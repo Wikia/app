@@ -34,6 +34,13 @@ class Title {
 	static private $titleCache = array();
 	// @}
 
+	# Wikia change begins
+	/**
+	 * Traits
+	 */
+	use TitleTrait;
+	# Wikia change ends
+
 	/**
 	 * Title::newFromText maintains a cache to avoid expensive re-normalization of
 	 * commonly used titles. On a batch operation this can become a memory leak

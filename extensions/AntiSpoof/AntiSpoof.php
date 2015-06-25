@@ -22,11 +22,9 @@ $wgExtensionCredits['antispam'][] = array(
 $wgAntiSpoofAccounts = true;
 
 /**
- * Allow sysops and bureaucrats to override the spoofing checks
- * and create accounts for people which hit false positives.
+ * CE-1459: sysop and bureaucrats should not have override-antispoof
+ * rights.
  */
-$wgGroupPermissions['sysop']['override-antispoof'] = true;
-$wgGroupPermissions['bureaucrat']['override-antispoof'] = true;
 $wgAvailableRights[] = 'override-antispoof';
 
 $dir = dirname( __FILE__ );

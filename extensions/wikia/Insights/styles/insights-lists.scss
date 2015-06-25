@@ -16,6 +16,10 @@
 	.insights-icon-wantedpages {
 		background-image: url('/extensions/wikia/Insights/images/wantedpages_dark.svg'); /* inline */
 	}
+
+	.insights-icon-nonportableinfoboxes {
+		background-image: url('/extensions/wikia/Insights/images/genericinsights_dark.svg'); /* inline */
+	}
 } @else {
 	.insights-icon-uncategorizedpages {
 		background-image: url('/extensions/wikia/Insights/images/uncategorized.svg'); /* inline */
@@ -31,6 +35,10 @@
 
 	.insights-icon-wantedpages {
 		background-image: url('/extensions/wikia/Insights/images/wantedpages.svg'); /* inline */
+	}
+
+	.insights-icon-nonportableinfoboxes {
+		background-image: url('/extensions/wikia/Insights/images/genericinsights.svg'); /* inline */
 	}
 }
 
@@ -67,6 +75,7 @@
 
 .insights-container-nav {
 	float: left;
+	padding-right: $width-insights-nav-content-space;
 	width: $width-insights-nav;
 
 	.insights-nav-list {
@@ -123,7 +132,7 @@
 .insights-container-main {
 	box-sizing: border-box;
 	float: right;
-	width: calc(100% - #{$width-insights-nav});
+	width: calc(100% - #{$width-insights-nav + $width-insights-nav-content-space});
 
 }
 

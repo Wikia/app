@@ -46,12 +46,12 @@ function getCityIdByImagePath( $image_path ) {
 }
 
 function moveRecordToActiveQueue( $row, $dry ) {
-	global $wgSpecialsDB;
-	$dbw = wfGetDB( DB_MASTER, array(), $wgSpecialsDB );
+	global $wgSwiftSyncDB;
+	$dbw = wfGetDB( DB_MASTER, array(), $wgSwiftSyncDB );
 	# move record to image_sync table
 
 	if ( !$dry ) {
-		$dbw->insert( '`swift_sync`.`image_sync`', 
+		$dbw->insert( 'image_sync',
 			[ 
 				'id'			=> $row->id,
 				'city_id'		=> $row->city_id,
@@ -69,7 +69,7 @@ function moveRecordToActiveQueue( $row, $dry ) {
 			print " added \n"; 
 					
 			# remove record from image_sync_done table;
-			$dbw->delete( '`swift_sync`.`image_sync_done`', array( 'id' => $row->id ), 	__METHOD__ );
+			$dbw->delete( 'image_sync_done', array( 'id' => $row->id ), 	__METHOD__ );
 			return true;
 		} else {
 			print " cannot be added \n"; 
@@ -81,11 +81,11 @@ function moveRecordToActiveQueue( $row, $dry ) {
 }
 
 function fixAllSwiftSyncData( $dry, $limit ) {
-	global $wgSpecialsDB, $method;
+	global $wgSwiftSyncDB, $method;
 
-	$dbr = wfGetDB( DB_SLAVE, array(), $wgSpecialsDB );
+	$dbr = wfGetDB( DB_SLAVE, array(), $wgSwiftSyncDB );
 	$res = $dbr->select(
-		[ '`swift_sync`.`image_sync_done`' ],
+		[ 'image_sync_done' ],
 		[ 'id, city_id, img_action, img_src, img_dest, img_added, img_sync, img_error' ],
 		[
 			'city_id' => 0,

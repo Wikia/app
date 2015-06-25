@@ -16,12 +16,16 @@ class AdEngine2ContextService {
 			$hubService = new HubService();
 			$adPageTypeService = new AdEngine2PageTypeService();
 			$wikiaPageType = new WikiaPageType();
-			$adEngineService = new AdEngine2Service();
 
 			$sevenOneMediaCombinedUrl = null;
 			if ( !empty( $wg->AdDriverUseSevenOneMedia ) ) {
 				// TODO: implicitly gets the skin from the context!
 				$sevenOneMediaCombinedUrl = ResourceLoader::makeCustomURL( $wg->Out, ['wikia.ext.adengine.sevenonemedia'], 'scripts' );
+			}
+
+			$monetizationServiceAds = null;
+			if ( !empty( $wg->AdDriverUseMonetizationService ) && !empty( $wg->EnableMonetizationModuleExt ) ) {
+				$monetizationServiceAds = F::app()->sendRequest( 'MonetizationModule', 'index' )->getData()['data'];
 			}
 
 			$langCode = $title->getPageLanguage()->getCode();
@@ -57,6 +61,8 @@ class AdEngine2ContextService {
 					'wikiVertical' => $hubService->getCategoryInfoForCity( $wg->CityId )->cat_name,
 				] ),
 				'providers' => $this->filterOutEmptyItems( [
+					'monetizationService' => $wg->AdDriverUseMonetizationService,
+					'monetizationServiceAds' => $monetizationServiceAds,
 					'sevenOneMedia' => $wg->AdDriverUseSevenOneMedia,
 					'sevenOneMediaCombinedUrl' => $sevenOneMediaCombinedUrl,
 					'taboola' => $wg->AdDriverUseTaboola,

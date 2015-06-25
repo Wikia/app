@@ -225,7 +225,7 @@ class VignetteRequest {
 		}
 
 		if (preg_match('/-(-{0,1}\d+),(\d+),(-{0,1}\d+),(\d+)-/', $legacyDefinition, $matches)) {
-			if ($generator->getMode() == UrlGenerator::MODE_SCALE_TO_WIDTH) {
+			if ($generator->getMode() == UrlGenerator::MODE_SCALE_TO_WIDTH || $generator->getMode() == UrlGenerator::MODE_SCALE_TO_WIDTH_DOWN) {
 				$generator->windowCrop();
 			} else {
 				$generator->windowCropFixed();

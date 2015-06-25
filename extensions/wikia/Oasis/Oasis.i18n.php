@@ -8,7 +8,6 @@ $messages['en'] = array(
 	'oasis-more' => 'See more >',
 	'oasis-mytools' => 'My Tools',
 	'oasis-follow' => 'Follow',
-	'oasis-share' => 'Share',
 	'oasis-like' => 'Like',
 	'oasis-signup' => 'Sign up',
 	'oasis-edit-protected-article' => 'Login to edit',
@@ -148,17 +147,6 @@ $messages['en'] = array(
 	'oasis-navigation-v2-validation-next' => 'Next',
 	'oasis-navigation-v2-new-photos' => 'Photos',
 	'oasis-on-the-wiki' => 'On the Wiki',
-	'oasis-sharing-toolbar-mail-subject' => '$1 has sent you a link on Wikia',
-	'oasis-sharing-toolbar-mail-body' => 'Hi.
-$1 sent you this page from {{SITENAME}} on Wikia:
-      $2
-Enjoy!
-- The Wikia team
-
-___________________________________________
-* Find help and advice on Community Central: http://community.wikia.com
-* Want to receive fewer messages from us? You can unsubscribe or change
-your email preferences here: http://community.wikia.com/Special:Preferences',
 	'oasis-label-wiki-vertical-id-0' => 'Other',
 	'oasis-label-wiki-vertical-id-1' => 'TV',
 	'oasis-label-wiki-vertical-id-1-link' => 'http://tvhub.wikia.com',
@@ -299,7 +287,6 @@ $messages['af'] = array(
 	'oasis-more' => 'Wys meer >',
 	'oasis-mytools' => 'My hulpmiddels',
 	'oasis-follow' => 'Volg',
-	'oasis-share' => 'Deel',
 	'oasis-like' => 'Hou van',
 	'oasis-global-nav-create-wiki' => "Begin 'n wiki",
 	'oasis-page-header-comments' => '{{PLURAL:$1|Opmerking|Opmerkings}}',
@@ -326,7 +313,6 @@ $messages['ar'] = array(
 	'oasis-more' => 'شاهد المزيد >',
 	'oasis-mytools' => 'أدواتي',
 	'oasis-follow' => 'اتبع',
-	'oasis-share' => 'شارك',
 	'oasis-page-header-subtitle-mediawiki' => 'صفحة ميدياويكي',
 	'oasis-page-header-subtitle-template' => 'صفحة قالب',
 	'oasis-page-header-subtitle-category' => 'صفحة تصنيف',
@@ -365,7 +351,6 @@ $messages['be-tarask'] = array(
 $messages['bg'] = array(
 	'oasis-home' => 'Начало',
 	'oasis-mytools' => 'Моите инструменти',
-	'oasis-share' => 'Споделяне',
 	'oasis-signup' => 'Регистриране',
 	'oasis-button-random-page' => 'Случайна страница',
 	'oasis-button-random-wiki' => 'Случайно уики',
@@ -412,7 +397,6 @@ $messages['br'] = array(
 	'oasis-more' => "Gwelout muioc'h >",
 	'oasis-mytools' => 'Ma ostilhoù',
 	'oasis-follow' => 'Heuliañ',
-	'oasis-share' => 'Rannañ',
 	'oasis-like' => 'Evel',
 	'oasis-edit-protected-article' => 'Kevreañ evit kemmañ',
 	'oasis-button-random-page' => 'Ur bajenn dre zegouezh',
@@ -523,7 +507,6 @@ $messages['ckb'] = array(
 	'oasis-more' => 'زۆرتر ببینە >',
 	'oasis-mytools' => 'ئامرازەکانم',
 	'oasis-follow' => 'بەداویدا کەوە',
-	'oasis-share' => 'بەشی بکە',
 	'oasis-button-random-page' => 'پەڕەیەک بە ھەڵکەوت',
 	'oasis-button-random-wiki' => 'ویکیی ھەرەمەکی',
 );
@@ -540,7 +523,6 @@ $messages['cs'] = array(
 	'oasis-more' => 'Více >',
 	'oasis-mytools' => 'Moje nástroje',
 	'oasis-follow' => 'Sledovat',
-	'oasis-share' => 'Sdílet',
 	'oasis-like' => 'To se mi líbí',
 	'oasis-signup' => 'Registrace',
 	'oasis-edit-protected-article' => 'Přihlašte se, chcete-li editovat.',
@@ -660,13 +642,7 @@ $messages['cs'] = array(
 	'oasis-navigation-v2-magic-word-validation' => 'Kouzelná slova mohou být zobrazena pouze v nabídkách 2. úrovně . Prosím zahrnujte je pouze ve wikitextu úrovně 2.',
 	'oasis-navigation-v2-validation-next' => 'Následující',
 	'oasis-navigation-v2-new-photos' => 'Nové fotky',
-	'oasis-on-the-wiki' => 'Na Wiki',
-	'oasis-sharing-toolbar-mail-subject' => '$1 vám poslal odkaz na Wikia',
-	'oasis-sharing-toolbar-mail-body' => 'Ahoj.
- $1  vám poslal tuto stránku ze stránky {{SITENAME}} na Wikia:
-      $2
-Příjemnou zábavu!
--Tým Wikia',
+	'oasis-on-the-wiki' => 'Na Wiki'
 );
 
 /** German (Deutsch)
@@ -688,7 +664,6 @@ $messages['de'] = array(
 	'oasis-more' => 'Mehr sehen >',
 	'oasis-mytools' => 'Meine Tools',
 	'oasis-follow' => 'Folgen',
-	'oasis-share' => 'Teilen',
 	'oasis-like' => 'Like',
 	'oasis-signup' => 'Registrieren',
 	'oasis-edit-protected-article' => 'Anmelden und bearbeiten',
@@ -809,16 +784,6 @@ $messages['de'] = array(
 	'oasis-navigation-v2-validation-next' => 'Weiter',
 	'oasis-navigation-v2-new-photos' => 'Fotos',
 	'oasis-on-the-wiki' => 'Im Wiki',
-	'oasis-sharing-toolbar-mail-subject' => '$1 hat dir im Wiki einen Link geschickt',
-	'oasis-sharing-toolbar-mail-body' => 'Hi!
-$1 hat dir auf Wikia diese Seite von {{SITENAME}} geschickt:
-      $2
-Viel Spaß damit!
-- Das Wikia-Team
-
-___________________________________________
-* Hilfe und Empfehlungen findest du im Community-Wiki: http://community.wikia.com
-* Möchtest du weniger Nachrichten von uns erhalten? Hier kannst du die Nachrichten abbestellen oder deine E-Mail-Einstellungen ändern: http://community.wikia.com/Special:Preferences',
 	'oasis-community-social-twitter-link' => 'http://twitter.com/#!/wikia',
 	'oasis-community-social-facebook-link' => 'http://www.facebook.com/wikia',
 	'oasis-community-social-googleplus-link' => 'http://gplus.to/wikia',
@@ -929,7 +894,6 @@ $messages['es'] = array(
 	'oasis-more' => 'Ver más >',
 	'oasis-mytools' => 'Mis herramientas',
 	'oasis-follow' => 'Seguir',
-	'oasis-share' => 'Compartir',
 	'oasis-like' => 'Me gusta',
 	'oasis-signup' => 'Inscribirse',
 	'oasis-edit-protected-article' => 'Iniciar sesión para editar',
@@ -1050,16 +1014,6 @@ $messages['es'] = array(
 	'oasis-navigation-v2-validation-next' => 'Siguiente',
 	'oasis-navigation-v2-new-photos' => 'Fotos',
 	'oasis-on-the-wiki' => 'En el wiki',
-	'oasis-sharing-toolbar-mail-subject' => '$1 le ha enviado un enlace en Wikia',
-	'oasis-sharing-toolbar-mail-body' => 'Hola.
-$1 le envió esta página de {{SITENAME}} en Wikia:
-      $2
-¡Que la disfrute!
-- El equipo de Wikia
-
-___________________________________________
-* Encuentre ayuda y consejos en Comunidad Central: http://comunidad.wikia.com
-* ¿Desea recibir menos mensajes de nosotros? Puede cancelar su suscripción o cambiar sus preferencias de correo electrónico aquí: http://comunidad.wikia.com/Especial:Preferencias',
 	'hub-Entertainment' => 'Entretenimiento',
 	'hub-Gaming' => 'Videojuegos',
 	'hub-Lifestyle' => 'Estilo de vida',
@@ -1139,7 +1093,6 @@ $messages['fa'] = array(
 	'oasis-more' => 'مشاهدهٔ بیشتر >',
 	'oasis-mytools' => 'ابزارهای من',
 	'oasis-follow' => 'پیگیری',
-	'oasis-share' => 'به‌اشتراک‌گذاشتن',
 	'oasis-like' => 'مانند',
 	'oasis-edit-protected-article' => 'ورود برای ویرایش',
 	'oasis-button-random-page' => 'صفحهٔ تصادفی',
@@ -1243,7 +1196,6 @@ $messages['fi'] = array(
 	'oasis-more' => 'Katso lisää >',
 	'oasis-mytools' => 'Omat työkalut',
 	'oasis-follow' => 'Seuraa',
-	'oasis-share' => 'Jaa',
 	'oasis-like' => 'Tykkää',
 	'oasis-signup' => 'Rekisteröidy',
 	'oasis-edit-protected-article' => 'Kirjaudu sisään muokataksesi',
@@ -1363,13 +1315,7 @@ $messages['fi'] = array(
 	'oasis-navigation-v2-magic-word-validation' => 'Taikasanat saattavat näkyä vain tason 3 valikoissa. Sisällytä ne vain tason 2 wiki-tekstiin',
 	'oasis-navigation-v2-validation-next' => 'Seuraava',
 	'oasis-navigation-v2-new-photos' => 'Uudet kuvat',
-	'oasis-on-the-wiki' => 'Wikissä',
-	'oasis-sharing-toolbar-mail-subject' => '$1 on lähettänyt sinulle linkin Wikiassa',
-	'oasis-sharing-toolbar-mail-body' => 'Hei.
-$1 lähetti sinulle tämän sivun sivulta {{SITENAME}} Wikiasta:
-     $2
-Nauti!
-- Wikia tiimi',
+	'oasis-on-the-wiki' => 'Wikissä'
 );
 
 /** French (français)
@@ -1387,7 +1333,6 @@ $messages['fr'] = array(
 	'oasis-more' => 'Plus >',
 	'oasis-mytools' => 'Mes outils',
 	'oasis-follow' => 'Suivre',
-	'oasis-share' => 'Partager',
 	'oasis-like' => "J'aime",
 	'oasis-signup' => "S'inscrire",
 	'oasis-edit-protected-article' => 'Se connecter pour modifier',
@@ -1508,16 +1453,6 @@ $messages['fr'] = array(
 	'oasis-navigation-v2-validation-next' => 'Suivant',
 	'oasis-navigation-v2-new-photos' => 'Photos',
 	'oasis-on-the-wiki' => 'Sur le wiki',
-	'oasis-sharing-toolbar-mail-subject' => '$1 vous a envoyé un lien sur Wikia',
-	'oasis-sharing-toolbar-mail-body' => "Bonjour !
-$1 vous a envoyé cette page du site {{SITENAME}} sur Wikia :
-      $2
-Bonne lecture !
-- L'équipe Wikia
-
-___________________________________________
-* Pour obtenir de l'aide ou des conseils, consultez le centre des communautés : http://communaute.wikia.com/wiki/Centre_des_communaut%C3%A9s
-* Pour ne plus recevoir autant de messages de notre part, désabonnez-vous ou modifiez vos préférences d'e-mail ici : http://community.wikia.com/Special:Preferences.",
 	'oasis-community-social-twitter-link' => 'http://twitter.com/#!/wikia',
 	'oasis-community-social-facebook-link' => 'http://fr-fr.facebook.com/wikia',
 	'oasis-community-social-googleplus-link' => 'http://gplus.to/wikia',
@@ -1592,7 +1527,6 @@ $messages['gl'] = array(
 	'oasis-more' => 'Ollar máis >',
 	'oasis-mytools' => 'As miñas ferramentas',
 	'oasis-follow' => 'Seguir',
-	'oasis-share' => 'Compartir',
 	'oasis-like' => 'Gústame',
 	'oasis-signup' => 'Rexístrese',
 	'oasis-edit-protected-article' => 'Acceda ao sistema para editar',
@@ -1712,17 +1646,7 @@ $messages['gl'] = array(
 	'oasis-navigation-v2-magic-word-validation' => 'As palabras máxicas poden mostrarse unicamente nos menús de nivel 2. Inclúa estas palabras máxicas soamente no texto wiki de nivel 2.',
 	'oasis-navigation-v2-validation-next' => 'Seguinte',
 	'oasis-navigation-v2-new-photos' => 'Novas fotos',
-	'oasis-on-the-wiki' => 'No wiki',
-	'oasis-sharing-toolbar-mail-subject' => '$1 envioulle unha ligazón en Wikia',
-	'oasis-sharing-toolbar-mail-body' => 'Ola.
-
-$1 envioulle esta páxina desde $2 en Wikia:
-
-$3
-
-Bótelle unha ollada!
-
-- O equipo de Wikia',
+	'oasis-on-the-wiki' => 'No wiki'
 );
 
 /** Hebrew (עברית)
@@ -1734,7 +1658,6 @@ $messages['he'] = array(
 	'oasis-more' => 'עוד >',
 	'oasis-mytools' => 'הכלים שלי',
 	'oasis-follow' => 'מעקב',
-	'oasis-share' => 'שיתוף',
 	'oasis-like' => 'אהבתי',
 	'oasis-edit-protected-article' => 'כניסה כדי לערוך',
 	'oasis-button-random-page' => 'דף אקראי',
@@ -1835,7 +1758,6 @@ $messages['hu'] = array(
 	'oasis-more' => 'Továbbiak >',
 	'oasis-mytools' => 'Saját eszközök',
 	'oasis-follow' => 'Követés',
-	'oasis-share' => 'Megosztás',
 	'oasis-edit-protected-article' => 'Jelentkezz be a szerkesztéshez',
 	'oasis-button-random-page' => 'Váletlen lap',
 	'oasis-button-random-wiki' => 'Véletlen wiki',
@@ -1888,7 +1810,6 @@ $messages['ia'] = array(
 	'oasis-more' => 'Vider plus >',
 	'oasis-mytools' => 'Mi utensiles',
 	'oasis-follow' => 'Sequer',
-	'oasis-share' => 'Divider',
 	'oasis-like' => 'Me place',
 	'oasis-signup' => 'Crear conto',
 	'oasis-edit-protected-article' => 'Aperi session pro modificar',
@@ -2008,17 +1929,7 @@ $messages['ia'] = array(
 	'oasis-navigation-v2-magic-word-validation' => 'Le parolas magic pote solmente esser monstrate in menus de nivello 2. Per favor include los solmente in wikitexto de nivello 2.',
 	'oasis-navigation-v2-validation-next' => 'Sequente',
 	'oasis-navigation-v2-new-photos' => 'Nove photos',
-	'oasis-on-the-wiki' => 'In le wiki',
-	'oasis-sharing-toolbar-mail-subject' => '$1 te ha inviate un ligamine in Wikia',
-	'oasis-sharing-toolbar-mail-body' => 'Salute.
-
-$1 te ha inviate iste pagina de $2 in Wikia:
-
-$3
-
-Bon lectura!
-
-- Le equipa de Wikia',
+	'oasis-on-the-wiki' => 'In le wiki'
 );
 
 /** Indonesian (Bahasa Indonesia)
@@ -2029,7 +1940,6 @@ $messages['id'] = array(
 	'oasis-more' => 'Lihat lebih>',
 	'oasis-mytools' => 'Peralatanku',
 	'oasis-follow' => 'Ikuti',
-	'oasis-share' => 'Bagikan',
 	'oasis-like' => 'Suka',
 	'oasis-edit-protected-article' => 'Login untuk menyunting',
 	'oasis-button-random-page' => 'Halaman sembarang',
@@ -2052,7 +1962,6 @@ $messages['it'] = array(
 	'oasis-more' => 'Di più >',
 	'oasis-mytools' => 'I miei strumenti',
 	'oasis-follow' => 'Segui',
-	'oasis-share' => 'Condividi',
 	'oasis-like' => 'Mi piace',
 	'oasis-signup' => 'Iscriviti',
 	'oasis-edit-protected-article' => 'Accedi per modificare',
@@ -2194,16 +2103,6 @@ $messages['it'] = array(
 	'oasis-navigation-v2-validation-next' => 'Seguente',
 	'oasis-navigation-v2-new-photos' => 'Foto',
 	'oasis-on-the-wiki' => 'Nella wiki',
-	'oasis-sharing-toolbar-mail-subject' => '$1 ti ha mandato un link su Wikia',
-	'oasis-sharing-toolbar-mail-body' => 'Ciao.
-$1 ti ha mandato questa pagina da {{SITENAME}} su Wikia:
-$2
-Buona lettura!
-- Il team di Wikia
-
-___________________________________________
-* Trova aiuto e consigli su Wiki della Community: http://it.community.wikia.com/wiki/Wiki_della_Community
-* Vuoi ricevere meno messaggi da noi? Puoi disiscriverti o modificare le tue preferenze per le email qui: http://community.wikia.com/wiki/Special:Preferences?cb=9946',
 	'oasis-label-wiki-vertical-id-0' => 'Altro',
 	'oasis-label-wiki-vertical-id-1' => 'TV',
 	'oasis-label-wiki-vertical-id-2' => 'Videogiochi',
@@ -2252,7 +2151,6 @@ $messages['ja'] = array(
 	'oasis-more' => 'もっと見る >',
 	'oasis-mytools' => 'マイツール',
 	'oasis-follow' => 'フォロー',
-	'oasis-share' => '共有',
 	'oasis-signup' => '登録',
 	'oasis-edit-protected-article' => 'ログインして編集',
 	'oasis-button-random-page' => 'おまかせ表示',
@@ -2346,16 +2244,6 @@ $messages['ja'] = array(
 	'oasis-navigation-v2-add-video' => '動画を追加',
 	'oasis-navigation-v2-edit-this-menu' => 'ウィキアナビゲーションを編集',
 	'oasis-navigation-v2-new-photos' => '写真',
-	'oasis-sharing-toolbar-mail-subject' => '$1さんからウィキアのリンクが送信されました',
-	'oasis-sharing-toolbar-mail-body' => 'こんにちは。
-$1さんからウィキアの{{SITENAME}}内にある次のページが送信されました:
-      $2
-お楽しみください！
-- ウィキアチーム
-
-___________________________________________
-* コミュニティセントラルのヘルプ: http://ja.community.wikia.com/wiki/メインページ
-* ウィキアから送信される通知数の変更をご希望の場合は、こちらで登録を解除するか、メール設定を変更してください: http://community.wikia.com/Special:Preferences',
 	'oasis-desc' => 'Oasisスキンモジュールのフックを簡単に追加できるようになります',
 	'oasis-global-page-header' => 'ウィキア',
 	'oasis-like' => 'いいね',
@@ -2505,7 +2393,6 @@ $messages['lt'] = array(
 	'oasis-more' => 'Žiūrėti daugiau >',
 	'oasis-mytools' => 'Mano įrankiai',
 	'oasis-follow' => 'Stebėti',
-	'oasis-share' => 'Dalintis',
 	'oasis-like' => 'Patinka',
 	'oasis-edit-protected-article' => 'Prisijunkite redaguoti',
 	'oasis-button-random-page' => 'Atsitiktinis puslapis',
@@ -2606,7 +2493,6 @@ $messages['mk'] = array(
 	'oasis-more' => 'Повеќе >',
 	'oasis-mytools' => 'Мои алатки',
 	'oasis-follow' => 'Следи',
-	'oasis-share' => 'Сподели',
 	'oasis-like' => 'Бендисај',
 	'oasis-signup' => 'Регистрација',
 	'oasis-edit-protected-article' => 'Најавете се за да уредувате',
@@ -2726,17 +2612,7 @@ $messages['mk'] = array(
 	'oasis-navigation-v2-magic-word-validation' => 'Волшебните зборови се прикажуваат само на менија од II ниво. Затоа ставајте ги само во викитекстот од II ниво.',
 	'oasis-navigation-v2-validation-next' => 'Следно',
 	'oasis-navigation-v2-new-photos' => 'Нови слики',
-	'oasis-on-the-wiki' => 'На викито',
-	'oasis-sharing-toolbar-mail-subject' => '$1 ви испрати врска на Викија',
-	'oasis-sharing-toolbar-mail-body' => 'Здраво.
-
-$1 ви ја испрати следнава страница од $2 на Викија:
-
-$3
-
-Пријатно читање!
-
-- Екипата на Викија',
+	'oasis-on-the-wiki' => 'На викито'
 );
 
 /** Malayalam (മലയാളം)
@@ -2745,7 +2621,6 @@ $3
 $messages['ml'] = array(
 	'oasis-more' => 'കൂടുതൽ കാണുക >',
 	'oasis-mytools' => 'എന്റെ ഉപകരണങ്ങൾ',
-	'oasis-share' => 'പങ്ക് വെയ്ക്കുക',
 	'oasis-like' => 'ഇഷ്ടപ്പെടുക',
 	'oasis-edit-protected-article' => 'തിരുത്താനായി പ്രവേശിച്ചിരിക്കണം',
 	'oasis-button-random-page' => 'ഏതെങ്കിലും താൾ',
@@ -2789,7 +2664,6 @@ $messages['ms'] = array(
 	'oasis-more' => 'Lihat banyak lagi >',
 	'oasis-mytools' => 'Alatan Saya',
 	'oasis-follow' => 'Ikuti',
-	'oasis-share' => 'Kongsi',
 	'oasis-like' => 'Suka',
 	'oasis-signup' => 'Daftar diri',
 	'oasis-edit-protected-article' => 'Log masuk untuk menyunting',
@@ -2909,17 +2783,7 @@ $messages['ms'] = array(
 	'oasis-navigation-v2-magic-word-validation' => 'Kata sakti hanya boleh dipaparkan dalam menu Aras 2. Sila sertakannya hanya dalam teks wiki Aras 2.',
 	'oasis-navigation-v2-validation-next' => 'Berikutnya',
 	'oasis-navigation-v2-new-photos' => 'Gambar Baru',
-	'oasis-on-the-wiki' => 'Di Wiki ini',
-	'oasis-sharing-toolbar-mail-subject' => '$1 telah menghantar pautan kepada anda di Wikia',
-	'oasis-sharing-toolbar-mail-body' => 'Selamat sejahtera.
-
-$1 menghantar laman ini kepada anda dari $2 di Wikia:
-
-$3
-
-Semoga ceria!
-
-- Pasukan Wikia',
+	'oasis-on-the-wiki' => 'Di Wiki ini'
 );
 
 /** Burmese (မြန်မာဘာသာ)
@@ -2954,7 +2818,6 @@ $messages['nb'] = array(
 	'oasis-more' => 'Se mer >',
 	'oasis-mytools' => 'Mine verktøy',
 	'oasis-follow' => 'Følg',
-	'oasis-share' => 'Del',
 	'oasis-like' => 'Lik',
 	'oasis-signup' => 'Registrer deg',
 	'oasis-edit-protected-article' => 'Logg inn for å redigere',
@@ -3074,17 +2937,7 @@ $messages['nb'] = array(
 	'oasis-navigation-v2-magic-word-validation' => 'Magiske ord kan bare vises i nivå 2-menyer. Vennligst bare inkluder dem i wikiteksten i nivå 2-menyene dine.',
 	'oasis-navigation-v2-validation-next' => 'Neste',
 	'oasis-navigation-v2-new-photos' => 'Nye bilder',
-	'oasis-on-the-wiki' => 'På wikien',
-	'oasis-sharing-toolbar-mail-subject' => '$1 har sendt deg en lenke på Wikia',
-	'oasis-sharing-toolbar-mail-body' => 'Hei.
-
-$1 sendte deg denne siden fra $2 på Wikia.
-
-$3
-
-Vel bekomme!
-
-– Wikia-teamet',
+	'oasis-on-the-wiki' => 'På wikien'
 );
 
 /** Dutch (Nederlands)
@@ -3097,7 +2950,6 @@ $messages['nl'] = array(
 	'oasis-more' => 'See more >',
 	'oasis-mytools' => 'My Tools',
 	'oasis-follow' => 'Follow',
-	'oasis-share' => 'Share',
 	'oasis-like' => 'Like',
 	'oasis-signup' => 'Sign up',
 	'oasis-edit-protected-article' => 'Login to edit',
@@ -3218,17 +3070,6 @@ $messages['nl'] = array(
 	'oasis-navigation-v2-validation-next' => 'Next',
 	'oasis-navigation-v2-new-photos' => 'Photos',
 	'oasis-on-the-wiki' => 'On the Wiki',
-	'oasis-sharing-toolbar-mail-subject' => '$1 has sent you a link on Wikia',
-	'oasis-sharing-toolbar-mail-body' => 'Hi.
-$1 sent you this page from {{SITENAME}} on Wikia:
-      $2
-Enjoy!
-- The Wikia team
-
-___________________________________________
-* Find help and advice on Community Central: http://community.wikia.com
-* Want to receive fewer messages from us? You can unsubscribe or change
-your email preferences here: http://community.wikia.com/Special:Preferences',
 	'oasis-desc' => 'Provides an easy way to add hooks for Oasis skin modules',
 	'oasis-global-page-header' => 'Wikia',
 	'oasis-button-random-page-tooltip' => '{{int:oasis-button-random-page}}',
@@ -3301,7 +3142,6 @@ $messages['nl-informal'] = array(
  */
 $messages['pfl'] = array(
 	'oasis-follow' => 'Folsche',
-	'oasis-share' => 'Deele',
 	'oasis-like' => 'Gfalldma',
 	'oasis-page-header-subtitle-mediawiki' => 'MediaWiki-Said',
 	'oasis-page-header-subtitle-special' => 'Schbezialsaid',
@@ -3330,7 +3170,6 @@ $messages['pl'] = array(
 	'oasis-more' => 'Zobacz więcej >',
 	'oasis-mytools' => 'Moje narzędzia',
 	'oasis-follow' => 'Obserwuj',
-	'oasis-share' => 'Podziel się',
 	'oasis-like' => 'Lubię to',
 	'oasis-signup' => 'Załóż konto',
 	'oasis-edit-protected-article' => 'Zaloguj się, by edytować',
@@ -3449,16 +3288,6 @@ $messages['pl'] = array(
 	'oasis-navigation-v2-validation-next' => 'Dalej',
 	'oasis-navigation-v2-new-photos' => 'Obrazy',
 	'oasis-on-the-wiki' => 'Na Wiki',
-	'oasis-sharing-toolbar-mail-subject' => '$1 przesyła Ci łącze na Wikia',
-	'oasis-sharing-toolbar-mail-body' => 'Witaj,
-$1 przesyła Ci stronę {{SITENAME}} z Wikia:
-      $2
-Miłej lektury!
-- Zespół Wikii
-
-___________________________________________
-* Aby dowiedzieć się co nowego na Wikii, odwiedź http://spolecznosc.wikia.com/
-* Chcesz zmienić ustawienia przysyłanych wiadomości? Przejdź tutaj: http://spolecznosc.wikia.com/wiki/Specjalna:Preferencje',
 	'oasis-community-social-twitter-link' => 'https://twitter.com/wikia_pl',
 	'oasis-community-social-facebook-link' => 'https://www.facebook.com/wikiapl',
 	'oasis-community-social-googleplus-link' => 'http://gplus.to/wikia',
@@ -3547,7 +3376,6 @@ $messages['ps'] = array(
 	'oasis-more' => 'نور کتل >',
 	'oasis-mytools' => 'زما اوزارونه',
 	'oasis-follow' => 'څارل',
-	'oasis-share' => 'شريکول',
 	'oasis-like' => 'خوښول',
 	'oasis-global-nav-create-wiki' => 'يو ويکي پيلول',
 	'oasis-page-header-comments' => '{{PLURAL:$1|تبصره|تبصرې}}',
@@ -3584,7 +3412,6 @@ $messages['pt'] = array(
 	'oasis-more' => 'Veja mais >',
 	'oasis-mytools' => 'Minhas ferramentas',
 	'oasis-follow' => 'Seguir',
-	'oasis-share' => 'Compartilhar',
 	'oasis-like' => 'Curtir',
 	'oasis-signup' => 'Inscrever-se',
 	'oasis-edit-protected-article' => 'Login para editar',
@@ -3728,17 +3555,6 @@ $messages['pt'] = array(
 	'oasis-navigation-v2-validation-next' => 'Próximo',
 	'oasis-navigation-v2-new-photos' => 'Fotos',
 	'oasis-on-the-wiki' => 'Na Wikia',
-	'oasis-sharing-toolbar-mail-subject' => '$1 enviou-lhe um link na Wikia',
-	'oasis-sharing-toolbar-mail-body' => 'Olá.
-$1 enviou-lhe esta página de {{SITENAME}} na Wikia:
-   $2
-Aproveite!
-Equipe Wikia
-
-___________________________________________
-* Encontre ajuda e conselhos na Comunidade Central: http://community.wikia.com
-* Você gostaria de receber menos mensagens de nossa equipe? Você pode cancelar ou alterar suas preferências de e-mail aqui: http://community.wikia.com/Special:Preferences
-',
 	'oasis-label-wiki-vertical-id-0' => 'Outro',
 	'oasis-label-wiki-vertical-id-1' => 'TV',
 	'oasis-label-wiki-vertical-id-1-link' => 'http://pt.entretenimento.wikia.com/wiki/Wiki_Entretenimento',
@@ -3797,7 +3613,6 @@ $messages['pt-br'] = array(
 	'oasis-more' => 'Ver mais >',
 	'oasis-mytools' => 'Minhas Ferramentas',
 	'oasis-follow' => 'Seguir',
-	'oasis-share' => 'Dividir',
 	'oasis-like' => 'Gostar',
 	'oasis-edit-protected-article' => 'Autentique-se para poder editar',
 	'oasis-button-random-page' => 'Página aleatória',
@@ -3923,7 +3738,6 @@ $messages['ru'] = array(
 	'oasis-more' => 'Смотреть еще >',
 	'oasis-mytools' => 'Мои инструменты',
 	'oasis-follow' => 'Подписаться',
-	'oasis-share' => 'Поделиться',
 	'oasis-like' => 'Нравится',
 	'oasis-signup' => 'Регистрация',
 	'oasis-edit-protected-article' => 'Войти в систему, чтобы редактировать',
@@ -4044,16 +3858,6 @@ $messages['ru'] = array(
 	'oasis-navigation-v2-validation-next' => 'Далее',
 	'oasis-navigation-v2-new-photos' => 'Фото',
 	'oasis-on-the-wiki' => 'В вики',
-	'oasis-sharing-toolbar-mail-subject' => '$1 отправил(а) вам ссылку на Викия',
-	'oasis-sharing-toolbar-mail-body' => 'Привет!
-$1 прислал(а) вам страницу с {{SITENAME}} на Викия:
-      $2
-Приятного просмотра!
-- Команда Викия
-
-___________________________________________
-* Нужна помощь или совет? Посетите Сообщества Викия: http://ru.community.wikia.com/wiki/Викия
-* Хотите получать меньше сообщений? Вы можете отписаться или изменить настройки электронной почты здесь: http://community.wikia.com/Special:Preferences',
 	'oasis-desc' => 'Позволяет легко добавлять хуки в модули обложек Оазис',
 	'oasis-global-page-header' => 'Викия',
 	'oasis-button-random-page-tooltip' => '{{int:oasis-button-random-page}}',
@@ -4121,7 +3925,6 @@ $messages['sr-ec'] = array(
 	'oasis-more' => 'Прикажи више >',
 	'oasis-mytools' => 'Алатке',
 	'oasis-follow' => 'Прати',
-	'oasis-share' => 'Дели',
 	'oasis-like' => 'Свиђа ми се',
 	'oasis-edit-protected-article' => 'Пријавите се да уређујете',
 	'oasis-button-random-page' => 'Случајна страница',
@@ -4201,7 +4004,6 @@ $messages['sv'] = array(
 	'oasis-more' => 'Se mer >',
 	'oasis-mytools' => 'Mina Verktyg',
 	'oasis-follow' => 'Följ',
-	'oasis-share' => 'Dela',
 	'oasis-like' => 'Gilla',
 	'oasis-signup' => 'Registrera dig',
 	'oasis-edit-protected-article' => 'Logga in för att redigera',
@@ -4321,17 +4123,7 @@ $messages['sv'] = array(
 	'oasis-navigation-v2-magic-word-validation' => 'Magiska ord visas bara i nivå 2-menyer. Var god inkludera dem endast i wikitexten för dina nivå 2-menyer.',
 	'oasis-navigation-v2-validation-next' => 'Nästa',
 	'oasis-navigation-v2-new-photos' => 'Nya foton',
-	'oasis-on-the-wiki' => 'På wikin',
-	'oasis-sharing-toolbar-mail-subject' => '$1 har skickat en länk till dig på Wikia',
-	'oasis-sharing-toolbar-mail-body' => 'Hej.
-
-$1 skickade denna sida till dig från $2 på Wikia:
-
-$3
-
-Ha det så kul!
-
-- Wikia-teamet',
+	'oasis-on-the-wiki' => 'På wikin'
 );
 
 /** Tamil (தமிழ்)
@@ -4339,7 +4131,6 @@ Ha det så kul!
  */
 $messages['ta'] = array(
 	'oasis-home' => 'முகப்பு',
-	'oasis-share' => 'பகிர்',
 	'oasis-signup' => 'பதிவுசெய்',
 	'oasis-button-random-page' => 'ஏதாவது ஒரு பக்கம்',
 	'oasis-button-wiki-activity' => 'விக்கி செயல்பாடு',
@@ -4367,7 +4158,6 @@ $messages['tl'] = array(
 	'oasis-more' => 'Tumingin pa >',
 	'oasis-mytools' => 'Mga Kasangkapan Ko',
 	'oasis-follow' => 'Sundan',
-	'oasis-share' => 'Ibahagi',
 	'oasis-like' => 'Gusto',
 	'oasis-edit-protected-article' => 'Lumagda upang makapamatnugot',
 	'oasis-button-random-page' => 'Alin mang pahina',
@@ -4426,7 +4216,6 @@ $messages['tt-cyrl'] = array(
 	'oasis-more' => 'Тулырак >',
 	'oasis-mytools' => 'Минем коралларым',
 	'oasis-follow' => 'Күзәтергә',
-	'oasis-share' => 'Бүлешү',
 	'oasis-like' => 'Миңа ошый',
 	'oasis-signup' => 'Теркәлү',
 	'oasis-edit-protected-article' => 'Төзәтү өчен керегез',
@@ -4516,7 +4305,6 @@ $messages['uk'] = array(
 	'oasis-home' => 'Головна',
 	'oasis-more' => 'Дивіться більше >',
 	'oasis-mytools' => 'Мої інструменти',
-	'oasis-share' => 'Поділитися',
 	'oasis-edit-protected-article' => 'Увійдіть для редагування',
 	'oasis-button-random-page' => 'Випадкова сторінка',
 	'oasis-button-random-wiki' => 'Випадкова вікі',
@@ -4588,7 +4376,6 @@ $messages['vi'] = array(
 	'oasis-more' => 'Xem thêm >',
 	'oasis-mytools' => 'Công cụ',
 	'oasis-follow' => 'Theo dõi',
-	'oasis-share' => 'Chia sẻ',
 	'oasis-like' => 'Thích',
 	'oasis-signup' => 'Đăng ký',
 	'oasis-edit-protected-article' => 'Đăng nhập để sửa đổi',
@@ -4708,13 +4495,7 @@ $messages['vi'] = array(
 	'oasis-navigation-v2-magic-word-validation' => 'Những từ ma thuật chỉ được ở Menu cấp 2. Xin vui lòng dùng văn bản wiki tại menu cấp 2.',
 	'oasis-navigation-v2-validation-next' => 'Tiếp theo',
 	'oasis-navigation-v2-new-photos' => 'Hình ảnh mới',
-	'oasis-on-the-wiki' => 'Trên Wiki này',
-	'oasis-sharing-toolbar-mail-subject' => '$1 đã gửi cho bạn một liên kết trên Wikia',
-	'oasis-sharing-toolbar-mail-body' => 'Chào bạn.
-$1 đã gửi cho bạn trang này từ {{SITENAME}} trên Wikia:
-      $2
-Thưởng thức!
-- Wikia Team',
+	'oasis-on-the-wiki' => 'Trên Wiki này'
 );
 
 /** Simplified Chinese (‪中文（简体）‬)
@@ -4729,7 +4510,6 @@ $messages['zh-hans'] = array(
 	'oasis-home' => '主页',
 	'oasis-more' => '查看更多',
 	'oasis-mytools' => '我的工具',
-	'oasis-share' => '分享',
 	'oasis-like' => '喜欢',
 	'oasis-signup' => '注册',
 	'oasis-edit-protected-article' => '登录剪辑',
@@ -4872,16 +4652,6 @@ $messages['zh-hans'] = array(
 	'oasis-navigation-v2-validation-next' => '下一页面',
 	'oasis-navigation-v2-new-photos' => '照片',
 	'oasis-on-the-wiki' => '在维基上',
-	'oasis-sharing-toolbar-mail-subject' => '$1给您发送了一个维基链接',
-	'oasis-sharing-toolbar-mail-body' => '您好，
-$1 给您发送的这个页面来自维基上的{{SITENAME}}：
-      $
-好好享受吧！
-- 维基团队
-
-___________________________________________
-* 前往社区中心寻求帮助和建议：http://community.wikia.com
-* 希望我们给您发送的信息少一些？您可以前往以下页面取消订阅或更改您的电子邮件偏好设置：http://community.wikia.com/Special:Preferences',
 	'oasis-label-wiki-vertical-id-0' => '其他',
 	'oasis-label-wiki-vertical-id-1' => '电视',
 	'oasis-label-wiki-vertical-id-2' => '视频游戏',
@@ -4928,7 +4698,6 @@ $messages['zh-hant'] = array(
 	'oasis-more' => '查看更多>',
 	'oasis-mytools' => '我的工具',
 	'oasis-follow' => '監視',
-	'oasis-share' => '分享',
 	'oasis-like' => '讚',
 	'oasis-signup' => '建立新帳號',
 	'oasis-edit-protected-article' => '登入編輯',
@@ -5037,7 +4806,6 @@ $messages['zh-hk'] = array(
 	'oasis-more' => '查看更多>',
 	'oasis-mytools' => '我的工具',
 	'oasis-follow' => '監視',
-	'oasis-share' => '分享',
 	'oasis-like' => '讚',
 	'oasis-edit-protected-article' => '登入編輯',
 	'oasis-button-random-page' => '隨機頁面',
@@ -5111,7 +4879,6 @@ $messages['zh-tw'] = array(
 	'oasis-more' => '查看更多 >',
 	'oasis-mytools' => '我的工具',
 	'oasis-follow' => '關注',
-	'oasis-share' => '分享',
 	'oasis-like' => '喜歡',
 	'oasis-edit-protected-article' => '登錄編輯',
 	'oasis-button-random-page' => '隨機頁面',
@@ -5253,15 +5020,6 @@ $messages['zh-tw'] = array(
 	'oasis-navigation-v2-validation-next' => '下一頁',
 	'oasis-navigation-v2-new-photos' => '照片',
 	'oasis-on-the-wiki' => '本維基',
-	'oasis-sharing-toolbar-mail-subject' => '$1 給你發送了一個維基鏈接',
-	'oasis-sharing-toolbar-mail-body' => '你好，此網頁是$1從維基上的{{SITENAME}}給你寄來的：
-                   $2
-好好享受吧！
--Wikia團隊
-
-___________________________________________
-* 如果需要尋求社區中心的幫助和建議，請到 HTTP://community.wikia.com
-* 希望從我們這裡收到的郵件少一些？你可以到以下網頁取消或更改您的電子郵件首選項：HTTP://community.wikia.com/Special:Preferences',
 	'oasis-label-wiki-vertical-id-0' => '其他',
 	'oasis-label-wiki-vertical-id-1' => '電視',
 	'oasis-label-wiki-vertical-id-2' => '視頻遊戲',

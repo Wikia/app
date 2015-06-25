@@ -215,6 +215,7 @@ class WikiaHubsModuleFromthecommunityService extends WikiaHubsModuleEditableServ
 			$photoField = $data['form']->getField('photo' . $i);
 			if (!empty($photoField['value'])) {
 				$imageData = $this->getImageInfo($photoField['value'], $imageSize);
+
 				$data['photos'][$i]['url'] = $imageData->url;
 				$data['photos'][$i]['imageWidth'] = $imageData->width;
 				$data['photos'][$i]['imageHeight'] = $imageData->height;

@@ -82,11 +82,27 @@ class User {
 			global $wgHeliosBaseUri, $wgHeliosClientId, $wgHeliosClientSecret;
 			$heliosClient = new Client( $wgHeliosBaseUri, $wgHeliosClientId, $wgHeliosClientSecret );
 
+			// start the session if there's none so far
+			// the code is borrowed from SpecialUserlogin
+			// @see PLATFORM-1261
+			if ( session_id() == '' ) {
+				wfSetupSession();
+				WikiaLogger::instance()->debug( __METHOD__ . '::startSession' );
+			}
+
 			try {
 				$tokenInfo = $heliosClient->info( $token );
 				if ( !empty( $tokenInfo->user_id ) ) {
+					$user = \User::newFromId( $tokenInfo->user_id );
+					
+					// dont return the user object if it's disabled
+					// @see SERVICES-459
+					if ( $user->getBoolOption( 'disabled' ) ) {
+						self::clearAccessTokenCookie();
+						return null;
+					}
 					// return a MediaWiki's User object
-					return \User::newFromId( $tokenInfo->user_id );
+					return $user;
 				}
 			}
 

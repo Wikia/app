@@ -8,6 +8,8 @@
  */
 $wgHooks['AlternateUserMailer'][] = "WikiaMailer::sendEmail";
 
+use Wikia\Logger\WikiaLogger;
+
 class WikiaMailer extends UserMailer {
 	
 	static $drivers = array(
@@ -54,7 +56,15 @@ class WikiaSendgridMailer {
 		wfProfileIn( __METHOD__ );
 		require_once( 'Mail.php' );
 		require_once( 'Mail/mime.php' );
-		
+
+		$logContext = array_merge( $headers, [
+			'issue' => 'SOC-910',
+			'method' => __METHOD__,
+			'to' => $to,
+			'subject' => $subject,
+		] );
+		WikiaLogger::instance()->info( 'Queuing email for SendGrid', $logContext );
+
 		wfSuppressWarnings();
 		$headers['Subject'] = UserMailer::quotedPrintable( $subject );
 		// Add a header for the server-name (helps us route where SendGrid will send bounces).
@@ -62,9 +72,15 @@ class WikiaSendgridMailer {
 			$headers["X-ServerName"] = $_SERVER['SERVER_NAME'];
 		}
 
+		/** @var Mail_wikiadb $mail_object */
 		$mail_object =& Mail::factory('wikiadb');
 
 		if ( PEAR::isError( $mail_object ) ) {
+			/** @var PEAR_error $mail_object */
+
+			$logContext['errorMessage'] = $mail_object->getMessage();
+			WikiaLogger::instance()->info( 'Failed to create mail object', $logContext );
+
 			wfDebug( "PEAR::Mail factory failed: " . $mail_object->getMessage() . "\n" );
 			wfRestoreWarnings();
 			wfProfileOut( __METHOD__ );
@@ -141,6 +157,8 @@ class WikiaSendgridMailer {
 			$headers['To'] = $chunk;
 			$status = self::sendWithPear( $mail_object, $chunk, $headers, $body );
 			if ( !$status->isOK() ) {
+				$logContext['errorMessage'] = $status->getMessage();
+				WikiaLogger::instance()->info( 'Failed to create mail object', $logContext );
 				wfRestoreWarnings();
 				wfProfileOut( __METHOD__ );
 				return $status->getMessage();
@@ -152,7 +170,8 @@ class WikiaSendgridMailer {
 		return false;
 	}
 
-	static public function sendWithPear( $mailer, $dest, $headers, $body ) {
+	static public function sendWithPear( Mail_wikiadb $mailer, $dest, $headers, $body ) {
+		/** @var PEAR_error $mailResult */
 		$mailResult = $mailer->send( $dest, $headers, $body );
 
 		# Based on the result return an error string,

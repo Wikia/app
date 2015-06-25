@@ -4,6 +4,7 @@
  * A model that reflects a type of flag that wikia's admins can define for their community.
  *
  * @author Adam Karmiński <adamk@wikia-inc.com>
+ * @author Łukasz Konieczny <lukaszk@wikia-inc.com>
  * @copyright (c) 2015 Wikia, Inc.
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
@@ -11,6 +12,10 @@
 namespace Flags\Models;
 
 class FlagType extends FlagsBaseModel {
+
+	const FLAG_TARGETING_READERS = 1;
+	const FLAG_TARGETING_CONTRIBUTORS = 2;
+
 	/**
 	 * Flags are organized in groups. We store this information as integers in the database.
 	 * Let's translate the numbers into something more readable!
@@ -32,8 +37,8 @@ class FlagType extends FlagsBaseModel {
 	 * @var array
 	 */
 	public static $flagTargeting = [
-		1 => 'readers',
-		2 => 'contributors'
+		self::FLAG_TARGETING_READERS => 'readers',
+		self::FLAG_TARGETING_CONTRIBUTORS => 'contributors'
 	];
 
 	/**
@@ -85,6 +90,31 @@ class FlagType extends FlagsBaseModel {
 	 */
 	public function getFlagTargetingId ( $flagTargetingName ) {
 		return array_search( strtolower( $flagTargetingName ), self::$flagTargeting );
+	}
+
+	/**
+	 * Fetches all types of flags available on a wikia from the database
+	 * @param int $wikiId
+	 * @return bool|mixed
+	 */
+	public function getFlagTypeIdByTemplate( $wikiId, $flag_view ) {
+		$db = $this->getDatabaseForRead();
+
+		$flagTypeId = ( new \WikiaSQL() )
+			->SELECT( 'flag_type_id' )
+			->FROM( self::FLAGS_TYPES_TABLE )
+			->WHERE( 'wiki_id' )->EQUAL_TO( $wikiId )
+			->AND_( 'flag_view')->EQUAL_TO( $flag_view )
+			->run( $db, function( $result ) {
+				$row = $result->fetchObject();
+				if ( $row ) {
+					return $row->flag_type_id;
+				} else {
+					return null;
+				}
+			} );
+
+		return $flagTypeId;
 	}
 
 	/**
@@ -145,7 +175,7 @@ class FlagType extends FlagsBaseModel {
 	 * If the passed params have been verified,
 	 * performs an INSERT query that adds a new type of flags.
 	 * @param array $params
-	 * @return bool
+	 * @return int id of inserted flag type
 	 */
 	public function addFlagType( $params ) {
 		$this->verifyParamsForAdd( $params );

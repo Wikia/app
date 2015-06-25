@@ -33,10 +33,17 @@ $wgAutoloadClasses['InsightsController'] = $dir . 'InsightsController.class.php'
 $wgAutoloadClasses['InsightsHelper'] = $dir . 'InsightsHelper.php';
 
 /**
+ * Custom QueryPage sub-classes
+ */
+$wgAutoloadClasses['UnconvertedInfoboxesPage'] = $dir . 'specials/UnconvertedInfoboxesPage.class.php';
+
+/**
  * Special pages
  */
 $wgSpecialPages['Insights'] = 'InsightsController';
 $wgSpecialPageGroups['Insights'] = 'wikia';
+$wgSpecialPages['Nonportableinfoboxes'] = 'UnconvertedInfoboxesPage';
+$wgSpecialPageGroups['Nonportableinfoboxes'] = 'wikia';
 
 /**
  * Permissions
@@ -53,6 +60,7 @@ $wgAutoloadClasses['InsightsUncategorizedModel'] = $dir . 'models/InsightsUncate
 $wgAutoloadClasses['InsightsWithoutimagesModel'] = $dir . 'models/InsightsWithoutimagesModel.php';
 $wgAutoloadClasses['InsightsDeadendModel'] = $dir . 'models/InsightsDeadendModel.php';
 $wgAutoloadClasses['InsightsWantedpagesModel'] = $dir . 'models/InsightsWantedpagesModel.php';
+$wgAutoloadClasses['InsightsUnconvertedInfoboxesModel'] = $dir . 'models/InsightsUnconvertedInfoboxesModel.php';
 
 /**
  * The right rail module
@@ -69,6 +77,7 @@ $wgHooks['ArticleCreateBeforeRedirect'][] = 'InsightsHooks::AfterActionBeforeRed
 $wgHooks['GetLocalURL'][] = 'InsightsHooks::onGetLocalURL';
 $wgHooks['MakeGlobalVariablesScript'][] = 'InsightsHooks::onMakeGlobalVariablesScript';
 $wgHooks['GetRailModuleList'][] = 'InsightsHooks::onGetRailModuleList';
+$wgHooks['wgQueryPages'][] = 'InsightsHooks::onwgQueryPages';
 
 /**
  * Message files

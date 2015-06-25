@@ -65,6 +65,12 @@ class RequestContext implements IContextSource {
 	private $skin;
 
 	/**
+	 * @var int
+	 */
+	private $recursion = 0;
+
+
+	/**
 	 * Set the WebRequest object
 	 *
 	 * @param $r WebRequest object
@@ -197,7 +203,7 @@ class RequestContext implements IContextSource {
 	public function getUser() {
 		// Wikia change - begin - @author: Michał Roszka
 		global $wgEnableHeliosExt;
-		if ( $wgEnableHeliosExt ) {
+		if ( $this->user === null && $wgEnableHeliosExt ) {
 			$this->user = \Wikia\Helios\User::newFromToken( $this->getRequest() );
 		}
 		// Wikia change - end
@@ -256,6 +262,19 @@ class RequestContext implements IContextSource {
 	 * @since 1.19
 	 */
 	public function setLanguage( $l ) {
+
+		// PLATFORM-1248 Recursive calls of RequestContext::getLanguage() michal@wikia-inc.com
+		if ( ( new Wikia\Util\Statistics\BernoulliTrial( 0.1 ) )->shouldSample() ) {
+			Wikia\Logger\WikiaLogger::instance()->debug(
+				__METHOD__,
+				[
+					'caller'    => wfGetAllCallers(),
+					'exception' => new Exception(),
+					'language'  => serialize( $l )
+				]
+			);
+		}
+
 		if ( $l instanceof Language ) {
 			$this->lang = $l;
 		} elseif ( is_string( $l ) ) {
@@ -284,16 +303,29 @@ class RequestContext implements IContextSource {
 	 * @since 1.19
 	 */
 	public function getLanguage() {
-		if ( isset( $this->recursion ) ) {
-			trigger_error( "Recursion detected in " . __METHOD__, E_USER_WARNING );
-			$e = new Exception;
-			wfDebugLog( 'recursion-guard', "Recursion detected:\n" . $e->getTraceAsString() );
-
+		/**
+		 * The following block of code (between if and elseif) has been added in
+		 * order to force setting $this->lang to some value. Apparently there was
+		 * something wrong with the following block (the one inside elseif) that would
+		 * cause an infinite loop or other issues.
+		 */
+		if ( $this->recursion > 0 ) {
+			$this->recursion++;
 			global $wgLanguageCode;
 			$code = ( $wgLanguageCode ) ? $wgLanguageCode : 'en';
 			$this->lang = Language::factory( $code );
+
+			// PLATFORM-1248 Recursive calls of RequestContext::getLanguage() michal@wikia-inc.com
+			Wikia\Logger\WikiaLogger::instance()->debug(
+				__METHOD__,
+				[
+					'caller'    => wfGetAllCallers(),
+					'exception' => new Exception(),
+					'language'  => serialize( $this->lang )
+				]
+			);
 		} elseif ( $this->lang === null ) {
-			$this->recursion = true;
+			$this->recursion++;
 
 			global $wgLanguageCode, $wgContLang;
 
@@ -311,8 +343,6 @@ class RequestContext implements IContextSource {
 				$obj = Language::factory( $code );
 				$this->lang = $obj;
 			}
-
-			unset( $this->recursion );
 		}
 
 		return $this->lang;
@@ -336,7 +366,7 @@ class RequestContext implements IContextSource {
 	public function getSkin() {
 		if ( $this->skin === null ) {
 			wfProfileIn( __METHOD__ . '-createskin' );
-			
+
 			$skin = null;
 			wfRunHooks( 'RequestContextCreateSkin', array( $this, &$skin ) );
 
