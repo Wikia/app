@@ -35,7 +35,7 @@ class UserChangesHistory {
 	 */
 	static public function LoginHistoryHook( $from, $user, $type = false ) {
 		global $wgCityId; #--- private wikia identifier, you can use wgDBname
-		global $wgEnableScribeReport, $wgStatsDB, $wgStatsDBEnabled;
+		global $wgEnableScribeReport, $wgStatsDB, $wgSpecialsDB;
 
 		if( wfReadOnly() ) { return true; }
 
@@ -70,31 +70,35 @@ class UserChangesHistory {
 							WScribeClient::singleton('trigger')->send($data);
 						}
 						catch( TException $e ) {
-							Wikia::log( __METHOD__, 'scribeClient exception', $e->getMessage() );
+							Wikia\Logger\WikiaLogger::instance()->error( __METHOD__, [
+								'exception' => $e
+							] );
 						}
 					} else {
-						# use database
-						if ( !empty( $wgStatsDBEnabled ) ) {
-							$dbw = wfGetDB( DB_MASTER, array(), $wgStatsDB ) ;
+						# use database as a fallback when Scribe is disabled
+						$dbw_stats = wfGetDB( DB_MASTER, array(), $wgStatsDB ) ;
 
-							$dbw->insert(
-								"user_login_history",
-								$params,
-								__METHOD__,
-								array('IGNORE')
-							);
+						$dbw_stats->insert(
+							"user_login_history",
+							$params,
+							__METHOD__,
+							array('IGNORE')
+						);
 
-							$dbw->replace(
-								"user_login_history_summary",
-								array( 'user_id' ),
-								array( 'ulh_timestamp' => wfTimestampOrNull(), 'user_id' => $id ),
-								__METHOD__
-							);
+						$dbw_stats->commit(__METHOD__);
 
-							if ( $dbw->getFlag( DBO_TRX ) ) {
-								$dbw->commit(__METHOD__);
-							}
-						}
+						// user_login_history_summary is used in joins with specials.events_local_users table
+						// @see PLATFORM-1309
+						$dbw_specials = wfGetDB( DB_MASTER, array(), $wgSpecialsDB ) ;
+
+						$dbw_specials->replace(
+							"user_login_history_summary",
+							array( 'user_id' ),
+							array( 'ulh_timestamp' => wfTimestampOrNull(), 'user_id' => $id ),
+							__METHOD__
+						);
+
+						$dbw_specials->commit(__METHOD__);
 					}
 				}
 			}
