@@ -12,7 +12,12 @@ class WikiaUserPropertiesHandlerBase extends WikiaModel {
 	}
 
 	protected function getPropertyValue($propertyName, $defaultOption = null) {
-		return $this->wg->User->getOption($propertyName, $defaultOption);
+		$value = $this->wg->User->getGlobalAttribute($propertyName);
+		if (!$value) {
+			$value = $defaultOption;
+		}
+
+		return $value;
 	}
 
 	protected function getPropertyObject($propertyName, $defaultOption = null) {
