@@ -134,7 +134,7 @@ $(function () {
 			checkForm = function () {
 				$save.removeClass();
 
-				checkInputs($ul.find('.section-input'), ['required']);
+				checkInputs($ul.find('.section-input'), ['required', 'limit']);
 				checkInputs($ul.find('.item-input'), ['required', 'checkEmpty']);
 
 				// validate orphans
