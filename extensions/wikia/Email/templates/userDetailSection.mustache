@@ -1,0 +1,30 @@
+<tr>
+	<td valign="top">
+		<div class="avatar-wrapper">
+			{{# editorProfilePage}}
+			<a href="{{editorProfilePage}}">
+				{{/ editorProfilePage}}
+				<img class="avatar" src="{{editorAvatarURL}}">
+				{{# editorProfilePage}}
+			</a>
+			{{/ editorProfilePage}}
+		</div>
+	</td>
+	<td class="widest">
+		<div class="message">
+			<p>
+				{{# editorProfilePage}}
+				<a class="username" href="{{editorProfilePage}}">
+					{{/ editorProfilePage}}
+					{{editorUserName}}
+					{{# editorProfilePage}}
+				</a>
+				{{/ editorProfilePage}}
+			</p>
+			{{# detailsHeader}}
+			<p><strong>{{detailsHeader}}</strong></p>
+			{{/ detailsHeader}}
+			<p>{{{details}}}</p>
+		</div>
+	</td>
+</tr>

@@ -9,8 +9,7 @@ class FounderEmailsRegisterEvent extends FounderEmailsEvent {
 		$this->setData( $eventData );
 	}
 
-	public function enabled( $wikiId, User $user ) {
-
+	public function enabled( User $admin, $wikiId = null ) {
 		// don't send if we're on an answersWiki
 		if ( self::isAnswersWiki() ) {
 			return false;
@@ -20,7 +19,6 @@ class FounderEmailsRegisterEvent extends FounderEmailsEvent {
 	}
 
 	public function process( Array $events ) {
-
 		if ( count( $events ) == 0 ) {
 			return false;
 		}

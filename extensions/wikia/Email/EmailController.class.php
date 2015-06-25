@@ -472,9 +472,12 @@ abstract class EmailController extends \WikiaController {
 	 * @return String
 	 */
 	protected function getCurrentAvatarURL() {
-		return \AvatarService::getAvatarUrl( $this->currentUser, self::AVATAR_SIZE );
+		return $this->getAvatarURL( $this->currentUser );
 	}
 
+	protected function getAvatarURL( \User $user ) {
+		return \AvatarService::getAvatarUrl( $user, self::AVATAR_SIZE );
+	}
 
 	protected function findUserFromRequest( $paramName, \User $default = null ) {
 		$userName = $this->getRequest()->getVal( $paramName );
