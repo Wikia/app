@@ -28,7 +28,7 @@ $(function () {
 			$form = $(form),
 			ul = form.getElementsByTagName('ul')[0],
 			$ul = $(ul),
-		//it looks better if we display in input item name without Item:
+			maxAllowedLength = 48, // it's derived from MAX_LABEL_LENGTH in CuratedContentSpecialController
 
 			setup = function (elem) {
 				(elem || $ul.find('.item-input')).autocomplete({
@@ -50,6 +50,7 @@ $(function () {
 					minLength: 3,
 					skipBadQueries: true // BugId:4625 - always send the request even if previous one returned no suggestions
 				});
+				// validate form on init
 				checkForm();
 			},
 			addNew = function (row, elem) {
@@ -68,6 +69,7 @@ $(function () {
 
 				$ul.sortable('refresh');
 			},
+
 			/**
 			 * Validate input elements
 			 *
@@ -75,17 +77,20 @@ $(function () {
 			 * @param options array consists of ['checkEmpty', 'required', 'limit']
 			 */
 			checkInputs = function (elements, options) {
-				var names = [],
+				var cachedVals = [],
 					optionCheckEmpty, optionRequired, optionLimit;
 
-				optionCheckEmpty = typeof options !== 'undefined' ? (options.indexOf('checkEmpty') !== -1) : false;
-				optionRequired = typeof options !== 'undefined' ? (options.indexOf('required') !== -1) : false;
-				optionLimit = typeof options !== 'undefined' ? (options.indexOf('limit') !== -1) : false;
+				options = Array.isArray(options) ? options : [];
+
+				optionCheckEmpty = options.indexOf('checkEmpty') !== -1;
+				optionRequired = options.indexOf('required') !== -1;
+				optionLimit = options.indexOf('limit') !== -1;
 
 				elements.each(function () {
 					var val = this.value,
 						$this = $(this);
 
+					// check if filed valuer is empty and it's required
 					if (optionRequired && val === '') {
 						$this
 							.addClass('error')
@@ -93,21 +98,30 @@ $(function () {
 							.popover({
 								content: requiredError
 							});
-					} else if (optionLimit && val.length > 48) {
+						return true;
+					}
+					// check if field value is too long
+					if (optionLimit && val.length > maxAllowedLength) {
 						$this
 							.addClass('error')
 							.popover('destroy')
 							.popover({
 								content: tooLongLabelError
 							});
-					} else if (names.indexOf(val) === -1) {
-						names.push(val);
+						return true;
+					}
+					// check if value already exists (in cachedVals variable)
+					if (cachedVals.indexOf(val) === -1) {
+						// not exists, add it to cachedVals and remove previous errors
+						cachedVals.push(val);
 
 						$this
 							.removeClass('error')
 							.popover('destroy');
 
+						return true;
 					} else if (optionCheckEmpty || val !== '') {
+						// if it exists and it's not empty it's duplication
 						$this
 							.addClass('error')
 							.popover('destroy')

@@ -19,7 +19,7 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 
 	const FEATURED_SECTION_TEMPLATE = 'featuredSection';
 
-	const NAME_MAX_LENGTH = 48;
+	const LABEL_MAX_LENGTH = 48;
 
 	public function __construct() {
 		parent::__construct( 'CuratedContent', '', false );
@@ -324,7 +324,7 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 		if ( empty( $row[ 'label' ] ) ) {
 			$reason = 'emptyLabel';
 		}
-		if ( strlen( $row[ 'label' ] ) > self::NAME_MAX_LENGTH ) {
+		if ( strlen( $row[ 'label' ] ) > self::LABEL_MAX_LENGTH ) {
 			$reason = 'tooLongLabel';
 		}
 
