@@ -54,6 +54,7 @@ $wgAutoloadClasses['Email\Controller\AbstractEmailConfirmationController'] =  $d
 $wgAutoloadClasses['Email\Controller\EmailConfirmationController'] =  $dir . 'Controller/EmailConfirmationController.class.php';
 $wgAutoloadClasses['Email\Controller\EmailConfirmationReminderController'] =  $dir . 'Controller/EmailConfirmationController.class.php';
 $wgAutoloadClasses['Email\Controller\ConfirmationChangedEmailController'] = $dir . 'Controller/EmailConfirmationController.class.php';
+$wgAutoloadClasses['Email\Controller\CategoryAddController'] = $dir . 'Controller/CategoryAddController.class.php';
 $wgAutoloadClasses['Email\Controller\AbstractFounderEditController'] =  $dir . 'Controller/FounderController.class.php';
 $wgAutoloadClasses['Email\Controller\FounderEditController'] =  $dir . 'Controller/FounderController.class.php';
 $wgAutoloadClasses['Email\Controller\FounderAnonEditController'] =  $dir . 'Controller/FounderController.class.php';
@@ -79,6 +80,7 @@ $wgExtensionMessagesFiles['EmailWallMessage'] = $dir . 'i18n/WallMessage.i18n.ph
 $wgExtensionMessagesFiles['EmailWeeklyDigest'] = $dir . 'i18n/WeeklyDigest.i18n.php';
 $wgExtensionMessagesFiles['EmailFounder'] = $dir . 'i18n/Founder.i18n.php';
 $wgExtensionMessagesFiles['EmailConfirmation'] = $dir . 'i18n/EmailConfirmation.i18n.php';
+$wgExtensionMessagesFiles['EmailCategoryAdd'] = $dir . 'i18n/CategoryAdd.i18n.php';
 $wgExtensionMessagesFiles['SpecialSendEmail'] = $dir . 'i18n/specialSendEmail.i18n.php';
 
 /**
