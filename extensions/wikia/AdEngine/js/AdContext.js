@@ -7,14 +7,16 @@ define('ext.wikia.adEngine.adContext', [
 	'wikia.document',
 	'wikia.geo',
 	'wikia.instantGlobals',
+	'wikia.querystring',
 	require.optional('wikia.abTest')
-], function (w, doc, geo, instantGlobals, abTest) {
+], function (w, doc, geo, instantGlobals, Querystring, abTest) {
 	'use strict';
 
 	instantGlobals = instantGlobals || {};
 
 	var context,
-		callbacks = [];
+		callbacks = [],
+		qs = new Querystring();
 
 	function getContext() {
 		return context;
@@ -44,7 +46,7 @@ define('ext.wikia.adEngine.adContext', [
 		context.slots = context.slots || {};
 		context.targeting = context.targeting || {};
 		context.providers = context.providers || {};
-		context.forceProviders = context.forceProviders || {};
+		context.forcedProvider = qs.getVal('forcead', null) || context.forcedProvider || null;
 
 		// Don't show ads when Sony requests the page
 		if (doc && doc.referrer && doc.referrer.match(/info\.tvsideview\.sony\.net/)) {
@@ -65,11 +67,6 @@ define('ext.wikia.adEngine.adContext', [
 		if (context.providers.taboola) {
 			context.providers.taboola = abTest && abTest.inGroup('NATIVE_ADS_TABOOLA', 'YES') &&
 				(context.targeting.pageType === 'article' || context.targeting.pageType === 'home');
-		}
-
-		// Turtle
-		if (context.forceProviders.turtle) {
-			context.providers.turtle = true;
 		}
 
 		if (instantGlobals.wgAdDriverTurtleCountries &&

@@ -185,6 +185,7 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 
 		if ( empty( $counter[$user->getId()] ) ) {
 			$allCounter = unserialize( $user->getOption( 'founderemails-counter' ) );
+			$allCounter = is_array( $allCounter ) ? $allCounter : [];
 			if ( $this->userCounterNeedsReset( $allCounter ) ) {
 				$allCounter[F::app()->wg->CityId] = [
 					'date'  => date( 'Y-m-d' ),

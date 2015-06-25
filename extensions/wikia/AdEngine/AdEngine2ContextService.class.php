@@ -16,7 +16,6 @@ class AdEngine2ContextService {
 			$hubService = new HubService();
 			$adPageTypeService = new AdEngine2PageTypeService();
 			$wikiaPageType = new WikiaPageType();
-			$adEngineService = new AdEngine2Service();
 
 			$sevenOneMediaCombinedUrl = null;
 			if ( !empty( $wg->AdDriverUseSevenOneMedia ) ) {
@@ -73,12 +72,7 @@ class AdEngine2ContextService {
 					'exitstitialRedirectDelay' => $wg->OutboundScreenRedirectDelay,
 					'invisibleHighImpact' => $wg->AdDriverEnableInvisibleHighImpactSlot,
 				] ),
-				// TODO: make it like forceadprovider=liftium
-				'forceProviders' => $this->filterOutEmptyItems( [
-					'liftium' => $wg->AdDriverForceLiftiumAd,
-					'openX' => $wg->AdDriverForceOpenXAd,
-					'turtle' => $wg->AdDriverForceTurtleAd,
-				] ),
+				'forcedProvider' => $wg->AdDriverForcedProvider
 			];
 		} );
 	}

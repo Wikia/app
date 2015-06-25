@@ -138,17 +138,6 @@ class AbstractFounderEditController extends FounderController {
 		] );
 	}
 
-	protected function getFooterMessages() {
-		$parentUrl = $this->pageTitle->getFullURL( 'action=unwatch' );
-		$parentTitleText = $this->pageTitle->getPrefixedText();
-
-		$footerMessages = [
-			$this->getMessage( 'emailext-unfollow-text', $parentUrl, $parentTitleText )
-				->parse()
-		];
-		return array_merge( $footerMessages, parent::getFooterMessages() );
-	}
-
 	protected function getFooterEncouragement() {
 		$name = $this->getCurrentUserName();
 		$profileUrl = $this->getCurrentProfilePage();
@@ -248,6 +237,26 @@ class FounderAnonEditController extends AbstractFounderEditController {
 	protected function getFooterEncouragement() {
 		return $this->getMessage( 'emailext-founder-anon-encourage' )
 			->parse();
+	}
+
+
+	/**
+	 * Form fields required for this email for Special:SendEmail. See
+	 * EmailController::getEmailSpecificFormFields for more info.
+	 * @return array
+	 */
+	protected static function getEmailSpecificFormFields() {
+		$formFields = [
+			'inputs' => [
+				[
+					'type' => 'hidden',
+					'name' => 'currentUser',
+					'value' => -1
+				],
+			]
+		];
+
+		return array_merge_recursive( $formFields, parent::getEmailSpecificFormFields() );
 	}
 }
 
