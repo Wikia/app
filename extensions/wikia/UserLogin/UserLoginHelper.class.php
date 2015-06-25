@@ -78,12 +78,6 @@ class UserLoginHelper extends WikiaModel {
 		global $wgSpecialsDB;
 		wfProfileIn( __METHOD__ );
 
-		if ( !$this->wg->StatsDBEnabled ) {
-			// no stats DB, can't get list of users with avatars
-			wfProfileOut( __METHOD__ );
-			return array();
-		}
-
 		$wikiId = ( empty( $wikiId ) ) ? $this->wg->CityId : $wikiId;
 
 		$memKey = wfSharedMemcKey( 'userlogin', 'users_with_avatar', $wikiId );
@@ -115,7 +109,6 @@ class UserLoginHelper extends WikiaModel {
 		}
 
 		wfProfileOut( __METHOD__ );
-
 		return $wikiUsers;
 	}
 
