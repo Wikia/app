@@ -52,6 +52,7 @@ class AdEngine2Hooks {
 	public static function onInstantGlobalsGetVariables( array &$vars )
 	{
 		$vars[] = 'wgAdDriverIncontentPlayerSlotCountries';
+		$vars[] = 'wgAdDriverKruxCountries';
 		$vars[] = 'wgAdDriverTurtleCountries';
 		$vars[] = 'wgAdDriverOpenXCountries';
 		$vars[] = 'wgAmazonMatchCountries';
