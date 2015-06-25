@@ -159,7 +159,7 @@ function Ach_MastheadEditCounter(&$editCounter, $user) {
 	if ($user instanceof User) {
 		global $wgUser;
 
-		if(!($wgUser->getId() == $user->getId() && $wgUser->getOption('hidepersonalachievements'))) {
+		if(!($wgUser->getId() == $user->getId() && $wgUser->getGlobalPreference('hidepersonalachievements'))) {
 			$dbr = wfGetDB(DB_SLAVE);
 			$editCounter = $dbr->selectField('ach_user_score', 'score', array('user_id' => $user->getId()), __METHOD__);
 
