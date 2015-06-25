@@ -147,7 +147,7 @@ class CreateNewWikiTask extends BaseTask {
 				];
 				if ( $sourceTitle->getPrefixedText() !== $targetTitle->getPrefixedText() ) {
 					$saveUser = $wgUser;
-					$wgUser = \User::newFromName( \CreateWiki::DEFAULT_STAFF );
+					$wgUser = \User::newFromName( 'Wikia' );
 
 					$err = $sourceTitle->moveTo( $targetTitle, false, "SEO" );
 					if ( $err !== true ) {
