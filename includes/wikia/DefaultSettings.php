@@ -1454,6 +1454,13 @@ $wgAdDriverRubiconRTPConfig = null;
 $wgAdDriverRubiconRTPCountries = null;
 
 /**
+ * @name $wgAdDriverKruxCountries
+ * List of countries Krux will be enabled on
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverKruxCountries = null;
+
+/**
  * @name $wgEnableKruxOnMobile
  * Whether to enable Krux on wikiamobile skin
  */
