@@ -9,6 +9,8 @@
 
 namespace Wikia\Tasks\Tasks;
 
+use Wikia\Util\GlobalStateWrapper;
+
 class CreateNewWikiTask extends BaseTask {
 	const
 		DEFAULT_USER = 'Default',
@@ -148,10 +150,15 @@ class CreateNewWikiTask extends BaseTask {
 					'target' => $targetTitle->getPrefixedText(),
 				];
 				if ( $sourceTitle->getPrefixedText() !== $targetTitle->getPrefixedText() ) {
-					$saveUser = $wgUser;
-					$wgUser = \User::newFromName( self::WIKIA_USER );
+					$wikiaUser = \User::newFromName( self::WIKIA_USER );
+					$wrapper = new GlobalStateWrapper( [
+						'wgUser' => $wikiaUser
+					] );
 
-					$err = $sourceTitle->moveTo( $targetTitle, false, "SEO" );
+					$err = $wrapper->wrap( function() use( $sourceTitle, $targetTitle ) {
+						return $sourceTitle->moveTo( $targetTitle, false, "SEO" );
+					});
+
 					if ( $err !== true ) {
 						$this->error('main page move failed', $moveContext);
 					} else {
@@ -161,7 +168,13 @@ class CreateNewWikiTask extends BaseTask {
 						 */
 						$mwMainPageTitle = \Title::newFromText( "Mainpage", NS_MEDIAWIKI );
 						$mwMainPageArticle = new \Article( $mwMainPageTitle, 0 );
-						$mwMainPageArticle->doEdit( $targetTitle->getText(), "SEO", EDIT_SUPPRESS_RC | EDIT_MINOR | EDIT_FORCE_BOT );
+						$mwMainPageArticle->doEdit(
+							$targetTitle->getText(),
+							"SEO",
+							EDIT_SUPPRESS_RC | EDIT_MINOR | EDIT_FORCE_BOT,
+							false,
+							$wikiaUser
+						);
 						$mwMainPageArticle->doPurge();
 
 						/**
