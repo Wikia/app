@@ -1,7 +1,7 @@
 /*global define, setTimeout, clearTimeout*/
 /*jshint camelcase:false*/
 /*jshint maxlen:127*/
-define('ext.wikia.adEngine.wikiaGptAdDetect', [
+define('ext.wikia.adEngine.provider.gpt.adDetect', [
 	'wikia.log',
 	'wikia.window',
 	'ext.wikia.adEngine.adContext',
@@ -9,7 +9,7 @@ define('ext.wikia.adEngine.wikiaGptAdDetect', [
 ], function (log, window, adContext, messageListener) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.adEngine.wikiaGptAdDetect',
+	var logGroup = 'ext.wikia.adEngine.provider.gpt.adDetect',
 		specialAdSelector = [
 			'script[src*="/ads.saymedia.com/"]',
 			'script[src*="/native.sharethrough.com/"]',
