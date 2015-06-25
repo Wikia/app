@@ -5,7 +5,7 @@ namespace Wikia\Service\Gateway;
 
 use Http;
 
-class ConsulUrlProvider implements UrlProviderInterface {
+class ConsulUrlProvider implements UrlProvider {
 
 	private $healthUrlSchema = '{consulUrl}/v1/health/service/{serviceName}?passing&tag={serviceTag}';
 	private $healthUrl;

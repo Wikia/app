@@ -8,7 +8,7 @@ class GatewayBase {
 
 	private $urlProvider;
 
-	function __construct( UrlProviderInterface $urlProvider ) {
+	function __construct( UrlProvider $urlProvider ) {
 		$this->urlProvider = $urlProvider;
 	}
 

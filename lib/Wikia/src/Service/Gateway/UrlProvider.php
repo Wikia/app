@@ -3,7 +3,7 @@
 namespace Wikia\Service\Gateway;
 
 
-interface UrlProviderInterface {
+interface UrlProvider {
 
 	public function getUrl();
 }
