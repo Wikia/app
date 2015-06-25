@@ -10,11 +10,11 @@ class ArticleAsJson extends WikiaService {
 	const ICON_MAX_SIZE = 40;
 	const CACHE_VERSION = '0.0.3';
 
-	const ARTICLE_IMAGE = 'article-image';
-	const ARTICLE_VIDEO = 'article-video';
-	const GALLERY_IMAGE = 'gallery-image';
-	const ICON = 'icon';
-	const INFOBOX_IMAGE = 'infobox-image';
+	const MEDIA_CONTEXT_ARTICLE_IMAGE = 'article-image';
+	const MEDIA_CONTEXT_ARTICLE_VIDEO = 'article-video';
+	const MEDIA_CONTEXT_GALLERY_IMAGE = 'gallery-image';
+	const MEDIA_CONTEXT_ICON = 'icon';
+	const MEDIA_CONTEXT_INFOBOX_IMAGE = 'infobox-image';
 
 	private static function createMarker( $width = 0, $height = 0, $isGallery = false ){
 		$blankImgUrl = F::app()->wg->blankImgUrl;
@@ -63,7 +63,7 @@ class ArticleAsJson extends WikiaService {
 		}
 
 		if ( $details['mediaType'] == 'video' ) {
-			$media['context'] = self::ARTICLE_VIDEO;
+			$media['context'] = self::MEDIA_CONTEXT_ARTICLE_VIDEO;
 			$media['views'] = (int) $details['videoViews'];
 			$media['embed'] = $details['videoEmbedCode'];
 			$media['duration'] = $details['duration'];
@@ -104,7 +104,7 @@ class ArticleAsJson extends WikiaService {
 					Title::newFromText( $image['name'], NS_FILE ),
 					self::$mediaDetailConfig
 				);
-				$details['context'] = self::GALLERY_IMAGE;
+				$details['context'] = self::MEDIA_CONTEXT_GALLERY_IMAGE;
 
 				$caption = $image['caption'];
 
@@ -140,7 +140,7 @@ class ArticleAsJson extends WikiaService {
 		if ( $title ) {
 			$details = WikiaFileHelper::getMediaDetail( $title, self::$mediaDetailConfig );
 			//TODO: When there will be more image contexts, move strings to const
-			$details['context'] = self::INFOBOX_IMAGE;
+			$details['context'] = self::MEDIA_CONTEXT_INFOBOX_IMAGE;
 			self::$media[] = self::createMediaObject( $details, $title->getText(), $alt );
 			$ref = count( self::$media ) - 1;
 		}
@@ -166,9 +166,7 @@ class ArticleAsJson extends WikiaService {
 			$details = WikiaFileHelper::getMediaDetail( $title, self::$mediaDetailConfig );
 
 			//information for mobile skins how they should display small icons
-			$fixedWidth = isset($handlerParams['width']) ? $handlerParams['width'] < self::ICON_MAX_SIZE : false;
-			$fixedHeight = isset($handlerParams['height']) ? $handlerParams['height'] < self::ICON_MAX_SIZE : false;
-			$details['context'] = ($fixedWidth || $fixedHeight) ? self::ICON : ARTICLE_IMAGE;
+			$details['context'] = self::isFixedImage($handlerParams) ? self::MEDIA_CONTEXT_ICON : self::MEDIA_CONTEXT_ARTICLE_IMAGE;
 
 			self::$media[] = self::createMediaObject( $details, $title->getText(), $frameParams['caption'], $linkHref );
 
@@ -290,5 +288,17 @@ class ArticleAsJson extends WikiaService {
 		) {
 			$parser->replaceLinkHolders( $media['caption'] );
 		}
+	}
+
+	/**
+	 * @param $handlerParams
+	 * @desc Determines if height or width of image was set
+	 * explicitly by user by adding '{width}px' or 'x{height}px' to image wikitext
+	 * @return bool true if the image size was manipulated by user
+	*/
+	private static function isFixedImage( $handlerParams ) {
+		$fixedWidth = isset($handlerParams['width']) ? $handlerParams['width'] < self::ICON_MAX_SIZE : false;
+		$fixedHeight = isset($handlerParams['height']) ? $handlerParams['height'] < self::ICON_MAX_SIZE : false;
+		return $fixedWidth || $fixedHeight;
 	}
 }
