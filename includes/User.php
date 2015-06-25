@@ -2453,6 +2453,16 @@ class User {
 	}
 
 	/**
+	 * Get the default global preference.
+	 *
+	 * @param string $preference
+	 * @return string
+	 */
+	public function getDefaultGlobalPreference($preference) {
+		return self::getDefaultOption($preference);
+	}
+
+	/**
 	 * Get a user attribute local to this wikia.
 	 *
 	 * @param string $attribute the attribute name
