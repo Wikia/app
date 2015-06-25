@@ -307,7 +307,7 @@ $(function () {
 						if (data.error) {
 							var err = data.error,
 								i = err.length,
-								items = $form.find('.item-input');
+								items = $form.find('.item-input, .section-input');
 							while (i--) {
 								//I cannot use value CSS selector as I want to use current value
 								var errTitle = err[i].title;
