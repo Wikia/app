@@ -85,7 +85,7 @@ echo "Exclude users which has disabled Wysiwyg in their preferences\n";
 $usersNew = array();
 foreach($users as $idx => $user) {
 	$oUser = User::newFromId($user);
-	if(!$oUser->getOption('disablewysiwyg')) {
+	if(!$oUser->getGlobalPreference('disablewysiwyg')) {
 		$usersNew[] = $user;
 	}
 
