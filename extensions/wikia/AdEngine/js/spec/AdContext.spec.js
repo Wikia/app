@@ -268,4 +268,18 @@ describe('AdContext', function () {
 			expect(adContext.forcedProvider).toEqual(queryParams[k]);
 		});
 	});
+
+	it('enables krux when country in instantGlobals.wgAdDriverKruxCountries', function () {
+		var adContext;
+
+		adContext = modules['ext.wikia.adEngine.adContext']({}, {}, geoMock, {
+			wgAdDriverKruxCountries: ['XX', 'ZZ']
+		});
+		expect(adContext.getContext().targeting.enableKruxTargeting).toBeTruthy();
+
+		adContext = modules['ext.wikia.adEngine.adContext']({},  {}, geoMock, {
+			wgAdDriverKruxCountries: ['YY']
+		});
+		expect(adContext.getContext().targeting.enableKruxTargeting).toBeFalsy();
+	});
 });
