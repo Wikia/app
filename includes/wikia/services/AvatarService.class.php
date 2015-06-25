@@ -125,7 +125,7 @@ class AvatarService extends Service {
 
 			$masthead = Masthead::newFromUser( $user );
 			// use per-user cachebuster when custom avatar is used
-			$cb = !$masthead->isDefault() ? intval( $user->getOption( 'avatar_rev' ) ) : 0;
+			$cb = !$masthead->isDefault() ? intval( $user->getGlobalAttribute( 'avatar_rev' ) ) : 0;
 
 			if ( $wgEnableVignette ) {
 				$avatarUrl = self::getVignetteUrl( $masthead, $avatarSize, $cb );
@@ -230,7 +230,7 @@ class AvatarService extends Service {
 		global $wgStylePath;
 
 		if ( class_exists( 'Masthead' ) ) {
-			$avatarUrl = Masthead::newFromUserName( $userName )->mUser->getOption( AVATAR_USER_OPTION_NAME );
+			$avatarUrl = Masthead::newFromUserName( $userName )->mUser->getGlobalAttribute( AVATAR_USER_OPTION_NAME );
 			$images = getMessageForContentAsArray( 'blog-avatar-defaults' );
 			$firstDefaultImage = $images[ 0 ];
 			if ( empty( $avatarUrl ) || substr( $avatarUrl, -strlen( $firstDefaultImage ) ) === $firstDefaultImage ) {
@@ -257,7 +257,7 @@ class AvatarService extends Service {
 	 * @return \Wikia\Vignette\UrlGenerator
 	 */
 	public static function getVignetteUrl( Masthead $masthead, $width, $timestamp ) {
-		$relativePath = $masthead->mUser->getOption( AVATAR_USER_OPTION_NAME );
+		$relativePath = $masthead->mUser->getGlobalAttribute( AVATAR_USER_OPTION_NAME );
 
 		if ( $relativePath ) {
 			if ( strpos( $relativePath, '/' ) !== false ) { // custom avatar
