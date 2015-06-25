@@ -28,15 +28,19 @@ define('ext.wikia.adEngine.adEngine', [
 
 	function cleanProviderContainers(slotName) {
 		var slotContainer = doc.getElementById(slotName),
-			containers;
+			containers,
+			i;
 
 		if (!slotContainer) {
 			return;
 		}
 
 		containers = slotContainer.childNodes;
-		for (var i = 0; i < containers.length; i++) {
-			containers[i].innerHTML = '';
+
+		for (i = containers.length - 1; i >= 0; i -= 1) {
+			if (containers[i].tagName !== 'SCRIPT') { // keep the adslots2.push script
+				slotContainer.removeChild(containers[i]);
+			}
 		}
 	}
 

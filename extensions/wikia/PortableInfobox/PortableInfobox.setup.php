@@ -48,7 +48,7 @@ foreach ( $wgInfoboxParserNodes as $parserNode ) {
 $wgAutoloadClasses[ 'Wikia\PortableInfobox\Helpers\ImageFilenameSanitizer' ] = $dir . 'services/Helpers/ImageFilenameSanitizer.php';
 $wgAutoloadClasses[ 'Wikia\PortableInfobox\Helpers\SimpleXmlUtil' ] = $dir . 'services/Helpers/SimpleXmlUtil.php';
 $wgAutoloadClasses[ 'Wikia\PortableInfobox\Helpers\InfoboParamsValidator' ] = $dir . 'services/Helpers/InfoboParamsValidator.php';
-
+$wgAutoloadClasses[ 'Wikia\PortableInfobox\Helpers\PortableInfoboxDataBag' ] = $dir . 'services/Helpers/PortableInfoboxDataBag.php';
 
 // controller classes
 $wgAutoloadClasses[ 'PortableInfoboxParserTagController' ] = $dir . 'controllers/PortableInfoboxParserTagController.class.php';
@@ -57,7 +57,8 @@ $wgAutoloadClasses[ 'ApiQueryPortableInfobox' ] = $dir . 'controllers/ApiQueryPo
 $wgAutoloadClasses[ 'PortableInfoboxHooks' ] = $dir . 'PortableInfoboxHooks.class.php';
 
 // hooks
-$wgHooks[ 'ParserFirstCallInit' ][] = 'PortableInfoboxParserTagController::parserTagInit';
+$wgHooks['ParserFirstCallInit'][] = 'PortableInfoboxParserTagController::parserTagInit';
+$wgHooks['ParserTagHooksBeforeInvoke'][] = 'PortableInfoboxHooks::onParserTagHooksBeforeInvoke';
 $wgHooks['BeforePageDisplay'][] = 'PortableInfoboxHooks::onBeforePageDisplay';
 $wgHooks['ParserAfterTidy'][] = 'PortableInfoboxParserTagController::replaceInfoboxMarkers';
 $wgHooks['ImageServing::buildAndGetIndex'][] = 'PortableInfoboxHooks::onImageServingCollectImages';
