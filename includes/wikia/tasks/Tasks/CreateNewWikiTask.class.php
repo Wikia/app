@@ -120,7 +120,7 @@ class CreateNewWikiTask extends BaseTask {
 	 * move main page to SEO-friendly name
 	 */
 	private function moveMainPage() {
-		global $wgSitename, $parserMemc, $wgContLanguageCode;
+		global $wgSitename, $parserMemc, $wgContLanguageCode, $wgUser;
 
 		$source = wfMsgForContent( 'Mainpage' );
 		$target = $wgSitename;
@@ -146,6 +146,10 @@ class CreateNewWikiTask extends BaseTask {
 					'target' => $targetTitle->getPrefixedText(),
 				];
 				if ( $sourceTitle->getPrefixedText() !== $targetTitle->getPrefixedText() ) {
+					$saveUser = $wgUser;
+					$wgUser = Wikia::staffForLang( $wgContLanguageCode );
+					$wgUser = ( $wgUser instanceof User ) ? $wgUser : User::newFromName( CreateWiki::DEFAULT_STAFF );
+
 					$err = $sourceTitle->moveTo( $targetTitle, false, "SEO" );
 					if ( $err !== true ) {
 						$this->error('main page move failed', $moveContext);
@@ -177,6 +181,7 @@ class CreateNewWikiTask extends BaseTask {
 							}
 						}
 					}
+					$wgUser = $saveUser;
 				} else {
 					$this->info( 'talk page not moved. source, destination are the same', $moveContext );
 				}
