@@ -4,6 +4,8 @@ class TemplateConverter {
 
 	const TEMPLATE_VARIABLE_REGEX = '/{{{([^\|}]*?)\|?.*}}}/sU';
 
+	var $title; // Title object of the template we're converting
+
 	/**
 	 * Names of variables that should be converted to a <title> tag
 	 * @var array
@@ -23,6 +25,10 @@ class TemplateConverter {
 		'photo',
 		'mainimage',
 	];
+
+	public function __construct( Title $templateTitle ) {
+		$this->title = $templateTitle;
+	}
 
 	/**
 	 * Performs a conversion to a template with a portable infobox.
@@ -46,6 +52,8 @@ class TemplateConverter {
 		}
 
 		$draft .= "</infobox>\n";
+
+		$draft .= $this->generatePreviewSection( $variables );
 
 		return $draft;
 	}
@@ -101,5 +109,31 @@ class TemplateConverter {
 			$label = $source;
 		}
 		return "\t<data source=\"{$source}\"><label>{$label}</label></data>\n";
+	}
+
+	public function generatePreviewSection( $variables ) {
+		$return = "== Usage & preview ==\n";
+		$return .= "<noinclude>\n";
+
+		$preview = "{{" . $this->title->getText() . "\n";
+		$docs = $preview;
+
+		foreach ( $variables as $var ) {
+			$preview .= "|{$var}=This is a test\n";
+			$docs .= "|{$var}=\n";
+		}
+
+		$preview .= "}}\n";
+		$docs .= "}}\n";
+
+		$return = "<noinclude>\n== Usage & preview ==\n";
+
+		$return .= "Type in this:\n<pre>\n$docs</pre>\nto see this:\n$preview\n";
+
+		$return .= "[{{fullurl:PAGENAME}}?action=purge Click here to refresh the preview above]\n";
+
+		$return .= "</noinclude>\n";
+
+		return $return;
 	}
 } 

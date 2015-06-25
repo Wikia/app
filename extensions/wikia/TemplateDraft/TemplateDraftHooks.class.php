@@ -43,6 +43,7 @@ class TemplateDraftHooks {
 				 */
 				$controller = new TemplateDraftController();
 				$text = $controller->createDraftContent(
+					$title,
 					$parentContent,
 					[ $controller::TEMPLATE_INFOBOX ]
 				);

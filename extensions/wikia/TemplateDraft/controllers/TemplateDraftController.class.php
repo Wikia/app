@@ -24,11 +24,11 @@ class TemplateDraftController extends WikiaController {
 	 * @param $flags Array
 	 * @return string
 	 */
-	public function createDraftContent( $content, Array $flags ) {
+	public function createDraftContent( Title $title, $content, Array $flags ) {
 		$flagsSum = array_sum( $flags );
 
 		if ( self::TEMPLATE_INFOBOX & $flagsSum ) {
-			$templateConverter = new TemplateConverter();
+			$templateConverter = new TemplateConverter( $title );
 			$content = $templateConverter->convertAsInfobox( $content );
 		}
 
