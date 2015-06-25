@@ -1308,7 +1308,7 @@ class Wikia {
 		#if this opt is set, fake their conf status to OFF, and stop here.
 		$user = User::newFromName( $to->name );
 
-		if( $user instanceof User && $user->getBoolOption('unsubscribed') ) {
+		if( $user instanceof User && $user->getGlobalPreference('unsubscribed') ) {
 			return false;
 		}
 
