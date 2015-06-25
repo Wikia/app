@@ -35,7 +35,7 @@ class UserChangesHistory {
 	 */
 	static public function LoginHistoryHook( $from, $user, $type = false ) {
 		global $wgCityId; #--- private wikia identifier, you can use wgDBname
-		global $wgEnableScribeReport, $wgStatsDB, $wgSpecialsDB;
+		global $wgEnableScribeReport, $wgSpecialsDB;
 
 		if( wfReadOnly() ) { return true; }
 
@@ -75,21 +75,16 @@ class UserChangesHistory {
 							] );
 						}
 					} else {
-						# use database as a fallback when Scribe is disabled
-						$dbw_stats = wfGetDB( DB_MASTER, array(), $wgStatsDB ) ;
+						// user_login_history_summary is used in joins with specials.events_local_users table
+						// @see PLATFORM-1309
+						$dbw_specials = wfGetDB( DB_MASTER, array(), $wgSpecialsDB ) ;
 
-						$dbw_stats->insert(
+						$dbw_specials->insert(
 							"user_login_history",
 							$params,
 							__METHOD__,
 							array('IGNORE')
 						);
-
-						$dbw_stats->commit(__METHOD__);
-
-						// user_login_history_summary is used in joins with specials.events_local_users table
-						// @see PLATFORM-1309
-						$dbw_specials = wfGetDB( DB_MASTER, array(), $wgSpecialsDB ) ;
 
 						$dbw_specials->replace(
 							"user_login_history_summary",
@@ -124,7 +119,7 @@ class UserChangesHistory {
 	 * @return bool true		process other hooks
 	 */
 	static public function SavePreferencesHook($formData, $error) {
-		global $wgStatsDB, $wgEnableScribeReport, $wgUser, $wgStatsDBEnabled;
+		global $$wgSpecialsDB, $wgEnableScribeReport, $wgUser;
 
 		if( wfReadOnly() ) { return true; }
 
@@ -159,7 +154,6 @@ class UserChangesHistory {
 
 			if ( !empty($wgEnableScribeReport) ) {
 				# use scribe
-				$key = "trigger_savepreferences";
 				try {
 					$message = array(
 						'method' => 'savepreferences',
@@ -172,22 +166,19 @@ class UserChangesHistory {
 					Wikia::log( __METHOD__, 'scribeClient exception', $e->getMessage() );
 				}
 			} else {
-				if ( !empty( $wgStatsDBEnabled ) ) {
-					$dbw = wfGetDB( DB_MASTER, array(), $wgStatsDB ) ;
+				$dbw = wfGetDB( DB_MASTER, array(), $wgSpecialsDB ) ;
 
-					/**
-					 * so far encodeOptions is public by default but could be
-					 * private in future
-					 */
-					$dbw->insert(
-						"user_history",
-						$params,
-						__METHOD__
-					);
-					if ( $dbw->getFlag( DBO_TRX ) ) {
-						$dbw->commit(__METHOD__);
-					}
-				}
+				/**
+				 * so far encodeOptions is public by default but could be
+				 * private in future
+				 */
+				$dbw->insert(
+					"user_history",
+					$params,
+					__METHOD__
+				);
+
+				$dbw->commit(__METHOD__);
 			}
 		}
 
