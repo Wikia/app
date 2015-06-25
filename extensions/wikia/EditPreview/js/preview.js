@@ -432,11 +432,10 @@ define('wikia.preview', [
 			dataSize = '';
 		}
 
-		if (type === 'max' && !$article.hasClass('large-typography')) {
-			$article.addClass('large-typography');
-		} else if (type !== 'max') {
-			$article.removeClass('large-typography');
-		}
+		$article.toggleClass(
+			'large-typography',
+			type === 'max' && !$article.hasClass('large-typography')
+		);
 
 		$article.attr('data-size', dataSize);
 	}
