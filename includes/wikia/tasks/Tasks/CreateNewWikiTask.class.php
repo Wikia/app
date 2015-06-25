@@ -131,9 +131,9 @@ class CreateNewWikiTask extends BaseTask {
 
 		$sourceTitle = \Title::newFromText( $source );
 		if ( !$sourceTitle ) {
-			$sourceTitle = \Title::newFromText( "Main_Page" );
+			$sourceTitle = \Title::newFromText( 'Main_Page' );
 			if ( !$sourceTitle ) {
-				$this->error("invalid page title", ["title" => $source]);
+				$this->error( 'invalid page title', [ 'title' => $source ] );
 				return;
 			}
 		}
@@ -155,8 +155,8 @@ class CreateNewWikiTask extends BaseTask {
 						'wgUser' => $wikiaUser
 					] );
 
-					$err = $wrapper->wrap( function() use( $sourceTitle, $targetTitle ) {
-						return $sourceTitle->moveTo( $targetTitle, false, "SEO" );
+					$err = $wrapper->wrap( function() use ( $sourceTitle, $targetTitle ) {
+						return $sourceTitle->moveTo( $targetTitle, false, 'SEO' );
 					});
 
 					if ( $err !== true ) {
@@ -166,11 +166,11 @@ class CreateNewWikiTask extends BaseTask {
 						/**
 						 * fill Mediawiki:Mainpage with new title
 						 */
-						$mwMainPageTitle = \Title::newFromText( "Mainpage", NS_MEDIAWIKI );
+						$mwMainPageTitle = \Title::newFromText( 'Mainpage', NS_MEDIAWIKI );
 						$mwMainPageArticle = new \Article( $mwMainPageTitle, 0 );
 						$mwMainPageArticle->doEdit(
 							$targetTitle->getText(),
-							"SEO",
+							'SEO',
 							EDIT_SUPPRESS_RC | EDIT_MINOR | EDIT_FORCE_BOT,
 							false,
 							$wikiaUser
@@ -187,7 +187,7 @@ class CreateNewWikiTask extends BaseTask {
 								'source' => $sourceTalkTitle->getPrefixedText(),
 								'target' => $targetTalkTitle->getPrefixedText(),
 							];
-							$err = $wrapper->wrap( function() use( $sourceTalkTitle, $targetTitle ) {
+							$err = $wrapper->wrap( function() use ( $sourceTalkTitle, $targetTitle ) {
 								return $sourceTalkTitle->moveTo( $targetTitle->getTalkPage(), false, "SEO" );
 							} );
 							if ( $err === true ) {
