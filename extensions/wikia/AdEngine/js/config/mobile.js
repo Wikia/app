@@ -30,7 +30,7 @@ define('ext.wikia.adEngine.config.mobile', [
 			return [];
 		}
 
-		if (context.forceProviders.openX) {
+		if (context.forcedProvider === 'openx') {
 			return [openX];
 		}
 
@@ -46,12 +46,10 @@ define('ext.wikia.adEngine.config.mobile', [
 			return [paidAssetDrop];
 		}
 
-		if (instantGlobals && instantGlobals.wgSitewideDisableGpt) {
-			return [];
+		if (!instantGlobals || !instantGlobals.wgSitewideDisableGpt) {
+			providerList.push(directGptMobile);
+			providerList.push(remnantGptMobile);
 		}
-
-		providerList.push(directGptMobile);
-		providerList.push(remnantGptMobile);
 
 		if (context.providers.openX && openX.canHandleSlot(slotName)) {
 			providerList.push(openX);

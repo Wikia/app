@@ -16,9 +16,9 @@ describe('ext.wikia.adEngine.provider.factory.wikiaGpt', function () {
 				}
 			},
 			gptHelper: {
-				pushAd: function (slotName, slotPath, slotTargeting, doSuccess, doHop) {
-					doSuccess();
-					doHop();
+				pushAd: function (slotName, slotElement, slotPath, slotTargeting, extra) {
+					extra.success();
+					extra.error();
 				}
 			},
 			lookups: {
@@ -69,7 +69,7 @@ describe('ext.wikia.adEngine.provider.factory.wikiaGpt', function () {
 
 		getProvider().fillInSlot('TOP_LEADERBOARD');
 
-		expect(mocks.gptHelper.pushAd.calls.mostRecent().args[1]).toEqual(
+		expect(mocks.gptHelper.pushAd.calls.mostRecent().args[2]).toEqual(
 			'/5441/wka.ent/_muppet//home/testSource/TOP_LEADERBOARD'
 		);
 	});
@@ -79,7 +79,7 @@ describe('ext.wikia.adEngine.provider.factory.wikiaGpt', function () {
 
 		getProvider({
 			beforeSuccess: mocks.beforeSuccess
-		}).fillInSlot('TOP_LEADERBOARD', noop, noop);
+		}).fillInSlot('TOP_LEADERBOARD', {}, noop, noop);
 
 		expect(mocks.beforeSuccess).toHaveBeenCalled();
 	});
@@ -89,7 +89,7 @@ describe('ext.wikia.adEngine.provider.factory.wikiaGpt', function () {
 
 		getProvider({
 			beforeHop: mocks.beforeHop
-		}).fillInSlot('TOP_LEADERBOARD', noop, noop);
+		}).fillInSlot('TOP_LEADERBOARD', {}, noop, noop);
 
 		expect(mocks.beforeHop).toHaveBeenCalled();
 	});

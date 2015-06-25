@@ -177,6 +177,8 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 
 		if ( empty( $counter[$admin->getId()] ) ) {
 			$allCounter = unserialize( $admin->getOption( 'founderemails-counter' ) );
+			$allCounter = is_array( $allCounter ) ? $allCounter : [];
+
 			if ( $this->userCounterNeedsReset( $allCounter ) ) {
 				$allCounter[F::app()->wg->CityId] = [
 					'date'  => date( 'Y-m-d' ),
@@ -197,7 +199,7 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 
 		$today = date( 'Y-m-d' );
 		$wikiCounter = $counter[F::app()->wg->CityId];
-		return empty( $wikiCounter['date'] ) || $wikiCounter['date'] !== $today;
+		return $wikiCounter['date'] !== $today;
 	}
 
 	private function updateUserNotificationCount( User $admin ) {
@@ -218,6 +220,7 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 			'pageNs' => $eventData['titleNs'],
 			'previousRevId' => $eventData['previousRevId'],
 			'currentRevId' => $eventData['currentRevId'],
+			// TODO: Remove the next two lines when SOC-530 has been merged (these will then be default)
 			'fromAddress' => \F::app()->wg->PasswordSender,
 			'fromName' => \F::app()->wg->PasswordSenderName,
 		];

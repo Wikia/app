@@ -17,9 +17,15 @@ abstract class EmailController extends \WikiaController {
 	 * and intended to be overridden by child classes. */
 	const LAYOUT_CSS = 'avatarLayout.css';
 
+	/** Used by emails that don't want to apply any additional styles */
+	const NO_ADDITIONAL_STYLES = '';
+
 	/** Regular expression pattern used to find all email controller classes inside
 	 * of $wgAutoLoadClasses */
 	const EMAIL_CONTROLLER_REGEX = "/^Email\\\\Controller\\\\(.+)Controller$/";
+
+	// Used when needing to specify an anonymous user from the external API
+	const ANONYMOUS_USER_ID = -1;
 
 	/** @var \User The user associated with the current request */
 	protected $currentUser;
@@ -77,12 +83,12 @@ abstract class EmailController extends \WikiaController {
 				$this->getVal( 'replyToName', $noReplyName )
 			);
 
-			$fromAddress = $this->getVal( 'fromAddress', '' );
+			$fromAddress = $this->getVal( 'fromAddress', $this->wg->PasswordSender );
 			$this->assertValidFromAddress( $fromAddress );
 
 			$this->fromAddress = new \MailAddress(
 				$fromAddress,
-				$this->getVal( 'fromName', '' )
+				$this->getVal( 'fromName', $this->wg->PasswordSenderName )
 			);
 
 			$this->initEmail();
@@ -155,6 +161,16 @@ abstract class EmailController extends \WikiaController {
 			];
 
 			if ( !$this->test ) {
+				WikiaLogger::instance()->info( 'Submitting email via UserMailer', [
+					'issue' => 'SOC-910',
+					'method' => __METHOD__,
+					'controller' => get_class( $this ),
+					'toAddress' => $toAddress->toString(),
+					'fromAddress' => $fromAddress->toString(),
+					'subject' => $subject,
+					'category' => static::TRACKING_CATEGORY,
+				] );
+
 				$status = \UserMailer::send(
 					$toAddress,
 					$fromAddress,
@@ -162,11 +178,19 @@ abstract class EmailController extends \WikiaController {
 					$body,
 					$replyToAddress,
 					$contentType = null,
-					static::TRACKING_CATEGORY
+					$this->getSendGridCategory()
 				);
 				$this->assertGoodStatus( $status );
 			}
 		} catch ( \Exception $e ) {
+			WikiaLogger::instance()->info( 'Failed to submit email via UserMailer', [
+				'issue' => 'SOC-910',
+				'method' => __METHOD__,
+				'controller' => get_class( $this ),
+				'category' => static::TRACKING_CATEGORY,
+				'errorMessage' => $e->getMessage(),
+			] );
+
 			$this->setErrorResponse( $e );
 			return;
 		}
@@ -298,6 +322,16 @@ abstract class EmailController extends \WikiaController {
 		// Get rid of leading spacing/indenting
 		$bodyText = preg_replace( '/^[\t ]+/m', '', $bodyText );
 		return $bodyText;
+	}
+
+	/**
+	 * Returns the category string we'll send to sendgrid with this email for
+	 * tracking purposes.
+	 *
+	 * @return string
+	 */
+	public function getSendGridCategory() {
+		return static::TRACKING_CATEGORY;
 	}
 
 	/**
@@ -452,7 +486,7 @@ abstract class EmailController extends \WikiaController {
 		}
 
 		// Allow an anonymous user to be specified
-		if ( $userName == -1 ) {
+		if ( $userName == self::ANONYMOUS_USER_ID ) {
 			return \User::newFromId( 0 );
 		}
 
@@ -590,16 +624,6 @@ abstract class EmailController extends \WikiaController {
 					'type' => 'hidden',
 					'name' => 'emailController',
 					'value' => get_called_class()
-				],
-				[
-					'type' => 'hidden',
-					'name' => 'fromAddress',
-					'value' => \F::app()->wg->PasswordSender
-				],
-				[
-					'type' => 'hidden',
-					'name' => 'fromName',
-					'value' => \F::app()->wg->PasswordSenderName
 				],
 				[
 					'type' => 'text',

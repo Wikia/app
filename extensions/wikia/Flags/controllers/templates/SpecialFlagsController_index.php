@@ -13,6 +13,7 @@
 		<tr class="flags-special-list-headers">
 			<th class="flags-special-list-header-name"><?= wfMessage( 'flags-special-list-header-name' )->escaped() ?></th>
 			<th class="flags-special-list-header-template"><?= wfMessage( 'flags-special-list-header-template' )->escaped() ?></th>
+			<th class="flags-special-list-header-parameters"><?= wfMessage( 'flags-special-list-header-parameters' )->escaped() ?></th>
 			<th class="flags-special-list-header-group"><?= wfMessage( 'flags-special-list-header-group' )->escaped() ?></th>
 			<th class="flags-special-list-header-target"><?= wfMessage( 'flags-special-list-header-target' )->escaped() ?></th>
 		</tr>
@@ -24,6 +25,18 @@
 				<a class="flags-special-list-item-template-link" href="<?= Sanitizer::cleanUrl( $title->getFullURL() ) ?>" target="_blank">
 					<?= $flag['flag_view'] ?>
 				</a>
+			</td>
+			<td class="flags-special-list-item-params">
+				<?php
+					$paramsNames = json_decode( $flag['flag_params_names'] );
+					if ( is_array( $paramsNames ) ) :
+				?>
+					<?php foreach ( $paramsNames as $name => $description ): ?>
+						<?= $name ?> <small><em><?= $description ?></em></small><br>
+					<?php endforeach; ?>
+				<?php
+					endif;
+				?>
 			</td>
 			<td class="flags-special-list-item-group"><?= $flagGroups[$flag['flag_group']] ?></td>
 			<td class="flags-special-list-item-targeting"><?= ucfirst( $flagTargeting[$flag['flag_targeting']] ) ?></td>

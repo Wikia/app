@@ -21,9 +21,9 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 	}
 
 	public function init() {
-		$skin = $this->wg->User->getSkin();
+		$skin = RequestContext::getMain()->getSkin();
 		$this->isMonobookOrUncyclo = ( $skin instanceof SkinMonoBook || $skin instanceof SkinUncyclopedia );
-		$this->isEn = ( $this->wg->Lang->getCode() == 'en' );
+		$this->isEn = ( RequestContext::getMain()->getLanguage()->getCode() == 'en' );
 		$this->userLoginHelper = ( new UserLoginHelper );
 	}
 
@@ -106,7 +106,7 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 		$this->signupToken = UserLoginHelper::getSignupToken();
 		$this->uselang = $this->request->getVal( 'uselang', 'en' );
 
-		//fb#38260 -- removed uselang
+		// fb#38260 -- removed uselang
 		$this->avatars = $this->userLoginHelper->getRandomAvatars();
 
 		// template params
@@ -129,6 +129,18 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 		} else {
 			$this->track( 'signup-start' );
 		}
+
+		/**
+		 * OPS-6556 Special:UserSignup daily vists
+		 * Contact: ruggero@wikia-inc.com or michal@wikia-inc.com
+		 */
+		\Wikia\Logger\WikiaLogger::instance()->info(
+			'OPS-6556',
+			[
+				'i18n' => RequestContext::getMain()->getLanguage()->getCode(),
+				'skin' => RequestContext::getMain()->getSkin()->getSkinName()
+			]
+		);
 	}
 
 	public function handleSignupFormSubmit() {

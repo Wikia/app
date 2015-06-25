@@ -16,8 +16,8 @@ define('ext.wikia.adEngine.slot.inContent', [
 	 *
 	 * @typedef {Object} Section
 	 * @property {boolean} intro              whether this is an intro section (the one BEFORE the first heading)
-	 * @porperty {String} name                name of the section
-	 * @porperty {String} nextName            name of the next section
+	 * @property {String} name                name of the section
+	 * @property {String} nextName            name of the next section
 	 * @property {jQuery} [$start]            header preceding the section (empty when section.intro = true)
 	 * @property {jQuery} $end                header following the section
 	 * @property {jQuery} $firstElement       first element in the section

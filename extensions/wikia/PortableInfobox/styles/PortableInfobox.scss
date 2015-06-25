@@ -5,8 +5,15 @@
 $infobox-width: 270px; // temporary value used to mach with Khal Drogo Infobox
 $infobox-margin: 15px;
 $infobox-item-margin: 5px;
-$infobox-background: mix($color-page, $color-links, 92%);
-$infobox-section-header-background: transparentize($color-links, .9);
+$infobox-background: mix($color-page, $color-links, 90%);
+@if ($is-dark-wiki) {
+	$infobox-background: mix($color-page, $color-links, 85%);
+}
+
+$infobox-section-header-background: mix($color-page, $color-links, 75%);
+$infobox-debug-line-number-width: 50px;
+$infobox-debug-error-msg-color: white;
+$infobox-debug-error-msg-bg: black;
 
 .portable-infobox {
 	background-color: $infobox-background;
@@ -51,7 +58,6 @@ $infobox-section-header-background: transparentize($color-links, .9);
 
 	.portable-infobox-header-background {
 		background-color: $infobox-section-header-background;
-		color: $color-alternate-text;
 	}
 
 	.portable-infobox-header-font {
@@ -74,8 +80,14 @@ $infobox-section-header-background: transparentize($color-links, .9);
 		line-height: 28px;
 	}
 
-	.item-type-key-val:not(:last-of-type) {
+	.item-type-key-val:not(:last-of-type),
+	.item-type-group,
+	.item-type-comparison {
 		border-bottom: 1px solid $infobox-section-header-background;
+	}
+
+	> .portable-infobox-item:last-child {
+		border-bottom: 0;
 	}
 
 	.portable-infobox-item-label {
@@ -83,6 +95,8 @@ $infobox-section-header-background: transparentize($color-links, .9);
 	}
 
 	.portable-infobox-item-value {
+		font-size: 14px;
+		line-height: 20px;
 		padding-left: $infobox-item-margin * 2;
 
 		// experiment with removing margins on all children of data value
@@ -108,6 +122,7 @@ $infobox-section-header-background: transparentize($color-links, .9);
 	.portable-infobox-comparison-set-header {
 		box-sizing: border-box;
 		display: block;
+		padding: 0;
 		text-align: left;
 		width: 100%;
 	}
@@ -128,7 +143,6 @@ $infobox-section-header-background: transparentize($color-links, .9);
 	}
 
 	.group-layout-horizontal {
-
 		&.item-type-group {
 			display: table;
 			table-layout: fixed;
@@ -151,7 +165,6 @@ $infobox-section-header-background: transparentize($color-links, .9);
 		}
 
 		.portable-infobox-item-label {
-			font-size: inherit;
 			overflow: hidden;
 			vertical-align: top;
 			white-space: nowrap;
@@ -163,9 +176,78 @@ $infobox-section-header-background: transparentize($color-links, .9);
 	}
 }
 
+.WikiaArticle {
+	.portable-infobox-error-info {
+		background-color: $color-error;
+		color: $infobox-debug-error-msg-color;
+		font-size: 18px;
+		line-height: 28px;
+		margin: 0;
+		padding: $infobox-margin * 2 $infobox-debug-line-number-width;
+	}
+
+	.portable-infobox-debug {
+		background-color: $color-unified-module-background;
+		font-family: monospace;
+		list-style: none;
+		margin: 0;
+		width: 100%;
+
+		li {
+			margin: 0;
+		}
+
+		.error {
+			font-size: inherit;
+		}
+	}
+}
+
+.portable-infobox-debug-line {
+	@include flexbox();
+}
+
+.portable-infobox-debug-line-number,
+.portable-infobox-debug-line-code {
+	box-sizing: border-box;
+}
+
+.portable-infobox-debug-line-number {
+	@include flex-basis($infobox-debug-line-number-width);
+	@include flex-shrink(0);
+	padding-left: $infobox-item-margin * 2;
+}
+
+.portable-infobox-debug-error-massage {
+	background-color: $infobox-debug-error-msg-bg;
+	color: $infobox-debug-error-msg-color;
+	font-family: Helvetica, Arial, sans-serif;
+	margin: 20px 0 10px 25px;
+	padding: $infobox-item-margin * 2 $infobox-item-margin * 3;
+	position: relative;
+	width: 400px;
+
+	&:before {
+		border-bottom: $infobox-margin solid $infobox-debug-error-msg-bg;
+		border-left: $infobox-margin solid transparent;
+		border-right: $infobox-margin solid transparent;
+		content: '';
+		display: block;
+		height: 0;
+		left: 25px;
+		position: absolute;
+		top: -$infobox-margin;
+		width: 0;
+	}
+
+	.portable-infobox-debug-error-massage-item {
+		margin: $infobox-item-margin 0;
+	}
+}
+
 .portable-infobox-layout-tabular {
 	> .item-type-key-val,
-	.item-type-group .item-type-key-val {
+	.item-type-group:not(.group-layout-horizontal) .item-type-key-val {
 		@include flexbox;
 		@include flex-direction(row);
 		box-sizing: border-box;
@@ -174,20 +256,27 @@ $infobox-section-header-background: transparentize($color-links, .9);
 
 		.portable-infobox-item-label {
 			@include flex-basis($infobox-width / 3);
-			line-height: 18px;
-			margin-top: inherit;
+			margin-bottom: inherit;
 		}
 
 		.portable-infobox-item-value {
-			@include flex-basis($infobox-width * 2 / 3);
-			font-size: 14px;
-			line-height: 20px;
+			padding-left: 0;
 		}
 
+		.portable-infobox-item-value:not(:first-child) {
+			@include flex-basis($infobox-width * 2 / 3);
+			padding-left: 10px;
+		}
+
+		li {
+			line-height: 19px;
+			margin: 0;
+		}
 	}
 
-	.portable-infobox-item-margins {
-		padding: $infobox-item-margin * 3 $infobox-item-margin * 2;
+	.portable-infobox-item-value {
+		font-size: 12px;
+		line-height: 18px;
 	}
 }
 

@@ -8,7 +8,7 @@
  */
 class WikiaConfirmEmailSpecialController extends WikiaSpecialPageController {
 	public function __construct() {
-		parent::__construct('WikiaConfirmEmail', '', false);
+		parent::__construct( 'WikiaConfirmEmail', '', false );
 	}
 
 	public function init() {
@@ -25,7 +25,7 @@ class WikiaConfirmEmailSpecialController extends WikiaSpecialPageController {
 	 * @responseParam string errParam - error param
 	 */
 	public function index() {
-		$this->response->addAsset('extensions/wikia/UserLogin/css/UserLogin.scss');
+		$this->response->addAsset( 'extensions/wikia/UserLogin/css/UserLogin.scss' );
 
 		// hide things in the skin
 		$this->wg->SuppressWikiHeader = false;
@@ -36,7 +36,7 @@ class WikiaConfirmEmailSpecialController extends WikiaSpecialPageController {
 
 		$this->getOutput()->disallowUserJs(); // just in case...
 
-		$this->wg->Out->setPageTitle( wfMessage('wikiaconfirmemail-heading')->plain() );
+		$this->wg->Out->setPageTitle( wfMessage( 'wikiaconfirmemail-heading' )->plain() );
 
 		$par = $this->request->getVal( 'par', '' );
 		$this->code = $this->request->getVal( 'code', $par );
@@ -110,7 +110,7 @@ class WikiaConfirmEmailSpecialController extends WikiaSpecialPageController {
 			if ( $user->checkPassword( $this->password ) ) {
 				$this->wg->User = $user;
 
-				if ( $user->getOption( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME ) != null ){// Signup confirm
+				if ( $user->getOption( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME ) != null ) {// Signup confirm
 					// Log user in manually
 					$this->wg->User->setCookies();
 					LoginForm::clearLoginToken();

@@ -20,6 +20,21 @@ class FlagView {
 	];
 
 	/**
+	 * Parses the wrapped wikitext and returns an HTML block of code with rendered flags.
+	 * @param array $templateCalls
+	 * @param $pageId
+	 * @return ParserOutput
+	 */
+	public function renderFlags( Array $templateCalls, $pageId ) {
+		global $wgUser;
+
+		$wikitext = $this->wrapAllFlags( $templateCalls );
+		$title = \Title::newFromID( $pageId );
+
+		return \ParserPool::parse( $wikitext, $title, \ParserOptions::newFromUser( $wgUser ) );
+	}
+
+	/**
 	 * Creates wikitext calls out of an array of names of templates and an array
 	 * of matching params. The wikitext calls are wrapped in an HTML element that
 	 * enables targeting control.

@@ -65,36 +65,73 @@ class Hooks {
 	}
 
 	/**
-	 * Hooks into the internalParse() process and injects a wikitext
-	 * with notices for the given page.
-	 * @param \Parser $parser
-	 * @param string $text
-	 * @param \StripState $stripState
+	 * Modifies the original ParserOutput object using the one returned from FlagView.
+	 * The modification
+	 * @param \ParserOutput $parserOutput
+	 * @param \Page $article
 	 * @return bool
 	 */
-	public static function onParserBeforeInternalParse( \Parser $parser, &$text, &$stripState ) {
-		global $wgRequest;
+	public static function onBeforeParserCacheSave( \ParserOutput $parserOutput, \Page $article ) {
+		$parserOutput = ( new \FlagsController )
+			->modifyParserOutputWithFlags( $parserOutput, $article->getID() );
 
-		/**
-		 * Don't check for flags if:
-		 * - you've already checked
-		 * - a user is on an edit page
-		 * - the request is from VE
-		 */
-		$helper = new FlagsHelper();
-		if ( !$parser->mFlagsParsed && $helper->shouldInjectFlags() ) {
-			$addText = ( new \FlagsController )->getFlagsForPageWikitext( $parser->getTitle()->getArticleID() );
+		return true;
+	}
 
-			if ( $addText !== null ) {
-				$mwf = \MagicWord::get( 'flags' );
-				if ( $mwf->match( $text ) ) {
-					$text = $mwf->replace( $addText, $text );
-				} else {
-					$text = $addText . $text;
+	/**
+	 * @param \ParserOutput $parserOutput
+	 * @param \Title $title
+	 * @return bool
+	 */
+	public static function onArticlePreviewAfterParse( \ParserOutput $parserOutput, \Title $title ) {
+		$parserOutput = ( new \FlagsController )
+			->modifyParserOutputWithFlags( $parserOutput, $title->getArticleID() );
+
+		return true;
+	}
+
+	public static function onLinksUpdateInsertTemplates( $pageId, Array $templates ) {
+		$app = \F::app();
+
+		if ( $app->wg->HideFlagsExt !== true ) {
+			$flagTypesResponse = $app->sendRequest( 'FlagsApiController',
+				'getFlagTypes',
+				[
+					'wiki_id' => $app->wg->CityId,
+				]
+			)->getData();
+
+			if ( $flagTypesResponse[\FlagsApiController::FLAGS_API_RESPONSE_STATUS] ) {
+				$flagTypesToExtract = $flagTypesToExtractNames = [];
+
+				/**
+				 * We need modified versions of names of templates and flag_view values to
+				 * compare in a case-insensitive and space-underscore-insensitive way.
+				 */
+				$templatesKeys = array_map( 'strtolower', array_keys( $templates ) );
+				foreach ( $flagTypesResponse[\FlagsApiController::FLAGS_API_RESPONSE_DATA] as $flagType ) {
+					$flagViewKey = strtolower( str_replace( ' ', '_', $flagType['flag_view'] ) );
+					if ( in_array( $flagViewKey, $templatesKeys ) ) {
+						$flagTypesToExtract[$flagType['flag_view']] = $flagType;
+					}
+				}
+
+				if ( !empty( $flagTypesToExtract ) ) {
+					$task = new FlagsExtractTemplatesTask();
+					$task->wikiId( $app->wg->CityId );
+					$task->call( 'extractTemplatesFromPage', $pageId, $flagTypesToExtract );
+					$task->prioritize();
+					$task->queue();
+
+					\BannerNotificationsController::addConfirmation(
+						wfMessage( 'flags-notification-templates-extraction' )
+							->params( implode( ', ', array_keys( $flagTypesToExtract ) ) )
+							->parse(),
+						\BannerNotificationsController::CONFIRMATION_WARN,
+						true
+					);
 				}
 			}
-
-			$parser->mFlagsParsed = true;
 		}
 
 		return true;
