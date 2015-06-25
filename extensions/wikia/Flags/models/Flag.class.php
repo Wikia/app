@@ -271,9 +271,10 @@ class Flag extends FlagsBaseModel {
 				$flagsIds[] = $flag['flag_id'];
 			}
 
-			if ( $this->removeFlags( $db, $flagsIds ) ) {
+			if ( $status = $this->removeFlags( $db, $flagsIds ) ) {
 				$db->commit();
 			}
+			return $status;
 		} catch( \Exception $exception ) {
 			if ( $db !== null ) {
 				$db->rollback();

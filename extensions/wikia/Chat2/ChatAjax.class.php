@@ -147,17 +147,6 @@ class ChatAjax {
 		return array("id" => $roomId);
 	}
 
-	static $chatUserIP = null;  // this is set by ChatAjax function
-
-	/**
-	 * webrequest->GetIP hook listener. in case of ajax requests made by nodejs server, we should use real user ip address
-	 * instead of the chat server ip
-	 */
-	static public function onGetIP(&$ip) {
-		if ( self::$chatUserIP ) $ip = self::$chatUserIP;
-		return true;
-	}
-
 	/**
  	 * Ajax endpoint for blocking privata chat with user.
 	 */

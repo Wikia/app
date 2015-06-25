@@ -11,55 +11,70 @@ class PortableInfoboxDataServiceTest extends PHPUnit_Framework_TestCase {
 		$data =
 			[
 				[ // INFOBOX 1
-					[
-						"type" => "data",
-						"data" => [
-							"value" => "AAAA",
-							"label" => "BBBB"
-						]
-					],
-					[
-						"type" => "image",
-						"data" => [
-							"key" => "Test.jpg",
-							"alt" => null,
-							"caption" => null,
-						]
-					],
-					[
-						"type" => "image",
-						"data" => [
-							"key" => "Test2.jpg",
-							"alt" => null,
-							"caption" => null
-						]
-					]
+				  'data' => [
+					  [
+						  "type" => "data",
+						  "data" => [
+							  "value" => "AAAA",
+							  "label" => "BBBB"
+						  ]
+					  ],
+					  [
+						  "type" => "image",
+						  "data" => [
+							  "key" => "Test.jpg",
+							  "alt" => null,
+							  "caption" => null,
+						  ]
+					  ],
+					  [
+						  "type" => "image",
+						  "data" => [
+							  "key" => "Test2.jpg",
+							  "alt" => null,
+							  "caption" => null
+						  ]
+					  ]
+				  ]
 				],
 				[ // INFOBOX 2
-					[
-						"type" => "image",
-						"data" => [
-							"key" => "Test2.jpg",
-							"alt" => null,
-							"caption" => null
-						]
-					]
+				  'data' => [
+					  [
+						  "type" => "image",
+						  "data" => [
+							  "key" => "Test2.jpg",
+							  "alt" => null,
+							  "caption" => null
+						  ]
+					  ]
+				  ]
 				]
 			];
+
 		return $data;
 	}
 
 	public function testImageListRemoveDuplicates() {
-		$dataService = new PortableInfoboxDataService();
-		$images = $dataService->getImageListFromInfoboxesData( $this->getInfoboxData() );
+		$mock = $this->getMockBuilder( 'PortableInfoboxDataService' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'getData' ] )
+			->getMock();
+		$mock->expects( $this->any() )->method( 'getData' )->will( $this->returnValue( $this->getInfoboxData() ) );
+
+		$images = $mock->getImages();
 		$this->assertTrue( count( $images ) === 2 );
 	}
 
 	public function testImageListFetchImages() {
-		$dataService = new PortableInfoboxDataService();
-		$images = $dataService->getImageListFromInfoboxesData( $this->getInfoboxData() );
+		$mock = $this->getMockBuilder( 'PortableInfoboxDataService' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'getData' ] )
+			->getMock();
+		$mock->expects( $this->any() )->method( 'getData' )->will( $this->returnValue( $this->getInfoboxData() ) );
+
+		$images = $mock->getImages();
 		$this->assertTrue( in_array( "Test.jpg", $images ), "Test.jpg should be in images array" );
-		$this->assertTrue( in_array( "Test2.jpg", $images ), "Test2.jpg should be in images array");
+		$this->assertTrue( in_array( "Test2.jpg", $images ), "Test2.jpg should be in images array" );
 	}
 
 }
