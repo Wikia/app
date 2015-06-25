@@ -7,7 +7,14 @@ class ArticleAsJson extends WikiaService {
 		'imageMaxWidth' => false
 	];
 
+	const ICON_MAX_SIZE = 40;
 	const CACHE_VERSION = '0.0.3';
+
+	const ARTICLE_IMAGE = 'article-image';
+	const ARTICLE_VIDEO = 'article-video';
+	const GALLERY_IMAGE = 'gallery-image';
+	const ICON = 'icon';
+	const INFOBOX_IMAGE = 'infobox-image';
 
 	private static function createMarker( $width = 0, $height = 0, $isGallery = false ){
 		$blankImgUrl = F::app()->wg->blankImgUrl;
@@ -21,7 +28,7 @@ class ArticleAsJson extends WikiaService {
 
 	public static function createMediaObject( $details, $imageName, $caption = null, $link = null ) {
 		wfProfileIn( __METHOD__ );
-		
+
 		$context = '';
 		$media = [
 			'type' => $details['mediaType'],
@@ -56,6 +63,7 @@ class ArticleAsJson extends WikiaService {
 		}
 
 		if ( $details['mediaType'] == 'video' ) {
+			$media['context'] = self::ARTICLE_VIDEO;
 			$media['views'] = (int) $details['videoViews'];
 			$media['embed'] = $details['videoEmbedCode'];
 			$media['duration'] = $details['duration'];
@@ -96,6 +104,7 @@ class ArticleAsJson extends WikiaService {
 					Title::newFromText( $image['name'], NS_FILE ),
 					self::$mediaDetailConfig
 				);
+				$details['context'] = self::GALLERY_IMAGE;
 
 				$caption = $image['caption'];
 
@@ -131,7 +140,7 @@ class ArticleAsJson extends WikiaService {
 		if ( $title ) {
 			$details = WikiaFileHelper::getMediaDetail( $title, self::$mediaDetailConfig );
 			//TODO: When there will be more image contexts, move strings to const
-			$details['context'] = 'infobox-big';
+			$details['context'] = self::INFOBOX_IMAGE;
 			self::$media[] = self::createMediaObject( $details, $title->getText(), $alt );
 			$ref = count( self::$media ) - 1;
 		}
@@ -155,6 +164,11 @@ class ArticleAsJson extends WikiaService {
 			}
 
 			$details = WikiaFileHelper::getMediaDetail( $title, self::$mediaDetailConfig );
+
+			//information for mobile skins how they should display small icons
+			$fixedWidth = isset($handlerParams['width']) ? $handlerParams['width'] < self::ICON_MAX_SIZE : false;
+			$fixedHeight = isset($handlerParams['height']) ? $handlerParams['height'] < self::ICON_MAX_SIZE : false;
+			$details['context'] = ($fixedWidth || $fixedHeight) ? self::ICON : ARTICLE_IMAGE;
 
 			self::$media[] = self::createMediaObject( $details, $title->getText(), $frameParams['caption'], $linkHref );
 
