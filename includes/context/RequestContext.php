@@ -321,6 +321,8 @@ class RequestContext implements IContextSource {
 				$obj = Language::factory( $code );
 				$this->lang = $obj;
 			}
+
+			$this->recursion = 0;
 		}
 
 		return $this->lang;
