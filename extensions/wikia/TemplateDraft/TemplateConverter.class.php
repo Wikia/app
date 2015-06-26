@@ -143,7 +143,7 @@ class TemplateConverter {
 	}
 
 	public function generatePreviewSection( $content ) {
-		$variables = $this->findTemplateVariables( $content );
+		$variables = $this->getTemplateVariables( $content );
 
 		$preview = "{{" . $this->title->getText() . "\n";
 		$docs = $preview;

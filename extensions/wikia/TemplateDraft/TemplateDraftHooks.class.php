@@ -11,10 +11,8 @@ class TemplateDraftHooks {
 	public static function onGetRailModuleList( Array &$railModuleList ) {
 		global $wgTitle;
 
-		$titleNeedle = 'infobox';
 		if ( $wgTitle->getNamespace() === NS_TEMPLATE
 			&& $wgTitle->exists()
-			&& strripos( $wgTitle->getText(), $titleNeedle ) !== false
 			&& Wikia::getProps( $wgTitle->getArticleID(), TemplateDraftController::TEMPLATE_INFOBOX_PROP ) !== 0
 		) {
 			$railModuleList[1502] = [ 'TemplateDraftModule', 'Index', null ];
