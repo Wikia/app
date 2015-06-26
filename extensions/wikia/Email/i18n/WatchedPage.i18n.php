@@ -55,12 +55,13 @@ $messages['de'] = array(
 	'emailext-watchedpage-article-renamed' => "'''[$1 $2] auf [{{SERVER}} {{SITENAME}}] wurde umbenannt. Sieh es dir an!'''",
 	'emailext-watchedpage-article-deleted' => "'''[$1 $2] auf [{{SERVER}} {{SITENAME}}] wurde gelöscht.'''",
 	'emailext-watchedpage-deleted-button-text' => 'Versionsgeschichte ansehen',
+	'emailext-watchedpage-salutation' => 'Hallo $1,',
 );
 
 $messages['es'] = array(
 	'emailext-watchedpage-article-edited-subject' => '$1 en {{SITENAME}} ha sido editado por $2',
 	'emailext-watchedpage-article-edited-subject-anonymous' => 'La página $1 en {{SITENAME}} ha sido editada',
-	'emailext-watchedpage-article-edited' => "'''[\$1 \$2] en [{{SERVER}} {{SITENAME}}] ha sido editado. ¡Revísalo!'\"",
+	'emailext-watchedpage-article-edited' => "'''[$1 $2] en [{{SERVER}} {{SITENAME}}] ha sido editado. ¡Revísalo!'''",
 	'emailext-watchedpage-diff-button-text' => 'Mostrar cambios',
 	'emailext-watchedpage-article-link-text' => "[$1 Visita la página '''$2''' para ver qué hay de nuevo].",
 	'emailext-watchedpage-view-all-changes' => "[$1 Ver todos los cambios realizados en '''$2'''].",
@@ -74,6 +75,7 @@ $messages['es'] = array(
 	'emailext-watchedpage-article-renamed' => "'''[$1 $2] en [{{SERVER}} {{SITENAME}}] ha sido renombrado ¡Revísalo!'''",
 	'emailext-watchedpage-article-deleted' => "'''[$1 $2] en [{{SERVER}} {{SITENAME}}] ha sido borrado.'''",
 	'emailext-watchedpage-deleted-button-text' => 'Ver el historial del artículo',
+	'emailext-watchedpage-salutation' => 'Hola, $1;',
 );
 
 $messages['fr'] = array(
@@ -93,6 +95,7 @@ $messages['fr'] = array(
 	'emailext-watchedpage-article-renamed' => "'''Quelqu'un a renommé [$1 $2] sur [{{SERVER}} {{SITENAME}}]. Consultez l'article !'''",
 	'emailext-watchedpage-article-deleted' => "'''Quelqu'un a supprimé [$1 $2] sur [{{SERVER}} {{SITENAME}}].'''",
 	'emailext-watchedpage-deleted-button-text' => "Voir l'historique",
+	'emailext-watchedpage-salutation' => 'Bonjour $1,',
 );
 
 $messages['it'] = array(
@@ -112,6 +115,7 @@ $messages['it'] = array(
 	'emailext-watchedpage-article-renamed' => "'''Qualcuno ha cambiato titolo a [$1 $2] nella [{{SERVER}} {{SITENAME}}]. Dacci un'occhiata!'''",
 	'emailext-watchedpage-article-deleted' => "'''Qualcuno ha eliminato [$1 $2] nella [{{SERVER}} {{SITENAME}}].'''",
 	'emailext-watchedpage-deleted-button-text' => "Vedi la cronologia dell'articolo",
+	'emailext-watchedpage-salutation' => 'Ciao, $1.',
 );
 
 $messages['ja'] = array(
@@ -131,6 +135,7 @@ $messages['ja'] = array(
 	'emailext-watchedpage-article-renamed' => "'''[{{SERVER}} {{SITENAME}}]の[$1 $2]の名前が変更されたようです。チェックしてみましょう！'''",
 	'emailext-watchedpage-article-deleted' => "'''[{{SERVER}} {{SITENAME}}]の[$1 $2]が削除されたようです。'''",
 	'emailext-watchedpage-deleted-button-text' => '記事の履歴を見る',
+	'emailext-watchedpage-salutation' => '$1さん',
 );
 
 $messages['nl'] = array(
@@ -150,6 +155,7 @@ $messages['nl'] = array(
 	'emailext-watchedpage-article-renamed' => "'''[$1 $2] on [{{SERVER}} {{SITENAME}}] has been renamed. Check it out!'''",
 	'emailext-watchedpage-article-deleted' => "'''[$1 $2] on [{{SERVER}} {{SITENAME}}] has been deleted.'''",
 	'emailext-watchedpage-deleted-button-text' => 'See article history',
+	'emailext-watchedpage-salutation' => 'Hi $1,',
 );
 
 $messages['pl'] = array(
@@ -169,6 +175,7 @@ $messages['pl'] = array(
 	'emailext-watchedpage-article-renamed' => "'''Dokonano zmiany nazwy [$1 $2] na [{{SERVER}} {{SITENAME}}]. Sprawdź!'''",
 	'emailext-watchedpage-article-deleted' => "'''Usunięto [$1 $2] na [{{SERVER}} {{SITENAME}}]. Sprawdź!'''",
 	'emailext-watchedpage-deleted-button-text' => 'Zobacz historię artykułu',
+	'emailext-watchedpage-salutation' => 'Cześć $1,',
 );
 
 $messages['pt'] = array(
@@ -188,6 +195,7 @@ $messages['pt'] = array(
 	'emailext-watchedpage-article-renamed' => "'''[$1 $2] na [{{SERVER}} {{SITENAME}}] foi renomeado. Confira!'''",
 	'emailext-watchedpage-article-deleted' => "'''[$1 $2] na [{{SERVER}} {{SITENAME}}] foi excluído.'''",
 	'emailext-watchedpage-deleted-button-text' => 'Ver o histórico do artigo',
+	'emailext-watchedpage-salutation' => 'Olá $1,',
 );
 
 $messages['ru'] = array(
@@ -207,6 +215,7 @@ $messages['ru'] = array(
 	'emailext-watchedpage-article-renamed' => "'''Страница [$1 $2] на [{{SERVER}} {{SITENAME}}] была переименована. Посмотрите сами!'''",
 	'emailext-watchedpage-article-deleted' => "'''Страница [$1 $2] на [{{SERVER}} {{SITENAME}}] была удалена.'''",
 	'emailext-watchedpage-deleted-button-text' => 'Просмотреть историю статьи',
+	'emailext-watchedpage-salutation' => 'Здравствуйте, $1!',
 );
 
 $messages['zh-hans'] = array(
@@ -226,6 +235,7 @@ $messages['zh-hans'] = array(
 	'emailext-watchedpage-article-renamed' => "'''[{{SERVER}} {{SITENAME}}]网站上题为[$1 $2]的文章已被重新命名。快来查看吧！'''",
 	'emailext-watchedpage-article-deleted' => "'''[{{SERVER}} {{SITENAME}}]网站上题为[$1 $2]的文章已被删除。'''",
 	'emailext-watchedpage-deleted-button-text' => '查看文章历史记录',
+	'emailext-watchedpage-salutation' => '$1，您好！',
 );
 
 $messages['zh-tw'] = array(
@@ -245,5 +255,6 @@ $messages['zh-tw'] = array(
 	'emailext-watchedpage-article-renamed' => "'''[{{SERVER}} {{SITENAME}}]網站上題爲[$1 $2]的文章已被重新命名。快來查看吧！'''",
 	'emailext-watchedpage-article-deleted' => "'''[{{SERVER}} {{SITENAME}}]網站上題爲[$1 $2]的文章已被刪除。'''",
 	'emailext-watchedpage-deleted-button-text' => '查看文章紀錄',
+	'emailext-watchedpage-salutation' => '$1，您好！',
 );
 

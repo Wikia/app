@@ -3,12 +3,13 @@
 namespace Email\Controller;
 
 use \Email\EmailController;
+use Email\Tracking\TrackingCategories;
 
 class WeeklyDigestController extends EmailController {
 
 	const LAYOUT_CSS = 'weeklyDigest.css';
 
-	const TRACKING_CATEGORY = "GlobalWatchlist";
+	const TRACKING_CATEGORY = TrackingCategories::WEEKLY_DIGEST;
 
 	protected $digestData;
 
