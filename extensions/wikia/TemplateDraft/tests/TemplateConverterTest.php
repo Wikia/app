@@ -74,7 +74,7 @@ class TemplateConverterTest extends WikiaBaseTest {
 			],
 			[
 				"{{{game|}}}\n{{{title|Test title}}}\\n{{{hero}}} and {{{image}}}",
-				"<infobox>\n\t<title source=\"title\"><default>Test title</default></title>\n\t<image source=\"image\"/>\n\t<data source=\"game\"><label>game</label></data>\n\t<data source=\"hero\"><label>hero</label></data>\n</infobox>\n",
+				"<infobox>\n\t<data source=\"game\"><label>game</label></data>\n\t<title source=\"title\"><default>Test title</default></title>\n\t<data source=\"hero\"><label>hero</label></data>\n\t<image source=\"image\"/>\n</infobox>\n",
 				'Title and image tags aliases in the middle and other data attributes',
 			],
 		];

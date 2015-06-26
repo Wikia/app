@@ -33,22 +33,17 @@ class TemplateConverter {
 	public function convertAsInfobox( $content ) {
 		$draft = "<infobox>\n";
 
-		$draftTop = '';
-		$draftData = '';
-
 		$variables = $this->getTemplateVariables( $content );
 
 		foreach ( $variables as $variable ) {
 			if ( in_array( $variable['name'], self::$titleAliases ) ) {
-				$draftTop .= $this->createTitleTag( $variable );
+				$draft .= $this->createTitleTag( $variable );
 			} elseif ( in_array( $variable['name'], self::$imageAliases ) ) {
-				$draftTop .= $this->createImageTag( $variable );
+				$draft .= $this->createImageTag( $variable );
 			} else {
-				$draftData .= $this->createDataTag( $variable );
+				$draft .= $this->createDataTag( $variable );
 			}
 		}
-
-		$draft .= $draftTop . $draftData;
 
 		$draft .= "</infobox>\n";
 
