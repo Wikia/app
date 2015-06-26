@@ -17,7 +17,7 @@ $messages['en'] = array(
 	'emailext-founder-new-member-link-label' => 'Send a message',
 	'emailext-founder-newly-created-subject' => 'Congratulations on creating $1!',
 	'emailext-founder-newly-created-summary' => 'You are now the proud founder of $1!',
-	'emailext-founder-newly-created-tips-intro' => 'This is your chance to give your eager audience the ultimate fan experience! Here are some tips to help your community shine bright within The Social Universe for Fans, by Fans.',
+	'emailext-founder-newly-created-summary-extended' => 'This is your chance to give your eager audience the ultimate fan experience! Here are some tips to help your community shine bright within The Social Universe for Fans, by Fans.',
 	'emailext-founder-add-pages-header' => 'Add Pages',
 	'emailext-founder-add-pages-details' => 'Go ahead, add everything you know about your favorite fandom. Share your knowledge and recruit others to help!',
 	'emailext-founder-add-photos-header' => 'Photos & Videos',
@@ -41,6 +41,16 @@ $messages['en'] = array(
 	'emailext-founder-3-days-wam-details' => "Draw inspiration from some of our favorite communities. These represent the best and most popular wikia fan sites!",
 	'emailext-founder-3-days-need-help' => "Need help figuring out how something works? We're always here for you! Ask us for help and advice at [http://community.wikia.com Community Central].",
 	'emailext-founder-3-days-great-work' => "Keep up the great work! ",
+	'emailext-founder-10-days-subject' => "Happy 10-day anniversary on $1!",
+	'emailext-founder-10-days-summary' => "It’s been 10 days since you started $1.",
+	'emailext-founder-10-days-extended-summary' => "We must say, your wikia are looking great.  Now it’s time to spread the word!",
+	'emailext-founder-10-days-sharing-header' => "Sharing is Caring",
+	'emailext-founder-10-days-sharing-details' => "Use the Share buttons on any page to tell your friends about your wikia on Facebook, Twitter, and beyond.",
+	'emailext-founder-10-days-email-power-header' => "Harness the Power of Email",
+	'emailext-founder-10-days-email-power-details' => "Use the Share buttons on any page to tell your friends about your wikia on Facebook, Twitter, and beyond.",
+	'emailext-founder-10-days-email-google-header' => "Get with Google",
+	'emailext-founder-10-days-email-google-details' => "The internet is just...so big. But we’ve got some tips on how to improve your search traffic. Check it out!",
+	'emailext-founder-10-days-email-what-next' => "We can’t imagine the Wikia fan community without you.  What will you do next? We can’t wait to find out!",
 );
 
 $messages['qqq'] = array(

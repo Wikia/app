@@ -389,8 +389,8 @@ class FounderTipsController extends FounderController {
 	public function body() {
 		$this->response->setData( [
 			'salutation' => $this->getSalutation(),
-			'summary' => $this->getSummary(),
-			'extendedSummary' => $this->getMessage( 'emailext-founder-newly-created-tips-intro' )->text(),
+			'summary' => $this->getMessage( 'emailext-founder-newly-created-summary', $this->wikiName )->parse(),
+			'extendedSummary' => $this->getMessage( 'emailext-founder-newly-created-summary-extended' )->text(),
 			'details' => $this->getDetailsList(),
 			'contentFooterMessages' => [
 				$this->getMessage( 'emailext-founder-visit-community', $this->wikiName )->parse(),
@@ -398,15 +398,6 @@ class FounderTipsController extends FounderController {
 				$this->getMessage( 'emailext-emailconfirmation-community-team' )->text(),
 			],
 		] );
-	}
-
-	public function getSummary() {
-		return $this->getMessage( 'emailext-founder-newly-created-summary', $this->wikiName )->parse();
-	}
-
-	// TODO add to this
-	public function assertCanEmail() {
-		parent::assertCanEmail();
 	}
 
 	/**
@@ -435,8 +426,6 @@ class FounderTipsController extends FounderController {
 class FounderTipsThreeDaysController extends FounderTipsController {
 	const TRACKING_CATEGORY_EN = TrackingCategories::FOUNDER_ACTIVITY_DIGEST_EN;
 	const TRACKING_CATEGORY_INT = TrackingCategories::FOUNDER_ACTIVITY_DIGEST_INT;
-
-	const LAYOUT_CSS = "founderTips.css";
 
 	protected static $ICONS = [
 		[
@@ -474,7 +463,7 @@ class FounderTipsThreeDaysController extends FounderTipsController {
 	public function body() {
 		$this->response->setData( [
 			'salutation' => $this->getSalutation(),
-			'summary' => $this->getSummary(),
+			'summary' => $this->getMessage( 'emailext-founder-3-days-summary', $this->wikiName )->parse(),
 			'extendedSummary' => $this->getMessage( 'emailext-founder-3-days-extended-summary' )->text(),
 			'details' => $this->getDetailsList(),
 			'contentFooterMessages' => [
@@ -483,15 +472,6 @@ class FounderTipsThreeDaysController extends FounderTipsController {
 				$this->getMessage( 'emailext-emailconfirmation-community-team' )->text(),
 			],
 		] );
-	}
-
-	public function getSummary() {
-		return $this->getMessage( 'emailext-founder-3-days-summary', $this->wikiName )->parse();
-	}
-
-	// TODO add to this
-	public function assertCanEmail() {
-		parent::assertCanEmail();
 	}
 
 	/**
@@ -515,4 +495,70 @@ class FounderTipsThreeDaysController extends FounderTipsController {
 	}
 
 
+}
+class FounderTipsTenDaysController extends FounderTipsController {
+	const TRACKING_CATEGORY_EN = TrackingCategories::FOUNDER_ACTIVITY_DIGEST_EN;
+	const TRACKING_CATEGORY_INT = TrackingCategories::FOUNDER_ACTIVITY_DIGEST_INT;
+
+	protected static $ICONS = [
+		[
+			"iconSrc" => "Share",
+			"detailsHeaderKey" => "emailext-founder-10-days-sharing-header",
+			"detailsKey" => "emailext-founder-10-days-sharing-details"
+		],
+		[
+			"iconSrc" => "Power-of-email",
+			"detailsHeaderKey" => "emailext-founder-10-days-email-power-header",
+			"detailsKey" => "emailext-founder-10-days-email-power-details"
+		],
+		[
+			"iconSrc" => "Get-with-google", /// TODO Figure out how to add the Google link here
+			"detailsHeaderKey" => "emailext-founder-10-days-email-google-header",
+			"detailsKey" => "emailext-founder-10-days-email-google-details"
+		],
+	];
+
+
+	protected $wikiName;
+	protected $wikiId;
+
+	protected function getSubject() {
+		return $this->getMessage( 'emailext-founder-3-days-subject', $this->wikiName )->parse();
+	}
+
+	/**
+	 * @template founderTips
+	 */
+	public function body() {
+		$this->response->setData( [
+			'salutation' => $this->getSalutation(),
+			'summary' => $this->getMessage( 'emailext-founder-3-days-summary', $this->wikiName )->parse(),
+			'extendedSummary' => $this->getMessage( 'emailext-founder-3-days-extended-summary' )->text(),
+			'details' => $this->getDetailsList(),
+			'contentFooterMessages' => [
+				$this->getMessage( 'emailext-founder-10-days-email-what-next' )->text(),
+				$this->getMessage( 'emailext-emailconfirmation-community-team' )->text(),
+			],
+		] );
+	}
+
+	/**
+	 * Returns list of details for the digest
+	 *
+	 * @return array
+	 */
+	protected function getDetailsList() {
+		$detailsList = [];
+		foreach ( self::$ICONS as $icon ) {
+			$detailsList[] = [
+				"detailsHeader" => $this->getMessage( $icon["detailsHeaderKey"] )->text(),
+				"details" => $this->getMessage( $icon["detailsKey"] )->text(),
+				"iconSrc" => Email\ImageHelper::getFileInfo( $icon['iconSrc'], ".png" )['url'],
+				"iconLink" => empty( $icon["iconLink"] ) ? "" :
+						\GlobalTitle::newFromText( $icon["iconLink"], NS_SPECIAL, $this->wikiId )->getFullURL( $icon["IconLinkParams"] )
+			];
+		}
+
+		return $detailsList;
+	}
 }
