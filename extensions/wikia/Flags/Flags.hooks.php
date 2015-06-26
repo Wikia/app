@@ -79,6 +79,21 @@ class Hooks {
 	}
 
 	/**
+	 * Modifies ParserOutput
+	 * @param \LinksUpdate $linksUpdate
+	 * @return bool
+	 */
+	public static function onLinksUpdate( \LinksUpdate $linksUpdate ) {
+		$linksUpdate->mParserOutput = ( new \FlagsController )
+			->modifyParserOutputWithFlags(
+				$linksUpdate->getParserOutput(),
+				$linksUpdate->getTitle()->getArticleID()
+			);
+
+		return true;
+	}
+
+	/**
 	 * @param \ParserOutput $parserOutput
 	 * @param \Title $title
 	 * @return bool
@@ -95,9 +110,10 @@ class Hooks {
 
 		if ( $app->wg->HideFlagsExt !== true ) {
 			$flagTypesResponse = $app->sendRequest( 'FlagsApiController',
-				'getFlagTypes',
+				'getFlagsForPageForEdit',
 				[
 					'wiki_id' => $app->wg->CityId,
+					'page_id' => $pageId,
 				]
 			)->getData();
 
@@ -110,6 +126,10 @@ class Hooks {
 				 */
 				$templatesKeys = array_map( 'strtolower', array_keys( $templates ) );
 				foreach ( $flagTypesResponse[\FlagsApiController::FLAGS_API_RESPONSE_DATA] as $flagType ) {
+					if ( isset( $flagType['flag_id'] ) ) {
+						continue;
+					}
+
 					$flagViewKey = strtolower( str_replace( ' ', '_', $flagType['flag_view'] ) );
 					if ( in_array( $flagViewKey, $templatesKeys ) ) {
 						$flagTypesToExtract[$flagType['flag_view']] = $flagType;
