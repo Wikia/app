@@ -124,7 +124,11 @@ class Hooks {
 				 * We need modified versions of names of templates and flag_view values to
 				 * compare in a case-insensitive and space-underscore-insensitive way.
 				 */
-				$templatesKeys = array_map( 'strtolower', array_keys( $templates ) );
+				$templatesKeys = [];
+				foreach( $templates as $template ) {
+					$templatesKeys = strtolower( $template['tl_title'] );
+				}
+
 				foreach ( $flagTypesResponse[\FlagsApiController::FLAGS_API_RESPONSE_DATA] as $flagType ) {
 					if ( isset( $flagType['flag_id'] ) ) {
 						continue;
