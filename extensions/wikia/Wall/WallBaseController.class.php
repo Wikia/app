@@ -144,7 +144,7 @@ class WallBaseController extends WikiaController {
 		$this->response->setVal( 'canRemove', $wallMessage->canRemove( $this->wg->User )  && !$wallMessage->isRemove() );
 		$this->response->setVal( 'canClose', $wallMessage->canArchive( $this->wg->User ) );
 		$this->response->setVal( 'canReopen', $wallMessage->canReopen( $this->wg->User ) );
-		$this->response->setVal( 'showViewSource', $this->wg->User->getGlobalFlag( 'wallshowsource', false ) );
+		$this->response->setVal( 'showViewSource', $this->wg->User->getGlobalPreference( 'wallshowsource', false ) );
 		$this->response->setVal( 'threadHistoryLink', $wallMessage->getMessagePageUrl( true ) . '?action=history' );
 		$this->response->setVal( 'wgBlankImgUrl', $this->wg->BlankImgUrl );
 		$this->response->setVal( 'isRemoved', $wallMessage->isRemove() );
