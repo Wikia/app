@@ -398,7 +398,28 @@ class FounderTipsController extends FounderController {
 		];
 	}
 
+	protected static function getEmailSpecificFormFields() {
+		$formFields = [
+			'inputs' => [
+				[
+					'type' => 'text',
+					'name' => 'wikiName',
+					'label' => "Wiki Name",
+					'value' => \F::app()->wg->Sitename,
+					'tooltip' => "The name of the Wiki (defaults to current wiki)"
+				],
+				[
+					'type' => 'text',
+					'name' => 'wikiId',
+					'label' => "Wiki ID",
+					'value' => \F::app()->wg->CityId,
+					'tooltip' => "The ID of the Wiki (defaults to current wiki)"
+				],
+			]
+		];
 
+		return array_merge_recursive( $formFields, parent::getEmailSpecificFormFields() );
+	}
 }
 
 class FounderTipsThreeDaysController extends FounderTipsController {
