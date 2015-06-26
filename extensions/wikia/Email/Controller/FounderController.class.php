@@ -568,6 +568,8 @@ class FounderTipsThreeDaysController extends FounderTipsController {
 	const TRACKING_CATEGORY_EN = TrackingCategories::FOUNDER_TIPS_3_DAY_EN;
 	const TRACKING_CATEGORY_INT = TrackingCategories::FOUNDER_TIPS_3_DAY_INT;
 
+	const WAM_LINK = "http://www.wikia.com/WAM";
+
 	protected function getSubject() {
 		return $this->getMessage( 'emailext-founder-3-days-subject', $this->wikiName )->parse();
 	}
@@ -610,11 +612,9 @@ class FounderTipsThreeDaysController extends FounderTipsController {
 			],
 			[
 				"iconSrc" => Email\ImageHelper::getFileInfo( "Get-inspired.png" )['url'],
-				"iconLink" => "http://http://www.wikia.com/WAM",
+				"iconLink" => self::WAM_LINK,
 				"detailsHeader" => $this->getMessage( "emailext-founder-3-days-wam-header" )->text(),
-				"details" => $this->getMessage( "emailext-founder-3-days-wam-details",
-						$this->getMessage( "emailext-founder-wam-link" )->text()
-					)->parse()
+				"details" => $this->getMessage( "emailext-founder-3-days-wam-details", self::WAM_LINK )->parse()
 			]
 		];
 	}

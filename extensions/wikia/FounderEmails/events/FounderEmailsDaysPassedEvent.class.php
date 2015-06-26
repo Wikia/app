@@ -40,6 +40,7 @@ class FounderEmailsDaysPassedEvent extends FounderEmailsEvent {
 					"targetUser" => User::newFromId( $adminId ),
 					"wikiName" => $eventData['wikiName'],
 					"wikiId" => $eventData['wikiId'],
+					"marketingFooter" => true
 				];
 
 
