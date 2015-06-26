@@ -108,21 +108,19 @@ class CategoryAddController extends EmailController {
 				[
 					'type' => 'text',
 					'name' => 'pageTitle',
-					'label' => "Article Title",
-					'tooltip' => "The title of the page added to the category"
+					'label' => "Category Page",
+					'tooltip' => "The Category Page which was added to, eg 'Category:CoolCategoryPage' "
 				],
 				[
-					'type' => 'text',
+					'type' => 'hidden',
 					'name' => 'namespace',
-					'label' => "Page Namespace",
-					'tooltip' => "The Namespace of the page added to the categorty. (0 = Main, 10 = Category, 6 = File).",
-					'value' => NS_MAIN
+					'value' => NS_CATEGORY
 				],
 				[
 					'type' => 'text',
 					'name' => 'childArticleID',
-					'label' => "Category Page ID",
-					'tooltip' => 'The ID of the category page added to.'
+					'label' => "Page Added to Category ID",
+					'tooltip' => 'The ID of the page added to the category'
 				],
 			]
 		];

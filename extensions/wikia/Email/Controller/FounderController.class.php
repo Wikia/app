@@ -26,7 +26,7 @@ abstract class FounderController extends EmailController {
 
 }
 
-class AbstractFounderEditController extends FounderController {
+abstract class AbstractFounderEditController extends FounderController {
 
 	/** @var \Title */
 	protected $pageTitle;
