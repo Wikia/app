@@ -72,7 +72,7 @@ describe('wikia.scriptwriter', function () {
 			{
 				insertType: 'append',
 				script: {
-					text: 'document.write("<script>document.write(\\"aaa\\");</script>");'
+					text: 'document.write("aaa");'
 				},
 				done: jasmine.any(Function)
 			}
@@ -116,7 +116,7 @@ describe('wikia.scriptwriter', function () {
 		getPsModule().injectScriptByText('foo', 'document.write("aaa");');
 		expect(mocks.postscribe).toHaveBeenCalledWith(
 			mocks.domElement,
-			'<script>document.write("aaa");</script>',
+			'<script src="data:text/javascript,document.write(%22aaa%22)%3B"></script>',
 			jasmine.any(Object)
 		);
 	});

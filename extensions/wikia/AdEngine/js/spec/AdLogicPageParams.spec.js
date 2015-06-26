@@ -12,7 +12,7 @@ describe('AdLogicPageParams', function () {
 				return {
 					opts: {},
 					targeting: targeting || {},
-					forceProviders: {}
+					forcedProvider: null
 				};
 			},
 			addCallback: function () {

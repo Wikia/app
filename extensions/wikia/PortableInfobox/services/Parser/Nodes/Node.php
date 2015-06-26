@@ -9,8 +9,9 @@ class Node {
 
 	const DATA_SRC_ATTR_NAME = 'source';
 	const DEFAULT_TAG_NAME = 'default';
-	const VALUE_TAG_NAME = 'value';
+	const FORMAT_TAG_NAME = 'format';
 	const LABEL_TAG_NAME = 'label';
+	const EXTRACT_SOURCE_REGEX = '/{{{([^\|}]*?)\|?.*}}}/sU';
 
 	protected $xmlNode;
 	protected $children;
@@ -145,7 +146,10 @@ class Node {
 	protected function getValueWithDefault( \SimpleXMLElement $xmlNode ) {
 		$value = $this->extractDataFromSource( $xmlNode );
 		if ( !$value && $xmlNode->{self::DEFAULT_TAG_NAME} ) {
-			$value = $this->extractDataFromNode( $xmlNode->{self::DEFAULT_TAG_NAME} );
+			return $this->extractDataFromNode( $xmlNode->{self::DEFAULT_TAG_NAME} );
+		}
+		if ( $value && $xmlNode->{self::FORMAT_TAG_NAME} ) {
+			return $this->extractDataFromNode( $xmlNode->{self::FORMAT_TAG_NAME} );
 		}
 
 		return $value;
@@ -220,13 +224,20 @@ class Node {
 	 *
 	 */
 	protected function extractSourceFromNode( \SimpleXMLElement $xmlNode ) {
-		$source = $this->getXmlAttribute( $xmlNode, self::DATA_SRC_ATTR_NAME );
-		if ( $xmlNode->{self::DEFAULT_TAG_NAME} ) {
-			preg_match_all( '/{{{([^\|}]*?)\|?.*}}}/sU', (string)$xmlNode->{self::DEFAULT_TAG_NAME}, $sources );
+		$source = $this->getXmlAttribute( $xmlNode, self::DATA_SRC_ATTR_NAME ) ? [$this->getXmlAttribute( $xmlNode, self::DATA_SRC_ATTR_NAME )] : [];
 
-			return $source ? array_unique( array_merge( [ $source ], $sources[ 1 ] ) ) : array_unique( $sources[ 1 ] );
+		if ( $xmlNode->{self::FORMAT_TAG_NAME} ) {
+			$source = $this->matchVariables( $xmlNode->{self::FORMAT_TAG_NAME}, $source );
+		}
+		if ( $xmlNode->{self::DEFAULT_TAG_NAME} ) {
+			$source = $this->matchVariables( $xmlNode->{self::DEFAULT_TAG_NAME}, $source );
 		}
 
-		return $source ? [ $source ] : [ ];
+		return $source;
+	}
+
+	protected function matchVariables( \SimpleXMLElement $node, array $source ) {
+		preg_match_all( self::EXTRACT_SOURCE_REGEX, (string)$node, $sources );
+		return array_unique( array_merge( $source , $sources[ 1 ] ) );
 	}
 }

@@ -30,7 +30,7 @@ define('ext.wikia.adEngine.config.mobile', [
 			return [];
 		}
 
-		if (context.forceProviders.openX) {
+		if (context.forcedProvider === 'openx') {
 			return [openX];
 		}
 

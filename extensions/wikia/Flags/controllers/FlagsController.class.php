@@ -43,28 +43,33 @@ class FlagsController extends WikiaController {
 		$wgLang->getLangObj();
 	}
 
-	public function modifyParserOutputWithFlags( ParserOutput $parserOutput, Page $article ) {
+	public function modifyParserOutputWithFlags( ParserOutput $parserOutput, $pageId ) {
+		$mwf = \MagicWord::get( 'flags' );
+
 		/**
 		 * First, get ParserOutput for flags for the article.
 		 * If it's null - return the original $parserOutput.
 		 */
-		$flagsParserOutput = $this->getFlagsParserOutputForPage( $article->getID() );
+		$flagsParserOutput = $this->getFlagsParserOutputForPage( $pageId );
 		if ( $flagsParserOutput === null ) {
+			/**
+			 * If there is __FLAGS__ magic word present in the content
+			 * replace it with an empty string
+			 */
+			if ( $mwf->match( $parserOutput->getText() ) ) {
+				$parserOutput->setText( $mwf->replace( '', $parserOutput->getText() ) );
+			}
 			return $parserOutput;
 		}
 
 		/**
 		 * Update the mText of the original ParserOutput object and merge other properties
 		 */
-
-		$mwf = \MagicWord::get( 'flags' );
 		if ( $mwf->match( $parserOutput->getText() ) ) {
 			$parserOutput->setText( $mwf->replace( $flagsParserOutput->getText(), $parserOutput->getText() ) );
 		} else {
 			$parserOutput->setText( $flagsParserOutput->getText() . $parserOutput->getText() );
 		}
-
-		$parserOutput->mergeExternalParserOutputVars( $flagsParserOutput );
 
 		return $parserOutput;
 	}
