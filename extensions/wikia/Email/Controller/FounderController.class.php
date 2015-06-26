@@ -340,8 +340,30 @@ class FounderTipsController extends FounderController {
 	protected $wikiId;
 
 	public function initEmail() {
-		$this->wikiName = $this->getVal( 'wikiName', 'Jsutterfield' );
-		$this->wikiId = $this->getVal( 'wikiId', 869155 );
+		$this->wikiName = $this->getVal( 'wikiName' );
+		$this->wikiId = $this->getVal( 'wikiId' );
+
+		$this->assertValidParams();
+	}
+
+	/**
+	 * Validate the params passed in by the client
+	 */
+	private function assertValidParams() {
+		$this->assertValidWikiName();
+		$this->assertValidWikiId();
+	}
+
+	private function assertValidWikiName() {
+		if ( empty( $this->wikiName ) ) {
+			throw new Check( "Must pass in value for wikiName!" );
+		}
+	}
+
+	private function assertValidWikiId() {
+		if ( empty( $this->wikiId ) ) {
+			throw new Check( "Must pass in value for wikiId!" );
+		}
 	}
 
 	protected function getSubject() {
@@ -366,7 +388,7 @@ class FounderTipsController extends FounderController {
 	}
 
 	/**
-	 * Returns list of details (icons, headers, and blurgs for those icons) for the founder tips email
+	 * Returns list of details (icons, headers, and blurbs for those icons) for the founder tips email
 	 *
 	 * @return array
 	 */
@@ -448,7 +470,7 @@ class FounderTipsThreeDaysController extends FounderTipsController {
 	}
 
 	/**
-	 * Returns list of details (icons, headers, and blurgs for those icons) for the founder tips email
+	 * Returns list of details (icons, headers, and blurbs for those icons) for the founder tips email
 	 *
 	 * @return array
 	 */
@@ -504,7 +526,7 @@ class FounderTipsTenDaysController extends FounderTipsController {
 	}
 
 	/**
-	 * Returns list of details (icons, headers, and blurgs for those icons) for the founder tips email
+	 * Returns list of details (icons, headers, and blurbs for those icons) for the founder tips email
 	 *
 	 * @return array
 	 */
