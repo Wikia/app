@@ -331,8 +331,8 @@ class FounderNewMemberController extends FounderController {
 }
 
 class FounderTipsController extends FounderController {
-	const TRACKING_CATEGORY_EN = TrackingCategories::FOUNDER_ACTIVITY_DIGEST_EN;
-	const TRACKING_CATEGORY_INT = TrackingCategories::FOUNDER_ACTIVITY_DIGEST_INT;
+	const TRACKING_CATEGORY_EN = TrackingCategories::FOUNDER_TIPS_0_DAY_EN;
+	const TRACKING_CATEGORY_INT = TrackingCategories::FOUNDER_TIPS_0_DAY_INT;
 
 	const LAYOUT_CSS = "founderTips.css";
 
@@ -366,7 +366,7 @@ class FounderTipsController extends FounderController {
 	}
 
 	/**
-	 * Returns list of details for the digest
+	 * Returns list of details (icons, headers, and blurgs for those icons) for the founder tips email
 	 *
 	 * @return array
 	 */
@@ -423,8 +423,8 @@ class FounderTipsController extends FounderController {
 }
 
 class FounderTipsThreeDaysController extends FounderTipsController {
-	const TRACKING_CATEGORY_EN = TrackingCategories::FOUNDER_ACTIVITY_DIGEST_EN;
-	const TRACKING_CATEGORY_INT = TrackingCategories::FOUNDER_ACTIVITY_DIGEST_INT;
+	const TRACKING_CATEGORY_EN = TrackingCategories::FOUNDER_TIPS_3_DAY_EN;
+	const TRACKING_CATEGORY_INT = TrackingCategories::FOUNDER_TIPS_3_DAY_INT;
 
 	protected function getSubject() {
 		return $this->getMessage( 'emailext-founder-3-days-subject', $this->wikiName )->parse();
@@ -448,7 +448,7 @@ class FounderTipsThreeDaysController extends FounderTipsController {
 	}
 
 	/**
-	 * Returns list of details for the digest
+	 * Returns list of details (icons, headers, and blurgs for those icons) for the founder tips email
 	 *
 	 * @return array
 	 */
@@ -480,8 +480,8 @@ class FounderTipsThreeDaysController extends FounderTipsController {
 
 }
 class FounderTipsTenDaysController extends FounderTipsController {
-	const TRACKING_CATEGORY_EN = TrackingCategories::FOUNDER_ACTIVITY_DIGEST_EN;
-	const TRACKING_CATEGORY_INT = TrackingCategories::FOUNDER_ACTIVITY_DIGEST_INT;
+	const TRACKING_CATEGORY_EN = TrackingCategories::FOUNDER_TIPS_10_DAY_EN;
+	const TRACKING_CATEGORY_INT = TrackingCategories::FOUNDER_TIPS_10_DAY_INT;
 
 	protected function getSubject() {
 		return $this->getMessage( 'emailext-founder-10-days-subject', $this->wikiName )->parse();
@@ -504,7 +504,7 @@ class FounderTipsTenDaysController extends FounderTipsController {
 	}
 
 	/**
-	 * Returns list of details for the digest
+	 * Returns list of details (icons, headers, and blurgs for those icons) for the founder tips email
 	 *
 	 * @return array
 	 */
