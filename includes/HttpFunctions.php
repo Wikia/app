@@ -756,13 +756,19 @@ class CurlHttpRequest extends MWHttpRequest {
 	}
 
 	public function execute() {
+
 		parent::execute();
 
 		if ( !$this->status->isOK() ) {
 			return $this->status;
 		}
 
-		$this->curlOptions[CURLOPT_PROXY] = $this->proxy;
+		if ( $this->parsedUrl['scheme'] == 'https' ) {
+			$this->curlOptions[CURLOPT_PROXY] = null;
+		} else {
+			$this->curlOptions[CURLOPT_PROXY] = $this->proxy;
+		}
+
 		$this->curlOptions[CURLOPT_TIMEOUT] = $this->timeout;
 		$this->curlOptions[CURLOPT_HTTP_VERSION] = CURL_HTTP_VERSION_1_0;
 		$this->curlOptions[CURLOPT_WRITEFUNCTION] = $this->callback;
