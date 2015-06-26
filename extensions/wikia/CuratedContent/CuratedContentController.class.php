@@ -216,12 +216,13 @@ class CuratedContentController extends WikiaController {
 			$section = $this->request->getVal( 'section' );
 
 			if ( empty( $section ) ) {
-				$this->cacheResponseFor( 14, self::DAYS );
 				$this->getSections( $content );
 				$this->getFeaturedSection( $content );
 			} else {
 				$this->getSectionItems( $content, $section );
 			}
+
+			$this->cacheResponseFor( 14, self::DAYS );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -401,10 +402,26 @@ class CuratedContentController extends WikiaController {
 	 */
 	static function onCuratedContentSave() {
 		self::purgeMethod( 'getList' );
+		self::purgeSections();
+
 		if ( class_exists( 'GameGuidesController' ) ) {
 			GameGuidesController::purgeMethod( 'getList' );
 		}
+
 		return true;
+	}
+
+	/**
+	 * @brief Purges API response for every section
+	 */
+	private function purgeSections() {
+		$content = $this->wg->WikiaCuratedContent;
+
+		foreach ( $content as $item ) {
+			if ( $item[ 'title' ] !== '' && $item[ 'featured' ] == false ) {
+				self::purgeMethod( 'getList', [ 'section' => $item[ 'title' ] ] );
+			}
+		}
 	}
 }
 
