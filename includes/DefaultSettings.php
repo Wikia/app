@@ -521,7 +521,7 @@ $wgHashedSharedUploadDirectory = true;
  *
  * Please specify the namespace, as in the example below.
  */
-$wgRepositoryBaseUrl = "http://commons.wikimedia.org/wiki/File:";
+$wgRepositoryBaseUrl = "https://commons.wikimedia.org/wiki/File:";
 
 /**
  * This is the list of preferred extensions for uploading files. Uploading files
