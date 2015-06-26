@@ -48,6 +48,13 @@ class FacebookTask extends BaseTask {
 	}
 
 	/**
+	 * Send user a welcome email
+	 */
+	public function sendWelcomeEmail() {
+		F::app()->sendRequest( 'Email\Controller\Welcome', 'handle', [] );
+	}
+
+	/**
 	 * Update user email to the one given
 	 *
 	 * @param int $userId

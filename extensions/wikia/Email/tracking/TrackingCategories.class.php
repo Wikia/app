@@ -20,4 +20,5 @@ class TrackingCategories {
 	const CHANGED_EMAIL_CONFIRMATION = "ReConfirmationMail";
 	const WEEKLY_DIGEST = "GlobalWatchlist";
 	const FORGOT_PASSWORD = 'TemporaryPassword';
+	const WELCOME = 'WelcomeMail';
 }
