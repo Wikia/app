@@ -424,10 +424,6 @@ class ExternalUser_Wikia extends ExternalUser {
 		} else {
 			wfDebug( __METHOD__ . ": update central user data \n" );
 
-			/** PLATFORM-508 - logging for Helios project - begin */
-			\Wikia\Logger\WikiaLogger::instance()->debug( 'PLATFORM-508', [ 'method' => __METHOD__ ] );
-			/** PLATFORM-508 - logging for Helios project - end */
-
 			$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 			$this->mUser->mTouched = User::newTouchedTimestamp();
 			$dbw->update(
