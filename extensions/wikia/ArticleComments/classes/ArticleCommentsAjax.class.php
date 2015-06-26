@@ -19,6 +19,8 @@
  *     require_once("$IP/extensions/wikia/ArticleComments/ArticleComments_setup.php");
  */
 
+use Wikia\Logger\WikiaLogger;
+
 class ArticleCommentsAjax {
 	/**
 	 * axSave -- static hook/entry for ajax request save comment
@@ -179,6 +181,12 @@ class ArticleCommentsAjax {
 		if ( !ArticleComment::canComment( $title ) ) {
 			return $result;
 		}
+
+		WikiaLogger::instance()->info( __METHOD__ . ' : Comment posted', [
+			'skin' => $wgRequest->getVal( 'useskin' ),
+			'articleId' => $articleId,
+			'parentId' => $parentId,
+		] );
 
 		$response = ArticleComment::doPost( self::getConvertedContent($wgRequest->getVal('wpArticleComment')), $wgUser, $title, $parentId );
 

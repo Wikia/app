@@ -126,6 +126,16 @@ class FacebookClient {
 		}
 	}
 
+	/**
+	 * Clear out the session saved for this user
+	 */
+	public function clearSessionFromMemcache() {
+		if ( $this->getUserId() ) {
+			$memc = F::app()->wg->memc;
+			$memc->delete( $this->getTokenMemcKey() );
+		}
+	}
+
 	private function getSessionFromCookie() {
 		$memc = F::app()->wg->memc;
 		$session = $this->facebookAPI->getSession();
@@ -174,7 +184,7 @@ class FacebookClient {
 		if ( !empty( $this->facebookUserId ) ) {
 			try {
 				// Try and create a session to see if facebookUserId is valid
-				$session = $this->getSession();
+				$this->getSession();
 			} catch ( \Exception $e ) {
 				$this->facebookUserId = 0;
 				WikiaLogger::instance()->warning( 'Unable to create valid session', [
@@ -448,6 +458,8 @@ class FacebookClient {
 
 			setcookie( $sessionCookieName, '', 0, '/', $base_domain );
 		}
+
+		$this->clearSessionFromMemcache();
 	}
 
 	/**

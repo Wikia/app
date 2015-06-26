@@ -21,9 +21,9 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 	}
 
 	public function init() {
-		$skin = $this->wg->User->getSkin();
+		$skin = RequestContext::getMain()->getSkin();
 		$this->isMonobookOrUncyclo = ( $skin instanceof SkinMonoBook || $skin instanceof SkinUncyclopedia );
-		$this->isEn = ( $this->wg->Lang->getCode() == 'en' );
+		$this->isEn = ( RequestContext::getMain()->getLanguage()->getCode() == 'en' );
 		$this->userLoginHelper = ( new UserLoginHelper );
 	}
 
@@ -129,6 +129,18 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 		} else {
 			$this->track( 'signup-start' );
 		}
+
+		/**
+		 * OPS-6556 Special:UserSignup daily vists
+		 * Contact: ruggero@wikia-inc.com or michal@wikia-inc.com
+		 */
+		\Wikia\Logger\WikiaLogger::instance()->info(
+			'OPS-6556',
+			[
+				'i18n' => RequestContext::getMain()->getLanguage()->getCode(),
+				'skin' => RequestContext::getMain()->getSkin()->getSkinName()
+			]
+		);
 	}
 
 	public function handleSignupFormSubmit() {
@@ -176,7 +188,7 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 			$this->wg->out->redirect( $redirectUrl );
 		} else {
 			$this->track( 'signup-failed' );
-			$this->response->setData( [
+			$this->response->setValues( [
 				'result' => $result,
 				'msg' => $response->getVal( 'msg', '' ),
 				'errParam' => $response->getVal( 'errParam', '' ),
@@ -652,10 +664,12 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 	 * Disables User Signup Captcha for automated tests, mobile skin, and sites such as internal
 	 */
 	private function disableCaptcha() {
+		global $wgHooks;
+
 		// Remove hook function
-		$hookArrayKey = array_search( 'Captcha\Hooks::confirmUserCreate', $this->wg->Hooks['AbortNewAccount'] );
+		$hookArrayKey = array_search( 'Captcha\Hooks::confirmUserCreate', $wgHooks['AbortNewAccount'] );
 		if ( $hookArrayKey !== false ) {
-			unset( $this->wg->Hooks['AbortNewAccount'][$hookArrayKey] );
+			unset( $wgHooks['AbortNewAccount'][$hookArrayKey] );
 		}
 		$this->wg->Out->addJsConfigVars( [
 			'wgUserSignupDisableCaptcha' => true

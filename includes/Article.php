@@ -104,8 +104,8 @@ class Article extends Page {
 	/**
 	 * Create an Article object of the appropriate class for the given page.
 	 *
-	 * @param $title Title
-	 * @param $context IContextSource
+	 * @param Title $title
+	 * @param IContextSource $context
 	 * @return Article object
 	 */
 	public static function newFromTitle( $title, IContextSource $context ) {
@@ -456,6 +456,7 @@ class Article extends Page {
 		$parserCache = ParserCache::singleton();
 
 		$parserOptions = $this->getParserOptions();
+
 		# Render printable version, use printable version cache
 		if ( $wgOut->isPrintable() ) {
 			$parserOptions->setIsPrintable( true );
@@ -682,6 +683,10 @@ class Article extends Page {
 		# Adjust title for main page & pages with displaytitle
 		if ( $pOutput ) {
 			$this->adjustDisplayTitle( $pOutput );
+
+			if ($pOutput->getText() == '') {
+				\Wikia\Logger\WikiaLogger::instance()->error( 'PLATFORM-1212 - empty parser output' );
+			}
 		}
 
 		# For the main page, overwrite the <title> element with the con-

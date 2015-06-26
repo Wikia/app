@@ -1,0 +1,22 @@
+{
+	"@metadata": {
+		"authors": [
+			"Wikimistusik"
+		]
+	},
+	"browsedata": "Origwigara",
+	"sd_browsedata_choosecategory": "Kiblara va loma",
+	"sd_browsedata_viewcategory": "Wira va loma",
+	"sd_browsedata_subcategory": "Volveyloma",
+	"sd_browsedata_other": "Ar",
+	"sd_browsedata_none": "Mek",
+	"sd_browsedata_filterbyvalue": "Espara kan bata voda",
+	"sd_browsedata_filterbysubcategory": "Espara kan bata volveyloma",
+	"sd_browsedata_otherfilter": "Nedira va bueem vadjes va ara esparavoda",
+	"sd_browsedata_nonefilter": "Nedira va bueem mevadjes va bata espara",
+	"sd_browsedata_removefilter": "Tioltera va bata espara",
+	"sd_browsedata_removesubcategoryfilter": "Tioltera va bata volveylomafa espara",
+	"sd_browsedata_resetfilters": "Dimplekura va espara",
+	"sd_createfilter_usepropertyvalues": "Favera va vodeem ke bata esparapilkaca",
+	"sd_createfilter_usecategoryvalues": "Plekura va esparavoda mal bata loma :"
+}

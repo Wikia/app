@@ -1080,14 +1080,7 @@ class LoginForm extends SpecialPage {
 
 		$np = $u->randomPassword();
 		$u->setNewpassword( $np, $throttle );
-
-		/* Wikia change begin */
-		//@TODO get rid of TempUser handling when it will be globally disabled
-		$tempUser = null;
-		wfRunHooks( 'MailPasswordTempUser' , array( &$u, &$tempUser ) );
-		if ( empty($tempUser) ) {
-			$u->saveSettings();
-		}
+		$u->saveSettings();
 
 		/* Wikia change begin - @author: Uberfuzzy */
 		/* use noReply address (if available) */

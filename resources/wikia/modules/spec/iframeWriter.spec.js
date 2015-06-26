@@ -34,7 +34,7 @@ describe('iframeWriter module', function () {
 
 		expect(iframe.width).toBe(123);
 		expect(iframe.height).toBe(456);
-		expect(iframe.frameborder).toBe('no');
+		expect(iframe.frameBorder).toBe('no');
 		expect(iframe.scrolling).toBe('no');
 		expect(iframe.onload).toBeDefined();
 	});

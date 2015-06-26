@@ -10,14 +10,14 @@ class WallDisabledHooksHelper {
 	 *
 	 * @return boolean true -- because it's a hook
 	 */
-	static public function onAfterEditPermissionErrors($permErrors, $title, $removeArray) {
+	static public function onAfterEditPermissionErrors( $permErrors, $title, $removeArray ) {
 		$app = F::App();
 
-		if( empty($app->wg->EnableWallExt) &&
-			($title->getNamespace() == NS_USER_WALL
+		if ( empty( $app->wg->EnableWallExt ) &&
+			( $title->getNamespace() == NS_USER_WALL
 			|| $title->getNamespace() == NS_USER_WALL_MESSAGE
 			|| $title->getNamespace() == NS_USER_WALL_MESSAGE_GREETING
-		)) {
+		) ) {
 			$permErrors[] = array(
 				0 => 'protectedpagetext',
 				1 => 'archived'

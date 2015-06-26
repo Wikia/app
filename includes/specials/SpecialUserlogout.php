@@ -44,6 +44,12 @@ class SpecialUserlogout extends UnlistedSpecialPage {
 			throw new HttpError( 400, wfMessage( 'suspicious-userlogout' ), wfMessage( 'loginerror' ) );
 		}
 
+		// Some communities (notably uncyclopedia) do not have FacebookClient enabled
+		if ( F::app()->wg->EnableFacebookClientExt ) {
+			// Clean up any facebook cookies/data
+			FacebookClient::getInstance()->logout();
+		}
+
 		$this->setHeaders();
 		$this->outputHeader();
 

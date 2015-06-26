@@ -55,6 +55,7 @@ module.exports = function (config) {
 			'resources/wikia/modules/nirvana.js',
 			'resources/wikia/modules/querystring.js',
 			'resources/wikia/modules/history.js',
+			'resources/wikia/modules/scriptwriter.js',
 			'resources/wikia/modules/scrollToLink.js',
 			'resources/wikia/modules/stringhelper.js',
 			'resources/wikia/modules/thumbnailer.js',
@@ -84,8 +85,9 @@ module.exports = function (config) {
 			'extensions/wikia/AdEngine/js/config/*.js',
 			'extensions/wikia/AdEngine/js/lookup/*.js',
 			'extensions/wikia/AdEngine/js/provider/*.js',
+			'extensions/wikia/AdEngine/js/provider/gpt/*.js',
 
-			'extensions/wikia/AdEngine/js/spec/*.spec.js',
+			'extensions/wikia/AdEngine/js/spec/**/*.spec.js',
 
 			//PhalanxII
 			'extensions/wikia/PhalanxII/js/modules/phalanx.js',
@@ -180,6 +182,14 @@ module.exports = function (config) {
 			// Banner Notifications
 			'extensions/wikia/BannerNotifications/js/BannerNotifications.js',
 			'extensions/wikia/BannerNotifications/js/spec/BannerNotifications.spec.js',
+
+			// Paid Asset Drop
+			'extensions/wikia/PaidAssetDrop/js/paidAssetDrop.js',
+			'extensions/wikia/PaidAssetDrop/js/spec/paidAssetDrop.spec.js',
+
+			// PageShare
+			'extensions/wikia/PageShare/scripts/PageShare.js',
+			'extensions/wikia/PageShare/scripts/spec/PageShare.spec.js'
 		]
 	});
 };

@@ -37,7 +37,7 @@ class WallHistoryController extends WallController {
 			( $this->isThreadLevel &&
 				!in_array( MWNamespace::getSubject( $title->getNamespace() ), $this->wg->WallNS ) )
 		) {
-			//paranoia -- why the message is not in DB
+			// paranoia -- why the message is not in DB
 			$this->response->setVal( 'wallmessageNotFound', true );
 			return;
 		}
@@ -105,15 +105,15 @@ class WallHistoryController extends WallController {
 	}
 
 	public function threadHistory() {
-		//this method is only to load other template
-		//all template variables and logic can be found
-		//in method above -- WallHistoryController::index()
+		// this method is only to load other template
+		// all template variables and logic can be found
+		// in method above -- WallHistoryController::index()
 	}
 
 	private function historyPreExecute() {
 		$this->response->addAsset( 'wall_history_js' );
 		$this->response->addAsset( 'extensions/wikia/Wall/css/WallHistory.scss' );
-		
+
 		// VOLDEV-36: separate monobook styling
 		if ( $this->app->checkSkin( 'monobook' ) ) {
 			$this->response->addAsset( 'extensions/wikia/Wall/css/monobook/WallHistoryMonobook.scss' );
@@ -207,8 +207,8 @@ class WallHistoryController extends WallController {
 				$history[$key]['prefix'] = ( $isReply === '1' ) ? 'reply-' : 'thread-';
 
 				if ( intval( $value['page_id'] ) === $threadId ) {
-					//if the entry is about change in top message
-					//hardcode the order number to 1
+					// if the entry is about change in top message
+					// hardcode the order number to 1
 					$history[$key]['msgid'] = 1;
 				} else {
 					$history[$key]['msgid'] = $wm->getOrderId();
@@ -261,7 +261,7 @@ class WallHistoryController extends WallController {
 					}
 
 					$history[$key]['actions'][] = array(
-						'class' => 'message-restore', //TODO: ?
+						'class' => 'message-restore', // TODO: ?
 						'data-id' => $value['page_id'],
 						'data-mode' => 'restore' . ( $wm->canFastrestore( $this->getContext()->getUser() ) ? '-fast' : '' ),
 						'href' => '#',

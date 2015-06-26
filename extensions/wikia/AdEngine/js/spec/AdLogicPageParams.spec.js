@@ -12,7 +12,7 @@ describe('AdLogicPageParams', function () {
 				return {
 					opts: {},
 					targeting: targeting || {},
-					forceProviders: {}
+					forcedProvider: null
 				};
 			},
 			addCallback: function () {
@@ -21,7 +21,7 @@ describe('AdLogicPageParams', function () {
 		};
 	}
 
-	function mockWindow(document, hostname, amzn_targs) {
+	function mockWindow(document, hostname, amzn_targs, perfab) {
 
 		hostname = hostname || 'example.org';
 
@@ -29,7 +29,8 @@ describe('AdLogicPageParams', function () {
 			document: document || {},
 			location: { origin: 'http://' + hostname, hostname: hostname },
 			amzn_targs: amzn_targs,
-			wgCookieDomain: hostname.substr(hostname.indexOf('.'))
+			wgCookieDomain: hostname.substr(hostname.indexOf('.')),
+			wgABPerformanceTest: perfab
 		};
 	}
 
@@ -92,7 +93,7 @@ describe('AdLogicPageParams', function () {
 				},
 				getGroup: function () { return; }
 			} : undefined,
-			windowMock = mockWindow(opts.document, opts.hostname, opts.amzn_targs);
+			windowMock = mockWindow(opts.document, opts.hostname, opts.amzn_targs, opts.perfab);
 
 		return modules['ext.wikia.adEngine.adLogicPageParams'](
 			mockAdContext(targeting),
@@ -100,6 +101,7 @@ describe('AdLogicPageParams', function () {
 			logMock,
 			windowMock.document,
 			windowMock.location,
+			windowMock,
 			undefined,
 			abTestMock,
 			kruxMock
@@ -248,6 +250,16 @@ describe('AdLogicPageParams', function () {
 			{ id: 76, group: { id: 112 } }
 		]});
 		expect(params.ab).toEqual(['17_34', '19_45', '76_112'], 'ab params passed');
+	});
+
+	it('getPageLevelParams abPerfTest info', function () {
+		var params;
+
+		params = getParams();
+		expect(params.perfab).toEqual(undefined);
+
+		params = getParams({}, {perfab: 'foo'});
+		expect(params.perfab).toEqual('foo');
 	});
 
 	it('getPageLevelParams includeRawDbName', function () {

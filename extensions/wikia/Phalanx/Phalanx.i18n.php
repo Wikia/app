@@ -498,6 +498,7 @@ Si vostè creu que es tracta d\'un error, si us plau, [[Special:Contact|contacti
 	'action-phalanx' => 'utilitzar el Mecanisme de Defensa de Spam Integrat',
 	'right-phalanx' => 'Pot gestionar blocatges globals i filtres antispam',
 	'right-phalanxexempt' => 'Exempt de les regles de la falange',
+	'right-phalanxemailblock' => 'Pot arxivar, veure i gestionar blocs de correus',
 );
 
 /** Chechen (нохчийн)
@@ -685,6 +686,7 @@ Ein Klick auf „{{int:phalanx-edit-block}}“ speichert Ihre Änderungen!',
 
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
+ * @author Kunalgrover05
  * @author Mirzali
  */
 $messages['diq'] = array(
@@ -695,7 +697,7 @@ $messages['diq'] = array(
 	'phalanx-label-reason' => 'Sebeb:',
 	'phalanx-label-expiry' => 'Qediyayış:',
 	'phalanx-label-type' => 'Babet:',
-	'phalanx-test-submit' => 'Test',
+	'phalanx-test-submit' => 'Tewr',
 	'phalanx-stats-table-type' => 'Babet',
 	'phalanx-stats-table-create' => 'Vıraziya',
 	'phalanx-stats-table-language' => 'Zıwan',
@@ -735,7 +737,7 @@ $messages['es'] = array(
 	'phalanx-view-blocks' => 'Buscar filtros',
 	'phalanx-view-id' => 'Obtener filtro por ID:',
 	'phalanx-view-id-submit' => 'Obtener filtro',
-	'phalanx-format-text' => 'texto plano',
+	'phalanx-format-text' => 'texto sin formato',
 	'phalanx-format-regex' => 'regex',
 	'phalanx-format-case' => 'sensible',
 	'phalanx-format-exact' => 'exacto',
@@ -836,12 +838,13 @@ $messages['eu'] = array(
 );
 
 /** Persian (فارسی)
+ * @author Mjbmr
  * @author Reza1615
  */
 $messages['fa'] = array(
 	'phalanx-title' => 'انگشت - مکانیسم دفاعی یکپارچه اسپم',
 	'phalanx-type-user' => 'کاربر',
-	'phalanx-type-user-email' => 'رایانامه',
+	'phalanx-type-user-email' => 'ایمیل',
 	'phalanx-type-answers-question-title' => 'عنوان سوأل',
 	'phalanx-type-answers-recent-questions' => 'سوألات اخیر',
 	'phalanx-type-wiki-creation' => 'ایجاد ویکی',
@@ -879,7 +882,7 @@ $messages['fa'] = array(
 	'phalanx-help-type-wiki-creation' => 'این فیلتر از ایجاد یک ویکی جلوگیری می‌کند، اگر نام یا یوآر‌ال آن با هر عبارت فهرست سیاه مطابق باشد.',
 	'phalanx-help-type-answers-question-title' => 'این فیلتر از ایجاد سوأل (صفحه) جلوگیری می‌کند، اگر عنوان آن با هر عبارت فهرست سیاه مطابق باشد.
 توجه: فقط در ویکی‌های نوع پاسخ کار می‌کند.',
-	'phalanx-help-type-user-email' => 'این فیلتر از ایجاد حساب با استفاده از آدرس رایانامه مسدود شده، جلوگیری می‌کند.',
+	'phalanx-help-type-user-email' => 'این پالایه از ایجاد حساب با استفاده از آدرس ایمیل مسدود شده، جلوگیری می‌کند.',
 	'phalanx-user-block-new-account' => 'نام کاربری برای ثبت‌نام در دسترس نیست. لطفاً یکی دیگر را انتخاب کنید.',
 	'phalanx-title-move-summary' => 'دلیلی که شما وارد کرده‌اید شامل یک عبارت مسدود بود.',
 	'phalanx-content-spam-summary' => 'متن در خلاصهٔ صفحه پیدا شد.',
@@ -909,6 +912,7 @@ $messages['fa'] = array(
  * @author Centerlink
  * @author Nedergard
  * @author Nike
+ * @author Silvonen
  * @author Tofu II
  * @author Ville96
  */
@@ -934,6 +938,7 @@ $messages['fi'] = array(
 	'phalanx-view-id' => 'Hae suodatinta tunnisteella:',
 	'phalanx-view-id-submit' => 'Nouda suodatin',
 	'phalanx-format-text' => 'muotoilematon teksti',
+	'phalanx-format-regex' => 'säännöllinen lauseke',
 	'phalanx-format-case' => 'kirjainkoko on merkitsevä',
 	'phalanx-format-exact' => 'tarkka',
 	'phalanx-tab-main' => 'Suodattimien hallinta',
@@ -955,6 +960,7 @@ Jos tämä on mielestäsi virhe, ole hyvä ja [[Special:Contact|ota yhteyttä Wi
 	'phalanx-stats-table-user' => 'Lisääjä',
 	'phalanx-stats-table-type' => 'Tyyppi',
 	'phalanx-stats-table-create' => 'Luotu',
+	'phalanx-stats-table-regex' => 'Säännöllinen lauseke',
 	'phalanx-stats-table-language' => 'Kieli',
 	'phalanx-stats-table-text' => 'Teksti',
 	'phalanx-stats-table-reason' => 'Syy',
@@ -1092,9 +1098,12 @@ Veuillez [[Special:Contact|contacter Wikia]] à propos de ce problème.<br />La 
  */
 $messages['fy'] = array(
 	'phalanx' => 'Phalanx',
+	'phalanx-type-user' => 'brûker',
 	'phalanx-type-user-email' => 'e-mail',
+	'phalanx-label-reason' => 'Reden:',
 	'phalanx-label-lang' => 'Taal:',
 	'phalanx-stats-table-language' => 'Taal',
+	'phalanx-stats-table-reason' => 'Reden',
 );
 
 /** Galician (galego)
@@ -1642,17 +1651,34 @@ $messages['ko'] = array(
 	'right-phalanx' => '전역 차단 및 스팸 필터 관리',
 );
 
+/** Kurdish (Latin script) (Kurdî (latînî)‎)
+ * @author Bikarhêner
+ */
+$messages['ku-latn'] = array(
+	'phalanx-type-user' => 'bikarhêner',
+	'phalanx-type-user-email' => 'e-name',
+	'phalanx-label-filter' => 'Fîltre:',
+	'phalanx-label-reason' => 'Sedem:',
+	'phalanx-label-lang' => 'Ziman:',
+	'phalanx-stats-table-reason' => 'Sedem',
+	'phalanx-stats-table-wiki-name' => 'Navê Wîkîye',
+	'phalanx-stats-table-wiki-url' => 'URLya Wîkîye',
+	'phalanx-stats-table-wiki-last-edited' => 'Guherandina dawî',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
 $messages['lb'] = array(
 	'phalanx-type-user' => 'Benotzer',
+	'phalanx-type-user-email' => 'E-Mail',
 	'phalanx-label-filter' => 'Filter:',
 	'phalanx-label-reason' => 'Grond:',
 	'phalanx-label-type' => 'Typ:',
 	'phalanx-label-lang' => 'Sprooch:',
 	'phalanx-test-submit' => 'Test',
 	'phalanx-link-unblock' => 'Spär ophiewen',
+	'phalanx-stats-table-user' => 'Derbäigesat vum',
 	'phalanx-stats-table-type' => 'Typ',
 	'phalanx-stats-table-language' => 'Sprooch',
 	'phalanx-stats-table-text' => 'Text:',
@@ -1660,14 +1686,14 @@ $messages['lb'] = array(
 	'phalanx-stats-table-wiki-name' => 'Numm vun der Wiki',
 );
 
-/** لوری (لوری)
+/** Northern Luri (لوری مینجایی)
  * @author Mogoeilor
  */
 $messages['lrc'] = array(
 	'phalanx' => 'فالانکس',
 	'phalanx-type-summary' => 'چکسته بلگه',
-	'phalanx-type-user' => 'كارور',
-	'phalanx-type-user-email' => 'پیومک برقی',
+	'phalanx-type-user' => 'کاریار',
+	'phalanx-type-user-email' => 'انجومانامه',
 	'phalanx-label-filter' => 'فيلتر',
 	'phalanx-label-reason' => 'دليل:',
 	'phalanx-label-expiry' => 'تموم بين:',
@@ -1679,14 +1705,14 @@ $messages['lrc'] = array(
 	'phalanx-link-unblock' => 'بی قطی',
 	'phalanx-link-modify' => 'آلشت كردن',
 	'phalanx-link-stats' => 'گوتن',
-	'phalanx-stats-table-type' => 'نيسنن كامپيتری',
+	'phalanx-stats-table-type' => 'انجومیار نیسی',
 	'phalanx-stats-table-create' => 'راست بيه',
 	'phalanx-stats-table-expire' => 'تموم بیه آ',
 	'phalanx-stats-table-exact' => 'گپ کردن',
 	'phalanx-stats-table-regex' => 'ریجکس',
 	'phalanx-stats-table-case' => 'نمونه',
 	'phalanx-stats-table-language' => 'زون',
-	'phalanx-stats-table-text' => 'متن',
+	'phalanx-stats-table-text' => 'نیسسه',
 	'phalanx-stats-table-reason' => 'دليل',
 	'phalanx-stats-table-wiki-name' => 'نوم ویکی',
 );
@@ -2194,7 +2220,50 @@ Als je denkt dat dit ten onrechte is, [[Special:Contact|neem dan contact op met 
 	'phalanx-title-move-summary' => 'De samenvatting die je hebt opgegeven bevat niet toegelaten tekst.',
 );
 
-/** Pälzisch (Pälzisch)
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'phalanx' => 'Phalanx',
+	'phalanx-title' => 'Phalanx - mecanisme de defensa de Spam integrat',
+	'phalanx-type-content' => 'contingut de la pagina',
+	'phalanx-type-summary' => 'resumit de la pagina',
+	'phalanx-type-title' => 'títol de la pagina',
+	'phalanx-type-user' => 'utilizaire',
+	'phalanx-type-user-email' => 'adreça de corrièr electronic',
+	'phalanx-type-answers-question-title' => 'títol de la question',
+	'phalanx-type-answers-recent-questions' => 'questions recentas',
+	'phalanx-type-wiki-creation' => 'creacion de wiki',
+	'phalanx-label-filter' => 'Filtre :',
+	'phalanx-label-reason' => 'Motiu :',
+	'phalanx-label-expiry' => 'Expiracion :',
+	'phalanx-label-type' => 'Tipe :',
+	'phalanx-label-lang' => 'Lenga :',
+	'phalanx-view-blocker' => 'Recercar per filtratge de tèxte :',
+	'phalanx-view-blocks' => 'Filtres de recèrca',
+	'phalanx-format-regex' => 'regex',
+	'phalanx-format-exact' => 'exacte',
+	'phalanx-test-submit' => 'Tèst',
+	'phalanx-display-row-blocks' => 'blocatges : $1',
+	'phalanx-link-unblock' => 'desblocar',
+	'phalanx-link-modify' => 'modificar',
+	'phalanx-link-stats' => 'estatisticas',
+	'phalanx-stats-table-type' => 'Tipe',
+	'phalanx-stats-table-create' => 'Creat lo',
+	'phalanx-stats-table-expire' => 'Expira lo',
+	'phalanx-stats-table-exact' => 'Exacte',
+	'phalanx-stats-table-regex' => 'Regex',
+	'phalanx-stats-table-case' => 'Cassa',
+	'phalanx-stats-table-language' => 'Lenga',
+	'phalanx-stats-table-text' => 'Tèxte',
+	'phalanx-stats-table-reason' => 'Rason',
+	'phalanx-stats-table-wiki-id' => 'ID del wiki',
+	'phalanx-stats-table-wiki-name' => 'Nom del wiki',
+	'phalanx-stats-table-wiki-url' => 'URL del wiki',
+	'phalanx-stats-table-wiki-last-edited' => 'Darrièr cambiament',
+);
+
+/** Palatine German (Pälzisch)
  * @author Manuae
  */
 $messages['pfl'] = array(
@@ -2803,7 +2872,7 @@ $messages['ru'] = array(
 	'right-phalanxemailblock' => 'Можно обратиться, просмотреть и управлять e-mail на основе блоков',
 );
 
-/** ꢱꣃꢬꢵꢯ꣄ꢡ꣄ꢬꢵ (ꢱꣃꢬꢵꢯ꣄ꢡ꣄ꢬꢵ)
+/** Saurashtra (ꢱꣃꢬꢵꢯ꣄ꢡ꣄ꢬꢵ)
  * @author MooRePrabu
  */
 $messages['saz'] = array(
@@ -3227,7 +3296,7 @@ $messages['uk'] = array(
 	'right-phalanxemailblock' => 'Можна звернутися, переглянути і управляти ел.поштою на основі блоків',
 );
 
-/** Uzbek (oʻzbekcha)
+/** Uzbek (oʻzbekcha/ўзбекча)
  * @author Sociologist
  */
 $messages['uz'] = array(
@@ -3236,6 +3305,7 @@ $messages['uz'] = array(
 
 /** Vietnamese (Tiếng Việt)
  * @author Baonguyen21022003
+ * @author Dinhxuanduyet
  */
 $messages['vi'] = array(
 	'phalanx-user-block-reason-ip' => 'Địa chỉ IP này đã bị cấm không cho sửa đổi trên toàn cầu Wikia do phá hoại hoặc gián đoạn khác bởi bạn hoặc bởi một người chia sẻ địa chỉ IP của bạn.
@@ -3246,9 +3316,12 @@ Xin vui lòng [[Special:Contact|liên lạc]] với nhân viên về vấn đề
 Nếu bạn tin rằng đây là lỗi, xin vui lòng [[Special:Contact|liên lạc]].<br />Lý do sau đây được cho là: $1.',
 	'phalanx-user-block-withreason-similar' => 'Tên người dùng này bị cấm không cho sửa đổi trên toàn cầu Wikia do phá hoại hoặc bị gián đoạn khác bởi bạn hoặc bởi một người chia sẻ địa chỉ IP của bạn.
 Nếu bạn tin rằng đây là lỗi, xin vui lòng [[Special:Contact|liên lạc]].<br />Lý do sau đây được cho là: $1.',
+	'phalanx-stats-block-notfound' => 'ID bị khóa không tìm thấy',
 	'phalanx-stats-table-language' => 'Ngôn ngữ',
 	'phalanx-stats-table-text' => 'Văn bản',
 	'phalanx-stats-table-reason' => 'Lý do',
+	'phalanx-stats-table-wiki-last-edited' => 'Sửa đổi lần cuối',
+	'phalanx-email-filter-hidden' => 'Bộ lọc Email bị ẩn. Bạn không có quyền được xem văn bản.',
 );
 
 /** Simplified Chinese (中文（简体）‎)
@@ -3377,4 +3450,11 @@ $messages['zh-hant'] = array(
 	'phalanx-test-submit' => '測試',
 	'phalanx-stats-table-regex' => '正規表示法',
 	'phalanx-stats-table-reason' => '原因',
+);
+
+/** Chinese (Hong Kong) (中文（香港）‎)
+ * @author Liuxinyu970226
+ */
+$messages['zh-hk'] = array(
+	'phalanx-type-user' => '用戶',
 );

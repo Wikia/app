@@ -45,6 +45,14 @@ ve.ui.ListTool.static.deactivateOnSelect = false;
 /**
  * @inheritdoc
  */
+ve.ui.ListTool.prototype.onSelect = function () {
+	ve.track( 'tool.list.select', { method: this.method, name: this.constructor.static.name } );
+	ve.ui.Tool.prototype.onSelect.apply( this, arguments );
+};
+
+/**
+ * @inheritdoc
+ */
 ve.ui.ListTool.prototype.onUpdateState = function ( fragment ) {
 	// Parent method
 	ve.ui.Tool.prototype.onUpdateState.apply( this, arguments );

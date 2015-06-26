@@ -14,19 +14,29 @@ define('ext.wikia.adEngine.lookup.amazonMatch', [
 		amazonResponse,
 		amazonTiming,
 		amazonCalled = false,
+		amazonRendered = false,
 		amazonParamPattern = /^a([0-9]x[0-9])p([0-9]+)$/,
 		sizeMapping = {
-			'1x6': 'SKYSCRAPER',
-			'3x2': 'BOXAD',
-			'3x6': 'BOXAD',
-			'7x9': 'LEADERBOARD'
+			'1x6': ['LEFT_SKYSCRAPER_2', 'LEFT_SKYSCRAPER_3'],
+			'3x2': [
+				'TOP_RIGHT_BOXAD',
+				'HOME_TOP_RIGHT_BOXAD',
+				'HUB_TOP_RIGHT_BOXAD',
+				'MOBILE_IN_CONTENT',
+				'MOBILE_PREFOOTER'
+			],
+			'3x5': ['MOBILE_TOP_LEADERBOARD'],
+			'3x6': ['TOP_RIGHT_BOXAD', 'HOME_TOP_RIGHT_BOXAD', 'HUB_TOP_RIGHT_BOXAD'],
+			'7x9': ['TOP_LEADERBOARD', 'HOME_TOP_LEADERBOARD', 'HUB_TOP_LEADERBOARD']
 		},
 		bestPricePointForSize = {
 			'1x6': null,
 			'3x2': null,
+			'3x5': null,
 			'3x6': null,
 			'7x9': null
-		};
+		},
+		module;
 
 	function trackState(trackEnd) {
 		log(['trackState', amazonResponse], 'debug', logGroup);
@@ -36,16 +46,12 @@ define('ext.wikia.adEngine.lookup.amazonMatch', [
 
 		if (amazonResponse) {
 			eventName = 'lookupSuccess';
-			if (Object.keys) {
-				Object.keys(sizeMapping).forEach(function (amazonSize) {
-					var pricePoint = bestPricePointForSize[amazonSize];
-					if (pricePoint) {
-						data['a' + amazonSize] = 'p' + pricePoint;
-					}
-				});
-			} else {
-				data.ie8 = 1; // No detailed tracking for IE8, sorry
-			}
+			Object.keys(sizeMapping).forEach(function (amazonSize) {
+				var pricePoint = bestPricePointForSize[amazonSize];
+				if (pricePoint) {
+					data['a' + amazonSize] = 'p' + pricePoint;
+				}
+			});
 		} else {
 			eventName = 'lookupError';
 		}
@@ -65,7 +71,7 @@ define('ext.wikia.adEngine.lookup.amazonMatch', [
 			amazonResponse = response.ads;
 		}
 
-		if (amazonResponse && Object.keys) {
+		if (amazonResponse) {
 			var targetingParams = Object.keys(amazonResponse),
 				allPricePointsForSize = {},
 				i,
@@ -98,11 +104,14 @@ define('ext.wikia.adEngine.lookup.amazonMatch', [
 			});
 		}
 
+		log(['onAmazonResponse - end', bestPricePointForSize], 'debug', logGroup);
+
 		trackState(true);
 	}
 
 	function renderAd(doc, adId) {
-		log(['getPageParams', doc, adId, 'available: ' + !!amazonResponse[adId]], 'debug', logGroup);
+		log(['renderAd', doc, adId, 'available: ' + !!amazonResponse[adId]], 'debug', logGroup);
+		amazonRendered = true;
 		doc.write(amazonResponse[adId]);
 	}
 
@@ -131,7 +140,6 @@ define('ext.wikia.adEngine.lookup.amazonMatch', [
 		s.async = true;
 		s.src = '//aax.amazon-adsystem.com/e/dtb/bid?src=' + amazonId + '&u=' + url + '&cb=' + cb;
 		doc.body.appendChild(s);
-
 	}
 
 	function wasCalled() {
@@ -139,25 +147,30 @@ define('ext.wikia.adEngine.lookup.amazonMatch', [
 		return amazonCalled;
 	}
 
+	function hasResponse() {
+		log(['hasResponse', amazonResponse], 'debug', logGroup);
+		return (amazonResponse) ? true : false;
+	}
+
 	function getSlotParams(slotName) {
-		log(['getSlotParams'], 'debug', logGroup);
+		log(['getSlotParams', slotName], 'debug', logGroup);
 
 		var amznSlots = [];
 
-		// No Object.keys on IE8
-		if (!Object.keys) {
-			log(['filterSlots()', 'no Object.keys (IE8?)'], 'error', logGroup);
-			return {};
+		if (!amazonRendered) {
+			Object.keys(sizeMapping).forEach(function (amazonSize) {
+				var validSlotNames = sizeMapping[amazonSize],
+					amazonPricePoint = bestPricePointForSize[amazonSize];
+
+				if (validSlotNames.indexOf(slotName) !== -1 && amazonPricePoint) {
+					amznSlots.push('a' + amazonSize + 'p' + amazonPricePoint);
+				}
+			});
+
+			log(['getSlotParams - amznSlots: ', amznSlots], 'debug', logGroup);
+		} else {
+			log(['getSlotParams - no amznSlots since ads has been already displayed', slotName], 'debug', logGroup);
 		}
-
-		Object.keys(sizeMapping).forEach(function (amazonSize) {
-			var slotNamePattern = sizeMapping[amazonSize],
-				amazonPricePoint = bestPricePointForSize[amazonSize];
-
-			if (slotName.search(slotNamePattern) > -1 && amazonPricePoint) {
-				amznSlots.push('a' + amazonSize + 'p' + amazonPricePoint);
-			}
-		});
 
 		if (amznSlots.length) {
 			return {
@@ -168,12 +181,29 @@ define('ext.wikia.adEngine.lookup.amazonMatch', [
 		return {};
 	}
 
-	return {
-		call: call,
-		getSlotParams: getSlotParams,
-		trackState: function () { trackState(); },
-		wasCalled: wasCalled
+	module = {
+		call: function () {
+			log('fake call - module is not supported in IE8', 'debug', logGroup);
+		},
+		getSlotParams: function () {
+			log('fake getSlotParams - module is not supported in IE8', 'debug', logGroup);
+			return {};
+		},
+		trackState: function () {
+			log('fake trackState - module is not supported in IE8', 'debug', logGroup);
+		},
+		wasCalled: wasCalled,
+		hasResponse: hasResponse
 	};
+
+	if (!Object.keys) {
+		return module;
+	} else {
+		module.call = call;
+		module.getSlotParams = getSlotParams;
+		module.trackState = trackState;
+		return module;
+	}
 });
 
 define('ext.wikia.adEngine.amazonMatch', [

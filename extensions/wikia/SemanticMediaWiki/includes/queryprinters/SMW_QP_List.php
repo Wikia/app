@@ -244,7 +244,11 @@ END;
 						}
 					}
 					
-					$result .= Sanitizer::stripAllTags( $text ); // actual output value
+					if ( $this->isPlainlist() ) {
+						$result .= $text;
+					} else {
+						$result .= Sanitizer::stripAllTags( $text ); // actual output value
+					}
 				}
 				
 				$first_col = false;

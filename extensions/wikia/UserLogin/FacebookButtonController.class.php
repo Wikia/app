@@ -15,6 +15,8 @@ class FacebookButtonController extends WikiaController {
 
 		if ( $this->app->checkSkin( 'wikiamobile' ) ) {
 			JSMessages::registerPackage( 'fblogin' , array( 'wikiamobile-facebook-connect-fail' ) );
+			JSMessages::enqueuePackage( 'fblogin', JSMessages::INLINE );
+
 			$this->response->setVal( 'requestType', $this->request->getVal( 'requestType' ) );
 			$this->overrideTemplate( 'WikiaMobileIndex' );
 		}

@@ -64,7 +64,7 @@ class PBLoginForm extends LoginForm {
 		$this->mRemember = (bool) $wgUser->getOption( 'rememberpassword' );
 	}
 
-	function mainLoginForm( $msg, $msgtype = 'error' ) {
+	function mainLoginForm( $msg, $msgtype = 'error', $errParam = '' ) {
 		$this->templateData['messagetype'] = $msgtype;
 		$this->templateData['message'] = $msg;
 		$this->templateData['name'] = $this->mUsername;

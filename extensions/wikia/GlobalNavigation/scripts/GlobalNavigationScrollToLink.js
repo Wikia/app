@@ -37,6 +37,13 @@ require(
 				$globalNavigation.css({
 					top: 0
 				});
+
+				$win.on('load', function() {
+					win.setTimeout(function() {
+						win.scrollTo(0, win.scrollY + offset);
+						$globalNavigation.animate({top: globalNavigationHeight}, 500);
+					}, 0);
+				});
 			}
 
 			// offset is negative - we want scroll BEFORE element's top offset
@@ -44,13 +51,5 @@ require(
 			offset = -(globalNavigationHeight + spacingBelowGlobalNav);
 
 			$win.on('hashchange', hashChangeHandler)
-				.on('load', function() {
-					win.setTimeout(function() {
-						win.scrollTo(0, win.scrollY + offset);
-						$globalNavigation.animate({top: globalNavigationHeight}, 500);
-					}, 0);
-				});
 		});
-
-
 });

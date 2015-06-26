@@ -375,7 +375,7 @@ body.lvs-loading {
 }
 
 // temp fix for responsive layout and lvs
-@if($responsive-layout-enabled) {
+@if($responsive-or-breakpoints-layout-enabled) {
 	.LVSGrid {
 		margin: 0 auto;
 		width: 1010px;

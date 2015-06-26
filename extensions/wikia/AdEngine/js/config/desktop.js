@@ -10,13 +10,14 @@ define('ext.wikia.adEngine.config.desktop', [
 
 	// adProviders
 	'ext.wikia.adEngine.provider.evolve',
-	'ext.wikia.adEngine.provider.liftium',
 	'ext.wikia.adEngine.provider.directGpt',
+	'ext.wikia.adEngine.provider.liftium',
+	'ext.wikia.adEngine.provider.monetizationService',
+	'ext.wikia.adEngine.provider.openX',
 	'ext.wikia.adEngine.provider.remnantGpt',
 	'ext.wikia.adEngine.provider.sevenOneMedia',
 	'ext.wikia.adEngine.provider.turtle',
-	require.optional('ext.wikia.adEngine.provider.taboola'),
-	require.optional('ext.wikia.adEngine.adDecoratorTopInContent')
+	require.optional('ext.wikia.adEngine.provider.taboola')
 ], function (
 	// regular dependencies
 	log,
@@ -28,14 +29,14 @@ define('ext.wikia.adEngine.config.desktop', [
 
 	// AdProviders
 	adProviderEvolve,
-	adProviderLiftium,
 	adProviderDirectGpt,
+	adProviderLiftium,
+	adProviderMonetizationService,
+	adProviderOpenX,
 	adProviderRemnantGpt,
 	adProviderSevenOneMedia,
 	adProviderTurtle,
-	adProviderTaboola,
-
-	adDecoratorTopInContent
+	adProviderTaboola
 ) {
 	'use strict';
 
@@ -52,13 +53,7 @@ define('ext.wikia.adEngine.config.desktop', [
 		dartEnabled = !instantGlobals.wgSitewideDisableGpt;
 
 	function getDecorators() {
-		var decorators = [adDecoratorPageDimensions];
-
-		if (adDecoratorTopInContent) {
-			decorators.push(adDecoratorTopInContent);
-		}
-
-		return decorators;
+		return [adDecoratorPageDimensions];
 	}
 
 	function getProviderList(slotName) {
@@ -72,7 +67,21 @@ define('ext.wikia.adEngine.config.desktop', [
 			return [];
 		}
 
-		if (context.forceProviders.liftium) {
+		// Force Turtle
+		if (context.forcedProvider === 'turtle') {
+			log(['getProvider', slotName, 'Turtle (wgAdDriverForcedProvider)'], 'info', logGroup);
+			return [adProviderTurtle];
+		}
+
+		// Force OpenX
+		if (context.forcedProvider === 'openx') {
+			log(['getProvider', slotName, 'OpenX (wgAdDriverForcedProvider)'], 'info', logGroup);
+			return [adProviderOpenX];
+		}
+
+		// Force Liftium
+		if (context.forcedProvider === 'liftium') {
+			log(['getProvider', slotName, 'Liftium (wgAdDriverForcedProvider)'], 'info', logGroup);
 			return [adProviderLiftium];
 		}
 
@@ -98,6 +107,15 @@ define('ext.wikia.adEngine.config.desktop', [
 			return [adProviderTaboola];
 		}
 
+		// MonetizationService
+		if (context.providers.monetizationService && adProviderMonetizationService.canHandleSlot(slotName)) {
+			if (instantGlobals.wgSitewideDisableMonetizationService) {
+				log('MonetizationService disabled by DR. No ads', 'warn', logGroup);
+				return [];
+			}
+			return [adProviderMonetizationService];
+		}
+
 		// First provider: Turtle, Evolve or Direct GPT?
 		if (context.providers.turtle) {
 			providerList.push(adProviderTurtle);
@@ -112,8 +130,12 @@ define('ext.wikia.adEngine.config.desktop', [
 			providerList.push(adProviderRemnantGpt);
 		}
 
-		// Last resort provider: Liftium
-		providerList.push(adProviderLiftium);
+		// Last resort provider: OpenX or Liftium
+		if (context.providers.openX && adProviderOpenX.canHandleSlot(slotName)) {
+			providerList.push(adProviderOpenX);
+		} else {
+			providerList.push(adProviderLiftium);
+		}
 
 		return providerList;
 	}

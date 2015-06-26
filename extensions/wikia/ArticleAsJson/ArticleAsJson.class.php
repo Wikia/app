@@ -7,7 +7,7 @@ class ArticleAsJson extends WikiaService {
 		'imageMaxWidth' => false
 	];
 
-	const CACHE_VERSION = '0.0.2';
+	const CACHE_VERSION = '0.0.3';
 
 	private static function createMarker( $width = 0, $height = 0, $isGallery = false ){
 		$blankImgUrl = F::app()->wg->blankImgUrl;
@@ -19,17 +19,25 @@ class ArticleAsJson extends WikiaService {
 		return "<img src='{$blankImgUrl}' class='{$classes}' data-ref='{$id}'{$width}{$height} />";
 	}
 
-	private static function createMediaObj( $details, $imageName, $caption = '', $link = null ) {
+	public static function createMediaObject( $details, $imageName, $caption = null, $link = null ) {
 		wfProfileIn( __METHOD__ );
-
+		
+		$context = '';
 		$media = [
 			'type' => $details['mediaType'],
 			'url' => $details['rawImageUrl'],
 			'fileUrl' => $details['fileUrl'],
 			'title' => $imageName,
-			'caption' => $caption,
 			'user' => $details['userName']
 		];
+
+		if ( isset( $details['context'] ) ) {
+			$context = $details['context'];
+		}
+
+		if ( is_string( $context ) && $context !== '' ) {
+			$media['context'] = $context;
+		}
 
 		if ( is_string( $link ) && $link !== '' ) {
 			$media['link'] = $link;
@@ -43,11 +51,15 @@ class ArticleAsJson extends WikiaService {
 			$media['height'] = (int) $details['height'];
 		}
 
+		if ( is_string( $caption ) && $caption !== '' ) {
+			$media['caption'] = $caption;
+		}
+
 		if ( $details['mediaType'] == 'video' ) {
 			$media['views'] = (int) $details['videoViews'];
 			$media['embed'] = $details['videoEmbedCode'];
-			$media['provider'] = $details['providerName'];
 			$media['duration'] = $details['duration'];
+			$media['provider'] = $details['providerName'];
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -91,7 +103,7 @@ class ArticleAsJson extends WikiaService {
 					$caption = $parser->parse( $caption, $title, $parserOptions, false )->getText();
 				}
 				$linkHref = isset( $image['linkhref'] ) ? $image['linkhref'] : null;
-				$media[] = self::createMediaObj( $details, $image['name'], $caption, $linkHref );
+				$media[] = self::createMediaObject( $details, $image['name'], $caption, $linkHref );
 
 				self::addUserObj($details);
 			}
@@ -107,6 +119,21 @@ class ArticleAsJson extends WikiaService {
 			ParserPool::release( $parser );
 			wfProfileOut( __METHOD__ );
 			return false;
+		}
+
+		wfProfileOut( __METHOD__ );
+		return true;
+	}
+
+	public static function onPortableInfoboxNodeImageGetData( $title, &$ref, $alt ) {
+
+		wfProfileIn( __METHOD__ );
+		if ( $title ) {
+			$details = WikiaFileHelper::getMediaDetail( $title, self::$mediaDetailConfig );
+			//TODO: When there will be more image contexts, move strings to const
+			$details['context'] = 'infobox-big';
+			self::$media[] = self::createMediaObject( $details, $title->getText(), $alt );
+			$ref = count( self::$media ) - 1;
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -129,7 +156,7 @@ class ArticleAsJson extends WikiaService {
 
 			$details = WikiaFileHelper::getMediaDetail( $title, self::$mediaDetailConfig );
 
-			self::$media[] = self::createMediaObj( $details, $title->getText(), $frameParams['caption'], $linkHref );
+			self::$media[] = self::createMediaObject( $details, $title->getText(), $frameParams['caption'], $linkHref );
 
 			self::addUserObj($details);
 
@@ -186,13 +213,8 @@ class ArticleAsJson extends WikiaService {
 				}
 			}
 
-			//because we take caption out of main parser flow
-			//we have to replace links manually
-			//gallery caption we parse ourselves so they are ok here
 			foreach ( self::$media as &$media ) {
-				if ( !empty( $media['caption'] ) && is_string( $media['caption'] ) ) {
-					$parser->replaceLinkHolders( $media['caption'] );
-				}
+				self::linkifyMediaCaption( $parser, $media );
 			}
 
 			$text = json_encode( [
@@ -234,5 +256,25 @@ class ArticleAsJson extends WikiaService {
 		}
 
 		return true;
+	}
+
+	/**
+	 * Because we take captions out of main parser flow we have to replace links manually
+	 *
+	 * @param Parser $parser
+	 * @param $media
+	 */
+	private static function linkifyMediaCaption( Parser $parser, &$media ) {
+		$caption = $media['caption'];
+		if (
+			!empty( $caption ) &&
+			is_string( $caption ) &&
+			(
+				strpos( $caption, '<!--LINK' ) !== false ||
+				strpos( $caption, '<!--IWLINK' ) !== false
+			)
+		) {
+			$parser->replaceLinkHolders( $media['caption'] );
+		}
 	}
 }

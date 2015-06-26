@@ -22,42 +22,37 @@ class PageShareHelper {
 
 	/**
 	 * Get language for Page Share service.
-	 * For anon users use the browser language from client side, if empty default to EN.
-	 * For logged in user use user's language.
-	 * Both values can be overwritten by ?uselang parameter which is passed from the client side.
+	 * Language code is sent from the client side. If it's empty, the default (en) is returned.
 	 *
-	 * @param $browserLang
-	 * @param $useLang
+	 * @param $requestShareLang
 	 * @return String language
 	 */
-	public static function getLangForPageShare( $browserLang, $useLang ) {
-		global $wgLang, $wgUser;
-
-		if ( !empty ( $useLang ) ) {
-			return $useLang;
-		} else if ( $wgUser->isAnon() ) {
-			if ( !empty( $browserLang ) ) {
-				return $browserLang;
-			} else {
-				return self::SHARE_DEFAULT_LANGUAGE;
-			}
-		} else {
-			return $wgLang->getCode();
-		}
+	public static function getLangForPageShare( $requestShareLang ) {
+		return empty( $requestShareLang ) ? self::SHARE_DEFAULT_LANGUAGE : $requestShareLang;
 	}
 
-	public static function isValidShareService( $service, $lang ) {
-		// filter through include list, default of true
-		if ( array_key_exists( 'languages:include', $service ) && is_array( $service['languages:include'] ) ) {
-			$allowedInLanguage = in_array( $lang, $service['languages:include'] );
-		} else {
-			$allowedInLanguage = true;
-		}
-		// filter through exclude list
-		if ( array_key_exists( 'languages:exclude', $service ) && is_array( $service['languages:exclude'] ) ) {
-			$allowedInLanguage = $allowedInLanguage && !in_array( $lang, $service['languages:exclude'] );
+	public static function isValidShareService( $service, $lang, $isTouchScreen ) {
+		// Don't display LINE social network or any other mobile app on desktops
+		if ( !$isTouchScreen && !empty( $service['displayOnlyOnTouchDevices'] ) ) {
+			return false;
 		}
 
-		return $allowedInLanguage && array_key_exists( 'url', $service ) && array_key_exists( 'title', $service ) && array_key_exists( 'name', $service );
+		// filter through include list
+		if ( array_key_exists( 'languages:include', $service ) && is_array( $service['languages:include'] ) ) {
+			$allowedInLanguage = in_array( $lang, $service['languages:include'] );
+		}
+		// filter through exclude list
+		elseif ( array_key_exists( 'languages:exclude', $service ) && is_array( $service['languages:exclude'] ) ) {
+			$allowedInLanguage = !in_array( $lang, $service['languages:exclude'] );
+		}
+		// if no inclusion or exclusion rules are set, default to true
+		else {
+			$allowedInLanguage = true;
+		}
+
+		return $allowedInLanguage
+			&& array_key_exists( 'name', $service )
+			&& array_key_exists( 'title', $service )
+			&& array_key_exists( 'href', $service );
 	}
 }

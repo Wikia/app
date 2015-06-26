@@ -32,25 +32,134 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		return $title;
 	}
 
+	private function mockMonetizationModule() {
+		$name = 'MonetizationModuleHelper';
+		$mock = $this->getMock( $name );
+		$mock->method( 'getMonetizationUnits' )->willReturn( ['below_category' => 'testing'] );
+		$mock->method( 'getWikiVertical' )->willReturn( 'other' );
+		$mock->method( 'getCacheVersion' )->willReturn( 'v1' );
+		$this->mockClass( $name, $mock );
+		$this->mockStaticMethod( $name, 'canShowModule', true );
+	}
+
 	public function adContextDataProvider() {
 		return [
 			[ ],
 
-			[ 'article', ['wgAdDriverEnableAdsInMaps'], ['enableAdsInMaps' => true] ],
-			[ 'article', ['wgAdDriverForceTurtleAd'], [], [], [], ['turtle' => true] ],
-			[ 'article', ['wgAdDriverTrackState'], ['trackSlotState' => true], [] ],
-			[ 'article', ['wgAdDriverUseSevenOneMedia'], [], [], ['sevenOneMedia' => true] ],
-			[ 'article', ['wgAdDriverWikiIsTop1000'], [], ['wikiIsTop1000' => true] ],
-			[ 'article', ['wgAdEngineDisableLateQueue'], ['disableLateQueue' => true] ],
-			[ 'article', ['wgEnableAdsInContent'], ['adsInContent' => true] ],
-			[ 'article', ['wgEnableKruxTargeting'], [], ['enableKruxTargeting' => true] ],
-			[ 'article', ['wgEnableWikiaHomePageExt'], ['pageType' => 'corporate'], ['wikiIsCorporate' => true] ],
-			[ 'article', ['wgEnableWikiaHubsV3Ext'], ['pageType' => 'corporate'], ['pageIsHub' => true, 'wikiIsCorporate' => true] ],
-			[ 'article', ['wgWikiDirectedAtChildrenByFounder'], [], ['wikiDirectedAtChildren' => true] ],
-			[ 'article', ['wgWikiDirectedAtChildrenByStaff'], [], ['wikiDirectedAtChildren' => true] ],
+			[
+				'titleMockType' => 'article',
+				'flags' => ['wgAdDriverEnableAdsInMaps'],
+				'expectedOpts' => ['enableAdsInMaps' => true]
+			],
+			[
+				'titleMockType' => 'article',
+				'flags' => ['wgAdDriverEnableInvisibleHighImpactSlot'],
+				'expectedOpts' => [],
+				'expectedTargeting' => [],
+				'expectedProviders' => [],
+				'expectedForceProviders' => null,
+				'expectedSlots' => ['invisibleHighImpact' => true]
+			],
+			[
+				'titleMockType' => 'article',
+				'flags' => ['wgAdDriverForceTurtleAd'],
+				'expectedOpts' => [],
+				'expectedTargeting' => [],
+				'expectedProviders' => [],
+				'expectedForcedProvider' => 'turtle'
+			],
+			[
+				'titleMockType' => 'article',
+				'flags' => ['wgAdDriverTrackState'],
+				'expectedOpts' => ['trackSlotState' => true],
+				'expectedTargeting' => []
+			],
+			[
+				'titleMockType' => 'article',
+				'flags' => ['wgAdDriverUseMonetizationService', 'wgEnableMonetizationModuleExt'],
+				'expectedOpts' => [],
+				'expectedTargeting' => [],
+				'expectedProviders' => ['monetizationService' => true]
+			],
+			[
+				'titleMockType' => 'article',
+				'flags' => ['wgAdDriverUseSevenOneMedia'],
+				'expectedOpts' => [],
+				'expectedTargeting' => [],
+				'expectedProviders' => ['sevenOneMedia' => true]
+			],
+			[
+				'titleMockType' => 'article',
+				'flags' => ['wgAdDriverWikiIsTop1000'],
+				'expectedOpts' => [],
+				'expectedTargeting' => ['wikiIsTop1000' => true]
+			],
+			[
+				'titleMockType' => 'article',
+				'flags' => ['wgEnableAdsInContent'],
+				'expectedOpts' => ['adsInContent' => true]
+			],
+			[
+				'titleMockType' => 'article',
+				'flags' => ['wgEnableKruxTargeting'],
+				'expectedOpts' => [],
+				'expectedTargeting' => ['enableKruxTargeting' => true]
+			],
+			[
+				'titleMockType' => 'article',
+				'flags' => ['wgEnableOutboundScreenExt'],
+				'expectedOpts' => [],
+				'expectedTargeting' => [],
+				'expectedProviders' => [],
+				'expectedForceProviders' => null,
+				'expectedSlots' => ['exitstitial' => true]
+			],
+			[
+				'titleMockType' => 'article',
+				'flags' => ['wgOutboundScreenRedirectDelay'],
+				'expectedOpts' => [],
+				'expectedTargeting' => [],
+				'expectedProviders' => [],
+				'expectedForceProviders' => null,
+				'expectedSlots' => ['exitstitialRedirectDelay' => true]
+			],
+			[
+				'titleMockType' => 'article',
+				'flags' => ['wgEnableWikiaHomePageExt'],
+				'expectedOpts' => ['pageType' => 'corporate'],
+				'expectedTargeting' => ['wikiIsCorporate' => true]
+			],
+			[
+				'titleMockType' => 'article',
+				'flags' => ['wgEnableWikiaHubsV3Ext'],
+				'expectedOpts' => ['pageType' => 'corporate'],
+				'expectedTargeting' => ['pageIsHub' => true, 'wikiIsCorporate' => true]
+			],
+			[
+				'titleMockType' => 'article',
+				'flags' => ['wgWikiDirectedAtChildrenByFounder'],
+				'expectedOpts' => [],
+				'expectedTargeting' => ['wikiDirectedAtChildren' => true]
+			],
+			[
+				'titleMockType' => 'article',
+				'flags' => ['wgWikiDirectedAtChildrenByStaff'],
+				'expectedOpts' => [],
+				'expectedTargeting' => ['wikiDirectedAtChildren' => true]
+			],
 
-			[ 'mainpage', [], [], ['pageType' => 'home'] ],
-			[ 'search', [], ['pageType' => 'search'], ['pageType' => 'search', 'pageName' => 'Special:Search'] ],
+			[
+				'titleMockType' => 'mainpage',
+				'flags' => [],
+				'expectedOpts' => [],
+				'expectedTargeting' => ['pageType' => 'home']
+			],
+			[
+				'titleMockType' => 'search',
+				'flags' => [],
+				'expectedOpts' => ['pageType' => 'search'],
+				'expectedTargeting' => ['pageType' => 'search', 'pageName' => 'Special:Search']
+			],
 		];
 	}
 
@@ -66,7 +175,8 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		$expectedOpts = [],
 		$expectedTargeting = [],
 		$expectedProviders = [],
-		$expectedForceProviders = []
+		$expectedForcedProvider = null,
+		$expectedSlots = []
 	) {
 		$langCode = 'xx';
 		$artId = 777;
@@ -92,16 +202,23 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		$this->mockGlobalVariable( 'wgDBname', $dbName );
 		$this->mockGlobalVariable( 'wgAdDriverSevenOneMediaOverrideSub2Site', $sevenOneMediaSub2Site );
 
+		if ( !is_null( $expectedForcedProvider ) ) {
+			$this->mockGlobalVariable( 'wgAdDriverForcedProvider', $expectedForcedProvider );
+		}
+
 		// Flags
 		$this->mockGlobalVariable( 'wgAdDriverEnableAdsInMaps', false );
-		$this->mockGlobalVariable( 'wgAdDriverForceTurtleAd', false );
+		$this->mockGlobalVariable( 'wgAdDriverEnableInvisibleHighImpactSlot', false );
 		$this->mockGlobalVariable( 'wgAdDriverTrackState', false );
+		$this->mockGlobalVariable( 'wgAdDriverUseMonetizationService', false );
 		$this->mockGlobalVariable( 'wgAdDriverUseSevenOneMedia', false );
-		$this->mockGlobalVariable( 'wgAdEngineDisableLateQueue', false );
 		$this->mockGlobalVariable( 'wgEnableAdsInContent', false );
 		$this->mockGlobalVariable( 'wgEnableKruxTargeting', false );
+		$this->mockGlobalVariable( 'wgEnableMonetizationModuleExt', false );
 		$this->mockGlobalVariable( 'wgEnableWikiaHomePageExt', false );
 		$this->mockGlobalVariable( 'wgEnableWikiaHubsV3Ext', false );
+		$this->mockGlobalVariable( 'wgEnableOutboundScreenExt', false );
+		$this->mockGlobalVariable( 'wgOutboundScreenRedirectDelay', false );
 		$this->mockGlobalVariable( 'wgWikiDirectedAtChildrenByFounder', false );
 		$this->mockGlobalVariable( 'wgWikiDirectedAtChildrenByStaff', false );
 
@@ -115,6 +232,11 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 
 		// Mock HubService
 		$this->mockStaticMethod( 'HubService', 'getCategoryInfoForCity', (object) ['cat_name' => $vertical] );
+
+		// Mock MonetizationModule
+		if ( in_array( 'wgAdDriverUseMonetizationService', $flags ) ) {
+			$this->mockMonetizationModule();
+		}
 
 		$adContextService = new AdEngine2ContextService();
 		$result = $adContextService->getContext( $this->getTitleMock( $titleMockType, $langCode, $artId, $artDbKey ), $skinName );
@@ -139,8 +261,7 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 			],
 			'slots' => [
 			],
-			'forceProviders' => [
-			],
+			'forcedProvider' => $expectedForcedProvider
 		];
 
 		foreach ( $expectedOpts as $var => $val ) {
@@ -155,14 +276,21 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 			$expected['providers'][$var] = $val;
 		}
 
-		foreach ( $expectedForceProviders as $var => $val ) {
-			$expected['forceProviders'][$var] = $val;
+		foreach ( $expectedSlots as $var => $val ) {
+			$expected['slots'][$var] = $val;
 		}
 
 		// Extra check for SevenOne Media URL
 		if ( isset( $expectedProviders['sevenOneMedia'] ) ) {
 			$this->assertStringMatchesFormat( $expectedSevenOneMediaUrlFormat, $result['providers']['sevenOneMediaCombinedUrl'] );
 			unset( $result['providers']['sevenOneMediaCombinedUrl'] );
+		}
+
+		// Extra check for Monetization Service
+		if ( isset( $expectedProviders['monetizationService'] ) ) {
+			$this->assertTrue( is_array( $result['providers']['monetizationServiceAds'] ) );
+			$this->assertNotEmpty( $result['providers']['monetizationServiceAds'] );
+			unset( $result['providers']['monetizationServiceAds'] );
 		}
 
 		$this->assertEquals( $expected, $result );

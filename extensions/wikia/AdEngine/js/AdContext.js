@@ -7,14 +7,16 @@ define('ext.wikia.adEngine.adContext', [
 	'wikia.document',
 	'wikia.geo',
 	'wikia.instantGlobals',
+	'wikia.querystring',
 	require.optional('wikia.abTest')
-], function (w, doc, geo, instantGlobals, abTest) {
+], function (w, doc, geo, instantGlobals, Querystring, abTest) {
 	'use strict';
 
 	instantGlobals = instantGlobals || {};
 
 	var context,
-		callbacks = [];
+		callbacks = [],
+		qs = new Querystring();
 
 	function getContext() {
 		return context;
@@ -41,18 +43,14 @@ define('ext.wikia.adEngine.adContext', [
 
 		// Always have objects in all categories
 		context.opts = context.opts || {};
+		context.slots = context.slots || {};
 		context.targeting = context.targeting || {};
 		context.providers = context.providers || {};
-		context.forceProviders = context.forceProviders || {};
+		context.forcedProvider = qs.getVal('forcead', null) || context.forcedProvider || null;
 
 		// Don't show ads when Sony requests the page
 		if (doc && doc.referrer && doc.referrer.match(/info\.tvsideview\.sony\.net/)) {
 			context.opts.showAds = false;
-		}
-
-		// Use PostScribe for ScriptWriter implementation when SevenOne Media ads are enabled
-		if (context.providers.sevenOneMedia) {
-			context.opts.usePostScribe = true;
 		}
 
 		// Targeting by page categories
@@ -71,16 +69,25 @@ define('ext.wikia.adEngine.adContext', [
 				(context.targeting.pageType === 'article' || context.targeting.pageType === 'home');
 		}
 
-		// Turtle
-		if (context.forceProviders.turtle) {
-			context.providers.turtle = true;
-		}
-
 		if (instantGlobals.wgAdDriverTurtleCountries &&
 				instantGlobals.wgAdDriverTurtleCountries.indexOf &&
 				instantGlobals.wgAdDriverTurtleCountries.indexOf(geo.getCountryCode()) > -1
 					) {
 			context.providers.turtle = true;
+		}
+
+		if (instantGlobals.wgAdDriverOpenXCountries &&
+			instantGlobals.wgAdDriverOpenXCountries.indexOf &&
+			instantGlobals.wgAdDriverOpenXCountries.indexOf(geo.getCountryCode()) > -1
+		) {
+			context.providers.openX = true;
+		}
+
+		if (instantGlobals.wgAdDriverHighImpactSlotCountries &&
+				instantGlobals.wgAdDriverHighImpactSlotCountries.indexOf &&
+				instantGlobals.wgAdDriverHighImpactSlotCountries.indexOf(geo.getCountryCode()) > -1
+					) {
+			context.slots.invisibleHighImpact = true;
 		}
 
 		// Export the context back to ads.context

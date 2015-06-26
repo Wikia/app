@@ -146,21 +146,32 @@ class UserMailer {
 	 * array of parameters. It requires PEAR:Mail to do that.
 	 * Otherwise it just uses the standard PHP 'mail' function.
 	 *
-	 * @param $to MailAddress: recipient's email (or an array of them)
-	 * @param $from MailAddress: sender's email
-	 * @param $subject String: email's subject.
-	 * @param $body String: email's text.
+	 * @param MailAddress $to : recipient's email (or an array of them)
+	 * @param MailAddress $from : sender's email
+	 * @param String $subject : email's subject.
+	 * @param String $body : email's text.
 	 * $body can be array with text and html version of email message, and also can contain attachements
 	 * $body = array('text' => 'Email text', 'html' => '<b>Email text</b>')
-	 * @param $replyto MailAddress: optional reply-to email (default: null).
-	 * @param $contentType String: optional custom Content-Type (default: text/plain; charset=UTF-8)
-	 * @param $contentType String: optional custom Content-Type
-	 * @param $category String: optional category for statistic
-	 * @param $priority int: optional priority for email
-	 * @param $attachements Array: optional list of files to send as attachements
+	 * @param MailAddress $replyTo : optional reply-to email (default: null).
+	 * @param String $contentType : optional custom Content-Type
+	 * @param String $category : optional category for statistic
+	 * @param int $priority : optional priority for email
+	 * @param Array $attachments : optional list of files to send as attachments
+	 *
 	 * @return Status object
+	 * @throws MWException
 	 */
-	public static function send( $to, $from, $subject, $body, $replyto = null, $contentType = null, $category = 'UserMailer', $priority = 0, $attachements = [] ) {
+	public static function send(
+		MailAddress $to,
+		MailAddress $from,
+		$subject,
+		$body,
+		MailAddress $replyTo = null,
+		$contentType = null,
+		$category = 'UserMailer',
+		$priority = 0,
+		$attachments = []
+	) {
 
 		if ( !is_array( $to ) ) {
 			$to = [ $to ];
@@ -209,14 +220,14 @@ class UserMailer {
 		$headers['From'] = $from->toString();
 		$headers['Return-Path'] = $from->address;
 
-		if ( $replyto && $replyto instanceof MailAddress ) {
-			$headers['Reply-To'] = $replyto->toString();
+		if ( $replyTo && $replyTo instanceof MailAddress ) {
+			$headers['Reply-To'] = $replyTo->toString();
 		}
 
 		$headers['Date'] = date( 'r' );
 		$headers['MIME-Version'] = '1.0';
 
-		if ( empty( $attachements ) ) {
+		if ( empty( $attachments ) ) {
 			$headers['Content-Type'] = ( is_null( $contentType ) ?
 				'text/plain; charset=UTF-8' : $contentType );
 			$headers['Content-Transfer-Encoding'] = '8bit';
@@ -230,7 +241,7 @@ class UserMailer {
 			$headers['X-Priority'] = $priority;
 		}
 
-		$ret = wfRunHooks( 'AlternateUserMailer', [ $headers, $to, $from, $subject, $body , $priority, $attachements ] );
+		$ret = wfRunHooks( 'AlternateUserMailer', [ $headers, $to, $from, $subject, $body , $priority, $attachments ] );
 		if ( $ret === false ) {
 			return Status::newGood();
 		} elseif ( $ret !== true ) {

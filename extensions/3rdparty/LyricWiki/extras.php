@@ -65,6 +65,7 @@ function sandboxParse($wikiText)
 
 	// do the parsing
 	wfRunHooks( 'custom_SandboxParse', array( &$wikiText ) );
+	$wgTitle = (empty($wgTitle) ? new Title() : $wgTitle);
 	$result = $wgParser->parse($wikiText, $wgTitle, $myParserOptions); /* @var $result ParserOutput */
 	$result = $result->getText();
 

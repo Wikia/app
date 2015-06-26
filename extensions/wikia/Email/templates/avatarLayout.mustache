@@ -1,8 +1,4 @@
-<div class="greeting">
-	<p>{{salutation}}</p>
-	<p>{{{articleEditedText}}}</p>
-</div>
-
+{{> greeting}}
 <table>
 	<tr>
 		<td valign="top">
@@ -27,18 +23,27 @@
 						</a>
 					{{/ editorProfilePage}}
 				</p>
-				<p>{{summary}}</p>
+				{{# detailsHeader}}
+					<p><strong>{{detailsHeader}}</strong></p>
+				{{/ detailsHeader}}
+				<p>{{{details}}}</p>
 			</div>
-			<a href="{{buttonLink}}"><button>{{buttonText}}</button></a>
 		</td>
 	</tr>
 	<tr>
 		<td colspan="2">
-			<div class="content-footer-messages">
-				{{#contentFooterMessages}}
-					<p>{{{.}}}</p>
-				{{/contentFooterMessages}}
-			</div>
+			<a class="button" href="{{buttonLink}}">{{buttonText}}</a>
 		</td>
 	</tr>
+	{{# hasContentFooterMessages}}
+		<tr>
+			<td colspan="2">
+				<div class="content-footer-messages">
+					{{#contentFooterMessages}}
+						<p>{{{.}}}</p>
+					{{/contentFooterMessages}}
+				</div>
+			</td>
+		</tr>
+	{{/ hasContentFooterMessages}}
 </table>

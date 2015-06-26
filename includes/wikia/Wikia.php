@@ -69,7 +69,10 @@ $wgHooks['LocalFilePurgeThumbnailsUrls'][] = 'Wikia::onLocalFilePurgeThumbnailsU
 class Wikia {
 
 	const REQUIRED_CHARS = '0123456789abcdefG';
-	const COMMUNITY_WIKI_ID = 177;
+
+	const COMMUNITY_WIKI_ID = 177; // community.wikia.com
+	const NEWSLETTER_WIKI_ID = 223496; // wikianewsletter.wikia.com
+
 	const FAVICON_URL_CACHE_KEY = 'favicon-v1';
 
 	private static $vars = array();
@@ -1596,8 +1599,10 @@ class Wikia {
 
 		$wgUseSiteJs = $request->getBool( 'usesitejs', $wgUseSiteJs ) !== false;
 		$wgUseSiteCss = $request->getBool( 'usesitecss', $wgUseSiteCss ) !== false;
-		$wgAllowUserJs = $request->getBool( 'allowuserjs', $wgAllowUserJs ) !== false;
-		$wgAllowUserCss = $request->getBool( 'allowusercss', $wgAllowUserCss ) !== false;
+		$wgAllowUserJs = $request->getBool( 'useuserjs',
+			$request->getBool( 'allowuserjs', $wgAllowUserJs ) ) !== false;
+		$wgAllowUserCss = $request->getBool( 'useusercss',
+			$request->getBool( 'allowusercss', $wgAllowUserCss ) ) !== false;
 		$wgBuckySampling = $request->getInt( 'buckysampling', $wgBuckySampling );
 
 		return true;

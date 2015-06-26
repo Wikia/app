@@ -1,19 +1,23 @@
 /*global define*/
 define('ext.wikia.adEngine.template.floor', [
-	'jquery',
+	'ext.wikia.adEngine.adContext',
 	'wikia.log',
 	'wikia.document',
 	'wikia.iframeWriter',
 	'wikia.window'
-], function ($, log, doc, iframeWriter, win) {
+], function (adContext, log, doc, iframeWriter, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.template.floor',
-		footerHtml = '<div id="ext-wikia-adEngine-template-footer">' +
+		footerId = 'ext-wikia-adEngine-template-footer',
+		footerHtml = '<div id="' + footerId + '">' +
 			'<div class="background"></div>' +
 			'<div class="ad"></div>' +
-			'<a class="close" title="Close" href="#"><span>Close</span></a>' +
-			'</div>';
+			'<a class="close" title="Close" href="#">' +
+			'<svg role="img" class="ads-floor-close-button"><use xlink:href="#close"></use></svg>' +
+			'</a>' +
+			'</div>',
+		$ = win.$;
 
 	/**
 	 * Show the floor ad.
@@ -35,14 +39,17 @@ define('ext.wikia.adEngine.template.floor', [
 	function show(params) {
 		log(['show', params], 'debug', logGroup);
 
-		var $footer = $(footerHtml),
-			iframe = iframeWriter.getIframe({
+		var iframe = iframeWriter.getIframe({
 				code: params.code,
 				width: params.width,
 				height: params.height
-			});
+			}),
+			skin = adContext.getContext().targeting.skin,
+			$footer = $(footerHtml);
 
-		win.WikiaBar.hideContainer();
+		if (skin === 'oasis') {
+			win.WikiaBar.hideContainer();
+		}
 
 		$footer.find('a.close').click(function (event) {
 			event.preventDefault();

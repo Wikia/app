@@ -89,6 +89,7 @@ class AdminDashboardLogic {
 				"PromoteImageReview",
 				"ScavengerHunt",
 				"Search",
+				"SendEmail",
 				"Signup",
 				"SiteWideMessages",
 				"SponsorshipDashboard",

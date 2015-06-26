@@ -9,11 +9,15 @@ class NjordHooks {
 		return true;
 	}
 
+	/**
+	 * Removes Hero Module from WikiLabs if it is disabled (allows for opt-out only)
+	 * @return bool
+	 */
 	public static function onGetFeatureLabs( ) {
-		global $wgContLang, $wgWikiFeatures;
+		global $wgWikiFeatures, $wgEnableNjordExt;
 
-		if ( $wgContLang->getCode() == 'en' ) {
-			$wgWikiFeatures['labs'] [] = 'wgEnableNjordExt';
+		if ( empty( $wgEnableNjordExt ) ) {
+			$wgWikiFeatures['labs'] = array_diff( $wgWikiFeatures['labs'], [ 'wgEnableNjordExt' ] );
 		}
 
 		return true;

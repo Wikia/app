@@ -80,6 +80,20 @@ class TransactionClassifierTest extends WikiaBaseTest {
 				],
 				'expectedName' => 'page/main/view/foo-skin/parser_cache_disabled/dpl'
 			],
+			[
+				'attributes' => [
+					Transaction::PARAM_ENTRY_POINT => Transaction::ENTRY_POINT_NIRVANA,
+					Transaction::PARAM_CONTROLLER => 'SearchSuggestionsApi',
+				],
+				'expectedName' => 'api/nirvana/SearchSuggestionsApi'
+			],
+			[
+				'attributes' => [
+					Transaction::PARAM_ENTRY_POINT => Transaction::ENTRY_POINT_NIRVANA,
+					Transaction::PARAM_CONTROLLER => 'Places',
+				],
+				'expectedName' => 'api/nirvana/other'
+			],
 		];
 	}
 }
