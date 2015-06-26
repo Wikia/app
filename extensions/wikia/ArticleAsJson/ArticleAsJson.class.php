@@ -291,10 +291,13 @@ class ArticleAsJson extends WikiaService {
 	}
 
 	/**
+	 * @desc Determines if image is a small image used by users on desktop
+	 * as an icon. They to it by explicitly adding
+	 * '{width}px' or 'x{height}px' to image wikitext
+	 *
 	 * @param $handlerParams
-	 * @desc Determines if height or width of image was set
-	 * explicitly by user by adding '{width}px' or 'x{height}px' to image wikitext
-	 * @return bool true if the image size was manipulated by user
+	 *
+	 * @return bool true if one of the image sizes is smaller than 40px
 	*/
 	private static function isIconImage( $handlerParams ) {
 		$fixedWidth = isset($handlerParams['width']) ? $handlerParams['width'] < self::ICON_MAX_SIZE : false;
