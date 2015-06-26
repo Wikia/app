@@ -93,8 +93,16 @@ class User {
 			try {
 				$tokenInfo = $heliosClient->info( $token );
 				if ( !empty( $tokenInfo->user_id ) ) {
+					$user = \User::newFromId( $tokenInfo->user_id );
+					
+					// dont return the user object if it's disabled
+					// @see SERVICES-459
+					if ( $user->getBoolOption( 'disabled' ) ) {
+						self::clearAccessTokenCookie();
+						return null;
+					}
 					// return a MediaWiki's User object
-					return \User::newFromId( $tokenInfo->user_id );
+					return $user;
 				}
 			}
 

@@ -480,6 +480,8 @@ class EmailNotification {
 			$controller = 'Email\Controller\ListBlogPost';
 		} elseif ( $this->isUserBlogPost() ) {
 			$controller = 'Email\Controller\UserBlogPost';
+		} elseif ( $this->isCategoryAdd() ) {
+			$controller = 'Email\Controller\CategoryAdd';
 		}
 
 		return $controller;
@@ -604,6 +606,10 @@ class EmailNotification {
 			( $this->action === FollowHelper::LOG_ACTION_BLOG_POST ) &&
 			( $ns == NS_BLOG_LISTING )
 		);
+	}
+
+	private function isCategoryAdd() {
+		return $this->action == FollowHelper::LOG_ACTION_CATEGORY_ADD;
 	}
 
 	private function sendUsingUserMailer( \User $user ) {

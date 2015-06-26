@@ -42,6 +42,7 @@ $wgGroupPermissions['*']['flagshq'] = true;
 $wgAutoloadClasses['SpecialFlagsController'] = __DIR__ . '/controllers/SpecialFlagsController.class.php';
 $wgAutoloadClasses['FlagsController'] = __DIR__ . '/controllers/FlagsController.class.php';
 $wgAutoloadClasses['FlagsApiController'] = __DIR__ . '/controllers/FlagsApiController.class.php';
+$wgWikiaApiControllers['FlagsApiController'] = __DIR__ . '/controllers/FlagsApiController.class.php';
 
 /**
  * Models
@@ -73,6 +74,7 @@ $wgAutoloadClasses['Flags\FlagsExtractTemplatesTask'] = __DIR__ . '/tasks/FlagsE
  * Hooks
  */
 $wgAutoloadClasses['Flags\Hooks'] = __DIR__ . '/Flags.hooks.php';
+$wgHooks['ArticlePreviewAfterParse'][] = 'Flags\Hooks::onArticlePreviewAfterParse';
 $wgHooks['BeforePageDisplay'][] = 'Flags\Hooks::onBeforePageDisplay';
 $wgHooks['BeforeParserCacheSave'][] = 'Flags\Hooks::onBeforeParserCacheSave';
 $wgHooks['LinksUpdateInsertTemplates'][] = 'Flags\Hooks::onLinksUpdateInsertTemplates';

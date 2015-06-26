@@ -31,7 +31,7 @@ describe('ext.wikia.adEngine.config.mobile', function () {
 						invisibleHighImpact: enableInvisibleHighImpactSlot
 					},
 					providers: providers || {},
-					forceProviders: {}
+					forcedProvider: null
 				};
 			}
 		};

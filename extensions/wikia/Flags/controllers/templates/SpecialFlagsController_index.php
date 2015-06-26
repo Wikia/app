@@ -27,9 +27,16 @@
 				</a>
 			</td>
 			<td class="flags-special-list-item-params">
-				<?php foreach ( json_decode( $flag['flag_params_names'] ) as $name => $description ): ?>
-					<?= $name ?> <small><em><?= $description ?></em></small><br>
-				<?php endforeach; ?>
+				<?php
+					$paramsNames = json_decode( $flag['flag_params_names'], true );
+					if ( is_array( $paramsNames ) ) :
+				?>
+					<?php foreach ( $paramsNames as $name => $description ): ?>
+						<?= $name ?> <small><em><?= $description ?></em></small><br>
+					<?php endforeach; ?>
+				<?php
+					endif;
+				?>
 			</td>
 			<td class="flags-special-list-item-group"><?= $flagGroups[$flag['flag_group']] ?></td>
 			<td class="flags-special-list-item-targeting"><?= ucfirst( $flagTargeting[$flag['flag_targeting']] ) ?></td>

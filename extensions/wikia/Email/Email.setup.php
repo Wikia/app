@@ -4,6 +4,8 @@
  * Email
  *
  * @author Garth Webb
+ * @author James Sutterfield
+ * @author Matt Klucsarits
  *
  * @date 2015-03-10
  */
@@ -11,7 +13,9 @@
 $wgExtensionCredits['Email'][] = [
 	'name' => 'Email',
 	'author' => [
-		"Garth Webb <garth@wikia-inc.com>"
+		'Garth Webb <garth@wikia-inc.com>',
+		'James Sutterfield <james@wikia-inc.com>',
+		'Matt Klucsarits <mattk@wikia-inc.com>',
 	],
 	'descriptionmsg' => 'email-desc',
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/Email'
@@ -53,6 +57,13 @@ $wgAutoloadClasses['Email\Controller\ConfirmationChangedEmailController'] = $dir
 $wgAutoloadClasses['Email\Controller\FounderDigestController'] = $dir . 'Controller/FounderDigestController.class.php';
 $wgAutoloadClasses['Email\Controller\FounderActivityDigestController'] = $dir . 'Controller/FounderDigestController.class.php';
 $wgAutoloadClasses['Email\Controller\FounderPageViewsDigestController'] = $dir . 'Controller/FounderDigestController.class.php';
+$wgAutoloadClasses['Email\Controller\CategoryAddController'] = $dir . 'Controller/CategoryAddController.class.php';
+$wgAutoloadClasses['Email\Controller\AbstractFounderEditController'] =  $dir . 'Controller/FounderController.class.php';
+$wgAutoloadClasses['Email\Controller\FounderEditController'] =  $dir . 'Controller/FounderController.class.php';
+$wgAutoloadClasses['Email\Controller\FounderAnonEditController'] =  $dir . 'Controller/FounderController.class.php';
+$wgAutoloadClasses['Email\Controller\FounderMultiEditController'] =  $dir . 'Controller/FounderController.class.php';
+$wgAutoloadClasses['Email\Controller\FounderActiveController'] =  $dir . 'Controller/FounderController.class.php';
+$wgAutoloadClasses['Email\Controller\FounderNewMemberController'] =  $dir . 'Controller/FounderController.class.php';
 $wgAutoloadClasses['Email\SpecialSendEmailController'] = $dir .  'SpecialSendEmailController.class.php';
 $wgAutoloadClasses['Email\Tracking\TrackingCategories'] = $dir .  'tracking/TrackingCategories.class.php';
 
@@ -71,9 +82,12 @@ $wgExtensionMessagesFiles['EmailBlogPost'] = $dir . 'i18n/BlogPost.i18n.php';
 $wgExtensionMessagesFiles['EmailForum'] = $dir . 'i18n/Forum.i18n.php';
 $wgExtensionMessagesFiles['EmailWallMessage'] = $dir . 'i18n/WallMessage.i18n.php';
 $wgExtensionMessagesFiles['EmailWeeklyDigest'] = $dir . 'i18n/WeeklyDigest.i18n.php';
+$wgExtensionMessagesFiles['EmailFounder'] = $dir . 'i18n/Founder.i18n.php';
 $wgExtensionMessagesFiles['EmailConfirmation'] = $dir . 'i18n/EmailConfirmation.i18n.php';
 $wgExtensionMessagesFiles['EmailFounderDigest'] = $dir . 'i18n/FounderDigest.i18n.php';
+$wgExtensionMessagesFiles['EmailCategoryAdd'] = $dir . 'i18n/CategoryAdd.i18n.php';
 $wgExtensionMessagesFiles['SpecialSendEmail'] = $dir . 'i18n/specialSendEmail.i18n.php';
+$wgExtensionMessagesFiles['ForgotPassword'] = $dir . 'i18n/ForgotPassword.i18n.php';
 
 /**
  * permissions
