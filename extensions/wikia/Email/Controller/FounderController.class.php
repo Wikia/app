@@ -4,7 +4,9 @@ namespace Email\Controller;
 
 use Email;
 use Email\Check;
+use Email\ControllerException;
 use Email\EmailController;
+use Wikia\Logger;
 use Email\Tracking\TrackingCategories;
 
 abstract class FounderController extends EmailController {
@@ -260,13 +262,131 @@ class FounderAnonEditController extends AbstractFounderEditController {
 	}
 }
 
+class FounderActiveController extends FounderController {
+
+	/**
+	 * Define this and do nothing since we don't need the checks of our parent
+	 */
+	public function initEmail() {
+		// NOOP
+	}
+
+	public function getSubject() {
+		return $this->getMessage( 'emailext-founder-active-subject' )->text();
+	}
+
+	/**
+	 * @template multiAvatarLayout
+	 */
+	public function body() {
+		$this->response->setData( [
+			'salutation' => $this->getSalutation(),
+			'summary' => $this->getSummary(),
+			'avatarAndDetailsList' => $this->getChangeList(),
+			'buttonText' => $this->getChangesLabel(),
+			'buttonLink' => $this->getChangesLink(),
+			'contentFooterMessages' => [
+				$this->getMessage( 'emailext-founder-active-footer-1' )->text(),
+				$this->getMessage( 'emailext-founder-active-footer-2' )->text(),
+			],
+			'hasContentFooterMessages' => true
+		] );
+	}
+
+	protected function getSummary() {
+		return $this->getMessage( 'emailext-founder-active-summary' )->parse();
+	}
+
+	private function getChangeList() {
+		$changes = $this->getRecentActivity();
+		$changeList = [];
+
+		foreach ( $changes as $event ) {
+			try {
+				$eventUser = $this->getUserFromName( $event[ 'user' ] );
+			} catch ( ControllerException $e ) {
+				Logger\WikiaLogger::instance()->warning( 'User from recent activity not found', [
+					'method' => __METHOD__,
+					'username' => $event['user'],
+				] );
+				continue;
+			}
+
+			$changeList[] = [
+				'editorProfilePage' => $eventUser->getUserPage()->getFullURL(),
+				'editorUserName' => $eventUser->getName(),
+				'editorAvatarURL' => $this->getAvatarURL( $eventUser ),
+				'details' => $this->getDetails( $event ),
+			];
+		}
+
+		return $changeList;
+	}
+
+	protected function getDetails( array $event ) {
+		$titleKey = $event['title'];
+		$ns = $event['ns'];
+		$title = \Title::newFromText( $titleKey, $ns );
+
+		$titleUrl = $title->getFullURL();
+		$titleText = $title->getText();
+
+		$msgKey = $event['type'] == 'new' ? 'emailext-founder-new-update' : 'emailext-founder-edit-update';
+		return $this->getMessage( $msgKey, $titleUrl, $titleText )->parse();
+	}
+
+	private function getRecentActivity( $num = 5 ) {
+		$wg = \F::app()->wg;
+
+		$data = \ApiService::call( [
+			'action' => 'query',
+			'list' => 'recentchanges',
+			'rctype' => implode( '|', [ 'new', 'edit' ] ),
+			'rcprop' => implode( '|', [ 'user', 'title' ] ),
+			'rcnamespace' => implode( '|', $wg->ContentNamespaces),
+			'rcexcludeuser' => $this->targetUser->getName(),
+			'rcshow' => implode( '|', [ '!minor', '!bot', '!anon', '!redirect' ] ),
+			'rclimit' => $num,
+			'rctoponly' => 1,
+		] );
+
+		if ( !empty( $data['query']['recentchanges'] ) ) {
+			return $data['query']['recentchanges'];
+		}
+
+		return [];
+	}
+
+	protected function getChangesLabel() {
+		return $this->getMessage( 'emailext-founder-active-link-label' )->parse();
+	}
+
+	protected function getChangesLink() {
+		$title = \SpecialPage::getTitleFor( 'WikiActivity' );
+		return $title->getFullURL();
+	}
+
+	protected function getFooterMessages() {
+		return EmailController::getFooterMessages();
+	}
+
+	/**
+	 * Form fields required for this email for Special:SendEmail. See
+	 * EmailController::getEmailSpecificFormFields for more info.
+	 * @return array
+	 */
+	protected static function getEmailSpecificFormFields() {
+		return EmailController::getEmailSpecificFormFields();
+	}
+}
+
 class FounderNewMemberController extends FounderController {
 	const TRACKING_CATEGORY_EN = TrackingCategories::FOUNDER_NEW_MEMBER_EN;
 	const TRACKING_CATEGORY_INT = TrackingCategories::FOUNDER_NEW_MEMBER_INT;
 
 	/**
 	 * @template avatarLayout
-	 */
+	*/
 	public function body() {
 		$this->response->setData( [
 			'salutation' => $this->getSalutation(),

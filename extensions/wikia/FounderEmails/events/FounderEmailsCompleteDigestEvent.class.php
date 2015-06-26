@@ -6,17 +6,19 @@ class FounderEmailsCompleteDigestEvent extends FounderEmailsEvent {
 		$this->setData( $data );
 	}
 
-	public function enabled ( $wikiId, User $user ) {
-		if ( self::isAnswersWiki() ) {
+	public function enabled( User $admin, $wikiId = null ) {
+		$wikiId = empty( $wikiId ) ? F::app()->wg->CityId : $wikiId;
+
+		if ( self::isAnswersWiki( $wikiId ) ) {
 			return false;
 		}
 
-		if ( $user->getOption( "founderemails-complete-digest-$wikiId" ) ) {
+		if ( $admin->getOption( "founderemails-complete-digest-$wikiId" ) ) {
 			return true;
 		}
 
 		// disable if all Wikia email disabled
-		if ( $user->getBoolOption( "unsubscribed" ) ) {
+		if ( $admin->getBoolOption( "unsubscribed" ) ) {
 			return false;
 		}
 
@@ -55,7 +57,7 @@ class FounderEmailsCompleteDigestEvent extends FounderEmailsEvent {
 				$user = User::newFromId( $user_id );
 
 				// skip if not enable
-				if ( !$this->enabled( $cityID, $user ) ) {
+				if ( !$this->enabled( $user, $cityID ) ) {
 					continue;
 				}
 
