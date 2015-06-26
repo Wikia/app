@@ -89,7 +89,7 @@ function WidgetBookmark($id) {
 function WidgetBookmarkGetPages() {
 	global $wgUser;
 
-	$pages = unserialize( $wgUser->getOption('widget_bookmark_pages') );
+	$pages = unserialize( $wgUser->getGlobalPreference('widget_bookmark_pages') );
 
 	return $pages;
 }
