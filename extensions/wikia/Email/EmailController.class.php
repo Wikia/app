@@ -92,7 +92,7 @@ abstract class EmailController extends \WikiaController {
 			);
 
 			$this->initEmail();
-		} catch ( ControllerException $e ) {
+		} catch ( \Exception $e ) {
 			$this->setErrorResponse( $e );
 		}
 	}
@@ -161,15 +161,7 @@ abstract class EmailController extends \WikiaController {
 			];
 
 			if ( !$this->test ) {
-				WikiaLogger::instance()->info( 'Submitting email via UserMailer', [
-					'issue' => 'SOC-910',
-					'method' => __METHOD__,
-					'controller' => get_class( $this ),
-					'toAddress' => $toAddress->toString(),
-					'fromAddress' => $fromAddress->toString(),
-					'subject' => $subject,
-					'category' => static::TRACKING_CATEGORY,
-				] );
+				$this->trackEmailEvent();
 
 				$status = \UserMailer::send(
 					$toAddress,
@@ -183,14 +175,7 @@ abstract class EmailController extends \WikiaController {
 				$this->assertGoodStatus( $status );
 			}
 		} catch ( \Exception $e ) {
-			WikiaLogger::instance()->info( 'Failed to submit email via UserMailer', [
-				'issue' => 'SOC-910',
-				'method' => __METHOD__,
-				'controller' => get_class( $this ),
-				'category' => static::TRACKING_CATEGORY,
-				'errorMessage' => $e->getMessage(),
-			] );
-
+			$this->trackEmailError( $e );
 			$this->setErrorResponse( $e );
 			return;
 		}
@@ -503,7 +488,13 @@ abstract class EmailController extends \WikiaController {
 			throw new Fatal( 'Required username has been left empty' );
 		}
 
-		$user = \User::newFromName( $username );
+		if ( $username instanceof \User ) {
+			$user = $username;
+		} else if ( is_object( $username ) ) {
+			throw new Fatal( 'Non-user object passed when user object or username expected' );
+		} else {
+			$user = \User::newFromName( $username );
+		}
 		$this->assertValidUser( $user );
 
 		return $user;
@@ -697,5 +688,45 @@ abstract class EmailController extends \WikiaController {
 		return call_user_func_array( 'wfMessage', func_get_args() )
 			->useDatabase( false )
 			->inLanguage( $this->targetLang );
+	}
+
+	private function trackEmailEvent() {
+		WikiaLogger::instance()->info( 'Submitting email via UserMailer', [
+			'issue' => 'SOC-910',
+			'method' => __METHOD__,
+			'controller' => get_class( $this ),
+			'toAddress' => $this->getToAddress()->toString(),
+			'fromAddress' => $this->getFromAddress()->toString(),
+			'subject' => $this->getSubject(),
+			'category' => static::TRACKING_CATEGORY,
+			'currentUser' => $this->getCurrentUserName(),
+			'targetUser' => $this->targetUser->getName(),
+			'targetLang' => $this->targetLang,
+		] );
+	}
+
+	private function trackEmailError( \Exception $e ) {
+		if ( $this->currentUser instanceof \User ) {
+			$currentName = $this->currentUser->getName();
+		} else {
+			$currentName = 'unknown';
+		}
+
+		if ( $this->targetUser instanceof \User ) {
+			$targetName = $this->targetUser->getName();
+		} else {
+			$targetName = 'unknown';
+		}
+
+		WikiaLogger::instance()->error( 'Failed to submit email via UserMailer', [
+			'issue' => 'SOC-910',
+			'method' => __METHOD__,
+			'controller' => get_class( $this ),
+			'category' => static::TRACKING_CATEGORY,
+			'errorMessage' => $e->getMessage(),
+			'currentUser' => $currentName,
+			'targetUser' => $targetName,
+			'targetLang' => $this->targetLang,
+		] );
 	}
 }
