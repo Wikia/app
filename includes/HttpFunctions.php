@@ -762,11 +762,13 @@ class CurlHttpRequest extends MWHttpRequest {
 			return $this->status;
 		}
 
+		// Wikia change PLATFORM-1298 michal@wikia-inc.com
 		if ( $this->parsedUrl['scheme'] == 'https' ) {
 			$this->curlOptions[CURLOPT_PROXY] = null;
 		} else {
 			$this->curlOptions[CURLOPT_PROXY] = $this->proxy;
 		}
+		// End of Wikia change
 
 		$this->curlOptions[CURLOPT_TIMEOUT] = $this->timeout;
 		$this->curlOptions[CURLOPT_HTTP_VERSION] = CURL_HTTP_VERSION_1_0;
