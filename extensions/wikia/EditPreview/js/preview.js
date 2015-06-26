@@ -180,9 +180,6 @@ define('wikia.preview', [
 					var articleWidth = breakpointsLayout.getArticleWidth(currentTypeName ,isWidePage);
 					$article.width(articleWidth);
 				}
-
-				// initial scale of article preview
-				scalePreview(currentTypeName);
 			}
 
 			if (opening) {
@@ -308,6 +305,9 @@ define('wikia.preview', [
 			loadPreview(previewTypes[currentTypeName].name, true);
 
 			if (window.wgOasisResponsive || window.wgOasisBreakpoints) {
+				//scale preview when opening modal
+				//scale preview when changing dropdown option is handled inside switchPreview function
+				scalePreview(previewTypes[currentTypeName].name);
 				// adding type dropdown to preview
 				if (!previewTemplate) {
 					loader({
