@@ -2451,6 +2451,43 @@ class User {
 	 * @param string $value
 	 */
 	public function setGlobalPreference($preference, $value) {
+		return $this->setOption($preference, $value);
+	}
+
+	/**
+	 * Create a local option name. All localized (wikia specific) options,
+	 * preferences, attributes or flags should be of the form "{option}-{cityId}"
+	 *
+	 * IF YOU USE $sep, MAKE A PLAN TO NORMALIZE IT TO "-"!
+	 *
+	 * @param string $option
+	 * @param int $cityId [optional]
+	 * @param string $sep the separator between the option and the id.
+	 * @return string
+	 */
+	public static function createLocalOptionName($option, $cityId = null) {
+		global $wgCityId;
+		if (!isset($cityId)) {
+			$cityId = $wgCityId;
+		}
+
+		return sprintf("%s-%s", $option, $cityId);
+	}
+
+	/**
+	 * Set a preference local to a wikia. See createLocalOptionName for details regarding
+	 * the format. Note that the $sep param is provided in the rare case where
+	 * the option name is not normal. Should you have to use the separator, PLEASE MAKE
+	 * A PLAN TO NORMALIZE IT TO "-".
+	 *
+	 * @param string $preferenc
+	 * @param string $value
+	 * @param int $cityId [optional, defaults to $wgCityId]
+	 * @param string $sep [optional, defaults to "-"]
+	 *
+	 */
+	public function setLocalPreference($preference, $value, $cityId = null, $sep = "-") {
+		return $this->setOption(self::createLocalOptionName($preference, $cityId), $value);
 	}
 
 	/**
