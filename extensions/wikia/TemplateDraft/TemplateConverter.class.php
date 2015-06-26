@@ -113,18 +113,23 @@ class TemplateConverter {
 	/**
 	 * Overrides content of parent page with contents of draft page
 	 * @param Title $title
+	 * @throws PermissionsException
 	 */
 	public function approveDraft( Title $title ) {
-		// Get contents of draft page
-		$article = Article::newFromId( $title->getArticleID() );
-		$draftContent = $article->getContent();
-		// Get parent page
-		$parentTitleText = $title->getBaseText();
-		$parentTitle = Title::newFromText( $parentTitleText, $title->getNamespace() );
-		$article = Article::newFromId( $parentTitle->getArticleID() );
-		$page = $article->getPage();
-		// Save to parent page
-		$page->doEdit( $draftContent, wfMessage( 'templatedraft-approval-summary' )->plain() );
+		if ( $title->userCan( 'edit' ) ) {
+			// Get contents of draft page
+			$article = Article::newFromId($title->getArticleID());
+			$draftContent = $article->getContent();
+			// Get parent page
+			$parentTitleText = $title->getBaseText();
+			$parentTitle = Title::newFromText($parentTitleText, $title->getNamespace());
+			$article = Article::newFromId($parentTitle->getArticleID());
+			$page = $article->getPage();
+			// Save to parent page
+			$page->doEdit($draftContent, wfMessage('templatedraft-approval-summary')->plain());
+		} else {
+			throw new PermissionsException( 'edit' );
+		}
 	}
 
 	/**
