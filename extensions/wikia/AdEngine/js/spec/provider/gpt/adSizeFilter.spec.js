@@ -51,10 +51,10 @@ describe('ext.wikia.adEngine.provider.gpt.adSizeFilter', function () {
 		expect(getModule().filter('HOME_TOP_LEADERBOARD', sizesIn)).toEqual(sizesOut);
 	});
 
-	it('Returns only the first size of TOP_LEADERBOARD for very small screens', function () {
+	it('Returns only 728x90 for TOP_LEADERBOARD for very small screens', function () {
 		spyOn(mocks, 'getDocumentWidth').and.returnValue(100);
 
-		var sizesIn = [[728, 90], [1030, 130], [970, 365], [980, 150]],
+		var sizesIn = [[600, 90], [1030, 130], [970, 365], [980, 150]],
 			sizesOut = [[728, 90]];
 
 		expect(getModule().filter('TOP_LEADERBOARD', sizesIn)).toEqual(sizesOut);
@@ -66,16 +66,16 @@ describe('ext.wikia.adEngine.provider.gpt.adSizeFilter', function () {
 	it('Returns sizes unmodified for INVISIBLE_SKIN for screens > 1065', function () {
 		spyOn(mocks, 'getDocumentWidth').and.returnValue(1070);
 
-		var sizesIn = [[1, 1], [1000, 1000]],
-			sizesOut = [[1, 1], [1000, 1000]];
+		var sizesIn = [[1000, 1000], [1, 1]],
+			sizesOut = [[1000, 1000], [1, 1]];
 
 		expect(getModule().filter('INVISIBLE_SKIN', sizesIn)).toEqual(sizesOut);
 	});
 
-	it('Returns only the first size of INVISIBLE_SKIN for screens < 1065', function () {
+	it('Returns only the 1x1 size of INVISIBLE_SKIN for screens < 1065', function () {
 		spyOn(mocks, 'getDocumentWidth').and.returnValue(1000);
 
-		var sizesIn = [[1, 1], [1000, 1000]],
+		var sizesIn = [[1000, 1000], [1, 1]],
 			sizesOut = [[1, 1]];
 
 		expect(getModule().filter('INVISIBLE_SKIN', sizesIn)).toEqual(sizesOut);

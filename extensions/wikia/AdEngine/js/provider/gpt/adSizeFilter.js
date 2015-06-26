@@ -5,7 +5,9 @@ define('ext.wikia.adEngine.provider.gpt.adSizeFilter', [
 ], function (doc, log) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.adEngine.provider.gpt.adSizeFilter';
+	var logGroup = 'ext.wikia.adEngine.provider.gpt.adSizeFilter',
+		leaderboardFallbackSize = [728, 90],
+		invisibleSkinFallbackSize = [1, 1];
 
 	function filterOutLeaderboardSizes(sizes) {
 		log(['filterOutLeaderboardSizes', sizes], 'debug', logGroup);
@@ -19,6 +21,11 @@ define('ext.wikia.adEngine.provider.gpt.adSizeFilter', [
 			}
 		}
 
+		if (goodSizes.length === 0) {
+			log(['filterOutLeaderboardSizes', 'using fallback size', leaderboardFallbackSize], 'debug', logGroup);
+			return [leaderboardFallbackSize];
+		}
+
 		log(['filterOutLeaderboardSizes', 'result', goodSizes], 'debug', logGroup);
 		return goodSizes;
 	}
@@ -28,7 +35,7 @@ define('ext.wikia.adEngine.provider.gpt.adSizeFilter', [
 
 		if (doc.documentElement.offsetWidth < 1064) {
 			log(['filterOutInvisibleSkinSizes', 'Skin not allowed', []], 'debug', logGroup);
-			return [];
+			return [invisibleSkinFallbackSize];
 		}
 
 		log(['filterOutInvisibleSkinSizes', 'Skin allowed', sizes], 'info', logGroup);
@@ -36,8 +43,6 @@ define('ext.wikia.adEngine.provider.gpt.adSizeFilter', [
 	}
 
 	function filterSizes(slotName, slotSizes) {
-		var fallbackSize = slotSizes[0];
-
 		log(['filterSizes', slotName, slotSizes], 'debug', logGroup);
 
 		if (slotName.match(/TOP_LEADERBOARD/)) {
@@ -48,14 +53,8 @@ define('ext.wikia.adEngine.provider.gpt.adSizeFilter', [
 			slotSizes = filterOutInvisibleSkinSizes(slotSizes);
 		}
 
-		if (slotSizes.length) {
-			log(['filterSizes', slotName, slotSizes], 'debug', logGroup);
-			return slotSizes;
-		}
-
-		// Return the first size as the fallback size
-		log(['filterSizes', slotName, fallbackSize], 'debug', logGroup);
-		return [fallbackSize];
+		log(['filterSizes', slotName, slotSizes], 'debug', logGroup);
+		return slotSizes;
 	}
 
 	return {
