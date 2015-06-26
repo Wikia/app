@@ -126,7 +126,7 @@ class Hooks {
 				 */
 				$templatesKeys = [];
 				foreach( $templates as $template ) {
-					$templatesKeys = strtolower( $template['tl_title'] );
+					$templatesKeys[] = strtolower( $template['tl_title'] );
 				}
 
 				foreach ( $flagTypesResponse[\FlagsApiController::FLAGS_API_RESPONSE_DATA] as $flagType ) {
