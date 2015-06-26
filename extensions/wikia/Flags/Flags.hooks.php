@@ -108,7 +108,7 @@ class Hooks {
 	public static function onLinksUpdateInsertTemplates( $pageId, Array $templates ) {
 		$app = \F::app();
 
-		if ( $app->wg->HideFlagsExt !== true ) {
+		if ( !empty( $templates) && $app->wg->HideFlagsExt !== true ) {
 			$flagTypesResponse = $app->sendRequest( 'FlagsApiController',
 				'getFlagsForPageForEdit',
 				[
