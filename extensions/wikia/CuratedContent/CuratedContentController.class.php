@@ -363,7 +363,7 @@ class CuratedContentController extends WikiaController {
 			array_reduce(
 				$content,
 				function ( $ret, $item ) {
-					if ( $item[ 'title' ] !== '' && $item[ 'featured' ] == false ) {
+					if ( $item[ 'title' ] !== '' && empty( $item[ 'featured' ] ) ) {
 						$imageId = $item[ 'image_id' ] != 0 ? $item[ 'image_id' ] : null;
 						$ret[ ] = [
 							'title' => $item[ 'title' ],
@@ -404,7 +404,7 @@ class CuratedContentController extends WikiaController {
 		$content = F::app()->wg->WikiaCuratedContent;
 
 		self::purgeMethodVariants( 'getList', array_map( function ( $item ) {
-			if ( $item[ 'title' ] !== '' && $item[ 'featured' ] == false ) {
+			if ( $item[ 'title' ] !== '' && empty( $item[ 'featured' ] ) ) {
 				return [ 'section' => $item[ 'title' ] ];
 			}
 		}, $content ) );
