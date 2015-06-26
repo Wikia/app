@@ -145,7 +145,6 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 		return params;
 	}
 
-
 	function getRefParam() {
 		var hostnameMatch,
 			ref = doc.referrer,
@@ -195,8 +194,9 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 	}
 
 	/**
-	 * options
-	 * @param options {includeRawDbName: bool}
+	 * Returns page level params
+	 * @param {Object} options
+	 * @param {Boolean} options.includeRawDbName - to include raw db name or not
 	 * @returns object
 	 */
 	function getPageLevelParams(options) {
@@ -249,7 +249,7 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 			params.rawDbName = dbName;
 		}
 
-		if (krux && !targeting.wikiDirectedAtChildren) {
+		if (krux && targeting.enableKruxTargeting) {
 			params.u = krux.getUser();
 			params.ksgmnt = krux.getSegments();
 		}
