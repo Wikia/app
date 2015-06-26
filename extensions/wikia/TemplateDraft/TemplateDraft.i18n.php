@@ -12,6 +12,10 @@ $messages['en'] = [
 	'templatedraft-description' => 'TemplateDraft extension',
 	'templatedraft-subpage' => 'Draft',
 	/**
+	 * Notifications
+	 */
+	'templatedraft-approval-summary' => 'Replaced with updated version from draft template',
+	/**
 	 * Right rail module
 	 */
 	'templatedraft-module-title' => 'Migrate this infobox',
@@ -28,6 +32,10 @@ $messages['en'] = [
 $messages['qqq'] = [
 	'templatedraft-description' => '{{desc}}',
 	'templatedraft-subpage' => 'A name that should be used for subpages of templates that contain a draft content.',
+	/**
+	 * Notifications
+	 */
+	'templatedraft-approval-summary' => 'Text used as edit summary when code is automatically replacing template with content from draft template on user approval',
 	/**
 	 * Right rail module
 	 */
