@@ -756,7 +756,6 @@ class CurlHttpRequest extends MWHttpRequest {
 	}
 
 	public function execute() {
-
 		parent::execute();
 
 		if ( !$this->status->isOK() ) {

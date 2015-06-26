@@ -358,7 +358,6 @@ class ForeignAPIRepo extends FileRepo {
 		$options['timeout'] = $timeout;
 		/* Http::get */
 		$url = wfExpandUrl( $url, PROTO_CURRENT );
-
 		wfDebug( "ForeignAPIRepo: HTTP GET: $url\n" );
 		$options['method'] = "GET";
 
