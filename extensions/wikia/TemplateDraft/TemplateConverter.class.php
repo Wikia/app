@@ -123,13 +123,9 @@ class TemplateConverter {
 		$preview .= "}}\n";
 		$docs .= "}}\n";
 
-		$return = "<noinclude>\n== Usage & preview ==\n";
-
-		$return .= "Type in this:\n<pre>\n$docs</pre>\nto see this:\n$preview\n";
-
-		$return .= "[{{fullurl:PAGENAME}}?action=purge Click here to refresh the preview above]\n";
-
-		$return .= "</noinclude>\n";
+		$return = "<noinclude>\n";
+		$return .= wfMessage( 'templatedraft-preview-n-docs' )->rawParams( $docs, $preview )->inContentLanguage()->plain();
+		$return .= "\n</noinclude>\n";
 
 		return $return;
 	}

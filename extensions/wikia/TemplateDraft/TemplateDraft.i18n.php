@@ -20,6 +20,19 @@ $messages['en'] = [
 	'templatedraft-module-button' => 'Generate draft markup',
 	'templatedraft-module-button-title' => 'Open a new tab with a pre-filled edit form',
 	'templatedraft-module-closelink' => 'This is not an infobox',
+
+	'templatedraft-preview-n-docs' => '== Usage & preview ==
+Type in this:
+
+<pre>
+$1
+</pre>
+
+to see this:
+
+$2
+
+[{{fullurl:PAGENAME}}?action=purge Click here to refresh the preview above]',
 ];
 
 /**
@@ -37,4 +50,5 @@ $messages['qqq'] = [
 	'templatedraft-module-button' => 'A button shown in a right rail module that gets user to a subpage with a draft of a template.',
 	'templatedraft-module-button-title' => 'Title of the "Generate draft markup" button. It should tell users what will happen when they click it.',
 	'templatedraft-module-closelink' => 'A link that closes the right rail module if it is not on a template page with an infobox in it.',
+	'templatedraft-preview-n-docs' => 'Used when generating documentation for a converted draft of a template',
 ];
