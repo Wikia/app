@@ -45,7 +45,6 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 	public function adContextDataProvider() {
 		return [
 			[ ],
-
 			[
 				'titleMockType' => 'article',
 				'flags' => ['wgAdDriverEnableAdsInMaps'],
@@ -101,12 +100,6 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 			],
 			[
 				'titleMockType' => 'article',
-				'flags' => ['wgEnableKruxTargeting'],
-				'expectedOpts' => [],
-				'expectedTargeting' => ['enableKruxTargeting' => true]
-			],
-			[
-				'titleMockType' => 'article',
 				'flags' => ['wgEnableOutboundScreenExt'],
 				'expectedOpts' => [],
 				'expectedTargeting' => [],
@@ -147,7 +140,6 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 				'expectedOpts' => [],
 				'expectedTargeting' => ['wikiDirectedAtChildren' => true]
 			],
-
 			[
 				'titleMockType' => 'mainpage',
 				'flags' => [],

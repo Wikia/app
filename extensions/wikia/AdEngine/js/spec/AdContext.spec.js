@@ -48,14 +48,14 @@ describe('AdContext', function () {
 			var adContext = getModule();
 
 			expect(adContext.getContext().opts).toEqual({});
-			expect(adContext.getContext().targeting).toEqual({});
+			expect(adContext.getContext().targeting).toEqual({enableKruxTargeting: false});
 			expect(adContext.getContext().providers).toEqual({});
 			expect(adContext.getContext().forcedProvider).toEqual(null);
 
 			mocks.win = {ads: {context: {}}};
 			adContext = getModule();
 			expect(adContext.getContext().opts).toEqual({});
-			expect(adContext.getContext().targeting).toEqual({});
+			expect(adContext.getContext().targeting).toEqual({enableKruxTargeting: false});
 			expect(adContext.getContext().providers).toEqual({});
 			expect(adContext.getContext().forcedProvider).toEqual(null);
 		}
@@ -176,24 +176,37 @@ describe('AdContext', function () {
 		'makes targeting.enableKruxTargeting false when disaster recovery instant global variable is set to true',
 		function () {
 			var adContext;
-			mocks.win = {ads: {context: {targeting: {enableKruxTargeting: true}}}};
+			mocks.win = {ads: {context: {}}};
 
+			mocks.instantGlobals = {wgAdDriverKruxCountries: ['XX']};
 			adContext = getModule();
 			expect(adContext.getContext().targeting.enableKruxTargeting).toBeTruthy();
 
-			mocks.instantGlobals = {wgSitewideDisableKrux: false};
+			mocks.instantGlobals = {
+				wgAdDriverKruxCountries: ['XX', 'ZZ'],
+				wgSitewideDisableKrux: false
+			};
 			adContext = getModule();
 			expect(adContext.getContext().targeting.enableKruxTargeting).toBeTruthy();
 
-			mocks.instantGlobals = {wgSitewideDisableKrux: true};
+			mocks.instantGlobals = {
+				wgAdDriverKruxCountries: ['XX', 'ZZ'],
+				wgSitewideDisableKrux: true
+			};
 			adContext = getModule();
 			expect(adContext.getContext().targeting.enableKruxTargeting).toBeFalsy();
 
-			mocks.instantGlobals = {wgSitewideDisableKrux: 0};
+			mocks.instantGlobals = {
+				wgAdDriverKruxCountries: ['XX', 'ZZ'],
+				wgSitewideDisableKrux: 0
+			};
 			adContext = getModule();
-			expect(adContext.getContext().targeting.enableKruxTargeting).toBeFalsy();
+			expect(adContext.getContext().targeting.enableKruxTargeting).toBeTruthy();
 
-			mocks.instantGlobals = {wgSitewideDisableKrux: 1};
+			mocks.instantGlobals = {
+				wgAdDriverKruxCountries: ['XX', 'ZZ'],
+				wgSitewideDisableKrux: 1
+			};
 			adContext = getModule();
 			expect(adContext.getContext().targeting.enableKruxTargeting).toBeFalsy();
 		}
@@ -267,5 +280,31 @@ describe('AdContext', function () {
 			adContext = adContext.getContext();
 			expect(adContext.forcedProvider).toEqual(queryParams[k]);
 		});
+	});
+
+	it('enables krux when country in instantGlobals.wgAdDriverKruxCountries', function () {
+		var adContext;
+
+		mocks.instantGlobals = {wgAdDriverKruxCountries: ['AA', 'XX', 'BB']};
+		adContext = getModule();
+		expect(adContext.getContext().targeting.enableKruxTargeting).toBeTruthy();
+
+		mocks.instantGlobals = {wgAdDriverKruxCountries: ['AA', 'BB', 'CC']};
+		adContext = getModule();
+		expect(adContext.getContext().targeting.enableKruxTargeting).toBeFalsy();
+	});
+
+	it('disables krux when wiki is directed at children', function () {
+		var adContext;
+
+		mocks.win = {ads: {context: {targeting: {wikiDirectedAtChildren: false}}}};
+		mocks.instantGlobals = {wgAdDriverKruxCountries: ['XX']};
+		adContext = getModule();
+		expect(adContext.getContext().targeting.enableKruxTargeting).toBeTruthy();
+
+		mocks.win = {ads: {context: {targeting: {wikiDirectedAtChildren: true}}}};
+		mocks.instantGlobals = {wgAdDriverKruxCountries: ['XX']};
+		adContext = getModule();
+		expect(adContext.getContext().targeting.enableKruxTargeting).toBeFalsy();
 	});
 });
