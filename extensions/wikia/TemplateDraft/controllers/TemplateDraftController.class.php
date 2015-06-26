@@ -30,6 +30,7 @@ class TemplateDraftController extends WikiaController {
 		if ( self::TEMPLATE_INFOBOX & $flagsSum ) {
 			$templateConverter = new TemplateConverter( $title );
 			$content = $templateConverter->convertAsInfobox( $content );
+			$content = $templateConverter->generatePreviewSection( $content );
 		}
 
 		return $content;

@@ -53,8 +53,6 @@ class TemplateConverter {
 
 		$draft .= "</infobox>\n";
 
-		$draft .= $this->generatePreviewSection( $variables );
-
 		return $draft;
 	}
 
@@ -111,7 +109,9 @@ class TemplateConverter {
 		return "\t<data source=\"{$source}\"><label>{$label}</label></data>\n";
 	}
 
-	public function generatePreviewSection( $variables ) {
+	public function generatePreviewSection( $content ) {
+		$variables = $this->findTemplateVariables( $content );
+
 		$preview = "{{" . $this->title->getText() . "\n";
 		$docs = $preview;
 
