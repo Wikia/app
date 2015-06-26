@@ -66,7 +66,7 @@ class CuratedContentController extends WikiaController {
 		//This will always return json
 		$this->response->setFormat( 'json' );
 
-		$this->cacheResponseFor( 7, self::DAYS );
+		$this->cacheResponseFor( 24, self::HOURS );
 
 		//set mobile skin as this is based on it
 		RequestContext::getMain()->setSkin(
@@ -86,12 +86,11 @@ class CuratedContentController extends WikiaController {
 
 			if ( $revId > 0 ) {
 				try {
-					$relatedPages =
-						$this->app->sendRequest( 'RelatedPagesApi', 'getList',
-							[
-								'ids' => [ $articleId ]
-							]
-						)->getVal( 'items' )[ $articleId ];
+					$relatedPages = $this->app->sendRequest(
+						'RelatedPagesApi',
+						'getList',
+						[ 'ids' => [ $articleId ] ]
+					)->getVal( 'items' )[ $articleId ];
 
 					if ( !empty( $relatedPages ) ) {
 						$this->response->setVal( 'relatedPages', $relatedPages );
@@ -102,15 +101,9 @@ class CuratedContentController extends WikiaController {
 
 				$this->response->setVal(
 					'html',
-					$this->sendSelfRequest( 'renderPage', array(
-							'page' => $titleName
-						)
-					)->toString() );
-
-				$this->response->setVal(
-					'revisionid',
-					$revId
+					$this->sendSelfRequest( 'renderPage', [ 'page' => $titleName ] )->toString()
 				);
+				$this->response->setVal( 'revisionid', $revId );
 			} else {
 				throw new NotFoundApiException( 'Revision ID = 0' );
 			}
@@ -192,7 +185,7 @@ class CuratedContentController extends WikiaController {
 			$scripts .= $s;
 		}
 
-		//getPage sets cache for a response for 7 days
+		//getPage sets cache for a response for 24 hours
 		$page = $this->sendSelfRequest( 'getPage', [
 			'page' => $this->getVal( 'page' )
 		] );
@@ -222,7 +215,7 @@ class CuratedContentController extends WikiaController {
 				$this->getSectionItems( $content, $section );
 			}
 
-			$this->cacheResponseFor( 14, self::DAYS );
+			$this->cacheResponseFor( 24, self::HOURS );
 		}
 
 		wfProfileOut( __METHOD__ );
