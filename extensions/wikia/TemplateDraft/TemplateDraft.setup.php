@@ -25,6 +25,7 @@ $wgExtensionMessagesFiles['TemplateDraft'] = __DIR__ . '/TemplateDraft.i18n.php'
  * Controllers
  */
 $wgAutoloadClasses['TemplateDraftController'] = __DIR__ . '/controllers/TemplateDraftController.class.php';
+$wgAutoloadClasses['TemplateClassificationController'] = __DIR__ . '/controllers/TemplateClassificationController.class.php';
 
 /**
  * Hooks
