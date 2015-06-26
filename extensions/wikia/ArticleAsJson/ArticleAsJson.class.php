@@ -166,7 +166,7 @@ class ArticleAsJson extends WikiaService {
 			$details = WikiaFileHelper::getMediaDetail( $title, self::$mediaDetailConfig );
 
 			//information for mobile skins how they should display small icons
-			$details['context'] = self::isFixedImage($handlerParams) ? self::MEDIA_CONTEXT_ICON : self::MEDIA_CONTEXT_ARTICLE_IMAGE;
+			$details['context'] = self::isIconImage($handlerParams) ? self::MEDIA_CONTEXT_ICON : self::MEDIA_CONTEXT_ARTICLE_IMAGE;
 
 			self::$media[] = self::createMediaObject( $details, $title->getText(), $frameParams['caption'], $linkHref );
 
@@ -296,7 +296,7 @@ class ArticleAsJson extends WikiaService {
 	 * explicitly by user by adding '{width}px' or 'x{height}px' to image wikitext
 	 * @return bool true if the image size was manipulated by user
 	*/
-	private static function isFixedImage( $handlerParams ) {
+	private static function isIconImage( $handlerParams ) {
 		$fixedWidth = isset($handlerParams['width']) ? $handlerParams['width'] < self::ICON_MAX_SIZE : false;
 		$fixedHeight = isset($handlerParams['height']) ? $handlerParams['height'] < self::ICON_MAX_SIZE : false;
 		return $fixedWidth || $fixedHeight;
