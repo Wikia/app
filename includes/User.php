@@ -2558,7 +2558,8 @@ class User {
 	 * @param string $flag
 	 * @return bool
 	 */
-	public function getGlobalFlag($flag) {
+	public function getGlobalFlag($flag, $default = null) {
+		return $this->getOption($flag, $default);
 	}
 
 	/**
