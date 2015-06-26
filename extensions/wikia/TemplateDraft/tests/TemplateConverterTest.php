@@ -49,7 +49,7 @@ class TemplateConverterTest extends WikiaBaseTest {
 			],
 			[
 				'{{{title|Test title}}}',
-				"<infobox>\n\t<title source=\"title\"><default>{{PAGENAME}}</default></title>\n</infobox>\n",
+				"<infobox>\n\t<title source=\"title\"><default>Test title</default></title>\n</infobox>\n",
 				'Title tag alias, with default text in the pipe',
 			],
 			[
@@ -62,12 +62,21 @@ class TemplateConverterTest extends WikiaBaseTest {
 				"<infobox>\n</infobox>\n",
 				'Empty content',
 			],
-			/* @todo: Common case to try to account for, uncomment when improving
 			[
 				"{{PAGENAME}}\n{{{{#if:{{{length|}}}|:{{{length|}}}|bar}}}}",
 				"<infobox>\n\t<data source=\"length\"><label>length</label></data>\n</infobox>\n",
 				'More than three curly braces with a template parameter inside',
-			],*/
+			],
+			[
+				"{{{name|}}}\n{{{title|Test title}}}\\n{{{surname|Kowalski}}}",
+				"<infobox>\n\t<title source=\"name\"><default>{{PAGENAME}}</default></title>\n\t<title source=\"title\"><default>Test title</default></title>\n\t<data source=\"surname\"><label>surname</label><default>Kowalski</default></data>\n</infobox>\n",
+				'Title tag aliases, with default text in the pipe and data tag',
+			],
+			[
+				"{{{game|}}}\n{{{title|Test title}}}\\n{{{hero}}} and {{{image}}}",
+				"<infobox>\n\t<title source=\"title\"><default>Test title</default></title>\n\t<image source=\"image\"/>\n\t<data source=\"game\"><label>game</label></data>\n\t<data source=\"hero\"><label>hero</label></data>\n</infobox>\n",
+				'Title and image tags aliases in the middle and other data attributes',
+			],
 		];
 	}
 }

@@ -2,7 +2,7 @@
 
 class TemplateConverter {
 
-	const TEMPLATE_VARIABLE_REGEX = '/{{{([^\|}]*?)\|?.*}}}/sU';
+	const TEMPLATE_VARIABLE_REGEX = '/{{{([^|{}]+)(\|([^{}]*|.*{{.*}}.*))?}}}/';
 
 	/**
 	 * Names of variables that should be converted to a <title> tag
@@ -33,17 +33,22 @@ class TemplateConverter {
 	public function convertAsInfobox( $content ) {
 		$draft = "<infobox>\n";
 
-		$variables = $this->findTemplateVariables( $content );
+		$draftTop = '';
+		$draftData = '';
+
+		$variables = $this->getTemplateVariables( $content );
 
 		foreach ( $variables as $variable ) {
-			if ( in_array( $variable, self::$titleAliases ) ) {
-				$draft .= $this->createTitleTag( $variable );
-			} elseif ( in_array( $variable, self::$imageAliases ) ) {
-				$draft .= $this->createImageTag( $variable );
+			if ( in_array( $variable['name'], self::$titleAliases ) ) {
+				$draftTop .= $this->createTitleTag( $variable );
+			} elseif ( in_array( $variable['name'], self::$imageAliases ) ) {
+				$draftTop .= $this->createImageTag( $variable );
 			} else {
-				$draft .= $this->createDataTag( $variable );
+				$draftData .= $this->createDataTag( $variable );
 			}
 		}
+
+		$draft .= $draftTop . $draftData;
 
 		$draft .= "</infobox>\n";
 
@@ -56,11 +61,11 @@ class TemplateConverter {
 	 * @param $content
 	 * @return array
 	 */
-	public function findTemplateVariables( $content ) {
-		$variables = [];
+	public function getTemplateVariables( $content ) {
+		$templateVariables = [];
 
-		preg_match_all( self::TEMPLATE_VARIABLE_REGEX, $content, $variables );
-		$variables = array_unique( $variables[1] );
+		preg_match_all( self::TEMPLATE_VARIABLE_REGEX, $content, $templateVariables );
+		$variables = $this->prepareVariables( $templateVariables );
 
 		return $variables;
 	}
@@ -68,38 +73,71 @@ class TemplateConverter {
 	/**
 	 * Creates a <title> tag.
 	 *
-	 * @param $source
-	 * @param string $default
+	 * @param $variable
 	 * @return string
 	 */
-	public function createTitleTag( $source, $default = '' ) {
-		if ( empty( $default ) ) {
-			$default = '{{PAGENAME}}';
+	public function createTitleTag( $variable ) {
+		if ( empty( $variable['default'] ) ) {
+			$variable['default'] = '{{PAGENAME}}';
 		}
-		return "\t<title source=\"{$source}\"><default>{$default}</default></title>\n";
+		return "\t<title source=\"{$variable['name']}\"><default>{$variable['default']}</default></title>\n";
 	}
 
 	/**
 	 * Creates an <image> tag.
 	 *
-	 * @param $source
+	 * @param $variable
 	 * @return string
 	 */
-	public function createImageTag( $source ) {
-		return "\t<image source=\"{$source}\"/>\n";
+	public function createImageTag( $variable ) {
+		return "\t<image source=\"{$variable['name']}\"/>\n";
 	}
 
 	/**
 	 * Creates a <data> tag.
 	 *
-	 * @param $source
-	 * @param string $label
+	 * @param $variable
 	 * @return string
 	 */
-	public function createDataTag( $source, $label = '' ) {
-		if ( empty( $label ) ) {
-			$label = $source;
+	public function createDataTag( $variable ) {
+		if ( empty( $variable['label'] ) ) {
+			$variable['label'] = $variable['name'];
 		}
-		return "\t<data source=\"{$source}\"><label>{$label}</label></data>\n";
+
+		$data = "\t<data source=\"{$variable['name']}\"><label>{$variable['label']}</label>";
+
+		if ( !empty( $variable['default'] ) ) {
+			$data .= "<default>{$variable['default']}</default>";
+		}
+
+		$data .= "</data>\n";
+
+		return $data;
+	}
+
+	/**
+	 * Prepares variables from templates
+	 *
+	 * @param $templateVariables
+	 * @return array
+	 */
+	private function prepareVariables( $templateVariables ) {
+		$variables = [];
+
+		foreach( $templateVariables[1] as $key => $variableName ) {
+			if ( isset( $variables[$variableName] ) ) {
+				if ( empty( $variables[$variableName]['default'] ) && strlen( $templateVariables[2][$key] ) > 1 ) {
+					$variables[$variableName]['default'] = substr( $templateVariables[2][$key], 1 );
+				}
+			} else {
+				$variables[$variableName] = [
+					'name' => $variableName,
+					'label' => '',
+					'default' => strlen( $templateVariables[2][$key] ) > 1 ? substr( $templateVariables[2][$key], 1 ) : ''
+				];
+			}
+		}
+
+		return $variables;
 	}
 } 
