@@ -29,4 +29,5 @@ class TrackingCategories {
 	const FOUNDER_TIPS_3_DAY_INT = 'FounderEmails3DayINT';
 	const FOUNDER_TIPS_10_DAY_EN = 'FounderEmails10DayEN';
 	const FOUNDER_TIPS_10_DAY_INT = 'FounderEmails10DayINT';
+	const FORGOT_PASSWORD = 'TemporaryPassword';
 }

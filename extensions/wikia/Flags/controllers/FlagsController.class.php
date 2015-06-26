@@ -71,8 +71,6 @@ class FlagsController extends WikiaController {
 			$parserOutput->setText( $flagsParserOutput->getText() . $parserOutput->getText() );
 		}
 
-		$parserOutput->mergeExternalParserOutputVars( $flagsParserOutput );
-
 		return $parserOutput;
 	}
 

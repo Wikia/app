@@ -5,28 +5,37 @@ namespace Email\Controller;
 use Email\EmailController;
 use Email\Check;
 use Email\Tracking\TrackingCategories;
+use Email\ImageHelper;
 
 abstract class FounderDigestController extends EmailController {
 	// Defaults; will be overridden in subclasses
 	const TRACKING_CATEGORY_EN = TrackingCategories::DEFAULT_CATEGORY;
 	const TRACKING_CATEGORY_INT = TrackingCategories::DEFAULT_CATEGORY;
 
+<<<<<<< HEAD
 	const LAYOUT_CSS = "digestLayout.css";
 
+=======
+	/** @var \Language */
+	protected $language;
+>>>>>>> SOC-766
 	protected $wikiId;
+	protected $wikiName;
 	protected $pageViews;
 
 	public function initEmail() {
+		$this->language = \Language::factory( $this->targetLang );
 		$this->wikiId = $this->request->getVal( 'wikiId' );
 		$this->pageViews = $this->request->getVal( 'pageViews' );
 		$this->assertValidParams();
-
-		$this->pageViews = number_format( $this->pageViews );
+		// Get the name of the wiki, because this email is not associated with the current wiki
+		$wikiObj = \WikiFactory::getWikiByID( $this->wikiId );
+		$this->wikiName = empty( $wikiObj ) ? '' : $wikiObj->city_title;
+		$this->pageViews = $this->language->formatNum( $this->pageViews );
 	}
 
 	protected function getSummary() {
-		return $this->getMessage( 'emailext-founder-digest-summary',
-			\WikiMap::getWikiName( $this->wikiId ) )->parse();
+		return $this->getMessage( 'emailext-founder-digest-summary', $this->wikiName )->parse();
 	}
 
 	protected function assertValidParams() {
@@ -40,7 +49,7 @@ abstract class FounderDigestController extends EmailController {
 	 * @throws \Email\Check
 	 */
 	protected function assertValidWikiId() {
-		if ( $this->wikiId < 1 ) {
+		if ( empty( $this->wikiId ) ) {
 			throw new Check( 'Invalid value passed for `wikiId`' );
 		}
 	}
@@ -102,13 +111,12 @@ class FounderActivityDigestController extends FounderDigestController {
 		$this->newUsers = $this->request->getVal( 'newUsers' );
 		// Parent method is called here so that assertion of parameters is done at the right time
 		parent::initEmail();
-		$this->pageEdits = number_format( $this->pageEdits );
-		$this->newUsers = number_format( $this->newUsers );
+		$this->pageEdits = $this->language->formatNum( $this->pageEdits );
+		$this->newUsers = $this->language->formatNum( $this->newUsers );
 	}
 
 	protected function getSubject() {
-		return $this->getMessage( 'emailext-founder-activity-digest-subject',
-			\WikiMap::getWikiName( $this->wikiId ) )->parse();
+		return $this->getMessage( 'emailext-founder-activity-digest-subject', $this->wikiName )->parse();
 	}
 
 	/**
@@ -180,17 +188,17 @@ class FounderActivityDigestController extends FounderDigestController {
 	protected function getDetailsList() {
 		return [
 			[
-				'iconSrc' => \GlobalFile::newFromText( 'Page-views.png', \Wikia::NEWSLETTER_WIKI_ID )->getUrlGenerator()->url(),
+				'iconSrc' => ImageHelper::getFileInfo( 'Page-views.png' )['url'],
 				'detailsHeader' => $this->getMessage( 'emailext-founder-digest-views-header', $this->pageViews )->parse(),
 				'details' => $this->getMessage( 'emailext-founder-digest-views-description-1' )->text()
 			],
 			[
-				'iconSrc' => \GlobalFile::newFromText( 'Number-of-edits.png', \Wikia::NEWSLETTER_WIKI_ID )->getUrlGenerator()->url(),
+				'iconSrc' => ImageHelper::getFileInfo( 'Number-of-edits.png' )['url'],
 				'detailsHeader' => $this->getMessage( 'emailext-founder-digest-edits-header', $this->pageEdits )->parse(),
 				'details' => $this->getMessage( 'emailext-founder-digest-edits-description' )->text()
 			],
 			[
-				'iconSrc' => \GlobalFile::newFromText( 'New-users.png', \Wikia::NEWSLETTER_WIKI_ID )->getUrlGenerator()->url(),
+				'iconSrc' => ImageHelper::getFileInfo( 'New-users.png' )['url'],
 				'detailsHeader' => $this->getMessage( 'emailext-founder-digest-users-header', $this->newUsers )->parse(),
 				'details' => $this->getMessage( 'emailext-founder-digest-users-description' )->text()
 			] 
@@ -206,10 +214,7 @@ class FounderActivityDigestController extends FounderDigestController {
 	}
 
 	protected function getCommunityFooterMessage() {
-		return $this->getMessage(
-			'emailext-founder-activity-digest-footer',
-			\GlobalTitle::newMainPage( \Wikia::COMMUNITY_WIKI_ID )->getFullURL()
-		)->parse();
+		return $this->getMessage( 'emailext-founder-activity-digest-footer' )->parse();
 	}
 
 	protected static function getEmailSpecificFormFields() {
@@ -239,8 +244,7 @@ class FounderPageViewsDigestController extends FounderDigestController {
 	const TRACKING_CATEGORY_INT = TrackingCategories::FOUNDER_VIEWS_DIGEST_INT;
 
 	protected function getSubject() {
-		return $this->getMessage( 'emailext-founder-views-digest-subject',
-			\WikiMap::getWikiName( $this->wikiId ) )->parse();
+		return $this->getMessage( 'emailext-founder-views-digest-subject', $this->wikiName )->parse();
 	}
 
 	/**
@@ -294,7 +298,7 @@ class FounderPageViewsDigestController extends FounderDigestController {
 	protected function getDetailsList() {
 		return [
 			[
-				'iconSrc' => \GlobalFile::newFromText( 'Page-views.png', \Wikia::NEWSLETTER_WIKI_ID )->getUrlGenerator()->url(),
+				'iconSrc' => ImageHelper::getFileInfo( 'Page-views.png' )['url'],
 				'detailsHeader' => $this->getMessage( 'emailext-founder-digest-views-header', $this->pageViews )->parse(),
 				'details' => $this->getMessage( 'emailext-founder-digest-views-description-2' )->text()
 			] 

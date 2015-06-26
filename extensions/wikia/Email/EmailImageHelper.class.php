@@ -35,19 +35,19 @@ class ImageHelper {
 		$info = [];
 
 		foreach ( self::$icons as $name ) {
-			$fileInfo = self::getFileInfo( $name );
+			$fileInfo = self::getFileInfo( $name . '.gif' );
 			$info[$name] = $fileInfo;
 		}
 
 		return $info;
 	}
 
-	public static function getFileInfo( $name, $fileType = ".gif" ) {
+	public static function getFileInfo( $name ) {
 		$info = \WikiaDataAccess::cache(
-			self::getFileKey( $name, $fileType ),
+			self::getFileKey( $name ),
 			self::ICON_CACHE_TTL,
-			function() use ( $name, $fileType ) {
-				$file = \GlobalFile::newFromText( $name . $fileType, \Wikia::NEWSLETTER_WIKI_ID );
+			function() use ( $name ) {
+				$file = \GlobalFile::newFromText( $name, \Wikia::NEWSLETTER_WIKI_ID );
 
 				return [
 					'name'   => $name,
@@ -61,7 +61,7 @@ class ImageHelper {
 		return $info;
 	}
 
-	protected static function getFileKey( $name, $fileType ) {
-		return wfSharedMemcKey( 'Email', 'ImageHelper', 'icon', $name ,$fileType );
+	protected static function getFileKey( $name ) {
+		return wfSharedMemcKey( 'Email', 'ImageHelper', 'icon', $name );
 	}
 }

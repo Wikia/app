@@ -7,7 +7,7 @@ class FounderEmailsDaysPassedEvent extends FounderEmailsEvent {
 		$this->setData( $data );
 	}
 
-	public function enabled ( $wgCityId, User $user ) {
+	public function enabled ( User $user, $wgCityId = null ) {
 		// This type of email cannot be disabled or avoided without unsubscribing from all email
 		return true;
 	}
