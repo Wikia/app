@@ -372,6 +372,11 @@ define('wikia.preview', [
 		$article.width(previewTypes[currentTypeName].value);
 		scalePreview(currentTypeName);
 
+		$article.toggleClass(
+			'large-typography',
+			type === 'max' && !$article.hasClass('large-typography')
+		);
+
 		tracker.track({
 			action: Wikia.Tracker.ACTIONS.CLICK,
 			category: 'edit-preview',
@@ -431,11 +436,6 @@ define('wikia.preview', [
 		default:
 			dataSize = '';
 		}
-
-		$article.toggleClass(
-			'large-typography',
-			type === 'max' && !$article.hasClass('large-typography')
-		);
 
 		$article.attr('data-size', dataSize);
 	}
