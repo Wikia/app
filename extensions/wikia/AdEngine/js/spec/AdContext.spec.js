@@ -296,4 +296,33 @@ describe('AdContext', function () {
 		adContext = getModule();
 		expect(adContext.getContext().targeting.enableKruxTargeting).toBeFalsy();
 	});
+
+	it('disables krux when wiki is directed at children', function () {
+		var adContext,
+			getWindowMock = function (directedAtChildrenMock) {
+				return {
+					ads: {
+						context: {
+							targeting: {
+								wikiDirectedAtChildren: directedAtChildrenMock
+							}
+						}
+					}
+				};
+			};
+
+		adContext = modules['ext.wikia.adEngine.adContext'](
+			getWindowMock(false),
+			{},
+			geoMock,
+			{wgAdDriverKruxCountries: ['XX', 'ZZ']}
+		);
+		expect(adContext.getContext().targeting.enableKruxTargeting).toBeTruthy();
+		adContext = modules['ext.wikia.adEngine.adContext'](
+			getWindowMock(true),
+			geoMock,
+			{wgAdDriverKruxCountries: ['XX', 'ZZ']}
+		);
+		expect(adContext.getContext().targeting.enableKruxTargeting).toBeFalsy();
+	});
 });

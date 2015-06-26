@@ -98,6 +98,10 @@ define('ext.wikia.adEngine.adContext', [
 			context.targeting.enableKruxTargeting = false;
 		}
 
+		if (context.targeting.wikiDirectedAtChildren) {
+			context.targeting.enableKruxTargeting = false;
+		}
+
 		// Export the context back to ads.context
 		// Only used by Lightbox.js, WikiaBar.js and AdsInContext.js
 		if (w.ads && w.ads.context) {
