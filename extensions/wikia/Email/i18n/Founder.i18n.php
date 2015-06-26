@@ -15,6 +15,32 @@ $messages['en'] = array(
 	'emailext-founder-new-member-subject' => '$1 just joined {{SITENAME}}. Congrats!',
 	'emailext-founder-new-member-details' => 'Take a few minutes to welcome $1 and encourage them to get involved. The more the merrier, and the faster your wikia will grow!',
 	'emailext-founder-new-member-link-label' => 'Send a message',
+	'emailext-founder-newly-created-subject' => 'Congratulations on creating $1!',
+	'emailext-founder-newly-created-summary' => 'You are now the proud founder of $1!',
+	'emailext-founder-newly-created-tips-intro' => 'This is your chance to give your eager audience the ultimate fan experience! Here are some tips to help your community shine bright within The Social Universe for Fans, by Fans.',
+	'emailext-founder-add-pages-header' => 'Add Pages',
+	'emailext-founder-add-pages-details' => 'Go ahead, add everything you know about your favorite fandom. Share your knowledge and recruit others to help!',
+	'emailext-founder-add-photos-header' => 'Photos & Videos',
+	'emailext-founder-add-photos-details' => 'Load up your wikia with awesome media! Add photos and videos to your community and keep them coming back for more.',
+	'emailext-founder-customize-header' => 'Customize It',
+	'emailext-founder-customize-details' => 'What’s the latest news on your wikia? Feature the best content on your homepage to make a great first impression!',
+	'emailext-founder-exposure-header' => 'Get Exposure',
+	'emailext-founder-exposure-details' => 'Want to show off your wikia? Suggest a story to highlight from your community.',
+	'emailext-founder-share-header' => 'Share It',
+	'emailext-founder-share-details' => 'Love your wikia? Stand on a mountain and shout it to the world! Tag @Wikia on your favorite social media network.',
+	'emailext-founder-visit-community' => "Now you're on your way! But, don't worry, we won't leave you high and dry. We're here to help you make $1 successful every step of the way. Visit [http://community.wikia.com Community Central] to ask questions and get advice!",
+	'emailext-founder-happy-wikia-building' => "Happy wikia building!",
+	'emailext-founder-3-days-subject' => "How’s it going on $1? We’re here to help!",
+	'emailext-founder-3-days-summary' => 'Can you believe it’s been three days since you started $1?',
+	'emailext-founder-3-days-extended-summary' => 'We’re checking in to share a few more tips on building your wikia community and make sure you’re having a great fan experience.',
+	'emailext-founder-3-days-add-videos-header' => "Add Videos",
+	'emailext-founder-3-days-add-videos-details' => "Make your page awesome and interesting by adding your favorite fandom videos. And who doesn’t love a good video?",
+	'emailext-founder-3-days-update-theme-header' => "Update Your Theme",
+	'emailext-founder-3-days-update-theme-details' => "Themes, colors, wordmarks, oh my! Use the Wikia Theme Designer to create a design that matches your fandom perfectly.",
+	'emailext-founder-3-days-wam-header' => "Get Inspired",
+	'emailext-founder-3-days-wam-details' => "Draw inspiration from some of our favorite communities. These represent the best and most popular wikia fan sites!",
+	'emailext-founder-3-days-need-help' => "Need help figuring out how something works? We're always here for you! Ask us for help and advice at [http://community.wikia.com Community Central].",
+	'emailext-founder-3-days-great-work' => "Keep up the great work! ",
 );
 
 $messages['qqq'] = array(
@@ -31,6 +57,9 @@ $messages['qqq'] = array(
 	'emailext-founder-new-member-subject' => 'Subject of the email send to founders when a user registers on their wiki. $1 -> new username',
 	'emailext-founder-new-member-details' => 'Text encouraging the founder to reach out to the new member and encourage them to get involved on the wiki. $1 -> new username',
 	'emailext-founder-new-member-link-label' => "Button label linking to the new member's talk page where the founder can welcome them to the wiki",
+	'emailext-founder-newly-created-subject' => 'TODO ADD THESE',
+	'emailext-founder-newly-created-summary' => 'TODO ADD THESE',
+	'emailext-founder-newly-created-tips-intro' => 'TODO ADD THESE'
 );
 
 $messages['de'] = array(

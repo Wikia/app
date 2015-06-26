@@ -1,13 +1,23 @@
-<tr>
-	<td valign="top" class="icon">
-		<img src="{{iconSrc}}">
-	</td>
-	<td class="widest">
-		<div class="message">
-			{{# detailsHeader}}
-				<p><strong>{{detailsHeader}}</strong></p>
-			{{/ detailsHeader}}
-			<p>{{{details}}}</p>
-		</div>
-	</td>
-</tr>
+<table class="detailsTable">
+	<tr>
+		<td>
+			<div style="float: left; margin-right: 20px" >
+				{{# iconLink}}
+				<a href="{{iconLink}}">
+				{{/iconLink}}
+				<img src="{{iconSrc}}" style="float: left">
+				{{# iconLink}}
+				</a>
+				{{/ iconLink}}
+			</div>
+		</td>
+		<td>
+			<div>
+				{{# detailsHeader}}
+					<p><strong>{{detailsHeader}}</strong></p>
+				{{/ detailsHeader}}
+				<p>{{{details}}}</p>
+			</div>
+		</td>
+	</tr>
+</table>

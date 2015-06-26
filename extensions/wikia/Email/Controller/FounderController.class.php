@@ -26,7 +26,7 @@ abstract class FounderController extends EmailController {
 
 }
 
-class AbstractFounderEditController extends FounderController {
+abstract class AbstractFounderEditController extends FounderController {
 
 	/** @var \Title */
 	protected $pageTitle;
@@ -328,4 +328,191 @@ class FounderNewMemberController extends FounderController {
 			throw new Check( "Founder doesn't want to be emailed about new members joining this wiki" );
 		}
 	}
+}
+
+class FounderTipsController extends FounderController {
+	const TRACKING_CATEGORY_EN = TrackingCategories::FOUNDER_ACTIVITY_DIGEST_EN;
+	const TRACKING_CATEGORY_INT = TrackingCategories::FOUNDER_ACTIVITY_DIGEST_INT;
+
+	const LAYOUT_CSS = "founderTips.css";
+
+	protected static $ICONS = [
+		[
+			"iconSrc" => "Add_page",
+			"iconLink" => "CreatePage",
+			"IconLinkParams" => [ "modal" => "AddPage" ],
+			"detailsHeaderKey" => "emailext-founder-add-pages-header",
+			"detailsKey" => "emailext-founder-add-pages-details"
+		],
+		[
+			"iconSrc" => "Add_photo",
+			"iconLink" => "NewFiles",
+			"IconLinkParams" => [ "modal" => "UploadImage" ],
+			"detailsHeaderKey" => "emailext-founder-add-photos-header",
+			"detailsKey" => "emailext-founder-add-photos-details"
+		],
+		[
+			"iconSrc" => "Customize",
+			"iconLink" => "Main", // TODO Localize this bitch
+			"IconLinkParams" => [ "action" => "edit" ],
+			"detailsHeaderKey" => "emailext-founder-customize-header",
+			"detailsKey" => "emailext-founder-customize-details"
+		],
+		[
+			"iconSrc" => "Get-exposure",
+			"detailsHeaderKey" => "emailext-founder-exposure-header",
+			"detailsKey" => "emailext-founder-exposure-details"
+		],
+		[
+			"iconSrc" => "Share",
+			"detailsHeaderKey" => "emailext-founder-share-header",
+			"detailsKey" => "emailext-founder-share-details"
+		],
+	];
+
+
+	protected $wikiName;
+	protected $wikiId;
+
+	public function initEmail() {
+		$this->wikiName = $this->getVal( 'wikiName', 'SOME SUPER COOL WIKIA' );
+		$this->wikiId = $this->getVal( 'wikiId', 869155 );
+	}
+
+	protected function getSubject() {
+		return $this->getMessage( 'emailext-founder-newly-created-subject', $this->wikiName )->parse();
+	}
+
+	/**
+	 * @template founderTips
+	 */
+	public function body() {
+		$this->response->setData( [
+			'salutation' => $this->getSalutation(),
+			'summary' => $this->getSummary(),
+			'extendedSummary' => $this->getMessage( 'emailext-founder-newly-created-tips-intro' )->text(),
+			'details' => $this->getDetailsList(),
+			'contentFooterMessages' => [
+				$this->getMessage( 'emailext-founder-visit-community', $this->wikiName )->parse(),
+				$this->getMessage( 'emailext-founder-happy-wikia-building' )->text(),
+				$this->getMessage( 'emailext-emailconfirmation-community-team' )->text(),
+			],
+		] );
+	}
+
+	public function getSummary() {
+		return $this->getMessage( 'emailext-founder-newly-created-summary', $this->wikiName )->parse();
+	}
+
+	// TODO add to this
+	public function assertCanEmail() {
+		parent::assertCanEmail();
+	}
+
+	/**
+	 * Returns list of details for the digest
+	 *
+	 * @return array
+	 */
+	protected function getDetailsList() {
+		$detailsList = [];
+		foreach ( self::$ICONS as $icon ) {
+			$detailsList[] = [
+				"detailsHeader" => $this->getMessage( $icon["detailsHeaderKey"] )->text(),
+				"details" => $this->getMessage( $icon["detailsKey"] )->text(),
+				"iconSrc" => Email\ImageHelper::getFileInfo( $icon['iconSrc'], ".png" )['url'],
+				"iconLink" => empty( $icon["iconLink"] ) ? "" :
+						\GlobalTitle::newFromText( $icon["iconLink"], NS_SPECIAL, $this->wikiId )->getFullURL( $icon["IconLinkParams"] )
+			];
+		}
+
+		return $detailsList;
+	}
+
+
+}
+
+class FounderTipsThreeDaysController extends FounderTipsController {
+	const TRACKING_CATEGORY_EN = TrackingCategories::FOUNDER_ACTIVITY_DIGEST_EN;
+	const TRACKING_CATEGORY_INT = TrackingCategories::FOUNDER_ACTIVITY_DIGEST_INT;
+
+	const LAYOUT_CSS = "founderTips.css";
+
+	protected static $ICONS = [
+		[
+			"iconSrc" => "Add_photo",
+			"iconLink" => "Videos",
+			"IconLinkParams" => [],
+			"detailsHeaderKey" => "emailext-founder-add-photos-header",
+			"detailsKey" => "emailext-founder-add-photos-details"
+		],
+		[
+			"iconSrc" => "Update-theme",
+			"iconLink" => "ThemeDesigner",
+			"IconLinkParams" => [],
+			"detailsHeaderKey" => "emailext-founder-customize-header",
+			"detailsKey" => "emailext-founder-customize-details"
+		],
+		[
+			"iconSrc" => "Get-exposure", /// TODO Figure out how to add the WAM link here
+			"detailsHeaderKey" => "emailext-founder-exposure-header",
+			"detailsKey" => "emailext-founder-exposure-details"
+		],
+	];
+
+
+	protected $wikiName;
+	protected $wikiId;
+
+	protected function getSubject() {
+		return $this->getMessage( 'emailext-founder-3-days-subject', $this->wikiName )->parse();
+	}
+
+	/**
+	 * @template founderTips
+	 */
+	public function body() {
+		$this->response->setData( [
+			'salutation' => $this->getSalutation(),
+			'summary' => $this->getSummary(),
+			'extendedSummary' => $this->getMessage( 'emailext-founder-3-days-extended-summary' )->text(),
+			'details' => $this->getDetailsList(),
+			'contentFooterMessages' => [
+				$this->getMessage( 'emailext-founder-3-days-need-help', $this->wikiName )->parse(),
+				$this->getMessage( 'emailext-founder-3-days-great-work' )->text(),
+				$this->getMessage( 'emailext-emailconfirmation-community-team' )->text(),
+			],
+		] );
+	}
+
+	public function getSummary() {
+		return $this->getMessage( 'emailext-founder-3-days-summary', $this->wikiName )->parse();
+	}
+
+	// TODO add to this
+	public function assertCanEmail() {
+		parent::assertCanEmail();
+	}
+
+	/**
+	 * Returns list of details for the digest
+	 *
+	 * @return array
+	 */
+	protected function getDetailsList() {
+		$detailsList = [];
+		foreach ( self::$ICONS as $icon ) {
+			$detailsList[] = [
+				"detailsHeader" => $this->getMessage( $icon["detailsHeaderKey"] )->text(),
+				"details" => $this->getMessage( $icon["detailsKey"] )->text(),
+				"iconSrc" => Email\ImageHelper::getFileInfo( $icon['iconSrc'], ".png" )['url'],
+				"iconLink" => empty( $icon["iconLink"] ) ? "" :
+						\GlobalTitle::newFromText( $icon["iconLink"], NS_SPECIAL, $this->wikiId )->getFullURL( $icon["IconLinkParams"] )
+			];
+		}
+
+		return $detailsList;
+	}
+
+
 }

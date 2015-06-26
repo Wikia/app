@@ -41,12 +41,12 @@ class ImageHelper {
 		return $info;
 	}
 
-	protected static function getFileInfo( $name ) {
+	public static function getFileInfo( $name, $fileType = ".gif" ) {
 		$info = \WikiaDataAccess::cache(
-			self::getFileKey( $name ),
+			self::getFileKey( $name, $fileType ),
 			self::ICON_CACHE_TTL,
-			function() use ( $name ) {
-				$file = \GlobalFile::newFromText( $name . '.gif', \Wikia::NEWSLETTER_WIKI_ID );
+			function() use ( $name, $fileType ) {
+				$file = \GlobalFile::newFromText( $name . $fileType, \Wikia::NEWSLETTER_WIKI_ID );
 
 				return [
 					'name'   => $name,
@@ -60,7 +60,7 @@ class ImageHelper {
 		return $info;
 	}
 
-	protected static function getFileKey( $name ) {
-		return wfSharedMemcKey( 'Email', 'ImageHelper', 'icon', $name );
+	protected static function getFileKey( $name, $fileType ) {
+		return wfSharedMemcKey( 'Email', 'ImageHelper', 'icon', $name ,$fileType );
 	}
 }
