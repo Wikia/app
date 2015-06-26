@@ -402,6 +402,14 @@ class CuratedContentController extends WikiaController {
 			}
 		}, $content ) );
 
+		$squidUpdate = new SquidUpdate( array_reduce( $content, function ( $urls, $item ) {
+			if ( $item[ 'title' ] !== '' && empty( $item[ 'featured' ] ) ) {
+				$urls[] = self::getUrl( 'getList' ) . '&section=' . rawurlencode( $item[ 'title' ] );
+			}
+			return $urls;
+		} ) );
+		$squidUpdate->doUpdate();
+
 		if ( class_exists( 'GameGuidesController' ) ) {
 			GameGuidesController::purgeMethod( 'getList' );
 		}
