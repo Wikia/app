@@ -303,6 +303,17 @@ class MercuryApiController extends WikiaController {
 		$this->response->setCacheValidity( self:: WIKI_VARIABLES_CACHE_TTL );
 	}
 
+	public function getRedirectTitle() {
+		$title = $this->getTitleFromRequest();
+
+		if ($title->isRedirect()) {
+			$article = Article::newFromID( $title->getArticleId() );
+			return $article->getRedirectTarget();
+		}
+
+		return null;
+	}
+
 	/**
 	 * @throws NotFoundApiException
 	 * @throws BadRequestApiException
@@ -311,16 +322,19 @@ class MercuryApiController extends WikiaController {
 		global $wgEnableMainPageDataMercuryApi;
 
 		try {
-			$title = $this->getTitleFromRequest();
+			$title = $this->getRedirectTitle();
+			$data['redirected'] = true;
+
+			if ($title === null) {
+				$title = $this->getTitleFromRequest();
+				unset($data['redirected']);
+			}
+
 			$articleId = $title->getArticleId();
-
-			$data = [
-				'details' => $this->getArticleDetails( $articleId ),
-				'topContributors' => $this->getTopContributorsDetails(
-					$this->getTopContributorsPerArticle( $articleId )
-				)
-			];
-
+			$data['details'] = $this->getArticleDetails( $articleId );
+			$data['topContributors'] = $this->getTopContributorsDetails(
+				$this->getTopContributorsPerArticle( $articleId )
+			);
 			$isMainPage = $title->isMainPage();
 			$data['isMainPage'] = $isMainPage;
 
