@@ -1,3 +1,11 @@
+.bold {
+	font-weight: bold;
+}
+
+.content-footer-messages p:not(:first-child) {
+	margin: 0;
+}
+
 .detailsTable {
 	margin-bottom: 40px;
 }
@@ -8,14 +16,6 @@
 
 .detailsTable td {
 	vertical-align: top;
-}
-
-.bold {
-	font-weight: bold;
-}
-
-.content-footer-messages p:not(:first-child) {
-	margin: 0;
 }
 
 td div.content-footer-messages {

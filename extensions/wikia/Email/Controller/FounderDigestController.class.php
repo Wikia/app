@@ -11,6 +11,8 @@ abstract class FounderDigestController extends EmailController {
 	const TRACKING_CATEGORY_EN = TrackingCategories::DEFAULT_CATEGORY;
 	const TRACKING_CATEGORY_INT = TrackingCategories::DEFAULT_CATEGORY;
 
+	const LAYOUT_CSS = "digestLayout.css";
+
 	protected $wikiId;
 	protected $pageViews;
 
@@ -128,7 +130,7 @@ class FounderActivityDigestController extends FounderDigestController {
 
 	public function assertCanEmail() {
 		parent::assertCanEmail();
-		$this->assertSubscribedToCompleteDigest();
+		//$this->assertSubscribedToCompleteDigest();
 	}
 
 	/**

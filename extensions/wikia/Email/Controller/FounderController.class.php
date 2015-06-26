@@ -334,7 +334,7 @@ class FounderTipsController extends FounderController {
 	const TRACKING_CATEGORY_EN = TrackingCategories::FOUNDER_TIPS_0_DAY_EN;
 	const TRACKING_CATEGORY_INT = TrackingCategories::FOUNDER_TIPS_0_DAY_INT;
 
-	const LAYOUT_CSS = "founderTips.css";
+	const LAYOUT_CSS = "digestLayout.css";
 
 	protected $wikiName;
 	protected $wikiId;
