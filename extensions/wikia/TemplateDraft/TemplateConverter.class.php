@@ -4,6 +4,8 @@ class TemplateConverter {
 
 	const TEMPLATE_VARIABLE_REGEX = '/{{{([^|{}]+)(\|([^{}]*|.*{{.*}}.*))?}}}/';
 
+	var $title; // Title object of the template we're converting
+
 	/**
 	 * Names of variables that should be converted to a <title> tag
 	 * @var array
@@ -23,6 +25,10 @@ class TemplateConverter {
 		'photo',
 		'mainimage',
 	];
+
+	public function __construct( Title $templateTitle ) {
+		$this->title = $templateTitle;
+	}
 
 	/**
 	 * Performs a conversion to a template with a portable infobox.
@@ -134,5 +140,26 @@ class TemplateConverter {
 		}
 
 		return $variables;
+	}
+
+	public function generatePreviewSection( $content ) {
+		$variables = $this->findTemplateVariables( $content );
+
+		$preview = "{{" . $this->title->getText() . "\n";
+		$docs = $preview;
+
+		foreach ( $variables as $var ) {
+			$preview .= "|{$var}=This is a test\n";
+			$docs .= "|{$var}=\n";
+		}
+
+		$preview .= "}}\n";
+		$docs .= "}}\n";
+
+		$return = "<noinclude>\n";
+		$return .= wfMessage( 'templatedraft-preview-n-docs' )->rawParams( $docs, $preview )->inContentLanguage()->plain();
+		$return .= "\n</noinclude>\n";
+
+		return $return;
 	}
 } 

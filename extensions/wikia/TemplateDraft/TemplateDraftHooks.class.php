@@ -46,6 +46,7 @@ class TemplateDraftHooks {
 				 */
 				$controller = new TemplateDraftController();
 				$text = $controller->createDraftContent(
+					$title, // @TODO this is currently taking the *edited* title (with subpage), not the *converted* title  
 					$parentContent,
 					[ $controller::TEMPLATE_INFOBOX ]
 				);
