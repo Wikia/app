@@ -124,7 +124,7 @@ class CategoryExhibitionSection {
 			$this->setSortTypeFromParam();
 			$return = $this->sortOption;
 		} else {
-			$return = $wgUser->getOption( 'CategoryExhibitionSortType', $this->allowedSortOptions[0] );
+			$return = $wgUser->getGlobalPreference( 'CategoryExhibitionSortType', $this->allowedSortOptions[0] );
 		}
 
 		if ( !empty( $return ) && in_array( $return, $this->allowedSortOptions ) ){
@@ -140,7 +140,7 @@ class CategoryExhibitionSection {
 
 		if ( in_array( $sortType, $this->allowedSortOptions ) ) {
 			if ( !$wgUser->isAnon() ) {
-				$wgUser->setOption('CategoryExhibitionSortType', $sortType );
+				$wgUser->setGlobalPreference('CategoryExhibitionSortType', $sortType );
 				$wgUser->saveSettings();
 			}
 			$this->sortOption = $sortType;
@@ -176,7 +176,7 @@ class CategoryExhibitionSection {
 		global $wgUser;
 		if ( in_array( $displayType, $this->allowedDisplayOptions ) ) {
 			if ( !$wgUser->isAnon() ) {
-				$wgUser->setOption('CategoryExhibitionDisplayType', $displayType );
+				$wgUser->setGlobalPreference('CategoryExhibitionDisplayType', $displayType );
 				$wgUser->saveSettings();
 			}
 			$this->displayOption = $displayType;
@@ -195,7 +195,7 @@ class CategoryExhibitionSection {
 			$this->setDisplayTypeFromParam();
 			$return = $this->displayOption;
 		} else {
-			$return = $wgUser->getOption( 'CategoryExhibitionDisplayType', $this->allowedDisplayOptions[0] );
+			$return = $wgUser->getGlobalPreference( 'CategoryExhibitionDisplayType', $this->allowedDisplayOptions[0] );
 		}
 
 		if ( !empty( $return ) && in_array( $return, $this->allowedDisplayOptions ) ){
