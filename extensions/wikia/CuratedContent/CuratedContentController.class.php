@@ -415,7 +415,7 @@ class CuratedContentController extends WikiaController {
 	 * @brief Purges API response for every section
 	 */
 	private function purgeSections() {
-		$content = $this->wg->WikiaCuratedContent;
+		$content = F::app()->wg->WikiaCuratedContent;
 
 		foreach ( $content as $item ) {
 			if ( $item[ 'title' ] !== '' && $item[ 'featured' ] == false ) {
