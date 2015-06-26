@@ -336,46 +336,11 @@ class FounderTipsController extends FounderController {
 
 	const LAYOUT_CSS = "founderTips.css";
 
-	protected static $ICONS = [
-		[
-			"iconSrc" => "Add_page",
-			"iconLink" => "CreatePage",
-			"IconLinkParams" => [ "modal" => "AddPage" ],
-			"detailsHeaderKey" => "emailext-founder-add-pages-header",
-			"detailsKey" => "emailext-founder-add-pages-details"
-		],
-		[
-			"iconSrc" => "Add_photo",
-			"iconLink" => "NewFiles",
-			"IconLinkParams" => [ "modal" => "UploadImage" ],
-			"detailsHeaderKey" => "emailext-founder-add-photos-header",
-			"detailsKey" => "emailext-founder-add-photos-details"
-		],
-		[
-			"iconSrc" => "Customize",
-			"iconLink" => "Main", // TODO Localize this bitch
-			"IconLinkParams" => [ "action" => "edit" ],
-			"detailsHeaderKey" => "emailext-founder-customize-header",
-			"detailsKey" => "emailext-founder-customize-details"
-		],
-		[
-			"iconSrc" => "Get-exposure",
-			"detailsHeaderKey" => "emailext-founder-exposure-header",
-			"detailsKey" => "emailext-founder-exposure-details"
-		],
-		[
-			"iconSrc" => "Share",
-			"detailsHeaderKey" => "emailext-founder-share-header",
-			"detailsKey" => "emailext-founder-share-details"
-		],
-	];
-
-
 	protected $wikiName;
 	protected $wikiId;
 
 	public function initEmail() {
-		$this->wikiName = $this->getVal( 'wikiName', 'SOME SUPER COOL WIKIA' );
+		$this->wikiName = $this->getVal( 'wikiName', 'Jsutterfield' );
 		$this->wikiId = $this->getVal( 'wikiId', 869155 );
 	}
 
@@ -406,18 +371,31 @@ class FounderTipsController extends FounderController {
 	 * @return array
 	 */
 	protected function getDetailsList() {
-		$detailsList = [];
-		foreach ( self::$ICONS as $icon ) {
-			$detailsList[] = [
-				"detailsHeader" => $this->getMessage( $icon["detailsHeaderKey"] )->text(),
-				"details" => $this->getMessage( $icon["detailsKey"] )->text(),
-				"iconSrc" => Email\ImageHelper::getFileInfo( $icon['iconSrc'], ".png" )['url'],
-				"iconLink" => empty( $icon["iconLink"] ) ? "" :
-						\GlobalTitle::newFromText( $icon["iconLink"], NS_SPECIAL, $this->wikiId )->getFullURL( $icon["IconLinkParams"] )
-			];
-		}
-
-		return $detailsList;
+		return [
+			[
+				"iconSrc" => Email\ImageHelper::getFileInfo( "Add_page", ".png" )['url'],
+				"iconLink" => \GlobalTitle::newFromText( "CreatePage", NS_SPECIAL, $this->wikiId )->getFullURL( [ "modal" => "AddPage" ] ),
+				"detailsHeader" => $this->getMessage( "emailext-founder-add-pages-header" )->text(),
+				"details" => $this->getMessage( "emailext-founder-add-pages-details" )->text()
+			],
+			[
+				"iconSrc" => Email\ImageHelper::getFileInfo( "Add_photo", ".png" )['url'],
+				"iconLink" => \GlobalTitle::newFromText( "NewFiles", NS_SPECIAL, $this->wikiId )->getFullURL( [ "modal" => "UploadImage" ] ),
+				"detailsHeader" => $this->getMessage( "emailext-founder-add-photos-header" )->text(),
+				"details" => $this->getMessage( "emailext-founder-add-photos-details" )->text()
+			],
+			[
+				"iconSrc" => Email\ImageHelper::getFileInfo( "Customize", ".png" )['url'],
+				"iconLink" => \GlobalTitle::newFromText( wfMessage( "mainpage" )->text(), NS_MAIN, $this->wikiId )->getFullURL( [ "action" => "edit" ] ),
+				"detailsHeader" => $this->getMessage( "emailext-founder-customize-header" )->text(),
+				"details" => $this->getMessage( "emailext-founder-customize-details" )->text()
+			],
+			[
+				"iconSrc" => Email\ImageHelper::getFileInfo( "Share", ".png" )['url'],
+				"detailsHeader" => $this->getMessage( "emailext-founder-share-header" )->text(),
+				"details" => $this->getMessage( "emailext-founder-share-details" )->text()
+			]
+		];
 	}
 
 
@@ -426,32 +404,6 @@ class FounderTipsController extends FounderController {
 class FounderTipsThreeDaysController extends FounderTipsController {
 	const TRACKING_CATEGORY_EN = TrackingCategories::FOUNDER_ACTIVITY_DIGEST_EN;
 	const TRACKING_CATEGORY_INT = TrackingCategories::FOUNDER_ACTIVITY_DIGEST_INT;
-
-	protected static $ICONS = [
-		[
-			"iconSrc" => "Add_photo",
-			"iconLink" => "Videos",
-			"IconLinkParams" => [],
-			"detailsHeaderKey" => "emailext-founder-add-photos-header",
-			"detailsKey" => "emailext-founder-add-photos-details"
-		],
-		[
-			"iconSrc" => "Update-theme",
-			"iconLink" => "ThemeDesigner",
-			"IconLinkParams" => [],
-			"detailsHeaderKey" => "emailext-founder-customize-header",
-			"detailsKey" => "emailext-founder-customize-details"
-		],
-		[
-			"iconSrc" => "Get-exposure", /// TODO Figure out how to add the WAM link here
-			"detailsHeaderKey" => "emailext-founder-exposure-header",
-			"detailsKey" => "emailext-founder-exposure-details"
-		],
-	];
-
-
-	protected $wikiName;
-	protected $wikiId;
 
 	protected function getSubject() {
 		return $this->getMessage( 'emailext-founder-3-days-subject', $this->wikiName )->parse();
@@ -480,18 +432,28 @@ class FounderTipsThreeDaysController extends FounderTipsController {
 	 * @return array
 	 */
 	protected function getDetailsList() {
-		$detailsList = [];
-		foreach ( self::$ICONS as $icon ) {
-			$detailsList[] = [
-				"detailsHeader" => $this->getMessage( $icon["detailsHeaderKey"] )->text(),
-				"details" => $this->getMessage( $icon["detailsKey"] )->text(),
-				"iconSrc" => Email\ImageHelper::getFileInfo( $icon['iconSrc'], ".png" )['url'],
-				"iconLink" => empty( $icon["iconLink"] ) ? "" :
-						\GlobalTitle::newFromText( $icon["iconLink"], NS_SPECIAL, $this->wikiId )->getFullURL( $icon["IconLinkParams"] )
-			];
-		}
-
-		return $detailsList;
+		return [
+			[
+				"iconSrc" => Email\ImageHelper::getFileInfo( "Add_photo", ".png" )['url'],
+				"iconLink" => \GlobalTitle::newFromText( "Videos", NS_SPECIAL, $this->wikiId )->getFullURL(),
+				"detailsHeader" => $this->getMessage( "emailext-founder-3-days-add-videos-header" )->text(),
+				"details" => $this->getMessage( "emailext-founder-3-days-add-videos-details" )->text()
+			],
+			[
+				"iconSrc" => Email\ImageHelper::getFileInfo( "Update-theme", ".png" )['url'],
+				"iconLink" => \GlobalTitle::newFromText( "ThemeDesigner", NS_SPECIAL, $this->wikiId )->getFullURL(),
+				"detailsHeader" => $this->getMessage( "emailext-founder-3-days-update-theme-header" )->text(),
+				"details" => $this->getMessage( "emailext-founder-3-days-update-theme-details" )->text()
+			],
+			[
+				"iconSrc" => Email\ImageHelper::getFileInfo( "Get-inspired", ".png" )['url'],
+				"iconLink" => "http://http://www.wikia.com/WAM",
+				"detailsHeader" => $this->getMessage( "emailext-founder-3-days-wam-header" )->text(),
+				"details" => $this->getMessage( "emailext-founder-3-days-wam-details",
+						$this->getMessage( "emailext-founder-wam-link" )->text()
+					)->parse()
+			]
+		];
 	}
 
 
@@ -500,30 +462,8 @@ class FounderTipsTenDaysController extends FounderTipsController {
 	const TRACKING_CATEGORY_EN = TrackingCategories::FOUNDER_ACTIVITY_DIGEST_EN;
 	const TRACKING_CATEGORY_INT = TrackingCategories::FOUNDER_ACTIVITY_DIGEST_INT;
 
-	protected static $ICONS = [
-		[
-			"iconSrc" => "Share",
-			"detailsHeaderKey" => "emailext-founder-10-days-sharing-header",
-			"detailsKey" => "emailext-founder-10-days-sharing-details"
-		],
-		[
-			"iconSrc" => "Power-of-email",
-			"detailsHeaderKey" => "emailext-founder-10-days-email-power-header",
-			"detailsKey" => "emailext-founder-10-days-email-power-details"
-		],
-		[
-			"iconSrc" => "Get-with-google", /// TODO Figure out how to add the Google link here
-			"detailsHeaderKey" => "emailext-founder-10-days-email-google-header",
-			"detailsKey" => "emailext-founder-10-days-email-google-details"
-		],
-	];
-
-
-	protected $wikiName;
-	protected $wikiId;
-
 	protected function getSubject() {
-		return $this->getMessage( 'emailext-founder-3-days-subject', $this->wikiName )->parse();
+		return $this->getMessage( 'emailext-founder-10-days-subject', $this->wikiName )->parse();
 	}
 
 	/**
@@ -532,8 +472,8 @@ class FounderTipsTenDaysController extends FounderTipsController {
 	public function body() {
 		$this->response->setData( [
 			'salutation' => $this->getSalutation(),
-			'summary' => $this->getMessage( 'emailext-founder-3-days-summary', $this->wikiName )->parse(),
-			'extendedSummary' => $this->getMessage( 'emailext-founder-3-days-extended-summary' )->text(),
+			'summary' => $this->getMessage( 'emailext-founder-10-days-summary', $this->wikiName )->parse(),
+			'extendedSummary' => $this->getMessage( 'emailext-founder-10-days-extended-summary' )->text(),
 			'details' => $this->getDetailsList(),
 			'contentFooterMessages' => [
 				$this->getMessage( 'emailext-founder-10-days-email-what-next' )->text(),
@@ -548,17 +488,23 @@ class FounderTipsTenDaysController extends FounderTipsController {
 	 * @return array
 	 */
 	protected function getDetailsList() {
-		$detailsList = [];
-		foreach ( self::$ICONS as $icon ) {
-			$detailsList[] = [
-				"detailsHeader" => $this->getMessage( $icon["detailsHeaderKey"] )->text(),
-				"details" => $this->getMessage( $icon["detailsKey"] )->text(),
-				"iconSrc" => Email\ImageHelper::getFileInfo( $icon['iconSrc'], ".png" )['url'],
-				"iconLink" => empty( $icon["iconLink"] ) ? "" :
-						\GlobalTitle::newFromText( $icon["iconLink"], NS_SPECIAL, $this->wikiId )->getFullURL( $icon["IconLinkParams"] )
-			];
-		}
-
-		return $detailsList;
+		return [
+			[
+				"iconSrc" => Email\ImageHelper::getFileInfo( "Share", ".png" )['url'],
+				"detailsHeader" => $this->getMessage( "emailext-founder-10-days-sharing-header" )->text(),
+				"details" => $this->getMessage( "emailext-founder-10-days-sharing-details" )->text()
+			],
+			[
+				"iconSrc" => Email\ImageHelper::getFileInfo( "Power-of-email", ".png" )['url'],
+				"detailsHeader" => $this->getMessage( "emailext-founder-10-days-email-power-header" )->text(),
+				"details" => $this->getMessage( "emailext-founder-10-days-email-power-details" )->text()
+			],
+			[
+				"iconSrc" => Email\ImageHelper::getFileInfo( "Get-with-google", ".png" )['url'],
+				"iconLink" => $this->getMessage( "emailext-founder-get-with-google" )->text(),
+				"detailsHeader" => $this->getMessage( "emailext-founder-10-days-email-google-header" )->text(),
+				"details" => $this->getMessage( "emailext-founder-10-days-email-google-details" )->text()
+			]
+		];
 	}
 }

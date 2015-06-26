@@ -15,6 +15,7 @@ class ImageHelper {
 	static public $icons = [
 		'Wikia',
 		'Comics',
+		'Games',
 		'Movies',
 		'Lifestyle',
 		'Music',

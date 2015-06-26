@@ -14,7 +14,11 @@
 		<td>
 			<div>
 				{{# detailsHeader}}
-					<p><strong>{{detailsHeader}}</strong></p>
+					<p>
+						{{# iconLink}}<a href="{{iconLink}}">{{/ iconLink}}
+						<strong>{{detailsHeader}}</strong>
+						{{# iconLink}}</a>{{/ iconLink}}
+					</p>
 				{{/ detailsHeader}}
 				<p>{{{details}}}</p>
 			</div>
