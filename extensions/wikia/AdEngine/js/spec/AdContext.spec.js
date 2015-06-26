@@ -39,10 +39,7 @@ describe('AdContext', function () {
 			'liftium',
 			'openx',
 			'turtle'
-		],
-		geoMock = {
-			getCountryCode: function () { return 'XX'; }
-		};
+		];
 
 	it(
 		'fills getContext() with context, targeting, providers and forcedProvider ' +
@@ -298,31 +295,16 @@ describe('AdContext', function () {
 	});
 
 	it('disables krux when wiki is directed at children', function () {
-		var adContext,
-			getWindowMock = function (directedAtChildrenMock) {
-				return {
-					ads: {
-						context: {
-							targeting: {
-								wikiDirectedAtChildren: directedAtChildrenMock
-							}
-						}
-					}
-				};
-			};
+		var adContext;
 
-		adContext = modules['ext.wikia.adEngine.adContext'](
-			getWindowMock(false),
-			{},
-			geoMock,
-			{wgAdDriverKruxCountries: ['XX', 'ZZ']}
-		);
+		mocks.win = {ads: {context: {targeting: {wikiDirectedAtChildren: false}}}};
+		mocks.instantGlobals = {wgAdDriverKruxCountries: ['XX']};
+		adContext = getModule();
 		expect(adContext.getContext().targeting.enableKruxTargeting).toBeTruthy();
-		adContext = modules['ext.wikia.adEngine.adContext'](
-			getWindowMock(true),
-			geoMock,
-			{wgAdDriverKruxCountries: ['XX', 'ZZ']}
-		);
+
+		mocks.win = {ads: {context: {targeting: {wikiDirectedAtChildren: true}}}};
+		mocks.instantGlobals = {wgAdDriverKruxCountries: ['XX']};
+		adContext = getModule();
 		expect(adContext.getContext().targeting.enableKruxTargeting).toBeFalsy();
 	});
 });
