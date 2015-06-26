@@ -92,7 +92,7 @@ abstract class EmailController extends \WikiaController {
 			);
 
 			$this->initEmail();
-		} catch ( ControllerException $e ) {
+		} catch ( \Exception $e ) {
 			$this->setErrorResponse( $e );
 		}
 	}
@@ -488,7 +488,13 @@ abstract class EmailController extends \WikiaController {
 			throw new Fatal( 'Required username has been left empty' );
 		}
 
-		$user = \User::newFromName( $username );
+		if ( $username instanceof \User ) {
+			$user = $username;
+		} else if ( is_object( $username ) ) {
+			throw new Fatal( 'Non-user object passed when user object or username expected' );
+		} else {
+			$user = \User::newFromName( $username );
+		}
 		$this->assertValidUser( $user );
 
 		return $user;
