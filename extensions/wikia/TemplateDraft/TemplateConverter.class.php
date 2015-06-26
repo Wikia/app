@@ -112,9 +112,6 @@ class TemplateConverter {
 	}
 
 	public function generatePreviewSection( $variables ) {
-		$return = "== Usage & preview ==\n";
-		$return .= "<noinclude>\n";
-
 		$preview = "{{" . $this->title->getText() . "\n";
 		$docs = $preview;
 
