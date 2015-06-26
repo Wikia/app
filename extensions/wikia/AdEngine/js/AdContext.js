@@ -85,6 +85,8 @@ define('ext.wikia.adEngine.adContext', [
 			context.slots.invisibleHighImpact = true;
 		}
 
+		// Krux integration
+		context.targeting.enableKruxTargeting = false;
 		if (instantGlobals.wgAdDriverKruxCountries &&
 			instantGlobals.wgAdDriverKruxCountries.indexOf &&
 			instantGlobals.wgAdDriverKruxCountries.indexOf(geo.getCountryCode()) > -1
@@ -92,7 +94,6 @@ define('ext.wikia.adEngine.adContext', [
 			context.targeting.enableKruxTargeting = true;
 		}
 
-		// Krux integration
 		if (instantGlobals.wgSitewideDisableKrux) {
 			context.targeting.enableKruxTargeting = false;
 		}
