@@ -24,6 +24,9 @@ abstract class EmailController extends \WikiaController {
 	 * of $wgAutoLoadClasses */
 	const EMAIL_CONTROLLER_REGEX = "/^Email\\\\Controller\\\\(.+)Controller$/";
 
+	// Used when needing to specify an anonymous user from the external API
+	const ANONYMOUS_USER_ID = -1;
+
 	/** @var \User The user associated with the current request */
 	protected $currentUser;
 
@@ -167,7 +170,7 @@ abstract class EmailController extends \WikiaController {
 					$body,
 					$replyToAddress,
 					$contentType = null,
-					static::TRACKING_CATEGORY
+					$this->getSendGridCategory()
 				);
 				$this->assertGoodStatus( $status );
 			}
@@ -304,6 +307,16 @@ abstract class EmailController extends \WikiaController {
 		// Get rid of leading spacing/indenting
 		$bodyText = preg_replace( '/^[\t ]+/m', '', $bodyText );
 		return $bodyText;
+	}
+
+	/**
+	 * Returns the category string we'll send to sendgrid with this email for
+	 * tracking purposes.
+	 *
+	 * @return string
+	 */
+	public function getSendGridCategory() {
+		return static::TRACKING_CATEGORY;
 	}
 
 	/**
@@ -452,6 +465,11 @@ abstract class EmailController extends \WikiaController {
 		$userName = $this->getRequest()->getVal( $paramName );
 		if ( empty( $userName ) ) {
 			return $default;
+		}
+
+		// Allow an anonymous user to be specified
+		if ( $userName == self::ANONYMOUS_USER_ID ) {
+			return \User::newFromId( 0 );
 		}
 
 		return $this->getUserFromName( $userName );
