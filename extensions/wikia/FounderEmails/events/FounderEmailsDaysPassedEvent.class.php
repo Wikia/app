@@ -1,6 +1,7 @@
 <?php
 
 class FounderEmailsDaysPassedEvent extends FounderEmailsEvent {
+
 	public function __construct( Array $data = array() ) {
 		parent::__construct( 'daysPassed' );
 		$this->setData( $data );
@@ -18,19 +19,31 @@ class FounderEmailsDaysPassedEvent extends FounderEmailsEvent {
 		foreach ( $events as $event ) {
 			$wikiId = $event['wikiId'];
 			$eventData = $event['data'];
-			$activateTime = $eventData['activateTime'];
 
 			if ( $this->isInvalidWiki( $wikiId ) ) {
 				continue;
 			}
 
-			if ( $this->isTooEarlyToSendEmail( $activateTime ) ) {
+			if ( $this->isTooEarlyToSendEmail( $eventData['activateTime'] ) ) {
+				continue;
+			}
+
+			$emailController = $this->getEmailController( $eventData['activateDays'] );
+			if ( empty( $emailController ) ) {
 				continue;
 			}
 
 			$adminIds = ( new WikiService )->getWikiAdminIds( $wikiId );
 			foreach ( $adminIds as $adminId ) {
-				$user = User::newFromId( $adminId );
+
+				$emailParams = [
+					"targetUser" => User::newFromId( $adminId ),
+					"wikiName" => $eventData['wikiName'],
+					"wikiId" => $eventData['wikiId'],
+				];
+
+
+				F::app()->sendRequest( $emailController, 'handle', $emailParams );
 			}
 
 			$dbw = wfGetDB( DB_MASTER, [], $wgExternalSharedDB );
@@ -49,6 +62,20 @@ class FounderEmailsDaysPassedEvent extends FounderEmailsEvent {
 		return time() < $activateTime;
 	}
 
+	private function getEmailController( $activateDay ) {
+
+		$emailController = "";
+		if ( $activateDay == 0 ) {
+			$emailController = 'Email\Controller\FounderTipsController';
+		} elseif ( $activateDay == 3 ) {
+			$emailController = 'Email\Controller\FounderTipsThreeDaysController';
+		} elseif ( $activateDay == 10 ) {
+			$emailController = 'Email\Controller\FounderTipsTenDaysController';
+		}
+
+		return $emailController;
+	}
+
 	public static function register( $wikiParams, $debugMode = false ) {
 		global $wgFounderEmailsExtensionConfig, $wgCityId;
 
@@ -60,15 +87,15 @@ class FounderEmailsDaysPassedEvent extends FounderEmailsEvent {
 
 		$wikiFounder->saveSettings();
 
-		foreach ( $wgFounderEmailsExtensionConfig['events']['daysPassed']['days'] as $daysToActivate ) {
+		foreach ( $wgFounderEmailsExtensionConfig['events']['daysPassed']['days'] as $activateDay ) {
 
 			// Send the 0 day email, queue the rest
-			$doProcess = $daysToActivate == 0 ? true : false;
+			$doProcess = $activateDay == 0 ? true : false;
 			$eventData = array(
-				'activateDays' => $daysToActivate,
-				'activateTime' => time() + ( 86400 * $daysToActivate ),
+				'activateDays' => $activateDay,
+				'activateTime' => time() + ( 86400 * $activateDay ),
 				'wikiName' => $wikiParams['title'],
-				'wikiUrl' => $wikiParams['url'],
+				'wikiId' => $wikiParams['city_id']
 			);
 
 			$founderEmailObj->registerEvent( new FounderEmailsDaysPassedEvent( $eventData ), $doProcess );
