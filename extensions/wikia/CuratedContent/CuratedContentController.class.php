@@ -401,27 +401,19 @@ class CuratedContentController extends WikiaController {
 	 * @return bool
 	 */
 	static function onCuratedContentSave() {
-		self::purgeMethod( 'getList' );
-		self::purgeSections();
+		$content = F::app()->wg->WikiaCuratedContent;
+
+		self::purgeMethodVariants( 'getList', array_map( function ( $item ) {
+			if ( $item[ 'title' ] !== '' && $item[ 'featured' ] == false ) {
+				return [ 'section' => $item[ 'title' ] ];
+			}
+		}, $content ) );
 
 		if ( class_exists( 'GameGuidesController' ) ) {
 			GameGuidesController::purgeMethod( 'getList' );
 		}
 
 		return true;
-	}
-
-	/**
-	 * @brief Purges API response for every section
-	 */
-	private function purgeSections() {
-		$content = F::app()->wg->WikiaCuratedContent;
-
-		foreach ( $content as $item ) {
-			if ( $item[ 'title' ] !== '' && $item[ 'featured' ] == false ) {
-				self::purgeMethod( 'getList', [ 'section' => $item[ 'title' ] ] );
-			}
-		}
 	}
 }
 
