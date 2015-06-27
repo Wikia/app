@@ -82,6 +82,14 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 		return true;
 	}
 
+	public function hasAltAction() {
+		return false;
+	}
+
+	public function getAltActionUrl( $title ) {}
+
+	public function altActionLinkMessage() {}
+
 	public function isWlhLinkRequired() {
 		return false;
 	}
@@ -100,6 +108,7 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 	public function getViewData() {
 		$data['display'] = [
 			'pageviews'	=> $this->arePageViewsRequired(),
+			'altaction'	=> $this->hasAltAction(),
 		];
 		return $data;
 	}
@@ -392,6 +401,11 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 					$article['metadata']['pv7'] = 0;
 					$article['metadata']['pv28'] = 0;
 					$article['metadata']['pvDiff'] = 0;
+				}
+
+				if ( $this->hasAltAction() ) {
+					$article['altaction']['url'] = $this->getAltActionUrl( $title );
+					$article['altaction']['label'] = $this->altActionLinkMessage();
 				}
 
 				$data[ $title->getArticleID() ] = $article;
