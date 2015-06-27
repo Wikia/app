@@ -603,7 +603,7 @@ class SpecialCssModel extends WikiaModel {
 	}
 
 	public function isMinorEditDefault() {
-		return $this->wg->User->getBoolOption('minordefault');
+		return $this->wg->User->getGlobalPreference('minordefault');
 	}
 
 	/**
