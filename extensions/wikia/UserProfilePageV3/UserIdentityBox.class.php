@@ -134,7 +134,7 @@ class UserIdentityBox {
 
 	protected function getInternationalizedRegistrationDate($wikiId, $data) {
 		wfProfileIn(__METHOD__);
-		$firstMastheadEditDate = $this->user->getOption(self::USER_FIRST_MASTHEAD_EDIT_DATE_PROPERTY . $wikiId);
+		$firstMastheadEditDate = $this->user->getGlobalFlag(self::USER_FIRST_MASTHEAD_EDIT_DATE_PROPERTY . $wikiId);
 
 		if (is_null($data['registration']) && !is_null($firstMastheadEditDate)) {
 			//if user hasn't edited anything on this wiki before
@@ -211,9 +211,9 @@ class UserIdentityBox {
 		if (empty($memcData)) {
 			foreach (array('location', 'occupation', 'gender', 'birthday', 'website', 'twitter', 'fbPage', 'hideEditsWikis') as $key) {
 				if (!in_array($key, array('gender', 'birthday'))) {
-					$data[$key] = $this->user->getOption($key);
+					$data[$key] = $this->user->getGlobalAttribute($key);
 				} else {
-					$data[$key] = $this->user->getOption(self::USER_PROPERTIES_PREFIX . $key);
+					$data[$key] = $this->user->getGlobalAttribute(self::USER_PROPERTIES_PREFIX . $key);
 				}
 			}
 		} else {
@@ -224,7 +224,7 @@ class UserIdentityBox {
 
 		//informations which aren't cached in UPPv3 (i.e. real name)
 		//fb#19398
-		$disabled = $this->user->getOption('disabled');
+		$disabled = $this->user->getGlobalFlag('disabled');
 		if (empty($disabled)) {
 			$data['realName'] = $this->user->getRealName();
 		} else {
@@ -262,7 +262,7 @@ class UserIdentityBox {
 	 * @return String
 	 */
 	private function hasUserEverEditedMasthead() {
-		return $has = $this->user->getOption(self::USER_EVER_EDITED_MASTHEAD, false);
+		return $has = $this->user->getGlobalFlag(self::USER_EVER_EDITED_MASTHEAD, false);
 	}
 
 	/**
@@ -270,7 +270,7 @@ class UserIdentityBox {
 	 * @return String
 	 */
 	protected function hasUserEditedMastheadBefore($wikiId) {
-		return $this->user->getOption(self::USER_EDITED_MASTHEAD_PROPERTY . $wikiId, false);
+		return $this->user->getGlobalFlag(self::USER_EDITED_MASTHEAD_PROPERTY . $wikiId, false);
 	}
 
 	/**
