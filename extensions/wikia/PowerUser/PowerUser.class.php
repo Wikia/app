@@ -171,7 +171,7 @@ class PowerUser {
 	 */
 	public function removePowerUserSetOption( $sProperty ) {
 		if ( in_array( $sProperty, self::$aPowerUserProperties ) ) {
-			if ( $this->oUser->getBoolOption( $sProperty ) === true ) {
+			if ( $this->oUser->getGlobalFlag( $sProperty ) === true ) {
 				$this->oUser->setOption( $sProperty, null );
 				$this->oUser->saveSettings();
 				$this->logSuccess( $sProperty, self::ACTION_REMOVE_SET_OPTION );
