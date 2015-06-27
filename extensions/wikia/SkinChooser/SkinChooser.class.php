@@ -14,7 +14,7 @@ class SkinChooser {
 		// hide default MediaWiki skin fieldset
 		unset( $defaultPreferences['skin'] );
 
-		$mSkin  = $user->getOption( 'skin' );
+		$mSkin  = $user->getGlobalPreference( 'skin' );
 
 		// hacks for Answers
 		if ( !empty( $wgEnableAnswers ) ) {
@@ -126,13 +126,13 @@ class SkinChooser {
 		global $wgUser, $wgEnableAnswers;
 		wfProfileIn( __METHOD__ );
 
-		$val = $wgUser->getOption( self::getUserOptionKey( $option ) );
+		$val = $wgUser->getGlobalPreference( self::getUserOptionKey( $option ) );
 
 		// fallback to non-answers option (RT #54087)
 		if ( !empty( $wgEnableAnswers ) &&  $val == '' ) {
 			wfDebug( __METHOD__ . ": '{$option}' fallbacked\n" );
 
-			$val = $wgUser->getOption( $option );
+			$val = $wgUser->getGlobalPreference( $option );
 		}
 
 		wfDebug( __METHOD__ . ": '{$option}' = {$val}\n" );
