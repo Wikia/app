@@ -250,7 +250,6 @@ class ExternalUser_Wikia extends ExternalUser {
         try {
             $userId = null;
             $result = null;
-            wfRunHooks( 'ExternalUserWikiaAddToDatabase', [ &$result, &$userId, $User, $password, $email, $realname ] );
 
             if ( is_null( $result ) ) {
                 $dbw->insert(
