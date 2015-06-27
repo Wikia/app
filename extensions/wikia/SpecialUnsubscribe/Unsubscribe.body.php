@@ -179,7 +179,7 @@ class UnsubscribePage extends UnlistedSpecialPage {
 
 				#this shouldnt need to be checked, but we will anyway
 				# we don't need it now - this is in EmailConfirmed hook
-				/*if( $user->getBoolOption($this->mPrefname) ) {
+				/*if( $user->getGlobalPreference($this->mPrefname) ) {
 					unset($this->mUsers[$uid]);
 					continue;
 				}*/
