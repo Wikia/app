@@ -407,7 +407,7 @@ class UserPreferencesV2 {
 		// customize toolbar/myToolbar
 		$oasisToolbarService = new SharedToolbarService();
 		$toolbarNameInUserOptions = $oasisToolbarService->getToolbarOptionName();
-		$toolbarCurrentList = $user->getOption( $oasisToolbarService->getToolbarOptionName() );
+		$toolbarCurrentList = $user->getGlobalPreference( $oasisToolbarService->getToolbarOptionName() );
 		$storage[self::MY_TOOLBAR_OPTIONS_STORAGE_ARRAY_KEY_NAME] = array(
 			$toolbarNameInUserOptions => $toolbarCurrentList,
 		);
