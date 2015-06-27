@@ -63,7 +63,7 @@ class UserLoginHooksHelper {
 	public static function onGetEmailAuthentication( User &$user, IContextSource $context, &$disableEmailPrefs, &$emailauthenticated ) {
 		if ( $user->getEmail() ) {
 			$emailTimestamp = $user->getEmailAuthenticationTimestamp();
-			$optionNewEmail = $user->getOption( 'new_email' );
+			$optionNewEmail = $user->getGlobalAttribute( 'new_email' );
 			$msgKeyPrefixEmail = ( empty( $optionNewEmail ) && !$emailTimestamp ) ? 'usersignup-user-pref-unconfirmed-' : 'usersignup-user-pref-';
 			if ( empty( $optionNewEmail ) && $emailTimestamp ) {
 				$lang = $context->getLanguage();
@@ -103,7 +103,7 @@ class UserLoginHooksHelper {
 	public static function onSetUserEmail( User $user, $newEmail, &$result, &$info ) {
 		$app = F::app();
 		$oldEmail = $user->getEmail();
-		$optionNewEmail = $user->getOption( 'new_email' );
+		$optionNewEmail = $user->getGlobalAttribute( 'new_email' );
 		if ( ( empty( $optionNewEmail ) &&  $newEmail != $oldEmail ) || ( !empty( $optionNewEmail ) &&  $newEmail != $optionNewEmail ) ) {
 			$user->setOption( 'new_email', $newEmail );
 			$user->invalidateEmail();
