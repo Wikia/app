@@ -800,7 +800,7 @@ class UserProfilePageController extends WikiaController {
 			empty( $this->wg->AvatarsMaintenance )
 		);
 
-		$this->setVal( 'avatarName', $user->getOption( 'avatar' ) );
+		$this->setVal( 'avatarName', $user->getGlobalAttribute( 'avatar' ) );
 		$this->setVal( 'userId', $userId );
 		$this->setVal( 'avatarMaxSize', self::AVATAR_MAX_SIZE );
 		$this->setVal( 'avatar', AvatarService::renderAvatar( $user->getName(), self::AVATAR_DEFAULT_SIZE ) );
