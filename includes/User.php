@@ -2562,6 +2562,15 @@ class User {
 	}
 
 	/**
+	 * Set a global user flag.
+	 *
+	 * @param string $flag
+	 * @return bool
+	 */
+	public function setGlobalFlag($flag) {
+	}
+
+	/**
 	 * Set the given option for a user.
 	 *
 	 * @param $oname String The option to set
