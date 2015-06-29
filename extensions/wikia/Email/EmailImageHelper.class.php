@@ -42,6 +42,11 @@ class ImageHelper {
 		return $info;
 	}
 
+	public static function getFileUrl( $name ) {
+		$fileInfo = self::getFileInfo( $name );
+		return $fileInfo['url'];
+	}
+
 	public static function getFileInfo( $name ) {
 		$info = \WikiaDataAccess::cache(
 			self::getFileKey( $name ),

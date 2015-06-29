@@ -515,25 +515,25 @@ class FounderTipsController extends FounderController {
 	protected function getDetailsList() {
 		return [
 			[
-				"iconSrc" => Email\ImageHelper::getFileInfo( "Add_page.png" )['url'],
+				"iconSrc" => Email\ImageHelper::getFileUrl( "Add_page.png" ),
 				"iconLink" => \GlobalTitle::newFromText( "CreatePage", NS_SPECIAL, $this->wikiId )->getFullURL( [ "modal" => "AddPage" ] ),
 				"detailsHeader" => $this->getMessage( "emailext-founder-add-pages-header" )->text(),
 				"details" => $this->getMessage( "emailext-founder-add-pages-details" )->text()
 			],
 			[
-				"iconSrc" => Email\ImageHelper::getFileInfo( "Add_photo.png" )['url'],
+				"iconSrc" => Email\ImageHelper::getFileUrl( "Add_photo.png" ),
 				"iconLink" => \GlobalTitle::newFromText( "NewFiles", NS_SPECIAL, $this->wikiId )->getFullURL( [ "modal" => "UploadImage" ] ),
 				"detailsHeader" => $this->getMessage( "emailext-founder-add-photos-header" )->text(),
 				"details" => $this->getMessage( "emailext-founder-add-photos-details" )->text()
 			],
 			[
-				"iconSrc" => Email\ImageHelper::getFileInfo( "Customize.png" )['url'],
+				"iconSrc" => Email\ImageHelper::getFileUrl( "Customize.png" ),
 				"iconLink" => \GlobalTitle::newFromText( wfMessage( "mainpage" )->text(), NS_MAIN, $this->wikiId )->getFullURL( [ "action" => "edit" ] ),
 				"detailsHeader" => $this->getMessage( "emailext-founder-customize-header" )->text(),
 				"details" => $this->getMessage( "emailext-founder-customize-details" )->text()
 			],
 			[
-				"iconSrc" => Email\ImageHelper::getFileInfo( "Share.png" )['url'],
+				"iconSrc" => Email\ImageHelper::getFileUrl( "Share.png" ),
 				"detailsHeader" => $this->getMessage( "emailext-founder-share-header" )->text(),
 				"details" => $this->getMessage( "emailext-founder-share-details" )->text()
 			]
@@ -599,19 +599,19 @@ class FounderTipsThreeDaysController extends FounderTipsController {
 	protected function getDetailsList() {
 		return [
 			[
-				"iconSrc" => Email\ImageHelper::getFileInfo( "Add_photo.png" )['url'],
+				"iconSrc" => Email\ImageHelper::getFileUrl( "Add_photo.png" ),
 				"iconLink" => \GlobalTitle::newFromText( "Videos", NS_SPECIAL, $this->wikiId )->getFullURL(),
 				"detailsHeader" => $this->getMessage( "emailext-founder-3-days-add-videos-header" )->text(),
 				"details" => $this->getMessage( "emailext-founder-3-days-add-videos-details" )->text()
 			],
 			[
-				"iconSrc" => Email\ImageHelper::getFileInfo( "Update-theme.png" )['url'],
+				"iconSrc" => Email\ImageHelper::getFileUrl( "Update-theme.png" ),
 				"iconLink" => \GlobalTitle::newFromText( "ThemeDesigner", NS_SPECIAL, $this->wikiId )->getFullURL(),
 				"detailsHeader" => $this->getMessage( "emailext-founder-3-days-update-theme-header" )->text(),
 				"details" => $this->getMessage( "emailext-founder-3-days-update-theme-details" )->text()
 			],
 			[
-				"iconSrc" => Email\ImageHelper::getFileInfo( "Get-inspired.png" )['url'],
+				"iconSrc" => Email\ImageHelper::getFileUrl( "Get-inspired.png" ),
 				"iconLink" => self::WAM_LINK,
 				"detailsHeader" => $this->getMessage( "emailext-founder-3-days-wam-header" )->text(),
 				"details" => $this->getMessage( "emailext-founder-3-days-wam-details", self::WAM_LINK )->parse()
@@ -653,17 +653,17 @@ class FounderTipsTenDaysController extends FounderTipsController {
 	protected function getDetailsList() {
 		return [
 			[
-				"iconSrc" => Email\ImageHelper::getFileInfo( "Share.png" )['url'],
+				"iconSrc" => Email\ImageHelper::getFileUrl( "Share.png" ),
 				"detailsHeader" => $this->getMessage( "emailext-founder-10-days-sharing-header" )->text(),
 				"details" => $this->getMessage( "emailext-founder-10-days-sharing-details" )->text()
 			],
 			[
-				"iconSrc" => Email\ImageHelper::getFileInfo( "Power-of-email.png" )['url'],
+				"iconSrc" => Email\ImageHelper::getFileUrl( "Power-of-email.png" ),
 				"detailsHeader" => $this->getMessage( "emailext-founder-10-days-email-power-header" )->text(),
 				"details" => $this->getMessage( "emailext-founder-10-days-email-power-details" )->text()
 			],
 			[
-				"iconSrc" => Email\ImageHelper::getFileInfo( "Get-with-google.png" )['url'],
+				"iconSrc" => Email\ImageHelper::getFileUrl( "emailext-founder-10-days-email-power-header" ),
 				"iconLink" => $this->getMessage( "emailext-founder-get-with-google" )->text(),
 				"detailsHeader" => $this->getMessage( "emailext-founder-10-days-email-google-header" )->text(),
 				"details" => $this->getMessage( "emailext-founder-10-days-email-google-details" )->text()
