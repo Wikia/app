@@ -396,12 +396,19 @@ class CuratedContentController extends WikiaController {
 	static function onCuratedContentSave() {
 		$content = F::app()->wg->WikiaCuratedContent;
 
-		self::purgeMethodVariants( 'getList', array_map( function ( $item ) {
+		// Purge section URLs using urlencode (standard for MediaWiki), which uses implements RFC 1866
+		// https://tools.ietf.org/html/rfc1866#section-8.2.1 - spaces encoded as `+`.
+		// iOS apps use this variant.
+		self::purgeMethodVariants( 'getList', array_reduce( $content, function ( $params, $item ) {
 			if ( $item[ 'title' ] !== '' && empty( $item[ 'featured' ] ) ) {
-				return [ 'section' => $item[ 'title' ] ];
+				$params[] = [ 'section' => $item[ 'title' ] ];
 			}
-		}, $content ) );
+			return $params;
+		} ) );
 
+		// Purge section URLs using rawurlencode, which uses implements RFC 3986
+		// https://tools.ietf.org/html/rfc3986#section-2.1 - spaces encoded as `%20`.
+		// Android apps and Mercury use this variant.
 		$squidUpdate = new SquidUpdate( array_reduce( $content, function ( $urls, $item ) {
 			if ( $item[ 'title' ] !== '' && empty( $item[ 'featured' ] ) ) {
 				$urls[] = self::getUrl( 'getList' ) . '&section=' . rawurlencode( $item[ 'title' ] );
@@ -410,8 +417,10 @@ class CuratedContentController extends WikiaController {
 		} ) );
 		$squidUpdate->doUpdate();
 
+		// Purge main page cache, so Mercury gets fresh data.
 		Title::newMainPage()->purgeSquid();
 
+		// Purge cache for obsolete (not updated) apps.
 		if ( class_exists( 'GameGuidesController' ) ) {
 			GameGuidesController::purgeMethod( 'getList' );
 		}
