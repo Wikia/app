@@ -11,12 +11,12 @@ class FounderEmailsCompleteDigestEvent extends FounderEmailsEvent {
 			return false;
 		}
 
-		if ( $user->getOption( "founderemails-complete-digest-$wgCityId" ) ) {
+		if ( $user->getLocalPreference( 'founderemails-complete-digest', $wgCityId. '-' ) ) {
 			return true;
 		}
 
 		// disable if all Wikia email disabled
-		if ( $user->getBoolOption( "unsubscribed" ) ) {
+		if ( (bool)$user->getGlobalPreference( 'unsubscribed' ) ) {
 			return false;
 		}
 
@@ -66,7 +66,7 @@ class FounderEmailsCompleteDigestEvent extends FounderEmailsEvent {
 					continue;
 				}
 
-				$langCode = $user->getOption( 'language' );
+				$langCode = $user->getGlobalPreference( 'language' );
 				$links = array(
 					'$WIKINAME' => $emailParams['$WIKIURL'],
 				);
