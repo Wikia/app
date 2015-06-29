@@ -409,7 +409,7 @@ class CuratedContentController extends WikiaController {
 					// Purge section URLs using JavaScript encodeURIComponent() compatible standard,
 					// which works almost like rawurlencode(), but does not encode following characters: !'()*
 					// Mercury web app uses this variant.
-					$urls[ ] = self::getUrl( 'getList' ) . '&section=' . self::encodeURIComponent( $item[ 'title' ] );
+					$urls[ ] = self::getUrl( 'getList' ) . '&section=' . self::encodeURIQueryParam( $item[ 'title' ] );
 				}
 				return $urls;
 			},
@@ -429,13 +429,24 @@ class CuratedContentController extends WikiaController {
 	}
 
 	/**
-	 * @brief Emulates JavaScript URL encoding function
+	 * @brief Emulates JavaScript encodeURIComponent function.
 	 *
 	 * @param string $str
 	 * @return string
 	 */
 	private static function encodeURIComponent( $str ) {
 		return strtr( rawurlencode( $str ), [ '%21' => '!', '%27' => "'", '%28' => '(', '%29' => ')', '%2A' => '*' ] );
+	}
+
+	/**
+	 * @brief Similar to encodeURIComponent, but it's extended, so it also encodes single quote character as %27.
+	 * It's because raw ' does not function properly in query string params and it's auto-converted to %27.
+	 *
+	 * @param string $str
+	 * @return string
+	 */
+	private static function encodeURIQueryParam( $str ) {
+		return strtr( rawurlencode( $str ), [ '%21' => '!', '%28' => '(', '%29' => ')', '%2A' => '*' ] );
 	}
 }
 
