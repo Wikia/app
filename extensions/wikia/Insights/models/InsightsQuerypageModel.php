@@ -86,9 +86,13 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 		return false;
 	}
 
-	public function getAltActionUrl( $title ) {}
+	public function getAltActionUrl( $title ) {
+		return '';
+	}
 
-	public function altActionLinkMessage() {}
+	public function altActionLinkMessage() {
+		return '';
+	}
 
 	public function isWlhLinkRequired() {
 		return false;
