@@ -53,7 +53,7 @@ class SkinLegacy extends SkinTemplate {
 		if ( $this->isQuickbarSuppressed() ) {
 			return 0;
 		}
-		$q = $wgUser->getOption( 'quickbar', 0 );
+		$q = $wgUser->getGlobalPreference( 'quickbar', 0 );
 		if( $q == 5 ) {
 			# 5 is the default, which chooses the setting
 			# depending on the directionality of your interface language
