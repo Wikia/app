@@ -2,10 +2,9 @@ define(
 	'ext.wikia.templateDraft.rightRailModule',
 	[
 		'jquery',
-		'wikia.window',
-		'wikia.tracker'
+		'mw',
 	],
-	function ($, w) {
+	function ($, mw) {
 		'use strict';
 
 		function bindCloseModuleLink() {
@@ -20,7 +19,8 @@ define(
 				controller: 'TemplateDraftController',
 				method: 'markTemplateAsNotInfobox',
 				data: {
-					'pageId': w.wgArticleId
+					'pageId': mw.config.get('wgArticleId'),
+					'editToken': mw.user.tokens.get('editToken')
 				}
 			});
 		}

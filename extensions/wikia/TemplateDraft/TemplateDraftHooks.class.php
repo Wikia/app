@@ -2,10 +2,8 @@
 
 class TemplateDraftHooks {
 
-	public static function onSkinAfterBottomScripts( $skin, &$text ) {
-		global $wgTitle, $wgUser;
-
-		if ( $wgUser->isPowerUser() && $wgTitle->getNamespace() === NS_TEMPLATE ) {
+	public static function onSkinAfterBottomScripts( Skin $skin, &$text ) {
+		if ( $skin->getUser()->isPowerUser() && $skin->getTitle()->getNamespace() === NS_TEMPLATE ) {
 			$scripts = AssetsManager::getInstance()->getURL( 'template_draft' );
 
 			foreach ( $scripts as $script ) {
