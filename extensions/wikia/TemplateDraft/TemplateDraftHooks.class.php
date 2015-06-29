@@ -2,6 +2,20 @@
 
 class TemplateDraftHooks {
 
+	public static function onSkinAfterBottomScripts( $skin, &$text ) {
+		global $wgTitle;
+
+		if ( $wgTitle->getNamespace() === NS_TEMPLATE ) {
+			$scripts = AssetsManager::getInstance()->getURL( 'template_draft' );
+
+			foreach( $scripts as $script ) {
+				$text .= Html::linkedScript( $script );
+			}
+		}
+
+		return true;
+	}
+
 	/**
 	 * Attaches a new module to right rail which is an entry point to convert a given template.
 	 *
@@ -13,7 +27,7 @@ class TemplateDraftHooks {
 
 		if ( $wgTitle->getNamespace() === NS_TEMPLATE
 			&& $wgTitle->exists()
-			&& Wikia::getProps( $wgTitle->getArticleID(), TemplateDraftController::TEMPLATE_INFOBOX_PROP ) !== 0
+			&& Wikia::getProps( $wgTitle->getArticleID(), TemplateDraftController::TEMPLATE_INFOBOX_PROP ) !== '0'
 		) {
 			$railModuleList[1502] = [ 'TemplateDraftModule', 'Index', null ];
 		}

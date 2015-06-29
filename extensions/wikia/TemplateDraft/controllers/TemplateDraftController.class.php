@@ -35,4 +35,23 @@ class TemplateDraftController extends WikiaController {
 
 		return $newContent;
 	}
+
+	public function markTemplateAsNotInfobox() {
+		$requestParams = $this->getRequest()->getParams();
+
+		if ( empty( $requestParams['pageId'] )
+			|| !is_numeric( $requestParams['pageId'] )
+		) {
+			$this->response->setVal( 'status', false );
+		}
+		/**
+		 * Wikia::setProps unfortunately fails silently so if we get to this point
+		 * we can set the response's status to true anyway...
+		 */
+		$this->response->setVal( 'status', true );
+
+		Wikia::setProps( $requestParams['pageId'], [
+			self::TEMPLATE_INFOBOX_PROP => 0,
+		] );
+	}
 }
