@@ -512,7 +512,9 @@ class EditPage {
 		} elseif ( $this->section == 'new' ) {
 			// Nothing *to* preview for new sections
 			return false;
-		} elseif ( ( $wgRequest->getVal( 'preload' ) !== null || $this->mTitle->exists() ) && $wgUser->getOption( 'previewonfirst' ) ) {
+		} elseif ( ( $wgRequest->getVal( 'preload' ) !== null || $this->mTitle->exists() ) &&
+			$wgUser->getGlobalPreference( 'previewonfirst' )
+		) {
 			// Standard preference behaviour
 			return true;
 		} elseif ( !$this->mTitle->exists() &&
