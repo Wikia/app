@@ -95,7 +95,7 @@ function wfCreatePageSetupVars(Array &$vars ) {
 	 * For example see: InsightsHooks::onMakeGlobalVariablesScript
 	 */
 	if ( !isset( $vars['WikiaEnableNewCreatepage'] ) ) {
-		$vars['WikiaEnableNewCreatepage'] = $wgUser->getOption( 'createpagepopupdisabled', false ) ? false : $wgWikiaEnableNewCreatepageExt;
+		$vars['WikiaEnableNewCreatepage'] = $wgUser->getGlobalPreference( 'createpagepopupdisabled', false ) ? false : $wgWikiaEnableNewCreatepageExt;
 	}
 
 	if (!empty( $wgWikiaDisableDynamicLinkCreatePagePopup )) {
