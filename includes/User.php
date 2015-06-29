@@ -2533,7 +2533,7 @@ class User {
 	 * @param string $value
 	 */
 	public function setGlobalAttribute($attribute, $value) {
-
+		$this->setOption($attribute, $value);
 	}
 
 
@@ -2568,7 +2568,8 @@ class User {
 	 * @param string $flag
 	 * @return bool
 	 */
-	public function setGlobalFlag($flag) {
+	public function setGlobalFlag($flag, $value) {
+		$this->setOption($flag, $value);
 	}
 
 	/**
