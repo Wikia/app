@@ -2462,16 +2462,16 @@ class User {
 	 *
 	 * @param string $option
 	 * @param int $cityId [optional]
-	 * @param string $sep the separator between the option and the id.
+	 * @param char $sep the separator between the option and the id.
 	 * @return string
 	 */
-	public static function createLocalOptionName($option, $cityId = null) {
+	public static function createLocalOptionName($option, $cityId = null, $sep = '-') {
 		global $wgCityId;
 		if (!isset($cityId)) {
 			$cityId = $wgCityId;
 		}
 
-		return sprintf("%s-%s", $option, $cityId);
+		return sprintf("%s%c%s", $option, $sep, $cityId);
 	}
 
 	/**
@@ -2483,11 +2483,11 @@ class User {
 	 * @param string $preferenc
 	 * @param string $value
 	 * @param int $cityId [optional, defaults to $wgCityId]
-	 * @param string $sep [optional, defaults to "-"]
+	 * @param char $sep [optional, defaults to '-']
 	 *
 	 */
-	public function setLocalPreference($preference, $value, $cityId = null, $sep = "-") {
-		return $this->setOption(self::createLocalOptionName($preference, $cityId), $value);
+	public function setLocalPreference($preference, $value, $cityId = null, $sep = '-') {
+		return $this->setOption(self::createLocalOptionName($preference, $cityId, $sep), $value);
 	}
 
 	/**
@@ -2536,6 +2536,21 @@ class User {
 		$this->setOption($attribute, $value);
 	}
 
+	/**
+	 * Set an attribute local to a wikia. See createLocalOptionName for details regarding
+	 * the format. Note that the $sep param is provided in the rare case where
+	 * the option name is not normal. Should you have to use the separator, PLEASE MAKE
+	 * A PLAN TO NORMALIZE IT TO "-".
+	 *
+	 * @param string $attribute
+	 * @param string $value
+	 * @param int $cityId
+	 * @param char $sep
+	 * @return bool
+	 */
+	public function setLocalAttribute($attribute, $value, $cityId = null, $sep = '-') {
+		return $this->setOption(self::createLocalOptionName($attribute, $cityId, $sep), $value, $sep);
+	}
 
 	/**
 	 * Get a user flag local to this wikia.
