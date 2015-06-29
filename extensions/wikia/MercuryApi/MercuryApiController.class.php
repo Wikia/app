@@ -273,7 +273,7 @@ class MercuryApiController extends WikiaController {
 			$wikiVariables[ 'navData' ] = [];
 		}
 
-		$wikiVariables[ 'vertical' ] = WikiFactoryHub::getInstance()->getWikiVertical( $this->wg->CityId )['short'];
+		$wikiVariables[ 'vertical' ] = WikiFactoryHub::getInstance()->getWikiVertical( $this->wg->CityId )[ 'short' ];
 		$wikiVariables[ 'basePath' ] = $this->wg->Server;
 
 		// Used to determine GA tracking
@@ -306,7 +306,7 @@ class MercuryApiController extends WikiaController {
 	public function getRedirectTitle() {
 		$title = $this->getTitleFromRequest();
 
-		if ($title->isRedirect()) {
+		if ( $title->isRedirect() ) {
 			$article = Article::newFromID( $title->getArticleId() );
 			return $article->getRedirectTarget();
 		}
@@ -323,32 +323,32 @@ class MercuryApiController extends WikiaController {
 
 		try {
 			$title = $this->getRedirectTitle();
-			$data['redirected'] = true;
+			$data[ 'redirected' ] = true;
 
-			if ($title === null) {
+			if ( $title === null ) {
 				$title = $this->getTitleFromRequest();
-				unset($data['redirected']);
+				unset ($data[ 'redirected' ] );
 			}
 
 			$articleId = $title->getArticleId();
-			$data['details'] = $this->getArticleDetails( $articleId );
-			$data['topContributors'] = $this->getTopContributorsDetails(
+			$data[ 'details' ] = $this->getArticleDetails( $articleId );
+			$data[ 'topContributors' ] = $this->getTopContributorsDetails(
 				$this->getTopContributorsPerArticle( $articleId )
 			);
 			$isMainPage = $title->isMainPage();
-			$data['isMainPage'] = $isMainPage;
+			$data[ 'isMainPage' ] = $isMainPage;
 
 			if ( $isMainPage && !empty( $wgEnableMainPageDataMercuryApi ) ) {
-				$data['mainPageData'] = $this->getMainPageData();
+				$data[ 'mainPageData' ] = $this->getMainPageData();
 			} else {
 				$articleAsJson = $this->getArticleJson( $articleId, $title );
-				$data['article'] = $articleAsJson;
+				$data[ 'article' ] = $articleAsJson;
 			}
 
 			$relatedPages = $this->getRelatedPages( $articleId );
 
 			if ( !empty( $relatedPages ) ) {
-				$data['relatedPages'] = $relatedPages;
+				$data[ 'relatedPages' ] = $relatedPages;
 			}
 		} catch ( WikiaHttpException $exception ) {
 			$this->response->setCode( $exception->getCode() );
@@ -364,7 +364,7 @@ class MercuryApiController extends WikiaController {
 			$title = $this->wg->Title;
 		}
 
-		$data['adsContext'] = $this->mercuryApi->getAdsContext( $title );
+		$data[ 'adsContext' ] = $this->mercuryApi->getAdsContext( $title );
 
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
