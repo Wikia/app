@@ -4,6 +4,7 @@ class MercuryApiHooks {
 
 	const SERVICE_API_BASE = '/api/v1/';
 	const SERVICE_API_ARTICLE = 'article/';
+	const SERVICE_API_CURATED_CONTENT = 'curatedContent/';
 
 	/**
 	 * @desc Get number of user's contribution from DB

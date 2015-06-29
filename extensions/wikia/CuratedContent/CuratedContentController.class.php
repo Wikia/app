@@ -392,11 +392,14 @@ class CuratedContentController extends WikiaController {
 	 * @return bool
 	 */
 	static function onCuratedContentSave() {
+		global $wgServer;
+
 		$content = F::app()->wg->WikiaCuratedContent;
+		$mercuryApiExists = class_exists( 'MercuryApiHooks' );
 
 		( new SquidUpdate( array_unique( array_reduce(
 			$content,
-			function ( $urls, $item ) {
+			function ( $urls, $item ) use ( $wgServer, $mercuryApiExists ) {
 				if ( $item[ 'title' ] !== '' && empty( $item[ 'featured' ] ) ) {
 					// Purge section URLs using urlencode() (standard for MediaWiki), which uses implements RFC 1738
 					// https://tools.ietf.org/html/rfc1738#section-2.2 - spaces encoded as `+`.
@@ -408,8 +411,16 @@ class CuratedContentController extends WikiaController {
 					$urls[ ] = self::getUrl( 'getList' ) . '&section=' . rawurlencode( $item[ 'title' ] );
 					// Purge section URLs using JavaScript encodeURIComponent() compatible standard,
 					// which works almost like rawurlencode(), but does not encode following characters: !'()*
-					// Mercury web app uses this variant.
+					// Mercury web app uses this variant - request from Hapi.js to MediaWiki.
 					$urls[ ] = self::getUrl( 'getList' ) . '&section=' . self::encodeURIQueryParam( $item[ 'title' ] );
+					// Mercury web app uses this variant - request from Ember.js to Hapi.js.
+					if ( $mercuryApiExists ) {
+						$urls[ ] =
+							$wgServer .
+							MercuryApiHooks::SERVICE_API_BASE .
+							MercuryApiHooks::SERVICE_API_CURATED_CONTENT .
+							self::encodeURIQueryParam( $item[ 'title' ] );
+					}
 				}
 				return $urls;
 			},
