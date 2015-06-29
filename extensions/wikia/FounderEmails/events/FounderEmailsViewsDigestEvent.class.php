@@ -11,15 +11,15 @@ class FounderEmailsViewsDigestEvent extends FounderEmailsEvent {
 		}
 
 		// disable if all Wikia email disabled
-		if ( $user->getBoolOption( 'unsubscribed' ) ) {
+        if ( (bool)$user->getGlobalPreference( 'unsubscribed' ) ) {
 			return false;
 		}
 
 		// If complete digest mode is enabled, do not send views only digest
-		if ( $user->getOption( "founderemails-complete-digest-$wgCityId" ) ) {
+        if ( $user->getLocalPreference( 'founderemails-complete-digest', $wgCityId ) ) {
 			return false;
 		}
-		if ( $user->getOption( "founderemails-views-digest-$wgCityId" ) ) {
+        if ( $user->getLocalPreference( 'founderemails-views-digest', $wgCityId ) ) {
 			return true;
 		}
 		return false;
@@ -62,7 +62,7 @@ class FounderEmailsViewsDigestEvent extends FounderEmailsEvent {
 				}
 				self::addParamsUser( $cityID, $user->getName(), $emailParams );
 
-				$langCode = $user->getOption( 'language' );
+				$langCode = $user->getGlobalPreference( 'language' );
 				$links = array(
 					'$WIKINAME' => $emailParams['$WIKIURL'],
 				);
