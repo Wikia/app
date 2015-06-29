@@ -7,7 +7,7 @@ class WikiaUserPropertiesHandlerBase extends WikiaModel {
 	protected function savePropertyValue($property, $value) {
 		$this->throwExceptionForAnons();
 
-		$this->wg->User->setOption($property, $value);
+		$this->wg->User->setGlobalAttribute($property, $value);
 		$this->wg->User->saveSettings();
 	}
 
