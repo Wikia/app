@@ -3,6 +3,17 @@
 class TemplateDraftHooks {
 
 	/**
+	 * @param OutputPage $out
+	 * @param Skin $skin
+	 * @return bool
+	 */
+	public static function onBeforePageDisplay( \OutputPage $out, \Skin $skin ) {
+		// TODO check and add only when one of template draft modules are loaded
+		Wikia::addAssetsToOutput( 'templatedraft_js' );
+		return true;
+	}
+
+	/**
 	 * Attaches a new module to right rail which is an entry point to convert a given template.
 	 *
 	 * @param array $railModuleList
