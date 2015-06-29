@@ -139,7 +139,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 				$this->app->wg->User->saveSettings();
 			}
 
-			$order = $this->app->wg->User->getOption('imageReviewSort');
+			$order = $this->app->wg->User->getGlobalPreference('imageReviewSort');
 			return $order;
 		} else {
 			$order = -1;
