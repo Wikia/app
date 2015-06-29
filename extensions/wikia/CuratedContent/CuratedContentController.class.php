@@ -429,18 +429,9 @@ class CuratedContentController extends WikiaController {
 	}
 
 	/**
-	 * @brief Emulates JavaScript encodeURIComponent function.
-	 *
-	 * @param string $str
-	 * @return string
-	 */
-	private static function encodeURIComponent( $str ) {
-		return strtr( rawurlencode( $str ), [ '%21' => '!', '%27' => "'", '%28' => '(', '%29' => ')', '%2A' => '*' ] );
-	}
-
-	/**
-	 * @brief Similar to encodeURIComponent, but it's extended, so it also encodes single quote character as %27.
-	 * It's because raw ' does not function properly in query string params and it's auto-converted to %27.
+	 * @brief Similar to JavaScript encodeURIComponent, but it also encodes single quote character as %27.
+	 * It's because raw ' does not function properly in query string params and it's auto-converted to %27,
+	 * which break the purging.
 	 *
 	 * @param string $str
 	 * @return string
