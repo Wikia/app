@@ -8,7 +8,7 @@ class TemplateDraftHooks {
 		if ( $wgUser->isPowerUser() && $wgTitle->getNamespace() === NS_TEMPLATE ) {
 			$scripts = AssetsManager::getInstance()->getURL( 'template_draft' );
 
-			foreach( $scripts as $script ) {
+			foreach ( $scripts as $script ) {
 				$text .= Html::linkedScript( $script );
 			}
 		}
@@ -63,7 +63,7 @@ class TemplateDraftHooks {
 				 */
 				$controller = new TemplateDraftController();
 				$text = $controller->createDraftContent(
-					$title, // @TODO this is currently taking the *edited* title (with subpage), not the *converted* title  
+					$title, // @TODO this is currently taking the *edited* title (with subpage), not the *converted* title
 					$parentContent,
 					[ $controller::TEMPLATE_INFOBOX ]
 				);
@@ -77,7 +77,7 @@ class TemplateDraftHooks {
 	 * It adds an editintro message with help and links.
 	 *
 	 * @param String $msgName
-	 * @param Array $msgParams 
+	 * @param Array $msgParams
 	 * @param Title $title
 	 * @return bool
 	 */
