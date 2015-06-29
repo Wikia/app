@@ -41,8 +41,8 @@ class ApprovedraftAction extends FormlessAction {
 
 		$this->redirectTitle = $wgTitle->getBaseText();
 		$this->redirectTitle = Title::newFromText( $this->redirectTitle, $wgTitle->getNamespace() );
-		$converter = new TemplateConverter();
-		$converter->approveDraft( $wgTitle );
+		$templateDraftController = new TemplateDraftController();
+		$templateDraftController->approveDraft( $wgTitle );
 
 		$this->getOutput()->redirect( $this->redirectTitle->getFullUrl( $this->redirectParams) );
 	}
