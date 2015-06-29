@@ -11,7 +11,7 @@ class FounderEmailsCompleteDigestEvent extends FounderEmailsEvent {
 			return false;
 		}
 
-		if ( $user->getLocalPreference( 'founderemails-complete-digest', $wgCityId. '-' ) ) {
+		if ( $user->getLocalPreference( 'founderemails-complete-digest', $wgCityId ) ) {
 			return true;
 		}
 
