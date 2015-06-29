@@ -42,18 +42,20 @@ class TemplateDraftController extends WikiaController {
 	 */
 	public function approveDraft( Title $title ) {
 		// Get Title object of parent page
-		$parentTitleText = $title->getBaseText();
-		$parentTitle = Title::newFromText( $parentTitleText, $title->getNamespace() );
-		if ( $parentTitle->userCan( 'edit' ) ) {
-			// Get contents of draft page
-			$article = Article::newFromId( $title->getArticleID() );
-			$draftContent = $article->getContent();
-			// Get WikiPage object of parent page
-			$page = WikiPage::newFromID( $parentTitle->getArticleID() );
-			// Save to parent page
-			$page->doEdit( $draftContent, wfMessage( 'templatedraft-approval-summary' )->inContentLanguage()->plain() );
-		} else {
+		$helper = new TemplateDraftHelper();
+		$parentTitle = $helper->getParentTitle( $title );
+
+		// Check edit rights
+		if ( !$parentTitle->userCan( 'edit' ) ) {
 			throw new PermissionsException( 'edit' );
 		}
+
+		// Get contents of draft page
+		$article = Article::newFromId( $title->getArticleID() );
+		$draftContent = $article->getContent();
+		// Get WikiPage object of parent page
+		$page = WikiPage::newFromID( $parentTitle->getArticleID() );
+		// Save to parent page
+		$page->doEdit( $draftContent, wfMessage( 'templatedraft-approval-summary' )->inContentLanguage()->plain() );
 	}
 }
