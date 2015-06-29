@@ -662,12 +662,12 @@ class EditPageLayout extends EditPage {
 			// check for empty message (BugId:6923)
 			if ( !empty( $msgName ) ) {
 				$message = wfMessage( $msgName, $msgParams );
-				$msg = $message->parse();
-				if ( !$message->isBlank() && trim( strip_tags($msg) ) != '' ) {
-					$this->mEditPagePreloads['EditPageIntro'] = array(
-							'content' => $msg,
+				$messageParsed = $message->parse();
+				if ( !$message->isBlank() && trim( strip_tags( $messageParsed ) ) != '' ) {
+					$this->mEditPagePreloads['EditPageIntro'] = [
+							'content' => $messageParsed,
 							'class' => $class,
-					);
+					];
 				}
 			}
 		}
