@@ -33,7 +33,7 @@ define('ext.wikia.adEngine.provider.gpt.adSizeFilter', [
 	function filterOutInvisibleSkinSizes(sizes) {
 		log(['filterOutInvisibleSkinSizes', sizes], 'debug', logGroup);
 
-		if (doc.documentElement.offsetWidth < 1064) {
+		if (doc.documentElement.offsetWidth < 1240) {
 			log(['filterOutInvisibleSkinSizes', 'Skin not allowed', []], 'debug', logGroup);
 			return [invisibleSkinFallbackSize];
 		}

@@ -63,8 +63,8 @@ describe('ext.wikia.adEngine.provider.gpt.adSizeFilter', function () {
 		expect(getModule().filter('HOME_TOP_LEADERBOARD', sizesIn)).toEqual(sizesOut);
 	});
 
-	it('Returns sizes unmodified for INVISIBLE_SKIN for screens > 1065', function () {
-		spyOn(mocks, 'getDocumentWidth').and.returnValue(1070);
+	it('Returns sizes unmodified for INVISIBLE_SKIN for screens > 1240', function () {
+		spyOn(mocks, 'getDocumentWidth').and.returnValue(1245);
 
 		var sizesIn = [[1000, 1000], [1, 1]],
 			sizesOut = [[1000, 1000], [1, 1]];
@@ -72,8 +72,8 @@ describe('ext.wikia.adEngine.provider.gpt.adSizeFilter', function () {
 		expect(getModule().filter('INVISIBLE_SKIN', sizesIn)).toEqual(sizesOut);
 	});
 
-	it('Returns only the 1x1 size of INVISIBLE_SKIN for screens < 1065', function () {
-		spyOn(mocks, 'getDocumentWidth').and.returnValue(1000);
+	it('Returns only the 1x1 size of INVISIBLE_SKIN for screens < 1240', function () {
+		spyOn(mocks, 'getDocumentWidth').and.returnValue(1235);
 
 		var sizesIn = [[1000, 1000], [1, 1]],
 			sizesOut = [[1, 1]];
