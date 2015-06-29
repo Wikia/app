@@ -660,9 +660,9 @@ class EditPageLayout extends EditPage {
 			wfRunHooks( 'EditPageLayoutShowIntro', [ &$msgName, &$msgParams, $this->mTitle ] );
 
 			// check for empty message (BugId:6923)
-			$parsedMsg = wfMsg($msgName);
-			if (!wfEmptyMsg($msgName, $parsedMsg) && strip_tags($parsedMsg) != '') {
-				$msg = wfMsgExt($msgName, array('parse'), $msgParams );
+			$message = wfMessage($msgName, $msgParams );
+			if ( $message->isBlank() ) {
+				$msg = $message->parse();
 
 				$this->mEditPagePreloads['EditPageIntro'] = array(
 					'content' => $msg,
