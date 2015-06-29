@@ -7,7 +7,7 @@ class ArticleAsJson extends WikiaService {
 		'imageMaxWidth' => false
 	];
 
-	const ICON_MAX_SIZE = 40;
+	const ICON_MAX_SIZE = 48;
 	const CACHE_VERSION = '0.0.3';
 
 	const MEDIA_CONTEXT_ARTICLE_IMAGE = 'article-image';

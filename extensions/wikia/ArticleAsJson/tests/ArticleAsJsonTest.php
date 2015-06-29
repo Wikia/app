@@ -42,7 +42,7 @@ class ArticleAsJsonTest extends WikiaBaseTest {
 			],
 			[
 				'details' => [
-					'height' => '39',
+					'height' => '47',
 					'width' => '4'
 				],
 				'expectedOutput' => true,
@@ -64,8 +64,8 @@ class ArticleAsJsonTest extends WikiaBaseTest {
 			],
 			[
 				'details' => [
-					'height' => '40',
-					'width' => '40'
+					'height' => '48',
+					'width' => '48'
 				],
 				'expectedOutput' => false,
 				'message' => 'big width, big height'
