@@ -661,7 +661,7 @@ class EditPageLayout extends EditPage {
 
 			// check for empty message (BugId:6923)
 			$message = wfMessage($msgName, $msgParams );
-			if ( $message->isBlank() ) {
+			if ( !$message->isBlank() ) {
 				$msg = $message->parse();
 
 				$this->mEditPagePreloads['EditPageIntro'] = array(
