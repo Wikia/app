@@ -62,8 +62,13 @@ class TemplateDraftHooks {
 	 * @param Title $title
 	 * @return bool
 	 */
-	public static function onEditPageLayoutShowIntroOnDraft( &$msgName, &$msgParams, Title $title ) {
+	public static function onEditPageLayoutShowIntro( &$preloads, Title $title ) {
 		$helper = new TemplateDraftHelper();
+
+//		die( var_dump( $title->isSubpage() ) );
+		$preloads['EditPageIntro'] = [
+			'content' => "fgsdfgfdsgds",
+		 ];
 
 		if ( $helper->isTitleDraft( $title ) 
 			&& class_exists( 'TemplateConverter' )
@@ -72,32 +77,12 @@ class TemplateDraftHooks {
 
 			$base = Title::newFromText( $title->getBaseText(), NS_TEMPLATE );
 			$msgParams = [ $base->getFullUrl( ['action' => 'edit'] ) ];
-		}
-
-		return true;
-	}
-
-	/**
-	 * Triggered if a user edits subpage of a template.
-	 * It adds an message that you can convert template to draft
-	 *
-	 * @param String $msgName
-	 * @param Array $msgParams
-	 * @param Title $title
-	 * @return bool
-	 */
-	public static function onEditPageLayoutShowIntroOnBase( &$msgName, &$msgParams, Title $title ) {
-		$helper = new TemplateDraftHelper();
-
-		/*if ( $helper->isTitleDraft( $title )
-			&& class_exists( 'TemplateConverter' )
-			&& TemplateConverter::isConversion() ) {*/
+		} elseif ( !$helper->isTitleDraft( $title ) ) {
+			die( 'fsfs' );
 			$msgName = 'templatedraft-module-editintro-please-convert';
-		die("costam");
-
-			$base = Title::newFromText( $title->getBaseText(), NS_TEMPLATE );
-			$msgParams = [ $base->getFullUrl( ['action' => 'edit'] ) ];
-		//}
+		} else {
+			die( 'koniec' );
+		}
 
 		return true;
 	}
