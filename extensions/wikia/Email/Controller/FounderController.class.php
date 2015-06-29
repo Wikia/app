@@ -663,7 +663,7 @@ class FounderTipsTenDaysController extends FounderTipsController {
 				"details" => $this->getMessage( "emailext-founder-10-days-email-power-details" )->text()
 			],
 			[
-				"iconSrc" => Email\ImageHelper::getFileUrl( "emailext-founder-10-days-email-power-header" ),
+				"iconSrc" => Email\ImageHelper::getFileUrl( "Get-with-google.png" ),
 				"iconLink" => $this->getMessage( "emailext-founder-get-with-google" )->text(),
 				"detailsHeader" => $this->getMessage( "emailext-founder-10-days-email-google-header" )->text(),
 				"details" => $this->getMessage( "emailext-founder-10-days-email-google-details" )->text()

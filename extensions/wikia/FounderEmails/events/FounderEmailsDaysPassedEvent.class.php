@@ -78,7 +78,7 @@ class FounderEmailsDaysPassedEvent extends FounderEmailsEvent {
 	}
 
 	public static function register( $wikiParams, $debugMode = false ) {
-		global $wgFounderEmailsExtensionConfig, $wgCityId;
+		global $wgFounderEmailsEvents, $wgCityId;
 
 		$founderEmailObj = FounderEmails::getInstance();
 
@@ -88,7 +88,8 @@ class FounderEmailsDaysPassedEvent extends FounderEmailsEvent {
 
 		$wikiFounder->saveSettings();
 
-		foreach ( $wgFounderEmailsExtensionConfig['events']['daysPassed']['days'] as $activateDay ) {
+		foreach ( $wgFounderEmailsEvents['daysPassed']['days'] as $activateDay ) {
+
 
 			// Send the 0 day email, queue the rest
 			$doProcess = $activateDay == 0 ? true : false;
