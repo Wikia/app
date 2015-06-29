@@ -5,8 +5,9 @@ define('ext.wikia.adEngine.provider.gpt.adDetect', [
 	'wikia.log',
 	'wikia.window',
 	'ext.wikia.adEngine.adContext',
-	'ext.wikia.adEngine.messageListener'
-], function (log, window, adContext, messageListener) {
+	'ext.wikia.adEngine.messageListener',
+	'ext.wikia.adEngine.slotTweaker'
+], function (log, window, adContext, messageListener, slotTweaker) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.gpt.adDetect',
@@ -230,6 +231,11 @@ define('ext.wikia.adEngine.provider.gpt.adDetect', [
 		log(['onAdLoad', slotname, 'adType', adType], 'info', logGroup);
 
 		if (adType === 'forced_success' || adType === 'always_success') {
+			return callAdCallback();
+		}
+
+		if (adType === 'collapse') {
+			slotTweaker.hide(slotname);
 			return callAdCallback();
 		}
 
