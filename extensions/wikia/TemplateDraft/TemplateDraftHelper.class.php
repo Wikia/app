@@ -3,6 +3,17 @@
 class TemplateDraftHelper {
 
 	/**
+	 * Checks if a Title is a new one and if it fits /Draft criteria.
+	 *
+	 * @param Title $title
+	 * @return bool
+	 */
+	public function isTitleNewDraft( Title $title ) {
+		return !$title->exists()
+			&& $this->isTitleDraft( $title );
+	}
+
+	/**
 	 * Checks if the Title object is a Draft subpage of a template
 	 *
 	 * @param Title $title

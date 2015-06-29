@@ -33,7 +33,7 @@ to see this:
 
 $2
 
-[{{fullurl:PAGENAME}}?action=purge Click here to refresh the preview above]',
+[{{fullurl:{{ns:Template}}:{{PAGENAME}}}}?action=purge Click here to refresh the preview above]',
 ];
 
 /**

@@ -3,9 +3,9 @@
 class TemplateDraftHooks {
 
 	public static function onSkinAfterBottomScripts( $skin, &$text ) {
-		global $wgTitle;
+		global $wgTitle, $wgUser;
 
-		if ( $wgTitle->getNamespace() === NS_TEMPLATE ) {
+		if ( $wgUser->isPowerUser() && $wgTitle->getNamespace() === NS_TEMPLATE ) {
 			$scripts = AssetsManager::getInstance()->getURL( 'template_draft' );
 
 			foreach( $scripts as $script ) {
@@ -23,10 +23,13 @@ class TemplateDraftHooks {
 	 * @return bool
 	 */
 	public static function onGetRailModuleList( Array &$railModuleList ) {
-		global $wgTitle;
+		global $wgTitle, $wgUser;
+		$helper = new TemplateDraftHelper();
 
-		if ( $wgTitle->getNamespace() === NS_TEMPLATE
+		if ( $wgUser->isPowerUser()
+			&& $wgTitle->getNamespace() === NS_TEMPLATE
 			&& $wgTitle->exists()
+			&& !$helper->isTitleDraft( $wgTitle )
 			&& Wikia::getProps( $wgTitle->getArticleID(), TemplateDraftController::TEMPLATE_INFOBOX_PROP ) !== '0'
 		) {
 			$railModuleList[1502] = [ 'TemplateDraftModule', 'Index', null ];
@@ -45,7 +48,9 @@ class TemplateDraftHooks {
 	 */
 	public static function onEditFormPreloadText( &$text, Title $title ) {
 		$helper = new TemplateDraftHelper();
-		if ( $helper->isTitleDraft( $title ) ) {
+		if ( $helper->isTitleNewDraft( $title )
+			&& TemplateConverter::isConversion()
+		) {
 			$parentTitleId = $helper->getParentTitleId( $title );
 
 			if ( $parentTitleId > 0 ) {
@@ -79,9 +84,10 @@ class TemplateDraftHooks {
 	public static function onEditPageLayoutShowIntro( &$msgName, &$msgParams, Title $title ) {
 		$helper = new TemplateDraftHelper();
 
-		if ( $helper->isTitleDraft( $title ) 
+		if ( $helper->isTitleNewDraft( $title )
 			&& class_exists( 'TemplateConverter' )
-			&& TemplateConverter::isConversion() ) {
+			&& TemplateConverter::isConversion()
+		) {
 			$msgName = 'templatedraft-editintro';
 
 			$base = Title::newFromText( $title->getBaseText(), NS_TEMPLATE );
