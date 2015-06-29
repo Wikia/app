@@ -49,7 +49,7 @@ class TemplateDraftHooks {
 		if ( $helper->isTitleNewDraft( $title )
 			&& TemplateConverter::isConversion()
 		) {
-			$parentTitleId = $helper->getParentTitleId( $title );
+			$parentTitleId = $helper->getParentTitle( $title )->getArticleID();
 
 			if ( $parentTitleId > 0 ) {
 				$parentContent = WikiPage::newFromID( $parentTitleId )->getText();

@@ -13,6 +13,10 @@ $messages['en'] = [
 	'templatedraft-subpage' => 'Draft',
 	'templatedraft-editintro' => "Here you go! We've generated a draft version of your infobox with our new markup. We'll save it as a sub-page so you can review it and make any needed changes. You may want to [[Help:PortableInfoboxes|view the help page on Infobox markup]] or [$1 view parent template wikitext].",
 	/**
+	 * Notifications
+	 */
+	'templatedraft-approval-summary' => 'Replaced with updated version from draft template',
+	/**
 	 * Right rail module
 	 */
 	'templatedraft-module-title' => 'Migrate this infobox',
@@ -42,6 +46,10 @@ $2
 $messages['qqq'] = [
 	'templatedraft-description' => '{{desc}}',
 	'templatedraft-subpage' => 'A name that should be used for subpages of templates that contain a draft content.',
+	/**
+	 * Notifications
+	 */
+	'templatedraft-approval-summary' => 'Text used as edit summary when code is automatically replacing template with content from draft template on user approval',
 	/**
 	 * Right rail module
 	 */

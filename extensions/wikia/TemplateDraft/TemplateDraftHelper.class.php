@@ -27,13 +27,13 @@ class TemplateDraftHelper {
 	}
 
 	/**
-	 * Retrieves an ID of a parent Title object
+	 * Retrieves parent Title object from provided $title
 	 *
 	 * @param Title $title
-	 * @return Int
+	 * @return Title Parent Title
 	 * @throws MWException
 	 */
-	public function getParentTitleId( Title $title ) {
-		return Title::newFromText( $title->getBaseText(), NS_TEMPLATE )->getArticleID();
+	public function getParentTitle( Title $title ) {
+		return Title::newFromText( $title->getBaseText(), NS_TEMPLATE );
 	}
 }
