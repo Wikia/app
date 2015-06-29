@@ -394,9 +394,7 @@ class CuratedContentController extends WikiaController {
 	 * @return bool
 	 */
 	static function onCuratedContentSave() {
-		$app = F::app();
-		$content = $app->wg->WikiaCuratedContent;
-		$cityId = $app->wg->cityId;
+		$content = F::app()->wg->WikiaCuratedContent;
 
 		self::purgeMethodVariants( 'getList', array_map( function ( $item ) {
 			if ( $item[ 'title' ] !== '' && empty( $item[ 'featured' ] ) ) {
@@ -404,18 +402,15 @@ class CuratedContentController extends WikiaController {
 			}
 		}, $content ) );
 
-		$urlsToPurge = array_reduce( $content, function ( $urls, $item ) {
+		$squidUpdate = new SquidUpdate( array_reduce( $content, function ( $urls, $item ) {
 			if ( $item[ 'title' ] !== '' && empty( $item[ 'featured' ] ) ) {
 				$urls[] = self::getUrl( 'getList' ) . '&section=' . rawurlencode( $item[ 'title' ] );
 			}
 			return $urls;
-		} );
-		// TODO: find something better than newMainPage(), as it just returns Main_Page not the actual main page -- the one after redirect
-		$urlsToPurge[] = GlobalTitle::newMainPage( $cityId )->getFullURL();
-
-		// TODO: check if this should be used: CeleryPurge::purge();
-		$squidUpdate = new SquidUpdate( $urlsToPurge );
+		} ) );
 		$squidUpdate->doUpdate();
+
+		Title::newMainPage()->purgeSquid();
 
 		if ( class_exists( 'GameGuidesController' ) ) {
 			GameGuidesController::purgeMethod( 'getList' );
