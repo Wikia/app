@@ -62,10 +62,12 @@ class TemplateDraftHooks {
 	 * @param Title $title
 	 * @return bool
 	 */
-	public static function onEditPageLayoutShowIntro( &$msgName, &$msgParams, $title ) {
+	public static function onEditPageLayoutShowIntro( &$msgName, &$msgParams, Title $title ) {
 		$helper = new TemplateDraftHelper();
 
-		if ( $helper->isTitleDraft( $title ) ) {
+		if ( $helper->isTitleDraft( $title ) 
+			&& class_exists( 'TemplateConverter' )
+			&& TemplateConverter::isConversion() ) {
 			$msgName = 'templatedraft-editintro';
 
 			$base = Title::newFromText( $title->getBaseText(), NS_TEMPLATE );
