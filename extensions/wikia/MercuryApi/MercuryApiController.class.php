@@ -406,16 +406,16 @@ class MercuryApiController extends WikiaController {
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 
 		if ( empty( $section ) ) {
-			$this->response->setVal( 'items', false );
 			throw new NotFoundApiException( 'Section is not set' );
 		}
 
 		$data = $this->getCuratedContentData( $section );
-		$this->response->setVal( 'items', $data[ 'items' ] );
 
 		if ( empty( $data ) ) {
 			throw new NotFoundApiException( 'No members' );
 		}
+
+		$this->response->setVal( 'items', $data[ 'items' ] );
 	}
 
 	private function getCuratedContentData( $section = null ) {
