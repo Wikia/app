@@ -184,7 +184,7 @@ class GlobalWatchlistBot {
 	 * @throws Exception
 	 */
 	private function checkIfEmailUnSubscribed( \User $user ) {
-		if ( $user->getBoolOption( 'unsubscribed' ) ) {
+		if ( $user->getGlobalPreference( 'unsubscribed' ) ) {
 			throw new Exception( 'Email is unsubscribed.' );
 		}
 	}
@@ -204,7 +204,7 @@ class GlobalWatchlistBot {
 	 * @throws Exception
 	 */
 	private function checkIfSubscribedToWeeklyDigest( \User $user ) {
-		if ( !$user->getBoolOption( 'watchlistdigest' ) ) {
+		if ( !$user->getGlobalPreference( 'watchlistdigest' ) ) {
 			throw new Exception( 'Not subscribed to weekly digest' );
 		}
 	}
