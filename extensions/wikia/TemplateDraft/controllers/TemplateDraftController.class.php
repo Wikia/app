@@ -70,7 +70,8 @@ class TemplateDraftController extends WikiaController {
 	}
 
 	private function isValidPostRequest() {
+		$editToken = $this->getRequest()->getParams()['editToken'];
 		return $this->getRequest()->wasPosted()
-			&& $this->wg->User->matchEditToken( 'editToken' );
+			&& $this->wg->User->matchEditToken( $editToken );
 	}
 }
