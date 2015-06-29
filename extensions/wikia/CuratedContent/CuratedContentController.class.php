@@ -291,7 +291,6 @@ class CuratedContentController extends WikiaController {
 	 *
 	 * @param $content
 	 * @param $requestSection
-	 * @param string $sectionName
 	 *
 	 * @throws CuratedContentSectionNotFoundException
 	 * @responseReturn Array|false Items or false if section was not found
@@ -328,7 +327,6 @@ class CuratedContentController extends WikiaController {
 	/**
 	 * @param $sectionName
 	 * @param $ret
-	 * @param $value
 	 * @return mixed
 	 */
 	private function setSectionItemsResponse( $sectionName, $ret ) {
@@ -396,26 +394,28 @@ class CuratedContentController extends WikiaController {
 	static function onCuratedContentSave() {
 		$content = F::app()->wg->WikiaCuratedContent;
 
-		// Purge section URLs using urlencode (standard for MediaWiki), which uses implements RFC 1866
-		// https://tools.ietf.org/html/rfc1866#section-8.2.1 - spaces encoded as `+`.
-		// iOS apps use this variant.
-		self::purgeMethodVariants( 'getList', array_reduce( $content, function ( $params, $item ) {
-			if ( $item[ 'title' ] !== '' && empty( $item[ 'featured' ] ) ) {
-				$params[] = [ 'section' => $item[ 'title' ] ];
-			}
-			return $params;
-		} ) );
-
-		// Purge section URLs using rawurlencode, which uses implements RFC 3986
-		// https://tools.ietf.org/html/rfc3986#section-2.1 - spaces encoded as `%20`.
-		// Android apps and Mercury use this variant.
-		$squidUpdate = new SquidUpdate( array_reduce( $content, function ( $urls, $item ) {
-			if ( $item[ 'title' ] !== '' && empty( $item[ 'featured' ] ) ) {
-				$urls[] = self::getUrl( 'getList' ) . '&section=' . rawurlencode( $item[ 'title' ] );
-			}
-			return $urls;
-		} ) );
-		$squidUpdate->doUpdate();
+		( new SquidUpdate( array_unique( array_reduce(
+			$content,
+			function ( $urls, $item ) {
+				if ( $item[ 'title' ] !== '' && empty( $item[ 'featured' ] ) ) {
+					// Purge section URLs using urlencode() (standard for MediaWiki), which uses implements RFC 1738
+					// https://tools.ietf.org/html/rfc1738#section-2.2 - spaces encoded as `+`.
+					// iOS apps use this variant.
+					$urls[ ] = self::getUrl( 'getList' ) . '&section=' . urlencode( $item[ 'title' ] );
+					// Purge section URLs using rawurlencode(), which uses implements RFC 3986
+					// https://tools.ietf.org/html/rfc3986#section-2.1 - spaces encoded as `%20`.
+					// Android apps use this variant.
+					$urls[ ] = self::getUrl( 'getList' ) . '&section=' . rawurlencode( $item[ 'title' ] );
+					// Purge section URLs using JavaScript encodeURIComponent() compatible standard,
+					// which works almost like rawurlencode(), but does not encode following characters: !'()*
+					// Mercury web app uses this variant.
+					$urls[ ] = self::getUrl( 'getList' ) . '&section=' . self::encodeURIComponent( $item[ 'title' ] );
+				}
+				return $urls;
+			},
+			// Purge all sections list getter URL - no additional params
+			[ self::getUrl( 'getList' ) ]
+		) ) ) )->doUpdate();
 
 		// Purge main page cache, so Mercury gets fresh data.
 		Title::newMainPage()->purgeSquid();
@@ -426,6 +426,16 @@ class CuratedContentController extends WikiaController {
 		}
 
 		return true;
+	}
+
+	/**
+	 * @brief Emulates JavaScript URL encoding function
+	 *
+	 * @param string $str
+	 * @return string
+	 */
+	private static function encodeURIComponent( $str ) {
+		return strtr( rawurlencode( $str ), [ '%21' => '!', '%27' => "'", '%28' => '(', '%29' => ')', '%2A' => '*' ] );
 	}
 }
 
