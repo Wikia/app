@@ -407,9 +407,14 @@ class MercuryApiController extends WikiaController {
 
 		if ( empty( $section ) ) {
 			$this->response->setVal( 'items', false );
-		} else {
-			$data = $this->getCuratedContentData( $section );
-			$this->response->setVal( 'items', $data[ 'items' ] );
+			throw new NotFoundApiException( 'Section is not set' );
+		}
+
+		$data = $this->getCuratedContentData( $section );
+		$this->response->setVal( 'items', $data[ 'items' ] );
+
+		if ( empty( $data ) ) {
+			throw new NotFoundApiException( 'No members' );
 		}
 	}
 
