@@ -32,7 +32,7 @@ class TemplateDraftHooks {
 	public static function onEditFormPreloadText( &$text, Title $title ) {
 		$helper = new TemplateDraftHelper();
 		if ( $helper->isTitleDraft( $title ) ) {
-			$parentTitleId = $helper->getParentTitleId( $title );
+			$parentTitleId = $helper->getParentTitle( $title )->getArticleID();
 
 			if ( $parentTitleId > 0 ) {
 				$parentContent = WikiPage::newFromID( $parentTitleId )->getText();
