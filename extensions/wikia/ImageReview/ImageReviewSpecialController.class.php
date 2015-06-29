@@ -135,7 +135,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		if ($this->wg->user->isAllowed('imagereviewcontrols')) {
 			$order = (int)$this->getVal('sort', -1);
 			if ($order >= 0) {
-				$this->app->wg->User->setOption('imageReviewSort', $order);
+				$this->app->wg->User->setGlobalPreference('imageReviewSort', $order);
 				$this->app->wg->User->saveSettings();
 			}
 
