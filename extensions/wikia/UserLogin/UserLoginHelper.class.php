@@ -545,8 +545,8 @@ class UserLoginHelper extends WikiaModel {
 	 * @return bool
 	 */
 	public static function removeNotConfirmedFlag( User &$user ) {
-		$user->setOption( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME, null );
-		$user->setOption( UserLoginSpecialController::SIGNED_UP_ON_WIKI_OPTION_NAME, null );
+		$user->setGlobalFlag( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME, null );
+		$user->setGlobalFlag( UserLoginSpecialController::SIGNED_UP_ON_WIKI_OPTION_NAME, null );
 		$user->saveSettings();
 		$user->saveToCache();
 		wfRunHooks( 'SignupConfirmEmailComplete', array( $user ) );
