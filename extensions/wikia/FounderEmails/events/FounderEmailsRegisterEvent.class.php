@@ -12,15 +12,15 @@ class FounderEmailsRegisterEvent extends FounderEmailsEvent {
 		}
 
 		// disable if all Wikia email disabled
-		if ( $user->getBoolOption( 'unsubscribed' ) ) {
+        if ( (bool)$user->getGlobalPreference( 'unsubscribed' ) ) {
 			return false;
 		}
 
 		// If digest mode is enabled, do not create user registration event notifications
-		if ( $user->getOption( "founderemails-complete-digest-$wgCityId" ) ) {
+        if ( $user->getLocalPreference( 'founderemails-complete-digest', $wgCityId ) ) {
 			return false;
 		}
-		if ( $user->getOption( "founderemails-joins-$wgCityId" ) ) {
+        if ( $user->getLocalPreference( 'founderemails-joins', $wgCityId ) ) {
 			return true;
 		}
 		return false;
@@ -57,7 +57,7 @@ class FounderEmailsRegisterEvent extends FounderEmailsEvent {
 				}
 				self::addParamsUser( $wgCityId, $user->getName(), $emailParams );
 
-				$langCode = $user->getOption( 'language' );
+				$langCode = $user->getGlobalPreference( 'language' );
 				$mailSubject = strtr( wfMsgExt( 'founderemails' . $wikiType . '-email-user-registered-subject', array( 'content' ) ), $emailParams );
 				$mailBody = strtr( wfMsgExt( 'founderemails' . $wikiType . '-email-user-registered-body', array( 'content' ) ), $emailParams );
 
