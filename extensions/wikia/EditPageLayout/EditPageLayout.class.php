@@ -663,7 +663,7 @@ class EditPageLayout extends EditPage {
 			if ( !empty( $msgName ) ) {
 				$message = wfMessage( $msgName, $msgParams );
 				$msg = $message->parse();
-				if ( !$message->isBlank() && empty( strip_tags($msg) ) ) {
+				if ( !$message->isBlank() && trim( strip_tags($msg) ) != '' ) {
 					$this->mEditPagePreloads['EditPageIntro'] = array(
 							'content' => $msg,
 							'class' => $class,
