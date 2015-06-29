@@ -38,15 +38,16 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 		}
 
 		// disable if all Wikia email disabled
-		if ( $user->getBoolOption( 'unsubscribed' ) ) {
+		if ( (bool)$user->getGlobalPreference( 'unsubscribed' ) ) {
 			return false;
 		}
 
 		// If digest mode is enabled, do not create edit event notifications
-		if ( $user->getOption( "founderemails-complete-digest-$wgCityId" ) ) {
+		if ( $user->getLocalPreference( 'founderemails-complete-digest', $wgCityId ) ) {
+
 			return false;
 		}
-		if ( $user->getOption( "founderemails-edits-$wgCityId" ) ) {
+		if ( $user->getLocalPreference( 'founderemails-edits', $wgCityId ) ) {
 			return true;
 		}
 		return false;
@@ -105,7 +106,7 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 					return true;
 				}
 
-				$aAllCounter = unserialize( $user->getOption( 'founderemails-counter' ) );
+				$aAllCounter = unserialize( $user->getGlobalAttribute( 'founderemails-counter' ) );
 				if ( empty( $aAllCounter ) ) {
 					$aAllCounter = array();
 				}
@@ -160,10 +161,10 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 				$aWikiCounter[1] = ( $aWikiCounter[1] === 15 ) ? 'full' : $aWikiCounter[1] + 1;
 				$aAllCounter[$wgCityId] = $aWikiCounter;
 
-				$user->setOption( 'founderemails-counter', serialize( $aAllCounter ) );
+				$user->setGlobalAttribute( 'founderemails-counter', serialize( $aAllCounter ) );
 				$user->saveSettings();
 
-				$langCode = $user->getOption( 'language' );
+				$langCode = $user->getGlobalPreference( 'language' );
 				$mailCategory .= ( !empty( $langCode ) && $langCode == 'en' ? 'EN' : 'INT' );
 				$mailSubject = strtr( wfMsgExt( $msgKeys['subject'], array( 'content' ) ), $emailParams );
 				$mailBody = strtr( wfMsgExt( $msgKeys['body'], array( 'content' ) ), $emailParams );
