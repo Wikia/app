@@ -9,9 +9,6 @@ class TemplateDraftHelper {
 	 * @return bool
 	 */
 	public function isTitleDraft( Title $title ) {
-		/**
-		 * TODO: Improve this check (i18n)
-		 */
 		return $title->getNamespace() === NS_TEMPLATE
 			&& $title->isSubpage()
 			&& ( $title->getSubpageText() === wfMessage( 'templatedraft-subpage' )->inContentLanguage()->escaped()
