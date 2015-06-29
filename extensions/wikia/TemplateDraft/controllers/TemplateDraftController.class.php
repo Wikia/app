@@ -24,15 +24,16 @@ class TemplateDraftController extends WikiaController {
 	 * @param $flags Array
 	 * @return string
 	 */
-	public function createDraftContent( $content, Array $flags ) {
+	public function createDraftContent( Title $title, $content, Array $flags ) {
 		$flagsSum = array_sum( $flags );
 
 		if ( self::TEMPLATE_INFOBOX & $flagsSum ) {
-			$templateConverter = new TemplateConverter();
-			$content = $templateConverter->convertAsInfobox( $content );
+			$templateConverter = new TemplateConverter( $title );
+			$newContent = $templateConverter->convertAsInfobox( $content );
+			$newContent .= $templateConverter->generatePreviewSection( $content );
 		}
 
-		return $content;
+		return $newContent;
 	}
 
 	/**
@@ -42,18 +43,20 @@ class TemplateDraftController extends WikiaController {
 	 */
 	public function approveDraft( Title $title ) {
 		// Get Title object of parent page
-		$parentTitleText = $title->getBaseText();
-		$parentTitle = Title::newFromText( $parentTitleText, $title->getNamespace() );
-		if ( $parentTitle->userCan( 'edit' ) ) {
-			// Get contents of draft page
-			$article = Article::newFromId( $title->getArticleID() );
-			$draftContent = $article->getContent();
-			// Get WikiPage object of parent page
-			$page = WikiPage::newFromID( $parentTitle->getArticleID() );
-			// Save to parent page
-			$page->doEdit( $draftContent, wfMessage( 'templatedraft-approval-summary' )->inContentLanguage()->plain() );
-		} else {
+		$helper = new TemplateDraftHelper();
+		$parentTitle = $helper->getParentTitle( $title );
+
+		// Check edit rights
+		if ( !$parentTitle->userCan( 'edit' ) ) {
 			throw new PermissionsException( 'edit' );
 		}
+
+		// Get contents of draft page
+		$article = Article::newFromId( $title->getArticleID() );
+		$draftContent = $article->getContent();
+		// Get WikiPage object of parent page
+		$page = WikiPage::newFromID( $parentTitle->getArticleID() );
+		// Save to parent page
+		$page->doEdit( $draftContent, wfMessage( 'templatedraft-approval-summary' )->inContentLanguage()->plain() );
 	}
 }

@@ -11,7 +11,8 @@ class TemplateConverterTest extends WikiaBaseTest {
 	 * @dataProvider convertAsInfoboxProvider
 	 */
 	public function testConvertAsInfobox( $content, $expected, $comment ) {
-		$templateConverter = new TemplateConverter();
+		$mockTitle = $this->getMock( 'Title' );
+		$templateConverter = new TemplateConverter( $mockTitle );
 
 		$result = $templateConverter->convertAsInfobox( $content );
 

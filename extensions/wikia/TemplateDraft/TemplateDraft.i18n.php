@@ -11,6 +11,7 @@ $messages = [];
 $messages['en'] = [
 	'templatedraft-description' => 'TemplateDraft extension',
 	'templatedraft-subpage' => 'Draft',
+	'templatedraft-editintro' => "Here you go! We've generated a draft version of your infobox with our new markup. We'll save it as a sub-page so you can review it and make any needed changes. You may want to [[Help:PortableInfoboxes|view the help page on Infobox markup]] or [$1 view parent template wikitext].",
 	/**
 	 * Notifications
 	 */
@@ -27,6 +28,19 @@ $messages['en'] = [
 	'templatedraft-module-title-approve' => 'Move this draft template',
 	'templatedraft-module-content-approve' => 'Happy with this draft and want to promote it to the live template?',
 	'templatedraft-module-button-approve' => 'Approve this draft',
+
+	'templatedraft-preview-n-docs' => '== Usage & preview ==
+Type in this:
+
+<pre>
+$1
+</pre>
+
+to see this:
+
+$2
+
+[{{fullurl:PAGENAME}}?action=purge Click here to refresh the preview above]',
 ];
 
 /**
@@ -51,4 +65,5 @@ $messages['qqq'] = [
 	'templatedraft-module-title-approve' => 'A title of the TemplateDraft module for approving draft that appears in the right rail on Template pages.',
 	'templatedraft-module-content-approve' => 'A content of the TemplateDraft module for approving draft that appears in the right rail on Template pages.',
 	'templatedraft-module-button-approve' => 'A button shown in a right rail module for approving draft that moves draft text to parent template and gets user to this parent template',
+	'templatedraft-preview-n-docs' => 'Used when generating documentation for a converted draft of a template',
 ];
