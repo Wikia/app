@@ -52,4 +52,18 @@ class TemplateDraftHooks {
 		}
 		return true;
 	}
+
+
+	public static function onEditPageLayoutShowIntro( &$msgName, &$msgParams, $title ) {
+		$helper = new TemplateDraftHelper();
+
+		if ( $helper->isTitleDraft( $title ) ) {
+			$msgName = 'templatedraft-editintro';
+
+			$base = Title::newFromText( $title->getBaseText(), NS_TEMPLATE );
+			$msgParams = [ $base->getFullUrl( ['action' => 'edit'] ) ];
+		}
+
+		return true;
+	}
 }
