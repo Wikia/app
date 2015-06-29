@@ -177,7 +177,7 @@ class MyHome {
 		//user must be logged in and have redirect enabled;
 		//this is not used for Corporate Sites where Wikia Visualization is enabled
 		if( $wgUser->isLoggedIn() && empty($wgEnableWikiaHomePageExt) ) {
-			$value = $wgUser->getOption(UserPreferencesV2::LANDING_PAGE_PROP_NAME);
+			$value = $wgUser->getGlobalPreference(UserPreferencesV2::LANDING_PAGE_PROP_NAME);
 			switch($value) {
 				case UserPreferencesV2::LANDING_PAGE_WIKI_ACTIVITY:
 					$title = SpecialPage::getTitleFor('WikiActivity');
@@ -339,7 +339,7 @@ class MyHome {
 		$values = array('activity', 'watchlist');
 
 		if (in_array($defaultView, $values)) {
-			$wgUser->setOption('myhomedefaultview', $defaultView);
+			$wgUser->setGlobalPreference('myhomedefaultview', $defaultView);
 			$wgUser->saveSettings();
 
 			$dbw = wfGetDB( DB_MASTER );
@@ -363,7 +363,7 @@ class MyHome {
 		wfProfileIn(__METHOD__);
 
 		global $wgUser;
-		$defaultView = $wgUser->getOption('myhomedefaultview');
+		$defaultView = $wgUser->getGlobalPreference('myhomedefaultview');
 
 		if (empty($defaultView)) {
 			$defaultView = 'activity';
@@ -396,7 +396,7 @@ class MyHome {
 		// achievements.  It would be better to do this check at display-time rather than save-time, but we don't have access to the badge's user
 		// at that point.
 		Wikia::log(__METHOD__, "", "Noticed an achievement", $wgWikiaForceAIAFdebug);
-		if( ($badge->getTypeId() != BADGE_WELCOME) && (!$user->getOption('hidepersonalachievements')) ){
+		if( ($badge->getTypeId() != BADGE_WELCOME) && (!$user->getGlobalPreference('hidepersonalachievements')) ){
 			Wikia::log(__METHOD__, "", "Attaching badge to recent change...", $wgWikiaForceAIAFdebug);
 
 			// Make sure this Achievement gets added to its corresponding RecentChange (whether that has
