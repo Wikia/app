@@ -86,7 +86,7 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 		return false;
 	}
 
-	public function getAltActionUrl( $title ) {
+	public function getAltActionUrl( Title $title ) {
 		return '';
 	}
 
