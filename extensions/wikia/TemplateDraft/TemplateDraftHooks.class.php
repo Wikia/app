@@ -66,4 +66,28 @@ class TemplateDraftHooks {
 		}
 		return true;
 	}
+
+	/**
+	 * Triggered if a user edits a Draft subpage of a template.
+	 * It adds an editintro message with help and links.
+	 *
+	 * @param String $msgName
+	 * @param Array $msgParams 
+	 * @param Title $title
+	 * @return bool
+	 */
+	public static function onEditPageLayoutShowIntro( &$msgName, &$msgParams, Title $title ) {
+		$helper = new TemplateDraftHelper();
+
+		if ( $helper->isTitleDraft( $title ) 
+			&& class_exists( 'TemplateConverter' )
+			&& TemplateConverter::isConversion() ) {
+			$msgName = 'templatedraft-editintro';
+
+			$base = Title::newFromText( $title->getBaseText(), NS_TEMPLATE );
+			$msgParams = [ $base->getFullUrl( ['action' => 'edit'] ) ];
+		}
+
+		return true;
+	}
 }

@@ -2,6 +2,8 @@
 
 class TemplateConverter {
 
+	const CONVERSION_MARKER = 'conversion';
+
 	const TEMPLATE_VARIABLE_REGEX = '/{{{([^|{}]+)(\|([^{}]*|.*{{.*}}.*))?}}}/';
 
 	private $title; // Title object of the template we're converting
@@ -161,5 +163,11 @@ class TemplateConverter {
 		$return .= "\n</noinclude>\n";
 
 		return $return;
+	}
+
+	public static function isConversion() {
+		global $wgRequest;
+
+		return $wgRequest->getVal( self::CONVERSION_MARKER, false );
 	}
 }
