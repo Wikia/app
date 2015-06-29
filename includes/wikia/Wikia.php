@@ -2008,15 +2008,15 @@ class Wikia {
 			$userEmail = $user->getEmail();
 			// Optionally keep email in user property
 			if ( $keepEmail && !empty( $userEmail ) ) {
-				$user->setOption( 'disabled-user-email', $userEmail );
+				$user->setGlobalAttribute( 'disabled-user-email', $userEmail );
 			} elseif ( !$keepEmail ) {
 				// Make sure user property is removed
-				$user->setOption( 'disabled-user-email', null );
+				$user->setGlobalAttribute( 'disabled-user-email', null );
 			}
 			$user->setEmail( '' );
 			$user->setPassword( null );
-			$user->setOption( 'disabled', 1 );
-			$user->setOption( 'disabled_date', wfTimestamp( TS_DB ) );
+			$user->setGlobalFlag( 'disabled');
+			$user->setGlobalAttribute( 'disabled_date', wfTimestamp( TS_DB ) );
 			$user->mToken = null;
 			$user->invalidateEmail();
 			if ( $ajax ) {
