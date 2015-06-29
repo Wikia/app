@@ -212,10 +212,10 @@ describe('AdLogicPageParams', function () {
 			kruxSegmentsFew = ['kxsgmntA', 'kxsgmntB', 'kxsgmntC', 'kxsgmntD'],
 			params;
 
-		params = getParams({}, {kruxSegments: kruxSegmentsNone});
+		params = getParams({enableKruxTargeting: true}, {kruxSegments: kruxSegmentsNone});
 		expect(params.ksgmnt).toEqual(kruxSegmentsNone, 'No segments');
 
-		params = getParams({}, {kruxSegments: kruxSegmentsFew});
+		params = getParams({enableKruxTargeting: true}, {kruxSegments: kruxSegmentsFew});
 		expect(params.ksgmnt).toEqual(kruxSegmentsFew, 'A few segments');
 	});
 
@@ -280,7 +280,6 @@ describe('AdLogicPageParams', function () {
 		expect(params.rawDbName).toBe('_xyz');
 	});
 
-
 // Very specific tests for hubs:
 
 	it('getPageLevelParams Hub page: video games', function () {
@@ -344,7 +343,7 @@ describe('AdLogicPageParams', function () {
 		var kruxSegments = ['kxsgmntA', 'kxsgmntB', 'kxsgmntC', 'kxsgmntD'],
 			params;
 
-		params = getParams({}, {kruxSegments: kruxSegments});
+		params = getParams({enableKruxTargeting: true}, {kruxSegments: kruxSegments});
 		expect(params.ksgmnt).toEqual(kruxSegments, 'Krux on regular wiki');
 
 		params = getParams({wikiDirectedAtChildren: true}, {kruxSegments: kruxSegments});
@@ -391,7 +390,6 @@ describe('AdLogicPageParams', function () {
 
 	it('getPageLevelParams ref param', function () {
 		var params;
-
 
 		params = getParams({}, { document: {
 			referrer: ''
@@ -454,7 +452,5 @@ describe('AdLogicPageParams', function () {
 		});
 
 		expect(params.ref).toBe('external');
-
-
 	});
 });

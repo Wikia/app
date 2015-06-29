@@ -12,6 +12,9 @@ class MyHome {
 
 	// name of section edited
 	private static $editedSectionName = false;
+	private static $additionalRcDataBlacklist = [
+		'flags'
+	];
 
 	/**
 	 * Store custom data in rc_params field as JSON encoded table prefixed with extra string.
@@ -243,17 +246,20 @@ class MyHome {
 		if ($rc instanceof RecentChange) {
 			/* @var $rc RecentChange */
 			$rc_id = $rc->getAttribute('rc_id');
+			$rc_log_type = $rc->getAttribute('rc_log_type');
 
-			$dbw = wfGetDB( DB_MASTER );
-			$dbw->update('recentchanges',
-				array(
-					'rc_params' => MyHome::packData($rc_data)
-				),
-				array(
-					'rc_id' => $rc_id
-				),
-				__METHOD__
-			);
+			if ( !in_array( $rc_log_type, self::$additionalRcDataBlacklist ) ) {
+				$dbw = wfGetDB( DB_MASTER );
+				$dbw->update('recentchanges',
+					array(
+						'rc_params' => MyHome::packData($rc_data)
+					),
+					array(
+						'rc_id' => $rc_id
+					),
+					__METHOD__
+				);
+			}
 		}
 
 		Wikia::setVar('rc_data', $rc_data);

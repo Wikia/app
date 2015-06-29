@@ -231,7 +231,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 			$this->overrideTemplate( 'forgotPassword' );
 			// set page title
 			$this->wg->Out->setPageTitle( wfMessage( 'userlogin-forgot-password' )->plain() );
-			return;
+			return true;
 		}
 
 		// we're sure at this point we'll need the private fields'
@@ -257,6 +257,8 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 				$this->overrideTemplate( 'WikiaMobileIndex' );
 			}
 		}
+
+		return true;
 	}
 
 	public function getUnconfirmedUserRedirectUrl() {
@@ -417,13 +419,6 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 		}
 
 		$loginCase = $loginForm->authenticateUserData();
-
-		/** PLATFORM-508 - logging for Helios project - begin */
-		\Wikia\Logger\WikiaLogger::instance()->debug(
-			'PLATFORM-508',
-			[ 'method' => __METHOD__, 'login_case' => (string) $loginCase ]
-		);
-		/** PLATFORM-508 - logging for Helios project - end */
 
 		switch ( $loginCase ) {
 			case LoginForm::SUCCESS:
@@ -589,37 +584,101 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 		}
 
 		if ( $loginForm->mUsername == '' ) {
-			$this->result = 'error';
-			$this->msg = wfMessage( 'userlogin-error-noname' )->escaped();
-		} else if ( !$this->wg->Auth->allowPasswordChange() ) {
-			$this->result = 'error';
-			$this->msg = wfMessage( 'userlogin-error-resetpass_forbidden' )->escaped();
-		} else if ( $this->wg->User->isBlocked() ) {
-			$this->result = 'error';
-			$this->msg = wfMessage( 'userlogin-error-blocked-mailpassword' )->escaped();
-		} else {
-			$user = User::newFromName( $loginForm->mUsername );
-			if ( !$user instanceof User ) {
-				$this->result = 'error';
-				$this->msg = wfMessage( 'userlogin-error-noname' )->escaped();
-			} else if ( $user->getID() == 0 ) {
-				$this->result = 'error';
-				$this->msg = wfMessage( 'userlogin-error-nosuchuser' )->escaped();
-			} else if ( $user->isPasswordReminderThrottled() ) {
-				$this->result = 'error';
-				$this->msg = wfMessage( 'userlogin-error-throttled-mailpassword', round( $this->wg->PasswordReminderResendTime, 3 ) )->escaped();
-			} else {
-				$emailTextTemplate = $this->app->renderView( "UserLogin", "GeneralMail", array( 'language' => $user->getOption( 'language' ), 'type' => 'password-email' ) );
-				$result = $loginForm->mailPasswordInternal( $user, true, 'userlogin-password-email-subject', 'userlogin-password-email-body', $emailTextTemplate );
-				if ( !$result->isGood() ) {
-					$this->result = 'error';
-					$this->msg = wfMessage( 'userlogin-error-mail-error', $result->getMessage() )->parse();
-				} else {
-					$this->result = 'ok';
-					$this->msg = wfMessage( 'userlogin-password-email-sent', $loginForm->mUsername )->escaped();
-				}
-			}
+			$this->setErrorResponse( 'userlogin-error-noname' );
+			return;
 		}
+
+		if ( !$this->wg->Auth->allowPasswordChange() ) {
+			$this->setErrorResponse( 'userlogin-error-resetpass_forbidden' );
+			return;
+		}
+
+		if ( $this->wg->User->isBlocked() ) {
+			$this->setErrorResponse( 'userlogin-error-blocked-mailpassword' );
+			return;
+		}
+
+		$user = User::newFromName( $loginForm->mUsername );
+		if ( !$user instanceof User ) {
+			$this->setErrorResponse( 'userlogin-error-noname' );
+			return;
+		}
+
+		if ( $user->getID() == 0 ) {
+			$this->setErrorResponse( 'userlogin-error-nosuchuser' );
+			return;
+		}
+
+		if ( $user->isPasswordReminderThrottled() ) {
+			$throttleTTL = round( $this->wg->PasswordReminderResendTime, 3 );
+			$this->setErrorResponse( 'userlogin-error-throttled-mailpassword', $throttleTTL );
+			return;
+		}
+
+		/// Get a temporary password
+		$userService = new \UserService();
+		$tempPass = $userService->resetPassword( $user );
+
+		$resp = F::app()->sendRequest( 'Email\Controller\ForgotPassword', 'handle', [
+			'targetUser' => $user,
+			'tempPass' => $tempPass,
+		] );
+
+		$data = $resp->getData();
+		if ( !empty( $data['result'] ) && $data['result'] == 'ok' ) {
+			$this->setSuccessResponse( 'userlogin-password-email-sent', $loginForm->mUsername );
+		} else {
+			$this->setParsedErrorResponse( 'userlogin-error-mail-error' );
+		}
+	}
+
+	/**
+	 * Given a message key and any params for that key (exactly the same signature as wfMessage),
+	 * set the error response for this request
+	 *
+	 * @param string $key The message key
+	 * @param array ...$params The first element of this array will always be the message key
+	 */
+	private function setErrorResponse( $key, ...$params ) {
+		$this->setResponseGeneric(  $key, $params, 'error' );
+	}
+
+	/**
+	 * Same as setErrorResponse except the message key is parsed for wikitext
+	 *
+	 * @param string $key The message key
+	 * @param array ...$params The first element of this array will always be the message key
+	 */
+	private function setParsedErrorResponse( $key, ...$params ) {
+		$this->setResponseGeneric( $key, $params, 'error', 'parse' );
+	}
+
+	/**
+	 * Given a message key and any params for that key (exactly the same signature as wfMessage),
+	 * set a success response for this request
+	 *
+	 * @param string $key The message key
+	 * @param array ...$params The first element of this array will always be the message key
+	 */
+	private function setSuccessResponse( $key, ...$params ) {
+		$this->setResponseGeneric(  $key, $params );
+	}
+
+	/**
+	 * Set a success or fail status for the request.
+	 *
+	 * @param string $key The message key
+	 * @param array $params Any params to be passed to wfMessage for the key given
+	 * @param string $result This is the status code ("ok" or "error") for the request
+	 * @param string $postProcess This is the method to call to stringify the message key
+	 */
+	private function setResponseGeneric( $key, $params, $result = 'ok', $postProcess = 'escaped' ) {
+		$msg = wfMessage( $key, $params )->$postProcess();
+
+		$this->response->setData([
+			'result' => $result,
+			'msg' => $msg,
+		] );
 	}
 
 	/**

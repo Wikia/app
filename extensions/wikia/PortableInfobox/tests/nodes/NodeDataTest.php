@@ -31,6 +31,10 @@ class NodeDataTest extends WikiaBaseTest {
 			  [ ], [ 'test1', 'test2' ] ],
 			[ '<data><default>{{#switch: {{{test2|}}}|{{{test3}}}|{{{test4|kdjk|sajdkfj|}}}]] }}</default></data>',
 			  [ ], [ 'test2', 'test3', 'test4' ] ],
+			[ '<data source="test1"><format>my {{{test2}}}$$$</format><default>{{#switch: {{{test3|}}}|{{{test4}}}|{{{test5|kdjk|sajdkfj|}}}]] }}</default></data>',
+				[ 'test1' => 'blabla' ], [ 'test1', 'test2', 'test3', 'test4', 'test5' ] ],
+			[ '<data><format>my {{{test2}}}$$$</format><default>{{#switch: {{{test3|}}}|{{{test4}}}|{{{test5|kdjk|sajdkfj|}}}]] }}</default></data>',
+				[ ], [ 'test2', 'test3', 'test4', 'test5' ] ]
 		];
 	}
 
@@ -77,7 +81,13 @@ class NodeDataTest extends WikiaBaseTest {
 			  [ 'value' => 'def', 'label' => 'l' ] ],
 			[ '<data source="test"><label>l</label><default>def</default></data>', [ 'test' => 1 ],
 			  [ 'value' => 1, 'label' => 'l' ] ],
-			[ '<data></data>', [ ], [ 'label' => '', 'value' => null ] ]
+			[ '<data></data>', [ ], [ 'label' => '', 'value' => null ] ],
+			[ '<data source="test"><label>l</label><format>{{{test}}}%</format><default>def</default></data>', [ 'test' => 1 ],
+			  [ 'value' => '{{{test}}}%', 'label' => 'l' ] ],
+			[ '<data source="test"><label>l</label><format>{{{not_defined_var}}}%</format><default>def</default></data>', [ 'test' => 1 ],
+				[ 'value' => '{{{not_defined_var}}}%', 'label' => 'l' ] ],
+			[ '<data source="test"><label>l</label><format>{{{test}}}%</format><default>def</default></data>', [ ],
+				[ 'value' => 'def', 'label' => 'l' ] ],
 		];
 	}
 
@@ -97,8 +107,10 @@ class NodeDataTest extends WikiaBaseTest {
 
 	public function dataRenderProvider() {
 		return [
-			[ '<data source="test"></data>', [ 'test' => 'test' ],
-			  [ 'type' => 'data', 'data' => [ 'value' => 'test', 'label' => '' ] ] ],
+			[ '<data source="test"></data>',
+				[ 'test' => 'test' ],
+				[ 'type' => 'data', 'data' => [ 'value' => 'test', 'label' => '' ] ]
+			]
 		];
 	}
 
