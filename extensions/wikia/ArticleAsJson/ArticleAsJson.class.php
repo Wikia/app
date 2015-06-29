@@ -297,7 +297,7 @@ class ArticleAsJson extends WikiaService {
 	 *
 	 * @param $handlerParams
 	 *
-	 * @return bool true if one of the image sizes is smaller than 40px
+	 * @return bool true if one of the image sizes is smaller than ICON_MAX_SIZE
 	*/
 	private static function isIconImage( $handlerParams ) {
 		$fixedWidth = isset($handlerParams['width']) ? $handlerParams['width'] < self::ICON_MAX_SIZE : false;
