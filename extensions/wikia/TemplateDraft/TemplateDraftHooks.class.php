@@ -53,7 +53,15 @@ class TemplateDraftHooks {
 		return true;
 	}
 
-
+	/**
+	 * Triggered if a user edits a Draft subpage of a template.
+	 * It adds an editintro message with help and links.
+	 *
+	 * @param String $msgName
+	 * @param Array $msgParams 
+	 * @param Title $title
+	 * @return bool
+	 */
 	public static function onEditPageLayoutShowIntro( &$msgName, &$msgParams, $title ) {
 		$helper = new TemplateDraftHelper();
 
