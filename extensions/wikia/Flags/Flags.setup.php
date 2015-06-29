@@ -78,7 +78,6 @@ $wgHooks['ArticlePreviewAfterParse'][] = 'Flags\Hooks::onArticlePreviewAfterPars
 $wgHooks['BeforePageDisplay'][] = 'Flags\Hooks::onBeforePageDisplay';
 $wgHooks['BeforeParserCacheSave'][] = 'Flags\Hooks::onBeforeParserCacheSave';
 $wgHooks['LinksUpdate'][] = 'Flags\Hooks::onLinksUpdate';
-$wgHooks['LinksUpdateInsertTemplates'][] = 'Flags\Hooks::onLinksUpdateInsertTemplates';
 $wgHooks['PageHeaderDropdownActions'][] = 'Flags\Hooks::onPageHeaderDropdownActions';
 $wgHooks['SkinTemplateNavigation'][] = 'Flags\Hooks::onSkinTemplateNavigation';
 
