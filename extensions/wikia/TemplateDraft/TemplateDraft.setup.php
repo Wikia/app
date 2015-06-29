@@ -32,7 +32,8 @@ $wgAutoloadClasses['TemplateDraftController'] = __DIR__ . '/controllers/Template
 $wgAutoloadClasses['TemplateDraftHooks'] = __DIR__ . '/TemplateDraftHooks.class.php';
 $wgHooks['GetRailModuleList'][] = 'TemplateDraftHooks::onGetRailModuleList';
 $wgHooks['EditFormPreloadText'][] = 'TemplateDraftHooks::onEditFormPreloadText';
-$wgHooks['EditPageLayoutShowIntro'][] = 'TemplateDraftHooks::onEditPageLayoutShowIntro';
+$wgHooks['EditPageLayoutShowIntro'][] = 'TemplateDraftHooks::onEditPageLayoutShowIntroOnDraft';
+$wgHooks['EditPageLayoutShowIntro'][] = 'TemplateDraftHooks::onEditPageLayoutShowIntroOnBase';
 
 /**
  * Helpers

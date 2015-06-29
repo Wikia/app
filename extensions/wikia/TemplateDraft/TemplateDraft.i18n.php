@@ -34,6 +34,7 @@ to see this:
 $2
 
 [{{fullurl:PAGENAME}}?action=purge Click here to refresh the preview above]',
+	'templatedraft-module-editintro-please-convert' => 'Test',
 ];
 
 /**

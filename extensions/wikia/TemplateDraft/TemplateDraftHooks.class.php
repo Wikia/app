@@ -62,7 +62,7 @@ class TemplateDraftHooks {
 	 * @param Title $title
 	 * @return bool
 	 */
-	public static function onEditPageLayoutShowIntro( &$msgName, &$msgParams, Title $title ) {
+	public static function onEditPageLayoutShowIntroOnDraft( &$msgName, &$msgParams, Title $title ) {
 		$helper = new TemplateDraftHelper();
 
 		if ( $helper->isTitleDraft( $title ) 
@@ -76,4 +76,30 @@ class TemplateDraftHooks {
 
 		return true;
 	}
+
+	/**
+	 * Triggered if a user edits subpage of a template.
+	 * It adds an message that you can convert template to draft
+	 *
+	 * @param String $msgName
+	 * @param Array $msgParams
+	 * @param Title $title
+	 * @return bool
+	 */
+	public static function onEditPageLayoutShowIntroOnBase( &$msgName, &$msgParams, Title $title ) {
+		$helper = new TemplateDraftHelper();
+
+		/*if ( $helper->isTitleDraft( $title )
+			&& class_exists( 'TemplateConverter' )
+			&& TemplateConverter::isConversion() ) {*/
+			$msgName = 'templatedraft-module-editintro-please-convert';
+		die("costam");
+
+			$base = Title::newFromText( $title->getBaseText(), NS_TEMPLATE );
+			$msgParams = [ $base->getFullUrl( ['action' => 'edit'] ) ];
+		//}
+
+		return true;
+	}
+
 }
