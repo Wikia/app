@@ -31,7 +31,7 @@ class LinkSuggestHooks {
 	static function onEditFormMultiEditForm($a, $b, $c, $d) {
 		global $wgOut, $wgUser;
 
-		if($wgUser->getOption('disablelinksuggest') != true) {
+		if($wgUser->getGlobalPreference('disablelinksuggest') != true) {
 			$wgOut->addModules( 'ext.wikia.LinkSuggest' );
 		}
 
