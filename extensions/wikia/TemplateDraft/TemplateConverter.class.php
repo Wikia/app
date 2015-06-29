@@ -116,16 +116,17 @@ class TemplateConverter {
 	 * @throws PermissionsException
 	 */
 	public function approveDraft( Title $title ) {
-		if ( $title->userCan( 'edit' ) ) {
+		// Get Title object of parent page
+		$parentTitleText = $title->getBaseText();
+		$parentTitle = Title::newFromText( $parentTitleText, $title->getNamespace() );
+		if ( $parentTitle->userCan( 'edit' ) ) {
 			// Get contents of draft page
 			$article = Article::newFromId( $title->getArticleID() );
 			$draftContent = $article->getContent();
-			// Get parent page
-			$parentTitleText = $title->getBaseText();
-			$parentTitle = Title::newFromText( $parentTitleText, $title->getNamespace() );
+			// Get WikiPage object of parent page
 			$page = WikiPage::newFromID( $parentTitle->getArticleID() );
 			// Save to parent page
-			$page->doEdit( $draftContent, wfMessage( 'templatedraft-approval-summary' )->plain() );
+			$page->doEdit( $draftContent, wfMessage( 'templatedraft-approval-summary' )->inContentLanguage()->plain() );
 		} else {
 			throw new PermissionsException( 'edit' );
 		}
