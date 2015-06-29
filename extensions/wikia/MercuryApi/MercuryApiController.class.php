@@ -303,7 +303,7 @@ class MercuryApiController extends WikiaController {
 		$this->response->setCacheValidity( self:: WIKI_VARIABLES_CACHE_TTL );
 	}
 
-	public function getRedirectTitle() {
+	private function getRedirectTitle() {
 		$title = $this->getTitleFromRequest();
 
 		if ( $title->isRedirect() ) {
