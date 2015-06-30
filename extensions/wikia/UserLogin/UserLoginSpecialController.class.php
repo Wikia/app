@@ -462,7 +462,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 
 					// set rememberpassword option
 					if ( (bool)$loginForm->mRemember != (bool)$this->wg->User->getGlobalPreference('rememberpassword') ) {
-						$this->wg->User->setOption( 'rememberpassword', $loginForm->mRemember ? 1 : 0 );
+						$this->wg->User->setGlobalPreference( 'rememberpassword', $loginForm->mRemember ? 1 : 0 );
 						$this->wg->User->saveSettings();
 					} else {
 						$this->wg->User->invalidateCache();
