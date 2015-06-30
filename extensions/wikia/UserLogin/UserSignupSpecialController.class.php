@@ -157,7 +157,7 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 				$user = User::newFromName( $this->username );
 				// Get and clear redirect page
 				$userSignupRedirect = $user->getGlobalAttribute( UserLoginSpecialController::SIGNUP_REDIRECT_OPTION_NAME );
-				$user->setOption( UserLoginSpecialController::SIGNUP_REDIRECT_OPTION_NAME, null );
+				$user->setGlobalAttribute( UserLoginSpecialController::SIGNUP_REDIRECT_OPTION_NAME, null );
 
 				$user->saveSettings();
 
