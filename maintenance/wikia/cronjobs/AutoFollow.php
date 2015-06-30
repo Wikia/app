@@ -97,7 +97,7 @@ while ( $row = $dbr->fetchRow( $res ) ) {
 	}
 
 	if ( $status ) {
-		$user->setOption( $alreadyWatchedKey, 1 );
+		$user->setGlobalFlag( $alreadyWatchedKey, 1 );
 		$user->saveSettings();
 	}
 }
