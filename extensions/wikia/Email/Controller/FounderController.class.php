@@ -386,7 +386,7 @@ class FounderNewMemberController extends FounderController {
 
 	/**
 	 * @template avatarLayout
-	*/
+	 */
 	public function body() {
 		$this->response->setData( [
 			'salutation' => $this->getSalutation(),
