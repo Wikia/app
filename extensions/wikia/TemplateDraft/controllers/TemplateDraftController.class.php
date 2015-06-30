@@ -47,7 +47,7 @@ class TemplateDraftController extends WikiaController {
 		$parentTitle = $helper->getParentTitle( $title );
 
 		// Check edit rights
-		if ( !$parentTitle->userCan( 'edit' ) ) {
+		if ( !$parentTitle->userCan( 'templatedraft' ) ) {
 			throw new PermissionsException( 'edit' );
 		}
 
@@ -64,7 +64,7 @@ class TemplateDraftController extends WikiaController {
 		/**
 		 * First, validate a request
 		 */
-		if ( !$this->wg->User->isPowerUser()
+		if ( !$this->wg->Title->userCan( 'templatedraft', $this->wg->User )
 			|| !$this->isValidPostRequest()
 		) {
 			$this->response->setVal( 'status', false );

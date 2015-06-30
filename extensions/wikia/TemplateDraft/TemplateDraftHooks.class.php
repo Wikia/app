@@ -3,7 +3,9 @@
 class TemplateDraftHooks {
 
 	public static function onSkinAfterBottomScripts( Skin $skin, &$text ) {
-		if ( $skin->getUser()->isPowerUser() && $skin->getTitle()->getNamespace() === NS_TEMPLATE ) {
+		if ( $skin->getTitle()->userCan( 'templatedraft', $skin->getUser() )
+			&& $skin->getTitle()->getNamespace() === NS_TEMPLATE
+		) {
 			$scripts = AssetsManager::getInstance()->getURL( 'template_draft' );
 
 			foreach ( $scripts as $script ) {
@@ -21,10 +23,10 @@ class TemplateDraftHooks {
 	 * @return bool
 	 */
 	public static function onGetRailModuleList( Array &$railModuleList ) {
-		global $wgTitle, $wgUser;
+		global $wgTitle;
 		$helper = new TemplateDraftHelper();
 
-		if ( $wgUser->isPowerUser()
+		if ( $wgTitle->userCan( 'templatedraft' )
 			&& $wgTitle->getNamespace() === NS_TEMPLATE
 			&& $wgTitle->exists()
 			&& !$helper->isTitleDraft( $wgTitle )
