@@ -34,17 +34,33 @@ class ApprovedraftAction extends FormlessAction {
 	public function onView() {
 		global $wgTitle;
 
-		$this->redirectParams = wfArrayToCGI( array_diff_key(
-			$this->getRequest()->getQueryValues(),
-			[ 'title' => null, 'action' => null ]
-		));
+		if ( !$wgTitle->exists() ) {
+			/**
+			 * Show a friendly error message to a user after redirect
+			 */
+			BannerNotificationsController::addConfirmation(
+				wfMessage( 'templatedraft-approval-no-page-error' )->escaped(),
+				BannerNotificationsController::CONFIRMATION_ERROR
+			);
 
-		$this->redirectTitle = $wgTitle->getBaseText();
-		$this->redirectTitle = Title::newFromText( $this->redirectTitle, $wgTitle->getNamespace() );
-		$templateDraftController = new TemplateDraftController();
-		$templateDraftController->approveDraft( $wgTitle );
+			$this->redirectParams = wfArrayToCGI( array_diff_key(
+				$this->getRequest()->getQueryValues(),
+				[ 'title' => null, 'action' => null ]
+			));
+			$this->getOutput()->redirect( $wgTitle->getFullUrl( $this->redirectParams ) );
+		} else {
+			$this->redirectParams = wfArrayToCGI( array_diff_key(
+				$this->getRequest()->getQueryValues(),
+				[ 'title' => null, 'action' => null ]
+			) );
 
-		$this->getOutput()->redirect( $this->redirectTitle->getFullUrl( $this->redirectParams) );
+			$this->redirectTitle = $wgTitle->getBaseText();
+			$this->redirectTitle = Title::newFromText( $this->redirectTitle, $wgTitle->getNamespace() );
+			$templateDraftController = new TemplateDraftController();
+			$templateDraftController->approveDraft( $wgTitle );
+
+			$this->getOutput()->redirect( $this->redirectTitle->getFullUrl( $this->redirectParams ) );
+		}
 	}
 
 }
