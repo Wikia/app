@@ -13,9 +13,6 @@ describe('Method ext.wikia.adEngine.provider.gpt.adDetect.onAdLoad', function ()
 				hop: noop,
 				iframe: {},
 				window: windowMock,
-				slotTweaker: {
-					hide: noop
-				},
 				adContext: {
 					getContext: function () {
 						return {
@@ -32,7 +29,7 @@ describe('Method ext.wikia.adEngine.provider.gpt.adDetect.onAdLoad', function ()
 				}
 			};
 
-			gptHop = modules['ext.wikia.adEngine.provider.gpt.adDetect'](mocks.log, mocks.window, mocks.adContext, {}, mocks.slotTweaker);
+			gptHop = modules['ext.wikia.adEngine.provider.gpt.adDetect'](mocks.log, mocks.window, mocks.adContext);
 
 			spyOn(mocks, 'success');
 			spyOn(mocks, 'hop');
