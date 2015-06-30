@@ -57,33 +57,33 @@ class TemplateDraftHooks {
 	 * Triggered if a user edits a Draft subpage of a template.
 	 * It adds an editintro message with help and links.
 	 *
-	 * @param String $msgName
-	 * @param Array $msgParams 
+	 * @param Array $preloads
 	 * @param Title $title
 	 * @return bool
 	 */
 	public static function onEditPageLayoutShowIntro( &$preloads, Title $title ) {
 		$helper = new TemplateDraftHelper();
 
-//		die( var_dump( $title->isSubpage() ) );
-		$preloads['EditPageIntro'] = [
-			'content' => "fgsdfgfdsgds",
-		 ];
-
 		if ( $helper->isTitleDraft( $title ) 
 			&& class_exists( 'TemplateConverter' )
 			&& TemplateConverter::isConversion() ) {
-			$msgName = 'templatedraft-editintro';
-
 			$base = Title::newFromText( $title->getBaseText(), NS_TEMPLATE );
+			$msgName = 'templatedraft-editintro';
 			$msgParams = [ $base->getFullUrl( ['action' => 'edit'] ) ];
+			$preloads['EditPageIntro'] = [
+				'content' => wfMessage($msgName)->params( $msgParams)->parse(),
+			];
 		} elseif ( !$helper->isTitleDraft( $title ) ) {
-			die( 'fsfs' );
+			$base = Title::newFromText( $title->getBaseText().'/Draft', NS_TEMPLATE );
 			$msgName = 'templatedraft-module-editintro-please-convert';
-		} else {
-			die( 'koniec' );
+			$msgParams = $base->getFullUrl( [
+				'action' => 'edit',
+				TemplateConverter::CONVERSION_MARKER => 1,
+			] );
+			$preloads['EditPageIntro'] = [
+				'content' => wfMessage($msgName)->params($msgParams)->parse(),
+			];
 		}
-
 		return true;
 	}
 

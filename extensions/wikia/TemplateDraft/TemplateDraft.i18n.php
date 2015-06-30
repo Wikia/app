@@ -34,7 +34,7 @@ to see this:
 $2
 
 [{{fullurl:PAGENAME}}?action=purge Click here to refresh the preview above]',
-	'templatedraft-module-editintro-please-convert' => 'Test',
+	'templatedraft-module-editintro-please-convert' => 'We can generate a draft version of your infobox with our new markup just click [$1 generate a draft.]',
 ];
 
 /**
