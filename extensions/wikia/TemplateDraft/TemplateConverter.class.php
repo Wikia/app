@@ -2,9 +2,11 @@
 
 class TemplateConverter {
 
+	const CONVERSION_MARKER = 'conversion';
+
 	const TEMPLATE_VARIABLE_REGEX = '/{{{([^|{}]+)(\|([^{}]*|.*{{.*}}.*))?}}}/';
 
-	var $title; // Title object of the template we're converting
+	private $title; // Title object of the template we're converting
 
 	/**
 	 * Names of variables that should be converted to a <title> tag
@@ -143,7 +145,7 @@ class TemplateConverter {
 	}
 
 	public function generatePreviewSection( $content ) {
-		$variables = $this->findTemplateVariables( $content );
+		$variables = $this->getTemplateVariables( $content );
 
 		$preview = "{{" . $this->title->getText() . "\n";
 		$docs = $preview;
@@ -162,4 +164,10 @@ class TemplateConverter {
 
 		return $return;
 	}
-} 
+
+	public static function isConversion() {
+		global $wgRequest;
+
+		return $wgRequest->getVal( self::CONVERSION_MARKER, false );
+	}
+}
