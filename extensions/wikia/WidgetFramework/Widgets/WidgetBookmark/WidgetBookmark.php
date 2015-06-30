@@ -100,7 +100,7 @@ function WidgetBookmarkSavePages($pages) {
 
 	global $wgUser;
 
-	$wgUser->setOption('widget_bookmark_pages', serialize($pages));
+	$wgUser->setGlobalPreference('widget_bookmark_pages', serialize($pages));
         $wgUser->saveSettings();
 
 	// commit UPDATE query
