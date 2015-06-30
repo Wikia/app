@@ -105,7 +105,7 @@ class UserLoginHooksHelper {
 		$oldEmail = $user->getEmail();
 		$optionNewEmail = $user->getGlobalAttribute( 'new_email' );
 		if ( ( empty( $optionNewEmail ) &&  $newEmail != $oldEmail ) || ( !empty( $optionNewEmail ) &&  $newEmail != $optionNewEmail ) ) {
-			$user->setOption( 'new_email', $newEmail );
+			$user->setGlobalAttribute( 'new_email', $newEmail );
 			$user->invalidateEmail();
 			if ( $app->wg->EmailAuthentication ) {
 				$userLoginHelper = new UserLoginHelper();
