@@ -46,7 +46,7 @@ class WikiaApiAjaxLogin extends ApiBase {
 					$injected_html = '';
 					wfRunHooks('UserLoginComplete', array(&$wgUser, &$injected_html));
 
-					$wgUser->setOption( 'rememberpassword', $Remember ? 1 : 0 );
+					$wgUser->setGlobalPreference( 'rememberpassword', $Remember ? 1 : 0 );
 					$wgUser->setCookies();
 
 					$result['result'] = 'Success';
