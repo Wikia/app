@@ -75,6 +75,7 @@ class User {
 	const USER_TOKEN_LENGTH = USER_TOKEN_LENGTH;
 	const MW_USER_VERSION = MW_USER_VERSION;
 	const EDIT_TOKEN_SUFFIX = EDIT_TOKEN_SUFFIX;
+	const CACHE_PREFERENCES_KEY = "preferences";
 
 	/**
 	 * Array of Strings List of member variables which are saved to the
@@ -353,6 +354,10 @@ class User {
 					$this->$name = $data[$name];
 				}
 			}
+
+			if (isset($data[self::CACHE_PREFERENCES_KEY])) {
+				 $this->preferences->setPreferences($this->mId, $data['preferences']);
+			}
 		}
 		return true;
 	}
@@ -382,6 +387,7 @@ class User {
 			$data[$name] = $this->$name;
 		}
 		$data['mVersion'] = MW_USER_VERSION;
+		$data[self::CACHE_PREFERENCES_KEY] = $this->preferences->getPreferences($this->mId);
 		$key = wfMemcKey( 'user', 'id', $this->mId );
 		global $wgMemc;
 		$wgMemc->set( $key, $data );

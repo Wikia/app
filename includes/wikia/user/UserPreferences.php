@@ -43,7 +43,7 @@ class UserPreferences {
 	}
 
 	public function getPreferences($userId) {
-		return isset($this->preferences[$userId]) ?: [];
+		return $this->load($userId);
 	}
 
 	public function setPreferences($userId, $preferences) {
