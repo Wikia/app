@@ -730,7 +730,7 @@ class LanguageConverter {
 				 || $action == 'edit'
 				 || $action == 'submit'
 				 || $linkconvert == 'no'
-				 || $wgUser->getOption( 'noconvertlink' ) == 1 ) ) ) {
+				 || $wgUser->getGlobalPreference( 'noconvertlink' ) == 1 ) ) ) {
 			return;
 		}
 
