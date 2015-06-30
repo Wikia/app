@@ -213,11 +213,7 @@ class ParserCache {
 	 * @param $article Page
 	 * @param $popts ParserOptions
 	 */
-	public function save( ParserOutput $parserOutput, Page $article, ParserOptions $popts, $runHook = true ) {
-
-		if ( $runHook ) {
-			wfRunHooks( 'BeforeParserCacheSave', [ $parserOutput, $article ] );
-		}
+	public function save( ParserOutput $parserOutput, Page $article, ParserOptions $popts ) {
 
 		wfRunHooks( 'BeforeParserCacheSave', [ $parserOutput, $article ] );
 
