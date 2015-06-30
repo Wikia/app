@@ -151,8 +151,8 @@ class TemplateConverter {
 		$docs = $preview;
 
 		foreach ( $variables as $var ) {
-			$preview .= "|{$var}=This is a test\n";
-			$docs .= "|{$var}=\n";
+			$preview .= "|{$var['name']}=This is a test\n";
+			$docs .= "|{$var['name']}=\n";
 		}
 
 		$preview .= "}}\n";

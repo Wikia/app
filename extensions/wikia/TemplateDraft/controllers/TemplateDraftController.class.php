@@ -47,7 +47,7 @@ class TemplateDraftController extends WikiaController {
 		$parentTitle = $helper->getParentTitle( $title );
 
 		// Check edit rights
-		if ( !$parentTitle->userCan( 'edit' ) ) {
+		if ( !$parentTitle->userCan( 'templatedraft' ) ) {
 			throw new PermissionsException( 'edit' );
 		}
 
@@ -58,5 +58,44 @@ class TemplateDraftController extends WikiaController {
 		$page = WikiPage::newFromID( $parentTitle->getArticleID() );
 		// Save to parent page
 		$page->doEdit( $draftContent, wfMessage( 'templatedraft-approval-summary' )->inContentLanguage()->plain() );
+	}
+
+	public function markTemplateAsNotInfobox() {
+		/**
+		 * First, validate a request
+		 */
+		if ( !$this->wg->Title->userCan( 'templatedraft', $this->wg->User )
+			|| !$this->isValidPostRequest()
+		) {
+			$this->response->setVal( 'status', false );
+			return false;
+		}
+
+		/**
+		 * Then check the pageId param
+		 */
+		$pageId = $this->getRequest()->getInt( 'pageId' );
+		if ( $pageId === 0 ) {
+			$this->response->setVal( 'status', false );
+			return false;
+		}
+
+		/**
+		 * Wikia::setProps unfortunately fails silently so if we get to this point
+		 * we can set the response's status to true anyway...
+		 */
+		$this->response->setVal( 'status', true );
+
+		Wikia::setProps( $pageId, [
+			self::TEMPLATE_INFOBOX_PROP => 0,
+		] );
+
+		return true;
+	}
+
+	private function isValidPostRequest() {
+		$editToken = $this->getRequest()->getParams()['editToken'];
+		return $this->getRequest()->wasPosted()
+			&& $this->wg->User->matchEditToken( $editToken );
 	}
 }
