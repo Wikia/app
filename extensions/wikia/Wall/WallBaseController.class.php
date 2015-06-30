@@ -456,7 +456,7 @@ class WallBaseController extends WikiaController {
 			$selectedDB = $this->app->wg->User->getGlobalPreference( 'wall_sort_' . $this->sortingType );
 
 			if ( $selectedDB != $selected ) {
-				$this->app->wg->User->setOption( 'wall_sort_' . $this->sortingType, $selected );
+				$this->app->wg->User->setGlobalPreference( 'wall_sort_' . $this->sortingType, $selected );
 				$this->app->wg->User->saveSettings();
 			}
 		}
