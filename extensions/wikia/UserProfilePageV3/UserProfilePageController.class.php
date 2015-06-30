@@ -498,19 +498,19 @@ class UserProfilePageController extends WikiaController {
 				case 'sample':
 					// remove old avatar file
 					Masthead::newFromUser( $user )->removeFile( false );
-					$user->setOption( 'avatar', $data->file );
+					$user->setGlobalAttribute( 'avatar', $data->file );
 					break;
 				case 'uploaded':
 					$errorMsg = wfMessage( 'userprofilepage-interview-save-internal-error' )->escaped();
 					$avatar = $this->saveAvatarFromUrl( $user, $data->file, $errorMsg );
-					$user->setOption( 'avatar', $avatar );
+					$user->setGlobalAttribute( 'avatar', $avatar );
 					break;
 				default:
 					break;
 			}
 
 			// TODO: $user->getTouched() get be used to invalidate avatar URLs instead
-			$user->setOption( 'avatar_rev', date( 'U' ) );
+			$user->setGlobalAttribute( 'avatar_rev', date( 'U' ) );
 			$user->saveSettings();
 		}
 
