@@ -175,6 +175,7 @@ class EditPageLayoutHelper {
 
 		return $articleTitle->isCssOrJsPage()
 				|| $articleTitle->isCssJsSubpage()
+				|| $namespace === NS_TEMPLATE
 				// Lua module
 				|| $namespace === NS_MODULE;
 	}
@@ -240,6 +241,8 @@ class EditPageLayoutHelper {
 
 		if ( $namespace === NS_MODULE ) {
 			$type = 'lua';
+		} elseif ( $namespace === NS_TEMPLATE ) {
+			$type = 'xml';
 		} elseif ( $title->isCssPage() || $title->isCssSubpage() ) {
 			$type = 'css';
 		} elseif ( $title->isJsPage() || $title->isJsSubpage() ) {
