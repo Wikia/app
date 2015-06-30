@@ -2,9 +2,9 @@
 
 namespace Wikia\Persistence\User;
 
-use ResultWrapper;
-use Wikia\Service\User\PreferencePersistence;
+use Iterator;
 use Wikia\Domain\User\Preference;
+use Wikia\Service\User\PreferencePersistence;
 
 class PreferencePersistenceMySQL implements PreferencePersistence {
 	const USER_PREFERENCE_TABLE = 'user_properties';
@@ -59,10 +59,10 @@ class PreferencePersistenceMySQL implements PreferencePersistence {
 	/**
 	 * Convert a user_properties row into a Preference object.
 	 *
-	 * @param ResultWrapper $result
+	 * @param Iterator|array $result
 	 * @return Preference[]
 	 */
-	public function userPropertiesResultToPreferenceArray( ResultWrapper $result ) {
+	public function userPropertiesResultToPreferenceArray( $result ) {
 		$preferences = [];
 		foreach ( $result as $index => $row ) {
 			if ( isset( $row->up_property ) && isset( $row->up_value ) ) {
