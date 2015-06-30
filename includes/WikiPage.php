@@ -840,10 +840,10 @@ class WikiPage extends Page {
 	 *               get the current revision (default value)
 	 * @return ParserOutput or false if the revision was not found
 	 */
-	public function getParserOutput( ParserOptions $parserOptions, $oldid = null ) {
+	public function getParserOutput( ParserOptions $parserOptions, $oldid = null, $fromCache = true ) {
 		wfProfileIn( __METHOD__ );
 
-		$useParserCache = $this->isParserCacheUsed( $parserOptions, $oldid );
+		$useParserCache = $this->isParserCacheUsed( $parserOptions, $oldid ) && $fromCache;
 		wfDebug( __METHOD__ . ': using parser cache: ' . ( $useParserCache ? 'yes' : 'no' ) . "\n" );
 		if ( $parserOptions->getStubThreshold() ) {
 			wfIncrStats( 'pcache_miss_stub' );
@@ -3019,6 +3019,7 @@ class PoolWorkArticleView extends PoolCounterWork {
 		}
 
 		if ( $this->cacheable && $this->parserOutput->isCacheable() ) {
+			wfRunHooks( 'BeforeParserCacheSave', [ $this->parserOutput, $this->page ] );
 			ParserCache::singleton()->save( $this->parserOutput, $this->page, $this->parserOptions );
 		}
 
