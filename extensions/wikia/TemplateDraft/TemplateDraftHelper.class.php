@@ -13,7 +13,7 @@ class TemplateDraftHelper {
 		$parentTitle = $helper->getParentTitle( $draftTitle );
 
 		// Check edit rights
-		if ( !$parentTitle->userCan( 'edit' ) ) {
+		if ( !$parentTitle->userCan( 'templatedraft' ) ) {
 			throw new PermissionsException( 'edit' );
 		}
 

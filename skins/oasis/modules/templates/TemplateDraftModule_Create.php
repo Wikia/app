@@ -8,6 +8,8 @@
 		</button>
 	</a>
 	<p class="templatedraft-module-closelink">
-		<a href="#"><?= wfMessage( 'templatedraft-module-closelink-create' )->escaped() ?></a>
+		<a class="templatedraft-module-closelink-link">
+			<?= wfMessage( 'templatedraft-module-closelink-create' )->escaped() ?>
+		</a>
 	</p>
 </section>
