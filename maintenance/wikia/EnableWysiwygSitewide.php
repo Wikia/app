@@ -98,7 +98,7 @@ if(trim(readline("Please enter 'blabla' to continue and enable Wysiwyg for those
 	foreach($usersNew as $user) {
 		fwrite($fp, $user."\n");
 		$oUser = User::newFromId($user);
-		$oUser->setOption("EnableWysiwyg", true);
+		$oUser->setGlobalPreference("EnableWysiwyg", true);
 		$oUser->saveSettings();
 		$oUser->invalidateCache();
 	}
