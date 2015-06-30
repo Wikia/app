@@ -44,3 +44,9 @@ $wgAutoloadClasses['TemplateConverter'] = __DIR__ . '/TemplateConverter.class.ph
  * Right rail module
  */
 $wgAutoloadClasses['TemplateDraftModuleController'] = $IP . '/skins/oasis/modules/TemplateDraftModuleController.class.php';
+
+/**
+ * Add approvedraft action (?action=apprevedraft)
+ */
+$wgAutoloadLocalClasses['ApprovedraftAction'] = 'extensions/wikia/TemplateDraft/ApprovedraftAction.php';
+$wgActions['approvedraft'] = true;

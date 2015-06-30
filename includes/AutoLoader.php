@@ -258,7 +258,6 @@ $wgAutoloadLocalClasses = array(
 	'ZipDirectoryReader' => 'includes/ZipDirectoryReader.php',
 
 	# includes/actions
-	'ApprovedraftAction' => 'extensions/wikia/TemplateDraft/ApprovedraftAction.php',
 	'CreditsAction' => 'includes/actions/CreditsAction.php',
 	'DeleteAction' => 'includes/actions/DeleteAction.php',
 	'EditAction' => 'includes/actions/EditAction.php',

@@ -5335,7 +5335,6 @@ $wgMaxRedirectLinksRetrieved = 500;
  * Unsetting core actions will probably cause things to complain loudly.
  */
 $wgActions = array(
-	'approvedraft'   => true,
 	'credits'        => true,
 	'delete'         => true,
 	'edit'           => true,
