@@ -2,7 +2,7 @@
 
 class ResourceLoaderAdEngineSourcePointModule extends ResourceLoaderModule {
 	const TTL_SCRIPTS = 86400;   // one day - cache scripts from ad.71i.de for this time
-	const CACHE_BUSTER = 1;      // increase this any time the local files change
+	const CACHE_BUSTER = 3;      // increase this any time the local files change
 
 	private function generateData() {
 		$recovery = file_get_contents(__DIR__ . '/SourcePoint/recovery.js');

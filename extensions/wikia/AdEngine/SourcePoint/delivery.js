@@ -105,7 +105,7 @@
 		}],
 		2: [function(e, t) {
 			t.exports = {
-				rewriter: "datumreact.com",
+				rewriter: "budgetedbauer.com",
 				k: 8
 			}
 		}, {}],
