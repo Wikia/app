@@ -2471,7 +2471,7 @@ class User {
 			$cityId = $wgCityId;
 		}
 
-		return sprintf("%s%c%s", $option, $sep, $cityId);
+		return sprintf("%s%s%s", $option, $sep, $cityId);
 	}
 
 	/**
