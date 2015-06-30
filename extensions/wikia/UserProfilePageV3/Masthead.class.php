@@ -524,7 +524,7 @@ class Masthead {
 		if ( $result === false ) {
 			Wikia::log( __METHOD__, false, 'cannot remove avatar - ' . $this->getLocalPath() );
 		} else {
-			$this->mUser->setOption( AVATAR_USER_OPTION_NAME, "" );
+			$this->mUser->setGlobalAttribute( AVATAR_USER_OPTION_NAME, "" );
 			$this->mUser->saveSettings();
 
 			/* add log */
