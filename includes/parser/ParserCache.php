@@ -219,6 +219,8 @@ class ParserCache {
 			wfRunHooks( 'BeforeParserCacheSave', [ $parserOutput, $article ] );
 		}
 
+		wfRunHooks( 'BeforeParserCacheSave', [ $parserOutput, $article ] );
+
 		$expire = $parserOutput->getCacheExpiry();
 
 		if( $expire > 0 ) {
