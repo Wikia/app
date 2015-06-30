@@ -406,6 +406,7 @@ class WallNotifications {
 			$watcherName = $watcher->getName();
 			$controller = $this->getEmailExtensionController( $notification, $watcherName );
 
+
 			$params = [
 				'boardNamespace' => $notifData->article_title_ns,
 				'boardTitle' => $notifData->article_title_text,
@@ -414,7 +415,7 @@ class WallNotifications {
 				'details' => $text,
 				'targetUser' => $watcherName,
 				'wallUserName' => $notifData->wall_username,
-				'threadId' => $notifData->parent_id
+				'threadId' => $notifData->title_id
 			];
 
 			F::app()->sendRequest( $controller, 'handle', $params );
