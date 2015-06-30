@@ -411,13 +411,14 @@ class CuratedContentController extends WikiaController {
 					// Purge section URLs using JavaScript encodeURIComponent() compatible standard,
 					// which works almost like rawurlencode(), but does not encode following characters: !'()*
 					// Mercury web app uses this variant - request from Hapi.js to MediaWiki.
-					$urls[ ] = self::getUrl( 'getList' ) . '&section=' . self::encodeURIQueryParam( $item[ 'title' ] );
+					$javaScriptEncodedTitle = self::encodeURIQueryParam( $item[ 'title' ] );
+					$urls[ ] = self::getUrl( 'getList' ) . '&section=' . $javaScriptEncodedTitle;
 					// Mercury web app uses this variant - request from Ember.js to Hapi.js.
 					$urls[ ] =
 						$wgServer .
 						MercuryApiHooks::SERVICE_API_BASE .
 						MercuryApiHooks::SERVICE_API_CURATED_CONTENT .
-						self::encodeURIQueryParam( $item[ 'title' ] );
+						$javaScriptEncodedTitle;
 				}
 				return $urls;
 			},
