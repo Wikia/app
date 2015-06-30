@@ -83,15 +83,13 @@ class FlagsController extends WikiaController {
 	}
 
 	/**
-	 * Sends a request for all instances of flags for the given page.
-	 * A result of the request is transformed into a set of wikitext templates calls
+	 * Transform all flags for the given page from POST data into a set of wikitext templates calls
 	 * that are supposed to be injected into Parser before expanding templates.
 	 * @param $pageId
 	 * @return ParserOutput|null
 	 */
 	public function getFlagsForParserOutput( $currentFlags, $pageId ) {
-		$flagsOnPage = $templatesCalls = [];
-		$flagView = new FlagView();
+		$flagsOnPage = [];
 
 		foreach( $this->params['editFlags'] as $flagTypeId => $flag ) {
 			if ( isset( $flag[FlagsHelper::FLAGS_INPUT_NAME_CHECKBOX] ) ) {
@@ -100,16 +98,12 @@ class FlagsController extends WikiaController {
 					$this->params['editFlags']
 				);
 
-				$templatesCalls[] = $flagView->wrapSingleFlag(
-					$flagTypeId,
-					$currentFlags[$flagTypeId]['flag_targeting'],
-					$currentFlags[$flagTypeId]['flag_view'],
-					$flagsOnPage[$flagTypeId]['params']
-				);
+				$flagsOnPage[$flagTypeId]['flag_targeting'] = $currentFlags[$flagTypeId]['flag_targeting'];
+				$flagsOnPage[$flagTypeId]['flag_view'] = $currentFlags[$flagTypeId]['flag_view'];
 			}
 		}
 
-		return $flagView->renderFlags( $templatesCalls, $pageId );
+		return $this->getParsedFlags( $flagsOnPage, $pageId );
 	}
 
 	/**
@@ -124,21 +118,9 @@ class FlagsController extends WikiaController {
 			$response = $this->requestGetFlagsForPage( $pageId );
 
 			if ( $this->getResponseStatus( $response ) ) {
-				$templatesCalls = [];
 				$flags = $this->getResponseData( $response );
 
-				$flagView = new FlagView();
-
-				foreach ( $flags as $flagId => $flag ) {
-					$templatesCalls[] = $flagView->wrapSingleFlag(
-						$flag['flag_type_id'],
-						$flag['flag_targeting'],
-						$flag['flag_view'],
-						$flag['params']
-					);
-				}
-
-				return $flagView->renderFlags( $templatesCalls, $pageId );
+				return $this->getParsedFlags( $flags, $pageId );
 			} else {
 				return null;
 			}
@@ -146,6 +128,30 @@ class FlagsController extends WikiaController {
 		} catch ( Exception $exception ) {
 			$this->logResponseException( $exception, $response->getRequest() );
 		}
+	}
+
+	/**
+	 * Wrap and parse flags
+	 *
+	 * @param Array $flags
+	 * @param int $pageId
+	 * @return ParserOutput
+	 */
+	private function getParsedFlags( $flags, $pageId ) {
+		$templatesCalls = [];
+
+		$flagView = new FlagView();
+
+		foreach ( $flags as $flag ) {
+			$templatesCalls[] = $flagView->wrapSingleFlag(
+				$flag['flag_type_id'],
+				$flag['flag_targeting'],
+				$flag['flag_view'],
+				$flag['params']
+			);
+		}
+
+		return $flagView->renderFlags( $templatesCalls, $pageId );
 	}
 
 	/**
