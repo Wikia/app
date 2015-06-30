@@ -28,6 +28,8 @@ class FlagsController extends WikiaController {
 		self::FLAGS_CONTROLLER_ACTION_UPDATE => 'requestUpdateFlagsForPage',
 	];
 
+	public static $parsed = false;
+
 	private
 		$helper,
 		$params;
@@ -253,7 +255,9 @@ class FlagsController extends WikiaController {
 
 				$parserOutput = $this->modifyParserOutputWithFlags( $parserOutput, $pageId, $currentFlags );
 
-				ParserCache::singleton()->save($parserOutput, $wikiPage, $parserOptions, false);
+				self::$parsed = true;
+
+				ParserCache::singleton()->save($parserOutput, $wikiPage, $parserOptions);
 
 				( new LinksUpdate(
 					$wikiPage->getTitle(), $parserOutput )
