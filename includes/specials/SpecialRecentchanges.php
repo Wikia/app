@@ -85,7 +85,7 @@ class SpecialRecentChanges extends IncludableSpecialPage {
 
 		$opts->fetchValuesFromRequest( $this->getRequest() );
 
-		$user->setOption( 'usenewrc', !$opts['hideenhanced'] );
+		$user->setGlobalPreference( 'usenewrc', !$opts['hideenhanced'] );
 		if( $user->isLoggedIn() ) {
 			if( $user->getGlobalPreference( 'usenewrc' ) != !$opts['hideenhanced'] ) {
 				$user->saveSettings();
