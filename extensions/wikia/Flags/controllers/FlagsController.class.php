@@ -28,6 +28,11 @@ class FlagsController extends WikiaController {
 		self::FLAGS_CONTROLLER_ACTION_UPDATE => 'requestUpdateFlagsForPage',
 	];
 
+	/**
+	 * Prevent modifying ParserOutput twice in the same request
+	 *
+	 * @see \Flags\Hooks::onBeforeParserCacheSave
+	 */
 	public static $parsed = false;
 
 	private
