@@ -20,6 +20,8 @@
  * @file
  */
 
+use Wikia\DependencyInjection\Injector;
+
 /**
  * Int Number of characters in user_token field.
  * @ingroup Constants
@@ -228,6 +230,9 @@ class User {
 	 */
 	private $mBlockedFromCreateAccount = false;
 
+	/** @var UserPreferences */
+	private $preferences;
+
 	static $idCacheByName = array();
 
 	/**
@@ -242,6 +247,7 @@ class User {
 	 */
 	function __construct() {
 		$this->clearInstanceCache( 'defaults' );
+		$this->preferences = Injector::getInjector()->get(UserPreferences::class);
 	}
 
 	/**
@@ -2430,6 +2436,8 @@ class User {
 		if (!isset($cityId)) {
 			$cityId = $wgCityId;
 		}
+
+		return $this->getGlobalPreference(UserPreferences::localToGlobalPreferenceName($pref, $cityId, $sep));
 	}
 
 	/**
@@ -2440,7 +2448,8 @@ class User {
 	 * @return string
 	 */
 	public function getGlobalPreference($preference, $default = null) {
-		return $this->getOption($preference, $default);
+		$this->load();
+		return $this->preferences->get($this->mId, $preference, $default);
 	}
 
 
@@ -2451,27 +2460,8 @@ class User {
 	 * @param string $value
 	 */
 	public function setGlobalPreference($preference, $value) {
-		return $this->setOption($preference, $value);
-	}
-
-	/**
-	 * Create a local option name. All localized (wikia specific) options,
-	 * preferences, attributes or flags should be of the form "{option}-{cityId}"
-	 *
-	 * IF YOU USE $sep, MAKE A PLAN TO NORMALIZE IT TO "-"!
-	 *
-	 * @param string $option
-	 * @param int $cityId [optional]
-	 * @param char $sep the separator between the option and the id.
-	 * @return string
-	 */
-	public static function createLocalOptionName($option, $cityId = null, $sep = '-') {
-		global $wgCityId;
-		if (!isset($cityId)) {
-			$cityId = $wgCityId;
-		}
-
-		return sprintf("%s%c%s", $option, $sep, $cityId);
+		$this->load();
+		$this->preferences->set($this->mId, $preference, $value);
 	}
 
 	/**
@@ -2483,11 +2473,11 @@ class User {
 	 * @param string $preferenc
 	 * @param string $value
 	 * @param int $cityId [optional, defaults to $wgCityId]
-	 * @param char $sep [optional, defaults to '-']
+	 * @param string $sep [optional, defaults to '-']
 	 *
 	 */
 	public function setLocalPreference($preference, $value, $cityId = null, $sep = '-') {
-		return $this->setOption(self::createLocalOptionName($preference, $cityId, $sep), $value);
+		$this->setGlobalPreference(UserPreferences::localToGlobalPreferenceName($preference, $cityId, $sep), $value);
 	}
 
 	/**
