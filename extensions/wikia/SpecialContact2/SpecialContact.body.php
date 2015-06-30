@@ -115,7 +115,7 @@ class ContactForm extends SpecialPage {
 
 				if ( !empty( $this->customForms[$par]['markuser'] ) ) {
 					// notify relevant extension that a request has been made
-					$user->setOption( $this->customForms[$par]['markuser'], 1 );
+					$user->setGlobalFlag( $this->customForms[$par]['markuser'], 1 );
 					$user->saveSettings();
 				}
 
