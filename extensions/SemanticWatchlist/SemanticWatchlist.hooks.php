@@ -302,7 +302,7 @@ final class SWLHooks {
 			global $wgUser;
 			
 			// Find the watchlist item and replace it by itself and the semantic watchlist.
-			if ( $wgUser->isLoggedIn() && $wgUser->getOption( 'swl_watchlisttoplink' ) ) {
+			if ( $wgUser->isLoggedIn() && $wgUser->getGlobalAttribute( 'swl_watchlisttoplink' ) ) {
 				$keys = array_keys( $personal_urls );
 				$watchListLocation = array_search( 'watchlist', $keys );
 				$watchListItem = $personal_urls[$keys[$watchListLocation]];
