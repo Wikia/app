@@ -23,7 +23,6 @@ class WelcomeController extends EmailController {
 		$this->response->setData( [
 			'salutation' => $this->getSalutation(),
 			'summary' => $this->getSummary(),
-			'editorProfilePage' => $this->getCurrentProfilePage(),
 			'details' => $this->getDetailsList(),
 			'contentFooterMessages' => [
 				$this->getMessage( 'emailext-welcome-footer-community' )->parse(),
@@ -45,24 +44,25 @@ class WelcomeController extends EmailController {
 		}
 		return [
 			[
-				'iconSrc' => ImageHelper::getFileInfo( 'Create-profile.png' )['url'],
-				'detailsHeader' => $this->getMessage( 'emailext-welcome-profile-header',
-					$this->getCurrentProfilePage() )->parse(),
+				'iconSrc' => ImageHelper::getFileUrl( 'Create-profile.png' ),
+				'iconLink' => $this->getCurrentProfilePage(),
+				'detailsHeader' => $this->getMessage( 'emailext-welcome-profile-header' )->text(),
 				'details' => $this->getMessage( 'emailext-welcome-profile-description' )->text()
 			],
 			[
-				'iconSrc' => ImageHelper::getFileInfo( 'Learn-basics.png' )['url'],
-				'detailsHeader' => $this->getMessage( 'emailext-welcome-basics-header',
-					$basicsUrl )->parse(),
-				'details' => $this->getMessage( 'emailext-welcome-basics-description' )->parse()
+				'iconSrc' => ImageHelper::getFileUrl( 'Learn-basics.png' ),
+				'iconLink' => $basicsUrl,
+				'detailsHeader' => $this->getMessage( 'emailext-welcome-basics-header' )->text(),
+				'details' => $this->getMessage( 'emailext-welcome-basics-description', $basicsUrl )->parse()
 			],
 			[
-				'iconSrc' => ImageHelper::getFileInfo( 'Favorite-fandom.png' )['url'],
-				'detailsHeader' => $this->getMessage( 'emailext-welcome-fandom-header' )->parse(),
+				'iconSrc' => ImageHelper::getFileUrl( 'Favorite-fandom.png' ),
+				'iconLink' => 'http://www.wikia.com',
+				'detailsHeader' => $this->getMessage( 'emailext-welcome-fandom-header' )->text(),
 				'details' => $this->getMessage( 'emailext-welcome-fandom-description' )->text()
 			],
 			[
-				'iconSrc' => ImageHelper::getFileInfo( 'Take-everywhere.png' )['url'],
+				'iconSrc' => ImageHelper::getFileUrl( 'Take-everywhere.png' ),
 				'detailsHeader' => $this->getMessage( 'emailext-welcome-mobile-header' )->text(),
 				'details' => $this->getMessage( 'emailext-welcome-mobile-description',
 					self::MOBILE_URL_IOS, self::MOBILE_URL_ANDROID )->parse()
