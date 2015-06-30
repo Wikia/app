@@ -13,7 +13,7 @@ class MyToolsController extends WikiaController {
 		global $wgUser;
 
 		if(isset($params['tools'])) {
-			$wgUser->setOption('myTools', json_encode($params['tools']));
+			$wgUser->setGlobalPreference('myTools', json_encode($params['tools']));
 			$wgUser->saveSettings();
 		}
 
