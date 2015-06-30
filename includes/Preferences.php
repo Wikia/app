@@ -1447,7 +1447,7 @@ class Preferences {
 		foreach( $wgHiddenPrefs as $pref ){
 			# If the user has not set a non-default value here, the default will be returned
 			# and subsequently discarded
-			$formData[$pref] = $user->getGlobalPreference( $pref, null, true ); // TODO: resolve hidden prefs 3rd parameter
+			$formData[$pref] = $user->getGlobalPreference( $pref, null ); // TODO: resolve hidden prefs 3rd parameter (set to true here)
 		}
 
 		//  Keeps old preferences from interfering due to back-compat
