@@ -32,9 +32,14 @@ class ApprovedraftAction extends FormlessAction {
 	}
 
 	public function onView() {
-		global $wgTitle;
+		$title = $this->getTitle();
 
-		if ( !$wgTitle->exists() ) {
+		$this->redirectParams = wfArrayToCGI( array_diff_key(
+			$this->getRequest()->getQueryValues(),
+			[ 'title' => null, 'action' => null ]
+		));
+
+		if ( !$title->exists() ) {
 			/**
 			 * Show a friendly error message to a user after redirect
 			 */
@@ -43,21 +48,12 @@ class ApprovedraftAction extends FormlessAction {
 				BannerNotificationsController::CONFIRMATION_ERROR
 			);
 
-			$this->redirectParams = wfArrayToCGI( array_diff_key(
-				$this->getRequest()->getQueryValues(),
-				[ 'title' => null, 'action' => null ]
-			));
-			$this->getOutput()->redirect( $wgTitle->getFullUrl( $this->redirectParams ) );
+			$this->getOutput()->redirect( $title->getFullUrl( $this->redirectParams ) );
 		} else {
-			$this->redirectParams = wfArrayToCGI( array_diff_key(
-				$this->getRequest()->getQueryValues(),
-				[ 'title' => null, 'action' => null ]
-			) );
-
-			$this->redirectTitle = $wgTitle->getBaseText();
-			$this->redirectTitle = Title::newFromText( $this->redirectTitle, $wgTitle->getNamespace() );
+			$this->redirectTitle = $title->getBaseText();
+			$this->redirectTitle = Title::newFromText( $this->redirectTitle, $title->getNamespace() );
 			$templateDraftHelper = new TemplateDraftHelper();
-			$templateDraftHelper->approveDraft( $wgTitle );
+			$templateDraftHelper->approveDraft( $title );
 
 			$this->getOutput()->redirect( $this->redirectTitle->getFullUrl( $this->redirectParams ) );
 		}
