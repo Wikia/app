@@ -111,7 +111,7 @@ class UserLoginFacebookForm extends UserLoginForm {
 		$fbUserInfo = FacebookClient::getInstance()->getUserInfo();
 		$gender = $fbUserInfo->getProperty( 'gender' );
 		if ( !is_null( $gender ) ) {
-			$user->setOption( 'gender', $gender );
+			$user->setGlobalAttribute( 'gender', $gender );
 			$user->saveSettings();
 		}
 	}
