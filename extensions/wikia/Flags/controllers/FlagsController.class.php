@@ -124,7 +124,6 @@ class FlagsController extends WikiaController {
 			} else {
 				return null;
 			}
-
 		} catch ( Exception $exception ) {
 			$this->logResponseException( $exception, $response->getRequest() );
 		}
@@ -254,7 +253,7 @@ class FlagsController extends WikiaController {
 
 				$parserOutput = $this->modifyParserOutputWithFlags( $parserOutput, $pageId, $currentFlags );
 
-				ParserCache::singleton()->save($parserOutput, $wikiPage, $parserOptions);
+				ParserCache::singleton()->save($parserOutput, $wikiPage, $parserOptions, false);
 
 				( new LinksUpdate(
 					$wikiPage->getTitle(), $parserOutput )
