@@ -2,6 +2,20 @@
 
 class TemplateDraftHooks {
 
+	public static function onSkinAfterBottomScripts( Skin $skin, &$text ) {
+		if ( $skin->getTitle()->userCan( 'templatedraft', $skin->getUser() )
+			&& $skin->getTitle()->getNamespace() === NS_TEMPLATE
+		) {
+			$scripts = AssetsManager::getInstance()->getURL( 'template_draft' );
+
+			foreach ( $scripts as $script ) {
+				$text .= Html::linkedScript( $script );
+			}
+		}
+
+		return true;
+	}
+
 	/**
 	 * Attaches a new module to right rail which is an entry point to convert a given template.
 	 *
@@ -10,10 +24,13 @@ class TemplateDraftHooks {
 	 */
 	public static function onGetRailModuleList( Array &$railModuleList ) {
 		global $wgTitle;
+		$helper = new TemplateDraftHelper();
 
-		if ( $wgTitle->getNamespace() === NS_TEMPLATE
+		if ( $wgTitle->userCan( 'templatedraft' )
+			&& $wgTitle->getNamespace() === NS_TEMPLATE
 			&& $wgTitle->exists()
-			&& Wikia::getProps( $wgTitle->getArticleID(), TemplateDraftController::TEMPLATE_INFOBOX_PROP ) !== 0
+			&& !$helper->isTitleDraft( $wgTitle )
+			&& Wikia::getProps( $wgTitle->getArticleID(), TemplateDraftController::TEMPLATE_INFOBOX_PROP ) !== '0'
 		) {
 			$helper = new TemplateDraftHelper();
 			if ( $helper->isTitleDraft( $wgTitle ) ) {
@@ -38,7 +55,9 @@ class TemplateDraftHooks {
 	 */
 	public static function onEditFormPreloadText( &$text, Title $title ) {
 		$helper = new TemplateDraftHelper();
-		if ( $helper->isTitleDraft( $title ) ) {
+		if ( $helper->isTitleNewDraft( $title )
+			&& TemplateConverter::isConversion()
+		) {
 			$parentTitleId = $helper->getParentTitle( $title )->getArticleID();
 
 			if ( $parentTitleId > 0 ) {
@@ -51,7 +70,7 @@ class TemplateDraftHooks {
 				 */
 				$controller = new TemplateDraftController();
 				$text = $controller->createDraftContent(
-					$title, // @TODO this is currently taking the *edited* title (with subpage), not the *converted* title  
+					$title, // @TODO this is currently taking the *edited* title (with subpage), not the *converted* title
 					$parentContent,
 					[ $controller::TEMPLATE_INFOBOX ]
 				);
@@ -65,16 +84,17 @@ class TemplateDraftHooks {
 	 * It adds an editintro message with help and links.
 	 *
 	 * @param String $msgName
-	 * @param Array $msgParams 
+	 * @param Array $msgParams
 	 * @param Title $title
 	 * @return bool
 	 */
 	public static function onEditPageLayoutShowIntro( &$msgName, &$msgParams, Title $title ) {
 		$helper = new TemplateDraftHelper();
 
-		if ( $helper->isTitleDraft( $title ) 
+		if ( $helper->isTitleNewDraft( $title )
 			&& class_exists( 'TemplateConverter' )
-			&& TemplateConverter::isConversion() ) {
+			&& TemplateConverter::isConversion()
+		) {
 			$msgName = 'templatedraft-editintro';
 
 			$base = Title::newFromText( $title->getBaseText(), NS_TEMPLATE );
