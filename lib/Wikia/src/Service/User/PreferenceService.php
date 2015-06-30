@@ -2,12 +2,14 @@
 
 namespace Wikia\Service\User;
 
+use Wikia\Domain\User\Preference;
+
 interface PreferenceService {
 
 	/**
 	 * Set preferences for the given user id.
 	 *
-	 * @param int $userid
+	 * @param int $userId
 	 * @param Preference[] $preferences
 	 * @return bool true when saved false otherwise
 	 */
@@ -17,7 +19,7 @@ interface PreferenceService {
 	/**
 	 * Get preferences for a given user id.
 	 *
-	 * @param int $userid
+	 * @param int $userId
 	 * @return Preference[]
 	 */
 	public function getPreferences( $userId );

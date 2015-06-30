@@ -141,19 +141,13 @@ abstract class BlogPostController extends EmailController {
 	 * @return array
 	 */
 	protected static function getEmailSpecificFormFields() {
-		$formFields =  [
+		$formFields = [
 			"inputs" => [
 				[
 					'type' => 'text',
 					'name' => 'pageTitle',
 					'label' =>'Blog Page Title',
 					'tooltip' => 'The User_blog:XXX or Blog:YYY page where this post appears',
-				],
-				[
-					'type' => 'text',
-					'name' => 'namespace',
-					'label' => 'Namespace',
-					'tooltip' => 'Use '.NS_BLOG_ARTICLE.' for "User_blog:XXX" and '.NS_BLOG_LISTING.' for "Blog:YYY"',
 				],
 				[
 					'type' => 'text',
@@ -188,6 +182,20 @@ class UserBlogPostController extends BlogPostController {
 	protected function getSummaryKey() {
 		return 'emailext-blogpost-user-summary';
 	}
+
+	protected static function getEmailSpecificFormFields() {
+		$formFields = [
+			"inputs" => [
+				[
+					'type'  => 'hidden',
+					'name'  => 'namespace',
+					'value' => NS_BLOG_ARTICLE,
+				],
+			]
+		];
+
+		return array_merge_recursive( parent::getEmailSpecificFormFields(), $formFields );
+	}
 }
 
 /**
@@ -214,5 +222,19 @@ class ListBlogPostController extends BlogPostController {
 
 	protected function getSummaryKey() {
 		return 'emailext-blogpost-list-summary';
+	}
+
+	protected static function getEmailSpecificFormFields() {
+		$formFields = [
+			"inputs" => [
+				[
+					'type'  => 'hidden',
+					'name'  => 'namespace',
+					'value' => NS_BLOG_LISTING,
+				],
+			]
+		];
+
+		return array_merge_recursive( parent::getEmailSpecificFormFields(), $formFields );
 	}
 }

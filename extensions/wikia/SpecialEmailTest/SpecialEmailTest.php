@@ -28,38 +28,41 @@ class SpecialEmailTest extends UnlistedSpecialPage {
 	}
 
 	public function execute( $subpage ) {
-		global $wgRequest, $wgForceSendgridEmail, $wgForceSchwartzEmail;
+		global $wgRequest, $wgEnableWikiaDBEmail, $wgEnablePostfixEmail;
 
 		wfProfileIn( __METHOD__ );
-		
+
 		// Don't allow just anybody to use this
 		if ($this->mChallengeToken != $wgRequest->getVal('challenge')) {
 			header("Status: 400");
 			header("Content-type: text/plain");
 			print("Challenge incorrect");
-			
+
 			wfProfileOut( __METHOD__ );
 			exit;
 		}
-		
+
 		// Make sure we get an email address
 		$this->mAccount = $wgRequest->getVal('account');
 		if (!$this->mAccount) {
 			header("Status: 400");
 			header("Content-type: text/plain");
 			print("Parameter 'account' required");
-			
+
 			wfProfileOut( __METHOD__ );
 			exit;
 		}
-		
+
 		# These two both have defaults
 		$this->mText = $wgRequest->getVal('text', $this->mText);
 		$this->mConfirmToken = $wgRequest->getVal('token', $this->mConfirmToken);
 
-		$wgForceSendgridEmail = ($wgRequest->getVal('force') == 'sendgrid');
-		$wgForceSchwartzEmail = ($wgRequest->getVal('force') == 'schwartz');
-		
+		# default to whatever mail backend is in config or wikifactory, allow override
+		if ( $wgRequest->getVal('force') ) {
+			$wgEnableWikiaDBEmail = ($wgRequest->getVal('force') == 'wikiadb');
+			$wgEnablePostfixEmail = ($wgRequest->getVal('force') == 'postfix');
+		}
+
 		UserMailer::send( new MailAddress($this->mAccount),
 						  new MailAddress('test@wikia-inc.com'),
 						  "EmailTest - End to end test",
@@ -69,11 +72,11 @@ class SpecialEmailTest extends UnlistedSpecialPage {
 						  "emailtest",
 						  1
 						);
-						
+
 		header("Status: 200");
 		header("Content-type: text/plain");
 		print($this->mConfirmToken);
-		
+
 		wfProfileOut( __METHOD__ );
 		exit;
 	}

@@ -1,40 +1,6 @@
 (function (window, $) {
 
-	var WE = window.WikiaEditor = window.WikiaEditor || (new Observable()),
-		isWebkit = navigator.userAgent.toLowerCase().indexOf(' applewebkit/') > -1;
-
-	// Returns the width of the browsers scrollbar
-	function getScrollbarWidth () {
-		var inner = document.createElement('p'),
-			outer = document.createElement('div'),
-			w1, w2;
-
-		inner.style.width = '100%';
-		inner.style.height = '100px';
-
-		outer.style.position = 'absolute';
-		outer.style.top = '0px';
-		outer.style.left = '0px';
-		outer.style.visibility = 'hidden';
-		outer.style.width = '100px';
-		outer.style.height = '100px';
-		outer.style.overflow = 'hidden';
-		outer.appendChild(inner);
-
-		document.body.appendChild(outer);
-
-		w1 = inner.offsetWidth;
-		outer.style.overflow = 'scroll';
-		w2 = inner.offsetWidth;
-
-		if (w1 == w2) {
-			w2 = outer.clientWidth;
-		}
-
-		document.body.removeChild(outer);
-
-		return (w1 - w2);
-	}
+	var WE = window.WikiaEditor = window.WikiaEditor || (new Observable());
 
 	WE.plugins.pagecontrols = $.createClass(WE.plugin, {
 
@@ -62,7 +28,6 @@
 
 			this.categories = $('#categories');
 			this.textarea = $pageControls.find('textarea');
-			this.scrollbarWidth = getScrollbarWidth();
 
 			// set up the caption of summary field
 			this.textarea.placeholder();
@@ -436,15 +401,15 @@
 		renderPreview: function (extraData, type) {
 			var self = this;
 
-			require([ 'wikia.fluidlayout' ], function (fluidlayout) {
+			require([ 'wikia.breakpointsLayout' ], function (breakpointsLayout) {
 				var previewPadding = 22, // + 2px for borders
-					articleWidth = 660, width = articleWidth + (self.isGridLayout ? 30 : 0
-						), railBreakPoint = fluidlayout.getBreakpointSmall(), config = self.editor.config;
+					articleWidth = 660,
+					width = articleWidth + (self.isGridLayout ? 30 : 0),
+					config = self.editor.config;
 
+				//See logic: \EditPageLayoutHelper::isWidePage
 				if (config.isWidePage) {
-					// 980 px of content width on main pages / pages without right rail
-					width += 320 + (self.isGridLayout ? 20 : 0
-						);
+					width += breakpointsLayout.getRailWidthWithSpacing() + (self.isGridLayout ? 20 : 0);
 				}
 
 				if (config.extraPageWidth) {
@@ -453,42 +418,26 @@
 				}
 
 				if (window.wgOasisResponsive || window.wgOasisBreakpoints) {
-					var pageWidth = $('#WikiaPage').width(), widthArticlePadding = fluidlayout.getWidthGutter(), railWidth = fluidlayout.getRightRailWidth() + fluidlayout.getWidthPadding(), minWidth = fluidlayout.getMinArticleWidth();
+					var pageWidth = $('#WikiaPage').width(),
+						minWidth = breakpointsLayout.getArticleMinWidth();
 
 					// don't go below minimum width
 					if (pageWidth <= minWidth) {
 						pageWidth = minWidth;
 					}
 
-					// subtract rail width only in certain criteria
-					width = (config.isWidePage || pageWidth <= railBreakPoint
-						) ? pageWidth : pageWidth - railWidth;
-
-					width -= widthArticlePadding;
-
-					// For Webkit browsers, when the responsive layout kicks in
-					// we have to subtract the width of the scrollbar. For more
-					// information, read: http://bit.ly/hhJpJg
-					// PS: this doesn't work between 1370-1384px because at that point
-					// the article page has a scrollbar and the edit page doesn't.
-					// Luckily, those screen resolutions are kind of an edge case.
-					// PSS: fuck scrollbars.
-					// TODO: we should have access to breakpoints and such in JavaScript
-					// as variables instead of hardcoded values.
-					if (isWebkit && pageWidth >= 1370 || pageWidth <= railBreakPoint) {
-						width -= self.scrollbarWidth;
-					}
+					width = pageWidth - breakpointsLayout.getArticlePadding();
 				}
 
 				// add article preview padding width
 				width += previewPadding;
 
-				// add width of scrollbar (BugId:35767)
-				width += self.scrollbarWidth;
-
 				var previewOptions = {
 					width: width,
-					scrollbarWidth: self.scrollbarWidth,
+					//Most browsers have 17px wide scrollbars, 20px here is for safty net and round number
+					//ie: http://www.textfixer.com/tutorials/browser-scrollbar-width.php
+					//No need to run extra fancy JS to return value between 17 and 20
+					scrollbarWidth: 20,
 					onPublishButton: function () {
 						$('#wpSave').click();
 					},
@@ -498,12 +447,6 @@
 						});
 					}
 				};
-
-				// pass info about dropped rail to preview module
-				if (pageWidth <= railBreakPoint && (window.wgOasisResponsive || window.wgOasisBreakpoints)) {
-					// if it's a small screen or wide page pass to preview a flag to drop rail
-					previewOptions.isRailDropped = true;
-				}
 
 				// pass info about if it's a wide page (main page or page without right rail)
 				previewOptions.isWidePage = config.isWidePage;
@@ -569,10 +512,11 @@
 		},
 
 		getSummary: function () {
-			var summary = $('#wpSummary').val();
+			var $wpSummary = $('#wpSummary'),
+				summary = $wpSummary.val();
 
 			// bugid-93498: IE fakes placeholder functionality by setting a real val
-			if (summary === $('#wpSummary').attr('placeholder')) {
+			if (summary === $wpSummary.attr('placeholder')) {
 				summary = '';
 			}
 
