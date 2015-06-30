@@ -356,7 +356,7 @@ class User {
 			}
 
 			if (isset($data[self::CACHE_PREFERENCES_KEY])) {
-				 $this->preferences->setPreferences($this->mId, $data['preferences']);
+				 $this->preferences->setPreferences($this->mId, $data[self::CACHE_PREFERENCES_KEY]);
 			}
 		}
 		return true;
