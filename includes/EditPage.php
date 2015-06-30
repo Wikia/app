@@ -667,7 +667,8 @@ class EditPage {
 			{
 				$this->allowBlankSummary = true;
 			} else {
-				$this->allowBlankSummary = $request->getBool( 'wpIgnoreBlankSummary' ) || !$wgUser->getOption( 'forceeditsummary');
+				$this->allowBlankSummary = $request->getBool( 'wpIgnoreBlankSummary' ) ||
+					!$wgUser->getGlobalPreference( 'forceeditsummary' );
 			}
 
 			# <Wikia>
@@ -758,17 +759,17 @@ class EditPage {
 		$this->textbox1 = $this->getContent( false );
 		// activate checkboxes if user wants them to be always active
 		# Sort out the "watch" checkbox
-		if ( $wgUser->getOption( 'watchdefault' ) ) {
+		if ( $wgUser->getGlobalPreference( 'watchdefault' ) ) {
 			# Watch all edits
 			$this->watchthis = true;
-		} elseif ( $wgUser->getOption( 'watchcreations' ) && !$this->mTitle->exists() ) {
+		} elseif ( $wgUser->getGlobalPreference( 'watchcreations' ) && !$this->mTitle->exists() ) {
 			# Watch creations
 			$this->watchthis = true;
 		} elseif ( $this->mTitle->userIsWatching() ) {
 			# Already watched
 			$this->watchthis = true;
 		}
-		if ( $wgUser->getOption( 'minordefault' ) && !$this->isNew ) {
+		if ( $wgUser->getGlobalPreference( 'minordefault' ) && !$this->isNew ) {
 			$this->minoredit = true;
 		}
 		if ( $this->textbox1 === false ) {
@@ -1643,7 +1644,7 @@ class EditPage {
 
 		$wgOut->addModules( 'mediawiki.action.edit' );
 
-		if ( $wgUser->getOption( 'uselivepreview', false ) ) {
+		if ( $wgUser->getGlobalPreference( 'uselivepreview', false ) ) {
 			$wgOut->addModules( 'mediawiki.legacy.preview' );
 		}
 
@@ -1787,7 +1788,7 @@ class EditPage {
 
 		$wgOut->addHTML( $this->editFormPageTop );
 
-		if ( $wgUser->getOption( 'previewontop' ) ) {
+		if ( $wgUser->getGlobalPreference( 'previewontop' ) ) {
 			$this->displayPreviewArea( $previewOutput, true );
 		}
 
@@ -1879,7 +1880,9 @@ class EditPage {
 		/* Wikia change end */
 
 		/* Wikia change begin - @author: kflorence (BugId:40705) */
-		if ( !$this->isCssJsSubpage && $showToolbar && ( !( $wgUser->getSkin() instanceof SkinMonobook ) || $wgUser->getOption( 'showtoolbar' ) ) ) {
+		if ( !$this->isCssJsSubpage &&
+			$showToolbar &&
+			( !( $wgUser->getSkin() instanceof SkinMonobook ) || $wgUser->getGlobalPreference( 'showtoolbar' ) ) ) {
 			$wgOut->addHTML( EditPage::getEditToolbar() );
 		}
 		/* Wikia change end */
@@ -1900,9 +1903,9 @@ class EditPage {
 		// wikia change begin
 		wfRunHooks ('EditForm:AfterDisplayingTextbox', array (&$this, &$hidden /* TODO: remove? */) ) ;
 
-		$rows = $wgUser->getIntOption( 'rows' );
-		$cols = $wgUser->getIntOption( 'cols' );
-		$ew = $wgUser->getOption( 'editwidth' );
+		$rows = intval($wgUser->getGlobalPreference( 'rows' ));
+		$cols = intval($wgUser->getGlobalPreference( 'cols' ));
+		$ew = $wgUser->getGlobalPreference( 'editwidth' );
 
 		wfRunHooks( 'EditForm::MultiEdit:Form', array( $rows, $cols, $ew, htmlspecialchars( $this->safeUnicodeOutput( $this->textbox1 ) ) ) );
 		// wikia change end
@@ -1952,7 +1955,7 @@ class EditPage {
 		}
 		/* Wikia change end */
 
-		if ( !$wgUser->getOption( 'previewontop' ) ) {
+		if ( !$wgUser->getGlobalPreference( 'previewontop' ) ) {
 			$this->displayPreviewArea( $previewOutput, false );
 		}
 
@@ -2358,8 +2361,8 @@ HTML
 		$attribs = $customAttribs + array(
 			'accesskey' => ',',
 			'id'   => $name,
-			'cols' => $wgUser->getIntOption( 'cols' ),
-			'rows' => $wgUser->getIntOption( 'rows' ),
+			'cols' => intval($wgUser->getGlobalPreference( 'cols' )),
+			'rows' => intval($wgUser->getGlobalPreference( 'rows' )),
 			'style' => '' // avoid php notices when appending preferences (appending allows customAttribs['style'] to still work
 		);
 
@@ -2664,7 +2667,7 @@ HTML
 		// TODO: remove?
 		// @see https://trac.wikia-inc.com/changeset/6028
 		global $wgRequest;
-		if ($wgUser->getOption( 'showtoolbar' ) && !$wgUser->getOption( 'riched_disable' ) && !$this->previewOnOpen() ) {
+		if ($wgUser->getGlobalPreference( 'showtoolbar' ) && !$wgUser->getGlobalPreference( 'riched_disable' ) && !$this->previewOnOpen() ) {
 			$oldTextBox1 = $this->textbox1;
 			$this->importFormData( $wgRequest );
 		}
