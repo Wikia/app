@@ -115,7 +115,7 @@ class FacebookSignupController extends WikiaController {
 	 * @return boolean true if the account is disabled, false otherwise
 	 */
 	private function isAccountDisabled( User $user ) {
-		return $user->getBoolOption( 'disabled' ) || (
+		return $user->getGlobalFlag( 'disabled' ) || (
 			defined( 'CLOSED_ACCOUNT_FLAG' ) &&
 			$user->getRealName() == CLOSED_ACCOUNT_FLAG
 		);
