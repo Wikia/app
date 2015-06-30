@@ -123,7 +123,7 @@ class WikiaConfirmEmailSpecialController extends WikiaSpecialPageController {
 
 					// Get and clear redirect page
 					$userSignupRedirect = $user->getGlobalAttribute( UserLoginSpecialController::SIGNUP_REDIRECT_OPTION_NAME );
-					$user->setOption( UserLoginSpecialController::SIGNUP_REDIRECT_OPTION_NAME, null );
+					$user->setGlobalAttribute( UserLoginSpecialController::SIGNUP_REDIRECT_OPTION_NAME, null );
 
 					$user->saveSettings();
 
@@ -161,7 +161,7 @@ class WikiaConfirmEmailSpecialController extends WikiaSpecialPageController {
 						$user->setEmail( $optionNewEmail );
 					}
 					$user->confirmEmail();
-					$user->setOption( 'new_email', null );
+					$user->setGlobalAttribute( 'new_email', null );
 					$user->saveSettings();
 
 					// redirect user
