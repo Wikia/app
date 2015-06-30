@@ -190,7 +190,7 @@ class AutomaticWikiAdoptionHelper {
 					//log
 					self::addLogEntry($admin, $oldGroups, $newGroups);
 					//Unset preference for receiving future adoption emails
-					$admin->setOption("adoptionmails-$wikiId", 0);
+					$admin->setGlobalPreference("adoptionmails-$wikiId", 0);
 					$admin->saveSettings();
 				}
 			}
