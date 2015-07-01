@@ -5,18 +5,22 @@ define('editpage.event.preview', ['editpage.event.helper', 'jquery', 'wikia.wind
 
 	// handle "Preview" button
 	function onPreview(ev, editor) {
-		renderPreview({}, 'current');
-		editor.track('preview-desktop');
-
 		ev.preventDefault();
+
+		renderPreview({}, 'current');
+		if (editor) {
+			editor.track('preview-desktop');
+		}
 	}
 
 	// handle "PreviewMobile" button
 	function onPreviewMobile(ev, editor) {
-		renderPreview({}, 'mobile');
-		editor.track('preview-mobile');
-
 		ev.preventDefault();
+
+		renderPreview({}, 'mobile');
+		if (editor) {
+			editor.track('preview-mobile');
+		}
 	}
 
 	// render "Preview" modal
@@ -87,9 +91,7 @@ define('editpage.event.preview', ['editpage.event.helper', 'jquery', 'wikia.wind
 					$('#wpSave').click();
 				},
 				getPreviewContent: function (callback, skin) {
-					helper.getContent(function (content) {
-						preparePreviewContent(content, extraData, callback, skin);
-					});
+					preparePreviewContent(helper.getContent(), extraData, callback, skin);
 				}
 			};
 

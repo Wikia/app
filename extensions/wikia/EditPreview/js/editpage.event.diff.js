@@ -7,11 +7,13 @@ define('editpage.event.diff', ['editpage.event.helper', 'wikia.window', 'jquery'
 		// move the focus to the selected items to prevent iPad from showing the VK and resizing the viewport
 		$(ev.target).focus();
 		renderChanges();
-		editor.track('diff');
+		if (editor) {
+			editor.track('diff');
+		}
 	}
 
 	// render "show diff" modal
-	function renderChanges() {
+	function renderChanges(callbackContent) {
 		require([ 'wikia.ui.factory' ], function(uiFactory){
 			uiFactory.init([ 'modal' ]).then(function(uiModal) {
 				var previewModalConfig = {
@@ -31,9 +33,7 @@ define('editpage.event.diff', ['editpage.event.helper', 'wikia.window', 'jquery'
 						target.closest('a').not('[href^="#"]').attr('target', '_blank');
 					});
 
-					helper.getContent(function(content) {
-						prepareDiffContent(previewModal, content);
-					});
+					prepareDiffContent(previewModal, helper.getContent());
 
 					previewModal.show();
 				});

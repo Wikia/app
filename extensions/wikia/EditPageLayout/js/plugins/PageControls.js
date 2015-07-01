@@ -316,60 +316,7 @@
 					$('#HiddenFieldsDialog input[type!="hidden"]').focus();
 				}
 			});
-		},
-
-		// render "show diff" modal
-		renderChanges: function () {
-			var self = this;
-			require([ 'wikia.ui.factory' ], function(uiFactory){
-				uiFactory.init([ 'modal' ]).then(function(uiModal) {
-					var previewModalConfig = {
-						vars: {
-							id: 'EditPageDialog',
-							title: $.htmlentities($.msg('editpagelayout-pageControls-changes')),
-							content: '<div class="ArticlePreview modalContent"><div class="ArticlePreviewInner">' +
-								'</div></div>',
-							size: 'large'
-						}
-					};
-					uiModal.createComponent(previewModalConfig, function(previewModal) {
-						previewModal.deactivate();
-
-						previewModal.$content.on('click', function(event) {
-							var target = $(event.target);
-							target.closest('a').not('[href^="#"]').attr('target', '_blank');
-						});
-
-						self.getContent(function(content) {
-							var section = $.getUrlVar('section') || 0,
-								extraData = {
-									content: content,
-									section: parseInt(section, 10)
-								};
-
-							if (self.categories.length) {
-								extraData.categories = self.categories.val();
-							}
-
-							$.when(
-								// get wikitext diff
-								self.ajax('diff' , extraData),
-
-								// load CSS for diff
-								mw.loader.use('mediawiki.action.history.diff')
-							).done(function(ajaxData) {
-								var data = ajaxData[ 0 ],
-									html = '<h1 class="pagetitle">' + window.wgEditedTitle + '</h1>' + data.html;
-								previewModal.$content.find('.ArticlePreview .ArticlePreviewInner').html(html);
-								previewModal.activate();
-							});
-						});
-
-						previewModal.show();
-					});
-				});
-			});
-		},
+		}
 	});
 
 })(this, jQuery);

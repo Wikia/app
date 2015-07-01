@@ -1,22 +1,29 @@
-define('editpage.event.helper', [], function(){
+define('editpage.event.helper', ['wikia.window'], function(window, ace){
 	'use strict';
 
 	// get editor's content (either wikitext or HTML)
 	// and call provided callback with wikitext as its parameter
-	function getContent(callback) {
-		var editor = typeof RTE == 'object' ? RTE.getInstance() : false, mode = editor ? editor.mode : 'mw';
+	function getContent() {
+		var editor = typeof RTE == 'object' ? RTE.getInstance() : false, mode = editor ? editor.mode : 'mw',
+			content = '';
 
-		callback = callback || function () {};
+		if (window.wgEnableCodePageEditor) {
+			require(['wikia.ace.editor'], function(ace){
+				return ace.getContent();
+			});
+		}
 
 		switch (mode) {
 			case 'mw':
-				callback($('#wpTextbox1').val());
-				return;
+				content = $('#wpTextbox1').val();
+				break;
 			case 'source':
 			case 'wysiwyg':
-				callback(editor.getData());
-				return;
+				content = editor.getData();
+				break;
 		}
+
+		return content;
 	}
 
 	// send AJAX request
