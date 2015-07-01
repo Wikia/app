@@ -103,10 +103,10 @@ class TemplateDraftHooks {
 							'target' => '_blank'
 						],
 							wfMessage( 'templatedraft-module-view-parent' ) )
-					)->escaped(),
+					)->plain(),
 				];
 			} elseif ( !$helper->isTitleDraft( $title ) ) {
-				$base = Title::newFromText( $title->getBaseText() . '/Draft', NS_TEMPLATE );
+				$base = Title::newFromText( $title->getBaseText() .'/'. wfMessage( 'templatedraft-subpage' ), NS_TEMPLATE );
 				$draftUrl = $base->getFullUrl( [
 					'action' => 'edit',
 					TemplateConverter::CONVERSION_MARKER => 1,
@@ -118,7 +118,7 @@ class TemplateDraftHooks {
 							'target' => '_blank'
 						],
 							wfMessage( 'templatedraft-module-button' ) )
-					)->escaped(),
+					)->plain(),
 				];
 			}
 		}
