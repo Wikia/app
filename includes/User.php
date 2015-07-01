@@ -2460,11 +2460,6 @@ class User {
 	 * @return string
 	 */
 	public function getLocalPreference($pref, $cityId = null, $sep = "-", $default = null, $ignoreHidden = false) {
-		global $wgCityId;
-		if (!isset($cityId)) {
-			$cityId = $wgCityId;
-		}
-
 		$globalPref = self::localToGlobalPropertyName($pref, $cityId, $sep);
 		return $this->getGlobalPreference($globalPref, $default, $ignoreHidden);
 	}
@@ -2571,11 +2566,6 @@ class User {
 	 * @return string
 	 */
 	public function getLocalAttribute($attr, $cityId = null, $sep = "-") {
-		global $wgCityId;
-		if (!isset($cityId)) {
-			$cityId = $wgCityId;
-		}
-
 		return $this->getGlobalAttribute(self::localToGlobalPropertyName($attr, $cityId, $sep));
 	}
 
@@ -2625,11 +2615,6 @@ class User {
 	 * @return string
 	 */
 	public function getLocalFlag($flag, $cityId = null, $sep = "-") {
-		global $wgCityId;
-		if (!isset($cityId)) {
-			$cityId = $wgCityId;
-		}
-
 		return $this->getGlobalFlag(self::localToGlobalPropertyName($flag, $cityId, $sep));
 	}
 
