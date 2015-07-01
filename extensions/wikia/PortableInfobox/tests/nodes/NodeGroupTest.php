@@ -1,9 +1,9 @@
 <?php
 
 class NodeGroupTest extends WikiaBaseTest {
-	protected function groupUp() {
-		$this->groupupFile = dirname( __FILE__ ) . '/../../PortableInfobox.groupup.php';
-		parent::groupUp();
+	protected function setUp() {
+		$this->setupFile = dirname( __FILE__ ) . '/../../PortableInfobox.setup.php';
+		parent::setUp();
 	}
 
 	/**
