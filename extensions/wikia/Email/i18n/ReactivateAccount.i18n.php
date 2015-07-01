@@ -9,8 +9,8 @@ $messages['en'] = array(
 );
 
 $messages['qqq'] = array(
-	'emailext-reactivate-account-subject' => "TODO ADD THESE",
-	'emailext-reactivate-account-summary' => "TODO ADD THESE",
-	'emailext-reactivate-account-button-text' => "TODO ADD THESE",
-	'emailext-reactivate-account-welcome-back' => "TODO ADD THESE",
+	'emailext-reactivate-account-subject' => "Subject of the email a user receives when they're reactivating a deactivated account",
+	'emailext-reactivate-account-summary' => "Line telling the user to click the link below to reactivate their account on wikia",
+	'emailext-reactivate-account-button-text' => "Text on the link which the user clicks to reactivate their account",
+	'emailext-reactivate-account-welcome-back' => "Footer at the bottom of the email which welcomes the user back to Wikia",
 );
