@@ -410,7 +410,7 @@ class CuratedContentController extends WikiaController {
 		$wikiID = $this->request->getInt( 'wikiID', null );
 		$totalImages = $this->request->getBool( 'totalImages', false );
 		$totalTitles = $this->request->getBool( 'totalTitles', false );
-
+		$this->cacheResponseFor( 1, self::DAYS );
 		$this->getResponse()->setFormat( WikiaResponse::FORMAT_JSON );
 
 		if ( empty( $wikiID ) ) {
