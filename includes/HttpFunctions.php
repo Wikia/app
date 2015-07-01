@@ -821,9 +821,20 @@ class CurlHttpRequest extends MWHttpRequest {
 
 		$curlHandle = curl_init( $this->url );
 
+		// Wikia change - begin
+		/**
+		 * @author Michał Roszka <michal@wikia-inc.com> Wikia change - begin
+		 * @see PLATFORM-1317
+		 * @see PLATFORM-1308
+		 */
 		if ( !curl_setopt_array( $curlHandle, $this->curlOptions ) ) {
-			throw new MWException( "Error setting curl options." );
+			$e = new MWException( "Error setting curl options." );
+			if ( class_exists( 'Wikia\\Logger\\WikiaLogger' ) ) {
+				\Wikia\Logger\WikiaLogger::instance()->debug( 'PLATFORM-1317' , [ 'curl_options' => serialize( $this->curlOptions ), 'exception' => $e ]  );
+			}
+			throw $e;
 		}
+		// Wikia change - end
 
 		if ( $this->followRedirects && $this->canFollowRedirects() ) {
 			wfSuppressWarnings();
