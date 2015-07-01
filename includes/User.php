@@ -235,9 +235,6 @@ class User {
 	 */
 	private $mBlockedFromCreateAccount = false;
 
-	/** @var UserPreferences */
-	private $preferences;
-
 	static $idCacheByName = array();
 
 	/**
@@ -252,7 +249,6 @@ class User {
 	 */
 	function __construct() {
 		$this->clearInstanceCache( 'defaults' );
-		$this->preferences = Injector::getInjector()->get(UserPreferences::class);
 	}
 
 	/**
@@ -260,6 +256,10 @@ class User {
 	 */
 	function __toString(){
 		return $this->getName();
+	}
+
+	private function userPreferences() {
+		return Injector::getInjector()->get(UserPreferences::class);
 	}
 
 	/**
@@ -360,7 +360,7 @@ class User {
 			}
 
 			if (isset($data[self::CACHE_PREFERENCES_KEY])) {
-				 $this->preferences->setPreferences($this->mId, $data[self::CACHE_PREFERENCES_KEY]);
+				 $this->userPreferences()->setPreferences($this->mId, $data[self::CACHE_PREFERENCES_KEY]);
 			}
 		}
 		return true;
@@ -391,7 +391,7 @@ class User {
 			$data[$name] = $this->$name;
 		}
 		$data['mVersion'] = MW_USER_VERSION;
-		$data[self::CACHE_PREFERENCES_KEY] = $this->preferences->getPreferences($this->mId);
+		$data[self::CACHE_PREFERENCES_KEY] = $this->userPreferences()->getPreferences($this->mId);
 		$key = wfMemcKey( 'user', 'id', $this->mId );
 		global $wgMemc;
 		$wgMemc->set( $key, $data );
@@ -2482,11 +2482,11 @@ class User {
 
 		if ($wgPreferencesUseService) {
 			$this->load();
-			$value = $this->preferences->get($this->mId, $preference, $default, $ignoreHidden);
+			$value = $this->userPreferences()->get($this->mId, $preference, $default, $ignoreHidden);
 			wfRunHooks(
 				'UserGetPreference',
 				[
-					$this->preferences->getPreferences($this->mId),
+					$this->userPreferences()->getPreferences($this->mId),
 					$preference,
 					&$value
 				]
@@ -2532,7 +2532,7 @@ class User {
 				$value = str_replace("\n", " ", $value);
 			}
 
-			$this->preferences->set($this->mId, $preference, $value);
+			$this->userPreferences()->set($this->mId, $preference, $value);
 
 			// Clear cached skin/theme, so the new one displays immediately in Special:Preferences
 			switch ($preference) {
@@ -2544,7 +2544,7 @@ class User {
 					break;
 			}
 
-			wfRunHooks("UserSetPreferences", [$this, $this->preferences->getPreferences($this->mId)]);
+			wfRunHooks("UserSetPreferences", [$this, $this->userPreferences()->getPreferences($this->mId)]);
 
 			$this->clearSharedCache();
 		} else {
@@ -2559,7 +2559,7 @@ class User {
 	 * @return string
 	 */
 	public function getDefaultGlobalPreference($preference) {
-		return $this->preferences->getFromDefault($preference);
+		return $this->userPreferences()->getFromDefault($preference);
 	}
 
 	/**
