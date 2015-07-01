@@ -2455,7 +2455,17 @@ class User {
 	 */
 	public function getGlobalPreference($preference, $default = null) {
 		$this->load();
-		return $this->preferences->get($this->mId, $preference, $default);
+		$value = $this->preferences->get($this->mId, $preference, $default);
+		wfRunHooks(
+			'UserGetPreference',
+			[
+				$this->preferences->getPreferences($this->mId),
+				$preference,
+				&$value
+			]
+		);
+
+		return $value;
 	}
 
 
@@ -2467,7 +2477,24 @@ class User {
 	 */
 	public function setGlobalPreference($preference, $value) {
 		$this->load();
+
+		if ($value) {
+			$value = str_replace("\r\n", "\n", $value);
+			$value = str_replace("\r", "\n", $value);
+			$value = str_replace("\n", " ", $value);
+		}
+
 		$this->preferences->set($this->mId, $preference, $value);
+
+		// Clear cached skin/theme, so the new one displays immediately in Special:Preferences
+		switch ($preference) {
+			case 'skin':
+				unset($this->mSkin);
+				break;
+			case 'theme':
+				unset($this->mTheme);
+				break;
+		}
 	}
 
 	/**
