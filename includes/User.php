@@ -2520,13 +2520,7 @@ class User {
 
 		if ($wgPreferencesUseService) {
 			$this->load();
-
-			if ($value) {
-				$value = str_replace("\r\n", "\n", $value);
-				$value = str_replace("\r", "\n", $value);
-				$value = str_replace("\n", " ", $value);
-			}
-
+			$value = $this->sanitizeProperty($value);
 			$this->userPreferences()->set($this->mId, $preference, $value);
 
 			// Clear cached skin/theme, so the new one displays immediately in Special:Preferences
@@ -2658,6 +2652,16 @@ class User {
 		return sprintf("%s%s%s", $property, $sep, $cityId);
 	}
 
+	private function sanitizeProperty($value) {
+		if ($value) {
+			$value = str_replace("\r\n", "\n", $value);
+			$value = str_replace("\r", "\n", $value);
+			$value = str_replace("\n", " ", $value);
+		}
+
+		return $value;
+	}
+
 	/**
 	 * @param $oname
 	 * @param $val
@@ -2693,11 +2697,7 @@ class User {
 		}
 		// Filter out any newlines that may have passed through input validation.
 		// Newlines are used to separate items in the options blob.
-		if( $val ) {
-			$val = str_replace( "\r\n", "\n", $val );
-			$val = str_replace( "\r", "\n", $val );
-			$val = str_replace( "\n", " ", $val );
-		}
+		$val = $this->sanitizeProperty($val);
 		// Explicitly NULL values should refer to defaults
 		global $wgDefaultUserOptions;
 		if( is_null( $val ) && isset( $wgDefaultUserOptions[$oname] ) ) {
