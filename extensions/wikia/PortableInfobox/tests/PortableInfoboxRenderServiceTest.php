@@ -118,16 +118,16 @@ class PortableInfoboxRenderServiceTest extends PHPUnit_Framework_TestCase {
 			[
 				'input' => [
 					[
-						'type' => 'footer',
+						'type' => 'navigation',
 						'data' => [
-							'value' => 'Footer value',
+							'value' => 'navigation value',
 						]
 					]
 				],
 				'output' => '<aside class="portable-infobox">
-								<footer class="portable-infobox-footer portable-infobox-item-margins portable-infobox-header-background portable-infobox-header-font">Footer value</footer>
+								<nav class="portable-infobox-navigation portable-infobox-item-margins portable-infobox-header-background portable-infobox-header-font">navigation value</nav>
 							</aside>',
-				'description' => 'Footer only'
+				'description' => 'navigation only'
 			],
 			[
 				'input' => [
@@ -377,18 +377,18 @@ class PortableInfoboxRenderServiceTest extends PHPUnit_Framework_TestCase {
 			[
 				'input' => [
 					[
-						'type' => 'footer',
+						'type' => 'navigation',
 						'data' => [
 							'value' => '<p>Links</p>'
 						]
 					]
 				],
 				'output' => '<aside class="portable-infobox">
-								<footer class="portable-infobox-footer portable-infobox-item-margins portable-infobox-header-background portable-infobox-header-font">
+								<nav class="portable-infobox-navigation portable-infobox-item-margins portable-infobox-header-background portable-infobox-header-font">
 									<p>Links</p>
-								</footer>
+								</nav>
 							</aside>',
-				'description' => 'Infobox with footer'
+				'description' => 'Infobox with navigation'
 			]
 		];
 	}

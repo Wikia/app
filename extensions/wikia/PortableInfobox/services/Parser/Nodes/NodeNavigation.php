@@ -1,7 +1,7 @@
 <?php
 namespace Wikia\PortableInfobox\Parser\Nodes;
 
-class NodeFooter extends Node {
+class NodeNavigation extends Node {
 
 	public function getData() {
 		if ( !isset( $this->data ) ) {
