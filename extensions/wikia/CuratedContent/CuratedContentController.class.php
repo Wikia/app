@@ -474,11 +474,11 @@ class CuratedContentController extends WikiaController {
 		foreach ( $curatedContent as $curatedContentModule => $items ) {
 			foreach ( $items as $item ) {
 				if ( $item['type'] == 'category' ) {
-					if ( strlen( $item['label'] ) > 48 ) {
+					if ( strlen( $item['label'] ) > CuratedContentSpecialController::LABEL_MAX_LENGTH ) {
 						$tooLongTitleCount++;
 					}
 				} else {
-					if ( strlen( $item['title'] ) > 48 ) {
+					if ( strlen( $item['title'] ) > CuratedContentSpecialController::LABEL_MAX_LENGTH ) {
 						$tooLongTitleCount++;
 					}
 				}
