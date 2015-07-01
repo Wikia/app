@@ -18,10 +18,10 @@ class FounderEmailsViewsDigestEvent extends FounderEmailsEvent {
 		}
 
 		// If complete digest mode is enabled, do not send views only digest
-		if ( $admin->getGlobalPreference( "founderemails-complete-digest-$wikiId" ) ) {
+		if ( $admin->getLocalPreference( "founderemails-complete-digest", $wikiId ) ) {
 			return false;
 		}
-		if ( $admin->getGlobalPreference( "founderemails-views-digest-$wikiId" ) ) {
+		if ( $admin->getLocalPreference( "founderemails-views-digest", $wikiId ) ) {
 			return true;
 		}
 		return false;
