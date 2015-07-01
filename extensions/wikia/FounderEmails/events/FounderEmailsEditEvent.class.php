@@ -139,11 +139,11 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 		}
 
 		// If digest mode is enabled, do not create edit event notifications
-		if ( $admin->getGlobalPreference( "founderemails-complete-digest-$wikiId" ) ) {
+		if ( $admin->getLocalPreference( "founderemails-complete-digest", $wikiId ) ) {
 			return false;
 		}
 
-		if ( $admin->getGlobalPreference( "founderemails-edits-$wikiId" ) ) {
+		if ( $admin->getLocalPreference( "founderemails-edits", $wikiId ) ) {
 			return true;
 		}
 
