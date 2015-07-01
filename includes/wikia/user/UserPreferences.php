@@ -77,7 +77,7 @@ class UserPreferences {
 		$this->save($userId, [new Preference($pref, $val)]);
 	}
 
-	private function getFromDefault($pref) {
+	public function getFromDefault($pref) {
 		if (isset($this->defaultPreferences[$pref])) {
 			return $this->defaultPreferences[$pref];
 		}
@@ -119,25 +119,5 @@ class UserPreferences {
 
 		return in_array($pref, $this->forceSavePrefs) || $value != $default ||
 			($default != null && $value !== false && $value !== null);
-	}
-
-	/**
-	 * Create a local option name. All localized (wikia specific) options,
-	 * preferences, attributes or flags should be of the form "{option}-{cityId}"
-	 *
-	 * IF YOU USE $sep, MAKE A PLAN TO NORMALIZE IT TO "-"!
-	 *
-	 * @param string $preference
-	 * @param int $cityId [optional]
-	 * @param string $sep the separator between the option and the id.
-	 * @return string
-	 */
-	public static function localToGlobalPreferenceName($preference, $cityId = null, $sep = '-') {
-		global $wgCityId;
-		if (!isset($cityId)) {
-			$cityId = $wgCityId;
-		}
-
-		return sprintf("%s%c%s", $preference, $sep, $cityId);
 	}
 }

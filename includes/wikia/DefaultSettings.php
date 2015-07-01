@@ -1749,3 +1749,8 @@ $wgPaidAssetDropConfig = false;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverIncontentPlayerSlotCountries = null;
+
+/**
+ * flag for using (possibly external) service for managing a user's preferences
+ */
+$wgPreferencesUseService = true;
