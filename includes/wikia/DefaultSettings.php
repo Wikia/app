@@ -1716,7 +1716,7 @@ $wgOasisBreakpoints = true;
  * see CONCF-433
  * todo remove when 71M adjusts their styles
  */
-$wgOasisBreakpointsDE = false;
+$wgOasisBreakpointsDE = true;
 
 /**
  * Add poweruser to implicit groups
