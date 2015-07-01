@@ -2317,6 +2317,7 @@ class User {
 	 * @return String User's current value for the option
 	 * @see getBoolOption()
 	 * @see getIntOption()
+	 * @deprecated use get(Global|Local)Preference  get(Global|Local)Attribute or get(Global|Local)Flag
 	 */
 	public function getOption( $oname, $defaultOverride = null, $ignoreHidden = false ) {
 		global $wgHiddenPrefs;
@@ -2592,6 +2593,7 @@ class User {
 	 *
 	 * @param $oname String The option to set
 	 * @param $val mixed New value to set
+	 * @deprecated use set(Global|Local)Preference  set(Global|Local)Attribute or set(Global|Local)Flag
 	 */
 	public function setOption( $oname, $val ) {
 		$this->load();
