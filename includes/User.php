@@ -21,6 +21,7 @@
  */
 
 use Wikia\DependencyInjection\Injector;
+use Wikia\Logger\Loggable;
 use Wikia\Service\User\UserPreferences;
 
 /**
@@ -68,6 +69,8 @@ class User {
 	 */
 	use PowerUserTrait;
 	# WIKIA CHANGE END
+
+	use Loggable;
 
 	/**
 	 * Global constants made accessible as class constants so that autoloader
@@ -2329,6 +2332,11 @@ class User {
 	 * @deprecated use get(Global|Local)Preference  get(Global|Local)Attribute or get(Global|Local)Flag
 	 */
 	public function getOption($oname, $defaultOverride = null, $ignoreHidden = false) {
+		$this->warning("calling getOption", [
+			"class" => "user",
+			"type" => "getoption",
+			"source" => wfBacktrace(true),
+		]);
 		return $this->getOptionHelper($oname, $defaultOverride, $ignoreHidden);
 	}
 
@@ -2671,6 +2679,11 @@ class User {
 	 * @deprecated use set(Global|Local)Preference  set(Global|Local)Attribute or set(Global|Local)Flag
 	 */
 	public function setOption( $oname, $val ) {
+		$this->warning("calling setOption", [
+			"class" => "user",
+			"type" => "setoption",
+			"source" => wfBacktrace(true),
+		]);
 		$this->setOptionHelper($oname, $val);
 	}
 
