@@ -2670,7 +2670,7 @@ class User {
 			$cityId = $wgCityId;
 		}
 
-		return sprintf("%s%c%s", $property, $sep, $cityId);
+		return sprintf("%s%s%s", $property, $sep, $cityId);
 	}
 
 	/**
