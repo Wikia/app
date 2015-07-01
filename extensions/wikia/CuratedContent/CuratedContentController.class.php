@@ -408,6 +408,9 @@ class CuratedContentController extends WikiaController {
 			'totalNumberOfItems' => 0
 		];
 		$wikiID = $this->request->getInt( 'wikiID', null );
+		$totalImages = $this->request->getBool( 'totalImages', false );
+		$totalTitles = $this->request->getBool( 'totalTitles', false );
+
 		$this->getResponse()->setFormat( WikiaResponse::FORMAT_JSON );
 
 		if ( empty( $wikiID ) ) {
@@ -423,13 +426,22 @@ class CuratedContentController extends WikiaController {
 				$curatedContentQualityPerWiki[$wikiData['u']] = $quality;
 			}
 
-			$this->response->setVal( 'curatedContentQualityTotal', $curatedContentQualityTotal );
+			if ( $totalImages ) {
+				$this->response->setVal( 'item', $curatedContentQualityTotal['totalNumberOfMissingImages'] );
+				$this->response->setVal( 'min', ['value' => 0] );
+				$this->response->setVal( 'max', ['value' => $curatedContentQualityTotal['totalNumberOfItems']] );
+			} else if ( $totalTitles ) {
+				$this->response->setVal( 'item', $curatedContentQualityTotal['totalNumberOfTooLongTitles'] );
+				$this->response->setVal( 'min', ['value' => 0] );
+				$this->response->setVal( 'max', ['value' => $curatedContentQualityTotal['totalNumberOfItems']] );
+			} else {
+				$this->response->setVal( 'curatedContentQualityTotal', $curatedContentQualityTotal );
+				$this->response->setVal( 'curatedContentQualityPerWiki', $curatedContentQualityPerWiki );
+			}
 		} else {
 			$quality = $this->getCuratedContentQualityForWiki( $wikiID );
-			$curatedContentQualityPerWiki = $quality;
+			$this->response->setVal( 'wikiQuality', $quality );
 		}
-
-		$this->response->setVal( 'curatedContentQualityPerWiki', $curatedContentQualityPerWiki );
 	}
 
 	private function getCuratedContentForWiki( $wikiID ) {
