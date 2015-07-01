@@ -103,7 +103,7 @@ define('wikia.editpage.ace.editor', ['wikia.ace.editor', 'editpage.events', 'wik
 	}
 
 	function initDiff() {
-		editpageEvents.attachDiff('wpDiff', ace.getEditor(), function(){ return ace.getContent(); });
+		editpageEvents.attachDiff('wpDiff');
 	}
 
 	/**
@@ -130,6 +130,11 @@ define('wikia.editpage.ace.editor', ['wikia.ace.editor', 'editpage.events', 'wik
 		initSubmit();
 		initDiff();
 		beforeUnload();
+
+		if (win.showPreviewOnCodePage) {
+			editpageEvents.attachDesktopPreview('wpPreview');
+			editpageEvents.attachMobilePreview('wpPreviewMobile');
+		}
 
 		$('.editpage-widemode-trigger').click(editorModeChange);
 	}

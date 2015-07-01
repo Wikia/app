@@ -7,7 +7,9 @@ define('editpage.events', ['editpage.event.preview', 'editpage.event.diff', 'jqu
 		});
 	}
 
-	function attachDesktopPreview(id, $editPage, editor) {
+	function attachDesktopPreview(id,  editor) {
+		var $editPage = $('#EditPage');
+
 		$('#' + id).on(
 			'click', function(e) { preview.onPreview(e, editor); }
 		).popover({
@@ -32,7 +34,9 @@ define('editpage.events', ['editpage.event.preview', 'editpage.event.diff', 'jqu
 		}
 	}
 
-	function attachMobilePreview(id, $editPage, editor) {
+	function attachMobilePreview(id, editor) {
+		var $editPage = $('#EditPage');
+
 		$('#' + id).on(
 			'click', function(e) { preview.onPreviewMobile(e, editor); }
 		).popover({

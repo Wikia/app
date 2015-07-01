@@ -13,7 +13,7 @@ define('editpage.event.diff', ['editpage.event.helper', 'wikia.window', 'jquery'
 	}
 
 	// render "show diff" modal
-	function renderChanges(callbackContent) {
+	function renderChanges() {
 		require([ 'wikia.ui.factory' ], function(uiFactory){
 			uiFactory.init([ 'modal' ]).then(function(uiModal) {
 				var previewModalConfig = {
@@ -33,9 +33,12 @@ define('editpage.event.diff', ['editpage.event.helper', 'wikia.window', 'jquery'
 						target.closest('a').not('[href^="#"]').attr('target', '_blank');
 					});
 
-					prepareDiffContent(previewModal, helper.getContent());
-
-					previewModal.show();
+					$.when(
+						helper.getContent()
+					).done(function(content){
+						prepareDiffContent(previewModal, content);
+						previewModal.show();
+					});
 				});
 			});
 		});
@@ -60,17 +63,17 @@ define('editpage.event.diff', ['editpage.event.helper', 'wikia.window', 'jquery'
 		}
 
 		$.when(
-				// get wikitext diff
-				helper.ajax('diff' , extraData),
+			// get wikitext diff
+			helper.ajax('diff' , extraData),
 
-				// load CSS for diff
-				win.mw.loader.use('mediawiki.action.history.diff')
-			).done(function(ajaxData) {
-				var data = ajaxData[ 0 ],
-					html = '<h1 class="pagetitle">' + win.wgEditedTitle + '</h1>' + data.html;
-				previewModal.$content.find('.ArticlePreview .ArticlePreviewInner').html(html);
-				previewModal.activate();
-			});
+			// load CSS for diff
+			win.mw.loader.use('mediawiki.action.history.diff')
+		).done(function(ajaxData) {
+			var data = ajaxData[ 0 ],
+				html = '<h1 class="pagetitle">' + win.wgEditedTitle + '</h1>' + data.html;
+			previewModal.$content.find('.ArticlePreview .ArticlePreviewInner').html(html);
+			previewModal.activate();
+		});
 	}
 
 	return {

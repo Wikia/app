@@ -4,26 +4,30 @@ define('editpage.event.helper', ['wikia.window'], function(window, ace){
 	// get editor's content (either wikitext or HTML)
 	// and call provided callback with wikitext as its parameter
 	function getContent() {
-		var editor = typeof RTE == 'object' ? RTE.getInstance() : false, mode = editor ? editor.mode : 'mw',
+		var dfd = new $.Deferred(),
+			editor = typeof RTE == 'object' ? RTE.getInstance() : false, mode = editor ? editor.mode : 'mw',
 			content = '';
 
 		if (window.wgEnableCodePageEditor) {
 			require(['wikia.ace.editor'], function(ace){
-				return ace.getContent();
+				content = ace.getContent();
+				dfd.resolve(content);
 			});
+		} else {
+			switch (mode) {
+				case 'mw':
+					content = $('#wpTextbox1').val();
+					break;
+				case 'source':
+				case 'wysiwyg':
+					content = editor.getData();
+					break;
+			}
+
+			dfd.resolve(content);
 		}
 
-		switch (mode) {
-			case 'mw':
-				content = $('#wpTextbox1').val();
-				break;
-			case 'source':
-			case 'wysiwyg':
-				content = editor.getData();
-				break;
-		}
-
-		return content;
+		return dfd.promise();
 	}
 
 	// send AJAX request

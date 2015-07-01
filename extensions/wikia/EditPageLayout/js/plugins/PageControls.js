@@ -47,8 +47,8 @@
 
 			// attach events
 			require(['editpage.events'], function (editpageEvents) {
-				editpageEvents.attachDesktopPreview('wpPreview', $editPage,self.editor);
-				editpageEvents.attachMobilePreview('wpPreviewMobile', $editPage, self.editor);
+				editpageEvents.attachDesktopPreview('wpPreview', self.editor);
+				editpageEvents.attachMobilePreview('wpPreviewMobile', self.editor);
 				editpageEvents.attachDiff('wpDiff', self.editor);
 			});
 

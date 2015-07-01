@@ -91,7 +91,11 @@ define('editpage.event.preview', ['editpage.event.helper', 'jquery', 'wikia.wind
 					$('#wpSave').click();
 				},
 				getPreviewContent: function (callback, skin) {
-					preparePreviewContent(helper.getContent(), extraData, callback, skin);
+					$.when(
+						helper.getContent()
+					).done(function(content){
+						preparePreviewContent(content, extraData, callback, skin);
+					});
 				}
 			};
 
