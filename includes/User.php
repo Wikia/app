@@ -2350,7 +2350,7 @@ class User {
 	 * @see getBoolOption()
 	 * @see getIntOption()
 	 */
-	public function getOptionHelper( $oname, $defaultOverride = null, $ignoreHidden = false ) {
+	private function getOptionHelper( $oname, $defaultOverride = null, $ignoreHidden = false ) {
 		global $wgHiddenPrefs;
 		$this->loadOptions();
 
