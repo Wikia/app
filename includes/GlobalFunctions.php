@@ -3441,16 +3441,7 @@ function wfFixSessionID() {
 	if ( !empty( $_COOKIE[ session_name() ] ) || session_id() ) {
 		return;
 	}
-
-	global $wgSessionDebugData;
-	$sOldSessionId = session_id();
-	$sNewSessionId = MWCryptRand::generateHex( 32 );
-	$wgSessionDebugData[] = [
-		'event' => __METHOD__,
-		'old_session_id' => $sOldSessionId,
-		'new_session_id' => $sNewSessionId,
-	];
-	session_id( $sNewSessionId );
+	session_id( MWCryptRand::generateHex( 32 ) );
 }
 
 /**
@@ -3483,8 +3474,7 @@ function wfResetSessionID() {
  */
 function wfSetupSession( $sessionId = false ) {
 	global $wgSessionsInMemcached, $wgCookiePath, $wgCookieDomain,
-			$wgCookieSecure, $wgCookieHttpOnly, $wgSessionHandler,
-			$wgSessionDebugData;
+			$wgCookieSecure, $wgCookieHttpOnly, $wgSessionHandler;
 
 	if( $wgSessionsInMemcached ) {
 		if ( !defined( 'MW_COMPILED' ) ) {

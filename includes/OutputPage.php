@@ -3134,7 +3134,7 @@ $templates
 			$wgSitename, $wgVersion, $wgHtml5, $wgMimeType,
 			$wgFeed, $wgOverrideSiteFeed, $wgAdvertisedFeedTypes,
 			$wgDisableLangConversion, $wgCanonicalLanguageLinks,
-			$wgRightsPage, $wgRightsUrl;
+			$wgRightsPage, $wgRightsUrl, $wgDevelEnvironment;
 
 		$tags = array();
 
@@ -3161,6 +3161,12 @@ $templates
 		) );
 
 		$p = "{$this->mIndexPolicy},{$this->mFollowPolicy}";
+		// Wikia change - begin
+		if ( !empty( $wgDevelEnvironment ) ) {
+			$p = "noindex,nofollow";
+		}
+		// Wikia change - end
+
 		if( $p !== 'index,follow' ) {
 			// http://www.robotstxt.org/wc/meta-user.html
 			// Only show if it's different from the default robots policy

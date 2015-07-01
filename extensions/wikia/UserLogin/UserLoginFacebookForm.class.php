@@ -55,9 +55,9 @@ class UserLoginFacebookForm extends UserLoginForm {
 	 * @return User A new user object
 	 */
 	public function addNewAccount() {
-		return UserLoginHelper::callWithCaptchaDisabled(function() {
+		return UserLoginHelper::callWithCaptchaDisabled( function() {
 			return $this->addNewAccountInternal();
-		});
+		} );
 	}
 
 	/**
