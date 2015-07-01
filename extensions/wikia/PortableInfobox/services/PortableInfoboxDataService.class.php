@@ -28,10 +28,12 @@ class PortableInfoboxDataService {
 	 */
 	public function getData() {
 		if ( $this->title && $this->title->exists() ) {
-			$data = Article::newFromTitle( $this->title, RequestContext::getMain() )
+			$parserOutput = Article::newFromTitle( $this->title, RequestContext::getMain() )
 				//on empty parser cache this should be regenerated, see WikiPage.php:2996
-				->getParserOutput()
-				->getProperty( PortableInfoboxParserTagController::INFOBOXES_PROPERTY_NAME );
+				->getParserOutput();
+			$data = $parserOutput ?
+				$parserOutput->getProperty( PortableInfoboxParserTagController::INFOBOXES_PROPERTY_NAME )
+				: false;
 
 			//return empty [] to prevent false on non existing infobox data
 			return $data ? $data : [ ];
