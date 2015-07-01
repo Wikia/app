@@ -126,12 +126,12 @@ class SpecialWatchlist extends SpecialPage {
 		# Extract variables from the request, falling back to user preferences or
 		# other default values if these don't exist
 		$prefs['days']      = floatval( $user->getGlobalPreference( 'watchlistdays' ) );
-		$prefs['hideminor'] = $user->getGlobalPreference( 'watchlisthideminor' );
-		$prefs['hidebots']  = $user->getGlobalPreference( 'watchlisthidebots' );
-		$prefs['hideanons'] = $user->getGlobalPreference( 'watchlisthideanons' );
-		$prefs['hideliu']   = $user->getGlobalPreference( 'watchlisthideliu' );
-		$prefs['hideown' ]  = $user->getGlobalPreference( 'watchlisthideown' );
-		$prefs['hidepatrolled' ] = $user->getGlobalPreference( 'watchlisthidepatrolled' );
+		$prefs['hideminor'] = (bool)$user->getGlobalPreference( 'watchlisthideminor' );
+		$prefs['hidebots']  = (bool)$user->getGlobalPreference( 'watchlisthidebots' );
+		$prefs['hideanons'] = (bool)$user->getGlobalPreference( 'watchlisthideanons' );
+		$prefs['hideliu']   = (bool)$user->getGlobalPreference( 'watchlisthideliu' );
+		$prefs['hideown' ]  = (bool)$user->getGlobalPreference( 'watchlisthideown' );
+		$prefs['hidepatrolled' ] = (bool)$user->getGlobalPreference( 'watchlisthidepatrolled' );
 
 		# Get query variables
 		$values = array();

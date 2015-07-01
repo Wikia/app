@@ -61,7 +61,7 @@ class GlobalWatchlistHooks {
 	private static function userUnsubscribingFromWeeklyDigest( array $formData ) {
 		return (
 			$formData['watchlistdigest'] == false &&
-			F::app()->wg->User->getGlobalPreference( 'watchlistdigest' ) == true
+            (bool)F::app()->wg->User->getGlobalPreference( 'watchlistdigest' ) == true
 		);
 	}
 

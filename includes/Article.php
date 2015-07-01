@@ -1502,7 +1502,7 @@ class Article extends Page {
 		} else {
 			$suppress = '';
 		}
-		$checkWatch = $user->getGlobalPreference( 'watchdeletion' ) || $this->getTitle()->userIsWatching();
+		$checkWatch = (bool)$user->getGlobalPreference( 'watchdeletion' ) || $this->getTitle()->userIsWatching();
 
 		$form = Xml::openElement( 'form', array( 'method' => 'post',
 			'action' => $this->getTitle()->getLocalURL( 'action=delete' ), 'id' => 'deleteconfirm' ) ) .

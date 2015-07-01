@@ -4860,7 +4860,7 @@ class Parser {
 			$nickname = $user->getGlobalAttribute( 'nickname' );
 
 		if ( is_null( $fancySig ) ) {
-			$fancySig = $user->getGlobalAttribute( 'fancysig' );
+			$fancySig = (bool)$user->getGlobalAttribute( 'fancysig' );
 		}
 
 		$nickname = $nickname == null ? $username : $nickname;

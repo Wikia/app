@@ -46,11 +46,11 @@ class SpecialRecentChanges extends IncludableSpecialPage {
 		$opts->add( 'limit', (int)$this->getUser()->getGlobalPreference( 'rclimit' ) );
 		$opts->add( 'from', '' );
 
-		$opts->add( 'hideminor',     $this->getUser()->getGlobalPreference( 'hideminor' ) );
+		$opts->add( 'hideminor',     (bool)$this->getUser()->getGlobalPreference( 'hideminor' ) );
 		$opts->add( 'hidebots',      true  );
 		$opts->add( 'hideanons',     false );
 		$opts->add( 'hideliu',       false );
-		$opts->add( 'hidepatrolled', $this->getUser()->getGlobalPreference( 'hidepatrolled' ) );
+		$opts->add( 'hidepatrolled', (bool)$this->getUser()->getGlobalPreference( 'hidepatrolled' ) );
 		$opts->add( 'hidemyself',    false );
 		// Wikia change - begin
 		// still needed?
