@@ -47,6 +47,7 @@ JSMessages::registerPackage( 'CuratedContentMsg', [
 	'wikiacuratedcontent-content-videonotsupported-error',
 	'wikiacuratedcontent-content-notsupportedtype-error',
 	'wikiacuratedcontent-content-nocategoryintag-error',
+	'wikiacuratedcontent-content-imagemissing-error',
 ] );
 
 //hooks

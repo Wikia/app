@@ -21,6 +21,7 @@ $(function () {
 			videoNotSupportedError = msg('wikiacuratedcontent-content-videonotsupported-error'),
 			notSupportedType = msg('wikiacuratedcontent-content-notsupportedtype-error'),
 			noCategoryInTag = msg('wikiacuratedcontent-content-nocategoryintag-error'),
+			imageMissingError = msg('wikiacuratedcontent-content-imagemissing-error'),
 			addItem = d.getElementById('addItem'),
 			addSection = d.getElementById('addSection'),
 			$save = $(d.getElementById('save')),
@@ -131,11 +132,25 @@ $(function () {
 					}
 				});
 			},
+			checkImages = function () {
+				$ul.find('.image.error').removeClass('error').popover('destroy');
+
+				$ul.find('.section:not(.featured), .item')
+					.find('.image[data-id=0], .image:not([data-id])')
+					.addClass('error')
+					.popover('destroy')
+					.popover({
+						content: imageMissingError
+					});
+			},
 			checkForm = function () {
 				$save.removeClass();
 
-				checkInputs($ul.find('.section-input'), ['required', 'limit']);
+				checkInputs($ul.find('.section-input'), ['limit', 'checkEmpty']);
 				checkInputs($ul.find('.item-input'), ['required', 'checkEmpty']);
+
+				// check images for non-featured sections and items
+				checkImages();
 
 				// validate orphans
 				$ul.find('.section ~ .item.error').removeClass('error');
@@ -359,11 +374,12 @@ $(function () {
 			var $currentImage;
 
 			function onFail() {
-				$currentImage
-					.css('backgroundImage', '')
+				$currentImage.css('backgroundImage', '')
+					.data('id', 0)
 					.removeAttr('data-id');
 
 				$currentImage.stopThrobbing();
+				checkForm();
 			}
 
 			function loadImage(imgTitle, catImage) {
@@ -378,15 +394,16 @@ $(function () {
 				).done(
 					function (data) {
 						if (data.url && data.id) {
-							$currentImage.css('backgroundImage', 'url(' + data.url + ')');
-							$currentImage.data('id', data.id);
-							$currentImage.attr('data-id', data.id);
+							$currentImage.css('backgroundImage', 'url(' + data.url + ')')
+								.data('id', data.id)
+								.attr('data-id', data.id);
 
 							if (!catImage) {
 								$currentImage.siblings().last().addClass('photo-remove');
 							}
 
 							$currentImage.stopThrobbing();
+							checkForm();
 						} else {
 							onFail();
 						}

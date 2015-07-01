@@ -113,6 +113,7 @@
 }
 
 .image {
+  border: 1px solid transparent;
   cursor: pointer;
 
   position: absolute;
@@ -126,6 +127,9 @@
   background-image: url('/extensions/wikia/CuratedContent/images/placeholder_search.png'); /* inline */
 
   box-shadow: 0 0 10px -4px;
+  &.error {
+    border-color: red;
+  }
 }
 
 .section, .language{
