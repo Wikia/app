@@ -840,10 +840,10 @@ class WikiPage extends Page {
 	 *               get the current revision (default value)
 	 * @return ParserOutput or false if the revision was not found
 	 */
-	public function getParserOutput( ParserOptions $parserOptions, $oldid = null, $fromCache = true ) {
+	public function getParserOutput( ParserOptions $parserOptions, $oldid = null ) {
 		wfProfileIn( __METHOD__ );
 
-		$useParserCache = $this->isParserCacheUsed( $parserOptions, $oldid ) && $fromCache;
+		$useParserCache = $this->isParserCacheUsed( $parserOptions, $oldid );
 		wfDebug( __METHOD__ . ': using parser cache: ' . ( $useParserCache ? 'yes' : 'no' ) . "\n" );
 		if ( $parserOptions->getStubThreshold() ) {
 			wfIncrStats( 'pcache_miss_stub' );

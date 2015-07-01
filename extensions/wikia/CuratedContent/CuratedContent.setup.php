@@ -43,7 +43,6 @@ JSMessages::registerPackage( 'CuratedContentMsg', [
 	'wikiacuratedcontent-content-orphaned-error',
 	'wikiacuratedcontent-content-articlenotfound-error',
 	'wikiacuratedcontent-content-emptylabel-error',
-	'wikiacuratedcontent-content-toolonglabel-error',
 	'wikiacuratedcontent-content-videonotsupported-error',
 	'wikiacuratedcontent-content-notsupportedtype-error',
 	'wikiacuratedcontent-content-nocategoryintag-error',

@@ -1,10 +1,5 @@
 /* global wgNamespaceIds, wgFormattedNamespaces, mw, wgServer, wgScript */
-/* jshint maxlen: false */
-/* jshint loopfunc: false */
-/* jshint camelcase: false */
 $(function () {
-	'use strict';
-
 	require(['wikia.window', 'jquery', 'wikia.nirvana', 'wikia.tracker', 'JSMessages'], function (window, $, nirvana, tracker, msg) {
 		'use strict';
 
@@ -17,7 +12,6 @@ $(function () {
 			orphanError = msg('wikiacuratedcontent-content-orphaned-error'),
 			articleNotFoundError = msg('wikiacuratedcontent-content-articlenotfound-error'),
 			emptyLabelError = msg('wikiacuratedcontent-content-emptylabel-error'),
-			tooLongLabelError = msg('wikiacuratedcontent-content-toolonglabel-error'),
 			videoNotSupportedError = msg('wikiacuratedcontent-content-videonotsupported-error'),
 			notSupportedType = msg('wikiacuratedcontent-content-notsupportedtype-error'),
 			noCategoryInTag = msg('wikiacuratedcontent-content-nocategoryintag-error'),
@@ -28,7 +22,7 @@ $(function () {
 			$form = $(form),
 			ul = form.getElementsByTagName('ul')[0],
 			$ul = $(ul),
-			maxAllowedLength = 48, // it's derived from MAX_LABEL_LENGTH in CuratedContentSpecialController
+		//it looks better if we display in input item name without Item:
 
 			setup = function (elem) {
 				(elem || $ul.find('.item-input')).autocomplete({
@@ -50,8 +44,6 @@ $(function () {
 					minLength: 3,
 					skipBadQueries: true // BugId:4625 - always send the request even if previous one returned no suggestions
 				});
-				// validate form on init
-				checkForm();
 			},
 			addNew = function (row, elem) {
 				var cat;
@@ -69,59 +61,28 @@ $(function () {
 
 				$ul.sortable('refresh');
 			},
-
-			/**
-			 * Validate input elements
-			 *
-			 * @param elements
-			 * @param options array consists of ['checkEmpty', 'required', 'limit']
-			 */
-			checkInputs = function (elements, options) {
-				var cachedVals = [],
-					optionCheckEmpty, optionRequired, optionLimit;
-
-				if (Array.isArray(options)) {
-					optionCheckEmpty = options.indexOf('checkEmpty') !== -1;
-					optionRequired = options.indexOf('required') !== -1;
-					optionLimit = options.indexOf('limit') !== -1;
-				}
+			checkInputs = function (elements, checkEmpty, required) {
+				var names = [];
 
 				elements.each(function () {
 					var val = this.value,
 						$this = $(this);
 
-					// check if filed valuer is empty and it's required
-					if (optionRequired && val === '') {
+					if (required && val === '') {
 						$this
 							.addClass('error')
 							.popover('destroy')
 							.popover({
 								content: requiredError
 							});
-						return true;
-					}
-					// check if field value is too long
-					if (optionLimit && val.length > maxAllowedLength) {
-						$this
-							.addClass('error')
-							.popover('destroy')
-							.popover({
-								content: tooLongLabelError
-							});
-						return true;
-					}
-					// check if value already exists (in cachedVals variable)
-					if (cachedVals.indexOf(val) === -1) {
-						// not exists, add it to cachedVals and remove previous errors
-						cachedVals.push(val);
+					} else if (!~names.indexOf(val)) {
+						names.push(val);
 
 						$this
 							.removeClass('error')
 							.popover('destroy');
 
-						return true;
-					} else if (optionCheckEmpty || val !== '') {
-						// if it exists and it's not empty it's duplication
+					} else if (checkEmpty || val !== '') {
 						$this
 							.addClass('error')
 							.popover('destroy')
@@ -134,8 +95,8 @@ $(function () {
 			checkForm = function () {
 				$save.removeClass();
 
-				checkInputs($ul.find('.section-input'), ['required', 'limit']);
-				checkInputs($ul.find('.item-input'), ['required', 'checkEmpty']);
+				checkInputs($ul.find('.section-input'), true);
+				checkInputs($ul.find('.item-input'), true, true);
 
 				// validate orphans
 				$ul.find('.section ~ .item.error').removeClass('error');
@@ -161,7 +122,7 @@ $(function () {
 								content: emptySectionError
 							});
 					} else {
-						checkInputs($items.find('.name'), ['limit']);
+						checkInputs($items.find('.name'))
 					}
 				});
 
@@ -190,7 +151,7 @@ $(function () {
 			.on('blur', 'input', function () {
 				var val = $.trim(this.value);
 
-				if (this.className === 'item-input') {
+				if (this.className == 'item-input') {
 					val = val.replace(/ /g, '_');
 				}
 				this.value = val;
@@ -206,7 +167,7 @@ $(function () {
 				if (ev.keyCode === 13) {
 					$(this).next().focus();
 				}
-			}).keyup(function () {
+			}).keyup(function (ev) {
 				setTimeout(checkForm, 0);
 			});
 
@@ -224,7 +185,7 @@ $(function () {
 				title: $lia.find('.item-input').val(),
 				label: $lia.find('.name').val(),
 				image_id: $lia.find('.image').data('id') || 0
-			};
+			}
 		}
 
 		function getSectionData(li) {
@@ -243,9 +204,9 @@ $(function () {
 				title: name,
 				image_id: imageId,
 				items: items
-			};
+			}
 			if (featured) {
-				result.featured = true;
+				result['featured'] = true;
 			}
 			return result;
 		}
@@ -289,9 +250,6 @@ $(function () {
 							if (errReason === 'emptyLabel') {
 								return emptyLabelError;
 							}
-							if (errReason === 'tooLongLabel') {
-								return tooLongLabelError;
-							}
 							if (errReason === 'videoNotSupportProvider') {
 								return videoNotSupportedError;
 							}
@@ -307,7 +265,7 @@ $(function () {
 						if (data.error) {
 							var err = data.error,
 								i = err.length,
-								items = $form.find('.item-input, .section-input');
+								items = $form.find('.item-input');
 							while (i--) {
 								//I cannot use value CSS selector as I want to use current value
 								var errTitle = err[i].title;
@@ -316,7 +274,7 @@ $(function () {
 								items.each(function () {
 
 									if (this.value === errTitle) {
-										if (errReason !== 'emptyLabel' && errReason !== 'tooLongLabel') {
+										if (errReason != 'emptyLabel') {
 											$(this)
 												.addClass('error')
 												.popover('destroy')
@@ -378,7 +336,7 @@ $(function () {
 				).done(
 					function (data) {
 						if (data.url && data.id) {
-							$currentImage.css('backgroundImage', 'url(' + data.url + ')');
+							$currentImage.css('backgroundImage', 'url(' + data.url + ')')
 							$currentImage.data('id', data.id);
 							$currentImage.attr('data-id', data.id);
 

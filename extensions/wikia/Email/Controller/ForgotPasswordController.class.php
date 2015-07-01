@@ -20,10 +20,10 @@ class ForgotPasswordController extends EmailController {
 
 	public function initEmail() {
 		$userService = new \UserService();
-		$this->tempPass = $this->request->getVal( 'tempPass' );
-		if ( empty( $this->tempPass ) ) {
-			$this->tempPass = $userService->resetPassword( $this->targetUser );
-		}
+		$this->tempPass = $this->request->getVal(
+			'tempPass',
+			$userService->resetPassword( $this->targetUser )
+		);
 	}
 
 	public function getSubject() {

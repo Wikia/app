@@ -28,15 +28,7 @@ class FlagsController extends WikiaController {
 		self::FLAGS_CONTROLLER_ACTION_UPDATE => 'requestUpdateFlagsForPage',
 	];
 
-	/**
-	 * Prevent modifying ParserOutput twice in the same request
-	 *
-	 * @see \Flags\Hooks::onBeforeParserCacheSave
-	 */
-	public static $parsed = false;
-
 	private
-		$helper,
 		$params;
 
 	public function init() {
@@ -51,19 +43,14 @@ class FlagsController extends WikiaController {
 		$wgLang->getLangObj();
 	}
 
-	public function modifyParserOutputWithFlags( ParserOutput $parserOutput, $pageId, $currentFlags = [] ) {
+	public function modifyParserOutputWithFlags( ParserOutput $parserOutput, $pageId ) {
 		$mwf = \MagicWord::get( 'flags' );
 
 		/**
 		 * First, get ParserOutput for flags for the article.
 		 * If it's null - return the original $parserOutput.
 		 */
-		if ( !empty( $currentFlags ) ) {
-			$flagsParserOutput = $this->getFlagsForParserOutput( $currentFlags, $pageId );
-		} else {
-			$flagsParserOutput = $this->getFlagsForParserOutputFromDB( $pageId );
-		}
-
+		$flagsParserOutput = $this->getFlagsParserOutputForPage( $pageId );
 		if ( $flagsParserOutput === null ) {
 			/**
 			 * If there is __FLAGS__ magic word present in the content
@@ -90,74 +77,39 @@ class FlagsController extends WikiaController {
 	}
 
 	/**
-	 * Transform all flags for the given page from POST data into a set of wikitext templates calls
-	 * that are supposed to be injected into Parser before expanding templates.
-	 * @param $pageId
-	 * @return ParserOutput|null
-	 */
-	public function getFlagsForParserOutput( $currentFlags, $pageId ) {
-		$flagsOnPage = [];
-
-		foreach( $this->params['editFlags'] as $flagTypeId => $flag ) {
-			if ( isset( $flag[FlagsHelper::FLAGS_INPUT_NAME_CHECKBOX] ) ) {
-				$flagsOnPage[$flagTypeId] = $this->getFlagsHelper()->getFlagFromPostData(
-					$currentFlags[$flagTypeId],
-					$this->params['editFlags']
-				);
-
-				$flagsOnPage[$flagTypeId]['flag_targeting'] = $currentFlags[$flagTypeId]['flag_targeting'];
-				$flagsOnPage[$flagTypeId]['flag_view'] = $currentFlags[$flagTypeId]['flag_view'];
-			}
-		}
-
-		return $this->getParsedFlags( $flagsOnPage, $pageId );
-	}
-
-	/**
 	 * Sends a request for all instances of flags for the given page.
 	 * A result of the request is transformed into a set of wikitext templates calls
 	 * that are supposed to be injected into Parser before expanding templates.
 	 * @param $pageId
 	 * @return ParserOutput|null
 	 */
-	public function getFlagsForParserOutputFromDB( $pageId ) {
+	public function getFlagsParserOutputForPage( $pageId ) {
 		try {
 			$response = $this->requestGetFlagsForPage( $pageId );
 
 			if ( $this->getResponseStatus( $response ) ) {
+				$templatesCalls = [];
 				$flags = $this->getResponseData( $response );
 
-				return $this->getParsedFlags( $flags, $pageId );
+				$flagView = new FlagView();
+
+				foreach ( $flags as $flagId => $flag ) {
+					$templatesCalls[] = $flagView->wrapSingleFlag(
+						$flag['flag_type_id'],
+						$flag['flag_targeting'],
+						$flag['flag_view'],
+						$flag['params']
+					);
+				}
+
+				return $flagView->renderFlags( $templatesCalls, $pageId );
 			} else {
 				return null;
 			}
+
 		} catch ( Exception $exception ) {
 			$this->logResponseException( $exception, $response->getRequest() );
 		}
-	}
-
-	/**
-	 * Wrap and parse flags
-	 *
-	 * @param Array $flags
-	 * @param int $pageId
-	 * @return ParserOutput
-	 */
-	private function getParsedFlags( $flags, $pageId ) {
-		$templatesCalls = [];
-
-		$flagView = new FlagView();
-
-		foreach ( $flags as $flag ) {
-			$templatesCalls[] = $flagView->wrapSingleFlag(
-				$flag['flag_type_id'],
-				$flag['flag_targeting'],
-				$flag['flag_view'],
-				$flag['params']
-			);
-		}
-
-		return $flagView->renderFlags( $templatesCalls, $pageId );
 	}
 
 	/**
@@ -244,7 +196,8 @@ class FlagsController extends WikiaController {
 			 */
 			$currentFlags = $this->getResponseData( $this->requestGetFlagsForPageForEdit( $pageId ) );
 
-			$flagsToChange = $this->getFlagsHelper()->compareDataAndGetFlagsToChange( $currentFlags, $this->params['editFlags'] );
+			$helper = new FlagsHelper();
+			$flagsToChange = $helper->compareDataAndGetFlagsToChange( $currentFlags, $this->params['editFlags'] );
 
 			if ( !empty( $flagsToChange ) ) {
 				$this->sendRequestsUsingPostedData( $pageId, $flagsToChange );
@@ -256,16 +209,8 @@ class FlagsController extends WikiaController {
 				$wikiPage->doPurge();
 
 				$parserOptions = ParserOptions::newFromUser( $this->wg->User );
-				$parserOutput = $wikiPage->getParserOutput( $parserOptions, null, false );
-
-				$parserOutput = $this->modifyParserOutputWithFlags( $parserOutput, $pageId, $currentFlags );
-
-				self::$parsed = true;
-
-				ParserCache::singleton()->save($parserOutput, $wikiPage, $parserOptions);
-
 				( new LinksUpdate(
-					$wikiPage->getTitle(), $parserOutput )
+					$wikiPage->getTitle(), $wikiPage->getParserOutput( $parserOptions ) )
 				)->doUpdate();
 			}
 
@@ -433,14 +378,6 @@ class FlagsController extends WikiaController {
 
 	private function getResponseStatus( WikiaResponse $response ) {
 		return $response->getData()[FlagsApiController::FLAGS_API_RESPONSE_STATUS];
-	}
-
-	private function getFlagsHelper() {
-		if ( empty( $this->helper ) ) {
-			$this->helper = new FlagsHelper();
-		}
-
-		return $this->helper;
 	}
 
 	private function logResponseException( Exception $e, WikiaRequest $request ) {
