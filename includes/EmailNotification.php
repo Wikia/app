@@ -357,29 +357,16 @@ class EmailNotification {
 		$keys = [];
 		$postTransformKeys = [];
 
-		if ( $this->isNewPage() ) {
-			// watchlist link tracking
-			list ( $keys['$NEWPAGE'], $keys['$NEWPAGEHTML'] ) = wfMsgHTMLwithLanguageAndAlternative (
-				'enotif_lastvisited',
-				'enotif_lastvisited',
-				F::app()->wg->LanguageCode,
-				[],
-				$this->title->getFullUrl( 's=wldiff&diff=0&previousRevId=' . $this->previousRevId )
-			);
-			$keys['$OLDID']   = $this->previousRevId;
-			$keys['$CHANGEDORCREATED'] = wfMessage( 'changed' )->inContentLanguage()->plain();
+		if ( $action == '' ) {
+			// no previousRevId + empty action = create edit, ok to use newpagetext
+			$keys['$NEWPAGEHTML'] = $keys['$NEWPAGE'] = wfMessage( 'enotif_newpagetext' )->inContentLanguage()->plain();
 		} else {
-			if ( $action == '' ) {
-				// no previousRevId + empty action = create edit, ok to use newpagetext
-				$keys['$NEWPAGEHTML'] = $keys['$NEWPAGE'] = wfMessage( 'enotif_newpagetext' )->inContentLanguage()->plain();
-			} else {
-				// no previousRevId + action = event, dont show anything, confuses users
-				$keys['$NEWPAGEHTML'] = $keys['$NEWPAGE'] = '';
-			}
-			# clear $OLDID placeholder in the message template
-			$keys['$OLDID']   = '';
-			$keys['$CHANGEDORCREATED'] = wfMessage( 'created' )->inContentLanguage()->plain();
+			// no previousRevId + action = event, dont show anything, confuses users
+			$keys['$NEWPAGEHTML'] = $keys['$NEWPAGE'] = '';
 		}
+		# clear $OLDID placeholder in the message template
+		$keys['$OLDID']   = '';
+		$keys['$CHANGEDORCREATED'] = wfMessage( 'created' )->inContentLanguage()->plain();
 
 		$keys['$PAGETITLE'] = $this->title->getPrefixedText();
 		$keys['$PAGETITLE_URL'] = $this->title->getCanonicalUrl( 's=wl' );
@@ -462,8 +449,8 @@ class EmailNotification {
 
 		$controller = false;
 
-		if ( $this->isArticlePageEdit() ) {
-			$controller = 'Email\Controller\WatchedPageEdited';
+		if ( $this->isArticlePageEditOrCreatedPage() ) {
+			$controller = 'Email\Controller\WatchedPageEditedOrCreated';
 		} elseif ( $this->isArticlePageRenamed() ) {
 			$controller = 'Email\Controller\WatchedPageRenamed';
 		} elseif ( $this->isArticlePageProtected() ) {
@@ -520,14 +507,14 @@ class EmailNotification {
 		}
 	}
 	/**
-	 * Returns whether the email notification is for a watched article page which has been edited.
-	 * If $this->action is empty and we have a previous Revision id it's an article page edit.
-	 * The other possible values for action are categoryadd, blogpost, and article_comment.
+	 * Returns whether the email notification is for a watched article page which has been edited,
+	 * or for a newly created page. The other possible values for action are categoryadd, blogpost,
+	 * and article_comment.
 	 *
 	 * @return bool
 	 */
-	private function isArticlePageEdit() {
-		return empty( $this->action ) && !$this->isNewPage();
+	private function isArticlePageEditOrCreatedPage() {
+		return empty( $this->action );
 	}
 
 	/**
@@ -564,15 +551,6 @@ class EmailNotification {
 	 */
 	private function isArticlePageDeleted() {
 		return in_array( $this->action, [ 'delete' ] );
-	}
-
-	/**
-	 * When a page is created, the previousRevId is always 0.
-	 *
-	 * @return bool
-	 */
-	private function isNewPage() {
-		return $this->previousRevId == 0;
 	}
 
 	private function isArticleComment() {
