@@ -76,25 +76,25 @@ final class SWLHooks {
     	foreach ( $userIDs as $userID ) {
     		$user = User::newFromId( $userID );
 
-				if ( $user->getGlobalAttribute( 'swl_email', false ) ) {
-    			if ( !method_exists( 'Sanitizer', 'validateEmail' ) || Sanitizer::validateEmail( $user->getEmail() ) ) {
+			if ( $user->getGlobalAttribute( 'swl_email', false ) ) {
+				if ( !method_exists( 'Sanitizer', 'validateEmail' ) || Sanitizer::validateEmail( $user->getEmail() ) ) {
 					$lastNotify = $user->getGlobalAttribute( 'swl_last_notify' );
 					$lastWatch = $user->getGlobalAttribute( 'swl_last_watch' );
 
-		    		if ( is_null( $lastNotify ) || is_null( $lastWatch ) || $lastNotify < $lastWatch ) {
+					if ( is_null( $lastNotify ) || is_null( $lastWatch ) || $lastNotify < $lastWatch ) {
 							$mailCount = $user->getGlobalAttribute( 'swl_mail_count', 0 );
 
-		    			if ( $egSWLMailPerChange || $mailCount < $egSWLMaxMails ) {
-			    			SWLEmailer::notifyUser( $group, $user, $changes, $egSWLMailPerChange );
+						if ( $egSWLMailPerChange || $mailCount < $egSWLMaxMails ) {
+							SWLEmailer::notifyUser( $group, $user, $changes, $egSWLMailPerChange );
 								$user->setGlobalAttribute( 'swl_last_notify', wfTimestampNow() );
 								$user->setGlobalAttribute( 'swl_mail_count', $mailCount + 1 );
 								$user->saveSettings();
-		    			}
-		    		}      				
-    			}
-    		}
-    	}
-    	
+						}
+					}
+				}
+			}
+		}
+
         return true;
     }
     

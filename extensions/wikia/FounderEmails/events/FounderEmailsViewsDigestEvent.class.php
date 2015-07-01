@@ -13,7 +13,7 @@ class FounderEmailsViewsDigestEvent extends FounderEmailsEvent {
 		}
 
 		// disable if all Wikia email disabled
-        if ( (bool)$admin->getGlobalPreference( 'unsubscribed' ) ) {
+		if ( (bool)$admin->getGlobalPreference( 'unsubscribed' ) ) {
 			return false;
 		}
 

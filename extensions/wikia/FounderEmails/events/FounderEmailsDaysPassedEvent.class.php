@@ -8,7 +8,7 @@ class FounderEmailsDaysPassedEvent extends FounderEmailsEvent {
 
 	public function enabled ( User $admin, $wikiId = null ) {
 		// disable if all Wikia email disabled
-        if ( (bool)$admin->getGlobalPreference( 'unsubscribed' ) ) {
+		if ( (bool)$admin->getGlobalPreference( 'unsubscribed' ) ) {
 			return false;
 		}
 
@@ -106,8 +106,8 @@ class FounderEmailsDaysPassedEvent extends FounderEmailsEvent {
 
 		// set FounderEmails notifications enabled by default for wiki founder
 //		$wikiFounder->setOption( 'founderemailsenabled', true );
-        $wikiFounder->setLocalPreference( "founderemails-joins", true, $wgCityId );
-        $wikiFounder->setLocalPreference( "founderemails-edits", true, $wgCityId );
+		$wikiFounder->setLocalPreference( "founderemails-joins", true, $wgCityId );
+		$wikiFounder->setLocalPreference( "founderemails-edits", true, $wgCityId );
 
 		$wikiFounder->saveSettings();
 
