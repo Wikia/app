@@ -1084,7 +1084,7 @@ class ArticleComment {
 		}
 
 
-		if ( $wgUser->getOption( 'watchdefault' ) && !$oArticlePage->userIsWatching() ) {
+		if ( $wgUser->getGlobalPreference( 'watchdefault' ) && !$oArticlePage->userIsWatching() ) {
 			# and article page
 			$wgUser->addWatch( $oArticlePage );
 		}

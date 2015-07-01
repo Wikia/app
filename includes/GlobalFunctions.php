@@ -1812,10 +1812,11 @@ function wfDebugBacktrace( $limit = 0 ) {
  *
  * @return string
  */
-function wfBacktrace() {
+function wfBacktrace( $forceCommandLineMode = false ) {
 	global $wgCommandLineMode;
 
-	if ( $wgCommandLineMode ) {
+	$commandLinemode = $wgCommandLineMode || $forceCommandLineMode;
+	if ( $commandLinemode ) {
 		$msg = '';
 	} else {
 		$msg = "<ul>\n";
@@ -1833,7 +1834,7 @@ function wfBacktrace() {
 		} else {
 			$line = '-';
 		}
-		if ( $wgCommandLineMode ) {
+		if ( $commandLinemode ) {
 			$msg .= "$file line $line calls ";
 		} else {
 			$msg .= '<li>' . $file . ' line ' . $line . ' calls ';
@@ -1843,13 +1844,13 @@ function wfBacktrace() {
 		}
 		$msg .= $call['function'] . '()';
 
-		if ( $wgCommandLineMode ) {
+		if ( $commandLinemode ) {
 			$msg .= "\n";
 		} else {
 			$msg .= "</li>\n";
 		}
 	}
-	if ( $wgCommandLineMode ) {
+	if ( $commandLinemode ) {
 		$msg .= "\n";
 	} else {
 		$msg .= "</ul>\n";

@@ -243,7 +243,7 @@ class PlacesController extends WikiaController {
 
 		// use user default
 		if ( empty( $iWidth ) ){
-			$wopt = $this->app->wg->user->getOption( 'thumbsize' );
+			$wopt = $this->app->wg->user->getGlobalPreference( 'thumbsize' );
 			if( !isset( $this->app->wg->thumbLimits[ $wopt ] ) ) {
 				$wopt = User::getDefaultOption( 'thumbsize' );
 			}

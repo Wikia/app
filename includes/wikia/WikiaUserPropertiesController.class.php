@@ -32,15 +32,6 @@ class WikiaUserPropertiesController extends WikiaController {
 		}
 	}
 
-
-
-	protected function savePropetyValue($property, $value) {
-		$this->throwExceptionForAnons();
-
-		$this->wg->User->setOption($property, $value);
-		$this->wg->User->saveSettings();
-	}
-
 	protected function throwExceptionForAnons() {
 		if (!$this->wg->User->isLoggedIn()) {
 			throw new Exception('User not logged-in');

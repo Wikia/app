@@ -471,7 +471,7 @@ END;
 	 */
 	protected function watchCheck() {
 		global $wgUser;
-		if ( $wgUser->getOption( 'watchdefault' ) ) {
+		if ( $wgUser->getGlobalPreference( 'watchdefault' ) ) {
 			// Watch all edits!
 			return true;
 		}
@@ -483,7 +483,7 @@ END;
 			return $local->getTitle()->userIsWatching();
 		} else {
 			// New page should get watched if that's our option.
-			return $wgUser->getOption( 'watchcreations' );
+			return $wgUser->getGlobalPreference( 'watchcreations' );
 		}
 	}
 
@@ -848,14 +848,14 @@ class SFUploadForm extends HTMLForm {
 	/**
 	 * Get the descriptor of the fieldset that contains the file description
 	 * input. The section is 'description'
-	 * 
+	 *
 	 * @return array Descriptor array
 	 */
 	protected function getDescriptionSection() {
 		global $wgUser, $wgOut;
 
-		$cols = intval( $wgUser->getOption( 'cols' ) );
-		if ( $wgUser->getOption( 'editwidth' ) ) {
+		$cols = intval( $wgUser->getGlobalPreference( 'cols' ) );
+		if ( $wgUser->getGlobalPreference( 'editwidth' ) ) {
 			$wgOut->addInlineStyle( '#mw-htmlform-description { width: 100%; }' );
 		}
 

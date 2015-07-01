@@ -22,7 +22,7 @@ class LicensedVideoSwapHooksHelper {
 		if ( $app->wg->Title->getFullText() == 'Special:LicensedVideoSwap' ) {
 
 			// Get the user preference skin, not the current skin of the page
-			$skin = $app->wg->User->getOption( 'skin' );
+			$skin = $app->wg->User->getGlobalPreference( 'skin' );
 
 			// for monobook users, specify wikia skin in querystring
 			$query = "";

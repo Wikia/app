@@ -209,7 +209,7 @@ class UserLoginHelper extends WikiaModel {
 		if ( empty( $this->wg->EnableRichEmails ) ) {
 			$bodyHTML = null;
 		} else {
-			$emailTextTemplate = $this->app->renderView( "UserLogin", $template, array( 'language' => $user->getOption( 'language' ), 'type' => $templateType ) );
+			$emailTextTemplate = $this->app->renderView( "UserLogin", $template, array( 'language' => $user->getGlobalPreference( 'language' ), 'type' => $templateType ) );
 			$bodyHTML = strtr( $emailTextTemplate, $emailParams );
 		}
 
@@ -244,7 +244,7 @@ class UserLoginHelper extends WikiaModel {
 			$result['msg'] = wfMessage( 'userlogin-error-nosuchuser' )->escaped();
 			return $result;
 		} else {
-			if ( !$user->getOption( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME ) && $user->isEmailConfirmed() ) {
+			if ( !$user->getGlobalFlag(UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME ) && $user->isEmailConfirmed() ) {
 				// User already confirmed on signup
 				$result['result'] = 'confirmed';
 				$result['msg'] = wfMessage( 'usersignup-error-confirmed-user', $username, $user->getUserPage()->getFullURL() )->parse();
@@ -325,10 +325,10 @@ class UserLoginHelper extends WikiaModel {
 	 * @return Status object
 	 */
 	public function sendConfirmationReminderEmail( $user ) {
-		if ( ( $user->getOption( "cr_mailed", 0 ) == 1 ) ) {
+		if ( ( $user->getGlobalFlag( "cr_mailed", 0 ) == 1 ) ) {
 			return Status::newFatal( 'userlogin-error-confirmation-reminder-already-sent' );
 		}
-		$user->setOption( "cr_mailed", "1" );
+		$user->setGlobalFlag( "cr_mailed", "1" );
 		return $user->sendConfirmationMail( false, 'ConfirmationReminderMail' );
 	}
 
@@ -476,7 +476,7 @@ class UserLoginHelper extends WikiaModel {
 	public function showRequestFormConfirmEmail( EmailConfirmation $pageObj ) {
 		$user = $pageObj->getUser(); /* @var $user User */
 		$out = $pageObj->getOutput(); /* @var $out OutputPage */
-		$optionNewEmail = $user->getOption( 'new_email' );
+		$optionNewEmail = $user->getGlobalAttribute( 'new_email' );
 		if ( $pageObj->getRequest()->wasPosted() && $user->matchEditToken( $pageObj->getRequest()->getText( 'token' ) ) ) {
 			// Wikia change -- only allow one email confirmation attempt per hour
 			if ( strtotime( $user->mEmailTokenExpires ) - strtotime( "+6 days 23 hours" ) > 0 ) {
@@ -534,8 +534,8 @@ class UserLoginHelper extends WikiaModel {
 	 * @return bool
 	 */
 	public static function removeNotConfirmedFlag( User &$user ) {
-		$user->setOption( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME, null );
-		$user->setOption( UserLoginSpecialController::SIGNED_UP_ON_WIKI_OPTION_NAME, null );
+		$user->setGlobalFlag( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME, null );
+		$user->setGlobalFlag( UserLoginSpecialController::SIGNED_UP_ON_WIKI_OPTION_NAME, null );
 		$user->saveSettings();
 		$user->saveToCache();
 		wfRunHooks( 'SignupConfirmEmailComplete', array( $user ) );
