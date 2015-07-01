@@ -1752,4 +1752,4 @@ $wgAdDriverIncontentPlayerSlotCountries = null;
 /**
  * flag for using (possibly external) service for managing a user's preferences
  */
-$wgPreferencesUseService = true;
+$wgPreferencesUseService = false;
