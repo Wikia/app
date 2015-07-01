@@ -13,7 +13,7 @@ class FounderEmailsCompleteDigestEvent extends FounderEmailsEvent {
 			return false;
 		}
 
-		if ( $admin->getGlobalPreference( "founderemails-complete-digest-$wikiId" ) ) {
+		if ( $admin->getLocalPreference( "founderemails-complete-digest", $wikiId ) ) {
 			return true;
 		}
 
