@@ -95,7 +95,7 @@ class SFFormUtils {
 		if ( $is_disabled ) {
 			$attr['disabled'] = true;
 		}
-		$text .= Html::element( 'input', $attr );
+		$text .= ' ' . Html::element( 'input', $attr );
 
 		return $text;
 	}
