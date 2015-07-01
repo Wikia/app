@@ -184,7 +184,7 @@ class UserLoginTest extends UserLoginBaseTest {
 		$mockUserParams110 = array(
 			'load' => null,
 			'loadFromDatabase' => null,
-			'getOption' => true
+			'getGlobalFlag' => true
 		);
 		$expMsg110 = wfMessage( 'userlogin-error-edit-account-closed-flag' )->escaped();
 
