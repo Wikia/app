@@ -296,7 +296,7 @@ class RTEParser extends Parser {
 		else if (isset($data['params']['thumbnail'])) {
 			// width not provided - get default for thumbs
 			global $wgUser, $wgThumbLimits;
-			$wopt = $wgUser->getOption('thumbsize');
+			$wopt = $wgUser->getGlobalPreference('thumbsize');
 
 			if(!isset($wgThumbLimits[$wopt])) {
 				$wopt = User::getDefaultOption('thumbsize');

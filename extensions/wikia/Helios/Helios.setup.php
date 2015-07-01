@@ -31,8 +31,8 @@ $wgExtensionMessagesFiles['Helios'] = __DIR__ . '/Helios.i18n.php';
  */
 $wgHooks['UserCheckPassword'][] = 'Wikia\\Helios\\User::onUserCheckPassword';
 $wgHooks['ExternalUserWikiaAuthenticate'][] = 'Wikia\\Helios\\User::onUserCheckPassword';
-$wgHooks['ExternalUserWikiaAddToDatabase'][] = 'Wikia\\Helios\\User::onRegister';
 
 $wgHooks['UserSaveSettings'][] = 'Wikia\\Helios\\User::onUserSave';
 $wgHooks['UserSaveOptions'][] = 'Wikia\\Helios\\User::onUserSave';
+$wgHooks['UserSetPreferences'][] = 'Wikia\\Helios\\User::onUserSave';
 $wgHooks['UserLogout'][] = 'Wikia\\Helios\\User::clearAccessTokenCookie';

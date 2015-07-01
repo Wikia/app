@@ -143,7 +143,7 @@ class SpecialUploadWizard extends SpecialPage {
 		
 		$config['thanksLabel'] = $this->getPageContent( $config['thanksLabelPage'], true );
 		
-		$defaultLicense = $this->getUser()->getOption( 'upwiz_deflicense' );
+		$defaultLicense = $this->getUser()->getGlobalPreference( 'upwiz_deflicense' );
 		
 		if ( $defaultLicense !== 'default' ) {
 			$defaultLicense = explode( '-', $defaultLicense, 2 );

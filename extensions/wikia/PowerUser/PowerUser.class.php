@@ -124,7 +124,7 @@ class PowerUser {
 	 */
 	public function addPowerUserSetOption( $sProperty ) {
 		if ( in_array( $sProperty, self::$aPowerUserProperties ) ) {
-			$this->oUser->setOption( $sProperty, true );
+			$this->oUser->setGlobalFlag( $sProperty, true );
 			$this->oUser->saveSettings();
 			$this->logSuccess( $sProperty, self::ACTION_ADD_SET_OPTION );
 			return true;
@@ -171,8 +171,8 @@ class PowerUser {
 	 */
 	public function removePowerUserSetOption( $sProperty ) {
 		if ( in_array( $sProperty, self::$aPowerUserProperties ) ) {
-			if ( $this->oUser->getBoolOption( $sProperty ) === true ) {
-				$this->oUser->setOption( $sProperty, null );
+			if ( (bool)$this->oUser->getGlobalFlag( $sProperty ) === true ) {
+				$this->oUser->setGlobalFlag( $sProperty, null );
 				$this->oUser->saveSettings();
 				$this->logSuccess( $sProperty, self::ACTION_REMOVE_SET_OPTION );
 			}

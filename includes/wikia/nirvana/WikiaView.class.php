@@ -202,8 +202,8 @@ class WikiaView {
 			$method = $reflection->getMethod( $methodName );
 
 			$comment = $method->getDocComment();
-			if ( preg_match( '/@template ([^ ]+)/', $comment, $matches ) ) {
-				$template = trim( $matches[1] );
+			if ( preg_match( '/@template (\S+)/', $comment, $matches ) ) {
+				$template = $matches[1];
 			}
 		}
 

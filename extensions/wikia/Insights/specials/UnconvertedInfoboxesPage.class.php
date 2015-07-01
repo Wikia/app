@@ -130,7 +130,7 @@ class UnconvertedInfoboxesPage extends PageQueryPage {
 	public static function isTitleWithNonportableInfobox( $titleText, $contentText ) {
 		$titleNeedle = 'infobox';
 		if ( strripos( $titleText, $titleNeedle ) !== false ) {
-			$portableInfoboxNeedle = '<infobox>';
+			$portableInfoboxNeedle = '<infobox';
 
 			// If a portable infobox markup was found
 			// it means that the template doesn't have a non-portable infobox
