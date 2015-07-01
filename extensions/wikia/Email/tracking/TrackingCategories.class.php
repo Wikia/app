@@ -19,5 +19,5 @@ class TrackingCategories {
 	const EMAIL_CONFIRMATION_REMINDER = "ConfirmationReminderMail";
 	const CHANGED_EMAIL_CONFIRMATION = "ReConfirmationMail";
 	const WEEKLY_DIGEST = "GlobalWatchlist";
-	const FORGOT_PASSWORD = 'TemporaryPassword';
+	const TEMPORARY_PASSWORD = 'TemporaryPassword';
 }

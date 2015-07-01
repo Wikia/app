@@ -14,16 +14,16 @@ use Email\Tracking\TrackingCategories;
  */
 class ForgotPasswordController extends EmailController {
 
-	const TRACKING_CATEGORY = TrackingCategories::FORGOT_PASSWORD;
+	const TRACKING_CATEGORY = TrackingCategories::TEMPORARY_PASSWORD;
 
-	private $tempPass;
+	protected $tempPass;
 
 	public function initEmail() {
 		$userService = new \UserService();
-		$this->tempPass = $this->request->getVal(
-			'tempPass',
-			$userService->resetPassword( $this->targetUser )
-		);
+		$this->tempPass = $this->request->getVal( 'tempPass' );
+		if ( empty( $this->tempPass ) ) {
+			$this->tempPass = $userService->resetPassword( $this->targetUser );
+		}
 	}
 
 	public function getSubject() {
