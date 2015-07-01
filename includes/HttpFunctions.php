@@ -823,7 +823,7 @@ class CurlHttpRequest extends MWHttpRequest {
 
 		// Wikia change - begin
 		/**
-		 * @author Michał Roszka <michal@wikia-inc.com> Wikia change - begin
+		 * @author Michał Roszka <michal@wikia-inc.com>
 		 * @see PLATFORM-1317
 		 * @see PLATFORM-1308
 		 */
