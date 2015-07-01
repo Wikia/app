@@ -50,7 +50,7 @@ class AutoFollowTask extends BaseTask {
 	private function setFlag( \User $oUser ) {
 		global $wgAutoFollowFlag;
 
-		$oUser->setGlobalPreference( $wgAutoFollowFlag, 1 );
+		$oUser->setGlobalFlag( $wgAutoFollowFlag, 1 );
 		$oUser->saveSettings();
 	}
 

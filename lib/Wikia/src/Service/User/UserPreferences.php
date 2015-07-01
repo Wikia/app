@@ -104,6 +104,10 @@ class UserPreferences {
 	 * @param Preference[] $prefs
 	 */
 	private function save($userId, $prefs) {
+		if ($userId == 0) {
+			return;
+		}
+
 		$prefsToSave = [];
 
 		foreach ($prefs as $p) {
