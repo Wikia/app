@@ -51,7 +51,9 @@ class PortableInfoboxDataService {
 		$images = [ ];
 
 		foreach ( $this->getData() as $infobox ) {
-			foreach ( $infobox[ 'data' ] as $field ) {
+			// ensure data array exists
+			$data = is_array( $infobox[ 'data' ] ) ? $infobox[ 'data' ] : [ ];
+			foreach ( $data as $field ) {
 				if ( $field[ 'type' ] == self::IMAGE_FIELD_TYPE && isset( $field[ 'data' ] ) && !empty( $field[ 'data' ][ 'key' ] ) ) {
 					$images[ $field[ 'data' ][ 'key' ] ] = true;
 				}
