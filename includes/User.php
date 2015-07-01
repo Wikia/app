@@ -2375,10 +2375,10 @@ class User {
 			if($oname == 'skin') {
 				if(strlen(trim($this->mOptions[$oname])) > 7 &&  substr(trim($this->mOptions[$oname]), 0, 6) == 'quartz') {
 					$this->mOptions[$oname] = 'quartz';
-					$this->setOption('theme', substr(trim($this->mOptions[$oname]), 6));
+					$this->setOptionHelper('theme', substr(trim($this->mOptions[$oname]), 6));
 				} else if(trim($this->mOptions[$oname]) == 'slate' || trim($this->mOptions[$oname]) == 'smoke') {
 					$this->mOptions[$oname] = 'quartz';
-					$this->setOption('theme', trim($this->mOptions[$oname]));
+					$this->setOptionHelper('theme', trim($this->mOptions[$oname]));
 				}
 			}
 
@@ -2722,7 +2722,7 @@ class User {
 		// Important migration for old data rows
 		if ( is_null( $this->mDatePreference ) ) {
 			global $wgLang;
-			$value = $this->getOption( 'date' );
+			$value = $this->getGlobalPreference( 'date' );
 			$map = $wgLang->getDatePreferenceMigrationMap();
 			if ( isset( $map[$value] ) ) {
 				$value = $map[$value];
@@ -2739,7 +2739,7 @@ class User {
 	 */
 	public function getStubThreshold() {
 		global $wgMaxArticleSize; # Maximum article size, in Kb
-		$threshold = intval( $this->getOption( 'stubthreshold' ) );
+		$threshold = intval( $this->getGlobalPreference( 'stubthreshold' ) );
 		if ( $threshold > $wgMaxArticleSize * 1024 ) {
 			# If they have set an impossible value, disable the preference
 			# so we can use the parser cache again.
@@ -3267,7 +3267,7 @@ class User {
 			'UserID' => $this->mId,
 			'UserName' => $this->getName(),
 		);
-		if ( 1 == $this->getOption( 'rememberpassword' ) ) {
+		if ( 1 == $this->getGlobalPreference( 'rememberpassword' ) ) {
 			$cookies['Token'] = $this->mToken;
 		} else {
 			$cookies['Token'] = false;
@@ -3563,14 +3563,14 @@ class User {
 		// since it disables the parser cache, its value will always
 		// be 0 when this function is called by parsercache.
 
-		$confstr =        $this->getOption( 'math' );
+		$confstr =        $this->getGlobalPreference( 'math' );
 		$confstr .= '!' . $this->getStubThreshold();
 		if ( $wgUseDynamicDates ) { # This is wrong (bug 24714)
 			$confstr .= '!' . $this->getDatePreference();
 		}
-		$confstr .= '!' . ( $this->getOption( 'numberheadings' ) ? '1' : '' );
+		$confstr .= '!' . ( $this->getGlobalPreference( 'numberheadings' ) ? '1' : '' );
 		$confstr .= '!' . $wgLang->getCode();
-		$confstr .= '!' . $this->getOption( 'thumbsize' );
+		$confstr .= '!' . $this->getGlobalPreference( 'thumbsize' );
 		// add in language specific options, if any
 		$extra = $wgContLang->getExtraHashOptions();
 		$confstr .= $extra;
@@ -3902,9 +3902,9 @@ class User {
 				$wgLang->date( $expiration, false ),
 				$wgLang->time( $expiration, false ) ), null, null, $mailtype, null, $priority );
 		} else {
-			$wantHTML = $this->isAnon() || $this->getOption( 'htmlemails' );
+			$wantHTML = $this->isAnon() || $this->getGlobalPreference( 'htmlemails' );
 			if ( empty( $langCode ) ) {
-				$langCode = $this->getOption( 'language' );
+				$langCode = $this->getGlobalPreference( 'language' );
 			}
 
 			list($body, $bodyHTML) = wfMsgHTMLwithLanguage( $message, $langCode, array(), $args, $wantHTML );
@@ -3969,7 +3969,7 @@ class User {
 	 * @return WikiError|bool True on success, a WikiError object on failure.
 	 */
 	function sendReConfirmationMail() {
-		$this->setOption("mail_edited","1");
+		$this->setGlobalFlag("mail_edited","1");
 		$this->saveSettings();
 		return $this->sendConfirmationMail( false, 'ReConfirmationMail' );
 	}
@@ -3980,10 +3980,10 @@ class User {
 	 * @return \types{\bool,\type{WikiError}} True on success, a WikiError object on failure.
 	 */
 	function sendConfirmationReminderMail() {
-		if( ($this->getOption("cr_mailed", 0) == 1) || ($this->getOption("mail_edited", 0) == 1) ) {
+		if( ($this->getGlobalFlag("cr_mailed", 0) == 1) || ($this->getGlobalFlag("mail_edited", 0) == 1) ) {
 			return false;
 		}
-		$this->setOption("cr_mailed","1");
+		$this->setGlobalFlag("cr_mailed","1");
 		$this->saveSettings();
 		return $this->sendConfirmationMail( false, 'ConfirmationReminder', '', false );
 	}
@@ -4013,7 +4013,7 @@ class User {
 		/* Wikia change begin - @author: Marooned */
 		/* HTML e-mails functionality */
 		global $wgEnableRichEmails;
-		if ( !empty($wgEnableRichEmails) && ($this->isAnon() || $this->getOption('htmlemails')) && !empty($bodyHTML) ) {
+		if ( !empty($wgEnableRichEmails) && ($this->isAnon() || $this->getGlobalPreference('htmlemails')) && !empty($bodyHTML) ) {
 			$body = array( 'text' => $body, 'html' => $bodyHTML );
 		}
 		/* Wikia change end */
@@ -4143,7 +4143,7 @@ class User {
 	 * @return Bool
 	 */
 	public function canReceiveEmail() {
-		return $this->isEmailConfirmed() && !$this->getOption( 'disablemail' );
+		return $this->isEmailConfirmed() && !$this->getGlobalPreference( 'disablemail' );
 	}
 
 	/**
