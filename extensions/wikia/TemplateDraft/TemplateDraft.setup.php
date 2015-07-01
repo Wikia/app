@@ -26,7 +26,7 @@ $wgExtensionMessagesFiles['TemplateDraft'] = __DIR__ . '/TemplateDraft.i18n.php'
  */
 $wgAvailableRights[] = [ 'templatedraft' ];
 
-$wgGroupPermissions['*']['templatedraft'] = true;
+$wgGroupPermissions['*']['templatedraft'] = false;
 $wgGroupPermissions['util']['templatedraft'] = true;
 $wgGroupPermissions['staff']['templatedraft'] = true;
 $wgGroupPermissions['helper']['templatedraft'] = true;
