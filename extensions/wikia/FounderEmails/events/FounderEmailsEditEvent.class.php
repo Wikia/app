@@ -134,16 +134,16 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 		}
 
 		// disable if all Wikia email disabled
-		if ( $admin->getBoolOption( 'unsubscribed' ) ) {
+		if ( (bool)$admin->getGlobalPreference( 'unsubscribed' ) ) {
 			return false;
 		}
 
 		// If digest mode is enabled, do not create edit event notifications
-		if ( $admin->getOption( "founderemails-complete-digest-$wikiId" ) ) {
+		if ( $admin->getGlobalPreference( "founderemails-complete-digest-$wikiId" ) ) {
 			return false;
 		}
 
-		if ( $admin->getOption( "founderemails-edits-$wikiId" ) ) {
+		if ( $admin->getGlobalPreference( "founderemails-edits-$wikiId" ) ) {
 			return true;
 		}
 
@@ -176,7 +176,7 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 		static $counter = null;
 
 		if ( empty( $counter[$admin->getId()] ) ) {
-			$allCounter = unserialize( $admin->getOption( 'founderemails-counter' ) );
+			$allCounter = unserialize( $admin->getGlobalAttribute( 'founderemails-counter' ) );
 			$allCounter = is_array( $allCounter ) ? $allCounter : [];
 
 			if ( $this->userCounterNeedsReset( $allCounter ) ) {
@@ -206,7 +206,7 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 		$counter = $this->getNotificationCounter( $admin );
 		$counter[F::app()->wg->CityId]['count']++;
 
-		$admin->setOption( 'founderemails-counter', serialize( $counter ) );
+		$admin->setGlobalAttribute( 'founderemails-counter', serialize( $counter ) );
 		$admin->saveSettings();
 	}
 
