@@ -7,8 +7,6 @@ use \Email\EmailController;
 
 class UserRightsChangedController extends EmailController {
 
-	const LAYOUT_CSS = 'avatarLayout.css';
-
 	private $details;
 
 	public function initEmail() {
@@ -49,7 +47,7 @@ class UserRightsChangedController extends EmailController {
 			"type" => "rights",
 			"page" => $this->targetUser->getName(),
 		];
-		return \F::app()->wg->Server . "/index.php?" . http_build_query( $queryParms );
+		return \F::app()->wg->Server . "/?" . http_build_query( $queryParms );
 	}
 
 	public static function getEmailSpecificFormFields() {
