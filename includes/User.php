@@ -2535,6 +2535,10 @@ class User {
 					unset($this->mTheme);
 					break;
 			}
+
+			wfRunHooks("UserSetPreferences", [$this, $this->preferences->getPreferences($this->mId)]);
+
+			$this->clearSharedCache();
 		} else {
 			$this->setOptionHelper($preference, $value);
 		}

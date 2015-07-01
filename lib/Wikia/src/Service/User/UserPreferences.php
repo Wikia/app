@@ -27,9 +27,9 @@ class UserPreferences {
 	/**
 	 * @Inject({
 	 *    Wikia\Service\User\PreferenceService::class,
-	 *    UserPreferences::HIDDEN_PREFS,
-	 *    UserPreferences::DEFAULT_PREFERENCES,
-	 *    UserPreferences::FORCE_SAVE_PREFERENCES})
+	 *    Wikia\Service\User\UserPreferences::HIDDEN_PREFS,
+	 *    Wikia\Service\User\UserPreferences::DEFAULT_PREFERENCES,
+	 *    Wikia\Service\User\UserPreferences::FORCE_SAVE_PREFERENCES})
 	 * @param PreferenceService $preferenceService
 	 * @param string[] $hiddenPrefs
 	 * @param string[string] $defaultPrefs
@@ -64,17 +64,19 @@ class UserPreferences {
 	}
 
 	/**
+	 * @param int $userId
 	 * @param string $pref
 	 * @param string $val
 	 */
 	public function set($userId, $pref, $val) {
 		$this->load($userId);
 
-		if ($val == null && isset($this->defaultPreferences[$pref])) {
-			$val = $this->defaultPreferences[$pref];
+		$default = $this->getFromDefault($pref);
+		if ($val == null && isset($default)) {
+			$val = $default;
 		}
 
-		$this->preferences[$pref] = $val;
+		$this->preferences[$userId][$pref] = $val;
 		$this->save($userId, [new Preference($pref, $val)]);
 	}
 
