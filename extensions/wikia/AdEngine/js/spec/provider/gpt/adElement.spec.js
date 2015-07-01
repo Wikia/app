@@ -1,8 +1,8 @@
-/*global describe, it, expect, modules, spyOn, document*/
-describe('ext.wikia.adEngine.provider.gpt.adSizeConverter', function () {
+/*global describe, it, beforeEach, expect, modules, spyOn, document*/
+describe('ext.wikia.adEngine.provider.gpt.adElement', function () {
 	'use strict';
 
-	function noop() {}
+	function noop() { return; }
 
 	var AdElement,
 		adSizes = [
@@ -15,13 +15,23 @@ describe('ext.wikia.adEngine.provider.gpt.adSizeConverter', function () {
 					return adSizes;
 				}
 			},
+			adSizeFilter: {
+				filter: function (slotName, sizes) {
+					return sizes;
+				}
+			},
 			log: noop
 		},
 		slot,
 		slotTargeting;
 
-	beforeEach(function() {
-		AdElement = modules['ext.wikia.adEngine.provider.gpt.adElement'](document, mocks.log, mocks.adSizeConverter);
+	beforeEach(function () {
+		AdElement = modules['ext.wikia.adEngine.provider.gpt.adElement'](
+			document,
+			mocks.log,
+			mocks.adSizeConverter,
+			mocks.adSizeFilter
+		);
 		slot = {
 			setTargeting: noop
 		};
