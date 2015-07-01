@@ -3,42 +3,60 @@
 class TemplateDraftHooks
 {
 
-    /**
-     * Attaches a new module to right rail which is an entry point to convert a given template.
-     *
-     * @param array $railModuleList
-     * @return bool
-     */
-    public static function onGetRailModuleList(Array &$railModuleList)
-    {
-        global $wgTitle;
+	public static function onSkinAfterBottomScripts( Skin $skin, &$text ) {
+		if ( $skin->getTitle()->userCan( 'templatedraft', $skin->getUser() )
+			&& $skin->getTitle()->getNamespace() === NS_TEMPLATE
+		) {
+			$scripts = AssetsManager::getInstance()->getURL( 'template_draft' );
 
-        if ($wgTitle->getNamespace() === NS_TEMPLATE
-            && $wgTitle->exists()
-            && Wikia::getProps($wgTitle->getArticleID(), TemplateDraftController::TEMPLATE_INFOBOX_PROP) !== 0
-        ) {
-            $railModuleList[1502] = ['TemplateDraftModule', 'Index', null];
-        }
+			foreach ( $scripts as $script ) {
+				$text .= Html::linkedScript( $script );
+			}
+		}
+
+		return true;
+	}
+
+	/**
+	 * Attaches a new module to right rail which is an entry point to convert a given template.
+	 *
+	 * @param array $railModuleList
+	 * @return bool
+	 */
+	public static function onGetRailModuleList( Array &$railModuleList ) {
+		global $wgTitle;
+		$helper = new TemplateDraftHelper();
+
+		if ( $wgTitle->userCan( 'templatedraft' )
+			&& $wgTitle->getNamespace() === NS_TEMPLATE
+			&& $wgTitle->exists()
+			&& !$helper->isTitleDraft( $wgTitle )
+			&& Wikia::getProps( $wgTitle->getArticleID(), TemplateDraftController::TEMPLATE_INFOBOX_PROP ) !== '0'
+		) {
+			$railModuleList[1502] = [ 'TemplateDraftModule', 'Index', null ];
+		}
 
         return true;
     }
 
-    /**
-     * Triggered if a user edits a Draft subpage of a template.
-     * It pre-fills the content of the Draft with a converted markup.
-     *
-     * @param $text
-     * @param Title $title
-     * @return bool
-     */
-    public static function onEditFormPreloadText(&$text, Title $title)
-    {
-        $helper = new TemplateDraftHelper();
-        if ($helper->isTitleDraft($title)) {
-            $parentTitleId = $helper->getParentTitleId($title);
+	/**
+	 * Triggered if a user edits a Draft subpage of a template.
+	 * It pre-fills the content of the Draft with a converted markup.
+	 *
+	 * @param $text
+	 * @param Title $title
+	 * @return bool
+	 */
+	public static function onEditFormPreloadText( &$text, Title $title ) {
+		$helper = new TemplateDraftHelper();
+		if ( $helper->isTitleNewDraft( $title )
+			&& TemplateConverter::isConversion()
+		) {
+			$parentTitleId = $helper->getParentTitle( $title )->getArticleID();
 
             if ($parentTitleId > 0) {
                 $parentContent = WikiPage::newFromID($parentTitleId)->getText();
+
 
                 /**
                  * TODO: Introduce a parameter to modify conversion flags

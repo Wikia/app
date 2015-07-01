@@ -13,6 +13,10 @@ $messages['en'] = [
 	'templatedraft-subpage' => 'Draft',
 	'templatedraft-editintro' => "Here you go! We've generated a draft version of your infobox with our new markup. We'll save it as a sub-page so you can review it and make any needed changes. You may want to $1 or $2.",
 	/**
+	 * Notifications
+	 */
+	'templatedraft-approval-summary' => 'Replaced with updated version from draft template',
+	/**
 	 * Right rail module
 	 */
 	'templatedraft-module-title' => 'Migrate this infobox',
@@ -33,7 +37,7 @@ to see this:
 
 $2
 
-[{{fullurl:PAGENAME}}?action=purge Click here to refresh the preview above]',
+[{{fullurl:{{ns:Template}}:{{PAGENAME}}}}?action=purge Click here to refresh the preview above]',
 	'templatedraft-module-editintro-please-convert' => 'We can generate a draft version of your infobox with our new markup just click $1 .',
 	'templatedraft-module-view-parent' => 'view parent template wikitext',
 	'templatedraft-module-help' => 'view the help page on Infobox markup',
@@ -45,6 +49,10 @@ $2
 $messages['qqq'] = [
 	'templatedraft-description' => '{{desc}}',
 	'templatedraft-subpage' => 'A name that should be used for subpages of templates that contain a draft content.',
+	/**
+	 * Notifications
+	 */
+	'templatedraft-approval-summary' => 'Text used as edit summary when code is automatically replacing template with content from draft template on user approval',
 	/**
 	 * Right rail module
 	 */
