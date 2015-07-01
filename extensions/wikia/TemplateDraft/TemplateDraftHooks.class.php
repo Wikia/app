@@ -96,14 +96,14 @@ class TemplateDraftHooks {
 							'href' => $baseHelp->getFullURL(),
 							'target' => '_blank',
 						],
-							wfMessage( 'templatedraft-module-help' )
+							wfMessage( 'templatedraft-module-help' )->plain()
 						),
 						Xml::element( 'a', [
 							'href' => $base->getFullUrl( [ 'action' => 'edit' ] ),
 							'target' => '_blank'
 						],
-							wfMessage( 'templatedraft-module-view-parent' ) )
-					)->plain(),
+							wfMessage( 'templatedraft-module-view-parent' )->plain() )
+					)->escaped(),
 				];
 			} elseif ( !$helper->isTitleDraft( $title ) ) {
 				$base = Title::newFromText( $title->getBaseText() .'/'. wfMessage( 'templatedraft-subpage' ), NS_TEMPLATE );
@@ -117,8 +117,8 @@ class TemplateDraftHooks {
 							'href' => $draftUrl,
 							'target' => '_blank'
 						],
-							wfMessage( 'templatedraft-module-button' ) )
-					)->plain(),
+							wfMessage( 'templatedraft-module-button' )->plain() )
+					)->escaped(),
 				];
 			}
 		}
