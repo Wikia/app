@@ -14,6 +14,7 @@ class CuratedContentController extends WikiaController {
 	const MINUTES = 60;
 	const SECONDS = 1;
 	const LIMIT = 25;
+	const CURATED_CONTENT_WG_VAR_ID_PROD = 1460;
 
 	const NEW_API_VERSION = 1;
 
@@ -405,7 +406,7 @@ class CuratedContentController extends WikiaController {
 
 		if ( empty( $wikiID ) ) {
 			$wikiWithCC = WikiFactory::getListOfWikisWithVar(
-				1446, "full", "LIKE", null, "true"
+				self::CURATED_CONTENT_WG_VAR_ID_PROD, "full", "LIKE", null, "true"
 			);
 
 			foreach ( $wikiWithCC as $wikiID => $wikiData ) {
