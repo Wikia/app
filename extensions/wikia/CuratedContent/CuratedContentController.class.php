@@ -473,7 +473,7 @@ class CuratedContentController extends WikiaController {
 		$totalNumberOfItems = 0;
 		foreach ( $curatedContent as $curatedContentModule => $items ) {
 			foreach ( $items as $item ) {
-				if ( $item['type'] == 'category' ) {
+				if ( $item['type'] == 'category' || $curatedContentModule == 'featured') {
 					if ( strlen( $item['label'] ) > CuratedContentSpecialController::LABEL_MAX_LENGTH ) {
 						$tooLongTitleCount++;
 					}
