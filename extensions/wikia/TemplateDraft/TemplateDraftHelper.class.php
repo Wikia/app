@@ -62,6 +62,16 @@ class TemplateDraftHelper {
 	}
 
 	/**
+	 * Checks if the template (Title object) is marked by human as infobox
+	 *
+	 * @param Title $title
+	 * @return bool
+	 */
+	public function isMarkedAsInfobox( Title $title ) {
+		return Wikia::getProps( $title->getArticleID(), TemplateDraftController::TEMPLATE_INFOBOX_PROP ) !== '0';
+	}
+
+	/**
 	 * Retrieves parent Title object from provided $title
 	 *
 	 * @param Title $title
