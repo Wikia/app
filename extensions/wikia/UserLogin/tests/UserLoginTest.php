@@ -217,12 +217,8 @@ class UserLoginTest extends UserLoginBaseTest {
 				'mName' => self::TEST_USERNAME,
 				'mEmail' => self::TEST_EMAIL
 			),
-			'mockValueMap' => array(
-				'getOption' => array(
-					array( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME, null, false, true ),
-					array( 'language', null, false, 'en' )
-				)
-			)
+			'getGlobalFlag' => true,
+			'getGlobalPreference' => 'en',
 		);
 		$mockHelperParams118 = array( 'isPasswordThrottled' => false, 'clearPasswordThrottle' => null );
 		$expMsg118 = wfMessage( 'usersignup-confirmation-email-sent', self::TEST_EMAIL )->parse();
