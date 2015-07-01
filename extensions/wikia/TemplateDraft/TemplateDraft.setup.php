@@ -61,5 +61,5 @@ $wgAutoloadClasses['TemplateDraftModuleController'] = $IP . '/skins/oasis/module
 /**
  * Add approvedraft action (?action=apprevedraft)
  */
-$wgAutoloadLocalClasses['ApprovedraftAction'] = 'extensions/wikia/TemplateDraft/ApprovedraftAction.php';
+$wgAutoloadLocalClasses['ApprovedraftAction'] = __DIR__ . 'extensions/wikia/TemplateDraft/ApprovedraftAction.php';
 $wgActions['approvedraft'] = true;
