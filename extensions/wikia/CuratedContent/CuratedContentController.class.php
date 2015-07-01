@@ -401,14 +401,20 @@ class CuratedContentController extends WikiaController {
 
 	public function getCuratedContentQuality() {
 		$return = [];
-		$wikiWithCC = WikiFactory::getListOfWikisWithVar(
-			WikiaStatsController::CURATED_CONTENT_WG_VAR_ID_PROD, "full", "LIKE", null, "true"
-		);
+		$wikiID = $this->request->getInt( 'wikiID', null );
 
-		foreach ( $wikiWithCC as $wikiID => $wikiData ) {
-			$curatedContent = $this->getCuratedContentForWiki( $wikiID );
-			$quality = $this->getCuratedContentQualityForWiki( $curatedContent );
-			$return[$wikiData['u']] = $quality;
+		if ( empty( $wikiID ) ) {
+			$wikiWithCC = WikiFactory::getListOfWikisWithVar(
+				1446, "full", "LIKE", null, "true"
+			);
+
+			foreach ( $wikiWithCC as $wikiID => $wikiData ) {
+				$quality = $this->getCuratedContentQualityForWiki( $wikiID );
+				$return[$wikiData['u']] = $quality;
+			}
+		} else {
+			$quality = $this->getCuratedContentQualityForWiki( $wikiID );
+			$return = $quality;
 		}
 
 		$this->getResponse()->setFormat( WikiaResponse::FORMAT_JSON );
@@ -437,7 +443,8 @@ class CuratedContentController extends WikiaController {
 		return $return;
 	}
 
-	private function getCuratedContentQualityForWiki( $curatedContent ) {
+	private function getCuratedContentQualityForWiki( $wikiID ) {
+		$curatedContent = $this->getCuratedContentForWiki( $wikiID );
 		$tooLongTitleCount = 0;
 		$missingImagesCount = 0;
 		$totalNumberOfItems = 0;
