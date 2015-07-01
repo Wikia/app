@@ -401,8 +401,14 @@ class CuratedContentController extends WikiaController {
 	}
 
 	public function getCuratedContentQuality() {
-		$return = [];
+		$curatedContentQualityPerWiki = [];
+		$curatedContentQualityTotal = [
+			'totalNumberOfMissingImages' => 0,
+			'totalNumberOfTooLongTitles' => 0,
+			'totalNumberOfItems' => 0
+		];
 		$wikiID = $this->request->getInt( 'wikiID', null );
+		$this->getResponse()->setFormat( WikiaResponse::FORMAT_JSON );
 
 		if ( empty( $wikiID ) ) {
 			$wikiWithCC = WikiFactory::getListOfWikisWithVar(
@@ -411,15 +417,19 @@ class CuratedContentController extends WikiaController {
 
 			foreach ( $wikiWithCC as $wikiID => $wikiData ) {
 				$quality = $this->getCuratedContentQualityForWiki( $wikiID );
-				$return[$wikiData['u']] = $quality;
+				$curatedContentQualityTotal['totalNumberOfMissingImages'] += $quality['missingImagesCount'];
+				$curatedContentQualityTotal['totalNumberOfTooLongTitles'] += $quality['tooLongTitlesCount'];
+				$curatedContentQualityTotal['totalNumberOfItems'] += $quality['totalNumberOfItems'];
+				$curatedContentQualityPerWiki[$wikiData['u']] = $quality;
 			}
+
+			$this->response->setVal( 'curatedContentQualityTotal', $curatedContentQualityTotal );
 		} else {
 			$quality = $this->getCuratedContentQualityForWiki( $wikiID );
-			$return = $quality;
+			$curatedContentQualityPerWiki = $quality;
 		}
 
-		$this->getResponse()->setFormat( WikiaResponse::FORMAT_JSON );
-		$this->response->setVal( 'curatedContentQuality', $return );
+		$this->response->setVal( 'curatedContentQualityPerWiki', $curatedContentQualityPerWiki );
 	}
 
 	private function getCuratedContentForWiki( $wikiID ) {
@@ -451,8 +461,14 @@ class CuratedContentController extends WikiaController {
 		$totalNumberOfItems = 0;
 		foreach ( $curatedContent as $curatedContentModule => $items ) {
 			foreach ( $items as $item ) {
-				if ( strlen( $item['title'] ) > 48 ) {
-					$tooLongTitleCount++;
+				if ( $item['type'] == 'category' ) {
+					if ( strlen( $item['label'] ) > 48 ) {
+						$tooLongTitleCount++;
+					}
+				} else {
+					if ( strlen( $item['title'] ) > 48 ) {
+						$tooLongTitleCount++;
+					}
 				}
 				if ( empty( $item['image_id'] ) ) {
 					$missingImagesCount++;
