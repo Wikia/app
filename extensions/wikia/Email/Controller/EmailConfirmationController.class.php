@@ -135,6 +135,8 @@ class ConfirmationChangedEmailController extends AbstractEmailConfirmationContro
 
 class ReactivateAccountController extends AbstractEmailConfirmationController {
 
+	const TRACKING_CATEGORY = TrackingCategories::REACTIVATE_ACCOUNT;
+
 	protected function getSubject() {
 		return $this->getMessage( 'emailext-reactivate-account-subject' )->text();
 	}
