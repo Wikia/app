@@ -20,6 +20,10 @@
  * @file
  */
 
+use Wikia\DependencyInjection\Injector;
+use Wikia\Logger\Loggable;
+use Wikia\Service\User\UserPreferences;
+
 /**
  * Int Number of characters in user_token field.
  * @ingroup Constants
@@ -66,6 +70,8 @@ class User {
 	use PowerUserTrait;
 	# WIKIA CHANGE END
 
+	use Loggable;
+
 	/**
 	 * Global constants made accessible as class constants so that autoloader
 	 * magic can be used.
@@ -73,6 +79,7 @@ class User {
 	const USER_TOKEN_LENGTH = USER_TOKEN_LENGTH;
 	const MW_USER_VERSION = MW_USER_VERSION;
 	const EDIT_TOKEN_SUFFIX = EDIT_TOKEN_SUFFIX;
+	const CACHE_PREFERENCES_KEY = "preferences";
 
 	/**
 	 * Array of Strings List of member variables which are saved to the
@@ -251,6 +258,10 @@ class User {
 		return $this->getName();
 	}
 
+	private function userPreferences() {
+		return Injector::getInjector()->get(UserPreferences::class);
+	}
+
 	/**
 	 * Load the user table data for this object from the source given by mFrom.
 	 */
@@ -347,6 +358,10 @@ class User {
 					$this->$name = $data[$name];
 				}
 			}
+
+			if (isset($data[self::CACHE_PREFERENCES_KEY])) {
+				 $this->userPreferences()->setPreferences($this->mId, $data[self::CACHE_PREFERENCES_KEY]);
+			}
 		}
 		return true;
 	}
@@ -376,6 +391,7 @@ class User {
 			$data[$name] = $this->$name;
 		}
 		$data['mVersion'] = MW_USER_VERSION;
+		$data[self::CACHE_PREFERENCES_KEY] = $this->userPreferences()->getPreferences($this->mId);
 		$key = wfMemcKey( 'user', 'id', $this->mId );
 		global $wgMemc;
 		$wgMemc->set( $key, $data );
@@ -2309,6 +2325,22 @@ class User {
 	}
 
 	/**
+	 * @param $oname
+	 * @param null $defaultOverride
+	 * @param bool|false $ignoreHidden
+	 * @return String
+	 * @deprecated use get(Global|Local)Preference  get(Global|Local)Attribute or get(Global|Local)Flag
+	 */
+	public function getOption($oname, $defaultOverride = null, $ignoreHidden = false) {
+		$this->warning("calling getOption", [
+			"class" => "user",
+			"type" => "getoption",
+			"source" => wfBacktrace(true),
+		]);
+		return $this->getOptionHelper($oname, $defaultOverride, $ignoreHidden);
+	}
+
+	/**
 	 * Get the user's current setting for a given option.
 	 *
 	 * @param $oname String The option to check
@@ -2317,9 +2349,8 @@ class User {
 	 * @return String User's current value for the option
 	 * @see getBoolOption()
 	 * @see getIntOption()
-	 * @deprecated use get(Global|Local)Preference  get(Global|Local)Attribute or get(Global|Local)Flag
 	 */
-	public function getOption( $oname, $defaultOverride = null, $ignoreHidden = false ) {
+	private function getOptionHelper( $oname, $defaultOverride = null, $ignoreHidden = false ) {
 		global $wgHiddenPrefs;
 		$this->loadOptions();
 
@@ -2421,16 +2452,16 @@ class User {
 	/**
 	 * Get a preference local to this wikia.
 	 *
-	 * @param string $preference the preference name
+	 * @param string $pref the preference name
 	 * @param int $cityId the city id
 	 * @param string $sep the separator between the name and the city id
+	 * @param mixed $default
+	 * @param bool $ignoreHidden
 	 * @return string
 	 */
-	public function getLocalPreference($pref, $cityId = null, $sep = "-") {
-		global $wgCityId;
-		if (!isset($cityId)) {
-			$cityId = $wgCityId;
-		}
+	public function getLocalPreference($pref, $cityId = null, $sep = "-", $default = null, $ignoreHidden = false) {
+		$globalPref = self::localToGlobalPropertyName($pref, $cityId, $sep);
+		return $this->getGlobalPreference($globalPref, $default, $ignoreHidden);
 	}
 
 	/**
@@ -2438,41 +2469,28 @@ class User {
 	 *
 	 * @param string $preference
 	 * @param mixed $default
+	 * @param bool $ignoreHidden
 	 * @return string
 	 */
-	public function getGlobalPreference($preference, $default = null) {
-		return $this->getOption($preference, $default);
-	}
+	public function getGlobalPreference($preference, $default = null, $ignoreHidden = false) {
+		global $wgPreferencesUseService;
 
-
-	/**
-	 * Set a global user preference.
-	 *
-	 * @param string $preference
-	 * @param string $value
-	 */
-	public function setGlobalPreference($preference, $value) {
-		return $this->setOption($preference, $value);
-	}
-
-	/**
-	 * Create a local option name. All localized (wikia specific) options,
-	 * preferences, attributes or flags should be of the form "{option}-{cityId}"
-	 *
-	 * IF YOU USE $sep, MAKE A PLAN TO NORMALIZE IT TO "-"!
-	 *
-	 * @param string $option
-	 * @param int $cityId [optional]
-	 * @param char $sep the separator between the option and the id.
-	 * @return string
-	 */
-	public static function createLocalOptionName($option, $cityId = null, $sep = '-') {
-		global $wgCityId;
-		if (!isset($cityId)) {
-			$cityId = $wgCityId;
+		if ($wgPreferencesUseService) {
+			$this->load();
+			$value = $this->userPreferences()->get($this->mId, $preference, $default, $ignoreHidden);
+			wfRunHooks(
+				'UserGetPreference',
+				[
+					$this->userPreferences()->getPreferences($this->mId),
+					$preference,
+					&$value
+				]
+			);
+		} else {
+			$value = $this->getOptionHelper($preference, $default, $ignoreHidden);
 		}
 
-		return sprintf("%s%s%s", $option, $sep, $cityId);
+		return $value;
 	}
 
 	/**
@@ -2481,14 +2499,46 @@ class User {
 	 * the option name is not normal. Should you have to use the separator, PLEASE MAKE
 	 * A PLAN TO NORMALIZE IT TO "-".
 	 *
-	 * @param string $preferenc
+	 * @param string $preference
 	 * @param string $value
 	 * @param int $cityId [optional, defaults to $wgCityId]
-	 * @param char $sep [optional, defaults to '-']
+	 * @param string $sep [optional, defaults to '-']
 	 *
 	 */
 	public function setLocalPreference($preference, $value, $cityId = null, $sep = '-') {
-		return $this->setOption(self::createLocalOptionName($preference, $cityId, $sep), $value);
+		$this->setGlobalPreference(self::localToGlobalPropertyName($preference, $cityId, $sep), $value);
+	}
+
+	/**
+	 * Set a global user preference.
+	 *
+	 * @param string $preference
+	 * @param string $value
+	 */
+	public function setGlobalPreference($preference, $value) {
+		global $wgPreferencesUseService;
+
+		if ($wgPreferencesUseService) {
+			$this->load();
+			$value = $this->sanitizeProperty($value);
+			$this->userPreferences()->set($this->mId, $preference, $value);
+
+			// Clear cached skin/theme, so the new one displays immediately in Special:Preferences
+			switch ($preference) {
+				case 'skin':
+					unset($this->mSkin);
+					break;
+				case 'theme':
+					unset($this->mTheme);
+					break;
+			}
+
+			wfRunHooks("UserSetPreferences", [$this, $this->userPreferences()->getPreferences($this->mId)]);
+
+			$this->clearSharedCache();
+		} else {
+			$this->setOptionHelper($preference, $value);
+		}
 	}
 
 	/**
@@ -2498,22 +2548,19 @@ class User {
 	 * @return string
 	 */
 	public function getDefaultGlobalPreference($preference) {
-		return self::getDefaultOption($preference);
+		return $this->userPreferences()->getFromDefault($preference);
 	}
 
 	/**
 	 * Get a user attribute local to this wikia.
 	 *
-	 * @param string $attribute the attribute name
+	 * @param string $attr the attribute name
 	 * @param int $cityId the city id
 	 * @param string $sep the separator between the name and the city id
 	 * @return string
 	 */
 	public function getLocalAttribute($attr, $cityId = null, $sep = "-") {
-		global $wgCityId;
-		if (!isset($cityId)) {
-			$cityId = $wgCityId;
-		}
+		return $this->getGlobalAttribute(self::localToGlobalPropertyName($attr, $cityId, $sep));
 	}
 
 	/**
@@ -2524,17 +2571,7 @@ class User {
 	 * @return string
 	 */
 	public function getGlobalAttribute($attribute, $default=null) {
-		return $this->getOption($attribute, $default);
-	}
-
-	/**
-	 * Set a global user attribute.
-	 *
-	 * @param string $attribute
-	 * @param string $value
-	 */
-	public function setGlobalAttribute($attribute, $value) {
-		$this->setOption($attribute, $value);
+		return $this->getOptionHelper($attribute, $default);
 	}
 
 	/**
@@ -2546,11 +2583,21 @@ class User {
 	 * @param string $attribute
 	 * @param string $value
 	 * @param int $cityId
-	 * @param char $sep
+	 * @param string $sep
 	 * @return bool
 	 */
 	public function setLocalAttribute($attribute, $value, $cityId = null, $sep = '-') {
-		return $this->setOption(self::createLocalOptionName($attribute, $cityId, $sep), $value, $sep);
+		$this->setGlobalAttribute(self::localToGlobalPropertyName($attribute, $cityId, $sep), $value);
+	}
+
+	/**
+	 * Set a global user attribute.
+	 *
+	 * @param string $attribute
+	 * @param string $value
+	 */
+	public function setGlobalAttribute($attribute, $value) {
+		$this->setOptionHelper($attribute, $value);
 	}
 
 	/**
@@ -2562,10 +2609,7 @@ class User {
 	 * @return string
 	 */
 	public function getLocalFlag($flag, $cityId = null, $sep = "-") {
-		global $wgCityId;
-		if (!isset($cityId)) {
-			$cityId = $wgCityId;
-		}
+		return $this->getGlobalFlag(self::localToGlobalPropertyName($flag, $cityId, $sep));
 	}
 
 	/**
@@ -2575,7 +2619,7 @@ class User {
 	 * @return bool
 	 */
 	public function getGlobalFlag($flag, $default = null) {
-		return $this->getOption($flag, $default);
+		return $this->getOptionHelper($flag, $default);
 	}
 
 	/**
@@ -2585,7 +2629,51 @@ class User {
 	 * @return bool
 	 */
 	public function setGlobalFlag($flag, $value) {
-		$this->setOption($flag, $value);
+		$this->setOptionHelper($flag, $value);
+	}
+
+	/**
+	 * Create a local option name. All localized (wikia specific) options,
+	 * preferences, attributes or flags should be of the form "{option}-{cityId}"
+	 *
+	 * IF YOU USE $sep, MAKE A PLAN TO NORMALIZE IT TO "-"!
+	 *
+	 * @param string $property
+	 * @param int $cityId [optional]
+	 * @param string $sep the separator between the option and the id.
+	 * @return string
+	 */
+	public static function localToGlobalPropertyName($property, $cityId = null, $sep = '-') {
+		global $wgCityId;
+		if (!isset($cityId)) {
+			$cityId = $wgCityId;
+		}
+
+		return sprintf("%s%s%s", $property, $sep, $cityId);
+	}
+
+	private function sanitizeProperty($value) {
+		if ($value) {
+			$value = str_replace("\r\n", "\n", $value);
+			$value = str_replace("\r", "\n", $value);
+			$value = str_replace("\n", " ", $value);
+		}
+
+		return $value;
+	}
+
+	/**
+	 * @param $oname
+	 * @param $val
+	 * @deprecated use set(Global|Local)Preference  set(Global|Local)Attribute or set(Global|Local)Flag
+	 */
+	public function setOption( $oname, $val ) {
+		$this->warning("calling setOption", [
+			"class" => "user",
+			"type" => "setoption",
+			"source" => wfBacktrace(true),
+		]);
+		$this->setOptionHelper($oname, $val);
 	}
 
 	/**
@@ -2593,9 +2681,8 @@ class User {
 	 *
 	 * @param $oname String The option to set
 	 * @param $val mixed New value to set
-	 * @deprecated use set(Global|Local)Preference  set(Global|Local)Attribute or set(Global|Local)Flag
 	 */
-	public function setOption( $oname, $val ) {
+	private function setOptionHelper( $oname, $val ) {
 		$this->load();
 		$this->loadOptions();
 
@@ -2610,11 +2697,7 @@ class User {
 		}
 		// Filter out any newlines that may have passed through input validation.
 		// Newlines are used to separate items in the options blob.
-		if( $val ) {
-			$val = str_replace( "\r\n", "\n", $val );
-			$val = str_replace( "\r", "\n", $val );
-			$val = str_replace( "\n", " ", $val );
-		}
+		$val = $this->sanitizeProperty($val);
 		// Explicitly NULL values should refer to defaults
 		global $wgDefaultUserOptions;
 		if( is_null( $val ) && isset( $wgDefaultUserOptions[$oname] ) ) {

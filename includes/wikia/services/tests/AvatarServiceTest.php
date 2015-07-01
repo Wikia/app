@@ -64,7 +64,7 @@ class AvatarServiceTest extends WikiaBaseTest {
 		$user->setName( $userName );
 
 		if ( $userId > 0 ) {
-			$user->setGlobalPreference( AVATAR_USER_OPTION_NAME, $userId );
+			$user->setGlobalAttribute( AVATAR_USER_OPTION_NAME, $userId );
 		}
 
 		$this->assertStringEndsWith( $url, AvatarService::getAvatarUrl( $user, $avatarSize ) );

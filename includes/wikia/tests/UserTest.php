@@ -3,8 +3,8 @@ class UserTest extends WikiaBaseTest {
 
 	/** @dataProvider localOptionNameProvider */
 	public function testCreateLocalOptionName($input, $expected) {
-		$result = call_user_func_array('User::createLocalOptionName', $input);
-		$this->assertEquals($expected, $result, sprintf("failed with input: [%s, %d, %s]", $option, $cityId, $sep));
+		$result = call_user_func_array('User::localToGlobalPropertyName', $input);
+		$this->assertEquals($expected, $result, sprintf("failed with input: [%s]", implode(", ", $input)));
 	}
 
 	function localOptionNameProvider() {

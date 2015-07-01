@@ -130,7 +130,7 @@
 					'mName' => self::TEST_USERNAME,
 				),
 				'mockValueMap' => array(
-					'getOption' => array(// array of parameters and returned results
+					'getGlobalFlag' => array(// array of parameters and returned results
 						array( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME, null, false, true ),
 						array( UserLoginSpecialController::SIGNED_UP_ON_WIKI_OPTION_NAME, null, false, 0 )
 					)
@@ -415,7 +415,7 @@
 //					'mEmail' => self::TEST_EMAIL,
 				),
 				'mockValueMap' => array(
-					'getOption' => array(// array of parameters and returned results
+					'getGlobalFlag' => array(// array of parameters and returned results
 						array( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME, null, false, true )
 					)
 				)
@@ -451,7 +451,7 @@
 					'mEmail' => self::TEST_EMAIL,
 				),
 				'mockValueMap' => array(
-					'getOption' => array(// array of parameters and returned results
+					'getGlobalFlag' => array(// array of parameters and returned results
 						array( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME, null, false, true )
 					)
 				)
@@ -477,10 +477,12 @@
 					'mEmail' => 'devbox+test111@wikia-inc.com',
 				),
 				'mockValueMap' => array(
-					'getOption' => array(// array of parameters and returned results
+					'getGlobalFlag' => array(// array of parameters and returned results
 						array( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME, null, false, true ),
+					),
+					'getGlobalPreference' => array(
 						array( 'language', null, false, 'en' )
-					)
+					),
 				)
 			);
 
@@ -599,7 +601,7 @@
 					'mEmail' => self::TEST_EMAIL,
 				),
 				'mockValueMap' => array(
-					'getOption' => array(// array of parameters and returned results
+					'getGlobalFlag' => array(// array of parameters and returned results
 						array( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME, null, false, true )
 					)
 				)
@@ -675,7 +677,7 @@
 					'mEmail' => self::TEST_EMAIL,
 				),
 				'mockValueMap' => array(
-					'getOption' => array(// array of parameters and returned results
+					'getGlobalFlag' => array(// array of parameters and returned results
 						array( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME, null, false, true )
 					)
 				)
@@ -716,7 +718,7 @@
 					'mEmail' => 'testEmail',
 				),
 				'mockValueMap' => array(
-					'getOption' => array(// array of parameters and returned results
+					'getGlobalFlag' => array(// array of parameters and returned results
 						array( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME, null, false, true )
 					)
 				)
@@ -734,11 +736,9 @@
 					'mName' => self::TEST_USERNAME,
 					'mEmail' => self::TEST_EMAIL,
 				),
-				'mockValueMap' => array(
-					'getOption' => array(// array of parameters and returned results
-						array( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME, null, false, true )
-					)
-				)
+				'getGlobalFlag' => [
+					'mockExpValues' => true
+				],
 			);
 			$mockMessagesMap106 = array(
 				array( 'usersignup-error-already-confirmed' ),
@@ -762,10 +762,12 @@
 					'mEmail' => self::TEST_EMAIL,
 				),
 				'mockValueMap' => array(
-					'getOption' => array(// array of parameters and returned results
+					'getGlobalFlag' => array(// array of parameters and returned results
 						array( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME, null, false, true ),
-						array( 'language', null, false, 'en' )
-					)
+					),
+					'getGlobalPreferences' => array(
+						array( 'language', null, false, 'en' ),
+					),
 				)
 			);
 			$mockCache107 = 1;
@@ -805,10 +807,12 @@
 					'mEmail' => self::TEST_EMAIL
 				),
 				'mockValueMap' => array(
-					'getOption' => array(// array of parameters and returned results
+					'getGlobalFlag' => array(// array of parameters and returned results
 						array( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME, null, false, true ),
+					),
+					'getGlobalPreference' => array(
 						array( 'language', null, false, 'en' )
-					)
+					),
 				)
 			);
 

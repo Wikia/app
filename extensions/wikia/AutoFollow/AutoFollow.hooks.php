@@ -44,7 +44,7 @@ class AutoFollowHooks {
 	 */
 	private function checkAutoFollowConditions( \User $oUser ) {
 		global $wgAutoFollowFlag;
-		if ( (bool)$oUser->getGlobalPreference( $wgAutoFollowFlag ) === true ) {
+		if ( (bool)$oUser->getGlobalFlag( $wgAutoFollowFlag ) === true ) {
 			return false;
 		} elseif ( (bool)$oUser->getGlobalPreference( 'marketingallowed' ) === false ) {
 			return false;
