@@ -280,6 +280,11 @@ class UncycloUserMigrator extends Maintenance {
 
 		// update user_id in the rest of MW & Wikia-specific tables
 		$this->updateTables( self::UPDATE_TABLE_USER_ID, $user->getId(), $newUserId );
+
+		// invalidate user cache
+		global $wgMemc;
+		$wgMemc->delete( wfMemcKey( 'user', 'id', $user->getId() ) );
+		$wgMemc->delete( wfMemcKey( 'user', 'id', $newUserId ) );
 	}
 
 	/**
@@ -538,11 +543,6 @@ class UncycloUserMigrator extends Maintenance {
 			// we have a new ID for a global account
 			// update user ID in uncyclo database
 			$this->doChangeUncycloUserId( $user, $extUser->mId );
-
-			// invalidate user cache
-			global $wgMemc;
-			$wgMemc->delete( wfMemcKey( 'user', 'id', $user->getId() ) );
-			$wgMemc->delete( wfMemcKey( 'user', 'id', $extUser->mId ) );
 
 			$dbw->commit(__METHOD__);
 
