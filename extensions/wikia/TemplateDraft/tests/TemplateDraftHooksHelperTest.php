@@ -22,6 +22,17 @@ class TemplateDraftHooksHelperTest extends WikiaBaseTest {
 		$railModuleListActual = [];
 
 		/** @var Title $mockTitle */
+		$mockParentTitle = $this->getMockBuilder( 'Title' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'userCan' ] )
+			->getMock();
+		$mockParentTitle->expects( $this->any() )
+			->method( 'userCan' )
+			->with( 'templatedraft' )
+			->will( $this->returnValue( $paramUserCanTemplateDraft ) );
+
+
+		/** @var Title $mockTitle */
 		$mockTitle = $this->getMockBuilder( 'Title' )
 			->disableOriginalConstructor()
 			->setMethods( [ 'exists', 'getNamespace', 'userCan' ] )
@@ -35,7 +46,7 @@ class TemplateDraftHooksHelperTest extends WikiaBaseTest {
 			->method( 'getNamespace' )
 			->will( $this->returnValue( $paramTitleNamespace ) );
 
-		$mockTitle->expects( $this->once() )
+		$mockTitle->expects( $this->any() )
 			->method( 'userCan' )
 			->with( 'templatedraft' )
 			->will( $this->returnValue( $paramUserCanTemplateDraft ) );
@@ -43,10 +54,14 @@ class TemplateDraftHooksHelperTest extends WikiaBaseTest {
 		/* mock TemplateDraftHelper */
 		$mockTemplateDraftHelper = $this->getMockBuilder( 'Title' )
 			->disableOriginalConstructor()
-			->setMethods( [ 'isTitleDraft', 'isMarkedAsInfobox' ] )
+			->setMethods( [ 'getParentTitle', 'isTitleDraft', 'isMarkedAsInfobox' ] )
 			->getMock();
 
-		$mockTemplateDraftHelper->expects( $this->once() )
+		$mockTemplateDraftHelper->expects( $this->any() )
+			->method( 'getParentTitle' )
+			->will( $this->returnValue( $mockParentTitle ) );
+
+		$mockTemplateDraftHelper->expects( $this->any() )
 			->method( 'isTitleDraft' )
 			->will( $this->returnValue( $paramIsTitleDraft ) );
 
@@ -65,7 +80,7 @@ class TemplateDraftHooksHelperTest extends WikiaBaseTest {
 			->method( 'getGlobalTitle' )
 			->will( $this->returnValue( $mockTitle ) );
 
-		$mockTemplateDraftHooksHelper->expects( $this->once() )
+		$mockTemplateDraftHooksHelper->expects( $this->any() )
 			->method( 'getTemplateDraftHelper' )
 			->will( $this->returnValue( $mockTemplateDraftHelper ) );
 
@@ -84,6 +99,7 @@ class TemplateDraftHooksHelperTest extends WikiaBaseTest {
 		 */
 		return [
 			[ true, NS_TEMPLATE, true, false, true, $railModuleListExpectedCreate ],
+			[ true, NS_TEMPLATE, true, true, true, $railModuleListExpectedApprove ],
 		];
 	}
 }

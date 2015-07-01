@@ -23,7 +23,7 @@ class TemplateDraftHooks {
 	 * @return bool
 	 */
 	public static function onGetRailModuleList( Array &$railModuleList ) {
-		$templateDraftHooksHelper = new self();
+		$templateDraftHooksHelper = new TemplateDraftHooksHelper();
 		$templateDraftHooksHelper->addRailModuleList( $railModuleList );
 
 		return true;
