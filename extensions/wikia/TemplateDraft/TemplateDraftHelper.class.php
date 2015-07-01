@@ -72,6 +72,16 @@ class TemplateDraftHelper {
 	}
 
 	/**
+	 * Parent page has to meet criteria to allow showing template draft rail modules
+	 * Assuming namespace and existance is already chacked
+	 * @param Title $title
+	 * @return bool
+	 */
+	public function isParentValid( Title $title ) {
+		return $title->userCan( 'templatedraft' ) && $this->isMarkedAsInfobox( $title );
+	}
+
+	/**
 	 * Retrieves parent Title object from provided $title
 	 *
 	 * @param Title $title
