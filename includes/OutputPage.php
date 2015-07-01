@@ -3134,7 +3134,7 @@ $templates
 			$wgSitename, $wgVersion, $wgHtml5, $wgMimeType,
 			$wgFeed, $wgOverrideSiteFeed, $wgAdvertisedFeedTypes,
 			$wgDisableLangConversion, $wgCanonicalLanguageLinks,
-			$wgRightsPage, $wgRightsUrl, $wgDevelEnvironment;
+			$wgRightsPage, $wgRightsUrl, $wgDevelEnvironment, $wgStagingEnvironment;
 
 		$tags = array();
 
@@ -3162,7 +3162,7 @@ $templates
 
 		$p = "{$this->mIndexPolicy},{$this->mFollowPolicy}";
 		// Wikia change - begin
-		if ( !empty( $wgDevelEnvironment ) ) {
+		if ( !empty( $wgDevelEnvironment ) || !empty( $wgStagingEnvironment ) ) {
 			$p = "noindex,nofollow";
 		}
 		// Wikia change - end
