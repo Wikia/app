@@ -258,7 +258,7 @@ class LoginForm extends SpecialPage {
 		# If we showed up language selection links, and one was in use, be
 		# smart (and sensible) and save that language as the user's preference
 		if( $wgLoginLanguageSelector && $this->mLanguage ) {
-			$u->setOption( 'language', $this->mLanguage );
+			$u->setGlobalPreference( 'language', $this->mLanguage );
 		}
 
 		$out = $this->getOutput();
@@ -586,10 +586,10 @@ class LoginForm extends SpecialPage {
 			}
 		}
 
-		$u->setOption( 'rememberpassword', $this->mRemember ? 1 : 0 );
-		$u->setOption( 'marketingallowed', $this->mMarketingOptIn ? 1 : 0 );
-		$u->setOption( 'registrationCountry', $this->mRegistrationCountry );
-		$u->setOption( 'skinoverwrite', 1 );
+		$u->setGlobalPreference( 'rememberpassword', $this->mRemember ? 1 : 0 );
+		$u->setGlobalPreference( 'marketingallowed', $this->mMarketingOptIn ? 1 : 0 );
+		$u->setGlobalAttribute( 'registrationCountry', $this->mRegistrationCountry );
+		$u->setGlobalPreference( 'skinoverwrite', 1 );
 		$u->saveSettings();
 
 		# Update user count
@@ -879,7 +879,7 @@ class LoginForm extends SpecialPage {
 				# We've verified now, update the real record
 				$user = $this->getUser();
 				if( (bool)$this->mRemember != (bool)$user->getGlobalPreference( 'rememberpassword' ) ) {
-					$user->setOption( 'rememberpassword', $this->mRemember ? 1 : 0 );
+					$user->setGlobalPreference( 'rememberpassword', $this->mRemember ? 1 : 0 );
 					$user->saveSettings();
 				} else {
 					$user->invalidateCache();

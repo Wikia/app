@@ -64,7 +64,7 @@ class SFFormEdit extends SpecialPage {
 		} else {
 			$this->mError = null;
 		}
-		
+
 		wfProfileOut( __METHOD__ );
 
 	}
@@ -76,7 +76,11 @@ class SFFormEdit extends SpecialPage {
 		$i = 0;
 		foreach ( $alt_forms as $alt_form ) {
 			if ( $i++ > 0 ) { $text .= ', '; }
-			$text .= "<a href=\"$fe_url/$alt_form/$target_name\">" . str_replace( '_', ' ', $alt_form ) . '</a>';
+			$altFormURL = $fe_url . '/' . rawurlencode( $alt_form ) . '/' . rawurlencode( $target_name );
+			$text .= Html::element( 'a',
+				array( 'href' => $altFormURL ),
+				str_replace( '_', ' ', $alt_form )
+			);
 		}
 		return $text;
 	}
@@ -373,7 +377,7 @@ class SFFormEdit extends SpecialPage {
 						wfProfileOut( __METHOD__ );
 						return SFUtils::processEditErrors( $saveResultCode );
 					}
-					
+
 				} else {
 					// Lets other code process additional form-definition syntax
 					wfRunHooks( 'sfWritePageData', array( $form_name, $target_title, &$data_text ) );

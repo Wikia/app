@@ -413,9 +413,6 @@ class WallNotifications {
 				'titleUrl' => $notifData->url,
 				'details' => $text,
 				'targetUser' => $watcherName,
-				'fromAddress' => $this->app->wg->PasswordSender,
-				'replyToAddress' => $this->app->wg->NoReplyAddress,
-				'fromName' => $this->app->wg->PasswordSenderName,
 				'wallUserName' => $notifData->wall_username,
 				'threadId' => $notifData->parent_id
 			];

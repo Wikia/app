@@ -28,7 +28,7 @@
 			</td>
 			<td class="flags-special-list-item-params">
 				<?php
-					$paramsNames = json_decode( $flag['flag_params_names'] );
+					$paramsNames = json_decode( $flag['flag_params_names'], true );
 					if ( is_array( $paramsNames ) ) :
 				?>
 					<?php foreach ( $paramsNames as $name => $description ): ?>

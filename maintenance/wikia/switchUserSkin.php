@@ -41,7 +41,7 @@ while( $row = $dbr->fetchObject( $sth ) ) {
 		 */
 		if( $user->getGlobalPreference( "skin" ) === "" ) {
 			wfOut ("Moving {$user->getName()} ({$user->getId()}) skin preferences from {$user->getGlobalPreference( "skin" )} to oasis\n");
-			$user->setOption( "skin", "oasis" );
+			$user->setGlobalPreference( "skin", "oasis" );
 			$user->saveSettings();
 			$user->invalidateCache();
 		}

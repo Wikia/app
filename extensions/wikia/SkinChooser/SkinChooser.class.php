@@ -150,13 +150,13 @@ class SkinChooser {
 
 		$key = self::getUserOptionKey( $option );
 
-		$wgUser->setOption( $key, $value );
+		$wgUser->setGlobalPreference( $key, $value );
 		self::log( __METHOD__, "{$key} = {$value}" );
 
 		/* debugging skin leak, -uber */
 		if ( $key == 'skin' ) { # yes, i do mean to check key and not option here
 			global $wgCityId;
-			$wgUser->setOption( 'skin-set', implode( '|', array( 'SkinChooser', $wgCityId, time() ) ) );
+			$wgUser->setGlobalPreference( 'skin-set', implode( '|', array( 'SkinChooser', $wgCityId, time() ) ) );
 		}
 		/* end debug */
 

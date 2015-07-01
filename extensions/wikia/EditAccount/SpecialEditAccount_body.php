@@ -219,7 +219,7 @@ class EditAccount extends SpecialPage {
 					'userRealName' => $this->mUser->getRealName(),
 					'userId'  => $this->mUser->getID(),
 					'userReg' => date( 'r', strtotime( $this->mUser->getRegistration() ) ),
-					'isUnsub' => $this->mUser->getGlobalFlag('unsubscribed'),
+					'isUnsub' => $this->mUser->getGlobalPreference('unsubscribed'),
 					'isDisabled' => $this->mUser->getGlobalFlag('disabled'),
 					'isClosureRequested' => $this->isClosureRequested(),
 					'isAdopter' => $this->mUser->getGlobalFlag('AllowAdoption', 1 ),

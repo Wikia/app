@@ -58,7 +58,7 @@ class SpecialWatchlist extends SpecialPage {
 		$wlToken = $user->getGlobalAttribute( 'watchlisttoken' );
 		if ( !$wlToken ) {
 			$wlToken = MWCryptRand::generateHex( 40 );
-			$user->setOption( 'watchlisttoken', $wlToken );
+			$user->setGlobalAttribute( 'watchlisttoken', $wlToken );
 			$user->saveSettings();
 		}
 

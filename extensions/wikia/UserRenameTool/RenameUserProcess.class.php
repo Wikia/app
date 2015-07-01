@@ -105,6 +105,11 @@ class RenameUserProcess {
 	private $mLogTask = null;
 
 	/**
+	 * @var string
+	 */
+	private $mUserRenameTaskId = null;
+
+	/**
 	 * Creates new rename user process
 	 *
 	 * @param $oldUsername string Old username
@@ -157,6 +162,10 @@ class RenameUserProcess {
 
 	public function getPhalanxBlockID(){
 		return $this->mPhalanxBlockId;
+	}
+
+	public function getUserRenameTaskId() {
+		return $this->mUserRenameTaskId;
 	}
 
 	/**
@@ -505,7 +514,7 @@ class RenameUserProcess {
 
 			$problems = array_merge($this->mErrors, $this->mWarnings);
 
-			$this->addMainLog("fail", RenameUserLogFormatter::fail($this->mRequestorName, $this->mOldUsername, $this->mNewUsername, $this->mReason, $tasks));
+			$this->addMainLog("fail", RenameUserLogFormatter::fail($this->mRequestorName, $this->mOldUsername, $this->mNewUsername, $this->mReason));
 		}
 
 		wfProfileOut(__METHOD__);
@@ -621,7 +630,7 @@ class RenameUserProcess {
 		$task = ( new UserRenameTask() )
 			->setPriority( \Wikia\Tasks\Queues\PriorityQueue::NAME );
 		$task->call( 'renameUser', $wikiIDs, $callParams );
-		$task->queue();
+		$this->mUserRenameTaskId = $task->queue();
 
 		wfProfileOut(__METHOD__);
 		return true;

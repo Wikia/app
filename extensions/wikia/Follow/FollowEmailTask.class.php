@@ -17,9 +17,7 @@ class FollowEmailTask extends BaseTask {
 
 		$targetUser = User::newFromId( $iUserId );
 
-		$this->info( 'WatchlistLogs: Sending bloglisting watchlist updates', [
-			'watchedPages' => $aWatchers,
-		] );
+		$this->logWatchers( $aWatchers, $sAction );
 
 		foreach ( $aWatchers as $sKey => $sValue ) {
 			$oTitle = Title::makeTitle( $iNamespace, $sKey );
@@ -34,5 +32,17 @@ class FollowEmailTask extends BaseTask {
 			);
 			$oEmailNotification->notifyOnPageChange();
 		}
+	}
+
+	private function logWatchers( $watchers, $action ) {
+		if ( $action == FollowHelper::LOG_ACTION_BLOG_POST ) {
+			$msg = 'WatchlistLogs: Sending bloglisting watchlist updates';
+		} elseif ( $action == FollowHelper::LOG_ACTION_CATEGORY_ADD ) {
+			$msg = 'WatchlistLogs: Sending categoryadd watchlist updates';
+		} else {
+			$msg = 'WatchlistLogs: Sending other watchlist updates';
+		}
+
+		$this->info( $msg, [ 'watchers' => $watchers, 'action' => $action ] );
 	}
 }

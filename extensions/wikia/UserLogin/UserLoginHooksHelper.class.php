@@ -2,15 +2,6 @@
 
 class UserLoginHooksHelper {
 
-	// send reconfirmation mail
-	public static function onUserSendReConfirmationMail( User &$user, &$result ) {
-		$userLoginHelper = ( new UserLoginHelper );
-		$emailTextTemplate = $userLoginHelper->getReconfirmationEmailTempalte( $user );
-		$result = $user->sendConfirmationMail( false, 'ReConfirmationMail', 'usersignup-reconfirmation-email', true, $emailTextTemplate );
-
-		return true;
-	}
-
 	// get error message when abort new account
 	public static function onAbortNewAccountErrorMessage( &$abortError, &$errParam ) {
 		if ( $abortError == wfMessage( 'phalanx-user-block-new-account' )->escaped() ) {

@@ -78,16 +78,25 @@ class SFFormUtils {
 	static function summaryInputHTML( $is_disabled, $label = null, $attr = array() ) {
 		global $sfgTabIndex;
 
-		$sfgTabIndex++;
-		if ( $label == null )
-			$label = wfMsg( 'summary' );
-		$disabled_text = ( $is_disabled ) ? " disabled" : "";
-		$attr = Html::expandAttributes( $attr );
-		$text = <<<END
-	<span id='wpSummaryLabel'><label for='wpSummary'>$label</label></span>
-	<input tabindex="$sfgTabIndex" type='text' value="" name='wpSummary' id='wpSummary' maxlength='200' size='60'$disabled_text$attr/>
+		if ( $label == null ) {
+			$label = wfMessage( 'summary' )->text();
+		}
+		$label = htmlspecialchars( $label );
+		$text = "<span id='wpSummaryLabel'><label for='wpSummary'>$label</label></span>\n";
 
-END;
+		$sfgTabIndex++;
+		$attr['tabindex'] = $sfgTabIndex;
+		$attr['type'] = 'text';
+		$attr['value'] = '';
+		$attr['name'] = 'wpSummary';
+		$attr['id'] = 'wpSummary';
+		$attr['maxlength'] = 200;
+		$attr['size'] = 60;
+		if ( $is_disabled ) {
+			$attr['disabled'] = true;
+		}
+		$text .= Html::element( 'input', $attr );
+
 		return $text;
 	}
 

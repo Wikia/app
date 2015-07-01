@@ -422,10 +422,10 @@ class UserPreferencesV2 {
 	 */
 	static public function onSpecialPreferencesAfterResetUserOptions( $preferences, &$user, &$storage ) {
 		// user identity box/masthead
-		self::setUserOptionByNameAndValue( $user, $storage[self::MASTHEAD_OPTIONS_STORAGE_ARRAY_KEY_NAME] );
+		self::setUserAttributeByNameAndValue( $user, $storage[self::MASTHEAD_OPTIONS_STORAGE_ARRAY_KEY_NAME] );
 
 		// customize toolbar
-		self::setUserOptionByNameAndValue( $user, $storage[self::MY_TOOLBAR_OPTIONS_STORAGE_ARRAY_KEY_NAME] );
+		self::setUserPreferenceByNameAndValue( $user, $storage[self::MY_TOOLBAR_OPTIONS_STORAGE_ARRAY_KEY_NAME] );
 
 		return true;
 	}
@@ -462,10 +462,22 @@ class UserPreferencesV2 {
 	 * @param User $user
 	 * @param $options
 	 */
-	static protected function setUserOptionByNameAndValue( $user, $options ) {
+	static protected function setUserPreferenceByNameAndValue( $user, $options ) {
 		foreach ( $options as $optionName => $optionValue ) {
 			if ( !is_array( $optionValue ) ) {
-				$user->setOption( $optionName, $optionValue );
+				$user->setGlobalPreference( $optionName, $optionValue );
+			}
+		}
+	}
+
+	/**
+	 * @param User $user
+	 * @param $options
+	 */
+	static protected function setUserAttributeByNameAndValue( $user, $options ) {
+		foreach ( $options as $optionName => $optionValue ) {
+			if ( !is_array( $optionValue ) ) {
+				$user->setGlobalAttribute( $optionName, $optionValue );
 			}
 		}
 	}

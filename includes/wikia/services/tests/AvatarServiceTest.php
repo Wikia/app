@@ -64,7 +64,7 @@ class AvatarServiceTest extends WikiaBaseTest {
 		$user->setName( $userName );
 
 		if ( $userId > 0 ) {
-			$user->setOption( AVATAR_USER_OPTION_NAME, $userId );
+			$user->setGlobalPreference( AVATAR_USER_OPTION_NAME, $userId );
 		}
 
 		$this->assertStringEndsWith( $url, AvatarService::getAvatarUrl( $user, $avatarSize ) );
@@ -141,7 +141,7 @@ class AvatarServiceTest extends WikiaBaseTest {
 		$user = $this->getMock( 'User' );
 		$user
 			->expects( $this->any() )
-			->method( 'getOption' )
+			->method( 'getGlobalPreference' )
 			->will( $this->returnValue( null ) );
 
 		$masthead = $this->getMock( 'Masthead', [], [$user] );

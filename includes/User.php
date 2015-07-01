@@ -2320,6 +2320,13 @@ class User {
 		$this->mRealName = $str;
 	}
 
+	/**
+	 * @param $oname
+	 * @param null $defaultOverride
+	 * @param bool|false $ignoreHidden
+	 * @return String
+	 * @deprecated use get(Global|Local)Preference  get(Global|Local)Attribute or get(Global|Local)Flag
+	 */
 	public function getOption($oname, $defaultOverride = null, $ignoreHidden = false) {
 		return $this->getOptionHelper($oname, $defaultOverride, $ignoreHidden);
 	}
@@ -2653,6 +2660,11 @@ class User {
 		return sprintf("%s%c%s", $property, $sep, $cityId);
 	}
 
+	/**
+	 * @param $oname
+	 * @param $val
+	 * @deprecated use set(Global|Local)Preference  set(Global|Local)Attribute or set(Global|Local)Flag
+	 */
 	public function setOption( $oname, $val ) {
 		$this->setOptionHelper($oname, $val);
 	}
@@ -3867,6 +3879,11 @@ class User {
 		$priority = 0;
 		wfRunHooks( 'UserSendConfirmationMail' , array( &$this, &$args, &$priority, &$url, $token, $ip_arg, $type ) );
 
+		$emailController = $this->getEmailController( $mailtype );
+		if ( !empty( $emailController ) ) {
+			return $this->sendUsingEmailExtension( $emailController, $url );
+		}
+
 		/* Wikia change begin - @author: Marooned */
 		/* HTML e-mails functionality */
 		global $wgEnableRichEmails;
@@ -3902,23 +3919,56 @@ class User {
 		/* Wikia change end */
 	}
 
+	private function getEmailController( $mailType ) {
+		$controller = "";
+		if ( $this->isConfirmationMail( $mailType ) ) {
+			$controller = 'Email\Controller\EmailConfirmation';
+		} elseif ( $this->isConfirmationReminderMail( $mailType ) ) {
+			$controller = 'Email\Controller\EmailConfirmationReminder';
+		} elseif ( $this->isChangeEmailConfirmationMail( $mailType ) ) {
+			$controller = 'Email\Controller\ConfirmationChangedEmail';
+		}
+
+		return $controller;
+	}
+
+	private function isConfirmationMail( $mailType ) {
+		return $mailType == "ConfirmationMail";
+	}
+
+	private function isConfirmationReminderMail( $mailType ) {
+		return $mailType == "ConfirmationReminderMail";
+	}
+
+	private function isChangeEmailConfirmationMail( $mailType ) {
+		return $mailType == "ReConfirmationMail";
+	}
+
+	private function sendUsingEmailExtension( $emailController, $url ) {
+		$params = [
+			'targetUser' => $this->getName(),
+			'confirmUrl' => $url,
+		];
+
+		$responseData = F::app()->sendRequest( $emailController, 'handle', $params )->getData();
+
+		if ( $responseData['result'] == 'ok' ) {
+			return Status::newGood();
+		} else {
+			return Status::newFatal( $responseData['error'] );
+		}
+
+	}
+
 	/**
-	 * Confirmation after change the emial
+	 * Confirmation after change the email
 	 *
-	 * @return \types{\bool,\type{WikiError}} True on success, a WikiError object on failure.
+	 * @return WikiError|bool True on success, a WikiError object on failure.
 	 */
 	function sendReConfirmationMail() {
 		$this->setOption("mail_edited","1");
 		$this->saveSettings();
-		/* Wikia change - begin */
-		$result = null;
-		wfRunHooks( 'UserSendReConfirmationMail', array( &$this, &$result ) );
-		if ( empty($result) ) {
-			$result = $this->sendConfirmationMail( false, 'ReConfirmationMail', 'reconfirmemail' );
-		}
-
-		return $result;
-		/* Wikia change - end */
+		return $this->sendConfirmationMail( false, 'ReConfirmationMail' );
 	}
 
 	/**
@@ -3932,7 +3982,7 @@ class User {
 		}
 		$this->setOption("cr_mailed","1");
 		$this->saveSettings();
-		return $this->sendConfirmationMail( false, 'ConfirmationReminder', 'confirmemailreminder', false );
+		return $this->sendConfirmationMail( false, 'ConfirmationReminder', '', false );
 	}
 
 	/**

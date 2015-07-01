@@ -100,7 +100,7 @@ class SpecialSearchTest extends MediaWikiTestCase {
 			return $u;
 		}
 		foreach($opt as $name => $value) {
-			$u->setOption( $name, $value );
+			$u->setGlobalPreference( $name, $value );
 		}
 		return $u;
 	}

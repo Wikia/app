@@ -4,17 +4,21 @@ namespace Wikia\Persistence\User;
 
 use Iterator;
 use Wikia\Domain\User\Preference;
-use Wikia\Service\User\PreferencePersistence;
 
 class PreferencePersistenceMySQL implements PreferencePersistence {
 	const USER_PREFERENCE_TABLE = 'user_properties';
+	const UP_USER = 'up_user';
+	const UP_PROPERTY = 'up_property';
+	const UP_VALUE = 'up_value';
+	
 	const CONNECTION_MASTER = "user_preferences_mysql_persistence_master";
 	const CONNECTION_SLAVE = "user_preferences_mysql_persistence_slave";
 
-	public static $UPSERT_SET_BLOCK = ["up_user = VALUES(up_user)", "up_property = VALUES(up_property)", "up_value = VALUES(up_value)"];
+	public static $UPSERT_SET_BLOCK = [ "up_user = VALUES(up_user)", "up_property = VALUES(up_property)", "up_value = VALUES(up_value)" ];
 
 	private $master;
 	private $slave;
+	private $whiteList;
 
 	/**
 	 * @Inject({
@@ -22,34 +26,40 @@ class PreferencePersistenceMySQL implements PreferencePersistence {
 	 *   Wikia\Persistence\User\PreferencePersistenceMySQL::CONNECTION_SLAVE})
 	 * @param \DatabaseMysqli $master
 	 * @param \DatabaseMysqli $slave
+	 * @param array           $whiteList of user preference
 	 */
-	function __construct( \DatabaseMysqli $master, \DatabaseMysqli $slave ) {
+	function __construct( \DatabaseMysqli $master, \DatabaseMysqli $slave, $whiteList = [ ] ) {
 		$this->master = $master;
 		$this->slave = $slave;
+		$this->whiteList = $whiteList;
 	}
 
 	public function save( $userId, array $preferences ) {
 		$tuples = $this->createTuplesFromPreferences( $userId, $preferences );
-		return $this->master->upsert( self::USER_PREFERENCE_TABLE, $tuples, [], self::$UPSERT_SET_BLOCK );
+		return $this->master->upsert( self::USER_PREFERENCE_TABLE, $tuples, [ ], self::$UPSERT_SET_BLOCK );
 	}
 
 	public static function createTuplesFromPreferences( $userId, array $preferences ) {
 		$userId = intval( $userId );
-		return array_map( function( Preference $e ) use ( $userId ) {
+		return array_map( function ( Preference $e ) use ( $userId ) {
 			return [
-				'up_user' =>  $userId,
-				'up_property' => $e->getName(),
-				'up_value' => $e->getValue()
-				];
-		} , $preferences );
+				self::UP_USER => $userId,
+				self::UP_PROPERTY => $e->getName(),
+				self::UP_VALUE => $e->getValue()
+			];
+		}, $preferences );
 	}
 
 	public function get( $userId ) {
 		$userId = intval( $userId );
+		$cond = [ self::UP_USER => $userId ];
+		if ( !empty( $this->whiteList ) ) {
+			$cond[ self::UP_PROPERTY ] = $this->whiteList;
+		}
 		$result = $this->slave->select(
 			self::USER_PREFERENCE_TABLE,
-			'*',
-			array( 'up_user' => $userId ),
+			[ self::UP_PROPERTY, self::UP_VALUE ],
+			$cond,
 			__METHOD__
 		);
 
