@@ -4,7 +4,6 @@ namespace Wikia\Persistence\User;
 
 use Wikia\DependencyInjection\InjectorBuilder;
 use Wikia\DependencyInjection\Module;
-use Wikia\Service\User\PreferencePersistence;
 
 class PreferencePersistenceModuleMySQL implements Module {
 	/** @var callable */

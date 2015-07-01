@@ -299,8 +299,6 @@ $wgAutoloadClasses['SwaggerParameter'] = "$IP/includes/wikia/swagger/SwaggerPara
 $wgAutoloadClasses['SwaggerModel'] = "$IP/includes/wikia/swagger/SwaggerModel.php";
 $wgAutoloadClasses['SwaggerModelProperty'] = "$IP/includes/wikia/swagger/SwaggerModelProperty.php";
 $wgAutoloadClasses['SwaggerErrorResponse'] = "$IP/includes/wikia/swagger/SwaggerErrorResponse.php";
-$wgAutoloadClasses['UserPreferences'] = "$IP/includes/wikia/user/UserPreferences.php";
-$wgAutoloadClasses['UserPreferencesModule'] = "$IP/includes/wikia/user/UserPreferencesModule.php";
 
 /**
  * Resource Loader enhancements

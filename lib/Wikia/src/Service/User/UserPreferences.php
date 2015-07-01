@@ -1,6 +1,7 @@
 <?php
 
-use Wikia\Service\User\PreferenceService;
+namespace Wikia\Service\User;
+
 use Wikia\Domain\User\Preference;
 
 class UserPreferences {

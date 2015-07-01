@@ -21,6 +21,7 @@
  */
 
 use Wikia\DependencyInjection\Injector;
+use Wikia\Service\User\UserPreferences;
 
 /**
  * Int Number of characters in user_token field.

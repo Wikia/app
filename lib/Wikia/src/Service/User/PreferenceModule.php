@@ -1,12 +1,13 @@
 <?php
 
+namespace Wikia\Service\User;
+
+use User;
 use Wikia\DependencyInjection\InjectorBuilder;
 use Wikia\DependencyInjection\Module;
 use Wikia\Persistence\User\PreferencePersistenceModuleMySQL;
-use Wikia\Service\User\PreferenceKeyValueService;
-use Wikia\Service\User\PreferenceService;
 
-class UserPreferencesModule implements Module {
+class PreferenceModule implements Module {
 	public function configure(InjectorBuilder $builder) {
 		$builder
 			->addModule(self::getMySQLPersistenceModule())
