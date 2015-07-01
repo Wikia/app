@@ -1,6 +1,7 @@
 <?php
 
-class PortableInfoboxRenderService extends WikiaService {
+class PortableInfoboxRenderService extends WikiaService
+{
 	const LOGGER_LABEL = 'portable-infobox-render-not-supported-type';
 	const DESKTOP_THUMBNAIL_WIDTH = 270;
 	const MOBILE_THUMBNAIL_WIDTH = 360;
@@ -18,13 +19,15 @@ class PortableInfoboxRenderService extends WikiaService {
 		'comparison-set' => 'PortableInfoboxItemComparisonSet.mustache',
 		'comparison-set-header' => 'PortableInfoboxItemComparisonSetHeader.mustache',
 		'comparison-set-item' => 'PortableInfoboxItemComparisonSetItem.mustache',
-		'footer' => 'PortableInfoboxItemFooter.mustache'
+		'footer' => 'PortableInfoboxItemFooter.mustache',
+		'hero-mobile' => 'PortableInfoboxItemHeroMobile.mustache'
 	];
 	private $templateEngine;
 
-	function __construct() {
-		$this->templateEngine = ( new Wikia\Template\MustacheEngine )
-			->setPrefix( dirname( __FILE__ ) . '/../templates' );
+	function __construct()
+	{
+		$this->templateEngine = (new Wikia\Template\MustacheEngine)
+			->setPrefix(dirname(__FILE__) . '/../templates');
 	}
 
 	/**
@@ -33,38 +36,49 @@ class PortableInfoboxRenderService extends WikiaService {
 	 * @param array $infoboxdata
 	 * @return string - infobox HTML
 	 */
-	public function renderInfobox( array $infoboxdata, $theme, $layout ) {
-		wfProfileIn( __METHOD__ );
+	public function renderInfobox(array $infoboxdata, $theme, $layout)
+	{
+		wfProfileIn(__METHOD__);
 		$infoboxHtmlContent = '';
+		$heroData = [];
 
-		foreach ( $infoboxdata as $item ) {
-			$data = $item[ 'data' ];
-			$type = $item[ 'type' ];
+		foreach ($infoboxdata as $item) {
+			$data = $item['data'];
+			$type = $item['type'];
 
-			switch ( $type ) {
+			switch ($type) {
 				case 'comparison':
-					$infoboxHtmlContent .= $this->renderComparisonItem( $data['value'] );
+					$infoboxHtmlContent .= $this->renderComparisonItem($data['value']);
 					break;
 				case 'group':
-					$infoboxHtmlContent .= $this->renderGroup( $data );
+					$infoboxHtmlContent .= $this->renderGroup($data);
 					break;
 				case 'footer':
-					$infoboxHtmlContent .= $this->renderItem( 'footer', $data );
+					$infoboxHtmlContent .= $this->renderItem('footer', $data);
 					break;
 				default:
-					if ( $this->validateType( $type ) ) {
-						$infoboxHtmlContent .= $this->renderItem( $type, $data );
+					if ($this->isInfoboxHeroEnabled() && $this->isValidHeroDataItem($item, $heroData)) {
+						$heroData[$type] = $data;
+						continue;
+					}
+
+					if ($this->validateType($type)) {
+						$infoboxHtmlContent .= $this->renderItem($type, $data);
 					};
 			}
 		}
 
-		if(!empty($infoboxHtmlContent)) {
-			$output = $this->renderItem( 'wrapper', [ 'content' => $infoboxHtmlContent, 'theme' => $theme, 'layout' => $layout ] );
+		if (!empty($heroData)) {
+			$infoboxHtmlContent = $this->renderInfoboxHero($heroData) . $infoboxHtmlContent;
+		}
+
+		if (!empty($infoboxHtmlContent)) {
+			$output = $this->renderItem('wrapper', ['content' => $infoboxHtmlContent, 'theme' => $theme, 'layout' => $layout]);
 		} else {
 			$output = '';
 		}
 
-		wfProfileOut( __METHOD__ );
+		wfProfileOut(__METHOD__);
 
 		return $output;
 	}
@@ -75,7 +89,7 @@ class PortableInfoboxRenderService extends WikiaService {
 	 * @param array $comparisonData
 	 * @return string - comparison HTML
 	 */
-	private function renderComparisonItem( $comparisonData )
+	private function renderComparisonItem($comparisonData)
 	{
 		$comparisonHTMLContent = '';
 
@@ -100,11 +114,11 @@ class PortableInfoboxRenderService extends WikiaService {
 				}
 			}
 
-			$comparisonHTMLContent .= $this->renderItem( 'comparison-set', [ 'content' => $setHTMLContent ] );
+			$comparisonHTMLContent .= $this->renderItem('comparison-set', ['content' => $setHTMLContent]);
 		}
 
-		if ( !empty( $comparisonHTMLContent ) ) {
-			$output = $this->renderItem('comparison', [ 'content' => $comparisonHTMLContent ] );
+		if (!empty($comparisonHTMLContent)) {
+			$output = $this->renderItem('comparison', ['content' => $comparisonHTMLContent]);
 		} else {
 			$output = '';
 		}
@@ -118,20 +132,21 @@ class PortableInfoboxRenderService extends WikiaService {
 	 * @param array $groupData
 	 * @return string - group HTML markup
 	 */
-	private function renderGroup( $groupData ) {
+	private function renderGroup($groupData)
+	{
 		$groupHTMLContent = '';
 		$dataItems = $groupData['value'];
 		$layout = $groupData['layout'];
 
-		foreach ( $dataItems as $item ) {
+		foreach ($dataItems as $item) {
 			$type = $item['type'];
 
-			if ( $this->validateType( $type ) ) {
-				$groupHTMLContent .= $this->renderItem( $type, $item['data'] );
+			if ($this->validateType($type)) {
+				$groupHTMLContent .= $this->renderItem($type, $item['data']);
 			}
 		}
 
-		return $this->renderItem( 'group', [ 'content' => $groupHTMLContent, 'layout' => $layout] );
+		return $this->renderItem('group', ['content' => $groupHTMLContent, 'layout' => $layout]);
 	}
 
 	/**
@@ -141,21 +156,22 @@ class PortableInfoboxRenderService extends WikiaService {
 	 * @param array $data
 	 * @return string - HTML
 	 */
-	private function renderItem( $type, array $data ) {
+	private function renderItem($type, array $data)
+	{
 		//TODO: with validated the performance of render Service and in the next phase we want to refactor it (make
 		// it modular) While doing this we also need to move this logic to appropriate image render class
-		if ( $type === 'image' ) {
-			$data[ 'thumbnail' ] = $this->getThumbnailUrl( $data['name'] );
-			$data[ 'key' ] = urlencode( $data[ 'key' ] );
+		if ($type === 'image') {
+			$data['thumbnail'] = $this->getThumbnailUrl($data['name']);
+			$data['key'] = urlencode($data['key']);
 
-			if ( $this->isWikiaMobile() ) {
+			if ($this->isWikiaMobile()) {
 				$type = $type . self::MOBILE_TEMPLATE_POSTFIX;
 			}
 		}
 
 		return $this->templateEngine->clearData()
-			->setData( $data )
-			->render( $this->templates[ $type ] );
+			->setData($data)
+			->render($this->templates[$type]);
 	}
 
 	/**
@@ -163,10 +179,11 @@ class PortableInfoboxRenderService extends WikiaService {
 	 * @param string $title
 	 * @return string thumbnail url
 	 */
-	protected function getThumbnailUrl( $title ) {
-		$file = \WikiaFileHelper::getFileFromTitle( $title );
+	protected function getThumbnailUrl($title)
+	{
+		$file = \WikiaFileHelper::getFileFromTitle($title);
 
-		if ( $file ) {
+		if ($file) {
 			return $file->createThumb(
 				$this->isWikiaMobile() ?
 					self::MOBILE_THUMBNAIL_WIDTH :
@@ -177,12 +194,13 @@ class PortableInfoboxRenderService extends WikiaService {
 		return '';
 	}
 
-	/** 
+	/**
 	 * required for testing mobile template rendering
 	 * @return bool
 	 */
-	protected function isWikiaMobile() {
-		return F::app()->checkSkin( 'wikiamobile' );
+	protected function isWikiaMobile()
+	{
+		return F::app()->checkSkin('wikiamobile');
 	}
 
 	/**
@@ -191,17 +209,63 @@ class PortableInfoboxRenderService extends WikiaService {
 	 * @param string $type - template type
 	 * @return bool
 	 */
-	private function validateType( $type ) {
+	private function validateType($type)
+	{
 		$isValid = true;
 
-		if ( !isset( $this->templates[ $type ] ) ) {
-			Wikia\Logger\WikiaLogger::instance()->info( self::LOGGER_LABEL, [
+		if (!isset($this->templates[$type])) {
+			Wikia\Logger\WikiaLogger::instance()->info(self::LOGGER_LABEL, [
 				'type' => $type
-			] );
+			]);
 
 			$isValid = false;
 		}
 
 		return $isValid;
+	}
+
+	/**
+	 * returns true if infobox hero component should be rendered
+	 *
+	 * @return bool
+	 */
+	private function isInfoboxHeroEnabled()
+	{
+		return $this->isWikiaMobile();
+	}
+
+	/**
+	 * checks if infobox data item is valid hero component data
+	 *
+	 * @param array $item - infobox data item
+	 * @param array $heroData - hero component data
+	 * @return bool
+	 */
+	private function isValidHeroDataItem($item, $heroData)
+	{
+		$isValid = false;
+		$type = $item['type'];
+
+		if (
+			$type === 'title' && !array_key_exists('title', $heroData) ||
+			$type === 'image' && !array_key_exists('image', $heroData)
+		) {
+			$isValid = true;
+		}
+
+		return $isValid;
+	}
+
+	/**
+	 * renders infobox hero component
+	 *
+	 * @param array $data - infobox hero component data
+	 * @return string
+	 */
+	private function renderInfoboxHero($data)
+	{
+		return array_key_exists('image', $data) ?
+			$this->renderItem('hero-mobile', $data) :
+			$this->renderItem('title', $data['title']);
 	}
 }
