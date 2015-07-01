@@ -28,8 +28,6 @@ $wgAutoloadClasses[ 'Wikia\\PortableInfobox\\Parser\\DummyParser'] = $dir . 'ser
 $wgAutoloadClasses[ 'Wikia\\PortableInfobox\\Parser\\MediaWikiParserService'] = $dir . 'services/Parser/MediaWikiParserService.php';
 $wgInfoboxParserNodes = [
 	'Node',
-	'NodeComparison',
-	'NodeSet',
 	'NodeFooter',
 	'NodeGroup',
 	'NodeHeader',
