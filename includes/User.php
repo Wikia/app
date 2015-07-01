@@ -2432,18 +2432,21 @@ class User {
 	/**
 	 * Get a preference local to this wikia.
 	 *
-	 * @param string $preference the preference name
+	 * @param string $pref the preference name
 	 * @param int $cityId the city id
 	 * @param string $sep the separator between the name and the city id
+	 * @param mixed $default
+	 * @param bool $ignoreHidden
 	 * @return string
 	 */
-	public function getLocalPreference($pref, $cityId = null, $sep = "-") {
+	public function getLocalPreference($pref, $cityId = null, $sep = "-", $default = null, $ignoreHidden = false) {
 		global $wgCityId;
 		if (!isset($cityId)) {
 			$cityId = $wgCityId;
 		}
 
-		return $this->getGlobalPreference(UserPreferences::localToGlobalPreferenceName($pref, $cityId, $sep));
+		$globalPref = UserPreferences::localToGlobalPreferenceName($pref, $cityId, $sep);
+		return $this->getGlobalPreference($globalPref, $default, $ignoreHidden);
 	}
 
 	/**
@@ -2451,11 +2454,12 @@ class User {
 	 *
 	 * @param string $preference
 	 * @param mixed $default
+	 * @param bool $ignoreHidden
 	 * @return string
 	 */
-	public function getGlobalPreference($preference, $default = null) {
+	public function getGlobalPreference($preference, $default = null, $ignoreHidden = false) {
 		$this->load();
-		$value = $this->preferences->get($this->mId, $preference, $default);
+		$value = $this->preferences->get($this->mId, $preference, $default, $ignoreHidden);
 		wfRunHooks(
 			'UserGetPreference',
 			[
