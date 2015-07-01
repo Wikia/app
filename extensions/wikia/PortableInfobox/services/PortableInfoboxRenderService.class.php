@@ -161,8 +161,7 @@ class PortableInfoboxRenderService extends WikiaService
 		//TODO: with validated the performance of render Service and in the next phase we want to refactor it (make
 		// it modular) While doing this we also need to move this logic to appropriate image render class
 		if ($type === 'image') {
-			$data['thumbnail'] = $this->getThumbnailUrl($data['name']);
-			$data['key'] = urlencode($data['key']);
+			$data = $this->extendImageData( $data );
 
 			if ($this->isWikiaMobile()) {
 				$type = $type . self::MOBILE_TEMPLATE_POSTFIX;
@@ -262,10 +261,26 @@ class PortableInfoboxRenderService extends WikiaService
 	 * @param array $data - infobox hero component data
 	 * @return string
 	 */
-	private function renderInfoboxHero($data)
-	{
-		return array_key_exists('image', $data) ?
-			$this->renderItem('hero-mobile', $data) :
-			$this->renderItem('title', $data['title']);
+	private function renderInfoboxHero( $data ) {
+		if ( array_key_exists( 'image', $data ) ) {
+			$data[ 'image' ] = $this->extendImageData( $data[ 'image' ] );
+			$markup = $this->renderItem( 'hero-mobile', $data );
+		} else {
+			$markup = $this->renderItem( 'title', $data[ 'title' ] );
+		}
+		return $markup;
+	}
+
+	/**
+	 * extends image data
+	 *
+	 * @param array $data
+	 * @return array
+	 */
+	private function extendImageData( $data ) {
+		$data['thumbnail'] = $this->getThumbnailUrl($data['name']);
+		$data['key'] = urlencode($data['key']);
+
+		return $data;
 	}
 }
