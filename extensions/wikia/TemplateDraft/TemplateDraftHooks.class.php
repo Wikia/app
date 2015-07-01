@@ -67,31 +67,42 @@ class TemplateDraftHooks
     public static function onEditPageLayoutShowIntro(&$preloads, Title $title)
     {
         $helper = new TemplateDraftHelper();
-        if ($title->getNamespace() == NS_TEMPLATE) {
-            if ($helper->isTitleDraft($title)
-                && class_exists('TemplateConverter')
+        if ( $title->getNamespace() == NS_TEMPLATE ) {
+            if ( $helper->isTitleDraft( $title )
+                && class_exists( 'TemplateConverter' )
                 && TemplateConverter::isConversion()
             ) {
-                $base = Title::newFromText($title->getBaseText(), NS_TEMPLATE);
-                $msgName = 'templatedraft-editintro';
-                $msgParams = [$base->getFullUrl(['action' => 'edit'])];
+                $base = Title::newFromText( $title->getBaseText(), NS_TEMPLATE );
+                $baseHelp = Title::newFromText( 'Help:PortableInfoboxes' );
                 $preloads['EditPageIntro'] = [
-                    'content' => wfMessage($msgName)->params($msgParams)->parse(),
+                    'content' => wfMessage( 'templatedraft-editintro' )->rawParams(
+                        Xml::element( 'a', [
+                                'href' => $baseHelp->getFullURL(),
+                                'target' => '_blank',
+                            ],
+                            wfMessage( 'templatedraft-module-help' )
+                        ),
+                        Xml::element('a', [
+                                'href' => $base->getFullUrl( ['action' => 'edit'] ),
+                                'target' => '_blank'
+                            ],
+                            wfMessage( 'templatedraft-module-view-parent' ) )
+                    )->escaped(),
                 ];
-            } elseif (!$helper->isTitleDraft($title)) {
-                $base = Title::newFromText($title->getBaseText() . '/Draft', NS_TEMPLATE);
-                $msgName = 'templatedraft-module-editintro-please-convert';
-                $msgParams = $base->getFullUrl([
-                    'action' => 'edit',
-                    TemplateConverter::CONVERSION_MARKER => 1,
-                ]);
-
+            } elseif ( !$helper->isTitleDraft( $title ) ) {
+                $base = Title::newFromText( $title->getBaseText() . '/Draft', NS_TEMPLATE );
+                $draftUrl= $base->getFullUrl( [
+                        'action' => 'edit',
+                        TemplateConverter::CONVERSION_MARKER => 1,
+                    ] );
                 $preloads['EditPageIntro'] = [
-                    'content' => wfMessage($msgName)->rawParams(Xml::element('a',[
-                        'href' => $msgParams,
-                        'target' => '_blank'
-                        ],
-                        wfMessage('templatedraft-module-button')))->escaped(),
+                    'content' => wfMessage( 'templatedraft-module-editintro-please-convert' )->rawParams(
+                        Xml::element( 'a', [
+                                'href' => $draftUrl,
+                                'target' => '_blank'
+                            ],
+                            wfMessage( 'templatedraft-module-button' ) )
+                    )->escaped(),
                 ];
             }
         }
