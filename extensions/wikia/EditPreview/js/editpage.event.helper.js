@@ -42,6 +42,39 @@ define('editpage.event.helper', [], function(){
 		}, 'json');
 	}
 
+	// Returns the width of the browsers scrollbar
+	function getScrollbarWidth() {
+		var inner = document.createElement('p'),
+			outer = document.createElement('div'),
+			w1, w2;
+
+		inner.style.width = '100%';
+		inner.style.height = '100px';
+
+		outer.style.position = 'absolute';
+		outer.style.top = '0px';
+		outer.style.left = '0px';
+		outer.style.visibility = 'hidden';
+		outer.style.width = '100px';
+		outer.style.height = '100px';
+		outer.style.overflow = 'hidden';
+		outer.appendChild(inner);
+
+		document.body.appendChild(outer);
+
+		w1 = inner.offsetWidth;
+		outer.style.overflow = 'scroll';
+		w2 = inner.offsetWidth;
+
+		if (w1 === w2) {
+			w2 = outer.clientWidth;
+		}
+
+		document.body.removeChild(outer);
+
+		return (w1 - w2);
+	}
+
 	function getCategories() {
 		return $('#categories');
 	}
@@ -49,6 +82,7 @@ define('editpage.event.helper', [], function(){
 	return {
 		ajax: ajax,
 		getCategories: getCategories,
-		getContent: getContent
+		getContent: getContent,
+		getScrollbarWidth: getScrollbarWidth
 	};
 });

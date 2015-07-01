@@ -46,13 +46,10 @@
 			}));
 
 			// attach events
-			require(['editpage.event.preview'], function (previewEvents) {
-				previewEvents.attachDesktopPreview('wpPreview', $editPage,self.editor);
-				previewEvents.attachMobilePreview('wpPreviewMobile', $editPage, self.editor);
-			});
-
-			require(['editpage.event.diff'], function(diffEvents){
-				diffEvents.attachDiff('wpDiff', self.editor);
+			require(['editpage.events'], function (editpageEvents) {
+				editpageEvents.attachDesktopPreview('wpPreview', $editPage,self.editor);
+				editpageEvents.attachMobilePreview('wpPreviewMobile', $editPage, self.editor);
+				editpageEvents.attachDiff('wpDiff', self.editor);
 			});
 
 			// remove placeholder text when user submits the form without providing the summary

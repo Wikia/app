@@ -1,46 +1,7 @@
-define('wikia.preview.events', ['editpage.event.helper', 'jquery', 'wikia.window'], function(helper, $, window){
+define('editpage.event.preview', ['editpage.event.helper', 'jquery', 'wikia.window'], function(helper, $, window){
 	'use strict';
 
-	function attachDesktopPreview(id, $editPage, editor) {
-		$('#' + id).on(
-			'click', function(e) { onPreview(e, editor); }
-		).popover({
-			placement: 'top',
-			content: $.htmlentities($.msg('editpagelayout-preview-label-desktop')),
-			trigger: 'manual'
-		}).on('mouseenter', function() {
-			if ($editPage.hasClass('mode-source') && $editPage.hasClass('editpage-sourcewidemode-on')) {
-				$(this).popover('show');
-			}
-		}).on('mouseleave', function() {
-			$(this).popover('hide');
-		});
 
-		// Wikia change (bugid:5667) - begin
-		if ($.browser.msie) {
-			$(window).on('keydown', function (e) {
-				if (e.altKey && String.fromCharCode(e.keyCode) === $('#' + id).attr('accesskey').toUpperCase()) {
-					$('#' + id).click();
-				}
-			});
-		}
-	}
-
-	function attachMobilePreview(id, $editPage, editor) {
-		$('#' + id).on(
-			'click', function(e) { onPreviewMobile(e, editor); }
-		).popover({
-			placement: 'top',
-			content: $.htmlentities($.msg('editpagelayout-preview-label-mobile')),
-			trigger: 'manual'
-		}).on('mouseenter', function() {
-			if ($editPage.hasClass('mode-source') && $editPage.hasClass('editpage-sourcewidemode-on')) {
-				$(this).popover('show');
-			}
-		}).on('mouseleave', function() {
-			$(this).popover('hide');
-		});
-	}
 
 	// handle "Preview" button
 	function onPreview(ev, editor) {
@@ -68,7 +29,7 @@ define('wikia.preview.events', ['editpage.event.helper', 'jquery', 'wikia.window
 			isWidePage = !!window.wgEditPageIsWidePage,
 			isGridLayout = $('.WikiaGrid').length > 0,
 			extraPageWidth = (window.sassParams && window.sassParams.hd) ? 200 : 0,
-			scrollbarWidth = getScrollbarWidth();
+			scrollbarWidth = helper.getScrollbarWidth();
 
 		require([ 'wikia.fluidlayout' ], function (fluidlayout) {
 			var previewPadding = 22, // + 2px for borders
@@ -187,42 +148,8 @@ define('wikia.preview.events', ['editpage.event.helper', 'jquery', 'wikia.window
 
 	}
 
-	// Returns the width of the browsers scrollbar
-	function getScrollbarWidth() {
-		var inner = document.createElement('p'),
-			outer = document.createElement('div'),
-			w1, w2;
-
-		inner.style.width = '100%';
-		inner.style.height = '100px';
-
-		outer.style.position = 'absolute';
-		outer.style.top = '0px';
-		outer.style.left = '0px';
-		outer.style.visibility = 'hidden';
-		outer.style.width = '100px';
-		outer.style.height = '100px';
-		outer.style.overflow = 'hidden';
-		outer.appendChild(inner);
-
-		document.body.appendChild(outer);
-
-		w1 = inner.offsetWidth;
-		outer.style.overflow = 'scroll';
-		w2 = inner.offsetWidth;
-
-		if (w1 === w2) {
-			w2 = outer.clientWidth;
-		}
-
-		document.body.removeChild(outer);
-
-		return (w1 - w2);
-	}
-
-
 	return {
-		attachDesktopPreview: attachDesktopPreview,
-		attachMobilePreview: attachMobilePreview
+		onPreview: onPreview,
+		onPreviewMobile: onPreviewMobile
 	};
 });

@@ -1,11 +1,5 @@
-define('editpage.event.diff', ['editpage.event.helper', 'jquery'], function($, helper){
+define('editpage.event.diff', ['editpage.event.helper', 'wikia.window', 'jquery'], function(helper, win, $){
 	'use strict';
-
-	function attachDiff(id, editor) {
-		$('#' + id).on('click', function(e){
-			onDiff(e, editor);
-		});
-	}
 
 	// handle "Show changes" button
 	function onDiff(ev, editor) {
@@ -18,7 +12,6 @@ define('editpage.event.diff', ['editpage.event.helper', 'jquery'], function($, h
 
 	// render "show diff" modal
 	function renderChanges() {
-
 		require([ 'wikia.ui.factory' ], function(uiFactory){
 			uiFactory.init([ 'modal' ]).then(function(uiModal) {
 				var previewModalConfig = {
@@ -39,29 +32,7 @@ define('editpage.event.diff', ['editpage.event.helper', 'jquery'], function($, h
 					});
 
 					helper.getContent(function(content) {
-						var section = $.getUrlVar('section') || 0,
-							categories = helper.getCategories(),
-							extraData = {
-								content: content,
-								section: parseInt(section, 10)
-							};
-
-						if (categories.length) {
-							extraData.categories = categories.val();
-						}
-
-						$.when(
-								// get wikitext diff
-								helper.ajax('diff' , extraData),
-
-								// load CSS for diff
-								mw.loader.use('mediawiki.action.history.diff')
-							).done(function(ajaxData) {
-								var data = ajaxData[ 0 ],
-									html = '<h1 class="pagetitle">' + window.wgEditedTitle + '</h1>' + data.html;
-								previewModal.$content.find('.ArticlePreview .ArticlePreviewInner').html(html);
-								previewModal.activate();
-							});
+						prepareDiffContent(previewModal, content);
 					});
 
 					previewModal.show();
@@ -70,7 +41,39 @@ define('editpage.event.diff', ['editpage.event.helper', 'jquery'], function($, h
 		});
 	}
 
+	/**
+	 * Prepare content with difference between last saved and currently edited code
+	 *
+	 * @param previewModal modal box instance
+	 * @param content current edited content
+	 */
+	function prepareDiffContent(previewModal, content) {
+		var section = $.getUrlVar('section') || 0,
+			categories = helper.getCategories(),
+			extraData = {
+				content: content,
+				section: parseInt(section, 10)
+			};
+
+		if (categories.length) {
+			extraData.categories = categories.val();
+		}
+
+		$.when(
+				// get wikitext diff
+				helper.ajax('diff' , extraData),
+
+				// load CSS for diff
+				win.mw.loader.use('mediawiki.action.history.diff')
+			).done(function(ajaxData) {
+				var data = ajaxData[ 0 ],
+					html = '<h1 class="pagetitle">' + win.wgEditedTitle + '</h1>' + data.html;
+				previewModal.$content.find('.ArticlePreview .ArticlePreviewInner').html(html);
+				previewModal.activate();
+			});
+	}
+
 	return {
-		attachDiff: attachDiff
+		onDiff: onDiff
 	};
 });
