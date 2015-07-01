@@ -1,10 +1,8 @@
 <?php
 
-class TemplateDraftHooks
-{
+class TemplateDraftHooks {
 
-	public static function onSkinAfterBottomScripts( Skin $skin, &$text )
-	{
+	public static function onSkinAfterBottomScripts( Skin $skin, &$text ) {
 		if ( $skin->getTitle()->userCan( 'templatedraft', $skin->getUser() )
 			&& $skin->getTitle()->getNamespace() === NS_TEMPLATE
 		) {
@@ -24,8 +22,7 @@ class TemplateDraftHooks
 	 * @param array $railModuleList
 	 * @return bool
 	 */
-	public static function onGetRailModuleList( Array &$railModuleList )
-	{
+	public static function onGetRailModuleList( Array &$railModuleList ) {
 		global $wgTitle;
 		$helper = new TemplateDraftHelper();
 
@@ -49,8 +46,7 @@ class TemplateDraftHooks
 	 * @param Title $title
 	 * @return bool
 	 */
-	public static function onEditFormPreloadText( &$text, Title $title )
-	{
+	public static function onEditFormPreloadText( &$text, Title $title ) {
 		$helper = new TemplateDraftHelper();
 		if ( $helper->isTitleNewDraft( $title )
 			&& TemplateConverter::isConversion()
@@ -85,8 +81,7 @@ class TemplateDraftHooks
 	 * @param Title $title
 	 * @return bool
 	 */
-	public static function onEditPageLayoutShowIntro( &$preloads, Title $title )
-	{
+	public static function onEditPageLayoutShowIntro( &$preloads, Title $title ) {
 		$helper = new TemplateDraftHelper();
 		if ( $title->getNamespace() == NS_TEMPLATE ) {
 			if ( $helper->isTitleDraft( $title )
