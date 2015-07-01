@@ -13,9 +13,14 @@ class PortableInfoboxRenderServiceTest extends PHPUnit_Framework_TestCase {
 		$this->infoboxRenderService = $mock;
 	}
 
-	private function setWikiaMobileSkin($bool) {
+	private function setWikiaMobileSkin( $bool ) {
 		$this->infoboxRenderService->expects( $this->any() )->method( 'isWikiaMobile' )->will( $this->returnValue
-		($bool) );
+		( $bool ) );
+	}
+
+	private function setInfoboxHeroEnabled( $bool ) {
+		$this->infoboxRenderService->expects( $this->any() )->method( 'isInfoboxHeroEnabled' )->will( $this->returnValue
+		( $bool ) );
 	}
 
 	/**
@@ -25,7 +30,8 @@ class PortableInfoboxRenderServiceTest extends PHPUnit_Framework_TestCase {
 	 * @dataProvider testRenderInfoboxDataProvider
 	 */
 	public function testRenderInfobox( $input, $expectedOutput, $description ) {
-		$this->setWikiaMobileSkin(false);
+		$this->setWikiaMobileSkin( false );
+		$this->setInfoboxHeroEnabled( false );
 
 		$actualOutput = $this->infoboxRenderService->renderInfobox( $input );
 
@@ -48,10 +54,12 @@ class PortableInfoboxRenderServiceTest extends PHPUnit_Framework_TestCase {
 	 * @param $input
 	 * @param $expectedOutput
 	 * @param $description
-	 * @dataProvider testRenderInfoboxDataProvider
+	 * @dataProvider testRenderMobileInfoboxDataProvider
 	 */
 	public function testRenderMobileInfobox( $input, $expectedOutput, $description ) {
-		$this->setWikiaMobileSkin(true);
+		$this->setWikiaMobileSkin( true );
+		$this->setInfoboxHeroEnabled( false );
+
 		$actualOutput = $this->infoboxRenderService->renderInfobox( $input );
 
 		$actualDOM = new DOMDocument('1.0');
@@ -67,6 +75,78 @@ class PortableInfoboxRenderServiceTest extends PHPUnit_Framework_TestCase {
 		$actualHtml = $actualDOM->saveXML();
 
 		$this->assertEquals( $expectedHtml, $actualHtml, $description );
+	}
+
+	/**
+	 * @param $input
+	 * @param $expectedOutput
+	 * @param $description
+	 * @dataProvider testRenderInfoboxWithHeroDataProvider
+	 */
+	public function testRenderInfoboxWithHero(  $input, $expectedOutput, $description ) {
+		$this->setWikiaMobileSkin( true );
+		$this->setInfoboxHeroEnabled( true );
+
+		$actualOutput = $this->infoboxRenderService->renderInfobox( $input );
+
+		$actualDOM = new DOMDocument('1.0');
+		$expectedDOM = new DOMDocument('1.0');
+		$actualDOM->formatOutput = true;
+		$actualDOM->preserveWhiteSpace = false;
+		$expectedDOM->formatOutput = true;
+		$expectedDOM->preserveWhiteSpace = false;
+		$actualDOM->loadXML($actualOutput);
+		$expectedDOM->loadXML($expectedOutput);
+
+		$expectedHtml = $expectedDOM->saveXML();
+		$actualHtml = $actualDOM->saveXML();
+
+		$this->assertEquals( $expectedHtml, $actualHtml, $description );
+	}
+
+	public function testRenderInfoboxWithHeroDataProvider() {
+		return [
+			[
+				'input' => [
+					[
+						'type' => 'title',
+						'data' => [
+							'value' => 'Test Title'
+						]
+					],
+					[
+						'type' => 'image',
+						'data' => [
+							'alt' => 'image alt',
+							'caption' => 'image caption',
+							'value' => 'http://image.jpg'
+						]
+					],
+					[
+						'type' => 'data',
+						'data' => [
+							'label' => 'test label',
+							'value' => 'test value'
+						]
+					]
+				],
+				'output' => '<aside class="portable-infobox">
+								<div class="portable-infobox-item item-type-hero">
+									<hgroup class="portable-infobox-hero-title-wrapper portable-infobox-item-margins">
+										<h2 class="portable-infobox-hero-title">Test Title</h2>
+										<h3 class="portable-infobox-hero-caption">image caption</h3>
+									</hgroup>
+									<img src="dta:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D" class="portable-infobox-image lazy media article-media" alt="image alt"  data-image-key="test1" data-image-name="test1" data-ref="1" data-src="thumbnail.jpg" data-params=\'[{"name":"test1", "full":"http://image.jpg"}]\' />
+								</div>
+								<div class="portable-infobox-item item-type-key-val portable-infobox-item-margins">
+									<h3 class="portable-infobox-item-label portable-infobox-header-font">test label</h3>
+									<div class="portable-infobox-item-value">test value</div>
+									</div>
+							</aside>',
+				'description' => 'Simple infobox with title, image and key-value pair'
+			],
+
+		];
 	}
 
 	public function testRenderInfoboxDataProvider() {
