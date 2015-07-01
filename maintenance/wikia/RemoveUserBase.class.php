@@ -6,6 +6,7 @@
  *  - removeRenamedUser.php
  *
  * @see PLATFORM-1146
+ * @see PLATFORM-1318
  * @see CE-1182
  *
  * @author Macbre
@@ -17,6 +18,7 @@ require_once( __DIR__ . '/../Maintenance.php' );
 abstract class RemoveUserBase extends Maintenance {
 
 	const BATCH = 1000;
+	const USER_TABLE = 'user';
 
 	/**
 	 * Set script options
