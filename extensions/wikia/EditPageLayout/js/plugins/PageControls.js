@@ -24,7 +24,8 @@
 		// init page controls widget
 		init: function () {
 			var $pageControls = $('#EditPageRail .module_page_controls'),
-				$editPage = $('#EditPage');
+				$editPage = $('#EditPage'),
+				self = this;
 
 			this.categories = $('#categories');
 			this.textarea = $pageControls.find('textarea');
@@ -45,12 +46,14 @@
 			}));
 
 			// attach events
-			require([ 'wikia.preview.events' ], function (previewEvents) {
-				previewEvents.attachDesktopPreview('wpPreview', $editPage, this.proxy(this.editor));
-				previewEvents.attachMobilePreview('wpPreviewMobile', $editPage, this.proxy(this.editor));
+			require(['editpage.event.preview'], function (previewEvents) {
+				previewEvents.attachDesktopPreview('wpPreview', $editPage,self.editor);
+				previewEvents.attachMobilePreview('wpPreviewMobile', $editPage, self.editor);
 			});
 
-			$('#wpDiff').on('click', this.proxy(this.onDiff));
+			require(['editpage.event.diff'], function(diffEvents){
+				diffEvents.attachDiff('wpDiff', self.editor);
+			});
 
 			// remove placeholder text when user submits the form without providing the summary
 			this.editform = $('#editform').on('submit', this.proxy(this.onSave));

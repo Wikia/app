@@ -1,4 +1,4 @@
-define('wikia.preview.events', ['jquery', 'wikia.window'], function($, window){
+define('wikia.preview.events', ['editpage.event.helper', 'jquery', 'wikia.window'], function(helper, $, window){
 	'use strict';
 
 	function attachDesktopPreview(id, $editPage, editor) {
@@ -64,8 +64,7 @@ define('wikia.preview.events', ['jquery', 'wikia.window'], function($, window){
 	// of any widthType/gridLayout settings when the responsive layout goes out
 	// for a global release.
 	function renderPreview(extraData, type) {
-		var self = this,
-			isWebkit = navigator.userAgent.toLowerCase().indexOf(' applewebkit/') > -1,
+		var isWebkit = navigator.userAgent.toLowerCase().indexOf(' applewebkit/') > -1,
 			isWidePage = !!window.wgEditPageIsWidePage,
 			isGridLayout = $('.WikiaGrid').length > 0,
 			extraPageWidth = (window.sassParams && window.sassParams.hd) ? 200 : 0,
@@ -127,7 +126,7 @@ define('wikia.preview.events', ['jquery', 'wikia.window'], function($, window){
 					$('#wpSave').click();
 				},
 				getPreviewContent: function (callback, skin) {
-					getContent(function (content) {
+					helper.getContent(function (content) {
 						preparePreviewContent(content, extraData, callback, skin);
 					});
 				}
@@ -149,28 +148,10 @@ define('wikia.preview.events', ['jquery', 'wikia.window'], function($, window){
 		});
 	}
 
-	// get editor's content (either wikitext or HTML)
-	// and call provided callback with wikitext as its parameter
-	function getContent(callback) {
-		var editor = typeof RTE == 'object' ? RTE.getInstance() : false, mode = editor ? editor.mode : 'mw';
-
-		callback = callback || function () {};
-
-		switch (mode) {
-			case 'mw':
-				callback($('#wpTextbox1').val());
-				return;
-			case 'source':
-			case 'wysiwyg':
-				callback(editor.getData());
-				return;
-		}
-	}
-
 	// internal method, based on the editor content and some extraData, prepare a preview markup for the
 	// preview dialog and pass it to the callback
 	function preparePreviewContent(content, extraData, callback, skin) {
-		var categories = $('#categories');
+		var categories = helper.getCategories();
 
 		// add section name when adding new section (BugId:7658)
 		if (window.wgEditPageSection === 'new') {
@@ -189,7 +170,7 @@ define('wikia.preview.events', ['jquery', 'wikia.window'], function($, window){
 			extraData.categories = categories.val();
 		}
 
-		ajax('preview', extraData, function (data) {
+		helper.ajax('preview', extraData, function (data) {
 			callback(data);
 		}, skin);
 	}
@@ -204,29 +185,6 @@ define('wikia.preview.events', ['jquery', 'wikia.window'], function($, window){
 
 		return summary;
 
-	}
-
-	// send AJAX request
-	function ajax(method, params, callback, skin) {
-		var editor = typeof RTE == 'object' ? RTE.getInstance() : false;
-
-		params = $.extend({
-			page: window.wgEditPageClass ? window.wgEditPageClass : "",
-			method: method,
-			mode: editor.mode
-		}, params);
-
-		var url = window.wgEditPageHandler.replace('$1', encodeURIComponent(window.wgEditedTitle));
-
-		if (skin) {
-			url += '&type=full&skin=' + encodeURIComponent(skin);
-		}
-
-		return $.post(url, params, function (data) {
-			if (typeof callback == 'function') {
-				callback(data);
-			}
-		}, 'json');
 	}
 
 	// Returns the width of the browsers scrollbar
@@ -253,7 +211,7 @@ define('wikia.preview.events', ['jquery', 'wikia.window'], function($, window){
 		outer.style.overflow = 'scroll';
 		w2 = inner.offsetWidth;
 
-		if (w1 == w2) {
+		if (w1 === w2) {
 			w2 = outer.clientWidth;
 		}
 
