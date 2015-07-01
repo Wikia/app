@@ -66,7 +66,7 @@ class CuratedContentController extends WikiaController {
 		//This will always return json
 		$this->response->setFormat( 'json' );
 
-		$this->cacheResponseFor( 7, self::DAYS );
+		$this->cacheResponseFor( 24, self::HOURS );
 
 		//set mobile skin as this is based on it
 		RequestContext::getMain()->setSkin(
@@ -86,12 +86,11 @@ class CuratedContentController extends WikiaController {
 
 			if ( $revId > 0 ) {
 				try {
-					$relatedPages =
-						$this->app->sendRequest( 'RelatedPagesApi', 'getList',
-							[
-								'ids' => [ $articleId ]
-							]
-						)->getVal( 'items' )[ $articleId ];
+					$relatedPages = $this->app->sendRequest(
+						'RelatedPagesApi',
+						'getList',
+						[ 'ids' => [ $articleId ] ]
+					)->getVal( 'items' )[ $articleId ];
 
 					if ( !empty( $relatedPages ) ) {
 						$this->response->setVal( 'relatedPages', $relatedPages );
@@ -102,15 +101,9 @@ class CuratedContentController extends WikiaController {
 
 				$this->response->setVal(
 					'html',
-					$this->sendSelfRequest( 'renderPage', array(
-							'page' => $titleName
-						)
-					)->toString() );
-
-				$this->response->setVal(
-					'revisionid',
-					$revId
+					$this->sendSelfRequest( 'renderPage', [ 'page' => $titleName ] )->toString()
 				);
+				$this->response->setVal( 'revisionid', $revId );
 			} else {
 				throw new NotFoundApiException( 'Revision ID = 0' );
 			}
@@ -192,7 +185,7 @@ class CuratedContentController extends WikiaController {
 			$scripts .= $s;
 		}
 
-		//getPage sets cache for a response for 7 days
+		//getPage sets cache for a response for 24 hours
 		$page = $this->sendSelfRequest( 'getPage', [
 			'page' => $this->getVal( 'page' )
 		] );
@@ -216,12 +209,13 @@ class CuratedContentController extends WikiaController {
 			$section = $this->request->getVal( 'section' );
 
 			if ( empty( $section ) ) {
-				$this->cacheResponseFor( 14, self::DAYS );
 				$this->getSections( $content );
 				$this->getFeaturedSection( $content );
 			} else {
 				$this->getSectionItems( $content, $section );
 			}
+
+			$this->cacheResponseFor( 24, self::HOURS );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -297,7 +291,6 @@ class CuratedContentController extends WikiaController {
 	 *
 	 * @param $content
 	 * @param $requestSection
-	 * @param string $sectionName
 	 *
 	 * @throws CuratedContentSectionNotFoundException
 	 * @responseReturn Array|false Items or false if section was not found
@@ -334,7 +327,6 @@ class CuratedContentController extends WikiaController {
 	/**
 	 * @param $sectionName
 	 * @param $ret
-	 * @param $value
 	 * @return mixed
 	 */
 	private function setSectionItemsResponse( $sectionName, $ret ) {
@@ -362,7 +354,7 @@ class CuratedContentController extends WikiaController {
 			array_reduce(
 				$content,
 				function ( $ret, $item ) {
-					if ( $item[ 'title' ] !== '' && $item[ 'featured' ] == false ) {
+					if ( $item[ 'title' ] !== '' && empty( $item[ 'featured' ] ) ) {
 						$imageId = $item[ 'image_id' ] != 0 ? $item[ 'image_id' ] : null;
 						$ret[ ] = [
 							'title' => $item[ 'title' ],
@@ -400,11 +392,61 @@ class CuratedContentController extends WikiaController {
 	 * @return bool
 	 */
 	static function onCuratedContentSave() {
-		self::purgeMethod( 'getList' );
+		global $wgServer;
+
+		$content = F::app()->wg->WikiaCuratedContent;
+
+		( new SquidUpdate( array_unique( array_reduce(
+			$content,
+			function ( $urls, $item ) use ( $wgServer ) {
+				if ( $item[ 'title' ] !== '' && empty( $item[ 'featured' ] ) ) {
+					// Purge section URLs using urlencode() (standard for MediaWiki), which uses implements RFC 1738
+					// https://tools.ietf.org/html/rfc1738#section-2.2 - spaces encoded as `+`.
+					// iOS apps use this variant.
+					$urls[ ] = self::getUrl( 'getList' ) . '&section=' . urlencode( $item[ 'title' ] );
+					// Purge section URLs using rawurlencode(), which uses implements RFC 3986
+					// https://tools.ietf.org/html/rfc3986#section-2.1 - spaces encoded as `%20`.
+					// Android apps use this variant.
+					$urls[ ] = self::getUrl( 'getList' ) . '&section=' . rawurlencode( $item[ 'title' ] );
+					// Purge section URLs using JavaScript encodeURIComponent() compatible standard,
+					// which works almost like rawurlencode(), but does not encode following characters: !'()*
+					// Mercury web app uses this variant - request from Hapi.js to MediaWiki.
+					$javaScriptEncodedTitle = self::encodeURIQueryParam( $item[ 'title' ] );
+					$urls[ ] = self::getUrl( 'getList' ) . '&section=' . $javaScriptEncodedTitle;
+					// Mercury web app uses this variant - request from Ember.js to Hapi.js.
+					$urls[ ] =
+						$wgServer .
+						MercuryApiHooks::SERVICE_API_BASE .
+						MercuryApiHooks::SERVICE_API_CURATED_CONTENT .
+						$javaScriptEncodedTitle;
+				}
+				return $urls;
+			},
+			// Purge all sections list getter URL - no additional params
+			[ self::getUrl( 'getList' ) ]
+		) ) ) )->doUpdate();
+
+		// Purge main page cache, so Mercury gets fresh data.
+		Title::newMainPage()->purgeSquid();
+
+		// Purge cache for obsolete (not updated) apps.
 		if ( class_exists( 'GameGuidesController' ) ) {
 			GameGuidesController::purgeMethod( 'getList' );
 		}
+
 		return true;
+	}
+
+	/**
+	 * @brief Similar to JavaScript encodeURIComponent, but it also encodes single quote character as %27.
+	 * It's because raw ' does not function properly in query string params and it's auto-converted to %27,
+	 * which break the purging.
+	 *
+	 * @param string $str
+	 * @return string
+	 */
+	private static function encodeURIQueryParam( $str ) {
+		return strtr( rawurlencode( $str ), [ '%21' => '!', '%28' => '(', '%29' => ')', '%2A' => '*' ] );
 	}
 }
 
