@@ -16,6 +16,7 @@ $messages['en'] = [
 	 * Notifications
 	 */
 	'templatedraft-approval-no-page-error' => 'Approval failed as draft page doesn\'t exist',
+	'templatedraft-approval-no-templatedraft-error' => 'Approve draft action is not applicable on non template draft pages',
 	'templatedraft-approval-notification' => 'This template contents was replaced with updated version from draft template and the draft was removed',
 	'templatedraft-approval-summary' => 'Replaced with updated version from draft template',
 	'templatedraft-draft-removal-summary' => 'Cleanup. Draft approved to parent page.',
@@ -56,6 +57,7 @@ $messages['qqq'] = [
 	 * Notifications
 	 */
 	'templatedraft-approval-no-page-error' => 'Error message displayed on banner notification when approval failed due to not existent draft page',
+	'templatedraft-approval-no-templatedraft-error' => 'Error message displayed on banner notification when approval failed due to action performed on non draft page',
 	'templatedraft-approval-success-confirmation' => 'This template contents was replaced with updated version from draft template and the draft was removed',
 	'templatedraft-approval-summary' => 'Text used as edit summary when code is automatically replacing template with content from draft template on user approval',
 	'templatedraft-draft-removal-summary' => 'Text used as delete summary on draft page removal after draft page was approved to parent page',

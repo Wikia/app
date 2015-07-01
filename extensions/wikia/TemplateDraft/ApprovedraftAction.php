@@ -34,10 +34,12 @@ class ApprovedraftAction extends FormlessAction {
 	public function onView() {
 		$title = $this->getTitle();
 
-		$this->redirectParams = wfArrayToCGI( array_diff_key(
+		$redirectParams = wfArrayToCGI( array_diff_key(
 			$this->getRequest()->getQueryValues(),
 			[ 'title' => null, 'action' => null ]
 		));
+
+		$templateDraftHelper = new TemplateDraftHelper();
 
 		if ( !$title->exists() ) {
 			/**
@@ -48,14 +50,27 @@ class ApprovedraftAction extends FormlessAction {
 				BannerNotificationsController::CONFIRMATION_ERROR
 			);
 
-			$this->getOutput()->redirect( $title->getFullUrl( $this->redirectParams ) );
+			$this->getOutput()->redirect( $title->getFullUrl( $redirectParams ) );
+
+		} elseif ( !$templateDraftHelper->isTitleDraft( $title ) ) {
+			/**
+			 * Show a friendly error message to a user after redirect
+			 */
+			BannerNotificationsController::addConfirmation(
+				wfMessage( 'templatedraft-approval-no-page-error' )->escaped(),
+				BannerNotificationsController::CONFIRMATION_ERROR
+			);
+
+			$this->getOutput()->redirect( $title->getFullUrl( $redirectParams ) );
+
 		} else {
-			$this->redirectTitle = $title->getBaseText();
-			$this->redirectTitle = Title::newFromText( $this->redirectTitle, $title->getNamespace() );
-			$templateDraftHelper = new TemplateDraftHelper();
+
 			$templateDraftHelper->approveDraft( $title );
 
-			$this->getOutput()->redirect( $this->redirectTitle->getFullUrl( $this->redirectParams ) );
+			$redirectTitle = $title->getBaseText();
+			$redirectTitle = Title::newFromText( $redirectTitle, $title->getNamespace() );
+
+			$this->getOutput()->redirect( $redirectTitle->getFullUrl( $redirectParams ) );
 		}
 	}
 
