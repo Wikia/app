@@ -434,7 +434,7 @@ class FounderNewMemberController extends FounderController {
 	 */
 	public function assertFounderSubscribedToDigest() {
 		$wikiId = \F::app()->wg->CityId;
-		if ( (bool)$this->targetUser->getGlobalPreference( "founderemails-complete-digest-$wikiId" ) ) {
+		if ( (bool)$this->targetUser->getLocalPreference( "founderemails-complete-digest", $wikiId ) ) {
 			throw new Check( 'Digest mode is enabled, do not create user registration event notifications' );
 		}
 	}
@@ -444,7 +444,7 @@ class FounderNewMemberController extends FounderController {
 	 */
 	public function assertFounderWantsNewMembersEmail() {
 		$wikiId = \F::app()->wg->CityId;
-		if ( !(bool)$this->targetUser->getGlobalPreference( "founderemails-joins-$wikiId"  ) ) {
+		if ( !(bool)$this->targetUser->getLocalPreference( "founderemails-joins", $wikiId ) ) {
 			throw new Check( "Founder doesn't want to be emailed about new members joining this wiki" );
 		}
 	}
