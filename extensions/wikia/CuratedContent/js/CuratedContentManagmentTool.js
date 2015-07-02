@@ -6,7 +6,16 @@ $(function () {
 	'use strict';
 
 	require(['wikia.window', 'jquery', 'wikia.nirvana', 'wikia.tracker', 'JSMessages'], function (window, $, nirvana, tracker, msg) {
-		'use strict';
+
+		// usefull shortcuts
+		$.fn.removeError = function () {
+			return this.removeClass('error').popover('destroy');
+		};
+		$.fn.addError = function (message) {
+			return this.addClass('error')
+				.popover('destroy')
+				.popover({ content: message });
+		};
 
 		var d = document,
 			item = mw.config.get('itemTemplate'),
@@ -93,22 +102,12 @@ $(function () {
 
 					// check if filed valuer is empty and it's required
 					if (optionRequired && val === '') {
-						$this
-							.addClass('error')
-							.popover('destroy')
-							.popover({
-								content: requiredError
-							});
+						$this.addError(requiredError);
 						return true;
 					}
 					// check if field value is too long
 					if (optionLimit && val.length > maxAllowedLength) {
-						$this
-							.addClass('error')
-							.popover('destroy')
-							.popover({
-								content: tooLongLabelError
-							});
+						$this.addError(tooLongLabelError);
 						return true;
 					}
 					// check if value already exists (in cachedVals variable)
@@ -116,37 +115,25 @@ $(function () {
 						// not exists, add it to cachedVals and remove previous errors
 						cachedVals.push(val);
 
-						$this
-							.removeClass('error')
-							.popover('destroy');
-
+						$this.removeError();
 						return true;
 					} else if (optionCheckEmpty || val !== '') {
 						// if it exists and it's not empty it's duplication
-						$this
-							.addClass('error')
-							.popover('destroy')
-							.popover({
-								content: duplicateError
-							});
+						$this.addError(duplicateError);
 					}
 				});
 			},
 			checkImages = function () {
-				$ul.find('.image.error').removeClass('error').popover('destroy');
+				$ul.find('.image.error').removeError();
 
 				// find all images for items and sections except Featured Section and...
 				$ul.find('.section:not(.featured), .item')
 					.find('.image[data-id=0], .image:not([data-id])')
-					.addClass('error')
-					.popover('destroy')
-					.popover({
-						content: imageMissingError
-					});
+					.addError(imageMissingError);
 				// ...except Optional Section
 				var $lastSection = $ul.find('.section').last().find('.section-input');
 				if ($lastSection.val().length === 0) {
-					$lastSection.find('.image').removeClass('error').popover('destroy');
+					$lastSection.parent().find('.image').removeError();
 				}
 			},
 			checkForm = function () {
@@ -159,15 +146,11 @@ $(function () {
 				checkImages();
 
 				// validate orphans
-				$ul.find('.section ~ .item.error').removeClass('error');
+				$ul.find('.section ~ .item.error').removeError();
 
 				$ul.find('.item:not(.section ~ .item)').each(function () {
 					var $t = $(this);
-					$t.addClass('error')
-						.popover('destroy')
-						.popover({
-							content: orphanError
-						});
+					$t.addError(orphanError);
 				});
 
 				$ul.find('.section').each(function () {
@@ -175,12 +158,7 @@ $(function () {
 						$items = $t.nextUntil('.section');
 
 					if ($items.length === 0 && !$t.hasClass('featured')) {
-						$t.find('.section-input')
-							.addClass('error')
-							.popover('destroy')
-							.popover({
-								content: emptySectionError
-							});
+						$t.find('.section-input').addError(emptySectionError);
 					} else {
 						checkInputs($items.find('.name'), ['limit']);
 					}
@@ -329,14 +307,13 @@ $(function () {
 						}
 
 						if (data.error) {
-							var err = data.error,
-								i = err.length,
-								items = $form.find('.item-input, .section-input');
-							while (i--) {
-								//I cannot use value CSS selector as I want to use current value
-								var errTitle = err[i].title,
-									errReason = err[i].reason,
+							var items = $form.find('.item-input, .section-input');
+
+							data.error.each(function() {
+								var errTitle = this.title,
+									errReason = this.reason,
 									reasonMessage = getReasonMessage(errReason);
+
 								items.each(function () {
 									if (this.value === errTitle) {
 										var $itemWithError;
@@ -353,17 +330,12 @@ $(function () {
 												$itemWithError = $(this);
 										}
 
-										$itemWithError
-											.addClass('error')
-											.popover('destroy')
-											.popover({
-												content: reasonMessage
-											});
+										$itemWithError.addError(reasonMessage);
 										return false;
 									}
 									return true;
 								});
-							}
+							});
 
 							$save.addClass('err');
 							$save.attr('disabled', true);
