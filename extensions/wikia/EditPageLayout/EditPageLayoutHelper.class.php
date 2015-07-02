@@ -250,6 +250,8 @@ class EditPageLayoutHelper {
 
 		if ( $namespace === NS_MODULE ) {
 			$type = 'lua';
+		// TODO: Change NS_TEMPLATE to infobox template only
+		// TODO: Will be done today (2/7/2015) after https://github.com/Wikia/app/pull/7660 merge
 		} elseif ( $namespace === NS_TEMPLATE ) {
 			$type = 'xml';
 		} elseif ( $title->isCssPage() || $title->isCssSubpage() ) {
