@@ -42,26 +42,14 @@ class ApprovedraftAction extends FormlessAction {
 		$templateDraftHelper = new TemplateDraftHelper();
 
 		if ( !$title->exists() ) {
-			/**
-			 * Show a friendly error message to a user after redirect
-			 */
-			BannerNotificationsController::addConfirmation(
-				wfMessage( 'templatedraft-approval-no-page-error' )->escaped(),
-				BannerNotificationsController::CONFIRMATION_ERROR
-			);
 
-			$this->getOutput()->redirect( $title->getFullUrl( $redirectParams ) );
+			$this->addBannerNotificationMessage( 'templatedraft-approval-no-page-error' );
+			$redirectTitle = $title;
 
 		} elseif ( !$templateDraftHelper->isTitleDraft( $title ) ) {
-			/**
-			 * Show a friendly error message to a user after redirect
-			 */
-			BannerNotificationsController::addConfirmation(
-				wfMessage( 'templatedraft-approval-no-page-error' )->escaped(),
-				BannerNotificationsController::CONFIRMATION_ERROR
-			);
 
-			$this->getOutput()->redirect( $title->getFullUrl( $redirectParams ) );
+			$this->addBannerNotificationMessage( 'templatedraft-approval-no-templatedraft-error' );
+			$redirectTitle = $title;
 
 		} else {
 
@@ -70,8 +58,19 @@ class ApprovedraftAction extends FormlessAction {
 			$redirectTitle = $title->getBaseText();
 			$redirectTitle = Title::newFromText( $redirectTitle, $title->getNamespace() );
 
-			$this->getOutput()->redirect( $redirectTitle->getFullUrl( $redirectParams ) );
 		}
+
+		$this->getOutput()->redirect( $redirectTitle->getFullUrl( $redirectParams ) );
+	}
+
+	/**
+	 * Show a friendly error message to a user after redirect
+	 */
+	private function addBannerNotificationMessage( $messageName ) {
+		BannerNotificationsController::addConfirmation(
+			wfMessage( $messageName )->escaped(),
+			BannerNotificationsController::CONFIRMATION_ERROR
+		);
 	}
 
 }
