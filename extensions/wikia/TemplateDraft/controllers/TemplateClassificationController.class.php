@@ -55,7 +55,7 @@ class TemplateClassificationController extends WikiaController {
 		return false;
 	}
 
-	public function classifyTemplate ( $type, $value, $actor = self::CLASSIFICATION_ACTOR_HUMAN ) {
+	public function classifyTemplate( $type, $value, $actor = self::CLASSIFICATION_ACTOR_HUMAN ) {
 		$prop = self::getClassificationProp( $type );
 		if ( !$prop ) {
 			// unrecognized property, quit early
