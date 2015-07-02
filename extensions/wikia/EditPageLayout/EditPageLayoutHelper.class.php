@@ -227,6 +227,8 @@ class EditPageLayoutHelper {
 	public static function isCodePageWithoutPreview( Title $title ) {
 		$namespace = $title->getNamespace();
 
+		// TODO: Change NS_TEMPLATE to infobox template only
+		// TODO: Will be done today (2/7/2015) after https://github.com/Wikia/app/pull/7660 merge
 		return self::isCodePage( $title ) && $namespace !== NS_TEMPLATE;
 	}
 
