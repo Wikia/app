@@ -1,4 +1,8 @@
-define('wikia.editpage.ace.editor', ['wikia.ace.editor', 'editpage.events', 'wikia.window'], function (ace, editpageEvents, win) {
+define(
+	'wikia.editpage.ace.editor',
+	['wikia.ace.editor', 'editpage.events', 'wikia.window'],
+	function (ace, editpageEvents, win)
+{
 	'use strict';
 
 	var theme = 'solarized_light',
@@ -131,7 +135,7 @@ define('wikia.editpage.ace.editor', ['wikia.ace.editor', 'editpage.events', 'wik
 		initDiff();
 		beforeUnload();
 
-		if (win.showPreviewOnCodePage) {
+		if (win.showPagePreview) {
 			editpageEvents.attachDesktopPreview('wpPreview');
 			editpageEvents.attachMobilePreview('wpPreviewMobile');
 		}

@@ -248,7 +248,7 @@ class EditPageLayoutHelper {
 		$this->addJsVariable( 'aceScriptsPath', $aceUrlParts['path'] );
 
 		$this->addJsVariable( 'wgEnableCodePageEditor', true );
-		$this->addJsVariable( 'showPreviewOnCodePage', self::showMobilePreview( $title ));
+		$this->addJsVariable( 'showPagePreview', self::showMobilePreview( $title ));
 
 		if ( $namespace === NS_MODULE ) {
 			$type = 'lua';
