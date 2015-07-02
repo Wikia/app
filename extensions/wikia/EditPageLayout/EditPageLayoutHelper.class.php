@@ -173,13 +173,15 @@ class EditPageLayoutHelper {
 	static public function isCodePage( Title $articleTitle ) {
 		$namespace = $articleTitle->getNamespace();
 
-		return $articleTitle->isCssOrJsPage()
-				|| $articleTitle->isCssJsSubpage()
-				// TODO: Change NS_TEMPLATE to infobox template only
-				// TODO: Will be done today (2/7/2015) after https://github.com/Wikia/app/pull/7660 merge
-				|| $namespace === NS_TEMPLATE
-				// Lua module
-				|| $namespace === NS_MODULE;
+		if ( $articleTitle->isCssOrJsPage() || $articleTitle->getNamespace() === NS_MODULE ) {
+			return true;
+		} elseif ( class_exists( 'TemplateClassificationController' ) ) {
+			$tc = new TemplateClassificationController( $articleTitle );
+	
+			return $tc->isType( 'infobox' );
+		}
+
+		return false;
 	}
 
 	/**
