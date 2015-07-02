@@ -458,10 +458,12 @@ class FounderTipsController extends FounderController {
 
 	protected $wikiName;
 	protected $wikiId;
+	protected $wikiUrl;
 
 	public function initEmail() {
 		$this->wikiName = $this->getVal( 'wikiName' );
 		$this->wikiId = $this->getVal( 'wikiId' );
+		$this->wikiUrl = $this->getVal( 'wikiUrl' );
 
 		$this->assertValidParams();
 	}
@@ -472,6 +474,7 @@ class FounderTipsController extends FounderController {
 	private function assertValidParams() {
 		$this->assertValidWikiName();
 		$this->assertValidWikiId();
+		$this->assertValidWikiUrl();
 	}
 
 	private function assertValidWikiName() {
@@ -486,6 +489,12 @@ class FounderTipsController extends FounderController {
 		}
 	}
 
+	private function assertValidWikiUrl() {
+		if ( empty( $this->wikiUrl ) ) {
+			throw new Check( "Must pass in value for wikiUrl!" );
+		}
+	}
+
 	protected function getSubject() {
 		return $this->getMessage( 'emailext-founder-newly-created-subject', $this->wikiName )->parse();
 	}
@@ -496,11 +505,11 @@ class FounderTipsController extends FounderController {
 	public function body() {
 		$this->response->setData( [
 			'salutation' => $this->getSalutation(),
-			'summary' => $this->getMessage( 'emailext-founder-newly-created-summary', $this->wikiName )->parse(),
+			'summary' => $this->getMessage( 'emailext-founder-newly-created-summary', $this->wikiUrl, $this->wikiName )->parse(),
 			'extendedSummary' => $this->getMessage( 'emailext-founder-newly-created-summary-extended' )->text(),
 			'details' => $this->getDetailsList(),
 			'contentFooterMessages' => [
-				$this->getMessage( 'emailext-founder-visit-community', $this->wikiName )->parse(),
+				$this->getMessage( 'emailext-founder-visit-community', $this->wikiUrl, $this->wikiName )->parse(),
 				$this->getMessage( 'emailext-founder-happy-wikia-building' )->text(),
 				$this->getMessage( 'emailext-emailconfirmation-community-team' )->text(),
 			],
@@ -580,7 +589,7 @@ class FounderTipsThreeDaysController extends FounderTipsController {
 	public function body() {
 		$this->response->setData( [
 			'salutation' => $this->getSalutation(),
-			'summary' => $this->getMessage( 'emailext-founder-3-days-summary', $this->wikiName )->parse(),
+			'summary' => $this->getMessage( 'emailext-founder-3-days-summary', $this->wikiUrl, $this->wikiName )->parse(),
 			'extendedSummary' => $this->getMessage( 'emailext-founder-3-days-extended-summary' )->text(),
 			'details' => $this->getDetailsList(),
 			'contentFooterMessages' => [
@@ -597,6 +606,7 @@ class FounderTipsThreeDaysController extends FounderTipsController {
 	 * @return array
 	 */
 	protected function getDetailsList() {
+		$themeDesignerUrl = \GlobalTitle::newFromText( "ThemeDesigner", NS_SPECIAL, $this->wikiId )->getFullURL();
 		return [
 			[
 				"iconSrc" => Email\ImageHelper::getFileUrl( "Add_photo.png" ),
@@ -606,9 +616,9 @@ class FounderTipsThreeDaysController extends FounderTipsController {
 			],
 			[
 				"iconSrc" => Email\ImageHelper::getFileUrl( "Update-theme.png" ),
-				"iconLink" => \GlobalTitle::newFromText( "ThemeDesigner", NS_SPECIAL, $this->wikiId )->getFullURL(),
+				"iconLink" => $themeDesignerUrl,
 				"detailsHeader" => $this->getMessage( "emailext-founder-3-days-update-theme-header" )->text(),
-				"details" => $this->getMessage( "emailext-founder-3-days-update-theme-details" )->text()
+				"details" => $this->getMessage( "emailext-founder-3-days-update-theme-details", $themeDesignerUrl )->parse()
 			],
 			[
 				"iconSrc" => Email\ImageHelper::getFileUrl( "Get-inspired.png" ),
@@ -635,7 +645,7 @@ class FounderTipsTenDaysController extends FounderTipsController {
 	public function body() {
 		$this->response->setData( [
 			'salutation' => $this->getSalutation(),
-			'summary' => $this->getMessage( 'emailext-founder-10-days-summary', $this->wikiName )->parse(),
+			'summary' => $this->getMessage( 'emailext-founder-10-days-summary', $this->wikiUrl, $this->wikiName )->parse(),
 			'extendedSummary' => $this->getMessage( 'emailext-founder-10-days-extended-summary' )->text(),
 			'details' => $this->getDetailsList(),
 			'contentFooterMessages' => [

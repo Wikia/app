@@ -40,6 +40,7 @@ class FounderEmailsDaysPassedEvent extends FounderEmailsEvent {
 					"targetUser" => User::newFromId( $adminId ),
 					"wikiName" => $eventData['wikiName'],
 					"wikiId" => $eventData['wikiId'],
+					"wikiUrl" => $eventData['wikiUrl'],
 					"marketingFooter" => true
 				];
 
@@ -97,7 +98,8 @@ class FounderEmailsDaysPassedEvent extends FounderEmailsEvent {
 				'activateDays' => $activateDay,
 				'activateTime' => time() + ( 86400 * $activateDay ),
 				'wikiName' => $wikiParams['title'],
-				'wikiId' => $wikiParams['city_id']
+				'wikiId' => $wikiParams['city_id'],
+				'wikiUrl' => $wikiParams['url']
 			);
 
 			$founderEmailObj->registerEvent( new FounderEmailsDaysPassedEvent( $eventData ), $doProcess );
