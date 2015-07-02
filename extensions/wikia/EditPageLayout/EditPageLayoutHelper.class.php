@@ -175,10 +175,10 @@ class EditPageLayoutHelper {
 
 		if ( $articleTitle->isCssOrJsPage()
 			|| $articleTitle->isCssOrJsSubpage()
-			|| $articleTitle->getNamespace() === NS_MODULE 
+			|| $namespace === NS_MODULE 
 		) {
 			return true;
-		} elseif ( $articleTitle->getNamespace() === NS_TEMPLATE
+		} elseif ( $namespace === NS_TEMPLATE
 			&& class_exists( 'TemplateClassificationController' ) 
 		) {
 			$tc = new TemplateClassificationController( $articleTitle );
