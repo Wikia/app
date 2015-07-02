@@ -198,7 +198,7 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 		$this->response->setVal( 'status', $status );
 
 		if ( $status ) {
-			wfRunHooks( 'CuratedContentSave' );
+			wfRunHooks( 'CuratedContentSave', [ $sections ] );
 		}
 
 		return true;

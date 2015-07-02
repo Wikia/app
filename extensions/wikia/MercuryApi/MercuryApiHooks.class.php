@@ -109,4 +109,11 @@ class MercuryApiHooks {
 		$vars[] = 'wgSitewideDisableAdsOnMercury';
 		return true;
 	}
+
+	static public function onCuratedContentSave( $sections ) {
+		foreach($sections as $section) {
+			WikiaDataAccess::cachePurge( MercuryApiController::curatedContentDataMemcKey( $section['title'] ) );
+		}
+		return true;
+	}
 }
