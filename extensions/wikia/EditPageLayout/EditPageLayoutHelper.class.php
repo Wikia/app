@@ -180,12 +180,6 @@ class EditPageLayoutHelper {
 				|| $namespace === NS_MODULE;
 	}
 
-	static public function showPreviewOnCodePage( Title $articleTitle ) {
-		$namespace = $articleTitle->getNamespace();
-
-		return self::isCodePage( $articleTitle ) && $namespace === NS_TEMPLATE;
-	}
-
 	/**
 	 * Check if code syntax highlighting is enabled
 	 *
@@ -223,11 +217,17 @@ class EditPageLayoutHelper {
 	 * @return bool
 	 */
 	public function showMobilePreview( Title $title ) {
-		$blacklistedPage = !self::showPreviewOnCodePage( $title )
+		$blacklistedPage = ( self::isCodePageWithoutPreview( $title ) )
 				|| $title->isMainPage()
 				|| NavigationModel::isWikiNavMessage( $title );
 
 		return !$blacklistedPage;
+	}
+
+	public static function isCodePageWithoutPreview( Title $title ) {
+		$namespace = $title->getNamespace();
+
+		return self::isCodePage( $title ) && $namespace !== NS_TEMPLATE;
 	}
 
 	/**
@@ -244,7 +244,7 @@ class EditPageLayoutHelper {
 		$this->addJsVariable( 'aceScriptsPath', $aceUrlParts['path'] );
 
 		$this->addJsVariable( 'wgEnableCodePageEditor', true );
-		$this->addJsVariable( 'showPreviewOnCodePage', self::showPreviewOnCodePage( $title ) );
+		$this->addJsVariable( 'showPreviewOnCodePage', self::showMobilePreview( $title ));
 
 		if ( $namespace === NS_MODULE ) {
 			$type = 'lua';

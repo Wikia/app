@@ -8,27 +8,28 @@ define('editpage.events', ['editpage.event.preview', 'editpage.event.diff', 'jqu
 	}
 
 	function attachDesktopPreview(id,  editor) {
-		var $editPage = $('#EditPage');
+		var $editPage = $('#EditPage'),
+			$previewButton = $('#' + id);
 
-		$('#' + id).on(
+		$previewButton.on(
 			'click', function(e) { preview.onPreview(e, editor); }
 		).popover({
-				placement: 'top',
-				content: $.htmlentities($.msg('editpagelayout-preview-label-desktop')),
-				trigger: 'manual'
-			}).on('mouseenter', function() {
-				if ($editPage.hasClass('mode-source') && $editPage.hasClass('editpage-sourcewidemode-on')) {
-					$(this).popover('show');
-				}
-			}).on('mouseleave', function() {
-				$(this).popover('hide');
-			});
+			placement: 'top',
+			content: $.htmlentities($.msg('editpagelayout-preview-label-desktop')),
+			trigger: 'manual'
+		}).on('mouseenter', function() {
+			if ($editPage.hasClass('mode-source') && $editPage.hasClass('editpage-sourcewidemode-on')) {
+				$(this).popover('show');
+			}
+		}).on('mouseleave', function() {
+			$(this).popover('hide');
+		});
 
 		// Wikia change (bugid:5667) - begin
 		if ($.browser.msie) {
 			$(window).on('keydown', function (e) {
-				if (e.altKey && String.fromCharCode(e.keyCode) === $('#' + id).attr('accesskey').toUpperCase()) {
-					$('#' + id).click();
+				if (e.altKey && String.fromCharCode(e.keyCode) === $previewButton.attr('accesskey').toUpperCase()) {
+					$previewButton.click();
 				}
 			});
 		}

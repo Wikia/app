@@ -24,7 +24,6 @@
 		// init page controls widget
 		init: function () {
 			var $pageControls = $('#EditPageRail .module_page_controls'),
-				$editPage = $('#EditPage'),
 				self = this;
 
 			this.categories = $('#categories');
@@ -100,15 +99,6 @@
 		// Enable 'Publish' button when the editor is ready (BugId:13957)
 		onEditorReady: function () {
 			$('#wpSave').removeAttr('disabled');
-		},
-
-		// handle "Show changes" button
-		onDiff: function (event) {
-			event.preventDefault();
-			// move the focus to the selected items to prevent iPad from showing the VK and resizing the viewport
-			$(event.target).focus();
-			this.renderChanges();
-			this.editor.track('diff');
 		},
 
 		// handle "Save" button
