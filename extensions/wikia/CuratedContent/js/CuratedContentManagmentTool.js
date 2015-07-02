@@ -135,7 +135,7 @@ $(function () {
 			checkImages = function () {
 				$ul.find('.image.error').removeClass('error').popover('destroy');
 
-				// find all images for items and sections except Featured Section and Optional Section
+				// find all images for items and sections except Featured Section and...
 				$ul.find('.section:not(.featured), .item')
 					.find('.image[data-id=0], .image:not([data-id])')
 					.addClass('error')
@@ -143,6 +143,11 @@ $(function () {
 					.popover({
 						content: imageMissingError
 					});
+				// ...except Optional Section
+				var $lastSection = $ul.find('.section').last().find('.section-input');
+				if ($lastSection.val().length === 0) {
+					$lastSection.find('.image').removeClass('error').popover('destroy');
+				}
 			},
 			checkForm = function () {
 				$save.removeClass();
