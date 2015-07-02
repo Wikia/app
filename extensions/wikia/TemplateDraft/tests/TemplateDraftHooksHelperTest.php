@@ -11,14 +11,13 @@ class TemplateDraftHooksHelperTest extends WikiaBaseTest {
 	 * @dataProvider showCreateDraftModuleProvider
 	 */
 	public function testShowCreateDraftModule(
-		$paramTitleExists,
-		$paramTitleNamespace,
+		$paramAllowedForTitle,
 		$paramIsTitleDraft,
-		$paramIsParentValid,
-		$railModuleListExpected
+		$railModuleListExpected,
+		$railModuleListDefault
 	) {
 
-		$railModuleListActual = [];
+		$railModuleListActual = $railModuleListDefault;
 
 		/** @var Title $mockParentTitle */
 		$mockParentTitle = $this->getMockBuilder( 'Title' )
@@ -32,31 +31,19 @@ class TemplateDraftHooksHelperTest extends WikiaBaseTest {
 			->setMethods( [ 'exists', 'getNamespace' ] )
 			->getMock();
 
-		$mockTitle->expects( $this->once() )
-			->method( 'exists' )
-			->will( $this->returnValue( $paramTitleExists ) );
-
-		$mockTitle->expects( $this->any() )
-			->method( 'getNamespace' )
-			->will( $this->returnValue( $paramTitleNamespace ) );
-
 		/* mock TemplateDraftHelper */
 		$mockTemplateDraftHelper = $this->getMockBuilder( 'TemplateDraftHelper' )
 			->disableOriginalConstructor()
-			->setMethods( [ 'getParentTitle', 'isTitleDraft', 'isParentValid' ] )
+			->setMethods( [ 'allowedForTitle', 'isTitleDraft' ] )
 			->getMock();
 
 		$mockTemplateDraftHelper->expects( $this->any() )
-			->method( 'getParentTitle' )
-			->will( $this->returnValue( $mockParentTitle ) );
+			->method( 'allowedForTitle' )
+			->will( $this->returnValue( $paramAllowedForTitle ) );
 
 		$mockTemplateDraftHelper->expects( $this->any() )
 			->method( 'isTitleDraft' )
 			->will( $this->returnValue( $paramIsTitleDraft ) );
-
-		$mockTemplateDraftHelper->expects( $this->once() )
-			->method( 'isParentValid' )
-			->will( $this->returnValue( $paramIsParentValid ) );
 
 		/* Mock tested class /*
 		/** @var TemplateDraftHooksHelper $mockTemplateDraftHooksHelper */
@@ -76,6 +63,53 @@ class TemplateDraftHooksHelperTest extends WikiaBaseTest {
 		$mockTemplateDraftHooksHelper->addRailModuleList( $railModuleListActual );
 
 		$this->assertEquals( $railModuleListExpected, $railModuleListActual );
+	}
+
+	/**
+	 * @dataProvider allowedForTitleProvider
+	 */
+	public function testAllowedForTitle(
+		$paramTitleExists,
+		$paramTitleNamespace,
+		$paramIsParentValid,
+		$allowedForTitleExpected
+	)
+	{
+		$mockFakeTitle = $this->getMockBuilder( 'Title' )
+			->disableOriginalConstructor()
+			->setMethods( [] )
+			->getMock();
+
+		$mockTitle = $this->getMockBuilder( 'Title' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'exists', 'getNamespace' ] )
+			->getMock();
+
+		$mockTitle->expects( $this->once() )
+			->method( 'exists' )
+			->will( $this->returnValue( $paramTitleExists ) );
+
+		$mockTitle->expects( $this->any() )
+			->method( 'getNamespace' )
+			->will( $this->returnValue( $paramTitleNamespace ) );
+
+		/** @var TemplateDraftHelper $mockTemplateDraftHelper */
+		$mockTemplateDraftHelper = $this->getMockBuilder( 'TemplateDraftHelper' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'getParentTitle', 'isParentValid' ] )
+			->getMock();
+
+		$mockTemplateDraftHelper->expects( $this->any() )
+			->method( 'getParentTitle' )
+			->will( $this->returnValue( $mockFakeTitle ) );
+
+		$mockTemplateDraftHelper->expects( $this->any() )
+			->method( 'isParentValid' )
+			->will( $this->returnValue( $paramIsParentValid ) );
+
+		$allowedForTitleActual = $mockTemplateDraftHelper->allowedForTitle( $mockTitle );
+		$this->assertEquals( $allowedForTitleExpected, $allowedForTitleActual );
+
 	}
 
 	/**
@@ -116,16 +150,33 @@ class TemplateDraftHooksHelperTest extends WikiaBaseTest {
 
 	/* Data providers */
 	public function showCreateDraftModuleProvider() {
+		$railModuleListDefault = [];
 		$railModuleListExpectedCreate[1502] = [ 'TemplateDraftModule', 'Create', null ];
 		$railModuleListExpectedApprove[1502] = [ 'TemplateDraftModule', 'Approve', null ];
 
 		/*
 		 * Params order
-		 * [ $paramTitleExists, $paramTitleNamespace, $paramIsTitleDraft, $paramIsParentValid, $railModuleListExpected ]
+		 * [ $paramAllowedForTitle, $paramIsTitleDraft, $railModuleListExpected, $railModuleListDefault ]
 		 */
 		return [
-			[ true, NS_TEMPLATE, false, true, $railModuleListExpectedCreate ],
-			[ true, NS_TEMPLATE, true, true, $railModuleListExpectedApprove ],
+			[ true, false, $railModuleListExpectedCreate, $railModuleListDefault ],
+			[ true, true, $railModuleListExpectedApprove, $railModuleListDefault ],
+			[ false, true, $railModuleListDefault, $railModuleListDefault ],
+		];
+	}
+
+	/* Data providers */
+	public function allowedForTitleProvider() {
+
+		/*
+		 * Params order
+		 * [ $paramTitleExists, $paramTitleNamespace, $paramIsParentValid, $allowedForTitleExpected ]
+		 */
+		return [
+			[ true, NS_TEMPLATE, true, true ],
+			[ false, NS_TEMPLATE, true, false ],
+			[ true, NS_MAIN, true, false ],
+			[ true, NS_TEMPLATE, false, false ],
 		];
 	}
 
