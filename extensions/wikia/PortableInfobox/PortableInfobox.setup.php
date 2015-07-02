@@ -29,7 +29,7 @@ $wgInfoboxParserNodes = [
 	'Node',
 	'NodeComparison',
 	'NodeSet',
-	'NodeFooter',
+	'NodeNavigation',
 	'NodeGroup',
 	'NodeHeader',
 	'NodeImage',
