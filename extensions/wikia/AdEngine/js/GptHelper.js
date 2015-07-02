@@ -163,7 +163,7 @@ define('ext.wikia.adEngine.gptHelper', [
 			});
 
 			document.addEventListener('sp.blocking', function () {
-				adTracker('sourcepoint/blocked');
+				adTracker.track('sourcepoint/blocked');
 			});
 		}
 	}
