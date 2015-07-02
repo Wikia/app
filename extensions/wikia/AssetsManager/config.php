@@ -2484,6 +2484,6 @@ $config['template_draft'] = [
 	'assets' => [
 		'//extensions/wikia/TemplateDraft/scripts/rightRailModule.js',
 		'//extensions/wikia/TemplateDraft/scripts/templateDraft.run.js',
-		'//extensions/wikia/TemplateDraft/scripts/TemplateDraftTracking.js'
+		'//extensions/wikia/TemplateDraft/scripts/templateDraftTracking.js'
 	]
 ];

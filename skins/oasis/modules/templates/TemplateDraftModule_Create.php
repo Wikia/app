@@ -8,7 +8,7 @@
 		</button>
 	</a>
 	<p class="templatedraft-module-closelink">
-		<a class="templatedraft-module-closelink-link">
+		<a class="templatedraft-module-closelink-link" data-id="templatedraft-module-closelink">
 			<?= wfMessage( 'templatedraft-module-closelink-create' )->escaped() ?>
 		</a>
 	</p>

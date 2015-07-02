@@ -3,7 +3,9 @@
  * Module sends tracking record to google analytics and internal analytics
  * for events related to TemplateDraft.
  */
-require(['jquery', 'wikia.tracker', 'wikia.querystring'],
+define(
+	'ext.wikia.templateDraft.tracking',
+	['jquery', 'wikia.tracker'],
 	function ($, tracker) {
 		'use strict';
 
@@ -32,6 +34,9 @@ require(['jquery', 'wikia.tracker', 'wikia.querystring'],
 			}
 		}
 
-		$(init);
+		return {
+			init: init
+		};
 	}
+
 );
