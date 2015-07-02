@@ -81,7 +81,7 @@ class FacebookSignupController extends WikiaController {
 					$this->saveEmailAsynchronously( $user->getId(), true );
 				} else {
 					// Send welcome email
-					F::app()->sendRequest( 'Email\Controller\Welcome', 'handle', [] );
+					F::app()->sendRequest( WikiaConfirmEmailSpecialController::WELCOME_EMAIL_CONTROLLER, 'handle' );
 				}
 			}
 		} else {

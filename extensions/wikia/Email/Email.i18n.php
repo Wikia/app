@@ -16,6 +16,7 @@ $messages['en'] = array(
 	'emailext-unfollow-text' => 'No longer interested in receiving these updates? Click [$1 here] to unfollow $2 on {{SITENAME}}.',
 	'emailext-salutation' => 'Hi $1,',
 	'emailext-forumreply-unfollow-text' => 'No longer interested in receiving these updates? Click [$1 here] to unfollow [$2 this discussion] on [{{SERVER}} {{SITENAME}}].',
+	'emailext-wikia-home-url' => 'http://www.wikia.com',
 );
 
 $messages['qqq'] = array(
@@ -33,6 +34,7 @@ $messages['qqq'] = array(
 	'emailext-unfollow-text' => 'Asks the user if they want to stop following this page and provides a link to unfollow the page. $1 -> unfollow url, $2 article title',
 	'emailext-salutation' => "Email greeting. $1 is the recipient's username.",
 	'emailext-forumreply-unfollow-text' => 'Asks the user if they want to stop following this discussion and provides a link to unfollow the discussion. $1 -> unfollow url, $2 discussion url',
+	'emailext-wikia-home-url' => 'URL to the appropriate Wikia home page for each localized language',
 );
 
 $messages['de'] = array(

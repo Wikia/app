@@ -22,26 +22,20 @@ class WelcomeController extends EmailController {
 	public function body() {
 		$this->response->setData( [
 			'salutation' => $this->getSalutation(),
-			'summary' => $this->getSummary(),
+			'summary' => $this->getMessage( 'emailext-welcome-summary' )->text(),
+			'extendedSummary' => $this->getMessage( 'emailext-welcome-summary-extended' )->text(),
 			'details' => $this->getDetailsList(),
 			'contentFooterMessages' => [
 				$this->getMessage( 'emailext-welcome-footer-community' )->parse(),
-				$this->getMessage( 'emailext-welcome-footer-thanks' )->text()
+				$this->getMessage( 'emailext-welcome-footer-closing' )->text(),
+				$this->getMessage( 'emailext-emailconfirmation-community-team' )->text()
 			],
 			'hasContentFooterMessages' => true,
 		] );
 	}
 
-	protected function getSummary() {
-		return $this->getMessage( 'emailext-welcome-summary' )->text();
-	}
-
 	protected function getDetailsList() {
-		if ( in_array( $this->targetLang, [ 'de', 'en', 'es', 'ja', 'pt', 'ru', 'zh' ] ) ) {
-			$basicsUrl = \GlobalTitle::newFromText( 'Videos', NS_SPECIAL, \Wikia::COMMUNITY_WIKI_ID )->getFullURL();
-		} else {
-			$basicsUrl = \GlobalTitle::newFromText( 'Wikia_Basics', NS_HELP, \Wikia::COMMUNITY_WIKI_ID )->getFullURL();
-		}
+		$basicsUrl = $this->getMessage( 'emailext-welcome-basics-url' )->text();
 		return [
 			[
 				'iconSrc' => ImageHelper::getFileUrl( 'Create-profile.png' ),
@@ -57,7 +51,7 @@ class WelcomeController extends EmailController {
 			],
 			[
 				'iconSrc' => ImageHelper::getFileUrl( 'Favorite-fandom.png' ),
-				'iconLink' => 'http://www.wikia.com',
+				'iconLink' => $this->getMessage( 'emailext-wikia-home-url' )->text(),
 				'detailsHeader' => $this->getMessage( 'emailext-welcome-fandom-header' )->text(),
 				'details' => $this->getMessage( 'emailext-welcome-fandom-description' )->text()
 			],

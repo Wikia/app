@@ -7,7 +7,7 @@
  *
  */
 class WikiaConfirmEmailSpecialController extends WikiaSpecialPageController {
-	const EMAIL_CONTROLLER = 'Email\Controller\Welcome';
+	const WELCOME_EMAIL_CONTROLLER = 'Email\Controller\Welcome';
 
 	public function __construct() {
 		parent::__construct( 'WikiaConfirmEmail', '', false );
@@ -132,7 +132,7 @@ class WikiaConfirmEmailSpecialController extends WikiaSpecialPageController {
 					$userLoginHelper->addNewUserLogEntry( $user );
 
 					// send welcome email
-					F::app()->sendRequest( self::EMAIL_CONTROLLER, 'handle', [] );
+					F::app()->sendRequest( self::WELCOME_EMAIL_CONTROLLER, 'handle' );
 
 					// redirect user
 					if ( !empty( $userSignupRedirect ) ) {// Redirect user to the point where he finished (when signup on create wiki)
