@@ -1008,6 +1008,11 @@ $config['editpage_common_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'//extensions/wikia/EditPageLayout/js/loaders/EditPageEditorLoader.js',
+		'//extensions/wikia/EditPreview/js/preview.js',
+		'//extensions/wikia/EditPreview/js/editpage.event.preview.js',
+		'//extensions/wikia/EditPreview/js/editpage.event.diff.js',
+		'//extensions/wikia/EditPreview/js/editpage.event.helper.js',
+		'//extensions/wikia/EditPreview/js/editpage.events.js'
 	)
 );
 
@@ -2481,3 +2486,11 @@ $config['sitemap_page_css'] = array(
 		'//extensions/wikia/SitemapPage/styles/SitemapPage.scss',
 	]
 );
+
+$config['template_draft'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//extensions/wikia/TemplateDraft/scripts/rightRailModule.js',
+		'//extensions/wikia/TemplateDraft/scripts/templateDraft.run.js',
+	]
+];
