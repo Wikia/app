@@ -41,9 +41,9 @@ class UserNameChangeController extends EmailController {
 		$this->response->setData( [
 			'salutation' => $this->getSalutation(),
 			'editorAvatarURL' => $this->getCurrentAvatarURL(),
-			'summary' => $this->getSummary(),
+			'summary' => $this->getMessage( 'emailext-usernamechange-summary' )->text(),
 			'userNameMessage' => $this->getMessage( 'emailext-usernamechange-changed',
-				$this->oldUserName, $this->newUserName )->parse(),
+				$this->oldUserName, $this->newUserName )->text(),
 			'contentFooterMessages' => [
 				$this->getMessage( 'emailext-usernamechange-closing' )->text(),
 				$this->getMessage( 'emailext-usernamechange-signature' )->text()
@@ -52,12 +52,8 @@ class UserNameChangeController extends EmailController {
 		] );
 	}
 
-	public function getSubject() {
+	protected function getSubject() {
 		return $this->getMessage( 'emailext-usernamechange-subject' )->text();
-	}
-
-	protected function getSummary() {
-		return $this->getMessage( 'emailext-usernamechange-summary' )->text();
 	}
 
 	protected static function getEmailSpecificFormFields() {

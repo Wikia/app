@@ -4,7 +4,7 @@ $messages = [];
 $messages['en'] = [
 	'emailext-usernamechange-subject' => 'Your username change on Wikia is complete!',
 	'emailext-usernamechange-summary' => 'Your username change on Wikia is complete.',
-	'emailext-usernamechange-changed' => "'''$1''' is now '''$2'''",
+	'emailext-usernamechange-changed' => "$1 is now $2",
 	'emailext-usernamechange-closing' => "Can’t wait to see you around with your new name,",
 	'emailext-usernamechange-signature' => 'The Wikia Community Team',
 ];
