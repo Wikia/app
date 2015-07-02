@@ -3126,8 +3126,8 @@ class WikiFactory {
 
 	/**
 	 * fetching wiki list with selected variable set to $val
-	 * @param unknown_type $varId
-	 * @param unknown_type $type
+	 * @param int|string $varId
+	 * @param string $type
 	 * @param $selectedCond
 	 * @param unknown_type $val
 	 * @param string $likeVal
