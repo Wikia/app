@@ -11,7 +11,7 @@ $messages = [];
 $messages['en'] = [
 	'templatedraft-description' => 'TemplateDraft extension',
 	'templatedraft-subpage' => 'Draft',
-	'templatedraft-editintro' => "Here you go! We've generated a draft version of your infobox with our new markup. We'll save it as a sub-page so you can review it and make any needed changes. You may want to [[Help:PortableInfoboxes|view the help page on Infobox markup]] or [$1 view parent template wikitext].",
+	'templatedraft-editintro' => "Here you go! We've generated a draft version of your infobox with our new markup. We'll save it as a sub-page so you can review it and make any needed changes. You may want to $1 or $2.",
 	/**
 	 * Notifications
 	 */
@@ -38,6 +38,9 @@ to see this:
 $2
 
 [{{fullurl:{{ns:Template}}:{{PAGENAME}}}}?action=purge Click here to refresh the preview above]',
+	'templatedraft-module-editintro-please-convert' => 'We can generate a draft version of your infobox with our new markup just click $1.',
+	'templatedraft-module-view-parent' => 'view parent template wikitext',
+	'templatedraft-module-help' => 'view the help page on Infobox markup',
 ];
 
 /**

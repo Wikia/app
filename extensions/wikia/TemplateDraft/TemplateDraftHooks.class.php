@@ -56,6 +56,7 @@ class TemplateDraftHooks {
 			if ( $parentTitleId > 0 ) {
 				$parentContent = WikiPage::newFromID( $parentTitleId )->getText();
 
+
 				/**
 				 * TODO: Introduce a parameter to modify conversion flags
 				 * If you want to perform different conversions, not only the infobox one,
@@ -76,24 +77,51 @@ class TemplateDraftHooks {
 	 * Triggered if a user edits a Draft subpage of a template.
 	 * It adds an editintro message with help and links.
 	 *
-	 * @param String $msgName
-	 * @param Array $msgParams
+	 * @param Array $preloads
 	 * @param Title $title
 	 * @return bool
 	 */
-	public static function onEditPageLayoutShowIntro( &$msgName, &$msgParams, Title $title ) {
+	public static function onEditPageLayoutShowIntro( &$preloads, Title $title ) {
 		$helper = new TemplateDraftHelper();
-
-		if ( $helper->isTitleNewDraft( $title )
-			&& class_exists( 'TemplateConverter' )
-			&& TemplateConverter::isConversion()
-		) {
-			$msgName = 'templatedraft-editintro';
-
-			$base = Title::newFromText( $title->getBaseText(), NS_TEMPLATE );
-			$msgParams = [ $base->getFullUrl( ['action' => 'edit'] ) ];
+		if ( $title->getNamespace() == NS_TEMPLATE ) {
+			if ( $helper->isTitleDraft( $title )
+				&& class_exists( 'TemplateConverter' )
+				&& TemplateConverter::isConversion()
+			) {
+				$base = Title::newFromText( $title->getBaseText(), NS_TEMPLATE );
+				$baseHelp = Title::newFromText( 'Help:PortableInfoboxes' );
+				$preloads['EditPageIntro'] = [
+					'content' => wfMessage( 'templatedraft-editintro' )->rawParams(
+						Xml::element( 'a', [
+							'href' => $baseHelp->getFullURL(),
+							'target' => '_blank',
+						],
+							wfMessage( 'templatedraft-module-help' )->plain()
+						),
+						Xml::element( 'a', [
+							'href' => $base->getFullUrl( [ 'action' => 'edit' ] ),
+							'target' => '_blank'
+						],
+							wfMessage( 'templatedraft-module-view-parent' )->plain() )
+					)->escaped(),
+				];
+			} elseif ( !$helper->isTitleDraft( $title ) ) {
+				$base = Title::newFromText( $title->getBaseText() .'/'. wfMessage( 'templatedraft-subpage' ), NS_TEMPLATE );
+				$draftUrl = $base->getFullUrl( [
+					'action' => 'edit',
+					TemplateConverter::CONVERSION_MARKER => 1,
+				] );
+				$preloads['EditPageIntro'] = [
+					'content' => wfMessage( 'templatedraft-module-editintro-please-convert' )->rawParams(
+						Xml::element( 'a', [
+							'href' => $draftUrl,
+							'target' => '_blank'
+						],
+							wfMessage( 'templatedraft-module-button' )->plain() )
+					)->escaped(),
+				];
+			}
 		}
-
 		return true;
 	}
 }
