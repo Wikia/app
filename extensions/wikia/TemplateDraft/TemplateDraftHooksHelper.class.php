@@ -10,15 +10,18 @@ class TemplateDraftHooksHelper {
 	public function addRailModuleList( Array &$railModuleList ) {
 		$title = $this->getGlobalTitle();
 		$helper = $this->getTemplateDraftHelper();
-		$parentTitle = $helper->getParentTitle( $title );
-		if ( $title->exists() && $title->getNamespace() === NS_TEMPLATE && $helper->isParentValid( $parentTitle ) ) {
+		if ( $helper->allowedForTitle( $title ) ) {
 			if ( $helper->isTitleDraft( $title ) ) {
-				// $title is draft page
-				/* Rail module for draft approval */
+				/*
+				 * $title is draft page
+				 * Add rail module for draft approval
+				 */
 				$this->addRailModule( $railModuleList, 'Approve' );
 			} else {
-				// $title is parent page
-				/* Rail module for draft creation */
+				/*
+				 * $title is parent page
+				 * Add rail module for draft creation
+				 */
 				$this->addRailModule( $railModuleList, 'Create' );
 			}
 		}

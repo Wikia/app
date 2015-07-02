@@ -5,8 +5,7 @@ class TemplateDraftHooks {
 	public static function onSkinAfterBottomScripts( Skin $skin, &$text ) {
 		$title = $skin->getTitle();
 		$helper = new TemplateDraftHelper();
-		$parentTitle = $helper->getParentTitle( $title );
-		if ( $title->exists() && $title->getNamespace() === NS_TEMPLATE && $helper->isParentValid( $parentTitle ) ) {
+		if ( $helper->allowedForTitle( $title ) ) {
 			$scripts = AssetsManager::getInstance()->getURL( 'template_draft' );
 
 			foreach ( $scripts as $script ) {
