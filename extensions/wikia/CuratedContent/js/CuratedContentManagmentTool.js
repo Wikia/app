@@ -135,6 +135,7 @@ $(function () {
 			checkImages = function () {
 				$ul.find('.image.error').removeClass('error').popover('destroy');
 
+				// find all images for items and sections except Featured Section and Optional Section
 				$ul.find('.section:not(.featured), .item')
 					.find('.image[data-id=0], .image:not([data-id])')
 					.addClass('error')
@@ -316,6 +317,9 @@ $(function () {
 							if (errReason === 'noCategoryInTag') {
 								return noCategoryInTag;
 							}
+							if (errReason === 'imageMissing') {
+								return imageMissingError;
+							}
 							return errReason;
 						}
 
@@ -325,28 +329,31 @@ $(function () {
 								items = $form.find('.item-input, .section-input');
 							while (i--) {
 								//I cannot use value CSS selector as I want to use current value
-								var errTitle = err[i].title;
-								var errReason = err[i].reason;
-								var reasonMessage = getReasonMessage(errReason);
+								var errTitle = err[i].title,
+									errReason = err[i].reason,
+									reasonMessage = getReasonMessage(errReason);
 								items.each(function () {
-
 									if (this.value === errTitle) {
-										if (errReason !== 'emptyLabel' && errReason !== 'tooLongLabel') {
-											$(this)
-												.addClass('error')
-												.popover('destroy')
-												.popover({
-													content: reasonMessage
-												});
-										} else {
-											$(this).next()
-												.addClass('error')
-												.popover('destroy')
-												.popover({
-													content: reasonMessage
-												});
+										var $itemWithError;
+
+										switch(errReason) {
+											case 'missingImage':
+												$itemWithError = $(this).parent().find('.image');
+												break;
+											case 'emptyLabel':
+											case 'tooLongLabel':
+												$itemWithError = $(this).next();
+												break;
+											default:
+												$itemWithError = $(this);
 										}
 
+										$itemWithError
+											.addClass('error')
+											.popover('destroy')
+											.popover({
+												content: reasonMessage
+											});
 										return false;
 									}
 									return true;
