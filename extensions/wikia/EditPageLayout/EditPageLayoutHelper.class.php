@@ -175,6 +175,8 @@ class EditPageLayoutHelper {
 
 		return $articleTitle->isCssOrJsPage()
 				|| $articleTitle->isCssJsSubpage()
+				// TODO: Change NS_TEMPLATE to infobox template only
+				// TODO: Will be done today (2/7/2015) after https://github.com/Wikia/app/pull/7660 merge
 				|| $namespace === NS_TEMPLATE
 				// Lua module
 				|| $namespace === NS_MODULE;
