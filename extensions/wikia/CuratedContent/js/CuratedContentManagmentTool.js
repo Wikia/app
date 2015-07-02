@@ -128,7 +128,7 @@ $(function () {
 
 				// find all images for items and sections except Featured Section and...
 				$ul.find('.section:not(.featured), .item')
-					.find('.image[data-id=0], .image:not([data-id])')
+					.find('.image:not([data-id])')
 					.addError(imageMissingError);
 				// ...except Optional Section
 				var $lastSection = $ul.find('.section').last().find('.section-input');
