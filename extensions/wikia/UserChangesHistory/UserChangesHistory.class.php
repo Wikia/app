@@ -57,7 +57,7 @@ class UserChangesHistory {
 						"user_id"   		=> $id,
 						"city_id"   		=> $wgCityId,
 						"ulh_from"  		=> $from,
-						"ulh_rememberme" 	=> $user->getOption('rememberpassword')
+						"ulh_rememberme" 	=> $user->getGlobalPreference('rememberpassword')
 					);
 					if ( !empty($wgEnableScribeReport) ) {
 						# use scribe

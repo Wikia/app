@@ -110,7 +110,7 @@ class EditPageLayoutHelper {
 		if ( $user->isLoggedIn() ) {
 			global $wgRTEDisablePreferencesChange;
 			$wgRTEDisablePreferencesChange = true;
-			$this->addJsVariable( 'wgEditPageWideSourceMode', (bool)$user->getOption( 'editwidth' ) );
+			$this->addJsVariable( 'wgEditPageWideSourceMode', (bool)$user->getGlobalPreference( 'editwidth' ) );
 			unset( $wgRTEDisablePreferencesChange );
 		}
 
@@ -202,7 +202,7 @@ class EditPageLayoutHelper {
 		global $wgEnableEditorSyntaxHighlighting, $wgUser;
 
 		return $wgEnableEditorSyntaxHighlighting
-				&& !$wgUser->getOption( 'disablesyntaxhighlighting' );
+				&& !$wgUser->getGlobalPreference( 'disablesyntaxhighlighting' );
 	}
 
 	/**

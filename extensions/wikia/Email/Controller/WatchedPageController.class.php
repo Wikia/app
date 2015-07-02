@@ -150,11 +150,11 @@ abstract class WatchedPageController extends EmailController {
 	}
 
 	/**
-	 * @param $title
+	 * @param \Title $title
 	 * @return String
 	 * @throws \MWException
 	 */
-	protected function getAllChangesText( $title ) {
+	protected function getAllChangesText( \Title $title ) {
 		return $this->getMessage( 'emailext-watchedpage-view-all-changes',
 			$title->getFullURL( [
 				'action' => 'history'

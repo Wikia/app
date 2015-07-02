@@ -2,7 +2,8 @@
 @import 'skins/shared/mixins/columns';
 @import 'skins/shared/mixins/flexbox';
 
-$infobox-width: 270px; // temporary value used to mach with Khal Drogo Infobox
+$infobox-width: 270px;
+// temporary value used to mach with Khal Drogo Infobox
 $infobox-margin: 15px;
 $infobox-item-margin: 5px;
 $infobox-background: mix($color-page, $color-links, 90%);
@@ -56,11 +57,11 @@ $infobox-debug-error-msg-bg: black;
 		text-align: left;
 	}
 
-	.portable-infobox-header-background {
+	.portable-infobox-secondary-background {
 		background-color: $infobox-section-header-background;
 	}
 
-	.portable-infobox-header-font {
+	.portable-infobox-secondary-font {
 		font-size: 12px;
 		font-weight: bold;
 		line-height: 18px;
@@ -95,6 +96,8 @@ $infobox-debug-error-msg-bg: black;
 	}
 
 	.portable-infobox-item-value {
+		font-size: 14px;
+		line-height: 20px;
 		padding-left: $infobox-item-margin * 2;
 
 		// experiment with removing margins on all children of data value
@@ -254,13 +257,10 @@ $infobox-debug-error-msg-bg: black;
 
 		.portable-infobox-item-label {
 			@include flex-basis($infobox-width / 3);
-			line-height: 20px;
 			margin-bottom: inherit;
 		}
 
 		.portable-infobox-item-value {
-			font-size: 14px;
-			line-height: 19px;
 			padding-left: 0;
 		}
 
@@ -273,6 +273,11 @@ $infobox-debug-error-msg-bg: black;
 			line-height: 19px;
 			margin: 0;
 		}
+	}
+
+	.portable-infobox-item-value {
+		font-size: 12px;
+		line-height: 18px;
 	}
 }
 

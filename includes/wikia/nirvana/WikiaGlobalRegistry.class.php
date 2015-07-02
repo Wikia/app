@@ -10,6 +10,8 @@
  * @author Wojciech Szela <wojtek(at)wikia-inc.com>
  *
  *
+ * @property AuthPlugin Auth
+ * @property AuthPlugin auth
  * @property User $User
  * @property User $user
  * @property OutputPage $Out

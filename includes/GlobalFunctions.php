@@ -1812,10 +1812,11 @@ function wfDebugBacktrace( $limit = 0 ) {
  *
  * @return string
  */
-function wfBacktrace() {
+function wfBacktrace( $forceCommandLineMode = false ) {
 	global $wgCommandLineMode;
 
-	if ( $wgCommandLineMode ) {
+	$commandLinemode = $wgCommandLineMode || $forceCommandLineMode;
+	if ( $commandLinemode ) {
 		$msg = '';
 	} else {
 		$msg = "<ul>\n";
@@ -1833,7 +1834,7 @@ function wfBacktrace() {
 		} else {
 			$line = '-';
 		}
-		if ( $wgCommandLineMode ) {
+		if ( $commandLinemode ) {
 			$msg .= "$file line $line calls ";
 		} else {
 			$msg .= '<li>' . $file . ' line ' . $line . ' calls ';
@@ -1843,13 +1844,13 @@ function wfBacktrace() {
 		}
 		$msg .= $call['function'] . '()';
 
-		if ( $wgCommandLineMode ) {
+		if ( $commandLinemode ) {
 			$msg .= "\n";
 		} else {
 			$msg .= "</li>\n";
 		}
 	}
-	if ( $wgCommandLineMode ) {
+	if ( $commandLinemode ) {
 		$msg .= "\n";
 	} else {
 		$msg .= "</ul>\n";
@@ -3441,16 +3442,7 @@ function wfFixSessionID() {
 	if ( !empty( $_COOKIE[ session_name() ] ) || session_id() ) {
 		return;
 	}
-
-	global $wgSessionDebugData;
-	$sOldSessionId = session_id();
-	$sNewSessionId = MWCryptRand::generateHex( 32 );
-	$wgSessionDebugData[] = [
-		'event' => __METHOD__,
-		'old_session_id' => $sOldSessionId,
-		'new_session_id' => $sNewSessionId,
-	];
-	session_id( $sNewSessionId );
+	session_id( MWCryptRand::generateHex( 32 ) );
 }
 
 /**
@@ -3483,8 +3475,7 @@ function wfResetSessionID() {
  */
 function wfSetupSession( $sessionId = false ) {
 	global $wgSessionsInMemcached, $wgCookiePath, $wgCookieDomain,
-			$wgCookieSecure, $wgCookieHttpOnly, $wgSessionHandler,
-			$wgSessionDebugData;
+			$wgCookieSecure, $wgCookieHttpOnly, $wgSessionHandler;
 
 	if( $wgSessionsInMemcached ) {
 		if ( !defined( 'MW_COMPILED' ) ) {

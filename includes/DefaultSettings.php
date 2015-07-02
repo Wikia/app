@@ -521,7 +521,7 @@ $wgHashedSharedUploadDirectory = true;
  *
  * Please specify the namespace, as in the example below.
  */
-$wgRepositoryBaseUrl = "http://commons.wikimedia.org/wiki/File:";
+$wgRepositoryBaseUrl = "https://commons.wikimedia.org/wiki/File:";
 
 /**
  * This is the list of preferred extensions for uploading files. Uploading files
@@ -1587,16 +1587,6 @@ $wgSessionsInMemcached = false;
  * useful if you're doing cross-application sessions, see bug 11381)
  */
 $wgSessionHandler = null;
-
-/** Wikia change - begin - @author: Michał ‘Mix’ Roszka <mix@wikia-inc.com>
- *
- * See: https://wikia-inc.atlassian.net/browse/PLATFORM-308
- *
- * This is used for storing session data relevant to the above issue. The data
- * are logged to Kibana on shutdown.
- */
-$wgSessionDebugData = [];
-/** Wikia change - end */
 
 /** If enabled, will send MemCached debugging information to $wgDebugLogFile */
 $wgMemCachedDebug = false;

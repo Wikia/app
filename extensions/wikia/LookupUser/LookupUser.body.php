@@ -250,7 +250,7 @@ EOT
 			$optionsString .= "$name = $value <br />";
 		}
 		$name = $user->getName();
-		$email = $user->getEmail() ?: $user->getOption( 'disabled-user-email' );
+		$email = $user->getEmail() ?: $user->getGlobalAttribute( 'disabled-user-email' );
 		if( !empty( $email ) ) {
 			$email_output = wfMessage( 'lookupuser-email', $email, urlencode( $email ) )->text();
 		} else {
@@ -286,12 +286,12 @@ EOT
 		$wgOut->addWikiText( '*' . wfMessage( 'lookupuser-birthdate', $birthDate )->text() );
 
 
-		$newEmail = $user->getOption( 'new_email' );
+		$newEmail = $user->getGlobalAttribute( 'new_email' );
 		if ( !empty( $newEmail ) ) {
 			$wgOut->addWikiText( '*' . wfMessage( 'lookupuser-email-change-requested', $newEmail )->plain() );
 		}
 
-		$allowedAdoption = $user->getOption( 'AllowAdoption', true );
+		$allowedAdoption = $user->getGlobalFlag( 'AllowAdoption', true );
 		$wgOut->addWikiText( '*' . wfMessage( 'lookupuser-user' . ( !$allowedAdoption ? '-not' : '' ) . '-allowed-adoption' )->plain() );
 
 		//Begin: Small Stuff Week - adding table from Special:LookupContribs --nAndy

@@ -97,9 +97,11 @@
 	.oasis-breakpoints #ads-outer {
 		margin: 0 auto;
 	}
-
 	.oasis-breakpoints #ad-skyscraper1-outer {
 		right: -190px;
+	}
+	.oasis-breakpoints #ad-fullbanner2-outer {
+		right: -18px;
 	}
 }
 /* $large-range @see breakpoints-variables.scss */
@@ -107,9 +109,11 @@
 	.oasis-breakpoints #ads-outer {
 		margin: 0 auto;
 	}
-
 	.oasis-breakpoints #ad-skyscraper1-outer {
 		right: -274px;
+	}
+	.oasis-breakpoints #ad-fullbanner2-outer {
+		right: -105px;
 	}
 }
 
