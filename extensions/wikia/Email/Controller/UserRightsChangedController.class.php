@@ -42,12 +42,7 @@ class UserRightsChangedController extends EmailController {
 
 
 	private function getButtonLink() {
-		$queryParms = [
-			"title" => "Special:Log",
-			"type" => "rights",
-			"page" => $this->targetUser->getName(),
-		];
-		return \F::app()->wg->Server . "/?" . http_build_query( $queryParms );
+		return \SpecialPage::getTitleFor( 'Log' )->getFullURL( [ "type" => "rights", "page" => $this->targetUser->getName() ] );
 	}
 
 	public static function getEmailSpecificFormFields() {
