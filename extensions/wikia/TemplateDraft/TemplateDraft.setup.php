@@ -51,9 +51,16 @@ $wgHooks['EditPageLayoutShowIntro'][] = 'TemplateDraftHooks::onEditPageLayoutSho
  * Helpers
  */
 $wgAutoloadClasses['TemplateDraftHelper'] = __DIR__ . '/TemplateDraftHelper.class.php';
+$wgAutoloadClasses['TemplateDraftHooksHelper'] = __DIR__ . '/TemplateDraftHooksHelper.class.php';
 $wgAutoloadClasses['TemplateConverter'] = __DIR__ . '/TemplateConverter.class.php';
 
 /**
  * Right rail module
  */
 $wgAutoloadClasses['TemplateDraftModuleController'] = $IP . '/skins/oasis/modules/TemplateDraftModuleController.class.php';
+
+/**
+ * Add approvedraft action (?action=apprevedraft)
+ */
+$wgAutoloadLocalClasses['ApprovedraftAction'] = __DIR__ . '/ApprovedraftAction.php';
+$wgActions['approvedraft'] = true;

@@ -23,17 +23,8 @@ class TemplateDraftHooks {
 	 * @return bool
 	 */
 	public static function onGetRailModuleList( Array &$railModuleList ) {
-		global $wgTitle;
-		$helper = new TemplateDraftHelper();
-
-		if ( $wgTitle->userCan( 'templatedraft' )
-			&& $wgTitle->getNamespace() === NS_TEMPLATE
-			&& $wgTitle->exists()
-			&& !$helper->isTitleDraft( $wgTitle )
-			&& Wikia::getProps( $wgTitle->getArticleID(), TemplateDraftController::TEMPLATE_INFOBOX_PROP ) !== '0'
-		) {
-			$railModuleList[1502] = [ 'TemplateDraftModule', 'Index', null ];
-		}
+		$templateDraftHooksHelper = new TemplateDraftHooksHelper();
+		$templateDraftHooksHelper->addRailModuleList( $railModuleList );
 
 		return true;
 	}
