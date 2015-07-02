@@ -175,10 +175,12 @@ class EditPageLayoutHelper {
 
 		if ( $articleTitle->isCssOrJsPage()
 			|| $articleTitle->isCssOrJsSubpage()
-			|| $articleTitle->getNamespace() === NS_MODULE ) {
+			|| $articleTitle->getNamespace() === NS_MODULE 
+		) {
 			return true;
 		} elseif ( $articleTitle->getNamespace() === NS_TEMPLATE
-			&& class_exists( 'TemplateClassificationController' ) ) {
+			&& class_exists( 'TemplateClassificationController' ) 
+		) {
 			$tc = new TemplateClassificationController( $articleTitle );
 	
 			return $tc->isType( 'infobox' );
