@@ -1,0 +1,20 @@
+{{> greeting}}
+<table>
+	<tr>
+		<td class="border">
+			<div class="avatar-wrapper">
+				<img class="avatar" src="{{editorAvatarURL}}">
+			</div>
+		</td>
+		<td class="widest border">
+			<div class="message">
+				<p>
+					{{userNameMessage}}
+				</p>
+			</div>
+		</td>
+	</tr>
+	{{# hasContentFooterMessages}}
+		{{> contentFooterMessages}}
+	{{/ hasContentFooterMessages}}
+</table>

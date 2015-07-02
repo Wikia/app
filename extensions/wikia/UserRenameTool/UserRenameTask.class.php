@@ -203,14 +203,11 @@ class UserRenameTask extends BaseTask {
 	 */
 	protected function notifyUser( $user, $oldUsername, $newUsername ) {
 		if ( $user->getEmail() != null ) {
-			$user->sendMail(
-				wfMsgForContent('userrenametool-finished-email-subject', $oldUsername),
-				wfMsgForContent('userrenametool-finished-email-body-text', $oldUsername, $newUsername),
-				null, //from
-				null, //replyto
-				'UserRenameProcessFinishedNotification',
-				wfMsgForContent('userrenametool-finished-email-body-html', $oldUsername, $newUsername)
-			);
+			F::app()->sendRequest( 'Email\Controller\UserNameChange', 'handle', [
+				'targetUser' => $user,
+				'oldUserName' => $oldUsername,
+				'newUserName' => $newUsername
+			] );
 			$this->info('rename user with email notification', [
 				'old_name' => $oldUsername,
 				'new_name' => $newUsername,

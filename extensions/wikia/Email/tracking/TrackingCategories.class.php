@@ -24,4 +24,5 @@ class TrackingCategories {
 	const FOUNDER_VIEWS_DIGEST_EN = 'FounderEmailsVieiwsDigestEN';
 	const FOUNDER_VIEWS_DIGEST_INT = 'FounderEmailsViewsDigestINT';
 	const FORGOT_PASSWORD = 'TemporaryPassword';
+	const USER_NAME_CHANGE = 'UserRenameProcessFinishedNotification';
 }
