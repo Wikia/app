@@ -168,7 +168,7 @@ class User {
 			}
 
 			$result = !empty( $loginInfo->access_token );
-			$authMethod = $loginInfo->auth_method;
+			$authMethod = isset($loginInfo->auth_method) ? $loginInfo->auth_method : self::AUTH_TYPE_NORMAL_PW;
 		}
 		catch ( ClientException $e ) {
 			$logger->error(
