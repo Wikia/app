@@ -2,9 +2,11 @@
 
 class TemplateConverter {
 
+	const CONVERSION_MARKER = 'conversion';
+
 	const TEMPLATE_VARIABLE_REGEX = '/{{{([^|{}]+)(\|([^{}]*|.*{{.*}}.*))?}}}/';
 
-	var $title; // Title object of the template we're converting
+	private $title; // Title object of the template we're converting
 
 	/**
 	 * Names of variables that should be converted to a <title> tag
@@ -26,6 +28,19 @@ class TemplateConverter {
 		'mainimage',
 	];
 
+	/**
+	 * Names of variables that are usually not data and can be ignored
+	 * @var array
+	 */
+	public static $ignoredVariables = [
+		'imagewidth',
+		'caption',
+	];
+
+	/**
+	 * @param Title $templateTitle
+	 */
+
 	public function __construct( Title $templateTitle ) {
 		$this->title = $templateTitle;
 	}
@@ -42,9 +57,12 @@ class TemplateConverter {
 		$variables = $this->getTemplateVariables( $content );
 
 		foreach ( $variables as $variable ) {
-			if ( in_array( $variable['name'], self::$titleAliases ) ) {
+			$lcVarName = strtolower( $variable['name'] );
+			if ( in_array( $lcVarName, self::$ignoredVariables ) ) {
+				continue;
+			} elseif ( in_array( $lcVarName, self::$titleAliases ) ) {
 				$draft .= $this->createTitleTag( $variable );
-			} elseif ( in_array( $variable['name'], self::$imageAliases ) ) {
+			} elseif ( in_array( $lcVarName, self::$imageAliases ) ) {
 				$draft .= $this->createImageTag( $variable );
 			} else {
 				$draft .= $this->createDataTag( $variable );
@@ -143,14 +161,14 @@ class TemplateConverter {
 	}
 
 	public function generatePreviewSection( $content ) {
-		$variables = $this->findTemplateVariables( $content );
+		$variables = $this->getTemplateVariables( $content );
 
 		$preview = "{{" . $this->title->getText() . "\n";
 		$docs = $preview;
 
 		foreach ( $variables as $var ) {
-			$preview .= "|{$var}=This is a test\n";
-			$docs .= "|{$var}=\n";
+			$preview .= "|{$var['name']}=This is a test\n";
+			$docs .= "|{$var['name']}=\n";
 		}
 
 		$preview .= "}}\n";
@@ -162,4 +180,10 @@ class TemplateConverter {
 
 		return $return;
 	}
-} 
+
+	public static function isConversion() {
+		global $wgRequest;
+
+		return $wgRequest->getVal( self::CONVERSION_MARKER, false );
+	}
+}

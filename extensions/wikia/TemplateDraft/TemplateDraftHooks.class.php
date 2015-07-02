@@ -2,6 +2,20 @@
 
 class TemplateDraftHooks {
 
+	public static function onSkinAfterBottomScripts( Skin $skin, &$text ) {
+		if ( $skin->getTitle()->userCan( 'templatedraft', $skin->getUser() )
+			&& $skin->getTitle()->getNamespace() === NS_TEMPLATE
+		) {
+			$scripts = AssetsManager::getInstance()->getURL( 'template_draft' );
+
+			foreach ( $scripts as $script ) {
+				$text .= Html::linkedScript( $script );
+			}
+		}
+
+		return true;
+	}
+
 	/**
 	 * Attaches a new module to right rail which is an entry point to convert a given template.
 	 *
@@ -9,16 +23,8 @@ class TemplateDraftHooks {
 	 * @return bool
 	 */
 	public static function onGetRailModuleList( Array &$railModuleList ) {
-		global $wgTitle;
-
-		$titleNeedle = 'infobox';
-		if ( $wgTitle->getNamespace() === NS_TEMPLATE
-			&& $wgTitle->exists()
-			&& strripos( $wgTitle->getText(), $titleNeedle ) !== false
-			&& Wikia::getProps( $wgTitle->getArticleID(), TemplateDraftController::TEMPLATE_INFOBOX_PROP ) !== 0
-		) {
-			$railModuleList[1502] = [ 'TemplateDraftModule', 'Index', null ];
-		}
+		$templateDraftHooksHelper = new TemplateDraftHooksHelper();
+		$templateDraftHooksHelper->addRailModuleList( $railModuleList );
 
 		return true;
 	}
@@ -33,11 +39,14 @@ class TemplateDraftHooks {
 	 */
 	public static function onEditFormPreloadText( &$text, Title $title ) {
 		$helper = new TemplateDraftHelper();
-		if ( $helper->isTitleDraft( $title ) ) {
-			$parentTitleId = $helper->getParentTitleId( $title );
+		if ( $helper->isTitleNewDraft( $title )
+			&& TemplateConverter::isConversion()
+		) {
+			$parentTitleId = $helper->getParentTitle( $title )->getArticleID();
 
 			if ( $parentTitleId > 0 ) {
 				$parentContent = WikiPage::newFromID( $parentTitleId )->getText();
+
 
 				/**
 				 * TODO: Introduce a parameter to modify conversion flags
@@ -46,10 +55,62 @@ class TemplateDraftHooks {
 				 */
 				$controller = new TemplateDraftController();
 				$text = $controller->createDraftContent(
-					$title, // @TODO this is currently taking the *edited* title (with subpage), not the *converted* title  
+					$title, // @TODO this is currently taking the *edited* title (with subpage), not the *converted* title
 					$parentContent,
 					[ $controller::TEMPLATE_INFOBOX ]
 				);
+			}
+		}
+		return true;
+	}
+
+	/**
+	 * Triggered if a user edits a Draft subpage of a template.
+	 * It adds an editintro message with help and links.
+	 *
+	 * @param Array $preloads
+	 * @param Title $title
+	 * @return bool
+	 */
+	public static function onEditPageLayoutShowIntro( &$preloads, Title $title ) {
+		$helper = new TemplateDraftHelper();
+		if ( $title->getNamespace() == NS_TEMPLATE ) {
+			if ( $helper->isTitleDraft( $title )
+				&& class_exists( 'TemplateConverter' )
+				&& TemplateConverter::isConversion()
+			) {
+				$base = Title::newFromText( $title->getBaseText(), NS_TEMPLATE );
+				$baseHelp = Title::newFromText( 'Help:PortableInfoboxes' );
+				$preloads['EditPageIntro'] = [
+					'content' => wfMessage( 'templatedraft-editintro' )->rawParams(
+						Xml::element( 'a', [
+							'href' => $baseHelp->getFullURL(),
+							'target' => '_blank',
+						],
+							wfMessage( 'templatedraft-module-help' )->plain()
+						),
+						Xml::element( 'a', [
+							'href' => $base->getFullUrl( [ 'action' => 'edit' ] ),
+							'target' => '_blank'
+						],
+							wfMessage( 'templatedraft-module-view-parent' )->plain() )
+					)->escaped(),
+				];
+			} elseif ( !$helper->isTitleDraft( $title ) ) {
+				$base = Title::newFromText( $title->getBaseText() .'/'. wfMessage( 'templatedraft-subpage' ), NS_TEMPLATE );
+				$draftUrl = $base->getFullUrl( [
+					'action' => 'edit',
+					TemplateConverter::CONVERSION_MARKER => 1,
+				] );
+				$preloads['EditPageIntro'] = [
+					'content' => wfMessage( 'templatedraft-module-editintro-please-convert' )->rawParams(
+						Xml::element( 'a', [
+							'href' => $draftUrl,
+							'target' => '_blank'
+						],
+							wfMessage( 'templatedraft-module-button' )->plain() )
+					)->escaped(),
+				];
 			}
 		}
 		return true;
