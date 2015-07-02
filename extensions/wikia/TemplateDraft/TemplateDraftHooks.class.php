@@ -3,9 +3,10 @@
 class TemplateDraftHooks {
 
 	public static function onSkinAfterBottomScripts( Skin $skin, &$text ) {
-		if ( $skin->getTitle()->userCan( 'templatedraft', $skin->getUser() )
-			&& $skin->getTitle()->getNamespace() === NS_TEMPLATE
-		) {
+		$title = $skin->getTitle();
+		$helper = new TemplateDraftHelper();
+		$parentTitle = $helper->getParentTitle( $title );
+		if ( $title->exists() && $title->getNamespace() === NS_TEMPLATE && $helper->isParentValid( $parentTitle ) ) {
 			$scripts = AssetsManager::getInstance()->getURL( 'template_draft' );
 
 			foreach ( $scripts as $script ) {
@@ -13,17 +14,6 @@ class TemplateDraftHooks {
 			}
 		}
 
-		return true;
-	}
-
-	/**
-	 * @param OutputPage $out
-	 * @param Skin $skin
-	 * @return bool
-	 */
-	public static function onBeforePageDisplay( \OutputPage $out, \Skin $skin ) {
-		// TODO check and add only when one of template draft modules are loaded
-		Wikia::addAssetsToOutput( 'templatedraft_js' );
 		return true;
 	}
 

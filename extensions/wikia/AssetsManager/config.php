@@ -2439,14 +2439,6 @@ $config['portable_infobox_monobook_scss'] = [
 	]
 ];
 
-$config['templatedraft_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => ['oasis', 'monobook'],
-	'assets' => [
-		'//extensions/wikia/TemplateDraft/scripts/TemplateDraftTracking.js'
-	]
-];
-
 $config['flags_view_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => [ 'oasis', 'monobook' ],
@@ -2492,5 +2484,6 @@ $config['template_draft'] = [
 	'assets' => [
 		'//extensions/wikia/TemplateDraft/scripts/rightRailModule.js',
 		'//extensions/wikia/TemplateDraft/scripts/templateDraft.run.js',
+		'//extensions/wikia/TemplateDraft/scripts/TemplateDraftTracking.js'
 	]
 ];
