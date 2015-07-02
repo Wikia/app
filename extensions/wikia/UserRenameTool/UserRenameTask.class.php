@@ -8,6 +8,8 @@
 use Wikia\Tasks\Tasks\BaseTask;
 
 class UserRenameTask extends BaseTask {
+	const EMAIL_CONTROLLER = 'Email\Controller\UserNameChange';
+
 	/**
 	 * Marshal & execute the RenameUserProcess functions to rename a user
 	 *
@@ -203,7 +205,7 @@ class UserRenameTask extends BaseTask {
 	 */
 	protected function notifyUser( $user, $oldUsername, $newUsername ) {
 		if ( $user->getEmail() != null ) {
-			F::app()->sendRequest( 'Email\Controller\UserNameChange', 'handle', [
+			F::app()->sendRequest( self::EMAIL_CONTROLLER, 'handle', [
 				'targetUser' => $user,
 				'oldUserName' => $oldUsername,
 				'newUserName' => $newUsername
