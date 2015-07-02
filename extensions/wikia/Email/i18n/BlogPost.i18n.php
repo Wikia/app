@@ -7,7 +7,7 @@ $messages['en'] = array(
 	'emailext-blogpost-user-summary' => "There is a new post on [$1 $2's blog] on [{{SERVER}} {{SITENAME}}]. Take a look!",
 	'emailext-blogpost-list-summary' => 'There is a new post on [$1 $2] on [{{SERVER}} {{SITENAME}}]. Take a look!',
 	'emailext-blogpost-link-label' => 'Read Full Post',
-	'emailext-blogpost-view-all' => '[$1 All recent blog posts on $2]',
+	'emailext-blogpost-view-all' => "[$1 All recent blog posts on $2's blog]",
 	'emailext-blogpost-unfollow-text' => "No longer interested in receiving these updates? Click [$1 here] to unfollow $2's blog on {{SITENAME}}.",
 );
 
