@@ -3,6 +3,7 @@
 class PortableInfoboxDataService {
 
 	const IMAGE_FIELD_TYPE = 'image';
+	const INFOBOXES_PROPERTY_NAME = 'infoboxes';
 
 	/**
 	 * @var Title $title
@@ -32,7 +33,7 @@ class PortableInfoboxDataService {
 				//on empty parser cache this should be regenerated, see WikiPage.php:2996
 				->getParserOutput();
 			$data = $parserOutput ?
-				$parserOutput->getProperty( PortableInfoboxParserTagController::INFOBOXES_PROPERTY_NAME )
+				$parserOutput->getProperty( self::INFOBOXES_PROPERTY_NAME )
 				: false;
 
 			//return empty [] to prevent false on non existing infobox data
