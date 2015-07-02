@@ -48,6 +48,8 @@ $2
 	'templatedraft-module-editintro-please-convert' => 'We can generate a draft version of your infobox with our new markup just click $1.',
 	'templatedraft-module-view-parent' => 'view parent template wikitext',
 	'templatedraft-module-help' => 'view the help page on Infobox markup',
+
+	'templatedraft-invalid-template' => 'Invalid template name provided.',
 ];
 
 /**
@@ -77,4 +79,6 @@ $messages['qqq'] = [
 	'templatedraft-module-content-approve' => 'A content of the TemplateDraft module for approving draft that appears in the right rail on Template pages.',
 	'templatedraft-module-button-approve' => 'A button shown in a right rail module for approving draft that moves draft text to parent template and gets user to this parent template',
 	'templatedraft-preview-n-docs' => 'Used when generating documentation for a converted draft of a template',
+
+	'templatedraft-invalid-template' => 'Error message returned by an API method when an invalid or non-existent title was provided.',
 ];

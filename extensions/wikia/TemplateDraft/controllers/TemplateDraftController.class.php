@@ -60,6 +60,36 @@ class TemplateDraftController extends WikiaController {
 		return true;
 	}
 
+	/**
+	 * Get the converted infobox markup of a given template.
+	 *
+	 * @requestParam string template The name of the template to convert.
+	 */
+	public function getInfoboxMarkup() {
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+
+		$templateName = $this->request->getVal( 'template' );
+		$title = Title::newFromText( $templateName, NS_TEMPLATE );
+		if ( !$title instanceof Title
+			|| !$title->exists()
+			|| !$title->inNamespace( NS_TEMPLATE )
+		) {
+			$this->response->setVal( 'error', wfMessage( 'templatedraft-invalid-template' )->escaped() );
+			return;
+		}
+
+		$templateConverter = new TemplateConverter( $title );
+		$revision = Revision::newFromTitle( $title );
+		$content = $revision->getText();
+		$infoboxVariables = $templateConverter->getTemplateVariables( $content );
+		$infoboxContent = $templateConverter->convertAsInfobox( $content );
+
+		$this->response->setValues( [
+			'variables' => $infoboxVariables,
+			'content' => $infoboxContent,
+		] );
+	}
+
 	private function isValidPostRequest() {
 		$editToken = $this->getRequest()->getParams()['editToken'];
 		return $this->getRequest()->wasPosted()
