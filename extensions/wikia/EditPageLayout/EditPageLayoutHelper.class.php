@@ -173,9 +173,12 @@ class EditPageLayoutHelper {
 	static public function isCodePage( Title $articleTitle ) {
 		$namespace = $articleTitle->getNamespace();
 
-		if ( $articleTitle->isCssOrJsPage() || $articleTitle->getNamespace() === NS_MODULE ) {
+		if ( $articleTitle->isCssOrJsPage()
+			|| $articleTitle->isCssOrJsSubpage()
+			|| $articleTitle->getNamespace() === NS_MODULE ) {
 			return true;
-		} elseif ( class_exists( 'TemplateClassificationController' ) ) {
+		} elseif ( $articleTitle->getNamespace() === NS_TEMPLATE
+			&& class_exists( 'TemplateClassificationController' ) ) {
 			$tc = new TemplateClassificationController( $articleTitle );
 	
 			return $tc->isType( 'infobox' );
