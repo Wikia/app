@@ -14,7 +14,7 @@ class PortableInfoboxDataService {
 		$this->title = $title;
 	}
 
-	public static function newFromTitle( Title $title ) {
+	public static function newFromTitle( $title ) {
 		return new PortableInfoboxDataService( $title );
 	}
 
