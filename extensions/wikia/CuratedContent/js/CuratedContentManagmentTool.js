@@ -147,11 +147,7 @@ $(function () {
 
 				// validate orphans
 				$ul.find('.section ~ .item.error').removeError();
-
-				$ul.find('.item:not(.section ~ .item)').each(function () {
-					var $t = $(this);
-					$t.addError(orphanError);
-				});
+				$ul.find('.item:not(.section ~ .item)').addError(orphanError);
 
 				$ul.find('.section').each(function () {
 					var $t = $(this),
