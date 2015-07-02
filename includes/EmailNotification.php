@@ -472,6 +472,8 @@ class EmailNotification {
 			$controller = 'Email\Controller\WatchedPageUnprotected';
 		} elseif ( $this->isArticlePageDeleted() ) {
 			$controller = 'Email\Controller\WatchedPageDeleted';
+		} elseif ( $this->isArticlePageRestored() ) {
+			$controller = 'Email\Controller\WatchedPageRestored';
 		} elseif ( $this->isArticleComment() ) {
 			$controller = 'Email\Controller\ArticleComment';
 		} elseif ( $this->isBlogComment() ) {
@@ -564,6 +566,15 @@ class EmailNotification {
 	 */
 	private function isArticlePageDeleted() {
 		return in_array( $this->action, [ 'delete' ] );
+	}
+
+	/**
+	 * Check if the performed action is page restoration
+	 *
+	 * @return bool
+	 */
+	private function isArticlePageRestored() {
+		return $this->action == "restore";
 	}
 
 	/**
