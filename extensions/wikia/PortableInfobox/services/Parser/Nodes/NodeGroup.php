@@ -4,16 +4,18 @@ namespace Wikia\PortableInfobox\Parser\Nodes;
 class NodeGroup extends Node {
 	const LAYOUT_ATTR_NAME = 'layout';
 	const SHOW_ATTR_NAME = 'show';
-	const DEFAULT_OPTION = 'default';
+	const LAYOUT_DEFAULT_OPTION = 'default';
+	const LAYOUT_HORIZONTAL_OPTION = 'horizontal';
+	const SHOW_DEFAULT_OPTION = 'default';
 	const SHOW_INCOMPLETE_OPTION = 'incomplete';
 
 	private $supportedGroupLayouts = [
-		self::DEFAULT_OPTION,
-		'horizontal'
+		self::LAYOUT_DEFAULT_OPTION,
+		self::LAYOUT_HORIZONTAL_OPTION
 	];
 
 	private $supportedGroupDisplays = [
-		self::DEFAULT_OPTION,
+		self::SHOW_DEFAULT_OPTION,
 		self::SHOW_INCOMPLETE_OPTION
 	];
 
@@ -38,8 +40,10 @@ class NodeGroup extends Node {
 
 		return [
 			'type' => $this->getType(),
-			'data' => [ 'value' => $value,
-						'layout' => $this->getLayout() ],
+			'data' => [
+				'value' => $value,
+				'layout' => $this->getLayout()
+			],
 		];
 	}
 
@@ -66,13 +70,13 @@ class NodeGroup extends Node {
 		$show = $this->getXmlAttribute( $this->xmlNode, self::SHOW_ATTR_NAME );
 
 		return ( isset( $show ) && in_array( $show, $this->supportedGroupDisplays ) ) ? $show
-			: self::DEFAULT_OPTION;
+			: self::SHOW_DEFAULT_OPTION;
 	}
 
 	protected function getLayout() {
 		$layout = $this->getXmlAttribute( $this->xmlNode, self::LAYOUT_ATTR_NAME );
 
 		return ( isset( $layout ) && in_array( $layout, $this->supportedGroupLayouts ) ) ? $layout
-			: self::DEFAULT_OPTION;
+			: self::LAYOUT_DEFAULT_OPTION;
 	}
 }
