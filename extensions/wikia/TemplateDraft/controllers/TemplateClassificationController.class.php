@@ -27,14 +27,14 @@ class TemplateClassificationController extends WikiaController {
 	private function getClassificationProp( $type ) {
 		if ( array_search( $type, $this->templateTypes, true ) ) {
 			return self::TEMPLATE_CLASSIFICATION_DATA_PREFIX . $type;
-		} else {
-			// invalid type!
-			return false;
 		}
+		
+		// invalid type!
+		return false;
 	}
 
-	public function classifyTemplate( String $templateName, $type, bool $value, $actor = self::CLASSIFICATION_ACTOR_HUMAN ) {
-		$title = Title::newFromName( $titleName, NS_TITLE );
+	public function classifyTemplate ($templateName, $type, bool $value, $actor = self::CLASSIFICATION_ACTOR_HUMAN ) {
+		$title = Title::newFromName( $titleName, NS_TEMPLATE );
 
 		if ( is_null( $title ) ) {
 			return false;
