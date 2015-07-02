@@ -3,7 +3,6 @@
 namespace Email\Controller;
 
 use Email\EmailController;
-//use Email\Check;
 use Email\Tracking\TrackingCategories;
 
 class FacebookDisconnectController extends ForgotPasswordController {
@@ -14,18 +13,18 @@ class FacebookDisconnectController extends ForgotPasswordController {
 	}
 
 	/**
-	 * @template forgotPassword
+	 * @template temporaryPassword
 	 */
 	public function body() {
 		$this->response->setData( [
 			'salutation' => $this->getSalutation(),
 			'summary' => $this->getSummary(),
 			'passwordIntro' => $this->getIntro(),
-			'tempPassword' => $this->getMessage( 'emailext-fbdisconnect-username-password',
-					$this->targetUser->getName(),
-					$this->tempPass
-				)->parse(),
-			'unrequested' => $this->getMessage( 'emailext-fbdisconnect-unrequested' )->text(),
+			'username' => $this->getMessage( 'emailext-fbdisconnect-username',
+				$this->targetUser->getName() )->parse(),
+			'tempPassword' => $this->getMessage( 'emailext-fbdisconnect-password',
+				$this->tempPass )->parse(),
+			'instructions' => $this->getMessage( 'emailext-fbdisconnect-instructions' )->text(),
 			'questions' => $this->getMessage( 'emailext-password-questions' )->parse(),
 			'signature' => $this->getMessage( 'emailext-password-signature' )->text(),
 		] );
