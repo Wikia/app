@@ -68,7 +68,7 @@ class TemplateDraftHelper {
 	 * @return bool
 	 */
 	public function isMarkedAsInfobox( Title $title ) {
-		$tc = new TemplateClassification( $title );
+		$tc = new TemplateClassificationController( $title );
 		return $tc->isType( 'infobox' );
 	}
 
@@ -79,7 +79,7 @@ class TemplateDraftHelper {
 	 * @return bool
 	 */
 	public function isParentValid( Title $title ) {
-		return $title->userCan( 'templatedraft' ) && $this->isMarkedAsInfobox( $title );
+		return $title->userCan( 'templatedraft' );
 	}
 
 	/**

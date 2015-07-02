@@ -14,7 +14,7 @@ class TemplateDraftController extends WikiaController {
 
 		if ( TemplateClassificationController::TEMPLATE_INFOBOX & $flagsSum ) {
 			// while we're at it we can mark the base template as an infobox
-			$parentTitle = Title::newFromName( $title->getBaseText(), $title->getNamespace() );
+			$parentTitle = Title::newFromText( $title->getBaseText(), $title->getNamespace() );
 
 			$tc = new TemplateClassificationController( $parentTitle );
 			$tc->classifyTemplate( 'infobox', true );

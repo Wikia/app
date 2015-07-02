@@ -9,6 +9,7 @@ class TemplateDraftHooksHelper {
 	 */
 	public function addRailModuleList( Array &$railModuleList ) {
 		$title = $this->getGlobalTitle();
+
 		if ( $title->exists() && $title->getNamespace() === NS_TEMPLATE ) {
 			$helper = $this->getTemplateDraftHelper();
 			if ( $helper->isTitleDraft( $title ) ) {

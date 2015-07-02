@@ -2,6 +2,8 @@
 
 class TemplateClassificationController extends WikiaController {
 
+	var $title;
+
 	static $templateTypes = array(
 		'infobox',
 		'quote',
@@ -53,7 +55,7 @@ class TemplateClassificationController extends WikiaController {
 		return false;
 	}
 
-	public function classifyTemplate ( $type, bool $value, $actor = self::CLASSIFICATION_ACTOR_HUMAN ) {
+	public function classifyTemplate ( $type, $value, $actor = self::CLASSIFICATION_ACTOR_HUMAN ) {
 		$prop = self::getClassificationProp( $type );
 		if ( !$prop ) {
 			// unrecognized property, quit early
@@ -68,7 +70,7 @@ class TemplateClassificationController extends WikiaController {
 		}
 
 		$data = array(
-			'value' => $value,
+			'value' => (bool) $value,
 			'actor' => $actor,
 			'actor-id' => $this->wg->User->getId(),
 			'timestamp' => wfTimestamp(),
