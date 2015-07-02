@@ -2,14 +2,16 @@
 $messages = array();
 
 $messages['en'] = array(
-	'emailext-categoryadd-subject' => 'A page has been added to $1 on {{SITENAME}}!',
-	'emailext-categoryadd-details' => 'A page has been added to a category you’re following on {{SITENAME}}.',
+	'emailext-categoryadd-subject' => '$1 has been added to $2 on {{SITENAME}}!',
+	'emailext-categoryadd-details' => '[$1 $2] has been added to [$3 $4] on [{{SERVER}} {{SITENAME}}].',
+	'emailext-categoryadd-see-article' => 'See Article',
 	'emailext-categoryadd-see-all-pages' => 'See all pages in [$1 $2].',
 );
 
 $messages['qqq'] = array(
-	'emailext-categoryadd-subject' => 'Subject of email sent when a new category is added to a category page a user is watching. $1 -> category page name',
-	'emailext-categoryadd-details' => "Line informing the user a new page has been added to a category they're following",
+	'emailext-categoryadd-subject' => 'Subject of email sent when a new category is added to a category page a user is watching. $1 -> name of page added, $2 -> name of category the page was added to',
+	'emailext-categoryadd-details' => "Line informing the user a new page has been added to a category they're following.  $1 -> article URL, $2 -> article Title, $3 -> category URL, $4 category Title",
+	'emailext-categoryadd-see-article' => 'Text label for the button taking the user to the article that was added',
 	'emailext-categoryadd-see-all-pages' => 'Line which links to the category page the user is watching. Call to Action is to see all pages in that category. $1 -> category page name, $2 -> category page url',
 );
 

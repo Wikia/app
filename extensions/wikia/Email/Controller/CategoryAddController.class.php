@@ -63,27 +63,50 @@ class CategoryAddController extends EmailController {
 	}
 
 	/**
-	 * @template categoryAdd
+	 * @template avatarLayout
 	 */
 	public function body() {
 		$this->response->setData( [
 			'salutation' => $this->getSalutation(),
-			'summary' => $this->getDetails(),
-			'categoryPageName' => $this->categoryPage->getText(),
-			'pageAddedToCategoryName' => $this->pageAddedToCategory->getText(),
-			'pageAddedToCategoryUrl' => $this->pageAddedToCategory->getFullURL(),
+			'summary' => $this->getSummary(),
+			'editorProfilePage' => $this->getCurrentProfilePage(),
+			'editorUserName' => $this->getCurrentUserName(),
+			'editorAvatarURL' => $this->getCurrentAvatarURL(),
+			'detailsHeader' => $this->pageAddedToCategory->getText(),
+			'details' => $this->getDetails(),
+			'buttonLink' => $this->pageAddedToCategory->getFullURL(),
+			'buttonText' => $this->getMessage( 'emailext-categoryadd-see-article')->text(),
 			'contentFooterMessages' => [
 				$this->getContentFooterMessages()
-			]
+			],
+			'hasContentFooterMessages' => true,
 		] );
 	}
 
 	protected function getSubject() {
-		return $this->getMessage( 'emailext-categoryadd-subject', $this->categoryPage->getText() )->parse();
+		$pageName = $this->pageAddedToCategory->getText();
+		$categoryName = $this->categoryPage->getText();
+		return $this->getMessage( 'emailext-categoryadd-subject', $pageName, $categoryName )->text();
+	}
+
+	protected function getSummary() {
+		$pageName = $this->pageAddedToCategory->getText();
+		$pageUrl = $this->pageAddedToCategory->getFullURL();
+		$categoryName = $this->categoryPage->getText();
+		$categoryUrl = $this->categoryPage->getFullURL();
+		return $this->getMessage(
+			'emailext-categoryadd-details',
+			$pageUrl, $pageName,
+			$categoryUrl, $categoryName
+		)->parse();
 	}
 
 	protected function getDetails() {
-		return $this->getMessage( 'emailext-categoryadd-details' )->text();
+		$article = \Article::newFromTitle( $this->pageAddedToCategory, \RequestContext::getMain() );
+		$service = new \ArticleService( $article );
+		$snippet = $service->getTextSnippet();
+
+		return $snippet;
 	}
 
 	protected function getContentFooterMessages() {
@@ -119,7 +142,7 @@ class CategoryAddController extends EmailController {
 				[
 					'type' => 'text',
 					'name' => 'childArticleID',
-					'label' => "Page Added to Category ID",
+					'label' => "ID of the Page Added",
 					'tooltip' => 'The ID of the page added to the category'
 				],
 			]
