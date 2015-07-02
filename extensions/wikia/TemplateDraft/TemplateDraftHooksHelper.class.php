@@ -9,21 +9,17 @@ class TemplateDraftHooksHelper {
 	 */
 	public function addRailModuleList( Array &$railModuleList ) {
 		$title = $this->getGlobalTitle();
-		if ( $title->exists() && $title->getNamespace() === NS_TEMPLATE ) {
-			$helper = $this->getTemplateDraftHelper();
+		$helper = $this->getTemplateDraftHelper();
+		$parentTitle = $helper->getParentTitle( $title );
+		if ( $title->exists() && $title->getNamespace() === NS_TEMPLATE && $helper->isParentValid( $parentTitle ) ) {
 			if ( $helper->isTitleDraft( $title ) ) {
 				// $title is draft page
-				$parentTitle = $helper->getParentTitle( $title );
-				if (  $helper->isParentValid( $parentTitle )  ) {
-					/* Rail module for draft approval */
-					$this->addRailModule( $railModuleList, 'Approve' );
-				}
+				/* Rail module for draft approval */
+				$this->addRailModule( $railModuleList, 'Approve' );
 			} else {
 				// $title is parent page
-				if ( $helper->isParentValid( $title ) ) {
-					/* Rail module for draft creation */
-					$this->addRailModule( $railModuleList, 'Create' );
-				}
+				/* Rail module for draft creation */
+				$this->addRailModule( $railModuleList, 'Create' );
 			}
 		}
 	}

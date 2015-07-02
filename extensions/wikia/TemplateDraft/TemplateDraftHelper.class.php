@@ -83,7 +83,7 @@ class TemplateDraftHelper {
 
 	/**
 	 * Retrieves parent Title object from provided $title
-	 *
+	 * If $title is already a top parent page getParentTitle returns same title
 	 * @param Title $title
 	 * @return Title Parent Title
 	 * @throws MWException
