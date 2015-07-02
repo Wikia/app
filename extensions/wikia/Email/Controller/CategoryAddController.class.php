@@ -39,10 +39,6 @@ class CategoryAddController extends EmailController {
 		if ( !$this->categoryPage instanceof \Title ) {
 			throw new Check( "Invalid value passed for categoryPageId (param: childArticleId)" );
 		}
-
-		if ( !$this->categoryPage->exists() ) {
-			throw new Check( "Category Page doesn't exist." );
-		}
 	}
 
 	/**
@@ -72,7 +68,7 @@ class CategoryAddController extends EmailController {
 			'editorProfilePage' => $this->getCurrentProfilePage(),
 			'editorUserName' => $this->getCurrentUserName(),
 			'editorAvatarURL' => $this->getCurrentAvatarURL(),
-			'detailsHeader' => $this->pageAddedToCategory->getText(),
+			'detailsHeader' => $this->pageAddedToCategory->getPrefixedText(),
 			'details' => $this->getDetails(),
 			'buttonLink' => $this->pageAddedToCategory->getFullURL(),
 			'buttonText' => $this->getMessage( 'emailext-categoryadd-see-article')->text(),
@@ -84,13 +80,13 @@ class CategoryAddController extends EmailController {
 	}
 
 	protected function getSubject() {
-		$pageName = $this->pageAddedToCategory->getText();
+		$pageName = $this->pageAddedToCategory->getPrefixedText();
 		$categoryName = $this->categoryPage->getText();
 		return $this->getMessage( 'emailext-categoryadd-subject', $pageName, $categoryName )->text();
 	}
 
 	protected function getSummary() {
-		$pageName = $this->pageAddedToCategory->getText();
+		$pageName = $this->pageAddedToCategory->getPrefixedText();
 		$pageUrl = $this->pageAddedToCategory->getFullURL();
 		$categoryName = $this->categoryPage->getText();
 		$categoryUrl = $this->categoryPage->getFullURL();
