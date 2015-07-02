@@ -63,13 +63,13 @@ class NodeGroup extends Node {
 	}
 
 	protected function showIncomplete() {
-		return strcmp( $this->getDisplay(), self::SHOW_INCOMPLETE_OPTION ) === 0;
+		return strcasecmp( $this->getDisplay(), self::SHOW_INCOMPLETE_OPTION ) === 0;
 	}
 
 	protected function getDisplay() {
 		$show = $this->getXmlAttribute( $this->xmlNode, self::SHOW_ATTR_NAME );
 
-		return ( isset( $show ) && in_array( $show, $this->supportedGroupDisplays ) ) ? $show
+		return ( isset( $show ) && in_array( strtolower( $show ), $this->supportedGroupDisplays ) ) ? $show
 			: self::SHOW_DEFAULT_OPTION;
 	}
 
