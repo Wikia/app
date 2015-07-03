@@ -1,14 +1,15 @@
 <?php
 
 class NodeGroupTest extends WikiaBaseTest {
-	protected function setUp() {
-		$this->setupFile = dirname( __FILE__ ) . '/../../PortableInfobox.setup.php';
-		parent::setUp();
+	protected function groupUp() {
+		$this->groupupFile = dirname( __FILE__ ) . '/../../PortableInfobox.groupup.php';
+		parent::groupUp();
 	}
 
 	/**
-	 * @covers NodeGroup::getData
+	 * @covers       NodeGroup::getData
 	 * @dataProvider groupNodeTestProvider
+	 *
 	 * @param $markup
 	 * @param $params
 	 * @param $expected
@@ -63,6 +64,38 @@ class NodeGroupTest extends WikiaBaseTest {
 					],
 				'layout' => 'default'
 			  ] ],
+			[ '<group show="incomplete"><header>h</header><data source="1"/><data source="2"/></group>',
+			  [ '1' => 'one', '2' => 'two' ],
+			  [ 'value' => [
+				  [ 'type' => 'header', 'data' => [ 'value' => 'h' ], 'isEmpty' => false, 'source' => [ ] ],
+				  [ 'type' => 'data', 'data' => [ 'value' => 'one', 'label' => '' ], 'isEmpty' => false,
+					'source' => [ '1' ] ],
+				  [ 'type' => 'data', 'data' => [ 'value' => 'two', 'label' => '' ], 'isEmpty' => false,
+					'source' => [ '2' ] ],
+			  ],
+				'layout' => 'default'
+			  ] ],
+			[ '<group show="incomplete"><header>h</header><data source="1"/><data source="2"/></group>',
+			  [ '1' => 'one' ],
+			  [ 'value' => [
+				  [ 'type' => 'header', 'data' => [ 'value' => 'h' ], 'isEmpty' => false, 'source' => [ ] ],
+				  [ 'type' => 'data', 'data' => [ 'value' => 'one', 'label' => '' ], 'isEmpty' => false,
+					'source' => [ '1' ] ],
+				  [ 'type' => 'data', 'data' => [ 'value' => null, 'label' => '' ], 'isEmpty' => true,
+					'source' => [ '2' ] ]
+			  ],
+				'layout' => 'default'
+			  ] ],
+			[ '<group show="incomplete"><header>h</header><data source="1"/><data source="2"/></group>', [ ],
+			  [ 'value' => [
+				  [ 'type' => 'header', 'data' => [ 'value' => 'h' ], 'isEmpty' => false, 'source' => [ ] ],
+				  [ 'type' => 'data', 'data' => [ 'value' => null, 'label' => '' ], 'isEmpty' => true,
+					'source' => [ '1' ] ],
+				  [ 'type' => 'data', 'data' => [ 'value' => null, 'label' => '' ], 'isEmpty' => true,
+					'source' => [ '2' ] ],
+			  ],
+				'layout' => 'default'
+			  ] ]
 		];
 	}
 }

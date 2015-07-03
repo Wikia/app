@@ -2,12 +2,19 @@
 namespace Wikia\PortableInfobox\Parser\Nodes;
 
 class NodeGroup extends Node {
-	const DATA_LAYOUT_ATTR_NAME = 'layout';
-	const DEFAULT_TAG_NAME = 'default';
+	const LAYOUT_ATTR_NAME = 'layout';
+	const SHOW_ATTR_NAME = 'show';
+	const DEFAULT_OPTION = 'default';
+	const SHOW_INCOMPLETE_OPTION = 'incomplete';
 
 	private $supportedGroupLayouts = [
-		'default',
+		self::DEFAULT_OPTION,
 		'horizontal'
+	];
+
+	private $supportedGroupDisplays = [
+		self::DEFAULT_OPTION,
+		self::SHOW_INCOMPLETE_OPTION
 	];
 
 	public function getData() {
@@ -20,9 +27,18 @@ class NodeGroup extends Node {
 	}
 
 	public function getRenderData() {
+		$value = $this->showIncomplete() ?
+			array_map(
+				function ( Node $item ) {
+					return $item->getRenderData();
+				},
+				$this->getChildNodes()
+			)
+			: $this->getRenderDataForChildren();
+
 		return [
 			'type' => $this->getType(),
-			'data' => [ 'value' => $this->getRenderDataForChildren(),
+			'data' => [ 'value' => $value,
 						'layout' => $this->getLayout() ],
 		];
 	}
@@ -42,13 +58,21 @@ class NodeGroup extends Node {
 		return $this->getSourceForChildren();
 	}
 
-	/**
-	 * @return string
-	 */
+	protected function showIncomplete() {
+		return strcmp( $this->getDisplay(), self::SHOW_INCOMPLETE_OPTION ) === 0;
+	}
+
+	protected function getDisplay() {
+		$show = $this->getXmlAttribute( $this->xmlNode, self::SHOW_ATTR_NAME );
+
+		return ( isset( $show ) && in_array( $show, $this->supportedGroupDisplays ) ) ? $show
+			: self::DEFAULT_OPTION;
+	}
+
 	protected function getLayout() {
-		$layout = $this->getXmlAttribute( $this->xmlNode, self::DATA_LAYOUT_ATTR_NAME );
+		$layout = $this->getXmlAttribute( $this->xmlNode, self::LAYOUT_ATTR_NAME );
 
 		return ( isset( $layout ) && in_array( $layout, $this->supportedGroupLayouts ) ) ? $layout
-			: self::DEFAULT_TAG_NAME;
+			: self::DEFAULT_OPTION;
 	}
 }

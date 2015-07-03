@@ -8,7 +8,7 @@ use Wikia\PortableInfobox\Parser\SimpleParser;
 class Node {
 
 	const DATA_SRC_ATTR_NAME = 'source';
-	const DEFAULT_TAG_NAME = 'default';
+	const DEFAULT_OPTION = 'default';
 	const FORMAT_TAG_NAME = 'format';
 	const LABEL_TAG_NAME = 'label';
 	const EXTRACT_SOURCE_REGEX = '/{{{([^\|}]*?)\|?.*}}}/sU';
@@ -145,8 +145,8 @@ class Node {
 
 	protected function getValueWithDefault( \SimpleXMLElement $xmlNode ) {
 		$value = $this->extractDataFromSource( $xmlNode );
-		if ( !$value && $xmlNode->{self::DEFAULT_TAG_NAME} ) {
-			return $this->extractDataFromNode( $xmlNode->{self::DEFAULT_TAG_NAME} );
+		if ( !$value && $xmlNode->{self::DEFAULT_OPTION} ) {
+			return $this->extractDataFromNode( $xmlNode->{self::DEFAULT_OPTION} );
 		}
 		if ( $value && $xmlNode->{self::FORMAT_TAG_NAME} ) {
 			return $this->extractDataFromNode( $xmlNode->{self::FORMAT_TAG_NAME} );
@@ -157,8 +157,8 @@ class Node {
 
 	protected function getRawValueWithDefault( \SimpleXMLElement $xmlNode ) {
 		$value = $this->getRawInfoboxData( $this->getXmlAttribute( $xmlNode, self::DATA_SRC_ATTR_NAME ) );
-		if ( !$value && $xmlNode->{self::DEFAULT_TAG_NAME} ) {
-			$value = $this->getExternalParser()->replaceVariables( (string)$xmlNode->{self::DEFAULT_TAG_NAME} );
+		if ( !$value && $xmlNode->{self::DEFAULT_OPTION} ) {
+			$value = $this->getExternalParser()->replaceVariables( (string)$xmlNode->{self::DEFAULT_OPTION} );
 		}
 
 		return $value;
@@ -229,8 +229,8 @@ class Node {
 		if ( $xmlNode->{self::FORMAT_TAG_NAME} ) {
 			$source = $this->matchVariables( $xmlNode->{self::FORMAT_TAG_NAME}, $source );
 		}
-		if ( $xmlNode->{self::DEFAULT_TAG_NAME} ) {
-			$source = $this->matchVariables( $xmlNode->{self::DEFAULT_TAG_NAME}, $source );
+		if ( $xmlNode->{self::DEFAULT_OPTION} ) {
+			$source = $this->matchVariables( $xmlNode->{self::DEFAULT_OPTION}, $source );
 		}
 
 		return $source;
