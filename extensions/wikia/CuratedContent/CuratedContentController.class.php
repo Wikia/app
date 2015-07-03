@@ -502,7 +502,7 @@ class CuratedContentController extends WikiaController {
 	 *
 	 * @return bool
 	 */
-	static function onCuratedContentSave() {
+	static function onCuratedContentSave( $sections ) {
 		self::purgeMethod( 'getList' );
 		if ( class_exists( 'GameGuidesController' ) ) {
 			GameGuidesController::purgeMethod( 'getList' );
