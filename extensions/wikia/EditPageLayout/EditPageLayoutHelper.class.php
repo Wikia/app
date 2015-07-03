@@ -234,9 +234,7 @@ class EditPageLayoutHelper {
 	}
 
 	public static function isCodePageWithoutPreview( Title $title ) {
-		$namespace = $title->getNamespace();
-
-		return self::isCodePage( $title );
+		return self::isCodePage( $title ) && $title->getNamespace() !== NS_TEMPLATE;
 	}
 
 	/**
