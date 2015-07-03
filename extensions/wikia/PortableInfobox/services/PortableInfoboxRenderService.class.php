@@ -18,7 +18,7 @@ class PortableInfoboxRenderService extends WikiaService {
 		'comparison-set' => 'PortableInfoboxItemComparisonSet.mustache',
 		'comparison-set-header' => 'PortableInfoboxItemComparisonSetHeader.mustache',
 		'comparison-set-item' => 'PortableInfoboxItemComparisonSetItem.mustache',
-		'navigation' => 'PortableInfoboxItemNavigation.mustache'
+		'navigation' => 'PortableInfoboxItemNavigation.mustache',
 		'hero-mobile' => 'PortableInfoboxItemHeroMobile.mustache'
 	];
 	private $templateEngine;
