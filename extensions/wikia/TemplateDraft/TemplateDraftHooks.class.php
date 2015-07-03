@@ -3,9 +3,9 @@
 class TemplateDraftHooks {
 
 	public static function onSkinAfterBottomScripts( Skin $skin, &$text ) {
-		if ( $skin->getTitle()->userCan( 'templatedraft', $skin->getUser() )
-			&& $skin->getTitle()->getNamespace() === NS_TEMPLATE
-		) {
+		$title = $skin->getTitle();
+		$helper = new TemplateDraftHelper();
+		if ( $helper->allowedForTitle( $title ) ) {
 			$scripts = AssetsManager::getInstance()->getURL( 'template_draft' );
 
 			foreach ( $scripts as $script ) {
