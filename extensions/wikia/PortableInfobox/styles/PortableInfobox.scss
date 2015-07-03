@@ -82,8 +82,7 @@ $infobox-debug-error-msg-bg: black;
 	}
 
 	.item-type-key-val:not(:last-of-type),
-	.item-type-group,
-	.item-type-comparison {
+	.item-type-group {
 		border-bottom: 1px solid $infobox-section-header-background;
 	}
 
@@ -108,38 +107,6 @@ $infobox-debug-error-msg-bg: black;
 		ul,
 		ol {
 			list-style-position: inside;
-		}
-	}
-
-	.portable-infobox-comparison {
-		border-collapse: collapse;
-		width: 100%;
-	}
-
-	.portable-infobox-comparison-set {
-		display: block;
-	}
-
-	.portable-infobox-comparison-set-header {
-		box-sizing: border-box;
-		display: block;
-		padding: 0;
-		text-align: left;
-		width: 100%;
-	}
-
-	.portable-infobox-comparison-item {
-		box-sizing: border-box;
-		vertical-align: top;
-		width: $infobox-width / 2;
-
-		&:first-of-type {
-			border-right: 1px solid $infobox-section-header-background;
-		}
-
-		.item-type-key-val {
-			border-bottom: 0;
-			padding-right: $infobox-item-margin * 2;
 		}
 	}
 
