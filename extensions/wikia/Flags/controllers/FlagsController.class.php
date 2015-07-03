@@ -75,14 +75,29 @@ class FlagsController extends WikiaController {
 			return $parserOutput;
 		}
 
+		$pageText = $parserOutput->getText();
+		$flagsText = $flagsParserOutput->getText();
+
+		if ( $this->wg->ArticleAsJson ) {
+			$pageOutput = json_decode( $pageText, true );
+			$pageText = $pageOutput['content'];
+		}
+
 		/**
 		 * Update the mText of the original ParserOutput object and merge other properties
 		 */
-		if ( $mwf->match( $parserOutput->getText() ) ) {
-			$parserOutput->setText( $mwf->replace( $flagsParserOutput->getText(), $parserOutput->getText() ) );
+		if ( $mwf->match( $pageText ) ) {
+			$pageText = $mwf->replace( $flagsText, $pageText );
 		} else {
-			$parserOutput->setText( $flagsParserOutput->getText() . $parserOutput->getText() );
+			$pageText = $flagsText . $pageText;
 		}
+
+		if ( $this->wg->ArticleAsJson ) {
+			$pageOutput['content'] = $pageText;
+			$pageText = json_encode( $pageOutput );
+		}
+
+		$parserOutput->setText( $pageText );
 
 		$parserOutput->mergeExternalParserOutputVars( $flagsParserOutput );
 
