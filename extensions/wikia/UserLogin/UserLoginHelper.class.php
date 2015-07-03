@@ -75,13 +75,8 @@ class UserLoginHelper extends WikiaModel {
 	 * @return array $wikiUsers
 	 */
 	protected function getWikiUsers( $wikiId = null, $limit = 30 ) {
+		global $wgSpecialsDB;
 		wfProfileIn( __METHOD__ );
-
-		if ( !$this->wg->StatsDBEnabled ) {
-			// no stats DB, can't get list of users with avatars
-			wfProfileOut( __METHOD__ );
-			return array();
-		}
 
 		$wikiId = ( empty( $wikiId ) ) ? $this->wg->CityId : $wikiId;
 
@@ -90,7 +85,7 @@ class UserLoginHelper extends WikiaModel {
 		if ( !is_array( $wikiUsers ) ) {
 			$wikiUsers = array();
 
-			$db = wfGetDB( DB_SLAVE, array(), $this->wg->StatsDB );
+			$db = wfGetDB( DB_SLAVE, array(), $wgSpecialsDB );
 			$result = $db->select(
 				array( 'user_login_history' ),
 				array( 'distinct user_id' ),
@@ -110,11 +105,10 @@ class UserLoginHelper extends WikiaModel {
 				$this->addUserToUserList( $founder, $wikiUsers );
 			}
 
-			$this->wg->Memc->set( $memKey, $wikiUsers, 60 * 60 * 24 );
+			$this->wg->Memc->set( $memKey, $wikiUsers, WikiaResponse::CACHE_STANDARD );
 		}
 
 		wfProfileOut( __METHOD__ );
-
 		return $wikiUsers;
 	}
 
