@@ -52,6 +52,11 @@ class FlagsController extends WikiaController {
 	}
 
 	public function modifyParserOutputWithFlags( ParserOutput $parserOutput, $pageId, $currentFlags = [] ) {
+		// Don't output Flags in Mercury for now
+		if ( $this->wg->ArticleAsJson ) {
+			return $parserOutput;
+		}
+
 		$mwf = \MagicWord::get( 'flags' );
 
 		/**
@@ -78,11 +83,6 @@ class FlagsController extends WikiaController {
 		$pageText = $parserOutput->getText();
 		$flagsText = $flagsParserOutput->getText();
 
-		if ( $this->wg->ArticleAsJson ) {
-			$pageOutput = json_decode( $pageText, true );
-			$pageText = $pageOutput['content'];
-		}
-
 		/**
 		 * Update the mText of the original ParserOutput object and merge other properties
 		 */
@@ -90,11 +90,6 @@ class FlagsController extends WikiaController {
 			$pageText = $mwf->replace( $flagsText, $pageText );
 		} else {
 			$pageText = $flagsText . $pageText;
-		}
-
-		if ( $this->wg->ArticleAsJson ) {
-			$pageOutput['content'] = $pageText;
-			$pageText = json_encode( $pageOutput );
 		}
 
 		$parserOutput->setText( $pageText );
