@@ -68,7 +68,8 @@ class TemplateDraftHelper {
 	 * @return bool
 	 */
 	public function isMarkedAsInfobox( Title $title ) {
-		return Wikia::getProps( $title->getArticleID(), TemplateDraftController::TEMPLATE_INFOBOX_PROP ) !== '0';
+		$tc = new TemplateClassificationController( $title );
+		return $tc->isType( 'infobox' );
 	}
 
 	/**
@@ -78,7 +79,7 @@ class TemplateDraftHelper {
 	 * @return bool
 	 */
 	public function isParentValid( Title $title ) {
-		return $title->userCan( 'templatedraft' ) && $this->isMarkedAsInfobox( $title );
+		return $title->userCan( 'templatedraft' );
 	}
 
 	/**
