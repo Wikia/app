@@ -42,7 +42,11 @@ class UserRightsChangedController extends EmailController {
 
 
 	private function getButtonLink() {
-		return \SpecialPage::getTitleFor( 'Log' )->getFullURL( [ "type" => "rights", "page" => $this->targetUser->getName() ] );
+		$urlParams = [
+			"type" => "rights",
+			"page" => $this->targetUser->getName()
+		];
+		return \SpecialPage::getTitleFor( 'Log' )->getFullURL( $urlParams );
 	}
 
 	public static function getEmailSpecificFormFields() {
