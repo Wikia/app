@@ -110,7 +110,7 @@ class CreateNewWikiTask extends BaseTask {
 		}
 
 		$dbname = \WikiFactory::IDtoDB( $wgCityId );
-		$founder = $this->founder;
+		$founder = $this->founder->getId();
 		$cmd = sprintf( "perl /usr/wikia/backend/bin/scribe/events_local_users.pl --usedb={$dbname} --user={$founder} " );
 		$output = wfShellExec( $cmd, $exitStatus );
 		$this->info( 'run events_local_users.pl', ['exitStatus' => $exitStatus, 'output' => $output] );
