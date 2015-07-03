@@ -72,26 +72,32 @@ class TemplateDraftHooksHelperTest extends WikiaBaseTest {
 		$paramTitleExists,
 		$paramTitleNamespace,
 		$paramIsParentValid,
+		$mockTitleClass,
 		$allowedForTitleExpected
 	)
 	{
+
 		$mockFakeTitle = $this->getMockBuilder( 'Title' )
 			->disableOriginalConstructor()
 			->setMethods( [] )
 			->getMock();
 
-		$mockTitle = $this->getMockBuilder( 'Title' )
-			->disableOriginalConstructor()
-			->setMethods( [ 'exists', 'getNamespace' ] )
-			->getMock();
+		if ( $mockTitleClass === null ) {
+			$mockTitle = null;
+		} else {
+			$mockTitle = $this->getMockBuilder( $mockTitleClass )
+				->disableOriginalConstructor()
+				->setMethods( [ 'exists', 'getNamespace' ] )
+				->getMock();
 
-		$mockTitle->expects( $this->once() )
-			->method( 'exists' )
-			->will( $this->returnValue( $paramTitleExists ) );
+			$mockTitle->expects($this->any())
+				->method('exists')
+				->will($this->returnValue($paramTitleExists));
 
-		$mockTitle->expects( $this->any() )
-			->method( 'getNamespace' )
-			->will( $this->returnValue( $paramTitleNamespace ) );
+			$mockTitle->expects($this->any())
+				->method('getNamespace')
+				->will($this->returnValue($paramTitleNamespace));
+		}
 
 		/** @var TemplateDraftHelper $mockTemplateDraftHelper */
 		$mockTemplateDraftHelper = $this->getMockBuilder( 'TemplateDraftHelper' )
@@ -167,16 +173,19 @@ class TemplateDraftHooksHelperTest extends WikiaBaseTest {
 
 	/* Data providers */
 	public function allowedForTitleProvider() {
-
+		$mockTitleClass = 'Title';
+		$mockSomeClass= 'SomeClassNameGSDGY1234FF';
 		/*
 		 * Params order
-		 * [ $paramTitleExists, $paramTitleNamespace, $paramIsParentValid, $allowedForTitleExpected ]
+		 * [ $paramTitleExists, $paramTitleNamespace, $paramIsParentValid, $mockTitleClass, $allowedForTitleExpected ]
 		 */
 		return [
-			[ true, NS_TEMPLATE, true, true ],
-			[ false, NS_TEMPLATE, true, false ],
-			[ true, NS_MAIN, true, false ],
-			[ true, NS_TEMPLATE, false, false ],
+			[ true, NS_TEMPLATE, true, $mockTitleClass, true ],
+			[ false, NS_TEMPLATE, true, $mockTitleClass, false ],
+			[ true, NS_MAIN, true, $mockTitleClass, false ],
+			[ true, NS_TEMPLATE, false, $mockTitleClass, false ],
+			[ true, NS_TEMPLATE, false, null, false ],
+			[ true, NS_TEMPLATE, false, $mockSomeClass, false ],
 		];
 	}
 

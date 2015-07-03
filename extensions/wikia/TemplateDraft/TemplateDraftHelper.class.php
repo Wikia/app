@@ -84,12 +84,18 @@ class TemplateDraftHelper {
 	/**
 	 * Check if template draft operations are allowed for title.
 	 * Function is common for parent page and draft subpage
-	 * @param Title $title
+	 * @param Title|null $title
 	 * @return bool
 	 */
-	public function allowedForTitle( Title $title ) {
+	public function allowedForTitle( $title ) {
+		if ( !$title instanceof Title || !$title->exists() || $title->getNamespace() !== NS_TEMPLATE ) {
+			return false;
+		}
 		$parentTitle = $this->getParentTitle( $title );
-		return $title->exists() && $title->getNamespace() === NS_TEMPLATE && $this->isParentValid( $parentTitle );
+		if ( !$this->isParentValid( $parentTitle ) ) {
+			return false;
+		}
+		return true;
 	}
 
 	/**
