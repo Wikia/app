@@ -49,7 +49,6 @@ require(['wikia.window', 'jquery', 'wikia.nirvana', 'wikia.tracker', 'JSMessages
 							action: 'ajax',
 							rs: 'getLinkSuggest',
 							format: 'json'
-							//ns: categoryId
 						},
 						appendTo: form,
 						onSelect: function () {
@@ -102,7 +101,7 @@ require(['wikia.window', 'jquery', 'wikia.nirvana', 'wikia.tracker', 'JSMessages
 						var val = this.value,
 							$this = $(this);
 
-						// check if filed valuer is empty and it's required
+						// check if field value is empty and it's required
 						if (optionRequired && val === '') {
 							$this.addError(requiredError);
 							return true;
