@@ -34,19 +34,19 @@ class ImageHelper {
 		$info = [];
 
 		foreach ( self::$icons as $name ) {
-			$fileInfo = self::getFileInfo( $name );
+			$fileInfo = self::getFileInfo( $name . '.gif' );
 			$info[$name] = $fileInfo;
 		}
 
 		return $info;
 	}
 
-	protected static function getFileInfo( $name ) {
+	public static function getFileInfo( $name ) {
 		$info = \WikiaDataAccess::cache(
 			self::getFileKey( $name ),
 			self::ICON_CACHE_TTL,
 			function() use ( $name ) {
-				$file = \GlobalFile::newFromText( $name . '.gif', \Wikia::NEWSLETTER_WIKI_ID );
+				$file = \GlobalFile::newFromText( $name, \Wikia::NEWSLETTER_WIKI_ID );
 
 				return [
 					'name'   => $name,
