@@ -236,9 +236,7 @@ class EditPageLayoutHelper {
 	public static function isCodePageWithoutPreview( Title $title ) {
 		$namespace = $title->getNamespace();
 
-		// TODO: Change NS_TEMPLATE to infobox template only
-		// TODO: Will be done today (2/7/2015) after https://github.com/Wikia/app/pull/7660 merge
-		return self::isCodePage( $title ) && $namespace !== NS_TEMPLATE;
+		return self::isCodePage( $title );
 	}
 
 	/**
@@ -259,14 +257,16 @@ class EditPageLayoutHelper {
 
 		if ( $namespace === NS_MODULE ) {
 			$type = 'lua';
-		// TODO: Change NS_TEMPLATE to infobox template only
-		// TODO: Will be done today (2/7/2015) after https://github.com/Wikia/app/pull/7660 merge
-		} elseif ( $namespace === NS_TEMPLATE ) {
-			$type = 'xml';
 		} elseif ( $title->isCssPage() || $title->isCssSubpage() ) {
 			$type = 'css';
 		} elseif ( $title->isJsPage() || $title->isJsSubpage() ) {
 			$type = 'javascript';
+		} elseif ( $namespace === NS_TEMPLATE && class_exists( 'TemplateClassificationController' ) ) {
+			$tc = new TemplateClassificationController( $title );
+
+			if ( $tc->isType( 'infobox' ) ) {
+				$type = 'xml';
+			}
 		}
 
 		$this->addJsVariable( 'codePageType', $type );
