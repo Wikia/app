@@ -421,8 +421,12 @@ class MercuryApiController extends WikiaController {
 		try {
 			$data = WikiaDataAccess::cache( self::curatedContentDataMemcKey( $section ), WikiaResponse::CACHE_STANDARD,
 				function() use ( $section ) {
-					$rawData = $this->sendRequest( 'CuratedContent', 'getList',
-						empty( $section ) ? [] : [ 'section' => $section ])->getData();
+					$rawData = $this->sendRequest(
+						'CuratedContent',
+						'getList',
+						empty( $section ) ? [] : [ 'section' => $section ]
+					)->getData();
+
 					return $this->mercuryApi->processCuratedContent( $rawData );
 				}
 			);
