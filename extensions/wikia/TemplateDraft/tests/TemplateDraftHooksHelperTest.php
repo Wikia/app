@@ -203,7 +203,7 @@ class TemplateDraftHooksHelperTest extends WikiaBaseTest {
 		 */
 		return [
 			[ true, true, true ],
-			[ true, false, false ],
+			[ true, false, true ],
 			[ false, true, false ],
 			[ false, false, false ],
 		];

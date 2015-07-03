@@ -2,6 +2,8 @@
 
 class TemplateClassificationController extends WikiaController {
 
+	var $title;
+
 	static $templateTypes = array(
 		'infobox',
 		'quote',
@@ -24,6 +26,26 @@ class TemplateClassificationController extends WikiaController {
 	const CLASSIFICATION_ACTOR_AI = 0;
 	const CLASSIFICATION_ACTOR_HUMAN = 1;
 
+	public function __construct( Title $templateTitle ) {
+		$this->title = $templateTitle;
+	}
+
+	public function getType() {
+		return Wikia::getProps( $title->getArticleId(), self::TEMPLATE_CLASSIFICATION_MAIN_PROP );
+	}
+
+	/*
+	 * this function is preferred for making simple verifications
+	 */
+	public function isType( $type ) {
+		if ( !$this->getClassificationProp( $type ) ) {
+			// invalid type
+			return false;
+		}
+
+		return $this->getType() == $type;
+	}
+
 	private function getClassificationProp( $type ) {
 		if ( array_search( $type, $this->templateTypes, true ) ) {
 			return self::TEMPLATE_CLASSIFICATION_DATA_PREFIX . $type;
@@ -33,13 +55,7 @@ class TemplateClassificationController extends WikiaController {
 		return false;
 	}
 
-	public function classifyTemplate ($templateName, $type, bool $value, $actor = self::CLASSIFICATION_ACTOR_HUMAN ) {
-		$title = Title::newFromName( $titleName, NS_TEMPLATE );
-
-		if ( is_null( $title ) ) {
-			return false;
-		}
-
+	public function classifyTemplate( $type, $value, $actor = self::CLASSIFICATION_ACTOR_HUMAN ) {
 		$prop = self::getClassificationProp( $type );
 		if ( !$prop ) {
 			// unrecognized property, quit early
@@ -54,12 +70,12 @@ class TemplateClassificationController extends WikiaController {
 		}
 
 		$data = array(
-			'value' => $value,
+			'value' => (bool) $value,
 			'actor' => $actor,
 			'actor-id' => $this->wg->User->getId(),
 			'timestamp' => wfTimestamp(),
 		);
 
-		Wikia::setProp( $title->getArticleId(), array( $prop => json_encode( $data ) ) );
+		Wikia::setProps( $title->getArticleId(), array( $prop => json_encode( $data ) ) );
 	}
 }
