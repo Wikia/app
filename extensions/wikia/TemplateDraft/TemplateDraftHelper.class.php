@@ -83,8 +83,25 @@ class TemplateDraftHelper {
 	}
 
 	/**
+	 * Check if template draft operations are allowed for title.
+	 * Function is common for parent page and draft subpage
+	 * @param Title|null $title
+	 * @return bool
+	 */
+	public function allowedForTitle( $title ) {
+		if ( !$title instanceof Title || !$title->exists() || $title->getNamespace() !== NS_TEMPLATE ) {
+			return false;
+		}
+		$parentTitle = $this->getParentTitle( $title );
+		if ( !$this->isParentValid( $parentTitle ) ) {
+			return false;
+		}
+		return true;
+	}
+
+	/**
 	 * Retrieves parent Title object from provided $title
-	 *
+	 * If $title is already a top parent page getParentTitle returns same title
 	 * @param Title $title
 	 * @return Title Parent Title
 	 * @throws MWException

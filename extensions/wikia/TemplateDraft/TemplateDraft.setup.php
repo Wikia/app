@@ -43,10 +43,10 @@ $wgAutoloadClasses['TemplateClassificationController'] = __DIR__ . '/controllers
  * Hooks
  */
 $wgAutoloadClasses['TemplateDraftHooks'] = __DIR__ . '/TemplateDraftHooks.class.php';
-$wgHooks['SkinAfterBottomScripts'][] = 'TemplateDraftHooks::onSkinAfterBottomScripts';
-$wgHooks['GetRailModuleList'][] = 'TemplateDraftHooks::onGetRailModuleList';
 $wgHooks['EditFormPreloadText'][] = 'TemplateDraftHooks::onEditFormPreloadText';
 $wgHooks['EditPageLayoutShowIntro'][] = 'TemplateDraftHooks::onEditPageLayoutShowIntro';
+$wgHooks['GetRailModuleList'][] = 'TemplateDraftHooks::onGetRailModuleList';
+$wgHooks['SkinAfterBottomScripts'][] = 'TemplateDraftHooks::onSkinAfterBottomScripts';
 
 /**
  * Helpers
