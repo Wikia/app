@@ -17,7 +17,7 @@ class UserProfilePageRailHelper {
 		wfProfileIn(__METHOD__);
 
 		$pageOwner = UserProfilePageHelper::getUserFromTitle();
-		if( !$pageOwner->getOption('hidefollowedpages') && !$wg->Title->isSpecial('Following') && !$wg->Title->isSpecial('Contributions') ) {
+		if( !$pageOwner->getGlobalPreference('hidefollowedpages') && !$wg->Title->isSpecial('Following') && !$wg->Title->isSpecial('Contributions') ) {
 			$modules[1101] = array('FollowedPages', 'Index', array('showDeletedPages' => false));
 		}
 

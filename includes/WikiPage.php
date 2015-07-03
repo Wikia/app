@@ -3019,7 +3019,6 @@ class PoolWorkArticleView extends PoolCounterWork {
 		}
 
 		if ( $this->cacheable && $this->parserOutput->isCacheable() ) {
-			wfRunHooks( 'BeforeParserCacheSave', [ $this->parserOutput, $this->page ] );
 			ParserCache::singleton()->save( $this->parserOutput, $this->page, $this->parserOptions );
 		}
 

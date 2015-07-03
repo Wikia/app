@@ -174,7 +174,7 @@ class EditPageLayoutAjax {
 	static private function updatePreferences( $name, $value ) {
 		global $wgUser;
 		if ($wgUser->isLoggedIn()) {
-			$wgUser->setOption($name, $value);
+			$wgUser->setGlobalPreference($name, $value);
 			$wgUser->saveSettings();
 
 			// commit changes to local db

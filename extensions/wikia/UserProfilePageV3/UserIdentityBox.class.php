@@ -134,7 +134,7 @@ class UserIdentityBox {
 
 	protected function getInternationalizedRegistrationDate($wikiId, $data) {
 		wfProfileIn(__METHOD__);
-		$firstMastheadEditDate = $this->user->getOption(self::USER_FIRST_MASTHEAD_EDIT_DATE_PROPERTY . $wikiId);
+		$firstMastheadEditDate = $this->user->getGlobalFlag(self::USER_FIRST_MASTHEAD_EDIT_DATE_PROPERTY . $wikiId);
 
 		if (is_null($data['registration']) && !is_null($firstMastheadEditDate)) {
 			//if user hasn't edited anything on this wiki before
@@ -211,9 +211,9 @@ class UserIdentityBox {
 		if (empty($memcData)) {
 			foreach (array('location', 'occupation', 'gender', 'birthday', 'website', 'twitter', 'fbPage', 'hideEditsWikis') as $key) {
 				if (!in_array($key, array('gender', 'birthday'))) {
-					$data[$key] = $this->user->getOption($key);
+					$data[$key] = $this->user->getGlobalAttribute($key);
 				} else {
-					$data[$key] = $this->user->getOption(self::USER_PROPERTIES_PREFIX . $key);
+					$data[$key] = $this->user->getGlobalAttribute(self::USER_PROPERTIES_PREFIX . $key);
 				}
 			}
 		} else {
@@ -224,7 +224,7 @@ class UserIdentityBox {
 
 		//informations which aren't cached in UPPv3 (i.e. real name)
 		//fb#19398
-		$disabled = $this->user->getOption('disabled');
+		$disabled = $this->user->getGlobalFlag('disabled');
 		if (empty($disabled)) {
 			$data['realName'] = $this->user->getRealName();
 		} else {
@@ -262,7 +262,7 @@ class UserIdentityBox {
 	 * @return String
 	 */
 	private function hasUserEverEditedMasthead() {
-		return $has = $this->user->getOption(self::USER_EVER_EDITED_MASTHEAD, false);
+		return $has = $this->user->getGlobalFlag(self::USER_EVER_EDITED_MASTHEAD, false);
 	}
 
 	/**
@@ -270,7 +270,7 @@ class UserIdentityBox {
 	 * @return String
 	 */
 	protected function hasUserEditedMastheadBefore($wikiId) {
-		return $this->user->getOption(self::USER_EDITED_MASTHEAD_PROPERTY . $wikiId, false);
+		return $this->user->getGlobalFlag(self::USER_EDITED_MASTHEAD_PROPERTY . $wikiId, false);
 	}
 
 	/**
@@ -315,9 +315,9 @@ class UserIdentityBox {
 					}
 
 					if ($option === 'gender') {
-						$this->user->setOption(self::USER_PROPERTIES_PREFIX . $option, $data->$option);
+						$this->user->setGlobalAttribute(self::USER_PROPERTIES_PREFIX . $option, $data->$option);
 					} else {
-						$this->user->setOption($option, $data->$option);
+						$this->user->setGlobalAttribute($option, $data->$option);
 					}
 
 					$changed = true;
@@ -326,10 +326,10 @@ class UserIdentityBox {
 
 			if ( isset($data->month) && isset($data->day) ) {
 				if ( checkdate( intval( $data->month ), intval( $data->day ), 2000 ) ) {
-					$this->user->setOption( self::USER_PROPERTIES_PREFIX . 'birthday', intval( $data->month ) . '-' . intval( $data->day ) );
+					$this->user->setGlobalAttribute( self::USER_PROPERTIES_PREFIX . 'birthday', intval( $data->month ) . '-' . intval( $data->day ) );
 					$changed = true;
 				} elseif ( $data->month === '0' && $data->day === '0' ) {
-					$this->user->setOption( self::USER_PROPERTIES_PREFIX . 'birthday', null );
+					$this->user->setGlobalAttribute( self::USER_PROPERTIES_PREFIX . 'birthday', null );
 					$changed = true;
 				}
 			}
@@ -350,15 +350,15 @@ class UserIdentityBox {
 		}
 
 		if( !$this->hasUserEditedMastheadBefore($wgCityId) ) {
-			$this->user->setOption(self::USER_EDITED_MASTHEAD_PROPERTY . $wgCityId, true);
-			$this->user->setOption(self::USER_FIRST_MASTHEAD_EDIT_DATE_PROPERTY . $wgCityId, date('YmdHis'));
+			$this->user->setGlobalAttribute(self::USER_EDITED_MASTHEAD_PROPERTY . $wgCityId, true);
+			$this->user->setGlobalAttribute(self::USER_FIRST_MASTHEAD_EDIT_DATE_PROPERTY . $wgCityId, date('YmdHis'));
 
 			$this->addTopWiki($wgCityId);
 			$changed = true;
 		}
 
 		if (true === $changed) {
-			$this->user->setOption(self::USER_EVER_EDITED_MASTHEAD, true);
+			$this->user->setGlobalAttribute(self::USER_EVER_EDITED_MASTHEAD, true);
 
 			$this->user->saveSettings();
 			$this->saveMemcUserIdentityData($data);
@@ -567,7 +567,7 @@ class UserIdentityBox {
 			if ( $option === 'gender' || $option === 'birthday' ) {
 				$option = self::USER_PROPERTIES_PREFIX . $option;
 			}
-			$this->user->setOption( $option, null );
+			$this->user->setGlobalAttribute( $option, null );
 
 			$this->user->saveSettings();
 			$wgMemc->delete( $this->getMemcUserIdentityDataKey() );

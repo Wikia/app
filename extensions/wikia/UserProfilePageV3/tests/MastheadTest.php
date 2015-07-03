@@ -13,7 +13,7 @@ class MastheadTest extends WikiaBaseTest {
 	 */
 	function testGetPurgeUrl($avatarOption, $expectedUrl) {
 		$user = $this->mockClassWithMethods('User', [
-			'getOption' => $avatarOption
+			'getGlobalAttribute' => $avatarOption
 		]);
 
 		$masthead = Masthead::newFromUser($user);

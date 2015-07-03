@@ -52,7 +52,7 @@ class VisualEditorWikiaHooks {
 				. $wgIntMapConfig[ 'version' ];
 		}
 		// Note: even if set as integer, option value is retrieved as string
-		if ( $wgUser->getOption( 'showVisualEditorTransitionDialog' ) === '1' ) {
+		if ( $wgUser->getGlobalPreference( 'showVisualEditorTransitionDialog' ) === '1' ) {
 			$vars[ 'showVisualEditorTransitionDialog' ] = 1;
 		}
 		$vars[ 'VignettePathPrefix' ] = VignetteRequest::parsePathPrefix( $wgUploadPath );

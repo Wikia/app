@@ -28,6 +28,13 @@ class FlagsController extends WikiaController {
 		self::FLAGS_CONTROLLER_ACTION_UPDATE => 'requestUpdateFlagsForPage',
 	];
 
+	/**
+	 * Prevent modifying ParserOutput twice in the same request
+	 *
+	 * @see \Flags\Hooks::onBeforeParserCacheSave
+	 */
+	public static $parsed = false;
+
 	private
 		$helper,
 		$params;
@@ -124,7 +131,6 @@ class FlagsController extends WikiaController {
 			} else {
 				return null;
 			}
-
 		} catch ( Exception $exception ) {
 			$this->logResponseException( $exception, $response->getRequest() );
 		}
@@ -253,6 +259,8 @@ class FlagsController extends WikiaController {
 				$parserOutput = $wikiPage->getParserOutput( $parserOptions, null, false );
 
 				$parserOutput = $this->modifyParserOutputWithFlags( $parserOutput, $pageId, $currentFlags );
+
+				self::$parsed = true;
 
 				ParserCache::singleton()->save($parserOutput, $wikiPage, $parserOptions);
 

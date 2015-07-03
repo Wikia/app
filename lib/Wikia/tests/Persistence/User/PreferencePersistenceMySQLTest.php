@@ -31,9 +31,9 @@ class PreferencePersistenceMySQLTest extends \PHPUnit_Framework_TestCase {
 			->method( 'select' )
 			->with( 'user_properties', [ 'up_property', 'up_value' ], [ 'up_user' => $this->userId ], $this->anything() )
 			->willReturn( [
-				[ 'up_user' => $this->userId, 'up_property' => $this->testPreference->getName(), 'up_value' => $this->testPreference->getValue() ],
-				[ 'up_user' => $this->userId, 'up_property' => 'autopatrol', 'up_value' => '0' ],
-				[ 'up_user' => $this->userId, 'up_property' => 'date', 'up_value' => '1' ],
+				(object) [ 'up_user' => $this->userId, 'up_property' => $this->testPreference->getName(), 'up_value' => $this->testPreference->getValue() ],
+				(object) [ 'up_user' => $this->userId, 'up_property' => 'autopatrol', 'up_value' => '0' ],
+				(object) [ 'up_user' => $this->userId, 'up_property' => 'date', 'up_value' => '1' ],
 			] );
 
 		$persistence = new PreferencePersistenceMySQL( $this->mysqliMockMaster, $this->mysqliMockSlave );

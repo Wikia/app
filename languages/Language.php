@@ -1747,7 +1747,7 @@ class Language {
 		global $wgUser, $wgLocalTZoffset;
 
 		if ( $tz === false ) {
-			$tz = $wgUser->getOption( 'timecorrection' );
+			$tz = $wgUser->getGlobalPreference( 'timecorrection' );
 		}
 
 		$data = explode( '|', $tz, 3 );
@@ -1955,7 +1955,7 @@ class Language {
 		$options += array( 'timecorrection' => true, 'format' => true );
 		if ( $options['timecorrection'] !== false ) {
 			if ( $options['timecorrection'] === true ) {
-				$offset = $user->getOption( 'timecorrection' );
+				$offset = $user->getGlobalPreference( 'timecorrection' );
 			} else {
 				$offset = $options['timecorrection'];
 			}

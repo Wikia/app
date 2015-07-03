@@ -168,7 +168,7 @@ class FounderEmails {
 			}
 
 			// If we are in digest mode, grey out the individual email options
-			$disableEmailPrefs = $wgUser->getOption( "founderemails-complete-digest-$wgCityId" );
+			$disableEmailPrefs = $wgUser->getLocalPreference( 'founderemails-complete-digest', $wgCityId );
 
 			/*  This is the old preference, no longer used
 			 *  TODO: Write conversion script from old to new

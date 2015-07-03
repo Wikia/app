@@ -438,16 +438,16 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 			[
 				'input' => [
 					[
-						'type' => 'footer',
+						'type' => 'navigation',
 						'data' => [
-							'value' => 'Footer value',
+							'value' => 'navigation value',
 						]
 					]
 				],
 				'output' => '<aside class="portable-infobox">
-								<footer class="portable-infobox-footer portable-infobox-item-margins portable-infobox-header-background portable-infobox-header-font">Footer value</footer>
+								<nav class="portable-infobox-navigation portable-infobox-item-margins portable-infobox-secondary-background portable-infobox-secondary-font">navigation value</nav>
 							</aside>',
-				'description' => 'Footer only'
+				'description' => 'navigation only'
 			],
 			[
 				'input' => [
@@ -461,7 +461,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 				],
 				'output' => '<aside class="portable-infobox">
 								<div class="portable-infobox-item item-type-key-val portable-infobox-item-margins">
-									<h3 class="portable-infobox-item-label portable-infobox-header-font">test label</h3>
+									<h3 class="portable-infobox-item-label portable-infobox-secondary-font">test label</h3>
 									<div class="portable-infobox-item-value">test value</div>
 								</div>
 							</aside>',
@@ -502,7 +502,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 									</figure>
 								</div>
 								<div class="portable-infobox-item item-type-key-val portable-infobox-item-margins">
-									<h3 class="portable-infobox-item-label portable-infobox-header-font">test label</h3>
+									<h3 class="portable-infobox-item-label portable-infobox-secondary-font">test label</h3>
 									<div class="portable-infobox-item-value">test value</div>
 									</div>
 							</aside>',
@@ -529,7 +529,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 									<h2 class="portable-infobox-title">Test Title</h2>
 								</div>
 								<div class="portable-infobox-item item-type-key-val portable-infobox-item-margins">
-									<h3 class="portable-infobox-item-label portable-infobox-header-font">test label</h3>
+									<h3 class="portable-infobox-item-label portable-infobox-secondary-font">test label</h3>
 									<div class="portable-infobox-item-value">test value</div>
 								</div>
 							</aside>',
@@ -576,15 +576,15 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 									<h2 class="portable-infobox-title">Test Title</h2>
 								</div>
 								<section class="portable-infobox-item item-type-group">
-									<div class="portable-infobox-item item-type-header portable-infobox-item-margins portable-infobox-header-background">
-										<h2 class="portable-infobox-header portable-infobox-header-font">Test Header</h2>
+									<div class="portable-infobox-item item-type-header portable-infobox-item-margins portable-infobox-secondary-background">
+										<h2 class="portable-infobox-header portable-infobox-secondary-font">Test Header</h2>
 									</div>
 									<div class="portable-infobox-item item-type-key-val portable-infobox-item-margins">
-										<h3 class="portable-infobox-item-label portable-infobox-header-font">test label</h3>
+										<h3 class="portable-infobox-item-label portable-infobox-secondary-font">test label</h3>
 										<div class="portable-infobox-item-value">test value</div>
 									</div>
 									<div class="portable-infobox-item item-type-key-val portable-infobox-item-margins">
-										<h3 class="portable-infobox-item-label portable-infobox-header-font">test label</h3>
+										<h3 class="portable-infobox-item-label portable-infobox-secondary-font">test label</h3>
 										<div class="portable-infobox-item-value">test value</div>
 									</div>
 								</section>
@@ -617,11 +617,11 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 				],
 				'output' => '<aside class="portable-infobox">
 								<section class="portable-infobox-item item-type-group group-layout-horizontal">
-									<div class="portable-infobox-item item-type-header portable-infobox-item-margins portable-infobox-header-background">
-										<h2 class="portable-infobox-header portable-infobox-header-font">Test Header</h2>
+									<div class="portable-infobox-item item-type-header portable-infobox-item-margins portable-infobox-secondary-background">
+										<h2 class="portable-infobox-header portable-infobox-secondary-font">Test Header</h2>
 									</div>
 									<div class="portable-infobox-item item-type-key-val portable-infobox-item-margins">
-										<h3 class="portable-infobox-item-label portable-infobox-header-font">test label</h3>
+										<h3 class="portable-infobox-item-label portable-infobox-secondary-font">test label</h3>
 										<div class="portable-infobox-item-value">test value</div>
 									</div>
 								</section>
@@ -671,19 +671,19 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 										<tbody>
 											<tr class="portable-infobox-comparison-set">
 												<th class="portable-infobox-comparison-set-header">
-													<div class="portable-infobox-item item-type-header portable-infobox-item-margins portable-infobox-header-background">
-														<h2 class="portable-infobox-header portable-infobox-header-font">Test Header</h2>
+													<div class="portable-infobox-item item-type-header portable-infobox-item-margins portable-infobox-secondary-background">
+														<h2 class="portable-infobox-header portable-infobox-secondary-font">Test Header</h2>
 													</div>
 												</th>
 												<td class="portable-infobox-comparison-item">
 													<div class="portable-infobox-item item-type-key-val portable-infobox-item-margins">
-														<h3 class="portable-infobox-item-label portable-infobox-header-font">test label</h3>
+														<h3 class="portable-infobox-item-label portable-infobox-secondary-font">test label</h3>
 														<div class="portable-infobox-item-value">test value</div>
 													</div>
 												</td>
 												<td class="portable-infobox-comparison-item">
 													<div class="portable-infobox-item item-type-key-val portable-infobox-item-margins">
-														<h3 class="portable-infobox-item-label portable-infobox-header-font">test label</h3>
+														<h3 class="portable-infobox-item-label portable-infobox-secondary-font">test label</h3>
 														<div class="portable-infobox-item-value">test value</div>
 													</div>
 												</td>
@@ -697,18 +697,18 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 			[
 				'input' => [
 					[
-						'type' => 'footer',
+						'type' => 'navigation',
 						'data' => [
 							'value' => '<p>Links</p>'
 						]
 					]
 				],
 				'output' => '<aside class="portable-infobox">
-								<footer class="portable-infobox-footer portable-infobox-item-margins portable-infobox-header-background portable-infobox-header-font">
+								<nav class="portable-infobox-navigation portable-infobox-item-margins portable-infobox-secondary-background portable-infobox-secondary-font">
 									<p>Links</p>
-								</footer>
+								</nav>
 							</aside>',
-				'description' => 'Infobox with footer'
+				'description' => 'Infobox with navigation'
 			]
 		];
 	}

@@ -18,7 +18,6 @@ $wgExtensionCredits[ 'parserhook' ][] = [
 
 $wgAutoloadClasses[ 'PortableInfoboxRenderService' ] = $dir . 'services/PortableInfoboxRenderService.class.php';
 $wgAutoloadClasses[ 'PortableInfoboxErrorRenderService' ] = $dir . 'services/PortableInfoboxErrorRenderService.class.php';
-$wgAutoloadClasses[ 'PortableInfoboxDataService' ] = $dir . 'services/PortableInfoboxDataService.class.php';
 
 // parser
 $wgAutoloadClasses[ 'Wikia\\PortableInfobox\\Parser\\ExternalParser'] = $dir . 'services/Parser/ExternalParser.php';
@@ -30,7 +29,7 @@ $wgInfoboxParserNodes = [
 	'Node',
 	'NodeComparison',
 	'NodeSet',
-	'NodeFooter',
+	'NodeNavigation',
 	'NodeGroup',
 	'NodeHeader',
 	'NodeImage',

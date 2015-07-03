@@ -5,12 +5,13 @@ describe('Method ext.wikia.adEngine.provider.gpt.adDetect.onAdLoad', function ()
 	var noop = function () {},
 		returnObj = function () { return {}; };
 
-	function desktop(name, slotName, gptEvent, windowMock, successOrHop) {
+	function desktop(name, slotName, gptEvent, windowMock, successOrHop, forceAdType) {
 		it('calls ' + successOrHop + ' for ' + name + ' ' + slotName + ' on desktop', function () {
 			var gptHop, mocks = {
 				log: noop,
 				success: noop,
 				hop: noop,
+				iframe: {},
 				window: windowMock,
 				adContext: {
 					getContext: function () {
@@ -21,12 +22,19 @@ describe('Method ext.wikia.adEngine.provider.gpt.adDetect.onAdLoad', function ()
 				}
 			};
 
+			mocks.iframe.contentWindow = {
+				'AdEngine_adType': forceAdType,
+				document: {
+					querySelector: {}
+				}
+			};
+
 			gptHop = modules['ext.wikia.adEngine.provider.gpt.adDetect'](mocks.log, mocks.window, mocks.adContext);
 
 			spyOn(mocks, 'success');
 			spyOn(mocks, 'hop');
 
-			gptHop.onAdLoad(slotName, gptEvent, {}, mocks.success, mocks.hop);
+			gptHop.onAdLoad(slotName, gptEvent, mocks.iframe, mocks.success, mocks.hop);
 
 			if (successOrHop === 'success') {
 				expect(mocks.success.calls.count()).toBe(1, 'Success callback should be called once');
@@ -104,6 +112,8 @@ describe('Method ext.wikia.adEngine.provider.gpt.adDetect.onAdLoad', function ()
 
 	desktop('1x1 ad', 'SLOT_NAME', { isEmpty: false, size: [1, 1] }, {}, 'hop');
 	desktop('1x1 ad', 'INVISIBLE_SKIN', { isEmpty: false, size: [1, 1] }, {}, 'hop');
+
+	desktop('collapsed ad', 'INCONTENT_PLAYER', { isEmpty: false, size: [640, 400] }, {}, 'success', 'collapse');
 
 	// adDriver2ForcedStatus:
 	desktop('proper collapse slot ad', 'FORCED_SLOT_NAME', { isEmpty: false, size: [1, 1] }, {

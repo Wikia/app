@@ -390,7 +390,7 @@ class RenameUserProcess {
 			$olduser->invalidateCache();
 			$olduser = User::newFromName($oldTitle->getText(), false);
 
-			$renameData = $olduser->getOption( 'renameData', '' );
+			$renameData = $olduser->getGlobalAttribute( 'renameData', '' );
 
 			$this->addInternalLog("post-invalidate: titletext={$oldTitle->getText()} old={$olduser->getName()}:{$olduser->getId()}");
 
@@ -597,11 +597,11 @@ class RenameUserProcess {
 				$fakeUser->addToDatabase();
 			}
 
-			$fakeUser->setOption( 'renameData', self::RENAME_TAG . '=' . $this->mNewUsername . ';' . self::PROCESS_TAG . '=' . '1' );
-			$fakeUser->setOption( 'disabled', 1 );
+			$fakeUser->setGlobalAttribute( 'renameData', self::RENAME_TAG . '=' . $this->mNewUsername . ';' . self::PROCESS_TAG . '=' . '1' );
+			$fakeUser->setGlobalFlag( 'disabled', 1 );
 			$fakeUser->saveSettings();
 			$this->mFakeUserId = $fakeUser->getId();
-			$this->addLog("Created fake user account for {$fakeUser->getName()} with ID {$this->mFakeUserId} and renameData '{$fakeUser->getOption( 'renameData', '')}'");
+			$this->addLog("Created fake user account for {$fakeUser->getName()} with ID {$this->mFakeUserId} and renameData '{$fakeUser->getGlobalAttribute( 'renameData', '')}'");
 		} else {
 			$fakeUser = User::newFromId($this->mFakeUserId);
 			$this->addLog("Fake user account already exists: {$this->mFakeUserId}");
@@ -936,7 +936,7 @@ class RenameUserProcess {
 			$this->addLog("Cleaning up process data in user option renameData for ID {$this->mFakeUserId}");
 
 			$fakeUser = User::newFromId($this->mFakeUserId);
-			$fakeUser->setOption( 'renameData', self::RENAME_TAG . '=' . $this->mNewUsername);
+			$fakeUser->setGlobalAttribute( 'renameData', self::RENAME_TAG . '=' . $this->mNewUsername);
 			$fakeUser->saveSettings();
 			$fakeUser->saveToCache();
 		}
