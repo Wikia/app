@@ -174,7 +174,7 @@ class EditPageLayoutHelper {
 		$namespace = $articleTitle->getNamespace();
 
 		if ( $articleTitle->isCssOrJsPage()
-			|| $articleTitle->isCssOrJsSubpage()
+			|| $articleTitle->isCssJsSubpage()
 			|| $namespace === NS_MODULE 
 		) {
 			return true;

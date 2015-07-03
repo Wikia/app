@@ -31,7 +31,7 @@ class TemplateClassificationController extends WikiaController {
 	}
 
 	public function getType() {
-		return Wikia::getProps( $title->getArticleId(), self::TEMPLATE_CLASSIFICATION_MAIN_PROP );
+		return Wikia::getProps( $this->title->getArticleId(), self::TEMPLATE_CLASSIFICATION_MAIN_PROP );
 	}
 
 	/*
