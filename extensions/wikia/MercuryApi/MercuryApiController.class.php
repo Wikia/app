@@ -12,7 +12,6 @@ class MercuryApiController extends WikiaController {
 	const DEFAULT_PAGE = 1;
 
 	const WIKI_VARIABLES_CACHE_TTL = 60;
-	const CURATED_CONTENT_SECTION_CACHE = 86400;
 
 	private $mercuryApi = null;
 
@@ -420,7 +419,7 @@ class MercuryApiController extends WikiaController {
 
 	private function getCuratedContentData( $section = null ) {
 		try {
-			$data = WikiaDataAccess::cache( self::curatedContentDataMemcKey( $section ), self::CURATED_CONTENT_SECTION_CACHE,
+			$data = WikiaDataAccess::cache( self::curatedContentDataMemcKey( $section ), WikiaResponse::CACHE_STANDARD,
 				function() use ( $section ) {
 					$rawData = $this->sendRequest( 'CuratedContent', 'getList',
 						empty( $section ) ? [] : [ 'section' => $section ])->getData();
