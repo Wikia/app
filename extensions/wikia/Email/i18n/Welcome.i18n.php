@@ -3,7 +3,7 @@ $messages = [];
 
 $messages['en'] = array(
 	'emailext-welcome-subject' => "Welcome to Wikia, $1!",
-	'emailext-welcome-summary' => "Congrats, you’re a Wikian! You are now part of a universe created entirely for fans and authored by millions of other fans, just like you."
+	'emailext-welcome-summary' => "Congrats, you’re a Wikian! You are now part of a universe created entirely for fans and authored by millions of other fans, just like you.",
 	'emailext-welcome-summary-extended' => "So what’s next?",
 	'emailext-welcome-profile-header' => "Create your profile",
 	'emailext-welcome-profile-description' => "Here's your chance to build your identity on Wikia, connect with others, and discover more about what you love.",
