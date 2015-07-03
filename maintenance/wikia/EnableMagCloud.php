@@ -22,7 +22,7 @@ while($row = $dbr->fetchObject($res)) {
 
 	echo ".\n";
 
-	$config = unserialize($user->getOption('widgets'));
+	$config = unserialize($user->getGlobalPreference('widgets'));
 
 	if(!empty($config) && is_array($config)) {
 		if(empty($config[1]) && !is_array($config[1])) {
@@ -48,7 +48,7 @@ while($row = $dbr->fetchObject($res)) {
 			echo "error.3\n";
 		}
 		$config[1] = $out;
-		$user->setOption('widgets', serialize($config));
+		$user->setGlobalPreference('widgets', serialize($config));
 		$user->saveSettings();
 		$user->invalidateCache();
 		$dbw = wfGetDB(DB_MASTER);

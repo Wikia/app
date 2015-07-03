@@ -8,7 +8,7 @@ class FounderEmailsDaysPassedEvent extends FounderEmailsEvent {
 
 	public function enabled ( User $admin, $wikiId = null ) {
 		// disable if all Wikia email disabled
-		if ( $admin->getBoolOption( 'unsubscribed' ) ) {
+		if ( (bool)$admin->getGlobalPreference( 'unsubscribed' ) ) {
 			return false;
 		}
 
@@ -55,7 +55,7 @@ class FounderEmailsDaysPassedEvent extends FounderEmailsEvent {
 					self::addParamsUser( $wikiId, $user->getName(), $emailParams );
 					$emailParams['$USERPAGEEDITURL'] = $user->getUserPage()->getFullUrl( array( 'action' => 'edit' ) );
 
-					$langCode = $user->getOption( 'language' );
+					$langCode = $user->getGlobalPreference( 'language' );
 					// force loading messages for given languege, to make maintenance script works properly
 					$wgContLang = Language::factory( $langCode );
 
@@ -106,8 +106,8 @@ class FounderEmailsDaysPassedEvent extends FounderEmailsEvent {
 
 		// set FounderEmails notifications enabled by default for wiki founder
 //		$wikiFounder->setOption( 'founderemailsenabled', true );
-		$wikiFounder->setOption( "founderemails-joins-$wgCityId", true );
-		$wikiFounder->setOption( "founderemails-edits-$wgCityId", true );
+		$wikiFounder->setLocalPreference( "founderemails-joins", true, $wgCityId );
+		$wikiFounder->setLocalPreference( "founderemails-edits", true, $wgCityId );
 
 		$wikiFounder->saveSettings();
 

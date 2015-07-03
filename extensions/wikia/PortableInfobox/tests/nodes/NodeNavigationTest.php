@@ -1,13 +1,13 @@
 <?php
 
-class NodeFooterTest extends WikiaBaseTest {
+class NodeNavigationTest extends WikiaBaseTest {
 	protected function setUp() {
 		$this->setupFile = dirname( __FILE__ ) . '/../../PortableInfobox.setup.php';
 		parent::setUp();
 	}
 
 	/**
-	 * @covers       NodeFooter::getData
+	 * @covers       Nodenavigation::getData
 	 * @covers       Node::getInnerValue
 	 * @dataProvider dataProvider
 	 *
@@ -23,9 +23,9 @@ class NodeFooterTest extends WikiaBaseTest {
 
 	public function dataProvider() {
 		return [
-			[ '<footer></footer>', [ ], [ 'value' => '' ] ],
-			[ '<footer>kjdflkja dafkjlsdkfj</footer>', [ ], [ 'value' => 'kjdflkja dafkjlsdkfj' ] ],
-			[ '<footer>kjdflkja<ref>dafkjlsdkfj</ref></footer>', [ ], [ 'value' => 'kjdflkja<ref>dafkjlsdkfj</ref>' ] ],
+			[ '<navigation></navigation>', [ ], [ 'value' => '' ] ],
+			[ '<navigation>kjdflkja dafkjlsdkfj</navigation>', [ ], [ 'value' => 'kjdflkja dafkjlsdkfj' ] ],
+			[ '<navigation>kjdflkja<ref>dafkjlsdkfj</ref></navigation>', [ ], [ 'value' => 'kjdflkja<ref>dafkjlsdkfj</ref>' ] ],
 		];
 	}
 
@@ -34,7 +34,7 @@ class NodeFooterTest extends WikiaBaseTest {
 	 */
 	public function testIsEmpty( $string, $expectedOutput ) {
 		$xml = simplexml_load_string( $string );
-		$node = new Wikia\PortableInfobox\Parser\Nodes\NodeFooter( $xml, [ ] );
+		$node = new Wikia\PortableInfobox\Parser\Nodes\NodeNavigation( $xml, [ ] );
 		$data = $node->getData();
 		$this->assertTrue( $node->isEmpty( $data ) == $expectedOutput );
 	}
@@ -42,27 +42,27 @@ class NodeFooterTest extends WikiaBaseTest {
 	public function testIsEmptyDataProvider() {
 		return [
 			[
-				'string' => '<footer>goodnight</footer>',
+				'string' => '<navigation>goodnight</navigation>',
 				'expectedOutput' => false
 			],
 			[
-				'string' => '<footer>null</footer>',
+				'string' => '<navigation>null</navigation>',
 				'expectedOutput' => false
 			],
 			[
-				'string' => '<footer>0</footer>',
+				'string' => '<navigation>0</navigation>',
 				'expectedOutput' => false
 			],
 			[
-				'string' => '<footer>\'0\'</footer>',
+				'string' => '<navigation>\'0\'</navigation>',
 				'expectedOutput' => false
 			],
 			[
-				'string' => '<footer></footer>',
+				'string' => '<navigation></navigation>',
 				'expectedOutput' => true
 			],
 			[
-				'string' => '<footer>    </footer>',
+				'string' => '<navigation>    </navigation>',
 				'expectedOutput' => true
 			]
 		];

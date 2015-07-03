@@ -56,7 +56,7 @@ class GlobalNavigationController extends WikiaController {
 		$centralUrl = $this->helper->getCentralUrlFromGlobalTitle( $lang );
 		$globalSearchUrl = $this->helper->getGlobalSearchUrl( $centralUrl );
 		$localSearchUrl = SpecialPage::getTitleFor( 'Search' )->getFullUrl();
-		$fulltext = $wgUser->getOption( 'enableGoSearch' ) ? 0 : 'Search';
+		$fulltext = $wgUser->getGlobalPreference( 'enableGoSearch' ) ? 0 : 'Search';
 		$query = $wgRequest->getVal( 'search', $wgRequest->getVal( 'query', '' ) );
 		$localSearchPlaceholder = html_entity_decode(
 			wfMessage( 'global-navigation-local-search-placeholder', $wgSitename )->parse()

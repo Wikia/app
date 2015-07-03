@@ -128,7 +128,7 @@ class UserRenameTask extends BaseTask {
 		if ( !$renameIP ) {
 			//mark user as renamed
 			$renamedUser = \User::newFromName( $params['rename_new_name'] );
-			$renamedUser->setOption('wasRenamed', true);
+			$renamedUser->setGlobalFlag('wasRenamed', true);
 			$renamedUser->saveSettings();
 
 			if ( $params['notify_renamed'] ) {

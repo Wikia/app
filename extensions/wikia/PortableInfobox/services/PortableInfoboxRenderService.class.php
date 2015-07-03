@@ -14,7 +14,7 @@ class PortableInfoboxRenderService extends WikiaService {
 		'image-mobile' => 'PortableInfoboxItemImageMobile.mustache',
 		'data' => 'PortableInfoboxItemData.mustache',
 		'group' => 'PortableInfoboxItemGroup.mustache',
-		'footer' => 'PortableInfoboxItemFooter.mustache'
+		'navigation' => 'PortableInfoboxItemNavigation.mustache'
 	];
 	private $templateEngine;
 
@@ -41,8 +41,8 @@ class PortableInfoboxRenderService extends WikiaService {
 				case 'group':
 					$infoboxHtmlContent .= $this->renderGroup( $data );
 					break;
-				case 'footer':
-					$infoboxHtmlContent .= $this->renderItem( 'footer', $data );
+				case 'navigation':
+					$infoboxHtmlContent .= $this->renderItem( 'navigation', $data );
 					break;
 				default:
 					if ( $this->validateType( $type ) ) {

@@ -97,7 +97,7 @@ class User {
 					
 					// dont return the user object if it's disabled
 					// @see SERVICES-459
-					if ( $user->getBoolOption( 'disabled' ) ) {
+					if ( (bool)$user->getGlobalFlag( 'disabled' ) ) {
 						self::clearAccessTokenCookie();
 						return null;
 					}

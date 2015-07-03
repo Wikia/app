@@ -149,15 +149,15 @@ class SpecialSemanticWatchlist extends SpecialPage {
 	 * @param User $user
 	 */
 	protected function registerUserView( User $user ) {
-		$this->lastViewed = $user->getOption( 'swl_last_view' );
-		
+		$this->lastViewed = $user->getGlobalAttribute( 'swl_last_view' );
+
 		if ( is_null( $this->lastViewed ) ) {
 			$this->lastViewed = wfTimestampNow();
 		}
-		
-		$user->setOption( 'swl_last_view', wfTimestampNow() );
-		$user->setOption( 'swl_mail_count',0 );
-		$user->saveSettings();		
+
+		$user->setGlobalAttribute( 'swl_last_view', wfTimestampNow() );
+		$user->setGlobalAttribute( 'swl_mail_count',0 );
+		$user->saveSettings();
 	}
 	
 	/**

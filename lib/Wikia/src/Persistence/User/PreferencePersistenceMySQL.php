@@ -2,6 +2,7 @@
 
 namespace Wikia\Persistence\User;
 
+use Iterator;
 use Wikia\Domain\User\Preference;
 
 class PreferencePersistenceMySQL implements PreferencePersistence {
@@ -62,25 +63,20 @@ class PreferencePersistenceMySQL implements PreferencePersistence {
 			__METHOD__
 		);
 
-		$preferences = [ ];
-		if ( is_array( $result ) && !empty( $result ) ) {
-			$preferences = $this->userPropertiesResultToPreferenceArray( $result );
-		}
-
-		return $preferences;
+		return $this->userPropertiesResultToPreferenceArray( $result );
 	}
 
 	/**
 	 * Convert a user_properties row into a Preference object.
 	 *
-	 * @param array of ['up_user', 'up_property', 'up_value'] tuples
+	 * @param Iterator|array $result
 	 * @return Preference[]
 	 */
-	public function userPropertiesResultToPreferenceArray( array $result ) {
-		$preferences = [ ];
+	public function userPropertiesResultToPreferenceArray( $result ) {
+		$preferences = [];
 		foreach ( $result as $index => $row ) {
-			if ( isset( $row[ "up_property" ] ) && isset( $row[ "up_value" ] ) ) {
-				$preferences[ ] = new Preference( $row[ "up_property" ], $row[ "up_value" ] );
+			if ( isset( $row->up_property ) && isset( $row->up_value ) ) {
+				$preferences[] = new Preference( $row->up_property, $row->up_value );
 			}
 		}
 

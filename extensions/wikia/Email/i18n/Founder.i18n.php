@@ -29,18 +29,18 @@ $messages['qqq'] = array(
 	'emailext-founder-subject' => 'Subject of the email sent to founders on an edit to their wiki.  $1 -> page title, $2 -> author',
 	'emailext-founder-anon-subject' => 'Subject of the email sent to founder on an anonymous edit to their wiki.  $1 -> page title',
 	'emailext-founder-summary' => 'Summary text in the body of the email.  $1 -> page URL, $2 -> page title',
-	'emailext-founder-active-summary' => "Summary text in the body of the email when there is increased edit activity on the wiki",
+	'emailext-founder-active-summary' => 'Summary text in the body of the email when there is increased edit activity on the wiki',
 	'emailext-founder-body' => 'Body text of the email.  $1 -> author profile page URL, $2 -> author name',
 	'emailext-founder-link-label' => 'Button label linking to diff page of changes to the article changed',
 	'emailext-founder-active-link-label' => 'Button label linking to the wiki activity page',
-	'emailext-founder-footer-article' => "Footer text with link inviting user to see changes since last edit.  $1 -> diff URL, $2 -> page title",
+	'emailext-founder-footer-article' => 'Footer text with link inviting user to see changes since last edit.  $1 -> diff URL, $2 -> page title',
 	'emailext-founder-footer-all-changes' => 'Foot text with link inviting user to see all changes on the page.  $1 -> history page URL, $2 -> page title',
 	'emailext-founder-encourage' => 'Encouragement text for the founder to support the user who just edited.  $1 -> author profile URL, $2-> author name',
 	'emailext-founder-anon-encourage' => 'Text explaining what an anonymous edit is',
 	'emailext-founder-multi-encourage' => 'Text letting the founder know a contributor has made multiple edits.  $1 -> author profile URL, $2 -> author name',
 	'emailext-founder-new-update' => 'Text shown next to a wiki change related to a new page.  $1 -> new page URL, $2 -> new page title',
 	'emailext-founder-edit-update' => 'Text shown next to a wiki change related to an edited page.  $1 -> new page URL, $2 -> new page title',
-	'emailext-founder-active-footer-1' => "Instructional text shown to a wiki founder who has gotten a lot of recent edit activity",
+	'emailext-founder-active-footer-1' => 'Instructional text shown to a wiki founder who has gotten a lot of recent edit activity',
 	'emailext-founder-active-footer-2' => 'Encouragement text shown to a wiki founder who has gotten a lot of recent edit activity',
 	'emailext-founder-new-member-subject' => 'Subject of the email send to founders when a user registers on their wiki. $1 -> new username',
 	'emailext-founder-new-member-details' => 'Text encouraging the founder to reach out to the new member and encourage them to get involved on the wiki. $1 -> new username',
@@ -61,6 +61,13 @@ $messages['de'] = array(
 	'emailext-founder-new-member-subject' => '$1 ist eben {{SITENAME}} beigetreten. Herzlichen Glückwunsch!',
 	'emailext-founder-new-member-details' => 'Nimm dir ein paar Minuten Zeit, um $1 zu begrüßen und zur Mitarbeit zu motivieren. Je mehr Leute Beiträge leisten, desto schneller wird dein Wikia wachsen!',
 	'emailext-founder-new-member-link-label' => 'Sende eine Nachricht',
+	'emailext-founder-active-subject' => 'Auf {{SITENAME}} geht es heiß her!',
+	'emailext-founder-active-summary' => 'Glückwunsch! Auf {{SITENAME}} ist heute einiges los! Hier kannst du ein paar der der neuesten Updates lesen:',
+	'emailext-founder-active-link-label' => 'Alle neuen Aktivitäten',
+	'emailext-founder-new-update' => '[$1 $2] wurde erstellt',
+	'emailext-founder-edit-update' => '[$1 $2] wurde aktualisiert',
+	'emailext-founder-active-footer-1' => 'Wenn du es nichts sowieso schon getan hast, kannst du dir jetzt die fantastische Arbeit, die auf der Aktivitätenseite deiner Community geleistet wurde, ansehen. Da dort so viel los ist, möchtest du vielleicht auch in den Benutzereinstellungen angeben, wie häufig wir dir E-Mails mit Updates zuschicken sollen. Wenn du den Übersichts-Modus auswählst, erhältst du eine E-Mail, in der alle Aktivitäten eines Tages auf deinem Wikia zusammengefasst sind.',
+	'emailext-founder-active-footer-2' => 'Gut gemacht! Danke, dass du deine Fan-Community so aktiv hältst!',
 );
 
 $messages['es'] = array(
@@ -77,6 +84,13 @@ $messages['es'] = array(
 	'emailext-founder-new-member-subject' => '$1 acaba de unirse a {{SITENAME}}. ¡ Felicidades!',
 	'emailext-founder-new-member-details' => 'Dedica unos minutos a dar la bienvenida a $1 y a animarlo para que se involucre. ¡Mientras más mejor, y así tu wikia crecerá más rápido!',
 	'emailext-founder-new-member-link-label' => 'Envía un mensaje',
+	'emailext-founder-active-subject' => '¡{{SITENAME}} está entrando en calor!',
+	'emailext-founder-active-summary' => '¡Felicitaciones, hay mucha actividad en {{SITENAME}} el día de hoy! Aquí están algunas actualizaciones recientes:',
+	'emailext-founder-active-link-label' => 'Toda la actividad reciente',
+	'emailext-founder-new-update' => 'Se ha creado [$1 $2]',
+	'emailext-founder-edit-update' => 'Se ha actualizado [$1 $2]',
+	'emailext-founder-active-footer-1' => 'Si todavía no lo has hecho, puedes ver todo el gran trabajo que está ocurriendo en la página de actividades de tu comunidad. Como son demasiadas cosas, toma en cuenta que puedes cambiar tus preferencias de correo electrónico a modo de resumen. En este modo recibirás un mensaje de correo electrónico que incluye toda la actividad de tu wikia cada día.',
+	'emailext-founder-active-footer-2' => '¡Qué buena manera de crear una comunidad de fans tan activa!',
 );
 
 $messages['fr'] = array(
@@ -93,6 +107,13 @@ $messages['fr'] = array(
 	'emailext-founder-new-member-subject' => '$1 vient tout juste de rejoindre {{SITENAME}}. Félicitations !',
 	'emailext-founder-new-member-details' => "Prenez quelques minutes pour souhaiter la bienvenue à $1 et l'encourager à contribuer. Au plus votre wikia est populaire, au plus vite il se développera !",
 	'emailext-founder-new-member-link-label' => 'Envoyer un message',
+	'emailext-founder-active-subject' => "{{SITENAME}} prend de l'ampleur !",
+	'emailext-founder-active-summary' => "Félicitations ! Il se passe beaucoup de choses sur {{SITENAME}} aujourd'hui ! Voici quelques mises à jour récentes :",
+	'emailext-founder-active-link-label' => 'Activité récente',
+	'emailext-founder-new-update' => 'Page [$1 $2] créée',
+	'emailext-founder-edit-update' => 'Page [$1 $2] modifiée',
+	'emailext-founder-active-footer-1' => "Si ce n'est pas déjà fait, allez à la page d'activité de votre communauté pour voir l'excellent travail qui a été effectué. Comme il se passe beaucoup de choses, n'oubliez pas que vous pouvez choisir de recevoir un e-mail de résumé de l'activité qui a lieu sur votre wikia chaque jour en sélectionnant l'option appropriée dans vos préférences d'e-mail.",
+	'emailext-founder-active-footer-2' => "Nous vous félicitons d'avoir créé une communauté de fans aussi active !",
 );
 
 $messages['it'] = array(
@@ -109,6 +130,13 @@ $messages['it'] = array(
 	'emailext-founder-new-member-subject' => '$1 si è appena iscritto a {{SITENAME}}. Complimenti!',
 	'emailext-founder-new-member-details' => 'Prenditi qualche minuto per dare il benvenuto a $1 e incoraggiarlo a partecipare. Più partecipanti ci sono e meglio è: la tua wikia crescerà più velocemente!',
 	'emailext-founder-new-member-link-label' => 'Invia un messaggio',
+	'emailext-founder-active-subject' => '{{SITENAME}} si sta animando!',
+	'emailext-founder-active-summary' => "Congratulazioni! C'è parecchia attività oggi su {{SITENAME}}! Ecco alcuni aggiornamenti:",
+	'emailext-founder-active-link-label' => "Tutta l'attività recente",
+	'emailext-founder-new-update' => 'Creata [$1 $2]',
+	'emailext-founder-edit-update' => 'Aggiornata [$1 $2]',
+	'emailext-founder-active-footer-1' => "Se non l'hai ancora fatto, puoi vedere tutti i nuovi contributi sulla pagina delle attività della tua community. Dal momento che c'è molto da leggere, tieni presente che puoi selezionare la modalità riassunto nelle tue preferenze di Email. In modalità riassunto, riceverai un'email che contiene una lista di tutte le attività giornaliere sulla tua wikia.",
+	'emailext-founder-active-footer-2' => 'Ben fatto! La tua community di fan è molto attiva!',
 );
 
 $messages['ja'] = array(
@@ -125,6 +153,13 @@ $messages['ja'] = array(
 	'emailext-founder-new-member-subject' => '$1さんが{{SITENAME}}に登録しました。',
 	'emailext-founder-new-member-details' => '$1さんに歓迎の気持ちを伝えて、編集に参加してもらえるよう働きかけましょう。編集メンバーが増えれば、ウィキアの発展にもつながります。',
 	'emailext-founder-new-member-link-label' => 'メッセージを送る',
+	'emailext-founder-active-subject' => '{{SITENAME}}にたくさんの編集が追加されているようです',
+	'emailext-founder-active-summary' => '本日、{{SITENAME}}にたくさんのアクティビティが発生しています。最近の更新をご覧ください。',
+	'emailext-founder-active-link-label' => 'すべての最近のアクティビティ',
+	'emailext-founder-new-update' => '[$1 $2]が作成されました',
+	'emailext-founder-edit-update' => '[$1 $2]が更新されました',
+	'emailext-founder-active-footer-1' => 'コミュニティのアクティビティ・ページでは、あなたのウィキアにおけるすべてのアクティビティをご確認いただけます。このように非常にたくさんのアクティビティが発生している場合は、メール設定をダイジェストモードに切り替えることもできます。ダイジェストモードにすると、ウィキアにおけるすべてのアクティビティを一覧にしたメールが1日1回届きます。',
+	'emailext-founder-active-footer-2' => 'その調子で、ますます活動的で楽しいコミュニティとなるよう応援しています！',
 );
 
 $messages['nl'] = array(
@@ -141,6 +176,13 @@ $messages['nl'] = array(
 	'emailext-founder-new-member-subject' => '$1 just joined {{SITENAME}}. Congrats!',
 	'emailext-founder-new-member-details' => 'Take a few minutes to welcome $1 and encourage them to get involved. The more the merrier, and the faster your wikia will grow!',
 	'emailext-founder-new-member-link-label' => 'Send a message',
+	'emailext-founder-active-subject' => '{{SITENAME}} is heating up!',
+	'emailext-founder-active-summary' => "Congratulations, there's a lot going on at {{SITENAME}} today! Here are some recent updates:",
+	'emailext-founder-active-link-label' => 'All Recent Activity',
+	'emailext-founder-new-update' => 'Created [$1 $2]',
+	'emailext-founder-edit-update' => 'Updated [$1 $2]',
+	'emailext-founder-active-footer-1' => "If you haven't already, you can see all of the great work that's been happening on your community’s activity page. Since there's so much going on, keep in mind you can change your email preferences to digest mode. With digest mode, you'll receive one email that lists all of the activity on your wikia each day.",
+	'emailext-founder-active-footer-2' => 'Way to go on creating such an active fan community!',
 );
 
 $messages['pl'] = array(
@@ -157,6 +199,13 @@ $messages['pl'] = array(
 	'emailext-founder-new-member-subject' => 'Użytkownik $1 właśnie dołączył do {{SITENAME}}. Gratulacje!',
 	'emailext-founder-new-member-details' => 'Poświęć kilka minut, aby przywitać użytkownika $1 i zachęcić do angażowania się. Im więcej nas tym lepiej i tym szybciej będzie się rozwijała twoja wikia!',
 	'emailext-founder-new-member-link-label' => 'Wyślij wiadomość',
+	'emailext-founder-active-subject' => 'Na {{SITENAME}} robi się gorąco!',
+	'emailext-founder-active-summary' => 'Gratulacje! Dużo się dzisiaj dzieje na {{SITENAME}}! Oto kilka ostatnich zmian:',
+	'emailext-founder-active-link-label' => 'Zobacz Pełną Aktywność',
+	'emailext-founder-new-update' => 'Utworzono [$1 $2]',
+	'emailext-founder-edit-update' => 'Uaktualniono [$1 $2]',
+	'emailext-founder-active-footer-1' => 'Jęsli nie robiłeś tego do tej pory, możesz zobaczyć podsumowanie zmian na stronie aktywności twojej społeczności. Jako że tyle się dzieje pamiętaj, że możesz zmienić preferencje wiadomości e-mail na tryb skrócony. W trybie skróconym otrzymasz codziennie jedną wiadomość e-mail podsumowującą aktywność na Twojej stronie wikia.',
+	'emailext-founder-active-footer-2' => 'Gratulujemy stworzenia tak aktywnej społeczności fanów!',
 );
 
 $messages['pt'] = array(
@@ -173,6 +222,13 @@ $messages['pt'] = array(
 	'emailext-founder-new-member-subject' => '$1 acabou de juntar-se a {{SITENAME}}. Parabéns!',
 	'emailext-founder-new-member-details' => 'Dê as boas-vindas a $1 e o incentive a se envolver. Quanto mais, melhor, e mais rápido sua wikia vai crescer!',
 	'emailext-founder-new-member-link-label' => 'Enviar uma mensagem',
+	'emailext-founder-active-subject' => '{{SITENAME}} está bombando!',
+	'emailext-founder-active-summary' => 'Parabéns, há muita coisa acontecendo na {{SITENAME}} hoje! Aqui estão algumas atualizações recentes:',
+	'emailext-founder-active-link-label' => 'Toda a atividade recente',
+	'emailext-founder-new-update' => 'Criada [$1 $2]',
+	'emailext-founder-edit-update' => 'Atualizada [$1 $2]',
+	'emailext-founder-active-footer-1' => 'Se você ainda não o fez, você pode ver todo o bom trabalho que tem acontecido na página de atividade da sua comunidade. Porque há tanta coisa acontecendo, tenha em mente que você pode alterar suas preferências de e-mail para o modo digest. Com o modo digest, você receberá um e-mail que lista toda a atividade na sua wikia todos os dias.',
+	'emailext-founder-active-footer-2' => 'Parabéns por criar uma comunidade de fãs tão ativa!',
 );
 
 $messages['ru'] = array(
@@ -189,6 +245,13 @@ $messages['ru'] = array(
 	'emailext-founder-new-member-subject' => '$1 только что присоединился(ась) к {{SITENAME}}. Поздравляем!',
 	'emailext-founder-new-member-details' => 'Уделите немного времени, чтобы поприветствовать участника $1 и пригласить его внести свой вклад в развитие вашей вики. Чем больше людей — тем быстрее будет расти ваша вики!',
 	'emailext-founder-new-member-link-label' => 'Отправить сообщение',
+	'emailext-founder-active-subject' => 'На {{SITENAME}} становится жарко!',
+	'emailext-founder-active-summary' => 'Поздравляем! Страница {{SITENAME}} сегодня очень активна! Вот лишь часть недавних обновлений:',
+	'emailext-founder-active-link-label' => 'Последние действия',
+	'emailext-founder-new-update' => 'Была создана страница [$1 $2]',
+	'emailext-founder-edit-update' => 'Была обновлена страница [$1 $2]',
+	'emailext-founder-active-footer-1' => 'Если вы пока не видели все, что было создано на вашей странице сообщества — самое время сделать это. Обратите внимание: так как страница очень активна, в настройках электронной почты можно установить дайджестный режим. При дайджестном режиме вы будете получать одно электронное сообщение в день с подборкой всех изменений по вашей вики.',
+	'emailext-founder-active-footer-2' => 'Так держать! Продолжайте строить активное сообщество фанатов!',
 );
 
 $messages['zh-hans'] = array(
@@ -205,6 +268,13 @@ $messages['zh-hans'] = array(
 	'emailext-founder-new-member-subject' => '$1 刚刚加入{{SITENAME}}。恭喜！',
 	'emailext-founder-new-member-details' => '请花几分钟时间来欢迎$1，鼓励他们的参与。参与的人越多越好，这样您维基的增长速度才会更快！',
 	'emailext-founder-new-member-link-label' => '发送邮件',
+	'emailext-founder-active-subject' => '{{SITENAME}}的人气指数在不断上涨！',
+	'emailext-founder-active-summary' => '恭喜您，今天{{SITENAME}}上好热闹呀！下面是一些最新更新内容：',
+	'emailext-founder-active-link-label' => '最近所有活动',
+	'emailext-founder-new-update' => '[$1 $2]已创建',
+	'emailext-founder-edit-update' => '[$1 $2]已更新',
+	'emailext-founder-active-footer-1' => '如果您还没有看的话，您会看到您的的社区活动页面改进很多。既然有这么多更新内容，别忘了您可以把电子邮件的偏好设置改为摘要模式。这样，您每天就会收到一封电子邮件，邮件中会列出一天中您的维基上进行的所有活动。',
+	'emailext-founder-active-footer-2' => '为创建这样一个活跃的粉丝社区加油！',
 );
 
 $messages['zh-tw'] = array(
@@ -221,5 +291,12 @@ $messages['zh-tw'] = array(
 	'emailext-founder-new-member-subject' => '$1剛剛加入{{SITENAME}}。恭喜！',
 	'emailext-founder-new-member-details' => '請花幾分鐘來歡迎$1，鼓勵他的參與。參與的人越多越好，這樣你維基的增長速度才會更快！',
 	'emailext-founder-new-member-link-label' => '發送郵件',
+	'emailext-founder-active-subject' => '{{SITENAME}}的人氣指數在不斷上漲！',
+	'emailext-founder-active-summary' => '祝賀您，今天{{SITENAME}}上好熱鬧呀！這裡列出一些最新更新内容：',
+	'emailext-founder-active-link-label' => '最近的所有活動',
+	'emailext-founder-new-update' => '[$1 $2]已經創建',
+	'emailext-founder-edit-update' => '[$1 $2]已經更新',
+	'emailext-founder-active-footer-1' => '如果你還沒有注意到的話，你會看到你的社區活動頁面改進很多。由於有這麽多更新内容，別忘了你可以把電子郵件的偏好設置更改為摘要模式。這樣，每天你都會收到一個電子郵件，郵件中會列出一天中你在維基上進行的所有活動。',
+	'emailext-founder-active-footer-2' => '為創建這樣一個活躍的粉絲社區加油！',
 );
 
