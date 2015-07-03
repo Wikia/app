@@ -111,6 +111,7 @@ class MercuryApiHooks {
 	}
 
 	static public function onCuratedContentSave( $sections ) {
+		WikiaDataAccess::cachePurge( MercuryApiController::curatedContentDataMemcKey() );
 		foreach($sections as $section) {
 			WikiaDataAccess::cachePurge( MercuryApiController::curatedContentDataMemcKey( $section['title'] ) );
 		}

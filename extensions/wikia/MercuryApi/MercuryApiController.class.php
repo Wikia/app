@@ -414,8 +414,8 @@ class MercuryApiController extends WikiaController {
 		}
 	}
 
-	public static function curatedContentDataMemcKey( $section ) {
-		return wfMemcKey( 'curated-content-data', $section );
+	public static function curatedContentDataMemcKey( $section = null ) {
+		return wfMemcKey( 'curated-content-section-data', $section );
 	}
 
 	private function getCuratedContentData( $section = null ) {
