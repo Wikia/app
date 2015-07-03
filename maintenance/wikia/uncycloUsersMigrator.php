@@ -495,6 +495,8 @@ class UncycloUserMigrator extends Maintenance {
 						'user_token' => '',
 						'user_options' => '',
 						'user_registration' => $dbw->timestamp($user->mRegistration),
+						// avoid Uncyclopedia users be deleted by the cleanup script removing accounts without verified email address
+						'user_email_authenticated' => $dbw->timestamp($user->mRegistration),
 						'user_editcount' => $user->getEditCount(), // use uncyclo counter
 						'user_birthdate' => $user->mBirthDate
 					],
