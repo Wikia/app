@@ -581,7 +581,7 @@ class WikiaMiniUpload {
 					$this->tempFileClearInfo( $tempid );
 				}
 
-				if ( $wgUser->getOption( 'watchdefault' ) || ( $newFile && $wgUser->getOption( 'watchcreations' ) ) ) {
+				if ( $wgUser->getGLobalPreference( 'watchdefault' ) || ( $newFile && $wgUser->getGlobalPreference( 'watchcreations' ) ) ) {
 					$wgUser->addWatch($title);
 				}
 				$db =& wfGetDB(DB_MASTER);

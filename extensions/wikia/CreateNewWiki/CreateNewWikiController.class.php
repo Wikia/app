@@ -48,7 +48,7 @@ class CreateNewWikiController extends WikiaController {
 		asort( $languages );
 		$this->aLanguages = $languages;
 
-		$useLang = $wgRequest->getVal('uselang', $wgUser->getOption( 'language' ));
+		$useLang = $wgRequest->getVal('uselang', $wgUser->getGlobalPreference( 'language' ));
 
 		// squash language dialects (same wiki language for different dialects)
 		$useLang = $this->squashLanguageDialects($useLang);

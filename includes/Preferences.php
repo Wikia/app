@@ -72,7 +72,7 @@ class Preferences {
 
 		## Prod in defaults from the user
 		foreach ( $defaultPreferences as $name => &$info ) {
-			$prefFromUser = self::getOptionFromUser( $name, $info, $user );
+			$prefFromUser = self::getUserPreference( $name, $info, $user );
 			$field = HTMLForm::loadInputFromParameters( $name, $info ); // For validation
 			$defaultOptions = User::getDefaultOptions();
 			$globalDefault = isset( $defaultOptions[$name] )
@@ -107,8 +107,8 @@ class Preferences {
 	 * @param $user User
 	 * @return array|String
 	 */
-	static function getOptionFromUser( $name, $info, $user ) {
-		$val = $user->getOption( $name );
+	static function getUserPreference( $name, $info, $user ) {
+		$val = $user->getGlobalPreference( $name );
 
 		// Handling for array-type preferences
 		if ( ( isset( $info['type'] ) && $info['type'] == 'multiselect' ) ||
@@ -118,7 +118,7 @@ class Preferences {
 			$val = array();
 
 			foreach ( $options as $value ) {
-				if ( $user->getOption( "$prefix$value" ) ) {
+				if ( $user->getGlobalPreference( "$prefix$value" ) ) {
 					$val[] = $value;
 				}
 			}
@@ -512,7 +512,7 @@ class Preferences {
 			);
 		}
 
-		$selectedSkin = $user->getOption( 'skin' );
+		$selectedSkin = $user->getGlobalPreference( 'skin' );
 		if ( in_array( $selectedSkin, array( 'cologneblue', 'standard' ) ) ) {
 			$settings = array_flip( $context->getLanguage()->getQuickbarSettings() );
 
@@ -589,7 +589,7 @@ class Preferences {
 		);
 
 		// Grab existing pref.
-		$tzOffset = $user->getOption( 'timecorrection' );
+		$tzOffset = $user->getGlobalPreference( 'timecorrection' );
 		$tz = explode( '|', $tzOffset, 3 );
 
 		$tzOptions = self::getTimezoneOptions( $context );
@@ -1447,7 +1447,7 @@ class Preferences {
 		foreach( $wgHiddenPrefs as $pref ){
 			# If the user has not set a non-default value here, the default will be returned
 			# and subsequently discarded
-			$formData[$pref] = $user->getOption( $pref, null, true );
+			$formData[$pref] = $user->getGlobalPreference( $pref, null, true );
 		}
 
 		//  Keeps old preferences from interfering due to back-compat
@@ -1457,7 +1457,7 @@ class Preferences {
 		// </Wikia>
 
 		foreach ( $formData as $key => $value ) {
-			$user->setOption( $key, $value );
+			$user->setGlobalPreference( $key, $value );
 		}
 
 		$user->saveSettings();
@@ -1561,7 +1561,7 @@ class Preferences {
 		$arr = array();
 
 		foreach ( $searchableNamespaces as $ns => $name ) {
-			if ( $user->getOption( 'searchNs' . $ns ) ) {
+			if ( $user->getGlobalPreference( 'searchNs' . $ns ) ) {
 				$arr[] = $ns;
 			}
 		}

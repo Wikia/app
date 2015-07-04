@@ -2,12 +2,21 @@
 namespace Wikia\PortableInfobox\Parser\Nodes;
 
 class NodeGroup extends Node {
-	const DATA_LAYOUT_ATTR_NAME = 'layout';
-	const DEFAULT_TAG_NAME = 'default';
+	const LAYOUT_ATTR_NAME = 'layout';
+	const SHOW_ATTR_NAME = 'show';
+	const LAYOUT_DEFAULT_OPTION = 'default';
+	const LAYOUT_HORIZONTAL_OPTION = 'horizontal';
+	const SHOW_DEFAULT_OPTION = 'default';
+	const SHOW_INCOMPLETE_OPTION = 'incomplete';
 
 	private $supportedGroupLayouts = [
-		'default',
-		'horizontal'
+		self::LAYOUT_DEFAULT_OPTION,
+		self::LAYOUT_HORIZONTAL_OPTION
+	];
+
+	private $supportedGroupDisplays = [
+		self::SHOW_DEFAULT_OPTION,
+		self::SHOW_INCOMPLETE_OPTION
 	];
 
 	public function getData() {
@@ -20,10 +29,21 @@ class NodeGroup extends Node {
 	}
 
 	public function getRenderData() {
+		$value = $this->showIncomplete() ?
+			array_map(
+				function ( Node $item ) {
+					return $item->getRenderData();
+				},
+				$this->getChildNodes()
+			)
+			: $this->getRenderDataForChildren();
+
 		return [
 			'type' => $this->getType(),
-			'data' => [ 'value' => $this->getRenderDataForChildren(),
-						'layout' => $this->getLayout() ],
+			'data' => [
+				'value' => $value,
+				'layout' => $this->getLayout()
+			],
 		];
 	}
 
@@ -42,13 +62,21 @@ class NodeGroup extends Node {
 		return $this->getSourceForChildren();
 	}
 
-	/**
-	 * @return string
-	 */
+	protected function showIncomplete() {
+		return strcasecmp( $this->getDisplay(), self::SHOW_INCOMPLETE_OPTION ) === 0;
+	}
+
+	protected function getDisplay() {
+		$show = $this->getXmlAttribute( $this->xmlNode, self::SHOW_ATTR_NAME );
+
+		return ( isset( $show ) && in_array( strtolower( $show ), $this->supportedGroupDisplays ) ) ? $show
+			: self::SHOW_DEFAULT_OPTION;
+	}
+
 	protected function getLayout() {
-		$layout = $this->getXmlAttribute( $this->xmlNode, self::DATA_LAYOUT_ATTR_NAME );
+		$layout = $this->getXmlAttribute( $this->xmlNode, self::LAYOUT_ATTR_NAME );
 
 		return ( isset( $layout ) && in_array( $layout, $this->supportedGroupLayouts ) ) ? $layout
-			: self::DEFAULT_TAG_NAME;
+			: self::LAYOUT_DEFAULT_OPTION;
 	}
 }

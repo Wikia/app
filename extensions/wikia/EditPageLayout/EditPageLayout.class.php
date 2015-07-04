@@ -706,15 +706,12 @@ class EditPageLayout extends EditPage {
 	 * @return bool
 	 */
 	protected function userDismissedEduNote() {
-		$EditorUserPropertiesHandler = new EditorUserPropertiesHandler();
+		$editorUserPropertiesHandler = new EditorUserPropertiesHandler();
+		$result = false;
 
 		try {
-			$results = $EditorUserPropertiesHandler->getUserPropertyValue(
-				$EditorUserPropertiesHandler->getEditorMainPageNoticePropertyName()
-			);
-			$result = ($results->value == true) ? true : false;
+			$result = $editorUserPropertiesHandler->getEditorMainPageNoticePropertyForCurrentUser() == true;
 		} catch( Exception $e ) {
-			$result = false;
 		}
 
 		return $result;

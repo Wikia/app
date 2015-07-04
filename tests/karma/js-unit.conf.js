@@ -85,6 +85,7 @@ module.exports = function (config) {
 			'extensions/wikia/AdEngine/js/config/*.js',
 			'extensions/wikia/AdEngine/js/lookup/*.js',
 			'extensions/wikia/AdEngine/js/provider/*.js',
+			'extensions/wikia/AdEngine/js/provider/gpt/*.js',
 
 			'extensions/wikia/AdEngine/js/spec/**/*.spec.js',
 

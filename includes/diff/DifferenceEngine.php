@@ -223,7 +223,7 @@ class DifferenceEngine extends ContextSource {
 
 		$query = array();
 		# Carry over 'diffonly' param via navigation links
-		if ( $diffOnly != $user->getBoolOption( 'diffonly' ) ) {
+		if ( $diffOnly != (bool)$user->getGlobalPreference( 'diffonly' ) ) {
 			$query['diffonly'] = $diffOnly;
 		}
 		# Cascade unhide param in links for easy deletion browsing

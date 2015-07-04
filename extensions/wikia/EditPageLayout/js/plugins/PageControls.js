@@ -306,6 +306,180 @@
 					$('#HiddenFieldsDialog input[type!="hidden"]').focus();
 				}
 			});
+		},
+
+		// internal method, based on the editor content and some extraData, prepare a preview markup for the
+		// preview dialog and pass it to the callback
+		getPreviewContent: function (content, extraData, callback, skin) {
+			// add section name when adding new section (BugId:7658)
+			if (window.wgEditPageSection === 'new') {
+				content = '== ' + this.getSummary() + ' ==\n\n' + content;
+			} else {
+				extraData.summary = this.getSummary();
+			}
+
+			extraData.content = content;
+
+			if (window.wgEditPageSection !== null) {
+				extraData.section = window.wgEditPageSection;
+			}
+
+			if (this.categories.length) {
+				extraData.categories = this.categories.val();
+			}
+
+			this.ajax('preview', extraData, function (data) {
+				callback(data);
+			}, skin);
+		},
+
+		// render "Preview" modal
+		// TODO: it would be nice if there weren't any hardcoded values in here.
+		// Any changes to the article page or modal will break here. Also, get rid
+		// of any widthType/gridLayout settings when the responsive layout goes out
+		// for a global release.
+		renderPreview: function (extraData, type) {
+			var self = this;
+
+			require([ 'wikia.breakpointsLayout' ], function (breakpointsLayout) {
+				var previewPadding = 22, // + 2px for borders
+					articleWidth = 660,
+					width = articleWidth + (self.isGridLayout ? 30 : 0),
+					config = self.editor.config;
+
+				//See logic: \EditPageLayoutHelper::isWidePage
+				if (config.isWidePage) {
+					width += breakpointsLayout.getRailWidthWithSpacing() + (self.isGridLayout ? 20 : 0);
+				}
+
+				if (config.extraPageWidth) {
+					// wide wikis
+					width += config.extraPageWidth;
+				}
+
+				if (window.wgOasisResponsive || window.wgOasisBreakpoints) {
+					var pageWidth = $('#WikiaPage').width(),
+						minWidth = breakpointsLayout.getArticleMinWidth();
+
+					// don't go below minimum width
+					if (pageWidth <= minWidth) {
+						pageWidth = minWidth;
+					}
+
+					width = pageWidth - breakpointsLayout.getArticlePadding();
+				}
+
+				// add article preview padding width
+				width += previewPadding;
+
+				var previewOptions = {
+					width: width,
+					//Most browsers have 17px wide scrollbars, 20px here is for safty net and round number
+					//ie: http://www.textfixer.com/tutorials/browser-scrollbar-width.php
+					//No need to run extra fancy JS to return value between 17 and 20
+					scrollbarWidth: 20,
+					onPublishButton: function () {
+						$('#wpSave').click();
+					},
+					getPreviewContent: function (callback, skin) {
+						self.getContent(function (content) {
+							self.getPreviewContent(content, extraData, callback, skin);
+						});
+					}
+				};
+
+				// pass info about if it's a wide page (main page or page without right rail)
+				previewOptions.isWidePage = config.isWidePage;
+				previewOptions.currentTypeName = type;
+
+				require(['wikia.preview'], function (preview) {
+					preview.renderPreview(previewOptions);
+				});
+			});
+		},
+
+		// render "show diff" modal
+		renderChanges: function () {
+			var self = this;
+			require([ 'wikia.ui.factory' ], function(uiFactory){
+				uiFactory.init([ 'modal' ]).then(function(uiModal) {
+					var previewModalConfig = {
+						vars: {
+							id: 'EditPageDialog',
+							title: $.htmlentities($.msg('editpagelayout-pageControls-changes')),
+							content: '<div class="ArticlePreview modalContent"><div class="ArticlePreviewInner">' +
+								'</div></div>',
+							size: 'large'
+						}
+					};
+					uiModal.createComponent(previewModalConfig, function(previewModal) {
+						previewModal.deactivate();
+
+						previewModal.$content.on('click', function(event) {
+							var target = $(event.target);
+							target.closest('a').not('[href^="#"]').attr('target', '_blank');
+						});
+
+						self.getContent(function(content) {
+							var section = $.getUrlVar('section') || 0,
+								extraData = {
+									content: content,
+									section: parseInt(section, 10)
+								};
+
+							if (self.categories.length) {
+								extraData.categories = self.categories.val();
+							}
+
+							$.when(
+								// get wikitext diff
+								self.ajax('diff' , extraData),
+
+								// load CSS for diff
+								mw.loader.use('mediawiki.action.history.diff')
+							).done(function(ajaxData) {
+								var data = ajaxData[ 0 ],
+									html = '<h1 class="pagetitle">' + window.wgEditedTitle + '</h1>' + data.html;
+								previewModal.$content.find('.ArticlePreview .ArticlePreviewInner').html(html);
+								previewModal.activate();
+							});
+						});
+
+						previewModal.show();
+					});
+				});
+			});
+		},
+
+		getSummary: function () {
+			var $wpSummary = $('#wpSummary'),
+				summary = $wpSummary.val();
+
+			// bugid-93498: IE fakes placeholder functionality by setting a real val
+			if (summary === $wpSummary.attr('placeholder')) {
+				summary = '';
+			}
+
+			return summary;
+
+		},
+
+		// get editor's content (either wikitext or HTML)
+		// and call provided callback with wikitext as its parameter
+		getContent: function (callback) {
+			var editor = typeof RTE == 'object' ? RTE.getInstance() : false, mode = editor ? editor.mode : 'mw';
+
+			callback = callback || function () {};
+
+			switch (mode) {
+				case 'mw':
+					callback($('#wpTextbox1').val());
+					return;
+				case 'source':
+				case 'wysiwyg':
+					callback(editor.getData());
+					return;
+			}
 		}
 	});
 

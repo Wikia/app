@@ -352,6 +352,7 @@ $wgAutoloadClasses['SolrDocumentService'] = $IP . '/includes/wikia/services/Solr
 $wgAutoloadClasses['FormBuilderService']  =  $IP.'/includes/wikia/services/FormBuilderService.class.php';
 $wgAutoloadClasses['LicensedWikisService']  =  $IP.'/includes/wikia/services/LicensedWikisService.class.php';
 $wgAutoloadClasses['ArticleQualityService'] = $IP.'/includes/wikia/services/ArticleQualityService.php';
+$wgAutoloadClasses['PortableInfoboxDataService'] = $IP . '/extensions/wikia/PortableInfobox/services/PortableInfoboxDataService.class.php';
 
 // services hooks
 $wgHooks['ArticleEditUpdates'][] = 'MediaQueryService::onArticleEditUpdates';
@@ -1418,16 +1419,11 @@ $wgAdDriverSevenOneMediaOverrideSub2Site = null;
 $wgAdDriverTrackState = false;
 
 /**
- * @name $wgAdDriverForceLiftiumAd
- * Forces to use Liftium for all slots managed by this provider and disables other providers
+ * @name $wgAdDriverForcedProvider
+ * @example 'liftium', 'turtle' or 'openx'
+ * Forces to use passed provider for all slots managed by this provider and disables other providers.
  */
-$wgAdDriverForceLiftiumAd = false;
-
-/**
- * @name $wgAdDriverForceOpenXAd
- * Forces to use OpenX for all slots managed by this provider and disables other providers
- */
-$wgAdDriverForceOpenXAd = false;
+$wgAdDriverForcedProvider = null;
 
 /**
  * @name $wgAdDriverEnableAdsInMaps
@@ -1459,10 +1455,11 @@ $wgAdDriverRubiconRTPConfig = null;
 $wgAdDriverRubiconRTPCountries = null;
 
 /**
- * @name $wgEnableKruxOnMobile
- * Whether to enable Krux on wikiamobile skin
+ * @name $wgAdDriverKruxCountries
+ * List of countries Krux will be enabled on
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
-$wgEnableKruxOnMobile = true;
+$wgAdDriverKruxCountries = null;
 
 /**
  * @name $wgHighValueCountries
@@ -1720,7 +1717,7 @@ $wgOasisBreakpoints = true;
  * see CONCF-433
  * todo remove when 71M adjusts their styles
  */
-$wgOasisBreakpointsDE = false;
+$wgOasisBreakpointsDE = true;
 
 /**
  * Add poweruser to implicit groups
@@ -1752,3 +1749,8 @@ $wgPaidAssetDropConfig = false;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverIncontentPlayerSlotCountries = null;
+
+/**
+ * flag for using (possibly external) service for managing a user's preferences
+ */
+$wgPreferencesUseService = false;

@@ -100,10 +100,6 @@ define('wikia.krux', [
 
 		segsArray = segments.split(',');
 		trackNumberOfSegments(segsArray.length);
-		if (segsArray.indexOf('ph3uhzc41') > maxNumberOfKruxSegments - 1) {
-			segsArray.unshift('ph3uhzc41');
-		}
-
 		return segsArray.slice(0, maxNumberOfKruxSegments);
 	}
 

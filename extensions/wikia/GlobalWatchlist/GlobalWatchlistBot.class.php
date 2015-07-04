@@ -5,9 +5,6 @@ use \Wikia\Logger\WikiaLogger;
 class GlobalWatchlistBot {
 
 	const MAX_PAGES_PER_DIGEST = 50;
-	const FROM_NAME = 'Wikia';
-	const FROM_ADDRESS = 'community@wikia.com';
-	const REPLY_ADDRESS = 'noreply@wikia.com';
 	const EMAIL_CONTROLLER = 'Email\Controller\WeeklyDigestController';
 
 	/**
@@ -114,9 +111,6 @@ class GlobalWatchlistBot {
 
 		$params = [
 			'targetUser' => User::newFromId( $userID )->getName(),
-			'replyToAddress' => self::REPLY_ADDRESS,
-			'fromAddress' => self::FROM_ADDRESS,
-			'fromName' => self::FROM_NAME,
 			'digestData' => $digestData
 		];
 
@@ -184,7 +178,7 @@ class GlobalWatchlistBot {
 	 * @throws Exception
 	 */
 	private function checkIfEmailUnSubscribed( \User $user ) {
-		if ( $user->getBoolOption( 'unsubscribed' ) ) {
+		if ( (bool)$user->getGlobalPreference( 'unsubscribed' ) ) {
 			throw new Exception( 'Email is unsubscribed.' );
 		}
 	}
@@ -204,7 +198,7 @@ class GlobalWatchlistBot {
 	 * @throws Exception
 	 */
 	private function checkIfSubscribedToWeeklyDigest( \User $user ) {
-		if ( !$user->getBoolOption( 'watchlistdigest' ) ) {
+		if ( !(bool)$user->getGlobalPreference( 'watchlistdigest' ) ) {
 			throw new Exception( 'Not subscribed to weekly digest' );
 		}
 	}

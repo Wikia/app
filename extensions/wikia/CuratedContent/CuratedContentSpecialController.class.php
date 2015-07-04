@@ -19,6 +19,8 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 
 	const FEATURED_SECTION_TEMPLATE = 'featuredSection';
 
+	const LABEL_MAX_LENGTH = 48;
+
 	public function __construct() {
 		parent::__construct( 'CuratedContent', '', false );
 	}
@@ -252,6 +254,16 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 		return $result;
 	}
 
+	private function validateSection( $section ) {
+		if ( strlen( $section[ 'title' ] ) > self::LABEL_MAX_LENGTH ) {
+			return [
+				'title' => $section['title'],
+				'reason' => 'tooLongLabel'
+			];
+		}
+		return [];
+	}
+
 	/**
 	 * @param $sections
 	 * @return array
@@ -261,6 +273,10 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 		$sectionsAfterProcess = [ ];
 		if ( !empty( $sections ) ) {
 			foreach ( $sections as $section ) {
+				$sectionErr = $this->validateSection($section);
+				if ( sizeof( $sectionErr ) ) {
+					$err = array_merge($err, $sectionErr);
+				}
 				list( $newSection, $sectionErr ) = $this->processTagBeforeSave( $section, $err );
 				array_push( $sectionsAfterProcess, $newSection );
 				$err = array_merge( $err, $sectionErr );
@@ -321,6 +337,9 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 		$reason = '';
 		if ( empty( $row[ 'label' ] ) ) {
 			$reason = 'emptyLabel';
+		}
+		if ( strlen( $row[ 'label' ] ) > self::LABEL_MAX_LENGTH ) {
+			$reason = 'tooLongLabel';
 		}
 
 		if ( $type == null ) {
