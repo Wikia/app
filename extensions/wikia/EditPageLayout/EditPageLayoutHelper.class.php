@@ -173,10 +173,20 @@ class EditPageLayoutHelper {
 	static public function isCodePage( Title $articleTitle ) {
 		$namespace = $articleTitle->getNamespace();
 
-		return $articleTitle->isCssOrJsPage()
-				|| $articleTitle->isCssJsSubpage()
-				// Lua module
-				|| $namespace === NS_MODULE;
+		if ( $articleTitle->isCssOrJsPage()
+			|| $articleTitle->isCssJsSubpage()
+			|| $namespace === NS_MODULE 
+		) {
+			return true;
+		} elseif ( $namespace === NS_TEMPLATE
+			&& class_exists( 'TemplateClassificationController' ) 
+		) {
+			$tc = new TemplateClassificationController( $articleTitle );
+	
+			return $tc->isType( 'infobox' );
+		}
+
+		return false;
 	}
 
 	/**
@@ -216,11 +226,15 @@ class EditPageLayoutHelper {
 	 * @return bool
 	 */
 	public function showMobilePreview( Title $title ) {
-		$blacklistedPage = self::isCodePage( $title )
+		$blacklistedPage = ( self::isCodePageWithoutPreview( $title ) )
 				|| $title->isMainPage()
 				|| NavigationModel::isWikiNavMessage( $title );
 
 		return !$blacklistedPage;
+	}
+
+	public static function isCodePageWithoutPreview( Title $title ) {
+		return self::isCodePage( $title ) && $title->getNamespace() !== NS_TEMPLATE;
 	}
 
 	/**
@@ -237,6 +251,7 @@ class EditPageLayoutHelper {
 		$this->addJsVariable( 'aceScriptsPath', $aceUrlParts['path'] );
 
 		$this->addJsVariable( 'wgEnableCodePageEditor', true );
+		$this->addJsVariable( 'showPagePreview', self::showMobilePreview( $title ));
 
 		if ( $namespace === NS_MODULE ) {
 			$type = 'lua';
@@ -244,6 +259,12 @@ class EditPageLayoutHelper {
 			$type = 'css';
 		} elseif ( $title->isJsPage() || $title->isJsSubpage() ) {
 			$type = 'javascript';
+		} elseif ( $namespace === NS_TEMPLATE && class_exists( 'TemplateClassificationController' ) ) {
+			$tc = new TemplateClassificationController( $title );
+
+			if ( $tc->isType( 'infobox' ) ) {
+				$type = 'xml';
+			}
 		}
 
 		$this->addJsVariable( 'codePageType', $type );
