@@ -1,4 +1,8 @@
 <?php
+
+/**
+ * @group BrokenInHHVM
+ */
 class FounderProgressBarTest extends WikiaBaseTest {
         const TEST_DATA = 1;
         const TEST_CITY_ID = 79860;
@@ -12,20 +16,20 @@ class FounderProgressBarTest extends WikiaBaseTest {
 
         protected function setUp() {
 			global $wgCityId;
-			
+
 			$this->wgCityId = $wgCityId;
-			
+
 			$this->setupFile = dirname(__FILE__) . '/../FounderProgressBar.setup.php';
 			parent::setUp();
-			
+
 			// Mock response using $this->getValCallBack()
 			$mockR = $this->getMock('WikiaResponse', array('getVal'), array('raw'));
 			$mockR->expects( $this->any() )
 					->method ('getVal')
 					->will( $this->returnCallback (array($this, "getValCallback")));
-			
+
 			$mock_result = $this->getMock('ResultWrapper', array(), array(), '', false);
-			
+
 			$this->mock_db = $this->getMock('DatabaseMysql', array('select', 'query', 'update', 'commit', 'fetchObject', 'fetchRow'));
 			$this->mock_db->expects($this->any())
 							->method('select')
@@ -36,7 +40,7 @@ class FounderProgressBarTest extends WikiaBaseTest {
 							->method('update');
 			$this->mock_db->expects($this->any())
 							->method('commit');
-			
+
 			$cache = $this->getMock('stdClass', array('get', 'set', 'delete'));
 			$cache->expects($this->any())
 					->method('get')
@@ -45,7 +49,7 @@ class FounderProgressBarTest extends WikiaBaseTest {
 					->method('set');
 			$cache->expects($this->any())
 					->method('delete');
-			
+
 			$mock = $this->getMock('FounderProgressBarController', array('sendSelfRequest', 'getDb', 'getMCache'));
 			$mock->expects( $this->any() )
 					->method( 'sendSelfRequest' )
@@ -64,7 +68,7 @@ class FounderProgressBarTest extends WikiaBaseTest {
 
 		protected function tearDown() {
 			global $wgCityId;
-			
+
 			$wgCityId = $this->wgCityId;
 			parent::tearDown();
 		}
@@ -74,14 +78,14 @@ class FounderProgressBarTest extends WikiaBaseTest {
 		 * @slowExecutionTime 0.01265 ms
 		 * @dataProvider taskCompleteDataProvider
 		 */
-		
+
 		public function testTaskComplete($task_id) {
 			$this->task_id = $task_id;
 			$response = $this->app->sendRequest('FounderProgressBar', 'isTaskComplete', array('task_id' => $task_id));
 			$task_data = $this->getTaskData();
 			$this->assertEquals($response->getVal('task_completed'), $task_data[$task_id]['task_completed']);
 		}
-		
+
 		// Test task completed with 0 and 1
 		public function taskCompleteDataProvider() {
 			return array(
@@ -89,17 +93,17 @@ class FounderProgressBarTest extends WikiaBaseTest {
 				array(20)
 				);
 		}
-		
+
 		public function testShortTaskList() {
 			$response = $this->app->sendRequest('FounderProgressBar', 'getShortTaskList');
-			
+
 			$response_data = $response->getVal('list');
 			// Test data has one non-skipped non-completed task
 			$this->assertEquals(count($response_data), 1);
 
 			$first_element = array_pop($response_data);
 			$this->assertEquals($first_element['task_completed'], 0);
-			$this->assertEquals($first_element['task_skipped'], 0);			
+			$this->assertEquals($first_element['task_skipped'], 0);
 		}
 
 		/**
@@ -109,34 +113,34 @@ class FounderProgressBarTest extends WikiaBaseTest {
 		 */
 		public function testLongTaskList($fetch_obj, $exp_list, $exp_data) {
 			global $wgCityId;
-			
+
 			$wgCityId = self::TEST_CITY_ID;
-			
+
 			$fetchObj = array();
 			foreach($fetch_obj as $obj) {
 				$tmp = self::arrayToStdClass($obj);
 				$tmp->task_timestamp = '2011-06-28 01:25:23';
 				$fetchObj[] = $tmp;
 			}
-			
+
 			$required_obj = 8;
 			for ($i=count($fetchObj); $i<$required_obj; $i++) {
 				$fetchObj[] = null;
 			}
-			
+
 			$this->mock_db->expects($this->any())
 							->method('fetchObject')
 							->will($this->onConsecutiveCalls($fetchObj[0], $fetchObj[1], $fetchObj[2], $fetchObj[3], $fetchObj[4], $fetchObj[5], $fetchObj[6], null));
-			
+
 			$response = $this->app->sendRequest('FounderProgressBar', 'getLongTaskList');
-			
+
 			$response_data = $response->getVal('list');
 			$first_element = array_pop($response_data);
 			$this->assertEquals($first_element['task_id'], $exp_list['task_id']);
 			$this->assertEquals($first_element['task_completed'], $exp_list['task_completed']);
 			$this->assertEquals($first_element['task_count'], $exp_list['task_count']);
 			$this->assertEquals($first_element['task_skipped'], $exp_list['task_skipped']);
-			
+
 			$response_data = $response->getVal('data');
 			//$this->assertEquals($response_data['tasks_completed'], $exp_data['tasks_completed']);
 			//$this->assertEquals($response_data['tasks_skipped'], $exp_data['tasks_skipped']);
@@ -144,7 +148,7 @@ class FounderProgressBarTest extends WikiaBaseTest {
 			//$this->assertEquals($response_data['completion_percent'], $exp_data['completion_percent']);
 			$this->assertEquals($response_data, $exp_data);
 		}
-		
+
 		public function longTaskListDataProvider() {
 			$fetch_obj1 = array(	// uncompleted
 				'task_id' => '10',
@@ -200,7 +204,7 @@ class FounderProgressBarTest extends WikiaBaseTest {
 				'task_completed' => '1',
 				'task_skipped' => '0',
 			);
-			
+
 			$input1 = array($fetch_obj1, $fetch_obj2, $fetch_obj3, $fetch_obj5, $fetch_obj6, $fetch_obj7, $fetch_obj4);
 			$exp_data1 = array(
 				'tasks_completed' => 4,
@@ -210,7 +214,7 @@ class FounderProgressBarTest extends WikiaBaseTest {
 			);
 
 			$input2 = array($fetch_obj1, $fetch_obj2, $fetch_obj3, $fetch_obj5, $fetch_obj7, $fetch_obj4);
-			
+
 			$input3 = array($fetch_obj1);
 			$exp_data3 = array(
 				'tasks_completed' => 0,
@@ -218,7 +222,7 @@ class FounderProgressBarTest extends WikiaBaseTest {
 				'total_tasks' => 1,
 				'completion_percent' => 0,
 			);
-			
+
 			$input4 = array($fetch_obj1, $fetch_obj2);
 			$exp_data4 = array(
 				'tasks_completed' => 1,
@@ -226,7 +230,7 @@ class FounderProgressBarTest extends WikiaBaseTest {
 				'total_tasks' => 2,
 				'completion_percent' => 50,
 			);
-			
+
 			$input5 = array($fetch_obj1, $fetch_obj3);
 			$exp_data5 = array(
 				'tasks_completed' => 0,
@@ -234,7 +238,7 @@ class FounderProgressBarTest extends WikiaBaseTest {
 				'total_tasks' => 2,
 				'completion_percent' => 0,
 			);
-			
+
 			$input6 = array($fetch_obj1, $fetch_obj7);
 			$exp_data6 = array(
 				'tasks_completed' => 1,
@@ -242,7 +246,7 @@ class FounderProgressBarTest extends WikiaBaseTest {
 				'total_tasks' => 2,
 				'completion_percent' => 50,
 			);
-			
+
 			$input7 = array($fetch_obj3, $fetch_obj7);
 			$exp_data7 = array(
 				'tasks_completed' => 1,
@@ -250,7 +254,7 @@ class FounderProgressBarTest extends WikiaBaseTest {
 				'total_tasks' => 2,
 				'completion_percent' => 50,
 			);
-			
+
 			$input8 = array_merge($input4, $input7);
 			$exp_data8 = array(
 				'tasks_completed' => 2,
@@ -258,9 +262,9 @@ class FounderProgressBarTest extends WikiaBaseTest {
 				'total_tasks' => 4,
 				'completion_percent' => 50,
 			);
-			
+
 			$input9 = array($fetch_obj1, $fetch_obj2, $fetch_obj3, $fetch_obj6, $fetch_obj7);
-			
+
 			$input10 = array($fetch_obj3);
 			$exp_data10 = array(
 				'tasks_completed' => 0,
@@ -268,9 +272,9 @@ class FounderProgressBarTest extends WikiaBaseTest {
 				'total_tasks' => 1,
 				'completion_percent' => 0,
 			);
-			
+
 			$input11 = array($fetch_obj3, $fetch_obj6);
-			
+
 			$input12 = array($fetch_obj3, $fetch_obj5, $fetch_obj6);
 			$exp_data12 = array(
 				'tasks_completed' => 1,
@@ -278,7 +282,7 @@ class FounderProgressBarTest extends WikiaBaseTest {
 				'total_tasks' => 1,
 				'completion_percent' => 100,
 			);
-			
+
 			$input13 = array($fetch_obj3, $fetch_obj5, $fetch_obj6, $fetch_obj7);
 			$exp_data13 = array(
 				'tasks_completed' => 2,
@@ -310,7 +314,7 @@ class FounderProgressBarTest extends WikiaBaseTest {
 				'total_tasks' => 2,
 				'completion_percent' => 100,
 			);
-			
+
 			for($task_id = 10; $task_id <= 60; $task_id+=10) {
 				$input17[$task_id] = array(
 					'task_id' => "$task_id",
@@ -348,23 +352,23 @@ class FounderProgressBarTest extends WikiaBaseTest {
 						array($input17, $input17[510], $exp_data17),	// 6 skipped + 1 bonus [10nd round] (uncompleted)
 					);
 		}
-		
+
 		/**
 		 * @dataProvider doTaskDataProvider
 		 */
 		public function testDoTask($case) {
 			global $wgCityId;
-			
+
 			$wgCityId = self::TEST_CITY_ID;
 			$this->task_id = $case['task_id'];
 			$sql_result = $case['sql_result'];
 			if (array_key_exists('extra_task',$case))
 				$this->extra_task_data = $case['extra_task'];
-			
+
 			$this->mock_db->expects($this->any())
 							->method('fetchRow')
 							->will($this->returnValue($sql_result));
-			
+
 			$response = $this->app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => $this->task_id));
 
 			if ($sql_result) {
@@ -379,16 +383,16 @@ class FounderProgressBarTest extends WikiaBaseTest {
 				$this->assertEquals($response_data, $expect,'actions_remaining');
 				*/
 			}
-			
+
 			$response_data = $response->getVal('result');
 			$this->assertEquals($response_data, $case['exp_result'],'result');
-			
+
 			if(array_key_exists('error', $case)) {
 				$response_data = $response->getVal('error');
 				$this->assertEquals($response_data, $case['exp_error'],'error');
 			}
 		}
-		
+
 		// @brief data provider for testDoTask()
 		public function doTaskDataProvider() {
 			$case1 = array(
@@ -397,21 +401,21 @@ class FounderProgressBarTest extends WikiaBaseTest {
 							'exp_result' => 'error',
 							'exp_error' => 'invalid task_id',
 						);
-			
+
 			$case2 = array(
 							'task_id' => '20',
 							'sql_result' => null,
 							'exp_result' => 'error',
 							'exp_error' => 'task_completed',
 						);
-			
+
 			$case3 = array(
 							'task_id' => '10',
 							'sql_result' => null,
 							'exp_result' => 'error',
 							'exp_error' => 'invalid task_id',
 						);
-			
+
 			$case4 = array(
 							'task_id' => '10',
 							'sql_result' => array('task_id' => '10', 'task_count' => '7'),
@@ -423,13 +427,13 @@ class FounderProgressBarTest extends WikiaBaseTest {
 							'sql_result' => array('task_id' => '10', 'task_count' => '10'),
 							'exp_result' => 'task_completed',
 						);
-			
+
 			$case6 = array(
 							'task_id' => '10',
 							'sql_result' => array('task_id' => '10', 'task_count' => '15'),
 							'exp_result' => 'task_completed',
 						);
-			
+
 			$extra_task = array(
 								510 => array (
 									'task_id' => '510',
@@ -440,21 +444,21 @@ class FounderProgressBarTest extends WikiaBaseTest {
 									'task_label' => 'Uncompleted Bonus task',
 									'task_action' => 'Uncompleted Bonus task'),
 							);
-			
+
 			$case7 = array(
 							'task_id' => '510',
 							'sql_result' => array('task_id' => '510', 'task_count' => '9'),
 							'exp_result' => 'OK',
 							'extra_task' => $extra_task,
 						);
-			
+
 			$case8 = array(
 							'task_id' => '510',
 							'sql_result' => array('task_id' => '510', 'task_count' => '10'),
 							'exp_result' => 'task_completed',
 							'extra_task' => $extra_task,
 						);
-			
+
 			$case9 = array(
 							'task_id' => '510',
 							'sql_result' => array('task_id' => '510', 'task_count' => '9'),
@@ -462,7 +466,7 @@ class FounderProgressBarTest extends WikiaBaseTest {
 							'extra_task' => $extra_task,
 						);
 			$case9['extra_task'][510]['task_completed'] = '1';
-			
+
 			$case10 = array(
 							'task_id' => '510',
 							'sql_result' => array('task_id' => '510', 'task_count' => '10'),
@@ -470,7 +474,7 @@ class FounderProgressBarTest extends WikiaBaseTest {
 							'extra_task' => $extra_task,
 						);
 			$case10['extra_task'][510]['task_completed'] = '1';
-			
+
 			return array(
 						array($case1),	// invalid task_id - task id not found
 						array($case2),	// task completed (task_completed = 1)
@@ -484,13 +488,13 @@ class FounderProgressBarTest extends WikiaBaseTest {
 						array($case10),	// success - bonus task count = counters (task_completed = 1)
 					);
 		}
-		
+
 		/**
 		 * @dataProvider skipTaskDataProvider
 		 */
 		public function testskipTask($task_id, $task_skipped, $result, $extra_task) {
 			global $wgCityId;
-			
+
 			$wgCityId = self::TEST_CITY_ID;
 			$this->task_id = $task_id;
 			$this->extra_task_data = $extra_task;
@@ -498,9 +502,9 @@ class FounderProgressBarTest extends WikiaBaseTest {
 				'task_id' => $this->task_id,
 				'task_skipped' => $task_skipped,
 			);
-					
+
 			$response = $this->app->sendRequest('FounderProgressBar', 'skipTask', $req);
-			
+
 			$response_data = $response->getVal('result');
 			$this->assertEquals($response_data, $result);
 		}
@@ -529,7 +533,7 @@ class FounderProgressBarTest extends WikiaBaseTest {
 			$task_data = $this->getTaskData();
 			if (isset($this->extra_task_data))
 				$task_data = $task_data + $this->extra_task_data;
-			
+
 			switch ($param) {
 				case "list": return $task_data;
 				case "task_id": return $task_id;
@@ -538,10 +542,10 @@ class FounderProgressBarTest extends WikiaBaseTest {
 
 			return null;
 		}
-		
+
 		public function getTaskData() {
-			
-			$task_data = array ( 
+
+			$task_data = array (
 				10 => array (
 				'task_id' => '10',
 				'task_count' => '10',
@@ -549,7 +553,7 @@ class FounderProgressBarTest extends WikiaBaseTest {
 				'task_skipped' => '0',
 				'task_timestamp' => '21 hours ago',
 				'task_label' => 'Uncompleted task',
-				'task_action' => 'Uncompleted task'), 
+				'task_action' => 'Uncompleted task'),
 				20 => array (
 				'task_id' => '20',
 				'task_count' => '20',
@@ -570,12 +574,12 @@ class FounderProgressBarTest extends WikiaBaseTest {
 
 			return $task_data;
 		}
-		
+
 		public static function arrayToStdClass($arr) {
 			$result = new stdClass();
 			foreach($arr as $key => $value) {
 				$result->$key = $value;
 			}
 			return $result;
-		} 
+		}
 }

@@ -1,11 +1,14 @@
 <?php
 
 class WikiaQuizModuleTest extends WikiaBaseTest {
-	
+
 	public function __construct() {
 		$this->setupFile = dirname(__FILE__) . '/../WikiaQuiz_setup.php';
 	}
-	
+
+	/**
+	 * @group BrokenInHHVM
+	 */
 	public function testExecuteGetQuizElement() {
 		$wgRequest = $this->getMock('WebRequest', array('getVal'), array(), '', false);
 		$wgRequest->expects($this->any())
@@ -29,7 +32,7 @@ class WikiaQuizModuleTest extends WikiaBaseTest {
 		$wgRequest->expects($this->once())
 			->method('getVal')
 			->will($this->returnValue(null));
-		
+
 		$this->mockGlobalVariable('wgRequest', $wgRequest);
 
 		$response = $this->app->sendRequest('WikiaQuiz', 'executeGetQuizElement');

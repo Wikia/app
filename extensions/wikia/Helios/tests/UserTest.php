@@ -161,6 +161,9 @@ class UserTest extends \WikiaBaseTest {
 		$this->assertNull( User::getAccessToken( $this->webRequestMock ) );
 	}
 
+	/**
+	 * @group BrokenInHHVM
+	 */
 	public function testNewFromTokenAuthorizationGranted() {
 		$this->webRequestMock->expects( $this->once() )
 			->method( 'getCookie' )
@@ -190,6 +193,9 @@ class UserTest extends \WikiaBaseTest {
 		$this->assertEquals( User::newFromToken( $this->webRequestMock ), \User::newFromId( 1 ) );
 	}
 
+	/**
+	 * @group BrokenInHHVM
+	 */
 	public function testNewFromTokenAuthorizationDeclined() {
 		$this->webRequestMock->expects( $this->once() )
 			->method( 'getCookie' )
@@ -208,6 +214,9 @@ class UserTest extends \WikiaBaseTest {
 		$this->assertNull( User::newFromToken( $this->webRequestMock ) );
 	}
 
+	/**
+	 * @group BrokenInHHVM
+	 */
 	public function testAuthenticateAuthenticationFailed() {
 		$username = 'SomeName';
 		$password = 'Password';
@@ -222,6 +231,9 @@ class UserTest extends \WikiaBaseTest {
 		$this->assertFalse( User::authenticate( $username, $password ) );
 	}
 
+	/**
+	 * @group BrokenInHHVM
+	 */
 	public function testAuthenticateAuthenticationImpossible() {
 		$this->setExpectedException( 'Wikia\Service\Helios\ClientException', 'test' );
 		$username = 'SomeName';
@@ -237,6 +249,9 @@ class UserTest extends \WikiaBaseTest {
 		User::authenticate( $username, $password );
 	}
 
+	/**
+	 * @group BrokenInHHVM
+	 */
 	public function testAuthenticateAuthenticationSucceded() {
 		$username = 'SomeName';
 		$password = 'Password';

@@ -69,6 +69,7 @@ class WikiaDispatchableObjectTest extends WikiaBaseTest {
 
 	/**
 	 * @group Slow
+	 * @group BrokenInHHVM
 	 * @slowExecutionTime 0.0102 ms
 	 */
 	public function testPurgeUrl() {

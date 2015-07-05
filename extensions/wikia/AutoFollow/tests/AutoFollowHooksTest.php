@@ -36,6 +36,7 @@ class AutoFollowHooksTest extends \WikiaBaseTest {
 	}
 
 	/**
+	 * @group BrokenInHHVM
 	 * @dataProvider getUsersAllowedLanguages
 	 */
 	function testAddAutoFollowTask( $sLanguage ) {
@@ -96,6 +97,7 @@ class AutoFollowHooksTest extends \WikiaBaseTest {
 	}
 
 	/**
+	 * @group BrokenInHHVM
 	 * @dataProvider getUsersFaultyOptions
 	 */
 	function testDoNotAddAutoFollowTask( $sLanguage, $iMarketingAllowed, $iAutoFollowFlag ) {

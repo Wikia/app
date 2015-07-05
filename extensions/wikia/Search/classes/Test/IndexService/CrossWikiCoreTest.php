@@ -171,6 +171,7 @@ class CrossWikiCoreTest extends BaseTest
 	}
 
 	/**
+	 * @group BrokenInHHVM
 	 * @group Slow
 	 * @slowExecutionTime 0.08143 ms
 	 * @covers Wikia\Search\IndexService\CrossWikiCore::getWikiViews
@@ -202,6 +203,7 @@ class CrossWikiCoreTest extends BaseTest
 	}
 
 	/**
+	 * @group BrokenInHHVM
 	 * @group Slow
 	 * @slowExecutionTime 0.08105 ms
 	 * @covers Wikia\Search\IndexService\CrossWikiCore::getWam
@@ -233,6 +235,7 @@ class CrossWikiCoreTest extends BaseTest
 	}
 
 	/**
+	 * @group BrokenInHHVM
 	 * @group Slow
 	 * @slowExecutionTime 0.08427 ms
 	 * @covers Wikia\Search\IndexService\CrossWikiCore::getWikiStats

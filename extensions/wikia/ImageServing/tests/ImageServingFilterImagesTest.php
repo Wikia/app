@@ -41,6 +41,7 @@ class ImageServingFilterImagesTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @group BrokenInHHVM
 	 * @dataProvider filterImagesByMimeTypeDataProvider
 	 */
 	public function testFilterImagesByMimeType($mime, $shouldBeFilteredOut = false) {

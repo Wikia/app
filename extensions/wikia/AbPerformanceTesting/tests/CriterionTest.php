@@ -60,6 +60,7 @@ class CriterionTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @group BrokenInHHVM
 	 * @dataProvider oasisArticlesCriterionDataProvider
 	 */
 	function testOasisArticlesCriterion( $skinName, $titleExists, $isContentPage, $expected ) {

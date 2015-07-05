@@ -95,6 +95,7 @@ class AssetsManagerTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @group BrokenInHHVM
 	 * @dataProvider getGroupsForSkin
 	 */
 	public function testCheckIfGroupForSkin( $skin, $skinRegisteredInGroup, $isSkinStrict, $expectedValue ) {
@@ -123,6 +124,7 @@ class AssetsManagerTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @group BrokenInHHVM
 	 * @dataProvider checkAssetUrlForSkinDataProvider
 	 */
 	public function testCheckAssetUrlForSkin( $url, $isSkinStrict, $expectedValue ) {

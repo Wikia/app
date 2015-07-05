@@ -623,6 +623,7 @@ class MediaWikiServiceTest extends BaseTest
 
 	/**
 	 * @group Slow
+	 * @group BrokenInHHVM
 	 * @group Broken
 	 * @slowExecutionTime 0.11852 ms
 	 * One day this test will actually work as advertised.
@@ -1015,6 +1016,7 @@ class MediaWikiServiceTest extends BaseTest
 	/**
 	 * @group Slow
 	 * @group Broken
+	 * @group BrokenInHHVM
 	 * @slowExecutionTime 0.09684 ms
 	 * @covers \Wikia\Search\MediaWikiService::getMediaDetailFromPageId
 	 */
@@ -1183,6 +1185,7 @@ class MediaWikiServiceTest extends BaseTest
 	}
 
 	/**
+	 * @group BrokenInHHVM
 	 * @group Slow
 	 * @slowExecutionTime 0.16001 ms
 	 * @covers \Wikia\Search\MediaWikiService::getPageFromPageId
@@ -1224,6 +1227,7 @@ class MediaWikiServiceTest extends BaseTest
 	}
 
 	/**
+	 * @group BrokenInHHVM
 	 * @group Slow
 	 * @slowExecutionTime 0.16608 ms
 	 * @covers \Wikia\Search\MediaWikiService::getPageFromPageId
@@ -1538,6 +1542,7 @@ class MediaWikiServiceTest extends BaseTest
 	/**
 	 * @group Slow
 	 * @group Broken
+	 * @group BrokenInHHVM
 	 * @slowExecutionTime 0.08865 ms
 	 * @covers Wikia\Search\MediaWikiService::getGlobalForWiki
 	 */
@@ -1702,6 +1707,7 @@ class MediaWikiServiceTest extends BaseTest
 	}
 
 	/**
+	 * @group BrokenInHHVM
 	 * @group Slow
 	 * @slowExecutionTime 0.09075 ms
 	 * @covers Wikia\Search\MediaWikiService::getSnippetForPageId
@@ -1823,6 +1829,7 @@ class MediaWikiServiceTest extends BaseTest
 	/**
 	 * @group Slow
 	 * @group Broken
+	 * @group BrokenInHHVM
 	 * @slowExecutionTime 0.09557 ms
 	 * @covers Wikia\Search\MediaWikiService::getArticleMatchForTermAndNamespaces
 	 */
@@ -2103,6 +2110,7 @@ class MediaWikiServiceTest extends BaseTest
 	/**
 	 * @group Slow
 	 * @group Broken
+	 * @group BrokenInHHVM
 	 * @slowExecutionTime 0.08756 ms
 	 * @covers Wikia\Search\MediaWikiService::getWikiFromWikiId
 	 */
@@ -2537,6 +2545,7 @@ class MediaWikiServiceTest extends BaseTest
 
 	/**
 	 * @group Slow
+	 * @group BrokenInHHVM
 	 * @group Broken
 	 * @slowExecutionTime 0.09379 ms
 	 * @covers Wikia\Search\MediaWikiService::getVideoViewsForPageId
@@ -2652,6 +2661,7 @@ class MediaWikiServiceTest extends BaseTest
 	}
 
 	/**
+	 * @group BrokenInHHVM
 	 * @group Slow
 	 * @slowExecutionTime 0.09122 ms
 	 * @covers Wikia\Search\MediaWikiService::getVisualizationInfoForWikiId
@@ -2681,6 +2691,7 @@ class MediaWikiServiceTest extends BaseTest
 	}
 
 	/**
+	 * @group BrokenInHHVM
 	 * @group Slow
 	 * @slowExecutionTime 0.09316 ms
 	 * @covers Wikia\Search\MediaWikiService::getStatsInfoForWikiId
@@ -2736,6 +2747,7 @@ class MediaWikiServiceTest extends BaseTest
 	}
 
 	/**
+	 * @group BrokenInHHVM
 	 * @group Slow
 	 * @slowExecutionTime 0.09136 ms
 	 * @covers Wikia\Search\MediaWikiService::getDataSourceForWikiId
@@ -2764,6 +2776,7 @@ class MediaWikiServiceTest extends BaseTest
 	/**
 	 * @group Slow
 	 * @group Broken
+	 * @group BrokenInHHVM
 	 * @slowExecutionTime 0.14423 ms
 	 * @covers Wikia\Search\MediaWikiService::getMainPageTitleForWikiId
 	 */
@@ -2819,6 +2832,7 @@ class MediaWikiServiceTest extends BaseTest
 	/**
 	 * @group Slow
 	 * @group Broken
+	 * @group BrokenInHHVM
 	 * @slowExecutionTime 0.09433 ms
 	 * @covers Wikia\Search\MediaWikiService::getDescriptionTextForWikiId
 	 */
@@ -2863,6 +2877,7 @@ class MediaWikiServiceTest extends BaseTest
 	/**
 	 * @group Slow
 	 * @group Broken
+	 * @group BrokenInHHVM
 	 * @slowExecutionTime 0.09148 ms
 	 * @covers Wikia\Search\MediaWikiService::getHubForWikiId
 	 */
@@ -2886,6 +2901,7 @@ class MediaWikiServiceTest extends BaseTest
 	/**
 	 * @group Slow
 	 * @group Broken
+	 * @group BrokenInHHVM
 	 * @slowExecutionTime 0.09163 ms
 	 * @covers Wikia\Search\MediaWikiService::getSubHubForWikiId
 	 */
@@ -2908,6 +2924,7 @@ class MediaWikiServiceTest extends BaseTest
 	/**
 	 * @group Slow
 	 * @group Broken
+	 * @group BrokenInHHVM
 	 * @slowExecutionTime 0.09473 ms
 	 * @covers Wikia\Search\MediaWikiService::getMainPageTextForWikiId
 	 */

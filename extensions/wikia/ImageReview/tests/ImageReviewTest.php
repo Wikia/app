@@ -18,6 +18,7 @@ class ImageReviewTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @group BrokenInHHVM
 	 * @group Slow
 	 * @slowExecutionTime 0.08867 ms
 	 */
@@ -32,6 +33,7 @@ class ImageReviewTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @group BrokenInHHVM
 	 * @group Slow
 	 * @slowExecutionTime 0.07902 ms
 	 */

@@ -21,9 +21,9 @@ class ScavengerHuntAddItemToCacheTest extends ScavengerHuntTest {
 	}
 
 	/**
+	 * @group BrokenInHHVM
 	 * @dataProvider conditions
 	 */
-
 	public function testAddItemToCache( $articleExist, $articlesList, $cachedList, $expectedResult, $brokenCache = false ) {
 
 		// Game
@@ -39,7 +39,7 @@ class ScavengerHuntAddItemToCacheTest extends ScavengerHuntTest {
 			->will(  $this->returnValue( $articlesIdentifiers ) );
 
 		$this->mockClass( 'ScavengerHuntGame', $mockedGame );
-		$game = $this->getFakeGame();		
+		$game = $this->getFakeGame();
 
 		// Hunt
 		$scavengerHunt = $this->getMock('ScavengerHunt', array( 'getDataFromCache', 'saveDataToCache' ) );

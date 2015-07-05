@@ -78,6 +78,7 @@
 		}
 
 		/**
+		 * @group BrokenInHHVM
 		 * @group Slow
 		 * @slowExecutionTime 0.01386 ms
 		 * @dataProvider toggleFeatureDataProvider

@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * @group BrokenInHHVM
+ */
 class LyricFindControllerTest extends WikiaBaseTest {
 
 	public function setUp() {

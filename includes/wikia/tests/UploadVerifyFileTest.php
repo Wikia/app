@@ -21,6 +21,8 @@ class UploadVerifyFile extends WikiaBaseTest {
 
 	/**
 	 * @dataProvider uploadVerifyFileDataProvider
+	 *
+	 * @group BrokenInHHVM
 	 */
 	public function testUploadVerifyFile($mime, $expectedReturnVal, $uploadContent = '') {
 		if ($uploadContent !== '') {

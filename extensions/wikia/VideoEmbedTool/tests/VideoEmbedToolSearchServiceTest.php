@@ -6,27 +6,27 @@
  * @group MediaFeatures
  */
 class VideoEmbedToolSearchServiceTest extends WikiaBaseTest {
-	
+
 	/**
 	 * @covers VideoEmbedToolSearchService::getSuggestionsForArticleId
 	 */
 	public function testGetSuggestionsForArticleId() {
-		
+
 		$mockService = $this->getMockBuilder( 'VideoEmbedToolSearchService' )
 		                    ->disableOriginalConstructor()
 		                    ->setMethods( [ 'setSuggestionQueryByArticleId', 'getConfig', 'postProcessSearchResponse', 'getExpectedFields', 'getFactory', 'getSuggestionQuery' ] )
 		                    ->getMock();
-		
+
 		$mockConfig = $this->getMockBuilder( 'Wikia\Search\Config' )
 		                   ->disableOriginalConstructor()
 		                   ->setMethods( [ 'setWikiId', 'setQuery', 'setVideoEmbedToolSearch', 'setRequestedFields' ] )
 		                   ->getMock();
-		
+
 		$mockFactory = $this->getMockBuilder( 'Wikia\Search\QueryService\Factory' )
 		                    ->disableOriginalConstructor()
 		                    ->setMethods( [ 'getFromConfig' ] )
 		                    ->getMock();
-		
+
 		$mockQueryService = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\Dismax\VideoEmbedTool' )
 		                         ->disableOriginalConstructor()
 		                         ->setMethods( [ 'searchAsApi' ] )
@@ -107,32 +107,32 @@ class VideoEmbedToolSearchServiceTest extends WikiaBaseTest {
 				$mockService->getSuggestionsForArticleId( $articleId )
 		);
 	}
-	
+
 	/**
 	 * @covers VideoEmbedToolSearchService::videoSearch
 	 */
 	public function testVideoSearch() {
-		
+
 		$mockService = $this->getMockBuilder( 'VideoEmbedToolSearchService' )
 		                    ->disableOriginalConstructor()
 		                    ->setMethods( [ 'setSuggestionQueryByArticleId', 'getConfig', 'postProcessSearchResponse', 'getExpectedFields', 'getFactory', 'getSuggestionQuery' ] )
 		                    ->getMock();
-		
+
 		$mockConfig = $this->getMockBuilder( 'Wikia\Search\Config' )
 		                   ->disableOriginalConstructor()
 		                   ->setMethods( [ 'setWikiId', 'setQuery', 'setVideoSearch', 'setRequestedFields' ] )
 		                   ->getMock();
-		
+
 		$mockFactory = $this->getMockBuilder( 'Wikia\Search\QueryService\Factory' )
 		                    ->disableOriginalConstructor()
 		                    ->setMethods( [ 'getFromConfig' ] )
 		                    ->getMock();
-		
+
 		$mockQueryService = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\Dismax\Video' )
 		                         ->disableOriginalConstructor()
 		                         ->setMethods( [ 'searchAsApi' ] )
 		                         ->getMock();
-		
+
 		$query = 'notorious BIG';
 		$expectedFields = [ 'doesnt matter' ];
 		$apiResponse = [ 'also doesnt matter' ];
@@ -192,7 +192,7 @@ class VideoEmbedToolSearchServiceTest extends WikiaBaseTest {
 				$mockService->videoSearch( $query )
 		);
 	}
-	
+
 	/**
 	 * @covers VideoEmbedToolSearchService::setSuggestionQueryByArticleId
 	 */
@@ -201,12 +201,12 @@ class VideoEmbedToolSearchServiceTest extends WikiaBaseTest {
 		                    ->disableOriginalConstructor()
 		                    ->setMethods( [ 'getMwService', 'setSuggestionQuery' ] )
 		                    ->getMock();
-		
+
 		$mockMwService = $this->getMockBuilder( 'Wikia\Search\MediaWikiService' )
 		                      ->disableOriginalConstructor()
 		                      ->setMethods( [ 'getTitleStringFromPageId', 'getCanonicalPageIdFromPageId' ] )
 		                      ->getMock();
-		
+
 		$mockService
 		    ->expects( $this->once() )
 		    ->method ( 'getMwService' )
@@ -237,7 +237,7 @@ class VideoEmbedToolSearchServiceTest extends WikiaBaseTest {
 				$set->invoke( $mockService, 321 )
 		);
 	}
-	
+
 	/**
 	 * @covers VideoEmbedToolSearchService::setSuggestionQueryByArticleId
 	 */
@@ -246,16 +246,16 @@ class VideoEmbedToolSearchServiceTest extends WikiaBaseTest {
 		                    ->disableOriginalConstructor()
 		                    ->setMethods( [ 'getMwService', 'setSuggestionQuery' ] )
 		                    ->getMock();
-		
+
 		$mockMwService = $this->getMockBuilder( 'Wikia\Search\MediaWikiService' )
 		                      ->disableOriginalConstructor()
 		                      ->setMethods( [ 'getTitleStringFromPageId', 'getCanonicalPageIdFromPageId' ] )
 		                      ->getMock();
-		
+
 		$mockException = $this->getMockBuilder( 'Exception' )
 		                      ->disableOriginalConstructor()
 		                      ->getMock();
-		
+
 		$mockService
 		    ->expects( $this->once() )
 		    ->method ( 'getMwService' )
@@ -280,7 +280,7 @@ class VideoEmbedToolSearchServiceTest extends WikiaBaseTest {
 				$set->invoke( $mockService, 321 )
 		);
 	}
-	
+
 	/**
 	 * @covers VideoEmbedToolSearchService::getSuggestionQuery
 	 * @covers VideoEmbedToolSearchService::setSuggestionQuery
@@ -305,8 +305,9 @@ class VideoEmbedToolSearchServiceTest extends WikiaBaseTest {
 				$vetSearch->getSuggestionQuery()
 		);
 	}
-	
+
 	/**
+	 * @group BrokenInHHVM
 	 * @covers VideoEmbedToolSearchService::getConfig
 	 */
 	public function testGetConfigPremium() {
@@ -314,12 +315,12 @@ class VideoEmbedToolSearchServiceTest extends WikiaBaseTest {
 		               ->disableOriginalConstructor()
 		               ->setMethods( [ 'setLimit', 'setStart', 'setNamespaces', 'setRank', 'setFilterQueryByCode', 'setWikiId' ] )
 		               ->getMock();
-		
+
 		$service = $this->getMockBuilder( 'VideoEmbedToolSearchService' )
 		                ->disableOriginalConstructor()
 		                ->setMethods( [ 'getLimit', 'getStart', 'getRank', 'getSearchType' ] )
 		                ->getMock();
-		
+
 		$service
 		    ->expects( $this->at( 0 ) )
 		    ->method ( 'getLimit' )

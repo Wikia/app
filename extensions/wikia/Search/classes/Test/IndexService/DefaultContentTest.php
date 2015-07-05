@@ -13,6 +13,7 @@ use Wikia\Search\Test\BaseTest, Wikia\Search\IndexService\DefaultContent, Reflec
 class DefaultContentTest extends BaseTest
 {
 	/**
+	 * @group BrokenInHHVM
 	 * @group Slow
 	 * @slowExecutionTime 0.0834 ms
 	 * @covers Wikia\Search\IndexService\DefaultContent::Field
@@ -53,7 +54,7 @@ class DefaultContentTest extends BaseTest
 				$field->invoke( $dc, 'html' )
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.13276 ms
@@ -236,7 +237,7 @@ class DefaultContentTest extends BaseTest
 				$result
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.08447 ms
@@ -301,21 +302,21 @@ class DefaultContentTest extends BaseTest
 		    ->method ( 'getGlobal' )
 		    ->will   ( $this->returnValue( false ) )
 		;
-		
+
 		$prep = new ReflectionMethod( 'Wikia\Search\IndexService\DefaultContent', 'prepValuesFromHtml' );
 		$prep->setAccessible( true );
 
-		$expected = [ 
+		$expected = [
 			'nolang_txt' => "tam foo bar",
 			'words' => 3,
 			'html' => "tam foo bar"
     ];
-		
+
 		$this->assertEquals($expected, $prep->invoke($service, "<p>tam foo bar</p>"));
 		$this->assertEquals($expected, $prep->invoke($service, "&lt;tam foo bar"));
 		$this->assertEquals($expected, $prep->invoke($service, "&gt;tam foo bar"));
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.12441 ms
@@ -360,7 +361,7 @@ class DefaultContentTest extends BaseTest
 				$get->invoke( $mockService )
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.08268 ms
@@ -382,7 +383,7 @@ class DefaultContentTest extends BaseTest
 				$get->invoke( $service, $response )
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.08246 ms
@@ -404,7 +405,7 @@ class DefaultContentTest extends BaseTest
 				$get->invoke( $service, $response )
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.08559 ms
@@ -460,11 +461,11 @@ ENDIT;
 				$result['html_en']
 		);
 		$this->assertGreaterThanOrEqual(
-				str_word_count( $result['nolang_txt'] ), 
+				str_word_count( $result['nolang_txt'] ),
 				$result['words']
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.08387 ms
@@ -502,7 +503,7 @@ ENDIT;
 				$node->outertext
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.08582 ms
@@ -558,7 +559,7 @@ ENDIT;
 				$remove->invoke( $service, $dom )
 		);
 	}
-	
+
 
 	/**
 	 * @group Slow
@@ -597,7 +598,7 @@ ENDIT;
 				$remove->invoke( $service, $dom )
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.08371 ms
@@ -631,8 +632,9 @@ ENDIT;
 				$get->invoke( $service, $dom )
 		);
 	}
-	
+
 	/**
+	 * @group BrokenInHHVM
 	 * @group Slow
 	 * @slowExecutionTime 0.0881 ms
 	 * @covers Wikia\Search\IndexService\DefaultContent::extractInfoBoxes
@@ -664,7 +666,7 @@ ENDIT;
 		    ->will   ( $this->returnValue( array( $node ) ) )
 		;
 		$node
-		    ->expects( $this->at( 0 ) ) 
+		    ->expects( $this->at( 0 ) )
 		    ->method ( 'outertext' )
 		    ->will   ( $this->returnValue( 'foo' ) )
 		;
@@ -720,7 +722,8 @@ ENDIT;
 		);
 	}
 
-		/**
+	/**
+	 * @group BrokenInHHVM
 	 * @group Slow
 	 * @slowExecutionTime 0.0881 ms
 	 * @covers Wikia\Search\IndexService\DefaultContent::extractInfoBoxes
@@ -752,7 +755,7 @@ ENDIT;
 		    ->will   ( $this->returnValue( array( $node ) ) )
 		;
 		$node
-		    ->expects( $this->at( 0 ) ) 
+		    ->expects( $this->at( 0 ) )
 		    ->method ( 'outertext' )
 		    ->will   ( $this->returnValue( 'foo' ) )
 		;
@@ -807,7 +810,7 @@ ENDIT;
 				$extract->invoke( $service, $dom, $result )
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.08083 ms
@@ -842,7 +845,7 @@ ENDIT;
 				$get->invoke( $service )
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.08084 ms

@@ -7,6 +7,7 @@ require_once( "{$IP}/extensions/3rdparty/LyricWiki/server.php" );
 class ServerTest extends WikiaBaseTest
 {
 	/**
+	 * @group BrokenInHHVM
 	 * @covers lw_getSearchResults
 	 */
 	public function test_lw_getSearchResults() {
@@ -14,21 +15,21 @@ class ServerTest extends WikiaBaseTest
 		                   ->disableOriginalConstructor()
 		                   ->setMethods( [ 'setNamespaces', 'setQuery', 'setLimit' ] )
 		                   ->getMock();
-		
+
 		$mockFactory = $this->getMock( 'Wikia\Search\QueryService\Factory', [ 'getFromConfig' ] );
-		
+
 		$mockSearch = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\OnWiki' )
 		                   ->disableOriginalConstructor()
 		                   ->setMethods( [ 'search' ] )
 		                   ->getMock();
-		
+
 		$mockResultSet = $this->getMockBuilder( 'Wikia\Search\ResultSet\Base' )
 		                      ->disableOriginalConstructor()
 		                      ->getMock();
-		
+
 		$query = 'foo';
 		$limit = 20;
-		
+
 		$mockConfig
 		    ->expects( $this->once() )
 		    ->method ( 'setNamespaces' )
@@ -57,9 +58,9 @@ class ServerTest extends WikiaBaseTest
 		    ->method ( 'search' )
 		    ->will   ( $this->returnValue( $mockResultSet ) )
 		;
-		
+
 		// @todo handle the transformation from result set to array of titles
-		
+
 		$this->mockClass( 'Wikia\Search\Config', $mockConfig );
 		$this->mockClass( 'Wikia\Search\QueryService\Factory', $mockFactory );
 

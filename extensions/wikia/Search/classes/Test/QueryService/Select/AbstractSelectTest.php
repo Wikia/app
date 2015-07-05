@@ -758,6 +758,7 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 	}
 
 	/**
+	 * @group BrokenInHHVM
 	 * @group Slow
 	 * @slowExecutionTime 0.10668 ms
 	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::prepareResponse

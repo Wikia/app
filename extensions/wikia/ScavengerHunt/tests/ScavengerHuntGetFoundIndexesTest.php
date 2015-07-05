@@ -21,13 +21,13 @@ class ScavengerHuntGetFoundIndexesTest extends ScavengerHuntTest {
 			array( true, array( 0 => self::MOCK_TEXT, 1 => self::WRONG_ARTICLE_NAME ), array( self::WRONG_ARTICLE_NAME ), array(), true ),
 		);
 	}
-	
+
 	/**
+	 * @group BrokenInHHVM
 	 * @dataProvider conditions
 	 */
-
 	public function testGetFoundIndexes( $gameExists, $articlesList, $foundList, $expectedResult, $brokenCache = false ) {
-		
+
 		// mocking game object
 		$articlesIdentifiers = array();
 		foreach( $articlesList as $art ) {
@@ -56,7 +56,7 @@ class ScavengerHuntGetFoundIndexesTest extends ScavengerHuntTest {
 		$scavengerHunt
 			->expects( $this->any() )
 			->method( 'getDataFromCache' )
-			->will(  
+			->will(
 				$this->returnValue(
 					array(
 						'gameId' => $scavengerHunt->getHuntId(),
@@ -79,7 +79,7 @@ class ScavengerHuntGetFoundIndexesTest extends ScavengerHuntTest {
 
 		// test and assertions
 		$result = $scavengerHunt->getFoundIndexes();
-		
+
 		$this->assertEquals( $expectedResult, $result );
 	}
 }

@@ -58,6 +58,7 @@
 		}
 
 		/**
+		 * @group BrokenInHHVM
 		 * @group Slow
 		 * @slowExecutionTime 0.83832 ms
 		 * @dataProvider signupDataProvider
@@ -333,6 +334,7 @@
 		}
 
 		/**
+		 * @group BrokenInHHVM
 		 * @group Slow
 		 * @slowExecutionTime 0.65603 ms
 		 * @dataProvider changeUnconfirmedUserEmailDataProvider
@@ -509,6 +511,7 @@
 		}
 
 		/**
+		 * @group BrokenInHHVM
 		 * @group Slow
 		 * @slowExecutionTime 0.76122 ms
 		 * @dataProvider sendConfirmationEmailDataProvider

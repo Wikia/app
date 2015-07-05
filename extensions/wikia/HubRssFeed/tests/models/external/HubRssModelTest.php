@@ -38,6 +38,7 @@ class HubRssModelTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @group BrokenInHHVM
 	 * @covers  HubRssFeedModel::__construct
 	 */
 	public function testConstruct() {
@@ -64,6 +65,7 @@ class HubRssModelTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @group BrokenInHHVM
 	 * @covers  HubRssFeedModel::getServicesV3
 	 */
 	public function testGetServicesV3() {
@@ -182,6 +184,7 @@ class HubRssModelTest extends WikiaBaseTest {
 
 
 	/**
+	 * @group BrokenInHHVM
 	 * @covers  HubRssFeedModel::getRealDataV3
 	 */
 	public function testGetRealDataV3() {

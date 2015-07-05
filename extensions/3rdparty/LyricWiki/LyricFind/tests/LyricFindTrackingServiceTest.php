@@ -87,6 +87,7 @@ class LyricFindTrackingServiceTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @group BrokenInHHVM
 	 * @group Slow
 	 * @slowExecutionTime 0.11328 ms
 	 * @dataProvider trackResponseCodeProvider

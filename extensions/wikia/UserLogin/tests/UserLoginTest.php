@@ -38,6 +38,7 @@ class UserLoginTest extends UserLoginBaseTest {
 	}
 
 	/**
+	 * @group BrokenInHHVM
 	 * @group Slow
 	 * @slowExecutionTime 0.44648 ms
 	 * @dataProvider loginDataProvider
@@ -70,6 +71,7 @@ class UserLoginTest extends UserLoginBaseTest {
 	}
 
 	/**
+	 * @group BrokenInHHVM
 	 * @group Slow
 	 * @slowExecutionTime 0.50558 ms
 	 */
@@ -92,6 +94,7 @@ class UserLoginTest extends UserLoginBaseTest {
 	}
 
 	/**
+	 * @group BrokenInHHVM
 	 * @group Slow
 	 * @slowExecutionTime 0.50775 ms
 	 */
@@ -284,6 +287,7 @@ class UserLoginTest extends UserLoginBaseTest {
 	}
 
 	/**
+	 * @group BrokenInHHVM
 	 * @group Slow
 	 * @slowExecutionTime 0.49809 ms
 	 * @dataProvider mailPasswordDataProvider
@@ -418,6 +422,7 @@ class UserLoginTest extends UserLoginBaseTest {
 	}
 
 	/**
+	 * @group BrokenInHHVM
 	 * @group Slow
 	 * @slowExecutionTime 0.55212 ms
 	 * @dataProvider changePasswordDataProvider

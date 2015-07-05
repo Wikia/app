@@ -7,11 +7,11 @@ class InfoboxesServiceTest extends WikiaBaseTest
 	 */
 	public function testGetForPageIds() {
 		$service = $this->getMock( 'InfoboxesService', [ 'setExpectedIds', 'getItemsFromSearchResponse', 'getSearchResponse' ] );
-		
+
 		$expectedIds = [ 1 ];
 		$apiResponse = [ 'items' => [ '123_1' => [ 'foo' => 'bar' ] ] ];
 		$response = [ 'items' => [ 1 => [ 'foo' => 'bar' ] ] ];
-		
+
 		$service
 		    ->expects( $this->once() )
 		    ->method ( 'setExpectedIds' )
@@ -33,7 +33,7 @@ class InfoboxesServiceTest extends WikiaBaseTest
 				$service->getForPageIds( $expectedIds )
 		);
 	}
-	
+
 	/**
 	 * @covers InfoboxesService::setExpectedIds
 	 */
@@ -66,17 +66,17 @@ class InfoboxesServiceTest extends WikiaBaseTest
 				$service
 		);
 	}
-	
+
 	/**
 	 * @covers InfoboxesService::getIdQueries
 	 */
 	public function testGetIdQueries() {
 		$mwService = $this->getMock( 'Wikia\Search\MediaWikiService', [ 'getWikiId' ] );
-		
+
 		$service = $this->getMock( 'InfoboxesService', [ 'getMappedIds', 'getMwService' ] );
-		
+
 		$mappedIds = [ 456 => [ 789, 234 ] ];
-		
+
 		$service
 		    ->expects( $this->once() )
 		    ->method ( 'getMwService' )
@@ -99,7 +99,7 @@ class InfoboxesServiceTest extends WikiaBaseTest
 				$get->invoke( $service )
 		);
 	}
-	
+
 	/**
 	 * @covers InfoboxesService::getMappedIds
 	 */
@@ -151,12 +151,12 @@ class InfoboxesServiceTest extends WikiaBaseTest
 				$service
 		);
 	}
-	
+
 	/**
 	 * @covers InfoboxesService::getItemsFromSearchResponse
 	 */
 	public function testGetItemsFromSearchResponse() {
-		
+
 		$service = $this->getMock( 'InfoboxesService', [ 'getMappedIds' ] );
 		$mapped = [ 123 => [ 123 ], 234 => [ 456, 789 ], 987 => [ 889 ] ];
 		$boxes = [ 'infobox_1 | foo | bar', 'infobox_2 | baz | qux' ];
@@ -180,9 +180,10 @@ class InfoboxesServiceTest extends WikiaBaseTest
 				$get->invoke( $service, $searchResponse )
 		);
 	}
-	
+
 	/**
 	 * @group Slow
+	 * @group BrokenInHHVM
 	 * @slowExecutionTime 0.01089 ms
 	 * @covers InfoboxesService::getSearchResponse
 	 */
@@ -195,7 +196,7 @@ class InfoboxesServiceTest extends WikiaBaseTest
 		                     ->setMethods( [ 'searchAsApi' ] )
 		                     ->getMock();
 		$expected = [ 'foo' => 'bar' ]; // doesn't really matter
-		
+
 		$config
 		    ->expects( $this->at( 0 ) )
 		    ->method ( 'setDirectLuceneQuery' )
@@ -231,7 +232,7 @@ class InfoboxesServiceTest extends WikiaBaseTest
 		    ->with   ( [ 'pageid', 'infoboxes_txt' ], true )
 		    ->will   ( $this->returnValue( $expected ) )
 		;
-		
+
 		$this->mockClass( 'Wikia\Search\Config', $config );
 		$this->mockClass( 'Wikia\Search\QueryService\Factory', $factory );
 		$get = new ReflectionMethod( 'InfoboxesService', 'getSearchResponse' );
@@ -241,5 +242,5 @@ class InfoboxesServiceTest extends WikiaBaseTest
 				$get->invoke( $service )
 		);
 	}
-	
+
 }

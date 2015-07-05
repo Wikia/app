@@ -116,6 +116,8 @@ class ArticleServiceTest extends WikiaBaseTest {
 
 	/**
 	 * @covers ArticleService::getTextFromSolr
+	 *
+	 * @group BrokenInHHVM
 	 */
 	public function testGetTextFromSolr() {
 		$mockArticle = $this->getMockBuilder( 'Article' )
@@ -439,6 +441,8 @@ TEXT;
 	 * @param string $content
 	 * @param string $expected
 	 * @dataProvider cleanArticleSnippetProvider
+	 *
+	 * @group BrokenInHHVM
 	 */
 	public function testCleanArticleSnippet( $content, $expected ) {
 		/* @var $title Title */

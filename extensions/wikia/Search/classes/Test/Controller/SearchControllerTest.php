@@ -6,6 +6,8 @@ namespace Wikia\Search\Test\Controller;
 use Wikia, WikiaSearchController, ReflectionMethod, ReflectionProperty, SearchEngine, Exception, F;
 /**
  * Tests WikiaSearchController, currently in global namespace
+ *
+ * @group BrokenInHHVM
  */
 class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 
@@ -177,6 +179,7 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 	}
 
 	/**
+	 * @group BrokenInHHVM
 	 * @group Slow
 	 * @slowExecutionTime 0.16654 ms
 	 * @covers WikiaSearchController::handleArticleMatchTracking
@@ -278,6 +281,7 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 	}
 
 	/**
+	 * @group BrokenInHHVM
 	 * @group Slow
 	 * @slowExecutionTime 0.17231 ms
 	 * @covers WikiaSearchController::handleArticleMatchTracking
@@ -1147,6 +1151,7 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 	/**
 	 * @group Slow
 	 * @group Broken
+	 * @group BrokenInHHVM
 	 * @slowExecutionTime 0.08988 ms
 	 * @group UsingDB
 	 * @covers WikiaSearchController::advancedBox
@@ -1288,6 +1293,7 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 	/**
 	 * @group Slow
 	 * @group Broken
+	 * @group BrokenInHHVM
 	 * @slowExecutionTime 0.08337 ms
 	 * @covers WikiaSearchController::setNamespacesFromRequest
 	 */
@@ -1336,6 +1342,7 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 	/**
 	 * @group Slow
 	 * @group Broken
+	 * @group BrokenInHHVM
 	 * @slowExecutionTime 0.08119 ms
 	 * @covers WikiaSearchController::setNamespacesFromRequest
 	 */
@@ -1385,6 +1392,7 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 	/**
 	 * @group Slow
 	 * @group Broken
+	 * @group BrokenInHHVM
 	 * @slowExecutionTime 0.07994 ms
 	 * @covers WikiaSearchController::setNamespacesFromRequest
 	 */
@@ -1437,6 +1445,7 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 	}
 
 	/**
+	 * @group BrokenInHHVM
 	 * @group Slow
 	 * @slowExecutionTime 0.08516 ms
 	 * @covers WikiaSearchController::videoSearch
@@ -1542,6 +1551,7 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 	}
 
 	/**
+	 * @group BrokenInHHVM
 	 * @group Slow
 	 * @slowExecutionTime 0.08339 ms
 	 * @covers WikiaSearchController::searchVideosByTitle
@@ -1637,6 +1647,7 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 	}
 
 	/**
+	 * @group BrokenInHHVM
 	 * @group Slow
 	 * @slowExecutionTime 0.0823 ms
 	 * @covers WikiaSearchController::getPages
@@ -1791,6 +1802,7 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 	}
 
 	/**
+	 * @group BrokenInHHVM
 	 * @group Slow
 	 * @slowExecutionTime 0.07818 ms
 	 * @covers WikiaSearchController::getSearchConfigFromRequest
@@ -2003,6 +2015,7 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 	}
 
 	/**
+	 * @group BrokenInHHVM
 	 * @group Slow
 	 * @slowExecutionTime 0.07834 ms
 	 * @covers WikiaSearchController::getSearchConfigFromRequest

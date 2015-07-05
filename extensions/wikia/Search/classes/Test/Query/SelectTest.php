@@ -21,10 +21,11 @@ class SelectTest extends BaseTest
 				$query
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @group Broken
+	 * @group BrokenInHHVM
 	 * @slowExecutionTime 0.10945 ms
 	 * @covers Wikia\Search\Query\Select::getSanitizedQuery
 	 */
@@ -55,7 +56,7 @@ class SelectTest extends BaseTest
 				$query
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.10793 ms
@@ -73,7 +74,7 @@ class SelectTest extends BaseTest
 				$mockQuery->getQueryForHtml()
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.10823 ms
@@ -98,7 +99,7 @@ class SelectTest extends BaseTest
 				$mockQuery->hasTerms()
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.09127 ms
@@ -118,7 +119,7 @@ class SelectTest extends BaseTest
 				$query
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.09147 ms
@@ -144,7 +145,7 @@ class SelectTest extends BaseTest
 				$query->getNamespacePrefix()
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.09197 ms
@@ -155,16 +156,16 @@ class SelectTest extends BaseTest
 		              ->disableOriginalConstructor()
 		              ->setMethods( [ 'initializeNamespaceData' ] )
 		              ->getMock();
-		
+
 		$query
 		    ->expects( $this->once() )
 		    ->method ( 'initializeNamespaceData' )
 		;
-		
+
 		$attr = new ReflectionProperty( $query, 'namespacePrefix' );
 		$attr->setAccessible( true );
 		$attr->setValue( $query, 'foo' );
-		
+
 		$this->assertAttributeEmpty(
 				'namespaceChecked',
 				$query
@@ -179,9 +180,9 @@ class SelectTest extends BaseTest
 		$this->assertEquals(
 				'foo',
 				$query->getNamespacePrefix()
-		); 
+		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.09139 ms
@@ -204,7 +205,7 @@ class SelectTest extends BaseTest
 				$query->getSolrQuery()
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.09074 ms

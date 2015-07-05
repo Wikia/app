@@ -100,6 +100,7 @@ class WikiaHomePageTest extends WikiaBaseTest {
 
 
 	/**
+	 * @group BrokenInHHVM
 	 * @group Slow
 	 * @slowExecutionTime 0.053 ms
 	 */

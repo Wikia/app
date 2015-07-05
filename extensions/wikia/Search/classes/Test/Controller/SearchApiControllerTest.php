@@ -40,6 +40,7 @@ class SearchApiControllerTest extends BaseTest
 	}
 
 	/**
+	 * @group BrokenInHHVM
 	 * @group Slow
 	 * @slowExecutionTime 0.08631 ms
 	 * @covers SearchApiController::getConfigFromRequest
@@ -331,6 +332,7 @@ class SearchApiControllerTest extends BaseTest
 	}
 
 	/**
+	 * @group BrokenInHHVM
 	 * @group Slow
 	 * @slowExecutionTime 0.08567 ms
 	 * @covers SearchApiController::setResponseFromConfig

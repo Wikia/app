@@ -246,6 +246,7 @@ class IndexerTest extends BaseTest
 	}
 
 	/**
+	 * @group BrokenInHHVM
 	 * @group Slow
 	 * @slowExecutionTime 0.09558 ms
 	 * @covers Wikia\Search\Indexer::reindexWiki

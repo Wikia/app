@@ -5,6 +5,7 @@ class MastheadTest extends WikiaBaseTest {
 	/**
 	 * Test Masthead::getPurgeUrl method
 	 *
+	 * @group BrokenInHHVM
 	 * @group UsingDB
 	 * @dataProvider getPurgeUrlDataProvider
 	 *

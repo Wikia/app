@@ -8,7 +8,7 @@ use Wikia\Search\Hooks;
  * Tests hooks related to Wikia\Search
  */
 class HooksTest extends BaseTest {
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.08068 ms
@@ -64,8 +64,9 @@ class HooksTest extends BaseTest {
 		        'Wikia\Search\Hooks::onWikiaMobileAssetsPackages shoudl append the value "wikiasearch_scss_wikiamobile" to the jsBodyPackages array.'
 		);
 	}
-	
+
 	/**
+	 * @group BrokenInHHVM
 	 * @group Slow
 	 * @slowExecutionTime 0.08008 ms
 	 * @covers Wikia\Search\Hooks::onArticleDeleteComplete
@@ -90,8 +91,9 @@ class HooksTest extends BaseTest {
 				$mockHooks->onArticleDeleteComplete( $mockArticle, $mockUser, 'why not', 123 )
 		);
 	}
-	
+
 	/**
+	 * @group BrokenInHHVM
 	 * @group Slow
 	 * @slowExecutionTime 0.09188 ms
 	 * @covers Wikia\Search\Hooks::onArticleSaveComplete
@@ -135,8 +137,9 @@ class HooksTest extends BaseTest {
 				$mockHooks->onArticleSaveComplete( $mockArticle, $mockUser, 'why not', 'yup', 0, 0, 'foo', $whatevs, $mockRev, $whatevs2, $whatevs2 )
 		);
 	}
-	
+
 	/**
+	 * @group BrokenInHHVM
 	 * @group Slow
 	 * @slowExecutionTime 0.08008 ms
 	 * @covers Wikia\Search\Hooks::onArticleUndelete
@@ -166,8 +169,9 @@ class HooksTest extends BaseTest {
 				$mockHooks->onArticleUndelete( $mockTitle, 0 )
 		);
 	}
-	
+
 	/**
+	 * @group BrokenInHHVM
 	 * @group Slow
 	 * @slowExecutionTime 0.08024 ms
 	 * @covers Wikia\Search\Hooks::onWikiFactoryPublicStatusChange
@@ -197,7 +201,7 @@ class HooksTest extends BaseTest {
 				$hooks->onWikiFactoryPublicStatusChange( $status, $wid, 'why not' )
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.07897 ms
@@ -222,8 +226,9 @@ class HooksTest extends BaseTest {
 		$this->assertArrayHasKey( 'enableGoSearch', $prefs );
 		$this->assertArrayHasKey( 'searchAllNamespaces', $prefs );
 	}
-	
+
 	/**
+	 * @group BrokenInHHVM
 	 * @group Slow
 	 * @slowExecutionTime 0.09599 ms
 	 * @covers Wikia\Search\Hooks::onLinkEnd
@@ -235,11 +240,11 @@ class HooksTest extends BaseTest {
 		                  ->disableOriginalConstructor()
 		                  ->setMethods( [ 'getArticleId' ] )
 		                  ->getMock();
-		
+
 		$mockSkin = $this->getMockBuilder( 'Skin' )
 		                 ->disableOriginalConstructor()
 		                 ->getMock();
-		
+
 		$mockTitle
 		    ->expects( $this->once() )
 		    ->method ( 'getArticleId' )

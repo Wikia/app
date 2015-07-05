@@ -204,6 +204,7 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 	/**
 	 * Test getContext
 	 *
+	 * @group BrokenInHHVM
 	 * @covers AdEngine2ContextService::getContext
 	 * @dataProvider adContextDataProvider
 	 */

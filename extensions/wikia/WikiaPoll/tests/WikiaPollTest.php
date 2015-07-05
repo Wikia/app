@@ -7,6 +7,7 @@ class WikiaPollTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @group BrokenInHHVM
 	 * @group Slow
 	 * @slowExecutionTime 0.18718 ms
 	 */
@@ -135,6 +136,7 @@ class WikiaPollTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @group BrokenInHHVM
 	 * @group Slow
 	 * @slowExecutionTime 0.14959 ms
 	 */

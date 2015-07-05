@@ -9,6 +9,7 @@ use Wikia, ReflectionProperty, ReflectionMethod;
  */
 class DependenciesTest extends Wikia\Search\Test\BaseTest {
 	/**
+	 * @group BrokenInHHVM
 	 * @group Slow
 	 * @slowExecutionTime 0.11284 ms
 	 * @covers Wikia\Search\ResultSet\Factory::get
@@ -18,26 +19,26 @@ class DependenciesTest extends Wikia\Search\Test\BaseTest {
 		                ->disableOriginalConstructor()
 		                ->setMethods( null )
 		                ->getMock();
-		
+
 		$mockDc = $this->getMockBuilder( 'Wikia\Search\ResultSet\DependencyContainer' )
 		               ->disableOriginalConstructor()
 		               ->setMethods( array( 'getConfig', 'getResult', 'getService' ) )
 		               ->getMock();
-		
+
 		$mockService = $this->getMock( 'Wikia\Search\MediaWikiService', array( 'getWikiMatchByHost' ) );
-		
+
 		$mockEmptyResult = $this->getMockBuilder( 'Solarium_Result_Select_Empty' )
 		                   ->disableOriginalConstructor()
 		                   ->getMock();
-		
+
 		$mockResult = $this->getMockBuilder( 'Solarium_Result_Select' )
 		                   ->disableOriginalConstructor()
 		                   ->getMock();
-		
+
 		$mockMatch = $this->getMockBuilder( 'Wikia\Search\Match\Wiki' )
 		                  ->disableOriginalConstructor()
 		                  ->getMock();
-		
+
 		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'getInterWiki', 'getQueryService' ) );
 		$pcf = $this->getMock( 'Wikia\Search\ProfiledClassFactory', [ 'get' ] );
 		$setMockStrings = array( 'Base', 'EmptySet' );
@@ -129,7 +130,7 @@ class DependenciesTest extends Wikia\Search\Test\BaseTest {
 				$factory->get( $mockDc )
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.11218 ms
@@ -178,5 +179,5 @@ class DependenciesTest extends Wikia\Search\Test\BaseTest {
 			);
 		}
 	}
-	
+
 }

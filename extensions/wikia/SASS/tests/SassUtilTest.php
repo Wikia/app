@@ -18,6 +18,7 @@ class SassUtilTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @group BrokenInHHVM
 	 * @dataProvider isRTLProvider
 	 */
 	public function testIsRTL( $userRTL, $wikiRTL, $expected ) {

@@ -13,6 +13,7 @@ class LyricFindTrackingTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @group BrokenInHHVM
 	 * @dataProvider pageIsTrackableProvider
 	 * @param $ns int namespace
 	 * @param $action string action=... value

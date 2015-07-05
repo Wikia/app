@@ -233,6 +233,7 @@ class MatchTest extends BaseTest {
 	}
 
 	/**
+	 * @group BrokenInHHVM
 	 * @group Slow
 	 * @slowExecutionTime 0.08899 ms
 	 * @covers Wikia\Search\Match\Wiki::createResult

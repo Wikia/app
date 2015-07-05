@@ -15,13 +15,13 @@ class ScavengerHuntGetFinalModalArrayTest extends ScavengerHuntTest {
 			array( true, array( 0, 1 ), array( 1 ), false )
 		);
 	}
-	
+
 	/**
+	 * @group BrokenInHHVM
 	 * @dataProvider conditions
 	 */
-
 	public function testGetFinalModalArray( $gameExists, $articles, $foundArticles, $expectedResult ) {
-		
+
 		// mocking game object
 		// get articles
 		$mockedGame = $this->getMock( 'ScavengerHuntGame', array( 'getArticles' ), array( $this->app ) );

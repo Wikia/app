@@ -269,6 +269,8 @@ class SolrDocumentServiceTest extends WikiaBaseTest
 
 	/**
 	 * @covers SolrDocumentService::getConfig
+	 *
+	 * @group BrokenInHHVM
 	 */
 	public function testGetConfigCrossWiki() {
 		$ds = $this->getMock( 'SolrDocumentService', [ 'getCrossWiki' ] );
@@ -300,6 +302,8 @@ class SolrDocumentServiceTest extends WikiaBaseTest
 
 	/**
 	 * @covers SolrDocumentService::getConfig
+	 *
+	 * @group BrokenInHHVM
 	 */
 	public function testGetConfigMain() {
 		$ds = $this->getMock( 'SolrDocumentService', [ 'getCrossWiki' ] );

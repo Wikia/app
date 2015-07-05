@@ -12,6 +12,7 @@ class CreateNewWikiControllerTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @group BrokenInHHVM
 	 * @group Slow
 	 * @slowExecutionTime 0.07 ms
 	 * @group hyun

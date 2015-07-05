@@ -20,18 +20,18 @@ class ScavengerHuntMarkItemsAsFoundTest extends ScavengerHuntTest {
 
 		return $finalArray;
 	}
-	
+
 	/**
+	 * @group BrokenInHHVM
 	 * @dataProvider conditions
 	 */
-
 	public function testMarkItemsAsFound( $exists, $huntId, $emptyresponse ) {
 		$mockedTitle = $this->getMock( 'Title', array('exists') );
 		$mockedTitle
 			->expects( $this->any() )
 			->method( 'exists' )
 			->will(  $this->returnValue( $exists ) );
-		
+
 		$this->mockClass( 'Title', $mockedTitle, 'newFromText' );
 		$this->mockDatabaseResponse( $emptyresponse );
 
