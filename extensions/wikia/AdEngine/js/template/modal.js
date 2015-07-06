@@ -18,6 +18,7 @@ define('ext.wikia.adEngine.template.modal', [
 	 * @param {string} params.code - code to put into Lightbox
 	 * @param {number} params.width - desired width of the Lightbox
 	 * @param {number} params.height - desired height of the Lightbox
+	 * @param {boolean} params.scalable - extend iframe to maximum sensible size Lightbox (keeping the aspect ratio)
 	 */
 	function show(params) {
 		log(['show', params], 'debug', logGroup);
@@ -30,7 +31,16 @@ define('ext.wikia.adEngine.template.modal', [
 
 		if (skin === 'mercury') {
 			log(['showNew mobile (Mercury) modal'], 'debug', logGroup);
-			win.Mercury.Modules.Ads.getInstance().openLightbox(createAdIframe(params));
+
+			var adIframe = createAdIframe(params);
+
+			if (params.scalable) {
+				log(['showNew scale the ad'], 'debug', logGroup);
+
+				adIframe = scaleAdIframe(adIframe, params)
+			}
+
+			win.Mercury.Modules.Ads.getInstance().openLightbox(adIframe);
 		}
 	}
 
@@ -62,6 +72,12 @@ define('ext.wikia.adEngine.template.modal', [
 			width: params.width,
 			classes: 'wikia-ad-iframe'
 		});
+	}
+
+	function scaleAdIframe(adIframe, params) {
+		var ratio = Math.min(win.innerWidth / params.width, win.innerHeight / params.height);
+		adIframe.style.transform = 'scale(' + ratio + ')';
+		return adIframe;
 	}
 
 	return {
