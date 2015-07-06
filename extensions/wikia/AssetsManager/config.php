@@ -1647,14 +1647,6 @@ $config['imagedrop_scss'] = array(
 
 /** AnalyticsEngine **/
 /** Note: this group is also used in Oasis! */
-$config['analytics_gas_js'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'wikiamobile', 'venus' ],
-	'assets' => [
-		'//extensions/wikia/AnalyticsEngine/js/analytics.js'
-	]
-);
-
 $config['universal_analytics_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'wikiamobile', 'venus' ],
