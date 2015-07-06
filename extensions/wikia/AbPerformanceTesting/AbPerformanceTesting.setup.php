@@ -72,9 +72,8 @@ $wgAbPerformanceTestingExperiments = [];
 
 /**
  * Wikia\\AbPerformanceTesting\\Experiments\\BackendDelay
- *
- * Add a delay of 0 / 100 / 200 / 300 / 400 ms (for 1% of traffic each)
  */
+/**
 $wgAbPerformanceTestingExperiments['backend_delay_0'] = [
 	'handler' => 'Wikia\\AbPerformanceTesting\\Experiments\\BackendDelay',
 	'params' => [
@@ -118,23 +117,12 @@ $wgAbPerformanceTestingExperiments['backend_delay_3'] = [
 		'traffic' => [30, 39],
 	]
 ];
-
-$wgAbPerformanceTestingExperiments['backend_delay_4'] = [
-	'handler' => 'Wikia\\AbPerformanceTesting\\Experiments\\BackendDelay',
-	'params' => [
-		'delay' => 400,
-	],
-	'criteria' => [
-		'oasisArticles' => true,
-		'traffic' => [40, 49],
-	]
-];
+**/
 
 /**
  * Wikia\\AbPerformanceTesting\\Experiments\\FrontendDelay
- *
- * Add a delay of 0 / 200 / 400 / 600 / 800 ms (for 1% of traffic each)
  */
+/**
 $wgAbPerformanceTestingExperiments['frontend_delay_0'] = [
 	'handler' => 'Wikia\\AbPerformanceTesting\\Experiments\\FrontendDelay',
 	'params' => [
@@ -149,7 +137,7 @@ $wgAbPerformanceTestingExperiments['frontend_delay_0'] = [
 $wgAbPerformanceTestingExperiments['frontend_delay_1'] = [
 	'handler' => 'Wikia\\AbPerformanceTesting\\Experiments\\FrontendDelay',
 	'params' => [
-		'delay' => 200,
+		'delay' => 100,
 	],
 	'criteria' => [
 		'oasisArticles' => true,
@@ -160,7 +148,7 @@ $wgAbPerformanceTestingExperiments['frontend_delay_1'] = [
 $wgAbPerformanceTestingExperiments['frontend_delay_2'] = [
 	'handler' => 'Wikia\\AbPerformanceTesting\\Experiments\\FrontendDelay',
 	'params' => [
-		'delay' => 400,
+		'delay' => 200,
 	],
 	'criteria' => [
 		'oasisArticles' => true,
@@ -171,21 +159,11 @@ $wgAbPerformanceTestingExperiments['frontend_delay_2'] = [
 $wgAbPerformanceTestingExperiments['frontend_delay_3'] = [
 	'handler' => 'Wikia\\AbPerformanceTesting\\Experiments\\FrontendDelay',
 	'params' => [
-		'delay' => 600,
+		'delay' => 300,
 	],
 	'criteria' => [
 		'oasisArticles' => true,
 		'traffic' => [530, 539],
 	]
 ];
-
-$wgAbPerformanceTestingExperiments['frontend_delay_4'] = [
-	'handler' => 'Wikia\\AbPerformanceTesting\\Experiments\\FrontendDelay',
-	'params' => [
-		'delay' => 800,
-	],
-	'criteria' => [
-		'oasisArticles' => true,
-		'traffic' => [540, 549],
-	]
-];
+**/
