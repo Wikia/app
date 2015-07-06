@@ -239,7 +239,7 @@ require(['wikia.window', 'jquery', 'wikia.nirvana', 'wikia.tracker', 'JSMessages
 							// happens after blur event so value passed to loadImage is wrong.
 							// With setTimeout we are waiting for correct value to appear inside input
 							setTimeout(function() {
-								loadImage($imageForSection, $.trim(self.value).replace(/ /g, '_'))
+								loadImage($imageForSection, $(self).val())
 							}, 500);
 						}
 					} else {
