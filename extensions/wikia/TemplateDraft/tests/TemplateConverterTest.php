@@ -27,7 +27,7 @@ class TemplateConverterTest extends WikiaBaseTest {
 ! class="infoboxheading" colspan="2" | {{{name|}}}
 {{#if:{{{born|}}}|
 {{!}}-
-{{!}} class="infoboxlabel" {{!}} Born
+{{!}} class="infoboxlabel" {{!}} Born label
 {{!}} class="infoboxcell" {{!}}
 {{{born|}}}
 {{!}}-
@@ -37,7 +37,7 @@ class TemplateConverterTest extends WikiaBaseTest {
 		$fullInfoboxOutput = '<infobox>
 	<image source="image"/>
 	<title source="name"><default>{{PAGENAME}}</default></title>
-	<data source="born"><label>born</label></data>
+	<data source="born"><label>Born label</label></data>
 </infobox>
 ';
 
