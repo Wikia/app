@@ -229,7 +229,7 @@ class TemplateConverter {
 	}
 
 	/**
-	 * Check if label for template variable exists and add it's value
+	 * Check if label for template variable exists and add its value
 	 *
 	 * @param $templateVariables
 	 * @param $content
