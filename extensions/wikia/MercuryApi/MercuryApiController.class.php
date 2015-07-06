@@ -303,12 +303,18 @@ class MercuryApiController extends WikiaController {
 		$this->response->setCacheValidity( self:: WIKI_VARIABLES_CACHE_TTL );
 	}
 
-	private function getRedirectTitle() {
+	/**
+	 * @desc Returns redirected article or null
+	 *
+	 * @return mixed
+	 * @throws BadRequestApiException
+	 * @throws NotFoundApiException
+	 */
+	public function getRedirectedTitleFromRequest() {
 		$title = $this->getTitleFromRequest();
 
 		if ( $title->isRedirect() ) {
-			$article = Article::newFromID( $title->getArticleId() );
-			return $article->getRedirectTarget();
+			return Article::newFromID( $title->getArticleId() )->getRedirectTarget();
 		}
 
 		return null;
@@ -322,12 +328,12 @@ class MercuryApiController extends WikiaController {
 		global $wgEnableMainPageDataMercuryApi;
 
 		try {
-			$title = $this->getRedirectTitle();
-			$data[ 'redirected' ] = true;
+			$title = $this->getRedirectedTitleFromRequest();
 
-			if ( $title === null ) {
+			if ( $title instanceof Title ) {
+				$data[ 'redirected' ] = true;
+			} else {
 				$title = $this->getTitleFromRequest();
-				unset ($data[ 'redirected' ] );
 			}
 
 			$articleId = $title->getArticleId();
