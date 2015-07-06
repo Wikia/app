@@ -31,6 +31,8 @@ class WikiaMockProxy {
 	 */
 	public static $instance;
 
+	public static $patches = [];
+
 	protected $enabled = false;
 
 	protected $mocks = array();
@@ -157,6 +159,27 @@ class WikiaMockProxy {
 				$className = $parts[1];
 				$methodName = $parts[2];
 				$savedName = self::SAVED_PREFIX . $methodName;
+				$methodString = "{$className}::{$methodName}";
+				if ( wfIsHHVM() ) {
+					if ( $state ) { // enable
+						is_callable( $methodString );
+						self::$patches[$methodString] = Patchwork\replace( $methodString, function () use ( $type, $id ) {
+							$arguments = func_get_args();
+							$context = null;
+
+							if ( $type === WikiaMockProxy::DYNAMIC_METHOD ) {
+								$context = $this;
+							}
+
+							return WikiaMockProxy::$instance->execute( $type, $id, $arguments, $context );
+						} );
+					} else { // disable
+						if ( isset( self::$patches[$methodString] ) ) {
+							Patchwork\undo( self::$patches[$methodString] );
+						}
+					}
+					break;
+				}
 				if ( $state ) { // enable
 					is_callable( "{$className}::{$methodName}" );
 					$flags = RUNKIT_ACC_PUBLIC | ( $type == self::STATIC_METHOD ? RUNKIT_ACC_STATIC : 0);
@@ -172,6 +195,21 @@ class WikiaMockProxy {
 				list($namespace,$baseName) = self::parseGlobalFunctionName($functionName);
 				$functionName = $namespace . $baseName;
 				$savedName = $namespace . self::SAVED_PREFIX . $baseName;
+				if ( wfIsHHVM() ) {
+					if ( $state ) { // enable
+						self::$patches[$functionName] = Patchwork\replace( $functionName, function () use ( $type, $id ) {
+							$arguments = func_get_args();
+
+							return WikiaMockProxy::$instance->execute( $type, $id, $arguments );
+						} );
+					} else { // disable
+						if ( isset( self::$patches[$functionName] ) ) {
+							Patchwork\undo( self::$patches[$functionName] );
+						}
+					}
+					break;
+				}
+
 				if ( $state ) { // enable
 					$tempName = "WikiaMockProxyTempFuncName"; // workaround for namespaces functions
 					runkit_function_rename($functionName, $savedName);

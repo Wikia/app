@@ -1623,3 +1623,12 @@ function mb_pathinfo( $filepath ) {
 	}
 	return $ret;
 }
+
+/**
+ * Check if we are running under HHVM
+ *
+ * @return bool
+ */
+function wfIsHHVM() {
+	return defined( 'HHVM_VERSION' );
+}
