@@ -4,7 +4,11 @@ class TemplateConverter {
 
 	const CONVERSION_MARKER = 'conversion';
 
-	const TEMPLATE_VARIABLE_REGEX = '/{{{([^|{}]+)(\|([^{}]*|.*{{.*}}.*))?}}}/';
+	const
+		TEMPLATE_VARIABLE_PATTERN = '/{{{([^|{}]+)(\|([^{}]*|.*{{.*}}.*))?}}}/',
+		TABLE_ROWS_PATTERN = '/<tr.*?>.*?<\/tr>/s',
+		ROW_VALUES_PATTERN = '/<tr.*?><t[d|h].*?>(.*?)<\/t[d|h].*><t[d|h].*?>(.*?)<\/t[d|h]><\/tr>/s';
+
 
 	private $title; // Title object of the template we're converting
 
@@ -46,15 +50,33 @@ class TemplateConverter {
 	}
 
 	/**
-	 * Performs a conversion to a template with a portable infobox.
+	 * Performs a conversion to a template with a portable infobox
 	 *
 	 * @param $content
 	 * @return string
 	 */
 	public function convertAsInfobox( $content ) {
-		$draft = "<infobox>\n";
+		$templateVariables =  $this->getTemplateVariables( $content );
+		$content = $this->prepareContent( $content );
 
-		$variables = $this->getTemplateVariables( $content );
+		preg_match_all( self::TABLE_ROWS_PATTERN, $content, $rows );
+		$values = $this->getVariablesFromRows( $rows );
+
+		$templateVariables = $this->prepareVariableLabels( $values, $templateVariables );
+
+		$draft = $this->prepareDraft( $templateVariables );
+
+		return $draft;
+	}
+
+	/**
+	 * Prepares draft with infobox template based on passed variables
+	 *
+	 * @param $variables
+	 * @return string
+	 */
+	public function prepareDraft( $variables ) {
+		$draft = "<infobox>\n";
 
 		foreach ( $variables as $variable ) {
 			$lcVarName = strtolower( $variable['name'] );
@@ -81,9 +103,8 @@ class TemplateConverter {
 	 * @return array
 	 */
 	public function getTemplateVariables( $content ) {
-		$templateVariables = [];
+		preg_match_all( self::TEMPLATE_VARIABLE_PATTERN, $content, $templateVariables );
 
-		preg_match_all( self::TEMPLATE_VARIABLE_REGEX, $content, $templateVariables );
 		$variables = $this->prepareVariables( $templateVariables );
 
 		return $variables;
@@ -158,6 +179,74 @@ class TemplateConverter {
 		}
 
 		return $variables;
+	}
+
+	/**
+	 * Prepares content in special format.
+	 * It doesn't parse template variables to extract them later.
+	 *
+	 * @param $content
+	 * @return string
+	 */
+	private function prepareContent( $content ) {
+		global $wgUser;
+
+		$ParserPool = \ParserPool::get();
+		$ParserPool->startExternalParse( $this->title, \ParserOptions::newFromUser( $wgUser ), \Parser::OT_PLAIN );
+
+		$frame = $ParserPool->getPreprocessor()->newFrame();
+		$dom = $ParserPool->preprocessToDom( $content );
+		$content = $frame->expand( $dom, PPFrame::NO_ARGS );
+		$content = $ParserPool->doTableStuff( $content );
+
+		return $content;
+	}
+
+	/**
+	 * Check if there is a row with template variable and label.
+	 * We assume if there is a table row and in one of the cell is template variable,
+	 * text inside second one is treated as a label.
+	 *
+	 * @param $rows
+	 * @return array
+	 */
+	private function getVariablesFromRows( $rows ) {
+		$values = [];
+
+		if ( !empty( $rows[0] ) ) {
+			foreach( $rows[0] as $row ) {
+				$row = str_replace( ["\n", "\r"], '', $row);
+				preg_match( self::ROW_VALUES_PATTERN, $row, $vars );
+
+				if ( !empty( $vars[1] ) && !empty( $vars[2] ) ) {
+					unset( $vars[0] );
+					$values[] = $vars;
+				}
+			}
+		}
+
+		return $values;
+	}
+
+	/**
+	 * Check if label for template variable exists and add it's value
+	 *
+	 * @param $templateVariables
+	 * @param $content
+	 * @return array
+	 */
+	private function prepareVariableLabels( $variables, $templateVariables ) {
+		foreach( $variables as $variable ) {
+			if ( !empty( $variable[2] ) ) {
+				preg_match( self::TEMPLATE_VARIABLE_PATTERN, $variable[2], $templateName );
+
+				if ( !empty( $templateName[1] ) && !empty( $variable[1] ) ) {
+					$templateVariables[$templateName[1]]['label'] = $variable[1];
+				}
+			}
+		}
+
+		return $templateVariables;
 	}
 
 	public function generatePreviewSection( $content ) {
