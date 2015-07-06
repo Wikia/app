@@ -38,6 +38,20 @@ class InsightsUnconvertedInfoboxesModel extends InsightsQuerypageModel {
 		return false;
 	}
 
+	public function hasAltAction() {
+		return class_exists( 'TemplateConverter' );
+	}
+
+	public function getAltActionUrl( Title $title ) {
+		$subpage = Title::newFromText( $title->getText() . "/Draft", NS_TEMPLATE );
+
+		return $subpage->getFullUrl( [ 'action' => 'edit' ] );
+	}
+
+	public function altActionLinkMessage() {
+		return 'insights-label-altaction-infoboxes';
+	}
+
 	/**
 	 * Checks if a given article has been fixed by a user
 	 * inside a productivity loop.

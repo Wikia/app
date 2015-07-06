@@ -173,10 +173,11 @@ class EditPageLayoutHelper {
 	static public function isCodePage( Title $articleTitle ) {
 		$namespace = $articleTitle->getNamespace();
 
-		return $articleTitle->isCssOrJsPage()
-				|| $articleTitle->isCssJsSubpage()
-				// Lua module
-				|| $namespace === NS_MODULE;
+		return ( $articleTitle->isCssOrJsPage()
+			|| $articleTitle->isCssJsSubpage()
+			|| $namespace === NS_MODULE
+			|| self::isInfoboxTemplate( $articleTitle )
+		);
 	}
 
 	/**
@@ -189,6 +190,17 @@ class EditPageLayoutHelper {
 		global $wgEnableEditorSyntaxHighlighting;
 
 		return self::isCodePage( $articleTitle ) && $wgEnableEditorSyntaxHighlighting;
+	}
+
+	static public function isInfoboxTemplate( Title $title ) {
+		$namespace = $title->getNamespace();
+
+		if ( $namespace === NS_TEMPLATE && class_exists( 'TemplateClassificationController' ) ) {
+			$tc = new TemplateClassificationController( $title );
+			return $tc->isType( $tc::TEMPLATE_INFOBOX ) || TemplateDraftHelper::isTitleDraft( $title );
+		}
+
+		return false;
 	}
 
 	/**
@@ -216,11 +228,15 @@ class EditPageLayoutHelper {
 	 * @return bool
 	 */
 	public function showMobilePreview( Title $title ) {
-		$blacklistedPage = self::isCodePage( $title )
+		$blacklistedPage = ( self::isCodePageWithoutPreview( $title ) )
 				|| $title->isMainPage()
 				|| NavigationModel::isWikiNavMessage( $title );
 
 		return !$blacklistedPage;
+	}
+
+	public static function isCodePageWithoutPreview( Title $title ) {
+		return self::isCodePage( $title ) && $title->getNamespace() !== NS_TEMPLATE;
 	}
 
 	/**
@@ -237,6 +253,7 @@ class EditPageLayoutHelper {
 		$this->addJsVariable( 'aceScriptsPath', $aceUrlParts['path'] );
 
 		$this->addJsVariable( 'wgEnableCodePageEditor', true );
+		$this->addJsVariable( 'showPagePreview', self::showMobilePreview( $title ));
 
 		if ( $namespace === NS_MODULE ) {
 			$type = 'lua';
@@ -244,6 +261,8 @@ class EditPageLayoutHelper {
 			$type = 'css';
 		} elseif ( $title->isJsPage() || $title->isJsSubpage() ) {
 			$type = 'javascript';
+		} elseif ( self::isInfoboxTemplate( $title ) ) {
+			$type = 'xml';
 		}
 
 		$this->addJsVariable( 'codePageType', $type );

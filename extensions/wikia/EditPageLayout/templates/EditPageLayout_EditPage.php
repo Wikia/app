@@ -125,10 +125,10 @@
 								</div>
 							<?php endif ?>
 							<nav class="buttons">
-								<?php if ( $pagetype == 'codepage' ): ?>
-									<?= $app->renderView( 'EditPageLayout', 'CodeButtons'); ?>
-								<?php else: ?>
+								<?php if ( $showMobilePreview ): ?>
 									<?= $app->renderView( 'EditPageLayout', 'Buttons', [ 'showMobilePreview' => $showMobilePreview ]); ?>
+								<?php else: ?>
+									<?= $app->renderView( 'EditPageLayout', 'CodeButtons'); ?>
 								<?php endif ?>
 							</nav>
 						</div>
