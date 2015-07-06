@@ -18,7 +18,7 @@ define('ext.wikia.adEngine.template.modal', [
 	 * @param {string} params.code - code to put into Lightbox
 	 * @param {number} params.width - desired width of the Lightbox
 	 * @param {number} params.height - desired height of the Lightbox
-	 * @param {boolean} params.scalable - extend iframe to maximum sensible size Lightbox (keeping the aspect ratio)
+	 * @param {boolean} params.scalable - extend iframe to maximum sensible size of the Lightbox
 	 */
 	function show(params) {
 		log(['show', params], 'debug', logGroup);
