@@ -3,21 +3,23 @@
 class TemplateDraftController extends WikiaController {
 
 	/**
-	 * Converts the content of the template according to the given flags.
-	 *
-	 * @param $content
-	 * @param $flags Array
+	 * Converts the content of the template according to the given type.
+	 * @param Title $title
+	 * @param sting $content
+	 * @param string $type One of types specified in the TemplateClassificationController
 	 * @return string
+	 * @throws MWException
 	 */
-	public function createDraftContent( Title $title, $content, Array $flags ) {
-		$flagsSum = array_sum( $flags );
+	public function createDraftContent( Title $title, $content, $type ) {
 
-		if ( TemplateClassificationController::TEMPLATE_INFOBOX & $flagsSum ) {
-			// while we're at it we can mark the base template as an infobox
+		if ( $type === TemplateClassificationController::TEMPLATE_INFOBOX ) {
+			/**
+			 * While we're at it we can mark the base template as an infobox
+			 */
 			$parentTitle = Title::newFromText( $title->getBaseText(), $title->getNamespace() );
 
 			$tc = new TemplateClassificationController( $parentTitle );
-			$tc->classifyTemplate( 'infobox', true );
+			$tc->classifyTemplate( TemplateClassificationController::TEMPLATE_INFOBOX, true );
 
 			$templateConverter = new TemplateConverter( $title );
 			$newContent = $templateConverter->convertAsInfobox( $content );
@@ -27,41 +29,33 @@ class TemplateDraftController extends WikiaController {
 		return $newContent;
 	}
 
+	/**
+	 * Makes a negative recognition marking the template as a not-infobox one.
+	 * @return bool
+	 */
 	public function markTemplateAsNotInfobox() {
 		/**
-		 * First, validate a request
-		 */
-		if ( !$this->wg->Title->userCan( 'templatedraft', $this->wg->User )
-			|| !$this->isValidPostRequest()
-		) {
-			$this->response->setVal( 'status', false );
-			return false;
-		}
-
-		/**
-		 * Then check the pageId param
+		 * First, validate the request.
 		 */
 		$pageId = $this->getRequest()->getInt( 'pageId' );
-		if ( $pageId === 0 ) {
+		if ( !$this->isValidPostRequest() || $pageId === 0 ) {
 			$this->response->setVal( 'status', false );
 			return false;
 		}
 
 		/**
-		 * Wikia::setProps unfortunately fails silently so if we get to this point
-		 * we can set the response's status to true anyway...
+		 * Then classify the template as not-infobox
+		 * (primary: unclassified, secondary: with logged data)
 		 */
-		$this->response->setVal( 'status', true );
-
-
-		$tc = new TemplateClassificationController( $this->wg->Title );
-		$tc->classifyTemplate( 'infobox', false );
-
-		return true;
+		$tc = new TemplateClassificationController( Title::newFromID( $pageId ) );
+		$this->response->setVal(
+			'status',
+			$tc->classifyTemplate( TemplateClassificationController::TEMPLATE_INFOBOX, false )
+		);
 	}
 
 	private function isValidPostRequest() {
-		$editToken = $this->getRequest()->getParams()['editToken'];
+		$editToken = $this->getRequest()->getParams()[ 'editToken' ];
 		return $this->getRequest()->wasPosted()
 			&& $this->wg->User->matchEditToken( $editToken );
 	}

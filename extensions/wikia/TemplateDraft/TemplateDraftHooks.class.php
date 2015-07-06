@@ -18,13 +18,16 @@ class TemplateDraftHooks {
 
 	/**
 	 * Attaches a new module to right rail which is an entry point to convert a given template.
-	 *
 	 * @param array $railModuleList
 	 * @return bool
 	 */
 	public static function onGetRailModuleList( Array &$railModuleList ) {
-		$templateDraftHooksHelper = new TemplateDraftHooksHelper();
-		$templateDraftHooksHelper->addRailModuleList( $railModuleList );
+		global $wgTitle;
+
+		$helper = new TemplateDraftHelper();
+		if ( $helper->isRailModuleAllowed( $wgTitle ) ) {
+			$helper->addRailModule( $wgTitle, $railModuleList );
+		}
 
 		return true;
 	}
@@ -32,7 +35,6 @@ class TemplateDraftHooks {
 	/**
 	 * Triggered if a user edits a Draft subpage of a template.
 	 * It pre-fills the content of the Draft with a converted markup.
-	 *
 	 * @param $text
 	 * @param Title $title
 	 * @return bool
@@ -57,7 +59,7 @@ class TemplateDraftHooks {
 				$text = $controller->createDraftContent(
 					$title, // @TODO this is currently taking the *edited* title (with subpage), not the *converted* title
 					$parentContent,
-					[ TemplateClassificationController::TEMPLATE_INFOBOX ]
+					TemplateClassificationController::TEMPLATE_INFOBOX
 				);
 			}
 		}

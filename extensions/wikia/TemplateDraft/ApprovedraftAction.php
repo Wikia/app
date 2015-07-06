@@ -53,7 +53,7 @@ class ApprovedraftAction extends FormlessAction {
 
 		} else {
 
-			$templateDraftHelper->approveDraft( $title );
+			$this->approveDraft( $title );
 
 			$redirectTitle = $title->getBaseText();
 			$redirectTitle = Title::newFromText( $redirectTitle, $title->getNamespace() );
@@ -61,6 +61,41 @@ class ApprovedraftAction extends FormlessAction {
 		}
 
 		$this->getOutput()->redirect( $redirectTitle->getFullUrl( $redirectParams ) );
+	}
+
+	/**
+	 * Overrides content of parent page with contents of draft page
+	 * @param Title $draftTitle Title object of sub page (draft)
+	 * @throws PermissionsException
+	 */
+	private function approveDraft( Title $draftTitle ) {
+		// Get Title object of parent page
+		$helper = new TemplateDraftHelper();
+		$parentTitle = $helper->getParentTitle( $draftTitle );
+
+		// Check edit rights
+		if ( !$parentTitle->userCan( 'templatedraft' ) ) {
+			throw new PermissionsException( 'edit' );
+		}
+
+		// Get contents of draft page
+		$article = Article::newFromId( $draftTitle->getArticleID() );
+		$draftContent = $article->getContent();
+		// Get WikiPage object of parent page
+		$page = WikiPage::newFromID( $parentTitle->getArticleID() );
+		// Save to parent page
+		$page->doEdit( $draftContent, wfMessage( 'templatedraft-approval-summary' )->inContentLanguage()->plain() );
+
+		// Remove Draft page
+		$draftPage = WikiPage::newFromID( $draftTitle->getArticleID() );
+		$draftPage->doDeleteArticle( wfMessage( 'templatedraft-draft-removal-summary' )->inContentLanguage()->plain() );
+
+		// Show a confirmation message to a user after redirect
+		BannerNotificationsController::addConfirmation(
+			wfMessage( 'templatedraft-approval-success-confirmation' )->escaped(),
+			BannerNotificationsController::CONFIRMATION_CONFIRM,
+			true
+		);
 	}
 
 	/**
