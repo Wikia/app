@@ -82,7 +82,7 @@ class SMWNotifyMe extends SpecialPage {
 					} else {
 						$disableEmailPrefs = false;
 					}
-					$eEmail = $wgUser->getOption( 'enotifyme' );
+					$eEmail = $wgUser->getGlobalPreference( 'enotifyme' );
 					$html .= '<div class="nmmenubar">
 					<input id="nmemail" type="checkbox" value="1"' . ( $disableEmailPrefs ? ' disabled':'' ) . ( $eEmail ? ' checked':'' ) . '/> ' . wfMsg( 'smw_nm_special_enablemail' ) . ' ';
 					if ( $disableEmailPrefs ) {

@@ -197,7 +197,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 				$this->errParam = $response->getVal( 'errParam', '' );
 
 				// set the language object
-				$code = $this->wg->request->getVal( 'uselang', $this->wg->User->getOption( 'language' ) );
+				$code = $this->wg->request->getVal( 'uselang', $this->wg->User->getGlobalPreference( 'language' ) );
 				$this->wg->Lang = Language::factory( $code );
 
 				if ( $this->result == 'ok' ) {
@@ -423,11 +423,11 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 		switch ( $loginCase ) {
 			case LoginForm::SUCCESS:
 				// first check if user has confirmed email after sign up
-				if ( $this->wg->User->getOption( self::NOT_CONFIRMED_SIGNUP_OPTION_NAME ) &&
+				if ( $this->wg->User->getGlobalFlag( self::NOT_CONFIRMED_SIGNUP_OPTION_NAME ) &&
 					/*
 					 * Remove when SOC-217 ABTest is finished
 					 */
-					$this->wg->User->getOption( self::NOT_CONFIRMED_LOGIN_OPTION_NAME ) !== self::NOT_CONFIRMED_LOGIN_ALLOWED
+					$this->wg->User->getGlobalAttribute( self::NOT_CONFIRMED_LOGIN_OPTION_NAME ) !== self::NOT_CONFIRMED_LOGIN_ALLOWED
 					/*
 					 * end remove
 					 */
@@ -456,8 +456,8 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 					wfRunHooks( 'UserLoginComplete', array( &$this->wg->User, &$injected_html ) );
 
 					// set rememberpassword option
-					if ( (bool)$loginForm->mRemember != (bool)$this->wg->User->getOption( 'rememberpassword' ) ) {
-						$this->wg->User->setOption( 'rememberpassword', $loginForm->mRemember ? 1 : 0 );
+					if ( (bool)$loginForm->mRemember != (bool)$this->wg->User->getGlobalPreference( 'rememberpassword' ) ) {
+						$this->wg->User->setGlobalPreference( 'rememberpassword', $loginForm->mRemember ? 1 : 0 );
 						$this->wg->User->saveSettings();
 					} else {
 						$this->wg->User->invalidateCache();
@@ -518,7 +518,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 
 				$attemptedUser = User::newFromName( $loginForm->mUsername );
 				if ( !is_null( $attemptedUser ) ) {
-					$disOpt = $attemptedUser->getOption( 'disabled' );
+					$disOpt = $attemptedUser->getGlobalFlag( 'disabled' );
 					if ( !empty( $disOpt ) ||
 						( defined( 'CLOSED_ACCOUNT_FLAG' ) && $attemptedUser->getRealName() == CLOSED_ACCOUNT_FLAG ) ) {
 						# either closed account flag was present, override fail message

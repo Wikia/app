@@ -258,7 +258,7 @@ class LoginForm extends SpecialPage {
 		# If we showed up language selection links, and one was in use, be
 		# smart (and sensible) and save that language as the user's preference
 		if( $wgLoginLanguageSelector && $this->mLanguage ) {
-			$u->setOption( 'language', $this->mLanguage );
+			$u->setGlobalPreference( 'language', $this->mLanguage );
 		}
 
 		$out = $this->getOutput();
@@ -586,10 +586,10 @@ class LoginForm extends SpecialPage {
 			}
 		}
 
-		$u->setOption( 'rememberpassword', $this->mRemember ? 1 : 0 );
-		$u->setOption( 'marketingallowed', $this->mMarketingOptIn ? 1 : 0 );
-		$u->setOption( 'registrationCountry', $this->mRegistrationCountry );
-		$u->setOption( 'skinoverwrite', 1 );
+		$u->setGlobalPreference( 'rememberpassword', $this->mRemember ? 1 : 0 );
+		$u->setGlobalPreference( 'marketingallowed', $this->mMarketingOptIn ? 1 : 0 );
+		$u->setGlobalAttribute( 'registrationCountry', $this->mRegistrationCountry );
+		$u->setGlobalPreference( 'skinoverwrite', 1 );
 		$u->saveSettings();
 
 		# Update user count
@@ -878,8 +878,8 @@ class LoginForm extends SpecialPage {
 			case self::SUCCESS:
 				# We've verified now, update the real record
 				$user = $this->getUser();
-				if( (bool)$this->mRemember != (bool)$user->getOption( 'rememberpassword' ) ) {
-					$user->setOption( 'rememberpassword', $this->mRemember ? 1 : 0 );
+				if( (bool)$this->mRemember != (bool)$user->getGlobalPreference( 'rememberpassword' ) ) {
+					$user->setGlobalPreference( 'rememberpassword', $this->mRemember ? 1 : 0 );
 					$user->saveSettings();
 				} else {
 					$user->invalidateCache();
@@ -896,7 +896,7 @@ class LoginForm extends SpecialPage {
 					/* Replace the language object to provide user interface in
 					 * correct language immediately on this first page load.
 					 */
-					$code = $request->getVal( 'uselang', $user->getOption( 'language' ) );
+					$code = $request->getVal( 'uselang', $user->getGlobalPreference( 'language' ) );
 					$userLang = Language::factory( $code );
 					$wgLang = $userLang;
 					$this->getContext()->setLanguage( $userLang );
@@ -1090,15 +1090,15 @@ class LoginForm extends SpecialPage {
 		}
 		/* Wikia change begin - @author: Marooned */
 		/* HTML e-mails functionality */
-		$userLanguage = $u->getOption( 'language' );
+		$userLanguage = $u->getGlobalPreference( 'language' );
 		$priority = 2;  // Password emails are higher than default priority of 0 and confirmation emails priority of 1
 		if (empty($wgEnableRichEmails)) {
 			$m = $this->msg( $emailText, $ip, $u->getName(), $np, $wgServer . $wgScript,
 				round( $wgNewPasswordExpiry / 86400 ) )->inLanguage( $userLanguage )->text();
 			$result = $u->sendMail( $this->msg( $emailTitle )->inLanguage( $userLanguage )->text(), $m, null, $nr, 'TemporaryPassword', $priority );
 		} else {
-			$wantHTML = $u->isAnon() || $u->getOption('htmlemails');
-			list($m, $mHTML) = wfMsgHTMLwithLanguage($emailText, $u->getOption('language'), array( 'parsemag' ), array($ip, $u->getName(), $np, $wgServer . $wgScript, round( $wgNewPasswordExpiry / 86400 )), $wantHTML);
+			$wantHTML = $u->isAnon() || $u->getGlobalPreference('htmlemails');
+			list($m, $mHTML) = wfMsgHTMLwithLanguage($emailText, $u->getGlobalPreference('language'), array( 'parsemag' ), array($ip, $u->getName(), $np, $wgServer . $wgScript, round( $wgNewPasswordExpiry / 86400 )), $wantHTML);
 			if ( !empty($emailTextTemplate) && $wantHTML ) {
 				$emailParams = array(
 					'$USERNAME' => $u->getName(),
@@ -1331,7 +1331,7 @@ class LoginForm extends SpecialPage {
 		$template->set( 'resetlink', $resetLink );
 		$template->set( 'canremember', ( $wgCookieExpiration > 0 ) );
 		$template->set( 'usereason', $user->isLoggedIn() );
-		$template->set( 'remember', $user->getOption( 'rememberpassword' ) || $this->mRemember );
+		$template->set( 'remember', $user->getGlobalPreference( 'rememberpassword' ) || $this->mRemember );
 		$template->set( 'cansecurelogin', ( $wgSecureLogin === true ) );
 		$template->set( 'stickHTTPS', $this->mStickHTTPS );
 

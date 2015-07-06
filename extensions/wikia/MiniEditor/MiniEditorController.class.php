@@ -36,7 +36,7 @@ class MiniEditorController extends WikiaController {
 		$this->response->setJsVar('wgMiniEditorLoadOnDemand', $loadOnDemand);
 
 		// VOLDEV-25: Create a JS variable to let us know if LinkSuggest should be loaded
-		$this->response->setJsVar( 'wgEnableMiniEditorLinkSuggest', ( $this->wg->EnableLinkSuggestExt && !$this->wg->User->getOption( 'disablelinksuggest' ) ) );
+		$this->response->setJsVar( 'wgEnableMiniEditorLinkSuggest', ( $this->wg->EnableLinkSuggestExt && !$this->wg->User->getGlobalPreference( 'disablelinksuggest' ) ) );
 
 		// If styles are not loaded here, they must be loaded in JavaScript
 		if ($loadStyles) {

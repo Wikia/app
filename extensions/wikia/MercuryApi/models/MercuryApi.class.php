@@ -345,8 +345,9 @@ class MercuryApi {
 				return $item;
 			}
 		} else if ( $item['article_id'] === 0 ) {
-			// We need this because there is a bug in CuratedContent, categories are saved with article_id = 0
-			// This will be fixed in CONCF-698
+			// Categories which don't have content have wgArticleID set to 0
+			// In order to generate link for them
+			// we can simply replace $1 inside /wiki/$1 to category title (Category:%name%)
 			global $wgArticlePath;
 			$item['article_local_url'] = str_replace( "$1",  $item['title'], $wgArticlePath );
 			return $item;

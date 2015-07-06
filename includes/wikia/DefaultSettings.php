@@ -352,6 +352,7 @@ $wgAutoloadClasses['SolrDocumentService'] = $IP . '/includes/wikia/services/Solr
 $wgAutoloadClasses['FormBuilderService']  =  $IP.'/includes/wikia/services/FormBuilderService.class.php';
 $wgAutoloadClasses['LicensedWikisService']  =  $IP.'/includes/wikia/services/LicensedWikisService.class.php';
 $wgAutoloadClasses['ArticleQualityService'] = $IP.'/includes/wikia/services/ArticleQualityService.php';
+$wgAutoloadClasses['PortableInfoboxDataService'] = $IP . '/extensions/wikia/PortableInfobox/services/PortableInfoboxDataService.class.php';
 
 // services hooks
 $wgHooks['ArticleEditUpdates'][] = 'MediaQueryService::onArticleEditUpdates';
@@ -1716,7 +1717,7 @@ $wgOasisBreakpoints = true;
  * see CONCF-433
  * todo remove when 71M adjusts their styles
  */
-$wgOasisBreakpointsDE = false;
+$wgOasisBreakpointsDE = true;
 
 /**
  * Add poweruser to implicit groups
@@ -1748,3 +1749,8 @@ $wgPaidAssetDropConfig = false;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverIncontentPlayerSlotCountries = null;
+
+/**
+ * flag for using (possibly external) service for managing a user's preferences
+ */
+$wgPreferencesUseService = false;

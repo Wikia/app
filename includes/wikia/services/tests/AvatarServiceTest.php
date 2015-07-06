@@ -64,7 +64,7 @@ class AvatarServiceTest extends WikiaBaseTest {
 		$user->setName( $userName );
 
 		if ( $userId > 0 ) {
-			$user->setOption( AVATAR_USER_OPTION_NAME, $userId );
+			$user->setGlobalAttribute( AVATAR_USER_OPTION_NAME, $userId );
 		}
 
 		$this->assertStringEndsWith( $url, AvatarService::getAvatarUrl( $user, $avatarSize ) );
@@ -94,7 +94,7 @@ class AvatarServiceTest extends WikiaBaseTest {
 		$user = $this->getMock( 'User' );
 		$user
 			->expects( $this->any() )
-			->method( 'getOption' )
+			->method( 'getGlobalAttribute' )
 			->will( $this->returnValue( '/a/ab/12345.png' ) );
 
 		$masthead = $this->getMock( 'Masthead', [], [$user] );
@@ -109,7 +109,7 @@ class AvatarServiceTest extends WikiaBaseTest {
 		$user = $this->getMock( 'User' );
 		$user
 			->expects( $this->any() )
-			->method( 'getOption' )
+			->method( 'getGlobalAttribute' )
 			->will( $this->returnValue( 'http://images.domain.com/user/nelson.jpg' ) );
 
 		$masthead = $this->getMock( 'Masthead', [], [$user] );
@@ -125,7 +125,7 @@ class AvatarServiceTest extends WikiaBaseTest {
 		$user = $this->getMock( 'User' );
 		$user
 			->expects( $this->any() )
-			->method( 'getOption' )
+			->method( 'getGlobalAttribute' )
 			->will( $this->returnValue( 'Fish.jpg' ) );
 
 		$masthead = $this->getMock( 'Masthead', [], [$user] );
@@ -141,7 +141,7 @@ class AvatarServiceTest extends WikiaBaseTest {
 		$user = $this->getMock( 'User' );
 		$user
 			->expects( $this->any() )
-			->method( 'getOption' )
+			->method( 'getGlobalPreference' )
 			->will( $this->returnValue( null ) );
 
 		$masthead = $this->getMock( 'Masthead', [], [$user] );

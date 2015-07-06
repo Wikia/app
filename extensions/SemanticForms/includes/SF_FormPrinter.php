@@ -543,7 +543,7 @@ END;
 					if ( $old_template_name != $template_name ) {
 						if ( isset( $template_label ) ) {
 							$multipleTemplateString .= "<fieldset>\n";
-							$multipleTemplateString .= "<legend>$template_label</legend>\n";
+							$multipleTemplateString .= Html::element( 'legend', null, $template_label ) . "\n";
 						}
 						// If $curPlaceholder is set, it means we want to insert a
 						// multiple template form's HTML into the main form's HTML.
@@ -983,7 +983,7 @@ END;
 								// borrowed from EditPage::showEditTools()
 								$options[] = 'parse';
 								$edittools_text = $wgParser->recursiveTagParse( wfMsg( 'edittools', array( 'content' ) ) );
-								
+
 								$new_text .= <<<END
 		<div class="mw-editTools">
 		$edittools_text

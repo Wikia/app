@@ -77,4 +77,16 @@ class PortableInfoboxDataServiceTest extends PHPUnit_Framework_TestCase {
 		$this->assertTrue( in_array( "Test2.jpg", $images ), "Test2.jpg should be in images array" );
 	}
 
+	public function testTitleNullConstructor() {
+		$service = PortableInfoboxDataService::newFromTitle(null);
+		$result = $service->getData();
+		$this->assertEquals( [], $result );
+	}
+
+	public function testConstructor() {
+		$service = PortableInfoboxDataService::newFromPageID(null);
+		$result = $service->getData();
+		$this->assertEquals( [], $result );
+	}
+
 }
