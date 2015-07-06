@@ -241,7 +241,7 @@ class TemplateConverter {
 				preg_match( self::TEMPLATE_VARIABLE_PATTERN, $variable[2], $templateName );
 
 				if ( !empty( $templateName[1] ) && !empty( $variable[1] ) ) {
-					$templateVariables[$templateName[1]]['label'] = $variable[1];
+					$templateVariables[$templateName[1]]['label'] = trim( $variable[1] );
 				}
 			}
 		}
