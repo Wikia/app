@@ -39,14 +39,12 @@ class ApprovedraftAction extends FormlessAction {
 			[ 'title' => null, 'action' => null ]
 		));
 
-		$templateDraftHelper = new TemplateDraftHelper();
-
 		if ( !$title->exists() ) {
 
 			$this->addBannerNotificationMessage( 'templatedraft-approval-no-page-error' );
 			$redirectTitle = $title;
 
-		} elseif ( !$templateDraftHelper->isTitleDraft( $title ) ) {
+		} elseif ( !TemplateDraftHelper::isTitleDraft( $title ) ) {
 
 			$this->addBannerNotificationMessage( 'templatedraft-approval-no-templatedraft-error' );
 			$redirectTitle = $title;

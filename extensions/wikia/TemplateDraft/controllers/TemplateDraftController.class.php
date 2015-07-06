@@ -11,6 +11,7 @@ class TemplateDraftController extends WikiaController {
 	 * @throws MWException
 	 */
 	public function createDraftContent( Title $title, $content, $type ) {
+		$newContent = '';
 
 		if ( $type === TemplateClassificationController::TEMPLATE_INFOBOX ) {
 			/**

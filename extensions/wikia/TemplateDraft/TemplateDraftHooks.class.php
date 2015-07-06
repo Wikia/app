@@ -4,8 +4,7 @@ class TemplateDraftHooks {
 
 	public static function onSkinAfterBottomScripts( Skin $skin, &$text ) {
 		$title = $skin->getTitle();
-		$helper = new TemplateDraftHelper();
-		if ( $helper->allowedForTitle( $title ) ) {
+		if ( TemplateDraftHelper::allowedForTitle( $title ) ) {
 			$scripts = AssetsManager::getInstance()->getURL( 'template_draft' );
 
 			foreach ( $scripts as $script ) {
@@ -75,9 +74,8 @@ class TemplateDraftHooks {
 	 * @return bool
 	 */
 	public static function onEditPageLayoutShowIntro( &$preloads, Title $title ) {
-		$helper = new TemplateDraftHelper();
 		if ( $title->getNamespace() == NS_TEMPLATE ) {
-			if ( $helper->isTitleDraft( $title )
+			if ( TemplateDraftHelper::isTitleDraft( $title )
 				&& class_exists( 'TemplateConverter' )
 				&& TemplateConverter::isConversion()
 			) {
@@ -98,7 +96,7 @@ class TemplateDraftHooks {
 							wfMessage( 'templatedraft-module-view-parent' )->plain() )
 					)->escaped(),
 				];
-			} elseif ( !$helper->isTitleDraft( $title ) ) {
+			} elseif ( !TemplateDraftHelper::isTitleDraft( $title ) ) {
 				$base = Title::newFromText( $title->getBaseText() .'/'. wfMessage( 'templatedraft-subpage' ), NS_TEMPLATE );
 				$draftUrl = $base->getFullUrl( [
 					'action' => 'edit',

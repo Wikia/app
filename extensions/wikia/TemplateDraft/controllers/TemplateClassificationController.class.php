@@ -71,7 +71,7 @@ class TemplateClassificationController extends WikiaController {
 	 * @return bool|string
 	 */
 	private function getClassificationProp( $type ) {
-		if ( array_search( $type, $this->templateTypes, true ) !== false ) {
+		if ( array_search( $type, self::$templateTypes, true ) !== false ) {
 			return self::TEMPLATE_CLASSIFICATION_DATA_PREFIX . $type;
 		}
 

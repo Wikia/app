@@ -8,9 +8,9 @@ class TemplateDraftHelper {
 	 * @param Title $title
 	 * @return bool
 	 */
-	public function isTitleNewDraft( Title $title ) {
+	public static function isTitleNewDraft( Title $title ) {
 		return !$title->exists()
-			&& $this->isTitleDraft( $title );
+			&& self::isTitleDraft( $title );
 	}
 
 	/**
@@ -19,7 +19,7 @@ class TemplateDraftHelper {
 	 * @param Title $title
 	 * @return bool
 	 */
-	public function isTitleDraft( Title $title ) {
+	public static function isTitleDraft( Title $title ) {
 		return $title->getNamespace() === NS_TEMPLATE
 			&& $title->isSubpage()
 			&& ( $title->getSubpageText() === wfMessage( 'templatedraft-subpage' )->inContentLanguage()->escaped()
@@ -41,7 +41,7 @@ class TemplateDraftHelper {
 	 * @param Title $title
 	 * @return bool
 	 */
-	public function allowedForTitle( Title $title ) {
+	public static function allowedForTitle( Title $title ) {
 		return $title->exists()
 			&& $title->getNamespace() === NS_TEMPLATE;
 	}
@@ -63,7 +63,7 @@ class TemplateDraftHelper {
 	 * @return bool
 	 */
 	public function isRailModuleAllowed( Title $title ) {
-		return $this->allowedForTitle( $title )
+		return self::allowedForTitle( $title )
 			&& $title->userCan( 'templatedraft' );
 	}
 
@@ -73,7 +73,7 @@ class TemplateDraftHelper {
 	 * @param array $railModuleList
 	 */
 	public function addRailModule( Title $title, Array &$railModuleList ) {
-		if ( $this->isTitleDraft( $title ) ) {
+		if ( self::isTitleDraft( $title ) ) {
 			/**
 			 * $title is a draft page.
 			 * Add rail module for draft approval
