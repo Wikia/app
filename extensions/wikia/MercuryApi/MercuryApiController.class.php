@@ -413,17 +413,23 @@ class MercuryApiController extends WikiaController {
 		}
 	}
 
+	public static function curatedContentDataMemcKey( $section = null ) {
+		return wfMemcKey( 'curated-content-section-data', $section );
+	}
+
 	private function getCuratedContentData( $section = null ) {
-		$params = [];
-		$data = [];
-
-		if ( $section ) {
-			$params[ 'section' ] = $section;
-		}
-
 		try {
-			$rawData = $this->sendRequest( 'CuratedContent', 'getList', $params )->getData();
-			$data = $this->mercuryApi->processCuratedContent( $rawData );
+			$data = WikiaDataAccess::cache( self::curatedContentDataMemcKey( $section ), WikiaResponse::CACHE_STANDARD,
+				function() use ( $section ) {
+					$rawData = $this->sendRequest(
+						'CuratedContent',
+						'getList',
+						empty( $section ) ? [] : [ 'section' => $section ]
+					)->getData();
+
+					return $this->mercuryApi->processCuratedContent( $rawData );
+				}
+			);
 		} catch ( NotFoundException $ex ) {
 			WikiaLogger::instance()->info( 'Curated content and categories are empty' );
 		}

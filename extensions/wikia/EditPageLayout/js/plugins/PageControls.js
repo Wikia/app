@@ -24,7 +24,7 @@
 		// init page controls widget
 		init: function () {
 			var $pageControls = $('#EditPageRail .module_page_controls'),
-				$editPage = $('#EditPage');
+				self = this;
 
 			this.categories = $('#categories');
 			this.textarea = $pageControls.find('textarea');
@@ -45,44 +45,11 @@
 			}));
 
 			// attach events
-			$('#wpPreview').on(
-				'click', this.proxy(this.onPreview)
-			).popover({
-				placement: 'top',
-				content: $.htmlentities($.msg('editpagelayout-preview-label-desktop')),
-				trigger: 'manual'
-			}).on('mouseenter', function() {
-				if ($editPage.hasClass('mode-source') && $editPage.hasClass('editpage-sourcewidemode-on')) {
-					$(this).popover('show');
-				}
-			}).on('mouseleave', function() {
-				$(this).popover('hide');
+			require(['editpage.events'], function (editpageEvents) {
+				editpageEvents.attachDesktopPreview('wpPreview', self.editor);
+				editpageEvents.attachMobilePreview('wpPreviewMobile', self.editor);
+				editpageEvents.attachDiff('wpDiff', self.editor);
 			});
-
-			$('#wpPreviewMobile').on(
-				'click', this.proxy(this.onPreviewMobile)
-			).popover({
-				placement: 'top',
-				content: $.htmlentities($.msg('editpagelayout-preview-label-mobile')),
-				trigger: 'manual'
-			}).on('mouseenter', function() {
-				if ($editPage.hasClass('mode-source') && $editPage.hasClass('editpage-sourcewidemode-on')) {
-					$(this).popover('show');
-				}
-			}).on('mouseleave', function() {
-				$(this).popover('hide');
-			});
-
-			// Wikia change (bugid:5667) - begin
-			if ($.browser.msie) {
-				$(window).on('keydown', function (e) {
-					if (e.altKey && String.fromCharCode(e.keyCode) == $('#wpPreview').attr('accesskey').toUpperCase()) {
-						$('#wpPreview').click();
-					}
-				});
-			}
-
-			$('#wpDiff').on('click', this.proxy(this.onDiff));
 
 			// remove placeholder text when user submits the form without providing the summary
 			this.editform = $('#editform').on('submit', this.proxy(this.onSave));
@@ -127,38 +94,11 @@
 					RTE.config.startupFocus = false;
 				}
 			}
-
-			this.isGridLayout = $('.WikiaGrid').length > 0;	// remove this after grid transition
 		},
 
 		// Enable 'Publish' button when the editor is ready (BugId:13957)
 		onEditorReady: function () {
 			$('#wpSave').removeAttr('disabled');
-		},
-
-		// handle "Preview" button
-		onPreview: function (ev) {
-			this.renderPreview({}, 'current');
-			this.editor.track('preview-desktop');
-
-			ev.preventDefault();
-		},
-
-		// handle "PreviewMobile" button
-		onPreviewMobile: function (ev) {
-			this.renderPreview({}, 'mobile');
-			this.editor.track('preview-mobile');
-
-			ev.preventDefault();
-		},
-
-		// handle "Show changes" button
-		onDiff: function (event) {
-			event.preventDefault();
-			// move the focus to the selected items to prevent iPad from showing the VK and resizing the viewport
-			$(event.target).focus();
-			this.renderChanges();
-			this.editor.track('diff');
 		},
 
 		// handle "Save" button
