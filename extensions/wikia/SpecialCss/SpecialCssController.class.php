@@ -114,7 +114,7 @@ class SpecialCssController extends WikiaSpecialPageController {
 		$aceUrl = AssetsManager::getInstance()->getOneCommonURL( '/resources/Ace' );
 		$aceUrlParts = parse_url($aceUrl);
 		$this->response->setJsVar( 'wgEnableCodePageEditor', true );
-		$this->response->setJsVar( 'wgEditedTitle', (new SpecialCssModel())->getCssFileTitle()->getPrefixedText() );
+		$this->response->setJsVar( 'wgEditedTitle', ( new SpecialCssModel() )->getCssFileTitle()->getPrefixedText() );
 		$this->response->setJsVar( 'wgEditPageClass', 'SpecialCustomEditPage' );
 		$this->response->setJsVar( 'aceScriptsPath', $aceUrlParts['path'] );
 		$this->response->setJsVar(
