@@ -26,7 +26,7 @@ class WikiaMobileFooterService extends WikiaService {
 		) );
 
 		//get skin name from user preferences or default one
-		$this->response->setVal( 'defaultSkin', urlencode( $this->wg->User->getOption( 'skin' ) ) );
+		$this->response->setVal( 'defaultSkin', urlencode( $this->wg->User->getGlobalPreference( 'skin' ) ) );
 		$this->response->setVal( 'privacyLink', $this->getLinkFromMessage( 'wikiamobile-footer-link-privacy' ) );
 		$this->response->setVal( 'feedbackLink', SpecialPage::getTitleFor( 'Contact' )->getLocalURL() );
 		$this->response->setVal( 'centralUrl', ( new WikiaLogoHelper() )->getCentralUrlForLang( $wgLang->getCode() ) );

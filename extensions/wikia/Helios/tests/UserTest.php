@@ -173,10 +173,10 @@ class UserTest extends \WikiaBaseTest {
 		$this->mockClass( 'Wikia\Helios\Client', $oClientMock );
 
 		$userMock = $this->getMockBuilder( 'User' )
-			->setMethods( [ 'getBoolOption' ] )
+			->setMethods( [ 'getGlobalFlag' ] )
 			->getMock();
 		$userMock->expects( $this->once() )
-			->method( 'getBoolOption' )
+			->method( 'getGlobalFlag' )
 			->with( $this->equalTo( 'disabled' ) )
 			->will( $this->returnValue( false ) );
 

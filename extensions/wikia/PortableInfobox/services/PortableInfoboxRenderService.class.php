@@ -14,11 +14,7 @@ class PortableInfoboxRenderService extends WikiaService {
 		'image-mobile' => 'PortableInfoboxItemImageMobile.mustache',
 		'data' => 'PortableInfoboxItemData.mustache',
 		'group' => 'PortableInfoboxItemGroup.mustache',
-		'comparison' => 'PortableInfoboxItemComparison.mustache',
-		'comparison-set' => 'PortableInfoboxItemComparisonSet.mustache',
-		'comparison-set-header' => 'PortableInfoboxItemComparisonSetHeader.mustache',
-		'comparison-set-item' => 'PortableInfoboxItemComparisonSetItem.mustache',
-		'footer' => 'PortableInfoboxItemFooter.mustache'
+		'navigation' => 'PortableInfoboxItemNavigation.mustache'
 	];
 	private $templateEngine;
 
@@ -42,14 +38,11 @@ class PortableInfoboxRenderService extends WikiaService {
 			$type = $item[ 'type' ];
 
 			switch ( $type ) {
-				case 'comparison':
-					$infoboxHtmlContent .= $this->renderComparisonItem( $data['value'] );
-					break;
 				case 'group':
 					$infoboxHtmlContent .= $this->renderGroup( $data );
 					break;
-				case 'footer':
-					$infoboxHtmlContent .= $this->renderItem( 'footer', $data );
+				case 'navigation':
+					$infoboxHtmlContent .= $this->renderItem( 'navigation', $data );
 					break;
 				default:
 					if ( $this->validateType( $type ) ) {
@@ -65,49 +58,6 @@ class PortableInfoboxRenderService extends WikiaService {
 		}
 
 		wfProfileOut( __METHOD__ );
-
-		return $output;
-	}
-
-	/**
-	 * renders comparison infobox component
-	 *
-	 * @param array $comparisonData
-	 * @return string - comparison HTML
-	 */
-	private function renderComparisonItem( $comparisonData )
-	{
-		$comparisonHTMLContent = '';
-
-		foreach ($comparisonData as $set) {
-			$setHTMLContent = '';
-
-			foreach ($set['data']['value'] as $item) {
-				$type = $item['type'];
-
-				if ($type === 'header') {
-					$setHTMLContent .= $this->renderItem(
-						'comparison-set-header',
-						['content' => $this->renderItem($type, $item['data'])]
-					);
-				} else {
-					if ($this->validateType($type)) {
-						$setHTMLContent .= $this->renderItem(
-							'comparison-set-item',
-							['content' => $this->renderItem($type, $item['data'])]
-						);
-					}
-				}
-			}
-
-			$comparisonHTMLContent .= $this->renderItem( 'comparison-set', [ 'content' => $setHTMLContent ] );
-		}
-
-		if ( !empty( $comparisonHTMLContent ) ) {
-			$output = $this->renderItem('comparison', [ 'content' => $comparisonHTMLContent ] );
-		} else {
-			$output = '';
-		}
 
 		return $output;
 	}

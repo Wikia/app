@@ -750,7 +750,7 @@ abstract class ApiBase extends ContextSource {
 							? 'watchdefault' : 'watchcreations';
 				}
 				# Watch the article based on the user preference
-				return (bool)$this->getUser()->getOption( $userOption );
+				return (bool)$this->getUser()->getGlobalPreference( $userOption );
 
 			case 'nochange':
 				return $userWatching;
@@ -1370,7 +1370,7 @@ abstract class ApiBase extends ContextSource {
 			if ( !($user && $user->getId()) ) {
 				$this->dieUsage( 'Specified user does not exist', 'bad_wlowner' );
 			}
-			$token = $user->getOption( 'watchlisttoken' );
+			$token = $user->getGlobalAttribute( 'watchlisttoken' );
 			if ( $token == '' || $token != $params['token'] ) {
 				$this->dieUsage( 'Incorrect watchlist token provided -- please set a correct token in Special:Preferences', 'bad_wltoken' );
 			}

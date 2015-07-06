@@ -7,14 +7,16 @@ define('ext.wikia.adEngine.adContext', [
 	'wikia.document',
 	'wikia.geo',
 	'wikia.instantGlobals',
+	'wikia.querystring',
 	require.optional('wikia.abTest')
-], function (w, doc, geo, instantGlobals, abTest) {
+], function (w, doc, geo, instantGlobals, Querystring, abTest) {
 	'use strict';
 
 	instantGlobals = instantGlobals || {};
 
 	var context,
-		callbacks = [];
+		callbacks = [],
+		qs = new Querystring();
 
 	function getContext() {
 		return context;
@@ -44,7 +46,7 @@ define('ext.wikia.adEngine.adContext', [
 		context.slots = context.slots || {};
 		context.targeting = context.targeting || {};
 		context.providers = context.providers || {};
-		context.forceProviders = context.forceProviders || {};
+		context.forcedProvider = qs.getVal('forcead', null) || context.forcedProvider || null;
 
 		// Don't show ads when Sony requests the page
 		if (doc && doc.referrer && doc.referrer.match(/info\.tvsideview\.sony\.net/)) {
@@ -56,20 +58,10 @@ define('ext.wikia.adEngine.adContext', [
 			context.targeting.pageCategories = w.wgCategories || getMercuryCategories();
 		}
 
-		// Krux integration
-		if (instantGlobals.wgSitewideDisableKrux) {
-			context.targeting.enableKruxTargeting = false;
-		}
-
 		// Taboola integration
 		if (context.providers.taboola) {
 			context.providers.taboola = abTest && abTest.inGroup('NATIVE_ADS_TABOOLA', 'YES') &&
 				(context.targeting.pageType === 'article' || context.targeting.pageType === 'home');
-		}
-
-		// Turtle
-		if (context.forceProviders.turtle) {
-			context.providers.turtle = true;
 		}
 
 		if (instantGlobals.wgAdDriverTurtleCountries &&
@@ -91,6 +83,23 @@ define('ext.wikia.adEngine.adContext', [
 				instantGlobals.wgAdDriverHighImpactSlotCountries.indexOf(geo.getCountryCode()) > -1
 					) {
 			context.slots.invisibleHighImpact = true;
+		}
+
+		// Krux integration
+		context.targeting.enableKruxTargeting = false;
+		if (instantGlobals.wgAdDriverKruxCountries &&
+			instantGlobals.wgAdDriverKruxCountries.indexOf &&
+			instantGlobals.wgAdDriverKruxCountries.indexOf(geo.getCountryCode()) > -1
+		) {
+			context.targeting.enableKruxTargeting = true;
+		}
+
+		if (instantGlobals.wgSitewideDisableKrux) {
+			context.targeting.enableKruxTargeting = false;
+		}
+
+		if (context.targeting.wikiDirectedAtChildren) {
+			context.targeting.enableKruxTargeting = false;
 		}
 
 		// Export the context back to ads.context

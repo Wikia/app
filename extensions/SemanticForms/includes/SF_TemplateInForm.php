@@ -158,19 +158,22 @@ class SFTemplateInForm {
 	}
 
 	function creationHTML( $template_num ) {
-		$checked_str = ( $this->mAllowMultiple ) ? "checked" : "";
-		$template_str = wfMsg( 'sf_createform_template' );
-		$template_label_input = wfMsg( 'sf_createform_templatelabelinput' );
-		$allow_multiple_text = wfMsg( 'sf_createform_allowmultiple' );
-		$text = <<<END
-	<input type="hidden" name="template_$template_num" value="$this->mTemplateName">
-	<div class="templateForm">
-	<h2>$template_str '$this->mTemplateName'</h2>
-	<p>$template_label_input <input size=25 name="label_$template_num" value="$this->mLabel"></p>
-	<p><input type="checkbox" name="allow_multiple_$template_num" $checked_str> $allow_multiple_text</p>
-	<hr>
+		$checked_attribs = ( $this->mAllowMultiple ) ? array( 'checked' => 'checked' ) : array();
+		$template_str = wfMessage( 'sf_createform_template' )->plain();
+		$template_label_input = wfMessage( 'sf_createform_templatelabelinput' )->escaped();
+		$allow_multiple_text = wfMessage( 'sf_createform_allowmultiple' )->escaped();
 
-END;
+		$text = Html::hidden( "template_$template_num", $this->mTemplateName );
+		$text .= '<div class="templateForm">';
+		$text .= Html::element( 'h2', array(), "$template_str '$this->mTemplateName'" );
+		$text .= Html::rawElement( 'p', array(),
+			$template_label_input . Html::input( "label_$template_num", $this->mLabel, 'text', array( 'size' => 25 ) )
+		);
+		$text .= Html::rawElement( 'p', array(),
+			Html::input( "allow_multiple_$template_num", '', 'checkbox', $checked_attribs ) . $allow_multiple_text
+		);
+		$text .= '<hr />';
+
 		foreach ( $this->mFields as $field ) {
 			$text .= $field->creationHTML( $template_num );
 		}

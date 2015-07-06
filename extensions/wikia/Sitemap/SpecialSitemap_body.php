@@ -95,6 +95,7 @@ class SitemapPage extends UnlistedSpecialPage {
 			// cache on both CDN and client
 			header( "Cache-Control: s-maxage=86400", true );
 			header( "X-Pass-Cache-Control: public, max-age=86400", true );
+			header( "X-Robots-Tag: noindex" );
 
 			$this->mTitle = SpecialPage::getTitleFor( "Sitemap", $subpage );
 			$this->getNamespacesList();

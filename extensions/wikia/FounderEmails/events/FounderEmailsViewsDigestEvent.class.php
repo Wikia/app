@@ -5,21 +5,23 @@ class FounderEmailsViewsDigestEvent extends FounderEmailsEvent {
 		$this->setData( $data );
 	}
 
-	public function enabled ( $wgCityId, User $user ) {
-		if ( self::isAnswersWiki() ) {
+	public function enabled( User $admin, $wikiId = null ) {
+		$wikiId = empty( $wikiId ) ? F::app()->wg->CityId : $wikiId;
+
+		if ( self::isAnswersWiki( $wikiId ) ) {
 			return false;
 		}
 
 		// disable if all Wikia email disabled
-		if ( $user->getBoolOption( 'unsubscribed' ) ) {
+		if ( (bool)$admin->getGlobalPreference( 'unsubscribed' ) ) {
 			return false;
 		}
 
 		// If complete digest mode is enabled, do not send views only digest
-		if ( $user->getOption( "founderemails-complete-digest-$wgCityId" ) ) {
+		if ( $admin->getLocalPreference( "founderemails-complete-digest", $wikiId ) ) {
 			return false;
 		}
-		if ( $user->getOption( "founderemails-views-digest-$wgCityId" ) ) {
+		if ( $admin->getLocalPreference( "founderemails-views-digest", $wikiId ) ) {
 			return true;
 		}
 		return false;
@@ -57,12 +59,12 @@ class FounderEmailsViewsDigestEvent extends FounderEmailsEvent {
 				$user = User::newFromId( $user_id );
 
 				// skip if not enable
-				if ( !$this->enabled( $cityID, $user ) ) {
+				if ( !$this->enabled( $user, $cityID ) ) {
 					continue;
 				}
 				self::addParamsUser( $cityID, $user->getName(), $emailParams );
 
-				$langCode = $user->getOption( 'language' );
+				$langCode = $user->getGlobalPreference( 'language' );
 				$links = array(
 					'$WIKINAME' => $emailParams['$WIKIURL'],
 				);

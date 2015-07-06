@@ -228,8 +228,8 @@ class VisualEditorHooks {
 		if (
 			!self::isVisible( $skin ) ||
 			isset( $GLOBALS[ 'wgVisualEditorInParserTests' ] ) ||
-			!$skin->getUser()->getOption( 'visualeditor-enable' ) ||
-			$skin->getUser()->getOption( 'visualeditor-betatempdisable' ) ||
+			!$skin->getUser()->getGlobalPreference( 'visualeditor-enable' ) ||
+			$skin->getUser()->getGlobalPreference( 'visualeditor-betatempdisable' ) ||
 			(
 				$title->inNamespace( NS_FILE ) &&
 				WikiPage::factory( $title ) instanceof WikiFilePage &&

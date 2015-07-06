@@ -508,7 +508,7 @@ class CodeRevision {
 
 					if ( $user->canReceiveEmail() ) {
 						// Send message in receiver's language
-						$lang = array( 'language' => $user->getOption( 'language' ) );
+						$lang = array( 'language' => $user->getGlobalPreference( 'language' ) );
 						$user->sendMail(
 							wfMsgExt( 'codereview-email-subj2', $lang, $this->repo->getName(),
 								$this->getIdString( $row->cr_id ) ),
@@ -720,7 +720,7 @@ class CodeRevision {
 			// This is ugly
 			if ( $id == 0 || $user->canReceiveEmail() ) {
 				// Send message in receiver's language
-				$lang = array( 'language' => $user->getOption( 'language' ) );
+				$lang = array( 'language' => $user->getGlobalPreference( 'language' ) );
 
 				$localSubject = wfMsgExt( $subject, $lang, $this->repo->getName(), $this->getIdString() );
 				$localBody = call_user_func_array( 'wfMsgExt', array_merge( array( $body, $lang ), $args ) );
