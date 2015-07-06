@@ -257,9 +257,27 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 	private function validateSection( $section ) {
 		if ( strlen( $section[ 'title' ] ) > self::LABEL_MAX_LENGTH ) {
 			return [
-				'title' => $section['title'],
+				'title' => $section[ 'title' ],
 				'reason' => 'tooLongLabel'
 			];
+		}
+
+		if ( empty( $section[ 'featured' ] ) && $section[ 'title' ] !== '' && $section[ 'image_id' ] === '0' ) {
+			return [
+				'title' => $section[ 'title' ],
+				'reason' => 'imageMissing'
+			];
+		}
+
+		if ( !empty( $section[ 'items' ] ) && is_array( $section[ 'items' ] ) ) {
+			foreach ( $section[ 'items' ] as $item ) {
+				if ( $item[ 'image_id' ] === '0' ) {
+					return [
+						'title' => $item[ 'title' ],
+						'reason' => 'imageMissing'
+					];
+				}
+			}
 		}
 		return [];
 	}
