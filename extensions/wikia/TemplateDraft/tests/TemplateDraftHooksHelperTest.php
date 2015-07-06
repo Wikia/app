@@ -3,6 +3,7 @@
 class TemplateDraftHooksHelperTest extends WikiaBaseTest {
 
 	public function setUp() {
+		$this->markTestSkipped();
 		$this->setupFile = __DIR__ . '/../TemplateDraft.setup.php';
 		parent::setUp();
 	}

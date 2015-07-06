@@ -3,49 +3,14 @@
 class TemplateDraftHelper {
 
 	/**
-	 * Overrides content of parent page with contents of draft page
-	 * @param Title $draftTitle Title object of sub page (draft)
-	 * @throws PermissionsException
-	 */
-	public function approveDraft( Title $draftTitle ) {
-		// Get Title object of parent page
-		$helper = new TemplateDraftHelper();
-		$parentTitle = $helper->getParentTitle( $draftTitle );
-
-		// Check edit rights
-		if ( !$parentTitle->userCan( 'templatedraft' ) ) {
-			throw new PermissionsException( 'edit' );
-		}
-
-		// Get contents of draft page
-		$article = Article::newFromId( $draftTitle->getArticleID() );
-		$draftContent = $article->getContent();
-		// Get WikiPage object of parent page
-		$page = WikiPage::newFromID( $parentTitle->getArticleID() );
-		// Save to parent page
-		$page->doEdit( $draftContent, wfMessage( 'templatedraft-approval-summary' )->inContentLanguage()->plain() );
-
-		// Remove Draft page
-		$draftPage = WikiPage::newFromID( $draftTitle->getArticleID() );
-		$draftPage->doDeleteArticle( wfMessage( 'templatedraft-draft-removal-summary' )->inContentLanguage()->plain() );
-
-		// Show a confirmation message to a user after redirect
-		BannerNotificationsController::addConfirmation(
-			wfMessage( 'templatedraft-approval-success-confirmation' )->escaped(),
-			BannerNotificationsController::CONFIRMATION_CONFIRM,
-			true
-		);
-	}
-
-	/**
 	 * Checks if a Title is a new one and if it fits /Draft criteria.
 	 *
 	 * @param Title $title
 	 * @return bool
 	 */
-	public function isTitleNewDraft( Title $title ) {
+	public static function isTitleNewDraft( Title $title ) {
 		return !$title->exists()
-			&& $this->isTitleDraft( $title );
+			&& self::isTitleDraft( $title );
 	}
 
 	/**
@@ -54,7 +19,7 @@ class TemplateDraftHelper {
 	 * @param Title $title
 	 * @return bool
 	 */
-	public function isTitleDraft( Title $title ) {
+	public static function isTitleDraft( Title $title ) {
 		return $title->getNamespace() === NS_TEMPLATE
 			&& $title->isSubpage()
 			&& ( $title->getSubpageText() === wfMessage( 'templatedraft-subpage' )->inContentLanguage()->escaped()
@@ -63,50 +28,84 @@ class TemplateDraftHelper {
 
 	/**
 	 * Checks if the template (Title object) is marked by human as infobox
-	 *
 	 * @param Title $title
 	 * @return bool
 	 */
 	public function isMarkedAsInfobox( Title $title ) {
 		$tc = new TemplateClassificationController( $title );
-		return $tc->isType( 'infobox' );
+		return $tc->isType( $tc::TEMPLATE_INFOBOX );
 	}
 
 	/**
-	 * Parent page has to meet criteria to allow showing template draft rail modules
-	 * Assuming namespace and existance is already chacked
+	 * Check if the basic conditions for displaying a right rail module are met by the given Title.
 	 * @param Title $title
 	 * @return bool
 	 */
-	public function isParentValid( Title $title ) {
-		return $title->userCan( 'templatedraft' );
-	}
-
-	/**
-	 * Check if template draft operations are allowed for title.
-	 * Function is common for parent page and draft subpage
-	 * @param Title|null $title
-	 * @return bool
-	 */
-	public function allowedForTitle( $title ) {
-		if ( !$title instanceof Title || !$title->exists() || $title->getNamespace() !== NS_TEMPLATE ) {
-			return false;
-		}
-		$parentTitle = $this->getParentTitle( $title );
-		if ( !$this->isParentValid( $parentTitle ) ) {
-			return false;
-		}
-		return true;
+	public static function allowedForTitle( Title $title ) {
+		return $title->exists()
+			&& $title->getNamespace() === NS_TEMPLATE;
 	}
 
 	/**
 	 * Retrieves parent Title object from provided $title
-	 * If $title is already a top parent page getParentTitle returns same title
+	 * If $title is already a top parent page it returns the same title.
 	 * @param Title $title
 	 * @return Title Parent Title
 	 * @throws MWException
 	 */
 	public function getParentTitle( Title $title ) {
 		return Title::newFromText( $title->getBaseText(), NS_TEMPLATE );
+	}
+
+	/**
+	 * Checks conditions that a Title object has to meet to have a right rail module displayed.
+	 * @param Title $title
+	 * @return bool
+	 */
+	public function isRailModuleAllowed( Title $title ) {
+		return self::allowedForTitle( $title )
+			&& $title->userCan( 'templatedraft' );
+	}
+
+	/**
+	 * Attaches a new module to right rail which is an entry point to convert a given template
+	 * or to approve a draft. Decides if a module should be added and what kind of it is required.
+	 * @param array $railModuleList
+	 */
+	public function addRailModule( Title $title, Array &$railModuleList ) {
+		if ( self::isTitleDraft( $title ) ) {
+			/**
+			 * $title is a draft page.
+			 * Add rail module for draft approval
+			 */
+			$railModuleList[1502] = [ 'TemplateDraftModule', 'Approve', null ];
+		} else {
+			/**
+			 * $title is a parent page
+			 * Check if the template has not been classified before
+			 */
+			if ( $this->shouldDisplayCreateModule( $title ) ) {
+				$railModuleList[1502] = [ 'TemplateDraftModule', 'Create', null ];
+			}
+		}
+	}
+
+	/**
+	 * Checks if the template has already been classified.
+	 * We display the create module only if the type is empty (nobody classified it yet)
+	 * or is classified as an infobox one.
+	 * @param Title $title
+	 * @return bool
+	 */
+	public function shouldDisplayCreateModule( Title $title ) {
+		$tc = new TemplateClassificationController( $title );
+		$type = $tc->getType();
+		return ( empty( $type ) || $type === $tc::TEMPLATE_INFOBOX )
+			&& !$this->titleHasPortableInfobox( $title );
+	}
+
+	public function titleHasPortableInfobox( Title $title ) {
+		$portableData = PortableInfoboxDataService::newFromTitle( $title )->getData();
+		return !empty( $portableData );
 	}
 }

@@ -4,8 +4,7 @@ class TemplateDraftHooks {
 
 	public static function onSkinAfterBottomScripts( Skin $skin, &$text ) {
 		$title = $skin->getTitle();
-		$helper = new TemplateDraftHelper();
-		if ( $helper->allowedForTitle( $title ) ) {
+		if ( TemplateDraftHelper::allowedForTitle( $title ) ) {
 			$scripts = AssetsManager::getInstance()->getURL( 'template_draft' );
 
 			foreach ( $scripts as $script ) {
@@ -18,13 +17,16 @@ class TemplateDraftHooks {
 
 	/**
 	 * Attaches a new module to right rail which is an entry point to convert a given template.
-	 *
 	 * @param array $railModuleList
 	 * @return bool
 	 */
 	public static function onGetRailModuleList( Array &$railModuleList ) {
-		$templateDraftHooksHelper = new TemplateDraftHooksHelper();
-		$templateDraftHooksHelper->addRailModuleList( $railModuleList );
+		global $wgTitle;
+
+		$helper = new TemplateDraftHelper();
+		if ( $helper->isRailModuleAllowed( $wgTitle ) ) {
+			$helper->addRailModule( $wgTitle, $railModuleList );
+		}
 
 		return true;
 	}
@@ -32,7 +34,6 @@ class TemplateDraftHooks {
 	/**
 	 * Triggered if a user edits a Draft subpage of a template.
 	 * It pre-fills the content of the Draft with a converted markup.
-	 *
 	 * @param $text
 	 * @param Title $title
 	 * @return bool
@@ -57,7 +58,7 @@ class TemplateDraftHooks {
 				$text = $controller->createDraftContent(
 					$title, // @TODO this is currently taking the *edited* title (with subpage), not the *converted* title
 					$parentContent,
-					[ TemplateClassificationController::TEMPLATE_INFOBOX ]
+					TemplateClassificationController::TEMPLATE_INFOBOX
 				);
 			}
 		}
@@ -73,9 +74,8 @@ class TemplateDraftHooks {
 	 * @return bool
 	 */
 	public static function onEditPageLayoutShowIntro( &$preloads, Title $title ) {
-		$helper = new TemplateDraftHelper();
 		if ( $title->getNamespace() == NS_TEMPLATE ) {
-			if ( $helper->isTitleDraft( $title )
+			if ( TemplateDraftHelper::isTitleDraft( $title )
 				&& class_exists( 'TemplateConverter' )
 				&& TemplateConverter::isConversion()
 			) {
@@ -96,7 +96,7 @@ class TemplateDraftHooks {
 							wfMessage( 'templatedraft-module-view-parent' )->plain() )
 					)->escaped(),
 				];
-			} elseif ( !$helper->isTitleDraft( $title ) ) {
+			} elseif ( !TemplateDraftHelper::isTitleDraft( $title ) ) {
 				$base = Title::newFromText( $title->getBaseText() .'/'. wfMessage( 'templatedraft-subpage' ), NS_TEMPLATE );
 				$draftUrl = $base->getFullUrl( [
 					'action' => 'edit',
