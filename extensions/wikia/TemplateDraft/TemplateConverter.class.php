@@ -164,7 +164,7 @@ class TemplateConverter {
 	private function prepareVariables( $templateVariables ) {
 		$variables = [];
 
-		foreach( $templateVariables[1] as $key => $variableName ) {
+		foreach ( $templateVariables[1] as $key => $variableName ) {
 			if ( isset( $variables[$variableName] ) ) {
 				if ( empty( $variables[$variableName]['default'] ) && strlen( $templateVariables[2][$key] ) > 1 ) {
 					$variables[$variableName]['default'] = substr( $templateVariables[2][$key], 1 );
@@ -191,13 +191,13 @@ class TemplateConverter {
 	private function prepareContent( $content ) {
 		global $wgUser;
 
-		$ParserPool = \ParserPool::get();
-		$ParserPool->startExternalParse( $this->title, \ParserOptions::newFromUser( $wgUser ), \Parser::OT_PLAIN );
+		$parser = \ParserPool::get();
+		$parser->startExternalParse( $this->title, \ParserOptions::newFromUser( $wgUser ), \Parser::OT_PLAIN );
 
-		$frame = $ParserPool->getPreprocessor()->newFrame();
-		$dom = $ParserPool->preprocessToDom( $content );
+		$frame = $parser->getPreprocessor()->newFrame();
+		$dom = $parser->preprocessToDom( $content );
 		$content = $frame->expand( $dom, PPFrame::NO_ARGS );
-		$content = $ParserPool->doTableStuff( $content );
+		$content = $parser->doTableStuff( $content );
 
 		return $content;
 	}
@@ -214,7 +214,7 @@ class TemplateConverter {
 		$values = [];
 
 		if ( !empty( $rows[0] ) ) {
-			foreach( $rows[0] as $row ) {
+			foreach ( $rows[0] as $row ) {
 				$row = str_replace( ["\n", "\r"], '', $row);
 				preg_match( self::ROW_VALUES_PATTERN, $row, $vars );
 
@@ -236,7 +236,7 @@ class TemplateConverter {
 	 * @return array
 	 */
 	private function prepareVariableLabels( $variables, $templateVariables ) {
-		foreach( $variables as $variable ) {
+		foreach ( $variables as $variable ) {
 			if ( !empty( $variable[2] ) ) {
 				preg_match( self::TEMPLATE_VARIABLE_PATTERN, $variable[2], $templateName );
 
