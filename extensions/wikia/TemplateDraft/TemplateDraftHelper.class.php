@@ -37,16 +37,6 @@ class TemplateDraftHelper {
 	}
 
 	/**
-	 * Parent page has to meet criteria to allow showing template draft rail modules
-	 * Assuming namespace and existance is already chacked
-	 * @param Title $title
-	 * @return bool
-	 */
-	public function isParentValid( Title $title ) {
-		return $title->userCan( 'templatedraft' );
-	}
-
-	/**
 	 * Check if the basic conditions for displaying a right rail module are met by the given Title.
 	 * @param Title $title
 	 * @return bool
