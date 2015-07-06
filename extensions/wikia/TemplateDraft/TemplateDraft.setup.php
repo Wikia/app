@@ -52,7 +52,6 @@ $wgHooks['SkinAfterBottomScripts'][] = 'TemplateDraftHooks::onSkinAfterBottomScr
  * Helpers
  */
 $wgAutoloadClasses['TemplateDraftHelper'] = __DIR__ . '/TemplateDraftHelper.class.php';
-$wgAutoloadClasses['TemplateDraftHooksHelper'] = __DIR__ . '/TemplateDraftHooksHelper.class.php';
 $wgAutoloadClasses['TemplateConverter'] = __DIR__ . '/TemplateConverter.class.php';
 
 /**
