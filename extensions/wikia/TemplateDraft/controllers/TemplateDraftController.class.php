@@ -54,7 +54,7 @@ class TemplateDraftController extends WikiaController {
 		$this->response->setVal( 'status', true );
 
 
-		$tc = new TemplateClassificationController();
+		$tc = new TemplateClassificationController( $this->wg->Title );
 		$tc->classifyTemplate( 'infobox', false );
 
 		return true;

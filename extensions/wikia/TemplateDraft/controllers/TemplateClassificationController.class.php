@@ -66,7 +66,7 @@ class TemplateClassificationController extends WikiaController {
 
 		if ( $value ) {
 			// Huzzah! Template positively identified! Store in main property for easy retrieval
-			Wikia::setProps( $title->getArticleId(), array( self::TEMPLATE_CLASSIFICATION_MAIN_PROP => $type ) );
+			Wikia::setProps( $this->title->getArticleId(), array( self::TEMPLATE_CLASSIFICATION_MAIN_PROP => $type ) );
 		}
 
 		$data = array(
@@ -76,6 +76,6 @@ class TemplateClassificationController extends WikiaController {
 			'timestamp' => wfTimestamp(),
 		);
 
-		Wikia::setProps( $title->getArticleId(), array( $prop => json_encode( $data ) ) );
+		Wikia::setProps( $this->title->getArticleId(), array( $prop => json_encode( $data ) ) );
 	}
 }
