@@ -1017,15 +1017,22 @@ $config['relatedpages_wikiamobile_js'] = array(
 );
 
 /** EditPageLayout **/
+$config['editpage_events_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//extensions/wikia/EditPreview/js/editpage.event.preview.js',
+		'//extensions/wikia/EditPreview/js/editpage.event.diff.js',
+		'//extensions/wikia/EditPreview/js/editpage.event.helper.js',
+		'//extensions/wikia/EditPreview/js/editpage.events.js'
+	)
+];
+
 $config['editpage_common_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'//extensions/wikia/EditPageLayout/js/loaders/EditPageEditorLoader.js',
 		'//extensions/wikia/EditPreview/js/preview.js',
-		'//extensions/wikia/EditPreview/js/editpage.event.preview.js',
-		'//extensions/wikia/EditPreview/js/editpage.event.diff.js',
-		'//extensions/wikia/EditPreview/js/editpage.event.helper.js',
-		'//extensions/wikia/EditPreview/js/editpage.events.js'
+		'#group_editpage_events_js',
 	)
 );
 
@@ -1842,6 +1849,7 @@ $config['special_css_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'//resources/wikia/libraries/Ace/wikia.ace.editor.js',
+		'#group_editpage_events_js',
 		'//extensions/wikia/SpecialCss/js/SpecialCss.js',
 		'//resources/wikia/libraries/mustache/mustache.js',
 		'//resources/wikia/libraries/mustache/jquery.mustache.js'
