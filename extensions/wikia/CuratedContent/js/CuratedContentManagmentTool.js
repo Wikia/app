@@ -129,7 +129,7 @@ require(['wikia.window', 'jquery', 'wikia.nirvana', 'wikia.tracker', 'JSMessages
 
 					// find all images for items and sections except Featured Section and...
 					$ul.find('.section:not(.featured), .item')
-						.find('.image:not([style])')
+						.find('.image:not([style*="background-image"])')
 						.addError(imageMissingError);
 					// ...except Optional Section
 					var $lastSection = $ul.find('.section').last().find('.section-input');
@@ -226,12 +226,22 @@ require(['wikia.window', 'jquery', 'wikia.nirvana', 'wikia.tracker', 'JSMessages
 					checkForm();
 				})
 				.on('blur', 'input', function () {
-					var val = $.trim(this.value);
+					var val = $.trim(this.value),
+						self = this,
+						$imageForSection = $(this).parent().find('.image');
 
 					if (this.className === 'item-input') {
 						val = val.replace(/ /g, '_');
 						this.value = val;
-						loadImage($(this).parent().find('.image'), val);
+						//If element doesn't have background image - load one from category
+						if (!$imageForSection[0].matches('[style*="background-image"]')) {
+							// This has to happen inside setTimeout because updating value from autocomplete
+							// happens after blur event so value passed to loadImage is wrong.
+							// With setTimeout we are waiting for correct value to appear inside input
+							setTimeout(function() {
+								loadImage($imageForSection, $.trim(self.value).replace(/ /g, '_'))
+							}, 500);
+						}
 					} else {
 						this.value = val;
 						checkForm();
@@ -350,7 +360,7 @@ require(['wikia.window', 'jquery', 'wikia.nirvana', 'wikia.tracker', 'JSMessages
 							if (data.error) {
 								var items = $form.find('.item-input, .section-input');
 
-								data.error.each(function () {
+								$.each(data.error, function() {
 									var errTitle = this.title,
 										errReason = this.reason,
 										reasonMessage = getReasonMessage(errReason);
