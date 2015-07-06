@@ -215,7 +215,7 @@ class TemplateConverter {
 
 		if ( !empty( $rows[0] ) ) {
 			foreach ( $rows[0] as $row ) {
-				$row = str_replace( ["\n", "\r"], '', $row);
+				$row = str_replace( [ "\n", "\r" ], '', $row );
 				preg_match( self::ROW_VALUES_PATTERN, $row, $vars );
 
 				if ( !empty( $vars[1] ) && !empty( $vars[2] ) ) {
