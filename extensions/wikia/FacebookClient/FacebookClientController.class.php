@@ -160,9 +160,14 @@ class FacebookClientController extends WikiaController {
 			'targetUser' => $user,
 			'tempPass' => $tempPass,
 		];
-		F::app()->sendRequest( 'Email\Controller\FacebookDisconnect', 'handle', $emailParams );
+		$response = F::app()->sendRequest( 'Email\Controller\FacebookDisconnect', 'handle', $emailParams );
 
-		$this->status = 'ok';
+		if ( $response->getData()['result'] === 'ok' ) {
+			$this->status = 'ok';
+		} else {
+			$this->status = 'error';
+			$this->msg = wfMessage( 'fbconnect-unknown-error' )->text();
+		}
 	}
 
 	/**

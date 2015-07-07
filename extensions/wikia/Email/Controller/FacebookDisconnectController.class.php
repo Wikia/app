@@ -6,8 +6,6 @@ use Email\EmailController;
 use Email\Tracking\TrackingCategories;
 
 class FacebookDisconnectController extends ForgotPasswordController {
-	const TRACKING_CATEGORY = TrackingCategories::TEMPORARY_PASSWORD;
-
 	public function getSubject() {
 		return $this->getMessage( 'emailext-fbdisconnect-subject' )->text();
 	}
@@ -21,9 +19,9 @@ class FacebookDisconnectController extends ForgotPasswordController {
 			'summary' => $this->getSummary(),
 			'passwordIntro' => $this->getIntro(),
 			'username' => $this->getMessage( 'emailext-fbdisconnect-username',
-				$this->targetUser->getName() )->parse(),
+				$this->targetUser->getName() )->text(),
 			'tempPassword' => $this->getMessage( 'emailext-fbdisconnect-password',
-				$this->tempPass )->parse(),
+				$this->tempPass )->text(),
 			'instructions' => $this->getMessage( 'emailext-fbdisconnect-instructions' )->text(),
 			'questions' => $this->getMessage( 'emailext-password-questions' )->parse(),
 			'signature' => $this->getMessage( 'emailext-password-signature' )->text(),
