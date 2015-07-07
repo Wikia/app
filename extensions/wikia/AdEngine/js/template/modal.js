@@ -81,13 +81,11 @@ define('ext.wikia.adEngine.template.modal', [
 	function scaleAdIframe(adIframe, params) {
 		var lightBoxHeaderHeight = 40,
 			ratioWidth = win.innerWidth / params.width,
-			ratioHeight = (win.innerHeight - lightBoxHeaderHeight) / params.height;
+			ratioHeight = (win.innerHeight - lightBoxHeaderHeight) / params.height,
+			ratio = Math.min(ratioWidth, ratioHeight);
 
-		if (ratioHeight < ratioWidth) {
-			adIframe.style.Margin.top = lightBoxHeaderHeight;
-		}
-
-		adIframe.style.transform = 'scale(' + Math.min(ratioWidth, ratioHeight) + ')';
+		adIframe.style.marginTop = lightBoxHeaderHeight;
+		adIframe.style.transform = 'scale(' + ratio + ')';
 	}
 
 	return {
