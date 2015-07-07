@@ -125,7 +125,7 @@
 								</div>
 							<?php endif ?>
 							<nav class="buttons">
-								<?php if ( $showMobilePreview ): ?>
+								<?php if ( $showPreview ): ?>
 									<?= $app->renderView( 'EditPageLayout', 'Buttons', [ 'showMobilePreview' => $showMobilePreview ]); ?>
 								<?php else: ?>
 									<?= $app->renderView( 'EditPageLayout', 'CodeButtons'); ?>
