@@ -37,7 +37,7 @@ define('ext.wikia.adEngine.template.modal', [
 			if (params.scalable) {
 				log(['showNew scale the ad'], 'debug', logGroup);
 
-				adIframe = scaleAdIframe(adIframe, params)
+				win.addEventListener('resize', scaleAdIframe(adIframe, params));
 			}
 
 			win.Mercury.Modules.Ads.getInstance().openLightbox(adIframe);
@@ -77,7 +77,6 @@ define('ext.wikia.adEngine.template.modal', [
 	function scaleAdIframe(adIframe, params) {
 		var ratio = Math.min(win.innerWidth / params.width, win.innerHeight / params.height);
 		adIframe.style.transform = 'scale(' + ratio + ')';
-		return adIframe;
 	}
 
 	return {
