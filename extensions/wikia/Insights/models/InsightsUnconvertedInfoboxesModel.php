@@ -43,9 +43,16 @@ class InsightsUnconvertedInfoboxesModel extends InsightsQuerypageModel {
 	}
 
 	public function getAltActionUrl( Title $title ) {
-		$subpage = Title::newFromText( $title->getText() . "/Draft", NS_TEMPLATE );
+		if ( !class_exists( 'TemplateConverter' ) ) {
+			return '';
+		}
 
-		return $subpage->getFullUrl( [ 'action' => 'edit' ] );
+		$subpage = Title::newFromText( $title->getText() . "/" . wfMessage('templatedraft-subpage')->escaped() , NS_TEMPLATE );
+
+		return $subpage->getFullUrl( [
+			'action' => 'edit',
+			TemplateConverter::CONVERSION_MARKER => 1,
+		] );
 	}
 
 	public function altActionLinkMessage() {
