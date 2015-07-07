@@ -21,10 +21,6 @@
 	font-weight: bold;
 }
 
-.username {
-	font-size: 12px;
-}
-
 .message {
 	margin: 20px 0;
 }
@@ -34,3 +30,6 @@
 	font-weight: bold;
 }
 
+.username {
+	font-size: 12px;
+}
