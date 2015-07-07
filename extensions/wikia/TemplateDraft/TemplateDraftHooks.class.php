@@ -108,7 +108,7 @@ class TemplateDraftHooks {
 							'href' => $draftUrl,
 							'target' => '_blank'
 						],
-							wfMessage( 'templatedraft-module-button-generate' )->plain() )
+							wfMessage( 'templatedraft-module-button-create' )->plain() )
 					)->escaped(),
 				];
 			}

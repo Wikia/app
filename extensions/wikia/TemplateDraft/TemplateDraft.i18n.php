@@ -48,7 +48,6 @@ $2
 	'templatedraft-module-editintro-please-convert' => 'We can generate a draft version of your infobox with our new markup just click $1.',
 	'templatedraft-module-view-parent' => 'view parent template wikitext',
 	'templatedraft-module-help' => 'view the help page on Infobox markup',
-	'templatedraft-module-button-generate' => 'generate draft markup',
 
 	'templatedraft-invalid-template' => 'Invalid template name provided.',
 ];
