@@ -109,7 +109,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 									<img src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D" data-src="http://image.jpg" class="portable-infobox-image lazy media article-media" alt="image alt"  data-image-key="test1" data-image-name="test1" data-ref="1" data-params=\'[{"name":"test1", "full":"http://image.jpg"}]\' />
 								</div>
 								<div class="portable-infobox-item item-type-key-val portable-infobox-item-margins">
-									<h3 class="portable-infobox-item-label portable-infobox-header-font">test label</h3>
+									<h3 class="portable-infobox-item-label portable-infobox-secondary-font">test label</h3>
 									<div class="portable-infobox-item-value">test value</div>
 									</div>
 							</aside>',
@@ -152,7 +152,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 									<img src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D" data-src="http://image.jpg" class="portable-infobox-image lazy media article-media" alt="image alt"  data-image-key="test1" data-image-name="test1" data-ref="1" data-params=\'[{"name":"test1", "full":"http://image.jpg"}]\' />
 								</div>
 								<div class="portable-infobox-item item-type-key-val portable-infobox-item-margins">
-									<h3 class="portable-infobox-item-label portable-infobox-header-font">test label</h3>
+									<h3 class="portable-infobox-item-label portable-infobox-secondary-font">test label</h3>
 									<div class="portable-infobox-item-value">test value</div>
 									</div>
 							</aside>',
@@ -210,7 +210,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 									<img src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D" data-src="http://image.jpg" class="portable-infobox-image lazy media article-media" alt="image alt"  data-image-key="test1" data-image-name="test1" data-ref="1" data-params=\'[{"name":"test1", "full":"http://image.jpg"}]\' />
 								</div>
 								<div class="portable-infobox-item item-type-key-val portable-infobox-item-margins">
-									<h3 class="portable-infobox-item-label portable-infobox-header-font">test label</h3>
+									<h3 class="portable-infobox-item-label portable-infobox-secondary-font">test label</h3>
 									<div class="portable-infobox-item-value">test value</div>
 								</div>
 								<div class="portable-infobox-item item-type-title portable-infobox-item-margins">
@@ -257,7 +257,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 									<img src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D" data-src="http://image.jpg" class="portable-infobox-image lazy media article-media" alt="image alt"  data-image-key="test1" data-image-name="test1" data-ref="1" data-params=\'[{"name":"test1", "full":"http://image.jpg"}]\' />
 								</div>
 								<div class="portable-infobox-item item-type-key-val portable-infobox-item-margins">
-									<h3 class="portable-infobox-item-label portable-infobox-header-font">test label</h3>
+									<h3 class="portable-infobox-item-label portable-infobox-secondary-font">test label</h3>
 									<div class="portable-infobox-item-value">test value</div>
 									</div>
 							</aside>',
@@ -314,7 +314,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 									<img src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D" data-src="http://image.jpg" class="portable-infobox-image lazy media article-media" alt="image alt"  data-image-key="test1" data-image-name="test1" data-ref="1" data-params=\'[{"name":"test1", "full":"http://image.jpg"}]\' />
 								</div>
 								<div class="portable-infobox-item item-type-key-val portable-infobox-item-margins">
-									<h3 class="portable-infobox-item-label portable-infobox-header-font">test label</h3>
+									<h3 class="portable-infobox-item-label portable-infobox-secondary-font">test label</h3>
 									<div class="portable-infobox-item-value">test value</div>
 								</div>
 								<div class="portable-infobox-item item-type-title portable-infobox-item-margins">
@@ -347,7 +347,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 									<h2 class="portable-infobox-title">Test Title</h2>
 								</div>
 								<div class="portable-infobox-item item-type-key-val portable-infobox-item-margins">
-									<h3 class="portable-infobox-item-label portable-infobox-header-font">test label</h3>
+									<h3 class="portable-infobox-item-label portable-infobox-secondary-font">test label</h3>
 									<div class="portable-infobox-item-value">test value</div>
 									</div>
 							</aside>',
@@ -380,7 +380,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 									<img src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D" data-src="http://image.jpg" class="portable-infobox-image lazy media article-media" alt="image alt"  data-image-key="test1" data-image-name="test1" data-ref="1" data-params=\'[{"name":"test1", "full":"http://image.jpg"}]\' />
 								</div>
 								<div class="portable-infobox-item item-type-key-val portable-infobox-item-margins">
-									<h3 class="portable-infobox-item-label portable-infobox-header-font">test label</h3>
+									<h3 class="portable-infobox-item-label portable-infobox-secondary-font">test label</h3>
 									<div class="portable-infobox-item-value">test value</div>
 									</div>
 							</aside>',
