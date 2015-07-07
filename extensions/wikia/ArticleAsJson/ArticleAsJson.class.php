@@ -14,8 +14,7 @@ class ArticleAsJson extends WikiaService {
 	const MEDIA_CONTEXT_ARTICLE_VIDEO = 'article-video';
 	const MEDIA_CONTEXT_GALLERY_IMAGE = 'gallery-image';
 	const MEDIA_CONTEXT_ICON = 'icon';
-	const MEDIA_CONTEXT_INFOBOX_IMAGE = 'infobox-image';
-	const MEDIA_CONTEXT_INFOBOX_VIDEO = 'infobox-video';
+	const MEDIA_CONTEXT_INFOBOX = 'infobox';
 
 	private static function createMarker( $width = 0, $height = 0, $isGallery = false ){
 		$blankImgUrl = F::app()->wg->blankImgUrl;
@@ -140,7 +139,7 @@ class ArticleAsJson extends WikiaService {
 		wfProfileIn( __METHOD__ );
 		if ( $title ) {
 			$details = WikiaFileHelper::getMediaDetail( $title, self::$mediaDetailConfig );
-			$details['context'] = $details['mediaType'] === 'video' ? self::MEDIA_CONTEXT_INFOBOX_VIDEO : self::MEDIA_CONTEXT_INFOBOX_IMAGE;
+			$details['context'] = self::MEDIA_CONTEXT_INFOBOX;
 			self::$media[] = self::createMediaObject( $details, $title->getText(), $alt );
 			$ref = count( self::$media ) - 1;
 		}
