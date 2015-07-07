@@ -66,7 +66,7 @@
 							</td>
 							<?php if ( isset( $item['altaction'] ) ) : ?>
 							<td class="insights-list-cell">
-								<a class="wikia-button big" href="<?= $item['altaction']['url'] ?>">
+								<a class="wikia-button" href="<?= $item['altaction']['url'] ?>">
 									<?= wfMessage( $item['altaction']['label'] )->escaped() ?>
 								</a>
 							</td>
