@@ -228,15 +228,15 @@ class EditPageLayoutHelper {
 	 * @return bool
 	 */
 	public function showMobilePreview( Title $title ) {
-		$blacklistedPage = ( self::isCodePageWithoutPreview( $title ) )
+		$blacklistedPage = self::isCodePage( $title )
 				|| $title->isMainPage()
 				|| NavigationModel::isWikiNavMessage( $title );
 
 		return !$blacklistedPage;
 	}
 
-	public static function isCodePageWithoutPreview( Title $title ) {
-		return self::isCodePage( $title ) && $title->getNamespace() !== NS_TEMPLATE;
+	public static function isCodePageWithPreview( Title $title ) {
+		return self::isCodePage( $title ) && self::isInfoboxTemplate( $title );
 	}
 
 	/**
