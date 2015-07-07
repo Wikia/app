@@ -37,7 +37,11 @@ define('ext.wikia.adEngine.template.modal', [
 			if (params.scalable) {
 				log(['showNew scale the ad'], 'debug', logGroup);
 
-				win.addEventListener('resize', scaleAdIframe(adIframe, params));
+				scaleAdIframe(adIframe, params);
+
+				win.addEventListener('resize', function () {
+					scaleAdIframe(adIframe, params);
+				});
 			}
 
 			win.Mercury.Modules.Ads.getInstance().openLightbox(adIframe);
