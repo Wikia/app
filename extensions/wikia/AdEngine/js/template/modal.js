@@ -80,9 +80,10 @@ define('ext.wikia.adEngine.template.modal', [
 
 	function scaleAdIframe(adIframe, params) {
 		var lightBoxHeaderHeight = 40,
+			maximumRatio = 3,
 			ratioWidth = win.innerWidth / params.width,
 			ratioHeight = (win.innerHeight - lightBoxHeaderHeight) / params.height,
-			ratio = Math.min(ratioWidth, ratioHeight);
+			ratio = Math.min(ratioWidth, ratioHeight, maximumRatio);
 
 		adIframe.style.marginTop = lightBoxHeaderHeight + 'px';
 		adIframe.style.transform = 'scale(' + ratio + ')';
