@@ -1028,14 +1028,16 @@ class ArticlesApiController extends WikiaApiController {
 			$articleContent = json_decode( $parsedArticle->getText() );
 			$content = [];
 
-			if ( $sectionsToGet === 'all' ) {
-				$count = count( $parsedArticle->getSections() );
-				for ( $i = 0; $i < $count; $i++ ) {
-					$content[] = $this->getArticleSection( $articleAsWikiText, $title, $i );
+			if ( !empty( $sectionsToGet ) ) {
+				if ( $sectionsToGet === 'all' ) {
+					$sectionsToGet = range( 0, count( $parsedArticle->getSections() ) );
 				}
-			} elseif ( is_array( $sectionsToGet ) ) {
-				foreach ( $sectionsToGet as $section ) {
-					$content[] = $this->getArticleSection( $articleAsWikiText, $title, $section );
+				if ( is_array( $sectionsToGet ) ) {
+					foreach ( $sectionsToGet as $section ) {
+						$content[] = $this->getArticleSection( $articleAsWikiText, $title, $section );
+					}
+				} else {
+					throw new BadRequestApiException( 'Sections must be an array of numbers or "all"' );
 				}
 			} else {
 				$content = $articleContent->content;
