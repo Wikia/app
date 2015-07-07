@@ -69,8 +69,13 @@ define('ext.wikia.adEngine.slot.inContent', [
 	 */
 	function getSectionHeight(section) {
 		var $firstElement = section.$ad || section.$firstElement,
-			offsetTop = $firstElement.offset().top,
+			firstElementOffset = $firstElement.offset(),
+			offsetTop = firstElementOffset && firstElementOffset.top,
 			offsetBottom;
+
+		if (offsetTop === undefined) {
+			return 0;
+		}
 
 		if (section.$end.length) {
 			offsetBottom = section.$end.offset().top;
@@ -105,6 +110,10 @@ define('ext.wikia.adEngine.slot.inContent', [
 			$start = !intro && $headers.eq(i - 1);
 			$end = $headers.eq(i);
 			$firstElement = intro ? $container.children().first() : $start.next();
+			// Elements with display: none don't alter the layout
+			while ($firstElement.css('display') === 'none') {
+				$firstElement = $firstElement.next();
+			}
 			section = {
 				intro: intro,
 				name: intro ? 'TOP' : $start.children().first().text(),

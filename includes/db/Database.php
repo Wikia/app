@@ -2684,10 +2684,18 @@ abstract class DatabaseBase implements DatabaseType {
 			$sql .= ' WHERE ' . $conds;
 		}
 
+		// Wikia change- begin
+		// improve logging for BAC-1094
 		if ( strpos( $sql, '`user`' ) !== false ) {
-			global $wgDBname, $wgUser;
-			error_log( sprintf( "MOLI: (%s), user: %d: %s", $wgDBname, ( !empty( $wgUser ) ) ? $wgUser->getId() : 0, $sql ) );
+			global $wgUser;
+			WikiaLogger::instance()->warning( 'MOLI: delete from user', [
+				'fname' => $fname,
+				'sql' => $sql,
+				'exception' => new Exception(),
+				'sent_by' => !empty( $wgUser ) ? $wgUser->getName() : ''
+			] );
 		}
+		// Wikia change- end
 
 		return $this->query( $sql, $fname );
 	}
