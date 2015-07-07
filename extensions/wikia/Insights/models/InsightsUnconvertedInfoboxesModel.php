@@ -38,6 +38,14 @@ class InsightsUnconvertedInfoboxesModel extends InsightsQuerypageModel {
 		return false;
 	}
 
+	/**
+	 * Get a type of a subpage only, we want a user to be directed to view.
+	 * @return array
+	 */
+	public function getUrlParams() {
+		return $this->getInsightParam();
+	}
+
 	public function hasAltAction() {
 		return class_exists( 'TemplateConverter' );
 	}
