@@ -97,6 +97,9 @@ class PortableInfoboxRenderService extends WikiaService {
 		if ( $type === 'image' ) {
 			$data[ 'thumbnail' ] = $this->getThumbnailUrl( $data['name'] );
 			$data[ 'key' ] = urlencode( $data[ 'key' ] );
+			$thumbnailSizes = $this->getThumbnailSizes( $data['name'] );
+			$data[ 'height' ] = $thumbnailSizes[ 'height' ];
+			$data[ 'width' ] = $thumbnailSizes[ 'width' ];
 
 			if ( $this->isWikiaMobile() ) {
 				$type = $type . self::MOBILE_TEMPLATE_POSTFIX;
@@ -125,6 +128,24 @@ class PortableInfoboxRenderService extends WikiaService {
 		}
 
 		return '';
+	}
+
+	/**
+	 * @param $title
+	 * @return array|null
+	 */
+	protected function getThumbnailSizes( $title ) {
+		$file = \WikiaFileHelper::getFileFromTitle( $title );
+
+		if ( $file ) {
+			$width = $this->isWikiaMobile() ?
+				self::MOBILE_THUMBNAIL_WIDTH :
+				self::DESKTOP_THUMBNAIL_WIDTH;
+			return [
+				'height' => floor($file->height * $width / $file->width),
+				'width' => $width
+			];
+		}
 	}
 
 	/** 
