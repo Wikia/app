@@ -105,7 +105,11 @@ class XmlParserTest extends WikiaBaseTest {
 			[ '<data></data>', '' ],
 			[ '<data>&aksjdf;</data>', '&aksjdf;' ],
 			[ '<data>&amp;</data>', '&' ],
-			[ '<data>&middot;</data>', '·' ]
+			[ '<data>&middot;</data>', '·' ],
+			[ '<data>&Uuml;</data>', 'Ü' ],
+			[ '<data>&Delta;</data>', 'Δ' ],
+			[ '<data>&amp;amp;</data>', '&amp;' ],
+			[ '<data>&amp</data>', '&amp' ]
 		];
 	}
 }
