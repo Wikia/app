@@ -25,17 +25,17 @@ define('ext.wikia.adEngine.template.modal', [
 		var skin = adContext.getContext().targeting.skin;
 
 		if (skin === 'oasis') {
-			log(['showNew desktop modal'], 'debug', logGroup);
+			log(['show desktop modal'], 'debug', logGroup);
 			createAndShowDesktopModal(params);
 		}
 
 		if (skin === 'mercury') {
-			log(['showNew mobile (Mercury) modal'], 'debug', logGroup);
+			log(['show mobile (Mercury) modal'], 'debug', logGroup);
 
 			var adIframe = createAdIframe(params);
 
 			if (params.scalable) {
-				log(['showNew scale the ad'], 'debug', logGroup);
+				log(['show scale the ad'], 'debug', logGroup);
 
 				scaleAdIframe(adIframe, params);
 
