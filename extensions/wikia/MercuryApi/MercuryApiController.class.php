@@ -127,12 +127,13 @@ class MercuryApiController extends WikiaController {
 	 * @param int $articleId
 	 * @return array
 	 */
-	private function getArticleJson( $articleId, Title $title ) {
+	private function getArticleJson( $articleId, Title $title, $sections = [] ) {
 		$redirect = $this->request->getVal( 'redirect' );
 
 		$articleAsJson = $this->sendRequest( 'ArticlesApi', 'getAsJson', [
 			'id' => $articleId,
-			'redirect' => $redirect
+			'redirect' => $redirect,
+			'sections' => $sections
 		] )->getData();
 
 		$articleType = WikiaPageType::getArticleType( $title );
@@ -143,6 +144,7 @@ class MercuryApiController extends WikiaController {
 
 		return $articleAsJson;
 	}
+
 
 	/**
 	 * @desc returns top contributors user details
@@ -313,6 +315,7 @@ class MercuryApiController extends WikiaController {
 		try {
 			$title = $this->getTitleFromRequest();
 			$articleId = $title->getArticleId();
+			$sections = $this->getVal( 'sections' );
 
 			$data = [
 				'details' => $this->getArticleDetails( $articleId ),
@@ -327,7 +330,7 @@ class MercuryApiController extends WikiaController {
 			if ( $isMainPage && !empty( $wgEnableMainPageDataMercuryApi ) ) {
 				$data['mainPageData'] = $this->getMainPageData();
 			} else {
-				$articleAsJson = $this->getArticleJson( $articleId, $title );
+				$articleAsJson = $this->getArticleJson( $articleId, $title, $sections );
 				$data['article'] = $articleAsJson;
 			}
 

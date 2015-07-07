@@ -976,6 +976,7 @@ class ArticlesApiController extends WikiaApiController {
 		$articleId = $this->getRequest()->getInt(self::SIMPLE_JSON_ARTICLE_ID_PARAMETER_NAME, NULL);
 		$articleTitle = $this->getRequest()->getVal(self::SIMPLE_JSON_ARTICLE_TITLE_PARAMETER_NAME, NULL);
 		$redirect = $this->request->getVal('redirect');
+		$sectionsToGet = $this->request->getVal('sections');
 
 		if ( !empty( $articleId ) && !empty( $articleTitle ) ) {
 			throw new BadRequestApiException( 'Can\'t use id and title in the same request' );
@@ -987,6 +988,7 @@ class ArticlesApiController extends WikiaApiController {
 
 		if ( !empty( $articleId ) ) {
 			$article = Article::newFromID( $articleId );
+			$title = $article->getTitle();
 		} else {
 			$title = Title::newFromText( $articleTitle, NS_MAIN );
 
@@ -1020,7 +1022,24 @@ class ArticlesApiController extends WikiaApiController {
 		$parsedArticle = $article->getParserOutput();
 
 		if ( $parsedArticle instanceof ParserOutput ) {
+			// TODO: try to get $wgParser->getSection to handle HTML instead of passing in wikitext
+
+			$articleAsWikiText = $article->getContent();
 			$articleContent = json_decode( $parsedArticle->getText() );
+			$content = [];
+
+			if ( $sectionsToGet === 'all' ) {
+				$count = count( $parsedArticle->getSections() );
+				for ( $i = 0; $i < $count; $i++ ) {
+					$content[] = $this->getArticleSection( $articleAsWikiText, $title, $i );
+				}
+			} elseif ( is_array( $sectionsToGet ) ) {
+				foreach ( $sectionsToGet as $section ) {
+					$content[] = $this->getArticleSection( $articleAsWikiText, $title, $section );
+				}
+			} else {
+				$content = $articleContent->content;
+			}
 		} else {
 			throw new ArticleAsJsonParserException( 'Parser is currently not available' );
 		}
@@ -1039,13 +1058,21 @@ class ArticlesApiController extends WikiaApiController {
 		}
 
 		$result = [
-			'content' => $articleContent->content,
+			'content' => $content,
 			'media' => $articleContent->media,
 			'users' => $articleContent->users,
 			'categories' => $categories
 		];
 
 		$this->setResponseData( $result, '', self::SIMPLE_JSON_VARNISH_CACHE_EXPIRATION );
+	}
+
+	private function getArticleSection( $articleAsWikiText, $title, $section ) {
+		/** @var $wgParser Parser */
+		global $wgParser;
+
+		$wikitext = $wgParser->getSection( $articleAsWikiText, $section );
+		return $wgParser->parse( $wikitext, $title, $wgParser->mOptions )->mText;
 	}
 
 	public function getPopular() {
