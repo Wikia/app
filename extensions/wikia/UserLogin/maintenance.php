@@ -110,7 +110,7 @@
 				'user_email_authenticated' => NULL,
 				'up_property' => UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME,
 				'up_value' => 1,
-				'date(user_registration) < curdate() - interval 30 day'
+				'date(user_registration) < curdate() - interval 60 day'
 			),
 			__METHOD__,
 			array(),
