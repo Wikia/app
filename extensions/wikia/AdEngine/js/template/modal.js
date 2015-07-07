@@ -9,7 +9,9 @@ define('ext.wikia.adEngine.template.modal', [
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.template.modal',
-		modalId = 'ext-wikia-adEngine-template-modal';
+		modalId = 'ext-wikia-adEngine-template-modal',
+		lightBoxHeaderHeight = 40,
+		maximumRatio = 3; // don't scale the ad more than 3 times
 
 	/**
 	 * Show the modal ad
@@ -79,9 +81,7 @@ define('ext.wikia.adEngine.template.modal', [
 	}
 
 	function scaleAdIframe(adIframe, params) {
-		var lightBoxHeaderHeight = 40,
-			maximumRatio = 3,
-			ratioWidth = win.innerWidth / params.width,
+		var ratioWidth = win.innerWidth / params.width,
 			ratioHeight = (win.innerHeight - lightBoxHeaderHeight) / params.height,
 			ratio = Math.min(ratioWidth, ratioHeight, maximumRatio);
 
