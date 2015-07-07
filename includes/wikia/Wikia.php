@@ -2015,7 +2015,7 @@ class Wikia {
 			}
 			$user->setEmail( '' );
 			$user->setPassword( null );
-			$user->setGlobalFlag( 'disabled');
+			$user->setGlobalFlag( 'disabled', 1);
 			$user->setGlobalAttribute( 'disabled_date', wfTimestamp( TS_DB ) );
 			$user->mToken = null;
 			$user->invalidateEmail();
