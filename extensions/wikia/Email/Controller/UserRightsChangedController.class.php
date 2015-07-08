@@ -43,9 +43,9 @@ class UserRightsChangedController extends EmailController {
 
 	protected function getSubject() {
 		if ( $this->isTargetUserChangedUser() ) {
-			return $this->getMessage( "emailext-user-rights-changed-subject" )->text();
+			return $this->getMessage( 'emailext-user-rights-changed-subject' )->text();
 		}
-		return $this->getMessage( "emailext-user-rights-changed-subject-follower", $this->changedUser )->text();
+		return $this->getMessage( 'emailext-user-rights-changed-subject-follower', $this->changedUser )->text();
 	}
 
 	/**
@@ -81,7 +81,7 @@ class UserRightsChangedController extends EmailController {
 					'name' => 'pageTitle',
 					'value' => \F::app()->wg->User->getName(),
 					'label' => 'User whose rights were changed',
-					'tooltip' => "User whose rights were changed",
+					'tooltip' => 'User whose rights were changed',
 				],
 			]
 		];

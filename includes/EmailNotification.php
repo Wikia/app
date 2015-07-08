@@ -615,7 +615,7 @@ class EmailNotification {
 	}
 
 	private function isUserRightsChange() {
-		return $this->action == "rights";
+		return $this->action == 'rights';
 	}
 
 	private function sendUsingUserMailer( \User $user ) {
