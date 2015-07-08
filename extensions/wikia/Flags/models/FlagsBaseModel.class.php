@@ -41,9 +41,9 @@ class FlagsBaseModel extends \WikiaModel {
 			'wgDBmysql5' => true
 		] );
 
-		$db = $wrapper->wrap( function() use( $dbType ) {
+		$db = $wrapper->wrap( function () use ( $dbType ) {
 			return wfGetDB( $dbType, [], $this->wg->FlagsDB );
-		});
+		} );
 
 		return $db;
 	}
