@@ -225,7 +225,7 @@ class CuratedContentController extends WikiaController {
 
 		$items = WikiaDataAccess::cache(
 			wfMemcKey( __METHOD__, $offset, $limit, self::NEW_API_VERSION ),
-			6 * self::HOURS,
+			WikiaResponse::CACHE_SHORT,
 			function () use ( $limit, $offset ) {
 				return ApiService::call(
 					[
