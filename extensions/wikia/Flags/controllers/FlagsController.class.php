@@ -243,7 +243,7 @@ class FlagsController extends WikiaController {
 	private function getFlagsForParserOutput( $currentFlags, $pageId ) {
 		$flagsOnPage = [];
 
-		foreach( $this->editFlags as $flagTypeId => $flag ) {
+		foreach ( $this->editFlags as $flagTypeId => $flag ) {
 			if ( isset( $flag[FlagsHelper::FLAGS_INPUT_NAME_CHECKBOX] ) ) {
 				$flagsOnPage[$flagTypeId] = $this->getFlagsHelper()->getFlagFromPostData(
 					$currentFlags[$flagTypeId],
@@ -273,9 +273,9 @@ class FlagsController extends WikiaController {
 				$flags = $this->getResponseData( $response );
 
 				return $this->getParsedFlags( $flags, $pageId );
-			} else {
-				return null;
 			}
+
+			return null;
 		} catch ( Exception $exception ) {
 			$this->logResponseException( $exception, $response->getRequest() );
 		}
