@@ -17,9 +17,6 @@ class UserRightsChangedController extends EmailController {
 	}
 
 	private function assertValidParams() {
-		if ( empty( $this->details ) ) {
-			throw new Check( "'summary' parameter must not be empty" );
-		}
 		if ( empty( $this->changedUser ) ) {
 			throw new Check( "'pageTitle' parameter must not be empty" );
 		}
@@ -32,7 +29,7 @@ class UserRightsChangedController extends EmailController {
 		$this->response->setData( [
 			'salutation' => $this->getSalutation(),
 			'summary' => $this->getSubject(),
-			'details' => $this->details,
+			'details' => $this->getDetails(),
 			'editorProfilePage' => $this->getCurrentProfilePage(),
 			'editorUserName' => $this->getCurrentUserName(),
 			'editorAvatarURL' => $this->getCurrentAvatarURL(),
@@ -46,6 +43,13 @@ class UserRightsChangedController extends EmailController {
 			return $this->getMessage( 'emailext-user-rights-changed-subject' )->text();
 		}
 		return $this->getMessage( 'emailext-user-rights-changed-subject-follower', $this->changedUser )->text();
+	}
+
+	private function getDetails() {
+		if ( empty( $this->details ) ) {
+			return $this->getMessage('emailext-watchedpage-no-summary' )->text();
+		}
+		return $this->details;
 	}
 
 	/**
