@@ -47,7 +47,7 @@ class UserRightsChangedController extends EmailController {
 
 	private function getDetails() {
 		if ( empty( $this->details ) ) {
-			return $this->getMessage('emailext-watchedpage-no-summary' )->text();
+			return $this->getMessage( 'emailext-watchedpage-no-summary' )->text();
 		}
 		return $this->details;
 	}
