@@ -95,13 +95,13 @@ class PortableInfoboxRenderService extends WikiaService {
 		//TODO: with validated the performance of render Service and in the next phase we want to refactor it (make
 		// it modular) While doing this we also need to move this logic to appropriate image render class
 		if ( $type === 'image' ) {
-			$data[ 'thumbnail' ] = $this->getThumbnailUrl( $data['name'] );
 			$data[ 'key' ] = urlencode( $data[ 'key' ] );
-			$thumbnailSizes = $this->getThumbnailSizes( $data['name'] );
+			$thumbnail = $this->getThumbnail( $data['name'] );
 
-			if ( $thumbnailSizes ) {
-				$data[ 'height' ] = $thumbnailSizes[ 'height' ];
-				$data[ 'width' ] = $thumbnailSizes[ 'width' ];
+			if ( $thumbnail ) {
+				$data[ 'height' ] = $thumbnail->height;
+				$data[ 'width' ] = $thumbnail->width;
+				$data[ 'thumbnail' ] = $thumbnail->getUrl();
 			}
 
 			if ( $this->isWikiaMobile() ) {
@@ -115,41 +115,22 @@ class PortableInfoboxRenderService extends WikiaService {
 	}
 
 	/**
-	 * @desc returns the thumbnail url
-	 * @param string $title
-	 * @return string thumbnail url
+	 * @desc create a thumb of the image from file title
+	 * @param $title
+	 * @return bool|false|MediaTransformOutput
 	 */
-	protected function getThumbnailUrl( $title ) {
-		$file = \WikiaFileHelper::getFileFromTitle( $title );
-
-		if ( $file ) {
-			return $file->createThumb(
-				$this->isWikiaMobile() ?
-					self::MOBILE_THUMBNAIL_WIDTH :
-					self::DESKTOP_THUMBNAIL_WIDTH
-			);
-		}
-
-		return '';
-	}
-
-	/**
-	 * @desc returns the dimension attributes whcih will
-	 * be added to <img> to avoid repaints and "jumping" content.
-	 * @param string $title title of image file
-	 * @return array|bool image dimensions or false if image not found
-     */
-	protected function getThumbnailSizes( $title ) {
+	protected function getThumbnail( $title ) {
 		$file = \WikiaFileHelper::getFileFromTitle( $title );
 
 		if ( $file ) {
 			$width = $this->isWikiaMobile() ?
 				self::MOBILE_THUMBNAIL_WIDTH :
 				self::DESKTOP_THUMBNAIL_WIDTH;
-			return [
-				'height' => floor($file->height * $width / $file->width),
-				'width' => $width
-			];
+			$thumb = $file->transform( ['width' => $width] );
+
+			if (!is_null($thumb) && !$thumb->isError()) {
+				return $thumb;
+			}
 		}
 		return false;
 	}
