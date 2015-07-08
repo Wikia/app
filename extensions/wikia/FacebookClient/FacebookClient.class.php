@@ -449,14 +449,14 @@ class FacebookClient {
 		if ( !headers_sent() ) {
 			// The base domain is stored in the metadata cookie if not we fallback
 			// to the current hostname
-			$base_domain = '.' . $_SERVER[ 'HTTP_HOST' ];
+			$baseDomain = '.' . $_SERVER[ 'HTTP_HOST' ];
 
 			$metadata = $_COOKIE[ $metaCookieName ];
-			if ( !empty( $metadata[ 'base_domain' ] ) ) {
-				$base_domain = $metadata[ 'base_domain' ];
+			if ( preg_match( '/base_domain=([^&]+)/', $metadata, $matches ) ) {
+				$baseDomain = $matches[1];
 			}
 
-			setcookie( $sessionCookieName, '', 0, '/', $base_domain );
+			setcookie( $sessionCookieName, '', time() - 86400, '/', $baseDomain );
 		}
 
 		$this->clearSessionFromMemcache();
