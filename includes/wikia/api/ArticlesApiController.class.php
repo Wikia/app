@@ -1075,8 +1075,10 @@ class ArticlesApiController extends WikiaApiController {
 		}
 		if ( is_array( $sectionsToGet ) ) {
 			foreach ( $sectionsToGet as $section ) {
-				// Only retrieve top level sections. parsedSections doesn't include section 0, so subtract 1
-				if ( $section === 0 || $parsedSections[$section - 1]['toclevel'] === 1 ) {
+				// Only retrieve top level sections.
+				// $parsedSections doesn't include section 0, so subtract 1
+				$isTopLevel = $parsedSections[$section - 1]['toclevel'] === 1;
+				if ( $section == 0 || $isTopLevel ) {
 					$content[] = $this->getArticleSection( $articleAsWikiText, $title, $section );
 				}
 			}
@@ -1099,7 +1101,7 @@ class ArticlesApiController extends WikiaApiController {
 		global $wgParser;
 
 		$wikitext = $wgParser->getSection( $articleAsWikiText, $section );
-		$html = $wgParser->parse( $wikitext, $title, $wgParser->mOptions, true, false )->mText;
+		$html = $wgParser->parse( $wikitext, $title, $wgParser->mOptions )->mText;
 		return $this->replaceSectionIndex( $html, $section );
 	}
 
