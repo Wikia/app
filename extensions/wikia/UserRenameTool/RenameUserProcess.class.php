@@ -89,6 +89,7 @@ class RenameUserProcess {
 	private $mRequestorName = '';
 	private $mReason = null;
 	private $mRenameIP = false;
+	private $mNotifyUser;
 
 	private $mErrors = array();
 	private $mWarnings = array();
@@ -110,8 +111,9 @@ class RenameUserProcess {
 	 * @param $oldUsername string Old username
 	 * @param $newUsername string New username
 	 * @param $confirmed bool Has the user confirmed all the warnings he got?
+	 * @param $notifyUser bool Whether to notify the renamed user
 	 */
-	public function __construct( $oldUsername, $newUsername, $confirmed = false, $reason = null ) {
+	public function __construct( $oldUsername, $newUsername, $confirmed = false, $reason = null, $notifyUser = true ) {
 		global $wgContLang, $wgUser;
 
 		// Save original request data
@@ -123,6 +125,7 @@ class RenameUserProcess {
 		$this->mReason = $reason;
 		$this->mRequestorId = $wgUser ? $wgUser->getId() : 0;
 		$this->mRequestorName = $wgUser ? $wgUser->getName() : '';
+		$this->mNotifyUser = $notifyUser;
 
 		$this->addInternalLog("construct: old={$oldUsername} new={$newUsername}");
 	}
@@ -617,6 +620,7 @@ class RenameUserProcess {
 			'rename_fake_user_id' => $this->mFakeUserId,
 			'phalanx_block_id' => $this->mPhalanxBlockId,
 			'reason' => $this->mReason,
+			'notify_renamed' => $this->mNotifyUser,
 		);
 		$task = ( new UserRenameTask() )
 			->setPriority( \Wikia\Tasks\Queues\PriorityQueue::NAME );
