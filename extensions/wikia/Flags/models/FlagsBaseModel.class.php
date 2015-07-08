@@ -10,6 +10,8 @@
 
 namespace Flags\Models;
 
+use Wikia\Util\GlobalStateWrapper;
+
 class FlagsBaseModel extends \WikiaModel {
 	/**
 	 * Names of tables used by the extension
@@ -23,7 +25,7 @@ class FlagsBaseModel extends \WikiaModel {
 	 * @return \DatabaseBase
 	 */
 	protected function getDatabaseForRead() {
-		return wfGetDB( DB_SLAVE, [], $this->wg->FlagsDB );
+		return $this->getDatabase( DB_SLAVE );
 	}
 
 	/**
@@ -31,7 +33,19 @@ class FlagsBaseModel extends \WikiaModel {
 	 * @return \DatabaseBase
 	 */
 	protected function getDatabaseForWrite() {
-		return wfGetDB( DB_MASTER, [], $this->wg->FlagsDB );
+		return $this->getDatabase( DB_MASTER );
+	}
+
+	protected function getDatabase( $dbType ) {
+		$wrapper = new GlobalStateWrapper( [
+			'wgDBmysql5' => true
+		] );
+
+		$db = $wrapper->wrap( function () use ( $dbType ) {
+			return wfGetDB( $dbType, [], $this->wg->FlagsDB );
+		} );
+
+		return $db;
 	}
 
 	/**
