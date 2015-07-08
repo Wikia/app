@@ -24,6 +24,7 @@ use Wikia\Domain\User\Preference;
 use Wikia\Persistence\User\PreferencePersistence;
 
 class PreferenceKeyValueService implements PreferenceService {
+	use \Wikia\Util\WikiaProfiler;
 
 	private $persistenceAdapter;
 
@@ -36,11 +37,18 @@ class PreferenceKeyValueService implements PreferenceService {
 			return false;
 		}
 
-		return $this->persistenceAdapter->save( $userId, $preferences );
+		$profiler_start = $this->startProfile();
+		$ret = $this->persistenceAdapter->save( $userId, $preferences );
+		$this->endProfile('USER_PREFERENCES', $profiler_start, ['user_id' => $userId, ]);
+
+		return $ret;
 	}
 
 	public function getPreferences( $userId ) {
+		$profiler_start = $this->startProfile();
 		$preferences = $this->persistenceAdapter->get( $userId );
+		$this->endProfile('USER_PREFERENCES', $profiler_start, ['user_id' => $userId, ]);
+
 		if ( !is_array( $preferences ) ) {
 			return [ ];
 		}
