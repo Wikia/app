@@ -9,10 +9,6 @@ class CuratedContentController extends WikiaController {
 	const API_MINOR_REVISION = 1;
 	const APP_NAME = 'CuratedContent';
 	const SKIN_NAME = 'wikiamobile';
-	const DAYS = 86400;
-	const HOURS = 3600;
-	const MINUTES = 60;
-	const SECONDS = 1;
 	const LIMIT = 25;
 	const CURATED_CONTENT_WG_VAR_ID_PROD = 1460;
 
@@ -41,21 +37,6 @@ class CuratedContentController extends WikiaController {
 	}
 
 	/**
-	 * Simple DRY function to set cache for a given time
-	 *
-	 * @example:
-	 * $this->cacheResponseFor( 1, self:HOURS )
-	 * $this->cacheResponseFor( 14, self:DAYS )
-	 */
-	private function cacheResponseFor( $factor, $period ) {
-		if ( isset( $period ) && isset( $factor ) ) {
-			$cacheValidityTime = $factor * $period;
-
-			$this->response->setCacheValidity( $cacheValidityTime );
-		}
-	}
-
-	/**
 	 * @brief Api entry point to get a page and globals and messages that are relevant to the page
 	 *
 	 * @example wikia.php?controller=CuratedContent&method=getPage&page={Title}
@@ -64,9 +45,8 @@ class CuratedContentController extends WikiaController {
 		global $wgTitle;
 
 		// This will always return json
-		$this->response->setFormat( 'json' );
-
-		$this->cacheResponseFor( 24, self::HOURS );
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
 
 		// set mobile skin as this is based on it
 		RequestContext::getMain()->setSkin( Skin::newFromKey( 'wikiamobile' ) );
@@ -207,7 +187,7 @@ class CuratedContentController extends WikiaController {
 	public function getList() {
 		wfProfileIn( __METHOD__ );
 
-		$this->response->setFormat( 'json' );
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 
 		$content = $this->wg->WikiaCuratedContent;
 		if ( empty( $content ) ) {
@@ -221,7 +201,7 @@ class CuratedContentController extends WikiaController {
 				$this->setSectionItemsInResponse( $content, $section );
 			}
 
-			$this->cacheResponseFor( 24, self::HOURS );
+			$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -415,7 +395,7 @@ class CuratedContentController extends WikiaController {
 		$wikiID = $this->request->getInt( 'wikiID', null );
 		$totalImages = $this->request->getBool( 'totalImages', false );
 		$totalTitles = $this->request->getBool( 'totalTitles', false );
-		$this->cacheResponseFor( 1, self::DAYS );
+		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
 		$this->getResponse()->setFormat( WikiaResponse::FORMAT_JSON );
 
 		if ( empty( $wikiID ) ) {
