@@ -21,9 +21,12 @@
 namespace Wikia\Service\User\Preferences;
 
 use Wikia\Domain\User\Preference;
+use Wikia\Logger\Loggable;
 use Wikia\Persistence\User\Preferences\PreferencePersistence;
 
 class PreferenceKeyValueService implements PreferenceService {
+
+	use Loggable;
 
 	private $persistenceAdapter;
 
@@ -36,11 +39,26 @@ class PreferenceKeyValueService implements PreferenceService {
 			return false;
 		}
 
-		return $this->persistenceAdapter->save( $userId, $preferences );
+		try {
+			return $this->persistenceAdapter->save( $userId, $preferences );
+		} catch (\Exception $e) {
+			$this->error($e->getMessage(), [
+				'user' => $userId
+			]);
+			return false;
+		}
 	}
 
 	public function getPreferences( $userId ) {
-		$preferences = $this->persistenceAdapter->get( $userId );
+		try {
+			$preferences = $this->persistenceAdapter->get( $userId );
+		} catch (\Exception $e) {
+			$this->error($e->getMessage(), [
+				'user' => $userId
+			]);
+			return [ ];
+		}
+
 		if ( !is_array( $preferences ) ) {
 			return [ ];
 		}
@@ -54,5 +72,11 @@ class PreferenceKeyValueService implements PreferenceService {
 		}
 
 		return $preferences;
+	}
+
+	protected function getLoggerContext() {
+		return [
+			'persistence-class' => get_class($this->persistenceAdapter),
+		];
 	}
 }
