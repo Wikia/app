@@ -21,10 +21,10 @@ class TemplateDraftHooks {
 	 * @return bool
 	 */
 	public static function onGetRailModuleList( Array &$railModuleList ) {
-		global $wgTitle, $wgUser;
+		global $wgTitle;
 
 		$helper = new TemplateDraftHelper();
-		if ( $wgUser->isLoggedIn() ) {
+		if ( $helper->isRailModuleAllowed( $wgTitle ) ) {
 			$helper->addRailModule( $wgTitle, $railModuleList );
 		}
 

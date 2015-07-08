@@ -32,6 +32,7 @@ $wgGroupPermissions['staff']['templatedraft'] = true;
 $wgGroupPermissions['helper']['templatedraft'] = true;
 $wgGroupPermissions['vstf']['templatedraft'] = true;
 $wgGroupPermissions['voldev']['templatedraft'] = true;
+$wgGroupPermissions['user']['templatedraft'] = true;
 
 /**
  * Controllers
