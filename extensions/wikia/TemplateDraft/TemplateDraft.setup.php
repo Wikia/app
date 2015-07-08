@@ -37,7 +37,6 @@ $wgGroupPermissions['voldev']['templatedraft'] = true;
  * Controllers
  */
 $wgAutoloadClasses['TemplateDraftController'] = __DIR__ . '/controllers/TemplateDraftController.class.php';
-$wgAutoloadClasses['TemplateClassificationController'] = __DIR__ . '/controllers/TemplateClassificationController.class.php';
 
 /**
  * Hooks

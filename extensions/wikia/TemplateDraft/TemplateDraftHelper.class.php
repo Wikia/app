@@ -32,7 +32,7 @@ class TemplateDraftHelper {
 	 * @return bool
 	 */
 	public function isMarkedAsInfobox( Title $title ) {
-		$tc = new TemplateClassificationController( $title );
+		$tc = new TemplateClassification( $title );
 		return $tc->isType( $tc::TEMPLATE_INFOBOX );
 	}
 
@@ -98,7 +98,7 @@ class TemplateDraftHelper {
 	 * @return bool
 	 */
 	public function shouldDisplayCreateModule( Title $title ) {
-		$tc = new TemplateClassificationController( $title );
+		$tc = new TemplateClassification( $title );
 		$type = $tc->getType();
 		return ( empty( $type ) || $type === $tc::TEMPLATE_INFOBOX )
 			&& !self::titleHasPortableInfobox( $title );
