@@ -12,6 +12,7 @@ use Wikia\Persistence\User\PreferencePersistenceSwaggerService;
 class PreferenceModule implements Module {
 	public function configure(InjectorBuilder $builder) {
 		$builder
+			->bind(PreferenceService::class)->toClass(PreferenceKeyValueService::class)
 			->bind(UserPreferences::HIDDEN_PREFS)->to(function() {
 				global $wgHiddenPrefs;
 				return $wgHiddenPrefs;
@@ -24,8 +25,8 @@ class PreferenceModule implements Module {
 				return $wgGlobalUserProperties;
 			});
 
-//		self::bindMysqlService($builder);
-		self::bindSwaggerService($builder);
+		self::bindMysqlService($builder);
+//		self::bindSwaggerService($builder);
 	}
 
 	private static function bindMysqlService(InjectorBuilder $builder) {

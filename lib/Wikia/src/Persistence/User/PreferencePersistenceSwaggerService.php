@@ -1,28 +1,19 @@
 <?php
-/**
- * PreferencePersistenceSwaggerService
- *
- * <insert description here>
- *
- * @author Nelson Monterroso <nelson@wikia-inc.com>
- */
 
 namespace Wikia\Persistence\User;
 
-use Swagger\Client\ApiClient;
-use Swagger\Client\Configuration;
 use Swagger\Client\User\Preferences\Api\UserPreferencesApi;
 use Wikia\Domain\User\Preference;
-use Wikia\Service\Gateway\UrlProvider;
+use Wikia\Service\Swagger\ApiProvider;
 
 class PreferencePersistenceSwaggerService implements PreferencePersistence {
 	const SERVICE_NAME = "user-preference";
 
-	/** @var UrlProvider */
-	private $urlProvider;
+	/** @var ApiProvider */
+	private $apiProvider;
 
-	public function __construct(UrlProvider $urlProvider) {
-		$this->urlProvider = $urlProvider;
+	public function __construct(ApiProvider $apiProvider) {
+		$this->apiProvider = $apiProvider;
 	}
 
 	/**
@@ -58,11 +49,6 @@ class PreferencePersistenceSwaggerService implements PreferencePersistence {
 	 * @return UserPreferencesApi
 	 */
 	private function getApi($userId) {
-		// TODO: separate out to own service (swagger service provider)
-		$config = (new Configuration())
-			->setHost($this->urlProvider->getUrl(self::SERVICE_NAME))
-			->setApiKey('X-Wikia-UserId', $userId);
-		$apiClient = new ApiClient($config);
-		return new UserPreferencesApi($apiClient);
+		return $this->apiProvider->getAuthenticatedApi(self::SERVICE_NAME, $userId, UserPreferencesApi::class);
 	}
 }

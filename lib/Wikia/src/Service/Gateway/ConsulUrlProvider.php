@@ -24,8 +24,8 @@ class ConsulUrlProvider implements UrlProvider {
 	 * @Inject({
 	 *  Wikia\Service\Gateway\ConsulUrlProvider::BASE_URL,
 	 *  Wikia\Service\Gateway\ConsulUrlProvider::SERVICE_TAG})
-	 * @param $consulUrl
-	 * @param $serviceTag
+	 * @param string $consulUrl
+	 * @param string $serviceTag
 	 */
 	function __construct( $consulUrl, $serviceTag ) {
 		if ( empty( $consulUrl ) || empty( $serviceTag ) ) {
