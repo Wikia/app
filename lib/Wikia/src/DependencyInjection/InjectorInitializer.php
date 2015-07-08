@@ -3,6 +3,7 @@
 namespace Wikia\DependencyInjection;
 
 use Doctrine\Common\Cache\CacheProvider;
+use Wikia\Service\Gateway\ConsulUrlProviderModule;
 use Wikia\Service\User\PreferenceModule;
 
 class InjectorInitializer {
@@ -11,6 +12,7 @@ class InjectorInitializer {
 			(new InjectorBuilder())
 				->withCache($cacheProvider)
 				->addModule(new PreferenceModule())
+				->addModule(new ConsulUrlProviderModule())
 				->build());
 	}
 }

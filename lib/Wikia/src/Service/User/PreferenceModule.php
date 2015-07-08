@@ -5,13 +5,13 @@ namespace Wikia\Service\User;
 use User;
 use Wikia\DependencyInjection\InjectorBuilder;
 use Wikia\DependencyInjection\Module;
+use Wikia\Persistence\User\PreferencePersistence;
 use Wikia\Persistence\User\PreferencePersistenceModuleMySQL;
+use Wikia\Persistence\User\PreferencePersistenceSwaggerService;
 
 class PreferenceModule implements Module {
 	public function configure(InjectorBuilder $builder) {
 		$builder
-			->addModule(self::getMySQLPersistenceModule())
-			->bind(PreferenceService::class)->toClass(PreferenceKeyValueService::class)
 			->bind(UserPreferences::HIDDEN_PREFS)->to(function() {
 				global $wgHiddenPrefs;
 				return $wgHiddenPrefs;
@@ -23,9 +23,12 @@ class PreferenceModule implements Module {
 				global $wgGlobalUserProperties;
 				return $wgGlobalUserProperties;
 			});
+
+//		self::bindMysqlService($builder);
+		self::bindSwaggerService($builder);
 	}
 
-	private static function getMySQLPersistenceModule() {
+	private static function bindMysqlService(InjectorBuilder $builder) {
 		$masterProvider = function() {
 			global $wgExternalSharedDB;
 			return wfGetDB(DB_MASTER, [], $wgExternalSharedDB);
@@ -35,6 +38,10 @@ class PreferenceModule implements Module {
 			return wfGetDB(DB_SLAVE, [], $wgExternalSharedDB);
 		};
 
-		return new PreferencePersistenceModuleMySQL($masterProvider, $slaveProvider);
+		$builder->addModule(new PreferencePersistenceModuleMySQL($masterProvider, $slaveProvider));
+	}
+
+	private static function bindSwaggerService(InjectorBuilder $builder) {
+		$builder->bind(PreferencePersistence::class)->toClass(PreferencePersistenceSwaggerService::class);
 	}
 }

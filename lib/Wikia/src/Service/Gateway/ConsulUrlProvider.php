@@ -6,27 +6,48 @@ namespace Wikia\Service\Gateway;
 use Http;
 
 class ConsulUrlProvider implements UrlProvider {
+	const BASE_URL = "consul_url_provider_base_url";
+	const SERVICE_TAG = "consul_url_provider_tag";
 
-	private $healthUrlSchema = '{consulUrl}/v1/health/service/{serviceName}?passing&tag={serviceTag}';
-	private $healthUrl;
+	const HEALTH_URL = '{consulUrl}/v1/health/service/{serviceName}?passing&tag={serviceTag}';
 
-	function __construct( $consulUrl, $serviceName, $serviceTag ) {
-		if ( empty( $serviceName ) || empty( $serviceTag ) ) {
-			throw new \InvalidArgumentException ( "serviceName or serviceTag not set" );
+	/** @var string */
+	private $consulUrl;
+
+	/** @var string */
+	private $serviceTag;
+
+	/**
+	 * @Inject({
+	 *  Wikia\Service\Gateway\ConsulUrlProvider::BASE_URL,
+	 *  Wikia\Service\Gateway\ConsulUrlProvider::SERVICE_TAG})
+	 * @param $consulUrl
+	 * @param $serviceTag
+	 */
+	function __construct( $consulUrl, $serviceTag ) {
+		if ( empty( $consulUrl ) || empty( $serviceTag ) ) {
+			throw new \InvalidArgumentException ( "consulUrl or serviceTag not set" );
 		}
-		$this->healthUrl = strtr( $this->healthUrlSchema, [
-			'{consulUrl}' => $consulUrl,
-			'{serviceName}' => $serviceName,
-			'{serviceTag}' => $serviceTag
-		] );
+
+		$this->consulUrl = $consulUrl;
+		$this->serviceTag = $serviceTag;
 	}
 
-	public function getUrl() {
-		$response = Http::Request( "GET", $this->healthUrl, [ 'noProxy' => true ] );
+	public function getUrl( $serviceName ) {
+		$healthUrl = $this->getHealthUrl($serviceName);
+		$response = Http::Request( "GET", $healthUrl, [ 'noProxy' => true ] );
 		$json_response = json_decode($response, true);
 		if ( !empty( $json_response ) && is_array( $json_response ) ) {
-			return implode(":",[$json_response[0]['Node']['Address'], $json_response[0]['Service']['Port']]);
+			return implode(":",[$json_response[0]['Node']['Address'], $json_response[0]['Service']['Port']]); // TODO:randomize
 		}
 		return "";
+	}
+
+	private function getHealthUrl($serviceName) {
+		return strtr( self::HEALTH_URL, [
+			'{consulUrl}' => $this->consulUrl,
+			'{serviceName}' => $serviceName,
+			'{serviceTag}' => $this->serviceTag
+		] );
 	}
 }
