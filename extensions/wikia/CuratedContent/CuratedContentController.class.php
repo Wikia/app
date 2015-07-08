@@ -219,7 +219,6 @@ class CuratedContentController extends WikiaController {
 				$this->setSectionsInResponse( $content );
 				$this->setFeaturedContentInResponse( $content );
 			} else {
-				$sectionItems = $this->getSectionItems( $content, $section );
 				$this->setSectionItemsInResponse( $content, $section );
 			}
 
