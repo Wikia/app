@@ -45,7 +45,7 @@ class PreferenceKeyValueService implements PreferenceService {
 			$this->error($e->getMessage(), [
 				'user' => $userId
 			]);
-			return false;
+			throw $e;
 		}
 	}
 
@@ -56,7 +56,7 @@ class PreferenceKeyValueService implements PreferenceService {
 			$this->error($e->getMessage(), [
 				'user' => $userId
 			]);
-			return [ ];
+			throw $e;
 		}
 
 		if ( !is_array( $preferences ) ) {
