@@ -509,6 +509,10 @@ class UncycloUserMigrator extends Maintenance {
 
 				$extUser->mId = $dbw->insertId();
 
+				if ( empty( $extUser->mId ) ) {
+					throw new Exception( sprintf( 'Failed inserting "%s" into shared database', $user->getName() ) );
+				}
+
 				// move user settings to the shared DB
 				$res = $this->getUncycloDB()->select(
 					'user_properties',
