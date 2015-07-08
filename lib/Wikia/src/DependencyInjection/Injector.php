@@ -3,7 +3,7 @@
 namespace Wikia\DependencyInjection;
 
 use DI\Container;
-use Wikia\Service\User\PreferenceService;
+use Wikia\Service\User\Preferences\PreferenceService;
 
 class Injector {
 	private static $injector = null;

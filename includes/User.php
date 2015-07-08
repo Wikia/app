@@ -22,7 +22,7 @@
 
 use Wikia\DependencyInjection\Injector;
 use Wikia\Logger\Loggable;
-use Wikia\Service\User\UserPreferences;
+use Wikia\Service\User\Preferences\UserPreferences;
 
 /**
  * Int Number of characters in user_token field.

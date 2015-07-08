@@ -1,6 +1,6 @@
 <?php
 
-namespace Wikia\Service\User;
+namespace Wikia\Service\User\Preferences;
 
 use User;
 use Wikia\DependencyInjection\InjectorBuilder;
