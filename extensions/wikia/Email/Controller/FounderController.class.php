@@ -496,7 +496,7 @@ class FounderTipsController extends FounderController {
 	}
 
 	protected function getSubject() {
-		return $this->getMessage( 'emailext-founder-newly-created-subject', $this->wikiName )->parse();
+		return $this->getMessage( 'emailext-founder-newly-created-subject', $this->wikiName )->text();
 	}
 
 	/**
@@ -580,7 +580,7 @@ class FounderTipsThreeDaysController extends FounderTipsController {
 	const WAM_LINK = "http://www.wikia.com/WAM";
 
 	protected function getSubject() {
-		return $this->getMessage( 'emailext-founder-3-days-subject', $this->wikiName )->parse();
+		return $this->getMessage( 'emailext-founder-3-days-subject', $this->wikiName )->text();
 	}
 
 	/**
@@ -636,7 +636,7 @@ class FounderTipsTenDaysController extends FounderTipsController {
 	const TRACKING_CATEGORY_INT = TrackingCategories::FOUNDER_TIPS_10_DAY_INT;
 
 	protected function getSubject() {
-		return $this->getMessage( 'emailext-founder-10-days-subject', $this->wikiName )->parse();
+		return $this->getMessage( 'emailext-founder-10-days-subject', $this->wikiName )->text();
 	}
 
 	/**
