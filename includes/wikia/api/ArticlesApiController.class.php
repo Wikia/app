@@ -1024,10 +1024,10 @@ class ArticlesApiController extends WikiaApiController {
 		if ( $parsedArticle instanceof ParserOutput ) {
 			$articleContent = json_decode( $parsedArticle->getText() );
 
-			if ( !empty( $sectionsToGet ) ) {
-				$content = $this->getArticleSections( $sectionsToGet, $parsedArticle, $article, $title );
-			} else {
+			if ( empty( $sectionsToGet ) ) {
 				$content = $articleContent->content;
+			} else {
+				$content = $this->getArticleSections( $sectionsToGet, $parsedArticle, $article, $title );
 			}
 		} else {
 			throw new ArticleAsJsonParserException( 'Parser is currently not available' );
