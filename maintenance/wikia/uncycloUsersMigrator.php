@@ -334,6 +334,10 @@ class UncycloUserMigrator extends Maintenance {
 		$this->renamedUnclycloAccounts++;
 
 		if ( !$this->isDryRun ) {
+			// update user_name in the local user database
+			$dbw = $this->getUncycloDB( DB_MASTER );
+			$dbw->update( self::USER_TABLE,  [ 'user_name' => $newName ], [ 'user_id' => $user->getId() ], __METHOD__ );
+
 			// update user_name in MW tables
 			$this->updateTables(self::UPDATE_TABLE_USER_NAME, $user->getName(), $newName);
 
