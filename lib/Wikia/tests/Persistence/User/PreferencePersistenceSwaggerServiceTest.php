@@ -1,6 +1,6 @@
 <?php
 
-namespace Wikia\Persistence\User;
+namespace Wikia\Persistence\User\Preferences;
 
 use Swagger\Client\User\Preferences\Api\UserPreferencesApi;
 use Swagger\Client\User\Preferences\Models\Preference as SwaggerPreference;

@@ -5,9 +5,9 @@ namespace Wikia\Service\User;
 use User;
 use Wikia\DependencyInjection\InjectorBuilder;
 use Wikia\DependencyInjection\Module;
-use Wikia\Persistence\User\PreferencePersistence;
-use Wikia\Persistence\User\PreferencePersistenceModuleMySQL;
-use Wikia\Persistence\User\PreferencePersistenceSwaggerService;
+use Wikia\Persistence\User\Preferences\PreferencePersistence;
+use Wikia\Persistence\User\Preferences\PreferencePersistenceModuleMySQL;
+use Wikia\Persistence\User\Preferences\PreferencePersistenceSwaggerService;
 
 class PreferenceModule implements Module {
 	public function configure(InjectorBuilder $builder) {

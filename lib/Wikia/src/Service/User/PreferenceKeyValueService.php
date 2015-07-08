@@ -21,7 +21,7 @@
 namespace Wikia\Service\User;
 
 use Wikia\Domain\User\Preference;
-use Wikia\Persistence\User\PreferencePersistence;
+use Wikia\Persistence\User\Preferences\PreferencePersistence;
 
 class PreferenceKeyValueService implements PreferenceService {
 
