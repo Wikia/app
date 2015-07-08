@@ -11,7 +11,7 @@ class ConsulUrlProviderModule implements Module {
 
 		$builder
 			->bind(UrlProvider::class)->toClass(ConsulUrlProvider::class)
-			->bind(ConsulUrlProvider::BASE_URL)->to($wgConsulUrl) // TODO: get from a global
+			->bind(ConsulUrlProvider::BASE_URL)->to($wgConsulUrl)
 			->bind(ConsulUrlProvider::SERVICE_TAG)->to($wgConsulServiceTag);
 	}
 }
