@@ -1112,7 +1112,7 @@ class ArticlesApiController extends WikiaApiController {
 	 * @return mixed
 	 */
 	private function replaceSectionIndex( $html, $section ) {
-		$regex = '/(<h\d[^\>]+section\=[\'"])(\d+)/';
+		$regex = '/(<h\d[^\>]+section\s*\=\s*[\'"]\s*)(\d+)/';
 
 		$replaced = preg_replace_callback( $regex, function ( $matches ) use ( &$section ) {
 			$ret = $matches[1] . $section;
