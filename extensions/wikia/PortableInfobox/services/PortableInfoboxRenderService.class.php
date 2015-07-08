@@ -98,8 +98,11 @@ class PortableInfoboxRenderService extends WikiaService {
 			$data[ 'thumbnail' ] = $this->getThumbnailUrl( $data['name'] );
 			$data[ 'key' ] = urlencode( $data[ 'key' ] );
 			$thumbnailSizes = $this->getThumbnailSizes( $data['name'] );
-			$data[ 'height' ] = $thumbnailSizes[ 'height' ];
-			$data[ 'width' ] = $thumbnailSizes[ 'width' ];
+
+			if ( $thumbnailSizes ) {
+				$data[ 'height' ] = $thumbnailSizes[ 'height' ];
+				$data[ 'width' ] = $thumbnailSizes[ 'width' ];
+			}
 
 			if ( $this->isWikiaMobile() ) {
 				$type = $type . self::MOBILE_TEMPLATE_POSTFIX;
@@ -131,9 +134,11 @@ class PortableInfoboxRenderService extends WikiaService {
 	}
 
 	/**
-	 * @param $title
-	 * @return array|null
-	 */
+	 * @desc returns the dimension attributes whcih will
+	 * be added to <img> to avoid repaints and "jumping" content.
+	 * @param string $title title of image file
+	 * @return array|bool image dimensions or false if image not found
+     */
 	protected function getThumbnailSizes( $title ) {
 		$file = \WikiaFileHelper::getFileFromTitle( $title );
 
@@ -146,6 +151,7 @@ class PortableInfoboxRenderService extends WikiaService {
 				'width' => $width
 			];
 		}
+		return false;
 	}
 
 	/** 
