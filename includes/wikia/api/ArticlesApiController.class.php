@@ -1092,13 +1092,33 @@ class ArticlesApiController extends WikiaApiController {
 	 * @param Title $title
 	 * @param integer $section
 	 * @return string
+	 * @todo Supposedly getSection works with HTML, but I could only get it to work with wikitext
 	 */
 	private function getArticleSection( $articleAsWikiText, $title, $section ) {
 		/** @var $wgParser Parser */
 		global $wgParser;
 
 		$wikitext = $wgParser->getSection( $articleAsWikiText, $section );
-		return $wgParser->parse( $wikitext, $title, $wgParser->mOptions )->mText;
+		$html = $wgParser->parse( $wikitext, $title, $wgParser->mOptions, true, false )->mText;
+		return $this->replaceSectionIndex( $html, $section );
+	}
+
+	/**
+	 * Restore original section attribute values after splitting article content into section array
+	 * @param string $html HTML of article section with bad section attribute value
+	 * @param integer $section Correct section number
+	 * @return mixed
+	 */
+	private function replaceSectionIndex( $html, $section ) {
+		$regex = '/(<h\d[^\>]+section\=[\'"])(\d+)/';
+
+		$replaced = preg_replace_callback( $regex, function ( $matches ) use ( &$section ) {
+			$ret = $matches[1] . $section;
+			$section++;
+			return $ret;
+		}, $html );
+
+		return $replaced;
 	}
 
 	public function getPopular() {
