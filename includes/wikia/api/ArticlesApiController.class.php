@@ -1025,8 +1025,7 @@ class ArticlesApiController extends WikiaApiController {
 			$articleContent = json_decode( $parsedArticle->getText() );
 
 			if ( !empty( $sectionsToGet ) ) {
-				$articleAsWikiText = $article->getContent();
-				$content = $this->getArticleSections( $sectionsToGet, $parsedArticle, $articleAsWikiText, $title );
+				$content = $this->getArticleSections( $sectionsToGet, $parsedArticle, $article, $title );
 			} else {
 				$content = $articleContent->content;
 			}
@@ -1058,22 +1057,28 @@ class ArticlesApiController extends WikiaApiController {
 	}
 
 	/**
-	 * Get some or all of the article sections as an array
+	 * Get some or all of the article top level sections as an array
 	 * @param mixed $sectionsToGet Array of section numbers or the string "all"
 	 * @param ParserOutput $parsedArticle
-	 * @param string $articleAsWikiText
+	 * @param Article $article
 	 * @param Title $title
 	 * @return array
 	 * @throws BadRequestApiException
 	 */
-	private function getArticleSections( $sectionsToGet, ParserOutput $parsedArticle, $articleAsWikiText, $title ) {
+	private function getArticleSections( $sectionsToGet, ParserOutput $parsedArticle, Article $article, $title ) {
 		$content = [];
+		$articleAsWikiText = $article->getContent();
+		$parsedSections = $parsedArticle->getSections();
+
 		if ( $sectionsToGet === 'all' || in_array( 'all', $sectionsToGet ) ) {
 			$sectionsToGet = range( 0, count( $parsedArticle->getSections() ) );
 		}
 		if ( is_array( $sectionsToGet ) ) {
 			foreach ( $sectionsToGet as $section ) {
-				$content[] = $this->getArticleSection( $articleAsWikiText, $title, $section );
+				// Only retrieve top level sections. parsedSections doesn't include section 0, so subtract 1
+				if ( $section === 0 || $parsedSections[$section - 1]['toclevel'] === 1 ) {
+					$content[] = $this->getArticleSection( $articleAsWikiText, $title, $section );
+				}
 			}
 		} else {
 			throw new BadRequestApiException( 'Sections must be an array of numbers or "all"' );
