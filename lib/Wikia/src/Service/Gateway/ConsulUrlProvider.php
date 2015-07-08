@@ -17,6 +17,9 @@ class ConsulUrlProvider implements UrlProvider {
 	/** @var string */
 	private $serviceTag;
 
+	/** @var string[][string] */
+	private $cache;
+
 	/**
 	 * @Inject({
 	 *  Wikia\Service\Gateway\ConsulUrlProvider::BASE_URL,
@@ -31,16 +34,31 @@ class ConsulUrlProvider implements UrlProvider {
 
 		$this->consulUrl = $consulUrl;
 		$this->serviceTag = $serviceTag;
+		$this->cache = [];
 	}
 
 	public function getUrl( $serviceName ) {
-		$healthUrl = $this->getHealthUrl($serviceName);
-		$response = Http::Request( "GET", $healthUrl, [ 'noProxy' => true ] );
-		$json_response = json_decode($response, true);
-		if ( !empty( $json_response ) && is_array( $json_response ) ) {
-			return implode(":",[$json_response[0]['Node']['Address'], $json_response[0]['Service']['Port']]); // TODO:randomize
+		if (!isset($this->cache[$serviceName])) {
+			$this->cache[$serviceName] = [];
+			$healthUrl = $this->getHealthUrl($serviceName);
+			$response = Http::Request( "GET", $healthUrl, [ 'noProxy' => true ] );
+			$jsonResponse = json_decode($response, true);
+
+			if ( !empty( $jsonResponse ) && is_array( $jsonResponse ) ) {
+				foreach ($jsonResponse as $node) {
+					$address = $node['Node']['Address'];
+					$port = $node['Service']['Port'];
+					$this->cache[$serviceName][] = "${address}:${port}";
+				}
+			}
 		}
-		return "";
+
+		if (empty($this->cache[$serviceName])) {
+			return "";
+		}
+
+		$index = mt_rand(0, count($this->cache[$serviceName]) - 1);
+		return $this->cache[$serviceName][$index];
 	}
 
 	private function getHealthUrl($serviceName) {
