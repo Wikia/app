@@ -285,7 +285,7 @@ class CuratedContentController extends WikiaController {
 		$return = [ ];
 
 		foreach ( $content as $section ) {
-			if ( $requestSection == $section['title'] && $section['featured'] == false ) {
+			if ( $requestSection == $section['title'] && empty( $section['featured'] ) ) {
 				$return = $section['items'];
 			}
 		}
@@ -353,7 +353,7 @@ class CuratedContentController extends WikiaController {
 		$sections = array_reduce(
 			$content,
 			function ( $ret, $item ) {
-				if ( $item['title'] !== '' && $item['featured'] == false ) {
+				if ( $item['title'] !== '' && empty( $item['featured'] ) ) {
 					$imageId = $item['image_id'] != 0 ? $item['image_id'] : null;
 					$ret[] = [
 						'title' => $item['title'],
