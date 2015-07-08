@@ -1,4 +1,4 @@
-<?php
+i<?php
 
 namespace Email\Tracking;
 
