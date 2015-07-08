@@ -37,7 +37,7 @@ class FlagsController extends WikiaController {
 
 	private
 		$helper,
-		$postedFlags;
+		$editFlags;
 
 	public function init() {
 		global $wgLang;
@@ -181,9 +181,9 @@ class FlagsController extends WikiaController {
 			 * Get the current status to compare
 			 */
 			$currentFlags = $this->getResponseData( $this->requestGetFlagsForPageForEdit( $pageId ) );
-			$this->postedFlags = $this->request->getArray( 'editFlags' );
+			$this->editFlags = $this->request->getArray( 'editFlags' );
 
-			$flagsToChange = $this->getFlagsHelper()->compareDataAndGetFlagsToChange( $currentFlags, $this->postedFlags );
+			$flagsToChange = $this->getFlagsHelper()->compareDataAndGetFlagsToChange( $currentFlags, $this->editFlags );
 
 			if ( !empty( $flagsToChange ) ) {
 				$this->sendRequestsUsingPostedData( $pageId, $flagsToChange );
@@ -243,11 +243,11 @@ class FlagsController extends WikiaController {
 	private function getFlagsForParserOutput( $currentFlags, $pageId ) {
 		$flagsOnPage = [];
 
-		foreach( $this->postedFlags as $flagTypeId => $flag ) {
+		foreach( $this->editFlags as $flagTypeId => $flag ) {
 			if ( isset( $flag[FlagsHelper::FLAGS_INPUT_NAME_CHECKBOX] ) ) {
 				$flagsOnPage[$flagTypeId] = $this->getFlagsHelper()->getFlagFromPostData(
 					$currentFlags[$flagTypeId],
-					$this->postedFlags
+					$this->editFlags
 				);
 
 				$flagsOnPage[$flagTypeId]['flag_targeting'] = $currentFlags[$flagTypeId]['flag_targeting'];
