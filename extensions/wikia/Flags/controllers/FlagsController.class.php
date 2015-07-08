@@ -238,11 +238,10 @@ class FlagsController extends WikiaController {
 				throw new BadRequestApiException();
 			}
 
-			$this->params = $this->request->getParams();
-			if ( !isset( $this->params['page_id'] ) ) {
+			$pageId = $this->request->getInt( 'page_id' );
+			if ( $pageId === 0 ) {
 				throw new MissingParameterApiException( 'page_id' );
 			}
-			$pageId = $this->params['page_id'];
 
 			$title = Title::newFromID( $pageId );
 			if ( $title === null ) {
@@ -253,8 +252,9 @@ class FlagsController extends WikiaController {
 			 * Get the current status to compare
 			 */
 			$currentFlags = $this->getResponseData( $this->requestGetFlagsForPageForEdit( $pageId ) );
+			$postData = $this->request->getArray( 'editFlags' );
 
-			$flagsToChange = $this->getFlagsHelper()->compareDataAndGetFlagsToChange( $currentFlags, $this->params['editFlags'] );
+			$flagsToChange = $this->getFlagsHelper()->compareDataAndGetFlagsToChange( $currentFlags, $postData );
 
 			if ( !empty( $flagsToChange ) ) {
 				$this->sendRequestsUsingPostedData( $pageId, $flagsToChange );
@@ -317,10 +317,7 @@ class FlagsController extends WikiaController {
 	 * @throws MissingParameterApiException
 	 */
 	private function sendRequestsUsingPostedData( $pageId, Array $flagsToChange ) {
-		if ( !isset( $this->params['edit_token'] ) ) {
-			throw new MissingParameterApiException( 'edit_token' );
-		}
-
+		$editToken = $this->request->getVal( 'edit_token' );
 		$responseData = [];
 
 		foreach ( self::$flagsActionsToMethodsMapping as $action => $requestMethodName ) {
@@ -328,7 +325,7 @@ class FlagsController extends WikiaController {
 				continue;
 			}
 
-			$response = $this->$requestMethodName( $this->params['edit_token'], $pageId, $flagsToChange[$action] );
+			$response = $this->$requestMethodName( $editToken, $pageId, $flagsToChange[$action] );
 
 			if ( $response->hasException() ) {
 				throw $response->getException();
