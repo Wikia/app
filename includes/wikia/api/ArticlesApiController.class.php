@@ -1022,23 +1022,11 @@ class ArticlesApiController extends WikiaApiController {
 		$parsedArticle = $article->getParserOutput();
 
 		if ( $parsedArticle instanceof ParserOutput ) {
-			// TODO: try to get $wgParser->getSection to handle HTML instead of passing in wikitext
-
-			$articleAsWikiText = $article->getContent();
 			$articleContent = json_decode( $parsedArticle->getText() );
-			$content = [];
 
 			if ( !empty( $sectionsToGet ) ) {
-				if ( $sectionsToGet === 'all' ) {
-					$sectionsToGet = range( 0, count( $parsedArticle->getSections() ) );
-				}
-				if ( is_array( $sectionsToGet ) ) {
-					foreach ( $sectionsToGet as $section ) {
-						$content[] = $this->getArticleSection( $articleAsWikiText, $title, $section );
-					}
-				} else {
-					throw new BadRequestApiException( 'Sections must be an array of numbers or "all"' );
-				}
+				$articleAsWikiText = $article->getContent();
+				$content = $this->getArticleSections( $sectionsToGet, $parsedArticle, $articleAsWikiText, $title );
 			} else {
 				$content = $articleContent->content;
 			}
@@ -1069,6 +1057,37 @@ class ArticlesApiController extends WikiaApiController {
 		$this->setResponseData( $result, '', self::SIMPLE_JSON_VARNISH_CACHE_EXPIRATION );
 	}
 
+	/**
+	 * Get some or all of the article sections as an array
+	 * @param mixed $sectionsToGet Array of section numbers or the string "all"
+	 * @param ParserOutput $parsedArticle
+	 * @param string $articleAsWikiText
+	 * @param Title $title
+	 * @return array
+	 * @throws BadRequestApiException
+	 */
+	private function getArticleSections( $sectionsToGet, ParserOutput $parsedArticle, $articleAsWikiText, $title ) {
+		$content = [];
+		if ( $sectionsToGet === 'all' || in_array( 'all', $sectionsToGet ) ) {
+			$sectionsToGet = range( 0, count( $parsedArticle->getSections() ) );
+		}
+		if ( is_array( $sectionsToGet ) ) {
+			foreach ( $sectionsToGet as $section ) {
+				$content[] = $this->getArticleSection( $articleAsWikiText, $title, $section );
+			}
+		} else {
+			throw new BadRequestApiException( 'Sections must be an array of numbers or "all"' );
+		}
+		return $content;
+	}
+
+	/**
+	 * Get the HTML for an article section
+	 * @param string $articleAsWikiText
+	 * @param Title $title
+	 * @param integer $section
+	 * @return string
+	 */
 	private function getArticleSection( $articleAsWikiText, $title, $section ) {
 		/** @var $wgParser Parser */
 		global $wgParser;
