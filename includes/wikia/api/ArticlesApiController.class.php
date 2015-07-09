@@ -1351,30 +1351,6 @@ class ArticlesApiController extends WikiaApiController {
 	}
 
 	/**
-	 * Get Main Page Article ID for passed Wiki by its ID
-	 */
-	public function getMainPageForWiki() {
-		$this->getResponse()->setFormat( WikiaResponse::FORMAT_JSON );
-		$this->response->setCacheValidity( self::SIMPLE_JSON_VARNISH_CACHE_EXPIRATION * 30 );
-
-		$wikiId = $this->request->getVal( 'wikiId', null );
-		if ( !empty( $wikiId ) ) {
-			$mainPageTitle = WikiFactory::getVarValueByName( 'wgSitename', $wikiId );
-			$mainPageId = GlobalTitle::newFromText($mainPageTitle, NS_MAIN, $wikiId)->getArticleID();
-			if ( empty( $mainPageId ) ) {
-				$db = WikiFactory::IDtoDB($wikiId);
-				$domain = WikiFactory::DBtoDomain($db);
-				$url = 'http://' . $domain . '/api.php?action=query&meta=siteinfo&siprop=general&format=json';
-				$json = file_get_contents($url);
-				$pageData = json_decode($json);
-				$mainPageTitle = $pageData->query->general->mainpage;
-				$mainPageId = GlobalTitle::newFromText($mainPageTitle, NS_MAIN, $wikiId)->getArticleID();
-			}
-			$this->response->setVal('mainPageArticleId', $mainPageId);
-		}
-	}
-
-	/**
 	 * Checking existence of article with given $baseArtcileId
 	 *
 	 * If provided id corresponds to non-existent article,
