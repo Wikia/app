@@ -1058,6 +1058,13 @@ class ArticlesApiController extends WikiaApiController {
 
 	/**
 	 * Get some or all of the article top level sections as an array
+	 *
+	 * Note: If sections 1, 2 and 3 are requested, but section 3 is a subsection, the returned
+	 * array will only have two items: section 1 & 2 (section 2 containing subsection 3).
+	 * All top level sections will contain all of their subsections, regardless of how many
+	 * were requested. So if sections 1, 2 and 3 are requested, and section 2 contains 3 subsections,
+	 * section two will be returned with all 3 subsections.
+	 *
 	 * @param mixed $sectionsToGet Array of section numbers (could need URL decoding) or the string "all"
 	 * @param ParserOutput $parsedArticle
 	 * @param Article $article
