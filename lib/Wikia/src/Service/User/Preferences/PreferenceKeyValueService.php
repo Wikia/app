@@ -21,16 +21,19 @@
 namespace Wikia\Service\User\Preferences;
 
 use Wikia\Domain\User\Preference;
+use Wikia\Logger\Loggable;
 use Wikia\Persistence\User\Preferences\PreferencePersistence;
+use Wikia\Util\WikiaProfiler;
 
 class PreferenceKeyValueService implements PreferenceService {
-	use \Wikia\Util\WikiaProfiler;
 
-	/**
-	 * @var PreferencePersistence
-	 */
-	private $persistenceAdapter;
 	const PROFILE_EVENT = \Transaction::EVENT_USER_PREFERENCES;
+
+	use WikiaProfiler;
+	use Loggable;
+
+	/** @var PreferencePersistence */
+	private $persistenceAdapter;
 
 	function __construct( PreferencePersistence $persistenceAdapter ) {
 		$this->persistenceAdapter = $persistenceAdapter;
@@ -41,17 +44,32 @@ class PreferenceKeyValueService implements PreferenceService {
 			return false;
 		}
 
-		$profiler_start = $this->startProfile();
-		$ret = $this->persistenceAdapter->save( $userId, $preferences );
-		$this->endProfile(PreferenceKeyValueService::PROFILE_EVENT, $profiler_start, ['user_id' => $userId, ]);
+		try {
+			$profiler_start = $this->startProfile();
+			$ret = $this->persistenceAdapter->save( $userId, $preferences );
+			$this->endProfile(PreferenceKeyValueService::PROFILE_EVENT, $profiler_start, ['user_id' => $userId, ]);
 
-		return $ret;
+			return $ret;
+		} catch (\Exception $e) {
+			$this->error($e->getMessage(), [
+				'user' => $userId
+			]);
+
+			throw $e;
+		}
 	}
 
 	public function getPreferences( $userId ) {
-		$profiler_start = $this->startProfile();
-		$preferences = $this->persistenceAdapter->get( $userId );
-		$this->endProfile(PreferenceKeyValueService::PROFILE_EVENT, $profiler_start, ['user_id' => $userId, ]);
+		try {
+			$profiler_start = $this->startProfile();
+			$preferences = $this->persistenceAdapter->get( $userId );
+			$this->endProfile(PreferenceKeyValueService::PROFILE_EVENT, $profiler_start, ['user_id' => $userId, ]);
+		} catch (\Exception $e) {
+			$this->error($e->getMessage(), [
+				'user' => $userId
+			]);
+			throw $e;
+		}
 
 		if ( !is_array( $preferences ) ) {
 			return [ ];
@@ -66,5 +84,11 @@ class PreferenceKeyValueService implements PreferenceService {
 		}
 
 		return $preferences;
+	}
+
+	protected function getLoggerContext() {
+		return [
+			'persistence-class' => get_class($this->persistenceAdapter),
+		];
 	}
 }

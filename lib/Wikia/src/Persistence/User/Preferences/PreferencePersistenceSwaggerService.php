@@ -2,9 +2,12 @@
 
 namespace Wikia\Persistence\User\Preferences;
 
+use Swagger\Client\ApiException;
 use Swagger\Client\User\Preferences\Api\UserPreferencesApi;
 use Wikia\Domain\User\Preference;
+use Wikia\Service\PersistenceException;
 use Wikia\Service\Swagger\ApiProvider;
+use Wikia\Service\UnauthorizedException;
 
 class PreferencePersistenceSwaggerService implements PreferencePersistence {
 	const SERVICE_NAME = "user-preference";
@@ -19,9 +22,9 @@ class PreferencePersistenceSwaggerService implements PreferencePersistence {
 	/**
 	 * @param int $userId
 	 * @param Preference[] $preferences
-	 * @throws \Exception
-	 * @throws \Swagger\Client\ApiException
 	 * @return true success, false or exception otherwise
+	 * @throws PersistenceException
+	 * @throws UnauthorizedException
 	 */
 	public function save($userId, array $preferences) {
 		$prefs = [];
@@ -31,14 +34,32 @@ class PreferencePersistenceSwaggerService implements PreferencePersistence {
 				->setValue($p->getValue());
 		}
 
-		$this->getApi($userId)->updateUserPreferences($userId, $prefs);
-		return true;
+		try {
+			$this->getApi($userId)->updateUserPreferences($userId, $prefs);
+			return true;
+		} catch (ApiException $e) {
+			$this->handleApiException($e);
+			return false;
+		}
 	}
 
+	/**
+	 * Get the users preferences.
+	 *
+	 * @param int $userId
+	 * @return array of Preference objects
+	 * @throws UnauthorizedException
+	 * @throws PersistenceException
+	 */
 	public function get($userId) {
 		$prefs = [];
-		foreach ($this->getApi($userId)->getUserPreferences($userId) as $p) {
-			$prefs[] = new Preference($p->getName(), $p->getValue());
+
+		try {
+			foreach ($this->getApi($userId)->getUserPreferences($userId) as $p) {
+				$prefs[] = new Preference($p->getName(), $p->getValue());
+			}
+		} catch (ApiException $e) {
+			$this->handleApiException($e);
 		}
 
 		return $prefs;
@@ -50,5 +71,21 @@ class PreferencePersistenceSwaggerService implements PreferencePersistence {
 	 */
 	private function getApi($userId) {
 		return $this->apiProvider->getAuthenticatedApi(self::SERVICE_NAME, $userId, UserPreferencesApi::class);
+	}
+
+	/**
+	 * @param ApiException $e
+	 * @throws PersistenceException
+	 * @throws UnauthorizedException
+	 */
+	private function handleApiException(ApiException $e) {
+		switch ($e->getCode()) {
+			case UnauthorizedException::CODE:
+				throw new UnauthorizedException();
+				break;
+			default:
+				throw new PersistenceException($e->getMessage());
+				break;
+		}
 	}
 }
