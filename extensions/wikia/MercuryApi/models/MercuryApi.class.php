@@ -318,7 +318,6 @@ class MercuryApi {
 		if ( !empty( $items ) ) {
 			foreach ( $items as $item ) {
 				$processedItem = $this->processCuratedContentItem($item);
-				//print_r( $processedItem );
 				if ( !empty( $processedItem ) ) {
 					$data[] = $processedItem;
 				}
