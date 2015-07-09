@@ -1,4 +1,3 @@
-/*global syslogReport: true */
 /* jshint maxlen: 150 */
 /* Lazy loading for images inside articles (skips wikiamobile)
  * @author Piotr Bablok <pbablok@wikia-inc.com>
@@ -52,15 +51,7 @@ define('wikia.ImgLzy', ['jquery', 'wikia.log', 'wikia.window', 'wikia.thumbnaile
 				'base64,UklGRjoAAABXRUJQVlA4IC4AAACyAgCdASoCAAIALmk0mk0iIiIiIgBoSygABc6WWgAA/veff/0PP8bA//LwYAAA';
 			webP.onload = webP.onerror = $.proxy(function () {
 				this.browserSupportsWebP = webP.height === 2;
-
 				logger('has support for WebP: ' + (this.browserSupportsWebP ? 'yes' : 'no'));
-
-				// report WebP support stats to Kibana
-				if (w.wgEnableWebPSupportStats === true && typeof syslogReport === 'function') {
-					syslogReport(log.levels.info, 'webp', {
-						'webp-support': this.browserSupportsWebP ? 'yes' : 'no'
-					});
-				}
 			}, this);
 		},
 
