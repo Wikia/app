@@ -1,4 +1,5 @@
 <?php
+
 class MercuryApiModelTest extends WikiaBaseTest {
 
 	public function setUp() {
@@ -50,6 +51,256 @@ class MercuryApiModelTest extends WikiaBaseTest {
 				'$isDisabled' => false,
 				'$siteMessageMock' => '',
 			]
+		];
+	}
+
+	/**
+	 * @dataProvider getCuratedContentSectionsDataProvider
+	 */
+	public function testGetCuratedContentSections( $expected, $data ) {
+		$mercuryApi = new MercuryApi();
+		$this->assertEquals( $expected, $mercuryApi->getCuratedContentSections( $data ) );
+	}
+
+	public function getCuratedContentSectionsDataProvider() {
+		return [
+			[
+				'$expected' => [ ],
+				'$data' => [ ]
+			],
+			[
+				'$expected' => [
+					[
+						'title' => 'Curated Content Section',
+						'image_id' => 1024,
+						'image_url' => 'image_url_0',
+						'type' => 'section',
+					],
+					[
+						'title' => 'Another Curated Content Section',
+						'image_id' => 2048,
+						'image_url' => 'image_url_2',
+						'type' => 'section',
+					],
+				],
+				'$data' => [
+					'sections' => [
+						[
+							'title' => 'Curated Content Section',
+							'image_id' => 1024,
+							'image_url' => 'image_url_0',
+						],
+						[
+							'title' => 'Another Curated Content Section',
+							'image_id' => 2048,
+							'image_url' => 'image_url_2',
+						],
+					],
+					'items' => [
+						[
+							'title' => 'Category:Category_name_0',
+							'label' => 'Category Name Zero',
+							'image_id' => 4096,
+							'article_id' => 0,
+							'type' => 'category',
+							'image_url' => 'image_url_3',
+						],
+						[
+							'title' => 'Category:Category_name_1',
+							'label' => 'Category Name One',
+							'image_id' => 8192,
+							'article_id' => 512,
+							'type' => 'category',
+							'image_url' => 'image_url_4',
+						],
+					],
+					'featured' => [
+						[
+							'title' => 'Article_title',
+							'label' => 'Article label',
+							'image_id' => 256,
+							'article_id' => 128,
+							'type' => 'article',
+							'image_url' => 'image_url_5',
+						],
+						[
+							'title' => 'User_blog:Warkot/Such_Post',
+							'label' => 'Awesome blog post',
+							'image_id' => 64,
+							'article_id' => 32,
+							'type' => 'blog',
+							'image_url' => 'image_url_6',
+						],
+					],
+				]
+			],
+			[
+				'$expected' => [ ],
+				'$data' => [
+					'items' => [
+						[
+							'title' => 'Category:Category_name_2',
+							'label' => 'Category Name Two',
+							'image_id' => 4096,
+							'article_id' => 0,
+							'type' => 'category',
+							'image_url' => 'image_url_6',
+						],
+					],
+				]
+			]
+		];
+	}
+
+	/**
+	 * @dataProvider getCuratedContentItemsDataProvider
+	 */
+	public function testGetCuratedContentItems( $expected, $data, $processCuratedContentItemData ) {
+		$mercuryApiMock =
+			$this->getMockBuilder( 'MercuryApi' )->setMethods( [ 'processCuratedContentItem' ] )->getMock();
+
+		$mercuryApiMock->expects( $this->any() )
+			->method( 'processCuratedContentItem' )
+			//->with( $processCuratedContentItemData )
+			//->will( $this->returnValue( [ 'foo' ] ) );
+			->willReturn( $processCuratedContentItemData );
+
+		$this->assertEquals( $expected, $mercuryApiMock->getCuratedContentItems( $data ) );
+	}
+
+	public function getCuratedContentItemsDataProvider() {
+		return [
+			[
+				'$expected' => [ ],
+				'$data' => [ ],
+				'$processCuratedContentItemData' => [ ]
+			],
+			[
+				'$expected' => [
+					'Category:Category_name_0',
+					'Category Name Zero',
+					4096,
+					0,
+					'category',
+					'image_url_3'
+				],
+				'$data' => [ [
+					'title' => 'Category:Category_name_0',
+					'label' => 'Category Name Zero',
+					'image_id' => 4096,
+					'article_id' => 0,
+					'type' => 'category',
+					'image_url' => 'image_url_3',
+				] ],
+				'$processCuratedContentItemData' => [
+					'title' => 'Category:Category_name_0',
+					'label' => 'Category Name Zero',
+					'image_id' => 4096,
+					'article_id' => 0,
+					'type' => 'category',
+					'image_url' => 'image_url_3',
+					'article_local_url' => '/wiki/Category:Category_name_0'
+				],
+			],
+			[
+				'$expected' => [
+					'Category:Category_name_1',
+					'Category Name One',
+					8192,
+					512,
+					'category',
+					'image_url_4'
+				],
+				'$data' => [ [
+					'title' => 'Category:Category_name_1',
+					'label' => 'Category Name One',
+					'image_id' => 8192,
+					'article_id' => 512,
+					'type' => 'category',
+					'image_url' => 'image_url_4',
+				] ],
+				'$processCuratedContentItemData' => [
+					'title' => 'Category:Category_name_1',
+					'label' => 'Category Name One',
+					'image_id' => 8192,
+					'article_id' => 512,
+					'type' => 'category',
+					'image_url' => 'image_url_4',
+					'article_local_url' => '/wiki/Category:Category_name_1'
+				],
+			],
+		];
+	}
+
+	/**
+	 * @dataProvider processCuratedContentItemDataProvider
+	 */
+	public function testProcessCuratedContentItem( $expected, $item, $wgArticlePath, $getLocalURL ) {
+		$mercuryApi = new MercuryApi();
+
+		$titleMock = $this->getMockBuilder( 'Title' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'getLocalURL' ] )
+			->getMock();
+
+		$titleMock->expects( $this->any() )
+			->method( 'getLocalURL' )
+			->willReturn( $getLocalURL );
+
+		$this->mockGlobalVariable( 'wgArticlePath', $wgArticlePath );
+		$this->assertEquals( $expected, $mercuryApi->processCuratedContentItem( $item ) );
+	}
+
+	public function processCuratedContentItemDataProvider() {
+		return [
+			[
+				'$expected' => null,
+				'$item' => [ ],
+				'$wgArticlePath' => '',
+				'$getLocalURL' => ''
+			],
+			[
+				'$expected' => [
+					'title' => 'Category:Category_name_0',
+					'label' => 'Category Name Zero',
+					'image_id' => 4096,
+					'article_id' => 0,
+					'type' => 'category',
+					'image_url' => 'image_url_3',
+					'article_local_url' => '/wiki/Category:Category_name_0'
+				],
+				'$item' => [
+					'title' => 'Category:Category_name_0',
+					'label' => 'Category Name Zero',
+					'image_id' => 4096,
+					'article_id' => 0,
+					'type' => 'category',
+					'image_url' => 'image_url_3',
+				],
+				'$wgArticlePath' => '/wiki/$1',
+				'$getLocalURL' => ''
+			],
+			[
+				'$expected' => [
+					'title' => 'Category:Category_name_1',
+					'label' => 'Category Name One',
+					'image_id' => 8192,
+					'article_id' => 512,
+					'type' => 'category',
+					'image_url' => 'image_url_4',
+					'article_local_url' => '/wiki/Category:Category_name_1'
+				],
+				'$item' => [
+					'title' => 'Category:Category_name_1',
+					'label' => 'Category Name One',
+					'image_id' => 8192,
+					'article_id' => 512,
+					'type' => 'category',
+					'image_url' => 'image_url_4',
+				],
+				'$wgArticlePath' => '',
+				'$getLocalURL' => '/wiki/Category:Category_name_1'
+			],
 		];
 	}
 }

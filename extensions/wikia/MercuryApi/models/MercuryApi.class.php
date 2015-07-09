@@ -313,11 +313,12 @@ class MercuryApi {
 	 * @param $items
 	 * @return array
 	 */
-	private function getCuratedContentItems( $items ) {
+	public function getCuratedContentItems( $items ) {
 		$data = [];
 		if ( !empty( $items ) ) {
 			foreach ( $items as $item ) {
 				$processedItem = $this->processCuratedContentItem($item);
+				//print_r( $processedItem );
 				if ( !empty( $processedItem ) ) {
 					$data[] = $processedItem;
 				}
@@ -336,7 +337,7 @@ class MercuryApi {
 	 * @param $item
 	 * @return mixed
 	 */
-	private function processCuratedContentItem( $item ) {
+	public function processCuratedContentItem( $item ) {
 		if ( !empty( $item['article_id'] ) ) {
 			$title = Title::newFromID( $item['article_id'] );
 
