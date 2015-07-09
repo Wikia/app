@@ -41,10 +41,11 @@ define('ext.wikia.adEngine.template.skin', [
 						skinImageHeight: 800,
 						backgroundTiled: false,
 						backgroundFixed: true,
-						backgroundDynamic: true
+						backgroundDynamic: true,
+						backgroundColor: 'transparent'
 					};
 					if (params.backgroundColor) {
-						bcParams.backgroundColor = '#' + params.backgroundColor;
+						doc.documentElement.style.backgroundColor = '#' + params.backgroundColor;
 					}
 					if (params.middleColor) {
 						bcParams.backgroundMiddleColor = '#' + params.middleColor;
