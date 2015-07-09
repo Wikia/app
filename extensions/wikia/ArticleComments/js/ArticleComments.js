@@ -146,7 +146,6 @@
 						$textfield = $(textfieldSelector);
 						if (ArticleComments.miniEditorEnabled) {
 							ArticleComments.editorInit($textfield, content, json.edgeCases);
-
 						} else {
 							$textfield.val(content);
 						}
@@ -246,6 +245,7 @@
 
 							// Update DOM with information from saveTemplate
 							commentText.html(saveTemplateText.html()).show();
+							$textfield.val(content);
 
 							// fire event when new article comment is/will be added to DOM
 							mw.hook('wikipage.content').fire(commentText);
