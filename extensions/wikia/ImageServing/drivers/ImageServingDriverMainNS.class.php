@@ -60,16 +60,17 @@ class ImageServingDriverMainNS extends ImageServingDriverBase {
 		wfProfileIn( __METHOD__ );
 
 		//load infobox images at start, set number of images from infoboxes
-		$order = $this->loadImagesFromInfoboxes( $articleIds );
+		$imageCount = $this->loadImagesFromInfoboxes( $articleIds );
 
 		$articleImageIndex = $this->getImageIndex( $articleIds, 2 * self::QUERY_LIMIT );
 		foreach ( $articleImageIndex as $articleId => $imageIndex ) {
 			// make sure images are in correct order
 			ksort( $imageIndex );
 			foreach ( $imageIndex as $imageData ) {
-				$added = $this->addImage( $imageData, $articleId, $order, self::QUERY_LIMIT );
-				// increment order count when new image added
-				$order += $added ? 1 : 0;
+				if ( $this->addImage( $imageData, $articleId, $imageCount, self::QUERY_LIMIT ) ) {
+					// increment order count when new image added
+					$imageCount++;
+				}
 			}
 		}
 
@@ -244,12 +245,12 @@ class ImageServingDriverMainNS extends ImageServingDriverBase {
 
 	protected function loadImagesFromInfoboxes( $articleIds ) {
 		wfProfileIn( __METHOD__ );
-		$order = 0;
 		$images = [ ];
+		$imageCount = 0;
 		foreach ( $articleIds as $id ) {
 			$articleImages = PortableInfoboxDataService::newFromPageID( $id )->getImages();
 			foreach ( $articleImages as $image ) {
-				$this->addImage( $image, $id, $order++ );
+				$this->addImage( $image, $id, $imageCount++ );
 			}
 			$images = array_merge( $images, $articleImages );
 		}
@@ -264,6 +265,6 @@ class ImageServingDriverMainNS extends ImageServingDriverBase {
 
 		wfProfileOut( __METHOD__ );
 
-		return $order;
+		return $imageCount;
 	}
 }
