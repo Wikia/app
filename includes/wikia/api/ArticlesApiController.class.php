@@ -1351,6 +1351,21 @@ class ArticlesApiController extends WikiaApiController {
 	}
 
 	/**
+	 * Get Main Page Article ID for passed Wiki by its ID
+	 */
+	public function getMainPageForWiki() {
+		$this->getResponse()->setFormat( WikiaResponse::FORMAT_JSON );
+		$this->response->setCacheValidity( self::SIMPLE_JSON_VARNISH_CACHE_EXPIRATION * 30 );
+
+		$wikiId = $this->request->getVal( 'wikiId', null );
+		if ( !empty( $wikiId ) ) {
+			$mainPageTitle = WikiFactory::getVarValueByName( 'wgSitename', $wikiId );
+			$mainPageId = GlobalTitle::newFromText($mainPageTitle, NS_MAIN, $wikiId)->getArticleID();
+			$this->response->setVal('mainPageArticleId', $mainPageId);
+		}
+	}
+
+	/**
 	 * Checking existence of article with given $baseArtcileId
 	 *
 	 * If provided id corresponds to non-existent article,
