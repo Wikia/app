@@ -93,7 +93,7 @@ class MercuryApiController extends WikiaController {
 	 * @param int $articleId
 	 * @param int $descLength
 	 * @return string
-	 * @throws WikiaException
+	 * @throws NotFoundApiException
 	 */
 	private function getArticleDescription( $articleId, $descLength = 100 ) {
 		$article = Article::newFromID( $articleId );
@@ -149,6 +149,7 @@ class MercuryApiController extends WikiaController {
 	 *
 	 * @param int[] $ids
 	 * @return mixed
+	 * @throws NotFoundApiException
 	 */
 	private function getTopContributorsDetails( Array $ids ) {
 		if ( empty( $ids ) ) {
@@ -417,7 +418,7 @@ class MercuryApiController extends WikiaController {
 		return wfMemcKey( 'curated-content-section-data', $section );
 	}
 
-	private function getCuratedContentData( $section = null ) {
+	public function getCuratedContentData( $section = null ) {
 		try {
 			$data = WikiaDataAccess::cache( self::curatedContentDataMemcKey( $section ), WikiaResponse::CACHE_STANDARD,
 				function() use ( $section ) {

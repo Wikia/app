@@ -293,10 +293,10 @@ class MercuryApi {
 	/**
 	 * Add `section` type to all sections from CuratedContent data
 	 *
-	 * @param $data
+	 * @param array $data
 	 * @return array
 	 */
-	private function getCuratedContentSections( $data ) {
+	public function getCuratedContentSections( $data ) {
 		$sections = [];
 		if ( !empty( $data[ 'sections' ] ) ) {
 			foreach ( $data[ 'sections' ] as $section ) {
