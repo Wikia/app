@@ -309,7 +309,7 @@ class MercuryApiController extends WikiaController {
 	 * @param $title
 	 * @return mixed
 	 */
-	public function getRedirectedTitleFromTitle($title) {
+	private function getRedirectedTitleFromTitle($title) {
 		if ( $title->isRedirect() ) {
 			return Article::newFromID( $title->getArticleId() )->getRedirectTarget();
 		}
