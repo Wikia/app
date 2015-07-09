@@ -87,6 +87,42 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 		$this->assertEquals( $expectedHtml, $actualHtml, $description );
 	}
 
+	/**
+	 * @param $input
+	 * @param $expectedOutput
+	 * @param $description
+	 * @desc Case when the getThumbnail method will not return false due to
+	 * some image thumbnail error
+	 * @dataProvider testRenderInfoboxDataProviderThumbnailError
+	 */
+	public function testRenderMobileInfoboxThumbnailError( $input, $expectedOutput, $description ) {
+		$this->setWikiaMobileSkin(false);
+
+		$mock = $this->getMockBuilder( 'PortableInfoboxRenderService' )
+			->setMethods( [ 'getThumbnail' ] )
+			->getMock();
+		$mock->expects( $this->any() )
+			->method( 'getThumbnail' )
+			->will( $this->returnValue( false ) );
+		$this->infoboxRenderServiceThumbnailError = $mock;
+
+		$actualOutput = $this->infoboxRenderServiceThumbnailError->renderInfobox( $input );
+
+		$actualDOM = new DOMDocument('1.0');
+		$expectedDOM = new DOMDocument('1.0');
+		$actualDOM->formatOutput = true;
+		$actualDOM->preserveWhiteSpace = false;
+		$expectedDOM->formatOutput = true;
+		$expectedDOM->preserveWhiteSpace = false;
+		$actualDOM->loadXML($actualOutput);
+		$expectedDOM->loadXML($expectedOutput);
+
+		$expectedHtml = $expectedDOM->saveXML();
+		$actualHtml = $actualDOM->saveXML();
+
+		$this->assertEquals( $expectedHtml, $actualHtml, $description );
+	}
+
 	public function testRenderInfoboxDataProvider() {
 		return [
 			[
@@ -366,6 +402,34 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 								</div>
 							</aside>',
 				'description' => 'Only image for mobile'
+			]
+		];
+	}
+
+	public function testRenderInfoboxDataProviderThumbnailError() {
+		return [
+			[
+				'input' => [
+					[
+						'type' => 'image',
+						'data' => [
+							'alt' => 'image alt',
+							'url' => 'http://image.jpg',
+							'caption' => 'Lorem ipsum dolor'
+						]
+					]
+				],
+				'output' => '<aside class="portable-infobox">
+								<div class="portable-infobox-item item-type-image no-margins">
+									<figure class="portable-infobox-image-wrapper">
+										<a href="http://image.jpg" class="image image-thumbnail" title="image alt">
+											<img src="" class="portable-infobox-image" alt="image alt" width="" height="" data-image-key="" data-image-name=""/>
+										</a>
+										<figcaption class="portable-infobox-item-margins portable-infobox-image-caption">Lorem ipsum dolor</figcaption>
+									</figure>
+								</div>
+							</aside>',
+				'description' => 'Image with invalid thumb. Thumbnail and dimensions should be empty'
 			]
 		];
 	}
