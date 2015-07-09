@@ -24,29 +24,27 @@ class MercuryApiController extends WikiaController {
 	 * @desc Gets smart banner config from WF and cleans it up
 	 */
 	private function getSmartBannerConfig() {
-		if ( !empty( $this->wg->EnableWikiaMobileSmartBanner )
-			&& !empty( $this->wg->WikiaMobileSmartBannerConfig )
-		) {
+		if ( !empty( $this->wg->EnableWikiaMobileSmartBanner ) && !empty( $this->wg->WikiaMobileSmartBannerConfig ) ) {
 			$smartBannerConfig = $this->wg->WikiaMobileSmartBannerConfig;
 
-			unset( $smartBannerConfig[ 'author' ] );
+			unset( $smartBannerConfig['author'] );
 
-			if ( !empty( $smartBannerConfig[ 'icon' ] )
-				&& !isset( parse_url( $smartBannerConfig[ 'icon' ] )[ 'scheme' ] ) // it differs per wiki
+			if ( !empty( $smartBannerConfig['icon'] ) &&
+				!isset( parse_url( $smartBannerConfig['icon'] )['scheme'] ) // it differs per wiki
 			) {
-				$smartBannerConfig[ 'icon' ] = $this->wg->extensionsPath . $smartBannerConfig[ 'icon' ];
+				$smartBannerConfig['icon'] = $this->wg->extensionsPath . $smartBannerConfig['icon'];
 			}
 
-			$meta = $smartBannerConfig[ 'meta' ];
-			unset( $smartBannerConfig[ 'meta' ] );
-			$smartBannerConfig[ 'appId' ] = [
-				'ios' => str_replace( 'app-id=', '', $meta[ 'apple-itunes-app' ] ),
-				'android' => str_replace( 'app-id=', '', $meta[ 'google-play-app' ] ),
+			$meta = $smartBannerConfig['meta'];
+			unset( $smartBannerConfig['meta'] );
+			$smartBannerConfig['appId'] = [
+				'ios' => str_replace( 'app-id=', '', $meta['apple-itunes-app'] ),
+				'android' => str_replace( 'app-id=', '', $meta['google-play-app'] ),
 			];
 
-			$smartBannerConfig[ 'appScheme' ] = [
-				'ios' => $meta[ 'ios-scheme' ],
-				'android' => $meta[ 'android-scheme' ]
+			$smartBannerConfig['appScheme'] = [
+				'ios' => $meta['ios-scheme'],
+				'android' => $meta['android-scheme']
 			];
 
 			return $smartBannerConfig;
@@ -64,6 +62,7 @@ class MercuryApiController extends WikiaController {
 	 */
 	private function getTopContributorsPerArticle( $articleId ) {
 		$usersIds = $this->mercuryApi->topContributorsPerArticle( $articleId, self::NUMBER_CONTRIBUTORS );
+
 		return $usersIds;
 	}
 
@@ -71,16 +70,17 @@ class MercuryApiController extends WikiaController {
 	 * @desc returns article details
 	 *
 	 * @param int $articleId
+	 *
 	 * @return mixed
 	 */
 	private function getArticleDetails( $articleId ) {
-		$articleDetails = $this->sendRequest( 'ArticlesApi', 'getDetails', [ 'ids' => $articleId ] )
-			->getData()[ 'items' ][ $articleId ];
+		$articleDetails =
+			$this->sendRequest( 'ArticlesApi', 'getDetails', [ 'ids' => $articleId ] )->getData()['items'][$articleId];
 
 		$description = $this->getArticleDescription( $articleId );
 
-		$articleDetails[ 'abstract' ] = htmlspecialchars( $articleDetails[ 'abstract' ] );
-		$articleDetails[ 'description' ] = htmlspecialchars( $description );
+		$articleDetails['abstract'] = htmlspecialchars( $articleDetails['abstract'] );
+		$articleDetails['description'] = htmlspecialchars( $description );
 
 		return $articleDetails;
 	}
@@ -92,6 +92,7 @@ class MercuryApiController extends WikiaController {
 	 *
 	 * @param int $articleId
 	 * @param int $descLength
+	 *
 	 * @return string
 	 * @throws WikiaException
 	 */
@@ -125,20 +126,25 @@ class MercuryApiController extends WikiaController {
 	 * @desc returns an article in simplified json structure
 	 *
 	 * @param int $articleId
+	 *
 	 * @return array
 	 */
 	private function getArticleJson( $articleId, Title $title ) {
 		$redirect = $this->request->getVal( 'redirect' );
 
-		$articleAsJson = $this->sendRequest( 'ArticlesApi', 'getAsJson', [
-			'id' => $articleId,
-			'redirect' => $redirect
-		] )->getData();
+		$articleAsJson = $this->sendRequest(
+			'ArticlesApi',
+			'getAsJson',
+			[
+				'id' => $articleId,
+				'redirect' => $redirect
+			]
+		)->getData();
 
 		$articleType = WikiaPageType::getArticleType( $title );
 
 		if ( !empty( $articleType ) ) {
-			$articleAsJson[ 'type' ] = $articleType;
+			$articleAsJson['type'] = $articleType;
 		}
 
 		return $articleAsJson;
@@ -148,19 +154,19 @@ class MercuryApiController extends WikiaController {
 	 * @desc returns top contributors user details
 	 *
 	 * @param int[] $ids
+	 *
 	 * @return mixed
 	 */
 	private function getTopContributorsDetails( Array $ids ) {
 		if ( empty( $ids ) ) {
-			return [];
+			return [ ];
 		}
 		try {
-			return $this->sendRequest( 'UserApi', 'getDetails', [ 'ids' => implode( ',', $ids ) ] )
-				->getData()[ 'items' ];
+			return $this->sendRequest( 'UserApi', 'getDetails', [ 'ids' => implode( ',', $ids ) ] )->getData()['items'];
 		} catch ( NotFoundApiException $e ) {
 			// getDetails throws NotFoundApiException when no contributors are found
 			// and we want the article even if we don't have the contributors
-			return [];
+			return [ ];
 		}
 	}
 
@@ -178,6 +184,7 @@ class MercuryApiController extends WikiaController {
 	 *
 	 * @param int $articleId
 	 * @param int $limit
+	 *
 	 * @return mixed
 	 */
 	private function getRelatedPages( $articleId, $limit = 6 ) {
@@ -194,8 +201,8 @@ class MercuryApiController extends WikiaController {
 	 * @throws BadRequestApiException
 	 */
 	private function getTitleFromRequest() {
-		$articleId = $this->request->getInt( self::PARAM_ARTICLE_ID, NULL );
-		$articleTitle = $this->request->getVal( self::PARAM_ARTICLE_TITLE, NULL );
+		$articleId = $this->request->getInt( self::PARAM_ARTICLE_ID, null );
+		$articleTitle = $this->request->getVal( self::PARAM_ARTICLE_TITLE, null );
 		$articleTitleValidator = new WikiaValidatorString( [ 'min' => 1, 'required' => true ] );
 
 		if ( !empty( $articleId ) && $articleTitleValidator->isValid( $articleTitle ) ) {
@@ -236,11 +243,15 @@ class MercuryApiController extends WikiaController {
 
 		$page = $this->request->getInt( self::PARAM_PAGE, self::DEFAULT_PAGE );
 
-		$commentsResponse = $this->app->sendRequest( 'ArticleComments', 'WikiaMobileCommentsPage', [
-			'articleID' => $articleId,
-			'page' => $page,
-			'format' => WikiaResponse::FORMAT_JSON
-		] );
+		$commentsResponse = $this->app->sendRequest(
+			'ArticleComments',
+			'WikiaMobileCommentsPage',
+			[
+				'articleID' => $articleId,
+				'page' => $page,
+				'format' => WikiaResponse::FORMAT_JSON
+			]
+		);
 
 		if ( empty( $commentsResponse ) ) {
 			throw new BadRequestApiException();
@@ -250,7 +261,7 @@ class MercuryApiController extends WikiaController {
 		$comments = $this->mercuryApi->processArticleComments( $commentsData );
 
 		$this->response->setVal( 'payload', $comments );
-		$this->response->setVal( 'pagesCount', $commentsData[ 'pagesCount' ] );
+		$this->response->setVal( 'pagesCount', $commentsData['pagesCount'] );
 		$this->response->setVal( 'basePath', $this->wg->Server );
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 	}
@@ -265,35 +276,38 @@ class MercuryApiController extends WikiaController {
 		$wikiVariables = $this->mercuryApi->getWikiVariables();
 
 		try {
-			$wikiVariables[ 'navData' ] = $this->getNavigationData();
+			$wikiVariables['navData'] = $this->getNavigationData();
 		} catch ( Exception $e ) {
-			\Wikia\Logger\WikiaLogger::instance()->error( 'Fallback to empty navigation', [
-				'exception' => $e
-			] );
-			$wikiVariables[ 'navData' ] = [];
+			\Wikia\Logger\WikiaLogger::instance()->error(
+				'Fallback to empty navigation',
+				[
+					'exception' => $e
+				]
+			);
+			$wikiVariables['navData'] = [ ];
 		}
 
-		$wikiVariables[ 'vertical' ] = WikiFactoryHub::getInstance()->getWikiVertical( $this->wg->CityId )[ 'short' ];
-		$wikiVariables[ 'basePath' ] = $this->wg->Server;
+		$wikiVariables['vertical'] = WikiFactoryHub::getInstance()->getWikiVertical( $this->wg->CityId )['short'];
+		$wikiVariables['basePath'] = $this->wg->Server;
 
 		// Used to determine GA tracking
 		if ( !empty( $this->wg->IsGASpecialWiki ) ) {
-			$wikiVariables[ 'isGASpecialWiki' ] = true;
+			$wikiVariables['isGASpecialWiki'] = true;
 		}
 
 		if ( !empty( $this->wg->ArticlePath ) ) {
-			$wikiVariables[ 'articlePath' ] = str_replace( '$1', '', $this->wg->ArticlePath );
+			$wikiVariables['articlePath'] = str_replace( '$1', '', $this->wg->ArticlePath );
 		} else {
-			$wikiVariables[ 'articlePath' ] = '/wiki/';
+			$wikiVariables['articlePath'] = '/wiki/';
 		}
 
 		$smartBannerConfig = $this->getSmartBannerConfig();
 		if ( !is_null( $smartBannerConfig ) ) {
-			$wikiVariables[ 'smartBanner' ] = $smartBannerConfig;
+			$wikiVariables['smartBanner'] = $smartBannerConfig;
 		}
 
 		if ( !is_null( $egFacebookAppId ) ) {
-			$wikiVariables[ 'facebookAppId' ] = $egFacebookAppId;
+			$wikiVariables['facebookAppId'] = $egFacebookAppId;
 		}
 
 		$this->response->setVal( 'data', $wikiVariables );
@@ -307,9 +321,10 @@ class MercuryApiController extends WikiaController {
 	 * @desc Returns redirected article or null
 	 *
 	 * @param $title
+	 *
 	 * @return mixed
 	 */
-	private function getRedirectedTitleFromTitle($title) {
+	private function getRedirectedTitleFromTitle( $title ) {
 		if ( $title->isRedirect() ) {
 			return Article::newFromID( $title->getArticleId() )->getRedirectTarget();
 		}
@@ -326,48 +341,51 @@ class MercuryApiController extends WikiaController {
 
 		try {
 			$title = $this->getTitleFromRequest();
-			$redirectedTitle = $this->getRedirectedTitleFromTitle($title);
+			$redirectedTitle = $this->getRedirectedTitleFromTitle( $title );
 
 			if ( $redirectedTitle instanceof Title ) {
-				$data[ 'redirected' ] = true;
+				$data['redirected'] = true;
 				$title = $redirectedTitle;
 			}
 
 			$articleId = $title->getArticleId();
-			$data[ 'details' ] = $this->getArticleDetails( $articleId );
-			$data[ 'topContributors' ] = $this->getTopContributorsDetails(
+			$data['details'] = $this->getArticleDetails( $articleId );
+			$data['topContributors'] = $this->getTopContributorsDetails(
 				$this->getTopContributorsPerArticle( $articleId )
 			);
 			$isMainPage = $title->isMainPage();
-			$data[ 'isMainPage' ] = $isMainPage;
+			$data['isMainPage'] = $isMainPage;
 
 			if ( $isMainPage && !empty( $wgEnableMainPageDataMercuryApi ) ) {
-				$data[ 'mainPageData' ] = $this->getMainPageData();
+				$data['mainPageData'] = $this->getMainPageData();
 			} else {
 				$articleAsJson = $this->getArticleJson( $articleId, $title );
-				$data[ 'article' ] = $articleAsJson;
+				$data['article'] = $articleAsJson;
 			}
 
 			$relatedPages = $this->getRelatedPages( $articleId );
 
 			if ( !empty( $relatedPages ) ) {
-				$data[ 'relatedPages' ] = $relatedPages;
+				$data['relatedPages'] = $relatedPages;
 			}
 		} catch ( WikiaHttpException $exception ) {
 			$this->response->setCode( $exception->getCode() );
 
-			$data = [];
+			$data = [ ];
 
-			$this->response->setVal( 'exception', [
-				'message' => $exception->getMessage(),
-				'code' => $exception->getCode(),
-				'details' => $exception->getDetails()
-			] );
+			$this->response->setVal(
+				'exception',
+				[
+					'message' => $exception->getMessage(),
+					'code' => $exception->getCode(),
+					'details' => $exception->getDetails()
+				]
+			);
 
 			$title = $this->wg->Title;
 		}
 
-		$data[ 'adsContext' ] = $this->mercuryApi->getAdsContext( $title );
+		$data['adsContext'] = $this->mercuryApi->getAdsContext( $title );
 
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
@@ -389,30 +407,30 @@ class MercuryApiController extends WikiaController {
 	}
 
 	private function getMainPageData() {
-		$mainPageData = [];
+		$mainPageData = [ ];
 		$curatedContent = $this->getCuratedContentData();
 		$trendingArticles = $this->getTrendingArticlesData();
 		$trendingVideos = $this->getTrendingVideosData();
 		$wikiaStats = $this->getWikiaStatsData();
 
-		if ( !empty( $curatedContent[ 'items' ] ) ) {
-			$mainPageData[ 'curatedContent' ] = $curatedContent[ 'items' ];
+		if ( !empty( $curatedContent['items'] ) ) {
+			$mainPageData['curatedContent'] = $curatedContent['items'];
 		}
 
-		if ( !empty( $curatedContent[ 'featured' ] ) ) {
-			$mainPageData[ 'featuredContent' ] = $curatedContent[ 'featured' ];
+		if ( !empty( $curatedContent['featured'] ) ) {
+			$mainPageData['featuredContent'] = $curatedContent['featured'];
 		}
 
 		if ( !empty( $trendingArticles ) ) {
-			$mainPageData[ 'trendingArticles' ] = $trendingArticles;
+			$mainPageData['trendingArticles'] = $trendingArticles;
 		}
 
 		if ( !empty( $trendingVideos ) ) {
-			$mainPageData[ 'trendingVideos' ] = $trendingVideos;
+			$mainPageData['trendingVideos'] = $trendingVideos;
 		}
 
 		if ( !empty( $wikiaStats ) ) {
-			$mainPageData[ 'wikiaStats' ] = $wikiaStats;
+			$mainPageData['wikiaStats'] = $wikiaStats;
 		}
 
 		return $mainPageData;
@@ -426,7 +444,7 @@ class MercuryApiController extends WikiaController {
 			$this->response->setVal( 'items', false );
 		} else {
 			$data = $this->getCuratedContentData( $section );
-			$this->response->setVal( 'items', $data[ 'items' ] );
+			$this->response->setVal( 'items', $data['items'] );
 		}
 	}
 
@@ -436,12 +454,14 @@ class MercuryApiController extends WikiaController {
 
 	private function getCuratedContentData( $section = null ) {
 		try {
-			$data = WikiaDataAccess::cache( self::curatedContentDataMemcKey( $section ), WikiaResponse::CACHE_STANDARD,
-				function() use ( $section ) {
+			$data = WikiaDataAccess::cache(
+				self::curatedContentDataMemcKey( $section ),
+				WikiaResponse::CACHE_STANDARD,
+				function () use ( $section ) {
 					$rawData = $this->sendRequest(
 						'CuratedContent',
 						'getList',
-						empty( $section ) ? [] : [ 'section' => $section ]
+						empty( $section ) ? [ ] : [ 'section' => $section ]
 					)->getData();
 
 					return $this->mercuryApi->processCuratedContent( $rawData );
@@ -463,7 +483,7 @@ class MercuryApiController extends WikiaController {
 			'limit' => 10,
 			'namespaces' => implode( ',', $wgContentNamespaces )
 		];
-		$data = [];
+		$data = [ ];
 
 		try {
 			$rawData = $this->sendRequest( 'ArticlesApi', 'getTop', $params )->getData();
@@ -481,7 +501,7 @@ class MercuryApiController extends WikiaController {
 			'getThumbnail' => false,
 			'format' => 'json',
 		];
-		$data = [];
+		$data = [ ];
 
 		try {
 			$rawData = $this->sendRequest( 'SpecialVideosSpecial', 'getVideos', $params )->getData();
@@ -498,6 +518,7 @@ class MercuryApiController extends WikiaController {
 
 		$service = new WikiDetailsService();
 		$wikiDetails = $service->getWikiDetails( $wgCityId );
-		return $wikiDetails[ 'stats' ];
+
+		return $wikiDetails['stats'];
 	}
 }
