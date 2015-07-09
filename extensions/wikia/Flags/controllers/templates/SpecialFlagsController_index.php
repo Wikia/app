@@ -4,7 +4,7 @@
 		<h1 class="flags-special-header-content-title">
 			<?= wfMessage( 'flags-special-title' )->escaped() ?>
 		</h1>
-			<p class="flags-special-header-content-text">
+		<p class="flags-special-header-content-text">
 			<?= wfMessage( 'flags-special-header-text' )->parse() ?>
 		</p>
 	</div>
