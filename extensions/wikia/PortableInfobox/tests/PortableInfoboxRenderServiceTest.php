@@ -95,7 +95,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 	 * some image thumbnail error
 	 * @dataProvider testRenderInfoboxDataProviderThumbnailError
 	 */
-	public function testRenderMobileInfoboxThumbnailError( $input, $expectedOutput, $description ) {
+	public function testRenderInfoboxThumbnailError( $input, $expectedOutput, $description ) {
 		$this->setWikiaMobileSkin(false);
 
 		$mock = $this->getMockBuilder( 'PortableInfoboxRenderService' )
