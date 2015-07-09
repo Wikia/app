@@ -23,11 +23,16 @@ namespace Wikia\Service\User\Preferences;
 use Wikia\Domain\User\Preference;
 use Wikia\Logger\Loggable;
 use Wikia\Persistence\User\Preferences\PreferencePersistence;
+use Wikia\Util\WikiaProfiler;
 
 class PreferenceKeyValueService implements PreferenceService {
 
+	const PROFILE_EVENT = \Transaction::EVENT_USER_PREFERENCES;
+
+	use WikiaProfiler;
 	use Loggable;
 
+	/** @var PreferencePersistence */
 	private $persistenceAdapter;
 
 	function __construct( PreferencePersistence $persistenceAdapter ) {
@@ -40,18 +45,25 @@ class PreferenceKeyValueService implements PreferenceService {
 		}
 
 		try {
-			return $this->persistenceAdapter->save( $userId, $preferences );
+			$profiler_start = $this->startProfile();
+			$ret = $this->persistenceAdapter->save( $userId, $preferences );
+			$this->endProfile(PreferenceKeyValueService::PROFILE_EVENT, $profiler_start, ['user_id' => $userId, ]);
+
+			return $ret;
 		} catch (\Exception $e) {
 			$this->error($e->getMessage(), [
 				'user' => $userId
 			]);
+
 			throw $e;
 		}
 	}
 
 	public function getPreferences( $userId ) {
 		try {
+			$profiler_start = $this->startProfile();
 			$preferences = $this->persistenceAdapter->get( $userId );
+			$this->endProfile(PreferenceKeyValueService::PROFILE_EVENT, $profiler_start, ['user_id' => $userId, ]);
 		} catch (\Exception $e) {
 			$this->error($e->getMessage(), [
 				'user' => $userId
