@@ -7,7 +7,6 @@ class TemplateDataExtractor {
 		TABLE_ROWS_PATTERN = '/<tr.*?>.*?<\/tr>/s',
 		ROW_VALUES_PATTERN = '/<tr.*?><t[d|h].*?>(.*?)<\/t[d|h].*><t[d|h].*?>(.*?)<\/t[d|h]><\/tr>/s';
 
-
 	private $title; // Title object of the template we're converting
 
 	/**
