@@ -96,7 +96,7 @@ class NavigationModel extends WikiaModel {
 
 		$messageName = str_replace(' ', '_', $messageName);
 
-		return implode( ':', array( __CLASS__, $wikiId, $this->wg->Lang->getCode(), $messageName, self::version ) );
+		return wfMemcKey( __CLASS__, $wikiId, $this->wg->Lang->getCode(), $messageName, self::version );
 	}
 
 	public function clearMemc( $key = self::WIKIA_GLOBAL_VARIABLE, $city_id = false ){
