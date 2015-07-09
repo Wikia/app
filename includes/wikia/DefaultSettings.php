@@ -1287,6 +1287,12 @@ $wgEnableAdEngineExt = true;
 $wgAdDriverDelayBelowTheFold = false;
 
 /**
+ * @name $wgAdDriverEnableInvisibleHighImpactSlot
+ * Enables INVISIBLE_HIGH_IMPACT slot
+ */
+$wgAdDriverEnableInvisibleHighImpactSlot = true;
+
+/**
  * @name $wgAdDriverUseAdsAfterInfobox
  * Enable new mobile_in_content slot after infobox placement
  */
@@ -1375,6 +1381,13 @@ $wgSitewideDisableRubiconRTP = false;
  * For more details consult https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
  */
 $wgSitewideDisableSevenOneMedia = false;
+
+/**
+ * @name $wgEnableKruxTargeting
+ *
+ * Enables Krux Targeting
+ */
+$wgEnableKruxTargeting = true;
 
 /**
  * @name $wgSitewideDisableKrux
