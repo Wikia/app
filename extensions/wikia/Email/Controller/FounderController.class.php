@@ -566,6 +566,13 @@ class FounderTipsController extends FounderController {
 					'value' => \F::app()->wg->CityId,
 					'tooltip' => "The ID of the Wiki (defaults to current wiki)"
 				],
+				[
+					'type' => 'text',
+					'name' => 'wikiUrl',
+					'label' => "Wiki URL",
+					'value' => \F::app()->wg->Server,
+					'tooltip' => "The URL of the Wiki (defaults to current wiki)"
+				],
 			]
 		];
 
