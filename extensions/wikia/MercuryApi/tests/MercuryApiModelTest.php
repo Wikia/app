@@ -161,8 +161,6 @@ class MercuryApiModelTest extends WikiaBaseTest {
 
 		$mercuryApiMock->expects( $this->any() )
 			->method( 'processCuratedContentItem' )
-			//->with( $processCuratedContentItemData )
-			//->will( $this->returnValue( [ 'foo' ] ) );
 			->willReturn( $processCuratedContentItemData );
 
 		$this->assertEquals( $expected, $mercuryApiMock->getCuratedContentItems( $data ) );
@@ -173,25 +171,30 @@ class MercuryApiModelTest extends WikiaBaseTest {
 			[
 				'$expected' => [ ],
 				'$data' => [ ],
-				'$processCuratedContentItemData' => [ ]
+				'$processCuratedContentItemData' => null
 			],
 			[
 				'$expected' => [
-					'Category:Category_name_0',
-					'Category Name Zero',
-					4096,
-					0,
-					'category',
-					'image_url_3'
+					[
+						'title' => 'Category:Category_name_0',
+						'label' => 'Category Name Zero',
+						'image_id' => 4096,
+						'article_id' => 0,
+						'type' => 'category',
+						'image_url' => 'image_url_3',
+						'article_local_url' => '/wiki/Category:Category_name_0'
+					]
 				],
-				'$data' => [ [
-					'title' => 'Category:Category_name_0',
-					'label' => 'Category Name Zero',
-					'image_id' => 4096,
-					'article_id' => 0,
-					'type' => 'category',
-					'image_url' => 'image_url_3',
-				] ],
+				'$data' => [
+					[
+						'title' => 'Category:Category_name_0',
+						'label' => 'Category Name Zero',
+						'image_id' => 4096,
+						'article_id' => 0,
+						'type' => 'category',
+						'image_url' => 'image_url_3',
+					]
+				],
 				'$processCuratedContentItemData' => [
 					'title' => 'Category:Category_name_0',
 					'label' => 'Category Name Zero',
@@ -204,29 +207,34 @@ class MercuryApiModelTest extends WikiaBaseTest {
 			],
 			[
 				'$expected' => [
-					'Category:Category_name_1',
-					'Category Name One',
-					8192,
-					512,
-					'category',
-					'image_url_4'
+					[
+						'title' => 'Category:Category_name_122',
+                                        	'label' => 'Category Name One',
+                                        	'image_id' => 8192,
+                                        	'article_id' => 512,
+                                        	'type' => 'category',
+                                        	'image_url' => 'image_url_4',
+                                        	'article_local_url' => '/wiki/Category:Category_name_122'
+					]
 				],
-				'$data' => [ [
-					'title' => 'Category:Category_name_1',
-					'label' => 'Category Name One',
-					'image_id' => 8192,
-					'article_id' => 512,
-					'type' => 'category',
-					'image_url' => 'image_url_4',
-				] ],
+				'$data' => [
+					[
+						'title' => 'Category:Category_name_122',
+						'label' => 'Category Name One',
+						'image_id' => 8192,
+						'article_id' => 512,
+						'type' => 'category',
+						'image_url' => 'image_url_4',
+					]
+				],
 				'$processCuratedContentItemData' => [
-					'title' => 'Category:Category_name_1',
+					'title' => 'Category:Category_name_122',
 					'label' => 'Category Name One',
 					'image_id' => 8192,
 					'article_id' => 512,
 					'type' => 'category',
 					'image_url' => 'image_url_4',
-					'article_local_url' => '/wiki/Category:Category_name_1'
+					'article_local_url' => '/wiki/Category:Category_name_122'
 				],
 			],
 		];
