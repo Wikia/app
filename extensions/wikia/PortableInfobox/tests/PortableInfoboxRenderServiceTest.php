@@ -107,7 +107,7 @@ class PortableInfoboxRenderServiceTest extends PHPUnit_Framework_TestCase {
 								<div class="portable-infobox-item item-type-image no-margins">
 									<figure class="portable-infobox-image-wrapper">
 										<a href="http://image.jpg" class="image image-thumbnail" title="image alt">
-											<img src="http://image.jpg" class="portable-infobox-image" alt="image alt" data-image-key="" data-image-name=""/>
+											<img src="http://image.jpg" class="portable-infobox-image" alt="image alt" width="" height="" data-image-key="" data-image-name=""/>
 										</a>
 										<figcaption class="portable-infobox-item-margins portable-infobox-image-caption">Lorem ipsum dolor</figcaption>
 									</figure>
@@ -159,7 +159,9 @@ class PortableInfoboxRenderServiceTest extends PHPUnit_Framework_TestCase {
 						'type' => 'image',
 						'data' => [
 							'alt' => 'image alt',
-							'value' => 'http://image.jpg'
+							'value' => 'http://image.jpg',
+							'width' => 55,
+							'height' => 77
 						]
 					],
 					[
@@ -177,7 +179,7 @@ class PortableInfoboxRenderServiceTest extends PHPUnit_Framework_TestCase {
 								<div class="portable-infobox-item item-type-image no-margins">
 									<figure class="portable-infobox-image-wrapper">
 										<a href="" class="image image-thumbnail" title="image alt">
-											<img src="http://image.jpg" class="portable-infobox-image" alt="image alt" data-image-key="" data-image-name=""/>
+											<img src="http://image.jpg" class="portable-infobox-image" alt="image alt" width="55" height="77" data-image-key="" data-image-name=""/>
 										</a>
 									</figure>
 								</div>
