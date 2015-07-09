@@ -84,9 +84,9 @@ foreach ( $allRows as $row ) {
 	}
 
 	// Set editor preference to VE
-	$user->setOption( PREFERENCE_EDITOR, EditorPreference::OPTION_EDITOR_VISUAL );
+	$user->setGlobalPreference( PREFERENCE_EDITOR, EditorPreference::OPTION_EDITOR_VISUAL );
 	// Set option that flags that a user should see an orientation dialog when loading VE
-	$user->setOption( 'showVisualEditorTransitionDialog', 1 );
+	$user->setGlobalPreference( 'showVisualEditorTransitionDialog', 1 );
 	$output .= ' editor preference set to VisualEditor';
 
 	// Uncomment below before executing, to actually make changes to user settings

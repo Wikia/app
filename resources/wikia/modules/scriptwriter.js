@@ -37,11 +37,6 @@ define('wikia.scriptwriter', [
 		queue = [],
 		loading = false; // load library only once
 
-	function psBeforeWrite(str) {
-		log(['psBeforeWrite', str], 'trace_l3', logGroup);
-		return str.replace(/<\/embed>/gi, '');
-	}
-
 	function gwFlushLoadHandlersAndCall(callback) {
 		return function () {
 			win.ghostwriter.flushloadhandlers();
@@ -68,10 +63,13 @@ define('wikia.scriptwriter', [
 			win.postscribe(
 				params.element,
 				params.html,
-				{beforeWrite: psBeforeWrite, done: params.callback}
+				{
+					autoFix: false,
+					done: params.callback
+				}
 			);
 		} else {
-			var text = 'document.write(' + JSON.stringify(params.html) + ');';
+			var text = params.gwScriptText || 'document.write(' + JSON.stringify(params.html) + ');';
 			win.ghostwriter(
 				params.element,
 				{
@@ -138,9 +136,10 @@ define('wikia.scriptwriter', [
 	 * Queue an HTML injection and load the proper library
 	 *
 	 * @param {Object}      params
-	 * @param {HTMLElement} params.element  Element to inject HTML to
-	 * @param {string}      params.html     HTML to inject
-	 * @param {Function}    params.callback Function to call when done
+	 * @param {HTMLElement} params.element        Element to inject HTML to
+	 * @param {string}      params.html           HTML to inject
+	 * @param {string}      [params.gwScriptText] Script to inject (used directly by ghostwriter)
+	 * @param {Function}    params.callback       Function to call when done
 	 */
 	function queueHtmlInjection(params) {
 		log(['queueHtmlInjection', params], 'debug', logGroup);
@@ -197,7 +196,8 @@ define('wikia.scriptwriter', [
 	function injectScriptByText(elementOrElementId, text, callback) {
 		queueHtmlInjection({
 			element: getElement(elementOrElementId),
-			html: '<script>' + text + '</script>',
+			html: '<script src="data:text/javascript,' + encodeURIComponent(text) + '"></script>',
+			gwScriptText: text, // optimization for GhostWriter
 			callback: callback || noop
 		});
 	}

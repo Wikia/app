@@ -133,7 +133,7 @@ function smwfNMGetJSLanguageScripts( &$pathlng, &$userpathlng ) {
 	// user language file
 	$lng = '/scripts/Language/SMW_NMLanguage';
 	if ( isset( $wgUser ) ) {
-		$lng .= "User" . ucfirst( $wgUser->getOption( 'language' ) ) . '.js';
+		$lng .= "User" . ucfirst( $wgUser->getGlobalPreference( 'language' ) ) . '.js';
 		if ( file_exists( $smwgNMIP . $lng ) ) {
 			$userpathlng = $smwgNMScriptPath . $lng;
 		} else {

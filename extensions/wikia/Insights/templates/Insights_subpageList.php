@@ -33,6 +33,9 @@
 				<table class="insights-list" data-type="<?= Sanitizer::encodeAttribute( $subpage ) ?>">
 					<tr>
 						<th class="insights-list-header insights-list-first-column"><?= wfMessage( 'insights-list-header-page' )->escaped() ?></th>
+						<?php if ( $data['display']['altaction'] ) : ?>
+							<th class="insights-list-header"><?= wfMessage( "insights-list-header-altaction" )->escaped() ?></th>
+						<?php endif; ?>
 						<?php if ( $data['display']['pageviews'] ) : ?>
 							<th class="insights-list-header insights-list-header-pageviews"><?= wfMessage( 'insights-list-header-pageviews' )->escaped() ?></th>
 						<?php endif; ?>
@@ -61,6 +64,13 @@
 									</p>
 								<?php endif; ?>
 							</td>
+							<?php if ( isset( $item['altaction'] ) ) : ?>
+							<td class="insights-list-cell">
+								<a class="wikia-button" href="<?= $item['altaction']['url'] ?>">
+									<?= wfMessage( $item['altaction']['label'] )->escaped() ?>
+								</a>
+							</td>
+							<?php endif; ?>
 							<?php if ( $data['display']['pageviews'] ) : ?>
 								<td class="insights-list-item-pageviews insights-list-cell">
 									<?= $wg->Lang->formatNum( $item['metadata'][$metadata] ); ?>

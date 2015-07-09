@@ -255,7 +255,7 @@ class BodyController extends WikiaController {
 			$page_owner = User::newFromName($wgTitle->getText());
 
 			if($page_owner) {
-				if ( !$page_owner->getOption('hidefollowedpages') ) {
+				if ( !$page_owner->getGlobalPreference('hidefollowedpages') ) {
 					$railModuleList[1101] = array('FollowedPages', 'Index', null);
 				}
 

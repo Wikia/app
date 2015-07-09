@@ -110,7 +110,7 @@ class EditPageLayoutHelper {
 		if ( $user->isLoggedIn() ) {
 			global $wgRTEDisablePreferencesChange;
 			$wgRTEDisablePreferencesChange = true;
-			$this->addJsVariable( 'wgEditPageWideSourceMode', (bool)$user->getOption( 'editwidth' ) );
+			$this->addJsVariable( 'wgEditPageWideSourceMode', (bool)$user->getGlobalPreference( 'editwidth' ) );
 			unset( $wgRTEDisablePreferencesChange );
 		}
 
@@ -173,10 +173,11 @@ class EditPageLayoutHelper {
 	static public function isCodePage( Title $articleTitle ) {
 		$namespace = $articleTitle->getNamespace();
 
-		return $articleTitle->isCssOrJsPage()
-				|| $articleTitle->isCssJsSubpage()
-				// Lua module
-				|| $namespace === NS_MODULE;
+		return ( $articleTitle->isCssOrJsPage()
+			|| $articleTitle->isCssJsSubpage()
+			|| $namespace === NS_MODULE
+			|| self::isInfoboxTemplate( $articleTitle )
+		);
 	}
 
 	/**
@@ -191,6 +192,17 @@ class EditPageLayoutHelper {
 		return self::isCodePage( $articleTitle ) && $wgEnableEditorSyntaxHighlighting;
 	}
 
+	static public function isInfoboxTemplate( Title $title ) {
+		$namespace = $title->getNamespace();
+
+		if ( $namespace === NS_TEMPLATE && class_exists( 'TemplateClassificationController' ) ) {
+			$tc = new TemplateClassificationController( $title );
+			return $tc->isType( $tc::TEMPLATE_INFOBOX ) || TemplateDraftHelper::isTitleDraft( $title );
+		}
+
+		return false;
+	}
+
 	/**
 	 * Check if wikitext syntax highlighting is enabled, so
 	 * - $wgEnableEditorSyntaxHighlighting is set to true
@@ -202,7 +214,7 @@ class EditPageLayoutHelper {
 		global $wgEnableEditorSyntaxHighlighting, $wgUser;
 
 		return $wgEnableEditorSyntaxHighlighting
-				&& !$wgUser->getOption( 'disablesyntaxhighlighting' );
+				&& !$wgUser->getGlobalPreference( 'disablesyntaxhighlighting' );
 	}
 
 	/**
@@ -223,6 +235,10 @@ class EditPageLayoutHelper {
 		return !$blacklistedPage;
 	}
 
+	public static function isCodePageWithPreview( Title $title ) {
+		return self::isCodePage( $title ) && self::isInfoboxTemplate( $title );
+	}
+
 	/**
 	 * Prepare variables to init and support edit code pages
 	 *
@@ -237,6 +253,7 @@ class EditPageLayoutHelper {
 		$this->addJsVariable( 'aceScriptsPath', $aceUrlParts['path'] );
 
 		$this->addJsVariable( 'wgEnableCodePageEditor', true );
+		$this->addJsVariable( 'showPagePreview', self::showMobilePreview( $title ));
 
 		if ( $namespace === NS_MODULE ) {
 			$type = 'lua';
@@ -244,6 +261,8 @@ class EditPageLayoutHelper {
 			$type = 'css';
 		} elseif ( $title->isJsPage() || $title->isJsSubpage() ) {
 			$type = 'javascript';
+		} elseif ( self::isInfoboxTemplate( $title ) ) {
+			$type = 'xml';
 		}
 
 		$this->addJsVariable( 'codePageType', $type );

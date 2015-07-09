@@ -1,7 +1,7 @@
 <div class="flags-special-header clearfix">
 	<div class="flags-special-header-content">
 		<h1 class="flags-special-header-content-title">
-			<?= wfMessage( 'flags-special-header-title' )->escaped() ?>
+			<?= wfMessage( 'flags-special-title' )->escaped() ?>
 		</h1>
 		<p class="flags-special-header-content-text">
 			<?= wfMessage( 'flags-special-header-text' )->parse() ?>
@@ -28,7 +28,7 @@
 			</td>
 			<td class="flags-special-list-item-params">
 				<?php
-					$paramsNames = json_decode( $flag['flag_params_names'] );
+					$paramsNames = json_decode( $flag['flag_params_names'], true );
 					if ( is_array( $paramsNames ) ) :
 				?>
 					<?php foreach ( $paramsNames as $name => $description ): ?>

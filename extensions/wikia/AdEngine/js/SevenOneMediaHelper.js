@@ -39,7 +39,7 @@ define('ext.wikia.adEngine.sevenOneMediaHelper', [
 			},
 			'fullbanner2': {
 				SOI_FB2: true,
-				SOI_PB: true,    // powerbanner (728x180)
+				SOI_PB: false,   // powerbanner (728x180)
 				SOI_PD: true,    // pushdown
 				SOI_BB: true,    // billboard
 				SOI_WP: true,    // wallpaper

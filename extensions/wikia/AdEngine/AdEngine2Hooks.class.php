@@ -20,26 +20,12 @@ class AdEngine2Hooks {
 	 * @author Sergey Naumov
 	 */
 	public static function onAfterInitialize( $title, $article, $output, $user, WebRequest $request, $wiki ) {
-		global
-			$wgAdDriverForceLiftiumAd,
-			$wgAdDriverForceOpenXAd,
-			$wgAdDriverForceTurtleAd,
-			$wgAdDriverUseSevenOneMedia,
-			$wgEnableKruxOnMobile,
-			$wgEnableKruxTargeting,
-			$wgLiftiumOnLoad,
+		global $wgAdDriverUseSevenOneMedia,
 			$wgNoExternals,
 			$wgUsePostScribe;
 
+		// TODO: we shouldn't have it in AdEngine - ticket for Platform: PLATFORM-1296
 		$wgNoExternals = $request->getBool( 'noexternals', $wgNoExternals );
-		$wgLiftiumOnLoad = $request->getBool( 'liftiumonload', (bool)$wgLiftiumOnLoad );
-
-		$wgAdDriverForceLiftiumAd = $request->getBool( 'forceliftium', $wgAdDriverForceLiftiumAd );
-		$wgAdDriverForceOpenXAd = $request->getBool( 'forceopenx', $wgAdDriverForceOpenXAd );
-		$wgAdDriverForceTurtleAd = $request->getBool( 'forceturtle', $wgAdDriverForceTurtleAd );
-
-		$wgEnableKruxTargeting = !$wgNoExternals && $wgEnableKruxTargeting;
-		$wgEnableKruxOnMobile = $request->getBool( 'enablekrux', $wgEnableKruxOnMobile && !$wgNoExternals );
 
 		// use PostScribe with 71Media - check scriptwriter.js:35
 		if ( $wgAdDriverUseSevenOneMedia ) {
@@ -59,6 +45,7 @@ class AdEngine2Hooks {
 	public static function onInstantGlobalsGetVariables( array &$vars )
 	{
 		$vars[] = 'wgAdDriverIncontentPlayerSlotCountries';
+		$vars[] = 'wgAdDriverKruxCountries';
 		$vars[] = 'wgAdDriverTurtleCountries';
 		$vars[] = 'wgAdDriverOpenXCountries';
 		$vars[] = 'wgAmazonMatchCountries';

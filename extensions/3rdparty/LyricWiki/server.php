@@ -2379,7 +2379,7 @@ function login($username, $password) {
 				} else {
 					$r = 0;
 				}
-				$u->setOption( 'rememberpassword', $r );
+				$u->setGlobalPreference( 'rememberpassword', $r );
 				$wgAuth->updateUser( $u );
 				$wgUser = $u;
 				$wgUser->setCookies();

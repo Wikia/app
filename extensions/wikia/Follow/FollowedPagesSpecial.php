@@ -27,7 +27,7 @@ class FollowedPages extends SpecialPage {
 
 		if ($wgRequest->wasPosted()) {
 			if( ($wgUser->getId() != 0) && ($wgRequest->getVal( "show_followed", 0) == 1) ) {
-				$wgUser->setOption( "hidefollowedpages", false );
+				$wgUser->setGlobalPreference( "hidefollowedpages", false );
 				$wgUser->saveSettings();
 			}
 		}
@@ -44,7 +44,7 @@ class FollowedPages extends SpecialPage {
 
 		$user = $wgUser;
 		$is_hide = false;
-		if ( $user->getOption('hidefollowedpages') ) {
+		if ( $user->getGlobalPreference('hidefollowedpages') ) {
 			$is_hide = true;
 			if( $user->getId() != $wgUser->getId() ) {
 				$wgOut->addHTML( wfMsgExt( 'wikiafollowedpages-special-hidden', array( 'parse' ), $user->getName ) );

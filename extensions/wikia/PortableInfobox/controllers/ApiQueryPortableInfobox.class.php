@@ -23,7 +23,7 @@ class ApiQueryPortableInfobox extends ApiQueryBase {
 		 * @var Article $article
 		 */
 		foreach ( $articles as $id => $article ) {
-			$d = $article->getParserOutput()->getProperty( PortableInfoboxParserTagController::INFOBOXES_PROPERTY_NAME );
+			$d = $article->getParserOutput()->getProperty( PortableInfoboxDataService::INFOBOXES_PROPERTY_NAME );
 			if ( is_array( $d ) ) {
 
 				$inf = [ ];

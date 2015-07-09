@@ -44,14 +44,12 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 			LEFT_SKYSCRAPER_2:       'oneColumn',
 			LEFT_SKYSCRAPER_3:       'oneColumn',
 			INCONTENT_BOXAD_1:       'oneColumn',
-			INCONTENT_PLAYER:        'oneColumn',
-			INVISIBLE_SKIN:          'noSkins'
+			INCONTENT_PLAYER:        'oneColumn'
 		},
 		mediaQueriesToCheck = {
 			twoColumns: 'screen and (min-width: 1024px)',
 			oneColumn: 'screen and (max-width: 1023px)',
-			noTopButton: 'screen and (max-width: 1063px)',
-			noSkins: 'screen and (max-width: 1260px)'
+			noTopButton: 'screen and (max-width: 1063px)'
 		},
 		mediaQueriesMet,
 		matchMedia;

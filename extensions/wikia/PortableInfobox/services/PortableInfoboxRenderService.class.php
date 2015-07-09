@@ -4,12 +4,6 @@ class PortableInfoboxRenderService extends WikiaService {
 	const LOGGER_LABEL = 'portable-infobox-render-not-supported-type';
 	const DESKTOP_THUMBNAIL_WIDTH = 270;
 	const MOBILE_THUMBNAIL_WIDTH = 360;
-	// TODO: https://wikia-inc.atlassian.net/browse/MAIN-4601 - request for the missing vignette feature which will
-	// allow us to remove THUMBNAIL_HEIGHT from the code. Currently we need this value cause it it impossible to get
-	// vignette thumbnail without upsampling only specifying width. The height need to be big enough so each image width
-	// will reach our thumbnail width based on its aspect ratio
-
-	const THUMBNAIL_HEIGHT = 1000;
 	const MOBILE_TEMPLATE_POSTFIX = '-mobile';
 
 	private $templates = [
@@ -20,11 +14,7 @@ class PortableInfoboxRenderService extends WikiaService {
 		'image-mobile' => 'PortableInfoboxItemImageMobile.mustache',
 		'data' => 'PortableInfoboxItemData.mustache',
 		'group' => 'PortableInfoboxItemGroup.mustache',
-		'comparison' => 'PortableInfoboxItemComparison.mustache',
-		'comparison-set' => 'PortableInfoboxItemComparisonSet.mustache',
-		'comparison-set-header' => 'PortableInfoboxItemComparisonSetHeader.mustache',
-		'comparison-set-item' => 'PortableInfoboxItemComparisonSetItem.mustache',
-		'footer' => 'PortableInfoboxItemFooter.mustache'
+		'navigation' => 'PortableInfoboxItemNavigation.mustache'
 	];
 	private $templateEngine;
 
@@ -48,14 +38,11 @@ class PortableInfoboxRenderService extends WikiaService {
 			$type = $item[ 'type' ];
 
 			switch ( $type ) {
-				case 'comparison':
-					$infoboxHtmlContent .= $this->renderComparisonItem( $data['value'] );
-					break;
 				case 'group':
 					$infoboxHtmlContent .= $this->renderGroup( $data );
 					break;
-				case 'footer':
-					$infoboxHtmlContent .= $this->renderItem( 'footer', $data );
+				case 'navigation':
+					$infoboxHtmlContent .= $this->renderItem( 'navigation', $data );
 					break;
 				default:
 					if ( $this->validateType( $type ) ) {
@@ -71,49 +58,6 @@ class PortableInfoboxRenderService extends WikiaService {
 		}
 
 		wfProfileOut( __METHOD__ );
-
-		return $output;
-	}
-
-	/**
-	 * renders comparison infobox component
-	 *
-	 * @param array $comparisonData
-	 * @return string - comparison HTML
-	 */
-	private function renderComparisonItem( $comparisonData )
-	{
-		$comparisonHTMLContent = '';
-
-		foreach ($comparisonData as $set) {
-			$setHTMLContent = '';
-
-			foreach ($set['data']['value'] as $item) {
-				$type = $item['type'];
-
-				if ($type === 'header') {
-					$setHTMLContent .= $this->renderItem(
-						'comparison-set-header',
-						['content' => $this->renderItem($type, $item['data'])]
-					);
-				} else {
-					if ($this->validateType($type)) {
-						$setHTMLContent .= $this->renderItem(
-							'comparison-set-item',
-							['content' => $this->renderItem($type, $item['data'])]
-						);
-					}
-				}
-			}
-
-			$comparisonHTMLContent .= $this->renderItem( 'comparison-set', [ 'content' => $setHTMLContent ] );
-		}
-
-		if ( !empty( $comparisonHTMLContent ) ) {
-			$output = $this->renderItem('comparison', [ 'content' => $comparisonHTMLContent ] );
-		} else {
-			$output = '';
-		}
 
 		return $output;
 	}
@@ -151,7 +95,7 @@ class PortableInfoboxRenderService extends WikiaService {
 		//TODO: with validated the performance of render Service and in the next phase we want to refactor it (make
 		// it modular) While doing this we also need to move this logic to appropriate image render class
 		if ( $type === 'image' ) {
-			$data[ 'thumbnail' ] = $this->getThumbnailUrl( $data );
+			$data[ 'thumbnail' ] = $this->getThumbnailUrl( $data['name'] );
 			$data[ 'key' ] = urlencode( $data[ 'key' ] );
 
 			if ( $this->isWikiaMobile() ) {
@@ -165,54 +109,21 @@ class PortableInfoboxRenderService extends WikiaService {
 	}
 
 	/**
-	 * @desc returns the thumbnail url from
-	 * Vignette or from old service
-	 * @param string $url
+	 * @desc returns the thumbnail url
+	 * @param string $title
 	 * @return string thumbnail url
 	 */
-	protected function getThumbnailUrl( $data ) {
-		$url = $data['url'];
-		// TODO: remove 'if' condition when unified thumb method
-		// will be implemented: https://wikia­inc.atlassian.net/browse/PLATFORM­1237
-		if ( VignetteRequest::isVignetteUrl( $url ) ) {
-			return $this->createVignetteThumbnail( $url );
-		} else {
-			return $this->createOldThumbnail( $data['name'] );
-		}
-	}
-
-	/**
-	 * @param $url
-	 * @return string
-	 */
-	private function createVignetteThumbnail( $url ) {
-		return VignetteRequest::fromUrl( $url )
-			->thumbnailDown()
-			->width( $this->isWikiaMobile() ?
-				self::MOBILE_THUMBNAIL_WIDTH :
-				self::DESKTOP_THUMBNAIL_WIDTH
-			)
-			->height( self::THUMBNAIL_HEIGHT )
-			->url();
-	}
-
-	/**
-	 * @desc If the image is served from an old
-	 * service we have to again obtain file to
-	 * call the createThumb function
-	 * @param $title
-	 * @return mixed
-	 */
-	private function createOldThumbnail( $title )
-	{
+	protected function getThumbnailUrl( $title ) {
 		$file = \WikiaFileHelper::getFileFromTitle( $title );
+
 		if ( $file ) {
 			return $file->createThumb(
-				F::app()->checkSkin( 'wikiamobile' ) ?
+				$this->isWikiaMobile() ?
 					self::MOBILE_THUMBNAIL_WIDTH :
 					self::DESKTOP_THUMBNAIL_WIDTH
 			);
 		}
+
 		return '';
 	}
 
