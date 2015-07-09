@@ -99,8 +99,8 @@ class PortableInfoboxRenderService extends WikiaService {
 			$thumbnail = $this->getThumbnail( $data['name'] );
 
 			if ( $thumbnail ) {
-				$data[ 'height' ] = $thumbnail->height;
-				$data[ 'width' ] = $thumbnail->width;
+				$data[ 'height' ] = $thumbnail->getHeight();
+				$data[ 'width' ] = $thumbnail->getWidth();
 				$data[ 'thumbnail' ] = $thumbnail->getUrl();
 			}
 

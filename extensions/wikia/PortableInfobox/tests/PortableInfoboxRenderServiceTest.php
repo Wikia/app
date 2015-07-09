@@ -1,14 +1,32 @@
 <?php
 
-class PortableInfoboxRenderServiceTest extends PHPUnit_Framework_TestCase {
+class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 	private $infoboxRenderService;
 
 	protected function setUp() {
 		$this->setupFile = dirname( __FILE__ ) . '/../PortableInfobox.setup.php';
 		parent::setUp();
 
-		$mock = $this->getMock( 'PortableInfoboxRenderService', [ 'getThumbnailUrl' ] );
-		$mock->expects( $this->any() )->method( 'getThumbnailUrl' )->will( $this->returnValue( 'http://image.jpg' ) );
+		$mockThumbnailImage = $this->getMockBuilder( 'ThumbnailImage' )
+			->setMethods( [ 'getUrl', 'getWidth', 'getHeight' ] )
+			->getMock();
+
+		$mock = $this->getMockBuilder( 'PortableInfoboxRenderService' )
+			->setMethods( [ 'getThumbnail' ] )
+			->getMock();
+
+		$mock->expects( $this->any() )
+			->method( 'getThumbnail' )
+			->will( $this->returnValue($mockThumbnailImage));
+		$mockThumbnailImage->expects( $this->any() )
+			->method( 'getUrl' )
+			->will( $this->returnValue('http://image.jpg'));
+		$mockThumbnailImage->expects( $this->any() )
+			->method( 'getWidth' )
+			->will( $this->returnValue(400));
+		$mockThumbnailImage->expects( $this->any() )
+			->method( 'getHeight' )
+			->will( $this->returnValue(200));
 
 		$this->infoboxRenderService = $mock;
 	}
@@ -107,7 +125,7 @@ class PortableInfoboxRenderServiceTest extends PHPUnit_Framework_TestCase {
 								<div class="portable-infobox-item item-type-image no-margins">
 									<figure class="portable-infobox-image-wrapper">
 										<a href="http://image.jpg" class="image image-thumbnail" title="image alt">
-											<img src="http://image.jpg" class="portable-infobox-image" alt="image alt" width="" height="" data-image-key="" data-image-name=""/>
+											<img src="http://image.jpg" class="portable-infobox-image" alt="image alt" width="400" height="200" data-image-key="" data-image-name=""/>
 										</a>
 										<figcaption class="portable-infobox-item-margins portable-infobox-image-caption">Lorem ipsum dolor</figcaption>
 									</figure>
@@ -160,8 +178,6 @@ class PortableInfoboxRenderServiceTest extends PHPUnit_Framework_TestCase {
 						'data' => [
 							'alt' => 'image alt',
 							'value' => 'http://image.jpg',
-							'width' => 55,
-							'height' => 77
 						]
 					],
 					[
@@ -179,7 +195,7 @@ class PortableInfoboxRenderServiceTest extends PHPUnit_Framework_TestCase {
 								<div class="portable-infobox-item item-type-image no-margins">
 									<figure class="portable-infobox-image-wrapper">
 										<a href="" class="image image-thumbnail" title="image alt">
-											<img src="http://image.jpg" class="portable-infobox-image" alt="image alt" width="55" height="77" data-image-key="" data-image-name=""/>
+											<img src="http://image.jpg" class="portable-infobox-image" alt="image alt" width="400" height="200" data-image-key="" data-image-name=""/>
 										</a>
 									</figure>
 								</div>
