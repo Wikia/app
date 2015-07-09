@@ -348,8 +348,4 @@ END;
 		$wgOut->addExtensionStyle( $sfgScriptPath . "/skins/SemanticForms.css" );
 		$wgOut->addHTML( $text );
 	}
-
-	protected function getGroupName() {
-		return 'sf_group';
-	}
 }

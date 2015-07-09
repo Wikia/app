@@ -217,15 +217,13 @@ class SFFormLinker {
 				}
 				$params['user_id'] = $userID;
 				$params['page_text'] = $data_text;
-				$job = new SFCreatePageJob( $title, $params );
 
-				$jobs = array( $job );
-				if ( class_exists( 'JobQueueGroup' ) ) {
-					JobQueueGroup::singleton()->push( $jobs );
-				} else {
-					// MW <= 1.20
-					Job::batchInsert( $jobs );
-				}
+				// wikia change start - jobqueue migration
+				$task = new \Wikia\Tasks\Tasks\JobWrapperTask();
+				$task->call( 'createPage', $title, $params );
+				$task->queue();
+				// wikia change end
+
 				return true;
 			}
 		}

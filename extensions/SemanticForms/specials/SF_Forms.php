@@ -25,10 +25,6 @@ class SFForms extends SpecialPage {
 		$rep = new FormsPage();
 		return $rep->execute( $query );
 	}
-
-	protected function getGroupName() {
-		return 'pages';
-	}
 }
 
 /**

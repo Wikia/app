@@ -98,9 +98,10 @@ $GLOBALS['wgExtensionFunctions'][] = function() {
 
 $GLOBALS['wgHooks']['LinkEnd'][] = 'SFFormLinker::setBrokenLink';
 // 'SkinTemplateNavigation' replaced 'SkinTemplateTabs' in the Vector skin
-$GLOBALS['wgHooks']['SkinTemplateTabs'][] = 'SFFormEditAction::displayTab';
+// Wikia change -- disable SkinTemplateTabs hooks
+// $GLOBALS['wgHooks']['SkinTemplateTabs'][] = 'SFFormEditAction::displayTab';
 $GLOBALS['wgHooks']['SkinTemplateNavigation'][] = 'SFFormEditAction::displayTab2';
-$GLOBALS['wgHooks']['SkinTemplateTabs'][] = 'SFHelperFormAction::displayTab';
+// $GLOBALS['wgHooks']['SkinTemplateTabs'][] = 'SFHelperFormAction::displayTab';
 $GLOBALS['wgHooks']['SkinTemplateNavigation'][] = 'SFHelperFormAction::displayTab2';
 $GLOBALS['wgHooks']['smwInitProperties'][] = 'SFUtils::initProperties';
 $GLOBALS['wgHooks']['ArticlePurge'][] = 'SFFormUtils::purgeCache';
@@ -131,26 +132,36 @@ $GLOBALS['wgAPIModules']['sfautoedit'] = 'SFAutoeditAPI';
 // register all special pages and other classes
 $GLOBALS['wgSpecialPages']['Forms'] = 'SFForms';
 $GLOBALS['wgAutoloadClasses']['SFForms'] = __DIR__ . '/specials/SF_Forms.php';
+$GLOBALS['wgSpecialPageGroups']['Forms'] = 'pages';
 $GLOBALS['wgSpecialPages']['CreateForm'] = 'SFCreateForm';
 $GLOBALS['wgAutoloadClasses']['SFCreateForm'] = __DIR__ . '/specials/SF_CreateForm.php';
+$GLOBALS['wgSpecialPageGroups']['CreateForm'] = 'sf_group';
 $GLOBALS['wgSpecialPages']['Templates'] = 'SFTemplates';
 $GLOBALS['wgAutoloadClasses']['SFTemplates'] = __DIR__ . '/specials/SF_Templates.php';
+$GLOBALS['wgSpecialPageGroups']['Templates'] = 'pages';
 $GLOBALS['wgSpecialPages']['CreateTemplate'] = 'SFCreateTemplate';
 $GLOBALS['wgAutoloadClasses']['SFCreateTemplate'] = __DIR__ . '/specials/SF_CreateTemplate.php';
+$GLOBALS['wgSpecialPageGroups']['CreateTemplate'] = 'sf_group';
 if ( defined( 'SMW_VERSION' ) ) {
 	$GLOBALS['wgSpecialPages']['CreateProperty'] = 'SFCreateProperty';
 	$GLOBALS['wgAutoloadClasses']['SFCreateProperty'] = __DIR__ . '/specials/SF_CreateProperty.php';
+	$GLOBALS['wgSpecialPageGroups']['CreateProperty'] = 'sf_group';
 }
 $GLOBALS['wgSpecialPages']['CreateClass'] = 'SFCreateClass';
 $GLOBALS['wgAutoloadClasses']['SFCreateClass'] = __DIR__ . '/specials/SF_CreateClass.php';
+$GLOBALS['wgSpecialPageGroups']['CreateClass'] = 'sf_group';
 $GLOBALS['wgSpecialPages']['CreateCategory'] = 'SFCreateCategory';
 $GLOBALS['wgAutoloadClasses']['SFCreateCategory'] = __DIR__ . '/specials/SF_CreateCategory.php';
+$GLOBALS['wgSpecialPageGroups']['CreateCategory'] = 'sf_group';
 $GLOBALS['wgSpecialPages']['FormStart'] = 'SFFormStart';
 $GLOBALS['wgAutoloadClasses']['SFFormStart'] = __DIR__ . '/specials/SF_FormStart.php';
+$GLOBALS['wgSpecialPageGroups']['FormStart'] = 'sf_group';
 $GLOBALS['wgSpecialPages']['FormEdit'] = 'SFFormEdit';
 $GLOBALS['wgAutoloadClasses']['SFFormEdit'] = __DIR__ . '/specials/SF_FormEdit.php';
+$GLOBALS['wgSpecialPageGroups']['FormEdit'] = 'sf_group';
 $GLOBALS['wgSpecialPages']['RunQuery'] = 'SFRunQuery';
 $GLOBALS['wgAutoloadClasses']['SFRunQuery'] = __DIR__ . '/specials/SF_RunQuery.php';
+$GLOBALS['wgSpecialPageGroups']['RunQuery'] = 'sf_group';
 $GLOBALS['wgSpecialPages']['UploadWindow'] = 'SFUploadWindow';
 $GLOBALS['wgAutoloadClasses']['SFUploadForm'] = __DIR__ . '/specials/SF_UploadWindow.php';
 $GLOBALS['wgAutoloadClasses']['SFUploadSourceField'] = __DIR__ . '/specials/SF_UploadWindow.php';
