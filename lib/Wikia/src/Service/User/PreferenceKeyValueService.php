@@ -28,7 +28,7 @@ class PreferenceKeyValueService implements PreferenceService {
 
 	/**
 	 * @var PreferencePersistence
-     */
+	 */
 	private $persistenceAdapter;
 	const PROFILE_EVENT = \Transaction::EVENT_USER_PREFERENCES;
 
