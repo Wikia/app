@@ -1,9 +1,10 @@
 <div class="flags-special-header clearfix">
 	<div class="flags-special-header-content">
+		<?= wfMessage('flags-special-video')->parse() ?>
 		<h1 class="flags-special-header-content-title">
-			<?= wfMessage( 'flags-special-header-title' )->escaped() ?>
+			<?= wfMessage( 'flags-special-title' )->escaped() ?>
 		</h1>
-		<p class="flags-special-header-content-text">
+			<p class="flags-special-header-content-text">
 			<?= wfMessage( 'flags-special-header-text' )->parse() ?>
 		</p>
 	</div>
