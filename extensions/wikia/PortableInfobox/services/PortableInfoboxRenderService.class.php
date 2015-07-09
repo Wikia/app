@@ -102,6 +102,8 @@ class PortableInfoboxRenderService extends WikiaService {
 				$data[ 'height' ] = $thumbnail->getHeight();
 				$data[ 'width' ] = $thumbnail->getWidth();
 				$data[ 'thumbnail' ] = $thumbnail->getUrl();
+			} else {
+				$data[ 'thumbnail' ] = '';
 			}
 
 			if ( $this->isWikiaMobile() ) {

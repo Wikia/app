@@ -17,16 +17,16 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 
 		$mock->expects( $this->any() )
 			->method( 'getThumbnail' )
-			->will( $this->returnValue($mockThumbnailImage));
+			->will( $this->returnValue( $mockThumbnailImage ) );
 		$mockThumbnailImage->expects( $this->any() )
 			->method( 'getUrl' )
-			->will( $this->returnValue('http://image.jpg'));
+			->will( $this->returnValue( 'http://image.jpg' ) );
 		$mockThumbnailImage->expects( $this->any() )
 			->method( 'getWidth' )
-			->will( $this->returnValue(400));
+			->will( $this->returnValue( 400 ) );
 		$mockThumbnailImage->expects( $this->any() )
 			->method( 'getHeight' )
-			->will( $this->returnValue(200));
+			->will( $this->returnValue( 200 ) );
 
 		$this->infoboxRenderService = $mock;
 	}
@@ -177,7 +177,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 						'type' => 'image',
 						'data' => [
 							'alt' => 'image alt',
-							'value' => 'http://image.jpg',
+							'value' => 'http://image.jpg'
 						]
 					],
 					[
