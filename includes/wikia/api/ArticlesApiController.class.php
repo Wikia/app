@@ -1361,6 +1361,15 @@ class ArticlesApiController extends WikiaApiController {
 		if ( !empty( $wikiId ) ) {
 			$mainPageTitle = WikiFactory::getVarValueByName( 'wgSitename', $wikiId );
 			$mainPageId = GlobalTitle::newFromText($mainPageTitle, NS_MAIN, $wikiId)->getArticleID();
+			if ( empty( $mainPageId ) ) {
+				$db = WikiFactory::IDtoDB($wikiId);
+				$domain = WikiFactory::DBtoDomain($db);
+				$url = 'http://' . $domain . '/api.php?action=query&meta=siteinfo&siprop=general&format=json';
+				$json = file_get_contents($url);
+				$pageData = json_decode($json);
+				$mainPageTitle = $pageData->query->general->mainpage;
+				$mainPageId = GlobalTitle::newFromText($mainPageTitle, NS_MAIN, $wikiId)->getArticleID();
+			}
 			$this->response->setVal('mainPageArticleId', $mainPageId);
 		}
 	}
