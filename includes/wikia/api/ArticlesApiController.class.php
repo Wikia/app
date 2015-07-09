@@ -1058,7 +1058,7 @@ class ArticlesApiController extends WikiaApiController {
 
 	/**
 	 * Get some or all of the article top level sections as an array
-	 * @param mixed $sectionsToGet Array of section numbers or the string "all"
+	 * @param mixed $sectionsToGet Array of section numbers (could need URL decoding) or the string "all"
 	 * @param ParserOutput $parsedArticle
 	 * @param Article $article
 	 * @param Title $title
@@ -1070,14 +1070,20 @@ class ArticlesApiController extends WikiaApiController {
 		$articleAsWikiText = $article->getContent();
 		$parsedSections = $parsedArticle->getSections();
 
+		// decode strings like "%5B1,2,3%5D" or "[1,2,3]"
+		if ( is_string( $sectionsToGet ) ) {
+			$sectionsToGet = json_decode( urldecode( $sectionsToGet ) );
+		}
+		// convert "all" or ["all"] to array of numbers
 		if ( $sectionsToGet === 'all' || in_array( 'all', $sectionsToGet ) ) {
 			$sectionsToGet = range( 0, count( $parsedArticle->getSections() ) );
 		}
+		// should be an array by this point
 		if ( is_array( $sectionsToGet ) ) {
 			foreach ( $sectionsToGet as $section ) {
 				// Only retrieve top level sections.
 				// $parsedSections doesn't include section 0, so subtract 1
-				$isTopLevel = $parsedSections[$section - 1]['toclevel'] === 1;
+				$isTopLevel = $section > 0 && $parsedSections[$section - 1]['toclevel'] === 1;
 				if ( $section == 0 || $isTopLevel ) {
 					$content[] = $this->getArticleSection( $articleAsWikiText, $title, $section );
 				}
@@ -1097,7 +1103,7 @@ class ArticlesApiController extends WikiaApiController {
 	 * @todo Supposedly getSection works with HTML, but I could only get it to work with wikitext
 	 */
 	private function getArticleSection( $articleAsWikiText, $title, $section ) {
-		/** @var $wgParser Parser */
+		/** @var Parser $wgParser */
 		global $wgParser;
 
 		$wikitext = $wgParser->getSection( $articleAsWikiText, $section );
