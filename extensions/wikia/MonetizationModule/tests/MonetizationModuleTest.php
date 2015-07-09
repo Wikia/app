@@ -3,7 +3,6 @@
 class MonetizationModuleTest extends WikiaBaseTest {
 
 	const TEST_CITY_ID = 79860;
-	const TEST_ARTICLE = 'test 123';
 
 	protected $orgSkin;
 
@@ -25,7 +24,6 @@ class MonetizationModuleTest extends WikiaBaseTest {
 			->method( 'delete' );
 
 		$this->mockGlobalVariable( 'wgMemc', $mock_cache );
-
 		$this->mockGlobalVariable( 'wgCityId', self::TEST_CITY_ID );
 	}
 
@@ -116,7 +114,6 @@ class MonetizationModuleTest extends WikiaBaseTest {
 	 */
 	public function testGetWikiVertical( $verticalId, $exp ) {
 		$this->mockGlobalVariable( 'wgCityId', self::TEST_CITY_ID );
-
 		$this->mockStaticMethod( 'WikiFactoryHub', 'getVerticalId', $verticalId );
 
 		$helper = new MonetizationModuleHelper();
