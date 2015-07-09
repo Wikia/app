@@ -247,7 +247,8 @@
         ['set', 'dimension17', window.wgWikiVertical],                         // Vertical
         ['set', 'dimension18', window.wgWikiCategories.join(',')],             // Categories
         ['set', 'dimension19', window.wgArticleType],                          // ArticleType
-        ['set', 'dimension20', window.wgABPerformanceTest || 'not set']        // Performance A/B testing
+        ['set', 'dimension20', window.wgABPerformanceTest || 'not set'],       // Performance A/B testing
+        ['set', 'dimension21', String(window.wgArticleId)]                     // ArticleId
     );
 
     /*
@@ -350,6 +351,7 @@
     window.ga('ads.set', 'dimension17', window.wgWikiVertical);                         // Vertical
     window.ga('ads.set', 'dimension18', window.wgWikiCategories.join(','));             // Categories
     window.ga('ads.set', 'dimension19', window.wgArticleType);                          // ArticleType
+    window.ga('ads.set', 'dimension21', String(window.wgArticleId));                    // ArticleId
 
     /**** Include A/B testing status ****/
     if (window.Wikia && window.Wikia.AbTest) {
