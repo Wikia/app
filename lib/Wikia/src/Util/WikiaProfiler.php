@@ -1,21 +1,20 @@
 <?php
 namespace Wikia\Util;
 
-use Wikia\Logger\WikiaLogger;
 use Wikia\Util\Statistics\BernoulliTrial;
 
 /**
  * Trait WikiaProfiler
  *
- * Allows sending profiler info (elapsed time) to a log.
+ * Allows sending profiler info (elapsed time) to a InfluxDB for further processing
+ * and analyzing.
  *
  * Usage:
  *   - call startProfile() and store a timestamp returned by the function
  *   - execute code which needs to be benchmarked
  *   - call endProfile() and pass it a previously stored timestamp
  *
- *  All data will be sent to a log using Wikia\Logger\WikiLogger instance.
- *  A caller function name is added to the data being sent automatically if missing.
+ *  All data will be sent to a InfluxDB using Transactions.
  *
  * @package Wikia\Util
  */
@@ -45,12 +44,12 @@ trait WikiaProfiler {
     }
 
     /**
-     * @param $label - message which will be used in a log
+     * @param $event - name of a event to profile (see: Transaction)
      * @param $start_time - timestamp returned by startProfile()
      * @param array $options - [opt] additional options send in log
      * @param float $sample_rate - [opt] how many % of profile calls will be send (default: 0.01)
      */
-    function endProfile( $label, $start_time, $options=[], $sample_rate=0.01 ) {
+    function endProfile( $event, $start_time, $options=[], $sample_rate=0.01 ) {
         $elapsed = microtime( true ) - $start_time;
 
         if ( !$this->getProfileSampler( $sample_rate )->shouldSample() ) {
@@ -59,10 +58,6 @@ trait WikiaProfiler {
 
         $options['elapsed'] = $elapsed;
 
-        if ( !array_key_exists('function', $options) ) {
-            $callers = debug_backtrace( DEBUG_BACKTRACE_IGNORE_ARGS, 2 );
-            $options['function'] = $callers[1]['function'];
-        }
-        WikiaLogger::instance()->info($label, $options);
+        \Transaction::addEvent( $event, $options );
     }
 }
