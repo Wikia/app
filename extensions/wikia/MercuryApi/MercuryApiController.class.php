@@ -69,15 +69,16 @@ class MercuryApiController extends WikiaController {
 	/**
 	 * @desc returns article details
 	 *
-	 * @param int $articleId
+	 * @param Article $article
 	 *
 	 * @return mixed
 	 */
-	private function getArticleDetails( $articleId ) {
+	private function getArticleDetails( Article $article ) {
+		$articleId = $article->getID();
 		$articleDetails =
 			$this->sendRequest( 'ArticlesApi', 'getDetails', [ 'ids' => $articleId ] )->getData()['items'][$articleId];
 
-		$description = $this->getArticleDescription( $articleId );
+		$description = $this->getArticleDescription( $article );
 
 		$articleDetails['abstract'] = htmlspecialchars( $articleDetails['abstract'] );
 		$articleDetails['description'] = htmlspecialchars( $description );
@@ -90,19 +91,14 @@ class MercuryApiController extends WikiaController {
 	 *
 	 * This is mostly copied from the ArticleMetaDescription extension.
 	 *
-	 * @param int $articleId
+	 * @param Article $article
 	 * @param int $descLength
 	 *
 	 * @return string
+	 * @throws NotFoundApiException
 	 * @throws WikiaException
 	 */
-	private function getArticleDescription( $articleId, $descLength = 100 ) {
-		$article = Article::newFromID( $articleId );
-
-		if ( !( $article instanceof Article ) ) {
-			throw new NotFoundApiException();
-		}
-
+	private function getArticleDescription( $article, $descLength = 100 ) {
 		$title = $article->getTitle();
 		$sMessage = null;
 
@@ -318,21 +314,6 @@ class MercuryApiController extends WikiaController {
 	}
 
 	/**
-	 * @desc Returns redirected article or null
-	 *
-	 * @param $title
-	 *
-	 * @return mixed
-	 */
-	private function getRedirectedTitleFromTitle( $title ) {
-		if ( $title->isRedirect() ) {
-			return Article::newFromID( $title->getArticleId() )->getRedirectTarget();
-		}
-
-		return null;
-	}
-
-	/**
 	 * @throws NotFoundApiException
 	 * @throws BadRequestApiException
 	 */
@@ -341,15 +322,19 @@ class MercuryApiController extends WikiaController {
 
 		try {
 			$title = $this->getTitleFromRequest();
-			$redirectedTitle = $this->getRedirectedTitleFromTitle( $title );
+			$articleId = $title->getArticleId();
 
-			if ( $redirectedTitle instanceof Title ) {
+			// getArticle is cached (see the bottom of the method body) so there is no need for additional caching here
+			$article = Article::newFromID( $articleId );
+
+			if ( $title->isRedirect() ) {
+				/* @var Title $title */
+				$title = $article->getRedirectTarget();
+				$article = Article::newFromID( $title->getArticleID() );
 				$data['redirected'] = true;
-				$title = $redirectedTitle;
 			}
 
-			$articleId = $title->getArticleId();
-			$data['details'] = $this->getArticleDetails( $articleId );
+			$data['details'] = $this->getArticleDetails( $article );
 			$data['topContributors'] = $this->getTopContributorsDetails(
 				$this->getTopContributorsPerArticle( $articleId )
 			);
