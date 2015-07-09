@@ -1,7 +1,8 @@
 <?php
 
-namespace Wikia\Service\User;
+namespace Wikia\Service\User\Preferences;
 use Wikia\Domain\User\Preference;
+use Wikia\Persistence\User\Preferences\PreferencePersistence;
 
 class PreferenceKeyValueTest extends \PHPUnit_Framework_TestCase {
 
@@ -11,7 +12,7 @@ class PreferenceKeyValueTest extends \PHPUnit_Framework_TestCase {
 
 	protected function setUp() {
 		$this->testPreference = new Preference( "pref-name", "pref-value" );
-		$this->persistenceMock = $this->getMockBuilder( '\Wikia\Persistence\User\PreferencePersistence' )
+		$this->persistenceMock = $this->getMockBuilder( PreferencePersistence::class )
 			->setMethods( ['save', 'get'] )
 			->disableOriginalConstructor()
 			->disableAutoload()

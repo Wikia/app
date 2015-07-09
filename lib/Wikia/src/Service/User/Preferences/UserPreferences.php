@@ -1,6 +1,6 @@
 <?php
 
-namespace Wikia\Service\User;
+namespace Wikia\Service\User\Preferences;
 
 use Wikia\Domain\User\Preference;
 
@@ -26,10 +26,10 @@ class UserPreferences {
 
 	/**
 	 * @Inject({
-	 *    Wikia\Service\User\PreferenceService::class,
-	 *    Wikia\Service\User\UserPreferences::HIDDEN_PREFS,
-	 *    Wikia\Service\User\UserPreferences::DEFAULT_PREFERENCES,
-	 *    Wikia\Service\User\UserPreferences::FORCE_SAVE_PREFERENCES})
+	 *    Wikia\Service\User\Preferences\PreferenceService::class,
+	 *    Wikia\Service\User\Preferences\UserPreferences::HIDDEN_PREFS,
+	 *    Wikia\Service\User\Preferences\UserPreferences::DEFAULT_PREFERENCES,
+	 *    Wikia\Service\User\Preferences\UserPreferences::FORCE_SAVE_PREFERENCES})
 	 * @param PreferenceService $preferenceService
 	 * @param string[] $hiddenPrefs
 	 * @param string[string] $defaultPrefs

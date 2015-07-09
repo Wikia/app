@@ -18,10 +18,10 @@
  *      - success 200
  *
  */
-namespace Wikia\Service\User;
+namespace Wikia\Service\User\Preferences;
 
 use Wikia\Domain\User\Preference;
-use Wikia\Persistence\User\PreferencePersistence;
+use Wikia\Persistence\User\Preferences\PreferencePersistence;
 
 class PreferenceKeyValueService implements PreferenceService {
 	use \Wikia\Util\WikiaProfiler;

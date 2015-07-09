@@ -1,6 +1,6 @@
 <?php
 
-namespace Wikia\Persistence\User;
+namespace Wikia\Persistence\User\Preferences;
 
 use Wikia\DependencyInjection\InjectorBuilder;
 use Wikia\DependencyInjection\Module;

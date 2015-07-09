@@ -1,6 +1,8 @@
 <?php
 
-namespace Wikia\Persistence\User;
+namespace Wikia\Persistence\User\Preferences;
+
+use Wikia\Domain\User\Preference;
 
 interface PreferencePersistence {
 
@@ -8,7 +10,7 @@ interface PreferencePersistence {
 	 * Save the users preferences.
 	 *
 	 * @param int $userId
-	 * @param Preference[]
+	 * @param Preference[] $preferences
 	 * @return true success, false or exception otherwise
 	 */
 	public function save( $userId, array $preferences );
