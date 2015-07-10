@@ -100,7 +100,7 @@ class UnconvertedInfoboxesPage extends PageQueryPage {
 			->runLoop( $dbr, function( &$nonportableTemplates, $row ) {
 				$title = Title::newFromText( $row->title, NS_TEMPLATE );
 				$contentText = ( new WikiPage( $title ) )->getText();
-				if ( $title !== null && self::isTitleWithNonportableInfobox( $title, $contentText ) ) {
+				if ( $title !== null && self::isTitleWithNonportableInfobox( $title->getText(), $contentText ) ) {
 					$links = $title->getIndirectLinks();
 					$nonportableTemplates[] = [
 						$this->getName(),
