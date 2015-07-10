@@ -130,7 +130,7 @@ class UnconvertedInfoboxesPage extends PageQueryPage {
 	 */
 	public static function isTitleWithNonportableInfobox( $titleText, $contentText ) {
 		// ignore docs pages
-		if ( strpos( $titleText, '/doc' ) ) {
+		if ( stripos( $titleText, '/doc' ) ) {
 			return false;
 		}
 
