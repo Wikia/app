@@ -12,13 +12,15 @@
  * @version 1.0
  */
 
+use Wikia\CreateNewWiki\Starters;
+
 class CreateWiki {
 
 	use \Wikia\Logger\Loggable;
 
 	/* @var $mDBw DatabaseMysql */
 	/* @var $mClusterDB string */
-	private $mName, $mDomain, $mLanguage, $mVertical, $mCategories, $mStarters, $mIP,
+	private $mName, $mDomain, $mLanguage, $mVertical, $mCategories, $mIP,
 		$mPHPbin, $mMYSQLbin, $mMYSQLdump, $mNewWiki, $mFounder,
 		$mLangSubdomain, $mDBw, $mWFSettingVars, $mWFVars,
 		$mDefaultTables, $mAdditionalTables,
@@ -80,27 +82,6 @@ class CreateWiki {
 		$this->mFounderIp = $wgRequest->getIP();
 
 		wfDebugLog( "createwiki", "founder: " . print_r($this->mFounder, true) . "\n", true );
-		/**
-		 * starters map: langcode => database name
-		 *
-		 * "*" is default
-		 */
-		$this->mStarters = array(
-			"*" => array(
-				"*"  => "aastarter",
-				"de" => "destarter",
-				"en" => "starter",
-				"es" => "esstarter",
-				"fi" => "fistarter",
-				"fr" => "starterbeta",
-				"it" => "italianstarter",
-				"ja" => "jastarter",
-				"ko" => "starterko",
-				"nl" => "nlstarter",
-				"pl" => "plstarter",
-				"ru" => "rustarter",
-			)
-		);
 
 		$this->mStarterTables = array(
 			"*" => array(
@@ -1079,9 +1060,7 @@ class CreateWiki {
 	private function importStarter() {
 		global $wgDBadminuser, $wgDBadminpassword, $wgWikiaLocalSettingsPath;
 
-		$dbStarter = ( isset( $this->mStarters[ "*" ][ $this->mNewWiki->language ] ) )
-					? $this->mStarters[ "*" ][ $this->mNewWiki->language ]
-					: $this->mStarters[ "*" ][ "*" ];
+		$dbStarter = Starters::getStarterByLanguage( $this->mNewWiki->language );
 
 		/**
 		 * determine if exists

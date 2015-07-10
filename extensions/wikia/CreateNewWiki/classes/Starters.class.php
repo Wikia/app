@@ -1,0 +1,62 @@
+<?php
+
+namespace Wikia\CreateNewWiki;
+
+/**
+ * A helper class for getting a proper starter wiki based on a given language
+ *
+ * @author macbre
+ */
+class Starters {
+
+	const STARTER_DUMPS_BUCKET = 'starter';
+
+	/**
+	 * starters map: langcode => database name
+	 *
+	 * "*" is default
+	 */
+	static private $mStarters = [
+		"*"  => "aastarter",
+		"de" => "destarter",
+		"en" => "starter",
+		"es" => "esstarter",
+		"fi" => "fistarter",
+		"fr" => "starterbeta",
+		"it" => "italianstarter",
+		"ja" => "jastarter",
+		"ko" => "starterko",
+		"nl" => "nlstarter",
+		"pl" => "plstarter",
+		"ru" => "rustarter",
+	];
+
+	/**
+	 * Get the starter database for a given language code
+	 *
+	 * @param string $lang language code
+	 * @return string
+	 */
+	public static function getStarterByLanguage( $lang ) {
+		return ( isset( self::$mStarters[ $lang ] ) )
+			? self::$mStarters[ $lang ]
+			: self::$mStarters[ "*" ];
+	}
+
+	/**
+	 * @return array
+	 */
+	public static function getAllStarters() {
+		return self::$mStarters;
+	}
+
+	/**
+	 * Return a remote DFS path to the starter dump file
+	 *
+	 * @param string $starter starter DB name
+	 * @return string
+	 */
+	public static function getStarterDumpPath( $starter ) {
+		return sprintf( '/dumps/%s.xml', $starter );
+	}
+}

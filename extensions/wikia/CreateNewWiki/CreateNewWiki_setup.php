@@ -21,6 +21,8 @@ $wgAutoloadClasses['AutoCreateWiki'] = $dir."/AutoCreateWiki.php";
 $wgAutoloadClasses['SpecialCreateNewWiki'] = $dir . 'SpecialCreateNewWiki.class.php';
 $wgAutoloadClasses['CreateWikiException'] = $dir . 'CreateWikiException.class.php';
 
+$wgAutoloadClasses['Wikia\\CreateNewWiki\\Starters'] = $dir . 'classes/Starters.class.php';
+
 // Nirvana controllers
 $wgAutoloadClasses['CreateNewWikiController'] = $dir . 'CreateNewWikiController.class.php';
 
