@@ -6,18 +6,31 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 	protected function setUp() {
 		$this->setupFile = dirname( __FILE__ ) . '/../PortableInfobox.setup.php';
 		parent::setUp();
+	}
 
+	private function getInfoboxRenderServiceMock( $isWikiaMobile, $data )
+	{
+		$mock = $this->getMockBuilder('PortableInfoboxRenderService')
+			->setMethods(['getThumbnail', 'isWikiaMobile'])
+			->getMock();
+
+		$mock->expects($this->any())
+			->method('isWikiaMobile')
+			->will($this->returnValue($isWikiaMobile));
+
+		$mockThumbnailImage = $this->getThumbnailImageMock($data);
+
+		$mock->expects($this->any())
+			->method('getThumbnail')
+			->will($this->returnValue($mockThumbnailImage));
+		return $mock;
+	}
+
+	private function getThumbnailImageMock( $data ) {
+		if (empty($data)) return false;
 		$mockThumbnailImage = $this->getMockBuilder( 'ThumbnailImage' )
 			->setMethods( [ 'getUrl', 'getWidth', 'getHeight' ] )
 			->getMock();
-
-		$mock = $this->getMockBuilder( 'PortableInfoboxRenderService' )
-			->setMethods( [ 'getThumbnail' ] )
-			->getMock();
-
-		$mock->expects( $this->any() )
-			->method( 'getThumbnail' )
-			->will( $this->returnValue( $mockThumbnailImage ) );
 		$mockThumbnailImage->expects( $this->any() )
 			->method( 'getUrl' )
 			->will( $this->returnValue( 'http://image.jpg' ) );
@@ -27,13 +40,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 		$mockThumbnailImage->expects( $this->any() )
 			->method( 'getHeight' )
 			->will( $this->returnValue( 200 ) );
-
-		$this->infoboxRenderService = $mock;
-	}
-
-	private function setWikiaMobileSkin($bool) {
-		$this->infoboxRenderService->expects( $this->any() )->method( 'isWikiaMobile' )->will( $this->returnValue
-		($bool) );
+		return $mockThumbnailImage;
 	}
 
 	/**
@@ -43,8 +50,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 	 * @dataProvider testRenderInfoboxDataProvider
 	 */
 	public function testRenderInfobox( $input, $expectedOutput, $description ) {
-		$this->setWikiaMobileSkin(false);
-
+		$this->infoboxRenderService = $this->getInfoboxRenderServiceMock( true, $input );
 		$actualOutput = $this->infoboxRenderService->renderInfobox( $input );
 
 		$actualDOM = new DOMDocument('1.0');
@@ -66,47 +72,11 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 	 * @param $input
 	 * @param $expectedOutput
 	 * @param $description
-	 * @dataProvider testRenderInfoboxDataProvider
+	 * @dataProvider testRenderMobileInfoboxDataProvider
 	 */
 	public function testRenderMobileInfobox( $input, $expectedOutput, $description ) {
-		$this->setWikiaMobileSkin(true);
+		$this->getInfoboxRenderServiceMock( true, $input );
 		$actualOutput = $this->infoboxRenderService->renderInfobox( $input );
-
-		$actualDOM = new DOMDocument('1.0');
-		$expectedDOM = new DOMDocument('1.0');
-		$actualDOM->formatOutput = true;
-		$actualDOM->preserveWhiteSpace = false;
-		$expectedDOM->formatOutput = true;
-		$expectedDOM->preserveWhiteSpace = false;
-		$actualDOM->loadXML($actualOutput);
-		$expectedDOM->loadXML($expectedOutput);
-
-		$expectedHtml = $expectedDOM->saveXML();
-		$actualHtml = $actualDOM->saveXML();
-
-		$this->assertEquals( $expectedHtml, $actualHtml, $description );
-	}
-
-	/**
-	 * @param $input
-	 * @param $expectedOutput
-	 * @param $description
-	 * @desc Case when the getThumbnail method will not return false due to
-	 * some image thumbnail error
-	 * @dataProvider testRenderInfoboxDataProviderThumbnailError
-	 */
-	public function testRenderInfoboxThumbnailError( $input, $expectedOutput, $description ) {
-		$this->setWikiaMobileSkin(false);
-
-		$mock = $this->getMockBuilder( 'PortableInfoboxRenderService' )
-			->setMethods( [ 'getThumbnail' ] )
-			->getMock();
-		$mock->expects( $this->any() )
-			->method( 'getThumbnail' )
-			->will( $this->returnValue( false ) );
-		$this->infoboxRenderServiceThumbnailError = $mock;
-
-		$actualOutput = $this->infoboxRenderServiceThumbnailError->renderInfobox( $input );
 
 		$actualDOM = new DOMDocument('1.0');
 		$expectedDOM = new DOMDocument('1.0');
@@ -398,38 +368,10 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 				],
 				'output' => '<aside class="portable-infobox">
 								<div class="portable-infobox-item item-type-image no-margins">
-									<img src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D" class="portable-infobox-image lazy media article-media" alt="image alt"  data-image-key="test1" data-image-name="test1" data-ref="1" data-src="thumbnail.jpg" data-params=\'[{"name":"test1", "full":"http://image.jpg"}]\' />
+									<img src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D" data-src="http://image.jpg" class="portable-infobox-image lazy media article-media" alt="image alt"  data-image-key="test1" data-image-name="test1" data-ref="1" data-params=\'[{"name":"test1", "full":"http://image.jpg"}]\' />
 								</div>
 							</aside>',
 				'description' => 'Only image for mobile'
-			]
-		];
-	}
-
-	public function testRenderInfoboxDataProviderThumbnailError() {
-		return [
-			[
-				'input' => [
-					[
-						'type' => 'image',
-						'data' => [
-							'alt' => 'image alt',
-							'url' => 'http://image.jpg',
-							'caption' => 'Lorem ipsum dolor'
-						]
-					]
-				],
-				'output' => '<aside class="portable-infobox">
-								<div class="portable-infobox-item item-type-image no-margins">
-									<figure class="portable-infobox-image-wrapper">
-										<a href="http://image.jpg" class="image image-thumbnail" title="image alt">
-											<img src="" class="portable-infobox-image" alt="image alt" width="" height="" data-image-key="" data-image-name=""/>
-										</a>
-										<figcaption class="portable-infobox-item-margins portable-infobox-image-caption">Lorem ipsum dolor</figcaption>
-									</figure>
-								</div>
-							</aside>',
-				'description' => 'Image with invalid thumb. Thumbnail and dimensions should be empty'
 			]
 		];
 	}
