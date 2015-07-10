@@ -148,7 +148,7 @@
 .insights-list {
 	border-collapse: collapse;
 	margin: 0;
-	table-layout: auto;
+	table-layout: fixed;
 	width: 100%;
 }
 
@@ -159,10 +159,10 @@
 	padding: 5px 10px;
 	text-align: left;
 	white-space: nowrap;
+}
 
-	&:first-child {
-		width: 100%;
-	}
+.insights-list-header-altaction {
+	text-align: right;
 }
 
 .insights-list-header-pageviews {
@@ -179,10 +179,6 @@
 .insights-list-cell-altaction {
 	padding: 0 10px;
 	text-align: right;
-}
-
-.insights-list-item-page {
-	width: 100%;
 }
 
 .insights-list-item {
