@@ -409,6 +409,27 @@ class MercuryApiModelTest extends WikiaBaseTest {
 			],
 			[
 				'$expected' => [
+					'title' => 'Category:Category_name_0',
+					'label' => 'Category Name Zero',
+					'image_id' => 4096,
+					'article_id' => 0,
+					'type' => 'category',
+					'image_url' => 'image_url_3',
+					'article_local_url' => '/Category:Category_name_0'
+				],
+				'$item' => [
+					'title' => 'Category:Category_name_0',
+					'label' => 'Category Name Zero',
+					'image_id' => 4096,
+					'article_id' => 0,
+					'type' => 'category',
+					'image_url' => 'image_url_3',
+				],
+				'$wgArticlePath' => '/$1',
+				'$getLocalURL' => ''
+			],
+			[
+				'$expected' => [
 					'title' => 'Category:Category_name_1',
 					'label' => 'Category Name One',
 					'image_id' => 8192,
