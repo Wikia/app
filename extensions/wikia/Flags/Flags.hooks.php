@@ -162,4 +162,119 @@ class Hooks {
 
 		return true;
 	}
+
+	public static function onArticleSaveComplete( &$article, &$user, $text, $summary,
+			$minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId
+	) {
+		global $wgContLang;
+		if ( $article->mTitle->getNamespace() === NS_TEMPLATE ) {
+			$app = \F::app();
+
+			$flagTypesResponse = $app->sendRequest(
+				'FlagsApiController', 'getFlagTypes', [ 'wiki_id' => $app->wg->CityId ]
+			)->getData();
+
+			if ( $flagTypesResponse[\FlagsApiController::FLAGS_API_RESPONSE_STATUS] ) {
+				$flagsTypes = $flagTypesResponse[\FlagsApiController::FLAGS_API_RESPONSE_DATA];
+				$templateName = $article->mTitle->getText();
+
+				var_dump($templateName);
+
+				foreach ( $flagsTypes as $flagType ) {
+					if ( $flagType['flag_view'] === $templateName ) {
+						$oldText = $article->getRawText();
+
+						if ( strcmp( $text, $oldText ) != 0 ) {
+							$oldText = str_replace( "\r\n", "\n", $oldText );
+							$text = str_replace( "\r\n", "\n", $text );
+
+							$variables = (new \TemplateDataExtractor( $article->mTitle ) )->getTemplateVariables( $text );
+							$flagVariables = json_decode($flagType['flag_params_names'], true);
+
+							$removedVariables = array_diff_key( $flagVariables, $variables );
+							$changedVariables = array_diff_key( $variables, $flagVariables );
+
+							if ( self::compareVariables( $flagVariables, $removedVariables, $changedVariables ) ) {
+
+								return true;
+							}
+
+							$ota = explode( "\n", $wgContLang->segmentForDiff( $oldText ) );
+							$nta = explode( "\n", $wgContLang->segmentForDiff( $text ) );
+
+							$diffs = new \WordLevelDiff( $ota, $nta );
+
+							$added = [];
+							$removed = [];
+							$updated = [];
+
+							foreach ( $diffs->edits as $diff ) {
+								switch ( $diff->type ) {
+									case 'add': $added[] = $diff; break;
+									case 'change': $updated[] = $diff; break;
+									case 'delete': $removed[] = $diff; break;
+								}
+							}
+
+							$updated = array_unique( $updated, SORT_REGULAR );
+
+							foreach( $updated as $update ) {
+								$flagParam = $update->orig[0];
+								$newParam = $update->closing[0];
+
+								if ( isset( $flagVariables[$flagParam] ) && isset( $variables[$newParam] ) ) {
+
+									$flagVariables[$newParam] = $flagVariables[$flagParam];
+
+									unset($flagVariables[$flagParam]);
+									unset($removedVariables[$flagParam]);
+									unset($changedVariables[$newParam]);
+								}
+							}
+
+							foreach ( $removedVariables as $name => $variable ) {
+								if ( isset( $flagVariables[$name] ) ) {
+									unset( $flagVariables[$name]);
+								}
+							}
+
+							foreach ( $changedVariables as $name => $variable ) {
+								$flagVariables[$name] = $name;
+							}
+						}
+
+						return true;
+					}
+				}
+			}
+		}
+	}
+
+	public static function compareVariables( $flagVariables, $removedVariables, $changedVariables ) {
+		if ( empty( $removedVariables ) && empty( $changedVariables ) ) {
+			// nothing changed
+
+			return true;
+		} elseif ( empty( $removedVariables ) && !empty( $changedVariables ) ) {
+			// variables added
+			foreach ( $changedVariables as $name => $variable ) {
+				$flagVariables[$name] = $name;
+			}
+
+
+			// save
+			return true;
+		} elseif ( !empty( $removedVariables ) && empty( $changedVariables ) ) {
+			// variables removed
+			foreach ( $removedVariables as $name => $variable ) {
+				if ( isset( $flagVariables[$name] ) ) {
+					unset( $flagVariables[$name]);
+				}
+			}
+
+			// save return true;
+		} else {
+			return false;
+		}
+	}
 }
