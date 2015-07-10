@@ -157,7 +157,7 @@ class MercuryApiModelTest extends WikiaBaseTest {
 	/**
 	 * @dataProvider getCuratedContentItemsDataProvider
 	 */
-	public function testGetCuratedContentItems( $expected, $data, $processCuratedContentItemData ) {
+	public function testGetCuratedContentItems( $expected, $data, $itemData ) {
 		$mercuryApiMock = $this->getMockBuilder( 'MercuryApi' )
 			->setMethods( [ 'processCuratedContentItem' ] )
 			->getMock();
@@ -165,7 +165,7 @@ class MercuryApiModelTest extends WikiaBaseTest {
 		if ( empty( $data ) ) {
 			$map = [ $data, null ];
 		} else {
-			$map = array_map( null, $data, $processCuratedContentItemData );
+			$map = array_map( null, $data, $itemData );
 		}
 
 		$mercuryApiMock->expects( $this->any() )
@@ -448,6 +448,41 @@ class MercuryApiModelTest extends WikiaBaseTest {
 				],
 				'$wgArticlePath' => '',
 				'$getLocalURL' => '/wiki/Category:Category_name_1'
+			]
+		];
+	}
+
+	/**
+	 * @dataProvider processCuratedContentDataProvider
+	 */
+	public function testProcessCuratedContent( $expected, $data, $sectionsData, $itemsData, $featuredData ) {
+		$mercuryApiMock = $this->getMockBuilder( 'MercuryApi' )
+			->setMethods( [ 'getCuratedContentSections', 'getCuratedContentItems' ] )
+			->getMock();
+
+		$mercuryApiMock->expects( $this->any() )
+			->method( 'getCuratedContentSections' )
+			->willReturn( $sectionsData );
+
+		$mercuryApiMock->expects( $this->any() )
+			->method( 'processCuratedContentItems' )
+			->will( $this->returnValueMap( [
+				[ [ ], [ ] ],
+				[ $data['items'], $itemsData ],
+				[ $data['featured'], $featuredData ]
+			] ) );
+
+		$this->assertEquals( $expected, $mercuryApiMock->processCuratedContent( $data ) );
+	}
+
+	public function processCuratedContentDataProvider() {
+		return [
+			[
+				'$expected' => null,
+				'$data' => [ ],
+				'$sectionsData' => [ ],
+				'$itemsData' => [ ],
+				'$featuredData' => [ ]
 			],
 		];
 	}
