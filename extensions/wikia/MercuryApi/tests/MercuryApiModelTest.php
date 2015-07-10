@@ -141,7 +141,7 @@ class MercuryApiModelTest extends WikiaBaseTest {
 							'type' => 'blog',
 							'image_url' => 'image_url_6',
 						],
-					],
+					]
 				]
 			],
 			[
@@ -490,7 +490,7 @@ class MercuryApiModelTest extends WikiaBaseTest {
 			->willReturn( $sectionsData );
 
 		$mercuryApiMock->expects( $this->any() )
-			->method( 'processCuratedContentItems' )
+			->method( 'getCuratedContentItems' )
 			->will( $this->returnValueMap( [
 				[ [ ], [ ] ],
 				[ $data['items'], $itemsData ],
@@ -508,6 +508,182 @@ class MercuryApiModelTest extends WikiaBaseTest {
 				'$sectionsData' => [ ],
 				'$itemsData' => [ ],
 				'$featuredData' => [ ]
+			],
+			[
+				'$expected' => [
+					'items' => [ 'A', 'B', 'C', 'P', 'Q', 'R' ],
+					'featured' => [ 'X', 'Y', 'Z' ]
+				],
+				'$data' => [
+					'sections' => [ 'a', 'b', 'c' ],
+					'items' => [ 'p', 'q', 'r' ],
+					'featured' => [ 'x', 'y', 'z' ]
+				],
+				'$sectionsData' => [ 'A', 'B', 'C' ],
+				'$itemsData' => [ 'P', 'Q', 'R' ],
+				'$featuredData' => [ 'X', 'Y', 'Z' ]
+			],
+			[
+				'$expected' => [
+					'items' => [
+						[
+							'title' => 'Curated Content Section',
+							'image_id' => 1024,
+							'image_url' => 'image_url_0',
+							'type' => 'section',
+						],
+						[
+							'title' => 'Another Curated Content Section',
+							'image_id' => 2048,
+							'image_url' => 'image_url_2',
+							'type' => 'section',
+						],
+						[
+							'title' => 'Category:Category_name_0',
+							'label' => 'Category Name Zero',
+							'image_id' => 4096,
+							'article_id' => 0,
+							'type' => 'category',
+							'image_url' => 'image_url_3',
+							'article_local_url' => '/wiki/Category:Category_name_0'
+						],
+						[
+							'title' => 'Category:Category_name_1',
+							'label' => 'Category Name One',
+							'image_id' => 8192,
+							'article_id' => 512,
+							'type' => 'category',
+							'image_url' => 'image_url_4',
+							'article_local_url' => '/wiki/Category:Category_name_1'
+						],
+					],
+					'featured' => [
+						[
+							'title' => 'Article_title',
+							'label' => 'Article label',
+							'image_id' => 256,
+							'article_id' => 128,
+							'type' => 'article',
+							'image_url' => 'image_url_5',
+							'article_local_url' => '/Article_title'
+						],
+						[
+							'title' => 'User_blog:Warkot/Such_Post',
+							'label' => 'Awesome blog post',
+							'image_id' => 64,
+							'article_id' => 32,
+							'type' => 'blog',
+							'image_url' => 'image_url_6',
+							'article_local_url' => '/User_blog:Warkot/Such_Post'
+						]
+					],
+				],
+				'$data' => [
+					'sections' => [
+						[
+							'title' => 'Curated Content Section',
+							'image_id' => 1024,
+							'image_url' => 'image_url_0',
+							'type' => 'section',
+						],
+						[
+							'title' => 'Another Curated Content Section',
+							'image_id' => 2048,
+							'image_url' => 'image_url_2',
+							'type' => 'section',
+						]
+					],
+					'items' => [
+						[
+							'title' => 'Category:Category_name_0',
+							'label' => 'Category Name Zero',
+							'image_id' => 4096,
+							'article_id' => 0,
+							'type' => 'category',
+							'image_url' => 'image_url_3',
+						],
+						[
+							'title' => 'Category:Category_name_1',
+							'label' => 'Category Name One',
+							'image_id' => 8192,
+							'article_id' => 512,
+							'type' => 'category',
+							'image_url' => 'image_url_4',
+						]
+					],
+					'featured' => [
+						[
+							'title' => 'Article_title',
+							'label' => 'Article label',
+							'image_id' => 256,
+							'article_id' => 128,
+							'type' => 'article',
+							'image_url' => 'image_url_5',
+						],
+						[
+							'title' => 'User_blog:Warkot/Such_Post',
+							'label' => 'Awesome blog post',
+							'image_id' => 64,
+							'article_id' => 32,
+							'type' => 'blog',
+							'image_url' => 'image_url_6',
+						]
+					]
+				],
+				'$sectionsData' => [
+					[
+						'title' => 'Curated Content Section',
+						'image_id' => 1024,
+						'image_url' => 'image_url_0',
+						'type' => 'section',
+					],
+					[
+						'title' => 'Another Curated Content Section',
+						'image_id' => 2048,
+						'image_url' => 'image_url_2',
+						'type' => 'section',
+					]
+				],
+				'$itemsData' => [
+					[
+						'title' => 'Category:Category_name_0',
+						'label' => 'Category Name Zero',
+						'image_id' => 4096,
+						'article_id' => 0,
+						'type' => 'category',
+						'image_url' => 'image_url_3',
+						'article_local_url' => '/wiki/Category:Category_name_0'
+					],
+					[
+						'title' => 'Category:Category_name_1',
+						'label' => 'Category Name One',
+						'image_id' => 8192,
+						'article_id' => 512,
+						'type' => 'category',
+						'image_url' => 'image_url_4',
+						'article_local_url' => '/wiki/Category:Category_name_1'
+					],
+				],
+				'$featuredData' => [
+					[
+						'title' => 'Article_title',
+						'label' => 'Article label',
+						'image_id' => 256,
+						'article_id' => 128,
+						'type' => 'article',
+						'image_url' => 'image_url_5',
+						'article_local_url' => '/Article_title'
+					],
+					[
+						'title' => 'User_blog:Warkot/Such_Post',
+						'label' => 'Awesome blog post',
+						'image_id' => 64,
+						'article_id' => 32,
+						'type' => 'blog',
+						'image_url' => 'image_url_6',
+						'article_local_url' => '/User_blog:Warkot/Such_Post'
+					]
+				]
 			],
 		];
 	}
