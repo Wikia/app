@@ -72,7 +72,7 @@ class DumpStarters extends Maintenance {
 	 * @throws DumpStartersException
 	 */
 	private function dumpStarter($starter) {
-		$this->output( "Preparing a dump of '{$starter}'..." );
+		$this->output( sprintf("%s: preparing a dump of '%s'...", wfTimestamp( TS_DB ), $starter ) );
 
 		// 0. set up the XML dump file
 		$tmpname = tempnam( wfTempDir(), 'starter' );
@@ -89,12 +89,6 @@ class DumpStarters extends Maintenance {
 		// export only the current revisions
 		$this->generateDump( $fp, $starter );
 
-		// check if the file is not empty
-		$dumpSize = filesize($tmpname);
-		if ( empty( $dumpSize ) ) {
-			throw new DumpStartersException( 'XML dump is empty' );
-		}
-
 		// 2. store it on Ceph
 		$fp = fopen($tmpname, 'r' );
 		$res = $this->storeDump( $fp, $starter );
@@ -104,12 +98,15 @@ class DumpStarters extends Maintenance {
 		}
 
 		// cleanup
+		$dumpSize = filesize($tmpname);
 		unlink($tmpname);
 
 		$this->output( sprintf(" \t[done] %.2f kB\n", $dumpSize / 1024 ) );
 	}
 
 	public function execute() {
+		$this->output( sprintf("%s: %s - starting...\n", wfTimestamp( TS_DB ), __CLASS__ ) );
+
 		foreach( Wikia\CreateNewWiki\Starters::getAllStarters() as $starter ) {
 			try {
 				$this->dumpStarter($starter);
@@ -119,7 +116,7 @@ class DumpStarters extends Maintenance {
 			}
 		}
 
-		$this->output("Completed!\n");
+		$this->output( wfTimestamp( TS_DB ) .": completed!\n");
 	}
 
 }
