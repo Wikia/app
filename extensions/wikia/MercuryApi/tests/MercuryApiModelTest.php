@@ -170,6 +170,7 @@ class MercuryApiModelTest extends WikiaBaseTest {
 	 * @param $itemData
 	 */
 	public function testGetCuratedContentItems( $expected, $data, $itemData ) {
+		/* @var MercuryApi|PHPUnit_Framework_MockObject_MockObject $mercuryApiMock */
 		$mercuryApiMock = $this->getMockBuilder( 'MercuryApi' )
 			->setMethods( [ 'processCuratedContentItem' ] )
 			->getMock();
@@ -479,6 +480,7 @@ class MercuryApiModelTest extends WikiaBaseTest {
 	 * @param $featuredData
 	 */
 	public function testProcessCuratedContent( $expected, $data, $sectionsData, $itemsData, $featuredData ) {
+		/* @var MercuryApi|PHPUnit_Framework_MockObject_MockObject $mercuryApiMock */
 		$mercuryApiMock = $this->getMockBuilder( 'MercuryApi' )
 			->setMethods( [ 'getCuratedContentSections', 'getCuratedContentItems' ] )
 			->getMock();
@@ -507,6 +509,76 @@ class MercuryApiModelTest extends WikiaBaseTest {
 				'$itemsData' => [ ],
 				'$featuredData' => [ ]
 			],
+		];
+	}
+
+	/**
+	 * @dataProvider processTrendingArticlesDataDataProvider
+	 *
+	 * @param $expected
+	 * @param $data
+	 */
+	public function testProcessTrendingArticlesData( $expected, $data ) {
+		/* @var MercuryApi|PHPUnit_Framework_MockObject_MockObject $mercuryApiMock */
+		$mercuryApiMock = $this->getMockBuilder( 'MercuryApi' )
+			->setMethods( [ 'processTrendingArticlesItem' ] )
+			->getMock();
+
+		$mercuryApiMock->expects( $this->any() )
+			->method( 'processTrendingArticlesItem' )
+			->will( $this->returnCallback( function ( $item ) {
+				return $item . ' processed';
+			} ) );
+
+		$this->assertEquals( $expected, $mercuryApiMock->processTrendingArticlesData( $data ) );
+	}
+
+	public function processTrendingArticlesDataDataProvider() {
+		return [
+			[
+				'$expected' => null,
+				'$data' => null
+			],
+			[
+				'$expected' => null,
+				'$data' => [
+					'whatever' => []
+				]
+			],
+			[
+				'$expected' => null,
+				'$data' => [
+					'items' => 'error string'
+				]
+			],
+			[
+				'$expected' => [],
+				'$data' => [
+					'items' => []
+				]
+			],
+			[
+				'$expected' => [
+					'Item 1 processed'
+				],
+				'$data' => [
+					'items' => [
+						'Item 1'
+					]
+				]
+			],
+			[
+				'$expected' => [
+					'Item 1 processed',
+					'Item 2 processed'
+				],
+				'$data' => [
+					'items' => [
+						'Item 1',
+						'Item 2'
+					]
+				]
+			]
 		];
 	}
 
