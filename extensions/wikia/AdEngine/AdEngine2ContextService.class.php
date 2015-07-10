@@ -70,7 +70,7 @@ class AdEngine2ContextService {
 				'slots' => $this->filterOutEmptyItems( [
 					'exitstitial' => $wg->EnableOutboundScreenExt,
 					'exitstitialRedirectDelay' => $wg->OutboundScreenRedirectDelay,
-					'invisibleHighImpact' => $wg->AdDriverEnableeInvisibleHighImpactSlot,
+					'invisibleHighImpact' => $wg->AdDriverEnableInvisibleHighImpactSlot,
 				] ),
 				'forcedProvider' => $wg->AdDriverForcedProvider
 			];
