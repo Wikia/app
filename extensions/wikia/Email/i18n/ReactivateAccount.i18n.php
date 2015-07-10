@@ -44,8 +44,8 @@ $messages['it'] = array(
 );
 
 $messages['ja'] = array(
-	'emailext-reactivate-account-subject' => 'ウィキアの再開',
-	'emailext-reactivate-account-summary' => 'ウィキアアカウントの再開が完了するまであと一歩です。下のリンクをクリックしてリクエストの確認を行ってください。',
+	'emailext-reactivate-account-subject' => 'ウィキア・アカウントの再開',
+	'emailext-reactivate-account-summary' => '間もなくウィキアアカウントの再開が完了します。下のリンクをクリックしてリクエストをご確認ください。',
 	'emailext-reactivate-account-button-text' => '今すぐ再開',
 	'emailext-reactivate-account-welcome-back' => '今後ともウィキアをよろしくお願いいたします。',
 );
