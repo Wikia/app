@@ -1076,29 +1076,33 @@ class ArticlesApiController extends WikiaApiController {
 		$content = [];
 		$articleAsWikiText = $article->getContent();
 		$parsedSections = $parsedArticle->getSections();
+		$sectionsToGet = $this->getSectionNumbersArray( $sectionsToGet, $parsedSections );
 
-		// decode strings like "%5B1,2,3%5D" or "[1,2,3]"
-		if ( is_string( $sectionsToGet ) ) {
-			$sectionsToGet = json_decode( urldecode( $sectionsToGet ) );
-		}
-		// convert "all" or ["all"] to array of numbers
-		if ( $sectionsToGet === 'all' || in_array( 'all', $sectionsToGet ) ) {
-			$sectionsToGet = range( 0, count( $parsedArticle->getSections() ) );
-		}
-		// should be an array by this point
-		if ( is_array( $sectionsToGet ) ) {
-			foreach ( $sectionsToGet as $section ) {
-				// Only retrieve top level sections.
-				// $parsedSections doesn't include section 0, so subtract 1
-				$isTopLevel = $section > 0 && $parsedSections[$section - 1]['toclevel'] === 1;
-				if ( $section == 0 || $isTopLevel ) {
-					$content[] = $this->getArticleSection( $articleAsWikiText, $title, $section );
-				}
+		foreach ( $sectionsToGet as $section ) {
+			// Only retrieve top level sections.
+			// $parsedSections doesn't include section 0, so subtract 1
+			$isTopLevel = $section > 0 && $parsedSections[$section - 1]['toclevel'] === 1;
+			if ( $section == 0 || $isTopLevel ) {
+				$content[] = $this->getArticleSection( $articleAsWikiText, $title, $section );
 			}
-		} else {
-			throw new BadRequestApiException( 'Sections must be an array of numbers or "all"' );
 		}
 		return $content;
+	}
+
+	/**
+	 * @param string $sectionsToGet Value of sections param in request
+	 * @param array $parsedSections Array of top-level (TOC) section data
+	 * @return array
+	 * @throws BadRequestApiException
+	 */
+	private function getSectionNumbersArray( $sectionsToGet, $parsedSections ) {
+		if ( $sectionsToGet === 'all' ) {
+			$sectionsToGet = range( 0, count( $parsedSections ) );
+		} else {
+			// decode strings like "1%2C%202%2C%203" or "1,2,3" into an array
+			$sectionsToGet = explode( ',', urldecode( $sectionsToGet ) );
+		}
+		return $sectionsToGet;
 	}
 
 	/**

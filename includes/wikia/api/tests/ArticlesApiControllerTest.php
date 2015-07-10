@@ -171,31 +171,31 @@ class ArticlesApiControllerTest extends \WikiaBaseTest {
 			// section text outside of heading tag
 			[
 				'<h2 section="1">Foo</h2><p>section=\'2\'</p>',
-				'3',
+				3,
 				'<h2 section="3">Foo</h2><p>section=\'2\'</p>',
 			],
 			// multiple heading tags should increment starting with the section provided
 			[
 				'<h2 section="1">Foo</h2><p>Bar</p><h3 section="2">Baz</h3>',
-				'3',
+				3,
 				'<h2 section="3">Foo</h2><p>Bar</p><h3 section="4">Baz</h3>',
 			],
 			// multiple digit section numbers
 			[
 				'<h2 section="101">Foo</h2><p>Bar</p><h3 section="102">Baz</h3>',
-				'125',
+				125,
 				'<h2 section="125">Foo</h2><p>Bar</p><h3 section="126">Baz</h3>',
 			],
 			// single quotes instead of double
 			[
 				"<h2 section='101'>Foo</h2><p>Bar</p><h3 section='102'>Baz</h3>",
-				'125',
+				125,
 				"<h2 section='125'>Foo</h2><p>Bar</p><h3 section='126'>Baz</h3>",
 			],
 			// odd spacing
 			[
 				"<h2 section= ' 101'>Foo</h2><p>Bar</p><h3 section ='102 '>Baz</h3>",
-				'125',
+				125,
 				"<h2 section= ' 125'>Foo</h2><p>Bar</p><h3 section ='126 '>Baz</h3>",
 			],
 		];
@@ -207,6 +207,43 @@ class ArticlesApiControllerTest extends \WikiaBaseTest {
 	public function testReplaceSectionIndex( $html, $section, $replaced ) {
 		$replaceSectionIndex = self::getFn( new ArticlesApiController(), 'replaceSectionIndex' );
 		$this->assertEquals( $replaced, $replaceSectionIndex( $html, $section ) );
+	}
+
+	public function getSectionNumbersArrayDataProvider() {
+		return [
+			// get all sections (inlcuding section 0, which isn't included in TOC sections array)
+			[
+				'all',
+				['foo', 'bar', 'baz'],
+				[0, 1, 2, 3]
+			],
+			// get all sections when there's no headers / TOC sections
+			[
+				'all',
+				[],
+				[0]
+			],
+			// get specified sections
+			[
+				'0,1,2',
+				['foo', 'bar', 'baz', 'qux'],
+				[0, 1, 2]
+			],
+			// different spacing and there's more sections requested than are available
+			[
+				'0, 1, 2',
+				['foo', 'bar'],
+				[0, 1, 2]
+			]
+		];
+	}
+
+	/**
+	 * @dataProvider getSectionNumbersArrayDataProvider
+	 */
+	public function testGetSectionNumbersArray( $sectionsToGet, $parsedSections, $sectionsArray ) {
+		$getSectionNumbersArray = self::getFn( new ArticlesApiController(), 'getSectionNumbersArray' );
+		$this->assertEquals( $sectionsArray, $getSectionNumbersArray( $sectionsToGet, $parsedSections ) );
 	}
 
 	protected static function getFn( $obj, $name ) {
