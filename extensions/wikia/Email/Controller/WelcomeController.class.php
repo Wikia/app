@@ -13,7 +13,7 @@ class WelcomeController extends EmailController {
 	const MOBILE_URL_ANDROID = 'https://play.google.com/store/apps/developer?id=Wikia,+Inc';
 
 	protected function getSubject() {
-		return $this->getMessage( 'emailext-welcome-subject', $this->getCurrentUserName() )->parse();
+		return $this->getMessage( 'emailext-welcome-subject', $this->getCurrentUserName() )->text();
 	}
 
 	/**
