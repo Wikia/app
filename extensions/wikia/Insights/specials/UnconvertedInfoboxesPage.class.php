@@ -127,11 +127,13 @@ class UnconvertedInfoboxesPage extends PageQueryPage {
 	 * @param string $contentText
 	 * @return bool
 	 */
-	public static function isTitleWithNonportableInfobox( $title, $contentText ) {
+	public static function isTitleWithNonportableInfobox( $titleText, $contentText ) {
 		// ignore docs pages
-		if ( strpos( $title->getText(), '/doc' ) ) {
+		if ( strpos( $titleText, '/doc' ) ) {
 			return false;
 		}
+
+		$title = Title::newFromText( $titleText, NS_TEMPLATE );
 
 		// ingore redirects
 		if ( $title->isRedirect() ) {
@@ -139,7 +141,7 @@ class UnconvertedInfoboxesPage extends PageQueryPage {
 		}
 
 		$titleNeedle = 'infobox';
-		if ( strripos( $title->getText(), $titleNeedle ) !== false ) {
+		if ( strripos( $titleText, $titleNeedle ) !== false ) {
 			$portableInfoboxNeedle = '<infobox';
 
 			// If a portable infobox markup was found
