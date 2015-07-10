@@ -148,16 +148,8 @@
 .insights-list {
 	border-collapse: collapse;
 	margin: 0;
-	table-layout: fixed;
+	table-layout: auto;
 	width: 100%;
-
-	tr {
-
-		td:first-child,
-		th:first-child {
-			padding-left: 15px;
-		}
-	}
 }
 
 .insights-list-header {
@@ -166,6 +158,11 @@
 	border-top: $border-insights-default;
 	padding: 5px 10px;
 	text-align: left;
+	white-space: nowrap;
+
+	&:first-child {
+		width: 100%;
+	}
 }
 
 .insights-list-header-pageviews {
@@ -179,7 +176,20 @@
 	padding: 10px;
 }
 
+.insights-list-cell-altaction {
+	padding: 0 10px;
+}
+
+.insights-list-item-page {
+	width: 100%;
+}
+
 .insights-list-item {
+
+	.insights-list-item:first-child,
+	.insights-list-header:first-child {
+		padding-left: 15px;
+	}
 
 	&:last-child {
 
