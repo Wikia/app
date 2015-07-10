@@ -102,6 +102,10 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 		return 'insights-wanted-by';
 	}
 
+	public function purgeCacheAfterUpdateTask() {
+		return true;
+	}
+
 	/**
 	 * Returns an array of boolean values that you can use
 	 * to toggle columns of a subpage's table view
@@ -526,6 +530,14 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 		}
 
 		return $next;
+	}
+
+	public function purgeInsightsCache() {
+		global $wgMemc;
+
+		$cacheKey = $this->getMemcKey( self::INSIGHTS_MEMC_ARTICLES_KEY );
+
+		$wgMemc->delete( $cacheKey );
 	}
 
 	/**
