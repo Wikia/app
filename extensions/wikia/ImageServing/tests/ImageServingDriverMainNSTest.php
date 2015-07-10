@@ -42,22 +42,22 @@ class ImageServingDriverMainNSTest extends WikiaBaseTest {
 	}
 
 	public function testMixedResults() {
-		$infobxoImage = 'should_be_first.jpg';
+		$infoboxImage = 'should_be_first.jpg';
 		$other = 'other.png';
 		$id = 302;
 
 		$driver = $this->setUpMock()
 			->setUpImageIndex( [ $id => [ $other ] ] )
 			->setUpImagesPopularity( [ $other => 1 ] )
-			->setUpLoadImageMetadata( [ [ [ $infobxoImage ], [ $infobxoImage => $this->getDetails( $infobxoImage ) ] ],
+			->setUpLoadImageMetadata( [ [ [ $infoboxImage ], [ $infoboxImage => $this->getDetails( $infoboxImage ) ] ],
 										[ [ $other ], [ $other => $this->getDetails( $other ) ] ] ] )
-			->setUpInfoboxImages( [ $infobxoImage ] )
+			->setUpInfoboxImages( [ $infoboxImage ] )
 			->getDriver();
 
 		$driver->setArticles( [ $id => null ] );
 		$result = $driver->execute();
 
-		$this->assertEquals( $this->getExpected( $id, [ $infobxoImage, $other ] ), $result );
+		$this->assertEquals( $this->getExpected( $id, [ $infoboxImage, $other ] ), $result );
 	}
 
 	/**
