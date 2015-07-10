@@ -82,7 +82,7 @@ define('ext.wikia.adEngine.adContext', [
 		);
 
 		// Krux integration
-		context.targeting.enableKruxTargeting = (
+		context.targeting.enableKruxTargeting = !!(
 			context.targeting.enableKruxTargeting &&
 			isProperCountry(instantGlobals.wgAdDriverKruxCountries) &&
 			!instantGlobals.wgSitewideDisableKrux &&
