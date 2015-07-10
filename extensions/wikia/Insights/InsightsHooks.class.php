@@ -106,8 +106,8 @@ class InsightsHooks {
 
 		$model = InsightsHelper::getInsightModel( $queryPageName );
 
-		if ( !is_null( $model ) && $model instanceof InsightsQuerypageModel && $model->purgeCacheAfterUpdateTask() ) {
-			$model->purgeInsightCache();
+		if ( $model instanceof InsightsQuerypageModel && $model->purgeCacheAfterUpdateTask() ) {
+			$model->purgeInsightsCache();
 			$model->getContent( [] );
 		}
 

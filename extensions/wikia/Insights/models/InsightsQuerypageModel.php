@@ -532,7 +532,7 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 		return $next;
 	}
 
-	public function purgeInsightCache() {
+	public function purgeInsightsCache() {
 		global $wgMemc;
 
 		$cacheKey = $this->getMemcKey( self::INSIGHTS_MEMC_ARTICLES_KEY );

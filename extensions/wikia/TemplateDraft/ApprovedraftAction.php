@@ -90,7 +90,7 @@ class ApprovedraftAction extends FormlessAction {
 
 		// Update Insights list
 		$model = InsightsHelper::getInsightModel( InsightsUnconvertedInfoboxesModel::INSIGHT_TYPE );
-		if ( !is_null( $model ) && $model instanceof InsightsQuerypageModel ) {
+		if ( $model instanceof InsightsQuerypageModel ) {
 			$model->updateInsightsCache( $parentTitle->getArticleID() );
 		}
 
