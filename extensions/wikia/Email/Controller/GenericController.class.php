@@ -6,12 +6,18 @@ use Email\Check;
 use Email\EmailController;
 
 class GenericController extends EmailController {
+	protected $toAddress;
 	protected $subject;
 	protected $salutation;
 	protected $body;
 	protected $category;
 
 	public function initEmail() {
+		$toString = $this->request->getVal( 'toAddress', '' );
+		if ( !empty( $toString ) ) {
+			$this->toAddress = new \MailAddress( $toString );
+		}
+
 		// Default to the stock email salutation
 		$this->salutation = $this->request->getVal( 'salutation', $this->getSalutation() );
 		$this->category = $this->request->getVal( 'category', self::getControllerShortName() );
@@ -42,6 +48,10 @@ class GenericController extends EmailController {
 
 	public function getSendGridCategory() {
 		return $this->category;
+	}
+
+	protected function getToAddress() {
+		return empty( $this->toAddress ) ? parent::getToAddress() : $this->toAddress;
 	}
 
 	/**
