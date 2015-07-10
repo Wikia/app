@@ -8,6 +8,10 @@
 class InsightsUnconvertedInfoboxesModel extends InsightsQuerypageModel {
 	const INSIGHT_TYPE = 'nonportableinfoboxes';
 
+	public $loopNotificationConfig = [
+		'displayFixItMessage' => false,
+	];
+
 	public function getDataProvider() {
 		return new UnconvertedInfoboxesPage();
 	}

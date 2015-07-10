@@ -35,6 +35,9 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 				'sortType' => SORT_NUMERIC,
 				'metadata' => 'pv7',
 			]
+		],
+		$loopNotificationConfig = [
+			'displayFixItMessage' => true,
 		];
 
 	abstract function getDataProvider();
@@ -100,6 +103,21 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 
 	public function purgeCacheAfterUpdateTask() {
 		return true;
+	}
+
+	/**
+	 * Returns a whole config for loop notification mechanism or its single property
+	 * @param string $singleProperty
+	 * @return string|array
+	 */
+	public function getLoopNotificationConfig( $singleProperty = '' ) {
+		if ( !empty( $singleProperty )
+			&& isset( $this->loopNotificationConfig[$singleProperty] )
+		) {
+			return $this->loopNotificationConfig[$singleProperty];
+		}
+
+		return $this->loopNotificationConfig;
 	}
 
 	/**
