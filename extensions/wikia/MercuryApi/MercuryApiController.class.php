@@ -308,7 +308,7 @@ class MercuryApiController extends WikiaController {
 	 * @throws BadRequestApiException
 	 */
 	public function getArticle() {
-		global $wgEnableMainPageDataMercuryApi;
+		global $wgEnableMainPageDataMercuryApi, $wgWikiaCuratedContent;
 
 		try {
 			$title = $this->getTitleFromRequest();
@@ -324,7 +324,7 @@ class MercuryApiController extends WikiaController {
 			$isMainPage = $title->isMainPage();
 			$data['isMainPage'] = $isMainPage;
 
-			if ( $isMainPage && !empty( $wgEnableMainPageDataMercuryApi ) ) {
+			if ( $isMainPage && !empty( $wgEnableMainPageDataMercuryApi ) && !empty( $wgWikiaCuratedContent ) ) {
 				$data['mainPageData'] = $this->getMainPageData();
 			} else {
 				$articleAsJson = $this->getArticleJson( $articleId, $title );
