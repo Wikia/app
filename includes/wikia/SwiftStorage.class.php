@@ -230,9 +230,9 @@ class SwiftStorage {
 				$fp = @fopen( $localFile, 'r' );
 				if ( !$fp ) {
 					$this->error( 'SwiftStorage: fopen - file does not exist', [
-						'exception'  => new \Exception($localFile)
+						'exception'  => new \Exception($file)
 					]);
-					return \Status::newFatal( "{$localFile} doesn't exist" );
+					return \Status::newFatal( "{$file} doesn't exist" );
 				}
 			} else {
 				$fp = $localFile;
@@ -242,9 +242,9 @@ class SwiftStorage {
 			$size = intval( fstat( $fp )['size'] );
 			if ( $size === 0 ) {
 				$this->error( 'SwiftStorage: fopen - file is empty', [
-					'exception'  => new \Exception($localFile)
+					'exception'  => new \Exception($file)
 				]);
-				return \Status::newFatal( "{$localFile} is empty" );
+				return \Status::newFatal( "{$file} is empty" );
 			}
 
 			$object = $this->container->create_object( $remotePath );
@@ -271,8 +271,7 @@ class SwiftStorage {
 				'args'       => [ $localFile, $remoteFile, $metadata, $mimeType ],
 				'exception'  => $ex
 			]);
-
-			return \Status::newFatal( $ex->getMessage() );
+			return \Status::newFatal( $ex->getMessage(), get_class($ex) );
 		}
 
 		$time = round( ( microtime( true ) - $time ) * 1000 );
