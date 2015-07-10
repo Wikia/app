@@ -183,6 +183,17 @@ class SwiftStorage {
 	}
 
 	/**
+	 * Return an instance of Swift object for a given remote file name
+	 *
+	 * @param string $remoteFile
+	 * @return \CF_Object
+	 * @throws NoSuchObjectException
+	 */
+	private function getObject( $remoteFile ) {
+		return $this->container->get_object( $this->getRemotePath( $remoteFile ) );
+	}
+
+	/**
 	 * Prepend given name with remote path
 	 *
 	 * @param $remoteFile string remote file name
@@ -195,6 +206,8 @@ class SwiftStorage {
 
 	/**
 	 * Uploads given local file to Swift storage
+	 *
+	 * When passing a stream this method will close it internally (via fclose)
 	 *
 	 * @param $localFile string|resource local file name or handler to content stream
 	 * @param $remoteFile string remote file name
@@ -298,14 +311,20 @@ class SwiftStorage {
 	/**
 	 * Read remote file to string
 	 *
-	 * @param $remoteFile string remote file name
-	 * @return String $content
+	 * @param string $remoteFile remote file name
+	 * @param resource $fp stream to use for reading (optional)
+	 * @return String|null|boolean $content
 	 */
-	public function read( $remoteFile ) {
+	public function read( $remoteFile, &$fp = null ) {
 		try {
-			$remoteFile = $this->getRemotePath( $remoteFile );
-			$object = $this->container->get_object( $remoteFile );
-			$content = $object->read();
+			$object = $this->getObject( $remoteFile );
+
+			if ( is_resource( $fp ) ) {
+				return $object->stream( $fp );
+			}
+			else {
+				return $object->read();
+			}
 		}
 		catch ( \InvalidResponseException $ex ) {
 			$this->error( 'SwiftStorage: exception', [
@@ -318,8 +337,6 @@ class SwiftStorage {
 		catch ( \NoSuchObjectException $ex ) {
 			return null;
 		}
-
-		return $content;
 	}
 
 	/**
@@ -330,7 +347,7 @@ class SwiftStorage {
 	 */
 	public function exists( $remoteFile ) {
 		try {
-			$this->container->get_object( $this->getRemotePath( $remoteFile ) );
+			$object = $this->getObject( $remoteFile );
 		}
 		catch ( \NoSuchObjectException $ex ) {
 			return false;

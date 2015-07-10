@@ -7,6 +7,7 @@
  *
  * @category Wikia
  * @group Integration
+ * @group Swift
  */
 class SwiftStorageTest extends WikiaBaseTest {
 
@@ -57,5 +58,39 @@ class SwiftStorageTest extends WikiaBaseTest {
 
 		$this->assertTrue(Http::get($url, 'default', ['noProxy' => true]) === false, 'Removed image should return HTTP 404 - ' . $url);
 		$this->assertFalse($swift->exists($remoteFile), 'File should not exist after the delete');
+	}
+
+	public function testStream() {
+		$swift = \Wikia\SwiftStorage::newFromContainer(self::CONTAINER);
+		$remoteFile = sprintf('Test_%s.txt', time());
+
+		// set up the temporary file
+		$content = md5( time() );
+		$tmpfname = tempnam( wfTempDir() , "swift");
+		file_put_contents( $tmpfname, $content );
+
+		// stream a file to Ceph
+		$fp = fopen( $tmpfname, 'r' );
+		$this->assertTrue( is_resource( $fp ), 'Temp file created' );
+
+		$res = $swift->store( $fp, $remoteFile ); # will call fclose($fp)
+		$this->assertTrue($res->isOK(), 'Upload should be done');
+
+		// now get the file using a stream
+		$fp = fopen( $tmpfname, 'a' );
+
+		$res = $swift->read( $remoteFile, $fp );
+		$this->assertTrue($res, 'Read should be completed');
+
+		fclose($fp);
+
+		// check the temp file
+		$this->assertEquals( $content . $content, file_get_contents( $tmpfname ) );
+
+		// cleanup
+		$res = $swift->remove($remoteFile);
+		$this->assertTrue($res->isOK(), 'Delete should be done');
+
+		unlink($tmpfname);
 	}
 }
