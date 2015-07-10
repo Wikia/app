@@ -60,7 +60,8 @@ $messages['en'] = array(
 
 	'insights-module-see-more' => 'See more insights',
 
-	'insights-label-altaction-infoboxes' => 'Convert!',
+	'insights-altaction-convert' => 'Convert!',
+	'insights-altaction-seedraft' => 'View the draft',
 );
 
 $messages['qqq'] = array(

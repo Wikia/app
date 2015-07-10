@@ -8,7 +8,7 @@
 abstract class InsightsQuerypageModel extends InsightsModel {
 	const
 		INSIGHTS_MEMC_PREFIX = 'insights',
-		INSIGHTS_MEMC_VERSION = '1.0',
+		INSIGHTS_MEMC_VERSION = '1.1',
 		INSIGHTS_MEMC_TTL = 259200, // Cache for 3 days
 		INSIGHTS_MEMC_ARTICLES_KEY = 'articlesData',
 		INSIGHTS_LIST_MAX_LIMIT = 100,
@@ -86,12 +86,8 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 		return false;
 	}
 
-	public function getAltActionUrl( Title $title ) {
-		return '';
-	}
-
-	public function altActionLinkMessage() {
-		return '';
+	public function getAltAction( Title $title ) {
+		return [];
 	}
 
 	public function isWlhLinkRequired() {
@@ -408,8 +404,7 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 				}
 
 				if ( $this->hasAltAction() ) {
-					$article['altaction']['url'] = $this->getAltActionUrl( $title );
-					$article['altaction']['label'] = $this->altActionLinkMessage();
+					$article['altaction'] = $this->getAltAction( $title );
 				}
 
 				$data[ $title->getArticleID() ] = $article;

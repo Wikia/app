@@ -64,10 +64,10 @@
 									</p>
 								<?php endif; ?>
 							</td>
-							<?php if ( isset( $item['altaction'] ) ) : ?>
+							<?php if ( isset( $item['altaction'] ) && !empty( $item['altaction'] ) ) : ?>
 							<td class="insights-list-cell insights-list-cell-altaction">
-								<a class="wikia-button" href="<?= $item['altaction']['url'] ?>">
-									<?= wfMessage( $item['altaction']['label'] )->escaped() ?>
+								<a class="wikia-button <?= $item['altaction']['class'] ?>" href="<?= $item['altaction']['url'] ?>">
+									<?= $item['altaction']['text'] ?>
 								</a>
 							</td>
 							<?php endif; ?>
