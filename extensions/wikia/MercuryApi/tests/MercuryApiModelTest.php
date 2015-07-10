@@ -9,8 +9,8 @@ class MercuryApiModelTest extends WikiaBaseTest {
 	}
 
 	/**
-	* @dataProvider getSiteMessageDataProvider
-	*/
+	 * @dataProvider getSiteMessageDataProvider
+	 */
 	public function testGetSiteMessage( $expected, $isDisabled, $siteMessageMock, $wgSitenameMock ) {
 		$messageMock = $this->getMockBuilder( 'Message' )
 			->disableOriginalConstructor()
@@ -42,11 +42,13 @@ class MercuryApiModelTest extends WikiaBaseTest {
 				'$expected' => 'Test Wiki',
 				'$isDisabled' => false,
 				'$siteMessageMock' => 'Test Wiki'
-			], [
+			],
+			[
 				'$expected' => false,
 				'$isDisabled' => true,
 				'$siteMessageMock' => 'Test Wiki',
-			], [
+			],
+			[
 				'$expected' => false,
 				'$isDisabled' => false,
 				'$siteMessageMock' => '',
@@ -156,12 +158,19 @@ class MercuryApiModelTest extends WikiaBaseTest {
 	 * @dataProvider getCuratedContentItemsDataProvider
 	 */
 	public function testGetCuratedContentItems( $expected, $data, $processCuratedContentItemData ) {
-		$mercuryApiMock =
-			$this->getMockBuilder( 'MercuryApi' )->setMethods( [ 'processCuratedContentItem' ] )->getMock();
+		$mercuryApiMock = $this->getMockBuilder( 'MercuryApi' )
+			->setMethods( [ 'processCuratedContentItem' ] )
+			->getMock();
+
+		if ( empty( $data ) ) {
+			$map = [ $data, null ];
+		} else {
+			$map = array_map( null, $data, $processCuratedContentItemData );
+		}
 
 		$mercuryApiMock->expects( $this->any() )
 			->method( 'processCuratedContentItem' )
-			->willReturn( $processCuratedContentItemData );
+			->will( $this->returnValueMap( $map ) );
 
 		$this->assertEquals( $expected, $mercuryApiMock->getCuratedContentItems( $data ) );
 	}
@@ -183,6 +192,15 @@ class MercuryApiModelTest extends WikiaBaseTest {
 						'type' => 'category',
 						'image_url' => 'image_url_3',
 						'article_local_url' => '/wiki/Category:Category_name_0'
+					],
+					[
+						'title' => 'Category:Category_name_1',
+						'label' => 'Category Name One',
+						'image_id' => 8192,
+						'article_id' => 512,
+						'type' => 'category',
+						'image_url' => 'image_url_4',
+						'article_local_url' => '/wiki/Category:Category_name_1'
 					]
 				],
 				'$data' => [
@@ -193,33 +211,9 @@ class MercuryApiModelTest extends WikiaBaseTest {
 						'article_id' => 0,
 						'type' => 'category',
 						'image_url' => 'image_url_3',
-					]
-				],
-				'$processCuratedContentItemData' => [
-					'title' => 'Category:Category_name_0',
-					'label' => 'Category Name Zero',
-					'image_id' => 4096,
-					'article_id' => 0,
-					'type' => 'category',
-					'image_url' => 'image_url_3',
-					'article_local_url' => '/wiki/Category:Category_name_0'
-				],
-			],
-			[
-				'$expected' => [
+					],
 					[
-						'title' => 'Category:Category_name_122',
-                                        	'label' => 'Category Name One',
-                                        	'image_id' => 8192,
-                                        	'article_id' => 512,
-                                        	'type' => 'category',
-                                        	'image_url' => 'image_url_4',
-                                        	'article_local_url' => '/wiki/Category:Category_name_122'
-					]
-				],
-				'$data' => [
-					[
-						'title' => 'Category:Category_name_122',
+						'title' => 'Category:Category_name_1',
 						'label' => 'Category Name One',
 						'image_id' => 8192,
 						'article_id' => 512,
@@ -228,14 +222,25 @@ class MercuryApiModelTest extends WikiaBaseTest {
 					]
 				],
 				'$processCuratedContentItemData' => [
-					'title' => 'Category:Category_name_122',
-					'label' => 'Category Name One',
-					'image_id' => 8192,
-					'article_id' => 512,
-					'type' => 'category',
-					'image_url' => 'image_url_4',
-					'article_local_url' => '/wiki/Category:Category_name_122'
-				],
+					[
+						'title' => 'Category:Category_name_0',
+						'label' => 'Category Name Zero',
+						'image_id' => 4096,
+						'article_id' => 0,
+						'type' => 'category',
+						'image_url' => 'image_url_3',
+						'article_local_url' => '/wiki/Category:Category_name_0'
+					],
+					[
+						'title' => 'Category:Category_name_1',
+						'label' => 'Category Name One',
+						'image_id' => 8192,
+						'article_id' => 512,
+						'type' => 'category',
+						'image_url' => 'image_url_4',
+						'article_local_url' => '/wiki/Category:Category_name_1'
+					]
+				]
 			],
 		];
 	}
