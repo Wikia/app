@@ -268,10 +268,11 @@ class TemplateConverter {
 	private function prepareVariableLabels( $variables, $templateVariables ) {
 		foreach ( $variables as $variable ) {
 			if ( !empty( $variable[2] ) ) {
-				preg_match( self::TEMPLATE_VARIABLE_PATTERN, $variable[2], $templateName );
+				preg_match( self::TEMPLATE_VARIABLE_PATTERN, $variable[2], $variableName );
+				list( $variableName, $default ) = $this->getVariableData( $variableName[1] );
 
-				if ( !empty( $templateName[1] ) && !empty( $variable[1] ) ) {
-					$templateVariables[$templateName[1]]['label'] = trim( $variable[1] );
+				if ( !empty( $variableName ) && !empty( $variable[1] ) ) {
+					$templateVariables[$variableName]['label'] = trim( $variable[1] );
 				}
 			}
 		}
