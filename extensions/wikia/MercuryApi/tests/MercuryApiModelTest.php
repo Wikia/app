@@ -242,6 +242,104 @@ class MercuryApiModelTest extends WikiaBaseTest {
 					]
 				]
 			],
+			[
+				'$expected' => [
+					[
+						'title' => 'Article_title',
+						'label' => 'Article label',
+						'image_id' => 256,
+						'article_id' => 128,
+						'type' => 'article',
+						'image_url' => 'image_url_5',
+						'article_local_url' => '/Article_title'
+					],
+					[
+						'title' => 'User_blog:Warkot/Such_Post',
+						'label' => 'Awesome blog post',
+						'image_id' => 64,
+						'article_id' => 32,
+						'type' => 'blog',
+						'image_url' => 'image_url_6',
+						'article_local_url' => '/User_blog:Warkot/Such_Post'
+					]
+				],
+				'$data' => [
+					[
+						'title' => 'Article_title',
+						'label' => 'Article label',
+						'image_id' => 256,
+						'article_id' => 128,
+						'type' => 'article',
+						'image_url' => 'image_url_5',
+					],
+					[
+						'title' => 'User_blog:Warkot/Such_Post',
+						'label' => 'Awesome blog post',
+						'image_id' => 64,
+						'article_id' => 32,
+						'type' => 'blog',
+						'image_url' => 'image_url_6',
+					]
+				],
+				'$processCuratedContentItemData' => [
+					[
+						'title' => 'Article_title',
+						'label' => 'Article label',
+						'image_id' => 256,
+						'article_id' => 128,
+						'type' => 'article',
+						'image_url' => 'image_url_5',
+						'article_local_url' => '/Article_title'
+					],
+					[
+						'title' => 'User_blog:Warkot/Such_Post',
+						'label' => 'Awesome blog post',
+						'image_id' => 64,
+						'article_id' => 32,
+						'type' => 'blog',
+						'image_url' => 'image_url_6',
+						'article_local_url' => '/User_blog:Warkot/Such_Post'
+					]
+				]
+			],
+			[
+				'$expected' => [
+					[
+						'title' => 'Article_title',
+						'label' => 'Article label',
+						'image_id' => 256,
+						'article_id' => 128,
+						'type' => 'article',
+						'image_url' => 'image_url_5',
+						'article_local_url' => '/Article_title'
+					]
+				],
+				'$data' => [
+					[
+						'title' => 'Article_title',
+						'label' => 'Article label',
+						'image_id' => 256,
+						'article_id' => 128,
+						'type' => 'article',
+						'image_url' => 'image_url_5',
+					],
+					[
+						'article_id' => null
+					]
+				],
+				'$processCuratedContentItemData' => [
+					[
+						'title' => 'Article_title',
+						'label' => 'Article label',
+						'image_id' => 256,
+						'article_id' => 128,
+						'type' => 'article',
+						'image_url' => 'image_url_5',
+						'article_local_url' => '/Article_title'
+					],
+					null
+				]
+			]
 		];
 	}
 
@@ -277,6 +375,14 @@ class MercuryApiModelTest extends WikiaBaseTest {
 			[
 				'$expected' => null,
 				'$item' => [ ],
+				'$wgArticlePath' => '',
+				'$getLocalURL' => ''
+			],
+			[
+				'$expected' => null,
+				'$item' => [
+					'article_id' => null
+				],
 				'$wgArticlePath' => '',
 				'$getLocalURL' => ''
 			],
