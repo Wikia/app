@@ -47,7 +47,8 @@ class PreferenceKeyValueService implements PreferenceService {
 		try {
 			$profiler_start = $this->startProfile();
 			$ret = $this->persistenceAdapter->save( $userId, $preferences );
-			$this->endProfile(PreferenceKeyValueService::PROFILE_EVENT, $profiler_start, ['user_id' => $userId, ]);
+			$this->endProfile( PreferenceKeyValueService::PROFILE_EVENT, $profiler_start,
+				['user_id' => $userId, 'method' => 'setPreferences'] );
 
 			return $ret;
 		} catch (\Exception $e) {
@@ -63,7 +64,8 @@ class PreferenceKeyValueService implements PreferenceService {
 		try {
 			$profiler_start = $this->startProfile();
 			$preferences = $this->persistenceAdapter->get( $userId );
-			$this->endProfile(PreferenceKeyValueService::PROFILE_EVENT, $profiler_start, ['user_id' => $userId, ]);
+			$this->endProfile( PreferenceKeyValueService::PROFILE_EVENT, $profiler_start,
+				['user_id' => $userId, 'method' => 'getPreferences'] );
 		} catch (\Exception $e) {
 			$this->error($e->getMessage(), [
 				'user' => $userId
