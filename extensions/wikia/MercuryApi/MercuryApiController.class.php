@@ -95,10 +95,9 @@ class MercuryApiController extends WikiaController {
 	 * @param int $descLength
 	 *
 	 * @return string
-	 * @throws NotFoundApiException
 	 * @throws WikiaException
 	 */
-	private function getArticleDescription( $article, $descLength = 100 ) {
+	private function getArticleDescription( Article $article, $descLength = 100 ) {
 		$title = $article->getTitle();
 		$sMessage = null;
 
