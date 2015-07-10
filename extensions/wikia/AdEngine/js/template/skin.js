@@ -49,6 +49,9 @@ define('ext.wikia.adEngine.template.skin', [
 					};
 					if (params.backgroundColor) {
 						doc.documentElement.style.backgroundColor = '#' + params.backgroundColor;
+						if (win.ads.context.providers.sevenOneMedia) {
+							doc.body.style.backgroundColor = 'transparent';
+						}
 					}
 					if (params.middleColor) {
 						bcParams.backgroundMiddleColor = '#' + params.middleColor;
