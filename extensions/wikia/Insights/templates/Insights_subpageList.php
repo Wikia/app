@@ -66,7 +66,7 @@
 							</td>
 							<?php if ( isset( $item['altaction'] ) && !empty( $item['altaction'] ) ) : ?>
 							<td class="insights-list-cell insights-list-cell-altaction">
-								<a class="wikia-button <?= $item['altaction']['class'] ?>" href="<?= $item['altaction']['url'] ?>">
+								<a class="wikia-button <?= $item['altaction']['class'] ?>" href="<?= $item['altaction']['url'] ?>" target="_blank">
 									<?= $item['altaction']['text'] ?>
 								</a>
 							</td>
