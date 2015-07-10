@@ -79,6 +79,14 @@ class ApprovedraftAction extends FormlessAction {
 		// Get contents of draft page
 		$article = Article::newFromId( $draftTitle->getArticleID() );
 		$draftContent = $article->getContent();
+
+		// update the draft to show a preview of the correct page
+		$draftContent = str_replace(
+			$draftTitle->getText(),
+			$draftTitle->getBaseText(),
+			$draftContent
+		);
+
 		// Get WikiPage object of parent page
 		$page = WikiPage::newFromID( $parentTitle->getArticleID() );
 		// Save to parent page
