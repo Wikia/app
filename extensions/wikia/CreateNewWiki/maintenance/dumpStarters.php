@@ -56,9 +56,7 @@ class DumpStarters extends Maintenance {
 		$res = $swift->store(
 			$fp,
 			\Wikia\CreateNewWiki\Starters::getStarterDumpPath( $starter ),
-			[
-				'Last-Modified' => date( 'r' ),
-			],
+			[],
 			self::DUMP_MIME_TYPE
 		);
 
