@@ -24,7 +24,7 @@ class GenericController extends EmailController {
 		$this->salutation = $this->request->getVal( 'salutation', $this->getSalutation() );
 		$this->category = $this->request->getVal( 'category', self::getControllerShortName() );
 
-			$this->subject = $this->request->getVal( 'subject' );
+		$this->subject = $this->request->getVal( 'subject' );
 		$this->body = $this->request->getVal( 'body' );
 
 		$this->assertValidParams();
