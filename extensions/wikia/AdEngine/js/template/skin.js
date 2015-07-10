@@ -35,6 +35,9 @@ define('ext.wikia.adEngine.template.skin', [
 
 			if (win.wgOasisResponsive || win.wgOasisBreakpoints || win.skin === 'venus') {
 				require(['wikia.backgroundchanger'], function (backgroundchanger) {
+					if (!params.middleColor) {
+						params.middleColor = params.backgroundColor;
+					}
 					var bcParams = {
 						skinImage: params.skinImage,
 						skinImageWidth: 1700,
