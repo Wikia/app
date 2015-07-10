@@ -10,6 +10,11 @@ class MercuryApiModelTest extends WikiaBaseTest {
 
 	/**
 	 * @dataProvider getSiteMessageDataProvider
+	 *
+	 * @param $expected
+	 * @param $isDisabled
+	 * @param $siteMessageMock
+	 * @param $wgSitenameMock
 	 */
 	public function testGetSiteMessage( $expected, $isDisabled, $siteMessageMock, $wgSitenameMock ) {
 		$messageMock = $this->getMockBuilder( 'Message' )
@@ -58,6 +63,9 @@ class MercuryApiModelTest extends WikiaBaseTest {
 
 	/**
 	 * @dataProvider getCuratedContentSectionsDataProvider
+	 *
+	 * @param $expected
+	 * @param $data
 	 */
 	public function testGetCuratedContentSections( $expected, $data ) {
 		$mercuryApi = new MercuryApi();
@@ -156,6 +164,10 @@ class MercuryApiModelTest extends WikiaBaseTest {
 
 	/**
 	 * @dataProvider getCuratedContentItemsDataProvider
+	 *
+	 * @param $expected
+	 * @param $data
+	 * @param $itemData
 	 */
 	public function testGetCuratedContentItems( $expected, $data, $itemData ) {
 		$mercuryApiMock = $this->getMockBuilder( 'MercuryApi' )
@@ -345,6 +357,11 @@ class MercuryApiModelTest extends WikiaBaseTest {
 
 	/**
 	 * @dataProvider processCuratedContentItemDataProvider
+	 *
+	 * @param $expected
+	 * @param $item
+	 * @param $wgArticlePath
+	 * @param $getLocalURL
 	 */
 	public function testProcessCuratedContentItem( $expected, $item, $wgArticlePath, $getLocalURL ) {
 		$mercuryApi = new MercuryApi();
@@ -454,6 +471,12 @@ class MercuryApiModelTest extends WikiaBaseTest {
 
 	/**
 	 * @dataProvider processCuratedContentDataProvider
+	 *
+	 * @param $expected
+	 * @param $data
+	 * @param $sectionsData
+	 * @param $itemsData
+	 * @param $featuredData
 	 */
 	public function testProcessCuratedContent( $expected, $data, $sectionsData, $itemsData, $featuredData ) {
 		$mercuryApiMock = $this->getMockBuilder( 'MercuryApi' )
@@ -484,6 +507,103 @@ class MercuryApiModelTest extends WikiaBaseTest {
 				'$itemsData' => [ ],
 				'$featuredData' => [ ]
 			],
+		];
+	}
+
+	/**
+	 * @dataProvider processTrendingVideoDataDataProvider
+	 *
+	 * @param $expected
+	 * @param $data
+	 */
+	public function testProcessTrendingVideoData( $expected, $data ) {
+		$mercuryApi = new MercuryApi();
+
+		$this->getStaticMethodMock( 'Title', 'newFromText' )
+			->expects( $this->any() )
+			->method( 'newFromText' )
+			->will( $this->returnArgument( 0 ) );
+
+		$this->getStaticMethodMock( 'WikiaFileHelper', 'getMediaDetail' )
+			->expects( $this->any() )
+			->method( 'getMediaDetail' )
+			->will( $this->returnCallback( function ( $title ) {
+				return [
+					'type' => 'video',
+					'title' => $title
+				];
+			} ) );
+
+		$this->getStaticMethodMock( 'ArticleAsJson', 'createMediaObject' )
+			->expects( $this->any() )
+			->method( 'createMediaObject' )
+			->will( $this->returnCallback( function ( $mediaDetail, $title ) {
+				return [
+					'type' => $mediaDetail['type'],
+					'title' => $title
+				];
+			} ) );
+
+		$this->assertEquals( $expected, $mercuryApi->processTrendingVideoData( $data ) );
+	}
+
+	public function processTrendingVideoDataDataProvider() {
+		return [
+			[
+				'$expected' => null,
+				'$data' => [
+					'videos' => 'strange error'
+				]
+			],
+			[
+				'$expected' => null,
+				'$data' => [
+					'items' => []
+				]
+			],
+			[
+				'$expected' => [],
+				'$data' => [
+					'videos' => []
+				]
+			],
+			[
+				'$expected' => [
+					[
+						'title' => 'Video 1',
+						'type' => 'video'
+					]
+				],
+				'$data' => [
+					'videos' => [
+						[
+							'title' => 'Video 1'
+						]
+					]
+				]
+			],
+			[
+				'$expected' => [
+					[
+						'title' => 'Video 1',
+						'type' => 'video'
+					],
+					[
+						'title' => 'Video 2',
+						'type' => 'video'
+					]
+				],
+				'$data' => [
+					'videos' => [
+						[
+							'title' => 'Video 1'
+						],
+						[
+							'title' => 'Video 2'
+						]
+					]
+				]
+			]
 		];
 	}
 }
