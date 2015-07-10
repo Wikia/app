@@ -6,7 +6,9 @@ use Email\Check;
 use Email\EmailController;
 
 class GenericController extends EmailController {
+	/** @var  \MailAddress */
 	protected $toAddress;
+
 	protected $subject;
 	protected $salutation;
 	protected $body;
