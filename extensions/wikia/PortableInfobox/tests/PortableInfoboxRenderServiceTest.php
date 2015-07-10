@@ -1,7 +1,6 @@
 <?php
 
 class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
-	private $infoboxRenderService;
 
 	protected function setUp() {
 		$this->setupFile = dirname( __FILE__ ) . '/../PortableInfobox.setup.php';
@@ -12,10 +11,11 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 	 * @param $isWikiaMobile
 	 * @param $input to check presence of 'invalidImage' field
 	 * @return PHPUnit_Framework_MockObject_MockObject
-     */
-	private function getInfoboxRenderServiceMock( $isWikiaMobile, $input )
+	 */
+	private function getInfoboxRenderServiceMock( $input )
 	{
-		$invalidImage = ( isset( $input[ 'invalidImage' ] ) && $input[ 'invalidImage' ]);
+		$invalidImage = isset( $input[ 'invalidImage' ] ) && $input[ 'invalidImage' ];
+		$isWikiaMobile = isset( $input[ 'isWikiaMobile' ] ) && $input[ 'isWikiaMobile' ];
 		$mockThumbnailImage = $invalidImage ? false : $this->getThumbnailImageMock();
 
 		$mock = $this->getMockBuilder( 'PortableInfoboxRenderService' )
@@ -35,7 +35,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 	 * @desc Returns the ThumbnailImage with hardcoded values returned by
 	 * 'getUrl', 'getWidth' and 'getHeight' functions.
 	 * @return PHPUnit_Framework_MockObject_MockObject
-     */
+	 */
 	private function getThumbnailImageMock() {
 		$mockThumbnailImage = $this->getMockBuilder( 'ThumbnailImage' )
 			->setMethods( [ 'getUrl', 'getWidth', 'getHeight' ] )
@@ -53,6 +53,15 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 		return $mockThumbnailImage;
 	}
 
+	private function processInfoboxHTML( $html ) {
+		$DOM = new DOMDocument('1.0');
+		$DOM->formatOutput = true;
+		$DOM->preserveWhiteSpace = false;
+		$DOM->loadXML($html);
+
+		return $DOM->saveXML();
+	}
+
 	/**
 	 * @param $input
 	 * @param $expectedOutput
@@ -60,45 +69,11 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 	 * @dataProvider testRenderInfoboxDataProvider
 	 */
 	public function testRenderInfobox( $input, $expectedOutput, $description ) {
-		$this->infoboxRenderService = $this->getInfoboxRenderServiceMock( false, $input );
-		$actualOutput = $this->infoboxRenderService->renderInfobox( $input );
+		$infoboxRenderService = $this->getInfoboxRenderServiceMock( $input );
+		$actualOutput = $infoboxRenderService->renderInfobox( $input );
 
-		$actualDOM = new DOMDocument('1.0');
-		$expectedDOM = new DOMDocument('1.0');
-		$actualDOM->formatOutput = true;
-		$actualDOM->preserveWhiteSpace = false;
-		$expectedDOM->formatOutput = true;
-		$expectedDOM->preserveWhiteSpace = false;
-		$actualDOM->loadXML($actualOutput);
-		$expectedDOM->loadXML($expectedOutput);
-
-		$expectedHtml = $expectedDOM->saveXML();
-		$actualHtml = $actualDOM->saveXML();
-
-		$this->assertEquals( $expectedHtml, $actualHtml, $description );
-	}
-
-	/**
-	 * @param $input
-	 * @param $expectedOutput
-	 * @param $description
-	 * @dataProvider testRenderMobileInfoboxDataProvider
-	 */
-	public function testRenderMobileInfobox( $input, $expectedOutput, $description ) {
-		$this->infoboxRenderService = $this->getInfoboxRenderServiceMock( true, $input );
-		$actualOutput = $this->infoboxRenderService->renderInfobox( $input );
-
-		$actualDOM = new DOMDocument('1.0');
-		$expectedDOM = new DOMDocument('1.0');
-		$actualDOM->formatOutput = true;
-		$actualDOM->preserveWhiteSpace = false;
-		$expectedDOM->formatOutput = true;
-		$expectedDOM->preserveWhiteSpace = false;
-		$actualDOM->loadXML($actualOutput);
-		$expectedDOM->loadXML($expectedOutput);
-
-		$expectedHtml = $expectedDOM->saveXML();
-		$actualHtml = $actualDOM->saveXML();
+		$expectedHtml = $this->processInfoboxHTML($expectedOutput);
+		$actualHtml = $this->processInfoboxHTML($actualOutput);
 
 		$this->assertEquals( $expectedHtml, $actualHtml, $description );
 	}
@@ -389,14 +364,10 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 								</nav>
 							</aside>',
 				'description' => 'Infobox with navigation'
-			]
-		];
-	}
-
-	public function testRenderMobileInfoboxDataProvider() {
-		return [
+			],
 			[
 				'input' => [
+					'isWikiaMobile' => true,
 					[
 						'type' => 'image',
 						'data' => [
@@ -413,7 +384,40 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 									<img src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D" data-src="http://image.jpg" class="portable-infobox-image lazy media article-media" alt="image alt"  data-image-key="test1" data-image-name="test1" data-ref="1" data-params=\'[{"name":"test1", "full":"http://image.jpg"}]\' />
 								</div>
 							</aside>',
-				'description' => 'Only image for mobile'
+				'description' => 'Mobile: Only image'
+			],
+			[
+				'input' => [
+					'invalidImage' => true,
+					'isWikiaMobile' => true,
+					[
+						'type' => 'title',
+						'data' => [
+							'value' => 'Test Title'
+						]
+					],
+					[
+						'type' => 'image',
+						'data' => []
+					],
+					[
+						'type' => 'data',
+						'data' => [
+							'label' => 'test label',
+							'value' => 'test value'
+						]
+					]
+				],
+				'output' => '<aside class="portable-infobox">
+								<div class="portable-infobox-item item-type-title portable-infobox-item-margins">
+									<h2 class="portable-infobox-title">Test Title</h2>
+								</div>
+								<div class="portable-infobox-item item-type-key-val portable-infobox-item-margins">
+									<h3 class="portable-infobox-item-label portable-infobox-secondary-font">test label</h3>
+									<div class="portable-infobox-item-value">test value</div>
+									</div>
+							</aside>',
+				'description' => 'Mobile: Simple infobox with title, INVALID image and key-value pair'
 			]
 		];
 	}
