@@ -8,26 +8,26 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 		parent::setUp();
 	}
 
-	private function getInfoboxRenderServiceMock( $isWikiaMobile, $data )
+	private function getInfoboxRenderServiceMock( $isWikiaMobile, $input )
 	{
-		$mock = $this->getMockBuilder('PortableInfoboxRenderService')
-			->setMethods(['getThumbnail', 'isWikiaMobile'])
+		$invalidImage = ( isset( $input[ 'invalidImage' ] ) && $input[ 'invalidImage' ]);
+		$mockThumbnailImage = $invalidImage ? false : $this->getThumbnailImageMock();
+
+		$mock = $this->getMockBuilder( 'PortableInfoboxRenderService' )
+			->setMethods( [ 'getThumbnail', 'isWikiaMobile' ] )
 			->getMock();
 
-		$mock->expects($this->any())
-			->method('isWikiaMobile')
-			->will($this->returnValue($isWikiaMobile));
+		$mock->expects( $this->any() )
+			->method( 'isWikiaMobile' )
+			->will( $this->returnValue( $isWikiaMobile ) );
 
-		$mockThumbnailImage = $this->getThumbnailImageMock($data);
-
-		$mock->expects($this->any())
-			->method('getThumbnail')
-			->will($this->returnValue($mockThumbnailImage));
+		$mock->expects( $this->any() )
+			->method( 'getThumbnail' )
+			->will( $this->returnValue( $mockThumbnailImage ) );
 		return $mock;
 	}
 
-	private function getThumbnailImageMock( $data ) {
-		if (empty($data)) return false;
+	private function getThumbnailImageMock() {
 		$mockThumbnailImage = $this->getMockBuilder( 'ThumbnailImage' )
 			->setMethods( [ 'getUrl', 'getWidth', 'getHeight' ] )
 			->getMock();
@@ -50,7 +50,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 	 * @dataProvider testRenderInfoboxDataProvider
 	 */
 	public function testRenderInfobox( $input, $expectedOutput, $description ) {
-		$this->infoboxRenderService = $this->getInfoboxRenderServiceMock( true, $input );
+		$this->infoboxRenderService = $this->getInfoboxRenderServiceMock( false, $input );
 		$actualOutput = $this->infoboxRenderService->renderInfobox( $input );
 
 		$actualDOM = new DOMDocument('1.0');
@@ -75,7 +75,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 	 * @dataProvider testRenderMobileInfoboxDataProvider
 	 */
 	public function testRenderMobileInfobox( $input, $expectedOutput, $description ) {
-		$this->getInfoboxRenderServiceMock( true, $input );
+		$this->infoboxRenderService = $this->getInfoboxRenderServiceMock( true, $input );
 		$actualOutput = $this->infoboxRenderService->renderInfobox( $input );
 
 		$actualDOM = new DOMDocument('1.0');
@@ -211,6 +211,38 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 									</div>
 							</aside>',
 				'description' => 'Simple infobox with title, image and key-value pair'
+			],
+			[
+				'input' => [
+					'invalidImage' => true,
+					[
+						'type' => 'title',
+						'data' => [
+							'value' => 'Test Title'
+						]
+					],
+					[
+						'type' => 'image',
+						'data' => []
+					],
+					[
+						'type' => 'data',
+						'data' => [
+							'label' => 'test label',
+							'value' => 'test value'
+						]
+					]
+				],
+				'output' => '<aside class="portable-infobox">
+								<div class="portable-infobox-item item-type-title portable-infobox-item-margins">
+									<h2 class="portable-infobox-title">Test Title</h2>
+								</div>
+								<div class="portable-infobox-item item-type-key-val portable-infobox-item-margins">
+									<h3 class="portable-infobox-item-label portable-infobox-secondary-font">test label</h3>
+									<div class="portable-infobox-item-value">test value</div>
+									</div>
+							</aside>',
+				'description' => 'Simple infobox with title, INVALID image and key-value pair'
 			],
 			[
 				'input' => [

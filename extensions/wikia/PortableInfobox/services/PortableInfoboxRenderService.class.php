@@ -86,10 +86,11 @@ class PortableInfoboxRenderService extends WikiaService {
 
 	/**
 	 * renders part of infobox
+	 * If image element has invalid thumbnail, doesn't render this element at all.
 	 *
 	 * @param string $type
 	 * @param array $data
-	 * @return string - HTML
+	 * @return bool|false|string - HTML
 	 */
 	private function renderItem( $type, array $data ) {
 		//TODO: with validated the performance of render Service and in the next phase we want to refactor it (make
@@ -98,13 +99,13 @@ class PortableInfoboxRenderService extends WikiaService {
 			$data[ 'key' ] = urlencode( $data[ 'key' ] );
 			$thumbnail = $this->getThumbnail( $data['name'] );
 
-			if ( $thumbnail ) {
-				$data[ 'height' ] = $thumbnail->getHeight();
-				$data[ 'width' ] = $thumbnail->getWidth();
-				$data[ 'thumbnail' ] = $thumbnail->getUrl();
-			} else {
-				$data[ 'thumbnail' ] = '';
+			if (!$thumbnail) {
+				return false;
 			}
+
+			$data[ 'height' ] = $thumbnail->getHeight();
+			$data[ 'width' ] = $thumbnail->getWidth();
+			$data[ 'thumbnail' ] = $thumbnail->getUrl();
 
 			if ( $this->isWikiaMobile() ) {
 				$type = $type . self::MOBILE_TEMPLATE_POSTFIX;
