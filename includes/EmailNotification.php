@@ -469,6 +469,8 @@ class EmailNotification {
 			$controller = 'Email\Controller\UserBlogPost';
 		} elseif ( $this->isCategoryAdd() ) {
 			$controller = 'Email\Controller\CategoryAdd';
+		} elseif ( $this->isUserRightsChange() ) {
+			$controller = 'Email\Controller\UserRightsChanged';
 		}
 
 		return $controller;
@@ -588,6 +590,10 @@ class EmailNotification {
 
 	private function isCategoryAdd() {
 		return $this->action == FollowHelper::LOG_ACTION_CATEGORY_ADD;
+	}
+
+	private function isUserRightsChange() {
+		return $this->action == 'rights';
 	}
 
 	private function sendUsingUserMailer( \User $user ) {
