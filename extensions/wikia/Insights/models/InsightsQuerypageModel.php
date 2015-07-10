@@ -110,7 +110,7 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 	 * @param string $singleProperty
 	 * @return string|array
 	 */
-	public function getLoopNotificationConfig( $singleProperty = '' ){
+	public function getLoopNotificationConfig( $singleProperty = '' ) {
 		if ( !empty( $singleProperty )
 			&& isset( $this->loopNotificationConfig[$singleProperty] )
 		) {
