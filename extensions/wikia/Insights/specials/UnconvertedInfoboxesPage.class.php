@@ -100,7 +100,7 @@ class UnconvertedInfoboxesPage extends PageQueryPage {
 			->runLoop( $dbr, function( &$nonportableTemplates, $row ) {
 				$title = Title::newFromText( $row->title, NS_TEMPLATE );
 				$contentText = ( new WikiPage( $title ) )->getText();
-				if ( $title !== null && self::isTitleWithNonportableInfobox( $title->getText(), $contentText ) ) {
+				if ( $title !== null && self::isTitleWithNonportableInfobox( $title, $contentText ) ) {
 					$links = $title->getIndirectLinks();
 					$nonportableTemplates[] = [
 						$this->getName(),
@@ -127,9 +127,19 @@ class UnconvertedInfoboxesPage extends PageQueryPage {
 	 * @param string $contentText
 	 * @return bool
 	 */
-	public static function isTitleWithNonportableInfobox( $titleText, $contentText ) {
+	public static function isTitleWithNonportableInfobox( $title, $contentText ) {
+		// ignore docs pages
+		if ( strpos( $title->getText(), '/doc' ) ) {
+			return false;
+		}
+
+		// ingore redirects
+		if ( $title->isRedirect() ) {
+			return false;
+		}
+
 		$titleNeedle = 'infobox';
-		if ( strripos( $titleText, $titleNeedle ) !== false ) {
+		if ( strripos( $title->getText(), $titleNeedle ) !== false ) {
 			$portableInfoboxNeedle = '<infobox';
 
 			// If a portable infobox markup was found
