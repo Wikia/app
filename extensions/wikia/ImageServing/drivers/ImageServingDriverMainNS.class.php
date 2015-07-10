@@ -46,7 +46,7 @@ class ImageServingDriverMainNS extends ImageServingDriverBase {
 				foreach ( $mimeTypes->mMediaTypes[ $type ] as $mime ) {
 					// parse mime type - "image/svg" -> "svg"
 					list( , $mimeMinor ) = explode( '/', $mime );
-					$mimeTypesBlacklist[ ] = $mimeMinor;
+					$mimeTypesBlacklist[] = $mimeMinor;
 				}
 			}
 
@@ -248,7 +248,7 @@ class ImageServingDriverMainNS extends ImageServingDriverBase {
 		$images = [ ];
 		$imageCount = 0;
 		foreach ( $articleIds as $id ) {
-			$articleImages = PortableInfoboxDataService::newFromPageID( $id )->getImages();
+			$articleImages = $this->getInfoboxImagesForId( $id );
 			foreach ( $articleImages as $image ) {
 				$this->addImage( $image, $id, $imageCount++ );
 			}
@@ -266,5 +266,11 @@ class ImageServingDriverMainNS extends ImageServingDriverBase {
 		wfProfileOut( __METHOD__ );
 
 		return $imageCount;
+	}
+
+	protected function getInfoboxImagesForId( $id ) {
+		$articleImages = PortableInfoboxDataService::newFromPageID( $id )->getImages();
+
+		return $articleImages;
 	}
 }
