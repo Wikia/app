@@ -57,6 +57,6 @@ class Starters {
 	 * @return string
 	 */
 	public static function getStarterDumpPath( $starter ) {
-		return sprintf( '/dumps/%s.xml', $starter );
+		return sprintf( '/dumps/%s.xml.bz2', $starter );
 	}
 }
