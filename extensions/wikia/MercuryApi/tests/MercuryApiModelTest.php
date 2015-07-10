@@ -252,7 +252,6 @@ class MercuryApiModelTest extends WikiaBaseTest {
 		$mercuryApi = new MercuryApi();
 
 		$titleMock = $this->getMockBuilder( 'Title' )
-			->disableOriginalConstructor()
 			->setMethods( [ 'getLocalURL' ] )
 			->getMock();
 
@@ -260,7 +259,16 @@ class MercuryApiModelTest extends WikiaBaseTest {
 			->method( 'getLocalURL' )
 			->willReturn( $getLocalURL );
 
+		$this->getStaticMethodMock( 'Title', 'newFromID' )
+			->expects( $this->any() )
+			->method( 'newFromID' )
+			->will( $this->returnValueMap( [
+				[ 0, null ],
+				[ $item['article_id'], $titleMock ]
+			] ) );
+
 		$this->mockGlobalVariable( 'wgArticlePath', $wgArticlePath );
+
 		$this->assertEquals( $expected, $mercuryApi->processCuratedContentItem( $item ) );
 	}
 
