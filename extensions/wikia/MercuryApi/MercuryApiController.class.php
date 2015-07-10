@@ -419,6 +419,8 @@ class MercuryApiController extends WikiaController {
 	}
 
 	public function getCuratedContentData( $section = null ) {
+		$data = [ ];
+
 		try {
 			$data = WikiaDataAccess::cache( self::curatedContentDataMemcKey( $section ), WikiaResponse::CACHE_STANDARD,
 				function() use ( $section ) {
@@ -451,7 +453,7 @@ class MercuryApiController extends WikiaController {
 
 		try {
 			$rawData = $this->sendRequest( 'ArticlesApi', 'getTop', $params )->getData();
-			$data = $this->mercuryApi->processTrendingArticlesData( $rawData, [ 'title', 'thumbnail', 'url' ] );
+			$data = $this->mercuryApi->processTrendingArticlesData( $rawData );
 		} catch ( NotFoundException $ex ) {
 			WikiaLogger::instance()->info( 'Trending articles data is empty' );
 		}

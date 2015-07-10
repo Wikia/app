@@ -355,7 +355,7 @@ class MercuryApi {
 		return null;
 	}
 
-	public function processTrendingArticlesData( $data, $paramsToInclude = [] ) {
+	public function processTrendingArticlesData( $data ) {
 		$data = $data[ 'items' ];
 
 		if ( !isset( $data ) || !is_array( $data ) ) {
@@ -365,7 +365,7 @@ class MercuryApi {
 		$items = [];
 
 		foreach ( $data as $item ) {
-			$processedItem = $this->processTrendingDataItem( $item, $paramsToInclude );
+			$processedItem = $this->processTrendingArticlesItem( $item );
 
 			if ( !empty( $processedItem ) ) {
 				$items[] = $processedItem;
@@ -373,6 +373,28 @@ class MercuryApi {
 		}
 
 		return $items;
+	}
+
+	/**
+	 * @desc To save some bandwidth, the unnecessary params are stripped
+	 *
+	 * @param $item array
+	 * @return array
+	 */
+	public function processTrendingArticlesItem( $item ) {
+		$paramsToInclude = [ 'title', 'thumbnail', 'url' ];
+
+		$processedItem = [];
+
+		if ( !empty( $item ) && is_array( $item ) ) {
+			foreach ( $paramsToInclude as $param) {
+				if ( !empty( $item[ $param ] ) ) {
+					$processedItem[ $param ] = $item[ $param ];
+				}
+			}
+		}
+
+		return $processedItem;
 	}
 
 	public function processTrendingVideoData( $data ) {
@@ -397,30 +419,5 @@ class MercuryApi {
 		}
 
 		return $items;
-	}
-
-	/**
-	 * @desc To save some bandwidth, the unnecessary params are stripped
-	 *
-	 * @param $item array
-	 * @param $paramsToInclude array: leave empty to return all params
-	 * @return array
-	 */
-	private function processTrendingDataItem( $item, $paramsToInclude = [] ) {
-		if ( empty( $paramsToInclude ) ) {
-			return $item;
-		}
-
-		$processedItem = [];
-
-		if ( !empty( $item ) && is_array( $item ) && is_array( $paramsToInclude ) ) {
-			foreach ( $paramsToInclude as $param) {
-				if ( !empty( $item[ $param ] ) ) {
-					$processedItem[ $param ] = $item[ $param ];
-				}
-			}
-		}
-
-		return $processedItem;
 	}
 }
