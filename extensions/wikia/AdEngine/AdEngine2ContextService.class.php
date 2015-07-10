@@ -42,6 +42,7 @@ class AdEngine2ContextService {
 					'usePostScribe' => $wg->Request->getBool( 'usepostscribe', false ),
 				] ),
 				'targeting' => $this->filterOutEmptyItems( [
+					'enableKruxTargeting' => $wg->EnableKruxTargeting,
 					'enablePageCategories' => array_search( $langCode, $wg->AdPageLevelCategoryLangs ) !== false,
 					'pageArticleId' => $title->getArticleId(),
 					'pageIsArticle' => !!$title->getArticleId(),
@@ -69,7 +70,7 @@ class AdEngine2ContextService {
 				'slots' => $this->filterOutEmptyItems( [
 					'exitstitial' => $wg->EnableOutboundScreenExt,
 					'exitstitialRedirectDelay' => $wg->OutboundScreenRedirectDelay,
-					'invisibleHighImpact' => $wg->AdDriverEnableInvisibleHighImpactSlot,
+					'invisibleHighImpact' => $wg->AdDriverEnableeInvisibleHighImpactSlot,
 				] ),
 				'forcedProvider' => $wg->AdDriverForcedProvider
 			];
