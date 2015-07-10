@@ -8,6 +8,11 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 		parent::setUp();
 	}
 
+	/**
+	 * @param $isWikiaMobile
+	 * @param $input to check presence of 'invalidImage' field
+	 * @return PHPUnit_Framework_MockObject_MockObject
+     */
 	private function getInfoboxRenderServiceMock( $isWikiaMobile, $input )
 	{
 		$invalidImage = ( isset( $input[ 'invalidImage' ] ) && $input[ 'invalidImage' ]);
@@ -16,17 +21,21 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 		$mock = $this->getMockBuilder( 'PortableInfoboxRenderService' )
 			->setMethods( [ 'getThumbnail', 'isWikiaMobile' ] )
 			->getMock();
-
 		$mock->expects( $this->any() )
 			->method( 'isWikiaMobile' )
 			->will( $this->returnValue( $isWikiaMobile ) );
-
 		$mock->expects( $this->any() )
 			->method( 'getThumbnail' )
 			->will( $this->returnValue( $mockThumbnailImage ) );
+
 		return $mock;
 	}
 
+	/**
+	 * @desc Returns the ThumbnailImage with hardcoded values returned by
+	 * 'getUrl', 'getWidth' and 'getHeight' functions.
+	 * @return PHPUnit_Framework_MockObject_MockObject
+     */
 	private function getThumbnailImageMock() {
 		$mockThumbnailImage = $this->getMockBuilder( 'ThumbnailImage' )
 			->setMethods( [ 'getUrl', 'getWidth', 'getHeight' ] )
@@ -40,6 +49,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 		$mockThumbnailImage->expects( $this->any() )
 			->method( 'getHeight' )
 			->will( $this->returnValue( 200 ) );
+
 		return $mockThumbnailImage;
 	}
 
