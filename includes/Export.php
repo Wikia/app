@@ -939,6 +939,17 @@ class Dump7ZipOutput extends DumpPipeOutput {
 }
 
 
+/**
+ * Stream outputter to send data to a file.
+ * @ingroup Dump
+ *
+ * Wikia change - author: @macbre
+ */
+class DumpStreamOutput extends DumpFileOutput {
+	function __construct($handle) {
+		$this->handle = $handle;
+	}
+}
 
 /**
  * Dump output filter class.
