@@ -105,6 +105,10 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 		return 'insights-wanted-by';
 	}
 
+	public function purgeCacheAfterUpdateTask() {
+		return true;
+	}
+
 	/**
 	 * Returns a whole config for loop notification mechanism or its single property
 	 * @param string $singleProperty
@@ -544,6 +548,14 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 		}
 
 		return $next;
+	}
+
+	public function purgeInsightsCache() {
+		global $wgMemc;
+
+		$cacheKey = $this->getMemcKey( self::INSIGHTS_MEMC_ARTICLES_KEY );
+
+		$wgMemc->delete( $cacheKey );
 	}
 
 	/**
