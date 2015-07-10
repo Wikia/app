@@ -60,14 +60,14 @@ class InsightsUnconvertedInfoboxesModel extends InsightsQuerypageModel {
 
 		if ( $subpage->exists() ) {
 			$url = $subpage->getFullUrl();
-			$text = wfMessage( 'insights-altaction-convert' )->escaped();
+			$text = wfMessage( 'insights-altaction-seedraft' )->escaped();
 			$class = 'secondary';
 		} else {
 			$url = $subpage->getFullUrl( [
 				'action' => 'edit',
 				TemplateConverter::CONVERSION_MARKER => 1,
 			] );
-			$text = wfMessage( 'insights-altaction-seedraft' )->escaped();
+			$text = wfMessage( 'insights-altaction-convert' )->escaped();
 			$class = 'primary';
 		}
 
