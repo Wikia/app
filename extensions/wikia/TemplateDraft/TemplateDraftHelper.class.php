@@ -101,10 +101,10 @@ class TemplateDraftHelper {
 		$tc = new TemplateClassificationController( $title );
 		$type = $tc->getType();
 		return ( empty( $type ) || $type === $tc::TEMPLATE_INFOBOX )
-			&& !$this->titleHasPortableInfobox( $title );
+			&& !self::titleHasPortableInfobox( $title );
 	}
 
-	public function titleHasPortableInfobox( Title $title ) {
+	public static function titleHasPortableInfobox( Title $title ) {
 		$portableData = PortableInfoboxDataService::newFromTitle( $title )->getData();
 		return !empty( $portableData );
 	}

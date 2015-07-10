@@ -1,6 +1,6 @@
 <?php
 
-namespace Wikia\Persistence\User;
+namespace Wikia\Persistence\User\Preferences;
 
 use Iterator;
 use Wikia\Domain\User\Preference;
@@ -22,8 +22,8 @@ class PreferencePersistenceMySQL implements PreferencePersistence {
 
 	/**
 	 * @Inject({
-	 *   Wikia\Persistence\User\PreferencePersistenceMySQL::CONNECTION_MASTER,
-	 *   Wikia\Persistence\User\PreferencePersistenceMySQL::CONNECTION_SLAVE})
+	 *   Wikia\Persistence\User\Preferences\PreferencePersistenceMySQL::CONNECTION_MASTER,
+	 *   Wikia\Persistence\User\Preferences\PreferencePersistenceMySQL::CONNECTION_SLAVE})
 	 * @param \DatabaseMysqli $master
 	 * @param \DatabaseMysqli $slave
 	 * @param array           $whiteList of user preference

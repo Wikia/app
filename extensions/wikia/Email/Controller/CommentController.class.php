@@ -97,8 +97,9 @@ abstract class CommentController extends EmailController {
 
 	protected function getSummary() {
 		$articleTitle = $this->pageTitle->getText();
+		$articleUrl = $this->pageTitle->getFullURL();
 
-		return $this->getMessage( $this->getSummaryKey(), $articleTitle )->text();
+		return $this->getMessage( $this->getSummaryKey(), $articleUrl, $articleTitle )->parse();
 	}
 
 	abstract protected function getSummaryKey();
@@ -158,7 +159,7 @@ abstract class CommentController extends EmailController {
 
 class ArticleCommentController extends CommentController {
 	protected function getSubjectKey() {
-		return 'emailext-articlecomment-summary';
+		return 'emailext-articlecomment-subject';
 	}
 
 	protected function getSummaryKey() {
@@ -193,7 +194,7 @@ class ArticleCommentController extends CommentController {
 
 class BlogCommentController extends CommentController {
 	protected function getSubjectKey() {
-		return 'emailext-blogcomment-summary';
+		return 'emailext-blogcomment-subject';
 	}
 
 	protected function getSummaryKey() {
