@@ -674,12 +674,22 @@ abstract class EmailController extends \WikiaController {
 	 * @return string
 	 */
 	private static function getLegendName() {
-		$legendName = "";
-		if ( preg_match( self::EMAIL_CONTROLLER_REGEX, get_called_class(), $matches ) ) {
-			$legendName = $matches[1] . " Email";
+		$legendName = self::getControllerShortName() . ' Email';
+		return $legendName;
+	}
+
+	/**
+	 * Get a shortened version of the controller name.  Useful for admin tool and email category
+	 *
+	 * @return string
+	 */
+	public static function getControllerShortName() {
+		$name = get_called_class();
+		if ( preg_match( self::EMAIL_CONTROLLER_REGEX, $name, $matches ) ) {
+			$name = $matches[1];
 		}
 
-		return $legendName;
+		return $name;
 	}
 
 	/**

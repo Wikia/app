@@ -337,6 +337,7 @@ class LightboxController extends WikiaController {
 			if ( !empty( $addresses ) && !empty( $shareUrl ) && !$user->isBlockedFromEmailuser() ) {
 				$addresses = explode( ',', $addresses );
 
+
 				//send mails
 				$sender = new MailAddress( $this->wg->NoReplyAddress, 'Wikia' );	//TODO: use some standard variable for 'Wikia'?
 				foreach ( $addresses as $address ) {
