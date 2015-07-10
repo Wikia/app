@@ -122,7 +122,8 @@ $messages['qqq'] = array(
 
 	'insights-module-see-more' => 'A text for a link to see more Insights lists',
 
-	'insights-label-altaction-infoboxes' => 'A label for a link that takes you to edit mode and presents you an automatically converted infobox markup for your template',
+	'insights-altaction-convert' => 'A label for a link that takes you to edit mode and presents you an automatically converted infobox markup for your template.',
+	'insights-altaction-seedraft' => 'A label for a link that takes you to a view of an existing draft of a template.',
 );
 
 $messages['de'] = array(
