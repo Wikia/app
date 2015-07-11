@@ -15,6 +15,7 @@ class ImageHelper {
 	static public $icons = [
 		'Wikia',
 		'Comics',
+		'Games',
 		'Movies',
 		'Lifestyle',
 		'Music',
@@ -39,6 +40,11 @@ class ImageHelper {
 		}
 
 		return $info;
+	}
+
+	public static function getFileUrl( $name ) {
+		$fileInfo = self::getFileInfo( $name );
+		return $fileInfo['url'];
 	}
 
 	public static function getFileInfo( $name ) {

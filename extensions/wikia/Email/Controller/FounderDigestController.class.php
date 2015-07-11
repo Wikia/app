@@ -12,6 +12,8 @@ abstract class FounderDigestController extends EmailController {
 	const TRACKING_CATEGORY_EN = TrackingCategories::DEFAULT_CATEGORY;
 	const TRACKING_CATEGORY_INT = TrackingCategories::DEFAULT_CATEGORY;
 
+	const LAYOUT_CSS = "digestLayout.css";
+
 	/** @var \Language */
 	protected $language;
 	protected $wikiId;
@@ -183,17 +185,17 @@ class FounderActivityDigestController extends FounderDigestController {
 	protected function getDetailsList() {
 		return [
 			[
-				'iconSrc' => ImageHelper::getFileInfo( 'Page-views.png' )['url'],
+				'iconSrc' => ImageHelper::getFileUrl( 'Page-views.png' ),
 				'detailsHeader' => $this->getMessage( 'emailext-founder-digest-views-header', $this->pageViews )->parse(),
 				'details' => $this->getMessage( 'emailext-founder-digest-views-description-1' )->text()
 			],
 			[
-				'iconSrc' => ImageHelper::getFileInfo( 'Number-of-edits.png' )['url'],
+				'iconSrc' => ImageHelper::getFileUrl( 'Number-of-edits.png' ),
 				'detailsHeader' => $this->getMessage( 'emailext-founder-digest-edits-header', $this->pageEdits )->parse(),
 				'details' => $this->getMessage( 'emailext-founder-digest-edits-description' )->text()
 			],
 			[
-				'iconSrc' => ImageHelper::getFileInfo( 'New-users.png' )['url'],
+				'iconSrc' => ImageHelper::getFileUrl( 'New-users.png' ),
 				'detailsHeader' => $this->getMessage( 'emailext-founder-digest-users-header', $this->newUsers )->parse(),
 				'details' => $this->getMessage( 'emailext-founder-digest-users-description' )->text()
 			] 
@@ -293,7 +295,7 @@ class FounderPageViewsDigestController extends FounderDigestController {
 	protected function getDetailsList() {
 		return [
 			[
-				'iconSrc' => ImageHelper::getFileInfo( 'Page-views.png' )['url'],
+				'iconSrc' => ImageHelper::getFileUrl( 'Page-views.png' ),
 				'detailsHeader' => $this->getMessage( 'emailext-founder-digest-views-header', $this->pageViews )->parse(),
 				'details' => $this->getMessage( 'emailext-founder-digest-views-description-2' )->text()
 			] 
