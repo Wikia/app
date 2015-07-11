@@ -201,7 +201,7 @@ abstract class WatchedPageController extends EmailController {
 	}
 }
 
-class WatchedPageEditedController extends WatchedPageController {
+class WatchedPageEditedOrCreatedController extends WatchedPageController {
 	/**
 	 * @return String
 	 */

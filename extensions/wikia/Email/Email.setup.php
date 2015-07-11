@@ -34,7 +34,7 @@ $wgAutoloadClasses['Email\Fatal'] =  $dir . 'EmailExceptions.class.php';
 $wgAutoloadClasses['Email\Check'] =  $dir . 'EmailExceptions.class.php';
 $wgAutoloadClasses['Email\Controller\ForgotPasswordController'] =  $dir . 'Controller/ForgotPasswordController.class.php';
 $wgAutoloadClasses['Email\Controller\WatchedPageController'] =  $dir . 'Controller/WatchedPageController.class.php';
-$wgAutoloadClasses['Email\Controller\WatchedPageEditedController'] =  $dir . 'Controller/WatchedPageController.class.php';
+$wgAutoloadClasses['Email\Controller\WatchedPageEditedOrCreatedController'] =  $dir . 'Controller/WatchedPageController.class.php';
 $wgAutoloadClasses['Email\Controller\WatchedPageProtectedController'] =  $dir . 'Controller/WatchedPageController.class.php';
 $wgAutoloadClasses['Email\Controller\WatchedPageUnprotectedController'] =  $dir . 'Controller/WatchedPageController.class.php';
 $wgAutoloadClasses['Email\Controller\WatchedPageRenamedController'] =  $dir . 'Controller/WatchedPageController.class.php';
@@ -58,6 +58,7 @@ $wgAutoloadClasses['Email\Controller\ConfirmationChangedEmailController'] = $dir
 $wgAutoloadClasses['Email\Controller\FounderDigestController'] = $dir . 'Controller/FounderDigestController.class.php';
 $wgAutoloadClasses['Email\Controller\FounderActivityDigestController'] = $dir . 'Controller/FounderDigestController.class.php';
 $wgAutoloadClasses['Email\Controller\FounderPageViewsDigestController'] = $dir . 'Controller/FounderDigestController.class.php';
+$wgAutoloadClasses['Email\Controller\ReactivateAccountController'] =  $dir . 'Controller/EmailConfirmationController.class.php';
 $wgAutoloadClasses['Email\Controller\CategoryAddController'] = $dir . 'Controller/CategoryAddController.class.php';
 $wgAutoloadClasses['Email\Controller\AbstractFounderEditController'] =  $dir . 'Controller/FounderController.class.php';
 $wgAutoloadClasses['Email\Controller\FounderEditController'] =  $dir . 'Controller/FounderController.class.php';
@@ -65,6 +66,7 @@ $wgAutoloadClasses['Email\Controller\FounderAnonEditController'] =  $dir . 'Cont
 $wgAutoloadClasses['Email\Controller\FounderMultiEditController'] =  $dir . 'Controller/FounderController.class.php';
 $wgAutoloadClasses['Email\Controller\FounderActiveController'] =  $dir . 'Controller/FounderController.class.php';
 $wgAutoloadClasses['Email\Controller\FounderNewMemberController'] =  $dir . 'Controller/FounderController.class.php';
+$wgAutoloadClasses['Email\Controller\UserRightsChangedController'] =  $dir . 'Controller/UserRightsChangedController.class.php';
 $wgAutoloadClasses['Email\SpecialSendEmailController'] = $dir .  'SpecialSendEmailController.class.php';
 $wgAutoloadClasses['Email\Tracking\TrackingCategories'] = $dir .  'tracking/TrackingCategories.class.php';
 
@@ -87,9 +89,11 @@ $wgExtensionMessagesFiles['EmailWeeklyDigest'] = $dir . 'i18n/WeeklyDigest.i18n.
 $wgExtensionMessagesFiles['EmailFounder'] = $dir . 'i18n/Founder.i18n.php';
 $wgExtensionMessagesFiles['EmailConfirmation'] = $dir . 'i18n/EmailConfirmation.i18n.php';
 $wgExtensionMessagesFiles['EmailFounderDigest'] = $dir . 'i18n/FounderDigest.i18n.php';
+$wgExtensionMessagesFiles['ReactivateAccount'] = $dir . 'i18n/ReactivateAccount.i18n.php';
 $wgExtensionMessagesFiles['EmailCategoryAdd'] = $dir . 'i18n/CategoryAdd.i18n.php';
 $wgExtensionMessagesFiles['SpecialSendEmail'] = $dir . 'i18n/specialSendEmail.i18n.php';
 $wgExtensionMessagesFiles['ForgotPassword'] = $dir . 'i18n/ForgotPassword.i18n.php';
+$wgExtensionMessagesFiles['UserRightsChanged'] = $dir . 'i18n/UserRightsChanged.i18n.php';
 
 /**
  * permissions
