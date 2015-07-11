@@ -351,3 +351,39 @@ class WatchedPageRenamedController extends WatchedPageController {
 		return parent::getAllChangesText( $this->newTitle );
 	}
 }
+
+class WatchedPageRestoredController extends WatchedPageController {
+
+	/**
+	 * @return String
+	 */
+	protected function getSubjectMessageKey() {
+		return 'emailext-watchedpage-article-restored-subject';
+	}
+
+	/**
+	 * @return String
+	 */
+	protected function getSummaryMessageKey() {
+		return 'emailext-watchedpage-article-restored-summary';
+	}
+
+	/**
+	 * @return String
+	 */
+	protected function getButtonLink() {
+		return $this->title->getFullUrl();
+	}
+
+	/**
+	 * @return String
+	 */
+	protected function getButtonTextMessageKey() {
+		return 'emailext-watchedpage-article-restored-button-text';
+	}
+
+	protected function getContentFooterMessages() {
+		// no op
+		return [];
+	}
+}

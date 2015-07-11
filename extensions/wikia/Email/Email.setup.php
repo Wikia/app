@@ -39,6 +39,7 @@ $wgAutoloadClasses['Email\Controller\WatchedPageProtectedController'] =  $dir . 
 $wgAutoloadClasses['Email\Controller\WatchedPageUnprotectedController'] =  $dir . 'Controller/WatchedPageController.class.php';
 $wgAutoloadClasses['Email\Controller\WatchedPageRenamedController'] =  $dir . 'Controller/WatchedPageController.class.php';
 $wgAutoloadClasses['Email\Controller\WatchedPageDeletedController'] =  $dir . 'Controller/WatchedPageController.class.php';
+$wgAutoloadClasses['Email\Controller\WatchedPageRestoredController'] =  $dir . 'Controller/WatchedPageController.class.php';
 $wgAutoloadClasses['Email\Controller\ArticleCommentController'] =  $dir . 'Controller/CommentController.class.php';
 $wgAutoloadClasses['Email\Controller\BlogCommentController'] =  $dir . 'Controller/CommentController.class.php';
 $wgAutoloadClasses['Email\Controller\UserBlogPostController'] =  $dir . 'Controller/BlogPostController.class.php';
@@ -79,6 +80,7 @@ $wgSpecialPages[ 'SendEmail' ] =  'Email\SpecialSendEmailController';
  */
 $wgExtensionMessagesFiles['Email'] = $dir . 'Email.i18n.php';
 $wgExtensionMessagesFiles['EmailWatchedPage'] = $dir . 'i18n/WatchedPage.i18n.php';
+$wgExtensionMessagesFiles['EmailWatchedPageRestored'] = $dir . 'i18n/WatchedPageRestored.i18n.php';
 $wgExtensionMessagesFiles['EmailComment'] = $dir . 'i18n/Comment.i18n.php';
 $wgExtensionMessagesFiles['EmailBlogPost'] = $dir . 'i18n/BlogPost.i18n.php';
 $wgExtensionMessagesFiles['EmailForum'] = $dir . 'i18n/Forum.i18n.php';
