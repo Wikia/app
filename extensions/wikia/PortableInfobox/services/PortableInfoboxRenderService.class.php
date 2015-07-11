@@ -90,7 +90,7 @@ class PortableInfoboxRenderService extends WikiaService {
 	 *
 	 * @param string $type
 	 * @param array $data
-	 * @return bool|false|string - HTML
+	 * @return bool|string - HTML
 	 */
 	private function renderItem( $type, array $data ) {
 		//TODO: with validated the performance of render Service and in the next phase we want to refactor it (make
@@ -120,7 +120,7 @@ class PortableInfoboxRenderService extends WikiaService {
 	/**
 	 * @desc create a thumb of the image from file title
 	 * @param $title
-	 * @return bool|false|MediaTransformOutput
+	 * @return bool|MediaTransformOutput
 	 */
 	protected function getThumbnail( $title ) {
 		$file = \WikiaFileHelper::getFileFromTitle( $title );
