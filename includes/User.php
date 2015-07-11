@@ -3844,7 +3844,7 @@ class User {
 	 * @param $type String: message to send, either "created", "changed" or "set"
 	 * @return Status object
 	 */
-	public function sendConfirmationMail( $type = 'created', $mailtype = "ConfirmationMail", $mailmsg = '', $ip_arg = true, $emailTextTemplate = '', $langCode = null ) {
+	public function sendConfirmationMail( $type = 'created', $mailtype = "ConfirmationMail", $mailmsg = '', $ip_arg = true, $emailTextTemplate = '' ) {
 		global $wgLang;
 		$expiration = null; // gets passed-by-ref and defined in next line.
 		$token = $this->confirmationToken( $expiration );
@@ -3903,11 +3903,8 @@ class User {
 				$wgLang->time( $expiration, false ) ), null, null, $mailtype, null, $priority );
 		} else {
 			$wantHTML = $this->isAnon() || $this->getGlobalPreference( 'htmlemails' );
-			if ( empty( $langCode ) ) {
-				$langCode = $this->getGlobalPreference( 'language' );
-			}
 
-			list($body, $bodyHTML) = wfMsgHTMLwithLanguage( $message, $langCode, array(), $args, $wantHTML );
+			list($body, $bodyHTML) = wfMsgHTMLwithLanguage( $message, $this->getGlobalPreference( 'language' ), array(), $args, $wantHTML );
 
 			if ( !empty($emailTextTemplate) && $wantHTML ) {
 				$emailParams = array(
