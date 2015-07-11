@@ -3674,6 +3674,8 @@ class User {
 			$controller = 'Email\Controller\EmailConfirmationReminder';
 		} elseif ( $this->isChangeEmailConfirmationMail( $mailType ) ) {
 			$controller = 'Email\Controller\ConfirmationChangedEmail';
+		} elseif ( $this->isReactivateAccountMail( $mailType ) ) {
+			$controller = 'Email\Controller\ReactivateAccount';
 		}
 
 		return $controller;
@@ -3689,6 +3691,10 @@ class User {
 
 	private function isChangeEmailConfirmationMail( $mailType ) {
 		return $mailType == "ReConfirmationMail";
+	}
+
+	private function isReactivateAccountMail( $mailType ) {
+		return $mailType == "ReactivationMail";
 	}
 
 	private function sendUsingEmailExtension( $emailController, $url ) {
