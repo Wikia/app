@@ -22,37 +22,35 @@ class ImportStarter extends Maintenance {
 
 	const ERR_OPEN_STARTER_DUMP_FAILED = 1;
 	const ERR_NO_PAGES_IMPORTED = 2;
-	const ERR_RUN_UPDATE_FAILED = 3;
+	const ERR_SQL_IMPORT_FAILED = 3;
+	const ERR_RUN_UPDATE_FAILED = 4;
 
 	/**
-	 * Get the stream with starter XML dump
+	 * Get the stream with starter dump
 	 *
-	 * @param string $language the language to get the starter for
-	 * @return resource the stream with XML dump
+	 * @param string $path remote path to a dump from
+	 * @return resource the stream with a dump
 	 * @throws CreateWikiException
 	 */
-	private function getStarterDump( $language ) {
+	private function getDump( $path ) {
 		$stream = fopen( "php://memory", "wb" );
 
 		if (!is_resource($stream)) {
 			throw new CreateWikiException("Unable to create a memory stream for starter database dump", self::ERR_OPEN_STARTER_DUMP_FAILED);
 		}
 
-		$starter = Wikia\CreateNewWiki\Starters::getStarterByLanguage( $language );
-
 		$swift = \Wikia\CreateNewWiki\Starters::getStarterDumpStorage();
-		$res = $swift->read( \Wikia\CreateNewWiki\Starters::getStarterContentDumpPath( $starter ),  $stream );
+		$res = $swift->read( $path, $stream );
 
 		if (is_null($res)) {
-			throw new CreateWikiException("Unable to open a starter database dump for {$language} language", self::ERR_OPEN_STARTER_DUMP_FAILED);
+			throw new CreateWikiException("Unable to fetch a dump from {$path}", self::ERR_OPEN_STARTER_DUMP_FAILED);
 		}
 
 		$stats = fstat($stream);
-		$this->output( sprintf("Fetched XML dump of '%s' (%.2f kB)\n", $starter, $stats['size'] / 1024) );
+		$this->output( sprintf("Fetched XML dump from '%s' (%.2f kB)\n", $path, $stats['size'] / 1024) );
 
 		$this->logger->info( __METHOD__, [
-			'language'   => $language,
-			'starter_db' => $starter,
+			'path'       => $path,
 			'size'       => $stats['size']
 		] );
 
@@ -66,40 +64,60 @@ class ImportStarter extends Maintenance {
 	/**
 	 * Import the provided XML dump
 	 *
-	 * @param resource $stream stream with XML dump
+	 * @param resource $contentDumpStream stream with XML dump
+	 * @param resource $sqlDumpStream stream with SQL tables dump
 	 */
-	private function importDump($stream) {
+	private function importDump($contentDumpStream, $sqlDumpStream) {
 		$pagesCnt = 0;
 		$then = microtime(true);
 
-		$source = new ImportStreamSource( $stream );
+		// perform the import in a transaction
+		$dbw = wfGetDB( DB_MASTER );
+		$dbw->begin( __METHOD__ );
+
+		// first, import the articles content
+		$source = new ImportStreamSource( $contentDumpStream );
 		$importer = new WikiImporter( $source );
 
 		/**
 		 * We don't want to invoke tasks (namely run Page::doEditUpdates) on each insert to revision table
 		 *
-		 * Let's do it once when the import is completed
+		 * The links will be updated thanks to a SQL dump of links tables
 		 */
 		$importer->setNoUpdates(true);
 
 		$importer->setRevisionCallback(function(WikiRevision $rev) use (&$pagesCnt) {
 			$rev->importOldRevision();
 
-			$this->output(sprintf("Importing '%s'...\n", $rev->getTitle()->getPrefixedDBkey()));
+			#$this->output(sprintf("Importing '%s'...\n", $rev->getTitle()->getPrefixedDBkey()));
 			$pagesCnt++;
 		});
 
-		$dbw = wfGetDB( DB_MASTER );
-
-		$dbw->begin( __METHOD__ );
+		$this->output("\n\nImporting a XML content dump...\n");
 		$importer->doImport();
-		$dbw->commit(__METHOD__);
 
 		$this->output( sprintf("Imported %d pages\n", $pagesCnt) );
-
 		if ($pagesCnt === 0) {
+			$dbw->rollback(__METHOD__);
 			throw new CreateWikiException('No pages were imported', self::ERR_NO_PAGES_IMPORTED);
 		}
+
+		// now, import the SQL tables with article links
+		try {
+			$this->output("\n\nImporting a SQL tables dump...\n");
+			$ret = $dbw->sourceStream($sqlDumpStream, false, false, __METHOD__);
+		}
+		catch(DBError $ex) {
+			$ret = $ex->getMessage();
+		}
+
+		if ($ret !== true) {
+			$dbw->rollback(__METHOD__);
+			throw new CreateWikiException('SQL import failed: ' . $ret, self::ERR_SQL_IMPORT_FAILED);
+		}
+
+		// ok, we're done
+		$dbw->commit(__METHOD__);
 
 		$this->logger->info(__METHOD__, [
 			'pages' => $pagesCnt,
@@ -107,41 +125,11 @@ class ImportStarter extends Maintenance {
 		]);
 	}
 
-	/**
-	 * Update statistics (articles count) and links
-	 *
-	 * @throws CreateWikiException
-	 */
-	private function runUpdates() {
-		global $IP;
-		require_once( $IP . '/maintenance/updateArticleCount.php' );
-		require_once( $IP . '/maintenance/refreshLinks.php' );
-
-		try {
-			$then = microtime(true);
-
-			// php updateArticleCount.php --update
-			$updateArticlesCount = new UpdateArticleCount();
-			$updateArticlesCount->loadParamsAndArgs(null, ['update' => true]);
-			$updateArticlesCount->execute();
-
-			// php refreshLinks.php
-			$refreshLinks = new RefreshLinks();
-			$refreshLinks->execute();
-
-			$this->logger->info(__METHOD__, [
-				'took' => microtime(true) - $then
-			]);
-		}
-		catch(Exception $ex) {
-			throw new CreateWikiException('runUpdate failed', self::ERR_RUN_UPDATE_FAILED, $ex);
-		}
-	}
-
 	public function execute() {
 		/* @var Language $wgContLang */
 		global $wgContLang, $wgCityId, $wgDBname;
 		$language = $wgContLang->getCode();
+		$starter = Wikia\CreateNewWiki\Starters::getStarterByLanguage( $language );
 
 		// set up the logger to work similar to the one in CreateWiki class
 		$this->logger = Wikia\Logger\WikiaLogger::instance();
@@ -152,16 +140,15 @@ class ImportStarter extends Maintenance {
 		]);
 
 		try {
-			$this->output("Getting starter database for '{$language}' language...\n");
-			$stream = $this->getStarterDump($language);
+			$this->output("Getting starter dump for '{$language}' language ('{$starter}' database)...\n");
 
-			$this->output("\n\nImporting a dump...\n");
-			$this->importDump($stream);
+			$contentDumpStream = $this->getDump(\Wikia\CreateNewWiki\Starters::getStarterContentDumpPath( $starter ));
+			$sqlDumpStream = $this->getDump(\Wikia\CreateNewWiki\Starters::getStarterSqlDumpPath( $starter ));
 
-			fclose($stream);
+			$this->importDump($contentDumpStream, $sqlDumpStream);
 
-			$this->output("\n\nRunning post-import updates...\n");
-			$this->runUpdates();
+			fclose($contentDumpStream);
+			fclose($sqlDumpStream);
 		}
 		catch( CreateWikiException $ex ) {
 			$this->error( 'Error: ' . $ex->getMessage(), $ex->getCode() );
