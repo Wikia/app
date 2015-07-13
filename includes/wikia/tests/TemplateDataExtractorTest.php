@@ -35,12 +35,25 @@ class TemplateDataExtractorTest extends WikiaBaseTest {
 |-
 | class="infoboximage" colspan="2" | {{{image|}}}
 |-
-! class="infoboxheading" colspan="2" | {{{name|default name}}}
+! class="infoboxheading" colspan="2" | {{{name}}}
 {{#if:{{{born|}}}|
 {{!}}-
 {{!}} class="infoboxlabel" {{!}} Born label
 {{!}} class="infoboxcell" {{!}}
-{{{born|}}}
+{{{born|1/1/1970}}}
+{{!}}-
+|}}
+|}';
+		$contentWithTransclusionTags = '{| class="infobox
+|-
+| class="infoboximage" colspan="2" | {{{image<includeonly>|</includeonly>}}}
+|-
+! class="infoboxheading" colspan="2" | {{{name<includeonly>|</includeonly>}}}
+{{#if:{{{born|}}}|
+{{!}}-
+{{!}} class="infoboxlabel" {{!}} Born label
+{{!}} class="infoboxcell" {{!}}
+{{{born|1/1/1970}}}
 {{!}}-
 |}}
 |}';
@@ -54,17 +67,18 @@ class TemplateDataExtractorTest extends WikiaBaseTest {
 			'name' => [
 				'name' => 'name',
 				'label' => '',
-				'default' => 'default name'
+				'default' => ''
 			],
 			'born' => [
 				'name' => 'born',
 				'label' => '',
-				'default' => ''
+				'default' => '1/1/1970'
 			]
 		];
 
 		return [
 			[ $content, $variables, 'extracting variables from simple infobox wikitext' ],
+			[ $contentWithTransclusionTags, $variables, 'extracting variables from simple infobox wikitext with transclusion tags' ],
 			[
 				'{{{picture}}}',
 				[
