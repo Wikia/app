@@ -34,6 +34,20 @@ class TemplateConverterTest extends WikiaBaseTest {
 |}}
 |}';
 
+		$wikiTextFullInfoboxWithTransclusionTag = '{| class="infobox
+|-
+| class="infoboximage" colspan="2" | {{{image<includeonly>|</includeonly>}}}
+|-
+! class="infoboxheading" colspan="2" | {{{name<includeonly>|</includeonly>}}}
+{{#if:{{{born|}}}|
+{{!}}-
+{{!}} class="infoboxlabel" {{!}} Born label
+{{!}} class="infoboxcell" {{!}}
+{{{born|}}}
+{{!}}-
+|}}
+|}';
+
 		$fullInfoboxOutput = '<infobox>
 	<image source="image"/>
 	<title source="name"><default>{{PAGENAME}}</default></title>
@@ -43,6 +57,7 @@ class TemplateConverterTest extends WikiaBaseTest {
 
 		return [
 			[ $wikiTextFullInfobox, $fullInfoboxOutput, 'Converting a simple infobox' ],
+			[ $wikiTextFullInfoboxWithTransclusionTag, $fullInfoboxOutput, 'Converting a simple infobox with transclusion tags' ],
 			[
 				'{{{picture}}}',
 				"<infobox>\n\t<image source=\"picture\"/>\n</infobox>\n",
