@@ -62,7 +62,10 @@ define('ext.wikia.adEngine.provider.directGpt', [
 		log(['fillInSlotWithDelay', slotName], 'debug', logGroup);
 
 		if (slotName.indexOf('TOP_LEADERBOARD') > -1) {
-			var eventName = 'vertical_mapping/' + context.targeting.wikiVertical + '/' + context.targeting.wikiDbName;
+			var eventName = 'vertical_mapping/' +
+				(context.targeting.wikiCategory === context.targeting.wikiNewVertical ? 'same' : 'changed');
+			eventName += '/' + context.targeting.wikiCategory + '/' + context.targeting.wikiDbName;
+
 			adTracker.track(eventName, {newVertical: context.targeting.wikiNewVertical}, 0);
 			log(['vertical mapping', eventName, {newVertical: context.targeting.wikiNewVertical}], 'debug', logGroup);
 		}
