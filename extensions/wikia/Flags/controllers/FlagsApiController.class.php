@@ -277,6 +277,29 @@ class FlagsApiController extends WikiaApiController {
 	}
 
 	/**
+	 * Adds a new type of flags.
+	 *
+	 * Required parameters:
+	 * @requestParam int flag_type_id
+	 * @requestParam string flags_params_names parameters names with its descriptions in JSON format
+	 */
+	public function updateFlagTypeParameters() {
+		try {
+			$this->processRequest();
+
+			$flagTypeModel = new FlagType();
+			$modelResponse = $flagTypeModel->updateFlagTypeParameters( $this->params );
+
+			$this->getCache()->purgeFlagTypesForWikia();
+
+			$this->makeSuccessResponse( $modelResponse );
+		} catch ( Exception $e ) {
+			$this->logResponseException( $e, $this->request );
+			$this->response->setException( $e );
+		}
+	}
+
+	/**
 	 * Get all flag types for given wiki
 	 *
 	 * Optional parameters:

@@ -207,6 +207,55 @@ class FlagType extends FlagsBaseModel {
 	}
 
 	/**
+	 * Verify in the fetched array has every required information
+	 * before performing an UPDATE query.
+	 * @param array $params
+	 * @return bool
+	 * @throws \MissingParameterApiException
+	 */
+	public function verifyParamsForUpdate( $params ) {
+		$required = [ 'flag_type_id', 'flags_params_names' ];
+
+		foreach ( $required as $requiredField ) {
+			if ( !isset( $params[$requiredField] ) ) {
+				throw new \MissingParameterApiException( $requiredField ) ;
+			}
+		}
+
+		return true;
+	}
+
+	/**
+	 * Update parameters definition for flag type
+	 *
+	 * @param $params
+	 * @return bool
+	 * @throws \InvalidDataApiException
+	 */
+	public function updateFlagTypeParameters( $params ) {
+		$this->verifyParamsForUpdate( $params );
+
+		json_decode( $params['flags_params_names'] );
+		if ( json_last_error() !== JSON_ERROR_NONE ) {
+			throw new \InvalidDataApiException();
+		}
+
+		$db = $this->getDatabaseForWrite();
+
+		( new \WikiaSQL )
+			->UPDATE( self::FLAGS_TYPES_TABLE )
+			->SET( 'flags_params_names', $params['flags_params_names'] )
+			->WHERE( 'flag_type_id' )->EQUAL_TO( $params['flags_type_id'] )
+			->run( $db );
+
+		$status = $db->affectedRows() > 0;
+
+		$db->commit();
+
+		return $status;
+	}
+
+	/**
 	 * Removing types of flags
 	 */
 
