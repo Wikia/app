@@ -149,7 +149,6 @@ class MercuryApiController extends WikiaController {
 	 *
 	 * @param int[] $ids
 	 * @return mixed
-	 * @throws NotFoundApiException
 	 */
 	private function getTopContributorsDetails( Array $ids ) {
 		if ( empty( $ids ) ) {

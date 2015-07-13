@@ -378,7 +378,7 @@ class MercuryApi {
 	/**
 	 * @desc To save some bandwidth, the unnecessary params are stripped
 	 *
-	 * @param $item array
+	 * @param array $item
 	 * @return array
 	 */
 	public function processTrendingArticlesItem( $item ) {
