@@ -248,6 +248,7 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 				'wikiDbName' => $dbName,
 				'wikiLanguage' => $langCode,
 				'wikiVertical' => $vertical,
+				'wikiNewVertical' => 'life'
 			],
 			'providers' => [
 			],
