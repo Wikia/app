@@ -2962,7 +2962,7 @@ class WikiFactory {
 	 *
 	 * @param string $lang_code	language code ('en', 'de' ... )
 	 *
-	 * @return id from coty_lang
+	 * @return int|bool ID from city_lang table
 	 */
 	static public function LangCodeToId( $lang_code ) {
 		if ( ! self::isUsed() ) {
