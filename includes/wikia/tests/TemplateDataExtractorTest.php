@@ -35,12 +35,12 @@ class TemplateDataExtractorTest extends WikiaBaseTest {
 |-
 | class="infoboximage" colspan="2" | {{{image|}}}
 |-
-! class="infoboxheading" colspan="2" | {{{name|default name}}}
+! class="infoboxheading" colspan="2" | {{{name}}}
 {{#if:{{{born|}}}|
 {{!}}-
 {{!}} class="infoboxlabel" {{!}} Born label
 {{!}} class="infoboxcell" {{!}}
-{{{born|}}}
+{{{born|1/1/1970}}}
 {{!}}-
 |}}
 |}';
@@ -53,7 +53,7 @@ class TemplateDataExtractorTest extends WikiaBaseTest {
 {{!}}-
 {{!}} class="infoboxlabel" {{!}} Born label
 {{!}} class="infoboxcell" {{!}}
-{{{born|}}}
+{{{born|1/1/1970}}}
 {{!}}-
 |}}
 |}';
@@ -67,12 +67,12 @@ class TemplateDataExtractorTest extends WikiaBaseTest {
 			'name' => [
 				'name' => 'name',
 				'label' => '',
-				'default' => 'default name'
+				'default' => ''
 			],
 			'born' => [
 				'name' => 'born',
 				'label' => '',
-				'default' => ''
+				'default' => '1/1/1970'
 			]
 		];
 
