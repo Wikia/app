@@ -36,10 +36,11 @@ $wgSpecialPageGroups['Flags'] = 'wikia';
 $wgAvailableRights[] = 'flagshq';
 $wgGroupPermissions['*']['flagshq'] = true;
 
+$wgAutoloadClasses['SpecialFlagsController'] = __DIR__ . '/specials/SpecialFlagsController.class.php';
+
 /**
  * Controllers
  */
-$wgAutoloadClasses['SpecialFlagsController'] = __DIR__ . '/controllers/SpecialFlagsController.class.php';
 $wgAutoloadClasses['FlagsController'] = __DIR__ . '/controllers/FlagsController.class.php';
 $wgAutoloadClasses['FlagsApiController'] = __DIR__ . '/controllers/FlagsApiController.class.php';
 $wgWikiaApiControllers['FlagsApiController'] = __DIR__ . '/controllers/FlagsApiController.class.php';
@@ -85,6 +86,10 @@ $wgHooks['SkinTemplateNavigation'][] = 'Flags\Hooks::onSkinTemplateNavigation';
  */
 $wgExtensionMessagesFiles['Flags'] = __DIR__ . '/Flags.i18n.php';
 $wgExtensionMessagesFiles['FlagsMagic'] = __DIR__ . '/Flags.magic.i18n.php';
+
+JSMessages::registerPackage( 'FlagsCreateForm', [
+	'flags-special-create-*'
+] );
 
 /**
  * Resources Loader module

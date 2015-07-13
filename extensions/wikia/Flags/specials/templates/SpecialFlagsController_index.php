@@ -8,9 +8,15 @@
 			<?= wfMessage( 'flags-special-header-text' )->parse() ?>
 		</p>
 	</div>
+	<div class="flags-special-create">
+		<a href="#" class="flags-special-create-button wikia-button primary">
+			<?= wfMessage( 'flags-special-create-button-text' )->escaped(); ?>
+		</a>
+	</div>
 </div>
-<?php if ( !empty( $flagTypes ) ): ?>
-	<table class="article-table sortable flags-special-list">
+
+<table class="article-table sortable flags-special-list">
+	<thead>
 		<tr class="flags-special-list-headers">
 			<th class="flags-special-list-header-name"><?= wfMessage( 'flags-special-list-header-name' )->escaped() ?></th>
 			<th class="flags-special-list-header-template"><?= wfMessage( 'flags-special-list-header-template' )->escaped() ?></th>
@@ -18,6 +24,9 @@
 			<th class="flags-special-list-header-group"><?= wfMessage( 'flags-special-list-header-group' )->escaped() ?></th>
 			<th class="flags-special-list-header-target"><?= wfMessage( 'flags-special-list-header-target' )->escaped() ?></th>
 		</tr>
+	</thead>
+	<tbody>
+<?php if ( !empty( $flagTypes ) ): ?>
 	<?php foreach ( $flagTypes as $flagTypeId => $flag ): ?>
 		<?php $title = Title::newFromText( $flag['flag_view'], NS_TEMPLATE ); ?>
 		<tr class="flags-special-list-item">
@@ -43,8 +52,11 @@
 			<td class="flags-special-list-item-targeting"><?= ucfirst( $flagTargeting[$flag['flag_targeting']] ) ?></td>
 		</tr>
 	<?php endforeach; ?>
-	</table>
+	</tbody>
+</table>
 <?php else: ?>
+	</tbody>
+</table>
 	<div class="flags-special-zero-status">
 		<?= wfMessage( 'flags-special-zero-state' )->parse(); ?>
 	</div>
