@@ -8,6 +8,10 @@
 class InsightsUnconvertedInfoboxesModel extends InsightsQuerypageModel {
 	const INSIGHT_TYPE = 'nonportableinfoboxes';
 
+	public $loopNotificationConfig = [
+		'displayFixItMessage' => false,
+	];
+
 	public function getDataProvider() {
 		return new UnconvertedInfoboxesPage();
 	}
@@ -50,22 +54,32 @@ class InsightsUnconvertedInfoboxesModel extends InsightsQuerypageModel {
 		return class_exists( 'TemplateConverter' );
 	}
 
-	public function getAltActionUrl( Title $title ) {
+	public function getAltAction( Title $title ) {
 		$subpage = Title::newFromText( $title->getText() . "/" . wfMessage('templatedraft-subpage')->escaped() , NS_TEMPLATE );
 
-		if ( $subpage === null ) {
+		if ( !$subpage instanceof Title ) {
 			// something went terribly wrong, quit early
 			return '';
 		}
 
-		return $subpage->getFullUrl( [
-			'action' => 'edit',
-			TemplateConverter::CONVERSION_MARKER => 1,
-		] );
-	}
+		if ( $subpage->exists() ) {
+			$url = $subpage->getFullUrl();
+			$text = wfMessage( 'insights-altaction-seedraft' )->escaped();
+			$class = 'secondary';
+		} else {
+			$url = $subpage->getFullUrl( [
+				'action' => 'edit',
+				TemplateConverter::CONVERSION_MARKER => 1,
+			] );
+			$text = wfMessage( 'insights-altaction-convert' )->escaped();
+			$class = 'primary';
+		}
 
-	public function altActionLinkMessage() {
-		return 'insights-label-altaction-infoboxes';
+		return [
+			'url' => $url,
+			'text' => $text,
+			'class' => $class,
+		];
 	}
 
 	/**

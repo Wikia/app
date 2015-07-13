@@ -9,7 +9,9 @@ define('ext.wikia.adEngine.template.modal', [
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.template.modal',
-		modalId = 'ext-wikia-adEngine-template-modal';
+		modalId = 'ext-wikia-adEngine-template-modal',
+		lightBoxHeaderHeight = 40,
+		maximumRatio = 3; // don't scale the ad more than 3 times
 
 	/**
 	 * Show the modal ad
@@ -18,19 +20,33 @@ define('ext.wikia.adEngine.template.modal', [
 	 * @param {string} params.code - code to put into Lightbox
 	 * @param {number} params.width - desired width of the Lightbox
 	 * @param {number} params.height - desired height of the Lightbox
+	 * @param {boolean} params.scalable - extend iframe to maximum sensible size of the Lightbox
 	 */
 	function show(params) {
 		log(['show', params], 'debug', logGroup);
 		var skin = adContext.getContext().targeting.skin;
 
 		if (skin === 'oasis') {
-			log(['showNew desktop modal'], 'debug', logGroup);
+			log(['show desktop modal'], 'debug', logGroup);
 			createAndShowDesktopModal(params);
 		}
 
 		if (skin === 'mercury') {
-			log(['showNew mobile (Mercury) modal'], 'debug', logGroup);
-			win.Mercury.Modules.Ads.getInstance().openLightbox(createAdIframe(params));
+			log(['show mobile (Mercury) modal'], 'debug', logGroup);
+
+			var adIframe = createAdIframe(params);
+
+			if (params.scalable) {
+				log(['show scale the ad'], 'debug', logGroup);
+
+				scaleAdIframe(adIframe, params);
+
+				win.addEventListener('resize', function () {
+					scaleAdIframe(adIframe, params);
+				});
+			}
+
+			win.Mercury.Modules.Ads.getInstance().openLightbox(adIframe);
 		}
 	}
 
@@ -62,6 +78,15 @@ define('ext.wikia.adEngine.template.modal', [
 			width: params.width,
 			classes: 'wikia-ad-iframe'
 		});
+	}
+
+	function scaleAdIframe(adIframe, params) {
+		var ratioWidth = win.innerWidth / params.width,
+			ratioHeight = (win.innerHeight - lightBoxHeaderHeight) / params.height,
+			ratio = Math.min(ratioWidth, ratioHeight, maximumRatio);
+
+		adIframe.style.marginTop = lightBoxHeaderHeight + 'px';
+		adIframe.style.transform = 'scale(' + ratio + ')';
 	}
 
 	return {

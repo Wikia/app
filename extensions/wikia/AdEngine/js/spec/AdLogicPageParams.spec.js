@@ -21,16 +21,17 @@ describe('AdLogicPageParams', function () {
 		};
 	}
 
-	function mockWindow(document, hostname, amzn_targs, perfab) {
-
-		hostname = hostname || 'example.org';
+	function mockWindow(opts) {
+		opts.hostname = opts.hostname || 'example.org';
 
 		return {
-			document: document || {},
-			location: { origin: 'http://' + hostname, hostname: hostname },
-			amzn_targs: amzn_targs,
-			wgCookieDomain: hostname.substr(hostname.indexOf('.')),
-			wgABPerformanceTest: perfab
+			innerWidth: opts.innerWidth,
+			innerHeight: opts.innerHeight,
+			document: opts.document || {},
+			location: { origin: 'http://' + opts.hostname, hostname: opts.hostname },
+			amzn_targs: opts.amzn_targs,
+			wgCookieDomain: opts.hostname.substr(opts.hostname.indexOf('.')),
+			wgABPerformanceTest: opts.perfab
 		};
 	}
 
@@ -93,7 +94,7 @@ describe('AdLogicPageParams', function () {
 				},
 				getGroup: function () { return; }
 			} : undefined,
-			windowMock = mockWindow(opts.document, opts.hostname, opts.amzn_targs, opts.perfab);
+			windowMock = mockWindow(opts);
 
 		return modules['ext.wikia.adEngine.adLogicPageParams'](
 			mockAdContext(targeting),
@@ -452,5 +453,23 @@ describe('AdLogicPageParams', function () {
 		});
 
 		expect(params.ref).toBe('external');
+	});
+
+	it('getPageLevelParams aspect ratio for landscape orientation', function () {
+		var params = getParams({}, {
+			innerWidth: 1024,
+			innerHeight: 600
+		});
+
+		expect(params.ar).toBe('4:3');
+	});
+
+	it('getPageLevelParams aspect ratio for portrait orientation', function () {
+		var params = getParams({}, {
+			innerWidth: 360,
+			innerHeight: 640
+		});
+
+		expect(params.ar).toBe('3:4');
 	});
 });

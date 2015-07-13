@@ -55,6 +55,8 @@ FluentSql\StaticSQL::setClass("\\WikiaSQL");
  */
 require_once ( $IP."/lib/Wikia/autoload.php");
 
+require_once ( $IP."/lib/Swagger/autoload.php");
+
 global $wgDBname;
 if($wgDBname != 'uncyclo') {
 	include_once( "$IP/extensions/wikia/SkinChooser/SkinChooser.php" );
@@ -299,6 +301,8 @@ $wgAutoloadClasses['SwaggerParameter'] = "$IP/includes/wikia/swagger/SwaggerPara
 $wgAutoloadClasses['SwaggerModel'] = "$IP/includes/wikia/swagger/SwaggerModel.php";
 $wgAutoloadClasses['SwaggerModelProperty'] = "$IP/includes/wikia/swagger/SwaggerModelProperty.php";
 $wgAutoloadClasses['SwaggerErrorResponse'] = "$IP/includes/wikia/swagger/SwaggerErrorResponse.php";
+$wgAutoloadClasses['TemplateClassification'] = "$IP/includes/wikia/TemplateClassification.class.php";
+$wgAutoloadClasses['TemplateDataExtractor'] = "$IP/includes/wikia/TemplateDataExtractor.class.php";
 
 /**
  * Resource Loader enhancements

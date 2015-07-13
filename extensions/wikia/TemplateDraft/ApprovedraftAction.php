@@ -79,6 +79,14 @@ class ApprovedraftAction extends FormlessAction {
 		// Get contents of draft page
 		$article = Article::newFromId( $draftTitle->getArticleID() );
 		$draftContent = $article->getContent();
+
+		// update the draft to show a preview of the correct page
+		$draftContent = str_replace(
+			$draftTitle->getText(),
+			$draftTitle->getBaseText(),
+			$draftContent
+		);
+
 		// Get WikiPage object of parent page
 		$page = WikiPage::newFromID( $parentTitle->getArticleID() );
 		// Save to parent page
@@ -87,6 +95,12 @@ class ApprovedraftAction extends FormlessAction {
 		// Remove Draft page
 		$draftPage = WikiPage::newFromID( $draftTitle->getArticleID() );
 		$draftPage->doDeleteArticle( wfMessage( 'templatedraft-draft-removal-summary' )->inContentLanguage()->plain() );
+
+		// Update Insights list
+		$model = InsightsHelper::getInsightModel( InsightsUnconvertedInfoboxesModel::INSIGHT_TYPE );
+		if ( $model instanceof InsightsQuerypageModel ) {
+			$model->updateInsightsCache( $parentTitle->getArticleID() );
+		}
 
 		// Show a confirmation message to a user after redirect
 		BannerNotificationsController::addConfirmation(

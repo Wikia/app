@@ -8,7 +8,7 @@
 abstract class InsightsQuerypageModel extends InsightsModel {
 	const
 		INSIGHTS_MEMC_PREFIX = 'insights',
-		INSIGHTS_MEMC_VERSION = '1.0',
+		INSIGHTS_MEMC_VERSION = '1.1',
 		INSIGHTS_MEMC_TTL = 259200, // Cache for 3 days
 		INSIGHTS_MEMC_ARTICLES_KEY = 'articlesData',
 		INSIGHTS_LIST_MAX_LIMIT = 100,
@@ -35,6 +35,9 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 				'sortType' => SORT_NUMERIC,
 				'metadata' => 'pv7',
 			]
+		],
+		$loopNotificationConfig = [
+			'displayFixItMessage' => true,
 		];
 
 	abstract function getDataProvider();
@@ -86,12 +89,8 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 		return false;
 	}
 
-	public function getAltActionUrl( Title $title ) {
-		return '';
-	}
-
-	public function altActionLinkMessage() {
-		return '';
+	public function getAltAction( Title $title ) {
+		return [];
 	}
 
 	public function isWlhLinkRequired() {
@@ -100,6 +99,25 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 
 	public function wlhLinkMessage() {
 		return 'insights-wanted-by';
+	}
+
+	public function purgeCacheAfterUpdateTask() {
+		return true;
+	}
+
+	/**
+	 * Returns a whole config for loop notification mechanism or its single property
+	 * @param string $singleProperty
+	 * @return string|array
+	 */
+	public function getLoopNotificationConfig( $singleProperty = '' ) {
+		if ( !empty( $singleProperty )
+			&& isset( $this->loopNotificationConfig[$singleProperty] )
+		) {
+			return $this->loopNotificationConfig[$singleProperty];
+		}
+
+		return $this->loopNotificationConfig;
 	}
 
 	/**
@@ -408,8 +426,7 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 				}
 
 				if ( $this->hasAltAction() ) {
-					$article['altaction']['url'] = $this->getAltActionUrl( $title );
-					$article['altaction']['label'] = $this->altActionLinkMessage();
+					$article['altaction'] = $this->getAltAction( $title );
 				}
 
 				$data[ $title->getArticleID() ] = $article;
@@ -526,6 +543,14 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 		}
 
 		return $next;
+	}
+
+	public function purgeInsightsCache() {
+		global $wgMemc;
+
+		$cacheKey = $this->getMemcKey( self::INSIGHTS_MEMC_ARTICLES_KEY );
+
+		$wgMemc->delete( $cacheKey );
 	}
 
 	/**
