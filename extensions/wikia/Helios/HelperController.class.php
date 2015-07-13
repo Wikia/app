@@ -118,7 +118,7 @@ class HelperController extends \WikiaController
 			return;
 		}
 
-		$mailStatus = $user->sendConfirmationMail( false, 'ConfirmationMail' );
+		$mailStatus = $user->sendConfirmationMail();
 
 		if ( ! $mailStatus->isGood() ) {
 			$this->response->setVal( 'message', 'could not send an email message' );
