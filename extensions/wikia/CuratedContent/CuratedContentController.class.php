@@ -448,6 +448,7 @@ class CuratedContentController extends WikiaController {
 		global $wgWikiaCuratedContent;
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 		$this->response->setVal('data', $wgWikiaCuratedContent);
+		$this->response->setHeader('Access-Control-Allow-Origin', '*');
 	}
 
 	private function getCuratedContentForWiki( $wikiID ) {
