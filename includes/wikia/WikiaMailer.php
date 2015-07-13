@@ -13,8 +13,8 @@ use Wikia\Logger\WikiaLogger;
 class WikiaMailer extends UserMailer {
 
 	static $drivers = array(
-		'wgEnableWikiaDBEmail' => 'wikiadb',
-		'wgEnablePostfixEmail' => 'smtp'
+		'wgEnablePostfixEmail' => 'smtp',
+		'wgEnableWikiaDBEmail' => 'wikiadb'
 	);
 
 	static private function getDriver() {

@@ -108,6 +108,36 @@
         window.ga('special.require', 'displayfeatures');
     }
 
+    if (window.wgGAUserIdHash) {
+        // Separate account for Logged-In users - UA-32132943-7/UA-32132943-8
+        if (isProductionEnv) {
+            // Production Environment
+            window.ga(
+                'create', 'UA-32132943-7', 'auto',
+                {
+                    'name': 'loggedin_users',
+                    'sampleRate': 100,
+                    'allowLinker': true,
+                    'userId': window.wgGAUserIdHash
+                }
+            );
+        } else {
+            // Development Environment
+            window.ga(
+                'create', 'UA-32132943-8', 'auto',
+                {
+                    'name': 'loggedin_users',
+                    'sampleRate': 100,
+                    'allowLinker': true,
+                    'userId': window.wgGAUserIdHash
+                }
+            );
+
+            // Enable Demographics and Interests Reports
+            window.ga('loggedin_users.require', 'displayfeatures');
+        }
+    }
+
     if (isProductionEnv) {
         // VE account - UA-32132943-4'
         window.ga(
@@ -161,6 +191,13 @@
                     spec = args[i].slice();
                     // Send to Special Wikis Account
                     spec[0] = 'special.' + spec[0];
+                    window.ga.apply(window, spec);
+                }
+
+                // If user is logged in we send to Logged-In Users Account
+                if (window.wgGAUserIdHash) {
+                    spec = args[i].slice();
+                    spec[0] = 'loggedin_users.' + spec[0];
                     window.ga.apply(window, spec);
                 }
 

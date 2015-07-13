@@ -5,5 +5,5 @@ namespace Wikia\Service\Gateway;
 
 interface UrlProvider {
 
-	public function getUrl();
+	public function getUrl($serviceName);
 }
