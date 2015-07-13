@@ -14,9 +14,9 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 	 */
 	private function getInfoboxRenderServiceMock( $input )
 	{
-		$invalidImage = isset( $input[ 'invalidImage' ] ) && $input[ 'invalidImage' ];
+		$isInvalidImage = isset( $input[ 'isInvalidImage' ] ) && $input[ 'isInvalidImage' ];
 		$isWikiaMobile = isset( $input[ 'isWikiaMobile' ] ) && $input[ 'isWikiaMobile' ];
-		$mockThumbnailImage = $invalidImage ? false : $this->getThumbnailImageMock();
+		$mockThumbnailImage = $isInvalidImage ? false : $this->getThumbnailImageMock();
 
 		$mock = $this->getMockBuilder( 'PortableInfoboxRenderService' )
 			->setMethods( [ 'getThumbnail', 'isWikiaMobile' ] )
@@ -53,11 +53,15 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 		return $mockThumbnailImage;
 	}
 
-	private function processInfoboxHTML( $html ) {
+	/**
+	 * @param $html
+	 * @return string
+     */
+	private function normalizeHTML( $html ) {
 		$DOM = new DOMDocument('1.0');
 		$DOM->formatOutput = true;
 		$DOM->preserveWhiteSpace = false;
-		$DOM->loadXML($html);
+		$DOM->loadXML( $html );
 
 		return $DOM->saveXML();
 	}
@@ -72,8 +76,8 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 		$infoboxRenderService = $this->getInfoboxRenderServiceMock( $input );
 		$actualOutput = $infoboxRenderService->renderInfobox( $input );
 
-		$expectedHtml = $this->processInfoboxHTML($expectedOutput);
-		$actualHtml = $this->processInfoboxHTML($actualOutput);
+		$expectedHtml = $this->normalizeHTML( $expectedOutput) ;
+		$actualHtml = $this->normalizeHTML( $actualOutput );
 
 		$this->assertEquals( $expectedHtml, $actualHtml, $description );
 	}
@@ -199,7 +203,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 			],
 			[
 				'input' => [
-					'invalidImage' => true,
+					'isInvalidImage' => true,
 					[
 						'type' => 'title',
 						'data' => [
@@ -388,7 +392,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 			],
 			[
 				'input' => [
-					'invalidImage' => true,
+					'isInvalidImage' => true,
 					'isWikiaMobile' => true,
 					[
 						'type' => 'title',
