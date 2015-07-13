@@ -2,7 +2,8 @@
 
 class MercuryApiHooks {
 
-	const SERVICE_API_BASE = '/api/v1/';
+	const SERVICE_API_ROOT = '/';
+	const SERVICE_API_BASE = 'api/v1/';
 	const SERVICE_API_ARTICLE = 'article/';
 	const SERVICE_API_CURATED_CONTENT = 'main/section/';
 
@@ -92,7 +93,13 @@ class MercuryApiHooks {
 			// Mercury API call from Ember.js to Hapi.js e.g.
 			// http://elderscrolls.wikia.com/api/v1/article/Morrowind
 			// To access it, you have to set your client to be directed to the Mercury machines.
-			$urls[] = $wgServer . self::SERVICE_API_BASE . self::SERVICE_API_ARTICLE . $title->getPartialURL();
+			$urls[] =
+				$wgServer .
+				self::SERVICE_API_ROOT .
+				self::SERVICE_API_BASE .
+				self::SERVICE_API_ARTICLE .
+				$title->getPartialURL();
+
 			// Mercury API call from Hapi.js to MediaWiki e.g.
 			// http://elderscrolls.wikia.com/wikia.php?controller=MercuryApi&method=getArticle&title=Morrowind
 			$urls[] = MercuryApiController::getUrl( 'getArticle', [ 'title' => $title->getPartialURL() ] );
@@ -129,18 +136,27 @@ class MercuryApiHooks {
 
 			WikiaDataAccess::cachePurge( MercuryApiController::curatedContentDataMemcKey( $sectionTitle ) );
 
-			// Request from Ember to Hapi
 			// We have to double encode because Ember's RouteRecognizer does decodeURI while processing path.
 			$doubleEncodedTitle = self::encodeURI( self::encodeURIQueryParam( $sectionTitle ) );
+
+			// Mercury opened directly with URL
 			$urls[] =
 				$wgServer .
+				self::SERVICE_API_ROOT .
+				self::SERVICE_API_CURATED_CONTENT .
+				$doubleEncodedTitle;
+
+			// API request from Ember to Hapi
+			$urls[] =
+				$wgServer .
+				self::SERVICE_API_ROOT .
 				self::SERVICE_API_BASE .
 				self::SERVICE_API_CURATED_CONTENT .
 				$doubleEncodedTitle;
 
 			// Request from Hapi to MediaWiki
 			$encodedTitle = self::encodeURIQueryParam( $sectionTitle );
-			$urls[] = MercuryApiController::getUrl( 'getCuratedContentSection' ) . '&section=' . $encodedTitle;
+			$urls[] = MercuryApiController::getUrl( 'getCuratedContentSection', [ 'section' => $encodedTitle ] );
 		}
 
 		( new SquidUpdate( array_unique( $urls ) ) )->doUpdate();
