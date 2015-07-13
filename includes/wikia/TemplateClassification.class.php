@@ -33,11 +33,11 @@ class TemplateClassification {
 
 	/**
 	 * A Title object for the page you are classifying.
-	 * @var \Title
+	 * @var Title
 	 */
 	private $title;
 
-	public function __construct( \Title $templateTitle ) {
+	public function __construct( Title $templateTitle ) {
 		$this->title = $templateTitle;
 	}
 
@@ -46,7 +46,7 @@ class TemplateClassification {
 	 * @return string
 	 */
 	public function getType() {
-		return \Wikia::getProps( $this->title->getArticleId(), self::TEMPLATE_CLASSIFICATION_MAIN_PROP );
+		return Wikia::getProps( $this->title->getArticleId(), self::TEMPLATE_CLASSIFICATION_MAIN_PROP );
 	}
 
 	/**
@@ -84,7 +84,7 @@ class TemplateClassification {
 	 * @param bool $value Value of the classification. If false, the type will be set to unclassified.
 	 * @param int $actor Specifies if the recognition was made by a machine or a human
 	 * @return bool
-	 * @throws \MWException
+	 * @throws MWException
 	 */
 	public function classifyTemplate( $type, $value, $actor = self::CLASSIFICATION_ACTOR_HUMAN ) {
 		global $wgUser;
@@ -110,7 +110,7 @@ class TemplateClassification {
 			$type = self::TEMPLATE_UNCLASSIFIED;
 		}
 
-		\Wikia::setProps( $this->title->getArticleID(), [
+		Wikia::setProps( $this->title->getArticleID(), [
 			self::TEMPLATE_CLASSIFICATION_MAIN_PROP => $type
 		] );
 
@@ -126,7 +126,7 @@ class TemplateClassification {
 			'timestamp' => wfTimestamp(),
 		];
 
-		\Wikia::setProps( $this->title->getArticleID(), [ $prop => json_encode( $data ) ] );
+		Wikia::setProps( $this->title->getArticleID(), [ $prop => json_encode( $data ) ] );
 
 		/**
 		 * Since Wikia::setProps fails silently we can return true at this point.

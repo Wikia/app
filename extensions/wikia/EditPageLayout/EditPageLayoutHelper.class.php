@@ -195,7 +195,7 @@ class EditPageLayoutHelper {
 	static public function isInfoboxTemplate( Title $title ) {
 		$namespace = $title->getNamespace();
 
-		if ( $namespace === NS_TEMPLATE && class_exists( 'TemplateClassification' ) ) {
+		if ( $namespace === NS_TEMPLATE ) {
 			$tc = new TemplateClassification( $title );
 			return $tc->isType( $tc::TEMPLATE_INFOBOX ) || TemplateDraftHelper::isTitleDraft( $title );
 		}
