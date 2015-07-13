@@ -92,7 +92,7 @@ class VectorHooks {
 			if ( isset( self::$features[$name]['requirements'] ) ) {
 				foreach ( self::$features[$name]['requirements'] as $requirement => $value ) {
 					// Important! We really do want fuzzy evaluation here
-					if ( $wgUser->getOption( $requirement ) != $value ) {
+					if ( $wgUser->getGlobalPreference( $requirement ) != $value ) {
 						return false;
 					}
 				}

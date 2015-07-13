@@ -144,7 +144,7 @@ class EditAccount extends SpecialPage {
 				break;
 			case 'closeaccount':
 				$template = 'closeaccount';
-				$this->mStatus = (bool) $this->mUser->getOption( 'requested-closure', 0 );
+				$this->mStatus = (bool) $this->mUser->getGlobalFlag( 'requested-closure', 0 );
 				$this->mStatusMsg = $this->mStatus ? wfMsg( 'editaccount-requested' ) : wfMsg( 'editaccount-not-requested' );
 				break;
 			case 'closeaccountconfirm':
@@ -209,7 +209,7 @@ class EditAccount extends SpecialPage {
 			$this->mUser->load();
 
 			// get new email (unconfirmed)
-			$optionNewEmail = $this->mUser->getOption( 'new_email' );
+			$optionNewEmail = $this->mUser->getGlobalAttribute( 'new_email' );
 			$changeEmailRequested = ( empty($optionNewEmail) ) ? '' : wfMsg( 'editaccount-email-change-requested', $optionNewEmail ) ;
 
 			// emailStatus is the status of the email in the "Set new email address" field
@@ -219,10 +219,10 @@ class EditAccount extends SpecialPage {
 					'userRealName' => $this->mUser->getRealName(),
 					'userId'  => $this->mUser->getID(),
 					'userReg' => date( 'r', strtotime( $this->mUser->getRegistration() ) ),
-					'isUnsub' => $this->mUser->getOption('unsubscribed'),
-					'isDisabled' => $this->mUser->getOption('disabled'),
+					'isUnsub' => $this->mUser->getGlobalPreference('unsubscribed'),
+					'isDisabled' => $this->mUser->getGlobalFlag('disabled'),
 					'isClosureRequested' => $this->isClosureRequested(),
-					'isAdopter' => $this->mUser->getOption('AllowAdoption', 1 ),
+					'isAdopter' => $this->mUser->getGlobalFlag('AllowAdoption', 1 ),
 					'userStatus' => $userStatus,
 					'emailStatus' => $emailStatus,
 					'changeEmailRequested' => $changeEmailRequested,
@@ -246,9 +246,9 @@ class EditAccount extends SpecialPage {
 			if ( $email != '' ) {
 				UserLoginHelper::removeNotConfirmedFlag( $this->mUser );
 				$this->mUser->confirmEmail();
-				$this->mUser->setOption( 'new_email', null );
+				$this->mUser->setGlobalAttribute( 'new_email', null );
 			} else {
-				if ( $this->mUser->getOption( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME ) ) {
+				if ( $this->mUser->getGlobalFlag( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME ) ) {
 					// User not confirmed on signup can't has empty email
 					// @TODO introduce new message since usecase here is same as temp user empty email but it's not temp user anymore
 					$this->mStatusMsg = wfMsg( 'editaccount-error-tempuser-email' );
@@ -437,7 +437,7 @@ class EditAccount extends SpecialPage {
 	 */
 	function clearUnsubscribe() {
 		global $wgExternalAuthType;
-		$this->mUser->setOption( 'unsubscribed', null );
+		$this->mUser->setGlobalPreference( 'unsubscribed', null );
 		$this->mUser->saveSettings();
 
 		// delete the record from all the secondary clusters
@@ -457,8 +457,8 @@ class EditAccount extends SpecialPage {
 	 * @return Boolean: true
 	 */
 	function clearDisable() {
-		$this->mUser->setOption( 'disabled', null );
-		$this->mUser->setOption( 'disabled_date', null );
+		$this->mUser->setGlobalFlag( 'disabled', null );
+		$this->mUser->setGlobalAttribute( 'disabled_date', null );
 		$this->mUser->setRealName( '' );
 		$this->mUser->saveSettings();
 
@@ -468,7 +468,7 @@ class EditAccount extends SpecialPage {
 	}
 
 	function toggleAdopterStatus() {
-		$this->mUser->setOption( 'AllowAdoption', (int) !$this->mUser->getOption( 'AllowAdoption', 1 ) );
+		$this->mUser->setGlobalFlag( 'AllowAdoption', (int) !$this->mUser->getGlobalFlag( 'AllowAdoption', 1 ) );
 		$this->mUser->saveSettings();
 
 		$this->mStatusMsg = wfMsg( 'editaccount-success-toggleadopt', $this->mUser->mName );

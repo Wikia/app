@@ -230,13 +230,13 @@ class EmailNotification {
 			}
 
 			// Does that user want to know about minor edits?
-			if ( !$targetUser->getOption( 'enotifminoredits' ) ) {
+			if ( !$targetUser->getGlobalPreference( 'enotifminoredits' ) ) {
 				return false;
 			}
 		}
 
 		// Does that user want to be notified about changes to their talk page?
-		if ( !$targetUser->getOption( 'enotifusertalkpages' ) ) {
+		if ( !$targetUser->getGlobalPreference( 'enotifusertalkpages' ) ) {
 			return false;
 		}
 
@@ -274,7 +274,7 @@ class EmailNotification {
 				// Send mail to user when comment on his user talk has been added
 				$fakeUser = null;
 				wfRunHooks( 'UserMailer::NotifyUser', [ $this->title, &$fakeUser ] );
-				if ( $fakeUser instanceof User && $fakeUser->getOption( 'enotifusertalkpages' ) && $fakeUser->isEmailConfirmed() ) {
+				if ( $fakeUser instanceof User && $fakeUser->getGlobalPreference( 'enotifusertalkpages' ) && $fakeUser->isEmailConfirmed() ) {
 					$this->compose( $fakeUser );
 				}
 			}
@@ -285,11 +285,11 @@ class EmailNotification {
 
 				/* @var $watchingUser User */
 				foreach ( $userArray as $watchingUser ) {
-					if ( $watchingUser->getOption( 'enotifwatchlistpages' ) &&
-						( !$this->isMinorEdit() || $watchingUser->getOption( 'enotifminoredits' ) ) &&
+					if ( $watchingUser->getGlobalPreference( 'enotifwatchlistpages' ) &&
+						( !$this->isMinorEdit() || $watchingUser->getGlobalPreference( 'enotifminoredits' ) ) &&
 						$watchingUser->isEmailConfirmed() &&
 						$watchingUser->getID() != $userTalkId &&
-						!$watchingUser->getBoolOption( 'unsubscribed' ) )
+						!(bool)$watchingUser->getGlobalPreference( 'unsubscribed' ) )
 					{
 						$this->compose( $watchingUser );
 					}
@@ -306,7 +306,7 @@ class EmailNotification {
 		$adminAddress = new MailAddress( F::app()->wg->PasswordSender, F::app()->wg->PasswordSenderName );
 		if ( F::app()->wg->EnotifRevealEditorAddress
 			&& ( $this->editor->getEmail() != '' )
-			&& $this->editor->getOption( 'enotifrevealaddr' ) )
+			&& $this->editor->getGlobalPreference( 'enotifrevealaddr' ) )
 		{
 			$editorAddress = new MailAddress( $this->editor );
 			if ( F::app()->wg->EnotifFromEditor ) {
@@ -627,7 +627,7 @@ class EmailNotification {
 		$to = new MailAddress( $watchingUser );
 		$body = $this->expandBodyVariables( $watchingUser, $this->body );
 
-		if ( $watchingUser->getOption( 'htmlemails' ) && !empty( $this->bodyHTML ) ) {
+		if ( $watchingUser->getGlobalPreference( 'htmlemails' ) && !empty( $this->bodyHTML ) ) {
 			$bodyHTML = $this->expandBodyVariables( $watchingUser, $this->bodyHTML );
 			# now body is array with text and html version of email
 			$body = [ 'text' => $body, 'html' => $bodyHTML ];

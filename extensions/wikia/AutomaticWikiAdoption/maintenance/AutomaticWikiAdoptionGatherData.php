@@ -176,8 +176,8 @@ class AutomaticWikiAdoptionGatherData {
 			$defaultOption = null;
 			if ( $wikiId > 194785 ) {
 				$defaultOption = 1;
-			}			
-			$acceptMails = $adminUser->getOption("adoptionmails-$wikiId", $defaultOption);
+			}
+			$acceptMails = $adminUser->setLocalPreference("adoptionmails", $defaultOption, $wikiId);
 			if ($acceptMails && $adminUser->isEmailConfirmed()) {
 				$adminName = $adminUser->getName();
 				if (!isset($commandLineOptions['quiet'])) {

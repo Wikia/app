@@ -15,7 +15,9 @@ class XmlParser {
 	public static function parseXmlString( $xmlString, &$errors = [ ] ) {
 		$global_libxml_setting = libxml_use_internal_errors();
 		libxml_use_internal_errors( true );
-		$xml = simplexml_load_string( $xmlString );
+		// support for html entities and single & char
+		$decoded = str_replace( '&', '&amp;', html_entity_decode( $xmlString ) );
+		$xml = simplexml_load_string( $decoded );
 		$errors = libxml_get_errors();
 		libxml_use_internal_errors( $global_libxml_setting );
 
@@ -44,6 +46,7 @@ class XmlMarkupParseErrorException extends \Exception {
 
 	public function __construct( $errors ) {
 		$this->errors = $errors;
+
 		return parent::__construct();
 	}
 

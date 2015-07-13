@@ -104,7 +104,7 @@ class UserProfilePageHooks {
 			return true;
 		}
 		// abort if user has been disabled (v2, both need to be checked for a while)
-		$disabledOpt = $user->getOption('disabled');
+		$disabledOpt = $user->getGlobalFlag('disabled');
 		if (!empty($disabledOpt)) {
 			wfProfileOut(__METHOD__);
 			return true;

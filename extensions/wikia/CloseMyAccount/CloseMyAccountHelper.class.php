@@ -24,8 +24,8 @@ class CloseMyAccountHelper {
 			return true;
 		}
 
-		$user->setOption( 'requested-closure', true );
-		$user->setOption( 'requested-closure-date', wfTimestamp( TS_DB ) );
+		$user->setGlobalFlag( 'requested-closure', true );
+		$user->setGlobalAttribute( 'requested-closure-date', wfTimestamp( TS_DB ) );
 		$user->saveSettings();
 
 		$this->track( $user, 'request-closure' );
@@ -81,8 +81,8 @@ class CloseMyAccountHelper {
 			return false;
 		}
 
-		$user->setOption( 'requested-closure', null );
-		$user->setOption( 'requested-closure-date', null );
+		$user->setGlobalFlag( 'requested-closure', null );
+		$user->setGlobalAttribute( 'requested-closure-date', null );
 		$user->saveSettings();
 
 		$this->track( $user, 'account-reactivated' );
@@ -100,7 +100,7 @@ class CloseMyAccountHelper {
 	 */
 	public function getDaysUntilClosure( User $user ) {
 		$daysRemaining = false;
-		$requestDate = $user->getOption( 'requested-closure-date' );
+		$requestDate = $user->getGlobalAttribute( 'requested-closure-date' );
 
 		if ( $requestDate !== null ) {
 			// Number of days remaining until closure
@@ -120,7 +120,7 @@ class CloseMyAccountHelper {
 	 *                       False otherwise
 	 */
 	public function isClosed( User $user ) {
-		return (bool)$user->getOption( 'disabled', false );
+		return (bool)$user->getGlobalFlag( 'disabled', false );
 	}
 
 	/**
@@ -131,8 +131,8 @@ class CloseMyAccountHelper {
 	 *                       False otherwise
 	 */
 	public function isScheduledForClosure( User $user ) {
-		return (bool)$user->getOption( 'requested-closure', false )
-			&& ( $user->getOption( 'requested-closure-date', false ) !== false );
+		return (bool)$user->getGlobalFlag( 'requested-closure', false )
+			&& ( $user->getGlobalAttribute( 'requested-closure-date', false ) !== false );
 	}
 
 	/**

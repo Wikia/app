@@ -1,12 +1,14 @@
 /*global define, require*/
 define('ext.wikia.adEngine.template.skin', [
+	'ext.wikia.adEngine.adContext',
 	'wikia.document',
 	'wikia.window',
 	'wikia.log'
-], function (doc, win, log) {
+], function (adContext, doc, win, log) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.adengine.template.skin';
+	var logGroup = 'ext.wikia.adengine.template.skin',
+		sevenOneMedia = adContext.getContext().providers.sevenOneMedia;
 
 	/**
 	 * Show the skin ad
@@ -35,16 +37,28 @@ define('ext.wikia.adEngine.template.skin', [
 
 			if (win.wgOasisResponsive || win.wgOasisBreakpoints || win.skin === 'venus') {
 				require(['wikia.backgroundchanger'], function (backgroundchanger) {
+					if (!params.middleColor) { // TODO: Revisit this hack after CONCF-842 is fixed
+						params.middleColor = params.backgroundColor;
+					}
 					var bcParams = {
 						skinImage: params.skinImage,
 						skinImageWidth: 1700,
 						skinImageHeight: 800,
 						backgroundTiled: false,
 						backgroundFixed: true,
-						backgroundDynamic: true
+						backgroundDynamic: true,
+						backgroundColor: 'transparent' // TODO: Revisit this hack after CONCF-842 is fixed
 					};
 					if (params.backgroundColor) {
-						bcParams.backgroundColor = '#' + params.backgroundColor;
+						doc.documentElement.style.backgroundColor = '#' + params.backgroundColor;
+
+						// The SevenOne Media hack (ADEN-2223)
+						//
+						// Ad skins used to work in release-310 without it
+						// TODO: Revisit this hack after CONCF-842 is fixed
+						if (sevenOneMedia) {
+							doc.body.style.backgroundColor = 'transparent';
+						}
 					}
 					if (params.middleColor) {
 						bcParams.backgroundMiddleColor = '#' + params.middleColor;

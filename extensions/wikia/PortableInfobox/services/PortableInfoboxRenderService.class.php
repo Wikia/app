@@ -14,11 +14,7 @@ class PortableInfoboxRenderService extends WikiaService {
 		'image-mobile' => 'PortableInfoboxItemImageMobile.mustache',
 		'data' => 'PortableInfoboxItemData.mustache',
 		'group' => 'PortableInfoboxItemGroup.mustache',
-		'comparison' => 'PortableInfoboxItemComparison.mustache',
-		'comparison-set' => 'PortableInfoboxItemComparisonSet.mustache',
-		'comparison-set-header' => 'PortableInfoboxItemComparisonSetHeader.mustache',
-		'comparison-set-item' => 'PortableInfoboxItemComparisonSetItem.mustache',
-		'footer' => 'PortableInfoboxItemFooter.mustache'
+		'navigation' => 'PortableInfoboxItemNavigation.mustache'
 	];
 	private $templateEngine;
 
@@ -42,14 +38,11 @@ class PortableInfoboxRenderService extends WikiaService {
 			$type = $item[ 'type' ];
 
 			switch ( $type ) {
-				case 'comparison':
-					$infoboxHtmlContent .= $this->renderComparisonItem( $data['value'] );
-					break;
 				case 'group':
 					$infoboxHtmlContent .= $this->renderGroup( $data );
 					break;
-				case 'footer':
-					$infoboxHtmlContent .= $this->renderItem( 'footer', $data );
+				case 'navigation':
+					$infoboxHtmlContent .= $this->renderItem( 'navigation', $data );
 					break;
 				default:
 					if ( $this->validateType( $type ) ) {
@@ -65,49 +58,6 @@ class PortableInfoboxRenderService extends WikiaService {
 		}
 
 		wfProfileOut( __METHOD__ );
-
-		return $output;
-	}
-
-	/**
-	 * renders comparison infobox component
-	 *
-	 * @param array $comparisonData
-	 * @return string - comparison HTML
-	 */
-	private function renderComparisonItem( $comparisonData )
-	{
-		$comparisonHTMLContent = '';
-
-		foreach ($comparisonData as $set) {
-			$setHTMLContent = '';
-
-			foreach ($set['data']['value'] as $item) {
-				$type = $item['type'];
-
-				if ($type === 'header') {
-					$setHTMLContent .= $this->renderItem(
-						'comparison-set-header',
-						['content' => $this->renderItem($type, $item['data'])]
-					);
-				} else {
-					if ($this->validateType($type)) {
-						$setHTMLContent .= $this->renderItem(
-							'comparison-set-item',
-							['content' => $this->renderItem($type, $item['data'])]
-						);
-					}
-				}
-			}
-
-			$comparisonHTMLContent .= $this->renderItem( 'comparison-set', [ 'content' => $setHTMLContent ] );
-		}
-
-		if ( !empty( $comparisonHTMLContent ) ) {
-			$output = $this->renderItem('comparison', [ 'content' => $comparisonHTMLContent ] );
-		} else {
-			$output = '';
-		}
 
 		return $output;
 	}
@@ -136,17 +86,26 @@ class PortableInfoboxRenderService extends WikiaService {
 
 	/**
 	 * renders part of infobox
+	 * If image element has invalid thumbnail, doesn't render this element at all.
 	 *
 	 * @param string $type
 	 * @param array $data
-	 * @return string - HTML
+	 * @return bool|string - HTML
 	 */
 	private function renderItem( $type, array $data ) {
 		//TODO: with validated the performance of render Service and in the next phase we want to refactor it (make
 		// it modular) While doing this we also need to move this logic to appropriate image render class
 		if ( $type === 'image' ) {
-			$data[ 'thumbnail' ] = $this->getThumbnailUrl( $data['name'] );
 			$data[ 'key' ] = urlencode( $data[ 'key' ] );
+			$thumbnail = $this->getThumbnail( $data['name'] );
+
+			if (!$thumbnail) {
+				return false;
+			}
+
+			$data[ 'height' ] = $thumbnail->getHeight();
+			$data[ 'width' ] = $thumbnail->getWidth();
+			$data[ 'thumbnail' ] = $thumbnail->getUrl();
 
 			if ( $this->isWikiaMobile() ) {
 				$type = $type . self::MOBILE_TEMPLATE_POSTFIX;
@@ -159,22 +118,24 @@ class PortableInfoboxRenderService extends WikiaService {
 	}
 
 	/**
-	 * @desc returns the thumbnail url
-	 * @param string $title
-	 * @return string thumbnail url
+	 * @desc create a thumb of the image from file title
+	 * @param $title
+	 * @return bool|MediaTransformOutput
 	 */
-	protected function getThumbnailUrl( $title ) {
+	protected function getThumbnail( $title ) {
 		$file = \WikiaFileHelper::getFileFromTitle( $title );
 
 		if ( $file ) {
-			return $file->createThumb(
-				$this->isWikiaMobile() ?
-					self::MOBILE_THUMBNAIL_WIDTH :
-					self::DESKTOP_THUMBNAIL_WIDTH
-			);
-		}
+			$width = $this->isWikiaMobile() ?
+				self::MOBILE_THUMBNAIL_WIDTH :
+				self::DESKTOP_THUMBNAIL_WIDTH;
+			$thumb = $file->transform( ['width' => $width] );
 
-		return '';
+			if (!is_null($thumb) && !$thumb->isError()) {
+				return $thumb;
+			}
+		}
+		return false;
 	}
 
 	/** 

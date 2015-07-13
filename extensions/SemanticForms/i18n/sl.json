@@ -1,0 +1,11 @@
+{
+	"@metadata": {
+		"authors": [
+			"Dbc334"
+		]
+	},
+	"sf_createtemplate_connectingproperty": "Ime lastnosti za povezovanje polj te predloge s preostalo stranjo:",
+	"sf_createform_add": "Dodaj",
+	"formedit": "Uredi z obrazcem",
+	"right-viewedittab": "Ogled zavihka »{{int:edit}}« za strani, ki jih lahko urejate z obrazcem"
+}

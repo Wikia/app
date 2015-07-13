@@ -84,8 +84,8 @@ class FounderEmailsDaysPassedEvent extends FounderEmailsEvent {
 		$founderEmailObj = FounderEmails::getInstance();
 
 		$wikiFounder = $founderEmailObj->getWikiFounder();
-		$wikiFounder->setOption( "founderemails-joins-$wgCityId", true );
-		$wikiFounder->setOption( "founderemails-edits-$wgCityId", true );
+		$wikiFounder->setLocalPreference( "founderemails-joins", true, $wgCityId );
+		$wikiFounder->setLocalPreference( "founderemails-edits", true, $wgCityId );
 
 		$wikiFounder->saveSettings();
 

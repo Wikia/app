@@ -369,7 +369,7 @@ class Gadget {
 	 * @return Boolean
 	 */
 	public function isEnabled( $user ) {
-		return (bool)$user->getOption( "gadget-{$this->name}", $this->onByDefault );
+		return (bool)$user->getGlobalPreference( "gadget-{$this->name}", $this->onByDefault );
 	}
 
 	/**
@@ -380,7 +380,7 @@ class Gadget {
 	 */
 	public function isAllowed( $user ) {
 		return count( array_intersect( $this->requiredRights, $user->getRights() ) ) == count( $this->requiredRights )
-			&& ( !count( $this->requiredSkins ) || in_array( $user->getOption( 'skin' ), $this->requiredSkins ) );
+			&& ( !count( $this->requiredSkins ) || in_array( $user->getGlobalPreference( 'skin' ), $this->requiredSkins ) );
 	}
 
 	/**

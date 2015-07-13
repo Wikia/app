@@ -429,11 +429,11 @@ class WallNotifications {
 		}
 
 		// Don't send an email to users that unsubscribed their email address
-		if ( $watcher->getBoolOption( 'unsubscribed' ) === true ) {
+		if ( (bool)$watcher->getGlobalPreference( 'unsubscribed' ) === true ) {
 			return false;
 		}
 
-		$mode = $watcher->getOption( 'enotifwallthread' );
+		$mode = $watcher->getGlobalPreference( 'enotifwallthread' );
 		if ( empty( $mode ) ) {
 			return false;
 		}
