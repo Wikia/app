@@ -5,7 +5,7 @@ class TemplateConverter {
 	const CONVERSION_MARKER = 'conversion';
 
 	const
-		TEMPLATE_VARIABLE_PATTERN = '/{{{([^{}]+|.*{{.*}}.*)?}}}/',
+		TEMPLATE_VARIABLE_PATTERN = '/{{{([^|{}]+(\|([^{}]*|.*{{.*}}.*))*)?}}}/',
 		TEMPLATE_VARIABLE_DATA_PATTERN = '/([^|]+)(\|.*)*/',
 		TRANSCLUSION_MARKUP_PATTERN = '/(<(includeonly|onlyinclude|noinclude)>.*?<\/(includeonly|onlyinclude|noinclude)>)/',
 		TABLE_ROWS_PATTERN = '/<tr.*?>.*?<\/tr>/s',
@@ -225,7 +225,7 @@ class TemplateConverter {
 		$parser->startExternalParse( $this->title, \ParserOptions::newFromUser( $wgUser ), \Parser::OT_PLAIN );
 
 		$frame = $parser->getPreprocessor()->newFrame();
-		$dom = $parser->preprocessToDom( $content );
+		$dom = $parser->preprocessToDom( $content, \Parser::PTD_FOR_INCLUSION );
 		$content = $frame->expand( $dom, PPFrame::NO_ARGS );
 		$content = $parser->doTableStuff( $content );
 
