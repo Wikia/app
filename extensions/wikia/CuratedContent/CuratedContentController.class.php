@@ -490,8 +490,8 @@ class CuratedContentController extends WikiaController {
 		$wikisList = WikiFactory::getListOfWikisWithVar(
 			self::CURATED_CONTENT_WG_VAR_ID_PROD, "full", "LIKE", null, "true"
 		);
-		$this->getResponse()->setFormat( WikiaResponse::FORMAT_JSON );
-		$this->cacheResponseFor( 1, self::DAYS );
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
 		$this->response->setVal('ids_list', $wikisList);
 	}
 
