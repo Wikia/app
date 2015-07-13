@@ -63,6 +63,16 @@ class Starters {
 	}
 
 	/**
+	 * Return a remote DFS path to the starter SQL dump file
+	 *
+	 * @param string $starter starter DB name
+	 * @return string
+	 */
+	public static function getStarterSqlDumpPath( $starter ) {
+		return sprintf( '/dumps/%s.sql.bz2', $starter );
+	}
+
+	/**
 	 * Return SwiftStorage instance used to upload and fetch XML dumps
 	 *
 	 * @return SwiftStorage

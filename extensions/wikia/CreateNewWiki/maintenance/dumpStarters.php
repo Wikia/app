@@ -24,6 +24,17 @@ class DumpStarters extends Maintenance {
 	protected $mDescription = 'This script prepares XML dumps with the latest revisions of starter wikis';
 
 	/**
+	 * The following tables will be used to generate a SQL dump of a starter wiki
+	 */
+	static private $mTablesToDump = [
+		'categorylinks',
+		'externallinks',
+		'langlinks',
+		'pagelinks',
+		'templatelinks',
+	];
+
+	/**
 	 * Generate XML dump of a given starter database and writes it to a given file
 	 *
 	 * The file will be bzip2 compressed
@@ -33,8 +44,8 @@ class DumpStarters extends Maintenance {
 	 */
 	private function generateContentDump($filename, $starter) {
 		// export only the current revisions
-		$db = wfGetDB( DB_SLAVE, [], $starter );
-		$exporter = new WikiExporter( $db, WikiExporter::CURRENT, WikiExporter::STREAM, WikiExporter::TEXT );
+		$dbr = wfGetDB( DB_SLAVE, [], $starter );
+		$exporter = new WikiExporter( $dbr, WikiExporter::CURRENT, WikiExporter::STREAM, WikiExporter::TEXT );
 
 		// write to a stream
 		$exporter->setOutputSink( new DumpBZip2Output( $filename ) );
@@ -44,7 +55,48 @@ class DumpStarters extends Maintenance {
 	}
 
 	/**
+	 * Generate SQL dump of all tables that keep the links between tables
+	 *
+	 * This allows us to avoid running heavy maintenance scripts while creating a wiki
+	 *
+	 * The file will be bzip2 compressed
+	 *
+	 * @param string $filename file to write the SQL dump to
+	 * @param string $starter
+	 * @throws DumpStartersException
+	 */
+	private function generateSqlDump($filename, $starter) {
+		// export only the current revisions
+		$dbr = wfGetDB( DB_SLAVE, [], $starter );
+
+		// get the DB host name, user and password to be used by mysqldump
+		$info = $dbr->getLBInfo();
+
+		// dump tables data only
+		$cmd = sprintf("%s --no-create-info -h%s -u%s -p%s %s %s",
+			"/usr/bin/mysqldump",
+			$info[ "host"      ],
+			$info[ "user"      ],
+			$info[ "password"  ],
+			$starter,
+			implode( " ", self::$mTablesToDump ),
+			$filename
+		);
+
+		$dump = wfShellExec( $cmd, $retVal );
+
+		if ($retVal > 0) {
+			throw new DumpStartersException("Unable to generate a SQL dump of '{$starter}'");
+		}
+
+		// save the compressed SQL dump
+		file_put_contents( $filename, bzcompress($dump, 9) );
+	}
+
+	/**
 	 * Stores the bzip2-compressed XML dump on Ceph
+	 *
+	 * Will remove the file internally
 	 *
 	 * @param string $filename file to upload to Ceph
 	 * @param string $dest the destination to store the file at
@@ -62,6 +114,12 @@ class DumpStarters extends Maintenance {
 		if ( !$res->isOK() ) {
 			throw new DumpStartersException( 'XML dump upload failed - ' . json_encode( $res->getErrorsArray() ) );
 		}
+
+		// cleanup
+		$dumpSize = filesize($filename);
+		unlink($filename);
+
+		$this->output( sprintf(" \n\t[%s] uploaded %.2f kB", $dest, $dumpSize / 1024 ) );
 	}
 
 	/**
@@ -80,16 +138,15 @@ class DumpStarters extends Maintenance {
 	private function dumpStarter($starter) {
 		$this->output( sprintf("\n%s: preparing a dump of '%s'...", wfTimestamp( TS_DB ), $starter ) );
 
-		// generate content XML dump with only the latest revisions
+		// 1. generate content XML dump with only the latest revisions
 		$tmpname = $this->getTempFile();
 		$this->generateContentDump( $tmpname, $starter );
 		$this->storeDump( $tmpname, \Wikia\CreateNewWiki\Starters::getStarterContentDumpPath( $starter ) );
 
-		// cleanup
-		$dumpSize = filesize($tmpname);
-		unlink($tmpname);
-
-		$this->output( sprintf(" \t[content] %.2f kB", $dumpSize / 1024 ) );
+		// 2. generate SQL dump of "links" tables
+		$tmpname = $this->getTempFile();
+		$this->generateSqlDump( $tmpname, $starter );
+		$this->storeDump( $tmpname, \Wikia\CreateNewWiki\Starters::getStarterSqlDumpPath( $starter ) );
 	}
 
 	public function execute() {
