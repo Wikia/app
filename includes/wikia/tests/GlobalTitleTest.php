@@ -22,19 +22,9 @@ class GlobalTitleTest extends WikiaBaseTest {
 				[ 'wgExtraNamespacesLocal', 490, [ 116 => 'Portal' ] ],
 			] );
 
-		global $wgDevelEnvironment,$wgDevelEnvironmentName;
-		$this->wgDevelEnv = $wgDevelEnvironment;
-		$this->wgDevelEnvName = $wgDevelEnvironmentName;
-		$wgDevelEnvironment = false;
-		$wgDevelEnvironmentName = 'qa-testing-class-' . get_class($this);
-	}
-	
-	function tearDown() {
-		global $wgDevelEnvironment,$wgDevelEnvironmentName;
-		$wgDevelEnvironment = $this->wgDevelEnv;
-		$wgDevelEnvironmentName = $this->wgDevelEnvName;
-		
-		parent::tearDown();
+		$this->mockGlobalVariable('wgDevelEnvironment',false);
+		$this->mockGlobalVariable('wgDevelEnvironmentName','qa-testing-class-' . get_class($this));
+		$this->mockGlobalVariable('wgWikiaEnvironment',WIKIA_ENV_PROD);
 	}
 
 	function testNewFromText1() {
