@@ -1024,10 +1024,12 @@ class ArticlesApiController extends WikiaApiController {
 		if ( $parsedArticle instanceof ParserOutput ) {
 			$articleContent = json_decode( $parsedArticle->getText() );
 
-			if ( empty( $sectionsToGet ) ) {
-				$content = $articleContent->content;
+			if ( !empty( $sectionsToGet ) || $sectionsToGet == '0' ) {
+				$contentArray = $this->splitArticleIntoSections( $articleContent->content );
+				$sectionsToGet = $this->getSectionNumbersArray( $sectionsToGet, count( $contentArray ) );
+				$content = $this->getArticleSections( $sectionsToGet, $contentArray );
 			} else {
-				$content = $this->getArticleSections( $sectionsToGet, $parsedArticle, $article, $title );
+				$content = $articleContent->content;
 			}
 		} else {
 			throw new ArticleAsJsonParserException( 'Parser is currently not available' );
@@ -1057,36 +1059,34 @@ class ArticlesApiController extends WikiaApiController {
 	}
 
 	/**
-	 * Get some or all of the article top level sections as an array
-	 *
-	 * Note: If sections 1, 2 and 3 are requested, but section 3 is a subsection, the returned
-	 * array will only have two items: section 1 & 2 (section 2 containing subsection 3).
-	 * All top level sections will contain all of their subsections, regardless of how many
-	 * were requested. So if sections 1, 2 and 3 are requested, and section 2 contains 3 subsections,
-	 * section two will be returned with all 3 subsections.
-	 *
-	 * @param mixed $sectionsToGet Array of section numbers (could need URL decoding) or the string "all"
-	 * @param ParserOutput $parsedArticle
-	 * @param Article $article
-	 * @param Title $title
+	 * Get all top level sections as an array by splitting on h2 tags
+	 * @param $content
 	 * @return array
-	 * @throws BadRequestApiException
 	 */
-	private function getArticleSections( $sectionsToGet, ParserOutput $parsedArticle, Article $article, $title ) {
-		$content = [];
-		$articleAsWikiText = $article->getContent();
-		$parsedSections = $parsedArticle->getSections();
-		$sectionsToGet = $this->getSectionNumbersArray( $sectionsToGet, $parsedSections );
+	private function splitArticleIntoSections( $content ) {
+		$pattern = '/(\<h2[^\>]*>)/';
 
-		foreach ( $sectionsToGet as $section ) {
-			// Only retrieve top level sections.
-			// $parsedSections doesn't include section 0, so subtract 1
-			$isTopLevel = $section > 0 && $parsedSections[$section - 1]['toclevel'] === 1;
-			if ( $section == 0 || $isTopLevel ) {
-				$content[] = $this->getArticleSection( $articleAsWikiText, $title, $section );
+		$contentArray = preg_split( $pattern, $content, -1, PREG_SPLIT_DELIM_CAPTURE );
+		$index = count( $contentArray );
+
+		// If the section matches the pattern, prepend it to the following section and delete it.
+		// Count backwards to avoid searching after match is prepended.
+		while ( $index-- ) {
+			if ( preg_match( $pattern, $contentArray[$index], $matches ) ) {
+				$contentArray[$index + 1] = $matches[0] . $contentArray[$index + 1];
+				array_splice( $contentArray, $index, 1 );
 			}
 		}
-		return $content;
+
+		return $contentArray;
+	}
+
+	private function getArticleSections( $sectionsToGet, $contentArray ) {
+		$retArr = [];
+		foreach ( $sectionsToGet as $section ) {
+			$retArr[] = $contentArray[$section];
+		}
+		return $retArr;
 	}
 
 	/**
@@ -1095,49 +1095,14 @@ class ArticlesApiController extends WikiaApiController {
 	 * @return array
 	 * @throws BadRequestApiException
 	 */
-	private function getSectionNumbersArray( $sectionsToGet, $parsedSections ) {
+	private function getSectionNumbersArray( $sectionsToGet, $total ) {
 		if ( $sectionsToGet === 'all' ) {
-			$sectionsToGet = range( 0, count( $parsedSections ) );
+			$sectionsToGet = range( 0, $total );
 		} else {
 			// decode strings like "1%2C%202%2C%203" or "1,2,3" into an array
 			$sectionsToGet = explode( ',', urldecode( $sectionsToGet ) );
 		}
 		return $sectionsToGet;
-	}
-
-	/**
-	 * Get the HTML for an article section
-	 * @param string $articleAsWikiText
-	 * @param Title $title
-	 * @param integer $section
-	 * @return string
-	 * @todo Supposedly getSection works with HTML, but I could only get it to work with wikitext
-	 */
-	private function getArticleSection( $articleAsWikiText, $title, $section ) {
-		/** @var Parser $wgParser */
-		global $wgParser;
-
-		$wikitext = $wgParser->getSection( $articleAsWikiText, $section );
-		$html = $wgParser->parse( $wikitext, $title, $wgParser->mOptions )->mText;
-		return $this->replaceSectionIndex( $html, $section );
-	}
-
-	/**
-	 * Restore original section attribute values after splitting article content into section array
-	 * @param string $html HTML of article section with bad section attribute value
-	 * @param integer $section Correct section number
-	 * @return mixed
-	 */
-	private function replaceSectionIndex( $html, $section ) {
-		$regex = '/(<h\d[^\>]+section\s*\=\s*[\'"]\s*)(\d+)/';
-
-		$replaced = preg_replace_callback( $regex, function ( $matches ) use ( &$section ) {
-			$ret = $matches[1] . $section;
-			$section++;
-			return $ret;
-		}, $html );
-
-		return $replaced;
 	}
 
 	public function getPopular() {
