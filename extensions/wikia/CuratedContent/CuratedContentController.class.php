@@ -518,17 +518,6 @@ class CuratedContentController extends WikiaController {
 					// https://tools.ietf.org/html/rfc3986#section-2.1 - spaces encoded as `%20`.
 					// Android apps use this variant.
 					$urls[] = self::getUrl( 'getList' ) . '&section=' . rawurlencode( $item['title'] );
-					// Purge section URLs using JavaScript encodeURIComponent() compatible standard,
-					// which works almost like rawurlencode(), but does not encode following characters: !'()*
-					// Mercury web app uses this variant - request from Hapi.js to MediaWiki.
-					$javaScriptEncodedTitle = self::encodeURIQueryParam( $item['title'] );
-					$urls[] = self::getUrl( 'getList' ) . '&section=' . $javaScriptEncodedTitle;
-					// Mercury web app uses this variant - request from Ember.js to Hapi.js.
-					$urls[] =
-						$wgServer .
-						MercuryApiHooks::SERVICE_API_BASE .
-						MercuryApiHooks::SERVICE_API_CURATED_CONTENT .
-						$javaScriptEncodedTitle;
 				}
 
 				return $urls;
@@ -537,28 +526,12 @@ class CuratedContentController extends WikiaController {
 			[ self::getUrl( 'getList' ) ]
 		) ) ) )->doUpdate();
 
-		// Purge main page cache, so Mercury gets fresh data.
-		Title::newMainPage()->purgeSquid();
-
 		// Purge cache for obsolete (not updated) apps.
 		if ( class_exists( 'GameGuidesController' ) ) {
 			GameGuidesController::purgeMethod( 'getList' );
 		}
 
 		return true;
-	}
-
-	/**
-	 * @brief Similar to JavaScript encodeURIComponent, but it also encodes single quote character as %27.
-	 * It's because raw ' does not function properly in query string params and it's auto-converted to %27,
-	 * which break the purging.
-	 *
-	 * @param string $str
-	 *
-	 * @return string
-	 */
-	private static function encodeURIQueryParam( $str ) {
-		return strtr( rawurlencode( $str ), [ '%21' => '!', '%28' => '(', '%29' => ')', '%2A' => '*' ] );
 	}
 }
 

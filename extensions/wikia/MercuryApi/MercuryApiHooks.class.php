@@ -112,10 +112,45 @@ class MercuryApiHooks {
 	}
 
 	static public function onCuratedContentSave( $sections ) {
+		global $wgServer;
+
+		// Purge main page cache, so Mercury gets fresh data.
+		Title::newMainPage()->purgeSquid();
+
+		$urls = [ ];
 		WikiaDataAccess::cachePurge( MercuryApiController::curatedContentDataMemcKey() );
-		foreach( $sections as $section ) {
+
+		foreach ( $sections as $section ) {
 			WikiaDataAccess::cachePurge( MercuryApiController::curatedContentDataMemcKey( $section[ 'title' ] ) );
+
+			// Purge section URLs using JavaScript encodeURIComponent() compatible standard,
+			// which works almost like rawurlencode(), but does not encode following characters: !'()*
+			// Mercury web app uses this variant - request from Hapi.js to MediaWiki.
+			$javaScriptEncodedTitle = self::encodeURIQueryParam( $section['title'] );
+			$urls[] = MercuryApiController::getUrl( 'getCuratedContentSection' ) . '&section=' . $javaScriptEncodedTitle;
+			// Mercury web app uses this variant - request from Ember.js to Hapi.js.
+			$urls[] =
+				$wgServer .
+				self::SERVICE_API_BASE .
+				self::SERVICE_API_CURATED_CONTENT .
+				$javaScriptEncodedTitle;
 		}
+
+		( new SquidUpdate( array_unique( $urls ) ) )->doUpdate();
+
 		return true;
+	}
+
+	/**
+	 * @brief Similar to JavaScript encodeURIComponent, but it also encodes single quote character as %27.
+	 * It's because raw ' does not function properly in query string params and it's auto-converted to %27,
+	 * which break the purging.
+	 *
+	 * @param string $str
+	 *
+	 * @return string
+	 */
+	private static function encodeURIQueryParam( $str ) {
+		return strtr( rawurlencode( $str ), [ '%21' => '!', '%28' => '(', '%29' => ')', '%2A' => '*' ] );
 	}
 }
