@@ -444,6 +444,12 @@ class CuratedContentController extends WikiaController {
 		}
 	}
 
+	public function getData( ) {
+		global $wgWikiaCuratedContent;
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+		$this->response->setVal('data', $wgWikiaCuratedContent);
+	}
+
 	private function getCuratedContentForWiki( $wikiID ) {
 		$curatedContent = [];
 		$value = WikiFactory::getVarValueByName( 'wgWikiaCuratedContent', $wikiID );
