@@ -126,7 +126,7 @@ class MercuryApiController extends WikiaController {
 	 *
 	 * @param int $articleId
 	 * @param Title $title
-	 * @param array $sections Array of section numbers or ['all']
+	 * @param string $sections List of section numbers or 'all'
 	 * @return array
 	 */
 	private function getArticleJson( $articleId, Title $title, $sections = '' ) {

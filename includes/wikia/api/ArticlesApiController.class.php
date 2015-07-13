@@ -973,10 +973,10 @@ class ArticlesApiController extends WikiaApiController {
 	}
 
 	public function getAsJson() {
-		$articleId = $this->getRequest()->getInt(self::SIMPLE_JSON_ARTICLE_ID_PARAMETER_NAME, NULL);
-		$articleTitle = $this->getRequest()->getVal(self::SIMPLE_JSON_ARTICLE_TITLE_PARAMETER_NAME, NULL);
-		$redirect = $this->request->getVal('redirect');
-		$sectionsToGet = $this->request->getVal('sections');
+		$articleId = $this->getRequest()->getInt( self::SIMPLE_JSON_ARTICLE_ID_PARAMETER_NAME, NULL );
+		$articleTitle = $this->getRequest()->getVal( self::SIMPLE_JSON_ARTICLE_TITLE_PARAMETER_NAME, NULL );
+		$redirect = $this->request->getVal( 'redirect' );
+		$sectionsToGet = $this->request->getVal( 'sections' );
 
 		if ( !empty( $articleId ) && !empty( $articleTitle ) ) {
 			throw new BadRequestApiException( 'Can\'t use id and title in the same request' );
@@ -1026,8 +1026,8 @@ class ArticlesApiController extends WikiaApiController {
 
 			if ( !empty( $sectionsToGet ) || $sectionsToGet == '0' ) {
 				$contentArray = $this->splitArticleIntoSections( $articleContent->content );
-				$sectionsToGet = $this->getSectionNumbersArray( $sectionsToGet, count( $contentArray ) );
-				$content = $this->getArticleSections( $sectionsToGet, $contentArray );
+				$sectionsArray = $this->getSectionNumbersArray( $sectionsToGet, count( $contentArray ) );
+				$content = $this->getArticleSections( $sectionsArray, $contentArray );
 			} else {
 				$content = $articleContent->content;
 			}
@@ -1066,7 +1066,7 @@ class ArticlesApiController extends WikiaApiController {
 	private function splitArticleIntoSections( $content ) {
 		$pattern = '/(\<h2[^\>]*>)/';
 
-		$contentArray = preg_split( $pattern, $content, -1, PREG_SPLIT_DELIM_CAPTURE );
+		$contentArray = preg_split( $pattern, $content, -1, PREG_SPLIT_DELIM_CAPTURE|PREG_SPLIT_NO_EMPTY );
 		$index = count( $contentArray );
 
 		// If the section matches the pattern, prepend it to the following section and delete it.
