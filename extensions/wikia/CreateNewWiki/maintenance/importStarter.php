@@ -41,7 +41,7 @@ class ImportStarter extends Maintenance {
 		$starter = Wikia\CreateNewWiki\Starters::getStarterByLanguage( $language );
 
 		$swift = \Wikia\CreateNewWiki\Starters::getStarterDumpStorage();
-		$res = $swift->read( \Wikia\CreateNewWiki\Starters::getStarterDumpPath( $starter ),  $stream );
+		$res = $swift->read( \Wikia\CreateNewWiki\Starters::getStarterContentDumpPath( $starter ),  $stream );
 
 		if (is_null($res)) {
 			throw new CreateWikiException("Unable to open a starter database dump for {$language} language", self::ERR_OPEN_STARTER_DUMP_FAILED);

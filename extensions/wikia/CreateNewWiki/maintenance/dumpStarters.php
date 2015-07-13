@@ -24,97 +24,87 @@ class DumpStarters extends Maintenance {
 	protected $mDescription = 'This script prepares XML dumps with the latest revisions of starter wikis';
 
 	/**
-	 * Generate XML dump of a given starter database and writes it to a given stream
+	 * Generate XML dump of a given starter database and writes it to a given file
 	 *
-	 * @param resource $fp stream to write XML dump to
+	 * The file will be bzip2 compressed
+	 *
+	 * @param string $filename file to write the XML dump to
 	 * @param string $starter
 	 */
-	private function generateDump($fp, $starter) {
-		// 1. generate the dump
+	private function generateContentDump($filename, $starter) {
 		// export only the current revisions
 		$db = wfGetDB( DB_SLAVE, [], $starter );
 		$exporter = new WikiExporter( $db, WikiExporter::CURRENT, WikiExporter::STREAM, WikiExporter::TEXT );
 
 		// write to a stream
-		$exporter->setOutputSink( new DumpStreamOutput( $fp ) );
+		$exporter->setOutputSink( new DumpBZip2Output( $filename ) );
 		$exporter->openStream();
 		$exporter->allPages();
 		$exporter->closeStream();
-
-		fclose( $fp );
 	}
 
 	/**
 	 * Stores the bzip2-compressed XML dump on Ceph
 	 *
-	 * @param resource $fp stream to use to get the data to be stored
-	 * @param string $starter
-	 * @return Status
+	 * @param string $filename file to upload to Ceph
+	 * @param string $dest the destination to store the file at
+	 * @throws DumpStartersException
 	 */
-	private function storeDump( $fp, $starter ) {
+	private function storeDump( $filename, $dest ) {
 		$swift = \Wikia\CreateNewWiki\Starters::getStarterDumpStorage();
 		$res = $swift->store(
-			$fp,
-			\Wikia\CreateNewWiki\Starters::getStarterDumpPath( $starter ),
+			$filename,
+			$dest,
 			[],
 			self::DUMP_MIME_TYPE
 		);
 
-		return $res;
+		if ( !$res->isOK() ) {
+			throw new DumpStartersException( 'XML dump upload failed - ' . json_encode( $res->getErrorsArray() ) );
+		}
 	}
 
 	/**
-	 * Generate and upload a starter XML dump
+	 * @return string path to a temporary file
+	 */
+	private function getTempFile() {
+		return tempnam( wfTempDir(), 'starter' );
+	}
+
+	/**
+	 * Generate and upload a starter XML dump and SQL dump of "links" table
 	 *
 	 * @param string $starter
 	 * @throws DumpStartersException
 	 */
 	private function dumpStarter($starter) {
-		$this->output( sprintf("%s: preparing a dump of '%s'...", wfTimestamp( TS_DB ), $starter ) );
+		$this->output( sprintf("\n%s: preparing a dump of '%s'...", wfTimestamp( TS_DB ), $starter ) );
 
-		// 0. set up the XML dump file
-		$tmpname = tempnam( wfTempDir(), 'starter' );
-		$fp = fopen( $tmpname, 'w' );
-
-		if ( !is_resource( $fp ) ) {
-			throw new DumpStartersException( 'Cannot create a temporary file' );
-		}
-
-		// compress the XML dump on the fly
-		stream_filter_append( $fp, 'bzip2.compress', STREAM_FILTER_WRITE );
-
-		// 1. generate the dump
-		// export only the current revisions
-		$this->generateDump( $fp, $starter );
-
-		// 2. store it on Ceph
-		$fp = fopen($tmpname, 'r' );
-		$res = $this->storeDump( $fp, $starter );
-
-		if ( !$res->isOK() ) {
-			throw new DumpStartersException( 'XML dump upload failed - ' . json_encode( $res->getErrorsArray() ) );
-		}
+		// generate content XML dump with only the latest revisions
+		$tmpname = $this->getTempFile();
+		$this->generateContentDump( $tmpname, $starter );
+		$this->storeDump( $tmpname, \Wikia\CreateNewWiki\Starters::getStarterContentDumpPath( $starter ) );
 
 		// cleanup
 		$dumpSize = filesize($tmpname);
 		unlink($tmpname);
 
-		$this->output( sprintf(" \t[done] %.2f kB\n", $dumpSize / 1024 ) );
+		$this->output( sprintf(" \t[content] %.2f kB", $dumpSize / 1024 ) );
 	}
 
 	public function execute() {
-		$this->output( sprintf("%s: %s - starting...\n", wfTimestamp( TS_DB ), __CLASS__ ) );
+		$this->output( sprintf("%s: %s - starting...", wfTimestamp( TS_DB ), __CLASS__ ) );
 
 		foreach( Wikia\CreateNewWiki\Starters::getAllStarters() as $starter ) {
 			try {
 				$this->dumpStarter($starter);
 			}
 			catch (Exception $ex) {
-				$this->output( " \t[err] {$ex->getMessage()}\n" );
+				$this->output( " \t[err] {$ex->getMessage()}" );
 			}
 		}
 
-		$this->output( wfTimestamp( TS_DB ) .": completed!\n");
+		$this->output( "\n" . wfTimestamp( TS_DB ) .": completed!\n");
 	}
 
 }

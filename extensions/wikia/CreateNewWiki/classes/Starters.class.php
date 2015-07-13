@@ -53,12 +53,12 @@ class Starters {
 	}
 
 	/**
-	 * Return a remote DFS path to the starter dump file
+	 * Return a remote DFS path to the starter content XML dump file
 	 *
 	 * @param string $starter starter DB name
 	 * @return string
 	 */
-	public static function getStarterDumpPath( $starter ) {
+	public static function getStarterContentDumpPath( $starter ) {
 		return sprintf( '/dumps/%s.xml.bz2', $starter );
 	}
 
