@@ -52,7 +52,7 @@ class DumpStarters extends Maintenance {
 	 * @return Status
 	 */
 	private function storeDump( $fp, $starter ) {
-		$swift = \Wikia\SwiftStorage::newFromContainer( \Wikia\CreateNewWiki\Starters::STARTER_DUMPS_BUCKET );
+		$swift = \Wikia\CreateNewWiki\Starters::getStarterDumpStorage();
 		$res = $swift->store(
 			$fp,
 			\Wikia\CreateNewWiki\Starters::getStarterDumpPath( $starter ),
