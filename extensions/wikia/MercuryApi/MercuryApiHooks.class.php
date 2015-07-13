@@ -121,6 +121,10 @@ class MercuryApiHooks {
 		WikiaDataAccess::cachePurge( MercuryApiController::curatedContentDataMemcKey() );
 
 		foreach ( $sections as $section ) {
+			if ( !empty( $section['featured'] ) ) {
+				continue;
+			}
+
 			$sectionTitle = $section['title'];
 
 			WikiaDataAccess::cachePurge( MercuryApiController::curatedContentDataMemcKey( $sectionTitle ) );
