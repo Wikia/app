@@ -263,18 +263,6 @@ class RequestContext implements IContextSource {
 	 */
 	public function setLanguage( $l ) {
 
-		// PLATFORM-1248 Recursive calls of RequestContext::getLanguage() michal@wikia-inc.com
-		if ( ( new Wikia\Util\Statistics\BernoulliTrial( 0.1 ) )->shouldSample() ) {
-			Wikia\Logger\WikiaLogger::instance()->debug(
-				__METHOD__,
-				[
-					'caller'    => wfGetAllCallers(),
-					'exception' => new Exception(),
-					'language'  => serialize( $l )
-				]
-			);
-		}
-
 		if ( $l instanceof Language ) {
 			$this->lang = $l;
 		} elseif ( is_string( $l ) ) {
@@ -314,16 +302,6 @@ class RequestContext implements IContextSource {
 			global $wgLanguageCode;
 			$code = ( $wgLanguageCode ) ? $wgLanguageCode : 'en';
 			$this->lang = Language::factory( $code );
-
-			// PLATFORM-1248 Recursive calls of RequestContext::getLanguage() michal@wikia-inc.com
-			Wikia\Logger\WikiaLogger::instance()->debug(
-				__METHOD__,
-				[
-					'caller'    => wfGetAllCallers(),
-					'exception' => new Exception(),
-					'language'  => serialize( $this->lang )
-				]
-			);
 		} elseif ( $this->lang === null ) {
 			$this->recursion++;
 
