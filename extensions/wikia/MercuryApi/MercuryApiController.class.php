@@ -147,7 +147,7 @@ class MercuryApiController extends WikiaController {
 	/**
 	 * @desc returns top contributors user details
 	 *
-	 * @param int[] $ids
+	 * @param array $ids
 	 * @return mixed
 	 */
 	private function getTopContributorsDetails( Array $ids ) {
