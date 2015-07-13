@@ -358,7 +358,15 @@ class UncycloUserMigrator extends Maintenance {
 	 * @param string $newName new user name
 	 */
 	protected function moveUserPages( $oldName, $newName ) {
-		$oldName = Title::makeTitleSafe( NS_USER, $oldName )->getDBkey();
+		$userPage = Title::makeTitleSafe( NS_USER, $oldName );
+
+		// fails for "~~~~"
+		if ( empty( $userPage ) ) {
+			$this->output( "user pages move failed - user name does not validate\n" );
+			return;
+		}
+
+		$oldName = $userPage->getDBkey();
 
 		$dbr = $this->getUncycloDB(DB_SLAVE);
 		$pages = $dbr->select(

@@ -17,35 +17,48 @@ class SFListBoxInput extends SFMultiEnumInput {
 		return 'listbox';
 	}
 
-	public static function getHTML( $cur_value, $input_name, $is_mandatory, $is_disabled, $other_args ) {
+	public static function getParameters() {
+		$params = parent::getParameters();
+		$params[] = array(
+			'name' => 'size',
+			'type' => 'int',
+			'description' => wfMessage( 'sf_forminputs_listboxsize' )->text()
+		);
+		return $params;
+	}
+
+	/**
+	 * Returns the HTML code to be included in the output page for this input.
+	 */
+	public function getHtmlText() {
 		global $sfgTabIndex, $sfgFieldNum, $sfgShowOnSelect;
 
-		$className = ( $is_mandatory ) ? 'mandatoryField' : 'createboxInput';
-		if ( array_key_exists( 'class', $other_args ) ) {
-			$className .= ' ' . $other_args['class'];
+		$className = ( $this->mIsMandatory ) ? 'mandatoryField' : 'createboxInput';
+		if ( array_key_exists( 'class', $this->mOtherArgs ) ) {
+			$className .= ' ' . $this->mOtherArgs['class'];
 		}
 		$input_id = "input_$sfgFieldNum";
 		// get list delimiter - default is comma
-		if ( array_key_exists( 'delimiter', $other_args ) ) {
-			$delimiter = $other_args['delimiter'];
+		if ( array_key_exists( 'delimiter', $this->mOtherArgs ) ) {
+			$delimiter = $this->mOtherArgs['delimiter'];
 		} else {
 			$delimiter = ',';
 		}
-		$cur_values = SFUtils::getValuesArray( $cur_value, $delimiter );
+		$cur_values = SFUtils::getValuesArray( $this->mCurrentValue, $delimiter );
 		$className .= ' sfShowIfSelected';
 
-		if ( ( $possible_values = $other_args['possible_values'] ) == null ) {
+		if ( ( $possible_values = $this->mOtherArgs['possible_values'] ) == null ) {
 			$possible_values = array();
 		}
 		$optionsText = '';
 		foreach ( $possible_values as $possible_value ) {
 			if (
-				array_key_exists( 'value_labels', $other_args ) &&
-				is_array( $other_args['value_labels'] ) &&
-				array_key_exists( $possible_value, $other_args['value_labels'] )
+				array_key_exists( 'value_labels', $this->mOtherArgs ) &&
+				is_array( $this->mOtherArgs['value_labels'] ) &&
+				array_key_exists( $possible_value, $this->mOtherArgs['value_labels'] )
 			)
 			{
-				$optionLabel = $other_args['value_labels'][$possible_value];
+				$optionLabel = $this->mOtherArgs['value_labels'][$possible_value];
 			} else {
 				$optionLabel = $possible_value;
 			}
@@ -58,24 +71,24 @@ class SFListBoxInput extends SFMultiEnumInput {
 		$selectAttrs = array(
 			'id' => $input_id,
 			'tabindex' => $sfgTabIndex,
-			'name' => $input_name . '[]',
+			'name' => $this->mInputName . '[]',
 			'class' => $className,
 			'multiple' => 'multiple'
 		);
-		if ( array_key_exists( 'size', $other_args ) ) {
-			$selectAttrs['size'] = $other_args['size'];
+		if ( array_key_exists( 'size', $this->mOtherArgs ) ) {
+			$selectAttrs['size'] = $this->mOtherArgs['size'];
 		}
-		if ( $is_disabled ) {
+		if ( $this->mIsDisabled ) {
 			$selectAttrs['disabled'] = 'disabled';
 		}
 		$text = Html::rawElement( 'select', $selectAttrs, $optionsText );
-		$text .= Html::hidden( $input_name . '[is_list]', 1 );
-		if ( $is_mandatory ) {
+		$text .= Html::hidden( $this->mInputName . '[is_list]', 1 );
+		if ( $this->mIsMandatory ) {
 			$text = Html::rawElement( 'span', array( 'class' => 'inputSpan mandatoryFieldSpan' ), $text );
 		}
 
-		if ( array_key_exists( 'show on select', $other_args ) ) {
-			foreach ( $other_args['show on select'] as $div_id => $options ) {
+		if ( array_key_exists( 'show on select', $this->mOtherArgs ) ) {
+			foreach ( $this->mOtherArgs['show on select'] as $div_id => $options ) {
 				if ( array_key_exists( $input_id, $sfgShowOnSelect ) ) {
 					$sfgShowOnSelect[$input_id][] = array( $options, $div_id );
 				} else {
@@ -85,28 +98,5 @@ class SFListBoxInput extends SFMultiEnumInput {
 		}
 
 		return $text;
-	}
-
-	public static function getParameters() {
-		$params = parent::getParameters();
-		$params[] = array(
-			'name' => 'size',
-			'type' => 'int',
-			'description' => wfMsg( 'sf_forminputs_listboxsize' )
-		);
-		return $params;
-	}
-
-	/**
-	 * Returns the HTML code to be included in the output page for this input.
-	 */
-	public function getHtmlText() {
-		return self::getHTML(
-			$this->mCurrentValue,
-			$this->mInputName,
-			$this->mIsMandatory,
-			$this->mIsDisabled,
-			$this->mOtherArgs
-		);
 	}
 }

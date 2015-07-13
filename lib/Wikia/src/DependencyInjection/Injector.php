@@ -3,7 +3,6 @@
 namespace Wikia\DependencyInjection;
 
 use DI\Container;
-use Wikia\Service\User\PreferenceService;
 
 class Injector {
 	private static $injector = null;
@@ -13,13 +12,6 @@ class Injector {
 
 	public function __construct(Container $container) {
 		$this->container = $container;
-	}
-
-	/**
-	 * @return PreferenceService
-	 */
-	public function userPreferenceService() {
-		return $this->get(PreferenceService::class);
 	}
 
 	public function get($name) {

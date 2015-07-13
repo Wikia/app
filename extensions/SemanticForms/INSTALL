@@ -1,4 +1,4 @@
-[[Semantic Forms 2.4.2]]
+[[Semantic Forms 3.3]]
 
 Contents:
 * Disclaimer
@@ -17,8 +17,7 @@ For a proper legal disclaimer, see the file "COPYING".
 
 == Requirements ==
 
-The extension requires an install of Semantic MediaWiki 1.4 or
-greater, as well as MediaWiki 1.17 or greater.
+The extension requires MediaWiki 1.19 or greater.
 
 == Installation ==
 
@@ -31,8 +30,8 @@ greater, as well as MediaWiki 1.17 or greater.
 '''Remark:'''  Semantic Forms creates an additional custom namespace, "Form"
 (see http://www.mediawiki.org/wiki/Manual:Using_custom_namespaces). If you have
 your own custom namespaces and you want to change the numbers used by Semantic
-Forms and Semantic MediaWiki, see the file SMW_Settings.php, within
-Semantic MediaWiki, for instructions.
+Forms, it is possible, though how to do it depends on whether or not you have
+Semantic MediaWiki installed.
 
 == Contact ==
 

@@ -64,7 +64,8 @@ class TemplateDraftHelper {
 	 */
 	public function isRailModuleAllowed( Title $title ) {
 		return self::allowedForTitle( $title )
-			&& $title->userCan( 'templatedraft' );
+			&& $title->userCan( 'templatedraft' )
+			&& $title->userCan( 'edit' );
 	}
 
 	/**

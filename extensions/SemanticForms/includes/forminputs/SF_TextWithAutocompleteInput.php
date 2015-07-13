@@ -23,21 +23,51 @@ class SFTextWithAutocompleteInput extends SFTextInput {
 	}
 
 	public static function getOtherPropTypesHandled() {
-		return array( '_str' );
+		if ( defined( 'SMWDataItem::TYPE_STRING' ) ) {
+			// SMW < 1.9
+			return array( '_str' );
+		} else {
+			return array( '_txt' );
+		}
 	}
 
 	public static function getDefaultPropTypeLists() {
-		return array(
-			'_wpg' => array( 'is_list' => true, 'size' => 100 )
-		);
+		return array();
 	}
 
 	public static function getOtherPropTypeListsHandled() {
-		return array( '_str' );
+		if ( defined( 'SMWDataItem::TYPE_STRING' ) ) {
+			// SMW < 1.9
+			return array( '_str' );
+		} else {
+			return array( '_txt' );
+		}
 	}
 
+	public static function getDefaultCargoTypes() {
+		return array();
+	}
+
+	public static function getOtherCargoTypesHandled() {
+		return array( 'Page', 'String' );
+	}
+
+	public static function getDefaultCargoTypeLists() {
+		return array();
+	}
+
+	public static function getOtherCargoTypeListsHandled() {
+		return array( 'String' );
+	}
+
+
 	public static function getAutocompletionTypeAndSource( &$field_args ) {
-		if ( array_key_exists( 'values from property', $field_args ) ) {
+		if ( array_key_exists( 'cargo field', $field_args ) ) {
+			$fieldName = $field_args['cargo field'];
+			$tableName = $field_args['cargo table'];
+			$autocompletionSource = "$tableName|$fieldName";
+			$autocompleteFieldType = 'cargo field';
+		} elseif ( array_key_exists( 'values from property', $field_args ) ) {
 			$autocompletionSource = $field_args['values from property'];
 			$autocompleteFieldType = 'property';
 		} elseif ( array_key_exists( 'values from category', $field_args ) ) {
@@ -61,6 +91,9 @@ class SFTextWithAutocompleteInput extends SFTextInput {
 		} elseif ( array_key_exists( 'autocomplete field type', $field_args ) ) {
 			$autocompleteFieldType = $field_args['autocomplete field type'];
 			$autocompletionSource = $field_args['autocompletion source'];
+		} elseif ( array_key_exists( 'full_cargo_field', $field_args ) ) {
+			$autocompletionSource = $field_args['full_cargo_field'];
+			$autocompleteFieldType = 'cargo field';
 		} elseif ( array_key_exists( 'semantic_property', $field_args ) ) {
 			$autocompletionSource = $field_args['semantic_property'];
 			$autocompleteFieldType = 'property';
@@ -78,7 +111,7 @@ class SFTextWithAutocompleteInput extends SFTextInput {
 	}
 
 	public static function setAutocompleteValues( $field_args ) {
-		global $sfgAutocompleteValues;
+		global $sfgAutocompleteValues, $sfgMaxLocalAutocompleteValues;
 
 		// Get all autocomplete-related values, plus delimiter value
 		// (it's needed also for the 'uploadable' link, if there is one).
@@ -112,6 +145,10 @@ class SFTextWithAutocompleteInput extends SFTextInput {
 			} else {
 				$autocompleteValues = SFUtils::getAutocompleteValues( $autocompletionSource, $autocompleteFieldType );
 			}
+			if( count($autocompleteValues) > $sfgMaxLocalAutocompleteValues &&
+			$autocompleteFieldType != 'values' && !array_key_exists( 'values dependent on', $field_args ) && !array_key_exists( 'mapping template', $field_args ) ) {
+				$remoteDataType = $autocompleteFieldType;
+			}
 			$sfgAutocompleteValues[$autocompleteSettings] = $autocompleteValues;
 		}
 		return array( $autocompleteSettings, $remoteDataType, $delimiter );
@@ -131,6 +168,9 @@ class SFTextWithAutocompleteInput extends SFTextInput {
 		list( $autocompleteSettings, $remoteDataType, $delimiter ) = self::setAutocompleteValues( $other_args );
 
 		$className = ( $is_mandatory ) ? 'autocompleteInput mandatoryField' : 'autocompleteInput createboxInput';
+		if ( array_key_exists( 'unique', $other_args ) ) {
+			$className .= ' uniqueField';
+		}
 		if ( array_key_exists( 'class', $other_args ) ) {
 			$className .= ' ' . $other_args['class'];
 		}
@@ -181,6 +221,9 @@ class SFTextWithAutocompleteInput extends SFTextInput {
 		if ( $is_mandatory ) {
 			$spanClass .= ' mandatoryFieldSpan';
 		}
+		if ( array_key_exists( 'unique', $other_args ) ) {
+			$spanClass .= ' uniqueFieldSpan';
+		}
 		$text = "\n" . Html::rawElement( 'span', array( 'class' => $spanClass ), $text );
 
 		return $text;
@@ -191,22 +234,22 @@ class SFTextWithAutocompleteInput extends SFTextInput {
 		$params[] = array(
 			'name' => 'values from url',
 			'type' => 'string',
-			'description' => wfMsg( 'sf_forminputs_valuesfromurl' )
+			'description' => wfMessage( 'sf_forminputs_valuesfromurl' )->text()
 		);
 		$params[] = array(
 			'name' => 'remote autocompletion',
 			'type' => 'boolean',
-			'description' => wfMsg( 'sf_forminputs_remoteautocompletion' )
+			'description' => wfMessage( 'sf_forminputs_remoteautocompletion' )->text()
 		);
 		$params[] = array(
 			'name' => 'list',
 			'type' => 'boolean',
-			'description' => wfMsg( 'sf_forminputs_list' )
+			'description' => wfMessage( 'sf_forminputs_list' )->text()
 		);
 		$params[] = array(
 			'name' => 'delimiter',
 			'type' => 'string',
-			'description' => wfMsg( 'sf_forminputs_delimiter' )
+			'description' => wfMessage( 'sf_forminputs_delimiter' )->text()
 		);
 		return $params;
 	}

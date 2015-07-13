@@ -193,6 +193,10 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 		return 'external';
 	}
 
+	function getAspectRatio() {
+		return win.innerWidth > win.innerHeight ? '4:3' : '3:4';
+	}
+
 	/**
 	 * Returns page level params
 	 * @param {Object} options
@@ -230,6 +234,7 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 			s1: zone1,
 			s2: zone2,
 			ab: getAb(),
+			ar: getAspectRatio(),
 			perfab: getPerformanceAb(),
 			artid: targeting.pageArticleId && targeting.pageArticleId.toString(),
 			cat: getCategories(),

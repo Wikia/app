@@ -486,6 +486,15 @@ class CuratedContentController extends WikiaController {
 		];
 	}
 
+	public function getWikisWithCuratedContent() {
+		$wikisList = WikiFactory::getListOfWikisWithVar(
+			self::CURATED_CONTENT_WG_VAR_ID_PROD, "full", "LIKE", null, "true"
+		);
+		$this->getResponse()->setFormat( WikiaResponse::FORMAT_JSON );
+		$this->cacheResponseFor( 1, self::DAYS );
+		$this->response->setVal('ids_list', $wikisList);
+	}
+
 	/**
 	 * @brief Whenever data is saved in Curated Content Management Tool
 	 * purge Varnish cache for it and Game Guides
