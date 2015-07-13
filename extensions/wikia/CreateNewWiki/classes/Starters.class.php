@@ -2,6 +2,8 @@
 
 namespace Wikia\CreateNewWiki;
 
+use Wikia\SwiftStorage;
+
 /**
  * A helper class for getting a proper starter wiki based on a given language
  *
@@ -58,5 +60,14 @@ class Starters {
 	 */
 	public static function getStarterDumpPath( $starter ) {
 		return sprintf( '/dumps/%s.xml.bz2', $starter );
+	}
+
+	/**
+	 * Return SwiftStorage instance used to upload and fetch XML dumps
+	 *
+	 * @return SwiftStorage
+	 */
+	public static function getStarterDumpStorage() {
+		return SwiftStorage::newFromContainer( self::STARTER_DUMPS_BUCKET );
 	}
 }
