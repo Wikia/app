@@ -397,6 +397,7 @@ class MercuryApiController extends WikiaController {
 	 */
 	public function getAdsContext() {
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
 
 		$articleTitle = $this->request->getVal( 'title', null );
 		$title = $this->getTitleFromString( $articleTitle );
