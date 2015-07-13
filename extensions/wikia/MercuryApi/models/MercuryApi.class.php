@@ -296,7 +296,7 @@ class MercuryApi {
 	 * @param array $data
 	 * @return array
 	 */
-	public function getCuratedContentSections( $data ) {
+	public function getCuratedContentSections( Array $data ) {
 		$sections = [];
 		if ( !empty( $data[ 'sections' ] ) ) {
 			foreach ( $data[ 'sections' ] as $section ) {
