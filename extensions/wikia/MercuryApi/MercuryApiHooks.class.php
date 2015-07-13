@@ -121,19 +121,22 @@ class MercuryApiHooks {
 		WikiaDataAccess::cachePurge( MercuryApiController::curatedContentDataMemcKey() );
 
 		foreach ( $sections as $section ) {
-			WikiaDataAccess::cachePurge( MercuryApiController::curatedContentDataMemcKey( $section[ 'title' ] ) );
+			$sectionTitle = $section['title'];
 
-			// Purge section URLs using JavaScript encodeURIComponent() compatible standard,
-			// which works almost like rawurlencode(), but does not encode following characters: !'()*
-			// Mercury web app uses this variant - request from Hapi.js to MediaWiki.
-			$javaScriptEncodedTitle = self::encodeURIQueryParam( $section['title'] );
-			$urls[] = MercuryApiController::getUrl( 'getCuratedContentSection' ) . '&section=' . $javaScriptEncodedTitle;
-			// Mercury web app uses this variant - request from Ember.js to Hapi.js.
+			WikiaDataAccess::cachePurge( MercuryApiController::curatedContentDataMemcKey( $sectionTitle ) );
+
+			// Request from Ember to Hapi
+			// We have to double encode because Ember's RouteRecognizer does decodeURI while processing path.
+			$doubleEncodedTitle = self::encodeURI( self::encodeURIQueryParam( $sectionTitle ) );
 			$urls[] =
 				$wgServer .
 				self::SERVICE_API_BASE .
 				self::SERVICE_API_CURATED_CONTENT .
-				$javaScriptEncodedTitle;
+				$doubleEncodedTitle;
+
+			// Request from Hapi to MediaWiki
+			$encodedTitle = self::encodeURIQueryParam( $sectionTitle );
+			$urls[] = MercuryApiController::getUrl( 'getCuratedContentSection' ) . '&section=' . $encodedTitle;
 		}
 
 		( new SquidUpdate( array_unique( $urls ) ) )->doUpdate();
@@ -142,15 +145,53 @@ class MercuryApiHooks {
 	}
 
 	/**
-	 * @brief Similar to JavaScript encodeURIComponent, but it also encodes single quote character as %27.
-	 * It's because raw ' does not function properly in query string params and it's auto-converted to %27,
-	 * which break the purging.
+	 * @desc Analogue to JavaScript encodeURI
+	 *
+	 * @param string $str
+	 *
+	 * @return string
+	 */
+	private static function encodeURI( $str ) {
+		// http://php.net/manual/en/function.rawurlencode.php
+		// https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/encodeURI
+		$unescaped = [
+			'%2D' => '-',
+			'%5F' => '_',
+			'%2E' => '.',
+			'%21' => '!',
+			'%7E' => '~',
+			'%2A' => '*',
+			'%27' => "'",
+			'%28' => '(',
+			'%29' => ')'
+		];
+		$reserved = [
+			'%3B' => ';',
+			'%2C' => ',',
+			'%2F' => '/',
+			'%3F' => '?',
+			'%3A' => ':',
+			'%40' => '@',
+			'%26' => '&',
+			'%3D' => '=',
+			'%2B' => '+',
+			'%24' => '$'
+		];
+		$score = [
+			'%23' => '#'
+		];
+
+		return strtr( rawurlencode( $str ), array_merge( $reserved, $unescaped, $score ) );
+	}
+
+	/**
+	 * @desc Analogue to JavaScript encodeURIComponent
 	 *
 	 * @param string $str
 	 *
 	 * @return string
 	 */
 	private static function encodeURIQueryParam( $str ) {
-		return strtr( rawurlencode( $str ), [ '%21' => '!', '%28' => '(', '%29' => ')', '%2A' => '*' ] );
+		return strtr( rawurlencode( $str ), [ '%21' => '!', '%27' => "'", '%28' => '(', '%29' => ')', '%2A' => '*' ] );
 	}
 }
