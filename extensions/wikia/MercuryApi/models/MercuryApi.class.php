@@ -240,21 +240,6 @@ class MercuryApi {
 	}
 
 	/**
-	 * Get ads context for Title. Return null if Ad Engine extension is not enabled
-	 *
-	 * @param Title $title Title object
-	 * @return array|null Article Ad context
-	 */
-	public function getAdsContext( Title $title ) {
-		global $wgEnableAdEngineExt;
-		if ( !empty( $wgEnableAdEngineExt ) ) {
-			$adContext = new AdEngine2ContextService();
-			return $adContext->getContext( $title, self::MERCURY_SKIN_NAME );
-		}
-		return null;
-	}
-
-	/**
 	 * CuratedContent API returns data in a different format than we need.
 	 * Let's clean it up!
 	 *
@@ -317,7 +302,7 @@ class MercuryApi {
 		$data = [];
 		if ( !empty( $items ) ) {
 			foreach ( $items as $item ) {
-				$processedItem = $this->processCuratedContentItem($item);
+				$processedItem = $this->processCuratedContentItem( $item );
 				if ( !empty( $processedItem ) ) {
 					$data[] = $processedItem;
 				}
@@ -414,7 +399,7 @@ class MercuryApi {
 		$processedItem = [];
 
 		if ( !empty( $item ) && is_array( $item ) && is_array( $paramsToInclude ) ) {
-			foreach ( $paramsToInclude as $param) {
+			foreach ( $paramsToInclude as $param ) {
 				if ( !empty( $item[ $param ] ) ) {
 					$processedItem[ $param ] = $item[ $param ];
 				}
