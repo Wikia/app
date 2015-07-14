@@ -1312,7 +1312,7 @@ class SiteWideMessages extends SpecialPage {
 		}
 
 		$langs = explode( ',', $langs );
-		$userLang = $user->getOption( 'language' );
+		$userLang = $user->getGlobalPreference( 'language' );
 
 		$ret = ( in_array( MSG_LANG_ALL, $langs ) || in_array( $userLang, $langs ) || ( in_array( MSG_LANG_OTHER, $langs) && !in_array( $userLang, $wgSWMSupportedLanguages ) ) );
 

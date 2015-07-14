@@ -52,7 +52,7 @@ $messages['de'] = array(
 	'group-translator-member' => 'Wikia Translator',
 	'group-translator' => 'Wikia Translators',
 	'grouppage-translator' => 'wikia:Help:Internationalization',
-	'emailext-wikia-home-url' => 'http://de.wikia.com/Wikia',
+	'emailext-wikia-home-url' => 'http://de.wikia.com',
 );
 
 $messages['es'] = array(
@@ -70,7 +70,7 @@ $messages['es'] = array(
 	'group-translator-member' => 'Wikia Translator',
 	'group-translator' => 'Wikia Translators',
 	'grouppage-translator' => 'wikia:Help:Internationalization',
-	'emailext-wikia-home-url' => 'http://es.wikia.com/Wikia',
+	'emailext-wikia-home-url' => 'http://es.wikia.com',
 );
 
 $messages['fr'] = array(
@@ -89,7 +89,7 @@ $messages['fr'] = array(
 	'group-translator-member' => 'Wikia Translator',
 	'group-translator' => 'Wikia Translators',
 	'grouppage-translator' => 'wikia:Help:Internationalization',
-	'emailext-wikia-home-url' => 'http://fr.wikia.com/Wikia',
+	'emailext-wikia-home-url' => 'http://fr.wikia.com',
 );
 
 $messages['it'] = array(
@@ -125,7 +125,7 @@ $messages['ja'] = array(
 	'group-translator-member' => 'Wikia Translator',
 	'group-translator' => 'Wikia Translators',
 	'grouppage-translator' => 'wikia:Help:Internationalization',
-	'emailext-wikia-home-url' => 'http://ja.wikia.com/Wikia',
+	'emailext-wikia-home-url' => 'http://ja.wikia.com',
 );
 
 $messages['nl'] = array(
@@ -161,7 +161,7 @@ $messages['pl'] = array(
 	'group-translator-member' => 'Wikia Translator',
 	'group-translator' => 'Wikia Translators',
 	'grouppage-translator' => 'wikia:Help:Internationalization',
-	'emailext-wikia-home-url' => 'http://pl.wikia.com/Wikia',
+	'emailext-wikia-home-url' => 'http://pl.wikia.com',
 );
 
 $messages['pt'] = array(
@@ -180,7 +180,7 @@ $messages['pt'] = array(
 	'group-translator-member' => 'Wikia Translator',
 	'group-translator' => 'Wikia Translators',
 	'grouppage-translator' => 'wikia:Help:Internationalization',
-	'emailext-wikia-home-url' => 'http://pt-br.wikia.com/wiki/Wikia_em_Portugu%C3%AAs',
+	'emailext-wikia-home-url' => 'http://pt-br.wikia.com',
 );
 
 $messages['ru'] = array(

@@ -51,10 +51,4 @@ class FounderEmailsViewsDigestEvent extends FounderEmailsEvent {
 		}
 		wfProfileOut( __METHOD__ );
 	}
-
-	/*  Not used by DailyDigest event
-	public static function register ( ) {
-
-	}
-	 */
 }

@@ -75,26 +75,26 @@ final class SWLHooks {
     	
     	foreach ( $userIDs as $userID ) {
     		$user = User::newFromId( $userID );
-    		
-    		if ( $user->getOption( 'swl_email', false ) ) {
-    			if ( !method_exists( 'Sanitizer', 'validateEmail' ) || Sanitizer::validateEmail( $user->getEmail() ) ) {
-					$lastNotify = $user->getOption( 'swl_last_notify' );
-					$lastWatch = $user->getOption( 'swl_last_watch' );
-	    		
-		    		if ( is_null( $lastNotify ) || is_null( $lastWatch ) || $lastNotify < $lastWatch ) {
-		    			$mailCount = $user->getOption( 'swl_mail_count', 0 );
-		    			
-		    			if ( $egSWLMailPerChange || $mailCount < $egSWLMaxMails ) {
-			    			SWLEmailer::notifyUser( $group, $user, $changes, $egSWLMailPerChange );
-			    			$user->setOption( 'swl_last_notify', wfTimestampNow() );
-			    			$user->setOption( 'swl_mail_count', $mailCount + 1 );
-			    			$user->saveSettings();	    				
-		    			}
-		    		}      				
-    			}
-    		}
-    	}
-    	
+
+			if ( $user->getGlobalAttribute( 'swl_email', false ) ) {
+				if ( !method_exists( 'Sanitizer', 'validateEmail' ) || Sanitizer::validateEmail( $user->getEmail() ) ) {
+					$lastNotify = $user->getGlobalAttribute( 'swl_last_notify' );
+					$lastWatch = $user->getGlobalAttribute( 'swl_last_watch' );
+
+					if ( is_null( $lastNotify ) || is_null( $lastWatch ) || $lastNotify < $lastWatch ) {
+							$mailCount = $user->getGlobalAttribute( 'swl_mail_count', 0 );
+
+						if ( $egSWLMailPerChange || $mailCount < $egSWLMaxMails ) {
+							SWLEmailer::notifyUser( $group, $user, $changes, $egSWLMailPerChange );
+								$user->setGlobalAttribute( 'swl_last_notify', wfTimestampNow() );
+								$user->setGlobalAttribute( 'swl_mail_count', $mailCount + 1 );
+								$user->saveSettings();
+						}
+					}
+				}
+			}
+		}
+
         return true;
     }
     
@@ -302,7 +302,7 @@ final class SWLHooks {
 			global $wgUser;
 			
 			// Find the watchlist item and replace it by itself and the semantic watchlist.
-			if ( $wgUser->isLoggedIn() && $wgUser->getOption( 'swl_watchlisttoplink' ) ) {
+			if ( $wgUser->isLoggedIn() && $wgUser->getGlobalAttribute( 'swl_watchlisttoplink' ) ) {
 				$keys = array_keys( $personal_urls );
 				$watchListLocation = array_search( 'watchlist', $keys );
 				$watchListItem = $personal_urls[$keys[$watchListLocation]];

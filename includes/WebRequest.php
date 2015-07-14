@@ -709,7 +709,7 @@ class WebRequest {
 			$limit = 0;
 		}
 		if( ( $limit == 0 ) && ( $optionname != '' ) ) {
-			$limit = (int)$wgUser->getOption( $optionname );
+			$limit = (int)$wgUser->getGlobalPreference( $optionname );
 		}
 		if( $limit <= 0 ) {
 			$limit = $deflimit;

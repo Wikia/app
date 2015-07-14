@@ -16,7 +16,7 @@ function smwf_nm_NotifyAccess( $method, $params ) {
 	$result = "Query disabled.";
 	if ( $method == "updateMail" ) {
 		global $wgUser;
-		$wgUser->setOption( 'enotifyme', $params );
+		$wgUser->setGlobalPreference( 'enotifyme', $params );
 		$wgUser->saveSettings();
 		return wfMsg( 'smw_nm_ajax_mailupdate' );
 	}

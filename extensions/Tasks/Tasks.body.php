@@ -364,7 +364,7 @@ class SpecialTasks extends IncludableSpecialPage {
 		$out .= '</td></tr>' ;
 
 		# Transclude comments page, if wanted
-		if( $wgUser->getOption( 'show_task_comments' ) ) {
+		if( $wgUser->getGlobalPreference( 'show_task_comments' ) ) {
 			if( $this->pagemode == 'search' || $this->pagemode == 'tasks_of_page' ) {
 				$out .= $this->transclude_comments( $tdp, $show_page ? 5 : 4 ) ;
 			}

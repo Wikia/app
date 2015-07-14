@@ -112,7 +112,7 @@ class WikiaConfirmEmailSpecialController extends WikiaSpecialPageController {
 			if ( $user->checkPassword( $this->password ) ) {
 				$this->wg->User = $user;
 
-				if ( $user->getOption( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME ) != null ) {// Signup confirm
+				if ( $user->getGlobalFlag( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME ) != null ){// Signup confirm
 					// Log user in manually
 					$this->wg->User->setCookies();
 					LoginForm::clearLoginToken();
@@ -124,8 +124,8 @@ class WikiaConfirmEmailSpecialController extends WikiaSpecialPageController {
 					$user->confirmEmail();
 
 					// Get and clear redirect page
-					$userSignupRedirect = $user->getOption( UserLoginSpecialController::SIGNUP_REDIRECT_OPTION_NAME );
-					$user->setOption( UserLoginSpecialController::SIGNUP_REDIRECT_OPTION_NAME, null );
+					$userSignupRedirect = $user->getGlobalAttribute( UserLoginSpecialController::SIGNUP_REDIRECT_OPTION_NAME );
+					$user->setGlobalAttribute( UserLoginSpecialController::SIGNUP_REDIRECT_OPTION_NAME, null );
 
 					$user->saveSettings();
 
@@ -151,12 +151,12 @@ class WikiaConfirmEmailSpecialController extends WikiaSpecialPageController {
 
 					$result = $response->getVal( 'result', '' );
 
-					$optionNewEmail = $this->wg->User->getOption( 'new_email' );
+					$optionNewEmail = $this->wg->User->getGlobalAttribute( 'new_email' );
 					if ( !empty( $optionNewEmail ) ) {
 						$user->setEmail( $optionNewEmail );
 					}
 					$user->confirmEmail();
-					$user->setOption( 'new_email', null );
+					$user->setGlobalAttribute( 'new_email', null );
 					$user->saveSettings();
 
 					// redirect user

@@ -386,7 +386,7 @@ class FounderNewMemberController extends FounderController {
 
 	/**
 	 * @template avatarLayout
-	*/
+	 */
 	public function body() {
 		$this->response->setData( [
 			'salutation' => $this->getSalutation(),
@@ -434,7 +434,7 @@ class FounderNewMemberController extends FounderController {
 	 */
 	public function assertFounderSubscribedToDigest() {
 		$wikiId = \F::app()->wg->CityId;
-		if ( $this->targetUser->getBoolOption( "founderemails-complete-digest-$wikiId" ) ) {
+		if ( (bool)$this->targetUser->getLocalPreference( "founderemails-complete-digest", $wikiId ) ) {
 			throw new Check( 'Digest mode is enabled, do not create user registration event notifications' );
 		}
 	}
@@ -444,7 +444,7 @@ class FounderNewMemberController extends FounderController {
 	 */
 	public function assertFounderWantsNewMembersEmail() {
 		$wikiId = \F::app()->wg->CityId;
-		if ( !$this->targetUser->getBoolOption( "founderemails-joins-$wikiId"  ) ) {
+		if ( !(bool)$this->targetUser->getLocalPreference( "founderemails-joins", $wikiId ) ) {
 			throw new Check( "Founder doesn't want to be emailed about new members joining this wiki" );
 		}
 	}
@@ -496,7 +496,7 @@ class FounderTipsController extends FounderController {
 	}
 
 	protected function getSubject() {
-		return $this->getMessage( 'emailext-founder-newly-created-subject', $this->wikiName )->parse();
+		return $this->getMessage( 'emailext-founder-newly-created-subject', $this->wikiName )->text();
 	}
 
 	/**
@@ -566,6 +566,13 @@ class FounderTipsController extends FounderController {
 					'value' => \F::app()->wg->CityId,
 					'tooltip' => "The ID of the Wiki (defaults to current wiki)"
 				],
+				[
+					'type' => 'text',
+					'name' => 'wikiUrl',
+					'label' => "Wiki URL",
+					'value' => \F::app()->wg->Server,
+					'tooltip' => "The URL of the Wiki (defaults to current wiki)"
+				],
 			]
 		];
 
@@ -580,7 +587,7 @@ class FounderTipsThreeDaysController extends FounderTipsController {
 	const WAM_LINK = "http://www.wikia.com/WAM";
 
 	protected function getSubject() {
-		return $this->getMessage( 'emailext-founder-3-days-subject', $this->wikiName )->parse();
+		return $this->getMessage( 'emailext-founder-3-days-subject', $this->wikiName )->text();
 	}
 
 	/**
@@ -636,7 +643,7 @@ class FounderTipsTenDaysController extends FounderTipsController {
 	const TRACKING_CATEGORY_INT = TrackingCategories::FOUNDER_TIPS_10_DAY_INT;
 
 	protected function getSubject() {
-		return $this->getMessage( 'emailext-founder-10-days-subject', $this->wikiName )->parse();
+		return $this->getMessage( 'emailext-founder-10-days-subject', $this->wikiName )->text();
 	}
 
 	/**

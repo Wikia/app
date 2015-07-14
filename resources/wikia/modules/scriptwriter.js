@@ -37,11 +37,6 @@ define('wikia.scriptwriter', [
 		queue = [],
 		loading = false; // load library only once
 
-	function psBeforeWrite(str) {
-		log(['psBeforeWrite', str], 'trace_l3', logGroup);
-		return str.replace(/<\/embed>/gi, '');
-	}
-
 	function gwFlushLoadHandlersAndCall(callback) {
 		return function () {
 			win.ghostwriter.flushloadhandlers();
@@ -70,7 +65,6 @@ define('wikia.scriptwriter', [
 				params.html,
 				{
 					autoFix: false,
-					beforeWrite: psBeforeWrite, // Remove after releasing ADEN-1127
 					done: params.callback
 				}
 			);

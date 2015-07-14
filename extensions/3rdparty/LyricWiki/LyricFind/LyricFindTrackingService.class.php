@@ -11,6 +11,10 @@ class LyricFindTrackingService extends WikiaService {
 	const CODE_LRC_IS_AVAILABLE  = 111;
 	const CODE_LYRIC_IS_BLOCKED  = 206;
 
+	// Not documented. The response body says "SUCCESS: NO LYRICS" which I assume means that they
+	// have licensing in place, they just don't have lyrics for the song.
+	const CODE_SUCCESS_NO_LYRICS = 106;
+
 	const DEFAULT_USER_AGENT = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.142 Safari/535.19';
 
 	const LOG_GROUP = 'lyricfind-tracking';
@@ -136,6 +140,7 @@ class LyricFindTrackingService extends WikiaService {
 					$this->markLyricForRemoval($this->wg->Title->getArticleID());
 					break;
 
+				case self::CODE_SUCCESS_NO_LYRICS:
 				case self::CODE_LRC_IS_AVAILABLE:
 				case self::CODE_LYRIC_IS_INSTRUMENTAL:
 				case self::CODE_LYRIC_IS_AVAILABLE:
@@ -213,6 +218,7 @@ class LyricFindTrackingService extends WikiaService {
 					$isBlocked = true;
 					break;
 
+				case self::CODE_SUCCESS_NO_LYRICS:
 				case self::CODE_LRC_IS_AVAILABLE:
 				case self::CODE_LYRIC_IS_INSTRUMENTAL:
 				case self::CODE_LYRIC_IS_AVAILABLE:

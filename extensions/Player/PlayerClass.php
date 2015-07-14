@@ -141,13 +141,13 @@ class Player {
 				else $wopt = false;
 			}
 
-			if (!$wopt) $wopt = $wgUser->getOption( $sizeDefault );
+			if (!$wopt) $wopt = $wgUser->getGlobalPreference( $sizeDefault );
 
 			if ( $sizeDefault == 'thumbsize' ) $limits = $GLOBALS['wgThumbLimits'];
 			else $limits = $GLOBALS['wgImageLimits'];
 
 			if( !isset( $limits[$wopt] ) ) {
-					$wopt = User::getDefaultOption( $sizeDefault );
+					$wopt = User::getDefaultGlobalPreference( $sizeDefault );
 			}
 
 			list($width, $height) = $limits[$wopt];

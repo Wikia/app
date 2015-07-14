@@ -35,6 +35,9 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 		element = new AdElement(slotName, slotPath, slotTargeting);
 
 		function callSuccess(adInfo) {
+			if (adInfo && adInfo.adType === 'collapse') {
+				slotTweaker.hide(slotName);
+			}
 			if (typeof extra.success === 'function') {
 				extra.success(adInfo);
 			}

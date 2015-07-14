@@ -1,10 +1,11 @@
-/*global define,setTimeout*/
-/*jshint maxlen:125, camelcase:false, maxdepth:7*/
+/*global define*/
 define('ext.wikia.adEngine.provider.gpt.adElement', [
 	'wikia.document',
 	'wikia.log',
-	'ext.wikia.adEngine.provider.gpt.adSizeConverter'
-], function (doc, log, adSizeConverter) {
+	'ext.wikia.adEngine.provider.gpt.adSizeConverter',
+	'ext.wikia.adEngine.provider.gpt.adSizeFilter'
+], function (doc, log, adSizeConverter, adSizeFilter) {
+	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.gpt.adElement';
 
@@ -17,8 +18,9 @@ define('ext.wikia.adEngine.provider.gpt.adElement', [
 			this.node = doc.createElement('div');
 			this.node.id = this.id;
 		}
-		if (!!slotTargeting.size) {
-			this.sizes = adSizeConverter.convert(slotName, slotTargeting.size);
+		if (slotTargeting.size) {
+			this.sizes = adSizeConverter.convert(slotTargeting.size);
+			this.sizes = adSizeFilter.filter(slotName, this.sizes);
 			delete slotTargeting.size;
 		}
 

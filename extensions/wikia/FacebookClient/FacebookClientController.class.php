@@ -23,7 +23,7 @@ class FacebookClientController extends WikiaController {
 
 		// Settings for a connected user
 		$disconnectLink = wfMessage( 'fbconnect-disconnect-account-link' )->parse();
-		$fbFromExist = F::app()->wg->User->getOption( 'fbFromExist' );
+		$fbFromExist = F::app()->wg->User->getGlobalFlag( 'fbFromExist' );
 
 		// Settings for a user who is not connected yet
 		$convertMessage = wfMessage( 'fbconnect-convert' )->plain();
@@ -154,7 +154,7 @@ class FacebookClientController extends WikiaController {
 		$params = new FauxRequest( [ 'wpName' => $user->getName() ] );
 		$loginForm = new LoginForm( $params );
 
-		if ( $user->getOption( 'fbFromExist' ) ) {
+		if ( $user->getGlobalFlag( 'fbFromExist' ) ) {
 			$res = $loginForm->mailPasswordInternal( $user, true, 'fbconnect-passwordremindertitle-exist', 'fbconnect-passwordremindertext-exist' );
 		} else {
 			$res = $loginForm->mailPasswordInternal( $user, true, 'fbconnect-passwordremindertitle', 'fbconnect-passwordremindertext' );
