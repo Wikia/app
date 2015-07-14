@@ -1,6 +1,6 @@
 /*global define, setTimeout, clearTimeout*/
-/*jshint camelcase:false*/
-/*jshint maxlen:127*/
+/*jshint camelcase:false, maxlen:127*/
+/*jslint regexp:true*/
 define('ext.wikia.adEngine.provider.gpt.adDetect', [
 	'wikia.log',
 	'wikia.window',
@@ -155,8 +155,10 @@ define('ext.wikia.adEngine.provider.gpt.adDetect', [
 			shouldPollForSuccess = false,
 			expectAsyncHop = false,
 			expectAsyncHopWithSlotName = false,
+			expectAsyncSuccessWithSlotName = false,
 			expectAsyncSuccess = false,
-			successTimer;
+			successTimer,
+			shortSlotName = slotName.replace(/^.*\/([^\/]*)$/, '$1');
 
 		function noop() { return; }
 
@@ -188,7 +190,7 @@ define('ext.wikia.adEngine.provider.gpt.adDetect', [
 			log(['msgCallback', slotName, 'caught message', data], 'info', logGroup);
 
 			if (data.status === 'success') {
-				if (expectAsyncSuccess) {
+				if (expectAsyncSuccess || expectAsyncHopWithSlotName) {
 					callAdCallback(data.extra);
 				} else {
 					log(
@@ -227,6 +229,11 @@ define('ext.wikia.adEngine.provider.gpt.adDetect', [
 			shouldPollForSuccess = true; // TODO: there's no way to detect the GumGum success :-(
 		}
 
+		if (adType === 'floor') {
+			expectAsyncHopWithSlotName = true;
+			expectAsyncSuccessWithSlotName = true;
+		}
+
 		log(['onAdLoad', slotName, 'adType', adType], 'info', logGroup);
 
 		if (adType === 'forced_success' || adType === 'always_success' || adType === 'collapse') {
@@ -249,13 +256,15 @@ define('ext.wikia.adEngine.provider.gpt.adDetect', [
 			messageListener.register({source: iframe.contentWindow, dataKey: 'status'}, msgCallback);
 		}
 
-		if (expectAsyncHopWithSlotName) {
-			messageListener.register({dataKey: 'slot_' + slotName}, msgCallback);
+		if (expectAsyncHopWithSlotName || expectAsyncSuccessWithSlotName) {
+			messageListener.register({dataKey: 'slot_' + shortSlotName}, msgCallback);
 		}
 
-		if (expectAsyncHop && (shouldPollForSuccess || expectAsyncSuccess)) {
-			// Hops and successes handled. We can safely return now
-			return;
+		if (expectAsyncHop || expectAsyncHopWithSlotName) {
+			if (shouldPollForSuccess || expectAsyncSuccess || expectAsyncSuccessWithSlotName) {
+				// Hops and successes handled. We can safely return now
+				return;
+			}
 		}
 
 		log(['onAdLoad', 'Unknown ad type (launching starting ad callback)', adType], 'error', logGroup);
