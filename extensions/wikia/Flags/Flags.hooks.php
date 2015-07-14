@@ -162,4 +162,27 @@ class Hooks {
 
 		return true;
 	}
+
+	/**
+	* @param Array $preloads
+	* @param Title $title
+	* @return bool
+	*/
+
+	public static function onEditPageShowIntro( &$preloads, \Title $title ) {
+		$app = \F::app();
+		$response = $app->sendRequest( 'FlagsApiController',
+			'getFlagTypeIdByTemplate',
+			[
+				'flag_view' => $title->getBaseText()
+			]
+		)->getData();
+
+		if ( $response['status'] ) {
+			$preloads['EditPageIntro'] = [
+				'content' => wfMessage( 'flags-edit-intro-notification' )->parse(),
+				];
+		}
+		return true;
+	}
 }
