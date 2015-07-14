@@ -1456,9 +1456,7 @@ class Preferences {
 		//$user->resetOptions();
 		// </Wikia>
 
-		foreach ( $formData as $key => $value ) {
-			$user->setGlobalPreference( $key, $value );
-		}
+		$user->setGlobalPreferences($formData);
 
 		$user->saveSettings();
 
