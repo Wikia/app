@@ -30,7 +30,7 @@ class Hooks {
 		}
 
 		if ( $skin->getTitle()->getNamespace() == NS_TEMPLATE ) {
-			self::onViewPageShowNotification( $out, $skin );
+			self::showFlagsNotification( $out, $skin );
 		}
 		return true;
 	}
@@ -174,23 +174,26 @@ class Hooks {
 	 */
 
 	public static function onEditPageLayoutShowIntro( &$preloads, \Title $title ) {
-		$app = \F::app();
-		$response = $app->sendRequest( 'FlagsApiController',
-			'getFlagTypeIdByTemplate',
-			[
-				'flag_view' => $title->getBaseText()
-			]
-		)->getData();
 
-		if ( $title->getNamespace() == NS_TEMPLATE && $response['status'] ) {
-			$preloads['EditPageFlagsIntro'] = [
-				'content' => wfMessage( 'flags-edit-intro-notification' )->parse(),
-			];
+		if( $title->getNamespace() == NS_TEMPLATE ) {
+			$app = \F::app();
+			$response = $app->sendRequest( 'FlagsApiController',
+				'getFlagTypeIdByTemplate',
+				[
+					'flag_view' => $title->getBaseText()
+				]
+			)->getData();
+
+			if ( $response['status'] ) {
+				$preloads['EditPageFlagsIntro'] = [
+					'content' => wfMessage( 'flags-edit-intro-notification' )->parse(),
+				];
+			}
 		}
 		return true;
 	}
 
-	public static function onViewPageShowNotification( &$out, \Skin &$skin ) {
+	public static function showFlagsNotification( &$out, \Skin &$skin ) {
 		$app = \F::app();
 		$response = $app->sendRequest( 'FlagsApiController',
 			'getFlagTypeIdByTemplate',
