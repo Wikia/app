@@ -67,7 +67,6 @@ define('ext.wikia.adEngine.template.modal', [
 				modal.$content.append(createAdIframe(params));
 				modal.$element.width('auto');
 				modal.show();
-				modal.bind('close', function(){ alert('a'); });
 			});
 		});
 	}
@@ -85,6 +84,7 @@ define('ext.wikia.adEngine.template.modal', [
 		var ratioWidth = win.innerWidth / params.width,
 			ratioHeight = (win.innerHeight - lightBoxHeaderHeight) / params.height,
 			ratio = Math.min(ratioWidth, ratioHeight, maximumRatio);
+
 		adIframe.style.marginTop = lightBoxHeaderHeight + 'px';
 		adIframe.style.transform = 'scale(' + ratio + ')';
 	}
