@@ -171,25 +171,25 @@ class ArticlesApiControllerTest extends \WikiaBaseTest {
 			// get all sections (inlcuding section 0, which isn't included in TOC sections array)
 			[
 				'all',
-				['foo', 'bar', 'baz'],
+				3,
 				[0, 1, 2, 3]
 			],
 			// get all sections when there's no headers / TOC sections
 			[
 				'all',
-				[],
+				0,
 				[0]
 			],
 			// get specified sections
 			[
 				'0,1,2',
-				['foo', 'bar', 'baz', 'qux'],
+				4,
 				[0, 1, 2]
 			],
 			// different spacing and there's more sections requested than are available
 			[
 				'0, 1, 2',
-				['foo', 'bar'],
+				2,
 				[0, 1, 2]
 			]
 		];
@@ -198,9 +198,9 @@ class ArticlesApiControllerTest extends \WikiaBaseTest {
 	/**
 	 * @dataProvider getSectionNumbersArrayDataProvider
 	 */
-	public function testGetSectionNumbersArray( $sectionsToGet, $parsedSections, $sectionsArray ) {
+	public function testGetSectionNumbersArray( $sectionsToGet, $sectionCount, $sectionsArray ) {
 		$getSectionNumbersArray = self::getFn( new ArticlesApiController(), 'getSectionNumbersArray' );
-		$this->assertEquals( $sectionsArray, $getSectionNumbersArray( $sectionsToGet, $parsedSections ) );
+		$this->assertEquals( $sectionsArray, $getSectionNumbersArray( $sectionsToGet, $sectionCount ) );
 	}
 
 	protected static function getFn( $obj, $name ) {

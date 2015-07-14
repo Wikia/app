@@ -1095,9 +1095,9 @@ class ArticlesApiController extends WikiaApiController {
 	 * @return array
 	 * @throws BadRequestApiException
 	 */
-	private function getSectionNumbersArray( $sectionsToGet, $total ) {
+	private function getSectionNumbersArray( $sectionsToGet, $sectionCount ) {
 		if ( $sectionsToGet === 'all' ) {
-			$sectionsToGet = range( 0, $total );
+			$sectionsToGet = range( 0, $sectionCount );
 		} else {
 			// decode strings like "1%2C%202%2C%203" or "1,2,3" into an array
 			$sectionsToGet = explode( ',', urldecode( $sectionsToGet ) );
