@@ -446,8 +446,26 @@ class CuratedContentController extends WikiaController {
 
 	public function getData( ) {
 		global $wgWikiaCuratedContent;
+		$data = [];
+
+		foreach ($wgWikiaCuratedContent as $section) {
+			// sections
+			if ( !empty( $section['title'] ) && empty( $section['featured'] ) ) {
+				list($_image_id, $url) = CuratedContentSpecialController::findImageIfNotSet( $section['image_id'] );
+				$section['image_url'] = $url;
+			}
+
+			// items
+			foreach ( $section['items'] as $i => $item) {
+				list($_image_id, $url) = CuratedContentSpecialController::findImageIfNotSet( $item['image_id'], $item['article_id'] );
+				$section['items'][$i]['image_url'] = $url;
+			}
+
+			$data[] = $section;
+		}
+
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
-		$this->response->setVal('data', $wgWikiaCuratedContent);
+		$this->response->setVal('data', $data);
 		$this->response->setHeader('Access-Control-Allow-Origin', '*');
 	}
 
