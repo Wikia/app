@@ -1064,7 +1064,7 @@ class ArticlesApiController extends WikiaApiController {
 	 * @return array
 	 */
 	private function splitArticleIntoSections( $content ) {
-		$pattern = '/(\<h2[^\>]*>)/';
+		$pattern = '/(\<h2[^\>]*section[^\>]*>)/i';
 
 		$contentArray = preg_split( $pattern, $content, -1, PREG_SPLIT_DELIM_CAPTURE|PREG_SPLIT_NO_EMPTY );
 		$index = count( $contentArray );
