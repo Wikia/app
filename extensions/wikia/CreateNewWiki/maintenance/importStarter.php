@@ -23,7 +23,7 @@ class ImportStarter extends Maintenance {
 	const ERR_OPEN_STARTER_DUMP_FAILED = 1;
 	const ERR_NO_PAGES_IMPORTED = 2;
 	const ERR_SQL_IMPORT_FAILED = 3;
-	const ERR_RUN_UPDATE_FAILED = 4;
+	const ERR_RUN_UPDATES_FAILED = 4;
 
 	/**
 	 * Get the stream with starter dump
@@ -125,6 +125,32 @@ class ImportStarter extends Maintenance {
 		]);
 	}
 
+	/**
+	 * Update articles count
+	 *
+	 * @throws CreateWikiException
+	 */
+	private function runUpdates() {
+		global $IP;
+		require_once( $IP . '/maintenance/updateArticleCount.php' );
+
+		try {
+			$then = microtime(true);
+
+			// php updateArticleCount.php --update
+			$updateArticlesCount = new UpdateArticleCount();
+			$updateArticlesCount->loadParamsAndArgs(null, ['update' => true]);
+			$updateArticlesCount->execute();
+
+			$this->logger->info(__METHOD__, [
+				'took' => microtime(true) - $then
+			]);
+		}
+		catch(Exception $ex) {
+			throw new CreateWikiException('runUpdates failed', self::ERR_RUN_UPDATES_FAILED, $ex);
+		}
+	}
+
 	public function execute() {
 		/* @var Language $wgContLang */
 		global $wgContLang, $wgCityId, $wgDBname;
@@ -149,6 +175,8 @@ class ImportStarter extends Maintenance {
 
 			fclose($contentDumpStream);
 			fclose($sqlDumpStream);
+
+			$this->runUpdates();
 		}
 		catch( CreateWikiException $ex ) {
 			$this->error( 'Error: ' . $ex->getMessage(), $ex->getCode() );
