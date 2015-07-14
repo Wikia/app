@@ -23,6 +23,7 @@
 use Wikia\DependencyInjection\Injector;
 use Wikia\Logger\Loggable;
 use Wikia\Service\User\Preferences\UserPreferences;
+use Wikia\Util\Statistics\BernoulliTrial;
 
 /**
  * Int Number of characters in user_token field.
@@ -80,6 +81,7 @@ class User {
 	const MW_USER_VERSION = MW_USER_VERSION;
 	const EDIT_TOKEN_SUFFIX = EDIT_TOKEN_SUFFIX;
 	const CACHE_PREFERENCES_KEY = "preferences";
+	const GET_SET_OPTION_SAMPLE_RATE = 0.1;
 
 	/**
 	 * Array of Strings List of member variables which are saved to the
@@ -260,6 +262,19 @@ class User {
 
 	private function userPreferences() {
 		return Injector::getInjector()->get(UserPreferences::class);
+	}
+
+	/**
+	 * @return BernoulliTrial
+	 */
+	private function getOrSetOptionSampler() {
+		static $sampler = null;
+
+		if ($sampler === null) {
+			$sampler = new BernoulliTrial(self::GET_SET_OPTION_SAMPLE_RATE);
+		}
+
+		return $sampler;
 	}
 
 	/**
@@ -2332,11 +2347,14 @@ class User {
 	 * @deprecated use get(Global|Local)Preference  get(Global|Local)Attribute or get(Global|Local)Flag
 	 */
 	public function getOption($oname, $defaultOverride = null, $ignoreHidden = false) {
-		$this->warning("calling getOption", [
-			"class" => "user",
-			"type" => "getoption",
-			"source" => wfBacktrace(true),
-		]);
+		if ($this->getOrSetOptionSampler()->shouldSample()) {
+			$this->warning("calling getOption", [
+				"class" => "user",
+				"type" => "getoption",
+				"source" => wfBacktrace(true),
+			]);
+		}
+
 		return $this->getOptionHelper($oname, $defaultOverride, $ignoreHidden);
 	}
 
@@ -2668,11 +2686,14 @@ class User {
 	 * @deprecated use set(Global|Local)Preference  set(Global|Local)Attribute or set(Global|Local)Flag
 	 */
 	public function setOption( $oname, $val ) {
-		$this->warning("calling setOption", [
-			"class" => "user",
-			"type" => "setoption",
-			"source" => wfBacktrace(true),
-		]);
+		if ($this->getOrSetOptionSampler()->shouldSample()) {
+			$this->warning("calling setOption", [
+				"class" => "user",
+				"type" => "setoption",
+				"source" => wfBacktrace(true),
+			]);
+		}
+
 		$this->setOptionHelper($oname, $val);
 	}
 
