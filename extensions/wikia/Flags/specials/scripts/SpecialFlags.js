@@ -1,35 +1,49 @@
 require(
-	['jquery', 'wikia.document', 'wikia.loader', 'wikia.nirvana', 'wikia.mustache', 'mw', 'wikia.tracker'],
-	function ($, document, loader, nirvana, mustache, mw, tracker)
+	['jquery', 'wikia.document', 'wikia.loader', 'wikia.nirvana', 'wikia.mustache', 'mw', 'wikia.tracker', 'ext.wikia.Flags.FlagEditForm'],
+	function ($, document, loader, nirvana, mustache, mw, tracker, FlagEditForm)
 	{
 		'use strict';
 
-		var createForm,
-			createFormMessages;
+		var formTemplate,
+			formMessages;
 
 		function init() {
-			$('.flags-special-create-button').on('click', displayCreateFlagForm);
-
 			$.when(
 				loader({
 					type: loader.MULTI,
 					resources: {
 						messages: 'FlagsCreateForm',
-						mustache: '/extensions/wikia/Flags/specials/templates/SpecialFlags_createFlagForm.mustache'
+						mustache: '/extensions/wikia/Flags/specials/templates/SpecialFlags_createFlagForm.mustache',
+						styles: '/extensions/wikia/Flags/specials/styles/CreateForm.scss'
 					}
 				})
 			).done(function (res) {
-				createFormMessages = res.messages;
-				createForm = mustache.render(res.mustache[0], createFormMessages);
+				loader.processStyle(res.styles);
+				mw.messages.set(res.messages);
+				formMessages = res.messages;
+				formTemplate = res.mustache[0];
 			});
+
+			bindEvents();
 		}
 
-		function displayCreateFlagForm() {
-			if ($('.flags-special-item-new').length === 0){
-				var $flagsListTable = $('.flags-special-list').find('tbody');
+		function bindEvents() {
+			$('.flags-special-create-button').on('click', displayCreateFlagForm);
+		}
 
-				$flagsListTable.prepend(createForm);
-			}
+		function displayCreateFlagForm(event) {
+			event.preventDefault();
+
+			/**
+			 * TODO Cache the content of an empty form
+			 */
+			var formParams = {
+				messages: formMessages,
+				class: 'new'
+			},
+			content = mustache.render(formTemplate, formParams);
+
+			FlagEditForm.displayFormCreate(content);
 		}
 
 		/**

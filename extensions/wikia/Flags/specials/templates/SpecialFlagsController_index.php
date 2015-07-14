@@ -23,6 +23,7 @@
 			<th class="flags-special-list-header-parameters"><?= wfMessage( 'flags-special-list-header-parameters' )->escaped() ?></th>
 			<th class="flags-special-list-header-group"><?= wfMessage( 'flags-special-list-header-group' )->escaped() ?></th>
 			<th class="flags-special-list-header-target"><?= wfMessage( 'flags-special-list-header-target' )->escaped() ?></th>
+			<th class="flags-special-list-header-target"><?= wfMessage( 'flags-special-list-header-actions' )->escaped() ?></th>
 		</tr>
 	</thead>
 	<tbody>
@@ -50,6 +51,19 @@
 			</td>
 			<td class="flags-special-list-item-group"><?= $flagGroups[$flag['flag_group']] ?></td>
 			<td class="flags-special-list-item-targeting"><?= ucfirst( $flagTargeting[$flag['flag_targeting']] ) ?></td>
+			<td class="flags-special-list-item-actions clearfix">
+				<a class="flags-special-list-item-actions-insights" href="#" target="_blank" title="<?= wfMessage( 'flags-icons-actions-insights' )->escaped() ?>">
+					<span class="flags-icons-special flags-icons-insights"></span>
+				</a>
+				<a class="flags-special-list-item-actions-delete" href="#" title="<?= wfMessage( 'flags-icons-actions-delete' )->escaped() ?>">
+					<span class="flags-icons-special flags-icons-trash"></span>
+				</a>
+				<a class="flags-special-list-item-actions-edit" href="#" title="<?= wfMessage( 'flags-icons-actions-edit' )->escaped() ?>">
+					<span class="flags-icons-special flags-icons-edit">
+						<?= wfMessage( 'flags-icons-actions-edit' )->escaped() ?>
+					</span>
+				</a>
+			</td>
 		</tr>
 	<?php endforeach; ?>
 	</tbody>

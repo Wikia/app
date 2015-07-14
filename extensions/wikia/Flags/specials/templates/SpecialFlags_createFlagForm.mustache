@@ -1,23 +1,19 @@
-<tr class="flags-special-item-new">
-	<form>
-		<td class="flags-special-item-new-name">
-			<input type="text" placeholder="{{flags-special-create-form-name-placeholder}}">
-		</td>
-		<td class="flags-special-item-new-template">
-			<input type="text" placeholder="{{flags-special-create-form-template-placeholder}}">
-		</td>
-		<td class="flags-special-item-new-parameters">
-			{{flags-special-create-form-parameters}}
-		</td>
-		<td class="flags-special-item-new-">
-			<select name="" id="">
-				<option value="" disabled selected>{{flags-special-create-form-group}}</option>
-			</select>
-		</td>
-		<td class="flags-special-item-new-">
-			<select name="" id="">
-				<option value="" disabled selected>{{flags-special-create-form-target}}</option>
-			</select>
-		</td>
-	</form>
-</tr>
+<form name="flags-special-form-{{class}}" class="flags-special-form-{{class}}">
+	<fieldset>
+		<label class="flags-special-form-label" for="flags-special-item-new-name">Flag name</label>
+		<input class="flags-special-form-input" type="text"
+			   placeholder="{{messages.flags-special-create-form-name-placeholder}}" id="flags-special-item-new-name" value="{{values.name}}">
+
+		<label class="flags-special-form-label" for="flags-special-item-new-template">Flag template</label>
+		<input class="flags-special-form-input" type="text"
+			   placeholder="{{messages.flags-special-create-form-template-placeholder}}" id="flags-special-item-new-template" value="{{values.template}}">
+		<label class="flags-special-form-label" for="flags-special-item-new-group">Flag group</label>
+		<select name="" id="flags-special-item-new-group">
+			<option value="8" disabled selected>{{messages.flags-special-create-form-group}}</option>
+		</select>
+		<label class="flags-special-form-label" for="flags-special-item-new-targeting">Flag targeting</label>
+		<select name="" id="flags-special-item-new-targeting">
+			<option value="1" disabled selected>{{messages.flags-special-create-form-target}}</option>
+		</select>
+	</fieldset>
+</form>
