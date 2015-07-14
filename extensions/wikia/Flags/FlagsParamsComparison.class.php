@@ -3,12 +3,11 @@ namespace Flags;
 
 class FlagsParamsComparison {
 
-	public function compareTemplateVariables( $title, $oldText, $newText, $flagType) {
+	public function compareTemplateVariables( $title, $oldText, $newText, $flagVariables ) {
 		$oldText = str_replace( "\r\n", "\n", $oldText );
 		$newText = str_replace( "\r\n", "\n", $newText );
 
-		$newVariables = (new \TemplateDataExtractor( $title ) )->getTemplateVariables( $newText );
-		$flagVariables = json_decode( $flagType['flag_params_names'], true );
+		$newVariables = ( new \TemplateDataExtractor( $title ) )->getTemplateVariables( $newText );
 
 		$removedVariables = array_diff_key( $flagVariables, $newVariables );
 		$changedVariables = array_diff_key( $newVariables, $flagVariables );
@@ -28,14 +27,10 @@ class FlagsParamsComparison {
 	}
 
 	private static function compareVariables( $flagVariables, $removedVariables, $changedVariables ) {
-		if ( empty( $removedVariables ) && empty( $changedVariables ) ) {
-			// nothing changed
-			return [];
-
-		} elseif ( empty( $removedVariables ) && !empty( $changedVariables ) ) {
+		if ( empty( $removedVariables ) && !empty( $changedVariables ) ) {
 			// variables added
 			foreach ( $changedVariables as $name => $variable ) {
-				$flagVariables[$name] = $name;
+				$flagVariables[$name] = '';
 			}
 
 			return $flagVariables;
@@ -63,13 +58,11 @@ class FlagsParamsComparison {
 
 		$diffs = new \WordLevelDiff( $ota, $nta );
 
-		$deleted = [];
 		$changed = [];
 
 		foreach ( $diffs->edits as $diff ) {
 			switch ( $diff->type ) {
 				case 'change': $changed[] = $diff; break;
-				case 'delete': $deleted[] = $diff; break;
 			}
 		}
 
@@ -79,7 +72,7 @@ class FlagsParamsComparison {
 			$flagParam = $change->orig[0];
 			$newParam = $change->closing[0];
 
-			if ( isset( $flagVariables[$flagParam] ) && isset( $variables[$newParam] ) ) {
+			if ( isset( $removedVariables[$flagParam] ) && isset( $changedVariables[$newParam] ) ) {
 
 				$flagVariables[$newParam] = $flagVariables[$flagParam];
 
@@ -96,7 +89,7 @@ class FlagsParamsComparison {
 		}
 
 		foreach ( $changedVariables as $name => $variable ) {
-			$flagVariables[$name] = $name;
+			$flagVariables[$name] = '';
 		}
 
 		return $flagVariables;

@@ -182,20 +182,28 @@ class Hooks {
 						$oldText = $article->getRawText();
 
 						if ( strcmp( $text, $oldText ) !== 0 ) {
+							if ( is_null( $flagType['flag_params_names'] ) ) {
+								$flagVariables = [];
+							} else {
+								$flagVariables = json_decode( $flagType['flag_params_names'], true );
+							}
+
 							$flagParamsNames = ( new FlagsParamsComparison() )->compareTemplateVariables(
 								$article->mTitle,
 								$oldText,
 								$text,
-								$flagType
+								$flagVariables
 							);
 
 							if ( !is_null( $flagParamsNames ) ) {
+								$flagParamsNames = !empty( $flagParamsNames ) ? json_encode( $flagParamsNames ) : null;
+
 								$app->sendRequest(
 									'FlagsApiController',
 									'updateFlagTypeParameters',
 									[
 										'flag_type_id' => $flagType['flag_type_id'],
-										'flags_params_names' => json_encode( $flagParamsNames )
+										'flags_params_names' => $flagParamsNames
 									],
 									true,
 									\WikiaRequest::EXCEPTION_MODE_RETURN
