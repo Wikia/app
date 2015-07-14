@@ -12,8 +12,7 @@
 
 namespace Flags;
 
-class Hooks
-{
+class Hooks {
 
 	const FLAGS_DROPDOWN_ACTION = 'flags';
 
@@ -21,8 +20,7 @@ class Hooks
 		$helper = new FlagsHelper();
 		/* Assets for flags view */
 		if ( $helper->shouldDisplayFlags()
-			|| $out->getTitle()->isSpecial( 'Flags' )
-		) {
+			|| $out->getTitle()->isSpecial( 'Flags' ) ) {
 			\Wikia::addAssetsToOutput( 'flags_view_scss' );
 		}
 		/* Assets for flags edit form */
@@ -74,7 +72,7 @@ class Hooks
 	 * @return bool
 	 */
 	public static function onBeforeParserCacheSave( \ParserOutput $parserOutput, \Page $article ) {
-		if ( !\FlagsController::$parsed ) {
+		if ( ! \FlagsController::$parsed ) {
 			$parserOutput = ( new \FlagsController )
 				->modifyParserOutputWithFlags( $parserOutput, $article->getID() );
 		}
@@ -122,13 +120,13 @@ class Hooks
 			)->getData();
 
 			if ( $flagTypesResponse[\FlagsApiController::FLAGS_API_RESPONSE_STATUS] ) {
-				$flagTypesToExtract = $flagTypesToExtractNames = [ ];
+				$flagTypesToExtract = $flagTypesToExtractNames = [];
 
 				/**
 				 * We need modified versions of names of templates and flag_view values to
 				 * compare in a case-insensitive and space-underscore-insensitive way.
 				 */
-				$templatesKeys = [ ];
+				$templatesKeys = [];
 				foreach ( $templates as $template ) {
 					$templatesKeys[] = strtolower( $template['tl_title'] );
 				}
