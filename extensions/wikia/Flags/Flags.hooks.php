@@ -182,8 +182,7 @@ class Hooks {
 						$oldText = $article->getRawText();
 
 						if ( strcmp( $text, $oldText ) !== 0 ) {
-							$helper = new FlagsHelper();
-							$flagParamsNames = $helper->compareTemplateVariables(
+							$flagParamsNames = ( new FlagsParamsComparison() )->compareTemplateVariables(
 								$article->mTitle,
 								$oldText,
 								$text,
