@@ -40,7 +40,7 @@ class PreferenceKeyValueService implements PreferenceService {
 	}
 
 	public function setPreferences( $userId, array $preferences ) {
-		if ( !is_array( $preferences ) || empty( $preferences ) ) {
+		if ( !is_array( $preferences ) || empty( $preferences ) || $userId == 0 ) {
 			return false;
 		}
 
@@ -61,6 +61,10 @@ class PreferenceKeyValueService implements PreferenceService {
 	}
 
 	public function getPreferences( $userId ) {
+		if ( $userId == 0 ) {
+			return [];
+		}
+
 		try {
 			$profiler_start = $this->startProfile();
 			$preferences = $this->persistenceAdapter->get( $userId );
