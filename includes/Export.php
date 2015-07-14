@@ -794,6 +794,17 @@ class DumpFileOutput extends DumpOutput {
 		$this->filename = $file;
 	}
 
+	/**
+	 * @param string $string
+	 */
+	function writeCloseStream( $string ) {
+		parent::writeCloseStream( $string );
+		if ( $this->handle ) {
+			fclose( $this->handle );
+			$this->handle = false;
+		}
+	}
+
 	function write( $string ) {
 		fputs( $this->handle, $string );
 	}
@@ -843,6 +854,7 @@ class DumpFileOutput extends DumpOutput {
  */
 class DumpPipeOutput extends DumpFileOutput {
 	protected $command, $filename;
+	protected $procOpenResource = false;
 
 	function __construct( $command, $file = null ) {
 		if ( !is_null( $file ) ) {
@@ -852,6 +864,17 @@ class DumpPipeOutput extends DumpFileOutput {
 		$this->startCommand( $command );
 		$this->command = $command;
 		$this->filename = $file;
+	}
+
+	/**
+	 * @param string $string
+	 */
+	function writeCloseStream( $string ) {
+		parent::writeCloseStream( $string );
+		if ( $this->procOpenResource ) {
+			proc_close( $this->procOpenResource );
+			$this->procOpenResource = false;
+		}
 	}
 
 	function startCommand( $command ) {
