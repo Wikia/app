@@ -69,15 +69,14 @@ class UserPreferences {
 	 * @param string $val
 	 */
 	public function set( $userId, $pref, $val ) {
-		$this->setMultiply( $userId, [ $pref => $val ] );
+		$this->setMultiple( $userId, [ $pref => $val ] );
 	}
 
 	/**
 	 * @param int $userId
 	 * @param array $prefs
 	 */
-
-	public function setMultiply( $userId, $prefs ) {
+	public function setMultiple( $userId, $prefs ) {
 		$this->load( $userId );
 		$prefToSave = [ ];
 

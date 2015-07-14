@@ -2539,7 +2539,7 @@ class User {
 		if ( $wgPreferencesUseService ) {
 			$this->load();
 			$this->sanitizePropertyArray( $preferences );
-			$this->userPreferences()->setPreferencesInCache( $this->mId, $preferences );
+			$this->userPreferences()->setMultiple( $this->mId, $preferences );
 			if ( array_key_exists( 'skin', $preferences ) ) {
 				unset( $this->mSkin );
 			}
