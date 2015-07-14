@@ -195,8 +195,8 @@ class EditPageLayoutHelper {
 	static public function isInfoboxTemplate( Title $title ) {
 		$namespace = $title->getNamespace();
 
-		if ( $namespace === NS_TEMPLATE && class_exists( 'TemplateClassificationController' ) ) {
-			$tc = new TemplateClassificationController( $title );
+		if ( $namespace === NS_TEMPLATE ) {
+			$tc = new TemplateClassification( $title );
 			return $tc->isType( $tc::TEMPLATE_INFOBOX ) || TemplateDraftHelper::isTitleDraft( $title );
 		}
 
@@ -228,15 +228,15 @@ class EditPageLayoutHelper {
 	 * @return bool
 	 */
 	public function showMobilePreview( Title $title ) {
-		$blacklistedPage = ( self::isCodePageWithoutPreview( $title ) )
+		$blacklistedPage = self::isCodePage( $title )
 				|| $title->isMainPage()
 				|| NavigationModel::isWikiNavMessage( $title );
 
 		return !$blacklistedPage;
 	}
 
-	public static function isCodePageWithoutPreview( Title $title ) {
-		return self::isCodePage( $title ) && $title->getNamespace() !== NS_TEMPLATE;
+	public static function isCodePageWithPreview( Title $title ) {
+		return self::isCodePage( $title ) && self::isInfoboxTemplate( $title );
 	}
 
 	/**

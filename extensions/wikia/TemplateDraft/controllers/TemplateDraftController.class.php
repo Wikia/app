@@ -13,14 +13,14 @@ class TemplateDraftController extends WikiaController {
 	public function createDraftContent( Title $title, $content, $type ) {
 		$newContent = '';
 
-		if ( $type === TemplateClassificationController::TEMPLATE_INFOBOX ) {
+		if ( $type === TemplateClassification::TEMPLATE_INFOBOX ) {
 			/**
 			 * While we're at it we can mark the base template as an infobox
 			 */
 			$parentTitle = Title::newFromText( $title->getBaseText(), $title->getNamespace() );
 
-			$tc = new TemplateClassificationController( $parentTitle );
-			$tc->classifyTemplate( TemplateClassificationController::TEMPLATE_INFOBOX, true );
+			$tc = new TemplateClassification( $parentTitle );
+			$tc->classifyTemplate( TemplateClassification::TEMPLATE_INFOBOX, true );
 
 			$templateConverter = new TemplateConverter( $title );
 			$newContent = $templateConverter->convertAsInfobox( $content );
@@ -48,10 +48,10 @@ class TemplateDraftController extends WikiaController {
 		 * Then classify the template as not-infobox
 		 * (primary: unclassified, secondary: with logged data)
 		 */
-		$tc = new TemplateClassificationController( Title::newFromID( $pageId ) );
+		$tc = new TemplateClassification( Title::newFromID( $pageId ) );
 		$this->response->setVal(
 			'status',
-			$tc->classifyTemplate( TemplateClassificationController::TEMPLATE_INFOBOX, false )
+			$tc->classifyTemplate( TemplateClassification::TEMPLATE_INFOBOX, false )
 		);
 	}
 
@@ -74,9 +74,10 @@ class TemplateDraftController extends WikiaController {
 		}
 
 		$templateConverter = new TemplateConverter( $title );
+		$templateDataExtractor = new TemplateDataExtractor( $title );
 		$revision = Revision::newFromTitle( $title );
 		$content = $revision->getText();
-		$infoboxVariables = $templateConverter->getTemplateVariables( $content );
+		$infoboxVariables = $templateDataExtractor->getTemplateVariables( $content );
 		$infoboxContent = $templateConverter->convertAsInfobox( $content );
 
 		$this->response->setValues( [

@@ -58,7 +58,7 @@ class TemplateDraftHooks {
 				$text = $controller->createDraftContent(
 					$title, // @TODO this is currently taking the *edited* title (with subpage), not the *converted* title
 					$parentContent,
-					TemplateClassificationController::TEMPLATE_INFOBOX
+					TemplateClassification::TEMPLATE_INFOBOX
 				);
 			}
 		}
@@ -75,10 +75,7 @@ class TemplateDraftHooks {
 	 */
 	public static function onEditPageLayoutShowIntro( &$preloads, Title $title ) {
 		if ( $title->getNamespace() == NS_TEMPLATE ) {
-			if ( TemplateDraftHelper::isTitleDraft( $title )
-				&& class_exists( 'TemplateConverter' )
-				&& TemplateConverter::isConversion()
-			) {
+			if ( TemplateDraftHelper::isTitleDraft( $title ) ) {
 				$base = Title::newFromText( $title->getBaseText(), NS_TEMPLATE );
 				$baseHelp = Title::newFromText( 'Help:PortableInfoboxes' );
 				$preloads['EditPageIntro'] = [
@@ -96,7 +93,7 @@ class TemplateDraftHooks {
 							wfMessage( 'templatedraft-module-view-parent' )->plain() )
 					)->escaped(),
 				];
-			} elseif ( !TemplateDraftHelper::isTitleDraft( $title ) ) {
+			} elseif ( !TemplateDraftHelper::titleHasPortableInfobox( $title ) ) {
 				$base = Title::newFromText( $title->getBaseText() .'/'. wfMessage( 'templatedraft-subpage' ), NS_TEMPLATE );
 				$draftUrl = $base->getFullUrl( [
 					'action' => 'edit',

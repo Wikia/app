@@ -22,7 +22,7 @@
 
 use Wikia\DependencyInjection\Injector;
 use Wikia\Logger\Loggable;
-use Wikia\Service\User\UserPreferences;
+use Wikia\Service\User\Preferences\UserPreferences;
 
 /**
  * Int Number of characters in user_token field.
@@ -2426,6 +2426,7 @@ class User {
 	 *
 	 * @param $oname String The option to check
 	 * @return Bool User's current value for the option
+	 * @deprecated use get(Global|Local)Preference  get(Global|Local)Attribute or get(Global|Local)Flag
 	 * @see getOption()
 	 */
 	public function getBoolOption( $oname ) {
@@ -2438,7 +2439,7 @@ class User {
 	 * @param $oname String The option to check
 	 * @param $defaultOverride Int A default value returned if the option does not exist
 	 * @return Int User's current value for the option
-	 * @see getOption()
+	 * @deprecated use get(Global|Local)Preference  get(Global|Local)Attribute or get(Global|Local)Flag
 	 */
 	public function getIntOption( $oname, $defaultOverride=0 ) {
 		$val = $this->getOption( $oname );
@@ -2452,12 +2453,15 @@ class User {
 	/**
 	 * Get a preference local to this wikia.
 	 *
+	 * Refere to getGlobalPreference for more detailed documentation.
+	 *
 	 * @param string $pref the preference name
 	 * @param int $cityId the city id
 	 * @param string $sep the separator between the name and the city id
 	 * @param mixed $default
 	 * @param bool $ignoreHidden
 	 * @return string
+	 * @see getGlobalPreference
 	 */
 	public function getLocalPreference($pref, $cityId = null, $sep = "-", $default = null, $ignoreHidden = false) {
 		$globalPref = self::localToGlobalPropertyName($pref, $cityId, $sep);
@@ -2466,6 +2470,10 @@ class User {
 
 	/**
 	 * Get a global user preference.
+	 *
+	 * Preferences are options that typically alter the users experience. Some
+	 * examples include the skin, language, and whether or not marketing is
+	 * allowed.
 	 *
 	 * @param string $preference
 	 * @param mixed $default
@@ -2503,7 +2511,7 @@ class User {
 	 * @param string $value
 	 * @param int $cityId [optional, defaults to $wgCityId]
 	 * @param string $sep [optional, defaults to '-']
-	 *
+	 * @see getGlobalPreference
 	 */
 	public function setLocalPreference($preference, $value, $cityId = null, $sep = '-') {
 		$this->setGlobalPreference(self::localToGlobalPropertyName($preference, $cityId, $sep), $value);
@@ -2514,6 +2522,7 @@ class User {
 	 *
 	 * @param string $preference
 	 * @param string $value
+	 * @see getGlobalPreference for documentation about preferences
 	 */
 	public function setGlobalPreference($preference, $value) {
 		global $wgPreferencesUseService;
@@ -2546,6 +2555,7 @@ class User {
 	 *
 	 * @param string $preference
 	 * @return string
+	 * @see getGlobalPreference for documentation about preferences
 	 */
 	public function getDefaultGlobalPreference($preference) {
 		return $this->userPreferences()->getFromDefault($preference);
@@ -2558,6 +2568,7 @@ class User {
 	 * @param int $cityId the city id
 	 * @param string $sep the separator between the name and the city id
 	 * @return string
+	 * @see getGlobalAttribute for more documentation about attributes
 	 */
 	public function getLocalAttribute($attr, $cityId = null, $sep = "-") {
 		return $this->getGlobalAttribute(self::localToGlobalPropertyName($attr, $cityId, $sep));
@@ -2565,6 +2576,9 @@ class User {
 
 	/**
 	 * Get a global user attribute.
+	 *
+	 * Attributes are facts about the user such as their avatar URL, their
+	 * location, or their twitter username.
 	 *
 	 * @param string $attribute
 	 * @param mixed $default
@@ -2585,6 +2599,7 @@ class User {
 	 * @param int $cityId
 	 * @param string $sep
 	 * @return bool
+	 * @see getGlobalAttribute for more documentation about attributes
 	 */
 	public function setLocalAttribute($attribute, $value, $cityId = null, $sep = '-') {
 		$this->setGlobalAttribute(self::localToGlobalPropertyName($attribute, $cityId, $sep), $value);
@@ -2595,6 +2610,7 @@ class User {
 	 *
 	 * @param string $attribute
 	 * @param string $value
+	 * @see getGlobalAttribute for more documentation about attributes
 	 */
 	public function setGlobalAttribute($attribute, $value) {
 		$this->setOptionHelper($attribute, $value);
@@ -2607,6 +2623,7 @@ class User {
 	 * @param int $cityId the city id
 	 * @param string $sep the separator between the name and the city id
 	 * @return string
+	 * @see getGlobalFlag for more documentation about flags
 	 */
 	public function getLocalFlag($flag, $cityId = null, $sep = "-") {
 		return $this->getGlobalFlag(self::localToGlobalPropertyName($flag, $cityId, $sep));
@@ -2614,6 +2631,10 @@ class User {
 
 	/**
 	 * Get a global user flag.
+	 *
+	 * Flags are typically boolean settings that are used internally to signify
+	 * something about the user such as whether or not their account has been
+	 * disabled or if they are a power user.
 	 *
 	 * @param string $flag
 	 * @return bool
@@ -2627,6 +2648,7 @@ class User {
 	 *
 	 * @param string $flag
 	 * @return bool
+	 * @see getGlobalFlag for more documentation about flags
 	 */
 	public function setGlobalFlag($flag, $value) {
 		$this->setOptionHelper($flag, $value);
