@@ -28,6 +28,10 @@ class Hooks {
 			\Wikia::addAssetsToOutput( 'flags_editform_js' );
 			$out->addModules( 'ext.wikia.Flags.EditFormMessages' );
 		}
+
+		if ( $skin->getTitle()->getNamespace() == NS_TEMPLATE ) {
+			self::onViewPageShowNotification( $out, $skin );
+		}
 		return true;
 	}
 
@@ -169,7 +173,7 @@ class Hooks {
 	 * @return bool
 	 */
 
-	public static function onEditPageShowIntro( &$preloads, \Title $title ) {
+	public static function onEditPageLayoutShowIntro( &$preloads, \Title $title ) {
 		$app = \F::app();
 		$response = $app->sendRequest( 'FlagsApiController',
 			'getFlagTypeIdByTemplate',
@@ -178,8 +182,8 @@ class Hooks {
 			]
 		)->getData();
 
-		if ( $response['status'] && $title->getNamespace() == NS_TEMPLATE ) {
-			$preloads['EditPageIntro'] = [
+		if ( $title->getNamespace() == NS_TEMPLATE && $response['status'] ) {
+			$preloads['EditPageFlagsIntro'] = [
 				'content' => wfMessage( 'flags-edit-intro-notification' )->parse(),
 			];
 		}
@@ -195,10 +199,9 @@ class Hooks {
 			]
 		)->getData();
 
-		if ( $response['status'] && $skin->getTitle()->getNamespace() == NS_TEMPLATE ) {
+		if ( $response['status'] ) {
 			\BannerNotificationsController::addConfirmation(
-				wfMessage( 'flags-edit-intro-notification' )
-					->parse(),
+				wfMessage( 'flags-edit-intro-notification' )->parse(),
 				\BannerNotificationsController::CONFIRMATION_NOTIFY
 			);
 		}

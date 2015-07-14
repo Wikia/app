@@ -79,8 +79,7 @@ $wgHooks['BeforePageDisplay'][] = 'Flags\Hooks::onBeforePageDisplay';
 $wgHooks['BeforeParserCacheSave'][] = 'Flags\Hooks::onBeforeParserCacheSave';
 $wgHooks['PageHeaderDropdownActions'][] = 'Flags\Hooks::onPageHeaderDropdownActions';
 $wgHooks['SkinTemplateNavigation'][] = 'Flags\Hooks::onSkinTemplateNavigation';
-$wgHooks['EditPageLayoutShowIntro'][] = 'Flags\Hooks::onEditPageShowIntro';
-$wgHooks['BeforePageDisplay'][] = 'Flags\Hooks::onViewPageShowNotification';
+$wgHooks['EditPageLayoutShowIntro'][] = 'Flags\Hooks::onEditPageLayoutShowIntro';
 
 /**
  * Messages
