@@ -260,6 +260,9 @@ class User {
 		return $this->getName();
 	}
 
+	/**
+	 * @return UserPreferences
+	 */
 	private function userPreferences() {
 		return Injector::getInjector()->get(UserPreferences::class);
 	}
@@ -375,7 +378,7 @@ class User {
 			}
 
 			if (isset($data[self::CACHE_PREFERENCES_KEY])) {
-				 $this->userPreferences()->setPreferences($this->mId, $data[self::CACHE_PREFERENCES_KEY]);
+				 $this->userPreferences()->setPreferencesInCache($this->mId, $data[self::CACHE_PREFERENCES_KEY]);
 			}
 		}
 		return true;
@@ -2542,32 +2545,42 @@ class User {
 	 * @param string $value
 	 * @see getGlobalPreference for documentation about preferences
 	 */
-	public function setGlobalPreference($preference, $value) {
+	public function setGlobalPreference( $preference, $value ) {
+		$this->setGlobalPreferences( [ $preference => $value ] );
+	}
+
+	/**
+	 * @param array $preferences preferenceName->Value
+	 */
+	public function setGlobalPreferences( $preferences ) {
 		global $wgPreferencesUseService;
-
-		if ($wgPreferencesUseService) {
+		if ( $wgPreferencesUseService ) {
 			$this->load();
-			$value = $this->sanitizeProperty($value);
-			$this->userPreferences()->set($this->mId, $preference, $value);
-
-			// Clear cached skin/theme, so the new one displays immediately in Special:Preferences
-			switch ($preference) {
-				case 'skin':
-					unset($this->mSkin);
-					break;
-				case 'theme':
-					unset($this->mTheme);
-					break;
+			$this->sanitizePropertyArray( $preferences );
+			$this->userPreferences()->setMultiple( $this->mId, $preferences );
+			if ( array_key_exists( 'skin', $preferences ) ) {
+				unset( $this->mSkin );
 			}
-
-			wfRunHooks("UserSetPreferences", [$this, $this->userPreferences()->getPreferences($this->mId)]);
-
+			if ( array_key_exists( 'theme', $preferences ) ) {
+				unset( $this->mTheme );
+			}
+			wfRunHooks( "UserSetPreferences", [ $this, $this->userPreferences()->getPreferences( $this->mId ) ] );
 			$this->clearSharedCache();
 		} else {
-			$this->setOptionHelper($preference, $value);
+			foreach ( $preferences as $key => $value ) {
+				$this->setOptionHelper( $key, $value );
+			}
 		}
 	}
 
+	/**
+	 * @param String $preference set to default
+	 * for now its support only old aproach to handle preferences (get/set Option)
+	 * It will be handled with https://wikia-inc.atlassian.net/browse/SERVICES-483
+	 */
+	public function removeGlobalPreference($preference){
+		unset( $this->mOptions[ $preference ] );
+	}
 	/**
 	 * Get the default global preference.
 	 *
@@ -2690,6 +2703,18 @@ class User {
 		}
 
 		return sprintf("%s%s%s", $property, $sep, $cityId);
+	}
+
+	private function sanitizePropertyArray( $array_map ) {
+		if ( !is_array( $array_map ) ) {
+			return [ ];
+		}
+
+		foreach ( $array_map as $key => $value ) {
+			$array_map[ $key ] = $this->sanitizeProperty( $value );
+		}
+
+		return $array_map;
 	}
 
 	private function sanitizeProperty($value) {
