@@ -37,8 +37,6 @@ class DumpStarters extends Maintenance {
 	/**
 	 * Generate XML dump of a given starter database and writes it to a given file
 	 *
-	 * The file will be bzip2 compressed
-	 *
 	 * @param string $filename file to write the XML dump to
 	 * @param string $starter
 	 */
@@ -48,7 +46,7 @@ class DumpStarters extends Maintenance {
 		$exporter = new WikiExporter( $dbr, WikiExporter::CURRENT, WikiExporter::STREAM, WikiExporter::TEXT );
 
 		// write to a stream
-		$exporter->setOutputSink( new DumpBZip2Output( $filename ) );
+		$exporter->setOutputSink( new DumpBzOutput( $filename ) );
 		$exporter->openStream();
 		$exporter->allPages();
 		$exporter->closeStream();
@@ -58,8 +56,6 @@ class DumpStarters extends Maintenance {
 	 * Generate SQL dump of all tables that keep the links between tables
 	 *
 	 * This allows us to avoid running heavy maintenance scripts while creating a wiki
-	 *
-	 * The file will be bzip2 compressed
 	 *
 	 * @param string $filename file to write the SQL dump to
 	 * @param string $starter
@@ -79,14 +75,13 @@ class DumpStarters extends Maintenance {
 			$info[ "user"      ],
 			$info[ "password"  ],
 			$starter,
-			implode( " ", self::$mTablesToDump ),
-			$filename
+			implode( " ", self::$mTablesToDump )
 		);
 
 		$dump = wfShellExec( $cmd, $retVal );
 
 		if ($retVal > 0) {
-			throw new DumpStartersException("Unable to generate a SQL dump of '{$starter}'");
+			throw new DumpStartersException("Unable to generate a SQL dump of '{$starter}' (using {$info['host']})");
 		}
 
 		// save the compressed SQL dump
@@ -103,6 +98,8 @@ class DumpStarters extends Maintenance {
 	 * @throws DumpStartersException
 	 */
 	private function storeDump( $filename, $dest ) {
+		$this->output( sprintf(" \n\t[%s / %.2f kB]", $dest, filesize($filename) / 1024 ) );
+
 		$swift = \Wikia\CreateNewWiki\Starters::getStarterDumpStorage();
 		$res = $swift->store(
 			$filename,
@@ -112,14 +109,13 @@ class DumpStarters extends Maintenance {
 		);
 
 		if ( !$res->isOK() ) {
-			throw new DumpStartersException( 'XML dump upload failed - ' . json_encode( $res->getErrorsArray() ) );
+			throw new DumpStartersException( ' upload failed - ' . json_encode( $res->getErrorsArray() ) );
 		}
 
 		// cleanup
-		$dumpSize = filesize($filename);
 		unlink($filename);
 
-		$this->output( sprintf(" \n\t[%s] uploaded %.2f kB", $dest, $dumpSize / 1024 ) );
+		$this->output( ' uploaded' );
 	}
 
 	/**
