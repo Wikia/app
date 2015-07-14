@@ -78,7 +78,10 @@ class FacebookSignupController extends WikiaController {
 				// Retrieve user email from Facebook if missing
 				$email = $user->getEmail();
 				if ( empty( $email ) ) {
-					$this->saveEmailAsynchronously( $user->getId() );
+					$this->saveEmailAsynchronously( $user->getId(), true );
+				} else {
+					// Send welcome email
+					F::app()->sendRequest( WikiaConfirmEmailSpecialController::WELCOME_EMAIL_CONTROLLER, 'handle' );
 				}
 			}
 		} else {
@@ -100,13 +103,20 @@ class FacebookSignupController extends WikiaController {
 
 	/**
 	 * Kick off an asynch job to update user's email to be what's reported by Facebook
-	 * @param $userId
+	 * @param integer $userId
+	 * @param boolean $sendWelcomeEmail
 	 */
-	protected function saveEmailAsynchronously( $userId ) {
+	protected function saveEmailAsynchronously( $userId, $sendWelcomeEmail = false ) {
 		$task = new \Wikia\Tasks\Tasks\FacebookTask();
-		$task->dupCheck();
-		$task->call( 'updateEmailFromFacebook', $userId );
-		$task->queue();
+		$taskList = new AsyncTaskList();
+		$taskList->dupCheck()
+			->add( $task->call( 'updateEmailFromFacebook', $userId ) );
+
+		if ( $sendWelcomeEmail ) {
+			$taskList->add( $task->call( 'sendWelcomeEmail' ) );
+		}
+
+		$taskList->queue();
 	}
 
 	/**

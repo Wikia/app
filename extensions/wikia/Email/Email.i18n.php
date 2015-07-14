@@ -16,6 +16,7 @@ $messages['en'] = array(
 	'emailext-unfollow-text' => 'No longer interested in receiving these updates? Click [$1 here] to unfollow $2 on {{SITENAME}}.',
 	'emailext-salutation' => 'Hi $1,',
 	'emailext-forumreply-unfollow-text' => 'No longer interested in receiving these updates? Click [$1 here] to unfollow [$2 this discussion] on [{{SERVER}} {{SITENAME}}].',
+	'emailext-wikia-home-url' => 'http://www.wikia.com',
 );
 
 $messages['qqq'] = array(
@@ -33,6 +34,7 @@ $messages['qqq'] = array(
 	'emailext-unfollow-text' => 'Asks the user if they want to stop following this page and provides a link to unfollow the page. $1 -> unfollow url, $2 article title',
 	'emailext-salutation' => "Email greeting. $1 is the recipient's username.",
 	'emailext-forumreply-unfollow-text' => 'Asks the user if they want to stop following this discussion and provides a link to unfollow the discussion. $1 -> unfollow url, $2 discussion url',
+	'emailext-wikia-home-url' => 'URL to the appropriate Wikia home page for each localized language',
 );
 
 $messages['de'] = array(
@@ -50,7 +52,7 @@ $messages['de'] = array(
 	'group-translator-member' => 'Wikia Translator',
 	'group-translator' => 'Wikia Translators',
 	'grouppage-translator' => 'wikia:Help:Internationalization',
-	'emailext-wikia-home-url' => 'http://www.wikia.com',
+	'emailext-wikia-home-url' => 'http://de.wikia.com',
 );
 
 $messages['es'] = array(
@@ -68,7 +70,7 @@ $messages['es'] = array(
 	'group-translator-member' => 'Wikia Translator',
 	'group-translator' => 'Wikia Translators',
 	'grouppage-translator' => 'wikia:Help:Internationalization',
-	'emailext-wikia-home-url' => 'http://www.wikia.com',
+	'emailext-wikia-home-url' => 'http://es.wikia.com',
 );
 
 $messages['fr'] = array(
@@ -87,7 +89,7 @@ $messages['fr'] = array(
 	'group-translator-member' => 'Wikia Translator',
 	'group-translator' => 'Wikia Translators',
 	'grouppage-translator' => 'wikia:Help:Internationalization',
-	'emailext-wikia-home-url' => 'http://www.wikia.com',
+	'emailext-wikia-home-url' => 'http://fr.wikia.com',
 );
 
 $messages['it'] = array(
@@ -123,7 +125,7 @@ $messages['ja'] = array(
 	'group-translator-member' => 'Wikia Translator',
 	'group-translator' => 'Wikia Translators',
 	'grouppage-translator' => 'wikia:Help:Internationalization',
-	'emailext-wikia-home-url' => 'http://www.wikia.com',
+	'emailext-wikia-home-url' => 'http://ja.wikia.com',
 );
 
 $messages['nl'] = array(
@@ -159,7 +161,7 @@ $messages['pl'] = array(
 	'group-translator-member' => 'Wikia Translator',
 	'group-translator' => 'Wikia Translators',
 	'grouppage-translator' => 'wikia:Help:Internationalization',
-	'emailext-wikia-home-url' => 'http://www.wikia.com',
+	'emailext-wikia-home-url' => 'http://pl.wikia.com',
 );
 
 $messages['pt'] = array(
@@ -178,7 +180,7 @@ $messages['pt'] = array(
 	'group-translator-member' => 'Wikia Translator',
 	'group-translator' => 'Wikia Translators',
 	'grouppage-translator' => 'wikia:Help:Internationalization',
-	'emailext-wikia-home-url' => 'http://www.wikia.com',
+	'emailext-wikia-home-url' => 'http://pt-br.wikia.com',
 );
 
 $messages['ru'] = array(
@@ -196,7 +198,7 @@ $messages['ru'] = array(
 	'group-translator-member' => 'Wikia Translator',
 	'group-translator' => 'Wikia Translators',
 	'grouppage-translator' => 'wikia:Help:Internationalization',
-	'emailext-wikia-home-url' => 'http://www.wikia.com',
+	'emailext-wikia-home-url' => 'http://ru.wikia.com',
 );
 
 $messages['zh-hans'] = array(

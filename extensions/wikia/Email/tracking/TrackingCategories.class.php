@@ -30,5 +30,6 @@ class TrackingCategories {
 	const FOUNDER_TIPS_10_DAY_EN = 'FounderEmails10DayEN';
 	const FOUNDER_TIPS_10_DAY_INT = 'FounderEmails10DayINT';
 	const FORGOT_PASSWORD = 'TemporaryPassword';
+	const WELCOME = 'WelcomeMail';
 	const REACTIVATE_ACCOUNT = 'ReactivationMail';
 }
