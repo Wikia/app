@@ -2551,6 +2551,13 @@ class User {
 	}
 
 	/**
+	 * @param String $preference set to default
+	 * for now its support only old aproach to handle preferences (get/set Option)
+	 */
+	public function removeGlobalPreference($preference){
+		unset( $this->mOptions[ $preference ] );
+	}
+	/**
 	 * Get the default global preference.
 	 *
 	 * @param string $preference
