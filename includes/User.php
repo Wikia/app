@@ -258,6 +258,9 @@ class User {
 		return $this->getName();
 	}
 
+	/**
+	 * @return UserPreferences
+	 */
 	private function userPreferences() {
 		return Injector::getInjector()->get(UserPreferences::class);
 	}
@@ -2551,6 +2554,22 @@ class User {
 	}
 
 	/**
+	 * @param array $preferences preferenceName->Value
+	 */
+	public function setGlobalPreferences( $preferences ) {
+		global $wgPreferencesUseService;
+		if ($wgPreferencesUseService) {
+			$this->sanitizePropertyArray($preferences);
+			$this->userPreferences()->setPreferences($this->mId, $preferences);
+		}
+		else {
+			foreach ( $preferences as $key => $value ) {
+				$this->setOptionHelper($key, $value);
+			}
+		}
+	}
+
+	/**
 	 * Get the default global preference.
 	 *
 	 * @param string $preference
@@ -2672,6 +2691,18 @@ class User {
 		}
 
 		return sprintf("%s%s%s", $property, $sep, $cityId);
+	}
+
+	private function sanitizePropertyArray( $array ) {
+		if ( !is_array( $array ) ) {
+			return [ ];
+		}
+
+		foreach ( $array as $key => $value ) {
+			$array[ $key ] = $this->sanitizeProperty( $value );
+		}
+
+		return $array;
 	}
 
 	private function sanitizeProperty($value) {
