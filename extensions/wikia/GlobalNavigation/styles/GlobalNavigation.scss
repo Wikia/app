@@ -101,7 +101,7 @@ $start-a-wikia-logo-size: 30px;
 		}
 	}
 
-	@media #{$breakpoint-small-only} {
+	@media #{$breakpoint-below-small-plus} {
 		.global-navigation .global-navigation-container {
 			width: $content-width-small - $scroll-bar-width;
 
@@ -122,6 +122,12 @@ $start-a-wikia-logo-size: 30px;
 					}
 				}
 			}
+		}
+	}
+
+	@media #{$breakpoint-small-plus} {
+		.global-navigation .global-navigation-container {
+			width: $content-width-small-plus;
 		}
 	}
 

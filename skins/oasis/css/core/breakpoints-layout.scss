@@ -282,7 +282,7 @@
 			}
 
 			> nav.WikiNav {
-				@include width-calc('100% - 250px');
+				@include width-calc('100% - 265px');
 
 				left: 275px;
 				top: 20px;
@@ -294,7 +294,7 @@
 
 				.navbackground {
 					left: 10px;
-					width: 734px; // it's 100% of content minus wordmark
+					width: 713px;
 				 }
 			}
 		}
