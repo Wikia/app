@@ -29,8 +29,8 @@ class Hooks {
 			$out->addModules( 'ext.wikia.Flags.EditFormMessages' );
 		}
 
-		if ( $skin->getTitle()->getNamespace() == NS_TEMPLATE ) {
-			self::showFlagsNotification( $out, $skin );
+		if ( $skin->getTitle()->getNamespace() === NS_TEMPLATE ) {
+			self::showFlagsNotification( $skin->getTitle()->getBaseText() );
 		}
 		return true;
 	}
@@ -175,7 +175,7 @@ class Hooks {
 
 	public static function onEditPageLayoutShowIntro( &$preloads, \Title $title ) {
 
-		if( $title->getNamespace() == NS_TEMPLATE ) {
+		if( $title->getNamespace() === NS_TEMPLATE ) {
 			$app = \F::app();
 			$response = $app->sendRequest( 'FlagsApiController',
 				'getFlagTypeIdByTemplate',
@@ -193,12 +193,18 @@ class Hooks {
 		return true;
 	}
 
-	public static function showFlagsNotification( &$out, \Skin &$skin ) {
+	/**
+	 * Adds banner notification on view page if template is mapped as a Flag.
+	 * @param $templateName
+	 * @return bool
+	 */
+
+	public static function showFlagsNotification( $templateName ) {
 		$app = \F::app();
 		$response = $app->sendRequest( 'FlagsApiController',
 			'getFlagTypeIdByTemplate',
 			[
-				'flag_view' => $skin->getTitle()->getBaseText()
+				'flag_view' => $templateName
 			]
 		)->getData();
 
