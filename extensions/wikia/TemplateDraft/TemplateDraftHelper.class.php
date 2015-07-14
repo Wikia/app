@@ -32,7 +32,7 @@ class TemplateDraftHelper {
 	 * @return bool
 	 */
 	public function isMarkedAsInfobox( Title $title ) {
-		$tc = new TemplateClassificationController( $title );
+		$tc = new TemplateClassification( $title );
 		return $tc->isType( $tc::TEMPLATE_INFOBOX );
 	}
 
@@ -64,7 +64,8 @@ class TemplateDraftHelper {
 	 */
 	public function isRailModuleAllowed( Title $title ) {
 		return self::allowedForTitle( $title )
-			&& $title->userCan( 'templatedraft' );
+			&& $title->userCan( 'templatedraft' )
+			&& $title->userCan( 'edit' );
 	}
 
 	/**
@@ -98,7 +99,7 @@ class TemplateDraftHelper {
 	 * @return bool
 	 */
 	public function shouldDisplayCreateModule( Title $title ) {
-		$tc = new TemplateClassificationController( $title );
+		$tc = new TemplateClassification( $title );
 		$type = $tc->getType();
 		return ( empty( $type ) || $type === $tc::TEMPLATE_INFOBOX )
 			&& !self::titleHasPortableInfobox( $title );

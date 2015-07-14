@@ -1,18 +1,13 @@
 <?php
 /**
  * Handles the formedit action.
- * 
+ *
  * @author Stephan Gambke
  * @file
  * @ingroup SF
  */
 
-// TODO: Action class did not exist until MW 1.18
-if ( ! class_exists( 'Action') ) {
-	class Action{}
-}
-
-class SFFormEditAction extends Action 
+class SFFormEditAction extends Action
 {
 	/**
 	 * Return the name of the action this object responds to
@@ -21,7 +16,7 @@ class SFFormEditAction extends Action
 	public function getName(){
 		return 'formedit';
 	}
-	
+
 	/**
 	 * The main action entry point.  Do all output for display and send it to the context
 	 * output.  Do not use globals $wgOut, $wgRequest, etc, in implementations; use
@@ -66,32 +61,35 @@ class SFFormEditAction extends Action
 			return true;
 		}
 
-		global $wgRequest, $wgUser;
+		global $wgRequest;
 		global $sfgRenameEditTabs, $sfgRenameMainEditTab;
 
-		$user_can_edit = $wgUser->isAllowed( 'edit' ) && $title->userCan( 'edit' );
+		$user_can_edit = $title->userCan( 'edit' );
 		// Create the form edit tab, and apply whatever changes are
 		// specified by the edit-tab global variables.
 		if ( $sfgRenameEditTabs ) {
-			$form_edit_tab_text = $user_can_edit ? wfMsg( 'edit' ) : wfMsg( 'sf_viewform' );
+			$form_edit_tab_text = $user_can_edit ? 'edit' : 'sf_viewform';
 			if ( array_key_exists( 'edit', $content_actions ) ) {
-				$content_actions['edit']['text'] = $user_can_edit ? wfMsg( 'sf_editsource' ) : wfMsg( 'viewsource' );
+				$msg = $user_can_edit ? 'sf_editsource' : 'viewsource';
+				$content_actions['edit']['text'] = wfMessage( $msg )->text();
 			}
 		} else {
 			if ( $user_can_edit ) {
-				$form_edit_tab_text = $title->exists() ? wfMsg( 'formedit' ) : wfMsg( 'sf_formcreate' );
+				$form_edit_tab_text = $title->exists() ? 'formedit' : 'sf_formcreate';
 			} else {
-				$form_edit_tab_text = wfMsg( 'sf_viewform' );
+				$form_edit_tab_text = 'sf_viewform';
 			}
 			// Check for renaming of main edit tab only if
 			// $sfgRenameEditTabs is off.
 			if ( $sfgRenameMainEditTab ) {
 				if ( array_key_exists( 'edit', $content_actions ) ) {
-					$content_actions['edit']['text'] = $user_can_edit ? wfMsg( 'sf_editsource' ) : wfMsg( 'viewsource' );
+					$msg = $user_can_edit ? 'sf_editsource' : 'viewsource';
+					$content_actions['edit']['text'] = wfMessage( $msg )->text();
 				}
 			}
 		}
 
+		$form_edit_tab_text = wfMessage( $form_edit_tab_text )->text();
 		$class_name = ( $wgRequest->getVal( 'action' ) == 'formedit' ) ? 'selected' : '';
 		$form_edit_tab = array(
 			'class' => $class_name,
@@ -140,7 +138,7 @@ class SFFormEditAction extends Action
 
 	/**
 	 * Like displayTab(), but called with a different hook - this one is
-	 * called for the 'Vector' skin, and others.
+	 * called for the 'Vector' skin, and some others.
 	 */
 	static function displayTab2( $obj, &$links ) {
 		// the old '$content_actions' array is thankfully just a
@@ -148,80 +146,64 @@ class SFFormEditAction extends Action
 		return self::displayTab( $obj, $links['views'] );
 	}
 
+	static function displayFormChooser( $output, $title ) {
+		$output->addModules( 'ext.semanticforms.main' );
+
+		$targetName = $title->getPrefixedText();
+		$output->setPageTitle( wfMessage( "creating", $targetName )->text() );
+
+		$output->addHTML( Html::element( 'p', null, wfMessage( 'sf-formedit-selectform' )->text() ) );
+		$formNames = SFUtils::getAllForms();
+		$fe = SpecialPageFactory::getPage( 'FormEdit' );
+		$text = '';
+		foreach( $formNames as $i => $formName ) {
+			if ( $i > 0 ) {
+				$text .= " &middot; ";
+			}
+
+			// Special handling for forms whose name contains a slash.
+			if ( strpos( $formName, '/' ) !== false ) {
+				$url = $fe->getTitle()->getLocalURL( array( 'form' => $formName, 'target' => $targetName ) );
+			} else {
+				$url = $fe->getTitle( "$formName/$targetName" )->getLocalURL();
+			}
+			$text .= Html::element( 'a', array( 'href' => $url ), $formName );
+		}
+		$output->addHTML( Html::rawElement( 'div', array( 'class' => 'infoMessage' ), $text ) );
+
+		// We need to call linkKnown(), not link(), so that SF's
+		// edit=>formedit hook won't be called on this link.
+		$noFormLink = Linker::linkKnown( $title, wfMessage( 'sf-formedit-donotuseform' )->text(), array(), array( 'action' => 'edit', 'redlink' => true ) );
+		$output->addHTML( Html::rawElement( 'p', null, $noFormLink ) );
+	}
+
 	/**
 	 * The function called if we're in index.php (as opposed to one of the
 	 * special pages)
 	 */
 	static function displayForm( $action, $article ) {
-		global $sfgUseFormEditPage;
-
-		// TODO: This function will be called as a hook handler and $action will
-		//  be a string before MW 1.18. From 1.18 onwards this function will#
-		//  only be called for formedit actions, i.e. the if statement can be
-		//  removed then.
-
-		// return "true" if the call failed (meaning, pass on handling
-		// of the hook to others), and "false" otherwise
-		if ( is_string( $action ) && $action !== 'formedit' ) {
-			return true;
-		}
-
-		// @todo: This looks like bad code. If we can't find a form, we
-		// should be showing an informative error page rather than
-		// making it look like an edit form page does not exist.
+		$output = $action->getOutput();
 		$title = $article->getTitle();
 		$form_names = SFFormLinker::getDefaultFormsForPage( $title );
 		if ( count( $form_names ) == 0 ) {
+			// If no form is set, display an interface to let the
+			// user choose out of all the forms defined on this wiki
+			// (or none at all).
+			self::displayFormChooser( $output, $title );
 			return true;
 		}
 
-		// For backward-compatibility
-		if ( is_string( $action ) ) {
-			global $wgOut;
-			$output = $wgOut;
-		} else {
-			$output = $action->getOutput();
-		}
-
 		if ( count( $form_names ) > 1 ) {
-			$warning_text = "\t" . '<div class="warningbox">' . wfMsg( 'sf_formedit_morethanoneform' ) . "</div>\n";
+			$warning_text = "\t" . '<div class="warningbox">' . wfMessage( 'sf_formedit_morethanoneform' )->text() . "</div>\n";
 			$output->addWikiText( $warning_text );
 		}
+		
 		$form_name = $form_names[0];
-
-		if ( $sfgUseFormEditPage ) {
-			# Experimental new feature extending from the internal
-			# EditPage class
-			$editor = new SFFormEditPage( $article, $form_name );
-			$editor->edit();
-			return false;
-		}
-
 		$page_name = SFUtils::titleString( $title );
 
-		$msg = SFFormEdit::printForm( $form_name, $page_name );
-
-		if ( $msg ) {
-			// Some error occurred - display it.
-			$msgdata = null;
-			if ( is_array( $msg ) ) {
-				if ( count( $msg ) > 1 ) {
-					$msgdata = $msg[1];
-				}
-				$msg = $msg[0];
-			}
-
-			$output->addHTML( Html::element( 'p', array( 'class' => 'error' ), wfMsg( $msg, $msgdata ) ) );
-
-		}
+		$sfFormEdit = new SFFormEdit();
+		$sfFormEdit->printForm( $form_name, $page_name );
 
 		return false;
-	}
-
-	/**
-	 * A dummy method - this is needed for MediaWiki 1.18, where
-	 * Action::getRestriction() is abstract and needs to be implemented.
-	 */
-	public function getRestriction() {
 	}
 }

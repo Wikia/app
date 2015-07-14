@@ -11,7 +11,7 @@ class MoveNotice extends Maintenance {
 	const
 		SECTION_DEFAULT = 0,
 		SECTION_ALL = 'all',
-		EDIT_SUMMARY = 'Moving notices templates to our new Flags feature.',
+		EDIT_SUMMARY = 'Moving notices templates to our new [[Special:Flags]] feature.',
 		EDIT_USER = 'WikiaBot';
 
 	private
