@@ -17,13 +17,13 @@ class FlagsParamsComparison {
 			return null;
 		}
 
-		$flagParamsNames = self::compareVariables( $flagVariables, $removedVariables, $changedVariables );
+		$variablesDiff = self::compareVariables( $flagVariables, $removedVariables, $changedVariables );
 
-		if ( $flagParamsNames === false ) {
-			$flagParamsNames = self::compareVariableFromDiff( $oldText, $newText, $flagVariables, $removedVariables, $changedVariables );
+		if ( $variablesDiff === false ) {
+			$variablesDiff = self::compareVariableFromDiff( $oldText, $newText, $flagVariables, $removedVariables, $changedVariables );
 		}
 
-		return $flagParamsNames;
+		return $variablesDiff;
 	}
 
 	private static function compareVariables( $flagVariables, $removedVariables, $changedVariables ) {
@@ -31,19 +31,25 @@ class FlagsParamsComparison {
 			// variables added
 			foreach ( $changedVariables as $name => $variable ) {
 				$flagVariables[$name] = '';
+				$variablesDiff['added'][] = $name;
 			}
 
-			return $flagVariables;
+			$variablesDiff['params'] = $flagVariables;
+
+			return $variablesDiff;
 
 		} elseif ( !empty( $removedVariables ) && empty( $changedVariables ) ) {
 			// variables removed
 			foreach ( $removedVariables as $name => $variable ) {
 				if ( isset( $flagVariables[$name] ) ) {
+					$variablesDiff['removed'][] = $name;
 					unset( $flagVariables[$name]);
 				}
 			}
 
-			return $flagVariables;
+			$variablesDiff['params'] = $flagVariables;
+
+			return $variablesDiff;
 
 		} else {
 			return false;
@@ -61,8 +67,8 @@ class FlagsParamsComparison {
 		$changed = [];
 
 		foreach ( $diffs->edits as $diff ) {
-			switch ( $diff->type ) {
-				case 'change': $changed[] = $diff; break;
+			if ( $diff->type === 'change' ) {
+				$changed[] = $diff;
 			}
 		}
 
@@ -76,6 +82,8 @@ class FlagsParamsComparison {
 
 				$flagVariables[$newParam] = $flagVariables[$flagParam];
 
+				$variablesDiff['changed'][$newParam] = [ 'old' => $flagParam, 'new' => $newParam ];
+
 				unset($flagVariables[$flagParam]);
 				unset($removedVariables[$flagParam]);
 				unset($changedVariables[$newParam]);
@@ -84,14 +92,18 @@ class FlagsParamsComparison {
 
 		foreach ( $removedVariables as $name => $variable ) {
 			if ( isset( $flagVariables[$name] ) ) {
+				$variablesDiff['removed'][] = $name;
 				unset( $flagVariables[$name]);
 			}
 		}
 
 		foreach ( $changedVariables as $name => $variable ) {
 			$flagVariables[$name] = '';
+			$variablesDiff['added'][] = $name;
 		}
 
-		return $flagVariables;
+		$variablesDiff['params'] = $flagVariables;
+
+		return $variablesDiff;
 	}
 }
