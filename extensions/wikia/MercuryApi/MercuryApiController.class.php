@@ -209,7 +209,7 @@ class MercuryApiController extends WikiaController {
 		}
 
 		if ( empty( $articleId ) ) {
-			$title = $this->getTitleFromString( $articleTitle );
+			$title = Title::newFromText( $articleTitle, NS_MAIN );
 		} else {
 			$title = Title::newFromId( $articleId, NS_MAIN );
 		}
@@ -220,21 +220,6 @@ class MercuryApiController extends WikiaController {
 
 		if ( empty( $title ) ) {
 			throw new NotFoundApiException( 'Unable to find any article' );
-		}
-
-		return $title;
-	}
-
-	/**
-	 * Get title object from string.
-	 * @param $titleName
-	 * @return bool|Title
-	 */
-	private function getTitleFromString( $titleName ) {
-		$title = Title::newFromText( $titleName, NS_MAIN );
-
-		if ( !$title instanceof Title || !$title->isKnown() ) {
-			$title = false;
 		}
 
 		return $title;
@@ -384,35 +369,12 @@ class MercuryApiController extends WikiaController {
 			$title = $this->wg->Title;
 		}
 
-		$data['adsContext'] = $this->getAdsContextForTitle( $title );
+		$data['adsContext'] = $this->mercuryApi->getAdsContext( $title );
 
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
 
 		$this->response->setVal( 'data', $data );
-	}
-
-	/**
-	 * Get ads context for Title. Return null if Ad Engine extension is not enabled
-	 */
-	public function getAdsContext() {
-		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
-
-		$articleTitle = $this->request->getVal( 'title', null );
-		$title = $this->getTitleFromString( $articleTitle );
-		$adsContext = $this->getAdsContextForTitle( $title );
-
-		$this->response->setVal( 'adsContext', $adsContext );
-	}
-
-	private function getAdsContextForTitle( Title $title ) {
-		global $wgEnableAdEngineExt;
-
-		if ( !empty( $wgEnableAdEngineExt ) && !is_null( $title ) ) {
-			$adContext = new AdEngine2ContextService();
-			return $adContext->getContext( $title, MercuryApi::MERCURY_SKIN_NAME );
-		}
-		return null;
 	}
 
 	/**
