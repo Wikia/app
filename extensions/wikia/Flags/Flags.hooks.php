@@ -12,7 +12,8 @@
 
 namespace Flags;
 
-class Hooks {
+class Hooks
+{
 
 	const FLAGS_DROPDOWN_ACTION = 'flags';
 
@@ -20,7 +21,8 @@ class Hooks {
 		$helper = new FlagsHelper();
 		/* Assets for flags view */
 		if ( $helper->shouldDisplayFlags()
-			|| $out->getTitle()->isSpecial( 'Flags' ) ) {
+			|| $out->getTitle()->isSpecial( 'Flags' )
+		) {
 			\Wikia::addAssetsToOutput( 'flags_view_scss' );
 		}
 		/* Assets for flags edit form */
@@ -72,7 +74,7 @@ class Hooks {
 	 * @return bool
 	 */
 	public static function onBeforeParserCacheSave( \ParserOutput $parserOutput, \Page $article ) {
-		if ( ! \FlagsController::$parsed ) {
+		if ( !\FlagsController::$parsed ) {
 			$parserOutput = ( new \FlagsController )
 				->modifyParserOutputWithFlags( $parserOutput, $article->getID() );
 		}
@@ -110,7 +112,7 @@ class Hooks {
 	public static function onLinksUpdateInsertTemplates( $pageId, Array $templates ) {
 		$app = \F::app();
 
-		if ( !empty( $templates) && $app->wg->HideFlagsExt !== true ) {
+		if ( !empty( $templates ) && $app->wg->HideFlagsExt !== true ) {
 			$flagTypesResponse = $app->sendRequest( 'FlagsApiController',
 				'getFlagsForPageForEdit',
 				[
@@ -120,14 +122,14 @@ class Hooks {
 			)->getData();
 
 			if ( $flagTypesResponse[\FlagsApiController::FLAGS_API_RESPONSE_STATUS] ) {
-				$flagTypesToExtract = $flagTypesToExtractNames = [];
+				$flagTypesToExtract = $flagTypesToExtractNames = [ ];
 
 				/**
 				 * We need modified versions of names of templates and flag_view values to
 				 * compare in a case-insensitive and space-underscore-insensitive way.
 				 */
-				$templatesKeys = [];
-				foreach( $templates as $template ) {
+				$templatesKeys = [ ];
+				foreach ( $templates as $template ) {
 					$templatesKeys[] = strtolower( $template['tl_title'] );
 				}
 
@@ -164,10 +166,10 @@ class Hooks {
 	}
 
 	/**
-	* @param Array $preloads
-	* @param Title $title
-	* @return bool
-	*/
+	 * @param Array $preloads
+	 * @param Title $title
+	 * @return bool
+	 */
 
 	public static function onEditPageShowIntro( &$preloads, \Title $title ) {
 		$app = \F::app();
@@ -181,7 +183,26 @@ class Hooks {
 		if ( $response['status'] ) {
 			$preloads['EditPageIntro'] = [
 				'content' => wfMessage( 'flags-edit-intro-notification' )->parse(),
-				];
+			];
+		}
+		return true;
+	}
+
+	public static function onViewPageShowNotification( &$out, \Skin &$skin ) {
+		$app = \F::app();
+		$response = $app->sendRequest( 'FlagsApiController',
+			'getFlagTypeIdByTemplate',
+			[
+				'flag_view' => $skin->getTitle()->getBaseText()
+			]
+		)->getData();
+
+		if ( $response['status'] ) {
+			\BannerNotificationsController::addConfirmation(
+				wfMessage( 'flags-edit-intro-notification' )
+					->parse(),
+				\BannerNotificationsController::CONFIRMATION_NOTIFY
+			);
 		}
 		return true;
 	}
