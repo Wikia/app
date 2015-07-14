@@ -178,7 +178,7 @@ class Hooks {
 			]
 		)->getData();
 
-		if ( $response['status'] ) {
+		if ( $response['status'] && $title->getNamespace() == NS_TEMPLATE ) {
 			$preloads['EditPageIntro'] = [
 				'content' => wfMessage( 'flags-edit-intro-notification' )->parse(),
 			];
@@ -195,7 +195,7 @@ class Hooks {
 			]
 		)->getData();
 
-		if ( $response['status'] ) {
+		if ( $response['status'] && $skin->getTitle()->getNamespace() == NS_TEMPLATE ) {
 			\BannerNotificationsController::addConfirmation(
 				wfMessage( 'flags-edit-intro-notification' )
 					->parse(),
