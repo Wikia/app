@@ -19,7 +19,7 @@ class PreferencePersistenceModuleMySQL implements Module {
 
 	public function configure(InjectorBuilder $builder) {
 		$builder
-			->bind(PreferencePersistence::class)->toClass(PreferencePersistenceMySQL::class)
+			->bind(PreferencePersistence::class)->toClass(PreferencePersistenceSwaggerService::class)
 			->bind(PreferencePersistenceMySQL::CONNECTION_MASTER)->to($this->masterProvider)
 			->bind(PreferencePersistenceMySQL::CONNECTION_SLAVE)->to($this->slaveProvider);
 	}

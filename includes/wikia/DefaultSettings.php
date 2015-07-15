@@ -1757,4 +1757,7 @@ $wgAdDriverIncontentPlayerSlotCountries = null;
 /**
  * flag for using (possibly external) service for managing a user's preferences
  */
-$wgPreferencesUseService = false;
+$wgPreferencesUseService = true;
+
+$wgConsulUrl = 'localhost';
+$wgConsulServiceTag = 'testing';
