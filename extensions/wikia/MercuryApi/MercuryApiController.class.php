@@ -95,7 +95,7 @@ class MercuryApiController extends WikiaController {
 	 * @param int $descLength
 	 *
 	 * @return string
-	 * @throws WikiaException
+	 * @throws NotFoundApiException
 	 */
 	private function getArticleDescription( Article $article, $descLength = 100 ) {
 		$title = $article->getTitle();
@@ -148,8 +148,7 @@ class MercuryApiController extends WikiaController {
 	/**
 	 * @desc returns top contributors user details
 	 *
-	 * @param int[] $ids
-	 *
+	 * @param array $ids
 	 * @return mixed
 	 */
 	private function getTopContributorsDetails( Array $ids ) {
@@ -317,7 +316,7 @@ class MercuryApiController extends WikiaController {
 	 * @throws BadRequestApiException
 	 */
 	public function getArticle() {
-		global $wgEnableMainPageDataMercuryApi;
+		global $wgEnableMainPageDataMercuryApi, $wgWikiaCuratedContent;
 
 		try {
 			$title = $this->getTitleFromRequest();
@@ -340,7 +339,7 @@ class MercuryApiController extends WikiaController {
 			$isMainPage = $title->isMainPage();
 			$data['isMainPage'] = $isMainPage;
 
-			if ( $isMainPage && !empty( $wgEnableMainPageDataMercuryApi ) ) {
+			if ( $isMainPage && !empty( $wgEnableMainPageDataMercuryApi ) && !empty( $wgWikiaCuratedContent ) ) {
 				$data['mainPageData'] = $this->getMainPageData();
 			} else {
 				$articleAsJson = $this->getArticleJson( $articleId, $title );
@@ -423,6 +422,7 @@ class MercuryApiController extends WikiaController {
 	public function getCuratedContentSection() {
 		$section = $this->getVal( 'section' );
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
 
 		if ( empty( $section ) ) {
 			$this->response->setVal( 'items', false );
@@ -436,7 +436,9 @@ class MercuryApiController extends WikiaController {
 		return wfMemcKey( 'curated-content-section-data', $section );
 	}
 
-	private function getCuratedContentData( $section = null ) {
+	public function getCuratedContentData( $section = null ) {
+		$data = [ ];
+
 		try {
 			$data = WikiaDataAccess::cache(
 				self::curatedContentDataMemcKey( $section ),
@@ -471,7 +473,7 @@ class MercuryApiController extends WikiaController {
 
 		try {
 			$rawData = $this->sendRequest( 'ArticlesApi', 'getTop', $params )->getData();
-			$data = $this->mercuryApi->processTrendingArticlesData( $rawData, [ 'title', 'thumbnail', 'url' ] );
+			$data = $this->mercuryApi->processTrendingArticlesData( $rawData );
 		} catch ( NotFoundException $ex ) {
 			WikiaLogger::instance()->info( 'Trending articles data is empty' );
 		}

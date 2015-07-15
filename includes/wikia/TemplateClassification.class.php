@@ -1,6 +1,6 @@
 <?php
 
-class TemplateClassificationController extends WikiaController {
+class TemplateClassification {
 	/**
 	 * Flags indicating type of the template.
 	 */
@@ -39,7 +39,6 @@ class TemplateClassificationController extends WikiaController {
 
 	public function __construct( Title $templateTitle ) {
 		$this->title = $templateTitle;
-		parent::__construct();
 	}
 
 	/**
@@ -88,6 +87,8 @@ class TemplateClassificationController extends WikiaController {
 	 * @throws MWException
 	 */
 	public function classifyTemplate( $type, $value, $actor = self::CLASSIFICATION_ACTOR_HUMAN ) {
+		global $wgUser;
+
 		/**
 		 * Check if the fetched $type is valid
 		 * and if the user is permitted to perform templatedraft related actions.
@@ -121,7 +122,7 @@ class TemplateClassificationController extends WikiaController {
 		$data = [
 			'value' => (bool) $value,
 			'actor' => $actor,
-			'actor-id' => $this->wg->User->getId(),
+			'actor-id' => $wgUser->getId(),
 			'timestamp' => wfTimestamp(),
 		];
 

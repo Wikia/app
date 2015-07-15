@@ -101,8 +101,8 @@ $messages['ru'] = array(
 );
 
 $messages['zh-hans'] = array(
-	'emailext-articlecomment-subject' => '大家都在谈论发布在{{SERVER}}上标题为$1的文章！',
-	'emailext-blogcomment-subject' => '大家都在谈论发布在{{SERVER}}上名为$1的博客！',
+	'emailext-articlecomment-subject' => '大家都在谈论发布在{{SITENAME}}上标题为$1的文章！',
+	'emailext-blogcomment-subject' => '大家都在谈论发布在{{SITENAME}}上名为$1的博客！',
 	'emailext-articlecomment-summary' => '大家都在谈论发布在[{{SERVER}} {{SITENAME}}]上标题为[$1 $2]的文章！',
 	'emailext-blogcomment-summary' => '大家都在谈论发布在[{{SERVER}} {{SITENAME}}]上名为[$1 $2]的博客！',
 	'emailext-comment-link-label' => '查看评论',
