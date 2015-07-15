@@ -89,6 +89,16 @@ class FlagsCache {
 	}
 
 	/**
+	 * Purges the data on instances of flags for set of pages.	 *
+	 * @param array $pageIds
+	 */
+	public function purgeFlagsForPages( Array $pageIds ) {
+		foreach ( $pageIds as $pageId ) {
+			$this->purgeFlagsForPage( $pageId );
+		}
+	}
+
+	/**
 	 * Returns a memcache key for data on all types of flags for the wikia.
 	 * @return String A memcache key
 	 */

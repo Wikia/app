@@ -144,6 +144,26 @@ class FlagType extends FlagsBaseModel {
 	}
 
 	/**
+	 * Fetches pages ids with given flag enabled
+	 *
+	 * @param int $flagTypeId
+	 * @return array
+	 */
+	public function getPagesWithFlag( $flagTypeId ) {
+		$db = $this->getDatabaseForRead();
+
+		$pagesIds = ( new \WikiaSQL() )
+			->SELECT( 'page_id' )
+			->FROM( self::FLAGS_TO_PAGES_TABLE )
+			->WHERE( 'flag_type_id' )->EQUAL_TO( $flagTypeId )
+			->runLoop( $db, function( &$pagesIds, $row ) {
+				$pagesIds[] = $row->page_id;
+			} );
+
+		return $pagesIds;
+	}
+
+	/**
 	 * Adding types of flags
 	 */
 

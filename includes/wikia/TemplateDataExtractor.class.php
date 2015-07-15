@@ -3,7 +3,7 @@
 class TemplateDataExtractor {
 
 	const
-		TEMPLATE_VARIABLE_PATTERN = '/{{{([^|{}]+(\|([^{}]*|.*{{.*}}.*))*)?}}}/',
+		TEMPLATE_VARIABLE_PATTERN = '/{{{([^|{}]+(\|([^{}]*|.*?{{.*?}}.*?))*)?}}}/',
 		TEMPLATE_VARIABLE_DATA_PATTERN = '/([^|]+)(\|.*)*/',
 		TRANSCLUSION_MARKUP_PATTERN = '/(<(includeonly|onlyinclude|noinclude)>.*?<\/(includeonly|onlyinclude|noinclude)>)/',
 		TABLE_ROWS_PATTERN = '/<tr.*?>.*?<\/tr>/s',
