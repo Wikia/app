@@ -25,8 +25,8 @@
 			<aside id="NotificationsLink" class="NotificationsLink"><a href="#"><?= $notificationsLink ?></a></aside>
 		</header>
 
-		<?php if ( isPortableInfoboxBuilder ): ?>
-			<?= PortableInfoboxBuilderHTML ?>
+		<?php if ( $isPortableInfoboxBuilder ): ?>
+			<?= $PortableInfoboxBuilderHTML ?>
 		<?php else: ?>
 			<form id="editform" class="editform" name="editform" method="post" action="<?= htmlspecialchars($editFormAction) ?>" enctype="multipart/form-data">
 			<section id="EditPage" class="EditPage">
