@@ -178,7 +178,7 @@ class Hooks {
 	public static function onArticleSaveComplete( &$article, &$user, $text, $summary,
 			$minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId
 	) {
-		if ( $article->mTitle->getNamespace() === NS_TEMPLATE ) {
+		if ( $article->mTitle->getNamespace() === NS_TEMPLATE && !is_null( $revision ) ) {
 			$app = \F::app();
 
 			$flagTypesResponse = $app->sendRequest(
