@@ -252,6 +252,8 @@ class Hooks {
 				}
 			}
 		}
+
+		return true;
 	}
 
 	/**
@@ -276,6 +278,7 @@ class Hooks {
 				];
 			}
 		}
+
 		return true;
 	}
 
