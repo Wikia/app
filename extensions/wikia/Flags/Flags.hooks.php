@@ -186,69 +186,77 @@ class Hooks {
 			)->getData();
 
 			// Get flag types
-			if ( $flagTypesResponse[\FlagsApiController::FLAGS_API_RESPONSE_STATUS] ) {
-				$flagsTypes = $flagTypesResponse[\FlagsApiController::FLAGS_API_RESPONSE_DATA];
-				$templateName = $article->mTitle->getText();
+			if ( !$flagTypesResponse[\FlagsApiController::FLAGS_API_RESPONSE_STATUS] ) {
+				return true;
+			}
 
-				foreach ( $flagsTypes as $flagType ) {
-					// Check if saved template is one of the flags
-					if ( $flagType['flag_view'] === $templateName ) {
-						$prevRevision = $revision->getPrevious( true );
-						if ( is_null( $prevRevision ) ) {
-							return true;
-						}
+			$flagsTypes = $flagTypesResponse[\FlagsApiController::FLAGS_API_RESPONSE_DATA];
+			$templateName = $article->mTitle->getText();
 
-						$oldText = $prevRevision->getRawText();
-
-						// if template text has changed
-						if ( strcmp( $text, $oldText ) !== 0 ) {
-							if ( is_null( $flagType['flag_params_names'] ) ) {
-								$flagVariables = [];
-							} else {
-								$flagVariables = json_decode( $flagType['flag_params_names'], true );
-							}
-
-							$flagParamsDiff = ( new FlagsParamsComparison() )->compareTemplateVariables(
-								$article->mTitle,
-								$oldText,
-								$text,
-								$flagVariables
-							);
-
-							if ( !is_null( $flagParamsDiff ) ) {
-								$flagParamsNames = !empty( $flagParamsDiff['params'] )
-										? json_encode( $flagParamsDiff['params'] )
-										: null;
-
-								$response = $app->sendRequest(
-									'FlagsApiController',
-									'updateFlagTypeParameters',
-									[
-										'flag_type_id' => $flagType['flag_type_id'],
-										'flag_params_names' => $flagParamsNames
-									],
-									true,
-									\WikiaRequest::EXCEPTION_MODE_RETURN
-								)->getData();
-
-								if ( !empty( $response['status'] ) ) {
-									$flagParameters = new FlagParameter();
-
-									if ( !empty( $flagParamsDiff['changed'] ) ) {
-										foreach ( $flagParamsDiff['changed'] as $changed ) {
-											$flagParameters->updateParameterNameForFlag(
-												$flagType['flag_type_id'],
-												$changed['old'],
-												$changed['new']
-											);
-										}
-									}
-								}
-							}
-						}
-
-						break;
+			foreach ( $flagsTypes as $flagType ) {
+				// Check if saved template is one of the flags
+				if ( $flagType['flag_view'] === $templateName ) {
+					$prevRevision = $revision->getPrevious( true );
+					if ( is_null( $prevRevision ) ) {
+						return true;
 					}
+
+					$oldText = $prevRevision->getRawText();
+
+					// if template text hasn't changed
+					if ( strcmp( $text, $oldText ) === 0 ) {
+						return true;
+					}
+
+					if ( is_null( $flagType['flag_params_names'] ) ) {
+						$flagVariables = [];
+					} else {
+						$flagVariables = json_decode( $flagType['flag_params_names'], true );
+					}
+
+					$flagParamsDiff = ( new FlagsParamsComparison() )->compareTemplateVariables(
+						$article->mTitle,
+						$oldText,
+						$text,
+						$flagVariables
+					);
+
+					if ( is_null( $flagParamsDiff ) ) {
+						return true;
+					}
+
+					$flagParamsNames = !empty( $flagParamsDiff['params'] )
+							? json_encode( $flagParamsDiff['params'] )
+							: null;
+
+					$response = $app->sendRequest(
+						'FlagsApiController',
+						'updateFlagTypeParameters',
+						[
+							'flag_type_id' => $flagType['flag_type_id'],
+							'flag_params_names' => $flagParamsNames
+						],
+						true,
+						\WikiaRequest::EXCEPTION_MODE_RETURN
+					)->getData();
+
+					if ( empty( $response[\FlagsApiController::FLAGS_API_RESPONSE_STATUS] ) ) {
+						return true;
+					}
+
+					$flagParameters = new FlagParameter();
+
+					if ( !empty( $flagParamsDiff['changed'] ) ) {
+						foreach ( $flagParamsDiff['changed'] as $changed ) {
+							$flagParameters->updateParameterNameForFlag(
+								$flagType['flag_type_id'],
+								$changed['old'],
+								$changed['new']
+							);
+						}
+					}
+
+					break;
 				}
 			}
 		}
