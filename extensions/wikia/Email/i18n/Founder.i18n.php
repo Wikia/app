@@ -55,7 +55,7 @@ $messages['en'] = array(
 	'emailext-founder-10-days-email-power-details' => 'Want to recruit someone to your wikia? Email them an invitation to get involved. The more, the merrier!',
 	'emailext-founder-10-days-email-google-header' => 'Get with Google',
 	'emailext-founder-10-days-email-google-details' => 'The internet is just...so big. But we’ve got some tips on how to improve your search traffic. Check it out!',
-	'emailext-founder-get-with-google' => 'http://community.wikia.com/wiki/Help:Raising_your_wiki%27s_Google_ranking',
+	'emailext-founder-get-with-google' => 'http://community.wikia.com/wiki/Help:Search_Engine_Optimization',
 	'emailext-founder-10-days-email-what-next' => 'We can’t imagine the Wikia fan community without you.  What will you do next? We can’t wait to find out!',
 );
 
@@ -171,7 +171,7 @@ $messages['de'] = array(
 	'emailext-founder-10-days-email-power-details' => 'Du möchtest Mitarbeiter für dein Wikia anwerben? Schicke ihnen einfach per E-Mail eine Einladung zur Mitarbeit. Je mehr desto besser!',
 	'emailext-founder-10-days-email-google-header' => 'Mache dir Google zunutze',
 	'emailext-founder-10-days-email-google-details' => 'Ja, das Internet ist... groß. Aber wir können dir ein paar Tipps geben, wie du mehr Traffic auf dein Wikia bekommst. Schau es dir einfach mal an!',
-	'emailext-founder-get-with-google' => 'http://de.community.wikia.com/wiki/Hilfe:Verbessere_dein_Googleranking',
+	'emailext-founder-get-with-google' => 'http://de.community.wikia.com/wiki/Hilfe:Suchmaschinenoptimierung',
 	'emailext-founder-10-days-email-what-next' => 'Wir können uns die Wikia-Fan-Community gar nicht mehr ohne deine Mitarbeit vorstellen. Was hast du als nächstes vor? Wir können es kaum erwarten, mehr zu erfahren!',
 );
 
@@ -229,7 +229,7 @@ $messages['es'] = array(
 	'emailext-founder-10-days-email-power-details' => '¿Quieres reclutar a una persona para tu wikia? Envía una invitación por correo electrónico para que participe. ¡Cuantos más, mejor!',
 	'emailext-founder-10-days-email-google-header' => 'Obtener con Google',
 	'emailext-founder-10-days-email-google-details' => 'La red es tan...  grande. Pero tenemos algunos consejos sobre cómo mejorar el tráfico de tu búsqueda. ¡Échale un vistazo!',
-	'emailext-founder-get-with-google' => 'http://comunidad.wikia.com/wiki/Ayuda:Aumentar_el_ranking_de_tu_wiki%27s_en_Google',
+	'emailext-founder-get-with-google' => 'http://comunidad.wikia.com/wiki/Ayuda:SEO',
 	'emailext-founder-10-days-email-what-next' => 'No podemos imaginar la comunidad de fans de Wikia sin ti.  ¿Qué harás a continuación? ¡Estamos ansiosos por saber!',
 );
 
@@ -345,7 +345,7 @@ $messages['it'] = array(
 	'emailext-founder-10-days-email-power-details' => "Vuoi trovare dei collaboratori per la tua wikia? Invitali con un'email. Più siamo e meglio è!",
 	'emailext-founder-10-days-email-google-header' => 'Migliora la tua visibilità su Google',
 	'emailext-founder-10-days-email-google-details' => 'Internet è davvero grande ma non farti intimidire. Abbiamo dei suggerimenti per te per migliorare il traffico sulla tua wikia. Provali!',
-	'emailext-founder-get-with-google' => ' http://it.community.wikia.com/wiki/Aiuto:Migliorare_il_ranking_di_una_wiki_su_Google',
+	'emailext-founder-get-with-google' => 'http://it.community.wikia.com/wiki/Aiuto:Search_Engine_Optimization',
 	'emailext-founder-10-days-email-what-next' => 'È impossibile immaginare la comunità dei fan di Wikia senza di te! Siamo impazienti di scoprire quale sarà la tua prossima mossa.',
 );
 
@@ -403,7 +403,7 @@ $messages['ja'] = array(
 	'emailext-founder-10-days-email-power-details' => 'メールで友達を招待して、ウィキアの活動に参加してもらいましょう。メンバーが増えれば、コミュニティの発展につながります。',
 	'emailext-founder-10-days-email-google-header' => 'Googleを活用する',
 	'emailext-founder-10-days-email-google-details' => '広大なインターネットの中で、検索からのトラフィックをアップする方法についてご紹介しています。ぜひご活用ください。',
-	'emailext-founder-get-with-google' => 'http://ja.community.wikia.com/wiki/ヘルプ:あなたのウィキアのGoogleランキングを上昇させる',
+	'emailext-founder-get-with-google' => 'http://ja.community.wikia.com/wiki/ヘルプ:検索エンジン最適化（SEO）',
 	'emailext-founder-10-days-email-what-next' => 'コミュニティのより一層の発展を心よりお祈りします。',
 );
 
@@ -519,7 +519,7 @@ $messages['pl'] = array(
 	'emailext-founder-10-days-email-power-details' => 'Chcesz, żeby ktoś dołączył do Twojej strony wikia? Wyślij do nich wiadomość e-mail z zaproszeniem. W grupie raźniej!',
 	'emailext-founder-10-days-email-google-header' => 'Współpracuj z Google',
 	'emailext-founder-10-days-email-google-details' => 'Internet jest taaaki wielki. Dlatego właśnie przygotowaliśmy kilka wskazówek o tym jak przyciągnąć ruch z wyszukiwarek. Sprawdź!',
-	'emailext-founder-get-with-google' => 'http://community.wikia.com/wiki/Help:Raising_your_wiki%27s_Google_ranking',
+	'emailext-founder-get-with-google' => 'http://community.wikia.com/wiki/Help:Search_Engine_Optimization',
 	'emailext-founder-10-days-email-what-next' => 'Nie wyobrażamy sobie społeczności fanów Wikia bez Ciebie. Czym chcesz się teraz zająć? Nie możemy się doczekać, żeby to zobaczyć!',
 );
 
@@ -577,7 +577,7 @@ $messages['pt'] = array(
 	'emailext-founder-10-days-email-power-details' => 'Você quer trazer alguém para sua wikia? Envie um convite. Quanto mais, melhor!',
 	'emailext-founder-10-days-email-google-header' => 'Obter com Google',
 	'emailext-founder-10-days-email-google-details' => 'A internet é... tão grande. Mas nós temos algumas dicas sobre como melhorar o seu tráfego de busca. Confira!',
-	'emailext-founder-get-with-google' => 'http://community.wikia.com/wiki/Help:Raising_your_wiki%27s_Google_ranking',
+	'emailext-founder-get-with-google' => 'http://community.wikia.com/wiki/Help:Search_Engine_Optimization',
 	'emailext-founder-10-days-email-what-next' => 'Não podemos imaginar a comunidade de fãs da Wikia sem você.  O que você vai fazer a seguir? Não podemos esperar para descobrir!',
 );
 
@@ -635,7 +635,7 @@ $messages['ru'] = array(
 	'emailext-founder-10-days-email-power-details' => 'Хотите пригласить кого-нибудь на вашу вики? Отправьте им приглашение по электронной почте. Одна голова хорошо, а две лучше!',
 	'emailext-founder-10-days-email-google-header' => 'Ваша вики в поисковых системах',
 	'emailext-founder-10-days-email-google-details' => 'В интернете можно и потеряться... но не волнуйтесь: у нас есть советы для того, чтобы повысить рейтинг вашей вики в поисковых системах.',
-	'emailext-founder-get-with-google' => 'http://ru.community.wikia.com/wiki/%D0%A1%D0%BF%D1%80%D0%B0%D0%B2%D0%BA%D0%B0:%D0%A1%D0%BE%D0%B2%D0%B5%D1%82-%D0%9F%D0%BE%D0%B2%D1%8B%D1%88%D0%B5%D0%BD%D0%B8%D0%B5_%D1%80%D0%B5%D0%B9%D1%82%D0%B8%D0%BD%D0%B3%D0%B0_%D0%B2%D0%B0%D1%88%D0%B5%D0%B9_%D0%B2%D0%B8%D0%BA%D0%B8_%D0%B2_Google',
+	'emailext-founder-get-with-google' => 'http://ru.community.wikia.com/wiki/Справка:Поисковая_оптимизация',
 	'emailext-founder-10-days-email-what-next' => 'Ваше участие делает Викия уникальной, и мы с нетерпением ждём от вас новых начинаний.',
 );
 
@@ -693,7 +693,7 @@ $messages['zh-hans'] = array(
 	'emailext-founder-10-days-email-power-details' => '想吸引人到您的维基？发送电子邮件邀请他们参与。人越多越好！',
 	'emailext-founder-10-days-email-google-header' => '通过Google提高您的维基流量',
 	'emailext-founder-10-days-email-google-details' => '互联网简直......太大了。但我们有一些关于如何改善您的搜索排名的诀窍。赶快点击一下试试看吧！',
-	'emailext-founder-get-with-google' => 'http://zh.community.wikia.com/wiki/Help:%E6%8F%90%E9%AB%98%E4%BD%A0%E7%9A%84wiki%E7%9A%84Google%E6%8E%92%E5%90%8D',
+	'emailext-founder-get-with-google' => 'http://zh.community.wikia.com/wiki/Help:搜尋引擎最佳化',
 	'emailext-founder-10-days-email-what-next' => '我们无法想象没有您的维基粉丝社区会是什么样。您下一步有什么计划？我们已经迫不及待地想知道了！',
 );
 
@@ -751,7 +751,7 @@ $messages['zh-tw'] = array(
 	'emailext-founder-10-days-email-power-details' => '想吸引人參與你的Wiki？發送電子郵件邀請他們參與。人越多越好！',
 	'emailext-founder-10-days-email-google-header' => '通過Google提高你的Wiki流量',
 	'emailext-founder-10-days-email-google-details' => '網路簡直是……太大了。但我們有一些增加你的搜索流量的訣竅。試試看！',
-	'emailext-founder-get-with-google' => 'http://zh.community.wikia.com/wiki/Help:Raising_your_wiki%27s_Google_ranking',
+	'emailext-founder-get-with-google' => 'http://zh.community.wikia.com/wiki/Help:搜尋引擎最佳化',
 	'emailext-founder-10-days-email-what-next' => '我們無法想象沒有你的Wikia粉絲社區。你下一步要做什麽？我們迫不及待地想要知道！',
 );
 
