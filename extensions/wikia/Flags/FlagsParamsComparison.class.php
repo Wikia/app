@@ -3,6 +3,15 @@ namespace Flags;
 
 class FlagsParamsComparison {
 
+	/**
+	 * Compare old and new template text to compare if its variables were changed
+	 *
+	 * @param $title
+	 * @param $oldText
+	 * @param $newText
+	 * @param $flagVariables
+	 * @return bool|mixed|null
+	 */
 	public function compareTemplateVariables( $title, $oldText, $newText, $flagVariables ) {
 		$oldText = str_replace( "\r\n", "\n", $oldText );
 		$newText = str_replace( "\r\n", "\n", $newText );
@@ -26,6 +35,16 @@ class FlagsParamsComparison {
 		return $variablesDiff;
 	}
 
+	/**
+	 * Basic template variables comparison.
+	 * Checks if just new variables were added or removed.
+	 * If variables names were updated need to make more advanced compariosn
+	 *
+	 * @param $flagVariables
+	 * @param $removedVariables
+	 * @param $changedVariables
+	 * @return bool
+	 */
 	private static function compareVariables( $flagVariables, $removedVariables, $changedVariables ) {
 		if ( empty( $removedVariables ) && !empty( $changedVariables ) ) {
 			// variables added
@@ -52,10 +71,22 @@ class FlagsParamsComparison {
 			return $variablesDiff;
 
 		} else {
+			// variables updated - needs more advanced comparison
 			return false;
 		}
 	}
 
+	/**
+	 * Compare old and new template text and get data about updated variables.
+	 * Uses data about removed and added variables from previous calculations.
+	 *
+	 * @param $oldText
+	 * @param $newText
+	 * @param $flagVariables
+	 * @param $removedVariables
+	 * @param $changedVariables
+	 * @return mixed
+	 */
 	private static function compareVariableFromDiff( $oldText, $newText, $flagVariables, $removedVariables, $changedVariables ) {
 		global $wgContLang;
 
