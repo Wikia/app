@@ -3,9 +3,12 @@
 class TemplateDataExtractor {
 
 	const
-		TEMPLATE_VARIABLE_PATTERN = '/{{{([^|{}]+)(\|([^{}]*|.*{{.*}}.*))?}}}/',
+		TEMPLATE_VARIABLE_PATTERN = '/{{{([^|{}]+(\|([^{}]*|.*{{.*}}.*))*)?}}}/',
+		TEMPLATE_VARIABLE_DATA_PATTERN = '/([^|]+)(\|.*)*/',
+		TRANSCLUSION_MARKUP_PATTERN = '/(<(includeonly|onlyinclude|noinclude)>.*?<\/(includeonly|onlyinclude|noinclude)>)/',
 		TABLE_ROWS_PATTERN = '/<tr.*?>.*?<\/tr>/s',
 		ROW_VALUES_PATTERN = '/<tr.*?><t[d|h].*?>(.*?)<\/t[d|h].*><t[d|h].*?>(.*?)<\/t[d|h]><\/tr>/s';
+
 
 	private $title; // Title object of the template we're converting
 
@@ -26,7 +29,7 @@ class TemplateDataExtractor {
 	public function getTemplateVariables( $content ) {
 		preg_match_all( self::TEMPLATE_VARIABLE_PATTERN, $content, $templateVariables );
 
-		$variables = $this->prepareVariables( $templateVariables );
+		$variables = $this->prepareVariables( $templateVariables[1] );
 
 		return $variables;
 	}
@@ -51,32 +54,6 @@ class TemplateDataExtractor {
 	}
 
 	/**
-	 * Prepares variables from templates
-	 *
-	 * @param $templateVariables
-	 * @return array
-	 */
-	private function prepareVariables( $templateVariables ) {
-		$variables = [];
-
-		foreach ( $templateVariables[1] as $key => $variableName ) {
-			if ( isset( $variables[$variableName] ) ) {
-				if ( empty( $variables[$variableName]['default'] ) && strlen( $templateVariables[2][$key] ) > 1 ) {
-					$variables[$variableName]['default'] = substr( $templateVariables[2][$key], 1 );
-				}
-			} else {
-				$variables[$variableName] = [
-					'name' => $variableName,
-					'label' => '',
-					'default' => strlen( $templateVariables[2][$key] ) > 1 ? substr( $templateVariables[2][$key], 1 ) : ''
-				];
-			}
-		}
-
-		return $variables;
-	}
-
-	/**
 	 * Prepares content in special format.
 	 * It doesn't parse template variables to extract them later.
 	 *
@@ -90,11 +67,65 @@ class TemplateDataExtractor {
 		$parser->startExternalParse( $this->title, \ParserOptions::newFromUser( $wgUser ), \Parser::OT_PLAIN );
 
 		$frame = $parser->getPreprocessor()->newFrame();
-		$dom = $parser->preprocessToDom( $content );
+		$dom = $parser->preprocessToDom( $content, \Parser::PTD_FOR_INCLUSION );
 		$content = $frame->expand( $dom, PPFrame::NO_ARGS );
 		$content = $parser->doTableStuff( $content );
 
 		return $content;
+	}
+
+	/**
+	 * Prepares variables from templates
+	 *
+	 * @param $templateVariables
+	 * @return array
+	 */
+	private function prepareVariables( $templateVariables ) {
+		$variables = [];
+
+		foreach ( $templateVariables as $variable ) {
+			$variable = $this->removeTransclusionMarkup( $variable );
+			list( $variableName, $default ) = $this->getVariableData( $variable );
+
+			if ( isset( $variables[$variableName] ) ) {
+				if ( empty( $variables[$variableName]['default'] ) && strlen( $default ) > 1 ) {
+					$variables[$variableName]['default'] = substr( $default, 1 );
+				}
+			} else {
+				$variables[$variableName] = [
+					'name' => $variableName,
+					'label' => '',
+					'default' => strlen( $default ) > 1 ? substr( $default, 1 ) : ''
+				];
+			}
+
+		}
+
+		return $variables;
+	}
+
+	/**
+	 * Remove tags like includeonly, onlyinclude and noinclude from template variable
+	 *
+	 * @param $variable
+	 * @return string
+	 */
+	private function removeTransclusionMarkup( $variable ) {
+		$variable = preg_replace( self::TRANSCLUSION_MARKUP_PATTERN, '', $variable );
+
+		return $variable;
+	}
+
+	/**
+	 * Get template variable name and its default value if exists
+	 *
+	 * @param $variable
+	 * @return array
+	 */
+	private function getVariableData( $variable ) {
+		preg_match_all( self::TEMPLATE_VARIABLE_DATA_PATTERN, $variable, $variableData );
+
+		return [ $variableData[1][0], $variableData[2][0] ];
 	}
 
 	/**
@@ -133,10 +164,11 @@ class TemplateDataExtractor {
 	private function prepareVariableLabels( $variables, $templateVariables ) {
 		foreach ( $variables as $variable ) {
 			if ( !empty( $variable[2] ) ) {
-				preg_match( self::TEMPLATE_VARIABLE_PATTERN, $variable[2], $templateName );
+				preg_match( self::TEMPLATE_VARIABLE_PATTERN, $variable[2], $variableName );
+				list( $variableName, $default ) = $this->getVariableData( $variableName[1] );
 
-				if ( !empty( $templateName[1] ) && !empty( $variable[1] ) ) {
-					$templateVariables[$templateName[1]]['label'] = trim( $variable[1] );
+				if ( !empty( $variableName ) && !empty( $variable[1] ) ) {
+					$templateVariables[$variableName]['label'] = trim( $variable[1] );
 				}
 			}
 		}
