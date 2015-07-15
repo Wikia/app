@@ -319,7 +319,7 @@ class CuratedContentController extends WikiaController {
 	 */
 	private function setSectionItemsResponse( $sectionName, $ret ) {
 		foreach ( $ret as &$value ) {
-			list( $image_id, $image_url ) = CuratedContentSpecialController::findImageIfNotSet(
+			list( $image_id, $image_url ) = CuratedContentHelper::findImageIfNotSet(
 				$value['image_id'],
 				$value['article_id']
 			);
@@ -358,7 +358,7 @@ class CuratedContentController extends WikiaController {
 					$ret[] = [
 						'title' => $item['title'],
 						'image_id' => $imageId,
-						'image_url' => CuratedContentSpecialController::findImageIfNotSet( $imageId )[1]
+						'image_url' => CuratedContentHelper::findImageIfNotSet( $imageId )[1]
 					];
 				}
 
@@ -373,7 +373,7 @@ class CuratedContentController extends WikiaController {
 
 	function getJsonItem( $titleName, $ns, $pageId ) {
 		$title = Title::makeTitle( $ns, $titleName );
-		list( $image_id, $image_url ) = CuratedContentSpecialController::findImageIfNotSet( 0, $pageId );
+		list( $image_id, $image_url ) = CuratedContentHelper::findImageIfNotSet( 0, $pageId );
 
 		return [
 			'title' => $ns . ':' . $title->getFullText(),
@@ -464,11 +464,11 @@ class CuratedContentController extends WikiaController {
 		foreach ( $curatedContent as $curatedContentModule => $items ) {
 			foreach ( $items as $item ) {
 				if ( $item['type'] == 'category' || $curatedContentModule == 'featured' ) {
-					if ( strlen( $item['label'] ) > CuratedContentSpecialController::LABEL_MAX_LENGTH ) {
+					if ( strlen( $item['label'] ) > CuratedContentHelper::VALIDATE_LABEL_MAX_LENGTH ) {
 						$tooLongTitleCount++;
 					}
 				} else {
-					if ( strlen( $item['title'] ) > CuratedContentSpecialController::LABEL_MAX_LENGTH ) {
+					if ( strlen( $item['title'] ) > CuratedContentHelper::VALIDATE_LABEL_MAX_LENGTH ) {
 						$tooLongTitleCount++;
 					}
 				}
