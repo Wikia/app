@@ -166,6 +166,43 @@ class ArticlesApiControllerTest extends \WikiaBaseTest {
 		];
 	}
 
+	public function getSectionNumbersArrayDataProvider() {
+		return [
+			// get all sections (inlcuding section 0, which isn't included in TOC sections array)
+			[
+				'all',
+				3,
+				[0, 1, 2, 3]
+			],
+			// get all sections when there's no headers / TOC sections
+			[
+				'all',
+				0,
+				[0]
+			],
+			// get specified sections
+			[
+				'0,1,2',
+				4,
+				[0, 1, 2]
+			],
+			// different spacing and there's more sections requested than are available
+			[
+				'0, 1, 2',
+				2,
+				[0, 1, 2]
+			]
+		];
+	}
+
+	/**
+	 * @dataProvider getSectionNumbersArrayDataProvider
+	 */
+	public function testGetSectionNumbersArray( $sectionsToGet, $sectionCount, $sectionsArray ) {
+		$getSectionNumbersArray = self::getFn( new ArticlesApiController(), 'getSectionNumbersArray' );
+		$this->assertEquals( $sectionsArray, $getSectionNumbersArray( $sectionsToGet, $sectionCount ) );
+	}
+
 	protected static function getFn( $obj, $name ) {
 		$class = new ReflectionClass( get_class( $obj ) );
 		$method = $class->getMethod( $name );
