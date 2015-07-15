@@ -94,6 +94,7 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 
 			$this->response->setVal( 'list', $list );
 		} else {
+			$this->response->setVal( 'featured', $this->sendSelfRequest( self::FEATURED_SECTION_TEMPLATE ) );
 			$this->response->setVal( 'section', $sectionTemplate );
 			$this->response->setVal( 'item', $itemTemplate );
 		}
