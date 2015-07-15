@@ -1,8 +1,6 @@
 <?php
 
 class GlobalTitleTest extends WikiaBaseTest {
-	const QA_DEV_NAME = 'globaltitletest';
-
 	function setUp() {
 		parent::setUp();
 
@@ -66,7 +64,7 @@ class GlobalTitleTest extends WikiaBaseTest {
 	 * @dataProvider testUrlsSpacesProvider
 	 */
 	function testUrlsSpaces( $environment, $title, $namespace, $city_id, $expectedUrl ) {
-		$this->mockEnvironmentVars( $environment );
+		$this->mockEnvironment( $environment );
 
 		$title = GlobalTitle::newFromText( $title, $namespace, $city_id );
 		$this->assertEquals( $expectedUrl, $title->getFullURL() );
@@ -113,7 +111,7 @@ class GlobalTitleTest extends WikiaBaseTest {
 
 	public function testUrlsSpacesProvider() {
 		return [
-			[ WIKIA_ENV_DEV, 'Test Ze Spacjami', NS_TALK, 177, 'http://community.' . self::QA_DEV_NAME . '.wikia-dev.com/wiki/Talk:Test_Ze_Spacjami' ],
+			[ WIKIA_ENV_DEV, 'Test Ze Spacjami', NS_TALK, 177, 'http://community.' . self::MOCK_DEV_NAME . '.wikia-dev.com/wiki/Talk:Test_Ze_Spacjami' ],
 			[ WIKIA_ENV_PROD, 'Test Ze Spacjami', NS_TALK, 177, 'http://community.wikia.com/wiki/Talk:Test_Ze_Spacjami' ],
 			[ WIKIA_ENV_PREVIEW, 'Test Ze Spacjami', NS_TALK, 177, 'http://preview.community.wikia.com/wiki/Talk:Test_Ze_Spacjami' ],
 			[ WIKIA_ENV_VERIFY, 'Test Ze Spacjami', NS_TALK, 177, 'http://verify.community.wikia.com/wiki/Talk:Test_Ze_Spacjami' ],
@@ -141,60 +139,5 @@ class GlobalTitleTest extends WikiaBaseTest {
 			['/wiki/Manhattan_Research,_Inc./subpage','/wiki/$1','Manhattan_Research,_Inc./subpage'],
 			['/wiki/Ludovic_Hindman/subpage','/wiki/$1','Ludovic_Hindman/subpage'],
 		];
-	}
-
-	private function mockPreviewEnv() {
-		$this->mockGlobalVariable( 'wgDevelEnvironment', false );
-		$this->mockGlobalVariable( 'wgStagingEnvironment', true );
-		$this->mockGlobalVariable( 'wgWikiaEnvironment', WIKIA_ENV_PREVIEW );
-	}
-
-	private function mockVerifyEnv() {
-		$this->mockGlobalVariable( 'wgDevelEnvironment', false );
-		$this->mockGlobalVariable( 'wgStagingEnvironment', true );
-		$this->mockGlobalVariable( 'wgWikiaEnvironment', WIKIA_ENV_VERIFY );
-	}
-
-	private function mockSandboxEnv() {
-		$this->mockGlobalVariable( 'wgDevelEnvironment', false );
-		$this->mockGlobalVariable( 'wgStagingEnvironment', false );
-		$this->mockGlobalVariable( 'wgWikiaEnvironment', WIKIA_ENV_SANDBOX );
-		$this->getStaticMethodMock( 'WikiFactory', 'getExternalHostName' )
-			->expects( $this->any() )
-			->method( 'getExternalHostName' )
-			->willReturn( 'sandbox-s1' );
-	}
-
-	private function mockProdEnv() {
-		$this->mockGlobalVariable( 'wgDevelEnvironment', false );
-		$this->mockGlobalVariable( 'wgWikiaEnvironment', WIKIA_ENV_PROD );
-	}
-
-	private function mockDevEnv() {
-		$this->mockGlobalVariable( 'wgDevelEnvironmentName', self::QA_DEV_NAME );
-		$this->getStaticMethodMock( 'WikiFactory', 'getExternalHostName' )
-			->expects( $this->any() )
-			->method( 'getExternalHostName' )
-			->willReturn( self::QA_DEV_NAME );
-	}
-
-	private function mockEnvironmentVars( $environment ) {
-		switch ( $environment ) {
-			case WIKIA_ENV_PROD:
-				$this->mockProdEnv();
-				break;
-			case WIKIA_ENV_PREVIEW:
-				$this->mockPreviewEnv();
-				break;
-			case WIKIA_ENV_VERIFY:
-				$this->mockVerifyEnv();
-				break;
-			case WIKIA_ENV_SANDBOX:
-				$this->mockSandboxEnv();
-				break;
-			case WIKIA_ENV_DEV:
-				$this->mockDevEnv();
-				break;
-		}
 	}
 }
