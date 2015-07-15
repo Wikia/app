@@ -23,7 +23,7 @@ require_once( __DIR__ . '/../Maintenance.php' );
 
 class CleanupNewWikis extends Maintenance {
 
-	const BATCH = 500; // remove X rows and wait for slaves to catch up
+	const BATCH = 10000; // remove X rows and wait for slaves to catch up
 
 	protected $mDescription = 'This script performs a cleanup of newly created wikis';
 
