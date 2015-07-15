@@ -59,6 +59,7 @@ $wgHooks['ParserTagHooksBeforeInvoke'][] = 'PortableInfoboxHooks::onParserTagHoo
 $wgHooks['BeforePageDisplay'][] = 'PortableInfoboxHooks::onBeforePageDisplay';
 $wgHooks['ParserAfterTidy'][] = 'PortableInfoboxParserTagController::replaceInfoboxMarkers';
 $wgHooks['ImageServing::buildAndGetIndex'][] = 'PortableInfoboxHooks::onImageServingCollectImages';
+$wgHooks['EditPageLayoutExecute'][] = 'PortableInfoboxHooks::onEditPageLayoutExecute';
 
 // i18n mapping
 $wgExtensionMessagesFiles[ 'PortableInfobox' ] = $dir . 'PortableInfobox.i18n.php';
