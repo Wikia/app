@@ -58,6 +58,7 @@ class AdEngine2ContextService {
 					'wikiIsTop1000' => $wg->AdDriverWikiIsTop1000,
 					'wikiLanguage' => $langCode,
 					'wikiVertical' => $hubService->getCategoryInfoForCity( $wg->CityId )->cat_name,
+					'wikiNewVertical' => $this->getNewVertical(),
 				] ),
 				'providers' => $this->filterOutEmptyItems( [
 					'monetizationService' => $wg->AdDriverUseMonetizationService,
@@ -74,6 +75,29 @@ class AdEngine2ContextService {
 				'forcedProvider' => $wg->AdDriverForcedProvider
 			];
 		} );
+	}
+
+	private function getNewVertical() {
+		global $wgCityId;
+		$wikiVertical = WikiFactoryHub::getInstance()->getWikiVertical( $wgCityId );
+		if ( !empty($wikiVertical['short']) ) {
+			$mapping = [
+				'other' => 'life',
+				'tv' => 'ent',
+				'games' => 'gaming',
+				'books' => 'ent',
+				'comics' => 'ent',
+				'lifestyle' => 'life',
+				'music' => 'ent',
+				'movies' => 'ent'
+			];
+			$newVerticalName = strtolower( $wikiVertical['short'] );
+			if ( !empty( $mapping[ $newVerticalName ] ) ) {
+				return $mapping[ $newVerticalName ];
+			}
+			return 'notMapped';
+		}
+		return 'error';
 	}
 
 	private function filterOutEmptyItems( $input ) {

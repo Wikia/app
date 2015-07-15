@@ -6,8 +6,9 @@ define('ext.wikia.adEngine.provider.directGpt', [
 	'ext.wikia.adEngine.slotTweaker',
 	'wikia.lazyqueue',
 	'wikia.log',
-	'wikia.window'
-], function (adContext, factory, slotTweaker, lazyQueue, log, win) {
+	'wikia.window',
+	'ext.wikia.adEngine.adTracker'
+], function (adContext, factory, slotTweaker, lazyQueue, log, win, adTracker) {
 	'use strict';
 
 	var context = adContext.getContext(),
@@ -59,6 +60,15 @@ define('ext.wikia.adEngine.provider.directGpt', [
 
 	function fillInSlotWithDelay(slotName, slotElement, success, hop) {
 		log(['fillInSlotWithDelay', slotName], 'debug', logGroup);
+
+		if (slotName.indexOf('TOP_LEADERBOARD') > -1) {
+			var eventName = 'vertical_mapping/' +
+				(context.targeting.wikiCategory === context.targeting.wikiNewVertical ? 'same' : 'changed');
+			eventName += '/' + context.targeting.wikiCategory + '/' + context.targeting.wikiDbName;
+
+			adTracker.track(eventName, {newVertical: context.targeting.wikiNewVertical}, 0);
+			log(['vertical mapping', eventName, {newVertical: context.targeting.wikiNewVertical}], 'debug', logGroup);
+		}
 
 		if (!context.opts.delayBtf) {
 			provider.fillInSlot(slotName, slotElement, success, hop);
