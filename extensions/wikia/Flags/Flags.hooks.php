@@ -181,11 +181,13 @@ class Hooks {
 				'FlagsApiController', 'getFlagTypes', [ 'wiki_id' => $app->wg->CityId ]
 			)->getData();
 
+			// Get flag types
 			if ( $flagTypesResponse[\FlagsApiController::FLAGS_API_RESPONSE_STATUS] ) {
 				$flagsTypes = $flagTypesResponse[\FlagsApiController::FLAGS_API_RESPONSE_DATA];
 				$templateName = $article->mTitle->getText();
 
 				foreach ( $flagsTypes as $flagType ) {
+					// Check if saved template is one of the flags
 					if ( $flagType['flag_view'] === $templateName ) {
 						$prevRevision = $revision->getPrevious( true );
 						if ( is_null( $prevRevision ) ) {
