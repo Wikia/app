@@ -1,0 +1,13 @@
+@import "skins/shared/color";
+
+// Icons
+$flags-icons-insights: "/extensions/wikia/Flags/specials/icons/flags-insights-bright.svg";
+$flags-icons-trash: "/extensions/wikia/Flags/specials/icons/flags-trash-bright.svg";
+$flags-icons-edit: "/extensions/wikia/Flags/specials/icons/flags-edit-bright.svg";
+@if $is-dark-wiki {
+	$flags-icons-insights: "/extensions/wikia/Flags/specials/icons/flags-insights-dark.svg";
+	$flags-icons-trash: "/extensions/wikia/Flags/specials/icons/flags-trash-dark.svg";
+	$flags-icons-edit: "/extensions/wikia/Flags/specials/icons/flags-edit-dark.svg";
+}
+
+$flags-icons-actions: 10px;
