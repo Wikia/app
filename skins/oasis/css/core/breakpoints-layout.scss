@@ -105,7 +105,7 @@
 
 		.WikiHeader > nav.WikiNav .navbackground {
 			left: -24px;
-			width: 772px;
+			width: 771px;
 		}
 	}
 
@@ -216,6 +216,7 @@
 
 	.banner-notifications-wrapper {
 		width: auto;
+
 		&.float {
 			@media #{$breakpoint-small-only} {
 				margin-left: $page-width-small / -2;
