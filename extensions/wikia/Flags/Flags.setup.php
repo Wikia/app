@@ -80,7 +80,7 @@ $wgHooks['BeforePageDisplay'][] = 'Flags\Hooks::onBeforePageDisplay';
 $wgHooks['BeforeParserCacheSave'][] = 'Flags\Hooks::onBeforeParserCacheSave';
 $wgHooks['PageHeaderDropdownActions'][] = 'Flags\Hooks::onPageHeaderDropdownActions';
 $wgHooks['SkinTemplateNavigation'][] = 'Flags\Hooks::onSkinTemplateNavigation';
-$wgHooks['ArticleSave'][] = 'Flags\Hooks::onArticleSaveComplete';
+$wgHooks['ArticleSaveComplete'][] = 'Flags\Hooks::onArticleSaveComplete';
 
 /**
  * Messages

@@ -214,7 +214,7 @@ class FlagType extends FlagsBaseModel {
 	 * @throws \MissingParameterApiException
 	 */
 	public function verifyParamsForUpdate( $params ) {
-		$required = [ 'flag_type_id', 'flags_params_names' ];
+		$required = [ 'flag_type_id', 'flag_params_names' ];
 
 		foreach ( $required as $requiredField ) {
 			if ( !isset( $params[$requiredField] ) ) {
@@ -235,7 +235,7 @@ class FlagType extends FlagsBaseModel {
 	public function updateFlagTypeParameters( $params ) {
 		$this->verifyParamsForUpdate( $params );
 
-		json_decode( $params['flags_params_names'] );
+		json_decode( $params['flag_params_names'] );
 		if ( json_last_error() !== JSON_ERROR_NONE ) {
 			throw new \InvalidDataApiException();
 		}
@@ -244,8 +244,8 @@ class FlagType extends FlagsBaseModel {
 
 		( new \WikiaSQL )
 			->UPDATE( self::FLAGS_TYPES_TABLE )
-			->SET( 'flags_params_names', $params['flags_params_names'] )
-			->WHERE( 'flag_type_id' )->EQUAL_TO( $params['flags_type_id'] )
+			->SET( 'flag_params_names', $params['flag_params_names'] )
+			->WHERE( 'flag_type_id' )->EQUAL_TO( $params['flag_type_id'] )
 			->run( $db );
 
 		$status = $db->affectedRows() > 0;

@@ -39,6 +39,8 @@ class FlagParameter extends FlagsBaseModel {
 
 		$status = $db->affectedRows() > 0;
 
+		$db->commit();
+
 		return $status;
 	}
 
@@ -59,6 +61,57 @@ class FlagParameter extends FlagsBaseModel {
 		}
 
 		$status = $db->affectedRows() > 0;
+
+		$db->commit();
+
+		return $status;
+	}
+
+	/**
+	 * Update parameter name for given flag type
+	 *
+	 * @param int $flagTypeId
+	 * @param int|string $paramName
+	 * @param int|string $newParamName
+	 * @return bool
+	 */
+	public function updateParameterNameForFlag( $flagTypeId, $paramName, $newParamName ) {
+		$db = $this->getDatabase( DB_MASTER );
+
+		( new \WikiaSQL )
+			->UPDATE( self::FLAGS_PARAMS_TABLE )
+			->SET( 'param_name', $newParamName )
+			->WHERE( 'flag_type_id' )->EQUAL_TO( $flagTypeId )
+			->AND_( 'param_name' )->EQUAL_TO( $paramName )
+			->run( $db );
+
+		$status = $db->affectedRows() > 0;
+
+		$db->commit();
+
+		return $status;
+	}
+
+	/**
+	 * Remove parameter for given flat type
+	 *
+	 * @param int $flagTypeId
+	 * @param int|string $paramName
+	 * @return bool
+	 */
+	public function removeParameterFromFlag( $flagTypeId, $paramName ) {
+		$db = $this->getDatabase( DB_MASTER );
+
+		( new \WikiaSQL )
+			->DELETE( self::FLAGS_PARAMS_TABLE )
+			->WHERE( 'flag_type_id' )->EQUAL_TO( $flagTypeId )
+			->AND_( 'param_name' )->EQUAL_TO( $paramName )
+			->run( $db );
+
+		$status = $db->affectedRows() > 0;
+
+		$db->commit();
+
 		return $status;
 	}
 

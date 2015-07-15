@@ -12,6 +12,8 @@
 
 namespace Flags;
 
+use Flags\Models\FlagParameter;
+
 class Hooks {
 
 	const FLAGS_DROPDOWN_ACTION = 'flags';
@@ -163,6 +165,12 @@ class Hooks {
 		return true;
 	}
 
+	/**
+	 * Check if saved template is one of flag type,
+	 * and should update flag parameters if template variables have changed
+	 *
+	 * @return bool
+	 */
 	public static function onArticleSaveComplete( &$article, &$user, $text, $summary,
 			$minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId
 	) {
@@ -179,8 +187,14 @@ class Hooks {
 
 				foreach ( $flagsTypes as $flagType ) {
 					if ( $flagType['flag_view'] === $templateName ) {
-						$oldText = $article->getRawText();
+						$prevRevision = $revision->getPrevious( true );
+						if ( is_null( $prevRevision ) ) {
+							return true;
+						}
 
+						$oldText = $prevRevision->getRawText();
+
+						// if template text has changed
 						if ( strcmp( $text, $oldText ) !== 0 ) {
 							if ( is_null( $flagType['flag_params_names'] ) ) {
 								$flagVariables = [];
@@ -188,26 +202,42 @@ class Hooks {
 								$flagVariables = json_decode( $flagType['flag_params_names'], true );
 							}
 
-							$flagParamsNames = ( new FlagsParamsComparison() )->compareTemplateVariables(
+							$flagParamsDiff = ( new FlagsParamsComparison() )->compareTemplateVariables(
 								$article->mTitle,
 								$oldText,
 								$text,
 								$flagVariables
 							);
 
-							if ( !is_null( $flagParamsNames ) ) {
-								$flagParamsNames = !empty( $flagParamsNames ) ? json_encode( $flagParamsNames ) : null;
+							if ( !is_null( $flagParamsDiff ) ) {
+								$flagParamsNames = !empty( $flagParamsDiff['params'] )
+										? json_encode( $flagParamsDiff['params'] )
+										: null;
 
-								$app->sendRequest(
+								$response = $app->sendRequest(
 									'FlagsApiController',
 									'updateFlagTypeParameters',
 									[
 										'flag_type_id' => $flagType['flag_type_id'],
-										'flags_params_names' => $flagParamsNames
+										'flag_params_names' => $flagParamsNames
 									],
 									true,
 									\WikiaRequest::EXCEPTION_MODE_RETURN
-								);
+								)->getData();
+
+								if ( !empty( $response['status'] ) ) {
+									$flagParameters = new FlagParameter();
+
+									if ( !empty( $flagParamsDiff['changed'] ) ) {
+										foreach ( $flagParamsDiff['changed'] as $changed ) {
+											$flagParameters->updateParameterNameForFlag(
+												$flagType['flag_type_id'],
+												$changed['old'],
+												$changed['new']
+											);
+										}
+									}
+								}
 							}
 						}
 
