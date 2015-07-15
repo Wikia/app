@@ -282,6 +282,7 @@
 			}
 
 			> nav.WikiNav {
+				// we need to accomodate for additional space while having to count scrollbar
 				@include width-calc('100% - 265px');
 
 				left: 275px;
@@ -294,6 +295,7 @@
 
 				.navbackground {
 					left: 10px;
+					// it's content width minus wordmark and padding plus space that ribbon occupies outside of the page
 					width: 713px;
 				 }
 			}
