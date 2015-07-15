@@ -66,11 +66,11 @@
 			</td>
 		</tr>
 	<?php endforeach; ?>
+<?php endif; ?>
 	</tbody>
 </table>
-<?php else: ?>
-	</tbody>
-</table>
+
+<?php if ( empty( $flagTypes ) ): ?>
 	<div class="flags-special-zero-status">
 		<?= wfMessage( 'flags-special-zero-state' )->parse(); ?>
 	</div>
