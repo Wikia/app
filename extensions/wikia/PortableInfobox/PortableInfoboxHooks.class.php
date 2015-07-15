@@ -52,4 +52,12 @@ class PortableInfoboxHooks {
 
 		return true;
 	}
+
+	static public function onAddPortableInfoboxBuilderText( &$article, &$text ) {
+		$infoboxText = '<center><span class="wikia-button big plainlinks">or<br />[{{fullurl:{{FULLPAGENAMEE}}|action=edit&portableInfoboxBuilder=true}} <span>Create new infobox!</span>]<br /></span></center>
+<br />';
+		$text = $text.$infoboxText;
+
+		return true;
+	}
 }

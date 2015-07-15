@@ -1103,7 +1103,9 @@ class Article extends Page {
 				$text = wfMsgNoTrans( 'noarticletext-nopermission' );
 			}
 		}
-		$text = "<div class='noarticletext'>\n$text\n</div>";
+
+		wfRunHooks( 'AddPortableInfoboxBuilderText', array( &$this, &$text ) );
+		$text = "<div class='noarticletext'>$text</div>";
 
 		$wgOut->addWikiText( $text );
 	}
