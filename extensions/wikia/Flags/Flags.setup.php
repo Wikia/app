@@ -97,7 +97,7 @@ JSMessages::registerPackage( 'FlagsCreateForm', [
  */
 $wgResourceModules['ext.wikia.Flags.EditFormMessages'] = [
 	'messages' => [
-		'flags-edit-flags-button-text ',
+		'flags-edit-flags-button-text',
 		'flags-edit-modal-title',
 		'flags-edit-modal-done-button-text',
 		'flags-edit-modal-cancel-button-text',
