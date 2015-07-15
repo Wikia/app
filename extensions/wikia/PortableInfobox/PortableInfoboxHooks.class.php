@@ -42,13 +42,13 @@ class PortableInfoboxHooks {
 		return true;
 	}
 
-	static public function onEditPageLayoutExecute($editPageContext) {
+	static public function onEditPageLayoutExecute( $editPageContext ) {
 		$data = $editPageContext->response->getData();
 
-		$data['isPortableInfoboxBuilder'] = true;
-		$data['PortableInfoboxBuilderHTML'] = 'I\'m new Infobox Builder';
+		$data[ 'isPortableInfoboxBuilder' ] = true;
+		$data[ 'PortableInfoboxBuilderHTML' ] = F::app()->renderView( 'PortableInfoboxBuilder', 'index' );
 
-		$editPageContext->response->setData($data);
+		$editPageContext->response->setData( $data );
 
 		return true;
 	}

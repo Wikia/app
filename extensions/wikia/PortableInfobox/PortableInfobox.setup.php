@@ -52,6 +52,8 @@ $wgAutoloadClasses[ 'PortableInfoboxParserTagController' ] = $dir . 'controllers
 $wgAutoloadClasses[ 'ApiPortableInfobox' ] = $dir . 'controllers/ApiPortableInfobox.class.php';
 $wgAutoloadClasses[ 'ApiQueryPortableInfobox' ] = $dir . 'controllers/ApiQueryPortableInfobox.class.php';
 $wgAutoloadClasses[ 'PortableInfoboxHooks' ] = $dir . 'PortableInfoboxHooks.class.php';
+$wgAutoloadClasses[ 'PortableInfoboxBuilderController' ] = $dir . 'controllers/PortableInfoboxBuilderController.class.php';
+
 
 // hooks
 $wgHooks['ParserFirstCallInit'][] = 'PortableInfoboxParserTagController::parserTagInit';
