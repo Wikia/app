@@ -240,11 +240,13 @@ class FlagType extends FlagsBaseModel {
 			throw new \InvalidDataApiException();
 		}
 
+		$flag_params_names = !empty( $params['flag_params_names'] ) ? $params['flag_params_names'] : null;
+
 		$db = $this->getDatabaseForWrite();
 
 		( new \WikiaSQL )
 			->UPDATE( self::FLAGS_TYPES_TABLE )
-			->SET( 'flag_params_names', $params['flag_params_names'] )
+			->SET( 'flag_params_names', $flag_params_names )
 			->WHERE( 'flag_type_id' )->EQUAL_TO( $params['flag_type_id'] )
 			->run( $db );
 

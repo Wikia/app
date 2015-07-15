@@ -227,7 +227,7 @@ class Hooks {
 
 					$flagParamsNames = !empty( $flagParamsDiff['params'] )
 							? json_encode( $flagParamsDiff['params'] )
-							: null;
+							: '';
 
 					$response = $app->sendRequest(
 						'FlagsApiController',
