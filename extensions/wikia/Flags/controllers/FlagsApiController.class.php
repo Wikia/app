@@ -228,7 +228,7 @@ class FlagsApiController extends WikiaApiController {
 	 * @requestParam int flag_group One of the keys in flagGroups property of the FlagType model
 	 * @requestParam string flag_name A name of the flag (not longer than 128 characters)
 	 * @requestParam string flag_view A title of a template used for rendering the flag
-	 * @requestParam int flag_targeting A level of targeting: 0 -> readers, 1 -> contibutors, 2 -> admins
+	 * @requestParam int flag_targeting A level of targeting: 1 -> readers, 2 -> contibutors, 3 -> admins
 	 *
 	 * Optional parameters:
 	 * @requestParam string flag_params_names A JSON-encoded array of names of parameters

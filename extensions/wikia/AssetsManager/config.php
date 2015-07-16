@@ -2482,6 +2482,7 @@ $config['flags_special_js'] = [
 	'skin' => [ 'oasis', 'monobook' ],
 	'assets' => [
 		'//extensions/wikia/Flags/specials/scripts/SpecialFlags.js',
+		'//extensions/wikia/Flags/specials/scripts/FlagEditForm.js',
 	],
 ];
 
