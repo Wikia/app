@@ -12,7 +12,9 @@ define('ext.wikia.adEngine.template.modal', [
 	var logGroup = 'ext.wikia.adEngine.template.modal',
 		modalId = 'ext-wikia-adEngine-template-modal',
 		lightBoxHeaderHeight = 40,
-		maximumRatio = 3; // don't scale the ad more than 3 times
+		lightBoxHeaderHeightDesktop = 45,
+		maximumRatio = 3, // don't scale the ad more than 3 times
+		minimumRatio = 0.66;
 
 	/**
 	 * Show the modal ad
@@ -43,8 +45,6 @@ define('ext.wikia.adEngine.template.modal', [
 
 		if (skin === 'mercury') {
 			log(['show mobile (Mercury) modal'], 'debug', logGroup);
-
-
 
 			if (params.scalable) {
 				log(['show scale the ad'], 'debug', logGroup);
@@ -92,18 +92,18 @@ define('ext.wikia.adEngine.template.modal', [
 
 	function scaleAdIframeDesktop(adIframe, params) {
 
-		var border = 45;
-		var ratioWidth = win.innerWidth / params.width;
-		var ratioHeight = (win.innerHeight-border*2) / params.height;
-		var ratio = Math.min(ratioWidth, ratioHeight, maximumRatio);
+		var ratioWidth = win.innerWidth / params.width,
+			ratioHeight = (((win.innerHeight)-(lightBoxHeaderHeightDesktop*2))) / params.height,
+			ratio = Math.max(minimumRatio, Math.min(ratioWidth, ratioHeight, maximumRatio));
+
+		adIframe.parentElement.parentElement.style.height = "100%";
+		adIframe.parentElement.parentElement.style.maxHeight = "100%";
 
 		adIframe.parentElement.style.padding = '0px';
 		adIframe.parentElement.style.width = (params.width * ratio) + 'px';
 		adIframe.parentElement.style.height = (params.height * ratio) + 'px';
-		adIframe.style.display = 'block';
-		adIframe.style.margin = '0 auto';
 		adIframe.style.transform = 'scale(' + ratio + ')';
-		adIframe.style.marginTop = (params.height) - (params.height / ratio) + 'px';
+		adIframe.style.transformOrigin = 'top left';
 	}
 
 	function scaleAdIframe(adIframe, params) {
