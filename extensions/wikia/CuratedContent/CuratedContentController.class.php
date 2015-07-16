@@ -448,10 +448,10 @@ class CuratedContentController extends WikiaController {
 		global $wgWikiaCuratedContent;
 		$data = [];
 
-		foreach ($wgWikiaCuratedContent as $section) {
+		foreach ( $wgWikiaCuratedContent as $section ) {
 			// sections
 			if ( !empty( $section['title'] ) && empty( $section['featured'] ) ) {
-				list($_image_id, $url) = CuratedContentSpecialController::findImageIfNotSet( $section['image_id'] );
+				list( $_image_id, $url ) = CuratedContentSpecialController::findImageIfNotSet( $section['image_id'] );
 				$section['image_url'] = $url;
 			}
 
