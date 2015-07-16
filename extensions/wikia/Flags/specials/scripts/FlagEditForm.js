@@ -13,7 +13,7 @@ define('ext.wikia.Flags.FlagEditForm',
 			$.when(getFormResources()).done(function (formResources) {
 				setupForm(formResources);
 
-				if (prefillData === undefined || prefillData.values === undefined) {
+				if (prefillData == null || prefillData.values == null) {
 					displayFormCreate();
 				} else {
 					displayFormEdit(prefillData);
@@ -91,7 +91,7 @@ define('ext.wikia.Flags.FlagEditForm',
 		function displayFormCreate() {
 			/* TODO - We can get a half-rendered template to avoid escaping messages in front-end */
 			var content = cache.get(getEmptyFormCacheKey());
-			if (content === null) {
+			if (content == null) {
 				var formParams = {
 					messages: formData.messages,
 					values: getDropdownOptions({})
