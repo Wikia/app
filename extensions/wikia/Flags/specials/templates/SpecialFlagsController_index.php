@@ -30,7 +30,7 @@
 <?php if ( !empty( $flagTypes ) ): ?>
 	<?php foreach ( $flagTypes as $flagTypeId => $flag ): ?>
 		<?php $title = Title::newFromText( $flag['flag_view'], NS_TEMPLATE ); ?>
-		<tr class="flags-special-list-item">
+		<tr class="flags-special-list-item" id="flags-special-list-item-<?= $flagTypeId ?>">
 			<td class="flags-special-list-item-name"><?= $flag['flag_name'] ?></td>
 			<td class="flags-special-list-item-template">
 				<a class="flags-special-list-item-template-link" href="<?= Sanitizer::cleanUrl( $title->getFullURL() ) ?>" target="_blank">
@@ -55,7 +55,7 @@
 				<a class="flags-special-list-item-actions-insights" href="#" target="_blank" title="<?= wfMessage( 'flags-icons-actions-insights' )->escaped() ?>">
 					<span class="flags-icons-special flags-icons-insights"></span>
 				</a>
-				<a class="flags-special-list-item-actions-delete" href="#" title="<?= wfMessage( 'flags-icons-actions-delete' )->escaped() ?>">
+				<a class="flags-special-list-item-actions-delete" href="#" title="<?= wfMessage( 'flags-icons-actions-delete' )->escaped() ?>" data-flag-type-id="<?= $flagTypeId ?>">
 					<span class="flags-icons-special flags-icons-trash"></span>
 				</a>
 				<a class="flags-special-list-item-actions-edit" href="#" title="<?= wfMessage( 'flags-icons-actions-edit' )->escaped() ?>">

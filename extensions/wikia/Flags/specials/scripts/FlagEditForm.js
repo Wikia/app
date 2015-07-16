@@ -1,4 +1,4 @@
-define('ext.wikia.Flags.FlagEditForm',
+define ('ext.wikia.Flags.FlagEditForm',
 	['jquery', 'mw', 'wikia.loader', 'wikia.cache', 'wikia.nirvana', 'wikia.mustache', 'BannerNotification'],
 	function ($, mw, loader, cache, nirvana, mustache, BannerNotification) {
 		/* In order of appearance */
@@ -121,7 +121,7 @@ define('ext.wikia.Flags.FlagEditForm',
 		function displayModal() {
 			require(['wikia.ui.factory'], function (uiFactory) {
 				/* Initialize the modal component */
-				uiFactory.init(['modal']).then(function(uiModal){
+				uiFactory.init(['modal']).then(function (uiModal) {
 					uiModal.createComponent(modalConfig, processInstance);
 				});
 			});
@@ -140,22 +140,15 @@ define('ext.wikia.Flags.FlagEditForm',
 				controller: 'FlagsApiController',
 				method: 'addFlagType',
 				data: data,
-				callback: function(json) {
-					var notification;
-
+				callback: function (json) {
 					if (json.status) {
-						notification = new BannerNotification(
-							mw.message('flags-special-create-form-save-success').escaped(),
-							'confirm'
-						);
+						location.reload(true);
 					} else {
-						notification = new BannerNotification(
+						new BannerNotification(
 							mw.message('flags-special-create-form-save-failure').escaped(),
 							'error'
-						);
+						).show();
 					}
-
-					notification.show();
 				}
 			});
 		}
@@ -163,9 +156,9 @@ define('ext.wikia.Flags.FlagEditForm',
 		function collectFormData() {
 			var params = {};
 
-			$('.flags-special-form-param').each(function() {
+			$('.flags-special-form-param').each(function () {
 				var name = $(this).find('.flags-special-form-param-name-input').val(),
-				description = $(this).find('.flags-special-form-param-description-input').val();
+					description = $(this).find('.flags-special-form-param-description-input').val();
 				params[name] = description;
 			});
 
