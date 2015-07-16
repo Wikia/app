@@ -1,0 +1,14 @@
+// infoboxes
+$infobox-width: 270px;
+// arbitrary value used to mach with Khal Drogo Infobox; subject to change
+$infobox-margin: 15px;
+$infobox-item-margin: 5px;
+$infobox-background: mix($color-page, $color-links, 90%);
+@if ($is-dark-wiki) {
+	$infobox-background: mix($color-page, $color-links, 85%);
+}
+
+$infobox-section-header-background: mix($color-page, $color-links, 75%);
+$infobox-debug-line-number-width: 50px;
+$infobox-debug-error-msg-color: white;
+$infobox-debug-error-msg-bg: black;

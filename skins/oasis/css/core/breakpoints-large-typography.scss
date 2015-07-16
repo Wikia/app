@@ -1,4 +1,5 @@
 @import 'breakpoints-variables';
+@import 'skins/shared/mixins/portable_infobox';
 
 @mixin breakpoints-large-typography {
 	.WikiaArticle {
@@ -11,6 +12,7 @@
 			font-size: $default-body-font-size;
 			line-height: $default-body-line-height;
 		}
+		@include portable_infobox();
 
 		//Overwrite styles from skins/oasis/css/core/article.scss:125
 		//@TODO should be removed when above line is removed - CONCF-186
