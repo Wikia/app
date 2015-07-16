@@ -54,10 +54,28 @@ class PortableInfoboxHooks {
 	}
 
 	static public function onAddPortableInfoboxBuilderText( &$article, &$text ) {
+		//TODO: run it only on a template page
 		$infoboxText = '<center><span class="wikia-button big plainlinks">or<br />[{{fullurl:{{FULLPAGENAMEE}}|action=edit&portableInfoboxBuilder=true}} <span>Create new infobox!</span>]<br /></span></center>
 <br />';
 		$text = $text.$infoboxText;
 
+		return true;
+	}
+
+	public static function onSkinAfterBottomScripts( $skin, &$text ) {
+		//var_dump($skin);
+		//if ( WikiaPageType::isMainPage() ) {
+		//TODO: run it only on a template page
+		if (true) {
+			$scripts = AssetsManager::getInstance()->getURL( 'portable_infobox_js' );
+
+			foreach ( $scripts as $script ) {
+				$text .= Html::linkedScript( $script );
+			}
+		}
+
+		//add js from PortableInfoboxBuilder handling only for template pages
+		//if ($out->getTitle()->mNamespace == '10')
 		return true;
 	}
 }

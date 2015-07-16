@@ -59,6 +59,7 @@ $wgAutoloadClasses[ 'PortableInfoboxBuilderController' ] = $dir . 'controllers/P
 $wgHooks['ParserFirstCallInit'][] = 'PortableInfoboxParserTagController::parserTagInit';
 $wgHooks['ParserTagHooksBeforeInvoke'][] = 'PortableInfoboxHooks::onParserTagHooksBeforeInvoke';
 $wgHooks['BeforePageDisplay'][] = 'PortableInfoboxHooks::onBeforePageDisplay';
+$wgHooks['SkinAfterBottomScripts'][] = 'PortableInfoboxHooks::onSkinAfterBottomScripts';
 $wgHooks['ParserAfterTidy'][] = 'PortableInfoboxParserTagController::replaceInfoboxMarkers';
 $wgHooks['ImageServing::buildAndGetIndex'][] = 'PortableInfoboxHooks::onImageServingCollectImages';
 $wgHooks['EditPageLayoutExecute'][] = 'PortableInfoboxHooks::onEditPageLayoutExecute';
