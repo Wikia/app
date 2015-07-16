@@ -12,14 +12,46 @@ class PortableInfoboxBuilderController extends WikiaController {
 		$this->optionsPlaceholder = 'options placeholder';
 		$this->publishBtn = 'Publish';
 		$this->infoboxBuilderHeader = 'Infobox Builder';
+		$this->formAction = self::getLocalUrl('publish');
+		$this->templateTitle = requestContext::getMain()->getTitle()->getPrefixedDBkey();
 
 		$this->wg->out->addStyle( AssetsManager::getInstance()->getSassCommonURL( self::EXTENSION_PATH . 'styles/PortableInfoboxBuilder.scss' ) );
 		$this->response->getView()->setTemplatePath( $IP . self::EXTENSION_PATH . 'templates/PortableInfoboxBuilderIndex.mustache' );
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 	}
 
+	/**
+	 * publishes changes to infobox tamplete made inside infobox builder UI
+	 */
 	public function publish() {
+		global $wgTitle, $wgOut, $wgUser;
 
+		$params = [
+			'action' => 'edit',
+			'title' => $wgTitle->getPrefixedDBkey(),
+			'summary' => 'initial edit',
+			'text' => $this->getInfoboxMarkup(),
+			'token' => $wgUser->getEditToken()
+		];
+
+		$response = ApiService::call( $params );
+
+		var_dump($response);
+
+		$wgOut->redirect( $wgTitle->getFullURL() );
+	}
+
+	/**
+	 * returns infobox xml markup based on infobox build using infobox builder UI tool
+	 * @todo returns temporary mock
+	 * @return string
+	 */
+	private function getInfoboxMarkup() {
+		return '<infobox>
+				<title source="title" />
+				<image source="image" />
+				<data source="data"><label>I\'m label</label></data>
+			</infobox>';
 	}
 
 	/**

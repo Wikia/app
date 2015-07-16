@@ -1,8 +1,9 @@
-<section id="portableInfoboxBuilder" class="portable-infobox-builder">
+<form id="portableInfoboxBuilder" class="portable-infobox-builder" method="POST" action="{{formAction}}">
 	<h2 class="title">{{infoboxBuilderHeader}}</h2>
-	<button class="big publish-btn">{{publishBtn}}</button>
+	<button type="submit" class="big publish-btn">{{publishBtn}}</button>
 	<div id="infoboxPreview" class="infobox-preview">{{{infoboxContent}}}</div>
 	<div id="optionsPannel" class="options-pannel">
 		<span class="option-pannel-placeholder">{{optionsPlaceholder}}</span>
 	</div>
-</section>
+	<input type="hidden" name="title" value="{{templateTitle}}">
+</form>
