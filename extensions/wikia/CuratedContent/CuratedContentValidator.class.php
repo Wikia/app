@@ -5,10 +5,12 @@ class CuratedContentValidator {
 
 	private $errors;
 	private $titles;
+	private $hadEmptyLabel;
 
 	public function __construct( $data ) {
 		$this->errors = [];
 		$this->titles = [];
+		$this->hadEmptyLabel = false;
 
 		// validate sections
 		foreach( $data as $section ) {
@@ -21,13 +23,13 @@ class CuratedContentValidator {
 		// also check section for duplicate title
 		foreach( array_count_values( $this->titles ) as $title => $count ) {
 			if ( $count > 1 ) {
-				$this->error($title, 'duplicatedLabel');
+				$this->error( [ 'title' => $title ], 'duplicatedLabel' );
 			}
 		}
 	}
 
 	private function error( $itemWithTitle, $errorString ) {
-		if ( array_key_exists('title', $itemWithTitle ) && !empty( $errorString ) ) {
+		if ( array_key_exists( 'title', $itemWithTitle ) && !empty( $errorString ) ) {
 			$this->errors[] = ['title' => $itemWithTitle['title'], 'reason' => $errorString];
 		}
 	}
@@ -43,19 +45,17 @@ class CuratedContentValidator {
 	}
 
 	private function validateImage( $sectionOrItem ) {
-		if ( $sectionOrItem['image_id'] === 0) {
+		if ( empty( $sectionOrItem['image_id'] ) ) {
 			$this->error( $sectionOrItem, 'imageMissing' );
 		}
 	}
 
 	private function validateSection ( $section ) {
-		static $hadEmptyLabel = false;
-
 		if ( empty( $section['title'] ) ) {
-			if ($hadEmptyLabel) {
+			if ($this->hadEmptyLabel) {
 				$this->error( $section, 'duplicatedLabel' );
 			} else {
-				$hadEmptyLabel = true;
+				$this->hadEmptyLabel = true;
 			}
 		}
 
@@ -107,14 +107,14 @@ class CuratedContentValidator {
 		}
 
 		if ( $item['type'] === 'video' ) {
-			if ( empty( $info ) ) {
+			if ( empty( $item['info'] ) ) {
 				$this->error( $item, 'videoNotHaveInfo' );
-			} elseif ( self::isSupportedProvider( $info['provider'] ) ) {
+			} elseif ( !self::isSupportedProvider( $item['info']['provider'] ) ) {
 				$this->error( $item, 'videoNotSupportProvider' );
 			}
 		}
 
-		if ( self::needsArticleId( $item['type'] ) && $item['article_id'] === 0 ) {
+		if ( self::needsArticleId( $item['type'] ) && empty( $item['article_id'] ) ) {
 			$this->error( $item, 'articleNotFound' );
 		}
 
