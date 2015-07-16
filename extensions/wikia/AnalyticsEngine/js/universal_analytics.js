@@ -276,16 +276,18 @@
 
     /**** Medium-Priority Custom Dimensions ****/
     _gaWikiaPush(
-        ['set', 'dimension8', window.wikiaPageType],                           // PageType
-        ['set', 'dimension9', window.wgCityId],                                // CityId
-        ['set', 'dimension14', window.wgGaHasAds ? 'Yes' : 'No'],              // HasAds
-        ['set', 'dimension15', window.wikiaPageIsCorporate ? 'Yes' : 'No'],    // IsCorporatePage
-        ['set', 'dimension16', getKruxSegment()],                              // Krux Segment
-        ['set', 'dimension17', window.wgWikiVertical],                         // Vertical
-        ['set', 'dimension18', window.wgWikiCategories.join(',')],             // Categories
-        ['set', 'dimension19', window.wgArticleType],                          // ArticleType
-        ['set', 'dimension20', window.wgABPerformanceTest || 'not set'],       // Performance A/B testing
-        ['set', 'dimension21', String(window.wgArticleId)]                     // ArticleId
+        ['set', 'dimension8', window.wikiaPageType],                            // PageType
+        ['set', 'dimension9', window.wgCityId],                                 // CityId
+        ['set', 'dimension14', window.wgGaHasAds ? 'Yes' : 'No'],               // HasAds
+        ['set', 'dimension15', window.wikiaPageIsCorporate ? 'Yes' : 'No'],     // IsCorporatePage
+        ['set', 'dimension16', getKruxSegment()],                               // Krux Segment
+        ['set', 'dimension17', window.wgWikiVertical],                          // Vertical
+        ['set', 'dimension18', window.wgWikiCategories.join(',')],              // Categories
+        ['set', 'dimension19', window.wgArticleType],                           // ArticleType
+        ['set', 'dimension20', window.wgABPerformanceTest || 'not set'],        // Performance A/B testing
+        ['set', 'dimension21', String(window.wgArticleId)],                     // ArticleId
+        ['set', 'dimension23', window.wikiaIsPowerUserFrequent ? 'Yes' : 'No'], // IsPowerUser: Frequent
+        ['set', 'dimension24', window.wikiaIsPowerUserLifetime ? 'Yes' : 'No']  // IsPowerUser: Lifetime
     );
 
     /*
