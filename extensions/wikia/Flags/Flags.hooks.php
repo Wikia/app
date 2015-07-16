@@ -245,6 +245,24 @@ class Hooks {
 					}
 
 					$flagParameters = new FlagParameter();
+					$logger = \Wikia\Logger\WikiaLogger::instance();
+
+					$flagInfo = [
+						'template' => $flagType['flag_view'],
+						'template_url' => $flagType['flag_view_url'],
+						'flag_type_id' => $flagType['flag_type_id'],
+						'flag_old_params' => $flagType['flag_params_names'],
+						'flag_new_params' => $flagParamsNames
+					];
+
+					if ( !empty( $flagParamsDiff['added'] ) ) {
+						foreach ( $flagParamsDiff['added'] as $added ) {
+							$logger->info(
+								'Flag template variables were changed',
+								self::getParamsDiffInfo( $flagInfo, 'added', $added )
+							);
+						}
+					}
 
 					if ( !empty( $flagParamsDiff['changed'] ) ) {
 						foreach ( $flagParamsDiff['changed'] as $changed ) {
@@ -252,6 +270,20 @@ class Hooks {
 								$flagType['flag_type_id'],
 								$changed['old'],
 								$changed['new']
+							);
+
+							$logger->info(
+								'Flag template variables were changed',
+								self::getParamsDiffInfo( $flagInfo, 'changed', $changed['new'], $changed['old'] )
+							);
+						}
+					}
+
+					if ( !empty( $flagParamsDiff['removed'] ) ) {
+						foreach ( $flagParamsDiff['removed'] as $removed ) {
+							$logger->info(
+								'Flag template variables were changed',
+								self::getParamsDiffInfo( $flagInfo, 'removed', $removed )
 							);
 						}
 					}
@@ -262,6 +294,14 @@ class Hooks {
 		}
 
 		return true;
+	}
+
+	public static function getParamsDiffInfo( $flagInfo, $action, $variable, $oldVariable = '' ) {
+		return array_merge( $flagInfo, [
+			'variable_action' => $action,
+			'variable_name' => $variable,
+			'variable_old_name' => $oldVariable
+		] );
 	}
 
 	/**
