@@ -1,6 +1,6 @@
 require(
-	['jquery'],
-	function ($)
+	['jquery', 'ext.wikia.Flags.FlagEditForm'],
+	function ($, FlagEditForm)
 	{
 		'use strict';
 
@@ -15,7 +15,7 @@ require(
 		function displayCreateFlagForm(event) {
 			event.preventDefault();
 
-//			FlagEditForm.init();
+			FlagEditForm.init();
 		}
 
 		// Run initialization method on DOM ready
