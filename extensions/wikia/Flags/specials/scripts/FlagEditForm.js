@@ -118,6 +118,7 @@ define('ext.wikia.Flags.FlagEditForm',
 		}
 
 		function displayFormEdit(content) {
+			/* TODO - Finish this method */
 			modalConfig.vars.content = content;
 			modalConfig.vars.title = mw.message('flags-special-create-form-title-edit').escaped();
 
@@ -127,12 +128,10 @@ define('ext.wikia.Flags.FlagEditForm',
 		function displayModal() {
 			require(['wikia.ui.factory'], function (uiFactory) {
 				/* Initialize the modal component */
-				uiFactory.init(['modal']).then(createComponent);
+				uiFactory.init(['modal']).then(function(uiModal){
+					uiModal.createComponent(modalConfig, processInstance);
+				});
 			});
-		}
-
-		function createComponent(uiModal) {
-			uiModal.createComponent(modalConfig, processInstance);
 		}
 
 		function processInstance(modalInstance) {
