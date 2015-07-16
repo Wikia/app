@@ -1144,7 +1144,7 @@ class WikiFactory {
 	 * @return string	url pointing to local env
 	 */
 	static public function getLocalEnvURL( $url ) {
-		global $wgWikiaEnvironment, $wgDevelEnvironmentName;
+		global $wgWikiaEnvironment;
 
 		// first - normalize URL
 		$regexp = '/^http:\/\/([^\/]+)\/?(.*)?$/';
@@ -1154,7 +1154,6 @@ class WikiFactory {
 		}
 		$server = $groups[1];
 		$address = $groups[2];
-		$devbox = '';
 
 		if ( !empty($address) ) {
 			$address = '/' . $address;
@@ -1162,9 +1161,14 @@ class WikiFactory {
 
 		// strip env-specific pre- and suffixes for staging environment
 		$server = mb_ereg_replace( '^(preview|verify|sandbox-[a-z0-9]+)\.', '', $server );
-		if( $wgWikiaEnvironment === WIKIA_ENV_DEV ) {
-			$server = str_replace( $wgDevelEnvironmentName . '.wikia-dev.com', '', $server );
+		$devboxRegex = '/\.([^\.]+)\.wikia-dev\.com$/';
+
+		if ( preg_match( $devboxRegex, $server, $groups ) === 1 ) {
+			$devbox = $groups[1];
+		} else {
+			$devbox = '';
 		}
+		$server = str_replace( $devbox . '.wikia-dev.com', '', $server );
 		$server = str_replace( '.wikia.com', '', $server );
 
 		// put the address back into shape and return
