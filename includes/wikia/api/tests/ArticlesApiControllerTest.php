@@ -191,7 +191,13 @@ class ArticlesApiControllerTest extends \WikiaBaseTest {
 				'0, 1, 2',
 				2,
 				[0, 1, 2]
-			]
+			],
+			// get specified and all remaining sections
+			[
+				'3+',
+				5,
+				[3,4]
+			],
 		];
 	}
 

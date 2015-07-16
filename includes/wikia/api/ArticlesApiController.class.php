@@ -1098,6 +1098,9 @@ class ArticlesApiController extends WikiaApiController {
 	private function getSectionNumbersArray( $sectionsToGet, $sectionCount ) {
 		if ( $sectionsToGet === 'all' ) {
 			$sectionsToGet = range( 0, $sectionCount - 1 );
+		} else if ( preg_match( '/(\d)\+/', $sectionsToGet, $matches ) ) {
+			// for an input like "3+", get specified section (section 3) and all following sections
+			$sectionsToGet = range( $matches[1], $sectionCount - 1 );
 		} else {
 			// decode strings like "1%2C%202%2C%203" or "1,2,3" into an array
 			$sectionsToGet = explode( ',', urldecode( preg_replace( '/\s*/', '', $sectionsToGet ) ) );
