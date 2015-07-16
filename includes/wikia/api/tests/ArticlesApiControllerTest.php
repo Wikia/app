@@ -172,12 +172,12 @@ class ArticlesApiControllerTest extends \WikiaBaseTest {
 			[
 				'all',
 				3,
-				[0, 1, 2, 3]
+				[0, 1, 2]
 			],
-			// get all sections when there's no headers / TOC sections
+			// get all sections when there's only one section
 			[
 				'all',
-				0,
+				1,
 				[0]
 			],
 			// get specified sections
@@ -186,7 +186,7 @@ class ArticlesApiControllerTest extends \WikiaBaseTest {
 				4,
 				[0, 1, 2]
 			],
-			// different spacing and there's more sections requested than are available
+			// different spacing
 			[
 				'0, 1, 2',
 				2,
@@ -201,6 +201,51 @@ class ArticlesApiControllerTest extends \WikiaBaseTest {
 	public function testGetSectionNumbersArray( $sectionsToGet, $sectionCount, $sectionsArray ) {
 		$getSectionNumbersArray = self::getFn( new ArticlesApiController(), 'getSectionNumbersArray' );
 		$this->assertEquals( $sectionsArray, $getSectionNumbersArray( $sectionsToGet, $sectionCount ) );
+	}
+
+	public function splitArticleIntoSectionsDataProvider() {
+		return [
+			// real article output
+			[
+				'<p>Section 0 text </p><p><br /> </p> <h2 id=\'Section_1_heading\' section=\'1\' >Section 1 heading</h2> <p><img src=\'data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D\' class=\'article-media\' data-ref=\'0\' width=\'800\' height=\'600\' /> Section 1 text <a rel="nofollow" class="external text exitstitial" href="http://www.google.com">Foo</a> </p> <h3 id=\'Section_1.1_heading\' section=\'2\' >Section 1.1 heading</h3> <p>Section1.1 text </p><p><img src=\'data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D\' class=\'article-media\' data-ref=\'1\' width=\'960\' height=\'640\' /> </p> <h2 id=\'Section_2_heading\' section=\'3\' >Section 2 heading</h2> <p>Section 2 text <a rel="nofollow" class="external text exitstitial" href="http://www.google.com">Foo</a> </p> <h2 id=\'Section_3_heading\' section=\'4\' >Section 3 heading</h2> <p>Section 3 text <a rel="nofollow" class="external text exitstitial" href="http://www.google.com">Foo</a> </p><p><img src=\'data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D\' class=\'article-media\' data-ref=\'2\' width=\'506\' height=\'506\' /> </p> <h2 id=\'Test_4th_Section\' section=\'\' >Test 4th Section</h2> <p>Test 4th section text. </p>',
+				[
+					'<p>Section 0 text </p><p><br /> </p> ',
+					'<h2 id=\'Section_1_heading\' section=\'1\' >Section 1 heading</h2> <p><img src=\'data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D\' class=\'article-media\' data-ref=\'0\' width=\'800\' height=\'600\' /> Section 1 text <a rel="nofollow" class="external text exitstitial" href="http://www.google.com">Foo</a> </p> <h3 id=\'Section_1.1_heading\' section=\'2\' >Section 1.1 heading</h3> <p>Section1.1 text </p><p><img src=\'data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D\' class=\'article-media\' data-ref=\'1\' width=\'960\' height=\'640\' /> </p> ',
+					'<h2 id=\'Section_2_heading\' section=\'3\' >Section 2 heading</h2> <p>Section 2 text <a rel="nofollow" class="external text exitstitial" href="http://www.google.com">Foo</a> </p> ',
+					'<h2 id=\'Section_3_heading\' section=\'4\' >Section 3 heading</h2> <p>Section 3 text <a rel="nofollow" class="external text exitstitial" href="http://www.google.com">Foo</a> </p><p><img src=\'data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D\' class=\'article-media\' data-ref=\'2\' width=\'506\' height=\'506\' /> </p> ',
+					'<h2 id=\'Test_4th_Section\' section=\'\' >Test 4th Section</h2> <p>Test 4th section text. </p>',
+				]
+			],
+			// h2 without a section attribute
+			[
+				'<h2>Foo bar</h2> Foo bar baz qux <h2 section="2">Section with attribute</h2>',
+				[
+					'<h2>Foo bar</h2> Foo bar baz qux ',
+					'<h2 section="2">Section with attribute</h2>'
+				]
+			],
+			// empty article
+			[
+				'',
+				[]
+			],
+			// article without section 0
+			[
+				'<h2 id=\'Section_1_heading\' section=\'1\' >Section 1 heading</h2> <p>Section 1 text <a href="http://www.google.com">Foo</a> </p> <h2 id=\'Section_1.1_heading\' section=\'2\' >Section 1.1 heading</h2> <p>Section1.1 text </p><p><img src=\'data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D\' class=\'article-media\' data-ref=\'1\' width=\'960\' height=\'640\' /> </p> ',
+				[
+					'<h2 id=\'Section_1_heading\' section=\'1\' >Section 1 heading</h2> <p>Section 1 text <a href="http://www.google.com">Foo</a> </p> ',
+					'<h2 id=\'Section_1.1_heading\' section=\'2\' >Section 1.1 heading</h2> <p>Section1.1 text </p><p><img src=\'data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D\' class=\'article-media\' data-ref=\'1\' width=\'960\' height=\'640\' /> </p> '
+				]
+			]
+		];
+	}
+
+	/**
+	 * @dataProvider splitArticleIntoSectionsDataProvider
+	 */
+	public function testSplitArticleIntoSections( $content, $contentArray ) {
+		$splitArticleIntoSections = self::getFn( new ArticlesApiController(), 'splitArticleIntoSections' );
+		$this->assertEquals( $contentArray, $splitArticleIntoSections( $content ) );
 	}
 
 	protected static function getFn( $obj, $name ) {
