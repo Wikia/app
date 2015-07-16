@@ -9,7 +9,7 @@
  * @ingroup Maintenance
  */
 
-putenv('SERVER_ID=1252'); // run in the context of "starter" wiki, we want to get the default user groups from there
+putenv( 'SERVER_ID=1252' ); // run in the context of "starter" wiki, we want to get the default user groups from there
 
 require_once( dirname( __FILE__ ) . '/../Maintenance.php' );
 
@@ -51,7 +51,7 @@ class ListCustomUserGrousp extends Maintenance {
 	 * @param string $varName WF variable name
 	 * @return ResultWrapper
 	 */
-	private function getWikisWithVariableSet($varName) {
+	private function getWikisWithVariableSet( $varName ) {
 		$db_wf = WikiFactory::db( DB_SLAVE );
 
 		return $db_wf->select(
@@ -60,7 +60,7 @@ class ListCustomUserGrousp extends Maintenance {
 			['cv_variable_id' => WikiFactory::getVarIdByName( $varName )],
 			__METHOD__,
 			[
-				#'LIMIT' => 20
+				# 'LIMIT' => 20
 			],
 			[
 				'city_list' => [ 'LEFT JOIN', 'city_variables.cv_city_id = city_list.city_id' ]
@@ -75,7 +75,7 @@ class ListCustomUserGrousp extends Maintenance {
 	 * @param array $localGroups list of local groups to get stats for
 	 * @return array
 	 */
-	private function getLocalUserGroupsStats(DatabaseBase $dbr, $localGroups) {
+	private function getLocalUserGroupsStats( DatabaseBase $dbr, $localGroups ) {
 		$res = $dbr->select(
 			'user_groups',
 			['ug_group', 'count(*) as cnt'],
@@ -85,8 +85,8 @@ class ListCustomUserGrousp extends Maintenance {
 		);
 
 		$groups = [];
-		foreach($res as $row) {
-			$groups[ $row->ug_group ] = intval($row->cnt);
+		foreach ( $res as $row ) {
+			$groups[ $row->ug_group ] = intval( $row->cnt );
 		}
 
 		return $groups;
@@ -99,68 +99,68 @@ class ListCustomUserGrousp extends Maintenance {
 	 * @param array $permissionSettings parsed wgGroupPermissionsLocal variable value
 	 * @throws DBError
 	 */
-	private function processWiki($dbname, array $permissionSettings) {
+	private function processWiki( $dbname, array $permissionSettings ) {
 		$localGroups = [];
 
 		// filter out global groups and format the rights
-		foreach($permissionSettings as $groupName => $rights) {
+		foreach ( $permissionSettings as $groupName => $rights ) {
 			// the current group is a local one
-			if (!in_array($groupName, self::getDefaultGroups())) {
+			if ( !in_array( $groupName, self::getDefaultGroups() ) ) {
 				$localGroups[$groupName] = $rights;
 			}
 		}
 
-		if (empty($localGroups)) {
+		if ( empty( $localGroups ) ) {
 			return;
 		}
 
-		$this->output( sprintf("%s: local groups - %s\n", $dbname, implode(', ', array_keys( $localGroups ))) );
+		$this->output( sprintf( "%s: local groups - %s\n", $dbname, implode( ', ', array_keys( $localGroups ) ) ) );
 
 		// connect to a local wiki database and collect statistics
-		$dbr = wfGetDB(DB_SLAVE, [], $dbname);
+		$dbr = wfGetDB( DB_SLAVE, [], $dbname );
 
-		$userGroupsStats = $this->getLocalUserGroupsStats($dbr, array_keys($localGroups));
-		foreach ($userGroupsStats as $groupName => $usersCount) {
-			$this->writeCsvRow([
+		$userGroupsStats = $this->getLocalUserGroupsStats( $dbr, array_keys( $localGroups ) );
+		foreach ( $userGroupsStats as $groupName => $usersCount ) {
+			$this->writeCsvRow( [
 				$dbname,
 				$groupName,
 				$usersCount,
-				implode(',', array_keys($localGroups[$groupName])) # user group rights
-			]);
+				implode( ',', array_keys( $localGroups[$groupName] ) ) # user group rights
+			] );
 		}
 	}
 
-	private function writeCsvRow(Array $row) {
-		if (is_resource($this->csv)) {
-			fputcsv($this->csv, $row);
+	private function writeCsvRow( Array $row ) {
+		if ( is_resource( $this->csv ) ) {
+			fputcsv( $this->csv, $row );
 		}
 	}
 
 	public function execute() {
-		$this->output( sprintf("Global user groups detected: %s\n\n", implode(', ', self::getDefaultGroups())) );
+		$this->output( sprintf( "Global user groups detected: %s\n\n", implode( ', ', self::getDefaultGroups() ) ) );
 
-		if ($this->getOption('csv')) {
-			$this->csv = fopen($this->getOption('csv'), 'w');
-			fputcsv($this->csv, [
+		if ( $this->getOption( 'csv' ) ) {
+			$this->csv = fopen( $this->getOption( 'csv' ), 'w' );
+			fputcsv( $this->csv, [
 				'DB name',
 				'Group name',
 				'Group members',
 				'Rights'
-			]);
+			] );
 		}
 
 		$res = $this->getWikisWithVariableSet( self::WF_GROUP_PERMISSION_LOCAL );
-		foreach($res as $row) {
+		foreach ( $res as $row ) {
 			try {
-				$this->processWiki($row->dbname, WikiFactoryLoader::parsePermissionsSettings(unserialize($row->value)));
+				$this->processWiki( $row->dbname, WikiFactoryLoader::parsePermissionsSettings( unserialize( $row->value ) ) );
 			}
-			catch(Exception $e) {
+			catch ( Exception $e ) {
 				$this->output( $e->getMessage() . "\n" );
 			}
 		}
 
-		if (is_resource($this->csv)) {
-			fclose($this->csv);
+		if ( is_resource( $this->csv ) ) {
+			fclose( $this->csv );
 		}
 	}
 }
