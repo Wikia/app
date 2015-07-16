@@ -16,6 +16,7 @@ class ForumSpecialController extends WikiaSpecialPageController {
 	public function init() {
 		$this->response->addAsset( 'extensions/wikia/Forum/css/Forum.scss' );
 		$this->response->addAsset( 'extensions/wikia/Forum/css/ForumSpecial.scss' );
+		$this->response->addAsset( 'extensions/wikia/Forum/css/ForumTag.scss' );
 
 		if ( $this->app->checkSkin( 'monobook' ) ) {
 			$this->response->addAsset( 'extensions/wikia/WikiaStyleGuide/js/Form.js' );
