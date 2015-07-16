@@ -84,8 +84,8 @@ class FounderEmailsOptionsConverter extends Maintenance {
 						$user->setLocalPreference( "founderemails-views-digest", $row->up_value, $city_id );
 						$user->setLocalPreference( "founderemails-complete-digest", $row->up_value, $city_id );
 						if ( $this->hasOption( 'remove' ) ) {
-							// hack, User object doesn't have method for resetting option
-							unset( $user->mOptions[ "founderemailsenabled" ] );
+							// founderemailsenabled is not in use anymore.
+							$user->removeGlobalPreference("founderemailsenabled");
 						}
 						$changed = true;
 					}

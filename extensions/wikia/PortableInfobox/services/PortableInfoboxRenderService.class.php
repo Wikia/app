@@ -99,17 +99,20 @@ class PortableInfoboxRenderService extends WikiaService {
 
 	/**
 	 * renders part of infobox
+	 * If image element has invalid thumbnail, doesn't render this element at all.
 	 *
 	 * @param string $type
 	 * @param array $data
-	 *
-	 * @return string - HTML
+	 * @return bool|string - HTML
 	 */
 	private function renderItem( $type, array $data ) {
 		//TODO: with validated the performance of render Service and in the next phase we want to refactor it (make
 		// it modular) While doing this we also need to move this logic to appropriate image render class
 		if ( $type === 'image' ) {
 			$data = $this->extendImageData( $data );
+			if (!$data) {
+				return false;
+			}
 
 			if ( $this->isWikiaMobile() ) {
 				$type = $type . self::MOBILE_TEMPLATE_POSTFIX;
@@ -122,24 +125,24 @@ class PortableInfoboxRenderService extends WikiaService {
 	}
 
 	/**
-	 * @desc returns the thumbnail url
-	 *
-	 * @param string $title
-	 *
-	 * @return string thumbnail url
+	 * @desc create a thumb of the image from file title
+	 * @param $title
+	 * @return bool|MediaTransformOutput
 	 */
-	protected function getThumbnailUrl( $title ) {
+	protected function getThumbnail( $title ) {
 		$file = \WikiaFileHelper::getFileFromTitle( $title );
 
 		if ( $file ) {
-			return $file->createThumb(
-				$this->isWikiaMobile() ?
-					self::MOBILE_THUMBNAIL_WIDTH :
-					self::DESKTOP_THUMBNAIL_WIDTH
-			);
-		}
+			$width = $this->isWikiaMobile() ?
+				self::MOBILE_THUMBNAIL_WIDTH :
+				self::DESKTOP_THUMBNAIL_WIDTH;
+			$thumb = $file->transform( ['width' => $width] );
 
-		return '';
+			if (!is_null($thumb) && !$thumb->isError()) {
+				return $thumb;
+			}
+		}
+		return false;
 	}
 
 	/**
@@ -225,11 +228,18 @@ class PortableInfoboxRenderService extends WikiaService {
 	 *
 	 * @param array $data
 	 *
-	 * @return array
+	 * @return bool|array
 	 */
 	private function extendImageData( $data ) {
-		$data[ 'thumbnail' ] = $this->getThumbnailUrl( $data[ 'name' ] );
+		$thumbnail = $this->getThumbnail( $data[ 'name' ] );
+		$data[ 'height' ] = $thumbnail->getHeight();
+		$data[ 'width' ] = $thumbnail->getWidth();
+		$data[ 'thumbnail' ] = $thumbnail->getUrl();
 		$data[ 'key' ] = urlencode( $data[ 'key' ] );
+
+		if (!$thumbnail) {
+			return false;
+		}
 
 		return $data;
 	}

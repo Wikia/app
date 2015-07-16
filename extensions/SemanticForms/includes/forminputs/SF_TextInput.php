@@ -17,12 +17,18 @@ class SFTextInput extends SFFormInput {
 	}
 
 	public static function getDefaultPropTypes() {
-		return array(
-			'_str' => array( 'field_type' => 'string' ),
+		$defaultPropTypes = array(
 			'_num' => array( 'field_type' => 'number' ),
 			'_uri' => array( 'field_type' => 'URL' ),
 			'_ema' => array( 'field_type' => 'email' )
 		);
+		if ( defined( 'SMWDataItem::TYPE_STRING' ) ) {
+			// SMW < 1.9
+			$defaultPropTypes['_str'] = array( 'field_type' => 'string' );
+		} else {
+			$defaultPropTypes['_txt'] = array( 'field_type' => 'text' );
+		}
+		return $defaultPropTypes;
 	}
 
 	public static function getOtherPropTypesHandled() {
@@ -30,16 +36,49 @@ class SFTextInput extends SFFormInput {
 	}
 
 	public static function getDefaultPropTypeLists() {
-		return array(
-			'_str' => array( 'field_type' => 'string', 'is_list' => 'true', 'size' => '100' ),
+		$defaultPropTypeLists = array(
 			'_num' => array( 'field_type' => 'number', 'is_list' => 'true', 'size' => '100' ),
 			'_uri' => array( 'field_type' => 'URL', 'is_list' => 'true' ),
 			'_ema' => array( 'field_type' => 'email', 'is_list' => 'true' )
 		);
+		if ( defined( 'SMWDataItem::TYPE_STRING' ) ) {
+			// SMW < 1.9
+			$defaultPropTypeLists['_str'] = array( 'field_type' => 'string', 'is_list' => 'true', 'size' => '100' );
+		} else {
+			$defaultPropTypeLists['_txt'] = array( 'field_type' => 'text', 'is_list' => 'true', 'size' => '100' );
+		}
+		return $defaultPropTypeLists;
 	}
 
 	public static function getOtherPropTypeListsHandled() {
 		return array( '_wpg' );
+	}
+
+	public static function getDefaultCargoTypes() {
+		return array(
+			'Integer' => array( 'field_type' => 'number' ),
+			'Float' => array( 'field_type' => 'number' ),
+			'URL' => array( 'field_type' => 'URL' ),
+			'Email' => array( 'field_type' => 'email' ),
+			'String' => array( 'field_type' => 'string' )
+		);
+	}
+
+	public static function getOtherCargoTypesHandled() {
+		return array( 'Page', 'Coordinates' );
+	}
+
+	public static function getDefaultCargoTypeLists() {
+		return array(
+			'Number' => array( 'field_type' => 'number', 'is_list' => 'true', 'size' => '100' ),
+			'URL' => array( 'field_type' => 'URL', 'is_list' => 'true' ),
+			'Email' => array( 'field_type' => 'email', 'is_list' => 'true' ),
+			'String' => array( 'field_type' => 'text', 'is_list' => 'true', 'size' => '100' )
+		);
+	}
+
+	public static function getOtherCargoTypeListsHandled() {
+		return array( 'Page' );
 	}
 
 	/**
@@ -76,9 +115,11 @@ class SFTextInput extends SFFormInput {
 
 		if ( array_key_exists( 'query', $result ) && array_key_exists( 'pages', $result['query'] ) ) {
 			foreach ( $result['query']['pages'] as $page ) {
-				foreach ( $page['imageinfo'] as $imageInfo ) {
-					$url = $imageInfo['thumburl'];
-					break;
+				if ( array_key_exists( 'imageinfo', $page ) ) {
+					foreach ( $page['imageinfo'] as $imageInfo ) {
+						$url = $imageInfo['thumburl'];
+						break;
+					}
 				}
 			}
 		}
@@ -94,7 +135,7 @@ class SFTextInput extends SFFormInput {
 	}
 
 	public static function uploadableHTML( $input_id, $delimiter = null, $default_filename = null, $cur_value = '', $other_args = array() ) {
-		$upload_window_page = SFUtils::getSpecialPage( 'UploadWindow' );
+		$upload_window_page = SpecialPageFactory::getPage( 'UploadWindow' );
 		$query_string = "sfInputID=$input_id";
 		if ( $delimiter != null ) {
 			$query_string .= "&sfDelimiter=$delimiter";
@@ -103,7 +144,7 @@ class SFTextInput extends SFFormInput {
 			$query_string .= "&wpDestFile=$default_filename";
 		}
 		$upload_window_url = $upload_window_page->getTitle()->getFullURL( $query_string );
-		$upload_label = wfMsg( 'upload' );
+		$upload_label = wfMessage( 'upload' )->text();
 		// We need to set the size by default.
 		$style = "width:650 height:500";
 
@@ -118,7 +159,11 @@ class SFTextInput extends SFFormInput {
 		$linkAttrs = array(
 			'href' => $upload_window_url,
 			'class' => implode( ' ', $cssClasses ),
-			'title' => $upload_label,
+			// The 'title' parameter sets the label below the
+			// window; we're leaving it blank, because otherwise
+			// it can by mistaken by users for a button, leading
+			// to confusion.
+			//'title' => $upload_label,
 			'rev' => $style,
 			'data-input-id' => $input_id
 		);
@@ -152,6 +197,9 @@ class SFTextInput extends SFFormInput {
 		if ( array_key_exists( 'class', $other_args ) ) {
 			$className .= ' ' . $other_args['class'];
 		}
+		if ( array_key_exists( 'unique', $other_args ) ) {
+			$className .= ' uniqueField';
+		}
 		$input_id = "input_$sfgFieldNum";
 		// Set size based on pre-set size, or field type - if field
 		// type is set, possibly add validation too.
@@ -159,9 +207,9 @@ class SFTextInput extends SFFormInput {
 		// holds a single value, not a list of values.)
 		$size = 35;
 		$inputType = '';
-		if ( array_key_exists( 'field_type', $other_args )  &&
+		if ( array_key_exists( 'field_type', $other_args ) &&
 			( !array_key_exists( 'is_list', $other_args ) ||
-	       		!$other_args['is_list']	) ) {
+			!$other_args['is_list']	) ) {
 			if ( $other_args['field_type'] == 'number' ) {
 				$size = 10;
 				$inputType = 'number';
@@ -219,6 +267,9 @@ class SFTextInput extends SFFormInput {
 		if ( $is_mandatory ) {
 			$spanClass .= ' mandatoryFieldSpan';
 		}
+		if ( array_key_exists( 'unique', $other_args ) ) {
+			$spanClass .= ' uniqueFieldSpan';
+		}
 		$text = Html::rawElement( 'span', array( 'class' => $spanClass ), $text );
 		return $text;
 	}
@@ -228,27 +279,27 @@ class SFTextInput extends SFFormInput {
 		$params[] = array(
 			'name' => 'size',
 			'type' => 'int',
-			'description' => wfMsg( 'sf_forminputs_size' )
+			'description' => wfMessage( 'sf_forminputs_size' )->text()
 		);
 		$params[] = array(
 			'name' => 'maxlength',
 			'type' => 'int',
-			'description' => wfMsg( 'sf_forminputs_maxlength' )
+			'description' => wfMessage( 'sf_forminputs_maxlength' )->text()
 		);
 		$params[] = array(
 			'name' => 'placeholder',
 			'type' => 'string',
-			'description' => wfMsg( 'sf_forminputs_placeholder' )
+			'description' => wfMessage( 'sf_forminputs_placeholder' )->text()
 		);
 		$params[] = array(
 			'name' => 'uploadable',
 			'type' => 'boolean',
-			'description' => wfMsg( 'sf_forminputs_uploadable' )
+			'description' => wfMessage( 'sf_forminputs_uploadable' )->text()
 		);
 		$params[] = array(
 			'name' => 'default filename',
 			'type' => 'string',
-			'description' => wfMsg( 'sf_forminputs_defaultfilename' )
+			'description' => wfMessage( 'sf_forminputs_defaultfilename' )->text()
 		);
 		return $params;
 	}

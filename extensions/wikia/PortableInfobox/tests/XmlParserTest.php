@@ -91,4 +91,25 @@ class XmlParserTest extends WikiaBaseTest {
 			]
 		];
 	}
+
+	/**
+	 * @dataProvider entitiesTestDataProvider
+	 */
+	public function testHTMLEntities( $markup, $expectedResult ) {
+		$result = \Wikia\PortableInfobox\Parser\XmlParser::parseXmlString( $markup );
+		$this->assertEquals( $expectedResult, $result[ 0 ] );
+	}
+
+	public function entitiesTestDataProvider() {
+		return [
+			[ '<data></data>', '' ],
+			[ '<data>&aksjdf;</data>', '&aksjdf;' ],
+			[ '<data>&amp;</data>', '&' ],
+			[ '<data>&middot;</data>', '·' ],
+			[ '<data>&Uuml;</data>', 'Ü' ],
+			[ '<data>&Delta;</data>', 'Δ' ],
+			[ '<data>&amp;amp;</data>', '&amp;' ],
+			[ '<data>&amp</data>', '&amp' ]
+		];
+	}
 }

@@ -1,21 +1,68 @@
 <?php
 
 class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
-	private $infoboxRenderService;
-
 	protected function setUp() {
 		$this->setupFile = dirname( __FILE__ ) . '/../PortableInfobox.setup.php';
 		parent::setUp();
-
-		$mock = $this->getMock( 'PortableInfoboxRenderService', [ 'getThumbnailUrl', 'isWikiaMobile' ] );
-		$mock->expects( $this->any() )->method( 'getThumbnailUrl' )->will( $this->returnValue( 'http://image.jpg' ) );
-
-		$this->infoboxRenderService = $mock;
 	}
 
-	private function setWikiaMobileSkin( $bool ) {
-		$this->infoboxRenderService->expects( $this->any() )->method( 'isWikiaMobile' )->will( $this->returnValue
-		( $bool ) );
+	/**
+	 * @param $isWikiaMobile
+	 * @param $input to check presence of 'invalidImage' field
+	 * @return PHPUnit_Framework_MockObject_MockObject
+	 */
+	private function getInfoboxRenderServiceMock( $input )
+	{
+		$isInvalidImage = isset( $input[ 'isInvalidImage' ] ) && $input[ 'isInvalidImage' ];
+		$isWikiaMobile = isset( $input[ 'isWikiaMobile' ] ) && $input[ 'isWikiaMobile' ];
+		$mockThumbnailImage = $isInvalidImage ? false : $this->getThumbnailImageMock();
+
+		$mock = $this->getMockBuilder( 'PortableInfoboxRenderService' )
+			->setMethods( [ 'getThumbnail', 'isWikiaMobile' ] )
+			->getMock();
+		$mock->expects( $this->any() )
+			->method( 'isWikiaMobile' )
+			->will( $this->returnValue( $isWikiaMobile ) );
+		$mock->expects( $this->any() )
+			->method( 'getThumbnail' )
+			->will( $this->returnValue( $mockThumbnailImage ) );
+
+		return $mock;
+	}
+
+	/**
+	 * @desc Returns the ThumbnailImage with hardcoded values returned by
+	 * 'getUrl', 'getWidth' and 'getHeight' functions.
+	 * @return PHPUnit_Framework_MockObject_MockObject
+	 */
+	private function getThumbnailImageMock() {
+		$mockThumbnailImage = $this->getMockBuilder( 'ThumbnailImage' )
+			->setMethods( [ 'getUrl', 'getWidth', 'getHeight' ] )
+			->getMock();
+		$mockThumbnailImage->expects( $this->any() )
+			->method( 'getUrl' )
+			->will( $this->returnValue( 'http://image.jpg' ) );
+		$mockThumbnailImage->expects( $this->any() )
+			->method( 'getWidth' )
+			->will( $this->returnValue( 400 ) );
+		$mockThumbnailImage->expects( $this->any() )
+			->method( 'getHeight' )
+			->will( $this->returnValue( 200 ) );
+
+		return $mockThumbnailImage;
+	}
+
+	/**
+	 * @param $html
+	 * @return string
+     */
+	private function normalizeHTML( $html ) {
+		$DOM = new DOMDocument('1.0');
+		$DOM->formatOutput = true;
+		$DOM->preserveWhiteSpace = false;
+		$DOM->loadXML( $html );
+
+		return $DOM->saveXML();
 	}
 
 	/**
@@ -25,368 +72,13 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 	 * @dataProvider testRenderInfoboxDataProvider
 	 */
 	public function testRenderInfobox( $input, $expectedOutput, $description ) {
-		$this->setWikiaMobileSkin( false );
+		$infoboxRenderService = $this->getInfoboxRenderServiceMock( $input );
+		$actualOutput = $infoboxRenderService->renderInfobox( $input );
 
-		$actualOutput = $this->infoboxRenderService->renderInfobox( $input );
-
-		$actualDOM = new DOMDocument('1.0');
-		$expectedDOM = new DOMDocument('1.0');
-		$actualDOM->formatOutput = true;
-		$actualDOM->preserveWhiteSpace = false;
-		$expectedDOM->formatOutput = true;
-		$expectedDOM->preserveWhiteSpace = false;
-		$actualDOM->loadXML($actualOutput);
-		$expectedDOM->loadXML($expectedOutput);
-
-		$expectedHtml = $expectedDOM->saveXML();
-		$actualHtml = $actualDOM->saveXML();
+		$expectedHtml = $this->normalizeHTML( $expectedOutput) ;
+		$actualHtml = $this->normalizeHTML( $actualOutput );
 
 		$this->assertEquals( $expectedHtml, $actualHtml, $description );
-	}
-
-	/**
-	 * @param $input
-	 * @param $expectedOutput
-	 * @param $description
-	 * @dataProvider testRenderMobileInfoboxDataProvider
-	 */
-	public function testRenderMobileInfobox( $input, $expectedOutput, $description ) {
-		$this->setWikiaMobileSkin( true );
-
-		$actualOutput = $this->infoboxRenderService->renderInfobox( $input );
-
-		$actualDOM = new DOMDocument('1.0');
-		$expectedDOM = new DOMDocument('1.0');
-		$actualDOM->formatOutput = true;
-		$actualDOM->preserveWhiteSpace = false;
-		$expectedDOM->formatOutput = true;
-		$expectedDOM->preserveWhiteSpace = false;
-		$actualDOM->loadXML($actualOutput);
-		$expectedDOM->loadXML($expectedOutput);
-
-		$expectedHtml = $expectedDOM->saveXML();
-		$actualHtml = $actualDOM->saveXML();
-
-		$this->assertEquals( $expectedHtml, $actualHtml, $description );
-	}
-
-	public function testRenderMobileInfoboxDataProvider() {
-		return [
-			[
-				'input' => [
-					[
-						'type' => 'title',
-						'data' => [
-							'value' => 'Test Title'
-						]
-					],
-					[
-						'type' => 'image',
-						'data' => [
-							'alt' => 'image alt',
-							'caption' => 'image caption',
-							'alt' => 'image alt',
-							'url' => 'http://image.jpg',
-							'thumbnail' => 'thumbnail.jpg',
-							'ref' => 1,
-							'name' => 'test1'
-						]
-					],
-					[
-						'type' => 'data',
-						'data' => [
-							'label' => 'test label',
-							'value' => 'test value'
-						]
-					]
-				],
-				'output' => '<aside class="portable-infobox">
-								<div class="portable-infobox-item item-type-hero">
-									<hgroup class="portable-infobox-hero-title-wrapper portable-infobox-item-margins">
-										<h2 class="portable-infobox-hero-title">Test Title</h2>
-										<h3 class="portable-infobox-hero-caption">image caption</h3>
-									</hgroup>
-									<img src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D" data-src="http://image.jpg" class="portable-infobox-image lazy media article-media" alt="image alt"  data-image-key="test1" data-image-name="test1" data-ref="1" data-params=\'[{"name":"test1", "full":"http://image.jpg"}]\' />
-								</div>
-								<div class="portable-infobox-item item-type-key-val portable-infobox-item-margins">
-									<h3 class="portable-infobox-item-label portable-infobox-secondary-font">test label</h3>
-									<div class="portable-infobox-item-value">test value</div>
-									</div>
-							</aside>',
-				'description' => 'Mobile Hero infobox with title, image and key-value pair'
-			],
-			[
-				'input' => [
-					[
-						'type' => 'data',
-						'data' => [
-							'label' => 'test label',
-							'value' => 'test value'
-						]
-					],
-					[
-						'type' => 'image',
-						'data' => [
-							'alt' => 'image alt',
-							'caption' => 'image caption',
-							'alt' => 'image alt',
-							'url' => 'http://image.jpg',
-							'thumbnail' => 'thumbnail.jpg',
-							'ref' => 1,
-							'name' => 'test1'
-						]
-					],
-					[
-						'type' => 'title',
-						'data' => [
-							'value' => 'Test Title'
-						]
-					],
-				],
-				'output' => '<aside class="portable-infobox">
-								<div class="portable-infobox-item item-type-hero">
-									<hgroup class="portable-infobox-hero-title-wrapper portable-infobox-item-margins">
-										<h2 class="portable-infobox-hero-title">Test Title</h2>
-										<h3 class="portable-infobox-hero-caption">image caption</h3>
-									</hgroup>
-									<img src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D" data-src="http://image.jpg" class="portable-infobox-image lazy media article-media" alt="image alt"  data-image-key="test1" data-image-name="test1" data-ref="1" data-params=\'[{"name":"test1", "full":"http://image.jpg"}]\' />
-								</div>
-								<div class="portable-infobox-item item-type-key-val portable-infobox-item-margins">
-									<h3 class="portable-infobox-item-label portable-infobox-secondary-font">test label</h3>
-									<div class="portable-infobox-item-value">test value</div>
-									</div>
-							</aside>',
-				'description' => 'Mobile Hero infobox with title, image and key-value pair - reversed (check if hero if
-				data is properly extracted from infobox data'
-			],
-			[
-				'input' => [
-					[
-						'type' => 'title',
-						'data' => [
-							'value' => 'Test Title'
-						]
-					],
-					[
-						'type' => 'image',
-						'data' => [
-							'alt' => 'image alt',
-							'caption' => 'image caption',
-							'url' => 'http://image.jpg',
-							'ref' => 1,
-							'name' => 'test1'
-						]
-					],
-					[
-						'type' => 'data',
-						'data' => [
-							'label' => 'test label',
-							'value' => 'test value'
-						]
-					],
-					[
-						'type' => 'title',
-						'data' => [
-							'value' => 'Test Title 2'
-						]
-					],
-					[
-						'type' => 'image',
-						'data' => [
-							'alt' => 'image alt 2',
-							'caption' => 'image caption 2',
-							'url' => 'http://image2.jpg',
-							'ref' => 2,
-							'name' => 'test2'
-						]
-					],
-				],
-				'output' => '<aside class="portable-infobox">
-								<div class="portable-infobox-item item-type-hero">
-									<hgroup class="portable-infobox-hero-title-wrapper portable-infobox-item-margins">
-										<h2 class="portable-infobox-hero-title">Test Title</h2>
-										<h3 class="portable-infobox-hero-caption">image caption</h3>
-									</hgroup>
-									<img src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D" data-src="http://image.jpg" class="portable-infobox-image lazy media article-media" alt="image alt"  data-image-key="test1" data-image-name="test1" data-ref="1" data-params=\'[{"name":"test1", "full":"http://image.jpg"}]\' />
-								</div>
-								<div class="portable-infobox-item item-type-key-val portable-infobox-item-margins">
-									<h3 class="portable-infobox-item-label portable-infobox-secondary-font">test label</h3>
-									<div class="portable-infobox-item-value">test value</div>
-								</div>
-								<div class="portable-infobox-item item-type-title portable-infobox-item-margins">
-									<h2 class="portable-infobox-title">Test Title 2</h2>
-								</div>
-								<div class="portable-infobox-item item-type-image no-margins">
-									<img src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D" data-src="http://image.jpg" class="portable-infobox-image lazy media article-media" alt="image alt 2"  data-image-key="test2" data-image-name="test2" data-ref="2" data-params=\'[{"name":"test2", "full":"http://image2.jpg"}]\' />
-								</div>
-							</aside>',
-				'description' => 'Mobile Hero infobox with 2 titles, 2 images and key-value pair'
-			],
-			[
-				'input' => [
-					[
-						'type' => 'title',
-						'data' => [
-							'value' => 'Test Title'
-						]
-					],
-					[
-						'type' => 'image',
-						'data' => [
-							'alt' => 'image alt',
-							'alt' => 'image alt',
-							'url' => 'http://image.jpg',
-							'thumbnail' => 'thumbnail.jpg',
-							'ref' => 1,
-							'name' => 'test1'
-						]
-					],
-					[
-						'type' => 'data',
-						'data' => [
-							'label' => 'test label',
-							'value' => 'test value'
-						]
-					]
-				],
-				'output' => '<aside class="portable-infobox">
-								<div class="portable-infobox-item item-type-hero">
-									<hgroup class="portable-infobox-hero-title-wrapper portable-infobox-item-margins">
-										<h2 class="portable-infobox-hero-title">Test Title</h2>
-									</hgroup>
-									<img src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D" data-src="http://image.jpg" class="portable-infobox-image lazy media article-media" alt="image alt"  data-image-key="test1" data-image-name="test1" data-ref="1" data-params=\'[{"name":"test1", "full":"http://image.jpg"}]\' />
-								</div>
-								<div class="portable-infobox-item item-type-key-val portable-infobox-item-margins">
-									<h3 class="portable-infobox-item-label portable-infobox-secondary-font">test label</h3>
-									<div class="portable-infobox-item-value">test value</div>
-									</div>
-							</aside>',
-				'description' => 'Mobile Hero infobox without image caption'
-			],
-			[
-				'input' => [
-					[
-						'type' => 'title',
-						'data' => [
-							'value' => 'Test Title'
-						]
-					],
-					[
-						'type' => 'image',
-						'data' => [
-							'alt' => 'image alt',
-							'caption' => 'image caption',
-							'url' => 'http://image.jpg',
-							'ref' => 1,
-							'name' => 'test1'
-						]
-					],
-					[
-						'type' => 'data',
-						'data' => [
-							'label' => 'test label',
-							'value' => 'test value'
-						]
-					],
-					[
-						'type' => 'title',
-						'data' => [
-							'value' => 'Test Title 2'
-						]
-					],
-					[
-						'type' => 'image',
-						'data' => [
-							'alt' => 'image alt 2',
-							'caption' => 'image caption 2',
-							'url' => 'http://image2.jpg',
-							'ref' => 2,
-							'name' => 'test2'
-						]
-					],
-				],
-				'output' => '<aside class="portable-infobox">
-								<div class="portable-infobox-item item-type-hero">
-									<hgroup class="portable-infobox-hero-title-wrapper portable-infobox-item-margins">
-										<h2 class="portable-infobox-hero-title">Test Title</h2>
-										<h3 class="portable-infobox-hero-caption">image caption</h3>
-									</hgroup>
-									<img src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D" data-src="http://image.jpg" class="portable-infobox-image lazy media article-media" alt="image alt"  data-image-key="test1" data-image-name="test1" data-ref="1" data-params=\'[{"name":"test1", "full":"http://image.jpg"}]\' />
-								</div>
-								<div class="portable-infobox-item item-type-key-val portable-infobox-item-margins">
-									<h3 class="portable-infobox-item-label portable-infobox-secondary-font">test label</h3>
-									<div class="portable-infobox-item-value">test value</div>
-								</div>
-								<div class="portable-infobox-item item-type-title portable-infobox-item-margins">
-									<h2 class="portable-infobox-title">Test Title 2</h2>
-								</div>
-								<div class="portable-infobox-item item-type-image no-margins">
-									<img src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D" data-src="http://image.jpg" class="portable-infobox-image lazy media article-media" alt="image alt 2"  data-image-key="test2" data-image-name="test2" data-ref="2" data-params=\'[{"name":"test2", "full":"http://image2.jpg"}]\' />
-								</div>
-							</aside>',
-				'description' => 'Mobile Hero infobox with 2 titles, 2 images and key-value pair'
-			],
-			[
-				'input' => [
-					[
-						'type' => 'title',
-						'data' => [
-							'value' => 'Test Title'
-						]
-					],
-					[
-						'type' => 'data',
-						'data' => [
-							'label' => 'test label',
-							'value' => 'test value'
-						]
-					]
-				],
-				'output' => '<aside class="portable-infobox">
-								<div class="portable-infobox-item item-type-title portable-infobox-item-margins">
-									<h2 class="portable-infobox-title">Test Title</h2>
-								</div>
-								<div class="portable-infobox-item item-type-key-val portable-infobox-item-margins">
-									<h3 class="portable-infobox-item-label portable-infobox-secondary-font">test label</h3>
-									<div class="portable-infobox-item-value">test value</div>
-									</div>
-							</aside>',
-				'description' => 'Mobile Hero infobox without image'
-			],
-			[
-				'input' => [
-					[
-						'type' => 'image',
-						'data' => [
-							'alt' => 'image alt',
-							'caption' => 'image caption',
-							'alt' => 'image alt',
-							'url' => 'http://image.jpg',
-							'thumbnail' => 'thumbnail.jpg',
-							'ref' => 1,
-							'name' => 'test1'
-						]
-					],
-					[
-						'type' => 'data',
-						'data' => [
-							'label' => 'test label',
-							'value' => 'test value'
-						]
-					]
-				],
-				'output' => '<aside class="portable-infobox">
-								<div class="portable-infobox-item item-type-hero">
-									<img src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D" data-src="http://image.jpg" class="portable-infobox-image lazy media article-media" alt="image alt"  data-image-key="test1" data-image-name="test1" data-ref="1" data-params=\'[{"name":"test1", "full":"http://image.jpg"}]\' />
-								</div>
-								<div class="portable-infobox-item item-type-key-val portable-infobox-item-margins">
-									<h3 class="portable-infobox-item-label portable-infobox-secondary-font">test label</h3>
-									<div class="portable-infobox-item-value">test value</div>
-									</div>
-							</aside>',
-				'description' => 'Mobile Hero infobox without title'
-			],
-		];
 	}
 
 	public function testRenderInfoboxDataProvider() {
@@ -427,7 +119,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 								<div class="portable-infobox-item item-type-image no-margins">
 									<figure class="portable-infobox-image-wrapper">
 										<a href="http://image.jpg" class="image image-thumbnail" title="image alt">
-											<img src="http://image.jpg" class="portable-infobox-image" alt="image alt" data-image-key="" data-image-name=""/>
+											<img src="http://image.jpg" class="portable-infobox-image" alt="image alt" width="400" height="200" data-image-key="" data-image-name=""/>
 										</a>
 										<figcaption class="portable-infobox-item-margins portable-infobox-image-caption">Lorem ipsum dolor</figcaption>
 									</figure>
@@ -497,7 +189,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 								<div class="portable-infobox-item item-type-image no-margins">
 									<figure class="portable-infobox-image-wrapper">
 										<a href="" class="image image-thumbnail" title="image alt">
-											<img src="http://image.jpg" class="portable-infobox-image" alt="image alt" data-image-key="" data-image-name=""/>
+											<img src="http://image.jpg" class="portable-infobox-image" alt="image alt" width="400" height="200" data-image-key="" data-image-name=""/>
 										</a>
 									</figure>
 								</div>
@@ -507,6 +199,38 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 									</div>
 							</aside>',
 				'description' => 'Simple infobox with title, image and key-value pair'
+			],
+			[
+				'input' => [
+					'isInvalidImage' => true,
+					[
+						'type' => 'title',
+						'data' => [
+							'value' => 'Test Title'
+						]
+					],
+					[
+						'type' => 'image',
+						'data' => []
+					],
+					[
+						'type' => 'data',
+						'data' => [
+							'label' => 'test label',
+							'value' => 'test value'
+						]
+					]
+				],
+				'output' => '<aside class="portable-infobox">
+								<div class="portable-infobox-item item-type-title portable-infobox-item-margins">
+									<h2 class="portable-infobox-title">Test Title</h2>
+								</div>
+								<div class="portable-infobox-item item-type-key-val portable-infobox-item-margins">
+									<h3 class="portable-infobox-item-label portable-infobox-secondary-font">test label</h3>
+									<div class="portable-infobox-item-value">test value</div>
+									</div>
+							</aside>',
+				'description' => 'Simple infobox with title, INVALID image and key-value pair'
 			],
 			[
 				'input' => [
@@ -643,6 +367,60 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 								</nav>
 							</aside>',
 				'description' => 'Infobox with navigation'
+			],
+			[
+				'input' => [
+					'isWikiaMobile' => true,
+					[
+						'type' => 'image',
+						'data' => [
+							'alt' => 'image alt',
+							'url' => 'http://image.jpg',
+							'thumbnail' => 'thumbnail.jpg',
+							'ref' => 1,
+							'name' => 'test1'
+						]
+					]
+				],
+				'output' => '<aside class="portable-infobox">
+								<div class="portable-infobox-item item-type-image no-margins">
+									<img src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D" data-src="http://image.jpg" class="portable-infobox-image lazy media article-media" alt="image alt"  data-image-key="test1" data-image-name="test1" data-ref="1" data-params=\'[{"name":"test1", "full":"http://image.jpg"}]\' />
+								</div>
+							</aside>',
+				'description' => 'Mobile: Only image'
+			],
+			[
+				'input' => [
+					'isInvalidImage' => true,
+					'isWikiaMobile' => true,
+					[
+						'type' => 'title',
+						'data' => [
+							'value' => 'Test Title'
+						]
+					],
+					[
+						'type' => 'image',
+						'data' => []
+					],
+					[
+						'type' => 'data',
+						'data' => [
+							'label' => 'test label',
+							'value' => 'test value'
+						]
+					]
+				],
+				'output' => '<aside class="portable-infobox">
+								<div class="portable-infobox-item item-type-title portable-infobox-item-margins">
+									<h2 class="portable-infobox-title">Test Title</h2>
+								</div>
+								<div class="portable-infobox-item item-type-key-val portable-infobox-item-margins">
+									<h3 class="portable-infobox-item-label portable-infobox-secondary-font">test label</h3>
+									<div class="portable-infobox-item-value">test value</div>
+									</div>
+							</aside>',
+				'description' => 'Mobile: Simple infobox with title, INVALID image and key-value pair'
 			]
 		];
 	}
