@@ -26,16 +26,25 @@ define('ext.wikia.adEngine.template.modal', [
 	function show(params) {
 		log(['show', params], 'debug', logGroup);
 		var skin = adContext.getContext().targeting.skin;
+		var adIframe = createAdIframe(params);
 
 		if (skin === 'oasis') {
 			log(['show desktop modal'], 'debug', logGroup);
-			createAndShowDesktopModal(params);
+			createAndShowDesktopModal(adIframe, params);
+
+			if (params.scalable) {
+				log(['show scale the ad'], 'debug', logGroup);
+
+				win.addEventListener('resize', function () {
+					scaleAdIframeDesktop(adIframe, params);
+				});
+			}
 		}
 
 		if (skin === 'mercury') {
 			log(['show mobile (Mercury) modal'], 'debug', logGroup);
 
-			var adIframe = createAdIframe(params);
+
 
 			if (params.scalable) {
 				log(['show scale the ad'], 'debug', logGroup);
@@ -50,7 +59,7 @@ define('ext.wikia.adEngine.template.modal', [
 		}
 	}
 
-	function createAndShowDesktopModal(params) {
+	function createAndShowDesktopModal(adIframe, params) {
 		var modalConfig = {
 			vars: {
 				id: modalId,
@@ -64,8 +73,9 @@ define('ext.wikia.adEngine.template.modal', [
 
 		uiFactory.init('modal').then(function (uiModal) {
 			uiModal.createComponent(modalConfig, function (modal) {
-				modal.$content.append(createAdIframe(params));
+				modal.$content.append(adIframe);
 				modal.$element.width('auto');
+				scaleAdIframeDesktop(adIframe, params);
 				modal.show();
 			});
 		});
@@ -78,6 +88,22 @@ define('ext.wikia.adEngine.template.modal', [
 			width: params.width,
 			classes: 'wikia-ad-iframe'
 		});
+	}
+
+	function scaleAdIframeDesktop(adIframe, params) {
+
+		var border = 45;
+		var ratioWidth = win.innerWidth / params.width;
+		var ratioHeight = (win.innerHeight-border*2) / params.height;
+		var ratio = Math.min(ratioWidth, ratioHeight, maximumRatio);
+
+		adIframe.parentElement.style.padding = '0px';
+		adIframe.parentElement.style.width = (params.width * ratio) + 'px';
+		adIframe.parentElement.style.height = (params.height * ratio) + 'px';
+		adIframe.style.display = 'block';
+		adIframe.style.margin = '0 auto';
+		adIframe.style.transform = 'scale(' + ratio + ')';
+		adIframe.style.marginTop = (params.height) - (params.height / ratio) + 'px';
 	}
 
 	function scaleAdIframe(adIframe, params) {
