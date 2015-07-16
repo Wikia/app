@@ -232,14 +232,15 @@ class PortableInfoboxRenderService extends WikiaService {
 	 */
 	private function extendImageData( $data ) {
 		$thumbnail = $this->getThumbnail( $data[ 'name' ] );
-		$data[ 'height' ] = $thumbnail->getHeight();
-		$data[ 'width' ] = $thumbnail->getWidth();
-		$data[ 'thumbnail' ] = $thumbnail->getUrl();
-		$data[ 'key' ] = urlencode( $data[ 'key' ] );
 
 		if (!$thumbnail) {
 			return false;
 		}
+
+		$data[ 'height' ] = $thumbnail->getHeight();
+		$data[ 'width' ] = $thumbnail->getWidth();
+		$data[ 'thumbnail' ] = $thumbnail->getUrl();
+		$data[ 'key' ] = urlencode( $data[ 'key' ] );
 
 		return $data;
 	}

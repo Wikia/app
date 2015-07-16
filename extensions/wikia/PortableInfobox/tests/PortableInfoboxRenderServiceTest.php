@@ -383,7 +383,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 					]
 				],
 				'output' => '<aside class="portable-infobox">
-								<div class="portable-infobox-item item-type-image no-margins">
+								<div class="portable-infobox-item item-type-hero">
 									<img src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D" data-src="http://image.jpg" class="portable-infobox-image lazy media article-media" alt="image alt"  data-image-key="test1" data-image-name="test1" data-ref="1" data-params=\'[{"name":"test1", "full":"http://image.jpg"}]\' />
 								</div>
 							</aside>',
@@ -412,8 +412,10 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 					]
 				],
 				'output' => '<aside class="portable-infobox">
-								<div class="portable-infobox-item item-type-title portable-infobox-item-margins">
-									<h2 class="portable-infobox-title">Test Title</h2>
+								<div class="portable-infobox-item item-type-hero">
+									<hgroup class="portable-infobox-hero-title-wrapper portable-infobox-item-margins">
+									<h2 class="portable-infobox-hero-title">Test Title</h2>
+									</hgroup>
 								</div>
 								<div class="portable-infobox-item item-type-key-val portable-infobox-item-margins">
 									<h3 class="portable-infobox-item-label portable-infobox-secondary-font">test label</h3>
