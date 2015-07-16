@@ -28,6 +28,10 @@ class Hooks {
 			\Wikia::addAssetsToOutput( 'flags_editform_js' );
 			$out->addModules( 'ext.wikia.Flags.EditFormMessages' );
 		}
+
+		if ( $skin->getTitle()->getNamespace() === NS_TEMPLATE ) {
+			self::showFlagsNotification( $skin->getTitle()->getBaseText() );
+		}
 		return true;
 	}
 
@@ -110,7 +114,7 @@ class Hooks {
 	public static function onLinksUpdateInsertTemplates( $pageId, Array $templates ) {
 		$app = \F::app();
 
-		if ( !empty( $templates) && $app->wg->HideFlagsExt !== true ) {
+		if ( !empty( $templates ) && $app->wg->HideFlagsExt !== true ) {
 			$flagTypesResponse = $app->sendRequest( 'FlagsApiController',
 				'getFlagsForPageForEdit',
 				[
@@ -127,7 +131,7 @@ class Hooks {
 				 * compare in a case-insensitive and space-underscore-insensitive way.
 				 */
 				$templatesKeys = [];
-				foreach( $templates as $template ) {
+				foreach ( $templates as $template ) {
 					$templatesKeys[] = strtolower( $template['tl_title'] );
 				}
 
@@ -160,6 +164,56 @@ class Hooks {
 			}
 		}
 
+		return true;
+	}
+
+	/**
+	 * @param Array $preloads
+	 * @param Title $title
+	 * @return bool
+	 */
+
+	public static function onEditPageLayoutShowIntro( &$preloads, \Title $title ) {
+
+		if( $title->getNamespace() === NS_TEMPLATE ) {
+			$app = \F::app();
+			$response = $app->sendRequest( 'FlagsApiController',
+				'getFlagTypeIdByTemplate',
+				[
+					'flag_view' => $title->getBaseText()
+				]
+			)->getData();
+
+			if ( $response['status'] ) {
+				$preloads['EditPageFlagsIntro'] = [
+					'content' => wfMessage( 'flags-edit-intro-notification' )->parse(),
+				];
+			}
+		}
+		return true;
+	}
+
+	/**
+	 * Adds banner notification on view page if template is mapped as a Flag.
+	 * @param $templateName
+	 * @return bool
+	 */
+
+	public static function showFlagsNotification( $templateName ) {
+		$app = \F::app();
+		$response = $app->sendRequest( 'FlagsApiController',
+			'getFlagTypeIdByTemplate',
+			[
+				'flag_view' => $templateName
+			]
+		)->getData();
+
+		if ( $response['status'] ) {
+			\BannerNotificationsController::addConfirmation(
+				wfMessage( 'flags-edit-intro-notification' )->parse(),
+				\BannerNotificationsController::CONFIRMATION_NOTIFY
+			);
+		}
 		return true;
 	}
 }
