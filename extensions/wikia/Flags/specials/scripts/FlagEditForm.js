@@ -13,8 +13,8 @@ define('ext.wikia.Flags.FlagEditForm',
 			/**
 			 * FOR DEVELOPMENT ONLY
 			 */
-			//cache.del(getResourcesCacheKey());
-			//cache.del(getEmptyFormCacheKey());
+			cache.del(getResourcesCacheKey());
+			cache.del(getEmptyFormCacheKey());
 
 			$.when(getFormResources()).done(function (formResources) {
 				setupForm(formResources);
@@ -103,7 +103,7 @@ define('ext.wikia.Flags.FlagEditForm',
 					//values: getDropdownOptions({})
 					values: getDropdownOptions(getExampleValues())
 				};
-				content = mustache.to_html(formData.template, formParams);
+				content = mustache.to_html(formData.template, formParams, formData.partialParam);
 
 				cache.set(getEmptyFormCacheKey(), content, cache.CACHE_LONG);
 			}
@@ -189,10 +189,7 @@ define('ext.wikia.Flags.FlagEditForm',
 
 		function addNewParameterInput() {
 			var tbody = $('.flags-special-form-params-tbody'),
-				partial = mustache.to_html(formData.partialParam, {
-					/* TODO - Figure out a better ID */
-					id: 1
-				});
+				partial = mustache.to_html(formData.partialParam, {});
 
 			tbody.append(partial);
 		}
@@ -256,6 +253,7 @@ define('ext.wikia.Flags.FlagEditForm',
 		}
 
 		function getExampleValues() {
+			/* TODO - Remove it when done */
 			return {
 				name: 'Test Name',
 				template: 'Test Template',
