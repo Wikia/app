@@ -448,20 +448,22 @@ class CuratedContentController extends WikiaController {
 		global $wgWikiaCuratedContent;
 		$data = [];
 
-		foreach ( $wgWikiaCuratedContent as $section ) {
-			// sections
-			if ( !empty( $section['title'] ) && empty( $section['featured'] ) ) {
-				list( $_image_id, $url ) = CuratedContentSpecialController::findImageIfNotSet( $section['image_id'] );
-				$section['image_url'] = $url;
-			}
+		if ( is_array( $wgWikiaCuratedContent ) && !empty( $wgWikiaCuratedContent ) ) {
+			foreach ( $wgWikiaCuratedContent as $section ) {
+				// sections
+				if ( !empty( $section['title'] ) && empty( $section['featured'] ) ) {
+					list( $_image_id, $url ) = CuratedContentSpecialController::findImageIfNotSet( $section['image_id'] );
+					$section['image_url'] = $url;
+				}
 
-			// items
-			foreach ( $section['items'] as $i => $item) {
-				list( $_image_id, $url ) = CuratedContentSpecialController::findImageIfNotSet( $item['image_id'], $item['article_id'] );
-				$section['items'][$i]['image_url'] = $url;
-			}
+				// items
+				foreach ( $section['items'] as $i => $item ) {
+					list( $_image_id, $url ) = CuratedContentSpecialController::findImageIfNotSet( $item['image_id'], $item['article_id'] );
+					$section['items'][$i]['image_url'] = $url;
+				}
 
-			$data[] = $section;
+				$data[] = $section;
+			}
 		}
 
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
@@ -499,7 +501,7 @@ class CuratedContentController extends WikiaController {
 		$totalNumberOfItems = 0;
 		foreach ( $curatedContent as $curatedContentModule => $items ) {
 			foreach ( $items as $item ) {
-				if ( $item['type'] == 'category' || $curatedContentModule == 'featured') {
+				if ( $item['type'] == 'category' || $curatedContentModule == 'featured' ) {
 					if ( strlen( $item['label'] ) > CuratedContentSpecialController::LABEL_MAX_LENGTH ) {
 						$tooLongTitleCount++;
 					}
@@ -528,7 +530,7 @@ class CuratedContentController extends WikiaController {
 		);
 		$this->getResponse()->setFormat( WikiaResponse::FORMAT_JSON );
 		$this->cacheResponseFor( 1, self::DAYS );
-		$this->response->setVal('ids_list', $wikisList);
+		$this->response->setVal( 'ids_list', $wikisList );
 	}
 
 	/**
