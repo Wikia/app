@@ -249,7 +249,6 @@
         ['set', 'dimension19', window.wgArticleType],                           // ArticleType
         ['set', 'dimension20', window.wgABPerformanceTest || 'not set'],        // Performance A/B testing
         ['set', 'dimension21', String(window.wgArticleId)],                     // ArticleId
-        ['set', 'dimension22', window.wikiaIsPowerUserAdmin ? 'Yes' : 'No'],    // IsPowerUser: Admin
         ['set', 'dimension23', window.wikiaIsPowerUserFrequent ? 'Yes' : 'No'], // IsPowerUser: Frequent
         ['set', 'dimension24', window.wikiaIsPowerUserLifetime ? 'Yes' : 'No']  // IsPowerUser: Lifetime
     );
