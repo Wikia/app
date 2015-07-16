@@ -198,6 +198,18 @@ class ArticlesApiControllerTest extends \WikiaBaseTest {
 				5,
 				[3,4]
 			],
+			// url encoded input
+			[
+				'1%2C%202%2C%203',
+				5,
+				[1,2,3]
+			],
+			// url encoded input
+			[
+				'4%2C5%2C6',
+				5,
+				[4,5,6]
+			]
 		];
 	}
 
