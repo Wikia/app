@@ -287,7 +287,8 @@
         ['set', 'dimension20', window.wgABPerformanceTest || 'not set'],        // Performance A/B testing
         ['set', 'dimension21', String(window.wgArticleId)],                     // ArticleId
         ['set', 'dimension23', window.wikiaIsPowerUserFrequent ? 'Yes' : 'No'], // IsPowerUser: Frequent
-        ['set', 'dimension24', window.wikiaIsPowerUserLifetime ? 'Yes' : 'No']  // IsPowerUser: Lifetime
+        ['set', 'dimension24', window.wikiaIsPowerUserLifetime ? 'Yes' : 'No'], // IsPowerUser: Lifetime
+        ['set', 'dimension25', String(window.wgNamespaceNumber)]                // Namespace Number
     );
 
     /*
@@ -391,6 +392,10 @@
     window.ga('ads.set', 'dimension18', window.wgWikiCategories.join(','));             // Categories
     window.ga('ads.set', 'dimension19', window.wgArticleType);                          // ArticleType
     window.ga('ads.set', 'dimension21', String(window.wgArticleId));                    // ArticleId
+    window.ga('ads.set', 'dimension21', String(window.wgArticleId));                     // ArticleId
+    window.ga('ads.set', 'dimension23', window.wikiaIsPowerUserFrequent ? 'Yes' : 'No'); // IsPowerUser: Frequent
+    window.ga('ads.set', 'dimension24', window.wikiaIsPowerUserLifetime ? 'Yes' : 'No'); // IsPowerUser: Lifetime
+    window.ga('ads.set', 'dimension25', String(window.wgNamespaceNumber));               // Namespace Number
 
     /**** Include A/B testing status ****/
     if (window.Wikia && window.Wikia.AbTest) {
