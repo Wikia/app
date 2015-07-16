@@ -1,11 +1,12 @@
 /*global define*/
 define('ext.wikia.adEngine.template.modal', [
 	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.adHelper',
 	'wikia.log',
 	'wikia.iframeWriter',
 	'wikia.window',
 	require.optional('wikia.ui.factory')
-], function (adContext, log, iframeWriter, win, uiFactory) {
+], function (adContext, adHelper, log, iframeWriter, win, uiFactory) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.template.modal',
@@ -41,11 +42,10 @@ define('ext.wikia.adEngine.template.modal', [
 
 				scaleAdIframe(adIframe, params);
 
-				win.addEventListener('resize', function () {
+				win.addEventListener('resize', adHelper.throttle(function () {
 					scaleAdIframe(adIframe, params);
-				});
+				}));
 			}
-
 			win.Mercury.Modules.Ads.getInstance().openLightbox(adIframe);
 		}
 	}
