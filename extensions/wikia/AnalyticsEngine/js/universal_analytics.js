@@ -285,7 +285,8 @@
         ['set', 'dimension18', window.wgWikiCategories.join(',')],             // Categories
         ['set', 'dimension19', window.wgArticleType],                          // ArticleType
         ['set', 'dimension20', window.wgABPerformanceTest || 'not set'],       // Performance A/B testing
-        ['set', 'dimension21', String(window.wgArticleId)]                     // ArticleId
+        ['set', 'dimension21', String(window.wgArticleId)],                    // ArticleId
+        ['set', 'dimension25', window.wgNamespaceNumber]                       // Namespace Number
     );
 
     /*
