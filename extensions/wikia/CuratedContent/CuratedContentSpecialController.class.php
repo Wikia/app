@@ -94,7 +94,8 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 
 			$this->response->setVal( 'list', $list );
 		} else {
-			$this->response->setVal( 'featured', $this->sendSelfRequest( self::FEATURED_SECTION_TEMPLATE ) );
+			$this->response->setVal( 'featured', $this->sendSelfRequest( 'featuredSection' ) );
+			$this->response->setVal( 'featured', $this->sendSelfRequest( 'featuredSection' ) );
 			$this->response->setVal( 'section', $sectionTemplate );
 			$this->response->setVal( 'item', $itemTemplate );
 		}
@@ -109,7 +110,7 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 
 		$this->response->setVal( 'value', wfMessage( 'wikiacuratedcontent-featured-section-name' ) );
 		$this->response->setVal( 'image_id', $id );
-		$this->response->setVal( 'image_url', CuratedContentHelper::getImageUrl( $this->request->getVal( 'file' ), $id ) );
+		$this->response->setVal( 'image_url', CuratedContentHelper::getImageUrl( $id ) );
 		if ( $id != 0 ) {
 			$this->response->setVal( 'image_set', true );
 		}
@@ -122,7 +123,7 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 
 		$this->response->setVal( 'value', $this->request->getVal( 'value' , '' ) );
 		$this->response->setVal( 'image_id', $id );
-		$this->response->setVal( 'image_url', CuratedContentHelper::getImageUrl( $this->request->getVal( 'file' ), $id ) );
+		$this->response->setVal( 'image_url', CuratedContentHelper::getImageUrl( $id ) );
 		if ( $id != 0 ) {
 			$this->response->setVal( 'image_set', true );
 		}
@@ -144,13 +145,13 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 		$this->response->setVal( 'image_id', $id );
 
 
-		if ( $id == 0 && $item != '' ) {
+		if ( empty( $id ) && $item != '' ) {
 			$id = CuratedContentHelper::getIdFromCategoryName( $item );
 		} else {
 			$this->response->setVal( 'image_set', true );
 		}
 
-		$this->response->setVal( 'image_url', CuratedContentHelper::getImageUrl( $this->request->getVal( 'file' ), $id ) );
+		$this->response->setVal( 'image_url', CuratedContentHelper::getImageUrl( $id ) );
 		$this->response->setVal( 'item_placeholder', wfMessage( 'wikiacuratedcontent-content-item' ) );
 		$this->response->setVal( 'name_placeholder', wfMessage( 'wikiacuratedcontent-content-name' ) );
 	}
@@ -162,22 +163,24 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 		}
 		$this->response->setFormat( 'json' );
 
-		$sections = CuratedContentHelper::processLogic( $this->request->getArray( 'sections' ) );
-		$errors = CuratedContentHelper::validate( $sections );
+		$helper = new CuratedContentHelper();
+
+		$sections = $helper->processLogic( $this->request->getArray( 'sections' ) );
+		$errors = ( new CuratedContentValidator( $sections ) )->getErrors();
+
 
 		if ( !empty( $errors ) ) {
 			$this->response->setVal( 'error', $errors );
 			return true;
+		} else {
+			$status = WikiFactory::setVarByName( 'wgWikiaCuratedContent', $this->wg->CityId, $sections );
+			$this->response->setVal( 'status', $status );
+
+			if ( $status) {
+				wfRunHooks('CuratedContentSave', [$sections]);
+			}
+			return true;
 		}
-
-		$status = WikiFactory::setVarByName( 'wgWikiaCuratedContent', $this->wg->CityId, $sections );
-		$this->response->setVal( 'status', $status );
-
-		if ( $status ) {
-			wfRunHooks( 'CuratedContentSave', [ $sections ] );
-		}
-
-		return true;
 	}
 
 	private function buildSection( $section ) {
@@ -200,5 +203,26 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 			}
 		}
 		return $result;
+	}
+
+	public function getImage() {
+		$file = $this->request->getVal( 'file', '' );
+		$url = '';
+		$id = 0;
+
+		if ( !empty( $file ) ) {
+			$img = Title::newFromText( $file );
+
+			if ( !empty( $img ) && $img instanceof Title ) {
+				$id = $img->getArticleID();
+			}
+		}
+
+		if ( $id != 0 ) {
+			$url = CuratedContentHelper::getImageUrl( $id );
+		}
+
+		$this->response->setVal( 'url', $url );
+		$this->response->setVal( 'id', $id );
 	}
 }

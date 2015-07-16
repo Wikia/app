@@ -354,18 +354,22 @@ require(['wikia.window', 'jquery', 'wikia.nirvana', 'wikia.tracker', 'JSMessages
 								if (errReason === 'imageMissing') {
 									return imageMissingError;
 								}
+								if (errReason === 'duplicatedLabel') {
+									return duplicateError;
+								}
 								return errReason;
 							}
 
 							if (data.error) {
-								var items = $form.find('.item-input, .section-input');
+								var $items = $form.find('.item-input'),
+									$sections = $form.find('.section-input');
 
-								$.each(data.error, function() {
-									var errTitle = this.title,
-										errReason = this.reason,
+								[].forEach.call(data.error, function(err) {
+									var errTitle = err.title,
+										errReason = err.reason,
 										reasonMessage = getReasonMessage(errReason);
 
-									items.each(function () {
+									$items.each(function () {
 										if (this.value === errTitle) {
 											var $itemWithError;
 
@@ -380,16 +384,38 @@ require(['wikia.window', 'jquery', 'wikia.nirvana', 'wikia.tracker', 'JSMessages
 												default:
 													$itemWithError = $(this);
 											}
+											if ($itemWithError) {
+												$itemWithError.addError(reasonMessage);
+												return false;
+											}
+										}
+										return true;
+									});
 
-											$itemWithError.addError(reasonMessage);
-											return false;
+									$sections.each(function () {
+										if (this.value === errTitle) {
+											var $itemWithError;
+
+											switch (errReason) {
+												case 'missingImage':
+													$itemWithError = $(this).parent().find('.image');
+													break;
+												case 'duplicatedLabel':
+												case 'tooLongLabel':
+													$itemWithError = $(this);
+													break;
+											}
+											if ($itemWithError) {
+												$itemWithError.addError(reasonMessage);
+												return false;
+											}
 										}
 										return true;
 									});
 								});
 
 								$save.addClass('err');
-								$save.attr('disabled', true);
+								//$save.attr('disabled', true);
 								track({label: 'save-error'});
 							} else if (data.status) {
 								$save.addClass('ok');
