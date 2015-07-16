@@ -38,6 +38,7 @@ $messages['en'] = [
 	'flags-groups-other' => 'Other',
 	'flags-target-readers' => 'Readers',
 	'flags-target-contributors' => 'Contributors',
+	'flags-target-navigation' => 'Navigation',
 
 	'flags-notification-templates-extraction' => 'The following templates: \'\'$1\'\' were recognized as [[Special:Flags|Flags]] and automatically converted. To see the change visit [[Special:RecentChanges]] or [[Special:Log]].',
 	'flags-edit-intro-notification' => 'This template is associated with a Flag. Manage Flags at [[Special:Flags]].',
@@ -80,6 +81,7 @@ $messages['qqq'] = [
 	'flags-groups-improvements' => 'A name of a Improvements group of flags',
 	'flags-groups-status' => 'A name of a Status group of flags',
 	'flags-groups-other' => 'A name of a Other group of flags',
+	'flags-groups-navigation' => 'A name of Navigation group of flags',
 	'flags-target-readers' => 'Target for displaying flags - Readers',
 	'flags-target-contributors' => 'Target for displaying flags - Contributors',
 	
