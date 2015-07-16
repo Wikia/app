@@ -457,7 +457,7 @@ class CuratedContentController extends WikiaController {
 
 			// items
 			foreach ( $section['items'] as $i => $item) {
-				list($_image_id, $url) = CuratedContentSpecialController::findImageIfNotSet( $item['image_id'], $item['article_id'] );
+				list( $_image_id, $url ) = CuratedContentSpecialController::findImageIfNotSet( $item['image_id'], $item['article_id'] );
 				$section['items'][$i]['image_url'] = $url;
 			}
 
@@ -465,9 +465,9 @@ class CuratedContentController extends WikiaController {
 		}
 
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
-		$this->response->setVal('data', $data);
+		$this->response->setVal( 'data', $data );
 		// TODO: remove following line when Curated Content Manager is relased for all
-		$this->response->setHeader('Access-Control-Allow-Origin', '*');
+		$this->response->setHeader( 'Access-Control-Allow-Origin', '*' );
 	}
 
 	private function getCuratedContentForWiki( $wikiID ) {
