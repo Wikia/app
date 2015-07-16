@@ -10,12 +10,6 @@ define('ext.wikia.Flags.FlagEditForm',
 
 		/* Modal component configuration */
 		function init(prefillData) {
-			/**
-			 * FOR DEVELOPMENT ONLY
-			 */
-			cache.del(getResourcesCacheKey());
-			cache.del(getEmptyFormCacheKey());
-
 			$.when(getFormResources()).done(function (formResources) {
 				setupForm(formResources);
 
@@ -100,8 +94,7 @@ define('ext.wikia.Flags.FlagEditForm',
 			if (content === null) {
 				var formParams = {
 					messages: formData.messages,
-					//values: getDropdownOptions({})
-					values: getDropdownOptions(getExampleValues())
+					values: getDropdownOptions({})
 				};
 				content = mustache.to_html(formData.template, formParams, formData.partialParam);
 
