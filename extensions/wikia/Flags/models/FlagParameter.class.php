@@ -39,8 +39,6 @@ class FlagParameter extends FlagsBaseModel {
 
 		$status = $db->affectedRows() > 0;
 
-		$db->commit();
-
 		return $status;
 	}
 
@@ -60,11 +58,47 @@ class FlagParameter extends FlagsBaseModel {
 				->run( $db );
 		}
 
-		$status = $db->affectedRows() > 0;
+		$affectedRows = $db->affectedRows();
+		$allParams = count( $params );
 
-		$db->commit();
+		if ( $affectedRows < $allParams ) {
+			$flagParams = $this->getParametersForFlag( $db, $flagId );
+			$paramsDiff = array_diff_key( $params, $flagParams[$flagId]['params'] );
+
+			if ( !empty( $paramsDiff ) ) {
+				$this->createParametersForFlag( $db, $flagId, $flagParams[$flagId]['flag_type_id'], $paramsDiff );
+				$affectedRows += count( $paramsDiff );
+			}
+		}
+
+		$status = $affectedRows === $allParams;
 
 		return $status;
+	}
+
+	/**
+	 * Fetch all parameters for given flag instance
+	 *
+	 * @param \DatabaseBase $db
+	 * @param $flagId
+	 * @return bool|mixed
+	 */
+	public function getParametersForFlag( \DatabaseBase $db, $flagId ) {
+		$flagsParams = ( new \WikiaSQL() )
+			->SELECT_ALL()
+			->FROM( 'flags_params' )
+			->WHERE( 'flag_id' )->IN( $flagId )
+			->runLoop( $db, function( &$flagsParams, $row ) {
+				if ( !isset( $flagsParams[$row->flag_id] ) ) {
+					$flagsParams[$row->flag_id] = [
+						'flag_id' => $row->flag_id,
+						'flag_type_id' => $row->flag_type_id
+					];
+				}
+				$flagsParams[$row->flag_id]['params'][$row->param_name] = $row->param_value;
+			} );
+
+		return $flagsParams;
 	}
 
 	/**
