@@ -100,7 +100,8 @@ define('ext.wikia.Flags.FlagEditForm',
 			if (content === null) {
 				var formParams = {
 					messages: formData.messages,
-					values: getDropdownOptions({})
+					//values: getDropdownOptions({})
+					values: getDropdownOptions(getExampleValues())
 				};
 				content = mustache.to_html(formData.template, formParams);
 
@@ -162,25 +163,34 @@ define('ext.wikia.Flags.FlagEditForm',
 						);
 					}
 
-					modalInstance.close();
 					notification.show();
 				}
 			});
 		}
 
 		function collectFormData() {
+			var params = {};
+
+			$('.flags-special-form-param').each(function() {
+				var name = $(this).find('.flags-special-form-param-name-input').val(),
+				description = $(this).find('.flags-special-form-param-description-input').val();
+				params[name] = description;
+			});
+
 			return {
 				edit_token: mw.user.tokens.get('editToken'),
-				flag_name: $('#flags-special-item-new-name').val(),
-				flag_view: $('#flags-special-item-new-template').val(),
-				flag_group: $('#flags-special-item-new-group option:selected').val(),
-				flag_targeting: $('#flags-special-item-new-targeting option:selected').val()
+				flag_name: $('#flags-special-form-name').val(),
+				flag_view: $('#flags-special-form-template').val(),
+				flag_group: $('#flags-special-form-group option:selected').val(),
+				flag_targeting: $('#flags-special-form-targeting option:selected').val(),
+				flag_params_names: JSON.stringify(params)
 			}
 		}
 
 		function addNewParameterInput() {
 			var tbody = $('.flags-special-form-params-tbody'),
 				partial = mustache.to_html(formData.partialParam, {
+					/* TODO - Figure out a better ID */
 					id: 1
 				});
 
@@ -195,7 +205,7 @@ define('ext.wikia.Flags.FlagEditForm',
 			return emptyFormCacheKey + ':' + cacheVersion;
 		}
 
-		function getDropdownOptions(values, selectedGroup, selectedTargeting) {
+		function getDropdownOptions(values) {
 			/* TODO - i18n and move it from here right now! */
 			values.groups = [
 				{
@@ -242,18 +252,6 @@ define('ext.wikia.Flags.FlagEditForm',
 				},
 			];
 
-			if ( selectedGroup !== undefined && values.groups.selectedGroup !== undefined ) {
-				values.groups[selectedGroup].selected = true;
-			} else {
-				values.groups[0].selected = true;
-			}
-
-			if ( selectedTargeting !== undefined && values.groups.selectedTargeting !== undefined ) {
-				values.groups[selectedTargeting].selected = true;
-			} else {
-				values.groups[0].selected = true;
-			}
-
 			return values;
 		}
 
@@ -261,28 +259,6 @@ define('ext.wikia.Flags.FlagEditForm',
 			return {
 				name: 'Test Name',
 				template: 'Test Template',
-				groups: [
-					{
-						name: 'Stub',
-						value: '3'
-					},
-					{
-						name: 'Spoiler',
-						value: '2',
-						selected: true
-					}
-				],
-				targeting: [
-					{
-						name: 'Readers',
-						value: 1,
-						selected: true
-					},
-					{
-						name: 'Contributors',
-						value: 2
-					}
-				],
 				params: [
 					{
 						id: 1,
