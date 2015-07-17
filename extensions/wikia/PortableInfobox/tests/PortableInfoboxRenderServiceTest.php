@@ -392,8 +392,8 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 							'thumbnail' => 'thumbnail.jpg',
 							'ref' => 1,
 							'name' => 'test1',
-							'width' => 400,
-							'height' => 200
+							'width' => 450,
+							'height' => 600
 						]
 					]
 				],

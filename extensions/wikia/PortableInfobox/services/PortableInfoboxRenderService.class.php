@@ -4,6 +4,7 @@ class PortableInfoboxRenderService extends WikiaService {
 	const LOGGER_LABEL = 'portable-infobox-render-not-supported-type';
 	const DESKTOP_THUMBNAIL_WIDTH = 270;
 	const MOBILE_THUMBNAIL_WIDTH = 360;
+	const MAX_SMALL_IMAGE_WIDTH = 300;
 	const MOBILE_TEMPLATE_POSTFIX = '-mobile';
 
 	private $templates = [
@@ -200,9 +201,9 @@ class PortableInfoboxRenderService extends WikiaService {
 		}
 
 		if ( $type === 'image' && !array_key_exists( 'image', $heroData ) ) {
-			$imageData = $this->extendImageData($item);
+			$file = \WikiaFileHelper::getFileFromTitle( $item['data'][ 'name' ] );
 
-			if ( $imageData && $imageData['data']['width'] > self::MOBILE_THUMBNAIL_WIDTH ) {
+			if ( $file && $file->getWidth() > self::MAX_SMALL_IMAGE_WIDTH ) {
 				return true;
 			}
 		}
