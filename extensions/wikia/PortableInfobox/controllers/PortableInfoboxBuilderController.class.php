@@ -21,24 +21,17 @@ class PortableInfoboxBuilderController extends WikiaController {
 	}
 
 	/**
-	 * publishes changes to infobox tamplete made inside infobox builder UI
+	 * publishes changes to infobox template made inside infobox builder UI
 	 */
 	public function publish() {
-		global $wgTitle, $wgOut, $wgUser;
+		global $wgTitle;
 
-		$params = [
-			'action' => 'edit',
-			'title' => $wgTitle->getPrefixedDBkey(),
-			'summary' => 'initial edit',
-			'text' => $this->getInfoboxMarkup(),
-			'token' => $wgUser->getEditToken()
-		];
+		$ep = new EditPage(Article::newFromTitle($wgTitle, RequestContext::getMain()));
+		$ep->textbox1 = $this->getInfoboxMarkup();
+		$ep->summary = 'InfoboxBuilder';
+		$ep->attemptSave();
 
-		$response = ApiService::call( $params );
-
-		var_dump($response);
-
-		$wgOut->redirect( $wgTitle->getFullURL() );
+		$this->response->redirect( $wgTitle->getFullURL() );
 	}
 
 	/**
