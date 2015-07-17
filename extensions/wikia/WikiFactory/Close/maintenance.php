@@ -62,9 +62,11 @@ class CloseWikiMaintenance {
 
 		$first     = isset( $this->mOptions[ "first" ] ) ? true : false;
 		$sleep     = isset( $this->mOptions[ "sleep" ] ) ? $this->mOptions[ "sleep" ] : 15;
-		$condition = array( "ORDER BY" => "city_id" );
+		$cluster   = isset( $this->mOptions[ "cluster" ] ) ? $this->mOptions[ "cluster" ] : false; // eg. c6
+		$opts      = array( "ORDER BY" => "city_id" );
 
 		$this->info( 'start', [
+			'cluster' => $cluster,
 			'first'   => $first,
 			'limit'   => $this->mOptions[ "limit" ] ?: false
 		] );
@@ -74,8 +76,18 @@ class CloseWikiMaintenance {
 		 */
 		if( !$first ) {
 			if( isset( $this->mOptions[ "limit" ] ) && is_numeric( $this->mOptions[ "limit" ] ) )  {
-				$condition[ "LIMIT" ] = $this->mOptions[ "limit" ];
+				$opts[ "LIMIT" ] = $this->mOptions[ "limit" ];
 			}
+		}
+
+		$where = array(
+			"city_public" => array( 0, -1 ),
+			"city_flags <> 0 && city_flags <> 32",
+			"city_last_timestamp < '{$timestamp}'",
+		);
+
+		if ($cluster !== false) {
+			$where[ "city_cluster" ] = $cluster;
 		}
 
 		$timestamp = wfTimestamp(TS_DB,strtotime(sprintf("-%d days",self::CLOSE_WIKI_DELAY)));
@@ -83,18 +95,17 @@ class CloseWikiMaintenance {
 		$sth = $dbr->select(
 			array( "city_list" ),
 			array( "city_id", "city_flags", "city_dbname", "city_url", "city_public" ),
-			array(
-				"city_public" => array( 0, -1 ),
-				"city_flags <> 0 && city_flags <> 32",
-				"city_last_timestamp < '{$timestamp}'",
-			),
+			$where,
 			__METHOD__,
-			$condition
+			$opts
 		);
 
 		$this->info( 'wikis to remove', [
 			'wikis' => $sth->numRows()
 		] );
+
+		$this->log( 'Wikis to remove: ' . $sth->numRows() );
+		$this->log( $dbr->lastQuery() );
 
 		while( $row = $dbr->fetchObject( $sth ) ) {
 			/**
