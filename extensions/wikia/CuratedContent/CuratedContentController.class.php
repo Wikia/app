@@ -433,6 +433,34 @@ class CuratedContentController extends WikiaController {
 		}
 	}
 
+	public function getData( ) {
+		global $wgWikiaCuratedContent;
+		$data = [];
+
+		if ( !empty( $wgWikiaCuratedContent ) && is_array( $wgWikiaCuratedContent )  ) {
+			foreach ( $wgWikiaCuratedContent as $section ) {
+				// sections
+				if ( !empty( $section['title'] ) && empty( $section['featured'] ) ) {
+					list( $_image_id, $url ) = CuratedContentSpecialController::findImageIfNotSet( $section['image_id'] );
+					$section['image_url'] = $url;
+				}
+
+				// items
+				foreach ( $section['items'] as $i => $item ) {
+					list( $_image_id, $url ) = CuratedContentSpecialController::findImageIfNotSet( $item['image_id'], $item['article_id'] );
+					$section['items'][$i]['image_url'] = $url;
+				}
+
+				$data[] = $section;
+			}
+		}
+
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+		$this->response->setVal( 'data', $data );
+		// TODO: remove following line when Curated Content Manager is relased for all
+		$this->response->setHeader( 'Access-Control-Allow-Origin', '*' );
+	}
+
 	private function getCuratedContentForWiki( $wikiID ) {
 		$curatedContent = [ ];
 		$value = WikiFactory::getVarValueByName( 'wgWikiaCuratedContent', $wikiID );
@@ -490,9 +518,10 @@ class CuratedContentController extends WikiaController {
 		$wikisList = WikiFactory::getListOfWikisWithVar(
 			self::CURATED_CONTENT_WG_VAR_ID_PROD, "full", "LIKE", null, "true"
 		);
+
+		$this->response->setVal( 'ids_list', $wikisList );
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
-		$this->response->setVal('ids_list', $wikisList);
 	}
 
 	/**
