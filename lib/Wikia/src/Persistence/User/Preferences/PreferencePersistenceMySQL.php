@@ -39,13 +39,15 @@ class PreferencePersistenceMySQL implements PreferencePersistence {
 	public function save( $userId, array $preferences ) {
 		// Filtering preferences against the whiteList
 		$whiteList = $this->whiteList;
-		$preferences = array_reduce($preferences, function($result, $value) use ($whiteList) {
-			if (in_array($value, $this->whiteList)) {
-				$result[] = $value;
-			}
+		if ( !empty($whiteList) ) {
+			$preferences = array_reduce( $preferences, function ( $result, $item ) use ( $whiteList ) {
+				if ( in_array( $item->getName(), $this->whiteList ) ) {
+					$result[] = $item;
+				}
 
-			return $result;
-		}, []);
+				return $result;
+			}, [] );
+		}
 		$tuples = $this->createTuplesFromPreferences( $userId, $preferences );
 
 		if ( empty( $tuples ) ) {
