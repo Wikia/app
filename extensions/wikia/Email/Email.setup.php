@@ -71,6 +71,7 @@ $wgAutoloadClasses['Email\Controller\FounderTipsThreeDaysController'] = $dir . '
 $wgAutoloadClasses['Email\Controller\FounderTipsTenDaysController'] = $dir . 'Controller/FounderController.class.php';
 $wgAutoloadClasses['Email\Controller\WelcomeController'] = $dir . 'Controller/WelcomeController.class.php';
 $wgAutoloadClasses['Email\Controller\UserRightsChangedController'] =  $dir . 'Controller/UserRightsChangedController.class.php';
+$wgAutoloadClasses['Email\Controller\UserNameChangeController'] = $dir . 'Controller/UserNameChangeController.class.php';
 $wgAutoloadClasses['Email\SpecialSendEmailController'] = $dir .  'SpecialSendEmailController.class.php';
 $wgAutoloadClasses['Email\Tracking\TrackingCategories'] = $dir .  'tracking/TrackingCategories.class.php';
 
@@ -99,6 +100,7 @@ $wgExtensionMessagesFiles['EmailWelcome'] = $dir . 'i18n/Welcome.i18n.php';
 $wgExtensionMessagesFiles['SpecialSendEmail'] = $dir . 'i18n/specialSendEmail.i18n.php';
 $wgExtensionMessagesFiles['ForgotPassword'] = $dir . 'i18n/ForgotPassword.i18n.php';
 $wgExtensionMessagesFiles['UserRightsChanged'] = $dir . 'i18n/UserRightsChanged.i18n.php';
+$wgExtensionMessagesFiles['EmailUserNameChange'] = $dir . 'i18n/UserNameChange.i18n.php';
 
 /**
  * permissions

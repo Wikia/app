@@ -32,4 +32,5 @@ class TrackingCategories {
 	const FORGOT_PASSWORD = 'TemporaryPassword';
 	const WELCOME = 'WelcomeMail';
 	const REACTIVATE_ACCOUNT = 'ReactivationMail';
+	const USER_NAME_CHANGE = 'UserRenameProcessFinishedNotification';
 }
