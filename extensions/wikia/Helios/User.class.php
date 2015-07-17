@@ -189,11 +189,26 @@ class User {
 			throw $throwException;
 		}
 
-		if ( !empty( $loginInfo ) ) {
+		if ( !empty( $loginInfo ) && $authMethod != self::AUTH_TYPE_RESET_PW ) {
 			self::setAccessTokenCookie( $loginInfo->access_token );
 		}
 
 		return $result;
+	}
+
+	/**
+	 * @param $username
+	 * @param $password
+	 *
+	 * @return bool
+	 */
+	public static function wasResetPassAuth( $username, $password ) {
+		if ( empty( self::$authenticationCache[$username][$password][self::AUTH_METHOD_NAME] ) ) {
+			return false;
+		}
+		$authMethod = self::$authenticationCache[$username][$password][self::AUTH_METHOD_NAME];
+
+		return $authMethod == self::AUTH_TYPE_RESET_PW;
 	}
 
 	/**

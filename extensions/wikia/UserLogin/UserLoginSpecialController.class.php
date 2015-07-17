@@ -79,12 +79,6 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	 * Route the view based on logged in status
 	 */
 	public function index() {
-		//Making sure that user is logged out for password reset
-		$action = $this->request->getVal( 'action', null );
-		if ( $action === wfMessage( 'resetpass_submit' )->escaped() ) {
-			$this->wg->User->logout();
-		}
-
 		if ( $this->wg->User->isLoggedIn() ) {
 			$this->forward( __CLASS__, 'loggedIn' );
 		} else {
