@@ -92,6 +92,10 @@ JSMessages::registerPackage( 'FlagsCreateForm', [
 	'flags-special-create-*'
 ] );
 
+JSMessages::registerPackage( 'FlagsSpecialAutoload', [
+	'flags-special-autoload-*'
+] );
+
 /**
  * Resources Loader module
  */
