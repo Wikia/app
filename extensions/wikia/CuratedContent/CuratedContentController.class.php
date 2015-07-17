@@ -437,7 +437,7 @@ class CuratedContentController extends WikiaController {
 		global $wgWikiaCuratedContent;
 		$data = [];
 
-		if ( is_array( $wgWikiaCuratedContent ) && !empty( $wgWikiaCuratedContent ) ) {
+		if ( !empty( $wgWikiaCuratedContent ) && is_array( $wgWikiaCuratedContent )  ) {
 			foreach ( $wgWikiaCuratedContent as $section ) {
 				// sections
 				if ( !empty( $section['title'] ) && empty( $section['featured'] ) ) {
