@@ -289,6 +289,7 @@ class ForumHooksHelper {
 	 */
 	static public function onOutputPageBeforeHTML( OutputPage $out, &$text ) {
 		$app = F::app();
+		$out->addStyle( AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/Forum/css/ForumTag.scss'));
 		$title = $out->getTitle();
 		if ( $out->isArticle()
 			&& $title->exists()
