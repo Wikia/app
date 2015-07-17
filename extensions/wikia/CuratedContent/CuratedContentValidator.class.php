@@ -13,7 +13,7 @@ class CuratedContentValidator {
 		$this->hadEmptyLabel = false;
 
 		// validate sections
-		foreach( $data as $section ) {
+		foreach ( $data as $section ) {
 			if ( !empty( $section['featured'] ) ) {
 				$this->validateFeaturedSection( $section );
 			} else {
@@ -21,7 +21,7 @@ class CuratedContentValidator {
 			}
 		}
 		// also check section for duplicate title
-		foreach( array_count_values( $this->titles ) as $title => $count ) {
+		foreach ( array_count_values( $this->titles ) as $title => $count ) {
 			if ( $count > 1 ) {
 				$this->error( [ 'title' => $title ], 'duplicatedLabel' );
 			}
@@ -39,8 +39,10 @@ class CuratedContentValidator {
 	}
 
 	private function validateFeaturedSection( $section ) {
-		foreach ( $section['items'] as $item ) {
-			$this->validateItem( $item );
+		if ( !empty( $section['items'] ) && is_array( $section['items'] ) ) {
+			foreach ($section['items'] as $item) {
+				$this->validateItem($item);
+			}
 		}
 	}
 
@@ -50,9 +52,10 @@ class CuratedContentValidator {
 		}
 	}
 
-	private function validateSection ( $section ) {
+	private function validateSection( $section ) {
+		// check for "optional" section - it has empty label, but there can be only ONE
 		if ( empty( $section['title'] ) ) {
-			if ($this->hadEmptyLabel) {
+			if ( $this->hadEmptyLabel ) {
 				$this->error( $section, 'duplicatedLabel' );
 			} else {
 				$this->hadEmptyLabel = true;
@@ -63,7 +66,7 @@ class CuratedContentValidator {
 			$this->error( $section, 'tooLongLabel' );
 		}
 
-		if ( empty( $section['featured'] ) && $section['title'] !== '' ) {
+		if ( empty( $section['featured'] ) && !empty( $section['title'] ) ) {
 			$this->validateImage( $section );
 		}
 
@@ -79,7 +82,7 @@ class CuratedContentValidator {
 		}
 
 		if ( strlen( $section['title'] ) ) {
-			$this->titles[ ] = $section['title'];
+			$this->titles[] = $section['title'];
 		}
 	}
 
@@ -118,7 +121,7 @@ class CuratedContentValidator {
 			$this->error( $item, 'articleNotFound' );
 		}
 
-		$this->titles[ ] = $item['title'];
+		$this->titles[] = $item['title'];
 	}
 
 	private static function needsArticleId( $type ) {

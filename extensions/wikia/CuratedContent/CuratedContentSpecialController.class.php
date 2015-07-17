@@ -95,7 +95,6 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 			$this->response->setVal( 'list', $list );
 		} else {
 			$this->response->setVal( 'featured', $this->sendSelfRequest( 'featuredSection' ) );
-			$this->response->setVal( 'featured', $this->sendSelfRequest( 'featuredSection' ) );
 			$this->response->setVal( 'section', $sectionTemplate );
 			$this->response->setVal( 'item', $itemTemplate );
 		}
@@ -106,12 +105,12 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 	public function featuredSection() {
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 
-		$id = $this->request->getVal( 'image_id', 0 );
+		$imageId = $this->request->getVal( 'image_id', 0 );
 
 		$this->response->setVal( 'value', wfMessage( 'wikiacuratedcontent-featured-section-name' ) );
-		$this->response->setVal( 'image_id', $id );
-		$this->response->setVal( 'image_url', CuratedContentHelper::getImageUrl( $id ) );
-		if ( $id != 0 ) {
+		$this->response->setVal( 'image_id', $imageId );
+		$this->response->setVal( 'image_url', CuratedContentHelper::getImageUrl( $imageId ) );
+		if ( $imageId != 0 ) {
 			$this->response->setVal( 'image_set', true );
 		}
 	}
@@ -119,39 +118,37 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 	public function section() {
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 
-		$id = $this->request->getVal( 'image_id', 0 );
+		$imageId = $this->request->getVal( 'image_id', 0 );
 
 		$this->response->setVal( 'value', $this->request->getVal( 'value' , '' ) );
-		$this->response->setVal( 'image_id', $id );
-		$this->response->setVal( 'image_url', CuratedContentHelper::getImageUrl( $id ) );
-		if ( $id != 0 ) {
+		$this->response->setVal( 'image_id', $imageId );
+		$this->response->setVal( 'image_url', CuratedContentHelper::getImageUrl( $imageId ) );
+		if ( empty( $imageId ) ) {
 			$this->response->setVal( 'image_set', true );
 		}
 
 		$this->response->setVal( 'section_placeholder', wfMessage( 'wikiacuratedcontent-content-section' ) );
 	}
 
-	/*
-	 * referred by ITEM_FUNCTION_NAME
-	 */
 	public function item() {
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 
-		$id = $this->request->getVal( 'image_id', 0 );
+		$imageId = $this->request->getVal( 'image_id', 0 );
 		$item = $this->request->getVal( 'item_value', '' );
 
 		$this->response->setVal( 'item_value', $item );
 		$this->response->setVal( 'name_value', $this->request->getVal( 'name_value', '' ) );
-		$this->response->setVal( 'image_id', $id );
+		$this->response->setVal( 'image_id', $imageId );
 
 
-		if ( empty( $id ) && $item != '' ) {
-			$id = CuratedContentHelper::getIdFromCategoryName( $item );
+		if ( empty( $imageId ) && !empty( $item ) ) {
+			// image_id is 0 - that means it should be taken from page
+			$imageId = CuratedContentHelper::getIdFromCategoryName( $item );
 		} else {
 			$this->response->setVal( 'image_set', true );
 		}
 
-		$this->response->setVal( 'image_url', CuratedContentHelper::getImageUrl( $id ) );
+		$this->response->setVal( 'image_url', CuratedContentHelper::getImageUrl( $imageId ) );
 		$this->response->setVal( 'item_placeholder', wfMessage( 'wikiacuratedcontent-content-item' ) );
 		$this->response->setVal( 'name_placeholder', wfMessage( 'wikiacuratedcontent-content-name' ) );
 	}
@@ -171,16 +168,15 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 
 		if ( !empty( $errors ) ) {
 			$this->response->setVal( 'error', $errors );
-			return true;
 		} else {
 			$status = WikiFactory::setVarByName( 'wgWikiaCuratedContent', $this->wg->CityId, $sections );
 			$this->response->setVal( 'status', $status );
 
-			if ( $status) {
-				wfRunHooks('CuratedContentSave', [$sections]);
+			if ( $status ) {
+				wfRunHooks( 'CuratedContentSave', [ $sections ] );
 			}
-			return true;
 		}
+		return true;
 	}
 
 	private function buildSection( $section ) {
@@ -208,21 +204,21 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 	public function getImage() {
 		$file = $this->request->getVal( 'file', '' );
 		$url = '';
-		$id = 0;
+		$imageId = 0;
 
 		if ( !empty( $file ) ) {
-			$img = Title::newFromText( $file );
+			$imageTitle = Title::newFromText( $file );
 
-			if ( !empty( $img ) && $img instanceof Title ) {
-				$id = $img->getArticleID();
+			if ( !empty( $imageTitle ) && $imageTitle instanceof Title && $imageTitle->exists() ) {
+				$imageId = $imageTitle->getArticleID();
 			}
 		}
 
-		if ( $id != 0 ) {
-			$url = CuratedContentHelper::getImageUrl( $id );
+		if ( !empty( $imageId ) ) {
+			$url = CuratedContentHelper::getImageUrl( $imageId );
 		}
 
 		$this->response->setVal( 'url', $url );
-		$this->response->setVal( 'id', $id );
+		$this->response->setVal( 'id', $imageId );
 	}
 }

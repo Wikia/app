@@ -190,16 +190,16 @@ class CuratedContentController extends WikiaController {
 		wfProfileIn( __METHOD__ );
 
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
-		$content = $wgWikiaCuratedContent;
-		if ( empty( $content ) ) {
+
+		if ( empty( $wgWikiaCuratedContent ) ) {
 			$this->getCategories();
 		} else {
 			$section = $this->request->getVal( 'section' );
 			if ( empty( $section ) ) {
-				$this->setSectionsInResponse( $content );
-				$this->setFeaturedContentInResponse( $content );
+				$this->setSectionsInResponse( $wgWikiaCuratedContent );
+				$this->setFeaturedContentInResponse( $wgWikiaCuratedContent );
 			} else {
-				$this->setSectionItemsInResponse( $content, $section );
+				$this->setSectionItemsInResponse( $wgWikiaCuratedContent, $section );
 			}
 
 			$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
@@ -320,7 +320,7 @@ class CuratedContentController extends WikiaController {
 	 */
 	private function setSectionItemsResponse( $sectionName, $ret ) {
 		foreach ( $ret as &$value ) {
-			list( $image_id, $image_url ) = CuratedContentHelper::findImageIfNotSet(
+			list( $image_id, $image_url ) = CuratedContentHelper::findImage(
 				$value['image_id'],
 				$value['article_id']
 			);
@@ -359,7 +359,7 @@ class CuratedContentController extends WikiaController {
 					$ret[] = [
 						'title' => $item['title'],
 						'image_id' => $imageId,
-						'image_url' => CuratedContentHelper::findImageIfNotSet( $imageId )[1]
+						'image_url' => CuratedContentHelper::findImage( $imageId )[1]
 					];
 				}
 
@@ -374,7 +374,7 @@ class CuratedContentController extends WikiaController {
 
 	function getJsonItem( $titleName, $ns, $pageId ) {
 		$title = Title::makeTitle( $ns, $titleName );
-		list( $image_id, $image_url ) = CuratedContentHelper::findImageIfNotSet( 0, $pageId );
+		list( $image_id, $image_url ) = CuratedContentHelper::findImage( 0, $pageId );
 
 		return [
 			'title' => $ns . ':' . $title->getFullText(),
@@ -503,12 +503,10 @@ class CuratedContentController extends WikiaController {
 	 * @return bool
 	 */
 	static function onCuratedContentSave() {
-		global $wgServer;
-
-		$content = F::app()->wg->WikiaCuratedContent;
+		global $wgServer, $wgWikiaCuratedContent;
 
 		( new SquidUpdate( array_unique( array_reduce(
-			$content,
+			$wgWikiaCuratedContent,
 			function ( $urls, $item ) use ( $wgServer ) {
 				if ( $item['title'] !== '' && empty( $item['featured'] ) ) {
 					// Purge section URLs using urlencode() (standard for MediaWiki), which uses implements RFC 1738

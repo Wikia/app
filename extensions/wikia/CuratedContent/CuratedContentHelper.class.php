@@ -18,7 +18,7 @@ class CuratedContentHelper {
 	}
 
 	private function processLogicForSection( $section ) {
-		$section['image_id'] = (int)$section['image_id'];
+		$section['image_id'] = (int)$section['image_id']; // fallback to 0 if it's not set in request
 
 		foreach ( $section['items'] as &$item ) {
 			$this->fillItemInfo( $item );
@@ -29,7 +29,7 @@ class CuratedContentHelper {
 
 	private function fillItemInfo( &$item ) {
 		$title = Title::newFromText( $item['title'] );
-		if ( !empty( $title ) ) {
+		if ( $title instanceof Title && $title->exists() ) {
 			$articleId = $title->getArticleId();
 			$namespaceId = $title->getNamespace();
 			$imageId = (int)$item['image_id'];
@@ -47,19 +47,21 @@ class CuratedContentHelper {
 
 				case self::STR_CATEGORY:
 					$category = Category::newFromTitle( $title );
-					if ( !empty( $category ) ) {
+					if ( $category instanceof Category && $category->getID() ) {
 						$count = $category->getPageCount();
 						if ( empty( $count ) ) {
 							$item['type'] = self::STR_EMPTY_CATEGORY;
 						}
+					} else {
+						$item['type'] = null;
 					}
 					break;
 			}
 
-			if ( $imageId === 0 ) {
+			if ( empty( $imageId ) ) {
 				$imageTitle = self::findFirstImageTitleFromArticle( $articleId );
 				if ( !empty( $imageTitle ) ) {
-					$articleId = $imageTitle->getArticleId();
+					$imageId = $imageTitle->getArticleId();
 				}
 			}
 			$item['article_id'] = $articleId;
@@ -68,13 +70,13 @@ class CuratedContentHelper {
 	}
 
 	public static function getIdFromCategoryName( $categoryName ) {
-		$cat = Title::newFromText( $categoryName, NS_CATEGORY );
+		$category = Title::newFromText( $categoryName, NS_CATEGORY );
 
-		return ($cat instanceof Title) ? $cat->getArticleID() : 0;
+		return ($category instanceof Title && $category->exists()) ? $category->getArticleID() : 0;
 	}
 
-	public static function getImageUrl( $id ) {
-		$thumbnail = (new ImageServing( [$id], 50, 50 ))->getImages( 1 );
+	public static function getImageUrl( $id, $imageSize = 50 ) {
+		$thumbnail = (new ImageServing( [ $id ], $imageSize, $imageSize ))->getImages( 1 );
 
 		return !empty( $thumbnail ) ? $thumbnail[$id][0]['url'] : '';
 	}
@@ -83,7 +85,7 @@ class CuratedContentHelper {
 		$mediaService = new MediaQueryService();
 		$mediaInfo = $mediaService->getMediaData( $title );
 		if ( !empty( $mediaInfo ) ) {
-			if ( $mediaInfo['type'] === 'video' ) {
+			if ( $mediaInfo['type'] === MediaQueryService::MEDIA_TYPE_VIDEO ) {
 				return [
 					'provider' => $mediaInfo['meta']['provider'],
 					'thumb_url' => $mediaInfo['thumbUrl'],
@@ -94,17 +96,17 @@ class CuratedContentHelper {
 		return null;
 	}
 
-	public static function findImageIfNotSet( $imageId, $articleId = 0 ) {
+	public static function findImage( $imageId, $articleId = 0 ) {
 		$url = '';
-
 		$imageTitle = null;
+
 		if ( empty( $imageId ) ) {
 			$imageId = null;
 			$imageTitle = self::findFirstImageTitleFromArticle( $articleId );
 		} else {
 			$imageTitle = Title::newFromID( $imageId );
 		}
-		if ( !empty( $imageTitle ) ) {
+		if ( $imageTitle instanceof Title && $imageTitle->exists() ) {
 			$url = self::getUrlFromImageTitle( $imageTitle );
 			$imageId = $imageTitle->getArticleId();
 		}
@@ -115,16 +117,16 @@ class CuratedContentHelper {
 	public static function findFirstImageTitleFromArticle( $articleId ) {
 		$imageTitle = null;
 		if ( !empty( $articleId ) ) {
-			$is = new ImageServing( [$articleId] );
-			$image = $is->getImages( 1 );
+			$imageServing = new ImageServing( [ $articleId ] );
+			$image = $imageServing->getImages( 1 );
 			if ( !empty( $image ) ) {
-				$image_title_name = $image[$articleId][0]['name'];
-				if ( !empty( $image_title_name ) ) {
-					$imageTitle = Title::newFromText( $image_title_name, NS_FILE );
+				$imageTitleName = $image[$articleId][0]['name'];
+				if ( !empty( $imageTitleName ) ) {
+					$imageTitle = Title::newFromText( $imageTitleName, NS_FILE );
 				}
 			}
 		}
-		return $imageTitle;
+		return ($imageTitle instanceof Title && $imageTitle->exists()) ? $imageTitle : null;
 	}
 
 	public static function getUrlFromImageTitle( $imageTitle ) {

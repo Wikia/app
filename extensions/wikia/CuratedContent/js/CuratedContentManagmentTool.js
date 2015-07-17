@@ -401,6 +401,7 @@ require(['wikia.window', 'jquery', 'wikia.nirvana', 'wikia.tracker', 'JSMessages
 													$itemWithError = $(this).parent().find('.image');
 													break;
 												case 'duplicatedLabel':
+													// intended fall
 												case 'tooLongLabel':
 													$itemWithError = $(this);
 													break;
@@ -415,7 +416,7 @@ require(['wikia.window', 'jquery', 'wikia.nirvana', 'wikia.tracker', 'JSMessages
 								});
 
 								$save.addClass('err');
-								//$save.attr('disabled', true);
+								$save.attr('disabled', true);
 								track({label: 'save-error'});
 							} else if (data.status) {
 								$save.addClass('ok');
