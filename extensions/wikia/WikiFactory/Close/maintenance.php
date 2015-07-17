@@ -68,7 +68,7 @@ class CloseWikiMaintenance {
 		$this->info( 'start', [
 			'cluster' => $cluster,
 			'first'   => $first,
-			'limit'   => $this->mOptions[ "limit" ] ?: false
+			'limit'   => isset( $this->mOptions[ "limit" ] ) ? $this->mOptions[ "limit" ] : false
 		] );
 
 		/**
@@ -80,9 +80,11 @@ class CloseWikiMaintenance {
 			}
 		}
 
+		$timestamp = wfTimestamp(TS_DB,strtotime(sprintf("-%d days",self::CLOSE_WIKI_DELAY)));
 		$where = array(
-			"city_public" => array( 0, -1 ),
-			"city_flags <> 0 && city_flags <> 32",
+			"city_public" => array( WikiFactory::CLOSE_ACTION, WikiFactory::HIDE_ACTION ),
+			"city_flags <> 0",
+			sprintf( "city_flags <> %d", WikiFactory::FLAG_REDIRECT ),
 			"city_last_timestamp < '{$timestamp}'",
 		);
 
@@ -90,7 +92,6 @@ class CloseWikiMaintenance {
 			$where[ "city_cluster" ] = $cluster;
 		}
 
-		$timestamp = wfTimestamp(TS_DB,strtotime(sprintf("-%d days",self::CLOSE_WIKI_DELAY)));
 		$dbr = WikiFactory::db( DB_SLAVE );
 		$sth = $dbr->select(
 			array( "city_list" ),
@@ -106,6 +107,9 @@ class CloseWikiMaintenance {
 
 		$this->log( 'Wikis to remove: ' . $sth->numRows() );
 		$this->log( $dbr->lastQuery() );
+
+		$this->log( 'Will start in 5 seconds...' );
+		sleep(5);
 
 		while( $row = $dbr->fetchObject( $sth ) ) {
 			/**
