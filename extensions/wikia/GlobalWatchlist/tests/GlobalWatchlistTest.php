@@ -31,11 +31,11 @@ class GlobalWatchlistBotTest extends WikiaBaseTest {
 	 */
 	public function testCheckIfEmailUnSubscribed() {
 		$userMock = $this->getMockBuilder( 'User' )
-			->setMethods( [ 'getBoolOption' ] )
+			->setMethods( [ 'getGlobalPreference' ] )
 			->getMock();
 
 		$userMock->expects( $this->once() )
-			->method( 'getBoolOption' )
+			->method( 'getGlobalPreference' )
 			->with( $this->equalTo( 'unsubscribed' ) )
 			->will( $this->returnValue( true ) );
 
@@ -78,11 +78,11 @@ class GlobalWatchlistBotTest extends WikiaBaseTest {
 	 */
 	public function testCheckIfSubscribedToWeeklyDigest() {
 		$userMock = $this->getMockBuilder( 'User' )
-			->setMethods( [ 'getBoolOption' ] )
+			->setMethods( [ 'getGlobalPreference' ] )
 			->getMock();
 
 		$userMock->expects( $this->once() )
-			->method( 'getBoolOption' )
+			->method( 'getGlobalPreference' )
 			->with( $this->equalTo( 'watchlistdigest' ) )
 			->will( $this->returnValue( false ) );
 

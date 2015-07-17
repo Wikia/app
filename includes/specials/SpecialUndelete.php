@@ -629,7 +629,7 @@ class SpecialUndelete extends SpecialPage {
 		$this->mInvert = $request->getCheck( 'invert' ) && $posted;
 		$this->mPreview = $request->getCheck( 'preview' ) && $posted;
 		$this->mDiff = $request->getCheck( 'diff' );
-		$this->mDiffOnly = $request->getBool( 'diffonly', $this->getUser()->getOption( 'diffonly' ) );
+		$this->mDiffOnly = $request->getBool( 'diffonly', $this->getUser()->getGlobalPreference( 'diffonly' ) );
 		$this->mComment = $request->getText( 'wpComment' );
 		$this->mUnsuppress = $request->getVal( 'wpUnsuppress' ) && $user->isAllowed( 'suppressrevision' );
 		$this->mToken = $request->getVal( 'token' );
@@ -870,8 +870,8 @@ class SpecialUndelete extends SpecialPage {
 		$out->addHTML(
 			Xml::element( 'textarea', array(
 					'readonly' => 'readonly',
-					'cols' => intval( $user->getOption( 'cols' ) ),
-					'rows' => intval( $user->getOption( 'rows' ) ) ),
+					'cols' => intval( $user->getGlobalPreference( 'cols' ) ),
+					'rows' => intval( $user->getGlobalPreference( 'rows' ) ) ),
 				$rev->getText( Revision::FOR_THIS_USER, $user ) . "\n" ) .
 			Xml::openElement( 'div' ) .
 			Xml::openElement( 'form', array(

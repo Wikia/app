@@ -1,7 +1,11 @@
 {{> greeting}}
 <table>
 	{{# details}}
-		{{> digestDetail}}
+		<tr>
+			<td>
+				{{> digestDetail}}
+			</td>
+		</tr>
 	{{/ details}}
 	{{> button}}
 	{{# hasContentFooterMessages}}

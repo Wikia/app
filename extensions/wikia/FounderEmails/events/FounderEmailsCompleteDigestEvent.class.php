@@ -48,7 +48,7 @@ class FounderEmailsCompleteDigestEvent extends FounderEmailsEvent {
 				$user = User::newFromId( $userId );
 
 				// skip if not enabled
-				if ( !$this->enabled( $cityID, $user ) ) {
+				if ( !$this->enabled( $user, $cityID ) ) {
 					continue;
 				}
 

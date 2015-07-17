@@ -62,7 +62,7 @@ class EditPageLayoutController extends WikiaController {
 		$helper = EditPageLayoutHelper::getInstance();
 		$editPage = $helper->getEditPage();
 
-		$this->pagetype = 'editpage';
+		$this->showPreview = true;
 
 		if ( $helper->fullScreen ) {
 			$wgJsMimeType = $this->wg->JsMimeType;
@@ -72,11 +72,12 @@ class EditPageLayoutController extends WikiaController {
 				->getSassCommonURL( 'extensions/wikia/EditPageLayout/css/EditPageLayout.scss' ) );
 
 			if ( $helper->isCodeSyntaxHighlightingEnabled( $editPage->getTitle() ) ) {
-				$this->pagetype = 'codepage';
 				$this->wg->Out->addScript( "<script type=\"{$wgJsMimeType}\" src=\"/resources/Ace/ace.js\"></script>" );
 				$srcs = AssetsManager::getInstance()->getGroupCommonURL( 'ace_editor_js' );
 
 				OasisController::addBodyClass( 'codeeditor' );
+
+				$this->showPreview = $helper->isCodePageWithPreview( $editPage->getTitle() );
 			} else {
 				$packageName = 'epl';
 				if ( class_exists( 'RTE' ) && RTE::isEnabled() && !$editPage->isReadOnlyPage() ) {

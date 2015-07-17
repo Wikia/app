@@ -1,0 +1,13 @@
+{
+	"@metadata": {
+		"authors": [
+			"Gazeb"
+		]
+	},
+	"sf_createproperty_proptype": "Тіп:",
+	"templates": "Шаблоны",
+	"sf_createtemplate_deletefield": "Вымазати",
+	"sf_createform_add": "Придати",
+	"createcategory": "Створити катеґорію",
+	"sf_createcategory_name": "Мено катеґорії:"
+}

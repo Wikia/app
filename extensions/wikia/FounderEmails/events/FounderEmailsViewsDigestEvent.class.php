@@ -7,7 +7,7 @@ class FounderEmailsViewsDigestEvent extends FounderEmailsEvent {
 		$this->setData( $data );
 	}
 
-	public function enabled ( $wikiId, User $user ) {
+	public function enabled ( User $user, $wikiId = null ) {
 		if ( self::isAnswersWiki() ) {
 			return false;
 		}
@@ -51,10 +51,4 @@ class FounderEmailsViewsDigestEvent extends FounderEmailsEvent {
 		}
 		wfProfileOut( __METHOD__ );
 	}
-
-	/*  Not used by DailyDigest event
-	public static function register ( ) {
-
-	}
-	 */
 }

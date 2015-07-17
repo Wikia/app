@@ -10,6 +10,7 @@ $messages['en'] = array(
 
 	'insights-list-no-items' => 'Great work! There are no articles in this queue that need attention.',
 	'insights-list-header-page' => 'Page',
+	'insights-list-header-altaction' => 'Action',
 	'insights-list-header-pageviews' => 'Page views',
 	'insights-last-edit' => 'Last edited by $1, $2',
 
@@ -58,6 +59,9 @@ $messages['en'] = array(
 	'insights-used-on' => 'Used on $1 articles',
 
 	'insights-module-see-more' => 'See more insights',
+
+	'insights-altaction-convert' => 'Convert!',
+	'insights-altaction-seedraft' => 'View the draft',
 );
 
 $messages['qqq'] = array(
@@ -69,6 +73,7 @@ $messages['qqq'] = array(
 
 	'insights-list-no-items' => 'A message that is shown when there are no items to work on left on a list',
 	'insights-list-header-page' => 'A header of an Insights list table for a column with a title and last revision data',
+	'insights-list-header-altaction' => 'A header of an Insights list table for a column with a link to a semi- or fully automatic action taken on the corresponding page',
 	'insights-list-header-pageviews' => 'A header of an Insights list table for a column with a number of views of an article',
 	'insights-last-edit' => 'Information who and when made last edit for chosen article on the list',
 
@@ -116,6 +121,9 @@ $messages['qqq'] = array(
 	'insights-used-on' => 'An information on how many articles uses the given template. $1 is the number',
 
 	'insights-module-see-more' => 'A text for a link to see more Insights lists',
+
+	'insights-altaction-convert' => 'A label for a link that takes you to edit mode and presents you an automatically converted infobox markup for your template.',
+	'insights-altaction-seedraft' => 'A label for a link that takes you to a view of an existing draft of a template.',
 );
 
 $messages['de'] = array(

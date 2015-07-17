@@ -122,7 +122,7 @@ class GlobalTitle extends Title {
 			throw new \Exception( 'Invalid $city_id.' );
 		}
 
-		$memkey = sprintf( "GlobalTitle:%d:%d", $id, $city_id );
+		$memkey = wfSharedMemcKey( "GlobalTitle", $id, $city_id );
 		$res = $wgMemc->get( $memkey );
 		if ( empty($res) && WikiFactory::isPublic($city_id) ) {
 			$dbname = ( $dbname ) ? $dbname : WikiFactory::IDtoDB($city_id);

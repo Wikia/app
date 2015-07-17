@@ -3,6 +3,7 @@
 class PortableInfoboxDataService {
 
 	const IMAGE_FIELD_TYPE = 'image';
+	const INFOBOXES_PROPERTY_NAME = 'infoboxes';
 
 	/**
 	 * @var Title $title
@@ -13,7 +14,7 @@ class PortableInfoboxDataService {
 		$this->title = $title;
 	}
 
-	public static function newFromTitle( Title $title ) {
+	public static function newFromTitle( $title ) {
 		return new PortableInfoboxDataService( $title );
 	}
 
@@ -28,10 +29,12 @@ class PortableInfoboxDataService {
 	 */
 	public function getData() {
 		if ( $this->title && $this->title->exists() ) {
-			$data = Article::newFromTitle( $this->title, RequestContext::getMain() )
+			$parserOutput = Article::newFromTitle( $this->title, RequestContext::getMain() )
 				//on empty parser cache this should be regenerated, see WikiPage.php:2996
-				->getParserOutput()
-				->getProperty( PortableInfoboxParserTagController::INFOBOXES_PROPERTY_NAME );
+				->getParserOutput();
+			$data = $parserOutput ?
+				$parserOutput->getProperty( self::INFOBOXES_PROPERTY_NAME )
+				: false;
 
 			//return empty [] to prevent false on non existing infobox data
 			return $data ? $data : [ ];
@@ -49,7 +52,9 @@ class PortableInfoboxDataService {
 		$images = [ ];
 
 		foreach ( $this->getData() as $infobox ) {
-			foreach ( $infobox[ 'data' ] as $field ) {
+			// ensure data array exists
+			$data = is_array( $infobox[ 'data' ] ) ? $infobox[ 'data' ] : [ ];
+			foreach ( $data as $field ) {
 				if ( $field[ 'type' ] == self::IMAGE_FIELD_TYPE && isset( $field[ 'data' ] ) && !empty( $field[ 'data' ][ 'key' ] ) ) {
 					$images[ $field[ 'data' ][ 'key' ] ] = true;
 				}

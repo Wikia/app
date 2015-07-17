@@ -14,6 +14,9 @@ class FacebookClientHooks {
 	 * fbReturnToTitle
 	 * fbScriptLangCode
 	 *
+	 * @param $vars
+	 *
+	 * @return bool
 	 */
 	public static function MakeGlobalVariablesScript( &$vars ) {
 		global $fbScript, $fbAppId, $fbLogo;
@@ -117,6 +120,10 @@ class FacebookClientHooks {
 
 	/**
 	 * Handle confirmation message from Facebook Connect
+	 *
+	 * @param $html
+	 *
+	 * @return bool
 	 */
 	public static function onSkinTemplatePageBeforeUserMsg( &$html ) {
 		if ( F::app()->checkSkin( 'oasis' ) ) {
@@ -137,11 +144,29 @@ class FacebookClientHooks {
 		return true;
 	}
 
+	/**
+	 * @param Skin $skin
+	 * @param string $text
+	 *
+	 * @return bool
+	 * @throws WikiaException
+	 */
 	public static function onSkinAfterBottomScripts( $skin, &$text ) {
 
 		$script = AssetsManager::getInstance()->getURL( 'facebook_client_fbtags_js' );
 		$text .= Html::linkedScript( $script[0] );
 
+		return true;
+	}
+
+	/**
+	 * @param User $user
+	 *
+	 * @return bool
+	 */
+	public static function onUserLogout( &$user ) {
+		// Clean up any facebook cookies/data
+		FacebookClient::getInstance()->logout();
 		return true;
 	}
 }

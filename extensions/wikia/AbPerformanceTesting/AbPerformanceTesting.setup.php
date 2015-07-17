@@ -73,6 +73,7 @@ $wgAbPerformanceTestingExperiments = [];
 /**
  * Wikia\\AbPerformanceTesting\\Experiments\\BackendDelay
  */
+/**
 $wgAbPerformanceTestingExperiments['backend_delay_0'] = [
 	'handler' => 'Wikia\\AbPerformanceTesting\\Experiments\\BackendDelay',
 	'params' => [
@@ -116,10 +117,12 @@ $wgAbPerformanceTestingExperiments['backend_delay_3'] = [
 		'traffic' => [30, 39],
 	]
 ];
+**/
 
 /**
  * Wikia\\AbPerformanceTesting\\Experiments\\FrontendDelay
  */
+/**
 $wgAbPerformanceTestingExperiments['frontend_delay_0'] = [
 	'handler' => 'Wikia\\AbPerformanceTesting\\Experiments\\FrontendDelay',
 	'params' => [
@@ -163,3 +166,4 @@ $wgAbPerformanceTestingExperiments['frontend_delay_3'] = [
 		'traffic' => [530, 539],
 	]
 ];
+**/

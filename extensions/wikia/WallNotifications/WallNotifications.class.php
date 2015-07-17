@@ -406,7 +406,6 @@ class WallNotifications {
 			$watcherName = $watcher->getName();
 			$controller = $this->getEmailExtensionController( $notification, $watcherName );
 
-
 			$params = [
 				'boardNamespace' => $notifData->article_title_ns,
 				'boardTitle' => $notifData->article_title_text,
@@ -430,11 +429,11 @@ class WallNotifications {
 		}
 
 		// Don't send an email to users that unsubscribed their email address
-		if ( $watcher->getBoolOption( 'unsubscribed' ) === true ) {
+		if ( (bool)$watcher->getGlobalPreference( 'unsubscribed' ) === true ) {
 			return false;
 		}
 
-		$mode = $watcher->getOption( 'enotifwallthread' );
+		$mode = $watcher->getGlobalPreference( 'enotifwallthread' );
 		if ( empty( $mode ) ) {
 			return false;
 		}
@@ -459,7 +458,7 @@ class WallNotifications {
 			} else {
 				$controller = 'Email\Controller\ReplyForum';
 			}
-		} else if ( $notification->data->wall_username != $watcherName ) {
+		} else if ( $notification->isMain() && $notification->data->wall_username != $watcherName ) {
 			$controller = 'Email\Controller\FollowedWallMessage';
 		} else if ( !$notification->isMain() ) {
 			$controller = 'Email\Controller\ReplyWallMessage';

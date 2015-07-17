@@ -144,7 +144,7 @@ class WallBaseController extends WikiaController {
 		$this->response->setVal( 'canRemove', $wallMessage->canRemove( $this->wg->User )  && !$wallMessage->isRemove() );
 		$this->response->setVal( 'canClose', $wallMessage->canArchive( $this->wg->User ) );
 		$this->response->setVal( 'canReopen', $wallMessage->canReopen( $this->wg->User ) );
-		$this->response->setVal( 'showViewSource', $this->wg->User->getOption( 'wallshowsource', false ) );
+		$this->response->setVal( 'showViewSource', $this->wg->User->getGlobalPreference( 'wallshowsource', false ) );
 		$this->response->setVal( 'threadHistoryLink', $wallMessage->getMessagePageUrl( true ) . '?action=history' );
 		$this->response->setVal( 'wgBlankImgUrl', $this->wg->BlankImgUrl );
 		$this->response->setVal( 'isRemoved', $wallMessage->isRemove() );
@@ -451,12 +451,12 @@ class WallBaseController extends WikiaController {
 		$selected = $this->wg->request->getVal( 'sort' );
 
 		if ( empty( $selected ) ) {
-			$selected = $this->app->wg->User->getOption( 'wall_sort_' . $this->sortingType );
+			$selected = $this->app->wg->User->getGlobalPreference( 'wall_sort_' . $this->sortingType );
 		} else {
-			$selectedDB = $this->app->wg->User->getOption( 'wall_sort_' . $this->sortingType );
+			$selectedDB = $this->app->wg->User->getGlobalPreference( 'wall_sort_' . $this->sortingType );
 
 			if ( $selectedDB != $selected ) {
-				$this->app->wg->User->setOption( 'wall_sort_' . $this->sortingType, $selected );
+				$this->app->wg->User->setGlobalPreference( 'wall_sort_' . $this->sortingType, $selected );
 				$this->app->wg->User->saveSettings();
 			}
 		}

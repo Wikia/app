@@ -35,6 +35,7 @@ $wgHooks['ArticleSaveComplete'][] = 'MercuryApiHooks::onArticleSaveComplete';
 $wgHooks['ArticleRollbackComplete'][] = 'MercuryApiHooks::onArticleRollbackComplete';
 $wgHooks['TitleGetSquidURLs'][] = 'MercuryApiHooks::onTitleGetSquidURLs';
 $wgHooks['InstantGlobalsGetVariables'][] = 'MercuryApiHooks::onInstantGlobalsGetVariables';
+$wgHooks['CuratedContentSave'][] = 'MercuryApiHooks::onCuratedContentSave';
 
 // Special pages
 $wgSpecialPages['Mercury'] = 'MercurySpecialPageController';

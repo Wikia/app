@@ -170,7 +170,8 @@ class UserMailer {
 		$contentType = null,
 		$category = 'UserMailer',
 		$priority = 0,
-		$attachments = []
+		$attachments = [],
+		$sourceType = 'mediawiki' // remove when no more 'mediawiki' types are sent
 	) {
 
 		if ( !is_array( $to ) ) {
@@ -241,7 +242,7 @@ class UserMailer {
 			$headers['X-Priority'] = $priority;
 		}
 
-		$ret = wfRunHooks( 'AlternateUserMailer', [ $headers, $to, $from, $subject, $body , $priority, $attachments ] );
+		$ret = wfRunHooks( 'AlternateUserMailer', [ $headers, $to, $from, $subject, $body , $priority, $attachments, $sourceType ] );
 		if ( $ret === false ) {
 			return Status::newGood();
 		} elseif ( $ret !== true ) {

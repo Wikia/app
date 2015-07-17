@@ -23,7 +23,7 @@ class FacebookClientController extends WikiaController {
 
 		// Settings for a connected user
 		$disconnectLink = wfMessage( 'fbconnect-disconnect-account-link' )->parse();
-		$fbFromExist = F::app()->wg->User->getOption( 'fbFromExist' );
+		$fbFromExist = F::app()->wg->User->getGlobalFlag( 'fbFromExist' );
 
 		// Settings for a user who is not connected yet
 		$convertMessage = wfMessage( 'fbconnect-convert' )->plain();

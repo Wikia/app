@@ -8,6 +8,8 @@
 use Wikia\Tasks\Tasks\BaseTask;
 
 class UserRenameTask extends BaseTask {
+	const EMAIL_CONTROLLER = 'Email\Controller\UserNameChange';
+
 	/**
 	 * Marshal & execute the RenameUserProcess functions to rename a user
 	 *
@@ -128,7 +130,7 @@ class UserRenameTask extends BaseTask {
 		if ( !$renameIP ) {
 			//mark user as renamed
 			$renamedUser = \User::newFromName( $params['rename_new_name'] );
-			$renamedUser->setOption('wasRenamed', true);
+			$renamedUser->setGlobalFlag('wasRenamed', true);
 			$renamedUser->saveSettings();
 
 			if ( $params['notify_renamed'] ) {
@@ -203,14 +205,11 @@ class UserRenameTask extends BaseTask {
 	 */
 	protected function notifyUser( $user, $oldUsername, $newUsername ) {
 		if ( $user->getEmail() != null ) {
-			$user->sendMail(
-				wfMsgForContent('userrenametool-finished-email-subject', $oldUsername),
-				wfMsgForContent('userrenametool-finished-email-body-text', $oldUsername, $newUsername),
-				null, //from
-				null, //replyto
-				'UserRenameProcessFinishedNotification',
-				wfMsgForContent('userrenametool-finished-email-body-html', $oldUsername, $newUsername)
-			);
+			F::app()->sendRequest( self::EMAIL_CONTROLLER, 'handle', [
+				'targetUser' => $user,
+				'oldUserName' => $oldUsername,
+				'newUserName' => $newUsername
+			] );
 			$this->info('rename user with email notification', [
 				'old_name' => $oldUsername,
 				'new_name' => $newUsername,
