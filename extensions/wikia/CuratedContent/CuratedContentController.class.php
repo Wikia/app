@@ -185,11 +185,12 @@ class CuratedContentController extends WikiaController {
 	}
 
 	public function getList() {
+		global $wgWikiaCuratedContent;
+
 		wfProfileIn( __METHOD__ );
 
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
-
-		$content = $this->wg->WikiaCuratedContent;
+		$content = $wgWikiaCuratedContent;
 		if ( empty( $content ) ) {
 			$this->getCategories();
 		} else {
@@ -464,11 +465,11 @@ class CuratedContentController extends WikiaController {
 		foreach ( $curatedContent as $curatedContentModule => $items ) {
 			foreach ( $items as $item ) {
 				if ( $item['type'] == 'category' || $curatedContentModule == 'featured' ) {
-					if ( strlen( $item['label'] ) > CuratedContentHelper::VALIDATE_LABEL_MAX_LENGTH ) {
+					if ( strlen( $item['label'] ) > CuratedContentValidator::LABEL_MAX_LENGTH ) {
 						$tooLongTitleCount++;
 					}
 				} else {
-					if ( strlen( $item['title'] ) > CuratedContentHelper::VALIDATE_LABEL_MAX_LENGTH ) {
+					if ( strlen( $item['title'] ) > CuratedContentValidator::LABEL_MAX_LENGTH ) {
 						$tooLongTitleCount++;
 					}
 				}

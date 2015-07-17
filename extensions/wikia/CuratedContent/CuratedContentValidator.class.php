@@ -1,15 +1,15 @@
 <?php
 
 class CuratedContentValidator {
-	const VALIDATE_LABEL_MAX_LENGTH = 48;
+	const LABEL_MAX_LENGTH = 48;
 
 	private $errors;
 	private $titles;
 	private $hadEmptyLabel;
 
 	public function __construct( $data ) {
-		$this->errors = [];
-		$this->titles = [];
+		$this->errors = [ ];
+		$this->titles = [ ];
 		$this->hadEmptyLabel = false;
 
 		// validate sections
@@ -30,7 +30,7 @@ class CuratedContentValidator {
 
 	private function error( $itemWithTitle, $errorString ) {
 		if ( array_key_exists( 'title', $itemWithTitle ) && !empty( $errorString ) ) {
-			$this->errors[] = ['title' => $itemWithTitle['title'], 'reason' => $errorString];
+			$this->errors[ ] = [ 'title' => $itemWithTitle['title'], 'reason' => $errorString ];
 		}
 	}
 
@@ -59,7 +59,7 @@ class CuratedContentValidator {
 			}
 		}
 
-		if ( strlen( $section['title'] ) > self::VALIDATE_LABEL_MAX_LENGTH ) {
+		if ( strlen( $section['title'] ) > self::LABEL_MAX_LENGTH ) {
 			$this->error( $section, 'tooLongLabel' );
 		}
 
@@ -79,7 +79,7 @@ class CuratedContentValidator {
 		}
 
 		if ( strlen( $section['title'] ) ) {
-			$this->titles[] = $section['title'];
+			$this->titles[ ] = $section['title'];
 		}
 	}
 
@@ -98,7 +98,7 @@ class CuratedContentValidator {
 			$this->error( $item, 'emptyLabel' );
 		}
 
-		if ( strlen( $item['label'] ) > self::VALIDATE_LABEL_MAX_LENGTH ) {
+		if ( strlen( $item['label'] ) > self::LABEL_MAX_LENGTH ) {
 			$this->error( $item, 'tooLongLabel' );
 		}
 
@@ -118,7 +118,7 @@ class CuratedContentValidator {
 			$this->error( $item, 'articleNotFound' );
 		}
 
-		$this->titles[] = $item['title'];
+		$this->titles[ ] = $item['title'];
 	}
 
 	private static function needsArticleId( $type ) {

@@ -10,9 +10,9 @@ class CuratedContentHelper {
 	const STR_EMPTY_CATEGORY = 'emptyCategory';
 
 	public function processLogic( $sections ) {
-		$processedSections = [];
+		$processedSections = [ ];
 		foreach ( $sections as $section ) {
-			$processedSections[] = $this->processLogicForSection( $section );
+			$processedSections[ ] = $this->processLogicForSection( $section );
 		}
 		return $processedSections;
 	}
@@ -28,11 +28,11 @@ class CuratedContentHelper {
 	}
 
 	private function fillItemInfo( &$item ) {
-		$title = Title::newFromText( $item[ 'title' ] );
+		$title = Title::newFromText( $item['title'] );
 		if ( !empty( $title ) ) {
 			$articleId = $title->getArticleId();
 			$namespaceId = $title->getNamespace();
-			$imageId = (int)$item[ 'image_id' ];
+			$imageId = (int)$item['image_id'];
 
 			$item['type'] = self::getTypeFromNamespaceId( $namespaceId );
 
@@ -74,23 +74,20 @@ class CuratedContentHelper {
 	}
 
 	public static function getImageUrl( $id ) {
-		$thumbnail = (new ImageServing( [ $id ], 50, 50 ))->getImages( 1 );
+		$thumbnail = (new ImageServing( [$id], 50, 50 ))->getImages( 1 );
 
-		return !empty( $thumbnail ) ? $thumbnail[ $id ][ 0 ][ 'url' ] : '';
+		return !empty( $thumbnail ) ? $thumbnail[$id][0]['url'] : '';
 	}
 
 	private function getVideoInfo( $title ) {
 		$mediaService = new MediaQueryService();
 		$mediaInfo = $mediaService->getMediaData( $title );
 		if ( !empty( $mediaInfo ) ) {
-			if ( $mediaInfo[ 'type' ] === 'video' ) {
-				$provider = $mediaInfo [ 'meta' ][ 'provider' ];
-				$thumbUrl = $mediaInfo [ 'thumbUrl' ];
-				$videoId = $mediaInfo[ 'meta' ][ 'videoId' ];
+			if ( $mediaInfo['type'] === 'video' ) {
 				return [
-					'provider' => $provider,
-					'thumb_url' => $thumbUrl,
-					'videoId' => $videoId
+					'provider' => $mediaInfo['meta']['provider'],
+					'thumb_url' => $mediaInfo['thumbUrl'],
+					'videoId' => $mediaInfo['meta']['videoId']
 				];
 			}
 		}
@@ -118,10 +115,10 @@ class CuratedContentHelper {
 	public static function findFirstImageTitleFromArticle( $articleId ) {
 		$imageTitle = null;
 		if ( !empty( $articleId ) ) {
-			$is = new ImageServing( [ $articleId ] );
+			$is = new ImageServing( [$articleId] );
 			$image = $is->getImages( 1 );
 			if ( !empty( $image ) ) {
-				$image_title_name = $image[ $articleId ][ 0 ][ 'name' ];
+				$image_title_name = $image[$articleId][0]['name'];
 				if ( !empty( $image_title_name ) ) {
 					$imageTitle = Title::newFromText( $image_title_name, NS_FILE );
 				}
