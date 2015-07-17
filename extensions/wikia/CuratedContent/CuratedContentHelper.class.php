@@ -8,6 +8,7 @@ class CuratedContentHelper {
 	const STR_FILE = 'file';
 	const STR_CATEGORY = 'category';
 	const STR_EMPTY_CATEGORY = 'emptyCategory';
+	const STR_VIDEO = 'video';
 
 	public function processLogic( $sections ) {
 		$processedSections = [ ];
@@ -40,7 +41,7 @@ class CuratedContentHelper {
 				case self::STR_FILE:
 					$info = self::getVideoInfo( $title );
 					if ( !empty( $info ) ) {
-						$item['type'] = 'video';
+						$item['type'] = self::STR_VIDEO;
 						$item['video_info'] = $info;
 					}
 					break;

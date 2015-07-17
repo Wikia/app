@@ -142,8 +142,8 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 
 
 		if ( empty( $imageId ) && !empty( $item ) ) {
-			// image_id is 0 - that means it should be taken from page
-			$imageId = CuratedContentHelper::getIdFromCategoryName( $item );
+			// $imageId is 0 - that means it should be taken from item
+			$imageId = CuratedContentHelper::findFirstImageTitleFromArticle( $item );
 		} else {
 			$this->response->setVal( 'image_set', true );
 		}

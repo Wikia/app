@@ -71,11 +71,13 @@ class CuratedContentValidator {
 		}
 
 		if ( !empty( $section['items'] ) && is_array( $section['items'] ) ) {
+			// if section has items - validate them
 			foreach ($section['items'] as $item) {
 				$this->validateCategoryItem($item);
 				$this->validateImage($item);
 			}
 		} else {
+			// if section doesn't have any items and it's not Featured Section, it's an error
 			if ( empty( $section['featured'] ) ) {
 				$this->error( $section, 'itemsMissing');
 			}
@@ -105,11 +107,11 @@ class CuratedContentValidator {
 			$this->error( $item, 'tooLongLabel' );
 		}
 
-		if ( $item['type'] == null ) {
+		if ( empty( $item['type'] ) ) {
 			$this->error( $item, 'notSupportedType' );
 		}
 
-		if ( $item['type'] === 'video' ) {
+		if ( $item['type'] === CuratedContentHelper::STR_VIDEO ) {
 			if ( empty( $item['info'] ) ) {
 				$this->error( $item, 'videoNotHaveInfo' );
 			} elseif ( !self::isSupportedProvider( $item['info']['provider'] ) ) {
