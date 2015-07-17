@@ -82,6 +82,7 @@ $wgHooks['PageHeaderDropdownActions'][] = 'Flags\Hooks::onPageHeaderDropdownActi
 $wgHooks['SkinTemplateNavigation'][] = 'Flags\Hooks::onSkinTemplateNavigation';
 $wgHooks['ArticleSaveComplete'][] = 'Flags\Hooks::onArticleSaveComplete';
 $wgHooks['EditPageLayoutShowIntro'][] = 'Flags\Hooks::onEditPageLayoutShowIntro';
+$wgHooks['BeforeRefreshLinksForTitleUpdate'][] = 'Flags\Hooks::onBeforeRefreshLinksForTitleUpdate';
 
 /**
  * Messages

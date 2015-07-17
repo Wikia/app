@@ -113,6 +113,13 @@ class Hooks {
 		return true;
 	}
 
+	public static function onBeforeRefreshLinksForTitleUpdate( \ParserOutput $parserOutput, \Revision $revision ) {
+		$parserOutput = ( new \FlagsController )
+			->modifyParserOutputWithFlags( $parserOutput, $revision->getPage() );
+
+		return true;
+	}
+
 	public static function onLinksUpdateInsertTemplates( $pageId, Array $templates ) {
 		$app = \F::app();
 
