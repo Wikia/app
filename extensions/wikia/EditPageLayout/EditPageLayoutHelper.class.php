@@ -197,10 +197,18 @@ class EditPageLayoutHelper {
 
 		if ( $namespace === NS_TEMPLATE ) {
 			$tc = new TemplateClassification( $title );
-			return $tc->isType( $tc::TEMPLATE_INFOBOX ) || TemplateDraftHelper::isTitleDraft( $title );
+			return $tc->isType( $tc::TEMPLATE_INFOBOX ) || self::isTemplateDraft( $title );
 		}
 
 		return false;
+	}
+
+	static function isTemplateDraft( $title ) {
+		global $wgEnableTemplateDraftExt, $wgEnableInsightsInfoboxes;
+
+		return !empty( $wgEnableTemplateDraftExt )
+				&& !empty( $wgEnableInsightsInfoboxes )
+				&& TemplateDraftHelper::isTitleDraft( $title );
 	}
 
 	/**

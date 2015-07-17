@@ -1,4 +1,7 @@
 <?php
+
+use \Wikia\Util\GlobalStateWrapper;
+
 /**
  * WikiaBaseTest class - part of Wikia UnitTest Framework - W(U)TF
  * @author ADi
@@ -455,9 +458,9 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Mocks global $wgMemc->get() so it always returns null
+	 * @return PHPUnit_Framework_MockObject_MockObject
 	 */
-	protected function disableMemCache() {
+	private function getMemCacheMock() {
 		$wgMemcMock = $this->getMockBuilder( 'MWMemcached' )
 			->disableOriginalConstructor()
 			->setMethods( [ 'get' ] )
@@ -465,6 +468,31 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 		$wgMemcMock->expects( $this->any() )
 			->method( 'get' )
 			->willReturn( null );
-		$this->mockGlobalVariable( 'wgMemc', $wgMemcMock );
+
+		return $wgMemcMock;
 	}
+
+	/**
+	 * Mocks global $wgMemc->get() so it always returns null
+	 */
+	protected function disableMemCache() {
+		$this->mockGlobalVariable( 'wgMemc', $this->getMemCacheMock() );
+	}
+
+	/**
+	 * Run given callback in a context that has memcache disabled
+	 *
+	 * @see PLATFORM-1337
+	 *
+	 * @param callable $callback function to run
+	 * @return mixed the value returned by $callback
+	 */
+	protected function memCacheDisabledSection( callable $callback ) {
+		$globalState = new GlobalStateWrapper( [
+			'wgMemc' => $this->getMemCacheMock()
+		] );
+
+		return $globalState->wrap( $callback );
+	}
+
 }
