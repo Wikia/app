@@ -13,6 +13,7 @@ class PreferencePersistenceMySQL implements PreferencePersistence {
 	
 	const CONNECTION_MASTER = "user_preferences_mysql_persistence_master";
 	const CONNECTION_SLAVE = "user_preferences_mysql_persistence_slave";
+	const WHITE_LIST = "user_preferences_mysql_persistance_white_list";
 
 	public static $UPSERT_SET_BLOCK = [ "up_user = VALUES(up_user)", "up_property = VALUES(up_property)", "up_value = VALUES(up_value)" ];
 
@@ -23,7 +24,8 @@ class PreferencePersistenceMySQL implements PreferencePersistence {
 	/**
 	 * @Inject({
 	 *   Wikia\Persistence\User\Preferences\PreferencePersistenceMySQL::CONNECTION_MASTER,
-	 *   Wikia\Persistence\User\Preferences\PreferencePersistenceMySQL::CONNECTION_SLAVE})
+	 *   Wikia\Persistence\User\Preferences\PreferencePersistenceMySQL::CONNECTION_SLAVE,
+	 *   Wikia\Persistence\User\Preferences\PreferencePersistenceMySQL::WHITE_LIST})
 	 * @param \DatabaseMysqli $master
 	 * @param \DatabaseMysqli $slave
 	 * @param array           $whiteList of user preference
@@ -35,7 +37,21 @@ class PreferencePersistenceMySQL implements PreferencePersistence {
 	}
 
 	public function save( $userId, array $preferences ) {
+		// Filtering preferences against the whiteList
+		$whiteList = $this->whiteList;
+		$preferences = array_reduce($preferences, function($result, $value) use ($whiteList) {
+			if (in_array($value, $this->whiteList)) {
+				$result[] = $value;
+			}
+
+			return $result;
+		}, []);
 		$tuples = $this->createTuplesFromPreferences( $userId, $preferences );
+
+		if ( empty( $tuples ) ) {
+			return false;
+		}
+
 		return $this->master->upsert( self::USER_PREFERENCE_TABLE, $tuples, [ ], self::$UPSERT_SET_BLOCK );
 	}
 
