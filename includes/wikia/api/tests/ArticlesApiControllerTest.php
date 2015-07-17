@@ -168,18 +168,6 @@ class ArticlesApiControllerTest extends \WikiaBaseTest {
 
 	public function getSectionNumbersArrayDataProvider() {
 		return [
-			// get all sections (inlcuding section 0, which isn't included in TOC sections array)
-			[
-				'all',
-				3,
-				[0, 1, 2]
-			],
-			// get all sections when there's only one section
-			[
-				'all',
-				1,
-				[0]
-			],
 			// get specified sections
 			[
 				'0,1,2',
@@ -191,12 +179,6 @@ class ArticlesApiControllerTest extends \WikiaBaseTest {
 				'0, 1, 2',
 				2,
 				[0, 1, 2]
-			],
-			// get specified and all remaining sections
-			[
-				'3+',
-				5,
-				[3,4]
 			],
 			// url encoded input
 			[
