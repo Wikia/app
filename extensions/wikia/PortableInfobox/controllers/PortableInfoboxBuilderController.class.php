@@ -95,7 +95,7 @@ class PortableInfoboxBuilderController extends WikiaController {
 			[
 				'type' => 'image',
 				'data' => [
-					'name' => 'Flower.jpg',
+					'name' => 'WallPaperHD 001.jpg',
 				]
 			],
 			[
