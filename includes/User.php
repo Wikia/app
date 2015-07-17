@@ -4798,7 +4798,7 @@ class User {
 	 * @todo document
 	 */
 	protected function saveOptions() {
-		global $wgAllowPrefChange, $wgPreferencesUseService;
+		global $wgAllowPrefChange, $wgPreferencesUseService, $wgUserPreferenceWhiteList;
 
 		$extuser = ExternalUser::newFromUser( $this );
 
@@ -4843,16 +4843,14 @@ class User {
 
 		// kinda ghetto, but :(
 		if ($wgPreferencesUseService) {
-			$preferenceNames = array_keys($this->userPreferences()->getPreferences($this->getId()));
-
 			(new WikiaSQL())
 				->DELETE('user_properties')
 				->WHERE('up_user')->EQUAL_TO($this->getId())
-					->AND_('up_property')->NOT_IN($preferenceNames)
+					->AND_('up_property')->NOT_IN($wgUserPreferenceWhiteList)
 				->run($dbw);
 
-			$insert_rows = array_reduce($insert_rows, function($result, $current) use ($preferenceNames) {
-				if (!in_array($current['up_property'], $preferenceNames)) {
+			$insert_rows = array_reduce($insert_rows, function($result, $current) use ($wgUserPreferenceWhiteList) {
+				if (!in_array($current['up_property'], $wgUserPreferenceWhiteList)) {
 					$result[] = $current;
 				}
 
