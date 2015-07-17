@@ -184,7 +184,8 @@ class PortableInfoboxRenderService extends WikiaService {
 	}
 
 	/**
-	 * checks if infobox data item is valid hero component data
+	 * checks if infobox data item is valid hero component data.
+	 * If image is smaller than const, don't render the hero module.
 	 *
 	 * @param array $item - infobox data item
 	 * @param array $heroData - hero component data
@@ -192,17 +193,21 @@ class PortableInfoboxRenderService extends WikiaService {
 	 * @return bool
 	 */
 	private function isValidHeroDataItem( $item, $heroData ) {
-		$isValid = false;
 		$type = $item[ 'type' ];
 
-		if (
-			$type === 'title' && !array_key_exists( 'title', $heroData ) ||
-			$type === 'image' && !array_key_exists( 'image', $heroData )
-		) {
-			$isValid = true;
+		if ( $type === 'title' && !array_key_exists( 'title', $heroData ) ) {
+			return true;
 		}
 
-		return $isValid;
+		if ( $type === 'image' && !array_key_exists( 'image', $heroData ) ) {
+			$imageData = $this->extendImageData($item);
+
+			if ( $imageData && $imageData['data']['width'] > self::MOBILE_THUMBNAIL_WIDTH ) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	/**

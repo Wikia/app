@@ -15,7 +15,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 	{
 		$isInvalidImage = isset( $input[ 'isInvalidImage' ] ) && $input[ 'isInvalidImage' ];
 		$isWikiaMobile = isset( $input[ 'isWikiaMobile' ] ) && $input[ 'isWikiaMobile' ];
-		$mockThumbnailImage = $isInvalidImage ? false : $this->getThumbnailImageMock();
+		$mockThumbnailImage = $isInvalidImage ? false : $this->getThumbnailImageMock( $input );
 
 		$mock = $this->getMockBuilder( 'PortableInfoboxRenderService' )
 			->setMethods( [ 'getThumbnail', 'isWikiaMobile' ] )
@@ -32,22 +32,35 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 
 	/**
 	 * @desc Returns the ThumbnailImage with hardcoded values returned by
-	 * 'getUrl', 'getWidth' and 'getHeight' functions.
+	 * 'getUrl', 'getWidth' and 'getHeight' functions. In case of small image return small image sizes.
 	 * @return PHPUnit_Framework_MockObject_MockObject
 	 */
-	private function getThumbnailImageMock() {
+	private function getThumbnailImageMock( $input ) {
+		$isSmallImage = isset( $input[ 'isSmallImage' ] ) && $input[ 'isSmallImage' ];
+
 		$mockThumbnailImage = $this->getMockBuilder( 'ThumbnailImage' )
 			->setMethods( [ 'getUrl', 'getWidth', 'getHeight' ] )
 			->getMock();
 		$mockThumbnailImage->expects( $this->any() )
 			->method( 'getUrl' )
 			->will( $this->returnValue( 'http://image.jpg' ) );
-		$mockThumbnailImage->expects( $this->any() )
-			->method( 'getWidth' )
-			->will( $this->returnValue( 400 ) );
-		$mockThumbnailImage->expects( $this->any() )
-			->method( 'getHeight' )
-			->will( $this->returnValue( 200 ) );
+
+		if ( $isSmallImage ) {
+			$mockThumbnailImage->expects( $this->any() )
+				->method( 'getWidth' )
+				->will( $this->returnValue( 100 ) );
+			$mockThumbnailImage->expects( $this->any() )
+				->method( 'getHeight' )
+				->will( $this->returnValue( 100 ) );
+		} else {
+			$mockThumbnailImage->expects( $this->any() )
+				->method( 'getWidth' )
+				->will( $this->returnValue( 400 ) );
+			$mockThumbnailImage->expects( $this->any() )
+				->method( 'getHeight' )
+				->will( $this->returnValue( 200 ) );
+		}
+
 
 		return $mockThumbnailImage;
 	}
@@ -378,7 +391,9 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 							'url' => 'http://image.jpg',
 							'thumbnail' => 'thumbnail.jpg',
 							'ref' => 1,
-							'name' => 'test1'
+							'name' => 'test1',
+							'width' => 400,
+							'height' => 200
 						]
 					]
 				],
@@ -387,7 +402,31 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 									<img src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D" data-src="http://image.jpg" class="portable-infobox-image lazy media article-media" alt="image alt"  data-image-key="test1" data-image-name="test1" data-ref="1" data-params=\'[{"name":"test1", "full":"http://image.jpg"}]\' />
 								</div>
 							</aside>',
-				'description' => 'Mobile: Only image'
+				'description' => 'Mobile: Only image. Image is not small- should render hero.'
+			],
+			[
+				'input' => [
+					'isWikiaMobile' => true,
+					'isSmallImage' => true,
+					[
+						'type' => 'image',
+						'data' => [
+							'alt' => 'image alt',
+							'url' => 'http://image.jpg',
+							'thumbnail' => 'thumbnail.jpg',
+							'ref' => 1,
+							'name' => 'test1',
+							'width' => 100,
+							'height' => 100
+						]
+					]
+				],
+				'output' => '<aside class="portable-infobox">
+								<div class="portable-infobox-item item-type-image no-margins">
+									<img src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D" data-src="http://image.jpg" class="portable-infobox-image lazy media article-media" alt="image alt"  data-image-key="test1" data-image-name="test1" data-ref="1" data-params=\'[{"name":"test1", "full":"http://image.jpg"}]\' />
+								</div>
+							</aside>',
+				'description' => 'Mobile: Only a small image. Should not render hero'
 			],
 			[
 				'input' => [
@@ -412,10 +451,8 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 					]
 				],
 				'output' => '<aside class="portable-infobox">
-								<div class="portable-infobox-item item-type-hero">
-									<hgroup class="portable-infobox-hero-title-wrapper portable-infobox-item-margins">
-									<h2 class="portable-infobox-hero-title">Test Title</h2>
-									</hgroup>
+								<div class="portable-infobox-item item-type-title portable-infobox-item-margins">
+									<h2 class="portable-infobox-title">Test Title</h2>
 								</div>
 								<div class="portable-infobox-item item-type-key-val portable-infobox-item-margins">
 									<h3 class="portable-infobox-item-label portable-infobox-secondary-font">test label</h3>
