@@ -57,11 +57,11 @@ $messages['it'] = array(
 
 $messages['ja'] = array(
 	'emailext-fbdisconnect-subject' => 'ウィキア・アカウントとFacebookのコネクトが解除されました',
-	'emailext-fbdisconnect-summary' => 'ウィキア・アカウントとFacebookアカウントのコネクトが解除されたようです。ただし、履歴、メッセージ、プロフィールの詳細はすべて保持されていますので、ご安心ください。',
-	'emailext-fbdisconnect-intro' => '今後も、以前と同じユーザー名をお使いいただけます。また、新しい一時パスワードを生成いたしました。詳細は次のとおりです。',
+	'emailext-fbdisconnect-summary' => 'ウィキア・アカウントとFacebookアカウントのコネクトが解除されたようです。履歴、メッセージ、プロフィールの詳細など大切な情報はすべて保持されていますので、ご安心ください。',
+	'emailext-fbdisconnect-intro' => '今後も以前と同じユーザー名をお使いいただけます。また新しい一時パスワードを生成いたしました。詳細は次のとおりです。',
 	'emailext-fbdisconnect-username' => 'ユーザー名: $1',
 	'emailext-fbdisconnect-password' => 'パスワード: $1',
-	'emailext-fbdisconnect-instructions' => 'すでにパスワードを設定されている場合でも、あなたのアカウントは安全に保護されていますのでご安心ください。その場合はこのメールを無視して、設定済みのパスワードを使用してウィキアにログインすることができます。まだパスワードを設定されていない場合は、上記の一時パスワードでログインし、「個人設定」ページでお好きなパスワードにリセットしていただけます。',
+	'emailext-fbdisconnect-instructions' => 'すでにパスワードの設定が完了している場合でも、アカウントは安全に保護されていますのでご安心ください。その場合はこのメールを無視していただき、設定済みのパスワードでウィキアにログインすることができます。まだパスワードを設定されていない場合には、上記の一時パスワードでログインし、「個人設定」ページでお好きなパスワードにリセットしていただけます。',
 );
 
 $messages['nl'] = array(
@@ -79,7 +79,7 @@ $messages['pl'] = array(
 	'emailext-fbdisconnect-intro' => 'Możesz korzystać z tej samej nazwy użytkownika, z której korzystałeś dotychczas. Wygenerowaliśmy też dla Ciebie nowe tymczasowe hasło. Oto dane logowania:',
 	'emailext-fbdisconnect-username' => 'Nazwa użytkownika: $1',
 	'emailext-fbdisconnect-password' => 'Hasło: $1',
-	'emailext-fbdisconnect-instructions' => 'Jeśli hasło na portalu Wikia zostało już przez Ciebie ustanowione, nie martw się! Twoje konto jest bezpieczne. Możesz zignorować ten e-mail i kontynuować logowanie na portalu Wikia używając starego hasła. W innym wypadku,  zaloguj się przy użyciu tymczasowego hasła powyżej i zmień ja na wybrane przez siebie hasło na stronie Preferencji.',
+	'emailext-fbdisconnect-instructions' => 'Jeśli hasło na portalu Wikia zostało już przez Ciebie utworzone, nie martw się! Twoje konto jest bezpieczne. Możesz zignorować ten e-mail i kontynuować logowanie na portalu Wikia używając starego hasła. W innym wypadku,  zaloguj się przy użyciu widocznego powyżej tymczasowego hasła  i zmień ja na wybrane przez siebie hasło na stronie Preferencji.',
 );
 
 $messages['pt'] = array(
@@ -99,24 +99,24 @@ $messages['ru'] = array(
 	'emailext-fbdisconnect-intro' => 'Вы можете использовать своё старое имя участника. Мы также предоставим вам новый временный пароль для входа в учётную запись. Вот ваши данные для входа:',
 	'emailext-fbdisconnect-username' => 'Имя участника: $1',
 	'emailext-fbdisconnect-password' => 'Пароль: $1',
-	'emailext-fbdisconnect-instructions' => 'Если вы уже установили желаемый пароль на Викия — не волнуйтесь! Ваш аккаунт в безопасности. Вы можете проигнорировать это письмо и продолжать входить в систему, используя старый пароль. Если вы запросили  это письмо — пожалуйста, войдите в в систему, используя временный пароль, указанный выше и измените его на желаемый на странице личных настроек.',
+	'emailext-fbdisconnect-instructions' => 'Если вы уже установили желаемый пароль на Викия, то не обращайте внимания на это письмо и продолжайте входить в систему, используя текущий пароль. Если вы запросили это письмо — пожалуйста, войдите в в систему при помощи указанного выше временного пароля и измените его на новый на странице личных настроек.',
 );
 
 $messages['zh-hans'] = array(
 	'emailext-fbdisconnect-subject' => '您的Wikia帐户与Facebook的连结现已断开！',
-	'emailext-fbdisconnect-summary' => '您好像刚刚断开您的Facebook与您的Wikia帐户的连接。由于您是Wikia社区的重要一员，我们已经保存了您的所有历史记录、邮件和个人详细信息。',
-	'emailext-fbdisconnect-intro' => '您可以使用以前一直使用的用户名，另外我们还生成了一个新的临时密码供您使用。详细信息如下：',
+	'emailext-fbdisconnect-summary' => '您好像已经断开了Wikia帐户与Facebook的连接。由于您是Wikia社区的重要一员，我们依然为您保存所有完整的历史记录、留言信息以及个人资料信息。',
+	'emailext-fbdisconnect-intro' => '您依然可以使用同样的用户名进行登录。系统将为您产生一个新的临时密码供您使用。详细信息如下：',
 	'emailext-fbdisconnect-username' => '用户名：$ 1',
 	'emailext-fbdisconnect-password' => '密码：$ 1',
-	'emailext-fbdisconnect-instructions' => '如果您已经在维基上设置了密码，别担心，您的帐户是安全的。您可以忽略这封电子邮件，并继续用您的旧密码登入Wikia。否则，也可以用上面提供的临时密码登入，然后在您的首选项页面上重置您的密码。',
+	'emailext-fbdisconnect-instructions' => '如果您已经在Wikia上设置了密码，别担心，您的帐户是安全的。您可以忽略这封电子邮件，并继续使用旧的密码进行登录。或者，您也可以使用我们提供的临时密码进行登录，然后在您的“用户设定”页面中重新设置密码。',
 );
 
 $messages['zh-tw'] = array(
 	'emailext-fbdisconnect-subject' => '你的Wikia帳戶與Facebook的連結現已斷開！',
-	'emailext-fbdisconnect-summary' => '你好像剛剛斷開了你的Facebook與你的Wikia帳戶的連接。由於你是Wikia社區的重要一員，我們已經保存了你的所有歷史記錄、郵件和個人資料詳細資訊。',
-	'emailext-fbdisconnect-intro' => '你可以使用之前一直使用的用戶名，另外，我們還生成了一個新的臨時密碼供你使用。詳細資訊如下：',
+	'emailext-fbdisconnect-summary' => '你好像剛剛斷開了你的Wikia帳戶與Facebook的連結。由於你是Wikia社區的重要一員，我們已經保存了你的所有歷史記錄、留言訊息和個人資訊。',
+	'emailext-fbdisconnect-intro' => '你可以繼續使用之前的用戶名，另外，我們還生成了一個新的臨時密碼供你使用。詳細資訊如下：',
 	'emailext-fbdisconnect-username' => '用戶名：$ 1',
 	'emailext-fbdisconnect-password' => '密碼：$ 1',
-	'emailext-fbdisconnect-instructions' => '如果你已經在Wikia上設置了密碼，不要擔心！你的帳戶是安全的。你可以忽略這個電子郵件，並繼續用你的舊密碼登入Wikia。否則，也可以用上面提供的臨時密碼登入，然後在你的首選項頁面上重置你的密碼。',
+	'emailext-fbdisconnect-instructions' => '如果你已經在Wikia上設置了密碼，不要擔心！你的帳戶是安全的。你可以忽略這封電子郵件，並繼續用你的舊密碼登入Wikia。否則，也可以用上面提供的臨時密碼登入，然後在你的用戶設定頁面中重新設置你的密碼。',
 );
 
