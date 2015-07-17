@@ -91,8 +91,8 @@ define('ext.wikia.adEngine.template.modal', [
 			ratio = Math.max(minimumRatio, Math.min(ratioWidth, ratioHeight, maximumRatio)),
 			iframeParent = adIframe.parentElement;
 
-		iframeParent.parentElement.style.height = "100%";
-		iframeParent.parentElement.style.maxHeight = "100%";
+		iframeParent.parentElement.style.height = '100%';
+		iframeParent.parentElement.style.maxHeight = '100%';
 
 		iframeParent.style.padding = '0px';
 		iframeParent.style.width = (params.width * ratio) + 'px';
