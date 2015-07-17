@@ -254,20 +254,11 @@ class Hooks {
 					$flagParameters = new FlagParameter();
 					$logger = \Wikia\Logger\WikiaLogger::instance();
 
-					$flagInfo = [
-						'template' => $flagType['flag_view'],
-						'template_url' => $flagType['flag_view_url'],
-						'flag_type_id' => $flagType['flag_type_id'],
-						'flag_old_params' => $flagType['flag_params_names'],
-						'flag_new_params' => $flagParamsNames
-					];
+					$flagInfo = self::getCommonParams( $flagType, $flagParamsNames );
 
 					if ( !empty( $flagParamsDiff['added'] ) ) {
 						foreach ( $flagParamsDiff['added'] as $added ) {
-							$logger->info(
-								'Flag template variables were changed',
-								self::getParamsDiffInfo( $flagInfo, 'added', $added )
-							);
+							self::logVariableChange( $logger, $flagInfo, 'added', $added );
 						}
 					}
 
@@ -279,19 +270,13 @@ class Hooks {
 								$changed['new']
 							);
 
-							$logger->info(
-								'Flag template variables were changed',
-								self::getParamsDiffInfo( $flagInfo, 'changed', $changed['new'], $changed['old'] )
-							);
+							self::logVariableChange( $logger, $flagInfo, 'changed', $changed['new'], $changed['old'] );
 						}
 					}
 
 					if ( !empty( $flagParamsDiff['removed'] ) ) {
 						foreach ( $flagParamsDiff['removed'] as $removed ) {
-							$logger->info(
-								'Flag template variables were changed',
-								self::getParamsDiffInfo( $flagInfo, 'removed', $removed )
-							);
+							self::logVariableChange( $logger, $flagInfo, 'removed', $removed );
 						}
 					}
 
@@ -309,6 +294,23 @@ class Hooks {
 			'variable_name' => $variable,
 			'variable_old_name' => $oldVariable
 		] );
+	}
+
+	public static function getCommonParams( $flagType, $flagParamsNames ) {
+		return [
+			'template' => $flagType['flag_view'],
+			'template_url' => $flagType['flag_view_url'],
+			'flag_type_id' => $flagType['flag_type_id'],
+			'flag_old_params' => $flagType['flag_params_names'],
+			'flag_new_params' => $flagParamsNames
+		];
+	}
+
+	public static function logVariableChange( $logger, $flagInfo, $action, $variable, $oldVariable = '' ) {
+		$logger->info(
+			'Flag template variables were changed',
+			self::getParamsDiffInfo( $flagInfo, $action, $variable, $oldVariable )
+		);
 	}
 
 	/**
