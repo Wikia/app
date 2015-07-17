@@ -13,7 +13,7 @@ define ('ext.wikia.Flags.FlagEditForm',
 			$.when(getFormResources()).done(function (formResources) {
 				setupForm(formResources);
 
-				if (prefillData == null || prefillData.values == null) {
+				if (prefillData == null) {
 					displayFormCreate();
 				} else {
 					displayFormEdit(prefillData);
@@ -110,10 +110,20 @@ define ('ext.wikia.Flags.FlagEditForm',
 			displayModal();
 		}
 
-		function displayFormEdit(content) {
-			/* TODO - Finish this method */
+		function displayFormEdit(prefillData) {
+			console.log(prefillData);
+
+			var formParams = {
+				messages: formData.messages,
+				values: getDropdownOptions(prefillData)
+			};
+
+			content = mustache.to_html(formData.template, formParams, formData.partialParam);
+
 			modalConfig.vars.content = content;
 			modalConfig.vars.title = mw.message('flags-special-create-form-title-edit').escaped();
+			modalConfig.vars.buttons[0].vars.value = mw.message('flags-special-create-form-save').escaped();
+			modalConfig.vars.buttons[1].vars.value = mw.message('flags-special-create-form-cancel').escaped();
 
 			displayModal();
 		}

@@ -22,6 +22,7 @@ require (
 		function bindEvents() {
 			$('.flags-special-create-button').on('click', displayCreateFlagForm);
 			$('.flags-special-list-item-actions-delete').on('click', deleteFlagType);
+			$('.flags-special-list-item-actions-edit').on('click', editFlagType);
 		}
 
 		function displayCreateFlagForm(event) {
@@ -35,15 +36,7 @@ require (
 
 			/* TODO - Collect a # of articles using this flag - has to wait for CE-1817 */
 			if (confirm(mw.message('flags-special-autoload-delete-confirm').escaped())) {
-				var $target;
-
-				if ($(event.target).is('a')) {
-					$target = $(event.target);
-				} else {
-					$target = $(event.target).parent();
-				}
-
-				var flagTypeId = $target.data('flag-type-id');
+				var flagTypeId = getFlagTypeId(event);
 				if (flagTypeId == null) {
 					return false;
 				}
@@ -87,6 +80,55 @@ require (
 					scrollPage();
 				}
 			});
+		}
+
+		function editFlagType(event) {
+			event.preventDefault();
+
+			var flagTypeId = getFlagTypeId(event),
+				row = $('#flags-special-list-item-' + flagTypeId),
+				flagTypeData = getValuesFromTableRow(row);
+
+			FlagEditForm.init(flagTypeData);
+		}
+
+		function getValuesFromTableRow(row) {
+			var data = {};
+
+			data.name = row.find('.flags-special-list-item-name').data('flag-name');
+			data.template = row.find('.flags-special-list-item-template').data('flag-template');
+
+			data.group = row.find('.flags-special-list-item-group').data('flag-group');
+			data.targeting = row.find('.flags-special-list-item-targeting').data('flag-targeting');
+
+			data.params = row.find('.flags-special-list-item-params').data('flag-params-names');
+
+			return data;
+		}
+
+		function getFlagTypeId(event) {
+			var $target;
+
+			if ($(event.target).is('a')) {
+				$target = $(event.target);
+			} else {
+				$target = $(event.target).parent();
+			}
+
+			return $target.data('flag-type-id');
+		}
+
+		function removeHighlightingFromRow(row) {
+			if (row.lenght > 0) {
+				$('td').removeClass('hightlight-green');
+				$('td').removeClass('hightlight-red');
+			}
+		}
+
+		function hightlightTableRowGreen(row) {
+			if (row.length > 0) {
+				$('td').addClass('highlight-green');
+			}
 		}
 
 		function hideTableRow(id) {

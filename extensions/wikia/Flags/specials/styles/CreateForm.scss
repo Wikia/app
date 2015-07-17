@@ -1,3 +1,5 @@
+@import './settings';
+
 /* Create form for a flag */
 
 .flags-special-form-fieldset {
@@ -57,4 +59,12 @@
 
 .flags-special-form-params-new {
 	padding: 15px 0 0;
+}
+
+.highlight-green {
+	background-color: #b2e09a;
+
+	@if $is-dark-wiki {
+		background-color: #154D06;
+	}
 }
