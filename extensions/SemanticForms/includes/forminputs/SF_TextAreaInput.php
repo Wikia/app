@@ -15,22 +15,26 @@
 class SFTextAreaInput extends SFFormInput {
 
 	protected $mUseWikieditor = false;
+
+        public static function getDefaultCargoTypes() {
+                return array( 'Text' => array() );
+        }
 	
 	/**
 	 * Constructor for the SFTextAreaInput class.
 	 *
 	 * @param String $input_number
-	 *		The number of the input in the form. For a simple HTML input element
-	 *      this should end up in the id attribute in the format 'input_<number>'.
+	 *	The number of the input in the form. For a simple HTML input element
+	 *	this should end up in the id attribute in the format 'input_<number>'.
 	 * @param String $cur_value
-	 *		The current value of the input field. For a simple HTML input
-	 *		element this should end up in the value attribute.
+	 *	The current value of the input field. For a simple HTML input
+	 *	element this should end up in the value attribute.
 	 * @param String $input_name
-	 *		The name of the input. For a simple HTML input element this should
-	 *		end up in the name attribute.
+	 *	The name of the input. For a simple HTML input element this should
+	 *	end up in the name attribute.
 	 * @param Array $other_args
-	 *		An associative array of other parameters that were present in the
-	 *		input definition.
+	 *	An associative array of other parameters that were present in the
+	 *	input definition.
 	 */
 	public function __construct( $input_number, $cur_value, $input_name, $disabled, $other_args ) {
 		
@@ -58,15 +62,34 @@ class SFTextAreaInput extends SFFormInput {
 	}
 
 	public static function getDefaultPropTypes() {
-		return array( '_txt' => array(), '_cod' => array() );
+		$defaultPropTypes = array( '_cod' => array() );
+		if ( defined( 'SMWDataItem::TYPE_STRING' ) ) {
+			// SMW < 1.9
+			$defaultPropTypes['_txt'] = array();
+		}
+		return $defaultPropTypes;
 	}
 
 	public static function getOtherPropTypesHandled() {
-		return array( '_wpg', '_str' );
+		$otherPropTypesHandled = array( '_wpg' );
+		if ( defined( 'SMWDataItem::TYPE_STRING' ) ) {
+			// SMW < 1.9
+			$otherPropTypesHandled[] = '_str';
+		} else {
+			$otherPropTypesHandled[] = '_txt';
+		}
+		return $otherPropTypesHandled;
 	}
 
 	public static function getOtherPropTypeListsHandled() {
-		return array( '_wpg', '_str' );
+		$otherPropTypeListsHandled = array( '_wpg' );
+		if ( defined( 'SMWDataItem::TYPE_STRING' ) ) {
+			// SMW < 1.9
+			$otherPropTypeListsHandled[] = '_str';
+		} else {
+			$otherPropTypeListsHandled[] = '_txt';
+		}
+		return $otherPropTypeListsHandled;
 	}
 
 	public static function getParameters() {
@@ -75,32 +98,32 @@ class SFTextAreaInput extends SFFormInput {
 		$params['preload'] = array(
 			'name' => 'preload',
 			'type' => 'string',
-			'description' => wfMsg( 'sf_forminputs_preload' )
+			'description' => wfMessage( 'sf_forminputs_preload' )->text()
 		);
 		$params['rows'] = array(
 			'name' => 'rows',
 			'type' => 'int',
-			'description' => wfMsg( 'sf_forminputs_rows' )
+			'description' => wfMessage( 'sf_forminputs_rows' )->text()
 		);
 		$params['cols'] = array(
 			'name' => 'cols',
 			'type' => 'int',
-			'description' => wfMsg( 'sf_forminputs_cols' )
+			'description' => wfMessage( 'sf_forminputs_cols' )->text()
 		);
 		$params['maxlength'] = array(
 			'name' => 'maxlength',
 			'type' => 'int',
-			'description' => wfMsg( 'sf_forminputs_maxlength' )
+			'description' => wfMessage( 'sf_forminputs_maxlength' )->text()
 		);
 		$params['placeholder'] = array(
 			'name' => 'placeholder',
 			'type' => 'string',
-			'description' => wfMsg( 'sf_forminputs_placeholder' )
+			'description' => wfMessage( 'sf_forminputs_placeholder' )->text()
 		);
 		$params['autogrow'] = array(
 			'name' => 'autogrow',
 			'type' => 'boolean',
-			'description' => wfMsg( 'sf_forminputs_autogrow' )
+			'description' => wfMessage( 'sf_forminputs_autogrow' )->text()
 		);
 		return $params;
 	}
@@ -121,19 +144,30 @@ class SFTextAreaInput extends SFFormInput {
 
 		global $sfgTabIndex, $sfgFieldNum;
 
-		// Use a special ID for the free text field, for FCK's needs.
+		// Use a special ID for the free text field -
+		// this was originally done for FCKeditor, but maybe it's
+		// useful for other stuff too.
 		$input_id = $this->mInputName == 'sf_free_text' ? 'sf_free_text' : "input_$sfgFieldNum";
 
 		if ( $this->mUseWikieditor ) {
-
-			// load modules for all enabled features
-			WikiEditorHooks::editPageShowEditFormInitial( $this );
+			// Load modules for all enabled WikiEditor features.
+			// The header for this function was changed in July
+			// 2014, and the function itself was changed
+			// significantly in March 2015 - this call should
+			// hopefully work for all versions.
+			global $wgTitle, $wgOut;
+			$article = new Article( $wgTitle );
+			$editPage = new EditPage( $article );
+			WikiEditorHooks::editPageShowEditFormInitial( $editPage, $wgOut );
 			$className = 'wikieditor ';
 		} else {
 			$className = '';
 		}
 
 		$className .= ( $this->mIsMandatory ) ? 'mandatoryField' : 'createboxInput';
+		if ( array_key_exists( 'unique', $this->mOtherArgs ) ) {
+			$className .= ' uniqueField';
+		}
 
 		if ( array_key_exists( 'class', $this->mOtherArgs ) ) {
 			$className .= ' ' . $this->mOtherArgs['class'];
@@ -210,7 +244,10 @@ class SFTextAreaInput extends SFFormInput {
 		$spanClass = 'inputSpan';
 		if ( $this->mIsMandatory ) {
 			$spanClass .= ' mandatoryFieldSpan';
-	}
+		}
+		if ( array_key_exists( 'unique', $this->mOtherArgs ) ) {
+			$spanClass .= ' uniqueFieldSpan';
+		}
 		$text = Html::rawElement( 'span', array( 'class' => $spanClass ), $text );
 
 		return $text;

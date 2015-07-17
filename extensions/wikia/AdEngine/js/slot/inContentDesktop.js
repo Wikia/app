@@ -23,6 +23,7 @@ define('ext.wikia.adEngine.slot.inContentDesktop', [
 		// Don't start those slots on no_ads, corporate, home etc
 		if (context.opts.pageType !== 'all_ads') {
 			log('In content ads not started, because context.opts.pageType is not all_ads', 'info', logGroup);
+			return;
 		}
 
 		log('Registering the slot to adLogicPageDimensions', 'info', logGroup);

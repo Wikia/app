@@ -65,7 +65,7 @@ class GamestarApiWrapperTest extends WikiaBaseTest {
 		// Video Title
 		$response_data = $apiWrapper->getTitle();
 
-		$exp_data = 'ARMA 3 - Walkthrough-Interview mit Jay Crowe - Teil 1: Camp Maxwell - Video - GameStar.de';
+		$exp_data = 'ARMA 3 - Walkthrough-Interview mit Jay Crowe - Teil 1: Camp Maxwell - Video - GameStar';
 		$this->assertEquals( $exp_data, $response_data );
 		$this->assertEquals( $exp_data, $metaData['title'] );
 

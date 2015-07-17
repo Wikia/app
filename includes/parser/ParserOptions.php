@@ -399,9 +399,9 @@ class ParserOptions {
 		$this->mExternalLinkTarget = $wgExternalLinkTarget;
 
 		$this->mUser = $user;
-		$this->mNumberHeadings = $user->getOption( 'numberheadings' );
-		$this->mMath = $user->getOption( 'math' );
-		$this->mThumbSize = $user->getOption( 'thumbsize' );
+		$this->mNumberHeadings = $user->getGlobalPreference( 'numberheadings' );
+		$this->mMath = $user->getGlobalPreference( 'math' );
+		$this->mThumbSize = $user->getGlobalPreference( 'thumbsize' );
 		$this->mStubThreshold = $user->getStubThreshold();
 		$this->mUserLang = $lang;
 

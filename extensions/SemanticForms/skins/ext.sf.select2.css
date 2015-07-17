@@ -1,0 +1,63 @@
+/*Overriding some select2 classes for customization*/
+.sf-select2-dropdown .select2-results .select2-result .select2-result-label .select2-match {
+	text-decoration: none;
+	font-weight: bold;
+}
+
+.sf-select2-dropdown .select2-results .select2-highlighted {
+	background-color: #0645ad;
+}
+
+.sf-select2-dropdown .select2-search input {
+	font-size: 14px;
+}
+
+.sf-select2-dropdown .select2-results {
+	font-size: 14px;
+}
+
+.sf-select2-container {
+	margin-bottom: 6px;
+}
+
+.sf-icon {
+    width:15px;
+    height: 10px;
+    padding-right: 5px;
+}
+
+.sf-select2-result td{
+    vertical-align: top;
+    max-height: 300px;
+}
+
+.sf-result-thumbnail {
+    width: 120px;
+}
+
+.sf-result-thumbnail img{
+    height: 90px;
+    width: 120px;
+    vertical-align: middle;
+}
+
+.sf-result-info {
+    padding-left: 10px;
+    vertical-align: top;
+}
+
+.sf-result-title {
+    font-size: 1.2em;
+    padding-bottom: 10px;
+}
+
+.sf-result-description {
+    font-size: .8em;
+    color: #888;
+    text-align: justify;
+    max-height: 300px;
+}
+.select2-highlighted .sf-result-description {
+    font-size: .8em;
+    color: #eee;
+}

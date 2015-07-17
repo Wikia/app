@@ -386,7 +386,7 @@ class FounderNewMemberController extends FounderController {
 
 	/**
 	 * @template avatarLayout
-	*/
+	 */
 	public function body() {
 		$this->response->setData( [
 			'salutation' => $this->getSalutation(),
@@ -434,7 +434,7 @@ class FounderNewMemberController extends FounderController {
 	 */
 	public function assertFounderSubscribedToDigest() {
 		$wikiId = \F::app()->wg->CityId;
-		if ( $this->targetUser->getBoolOption( "founderemails-complete-digest-$wikiId" ) ) {
+		if ( (bool)$this->targetUser->getLocalPreference( "founderemails-complete-digest", $wikiId ) ) {
 			throw new Check( 'Digest mode is enabled, do not create user registration event notifications' );
 		}
 	}
@@ -444,8 +444,247 @@ class FounderNewMemberController extends FounderController {
 	 */
 	public function assertFounderWantsNewMembersEmail() {
 		$wikiId = \F::app()->wg->CityId;
-		if ( !$this->targetUser->getBoolOption( "founderemails-joins-$wikiId"  ) ) {
+		if ( !(bool)$this->targetUser->getLocalPreference( "founderemails-joins", $wikiId ) ) {
 			throw new Check( "Founder doesn't want to be emailed about new members joining this wiki" );
 		}
+	}
+}
+
+class FounderTipsController extends FounderController {
+	const TRACKING_CATEGORY_EN = TrackingCategories::FOUNDER_TIPS_0_DAY_EN;
+	const TRACKING_CATEGORY_INT = TrackingCategories::FOUNDER_TIPS_0_DAY_INT;
+
+	const LAYOUT_CSS = "digestLayout.css";
+
+	protected $wikiName;
+	protected $wikiId;
+	protected $wikiUrl;
+
+	public function initEmail() {
+		$this->wikiName = $this->getVal( 'wikiName' );
+		$this->wikiId = $this->getVal( 'wikiId' );
+		$this->wikiUrl = $this->getVal( 'wikiUrl' );
+
+		$this->assertValidParams();
+	}
+
+	/**
+	 * Validate the params passed in by the client
+	 */
+	private function assertValidParams() {
+		$this->assertValidWikiName();
+		$this->assertValidWikiId();
+		$this->assertValidWikiUrl();
+	}
+
+	private function assertValidWikiName() {
+		if ( empty( $this->wikiName ) ) {
+			throw new Check( "Must pass in value for wikiName!" );
+		}
+	}
+
+	private function assertValidWikiId() {
+		if ( empty( $this->wikiId ) ) {
+			throw new Check( "Must pass in value for wikiId!" );
+		}
+	}
+
+	private function assertValidWikiUrl() {
+		if ( empty( $this->wikiUrl ) ) {
+			throw new Check( "Must pass in value for wikiUrl!" );
+		}
+	}
+
+	protected function getSubject() {
+		return $this->getMessage( 'emailext-founder-newly-created-subject', $this->wikiName )->text();
+	}
+
+	/**
+	 * @template founderTips
+	 */
+	public function body() {
+		$this->response->setData( [
+			'salutation' => $this->getSalutation(),
+			'summary' => $this->getMessage( 'emailext-founder-newly-created-summary', $this->wikiUrl, $this->wikiName )->parse(),
+			'extendedSummary' => $this->getMessage( 'emailext-founder-newly-created-summary-extended' )->text(),
+			'details' => $this->getDetailsList(),
+			'contentFooterMessages' => [
+				$this->getMessage( 'emailext-founder-visit-community', $this->wikiUrl, $this->wikiName )->parse(),
+				$this->getMessage( 'emailext-founder-happy-wikia-building' )->text(),
+				$this->getMessage( 'emailext-emailconfirmation-community-team' )->text(),
+			],
+		] );
+	}
+
+	/**
+	 * Returns list of details (icons, headers, and blurbs for those icons) for the founder tips email
+	 *
+	 * @return array
+	 */
+	protected function getDetailsList() {
+		return [
+			[
+				"iconSrc" => Email\ImageHelper::getFileUrl( "Add_page.png" ),
+				"iconLink" => \GlobalTitle::newFromText( "CreatePage", NS_SPECIAL, $this->wikiId )->getFullURL( [ "modal" => "AddPage" ] ),
+				"detailsHeader" => $this->getMessage( "emailext-founder-add-pages-header" )->text(),
+				"details" => $this->getMessage( "emailext-founder-add-pages-details" )->text()
+			],
+			[
+				"iconSrc" => Email\ImageHelper::getFileUrl( "Add_photo.png" ),
+				"iconLink" => \GlobalTitle::newFromText( "NewFiles", NS_SPECIAL, $this->wikiId )->getFullURL( [ "modal" => "UploadImage" ] ),
+				"detailsHeader" => $this->getMessage( "emailext-founder-add-photos-header" )->text(),
+				"details" => $this->getMessage( "emailext-founder-add-photos-details" )->text()
+			],
+			[
+				"iconSrc" => Email\ImageHelper::getFileUrl( "Customize.png" ),
+				"iconLink" => \GlobalTitle::newFromText( wfMessage( "mainpage" )->text(), NS_MAIN, $this->wikiId )->getFullURL( [ "action" => "edit" ] ),
+				"detailsHeader" => $this->getMessage( "emailext-founder-customize-header" )->text(),
+				"details" => $this->getMessage( "emailext-founder-customize-details" )->text()
+			],
+			[
+				"iconSrc" => Email\ImageHelper::getFileUrl( "Share.png" ),
+				"detailsHeader" => $this->getMessage( "emailext-founder-share-header" )->text(),
+				"details" => $this->getMessage( "emailext-founder-share-details" )->text()
+			]
+		];
+	}
+
+	protected static function getEmailSpecificFormFields() {
+		$formFields = [
+			'inputs' => [
+				[
+					'type' => 'text',
+					'name' => 'wikiName',
+					'label' => "Wiki Name",
+					'value' => \F::app()->wg->Sitename,
+					'tooltip' => "The name of the Wiki (defaults to current wiki)"
+				],
+				[
+					'type' => 'text',
+					'name' => 'wikiId',
+					'label' => "Wiki ID",
+					'value' => \F::app()->wg->CityId,
+					'tooltip' => "The ID of the Wiki (defaults to current wiki)"
+				],
+				[
+					'type' => 'text',
+					'name' => 'wikiUrl',
+					'label' => "Wiki URL",
+					'value' => \F::app()->wg->Server,
+					'tooltip' => "The URL of the Wiki (defaults to current wiki)"
+				],
+			]
+		];
+
+		return array_merge_recursive( $formFields, parent::getEmailSpecificFormFields() );
+	}
+}
+
+class FounderTipsThreeDaysController extends FounderTipsController {
+	const TRACKING_CATEGORY_EN = TrackingCategories::FOUNDER_TIPS_3_DAY_EN;
+	const TRACKING_CATEGORY_INT = TrackingCategories::FOUNDER_TIPS_3_DAY_INT;
+
+	const WAM_LINK = "http://www.wikia.com/WAM";
+
+	protected function getSubject() {
+		return $this->getMessage( 'emailext-founder-3-days-subject', $this->wikiName )->text();
+	}
+
+	/**
+	 * @template founderTips
+	 */
+	public function body() {
+		$this->response->setData( [
+			'salutation' => $this->getSalutation(),
+			'summary' => $this->getMessage( 'emailext-founder-3-days-summary', $this->wikiUrl, $this->wikiName )->parse(),
+			'extendedSummary' => $this->getMessage( 'emailext-founder-3-days-extended-summary' )->text(),
+			'details' => $this->getDetailsList(),
+			'contentFooterMessages' => [
+				$this->getMessage( 'emailext-founder-3-days-need-help', $this->wikiName )->parse(),
+				$this->getMessage( 'emailext-founder-3-days-great-work' )->text(),
+				$this->getMessage( 'emailext-emailconfirmation-community-team' )->text(),
+			],
+		] );
+	}
+
+	/**
+	 * Returns list of details (icons, headers, and blurbs for those icons) for the founder tips email
+	 *
+	 * @return array
+	 */
+	protected function getDetailsList() {
+		$themeDesignerUrl = \GlobalTitle::newFromText( "ThemeDesigner", NS_SPECIAL, $this->wikiId )->getFullURL();
+		return [
+			[
+				"iconSrc" => Email\ImageHelper::getFileUrl( "Add_photo.png" ),
+				"iconLink" => \GlobalTitle::newFromText( "Videos", NS_SPECIAL, $this->wikiId )->getFullURL(),
+				"detailsHeader" => $this->getMessage( "emailext-founder-3-days-add-videos-header" )->text(),
+				"details" => $this->getMessage( "emailext-founder-3-days-add-videos-details" )->text()
+			],
+			[
+				"iconSrc" => Email\ImageHelper::getFileUrl( "Update-theme.png" ),
+				"iconLink" => $themeDesignerUrl,
+				"detailsHeader" => $this->getMessage( "emailext-founder-3-days-update-theme-header" )->text(),
+				"details" => $this->getMessage( "emailext-founder-3-days-update-theme-details", $themeDesignerUrl )->parse()
+			],
+			[
+				"iconSrc" => Email\ImageHelper::getFileUrl( "Get-inspired.png" ),
+				"iconLink" => self::WAM_LINK,
+				"detailsHeader" => $this->getMessage( "emailext-founder-3-days-wam-header" )->text(),
+				"details" => $this->getMessage( "emailext-founder-3-days-wam-details", self::WAM_LINK )->parse()
+			]
+		];
+	}
+
+
+}
+class FounderTipsTenDaysController extends FounderTipsController {
+	const TRACKING_CATEGORY_EN = TrackingCategories::FOUNDER_TIPS_10_DAY_EN;
+	const TRACKING_CATEGORY_INT = TrackingCategories::FOUNDER_TIPS_10_DAY_INT;
+
+	protected function getSubject() {
+		return $this->getMessage( 'emailext-founder-10-days-subject', $this->wikiName )->text();
+	}
+
+	/**
+	 * @template founderTips
+	 */
+	public function body() {
+		$this->response->setData( [
+			'salutation' => $this->getSalutation(),
+			'summary' => $this->getMessage( 'emailext-founder-10-days-summary', $this->wikiUrl, $this->wikiName )->parse(),
+			'extendedSummary' => $this->getMessage( 'emailext-founder-10-days-extended-summary' )->text(),
+			'details' => $this->getDetailsList(),
+			'contentFooterMessages' => [
+				$this->getMessage( 'emailext-founder-10-days-email-what-next' )->text(),
+				$this->getMessage( 'emailext-emailconfirmation-community-team' )->text(),
+			],
+		] );
+	}
+
+	/**
+	 * Returns list of details (icons, headers, and blurbs for those icons) for the founder tips email
+	 *
+	 * @return array
+	 */
+	protected function getDetailsList() {
+		return [
+			[
+				"iconSrc" => Email\ImageHelper::getFileUrl( "Share.png" ),
+				"detailsHeader" => $this->getMessage( "emailext-founder-10-days-sharing-header" )->text(),
+				"details" => $this->getMessage( "emailext-founder-10-days-sharing-details" )->text()
+			],
+			[
+				"iconSrc" => Email\ImageHelper::getFileUrl( "Power-of-email.png" ),
+				"detailsHeader" => $this->getMessage( "emailext-founder-10-days-email-power-header" )->text(),
+				"details" => $this->getMessage( "emailext-founder-10-days-email-power-details" )->text()
+			],
+			[
+				"iconSrc" => Email\ImageHelper::getFileUrl( "Get-with-google.png" ),
+				"iconLink" => $this->getMessage( "emailext-founder-get-with-google" )->text(),
+				"detailsHeader" => $this->getMessage( "emailext-founder-10-days-email-google-header" )->text(),
+				"details" => $this->getMessage( "emailext-founder-10-days-email-google-details" )->text()
+			]
+		];
 	}
 }

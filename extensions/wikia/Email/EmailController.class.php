@@ -72,7 +72,7 @@ abstract class EmailController extends \WikiaController {
 
 			$this->currentUser = $this->findUserFromRequest( 'currentUser', $this->wg->User );
 			$this->targetUser = $this->findUserFromRequest( 'targetUser', $this->wg->User );
-			$this->targetLang = $this->getVal( 'targetLang', $this->targetUser->getOption( 'language' ) );
+			$this->targetLang = $this->getVal( 'targetLang', $this->targetUser->getGlobalPreference( 'language' ) );
 			$this->test = $this->getVal( 'test', false );
 			$this->marketingFooter = $this->request->getBool( 'marketingFooter' );
 
@@ -170,7 +170,10 @@ abstract class EmailController extends \WikiaController {
 					$body,
 					$replyToAddress,
 					$contentType = null,
-					$this->getSendGridCategory()
+					$this->getSendGridCategory(),
+					$priority = 0,
+					$attachments = [],
+					$sourceType = 'email-ext' // Remove when this is the only sourceType sent
 				);
 				$this->assertGoodStatus( $status );
 			}
@@ -571,7 +574,7 @@ abstract class EmailController extends \WikiaController {
 	 * @throws \Email\Check
 	 */
 	public function assertUserWantsEmail() {
-		if ( $this->targetUser->getBoolOption( 'unsubscribed' ) ) {
+		if ( (bool)$this->targetUser->getGlobalPreference( 'unsubscribed' ) ) {
 			throw new Check( 'User does not wish to receive email' );
 		}
 	}

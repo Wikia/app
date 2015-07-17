@@ -349,14 +349,14 @@ class SearchEngine {
 		// get search everything preference, that can be set to be read for logged-in users
 		// it overrides other options
 		if ( !$wgSearchEverythingOnlyLoggedIn || $user->isLoggedIn() ) {
-			if ( $user->getOption( 'searcheverything' ) ) {
+			if ( $user->getGlobalPreference( 'searcheverything' ) ) {
 				return array_keys( $searchableNamespaces );
 			}
 		}
 
 		$arr = array();
 		foreach ( $searchableNamespaces as $ns => $name ) {
-			if ( $user->getOption( 'searchNs' . $ns ) ) {
+			if ( $user->getGlobalPreference( 'searchNs' . $ns ) ) {
 				$arr[] = $ns;
 			}
 		}

@@ -84,7 +84,7 @@ class UserLoginForm extends LoginForm {
 		$userLoginHelper->addNewUserLogEntry( $u, true );
 
 		// mail temporary password
-		$emailTextTemplate = F::app()->renderView( "UserLogin", "GeneralMail", array( 'language' => $u->getOption( 'language' ), 'type' => 'account-creation-email' ) );
+		$emailTextTemplate = F::app()->renderView( "UserLogin", "GeneralMail", array( 'language' => $u->getGlobalPreference( 'language' ), 'type' => 'account-creation-email' ) );
 		$result = $this->mailPasswordInternal( $u, false, 'usersignup-account-creation-email-subject', 'usersignup-account-creation-email-body', $emailTextTemplate );
 		if ( !$result->isGood() ) {
 			$this->mainLoginForm( wfMessage( 'userlogin-error-mail-error', $result->getMessage() )->parse() );
@@ -262,7 +262,7 @@ class UserLoginForm extends LoginForm {
 			/*
 			 * Remove when SOC-217 ABTest is finished
 			 */
-			$u->setOption(
+			$u->setGlobalAttribute(
 				UserLoginSpecialController::NOT_CONFIRMED_LOGIN_OPTION_NAME,
 				$isAllowRegisterUnconfirmed
 					? UserLoginSpecialController::NOT_CONFIRMED_LOGIN_ALLOWED
@@ -273,9 +273,9 @@ class UserLoginForm extends LoginForm {
 			 */
 
 			// Set properties that will require user to confirm email after signup
-			$u->setOption( UserLoginSpecialController::SIGNUP_REDIRECT_OPTION_NAME, $this->mReturnTo );
-			$u->setOption( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME, true );
-			$u->setOption( UserLoginSpecialController::SIGNED_UP_ON_WIKI_OPTION_NAME, $wgCityId );
+			$u->setGlobalAttribute( UserLoginSpecialController::SIGNUP_REDIRECT_OPTION_NAME, $this->mReturnTo );
+			$u->setGlobalFlag( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME, true );
+			$u->setGlobalFlag( UserLoginSpecialController::SIGNED_UP_ON_WIKI_OPTION_NAME, $wgCityId );
 			$u->saveSettings();
 			UserLoginHelper::setNotConfirmedUserSession( $u->getId() );
 		}
