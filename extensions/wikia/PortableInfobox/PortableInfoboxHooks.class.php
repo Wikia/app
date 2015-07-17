@@ -3,6 +3,13 @@
 class PortableInfoboxHooks {
 	const PARSER_TAG_GALLERY = 'gallery';
 
+	/**
+	 * adds portable infobox styles
+	 *
+	 * @param OutputPage $out
+	 * @param Skin $skin
+	 * @return bool
+	 */
 	static public function onBeforePageDisplay(OutputPage $out, Skin $skin) {
 		if (F::app()->checkSkin('monobook', $skin)) {
 			Wikia::addAssetsToOutput('portable_infobox_monobook_scss');
@@ -13,6 +20,13 @@ class PortableInfoboxHooks {
 		return true;
 	}
 
+	/**
+	 * adds infobox images to image serving
+	 *
+	 * @param $imageNamesArray
+	 * @param $articleTitle
+	 * @return bool
+	 */
 	static public function onImageServingCollectImages(&$imageNamesArray, $articleTitle) {
 		if ($articleTitle) {
 			$infoboxImages = PortableInfoboxDataService::newFromTitle($articleTitle)->getImages();
@@ -42,40 +56,60 @@ class PortableInfoboxHooks {
 		return true;
 	}
 
+	/**
+	 * renders portable infobox builder instead of edit page while creating new template
+	 *
+	 * @param EditPageLayoutController $editPageContext
+	 * @return bool
+	 */
 	static public function onEditPageLayoutExecute( $editPageContext ) {
-		$data = $editPageContext->response->getData();
+		global $wgRequest;
 
-		$data[ 'isPortableInfoboxBuilder' ] = true;
-		$data[ 'PortableInfoboxBuilderHTML' ] = F::app()->renderView( 'PortableInfoboxBuilder', 'index' );
+		if ( self::isEditingNewTemplate() && $wgRequest->getVal( 'portableInfoboxBuilder', false ) ) {
+			$data = $editPageContext->response->getData();
 
-		$editPageContext->response->setData( $data );
+			$data[ 'isPortableInfoboxBuilder' ] = true;
+			$data[ 'PortableInfoboxBuilderHTML' ] = F::app()->renderView( 'PortableInfoboxBuilder', 'index' );
 
-		return true;
-	}
-
-	static public function onAddPortableInfoboxBuilderText( &$article, &$text ) {
-		//TODO: run it only on a template page
-		$infoboxText = '<center><span class="wikia-button big plainlinks">or<br />[{{fullurl:{{FULLPAGENAMEE}}|action=edit&portableInfoboxBuilder=true}} <span>Create new infobox!</span>]<br /></span></center>
-<br />';
-		$text = $text.$infoboxText;
+			$editPageContext->response->setData( $data );
+		}
 
 		return true;
 	}
 
+	/**
+	 * adds portable infobox builder call to actiom modal js assets to edit page
+	 *
+	 * @param $skin
+	 * @param $text
+	 * @return bool
+	 * @throws WikiaException
+	 */
 	public static function onSkinAfterBottomScripts( $skin, &$text ) {
-		//var_dump($skin);
-		//if ( WikiaPageType::isMainPage() ) {
-		//TODO: run it only on a template page
-		if (true) {
-			$scripts = AssetsManager::getInstance()->getURL( 'portable_infobox_js' );
+		global $wgRequest;
 
+		if ( self::isEditingNewTemplate() && !$wgRequest->getVal( 'portableInfoboxBuilder', false ) ) {
+			$text .= JSMessages::printPackages( ['PortableInfoboxBuilder'] );
+
+			$scripts = AssetsManager::getInstance()->getURL( 'portable_infobox_builder_js' );
 			foreach ( $scripts as $script ) {
 				$text .= Html::linkedScript( $script );
 			}
 		}
 
-		//add js from PortableInfoboxBuilder handling only for template pages
-		//if ($out->getTitle()->mNamespace == '10')
 		return true;
+	}
+
+	/**
+	 * checks edit page is opened for a new blank template
+	 *
+	 * @return bool
+	 */
+	private static function isEditingNewTemplate() {
+		global $wgTitle, $wgRequest;
+
+		return $wgTitle->getNamespace() === NS_TEMPLATE &&
+		!$wgTitle->exists() &&
+		$wgRequest->getVal( 'action' ) === 'edit';
 	}
 }

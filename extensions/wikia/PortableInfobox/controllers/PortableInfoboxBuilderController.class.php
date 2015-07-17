@@ -2,42 +2,72 @@
 
 class PortableInfoboxBuilderController extends WikiaController {
 	const EXTENSION_PATH = 'extensions/wikia/PortableInfobox/';
+	const INFOBOX_BUILDER_TEMPLATE_PATH = 'templates/PortableInfoboxBuilderIndex.mustache';
+	const INFOBOX_BUILDER_STYLES_PATH = 'styles/PortableInfoboxBuilder.scss';
 
 	/**
 	 * creates portable infobox builder UI
 	 */
 	public function index() {
-		$this->infoboxContent = ( new PortableInfoboxRenderService() )->renderInfobox( $this->getInfoboxData(), null,
-			'portable-infobox-layout-tabular' );
-		$this->optionsPlaceholder = 'options placeholder';
-		$this->publishBtn = 'Publish';
-		$this->infoboxBuilderHeader = 'Infobox Builder';
-		$this->formAction = self::getLocalUrl('publish');
+		$this->optionsPlaceholder = wfMessage( 'portable-infobox-builder-edit-element-options-placeholder' )->text();
+		$this->publishBtn = wfMessage( 'portable-infobox-builder-publish-button' )->text();
+		$this->infoboxBuilderHeader = wfMessage( 'portable-infobox-builder-title' )->text();
+		$this->formAction = self::getLocalUrl( 'publish' );
 		$this->templateTitle = requestContext::getMain()->getTitle()->getPrefixedDBkey();
+		$this->infoboxContent = ( new PortableInfoboxRenderService() )
+			->renderInfobox( $this->getInfoboxData(), null, 'portable-infobox-layout-tabular' );
 
-		$this->wg->out->addStyle( AssetsManager::getInstance()->getSassCommonURL( self::EXTENSION_PATH . 'styles/PortableInfoboxBuilder.scss' ) );
-		$this->response->getView()->setTemplatePath( $IP . self::EXTENSION_PATH . 'templates/PortableInfoboxBuilderIndex.mustache' );
+		$this->response->getView()->setTemplatePath( $IP . self::EXTENSION_PATH . self::INFOBOX_BUILDER_TEMPLATE_PATH );
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
+		$this->wg->out->addStyle(
+			AssetsManager::getInstance()->getSassCommonURL( self::EXTENSION_PATH . self::INFOBOX_BUILDER_STYLES_PATH )
+		);
 	}
 
 	/**
-	 * publishes changes to infobox template made inside infobox builder UI
+	 * publishes changes to infobox template made inside infobox builder UI and redirects to template page
 	 */
 	public function publish() {
 		global $wgTitle;
 
-		$ep = new EditPage(Article::newFromTitle($wgTitle, RequestContext::getMain()));
-		$ep->textbox1 = $this->getInfoboxMarkup();
-		$ep->summary = 'InfoboxBuilder';
-		$ep->attemptSave();
+		$this->editInfoboxTemplate(
+			Article::newFromTitle( $wgTitle, RequestContext::getMain() ),
+			$this->getInfoboxMarkup(),
+			wfMessage( 'portable-infobox-builder-edit-summary' )->text()
+		);
 
 		$this->response->redirect( $wgTitle->getFullURL() );
 	}
 
 	/**
+	 * does edit on the infobox template
+	 *
+	 * @param $article
+	 * @param $markup
+	 * @param $summary
+	 *
+	 * @throws PermissionsError
+	 * @throws ReadOnlyError
+	 * @throws ThrottledError
+	 * @throws UserBlockedError
+	 *
+	 * @todo add error handling
+	 */
+	private function editInfoboxTemplate($article, $markup, $summary) {
+		$editPage = new EditPage( $article );
+
+		$editPage->textbox1 = $markup;
+		$editPage->summary = $summary;
+
+		$editPage->attemptSave();
+	}
+
+	/**
 	 * returns infobox xml markup based on infobox build using infobox builder UI tool
-	 * @todo returns temporary mock
+	 *
 	 * @return string
+	 *
+	 * @todo returns temporary mock
 	 */
 	private function getInfoboxMarkup() {
 		return '<infobox>
@@ -49,16 +79,17 @@ class PortableInfoboxBuilderController extends WikiaController {
 
 	/**
 	 * returns infobox data for rendering
-	 * @todo temporary returns data mock for simple infobox
 	 *
 	 * @return array
+	 *
+	 * @todo returns temporary data mock for simple infobox
 	 */
 	private function getInfoboxData() {
 		return [
 			[
 				'type' => 'title',
 				'data' => [
-					'value' => 'I\'m  Title'
+					'value' => wfMessage( 'portable-infobox-builder-infobox-title-element-placeholder' )->text()
 				]
 			],
 			[
@@ -70,8 +101,8 @@ class PortableInfoboxBuilderController extends WikiaController {
 			[
 				'type' => 'data',
 				'data' => [
-					'label' => 'I\'m label',
-					'value' => 'I\'m value'
+					'label' => wfMessage( 'portable-infobox-builder-infobox-data-label-element-placeholder' )->text(),
+					'value' => wfMessage( 'portable-infobox-builder-infobox-data-value-element-placeholder' )->text()
 				]
 			]
 		];
