@@ -2556,7 +2556,7 @@ class User {
 		global $wgPreferencesUseService;
 		if ( $wgPreferencesUseService ) {
 			$this->load();
-			$this->sanitizePropertyArray( $preferences );
+			$preferences = $this->sanitizePropertyArray( $preferences );
 			$this->userPreferences()->setMultiple( $this->mId, $preferences );
 			if ( array_key_exists( 'skin', $preferences ) ) {
 				unset( $this->mSkin );
@@ -4798,7 +4798,7 @@ class User {
 	 * @todo document
 	 */
 	protected function saveOptions() {
-		global $wgAllowPrefChange;
+		global $wgAllowPrefChange, $wgPreferencesUseService;
 
 		$extuser = ExternalUser::newFromUser( $this );
 
@@ -4841,7 +4841,27 @@ class User {
 			}
 		}
 
-		$dbw->delete( 'user_properties', array( 'up_user' => $this->getId() ), __METHOD__ );
+		// kinda ghetto, but :(
+		if ($wgPreferencesUseService) {
+			$preferenceNames = array_keys($this->userPreferences()->getPreferences($this->getId()));
+
+			(new WikiaSQL())
+				->DELETE('user_properties')
+				->WHERE('up_user')->EQUAL_TO($this->getId())
+					->AND_('up_property')->NOT_IN($preferenceNames)
+				->run($dbw);
+
+			$insert_rows = array_reduce($insert_rows, function($result, $current) use ($preferenceNames) {
+				if (!in_array($current['up_property'], $preferenceNames)) {
+					$result[] = $current;
+				}
+
+				return $result;
+			}, []);
+		} else {
+			$dbw->delete( 'user_properties', array( 'up_user' => $this->getId() ), __METHOD__ );
+		}
+
 		$dbw->insert( 'user_properties', $insert_rows, __METHOD__ );
 
 		if ( $extuser ) {
