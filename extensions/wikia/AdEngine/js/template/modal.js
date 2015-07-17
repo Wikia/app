@@ -33,29 +33,24 @@ define('ext.wikia.adEngine.template.modal', [
 		if (skin === 'oasis') {
 			log(['show desktop modal'], 'debug', logGroup);
 			createAndShowDesktopModal(adIframe, params);
-
-			if (params.scalable) {
-				log(['show scale the ad'], 'debug', logGroup);
-
-				win.addEventListener('resize', function () {
-					scaleAdIframeDesktop(adIframe, params);
-				});
-			}
 		}
 
 		if (skin === 'mercury') {
 			log(['show mobile (Mercury) modal'], 'debug', logGroup);
-
-			if (params.scalable) {
-				log(['show scale the ad'], 'debug', logGroup);
-
-				scaleAdIframe(adIframe, params);
-
-				win.addEventListener('resize', adHelper.throttle(function () {
-					scaleAdIframe(adIframe, params);
-				}));
-			}
+			appendScalability(scaleAdIframe, adIframe, params);
 			win.Mercury.Modules.Ads.getInstance().openLightbox(adIframe);
+		}
+	}
+
+	function appendScalability(scaleFn, adIframe, params) {
+		if (params.scalable) {
+			log(['show scale the ad'], 'debug', logGroup);
+
+			scaleFn(adIframe, params);
+
+			win.addEventListener('resize', adHelper.throttle(function () {
+				scaleFn(adIframe, params);
+			}));
 		}
 	}
 
@@ -75,8 +70,8 @@ define('ext.wikia.adEngine.template.modal', [
 			uiModal.createComponent(modalConfig, function (modal) {
 				modal.$content.append(adIframe);
 				modal.$element.width('auto');
-				scaleAdIframeDesktop(adIframe, params);
 				modal.show();
+				appendScalability(scaleAdIframeDesktop, adIframe, params);
 			});
 		});
 	}
@@ -91,17 +86,25 @@ define('ext.wikia.adEngine.template.modal', [
 	}
 
 	function scaleAdIframeDesktop(adIframe, params) {
-
 		var ratioWidth = win.innerWidth / params.width,
 			ratioHeight = (((win.innerHeight)-(lightBoxHeaderHeightDesktop*2))) / params.height,
-			ratio = Math.max(minimumRatio, Math.min(ratioWidth, ratioHeight, maximumRatio));
+			ratio = Math.max(minimumRatio, Math.min(ratioWidth, ratioHeight, maximumRatio)),
+			iframeParent = adIframe.parentElement;
 
-		adIframe.parentElement.parentElement.style.height = "100%";
-		adIframe.parentElement.parentElement.style.maxHeight = "100%";
+		iframeParent.parentElement.style.height = "100%";
+		iframeParent.parentElement.style.maxHeight = "100%";
 
-		adIframe.parentElement.style.padding = '0px';
-		adIframe.parentElement.style.width = (params.width * ratio) + 'px';
-		adIframe.parentElement.style.height = (params.height * ratio) + 'px';
+		iframeParent.style.padding = '0px';
+		iframeParent.style.width = (params.width * ratio) + 'px';
+		iframeParent.style.height = (params.height * ratio) + 'px';
+
+		var verticalDifference = iframeParent.offsetHeight - (params.height * ratio);
+
+		if (verticalDifference > 0) {
+			adIframe.style.marginTop = (iframeParent.offsetHeight - (params.height * ratio) )/2 + 'px';
+		} else {
+			adIframe.style.marginTop = '0px';
+		}
 		adIframe.style.transform = 'scale(' + ratio + ')';
 		adIframe.style.transformOrigin = 'top left';
 	}
