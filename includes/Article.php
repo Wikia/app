@@ -1104,7 +1104,6 @@ class Article extends Page {
 			}
 		}
 
-		wfRunHooks( 'AddPortableInfoboxBuilderText', array( &$this, &$text ) );
 		$text = "<div class='noarticletext'>$text</div>";
 
 		$wgOut->addWikiText( $text );
