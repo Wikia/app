@@ -2435,10 +2435,10 @@ $config['poweruser'] = [
 	]
 ];
 
-$config['portable_infobox_js'] = [
+$config['portable_infobox_builder_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
-		'//extensions/wikia/PortableInfobox/js/PortableInfobox.js'
+		'//extensions/wikia/PortableInfobox/js/PortableInfoboxBuilder.js'
 	]
 ];
 
