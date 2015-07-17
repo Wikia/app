@@ -5,8 +5,6 @@
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
-/*global mw */
-
 /**
  * DataModel MediaWiki gallery node.
  *
@@ -47,11 +45,11 @@ ve.dm.MWGalleryNode.static.toDataElement = function ( domElements, converter ) {
 		mwData = mwDataJSON ? JSON.parse( mwDataJSON ) : {};
 
 	dataElement = {
-		'type': this.name,
-		'attributes': {
-			'mw': mwData,
-			'originalDomElements': ve.copy( domElements ),
-			'originalMw': mwDataJSON
+		type: this.name,
+		attributes: {
+			mw: mwData,
+			originalDomElements: ve.copy( domElements ),
+			originalMw: mwDataJSON
 		}
 	};
 

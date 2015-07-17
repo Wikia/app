@@ -21,6 +21,7 @@ class ApiAddMediaTemporary extends ApiAddMedia {
 	}
 
 	private function executeImage() {
+		global $wgContLanguageCode;
 		$duplicate = $this->getFileDuplicate( $this->mRequest->getFileTempName( 'file' ) );
 		if ( $duplicate ) {
 			return array(
@@ -37,7 +38,12 @@ class ApiAddMediaTemporary extends ApiAddMedia {
 				$this->mRequest->getFileName( 'file' ),
 				$this->mRequest->getUpload( 'file' )
 			);
-			$this->checkPermissions();
+
+			// If wiki is Japanese content, then we do not check permissions. INT-102
+			if ($wgContLanguageCode !== 'ja') {
+				$this->checkPermissions();
+			}
+
 			$this->verifyUpload();
 			$tempFile = $this->createTempFile( $this->mRequest->getFileTempName( 'file' ) );
 			return array(
@@ -100,6 +106,7 @@ class ApiAddMediaTemporary extends ApiAddMedia {
 			if ( !UploadBase::isEnabled() ) {
 				$this->dieUsageMsg( 'uploaddisabled' );
 			}
+			F::app()->wg->DisableProxy = true;
 			$this->mUpload = new UploadFromUrl();
 			$this->mUpload->initializeFromRequest( new FauxRequest(
 				array(

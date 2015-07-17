@@ -1,28 +1,29 @@
 /*jshint camelcase:false*/
 /*global define, require*/
 define('ext.wikia.adEngine.adLogicPageParams', [
+	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.adLogicPageViewCounter',
 	'wikia.log',
-	'wikia.window',
 	'wikia.document',
 	'wikia.location',
+	'wikia.window',
+	require.optional('ext.wikia.adEngine.lookup.services'),
 	require.optional('wikia.abTest'),
-	'ext.wikia.adEngine.adContext',
-	require.optional('ext.wikia.adEngine.adLogicPageViewCounter'),
-	require.optional('ext.wikia.adEngine.amazonMatch'),
-	require.optional('ext.wikia.adEngine.amazonMatchOld'),
-	require.optional('ext.wikia.adEngine.krux')
-], function (log, win, doc, loc, abTest, adContext, pvCounter, amazonMatch, amazonMatchOld, Krux) {
+	require.optional('wikia.krux')
+], function (adContext, pvCounter, log, doc, loc, win, lookups, abTest, krux) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.adLogicPageParams',
 		hostname = loc.hostname,
 		maxNumberOfCategories = 3,
-		maxNumberOfKruxSegments = 27, // keep the DART URL part for Krux segments below 500 chars
-		pvs = pvCounter && pvCounter.increment();
+		skin = adContext.getContext().targeting.skin,
+		context = {};
+
+	function updateContext() {
+		context = adContext.getContext();
+	}
 
 	function getDartHubName() {
-		var context = adContext.getContext();
-
 		if (context.targeting.wikiVertical === 'Entertainment') {
 			return 'ent';
 		}
@@ -59,7 +60,7 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 	}
 
 	function getCategories() {
-		var categories = adContext.getContext().targeting.pageCategories,
+		var categories = context.targeting.pageCategories,
 			outCategories;
 
 		if (categories instanceof Array && categories.length > 0) {
@@ -80,6 +81,15 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 		}
 
 		return ab;
+	}
+
+	/**
+	 * Get the AbPerformanceTesting experiment name
+	 *
+	 * @returns {string}
+	 */
+	function getPerformanceAb() {
+		return win.wgABPerformanceTest;
 	}
 
 	/**
@@ -135,7 +145,6 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 		return params;
 	}
 
-
 	function getRefParam() {
 		var hostnameMatch,
 			ref = doc.referrer,
@@ -184,14 +193,18 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 		return 'external';
 	}
 
+	function getAspectRatio() {
+		return win.innerWidth > win.innerHeight ? '4:3' : '3:4';
+	}
+
 	/**
-	 * options
-	 * @param options {includeRawDbName: bool}
+	 * Returns page level params
+	 * @param {Object} options
+	 * @param {Boolean} options.includeRawDbName - to include raw db name or not
 	 * @returns object
 	 */
 	function getPageLevelParams(options) {
 		// TODO: cache results (keep in mind some of them may change while executing page)
-
 		log('getPageLevelParams', 9, logGroup);
 
 		var site,
@@ -199,7 +212,8 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 			zone1,
 			zone2,
 			params,
-			targeting = adContext.getContext().targeting;
+			targeting = context.targeting,
+			pvs = pvCounter.get();
 
 		options = options || {};
 
@@ -220,6 +234,8 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 			s1: zone1,
 			s2: zone2,
 			ab: getAb(),
+			ar: getAspectRatio(),
+			perfab: getPerformanceAb(),
 			artid: targeting.pageArticleId && targeting.pageArticleId.toString(),
 			cat: getCategories(),
 			dmn: getDomain(),
@@ -238,9 +254,9 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 			params.rawDbName = dbName;
 		}
 
-		if (Krux && !targeting.wikiDirectedAtChildren) {
-			params.u = Krux.user;
-			params.ksgmnt = Krux.segments && Krux.segments.slice(0, maxNumberOfKruxSegments);
+		if (krux && targeting.enableKruxTargeting) {
+			params.u = krux.getUser();
+			params.ksgmnt = krux.getSegments();
 		}
 
 		if (targeting.wikiIsTop1000) {
@@ -248,24 +264,24 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 		}
 
 		extend(params, decodeLegacyDartParams(targeting.wikiCustomKeyValues));
+		if (lookups) {
+			lookups.extendPageTargeting(params);
+		}
 
 		if (!params.esrb) {
 			params.esrb = targeting.wikiDirectedAtChildren ? 'ec' : 'teen';
 		}
 
-		if (amazonMatch && amazonMatch.wasCalled()) {
-			amazonMatch.trackState();
-			extend(params, amazonMatch.getPageParams());
-		}
-
-		if (amazonMatchOld && amazonMatchOld.wasCalled()) {
-			amazonMatchOld.trackState();
-			extend(params, decodeLegacyDartParams(win.amzn_targs));
-		}
-
 		log(params, 9, logGroup);
 		return params;
 	}
+
+	if (skin && skin !== 'mercury') {
+		pvCounter.increment();
+	}
+
+	updateContext();
+	adContext.addCallback(updateContext);
 
 	return {
 		getPageLevelParams: getPageLevelParams

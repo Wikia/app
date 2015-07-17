@@ -47,15 +47,13 @@ class WikiaInYourLangController extends WikiaController {
 			 */
 			$sNativeWikiDomain = $this->getNativeWikiDomain( $sWikiDomain, $sTargetLanguage );
 			$this->response->setVal( 'nativeDomain', $sNativeWikiDomain );
-			$iNativeWikiId = $this->getWikiIdByDomain( $sNativeWikiDomain );
+			$oNativeWiki = $this->getNativeWikiByDomain( $sNativeWikiDomain );
 
 			/**
 			 * If a wikia is found - send a response with its url and sitename.
 			 * Send success=false otherwise.
 			 */
-			if ( $iNativeWikiId > 0 ) {
-				$oNativeWiki = WikiFactory::getWikiById( $iNativeWikiId );
-
+			if ( is_object( $oNativeWiki ) ) {
 				/**
 				 * Check for false-positives - see CE-1216
 				 * Per request we should unify dialects like pt and pt-br
@@ -88,7 +86,7 @@ class WikiaInYourLangController extends WikiaController {
 	 * Using preg_match to handle all languages
 	 * e.g. get pad.wikia.com from zh.pad.wikia.com
 	 * @param  string $sCurrentUrl A full URL to parse
-	 * @return string              The retrieved domain
+	 * @return string The retrieved domain
 	 */
 	public function getWikiDomain( $sCurrentUrl ) {
 		$aParsed = parse_url( $sCurrentUrl );
@@ -131,7 +129,7 @@ class WikiaInYourLangController extends WikiaController {
 	/**
 	 * Returns a core of a full language code (e.g. pt from pt-br)
 	 * @param  string $sFullLangCode Full language code
-	 * @return string                A core of the language code
+	 * @return string A core of the language code
 	 */
 	public function getLanguageCore( $sFullLangCode ) {
 		return explode( '-', $sFullLangCode )[0];
@@ -139,9 +137,9 @@ class WikiaInYourLangController extends WikiaController {
 
 	/**
 	 * Concats a lang code with a domain
-	 * @param  string $sWikiDomain     A domain (host) (e.g. community.wikia.com)
+	 * @param  string $sWikiDomain A domain (host) (e.g. community.wikia.com)
 	 * @param  string $sTargetLanguage A lang code (e.g. ja)
-	 * @return string                  A native wikia URL (e.g. ja.community.wikia.com)
+	 * @return string A native wikia URL (e.g. ja.community.wikia.com)
 	 */
 	private function getNativeWikiDomain( $sWikiDomain, $sTargetLanguage ) {
 		if ( $sTargetLanguage !== 'en' ) {
@@ -156,9 +154,9 @@ class WikiaInYourLangController extends WikiaController {
 	/**
 	 * Retrieves a wikia's ID from a database using its domain
 	 * @param  string $sWikiDomain  A domain (host) (e.g. ja.community.wikia.com)
-	 * @return int                  A wikia's ID or 0 if not found.
+	 * @return ResultWrapper|bool A wikia's object or false if not found.
 	 */
-	private function getWikiIdByDomain( $sWikiDomain ) {
+	private function getNativeWikiByDomain( $sWikiDomain ) {
 		$oDB = wfGetDB( DB_SLAVE, array(), $this->wg->ExternalSharedDB );
 
 		$oRow = $oDB->selectRow(
@@ -169,10 +167,17 @@ class WikiaInYourLangController extends WikiaController {
 		);
 
 		if ( $oRow !== false ) {
-			return $oRow->city_id;
+			$iNativeWikiId = $oRow->city_id;
+			$oNativeWiki = WikiFactory::getWikiById( $iNativeWikiId );
+			if ( is_object( $oNativeWiki ) ) {
+				return $oNativeWiki;
+			} else {
+				$this->response->setVal( 'error', "A native wikia with id={$iNativeWikiId} not found." );
+				return false;
+			}
 		} else {
 			$this->response->setVal( 'error', "A native wikia not found." );
-			return 0;
+			return false;
 		}
 	}
 
@@ -180,11 +185,11 @@ class WikiaInYourLangController extends WikiaController {
 	 * Checks if a native wikia is not:
 	 * - closed
 	 * - in a different language than the target one
-	 * @param ResultWrapper $oWiki A native wikia city_list row
-	 * @param $sTargetLanguage The target language code
+	 * @param object $oWiki A native wikia city_list row
+	 * @param string $sTargetLanguage The target language code
 	 * @return bool
 	 */
-	private function isNativeWikiaValid( ResultWrapper $oWiki, $sTargetLanguage ) {
+	private function isNativeWikiaValid( $oWiki, $sTargetLanguage ) {
 		if ( $oWiki->city_public === WikiFactory::CLOSE_ACTION ) {
 			$this->response->setVal( 'error', "A native wikia is closed." );
 			return false;

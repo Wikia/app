@@ -1,0 +1,15 @@
+{
+	"@metadata": {
+		"authors": [
+			"Jeblad",
+			"Njardarlogar"
+		]
+	},
+	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]]",
+	"tag-visualeditor-description": "Endring gjord med [[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]]",
+	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor: Kontroller]]",
+	"tag-visualeditor-needcheck-description": "Endring gjord med [[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]] der systemet fann at wikiteksten kan ha umeinte endringar.",
+	"visualeditor-feedback-tool": "Gje attendemelding",
+	"visualeditor-help-label": "Les brukarrettleiinga",
+	"visualeditor-help-title": "Brukarhandbok for korleis å bruka teksthandsamaren"
+}

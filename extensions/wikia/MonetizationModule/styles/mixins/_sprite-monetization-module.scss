@@ -1,0 +1,297 @@
+// Generated automatically by Sprite Generator.
+//
+// Do not edit anything between @autopsrite directives manually
+// or your changes will be lost next time someone regenerates the file!
+//
+// Use maintenance/wikia/generateSprites.php to update sprite mixins and/or images.
+// Config file is config/wikia/sprites.php
+//
+
+
+// @autosprite-start
+@mixin sprite-monetization-module-base() {
+	background-color: transparent;
+	background-image: url('/extensions/wikia/MonetizationModule/images/sprite-monetization-module.png'); /* wgCdnStylePath */
+	background-repeat: no-repeat;
+}
+
+@mixin sprite-monetization-module-base-embed() {
+	background-color: transparent;
+	background-repeat: no-repeat;
+}
+
+@mixin sprite-monetization-module($image-name, $width: 0, $height: 0, $offset-x: 0, $offset-y: 0) {
+	$image-x: -1;
+	$image-y: -1;
+	$image-width: -1;
+	$image-height: -1;
+	// @autosprite-image-details: amazon-logo-black.png@72,0,f4702edbb66c0ea58a71395323364508
+	@if $image-name == 'amazon-logo-black' {
+		$image-x: 72px;
+		$image-y: 0;
+		$image-width: 160px;
+		$image-height: 38px;
+	}
+	// @autosprite-image-details: amazon-logo-video-horz.png@244,0,602eb292139e6e6833a1c6b200f10412
+	@if $image-name == 'amazon-logo-video-horz' {
+		$image-x: 244px;
+		$image-y: 0;
+		$image-width: 141px;
+		$image-height: 20px;
+	}
+	// @autosprite-image-details: amazon-logo-video.png@397,0,369a84f12411ed52f016596e5f54ec9b
+	@if $image-name == 'amazon-logo-video' {
+		$image-x: 397px;
+		$image-y: 0;
+		$image-width: 139px;
+		$image-height: 36px;
+	}
+	// @autosprite-image-details: amazon-logo-white.png@548,0,d3428873f21a0cd8c36f924ec57a06f6
+	@if $image-name == 'amazon-logo-white' {
+		$image-x: 548px;
+		$image-y: 0;
+		$image-width: 160px;
+		$image-height: 38px;
+	}
+	// @autosprite-image-details: amzon_no_iv.png@720,0,ff612acce911a2684730d960595a63c8
+	@if $image-name == 'amzon_no_iv' {
+		$image-x: 720px;
+		$image-y: 0;
+		$image-width: 106px;
+		$image-height: 35px;
+	}
+	// @autosprite-image-details: no_image_commerce.png@838,0,c12dc8c93696a7ed77739f8f269b3c50
+	@if $image-name == 'no_image_commerce' {
+		$image-x: 838px;
+		$image-y: 0;
+		$image-width: 160px;
+		$image-height: 122px;
+	}
+	// @autosprite-image-details: no_image_video.png@1010,0,93ab906b1dc7695b26cee2c4d612f63e
+	@if $image-name == 'no_image_video' {
+		$image-x: 1010px;
+		$image-y: 0;
+		$image-width: 160px;
+		$image-height: 122px;
+	}
+	// @autosprite-image-details: star-active.png@1182,0,239b184d8e02f123c6a51943ca26f7dd
+	@if $image-name == 'star-active' {
+		$image-x: 1182px;
+		$image-y: 0;
+		$image-width: 80px;
+		$image-height: 16px;
+	}
+	// @autosprite-image-details: star-inactive.png@1274,0,36faa1c14ab215b0144442bf2e6a33ee
+	@if $image-name == 'star-inactive' {
+		$image-x: 1274px;
+		$image-y: 0;
+		$image-width: 80px;
+		$image-height: 16px;
+	}
+	// @autosprite-image-details: watch-now-btn.png@1366,0,6b9f48d6e1294a010fcbff987bf164db
+	@if $image-name == 'watch-now-btn' {
+		$image-x: 1366px;
+		$image-y: 0;
+		$image-width: 178px;
+		$image-height: 45px;
+	}
+	@if $image-x != -1 {
+		$position-x: 0 - $image-x;
+		$position-y: 0 - $image-y;
+		@if $width > 0 {
+			$position-x: $position-x + ($width - $image-width) / 2;
+		}
+		@if $height > 0 {
+			$position-y: $position-y + ($height - $image-height) / 2;
+		}
+		@if $offset-x != 0 {
+			$position-x: $position-x + $offset-x;
+		}
+		@if $offset-y != 0 {
+			$position-y: $position-y + $offset-y;
+		}
+		background-position: $position-x $position-y;
+	}
+}
+
+@mixin sprite-monetization-module-embed($image-name, $width: 0, $height: 0, $offset-x: 0, $offset-y: 0) {
+	$image-width: -1;
+	$image-height: -1;
+	// @autosprite-image-details: amazon-logo-black.png@72,0,f4702edbb66c0ea58a71395323364508
+	@if $image-name == 'amazon-logo-black' {
+		$image-width: 160px;
+		$image-height: 38px;
+		background-image: url('/extensions/wikia/MonetizationModule/images/sprite-monetization-module/amazon-logo-black.png'); /* base64 */
+	}
+	// @autosprite-image-details: amazon-logo-video-horz.png@244,0,602eb292139e6e6833a1c6b200f10412
+	@if $image-name == 'amazon-logo-video-horz' {
+		$image-width: 141px;
+		$image-height: 20px;
+		background-image: url('/extensions/wikia/MonetizationModule/images/sprite-monetization-module/amazon-logo-video-horz.png'); /* base64 */
+	}
+	// @autosprite-image-details: amazon-logo-video.png@397,0,369a84f12411ed52f016596e5f54ec9b
+	@if $image-name == 'amazon-logo-video' {
+		$image-width: 139px;
+		$image-height: 36px;
+		background-image: url('/extensions/wikia/MonetizationModule/images/sprite-monetization-module/amazon-logo-video.png'); /* base64 */
+	}
+	// @autosprite-image-details: amazon-logo-white.png@548,0,d3428873f21a0cd8c36f924ec57a06f6
+	@if $image-name == 'amazon-logo-white' {
+		$image-width: 160px;
+		$image-height: 38px;
+		background-image: url('/extensions/wikia/MonetizationModule/images/sprite-monetization-module/amazon-logo-white.png'); /* base64 */
+	}
+	// @autosprite-image-details: amzon_no_iv.png@720,0,ff612acce911a2684730d960595a63c8
+	@if $image-name == 'amzon_no_iv' {
+		$image-width: 106px;
+		$image-height: 35px;
+		background-image: url('/extensions/wikia/MonetizationModule/images/sprite-monetization-module/amzon_no_iv.png'); /* base64 */
+	}
+	// @autosprite-image-details: no_image_commerce.png@838,0,c12dc8c93696a7ed77739f8f269b3c50
+	@if $image-name == 'no_image_commerce' {
+		$image-width: 160px;
+		$image-height: 122px;
+		background-image: url('/extensions/wikia/MonetizationModule/images/sprite-monetization-module/no_image_commerce.png'); /* base64 */
+	}
+	// @autosprite-image-details: no_image_video.png@1010,0,93ab906b1dc7695b26cee2c4d612f63e
+	@if $image-name == 'no_image_video' {
+		$image-width: 160px;
+		$image-height: 122px;
+		background-image: url('/extensions/wikia/MonetizationModule/images/sprite-monetization-module/no_image_video.png'); /* base64 */
+	}
+	// @autosprite-image-details: star-active.png@1182,0,239b184d8e02f123c6a51943ca26f7dd
+	@if $image-name == 'star-active' {
+		$image-width: 80px;
+		$image-height: 16px;
+		background-image: url('/extensions/wikia/MonetizationModule/images/sprite-monetization-module/star-active.png'); /* base64 */
+	}
+	// @autosprite-image-details: star-inactive.png@1274,0,36faa1c14ab215b0144442bf2e6a33ee
+	@if $image-name == 'star-inactive' {
+		$image-width: 80px;
+		$image-height: 16px;
+		background-image: url('/extensions/wikia/MonetizationModule/images/sprite-monetization-module/star-inactive.png'); /* base64 */
+	}
+	// @autosprite-image-details: watch-now-btn.png@1366,0,6b9f48d6e1294a010fcbff987bf164db
+	@if $image-name == 'watch-now-btn' {
+		$image-width: 178px;
+		$image-height: 45px;
+		background-image: url('/extensions/wikia/MonetizationModule/images/sprite-monetization-module/watch-now-btn.png'); /* base64 */
+	}
+	@if $image-width != -1 {
+		$position-x: 0;
+		$position-y: 0;
+		@if $width > 0 {
+			$position-x: $position-x + ($width - $image-width) / 2;
+		}
+		@if $height > 0 {
+			$position-y: $position-y + ($height - $image-height) / 2;
+		}
+		@if $offset-x != 0 {
+			$position-x: $position-x + $offset-x;
+		}
+		@if $offset-y != 0 {
+			$position-y: $position-y + $offset-y;
+		}
+		background-position: $position-x $position-y;
+	}
+}
+
+@mixin sprite-monetization-module-full($image-name, $width: 0, $height: 0, $offset-x: 0, $offset-y: 0) {
+	@include sprite-monetization-module-base;
+	@include sprite-monetization-module($image-name, $width, $height, $offset-x, $offset-y);
+}
+
+@mixin sprite-monetization-module-full-embed($image-name, $width: 0, $height: 0, $offset-x: 0, $offset-y: 0) {
+	@include sprite-monetization-module-base-embed;
+	@include sprite-monetization-module-embed($image-name, $width, $height, $offset-x, $offset-y);
+}
+
+@mixin sprite-monetization-module-deep($width: 0, $height: 0) {
+	@include sprite-monetization-module-base;
+
+	&.amazon-logo-black {
+		@include sprite-monetization-module('amazon-logo-black', $width, $height);
+	}
+
+	&.amazon-logo-video-horz {
+		@include sprite-monetization-module('amazon-logo-video-horz', $width, $height);
+	}
+
+	&.amazon-logo-video {
+		@include sprite-monetization-module('amazon-logo-video', $width, $height);
+	}
+
+	&.amazon-logo-white {
+		@include sprite-monetization-module('amazon-logo-white', $width, $height);
+	}
+
+	&.amzon-no-iv {
+		@include sprite-monetization-module('amzon_no_iv', $width, $height);
+	}
+
+	&.no-image-commerce {
+		@include sprite-monetization-module('no_image_commerce', $width, $height);
+	}
+
+	&.no-image-video {
+		@include sprite-monetization-module('no_image_video', $width, $height);
+	}
+
+	&.star-active {
+		@include sprite-monetization-module('star-active', $width, $height);
+	}
+
+	&.star-inactive {
+		@include sprite-monetization-module('star-inactive', $width, $height);
+	}
+
+	&.watch-now-btn {
+		@include sprite-monetization-module('watch-now-btn', $width, $height);
+	}
+}
+
+@mixin sprite-monetization-module-deep-embed($width: 0, $height: 0) {
+	@include sprite-monetization-module-base-embed;
+
+	&.amazon-logo-black {
+		@include sprite-monetization-module-embed('amazon-logo-black', $width, $height);
+	}
+
+	&.amazon-logo-video-horz {
+		@include sprite-monetization-module-embed('amazon-logo-video-horz', $width, $height);
+	}
+
+	&.amazon-logo-video {
+		@include sprite-monetization-module-embed('amazon-logo-video', $width, $height);
+	}
+
+	&.amazon-logo-white {
+		@include sprite-monetization-module-embed('amazon-logo-white', $width, $height);
+	}
+
+	&.amzon-no-iv {
+		@include sprite-monetization-module-embed('amzon_no_iv', $width, $height);
+	}
+
+	&.no-image-commerce {
+		@include sprite-monetization-module-embed('no_image_commerce', $width, $height);
+	}
+
+	&.no-image-video {
+		@include sprite-monetization-module-embed('no_image_video', $width, $height);
+	}
+
+	&.star-active {
+		@include sprite-monetization-module-embed('star-active', $width, $height);
+	}
+
+	&.star-inactive {
+		@include sprite-monetization-module-embed('star-inactive', $width, $height);
+	}
+
+	&.watch-now-btn {
+		@include sprite-monetization-module-embed('watch-now-btn', $width, $height);
+	}
+}
+
+// @autosprite-end

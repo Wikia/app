@@ -70,21 +70,21 @@ class AutomaticWikiAdoptionGatherData {
 	}
 
 	function getRecentAdminEdits($fromWikiId=null, $toWikiId=null) {
-		global $wgStatsDB, $wgStatsDBEnabled;
+		global $wgSpecialsDB;
 
 		$recentAdminEdit = array();
 		
-		if ( !empty($wgStatsDBEnabled) && !empty($fromWikiId) && !empty($toWikiId) ) {
-			$dbrStats = wfGetDB(DB_SLAVE, array(), $wgStatsDB);			
+		if ( !empty($fromWikiId) && !empty($toWikiId) ) {
+			$dbrSpecials = wfGetDB(DB_SLAVE, array(), $wgSpecialsDB);
 
 			//get wikis with edits < 1000 and admins not active in last 45 days
 			//260000 = ID of wiki created on 2011-05-01 so it will work for wikis created after this project has been deployed
-			$res = $dbrStats->query(
-				'select e1.wiki_id, sum(e1.edits) as sum_edits from specials.events_local_users e1 ' .
+			$res = $dbrSpecials->query(
+				'select e1.wiki_id, sum(e1.edits) as sum_edits from events_local_users e1 ' .
 				'where e1.wiki_id > '.$fromWikiId.' and e1.wiki_id <= '.$toWikiId.' ' .
 				'group by e1.wiki_id ' .
 				'having sum_edits < 1000 and (' .
-				'select count(0) from specials.events_local_users e2 ' .
+				'select count(0) from events_local_users e2 ' .
 				'where e1.wiki_id = e2.wiki_id and ' .
 				'all_groups like "%sysop%" and ' .
 				'editdate > now() - interval 45 day ' .
@@ -92,7 +92,7 @@ class AutomaticWikiAdoptionGatherData {
 				__METHOD__
 			);
 
-			while ($row = $dbrStats->fetchObject($res)) {
+			while ($row = $dbrSpecials->fetchObject($res)) {
 				$wikiDbname = WikiFactory::IDtoDB($row->wiki_id);
 				if ($wikiDbname === false) {
 					//check if wiki exists in city_list
@@ -109,8 +109,8 @@ class AutomaticWikiAdoptionGatherData {
 					continue;
 				}
 				
-				$res2 = $dbrStats->query(
-					"select user_id, max(editdate) as lastedit from specials.events_local_users where wiki_id = {$row->wiki_id} and all_groups like '%sysop%' group by 1 order by null;",
+				$res2 = $dbrSpecials->query(
+					"select user_id, max(editdate) as lastedit from events_local_users where wiki_id = {$row->wiki_id} and all_groups like '%sysop%' group by 1 order by null;",
 					__METHOD__
 				);
 
@@ -118,7 +118,7 @@ class AutomaticWikiAdoptionGatherData {
 					'recentEdit' => time(),
 					'admins' => array()
 				);
-				while ($row2 = $dbrStats->fetchObject($res2)) {
+				while ($row2 = $dbrSpecials->fetchObject($res2)) {
 					if (($lastedit = wfTimestamp(TS_UNIX, $row2->lastedit)) < $recentAdminEdit[$row->wiki_id]['recentEdit']) {
 						$recentAdminEdit[$row->wiki_id]['recentEdit'] = $lastedit;
 					} else if ($row2->lastedit == '0000-00-00 00:00:00') { // use city_created if no lastedit
@@ -176,8 +176,8 @@ class AutomaticWikiAdoptionGatherData {
 			$defaultOption = null;
 			if ( $wikiId > 194785 ) {
 				$defaultOption = 1;
-			}			
-			$acceptMails = $adminUser->getOption("adoptionmails-$wikiId", $defaultOption);
+			}
+			$acceptMails = $adminUser->setLocalPreference("adoptionmails", $defaultOption, $wikiId);
 			if ($acceptMails && $adminUser->isEmailConfirmed()) {
 				$adminName = $adminUser->getName();
 				if (!isset($commandLineOptions['quiet'])) {

@@ -8,6 +8,14 @@
 /*csslint known-properties:false */
 /* Bug: https://github.com/stubbornella/csslint/issues/436 */
 
+/* Visual Editor */
+
+.mw-viewPageTarget-loading {
+	width: 128px;
+	height: 15px;
+	float: right;
+}
+
 /* Section edit links */
 
 .mw-editsection {
@@ -30,4 +38,11 @@
 	/* Use !important to override div.vectorTabs span */
 	background-image: none !important;
 	display: inline !important;
+}
+
+/* Images */
+
+.mw-viewPageTarget-loading {
+	/* @embed */
+	background-image: url(images/loading-ltr.gif);
 }

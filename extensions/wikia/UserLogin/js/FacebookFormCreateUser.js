@@ -20,7 +20,7 @@
 	};
 
 	/**
-	 * Send ajax login request to FB controller. Overrides parent method.
+	 * Send ajax login request to FB controller.
 	 */
 	FacebookFormCreateUser.prototype.ajaxLogin = function () {
 		var formData = this.wikiaForm.form.serialize();
@@ -44,7 +44,7 @@
 		if (response.result === 'ok') {
 			window.Wikia.Tracker.track({
 				category: 'user-sign-up',
-				trackingMethod: 'both',
+				trackingMethod: 'analytics',
 				action: window.Wikia.Tracker.ACTIONS.SUCCESS,
 				label: 'facebook-signup'
 			});

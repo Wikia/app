@@ -163,6 +163,33 @@
 								<?= wfMsg('swm-label-mode-users-group-hint') ?>
 							</td>
 						</tr>
+						<tr>
+							<td>
+								<input name="mSendModeUsers" id="mSendModeUsersPU" type="radio" value="POWERUSER"<?= $formData['sendModeUsers'] == 'POWERUSER' ? ' checked="checked"' : ''?>/>
+							</td>
+							<td>
+								<label for="mSendModeUsersPU"><?= wfMessage( 'swm-label-mode-users-poweruser' )->escaped() ?></label>
+							</td>
+							<td>
+								<?php
+									foreach	( $formData[ 'powerUserTypes' ] as $powerUserType ) {
+										$html = '<label for="mPowerUserType_' . Sanitizer::encodeAttribute( $powerUserType ) . '">';
+											$html .= '<input type="checkbox" name="mPowerUserType[]"';
+												$html .= 'id="mPowerUserType_' . Sanitizer::encodeAttribute( $powerUserType ) . '"';
+												$html .= 'value="' . Sanitizer::encodeAttribute( $powerUserType ) . '"';
+											if ( isset( $formData['mPowerUserType'] ) && in_array( $powerUserType, $formData['mPowerUserType'] ) ) {
+												$html .= ' checked="checked"';
+											}
+											$html .= '>';
+										$html .= Sanitizer::escapeHtmlAllowEntities( $powerUserType ) . '</label><br>';
+										echo $html;
+									}
+								?>
+							</td>
+							<td class="swm-hint">
+								<?= wfMessage( 'swm-label-mode-users-poweruser-hint' )->parse() ?>
+							</td>
+						</tr>
 
 						<tr>
 							<td>
@@ -356,6 +383,14 @@ jQuery( document ).ready( function ( $ ) {
 					$( '#mSendModeUsersC' ).prop( 'checked', true );
 				}
 				break;
+			case 'mSendModeUsersPU':
+				$( '#mSendModeWikisA' ).prop( 'disabled', true );
+				$( '#mSendModeWikisC' ).prop( 'disabled', true );
+				$( '#mSendModeWikisH' ).prop( 'disabled', true );
+				$( '#mSendModeWikisW' ).prop( 'disabled', true );
+				$( '#mSendModeWikisM' ).prop( 'disabled', true );
+				$( '#mSendModeWikisD' ).prop( 'disabled', true );
+				break;
 			case 'mSendModeUsersU':
 			case 'mSendModeUsersM':
 				$( '#mSendModeWikisA' ).prop( 'disabled', true );
@@ -410,8 +445,9 @@ jQuery( document ).ready( function ( $ ) {
 	$( '#mSendModeWikisA' ).add( '#mSendModeWikisH' ).add( '#mSendModeWikisC' )
 		.add( '#mSendModeWikisW' ).add( '#mSendModeWikisM' ).add( '#mSendModeWikisD' )
 		.add( '#mSendModeUsersA' ).add( '#mSendModeUsersC' ).add( '#mSendModeUsersG' )
-		.add( '#mSendModeUsersU' ).add( '#mSendModeUsersM' ).add( '#mSendModeUsersIP' )
-		.add( '#mSendModeUsersReg' ).add( '#mSendModeUsersEC' ).bind( 'click', grayOut );
+		.add( '#mSendModeUsersPU' ).add( '#mSendModeUsersU' ).add( '#mSendModeUsersM' )
+		.add( '#mSendModeUsersIP' ).add( '#mSendModeUsersReg' ).add( '#mSendModeUsersEC' )
+		.on( 'click', grayOut );
 
 	$( '#mRegistrationS' ).change( function () {
 		if ( $( this ).val() === 'between' ) {

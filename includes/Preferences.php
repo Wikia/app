@@ -72,7 +72,7 @@ class Preferences {
 
 		## Prod in defaults from the user
 		foreach ( $defaultPreferences as $name => &$info ) {
-			$prefFromUser = self::getOptionFromUser( $name, $info, $user );
+			$prefFromUser = self::getUserPreference( $name, $info, $user );
 			$field = HTMLForm::loadInputFromParameters( $name, $info ); // For validation
 			$defaultOptions = User::getDefaultOptions();
 			$globalDefault = isset( $defaultOptions[$name] )
@@ -84,9 +84,10 @@ class Preferences {
 				// Already set, no problem
 				continue;
 			} elseif ( !is_null( $prefFromUser ) && // Make sure we're not just pulling nothing
-				$field->validate( $prefFromUser, $user->mOptions ) === true ) {
+				$field->validate( $prefFromUser, $user->getOptions() ) === true
+			) {
 				$info['default'] = $prefFromUser;
-			} elseif ( $field->validate( $globalDefault, $user->mOptions ) === true ) {
+			} elseif ( $field->validate( $globalDefault, $user->getOptions() ) === true ) {
 				$info['default'] = $globalDefault;
 			} else {
 				Wikia::log( __METHOD__, 'JKU', "Global default '$globalDefault' is invalid for field $name" );
@@ -107,8 +108,8 @@ class Preferences {
 	 * @param $user User
 	 * @return array|String
 	 */
-	static function getOptionFromUser( $name, $info, $user ) {
-		$val = $user->getOption( $name );
+	static function getUserPreference( $name, $info, $user ) {
+		$val = $user->getGlobalPreference( $name );
 
 		// Handling for array-type preferences
 		if ( ( isset( $info['type'] ) && $info['type'] == 'multiselect' ) ||
@@ -118,7 +119,7 @@ class Preferences {
 			$val = array();
 
 			foreach ( $options as $value ) {
-				if ( $user->getOption( "$prefix$value" ) ) {
+				if ( $user->getGlobalPreference( "$prefix$value" ) ) {
 					$val[] = $value;
 				}
 			}
@@ -461,13 +462,6 @@ class Preferences {
 			}
 
 			/* Wikia change begin - @author: Inez */
-			$defaultPreferences['htmlemails'] =
-				array(
-					'type' => 'toggle',
-					'section' => 'personal/email',
-					'label-message' => 'tog-htmlemails',
-				);
-
 			$defaultPreferences['marketingallowed'] =
 				array(
 					'type' => 'toggle',
@@ -519,7 +513,7 @@ class Preferences {
 			);
 		}
 
-		$selectedSkin = $user->getOption( 'skin' );
+		$selectedSkin = $user->getGlobalPreference( 'skin' );
 		if ( in_array( $selectedSkin, array( 'cologneblue', 'standard' ) ) ) {
 			$settings = array_flip( $context->getLanguage()->getQuickbarSettings() );
 
@@ -596,7 +590,7 @@ class Preferences {
 		);
 
 		// Grab existing pref.
-		$tzOffset = $user->getOption( 'timecorrection' );
+		$tzOffset = $user->getGlobalPreference( 'timecorrection' );
 		$tz = explode( '|', $tzOffset, 3 );
 
 		$tzOptions = self::getTimezoneOptions( $context );
@@ -713,110 +707,118 @@ class Preferences {
 		global $wgUseExternalEditor, $wgLivePreview, $wgAllowUserCssPrefs;
 
 		/* Wikia change begin - @author: Macbre */
-		wfRunHooks( 'EditingPreferencesBefore', array($user, &$defaultPreferences ) );
+		wfRunHooks( 'EditingPreferencesBefore', [ $user, &$defaultPreferences ] );
 		/* Wikia change end */
 
 		## Editing #####################################
-		$defaultPreferences['cols'] = array(
+		$defaultPreferences['cols'] = [
 			'type' => 'int',
 			'label-message' => 'columns',
 			'section' => 'editing/textboxsize',
 			'min' => 4,
 			'max' => 1000,
-		);
-		$defaultPreferences['rows'] = array(
+		];
+		$defaultPreferences['rows'] = [
 			'type' => 'int',
 			'label-message' => 'rows',
 			'section' => 'editing/textboxsize',
 			'min' => 4,
 			'max' => 1000,
-		);
+		];
 
 		if ( $wgAllowUserCssPrefs ) {
-			$defaultPreferences['editfont'] = array(
+			$defaultPreferences['editfont'] = [
 				'type' => 'select',
 				'section' => 'editing/advancedediting',
 				'label-message' => 'editfont-style',
-				'options' => array(
+				'options' => [
 					$context->msg( 'editfont-default' )->text() => 'default',
 					$context->msg( 'editfont-monospace' )->text() => 'monospace',
 					$context->msg( 'editfont-sansserif' )->text() => 'sans-serif',
 					$context->msg( 'editfont-serif' )->text() => 'serif',
-				)
-			);
+				]
+			];
 		}
-		$defaultPreferences['previewontop'] = array(
+		$defaultPreferences['previewontop'] = [
 			'type' => 'toggle',
 			'section' => 'editing/advancedediting',
 			'label-message' => 'tog-previewontop',
-		);
-		$defaultPreferences['previewonfirst'] = array(
+		];
+		$defaultPreferences['previewonfirst'] = [
 			'type' => 'toggle',
 			'section' => 'editing/advancedediting',
 			'label-message' => 'tog-previewonfirst',
-		);
+		];
 
 		if ( $wgAllowUserCssPrefs ) {
-			$defaultPreferences['editsection'] = array(
+			$defaultPreferences['editsection'] = [
 				'type' => 'toggle',
 				'section' => 'editing/advancedediting',
 				'label-message' => 'tog-editsection',
-			);
+			];
 		}
-		$defaultPreferences['editsectiononrightclick'] = array(
+		$defaultPreferences['editsectiononrightclick'] = [
 			'type' => 'toggle',
 			'section' => 'editing/advancedediting',
 			'label-message' => 'tog-editsectiononrightclick',
-		);
-		$defaultPreferences['editondblclick'] = array(
+		];
+		$defaultPreferences['editondblclick'] = [
 			'type' => 'toggle',
 			'section' => 'editing/advancedediting',
 			'label-message' => 'tog-editondblclick',
-		);
-		$defaultPreferences['editwidth'] = array(
+		];
+		$defaultPreferences['editwidth'] = [
 			'type' => 'toggle',
 			'section' => 'editing/advancedediting',
 			'label-message' => 'tog-editwidth',
-		);
-		$defaultPreferences['showtoolbar'] = array(
+		];
+		$defaultPreferences['showtoolbar'] = [
 			'type' => 'toggle',
 			'section' => 'editing/advancedediting',
 			'label-message' => 'tog-showtoolbar',
-		);
+		];
 
 		if ( $user->isAllowed( 'minoredit' ) ) {
-			$defaultPreferences['minordefault'] = array(
+			$defaultPreferences['minordefault'] = [
 				'type' => 'toggle',
 				'section' => 'editing/advancedediting',
 				'label-message' => 'tog-minordefault',
-			);
+			];
 		}
 
 		if ( $wgUseExternalEditor ) {
-			$defaultPreferences['externaleditor'] = array(
+			$defaultPreferences['externaleditor'] = [
 				'type' => 'toggle',
 				'section' => 'editing/advancedediting',
 				'label-message' => 'tog-externaleditor',
-			);
-			$defaultPreferences['externaldiff'] = array(
+			];
+			$defaultPreferences['externaldiff'] = [
 				'type' => 'toggle',
 				'section' => 'editing/advancedediting',
 				'label-message' => 'tog-externaldiff',
-			);
+			];
 		}
 
-		$defaultPreferences['forceeditsummary'] = array(
+		$defaultPreferences['forceeditsummary'] = [
 			'type' => 'toggle',
 			'section' => 'editing/advancedediting',
 			'label-message' => 'tog-forceeditsummary',
-		);
+		];
+
+		/* Wikia change begin - @author: Lukaszk */
+		$defaultPreferences['disablesyntaxhighlighting'] =[
+			'type' => 'toggle',
+			'section' => 'editing/advancedediting',
+			'label-message' => 'tog-disablesyntaxhighlighting',
+		];
+		/* Wikia change end */
 
 		if ( $wgLivePreview ) {
-			$defaultPreferences['uselivepreview'] = array(
+			$defaultPreferences['uselivepreview'] = [
 				'type' => 'toggle',
 				'section' => 'editing/advancedediting',
 				'label-message' => 'tog-uselivepreview',
-			);
+			];
 		}
 	}
 
@@ -1446,7 +1448,7 @@ class Preferences {
 		foreach( $wgHiddenPrefs as $pref ){
 			# If the user has not set a non-default value here, the default will be returned
 			# and subsequently discarded
-			$formData[$pref] = $user->getOption( $pref, null, true );
+			$formData[$pref] = $user->getGlobalPreference( $pref, null, true );
 		}
 
 		//  Keeps old preferences from interfering due to back-compat
@@ -1455,9 +1457,7 @@ class Preferences {
 		//$user->resetOptions();
 		// </Wikia>
 
-		foreach ( $formData as $key => $value ) {
-			$user->setOption( $key, $value );
-		}
+		$user->setGlobalPreferences($formData);
 
 		$user->saveSettings();
 
@@ -1560,7 +1560,7 @@ class Preferences {
 		$arr = array();
 
 		foreach ( $searchableNamespaces as $ns => $name ) {
-			if ( $user->getOption( 'searchNs' . $ns ) ) {
+			if ( $user->getGlobalPreference( 'searchNs' . $ns ) ) {
 				$arr[] = $ns;
 			}
 		}

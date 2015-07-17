@@ -133,10 +133,10 @@ foreach($csv as $line) {
 		//echo "checking $name against $cat1 $cat2\n";
 		//echo "result: " . var_dump(stristr($name, $cat1)) . "\n";
 		//echo "result: " . var_dump(stristr($name, $cat2)) . "\n";
-		if (stristr($name, $cat1) !== false) {
+		if ( !empty($cat1) && stristr($name, $cat1) !== false) {
 			$cat1_id = $id;
 		}
-		if (stristr($name, $cat2) !== false) {
+		if ( !empty($cat2) && stristr($name, $cat2) !== false) {
 			$cat2_id = $id;
 		}
 	}

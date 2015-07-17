@@ -10,3 +10,6 @@ $wgHooks['SpecialTags::UsedTags'][] = 'EditTaggingHooks::onUsedTags';
 
 // tagging API edits
 $wgHooks['ApiEditPage::SuccessfulApiEdit'][] = 'EditTaggingHooks::onSuccessfulApiEdit';
+
+// tagging reverts
+$wgHooks['ArticleRollbackComplete'][] = 'EditTaggingHooks::onArticleRollbackComplete';

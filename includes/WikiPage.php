@@ -590,10 +590,12 @@ class WikiPage extends Page {
 	 *
 	 * The target will be fetched from the redirect table if possible.
 	 * If this page doesn't have an entry there, call insertRedirect()
+	 *
+	 * @param int $flags
 	 * @return Title|mixed object, or null if this page is not a redirect
 	 */
-	public function getRedirectTarget() {
-		if ( !$this->mTitle->isRedirect() ) {
+	public function getRedirectTarget( $flags = 0 ) {
+		if ( !$this->mTitle->isRedirect( $flags ) ) {
 			return null;
 		}
 
@@ -602,7 +604,8 @@ class WikiPage extends Page {
 		}
 
 		# Query the redirect table
-		$dbr = wfGetDB( DB_SLAVE );
+		$useMasterDb = $flags & Title::GAID_FOR_UPDATE;
+		$dbr = $useMasterDb ? wfGetDB( DB_MASTER ) : wfGetDB( DB_SLAVE );
 		$row = $dbr->selectRow( 'redirect',
 			array( 'rd_namespace', 'rd_title', 'rd_fragment', 'rd_interwiki' ),
 			array( 'rd_from' => $this->getId() ),
@@ -837,10 +840,10 @@ class WikiPage extends Page {
 	 *               get the current revision (default value)
 	 * @return ParserOutput or false if the revision was not found
 	 */
-	public function getParserOutput( ParserOptions $parserOptions, $oldid = null ) {
+	public function getParserOutput( ParserOptions $parserOptions, $oldid = null, $fromCache = true ) {
 		wfProfileIn( __METHOD__ );
 
-		$useParserCache = $this->isParserCacheUsed( $parserOptions, $oldid );
+		$useParserCache = $this->isParserCacheUsed( $parserOptions, $oldid ) && $fromCache;
 		wfDebug( __METHOD__ . ': using parser cache: ' . ( $useParserCache ? 'yes' : 'no' ) . "\n" );
 		if ( $parserOptions->getStubThreshold() ) {
 			wfIncrStats( 'pcache_miss_stub' );
@@ -1595,17 +1598,9 @@ class WikiPage extends Page {
 
 		if ( wfRunHooks( 'ArticleEditUpdatesDeleteFromRecentchanges', array( &$this ) ) ) {
 			if ( 0 == mt_rand( 0, 99 ) ) {
-				// Flush old entries from the `recentchanges` table; we do this on
-				// random requests so as to avoid an increase in writes for no good reason
-				global $wgRCMaxAge;
-
-				$dbw = wfGetDB( DB_MASTER );
-				$cutoff = $dbw->timestamp( time() - $wgRCMaxAge );
-				$dbw->delete(
-					'recentchanges',
-					array( "rc_timestamp < '$cutoff'" ),
-					__METHOD__
-				);
+				// Flush old entries from the `recentchanges` table
+				// Wikia: use a job backported from MediaWiki 1.25 (@see PLATFORM-965)
+				Wikia\Tasks\Tasks\RecentChangesUpdateTask::newPurgeTask();
 			}
 		}
 

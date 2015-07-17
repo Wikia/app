@@ -7,9 +7,9 @@
 ?>
 <section>
 <header class="AdminDashboardGeneralHeader">
-	<h1 class="mw-specialpagesgroup">
+	<h2 class="mw-specialpagesgroup">
 		<?= wfMsgNoTrans( "specialpages-group-$group" ) ?>
-	</h1>
+	</h2>
 </header>
 <table style='width: 100%;' class='mw-specialpages-table'>
 	<tr>

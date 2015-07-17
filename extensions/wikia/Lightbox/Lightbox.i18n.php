@@ -73,11 +73,7 @@ your email preferences here: http://community.wikia.com/Special:Preferences',
 	'lightbox-share-email-label' => 'Email this image to a friend',
 	'lightbox-share-email-page-label' => 'Email this page to a friend',
 	'lightbox-share-email-page-label-address' => 'Email address',
-	'lightbox-share-email-ok-caption' => 'Confirmation',
 	'lightbox-share-email-ok-content' => '{{PLURAL:$1|Email has|Emails have}} been sent.',
-	'lightbox-share-email-error-caption' => 'Error',
-	'lightbox-share-email-error-content' => "Error sending {{PLURAL:$1|email|emails}}.\nDetails: $2",
-	'lightbox-share-email-error-login' => 'To send emails you need to login',
 	'lightbox-share-email-error-noaddress' => 'No addresses have been specified.',
 	'lightbox-visit-the-wiki' => 'Visit the wiki:'
 );
@@ -130,9 +126,6 @@ $messages['qqq'] = array(
 * $1 is a username.',
 	'lightbox-share-email-body-video' => 'Parameters:
 * $1 is a link to the suggested image.',
-	'lightbox-share-email-error-content' => 'Parameters:
-* $1 is the numer of sent e-mails
-* $2 is are the error details.',
 	'lightbox-video-views' => 'video views. $1 is number of video views.',
 );
 
@@ -167,14 +160,8 @@ $1
 	'lightbox-share-button-embed' => 'Einbinden',
 	'lightbox-share-email-label' => 'Dieses Bild an einen Freund senden',
 	'lightbox-share-email-page-label-address' => 'E-Mail-Adresse',
-	'lightbox-share-email-ok-caption' => 'Bestätigung',
 	'lightbox-share-email-ok-content' => 'Die {{PLURAL:$1|E-Mail wurde|E-Mails wurden}} gesendet.',
-	'lightbox-share-email-error-caption' => 'Fehler',
-	'lightbox-share-email-error-content' => 'Fehler beim Senden der {{PLURAL:$1|E-Mail|E-Mails}}.
-
-Details: $2',
-	'lightbox-share-email-error-login' => 'Um E-Mails zu senden, musst du dich anmelden',
-	'lightbox-share-email-error-noaddress' => 'Es wurden keine Adressen angegeben.',
+	'lightbox-share-email-error-noaddress' => 'Es wurden keine Adressen angegeben.'
 );
 
 /** German (formal address) (Deutsch (Sie-Form))
@@ -188,8 +175,7 @@ jemand will Ihnen ein Foto auf Wikia zeigen. Sehen Sie es sich an:
 
 $1
 
-- Das Wikia-Team',
-	'lightbox-share-email-error-login' => 'Um E-Mails zu senden, müssen Sie sich anmelden',
+- Das Wikia-Team'
 );
 
 /** Zazaki (Zazaki)
@@ -227,12 +213,7 @@ $1
 	'lightbox-share-email-label' => 'Enviar por e-mail esta imagen a un amigo',
 	'lightbox-share-email-page-label' => 'Enviar por e-mail esta página a un amigo',
 	'lightbox-share-email-page-label-address' => 'Dirección de correo electrónico',
-	'lightbox-share-email-ok-caption' => 'Confirmación',
 	'lightbox-share-email-ok-content' => '{{PLURAL:$1|correo ha|correos han}} sido enviado.',
-	'lightbox-share-email-error-caption' => 'Error',
-	'lightbox-share-email-error-content' => 'Error al enviar {{PLURAL:$1|correo|correos}}.
-Detalles: $2',
-	'lightbox-share-email-error-login' => 'Para enviar correos electrónicos debes iniciar sesión.',
 	'lightbox-share-email-error-noaddress' => 'No has especificado ninguna dirección.',
 	'lightbox-visit-the-wiki' => 'Visita el wiki:',
 );
@@ -263,12 +244,7 @@ $1
 	'lightbox-share-email-label' => 'Lähetä kuva sähköpostitse ystävälle',
 	'lightbox-share-email-page-label' => 'Lähetä sivu ystävälle sähköpostitse',
 	'lightbox-share-email-page-label-address' => 'Sähköpostiosoite',
-	'lightbox-share-email-ok-caption' => 'Vahvistus',
 	'lightbox-share-email-ok-content' => '{{PLURAL:$1|Sähköposti|Sähköpostit}} lähetettiin.',
-	'lightbox-share-email-error-caption' => 'Virhe',
-	'lightbox-share-email-error-content' => 'Virhe lähetettäessä {{PLURAL:$1|sähköpostia|sähköposteja}}.
-Tiedot: $2',
-	'lightbox-share-email-error-login' => 'Sähköpostien lähettäminen vaatii sisäänkirjautumisen',
 	'lightbox-share-email-error-noaddress' => 'Osoitteita ei ole määritetty.',
 	'lightbox-visit-the-wiki' => 'Siirry wikiin:',
 );
@@ -298,12 +274,7 @@ $1
 	'lightbox-share-email-label' => 'Envoyer cette image à un ami par courriel',
 	'lightbox-share-email-page-label' => 'Envoyer cette page à un ami par courriel',
 	'lightbox-share-email-page-label-address' => 'Adresse de courriel',
-	'lightbox-share-email-ok-caption' => 'Confirmation',
 	'lightbox-share-email-ok-content' => '{{PLURAL:$1|Le courriel a été envoyé|Les courriels ont été envoyés}}.',
-	'lightbox-share-email-error-caption' => 'Erreur',
-	'lightbox-share-email-error-content' => 'Erreur à l’envoi {{PLURAL:$1|du courriel|des courriels}}.
-Détails : $2',
-	'lightbox-share-email-error-login' => 'Vous devez vous connecter pour envoyer des courriels',
 	'lightbox-share-email-error-noaddress' => 'Vous n’avez spécifié aucune adresse.',
 	'lightbox-visit-the-wiki' => 'Visiter le wiki :',
 );
@@ -332,12 +303,7 @@ $1
 	'lightbox-share-email-label' => 'Envíe esta imaxe por correo a un amigo',
 	'lightbox-share-email-page-label' => 'Envíe esta páxina por correo a un amigo',
 	'lightbox-share-email-page-label-address' => 'Enderezo de correo electrónico',
-	'lightbox-share-email-ok-caption' => 'Configuración',
 	'lightbox-share-email-ok-content' => '{{PLURAL:$1|Enviouse o correo|Enviáronse os correos}}.',
-	'lightbox-share-email-error-caption' => 'Erro',
-	'lightbox-share-email-error-content' => 'Erro ao enviar {{PLURAL:$1|o correo|os correos}}.
-Detalles: $2',
-	'lightbox-share-email-error-login' => 'Para enviar correos ten que rexistrarse',
 	'lightbox-share-email-error-noaddress' => 'Non se especificou ningún enderezo.',
 	'lightbox-visit-the-wiki' => 'Visite o wiki:',
 );
@@ -366,12 +332,7 @@ $1
 	'lightbox-share-email-label' => 'Inviar iste imagine per e-mail a un amico',
 	'lightbox-share-email-page-label' => 'Inviar iste pagina per e-mail a un amico',
 	'lightbox-share-email-page-label-address' => 'Adresse de e-mail',
-	'lightbox-share-email-ok-caption' => 'Confirmation',
 	'lightbox-share-email-ok-content' => '{{PLURAL:$1|Un message|Messages}} de e-mail ha essite inviate.',
-	'lightbox-share-email-error-caption' => 'Error',
-	'lightbox-share-email-error-content' => 'Error durante le invio de {{PLURAL:$1|un message|messages}} de e-mail.
-Detalios: $2',
-	'lightbox-share-email-error-login' => 'Pro inviar messages de e-mail es necessari aperir session',
 	'lightbox-share-email-error-noaddress' => 'Nulle adresse ha essite specificate.',
 	'lightbox-visit-the-wiki' => 'Visita le wiki:',
 );
@@ -401,13 +362,7 @@ $1
 	'lightbox-share-email-label' => 'この画像をメールで友人に送信',
 	'lightbox-share-email-page-label' => '友達にメールでこのページを送信',
 	'lightbox-share-email-page-label-address' => 'メールアドレス',
-	'lightbox-share-email-ok-caption' => '確認',
 	'lightbox-share-email-ok-content' => 'メールを送信しました。',
-	'lightbox-share-email-error-caption' => 'エラー',
-	'lightbox-share-email-error-content' => 'メールの送信でエラーが発生しました。
-
-詳細: $2',
-	'lightbox-share-email-error-login' => 'メールを送信するにはログインする必要があります',
 	'lightbox-share-email-error-noaddress' => 'メールアドレスが指定されていません',
 );
 
@@ -435,12 +390,7 @@ $1
 	'lightbox-share-email-label' => 'Испратете ја сликава на пријател',
 	'lightbox-share-email-page-label' => 'Испратете ја страницава на пријател',
 	'lightbox-share-email-page-label-address' => 'Е-пошта',
-	'lightbox-share-email-ok-caption' => 'Потврда',
 	'lightbox-share-email-ok-content' => '{{PLURAL:$1|Пораката е испратена.|Пораките се испратени}}.',
-	'lightbox-share-email-error-caption' => 'Грешка',
-	'lightbox-share-email-error-content' => 'Грешка при испраќањето на {{PLURAL:$1|пораката|пораките}}.
-Поподробно: $2',
-	'lightbox-share-email-error-login' => 'Треба да се најавите за да испраќате е-пошта',
 	'lightbox-share-email-error-noaddress' => 'Немате наведено адреси.',
 	'lightbox-visit-the-wiki' => 'Посетете го викито:',
 );
@@ -469,12 +419,7 @@ $1
 	'lightbox-share-email-label' => 'E-melkan gambar ini kepada kawan',
 	'lightbox-share-email-page-label' => 'E-melkan laman ini kepada kawan',
 	'lightbox-share-email-page-label-address' => 'Alamat e-mel',
-	'lightbox-share-email-ok-caption' => 'Pengesahan',
 	'lightbox-share-email-ok-content' => '{{PLURAL:$1|E-mel|Beberapa e-mel}} telah dihantar.',
-	'lightbox-share-email-error-caption' => 'Ralat',
-	'lightbox-share-email-error-content' => 'Ralat ketika menghantar {{PLURAL:$1|e-mel|emel-emel}}.
-Butiran: $2',
-	'lightbox-share-email-error-login' => 'Untuk menghantar e-mel, anda perlu log masuk',
 	'lightbox-share-email-error-noaddress' => 'Tiada alamat yang dinyatakan.',
 	'lightbox-visit-the-wiki' => 'Lawati wiki:',
 );
@@ -503,12 +448,7 @@ $1
 	'lightbox-share-email-label' => 'Send dette bildet til en venn gjennom e-post',
 	'lightbox-share-email-page-label' => 'Send denne siden til en venn på e-post',
 	'lightbox-share-email-page-label-address' => 'E-postadresse',
-	'lightbox-share-email-ok-caption' => 'Bekreftelse',
 	'lightbox-share-email-ok-content' => '{{PLURAL:$1|E-posten|E-postene}} ble sendt.',
-	'lightbox-share-email-error-caption' => 'Feil',
-	'lightbox-share-email-error-content' => 'Feil ved sending av {{PLURAL:$1|e-post|e-post}}.
-Detaljer: $2',
-	'lightbox-share-email-error-login' => 'For å sende e-poster må du logge inn',
 	'lightbox-share-email-error-noaddress' => 'Ingen adresse har blitt spesifisert.',
 	'lightbox-visit-the-wiki' => 'Besøk wikien:',
 );
@@ -538,12 +478,7 @@ $1
 	'lightbox-share-email-label' => 'Deze afbeelding naar een vriend e-mailen',
 	'lightbox-share-email-page-label' => 'Deze pagina naar een vriend e-mailen',
 	'lightbox-share-email-page-label-address' => 'E-mailadres',
-	'lightbox-share-email-ok-caption' => 'Bevestiging',
 	'lightbox-share-email-ok-content' => 'Er {{PLURAL:$1|is $1 e-mail|zijn $1 e-mails}} verzonden.',
-	'lightbox-share-email-error-caption' => 'Fout',
-	'lightbox-share-email-error-content' => 'Er is een fout opgetreden tijdens het verzenden van de {{PLURAL:$1|e-mail|e-mails}}.
-Details: $2',
-	'lightbox-share-email-error-login' => 'U moet aanmelden om e-mail te kunnen verzenden',
 	'lightbox-share-email-error-noaddress' => 'Er zijn geen adressen opgegeven.',
 	'lightbox-visit-the-wiki' => 'Bezoek de wiki:',
 );
@@ -572,12 +507,7 @@ $1
 	'lightbox-share-email-label' => 'Wyślij ten obraz do znajomego',
 	'lightbox-share-email-page-label' => 'Poleć tę stronę znajomemu',
 	'lightbox-share-email-page-label-address' => 'Adres e‐mail',
-	'lightbox-share-email-ok-caption' => 'Potwierdzenie',
 	'lightbox-share-email-ok-content' => '{{PLURAL:$1|E-mail został wysłany|E-maile zostały wysłane|E-maili zostało wysłanych}}.',
-	'lightbox-share-email-error-caption' => 'Błąd',
-	'lightbox-share-email-error-content' => 'Błąd przy wysyłce {{PLURAL:$1|e-maila|e-maili}}.
-Szczegóły: $2',
-	'lightbox-share-email-error-login' => 'Aby wysyłać e-maile musisz się zalogować',
 	'lightbox-share-email-error-noaddress' => 'Adresy nie zostały określone.',
 	'lightbox-visit-the-wiki' => 'Odwiedź wiki:',
 );
@@ -590,8 +520,7 @@ $messages['ps'] = array(
 	'lightbox-send' => 'لېږل',
 	'lightbox-share-button-email' => 'برېښليک',
 	'lightbox-share-button-www' => 'شريکول',
-	'lightbox-share-email-page-label-address' => 'برېښليک پته',
-	'lightbox-share-email-error-caption' => 'تېروتنه',
+	'lightbox-share-email-page-label-address' => 'برېښليک پته'
 );
 
 /** Russian (Русский)
@@ -618,12 +547,7 @@ $1
 	'lightbox-share-email-label' => 'Отправить это изображение другу по email',
 	'lightbox-share-email-page-label' => 'Отправить эту страницу другу по email',
 	'lightbox-share-email-page-label-address' => 'Адрес электронной почты',
-	'lightbox-share-email-ok-caption' => 'Подтвердить',
 	'lightbox-share-email-ok-content' => '{{PLURAL:$1|эл. письма}} были отправлены.',
-	'lightbox-share-email-error-caption' => 'Ошибка',
-	'lightbox-share-email-error-content' => 'Ошибка при отправке {{PLURAL:$1|эл. письма|эл. писем}}.
-Подробнее: $2',
-	'lightbox-share-email-error-login' => 'Для отправки писем вам нужно войти на сайт',
 	'lightbox-share-email-error-noaddress' => 'Не был указан адрес(а).',
 	'lightbox-visit-the-wiki' => 'Посетите вики:',
 );
@@ -652,21 +576,9 @@ $1
 	'lightbox-share-email-label' => 'E-posta denna bild till en vän',
 	'lightbox-share-email-page-label' => 'E-posta denna sida till en vän',
 	'lightbox-share-email-page-label-address' => 'E-postadress',
-	'lightbox-share-email-ok-caption' => 'Bekräftelse',
 	'lightbox-share-email-ok-content' => '{{PLURAL:$1|E-postmeddelande|E-postmeddelanden}} har skickats.',
-	'lightbox-share-email-error-caption' => 'Fel',
-	'lightbox-share-email-error-content' => 'Fel uppstod när {{PLURAL:$1|e-postmeddelande|e-postmeddelanden}} skulle skickas.
-Detaljer: $2',
-	'lightbox-share-email-error-login' => 'För att skicka e-postmeddelanden måste du logga in',
 	'lightbox-share-email-error-noaddress' => 'Inga adresser har angivits.',
 	'lightbox-visit-the-wiki' => 'Besök wikin:',
-);
-
-/** Turkish (Türkçe)
- * @author Suelnur
- */
-$messages['tr'] = array(
-	'lightbox-share-email-error-caption' => 'Hata',
 );
 
 /** Simplified Chinese (中文(简体))

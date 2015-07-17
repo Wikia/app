@@ -15,7 +15,7 @@ class ExactTargetUserHooksHelper {
 			'user_email' => $oUser->getEmail(),
 			'user_email_authenticated' => $oUser->getEmailAuthenticationTimestamp(),
 			'user_registration' => $oUser->getRegistration(),
-			'user_editcount' => $oUser->getEditCount(),
+			'user_editcount' => (int)$oUser->getEditCount(),
 			'user_touched' => $oUser->getTouched()
 		];
 		return $aUserParams;
@@ -28,9 +28,9 @@ class ExactTargetUserHooksHelper {
 	 */
 	public function prepareUserPropertiesParams( \User $oUser ) {
 		$aUserPropertiesParams = [
-			'marketingallowed' => $oUser->getOption( 'marketingallowed' ),
-			'unsubscribed' => $oUser->getOption( 'unsubscribed' ),
-			'language' => $oUser->getOption( 'language' )
+			'marketingallowed' => $oUser->getGlobalPreference( 'marketingallowed' ),
+			'unsubscribed' => $oUser->getGlobalPreference( 'unsubscribed' ),
+			'language' => $oUser->getGlobalPreference( 'language' )
 		];
 		return $aUserPropertiesParams;
 	}

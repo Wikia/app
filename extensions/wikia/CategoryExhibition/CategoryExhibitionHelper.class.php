@@ -34,7 +34,7 @@ class CategoryExhibitionHelper {
 
 		$magicWord = MagicWord::get( CATEXHIBITION_DISABLED );
 		$disabled = ( 0 < $magicWord->match( $article->getRawText() ) );
-		if ( $disabled ) {
+		if ( $disabled || !$categoryExhibition->isCategoryExhibitionEnabled() ) {
 			$article = false;
 		}
 

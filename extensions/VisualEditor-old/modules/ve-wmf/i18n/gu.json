@@ -1,0 +1,19 @@
+{
+	"@metadata": {
+		"authors": [
+			"Ashok modhvadia",
+			"KartikMistry",
+			"The Discoverer"
+		]
+	},
+	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|વિઝ્યુલસંપાદક]]",
+	"tag-visualeditor-description": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|વિઝ્યુલસંપાદક]] વડે કરેલ ફેરફાર",
+	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|વિઝ્યુલસંપાદક: ચકાસો]]",
+	"tag-visualeditor-needcheck-description": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|વિઝ્યુલસંપાદક]] દ્વારા કરેલ ફેરફાર જ્યાં સિસ્ટમે ન ધારેલા વિકિલખાણ ફેરફારો મેળવ્યા.",
+	"tag-visualeditor-switched": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|વિઝ્યુલએડિટર: બદલેલ]]",
+	"tag-visualeditor-switched-description": "સભ્યે વિઝ્યુલએડિટર વાપરવાનું શરુ કર્યું પછી વિકિલખાણ સંપાદકમાં ગયા.",
+	"visualeditor-feedback-link": "Project:વિઝ્યુલસંપાદક/પ્રતિભાવ",
+	"visualeditor-feedback-tool": "પ્રતિભાવ આપો",
+	"visualeditor-help-label": "સભ્ય માર્ગદર્શિકા વાંચો",
+	"visualeditor-help-title": "સંપાદક કેવી રીતે વાપરવું તેની સભ્ય માર્ગદર્શિકા"
+}

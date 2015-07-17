@@ -6,7 +6,12 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname(dirname($vendorDir));
 
 return array(
+    'TijsVerkoyen\\CssToInlineStyles\\' => array($vendorDir . '/tijsverkoyen/css-to-inline-styles/src'),
+    'PhpDocReader\\' => array($vendorDir . '/php-di/phpdoc-reader/src/PhpDocReader'),
     'Monolog\\' => array($vendorDir . '/monolog/monolog/src/Monolog'),
+    'Invoker\\' => array($vendorDir . '/php-di/invoker/src'),
+    'Interop\\Container\\' => array($vendorDir . '/container-interop/container-interop/src/Interop/Container'),
     'FluentSql\\' => array($vendorDir . '/wikia/fluent-sql-php/src'),
     'Facebook\\' => array($vendorDir . '/facebook/php-sdk-v4/src/Facebook'),
+    'DI\\' => array($vendorDir . '/php-di/php-di/src/DI'),
 );

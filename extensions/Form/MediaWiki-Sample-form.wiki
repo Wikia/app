@@ -1,9 +1,0 @@
-title=Ew-nay Ample-say
-namePattern={{{topic}}}
-instructions=You can use this page to create a new article on a sample topic.
-topic|Topic|text|Topic of the article.
-purpose|Purpose|select|Purpose of the
-article|items=Business;Pleasure;Other
-intro|Introduction|textarea|An introductory paragraph about the topic.
-color|Color|radio|Color of the article|items=Red;Blue;Green
-conclusion|Conclusion|textarea|The conclusions of the topic.

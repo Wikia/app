@@ -67,15 +67,15 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 
 			// add a message that will be shown after the redirect
 			if ($res === self::RESULT_ERROR) {
-				NotificationsController::addConfirmation(
+				BannerNotificationsController::addConfirmation(
 					wfMsg('phalanx-block-failure'),
-					NotificationsController::CONFIRMATION_ERROR
+					BannerNotificationsController::CONFIRMATION_ERROR
 				);
 			}
 			else {
-				NotificationsController::addConfirmation(
+				BannerNotificationsController::addConfirmation(
 					wfMsg( $res === self::RESULT_BLOCK_ADDED ?  'phalanx-block-success' :  'phalanx-modify-success'),
-					NotificationsController::CONFIRMATION_CONFIRM
+					BannerNotificationsController::CONFIRMATION_CONFIRM
 				);
 			}
 

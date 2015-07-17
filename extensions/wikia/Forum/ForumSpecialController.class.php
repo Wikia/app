@@ -1,4 +1,7 @@
 <?php
+
+use Wikia\Logger\WikiaLogger;
+
 /**
  * Forum Special Page
  * @author Kyle Florence, Saipetch Kongkatong, Tomasz Odrobny
@@ -13,6 +16,7 @@ class ForumSpecialController extends WikiaSpecialPageController {
 	public function init() {
 		$this->response->addAsset( 'extensions/wikia/Forum/css/Forum.scss' );
 		$this->response->addAsset( 'extensions/wikia/Forum/css/ForumSpecial.scss' );
+		$this->response->addAsset( 'extensions/wikia/Forum/css/ForumTag.scss' );
 
 		if ( $this->app->checkSkin( 'monobook' ) ) {
 			$this->response->addAsset( 'extensions/wikia/WikiaStyleGuide/js/Form.js' );
@@ -42,7 +46,10 @@ class ForumSpecialController extends WikiaSpecialPageController {
 		$this->response->addAsset( 'extensions/wikia/Forum/js/Forum.js' );
 
 		if ( $this->request->getVal( 'showWarning', 0 ) == 1 ) {
-			NotificationsController::addConfirmation( wfMessage( 'forum-board-no-board-warning' )->escaped(), NotificationsController::CONFIRMATION_WARN );
+			BannerNotificationsController::addConfirmation(
+				wfMessage( 'forum-board-no-board-warning' )->escaped(),
+				BannerNotificationsController::CONFIRMATION_WARN
+			);
 		}
 
 		$action = $this->getVal( 'action', '' );
@@ -207,6 +214,15 @@ class ForumSpecialController extends WikiaSpecialPageController {
 		$boardId = $this->getVal( 'boardId', -1 );
 
 		$board = ForumBoard::newFromId( $boardId );
+		if ( empty( $board ) ) {
+			WikiaLogger::instance()->error( 'Error reporter: failed to find board', [
+				'jiraTicket' => 'SOC-590',
+				'boardId' => $boardId,
+				'method' => __METHOD__
+			]);
+			$this->response->setCode( 404 );
+			return true;
+		}
 		$boardTitle = $board->getTitle()->getText();
 
 

@@ -1,25 +1,21 @@
-@import "skins/shared/color";
-@import "skins/oasis/css/core/layout";
-@import "skins/shared/mixins/clearfix";
-@import "skins/shared/mixins/gradient";
-@import "skins/shared/mixins/box-shadow";
-@import "skins/shared/mixins/transition";
-@import "skins/shared/mixins/transform";
-@import "../../UserLogin/mixins/tooltip-icon";
+@import 'skins/shared/color';
+@import 'skins/oasis/css/core/layout';
+@import 'skins/shared/mixins/clearfix';
+@import 'skins/shared/mixins/gradient';
+@import 'skins/shared/mixins/box-shadow';
+@import 'skins/shared/mixins/transition';
+@import 'skins/shared/mixins/transform';
+@import 'extensions/wikia/WikiaStyleGuide/css/tooltip-icon';
 
 @mixin interstitial-toggle-animation {
 	-webkit-animation: InterstitialToggle 900ms;
 	-moz-animation: InterstitialToggle 900ms;
-	-ms-animation: InterstitialToggle 900ms;
-	-o-animation: InterstitialToggle 900ms;
 	animation: InterstitialToggle 900ms;
 }
 
 @mixin interstitial-toggle-animation2 {
 	-webkit-animation: InterstitialToggle2 900ms;
 	-moz-animation: InterstitialToggle2 900ms;
-	-ms-animation: InterstitialToggle2 900ms;
-	-o-animation: InterstitialToggle2 900ms;
 	animation: InterstitialToggle2 900ms;
 }
 
@@ -909,12 +905,4 @@ $wikiahomepage-line-height: 16px;
 }
 @-ms-keyframes InterstitialToggle2 {
 	@include interstitial-toggle-style;
-}
-
-.tooltip-icon-wrapper {
-	padding-right: 0.3em;
-	position: relative;
-	.tooltip-icon {
-		@include tooltip-icon;
-	}
 }

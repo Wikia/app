@@ -6,12 +6,12 @@ use PhpAmqpLib\Exception\AMQPRuntimeException;
 use PhpAmqpLib\Exception\AMQPTimeoutException;
 use Wikia\Logger\WikiaLogger;
 use Wikia\Tasks\Queues\NlpPipelineQueue;
-use Wikia\Tasks\AsyncBackendTaskList;
+use Wikia\Tasks\AsyncNLPTaskList;
 use \Title, \User;
 
 class Hooks
 {
-	
+
 	public static function onArticleEditUpdates( $article, $editInfo, $changed ) {
 		global $wgContentNamespaces;
 		$title = $article->getTitle();
@@ -51,7 +51,7 @@ class Hooks
 		};
 
 		try {
-			$taskList = new AsyncBackendTaskList();
+			$taskList = new AsyncNLPTaskList();
 
 			$taskList->taskType( $task )
 				->add( $articleId )

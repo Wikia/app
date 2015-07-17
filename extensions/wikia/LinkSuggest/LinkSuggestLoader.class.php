@@ -20,7 +20,7 @@ class LinkSuggestLoader {
 
 	private function __construct() {
 		$app = F::app();
-		$this->userWantsLinkSuggest = !( $app->wg->User->getOption( 'disablelinksuggest' ) );
+		$this->userWantsLinkSuggest = !( $app->wg->User->getGlobalPreference( 'disablelinksuggest' ) );
 
 		// only register hook if the user has enabled LinkSuggest
 		if ( $this->userWantsLinkSuggest ) {

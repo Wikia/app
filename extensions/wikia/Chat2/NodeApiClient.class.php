@@ -28,9 +28,18 @@ class NodeApiClient {
 			$cityId = $cityData->{'cityId'};
 		} else {
 			// FIXME: How should we handle it if there is no cityId?
+			ChatHelper::info( __METHOD__ . ': Method called - no cityId', [
+				'roomId' => $roomId,
+			] );
 		}
 
 		wfProfileOut( __METHOD__ );
+
+		ChatHelper::info( __METHOD__ . ': Method called', [
+			'roomId' => $roomId,
+			'cityId' => $cityId,
+		] );
+
 		return $cityId;
 	} // end getCityIdForRoom()
 
@@ -39,7 +48,11 @@ class NodeApiClient {
 	 *
 	 * If the chat doesn't exist, creates it.
 	 *
-	 * @param roomUsers - for private chats: an array of users who are in the room. TODO: Document what formatat these users are in (user ids? db_keys?)
+	 * @param roomUsers - for private chats: an array of users who are in the room.
+	 *
+	 * TODO: Document what format these users are in (user ids? db_keys?)
+	 *
+	 * @return string
 	 */
 	static public function getDefaultRoomId( $roomType = "open", $roomUsers = [] ){
 		global $wgCityId, $wgServer, $wgArticlePath;
@@ -67,8 +80,12 @@ class NodeApiClient {
 
 		if(isset($roomData->{'roomId'})){
 			$roomId = $roomData->{'roomId'};
+			ChatHelper::info( __METHOD__ . ': Method called', [
+				'roomId' => $roomId,
+			] );
 		} else {
 			// FIXME: How should we handle it if there is no roomId?
+			ChatHelper::info( __METHOD__ . ': Method called - no roomId' );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -110,7 +127,9 @@ class NodeApiClient {
 		global $wgReadOnly;
 		wfProfileIn( __METHOD__ );
 		$response = "";
-		
+
+		ChatHelper::debug( __METHOD__ . ': Method called ', $params );
+
 		// NOTE: When we fail over, the chat server host doesn't change which backend it points to (since there isn't
 		// even a chat server in the backup datacenter(s)), so if we're in read-only, even though this isn't a write
 		// operation, abort trying to contact the node server since it could be unavailable (in the event of complete

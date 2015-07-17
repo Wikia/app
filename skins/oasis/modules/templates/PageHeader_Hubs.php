@@ -1,10 +1,4 @@
 <header id="WikiaPageHeader" class="WikiaPageHeader">
-	<?php if ($showSearchBox && empty( $wg->EnableGlobalNavExt ) ) : ?>
-		<section id="WikiaSearchHeader" class="WikiaSearchHeader">
-			<?=  F::app()->renderView('Search', 'Index', array('searchFormId' => 'WikiaSearch')) ?>
-		</section>
-	<?php endif ?>
-
 	<?php if (!is_null($tallyMsg)) : ?>
 		<div class="tally">
 			<?= $tallyMsg ?>

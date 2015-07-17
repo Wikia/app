@@ -135,11 +135,11 @@
 				'labs' => array('wgEnableChat'),
 			);
 			$wiki_features4 = array(
-				'normal' => array('wgEnableAchievementsExt','wgEnablePageLayoutBuilder')
+				'normal' => array('wgEnableAchievementsExt','wgEnableChat')
 			);
 			$exp4 = array (
 				array ('name' => 'wgEnableAchievementsExt', 'enabled' => true, 'imageExtension' => '.png' ),
-				array ('name' => 'wgEnablePageLayoutBuilder', 'enabled' => true, 'imageExtension' => '.png' ),
+				array ('name' => 'wgEnableChat', 'enabled' => true, 'imageExtension' => '.png' ),
 			);
 			$wiki_features5 = array_merge($wiki_features3, $wiki_features4);
 

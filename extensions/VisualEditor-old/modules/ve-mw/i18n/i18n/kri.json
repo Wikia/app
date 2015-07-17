@@ -1,0 +1,12 @@
+{
+	"@metadata": {
+		"authors": [
+			"Protostar"
+		]
+	},
+	"visualeditor-dialog-media-position-center": "Sèntar",
+	"visualeditor-dialog-media-position-left": "Lèft",
+	"visualeditor-dialog-media-position-none": "Nòn pan dhèm",
+	"visualeditor-dialog-media-position-right": "Raiht",
+	"visualeditor-dialog-media-position-section": "Positio"
+}

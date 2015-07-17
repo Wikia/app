@@ -29,7 +29,7 @@ class CodeLintJs extends CodeLint {
 			'define',
 			'FB',
 			'Geo',
-			'GlobalNotification',
+			'BannerNotifications',
 			'GlobalTriggers',
 			'jQuery',
 			'Liftium',

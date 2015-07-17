@@ -12,7 +12,7 @@
 ve.ui.WikiaSingleMediaCartSelectWidget = function VeUiWikiaSingleMediaCartSelectWidget( model ) {
 	ve.ui.WikiaSingleMediaCartSelectWidget.super.call( this );
 	this.model = model;
-	this.model.connect( this, { 'add': 'onAdd', 'remove': 'onRemove' } );
+	this.model.connect( this, { add: 'onAdd', remove: 'onRemove' } );
 	this.$element.addClass( 've-ui-wikiaSingleMediaCartSelectWidget' );
 };
 
@@ -21,7 +21,10 @@ OO.inheritClass( ve.ui.WikiaSingleMediaCartSelectWidget, OO.ui.SelectWidget );
 ve.ui.WikiaSingleMediaCartSelectWidget.prototype.onAdd = function ( items, index ) {
 	var i, widgetItems = [];
 	for ( i = 0; i < items.length; i++ ) {
-		widgetItems.push( new ve.ui.WikiaSingleMediaCartOptionWidget( items[i] ) );
+		widgetItems.push( new ve.ui.WikiaSingleMediaCartOptionWidget( {
+			data: items[i].getId(),
+			model: items[i]
+		} ) );
 	}
 	this.addItems( widgetItems, index );
 };

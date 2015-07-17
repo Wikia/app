@@ -6,10 +6,10 @@
 	},
 	"qunit": {
 		"scripts": [
-			"lib/qunit/qunit.js"
+			"node_modules/qunitjs/qunit/qunit.js"
 		],
 		"styles": [
-			{ "file": "lib/qunit/qunit.css", "test": true }
+			{ "file": "node_modules/qunitjs/qunit/qunit.css", "test": true }
 		]
 	},
 	"jsdifflib": {
@@ -23,15 +23,12 @@
 	},
 	"oojs": {
 		"scripts": [
-			"lib/oojs/oojs.js"
+			"lib/oojs/oojs.jquery.js"
 		]
 	},
 	"oojs-ui": {
 		"scripts": [
 			"lib/oojs-ui/oojs-ui.js"
-		],
-		"styles": [
-			"lib/oojs-ui/oojs-ui.svg.css"
 		],
 		"dependencies": [
 			"oojs",
@@ -39,36 +36,35 @@
 		]
 	},
 	"oojs-ui-apex": {
-		"styles": [
-			"lib/oojs-ui/oojs-ui-apex.css"
-		],
-		"dependencies": [
-			"oojs-ui"
-		]
-	},
-	"oojs-ui-agora": {
-		"styles": [
-			"lib/oojs-ui/oojs-ui-agora.css"
-		],
-		"dependencies": [
-			"oojs-ui"
-		]
-	},
-	"rangy": {
 		"scripts": [
-			"lib/rangy/rangy-core-1.3.js",
-			"lib/rangy/rangy-position-1.3.js",
-			"lib/rangy/rangy-export.js"
+			"lib/oojs-ui/oojs-ui-apex.js"
+		],
+		"styles": [
+			"lib/oojs-ui/oojs-ui-apex.svg.css"
+		],
+		"dependencies": [
+			"oojs-ui"
+		]
+	},
+	"oojs-ui-mediawiki": {
+		"scripts": [
+			"lib/oojs-ui/oojs-ui-mediawiki.js"
+		],
+		"styles": [
+			"lib/oojs-ui/oojs-ui-mediawiki.svg.css"
+		],
+		"dependencies": [
+			"oojs-ui"
 		]
 	},
 	"unicodejs": {
 		"scripts": [
-			"modules/unicodejs/unicodejs.js",
-			"modules/unicodejs/unicodejs.textstring.js",
-			"modules/unicodejs/unicodejs.graphemebreakproperties.js",
-			"modules/unicodejs/unicodejs.graphemebreak.js",
-			"modules/unicodejs/unicodejs.wordbreakproperties.js",
-			"modules/unicodejs/unicodejs.wordbreak.js"
+			"lib/unicodejs/unicodejs.js"
+		]
+	},
+	"rangefix": {
+		"scripts": [
+			"lib/rangefix/rangefix.js"
 		]
 	},
 	"jquery.i18n": {
@@ -107,286 +103,398 @@
 			"jquery"
 		]
 	},
-	"visualEditor.base": {
+	"papaparse": {
 		"scripts": [
-			"modules/ve/ve.js",
-			{ "file": "modules/ve/ve.debug.js", "debug": true },
-			"modules/ve/ve.track.js",
-			"modules/ve/init/ve.init.js",
-			"modules/ve/init/ve.init.Platform.js",
-			"modules/ve/init/ve.init.Target.js"
+			"lib/papaparse/papaparse.js"
 		],
+		"dependencies": [
+			"jquery"
+		]
+	},
+	"baselibs": {
 		"dependencies": [
 			"jquery",
 			"oojs",
 			"oojs-ui",
-			"rangy",
-			"unicodejs",
 			"jquery.i18n",
-			"jquery.uls.data"
+			"jquery.uls.data",
+			"papaparse"
+		]
+	},
+	"visualEditor.base": {
+		"dependencies": [
+			"baselibs",
+			"visualEditor.base.build"
+		]
+	},
+	"visualEditor.base.build": {
+		"scripts": [
+			"src/ve.js",
+			"src/ve.utils.js",
+			"src/ve.TriggerListener.js",
+			{ "file": "src/ve.debug.js", "debug": true },
+			"src/ve.track.js",
+			"src/init/ve.init.js",
+			"src/init/ve.init.Platform.js",
+			"src/init/ve.init.Target.js"
+		],
+		"dependencies": [
+			"unicodejs",
+			"rangefix"
 		]
 	},
 	"visualEditor.core": {
+		"dependencies": [
+			"visualEditor.base",
+			"visualEditor.core.build"
+		]
+	},
+	"visualEditor.core.build": {
 		"scripts": [
-			"modules/ve/ve.Range.js",
-			"modules/ve/ve.Node.js",
-			"modules/ve/ve.BranchNode.js",
-			"modules/ve/ve.LeafNode.js",
-			"modules/ve/ve.Document.js",
-			"modules/ve/ve.EventSequencer.js",
-			"modules/ve/dm/ve.dm.js",
-			"modules/ve/dm/ve.dm.Model.js",
-			"modules/ve/dm/ve.dm.ModelRegistry.js",
-			"modules/ve/dm/ve.dm.NodeFactory.js",
-			"modules/ve/dm/ve.dm.AnnotationFactory.js",
-			"modules/ve/dm/ve.dm.AnnotationSet.js",
-			"modules/ve/dm/ve.dm.MetaItemFactory.js",
-			"modules/ve/dm/ve.dm.Scalable.js",
-			"modules/ve/dm/ve.dm.ResizableNode.js",
-			"modules/ve/dm/ve.dm.Node.js",
-			"modules/ve/dm/ve.dm.BranchNode.js",
-			"modules/ve/dm/ve.dm.LeafNode.js",
-			"modules/ve/dm/ve.dm.Annotation.js",
-			"modules/ve/dm/ve.dm.InternalList.js",
-			"modules/ve/dm/ve.dm.MetaItem.js",
-			"modules/ve/dm/ve.dm.MetaList.js",
-			"modules/ve/dm/ve.dm.TransactionProcessor.js",
-			"modules/ve/dm/ve.dm.Transaction.js",
-			"modules/ve/dm/ve.dm.Surface.js",
-			"modules/ve/dm/ve.dm.SurfaceFragment.js",
-			"modules/ve/dm/ve.dm.DataString.js",
-			"modules/ve/dm/ve.dm.Document.js",
-			"modules/ve/dm/ve.dm.DocumentSlice.js",
-			"modules/ve/dm/ve.dm.LinearData.js",
-			"modules/ve/dm/ve.dm.DocumentSynchronizer.js",
-			"modules/ve/dm/ve.dm.IndexValueStore.js",
-			"modules/ve/dm/ve.dm.Converter.js",
-			"modules/ve/dm/lineardata/ve.dm.FlatLinearData.js",
-			"modules/ve/dm/lineardata/ve.dm.ElementLinearData.js",
-			"modules/ve/dm/lineardata/ve.dm.MetaLinearData.js",
-			"modules/ve/dm/nodes/ve.dm.GeneratedContentNode.js",
-			"modules/ve/dm/nodes/ve.dm.AlienNode.js",
-			"modules/ve/dm/nodes/ve.dm.BreakNode.js",
-			"modules/ve/dm/nodes/ve.dm.CenterNode.js",
-			"modules/ve/dm/nodes/ve.dm.DefinitionListItemNode.js",
-			"modules/ve/dm/nodes/ve.dm.DefinitionListNode.js",
-			"modules/ve/dm/nodes/ve.dm.DivNode.js",
-			"modules/ve/dm/nodes/ve.dm.DocumentNode.js",
-			"modules/ve/dm/nodes/ve.dm.HeadingNode.js",
-			"modules/ve/dm/nodes/ve.dm.ImageNode.js",
-			"modules/ve/dm/nodes/ve.dm.InternalItemNode.js",
-			"modules/ve/dm/nodes/ve.dm.InternalListNode.js",
-			"modules/ve/dm/nodes/ve.dm.ListItemNode.js",
-			"modules/ve/dm/nodes/ve.dm.ListNode.js",
-			"modules/ve/dm/nodes/ve.dm.ParagraphNode.js",
-			"modules/ve/dm/nodes/ve.dm.PreformattedNode.js",
-			"modules/ve/dm/nodes/ve.dm.TableCaptionNode.js",
-			"modules/ve/dm/nodes/ve.dm.TableCellNode.js",
-			"modules/ve/dm/nodes/ve.dm.TableNode.js",
-			"modules/ve/dm/nodes/ve.dm.TableRowNode.js",
-			"modules/ve/dm/nodes/ve.dm.TableSectionNode.js",
-			"modules/ve/dm/nodes/ve.dm.TextNode.js",
-			"modules/ve/dm/annotations/ve.dm.LanguageAnnotation.js",
-			"modules/ve/dm/annotations/ve.dm.LinkAnnotation.js",
-			"modules/ve/dm/annotations/ve.dm.TextStyleAnnotation.js",
-			"modules/ve/dm/metaitems/ve.dm.AlienMetaItem.js",
-			"modules/ve/dm/metaitems/ve.dm.CommentMetaItem.js",
-			"modules/ve/ce/ve.ce.js",
-			"modules/ve/ce/ve.ce.DomRange.js",
-			"modules/ve/ce/ve.ce.AnnotationFactory.js",
-			"modules/ve/ce/ve.ce.NodeFactory.js",
-			"modules/ve/ce/ve.ce.Document.js",
-			"modules/ve/ce/ve.ce.View.js",
-			"modules/ve/ce/ve.ce.Annotation.js",
-			"modules/ve/ce/ve.ce.Node.js",
-			"modules/ve/ce/ve.ce.BranchNode.js",
-			"modules/ve/ce/ve.ce.ContentBranchNode.js",
-			"modules/ve/ce/ve.ce.LeafNode.js",
-			"modules/ve/ce/ve.ce.FocusableNode.js",
-			"modules/ve/ce/ve.ce.ResizableNode.js",
-			"modules/ve/ce/ve.ce.Surface.js",
-			"modules/ve/ce/ve.ce.SurfaceObserver.js",
-			"modules/ve/ce/nodes/ve.ce.GeneratedContentNode.js",
-			"modules/ve/ce/nodes/ve.ce.AlienNode.js",
-			"modules/ve/ce/nodes/ve.ce.BreakNode.js",
-			"modules/ve/ce/nodes/ve.ce.CenterNode.js",
-			"modules/ve/ce/nodes/ve.ce.DefinitionListItemNode.js",
-			"modules/ve/ce/nodes/ve.ce.DefinitionListNode.js",
-			"modules/ve/ce/nodes/ve.ce.DivNode.js",
-			"modules/ve/ce/nodes/ve.ce.DocumentNode.js",
-			"modules/ve/ce/nodes/ve.ce.HeadingNode.js",
-			"modules/ve/ce/nodes/ve.ce.ImageNode.js",
-			"modules/ve/ce/nodes/ve.ce.InternalItemNode.js",
-			"modules/ve/ce/nodes/ve.ce.InternalListNode.js",
-			"modules/ve/ce/nodes/ve.ce.ListItemNode.js",
-			"modules/ve/ce/nodes/ve.ce.ListNode.js",
-			"modules/ve/ce/nodes/ve.ce.ParagraphNode.js",
-			"modules/ve/ce/nodes/ve.ce.PreformattedNode.js",
-			"modules/ve/ce/nodes/ve.ce.TableCaptionNode.js",
-			"modules/ve/ce/nodes/ve.ce.TableCellNode.js",
-			"modules/ve/ce/nodes/ve.ce.TableNode.js",
-			"modules/ve/ce/nodes/ve.ce.TableRowNode.js",
-			"modules/ve/ce/nodes/ve.ce.TableSectionNode.js",
-			"modules/ve/ce/nodes/ve.ce.TextNode.js",
-			"modules/ve/ce/annotations/ve.ce.LanguageAnnotation.js",
-			"modules/ve/ce/annotations/ve.ce.LinkAnnotation.js",
-			"modules/ve/ce/annotations/ve.ce.TextStyleAnnotation.js",
-			"modules/ve/ui/ve.ui.js",
-			"modules/ve/ui/ve.ui.Surface.js",
-			"modules/ve/ui/ve.ui.Context.js",
-			"modules/ve/ui/ve.ui.Dialog.js",
-			"modules/ve/ui/ve.ui.Inspector.js",
-			"modules/ve/ui/ve.ui.WindowSet.js",
-			"modules/ve/ui/ve.ui.Tool.js",
-			"modules/ve/ui/ve.ui.Toolbar.js",
-			"modules/ve/ui/ve.ui.TargetToolbar.js",
-			{ "file": "modules/ve/ui/ve.ui.DebugBar.js", "debug": true },
-			"modules/ve/ui/ve.ui.ToolFactory.js",
-			"modules/ve/ui/ve.ui.Command.js",
-			"modules/ve/ui/ve.ui.CommandRegistry.js",
-			"modules/ve/ui/ve.ui.Trigger.js",
-			"modules/ve/ui/ve.ui.TriggerRegistry.js",
-			"modules/ve/ui/ve.ui.Action.js",
-			"modules/ve/ui/ve.ui.ActionFactory.js",
-			"modules/ve/ui/actions/ve.ui.AnnotationAction.js",
-			"modules/ve/ui/actions/ve.ui.ContentAction.js",
-			"modules/ve/ui/actions/ve.ui.FormatAction.js",
-			"modules/ve/ui/actions/ve.ui.HistoryAction.js",
-			"modules/ve/ui/actions/ve.ui.IndentationAction.js",
-			"modules/ve/ui/actions/ve.ui.ListAction.js",
-			"modules/ve/ui/actions/ve.ui.WindowAction.js",
-			"modules/ve/ui/dialogs/ve.ui.ActionDialog.js",
-			"modules/ve/ui/dialogs/ve.ui.NodeDialog.js",
-			"modules/ve/ui/dialogs/ve.ui.CommandHelpDialog.js",
-			"modules/ve/ui/widgets/ve.ui.LanguageResultWidget.js",
-			"modules/ve/ui/widgets/ve.ui.LanguageSearchWidget.js",
-			"modules/ve/ui/dialogs/ve.ui.LanguageSearchDialog.js",
-			"modules/ve/ui/widgets/ve.ui.SurfaceWidget.js",
-			"modules/ve/ui/widgets/ve.ui.LinkTargetInputWidget.js",
-			"modules/ve/ui/widgets/ve.ui.ContextWidget.js",
-			"modules/ve/ui/widgets/ve.ui.ContextItemWidget.js",
-			"modules/ve/ui/widgets/ve.ui.DimensionsWidget.js",
-			"modules/ve/ui/widgets/ve.ui.MediaSizeWidget.js",
-			"modules/ve/ui/tools/ve.ui.AnnotationTool.js",
-			"modules/ve/ui/tools/ve.ui.ClearAnnotationTool.js",
-			"modules/ve/ui/tools/ve.ui.DialogTool.js",
-			"modules/ve/ui/tools/ve.ui.FormatTool.js",
-			"modules/ve/ui/tools/ve.ui.HistoryTool.js",
-			"modules/ve/ui/tools/ve.ui.IndentationTool.js",
-			"modules/ve/ui/tools/ve.ui.InspectorTool.js",
-			"modules/ve/ui/tools/ve.ui.LanguageInspectorTool.js",
-			"modules/ve/ui/tools/ve.ui.ListTool.js",
-			"modules/ve/ui/inspectors/ve.ui.AnnotationInspector.js",
-			"modules/ve/ui/inspectors/ve.ui.LinkInspector.js",
-			"modules/ve/ui/widgets/ve.ui.LanguageInputWidget.js",
-			"modules/ve/ui/inspectors/ve.ui.LanguageInspector.js",
-			"modules/ve/ui/inspectors/ve.ui.SpecialCharacterInspector.js"
+			"src/ve.Range.js",
+			"src/ve.Node.js",
+			"src/ve.BranchNode.js",
+			"src/ve.LeafNode.js",
+			"src/ve.Document.js",
+			"src/ve.EventSequencer.js",
+			{ "file": "src/ve.Filibuster.js", "debug": true },
+			"src/dm/ve.dm.js",
+			"src/dm/ve.dm.Model.js",
+			"src/dm/ve.dm.ModelRegistry.js",
+			"src/dm/ve.dm.NodeFactory.js",
+			"src/dm/ve.dm.AnnotationFactory.js",
+			"src/dm/ve.dm.AnnotationSet.js",
+			"src/dm/ve.dm.MetaItemFactory.js",
+			"src/dm/ve.dm.ClassAttributeNode.js",
+			"src/dm/ve.dm.FocusableNode.js",
+			"src/dm/ve.dm.Scalable.js",
+			"src/dm/ve.dm.ResizableNode.js",
+			"src/dm/ve.dm.Node.js",
+			"src/dm/ve.dm.BranchNode.js",
+			"src/dm/ve.dm.LeafNode.js",
+			"src/dm/ve.dm.Annotation.js",
+			"src/dm/ve.dm.InternalList.js",
+			"src/dm/ve.dm.MetaItem.js",
+			"src/dm/ve.dm.MetaList.js",
+			"src/dm/ve.dm.TableMatrix.js",
+			"src/dm/ve.dm.TransactionProcessor.js",
+			"src/dm/ve.dm.Transaction.js",
+			"src/dm/ve.dm.Selection.js",
+			"src/dm/ve.dm.LinearSelection.js",
+			"src/dm/ve.dm.NullSelection.js",
+			"src/dm/ve.dm.TableSelection.js",
+			"src/dm/ve.dm.Surface.js",
+			"src/dm/ve.dm.SurfaceFragment.js",
+			"src/dm/ve.dm.DataString.js",
+			"src/dm/ve.dm.Document.js",
+			"src/dm/ve.dm.DocumentSlice.js",
+			"src/dm/ve.dm.LinearData.js",
+			"src/dm/ve.dm.DocumentSynchronizer.js",
+			"src/dm/ve.dm.IndexValueStore.js",
+			"src/dm/ve.dm.Converter.js",
+			"src/dm/lineardata/ve.dm.FlatLinearData.js",
+			"src/dm/lineardata/ve.dm.ElementLinearData.js",
+			"src/dm/lineardata/ve.dm.MetaLinearData.js",
+			"src/dm/nodes/ve.dm.GeneratedContentNode.js",
+			"src/dm/nodes/ve.dm.AlienNode.js",
+			"src/dm/nodes/ve.dm.BlockquoteNode.js",
+			"src/dm/nodes/ve.dm.BreakNode.js",
+			"src/dm/nodes/ve.dm.CenterNode.js",
+			"src/dm/nodes/ve.dm.DefinitionListItemNode.js",
+			"src/dm/nodes/ve.dm.DefinitionListNode.js",
+			"src/dm/nodes/ve.dm.DivNode.js",
+			"src/dm/nodes/ve.dm.DocumentNode.js",
+			"src/dm/nodes/ve.dm.HeadingNode.js",
+			"src/dm/nodes/ve.dm.InternalItemNode.js",
+			"src/dm/nodes/ve.dm.InternalListNode.js",
+			"src/dm/nodes/ve.dm.ListItemNode.js",
+			"src/dm/nodes/ve.dm.ListNode.js",
+			"src/dm/nodes/ve.dm.ParagraphNode.js",
+			"src/dm/nodes/ve.dm.PreformattedNode.js",
+			"src/dm/nodes/ve.dm.TableCaptionNode.js",
+			"src/dm/nodes/ve.dm.TableCellNode.js",
+			"src/dm/nodes/ve.dm.TableNode.js",
+			"src/dm/nodes/ve.dm.TableRowNode.js",
+			"src/dm/nodes/ve.dm.TableSectionNode.js",
+			"src/dm/nodes/ve.dm.TextNode.js",
+			"src/dm/nodes/ve.dm.ImageNode.js",
+			"src/dm/nodes/ve.dm.BlockImageNode.js",
+			"src/dm/nodes/ve.dm.BlockImageCaptionNode.js",
+			"src/dm/nodes/ve.dm.InlineImageNode.js",
+			"src/dm/annotations/ve.dm.LanguageAnnotation.js",
+			"src/dm/annotations/ve.dm.LinkAnnotation.js",
+			"src/dm/annotations/ve.dm.TextStyleAnnotation.js",
+			"src/dm/annotations/ve.dm.AbbreviationAnnotation.js",
+			"src/dm/annotations/ve.dm.BigAnnotation.js",
+			"src/dm/annotations/ve.dm.BoldAnnotation.js",
+			"src/dm/annotations/ve.dm.CodeSampleAnnotation.js",
+			"src/dm/annotations/ve.dm.CodeAnnotation.js",
+			"src/dm/annotations/ve.dm.DatetimeAnnotation.js",
+			"src/dm/annotations/ve.dm.DefinitionAnnotation.js",
+			"src/dm/annotations/ve.dm.HighlightAnnotation.js",
+			"src/dm/annotations/ve.dm.ItalicAnnotation.js",
+			"src/dm/annotations/ve.dm.QuotationAnnotation.js",
+			"src/dm/annotations/ve.dm.SmallAnnotation.js",
+			"src/dm/annotations/ve.dm.SpanAnnotation.js",
+			"src/dm/annotations/ve.dm.StrikethroughAnnotation.js",
+			"src/dm/annotations/ve.dm.SubscriptAnnotation.js",
+			"src/dm/annotations/ve.dm.SuperscriptAnnotation.js",
+			"src/dm/annotations/ve.dm.UnderlineAnnotation.js",
+			"src/dm/annotations/ve.dm.UserInputAnnotation.js",
+			"src/dm/annotations/ve.dm.VariableAnnotation.js",
+			"src/dm/metaitems/ve.dm.AlienMetaItem.js",
+			"src/dm/metaitems/ve.dm.CommentMetaItem.js",
+			"src/dm/nodes/ve.dm.CommentNode.js",
+			"src/ce/ve.ce.js",
+			"src/ce/ve.ce.RangeState.js",
+			"src/ce/ve.ce.AnnotationFactory.js",
+			"src/ce/ve.ce.NodeFactory.js",
+			"src/ce/ve.ce.Document.js",
+			"src/ce/ve.ce.View.js",
+			"src/ce/ve.ce.Annotation.js",
+			"src/ce/ve.ce.Node.js",
+			"src/ce/ve.ce.BranchNode.js",
+			"src/ce/ve.ce.ContentBranchNode.js",
+			"src/ce/ve.ce.LeafNode.js",
+			"src/ce/ve.ce.FocusableNode.js",
+			"src/ce/ve.ce.ResizableNode.js",
+			"src/ce/ve.ce.Surface.js",
+			"src/ce/ve.ce.SurfaceObserver.js",
+			"src/ce/nodes/ve.ce.GeneratedContentNode.js",
+			"src/ce/nodes/ve.ce.AlienNode.js",
+			"src/ce/nodes/ve.ce.BlockquoteNode.js",
+			"src/ce/nodes/ve.ce.BreakNode.js",
+			"src/ce/nodes/ve.ce.CenterNode.js",
+			"src/ce/nodes/ve.ce.CommentNode.js",
+			"src/ce/nodes/ve.ce.DefinitionListItemNode.js",
+			"src/ce/nodes/ve.ce.DefinitionListNode.js",
+			"src/ce/nodes/ve.ce.DivNode.js",
+			"src/ce/nodes/ve.ce.DocumentNode.js",
+			"src/ce/nodes/ve.ce.HeadingNode.js",
+			"src/ce/nodes/ve.ce.InternalItemNode.js",
+			"src/ce/nodes/ve.ce.InternalListNode.js",
+			"src/ce/nodes/ve.ce.ListItemNode.js",
+			"src/ce/nodes/ve.ce.ListNode.js",
+			"src/ce/nodes/ve.ce.ParagraphNode.js",
+			"src/ce/nodes/ve.ce.PreformattedNode.js",
+			"src/ce/nodes/ve.ce.TableCaptionNode.js",
+			"src/ce/nodes/ve.ce.TableCellNode.js",
+			"src/ce/nodes/ve.ce.TableNode.js",
+			"src/ce/nodes/ve.ce.TableRowNode.js",
+			"src/ce/nodes/ve.ce.TableSectionNode.js",
+			"src/ce/nodes/ve.ce.TextNode.js",
+			"src/ce/nodes/ve.ce.ImageNode.js",
+			"src/ce/nodes/ve.ce.BlockImageNode.js",
+			"src/ce/nodes/ve.ce.BlockImageCaptionNode.js",
+			"src/ce/nodes/ve.ce.InlineImageNode.js",
+			"src/ce/annotations/ve.ce.LanguageAnnotation.js",
+			"src/ce/annotations/ve.ce.LinkAnnotation.js",
+			"src/ce/annotations/ve.ce.TextStyleAnnotation.js",
+			"src/ce/annotations/ve.ce.AbbreviationAnnotation.js",
+			"src/ce/annotations/ve.ce.BigAnnotation.js",
+			"src/ce/annotations/ve.ce.BoldAnnotation.js",
+			"src/ce/annotations/ve.ce.CodeAnnotation.js",
+			"src/ce/annotations/ve.ce.CodeSampleAnnotation.js",
+			"src/ce/annotations/ve.ce.DatetimeAnnotation.js",
+			"src/ce/annotations/ve.ce.DefinitionAnnotation.js",
+			"src/ce/annotations/ve.ce.HighlightAnnotation.js",
+			"src/ce/annotations/ve.ce.ItalicAnnotation.js",
+			"src/ce/annotations/ve.ce.QuotationAnnotation.js",
+			"src/ce/annotations/ve.ce.SmallAnnotation.js",
+			"src/ce/annotations/ve.ce.SpanAnnotation.js",
+			"src/ce/annotations/ve.ce.StrikethroughAnnotation.js",
+			"src/ce/annotations/ve.ce.SubscriptAnnotation.js",
+			"src/ce/annotations/ve.ce.SuperscriptAnnotation.js",
+			"src/ce/annotations/ve.ce.UnderlineAnnotation.js",
+			"src/ce/annotations/ve.ce.UserInputAnnotation.js",
+			"src/ce/annotations/ve.ce.VariableAnnotation.js",
+			"src/ui/ve.ui.js",
+			"src/ui/ve.ui.Overlay.js",
+			"src/ui/ve.ui.Surface.js",
+			"src/ui/ve.ui.Context.js",
+			"src/ui/ve.ui.TableContext.js",
+			"src/ui/ve.ui.Tool.js",
+			"src/ui/ve.ui.Toolbar.js",
+			"src/ui/ve.ui.TargetToolbar.js",
+			{ "file": "src/ui/ve.ui.DebugBar.js", "debug": true },
+			"src/ui/ve.ui.ToolFactory.js",
+			"src/ui/ve.ui.Command.js",
+			"src/ui/ve.ui.CommandRegistry.js",
+			"src/ui/ve.ui.Trigger.js",
+			"src/ui/ve.ui.TriggerRegistry.js",
+			"src/ui/ve.ui.Sequence.js",
+			"src/ui/ve.ui.SequenceRegistry.js",
+			"src/ui/ve.ui.Action.js",
+			"src/ui/ve.ui.ActionFactory.js",
+			"src/ui/ve.ui.FileDropHandler.js",
+			"src/ui/ve.ui.FileDropHandlerFactory.js",
+			"src/ui/ve.ui.WindowManager.js",
+			"src/ui/actions/ve.ui.AnnotationAction.js",
+			"src/ui/actions/ve.ui.ContentAction.js",
+			"src/ui/actions/ve.ui.FormatAction.js",
+			"src/ui/actions/ve.ui.HistoryAction.js",
+			"src/ui/actions/ve.ui.IndentationAction.js",
+			"src/ui/actions/ve.ui.ListAction.js",
+			"src/ui/actions/ve.ui.TableAction.js",
+			"src/ui/actions/ve.ui.WindowAction.js",
+			"src/ui/commands/ve.ui.ClearAnnotationCommand.js",
+			"src/ui/commands/ve.ui.HistoryCommand.js",
+			"src/ui/commands/ve.ui.IndentationCommand.js",
+			"src/ui/commands/ve.ui.MergeCellsCommand.js",
+			"src/ui/commands/ve.ui.TableCaptionCommand.js",
+			"src/ui/dialogs/ve.ui.FragmentDialog.js",
+			"src/ui/dialogs/ve.ui.NodeDialog.js",
+			"src/ui/dialogs/ve.ui.ToolbarDialog.js",
+			"src/ui/dialogs/ve.ui.CommandHelpDialog.js",
+			"src/ui/dialogs/ve.ui.FindAndReplaceDialog.js",
+			"src/ui/dialogs/ve.ui.ProgressDialog.js",
+			"src/ui/filedrophandlers/ve.ui.DSVFileDropHandler.js",
+			"src/ui/filedrophandlers/ve.ui.PlainTextFileDropHandler.js",
+			"src/ui/filedrophandlers/ve.ui.HTMLFileDropHandler.js",
+			"src/ui/windowmanagers/ve.ui.ToolbarDialogWindowManager.js",
+			"src/ui/widgets/ve.ui.LanguageSearchWidget.js",
+			"src/ui/widgets/ve.ui.LanguageResultWidget.js",
+			"src/ui/dialogs/ve.ui.LanguageSearchDialog.js",
+			"src/ui/widgets/ve.ui.LanguageInputWidget.js",
+			"src/ui/widgets/ve.ui.SurfaceWidget.js",
+			"src/ui/widgets/ve.ui.LinkTargetInputWidget.js",
+			"src/ui/widgets/ve.ui.ContextSelectWidget.js",
+			"src/ui/widgets/ve.ui.ContextOptionWidget.js",
+			"src/ui/widgets/ve.ui.DimensionsWidget.js",
+			"src/ui/widgets/ve.ui.MediaSizeWidget.js",
+			"src/ui/widgets/ve.ui.WhitespacePreservingTextInputWidget.js",
+			"src/ui/tools/ve.ui.AnnotationTool.js",
+			"src/ui/tools/ve.ui.ClearAnnotationTool.js",
+			"src/ui/tools/ve.ui.DialogTool.js",
+			"src/ui/tools/ve.ui.FindAndReplaceTool.js",
+			"src/ui/tools/ve.ui.FormatTool.js",
+			"src/ui/tools/ve.ui.HistoryTool.js",
+			"src/ui/tools/ve.ui.IndentationTool.js",
+			"src/ui/tools/ve.ui.InspectorTool.js",
+			"src/ui/tools/ve.ui.LanguageInspectorTool.js",
+			"src/ui/tools/ve.ui.ListTool.js",
+			"src/ui/tools/ve.ui.TableTool.js",
+			"src/ui/inspectors/ve.ui.FragmentInspector.js",
+			"src/ui/inspectors/ve.ui.AnnotationInspector.js",
+			"src/ui/inspectors/ve.ui.NodeInspector.js",
+			"src/ui/inspectors/ve.ui.LinkInspector.js",
+			"src/ui/inspectors/ve.ui.CommentInspector.js",
+			"src/ui/inspectors/ve.ui.LanguageInspector.js",
+			"src/ui/inspectors/ve.ui.SpecialCharacterInspector.js"
 		],
 		"styles": [
-			"modules/ve/ce/styles/nodes/ve.ce.FocusableNode.css",
-			"modules/ve/ce/styles/nodes/ve.ce.AlienNode.css",
-			"modules/ve/ce/styles/nodes/ve.ce.BranchNode.css",
-			"modules/ve/ce/styles/nodes/ve.ce.DocumentNode.css",
-			"modules/ve/ce/styles/nodes/ve.ce.GeneratedContentNode.css",
-			"modules/ve/ce/styles/nodes/ve.ce.ImageNode.css",
-			"modules/ve/ce/styles/annotations/ve.ce.LanguageAnnotation.css",
-			"modules/ve/ce/styles/nodes/ve.ce.ResizableNode.css",
-			"modules/ve/ce/styles/nodes/ve.ce.TableCellNode.css",
-			"modules/ve/ce/styles/ve.ce.Surface.css",
-			"modules/ve/ui/styles/dialogs/ve.ui.ActionDialog.css",
-			"modules/ve/ui/styles/dialogs/ve.ui.CommandHelpDialog.css",
-			"modules/ve/ui/styles/tools/ve.ui.FormatTool.css",
-			"modules/ve/ui/styles/ve.ui.Inspector.css",
-			"modules/ve/ui/styles/widgets/ve.ui.LanguageInputWidget.css",
-			"modules/ve/ui/styles/widgets/ve.ui.LanguageSearchWidget.css",
-			"modules/ve/ui/styles/widgets/ve.ui.ContextItemWidget.css",
-			"modules/ve/ui/styles/widgets/ve.ui.ContextWidget.css",
-			"modules/ve/ui/styles/widgets/ve.ui.DimensionsWidget.css",
-			"modules/ve/ui/styles/widgets/ve.ui.MediaSizeWidget.css",
-			"modules/ve/ui/styles/inspectors/ve.ui.SpecialCharacterInspector.css",
-			"modules/ve/ui/styles/ve.ui.Surface.css",
-			"modules/ve/ui/styles/widgets/ve.ui.SurfaceWidget.css",
-			"modules/ve/ui/styles/ve.ui.Toolbar.css",
-			"modules/ve/ui/styles/ve.ui.Icons.css"
+			"src/ce/styles/nodes/ve.ce.FocusableNode.css",
+			"src/ce/styles/nodes/ve.ce.AlienNode.css",
+			"src/ce/styles/nodes/ve.ce.BranchNode.css",
+			"src/ce/styles/nodes/ve.ce.CommentNode.css",
+			"src/ce/styles/nodes/ve.ce.DocumentNode.css",
+			"src/ce/styles/nodes/ve.ce.GeneratedContentNode.css",
+			"src/ce/styles/annotations/ve.ce.LanguageAnnotation.css",
+			"src/ce/styles/nodes/ve.ce.ResizableNode.css",
+			"src/ce/styles/nodes/ve.ce.TableCellNode.css",
+			"src/ce/styles/nodes/ve.ce.TableNode.css",
+			"src/ce/styles/ve.ce.css",
+			"src/ce/styles/ve.ce.Surface.css",
+			"src/ui/styles/dialogs/ve.ui.ToolbarDialog.css",
+			"src/ui/styles/dialogs/ve.ui.CommandHelpDialog.css",
+			"src/ui/styles/dialogs/ve.ui.FindAndReplaceDialog.css",
+			"src/ui/styles/dialogs/ve.ui.ProgressDialog.css",
+			"src/ui/styles/tools/ve.ui.FormatTool.css",
+			"src/ui/styles/widgets/ve.ui.LanguageInputWidget.css",
+			"src/ui/styles/widgets/ve.ui.LanguageSearchWidget.css",
+			"src/ui/styles/widgets/ve.ui.ContextOptionWidget.css",
+			"src/ui/styles/widgets/ve.ui.ContextSelectWidget.css",
+			"src/ui/styles/widgets/ve.ui.DimensionsWidget.css",
+			"src/ui/styles/widgets/ve.ui.MediaSizeWidget.css",
+			"src/ui/styles/inspectors/ve.ui.CommentInspector.css",
+			"src/ui/styles/inspectors/ve.ui.FragmentInspector.css",
+			"src/ui/styles/inspectors/ve.ui.LinkInspector.css",
+			"src/ui/styles/inspectors/ve.ui.SpecialCharacterInspector.css",
+			"src/ui/styles/ve.ui.Overlay.css",
+			"src/ui/styles/ve.ui.Surface.css",
+			"src/ui/styles/widgets/ve.ui.SurfaceWidget.css",
+			"src/ui/styles/ve.ui.TableContext.css",
+			"src/ui/styles/ve.ui.Toolbar.css",
+			"src/ui/styles/ve.ui.Icons.css"
 		],
 		"dependencies": [
-			"visualEditor.base"
+			"visualEditor.base.build"
 		]
 	},
 	"visualEditor.test": {
 		"scripts": [
-			"modules/ve/test/ve.qunit.js",
-			"modules/ve/test/ve.test.utils.js",
-			"modules/ve/test/ve.test.js",
-			"modules/ve/test/ve.Range.test.js",
-			"modules/ve/test/ve.Document.test.js",
-			"modules/ve/test/ve.Node.test.js",
-			"modules/ve/test/ve.BranchNode.test.js",
-			"modules/ve/test/ve.LeafNode.test.js",
-			"modules/ve/test/dm/ve.dm.example.js",
-			"modules/ve/test/dm/ve.dm.AnnotationSet.test.js",
-			"modules/ve/test/dm/ve.dm.NodeFactory.test.js",
-			"modules/ve/test/dm/ve.dm.Node.test.js",
-			"modules/ve/test/dm/ve.dm.Converter.test.js",
-			"modules/ve/test/dm/ve.dm.BranchNode.test.js",
-			"modules/ve/test/dm/ve.dm.LeafNode.test.js",
-			"modules/ve/test/dm/nodes/ve.dm.TextNode.test.js",
-			"modules/ve/test/dm/ve.dm.Document.test.js",
-			"modules/ve/test/dm/ve.dm.DocumentSynchronizer.test.js",
-			"modules/ve/test/dm/ve.dm.IndexValueStore.test.js",
-			"modules/ve/test/dm/ve.dm.InternalList.test.js",
-			"modules/ve/test/dm/ve.dm.LinearData.test.js",
-			"modules/ve/test/dm/ve.dm.Transaction.test.js",
-			"modules/ve/test/dm/ve.dm.TransactionProcessor.test.js",
-			"modules/ve/test/dm/ve.dm.Surface.test.js",
-			"modules/ve/test/dm/ve.dm.SurfaceFragment.test.js",
-			"modules/ve/test/dm/ve.dm.ModelRegistry.test.js",
-			"modules/ve/test/dm/ve.dm.MetaList.test.js",
-			"modules/ve/test/dm/ve.dm.Model.test.js",
-			"modules/ve/test/dm/lineardata/ve.dm.FlatLinearData.test.js",
-			"modules/ve/test/dm/lineardata/ve.dm.ElementLinearData.test.js",
-			"modules/ve/test/dm/lineardata/ve.dm.MetaLinearData.test.js",
-			"modules/ve/test/ce/ve.ce.test.js",
-			"modules/ve/test/ce/ve.ce.Document.test.js",
-			"modules/ve/test/ce/ve.ce.Surface.test.js",
-			"modules/ve/test/ce/ve.ce.NodeFactory.test.js",
-			"modules/ve/test/ce/ve.ce.Node.test.js",
-			"modules/ve/test/ce/ve.ce.BranchNode.test.js",
-			"modules/ve/test/ce/ve.ce.ContentBranchNode.test.js",
-			"modules/ve/test/ce/ve.ce.LeafNode.test.js",
-			"modules/ve/test/ce/nodes/ve.ce.TextNode.test.js",
-			"modules/ve/test/init/ve.init.Platform.test.js",
-			"modules/ve/test/ui/ve.ui.Trigger.test.js",
-			"modules/ve/test/ui/actions/ve.ui.AnnotationAction.test.js",
-			"modules/ve/test/ui/actions/ve.ui.FormatAction.test.js",
-			"modules/ve/test/ui/actions/ve.ui.IndentationAction.test.js",
-			"modules/ve/test/ui/actions/ve.ui.ListAction.test.js",
-			"modules/ve/test/ce/ve.ce.TestRunner.js",
-			"modules/ve/test/ce/ve.ce.imetests.test.js",
-			"modules/ve/test/ce/imetests/backspace-chromium-ubuntu-none.js",
-			"modules/ve/test/ce/imetests/backspace-firefox-ubuntu-none.js",
-			"modules/ve/test/ce/imetests/backspace-ie-win-none.js",
-			"modules/ve/test/ce/imetests/input-chrome-win-chinese-traditional-handwriting.js",
-			"modules/ve/test/ce/imetests/input-chrome-win-greek.js",
-			"modules/ve/test/ce/imetests/input-chrome-win-welsh.js",
-			"modules/ve/test/ce/imetests/input-chromium-ubuntu-ibus-chinese-cantonese.js",
-			"modules/ve/test/ce/imetests/input-chromium-ubuntu-ibus-japanese-anthy--hiraganaonly.js",
-			"modules/ve/test/ce/imetests/input-chromium-ubuntu-ibus-korean-korean.js",
-			"modules/ve/test/ce/imetests/input-chromium-ubuntu-ibus-malayalam-swanalekha.js",
-			"modules/ve/test/ce/imetests/input-firefox-ubuntu-ibus-chinese-cantonese.js",
-			"modules/ve/test/ce/imetests/input-firefox-ubuntu-ibus-japanese-anthy--hiraganaonly.js",
-			"modules/ve/test/ce/imetests/input-firefox-ubuntu-ibus-korean-korean.js",
-			"modules/ve/test/ce/imetests/input-firefox-ubuntu-ibus-malayalam.swanalekha.js",
-			"modules/ve/test/ce/imetests/input-firefox-win-chinese-traditional-handwriting.js",
-			"modules/ve/test/ce/imetests/input-firefox-win-greek.js",
-			"modules/ve/test/ce/imetests/input-firefox-win-welsh.js",
-			"modules/ve/test/ce/imetests/input-ie-win-chinese-traditional-handwriting.js",
-			"modules/ve/test/ce/imetests/input-ie-win-greek.js",
-			"modules/ve/test/ce/imetests/input-ie-win-korean.js",
-			"modules/ve/test/ce/imetests/input-ie-win-welsh.js",
-			"modules/ve/test/ce/imetests/leftarrow-chromium-ubuntu-none.js",
-			"modules/ve/test/ce/imetests/leftarrow-firefox-ubuntu-none.js",
-			"modules/ve/test/ce/imetests/leftarrow-ie-win-none.js"
+			"tests/ve.qunit.js",
+			"tests/ve.test.utils.js",
+			"tests/ve.test.js",
+			"tests/ve.Range.test.js",
+			"tests/ve.Document.test.js",
+			"tests/ve.Node.test.js",
+			"tests/ve.BranchNode.test.js",
+			"tests/ve.LeafNode.test.js",
+			"tests/dm/ve.dm.example.js",
+			"tests/dm/ve.dm.AnnotationSet.test.js",
+			"tests/dm/ve.dm.NodeFactory.test.js",
+			"tests/dm/ve.dm.Node.test.js",
+			"tests/dm/ve.dm.Converter.test.js",
+			"tests/dm/ve.dm.BranchNode.test.js",
+			"tests/dm/ve.dm.LeafNode.test.js",
+			"tests/dm/nodes/ve.dm.TextNode.test.js",
+			"tests/dm/ve.dm.Document.test.js",
+			"tests/dm/ve.dm.DocumentSynchronizer.test.js",
+			"tests/dm/ve.dm.IndexValueStore.test.js",
+			"tests/dm/ve.dm.InternalList.test.js",
+			"tests/dm/ve.dm.LinearData.test.js",
+			"tests/dm/ve.dm.Transaction.test.js",
+			"tests/dm/ve.dm.TransactionProcessor.test.js",
+			"tests/dm/ve.dm.Surface.test.js",
+			"tests/dm/ve.dm.SurfaceFragment.test.js",
+			"tests/dm/ve.dm.ModelRegistry.test.js",
+			"tests/dm/ve.dm.MetaList.test.js",
+			"tests/dm/ve.dm.Model.test.js",
+			"tests/dm/lineardata/ve.dm.FlatLinearData.test.js",
+			"tests/dm/lineardata/ve.dm.ElementLinearData.test.js",
+			"tests/dm/lineardata/ve.dm.MetaLinearData.test.js",
+			"tests/ce/ve.ce.test.js",
+			"tests/ce/ve.ce.Document.test.js",
+			"tests/ce/ve.ce.Surface.test.js",
+			"tests/ce/ve.ce.NodeFactory.test.js",
+			"tests/ce/ve.ce.Node.test.js",
+			"tests/ce/ve.ce.BranchNode.test.js",
+			"tests/ce/ve.ce.ContentBranchNode.test.js",
+			"tests/ce/ve.ce.LeafNode.test.js",
+			"tests/ce/nodes/ve.ce.TextNode.test.js",
+			"tests/init/ve.init.Platform.test.js",
+			"tests/ui/ve.ui.Trigger.test.js",
+			"tests/ui/actions/ve.ui.AnnotationAction.test.js",
+			"tests/ui/actions/ve.ui.FormatAction.test.js",
+			"tests/ui/actions/ve.ui.IndentationAction.test.js",
+			"tests/ui/actions/ve.ui.ListAction.test.js",
+			"tests/ce/ve.ce.TestRunner.js",
+			"tests/ce/ve.ce.imetests.test.js",
+			"tests/ce/imetests/backspace-chromium-ubuntu-none.js",
+			"tests/ce/imetests/backspace-firefox-ubuntu-none.js",
+			"tests/ce/imetests/backspace-ie-win-none.js",
+			"tests/ce/imetests/input-chrome-win-chinese-traditional-handwriting.js",
+			"tests/ce/imetests/input-chrome-win-greek.js",
+			"tests/ce/imetests/input-chrome-win-welsh.js",
+			"tests/ce/imetests/input-chromium-ubuntu-ibus-chinese-cantonese.js",
+			"tests/ce/imetests/input-chromium-ubuntu-ibus-japanese-anthy--hiraganaonly.js",
+			"tests/ce/imetests/input-chromium-ubuntu-ibus-korean-korean.js",
+			"tests/ce/imetests/input-chromium-ubuntu-ibus-malayalam-swanalekha.js",
+			"tests/ce/imetests/input-firefox-ubuntu-ibus-chinese-cantonese.js",
+			"tests/ce/imetests/input-firefox-ubuntu-ibus-japanese-anthy--hiraganaonly.js",
+			"tests/ce/imetests/input-firefox-ubuntu-ibus-korean-korean.js",
+			"tests/ce/imetests/input-firefox-ubuntu-ibus-malayalam.swanalekha.js",
+			"tests/ce/imetests/input-firefox-win-chinese-traditional-handwriting.js",
+			"tests/ce/imetests/input-firefox-win-greek.js",
+			"tests/ce/imetests/input-firefox-win-welsh.js",
+			"tests/ce/imetests/input-ie-win-chinese-traditional-handwriting.js",
+			"tests/ce/imetests/input-ie-win-greek.js",
+			"tests/ce/imetests/input-ie-win-korean.js",
+			"tests/ce/imetests/input-ie-win-welsh.js",
+			"tests/ce/imetests/leftarrow-chromium-ubuntu-none.js",
+			"tests/ce/imetests/leftarrow-firefox-ubuntu-none.js",
+			"tests/ce/imetests/leftarrow-ie-win-none.js"
 		],
 		"dependencies": [
 			"jsdifflib",
@@ -395,46 +503,65 @@
 		]
 	},
 	"visualEditor.desktop": {
-		"scripts": [
-			"modules/ve/ui/ve.ui.DesktopSurface.js",
-			"modules/ve/ui/ve.ui.DesktopContext.js"
-		],
-		"styles": [
-			"modules/ve/ui/styles/ve.ui.DesktopContext.css",
-			"modules/ve/ui/themes/apex/ve.ui.Inspector.css",
-			"modules/ve/ui/themes/apex/dialogs/ve.ui.ActionDialog.css"
-		],
 		"dependencies": [
 			"oojs-ui-apex",
-			"visualEditor.core"
+			"visualEditor.core",
+			"visualEditor.desktop.build"
+		]
+	},
+	"visualEditor.desktop.build": {
+		"scripts": [
+			"src/ui/ve.ui.DesktopSurface.js",
+			"src/ui/ve.ui.DesktopContext.js",
+			"src/ui/windowmanagers/ve.ui.DesktopInspectorWindowManager.js"
+		],
+		"styles": [
+			"src/ui/styles/ve.ui.DesktopContext.css"
+		],
+		"dependencies": [
+			"visualEditor.core.build"
 		]
 	},
 	"visualEditor.mobile": {
+		"dependencies": [
+			"oojs-ui-mediawiki",
+			"visualEditor.core",
+			"visualEditor.mobile.build"
+		]
+	},
+	"visualEditor.mobile.build": {
 		"scripts": [
-			"modules/ve/ui/ve.ui.MobileSurface.js",
-			"modules/ve/ui/ve.ui.MobileContext.js"
+			"src/ui/ve.ui.MobileSurface.js",
+			"src/ui/ve.ui.MobileContext.js",
+			"src/ui/windowmanagers/ve.ui.MobileWindowManager.js",
+			"src/ui/widgets/ve.ui.MobileContextOptionWidget.js"
 		],
 		"styles": [
-			"modules/ve/ui/styles/ve.ui.MobileSurface.css",
-			"modules/ve/ui/styles/ve.ui.MobileContext.css"
+			"src/ui/styles/ve.ui.MobileSurface.css",
+			"src/ui/styles/widgets/ve.ui.MobileContextOptionWidget.css"
 		],
 		"dependencies": [
-			"oojs-ui-agora",
-			"visualEditor.core"
+			"visualEditor.core.build"
 		]
 	},
 	"visualEditor.standalone": {
+		"dependencies": [
+			"visualEditor.base",
+			"visualEditor.standalone.build"
+		]
+	},
+	"visualEditor.standalone.build": {
 		"scripts": [
-			"modules/ve/init/sa/ve.init.sa.js",
-			"modules/ve/init/sa/ve.init.sa.Platform.js",
-			"modules/ve/init/sa/ve.init.sa.Target.js"
+			"src/init/sa/ve.init.sa.js",
+			"src/init/sa/ve.init.sa.Platform.js",
+			"src/init/sa/ve.init.sa.Target.js"
 		],
 		"styles": [
-			"modules/ve/init/sa/styles/ve.init.sa.css",
-			{ "file": "modules/ve/ui/styles/ve.ui.DebugBar.css", "debug": true }
+			"src/init/sa/styles/ve.init.sa.css",
+			{ "file": "src/ui/styles/ve.ui.DebugBar.css", "debug": true }
 		],
 		"dependencies": [
-			"visualEditor.base"
+			"visualEditor.base.build"
 		]
 	},
 	"visualEditor.desktop.standalone": {
@@ -469,6 +596,20 @@
 			"visualEditor.standalone.demo"
 		]
 	},
+	"visualEditor.desktop.standalone.demo.dist": {
+		"scripts": [
+			"demos/ve/demo.desktop.js"
+		],
+		"styles": [
+			"demos/ve/demo.desktop.css"
+		],
+		"dependencies": [
+			"baselibs",
+			"oojs-ui-apex",
+			"visualEditor.dist",
+			"visualEditor.standalone.demo"
+		]
+	},
 	"visualEditor.mobile.standalone.demo": {
 		"scripts": [
 			"demos/ve/demo.mobile.js"
@@ -479,6 +620,35 @@
 		"dependencies": [
 			"visualEditor.mobile.standalone",
 			"visualEditor.standalone.demo"
+		]
+	},
+	"visualEditor.mobile.standalone.demo.dist": {
+		"scripts": [
+			"demos/ve/demo.mobile.js"
+		],
+		"styles": [
+			"demos/ve/demo.mobile.css"
+		],
+		"dependencies": [
+			"baselibs",
+			"oojs-ui-mediawiki",
+			"visualEditor.dist",
+			"visualEditor.standalone.demo"
+		]
+	},
+	"visualEditor.build": {
+		"dependencies": [
+			"visualEditor.standalone.build",
+			"visualEditor.desktop.build",
+			"visualEditor.mobile.build"
+		]
+	},
+	"visualEditor.dist": {
+		"scripts": [
+			"dist/visualEditor.js"
+		],
+		"styles": [
+			"dist/visualEditor.css"
 		]
 	}
 }

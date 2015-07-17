@@ -568,7 +568,8 @@ $(function() {
 					<th>database</th>
 					<th>cluster</th>
 					<th>language</th>
-					<th>hub</th>
+					<th>category(legacy)</th>
+					<th>vertical</th>
 					<th>status</th>
 				</tr>
 			</thead>
@@ -580,6 +581,11 @@ $(function() {
 				<td><?php
 					$wgHub = WikiFactory::getCategory( $wiki->city_id );
 					if ($wgHub) echo "<acronym title=\"id:{$wgHub->cat_id}\">{$wgHub->cat_name}</acronym>";
+				?></td>
+				<td><?php
+					$factory = new WikiFactoryHub();
+					$wgHub = $factory->getWikiVertical( $wiki->city_id );
+					if ($wgHub) echo "<acronym title=\"id:{$wgHub['id']}\">{$wgHub['name']}</acronym>";
 				?></td>
 				<td data-status="<?php echo $wiki->city_public; ?>"><?php echo "<acronym title=\"{$wiki->city_public}\">{$statuses[ $wiki->city_public ]}</acronym>" ?></td>
 			</tr>

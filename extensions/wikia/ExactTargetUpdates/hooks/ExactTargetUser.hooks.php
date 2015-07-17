@@ -11,38 +11,9 @@ class ExactTargetUserHooks {
 	 * @return bool
 	 */
 	public function onUserRenameAfterAccountRename( $iUserId, $sOldUsername, $sNewUsername ) {
-		/* Prepare params */
-		$aUserData = [
-			'user_id' => $iUserId,
-			'user_name' => $sNewUsername
-		];
-
-		/* Get and run the task */
-		$oUserHelper = $this->getUserHelper();
-		$task = $oUserHelper->getUpdateUserTask();
-		$task->call( 'updateUserData', $aUserData );
-		$task->queue();
-		return true;
-	}
-
-	/**
-	 * Adds Task for updating user editcount to job queue
-	 * @param WikiPage $article
-	 * @param User $user
-	 * @return bool
-	 */
-	public function onArticleSaveComplete( \WikiPage $article, \User $user ) {
-		/* Prepare params */
-		$aUserData = [
-			'user_id' => $user->getId(),
-			'user_editcount' => $user->getEditCount()
-		];
-
-		/* Get and run the task */
-		$oUserHelper = $this->getUserHelper();
-		$task = $oUserHelper->getUpdateUserTask();
-		$task->call( 'updateUserData', $aUserData );
-		$task->queue();
+		$oUser = \User::newFromId( $iUserId );
+		$oUser->setName( $sNewUsername ); // Reset new username just in case it's not propagated yet
+		$this->addTheUpdateCreateUserTask( $oUser );
 		return true;
 	}
 
@@ -71,11 +42,30 @@ class ExactTargetUserHooks {
 	}
 
 	/**
+	 * Adds Task for updating user due to email authentication field change
+	 * @param User $user
+	 * @return bool
+	 */
+	public function onInvalidateEmailComplete( \User $oUser ) {
+		/* Prepare params */
+		$oUserHelper = $this->getUserHelper();
+		$aUserData = $oUserHelper->prepareUserParams( $oUser );
+		$aUsersData = [ $aUserData ];
+
+		/* Get and run the task */
+		$task = $oUserHelper->getUpdateUserTask();
+		$task->call( 'updateFallbackCreateUsers', $aUsersData );
+		$task->queue();
+		return true;
+	}
+
+
+	/**
 	 * Adds Task for updating user email
 	 * @param User $user
 	 * @return bool
 	 */
-	public function onEmailChangeConfirmed( \User $oUser ) {
+	public function onConfirmEmailComplete( \User $oUser ) {
 		/* Get and run the task */
 		$oUserHelper = $this->getUserHelper();
 		$task = $oUserHelper->getUpdateUserTask();
@@ -89,7 +79,7 @@ class ExactTargetUserHooks {
 	 * @param User $oUser
 	 * @return bool
 	 */
-	public function onSignupConfirmEmailComplete( \User $oUser ) {
+	public function onCreateNewUserComplete( \User $oUser ) {
 		$this->addTheUpdateCreateUserTask( $oUser );
 		return true;
 	}
@@ -132,12 +122,11 @@ class ExactTargetUserHooks {
 	public function onUserSaveSettings( \User $user ) {
 		/* Prepare params */
 		$oUserHelper = $this->getUserHelper();
-		$aUserData = $oUserHelper->prepareUserParams( $user );
 		$aUserProperties = $oUserHelper->prepareUserPropertiesParams( $user );
 
 		/* Get and run the task */
-		$task = $oUserHelper->getUpdateUserTask();
-		$task->call( 'updateUserPropertiesData', $aUserData, $aUserProperties );
+		$task = $oUserHelper->getCreateUserTask();
+		$task->call( 'createUserProperties', $user->getId(), $aUserProperties );
 		$task->queue();
 		return true;
 	}
@@ -160,7 +149,7 @@ class ExactTargetUserHooks {
 
 	/**
 	 * A simple getter for an object of ExactTargetUserHooksHelper class
-	 * @return  object ExactTargetUserHooksHelper
+	 * @return ExactTargetUserHooksHelper
 	 */
 	private function getUserHelper() {
 		return new ExactTargetUserHooksHelper();

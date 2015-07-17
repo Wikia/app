@@ -262,10 +262,12 @@ class ApiQuery extends ApiBase {
 			$params = $module->extractRequestParams();
 			$cacheMode = $this->mergeCacheMode(
 				$cacheMode, $module->getCacheMode( $params ) );
+			$module->setupLogContext($params); // Wikia Change
 			$module->profileIn();
 			$module->execute();
 			wfRunHooks( 'APIQueryAfterExecute', array( &$module ) );
 			$module->profileOut();
+			$module->destroyLogContext(); // Wikia Change
 		}
 
 		// Set the cache mode

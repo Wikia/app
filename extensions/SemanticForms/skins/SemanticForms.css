@@ -12,18 +12,26 @@ textarea.mandatoryField {
 
 /* Used in 'create template' page */
 .fieldBox {
-        border: 1px black solid;
-        background: #dddddd;
-        padding: 10px 20px 10px 20px;
-        margin: 0px 20px 20px 20px;
+	border: 1px black solid;
+	background: #dddddd;
+	padding: 10px 20px 10px 20px;
+	margin: 0 20px 20px 20px;
 }
 
 /* Used in 'create form' page */
 .templateForm {
-        border: 1px black solid;
-        background: #dddddd;
-        padding: 0px 20px 10px 20px;
-        margin-bottom: 20px;
+	border: 1px black solid;
+	background: #dddddd;
+	padding: 0 20px 10px 20px;
+	margin-bottom: 20px;
+}
+
+/* Used in 'create form' page */
+.sectionForm {
+	border: 1px black solid;
+	background: #d0dae6;
+	padding: 0 20px 10px 20px;
+	margin-bottom: 20px;
 }
 
 /* Used in form pages */
@@ -73,6 +81,103 @@ span.mandatoryFieldsSpan {
 	padding: 4px; */
 }
 
+/** INPUT FIELD STYLE */
+#sfForm .createboxInput,
+#sfForm .mandatoryField,
+#sfForm textarea {
+	max-width: 100%;
+	margin-left: 0;
+	border-radius: 3px;
+	border: 1px solid #BBB;
+	padding: 4px 8px;
+	display: inline-block;
+}
+
+#sfForm input[readonly] {
+    background: #EEE;
+}
+
+#sfForm .select2-container {
+    border: none;
+    padding: 0;
+}
+#sfForm textarea,
+form input.formInput,
+#sfForm input.yearInput,
+#sfForm input.dayInput,
+#sfForm input.hoursInput,
+#sfForm input.minutesInput,
+#sfForm input.secondsInput {
+    border-radius: 3px;
+    border: 1px solid #BBB;
+    padding: 4px 8px;
+}
+
+/* The dropdowns need slightly different settings. */
+#sfForm select.monthInput,
+#sfForm select.ampmInput {
+    border-radius: 3px;
+    border: 1px solid #BBB;
+    padding: 3px 8px;
+}
+
+#sfForm input#wpSummary,
+#sfForminput#wpSummary:hover {
+    border-radius: 3px;
+    border: 1px solid #BBB;
+    padding: 4px 8px;
+}
+#sfForm select,
+#sfForm input[type="checkbox"] {
+    min-width: 0;
+    max-width: 100%;
+    width: auto !important;
+}
+#sfForm input#wpSummary,
+#sfForm input#wpSummary:hover {
+    max-width: 100%;
+}
+/* Select2 inputs */
+#sfForm .select2-container {
+    width: auto;
+}
+.select2-choices,
+.select2-choice {
+    border-radius: 3px 3px 0 0;
+    border: 1px solid #BBB;
+    min-width: 260px;
+    max-width: 100%;
+}
+.select2-choice {
+    /*width: 412px !important;*/
+}
+
+.formtable textarea {
+    /*width: 422px !important;*/
+}
+
+/** /INPUT FIELD STYLE */
+
+/* Override Select2 Style */
+.select2-drop-active {
+    border: 1px solid #999;
+}
+.select2-container-multi .select2-choices {
+    padding: 2px 0;
+}
+
+.select2-container-multi .select2-choices .select2-search-choice {
+    padding: 4px 5px 4px 18px;
+}
+
+.select2-container .select2-choice .select2-arrow {
+    border-radius: 0;
+}
+
+.select2-container .select2-choice > .select2-chosen {
+    color: #000;
+}
+
 div.infoMessage {
 	border: 1px solid #777777;
 	padding: 12px;
@@ -80,34 +185,21 @@ div.infoMessage {
 	width: auto;
 	background: #eeeeee;
 }
-/**
- * errorbox and warningbox CSS classes were added in MediaWiki 1.19 -
- * the CSS here exists for backwards compatibility, and to provide
- * some improvements for SF's specific usage.
- */
-.errorbox, .warningbox {
-	margin: 20px 0 0 0;
-	width: auto;
-	float: none;
-}
-.errorbox {
-	border: 2px solid red;
-	background-color: #fff2f2;
-	padding: 5px 10px 5px 10px;
-}
-.warningbox {
-	border: 2px solid #ff8c00;
-	background-color: #ffffc0;
-	padding: 12px;
-}
-span.errorMessage {
+
+div.errorMessage {
 	color: red;
+	margin: 1px 0 4px 0;
 }
+.inputError {
+	background: #FCEEEE;
+}
+
 .multipleTemplateInstance {
-	background-color: #dddddd;
+	background-color: #e9e9e9;
 	border: 1px solid #cccccc;
 	padding: 5px;
-	margin: 10px 0px 10px 0px;
+	margin: 10px 0 10px 0;
+	border-radius: 3px;
 }
 
 .multipleTemplateInstance table {
@@ -118,17 +210,49 @@ span.errorMessage {
 	background-color: inherit;
 }
 
-td.removeButton {
-	text-align: right;
-	padding-right: 10px;
+a.addAboveButton {
+	display: block;
+	width: 34px;
+	height: 34px;
+	background-image: url('SF_add_above.png');
+}
+
+a.addAboveButton:hover {
+	background-image: url('SF_add_above_hover.png');
+}
+
+a.addAboveButton:active {
+	background-image: url('SF_add_above_active.png');
+}
+
+a.removeButton {
+	display: block;
+	width: 34px;
+	height: 34px;
+	background-image: url('SF_remove.png');
+}
+
+a.removeButton:hover {
+	background-image: url('SF_remove_hover.png');
+}
+
+a.removeButton:active {
+	background-image: url('SF_remove_active.png');
 }
 
 td.instanceRearranger {
-	max-width: 15px;
-}
-
-img.rearrangerImage {
 	cursor: move;
+	background-image: url(rearrangeDots.png);
+	background-repeat: repeat;
+	width: 8px;
+}
+td.instanceMain {
+	padding-left: 7px;
+}
+td.instanceAddAbove, td.instanceRemove {
+	padding: 0;
+	width: 34px;
+	overflow: visible;
 }
 
 .autoGrow {
@@ -148,5 +272,5 @@ button.ui-button-icon-only {
 } /* button elements seem to need a little more width */
 /* Override CSS from Header Tabs extension, if tabs are used in the form */
 input.sfComboBoxActual {
-	border: 1px #a6a6a6 solid;
+	border: 1px solid #a6a6a6;
 }

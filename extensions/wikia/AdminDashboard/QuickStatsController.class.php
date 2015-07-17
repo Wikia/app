@@ -13,7 +13,6 @@ class QuickStatsController extends WikiaController {
 			$this->getDailyPageViews( $stats );
 			$this->getDailyEdits( $stats, $cityID );
 			$this->getDailyPhotos( $stats );
-			$hasfbdata = $this->getDailyLikes($stats);
 
 			// totals come in from MySQL as the last element with a null date, so just pop it off and give it a keyval
 			// Some of our stats can be empty, so insert zeros as defaults
@@ -26,7 +25,6 @@ class QuickStatsController extends WikiaController {
 				}
 				if (!isset($stats[$date]['edits'])) $stats[$date]['edits'] = 0;
 				if (!isset($stats[$date]['photos'])) $stats[$date]['photos'] = 0;
-				if ($hasfbdata && !isset($stats[$date]['likes'])) $stats[$date]['likes'] = 0;
 			}
 			$this->wg->Memc->set($memKey, $stats, 60*60*12);  // Stats are daily, 12 hours lag seems reasonable
 		}
@@ -105,40 +103,6 @@ class QuickStatsController extends WikiaController {
 			});
 
 		wfProfileOut( __METHOD__ );
-	}
-
-	protected function getDailyLikes(Array &$stats) {
-		global $fbAccessToken;
-
-		$result = FALSE;
-		$domain_id = Wikia::getFacebookDomainId();
-		if (!$domain_id)
-			return $result;
-
-		wfProfileIn(__METHOD__);
-
-		$since = strtotime("-7 day 00:00:00");
-		$until = strtotime("-0 day 00:00:00");
-		$url = 'https://graph.facebook.com/'.$domain_id.'/insights/domain_widget_likes/day?access_token='.$fbAccessToken.'&since='.$since.'&until='.$until;
-		$response = json_decode(Http::get($url));
-
-		if($response) {
-			$data = array_pop($response->data);
-			if(isset($data->values)) {
-				$stats['totals']['likes'] = 0;
-				foreach($data->values as $value) {
-					if (preg_match('/([\d\-]*)/', $value->end_time, $matches)) {
-						$day = $matches[1];
-						$stats[$day]['likes'] = $value->value;
-						$stats['totals']['likes'] += $value->value;
-					}
-				}
-				$result = TRUE;
-			}
-		}
-		wfProfileOut(__METHOD__);
-
-		return $result;
 	}
 
 	public static function shortenNumberDecorator($number) {

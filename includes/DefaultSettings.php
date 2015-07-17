@@ -33,7 +33,7 @@ $wgConf = new SiteConfiguration;
 /** @endcond */
 
 /** MediaWiki version number */
-$wgVersion = '1.19.23';
+$wgVersion = '1.19.24';
 
 /** Name of the site. It must be changed in LocalSettings.php */
 $wgSitename = 'MediaWiki';
@@ -521,7 +521,7 @@ $wgHashedSharedUploadDirectory = true;
  *
  * Please specify the namespace, as in the example below.
  */
-$wgRepositoryBaseUrl = "http://commons.wikimedia.org/wiki/File:";
+$wgRepositoryBaseUrl = "https://commons.wikimedia.org/wiki/File:";
 
 /**
  * This is the list of preferred extensions for uploading files. Uploading files
@@ -1422,7 +1422,7 @@ $wgDefaultExternalStore = false;
  *
  * Set to 0 to disable, or number of seconds before cache expiry.
  */
-$wgRevisionCacheExpiry = 0;
+$wgRevisionCacheExpiry = 86400 * 30; // a month
 
 /** @} */ # end text storage }
 
@@ -1587,16 +1587,6 @@ $wgSessionsInMemcached = false;
  * useful if you're doing cross-application sessions, see bug 11381)
  */
 $wgSessionHandler = null;
-
-/** Wikia change - begin - @author: Michał ‘Mix’ Roszka <mix@wikia-inc.com>
- *
- * See: https://wikia-inc.atlassian.net/browse/PLATFORM-308
- *
- * This is used for storing session data relevant to the above issue. The data
- * are logged to Kibana on shutdown.
- */
-$wgSessionDebugData = [];
-/** Wikia change - end */
 
 /** If enabled, will send MemCached debugging information to $wgDebugLogFile */
 $wgMemCachedDebug = false;
@@ -2803,7 +2793,7 @@ $wgLocalInterwiki = false;
 /**
  * Expiry time for cache of interwiki table
  */
-$wgInterwikiExpiry = 10800;
+$wgInterwikiExpiry = 86400;
 
 /** Interwiki caching settings.
 	$wgInterwikiCache specifies path to constant database file
@@ -5618,7 +5608,7 @@ $wgJobRunRate = 1;
 /**
  * Number of rows to update per job
  */
-$wgUpdateRowsPerJob = 500;
+$wgUpdateRowsPerJob = 50;
 
 /**
  * Number of rows to update per query

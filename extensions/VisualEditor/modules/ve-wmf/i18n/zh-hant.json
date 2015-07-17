@@ -13,17 +13,18 @@
 			"Simon Shek",
 			"Spring Roll Conan",
 			"Waihorace",
-			"Cwlin0416"
+			"Cwlin0416",
+			"Deryck Chan"
 		]
 	},
 	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]]",
-	"tag-visualeditor-description": "目前使用 [[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]] 編輯",
+	"tag-visualeditor-description": "使用 [[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]] 完成的編輯",
 	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor: 需要檢查]]",
-	"tag-visualeditor-needcheck-description": "目前使用 [[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]] 編輯，系統偵測到 WikiText 標記語言，可能有出不可預期的問題。",
+	"tag-visualeditor-needcheck-description": "使用 [[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]] 完成的編輯。系統偵測到 WikiText 可能發生預期外的變更。",
 	"tag-visualeditor-switched": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor: 已切換]]",
 	"tag-visualeditor-switched-description": "使用者使用 VisualEditor 後更改回 WikiText 編輯器。",
 	"visualeditor-feedback-link": "Project:VisualEditor/回饋",
 	"visualeditor-feedback-tool": "提供意見",
 	"visualeditor-help-label": "閱讀使用者指南",
-	"visualeditor-help-title": "有關如何使用編輯器的說明"
+	"visualeditor-help-title": "有關如何使用編輯器的使用者說明"
 }

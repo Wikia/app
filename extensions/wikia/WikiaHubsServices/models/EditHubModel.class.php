@@ -269,6 +269,9 @@ class EditHubModel extends WikiaModel {
 		return $out;
 	}
 
+	/**
+	 * @return String|User
+	 */
 	protected function getUserClass() {
 		return $this->userClass;
 	}
@@ -299,6 +302,9 @@ class EditHubModel extends WikiaModel {
 		);
 	}
 
+	/**
+	 * @return String|SpecialPage
+	 */
 	protected function getSpecialPageClass() {
 		return $this->specialPageClass;
 	}
@@ -551,9 +557,11 @@ class EditHubModel extends WikiaModel {
 	public function getVideoData ($fileName, $thumbSize) {
 		$videoData = [];
 		$title = Title::newFromText($fileName, NS_FILE);
+
 		if (!empty($title)) {
-			$file = wffindFile($title);
+			$file = wfFindFile($title);
 		}
+
 		if (!empty($file)) {
 			$htmlParams = [
 				'file-link' => true,
@@ -571,11 +579,57 @@ class EditHubModel extends WikiaModel {
 			$meta = unserialize($file->getMetadata());
 			$videoData['duration'] = isset($meta['duration']) ? $meta['duration'] : null;
 			$videoData['title'] = $title->getText();
-			$videoData['fileUrl'] = $title->getFullURL();
+			$videoData['fileUrl'] = $this->getFileUrl($fileName, $file);
 			$videoData['thumbUrl'] = $thumb->getUrl();
 		}
 
 		return $videoData;
+	}
+
+	/**
+	 * @desc Create a full url to a file using global title
+	 * as wfFindFile may return a foreign file
+	 *
+	 * @param $fileName
+	 * @param File $file
+	 * @return string
+	 * @throws Exception
+	 */
+	private function getFileUrl($fileName, File $file) {
+		return GlobalTitle::newFromText(
+			$fileName,
+			NS_FILE,
+			$this->getFileCityId( $file )
+		)->getFullUrl();
+	}
+
+	/**
+	 * @desc Return city_id for a given file
+	 * This is needed as File here is returned from wfFindFile
+	 * that can fallback to some other wikis
+	 *
+	 * @param File $file
+	 * @return int|null|string
+	 */
+	private function getFileCityId(File $file) {
+		global $wgCityId;
+
+		$repo = $file->getRepo();
+
+		/**
+		 * Only fetch city_id if the file is coming from
+		 * WikiaForeignDBViaLBRepo
+		 */
+		if ( $repo instanceof WikiaForeignDBViaLBRepo  ) {
+			$dbName = $repo->getDBName();
+			$wiki = WikiFactory::getWikiByDB( $dbName );
+
+			if ( !empty ( $wiki ) ) {
+				return $wiki->city_id;
+			}
+		}
+
+		return $wgCityId;
 	}
 
 	/**

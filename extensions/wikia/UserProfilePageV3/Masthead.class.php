@@ -217,7 +217,7 @@ class Masthead {
 	 */
 	public function getPurgeUrl( $thumb = "" ) {
 		global $wgBlogAvatarPath;
-		$url = $this->mUser->getOption( AVATAR_USER_OPTION_NAME );
+		$url = $this->mUser->getGlobalAttribute( AVATAR_USER_OPTION_NAME );
 
 		if ( $url ) {
 			/**
@@ -298,7 +298,7 @@ class Masthead {
 		if ( !empty( $this->avatarUrl ) ) {
 			$hasAvatar = true;
 		} else {
-			$url = $this->mUser->getOption( AVATAR_USER_OPTION_NAME );
+			$url = $this->mUser->getGlobalAttribute( AVATAR_USER_OPTION_NAME );
 			if ( ( $url ) && ( strpos( $url, '/' ) !== false ) ) {
 				// uploaded file
 				$hasAvatar = true;
@@ -435,7 +435,7 @@ class Masthead {
 	 * isDefault -- check if user use default avatars
 	 */
 	public function isDefault() {
-		$url = $this->mUser->getOption( AVATAR_USER_OPTION_NAME );
+		$url = $this->mUser->getGlobalAttribute( AVATAR_USER_OPTION_NAME );
 		if ( $url ) {
 			/**
 			 * default avatar are only filenames without path
@@ -524,7 +524,7 @@ class Masthead {
 		if ( $result === false ) {
 			Wikia::log( __METHOD__, false, 'cannot remove avatar - ' . $this->getLocalPath() );
 		} else {
-			$this->mUser->setOption( AVATAR_USER_OPTION_NAME, "" );
+			$this->mUser->setGlobalAttribute( AVATAR_USER_OPTION_NAME, "" );
 			$this->mUser->saveSettings();
 
 			/* add log */

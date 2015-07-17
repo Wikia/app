@@ -10,7 +10,7 @@ define('wikia.preview', [
 	'JSMessages',
 	'wikia.tracker',
 	'wikia.csspropshelper',
-	'wikia.fluidlayout'
+	'wikia.breakpointsLayout'
 ], function (
 	window,
 	nirvana,
@@ -20,19 +20,13 @@ define('wikia.preview', [
 	msg,
 	tracker,
 	cssPropHelper,
-	fluidlayout
+	breakpointsLayout
 ) {
 	'use strict';
 
 	var $article,
 		$previewTypeDropdown = $(), // in case preview loaded quicker than switchPreview
 		previewTemplate, // current design of preview has this margins to emulate page margins
-		// TODO: when we will redesign preview to meet darwin design directions -
-		// TODO: this should be done differently and refactored
-		// values for min and max are Darwin minimum and maximum supported article width.
-		articleMargin = fluidlayout.getWidthPadding() + fluidlayout.getArticleBorderWidth(),
-		rightRailWidth = fluidlayout.getRightRailWidth(),
-		isRailDropped = false,
 		isWidePage = false,
 		articleWrapperWidth, // width of article wrapper needed as reference for preview scaling
 		// pixels to be removed from modal width to fit modal on small screens,
@@ -47,22 +41,40 @@ define('wikia.preview', [
 	function renderDialog(title, options, callback) {
 		options = $.extend({
 			callback: function () {
-				var contentNode = $('#EditPageDialog').find('.ArticlePreviewInner');
+				var $editPageDialog = $('#EditPageDialog'),
+					$contentNode = $editPageDialog.find('.ArticlePreviewInner'),
+					$previewMsgNode = $editPageDialog.find('.preview-modal-msg-wrapper'),
+					modalHeight = options.height,
+					modalHeightModifier = 0;
+
+				if (!modalHeight) {
+					modalHeightModifier = -250 -($previewMsgNode.outerHeight() || 0);
+					modalHeight = $(window).height() + modalHeightModifier;
+				}
 
 				// block all clicks
-				contentNode.bind('click', function (ev) {
+				$contentNode.on('click', function (ev) {
 					var target = $(ev.target);
 
 					//links to other pages should be open in new windows
 					target.closest('a').not('[href^="#"]').attr('target', '_blank');
 				}).closest('.ArticlePreview').css({
-					'height': options.height || ($(window).height() - 250),
+					'height': modalHeight,
 					'overflow': 'auto',
 					'overflow-x': 'hidden'
 				});
 
+				$previewMsgNode.on('click', 'a', function () {
+					tracker.track({
+						action: Wikia.Tracker.ACTIONS.CLICK,
+						category: 'edit-preview',
+						label: 'button-best-practices',
+						trackingMethod: 'analytics'
+					});
+				});
+
 				if (typeof callback === 'function') {
-					callback(contentNode);
+					callback($contentNode);
 				}
 			},
 			id: 'EditPageDialog',
@@ -74,7 +86,29 @@ define('wikia.preview', [
 			window.stylepath +
 			'/common/images/ajax.gif" class="loading"></div></div>';
 
-		$.showCustomModal(title, content, options);
+		$.when(
+			loader({
+				type: loader.MULTI,
+				resources: {
+					mustache: 'extensions/wikia/EditPreview/templates/preview_best_practices.mustache'
+				}
+			}),
+			msg.getForContent('EditPreviewInContLang')
+		).done(function(response){
+			var params = {
+					bestPracticesMsg: $.htmlentities(msg('wikia-editor-preview-best-practices-notice')),
+					bestPracticesLinkText: $.htmlentities(msg('wikia-editor-preview-best-practices-button')),
+					bestPracticesLinkUrl:  window.wgArticlePath.replace(
+						'$1', $.htmlentities(msg('wikia-editor-preview-best-practices-button-link'))
+					)
+				},
+
+				template = response.mustache[0],
+				html = mustache.render(template, params);
+
+			content = html+content;
+			$.showCustomModal(title, content, options);
+		});
 	}
 
 	/**
@@ -85,7 +119,7 @@ define('wikia.preview', [
 	 */
 	function handleMobilePreview(data) {
 		var iframe = $article.html(
-				'<div class="mobile-preview"><iframe  width="320" height="480"></iframe></div>'
+				'<div class="mobile-preview"><iframe width="320" height="480"></iframe></div>'
 			).find('iframe')[0],
 			doc = iframe.document;
 
@@ -98,46 +132,6 @@ define('wikia.preview', [
 		doc.open();
 		doc.writeln(data.html);
 		doc.close();
-	}
-
-	/**
-	 * @desc Handles appending venus preview to modal
-	 *
-	 * This is a separate skin so we're loading it in iframe
-	 * @param {object} data - data that comes from preview api
-	 */
-	function handleVenusPreview(data) {
-		var iframe = $article.html(
-				'<div class="venus-preview">' +
-				'<iframe  width="100%" height="100%" frameborder="0" scrolling="no"></iframe>' +
-				'</div>'
-			).find('iframe')[0],
-			doc = iframe.document;
-
-		if (iframe.contentDocument) {
-			doc = iframe.contentDocument;
-		} else if (iframe.contentWindow) {
-			doc = iframe.contentWindow.document;
-		}
-
-		doc.open();
-		doc.writeln(data.html);
-		doc.close();
-
-		// set iframe height to mach its content
-		$(iframe).one('load', function () {
-			var iframeBody = doc.body;
-
-			iframe.style.height = iframeBody.scrollHeight + 'px';
-
-			// prevent any click on links and images from opening within the preview iframe (CON-2240)
-			$(iframeBody).on('click', 'a', function(ev) {
-				var target = $(ev.target);
-
-				// links to other pages should be open in new windows
-				target.closest('a').not('[href^="#"]').attr('target', '_blank');
-			});
-		});
 	}
 
 	/**
@@ -168,34 +162,24 @@ define('wikia.preview', [
 
 			if (type === previewTypes.mobile.name) {
 				handleMobilePreview(data);
-			} else if (type === previewTypes.venus.name) {
-				handleVenusPreview(data);
 			} else {
 				handleDesktopPreview(data);
 			}
 
-			if (window.wgOasisResponsive) {
+			if (window.wgOasisResponsive || window.wgOasisBreakpoints) {
 				if (opening) {
 
-					if (isRailDropped || isWidePage) {
-						// set proper preview width for shrinken modal
-						$article.width(editPageOptions.width - articleMargin * 2);
-					}
-
-					// set current width of the article
-					previewTypes.current.value = previewTypes.mobile.value = $article.width();
+					previewTypes.mobile.value = $article.width();
 
 					// get width of article Wrapper
 					// subtract scrollbar width to get correct width needed as reference point for scaling
 					articleWrapperWidth = $article.parent().width() - editPageOptions.scrollbarWidth;
-
-					if (currentTypeName) {
-						$article.width(previewTypes[currentTypeName].value);
-					}
 				}
 
-				// initial scale of article preview
-				scalePreview(currentTypeName);
+				if (currentTypeName) {
+					var articleWidth = breakpointsLayout.getArticleWidth(currentTypeName ,isWidePage);
+					$article.width(articleWidth);
+				}
 			}
 
 			if (opening) {
@@ -230,27 +214,20 @@ define('wikia.preview', [
 			params = {
 				options: [{
 					value: previewTypes.current.name,
-					name: msg('wikia-editor-preview-current-width')
+					name: $.htmlentities(msg('wikia-editor-preview-current-width'))
 				}, {
 					value: previewTypes.min.name,
-					name: msg('wikia-editor-preview-min-width')
+					name: $.htmlentities(msg('wikia-editor-preview-min-width'))
 				}, {
 					value: previewTypes.max.name,
-					name: msg('wikia-editor-preview-max-width')
+					name: $.htmlentities(msg('wikia-editor-preview-max-width'))
 				}, {
 					value: previewTypes.mobile.name,
-					name: msg('wikia-editor-preview-mobile-width')
+					name: $.htmlentities(msg('wikia-editor-preview-mobile-width'))
 				}],
-				toolTipMessage: msg('wikia-editor-preview-type-tooltip')
+				toolTipMessage: $.htmlentities(msg('wikia-editor-preview-type-tooltip'))
 			},
 			html;
-
-		if (window.wgEnableVenusArticle) {
-			params.options.push({
-				value: previewTypes.venus.name,
-				name: msg('wikia-editor-preview-venus-width')
-			});
-		}
 
 		html = mustache.render(template, params);
 
@@ -277,7 +254,6 @@ define('wikia.preview', [
 	/**
 	 * Display a dialog with article preview. Options passed in the object are:
 	 *  - 'width' - dialog width in pixels
-	 *  - 'isRailDropped' - flag set to true for window size 1023 and below when responsive layout is enabled
 	 *  - 'scrollbarWidth' - width of the scrollbar
 	 *                      (need do be subtracted from article wrapper width as reference for scaling)
 	 *  - 'onPublishButton' - callback function launched when user presses the 'Publish' button on the dialog
@@ -290,14 +266,16 @@ define('wikia.preview', [
 	 */
 	function renderPreview(options) {
 		editPageOptions = options;
-		isRailDropped = !!options.isRailDropped;
 		isWidePage = !!options.isWidePage;
-		getPreviewTypes(isWidePage);
+		getPreviewTypes();
+		if (typeof options.currentTypeName !== 'undefined') {
+			currentTypeName = options.currentTypeName;
+		}
 
 		var dialogOptions = {
 			buttons: [{
 				id: 'close',
-				message: msg('back'),
+				message: $.htmlentities(msg('back')),
 				handler: function () {
 					$('#EditPageDialog').closeModal();
 					$(window).trigger('EditPagePreviewClosed');
@@ -305,12 +283,11 @@ define('wikia.preview', [
 			}, {
 				id: 'publish',
 				defaultButton: true,
-				message: msg('savearticle'),
+				message: $.htmlentities(msg('savearticle')),
 				handler: options.onPublishButton
 			}],
 			// set modal width based on screen size
-			width: ((isRailDropped === false && isWidePage === false) || !window.wgOasisResponsive) ?
-				options.width : options.width - FIT_SMALL_SCREEN,
+			width: ((isWidePage === false) || !window.wgOasisResponsive || !window.wgOasisBreakpoints) ? options.width : options.width - FIT_SMALL_SCREEN,
 			className: 'preview',
 			onClose: function () {
 				previewLoaded = false;
@@ -321,13 +298,16 @@ define('wikia.preview', [
 		// allow extension to modify the preview dialog
 		$(window).trigger('EditPageRenderPreview', [dialogOptions]);
 
-		renderDialog(msg('preview'), dialogOptions, function (contentNode) {
+		renderDialog($.htmlentities(msg('preview')), dialogOptions, function (contentNode) {
 			// cache selector for other functions in this module
 			$article = contentNode;
 
 			loadPreview(previewTypes[currentTypeName].name, true);
 
-			if (window.wgOasisResponsive) {
+			if (window.wgOasisResponsive || window.wgOasisBreakpoints) {
+				//scale preview when opening modal
+				//scale preview when changing dropdown option is handled inside switchPreview function
+				scalePreview(previewTypes[currentTypeName].name);
 				// adding type dropdown to preview
 				if (!previewTemplate) {
 					loader({
@@ -384,9 +364,7 @@ define('wikia.preview', [
 
 		//load again preview only if changing mobile <-> desktop
 		if (type === previewTypes.mobile.name ||
-			type === previewTypes.venus.name ||
-			lastTypeName === previewTypes.mobile.name ||
-			lastTypeName === previewTypes.venus.name
+			lastTypeName === previewTypes.mobile.name
 		) {
 			loadPreview(previewTypes[currentTypeName].name);
 		}
@@ -394,11 +372,16 @@ define('wikia.preview', [
 		$article.width(previewTypes[currentTypeName].value);
 		scalePreview(currentTypeName);
 
+		$article.toggleClass(
+			'large-typography',
+			type === 'max' && !$article.hasClass('large-typography')
+		);
+
 		tracker.track({
 			action: Wikia.Tracker.ACTIONS.CLICK,
 			category: 'edit-preview',
 			label: 'preview-type-changed',
-			trackingMethod: 'both',
+			trackingMethod: 'analytics',
 			value: type
 		});
 	}
@@ -459,46 +442,30 @@ define('wikia.preview', [
 
 	/**
 	 * Returns previewTypes object which depends on the type of previewing page
-	 *
-	 * @param {boolean} isWidePage - type of previewing article page
-	 *                               is it mainpage / a page without right rail or not (DAR-2366)
 	 */
 
-	function getPreviewTypes(isWidePage) {
+	function getPreviewTypes() {
 		if (!previewTypes) {
-			var articleMinWidth = fluidlayout.getMinArticleWidth(),
-				articleMaxWidth = fluidlayout.getMaxArticleWidth();
-
 			previewTypes = {
 				current: {
 					name: 'current',
-					value: null
+					value: breakpointsLayout.getArticleWidth('current', isWidePage)
 				},
 				min: {
 					name: 'min',
-					value: articleMinWidth - 2 * articleMargin
+					value: breakpointsLayout.getArticleWidth('min', isWidePage)
 				},
 				max: {
 					name: 'max',
-					value: articleMaxWidth - 2 * articleMargin
+					value: breakpointsLayout.getArticleWidth('max', isWidePage)
 				},
 				mobile: {
 					name: 'mobile',
 					skin: 'wikiamobile',
 					type: 'full',
 					value: null
-				},
-				venus: {
-					name: 'venus',
-					skin: 'venus',
-					type: 'full',
-					value: 1024
 				}
 			};
-
-			if (isWidePage) {
-				previewTypes.max.value += rightRailWidth;
-			}
 		}
 
 		//Set base currentTypeName as a current - if it is there that means that preview was reopened

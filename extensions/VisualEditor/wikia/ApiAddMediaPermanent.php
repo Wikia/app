@@ -1,5 +1,7 @@
 <?php
 
+use \Wikia\Logger\WikiaLogger;
+
 class ApiAddMediaPermanent extends ApiAddMedia {
 
 	public function __construct( $main, $action ) {
@@ -80,6 +82,12 @@ class ApiAddMediaPermanent extends ApiAddMedia {
 			$title = $uploader->getUniqueTitle(
 				wfStripIllegalFilenameChars( $this->mParams['title'] )
 			);
+
+			// https://wikia-inc.atlassian.net/browse/VE-1819
+			if ( !$title ) {
+				WikiaLogger::instance()->debug( 'ApiAddMediaPermanent', array( 'title' => $this->mParams['title'] ) );
+			}
+
 			$uploader->setProvider( $this->mParams['provider'] );
 			$uploader->setVideoId( $this->mParams['videoId'] );
 			$uploader->setTargetTitle( $title->getBaseText() );

@@ -5,6 +5,8 @@ class UserProfilePageController extends WikiaController {
 	const AVATAR_MAX_SIZE = 512000;
 	const MAX_TOP_WIKIS = 4;
 
+	const FBPAGE_BASE_URL = 'https://www.facebook.com/';
+
 	/**
 	 * @var $profilePage UserProfilePage
 	 */
@@ -424,8 +426,12 @@ class UserProfilePageController extends WikiaController {
 			 */
 			$userIdentityBox = new UserIdentityBox( $user );
 
-			if ( !empty( $userData->website ) && 0 !== strpos( $userData->website, 'http' ) ) {
+			if ( !empty( $userData->website ) && strpos( $userData->website, 'http' ) !== 0 ) {
 				$userData->website = 'http://' . $userData->website;
+			}
+
+			if ( !empty( $userData->fbPage ) && strpos( $userData->fbPage, self::FBPAGE_BASE_URL ) !== 0 ) {
+				$userData->fbPage = self::FBPAGE_BASE_URL . $userData->fbPage;
 			}
 
 			if ( !$userIdentityBox->saveUserData( $userData ) ) {
@@ -492,19 +498,19 @@ class UserProfilePageController extends WikiaController {
 				case 'sample':
 					// remove old avatar file
 					Masthead::newFromUser( $user )->removeFile( false );
-					$user->setOption( 'avatar', $data->file );
+					$user->setGlobalAttribute( 'avatar', $data->file );
 					break;
 				case 'uploaded':
 					$errorMsg = wfMessage( 'userprofilepage-interview-save-internal-error' )->escaped();
 					$avatar = $this->saveAvatarFromUrl( $user, $data->file, $errorMsg );
-					$user->setOption( 'avatar', $avatar );
+					$user->setGlobalAttribute( 'avatar', $avatar );
 					break;
 				default:
 					break;
 			}
 
 			// TODO: $user->getTouched() get be used to invalidate avatar URLs instead
-			$user->setOption( 'avatar_rev', date( 'U' ) );
+			$user->setGlobalAttribute( 'avatar_rev', date( 'U' ) );
 			$user->saveSettings();
 		}
 
@@ -794,7 +800,7 @@ class UserProfilePageController extends WikiaController {
 			empty( $this->wg->AvatarsMaintenance )
 		);
 
-		$this->setVal( 'avatarName', $user->getOption( 'avatar' ) );
+		$this->setVal( 'avatarName', $user->getGlobalAttribute( 'avatar' ) );
 		$this->setVal( 'userId', $userId );
 		$this->setVal( 'avatarMaxSize', self::AVATAR_MAX_SIZE );
 		$this->setVal( 'avatar', AvatarService::renderAvatar( $user->getName(), self::AVATAR_DEFAULT_SIZE ) );
@@ -854,6 +860,10 @@ class UserProfilePageController extends WikiaController {
 		$userIdentityBox = new UserIdentityBox( $user );
 
 		$userData = $userIdentityBox->getFullData();
+
+		if ( !empty( $userData['fbPage'] ) ) {
+			$userData['fbPage'] = str_replace( self::FBPAGE_BASE_URL, '', $userData['fbPage'] );
+		}
 
 		$this->setVal( 'user', $userData );
 

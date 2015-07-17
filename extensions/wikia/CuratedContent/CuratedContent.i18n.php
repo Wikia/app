@@ -24,6 +24,8 @@ $messages['en'] = array(
 	'wikiacuratedcontent-content-description-items-input' => 'When adding items label them (right field) and type names (left field) with following convention: article_name, {{ns:Category}}:category_name, {{ns:500}}:username/post_name, {{ns:File}}:video_name',
 	'wikiacuratedcontent-content-articlenotfound-error' => 'Article not found',
 	'wikiacuratedcontent-content-emptylabel-error' => 'You need to enter a Curated Content Name for this item',
+	'wikiacuratedcontent-content-toolonglabel-error' => 'Curated Content Name must be no longer than 48 characters',
+	'wikiacuratedcontent-content-imagemissing-error' => 'Image is missing',
 	'wikiacuratedcontent-content-videonotsupported-error' => 'This video file provider is not supported',
 	'wikiacuratedcontent-content-notsupportedtype-error' => 'This type is not supported',
 	'wikiacuratedcontent-content-nocategoryintag-error' => 'You can put only category here',
@@ -53,6 +55,8 @@ $messages['qqq'] = array(
 	'wikiacuratedcontent-content-description-items-input' => 'Message describing a purpose and usage of the tool',
 	'wikiacuratedcontent-content-articlenotfound-error' => 'Message shown to a user when he tries to save a item with no related article',
 	'wikiacuratedcontent-content-emptylabel-error' => 'Message shown to a user when he tries to save without putting a label',
+	'wikiacuratedcontent-content-toolonglabel-error' => 'Message shown to a user when he tries to save too long label (greater than 48 characters)',
+	'wikiacuratedcontent-content-imagemissing-error' => 'Message attached to field which has missing image',
 	'wikiacuratedcontent-content-videonotsupported-error' => 'Message shown to a user when he tries to save a video item that is not supported',
 	'wikiacuratedcontent-content-notsupportedtype-error' => 'Message shown to a user when he tries to save a item that have not supported type',
 	'wikiacuratedcontent-content-nocategoryintag-error' => 'Message shown to a user when he tries to save an item in simple tag that is not of type category',
@@ -86,6 +90,7 @@ $messages['ach'] = array(
 	'wikiacuratedcontent-content-notsupportedtype-error' => 'crwdns6992:0crwdne6992:0',
 	'wikiacuratedcontent-content-nocategoryintag-error' => 'crwdns6993:0crwdne6993:0',
 	'wikiacuratedcontent-featured-section-name' => 'crwdns6994:0crwdne6994:0',
+	'wikiacuratedcontent-content-toolonglabel-error' => 'crwdns20152:0crwdne20152:0',
 );
 
 $messages['ast'] = array(
@@ -121,7 +126,7 @@ $messages['de'] = array(
 	'wikiacuratedcontent-content-required-entry' => 'Dieses Feld darf nicht leer sein.',
 	'wikiacuratedcontent-content-empty-section' => 'Dieser Ordner braucht noch ein paar Einträge.',
 	'wikiacuratedcontent-content-description-items' => 'Füge Einträge aus deinem Wikia hinzu und gib einen Namen an, unter dem sie angezeigt werden sollen.',
-	'wikiacuratedcontent-content-description-supported-items-for-sections' => 'Kategorien werden in allen Bereichen unterstützt. Zusätzlich können im Abschnitt "Empfohlene Inhalte" auch Artikel, Blog-Beiträge und Videos (Youtube und Ooyala) eingebunden werden.',
+	'wikiacuratedcontent-content-description-supported-items-for-sections' => 'Kategorien werden in allen Bereichen unterstützt. Zusätzlich können im Abschnitt „Empfohlene Inhalte“ auch Artikel, Blog-Beiträge und Videos (Youtube und Wikia Video-Bibliothek) eingebunden werden.',
 	'wikiacuratedcontent-content-description-tag-needs-image' => 'Ordner müssen ein Bild haben.',
 	'wikiacuratedcontent-content-description-section' => 'Macht es vielleicht Sinn, einige Einträge unter einer bestimmten Überschrift zu gruppieren? Füge einen Ordner hinzu, und ordne die entsprechenden Einträge darunter ein.
 ',
@@ -134,6 +139,7 @@ $messages['de'] = array(
 	'wikiacuratedcontent-content-notsupportedtype-error' => 'Dieser Dateityp wird nicht unterstützt.',
 	'wikiacuratedcontent-content-nocategoryintag-error' => 'Du kannst hier nur Kategorien einfügen.',
 	'wikiacuratedcontent-featured-section-name' => 'Empfohlene Inhalte',
+	'wikiacuratedcontent-content-toolonglabel-error' => 'Der Anzeigename darf nicht länger als 48 Zeichen sein.',
 );
 
 $messages['es'] = array(
@@ -163,6 +169,7 @@ $messages['es'] = array(
 	'wikiacuratedcontent-content-notsupportedtype-error' => 'Este tipo no es compatible',
 	'wikiacuratedcontent-content-nocategoryintag-error' => 'Solo puedes poner una categoría aquí',
 	'wikiacuratedcontent-featured-section-name' => 'Contenido destacado',
+	'wikiacuratedcontent-content-toolonglabel-error' => 'Nombre del contenido a cargo debe ser no mayor a 48 caracteres',
 );
 
 $messages['eu'] = array(
@@ -170,10 +177,10 @@ $messages['eu'] = array(
 );
 
 $messages['fi'] = array(
-	'wikiacuratedcontent-desc' => 'Wikia Curated Contentin mobiilisovellusmoduulit',
+	'wikiacuratedcontent-desc' => 'Wikian kuratoidun sisällön mobiilisovellusmoduulit',
 	'wikiacuratedcontent-content-save' => 'Tallenna',
-	'wikiacuratedcontent-preview-description' => 'Tämä on vain esikatselu siitä miltä sivut näyttäisivät Wiki Curated Content -sovelluksessa.',
-	'wikiacuratedcontent-content-title' => 'Wikia Curated Contentin hallintatyökalu',
+	'wikiacuratedcontent-preview-description' => 'Tämä on vain esikatselu siitä miltä sivut näyttäisivät Wikian kuratoidun sisällön sovelluksessa.',
+	'wikiacuratedcontent-content-title' => 'Wikian kuratoidun sisällön hallintatyökalu',
 	'wikiacuratedcontent-content-item' => 'Kohde',
 	'wikiacuratedcontent-content-section' => 'Kohteen osio (valinnainen)',
 	'wikiacuratedcontent-content-name' => 'Kuratoitu sisältönimi',
@@ -196,6 +203,7 @@ $messages['fi'] = array(
 	'wikiacuratedcontent-content-notsupportedtype-error' => 'Tätä tyyppiä ei tueta',
 	'wikiacuratedcontent-content-nocategoryintag-error' => 'Voi lisätä tänne vain luokan',
 	'wikiacuratedcontent-featured-section-name' => 'Suositeltu sisältö',
+	'wikiacuratedcontent-content-toolonglabel-error' => 'Curated Content Name must be no longer than 48 characters',
 );
 
 $messages['fr'] = array(
@@ -213,9 +221,9 @@ $messages['fr'] = array(
 	'wikiacuratedcontent-content-required-entry' => "L'élément est requis",
 	'wikiacuratedcontent-content-empty-section' => "Ce groupe a besoin d'éléments",
 	'wikiacuratedcontent-content-description-items' => "Ajoutez des « éléments » du wikia et nommez-les selon comment vous souhaitez qu'ils apparaissent dans l'application communautaire.",
-	'wikiacuratedcontent-content-description-supported-items-for-sections' => 'Les catégories sont prises en charge dans tous les groupes. De plus, le groupe à la une prend en charge les articles, les blogs et les vidéos (youtube et ooyala)',
+	'wikiacuratedcontent-content-description-supported-items-for-sections' => 'Les catégories sont prises en charge dans tous les groupes. De plus, le groupe « Contenu à la une » prend en charge les articles, les blogs et les vidéos (YouTube et Ooyala).',
 	'wikiacuratedcontent-content-description-tag-needs-image' => 'Les groupes doivent avoir une image associée',
-	'wikiacuratedcontent-content-description-section' => "S'il est intéressant de regrouper des éléments sous la même série de jeux vidéo, ajoutez un groupe et glissez-déposez les éléments du wiki en-dessous.",
+	'wikiacuratedcontent-content-description-section' => "S'il est intéressant de regrouper des éléments sous la même série de jeux vidéo, ajoutez un groupe et glissez-déposez les éléments du wikia en-dessous.",
 	'wikiacuratedcontent-content-description-organize' => "N'hésitez pas à supprimer ou ajouter des lignes et les réorganiser par glisser-déposer.",
 	'wikiacuratedcontent-content-description-no-section' => "Les éléments sans groupe ou avec un groupe vide seront affichés en dernier dans l'application communautaire.",
 	'wikiacuratedcontent-content-description-items-input' => 'Lorsque vous ajoutez des éléments, donnez leur un nom (champ à droite) et saisissez leur titre (champ à gauche) selon la convention suivante : nom_article, {{ns:Category}}:nom_catégorie, {{ns:500}}:nom_utilisateur/titre_billet, {{ns:File}}:titre_vidéo',
@@ -225,6 +233,7 @@ $messages['fr'] = array(
 	'wikiacuratedcontent-content-notsupportedtype-error' => "Ce type n'est pas pris en charge",
 	'wikiacuratedcontent-content-nocategoryintag-error' => 'Vous ne pouvez mettre que des catégories ici',
 	'wikiacuratedcontent-featured-section-name' => 'Contenu à la une',
+	'wikiacuratedcontent-content-toolonglabel-error' => "Le nom de l'application communautaire mobile ne doit pas dépasser les 48 caractères",
 );
 
 $messages['gl'] = array(
@@ -270,6 +279,7 @@ $messages['it'] = array(
 	'wikiacuratedcontent-content-notsupportedtype-error' => 'Questo tipo non è supportato',
 	'wikiacuratedcontent-content-nocategoryintag-error' => 'Puoi inserire solo categorie qui',
 	'wikiacuratedcontent-featured-section-name' => 'Contenuti in primo piano',
+	'wikiacuratedcontent-content-toolonglabel-error' => 'Il nome del contenuto curato non può contenere più di 48 caratteri',
 );
 
 $messages['ja'] = array(
@@ -299,6 +309,7 @@ $messages['ja'] = array(
 	'wikiacuratedcontent-content-notsupportedtype-error' => 'このタイプはサポートされていません',
 	'wikiacuratedcontent-content-nocategoryintag-error' => 'ここに入力できるのはカテゴリのみです',
 	'wikiacuratedcontent-featured-section-name' => '注目のコンテンツ',
+	'wikiacuratedcontent-content-toolonglabel-error' => 'キュレーションコンテンツ名は半角48文字以下にしてください',
 );
 
 $messages['ko'] = array(
@@ -328,6 +339,7 @@ $messages['ko'] = array(
 	'wikiacuratedcontent-content-notsupportedtype-error' => '이 형식은 지원되지 않습니다',
 	'wikiacuratedcontent-content-nocategoryintag-error' => '이곳에는 분류만 넣을 수 있습니다',
 	'wikiacuratedcontent-featured-section-name' => '추천 콘텐츠',
+	'wikiacuratedcontent-content-toolonglabel-error' => 'Curated Content Name must be no longer than 48 characters',
 );
 
 $messages['ksh'] = array(
@@ -389,6 +401,7 @@ $messages['nl'] = array(
 	'wikiacuratedcontent-content-notsupportedtype-error' => 'Dit type wordt niet ondersteund',
 	'wikiacuratedcontent-content-nocategoryintag-error' => 'Je kunt hier alleen categorieën plaatsen',
 	'wikiacuratedcontent-featured-section-name' => 'Aanbevolen Inhoud',
+	'wikiacuratedcontent-content-toolonglabel-error' => 'Curated Content Name must be no longer than 48 characters',
 );
 
 $messages['pl'] = array(
@@ -418,6 +431,7 @@ $messages['pl'] = array(
 	'wikiacuratedcontent-content-notsupportedtype-error' => 'Ten typ nie jest obsługiwany',
 	'wikiacuratedcontent-content-nocategoryintag-error' => 'Tutaj możesz dodać tylko kategorię',
 	'wikiacuratedcontent-featured-section-name' => 'Wyróżniona treść',
+	'wikiacuratedcontent-content-toolonglabel-error' => 'Nazwa Spersonalizowanej Treści nie może być duższa niż 48 znaków',
 );
 
 $messages['pms'] = array(
@@ -459,6 +473,7 @@ $messages['pt'] = array(
 	'wikiacuratedcontent-content-notsupportedtype-error' => 'Este tipo não é aceito',
 	'wikiacuratedcontent-content-nocategoryintag-error' => 'Você pode colocar apenas a categoria aqui',
 	'wikiacuratedcontent-featured-section-name' => 'Conteúdo Destacado',
+	'wikiacuratedcontent-content-toolonglabel-error' => 'Nome do conteúdo personalizado não deve exceder 48 caracteres.',
 );
 
 $messages['pt-br'] = array(
@@ -496,6 +511,7 @@ $messages['ru'] = array(
 	'wikiacuratedcontent-content-notsupportedtype-error' => 'Этот тип не поддерживается',
 	'wikiacuratedcontent-content-nocategoryintag-error' => 'Вы можете поместить сюда только категории',
 	'wikiacuratedcontent-featured-section-name' => 'Избранный контент',
+	'wikiacuratedcontent-content-toolonglabel-error' => 'Название курируемого контента не должно превышать 48 символов',
 );
 
 $messages['si'] = array(
@@ -527,32 +543,33 @@ $messages['uk'] = array(
 );
 
 $messages['vi'] = array(
-	'wikiacuratedcontent-desc' => 'Wikia Curated Content mobile app modules',
-	'wikiacuratedcontent-preview-description' => 'This is just a preview of how pages would look like in a Wikia Curated Content application.',
-	'wikiacuratedcontent-content-title' => 'Wikia Curated Content managment tool',
-	'wikiacuratedcontent-content-item' => 'Item',
-	'wikiacuratedcontent-content-section' => 'Item Section (optional)',
-	'wikiacuratedcontent-content-name' => 'Curated Content Name',
-	'wikiacuratedcontent-content-add-section' => 'Add Section',
-	'wikiacuratedcontent-content-add-item' => 'Add Item',
-	'wikiacuratedcontent-content-save' => 'Save',
-	'wikiacuratedcontent-content-orphaned-error' => 'Item must belong to a section',
-	'wikiacuratedcontent-content-required-entry' => 'Item is required',
-	'wikiacuratedcontent-content-duplicate-entry' => 'This value is duplicated',
-	'wikiacuratedcontent-content-empty-section' => 'This section needs some items',
-	'wikiacuratedcontent-content-description-items' => 'Add wiki "Items" and rename them as you\'d like them to appear in Curated Content with "Curated Content Names".',
-	'wikiacuratedcontent-content-description-supported-items-for-sections' => 'Categories are supported in all sections. Additionally "Featured" section supports: articles, blogs, videos (youtube and ooyala)',
-	'wikiacuratedcontent-content-description-tag-needs-image' => 'Sections must have an image',
-	'wikiacuratedcontent-content-description-section' => 'Does it make sense to group items under a game series installment? Add a "Section" and drag and drop wiki items under it.',
-	'wikiacuratedcontent-content-description-organize' => 'Feel free to delete or add more lines, and reorder them by dragging and dropping.',
-	'wikiacuratedcontent-content-description-no-section' => 'Items without section or with empty section will be shown as last in Curated Content.',
-	'wikiacuratedcontent-content-description-items-input' => 'When adding items label them (right field) and type names (left field) with following convention: article_name, {{ns:Category}}:category_name, {{ns:500}}:username/post_name, {{ns:File}}:video_name',
-	'wikiacuratedcontent-content-articlenotfound-error' => 'Article not found',
-	'wikiacuratedcontent-content-emptylabel-error' => 'You need to enter a Curated Content Name for this item',
-	'wikiacuratedcontent-content-videonotsupported-error' => 'This video file provider is not supported',
-	'wikiacuratedcontent-content-notsupportedtype-error' => 'This type is not supported',
-	'wikiacuratedcontent-content-nocategoryintag-error' => 'You can put only category here',
-	'wikiacuratedcontent-featured-section-name' => 'Featured Content',
+	'wikiacuratedcontent-desc' => 'Mô-đun ứng dụng điện thoại Nội dung tuyển chọn Wikia',
+	'wikiacuratedcontent-preview-description' => 'Đây là chỉ là một bản xem trước của cách trang sẽ trông ra sao trong ứng dụng Nội dung tuyển chọn Wikia.',
+	'wikiacuratedcontent-content-title' => 'Công cụ quản lý Nội dung tuyển chọn Wikia',
+	'wikiacuratedcontent-content-item' => 'Mục',
+	'wikiacuratedcontent-content-section' => 'Mục phần (tùy chọn)',
+	'wikiacuratedcontent-content-name' => 'Tên nội dung tuyển chọn',
+	'wikiacuratedcontent-content-add-section' => 'Thêm phần',
+	'wikiacuratedcontent-content-add-item' => 'Thêm mục',
+	'wikiacuratedcontent-content-save' => 'Lưu',
+	'wikiacuratedcontent-content-orphaned-error' => 'Mục phải nằm trong một phần',
+	'wikiacuratedcontent-content-required-entry' => 'Mục được yêu cầu',
+	'wikiacuratedcontent-content-duplicate-entry' => 'Giá trị này bị trùng lặp',
+	'wikiacuratedcontent-content-empty-section' => 'Đoạn này cần một số mục',
+	'wikiacuratedcontent-content-description-items' => 'Thêm "Mục" wiki và đổi tên chúng theo mong muốn xuất hiện trong Nội dung tuyển chọn với "Tên nội dung tạm thời".',
+	'wikiacuratedcontent-content-description-supported-items-for-sections' => 'Thể loại được hỗ trợ trong tất cả các phần. Ngoài ra phần "Tính năng" hỗ trợ: bài viết, blog, đoạn phim (youtube và ooyala)',
+	'wikiacuratedcontent-content-description-tag-needs-image' => 'Phần phải có một hình ảnh',
+	'wikiacuratedcontent-content-description-section' => 'Nó có ổn không khi xếp nhóm mục theo một loạt trò chơi cài đặt? Thêm một "Phần" và kéo và thả các mục wiki dưới nó.',
+	'wikiacuratedcontent-content-description-organize' => 'Thoải mái xoá hoặc thêm nhiều dòng, và sắp xếp lại chúng bằng cách kéo và thả.',
+	'wikiacuratedcontent-content-description-no-section' => 'Mục mà không có phần hoặc với trống phần sẽ được hiển thị ở cuối Nội dung tuyển chọn.',
+	'wikiacuratedcontent-content-description-items-input' => 'Khi thêm nhãn mục (trường phải) và nhập tên (trường trái) với ước sau: article_name, {{ns:Category}}:category_name, {{ns:500}}:username/post_name, {{ns:File}}:video_name',
+	'wikiacuratedcontent-content-articlenotfound-error' => 'Không tìm thấy bài viết',
+	'wikiacuratedcontent-content-emptylabel-error' => 'Bạn cần phải nhập Tên nội dung tuyển chọn cho mục này',
+	'wikiacuratedcontent-content-videonotsupported-error' => 'Nhà cung cấp tệp đoạn phim này không được hỗ trợ',
+	'wikiacuratedcontent-content-notsupportedtype-error' => 'Kiểu này không được hỗ trợ',
+	'wikiacuratedcontent-content-nocategoryintag-error' => 'Bạn chỉ có thể đặt thể loại ở đây',
+	'wikiacuratedcontent-featured-section-name' => 'Nội dung chọn lọc',
+	'wikiacuratedcontent-content-toolonglabel-error' => 'Curated Content Name must be no longer than 48 characters',
 );
 
 $messages['zh-hans'] = array(
@@ -582,6 +599,7 @@ $messages['zh-hans'] = array(
 	'wikiacuratedcontent-content-notsupportedtype-error' => '不支持此类型',
 	'wikiacuratedcontent-content-nocategoryintag-error' => '你可以在这里添加类别',
 	'wikiacuratedcontent-featured-section-name' => '特色内容',
+	'wikiacuratedcontent-content-toolonglabel-error' => '策划内容名称最多不能超过48个字符',
 );
 
 $messages['zh-tw'] = array(
@@ -611,5 +629,6 @@ $messages['zh-tw'] = array(
 	'wikiacuratedcontent-content-notsupportedtype-error' => '不支援此類型',
 	'wikiacuratedcontent-content-nocategoryintag-error' => '你可以在這裡添加類別',
 	'wikiacuratedcontent-featured-section-name' => '特色內容',
+	'wikiacuratedcontent-content-toolonglabel-error' => '策劃內容名稱最多不能超過48個字元',
 );
 

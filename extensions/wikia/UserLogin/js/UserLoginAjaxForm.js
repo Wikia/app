@@ -39,7 +39,7 @@
 		if (result === 'resetpass') {
 			this.onResetPasswordResponse(json);
 		} else if (result === 'closurerequested') {
-			this.onAccountClosureReqestResponse();
+			this.onAccountClosureRequestResponse();
 		} else {
 			this.onErrorResponse();
 		}
@@ -47,52 +47,69 @@
 
 	/**
 	 * Called when a user has requested a password change
-	 * @param {Object} json Response from server
 	 */
-	UserLoginAjaxForm.prototype.onResetPasswordResponse = function (json) {
-		var callback = this.options.resetpasscallback || '';
-		if (callback && typeof callback === 'function') {
-			// call with current context
-			callback.bind(this, json)();
-		} else {
-			// default implementation
-			$.post(wgScriptPath + '/wikia.php', {
-				controller: 'UserLoginSpecial',
-				method: 'changePassword',
-				format: 'html',
+	UserLoginAjaxForm.prototype.onResetPasswordResponse = function () {
+		$.nirvana.sendRequest({
+			controller: 'UserLoginSpecial',
+			method: 'changePassword',
+			format: 'html',
+			data: {
 				username: this.inputs.username.val(),
 				password: this.inputs.password.val(),
+				loginToken: this.inputs.loginToken.val(),
 				returnto: this.inputs.returnto.val(),
 				fakeGet: 1
-			}, this.retrieveTemplateCallback.bind(this));
+			},
+			callback: this.setupChangePasswordForm.bind(this)
+		});
+	};
+
+	/**
+	 * Replace form's content based on HTML sent from the server.
+	 * @param {string} html
+	 */
+	UserLoginAjaxForm.prototype.setupChangePasswordForm = function (html) {
+		var content, form, heading, modal, contentBlock, duration;
+
+		content = $('<div>').hide().append(html);
+		duration = 400;
+
+		// forced login modal needs a new header and some HTML adjustments
+		if (this.options.modal) {
+			heading = content.find('h1');
+			modal = this.options.modal;
+			contentBlock = modal.$element.find('.UserLoginModal');
+
+			modal.setTitle(heading.text());
+			heading.remove();
+
+			contentBlock.slideUp(duration, function () {
+				contentBlock.html('').html(content);
+				content.show();
+				contentBlock.slideDown(duration);
+			});
+
+		// any non-modal change password flow
+		} else {
+			form = this.form;
+
+			form.slideUp(duration, function () {
+				form.replaceWith(content);
+				content.slideDown(duration);
+			});
 		}
 	};
 
 	/**
-	 * Called after a user has requested an account closer.
-	 * @TODO: Not sure what user actions are taken for this to be called.
+	 * Called after a user has requested an account closer and then tries to log in with that same account.
 	 */
-	UserLoginAjaxForm.prototype.onAccountClosureReqestResponse = function () {
+	UserLoginAjaxForm.prototype.onAccountClosureRequestResponse = function () {
 		$.post(wgScriptPath + '/wikia.php', {
 			controller: 'UserLoginSpecial',
 			method: 'getCloseAccountRedirectUrl',
 			format: 'json'
 		}, function (data) {
 			window.location = data.redirectUrl;
-		});
-	};
-
-	/**
-	 * Replace modal's content based on HTML sent from the server.
-	 * @param {string} html
-	 */
-	UserLoginAjaxForm.prototype.retrieveTemplateCallback = function (html) {
-		var content = $('<div>').hide().append(html),
-			form = this.form;
-
-		form.slideUp(400, function () {
-			form.replaceWith(content);
-			content.slideDown(400);
 		});
 	};
 

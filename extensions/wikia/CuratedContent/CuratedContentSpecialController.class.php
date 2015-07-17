@@ -19,6 +19,8 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 
 	const FEATURED_SECTION_TEMPLATE = 'featuredSection';
 
+	const LABEL_MAX_LENGTH = 48;
+
 	public function __construct() {
 		parent::__construct( 'CuratedContent', '', false );
 	}
@@ -113,6 +115,7 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 
 			$this->response->setVal( 'list', $list );
 		} else {
+			$this->response->setVal( 'featured', $this->sendSelfRequest( self::FEATURED_SECTION_TEMPLATE ) );
 			$this->response->setVal( 'section', $sectionTemplate );
 			$this->response->setVal( 'item', $itemTemplate );
 		}
@@ -196,7 +199,7 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 		$this->response->setVal( 'status', $status );
 
 		if ( $status ) {
-			wfRunHooks( 'CuratedContentSave' );
+			wfRunHooks( 'CuratedContentSave', [ $sections ] );
 		}
 
 		return true;
@@ -252,6 +255,34 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 		return $result;
 	}
 
+	private function validateSection( $section ) {
+		if ( strlen( $section[ 'title' ] ) > self::LABEL_MAX_LENGTH ) {
+			return [
+				'title' => $section[ 'title' ],
+				'reason' => 'tooLongLabel'
+			];
+		}
+
+		if ( empty( $section[ 'featured' ] ) && $section[ 'title' ] !== '' && $section[ 'image_id' ] === '0' ) {
+			return [
+				'title' => $section[ 'title' ],
+				'reason' => 'imageMissing'
+			];
+		}
+
+		if ( !empty( $section[ 'items' ] ) && is_array( $section[ 'items' ] ) ) {
+			foreach ( $section[ 'items' ] as $item ) {
+				if ( $item[ 'image_id' ] === '0' ) {
+					return [
+						'title' => $item[ 'title' ],
+						'reason' => 'imageMissing'
+					];
+				}
+			}
+		}
+		return [];
+	}
+
 	/**
 	 * @param $sections
 	 * @return array
@@ -261,9 +292,16 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 		$sectionsAfterProcess = [ ];
 		if ( !empty( $sections ) ) {
 			foreach ( $sections as $section ) {
+				$sectionErr = $this->validateSection( $section );
+				if ( sizeof( $sectionErr ) ) {
+					$err = array_merge( $err, $sectionErr );
+				}
 				list( $newSection, $sectionErr ) = $this->processTagBeforeSave( $section, $err );
-				array_push( $sectionsAfterProcess, $newSection );
-				$err = array_merge( $err, $sectionErr );
+				// Don't push to output array featured section without items
+				if ( empty( $section['featured'] ) || !empty( $section['items'] ) ) {
+					array_push( $sectionsAfterProcess, $newSection );
+					$err = array_merge( $err, $sectionErr );
+				}
 			}
 		}
 		return [ $sectionsAfterProcess, $err ];
@@ -321,6 +359,9 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 		$reason = '';
 		if ( empty( $row[ 'label' ] ) ) {
 			$reason = 'emptyLabel';
+		}
+		if ( strlen( $row[ 'label' ] ) > self::LABEL_MAX_LENGTH ) {
+			$reason = 'tooLongLabel';
 		}
 
 		if ( $type == null ) {

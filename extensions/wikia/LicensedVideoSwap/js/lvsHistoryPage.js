@@ -1,13 +1,12 @@
-/*global GlobalNotification*/
-
 /**
  * AJAX interrupter for Licensed Video Swap undo workflow
  * @author Kenneth Kouot <kenneth@wikia-inc.com>
  */
 require([
 	'jquery',
-	'lvs.commonajax'
-], function ($, commonAjax) {
+	'lvs.commonajax',
+	'BannerNotification'
+], function ($, commonAjax, BannerNotification) {
 	'use strict';
 
 	function LVSHistoryPage(opts) {
@@ -53,12 +52,12 @@ require([
 		},
 		handleUndoFail: function (msg) {
 			commonAjax.stopLoadingGraphic();
-			GlobalNotification.show(msg, 'error');
+			new BannerNotification(msg, 'error').show();
 		},
 		handleUndoSuccess: function (msg, target) {
 			$(target).closest('li').remove();
 			commonAjax.stopLoadingGraphic();
-			GlobalNotification.show(msg, 'confirm');
+			new BannerNotification(msg, 'confirm').show();
 		},
 		// restore clobbered constructor
 		constructor: LVSHistoryPage

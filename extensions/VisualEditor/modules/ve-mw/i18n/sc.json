@@ -2,9 +2,12 @@
 	"@metadata": {
 		"authors": [
 			"L2212",
-			"Via maxima"
+			"Via maxima",
+			"Taxandru"
 		]
 	},
+	"tooltip-ca-ve-edit": "Càmbia custa pàgina cun VisualEditor",
+	"visualeditor-ca-editsource": "Càmbia wikitestu",
 	"visualeditor-cite-tool-name-news": "Novas",
 	"visualeditor-pagemenu-tooltip": "Preferèntzias de sa pàgina"
 }

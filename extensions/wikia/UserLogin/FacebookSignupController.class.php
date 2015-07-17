@@ -24,7 +24,7 @@ class FacebookSignupController extends WikiaController {
 	}
 
 	/**
-	 * This method is called when user successfully logins using FB credentials
+	 * This method is called when user successfully logs in using FB credentials
 	 *
 	 * Facebook user ID is passed to our backend:
 	 *  - if there's Wikia account connected, log the user in,
@@ -115,7 +115,7 @@ class FacebookSignupController extends WikiaController {
 	 * @return boolean true if the account is disabled, false otherwise
 	 */
 	private function isAccountDisabled( User $user ) {
-		return $user->getBoolOption( 'disabled' ) || (
+		return (bool)$user->getGlobalFlag( 'disabled' ) || (
 			defined( 'CLOSED_ACCOUNT_FLAG' ) &&
 			$user->getRealName() == CLOSED_ACCOUNT_FLAG
 		);
@@ -127,7 +127,7 @@ class FacebookSignupController extends WikiaController {
 	 * @return boolean true if the account is unconfirmed, false otherwise
 	 */
 	private function isAccountUnconfirmed( User $user ) {
-		return $user->getOption( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME );
+		return $user->getGlobalAttribute( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME );
 	}
 
 	/**
@@ -298,7 +298,7 @@ class FacebookSignupController extends WikiaController {
 	protected function getValidWikiaUser( $wikiaUserName, $wikiaPassword ) {
 
 		if ( !$wikiaUserName ) {
-			$this->setErrorResponse( 'userlogin-error-noname', [], self::SIGNUP_USERNAME_KEY);
+			$this->setErrorResponse( 'userlogin-error-noname', [], self::SIGNUP_USERNAME_KEY );
 			return null;
 		}
 

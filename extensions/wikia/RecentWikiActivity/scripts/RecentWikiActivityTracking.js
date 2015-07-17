@@ -4,7 +4,7 @@ require(['wikia.document', 'wikia.tracker'], function(d, tracker){
 	var recentWikiActivity = d.getElementById('recentWikiActivity'),
 		track = tracker.buildTrackingFunction({
 			action: tracker.ACTIONS.CLICK,
-			trackingMethod: 'ga'
+			trackingMethod: 'analytics'
 		});
 
 	function trackRecentWikiActivity(e) {

@@ -10,6 +10,7 @@
  *
  * @class
  * @extends ve.dm.LeafNode
+ * @mixins ve.dm.FocusableNode
  *
  * @constructor
  * @param {Object} [element] Reference to element in linear model
@@ -17,11 +18,16 @@
 ve.dm.MWNumberedExternalLinkNode = function VeDmMWNumberedExternalLinkNode() {
 	// Parent constructor
 	ve.dm.LeafNode.apply( this, arguments );
+
+	// Mixin constructors
+	ve.dm.FocusableNode.call( this );
 };
 
 /* Inheritance */
 
 OO.inheritClass( ve.dm.MWNumberedExternalLinkNode, ve.dm.LeafNode );
+
+OO.mixinClass( ve.dm.MWNumberedExternalLinkNode, ve.dm.FocusableNode );
 
 /* Static Properties */
 
@@ -33,6 +39,8 @@ ve.dm.MWNumberedExternalLinkNode.static.matchTagNames = [ 'a' ];
 
 ve.dm.MWNumberedExternalLinkNode.static.matchRdfaTypes = [ 'mw:ExtLink' ];
 
+ve.dm.MWNumberedExternalLinkNode.static.blacklistedAnnotationTypes = [ 'link' ];
+
 ve.dm.MWNumberedExternalLinkNode.static.matchFunction = function ( element ) {
 	// Must be empty
 	return element.childNodes.length === 0;
@@ -40,9 +48,9 @@ ve.dm.MWNumberedExternalLinkNode.static.matchFunction = function ( element ) {
 
 ve.dm.MWNumberedExternalLinkNode.static.toDataElement = function ( domElements ) {
 	return {
-		'type': this.name,
-		'attributes': {
-			'href': domElements[0].getAttribute( 'href' )
+		type: this.name,
+		attributes: {
+			href: domElements[0].getAttribute( 'href' )
 		}
 	};
 };

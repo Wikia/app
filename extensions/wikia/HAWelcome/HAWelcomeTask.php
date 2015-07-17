@@ -219,8 +219,7 @@ class HAWelcomeTask extends BaseTask {
 					),
 					__METHOD__,
 					array(
-						'ORDER BY' => 'rev_timestamp DESC',
-						'DISTINCT'
+						'ORDER BY' => 'rev_timestamp DESC'
 					)
 				);
 

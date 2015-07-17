@@ -3,12 +3,18 @@
 		"authors": [
 			"MaGa",
 			"Roberta F.",
-			"SpeedyGonsales"
+			"SpeedyGonsales",
+			"Zeljko.filipin"
 		]
 	},
 	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]]",
 	"tag-visualeditor-description": "Uređivanje napravljeno [[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditorom]]",
+	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor: potrebna provjera]]",
+	"tag-visualeditor-needcheck-description": "Uređivanje korištenjem [[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]]-a pri kojem je sustav opazio wikitext mogu imati nehotične promjene.",
+	"tag-visualeditor-switched": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor: prebačeno na klasično uređivanje]]",
+	"tag-visualeditor-switched-description": "Suradnik je počeo uređivati koristeći VisualEditor i onda se prebacio u wikitext uređivač.",
+	"visualeditor-feedback-link": "Project:VisualEditor/Feedback",
 	"visualeditor-feedback-tool": "Napišite povratnu informaciju",
 	"visualeditor-help-label": "Pročitajte vodič za korisnike",
-	"visualeditor-help-title": "Korisnički vodič za uporabu VisualEditora"
+	"visualeditor-help-title": "Vodič za uporabu VisualEditora"
 }

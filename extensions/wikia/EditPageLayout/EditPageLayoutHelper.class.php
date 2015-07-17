@@ -84,7 +84,7 @@ class EditPageLayoutHelper {
 		}
 
 		// Add variables for pages to edit code (css, js, lua)
-		if ( $this->isCodePage( $editedArticleTitle ) ) {
+		if ( $this->isCodeSyntaxHighlightingEnabled( $editedArticleTitle ) ) {
 			$this->prepareVarsForCodePage( $editedArticleTitle );
 		}
 
@@ -110,7 +110,7 @@ class EditPageLayoutHelper {
 		if ( $user->isLoggedIn() ) {
 			global $wgRTEDisablePreferencesChange;
 			$wgRTEDisablePreferencesChange = true;
-			$this->addJsVariable( 'wgEditPageWideSourceMode', (bool)$user->getOption( 'editwidth' ) );
+			$this->addJsVariable( 'wgEditPageWideSourceMode', (bool)$user->getGlobalPreference( 'editwidth' ) );
 			unset( $wgRTEDisablePreferencesChange );
 		}
 
@@ -171,15 +171,80 @@ class EditPageLayoutHelper {
 	 * @return bool
 	 */
 	static public function isCodePage( Title $articleTitle ) {
-		global $wgEnableEditorSyntaxHighlighting;
-
 		$namespace = $articleTitle->getNamespace();
 
+		return ( $articleTitle->isCssOrJsPage()
+			|| $articleTitle->isCssJsSubpage()
+			|| $namespace === NS_MODULE
+			|| self::isInfoboxTemplate( $articleTitle )
+		);
+	}
+
+	/**
+	 * Check if code syntax highlighting is enabled
+	 *
+	 * @param Title $articleTitle page title
+	 * @return bool
+	 */
+	static public function isCodeSyntaxHighlightingEnabled( Title $articleTitle ) {
+		global $wgEnableEditorSyntaxHighlighting;
+
+		return self::isCodePage( $articleTitle ) && $wgEnableEditorSyntaxHighlighting;
+	}
+
+	static public function isInfoboxTemplate( Title $title ) {
+		$namespace = $title->getNamespace();
+
+		if ( $namespace === NS_TEMPLATE ) {
+			$tc = new TemplateClassification( $title );
+			return $tc->isType( $tc::TEMPLATE_INFOBOX ) || self::isTemplateDraft( $title );
+		}
+
+		return false;
+	}
+
+	static function isTemplateDraft( $title ) {
+		global $wgEnableTemplateDraftExt, $wgEnableInsightsInfoboxes;
+
+		return !empty( $wgEnableTemplateDraftExt )
+				&& !empty( $wgEnableInsightsInfoboxes )
+				&& TemplateDraftHelper::isTitleDraft( $title );
+	}
+
+	/**
+	 * Check if wikitext syntax highlighting is enabled, so
+	 * - $wgEnableEditorSyntaxHighlighting is set to true
+	 * - user doesn't disable syntax highlighting in preferences
+	 *
+	 * @return bool
+	 */
+	static public function isWikitextSyntaxHighlightingEnabled() {
+		global $wgEnableEditorSyntaxHighlighting, $wgUser;
+
 		return $wgEnableEditorSyntaxHighlighting
-				&& ( $articleTitle->isCssOrJsPage()
-				|| $articleTitle->isCssJsSubpage()
-				// Lua module
-				|| $namespace === NS_MODULE );
+				&& !$wgUser->getGlobalPreference( 'disablesyntaxhighlighting' );
+	}
+
+	/**
+	 * Check if we should show mobile and desktop preview icon
+	 * Excluded pages:
+	 * - Main page
+	 * - Code page (CSS, JS and Lua)
+	 * - MediaWiki:Wiki-navigation
+	 *
+	 * @param Title $title
+	 * @return bool
+	 */
+	public function showMobilePreview( Title $title ) {
+		$blacklistedPage = self::isCodePage( $title )
+				|| $title->isMainPage()
+				|| NavigationModel::isWikiNavMessage( $title );
+
+		return !$blacklistedPage;
+	}
+
+	public static function isCodePageWithPreview( Title $title ) {
+		return self::isCodePage( $title ) && self::isInfoboxTemplate( $title );
 	}
 
 	/**
@@ -195,7 +260,8 @@ class EditPageLayoutHelper {
 		$aceUrlParts = parse_url( $aceUrl );
 		$this->addJsVariable( 'aceScriptsPath', $aceUrlParts['path'] );
 
-		$this->addJsVariable( 'wgIsCodePage', true );
+		$this->addJsVariable( 'wgEnableCodePageEditor', true );
+		$this->addJsVariable( 'showPagePreview', self::showMobilePreview( $title ));
 
 		if ( $namespace === NS_MODULE ) {
 			$type = 'lua';
@@ -203,6 +269,8 @@ class EditPageLayoutHelper {
 			$type = 'css';
 		} elseif ( $title->isJsPage() || $title->isJsSubpage() ) {
 			$type = 'javascript';
+		} elseif ( self::isInfoboxTemplate( $title ) ) {
+			$type = 'xml';
 		}
 
 		$this->addJsVariable( 'codePageType', $type );

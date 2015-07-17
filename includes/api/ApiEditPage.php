@@ -200,7 +200,7 @@ class ApiEditPage extends ApiBase {
 			$requestArray['wpStarttime'] = wfTimestampNow();	// Fake wpStartime
 		}
 
-		if ( $params['minor'] || ( !$params['notminor'] && $user->getOption( 'minordefault' ) ) )	{
+		if ( $params['minor'] || ( !$params['notminor'] && $user->getGlobalPreference( 'minordefault' ) ) )	{
 			$requestArray['wpMinoredit'] = '';
 		}
 
@@ -336,6 +336,7 @@ class ApiEditPage extends ApiBase {
 					$r['newtimestamp'] = wfTimestamp( TS_ISO_8601,
 						$articleObj->getTimestamp() );
 					wfRunHooks( 'ApiEditPage::SuccessfulApiEdit', [ $newRevId ] );
+					wfSetupSession();
 				}
 				break;
 

@@ -42,6 +42,9 @@ class EditPageLayoutController extends WikiaController {
 
 		// extra buttons
 		$this->buttons = $editPage->getControlButtons();
+
+		// Should show mobile preview icon
+		$this->showMobilePreview = $this->request->getVal('showMobilePreview');
 	}
 
 	/**
@@ -59,7 +62,7 @@ class EditPageLayoutController extends WikiaController {
 		$helper = EditPageLayoutHelper::getInstance();
 		$editPage = $helper->getEditPage();
 
-		$this->pagetype = 'editpage';
+		$this->showPreview = true;
 
 		if ( $helper->fullScreen ) {
 			$wgJsMimeType = $this->wg->JsMimeType;
@@ -68,12 +71,13 @@ class EditPageLayoutController extends WikiaController {
 			$this->wg->Out->addStyle( AssetsManager::getInstance()
 				->getSassCommonURL( 'extensions/wikia/EditPageLayout/css/EditPageLayout.scss' ) );
 
-			if ( $helper->isCodePage( $editPage->getTitle() ) ) {
-				$this->pagetype = 'codepage';
+			if ( $helper->isCodeSyntaxHighlightingEnabled( $editPage->getTitle() ) ) {
 				$this->wg->Out->addScript( "<script type=\"{$wgJsMimeType}\" src=\"/resources/Ace/ace.js\"></script>" );
 				$srcs = AssetsManager::getInstance()->getGroupCommonURL( 'ace_editor_js' );
 
 				OasisController::addBodyClass( 'codeeditor' );
+
+				$this->showPreview = $helper->isCodePageWithPreview( $editPage->getTitle() );
 			} else {
 				$packageName = 'epl';
 				if ( class_exists( 'RTE' ) && RTE::isEnabled() && !$editPage->isReadOnlyPage() ) {
@@ -94,11 +98,7 @@ class EditPageLayoutController extends WikiaController {
 		$this->wordmark = $response->getData();
 
 		// render global and user navigation
-		if ( !empty( $this->wg->EnableGlobalNavExt ) ) {
-			$this->header = F::app()->renderView( 'GlobalNavigation', 'index' );
-		} else {
-			$this->header = F::app()->renderView( 'GlobalHeader', 'Index' );
-		}
+		$this->header = F::app()->renderView( 'GlobalNavigation', 'index' );
 
 		// Editing [foo]
 		$this->title = $editPage->getEditedTitle();
@@ -114,6 +114,9 @@ class EditPageLayoutController extends WikiaController {
 
 		// Text for Edit summary label
 		$wpSummaryLabelText = 'editpagelayout-edit-summary-label';
+
+		// Should show mobile preview icon
+		$this->showMobilePreview = $helper->showMobilePreview( $editPage->getTitle() );
 
 		if ($section == 'new') {
 			$msgKey = 'editingcomment';
@@ -173,7 +176,7 @@ class EditPageLayoutController extends WikiaController {
 		$this->notificationsLink =
 			( count( $this->notices ) == 0 )
 			? wfMessage( 'editpagelayout-notificationsLink-none' )->escaped()
-			: wfMessage( 'editpagelayout-notificationsLink', count( $this->notices ) )->escaped();
+			: wfMessage( 'editpagelayout-notificationsLink', count( $this->notices ) )->parse();
 
 		// check if we're in read only mode
 		// disable edit form when in read-only mode

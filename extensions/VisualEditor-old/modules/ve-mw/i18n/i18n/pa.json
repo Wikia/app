@@ -1,0 +1,42 @@
+{
+	"@metadata": {
+		"authors": [
+			"Amikeco",
+			"Babanwalia",
+			"Bouron",
+			"Nasir8891",
+			"Aalam"
+		]
+	},
+	"tooltip-ca-createsource": "এই পাতার সোর্স কোড তৈরী করুন",
+	"tooltip-ca-editsource": "এই পাতার সোর্স সম্পাদনা করুন",
+	"tooltip-ca-ve-edit": "এই পাতাটি ভিজ্যুয়াল এডিটর দিয়ে সম্পাদনা করুন",
+	"visualeditor-beta-appendix": "বেটা",
+	"visualeditor-beta-label": "বেটা",
+	"visualeditor-browserwarning": "আপনি এমন একটি ব্রাউজার ব্যবহার করছেন যেটি ভিজ্যুয়াল এডিটর সমর্থন করে না।",
+	"visualeditor-ca-createsource": "সোর্স তৈরী",
+	"visualeditor-ca-editsource": "ਸਰੋਤ ਸੋਧੋ",
+	"visualeditor-ca-editsource-section": "সোর্স সম্পাদনা",
+	"visualeditor-ca-ve-create": "ভিজ্যুয়াল এডিটর",
+	"visualeditor-ca-ve-edit": "ভিজ্যুয়াল এডিটর",
+	"visualeditor-ca-ve-edit-section": "ভিজ্যুয়াল এডিটর",
+	"visualeditor-desc": "মিডিয়াউইকির জন্য ভিজ্যুয়াল এডিটর",
+	"visualeditor-descriptionpagelink": "Project:ভিজ্যুয়াল এডিটর",
+	"visualeditor-dialog-media-content-section": "ক্যাপশন",
+	"visualeditor-dialog-media-insert-button": "মিডিয়া সংযোজন",
+	"visualeditor-dialog-media-insert-title": "মিডিয়া সংযোজন",
+	"visualeditor-dialog-media-title": "মিডিয়া সেটিংস",
+	"visualeditor-dialog-meta-categories-category": "বিষয়শ্রেণী",
+	"visualeditor-dialog-meta-categories-data-label": "বিষয়শ্রেণী",
+	"visualeditor-dialog-meta-categories-input-matchingcategorieslabel": "বিষয়শ্রেণী মিলিয়ে নেয়া",
+	"visualeditor-dialog-meta-categories-input-movecategorylabel": "বিষয়শ্রেণী স্থানান্তর",
+	"visualeditor-dialog-meta-categories-input-newcategorylabel": "নতুন বিষয়শ্রেণী",
+	"visualeditor-dialog-meta-categories-input-placeholder": "নতুন বিষয়শ্রেণী সংযোজন",
+	"visualeditor-dialog-meta-categories-options": "অপশনসমূহ",
+	"visualeditor-dialog-meta-categories-section": "বিষয়শ্রেণীসমূহ",
+	"visualeditor-dialog-meta-languages-code-label": "ভাষার কোড",
+	"visualeditor-dialog-meta-languages-label": "ভাষাসমূহ",
+	"visualeditor-dialog-meta-languages-link-label": "পাতার লিংকসমূহ",
+	"visualeditor-dialog-meta-languages-section": "ভাষাসমূহ",
+	"visualeditor-dialog-transclusion-loading": "...ਲੋਡ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ"
+}

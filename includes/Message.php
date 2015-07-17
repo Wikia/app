@@ -84,7 +84,7 @@
  * If you want to use a different language:
  *
  * @code
- *    $userLanguage = $user->getOption( 'language' );
+ *    $userLanguage = $user->getGlobalPreference( 'language' );
  *    wfMessage( 'email-header' )
  *         ->inLanguage( $userLanguage )
  *         ->plain();

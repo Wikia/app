@@ -29,4 +29,5 @@ $wgExtensionCredits['specialpage'][] = array(
 // Set up the new special page
 $dir = dirname( __FILE__ ) . '/';
 $wgAutoloadClasses['HealthCheck'] = $dir . 'SpecialHealthcheck_body.php';
+$wgAutoloadClasses['HealthController'] = $dir . 'HealthController.class.php';
 $wgSpecialPages['HealthCheck'] = 'HealthCheck';

@@ -35,7 +35,11 @@ $wgGroupPermissions['sysop']['chatadmin'] = true;
 
 $wgAvailableRights[] = 'chat';
 $wgGroupPermissions['*']['chat'] = false;
+$wgGroupPermissions['staff']['chat'] = true;
 $wgGroupPermissions['user']['chat'] = true;
+if ( $wgWikiaEnvironment == WIKIA_ENV_PREVIEW || $wgWikiaEnvironment == WIKIA_ENV_VERIFY ) {
+	$wgGroupPermissions['user']['chat'] = false;
+}
 
 $wgGroupPermissions['util']['chatfailover'] = true;
 
@@ -100,7 +104,7 @@ $wgSpecialPages['Chat'] = 'SpecialChat';
 
 // i18n
 $wgExtensionMessagesFiles['Chat'] = $dir.'/Chat.i18n.php';
-$wgExtensionMessagesFiles['ChatAliases'] = $dir.'/Chat.aliases.php'; 
+$wgExtensionMessagesFiles['ChatAliases'] = $dir.'/Chat.aliases.php';
 $wgExtensionMessagesFiles['Chatfailover'] = $dir.'/Chatfailover.i18n.php';
 $wgExtensionMessagesFiles['ChatDefaultEmoticons'] = $dir.'/ChatDefaultEmoticons.i18n.php';
 
@@ -114,7 +118,6 @@ $wgHooks[ 'BeforePageDisplay' ][] = 'ChatHelper::onBeforePageDisplay';
 $wgHooks[ 'ContributionsToolLinks' ][] = 'ChatHelper::onContributionsToolLinks';
 $wgHooks[ 'LogLine' ][] = 'ChatHelper::onLogLine';
 $wgHooks[ 'UserGetRights' ][] = 'chatAjaxonUserGetRights';
-$wgHooks[ 'GetIP' ][] = 'ChatAjax::onGetIP'; // used for calls from chat nodejs server
 
 // logs
 $wgLogTypes[] = 'chatban';
@@ -193,17 +196,6 @@ function ChatAjax() {
 			if( !empty($data) ) {
 				$wgUser = User::newFromId( $data['user_id'] );
 			}
-		}
-
-		/*
-		 ChatAjax requests come from chat nodejs server, and that's not the user ip
-		 so if the server passed the correct user ip, we try to make use of it and
-		 record it here so $wgRequest->getIP return this address
-		 */
-		$userIP = $wgRequest->getVal('userIP');
-		if ( ( $userIP !== false ) && IP::isIPAddress( $userIP ) ){
-			ChatAjax::$chatUserIP = $userIP;
-
 		}
 
 		$data = ChatAjax::$method();

@@ -6,13 +6,14 @@
 	"--warnings": ["-nodoc(class,public)"],
 	"--builtin-classes": true,
 	"--warnings-exit-nonzero": true,
-	"--external": "HTMLDocument,Window,Node",
+	"--external": "HTMLDocument,Window,Node,Set,Range,Selection,ClientRect,File",
 	"--output": "../docs",
 	"--": [
 		"./external.js",
 		"../lib/oojs",
 		"../lib/oojs-ui",
-		"../modules/unicodejs",
-		"../modules/ve"
+		"../lib/unicodejs",
+		"../src",
+		"../tests"
 	]
 }

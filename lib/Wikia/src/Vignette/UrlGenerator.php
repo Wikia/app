@@ -14,6 +14,7 @@ class UrlGenerator {
 	const MODE_FIXED_ASPECT_RATIO = 'fixed-aspect-ratio';
 	const MODE_FIXED_ASPECT_RATIO_DOWN = 'fixed-aspect-ratio-down';
 	const MODE_SCALE_TO_WIDTH = 'scale-to-width';
+	const MODE_SCALE_TO_WIDTH_DOWN = 'scale-to-width-down';
 	const MODE_TOP_CROP = 'top-crop';
 	const MODE_TOP_CROP_DOWN = 'top-crop-down';
 	const MODE_WINDOW_CROP = 'window-crop';
@@ -121,6 +122,16 @@ class UrlGenerator {
 	}
 
 	/**
+	 * for animated gifs, capture a specific frame of animation
+	 * @param int $frame the frame to capture, from 0
+	 * @return $this
+	 */
+	public function frame($frame=0) {
+		$this->query['frame'] = $frame;
+		return $this;
+	}
+
+	/**
 	 * original image
 	 * @return $this
 	 */
@@ -199,10 +210,14 @@ class UrlGenerator {
 	/**
 	 * dictate width, let height auto scale
 	 * @param null $width
+	 * @param bool $upsample allow thumbnails larger than originals
 	 * @return $this
 	 */
-	public function scaleToWidth($width = null) {
-		$this->mode(self::MODE_SCALE_TO_WIDTH);
+	public function scaleToWidth($width = null, $upsample = false) {
+
+		$upsample
+			? $this->mode(self::MODE_SCALE_TO_WIDTH)
+			: $this->mode(self::MODE_SCALE_TO_WIDTH_DOWN);
 
 		if ($width != null) {
 			$this->width($width);
@@ -300,7 +315,7 @@ class UrlGenerator {
 		if ($this->mode != self::MODE_ORIGINAL) {
 			$modePath .= "/{$this->mode}";
 
-			if ($this->mode == self::MODE_SCALE_TO_WIDTH) {
+			if ($this->mode == self::MODE_SCALE_TO_WIDTH || $this->mode == self::MODE_SCALE_TO_WIDTH_DOWN) {
 				$modePath .= "/{$this->width}";
 			} elseif ($this->mode == self::MODE_WINDOW_CROP || $this->mode == self::MODE_WINDOW_CROP_FIXED) {
 				$modePath .= "/width/{$this->width}";

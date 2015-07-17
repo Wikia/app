@@ -6,7 +6,7 @@ var Wikia = window.Wikia || {},
 
 if ( ShareButtons ) {
 	ShareButtons.add({
-		dependencies: [ $.loadFacebookAPI ],
+		dependencies: [ $.loadFacebookSDK ],
 		callback: function() {
 			var dfd = new $.Deferred();
 

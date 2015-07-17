@@ -115,7 +115,7 @@ class FilePageController extends WikiaController {
 				GROUP BY gil_wiki
 				LIMIT $limit
 SQL;
-			$result = $db->query( $sql, __METHOD__ );
+			$result = $db->query( trim( $sql ), __METHOD__ );
 
 			// We need to make sure $globalUsage is an array. If the query below returns no rows, $globalUsage
 			// ends up being null due to it's initial assignment of $globalUsage = $this->wg->Memc->get( $memcKey );

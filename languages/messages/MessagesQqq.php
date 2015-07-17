@@ -3678,6 +3678,7 @@ There are no such extensions here, so look at [[wikipedia:Special:Version]] for 
 'version-license'                  => '{{Identical|License}}',
 'version-software-product'         => 'Shown in [[Special:Version]]',
 'version-software-version'         => '{{Identical|Version}}',
+'version-file-extensions-allowed'  => 'This message is a heading at [[Special:Version]] for file extensions that are allowed to be uploaded',
 
 # Special:FilePath
 'filepath'         => 'Legend of fieldset around input box in [[Special:FilePath]].',

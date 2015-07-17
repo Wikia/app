@@ -1,4 +1,8 @@
-define('wikia.editpage.ace.editor', ['wikia.ace.editor', 'wikia.window'], function (ace, win) {
+define(
+	'wikia.editpage.ace.editor',
+	['wikia.ace.editor', 'editpage.events', 'wikia.window'],
+	function (ace, editpageEvents, win)
+{
 	'use strict';
 
 	var theme = 'solarized_light',
@@ -10,7 +14,9 @@ define('wikia.editpage.ace.editor', ['wikia.ace.editor', 'wikia.window'], functi
 		$editPage = $('#EditPage'),
 		$editPageToolbar = $('#EditPageToolbar'),
 		wideClassName = 'editpage-sourcewidemode-on',
-		narrowClassName = 'editpage-sourcewidemode-off';
+		narrowClassName = 'editpage-sourcewidemode-off',
+		editorInitContent,
+		disableBeforeUnload = false;
 
 	function init() {
 		chooseTheme();
@@ -21,6 +27,8 @@ define('wikia.editpage.ace.editor', ['wikia.ace.editor', 'wikia.window'], functi
 		initStyles();
 		ace.setTheme(theme);
 		ace.setMode(win.codePageType);
+
+		editorInitContent = ace.getContent();
 
 		initEvents();
 	}
@@ -70,9 +78,22 @@ define('wikia.editpage.ace.editor', ['wikia.ace.editor', 'wikia.window'], functi
 		$('#editform').submit(function(e) {
 			var hiddenInput = ace.getInput().val(ace.getContent());
 
+			disableBeforeUnload = true;
+
 			$(this).unbind('submit').append(hiddenInput).submit();
 
 			e.preventDefault();
+		});
+	}
+
+	/**
+	 * Make sure that user doesn't leave the page by accident
+	 */
+	function beforeUnload() {
+		$(win).bind('beforeunload', function () {
+			if (!disableBeforeUnload && editorInitContent !== ace.getContent()) {
+				return $.msg('wikia-editor-leaveconfirm-message');
+			}
 		});
 	}
 
@@ -85,85 +106,8 @@ define('wikia.editpage.ace.editor', ['wikia.ace.editor', 'wikia.window'], functi
 		}
 	}
 
-	/**
-	 * Init modal showing difference between last saved and currently edited code
-	 */
-	function initDiffModal() {
-		var previewModalConfig = {
-				vars: {
-					id: 'EditPageDialog',
-					title: $.msg('editpagelayout-pageControls-changes'),
-					content: '<div class="ArticlePreview modalContent"><div class="ArticlePreviewInner">' +
-						'</div></div>',
-					size: 'large'
-				}
-			},
-			modalCallback = function(previewModal) {
-				previewModal.deactivate();
-
-				previewModal.$content.bind('click', function(event) {
-					var target = $(event.target);
-					target.closest('a').not('[href^="#"]').attr('target', '_blank');
-				});
-
-				prepareDiffContent(previewModal, ace.getContent());
-
-				previewModal.show();
-			};
-
-		$('#wpDiff').click(function(){
-			ace.showDiff(previewModalConfig, modalCallback);
-		});
-	}
-
-	/**
-	 * Send AJAX request
-	 */
-	function ajax(method, params, callback, skin) {
-		var url = win.wgEditPageHandler.replace('$1', encodeURIComponent(win.wgEditedTitle));
-
-		params = $.extend({
-			page: win.wgEditPageClass ? win.wgEditPageClass : "",
-			method: method,
-			mode: 'ace'
-		}, params);
-
-		if (skin) {
-			url += '&type=full&skin=' + encodeURIComponent(skin);
-		}
-
-		return jQuery.post(url, params, function (data) {
-			if (typeof callback === 'function') {
-				callback(data);
-			}
-		}, 'json' );
-	}
-
-	/**
-	 * Prepare content with difference between last saved and currently edited code
-	 *
-	 * @param previewModal modal box instance
-	 * @param content current edited content
-	 */
-	function prepareDiffContent(previewModal, content) {
-		var section = $.getUrlVar('section') || 0,
-			extraData = {
-				content: content,
-				section: parseInt(section, 10)
-			};
-
-		$.when(
-			// get wikitext diff
-			ajax('diff' , extraData),
-
-			// load CSS for diff
-			win.mw.loader.use('mediawiki.action.history.diff')
-		).done(function(ajaxData) {
-			var data = ajaxData[ 0 ],
-				html = '<h1 class="pagetitle">' + win.wgEditedTitle + '</h1>' + data.html;
-			previewModal.$content.find('.ArticlePreview .ArticlePreviewInner').html(html);
-			previewModal.activate();
-		});
+	function initDiff() {
+		editpageEvents.attachDiff('wpDiff');
 	}
 
 	/**
@@ -188,7 +132,13 @@ define('wikia.editpage.ace.editor', ['wikia.ace.editor', 'wikia.window'], functi
 	 */
 	function initEvents() {
 		initSubmit();
-		initDiffModal();
+		initDiff();
+		beforeUnload();
+
+		if (win.showPagePreview) {
+			editpageEvents.attachDesktopPreview('wpPreview');
+			editpageEvents.attachMobilePreview('wpPreviewMobile');
+		}
 
 		$('.editpage-widemode-trigger').click(editorModeChange);
 	}

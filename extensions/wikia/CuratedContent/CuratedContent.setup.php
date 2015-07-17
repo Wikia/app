@@ -21,15 +21,7 @@ $wgAutoloadClasses['CuratedContentModel'] =  "{$dir}/CuratedContentModel.class.p
  * message files
  */
 $wgExtensionMessagesFiles['CuratedContent'] = "{$dir}/CuratedContent.i18n.php";
-
-
-//Special Page to preview page in Curated Content style
-$wgAutoloadClasses['CuratedContentSpecialPreviewController'] =  "{$dir}/CuratedContentSpecialPreviewController.class.php" ;
-$wgSpecialPages['CuratedContentPreview'] = 'CuratedContentSpecialPreviewController';
-
-$wgGroupPermissions['*']['curatedcontentpreview'] = false;
-$wgGroupPermissions['staff']['curatedcontentpreview'] = true;
-$wgGroupPermissions['sysop']['curatedcontentpreview'] = true;
+$wgExtensionMessagesFiles['CuratedContentAlias'] = "{$dir}/CuratedContent.alias.php";
 
 //Special Page for Content Managment Tool
 $wgAutoloadClasses[ 'CuratedContentSpecialController'] =  "{$dir}/CuratedContentSpecialController.class.php" ;
@@ -51,9 +43,11 @@ JSMessages::registerPackage( 'CuratedContentMsg', [
 	'wikiacuratedcontent-content-orphaned-error',
 	'wikiacuratedcontent-content-articlenotfound-error',
 	'wikiacuratedcontent-content-emptylabel-error',
+	'wikiacuratedcontent-content-toolonglabel-error',
 	'wikiacuratedcontent-content-videonotsupported-error',
 	'wikiacuratedcontent-content-notsupportedtype-error',
 	'wikiacuratedcontent-content-nocategoryintag-error',
+	'wikiacuratedcontent-content-imagemissing-error',
 ] );
 
 //hooks

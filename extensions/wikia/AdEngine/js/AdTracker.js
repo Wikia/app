@@ -70,6 +70,9 @@ define('ext.wikia.adEngine.adTracker', ['wikia.tracker', 'wikia.window'], functi
 
 		gaValue = Math.round(value);
 
+		// Empty action is not allowed by Google Analytics, thus:
+		action = action || 'nodata';
+
 		tracker.track({
 			ga_category: category,
 			ga_action: action,

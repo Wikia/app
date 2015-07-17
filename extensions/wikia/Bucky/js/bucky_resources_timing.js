@@ -90,6 +90,7 @@ define('bucky.resourceTiming', ['jquery', 'wikia.window', 'wikia.log', 'bucky'],
 			'total',
 			'cached',
 			'dns',
+			'dns-cached',
 			'3rdparty',
 			'css',
 			'link',
@@ -127,7 +128,14 @@ define('bucky.resourceTiming', ['jquery', 'wikia.window', 'wikia.log', 'bucky'],
 				// count DNS calls and report the time
 				dnsTime = res.domainLookupStart ? res.domainLookupEnd - res.domainLookupStart : false;
 				if (dnsTime !== false) {
-					addStatsEntry('dns', dnsTime);
+					if (dnsTime === 0) {
+						addStatsEntry('dns-cached', dnsTime);
+					}
+					else {
+						addStatsEntry('dns', dnsTime);
+					}
+
+					debug('DNS', {dnsTime: dnsTime, url: res.name});
 				}
 
 				// browser cache hit
@@ -152,7 +160,7 @@ define('bucky.resourceTiming', ['jquery', 'wikia.window', 'wikia.log', 'bucky'],
 	 * @param {string} eventName
 	 */
 	function reportToBucky(eventName) {
-		var key, subkey, sink, stats;
+		var key, value, subkey, sink, stats;
 
 		// iterate all resources
 		stats = getResourcesStats(window.performance.getEntriesByType('resource') || []);
@@ -161,10 +169,18 @@ define('bucky.resourceTiming', ['jquery', 'wikia.window', 'wikia.log', 'bucky'],
 		sink = bucky('resource_timing::' + eventName);
 		debug('Sending stats', eventName);
 
+		// flush pending Bucky data to avoid HTTP 756 response code (Too long request string)
+		sink.flush();
+
 		for (key in stats) {
 			for (subkey in stats[key]) {
-				sink.send(key + '.' + subkey, Math.round(stats[key][subkey]));
-				debug(key + '.' + subkey, Math.round(stats[key][subkey]));
+				value = Math.round(stats[key][subkey]);
+
+				// do not report negative values (PLATFORM-)
+				if (value >= 0) {
+					sink.store(key + '.' + subkey, value);
+					debug(key + '.' + subkey, value);
+				}
 			}
 		}
 	}

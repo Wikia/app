@@ -33,7 +33,7 @@ ve.dm.MWNewSectionEditDisableMetaItem.static.matchTagNames = [ 'meta' ];
 ve.dm.MWNewSectionEditDisableMetaItem.static.matchRdfaTypes = [ 'mw:PageProp/nonewsectionlink' ];
 
 ve.dm.MWNewSectionEditDisableMetaItem.static.toDataElement = function ( ) {
-	return { 'type': this.name };
+	return { type: this.name };
 };
 
 ve.dm.MWNewSectionEditDisableMetaItem.static.toDomElements = function ( dataElement, doc ) {
