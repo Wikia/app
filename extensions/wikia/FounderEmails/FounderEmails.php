@@ -59,9 +59,6 @@ function wfFounderEmailsInit() {
 
 	$dir = dirname( __FILE__ ) . '/';
 
-	$u = new User();
-	$u->sendMail()
-
 	/**
 	 * classes
 	 */

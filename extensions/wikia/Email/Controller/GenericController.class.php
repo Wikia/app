@@ -57,6 +57,15 @@ class GenericController extends EmailController {
 	}
 
 	/**
+	 * Make sure we use the address passed to us in the footers, etc.
+	 *
+	 * @return string
+	 */
+	protected function getTargetUserEmail() {
+		return $this->getToAddress()->address;
+	}
+
+	/**
 	 * @template genericLayout
 	 */
 	public function body() {
@@ -73,6 +82,13 @@ class GenericController extends EmailController {
 	protected static function getEmailSpecificFormFields() {
 		$formFields =  [
 			"inputs" => [
+				[
+					'type' => 'text',
+					'name' => 'toAddress',
+					'label' => 'Recipient Address',
+					'tooltip' => 'The email address to send this content',
+					'value' => \F::app()->wg->User->getEmail(),
+				],
 				[
 					'type' => 'text',
 					'name' => 'category',
