@@ -66,11 +66,3 @@
 .flags-special-form-params-new {
 	padding: 15px 0 0;
 }
-
-.highlight-red {
-	background-color: #ffb1ba;
-
-	@if $is-dark-wiki {
-		background-color: #4d1111;
-	}
-}
