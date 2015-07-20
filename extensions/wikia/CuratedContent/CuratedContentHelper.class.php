@@ -34,7 +34,7 @@ class CuratedContentHelper {
 
 	private function fillItemInfo( &$item ) {
 		$title = Title::newFromText( $item['title'] );
-		if ( $title instanceof Title && $title->exists() ) {
+		if ( !empty($title ) ) {
 			$articleId = $title->getArticleId();
 			$namespaceId = $title->getNamespace();
 			$imageId = (int)$item['image_id'];

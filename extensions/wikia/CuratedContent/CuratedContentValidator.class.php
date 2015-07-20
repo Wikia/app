@@ -138,7 +138,7 @@ class CuratedContentValidator {
 	}
 
 	private static function needsArticleId( $type ) {
-		return $type != CuratedContentHelper::STR_CATEGORY;
+		return $type !== CuratedContentHelper::STR_CATEGORY;
 	}
 
 	private static function isSupportedProvider( $provider ) {
