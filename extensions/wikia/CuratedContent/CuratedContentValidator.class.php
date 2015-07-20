@@ -123,9 +123,9 @@ class CuratedContentValidator {
 		}
 
 		if ( $item['type'] === CuratedContentHelper::STR_VIDEO ) {
-			if ( empty( $item['info'] ) ) {
+			if ( empty( $item['video_info'] ) ) {
 				$this->error( $item, self::ERR_VIDEO_WITHOUT_INFO );
-			} elseif ( !self::isSupportedProvider( $item['info']['provider'] ) ) {
+			} elseif ( !self::isSupportedProvider( $item['video_info']['provider'] ) ) {
 				$this->error( $item, self::ERR_VIDEO_NOT_SUPPORTED );
 			}
 		}
