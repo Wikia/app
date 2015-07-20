@@ -4,7 +4,7 @@ class PortableInfoboxRenderService extends WikiaService {
 	const LOGGER_LABEL = 'portable-infobox-render-not-supported-type';
 	const DESKTOP_THUMBNAIL_WIDTH = 270;
 	const MOBILE_THUMBNAIL_WIDTH = 360;
-	const MAX_SMALL_IMAGE_WIDTH = 300;
+	const MIN_BIG_IMAGE_WIDTH = 300;
 	const MOBILE_TEMPLATE_POSTFIX = '-mobile';
 
 	private $templates = [
@@ -155,6 +155,19 @@ class PortableInfoboxRenderService extends WikiaService {
 	}
 
 	/**
+	 * return real width of the image.
+	 * @param $title
+	 * @return number
+	 */
+	protected function getFileWidth( $title ) {
+		$file = \WikiaFileHelper::getFileFromTitle( $title );
+
+		if ( $file ) {
+			return $file->getWidth();
+		}
+	}
+
+	/**
 	 * check if item type is supported and logs unsupported types
 	 *
 	 * @param string $type - template type
@@ -186,7 +199,7 @@ class PortableInfoboxRenderService extends WikiaService {
 
 	/**
 	 * checks if infobox data item is valid hero component data.
-	 * If image is smaller than const, don't render the hero module.
+	 * If image is smaller than MIN_BIG_IMAGE_WIDTH const, don't render the hero module.
 	 *
 	 * @param array $item - infobox data item
 	 * @param array $heroData - hero component data
@@ -201,9 +214,9 @@ class PortableInfoboxRenderService extends WikiaService {
 		}
 
 		if ( $type === 'image' && !array_key_exists( 'image', $heroData ) ) {
-			$file = \WikiaFileHelper::getFileFromTitle( $item['data'][ 'name' ] );
+			$imageWidth = $this->getFileWidth( $item[ 'data' ][ 'name' ] );
 
-			if ( $file && $file->getWidth() > self::MAX_SMALL_IMAGE_WIDTH ) {
+			if ( $imageWidth > self::MIN_BIG_IMAGE_WIDTH ) {
 				return true;
 			}
 		}

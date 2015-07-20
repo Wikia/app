@@ -15,10 +15,11 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 	{
 		$isInvalidImage = isset( $input[ 'isInvalidImage' ] ) && $input[ 'isInvalidImage' ];
 		$isWikiaMobile = isset( $input[ 'isWikiaMobile' ] ) && $input[ 'isWikiaMobile' ];
+		$fileWidth = isset( $input[ 'fileWidth' ] ) ? $input[ 'fileWidth' ] : null;
 		$mockThumbnailImage = $isInvalidImage ? false : $this->getThumbnailImageMock( $input );
 
 		$mock = $this->getMockBuilder( 'PortableInfoboxRenderService' )
-			->setMethods( [ 'getThumbnail', 'isWikiaMobile' ] )
+			->setMethods( [ 'getThumbnail', 'isWikiaMobile', 'getFileWidth' ] )
 			->getMock();
 		$mock->expects( $this->any() )
 			->method( 'isWikiaMobile' )
@@ -26,6 +27,9 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 		$mock->expects( $this->any() )
 			->method( 'getThumbnail' )
 			->will( $this->returnValue( $mockThumbnailImage ) );
+		$mock->expects( $this->any() )
+			->method( 'getFileWidth' )
+			->will( $this->returnValue( $fileWidth ) );
 
 		return $mock;
 	}
@@ -36,7 +40,6 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 	 * @return PHPUnit_Framework_MockObject_MockObject
 	 */
 	private function getThumbnailImageMock( $input ) {
-		$isSmallImage = isset( $input[ 'isSmallImage' ] ) && $input[ 'isSmallImage' ];
 
 		$mockThumbnailImage = $this->getMockBuilder( 'ThumbnailImage' )
 			->setMethods( [ 'getUrl', 'getWidth', 'getHeight' ] )
@@ -44,23 +47,12 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 		$mockThumbnailImage->expects( $this->any() )
 			->method( 'getUrl' )
 			->will( $this->returnValue( 'http://image.jpg' ) );
-
-		if ( $isSmallImage ) {
-			$mockThumbnailImage->expects( $this->any() )
-				->method( 'getWidth' )
-				->will( $this->returnValue( 100 ) );
-			$mockThumbnailImage->expects( $this->any() )
-				->method( 'getHeight' )
-				->will( $this->returnValue( 100 ) );
-		} else {
-			$mockThumbnailImage->expects( $this->any() )
-				->method( 'getWidth' )
-				->will( $this->returnValue( 400 ) );
-			$mockThumbnailImage->expects( $this->any() )
-				->method( 'getHeight' )
-				->will( $this->returnValue( 200 ) );
-		}
-
+		$mockThumbnailImage->expects( $this->any() )
+			->method( 'getWidth' )
+			->will( $this->returnValue( 400 ) );
+		$mockThumbnailImage->expects( $this->any() )
+			->method( 'getHeight' )
+			->will( $this->returnValue( 200 ) );
 
 		return $mockThumbnailImage;
 	}
@@ -384,6 +376,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 			[
 				'input' => [
 					'isWikiaMobile' => true,
+					'fileWidth' => '450',
 					[
 						'type' => 'image',
 						'data' => [
@@ -391,9 +384,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 							'url' => 'http://image.jpg',
 							'thumbnail' => 'thumbnail.jpg',
 							'ref' => 1,
-							'name' => 'test1',
-							'width' => 450,
-							'height' => 600
+							'name' => 'test1'
 						]
 					]
 				],
@@ -407,7 +398,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 			[
 				'input' => [
 					'isWikiaMobile' => true,
-					'isSmallImage' => true,
+					'fileWidth' => '290',
 					[
 						'type' => 'image',
 						'data' => [
@@ -415,9 +406,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 							'url' => 'http://image.jpg',
 							'thumbnail' => 'thumbnail.jpg',
 							'ref' => 1,
-							'name' => 'test1',
-							'width' => 100,
-							'height' => 100
+							'name' => 'test1'
 						]
 					]
 				],
@@ -426,7 +415,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 									<img src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D" data-src="http://image.jpg" class="portable-infobox-image lazy media article-media" alt="image alt"  data-image-key="test1" data-image-name="test1" data-ref="1" data-params=\'[{"name":"test1", "full":"http://image.jpg"}]\' />
 								</div>
 							</aside>',
-				'description' => 'Mobile: Only a small image. Should not render hero'
+				'description' => 'Mobile: A small image. Should not render hero'
 			],
 			[
 				'input' => [
