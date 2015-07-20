@@ -11,9 +11,8 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 }
 
 class TagsReportPage extends SpecialPage {
-	/* @var Title $mTitle */
-	private $mTitle;
 	private $mTag;
+
 	/**
 	 * constructor
 	 */
@@ -39,7 +38,6 @@ class TagsReportPage extends SpecialPage {
 		/**
 		 * initial output
 		 */
-		$this->mTitle = Title::makeTitle( NS_SPECIAL, 'TagsReport' );
 		$wgOut->setPageTitle( wfMsg('tagsreporttitle') );
 		$wgOut->setRobotpolicy( 'noindex,nofollow' );
 		$wgOut->setArticleRelated( false );
@@ -56,7 +54,7 @@ class TagsReportPage extends SpecialPage {
 	function showForm ($error = "") {
 		global $wgOut;
         wfProfileIn( __METHOD__ );
-		$action = htmlspecialchars($this->mTitle->getLocalURL());
+		$action = htmlspecialchars($this->getTitle()->getLocalURL());
 		$tagList = $this->getTagsList();
 
 		$timestamp = $this->getGenDate();
