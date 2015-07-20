@@ -11,7 +11,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 }
 
 class TagsReportPage extends SpecialPage {
-	private $mTag;
+	const TABLE = 'city_used_tags';
 
 	/**
 	 * constructor
@@ -26,10 +26,6 @@ class TagsReportPage extends SpecialPage {
 		if( $wgUser->isBlocked() ) {
 			throw new UserBlockedError( $this->getUser()->mBlock );
 		}
-		if( wfReadOnly() ) {
-			$wgOut->readOnlyPage();
-			return;
-		}
 		if( !$wgUser->isAllowed( 'tagsreport' ) ) {
 			$this->displayRestrictionError();
 			return;
@@ -41,21 +37,21 @@ class TagsReportPage extends SpecialPage {
 		$wgOut->setPageTitle( wfMsg('tagsreporttitle') );
 		$wgOut->setRobotpolicy( 'noindex,nofollow' );
 		$wgOut->setArticleRelated( false );
-		$this->mTag = $wgRequest->getVal ('target');
 
 		/**
 		 * show form
 		 */
-		$this->showForm();
-		$this->showArticleList();
+		$tag = $wgRequest->getVal ('target');
+		$this->showForm($tag);
+		$this->showArticleList($tag);
 	}
 
-	/* draws the form itself  */
-	function showForm ($error = "") {
+	/**
+	 * @param string $tag parser hook tag to get the report for
+	 */
+	function showForm ($tag) {
 		global $wgOut;
         wfProfileIn( __METHOD__ );
-		$action = htmlspecialchars($this->getTitle()->getLocalURL());
-		$tagList = $this->getTagsList();
 
 		$timestamp = $this->getGenDate();
 		if ( !empty( $timestamp ) ) {
@@ -65,27 +61,28 @@ class TagsReportPage extends SpecialPage {
         $oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
         $oTmpl->set_vars( array(
 			"error"		=> $error,
-            "action"	=> $action,
-            "tagList"	=> $tagList,
-            "mTag"  	=> $this->mTag,
+            "action"	=> htmlspecialchars($this->getTitle()->getLocalURL()),
+            "tagList"	=> $this->getTagsList(),
+            "mTag"  	=> $tag,
             "timestamp"	=> $timestamp
         ));
         $wgOut->addHTML( $oTmpl->render("main-form") );
         wfProfileOut( __METHOD__ );
 	}
 
-	function showArticleList() {
+	/**
+	 * @param string $tag parser hook tag to get the report for
+	 */
+	function showArticleList($tag) {
 		global $wgOut;
 		global $wgCanonicalNamespaceNames;
 		global $wgContLang;
         wfProfileIn( __METHOD__ );
 
-		$articles = $this->getTagsInfo();
-
         $oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
         $oTmpl->set_vars( array(
-            "mTag"  		=> $this->mTag,
-            "articles" 		=> $articles,
+            "mTag"  		=> $tag,
+            "articles" 		=> $this->getTagsInfo($tag),
             "wgCanonicalNamespaceNames" => $wgCanonicalNamespaceNames,
             "wgContLang" 	=> $wgContLang,
             "skin"			=> RequestContext::getMain()->getSkin()
@@ -94,85 +91,116 @@ class TagsReportPage extends SpecialPage {
         wfProfileOut( __METHOD__ );
 	}
 
-	function getResults() {
-        wfProfileIn( __METHOD__ );
-
-		/* no list when no user */
-		if (empty($this->mTag)) {
-			wfProfileOut( __METHOD__ );
-			return false ;
-		}
-
-		/* before, we need that numResults */
-        wfProfileOut( __METHOD__ );
-	}
-
+	/**
+	 * Report how many times tags of each kind are used on this wiki
+	 *
+	 * Returns (tag name) => (count) pairs
+	 *
+	 * SELECT ct_kind as tag,count(*) as cnt FROM `city_used_tags` WHERE ct_wikia_id = 'X' AND (ct_kind is not null) GROUP BY ct_kind ORDER BY ct_kind
+	 *
+	 * @return mixed
+	 * @throws MWException
+	 */
 	private function getTagsList() {
-		global $wgMemc, $wgSharedDB, $wgStatsDB, $wgStatsDBEnabled;
-		global $wgCityId;
-		$tagsList = array();
-		$memkey = wfForeignMemcKey( $wgSharedDB, null, "TagsReport", $wgCityId );
-		$cached = $wgMemc->get($memkey);
-		if ( !is_array ($cached) && !empty( $wgStatsDBEnabled ) ) {
-			$dbs = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
-			if (!is_null($dbs)) {
-				$query = "select ct_kind, count(*) as cnt from city_used_tags where ct_kind is not null and ct_wikia_id = {$wgCityId} group by ct_kind order by ct_kind";
-				$res = $dbs->query ($query, __METHOD__);
-				while ($row = $dbs->fetchObject($res)) {
-					$tagsList[$row->ct_kind] = $row->cnt;
-				}
-				$dbs->freeResult($res);
-				$wgMemc->set( $memkey, $tagsList, 60*60 );
-			}
-		} else {
-			$tagsList = (array)$cached;
-		}
+		return WikiaDataAccess::cache(
+			wfMemcKey(__METHOD__),
+			WikiaResponse::CACHE_SHORT,
+			function() {
+				global $wgCityId, $wgStatsDB, $wgStatsDBEnabled;
 
-		return $tagsList;
+				if (empty($wgStatsDBEnabled)) {
+					return [];
+				}
+
+				$dbs = wfGetDB( DB_SLAVE, [], $wgStatsDB );
+				$res = $dbs->select(
+					self::TABLE,
+					[ 'ct_kind as tag', 'count(*) as cnt' ],
+					[
+						'ct_wikia_id' => $wgCityId,
+						'ct_kind is not null'
+					],
+					__METHOD__,
+					[
+						'GROUP BY' => 'ct_kind',
+						'ORDER BY' => 'ct_kind'
+					]
+				);
+
+				$tags = [];
+				foreach($res as $row) {
+					$tags[ $row->tag ] = intval( $row->cnt );
+				}
+				return $tags;
+			}
+		);
 	}
 
-	private function getTagsInfo() {
-		global $wgMemc, $wgSharedDB, $wgStatsDB, $wgStatsDBEnabled;
-		global $wgCityId;
-		$tagsArticles = array();
-		$memkey = wfForeignMemcKey( $wgSharedDB, null, "TagsReport", $this->mTag, $wgCityId );
-		$cached = $wgMemc->get($memkey);
-		if ( !is_array ($cached) && !empty( $wgStatsDBEnabled ) ) {
-			$dbs = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
-			if (!is_null($dbs)) {
-				$query = "select ct_namespace, ct_page_id from city_used_tags where ct_kind = " .$dbs->addQuotes( $this->mTag ). " and ct_wikia_id = {$wgCityId} order by ct_namespace";
-				$res = $dbs->query ($query, __METHOD__);
-				while ($row = $dbs->fetchObject($res)) {
-					$tagsArticles[$row->ct_namespace][] = $row->ct_page_id;
-				}
-				$dbs->freeResult($res);
-				$wgMemc->set( $memkey, $tagsArticles, 60*60*3 );
-			}
-		} else {
-			$tagsArticles = $cached;
-		}
+	/**
+	 * Report how on which articles in which namespace the given parser hook is used
+	 *
+	 * @param string $tag parser hook tag to get the report for
+	 * @return mixed
+	 * @throws MWException
+	 */
+	private function getTagsInfo($tag) {
+		return WikiaDataAccess::cache(
+			wfMemcKey(__METHOD__, $tag),
+			WikiaResponse::CACHE_SHORT,
+			function() use ($tag) {
+				global $wgCityId, $wgStatsDB, $wgStatsDBEnabled;
 
-		return $tagsArticles;
+				if (empty($wgStatsDBEnabled)) {
+					return [];
+				}
+
+				$dbs = wfGetDB( DB_SLAVE, [], $wgStatsDB );
+				$res = $dbs->select(
+					self::TABLE,
+					[ ' ct_namespace', 'ct_page_id' ],
+					[
+						'ct_wikia_id' => $wgCityId,
+						'ct_kind' => $tag
+					],
+					__METHOD__,
+					[
+						'ORDER BY' => 'ct_namespace'
+					]
+				);
+
+				$pages = [];
+				foreach($res as $row) {
+					$pages[ $row->ct_namespace ][] = intval( $row->ct_page_id );
+				}
+				return $pages;
+			}
+		);
 	}
 
+	/**
+	 * Get the formatted timestamp with the last run of tags_report for a current wiki
+	 *
+	 * @return mixed
+	 * @throws MWException
+	 */
 	private function getGenDate() {
 		global $wgLang, $wgStatsDB, $wgCityId, $wgStatsDBEnabled;
 
 		if ( empty( $wgStatsDBEnabled ) ) {
-			return array();
+			return [];
 		}
 
-		$dbs = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
-		$s = $dbs->selectRow(
-			'city_used_tags',
-			array( 'max(ct_timestamp) as ts' ),
-			array( 'ct_wikia_id' =>  $wgCityId ),
+		$dbs = wfGetDB(DB_SLAVE, [], $wgStatsDB);
+		$ts = $dbs->selectField(
+			self::TABLE,
+			'max(ct_timestamp) as ts',
+			[ 'ct_wikia_id' => $wgCityId ],
 			__METHOD__
 		);
 
 		return array(
-			$wgLang->date( wfTimestamp( TS_MW, $s->ts ), true ),
-			$wgLang->time( wfTimestamp( TS_MW, $s->ts ), true ),
+			$wgLang->date( wfTimestamp( TS_MW, $ts ), true ),
+			$wgLang->time( wfTimestamp( TS_MW, $ts ), true ),
 		);
 	}
 
