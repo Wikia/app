@@ -20,6 +20,7 @@ use \Wikia\Util\GlobalStateWrapper;
  * }
  */
 abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
+	const MOCK_DEV_NAME = 'mockdevname';
 
 	protected static $alternativeConstructors = [
 		'Article' => [ 'newFromID', 'newFromTitle', 'newFromWikiPage' ],
@@ -495,4 +496,58 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 		return $globalState->wrap( $callback );
 	}
 
+	protected function mockPreviewEnv() {
+		$this->mockGlobalVariable( 'wgDevelEnvironment', false );
+		$this->mockGlobalVariable( 'wgStagingEnvironment', true );
+		$this->mockGlobalVariable( 'wgWikiaEnvironment', WIKIA_ENV_PREVIEW );
+	}
+
+	protected function mockVerifyEnv() {
+		$this->mockGlobalVariable( 'wgDevelEnvironment', false );
+		$this->mockGlobalVariable( 'wgStagingEnvironment', true );
+		$this->mockGlobalVariable( 'wgWikiaEnvironment', WIKIA_ENV_VERIFY );
+	}
+
+	protected function mockSandboxEnv() {
+		$this->mockGlobalVariable( 'wgDevelEnvironment', false );
+		$this->mockGlobalVariable( 'wgStagingEnvironment', false );
+		$this->mockGlobalVariable( 'wgWikiaEnvironment', WIKIA_ENV_SANDBOX );
+		$this->getStaticMethodMock( 'WikiFactory', 'getExternalHostName' )
+			->expects( $this->any() )
+			->method( 'getExternalHostName' )
+			->willReturn( 'sandbox-s1' );
+	}
+
+	protected function mockProdEnv() {
+		$this->mockGlobalVariable( 'wgDevelEnvironment', false );
+		$this->mockGlobalVariable( 'wgWikiaEnvironment', WIKIA_ENV_PROD );
+	}
+
+	protected function mockDevEnv() {
+		$this->mockGlobalVariable( 'wgDevelEnvironmentName', self::MOCK_DEV_NAME );
+		$this->getStaticMethodMock( 'WikiFactory', 'getExternalHostName' )
+			->expects( $this->any() )
+			->method( 'getExternalHostName' )
+			->willReturn( self::MOCK_DEV_NAME );
+	}
+
+	protected function mockEnvironment( $environment ) {
+		switch ( $environment ) {
+			case WIKIA_ENV_PROD:
+				$this->mockProdEnv();
+				break;
+			case WIKIA_ENV_PREVIEW:
+				$this->mockPreviewEnv();
+				break;
+			case WIKIA_ENV_VERIFY:
+				$this->mockVerifyEnv();
+				break;
+			case WIKIA_ENV_SANDBOX:
+				$this->mockSandboxEnv();
+				break;
+			case WIKIA_ENV_DEV:
+				$this->mockDevEnv();
+				break;
+		}
+	}
 }
