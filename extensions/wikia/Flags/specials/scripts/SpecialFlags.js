@@ -3,6 +3,8 @@ require(
 	function ($, mw, nirvana, loader, FlagEditForm) {
 		'use strict';
 
+		var currentRow;
+
 		function init() {
 			autoload();
 			bindEvents();
@@ -34,13 +36,22 @@ require(
 		function deleteFlagType(event) {
 			event.preventDefault();
 
+			var flagTypeId = getFlagTypeId(event);
+			if (flagTypeId == null) {
+				return false;
+			}
+
+			currentRow = $('#flags-special-list-item-' + flagTypeId);
+			if (currentRow.length === 0) {
+				return false;
+			}
+
 			/* TODO - Collect a # of articles using this flag - has to wait for CE-1817 */
-			if (confirm(mw.message('flags-special-autoload-delete-confirm').escaped())) {
-				var flagTypeId = getFlagTypeId(event);
-				if (flagTypeId == null) {
-					return false;
-				}
-				hideTableRow(flagTypeId);
+			var flagName = currentRow.find('.flags-special-list-item-name').data('flag-name'),
+				confirmMessage = mw.message('flags-special-autoload-delete-confirm', flagName);
+
+			if (confirm(confirmMessage.escaped())) {
+				hideTableRow(currentRow);
 				sendRequestDelete(flagTypeId);
 			}
 		}
@@ -59,13 +70,14 @@ require(
 					var notification;
 
 					if (json.status) {
-						removeTableRow(flagTypeId);
+						removeTableRow(currentRow);
 						notification = new BannerNotification(
 							mw.message('flags-special-autoload-delete-success').escaped(),
 							'confirm'
 						);
 					} else {
-						showTableRow(flagTypeId);
+						removeHighlightingFromRow(currentRow);
+						showTableRow(currentRow);
 						notification = new BannerNotification(
 							mw.message('flags-special-autoload-delete-error').escaped(),
 							'error'
@@ -126,38 +138,18 @@ require(
 			return $target.data('flag-type-id');
 		}
 
-		function removeHighlightingFromRow(row) {
-			if (row.lenght > 0) {
-				$('td').removeClass('hightlight-green');
-				$('td').removeClass('hightlight-red');
-			}
+		function hideTableRow(row) {
+			row.hide();
 		}
 
-		function hightlightTableRowGreen(row) {
-			if (row.length > 0) {
-				$('td').addClass('highlight-green');
-			}
+		function removeTableRow(row) {
+			row.remove();
+			row = null;
 		}
 
-		function hideTableRow(id) {
-			var row = $('#flags-special-list-item-' + id);
-			if (row.length > 0) {
-				row.hide();
-			}
-		}
-
-		function removeTableRow(id) {
-			var row = $('#flags-special-list-item-' + id);
-			if (row.length > 0) {
-				row.remove();
-			}
-		}
-
-		function showTableRow(id) {
-			var row = $('#flags-special-list-item-' + id);
-			if (row.length > 0) {
-				row.show();
-			}
+		function showTableRow(row) {
+			row.show();
+			row = null;
 		}
 
 		function scrollPage() {

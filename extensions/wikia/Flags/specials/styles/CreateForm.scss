@@ -67,10 +67,10 @@
 	padding: 15px 0 0;
 }
 
-.highlight-green {
-	background-color: #b2e09a;
+.highlight-red {
+	background-color: #ffb1ba;
 
 	@if $is-dark-wiki {
-		background-color: #154D06;
+		background-color: #4d1111;
 	}
 }
