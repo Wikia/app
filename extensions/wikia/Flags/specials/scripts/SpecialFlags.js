@@ -37,6 +37,7 @@ require(
 			event.preventDefault();
 
 			var flagTypeId = getFlagTypeId(event);
+			/** Checking flagTypeId for both undefined and null **/
 			if (flagTypeId == null) {
 				return false;
 			}
@@ -76,7 +77,6 @@ require(
 							'confirm'
 						);
 					} else {
-						removeHighlightingFromRow(currentRow);
 						showTableRow(currentRow);
 						notification = new BannerNotification(
 							mw.message('flags-special-autoload-delete-error').escaped(),
