@@ -38,8 +38,12 @@ class PreferenceModule implements Module {
 			global $wgExternalSharedDB;
 			return wfGetDB(DB_SLAVE, [], $wgExternalSharedDB);
 		};
+		$whiteListProvider = function() {
+			global $wgUserPreferenceWhiteList;
+			return $wgUserPreferenceWhiteList;
+		};
 
-		$builder->addModule(new PreferencePersistenceModuleMySQL($masterProvider, $slaveProvider));
+		$builder->addModule(new PreferencePersistenceModuleMySQL($masterProvider, $slaveProvider, $whiteListProvider));
 	}
 
 	private static function bindSwaggerService(InjectorBuilder $builder) {
