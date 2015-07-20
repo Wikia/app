@@ -17,16 +17,16 @@ class TagsReportPage extends SpecialPage {
 	 * constructor
 	 */
 	function  __construct() {
-		parent::__construct( "TagsReport"  /*class*/, 'tagsreport' /*restriction*/);
+		parent::__construct( "TagsReport"  /*class*/, 'tagsreport' /*restriction*/ );
 	}
 
 	public function execute( $subpage ) {
 		global $wgUser, $wgOut, $wgRequest;
 
-		if( $wgUser->isBlocked() ) {
+		if ( $wgUser->isBlocked() ) {
 			throw new UserBlockedError( $this->getUser()->mBlock );
 		}
-		if( !$wgUser->isAllowed( 'tagsreport' ) ) {
+		if ( !$wgUser->isAllowed( 'tagsreport' ) ) {
 			$this->displayRestrictionError();
 			return;
 		}
@@ -34,46 +34,46 @@ class TagsReportPage extends SpecialPage {
 		/**
 		 * initial output
 		 */
-		$wgOut->setPageTitle( wfMsg('tagsreporttitle') );
+		$wgOut->setPageTitle( wfMsg( 'tagsreporttitle' ) );
 		$wgOut->setRobotpolicy( 'noindex,nofollow' );
 		$wgOut->setArticleRelated( false );
 
 		/**
 		 * show form
 		 */
-		$tag = $wgRequest->getVal ('target');
-		$this->showForm($tag);
-		$this->showArticleList($tag);
+		$tag = $wgRequest->getVal ( 'target' );
+		$this->showForm( $tag );
+		$this->showArticleList( $tag );
 	}
 
 	/**
 	 * @param string $tag parser hook tag to get the report for
 	 */
-	function showForm ($tag) {
+	function showForm ( $tag ) {
 		global $wgOut;
         wfProfileIn( __METHOD__ );
 
 		$timestamp = $this->getGenDate();
 		if ( !empty( $timestamp ) ) {
-			$wgOut->setSubtitle(wfMsg('tagsreportgenerated', $timestamp[0], $timestamp[1]));
+			$wgOut->setSubtitle( wfMsg( 'tagsreportgenerated', $timestamp[0], $timestamp[1] ) );
 		}
 
         $oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
         $oTmpl->set_vars( array(
 			"error"		=> $error,
-            "action"	=> htmlspecialchars($this->getTitle()->getLocalURL()),
+            "action"	=> htmlspecialchars( $this->getTitle()->getLocalURL() ),
             "tagList"	=> $this->getTagsList(),
             "mTag"  	=> $tag,
             "timestamp"	=> $timestamp
-        ));
-        $wgOut->addHTML( $oTmpl->render("main-form") );
+        ) );
+        $wgOut->addHTML( $oTmpl->render( "main-form" ) );
         wfProfileOut( __METHOD__ );
 	}
 
 	/**
 	 * @param string $tag parser hook tag to get the report for
 	 */
-	function showArticleList($tag) {
+	function showArticleList( $tag ) {
 		global $wgOut;
 		global $wgCanonicalNamespaceNames;
 		global $wgContLang;
@@ -82,12 +82,12 @@ class TagsReportPage extends SpecialPage {
         $oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
         $oTmpl->set_vars( array(
             "mTag"  		=> $tag,
-            "articles" 		=> $this->getTagsInfo($tag),
+            "articles" 		=> $this->getTagsInfo( $tag ),
             "wgCanonicalNamespaceNames" => $wgCanonicalNamespaceNames,
             "wgContLang" 	=> $wgContLang,
             "skin"			=> RequestContext::getMain()->getSkin()
-        ));
-        $wgOut->addHTML( $oTmpl->render("tag-activity") );
+        ) );
+        $wgOut->addHTML( $oTmpl->render( "tag-activity" ) );
         wfProfileOut( __METHOD__ );
 	}
 
@@ -103,12 +103,12 @@ class TagsReportPage extends SpecialPage {
 	 */
 	private function getTagsList() {
 		return WikiaDataAccess::cache(
-			wfMemcKey(__METHOD__),
+			wfMemcKey( __METHOD__ ),
 			WikiaResponse::CACHE_SHORT,
 			function() {
 				global $wgCityId, $wgStatsDB, $wgStatsDBEnabled;
 
-				if (empty($wgStatsDBEnabled)) {
+				if ( empty( $wgStatsDBEnabled ) ) {
 					return [];
 				}
 
@@ -128,7 +128,7 @@ class TagsReportPage extends SpecialPage {
 				);
 
 				$tags = [];
-				foreach($res as $row) {
+				foreach ( $res as $row ) {
 					$tags[ $row->tag ] = intval( $row->cnt );
 				}
 				return $tags;
@@ -143,14 +143,14 @@ class TagsReportPage extends SpecialPage {
 	 * @return mixed
 	 * @throws MWException
 	 */
-	private function getTagsInfo($tag) {
+	private function getTagsInfo( $tag ) {
 		return WikiaDataAccess::cache(
-			wfMemcKey(__METHOD__, $tag),
+			wfMemcKey( __METHOD__, $tag ),
 			WikiaResponse::CACHE_SHORT,
-			function() use ($tag) {
+			function() use ( $tag ) {
 				global $wgCityId, $wgStatsDB, $wgStatsDBEnabled;
 
-				if (empty($wgStatsDBEnabled)) {
+				if ( empty( $wgStatsDBEnabled ) ) {
 					return [];
 				}
 
@@ -169,7 +169,7 @@ class TagsReportPage extends SpecialPage {
 				);
 
 				$pages = [];
-				foreach($res as $row) {
+				foreach ( $res as $row ) {
 					$pages[ $row->ct_namespace ][] = intval( $row->ct_page_id );
 				}
 				return $pages;
@@ -190,7 +190,7 @@ class TagsReportPage extends SpecialPage {
 			return [];
 		}
 
-		$dbs = wfGetDB(DB_SLAVE, [], $wgStatsDB);
+		$dbs = wfGetDB( DB_SLAVE, [], $wgStatsDB );
 		$ts = $dbs->selectField(
 			self::TABLE,
 			'max(ct_timestamp) as ts',
