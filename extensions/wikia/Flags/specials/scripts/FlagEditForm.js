@@ -14,8 +14,10 @@ define ('ext.wikia.Flags.FlagEditForm',
 				setupForm(formResources);
 
 				if (prefillData == null) {
+					modalConfig.vars.type = 'create';
 					displayFormCreate();
 				} else {
+					modalConfig.vars.type = 'edit';
 					displayFormEdit(prefillData);
 				}
 			});
@@ -138,8 +140,14 @@ define ('ext.wikia.Flags.FlagEditForm',
 
 		function processInstance(modalInstance) {
 			modalInstance.show();
-			modalInstance.bind('done', saveCreateFlagForm);
-			$('.flags-special-form-params-new').on('click', addNewParameterInput);
+
+			if (modalConfig.vars.type === 'create') {
+				modalInstance.bind('done', saveCreateFlagForm);
+			} else if (modalConfig.vars.type === 'edit') {
+				modalInstance.bind('done', saveEditFlagForm);
+			}
+
+			$('.flags-special-form-params-new-link').on('click', addNewParameterInput);
 		}
 
 		function saveCreateFlagForm() {
@@ -148,6 +156,31 @@ define ('ext.wikia.Flags.FlagEditForm',
 			nirvana.sendRequest({
 				controller: 'FlagsApiController',
 				method: 'addFlagType',
+				data: data,
+				callback: function (json) {
+					if (json.status) {
+						location.reload(true);
+					} else {
+						new BannerNotification(
+							mw.message('flags-special-create-form-save-failure').escaped(),
+							'error'
+						).show();
+					}
+				}
+			});
+		}
+
+		function saveEditFlagForm() {
+			var data = collectFormData();
+
+			data.flag_type_id = $('.flags-special-form').data('flag-type-id');
+			if (data.flag_type_id <= 0) {
+				return false;
+			}
+
+			nirvana.sendRequest({
+				controller: 'FlagsApiController',
+				method: 'updateFlagType',
 				data: data,
 				callback: function (json) {
 					if (json.status) {
@@ -262,21 +295,6 @@ define ('ext.wikia.Flags.FlagEditForm',
 			}
 
 			return values;
-		}
-
-		function getExampleValues() {
-			/* TODO - Remove it when done */
-			return {
-				name: 'Test Name',
-				template: 'Test Template',
-				params: [
-					{
-						id: 1,
-						name: '1',
-						description: 'Test description'
-					}
-				]
-			}
 		}
 
 		return {
