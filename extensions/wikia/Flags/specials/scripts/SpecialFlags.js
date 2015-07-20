@@ -1,7 +1,9 @@
-require (
+require(
 	['jquery', 'mw', 'wikia.nirvana', 'wikia.loader', 'ext.wikia.Flags.FlagEditForm'],
 	function ($, mw, nirvana, loader, FlagEditForm) {
 		'use strict';
+
+		var currentRow;
 
 		function init() {
 			autoload();
@@ -22,6 +24,7 @@ require (
 		function bindEvents() {
 			$('.flags-special-create-button').on('click', displayCreateFlagForm);
 			$('.flags-special-list-item-actions-delete').on('click', deleteFlagType);
+			$('.flags-special-list-item-actions-edit').on('click', editFlagType);
 		}
 
 		function displayCreateFlagForm(event) {
@@ -33,21 +36,23 @@ require (
 		function deleteFlagType(event) {
 			event.preventDefault();
 
+			var flagTypeId = getFlagTypeId(event);
+			/** Checking flagTypeId for both undefined and null **/
+			if (flagTypeId == null) {
+				return false;
+			}
+
+			currentRow = $('#flags-special-list-item-' + flagTypeId);
+			if (currentRow.length === 0) {
+				return false;
+			}
+
 			/* TODO - Collect a # of articles using this flag - has to wait for CE-1817 */
-			if (confirm(mw.message('flags-special-autoload-delete-confirm').escaped())) {
-				var $target;
+			var flagName = currentRow.find('.flags-special-list-item-name').data('flag-name'),
+				confirmMessage = mw.message('flags-special-autoload-delete-confirm', flagName);
 
-				if ($(event.target).is('a')) {
-					$target = $(event.target);
-				} else {
-					$target = $(event.target).parent();
-				}
-
-				var flagTypeId = $target.data('flag-type-id');
-				if (flagTypeId == null) {
-					return false;
-				}
-				hideTableRow(flagTypeId);
+			if (confirm(confirmMessage.escaped())) {
+				hideTableRow(currentRow);
 				sendRequestDelete(flagTypeId);
 			}
 		}
@@ -66,13 +71,13 @@ require (
 					var notification;
 
 					if (json.status) {
-						removeTableRow(flagTypeId);
+						removeTableRow(currentRow);
 						notification = new BannerNotification(
 							mw.message('flags-special-autoload-delete-success').escaped(),
 							'confirm'
 						);
 					} else {
-						showTableRow(flagTypeId);
+						showTableRow(currentRow);
 						notification = new BannerNotification(
 							mw.message('flags-special-autoload-delete-error').escaped(),
 							'error'
@@ -89,25 +94,62 @@ require (
 			});
 		}
 
-		function hideTableRow(id) {
-			var row = $('#flags-special-list-item-' + id);
-			if (row.length > 0) {
-				row.hide();
-			}
+		function editFlagType(event) {
+			event.preventDefault();
+
+			var flagTypeId = getFlagTypeId(event),
+				row = $('#flags-special-list-item-' + flagTypeId),
+				flagTypeData = getValuesFromTableRow(row);
+
+			FlagEditForm.init(flagTypeData);
 		}
 
-		function removeTableRow(id) {
-			var row = $('#flags-special-list-item-' + id);
-			if (row.length > 0) {
-				row.remove();
+		function getValuesFromTableRow(row) {
+			var data = {};
+
+			data.name = row.find('.flags-special-list-item-name').data('flag-name');
+			data.template = row.find('.flags-special-list-item-template').data('flag-template');
+
+			data.selectedGroup = row.find('.flags-special-list-item-group').data('flag-group');
+			data.selectedTargeting = row.find('.flags-special-list-item-targeting').data('flag-targeting');
+
+			data.params = [];
+
+			var flagParams = row.find('.flags-special-list-item-params').data('flag-params-names');
+			for (var name in flagParams) {
+				data.params.push({
+					name: name,
+					description: flagParams[name]
+				});
 			}
+
+			return data;
 		}
 
-		function showTableRow(id) {
-			var row = $('#flags-special-list-item-' + id);
-			if (row.length > 0) {
-				row.show();
+		function getFlagTypeId(event) {
+			var $target;
+
+			if ($(event.target).is('a')) {
+				$target = $(event.target);
+			} else {
+				$target = $(event.target).parent();
 			}
+
+			return $target.data('flag-type-id');
+		}
+
+		function hideTableRow(row) {
+			row.hide();
+		}
+
+		function removeTableRow(row) {
+			row.remove();
+			row = null;
+		}
+
+		function showTableRow(row) {
+			row.show();
+			row = null;
 		}
 
 		function scrollPage() {
