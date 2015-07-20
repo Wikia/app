@@ -40,7 +40,7 @@ class PreferencePersistenceMySQL implements PreferencePersistence {
 	 * @param array $whiteList
 	 * @return array
      */
-	private function buildWhitelist( array $whiteList ) {
+	private function buildWhitelist( $whiteList = [ ] ) {
 		if ( empty( $whiteList ) ) {
 			return [];
 		}
