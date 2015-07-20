@@ -208,6 +208,7 @@ class FlagsHelper {
 		 * flags-groups-delete
 		 * flags-groups-improvements
 		 * flags-groups-status
+		 * flags-groups-navigation
 		 * flags-groups-other
 		 */
 		foreach ( FlagType::$flagGroups as $flagGroupId => $flagGroupKey ) {

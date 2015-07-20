@@ -55,6 +55,7 @@ $messages['en'] = [
 	'flags-groups-improvements' => 'Improvements',
 	'flags-groups-status' => 'Status',
 	'flags-groups-other' => 'Other',
+	'flags-groups-navigation' => 'Navigation',
 	'flags-target-readers' => 'Readers',
 	'flags-target-contributors' => 'Contributors',
 
@@ -103,6 +104,7 @@ $messages['qqq'] = [
 	'flags-groups-improvements' => 'A name of a Improvements group of flags',
 	'flags-groups-status' => 'A name of a Status group of flags',
 	'flags-groups-other' => 'A name of a Other group of flags',
+	'flags-groups-navigation' => 'A name of Navigation group of flags',
 	'flags-target-readers' => 'Target for displaying flags - Readers',
 	'flags-target-contributors' => 'Target for displaying flags - Contributors',
 	

@@ -711,6 +711,7 @@ $config['mobile_base_ads_js'] = array(
 		'//extensions/wikia/AdEngine/js/MessageListener.js',
 		'//extensions/wikia/AdEngine/js/SlotTracker.js',
 		'//extensions/wikia/AdEngine/js/SlotTweaker.js',
+		'//extensions/wikia/AdEngine/js/WikiaAdHelper.js',
 		'//extensions/wikia/AdEngine/js/config/mobile.js',
 		'//extensions/wikia/AdEngine/js/lookup/amazonMatch.js',
 		'//extensions/wikia/AdEngine/js/lookup/services.js',

@@ -20,6 +20,9 @@ describe('ext.wikia.adEngine.template.modal', function () {
                     }
                 }
             },
+            adHelper: {
+                throttle: noop
+            },
             iframeWriter: {
                 getIframe: function () {
                     return {
@@ -54,6 +57,7 @@ describe('ext.wikia.adEngine.template.modal', function () {
     function getModule() {
         return modules['ext.wikia.adEngine.template.modal'](
             mocks.adContext,
+            mocks.adHelper,
             mocks.log,
             mocks.iframeWriter,
             mocks.win
