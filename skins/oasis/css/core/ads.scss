@@ -251,6 +251,15 @@ body >a >img[src$="noad.gif"] {
 	}
 }
 
+#ext-wikia-adEngine-template-modal {
+	> section {
+		overflow: hidden;
+		padding: 0px;
+		> div {
+			overflow: hidden;
+		}
+	}
+}
 
 //@TODO remove .oasis-responsive after deprecating responsive (July 2015)
 .oasis-breakpoints, .oasis-responsive {

@@ -24,11 +24,7 @@ describe('ext.wikia.adEngine.template.modal', function () {
 				throttle: noop
 			},
 			iframeWriter: {
-				getIframe: function () {
-					return {
-						style: {}
-					};
-				}
+				getIframe: noop
 			},
 			win: {
 				addEventListener: noop,
@@ -40,6 +36,14 @@ describe('ext.wikia.adEngine.template.modal', function () {
 							}
 						}
 					}
+				}
+			},
+			doc: {
+				createElement: function () {
+					return {
+						appendChild: noop,
+						style: {}
+					};
 				}
 			},
 			params: {
@@ -58,6 +62,7 @@ describe('ext.wikia.adEngine.template.modal', function () {
 		return modules['ext.wikia.adEngine.template.modal'](
 			mocks.adContext,
 			mocks.adHelper,
+			mocks.doc,
 			mocks.log,
 			mocks.iframeWriter,
 			mocks.win
@@ -65,19 +70,23 @@ describe('ext.wikia.adEngine.template.modal', function () {
 	}
 
 	it('Ad should be scaled by height', function () {
-		spyOn(adsModule, 'openLightbox');
+		var myIframe = { style: {} };
+		spyOn(mocks.iframeWriter, 'getIframe').and.returnValue(myIframe);
+
 		mocks.win.innerWidth = 300;
-		mocks.win.innerHeight = 240;
+		mocks.win.innerHeight = 280;
 		getModule().show(mocks.params);
-		expect(adsModule.openLightbox.calls.mostRecent().args[0].style.transform).toBe('scale(2)');
+		expect(myIframe.style.transform).toBe('scale(2)');
 	});
 
 	it('Ad should be scaled by width', function () {
-		spyOn(adsModule, 'openLightbox');
+		var myIframe = { style: {} };
+		spyOn(mocks.iframeWriter, 'getIframe').and.returnValue(myIframe);
+
 		mocks.win.innerWidth = 300;
 		mocks.win.innerHeight = 600;
 		getModule().show(mocks.params);
-		expect(adsModule.openLightbox.calls.mostRecent().args[0].style.transform).toBe('scale(3)');
+		expect(myIframe.style.transform).toBe('scale(3)');
 	});
 
 });
