@@ -13,12 +13,12 @@ class NodeTitle extends Node {
 	}
 
 	/**
-	 * removes all html tags and images from title
+	 * removes all html tags from title
 	 *
 	 * @param $title
 	 * @return string
-     */
-	private function sanitizeInfoboxTitle( $title ) {
+	 */
+	public function sanitizeInfoboxTitle( $title ) {
 		$title = strip_tags( $title );
 		$title = trim( $title );
 
