@@ -1,4 +1,4 @@
-require (
+require(
 	['jquery', 'mw', 'wikia.nirvana', 'wikia.loader', 'ext.wikia.Flags.FlagEditForm'],
 	function ($, mw, nirvana, loader, FlagEditForm) {
 		'use strict';
@@ -98,10 +98,18 @@ require (
 			data.name = row.find('.flags-special-list-item-name').data('flag-name');
 			data.template = row.find('.flags-special-list-item-template').data('flag-template');
 
-			data.group = row.find('.flags-special-list-item-group').data('flag-group');
-			data.targeting = row.find('.flags-special-list-item-targeting').data('flag-targeting');
+			data.selectedGroup = row.find('.flags-special-list-item-group').data('flag-group');
+			data.selectedTargeting = row.find('.flags-special-list-item-targeting').data('flag-targeting');
 
-			data.params = row.find('.flags-special-list-item-params').data('flag-params-names');
+			data.params = [];
+
+			var flagParams = row.find('.flags-special-list-item-params').data('flag-params-names');
+			for (var name in flagParams) {
+				data.params.push({
+					name: name,
+					description: flagParams[name]
+				});
+			}
 
 			return data;
 		}

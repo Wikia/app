@@ -2,6 +2,13 @@
 
 /* Create form for a flag */
 
+.flag-edit-form {
+
+	input {
+		padding: 5px;
+	}
+}
+
 .flags-special-form-fieldset {
 
 	&:first-child {
@@ -32,7 +39,6 @@
 	width: 100%;
 
 	input {
-		padding: 5px;
 		width: 50%;
 	}
 }
