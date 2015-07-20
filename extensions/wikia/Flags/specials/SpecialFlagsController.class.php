@@ -30,7 +30,9 @@ class SpecialFlagsController extends WikiaSpecialPageController {
 
 			if ( SpecialPage::exists( 'Insights' ) ) {
 				// @TODO change link to use InsightsFlagsModel::INSIGHT_TYPE
-				$this->insightsFlagTypeLink = Title::newFromText( 'Insights/flags', NS_SPECIAL )->getFullUrl() . '?typeId=';
+				$this->insightsFlagTypeLink = Title::newFromText( 'Insights/flags', NS_SPECIAL )->getFullUrl(
+					'typeId' => '' // added per flag in template code
+				);
 			} else {
 				$this->insightsFlagTypeLink = null;
 			}
