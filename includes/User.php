@@ -4798,7 +4798,7 @@ class User {
 	 * @todo document
 	 */
 	protected function saveOptions() {
-		global $wgAllowPrefChange, $wgPreferencesUseService, $wgUserPreferenceWhiteList;
+		global $wgAllowPrefChange, $wgPreferencesUseService;
 
 		$extuser = ExternalUser::newFromUser( $this );
 
@@ -4843,18 +4843,16 @@ class User {
 
 		// kinda ghetto, but :(
 		if ($wgPreferencesUseService) {
-			$regex = implode ('|', $wgUserPreferenceWhiteList['regexes']);
-			$dbw->delete( 'user_properties', [
-				'up_user' => $this->getId(),
-				'`up_property` NOT IN (' . $dbw->makeList($wgUserPreferenceWhiteList['literals']) . ') AND ' .
-				"`up_property` NOT REGEXP " . $dbw->addQuotes($regex)
-			]);
-			$regex = '/' . $regex . '/';
-			$insert_rows = array_reduce($insert_rows, function($result, $current) use ($wgUserPreferenceWhiteList, $regex) {
-				if (
-					!in_array( $current['up_property'], $wgUserPreferenceWhiteList['literals'] ) &&
-					!preg_match( $regex, $current['up_property'] )
-				) {
+			$preferenceNames = array_keys($this->userPreferences()->getPreferences($this->getId()));
+
+			(new WikiaSQL())
+				->DELETE('user_properties')
+				->WHERE('up_user')->EQUAL_TO($this->getId())
+					->AND_('up_property')->NOT_IN($preferenceNames)
+				->run($dbw);
+
+			$insert_rows = array_reduce($insert_rows, function($result, $current) use ($preferenceNames) {
+				if (!in_array($current['up_property'], $preferenceNames)) {
 					$result[] = $current;
 				}
 

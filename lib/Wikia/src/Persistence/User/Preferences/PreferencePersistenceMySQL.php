@@ -52,9 +52,9 @@ class PreferencePersistenceMySQL implements PreferencePersistence {
 	}
 
 	/**
-	 * @param array $preferences
-	 * @return array
-     */
+	 * @param Preference[] $preferences
+	 * @return Preference[]
+	 */
 	private function applyWhitelist( array $preferences ) {
 		$whiteList = $this->whiteList;
 
@@ -63,6 +63,7 @@ class PreferencePersistenceMySQL implements PreferencePersistence {
 		}
 
 		$preferences =  array_reduce( $preferences, function ( $result, $item ) use ( $whiteList ) {
+			/** @var Preference $item */
 			$preference_name = $item->getName();
 
 			if (
