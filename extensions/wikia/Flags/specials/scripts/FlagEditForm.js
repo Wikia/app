@@ -8,11 +8,11 @@ define ('ext.wikia.Flags.FlagEditForm',
 			emptyFormCacheKey = 'flagEditFormEmpty',
 			cacheVersion = '1.0';
 
-		/* Modal component configuration */
 		function init(prefillData) {
 			$.when(getFormResources()).done(function (formResources) {
 				setupForm(formResources);
 
+				/** Check prefillData for undefined or null **/
 				if (prefillData == null) {
 					displayFormCreate();
 				} else {
@@ -24,6 +24,7 @@ define ('ext.wikia.Flags.FlagEditForm',
 		function getFormResources() {
 			var formResources = cache.get(getResourcesCacheKey());
 
+			/** Check formResources and formResources.resources for undefined or null **/
 			if (formResources == null || formResources.resources == null) {
 				formResources = loader({
 					type: loader.MULTI,
@@ -93,6 +94,7 @@ define ('ext.wikia.Flags.FlagEditForm',
 		function displayFormCreate() {
 			/* TODO - We can get a half-rendered template to avoid escaping messages in front-end */
 			var content = cache.get(getEmptyFormCacheKey());
+			/** **/
 			if (content == null) {
 				var formParams = {
 					messages: formData.messages,
