@@ -53,7 +53,7 @@
 			<td class="flags-special-list-item-targeting"><?= ucfirst( $flagTargeting[$flag['flag_targeting']] ) ?></td>
 			<td class="flags-special-list-item-actions clearfix">
 				<?php if ( $insightsFlagTypeLink ): ?>
-					<a class="flags-special-list-item-actions-insights" href="<?= $insightsFlagTypeLink . $flagTypeId ?>" target="_blank" title="<?= wfMessage( 'flags-icons-actions-insights' )->escaped() ?>">
+					<a class="flags-special-list-item-actions-insights" href="<?= Sanitizer::cleanUrl( $insightsFlagTypeLink . $flagTypeId ) ?>" target="_blank" title="<?= wfMessage( 'flags-icons-actions-insights' )->escaped() ?>">
 						<span class="flags-icons-special flags-icons-insights"></span>
 					</a>
 				<?php endif; ?>
