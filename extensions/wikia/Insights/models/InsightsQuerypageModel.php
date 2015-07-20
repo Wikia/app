@@ -15,13 +15,15 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 		INSIGHTS_DEFAULT_SORTING = 'pv7';
 
 	private
-		$queryPageInstance,
 		$template = 'subpageList',
 		$offset = 0,
 		$limit = 100,
 		$total = 0,
 		$page = 0,
 		$sortingArray;
+
+	protected
+		$queryPageInstance;
 
 	public
 		$sorting = [
@@ -559,7 +561,7 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 	 * @param String $params
 	 * @return String
 	 */
-	private function getMemcKey( $params ) {
+	protected function getMemcKey( $params ) {
 		return wfMemcKey(
 			self::INSIGHTS_MEMC_PREFIX,
 			$this->getInsightType(),

@@ -36,6 +36,7 @@ $wgAutoloadClasses['InsightsHelper'] = $dir . 'InsightsHelper.php';
  * Custom QueryPage sub-classes
  */
 $wgAutoloadClasses['UnconvertedInfoboxesPage'] = $dir . 'specials/UnconvertedInfoboxesPage.class.php';
+$wgAutoloadClasses['FlagsPage'] = $dir . 'specials/FlagsPage.class.php';
 
 /**
  * Special pages
@@ -56,11 +57,12 @@ $wgGroupPermissions['*']['insights'] = true;
  */
 $wgAutoloadClasses['InsightsModel'] = $dir . 'models/InsightsModel.php';
 $wgAutoloadClasses['InsightsQuerypageModel'] = $dir . 'models/InsightsQuerypageModel.php';
-$wgAutoloadClasses['InsightsUncategorizedModel'] = $dir . 'models/InsightsUncategorizedModel.php';
-$wgAutoloadClasses['InsightsWithoutimagesModel'] = $dir . 'models/InsightsWithoutimagesModel.php';
+$wgAutoloadClasses['InsightsFlagsModel'] = $dir . 'models/InsightsFlagsModel.php';
 $wgAutoloadClasses['InsightsDeadendModel'] = $dir . 'models/InsightsDeadendModel.php';
-$wgAutoloadClasses['InsightsWantedpagesModel'] = $dir . 'models/InsightsWantedpagesModel.php';
+$wgAutoloadClasses['InsightsUncategorizedModel'] = $dir . 'models/InsightsUncategorizedModel.php';
 $wgAutoloadClasses['InsightsUnconvertedInfoboxesModel'] = $dir . 'models/InsightsUnconvertedInfoboxesModel.php';
+$wgAutoloadClasses['InsightsWantedpagesModel'] = $dir . 'models/InsightsWantedpagesModel.php';
+$wgAutoloadClasses['InsightsWithoutimagesModel'] = $dir . 'models/InsightsWithoutimagesModel.php';
 
 /**
  * The right rail module

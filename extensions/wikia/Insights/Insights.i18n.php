@@ -14,6 +14,9 @@ $messages['en'] = array(
 	'insights-list-header-pageviews' => 'Page views',
 	'insights-last-edit' => 'Last edited by $1, $2',
 
+	'insights-list-subtitle-flags' => 'Pages marked with flags',
+	'insights-list-description-flags' => 'These pages may need some work. Look at specific flag type and address suggestions from flags. Once it\'s done you can remove a flag',
+
 	'insights-list-subtitle-uncategorizedpages' => 'Pages without categories',
 	'insights-list-description-uncategorizedpages' => 'Add categories to these pages. Good categorization is vital to a successfully organized wikia!',
 	'insights-notification-message-inprogress-uncategorizedpages' => 'This page needs categories added. ',
@@ -76,6 +79,9 @@ $messages['qqq'] = array(
 	'insights-list-header-altaction' => 'A header of an Insights list table for a column with a link to a semi- or fully automatic action taken on the corresponding page',
 	'insights-list-header-pageviews' => 'A header of an Insights list table for a column with a number of views of an article',
 	'insights-last-edit' => 'Information who and when made last edit for chosen article on the list',
+
+	'insights-list-subtitle-flags' => 'A title of a subpage with a list of pages marked with flags',
+	'insights-list-description-flags' => 'A description for a subpage with a list of pages marked with flags',
 
 	'insights-list-subtitle-uncategorizedpages' => 'A title of a subpage with a list of uncategorized pages',
 	'insights-list-description-uncategorizedpages' => 'A description for a subpage with a list of uncategorized pages',
