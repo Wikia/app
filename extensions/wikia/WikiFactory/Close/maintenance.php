@@ -297,6 +297,8 @@ class CloseWikiMaintenance {
 			}
 			sleep( $sleep );
 		}
+
+		$this->log( 'Done' );
 	}
 
 	/**
