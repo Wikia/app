@@ -33,26 +33,60 @@ class PreferencePersistenceMySQL implements PreferencePersistence {
 	function __construct( \DatabaseMysqli $master, \DatabaseMysqli $slave, $whiteList = [ ] ) {
 		$this->master = $master;
 		$this->slave = $slave;
-		$this->whiteList = $whiteList;
+		$this->whiteList = $this->buildWhitelist( $whiteList );
+	}
+
+	/**
+	 * @param array $whiteList
+	 * @return array
+     */
+	private function buildWhitelist( array $whiteList ) {
+		if ( empty( $whiteList ) ) {
+			return [];
+		}
+
+		return [
+			'literals' => $whiteList['literals'],
+			'regex' => implode ( '|', $whiteList['regexes'] ),
+		];
+	}
+
+	/**
+	 * @param array $preferences
+	 * @return array
+     */
+	private function applyWhitelist( array $preferences ) {
+		$whiteList = $this->whiteList;
+
+		if ( empty( $whiteList )) {
+			return $preferences;
+		}
+
+		$preferences =  array_reduce( $preferences, function ( $result, $item ) use ( $whiteList ) {
+			$preference_name = $item->getName();
+
+			if (
+				in_array( $preference_name, $whiteList['literals'] ) ||
+				preg_match( '/' . $whiteList['regex'] . '/', $preference_name )
+			) {
+				$result[] = $item;
+			}
+
+			return $result;
+		}, [] );
+
+		return $preferences;
 	}
 
 	public function save( $userId, array $preferences ) {
-		// Filtering preferences against the whiteList
-		$whiteList = $this->whiteList;
-		if ( !empty($whiteList) ) {
-			$preferences = array_reduce( $preferences, function ( $result, $item ) use ( $whiteList ) {
-				if ( in_array( $item->getName(), $this->whiteList ) ) {
-					$result[] = $item;
-				}
+		// Filtering preferences against the whiteList if needed
+		$preferences = $this->applyWhitelist( $preferences );
 
-				return $result;
-			}, [] );
-		}
-		$tuples = $this->createTuplesFromPreferences( $userId, $preferences );
-
-		if ( empty( $tuples ) ) {
+		if ( empty ( $preferences )) {
 			return false;
 		}
+
+		$tuples = $this->createTuplesFromPreferences( $userId, $preferences );
 
 		return $this->master->upsert( self::USER_PREFERENCE_TABLE, $tuples, [ ], self::$UPSERT_SET_BLOCK );
 	}
@@ -72,7 +106,8 @@ class PreferencePersistenceMySQL implements PreferencePersistence {
 		$userId = intval( $userId );
 		$cond = [ self::UP_USER => $userId ];
 		if ( !empty( $this->whiteList ) ) {
-			$cond[ self::UP_PROPERTY ] = $this->whiteList;
+			$cond[] = '`' . self::UP_PROPERTY . '` IN (' . $this->slave->makeList($this->whiteList['literals']) . ') ' .
+				'OR `' . self::UP_PROPERTY . "` REGEXP " . $this->slave->addQuotes($this->whiteList['regex']);
 		}
 		$result = $this->slave->select(
 			self::USER_PREFERENCE_TABLE,
