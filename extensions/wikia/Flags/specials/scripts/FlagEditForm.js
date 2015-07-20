@@ -142,47 +142,28 @@ define ('ext.wikia.Flags.FlagEditForm',
 
 		function processInstance(modalInstance) {
 			modalInstance.show();
-
-			if (modalConfig.vars.type === 'create') {
-				modalInstance.bind('done', saveCreateFlagForm);
-			} else if (modalConfig.vars.type === 'edit') {
-				modalInstance.bind('done', saveEditFlagForm);
-			}
-
+			modalInstance.bind('done', saveEditForm);
 			$('.flags-special-form-params-new-link').on('click', addNewParameterInput);
 		}
 
-		function saveCreateFlagForm() {
-			var data = collectFormData();
+		function saveEditForm() {
+			var data = collectFormData(),
+				method;
 
-			nirvana.sendRequest({
-				controller: 'FlagsApiController',
-				method: 'addFlagType',
-				data: data,
-				callback: function (json) {
-					if (json.status) {
-						location.reload(true);
-					} else {
-						new BannerNotification(
-							mw.message('flags-special-create-form-save-failure').escaped(),
-							'error'
-						).show();
-					}
+			if (modalConfig.vars.type === 'create') {
+				method = 'addFlagType';
+			} else if (modalConfig.vars.type === 'edit') {
+				method = 'updateFlagType';
+
+				data.flag_type_id = $('.flags-special-form').data('flag-type-id');
+				if (data.flag_type_id <= 0) {
+					return false;
 				}
-			});
-		}
-
-		function saveEditFlagForm() {
-			var data = collectFormData();
-
-			data.flag_type_id = $('.flags-special-form').data('flag-type-id');
-			if (data.flag_type_id <= 0) {
-				return false;
 			}
 
 			nirvana.sendRequest({
 				controller: 'FlagsApiController',
-				method: 'updateFlagType',
+				method: method,
 				data: data,
 				callback: function (json) {
 					if (json.status) {
