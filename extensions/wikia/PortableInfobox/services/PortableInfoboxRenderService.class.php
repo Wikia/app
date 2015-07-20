@@ -4,7 +4,7 @@ class PortableInfoboxRenderService extends WikiaService {
 	const LOGGER_LABEL = 'portable-infobox-render-not-supported-type';
 	const DESKTOP_THUMBNAIL_WIDTH = 270;
 	const MOBILE_THUMBNAIL_WIDTH = 360;
-	const MIN_BIG_IMAGE_WIDTH = 300;
+	const MINIMAL_HERO_IMG_WIDTH = 300;
 	const MOBILE_TEMPLATE_POSTFIX = '-mobile';
 
 	private $templates = [
@@ -120,6 +120,10 @@ class PortableInfoboxRenderService extends WikiaService {
 			}
 		}
 
+		if ( $type === 'title' && $this->isWikiaMobile() ) {
+			$data[ 'value' ] = $this->sanitizeInfoboxTitle( $data[ 'value' ] );
+		}
+
 		return $this->templateEngine->clearData()
 			->setData( $data )
 			->render( $this->templates[ $type ] );
@@ -199,7 +203,7 @@ class PortableInfoboxRenderService extends WikiaService {
 
 	/**
 	 * checks if infobox data item is valid hero component data.
-	 * If image is smaller than MIN_BIG_IMAGE_WIDTH const, don't render the hero module.
+	 * If image is smaller than MINIMAL_HERO_IMG_WIDTH const, doesn't render the hero module.
 	 *
 	 * @param array $item - infobox data item
 	 * @param array $heroData - hero component data
@@ -216,7 +220,7 @@ class PortableInfoboxRenderService extends WikiaService {
 		if ( $type === 'image' && !array_key_exists( 'image', $heroData ) ) {
 			$imageWidth = $this->getFileWidth( $item[ 'data' ][ 'name' ] );
 
-			if ( $imageWidth > self::MIN_BIG_IMAGE_WIDTH ) {
+			if ( $imageWidth > self::MINIMAL_HERO_IMG_WIDTH ) {
 				return true;
 			}
 		}
@@ -262,5 +266,18 @@ class PortableInfoboxRenderService extends WikiaService {
 		$data[ 'key' ] = urlencode( $data[ 'key' ] );
 
 		return $data;
+	}
+
+	/**
+	 * removes all html tags from title
+	 *
+	 * @param $title
+	 * @return string
+	 */
+	public function sanitizeInfoboxTitle( $title ) {
+		$title = strip_tags( $title );
+		$title = trim( $title );
+
+		return $title;
 	}
 }
