@@ -18,7 +18,6 @@ class CuratedContentValidatorTest extends WikiaBaseTest {
 			[
 				// Featured all is ok
 				[
-					// empty errors array
 				],
 				[
 					[
@@ -45,6 +44,16 @@ class CuratedContentValidatorTest extends WikiaBaseTest {
 								'label' => 'Featured Label 03',
 								'image_id' => '3',
 								'type' => 'category',
+							],
+							[
+								'title' => 'Featured Title 04',
+								'label' => 'Featured Label 04',
+								'image_id' => '4',
+								'article_id' => '4',
+								'type' => 'video',
+								'video_info' => [
+									'provider' => 'youtube',
+								],
 							],
 						],
 					],
@@ -201,7 +210,7 @@ class CuratedContentValidatorTest extends WikiaBaseTest {
 								'image_id' => '1',
 								'article_id' => '1',
 								'type' => 'video',
-								'info' => [
+								'video_info' => [
 									'provider' => 'Not supported provider',
 								]
 							],
