@@ -52,9 +52,11 @@
 			<td class="flags-special-list-item-group"><?= $flagGroups[$flag['flag_group']] ?></td>
 			<td class="flags-special-list-item-targeting"><?= ucfirst( $flagTargeting[$flag['flag_targeting']] ) ?></td>
 			<td class="flags-special-list-item-actions clearfix">
-				<a class="flags-special-list-item-actions-insights" href="#" target="_blank" title="<?= wfMessage( 'flags-icons-actions-insights' )->escaped() ?>">
-					<span class="flags-icons-special flags-icons-insights"></span>
-				</a>
+				<?php if ( $insightsFlagTypeLink ): ?>
+					<a class="flags-special-list-item-actions-insights" href="<?= $insightsFlagTypeLink . $flagTypeId ?>" target="_blank" title="<?= wfMessage( 'flags-icons-actions-insights' )->escaped() ?>">
+						<span class="flags-icons-special flags-icons-insights"></span>
+					</a>
+				<?php endif; ?>
 				<a class="flags-special-list-item-actions-delete" href="#" title="<?= wfMessage( 'flags-icons-actions-delete' )->escaped() ?>" data-flag-type-id="<?= $flagTypeId ?>">
 					<span class="flags-icons-special flags-icons-trash"></span>
 				</a>
