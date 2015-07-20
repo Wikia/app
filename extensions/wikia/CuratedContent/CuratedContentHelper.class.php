@@ -10,10 +10,12 @@ class CuratedContentHelper {
 	const STR_EMPTY_CATEGORY = 'emptyCategory';
 	const STR_VIDEO = 'video';
 
-	public function processLogic( $sections ) {
+	public function processSections( $sections ) {
 		$processedSections = [ ];
-		foreach ( $sections as $section ) {
-			$processedSections[ ] = $this->processLogicForSection( $section );
+		if ( !empty( $sections ) && is_array( $sections ) ) {
+			foreach ( $sections as $section ) {
+				$processedSections[ ] = $this->processLogicForSection( $section );
+			}
 		}
 		return $processedSections;
 	}
@@ -21,8 +23,10 @@ class CuratedContentHelper {
 	private function processLogicForSection( $section ) {
 		$section['image_id'] = (int)$section['image_id']; // fallback to 0 if it's not set in request
 
-		foreach ( $section['items'] as &$item ) {
-			$this->fillItemInfo( $item );
+		if ( !empty( $section['items'] ) && is_array( $section['items'] ) ) {
+			foreach ( $section['items'] as &$item ) {
+				$this->fillItemInfo( $item );
+			}
 		}
 
 		return $section;
@@ -70,12 +74,6 @@ class CuratedContentHelper {
 		}
 	}
 
-	public static function getIdFromCategoryName( $categoryName ) {
-		$category = Title::newFromText( $categoryName, NS_CATEGORY );
-
-		return ($category instanceof Title && $category->exists()) ? $category->getArticleID() : 0;
-	}
-
 	public static function getImageUrl( $id, $imageSize = 50 ) {
 		$thumbnail = (new ImageServing( [ $id ], $imageSize, $imageSize ))->getImages( 1 );
 
@@ -97,7 +95,13 @@ class CuratedContentHelper {
 		return null;
 	}
 
-	public static function findImage( $imageId, $articleId = 0 ) {
+	public static function findImageUrl( $imageId ) {
+		list( $_imageId, $imageUrl ) = self::findImageIdAndUrl( $imageId );
+
+		return $imageUrl;
+	}
+
+	public static function findImageIdAndUrl( $imageId, $articleId = 0 ) {
 		$url = '';
 		$imageTitle = null;
 

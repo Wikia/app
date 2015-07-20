@@ -6,7 +6,8 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 	}
 
 	public function index() {
-		if ( !$this->wg->User->isAllowed( 'curatedcontent' ) ) {
+		global $wgWikiaCuratedContent, $wgUser;
+		if ( !$wgUser->isAllowed( 'curatedcontent' ) ) {
 			$this->displayRestrictionError();
 			return false; // skip rendering
 		}
@@ -73,12 +74,10 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 			'sectionTemplate' => $sectionTemplate
 		] );
 
-		$sections = $this->wg->WikiaCuratedContent;
-
-		if ( !empty( $sections ) ) {
+		if ( !empty( $wgWikiaCuratedContent ) ) {
 			$list = '';
 
-			foreach ( $sections as $section ) {
+			foreach ( $wgWikiaCuratedContent as $section ) {
 				if ( isset( $section[ 'featured' ] ) && $section[ 'featured' ] ) {
 					$featuredSection = $this->buildSection( $section );
 				} else {
@@ -110,7 +109,7 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 		$this->response->setVal( 'value', wfMessage( 'wikiacuratedcontent-featured-section-name' ) );
 		$this->response->setVal( 'image_id', $imageId );
 		$this->response->setVal( 'image_url', CuratedContentHelper::getImageUrl( $imageId ) );
-		if ( $imageId != 0 ) {
+		if ( empty( $imageId ) ) {
 			$this->response->setVal( 'image_set', true );
 		}
 	}
@@ -154,22 +153,24 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 	}
 
 	public function save() {
-		if ( !$this->wg->User->isAllowed( 'curatedcontent' ) ) {
+		global $wgCityId, $wgUser;
+		if ( !$wgUser->isAllowed( 'curatedcontent' ) ) {
 			$this->displayRestrictionError();
 			return false; // skip rendering
 		}
+
 		$this->response->setFormat( 'json' );
 
 		$helper = new CuratedContentHelper();
 
-		$sections = $helper->processLogic( $this->request->getArray( 'sections' ) );
+		$sections = $helper->processSections( $this->request->getArray( 'sections', [] ) );
 		$errors = ( new CuratedContentValidator( $sections ) )->getErrors();
 
 
 		if ( !empty( $errors ) ) {
 			$this->response->setVal( 'error', $errors );
 		} else {
-			$status = WikiFactory::setVarByName( 'wgWikiaCuratedContent', $this->wg->CityId, $sections );
+			$status = WikiFactory::setVarByName( 'wgWikiaCuratedContent', $wgCityId, $sections );
 			$this->response->setVal( 'status', $status );
 
 			if ( $status ) {
@@ -202,7 +203,7 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 	}
 
 	public function getImage() {
-		$file = $this->request->getVal( 'file', '' );
+		$file = $this->request->getVal( 'file' );
 		$url = '';
 		$imageId = 0;
 

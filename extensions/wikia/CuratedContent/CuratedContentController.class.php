@@ -320,12 +320,12 @@ class CuratedContentController extends WikiaController {
 	 */
 	private function setSectionItemsResponse( $sectionName, $ret ) {
 		foreach ( $ret as &$value ) {
-			list( $image_id, $image_url ) = CuratedContentHelper::findImage(
+			list( $imageId, $imageUrl ) = CuratedContentHelper::findImageIdAndUrl(
 				$value['image_id'],
 				$value['article_id']
 			);
-			$value['image_id'] = $image_id;
-			$value['image_url'] = $image_url;
+			$value['image_id'] = $imageId;
+			$value['image_url'] = $imageUrl;
 		}
 		$this->response->setVal( $sectionName, $ret );
 	}
@@ -359,7 +359,7 @@ class CuratedContentController extends WikiaController {
 					$ret[] = [
 						'title' => $item['title'],
 						'image_id' => $imageId,
-						'image_url' => CuratedContentHelper::findImage( $imageId )[1]
+						'image_url' => CuratedContentHelper::findImageUrl( $imageId )
 					];
 				}
 
@@ -374,15 +374,15 @@ class CuratedContentController extends WikiaController {
 
 	function getJsonItem( $titleName, $ns, $pageId ) {
 		$title = Title::makeTitle( $ns, $titleName );
-		list( $image_id, $image_url ) = CuratedContentHelper::findImage( 0, $pageId );
+		list( $imageId, $imageUrl ) = CuratedContentHelper::findImageIdAndUrl( null, $pageId );
 
 		return [
 			'title' => $ns . ':' . $title->getFullText(),
 			'label' => $title->getFullText(),
-			'image_id' => $image_id,
+			'image_id' => $imageId,
 			'article_id' => $pageId,
 			'type' => 'category',
-			'image_url' => $image_url
+			'image_url' => $imageUrl
 		];
 	}
 
