@@ -40,7 +40,6 @@ $messages['en'] = [
 	'flags-target-readers' => 'Readers',
 	'flags-target-contributors' => 'Contributors',
 
-
 	'flags-notification-templates-extraction' => 'The following templates: \'\'$1\'\' were recognized as [[Special:Flags|Flags]] and automatically converted. To see the change visit [[Special:RecentChanges]] or [[Special:Log]].',
 	'flags-edit-intro-notification' => 'This template is associated with a Flag. Manage Flags at [[Special:Flags]].',
 
