@@ -29,7 +29,8 @@ class FlagType extends FlagsBaseModel {
 		5 => 'delete',
 		6 => 'improvements',
 		7 => 'status',
-		8 => 'other'
+		8 => 'other',
+		9 => 'navigation',
 	];
 
 	/**
