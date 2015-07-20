@@ -36,9 +36,10 @@ $messages['en'] = [
 	'flags-groups-improvements' => 'Improvements',
 	'flags-groups-status' => 'Status',
 	'flags-groups-other' => 'Other',
+	'flags-groups-navigation' => 'Navigation',
 	'flags-target-readers' => 'Readers',
 	'flags-target-contributors' => 'Contributors',
-	'flags-target-navigation' => 'Navigation',
+
 
 	'flags-notification-templates-extraction' => 'The following templates: \'\'$1\'\' were recognized as [[Special:Flags|Flags]] and automatically converted. To see the change visit [[Special:RecentChanges]] or [[Special:Log]].',
 	'flags-edit-intro-notification' => 'This template is associated with a Flag. Manage Flags at [[Special:Flags]].',
