@@ -8,7 +8,7 @@
 			<?= wfMessage( 'flags-special-header-text' )->parse() ?>
 		</p>
 	</div>
-	<? if ( $canCRUD ): ?>
+	<? if ( $hasAdminPermissions ): ?>
 	<div class="flags-special-create">
 		<a href="#" class="flags-special-create-button wikia-button primary">
 			<?= wfMessage( 'flags-special-create-button-text' )->escaped(); ?>
@@ -65,7 +65,7 @@
 				<?php
 					endif;
 				?>
-			<? if ( $canCRUD ): ?>
+			<? if ( $hasAdminPermissions ): ?>
 				<a class="flags-special-list-item-actions-delete" href="#" title="<?= wfMessage( 'flags-icons-actions-delete' )->escaped() ?>" data-flag-type-id="<?= Sanitizer::encodeAttribute( $flagTypeId ) ?>">
 					<span class="flags-icons-special flags-icons-trash"></span>
 				</a>
