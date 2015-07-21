@@ -8,11 +8,13 @@
 			<?= wfMessage( 'flags-special-header-text' )->parse() ?>
 		</p>
 	</div>
+	<? if ( $canCRUD ): ?>
 	<div class="flags-special-create">
 		<a href="#" class="flags-special-create-button wikia-button primary">
 			<?= wfMessage( 'flags-special-create-button-text' )->escaped(); ?>
 		</a>
 	</div>
+	<? endif; ?>
 </div>
 
 <table class="article-table sortable flags-special-list">
@@ -55,6 +57,7 @@
 				<a class="flags-special-list-item-actions-insights" href="#" target="_blank" title="<?= wfMessage( 'flags-icons-actions-insights' )->escaped() ?>">
 					<span class="flags-icons-special flags-icons-insights"></span>
 				</a>
+			<? if ( $canCRUD ): ?>
 				<a class="flags-special-list-item-actions-delete" href="#" title="<?= wfMessage( 'flags-icons-actions-delete' )->escaped() ?>" data-flag-type-id="<?= Sanitizer::encodeAttribute( $flagTypeId ) ?>">
 					<span class="flags-icons-special flags-icons-trash"></span>
 				</a>
@@ -63,6 +66,7 @@
 						<?= wfMessage( 'flags-icons-actions-edit' )->escaped() ?>
 					</span>
 				</a>
+			<? endif; ?>
 			</td>
 		</tr>
 	<?php endforeach; ?>

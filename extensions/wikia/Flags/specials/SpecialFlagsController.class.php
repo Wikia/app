@@ -28,6 +28,9 @@ class SpecialFlagsController extends WikiaSpecialPageController {
 			$this->flagTargeting = $helper->getFlagTargetFullNames();
 			$this->flagTypes = $responseData['data'];
 		}
+
+		// permissions check
+		$this->canCRUD = $this->wg->User->isAllowed( 'flags-administration' );
 	}
 
 	private function requestGetFlagTypesForWikia( $wikiId ) {
