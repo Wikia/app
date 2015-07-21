@@ -97,7 +97,6 @@ class FlagsApiController extends WikiaApiController {
 	 * 		int flag_group
 	 * 		string flag_name
 	 * 		string flag_view A name of a template of the flag
-	 * 		string flag_view_url A full URL of the template
 	 * 		int flag_targeting
 	 * 		string|null flag_params_names
 	 *
