@@ -8,7 +8,11 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @param $input to check presence of some additional config fields e.g. 'isInvalidImage'
+	 * @param $input to check presence of some additional config fields. Possible fields:
+	 * 'isInvalidImage' - bool - if getThumbnail should return false
+	 * 'isWikiaMobile' - bool - if we want to test mobile env
+	 * 'smallImageDimensions' - integer - size of small image (both width and height)
+	 * 
 	 * @return PHPUnit_Framework_MockObject_MockObject
 	 */
 	private function getInfoboxRenderServiceMock( $input )
