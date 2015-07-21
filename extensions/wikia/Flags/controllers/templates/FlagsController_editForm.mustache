@@ -4,7 +4,7 @@
 			<li>
 				<input type="checkbox" id="{{inputNamePrefix}}:{{flag_type_id}}" name="{{inputNamePrefix}}[{{flag_type_id}}][{{inputNameCheckbox}}]" {{#flag_id}}checked{{/flag_id}}>
 				<label for="{{inputNamePrefix}}:{{flag_type_id}}">{{flag_name}}</label>
-				<a href="{{flag_view_url}}" data-id="more-info" target="_blank">{{moreInfo}}</a>
+				{{{flag_view_link}}}
 				{{#flag_params_names.length}}
 					<fieldset class="params">
 						{{#flag_params_names}}
