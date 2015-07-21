@@ -31,12 +31,26 @@ class PreferenceModule implements Module {
 
 	private static function bindMysqlService(InjectorBuilder $builder) {
 		$masterProvider = function() {
-			global $wgExternalSharedDB;
-			return wfGetDB(DB_MASTER, [], $wgExternalSharedDB);
+			global $wgExternalSharedDB, $wgSharedDB;
+
+			if (isset($wgSharedDB)) {
+				$db = wfGetDB(DB_MASTER, [], $wgExternalSharedDB);
+			} else {
+				$db = wfGetDB(DB_MASTER);
+			}
+
+			return $db;
 		};
 		$slaveProvider = function() {
-			global $wgExternalSharedDB;
-			return wfGetDB(DB_SLAVE, [], $wgExternalSharedDB);
+			global $wgExternalSharedDB, $wgSharedDB;
+
+			if (isset($wgSharedDB)) {
+				$db = wfGetDB(DB_SLAVE, [], $wgExternalSharedDB);
+			} else {
+				$db = wfGetDB(DB_SLAVE);
+			}
+
+			return $db;
 		};
 		$whiteListProvider = function() {
 			global $wgUserPreferenceWhiteList;
