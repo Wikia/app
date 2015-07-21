@@ -3,7 +3,7 @@
 /**
  * Data model specific to a subpage with a list of pages marked with flags
  */
-class InsightsFlagsModel extends InsightsQuerypageModel {
+class InsightsFlagsModel extends InsightsQueryPageModel {
 	const INSIGHT_TYPE = 'flags';
 
 	public $loopNotificationConfig = [

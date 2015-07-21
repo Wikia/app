@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Top abstract class defining necessary set of methods for Insights models
+ */
 abstract class InsightsModel {
 	const INSIGHTS_FLOW_URL_PARAM = 'insights';
 

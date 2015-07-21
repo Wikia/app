@@ -54,7 +54,7 @@ class InsightsController extends WikiaSpecialPageController {
 		 * - getData() - returning all the helping data
 		 * - getTemplate() - returning an overriding template
 		 */
-		if ( $this->model instanceof InsightsQuerypageModel ) {
+		if ( $this->model instanceof InsightsQueryPageModel ) {
 			$params = $this->request->getParams();
 			$this->content = $this->model->getContent( $params );
 			$this->preparePagination();
@@ -62,7 +62,7 @@ class InsightsController extends WikiaSpecialPageController {
 			$this->data = $this->model->getViewData();
 			$this->overrideTemplate( $this->model->getTemplate() );
 		} else {
-			throw new MWException( 'An Insights subpage should implement the InsightsQuerypageModel interface.' );
+			throw new MWException( 'An Insights subpage should implement the InsightsQueryPageModel interface.' );
 		}
 	}
 
@@ -74,7 +74,7 @@ class InsightsController extends WikiaSpecialPageController {
 
 		if ( InsightsHelper::isInsightPage( $subpage ) ) {
 			$model = InsightsHelper::getInsightModel( $subpage );
-			if ( $model instanceof InsightsQuerypageModel ) {
+			if ( $model instanceof InsightsQueryPageModel ) {
 				$params = [];
 				$type = '';
 				$isFixed = false;
@@ -123,10 +123,10 @@ class InsightsController extends WikiaSpecialPageController {
 	 * Get params for notification template shown in edit mode
 	 *
 	 * @param string $subpage Insights subpage
-	 * @param InsightsQuerypageModel $model
+	 * @param InsightsQueryPageModel $model
 	 * @return array
 	 */
-	private function getInProgressNotificationParams( $subpage, InsightsQuerypageModel $model ) {
+	private function getInProgressNotificationParams( $subpage, InsightsQueryPageModel $model ) {
 		$params = $this->getInsightListLinkParams( $subpage );
 		$params['notificationMessage'] = wfMessage( InsightsHelper::INSIGHT_INPROGRESS_MSG_PREFIX . $subpage )->plain();
 
@@ -142,10 +142,10 @@ class InsightsController extends WikiaSpecialPageController {
 	 *
 	 * @param string $subpage Insights subpage
 	 * @param Title $title
-	 * @param InsightsQuerypageModel $model
+	 * @param InsightsQueryPageModel $model
 	 * @return array
 	 */
-	private function getNotFixedNotificationParams( $subpage, Title $title, InsightsQuerypageModel $model ) {
+	private function getNotFixedNotificationParams( $subpage, Title $title, InsightsQueryPageModel $model ) {
 		$params = $this->getInsightListLinkParams( $subpage );
 
 		if ( $model->getLoopNotificationConfig( 'displayFixItMessage' ) ) {
@@ -201,10 +201,10 @@ class InsightsController extends WikiaSpecialPageController {
 	 * Get params to generate link back to edit mode
 	 *
 	 * @param Title $title
-	 * @param InsightsQuerypageModel $model
+	 * @param InsightsQueryPageModel $model
 	 * @return array
 	 */
-	private function getInsightFixItParams( Title $title, InsightsQuerypageModel $model ) {
+	private function getInsightFixItParams( Title $title, InsightsQueryPageModel $model ) {
 		$link = InsightsHelper::getTitleLink( $title, $model->getUrlParams() );
 
 		return [

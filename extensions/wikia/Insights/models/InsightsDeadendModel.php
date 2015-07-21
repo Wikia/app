@@ -5,7 +5,7 @@
  * A class specific to a subpage with a list of pages
  * without any links to other articles.
  */
-class InsightsDeadendModel extends InsightsQuerypageModel {
+class InsightsDeadendModel extends InsightsQueryPageModel {
 	const INSIGHT_TYPE = 'deadendpages';
 
 	public function getDataProvider() {

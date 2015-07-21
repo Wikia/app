@@ -1,11 +1,9 @@
 <?php
 
 /**
- * Class QueryPagesModel
- *
- * A base model for subpages that extend the QueryPage class
+ * Abstract class that defines necessary set of methods for Insights QueryPage models
  */
-abstract class InsightsQuerypageModel extends InsightsModel {
+abstract class InsightsQueryPageModel extends InsightsModel {
 	const
 		INSIGHTS_MEMC_PREFIX = 'insights',
 		INSIGHTS_MEMC_VERSION = '1.1',
@@ -527,7 +525,7 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 	/**
 	 * Get data for the next element that a user can take care of.
 	 *
-	 * @param string $type A key of a Querypage
+	 * @param string $type A key of a QueryPage
 	 * @param string $articleName A title of an article
 	 * @return Array The next item's data
 	 */
