@@ -8,7 +8,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @param $input to check presence of 'invalidImage' field
+	 * @param $input to check presence of some additional config fields e.g. 'isInvalidImage'
 	 * @return PHPUnit_Framework_MockObject_MockObject
 	 */
 	private function getInfoboxRenderServiceMock( $input )
@@ -35,7 +35,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 	 * 'getUrl', 'getWidth' and 'getHeight' functions.
 	 * Although the thumbnail dimensions can be bigger, we have to verify that image is not
 	 * upsampled - we need to mock the File and it's dimensions as well.
-	 * File mock can be removed when https://wikia-inc.atlassian.net/browse/MAIN-5001
+	 * File mock can be removed when https://wikia-inc.atlassian.net/browse/PLATFORM-1359
 	 * hit the production.
 	 * @param $input
 	 * @return PHPUnit_Framework_MockObject_MockObject

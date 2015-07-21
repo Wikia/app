@@ -103,7 +103,7 @@ class PortableInfoboxRenderService extends WikiaService {
 				return false;
 			}
 
-			// TODO: the min() function will be redundant when https://wikia-inc.atlassian.net/browse/MAIN-5001
+			// TODO: the min() function will be redundant when https://wikia-inc.atlassian.net/browse/PLATFORM-1359
 			// will hit the production
 			$data[ 'height' ] = min( $thumbnail->getHeight(), $thumbnail->file->getHeight() );
 			$data[ 'width' ] = min( $thumbnail->getWidth(), $thumbnail->file->getWidth() );
