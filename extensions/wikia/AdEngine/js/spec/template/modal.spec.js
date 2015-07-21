@@ -1,83 +1,92 @@
-/*global describe, it, expect, modules, spyOn */
+/*global describe, it, expect, modules, spyOn, beforeEach*/
 describe('ext.wikia.adEngine.template.modal', function () {
-    'use strict';
+	'use strict';
 
-    function noop() {
-    }
+	function noop() {
+		return;
+	}
 
-    var adsModule = {
-            openLightbox: function () {
-            }
-        },
-        mocks = {
-            log: noop,
-            adContext: {
-                getContext: function () {
-                    return {
-                        targeting: {
-                            skin: 'mercury'
-                        }
-                    }
-                }
-            },
-            adHelper: {
-                throttle: noop
-            },
-            iframeWriter: {
-                getIframe: function () {
-                    return {
-                        style: {}
-                    }
-                }
-            },
-            win: {
-                addEventListener: noop,
-                Mercury: {
-                    Modules: {
-                        Ads: {
-                            getInstance: function () {
-                                return adsModule
-                            }
-                        }
-                    }
-                }
-            },
-            params: {
-                width: 100,
-                height: 100,
-                scalable: true
-            }
-        };
+	var adsModule = {
+			openLightbox: noop
+		},
+		mocks = {
+			log: noop,
+			adContext: {
+				getContext: function () {
+					return {
+						targeting: {
+							skin: 'mercury'
+						}
+					};
+				}
+			},
+			adHelper: {
+				throttle: noop
+			},
+			iframeWriter: {
+				getIframe: noop
+			},
+			win: {
+				addEventListener: noop,
+				Mercury: {
+					Modules: {
+						Ads: {
+							getInstance: function () {
+								return adsModule;
+							}
+						}
+					}
+				}
+			},
+			doc: {
+				createElement: function () {
+					return {
+						appendChild: noop,
+						style: {}
+					};
+				}
+			},
+			params: {
+				width: 100,
+				height: 100,
+				scalable: true
+			}
+		};
 
-    beforeEach(function() {
-        mocks.win.innerWidth = 0;
-        mocks.win.innerHeight = 0;
-    });
+	beforeEach(function () {
+		mocks.win.innerWidth = 0;
+		mocks.win.innerHeight = 0;
+	});
 
-    function getModule() {
-        return modules['ext.wikia.adEngine.template.modal'](
-            mocks.adContext,
-            mocks.adHelper,
-            mocks.log,
-            mocks.iframeWriter,
-            mocks.win
-        );
-    }
+	function getModule() {
+		return modules['ext.wikia.adEngine.template.modal'](
+			mocks.adContext,
+			mocks.adHelper,
+			mocks.doc,
+			mocks.log,
+			mocks.iframeWriter,
+			mocks.win
+		);
+	}
 
-    it('Ad should be scaled by height', function () {
-        spyOn(adsModule, 'openLightbox');
-        mocks.win.innerWidth = 300;
-        mocks.win.innerHeight = 240;
-        getModule().show(mocks.params);
-        expect(adsModule.openLightbox.calls.mostRecent().args[0].style.transform).toBe('scale(2)');
-    });
+	it('Ad should be scaled by height', function () {
+		var myIframe = { style: {} };
+		spyOn(mocks.iframeWriter, 'getIframe').and.returnValue(myIframe);
 
-    it('Ad should be scaled by width', function () {
-        spyOn(adsModule, 'openLightbox');
-        mocks.win.innerWidth = 300;
-        mocks.win.innerHeight = 600;
-        getModule().show(mocks.params);
-        expect(adsModule.openLightbox.calls.mostRecent().args[0].style.transform).toBe('scale(3)');
-    });
+		mocks.win.innerWidth = 300;
+		mocks.win.innerHeight = 280;
+		getModule().show(mocks.params);
+		expect(myIframe.style.transform).toBe('scale(2)');
+	});
+
+	it('Ad should be scaled by width', function () {
+		var myIframe = { style: {} };
+		spyOn(mocks.iframeWriter, 'getIframe').and.returnValue(myIframe);
+
+		mocks.win.innerWidth = 300;
+		mocks.win.innerHeight = 600;
+		getModule().show(mocks.params);
+		expect(myIframe.style.transform).toBe('scale(3)');
+	});
 
 });
