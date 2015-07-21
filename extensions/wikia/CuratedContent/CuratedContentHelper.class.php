@@ -34,7 +34,9 @@ class CuratedContentHelper {
 
 	private function fillItemInfo( &$item ) {
 		$title = Title::newFromText( $item['title'] );
-		if ( !empty($title ) ) {
+		// We cannot check for $title->isEmpty() because it's empty for non-exisitng Articles.
+		// Categories without content are non-existing Articles (their article_id is 0)
+		if ( !empty( $title ) ) {
 			$articleId = $title->getArticleId();
 			$namespaceId = $title->getNamespace();
 			$imageId = (int)$item['image_id'];
