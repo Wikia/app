@@ -3,7 +3,11 @@
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'CreateNewWiki',
 	'descriptionmsg' => 'createnewwiki-desc',
-	'author' => 'Hyun Lim',
+	'author' => [
+		'Hyun Lim',
+		'Krzysztof Krzyżaniak',
+		'Piotr Molski',
+	],
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/CreateNewWiki'
 );
 
@@ -14,9 +18,10 @@ $wgAutoloadClasses['CreateNewWikiObfuscate'] = $dir . 'CreateNewWikiObfuscate.cl
 $wgAutoloadClasses['CreateWikiLocalJob'] = $dir."CreateWikiLocalJob.php";
 $wgAutoloadClasses['CreateWiki'] = $dir."/CreateWiki.php";
 $wgAutoloadClasses['AutoCreateWiki'] = $dir."/AutoCreateWiki.php";
-$wgAutoloadClasses['CreateNewWikiController'] = $dir . 'CreateNewWikiController.class.php';
 $wgAutoloadClasses['SpecialCreateNewWiki'] = $dir . 'SpecialCreateNewWiki.class.php';
-$wgAutoloadClasses['CreateWikiException'] = $dir . 'CreateWikiException.class.php';
+
+// Nirvana controllers
+$wgAutoloadClasses['CreateNewWikiController'] = $dir . 'CreateNewWikiController.class.php';
 
 // special page mapping
 $wgSpecialPages['CreateNewWiki'] = 'SpecialCreateNewWiki';
