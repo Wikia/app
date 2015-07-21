@@ -82,7 +82,7 @@ class UserPreferences {
 
 		foreach ( $prefs as $pref => $val ) {
 			$default = $this->getFromDefault( $pref );
-			if ( $val == null && isset( $default ) ) {
+			if ( $val === null && isset( $default ) ) {
 				$val = $default;
 			}
 			$this->preferences[ $userId ][ $pref ] = $val;
@@ -102,7 +102,7 @@ class UserPreferences {
 
 	private function load($userId) {
 		if (!isset($this->preferences[$userId])) {
-			$this->preferences[$userId] = [];
+			$this->preferences[$userId] = $this->defaultPreferences;
 			foreach ($this->service->getPreferences($userId) as $pref) {
 				$this->preferences[$userId][$pref->getName()] = $pref->getValue();
 			};
