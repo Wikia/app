@@ -274,6 +274,11 @@ class CloseWikiMaintenance {
 				$this->log( "Wiki documents removed from index" );
 
 				/**
+				 * let other extensions remove entries for closed wiki
+				 */
+				wfRunHooks( 'WikiFactoryDoCloseWiki', [ $row ] );
+
+				/**
 				 * there is nothing to set because row in city_list doesn't
 				 * exists
 				 */
