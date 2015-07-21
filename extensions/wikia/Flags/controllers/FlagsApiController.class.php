@@ -305,7 +305,7 @@ class FlagsApiController extends WikiaApiController {
 	 * @requestParam string flags_params_names parameters names with its descriptions in JSON format
 	 */
 	public function updateFlagTypeParameters() {
-		$this->checAdminPermissions();
+		$this->checkAdminPermissions();
 
 		try {
 			$this->processRequest();
