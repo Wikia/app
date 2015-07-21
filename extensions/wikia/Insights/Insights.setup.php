@@ -36,7 +36,6 @@ $wgAutoloadClasses['InsightsHelper'] = $dir . 'InsightsHelper.php';
  * Custom QueryPage sub-classes
  */
 $wgAutoloadClasses['UnconvertedInfoboxesPage'] = $dir . 'specials/UnconvertedInfoboxesPage.class.php';
-$wgAutoloadClasses['FlagsPage'] = $dir . 'specials/FlagsPage.class.php';
 
 /**
  * Special pages

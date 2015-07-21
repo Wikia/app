@@ -17,7 +17,7 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 	private
 		$template = 'subpageList',
 		$offset = 0,
-		$limit = 100,
+		$limit = self::INSIGHTS_LIST_MAX_LIMIT,
 		$total = 0,
 		$page = 0,
 		$sortingArray;
@@ -78,6 +78,14 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 	 */
 	public function getTemplate() {
 		return $this->template;
+	}
+
+	/**
+	 * Set size of full data set of model
+	 * @param int $total
+	 */
+	public function setTotal( $total) {
+		$this->total = $total;
 	}
 
 	/**
@@ -185,7 +193,7 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 	 *
 	 * @param $params An array of URL parameters
 	 */
-	private function prepareParams( $params ) {
+	protected function prepareParams( $params ) {
 		global $wgMemc;
 
 		if ( isset( $params['sort'] ) && isset( $this->sorting[ $params['sort'] ] ) ) {

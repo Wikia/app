@@ -11,7 +11,7 @@ class InsightsFlagsModel extends InsightsQuerypageModel {
 	];
 
 	public function getDataProvider() {
-		return new FlagsPage();
+		return null;
 	}
 
 	public function getInsightType() {
@@ -51,12 +51,30 @@ class InsightsFlagsModel extends InsightsQuerypageModel {
 		return !UnconvertedInfoboxesPage::isTitleWithNonportableInfobox( $titleText, $contentText );
 	}
 
+	/**
+	 * Get list of articles related to the given QueryPage category
+	 *
+	 * @return array
+	 */
+	public function getContent( $params ) {
+		$this->prepareParams( $params );
+
+		$this->queryPageInstance = $this->getDataProvider();
+
+		$articlesData = $this->fetchArticlesData();
+
+		return $articlesData;
+	}
+
+	/**
+	 * Prepare data of articles - title, last revision, link etc.
+	 */
 	public function fetchArticlesData() {
 		$cacheKey = $this->getMemcKey( self::INSIGHTS_MEMC_ARTICLES_KEY );
 		$articlesData = WikiaDataAccess::cache( $cacheKey, self::INSIGHTS_MEMC_TTL, function () {
-			$res = $this->queryPageInstance->doQuery();
+			$res = $this->sendQuery();
 
-			if ( sizeof($res) > 0 ) {
+			if ( count($res) > 0 ) {
 				$articlesData = $this->prepareData( $res );
 
 				if ( $this->arePageViewsRequired() ) {
@@ -71,6 +89,28 @@ class InsightsFlagsModel extends InsightsQuerypageModel {
 	}
 
 
+	private function sendQuery() {
+		/**
+		 * Sends a request to the FlaggedPagesApiController to list of pages marked with flags
+		 * with and without instances to display in the edit form.
+		 * @return WikiaResponse
+		 */
+		$flaggedPages = F::app()->sendRequest( 'FlaggedPagesApiController', 'getFlaggedPages' )->getData()['data'];
+		$this->setTotal( count( $flaggedPages ) );
+		$flaggedPages = array_slice( $flaggedPages, $this->getOffset(), $this->getLimitResultsNum() );
+
+		$result = [];
+		foreach ( $flaggedPages as $pageId ) {
+			$title = Title::newFromID( $pageId );
+			$result[] = [
+				InsightsFlagsModel::INSIGHT_TYPE,
+				0,
+				$title->getNamespace(),
+				$title->getText()
+			];
+		}
+		return $result;
+	}
 	public function prepareData( $res ) {
 		$data = [];
 

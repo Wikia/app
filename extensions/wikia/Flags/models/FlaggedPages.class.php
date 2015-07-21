@@ -27,7 +27,7 @@ class FlaggedPages extends FlagsBaseModel {
 
 		$flaggedPages = ( new \WikiaSQL() )
 			->SELECT()
-			->DISTINCT('page_id')
+			->DISTINCT( 'page_id' )
 			->FROM( 'flags_to_pages' )
 			->WHERE( 'flags_to_pages.wiki_id' )->EQUAL_TO( $wikiId )
 //			->AND_( 'flags_to_pages.flag_type_id' )->EQUAL_TO( ... ) // TODO add filtering by flag type
