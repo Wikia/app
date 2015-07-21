@@ -133,12 +133,6 @@ class FlagType extends FlagsBaseModel {
 			->ORDER_BY( 'flag_name ASC' )
 			->runLoop( $db, function( &$flagTypesForWikia, $row ) {
 				$flagTypesForWikia[$row->flag_type_id] = get_object_vars( $row );
-
-				/**
-				 * Create URLs for a template of the flag
-				 */
-				$title = \Title::newFromText( $row->flag_view, NS_TEMPLATE );
-				$flagTypesForWikia[$row->flag_type_id]['flag_view_url'] = $title->getFullURL();
 			} );
 
 		return $flagTypesForWikia;
@@ -222,9 +216,55 @@ class FlagType extends FlagsBaseModel {
 
 		$db->commit();
 
-		$this->paramsVerified = false;
-
 		return $flagTypeId;
+	}
+
+	/**
+	 * Updating methods
+	 */
+
+	public function verifyParamsForUpdate( $params ) {
+		$required = [ 'flag_type_id' ];
+
+		foreach ( $required as $requiredField ) {
+			if ( !isset( $params[$requiredField] ) ) {
+				throw new \MissingParameterApiException( $requiredField ) ;
+			}
+		}
+
+		return true;
+	}
+
+	public function updateFlagType( $params ) {
+		$this->verifyParamsForUpdate( $params );
+
+		$db = $this->getDatabaseForWrite();
+
+		$editableFields = [
+			'flag_group',
+			'flag_name',
+			'flag_view',
+			'flag_targeting',
+			'flag_params_names',
+		];
+
+		$sql = ( new \WikiaSQL )
+			->UPDATE( self::FLAGS_TYPES_TABLE );
+
+		foreach ( $editableFields as $field ) {
+			if ( !empty( $params[$field] ) ) {
+				$sql->SET( $field, $params[$field] );
+			}
+		}
+
+		$sql->WHERE( 'flag_type_id' )->EQUAL_TO( $params['flag_type_id'] )
+			->run( $db );
+
+		$status = $db->affectedRows() > 0;
+
+		$db->commit();
+
+		return $status;
 	}
 
 	/**
@@ -232,15 +272,21 @@ class FlagType extends FlagsBaseModel {
 	 * before performing an UPDATE query.
 	 * @param array $params
 	 * @return bool
+	 * @throws \InvalidDataApiException
 	 * @throws \MissingParameterApiException
 	 */
-	public function verifyParamsForUpdate( $params ) {
+	public function verifyParamsForParametersUpdate( $params ) {
 		$required = [ 'flag_type_id', 'flag_params_names' ];
 
 		foreach ( $required as $requiredField ) {
 			if ( !isset( $params[$requiredField] ) ) {
 				throw new \MissingParameterApiException( $requiredField ) ;
 			}
+		}
+
+		json_decode( $params['flag_params_names'] );
+		if ( json_last_error() !== JSON_ERROR_NONE ) {
+			throw new \InvalidDataApiException();
 		}
 
 		return true;
@@ -254,12 +300,7 @@ class FlagType extends FlagsBaseModel {
 	 * @throws \InvalidDataApiException
 	 */
 	public function updateFlagTypeParameters( $params ) {
-		$this->verifyParamsForUpdate( $params );
-
-		json_decode( $params['flag_params_names'] );
-		if ( json_last_error() !== JSON_ERROR_NONE ) {
-			throw new \InvalidDataApiException();
-		}
+		$this->verifyParamsForParametersUpdate( $params );
 
 		$flag_params_names = !empty( $params['flag_params_names'] ) ? $params['flag_params_names'] : null;
 

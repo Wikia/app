@@ -303,7 +303,6 @@ class Hooks {
 	public static function getCommonParams( $flagType, $flagParamsNames ) {
 		return [
 			'template' => $flagType['flag_view'],
-			'template_url' => $flagType['flag_view_url'],
 			'flag_type_id' => $flagType['flag_type_id'],
 			'flag_old_params' => $flagType['flag_params_names'],
 			'flag_new_params' => $flagParamsNames

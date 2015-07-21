@@ -126,12 +126,23 @@ class FlagsController extends WikiaController {
 			);
 		} elseif ( $this->getResponseStatus( $response ) ) {
 			$flags = array_values( $this->getResponseData( $response ) );
+
+			foreach ( $flags as $i => $flag ) {
+				$title = Title::newFromText( $flag['flag_view'], NS_TEMPLATE );
+				$flags[$i]['flag_view_link'] = Linker::link(
+					$title,
+					wfMessage( 'flags-edit-form-more-info' )->plain(),
+					[
+						'target' => '_blank',
+					]
+				);
+			}
+
 			$this->setVal( 'editToken', $this->wg->User->getEditToken() );
 			$this->setVal( 'flags', $flags );
 			$this->setVal( 'formSubmitUrl', $this->getLocalUrl( 'postFlagsEditForm' ) );
 			$this->setVal( 'inputNamePrefix', FlagsHelper::FLAGS_INPUT_NAME_PREFIX );
 			$this->setVal( 'inputNameCheckbox', FlagsHelper::FLAGS_INPUT_NAME_CHECKBOX );
-			$this->setVal( 'moreInfo', wfMessage( 'flags-edit-form-more-info' )->plain() );
 			$this->setVal( 'pageId', $pageId );
 		} else {
 			$this->setVal(

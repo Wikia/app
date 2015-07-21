@@ -27,6 +27,13 @@ class SpecialFlagsController extends WikiaSpecialPageController {
 			$this->flagGroups = $helper->getFlagGroupsFullNames();
 			$this->flagTargeting = $helper->getFlagTargetFullNames();
 			$this->flagTypes = $responseData['data'];
+
+			if ( SpecialPage::exists( 'Insights' ) ) {
+				// @TODO change link to use InsightsFlagsModel::INSIGHT_TYPE
+				$this->insightsTitle = Title::newFromText( 'Insights/flags', NS_SPECIAL );
+			} else {
+				$this->insightsTitle = null;
+			}
 		}
 
 		// permissions check

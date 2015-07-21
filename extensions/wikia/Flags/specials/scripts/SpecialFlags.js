@@ -99,14 +99,15 @@ require(
 
 			var flagTypeId = getFlagTypeId(event),
 				row = $('#flags-special-list-item-' + flagTypeId),
-				flagTypeData = getValuesFromTableRow(row);
+				flagTypeData = getValuesFromTableRow(flagTypeId, row);
 
 			FlagEditForm.init(flagTypeData);
 		}
 
-		function getValuesFromTableRow(row) {
+		function getValuesFromTableRow(flagTypeId, row) {
 			var data = {};
 
+			data.flagTypeId = flagTypeId;
 			data.name = row.find('.flags-special-list-item-name').data('flag-name');
 			data.template = row.find('.flags-special-list-item-template').data('flag-template');
 

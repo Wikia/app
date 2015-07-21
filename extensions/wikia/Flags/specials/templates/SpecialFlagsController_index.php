@@ -25,7 +25,7 @@
 			<th class="flags-special-list-header-parameters"><?= wfMessage( 'flags-special-list-header-parameters' )->escaped() ?></th>
 			<th class="flags-special-list-header-group"><?= wfMessage( 'flags-special-list-header-group' )->escaped() ?></th>
 			<th class="flags-special-list-header-target"><?= wfMessage( 'flags-special-list-header-target' )->escaped() ?></th>
-			<th class="flags-special-list-header-target"><?= wfMessage( 'flags-special-list-header-actions' )->escaped() ?></th>
+			<th class="flags-special-list-header-actions"><?= wfMessage( 'flags-special-list-header-actions' )->escaped() ?></th>
 		</tr>
 	</thead>
 	<tbody>
@@ -35,9 +35,10 @@
 		<tr class="flags-special-list-item" id="flags-special-list-item-<?= $flagTypeId ?>">
 			<td class="flags-special-list-item-name" data-flag-name="<?= Sanitizer::encodeAttribute( $flag['flag_name'] ) ?>"><?= $flag['flag_name'] ?></td>
 			<td class="flags-special-list-item-template" data-flag-template="<?= Sanitizer::encodeAttribute( $flag['flag_view'] ) ?>">
-				<a class="flags-special-list-item-template-link" href="<?= Sanitizer::cleanUrl( $title->getFullURL() ) ?>" target="_blank">
-					<?= $flag['flag_view'] ?>
-				</a>
+				<?= Linker::link( $title, $flag['flag_view'], [
+					'class' => 'flags-special-list-item-template-link',
+					'target' => '_blank',
+				] ); ?>
 			</td>
 			<td class="flags-special-list-item-params" data-flag-params-names='<?= Sanitizer::encodeAttribute( $flag['flag_params_names'] ) ?>'>
 				<?php
@@ -54,9 +55,16 @@
 			<td class="flags-special-list-item-group" data-flag-group="<?= Sanitizer::encodeAttribute( $flag['flag_group'] ) ?>"><?= $flagGroups[$flag['flag_group']] ?></td>
 			<td class="flags-special-list-item-targeting" data-flag-targeting="<?= Sanitizer::encodeAttribute( $flag['flag_targeting'] ) ?>"><?= ucfirst( $flagTargeting[$flag['flag_targeting']] ) ?></td>
 			<td class="flags-special-list-item-actions clearfix">
-				<a class="flags-special-list-item-actions-insights" href="#" target="_blank" title="<?= wfMessage( 'flags-icons-actions-insights' )->escaped() ?>">
-					<span class="flags-icons-special flags-icons-insights"></span>
-				</a>
+				<?php
+					if ( $insightsTitle ): 
+					$insightUrl = Sanitizer::cleanUrl( $insightsTitle->getFullUrl( [ 'flagTypeId' => $flagTypeId ] ) );
+				?>
+					<a class="flags-special-list-item-actions-insights" href="<?= $insightUrl ?>" target="_blank" title="<?= wfMessage( 'flags-icons-actions-insights' )->escaped() ?>">
+						<span class="flags-icons-special flags-icons-insights"></span>
+					</a>
+				<?php
+					endif;
+				?>
 			<? if ( $canCRUD ): ?>
 				<a class="flags-special-list-item-actions-delete" href="#" title="<?= wfMessage( 'flags-icons-actions-delete' )->escaped() ?>" data-flag-type-id="<?= Sanitizer::encodeAttribute( $flagTypeId ) ?>">
 					<span class="flags-icons-special flags-icons-trash"></span>

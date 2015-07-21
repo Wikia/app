@@ -14,8 +14,10 @@ define ('ext.wikia.Flags.FlagEditForm',
 
 				/** Check prefillData for undefined or null **/
 				if (prefillData == null) {
+					modalConfig.vars.type = 'create';
 					displayFormCreate();
 				} else {
+					modalConfig.vars.type = 'edit';
 					displayFormEdit(prefillData);
 				}
 			});
@@ -140,16 +142,28 @@ define ('ext.wikia.Flags.FlagEditForm',
 
 		function processInstance(modalInstance) {
 			modalInstance.show();
-			modalInstance.bind('done', saveCreateFlagForm);
-			$('.flags-special-form-params-new').on('click', addNewParameterInput);
+			modalInstance.bind('done', saveEditForm);
+			$('.flags-special-form-params-new-link').on('click', addNewParameterInput);
 		}
 
-		function saveCreateFlagForm() {
-			var data = collectFormData();
+		function saveEditForm() {
+			var data = collectFormData(),
+				method;
+
+			if (modalConfig.vars.type === 'create') {
+				method = 'addFlagType';
+			} else if (modalConfig.vars.type === 'edit') {
+				method = 'updateFlagType';
+
+				data.flag_type_id = $('.flags-special-form').data('flag-type-id');
+				if (data.flag_type_id <= 0) {
+					return false;
+				}
+			}
 
 			nirvana.sendRequest({
 				controller: 'FlagsApiController',
-				method: 'addFlagType',
+				method: method,
 				data: data,
 				callback: function (json) {
 					if (json.status) {
@@ -264,21 +278,6 @@ define ('ext.wikia.Flags.FlagEditForm',
 			}
 
 			return values;
-		}
-
-		function getExampleValues() {
-			/* TODO - Remove it when done */
-			return {
-				name: 'Test Name',
-				template: 'Test Template',
-				params: [
-					{
-						id: 1,
-						name: '1',
-						description: 'Test description'
-					}
-				]
-			}
 		}
 
 		return {
