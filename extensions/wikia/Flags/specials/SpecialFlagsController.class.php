@@ -37,7 +37,7 @@ class SpecialFlagsController extends WikiaSpecialPageController {
 		}
 
 		// permissions check
-		$this->canCRUD = $this->wg->User->isAllowed( 'flags-administration' );
+		$this->hasAdminPermissions = $this->wg->User->isAllowed( 'flags-administration' );
 	}
 
 	private function requestGetFlagTypesForWikia( $wikiId ) {
