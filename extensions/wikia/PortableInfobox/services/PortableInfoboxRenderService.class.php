@@ -120,8 +120,8 @@ class PortableInfoboxRenderService extends WikiaService {
 			}
 		}
 
-		if ( $type === 'title' && $this->isWikiaMobile() ) {
-			$data[ 'value' ] = $this->sanitizeInfoboxTitle( $data[ 'value' ] );
+		if ( $this->isWikiaMobile() ) {
+			$data = $this->sanitizeInfoboxTitle( $type, $data );
 		}
 
 		return $this->templateEngine->clearData()
@@ -269,15 +269,23 @@ class PortableInfoboxRenderService extends WikiaService {
 	}
 
 	/**
-	 * removes all html tags from title
+	 * checks if infobox item is the title or title inside the hero module
+	 * and if so, removes from it all HTML tags.
 	 *
-	 * @param $title
-	 * @return string
+	 * @param $type type of infobox item
+	 * @param $data infobox item data
+	 * @return infobox $data with sanitized title param if needed
 	 */
-	public function sanitizeInfoboxTitle( $title ) {
-		$title = strip_tags( $title );
-		$title = trim( $title );
+	public function sanitizeInfoboxTitle( $type, $data ) {
+		if ( $type === 'title' && !empty( $data['value'] ) ) {
+			$data['value'] = trim( strip_tags( $data['value'] ) );
+			return $data;
+		}
+		if ( $type === 'hero-mobile' && !empty( $data['title']['value'] ) ) {
+			$data['title']['value'] = trim( strip_tags( $data['title']['value'] ) );
+			return $data;
+		}
 
-		return $title;
+		return $data;
 	}
 }
