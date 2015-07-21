@@ -16,7 +16,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 	{
 		$isInvalidImage = isset( $input[ 'isInvalidImage' ] ) && $input[ 'isInvalidImage' ];
 		$isWikiaMobile = isset( $input[ 'isWikiaMobile' ] ) && $input[ 'isWikiaMobile' ];
-		$mockThumbnailImage = $isInvalidImage ? false : $this->getThumbnailImageMock();
+		$mockThumbnailImage = $isInvalidImage ? false : $this->getThumbnailImageMock( $input );
 
 		$mock = $this->getMockBuilder( 'PortableInfoboxRenderService' )
 			->setMethods( [ 'getThumbnail', 'isWikiaMobile' ] )
@@ -34,9 +34,18 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 	/**
 	 * @desc Returns the ThumbnailImage with hardcoded values returned by
 	 * 'getUrl', 'getWidth' and 'getHeight' functions.
+	 * Althought the thumbnail dimensions can be bigger, we have to verify that image is not
+	 * upsampled - we need to mock the File and it's dimensions as well.
 	 * @return PHPUnit_Framework_MockObject_MockObject
 	 */
-	private function getThumbnailImageMock() {
+	private function getThumbnailImageMock( $input ) {
+		if ( isset( $input[ 'smallImageDimensions' ] ) ) {
+			$fileWidth = $fileHeight = $input[ 'smallImageDimensions' ];
+		} else {
+			$fileWidth = 400;
+			$fileHeight = 200;
+		}
+
 		$mockThumbnailImage = $this->getMockBuilder( 'ThumbnailImage' )
 			->setMethods( [ 'getUrl', 'getWidth', 'getHeight' ] )
 			->getMock();
@@ -49,6 +58,19 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 		$mockThumbnailImage->expects( $this->any() )
 			->method( 'getHeight' )
 			->will( $this->returnValue( 200 ) );
+
+		$mockFile = $this->getMockBuilder( 'File' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'getWidth', 'getHeight' ] )
+			->getMock();
+		$mockFile->expects( $this->any() )
+			->method( 'getWidth' )
+			->will( $this->returnValue( $fileWidth ) );
+		$mockFile->expects( $this->any() )
+			->method( 'getHeight' )
+			->will( $this->returnValue( $fileHeight ) );
+
+		$mockThumbnailImage->file = $mockFile;
 
 		return $mockThumbnailImage;
 	}
@@ -203,6 +225,48 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 			],
 			[
 				'input' => [
+					'smallImageDimensions' => 100,
+					[
+						'type' => 'title',
+						'data' => [
+							'value' => 'Test Title'
+						]
+					],
+					[
+						'type' => 'image',
+						'data' => [
+							'alt' => 'image alt',
+							'value' => 'http://image.jpg'
+						]
+					],
+					[
+						'type' => 'data',
+						'data' => [
+							'label' => 'test label',
+							'value' => 'test value'
+						]
+					]
+				],
+				'output' => '<aside class="portable-infobox">
+								<div class="portable-infobox-item item-type-title portable-infobox-item-margins">
+									<h2 class="portable-infobox-title">Test Title</h2>
+								</div>
+								<div class="portable-infobox-item item-type-image no-margins">
+									<figure class="portable-infobox-image-wrapper">
+										<a href="" class="image image-thumbnail" title="image alt">
+											<img src="http://image.jpg" class="portable-infobox-image" alt="image alt" width="100" height="100" data-image-key="" data-image-name=""/>
+										</a>
+									</figure>
+								</div>
+								<div class="portable-infobox-item item-type-key-val portable-infobox-item-margins">
+									<h3 class="portable-infobox-item-label portable-infobox-secondary-font">test label</h3>
+									<div class="portable-infobox-item-value">test value</div>
+									</div>
+							</aside>',
+				'description' => 'Simple infobox with title, small (100x100px) image and key-value pair'
+			],
+			[
+				'input' => [
 					'isInvalidImage' => true,
 					[
 						'type' => 'title',
@@ -314,7 +378,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 									</div>
 								</section>
 							</aside>',
-				'description' => 'Infobox with title, image and group with header two key-value pairs'
+				'description' => 'Infobox with title, group with header and two key-value pairs'
 			],
 			[
 				'input' => [
@@ -351,7 +415,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 									</div>
 								</section>
 							</aside>',
-				'description' => 'Infobox with title, image and horizontal group'
+				'description' => 'Infobox with title and horizontal group'
 			],
 			[
 				'input' => [
