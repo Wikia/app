@@ -185,20 +185,21 @@ class CuratedContentController extends WikiaController {
 	}
 
 	public function getList() {
+		global $wgWikiaCuratedContent;
+
 		wfProfileIn( __METHOD__ );
 
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 
-		$content = $this->wg->WikiaCuratedContent;
-		if ( empty( $content ) ) {
+		if ( empty( $wgWikiaCuratedContent ) ) {
 			$this->getCategories();
 		} else {
 			$section = $this->request->getVal( 'section' );
 			if ( empty( $section ) ) {
-				$this->setSectionsInResponse( $content );
-				$this->setFeaturedContentInResponse( $content );
+				$this->setSectionsInResponse( $wgWikiaCuratedContent );
+				$this->setFeaturedContentInResponse( $wgWikiaCuratedContent );
 			} else {
-				$this->setSectionItemsInResponse( $content, $section );
+				$this->setSectionItemsInResponse( $wgWikiaCuratedContent, $section );
 			}
 
 			$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
@@ -319,12 +320,12 @@ class CuratedContentController extends WikiaController {
 	 */
 	private function setSectionItemsResponse( $sectionName, $ret ) {
 		foreach ( $ret as &$value ) {
-			list( $image_id, $image_url ) = CuratedContentSpecialController::findImageIfNotSet(
+			list( $imageId, $imageUrl ) = CuratedContentHelper::findImageIdAndUrl(
 				$value['image_id'],
 				$value['article_id']
 			);
-			$value['image_id'] = $image_id;
-			$value['image_url'] = $image_url;
+			$value['image_id'] = $imageId;
+			$value['image_url'] = $imageUrl;
 		}
 		$this->response->setVal( $sectionName, $ret );
 	}
@@ -358,7 +359,7 @@ class CuratedContentController extends WikiaController {
 					$ret[] = [
 						'title' => $item['title'],
 						'image_id' => $imageId,
-						'image_url' => CuratedContentSpecialController::findImageIfNotSet( $imageId )[1]
+						'image_url' => CuratedContentHelper::findImageUrl( $imageId )
 					];
 				}
 
@@ -373,15 +374,15 @@ class CuratedContentController extends WikiaController {
 
 	function getJsonItem( $titleName, $ns, $pageId ) {
 		$title = Title::makeTitle( $ns, $titleName );
-		list( $image_id, $image_url ) = CuratedContentSpecialController::findImageIfNotSet( 0, $pageId );
+		list( $imageId, $imageUrl ) = CuratedContentHelper::findImageIdAndUrl( null, $pageId );
 
 		return [
 			'title' => $ns . ':' . $title->getFullText(),
 			'label' => $title->getFullText(),
-			'image_id' => $image_id,
+			'image_id' => $imageId,
 			'article_id' => $pageId,
 			'type' => 'category',
-			'image_url' => $image_url
+			'image_url' => $imageUrl
 		];
 	}
 
@@ -492,11 +493,11 @@ class CuratedContentController extends WikiaController {
 		foreach ( $curatedContent as $curatedContentModule => $items ) {
 			foreach ( $items as $item ) {
 				if ( $item['type'] == 'category' || $curatedContentModule == 'featured' ) {
-					if ( strlen( $item['label'] ) > CuratedContentSpecialController::LABEL_MAX_LENGTH ) {
+					if ( strlen( $item['label'] ) > CuratedContentValidator::LABEL_MAX_LENGTH ) {
 						$tooLongTitleCount++;
 					}
 				} else {
-					if ( strlen( $item['title'] ) > CuratedContentSpecialController::LABEL_MAX_LENGTH ) {
+					if ( strlen( $item['title'] ) > CuratedContentValidator::LABEL_MAX_LENGTH ) {
 						$tooLongTitleCount++;
 					}
 				}
@@ -531,12 +532,10 @@ class CuratedContentController extends WikiaController {
 	 * @return bool
 	 */
 	static function onCuratedContentSave() {
-		global $wgServer;
-
-		$content = F::app()->wg->WikiaCuratedContent;
+		global $wgServer, $wgWikiaCuratedContent;
 
 		( new SquidUpdate( array_unique( array_reduce(
-			$content,
+			$wgWikiaCuratedContent,
 			function ( $urls, $item ) use ( $wgServer ) {
 				if ( $item['title'] !== '' && empty( $item['featured'] ) ) {
 					// Purge section URLs using urlencode() (standard for MediaWiki), which uses implements RFC 1738
