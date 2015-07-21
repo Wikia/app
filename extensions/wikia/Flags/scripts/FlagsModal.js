@@ -129,6 +129,7 @@ require(
 					param = [];
 					param['param_name'] = paramName;
 					param['param_description'] = paramsNames[paramName];
+					param['param_placeholder'] = paramsNames[paramName].length ? paramsNames[paramName] : paramName;
 					param['param_value'] = flagsData[flagTypeId].params ? flagsData[flagTypeId].params[paramName] : '';
 					params.push(param);
 				}

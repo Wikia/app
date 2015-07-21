@@ -8,12 +8,12 @@ define ('ext.wikia.Flags.FlagEditForm',
 			emptyFormCacheKey = 'flagEditFormEmpty',
 			cacheVersion = '1.0';
 
-		/* Modal component configuration */
 		function init(prefillData) {
 			$.when(getFormResources()).done(function (formResources) {
 				setupForm(formResources);
 
-				if (prefillData == null || prefillData.values == null) {
+				/** Check prefillData for undefined or null **/
+				if (prefillData == null) {
 					displayFormCreate();
 				} else {
 					displayFormEdit(prefillData);
@@ -24,6 +24,7 @@ define ('ext.wikia.Flags.FlagEditForm',
 		function getFormResources() {
 			var formResources = cache.get(getResourcesCacheKey());
 
+			/** Check formResources and formResources.resources for undefined or null **/
 			if (formResources == null || formResources.resources == null) {
 				formResources = loader({
 					type: loader.MULTI,
@@ -48,7 +49,9 @@ define ('ext.wikia.Flags.FlagEditForm',
 				/* TODO - Do something with the damn messages */
 				messages: formResources.messages,
 				template: formResources.mustache[0],
-				partialParam: formResources.mustache[1]
+				partials: {
+					createFormParam: formResources.mustache[1]
+				}
 			};
 
 			modalConfig = {
@@ -91,12 +94,13 @@ define ('ext.wikia.Flags.FlagEditForm',
 		function displayFormCreate() {
 			/* TODO - We can get a half-rendered template to avoid escaping messages in front-end */
 			var content = cache.get(getEmptyFormCacheKey());
+			/** **/
 			if (content == null) {
 				var formParams = {
 					messages: formData.messages,
 					values: getDropdownOptions({})
 				};
-				content = mustache.to_html(formData.template, formParams, formData.partialParam);
+				content = mustache.to_html(formData.template, formParams, formData.partials);
 
 				cache.set(getEmptyFormCacheKey(), content, cache.CACHE_LONG);
 			}
@@ -110,10 +114,17 @@ define ('ext.wikia.Flags.FlagEditForm',
 			displayModal();
 		}
 
-		function displayFormEdit(content) {
-			/* TODO - Finish this method */
-			modalConfig.vars.content = content;
+		function displayFormEdit(prefillData) {
+			var formParams = {
+				messages: formData.messages,
+				values: getDropdownOptions(prefillData)
+			};
+
+			modalConfig.vars.content = mustache.to_html(formData.template, formParams, formData.partials);
+
 			modalConfig.vars.title = mw.message('flags-special-create-form-title-edit').escaped();
+			modalConfig.vars.buttons[0].vars.value = mw.message('flags-special-create-form-save').escaped();
+			modalConfig.vars.buttons[1].vars.value = mw.message('flags-special-create-form-cancel').escaped();
 
 			displayModal();
 		}
@@ -174,7 +185,7 @@ define ('ext.wikia.Flags.FlagEditForm',
 
 		function addNewParameterInput() {
 			var tbody = $('.flags-special-form-params-tbody'),
-				partial = mustache.to_html(formData.partialParam, {});
+				partial = mustache.to_html(formData.partials.createFormParam, {});
 
 			tbody.append(partial);
 		}
@@ -195,7 +206,7 @@ define ('ext.wikia.Flags.FlagEditForm',
 					value: 1
 				},
 				{
-					name: 'Disambig',
+					name: 'Disambiguation',
 					value: 2
 				},
 				{
@@ -233,6 +244,24 @@ define ('ext.wikia.Flags.FlagEditForm',
 					value: 2
 				},
 			];
+
+			if (values.selectedGroup != null) {
+				for (var key in values.groups) {
+					if (values.groups[key].value === values.selectedGroup) {
+						values.groups[key].selected = true;
+						break;
+					}
+				}
+			}
+
+			if (values.selectedTargeting != null) {
+				for (var key in values.targeting) {
+					if (values.targeting[key].value === values.selectedTargeting) {
+						values.targeting[key].selected = true;
+						break;
+					}
+				}
+			}
 
 			return values;
 		}
