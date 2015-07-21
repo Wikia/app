@@ -55,6 +55,7 @@ $wgGroupPermissions['*']['insights'] = true;
  * Models
  */
 $wgAutoloadClasses['InsightsModel'] = $dir . 'models/InsightsModel.php';
+$wgAutoloadClasses['InsightsPageModel'] = $dir . 'models/InsightsPageModel.php';
 $wgAutoloadClasses['InsightsQueryPageModel'] = $dir . 'models/InsightsQueryPageModel.php';
 $wgAutoloadClasses['InsightsFlagsModel'] = $dir . 'models/InsightsFlagsModel.php';
 $wgAutoloadClasses['InsightsDeadendModel'] = $dir . 'models/InsightsDeadendModel.php';

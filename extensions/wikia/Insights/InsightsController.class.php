@@ -54,12 +54,12 @@ class InsightsController extends WikiaSpecialPageController {
 		 * - getData() - returning all the helping data
 		 * - getTemplate() - returning an overriding template
 		 */
-		if ( $this->model instanceof InsightsQueryPageModel ) {
+		if ( $this->model instanceof InsightsQueryPageModel || $this->model instanceof InsightsPageModel ) {
 			$params = $this->request->getParams();
-			$this->content = $this->model->getContent( $params );
+			$this->setVal('content', $this->model->getContent( $params ) );
 			$this->preparePagination();
 			$this->prepareSortingData();
-			$this->data = $this->model->getViewData();
+			$this->setVal('data', $this->model->getViewData() );
 			$this->overrideTemplate( $this->model->getTemplate() );
 		} else {
 			throw new MWException( 'An Insights subpage should implement the InsightsQueryPageModel interface.' );
