@@ -27,6 +27,7 @@ $messages['en'] = [
 	'flags-special-create-form-cancel' => 'Cancel',
 	'flags-special-create-form-save' => 'Save',
 	'flags-special-create-form-invalid-name' => 'Please enter an appropriate name for the flag.',
+	'flags-special-create-form-invalid-name-exists' => 'The name of the flag is already used. Please, choose another one.',
 	'flags-special-create-form-invalid-template' => 'Please enter an appropriate name of a template for the flag.',
 	'flags-special-create-form-invalid-param-name' => 'Please enter an appropriate names for all parameters.',
 	'flags-special-create-form-save-success' => 'The flag has been added!',

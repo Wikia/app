@@ -6,10 +6,12 @@ define ('ext.wikia.Flags.FlagEditForm',
 			modalConfig,
 			resourcesCacheKey = 'flagEditFormResources',
 			emptyFormCacheKey = 'flagEditFormEmpty',
-			cacheVersion = '1.0';
+			cacheVersion = '1.0',
+			allFlagsNames = [];
 
 		function init(prefillData) {
 			$.when(getFormResources()).done(function (formResources) {
+				getAllFlagNames();
 				setupForm(formResources);
 
 				/** Check prefillData for undefined or null **/
@@ -192,6 +194,11 @@ define ('ext.wikia.Flags.FlagEditForm',
 				return false;
 			}
 
+			if (allFlagsNames.indexOf(flagName) > -1) {
+				showErrorNotification('flags-special-create-form-invalid-name-exists');
+				return false;
+			}
+
 			flagView = $('#flags-special-form-template').val();
 			if (flagView.length === 0) {
 				showErrorNotification('flags-special-create-form-invalid-template');
@@ -221,6 +228,14 @@ define ('ext.wikia.Flags.FlagEditForm',
 				flag_group: $('#flags-special-form-group option:selected').val(),
 				flag_targeting: $('#flags-special-form-targeting option:selected').val(),
 				flag_params_names: JSON.stringify(params)
+			}
+		}
+
+		function getAllFlagNames() {
+			if (allFlagsNames.length === 0) {
+				$('.flags-special-list-item-name').each( function() {
+					allFlagsNames.push($(this).data('flag-name'));
+				});
 			}
 		}
 
