@@ -234,6 +234,8 @@ class FlagsApiController extends WikiaApiController {
 	 * 		It's used for rendering inputs in the "Add a flag" form.
 	 */
 	public function addFlagType() {
+		$this->checkAdminPermissions();
+
 		try {
 			$this->processRequest();
 
@@ -260,6 +262,8 @@ class FlagsApiController extends WikiaApiController {
 	 * of flags with ALL of their parameters per the database's configuration.
 	 */
 	public function removeFlagType() {
+		$this->checkAdminPermissions();
+
 		try {
 			$this->processRequest();
 
@@ -301,6 +305,8 @@ class FlagsApiController extends WikiaApiController {
 	 * @requestParam string flags_params_names parameters names with its descriptions in JSON format
 	 */
 	public function updateFlagTypeParameters() {
+		$this->checkAdminPermissions();
+
 		try {
 			$this->processRequest();
 
@@ -585,6 +591,12 @@ class FlagsApiController extends WikiaApiController {
 
 		if ( $pagesIds[self::FLAGS_API_RESPONSE_STATUS] ) {
 			$this->getCache()->purgeFlagsForPages( $pagesIds[self::FLAGS_API_RESPONSE_DATA] );
+		}
+	}
+
+	private function checkAdminPermissions() {
+		if ( !$this->wg->user->isAllowed( 'flags-administration' ) ) {
+			throw new PermissionsException( 'flags-administration' );
 		}
 	}
 }

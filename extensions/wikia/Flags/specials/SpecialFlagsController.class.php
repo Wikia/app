@@ -35,6 +35,9 @@ class SpecialFlagsController extends WikiaSpecialPageController {
 				$this->insightsTitle = null;
 			}
 		}
+
+		// permissions check
+		$this->hasAdminPermissions = $this->wg->User->isAllowed( 'flags-administration' );
 	}
 
 	private function requestGetFlagTypesForWikia( $wikiId ) {

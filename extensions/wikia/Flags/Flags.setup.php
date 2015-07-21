@@ -33,8 +33,9 @@ $wgExtensionCredits['other'][] = [
 $wgSpecialPages['Flags'] = 'SpecialFlagsController';
 $wgSpecialPageGroups['Flags'] = 'wikia';
 
-$wgAvailableRights[] = 'flagshq';
-$wgGroupPermissions['*']['flagshq'] = true;
+$wgAvailableRights[] = 'flags-administration';
+$wgGroupPermissions['*']['flags-administration'] = false;
+$wgGroupPermissions['sysop']['flags-administration'] = true;
 
 $wgAutoloadClasses['SpecialFlagsController'] = __DIR__ . '/specials/SpecialFlagsController.class.php';
 
