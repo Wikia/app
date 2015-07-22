@@ -25,6 +25,7 @@ Follow the links below to learn more about how to use Wikia, make changes to you
 		'specialcontact-seclink-content-issue' => "Issue with the wikia’s content",
 		'specialcontact-seclink-user-conflict' => "Problem with another user?",
 		'specialcontact-seclink-adoption' => "I want admin rights here",
+		'specialcontact-seclink-dmca-request' => 'I have a copyright complaint',
 
 	'specialcontact-secheader-account' => "Account changes",
 		'specialcontact-seclink-account-issue' => "Can't access my account",
@@ -229,6 +230,10 @@ If you prefer to use regular e-mail or have multiple attachments, you can contac
 	'specialcontact-submitcomplete' => 'Thank you for contacting Wikia. We receive and review all messages submitted here. We will do our best to get back to you in the next 2-3 business days, but please be patient as we work through all of the messages.
 
 Remember, you can also find help in our [[w:c:community:Special:Forum|Community Forum]] and [[w:c:community:Help:Index|Help pages]]. You can keep up to date with the latest Wikia news on our [[w:c:community:Blog:Wikia_Staff_Blog |Staff Blog]]. Happy editing!',
+);
+
+$messages['qqq'] = array(
+	'specialcontact-seclink-dmca-request' => 'Link text for copyright complaints.',
 );
 
 $messages['de'] = array(
