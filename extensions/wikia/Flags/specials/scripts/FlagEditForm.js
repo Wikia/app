@@ -114,6 +114,8 @@ define ('ext.wikia.Flags.FlagEditForm',
 			modalConfig.vars.buttons[1].vars.value = mw.message('flags-special-create-form-cancel').escaped();
 
 			displayModal();
+
+			$('#flags-special-form-template').on( 'focusout', getFlagParamsFromTemplate );
 		}
 
 		function displayFormEdit(prefillData) {
@@ -162,7 +164,7 @@ define ('ext.wikia.Flags.FlagEditForm',
 			}
 
 			nirvana.sendRequest({
-				controller: 'FlagsApiController',
+				controller: 'FlagsController',
 				method: method,
 				data: data,
 				callback: function (json) {
@@ -197,11 +199,19 @@ define ('ext.wikia.Flags.FlagEditForm',
 			}
 		}
 
-		function addNewParameterInput() {
+		function addNewParameterInput( param ) {
+			param = param || {};
+
+			param = {'name': 'bar'};
+
 			var tbody = $('.flags-special-form-params-tbody'),
-				partial = mustache.to_html(formData.partials.createFormParam, {});
+				partial = mustache.to_html(formData.partials.createFormParam, param );
 
 			tbody.append(partial);
+		}
+
+		function getFlagParamsFromTemplate( event ) {
+			addNewParameterInput( {'name': 'foo'} );
 		}
 
 		function getResourcesCacheKey() {
