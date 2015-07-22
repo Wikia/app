@@ -82,7 +82,7 @@ class TagsReportPage extends SpecialPage {
         $oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
         $oTmpl->set_vars( array(
             "mTag"  		=> $tag,
-            "articles" 		=> $this->getTagsInfo( $tag ),
+            "articles" 		=> $this->getTagInfo( $tag ),
             "wgCanonicalNamespaceNames" => $wgCanonicalNamespaceNames,
             "wgContLang" 	=> $wgContLang,
             "skin"			=> RequestContext::getMain()->getSkin()
@@ -143,7 +143,7 @@ class TagsReportPage extends SpecialPage {
 	 * @return mixed
 	 * @throws MWException
 	 */
-	private function getTagsInfo( $tag ) {
+	private function getTagInfo( $tag ) {
 		return WikiaDataAccess::cache(
 			wfMemcKey( __METHOD__, $tag ),
 			WikiaResponse::CACHE_SHORT,
