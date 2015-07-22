@@ -13,8 +13,8 @@ use Wikia\Logger\WikiaLogger;
 class WikiaMailer extends UserMailer {
 
 	static $drivers = array(
-		'wgEnableWikiaDBEmail' => 'wikiadb',
-		'wgEnablePostfixEmail' => 'smtp'
+		'wgEnablePostfixEmail' => 'smtp',
+		'wgEnableWikiaDBEmail' => 'wikiadb'
 	);
 
 	static private function getDriver() {
@@ -32,7 +32,7 @@ class WikiaMailer extends UserMailer {
 		return false;
 	}
 
-	static public function sendEmail( $headers, $to, $from, $subject, $body, $priority = 0, $attachments = null ) {
+	static public function sendEmail( $headers, $to, $from, $subject, $body, $priority = 0, $attachments = null, $sourceType = 'mediawiki' ) {
         wfProfileIn( __METHOD__ );
 
 		$driver = self::getDriver();
@@ -46,7 +46,7 @@ class WikiaMailer extends UserMailer {
 		WikiaSendgridMailer::$factory = $driver;
 
 		wfProfileOut( __METHOD__ );
-		return WikiaSendgridMailer::send( $headers, $to, $from, $subject, $body, $priority, $attachments );
+		return WikiaSendgridMailer::send( $headers, $to, $from, $subject, $body, $priority, $attachments, $sourceType );
 	}
 }
 
@@ -55,7 +55,7 @@ class WikiaSendgridMailer {
     // Default mail backend
 	static public $factory = "wikiadb";
 
-	static public function send ( $headers, $to, $from, $subject, $body, $priority = 0, $attachments = null ) {
+	static public function send ( $headers, $to, $from, $subject, $body, $priority = 0, $attachments = null, $sourceType = 'mediawiki' ) {
 		global $wgEnotifMaxRecips, $wgSMTP;
 
 		wfProfileIn( __METHOD__ );
@@ -67,6 +67,7 @@ class WikiaSendgridMailer {
 			'method' => __METHOD__,
 			'to' => $to,
 			'subject' => $subject,
+			'sourceType' => $sourceType,
 		] );
 		WikiaLogger::instance()->info( 'Queuing email for SendGrid', $logContext );
 

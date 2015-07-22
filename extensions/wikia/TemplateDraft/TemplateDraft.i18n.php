@@ -17,8 +17,8 @@ $messages['en'] = [
 	 */
 	'templatedraft-approval-no-page-error' => 'Approval failed as draft page doesn\'t exist',
 	'templatedraft-approval-no-templatedraft-error' => 'Approve draft action is not applicable on non template draft pages',
-	'templatedraft-approval-notification' => 'This template contents was replaced with updated version from draft template and the draft was removed',
-	'templatedraft-approval-summary' => 'Replaced with updated version from draft template',
+	'templatedraft-approval-success-confirmation' => 'This template contents was replaced with updated version from draft template and the draft was removed',
+	'templatedraft-approval-summary' => 'Infobox updated using the [[Help:PortableInfoboxes|portable infobox]] migration tool',
 	'templatedraft-draft-removal-summary' => 'Cleanup. Draft approved to parent page.',
 	/**
 	 * Right rail module
@@ -48,6 +48,8 @@ $2
 	'templatedraft-module-editintro-please-convert' => 'We can generate a draft version of your infobox with our new markup just click $1.',
 	'templatedraft-module-view-parent' => 'view parent template wikitext',
 	'templatedraft-module-help' => 'view the help page on Infobox markup',
+
+	'templatedraft-invalid-template' => 'Invalid template name provided.',
 ];
 
 /**
@@ -77,4 +79,6 @@ $messages['qqq'] = [
 	'templatedraft-module-content-approve' => 'A content of the TemplateDraft module for approving draft that appears in the right rail on Template pages.',
 	'templatedraft-module-button-approve' => 'A button shown in a right rail module for approving draft that moves draft text to parent template and gets user to this parent template',
 	'templatedraft-preview-n-docs' => 'Used when generating documentation for a converted draft of a template',
+
+	'templatedraft-invalid-template' => 'Error message returned by an API method when an invalid or non-existent title was provided.',
 ];

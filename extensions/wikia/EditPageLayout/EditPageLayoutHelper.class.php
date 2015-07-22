@@ -173,20 +173,11 @@ class EditPageLayoutHelper {
 	static public function isCodePage( Title $articleTitle ) {
 		$namespace = $articleTitle->getNamespace();
 
-		if ( $articleTitle->isCssOrJsPage()
+		return ( $articleTitle->isCssOrJsPage()
 			|| $articleTitle->isCssJsSubpage()
-			|| $namespace === NS_MODULE 
-		) {
-			return true;
-		} elseif ( $namespace === NS_TEMPLATE
-			&& class_exists( 'TemplateClassificationController' ) 
-		) {
-			$tc = new TemplateClassificationController( $articleTitle );
-	
-			return $tc->isType( 'infobox' );
-		}
-
-		return false;
+			|| $namespace === NS_MODULE
+			|| self::isInfoboxTemplate( $articleTitle )
+		);
 	}
 
 	/**
@@ -199,6 +190,25 @@ class EditPageLayoutHelper {
 		global $wgEnableEditorSyntaxHighlighting;
 
 		return self::isCodePage( $articleTitle ) && $wgEnableEditorSyntaxHighlighting;
+	}
+
+	static public function isInfoboxTemplate( Title $title ) {
+		$namespace = $title->getNamespace();
+
+		if ( $namespace === NS_TEMPLATE ) {
+			$tc = new TemplateClassification( $title );
+			return $tc->isType( $tc::TEMPLATE_INFOBOX ) || self::isTemplateDraft( $title );
+		}
+
+		return false;
+	}
+
+	static function isTemplateDraft( $title ) {
+		global $wgEnableTemplateDraftExt, $wgEnableInsightsInfoboxes;
+
+		return !empty( $wgEnableTemplateDraftExt )
+				&& !empty( $wgEnableInsightsInfoboxes )
+				&& TemplateDraftHelper::isTitleDraft( $title );
 	}
 
 	/**
@@ -226,15 +236,15 @@ class EditPageLayoutHelper {
 	 * @return bool
 	 */
 	public function showMobilePreview( Title $title ) {
-		$blacklistedPage = ( self::isCodePageWithoutPreview( $title ) )
+		$blacklistedPage = self::isCodePage( $title )
 				|| $title->isMainPage()
 				|| NavigationModel::isWikiNavMessage( $title );
 
 		return !$blacklistedPage;
 	}
 
-	public static function isCodePageWithoutPreview( Title $title ) {
-		return self::isCodePage( $title ) && $title->getNamespace() !== NS_TEMPLATE;
+	public static function isCodePageWithPreview( Title $title ) {
+		return self::isCodePage( $title ) && self::isInfoboxTemplate( $title );
 	}
 
 	/**
@@ -259,12 +269,8 @@ class EditPageLayoutHelper {
 			$type = 'css';
 		} elseif ( $title->isJsPage() || $title->isJsSubpage() ) {
 			$type = 'javascript';
-		} elseif ( $namespace === NS_TEMPLATE && class_exists( 'TemplateClassificationController' ) ) {
-			$tc = new TemplateClassificationController( $title );
-
-			if ( $tc->isType( 'infobox' ) ) {
-				$type = 'xml';
-			}
+		} elseif ( self::isInfoboxTemplate( $title ) ) {
+			$type = 'xml';
 		}
 
 		$this->addJsVariable( 'codePageType', $type );

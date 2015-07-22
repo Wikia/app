@@ -28,6 +28,11 @@ class UnconvertedInfoboxesPageTest extends WikiaBaseTest {
 				true
 			],
 			[
+				'This is an ignored Infobox documentation title/docs',
+				'This content is irrelevant and will be ignored',
+				false
+			],
+			[
 				'This is a title with no word in-fo-box in it, but with a non-portable one in the content',
 				'{| class="infobox" style="width: 20em; text-align: left; font-size: 95%;"
 				| style="background: #9400D3; font-size: 110%;" align="center" colspan="2" |

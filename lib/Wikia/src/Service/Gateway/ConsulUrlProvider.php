@@ -6,27 +6,66 @@ namespace Wikia\Service\Gateway;
 use Http;
 
 class ConsulUrlProvider implements UrlProvider {
+	const BASE_URL = "consul_url_provider_base_url";
+	const SERVICE_TAG = "consul_url_provider_tag";
 
-	private $healthUrlSchema = '{consulUrl}/v1/health/service/{serviceName}?passing&tag={serviceTag}';
-	private $healthUrl;
+	const HEALTH_URL = '{consulUrl}/v1/health/service/{serviceName}?passing&tag={serviceTag}';
 
-	function __construct( $consulUrl, $serviceName, $serviceTag ) {
-		if ( empty( $serviceName ) || empty( $serviceTag ) ) {
-			throw new \InvalidArgumentException ( "serviceName or serviceTag not set" );
+	/** @var string */
+	private $consulUrl;
+
+	/** @var string */
+	private $serviceTag;
+
+	/** @var string[][string] */
+	private $cache;
+
+	/**
+	 * @Inject({
+	 *  Wikia\Service\Gateway\ConsulUrlProvider::BASE_URL,
+	 *  Wikia\Service\Gateway\ConsulUrlProvider::SERVICE_TAG})
+	 * @param string $consulUrl
+	 * @param string $serviceTag
+	 */
+	function __construct( $consulUrl, $serviceTag ) {
+		if ( empty( $consulUrl ) || empty( $serviceTag ) ) {
+			throw new \InvalidArgumentException ( "consulUrl or serviceTag not set" );
 		}
-		$this->healthUrl = strtr( $this->healthUrlSchema, [
-			'{consulUrl}' => $consulUrl,
-			'{serviceName}' => $serviceName,
-			'{serviceTag}' => $serviceTag
-		] );
+
+		$this->consulUrl = $consulUrl;
+		$this->serviceTag = $serviceTag;
+		$this->cache = [];
 	}
 
-	public function getUrl() {
-		$response = Http::Request( "GET", $this->healthUrl, [ 'noProxy' => true ] );
-		$json_response = json_decode($response, true);
-		if ( !empty( $json_response ) && is_array( $json_response ) ) {
-			return implode(":",[$json_response[0]['Node']['Address'], $json_response[0]['Service']['Port']]);
+	public function getUrl( $serviceName ) {
+		if (!isset($this->cache[$serviceName])) {
+			$this->cache[$serviceName] = [];
+			$healthUrl = $this->getHealthUrl($serviceName);
+			$response = Http::Request( "GET", $healthUrl, [ 'noProxy' => true ] );
+			$jsonResponse = json_decode($response, true);
+
+			if ( !empty( $jsonResponse ) && is_array( $jsonResponse ) ) {
+				foreach ($jsonResponse as $node) {
+					$address = $node['Node']['Address'];
+					$port = $node['Service']['Port'];
+					$this->cache[$serviceName][] = "${address}:${port}";
+				}
+			}
 		}
-		return "";
+
+		if (empty($this->cache[$serviceName])) {
+			return "";
+		}
+
+		$index = mt_rand(0, count($this->cache[$serviceName]) - 1);
+		return $this->cache[$serviceName][$index];
+	}
+
+	private function getHealthUrl($serviceName) {
+		return strtr( self::HEALTH_URL, [
+			'{consulUrl}' => $this->consulUrl,
+			'{serviceName}' => $serviceName,
+			'{serviceTag}' => $this->serviceTag
+		] );
 	}
 }

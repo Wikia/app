@@ -246,7 +246,7 @@ class EditAccount extends SpecialPage {
 			if ( $email != '' ) {
 				UserLoginHelper::removeNotConfirmedFlag( $this->mUser );
 				$this->mUser->confirmEmail();
-				$this->mUser->getGlobalAttribute( 'new_email', null );
+				$this->mUser->setGlobalAttribute( 'new_email', null );
 			} else {
 				if ( $this->mUser->getGlobalFlag( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME ) ) {
 					// User not confirmed on signup can't has empty email

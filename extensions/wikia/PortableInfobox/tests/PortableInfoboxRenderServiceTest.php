@@ -1,21 +1,97 @@
 <?php
 
-class PortableInfoboxRenderServiceTest extends PHPUnit_Framework_TestCase {
-	private $infoboxRenderService;
+class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 
 	protected function setUp() {
 		$this->setupFile = dirname( __FILE__ ) . '/../PortableInfobox.setup.php';
 		parent::setUp();
-
-		$mock = $this->getMock( 'PortableInfoboxRenderService', [ 'getThumbnailUrl' ] );
-		$mock->expects( $this->any() )->method( 'getThumbnailUrl' )->will( $this->returnValue( 'http://image.jpg' ) );
-
-		$this->infoboxRenderService = $mock;
 	}
 
-	private function setWikiaMobileSkin($bool) {
-		$this->infoboxRenderService->expects( $this->any() )->method( 'isWikiaMobile' )->will( $this->returnValue
-		($bool) );
+	/**
+	 * @param $input to check presence of some additional config fields. Possible fields:
+	 * 'isInvalidImage' - bool - if getThumbnail should return false
+	 * 'isWikiaMobile' - bool - if we want to test mobile env
+	 * 'smallImageDimensions' - integer - size of small image (both width and height)
+	 * 
+	 * @return PHPUnit_Framework_MockObject_MockObject
+	 */
+	private function getInfoboxRenderServiceMock( $input )
+	{
+		$isInvalidImage = isset( $input[ 'isInvalidImage' ] ) && $input[ 'isInvalidImage' ];
+		$isWikiaMobile = isset( $input[ 'isWikiaMobile' ] ) && $input[ 'isWikiaMobile' ];
+		$mockThumbnailImage = $isInvalidImage ? false : $this->getThumbnailImageMock( $input );
+
+		$mock = $this->getMockBuilder( 'PortableInfoboxRenderService' )
+			->setMethods( [ 'getThumbnail', 'isWikiaMobile' ] )
+			->getMock();
+		$mock->expects( $this->any() )
+			->method( 'isWikiaMobile' )
+			->will( $this->returnValue( $isWikiaMobile ) );
+		$mock->expects( $this->any() )
+			->method( 'getThumbnail' )
+			->will( $this->returnValue( $mockThumbnailImage ) );
+
+		return $mock;
+	}
+
+	/**
+	 * @desc Returns the ThumbnailImage with hardcoded values returned by
+	 * 'getUrl', 'getWidth' and 'getHeight' functions.
+	 * Although the thumbnail dimensions can be bigger, we have to verify that image is not
+	 * upsampled - we need to mock the File and it's dimensions as well.
+	 * File mock can be removed when https://wikia-inc.atlassian.net/browse/PLATFORM-1359
+	 * hit the production.
+	 * @param $input
+	 * @return PHPUnit_Framework_MockObject_MockObject
+	 */
+	private function getThumbnailImageMock( $input ) {
+		if ( isset( $input[ 'smallImageDimensions' ] ) ) {
+			$fileWidth = $fileHeight = $input[ 'smallImageDimensions' ];
+		} else {
+			$fileWidth = 400;
+			$fileHeight = 200;
+		}
+
+		$mockThumbnailImage = $this->getMockBuilder( 'ThumbnailImage' )
+			->setMethods( [ 'getUrl', 'getWidth', 'getHeight' ] )
+			->getMock();
+		$mockThumbnailImage->expects( $this->any() )
+			->method( 'getUrl' )
+			->will( $this->returnValue( 'http://image.jpg' ) );
+		$mockThumbnailImage->expects( $this->any() )
+			->method( 'getWidth' )
+			->will( $this->returnValue( 400 ) );
+		$mockThumbnailImage->expects( $this->any() )
+			->method( 'getHeight' )
+			->will( $this->returnValue( 200 ) );
+
+		$mockFile = $this->getMockBuilder( 'File' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'getWidth', 'getHeight' ] )
+			->getMock();
+		$mockFile->expects( $this->any() )
+			->method( 'getWidth' )
+			->will( $this->returnValue( $fileWidth ) );
+		$mockFile->expects( $this->any() )
+			->method( 'getHeight' )
+			->will( $this->returnValue( $fileHeight ) );
+
+		$mockThumbnailImage->file = $mockFile;
+
+		return $mockThumbnailImage;
+	}
+
+	/**
+	 * @param $html
+	 * @return string
+     */
+	private function normalizeHTML( $html ) {
+		$DOM = new DOMDocument('1.0');
+		$DOM->formatOutput = true;
+		$DOM->preserveWhiteSpace = false;
+		$DOM->loadXML( $html );
+
+		return $DOM->saveXML();
 	}
 
 	/**
@@ -25,46 +101,11 @@ class PortableInfoboxRenderServiceTest extends PHPUnit_Framework_TestCase {
 	 * @dataProvider testRenderInfoboxDataProvider
 	 */
 	public function testRenderInfobox( $input, $expectedOutput, $description ) {
-		$this->setWikiaMobileSkin(false);
+		$infoboxRenderService = $this->getInfoboxRenderServiceMock( $input );
+		$actualOutput = $infoboxRenderService->renderInfobox( $input );
 
-		$actualOutput = $this->infoboxRenderService->renderInfobox( $input );
-
-		$actualDOM = new DOMDocument('1.0');
-		$expectedDOM = new DOMDocument('1.0');
-		$actualDOM->formatOutput = true;
-		$actualDOM->preserveWhiteSpace = false;
-		$expectedDOM->formatOutput = true;
-		$expectedDOM->preserveWhiteSpace = false;
-		$actualDOM->loadXML($actualOutput);
-		$expectedDOM->loadXML($expectedOutput);
-
-		$expectedHtml = $expectedDOM->saveXML();
-		$actualHtml = $actualDOM->saveXML();
-
-		$this->assertEquals( $expectedHtml, $actualHtml, $description );
-	}
-
-	/**
-	 * @param $input
-	 * @param $expectedOutput
-	 * @param $description
-	 * @dataProvider testRenderInfoboxDataProvider
-	 */
-	public function testRenderMobileInfobox( $input, $expectedOutput, $description ) {
-		$this->setWikiaMobileSkin(true);
-		$actualOutput = $this->infoboxRenderService->renderInfobox( $input );
-
-		$actualDOM = new DOMDocument('1.0');
-		$expectedDOM = new DOMDocument('1.0');
-		$actualDOM->formatOutput = true;
-		$actualDOM->preserveWhiteSpace = false;
-		$expectedDOM->formatOutput = true;
-		$expectedDOM->preserveWhiteSpace = false;
-		$actualDOM->loadXML($actualOutput);
-		$expectedDOM->loadXML($expectedOutput);
-
-		$expectedHtml = $expectedDOM->saveXML();
-		$actualHtml = $actualDOM->saveXML();
+		$expectedHtml = $this->normalizeHTML( $expectedOutput) ;
+		$actualHtml = $this->normalizeHTML( $actualOutput );
 
 		$this->assertEquals( $expectedHtml, $actualHtml, $description );
 	}
@@ -107,7 +148,7 @@ class PortableInfoboxRenderServiceTest extends PHPUnit_Framework_TestCase {
 								<div class="portable-infobox-item item-type-image no-margins">
 									<figure class="portable-infobox-image-wrapper">
 										<a href="http://image.jpg" class="image image-thumbnail" title="image alt">
-											<img src="http://image.jpg" class="portable-infobox-image" alt="image alt" data-image-key="" data-image-name=""/>
+											<img src="http://image.jpg" class="portable-infobox-image" alt="image alt" width="400" height="200" data-image-key="" data-image-name=""/>
 										</a>
 										<figcaption class="portable-infobox-item-margins portable-infobox-image-caption">Lorem ipsum dolor</figcaption>
 									</figure>
@@ -177,7 +218,7 @@ class PortableInfoboxRenderServiceTest extends PHPUnit_Framework_TestCase {
 								<div class="portable-infobox-item item-type-image no-margins">
 									<figure class="portable-infobox-image-wrapper">
 										<a href="" class="image image-thumbnail" title="image alt">
-											<img src="http://image.jpg" class="portable-infobox-image" alt="image alt" data-image-key="" data-image-name=""/>
+											<img src="http://image.jpg" class="portable-infobox-image" alt="image alt" width="400" height="200" data-image-key="" data-image-name=""/>
 										</a>
 									</figure>
 								</div>
@@ -187,6 +228,80 @@ class PortableInfoboxRenderServiceTest extends PHPUnit_Framework_TestCase {
 									</div>
 							</aside>',
 				'description' => 'Simple infobox with title, image and key-value pair'
+			],
+			[
+				'input' => [
+					'smallImageDimensions' => 100,
+					[
+						'type' => 'title',
+						'data' => [
+							'value' => 'Test Title'
+						]
+					],
+					[
+						'type' => 'image',
+						'data' => [
+							'alt' => 'image alt',
+							'value' => 'http://image.jpg'
+						]
+					],
+					[
+						'type' => 'data',
+						'data' => [
+							'label' => 'test label',
+							'value' => 'test value'
+						]
+					]
+				],
+				'output' => '<aside class="portable-infobox">
+								<div class="portable-infobox-item item-type-title portable-infobox-item-margins">
+									<h2 class="portable-infobox-title">Test Title</h2>
+								</div>
+								<div class="portable-infobox-item item-type-image no-margins">
+									<figure class="portable-infobox-image-wrapper">
+										<a href="" class="image image-thumbnail" title="image alt">
+											<img src="http://image.jpg" class="portable-infobox-image" alt="image alt" width="100" height="100" data-image-key="" data-image-name=""/>
+										</a>
+									</figure>
+								</div>
+								<div class="portable-infobox-item item-type-key-val portable-infobox-item-margins">
+									<h3 class="portable-infobox-item-label portable-infobox-secondary-font">test label</h3>
+									<div class="portable-infobox-item-value">test value</div>
+									</div>
+							</aside>',
+				'description' => 'Simple infobox with title, small (100x100px) image and key-value pair'
+			],
+			[
+				'input' => [
+					'isInvalidImage' => true,
+					[
+						'type' => 'title',
+						'data' => [
+							'value' => 'Test Title'
+						]
+					],
+					[
+						'type' => 'image',
+						'data' => []
+					],
+					[
+						'type' => 'data',
+						'data' => [
+							'label' => 'test label',
+							'value' => 'test value'
+						]
+					]
+				],
+				'output' => '<aside class="portable-infobox">
+								<div class="portable-infobox-item item-type-title portable-infobox-item-margins">
+									<h2 class="portable-infobox-title">Test Title</h2>
+								</div>
+								<div class="portable-infobox-item item-type-key-val portable-infobox-item-margins">
+									<h3 class="portable-infobox-item-label portable-infobox-secondary-font">test label</h3>
+									<div class="portable-infobox-item-value">test value</div>
+									</div>
+							</aside>',
+				'description' => 'Simple infobox with title, INVALID image and key-value pair'
 			],
 			[
 				'input' => [
@@ -269,7 +384,7 @@ class PortableInfoboxRenderServiceTest extends PHPUnit_Framework_TestCase {
 									</div>
 								</section>
 							</aside>',
-				'description' => 'Infobox with title, image and group with header two key-value pairs'
+				'description' => 'Infobox with title, group with header and two key-value pairs'
 			],
 			[
 				'input' => [
@@ -306,7 +421,7 @@ class PortableInfoboxRenderServiceTest extends PHPUnit_Framework_TestCase {
 									</div>
 								</section>
 							</aside>',
-				'description' => 'Infobox with title, image and horizontal group'
+				'description' => 'Infobox with title and horizontal group'
 			],
 			[
 				'input' => [
@@ -323,14 +438,10 @@ class PortableInfoboxRenderServiceTest extends PHPUnit_Framework_TestCase {
 								</nav>
 							</aside>',
 				'description' => 'Infobox with navigation'
-			]
-		];
-	}
-
-	public function testRenderMobileInfoboxDataProvider() {
-		return [
+			],
 			[
 				'input' => [
+					'isWikiaMobile' => true,
 					[
 						'type' => 'image',
 						'data' => [
@@ -344,10 +455,43 @@ class PortableInfoboxRenderServiceTest extends PHPUnit_Framework_TestCase {
 				],
 				'output' => '<aside class="portable-infobox">
 								<div class="portable-infobox-item item-type-image no-margins">
-									<img src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D" class="portable-infobox-image lazy media article-media" alt="image alt"  data-image-key="test1" data-image-name="test1" data-ref="1" data-src="thumbnail.jpg" data-params=\'[{"name":"test1", "full":"http://image.jpg"}]\' />
+									<img src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D" data-src="http://image.jpg" class="portable-infobox-image lazy media article-media" alt="image alt"  data-image-key="test1" data-image-name="test1" data-ref="1" data-params=\'[{"name":"test1", "full":"http://image.jpg"}]\' />
 								</div>
 							</aside>',
-				'description' => 'Only image for mobile'
+				'description' => 'Mobile: Only image'
+			],
+			[
+				'input' => [
+					'isInvalidImage' => true,
+					'isWikiaMobile' => true,
+					[
+						'type' => 'title',
+						'data' => [
+							'value' => 'Test Title'
+						]
+					],
+					[
+						'type' => 'image',
+						'data' => []
+					],
+					[
+						'type' => 'data',
+						'data' => [
+							'label' => 'test label',
+							'value' => 'test value'
+						]
+					]
+				],
+				'output' => '<aside class="portable-infobox">
+								<div class="portable-infobox-item item-type-title portable-infobox-item-margins">
+									<h2 class="portable-infobox-title">Test Title</h2>
+								</div>
+								<div class="portable-infobox-item item-type-key-val portable-infobox-item-margins">
+									<h3 class="portable-infobox-item-label portable-infobox-secondary-font">test label</h3>
+									<div class="portable-infobox-item-value">test value</div>
+									</div>
+							</aside>',
+				'description' => 'Mobile: Simple infobox with title, INVALID image and key-value pair'
 			]
 		];
 	}

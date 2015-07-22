@@ -78,6 +78,7 @@ $wgHooks['GetLocalURL'][] = 'InsightsHooks::onGetLocalURL';
 $wgHooks['MakeGlobalVariablesScript'][] = 'InsightsHooks::onMakeGlobalVariablesScript';
 $wgHooks['GetRailModuleList'][] = 'InsightsHooks::onGetRailModuleList';
 $wgHooks['wgQueryPages'][] = 'InsightsHooks::onwgQueryPages';
+$wgHooks['AfterUpdateSpecialPages'][] = 'InsightsHooks::onAfterUpdateSpecialPages';
 
 /**
  * Message files

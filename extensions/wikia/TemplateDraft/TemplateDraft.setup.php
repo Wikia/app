@@ -32,12 +32,12 @@ $wgGroupPermissions['staff']['templatedraft'] = true;
 $wgGroupPermissions['helper']['templatedraft'] = true;
 $wgGroupPermissions['vstf']['templatedraft'] = true;
 $wgGroupPermissions['voldev']['templatedraft'] = true;
+$wgGroupPermissions['user']['templatedraft'] = true;
 
 /**
  * Controllers
  */
 $wgAutoloadClasses['TemplateDraftController'] = __DIR__ . '/controllers/TemplateDraftController.class.php';
-$wgAutoloadClasses['TemplateClassificationController'] = __DIR__ . '/controllers/TemplateClassificationController.class.php';
 
 /**
  * Hooks
@@ -52,7 +52,6 @@ $wgHooks['SkinAfterBottomScripts'][] = 'TemplateDraftHooks::onSkinAfterBottomScr
  * Helpers
  */
 $wgAutoloadClasses['TemplateDraftHelper'] = __DIR__ . '/TemplateDraftHelper.class.php';
-$wgAutoloadClasses['TemplateDraftHooksHelper'] = __DIR__ . '/TemplateDraftHooksHelper.class.php';
 $wgAutoloadClasses['TemplateConverter'] = __DIR__ . '/TemplateConverter.class.php';
 
 /**

@@ -721,27 +721,6 @@ class LoginForm extends SpecialPage {
 				return self::ABORTED;
 			}
 			if( $u->checkTemporaryPassword( $this->mPassword ) ) {
-				// The e-mailed temporary password should not be used for actu-
-				// al logins; that's a very sloppy habit, and insecure if an
-				// attacker has a few seconds to click "search" on someone's o-
-				// pen mail reader.
-				//
-				// Allow it to be used only to reset the password a single time
-				// to a new value, which won't be in the user's e-mail ar-
-				// chives.
-				//
-				// For backwards compatibility, we'll still recognize it at the
-				// login form to minimize surprises for people who have been
-				// logging in with a temporary password for some time.
-				//
-				// As a side-effect, we can authenticate the user's e-mail ad-
-				// dress if it's not already done, since the temporary password
-				// was sent via e-mail.
-				if( !$u->isEmailConfirmed() ) {
-					$u->confirmEmail();
-					$u->saveSettings();
-				}
-
 				// At this point we just return an appropriate code/ indicating
 				// that the UI should show a password reset form; bot inter-
 				// faces etc will probably just fail cleanly here.
@@ -749,31 +728,74 @@ class LoginForm extends SpecialPage {
 			} else {
 				$retval = ( $this->mPassword  == '' ) ? self::EMPTY_PASS : self::WRONG_PASS;
 			}
+		} elseif ( $wgEnableHeliosExt && Wikia\Helios\User::wasResetPassAuth( $this->mUsername, $this->mPassword ) ) {
+			$retval = self::RESET_PASS;
 		} elseif ( $wgBlockDisablesLogin && $u->isBlocked() ) {
 			// If we've enabled it, make it so that a blocked user cannot login
 			$retval = self::USER_BLOCKED;
 		} else {
-			$wgAuth->updateUser( $u );
-			$wgUser = $u;
-			// This should set it for OutputPage and the Skin
-			// which is needed or the personal links will be
-			// wrong.
-			$this->getContext()->setUser( $u );
-
-			// Please reset throttle for successful logins, thanks!
-			if ( $throttleCount ) {
-				self::clearLoginThrottle( $this->mUsername );
-			}
-
-			if ( $isAutoCreated ) {
-				// Must be run after $wgUser is set, for correct new user log
-				wfRunHooks( 'AuthPluginAutoCreate', array( $u ) );
-			}
-
 			$retval = self::SUCCESS;
 		}
+
+		if ( in_array( $retval, [ self::SUCCESS, self::RESET_PASS ] ) ) {
+			wfRunHooks( 'LoginSuccessModifyRetval', [ $u->getName(), $this->mPassword, &$retval ] );
+		}
+
+		switch ($retval) {
+			case self::SUCCESS:
+				$this->onAuthenticateUserDataSuccess($u, $isAutoCreated, $throttleCount);
+				break;
+			case self::RESET_PASS:
+				$this->onAuthenticateUserDataResetPass($u);
+				break;
+		}
+
 		wfRunHooks( 'LoginAuthenticateAudit', array( $u, $this->mPassword, $retval ) );
 		return $retval;
+	}
+
+	private function onAuthenticateUserDataSuccess(User $u, $isAutoCreated, $throttleCount) {
+		global $wgAuth, $wgUser;
+
+		$wgAuth->updateUser( $u );
+		$wgUser = $u;
+		// This should set it for OutputPage and the Skin
+		// which is needed or the personal links will be
+		// wrong.
+		$this->getContext()->setUser( $u );
+
+		// Please reset throttle for successful logins, thanks!
+		if ( $throttleCount ) {
+			self::clearLoginThrottle( $this->mUsername );
+		}
+
+		if ( $isAutoCreated ) {
+			// Must be run after $wgUser is set, for correct new user log
+			wfRunHooks( 'AuthPluginAutoCreate', array( $u ) );
+		}
+	}
+
+	private function onAuthenticateUserDataResetPass(User $u) {
+		// The e-mailed temporary password should not be used for actu-
+		// al logins; that's a very sloppy habit, and insecure if an
+		// attacker has a few seconds to click "search" on someone's o-
+		// pen mail reader.
+		//
+		// Allow it to be used only to reset the password a single time
+		// to a new value, which won't be in the user's e-mail ar-
+		// chives.
+		//
+		// For backwards compatibility, we'll still recognize it at the
+		// login form to minimize surprises for people who have been
+		// logging in with a temporary password for some time.
+		//
+		// As a side-effect, we can authenticate the user's e-mail ad-
+		// dress if it's not already done, since the temporary password
+		// was sent via e-mail.
+		if( !$u->isEmailConfirmed() ) {
+			$u->confirmEmail();
+			$u->saveSettings();
+		}
 	}
 
 	/**

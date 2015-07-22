@@ -4,9 +4,9 @@ class TemplateConverter {
 
 	const CONVERSION_MARKER = 'conversion';
 
-	const TEMPLATE_VARIABLE_REGEX = '/{{{([^|{}]+)(\|([^{}]*|.*{{.*}}.*))?}}}/';
-
-	private $title; // Title object of the template we're converting
+	private
+		$title, // Title object of the template we're converting
+		$templateDataExtractor;
 
 	/**
 	 * Names of variables that should be converted to a <title> tag
@@ -46,15 +46,27 @@ class TemplateConverter {
 	}
 
 	/**
-	 * Performs a conversion to a template with a portable infobox.
+	 * Performs a conversion to a template with a portable infobox
 	 *
 	 * @param $content
 	 * @return string
 	 */
 	public function convertAsInfobox( $content ) {
-		$draft = "<infobox>\n";
+		$templateVariables = $this->getTemplateDataExtractor()->getTemplateVariablesWithLabels( $content );
 
-		$variables = $this->getTemplateVariables( $content );
+		$draft = $this->prepareDraft( $templateVariables );
+
+		return $draft;
+	}
+
+	/**
+	 * Prepares draft with infobox template based on passed variables
+	 *
+	 * @param $variables
+	 * @return string
+	 */
+	public function prepareDraft( $variables ) {
+		$draft = "<infobox>\n";
 
 		foreach ( $variables as $variable ) {
 			$lcVarName = strtolower( $variable['name'] );
@@ -72,21 +84,6 @@ class TemplateConverter {
 		$draft .= "</infobox>\n";
 
 		return $draft;
-	}
-
-	/**
-	 * Extracts variables used in a content of a template.
-	 *
-	 * @param $content
-	 * @return array
-	 */
-	public function getTemplateVariables( $content ) {
-		$templateVariables = [];
-
-		preg_match_all( self::TEMPLATE_VARIABLE_REGEX, $content, $templateVariables );
-		$variables = $this->prepareVariables( $templateVariables );
-
-		return $variables;
 	}
 
 	/**
@@ -134,34 +131,8 @@ class TemplateConverter {
 		return $data;
 	}
 
-	/**
-	 * Prepares variables from templates
-	 *
-	 * @param $templateVariables
-	 * @return array
-	 */
-	private function prepareVariables( $templateVariables ) {
-		$variables = [];
-
-		foreach( $templateVariables[1] as $key => $variableName ) {
-			if ( isset( $variables[$variableName] ) ) {
-				if ( empty( $variables[$variableName]['default'] ) && strlen( $templateVariables[2][$key] ) > 1 ) {
-					$variables[$variableName]['default'] = substr( $templateVariables[2][$key], 1 );
-				}
-			} else {
-				$variables[$variableName] = [
-					'name' => $variableName,
-					'label' => '',
-					'default' => strlen( $templateVariables[2][$key] ) > 1 ? substr( $templateVariables[2][$key], 1 ) : ''
-				];
-			}
-		}
-
-		return $variables;
-	}
-
 	public function generatePreviewSection( $content ) {
-		$variables = $this->getTemplateVariables( $content );
+		$variables = $this->getTemplateDataExtractor()->getTemplateVariables( $content );
 
 		$preview = "{{" . $this->title->getText() . "\n";
 		$docs = $preview;
@@ -185,5 +156,13 @@ class TemplateConverter {
 		global $wgRequest;
 
 		return $wgRequest->getVal( self::CONVERSION_MARKER, false );
+	}
+
+	protected function getTemplateDataExtractor() {
+		if ( empty( $this->templateDataExtractor ) ) {
+			$this->templateDataExtractor = new TemplateDataExtractor( $this->title );
+		}
+
+		return $this->templateDataExtractor;
 	}
 }

@@ -8,6 +8,10 @@
 class InsightsUnconvertedInfoboxesModel extends InsightsQuerypageModel {
 	const INSIGHT_TYPE = 'nonportableinfoboxes';
 
+	public $loopNotificationConfig = [
+		'displayFixItMessage' => false,
+	];
+
 	public function getDataProvider() {
 		return new UnconvertedInfoboxesPage();
 	}
@@ -38,18 +42,44 @@ class InsightsUnconvertedInfoboxesModel extends InsightsQuerypageModel {
 		return false;
 	}
 
+	/**
+	 * Get a type of a subpage only, we want a user to be directed to view.
+	 * @return array
+	 */
+	public function getUrlParams() {
+		return $this->getInsightParam();
+	}
+
 	public function hasAltAction() {
 		return class_exists( 'TemplateConverter' );
 	}
 
-	public function getAltActionUrl( Title $title ) {
-		$subpage = Title::newFromText( $title->getText() . "/Draft", NS_TEMPLATE );
+	public function getAltAction( Title $title ) {
+		$subpage = Title::newFromText( $title->getText() . "/" . wfMessage('templatedraft-subpage')->escaped() , NS_TEMPLATE );
 
-		return $subpage->getFullUrl( [ 'action' => 'edit' ] );
-	}
+		if ( !$subpage instanceof Title ) {
+			// something went terribly wrong, quit early
+			return '';
+		}
 
-	public function altActionLinkMessage() {
-		return 'insights-label-altaction-infoboxes';
+		if ( $subpage->exists() ) {
+			$url = $subpage->getFullUrl();
+			$text = wfMessage( 'insights-altaction-seedraft' )->escaped();
+			$class = 'secondary';
+		} else {
+			$url = $subpage->getFullUrl( [
+				'action' => 'edit',
+				TemplateConverter::CONVERSION_MARKER => 1,
+			] );
+			$text = wfMessage( 'insights-altaction-convert' )->escaped();
+			$class = 'primary';
+		}
+
+		return [
+			'url' => $url,
+			'text' => $text,
+			'class' => $class,
+		];
 	}
 
 	/**

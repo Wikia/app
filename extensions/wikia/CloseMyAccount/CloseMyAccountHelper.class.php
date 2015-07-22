@@ -54,11 +54,7 @@ class CloseMyAccountHelper {
 			return false;
 		}
 
-		$emailTextTemplate = $app->renderView( 'CloseMyAccountSpecial', 'email',
-			[ 'language' => $user->getGlobalPreference( 'language' ) ] );
-
-		$response = $user->sendConfirmationMail( 'reactivateaccount', 'ReactivationMail',
-			'closemyaccount-reactivation-email', /*$ip_arg = */true, $emailTextTemplate );
+		$response = $user->sendConfirmationMail( 'reactivateaccount', 'ReactivationMail' );
 
 		$this->track( $user, 'request-reactivation' );
 
