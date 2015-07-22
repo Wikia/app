@@ -59,13 +59,13 @@ class TagsReportPage extends SpecialPage {
 		}
 
         $oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
-        $oTmpl->set_vars( array(
+        $oTmpl->set_vars( [
 			"error"		=> '',
 			"action"	=> htmlspecialchars( $this->getTitle()->getLocalURL() ),
 			"tagList"	=> $this->getTagsList(),
 			"mTag"  	=> $tag,
 			"timestamp"	=> $timestamp
-        ) );
+        ] );
         $wgOut->addHTML( $oTmpl->render( "main-form" ) );
         wfProfileOut( __METHOD__ );
 	}
@@ -80,13 +80,13 @@ class TagsReportPage extends SpecialPage {
         wfProfileIn( __METHOD__ );
 
         $oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
-        $oTmpl->set_vars( array(
+        $oTmpl->set_vars( [
             "mTag"  		=> $tag,
             "articles" 		=> $this->getTagInfo( $tag ),
             "wgCanonicalNamespaceNames" => $wgCanonicalNamespaceNames,
             "wgContLang" 	=> $wgContLang,
             "skin"			=> RequestContext::getMain()->getSkin()
-        ) );
+        ] );
         $wgOut->addHTML( $oTmpl->render( "tag-activity" ) );
         wfProfileOut( __METHOD__ );
 	}
@@ -198,10 +198,10 @@ class TagsReportPage extends SpecialPage {
 			__METHOD__
 		);
 
-		return array(
+		return [
 			$wgLang->date( wfTimestamp( TS_MW, $ts ), true ),
 			$wgLang->time( wfTimestamp( TS_MW, $ts ), true ),
-		);
+		];
 	}
 
 }
