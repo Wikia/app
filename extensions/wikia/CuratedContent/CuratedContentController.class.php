@@ -523,6 +523,27 @@ class CuratedContentController extends WikiaController {
 		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
 	}
 
+	public function getImage() {
+		$fileTitle = $this->request->getVal( 'file' );
+		$url = null;
+		$imageId = 0;
+
+		if ( !empty( $fileTitle ) ) {
+			$imageTitle = Title::newFromText( $fileTitle );
+
+			if ( !empty( $imageTitle ) && $imageTitle instanceof Title && $imageTitle->exists() ) {
+				$imageId = $imageTitle->getArticleID();
+			}
+		}
+
+		if ( !empty( $imageId ) ) {
+			$url = CuratedContentHelper::getImageUrl( $imageId );
+		}
+
+		$this->response->setVal( 'url', $url );
+		$this->response->setVal( 'id', $imageId );
+	}
+
 	/**
 	 * @brief Whenever data is saved in Curated Content Management Tool
 	 * purge Varnish cache for it and Game Guides
