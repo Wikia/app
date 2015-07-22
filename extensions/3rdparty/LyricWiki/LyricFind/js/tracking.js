@@ -8,6 +8,16 @@ require(['jquery','LyricFindTracker', 'wikia.log'], function($, tracker, log) {
         return;
     }
 
+	// Track the view in GA/internal data warehouse.
+	Wikia.Tracker.track({
+		action: Wikia.Tracker.ACTIONS.VIEW,
+		category: 'lyricView',
+		//label: 'lyricFindView',
+		trackingMethod: 'analytics'
+	});
+	
+	// Track the view by calling the pixel which uses our LyricFindController to send the stats to LF.
     tracker(amgId, gracenoteId, window.wgPageName);
+
     log('tracking page view', log.levels.info, 'LyricFind');
 });
