@@ -528,6 +528,38 @@ class FlagsApiController extends WikiaApiController {
 		return $flagsForPage + $flagTypesForWikia;
 	}
 
+        /**
+         * @param string name of template treated as view and source of params
+         * @return string json encoded parameter array or null
+         */
+
+        public function getFlagParamsFromTemplate( $template ) {
+		$this->getRequestParams();
+
+                $article = new \Article( \Title::newFromText(
+			$this->params['template'],
+			NS_TEMPLATE
+		) );
+
+		if ( !$article->exists() ) {
+			return false;
+		}
+
+                $flagParams = ( new \Flags\FlagsParamsComparison() )->compareTemplateVariables(
+                                $article->mTitle,
+                                '',
+                                $article->getContent()
+                );
+
+
+                if ( !is_null( $flagParams ) && !empty( $flagParams['params'] ) ) {
+			$this->makeSuccessResponse( $flagParams['params'] );
+                } else {
+                        return null;
+                }
+        }
+
+
 	/**
 	 * Logging methods
 	 */

@@ -192,12 +192,8 @@ class FlagType extends FlagsBaseModel {
 	 * @param array $params
 	 * @return int id of inserted flag type
 	 */
-	public function addFlagType( $params, $getParamsFromView = true ) {
+	public function addFlagType( $params ) {
 		$this->verifyParamsForAdd( $params );
-
-		if ( $getParamsFromView && $params['flag_params_names'] == '{}' ) {
-			$params['flag_params_names'] = $this->getParamsFromView( $params['flag_view'] );
-		}
 
 		$db = $this->getDatabaseForWrite();
 
@@ -221,28 +217,6 @@ class FlagType extends FlagsBaseModel {
 		$db->commit();
 
 		return $flagTypeId;
-	}
-
-	/**
-	 * @param string name of template treated as view and source of params
-	 * @return string json encoded parameter array or null
-	 */
-
-	private function getParamsFromView( $view ) {
-
-		$article = new \Article( \Title::newFromText( $view, NS_TEMPLATE ) );
-
-		$flagParams = ( new \Flags\FlagsParamsComparison() )->compareTemplateVariables(
-				$article->mTitle,
-				'',
-				$article->getContent()
-		);
-
-		if ( !is_null( $flagParams ) && !empty( $flagParams['params'] ) ) {
-			return json_encode( $flagParams['params'] );
-		} else {
-			return null;
-		}
 	}
 
 	/**

@@ -114,8 +114,6 @@ define ('ext.wikia.Flags.FlagEditForm',
 			modalConfig.vars.buttons[1].vars.value = mw.message('flags-special-create-form-cancel').escaped();
 
 			displayModal();
-
-			$('#flags-special-form-template').on( 'focusout', getFlagParamsFromTemplate );
 		}
 
 		function displayFormEdit(prefillData) {
@@ -146,6 +144,7 @@ define ('ext.wikia.Flags.FlagEditForm',
 			modalInstance.show();
 			modalInstance.bind('done', saveEditForm);
 			$('.flags-special-form-params-new-link').on('click', addNewParameterInput);
+			$('#flags-special-form-template').on('focusout', getFlagParamsFromTemplate);
 		}
 
 		function saveEditForm() {
@@ -164,7 +163,7 @@ define ('ext.wikia.Flags.FlagEditForm',
 			}
 
 			nirvana.sendRequest({
-				controller: 'FlagsController',
+				controller: 'FlagsApiController',
 				method: method,
 				data: data,
 				callback: function (json) {
@@ -202,8 +201,6 @@ define ('ext.wikia.Flags.FlagEditForm',
 		function addNewParameterInput( param ) {
 			param = param || {};
 
-			param = {'name': 'bar'};
-
 			var tbody = $('.flags-special-form-params-tbody'),
 				partial = mustache.to_html(formData.partials.createFormParam, param );
 
@@ -211,7 +208,31 @@ define ('ext.wikia.Flags.FlagEditForm',
 		}
 
 		function getFlagParamsFromTemplate( event ) {
-			addNewParameterInput( {'name': 'foo'} );
+			var templateName = $( event.target ).val();
+
+			var data = {template: templateName};
+
+			params = nirvana.getJson(
+                                'FlagsApiController',
+                                'getFlagParamsFromTemplate',
+                                data,
+                                function (json) {
+                                        if (json.status) {
+						for ( param in json.data ) {
+							addNewParameterInput({
+								'name': param,
+								'disableName': true
+							});
+						}						
+
+                                        } else {
+                                                new BannerNotification(
+                                                        mw.message('flags-special-create-form-params-fetch-failure').escaped(),
+                                                        'error'
+                                                ).show();
+                                        }
+                                }
+                        );
 		}
 
 		function getResourcesCacheKey() {
