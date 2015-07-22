@@ -65,6 +65,9 @@ $messages['en'] = array(
 
 	'insights-altaction-convert' => 'Convert!',
 	'insights-altaction-seedraft' => 'View the draft',
+
+	/* Flags Insights */
+	'insights-flags-filter-label' => 'Filter pages by flag type',
 );
 
 $messages['qqq'] = array(
@@ -130,6 +133,9 @@ $messages['qqq'] = array(
 
 	'insights-altaction-convert' => 'A label for a link that takes you to edit mode and presents you an automatically converted infobox markup for your template.',
 	'insights-altaction-seedraft' => 'A label for a link that takes you to a view of an existing draft of a template.',
+
+	/* Flags Insights */
+	'insights-flags-filter-label' => 'Label for select dropdown on flags insights page explaining purpose of it',
 );
 
 $messages['de'] = array(

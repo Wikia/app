@@ -9,6 +9,7 @@ abstract class InsightsModel {
 	public $subpage;
 
 	abstract public function getContent( $params );
+	abstract public function getInsightType();
 	abstract public function getViewData();
 	abstract public function getTemplate();
 
