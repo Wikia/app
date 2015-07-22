@@ -4851,11 +4851,15 @@ class User {
 		if ($wgPreferencesUseService) {
 			$preferenceNames = array_keys($this->userPreferences()->getPreferences($this->getId()));
 
-			(new WikiaSQL())->skipIf(empty($preferenceNames))
+			$sql = (new WikiaSQL())
 				->DELETE('user_properties')
-				->WHERE('up_user')->EQUAL_TO($this->getId())
-					->AND_('up_property')->NOT_IN($preferenceNames)
-				->run($dbw);
+				->WHERE('up_user')->EQUAL_TO($this->getId());
+
+			if (!empty($preferenceNames)) {
+				$sql->AND_('up_property')->NOT_IN($preferenceNames);
+			}
+
+			$sql->run($dbw);
 
 			$insert_rows = array_reduce($insert_rows, function($result, $current) use ($preferenceNames) {
 				if (!in_array($current['up_property'], $preferenceNames)) {
