@@ -38,9 +38,9 @@ if (array_key_exists('p', $opts)) {
 }
 switch($wgWikiaDatacenter) {
 	case WIKIA_DC_POZ:
-		$wgDBdevboxServer1 = 'dev-db-a1-p2';
-		$wgDBdevboxServer2 = 'dev-db-a1-p2';
-		$wgDBdevboxCentral = 'dev-db-central-p2';
+		$wgDBdevboxServer1 = 'dev-db-p1';
+		$wgDBdevboxServer2 = 'dev-db-p2';
+		$wgDBdevboxCentral = 'dev-db-p1';
 		break;
 	case WIKIA_DC_SJC:
 		$wgDBdevboxServer1 = 'dev-db-a1';
