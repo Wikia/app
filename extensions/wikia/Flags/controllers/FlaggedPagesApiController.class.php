@@ -25,7 +25,7 @@ class FlaggedPagesApiController extends FlagsApiBaseController {
 		try {
 			$this->getRequestParams();
 
-			$flaggedPages = $this->getFlaggedPagesRawData( $this->params['wiki_id'], $this->params['flagTypeId'] );
+			$flaggedPages = $this->getFlaggedPagesRawData( $this->params['wiki_id'] );
 
 			$this->makeSuccessResponse( $flaggedPages );
 		} catch ( Exception $e ) {
@@ -45,18 +45,20 @@ class FlaggedPagesApiController extends FlagsApiBaseController {
 	/**
 	 * Tries to get the data on flagged pages from cache.
 	 * If that's not cached it gets data from the database and caches it.
-	 * @param int|null $flagTypeId Flag type id to filter results
 	 * @param $wikiId
 	 * @return bool|mixed
 	 */
-	private function getFlaggedPagesRawData( $wikiId, $flagTypeId ) {
+	private function getFlaggedPagesRawData( $wikiId ) {
 		// Hmm... is this cache working?
 		$flagsCache = $this->getCache();
 		$flaggedPages = $flagsCache->get();
 
 		if ( !$flaggedPages ) {
 			$flagModel = new FlaggedPages();
-			$flagsForPage = $flagModel->getFlaggedPagesFromDatabase( $wikiId, $flagTypeId );
+			$flagsForPage = $flagModel->getFlaggedPagesFromDatabase(
+				$wikiId,
+				$this->params['flagTypeId']
+			);
 
 			$flagsCache->set( $flagsForPage );
 		}
