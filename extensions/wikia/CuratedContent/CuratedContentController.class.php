@@ -440,9 +440,6 @@ class CuratedContentController extends WikiaController {
 
 		if ( !empty( $wgWikiaCuratedContent ) && is_array( $wgWikiaCuratedContent )  ) {
 			foreach ( $wgWikiaCuratedContent as $section ) {
-				// update information about node type
-				$section['node_type'] = 'section';
-
 				// rename $section['title'] to $section['label']
 				$section['label'] = $section['title'];
 				unset( $section['title'] );
@@ -450,6 +447,9 @@ class CuratedContentController extends WikiaController {
 				if ( !empty( $section['label'] ) && empty( $section['featured'] ) ) {
 					// load image for curated content sections (not optional, not featured)
 					$section['image_url'] = CuratedContentHelper::findImageUrl( $section['image_id'] );
+
+					// update information about node type
+					$section['node_type'] = 'section';
 				}
 
 				foreach ( $section['items'] as $i => $item ) {
