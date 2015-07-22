@@ -43,6 +43,16 @@ class InsightsController extends WikiaSpecialPageController {
 	}
 
 	/**
+	 * Entry point for rendering UI for filtering flags
+	 */
+	public function flagsFiltering() {
+		$selectedFlagTypeId = $this->request->getVal( 'selectedFlagTypeId' );
+		$flagTypes = $this->app->sendRequest( 'FlagsApiController', 'getFlagTypes' )->getData()['data'];
+		$this->setVal( 'flagTypes', $flagTypes );
+		$this->setVal( 'selectedFlagTypeId', $selectedFlagTypeId );
+	}
+
+	/**
 	 * Collects all necessary data used for rendering a subpage
 	 * @throws MWException
 	 */
@@ -56,13 +66,26 @@ class InsightsController extends WikiaSpecialPageController {
 		 */
 		if ( $this->model instanceof InsightsPageModel ) {
 			$params = $this->request->getParams();
-			$this->setVal('content', $this->model->getContent( $params ) );
+			$this->setVal( 'content', $this->model->getContent( $params ) );
 			$this->preparePagination();
 			$this->prepareSortingData();
-			$this->setVal('data', $this->model->getViewData() );
+			$this->renderFlagsFiltering();
+			$this->setVal( 'data', $this->model->getViewData() );
 			$this->overrideTemplate( $this->model->getTemplate() );
 		} else {
 			throw new MWException( 'An Insights subpage should implement the InsightsQueryPageModel interface.' );
+		}
+	}
+
+	/**
+	 * Add flags filter to layout
+	 */
+	private function renderFlagsFiltering() {
+		if ( $this->model instanceof InsightsFlagsModel ) {
+			/* Enable flags filter in layout */
+			$this->setVal( 'flagsFiltering', true );
+			$flagTypeId = $this->request->getVal( 'flagTypeId' );
+			$this->setVal( 'selectedFlagTypeId', $flagTypeId );
 		}
 	}
 

@@ -11,6 +11,7 @@
  */
 
 use Flags\FlagsApiBaseController;
+use Flags\FlagsCache;
 use Flags\FlagsLogTask;
 use Flags\Models\Flag;
 use Flags\Models\FlagType;
