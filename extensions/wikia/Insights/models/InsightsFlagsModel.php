@@ -40,18 +40,6 @@ class InsightsFlagsModel extends InsightsPageModel {
 	}
 
 	/**
-	 * Checks if a given article has been fixed by a user
-	 * inside a productivity loop.
-	 * @param Title $title
-	 * @return bool
-	 */
-	public function isItemFixed( Title $title ) {
-		$titleText = $title->getText();
-		$contentText = ( new WikiPage( $title ) )->getText();
-		return !UnconvertedInfoboxesPage::isTitleWithNonportableInfobox( $titleText, $contentText );
-	}
-
-	/**
 	 * Get list of articles related to the given QueryPage category
 	 *
 	 * @return array
