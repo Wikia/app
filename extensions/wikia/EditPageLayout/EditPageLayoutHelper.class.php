@@ -236,15 +236,23 @@ class EditPageLayoutHelper {
 	 * @return bool
 	 */
 	public function showMobilePreview( Title $title ) {
-		$blacklistedPage = self::isCodePage( $title )
-				|| $title->isMainPage()
-				|| NavigationModel::isWikiNavMessage( $title );
+		$blacklistedPage = ( self::isCodePage( $title )
+				&& !self::isCodePageWithPreview( $title ) )
+			|| $title->isMainPage()
+			|| NavigationModel::isWikiNavMessage( $title );
 
 		return !$blacklistedPage;
 	}
 
+	/**
+	 * This method checks if the $title comes from one of whitelisted code pages with
+	 * a preview enabled for them. DO NOT check for self::isCodePage, it makes no sense if
+	 * by definition you include only code pages here.
+	 * @param Title $title
+	 * @return bool
+	 */
 	public static function isCodePageWithPreview( Title $title ) {
-		return self::isCodePage( $title ) && self::isInfoboxTemplate( $title );
+		return self::isInfoboxTemplate( $title );
 	}
 
 	/**
@@ -261,7 +269,7 @@ class EditPageLayoutHelper {
 		$this->addJsVariable( 'aceScriptsPath', $aceUrlParts['path'] );
 
 		$this->addJsVariable( 'wgEnableCodePageEditor', true );
-		$this->addJsVariable( 'showPagePreview', self::showMobilePreview( $title ));
+		$this->addJsVariable( 'showPagePreview', self::showMobilePreview( $title ) );
 
 		if ( $namespace === NS_MODULE ) {
 			$type = 'lua';
