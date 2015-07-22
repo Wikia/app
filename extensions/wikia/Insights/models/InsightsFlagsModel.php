@@ -81,13 +81,20 @@ class InsightsFlagsModel extends InsightsPageModel {
 		return $articlesData;
 	}
 
+	/**
+	 * @return array
+	 */
 	private function sendFlaggedPagesRequest() {
-		/**
-		 * Sends a request to the FlaggedPagesApiController to list of pages marked with flags
-		 * with and without instances to display in the edit form.
-		 * @return WikiaResponse
-		 */
-		$flaggedPages = F::app()->sendRequest(
+		$app = F::app();
+
+		/* Select first type id by default */
+		if ( empty( $this->flagTypeId ) ) {
+			$flagTypes = $app->sendRequest( 'FlagsApiController', 'getFlagTypes' )->getData()['data'];
+			$this->flagTypeId = current($flagTypes)['flag_type_id'];
+		}
+
+		/* Get to list of pages marked with flags */
+		$flaggedPages = $app->sendRequest(
 			'FlaggedPagesApiController',
 			'getFlaggedPages',
 			[ 'flagTypeId' => $this->flagTypeId ]
