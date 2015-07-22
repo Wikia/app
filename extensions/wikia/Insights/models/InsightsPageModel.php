@@ -102,7 +102,7 @@ abstract class InsightsPageModel extends InsightsModel {
 	 *
 	 * @param $params An array of URL parameters
 	 */
-	protected function prepareParams( $params ) {
+	protected function preparePaginationParams( $params ) {
 		if ( isset( $params['limit'] ) ) {
 			if ( $params['limit'] <= self::INSIGHTS_LIST_MAX_LIMIT ) {
 				$this->limit = intval( $params['limit'] );

@@ -57,7 +57,7 @@ class InsightsFlagsModel extends InsightsPageModel {
 	 * @return array
 	 */
 	public function getContent( $params ) {
-		$this->prepareParams( $params );
+		$this->preparePaginationParams( $params );
 
 		$this->queryPageInstance = $this->getDataProvider();
 
