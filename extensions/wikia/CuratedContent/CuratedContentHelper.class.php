@@ -104,7 +104,7 @@ class CuratedContentHelper {
 	}
 
 	public static function findImageIdAndUrl( $imageId, $articleId = 0 ) {
-		$url = '';
+		$url = null;
 		$imageTitle = null;
 
 		if ( empty( $imageId ) ) {
