@@ -82,31 +82,6 @@ class InsightsFlagsModel extends InsightsPageModel {
 	}
 
 	/**
-	 * @return array
-	 */
-	private function sendFlaggedPagesRequest() {
-		$app = F::app();
-
-		/* Select first type id by default */
-		if ( empty( $this->flagTypeId ) ) {
-			$flagTypes = $app->sendRequest( 'FlagsApiController', 'getFlagTypes' )->getData()['data'];
-			$this->flagTypeId = current($flagTypes)['flag_type_id'];
-		}
-
-		/* Get to list of pages marked with flags */
-		$flaggedPages = $app->sendRequest(
-			'FlaggedPagesApiController',
-			'getFlaggedPages',
-			[ 'flagTypeId' => $this->flagTypeId ]
-		)->getData()['data'];
-
-		$this->setTotal( count( $flaggedPages ) );
-		$flaggedPages = array_slice( $flaggedPages, $this->getOffset(), $this->getLimitResultsNum() );
-
-		return $flaggedPages;
-	}
-
-	/**
 	 * @param array $pagesIds Array of pages Ids
 	 * @return array
 	 * e.g. result
@@ -137,5 +112,38 @@ class InsightsFlagsModel extends InsightsPageModel {
 			$data[ $title->getArticleID() ] = $article;
 		}
 		return $data;
+	}
+
+	public function purgeFlagsInsights() {
+		$flagTypes = F::app()->sendRequest( 'FlagsApiController', 'getFlagTypes' )->getData()['data'];
+		foreach( $flagTypes as $flagType ) {
+			$cacheKey = $this->getMemcKey( self::INSIGHTS_MEMC_ARTICLES_KEY, $flagType['flag_type_id'] );
+			WikiaDataAccess::cachePurge( $cacheKey );
+		}
+	}
+
+	/**
+	 * @return array
+	 */
+	private function sendFlaggedPagesRequest() {
+		$app = F::app();
+
+		/* Select first type id by default */
+		if ( empty( $this->flagTypeId ) ) {
+			$flagTypes = $app->sendRequest( 'FlagsApiController', 'getFlagTypes' )->getData()['data'];
+			$this->flagTypeId = current($flagTypes)['flag_type_id'];
+		}
+
+		/* Get to list of pages marked with flags */
+		$flaggedPages = $app->sendRequest(
+			'FlaggedPagesApiController',
+			'getFlaggedPages',
+			[ 'flagTypeId' => $this->flagTypeId ]
+		)->getData()['data'];
+
+		$this->setTotal( count( $flaggedPages ) );
+		$flaggedPages = array_slice( $flaggedPages, $this->getOffset(), $this->getLimitResultsNum() );
+
+		return $flaggedPages;
 	}
 }
