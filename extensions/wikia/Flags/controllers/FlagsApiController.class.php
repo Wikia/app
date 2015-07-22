@@ -528,6 +528,35 @@ class FlagsApiController extends WikiaApiController {
 		return $flagsForPage + $flagTypesForWikia;
 	}
 
+	public function getGroupsAsJson() {
+		$this->getRequestParams();
+		$groups = [];
+		foreach ( FlagType::$flagGroups as $index => $slug ){
+			$groups[] = [
+				'name' => wfMessage( "flags-groups-{$slug}" )->escaped(),
+				'value' => $index,
+			];
+		}
+		$this->response->setVal( 'groups',$groups );
+	}
+
+	public function getTargetingAsJson() {
+		$this->getRequestParams();
+		$targeting = [];
+		foreach ( FlagType::$flagTargeting as $index => $slug ){
+			$targeting[] = [
+				'name' => wfMessage( "flags-target-{$slug}" )->escaped(),
+				'value' => $index,
+			];
+		}
+		$this->response->setVal( 'targeting',$targeting );
+	}
+
+	public function getGroupsAndTargetingAsJson() {
+		$this->getGroupsAsJson();
+		$this->getTargetingAsJson();
+	}
+
 	/**
 	 * Logging methods
 	 */
