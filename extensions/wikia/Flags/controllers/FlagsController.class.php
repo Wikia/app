@@ -84,9 +84,12 @@ class FlagsController extends WikiaController {
 		$flagsText = $flagsParserOutput->getText();
 
 		/**
-		 * Update the mText of the original ParserOutput object and merge other properties
+		 * Update the mText of the original ParserOutput object and merge other properties.
+		 * If the __FLAGS__ magic word is matched - replace the CSS class of the flags container
+		 * to an inline one.
 		 */
 		if ( $mwf->match( $pageText ) ) {
+			$flagsText = $this->makeFlagsInline( $flagsText );
 			$pageText = $mwf->replace( $flagsText, $pageText );
 		} else {
 			$pageText = $flagsText . $pageText;
@@ -469,5 +472,9 @@ class FlagsController extends WikiaController {
 				'prms' => $request->getParams(),
 			]
 		);
+	}
+
+	private function makeFlagsInline( $flagsHtml ) {
+		return str_replace( FlagView::FLAGS_CSS_CLASS, FlagView::FLAGS_CSS_CLASS_INLINE, $flagsHtml );
 	}
 }

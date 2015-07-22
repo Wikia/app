@@ -15,6 +15,12 @@
 	margin: 5px 0;
 }
 
+.portable-flags-inline {
+	display: flex;
+	flex-direction: column;
+	margin: 5px 0;
+}
+
 .user-anon .flags-targeting-contributors {
 	display: none;
 }
