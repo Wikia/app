@@ -4851,7 +4851,7 @@ class User {
 		if ($wgPreferencesUseService) {
 			$preferenceNames = array_keys($this->userPreferences()->getPreferences($this->getId()));
 
-			(new WikiaSQL())
+			(new WikiaSQL())->skipIf(empty($preferenceNames))
 				->DELETE('user_properties')
 				->WHERE('up_user')->EQUAL_TO($this->getId())
 					->AND_('up_property')->NOT_IN($preferenceNames)
