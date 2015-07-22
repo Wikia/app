@@ -40,12 +40,6 @@ abstract class FlagsApiBaseController extends \WikiaApiController {
 		return $this->cache;
 	}
 
-	protected function logCache( $method, $hit ) {
-		$this->info( 'FlagsLog Cache', [
-			'ht' => $hit,
-			'mthd' => $method,
-		] );
-	}
 	/**
 	 * Private methods
 	 */

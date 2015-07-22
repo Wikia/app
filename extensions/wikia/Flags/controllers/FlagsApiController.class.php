@@ -373,9 +373,6 @@ class FlagsApiController extends FlagsApiBaseController {
 			$flagsForPage = $flagModel->getFlagsForPage( $wikiId, $pageId );
 
 			$flagsCache->setFlagsForPage( $pageId, $flagsForPage );
-			$this->logCache( 'getFlagsForPage', 'MISS' );
-		} else {
-			$this->logCache( 'getFlagsForPage', 'HIT' );
 		}
 
 		return $flagsForPage;
@@ -396,9 +393,6 @@ class FlagsApiController extends FlagsApiBaseController {
 			$flagTypesForWikia = $flagTypeModel->getFlagTypesForWikia( $wikiId );
 
 			$flagsCache->setFlagTypesForWikia( $flagTypesForWikia );
-			$this->logCache( 'getFlagsForPageForEdit', 'MISS' );
-		} else {
-			$this->logCache( 'getFlagsForPageForEdit', 'HIT' );
 		}
 
 		return $flagTypesForWikia;

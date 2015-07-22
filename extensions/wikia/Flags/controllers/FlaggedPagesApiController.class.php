@@ -80,9 +80,6 @@ class FlaggedPagesApiController extends FlagsApiBaseController {
 			$flagsForPage = $flagModel->getFlaggedPagesFromDatabase( $wikiId );
 
 			$flagsCache->set( $flagsForPage );
-			$this->logCache( 'getFlagsForPage', 'MISS' );
-		} else {
-			$this->logCache( 'getFlagsForPage', 'HIT' );
 		}
 
 		return $flagsForPage;
