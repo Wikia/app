@@ -243,7 +243,15 @@ require(
 			$div = $(document.createElement('div'))
 				.addClass('flags-edit')
 				.html($a);
-		$('.portable-flags').prepend($div).append($div.clone(true));
+		var flagsContainer = $('.portable-flags');
+		if (flagsContainer.length !== 0) {
+			flagsContainer.prepend($div).append($div.clone(true));
+		} else {
+			flagsContainer = $('.portable-flags-inline');
+			if (flagsContainer.length !== 0) {
+				flagsContainer.prepend($div).append($div.clone(true));
+			}
+		}
 	}
 
 	// Run initialization method on DOM ready
