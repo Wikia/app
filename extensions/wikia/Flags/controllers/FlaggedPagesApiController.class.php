@@ -49,18 +49,18 @@ class FlaggedPagesApiController extends FlagsApiBaseController {
 	 * @return bool|mixed
 	 */
 	private function getFlaggedPagesRawData( $wikiId ) {
-		// Hmm... is this cache working?
+		$flagTypeId = $this->params['flagTypeId'];
 		$flagsCache = $this->getCache();
-		$flaggedPages = $flagsCache->get();
+		$flaggedPages = $flagsCache->get( $flagTypeId );
 
 		if ( !$flaggedPages ) {
 			$flagModel = new FlaggedPages();
 			$flagsForPage = $flagModel->getFlaggedPagesFromDatabase(
 				$wikiId,
-				$this->params['flagTypeId']
+				$flagTypeId
 			);
 
-			$flagsCache->set( $flagsForPage );
+			$flagsCache->set( $flagsForPage, $flagTypeId );
 		}
 
 		return $flagsForPage;
