@@ -75,14 +75,10 @@ if ( array_key_exists('h', $opts) || array_key_exists ('f', $opts) ) {
 			exit;
 		}
 		/* Map cluster numbers to letters
-		 * 1->A, 2->B
+		 * 1->a, 2->b
 		 * chr(65)=='A' */
 		$clusterLetter = chr( 64 + $clusterNumberParam );
-		$databaseDirectory = "database_{$clusterLetter}";
-		if ( $clusterNumberParam >= 6 ) {
-			// Way of combining s3_bucket name changed from cluster 6
-			$databaseDirectory = 'database-' . strtolower( $clusterLetter );
-		}
+		$databaseDirectory = 'database-' . strtolower( $clusterLetter );
 		// just being lazy - easier to do this as a separate regex
 		$pattern = '/wgDBname="(.*)"/';
 		preg_match($pattern, $page, $matches);
