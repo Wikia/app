@@ -82,4 +82,55 @@ class NodeImageTest extends WikiaBaseTest {
 			[ '<image/>', [ ] ],
 		];
 	}
+
+	/**
+	 * @dataProvider testVideoProvider
+	 */
+	public function testVideo( $markup, $params, $expected ) {
+		$fileMock = new FileMock();
+		$xmlObj = Wikia\PortableInfobox\Parser\XmlParser::parseXmlString( $markup );
+
+		$nodeImageMock = $this->getMockBuilder( 'Wikia\\PortableInfobox\\Parser\\Nodes\\NodeImage' )
+			->setConstructorArgs( [ $xmlObj, $params ] )
+			->setMethods( [ 'getFilefromTitle' ] )
+			->getMock()
+			->expects( $this->any() )
+			->method( 'getFilefromTitle' )
+			->will( $this->returnValue( $fileMock ) );
+
+		var_dump($nodeImageMock);
+		var_dump( $nodeImageMock instanceof Wikia\PortableInfobox\Parser\Nodes\NodeImage );
+		die;
+
+		$this->assertEquals( $expected, $nodeImageMock->getData() );
+	}
+
+	public function testVideoProvider() {
+		return [
+			[
+				'<image source="img" />',
+				[ 'img' => 'test.jpg' ],
+				[
+					'url' => '',
+					'name' => 'Test.jpg',
+					'key' => 'Test.jpg',
+					'alt' => null,
+					'caption' => null,
+					'ref' => 0,
+					'isVideo' => true,
+					'duration' => '0:10'
+				]
+			]
+		];
+	}
+}
+
+class FileMock {
+	public function getMediaType() {
+		return "VIDEO";
+	}
+
+	public function getMetadataDuration() {
+		return 10000;
+	}
 }
