@@ -11,6 +11,8 @@
 
 putenv ("SERVER_ID=177");
 
+define('S3CMD_CONFIG', '/etc/s3cmd/amazon_ro.cfg');
+
 $dirName = dirname(__FILE__);
 
 require_once( $dirName . "/../commandLine.inc" );
@@ -101,7 +103,7 @@ if ( array_key_exists('h', $opts) || array_key_exists ('f', $opts) ) {
 	// first check to make sure s3cmd is available
 
 	function getFile($databaseDirectory, $dbname, $filedir) {
-		$response = shell_exec("s3cmd ls s3://".$databaseDirectory."/fulldump* 2>&1");
+		$response = shell_exec("s3cmd --config=" . S3CMD_CONFIG . " ls s3://".$databaseDirectory."/fulldump* 2>&1");
 		if (preg_match('/ERROR/', $response) || preg_match ('/command not found/', $response)) {
 			// some kind of error, print and die
 			exit($response);
@@ -150,7 +152,7 @@ if ( array_key_exists('h', $opts) || array_key_exists ('f', $opts) ) {
 				echo "Searching $dirname...\n";
 				$filename = $databaseDirectory."/$dirname/".$dbname."_$date".".sql.gz" ;
 				echo "Searching for $filename...\n";
-				$response = shell_exec("s3cmd ls s3://".$databaseDirectory."/$dirname/".$dbname."_$date".".sql.gz");
+				$response = shell_exec("s3cmd --config=" . S3CMD_CONFIG . " ls s3://".$databaseDirectory."/$dirname/".$dbname."_$date".".sql.gz");
 				$file_list = explode("\n", $response);
 				$file_list_count = count( $file_list ) - 1;
 				echo "Found " . $file_list_count . " items...\n";
@@ -166,7 +168,7 @@ if ( array_key_exists('h', $opts) || array_key_exists ('f', $opts) ) {
 
 						echo "Found a match: $file\n";
 								echo "Saving to local filesystem:".$filename."\n";
-						shell_exec("s3cmd get --skip-existing ".$file." ".$filename);
+						shell_exec("s3cmd --config=" . S3CMD_CONFIG . " get --skip-existing ".$file." ".$filename);
 						return $filename;
 					}
 				}
