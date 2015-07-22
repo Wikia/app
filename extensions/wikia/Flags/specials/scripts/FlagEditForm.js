@@ -144,7 +144,9 @@ define ('ext.wikia.Flags.FlagEditForm',
 			modalInstance.show();
 			modalInstance.bind('done', saveEditForm);
 			$('.flags-special-form-params-new-link').on('click', addNewParameterInput);
-			$('#flags-special-form-template').on('focusout', getFlagParamsFromTemplate);
+			if ( modalConfig.vars.type === 'create' ) {
+				$('#flags-special-form-template').on('focusout', getFlagParamsFromTemplate);
+			}
 		}
 
 		function saveEditForm() {
@@ -217,8 +219,8 @@ define ('ext.wikia.Flags.FlagEditForm',
                                 'getFlagParamsFromTemplate',
                                 data,
                                 function (json) {
-                                        if (json.status) {
-						for ( param in json.data ) {
+                                        if (json) {
+						for ( param in json ) {
 							addNewParameterInput({
 								'name': param,
 								'disableName': true

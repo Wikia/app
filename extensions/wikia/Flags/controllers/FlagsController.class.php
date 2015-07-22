@@ -318,14 +318,12 @@ class FlagsController extends WikiaController {
 
 	/**
 	 * @param string name of template treated as view and source of params
-	 * @return string json encoded parameter array or null
+	 * @return bool status
 	 */
 
 	public function getFlagParamsFromTemplate( $template ) {
-		$this->getRequestParams();
-
 		$article = new \Article( \Title::newFromText(
-			$this->params['template'],
+			$this->request->getVal( 'template' ),
 			NS_TEMPLATE
 		) );
 
@@ -339,11 +337,11 @@ class FlagsController extends WikiaController {
 			$article->getContent()
 		);
 
-
 		if ( !is_null( $flagParams ) && !empty( $flagParams['params'] ) ) {
-			$this->makeSuccessResponse( $flagParams['params'] );
+			$this->response->setData( $flagParams['params'] );
+			return true;
 		} else {
-			return null;
+			return false;
 		}
 	}
 
