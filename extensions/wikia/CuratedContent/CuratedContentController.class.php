@@ -454,7 +454,7 @@ class CuratedContentController extends WikiaController {
 
 				foreach ( $section['items'] as $i => $item ) {
 					// load image for all items
-					$section['items'][$i]['image_url'] = CuratedContentHelper::findImageUrl( $section['image_id'] );
+					$section['items'][$i]['image_url'] = CuratedContentHelper::findImageUrl( $item['image_id'] );
 
 					// update information about node type
 					$section['items'][$i]['node_type'] = 'item';
