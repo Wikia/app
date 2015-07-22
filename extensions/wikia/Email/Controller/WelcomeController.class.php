@@ -12,6 +12,10 @@ class WelcomeController extends EmailController {
 	const MOBILE_URL_IOS = 'https://itunes.apple.com/us/artist/wikia-inc./id422467077';
 	const MOBILE_URL_ANDROID = 'https://play.google.com/store/apps/developer?id=Wikia,+Inc';
 
+	public function initEmail() {
+		$this->marketingFooter = true;
+	}
+
 	protected function getSubject() {
 		return $this->getMessage( 'emailext-welcome-subject', $this->getCurrentUserName() )->text();
 	}
