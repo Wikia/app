@@ -12,17 +12,19 @@
  * @version 1.0
  */
 
+use Wikia\CreateNewWiki\Starters;
+
 class CreateWiki {
 
 	use \Wikia\Logger\Loggable;
 
 	/* @var $mDBw DatabaseMysql */
 	/* @var $mClusterDB string */
-	private $mName, $mDomain, $mLanguage, $mVertical, $mCategories, $mStarters, $mIP,
+	private $mName, $mDomain, $mLanguage, $mVertical, $mCategories, $mIP,
 		$mPHPbin, $mMYSQLbin, $mMYSQLdump, $mNewWiki, $mFounder,
 		$mLangSubdomain, $mDBw, $mWFSettingVars, $mWFVars,
 		$mDefaultTables, $mAdditionalTables,
-		$mStarterTables, $sDbStarter, $mFounderIp,
+		$sDbStarter, $mFounderIp,
 		$mCurrTime,
 		$mClusterDB; // eg. "wikicities_c7"
 
@@ -80,40 +82,6 @@ class CreateWiki {
 		$this->mFounderIp = $wgRequest->getIP();
 
 		wfDebugLog( "createwiki", "founder: " . print_r($this->mFounder, true) . "\n", true );
-		/**
-		 * starters map: langcode => database name
-		 *
-		 * "*" is default
-		 */
-		$this->mStarters = array(
-			"*" => array(
-				"*"  => "aastarter",
-				"de" => "destarter",
-				"en" => "starter",
-				"es" => "esstarter",
-				"fi" => "fistarter",
-				"fr" => "starterbeta",
-				"it" => "italianstarter",
-				"ja" => "jastarter",
-				"ko" => "starterko",
-				"nl" => "nlstarter",
-				"pl" => "plstarter",
-				"ru" => "rustarter",
-			)
-		);
-
-		$this->mStarterTables = array(
-			"*" => array(
-				'categorylinks',
-				'externallinks',
-				'langlinks',
-				'page',
-				'pagelinks',
-				'revision',
-				'templatelinks',
-				'text'
-			)
-		);
 
 		/* default tables */
 		$this->mDefaultTables = array(
@@ -1073,129 +1041,45 @@ class CreateWiki {
 	 *
 	 * @author Krzysztof Krzyzaniak <eloy@wikia-inc.com>
 	 * @author Piotr Molski <moli@wikia-inc.com>
-	 * @access private
-	 *
+	 * @author macbre
 	 */
 	private function importStarter() {
-		global $wgDBadminuser, $wgDBadminpassword, $wgWikiaLocalSettingsPath;
+		global $IP;
 
-		$dbStarter = ( isset( $this->mStarters[ "*" ][ $this->mNewWiki->language ] ) )
-					? $this->mStarters[ "*" ][ $this->mNewWiki->language ]
-					: $this->mStarters[ "*" ][ "*" ];
+		// BugId:15644 - I need to pass $this->sDbStarter to CreateWikiLocalJob::changeStarterContributions
+		$starterDatabase = $this->sDbStarter = Starters::getStarterByLanguage( $this->mNewWiki->language );
 
-		/**
-		 * determine if exists
-		 */
-		$starter = null;
-		try {
-			$dbr = wfGetDB( DB_SLAVE, array(), $dbStarter );
-			/**
-			 * read info about connection
-			 */
-			$starter = $dbr->getLBInfo();
+		// import a starter database XML dump from DFS
+		$then = microtime( true );
 
-			/**
-			 * get UploadDirectory
-			 */
-			$starter[ "dbStarter" ] = $dbStarter;
+		$cmd = sprintf(
+			"SERVER_ID=%d %s %s/maintenance/importStarter.php",
+			$this->mNewWiki->city_id,
+			$this->mPHPbin,
+			"{$IP}/extensions/wikia/CreateNewWiki"
+		);
+		wfShellExec( $cmd, $retVal );
 
-			// BugId:15644 - I need to pass this to CreateWikiLocalJob::changeStarterContributions
-			$this->sDbStarter = $dbStarter;
-
-			wfDebugLog( "createwiki", __METHOD__ . ": starter $dbStarter exists\n", true );
-		}
-		catch( DBConnectionError $e ) {
-			/**
-			 * well, it means that starter doesn't exists
-			 */
-			wfDebugLog( "createwiki", __METHOD__ . ": starter $dbStarter doesn't exist\n", true );
-		}
-
-		if ( $starter ) {
-			$tables = $this->mStarterTables[ "*" ];
-
-			$then = microtime( true );
-			$cmd = sprintf(
-				"%s -h%s -u%s -p%s %s %s | %s -h%s -u%s -p%s %s",
-				$this->mMYSQLdump,
-				$starter[ "host"      ],
-				$starter[ "user"      ],
-				$starter[ "password"  ],
-				$starter[ "dbStarter" ],
-				implode( " ", $tables ),
-				$this->mMYSQLbin,
-				$this->mNewWiki->dbw->getLBInfo( 'host' ),
-				$wgDBadminuser,
-				$wgDBadminpassword,
-				$this->mNewWiki->dbname
-			);
-			wfShellExec( $cmd, $retVal );
-
-			$this->info( 'importStarter: mysqldump', [
-				'host'    => $starter[ "host" ],
-				'retval'  => $retVal,
-				'starter' => $starter[ "dbStarter" ],
-				'took'    => microtime( true ) - $then,
+		if ($retVal > 0) {
+			$this->error( 'starter dump import failed', [
+				'starter' => $starterDatabase,
+				'retval'  => $retVal
 			] );
-
-			if ($retVal > 0) {
-				$this->error( 'starter dump import failed', [
-					'starter_db' => $dbStarter
-				] );
-				return false;
-			}
-/**
-			$then = microtime( true );
-
-			wfDebugLog( "createwiki", __METHOD__ . ": Import {$this->mIP}/maintenance/cleanupStarter.sql \n", true );
-			$error = $this->mNewWiki->dbw->sourceFile( "{$this->mIP}/maintenance/cleanupStarter.sql", false, false, __METHOD__ );
-
-			$this->info( 'importStarter: cleanup', [
-				'err'     => $error,
-				'took'    => microtime( true ) - $then,
-			] );
-
-			if ($error !== true) {
-				wfDebugLog( "createwiki", __METHOD__ . ": Import starter failed\n", true );
-				return false;
-			}
-**/
-
-			// starter import performs lots of inserts, wait for slaves to catch up
-			$this->waitForSlaves( __METHOD__ );
-
-			$cmd = sprintf(
-				"SERVER_ID=%d %s %s/maintenance/updateArticleCount.php --update --conf %s",
-				$this->mNewWiki->city_id,
-				$this->mPHPbin,
-				$this->mIP,
-				$wgWikiaLocalSettingsPath
-			);
-			wfShellExec( $cmd, $retVal );
-
-			if ($retVal > 0) {
-				$this->error( 'updateArticleCount.php failed', [
-					'ret_val' => $retVal
-				] );
-				return false;
-			}
-
-			wfDebugLog( "createwiki", __METHOD__ . ": Starter database copied \n", true );
+			return false;
 		}
 
+		$this->info( 'importStarter: from XML dump', [
+			'retval'  => $retVal,
+			'starter' => $starterDatabase,
+			'took'    => microtime( true ) - $then,
+		] );
+
+		$this->waitForSlaves( __METHOD__ );
+
+		wfDebugLog( "createwiki", __METHOD__ . ": Starter database imported \n", true );
 		return true;
 	}
 
-	/**
-	 * importStarter
-	 *
-	 * get starter data for current parameters
-	 *
-	 * @author Krzysztof Krzyzaniak <eloy@wikia-inc.com>
-	 * @author Piotr Molski <moli@wikia-inc.com>
-	 * @access private
-	 *
-	 */
 	private function addUserToGroups() {
 		if ( !$this->mNewWiki->founderId ) {
 			return false;

@@ -48,27 +48,6 @@ Would you like to reactivate your account?',
 
 Please note you will have $1 {{PLURAL:$1|day|days}} from now to reactivate your account by [[Special:UserLogin|logging in]] and following the instructions you will see. After this waiting period, your account will be closed permanently and cannot be restored.',
 	'closemyaccount-scheduled-failed' => 'An error occurred while attempting to schedule this account to be closed. Please [[Special:CloseMyAccount|try again]] or [[Special:Contact|contact Wikia]] if the issue persists.',
-
-	/** Email **/
-	'closemyaccount-reactivation-email_subject' => 'Wikia account reactivation',
-	'closemyaccount-reactivation-email_body' => 'Hi $2,
-
-You\'re one step away from reactivating your account on Wikia! Click the link below to confirm you were the one who requested this and get started.
-
-$3
-
-The Wikia Team
-
-
-___________________________________________
-
-To check out the latest happenings on Wikia, visit http://community.wikia.com',
-	'closemyaccount-reactivation-email_body-HTML' => '', # do not translate or duplicate this message to other languages
-	'closemyaccount-reactivation-email-greeting' => 'Hi $USERNAME,',
-	'closemyaccount-reactivation-email-content' => 'You\'re one step away from reactivating your account on Wikia! Click the link below to confirm you were the one who requested this and get started.
-
-<a style="color:#2C85D5;" href="$CONFIRMURL">$CONFIRMURL</a>',
-	'closemyaccount-reactivation-email-signature' => 'The Wikia Team',
 );
 
 /**
@@ -108,12 +87,6 @@ $messages['qqq'] = array(
 	'closemyaccount-reactivate-error-failed' => 'Error message displayed when reactivation of an account has failed.',
 	'closemyaccount-scheduled' => 'Success message displayed when the user has successfully requested their account is closed. $1 is the number of days the user has left to reactivate their account.',
 	'closemyaccount-scheduled-failed' => 'Error message displayed when a request to close an account has failed.',
-	'closemyaccount-reactivation-email_subject' => 'Reactivation email subject.',
-	'closemyaccount-reactivation-email_body' => 'Plain text reactivation email body. $2 is the username, $3 is the confirmation url.',
-	'closemyaccount-reactivation-email_body-HTML' => '{{notranslate}}',
-	'closemyaccount-reactivation-email-greeting' => 'Greeting in the HTML version of the reactivation email. $USERNAME is replaced with the user name of the account that was requested to be reactivated.',
-	'closemyaccount-reactivation-email-content' => 'The content of the HTML version of the reactivation email. $CONFIRMURL is replaced with the URL to confirm they are the one who requested that the account is reactivated.',
-	'closemyaccount-reactivation-email-signature' => 'Signature at the bottom of the HTML version of the reactivation email.',
 );
 
 $messages['de'] = array(
@@ -152,25 +125,6 @@ Möchtest du dein Benutzerkonto wieder reaktivieren?',
 
 Bitte beachte, dass du von nun an $1 {{PLURAL:$1|Tag|Tage}} Zeit hast, dein Benutzerkonto wieder zu reaktivieren. Dazu musst du dich [[Special:UserLogin|anmelden]] und den Anweisungen folgen. Nach dieser Wartezeit wird dein Benutzerkonto permanent geschlossen und kann nicht wiederhergestellt werden.',
 	'closemyaccount-scheduled-failed' => 'Beim Versuch dieses Benutzerkonto für eine Schließung vorzumerken ist ein Fehler aufgetreten. Bitte [[Special:CloseMyAccount|probiere es nochmal]] oder [[Special:Contact|kontaktiere Wikia]], falls das Problem bestehen bleibt.',
-	'closemyaccount-reactivation-email_subject' => 'Wikia Konto-Reaktivierung',
-	'closemyaccount-reactivation-email_body' => 'Hallo $2,
-
-du bist noch einen Schritt von der Reaktivierung deines Wikia-Kontos entfernt! Klicke auf den Link unten um zu bestätigen, dass du derjenige bist, der die Reaktivierung beantragt hat.
-
-$3
-
-Das Wikia-Team
-
-
-___________________________________________
-
-Für die letzten Neuigkeiten auf Wikia, besuche http://de.community.wikia.com',
-	'closemyaccount-reactivation-email_body-HTML' => '',
-	'closemyaccount-reactivation-email-greeting' => 'Hallo $USERNAME,',
-	'closemyaccount-reactivation-email-content' => 'du bist noch einen Schritt von der Reaktivierung deines Wikia-Kontos entfernt! Klicke auf den Link unten um zu bestätigen, dass du derjenige bist, der die Reaktivierung beantragt hat.
-
-<a style="color:#2C85D5;" href="$CONFIRMURL">$CONFIRMURL</a>',
-	'closemyaccount-reactivation-email-signature' => 'Das Wikia-Team',
 );
 
 $messages['es'] = array(
@@ -209,25 +163,6 @@ Ten en cuenta que tendrás $1 {{PLURAL:$1|día|días}} después de hacer el pedi
 
 Ten en cuenta que tendrás $1 {{PLURAL:$1|día|días}} después de hacer el pedido para reactivar su cuenta [[Special:UserLogin|ingresando]] y siguiendo las instrucciones. Después de este período de espera, su cuenta será cerrada permanentemente y no podrá ser restaurada.',
 	'closemyaccount-scheduled-failed' => 'Se ha producido un error al intentar programar esta cuenta para ser cerrada. Por favor [[Special:CloseMyAccount|intenta de nuevo]] o [[Special:Contact|contáctate con Wikia]] si el problema persiste.',
-	'closemyaccount-reactivation-email_subject' => 'Reactivación de cuenta en Wikia',
-	'closemyaccount-reactivation-email_body' => 'Hola $2,
-
-¡Estás a un paso de reactivar tu cuenta en Wikia! Haga clic en enlace de abajo para confirmar que has sido tú el que pidió esto y que deseas iniciar el proceso.
-
-$3
-
-El equipo de Wikia
-
-
-___________________________________________
-
-Para revisar los últimos acontecimientos en Wikia, visita http://comunidad.wikia.com',
-	'closemyaccount-reactivation-email_body-HTML' => '',
-	'closemyaccount-reactivation-email-greeting' => 'Hola $USERNAME,',
-	'closemyaccount-reactivation-email-content' => '¡Estás a un paso de reactivar tu cuenta en Wikia! Haga clic en enlace de abajo para confirmar que has sido tú el que pidió esto y que deseas iniciar el proceso.
-
-<a style="color:#2C85D5;" href="$CONFIRMURL">$CONFIRMURL</a>',
-	'closemyaccount-reactivation-email-signature' => 'El equipo de Wikia',
 );
 
 $messages['fr'] = array(
@@ -266,25 +201,6 @@ Souhaitez-vous réactiver votre compte ?',
 
 Veuillez noter que vous avez  $1 {{PLURAL:$1|jour|jours}} à partir de maintenant pour réactiver votre compte en [[Special:UserLogin|vous connectant]] et en suivant les instructions affichées. Après cette période de rétractation, votre compte sera définitivement fermé et ne pourra pas être restauré.',
 	'closemyaccount-scheduled-failed' => 'Une erreur est survenue en tentant de planifier la fermeture de ce compte. Veuillez [[Special:CloseMyAccount|réessayer]] ou [[Special:Contact|contactez Wikia]] si le problème persiste.',
-	'closemyaccount-reactivation-email_subject' => 'Réactivation de compte Wikia',
-	'closemyaccount-reactivation-email_body' => "Bonjour $2,
-
-Vous êtes proche de la réactivation de votre compte sur Wikia ! Cliquez sur le lien ci-dessous pour confirmer que vous êtes celui ou celle ayant demandé cette réactivation et commencer.
-
-$3
-
-L'équipe Wikia
-
-
-___________________________________________
-
-Pour connaître les derniers évènements sur Wikia, visitez http://communaute.wikia.com",
-	'closemyaccount-reactivation-email_body-HTML' => '',
-	'closemyaccount-reactivation-email-greeting' => 'Bonjour $USERNAME,',
-	'closemyaccount-reactivation-email-content' => 'Vous êtes proche de la réactivation de votre compte sur Wikia ! Cliquez sur le lien ci-dessous pour confirmer que vous êtes celui ou celle ayant demandé cette réactivation et commencer.
-
-<a style="color:#2C85D5;" href="$CONFIRMURL">$CONFIRMURL</a>',
-	'closemyaccount-reactivation-email-signature' => "L'équipe Wikia",
 );
 
 $messages['it'] = array(
@@ -323,25 +239,6 @@ Desideri riattivare il tuo account?",
 
 Per favore ricordati che hai $1 {{PLURAL:$1|giorno|giorni}} a disposizione da adesso per riattivare il tuo account [[Special:UserLogin|eseguendo l'accesso]] e seguendo le istruzioni che compariranno. Dopo questo periodo di attesa, il tuo account sarà chiuso definitivamente e non potrà essere riattivato.",
 	'closemyaccount-scheduled-failed' => 'Si è verificato un errore durante la programmazione della chiusura di questo account. Per favore [[Special:CloseMyAccount|prova di nuovo]] o [[Special:Contact|contatta Wikia]] se il problema persiste.',
-	'closemyaccount-reactivation-email_subject' => 'Riattivazione account Wikia',
-	'closemyaccount-reactivation-email_body' => 'Ciao $2,
-
-Sei ad un passo dal riattivare il tuo account su Wikia! Clicca sul link sottostante per confermare di essere stato tu a fare la richiesta e procedi.
-
-$3
-
-Il team di Wikia
-
-
-___________________________________________
-
-Per restare informati sul mondo di Wikia, visita http://it.community.wikia.com',
-	'closemyaccount-reactivation-email_body-HTML' => '',
-	'closemyaccount-reactivation-email-greeting' => 'Ciao $USERNAME,',
-	'closemyaccount-reactivation-email-content' => 'Sei ad un passo dal riattivare il tuo account su Wikia! Clicca sul link sottostante per confermare di essere stato tu a fare la richiesta e procedi.
-
-<a style="color:#2C85D5;" href="$CONFIRMURL">$CONFIRMURL</a>',
-	'closemyaccount-reactivation-email-signature' => 'Il team di Wikia',
 );
 
 $messages['ja'] = array(
@@ -380,20 +277,6 @@ $messages['ja'] = array(
 
 今から$1 {{PLURAL:$1|day|days}} 日間、[[Special:UserLogin|ログイン]]によってあなたのアカウントは再有効化されます。説明をよく読んで下さい。この期間を過ぎるとあなたのアカウントは永久に閉鎖され、再度有効化することはできません。',
 	'closemyaccount-scheduled-failed' => 'アカウントを閉鎖しようと手続きをしたところエラーが発生しました。お手数ですが[[Special:CloseMyAccount|再度試みる]]もしくは [[Special:Contact|ウィキア]]までご連絡下さい。',
-	'closemyaccount-reactivation-email_subject' => 'ウィキアアカウントの再有効化',
-	'closemyaccount-reactivation-email_body' => 'こんにちは $2さん、
-
-あなたのウィキアアカウントを再有効化するのに１ステップ必要です。下記のリンクをクリックして手続きを始めて下さい。
-
-$3
-
-ウィキアチーム',
-	'closemyaccount-reactivation-email_body-HTML' => '',
-	'closemyaccount-reactivation-email-greeting' => 'こんにちは、$USERNAME,さん',
-	'closemyaccount-reactivation-email-content' => 'あなたのウィキアアカウントを再有効化するのにもう１ステップ必要です。下にあるリンクをクリックしてアカウントを再有効化する手続きを始めて下さい。
-
-<a style="color:#2C85D5;" href="$CONFIRMURL">$CONFIRMURL</a>',
-	'closemyaccount-reactivation-email-signature' => 'ウィキアチーム',
 );
 
 $messages['pl'] = array(
@@ -428,25 +311,6 @@ Czy chcesz reaktywować swoje konto?',
 
 Masz $1 {{PLURAL:$1|dzień|dni}} aby je reaktywować logując się na nie ponownie i postępując zgodnie z instrukcjami. Po tym czasie Twoje konto zostanie wyłączone na stałe i nie będzie możliwości odzyskania go.',
 	'closemyaccount-scheduled-failed' => 'Wystąpił błąd przy dodawaniu zadania zamknięcia konta. Spróbuj [[Special:CloseMyAccount|ponownie]] lub [[Special:Contact|skontaktuj się z Wikią]] jeśli problem się powtarza.',
-	'closemyaccount-reactivation-email_subject' => 'Reaktywacja konta na Wikii',
-	'closemyaccount-reactivation-email_body' => 'Hej $2,
-
-Jesteś o krok od reaktywowania Twojego konta na Wikii! Kliknij na link poniżej aby potwierdzić, że to ty chcesz reaktywować konto.
-
-$1
-
-Zespół Wikii
-
-
-___________________________________________
-
-Odwiedź http://spolecznosc.wikia.com aby znaleźć nowinki dotyczące Wikii',
-	'closemyaccount-reactivation-email_body-HTML' => '',
-	'closemyaccount-reactivation-email-greeting' => 'Hej $USERNAME,',
-	'closemyaccount-reactivation-email-content' => 'Jesteś o krok od reaktywowania Twojego konta na Wikii! Kliknij na link poniżej aby potwierdzić, że to ty chcesz reaktywować konto.
-
-<a style="color:#2C85D5;" href="$CONFIRMURL">$CONFIRMURL</a>',
-	'closemyaccount-reactivation-email-signature' => 'Zespół Wikii',
 );
 
 $messages['pt'] = array(
@@ -485,24 +349,6 @@ Gostaria de reativar a sua conta?',
 
 Por favor, note que você terá $1 {{PLURAL: $1|dia|dias}} a partir de agora para reativar sua conta. Basta [[Special:UserLogin|logar]] e seguir as instruções que você verá. Após este período, sua conta será permanentemente fechada e não pode ser restaurada.',
 	'closemyaccount-scheduled-failed' => 'Um erro ocorreu ao tentar agendar esta conta para ser fechada. Por favor [[Special:CloseMyAccount|tente novamente]] ou [[Special:Contact|entre em contato]] com a Wikia se o problema persistir.',
-	'closemyaccount-reactivation-email_subject' => 'Reativação de conta da Wikia',
-	'closemyaccount-reactivation-email_body' => 'Olá $2,
-
-Você está a um passo de reativar a sua conta na Wikia! Clique no link abaixo para confirmar que foi você quem solicitou esse processo.
-
-$3
-
-A equipe da Wikia
-
-___________________________________________
-
-Para conferir os últimos acontecimentos na Wikia, visite http://comunidade.wikia.com',
-	'closemyaccount-reactivation-email_body-HTML' => '',
-	'closemyaccount-reactivation-email-greeting' => 'Olá $USERNAME,',
-	'closemyaccount-reactivation-email-content' => 'Você está a um passo de reativar sua conta na Wikia! Clique no link abaixo para confirmar que foi você quem solicitou esse processo.
-
-<a style="color:#2C85D5;" href="$CONFIRMURL">$CONFIRMURL</a>',
-	'closemyaccount-reactivation-email-signature' => 'A equipe da Wikia',
 );
 
 $messages['ru'] = array(
@@ -539,24 +385,6 @@ $messages['ru'] = array(
 
 Обратите внимание, что у вас будет $1 {{PLURAL:$1|день|дня|дней}}, чтобы восстановить аккаунт. Для этого [[Special:UserLogin|войдите в свою учётную запись]] и следуйте инструкциям. По прошествии указанного времени ваш аккаунт будет окончательно отключён и его невозможно будет восстановить.',
 	'closemyaccount-scheduled-failed' => 'Произошла ошибка при отключении учётной записи. Пожалуйста, попробуйте [[Special:CloseMyAccount|отключить аккаунт ещё раз]]. Если проблема не исчезла, [[Special:Contact|свяжитесь с сотрудниками Викия]].',
-	'closemyaccount-reactivation-email_subject' => 'Восстановление учётной записи Викия',
-	'closemyaccount-reactivation-email_body' => 'Привет, $2.
-
-Вы в одном шаге от восстановления своей учётной записи на Викия! Нажмите на ссылку ниже, чтобы подтвердить, что учётная запись принадлежит именно вам, и возвращайтесь на Викия.
-$3
-
-Команда Викия
-
-
-___________________________________________
-
-Узнайте свежие новости Вики, посетив http://community.wikia.com',
-	'closemyaccount-reactivation-email_body-HTML' => '',
-	'closemyaccount-reactivation-email-greeting' => 'Привет, $USERNAME',
-	'closemyaccount-reactivation-email-content' => 'Вы в одном шаге от того, чтобы восстановить свою учётную запись Викия! Нажмите на ссылку ниже, чтобы подтвердить, что вы тот, кто запрашивал восстановление аккаунта, и возвращайтесь на Викия.
-
-<a style="color:#2C85D5;" href="$CONFIRMURL">$CONFIRMURL</a>',
-	'closemyaccount-reactivation-email-signature' => 'Команда Викия',
 );
 
 $messages['zh-hans'] = array(
@@ -595,24 +423,6 @@ $messages['zh-hans'] = array(
 
 请注意，您还有$1{{PLURAL:$1|天|天}}时间重新激活您的帐户。请您[[Special:UserLogin|登陆帐户]]进行激活。在这段时间之后，您的帐户将被永久禁用并且无法恢复。 ',
 	'closemyaccount-scheduled-failed' => '关闭帐户出现错误，请[[Special:CloseMyAccount|重新进行关闭]]。如果问题依然存在，请[http://zh.community.wikia.com/wiki/Special:Contact/general 联系我们]。',
-	'closemyaccount-reactivation-email_subject' => 'Wikia帐户重新激活',
-	'closemyaccount-reactivation-email_body' => '您好$2，
-
-距离激活您的Wikia帐户只剩下最后一步！请点击下面的链接确认您的激活。
-
-$3
-
-Wikia团队
-
-___________________________________________
-
-查阅更多有关Wikia的消息，请访问维基中文社区中心：http://zh.community.wikia.com',
-	'closemyaccount-reactivation-email_body-HTML' => '',
-	'closemyaccount-reactivation-email-greeting' => '您好$USERNAME，',
-	'closemyaccount-reactivation-email-content' => '距离激活您的Wikia帐户只剩下最后一步！请点击下面的链接确认您的激活。
-
-<a style="color:#2C85D5;" href="$CONFIRMURL">$CONFIRMURL</a>',
-	'closemyaccount-reactivation-email-signature' => 'Wikia团队',
 );
 
 $messages['zh-tw'] = array(
@@ -651,22 +461,4 @@ $messages['zh-tw'] = array(
 
 請注意，您還有$1{{PLURAL:$1|天|天}}時間重新激活您的帳戶。請您[[Special:UserLogin|登陸帳戶]]進行激活。在這段時間之後，您的帳戶將被永久禁用並且無法恢復。',
 	'closemyaccount-scheduled-failed' => '關閉帳戶出現錯誤，請[[Special:CloseMyAccount|重新進行關閉]]。如果問題依然存在，請[http://zh.community.wikia.com/wiki/Special:Contact/general 聯繫我們]。',
-	'closemyaccount-reactivation-email_subject' => 'Wikia帳戶重新啟動',
-	'closemyaccount-reactivation-email_body' => '您好$2，
-
-距離激活您的Wikia帳戶只剩下​​最後一步！請點擊下面的鏈接確認您的激活。
-
-$3
-
-Wikia團隊
-
-___________________________________________
-
-查閱更多有關Wikia的消息，請訪問維基中文社區中心：http://zh.community.wikia.com',
-	'closemyaccount-reactivation-email_body-HTML' => '',
-	'closemyaccount-reactivation-email-greeting' => '您好$USERNAME，',
-	'closemyaccount-reactivation-email-content' => '距離激活您的Wikia帳戶只剩下​​最後一步！請點擊下面的鏈接確認您的激活。
-
-<a style="color:#2C85D5;" href="$CONFIRMURL">$CONFIRMURL</a>',
-	'closemyaccount-reactivation-email-signature' => 'Wikia團隊',
 );

@@ -260,8 +260,10 @@ class PortableInfoboxRenderService extends WikiaService {
 			return false;
 		}
 
-		$data[ 'height' ] = $thumbnail->getHeight();
-		$data[ 'width' ] = $thumbnail->getWidth();
+		// TODO: the min() function will be redundant when https://wikia-inc.atlassian.net/browse/PLATFORM-1359
+		// will hit the production
+		$data[ 'height' ] = min( $thumbnail->getHeight(), $thumbnail->file->getHeight() );
+		$data[ 'width' ] = min( $thumbnail->getWidth(), $thumbnail->file->getWidth() );
 		$data[ 'thumbnail' ] = $thumbnail->getUrl();
 		$data[ 'key' ] = urlencode( $data[ 'key' ] );
 

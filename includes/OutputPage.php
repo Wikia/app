@@ -3053,7 +3053,6 @@ $templates
 		$vars = array(
 			'wgCanonicalNamespace' => $nsname,
 			'wgCanonicalSpecialPageName' => $canonicalName,
-			'wgNamespaceNumber' => $title->getNamespace(),
 			'wgPageName' => $title->getPrefixedDBKey(),
 			'wgTitle' => $title->getText(),
 			'wgCurRevisionId' => $latestRevID,

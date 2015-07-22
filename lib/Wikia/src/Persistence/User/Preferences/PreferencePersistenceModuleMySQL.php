@@ -12,15 +12,20 @@ class PreferencePersistenceModuleMySQL implements Module {
 	/** @var callable */
 	private $slaveProvider;
 
-	public function __construct(callable $masterProvider, callable $slaveProvider) {
+	/** @var callable */
+	private $whiteListProvider;
+
+	public function __construct(callable $masterProvider, callable $slaveProvider, callable $whiteListProvider) {
 		$this->masterProvider = $masterProvider;
 		$this->slaveProvider = $slaveProvider;
+		$this->whiteListProvider = $whiteListProvider;
 	}
 
 	public function configure(InjectorBuilder $builder) {
 		$builder
 			->bind(PreferencePersistence::class)->toClass(PreferencePersistenceMySQL::class)
 			->bind(PreferencePersistenceMySQL::CONNECTION_MASTER)->to($this->masterProvider)
-			->bind(PreferencePersistenceMySQL::CONNECTION_SLAVE)->to($this->slaveProvider);
+			->bind(PreferencePersistenceMySQL::CONNECTION_SLAVE)->to($this->slaveProvider)
+			->bind(PreferencePersistenceMySQL::WHITE_LIST)->to($this->whiteListProvider);
 	}
 }

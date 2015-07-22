@@ -66,6 +66,7 @@ function wfJSVariablesTopScripts(Array &$vars, &$scripts) {
 	$vars['wikiaPageType'] = WikiaPageType::getPageType();
 	$vars['wikiaPageIsCorporate'] = WikiaPageType::isCorporatePage();
 	$vars['wgArticleType'] = WikiaPageType::getArticleType();
+	$vars['wgNamespaceNumber'] = $title->getNamespace();
 
 	// missing in 1.19
 	$skin = RequestContext::getMain()->getSkin();
