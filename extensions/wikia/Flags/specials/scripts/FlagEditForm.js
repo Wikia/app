@@ -213,7 +213,7 @@ define ('ext.wikia.Flags.FlagEditForm',
 			var data = {template: templateName};
 
 			params = nirvana.getJson(
-                                'FlagsApiController',
+                                'FlagsController',
                                 'getFlagParamsFromTemplate',
                                 data,
                                 function (json) {
