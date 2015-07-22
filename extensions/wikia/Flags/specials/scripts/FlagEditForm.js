@@ -194,7 +194,8 @@ define ('ext.wikia.Flags.FlagEditForm',
 				return false;
 			}
 
-			if (allFlagsNames.indexOf(flagName) > -1) {
+			var oldFlagName = $('#flags-special-form-name').data('flag-name');
+			if (flagName !== oldFlagName && allFlagsNames.indexOf(flagName) > -1) {
 				showErrorNotification('flags-special-create-form-invalid-name-exists');
 				return false;
 			}
