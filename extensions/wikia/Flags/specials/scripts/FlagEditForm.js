@@ -146,6 +146,7 @@ define ('ext.wikia.Flags.FlagEditForm',
 			modalInstance.show();
 			modalInstance.bind('done', saveEditForm);
 			$('.flags-special-form-params-new-link').on('click', addNewParameterInput);
+			$('.flags-special-form-param-delete-link').on('click', removeParameter);
 		}
 
 		function saveEditForm() {
@@ -245,6 +246,12 @@ define ('ext.wikia.Flags.FlagEditForm',
 				partial = mustache.to_html(formData.partials.createFormParam, {});
 
 			tbody.append(partial);
+			$('.flags-special-form-param-delete-link').on('click', removeParameter);
+		}
+
+		function removeParameter(event) {
+			event.preventDefault;
+			$(event.target).closest('tr').remove();
 		}
 
 		function getResourcesCacheKey() {
