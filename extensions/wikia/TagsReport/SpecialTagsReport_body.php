@@ -60,11 +60,11 @@ class TagsReportPage extends SpecialPage {
 
         $oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
         $oTmpl->set_vars( array(
-			"error"		=> $error,
-            "action"	=> htmlspecialchars( $this->getTitle()->getLocalURL() ),
-            "tagList"	=> $this->getTagsList(),
-            "mTag"  	=> $tag,
-            "timestamp"	=> $timestamp
+			"error"		=> '',
+			"action"	=> htmlspecialchars( $this->getTitle()->getLocalURL() ),
+			"tagList"	=> $this->getTagsList(),
+			"mTag"  	=> $tag,
+			"timestamp"	=> $timestamp
         ) );
         $wgOut->addHTML( $oTmpl->render( "main-form" ) );
         wfProfileOut( __METHOD__ );
