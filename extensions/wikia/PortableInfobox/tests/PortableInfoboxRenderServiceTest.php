@@ -112,6 +112,39 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 						'data' => [
 							'alt' => 'image alt',
 							'url' => 'http://image.jpg',
+							'caption' => 'Lorem ipsum dolor',
+							'isVideo' => true,
+							'duration' => '1:20',
+							'name' => 'test',
+							'key' => 'test'
+						]
+					]
+				],
+				'output' => '<aside class="portable-infobox">
+								<div class="portable-infobox-item item-type-image no-margins">
+									<figure class="portable-infobox-image-wrapper">
+										<a href="http://image.jpg"
+										class="image image-thumbnail video video-thumbnail small"
+										title="image alt">
+											<img src="http://image.jpg" class="portable-infobox-image"
+											alt="image alt" width="400" height="200" data-video-key="test"
+											data-video-name="test"/>
+											<span class="duration" itemprop="duration">1:20</span>
+											<span class="play-circle"></span>
+										</a>
+										<figcaption class="portable-infobox-item-margins portable-infobox-image-caption">Lorem ipsum dolor</figcaption>
+									</figure>
+								</div>
+							</aside>',
+				'description' => 'Only image'
+			],
+			[
+				'input' => [
+					[
+						'type' => 'image',
+						'data' => [
+							'alt' => 'image alt',
+							'url' => 'http://image.jpg',
 							'caption' => 'Lorem ipsum dolor'
 						]
 					]
