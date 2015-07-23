@@ -2501,3 +2501,11 @@ $config['template_draft'] = [
 		'//extensions/wikia/TemplateDraft/scripts/templateDraftTracking.js'
 	]
 ];
+
+$config['curated_tour_planning'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//extensions/wikia/CuratedTour/scripts/curatedTour.run.js',
+		'//extensions/wikia/CuratedTour/scripts/editBox.js',
+	],
+];
