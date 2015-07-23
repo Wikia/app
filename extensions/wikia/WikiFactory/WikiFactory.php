@@ -1053,7 +1053,7 @@ class WikiFactory {
 	 * @param string $city_dbname	name of database
 	 * @param boolean $master	use master or slave connection
 	 *
-	 * @return id in city_list
+	 * @return integer The ID in city_list
 	 */
 	static public function DBtoID( $city_dbname, $master = false ) {
 

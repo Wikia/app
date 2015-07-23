@@ -68,9 +68,9 @@ class LookupUserPage extends SpecialPage {
 
 		$emailUser = $wgRequest->getText( 'email_user' );
 		if ( $emailUser ) {
-			$this->showForm( $emailUser, $id, $target, $byIdInvalidUser );
+			$this->showForm( $emailUser, $id, $byIdInvalidUser );
 		} else {
-			$this->showForm( $target, $id, '', $byIdInvalidUser );
+			$this->showForm( $target, $id, $byIdInvalidUser );
 		}
 
 		if ( $target && !$byIdInvalidUser ) {
@@ -80,9 +80,12 @@ class LookupUserPage extends SpecialPage {
 
 	/**
 	 * Show the LookupUser form
+	 *
 	 * @param $target Mixed: user whose info we're about to look up
+	 * @param string $id
+	 * @param bool $invalidUser
 	 */
-	function showForm( $target, $id = '', $email = '', $invalidUser = false ) {
+	function showForm( $target, $id = '', $invalidUser = false ) {
 		global $wgScript, $wgOut;
 		$title = htmlspecialchars( $this->getTitle()->getPrefixedText() );
 		$action = htmlspecialchars( $wgScript );
@@ -133,12 +136,16 @@ EOT
 
 	/**
 	 * Retrieves and shows the gathered info to the user
-	 * @param $target Mixed: user whose info we're looking up
+	 *
+	 * @param string $target User whose info we're looking up
+	 * @param string $emailUser
 	 */
 	function showInfo( $target, $emailUser = "" ) {
-		global $wgOut, $wgLang, $wgScript, $wgEnableWallExt, $wgExternalSharedDB, $wgExternalAuthType;
+		global $wgOut, $wgScript, $wgEnableWallExt, $wgExternalSharedDB, $wgExternalAuthType;
 		// Small Stuff Week - adding table from Special:LookupContribs --nAndy
 		global $wgExtensionsPath, $wgJsMimeType, $wgResourceBasePath, $wgEnableLookupContribsExt;
+
+		$wg = F::app()->wg;
 
 		/**
 		 * look for @ in username
@@ -177,6 +184,7 @@ EOT
 				__METHOD__
 			);
 
+			/** @var stdClass $row */
 			foreach ( $dRows as $row ) {
 				if ( $loop === 0 ) {
 					$userTarget = $oRow->user_name;
@@ -241,7 +249,7 @@ EOT
 
 		$authTs = $user->getEmailAuthenticationTimestamp();
 		if ( $authTs ) {
-			$authenticated = wfMessage( 'lookupuser-authenticated', $wgLang->timeanddate( $authTs, true ) )->text();
+			$authenticated = wfMessage( 'lookupuser-authenticated', $wg->Lang->timeanddate( $authTs, true ) )->text();
 		} else {
 			$authenticated = wfMessage( 'lookupuser-not-authenticated' )->text();
 		}
@@ -257,12 +265,12 @@ EOT
 			$email_output = wfMessage( 'lookupuser-no-email' )->text();
 		}
 		if ( $user->getRegistration() ) {
-			$registration = $wgLang->timeanddate( $user->getRegistration(), true );
+			$registration = $wg->Lang->timeanddate( $user->getRegistration(), true );
 		} else {
 			$registration = wfMessage( 'lookupuser-no-registration' )->text();
 		}
 		$wgOut->addWikiText( '*' . wfMessage( 'username' )->text() . ' [[User:' . $name . '|' . $name . ']] (' .
-			$wgLang->pipeList( array(
+			$wg->Lang->pipeList( array(
 				'<span id="lu-tools">[[' . ( !empty( $wgEnableWallExt ) ?
 				'Message Wall:' . $name . '|' . wfMessage( 'wall-message-wall-shorten' )->text() :
 				'User talk:' . $name . '|' . wfMessage( 'talkpagelinktext' )->text() ) . ']]',
@@ -276,10 +284,10 @@ EOT
 		$wgOut->addWikiText( '*' . $email_output );
 		$wgOut->addWikiText( '*' . wfMessage( 'lookupuser-realname', $user->getRealName() )->text() );
 		$wgOut->addWikiText( '*' . wfMessage( 'lookupuser-registration', $registration )->text() );
-		$wgOut->addWikiText( '*' . wfMessage( 'lookupuser-touched', $wgLang->timeanddate( $user->mTouched, true ) )->text() );
+		$wgOut->addWikiText( '*' . wfMessage( 'lookupuser-touched', $wg->Lang->timeanddate( $user->mTouched, true ) )->text() );
 		$wgOut->addWikiText( '*' . wfMessage( 'lookupuser-info-authenticated', $authenticated )->text() );
 		if ( isset( $user->mBirthDate ) ) {
-			$birthDate = $wgLang->date( date( 'Y-m-d H:i:s', strtotime( $user->mBirthDate ) ) );
+			$birthDate = $wg->Lang->date( date( 'Y-m-d H:i:s', strtotime( $user->mBirthDate ) ) );
 		} else {
 			$birthDate = wfMessage( 'lookupuser-no-birthdate' )->text();
 		}
@@ -468,14 +476,12 @@ EOT
 	}
 
 	/**
-	 * @brief Returns true if a user is founder of a wiki
+	 * Returns true if a user is founder of a wiki
 	 *
-	 * @param integer $userId user's id
+	 * @param string $userName
 	 * @param integer $wikiId wiki's id
 	 *
-	 * @return boolean
-	 *
-	 * @author Andrzej 'nAndy' Łukaszewski
+	 * @return bool
 	 */
 	public static function isUserFounder( $userName, $wikiId ) {
 		global $wgMemc;
