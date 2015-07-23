@@ -101,7 +101,7 @@ define ('ext.wikia.Flags.FlagEditForm',
 
 		function displayFormCreate() {
 			/* TODO - We can get a half-rendered template to avoid escaping messages in front-end */
-			var content = cache.get(getEmptyFormCacheKey());
+			var content = cache.get(getEmptyFormCacheKey(mw.user.options.values.language));
 			/** **/
 			if (content == null) {
 				var formParams = {
@@ -110,7 +110,7 @@ define ('ext.wikia.Flags.FlagEditForm',
 				};
 				content = mustache.to_html(formData.template, formParams, formData.partials);
 
-				cache.set(getEmptyFormCacheKey(), content, cache.CACHE_LONG);
+				cache.set(getEmptyFormCacheKey(mw.user.options.values.language), content, cache.CACHE_LONG);
 			}
 
 			modalConfig.vars.content = content;
@@ -214,8 +214,8 @@ define ('ext.wikia.Flags.FlagEditForm',
 			return resourcesCacheKey + ':' + cacheVersion;
 		}
 
-		function getEmptyFormCacheKey() {
-			return emptyFormCacheKey + ':' + cacheVersion;
+		function getEmptyFormCacheKey(lang) {
+			return emptyFormCacheKey + ':' + lang +':' + cacheVersion;
 		}
 
 		function getDropdownOptions(values) {
@@ -248,4 +248,4 @@ define ('ext.wikia.Flags.FlagEditForm',
 			init: init
 		}
 	}
-);
+);;
