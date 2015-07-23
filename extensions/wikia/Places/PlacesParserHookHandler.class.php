@@ -18,6 +18,10 @@ class PlacesParserHookHandler {
 
 	static private $recursionLock = false;
 
+	const PLACES_DEFAULT_HEIGHT = 400;
+	const PLACES_DEFAULT_ANIMATION_DELAY = 5;
+	const PLACES_DEFAULT_ALL_LIMIT = 100;
+
 	/**
 	 * Render <place> tag
 	 *
@@ -107,11 +111,11 @@ class PlacesParserHookHandler {
 
 		// parse attributes
 		$content = trim($content);
-		$height = !empty($attributes['height']) && is_numeric($attributes['height']) ? $attributes['height'] : 400;
+		$height = !empty($attributes['height']) && is_numeric($attributes['height']) ? $attributes['height'] : self::PLACES_DEFAULT_HEIGHT;
 		$categories = !empty($attributes['category']) ? explode('|', $attributes['category']) : false;
 		$animate = !empty($attributes['animate'])
 			?
-			is_numeric($attributes['animate']) ? intval($attributes['animate']) : 5 /* default animation delay in sec */
+			is_numeric($attributes['animate']) ? intval($attributes['animate']) : self::PLACES_DEFAULT_ANIMATION_DELAY /* default animation delay in sec */
 			:
 			false;
 
@@ -135,7 +139,7 @@ class PlacesParserHookHandler {
 		// <places />
 		// render all places defined on this wiki (up to 100)
 		else {
-			$markers = $placesModel->getAll(100);
+			$markers = $placesModel->getAll(self::PLACES_DEFAULT_ALL_LIMIT);
 		}
 
 		#self::$recursionLock = false; return print_r($markers, true); # debug
