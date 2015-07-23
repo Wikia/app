@@ -11,7 +11,7 @@ $messages = [];
  */
 $messages['en'] = [
 	'curated-tour-title' => 'Curated Tour',
-
+	'curated-tour-edit-box-title' => 'Plan a tour',
 ];
 
 /**
@@ -19,4 +19,5 @@ $messages['en'] = [
  */
 $messages['qqq'] = [
 	'curated-tour-title' => 'Curated Tour',
+	'curated-tour-edit-box-title' => 'Plan a tour',
 ];

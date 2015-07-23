@@ -2,19 +2,25 @@ define('ext.wikia.curatedTour.editBox',
 	[
 		'jquery',
 		'mw',
-		'wikia.loader',
 		'wikia.cache',
-		'wikia.mustache'
-	],
-	function($, mw, loader, cache, mustache) {
+		'wikia.cookies',
+		'wikia.loader',
+		'wikia.mustache',
 
-		var
-			resources,
+	],
+	function($, mw, cache, cookies, loader, mustache) {
+
+		var	resources,
 			resourcesCacheKey = 'curatedTourEditBox',
-			cacheVersion = '1.0';
+			cacheVersion = '1.0',
+			editModeCookieName = 'curatedTourEditBoxEditMode',
+			wikiId = mw.config.get('wgCityId'),
+			currentTourCacheKey = 'currentCuratedTour:' + wikiId;
 
 		function init() {
-			resources = cache.get(getResourcesCacheKey());
+			enterEditMode();
+			//resources = cache.get(getResourcesCacheKey());
+			resources = null;
 			if (resources === null) {
 				$.when(loader({
 					type: loader.MULTI,
@@ -38,9 +44,52 @@ define('ext.wikia.curatedTour.editBox',
 			loader.processStyle(resources.styles);
 			mw.messages.set(resources.messages);
 
-			$('body').append(mustache.to_html(resources.mustache[0], {}, {
-				editBoxItem: resources.mustache[1]
-			}));
+			$.when(getCurrentTour).done(function (currentTour) {
+				var templateData = {
+					title: mw.message('curated-tour-edit-box-title').escaped(),
+					currentTour: currentTour
+				}
+
+				$('body').append(mustache.to_html(
+					resources.mustache[0],
+					templateData,
+					{
+						editBoxItem: resources.mustache[1]
+					}
+				));
+			});
+		}
+
+		function getCurrentTour() {
+			var currentTour = cache.get(currentTourCacheKey);
+
+			if (currentTour === null) {
+				nirvana.sendRequest({
+					controller: 'CuratedTourController',
+					method: 'getCuratedTourData',
+					callback: function (json) {
+						currentTour = json;
+					}
+				});
+			}
+
+			return currentTour;
+		}
+
+		function setCurrentTour(json) {
+			cache.set(currentTourCacheKey, json, cache.CACHE_SHORT);
+		}
+
+		function isInEditMode() {
+			return !!cookies.get(editModeCookieName);
+		}
+
+		function enterEditMode() {
+			cookies.set(editModeCookieName, '1', {expires: cache.CACHE_SHORT});
+		}
+
+		function exitEditMode() {
+			cookies.set(editModeCookieName);
 		}
 
 		function getResourcesCacheKey() {

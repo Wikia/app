@@ -30,3 +30,7 @@ $wgAutoloadClasses['CuratedTourController'] = __DIR__ . '/controllers/CuratedTou
 $wgAutoloadClasses['CuratedTourHooks'] = __DIR__ . '/CuratedTour.hooks.php';
 
 $wgHooks['BeforePageDisplay'][] = 'CuratedTourHooks::onBeforePageDisplay';
+
+JSMessages::registerPackage( 'CuratedTourEditBox', [
+	'curated-tour-edit-box-*'
+] );
