@@ -14,7 +14,7 @@ class ArticleAsJson extends WikiaService {
 	const MEDIA_CONTEXT_ARTICLE_VIDEO = 'article-video';
 	const MEDIA_CONTEXT_GALLERY_IMAGE = 'gallery-image';
 	const MEDIA_CONTEXT_ICON = 'icon';
-	const MEDIA_CONTEXT_INFOBOX_IMAGE = 'infobox-image';
+	const MEDIA_CONTEXT_INFOBOX = 'infobox';
 
 	private static function createMarker( $width = 0, $height = 0, $isGallery = false ){
 		$blankImgUrl = F::app()->wg->blankImgUrl;
@@ -38,14 +38,6 @@ class ArticleAsJson extends WikiaService {
 			'user' => $details['userName']
 		];
 
-		if ( isset( $details['context'] ) ) {
-			$context = $details['context'];
-		}
-
-		if ( is_string( $context ) && $context !== '' ) {
-			$media['context'] = $context;
-		}
-
 		if ( is_string( $link ) && $link !== '' ) {
 			$media['link'] = $link;
 		}
@@ -68,6 +60,14 @@ class ArticleAsJson extends WikiaService {
 			$media['embed'] = $details['videoEmbedCode'];
 			$media['duration'] = $details['duration'];
 			$media['provider'] = $details['providerName'];
+		}
+
+		if ( isset( $details['context'] ) ) {
+			$context = $details['context'];
+		}
+
+		if ( is_string( $context ) && $context !== '' ) {
+			$media['context'] = $context;
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -139,8 +139,7 @@ class ArticleAsJson extends WikiaService {
 		wfProfileIn( __METHOD__ );
 		if ( $title ) {
 			$details = WikiaFileHelper::getMediaDetail( $title, self::$mediaDetailConfig );
-			//TODO: When there will be more image contexts, move strings to const
-			$details['context'] = self::MEDIA_CONTEXT_INFOBOX_IMAGE;
+			$details['context'] = self::MEDIA_CONTEXT_INFOBOX;
 			self::$media[] = self::createMediaObject( $details, $title->getText(), $alt );
 			$ref = count( self::$media ) - 1;
 		}
