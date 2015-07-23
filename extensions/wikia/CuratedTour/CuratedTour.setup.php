@@ -38,5 +38,5 @@ JSMessages::registerPackage( 'CuratedTourEditBox', [
 
 $wgAutoloadClasses['SpecialCuratedTourController'] = __DIR__ . '/controllers/SpecialCuratedTourController.class.php';
 
-$wgSpecialPages['SpecialCuratedTourController'] = '/controllers/SpecialCuratedTourController';
+$wgSpecialPages['CuratedTour'] = 'SpecialCuratedTourController';
 
