@@ -6,9 +6,10 @@ define('ext.wikia.curatedTour.editBox',
 		'wikia.cookies',
 		'wikia.loader',
 		'wikia.mustache',
-		'wikia.nirvana'
+		'wikia.nirvana',
+		'BannerNotification'
 	],
-	function($, mw, cache, cookies, loader, mustache, nirvana) {
+	function($, mw, cache, cookies, loader, mustache, nirvana, BannerNotification) {
 
 		var	resources,
 			resourcesCacheKey = 'curatedTourEditBox',
@@ -58,6 +59,7 @@ define('ext.wikia.curatedTour.editBox',
 				nirvana.sendRequest({
 					controller: 'CuratedTourController',
 					method: 'getCuratedTourData',
+					type: 'GET',
 					callback: function (json) {
 						renderEditBox(json.data);
 					}
@@ -76,13 +78,48 @@ define('ext.wikia.curatedTour.editBox',
 				saveCurrentTourText: mw.message('curated-tour-edit-box-save').escaped()
 			}
 
-			$('body').append(mustache.to_html(
+			$.when($('body').append(mustache.to_html(
 				resources.mustache[0],
 				templateData,
 				{
 					editBoxItem: resources.mustache[1]
 				}
-			));
+			))).done(bindEventsToEditBox);
+		}
+
+		function bindEventsToEditBox() {
+			$('.ct-edit-box-controls-exit').on('click', exitEditMode);
+			$('.ct-edit-box-controls-save').on('click', saveCurrentTour);
+		}
+
+		function saveCurrentTour(event) {
+			event.preventDefault();
+
+			nirvana.sendRequest({
+				controller: 'CuratedTourController',
+				method: 'setCuratedTourData',
+				data: {
+					edit_token: mw.user.tokens.get('editToken'),
+					currentTourData: collectCurrentTour()
+				},
+				callback: function (json) {
+					if (json.status) {
+						new BannerNotification(
+							mw.message('curated-tour-edit-box-save-success').escaped(),
+							'confirm'
+						).show();
+					} else {
+						new BannerNotification(
+							mw.message('curated-tour-edit-box-save-failure').escaped(),
+							'error'
+						).show();
+					}
+				}
+			});
+		}
+
+		function collectCurrentTour() {
+
 		}
 
 		function setCurrentTour(json) {
@@ -97,7 +134,11 @@ define('ext.wikia.curatedTour.editBox',
 			cookies.set(editModeCookieName, '1', {expires: cache.CACHE_SHORT});
 		}
 
-		function exitEditMode() {
+		function exitEditMode(event) {
+			event.preventDefault();
+
+			$('#ct-edit-box').remove();
+			cache.del(getCurrentTourAndRenderEditBox());
 			cookies.set(editModeCookieName);
 		}
 
