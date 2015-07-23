@@ -11,7 +11,7 @@ class CuratedTourController extends WikiaController {
 	public function setCuratedTourData() {
 		if ( $this->request->wasPosted() && $this->wg->User->matchEditToken( $this->getVal( 'edit_token' ) ) ) {
 			$data = $this->getVal( 'currentTourData' );
-		var_dump($data);
+
 			try {
 				$this->getCuratedTourPage()->doEdit( json_encode( $data ), NS_MEDIAWIKI );
 				$this->response->setVal( 'status', true );

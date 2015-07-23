@@ -16,7 +16,6 @@ class SpecialCuratedTourController extends WikiaSpecialPageController {
 	private function requestGetCuratedTourData() {
 		return $this->sendRequest( 'CuratedTourController',
 			'getCuratedTourData'
-
 		);
 	}
 }
