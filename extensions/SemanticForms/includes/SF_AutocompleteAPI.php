@@ -133,7 +133,7 @@ class SFAutocompleteAPI extends ApiBase {
 		return 'Autocompletion call used by the Semantic Forms extension (http://www.mediawiki.org/Extension:Semantic_Forms)';
 	}
 
-	protected function getExamples() {
+	public function getExamples() {
 		return array (
 			'api.php?action=sfautocomplete&substr=te',
 			'api.php?action=sfautocomplete&substr=te&property=Has_author',
@@ -167,7 +167,7 @@ class SFAutocompleteAPI extends ApiBase {
 			if ( !is_null( $basePropertyName ) ) {
 				$cacheKeyString .= ',' . $basePropertyName . ',' . $baseValue;
 			}
-			$cacheKey = wfMemcKey( 'sf-autocomplete' , md5( $cacheKeyString ) ); 		
+			$cacheKey = wfMemcKey( 'sf-autocomplete' , md5( $cacheKeyString ) );
 			$values = $cache->get( $cacheKey );
 
 			if ( !empty( $values ) ){
@@ -274,7 +274,7 @@ class SFAutocompleteAPI extends ApiBase {
 			if ( !is_null( $baseCargoTable ) ) {
 				$cacheKeyString .= '|' . $baseCargoTable . '|' . $baseCargoField . '|' . $baseValue;
 			}
-			$cacheKey = wfMemcKey( 'sf-autocomplete' , md5( $cacheKeyString ) ); 		
+			$cacheKey = wfMemcKey( 'sf-autocomplete' , md5( $cacheKeyString ) );
 			$values = $cache->get( $cacheKey );
 
 			if ( !empty( $values ) ){

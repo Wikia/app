@@ -47,7 +47,7 @@ class UserPreferences {
 		return $this->load($userId);
 	}
 
-	public function setPreferences($userId, $preferences) {
+	public function setPreferencesInCache($userId, $preferences) {
 		$this->preferences[$userId] = $preferences;
 	}
 
@@ -68,16 +68,28 @@ class UserPreferences {
 	 * @param string $pref
 	 * @param string $val
 	 */
-	public function set($userId, $pref, $val) {
-		$this->load($userId);
+	public function set( $userId, $pref, $val ) {
+		$this->setMultiple( $userId, [ $pref => $val ] );
+	}
 
-		$default = $this->getFromDefault($pref);
-		if ($val == null && isset($default)) {
-			$val = $default;
+	/**
+	 * @param int $userId
+	 * @param array $prefs
+	 */
+	public function setMultiple( $userId, $prefs ) {
+		$this->load( $userId );
+		$prefToSave = [ ];
+
+		foreach ( $prefs as $pref => $val ) {
+			$default = $this->getFromDefault( $pref );
+			if ( $val === null && isset( $default ) ) {
+				$val = $default;
+			}
+			$this->preferences[ $userId ][ $pref ] = $val;
+			$prefToSave[ ] = new Preference( $pref, $val );
 		}
 
-		$this->preferences[$userId][$pref] = $val;
-		$this->save($userId, [new Preference($pref, $val)]);
+		$this->save( $userId, $prefToSave );
 	}
 
 	public function getFromDefault($pref) {
@@ -90,7 +102,7 @@ class UserPreferences {
 
 	private function load($userId) {
 		if (!isset($this->preferences[$userId])) {
-			$this->preferences[$userId] = [];
+			$this->preferences[$userId] = $this->defaultPreferences;
 			foreach ($this->service->getPreferences($userId) as $pref) {
 				$this->preferences[$userId][$pref->getName()] = $pref->getValue();
 			};

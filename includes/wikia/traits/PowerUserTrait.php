@@ -10,7 +10,7 @@ use Wikia\PowerUser\PowerUser;
 
 trait PowerUserTrait {
 	// Required base-class methods
-	abstract function getBoolOption( $oname );
+	abstract function getGlobalFlag( $oname );
 
 	/**
 	 * Checks if a user has one of the poweruser
@@ -20,7 +20,7 @@ trait PowerUserTrait {
 	 */
 	public function isPowerUser() {
 		foreach ( PowerUser::$aPowerUserProperties as $sProperty ) {
-			if ( $this->getBoolOption( $sProperty ) ) {
+			if ( $this->getGlobalFlag( $sProperty ) ) {
 				return true;
 			}
 		}
@@ -35,6 +35,6 @@ trait PowerUserTrait {
 	 */
 	public function isSpecificPowerUser( $sProperty ) {
 		return in_array( $sProperty, PowerUser::$aPowerUserProperties ) &&
-			$this->getBoolOption( $sProperty );
+			$this->getGlobalFlag( $sProperty );
 	}
 }

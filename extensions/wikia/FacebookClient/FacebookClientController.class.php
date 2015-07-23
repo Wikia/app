@@ -151,16 +151,18 @@ class FacebookClientController extends WikiaController {
 
 		FacebookMapModel::deleteFromWikiaID( $user->getId() );
 
-		$params = new FauxRequest( [ 'wpName' => $user->getName() ] );
-		$loginForm = new LoginForm( $params );
+		// Create a temporary password for the user
+		$userService = new \UserService();
+		$tempPass = $userService->resetPassword( $user );
 
-		if ( $user->getGlobalFlag( 'fbFromExist' ) ) {
-			$res = $loginForm->mailPasswordInternal( $user, true, 'fbconnect-passwordremindertitle-exist', 'fbconnect-passwordremindertext-exist' );
-		} else {
-			$res = $loginForm->mailPasswordInternal( $user, true, 'fbconnect-passwordremindertitle', 'fbconnect-passwordremindertext' );
-		}
+		// Send email to user with temp password, telling them their FB account is disconnected
+		$emailParams = [
+			'targetUser' => $user,
+			'tempPass' => $tempPass,
+		];
+		$response = F::app()->sendRequest( 'Email\Controller\FacebookDisconnect', 'handle', $emailParams );
 
-		if ( $res->isGood() ) {
+		if ( $response->getData()['result'] === 'ok' ) {
 			$this->status = 'ok';
 		} else {
 			$this->status = 'error';

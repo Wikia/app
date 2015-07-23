@@ -170,7 +170,10 @@ abstract class EmailController extends \WikiaController {
 					$body,
 					$replyToAddress,
 					$contentType = null,
-					$this->getSendGridCategory()
+					$this->getSendGridCategory(),
+					$priority = 0,
+					$attachments = [],
+					$sourceType = 'email-ext' // Remove when this is the only sourceType sent
 				);
 				$this->assertGoodStatus( $status );
 			}
