@@ -419,7 +419,5 @@ $(function () {
 	// If there are no preset selectors, the module was invoked dynamically
 	// In that case, it's up to the caller JS to apply LinkSuggest to elements
 	var elements = mw.config.get('wgLinkSuggestElements') || [];
-	elements.forEach(function (selector, i) {
-		$(selector).linksuggest();
-	});
+	$(elements.join(',')).linksuggest();
 });
