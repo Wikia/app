@@ -25,3 +25,4 @@ $wgExtensionCredits['other'][] = [
 ];
 
 $wgExtensionMessagesFiles['CuratedTour'] = __DIR__ . '/CuratedTour.i18n.php';
+$wgAutoloadClasses['CuratedTourController'] = __DIR__ . '/controllers/CuratedTourController.class.php';

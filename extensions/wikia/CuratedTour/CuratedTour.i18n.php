@@ -10,6 +10,7 @@ $messages = [];
  * English (en)
  */
 $messages['en'] = [
+	'curated-tour-title' => 'Curated Tour',
 
 ];
 
@@ -17,5 +18,5 @@ $messages['en'] = [
  * Message documentation
  */
 $messages['qqq'] = [
-
+	'curated-tour-title' => 'Curated Tour',
 ];
