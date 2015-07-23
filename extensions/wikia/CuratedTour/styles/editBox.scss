@@ -1,7 +1,9 @@
 #ct-edit-box {
+	background-color: rgba(255,255,255,0.9);
+	height: 400px;
 	position: fixed;
 	right: 0;
 	top: 100px;
 	width: 200px;
-	height: 400px;
+	z-index: 2000;
 }

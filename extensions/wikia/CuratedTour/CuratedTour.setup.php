@@ -25,4 +25,8 @@ $wgExtensionCredits['other'][] = [
 ];
 
 $wgExtensionMessagesFiles['CuratedTour'] = __DIR__ . '/CuratedTour.i18n.php';
+
 $wgAutoloadClasses['CuratedTourController'] = __DIR__ . '/controllers/CuratedTourController.class.php';
+$wgAutoloadClasses['CuratedTourHooks'] = __DIR__ . '/CuratedTour.hooks.php';
+
+$wgHooks['BeforePageDisplay'][] = 'CuratedTourHooks::onBeforePageDisplay';
