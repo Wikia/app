@@ -10,7 +10,7 @@
  * @licence GNU General Public Licence
  */
 
-if( !defined( 'MEDIAWIKI' ) ) {
+if ( !defined( 'MEDIAWIKI' ) ) {
 	echo( "This file is an extension to the MediaWiki software and cannot be used standalone.\n" );
 	die( 1 );
 }
@@ -27,7 +27,7 @@ $wgExtensionCredits['specialpage'][] = array(
 );
 
 // Set up the new special page
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 $wgExtensionMessagesFiles['LookupUser'] = $dir . 'LookupUser.i18n.php';
 $wgExtensionAliasesFiles['LookupUser'] = $dir . 'LookupUser.alias.php';
 $wgAutoloadClasses['LookupUserPage'] = $dir . 'LookupUser.body.php';
@@ -39,7 +39,7 @@ $wgSpecialPageGroups['LookupUser'] = 'users';
 $wgAvailableRights[] = 'lookupuser';
 $wgGroupPermissions['util']['lookupuser'] = true;
 
-//small stuff week --nAndy
+// small stuff week --nAndy
 global $wgAjaxExportList;
 $wgAjaxExportList[] = "LookupUserPage::loadAjaxContribData";
 $wgAjaxExportList[] = "LookupUserPage::requestApiAboutUser";
@@ -58,7 +58,7 @@ $wgHooks['ContributionsToolLinks'][] = 'efLoadLookupUserLink';
  */
 function efLoadLookupUserLink( $id, $nt, &$links ) {
 	global $wgUser;
-	if( $wgUser->isAllowed( 'lookupuser' ) && $id !== 0 ) {
+	if ( $wgUser->isAllowed( 'lookupuser' ) && $id !== 0 ) {
 		$links[] = Linker::linkKnown(
 			SpecialPage::getTitleFor( 'LookupUser' ),
 			wfMsgHtml( 'lookupuser' ),

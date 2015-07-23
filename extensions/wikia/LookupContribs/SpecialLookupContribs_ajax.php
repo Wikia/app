@@ -21,82 +21,82 @@ class LookupContribsAjax {
 
 		wfProfileIn( __METHOD__ );
 
-		$username 	= $wgRequest->getVal('username');
-		$dbname		= $wgRequest->getVal('wiki');
-		$mode 		= $wgRequest->getVal('mode');
-		$nspace		= $wgRequest->getVal('ns', -1);
-		$limit		= $wgRequest->getVal('limit');
-		$offset		= $wgRequest->getVal('offset');
-		$loop		= $wgRequest->getVal('loop');
-		$order		= $wgRequest->getVal('order');
-		$numOrder	= $wgRequest->getVal('numOrder');
-		$lookupUser = $wgRequest->getBool('lookupUser');
+		$username 	= $wgRequest->getVal( 'username' );
+		$dbname		= $wgRequest->getVal( 'wiki' );
+		$mode 		= $wgRequest->getVal( 'mode' );
+		$nspace		= $wgRequest->getVal( 'ns', -1 );
+		$limit		= $wgRequest->getVal( 'limit' );
+		$offset		= $wgRequest->getVal( 'offset' );
+		$loop		= $wgRequest->getVal( 'loop' );
+		$order		= $wgRequest->getVal( 'order' );
+		$numOrder	= $wgRequest->getVal( 'numOrder' );
+		$lookupUser = $wgRequest->getBool( 'lookupUser' );
 
 		$result = array(
-			'sEcho' => intval($loop),
+			'sEcho' => intval( $loop ),
 			'iTotalRecords' => 0,
 			'iTotalDisplayRecords' => 0,
 			'sColumns' => '',
 			'aaData' => array()
 		);
 
-		//$dbname, $username, $mode, $limit = 25, $offset = 0, $nspace = -1
+		// $dbname, $username, $mode, $limit = 25, $offset = 0, $nspace = -1
 
-		if ( empty($wgUser) ) {
-			wfProfileOut(__METHOD__);
+		if ( empty( $wgUser ) ) {
+			wfProfileOut( __METHOD__ );
 			return "";
 		}
 		if ( $wgUser->isBlocked() ) {
-			wfProfileOut(__METHOD__);
+			wfProfileOut( __METHOD__ );
 			return "";
 		}
 		if ( !$wgUser->isLoggedIn() ) {
-			wfProfileOut(__METHOD__);
+			wfProfileOut( __METHOD__ );
 			return "";
 		}
 		if ( !$wgUser->isAllowed( 'lookupcontribs' ) ) {
 			wfProfileOut( __METHOD__ );
-			return json_encode($result);
+			return json_encode( $result );
 		}
 
-		$oLC = new LookupContribsCore($username);
+		$oLC = new LookupContribsCore( $username );
 		if ( $oLC->checkUser() ) {
-			if ( empty($mode) ) {
-				$oLC->setLimit($limit);
-				$oLC->setOffset($offset);
-				$activity = $oLC->checkUserActivity($lookupUser, $order);
-				if ( !empty($activity) ) {
-					$result['iTotalRecords'] = intval($limit); #( isset( $records['cnt'] ) ) ?  intval( $records['cnt'] ) : 0;
-					$result['iTotalDisplayRecords'] = intval($activity['cnt']);
+			if ( empty( $mode ) ) {
+				$oLC->setLimit( $limit );
+				$oLC->setOffset( $offset );
+				$activity = $oLC->checkUserActivity( $lookupUser, $order );
+				if ( !empty( $activity ) ) {
+					$result['iTotalRecords'] = intval( $limit ); # ( isset( $records['cnt'] ) ) ?  intval( $records['cnt'] ) : 0;
+					$result['iTotalDisplayRecords'] = intval( $activity['cnt'] );
 
-					if( $lookupUser === true ) {
+					if ( $lookupUser === true ) {
 						$result['sColumns'] = 'id,title,url,lastedit,edits,userrights,blocked';
-						$result['aaData'] = LookupContribsAjax::prepareLookupUserData($activity['data'], $username);
+						$result['aaData'] = LookupContribsAjax::prepareLookupUserData( $activity['data'], $username );
 					} else {
 						$result['sColumns'] = 'id,dbname,title,url,lastedit,options';
-						$result['aaData'] = LookupContribsAjax::prepareLookupContribsData($activity['data']);
+						$result['aaData'] = LookupContribsAjax::prepareLookupContribsData( $activity['data'] );
 					}
 				}
 			} else {
-				$oLC->setDBname($dbname);
-				$oLC->setMode($mode);
-				$oLC->setNamespaces($nspace);
-				$oLC->setLimit($limit);
-				$oLC->setOffset($offset);
+				$oLC->setDBname( $dbname );
+				$oLC->setMode( $mode );
+				$oLC->setNamespaces( $nspace );
+				$oLC->setLimit( $limit );
+				$oLC->setOffset( $offset );
 				$data = $oLC->fetchContribs();
 				/* order by timestamp desc */
 				$nbr_records = 0;
 				$result = array();
 				$res = array();
-				if ( !empty($data) && is_array($data) ) {
-					$result['iTotalRecords'] = intval($limit); #( isset( $records['cnt'] ) ) ?  intval( $records['cnt'] ) : 0;
-					$result['iTotalDisplayRecords'] = intval($data['cnt']);
+				if ( !empty( $data ) && is_array( $data ) ) {
+					$result['iTotalRecords'] = intval( $limit ); # ( isset( $records['cnt'] ) ) ?  intval( $records['cnt'] ) : 0;
+					$result['iTotalDisplayRecords'] = intval( $data['cnt'] );
 					$result['sColumns'] = 'id,title,links,edit';
 					$rows = array();
-					if ( isset($data['data']) ) {
+					if ( isset( $data['data'] ) ) {
 						$loop = 1;
-						foreach ($data['data'] as $id => $row) {
-							list ($link, $diff, $hist, $contrib, $edit, $removed) = array_values($oLC->produceLine( $row ));
+						foreach ( $data['data'] as $id => $row ) {
+							list ( $link, $diff, $hist, $contrib, $edit, $removed ) = array_values( $oLC->produceLine( $row ) );
 							$rows[] = array(
 								$loop + $offset, // id
 								$link, // title
@@ -112,7 +112,7 @@ class LookupContribsAjax {
 		}
 
 		wfProfileOut( __METHOD__ );
-		return json_encode($result);
+		return json_encode( $result );
 	}
 
 	/**
@@ -124,18 +124,18 @@ class LookupContribsAjax {
 	 *
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
-	public static function prepareLookupContribsData($activityData) {
+	public static function prepareLookupContribsData( $activityData ) {
 		global $wgLang;
 
 		$rows = array();
-		foreach( $activityData as $row ) {
+		foreach ( $activityData as $row ) {
 			$rows[] = array(
 				$row['id'], // wiki Id
 				$row['dbname'], // wiki dbname
-				$row['title'], //wiki title
+				$row['title'], // wiki title
 				$row['url'], // wiki url
-				$wgLang->timeanddate( wfTimestamp( TS_MW, $row['last_edit'] ), true ), //last edited
-				'' //options
+				$wgLang->timeanddate( wfTimestamp( TS_MW, $row['last_edit'] ), true ), // last edited
+				'' // options
 			);
 		}
 
@@ -151,19 +151,19 @@ class LookupContribsAjax {
 	 *
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
-	public static function prepareLookupUserData($activityData, $username) {
+	public static function prepareLookupUserData( $activityData, $username ) {
 		global $wgLang, $wgContLang;
 
 		$rows = array();
-		foreach( $activityData as $row ) {
+		foreach ( $activityData as $row ) {
 			$rows[] = array(
 				$row['id'], // wiki Id
-				$row['title'], //wiki title
+				$row['title'], // wiki title
 				$row['url'], // wiki url
-				$wgLang->timeanddate( wfTimestamp( TS_MW, $row['last_edit'] ), true ), //last edited
-				$wgContLang->formatNum($row['editcount']),
-				LookupUserPage::getUserData($username, $row['id'], $row['url']), //user rights
-				LookupUserPage::getUserData($username, $row['id'], $row['url'], true), //blocked
+				$wgLang->timeanddate( wfTimestamp( TS_MW, $row['last_edit'] ), true ), // last edited
+				$wgContLang->formatNum( $row['editcount'] ),
+				LookupUserPage::getUserData( $username, $row['id'], $row['url'] ), // user rights
+				LookupUserPage::getUserData( $username, $row['id'], $row['url'], true ), // blocked
 			);
 		}
 
