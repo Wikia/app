@@ -100,7 +100,7 @@ define('ext.wikia.curatedTour.editBox',
 				method: 'setCuratedTourData',
 				data: {
 					edit_token: mw.user.tokens.get('editToken'),
-					currentTourData: collectCurrentTour()
+					currentTourData: collectCurrentTourData()
 				},
 				callback: function (json) {
 					if (json.status) {
@@ -118,8 +118,18 @@ define('ext.wikia.curatedTour.editBox',
 			});
 		}
 
-		function collectCurrentTour() {
+		function collectCurrentTourData() {
+			var currentTourData = [];
 
+			$('.ct-edit-box-item').each(function () {
+				currentTourData.push({
+					PageName: $(this).data('page-name'),
+					Selector: $(this).data('selector'),
+					Notes: $(this).find('.ct-edit-box-item-message').text()
+				});
+			});
+
+			return currentTourData;
 		}
 
 		function setCurrentTour(json) {

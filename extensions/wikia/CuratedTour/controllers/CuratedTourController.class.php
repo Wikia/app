@@ -14,7 +14,7 @@ class CuratedTourController extends WikiaController {
 			try {
 				$this->getCuratedTourPage()->doEdit( json_encode( $data ), NS_MEDIAWIKI );
 				$this->response->setVal( 'status', true );
-			} catch (Exception $e) {
+			} catch ( Exception $e ) {
 				$this->response->setVal( 'status', false );
 			}
 		}
