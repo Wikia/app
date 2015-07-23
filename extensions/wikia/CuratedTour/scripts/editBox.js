@@ -6,9 +6,9 @@ define('ext.wikia.curatedTour.editBox',
 		'wikia.cookies',
 		'wikia.loader',
 		'wikia.mustache',
-
+		'wikia.nirvana'
 	],
-	function($, mw, cache, cookies, loader, mustache) {
+	function($, mw, cache, cookies, loader, mustache, nirvana) {
 
 		var	resources,
 			resourcesCacheKey = 'curatedTourEditBox',
@@ -18,8 +18,8 @@ define('ext.wikia.curatedTour.editBox',
 			currentTourCacheKey = 'currentCuratedTour:' + wikiId;
 
 		function init() {
-			enterEditMode();
 			//resources = cache.get(getResourcesCacheKey());
+			enterEditMode();
 			resources = null;
 			if (resources === null) {
 				$.when(loader({
@@ -30,37 +30,28 @@ define('ext.wikia.curatedTour.editBox',
 						styles: '/extensions/wikia/CuratedTour/styles/editBox.scss'
 					}
 				})).done(function (res) {
-					resources = res;
-					cache.set(getResourcesCacheKey(), res, cache.CACHE_LONG);
-
-					renderEditBox();
+					setupEditBox(res);
 				});
 			} else {
-				renderEditBox();
+				setupEditBox(resources);
 			}
 		}
 
-		function renderEditBox() {
-			loader.processStyle(resources.styles);
-			mw.messages.set(resources.messages);
+		function setupEditBox(res) {
+			if (resources === null) {
+				resources = res;
+				cache.set(getResourcesCacheKey(), res, cache.CACHE_LONG);
+			}
 
-			$.when(getCurrentTour).done(function (currentTour) {
-				var templateData = {
-					title: mw.message('curated-tour-edit-box-title').escaped(),
-					currentTour: currentTour
-				}
+			console.log(res);
 
-				$('body').append(mustache.to_html(
-					resources.mustache[0],
-					templateData,
-					{
-						editBoxItem: resources.mustache[1]
-					}
-				));
-			});
+			loader.processStyle(res.styles);
+			mw.messages.set(res.messages);
+
+			getCurrentTourAndRenderEditBox();
 		}
 
-		function getCurrentTour() {
+		function getCurrentTourAndRenderEditBox() {
 			var currentTour = cache.get(currentTourCacheKey);
 
 			if (currentTour === null) {
@@ -68,12 +59,30 @@ define('ext.wikia.curatedTour.editBox',
 					controller: 'CuratedTourController',
 					method: 'getCuratedTourData',
 					callback: function (json) {
-						currentTour = json;
+						renderEditBox(json.data);
 					}
 				});
+			} else {
+				renderEditBox(currentTour);
+			}
+		}
+
+		function renderEditBox(currentTour) {
+			var templateData = {
+				title: mw.message('curated-tour-edit-box-title').escaped(),
+				currentTour: currentTour,
+				addNewStepText: mw.message('curated-tour-edit-box-add-new').escaped(),
+				exitEditModeText: mw.message('curated-tour-edit-box-exit').escaped(),
+				saveCurrentTourText: mw.message('curated-tour-edit-box-save').escaped()
 			}
 
-			return currentTour;
+			$('body').append(mustache.to_html(
+				resources.mustache[0],
+				templateData,
+				{
+					editBoxItem: resources.mustache[1]
+				}
+			));
 		}
 
 		function setCurrentTour(json) {

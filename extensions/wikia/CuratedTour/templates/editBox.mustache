@@ -1,4 +1,21 @@
 <div id="ct-edit-box">
 	<h2 class="ct-edit-box-title">{{title}}</h2>
-	{{>editBoxItem}}
+	<ol class="ct-edit-box-items-list">
+		{{#currentTour}}
+			{{>editBoxItem}}
+		{{/currentTour}}
+	</ol>
+	<div class="ct-edit-box-add">
+		<a class="wikia-button primary ct-edit-box-add-link" href="#">
+			{{addNewStepText}}
+		</a>
+	</div>
+	<div class="ct-edit-box-controls">
+		<a class="ct-edit-box-controls-exit wikia-button secondary" href="#">
+			{{exitEditModeText}}
+		</a>
+		<a class="ct-edit-box-controls-save wikia-button primary" href="#">
+			{{saveCurrentTourText}}
+		</a>
+	</div>
 </div>
