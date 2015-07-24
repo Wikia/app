@@ -97,6 +97,7 @@ class AdminDashboardLogic {
 				"ThemeDesigner",
 				"ThemeDesignerPreview",
 				"UnusedVideos",
+				'UserActivity',
 				"Userlogin",
 				"UserManagement",
 				"UserPathPrediction",

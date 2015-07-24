@@ -17,6 +17,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 
 class LookupContribsCore {
 	const CONTRIB_CACHE_TTL = 15 * 60;
+	const ACTIVITY_CACHE_TTL = 10 * 60;
 
 	var $mUsername;
 	var $mUserId;
@@ -76,8 +77,8 @@ class LookupContribsCore {
 		global $wgContentNamespaces;
 
 		$res = [];
-		$nspace = intval( $this->mNamespaces );
-		switch( $nspace ) {
+		$ns = $this->mNamespaces;
+		switch( $ns ) {
 			case -1: break; # all namespaces
 			case -2: # contentNamespaces
 				if ( !empty( $wgContentNamespaces ) && is_array( $wgContentNamespaces ) ) {
@@ -86,13 +87,19 @@ class LookupContribsCore {
 					$res = [ NS_MAIN ];
 				}
 				break;
-			default: $res = [ $nspace ];
+			default: $res = [ $ns ];
 		}
 
-				return $res;
+		return $res;
 	}
-	public function setNumRecords( $num = 0 ) { $this->mNumRecords = $num; }
-	public function getNumRecords() { return $this->mNumRecords; }
+
+	public function setNumRecords( $num = 0 ) {
+		$this->mNumRecords = $num;
+	}
+
+	public function getNumRecords() {
+		return $this->mNumRecords;
+	}
 
 	/**
 	 * Return if such user exists
@@ -140,13 +147,8 @@ class LookupContribsCore {
 			'cnt' => 0
 		];
 
-		if ( $addEditCount ) {
-			$sMemKey = __METHOD__ . ":{$this->mUserId}:dataWithEdits";
-		} else {
-			$sMemKey = __METHOD__ . ":{$this->mUserId}:data";
-		}
-
-		$data = $wgMemc->get( $sMemKey );
+		$memKey = $this->getUserActivityMemKey( $addEditCount );
+		$data = $wgMemc->get( $memKey );
 
 		if ( ( !is_array( $data ) || LOOKUPCONTRIBS_NO_CACHE ) && !empty( $wgStatsDBEnabled ) ) {
 			$dbr = wfGetDB( DB_SLAVE, "stats", $wgStatsDB );
@@ -155,7 +157,7 @@ class LookupContribsCore {
 				$excludedWikis = $this->getExclusionList();
 
 				$where = [
-					'user_id'    => $this->mUserId,
+					'user_id' => $this->mUserId,
 					'event_type' => [ 1, 2 ]
 				];
 
@@ -202,13 +204,13 @@ class LookupContribsCore {
 					}
 
 					$aItem = [
-						'id'         =>  $row->wiki_id,
-						'url'        =>  $wData[$row->wiki_id]->city_url,
-						'dbname'     =>  $wData[$row->wiki_id]->city_dbname,
-						'title'      =>  $wData[$row->wiki_id]->city_title,
-						'active'     =>  $wData[$row->wiki_id]->city_public,
-						'last_edit'  =>  $row->last_edit,
-						'edit_count' => 0
+						'id'        =>  $row->wiki_id,
+						'url'       =>  $wData[$row->wiki_id]->city_url,
+						'dbname'    =>  $wData[$row->wiki_id]->city_dbname,
+						'title'     =>  $wData[$row->wiki_id]->city_title,
+						'active'    =>  $wData[$row->wiki_id]->city_public,
+						'last_edit' =>  $row->last_edit,
+						'editcount' => 0
 					];
 
 					if ( isset( $wikiEdits[$row->wiki_id]->edits ) ) {
@@ -220,7 +222,7 @@ class LookupContribsCore {
 
 				$dbr->freeResult( $res );
 				if ( !LOOKUPCONTRIBS_NO_CACHE ) {
-					$wgMemc->set( $sMemKey, $userActivity, 60 * 10 );
+					$wgMemc->set( $memKey, $userActivity, self::ACTIVITY_CACHE_TTL );
 				}
 			}
 		} else {
@@ -228,6 +230,10 @@ class LookupContribsCore {
 		}
 
 		return $this->orderData( $userActivity, $order, $addEditCount );
+	}
+
+	private function getUserActivityMemKey( $addEditCount ) {
+		return wfSharedMemcKey( $this->mUserId, ( $addEditCount ? 'dataWithEdits' : 'data' ) );
 	}
 
 	private function orderData( &$data, $order, $edits ) {
@@ -350,10 +356,10 @@ class LookupContribsCore {
 			'res' => false
 		];
 
-		$conditions = array (
+		$conditions = [
 			'rev_user' => $this->mUserId,
-			' rc_timestamp = rev_timestamp '
-		);
+			'rc_timestamp = rev_timestamp'
+		];
 		$namespaces = $this->getNamespaces();
 		if ( !empty( $namespaces ) ) {
 			$conditions['rc_namespace'] = $namespaces;
@@ -402,7 +408,7 @@ class LookupContribsCore {
 
 		$conditions = [
 			'rev_user' => $this->mUserId,
-			' rev_id = page_latest '
+			'rev_id = page_latest'
 		];
 		$namespaces = $this->getNamespaces();
 		if ( !empty( $namespaces ) ) {
@@ -606,7 +612,7 @@ class LookupContribsCore {
 			'data' => []
 		];
 		$dbr = wfGetDB( DB_SLAVE, 'stats', $this->getDBname() );
-
+gmark('NAME: '.$this->getDBname() );
 		/* todo since there are now TWO modes, we need TWO keys to rule them all */
 		$memKey = $this->getContribsMemKey();
 		$data = $memc->get( $memKey );
@@ -617,7 +623,7 @@ class LookupContribsCore {
 			return $data;
 		}
 
-		/* get that data from database */
+		// Determine what type of data to retrieve and get it
 		switch ( $this->mMode ) {
 			case "normal"	: $data = $this->normalMode( $dbr ); break;
 			case "final"	: $data = $this->finalMode( $dbr ); break;
