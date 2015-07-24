@@ -32,6 +32,12 @@ class PlacesParserHookHandler {
 	static public function renderPlaceTag($content, array $attributes, Parser $parser, PPFrame $frame) {
 		wfProfileIn(__METHOD__);
 
+		// parse the caption
+		if (!empty($attributes['caption'])) {
+			$attributes['caption'] = $parser->recursiveTagParse($attributes['caption'], $frame);
+			$parser->replaceLinkHolders($attributes['caption']);
+		}
+
 		// wrap data in a model object
 		$placeModel = PlaceModel::newFromAttributes($attributes);
 
