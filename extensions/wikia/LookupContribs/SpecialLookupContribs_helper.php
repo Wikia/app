@@ -36,6 +36,7 @@ class LookupContribsCore {
 		$this->oUser = User::newFromName( $this->mUsername );
 		if ( $this->oUser instanceof User ) {
 			$this->mUserId = $this->oUser->getId();
+//			$this->mUserId = 22224;
 		}
 		$this->setMode( $mode );
 		$this->setDBname( $dbName );
@@ -158,7 +159,8 @@ class LookupContribsCore {
 
 				$where = [
 					'user_id' => $this->mUserId,
-					'event_type' => [ 1, 2 ]
+					'event_type' => [ 1, 2 ],
+					'wiki_id = city_id',
 				];
 
 				if ( !empty( $excludedWikis ) && is_array( $excludedWikis ) ) {
@@ -170,16 +172,6 @@ class LookupContribsCore {
 					'ORDER BY' => 'last_edit DESC',
 				];
 
-				if ( $addEditCount === true ) {
-					$wikisIds = [];
-					$wikiEdits = $this->getEditCount( $wikisIds );
-					if ( !empty( $wikisIds ) ) {
-						$where['wiki_id'] = $wikisIds;
-					}
-				} else {
-					$wikiEdits = [];
-				}
-
 				if ( $limit ) {
 					// If we have a limit/offset, make sure we get the total count another way
 					$userActivity['cnt'] = $this->getActivityCount( $dbr, $where );
@@ -187,9 +179,8 @@ class LookupContribsCore {
 					$options['OFFSET'] = $offset;
 				}
 
-				/* rows */
 				$res = $dbr->select(
-					[ 'events' ],
+					[ 'events', 'wikicities.city_list' ],
 					[
 						'wiki_id',
 						'max(unix_timestamp(rev_timestamp)) as last_edit'
@@ -199,36 +190,22 @@ class LookupContribsCore {
 					$options
 				);
 
-				if ( empty( $wikisIds ) ) {
-					$wikisIds = [];
-					while ( $row = $dbr->fetchObject( $res ) ) {
-						$wikisIds[] = $row->wiki_id;
-					}
-					$dbr->dataSeek( $res, 0 );
-				}
-
-				$wData = WikiFactory::getWikisByID( $wikisIds );
+				$wikiaIds = [];
 				while ( $row = $dbr->fetchObject( $res ) ) {
-					if ( !$limit && !isset( $wData[$row->wiki_id] ) ) {
-						continue;
-					}
-
 					$aItem = [
 						'id'        =>  $row->wiki_id,
-						'url'       =>  $wData[$row->wiki_id]->city_url,
-						'dbname'    =>  $wData[$row->wiki_id]->city_dbname,
-						'title'     =>  $wData[$row->wiki_id]->city_title,
-						'active'    =>  $wData[$row->wiki_id]->city_public,
 						'last_edit' =>  $row->last_edit,
 						'editcount' => 0
 					];
-
-					if ( isset( $wikiEdits[$row->wiki_id]->edits ) ) {
-						$aItem['editcount'] = $wikiEdits[$row->wiki_id]->edits;
-					}
+					$wikiaIds[] = $row->wiki_id;
 
 					$userActivity['data'][] = $aItem;
 				}
+
+				if ( $addEditCount ) {
+					$this->addEditCounts( $wikiaIds, $userActivity );
+				}
+				$this->addWikiaInfo( $wikiaIds, $userActivity );
 
 				$dbr->freeResult( $res );
 				if ( !LOOKUPCONTRIBS_NO_CACHE ) {
@@ -246,9 +223,41 @@ class LookupContribsCore {
 		}
 	}
 
+	private function addEditCounts( $wikiaIds, &$userActivity ) {
+		$wikiaEdits = $this->getEditCount( $wikiaIds );
+		foreach ( $userActivity['data'] as &$item ) {
+			$wikiaId = $item['id'];
+			if ( empty( $wikiaEdits[$wikiaId] ) ) {
+				$item[ 'editcount' ] = 0;
+			} else {
+				$item[ 'editcount' ] = $wikiaEdits[ $wikiaId ]->edits;
+			}
+		}
+	}
+
+	private function addWikiaInfo( $wikiaIds, &$userActivity ) {
+		$wikiaInfo = WikiFactory::getWikisByID( $wikiaIds );
+		foreach ( $userActivity['data'] as &$item ) {
+			$wikiaId = $item['id'];
+
+			if ( empty( $wikiaInfo[$wikiaId] ) ) {
+				$item['url'] = '';
+				$item['dbname'] = '';
+				$item['title'] = '';
+				$item['active'] = null;
+			} else {
+				$info = $wikiaInfo[$wikiaId];
+				$item[ 'url' ] = $info->city_url;
+				$item['dbname'] = $info->city_dbname;
+				$item['title'] = $info->city_title;
+				$item['active'] = $info->city_public;
+			}
+		}
+	}
+
 	private function getActivityCount( DatabaseBase $dbr, $where ) {
 		$res = $dbr->select(
-			[ 'events' ],
+			[ 'events', 'wikicities.city_list' ],
 			[ 'count(distinct wiki_id) as num' ],
 			$where
 		);
@@ -637,7 +646,7 @@ class LookupContribsCore {
 			'data' => []
 		];
 		$dbr = wfGetDB( DB_SLAVE, 'stats', $this->getDBname() );
-gmark('NAME: '.$this->getDBname() );
+
 		/* todo since there are now TWO modes, we need TWO keys to rule them all */
 		$memKey = $this->getContribsMemKey();
 		$data = $memc->get( $memKey );
