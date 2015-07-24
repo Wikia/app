@@ -1,10 +1,11 @@
 define('ext.wikia.curatedTour.tourNavigator',
 	[
+		'ext.wikia.curatedTour.stepProjector',
 		'ext.wikia.curatedTour.tourManager',
 		'mw',
 		'wikia.window'
 	],
-	function (TourManager, mw, window) {
+	function (StepProjector, TourManager, mw, window) {
 		"use strict";
 
 		function goToStep(step) {
@@ -35,6 +36,21 @@ define('ext.wikia.curatedTour.tourNavigator',
 			return parseInt(getUrlParam('curatedTour'));
 		}
 
+		function displayCurrentStep() {
+			TourManager.getPlan(function (tourPlan) {
+				var currentStep = getCurrentStep(),
+					stepData = tourPlan[getIndexFromStep(currentStep)];
+
+				StepProjector.show(
+					currentStep,
+					stepData.Selector,
+					stepData.Notes,
+					goToNextStep,
+					goToPreviousStep
+				);
+			});
+		}
+
 		function getUrlParam(name) {
 			var results = new RegExp("[\?&]" + name + "=([^&#]*)").exec(window.location.href);
 			if (results == null) {
@@ -48,7 +64,8 @@ define('ext.wikia.curatedTour.tourNavigator',
 			goToStep: goToStep,
 			goToNextStep: goToNextStep,
 			goToPreviousStep: goToPreviousStep,
-			getCurrentStep: getCurrentStep
+			getCurrentStep: getCurrentStep,
+			displayCurrentStep: displayCurrentStep
 		}
 	}
 );

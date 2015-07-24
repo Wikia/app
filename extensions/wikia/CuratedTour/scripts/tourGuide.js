@@ -14,6 +14,8 @@ define('ext.wikia.curatedTour.tourGuide',
 
 		function init() {
 			showNavigatorBox();
+
+			TourNavigator.displayCurrentStep();
 		}
 
 		function startTour(event) {
