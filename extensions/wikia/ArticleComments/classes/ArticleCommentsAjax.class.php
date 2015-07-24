@@ -46,7 +46,7 @@ class ArticleCommentsAjax {
 			return $result;
 		}
 
-		if (!ArticleComment::canComment()) {
+		if ( !ArticleCommentInit::userCanComment( $title, $wgUser, $result ) ) {
 			return $result;
 		}
 
@@ -113,7 +113,7 @@ class ArticleCommentsAjax {
 					$result['edgeCases'] = MiniEditorHelper::getEdgeCases();
 				}
 
-				$result['emptyMsg'] = wfMsg('article-comments-empty-comment', $comment->getTitle()->getLocalUrl('redirect=no&action=delete'));
+				$result['emptyMsg'] = wfMessage( 'article-comments-empty-comment', $comment->getTitle()->getFullUrl( 'redirect=no&action=delete' ) )->parse();
 			}
 		}
 
@@ -141,7 +141,7 @@ class ArticleCommentsAjax {
 			return $result;
 		}
 
-		$canComment = ArticleCommentInit::userCanComment( $result, $title );
+		$canComment = ArticleCommentInit::userCanComment( $title, null, $result );
 
 		if ( $canComment == true ) {
 			$articleId = $wgRequest->getVal( 'article', false );
@@ -178,7 +178,7 @@ class ArticleCommentsAjax {
 			return $result;
 		}
 
-		if ( !ArticleComment::canComment( $title ) ) {
+		if ( !ArticleCommentInit::userCanComment( $title, $wgUser, $result ) ) {
 			return $result;
 		}
 

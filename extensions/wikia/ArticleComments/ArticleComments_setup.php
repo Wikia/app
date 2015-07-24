@@ -44,10 +44,12 @@ $wgAutoloadClasses['CommentsIndex'] = "$dir/classes/CommentsIndex.class.php";
 
 $wgExtensionMessagesFiles['ArticleComments'] = dirname(__FILE__) . '/ArticleComments.i18n.php';
 
+$wgAvailableRights[] = 'articlecomment';
 $wgAvailableRights[] = 'commentmove';
 $wgAvailableRights[] = 'commentedit';
 $wgAvailableRights[] = 'commentdelete';
 
+$wgGroupPermissions['*']['articlecomment'] = true;
 $wgGroupPermissions['sysop']['commentmove'] = true;
 $wgGroupPermissions['sysop']['commentedit'] = true;
 $wgGroupPermissions['sysop']['commentdelete'] = true;

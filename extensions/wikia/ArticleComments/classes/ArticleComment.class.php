@@ -24,7 +24,7 @@ class ArticleComment {
 
 	/** @var array */
 	public $mMetadata;
-	
+
 	public $mText;
 	public $mRawtext;
 	public $mHeadItems;
@@ -411,10 +411,10 @@ class ArticleComment {
 			// we cannot check it using $title->getBaseText, as this returns main namespace title
 			// the subjectpage for $parts title is something like 'User blog comment:SomeUser/BlogTitle' which is fine
 			$articleTitle = Title::makeTitle( MWNamespace::getSubject( $this->mNamespace ), $parts['title'] );
-			$commentingAllowed = ArticleComment::canComment( $articleTitle );
+			$commentingAllowed = ArticleCommentInit::userCanComment( $articleTitle );
 
 			if ( ( count( $parts['partsStripped'] ) == 1 ) && $commentingAllowed ) {
-				$replyButton = '<button type="button" class="article-comm-reply wikia-button secondary actionButton">' . wfMsg( 'article-comments-reply' ) . '</button>';
+				$replyButton = '<button type="button" class="article-comm-reply wikia-button secondary actionButton">' . wfMessage( 'article-comments-reply' )->escaped() . '</button>';
 			}
 			if ( defined( 'NS_QUESTION_TALK' ) && ( $title->getNamespace() == NS_QUESTION_TALK ) ) {
 				$replyButton = '';
@@ -422,7 +422,7 @@ class ArticleComment {
 
 			if ( $canDelete ) {
 				$img = '<img class="remove sprite" alt="" src="' . $wgBlankImgUrl . '" width="16" height="16" />';
-				$buttons[] = $img . '<a href="' . $title->getLocalUrl( 'redirect=no&action=delete' ) . '" class="article-comm-delete">' . wfMsg( 'article-comments-delete' ) . '</a>';
+				$buttons[] = $img . '<a href="' . $title->getLocalUrl( 'redirect=no&action=delete' ) . '" class="article-comm-delete">' . wfMessage( 'article-comments-delete' )->escaped() . '</a>';
 
 				$links['delete'] = $title->getLocalUrl( 'redirect=no&action=delete' );
 			}
@@ -431,13 +431,13 @@ class ArticleComment {
 			if ( $wgUser->isLoggedIn() && $commentingAllowed ) {
 				$display = $this->canEdit() ? 'test=' : ' style="display:none"';
 				$img = '<img class="edit-pencil sprite" alt="" src="' . $wgBlankImgUrl . '" width="16" height="16" />';
-				$buttons[] = "<span class='edit-link'$display>" . $img . '<a href="#comment' . $commentId . '" class="article-comm-edit actionButton" id="comment' . $commentId . '">' . wfMsg( 'article-comments-edit' ) . '</a></span>';
+				$buttons[] = "<span class='edit-link'$display>" . $img . '<a href="#comment' . $commentId . '" class="article-comm-edit actionButton" id="comment' . $commentId . '">' . wfMessage( 'article-comments-edit' )->escaped() . '</a></span>';
 
 				$links['edit'] = '#comment' . $commentId;
 			}
 
 			if ( !$this->mTitle->isNewPage( Title::GAID_FOR_UPDATE ) ) {
-				$buttons[] = RequestContext::getMain()->getSkin()->makeKnownLinkObj( $title, wfMsgHtml( 'article-comments-history' ), 'action=history', '', '', 'class="article-comm-history"' );
+				$buttons[] = RequestContext::getMain()->getSkin()->makeKnownLinkObj( $title, wfMessage( 'article-comments-history' )->escaped(), 'action=history', '', '', 'class="article-comm-history"' );
 
 				$links['history'] = $title->getLocalUrl( 'action=history' );
 			}
@@ -606,31 +606,6 @@ class ArticleComment {
 		$res = $isAuthor || ( $isAllowed && $canEdit );
 
 		return $res;
-	}
-
-	/**
-	 * Check if current user can comment
-	 *
-	 * @param Title $title
-	 *
-	 * @return bool
-	 */
-	public static function canComment( Title $title = null ) {
-		global $wgTitle, $wgArticleCommentsNamespaces;
-
-		$canComment = true;
-		$title = is_null( $title ) ? $wgTitle : $title;
-
-		if ( !in_array( $title->getNamespace(), $wgArticleCommentsNamespaces ) ) {
-			$canComment = false;
-		}
-		if ( self::isBlog( $title ) ) {
-			$props = BlogArticle::getProps( $title->getArticleID() );
-
-			$canComment = isset( $props[ 'commenting' ] ) ? ( bool ) $props[ 'commenting' ] : true;
-		}
-
-		return $canComment;
 	}
 
 	/**
@@ -1047,7 +1022,7 @@ class ArticleComment {
 				Wikia::log( __METHOD__, 'error', "No article created. Status: {$status->value}; DB: {$wgDBname}; User: {$userId}" );
 				$text  = false;
 				$error = true;
-				$message = wfMsg( 'article-comments-error' );
+				$message = wfMessage( 'article-comments-error' )->text();
 		}
 
 		$res = [
@@ -1170,7 +1145,7 @@ class ArticleComment {
 
 			$name = $wgEnotifUseRealName ? $editor->getRealName() : $editor->getName();
 			if ( $editor->isIP( $name ) ) {
-				$utext = trim( wfMsgForContent( 'enotif_anon_editor', '' ) );
+				$utext = trim( wfMessage( 'enotif_anon_editor', '' )->inContentLanguage()->text() );
 				$message = str_replace( '$PAGEEDITOR', $utext, $message );
 				$keys['$PAGEEDITOR'] = $utext;
 			}
