@@ -8,6 +8,7 @@ define('ext.wikia.curatedTour.stepProjector',
 			$body,
 			$btnNext,
 			$btnPrev,
+			$title,
 			$content,
 			$popover,
 			$targetedItem,
@@ -17,18 +18,18 @@ define('ext.wikia.curatedTour.stepProjector',
 			setupPopover();
 		}
 
-		function show(stepNoParam, selector, message, nextCallback, prevCallback) {
+		function show(stepNoParam, selector, title, message, nextCallback, prevCallback) {
 			var $selector = $(selector);
 			if ($selector.length > 0) {
-				reallyShow(stepNoParam, selector, message, nextCallback, prevCallback);
+				reallyShow(stepNoParam, selector, title, message, nextCallback, prevCallback);
 			} else {
 				setTimeout(function () {
-					show(stepNoParam, selector, message, nextCallback, prevCallback);
+					show(stepNoParam, selector, title, message, nextCallback, prevCallback);
 				}, 250);
 			}
 		}
 
-		function reallyShow(stepNoParam, selector, message, nextCallback, prevCallback) {
+		function reallyShow(stepNoParam, selector, title, message, nextCallback, prevCallback) {
 			prepareTargetItemProperties(selector);
 			setPopoverPosition();
 			$btnNext.click(function () {
@@ -42,19 +43,20 @@ define('ext.wikia.curatedTour.stepProjector',
 			} else {
 				$btnPrev.hide();
 			}
+			$title.html(title);
 			$content.html(message);
 			$popover.show();
 		}
 
 		function setupPopover() {
 			var $arrow = $('<div></div>').addClass('arrow'),
-				$title = $('<div></div>').addClass('popover-title'),
 				$buttons = $('<div></div>').addClass('popover-buttons');
 
+			$title = $('<div></div>').addClass('popover-title');
 			$content = $('<div></div>').addClass('popover-content');
 			$popover = $('<div></div>').addClass('popover bottom');
 			$btnNext = $('<a class="ct-popover-next-btn wikia-button primary">Next</a>');
-			$btnPrev = $('<a class="ct-popover-prev-btn wikia-button primary">Previous</a>');
+			$btnPrev = $('<a class="ct-popover-prev-btn wikia-button secondary">Previous</a>');
 			$buttons.append($btnNext, $btnPrev);
 
 			$popover
