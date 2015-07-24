@@ -1,0 +1,7 @@
+<h2>User Activity</h2>
+<ul>
+{{#items}}
+<li>{{#wordmarkData}}{{> wordmark}} - {{/wordmarkData}}{{^wordmarkData}}# {{/wordmarkData}}<a href="{{url}}">{{title}}</a> - {{editString}} - {{lastEdit}}</li>
+{{/items}}
+</ul>
+{{{pagination}}}

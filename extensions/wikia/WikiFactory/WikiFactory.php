@@ -173,8 +173,8 @@ class WikiFactory {
 	 * getDomains
 	 *
 	 * get all domains defined in wiki.factory (city_domains table) or
-	 * all domains for given wiki ideintifier. Data from query is
-	 * stored in memcache for hour.
+	 * all domains for given wiki identifier. Data from query is
+	 * stored in memcache for an hour.
 	 *
 	 * @access public
 	 * @static
@@ -490,6 +490,23 @@ class WikiFactory {
 
 		wfProfileOut( __METHOD__ );
 		return $city_id;
+	}
+
+	public static function getHostByDbName( $dbName ) {
+		global $wgDevelEnvironment, $wgDevelEnvironmentName;
+
+		$cityId = \WikiFactory::DBtoID( $dbName );
+		$hostName = \WikiFactory::getVarValueByName( 'wgServer', $cityId );
+
+		if ( !empty( $wgDevelEnvironment ) ) {
+			if ( strpos( $hostName, "wikia.com" ) ) {
+				$hostName = str_replace( "wikia.com", "{$wgDevelEnvironmentName}.wikia-dev.com", $hostName );
+			} else {
+				$hostName = \WikiFactory::getLocalEnvURL( $hostName );
+			}
+		}
+
+		return rtrim( $hostName, '/' );
 	}
 
 	/**
@@ -1168,7 +1185,8 @@ class WikiFactory {
 		} else {
 			$devbox = '';
 		}
-		$server = str_replace( $devbox . '.wikia-dev.com', '', $server );
+
+		$server = str_replace( '.' . $devbox . '.wikia-dev.com', '', $server );
 		$server = str_replace( '.wikia.com', '', $server );
 
 		// put the address back into shape and return
