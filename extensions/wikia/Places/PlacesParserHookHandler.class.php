@@ -97,7 +97,7 @@ class PlacesParserHookHandler {
 		// parse attributes
 		$content = trim($content);
 		$height = !empty($attributes['height']) && is_numeric($attributes['height']) ? $attributes['height'] : self::PLACES_DEFAULT_HEIGHT;
-		$categories = !empty($attributes['category']) ? explode('|', $attributes['category']) : false;
+		$categories = !empty($attributes['category']) ? explode('|', $parser->recursiveTagParse($attributes['category'], $frame)) : false;
 		$animate = !empty($attributes['animate'])
 			?
 			is_numeric($attributes['animate']) ? intval($attributes['animate']) : self::PLACES_DEFAULT_ANIMATION_DELAY /* default animation delay in sec */
@@ -127,7 +127,7 @@ class PlacesParserHookHandler {
 			$markers = $placesModel->getAll(self::PLACES_DEFAULT_ALL_LIMIT);
 		}
 
-		#self::$recursionLock = false; return print_r($markers, true); # debug
+		#return print_r($markers, true); # debug
 
 		if (!empty($markers)) {
 			// render parser hook
