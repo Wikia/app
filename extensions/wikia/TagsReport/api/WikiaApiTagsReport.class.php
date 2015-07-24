@@ -79,7 +79,7 @@ class WikiaApiTagsReport extends ApiQueryBase {
 
 		// add the <tags> entries
 		$this->getResult()->setIndexedTagName( $entries, 'tag' );
-		$this->getResult()->addValue( 'query', 'tags', $entries );
+		$this->getResult()->addValue( 'query', 'tagsreport', $entries );
 
 		wfProfileOut( __METHOD__ );
 	}
