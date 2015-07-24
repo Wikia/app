@@ -22,7 +22,9 @@ $messages['en'] = [
 	'curated-tour-special-list-header-name' => 'Page Name',
 	'curated-tour-special-list-header-selector' => 'Selector',
 	'curated-tour-special-list-header-notes' => 'Notes',
-	'curatedTour-special-zero-state' => 'Hmm it seems that you have not prepared a guide on your wiki for new users, but you can change it by clicking button Create Curated Tour.',
+	'curated-tour-special-zero-state' => 'It seems that you have not prepared a guide on your wiki for new users, but you can change it by clicking button Plan Curated Tour.',
+	'curated-tour-special-plan-button-text' => 'Plan curated tour',
+	'curated-tour-special-edit-button-text' => 'Edit curated tour',
 ];
 /**
  * Message documentation
@@ -40,5 +42,7 @@ $messages['qqq'] = [
 	'curated-tour-special-list-header-name' => 'Page Name',
 	'curated-tour-special-list-header-selector' => 'Selector',
 	'curated-tour-special-list-header-notes' => 'Notes',
-	'curatedTour-special-zero-state' => 'Hmm it seems that you have not prepared a guide on your wiki for new users, but you can change it by clicking button Create Curated Tour.',
+	'curated-tour-special-zero-state' => 'It seems that you have not prepared a guide on your wiki for new users, but you can change it by clicking button Plan Curated Tour.',
+	'curated-tour-special-plan-button-text' => 'Plan curated tour',
+	'curated-tour-special-edit-button-text' => 'Edit curated tour',
 ];

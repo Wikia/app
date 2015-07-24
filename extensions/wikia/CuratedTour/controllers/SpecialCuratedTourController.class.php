@@ -8,8 +8,9 @@ class SpecialCuratedTourController extends WikiaSpecialPageController {
 
 	public function index() {
 		$this->wg->Out->setPageTitle( wfMessage( 'curated-tour-page-title' )->escaped() );
-		$response =  $this->requestGetCuratedTourData()->getData();
+		$response = $this->requestGetCuratedTourData()->getData();
 		$this->pageTour = $response['data'];
+		$this->hasAdminPermissions = $this->wg->User->isAllowed( 'curated-tour-administration' );
 	}
 
 	private function requestGetCuratedTourData() {

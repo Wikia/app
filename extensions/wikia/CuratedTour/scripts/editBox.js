@@ -159,7 +159,7 @@ define('ext.wikia.curatedTour.editBox',
 		}
 
 		function enterEditMode() {
-			cookies.set(editModeCookieName, '1', {expires: cache.CACHE_SHORT});
+			cookies.set(editModeCookieName, '1', {expires: cache.CACHE_STANDARD});
 		}
 
 		function exitEditMode(event) {
