@@ -70,7 +70,9 @@ class Controller extends \WikiaController {
 			$contribItem['editCount'] = $editCount;
 			unset($contribItem['editcount']);
 
-			$contribItem['wordmarkData'] = $this->getWordmark( $contribItem['dbname'] );
+			$dbName = $contribItem['dbname'];
+			$contribItem['wordmarkData'] = $this->getWordmark( $dbName );
+			$contribItem['groups'] = implode(', ', $this->getGroups( $dbName ) );
 
 			$flattened[] = $contribItem;
 		}
@@ -104,5 +106,42 @@ class Controller extends \WikiaController {
 
 			return $wm;
 		}
+	}
+
+	private function getGroups( $dbName ) {
+		$userName = $this->wg->User->getName();
+		$params = [
+			'action' => 'query',
+			'list' => 'users',
+			'ususers' => urlencode( $userName ),
+			'usprop' => 'groups',
+		];
+
+		$resp = \ApiService::foreignCall( $dbName, $params, \ApiService::API );
+
+		if ( ( $resp === false ) || ( empty( $resp['query']['users'][0]['groups'] ) ) ) {
+			return [];
+		} else {
+			$allGroups = $resp['query']['users'][0]['groups'];
+			$selectGroups = preg_grep( '/chatmoderator|bureaucrat|sysop/', $allGroups );
+			$translatedGroups = array_map(
+				function( $value ) {
+					$key = "group-$value-member";
+					return wfMessage( $key )->text();
+				},
+				$selectGroups
+			);
+
+			if ( $this->isUserFounder( $dbName ) ) {
+				$translatedGroups[] = wfMessage( 'lookupuser-founder' )->text();
+			}
+
+			return $translatedGroups;
+		}
+	}
+
+	private function isUserFounder( $dbName ) {
+		$wiki = \WikiFactory::getWikiByDB( $dbName );
+		return $wiki->city_founding_user == $this->wg->User->getId();
 	}
 }

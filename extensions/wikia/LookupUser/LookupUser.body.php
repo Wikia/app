@@ -6,6 +6,8 @@
  */
 class LookupUserPage extends SpecialPage {
 
+	const FOUNDER_CACHE_TTL = 3600;
+
 	/**
 	 * Constructor
 	 */
@@ -486,9 +488,7 @@ EOT
 	public static function isUserFounder( $userName, $wikiId ) {
 		global $wgMemc;
 
-		wfProfileIn( __METHOD__ );
-
-		$memcKey = 'lookupUser' . 'user' . 'isUserFounder' . $userName . 'on' . $wikiId;
+		$memcKey = self::getFounderMemKey( $userName, $wikiId );
 		$result = $cachedData = $wgMemc->get( $memcKey );
 
 		if ( $result !== true && $result !== false ) {
@@ -501,10 +501,13 @@ EOT
 				$result = true;
 			}
 
-			$wgMemc->set( $memcKey, $result, 3600 ); // 1h
+			$wgMemc->set( $memcKey, $result, self::FOUNDER_CACHE_TTL );
 		}
 
-		wfProfileOut( __METHOD__ );
 		return $result;
+	}
+
+	private static function getFounderMemKey( $userName, $wikiId ) {
+		return wfSharedMemcKey( 'lookupUser', 'isUserFounder', $userName, $wikiId );
 	}
 }
