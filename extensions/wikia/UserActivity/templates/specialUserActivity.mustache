@@ -15,19 +15,19 @@
 	{{#hasArticles}}
 	<tr>
 		<td colspan="4">
-			{{#articles}}
 			<div class="row page-listings">
-					<div class="four columns">
+			{{#articles}}
+					<div class="two columns">
 						<a id="wtf" class="page-listing-image" href="{{url}}">
 							<img src="{{imageUrl}}"{{#noImage}}class="no-image "{{/noImage}} />
 						</a>
 					</div>
-					<div class="eight columns">
-						<h3 class="page-listing-title"><a href="{{url}}">{{titleText}}</a></h3>
+					<div class="two columns">
+						<p class="page-listing-title"><a href="{{url}}">{{titleText}}</a></p>
 						<p class="page-listing-snippet">{{snippet}}</p>
 					</div>
-			</div>
 			{{/articles}}
+			</div>
 		</td>
 	</tr>
 	{{/hasArticles}}
