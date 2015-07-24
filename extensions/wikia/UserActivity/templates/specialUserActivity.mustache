@@ -1,7 +1,14 @@
 <h2>User Activity</h2>
-<ul>
+<table style="padding:10px;" class="TablePager" id="useractivity-table">
+	<thead>
+<tr><th>Title</th><th># of edits</th><th>Last edited</th><th>User rights</th>
+	</thead>
 {{#items}}
-<li>{{#wordmarkData}}{{> wordmark}} - {{/wordmarkData}}{{^wordmarkData}}# {{/wordmarkData}}<a href="{{url}}">{{title}}</a> - {{editString}} - {{lastEdit}}</li>
+<tr>
+	<td>{{#wordmarkData}}{{> wordmark}}{{/wordmarkData}}{{^wordmarkData}}{{/wordmarkData}}
+		<strong><a href="{{url}}">{{title}}</a></strong></td>
+	<td><a href="{{url}}wiki/Special:Contributions/{{username}}">{{editString}}</a></td>
+	<td>{{lastEdit}}</td></tr>
 {{/items}}
-</ul>
+</table>
 {{{pagination}}}
