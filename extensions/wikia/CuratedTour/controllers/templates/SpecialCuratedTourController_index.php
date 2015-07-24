@@ -7,6 +7,11 @@
 		<p class="curated-tour-special-header-content-text">
 			<?=wfMessage( 'curated-tour-header-text' )->parse()?>
 		</p>
+		<? if ( $hasAdminPermissions ): ?>
+		<p class="curated-tour-special-header-content-tip">
+			<?=wfMessage( 'curated-tour-header-tip' )->parse()?>
+		</p>
+		<? endif; ?>
 	</div>
 	<a class="ct-play-button" href="#"><?= wfMessage( 'curated-tour-start-text' )->escaped() ?></a>
 </div>

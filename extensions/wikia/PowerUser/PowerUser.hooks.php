@@ -48,11 +48,7 @@ class PowerUserHooks {
 	 * @return bool
 	 */
 	public function onWikiaSkinTopScripts( Array &$vars, &$scripts ) {
-		global $wgUser, $wgTitle;
-
-		if ( $wgTitle->isSpecial( 'CuratedTour' ) ) {
-			$vars [ 'initTourPlan' ] = true;
-		}
+		global $wgUser;
 
 		foreach ( PowerUser::$aPowerUserJSVariables as $sProperty => $sVarName ) {
 			if ( $wgUser->isSpecificPowerUser( $sProperty ) ) {

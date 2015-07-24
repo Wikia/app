@@ -29,16 +29,16 @@ $wgGroupPermissions['sysop']['curated-tour-administration'] = true;
 $wgExtensionMessagesFiles['CuratedTour'] = __DIR__ . '/CuratedTour.i18n.php';
 
 $wgAutoloadClasses['CuratedTourController'] = __DIR__ . '/controllers/CuratedTourController.class.php';
-
 $wgAutoloadClasses['CuratedTourHooks'] = __DIR__ . '/CuratedTour.hooks.php';
+$wgAutoloadClasses['SpecialCuratedTourController'] = __DIR__ . '/controllers/SpecialCuratedTourController.class.php';
+
 
 $wgHooks['BeforePageDisplay'][] = 'CuratedTourHooks::onBeforePageDisplay';
+$wgHooks['WikiaSkinTopScripts'][] = 'CuratedTourHooks::onWikiaSkinTopScripts';
 
 JSMessages::registerPackage( 'CuratedTourEditBox', [
 	'curated-tour-edit-box-*'
 ] );
-
-$wgAutoloadClasses['SpecialCuratedTourController'] = __DIR__ . '/controllers/SpecialCuratedTourController.class.php';
 
 $wgSpecialPages['CuratedTour'] = 'SpecialCuratedTourController';
 

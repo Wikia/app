@@ -20,4 +20,12 @@ class CuratedTourHooks {
 		return true;
 	}
 
+	public static function onWikiaSkinTopScripts(&$vars, &$scripts){
+		global $wgTitle;
+
+		if ( $wgTitle->isSpecial( 'CuratedTour' ) ) {
+			$vars [ 'initTourPlan' ] = true;
+		}
+		return true;
+	}
 }
