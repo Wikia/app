@@ -42,6 +42,7 @@ class AdEngine2ContextService {
 					'usePostScribe' => $wg->Request->getBool( 'usepostscribe', false ),
 				] ),
 				'targeting' => $this->filterOutEmptyItems( [
+					'enableKruxTargeting' => $wg->EnableKruxTargeting,
 					'enablePageCategories' => array_search( $langCode, $wg->AdPageLevelCategoryLangs ) !== false,
 					'pageArticleId' => $title->getArticleId(),
 					'pageIsArticle' => !!$title->getArticleId(),

@@ -344,7 +344,7 @@ class FounderActiveController extends FounderController {
 			'rctype' => implode( '|', [ 'new', 'edit' ] ),
 			'rcprop' => implode( '|', [ 'user', 'title' ] ),
 			'rcnamespace' => implode( '|', $wg->ContentNamespaces),
-			'rcexcludeuser' => $this->targetUser->getName(),
+			'rcexcludeuser' => $this->getTargetUserName(),
 			'rcshow' => implode( '|', [ '!minor', '!bot', '!anon', '!redirect' ] ),
 			'rclimit' => $num,
 			'rctoponly' => 1,

@@ -287,7 +287,7 @@ $messages['fr'] = array(
 	'emailext-founder-10-days-email-power-details' => "Vous souhaitez recruter quelqu'un pour votre wikia ? Envoyez-lui une invitation par e-mail. Rien de tel que d'agrandir la base d'une communauté&nbsp;!",
 	'emailext-founder-10-days-email-google-header' => 'Améliorez votre visibilité sur Google.',
 	'emailext-founder-10-days-email-google-details' => 'Consultez nos astuces pour améliorer le trafic vers votre wikia&nbsp;!',
-	'emailext-founder-get-with-google' => 'http://communaute.wikia.com/wiki/Aide:Am%C3%A9liorer_le_positionnement_Google_de_votre_wikia',
+	'emailext-founder-get-with-google' => 'http://communaute.wikia.com/wiki/Aide:Optimisation_pour_les_moteurs_de_recherche',
 	'emailext-founder-10-days-email-what-next' => 'Quelle serait la communauté de fans Wikia sans vous ! Nous sommes impatients de voir vos prochains ajouts.',
 );
 
