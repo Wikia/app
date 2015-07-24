@@ -6,6 +6,7 @@ use Wikia\Logger\WikiaLogger;
 
 class Controller extends \WikiaController {
 	const DEFAULT_TEMPLATE_ENGINE = \WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
+	const NUM_ARTICLES_SHOWN = 3;
 
 	public function index() {
 		$user = \F::app()->wg->User;
@@ -73,6 +74,10 @@ class Controller extends \WikiaController {
 			$dbName = $contribItem['dbname'];
 			$contribItem['wordmarkData'] = $this->getWordmark( $dbName );
 			$contribItem['groups'] = implode(', ', $this->getGroups( $dbName ) );
+
+			$articles = $this->getArticleBlurbs( $dbName );
+			$contribItem['articles'] = $articles;
+			$contribItem['hasArticles'] = count($articles) > 0;
 
 			$flattened[] = $contribItem;
 		}
@@ -143,5 +148,64 @@ class Controller extends \WikiaController {
 	private function isUserFounder( $dbName ) {
 		$wiki = \WikiFactory::getWikiByDB( $dbName );
 		return $wiki->city_founding_user == $this->wg->User->getId();
+	}
+
+	public function getArticleBlurbs( $dbName ) {
+		$articleIds = $this->getRecentChangeIds( $dbName );
+		$articleInfo = $this->getRecentChangeInfo( $dbName, $articleIds );
+
+		return $articleInfo;
+	}
+
+	private function getRecentChangeIds( $dbName ) {
+		$params = [
+			'action' => 'query',
+			'list' => 'recentchanges',
+			'rcuser' => $this->wg->User->getName(),
+			'rcprop' => 'ids|title',
+			'rcshow' => '!minor|!redirect',
+			'rctype' => 'new|edit',
+			'rctoponly' => 1,
+			'rcnamespace' => 0,
+			'rclimit' => self::NUM_ARTICLES_SHOWN,
+		];
+
+		$resp = \ApiService::foreignCall( $dbName, $params, \ApiService::API );
+		if ( $resp == false || empty( $resp['query']['recentchanges'][0] ) ) {
+			return [];
+		}
+
+		$articleIds = [];
+		foreach ( $resp['query']['recentchanges'] as $change ) {
+			$articleIds[] = $change['pageid'];
+		}
+
+		return $articleIds;
+	}
+
+	private function getRecentChangeInfo( $dbName, $articleIds ) {
+		$params = array(
+			'controller' => 'ArticleSummary',
+			'method' => 'blurb',
+			'ids' => implode( ',', $articleIds ),
+		);
+
+		$response = \ApiService::foreignCall( $dbName, $params, \ApiService::WIKIA );
+		if ( empty( $response['summary'] ) ) {
+			return [];
+		}
+
+		$recentChanges = [];
+		foreach ( $response[ 'summary' ] as $id => $info ) {
+			if ( !array_key_exists( 'error', $info ) ) {
+				if ( empty( $info['imageUrl'] ) ) {
+					$info['imageUrl'] = wfBlankImgUrl();
+					$info['noImage'] = true;
+				}
+				$recentChanges[] = $info;
+			}
+		}
+
+		return $recentChanges;
 	}
 }

@@ -2,7 +2,6 @@
 
 namespace UserActivity;
 
-
 class SpecialController extends \WikiaSpecialPageController {
 
 	const DEFAULT_TEMPLATE_ENGINE = \WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;

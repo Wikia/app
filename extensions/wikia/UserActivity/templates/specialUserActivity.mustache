@@ -2,16 +2,35 @@
 <p>{{pageDescription}}</p>
 <table width="100%" class="article-table" id="useractivity-table">
 	<thead>
-<tr><th>{{tableTitle}}</th><th>{{tableEdits}}</th><th>{{tableLastEdit}}</th><th>{{tableRights}}</th>
+		<tr><th>{{tableTitle}}</th><th>{{tableEdits}}</th><th>{{tableLastEdit}}</th><th>{{tableRights}}</th>
 	</thead>
-{{#items}}
-<tr>
-	<td>{{#wordmarkData}}{{> wordmark}}{{/wordmarkData}}{{^wordmarkData}}{{/wordmarkData}}
-		<strong><a href="{{url}}">{{title}}</a></strong></td>
-	<td><a href="{{url}}wiki/Special:Contributions/{{username}}">{{editString}}</a></td>
-	<td>{{lastEdit}}</td>
-	<td>{{groups}}</td>
-</tr>
-{{/items}}
+	{{#items}}
+	<tr>
+		<td>{{#wordmarkData}}{{> wordmark}}{{/wordmarkData}}{{^wordmarkData}}{{/wordmarkData}}
+			<strong><a href="{{url}}">{{title}}</a></strong></td>
+		<td><a href="{{url}}wiki/Special:Contributions/{{username}}">{{editString}}</a></td>
+		<td>{{lastEdit}}</td>
+		<td>{{groups}}</td>
+	</tr>
+	{{#hasArticles}}
+	<tr>
+		<td colspan="4">
+			{{#articles}}
+			<div class="row page-listings">
+					<div class="four columns">
+						<a id="wtf" class="page-listing-image" href="{{url}}">
+							<img src="{{imageUrl}}"{{#noImage}}class="no-image "{{/noImage}} />
+						</a>
+					</div>
+					<div class="eight columns">
+						<h3 class="page-listing-title"><a href="{{url}}">{{titleText}}</a></h3>
+						<p class="page-listing-snippet">{{snippet}}</p>
+					</div>
+			</div>
+			{{/articles}}
+		</td>
+	</tr>
+	{{/hasArticles}}
+	{{/items}}
 </table>
 {{{pagination}}}
