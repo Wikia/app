@@ -49,6 +49,15 @@
 	float: left;
 }
 
+.ct-edit-box-loader {
+	background-image: url('/skins/common/images/ajax.gif');
+	display: none;
+	float: right;
+	height: 16px;
+	margin-right: 15px;
+	width: 16px;
+}
+
 .ct-edit-box-controls-save {
 	float: right;
 }

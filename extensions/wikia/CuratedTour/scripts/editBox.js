@@ -39,13 +39,10 @@ define('ext.wikia.curatedTour.editBox',
 		}
 
 		function setupEditBox(res) {
-			debugger;
 			if (resources === null) {
 				resources = res;
 				cache.set(getResourcesCacheKey(), res, cache.CACHE_LONG);
 			}
-
-			console.log(res);
 
 			loader.processStyle(res.styles);
 			mw.messages.set(res.messages);
@@ -97,27 +94,32 @@ define('ext.wikia.curatedTour.editBox',
 		function saveCurrentTour(event) {
 			event.preventDefault();
 
-			nirvana.sendRequest({
-				controller: 'CuratedTourController',
-				method: 'setCuratedTourData',
-				data: {
-					edit_token: mw.user.tokens.get('editToken'),
-					currentTourData: collectCurrentTourData()
-				},
-				callback: function (json) {
-					if (json.status) {
-						new BannerNotification(
-							mw.message('curated-tour-edit-box-save-success').escaped(),
-							'confirm'
-						).show();
-					} else {
-						new BannerNotification(
-							mw.message('curated-tour-edit-box-save-failure').escaped(),
-							'error'
-						).show();
+			if ($(event.target).attr('disabled') !== 'disabled') {
+				startProgress();
+
+				nirvana.sendRequest({
+					controller: 'CuratedTourController',
+					method: 'setCuratedTourData',
+					data: {
+						editToken: mw.user.tokens.get('editToken'),
+						currentTourData: collectCurrentTourData()
+					},
+					callback: function (json) {
+						stopProgress();
+						if (json.status) {
+							new BannerNotification(
+								mw.message('curated-tour-edit-box-save-success').escaped(),
+								'confirm'
+							).show();
+						} else {
+							new BannerNotification(
+								mw.message('curated-tour-edit-box-save-failure').escaped(),
+								'error'
+							).show();
+						}
 					}
-				}
-			});
+				});
+			}
 		}
 
 		function collectCurrentTourData() {
@@ -132,6 +134,16 @@ define('ext.wikia.curatedTour.editBox',
 			});
 
 			return currentTourData;
+		}
+
+		function startProgress() {
+			$('.ct-edit-box-controls-save').attr('disabled', 'disabled');
+			$('.ct-edit-box-loader').show();
+		}
+
+		function stopProgress() {
+			$('.ct-edit-box-controls-save').removeAttr('disabled');
+			$('.ct-edit-box-loader').hide();
 		}
 
 		function setCurrentTour(json) {

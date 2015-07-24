@@ -9,7 +9,7 @@ class CuratedTourController extends WikiaController {
 	}
 
 	public function setCuratedTourData() {
-		if ( $this->request->wasPosted() && $this->wg->User->matchEditToken( $this->getVal( 'edit_token' ) ) ) {
+		if ( $this->request->wasPosted() && $this->wg->User->matchEditToken( $this->getVal( 'editToken' ) ) ) {
 			$data = $this->getVal( 'currentTourData' );
 
 			try {

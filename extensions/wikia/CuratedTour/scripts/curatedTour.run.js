@@ -9,7 +9,6 @@ require(
 	],
 	function (cookies, $, editBox) {
 		'use strict';
-		console.log('curatedTourEditMode loaded');
 
 	//if (cookies.get('curatedTourEditMode') !== null) {
 		editBox.init();
