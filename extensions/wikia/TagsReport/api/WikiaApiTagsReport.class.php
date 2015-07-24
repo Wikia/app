@@ -9,15 +9,15 @@ class WikiaApiTagsReport extends ApiQueryBase {
 
 	public function execute() {
 		global $wgCityId;
-		wfProfileIn(__METHOD__);
+		wfProfileIn( __METHOD__ );
 
 		// apply API request parameters
 		$params = $this->extractRequestParams();
 
 		$pageId = false;
-		if (isset($params['title'])) {
-			$title = Title::newFromText($params['title']);
-			if ($title instanceof Title) {
+		if ( isset( $params['title'] ) ) {
+			$title = Title::newFromText( $params['title'] );
+			if ( $title instanceof Title ) {
 				$pageId = $title->getArticleID();
 			}
 		}
@@ -37,11 +37,11 @@ class WikiaApiTagsReport extends ApiQueryBase {
 		$res = $this->select( __METHOD__ );
 		$entries = [];
 
-		foreach($res as $row) {
-			$pageId = intval($row->page_id);
-			$title = Title::newFromID($pageId);
+		foreach ( $res as $row ) {
+			$pageId = intval( $row->page_id );
+			$title = Title::newFromID( $pageId );
 
-			if ($title instanceof Title) {
+			if ( $title instanceof Title ) {
 				$entries[] = [
 					'page_id' => $pageId,
 					'title'   => $title->getPrefixedText(),
@@ -60,13 +60,13 @@ class WikiaApiTagsReport extends ApiQueryBase {
 			__METHOD__
 		);
 
-		$this->getResult()->addValue('query', 'generated', $generationTime);
+		$this->getResult()->addValue( 'query', 'generated', $generationTime );
 
 		// add the <tags> entries
-		$this->getResult()->setIndexedTagName($entries, 'tag');
-		$this->getResult()->addValue('query', 'tags', $entries);
+		$this->getResult()->setIndexedTagName( $entries, 'tag' );
+		$this->getResult()->addValue( 'query', 'tags', $entries );
 
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 	}
 
 	/**
