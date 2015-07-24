@@ -73,7 +73,6 @@ class Controller extends \WikiaController {
 		return $flattened;
 	}
 
-
 	private function getWordmark( $dbName ) {
 		$params = [
 			'controller' => 'WikiHeader',
