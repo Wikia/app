@@ -15,7 +15,7 @@ define('ext.wikia.curatedTour.editBox',
 		var	resources,
 			resourcesCacheKey = 'curatedTourEditBox',
 			cacheVersion = '1.0',
-			editModeCookieName = 'curatedTourEditBoxEditMode',
+			editModeCookieName = 'curatedTourEditMode',
 			wikiId = mw.config.get('wgCityId'),
 			currentTourCacheKey = 'currentCuratedTour:' + wikiId;
 
@@ -172,6 +172,11 @@ define('ext.wikia.curatedTour.editBox',
 
 		function getResourcesCacheKey() {
 			return resourcesCacheKey + ':' + cacheVersion;
+		}
+
+		function addNewItem(itemData) {
+			var newItem = mustache.to_html(resources.mustache[1], itemData);
+			$('#ct-edit-box-items-list').append(newItem);
 		}
 
 		function addNewStep() {
