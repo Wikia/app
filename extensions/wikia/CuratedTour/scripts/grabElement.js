@@ -20,11 +20,16 @@ define('ext.wikia.curatedTour.grabElement',
 		$body,
 		$popover,
 		$content,
-		$title;
+		$title,
+		$addBtn,
+		$titleTextarea,
+		$contentTextarea,
+		addItemToListCallback;
 
 		appendBody($hover);
 
-		function init() {
+		function init(callback) {
+			addItemToListCallback = callback;
 			console.log('grabElement loaded');
 
 			$('#WikiaPage *').mouseenter($.throttle(50, handlerIn)).mouseleave($.throttle(50, handlerOut));
@@ -132,6 +137,8 @@ define('ext.wikia.curatedTour.grabElement',
 				background: '#fff',
 				width: '400px'
 			});
+			$addBtn = $('<a class="ct-popover-add-btn wikia-button primary">Add</a>');
+			$addBtn.click(addTripItem);
 			$popover
 				.addClass('popover bottom')
 				.append($arrow, $title, $content)
@@ -140,8 +147,10 @@ define('ext.wikia.curatedTour.grabElement',
 		}
 
 		function addPopover() {
-			$title.html('test');
-			$content.html('test');
+			$titleTextarea = '<textarea placeholder="Title (optional)"></textarea>';
+			$contentTextarea = '<textarea placeholder="Provide your words for a user" rows="4"></textarea>';
+			$title.html($titleTextarea);
+			$content.html($contentTextarea);
 			$popover.css({
 				top: selectedElement.posY + selectedElement.height,
 				left: selectedElement.posX + 0.5 * selectedElement.width - $popover.width() * 0.5,
@@ -149,6 +158,15 @@ define('ext.wikia.curatedTour.grabElement',
 				background: '#fff'
 			});
 			$popover.show();
+		}
+
+		function addTripItem(e) {
+			var itemData = {
+				Selector: selectedElement.path,
+				PageName: 'Test',
+				Notes: $contentTextarea.html()
+			};
+			addItemToListCallback(itemData);
 		}
 
 		function appendBody(element) {

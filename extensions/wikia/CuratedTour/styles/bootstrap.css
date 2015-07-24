@@ -354,6 +354,7 @@
 }
 .popover-content {
   padding: 9px 14px;
+  overflow: hidden;
 }
 .popover > .arrow,
 .popover > .arrow:after {
@@ -471,4 +472,13 @@
 }
 .affix {
   position: fixed;
+}
+.popover textarea {
+	box-sizing: border-box;
+	padding: 10px;
+	width: 100%;
+}
+
+.ct-popover-add-btn {
+	float: right;
 }
