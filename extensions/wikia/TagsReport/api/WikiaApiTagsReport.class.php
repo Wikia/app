@@ -7,6 +7,8 @@
  */
 class WikiaApiTagsReport extends ApiQueryBase {
 
+	const LIMIT = 75;
+
 	public function execute() {
 		global $wgCityId;
 		wfProfileIn( __METHOD__ );
@@ -33,12 +35,25 @@ class WikiaApiTagsReport extends ApiQueryBase {
 		$this->addWhereIf( [ 'ct_page_id'  => $pageId ],        $pageId !== false );
 		$this->addWhereIf( [ 'ct_kind'     => $params['tag'] ], isset( $params['tag'] ) );
 
+		// apply limits and continue
+		$limit = $params['limit'];
+		$this->addOption( 'LIMIT', $limit + 1 );
+		$this->addWhereRange( 'ct_page_id', 'newer', $params[ 'continue' ] );
+
 		// run the query and format the results
 		$res = $this->select( __METHOD__ );
 		$entries = [];
+		$count = 0;
 
 		foreach ( $res as $row ) {
 			$pageId = intval( $row->page_id );
+
+			if ( ++ $count > $limit ) {
+				// We've reached the one extra which shows that there are additional pages to be had. Stop here...
+				$this->setContinueEnumParameter( 'continue', $pageId );
+				break;
+			}
+
 			$title = Title::newFromID( $pageId );
 
 			if ( $title instanceof Title ) {
@@ -87,13 +102,23 @@ class WikiaApiTagsReport extends ApiQueryBase {
 			'tag' => [
 				ApiBase :: PARAM_TYPE => 'string'
 			],
+			'limit' => array(
+				ApiBase::PARAM_DFLT => self::LIMIT,
+				ApiBase::PARAM_TYPE => 'limit',
+				ApiBase::PARAM_MIN => 1,
+				ApiBase::PARAM_MAX => ApiBase::LIMIT_BIG1,
+				ApiBase::PARAM_MAX2 => ApiBase::LIMIT_BIG2
+			),
+			'continue' => null,
 		];
 	}
 
 	public function getParamDescription() {
 		return [
-			'title' => 'query by article title (string)',
-			'tag' => 'query by tag type (string)',
+			'title' => 'Query by article title (string)',
+			'tag' => 'Query by tag type (string)',
+			'limit' => 'How many tags to return',
+			'continue' => 'When more results are available, use this to continue',
 		];
 	}
 
@@ -105,10 +130,12 @@ class WikiaApiTagsReport extends ApiQueryBase {
 	 * Examples
 	 */
 	public function getExamples() {
+		$mainPage = Title::newMainPage()->getPrefixedDBkey();
+
 		return [
 			'api.php?action=tagsreport',
-			'api.php?action=tagsreport&title=Main_Page',
-			'api.php?action=tagsreport&tag=dpl',
+			'api.php?action=tagsreport&title=' . urlencode( $mainPage ),
+			'api.php?action=tagsreport&tag=gallery',
 		];
 	}
 
