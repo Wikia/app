@@ -10,7 +10,7 @@ define('ext.wikia.curatedTour.tourGuide',
 		'use strict';
 
 		var onTourCookie = 'curatedTourIsOn',
-			ttl = 60 * 60 * 3;
+			ttl = 1000 * 60 * 60 * 3; // 3 hours
 
 		function init() {
 			showNavigatorBox();

@@ -34,9 +34,14 @@ define('ext.wikia.curatedTour.stepProjector',
 			$btnNext.click(function () {
 				nextCallback(stepNoParam);
 			});
-			$btnPrev.click(function () {
-				prevCallback(stepNoParam);
-			});
+			if (typeof prevCallback === 'function') {
+				$btnPrev.show();
+				$btnPrev.click(function () {
+					prevCallback(stepNoParam);
+				});
+			} else {
+				$btnPrev.hide();
+			}
 			$content.html(message);
 			$popover.show();
 		}

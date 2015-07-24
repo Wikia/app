@@ -17,6 +17,7 @@ define('ext.wikia.curatedTour.editBox',
 			resourcesCacheKey = 'curatedTourEditBox',
 			cacheVersion = '1.0',
 			editModeCookieName = 'curatedTourEditMode',
+			cookiesTtl = 1000 * 60 * 60 * 3, // 3 hours
 			wikiId = mw.config.get('wgCityId'),
 			currentTourCacheKey = 'currentCuratedTour:' + wikiId;
 
@@ -131,18 +132,18 @@ define('ext.wikia.curatedTour.editBox',
 		}
 
 		function isInEditMode() {
-			return !!cookies.get(editModeCookieName);
+			return cookies.get(editModeCookieName) === null;
 		}
 
 		function enterEditMode() {
-			cookies.set(editModeCookieName, '1', {expires: cache.CACHE_STANDARD});
+			cookies.set(editModeCookieName, '1', {expires: cookiesTtl});
 		}
 
 		function exitEditMode(event) {
 			event.preventDefault();
 
 			$('#ct-edit-box').remove();
-			cache.del(getCurrentTourAndRenderEditBox());
+			cache.del(currentTourCacheKey);
 			cookies.set(editModeCookieName);
 		}
 

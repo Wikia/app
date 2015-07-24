@@ -37,18 +37,23 @@ define('ext.wikia.curatedTour.tourNavigator',
 		}
 
 		function displayCurrentStep() {
-			TourManager.getPlan(function (tourPlan) {
-				var currentStep = getCurrentStep(),
-					stepData = tourPlan[getIndexFromStep(currentStep)];
+			var currentStep = getCurrentStep();
 
-				StepProjector.show(
-					currentStep,
-					stepData.Selector,
-					stepData.Notes,
-					goToNextStep,
-					goToPreviousStep
-				);
-			});
+			if (currentStep > 0) {
+				var previous = currentStep === 1 ? null : goToPreviousStep;
+
+				TourManager.getPlan(function (tourPlan) {
+					var stepData = tourPlan[getIndexFromStep(currentStep)];
+
+					StepProjector.show(
+						currentStep,
+						stepData.Selector,
+						stepData.Notes,
+						goToNextStep,
+						previous
+					);
+				});
+			}
 		}
 
 		function getUrlParam(name) {

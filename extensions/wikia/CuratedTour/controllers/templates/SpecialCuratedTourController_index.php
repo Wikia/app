@@ -41,11 +41,11 @@
 	<div class="curated-tour-special-zero-status">
 		<?=wfMessage( 'curated-tour-special-zero-state' )->parse();?>
 	</div>
-	<? if ( $hasAdminPermissions ): ?>
+	<?  if ( $hasAdminPermissions ): ?>
 		<div class="curated-tour-special-create">
 			<a href="#" class="curated-tour-special-plan-button wikia-button primary">
 				<?=wfMessage( 'curated-tour-special-plan-button-text' )->escaped();?>
 			</a>
 		</div>
-	<? endif; ?>
+	<?  endif; ?>
 <?php endif; ?>

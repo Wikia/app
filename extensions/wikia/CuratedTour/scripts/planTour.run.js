@@ -6,16 +6,19 @@ require(
 		'wikia.cookies',
 		'jquery',
 		'mw',
+		'ext.wikia.curatedTour.editBox'
 	],
-	function (cookies, $, mw) {
+	function (cookies, $, mw, editBox) {
 		'use strict';
 
-		if (mw.config.get('initTourPlan') === true) {
-			$('.curated-tour-special-plan-button').on('click', editBox.init);
-			$('.curated-tour-special-edit-button').on('click', editBox.init);
-		}
-		if( cookies.get( 'curatedTourEditEditMode' ) !== null ) {
-			editBox.init();
-		}
+		$(function(){
+			if (mw.config.get('initTourPlan') === true) {
+				$('.curated-tour-special-plan-button').on('click', editBox.init);
+				$('.curated-tour-special-edit-button').on('click', editBox.init);
+			}
+			if(cookies.get('curatedTourEditMode') !== null) {
+				editBox.init();
+			}
+		});
 	}
 );

@@ -24,7 +24,9 @@ $wgExtensionCredits['other'][] = [
 	'descriptionmsg'    => 'curated-tour-desc',
 ];
 
+$wgGroupPermissions['*']['curated-tour-administration'] = false;
 $wgGroupPermissions['sysop']['curated-tour-administration'] = true;
+$wgGroupPermissions['util']['curated-tour-administration'] = true;
 
 $wgExtensionMessagesFiles['CuratedTour'] = __DIR__ . '/CuratedTour.i18n.php';
 
