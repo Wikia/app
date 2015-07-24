@@ -8,8 +8,15 @@ class CuratedTourHooks {
 	 * @return bool
 	 */
 	public static function onBeforePageDisplay( \OutputPage $out ) {
-		\Wikia::addAssetsToOutput( 'curated_tour_planning' );
-		\Wikia::addAssetsToOutput( 'curated_tour_planning_css' );
+		if ( $out->getTitle()->isSpecial( 'CuratedTour' )
+			|| $out->getRequest()->getCookie('curatedTourIsOn') === '1' )
+		{
+			\Wikia::addAssetsToOutput( 'curated_tour_play' );
+		} else {
+			\Wikia::addAssetsToOutput( 'curated_tour_planning' );
+			\Wikia::addAssetsToOutput( 'curated_tour_planning_css' );
+		}
+
 		return true;
 	}
 

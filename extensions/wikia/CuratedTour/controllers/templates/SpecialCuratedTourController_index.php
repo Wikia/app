@@ -8,6 +8,7 @@
 			<?=wfMessage( 'curated-tour-header-text' )->parse()?>
 		</p>
 	</div>
+	<a class="ct-play-button" href="#"><?= wfMessage( 'curated-tour-start-text' )->escaped() ?></a>
 </div>
 <?php if ( !empty( $pageTour ) ): ?>
 	<? if ( $hasAdminPermissions ): ?>

@@ -2505,7 +2505,7 @@ $config['template_draft'] = [
 $config['curated_tour_planning'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
-		'//extensions/wikia/CuratedTour/scripts/curatedTour.run.js',
+		'//extensions/wikia/CuratedTour/scripts/planTour.run.js',
 		'//extensions/wikia/CuratedTour/scripts/editBox.js',
 		'//extensions/wikia/CuratedTour/scripts/tourManager.js',
 		'//extensions/wikia/CuratedTour/scripts/grabElement.js',
@@ -2524,7 +2524,9 @@ $config['curated_tour_planning_css'] = [
 $config['curated_tour_play'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
-		'//extensions/wikia/CuratedTour/scripts/curatedTour.run.js',
-		'//extensions/wikia/CuratedTour/scripts/playTour.js',
+		'//extensions/wikia/CuratedTour/scripts/playTour.run.js',
+		'//extensions/wikia/CuratedTour/scripts/tourGuide.js',
+		'//extensions/wikia/CuratedTour/scripts/tourManager.js',
+		'//extensions/wikia/CuratedTour/scripts/tourNavigator.js',
 	],
 ];
