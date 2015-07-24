@@ -183,6 +183,7 @@ class LookupContribsCore {
 					[ 'events', 'wikicities.city_list' ],
 					[
 						'wiki_id',
+						'count(*) as edits',
 						'max(unix_timestamp(rev_timestamp)) as last_edit'
 					],
 					$where,
@@ -193,18 +194,18 @@ class LookupContribsCore {
 				$wikiaIds = [];
 				while ( $row = $dbr->fetchObject( $res ) ) {
 					$aItem = [
-						'id'        =>  $row->wiki_id,
-						'last_edit' =>  $row->last_edit,
-						'editcount' => 0
+						'id'        => $row->wiki_id,
+						'last_edit' => $row->last_edit,
+						'editcount' => $row->edits,
 					];
 					$wikiaIds[] = $row->wiki_id;
 
 					$userActivity['data'][] = $aItem;
 				}
 
-				if ( $addEditCount ) {
-					$this->addEditCounts( $wikiaIds, $userActivity );
-				}
+//				if ( $addEditCount ) {
+//					$this->addEditCounts( $wikiaIds, $userActivity );
+//				}
 				$this->addWikiaInfo( $wikiaIds, $userActivity );
 
 				$dbr->freeResult( $res );

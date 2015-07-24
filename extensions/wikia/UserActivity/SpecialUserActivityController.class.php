@@ -52,6 +52,11 @@ class SpecialController extends \WikiaSpecialPageController {
 	 * @template specialUserActivity
 	 */
 	public function index() {
+		if ( $this->wg->User->isAnon() ) {
+			$this->getResponse()->redirect( '/' );
+			return;
+		}
+
 		$limit = $this->getVal( 'limit', self::ITEMS_PER_PAGE );
 		$page = $this->getVal( 'page', 1 );
 		$order = $this->getVal( 'order', 'lastedit:desc' );

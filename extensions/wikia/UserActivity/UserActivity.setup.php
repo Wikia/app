@@ -27,12 +27,12 @@ $dir = dirname( __FILE__ ) . '/';
  * classes
  */
 $wgAutoloadClasses['UserActivity\Controller'] =  $dir . 'UserActivityController.class.php';
-$wgAutoloadClasses[ 'UserActivity\SpecialController' ] =  $dir . 'SpecialUserActivityController.class.php';
+$wgAutoloadClasses['UserActivity\SpecialController'] =  $dir . 'SpecialUserActivityController.class.php';
 
 /**
  * special pages
  */
-$wgSpecialPages[ 'UserActivity' ] =  'UserActivity\SpecialController';
+$wgSpecialPages['UserActivity'] = 'UserActivity\SpecialController';
 
 /**
  * messages
