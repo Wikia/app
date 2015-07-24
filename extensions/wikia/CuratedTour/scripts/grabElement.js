@@ -147,10 +147,11 @@ define('ext.wikia.curatedTour.grabElement',
 		}
 
 		function addPopover() {
-			$titleTextarea = '<textarea placeholder="Title (optional)"></textarea>';
-			$contentTextarea = '<textarea placeholder="Provide your words for a user" rows="4"></textarea>';
+			$titleTextarea = $('<textarea placeholder="Title (optional)"></textarea>');
+			$contentTextarea = $('<textarea placeholder="Provide your words for a user" rows="4"></textarea>');
 			$title.html($titleTextarea);
 			$content.html($contentTextarea);
+			$content.append($addBtn);
 			$popover.css({
 				top: selectedElement.posY + selectedElement.height,
 				left: selectedElement.posX + 0.5 * selectedElement.width - $popover.width() * 0.5,

@@ -183,7 +183,7 @@ define('ext.wikia.curatedTour.editBox',
 			require(
 				['ext.wikia.curatedTour.grabElement'],
 				function (grabElement) {
-					$(grabElement.init);
+					$(grabElement.init(addNewItem));
 				});
 		}
 
