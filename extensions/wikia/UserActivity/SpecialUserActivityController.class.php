@@ -65,6 +65,7 @@ class SpecialController extends \WikiaSpecialPageController {
 		$data = $resp->getData();
 
 		$this->getResponse()->setData( [
+			'pageDescription' => wfMessage( 'user-activity-page-description' )->text(),
 			'items' => $data['items'],
 			'username' => $this->app->wg->User->getName(),
 			'total' => $data['total'],
