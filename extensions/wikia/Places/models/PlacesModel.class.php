@@ -140,7 +140,7 @@
 			'pages' => $pages
 		));
 
-		wfProfileIn(__METHOD__);
+		wfProfileOut(__METHOD__);
 		return $models;
 	}
 
