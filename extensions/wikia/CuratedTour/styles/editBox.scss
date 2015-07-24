@@ -34,6 +34,17 @@
 		font-size: 85%;
 		margin-top: 5px;
 	}
+
+	.ct-edit-box-item-drag {
+		background-image: url('/extensions/wikia/CuratedTour/images/vertical.svg');
+		background-position: center;
+		background-repeat: no-repeat;
+		cursor: ns-resize;
+		display: inline-block;
+		float: right;
+		height: 16px;
+		width: 16px;
+	}
 }
 
 .ct-edit-box-add {

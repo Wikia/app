@@ -7,9 +7,10 @@ define('ext.wikia.curatedTour.editBox',
 		'wikia.loader',
 		'wikia.mustache',
 		'wikia.nirvana',
-		'BannerNotification'
+		'BannerNotification',
+		'ext.wikia.curatedTour.sortable'
 	],
-	function($, mw, cache, cookies, loader, mustache, nirvana, BannerNotification) {
+	function($, mw, cache, cookies, loader, mustache, nirvana, BannerNotification, Sortable) {
 
 		var	resources,
 			resourcesCacheKey = 'curatedTourEditBox',
@@ -86,6 +87,9 @@ define('ext.wikia.curatedTour.editBox',
 		}
 
 		function bindEventsToEditBox() {
+			Sortable.create(document.getElementById('ct-edit-box-items-list'),{
+				handle: '.ct-edit-box-item-drag'
+			});
 			$('.ct-edit-box-controls-exit').on('click', exitEditMode);
 			$('.ct-edit-box-controls-save').on('click', saveCurrentTour);
 			$('.ct-edit-box-add-link').on('click', addNewStep);
