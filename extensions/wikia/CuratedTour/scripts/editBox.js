@@ -39,6 +39,7 @@ define('ext.wikia.curatedTour.editBox',
 		}
 
 		function setupEditBox(res) {
+			debugger;
 			if (resources === null) {
 				resources = res;
 				cache.set(getResourcesCacheKey(), res, cache.CACHE_LONG);
@@ -54,7 +55,7 @@ define('ext.wikia.curatedTour.editBox',
 
 		function getCurrentTourAndRenderEditBox() {
 			var currentTour = cache.get(currentTourCacheKey);
-
+			currentTour = null;
 			if (currentTour === null) {
 				nirvana.sendRequest({
 					controller: 'CuratedTourController',
@@ -90,6 +91,7 @@ define('ext.wikia.curatedTour.editBox',
 		function bindEventsToEditBox() {
 			$('.ct-edit-box-controls-exit').on('click', exitEditMode);
 			$('.ct-edit-box-controls-save').on('click', saveCurrentTour);
+			$('.ct-edit-box-add-link').on('click', addNewStep);
 		}
 
 		function saveCurrentTour(event) {
@@ -154,6 +156,14 @@ define('ext.wikia.curatedTour.editBox',
 
 		function getResourcesCacheKey() {
 			return resourcesCacheKey + ':' + cacheVersion;
+		}
+
+		function addNewStep() {
+			require(
+				['ext.wikia.curatedTour.grabElement'],
+				function (grabElement) {
+					$(grabElement.init);
+				});
 		}
 
 		return {

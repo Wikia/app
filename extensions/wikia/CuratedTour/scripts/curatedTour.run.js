@@ -5,15 +5,13 @@ require(
 	[
 		'wikia.cookies',
 		'jquery',
-		'ext.wikia.curatedTour.editBox',
-		'ext.wikia.curatedTour.grabElement'
+		'ext.wikia.curatedTour.editBox'
 	],
-	function (cookies, $, editBox, grabElement) {
+	function (cookies, $, editBox) {
 		'use strict';
 		console.log('curatedTourEditMode loaded');
 
 	//if (cookies.get('curatedTourEditMode') !== null) {
 		editBox.init();
-		$(grabElement.init);
 	//}
 });
