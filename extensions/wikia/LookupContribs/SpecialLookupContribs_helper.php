@@ -139,7 +139,7 @@ class LookupContribsCore {
 	 * @throws DBUnexpectedError
 	 * @throws MWException
 	 */
-	public function checkUserActivity( $addEditCount = false, $order = null ) {
+	public function checkUserActivity( $addEditCount = false, $order = null, $limit = null, $offset = null ) {
 		global $wgMemc, $wgStatsDB, $wgStatsDBEnabled;
 
 		$userActivity = [
@@ -165,7 +165,10 @@ class LookupContribsCore {
 					$where[] = 'wiki_id NOT IN (' . $dbr->makeList( $excludedWikis ) . ')';
 				}
 
-				$options = [ 'GROUP BY' => 'wiki_id' ];
+				$options = [
+					'GROUP BY' => 'wiki_id',
+					'ORDER BY' => 'last_edit DESC',
+				];
 
 				if ( $addEditCount === true ) {
 					$wikisIds = [];
@@ -175,6 +178,13 @@ class LookupContribsCore {
 					}
 				} else {
 					$wikiEdits = [];
+				}
+
+				if ( $limit ) {
+					// If we have a limit/offset, make sure we get the total count another way
+					$userActivity['cnt'] = $this->getActivityCount( $dbr, $where );
+					$options['LIMIT'] = $limit;
+					$options['OFFSET'] = $offset;
 				}
 
 				/* rows */
@@ -199,7 +209,7 @@ class LookupContribsCore {
 
 				$wData = WikiFactory::getWikisByID( $wikisIds );
 				while ( $row = $dbr->fetchObject( $res ) ) {
-					if ( !isset( $wData[$row->wiki_id] ) ) {
+					if ( !$limit && !isset( $wData[$row->wiki_id] ) ) {
 						continue;
 					}
 
@@ -229,7 +239,22 @@ class LookupContribsCore {
 			$userActivity = $data;
 		}
 
-		return $this->orderData( $userActivity, $order, $addEditCount );
+		if ( $limit ) {
+			return $userActivity;
+		} else {
+			return $this->orderData( $userActivity, $order, $addEditCount );
+		}
+	}
+
+	private function getActivityCount( DatabaseBase $dbr, $where ) {
+		$res = $dbr->select(
+			[ 'events' ],
+			[ 'count(distinct wiki_id) as num' ],
+			$where
+		);
+
+		$row = $dbr->fetchObject( $res );
+		return $row->num;
 	}
 
 	private function getUserActivityMemKey( $addEditCount ) {

@@ -40,7 +40,12 @@ class Controller extends \WikiaController {
 		$contribs->setLimit( $limit );
 		$contribs->setOffset( $offset );
 
-		$activity = $contribs->checkUserActivity( $addEditCount = true, $order );
+		$activity = $contribs->checkUserActivity(
+			$addEditCount = true,
+			$order,
+			$limit,
+			$offset
+		);
 
 		if ( !empty( $activity ) ) {
 			$result['items'] = $this->formatItems( $activity['data'] );
