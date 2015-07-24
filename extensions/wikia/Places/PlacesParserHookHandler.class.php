@@ -16,8 +16,6 @@ class PlacesParserHookHandler {
 	// stores wikitextId to be used when rendering placeholder for RTE
 	static public $lastWikitextId;
 
-	static private $recursionLock = false;
-
 	const PLACES_DEFAULT_HEIGHT = 400;
 	const PLACES_DEFAULT_ANIMATION_DELAY = 5;
 	const PLACES_DEFAULT_ALL_LIMIT = 100;
@@ -94,19 +92,6 @@ class PlacesParserHookHandler {
 	 * @return string HTML output of the tag
 	 */
 	static public function renderPlacesTag($content, array $attributes, Parser $parser, PPFrame $frame) {
-
-		/**
-		 * Prevent "Fatal error: Maximum function nesting level of '200' reached"
-		 *
-		 * PlacesModel calls ArticleSnippet and ImageServing that can trigger the parsing of the current article.
-		 * This can lead to an end-less recursion.
-		 */
-		if ( self::$recursionLock ) {
-			wfDebug( __METHOD__ . " - recursion detected, leaving\n" );
-			return '';
-		}
-		self::$recursionLock = true;
-
 		wfProfileIn(__METHOD__);
 
 		// parse attributes
@@ -167,7 +152,6 @@ class PlacesParserHookHandler {
 			);
 		}
 
-		self::$recursionLock = false;
 		wfProfileOut(__METHOD__);
 		return $html;
 	}
