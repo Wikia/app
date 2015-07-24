@@ -66,6 +66,7 @@ class SpecialController extends \WikiaSpecialPageController {
 
 		$this->getResponse()->setData( [
 			'items' => $data['items'],
+			'username' => $this->app->wg->User->getName(),
 			'total' => $data['total'],
     		'totalReturned' => $data['totalReturned'],
 			'pagination' => $this->getPagination( $data['total'], $page, $order )
