@@ -155,8 +155,6 @@ define('ext.wikia.curatedTour.grabElement',
 			$popover.css({
 				top: selectedElement.posY + selectedElement.height,
 				left: selectedElement.posX + 0.5 * selectedElement.width - $popover.width() * 0.5,
-				//'z-index': '1000000000',
-				background: '#fff'
 			});
 			$popover.show();
 		}
@@ -164,7 +162,7 @@ define('ext.wikia.curatedTour.grabElement',
 		function addTripItem(e) {
 			var itemData = {
 				Selector: selectedElement.path,
-				PageName: 'Test',
+				PageName: wgPageName,
 				Notes: $contentTextarea.html()
 			};
 			addItemToListCallback(itemData);
