@@ -8,7 +8,7 @@ define('ext.wikia.curatedTour.grabElement',
 				.css({
 					position:'absolute',
 					background:'#002e54',
-					'z-index': '999999999',
+					'z-index': '1059',
 					opacity:0.75,
 					'pointer-events':'none'
 				})
@@ -16,16 +16,22 @@ define('ext.wikia.curatedTour.grabElement',
 		inside = false,
 		lock = false,
 		$a,
-		selectedElement = {};
-		$('body').append($hover);
+		selectedElement = {},
+		$body,
+		$popover,
+		$content,
+		$title;
+
+		appendBody($hover);
 
 		function init() {
 			console.log('grabElement loaded');
 
 			$('#WikiaPage *').mouseenter($.throttle(50, handlerIn)).mouseleave($.throttle(50, handlerOut));
 
+			setupPopover();
 			$('html').click(
-				function (a, b, c) {
+				function (a) {
 					a.preventDefault();
 					if (!selectedElement.path || lock) {
 						return;
@@ -47,7 +53,7 @@ define('ext.wikia.curatedTour.grabElement',
 				position: 'absolute',
 				top: 0,
 				left: 0,
-				'z-index': '999999999',
+				'z-index': '1059',
 				opacity: 0.75,
 				background: '#002e54',
 				height:selectedElement.posY,
@@ -57,7 +63,7 @@ define('ext.wikia.curatedTour.grabElement',
 				position: 'absolute',
 				top: selectedElement.posY + selectedElement.height,
 				left: 0,
-				'z-index': '999999999',
+				'z-index': '1059',
 				opacity: 0.75,
 				background: '#002e54',
 				height: $('html').height() - selectedElement.posY - selectedElement.height,
@@ -67,7 +73,7 @@ define('ext.wikia.curatedTour.grabElement',
 				position: 'absolute',
 				top: selectedElement.posY,
 				left: 0,
-				'z-index': '999999999',
+				'z-index': '1059',
 				opacity: 0.75,
 				background: '#002e54',
 				height:selectedElement.height,
@@ -77,7 +83,7 @@ define('ext.wikia.curatedTour.grabElement',
 				position: 'absolute',
 				top: selectedElement.posY,
 				left: selectedElement.posX + selectedElement.width,
-				'z-index': '999999999',
+				'z-index': '1059',
 				opacity: 0.75,
 				background: '#002e54',
 				height: selectedElement.height,
@@ -88,8 +94,7 @@ define('ext.wikia.curatedTour.grabElement',
 			$('body').append($leftCover);
 			$('body').append($rightCover);
 
-
-			//$a.popover('show');
+			addPopover();
 		}
 
 		function handlerIn(a) {
@@ -116,6 +121,41 @@ define('ext.wikia.curatedTour.grabElement',
 
 		function handlerOut() {
 			$hover.hide();
+		}
+
+		function setupPopover() {
+			var $arrow = $('<div></div>').addClass('arrow');
+			$content = $('<div></div>').addClass('popover-content');
+			$title = $('<div></div>').addClass('popover-title');
+			$popover = $('<div></div>');
+			$popover.css({
+				background: '#fff',
+				width: '400px'
+			});
+			$popover
+				.addClass('popover bottom')
+				.append($arrow, $title, $content)
+				.hide();
+			appendBody($popover);
+		}
+
+		function addPopover() {
+			$title.html('test');
+			$content.html('test');
+			$popover.css({
+				top: selectedElement.posY + selectedElement.height,
+				left: selectedElement.posX + 0.5 * selectedElement.width - $popover.width() * 0.5,
+				//'z-index': '1000000000',
+				background: '#fff'
+			});
+			$popover.show();
+		}
+
+		function appendBody(element) {
+			if (typeof $body === 'undefined') {
+				$body = $('body');
+			}
+			$body.append(element);
 		}
 
 		$.fn.extend({

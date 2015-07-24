@@ -9,6 +9,7 @@ class CuratedTourHooks {
 	 */
 	public static function onBeforePageDisplay( \OutputPage $out ) {
 		\Wikia::addAssetsToOutput( 'curated_tour_planning' );
+		\Wikia::addAssetsToOutput( 'curated_tour_planning_css' );
 		return true;
 	}
 

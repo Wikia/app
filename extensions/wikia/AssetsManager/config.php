@@ -2511,3 +2511,10 @@ $config['curated_tour_planning'] = [
 		'//extensions/wikia/CuratedTour/scripts/hoverIntent.js',
 	],
 ];
+
+$config['curated_tour_planning_css'] = [
+	'type' => AssetsManager::TYPE_CSS,
+	'assets' => [
+		'//extensions/wikia/CuratedTour/styles/bootstrap.css',
+	],
+];
