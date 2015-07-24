@@ -2509,6 +2509,7 @@ $config['curated_tour_planning'] = [
 		'//extensions/wikia/CuratedTour/scripts/editBox.js',
 		'//extensions/wikia/CuratedTour/scripts/grabElement.js',
 		'//extensions/wikia/CuratedTour/scripts/hoverIntent.js',
+		'//extensions/wikia/CuratedTour/scripts/sortable.js',
 	],
 ];
 
