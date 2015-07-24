@@ -2507,5 +2507,7 @@ $config['curated_tour_planning'] = [
 	'assets' => [
 		'//extensions/wikia/CuratedTour/scripts/curatedTour.run.js',
 		'//extensions/wikia/CuratedTour/scripts/editBox.js',
+		'//extensions/wikia/CuratedTour/scripts/grabElement.js',
+		'//extensions/wikia/CuratedTour/scripts/hoverIntent.js',
 	],
 ];
