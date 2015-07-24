@@ -2528,5 +2528,6 @@ $config['curated_tour_play'] = [
 		'//extensions/wikia/CuratedTour/scripts/tourGuide.js',
 		'//extensions/wikia/CuratedTour/scripts/tourManager.js',
 		'//extensions/wikia/CuratedTour/scripts/tourNavigator.js',
+		'//extensions/wikia/CuratedTour/scripts/navigatorBox.js',
 	],
 ];

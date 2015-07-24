@@ -9,10 +9,11 @@ class CuratedTourHooks {
 	 */
 	public static function onBeforePageDisplay( \OutputPage $out ) {
 		if ( $out->getTitle()->isSpecial( 'CuratedTour' )
-			|| $out->getRequest()->getCookie('curatedTourIsOn') === '1' )
+			|| $out->getRequest()->getInt('curatedTour') > 0 )
 		{
 			\Wikia::addAssetsToOutput( 'curated_tour_play' );
-		} else {
+		} elseif ( $out->getTitle()->isSpecial( 'CuratedTour' )
+			|| $out->getRequest()->getCookie('curatedTourEditMode') !== null ) {
 			\Wikia::addAssetsToOutput( 'curated_tour_planning' );
 			\Wikia::addAssetsToOutput( 'curated_tour_planning_css' );
 		}

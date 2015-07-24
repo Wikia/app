@@ -1,0 +1,47 @@
+#ct-navigator-box {
+	background-color: rgba(255,255,255,0.9);
+	bottom: 0;
+	height: 400px;
+	padding: 20px;
+	position: fixed;
+	right: 0;
+	width: 300px;
+	z-index: 2000;
+}
+
+.ct-navigator-box-title {
+	margin-bottom: 20px;
+}
+
+.ct-navigator-box-item {
+	border-bottom: 1px solid #ccc;
+	font-size: 120%;
+	list-style-type: decimal;
+	margin-left: 20px;
+	padding: 10px 0;
+
+	&:first-child {
+		padding-top: 0px;
+	}
+
+	&:last-child {
+		border-bottom: 0;
+	}
+}
+
+.ct-navigator-box-add {
+	padding: 10px 0;
+	text-align: center;
+}
+
+.ct-navigator-box-controls {
+	padding-top: 25px;
+}
+
+.ct-navigator-box-controls-previous {
+	float: left;
+}
+
+.ct-navigator-box-controls-next {
+	float: right;
+}

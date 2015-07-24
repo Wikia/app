@@ -1,0 +1,20 @@
+<div id="ct-navigator-box">
+	<h2 class="ct-navigator-box-title">{{title}}</h2>
+	<ol id="ct-navigator-box-items-list">
+		{{#currentTour}}
+			{{>navigatorBoxItem}}
+		{{/currentTour}}
+	</ol>
+	<div class="ct-navigator-box-controls">
+		{{#previousStepText}}
+		<a class="ct-navigator-box-controls-previous wikia-button secondary" href="#">
+			{{previousStepText}}
+		</a>
+		{{/previousStepText}}
+		{{#nextStepText}}
+		<a class="ct-navigator-box-controls-next wikia-button primary" href="#">
+			{{nextStepText}}
+		</a>
+		{{/nextStepText}}
+	</div>
+</div>

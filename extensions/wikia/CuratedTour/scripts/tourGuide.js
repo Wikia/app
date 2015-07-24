@@ -1,13 +1,20 @@
 define('ext.wikia.curatedTour.tourGuide',
 	[
+		'ext.wikia.curatedTour.navigatorBox',
 		'ext.wikia.curatedTour.tourNavigator',
-		'wikia.cookies'
+		'jquery',
+		'wikia.cookies',
+		'wikia.window'
 	],
-	function (TourNavigator, cookies) {
+	function (NavigatorBox, TourNavigator, $, cookies, window) {
 		'use strict';
 
 		var onTourCookie = 'curatedTourIsOn',
 			ttl = 60 * 60 * 3;
+
+		function init() {
+			showNavigatorBox();
+		}
 
 		function startTour(event) {
 			event.preventDefault();
@@ -17,8 +24,14 @@ define('ext.wikia.curatedTour.tourGuide',
 			TourNavigator.goToStep(1);
 		}
 
+		function showNavigatorBox() {
+			NavigatorBox.init();
+		}
+
 		return {
-			startTour: startTour
+			init: init,
+			startTour: startTour,
+			showNavigatorBox: showNavigatorBox
 		}
 	}
 );

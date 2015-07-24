@@ -39,6 +39,9 @@ $wgHooks['WikiaSkinTopScripts'][] = 'CuratedTourHooks::onWikiaSkinTopScripts';
 JSMessages::registerPackage( 'CuratedTourEditBox', [
 	'curated-tour-edit-box-*'
 ] );
+JSMessages::registerPackage( 'CuratedTourNavigatorBox', [
+	'curated-tour-navigator-box-*'
+] );
 
 $wgSpecialPages['CuratedTour'] = 'SpecialCuratedTourController';
 
