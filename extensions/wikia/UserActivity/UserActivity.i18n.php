@@ -7,7 +7,7 @@ $messages['en'] = array(
 	'user-activity-table-title' => "Title",
 	'user-activity-table-edits' => "# of edits",
 	'user-activity-table-lastedit' => "Last edited",
-	'user-activity-table-rights' => "User rights",
+	'user-activity-table-rights' => "User groups",
 	'user-activity-tab' => 'User Activity',
 	'user-activity-edit-count' => '$1 {{PLURAL:$1|edit|edits}}',
 );
