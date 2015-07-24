@@ -3,10 +3,9 @@ define('ext.wikia.curatedTour.tourGuide',
 		'ext.wikia.curatedTour.navigatorBox',
 		'ext.wikia.curatedTour.tourNavigator',
 		'jquery',
-		'wikia.cookies',
-		'wikia.window'
+		'wikia.cookies'
 	],
-	function (NavigatorBox, TourNavigator, $, cookies, window) {
+	function (NavigatorBox, TourNavigator, $, cookies) {
 		'use strict';
 
 		var onTourCookie = 'curatedTourIsOn',
@@ -34,6 +33,6 @@ define('ext.wikia.curatedTour.tourGuide',
 			init: init,
 			startTour: startTour,
 			showNavigatorBox: showNavigatorBox
-		}
+		};
 	}
 );
