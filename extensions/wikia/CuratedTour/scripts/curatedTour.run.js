@@ -18,4 +18,10 @@ require(
 		if( cookies.get( 'curatedTourEditEditMode' ) !== null ) {
 			editBox.init();
 		}
-	});
+
+		var playButton = $('.ct-play-button');
+		if (playButton.length > 0) {
+			//playButton.on('click', playTour.init);
+		}
+	}
+);

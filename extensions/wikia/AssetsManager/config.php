@@ -2507,6 +2507,7 @@ $config['curated_tour_planning'] = [
 	'assets' => [
 		'//extensions/wikia/CuratedTour/scripts/curatedTour.run.js',
 		'//extensions/wikia/CuratedTour/scripts/editBox.js',
+		'//extensions/wikia/CuratedTour/scripts/tourManager.js',
 		'//extensions/wikia/CuratedTour/scripts/grabElement.js',
 		'//extensions/wikia/CuratedTour/scripts/hoverIntent.js',
 		'//extensions/wikia/CuratedTour/scripts/sortable.js',
@@ -2517,5 +2518,13 @@ $config['curated_tour_planning_css'] = [
 	'type' => AssetsManager::TYPE_CSS,
 	'assets' => [
 		'//extensions/wikia/CuratedTour/styles/bootstrap.css',
+	],
+];
+
+$config['curated_tour_play'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//extensions/wikia/CuratedTour/scripts/curatedTour.run.js',
+		'//extensions/wikia/CuratedTour/scripts/playTour.js',
 	],
 ];

@@ -6,11 +6,12 @@ define('ext.wikia.curatedTour.editBox',
 		'wikia.cookies',
 		'wikia.loader',
 		'wikia.mustache',
-		'wikia.nirvana',
 		'BannerNotification',
-		'ext.wikia.curatedTour.sortable'
+		'ext.wikia.curatedTour.sortable',
+		'ext.wikia.curatedTour.tourManager'
 	],
-	function($, mw, cache, cookies, loader, mustache, nirvana, BannerNotification, Sortable) {
+	function($, mw, cache, cookies, loader, mustache, BannerNotification, Sortable, TourManager) {
+		"use strict";
 
 		var	resources,
 			resourcesCacheKey = 'curatedTourEditBox',
@@ -48,24 +49,7 @@ define('ext.wikia.curatedTour.editBox',
 			loader.processStyle(res.styles);
 			mw.messages.set(res.messages);
 
-			getCurrentTourAndRenderEditBox();
-		}
-
-		function getCurrentTourAndRenderEditBox() {
-			var currentTour = cache.get(currentTourCacheKey);
-			currentTour = null;
-			if (currentTour === null) {
-				nirvana.sendRequest({
-					controller: 'CuratedTourController',
-					method: 'getCuratedTourData',
-					type: 'GET',
-					callback: function (json) {
-						renderEditBox(json.data);
-					}
-				});
-			} else {
-				renderEditBox(currentTour);
-			}
+			TourManager.getPlan(renderEditBox);
 		}
 
 		function renderEditBox(currentTour) {
@@ -101,26 +85,18 @@ define('ext.wikia.curatedTour.editBox',
 			if ($(event.target).attr('disabled') !== 'disabled') {
 				startProgress();
 
-				nirvana.sendRequest({
-					controller: 'CuratedTourController',
-					method: 'setCuratedTourData',
-					data: {
-						editToken: mw.user.tokens.get('editToken'),
-						currentTourData: collectCurrentTourData()
-					},
-					callback: function (json) {
-						stopProgress();
-						if (json.status) {
-							new BannerNotification(
-								mw.message('curated-tour-edit-box-save-success').escaped(),
-								'confirm'
-							).show();
-						} else {
-							new BannerNotification(
-								mw.message('curated-tour-edit-box-save-failure').escaped(),
-								'error'
-							).show();
-						}
+				TourManager.savePlan(collectCurrentTourData(), function(json) {
+					stopProgress();
+					if (json.status) {
+						new BannerNotification(
+							mw.message('curated-tour-edit-box-save-success').escaped(),
+							'confirm'
+						).show();
+					} else {
+						new BannerNotification(
+							mw.message('curated-tour-edit-box-save-failure').escaped(),
+							'error'
+						).show();
 					}
 				});
 			}
