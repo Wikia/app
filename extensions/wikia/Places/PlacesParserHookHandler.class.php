@@ -113,7 +113,10 @@ class PlacesParserHookHandler {
 		// </places>
 		// render places for a given list of articles
 		if ($content !== '') {
-			#$content = $parser->recursiveTagParse($content, $frame); // TODO: parse nested parser hooks like <dpl>
+			// parse nested parser hooks like <dpl>
+			$content = $parser->recursivePreprocess($content, $frame);
+
+			// get the list of markers from text list of articles
 			$markers = $placesModel->getFromText($content);
 		}
 		// <places category="Foo" />

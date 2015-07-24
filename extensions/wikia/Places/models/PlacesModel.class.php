@@ -127,7 +127,7 @@
 		/* @var int[] $pages */
 		$pages = array_map(
 			function($item) {
-				$item = trim($item);
+				$item = trim($item, '* ');
 
 				// get page ID from the title
 				$title = Title::newFromText($item);
