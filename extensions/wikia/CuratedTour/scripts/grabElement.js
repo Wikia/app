@@ -22,6 +22,8 @@ define('ext.wikia.curatedTour.grabElement',
 		$content,
 		$title,
 		$addBtn,
+		$close,
+		covers,
 		$titleTextarea,
 		$contentTextarea,
 		addItemToListCallback;
@@ -29,8 +31,9 @@ define('ext.wikia.curatedTour.grabElement',
 		appendBody($hover);
 
 		function init(callback) {
-			addItemToListCallback = callback;
 			console.log('grabElement loaded');
+			addItemToListCallback = callback;
+			lock = false;
 
 			$('#WikiaPage *').mouseenter($.throttle(50, handlerIn)).mouseleave($.throttle(50, handlerOut));
 
@@ -54,6 +57,12 @@ define('ext.wikia.curatedTour.grabElement',
 				$leftCover = $('<div></div>'),
 				$rightCover = $('<div></div>'),
 				$bottomCover = $('<div></div>');
+			covers = {
+				bottom: $topCover,
+				left: $leftCover,
+				right: $rightCover,
+				top: $bottomCover
+			}
 			$topCover.css({
 				position: 'absolute',
 				top: 0,
@@ -130,6 +139,9 @@ define('ext.wikia.curatedTour.grabElement',
 
 		function setupPopover() {
 			var $arrow = $('<div></div>').addClass('arrow');
+			$hover.show();
+			$close = $('<a class="ct-popover-close-btn wikia-button secondary">Cancel</a>')
+				.click(close);
 			$content = $('<div></div>').addClass('popover-content');
 			$title = $('<div></div>').addClass('popover-title');
 			$popover = $('<div></div>');
@@ -147,11 +159,14 @@ define('ext.wikia.curatedTour.grabElement',
 		}
 
 		function addPopover() {
-			$titleTextarea = $('<textarea placeholder="Title (optional)"></textarea>');
+			lock = true;
+			$hover.show();
+			$titleTextarea = $('<textarea placeholder="Step header (optional)"></textarea>');
 			$contentTextarea = $('<textarea placeholder="Provide your words for a user" rows="4"></textarea>');
 			$title.html($titleTextarea);
 			$content.html($contentTextarea);
 			$content.append($addBtn);
+			$content.append($close);
 			$popover.css({
 				top: selectedElement.posY + selectedElement.height,
 				left: selectedElement.posX + 0.5 * selectedElement.width - $popover.width() * 0.5,
@@ -160,6 +175,7 @@ define('ext.wikia.curatedTour.grabElement',
 		}
 
 		function addTripItem(e) {
+			close();
 			var itemData = {
 				Selector: selectedElement.path,
 				PageName: wgPageName,
@@ -174,6 +190,14 @@ define('ext.wikia.curatedTour.grabElement',
 				$body = $('body');
 			}
 			$body.append(element);
+		}
+
+		function close() {
+			$popover.hide();
+			covers.top.hide();
+			covers.bottom.hide();
+			covers.left.hide();
+			covers.right.hide();
 		}
 
 		$.fn.extend({
