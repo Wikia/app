@@ -25,15 +25,17 @@
 	<? endif; ?>
 	<table class="article-table sortable curated-tour-special-list">
 		<tr class="curated-tour-special-list-headers">
+			<th class="curated-tour-special-list-header-step"><?=wfMessage( 'curated-tour-special-list-header-step' )->escaped()?></th>
 			<th class="curated-tour-special-list-header-name"><?=wfMessage( 'curated-tour-special-list-header-name' )->escaped()?></th>
 			<th class="curated-tour-special-list-header-selector"><?=wfMessage( 'curated-tour-special-list-header-selector' )->escaped()?></th>
 			<th class="curated-tour-special-list-header-notes"><?=wfMessage( 'curated-tour-special-list-header-notes' )->escaped()?></th>
 		</tr>
 		<?php foreach ( $pageTour as $pageTourItem ): ?>
 			<tr class="curated-tour-special-list-item">
-				<td class="curated-tour-special-list-item-name"><?=$pageTourItem['PageName']?></td>
+				<td class="curated-tour-special-list-item-name"><?=$pageTourItem['StepHeader']?></td>
+				<td class="curated-tour-special-list-item-selector"><?=$pageTourItem['PageName']?></td>
 				<td class="curated-tour-special-list-item-selector"><?=$pageTourItem['Selector']?></td>
-				<td class="curated-tour-special-list-item-notes"><?=$pageTourItem['Notes']?></td>
+				<td class="curated-tour-special-list-item-notes"><?=$pageTourItem['StepNotes']?></td>
 			</tr>
 		<?php endforeach; ?>
 	</table>
