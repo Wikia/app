@@ -1,7 +1,10 @@
+@import "skins/shared/color";
+
 #ct-edit-box {
 	background-color: rgba(255,255,255,0.9);
 	bottom: 0;
 	height: 400px;
+	overflow: auto;
 	padding: 20px;
 	position: fixed;
 	right: 0;
@@ -28,9 +31,18 @@
 		border-bottom: 0;
 	}
 
-	.ct-edit-box-item-message {
+	.more-info {
+//		display: none;
+		margin-top: 10px;
+	}
+
+	.ct-edit-box-item-page {
+		color: $color-alternate-text;
+		font-size: 85%;
+	}
+	.ct-edit-box-item-notes {
 		clear: both;
-		display: none;
+		display: block;
 		font-size: 85%;
 		margin-top: 5px;
 	}

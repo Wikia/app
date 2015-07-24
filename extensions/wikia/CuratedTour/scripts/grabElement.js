@@ -163,7 +163,8 @@ define('ext.wikia.curatedTour.grabElement',
 			var itemData = {
 				Selector: selectedElement.path,
 				PageName: wgPageName,
-				Notes: $contentTextarea.html()
+				StepNotes: $contentTextarea.val(),
+				StepHeader: $titleTextarea.val()
 			};
 			addItemToListCallback(itemData);
 		}

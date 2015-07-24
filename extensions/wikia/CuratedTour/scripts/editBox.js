@@ -10,8 +10,8 @@ define('ext.wikia.curatedTour.editBox',
 		'ext.wikia.curatedTour.sortable',
 		'ext.wikia.curatedTour.tourManager'
 	],
-	function($, mw, cache, cookies, loader, mustache, BannerNotification, Sortable, TourManager) {
-		"use strict";
+	function ($, mw, cache, cookies, loader, mustache, BannerNotification, Sortable, TourManager) {
+		'use strict';
 
 		var	resources,
 			resourcesCacheKey = 'curatedTourEditBox',
@@ -86,7 +86,7 @@ define('ext.wikia.curatedTour.editBox',
 			if ($(event.target).attr('disabled') !== 'disabled') {
 				startProgress();
 
-				TourManager.savePlan(collectCurrentTourData(), function(json) {
+				TourManager.savePlan(collectCurrentTourData(), function (json) {
 					stopProgress();
 					if (json.status) {
 						new BannerNotification(
@@ -108,9 +108,10 @@ define('ext.wikia.curatedTour.editBox',
 
 			$('.ct-edit-box-item').each(function () {
 				currentTourData.push({
-					PageName: $(this).data('page-name'),
+					PageName: $(this).find('.ct-edit-box-item-page').text(),
 					Selector: $(this).data('selector'),
-					Notes: $(this).find('.ct-edit-box-item-message').text()
+					StepHeader: $(this).find('.ct-edit-box-item-header').text(),
+					StepNotes: $(this).find('.ct-edit-box-item-notes').text()
 				});
 			});
 
@@ -166,6 +167,6 @@ define('ext.wikia.curatedTour.editBox',
 
 		return {
 			init: init
-		}
+		};
 	}
-)
+);

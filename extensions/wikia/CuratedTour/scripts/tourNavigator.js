@@ -6,7 +6,7 @@ define('ext.wikia.curatedTour.tourNavigator',
 		'wikia.window'
 	],
 	function (StepProjector, TourManager, mw, window) {
-		"use strict";
+		'use strict';
 
 		function goToStep(step) {
 			var index = getIndexFromStep(step);
@@ -48,7 +48,8 @@ define('ext.wikia.curatedTour.tourNavigator',
 					StepProjector.show(
 						currentStep,
 						stepData.Selector,
-						stepData.Notes,
+						stepData.StepHeader,
+						stepData.StepNotes,
 						goToNextStep,
 						previous
 					);
@@ -71,6 +72,6 @@ define('ext.wikia.curatedTour.tourNavigator',
 			goToPreviousStep: goToPreviousStep,
 			getCurrentStep: getCurrentStep,
 			displayCurrentStep: displayCurrentStep
-		}
+		};
 	}
 );

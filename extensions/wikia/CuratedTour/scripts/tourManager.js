@@ -4,7 +4,7 @@ define('ext.wikia.curatedTour.tourManager',
 		'wikia.nirvana'
 	],
 	function (cache, nirvana) {
-		"use strict";
+		'use strict';
 
 		var controller = 'CuratedTourController',
 			wikiId = mw.config.get('wgCityId'),
@@ -45,6 +45,6 @@ define('ext.wikia.curatedTour.tourManager',
 		return {
 			getPlan: getPlan,
 			savePlan: savePlan
-		}
+		};
 	}
 );
