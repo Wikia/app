@@ -1,0 +1,48 @@
+@import "skins/shared/color";
+
+.WikiaMainContentContainer .WikiaArticle.AdminDashboardChromedArticle {
+	padding: 0;
+}
+
+.WikiaArticle .AdminDashboardGeneralHeader.AdminDashboardArticleHeader {
+	margin-bottom: 0;
+}
+
+.ct-special-header {
+	background-image: url('http://vignette3.wikia.nocookie.net/wikiaglobal/images/5/50/Wiki-background/revision/latest'); /* Direct link to wikia background on wikiaglobal */
+	background-position: center;
+	background-repeat: no-repeat;
+	overflow: hidden;
+	padding: 50px 50px 20px;
+
+	.ct-special-extension-icon {
+		background-image: url("/extensions/wikia/CuratedTour/images/curated-tour-logo-white.svg");
+		background-position: 50%;
+		background-repeat: no-repeat;
+		background-size: contain;
+		height: 0;
+		margin: 0 auto 50px auto;
+		min-width: 300px;
+		padding-bottom: 10%;
+		position: relative;
+		width: 50%;
+	}
+
+	.ct-play-button {
+		background: transparent;
+	}
+
+	.curated-tour-special-edit-button {
+		margin-right: 20px;
+	}
+
+	.wikia-button {
+		float: left;
+		line-height: 28px;
+		height: 28px;
+		padding: 0 13px;
+		font-size: 14px;
+	}
+}
+
+

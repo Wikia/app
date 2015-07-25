@@ -345,12 +345,15 @@
   margin-left: -10px;
 }
 .popover-title {
-  margin: 0;
-  padding: 14px 14px 8px;
-  font-size: 14px;
   background-color: #f7f7f7;
+  background-image: url('/extensions/wikia/CuratedTour/images/curated-tour-icon.svg');
+  background-position: 16px 50%;
+  background-repeat: no-repeat;
+  background-size: 25px;
   border-bottom: 1px solid #ebebeb;
-  border-radius: 5px 5px 0 0;
+  font-size: 18px;
+  margin: 0;
+  padding: 14px 14px 8px 52px;
 }
 .popover-content {
 	padding: 14px 14px 14px;

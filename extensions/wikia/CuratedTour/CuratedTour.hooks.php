@@ -8,6 +8,10 @@ class CuratedTourHooks {
 	 * @return bool
 	 */
 	public static function onBeforePageDisplay( \OutputPage $out ) {
+		if ( $out->getTitle()->isSpecial( 'CuratedTour' ) ) {
+			\Wikia::addAssetsToOutput( 'curated_tour_special_scss' );
+		}
+
 		if ( $out->getTitle()->isSpecial( 'CuratedTour' ) &&
 			!$out->getRequest()->getInt('curatedTour')
 		) {

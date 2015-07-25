@@ -9,7 +9,7 @@ require(
 	function ($, TourGuide) {
 		'use strict';
 
-		$(function() {
+		$(function () {
 			var playButton = $('.ct-play-button');
 			if (playButton.length > 0) {
 				playButton.on('click', TourGuide.startTour);

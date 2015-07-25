@@ -2522,6 +2522,13 @@ $config['curated_tour_planning_css'] = [
 	],
 ];
 
+$config['curated_tour_special_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'assets' => [
+		'//extensions/wikia/CuratedTour/styles/specialCuratedTour.scss',
+	],
+];
+
 $config['curated_tour_play'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [

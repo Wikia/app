@@ -21,7 +21,10 @@ define('ext.wikia.curatedTour.editBox',
 			wikiId = mw.config.get('wgCityId'),
 			currentTourCacheKey = 'currentCuratedTour:' + wikiId;
 
-		function init() {
+		function init(e) {
+			if (typeof e === 'object' && typeof e.preventDefault === 'function') {
+				e.preventDefault();
+			}
 			//resources = cache.get(getResourcesCacheKey());
 			enterEditMode();
 			resources = null;

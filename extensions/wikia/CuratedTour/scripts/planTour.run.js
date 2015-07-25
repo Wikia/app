@@ -11,12 +11,12 @@ require(
 	function (cookies, $, mw, editBox) {
 		'use strict';
 
-		$(function(){
+		$(function () {
 			if (mw.config.get('initTourPlan') === true) {
 				$('.curated-tour-special-plan-button').on('click', editBox.init);
 				$('.curated-tour-special-edit-button').on('click', editBox.init);
 			}
-			if(cookies.get('curatedTourEditMode') !== null) {
+			if (cookies.get('curatedTourEditMode') !== null) {
 				editBox.init();
 			}
 		});

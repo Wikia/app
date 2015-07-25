@@ -1,3 +1,22 @@
+<div class="ct-special-header">
+	<div class="ct-special-extension-icon"></div>
+	<? if ( $hasAdminPermissions ): ?>
+		<?php if ( !empty( $pageTour ) ): ?>
+			<div class="curated-tour-special-edit">
+				<a href="#" class="curated-tour-special-edit-button wikia-button primary">
+					<?=wfMessage( 'curated-tour-special-edit-button-text' )->escaped();?>
+				</a>
+			</div>
+		<?php else: ?>
+			<div class="curated-tour-special-create">
+				<a href="#" class="curated-tour-special-plan-button wikia-button primary">
+					<?=wfMessage( 'curated-tour-special-plan-button-text' )->escaped();?>
+				</a>
+			</div>
+		<? endif; ?>
+	<? endif; ?>
+	<a class="ct-play-button wikia-button" href="#"><?= wfMessage( 'curated-tour-start-text' )->escaped() ?></a>
+</div>
 <div class="curated-tour-special-header clearfix">
 	<div class="curated-tour-special-header-content">
 		<h1 class="curated-tour-special-header-content-title">
@@ -13,16 +32,9 @@
 		</p>
 		<? endif; ?>
 	</div>
-	<a class="ct-play-button" href="#"><?= wfMessage( 'curated-tour-start-text' )->escaped() ?></a>
 </div>
 <?php if ( !empty( $pageTour ) ): ?>
-	<? if ( $hasAdminPermissions ): ?>
-		<div class="curated-tour-special-edit">
-			<a href="#" class="curated-tour-special-edit-button wikia-button primary">
-				<?=wfMessage( 'curated-tour-special-edit-button-text' )->escaped();?>
-			</a>
-		</div>
-	<? endif; ?>
+
 	<table class="article-table sortable curated-tour-special-list">
 		<tr class="curated-tour-special-list-headers">
 			<th class="curated-tour-special-list-header-step"><?=wfMessage( 'curated-tour-special-list-header-step' )->escaped()?></th>
