@@ -154,10 +154,10 @@ class PortableInfoboxParserTagControllerTest extends WikiaBaseTest {
 	public function testGetLayoutDataProvider() {
 		return [
 			[
-				'layout' => [ 'layout' => 'tabular' ],
-				'expectedOutput' => 'portable-infobox-layout-tabular',
+				'layout' => [ 'layout' => 'stacked' ],
+				'expectedOutput' => 'portable-infobox-layout-stacked',
 				'text' => '<data><default>test</default></data>',
-				'message' => 'set tabular layout'
+				'message' => 'set stacked layout'
 			],
 			[
 				'layout' => [ 'layout' => 'looool' ],
