@@ -13,7 +13,7 @@ class PortableInfoboxBuilderController extends WikiaController {
 		$this->publishBtn = wfMessage( 'portable-infobox-builder-publish-button' )->text();
 		$this->infoboxBuilderHeader = wfMessage( 'portable-infobox-builder-title' )->text();
 		$this->formAction = self::getLocalUrl( 'publish' );
-		$this->templateTitle = requestContext::getMain()->getTitle()->getPrefixedDBkey();
+		$this->templateTitle = RequestContext::getMain()->getTitle()->getPrefixedDBkey();
 		$this->infoboxContent = ( new PortableInfoboxRenderService() )
 			->renderInfobox( $this->getInfoboxData(), null, 'portable-infobox-layout-tabular' );
 
