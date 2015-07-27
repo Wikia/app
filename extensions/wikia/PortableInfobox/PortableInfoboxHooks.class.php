@@ -63,7 +63,11 @@ class PortableInfoboxHooks {
 	 * @return bool
 	 */
 	static public function onEditPageLayoutExecute( $editPageContext ) {
-		if ( self::isEditingNewTemplate() && $editPageContext->getRequest()->getVal( 'portableInfoboxBuilder', false
+		$context = $editPageContext->getContext();
+		$webRequest = $context->getRequest();
+		$title = $context->getTitle();
+
+		if ( self::isEditingNewTemplate( $webRequest, $title ) && $webRequest->getVal( 'portableInfoboxBuilder', false
 			) ) {
 			$data = $editPageContext->response->getData();
 
@@ -85,9 +89,10 @@ class PortableInfoboxHooks {
 	 * @throws WikiaException
 	 */
 	public static function onSkinAfterBottomScripts( $skin, &$text ) {
-		global $wgRequest;
+		$webRequest = $skin->getRequest();
+		$title = $skin->getTitle();
 
-		if ( self::isEditingNewTemplate() && !$wgRequest->getVal( 'portableInfoboxBuilder', false ) ) {
+		if ( self::isEditingNewTemplate( $webRequest, $title ) && !$webRequest->getVal( 'portableInfoboxBuilder', false ) ) {
 			$text .= JSMessages::printPackages( ['PortableInfoboxBuilder'] );
 
 			$scripts = AssetsManager::getInstance()->getURL( 'portable_infobox_builder_js' );
@@ -102,13 +107,13 @@ class PortableInfoboxHooks {
 	/**
 	 * checks edit page is opened for a new blank template
 	 *
+	 * @param WebRequest $webRequest
+	 * @param Title $title
 	 * @return bool
 	 */
-	private static function isEditingNewTemplate() {
-		global $wgTitle, $wgRequest;
-
-		return $wgTitle->getNamespace() === NS_TEMPLATE &&
-		!$wgTitle->exists() &&
-		$wgRequest->getVal( 'action' ) === 'edit';
+	private static function isEditingNewTemplate( $webRequest, $title ) {
+		return $title->getNamespace() === NS_TEMPLATE &&
+		!$title->exists() &&
+		$webRequest->getVal( 'action' ) === 'edit';
 	}
 }
