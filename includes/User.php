@@ -2077,7 +2077,6 @@ class User {
 			$wgMemc->delete( wfMemcKey( 'user', 'id', $this->mId ) );
 			// Wikia: and save updated user data in the cache to avoid memcache miss and DB query
 			$this->saveToCache();
-			# not uncyclo
 			if( !empty( $wgSharedDB ) ) {
 				$memckey = self::getUserTouchedKey( $this->mId );
 				$wgMemc->set( $memckey, $this->mTouched );
