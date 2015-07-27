@@ -77,24 +77,18 @@ class CuratedContentValidator {
 			$this->error( $section, self::ERR_TOO_LONG_LABEL );
 		}
 
-		if ( empty( $section['featured'] ) && !empty( $section['title'] ) ) {
+		if ( !empty( $section['title'] ) ) {
 			$this->validateImage( $section );
 		}
 
 		if ( !empty( $section['items'] ) && is_array( $section['items'] ) ) {
 			// if section has items - validate them
 			foreach ( $section['items'] as $item ) {
-				if ( !empty( $sections['featured'] ) ) {
-					$this->validateItem( $item );
-				} else {
-					$this->validateCategoryItem( $item );
-				}
+				$this->validateCategoryItem( $item );
 			}
 		} else {
-			// if section doesn't have any items and it's not Featured Section, it's an error
-			if ( empty( $section['featured'] ) ) {
-				$this->error( $section, self::ERR_ITEMS_MISSING );
-			}
+			// if section doesn't have any items it's an error
+			$this->error( $section, self::ERR_ITEMS_MISSING );
 		}
 
 		if ( strlen( $section['title'] ) ) {
