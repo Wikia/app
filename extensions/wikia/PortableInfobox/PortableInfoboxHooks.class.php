@@ -68,8 +68,7 @@ class PortableInfoboxHooks {
 		$webRequest = $context->getRequest();
 		$title = $context->getTitle();
 
-		if ( self::isEditingNewTemplate( $webRequest, $title ) && $webRequest->getVal( self::INFOBOX_BUILDER_QUERY_STRING_PARAM, false
-			) ) {
+		if ( self::isEditingNewTemplate( $webRequest, $title ) && self::isInfoboxBuilderRequested( $webRequest ) ) {
 			$data = $editPageContext->response->getData();
 
 			$data[ 'isPortableInfoboxBuilder' ] = true;
@@ -93,7 +92,7 @@ class PortableInfoboxHooks {
 		$webRequest = $skin->getRequest();
 		$title = $skin->getTitle();
 
-		if ( self::isEditingNewTemplate( $webRequest, $title ) && !$webRequest->getVal( self::INFOBOX_BUILDER_QUERY_STRING_PARAM, false ) ) {
+		if ( self::isEditingNewTemplate( $webRequest, $title ) && !self::isInfoboxBuilderRequested( $webRequest ) ) {
 			$text .= JSMessages::printPackages( ['PortableInfoboxBuilder'] );
 
 			$scripts = AssetsManager::getInstance()->getURL( 'portable_infobox_builder_js' );
@@ -116,5 +115,15 @@ class PortableInfoboxHooks {
 		return $title->getNamespace() === NS_TEMPLATE &&
 		!$title->exists() &&
 		$webRequest->getVal( 'action' ) === 'edit';
+	}
+
+	/**
+	 * checks if infobox builder UI was requested via query string param
+	 *
+	 * @param WeBRequest $webRequest
+	 * @return mixed
+	 */
+	private static function isInfoboxBuilderRequested( $webRequest ) {
+		return $webRequest->getVal( self::INFOBOX_BUILDER_QUERY_STRING_PARAM, false );
 	}
 }
