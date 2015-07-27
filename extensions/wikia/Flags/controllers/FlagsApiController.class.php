@@ -528,6 +528,9 @@ class FlagsApiController extends WikiaApiController {
 		return $flagsForPage + $flagTypesForWikia;
 	}
 
+	/**
+	 * Tries to get groups of flags available for the given wikia
+	 */
 	public function getGroupsAsJson() {
 		$this->getRequestParams();
 		$groups = [];
@@ -540,6 +543,9 @@ class FlagsApiController extends WikiaApiController {
 		$this->response->setVal( 'groups',$groups );
 	}
 
+	/**
+	 * Tries to get targeting of flags available for the given wikia
+	 */
 	public function getTargetingAsJson() {
 		$this->getRequestParams();
 		$targeting = [];
