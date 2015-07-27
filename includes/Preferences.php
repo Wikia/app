@@ -109,15 +109,7 @@ class Preferences {
 	 * @return array|String
 	 */
 	static function getUserPreference( $name, $info, $user ) {
-		$getCallback = function($property) use ($user) {
-			if (in_array($property, self::getAttributes())) {
-				return $user->getGlobalAttribute($property);
-			} else {
-				return $user->getGlobalPreference($property);
-			}
-		};
-
-		$val = $getCallback($name);
+		$val = self::getUserPreferenceHelper($user, $name);
 
 		// Handling for array-type preferences
 		if ( ( isset( $info['type'] ) && $info['type'] == 'multiselect' ) ||
@@ -127,13 +119,21 @@ class Preferences {
 			$val = array();
 
 			foreach ( $options as $value ) {
-				if ( $getCallback( "$prefix$value" ) ) {
+				if ( self::getUserPreferenceHelper( $user, "$prefix$value" ) ) {
 					$val[] = $value;
 				}
 			}
 		}
 
 		return $val;
+	}
+
+	private static function getUserPreferenceHelper(User $user, $property) {
+		if (in_array($property, self::getAttributes())) {
+			return $user->getGlobalAttribute($property);
+		} else {
+			return $user->getGlobalPreference($property);
+		}
 	}
 
 	/**
