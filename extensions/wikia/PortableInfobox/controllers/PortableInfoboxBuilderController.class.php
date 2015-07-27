@@ -28,23 +28,23 @@ class PortableInfoboxBuilderController extends WikiaController {
 	 * publishes changes to infobox template made inside infobox builder UI and redirects to template page
 	 */
 	public function publish() {
-		global $wgTitle;
+		$title = $this->getContext()->getTitle();
 
 		$this->editInfoboxTemplate(
-			Article::newFromTitle( $wgTitle, RequestContext::getMain() ),
+			$title,
 			$this->getInfoboxMarkup(),
 			wfMessage( 'portable-infobox-builder-edit-summary' )->text()
 		);
 
-		$this->response->redirect( $wgTitle->getFullURL() );
+		$this->response->redirect( $title->getFullURL() );
 	}
 
 	/**
 	 * does edit on the infobox template
 	 *
-	 * @param $article
-	 * @param $markup
-	 * @param $summary
+	 * @param Title $title
+	 * @param String $markup
+	 * @param String $summary
 	 *
 	 * @throws PermissionsError
 	 * @throws ReadOnlyError
@@ -53,13 +53,9 @@ class PortableInfoboxBuilderController extends WikiaController {
 	 *
 	 * @todo add error handling
 	 */
-	private function editInfoboxTemplate($article, $markup, $summary) {
-		$editPage = new EditPage( $article );
-
-		$editPage->textbox1 = $markup;
-		$editPage->summary = $summary;
-
-		$editPage->attemptSave();
+	private function editInfoboxTemplate( $title, $markup, $summary ) {
+		$wikiPage = new WikiPage( $title );
+		$wikiPage->doEdit( $markup, $summary );
 	}
 
 	/**
