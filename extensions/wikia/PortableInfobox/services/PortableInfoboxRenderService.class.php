@@ -112,7 +112,7 @@ class PortableInfoboxRenderService extends WikiaService {
 		if ( $type === 'image' ) {
 			$data = $this->extendImageData( $data );
 
-			if (!$data) {
+			if ( !$data ) {
 				return false;
 			}
 
@@ -142,9 +142,9 @@ class PortableInfoboxRenderService extends WikiaService {
 			$width = $this->isWikiaMobile() ?
 				self::MOBILE_THUMBNAIL_WIDTH :
 				self::DESKTOP_THUMBNAIL_WIDTH;
-			$thumb = $file->transform( ['width' => $width] );
+			$thumb = $file->transform( [ 'width' => $width ] );
 
-			if (!is_null($thumb) && !$thumb->isError()) {
+			if ( !is_null( $thumb ) && !$thumb->isError() ) {
 				return $thumb;
 			}
 		}
@@ -267,7 +267,7 @@ class PortableInfoboxRenderService extends WikiaService {
 		$data[ 'width' ] = min( $thumbnail->getWidth(), $thumbnail->file->getWidth() );
 		$data[ 'thumbnail' ] = $thumbnail->getUrl();
 		$data[ 'key' ] = urlencode( $data[ 'key' ] );
-		$data['media-type'] = $data['isVideo'] ? 'video' : 'image';
+		$data[ 'media-type' ] = $data[ 'isVideo' ] ? 'video' : 'image';
 
 		return $data;
 	}
@@ -281,12 +281,12 @@ class PortableInfoboxRenderService extends WikiaService {
 	 * @return infobox $data with sanitized title param if needed
 	 */
 	public function sanitizeInfoboxTitle( $type, $data ) {
-		if ( $type === 'title' && !empty( $data['value'] ) ) {
-			$data['value'] = trim( strip_tags( $data['value'] ) );
+		if ( $type === 'title' && !empty( $data[ 'value' ] ) ) {
+			$data[ 'value' ] = trim( strip_tags( $data[ 'value' ] ) );
 			return $data;
 		}
-		if ( $type === 'hero-mobile' && !empty( $data['title']['value'] ) ) {
-			$data['title']['value'] = trim( strip_tags( $data['title']['value'] ) );
+		if ( $type === 'hero-mobile' && !empty( $data[ 'title' ][ 'value' ] ) ) {
+			$data[ 'title' ][ 'value' ] = trim( strip_tags( $data[ 'title' ][ 'value' ] ) );
 			return $data;
 		}
 
