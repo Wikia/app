@@ -171,7 +171,7 @@ class VoteHelper {
 		$dbr = wfGetDB( $db );
 		$row = $dbr->selectRow(
 			'page_vote',
-			'count(*) as cnt',
+			[ 'count(*) as cnt' ],
 			$this->getUserWhere(),
 			__METHOD__
 		);
