@@ -260,7 +260,7 @@ class SassService {
 
 		// save it to the cache if everything went correct
 		if ( $useCache && $ok ) {
-			$memc->set( $cacheKey, $styles );
+			$memc->set( $cacheKey, $styles, WikiaResponse::CACHE_LONG );
 		}
 
 		return $styles;
