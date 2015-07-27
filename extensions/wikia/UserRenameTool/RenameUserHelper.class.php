@@ -10,9 +10,7 @@ class RenameUserHelper {
 
 	const CLUSTER_DEFAULT = '';
 
-	public static $excludedWikis = array(
-		425, /* uncyclopedia */
-	);
+	public static $excludedWikis = [];
 
 	/**
 	 * @author Federico "Lox" Lucignano
