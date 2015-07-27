@@ -36,11 +36,6 @@ class Preferences {
 		'searchlimit' => array( 'Preferences', 'filterIntval' ),
 	);
 
-	private static $attributes = [
-		'nickname',
-		'fancysig'
-	];
-
 	/**
 	 * @throws MWException
 	 * @param $user User
@@ -1590,7 +1585,8 @@ class Preferences {
 
 	// attributes that show up on the preferences page. TODO: separate somehow?
 	private static function getAttributes() {
-		return self::$attributes;
+		global $wgUserAttributeWhitelist;
+		return $wgUserAttributeWhitelist;
 	}
 }
 
