@@ -63,9 +63,8 @@ class PortableInfoboxHooks {
 	 * @return bool
 	 */
 	static public function onEditPageLayoutExecute( $editPageContext ) {
-		global $wgRequest;
-
-		if ( self::isEditingNewTemplate() && $wgRequest->getVal( 'portableInfoboxBuilder', false ) ) {
+		if ( self::isEditingNewTemplate() && $editPageContext->getRequest()->getVal( 'portableInfoboxBuilder', false
+			) ) {
 			$data = $editPageContext->response->getData();
 
 			$data[ 'isPortableInfoboxBuilder' ] = true;
