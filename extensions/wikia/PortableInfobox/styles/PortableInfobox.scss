@@ -23,25 +23,6 @@ $infobox-debug-error-msg-bg: black;
 	margin: 0 0 $infobox-margin $infobox-margin;
 	width: $infobox-width;
 
-	// TODO: experimental wide infobox styles (remove or refactor)
-	&.wide-infobox {
-		@include column-count(3);
-		@include column-gap($infobox-item-margin * 2);
-
-		clear: both;
-		float: none;
-		margin: 0;
-		width: 100%;
-
-		.portable-infobox-item:not(.item-type-title) {
-			@include column-break-inside(avoid);
-		}
-
-		.item-type-title {
-			@include column-span(all);
-		}
-	}
-
 	.portable-infobox-item-margins {
 		padding: $infobox-item-margin $infobox-item-margin * 4 $infobox-item-margin $infobox-item-margin * 2;
 	}
