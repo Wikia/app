@@ -76,7 +76,7 @@ define('ext.wikia.adEngine.adContext', [
 			context.providers.openX = true;
 		}
 
-		context.slots.invisibleHighImpact = (
+		context.slots.invisibleHighImpact = qs.getVal('highimpactslot', false) || (
 			context.slots.invisibleHighImpact &&
 			isProperCountry(instantGlobals.wgAdDriverHighImpactSlotCountries)
 		);
