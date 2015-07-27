@@ -28,13 +28,13 @@ $messages[ 'en' ] = [
 	'portable-infobox-builder-edit-summary' => 'InfoboxBuilder',
 
 	// Infobox builder preview elements text placeholders
-	'portable-infobox-builder-infobox-title-element-placeholder' => 'I\'m Infobox Title',
-	'portable-infobox-builder-infobox-data-label-element-placeholder' => 'I\'m Label',
-	'portable-infobox-builder-infobox-data-value-element-placeholder' => 'I\'m Value',
+	'portable-infobox-builder-infobox-title-element-placeholder' => 'I\'m the Infobox Title',
+	'portable-infobox-builder-infobox-data-label-element-placeholder' => 'I\'m a Label',
+	'portable-infobox-builder-infobox-data-value-element-placeholder' => 'I\'m a Value',
 
 	// Infobox builder entry point modal
-	'portable-infobox-builder-entry-point-modal-title' => 'Do you want to create infobox?',
-	'portable-infobox-builder-entry-point-modal-message' => 'Perhaps you are creating new infobox template? Try out
+	'portable-infobox-builder-entry-point-modal-title' => 'Do you want to create an infobox?',
+	'portable-infobox-builder-entry-point-modal-message' => 'Perhaps you are creating a new infobox template? Try out
 	our new Infobox builder UI tool.',
 	'portable-infobox-builder-entry-point-modal-ok-button' => 'Ok',
 	'portable-infobox-builder-entry-point-modal-cancel-button' => 'Cancel',
