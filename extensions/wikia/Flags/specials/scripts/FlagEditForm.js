@@ -248,4 +248,4 @@ define ('ext.wikia.Flags.FlagEditForm',
 			init: init
 		}
 	}
-);;
+);
