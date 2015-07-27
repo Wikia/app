@@ -2,7 +2,7 @@
 
 require(['wikia.querystring', 'jquery', 'wikia.ui.factory'], function (queryString, $, uiFactory) {
 	var initBuilderUIqueryStringParam = 'portableInfoboxBuilder',
-		initBuilderUIEvantName = 'initPortableInfoboxBuilder',
+		initBuilderUIEventName = 'initPortableInfoboxBuilder',
 		builderUIModalEntryPointId = 'portableInfoboxBuilderModalEntryPoint',
 		builderUIModalEntryPointParams = {
 			vars: {
@@ -18,7 +18,7 @@ require(['wikia.querystring', 'jquery', 'wikia.ui.factory'], function (queryStri
 							data: [
 								{
 									key: 'event',
-									value: initBuilderUIEvantName
+									value: initBuilderUIEventName
 								}
 							]
 						}
@@ -49,7 +49,7 @@ require(['wikia.querystring', 'jquery', 'wikia.ui.factory'], function (queryStri
 
 	uiFactory.init(['modal']).then(function (modalComponent) {
 		modalComponent.createComponent(builderUIModalEntryPointParams, function (modal) {
-			modal.bind(initBuilderUIEvantName, initPortableInfoboxBuilder);
+			modal.bind(initBuilderUIEventName, initPortableInfoboxBuilder);
 			modal.show();
 		});
 	});
