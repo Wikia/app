@@ -31,12 +31,16 @@ abstract class AbstractEmailConfirmationController extends EmailController {
 			'salutation' => $this->getSalutation(),
 			'summary' => $this->getSummary(),
 			'buttonLink' => $this->confirmUrl,
-			'buttonText' => $this->getMessage( 'emailext-emailconfirmation-button-text' )->text(),
+			'buttonText' => $this->getButtonText(),
 			'contentFooterMessages' => $this->getContentFooterMessages()
 		] );
 	}
 
-	abstract protected  function getSummary();
+	abstract protected function getSummary();
+
+	protected function getButtonText() {
+		return $this->getMessage( 'emailext-emailconfirmation-button-text' )->text();
+	}
 
 	protected function getContentFooterMessages() {
 		$commonFooterMessage = $this->getCommonFooterMessages();
@@ -94,7 +98,7 @@ class EmailConfirmationReminderController extends AbstractEmailConfirmationContr
 	const TRACKING_CATEGORY = TrackingCategories::EMAIL_CONFIRMATION_REMINDER;
 
 	protected function getSubject() {
-		return $this->getMessage( 'emailext-emailconfirmation-reminder-subject', $this->targetUser->getName() )->parse();
+		return $this->getMessage( 'emailext-emailconfirmation-reminder-subject', $this->getTargetUserName() )->parse();
 	}
 
 	protected function getSummary() {
@@ -104,7 +108,7 @@ class EmailConfirmationReminderController extends AbstractEmailConfirmationContr
 	protected function getEmailSpecificFooterMessages() {
 		return [
 			$this->getMessage( 'emailext-emailconfirmation-reminder-footer-1',
-				$this->targetUser->getName() )->parse()
+				$this->getTargetUserName() )->parse()
 		];
 	}
 }
@@ -125,6 +129,29 @@ class ConfirmationChangedEmailController extends AbstractEmailConfirmationContro
 		return [
 			$this->getMessage( 'emailext-emailconfirmation-changed-footer-1' )->text(),
 			$this->getMessage( 'emailext-emailconfirmation-changed-footer-2' )->text(),
+		];
+	}
+}
+
+class ReactivateAccountController extends AbstractEmailConfirmationController {
+
+	const TRACKING_CATEGORY = TrackingCategories::REACTIVATE_ACCOUNT;
+
+	protected function getSubject() {
+		return $this->getMessage( 'emailext-reactivate-account-subject' )->text();
+	}
+
+	protected function getSummary() {
+		return $this->getMessage( 'emailext-reactivate-account-summary' )->text();
+	}
+
+	protected function getButtonText() {
+		return $this->getMessage( 'emailext-reactivate-account-button-text' )->text();
+	}
+
+	protected function getEmailSpecificFooterMessages() {
+		return [
+			$this->getMessage( 'emailext-reactivate-account-welcome-back' )->text(),
 		];
 	}
 }

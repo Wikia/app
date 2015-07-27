@@ -430,11 +430,16 @@ class MercuryApiController extends WikiaController {
 		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
 
 		if ( empty( $section ) ) {
-			$this->response->setVal( 'items', false );
-		} else {
-			$data = $this->getCuratedContentData( $section );
-			$this->response->setVal( 'items', $data['items'] );
+			throw new NotFoundApiException( 'Section is not set' );
 		}
+
+		$data = $this->getCuratedContentData( $section );
+
+		if ( empty( $data ) ) {
+			throw new NotFoundApiException( 'No members' );
+		}
+
+		$this->response->setVal( 'items', $data[ 'items' ] );
 	}
 
 	public static function curatedContentDataMemcKey( $section = null ) {

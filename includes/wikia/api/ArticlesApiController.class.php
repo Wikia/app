@@ -1026,7 +1026,7 @@ class ArticlesApiController extends WikiaApiController {
 
 			if ( !empty( $sectionsToGet ) || $sectionsToGet == '0' ) {
 				$contentArray = $this->splitArticleIntoSections( $articleContent->content );
-				$sectionsArray = $this->getSectionNumbersArray( $sectionsToGet, count( $contentArray ) );
+				$sectionsArray = $this->getSectionNumbersArray( $sectionsToGet );
 				$content = $this->getArticleSections( $sectionsArray, $contentArray );
 			} else {
 				$content = $articleContent->content;
@@ -1081,12 +1081,18 @@ class ArticlesApiController extends WikiaApiController {
 		return $contentArray;
 	}
 
+	/**
+	 * Return a string of the specified sections joined from section array
+	 * @param $sectionsToGet
+	 * @param $contentArray
+	 * @return string
+	 */
 	private function getArticleSections( $sectionsToGet, $contentArray ) {
-		$retArr = [];
+		$content = '';
 		foreach ( $sectionsToGet as $section ) {
-			$retArr[] = $contentArray[$section];
+			$content .= $contentArray[$section];
 		}
-		return $retArr;
+		return $content;
 	}
 
 	/**
@@ -1095,13 +1101,9 @@ class ArticlesApiController extends WikiaApiController {
 	 * @return array
 	 * @throws BadRequestApiException
 	 */
-	private function getSectionNumbersArray( $sectionsToGet, $sectionCount ) {
-		if ( $sectionsToGet === 'all' ) {
-			$sectionsToGet = range( 0, $sectionCount );
-		} else {
-			// decode strings like "1%2C%202%2C%203" or "1,2,3" into an array
-			$sectionsToGet = explode( ',', urldecode( $sectionsToGet ) );
-		}
+	private function getSectionNumbersArray( $sectionsToGet ) {
+		// decode strings like "1%2C%202%2C%203" or "1,2,3" into an array
+		$sectionsToGet = explode( ',', preg_replace( '/\s*/', '', urldecode( $sectionsToGet ) ) );
 		return $sectionsToGet;
 	}
 

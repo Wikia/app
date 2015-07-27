@@ -15,6 +15,16 @@
 	margin: 5px 0;
 }
 
+.portable-flags-inline {
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	-ms-flex-direction: column;
+	-webkit-flex-direction: column;
+	flex-direction: column;
+	margin: 5px 0;
+}
+
 .user-anon .flags-targeting-contributors {
 	display: none;
 }

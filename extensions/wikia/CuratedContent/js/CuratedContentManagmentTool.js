@@ -300,6 +300,83 @@ require(['wikia.window', 'jquery', 'wikia.nirvana', 'wikia.tracker', 'JSMessages
 				return result;
 			}
 
+			function gerErrorMessageFromErrReason(errReason) {
+				if (errReason === 'articleNotFound') {
+					return articleNotFoundError;
+				}
+				if (errReason === 'emptyLabel') {
+					return emptyLabelError;
+				}
+				if (errReason === 'tooLongLabel') {
+					return tooLongLabelError;
+				}
+				if (errReason === 'videoNotSupportProvider') {
+					return videoNotSupportedError;
+				}
+				if (errReason === 'notSupportedType') {
+					return notSupportedType;
+				}
+				if (errReason === 'noCategoryInTag') {
+					return noCategoryInTag;
+				}
+				if (errReason === 'imageMissing') {
+					return imageMissingError;
+				}
+				if (errReason === 'duplicatedLabel') {
+					return duplicateError;
+				}
+				return errReason;
+			}
+
+			function checkItemsForErrors($items, errTitle, errReason, reasonMessage) {
+				$items.each(function () {
+					if (this.value === errTitle) {
+						var $itemWithError;
+
+						switch (errReason) {
+							case 'missingImage':
+								$itemWithError = $(this).parent().find('.image');
+								break;
+							case 'emptyLabel':
+							case 'tooLongLabel':
+								$itemWithError = $(this).next();
+								break;
+							default:
+								$itemWithError = $(this);
+						}
+						if ($itemWithError) {
+							$itemWithError.addError(reasonMessage);
+							return false;
+						}
+					}
+					return true;
+				});
+			}
+			function checkSectionsForErrors($sections, errTitle, errReason, reasonMessage) {
+				$sections.each(function () {
+					if (this.value === errTitle) {
+						var $itemWithError;
+
+						switch (errReason) {
+							case 'missingImage':
+								$itemWithError = $(this).parent().find('.image');
+								break;
+							case 'duplicatedLabel':
+							// intended fall
+							case 'tooLongLabel':
+								$itemWithError = $(this);
+								break;
+						}
+						if ($itemWithError) {
+							$itemWithError.addError(reasonMessage);
+							return false;
+						}
+					}
+					return true;
+				});
+			}
+
+
 			window._gaq.push(['_setSampleRate', '100']);
 
 			$save.on('click', function () {
@@ -330,77 +407,33 @@ require(['wikia.window', 'jquery', 'wikia.nirvana', 'wikia.tracker', 'JSMessages
 						data: {
 							sections: data
 						}
-					}).done(
-						function (data) {
-							function getReasonMessage(errReason) {
-								if (errReason === 'articleNotFound') {
-									return articleNotFoundError;
-								}
-								if (errReason === 'emptyLabel') {
-									return emptyLabelError;
-								}
-								if (errReason === 'tooLongLabel') {
-									return tooLongLabelError;
-								}
-								if (errReason === 'videoNotSupportProvider') {
-									return videoNotSupportedError;
-								}
-								if (errReason === 'notSupportedType') {
-									return notSupportedType;
-								}
-								if (errReason === 'noCategoryInTag') {
-									return noCategoryInTag;
-								}
-								if (errReason === 'imageMissing') {
-									return imageMissingError;
-								}
-								return errReason;
-							}
+					}).done(function (data) {
+						if (data.error) {
+							var $items = $form.find('.item-input'),
+								$sections = $form.find('.section-input');
 
-							if (data.error) {
-								var items = $form.find('.item-input, .section-input');
+							[].forEach.call(data.error, function(err) {
+								var errTitle = err.title,
+									errReason = err.reason,
+									reasonMessage = gerErrorMessageFromErrReason(errReason);
 
-								$.each(data.error, function() {
-									var errTitle = this.title,
-										errReason = this.reason,
-										reasonMessage = getReasonMessage(errReason);
+								checkItemsForErrors($items, errTitle, errReason, reasonMessage);
+								checkSectionsForErrors($sections, errTitle, errReason, reasonMessage);
+							});
 
-									items.each(function () {
-										if (this.value === errTitle) {
-											var $itemWithError;
-
-											switch (errReason) {
-												case 'missingImage':
-													$itemWithError = $(this).parent().find('.image');
-													break;
-												case 'emptyLabel':
-												case 'tooLongLabel':
-													$itemWithError = $(this).next();
-													break;
-												default:
-													$itemWithError = $(this);
-											}
-
-											$itemWithError.addError(reasonMessage);
-											return false;
-										}
-										return true;
-									});
-								});
-
-								$save.addClass('err');
-								$save.attr('disabled', true);
-								track({label: 'save-error'});
-							} else if (data.status) {
-								$save.addClass('ok');
-								track({label: 'save'});
-							}
-						}).fail(function () {
 							$save.addClass('err');
+							$save.attr('disabled', true);
 							track({label: 'save-error'});
-						}).then(function () {
-							$form.stopThrobbing();
-						});
+						} else if (data.status) {
+							$save.addClass('ok');
+							track({label: 'save'});
+						}
+					}).fail(function () {
+						$save.addClass('err');
+						track({label: 'save-error'});
+					}).then(function () {
+						$form.stopThrobbing();
+					});
 				}
 			});
 

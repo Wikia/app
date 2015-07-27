@@ -15,7 +15,6 @@ class ForumController extends WallBaseController {
 		 */
 		if ( ForumHelper::isForum() ) {
 			$this->response->addAsset( 'extensions/wikia/Forum/css/Forum.scss' );
-			$this->response->addAsset( 'extensions/wikia/Forum/css/ForumTag.scss' );
 		}
 	}
 
