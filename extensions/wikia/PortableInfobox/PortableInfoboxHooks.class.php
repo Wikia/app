@@ -10,7 +10,7 @@ class PortableInfoboxHooks {
 	 * @param Skin $skin
 	 * @return bool
 	 */
-	static public function onBeforePageDisplay(OutputPage $out, Skin $skin) {
+	public static function onBeforePageDisplay(OutputPage $out, Skin $skin) {
 		if (F::app()->checkSkin('monobook', $skin)) {
 			Wikia::addAssetsToOutput('portable_infobox_monobook_scss');
 		} else {
@@ -27,7 +27,7 @@ class PortableInfoboxHooks {
 	 * @param $articleTitle
 	 * @return bool
 	 */
-	static public function onImageServingCollectImages(&$imageNamesArray, $articleTitle) {
+	public static function onImageServingCollectImages(&$imageNamesArray, $articleTitle) {
 		if ($articleTitle) {
 			$infoboxImages = PortableInfoboxDataService::newFromTitle($articleTitle)->getImages();
 			if (!empty($infoboxImages)) {
@@ -48,7 +48,7 @@ class PortableInfoboxHooks {
 	 * @param $parser
 	 * @param $frame
 	 */
-	static public function onParserTagHooksBeforeInvoke($name, $marker, $content, $attributes, $parser, $frame) {
+	public static function onParserTagHooksBeforeInvoke($name, $marker, $content, $attributes, $parser, $frame) {
 		if ($name === self::PARSER_TAG_GALLERY) {
 			\Wikia\PortableInfobox\Helpers\PortableInfoboxDataBag::getInstance()->setGallery($marker, $content);
 		}
@@ -62,7 +62,7 @@ class PortableInfoboxHooks {
 	 * @param EditPageLayoutController $editPageContext
 	 * @return bool
 	 */
-	static public function onEditPageLayoutExecute( $editPageContext ) {
+	public static function onEditPageLayoutExecute( $editPageContext ) {
 		$context = $editPageContext->getContext();
 		$webRequest = $context->getRequest();
 		$title = $context->getTitle();
