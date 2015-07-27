@@ -31,7 +31,7 @@ class PortableInfoboxBuilderController extends WikiaController {
 		$title = $this->getContext()->getTitle();
 
 		$this->editInfoboxTemplate(
-			$title,
+			Article::newFromTitle( $title, RequestContext::getMain() ),
 			$this->getInfoboxMarkup(),
 			wfMessage( 'portable-infobox-builder-edit-summary' )->text()
 		);
@@ -42,7 +42,7 @@ class PortableInfoboxBuilderController extends WikiaController {
 	/**
 	 * does edit on the infobox template
 	 *
-	 * @param Title $title
+	 * @param Article $article
 	 * @param String $markup
 	 * @param String $summary
 	 *
@@ -53,17 +53,23 @@ class PortableInfoboxBuilderController extends WikiaController {
 	 *
 	 * @todo add error handling
 	 */
-	private function editInfoboxTemplate( $title, $markup, $summary ) {
-		$wikiPage = new WikiPage( $title );
-		$wikiPage->doEdit( $markup, $summary );
+	private function editInfoboxTemplate( $article, $markup, $summary ) {
+		$editPage = new EditPage( $article );
+
+		$editPage->textbox1 = $markup;
+		$editPage->summary = $summary;
+
+		$editPage->attemptSave();
 	}
 
 	/**
-	 * returns infobox xml markup based on infobox build using infobox builder UI tool
+	 * returns infobox xml markup based on infobox created using infobox builder UI tool
+	 *
+	 * For now it returns mock for simple infobox XML.
+	 * This will change in the next stories for Portable Infobox Builder when the XML will be created based on the data
+	 * returned by getInfoboxData() method
 	 *
 	 * @return string
-	 *
-	 * @todo returns temporary mock
 	 */
 	private function getInfoboxMarkup() {
 		return '<infobox>
@@ -74,11 +80,13 @@ class PortableInfoboxBuilderController extends WikiaController {
 	}
 
 	/**
-	 * returns infobox data for rendering
+	 * returns infobox data for rendering.
+	 *
+	 * For now it returns a mocked data for simple imfobox.
+	 * This will be changes in the next stories for Portable Infobox Builder when user will be able to create custom
+	 * infobox using Infobox Builder UI.
 	 *
 	 * @return array
-	 *
-	 * @todo returns temporary data mock for simple infobox
 	 */
 	private function getInfoboxData() {
 		return [
