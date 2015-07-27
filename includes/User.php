@@ -4839,7 +4839,7 @@ class User {
 			# <Wikia>
 			if ( $this->shouldOptionBeStored( $key, $value ) ) {
 				$insertRows[] = [ 'up_user' => $this->getId(), 'up_property' => $key, 'up_value' => $value ];
-			} elseif ($this->shouldOptionBeDeleted($key, $value)) {
+			} elseif ($this->isDefaultOption($key, $value)) {
 				$deletePrefs[] = $key;
 			}
 			# </Wikia>
@@ -4897,7 +4897,7 @@ class User {
 		return false;
 	}
 
-	private function shouldOptionBeDeleted($key, $value) {
+	private function isDefaultOption($key, $value) {
 		return $value == self::getDefaultOption($key);
 	}
 
