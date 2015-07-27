@@ -23,7 +23,7 @@ use Wikia\Sass\Compiler\ExternalRubyCompiler;
  * @author Władysław Bodzek <wladek@wikia-inc.com>
  *
  */
-class SassService extends WikiaObject {
+class SassService {
 
 	const CACHE_VERSION = 6; # SASS caching does not depend on $wgStyleVersion, use this constant to bust SASS cache
 
@@ -44,14 +44,16 @@ class SassService extends WikiaObject {
 	protected $debug = null;
 	protected $useSourceMaps = false;
 
+	protected $app;
+
 	/**
 	 * Creates a new SassService object based on the Sass source provided.
 	 * Please use static constructors instead of calling this constructor directly.
 	 *
 	 * @param Source $source
 	 */
-	public function __construct( Source $source ) {
-		parent::__construct();
+	private function __construct( Source $source ) {
+		$this->app = F::app();
 		$this->source = $source;
 
 		// set up default cache variant
@@ -284,13 +286,13 @@ class SassService extends WikiaObject {
 	 * @return array Array of filter objects
 	 */
 	protected function getFilterObjects() {
-		$IP = $this->wg->get('IP');
+		$IP = $this->app->getGlobal('IP');
 		$filters = array();
 		if ( $this->filters & self::FILTER_IMPORT_CSS ) {
 			$filters[] = new CssImportsFilter($IP);
 		}
 		if ( $this->filters & self::FILTER_CDN_REWRITE ) {
-			$filters[] = new CdnRewriteFilter($this->wg->CdnStylePath);
+			$filters[] = new CdnRewriteFilter($this->app->wg->CdnStylePath);
 		}
 		if ( $this->filters & self::FILTER_BASE64 ) {
 			$filters[] = new InlineImageFilter($IP);
