@@ -154,7 +154,7 @@ $infobox-debug-error-msg-bg: black;
 	.portable-infobox-item-value {
 		font-size: 14px;
 		line-height: 20px;
-		padding-left: 20px;
+		padding-left: $infobox-item-margin * 2;
 	}
 }
 
