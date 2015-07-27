@@ -48,7 +48,11 @@ class UserPreferences {
 	}
 
 	public function setPreferencesInCache($userId, $preferences) {
-		$this->preferences[$userId] = $preferences;
+		$this->preferences[$userId] = $this->defaultPreferences;
+
+		foreach ($preferences as $key => $val) {
+			$this->preferences[$userId][$key] = $val;
+		}
 	}
 
 	public function get($userId, $pref, $default = null, $ignoreHidden = false) {

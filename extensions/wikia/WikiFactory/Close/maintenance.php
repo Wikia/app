@@ -137,12 +137,14 @@ class CloseWikiMaintenance {
 				echo "{$dbname} is not unique. Check city_list and rerun script";
 				die( 1 );
 			}
-			$this->log( "city_id={$row->city_id} city_url={$row->city_url} city_dbname={$dbname} city_flags={$row->city_flags} city_public={$row->city_public}" );
+			$this->log( "city_id={$row->city_id} city_cluster={$cluster} city_url={$row->city_url} city_dbname={$dbname} city_flags={$row->city_flags} city_public={$row->city_public}" );
 
 			/**
 			 * request for dump on remote server (now hardcoded for Iowa)
 			 */
 			if( $row->city_flags & WikiFactory::FLAG_HIDE_DB_IMAGES)  {
+				// "Hide Database and Image Dump
+				$this->log( "Images and DB dump should be hidden" );
 				$hide = true;
 			}
 			if( $row->city_flags & WikiFactory::FLAG_CREATE_DB_DUMP ) {
@@ -170,6 +172,7 @@ class CloseWikiMaintenance {
 			}
 			if( $row->city_flags & WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE ) {
 				if( $dbname && $folder ) {
+					$this->log( "Dumping images on remote host" );
 					$source = $this->tarFiles( $folder, $dbname, $cityid );
 					if( $source ) {
                         $retval = DumpsOnDemand::putToAmazonS3( $source, !$hide,  MimeMagic::singleton()->guessMimeType( $source ) );
@@ -194,6 +197,7 @@ class CloseWikiMaintenance {
 			}
 			if( $row->city_flags & WikiFactory::FLAG_DELETE_DB_IMAGES ||
 			$row->city_flags & WikiFactory::FLAG_FREE_WIKI_URL ) {
+				$this->log( "Cleaning the shared database" );
 
 				/**
 				 * clear wikifactory tables, condition for city_public should
@@ -270,6 +274,11 @@ class CloseWikiMaintenance {
 				$this->log( "Wiki documents removed from index" );
 
 				/**
+				 * let other extensions remove entries for closed wiki
+				 */
+				wfRunHooks( 'WikiFactoryDoCloseWiki', [ $row ] );
+
+				/**
 				 * there is nothing to set because row in city_list doesn't
 				 * exists
 				 */
@@ -288,6 +297,8 @@ class CloseWikiMaintenance {
 				'city_id' => (int) $cityid,
 				'dbname'  => $dbname,
 			] );
+
+			$this->log( "$dbname: completed" );
 
 			/**
 			 * just one?

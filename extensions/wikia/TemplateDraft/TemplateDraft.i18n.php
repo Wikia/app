@@ -18,7 +18,7 @@ $messages['en'] = [
 	'templatedraft-approval-no-page-error' => 'Approval failed as draft page doesn\'t exist',
 	'templatedraft-approval-no-templatedraft-error' => 'Approve draft action is not applicable on non template draft pages',
 	'templatedraft-approval-success-confirmation' => 'This template contents was replaced with updated version from draft template and the draft was removed',
-	'templatedraft-approval-summary' => 'Replaced with updated version from draft template',
+	'templatedraft-approval-summary' => 'Infobox updated using the [[Help:PortableInfoboxes|portable infobox]] migration tool',
 	'templatedraft-draft-removal-summary' => 'Cleanup. Draft approved to parent page.',
 	/**
 	 * Right rail module

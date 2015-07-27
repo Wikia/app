@@ -41,32 +41,11 @@ $messages['en'] = array(
 	'lightbox-send' => 'Send',
 	'lightbox-share-description' => 'Photo in $1 on $2',
 	'lightbox-share-email-subject' => '$1 has sent you a photo on Wikia',
-	'lightbox-share-email-body' => 'Hi,
-
-Someone wanted to show you a photo on Wikia. Check it out:
-
-$1
-
-- The Wikia team
-
-___________________________________________
-* Find help and advice on Community Central: http://community.wikia.com
-* Want to receive fewer messages from us? You can unsubscribe or change
-your email preferences here: http://community.wikia.com/Special:Preferences',
+	'lightbox-share-salutation' => 'Hi,',
+	'lightbox-share-email-body' => 'Someone wanted to show you a photo on Wikia. Check it out:<br /><br />$1',
 	'lightbox-share-description-video' => 'Video in $1 on $2',
 	'lightbox-share-email-subject-video' => '$1 has sent you a video on Wikia',
-	'lightbox-share-email-body-video' => 'Hi,
-
-Someone wanted to show you a video on Wikia. Check it out:
-
-$1
-
-- The Wikia team
-
-___________________________________________
-* Find help and advice on Community Central: http://community.wikia.com
-* Want to receive fewer messages from us? You can unsubscribe or change
-your email preferences here: http://community.wikia.com/Special:Preferences',
+	'lightbox-share-email-body-video' => 'Someone wanted to show you a video on Wikia. Check it out:<br /><br />$1',
 	'lightbox-share-button-email' => 'Email',
 	'lightbox-share-button-www' => 'Share',
 	'lightbox-share-button-embed' => 'Embed',
@@ -115,6 +94,7 @@ $messages['qqq'] = array(
 	'lightbox-share-description' => 'Parameters:
 * $1 is the current page,
 * $2 is the site name.',
+	'lightbox-share-salutation' => 'How the user is addressed in the email',
 	'lightbox-share-email-subject' => 'Parameters:
 * $1 is a username.',
 	'lightbox-share-email-body' => 'Parameters:
@@ -148,13 +128,8 @@ $messages['de'] = array(
 	'lightbox-send' => 'Senden',
 	'lightbox-share-description' => 'Foto auf $1 im $2',
 	'lightbox-share-email-subject' => '$1 hat dir ein Foto auf Wikia geschickt.',
-	'lightbox-share-email-body' => 'Hallo,
-
-jemand will dir ein Foto auf Wikia zeigen. Sieh es dir an:
-
-$1
-
-- Das Wikia-Team',
+	'lightbox-share-email-salutation' => 'Hallo,',
+	'lightbox-share-email-body' => 'jemand will dir ein Foto auf Wikia zeigen. Sieh es dir an:<br /><br />$1',
 	'lightbox-share-button-email' => 'E-Mail',
 	'lightbox-share-button-www' => 'Teilen',
 	'lightbox-share-button-embed' => 'Einbinden',
@@ -169,13 +144,8 @@ $1
  */
 $messages['de-formal'] = array(
 	'lightbox-share-email-subject' => '$1 hat Ihnen ein Foto auf Wikia geschickt.',
-	'lightbox-share-email-body' => 'Hallo,
-
-jemand will Ihnen ein Foto auf Wikia zeigen. Sehen Sie es sich an:
-
-$1
-
-- Das Wikia-Team'
+	'lightbox-share-email-salutation' => 'Hallo,',
+	'lightbox-share-email-body' => 'jemand will Ihnen ein Foto auf Wikia zeigen. Sehen Sie es sich an:<br /><br />$1'
 );
 
 /** Zazaki (Zazaki)
@@ -200,13 +170,8 @@ $messages['es'] = array(
 	'lightbox-send' => 'Enviar',
 	'lightbox-share-description' => 'Imagen de $1 en $2',
 	'lightbox-share-email-subject' => '$1 te ha enviado una imagen en Wikia',
-	'lightbox-share-email-body' => 'Hola,
-
-Alguien quería mostrarte una imagen en Wikia. Mírala:
-
-$1
-
--El Equipo de Wikia',
+	'lightbox-share-email-salutation' => 'Hola,',
+	'lightbox-share-email-body' => 'Alguien quería mostrarte una imagen en Wikia. Mírala:<br /><br />$1',
 	'lightbox-share-button-email' => 'Email',
 	'lightbox-share-button-www' => 'Compartir',
 	'lightbox-share-button-embed' => 'Insertar',
@@ -231,13 +196,8 @@ $messages['fi'] = array(
 	'lightbox-send' => 'Lähetä',
 	'lightbox-share-description' => 'Kuva sivulla $1 {{GRAMMAR:inessive|$2}}',
 	'lightbox-share-email-subject' => '$1 on lähettänyt sinulle kuvan Wikiassa',
-	'lightbox-share-email-body' => 'Hei,
-
-Joku halusi näyttää sinulle kuvan Wikiassa. Katso se täältä:
-
-$1
-
-- Wikia-tiimi',
+	'lightbox-share-email-salutation' => 'Hei,',
+	'lightbox-share-email-body' => 'Joku halusi näyttää sinulle kuvan Wikiassa. Katso se täältä:<br /><br />$1',
 	'lightbox-share-button-email' => 'Sähköposti',
 	'lightbox-share-button-www' => 'Jaa',
 	'lightbox-share-button-embed' => 'Upota',
@@ -261,13 +221,8 @@ $messages['fr'] = array(
 	'lightbox-send' => 'Envoyer',
 	'lightbox-share-description' => 'Photo de $1 sur $2',
 	'lightbox-share-email-subject' => '$1 vous a envoyé une photo sur Wikia',
-	'lightbox-share-email-body' => "Bonjour,
-
-Quelqu'un souhaite vous montrer une photo sur Wikia. Regardez-la :
-
-$1
-
-— L’équipe Wikia",
+	'lightbox-share-email-salutation' => 'Bonjour,',
+	'lightbox-share-email-body' => "Quelqu'un souhaite vous montrer une photo sur Wikia. Regardez-la :<br /><br />$1",
 	'lightbox-share-button-email' => 'Envoyer',
 	'lightbox-share-button-www' => 'Partager',
 	'lightbox-share-button-embed' => 'Intégrer',
@@ -290,13 +245,8 @@ $messages['gl'] = array(
 	'lightbox-send' => 'Enviar',
 	'lightbox-share-description' => 'Foto de "$1" en $2',
 	'lightbox-share-email-subject' => '$1 envioulle unha foto en Wikia',
-	'lightbox-share-email-body' => 'Ola:
-
-Alguén quixo ensinarlle unha foto en Wikia. Bótelle unha ollada:
-
-$1
-
-- O equipo de Wikia',
+	'lightbox-share-email-salutation' => 'Ola:',
+	'lightbox-share-email-body' => 'Alguén quixo ensinarlle unha foto en Wikia. Bótelle unha ollada:<br /><br />$1',
 	'lightbox-share-button-email' => 'Enviar',
 	'lightbox-share-button-www' => 'Compartir',
 	'lightbox-share-button-embed' => 'Incorporar',
@@ -319,13 +269,8 @@ $messages['ia'] = array(
 	'lightbox-send' => 'Inviar',
 	'lightbox-share-description' => 'Photo in $1 sur $2',
 	'lightbox-share-email-subject' => '$1 te ha inviate un photo in Wikia',
-	'lightbox-share-email-body' => 'Salute,
-
-Qualcuno vole monstrar te un photo in Wikia. Jecta un oculo:
-
-$1
-
-- Le equipa de Wikia',
+	'lightbox-share-email-salutation' => 'Salute,',
+	'lightbox-share-email-body' => 'Qualcuno vole monstrar te un photo in Wikia. Jecta un oculo:<br /><br />$1',
 	'lightbox-share-button-email' => 'E-mail',
 	'lightbox-share-button-www' => 'Divider',
 	'lightbox-share-button-embed' => 'Incorporar',
@@ -348,14 +293,9 @@ $messages['ja'] = array(
 	'lightbox-send' => '送信',
 	'lightbox-share-description' => '$2 のページ $1 の画像',
 	'lightbox-share-email-subject' => '$1 がウィキア上であなたに画像を送信しました',
-	'lightbox-share-email-body' => 'こんにちは、
-
-どなたかが、あなたに見せたいウィキア上の画像の紹介メッセージを送信しました。
-
-次のURLをチェックしてみてください:
-$1
-
-- ウィキア',
+	'lightbox-share-email-salutation' => 'こんにちは、',
+	'lightbox-share-email-body' => 'どなたかが、あなたに見せたいウィキア上の画像の紹介メッセージを送信しました。<br /><br />
+次のURLをチェックしてみてください:<br /><br />$1',
 	'lightbox-share-button-email' => 'メール',
 	'lightbox-share-button-www' => '共有',
 	'lightbox-share-button-embed' => '埋め込み',
@@ -377,13 +317,8 @@ $messages['mk'] = array(
 	'lightbox-send' => 'Испрати',
 	'lightbox-share-description' => 'Слика во $1 на $2',
 	'lightbox-share-email-subject' => '$1 ви испрати слика на Викија',
-	'lightbox-share-email-body' => 'Здраво,
-
-Некој сака да ви покаже слика на Викија. Погледајте ја:
-
-$1
-
-- Екипата на Викија',
+	'lightbox-share-email-salutation' => 'Здраво,',
+	'lightbox-share-email-body' => 'Некој сака да ви покаже слика на Викија. Погледајте ја:<br /><br />$1',
 	'lightbox-share-button-email' => 'По е-пошта',
 	'lightbox-share-button-www' => 'Сподели',
 	'lightbox-share-button-embed' => 'Вметни',
@@ -406,13 +341,8 @@ $messages['ms'] = array(
 	'lightbox-send' => 'Hantar',
 	'lightbox-share-description' => 'Gambar di $1 di $2',
 	'lightbox-share-email-subject' => '$1 telah menghantar gambar kepada anda di Wikia',
-	'lightbox-share-email-body' => 'Hai,
-
-Ada orang yang hendak menunjukkan gambar kepada anda di Wikia. Mari kita lihat:
-
-$1
-
-- Pasukan Wikia',
+	'lightbox-share-email-salutation' => 'Hai,',
+	'lightbox-share-email-body' => 'Ada orang yang hendak menunjukkan gambar kepada anda di Wikia. Mari kita lihat:<br /><br />$1',
 	'lightbox-share-button-email' => 'E-mel',
 	'lightbox-share-button-www' => 'Kongsi',
 	'lightbox-share-button-embed' => 'Benamkan',
@@ -435,13 +365,8 @@ $messages['nb'] = array(
 	'lightbox-send' => 'Send',
 	'lightbox-share-description' => 'Bilde i $1 på $2',
 	'lightbox-share-email-subject' => '$1 har sendt deg et bilde på Wikia',
-	'lightbox-share-email-body' => 'Hei,
-
-Noen ønsker å vise deg et bilde på Wikia. Sjekk det ut:
-
-$1
-
-- Wikia-teamet',
+	'lightbox-share-email-salutation' => 'Hei,',
+	'lightbox-share-email-body' => 'Noen ønsker å vise deg et bilde på Wikia. Sjekk det ut:<br /><br />$1',
 	'lightbox-share-button-email' => 'E-post',
 	'lightbox-share-button-www' => 'Del',
 	'lightbox-share-button-embed' => 'Bygg inn',
@@ -465,13 +390,8 @@ $messages['nl'] = array(
 	'lightbox-send' => 'Verzenden',
 	'lightbox-share-description' => 'Afbeelding in $1 op $2',
 	'lightbox-share-email-subject' => '$1 heeft u een afbeelding gezonden op Wikia',
-	'lightbox-share-email-body' => 'Hallo,
-
-Iemand wilde u een afbeelding laten zien op Wikia. Ga maar kijken!
-
-$1
-
-- Het Wikia-team',
+	'lightbox-share-email-salutation' => 'Hallo,',
+	'lightbox-share-email-body' => 'Iemand wilde u een afbeelding laten zien op Wikia. Ga maar kijken!<br /><br />$1',
 	'lightbox-share-button-email' => 'E-mailen',
 	'lightbox-share-button-www' => 'Delen',
 	'lightbox-share-button-embed' => 'Invoegen',
@@ -494,13 +414,8 @@ $messages['pl'] = array(
 	'lightbox-send' => 'Wyślij',
 	'lightbox-share-description' => 'Zdjęcie na stronie $1 na $2',
 	'lightbox-share-email-subject' => '$1 wysłał ci zdjęcie na Wikia',
-	'lightbox-share-email-body' => 'Cześć,
-
-Ktoś chciał pokazać Ci obraz na Wikii. Zobacz:
-
-$1
-
--Zespół Wikia',
+	'lightbox-share-email-salutation' => 'Cześć,',
+	'lightbox-share-email-body' => 'Ktoś chciał pokazać Ci obraz na Wikii. Zobacz:<br /><br />$1',
 	'lightbox-share-button-email' => 'E-mail',
 	'lightbox-share-button-www' => 'Podziel się',
 	'lightbox-share-button-embed' => 'Osadź',
@@ -534,13 +449,8 @@ $messages['ru'] = array(
 	'lightbox-send' => 'Отправить',
 	'lightbox-share-description' => 'Изображение в $1 на $2',
 	'lightbox-share-email-subject' => '$1 прислал вам фото на Викия',
-	'lightbox-share-email-body' => 'Привет.
-
-Кто-то хочет показать вам фотографии на Викия. Посмотреть:
-
-$1
-
--Команда Викия',
+	'lightbox-share-email-salutation' => 'Привет.',
+	'lightbox-share-email-body' => 'Кто-то хочет показать вам фотографии на Викия. Посмотреть:<br /><br />$1',
 	'lightbox-share-button-email' => 'Email',
 	'lightbox-share-button-www' => 'Поделиться',
 	'lightbox-share-button-embed' => 'Вставить',
@@ -563,13 +473,8 @@ $messages['sv'] = array(
 	'lightbox-send' => 'Skicka',
 	'lightbox-share-description' => 'Foto på $1 på $2',
 	'lightbox-share-email-subject' => '$1 har skickat ett foto till dig på Wikia',
-	'lightbox-share-email-body' => 'Hej,
-
-Någon ville visa dig ett foto på Wikia. Kolla in det:
-
-$1
-
-- Wikia-teamet',
+	'lightbox-share-email-salutation' => 'Hej,',
+	'lightbox-share-email-body' => 'Någon ville visa dig ett foto på Wikia. Kolla in det:<br /><br />$1',
 	'lightbox-share-button-email' => 'E-post',
 	'lightbox-share-button-www' => 'Dela',
 	'lightbox-share-button-embed' => 'Bädda in',
