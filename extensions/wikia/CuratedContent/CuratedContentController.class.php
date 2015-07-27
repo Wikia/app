@@ -542,6 +542,7 @@ class CuratedContentController extends WikiaController {
 
 		$this->response->setVal( 'url', $url );
 		$this->response->setVal( 'id', $imageId );
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 	}
 
 	/**
