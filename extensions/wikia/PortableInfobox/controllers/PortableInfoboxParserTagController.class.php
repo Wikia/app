@@ -13,7 +13,7 @@ class PortableInfoboxParserTagController extends WikiaController {
 	private $markers = [ ];
 	private $supportedLayouts = [
 		'default',
-		'tabular'
+		'stacked'
 	];
 
 	protected static $instance;

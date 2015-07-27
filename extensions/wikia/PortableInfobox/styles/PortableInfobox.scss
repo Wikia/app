@@ -52,7 +52,6 @@ $infobox-debug-error-msg-bg: black;
 	.portable-infobox-header,
 	.portable-infobox-title {
 		border: 0;
-
 		margin: 0;
 		padding: 0;
 	}
@@ -71,16 +70,31 @@ $infobox-debug-error-msg-bg: black;
 		border-bottom: 0;
 	}
 
+	.item-type-key-val {
+		@include flexbox;
+		@include flex-direction(row);
+		box-sizing: border-box;
+		overflow: hidden;
+		width: 100%;
+	}
+
 	.portable-infobox-item-label {
+		@include flex-basis($infobox-width / 3);
+		margin-bottom: inherit;
 		margin-top: 0;
 	}
 
 	.portable-infobox-item-value {
-		font-size: 14px;
-		line-height: 20px;
-		padding-left: $infobox-item-margin * 2;
+		font-size: 12px;
+		line-height: 18px;
+		padding-left: 0;
 
-		// experiment with removing margins on all children of data value
+		&:not(:first-child) {
+			@include flex-basis($infobox-width * 2 / 3);
+			padding-left: 10px;
+		}
+
+		// fix styles for children of data value
 		> * {
 			margin: 0;
 		}
@@ -88,6 +102,11 @@ $infobox-debug-error-msg-bg: black;
 		ul,
 		ol {
 			list-style-position: inside;
+		}
+
+		li {
+			line-height: 19px;
+			margin: 0;
 		}
 	}
 
@@ -124,6 +143,22 @@ $infobox-debug-error-msg-bg: black;
 		}
 	}
 }
+
+// **********  Overwrite default styles for STACKED layout type  ********** //
+
+.portable-infobox-layout-stacked {
+	.item-type-key-val {
+		display: block;
+	}
+
+	.portable-infobox-item-value {
+		font-size: 14px;
+		line-height: 20px;
+		padding-left: 20px;
+	}
+}
+
+// **********  Error handling styles  ********** //
 
 .WikiaArticle {
 	.portable-infobox-error-info {
@@ -191,41 +226,6 @@ $infobox-debug-error-msg-bg: black;
 
 	.portable-infobox-debug-error-massage-item {
 		margin: $infobox-item-margin 0;
-	}
-}
-
-.portable-infobox-layout-tabular {
-	> .item-type-key-val,
-	.item-type-group:not(.group-layout-horizontal) .item-type-key-val {
-		@include flexbox;
-		@include flex-direction(row);
-		box-sizing: border-box;
-		overflow: hidden;
-		width: 100%;
-
-		.portable-infobox-item-label {
-			@include flex-basis($infobox-width / 3);
-			margin-bottom: inherit;
-		}
-
-		.portable-infobox-item-value {
-			padding-left: 0;
-		}
-
-		.portable-infobox-item-value:not(:first-child) {
-			@include flex-basis($infobox-width * 2 / 3);
-			padding-left: 10px;
-		}
-
-		li {
-			line-height: 19px;
-			margin: 0;
-		}
-	}
-
-	.portable-infobox-item-value {
-		font-size: 12px;
-		line-height: 18px;
 	}
 }
 
