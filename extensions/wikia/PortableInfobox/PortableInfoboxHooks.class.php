@@ -10,8 +10,8 @@ class PortableInfoboxHooks {
 	 * @param Skin $skin
 	 * @return bool
 	 */
-	public static function onBeforePageDisplay(OutputPage $out, Skin $skin) {
-		if (F::app()->checkSkin('monobook', $skin)) {
+	public static function onBeforePageDisplay( OutputPage $out, Skin $skin ) {
+		if ( F::app()->checkSkin( 'monobook', $skin ) ) {
 			Wikia::addAssetsToOutput('portable_infobox_monobook_scss');
 		} else {
 			Wikia::addAssetsToOutput('portable_infobox_scss');
@@ -27,11 +27,11 @@ class PortableInfoboxHooks {
 	 * @param $articleTitle
 	 * @return bool
 	 */
-	public static function onImageServingCollectImages(&$imageNamesArray, $articleTitle) {
-		if ($articleTitle) {
-			$infoboxImages = PortableInfoboxDataService::newFromTitle($articleTitle)->getImages();
-			if (!empty($infoboxImages)) {
-				$imageNamesArray = array_merge($infoboxImages, (array)$imageNamesArray);
+	public static function onImageServingCollectImages( &$imageNamesArray, $articleTitle ) {
+		if ( $articleTitle ) {
+			$infoboxImages = PortableInfoboxDataService::newFromTitle( $articleTitle )->getImages();
+			if ( empty( $infoboxImages ) ) {
+				$imageNamesArray = array_merge($infoboxImages, ( array )$imageNamesArray );
 			}
 		}
 
@@ -48,9 +48,9 @@ class PortableInfoboxHooks {
 	 * @param $parser
 	 * @param $frame
 	 */
-	public static function onParserTagHooksBeforeInvoke($name, $marker, $content, $attributes, $parser, $frame) {
-		if ($name === self::PARSER_TAG_GALLERY) {
-			\Wikia\PortableInfobox\Helpers\PortableInfoboxDataBag::getInstance()->setGallery($marker, $content);
+	public static function onParserTagHooksBeforeInvoke( $name, $marker, $content, $attributes, $parser, $frame ) {
+		if ( $name === self::PARSER_TAG_GALLERY ) {
+			\Wikia\PortableInfobox\Helpers\PortableInfoboxDataBag::getInstance()->setGallery( $marker, $content );
 		}
 
 		return true;
