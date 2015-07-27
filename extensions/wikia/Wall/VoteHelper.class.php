@@ -4,8 +4,6 @@
  * Class VoteHelper
  */
 class VoteHelper {
-	const PAGE_CACHE_TTL = 60 * 60;
-
 	protected $userId;
 	protected $pageId;
 	protected $userIP = '';
@@ -121,7 +119,7 @@ class VoteHelper {
 			]
 		);
 
-		$cache->set( $this->getPageCacheKey(), $row->cnt, self::PAGE_CACHE_TTL );
+		$cache->set( $this->getPageCacheKey(), $row->cnt );
 
 		return (int) $row->cnt;
 	}
