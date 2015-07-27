@@ -26,6 +26,9 @@ class CuratedTourController extends WikiaController {
 
 	private function getCuratedTourPage() {
 		$title = \Title::newFromText( wfMessage( 'curated-tour-page-title' )->escaped(), NS_MEDIAWIKI );
+		if ( $title === NULL ) {
+			throw new MWException( 'Failed to create title object from message: "curated-tour-page-title". Try rebuilding messages' );
+		}
 		return new WikiPage( $title );
 	}
 }
