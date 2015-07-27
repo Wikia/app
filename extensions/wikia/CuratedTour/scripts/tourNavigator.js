@@ -53,6 +53,13 @@ define('ext.wikia.curatedTour.tourNavigator',
 						goToNextStep,
 						previous
 					);
+
+					/* Update tip box position in case something is added to content */
+					setTimeout(updateLoop, 50);
+					function updateLoop() {
+						StepProjector.updatePosition();
+						setTimeout(updateLoop, 50);
+					}
 				});
 			}
 		}

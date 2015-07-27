@@ -76,6 +76,11 @@ define('ext.wikia.curatedTour.stepProjector',
 			targetItemProperties.height = $targetedItem.outerHeight();
 		}
 
+		function updatePosition() {
+			prepareTargetItemProperties($targetedItem);
+			setPopoverPosition();
+		}
+
 		function setPopoverPosition() {
 			$popover.css({
 				top: targetItemProperties.posY + targetItemProperties.height,
@@ -94,7 +99,8 @@ define('ext.wikia.curatedTour.stepProjector',
 		init();
 
 		return {
-			show: show
+			show: show,
+			updatePosition: updatePosition
 		};
 	}
 );
