@@ -2,7 +2,7 @@
 
 class PortableInfoboxHooks {
 	const PARSER_TAG_GALLERY = 'gallery';
-	const INFOBOX_BUILDER_QS_PARAM = 'portableInfoboxBuilder';
+	const INFOBOX_BUILDER_QUERY_STRING_PARAM = 'portableInfoboxBuilder';
 
 	/**
 	 * adds portable infobox styles
@@ -68,7 +68,7 @@ class PortableInfoboxHooks {
 		$webRequest = $context->getRequest();
 		$title = $context->getTitle();
 
-		if ( self::isEditingNewTemplate( $webRequest, $title ) && $webRequest->getVal( self::INFOBOX_BUILDER_QS_PARAM, false
+		if ( self::isEditingNewTemplate( $webRequest, $title ) && $webRequest->getVal( self::INFOBOX_BUILDER_QUERY_STRING_PARAM, false
 			) ) {
 			$data = $editPageContext->response->getData();
 
@@ -93,7 +93,7 @@ class PortableInfoboxHooks {
 		$webRequest = $skin->getRequest();
 		$title = $skin->getTitle();
 
-		if ( self::isEditingNewTemplate( $webRequest, $title ) && !$webRequest->getVal( self::INFOBOX_BUILDER_QS_PARAM, false ) ) {
+		if ( self::isEditingNewTemplate( $webRequest, $title ) && !$webRequest->getVal( self::INFOBOX_BUILDER_QUERY_STRING_PARAM, false ) ) {
 			$text .= JSMessages::printPackages( ['PortableInfoboxBuilder'] );
 
 			$scripts = AssetsManager::getInstance()->getURL( 'portable_infobox_builder_js' );
