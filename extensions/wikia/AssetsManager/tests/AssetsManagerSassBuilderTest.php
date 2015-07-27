@@ -39,24 +39,4 @@ class AssetsManagerSassBuilderTest extends WikiaBaseTest {
 		$this->assertContains('data:image/gif;base64,', $builder->getContent());
 		$this->assertNotContains('/* base64 */', $builder->getContent());
 	}
-
-	public function testSassService() {
-		$css = <<<CSS
-@import "skins/shared/color";
-header {
-	div {
-		color: \$color-body;
-	}
-}
-CSS;
-		$sass = SassService::newFromString($css);
-		$sass->setSassVariables([
-			'color-body' => '#112233',
-		]);
-
-		$result = $sass->getCss(false); # no cache
-
-		$this->assertContains( 'header div {', $result, 'CSS selector is properly compiled' );
-		$this->assertContains( 'color: #112233;', $result, 'Color variable is properly passed' );
-	}
 }
