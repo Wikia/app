@@ -29,9 +29,9 @@
 		box-sizing: border-box;
 		color: darken($color-unified-module-background, 30%);
 		font-size: 16px;
+		min-height: 249px;
 		overflow: hidden;
 		padding-top: 20px;
-		min-height: 249px;
 		text-align: center;
 	}
 }
