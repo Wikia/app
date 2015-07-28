@@ -854,7 +854,7 @@ $wgCdnStylePath = '';
 /**
  * Transpaent 1x1 GIF URI-encoded (BugId:9975)
  */
-$wgBlankImgUrl = 'data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D';
+$wgBlankImgUrl = '//:0';//'data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D';
 
 /**
  * Serve jQuery from Google's CDN. Disable this variable to serve jQuery as a part of AssetsManager package.
