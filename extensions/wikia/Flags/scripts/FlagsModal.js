@@ -129,6 +129,7 @@ require(
 					param = [];
 					param['param_name'] = paramName;
 					param['param_description'] = paramsNames[paramName];
+					param['param_placeholder'] = paramsNames[paramName].length ? paramsNames[paramName] : paramName;
 					param['param_value'] = flagsData[flagTypeId].params ? flagsData[flagTypeId].params[paramName] : '';
 					params.push(param);
 				}
@@ -242,7 +243,15 @@ require(
 			$div = $(document.createElement('div'))
 				.addClass('flags-edit')
 				.html($a);
-		$('.portable-flags').prepend($div).append($div.clone(true));
+		var flagsContainer = $('.portable-flags');
+		if (flagsContainer.length !== 0) {
+			flagsContainer.prepend($div).append($div.clone(true));
+		} else {
+			flagsContainer = $('.portable-flags-inline');
+			if (flagsContainer.length !== 0) {
+				flagsContainer.prepend($div).append($div.clone(true));
+			}
+		}
 	}
 
 	// Run initialization method on DOM ready

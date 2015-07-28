@@ -176,12 +176,13 @@ describe('AdContext', function () {
 		'makes targeting.enableKruxTargeting false when disaster recovery instant global variable is set to true',
 		function () {
 			var adContext;
-			mocks.win = {ads: {context: {}}};
+			mocks.win = {ads: {context: {targeting: {enableKruxTargeting: true}}}};
 
 			mocks.instantGlobals = {wgAdDriverKruxCountries: ['XX']};
 			adContext = getModule();
 			expect(adContext.getContext().targeting.enableKruxTargeting).toBeTruthy();
 
+			mocks.win = {ads: {context: {targeting: {enableKruxTargeting: true}}}};
 			mocks.instantGlobals = {
 				wgAdDriverKruxCountries: ['XX', 'ZZ'],
 				wgSitewideDisableKrux: false
@@ -189,6 +190,7 @@ describe('AdContext', function () {
 			adContext = getModule();
 			expect(adContext.getContext().targeting.enableKruxTargeting).toBeTruthy();
 
+			mocks.win = {ads: {context: {targeting: {enableKruxTargeting: true}}}};
 			mocks.instantGlobals = {
 				wgAdDriverKruxCountries: ['XX', 'ZZ'],
 				wgSitewideDisableKrux: true
@@ -196,13 +198,15 @@ describe('AdContext', function () {
 			adContext = getModule();
 			expect(adContext.getContext().targeting.enableKruxTargeting).toBeFalsy();
 
+			mocks.win = {ads: {context: {targeting: {enableKruxTargeting: true}}}};
 			mocks.instantGlobals = {
-				wgAdDriverKruxCountries: ['XX', 'ZZ'],
+				wgAdDriverKruxCountries: ['XX', 'ZZ', 'YY'],
 				wgSitewideDisableKrux: 0
 			};
 			adContext = getModule();
 			expect(adContext.getContext().targeting.enableKruxTargeting).toBeTruthy();
 
+			mocks.win = {ads: {context: {targeting: {enableKruxTargeting: true}}}};
 			mocks.instantGlobals = {
 				wgAdDriverKruxCountries: ['XX', 'ZZ'],
 				wgSitewideDisableKrux: 1
@@ -254,7 +258,7 @@ describe('AdContext', function () {
 	it('enables high impact slot when country in instantGlobals.wgAdDriverHighImpactSlotCountries', function () {
 		var adContext;
 
-		mocks.win = {};
+		mocks.win = {ads: {context: {slots: {invisibleHighImpact: true}}}};
 		mocks.instantGlobals = {wgAdDriverHighImpactSlotCountries: ['HH', 'XX', 'ZZ']};
 		adContext = getModule();
 		expect(adContext.getContext().slots.invisibleHighImpact).toBeTruthy();
@@ -284,7 +288,7 @@ describe('AdContext', function () {
 
 	it('enables krux when country in instantGlobals.wgAdDriverKruxCountries', function () {
 		var adContext;
-
+		mocks.win = {ads: {context: {targeting: {enableKruxTargeting: true}}}};
 		mocks.instantGlobals = {wgAdDriverKruxCountries: ['AA', 'XX', 'BB']};
 		adContext = getModule();
 		expect(adContext.getContext().targeting.enableKruxTargeting).toBeTruthy();
@@ -297,12 +301,12 @@ describe('AdContext', function () {
 	it('disables krux when wiki is directed at children', function () {
 		var adContext;
 
-		mocks.win = {ads: {context: {targeting: {wikiDirectedAtChildren: false}}}};
+		mocks.win = {ads: {context: {targeting: {wikiDirectedAtChildren: false, enableKruxTargeting: true}}}};
 		mocks.instantGlobals = {wgAdDriverKruxCountries: ['XX']};
 		adContext = getModule();
 		expect(adContext.getContext().targeting.enableKruxTargeting).toBeTruthy();
 
-		mocks.win = {ads: {context: {targeting: {wikiDirectedAtChildren: true}}}};
+		mocks.win = {ads: {context: {targeting: {wikiDirectedAtChildren: true, enableKruxTargeting: true}}}};
 		mocks.instantGlobals = {wgAdDriverKruxCountries: ['XX']};
 		adContext = getModule();
 		expect(adContext.getContext().targeting.enableKruxTargeting).toBeFalsy();

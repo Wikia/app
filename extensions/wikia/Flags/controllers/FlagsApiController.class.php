@@ -10,7 +10,9 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
 
+use Flags\FlaggedPagesCache;
 use Flags\FlagsApiBaseController;
+use Flags\FlagsCache;
 use Flags\FlagsLogTask;
 use Flags\Models\Flag;
 use Flags\Models\FlagType;
@@ -24,6 +26,10 @@ class FlagsApiController extends FlagsApiBaseController {
 	 */
 	const LOG_ACTION_FLAG_ADDED = 'flag-added';
 	const LOG_ACTION_FLAG_REMOVED = 'flag-removed';
+
+	private
+		$cache,
+		$params;
 
 	/**
 	 * Article level API
@@ -88,7 +94,6 @@ class FlagsApiController extends FlagsApiBaseController {
 	 * 		int flag_group
 	 * 		string flag_name
 	 * 		string flag_view A name of a template of the flag
-	 * 		string flag_view_url A full URL of the template
 	 * 		int flag_targeting
 	 * 		string|null flag_params_names
 	 *
@@ -136,6 +141,7 @@ class FlagsApiController extends FlagsApiBaseController {
 			$modelResponse = $flagModel->addFlagsToPage( $this->params );
 
 			$this->getCache()->purgeFlagsForPage( $this->params['page_id'] );
+			$this->purgeFlaggedPages();
 
 			$this->makeSuccessResponse( $modelResponse );
 			$this->logFlagChange( $this->params['flags'], $this->params['wiki_id'], $this->params['page_id'], self::LOG_ACTION_FLAG_ADDED );
@@ -162,6 +168,7 @@ class FlagsApiController extends FlagsApiBaseController {
 			$modelResponse = $flagModel->removeFlagsFromPage( $this->params['flags'] );
 
 			$this->getCache()->purgeFlagsForPage( $this->params['page_id'] );
+			$this->purgeFlaggedPages();
 
 			$this->makeSuccessResponse( $modelResponse );
 			$this->logFlagChange( $this->params['flags'], $this->params['wiki_id'], $this->params['page_id'], self::LOG_ACTION_FLAG_REMOVED );
@@ -198,6 +205,7 @@ class FlagsApiController extends FlagsApiBaseController {
 			$modelResponse = $flagModel->updateFlagsForPage( $this->params['flags'] );
 
 			$this->getCache()->purgeFlagsForPage( $this->params['page_id'] );
+			$this->purgeFlaggedPages();
 
 			$this->makeSuccessResponse( $modelResponse );
 			$this->logParametersChange( $oldFlags, $this->params['flags'], $this->params['wiki_id'], $this->params['page_id'] );
@@ -259,9 +267,35 @@ class FlagsApiController extends FlagsApiBaseController {
 			$modelResponse = $flagTypeModel->removeFlagType( $this->params );
 
 			$this->getCache()->purgeFlagTypesForWikia();
+			$this->purgeFlaggedPages();
+			$this->purgePagesWithFlag( $this->params['flag_type_id'] );
 
 			$this->makeSuccessResponse( $modelResponse );
 		} catch( Exception $e ) {
+			$this->logResponseException( $e, $this->request );
+			$this->response->setException( $e );
+		}
+	}
+
+	/**
+	 * Adds a new type of flags.
+	 *
+	 * Required parameters:
+	 * @requestParam int flag_type_id
+	 * @requestParam string flags_params_names parameters names with its descriptions in JSON format
+	 */
+	public function updateFlagTypeParameters() {
+		try {
+			$this->processRequest();
+
+			$flagTypeModel = new FlagType();
+			$modelResponse = $flagTypeModel->updateFlagTypeParameters( $this->params );
+
+			$this->getCache()->purgeFlagTypesForWikia();
+			$this->purgePagesWithFlag( $this->params['flag_type_id'] );
+
+			$this->makeSuccessResponse( $modelResponse );
+		} catch ( Exception $e ) {
 			$this->logResponseException( $e, $this->request );
 			$this->response->setException( $e );
 		}
@@ -304,7 +338,7 @@ class FlagsApiController extends FlagsApiBaseController {
 			$this->getRequestParams();
 
 			if ( empty( $this->params['flag_view'] ) ) {
-				throw new MissingParameterApiException( 'page_id' );
+				throw new MissingParameterApiException( 'flag_view' );
 			}
 
 			$flagTypeModel = new FlagType();
@@ -316,6 +350,36 @@ class FlagsApiController extends FlagsApiBaseController {
 			$this->response->setException( $e );
 		}
 	}
+
+	/**
+	 * Get pages ids on which given flag type is enabled
+	 *
+	 * Required parameter:
+	 * @requestParam string flag_type_id
+	 *
+	 * @return array|null
+	 */
+	public function getPagesWithFlag() {
+		try {
+			$this->getRequestParams();
+
+			if ( empty( $this->params['flag_type_id'] ) ) {
+				throw new MissingParameterApiException( 'flag_type_id' );
+			}
+
+			$flagTypeModel = new FlagType();
+			$pagesIds = $flagTypeModel->getPagesWithFlag( $this->params['flag_type_id'] );
+
+			$this->makeSuccessResponse( $pagesIds );
+		} catch( Exception $e ) {
+			$this->logResponseException( $e, $this->request );
+			$this->response->setException( $e );
+		}
+	}
+
+	/**
+	 * Private methods
+	 */
 
 	/**
 	 * Returns a singleton instance of FlagsCache
@@ -355,6 +419,11 @@ class FlagsApiController extends FlagsApiBaseController {
 			}
 		}
 		$this->getRequestParams();
+	}
+
+	private function purgeFlaggedPages() {
+		( new FlaggedPagesCache() )->purgeAllFlagTypes();
+		( new InsightsFlagsModel() )->purgeFlagsInsights();
 	}
 
 	/**
@@ -447,5 +516,22 @@ class FlagsApiController extends FlagsApiBaseController {
 		$task->wikiId( $wikiId );
 		$task->createdBy( $this->wg->User->getId() );
 		$task->execute( 'logParametersChange', [ $oldFlags, $flags, $pageId ] );
+	}
+
+	/**
+	 * Purges the data on instances of flags for all pages on which given flag is enabled
+	 *
+	 * @param int $flagTypeId
+	 */
+	private function purgePagesWithFlag( $flagTypeId ) {
+		$pagesIds = $this->app->sendRequest(
+			'FlagsApiController',
+			'getPagesWithFlag',
+			[ 'flag_type_id' => $flagTypeId ]
+		)->getData();
+
+		if ( $pagesIds[self::FLAGS_API_RESPONSE_STATUS] ) {
+			$this->getCache()->purgeFlagsForPages( $pagesIds[self::FLAGS_API_RESPONSE_DATA] );
+		}
 	}
 }
