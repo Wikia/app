@@ -1,6 +1,7 @@
 <?php
 
 use VideosModule\Modules;
+use Wikia\Service\User\Attributes;
 
 class VideosModuleController extends WikiaController {
 	const DEFAULT_TEMPLATE_ENGINE = WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
@@ -91,5 +92,27 @@ class VideosModuleController extends WikiaController {
 		}
 
 		return $resultList;
+	}
+
+	public function test() {
+		/** @var Attributes\UserAttributes $userAttributes */
+		$userAttributes = \Wikia\DependencyInjection\Injector::getInjector()->get(Attributes\UserAttributes::class);
+		$foo = $userAttributes->getAttribute(5654074, 'nickName');
+		print_r($foo);
+		$userAttributes->saveAttribute( 5654074, new \Wikia\Domain\User\Attribute( 'nickName', 'AAAAAA' )  );
+		$foo = $userAttributes->getAttribute(5654074, 'nickName');
+		print_r($foo);
+//		$config = (new \Swagger\Client\Configuration())
+//			->setHost('http://10.8.38.30:31390')
+//			->setApiKey('X-Wikia-UserId', 5654074);
+//
+//		$client = new \Swagger\Client\ApiClient($config);
+//		$api = new \Swagger\Client\User\Attributes\Api\UsersAttributesApi($client);
+//
+//		try {
+//			print_r($api->updateAttributeForUser(5654074, "fbPage", "and again"));
+//		} catch (\Swagger\Client\ApiException $e) {
+//			print_r($e);
+//		}
 	}
 }

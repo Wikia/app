@@ -120,7 +120,7 @@ class UsersAttributesApi
         if (!is_null($_header_accept)) {
             $headerParams['Accept'] = $_header_accept;
         }
-        $headerParams['Content-Type'] = ApiClient::selectHeaderContentType(array());
+        $headerParams['Content-Type'] = ApiClient::selectHeaderContentType(array('application/x-www-form-urlencoded'));
   
         
         
@@ -180,114 +180,6 @@ class UsersAttributesApi
         }
   
         return $this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\User\Attributes\Models\AllUserAttributesHalResponse');
-        
-    }
-    
-    /**
-     * createAttributeForUser
-     *
-     * Creates an attribute for the specified user if it doesn't exist
-     *
-     * @param int $user_id The userID for the specified user (required)
-     * @param string $attr_name Name of attribute being created (required)
-     * @param string $value Value of the attribute being created for this user (required)
-     * @return \Swagger\Client\User\Attributes\Models\UserAttributeHalResponse
-     * @throws \Swagger\Client\ApiException on non-2xx response
-     */
-    public function createAttributeForUser($user_id, $attr_name, $value)
-    {
-        
-        // verify the required parameter 'user_id' is set
-        if ($user_id === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $user_id when calling createAttributeForUser');
-        }
-        // verify the required parameter 'attr_name' is set
-        if ($attr_name === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $attr_name when calling createAttributeForUser');
-        }
-        // verify the required parameter 'value' is set
-        if ($value === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $value when calling createAttributeForUser');
-        }
-  
-        // parse inputs
-        $resourcePath = "/user/{userID}/attr";
-        $resourcePath = str_replace("{format}", "json", $resourcePath);
-        $method = "POST";
-        $httpBody = '';
-        $queryParams = array();
-        $headerParams = array();
-        $formParams = array();
-        $_header_accept = ApiClient::selectHeaderAccept(array('application/hal+json'));
-        if (!is_null($_header_accept)) {
-            $headerParams['Accept'] = $_header_accept;
-        }
-        $headerParams['Content-Type'] = ApiClient::selectHeaderContentType(array());
-  
-        
-        
-        // path params
-        if ($user_id !== null) {
-            $resourcePath = str_replace(
-                "{" . "userID" . "}",
-                $this->apiClient->getSerializer()->toPathValue($user_id),
-                $resourcePath
-            );
-        }
-        // form params
-        if ($attr_name !== null) {
-            $formParams['attrName'] = $this->apiClient->getSerializer()->toFormValue($attr_name);
-        }// form params
-        if ($value !== null) {
-            $formParams['value'] = $this->apiClient->getSerializer()->toFormValue($value);
-        }
-        
-  
-        // for model (json/xml)
-        if (isset($_tempBody)) {
-            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-        } else if (count($formParams) > 0) {
-            $httpBody = $formParams; // for HTTP post (form)
-        }
-        
-        $apiKey = $this->apiClient->getApiKeyWithPrefix('X-Wikia-AccessToken');
-        if (isset($apiKey)) {
-            $headerParams['X-Wikia-AccessToken'] = $apiKey;
-        }
-        
-        
-        
-        $apiKey = $this->apiClient->getApiKeyWithPrefix('X-Wikia-UserId');
-        if (isset($apiKey)) {
-            $headerParams['X-Wikia-UserId'] = $apiKey;
-        }
-        
-        
-        
-        // make the API Call
-        try
-        {
-            list($response, $httpHeader) = $this->apiClient->callApi(
-                $resourcePath, $method,
-                $queryParams, $httpBody,
-                $headerParams, '\Swagger\Client\User\Attributes\Models\UserAttributeHalResponse'
-            );
-        } catch (ApiException $e) {
-            switch ($e->getCode()) { 
-            case 200:
-                $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\User\Attributes\Models\UserAttributeHalResponse', $httpHeader);
-                $e->setResponseObject($data);
-                break;
-            }
-  
-            throw $e;
-        }
-        
-        if (!$response) {
-            return null;
-        }
-  
-        return $this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\User\Attributes\Models\UserAttributeHalResponse');
         
     }
     
@@ -396,30 +288,30 @@ class UsersAttributesApi
     }
     
     /**
-     * updateAttributeForUser
+     * saveAttributeForUser
      *
-     * updates an existing attribute for a specified user
+     * Saves an attribute for a specified user
      *
-     * @param int $user_id The id of the user to update the attribute (required)
-     * @param string $attr_name The name of the attribute to be updated (required)
-     * @param string $value Updated value for the specified attribute (required)
+     * @param int $user_id The id of the user (required)
+     * @param string $attr_name The name of the attribute to be saved (required)
+     * @param string $value Value for the specified attribute (required)
      * @return \Swagger\Client\User\Attributes\Models\UserAttributeHalResponse
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
-    public function updateAttributeForUser($user_id, $attr_name, $value)
+    public function saveAttributeForUser($user_id, $attr_name, $value)
     {
         
         // verify the required parameter 'user_id' is set
         if ($user_id === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $user_id when calling updateAttributeForUser');
+            throw new \InvalidArgumentException('Missing the required parameter $user_id when calling saveAttributeForUser');
         }
         // verify the required parameter 'attr_name' is set
         if ($attr_name === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $attr_name when calling updateAttributeForUser');
+            throw new \InvalidArgumentException('Missing the required parameter $attr_name when calling saveAttributeForUser');
         }
         // verify the required parameter 'value' is set
         if ($value === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $value when calling updateAttributeForUser');
+            throw new \InvalidArgumentException('Missing the required parameter $value when calling saveAttributeForUser');
         }
   
         // parse inputs
@@ -434,7 +326,7 @@ class UsersAttributesApi
         if (!is_null($_header_accept)) {
             $headerParams['Accept'] = $_header_accept;
         }
-        $headerParams['Content-Type'] = ApiClient::selectHeaderContentType(array());
+        $headerParams['Content-Type'] = ApiClient::selectHeaderContentType(array('application/x-www-form-urlencoded'));
   
         
         
