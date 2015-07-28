@@ -27,13 +27,7 @@ class AdEngine2ContextService {
 			if ( !empty( $wg->AdDriverUseMonetizationService ) && !empty( $wg->EnableMonetizationModuleExt ) ) {
 				$monetizationServiceAds = F::app()->sendRequest( 'MonetizationModule', 'index' )->getData()['data'];
 			}
-			$abc = [
-				'wikiCategory' => $wikiFactoryHub->getCategoryShort( $wg->CityId ),
-				'wikiVertical' => $hubService->getCategoryInfoForCity( $wg->CityId )->cat_name,
-				'mappedVerticalName' => $this->getMappedVerticalName( $wg->CityId )
-			];
-			var_dump( $abc );
-			die;
+
 			$langCode = $title->getPageLanguage()->getCode();
 			return [
 				'opts' => $this->filterOutEmptyItems( [
