@@ -35,6 +35,25 @@ class LibSassCompiler extends Compiler {
 	}
 
 	/**
+	 * @return string SASS encoded variables
+	 */
+	private function getEncodedVariables() {
+		$sassVariables = $this->sassVariables;
+
+		# post-process SASS variables to encode strings properly
+		array_walk(
+			$sassVariables,
+			function(&$item, $key) {
+				if (in_array($key, ['background-image', 'wordmark-font'])) {
+					$item = "'{$item}'";
+				}
+			}
+		);
+
+		return self::encodeSassMap($sassVariables);
+	}
+
+	/**
 	 * Compile the given SASS source
 	 *
 	 * @param Source $source Sass source
@@ -43,7 +62,8 @@ class LibSassCompiler extends Compiler {
 	 */
 	public function compile( Source $source ) {
 		wfProfileIn(__METHOD__);
-		$sassVariables = self::encodeSassMap($this->sassVariables);
+
+		$sassVariables = $this->getEncodedVariables();
 
 		// define get_command_line_param() function to get the SASS variables
 		// @see http://sass-lang.com/documentation/file.SASS_REFERENCE.html#maps
