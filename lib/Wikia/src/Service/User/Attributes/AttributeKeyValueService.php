@@ -36,7 +36,7 @@ class AttributeKeyValueService implements AttributeService {
 			$profiler_start = $this->startProfile();
 			$ret = $this->persistenceAdapter->saveAttribute( $userId, $attribute );
 			$this->endProfile( AttributeKeyValueService::PROFILE_EVENT, $profiler_start,
-				[ 'user_id' => $userId, 'method' => 'setAttribute' ] );
+				[ 'user_id' => $userId, 'method' => 'saveAttribute' ] );
 
 			return $ret;
 		} catch ( \Exception $e ) {

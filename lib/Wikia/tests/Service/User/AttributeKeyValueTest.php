@@ -60,7 +60,7 @@ class AttributeKeyValueTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * @expectedException	\Wikia\Service\PersistenceException
+	 * @expectedException \Wikia\Service\PersistenceException
 	 */
 	public function testSetAttributeWithError() {
 		$this->persistenceMock->expects( $this->once() )
@@ -73,7 +73,7 @@ class AttributeKeyValueTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * @expectedException	\Wikia\Service\PersistenceException
+	 * @expectedException \Wikia\Service\PersistenceException
 	 */
 	public function testGetAttributeWithError() {
 		$this->persistenceMock->expects( $this->once() )
