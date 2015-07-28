@@ -23,9 +23,8 @@ class SpecialFlagsController extends WikiaSpecialPageController {
 
 		$responseData = $this->requestGetFlagTypesForWikia( $this->wg->CityId )->getData();
 		if ( $responseData['status'] ) {
-			$helper = new FlagsHelper();
-			$this->flagGroups = $helper->getFlagGroupsFullNames();
-			$this->flagTargeting = $helper->getFlagTargetFullNames();
+			$this->flagGroups = FlagsHelper::getFlagGroupsFullNames();
+			$this->flagTargeting = FlagsHelper::getFlagTargetFullNames();
 			$this->flagTypes = $responseData['data'];
 
 			if ( SpecialPage::exists( 'Insights' ) ) {

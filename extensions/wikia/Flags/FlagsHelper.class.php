@@ -185,9 +185,10 @@ class FlagsHelper {
 		 * flags-target-contributors
 		 */
 		foreach ( FlagType::$flagTargeting as $flagTargetId => $flagTargetKey ) {
-			$flagTargetFullNames[$flagTargetId] =[
+			$flagTargetFullNames[$flagTargetId] = [
 				'name' => wfMessage( "flags-target-{$flagTargetKey}" )->escaped(),
-				'value' => $flagTargetId ];
+				'value' => $flagTargetId
+			];
 		}
 
 		return $flagTargetFullNames;
@@ -215,7 +216,8 @@ class FlagsHelper {
 		foreach ( FlagType::$flagGroups as $flagGroupId => $flagGroupKey ) {
 			$flagGroupsFullNames[$flagGroupId] = [
 			'name' => wfMessage( "flags-groups-{$flagGroupKey}" )->escaped(),
-			'value' => $flagGroupId ];
+			'value' => $flagGroupId
+			];
 		}
 		return $flagGroupsFullNames;
 	}
