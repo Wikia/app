@@ -23,9 +23,10 @@
 		<tr class="flags-special-list-item">
 			<td class="flags-special-list-item-name"><?= $flag['flag_name'] ?></td>
 			<td class="flags-special-list-item-template">
-				<a class="flags-special-list-item-template-link" href="<?= Sanitizer::cleanUrl( $title->getFullURL() ) ?>" target="_blank">
-					<?= $flag['flag_view'] ?>
-				</a>
+				<?= Linker::link( $title, $flag['flag_view'], [
+					'class' => 'flags-special-list-item-template-link',
+					'target' => '_blank',
+				] ); ?>
 			</td>
 			<td class="flags-special-list-item-params">
 				<?php

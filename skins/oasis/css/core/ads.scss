@@ -10,7 +10,6 @@
 /** Hide invisible slots and 1x1 iframes **/
 .wikia-ad[id^="INVISIBLE_"],
 .wikia-ad.hidden,
-.wikia-ad iframe[width="1"][height="1"],
 .wikia-ad .hidden {
 	display: none !important;
 }
@@ -251,6 +250,15 @@ body >a >img[src$="noad.gif"] {
 	}
 }
 
+#ext-wikia-adEngine-template-modal {
+	> section {
+		overflow: hidden;
+		padding: 0px;
+		> div {
+			overflow: hidden;
+		}
+	}
+}
 
 //@TODO remove .oasis-responsive after deprecating responsive (July 2015)
 .oasis-breakpoints, .oasis-responsive {
