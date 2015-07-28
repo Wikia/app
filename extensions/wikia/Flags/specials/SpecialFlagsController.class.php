@@ -52,8 +52,6 @@ class SpecialFlagsController extends WikiaSpecialPageController {
 
 		$data['flag_params_names'] = json_encode( $params, JSON_FORCE_OBJECT );
 
-
-
 		$response = $this->sendRequest( 'FlagsApiController',
 			'addFlagType',
 			$data
@@ -77,7 +75,6 @@ class SpecialFlagsController extends WikiaSpecialPageController {
 	 * @param string name of template treated as view and source of params
 	 * @return bool status
 	 */
-
 	private function getFlagParamsFromTemplate( $template ) {
 		$params = [];
 
