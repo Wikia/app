@@ -273,7 +273,7 @@ class InsightsController extends WikiaSpecialPageController {
 		}
 
 		if( $total > $itemsPerPage ) {
-			$paginator = Paginator::newFromArray( array_fill( 0, $total, '' ), $itemsPerPage );
+			$paginator = Paginator::newFromArray( array_fill( 0, $total, '' ), $itemsPerPage, 3, false, '',  InsightsPageModel::INSIGHTS_LIST_MAX_LIMIT );
 			$paginator->setActivePage( $this->model->getPage() );
 			$url = urldecode( $this->getSpecialInsightsUrl( $this->subpage, $params ) );
 			$this->paginatorBar = $paginator->getBarHTML( $url );
