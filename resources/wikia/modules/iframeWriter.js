@@ -36,6 +36,7 @@ define('wikia.iframeWriter', [
 		}
 
 		iframe.onload = function () {
+			// Prevent infinite loop of calling onload function after closing document on IE/Safari
 			if (loaded) {
 				return;
 			}
