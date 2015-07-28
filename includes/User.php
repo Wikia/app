@@ -269,7 +269,7 @@ class User {
 	}
 
 	/**
-	 * @return UserPreferences
+	 * @return UserAttributes
 	 */
 	private function userAttributes() {
 		return Injector::getInjector()->get(UserAttributes::class);

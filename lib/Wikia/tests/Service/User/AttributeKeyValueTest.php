@@ -1,10 +1,9 @@
 <?php
 
-namespace Wikia\Service\User\Preferences;
+namespace Wikia\Service\User\Attributes;
 use Wikia\Domain\User\Attribute;
 use Wikia\Persistence\User\Attributes\AttributePersistence;
 use Wikia\Service\PersistenceException;
-use Wikia\Service\User\Attributes\AttributeKeyValueService;
 
 class AttributeKeyValueTest extends \PHPUnit_Framework_TestCase {
 

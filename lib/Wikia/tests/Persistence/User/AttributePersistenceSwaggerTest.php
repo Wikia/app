@@ -1,6 +1,6 @@
 <?php
 
-namespace Wikia\Persistence\User\Preferences;
+namespace Wikia\Persistence\User\Attributes;
 
 use Swagger\Client\ApiException;
 use Swagger\Client\User\Attributes\Api\UsersAttributesApi;
@@ -8,7 +8,6 @@ use Swagger\Client\User\Attributes\Models\AllUserAttributesHalResponse;
 use Swagger\Client\User\Attributes\Models\UserAttributeHalResponse;
 use Swagger\Client\User\Attributes\Models\UserAttributes;
 use Wikia\Domain\User\Attribute;
-use Wikia\Persistence\User\Attributes\AttributePersistenceSwagger;
 use Wikia\Service\ForbiddenException;
 use Wikia\Service\Swagger\ApiProvider;
 use Wikia\Service\UnauthorizedException;
