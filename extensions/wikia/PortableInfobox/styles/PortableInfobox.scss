@@ -2,7 +2,8 @@
 @import 'skins/shared/mixins/columns';
 @import 'skins/shared/mixins/flexbox';
 
-$infobox-width: 270px; // temporary value used to mach with Khal Drogo Infobox
+$infobox-width: 270px;
+// temporary value used to mach with Khal Drogo Infobox
 $infobox-margin: 15px;
 $infobox-item-margin: 5px;
 $infobox-background: mix($color-page, $color-links, 90%);
@@ -56,11 +57,11 @@ $infobox-debug-error-msg-bg: black;
 		text-align: left;
 	}
 
-	.portable-infobox-header-background {
+	.portable-infobox-secondary-background {
 		background-color: $infobox-section-header-background;
 	}
 
-	.portable-infobox-header-font {
+	.portable-infobox-secondary-font {
 		font-size: 12px;
 		font-weight: bold;
 		line-height: 18px;
@@ -81,8 +82,7 @@ $infobox-debug-error-msg-bg: black;
 	}
 
 	.item-type-key-val:not(:last-of-type),
-	.item-type-group,
-	.item-type-comparison {
+	.item-type-group {
 		border-bottom: 1px solid $infobox-section-header-background;
 	}
 
@@ -107,38 +107,6 @@ $infobox-debug-error-msg-bg: black;
 		ul,
 		ol {
 			list-style-position: inside;
-		}
-	}
-
-	.portable-infobox-comparison {
-		border-collapse: collapse;
-		width: 100%;
-	}
-
-	.portable-infobox-comparison-set {
-		display: block;
-	}
-
-	.portable-infobox-comparison-set-header {
-		box-sizing: border-box;
-		display: block;
-		padding: 0;
-		text-align: left;
-		width: 100%;
-	}
-
-	.portable-infobox-comparison-item {
-		box-sizing: border-box;
-		vertical-align: top;
-		width: $infobox-width / 2;
-
-		&:first-of-type {
-			border-right: 1px solid $infobox-section-header-background;
-		}
-
-		.item-type-key-val {
-			border-bottom: 0;
-			padding-right: $infobox-item-margin * 2;
 		}
 	}
 

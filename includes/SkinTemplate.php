@@ -288,7 +288,7 @@ class SkinTemplate extends Skin {
 		$tpl->set( 'rtl', $lang->isRTL() );
 
 		$tpl->set( 'capitalizeallnouns', $lang->capitalizeAllNouns() ? ' capitalize-all-nouns' : '' );
-		$tpl->set( 'showjumplinks', $user->getOption( 'showjumplinks' ) );
+		$tpl->set( 'showjumplinks', $user->getGlobalPreference( 'showjumplinks' ) );
 		$tpl->set( 'username', $this->loggedin ? $this->username : null );
 		$tpl->setRef( 'userpage', $this->userpage );
 		$tpl->setRef( 'userpageurl', $this->userpageUrlDetails['href'] );

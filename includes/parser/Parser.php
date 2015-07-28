@@ -4857,10 +4857,10 @@ class Parser {
 
 		# If not given, retrieve from the user object.
 		if ( $nickname === false )
-			$nickname = $user->getOption( 'nickname' );
+			$nickname = $user->getGlobalAttribute( 'nickname' );
 
 		if ( is_null( $fancySig ) ) {
-			$fancySig = $user->getBoolOption( 'fancysig' );
+			$fancySig = (bool)$user->getGlobalAttribute( 'fancysig' );
 		}
 
 		$nickname = $nickname == null ? $username : $nickname;

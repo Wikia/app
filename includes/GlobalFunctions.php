@@ -1812,10 +1812,11 @@ function wfDebugBacktrace( $limit = 0 ) {
  *
  * @return string
  */
-function wfBacktrace() {
+function wfBacktrace( $forceCommandLineMode = false ) {
 	global $wgCommandLineMode;
 
-	if ( $wgCommandLineMode ) {
+	$commandLinemode = $wgCommandLineMode || $forceCommandLineMode;
+	if ( $commandLinemode ) {
 		$msg = '';
 	} else {
 		$msg = "<ul>\n";
@@ -1833,7 +1834,7 @@ function wfBacktrace() {
 		} else {
 			$line = '-';
 		}
-		if ( $wgCommandLineMode ) {
+		if ( $commandLinemode ) {
 			$msg .= "$file line $line calls ";
 		} else {
 			$msg .= '<li>' . $file . ' line ' . $line . ' calls ';
@@ -1843,13 +1844,13 @@ function wfBacktrace() {
 		}
 		$msg .= $call['function'] . '()';
 
-		if ( $wgCommandLineMode ) {
+		if ( $commandLinemode ) {
 			$msg .= "\n";
 		} else {
 			$msg .= "</li>\n";
 		}
 	}
-	if ( $wgCommandLineMode ) {
+	if ( $commandLinemode ) {
 		$msg .= "\n";
 	} else {
 		$msg .= "</ul>\n";
@@ -4080,4 +4081,21 @@ function wfUnpack( $format, $data, $length=false ) {
 		throw new MWException( "unpack could not unpack binary data" );
 	}
 	return $result;
+}
+
+/**
+ * Get a random string containing a number of pseudo-random hex
+ * characters.
+ * @note This is not secure, if you are trying to generate some sort
+ *       of token please use MWCryptRand instead.
+ *
+ * @param int $length The length of the string to generate
+ * @return string
+ */
+function wfRandomString( $length = 32 ) {
+	$str = '';
+	for ( $n = 0; $n < $length; $n += 7 ) {
+		$str .= sprintf( '%07x', mt_rand() & 0xfffffff );
+	}
+	return substr( $str, 0, $length );
 }

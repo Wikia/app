@@ -1,0 +1,34 @@
+{
+	"@metadata": {
+		"authors": [
+			"පසිඳු කාවින්ද"
+		]
+	},
+	"sf_createproperty_proptype": "قسم:",
+	"templates": "سانچے",
+	"createtemplate": "ایک سانچے تخلیق کریں",
+	"sf_createtemplate_namelabel": "سانچے کے نام:",
+	"sf_createtemplate_fieldname": "میدان کا نام:",
+	"sf_createtemplate_displaylabel": "ڈسپلے لیبل:",
+	"sf_createtemplate_standardformat": "ٹیبل",
+	"sf_createtemplate_sectionsformat": "حصوں",
+	"sf_createtemplate_deletefield": "حذف کریں",
+	"forms": "فارم",
+	"createform": "ایک شکل تخلیق کریں",
+	"sf_createform_nameinput": "فارم کے نام",
+	"sf_createform_template": "سانچہ:",
+	"sf_createform_field": "میدان:",
+	"sf_createform_inputtype": "ان پٹ کی قسم:",
+	"sf_createform_inputtypedefault": "(طے شدہ)",
+	"sf_createform_hidden": "پوشیدہ",
+	"sf_createform_removetemplate": "سانچے کو حذف کریں",
+	"sf_createform_addtemplate": "سانچے شامل کریں:",
+	"sf_createform_add": "شامل کریں",
+	"sf_createform_before": "سانچہ: سے پہلے",
+	"createcategory": "ایک قسم کی تخلیق",
+	"sf_createcategory_name": "شعبے کا نام:",
+	"sf_createcategory_defaultform": "پہلے سے طے شدہ فارم:",
+	"createclass": "ایک کلاس کی تخلیق",
+	"sf_createclass_nameinput": "فارم کے نام:",
+	"sf_createclass_create": "تخلیق کریں"
+}

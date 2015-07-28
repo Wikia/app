@@ -53,7 +53,7 @@ function wfJSVariablesTopScripts(Array &$vars, &$scripts) {
 		/*
 		 * Remove when SOC-217 ABTest is finished
 		 */
-		$vars['wgNotConfirmedEmail'] = $user->getOption( UserLoginSpecialController::NOT_CONFIRMED_LOGIN_OPTION_NAME );
+		$vars['wgNotConfirmedEmail'] = $user->getGlobalAttribute( UserLoginSpecialController::NOT_CONFIRMED_LOGIN_OPTION_NAME );
 		/*
 		 * End remove
 		 */
@@ -66,6 +66,7 @@ function wfJSVariablesTopScripts(Array &$vars, &$scripts) {
 	$vars['wikiaPageType'] = WikiaPageType::getPageType();
 	$vars['wikiaPageIsCorporate'] = WikiaPageType::isCorporatePage();
 	$vars['wgArticleType'] = WikiaPageType::getArticleType();
+	$vars['wgNamespaceNumber'] = $title->getNamespace();
 
 	// missing in 1.19
 	$skin = RequestContext::getMain()->getSkin();

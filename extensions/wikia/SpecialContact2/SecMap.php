@@ -8,6 +8,7 @@ $SpecialContactSecMap[] = array(
 		'content-issue',
 		'user-conflict',
 		'adoption',
+		'dmca-request',
 	)
 );
 

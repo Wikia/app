@@ -1,8 +1,6 @@
 <?php
 namespace Wikia\Helios;
 
-use Wikia\Util\GlobalStateWrapper;
-
 /**
  * A helper controller to provide end points exposing MediaWiki functionality to Helios.
  */
@@ -120,28 +118,7 @@ class HelperController extends \WikiaController
 			return;
 		}
 
-		$langCode = $this->getVal( 'langCode', 'en' );
-		$mailTemplate = $this->app->renderView(
-			'UserLogin',
-			'GeneralMail',
-			[
-				'language' => $langCode,
-				'type' => 'confirmation-email'
-			]
-		);
-
-		$lang = \Language::factory($langCode);
-		$mailStatus = (new GlobalStateWrapper(['wgLang' => $lang]))
-			->wrap(function() use ($user, $mailTemplate, $langCode) {
-				return $user->sendConfirmationMail(
-					false,
-					'ConfirmationMail',
-					'usersignup-confirmation-email',
-					true,
-					$mailTemplate,
-					$langCode
-				);
-			});
+		$mailStatus = $user->sendConfirmationMail();
 
 		if ( ! $mailStatus->isGood() ) {
 			$this->response->setVal( 'message', 'could not send an email message' );

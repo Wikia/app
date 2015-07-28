@@ -258,7 +258,7 @@ class LoginForm extends SpecialPage {
 		# If we showed up language selection links, and one was in use, be
 		# smart (and sensible) and save that language as the user's preference
 		if( $wgLoginLanguageSelector && $this->mLanguage ) {
-			$u->setOption( 'language', $this->mLanguage );
+			$u->setGlobalPreference( 'language', $this->mLanguage );
 		}
 
 		$out = $this->getOutput();
@@ -586,10 +586,10 @@ class LoginForm extends SpecialPage {
 			}
 		}
 
-		$u->setOption( 'rememberpassword', $this->mRemember ? 1 : 0 );
-		$u->setOption( 'marketingallowed', $this->mMarketingOptIn ? 1 : 0 );
-		$u->setOption( 'registrationCountry', $this->mRegistrationCountry );
-		$u->setOption( 'skinoverwrite', 1 );
+		$u->setGlobalPreference( 'rememberpassword', $this->mRemember ? 1 : 0 );
+		$u->setGlobalPreference( 'marketingallowed', $this->mMarketingOptIn ? 1 : 0 );
+		$u->setGlobalAttribute( 'registrationCountry', $this->mRegistrationCountry );
+		$u->setGlobalPreference( 'skinoverwrite', 1 );
 		$u->saveSettings();
 
 		# Update user count
@@ -721,27 +721,6 @@ class LoginForm extends SpecialPage {
 				return self::ABORTED;
 			}
 			if( $u->checkTemporaryPassword( $this->mPassword ) ) {
-				// The e-mailed temporary password should not be used for actu-
-				// al logins; that's a very sloppy habit, and insecure if an
-				// attacker has a few seconds to click "search" on someone's o-
-				// pen mail reader.
-				//
-				// Allow it to be used only to reset the password a single time
-				// to a new value, which won't be in the user's e-mail ar-
-				// chives.
-				//
-				// For backwards compatibility, we'll still recognize it at the
-				// login form to minimize surprises for people who have been
-				// logging in with a temporary password for some time.
-				//
-				// As a side-effect, we can authenticate the user's e-mail ad-
-				// dress if it's not already done, since the temporary password
-				// was sent via e-mail.
-				if( !$u->isEmailConfirmed() ) {
-					$u->confirmEmail();
-					$u->saveSettings();
-				}
-
 				// At this point we just return an appropriate code/ indicating
 				// that the UI should show a password reset form; bot inter-
 				// faces etc will probably just fail cleanly here.
@@ -749,31 +728,74 @@ class LoginForm extends SpecialPage {
 			} else {
 				$retval = ( $this->mPassword  == '' ) ? self::EMPTY_PASS : self::WRONG_PASS;
 			}
+		} elseif ( $wgEnableHeliosExt && Wikia\Helios\User::wasResetPassAuth( $this->mUsername, $this->mPassword ) ) {
+			$retval = self::RESET_PASS;
 		} elseif ( $wgBlockDisablesLogin && $u->isBlocked() ) {
 			// If we've enabled it, make it so that a blocked user cannot login
 			$retval = self::USER_BLOCKED;
 		} else {
-			$wgAuth->updateUser( $u );
-			$wgUser = $u;
-			// This should set it for OutputPage and the Skin
-			// which is needed or the personal links will be
-			// wrong.
-			$this->getContext()->setUser( $u );
-
-			// Please reset throttle for successful logins, thanks!
-			if ( $throttleCount ) {
-				self::clearLoginThrottle( $this->mUsername );
-			}
-
-			if ( $isAutoCreated ) {
-				// Must be run after $wgUser is set, for correct new user log
-				wfRunHooks( 'AuthPluginAutoCreate', array( $u ) );
-			}
-
 			$retval = self::SUCCESS;
 		}
+
+		if ( in_array( $retval, [ self::SUCCESS, self::RESET_PASS ] ) ) {
+			wfRunHooks( 'LoginSuccessModifyRetval', [ $u->getName(), $this->mPassword, &$retval ] );
+		}
+
+		switch ($retval) {
+			case self::SUCCESS:
+				$this->onAuthenticateUserDataSuccess($u, $isAutoCreated, $throttleCount);
+				break;
+			case self::RESET_PASS:
+				$this->onAuthenticateUserDataResetPass($u);
+				break;
+		}
+
 		wfRunHooks( 'LoginAuthenticateAudit', array( $u, $this->mPassword, $retval ) );
 		return $retval;
+	}
+
+	private function onAuthenticateUserDataSuccess(User $u, $isAutoCreated, $throttleCount) {
+		global $wgAuth, $wgUser;
+
+		$wgAuth->updateUser( $u );
+		$wgUser = $u;
+		// This should set it for OutputPage and the Skin
+		// which is needed or the personal links will be
+		// wrong.
+		$this->getContext()->setUser( $u );
+
+		// Please reset throttle for successful logins, thanks!
+		if ( $throttleCount ) {
+			self::clearLoginThrottle( $this->mUsername );
+		}
+
+		if ( $isAutoCreated ) {
+			// Must be run after $wgUser is set, for correct new user log
+			wfRunHooks( 'AuthPluginAutoCreate', array( $u ) );
+		}
+	}
+
+	private function onAuthenticateUserDataResetPass(User $u) {
+		// The e-mailed temporary password should not be used for actu-
+		// al logins; that's a very sloppy habit, and insecure if an
+		// attacker has a few seconds to click "search" on someone's o-
+		// pen mail reader.
+		//
+		// Allow it to be used only to reset the password a single time
+		// to a new value, which won't be in the user's e-mail ar-
+		// chives.
+		//
+		// For backwards compatibility, we'll still recognize it at the
+		// login form to minimize surprises for people who have been
+		// logging in with a temporary password for some time.
+		//
+		// As a side-effect, we can authenticate the user's e-mail ad-
+		// dress if it's not already done, since the temporary password
+		// was sent via e-mail.
+		if( !$u->isEmailConfirmed() ) {
+			$u->confirmEmail();
+			$u->saveSettings();
+		}
 	}
 
 	/**
@@ -878,8 +900,8 @@ class LoginForm extends SpecialPage {
 			case self::SUCCESS:
 				# We've verified now, update the real record
 				$user = $this->getUser();
-				if( (bool)$this->mRemember != (bool)$user->getOption( 'rememberpassword' ) ) {
-					$user->setOption( 'rememberpassword', $this->mRemember ? 1 : 0 );
+				if( (bool)$this->mRemember != (bool)$user->getGlobalPreference( 'rememberpassword' ) ) {
+					$user->setGlobalPreference( 'rememberpassword', $this->mRemember ? 1 : 0 );
 					$user->saveSettings();
 				} else {
 					$user->invalidateCache();
@@ -896,7 +918,7 @@ class LoginForm extends SpecialPage {
 					/* Replace the language object to provide user interface in
 					 * correct language immediately on this first page load.
 					 */
-					$code = $request->getVal( 'uselang', $user->getOption( 'language' ) );
+					$code = $request->getVal( 'uselang', $user->getGlobalPreference( 'language' ) );
 					$userLang = Language::factory( $code );
 					$wgLang = $userLang;
 					$this->getContext()->setLanguage( $userLang );
@@ -1090,15 +1112,15 @@ class LoginForm extends SpecialPage {
 		}
 		/* Wikia change begin - @author: Marooned */
 		/* HTML e-mails functionality */
-		$userLanguage = $u->getOption( 'language' );
+		$userLanguage = $u->getGlobalPreference( 'language' );
 		$priority = 2;  // Password emails are higher than default priority of 0 and confirmation emails priority of 1
 		if (empty($wgEnableRichEmails)) {
 			$m = $this->msg( $emailText, $ip, $u->getName(), $np, $wgServer . $wgScript,
 				round( $wgNewPasswordExpiry / 86400 ) )->inLanguage( $userLanguage )->text();
 			$result = $u->sendMail( $this->msg( $emailTitle )->inLanguage( $userLanguage )->text(), $m, null, $nr, 'TemporaryPassword', $priority );
 		} else {
-			$wantHTML = $u->isAnon() || $u->getOption('htmlemails');
-			list($m, $mHTML) = wfMsgHTMLwithLanguage($emailText, $u->getOption('language'), array( 'parsemag' ), array($ip, $u->getName(), $np, $wgServer . $wgScript, round( $wgNewPasswordExpiry / 86400 )), $wantHTML);
+			$wantHTML = $u->isAnon() || $u->getGlobalPreference('htmlemails');
+			list($m, $mHTML) = wfMsgHTMLwithLanguage($emailText, $u->getGlobalPreference('language'), array( 'parsemag' ), array($ip, $u->getName(), $np, $wgServer . $wgScript, round( $wgNewPasswordExpiry / 86400 )), $wantHTML);
 			if ( !empty($emailTextTemplate) && $wantHTML ) {
 				$emailParams = array(
 					'$USERNAME' => $u->getName(),
@@ -1331,7 +1353,7 @@ class LoginForm extends SpecialPage {
 		$template->set( 'resetlink', $resetLink );
 		$template->set( 'canremember', ( $wgCookieExpiration > 0 ) );
 		$template->set( 'usereason', $user->isLoggedIn() );
-		$template->set( 'remember', $user->getOption( 'rememberpassword' ) || $this->mRemember );
+		$template->set( 'remember', $user->getGlobalPreference( 'rememberpassword' ) || $this->mRemember );
 		$template->set( 'cansecurelogin', ( $wgSecureLogin === true ) );
 		$template->set( 'stickHTTPS', $this->mStickHTTPS );
 

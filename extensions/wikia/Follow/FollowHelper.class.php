@@ -368,7 +368,7 @@ class FollowHelper {
 		$response = new AjaxResponse();
 
 		$user = User::newFromId( $user_id );
-		if ( empty( $user ) || $user->getOption( 'hidefollowedpages' ) ) {
+		if ( empty( $user ) || $user->getGlobalPreference( 'hidefollowedpages' ) ) {
 			if ( $user->getId() != $wgUser->getId() ) {
 				$response->addText( wfMsg( 'wikiafollowedpages-special-hidden' ) );
 				wfProfileOut( __METHOD__ );
@@ -459,9 +459,9 @@ class FollowHelper {
 			}
 
 			// back compatybility
-			$option = $wgUser->getOption( 'enotifwallthread' );
+			$option = $wgUser->getGlobalPreference( 'enotifwallthread' );
 			if ( empty( $option ) ) {
-				$wgUser->setOption( 'enotifwallthread', WALL_EMAIL_NOEMAIL );
+				$wgUser->setGlobalPreference( 'enotifwallthread', WALL_EMAIL_NOEMAIL );
 				$wgUser->saveSettings();
 			}
 
@@ -645,7 +645,7 @@ class FollowHelper {
 		}
 
 		if ( ( $wgUser->getId() != 0 ) && ( $wgRequest->getVal( "hide_followed", 0 ) == 1 ) ) {
-			$wgUser->setOption( "hidefollowedpages", true );
+			$wgUser->setGlobalPreference( "hidefollowedpages", true );
 			$wgUser->saveSettings();
 		}
 
@@ -674,7 +674,7 @@ class FollowHelper {
 			return true;
 		}
 
-		if ( $user->getOption( "hidefollowedpages" ) ) {
+		if ( $user->getGlobalPreference( "hidefollowedpages" ) ) {
 			wfProfileOut( __METHOD__ );
 			return true;
 		}

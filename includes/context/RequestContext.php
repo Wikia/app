@@ -310,7 +310,7 @@ class RequestContext implements IContextSource {
 			$request = $this->getRequest();
 			$user = $this->getUser();
 
-			$code = $request->getVal( 'uselang', $user->getOption( 'language' ) );
+			$code = $request->getVal( 'uselang', $user->getGlobalPreference( 'language' ) );
 			$code = self::sanitizeLangCode( $code );
 
 			wfRunHooks( 'UserGetLanguageObject', array( $user, &$code, $this ) );
@@ -363,7 +363,7 @@ class RequestContext implements IContextSource {
 				global $wgHiddenPrefs;
 				if( !in_array( 'skin', $wgHiddenPrefs ) ) {
 					# get the user skin
-					$userSkin = $this->getUser()->getOption( 'skin' );
+					$userSkin = $this->getUser()->getGlobalPreference( 'skin' );
 					$userSkin = $this->getRequest()->getVal( 'useskin', $userSkin );
 				} else {
 					# if we're not allowing users to override, then use the default

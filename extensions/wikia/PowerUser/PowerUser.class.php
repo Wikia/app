@@ -19,7 +19,6 @@ class PowerUser {
 	/**
 	 * Names of properties used to described PowerUsers
 	 */
-	const TYPE_ADMIN = 'poweruser_admin';
 	const TYPE_FREQUENT = 'poweruser_frequent';
 	const TYPE_LIFETIME = 'poweruser_lifetime';
 
@@ -49,7 +48,6 @@ class PowerUser {
 	 * @var array
 	 */
 	public static $aPowerUserProperties = [
-		self::TYPE_ADMIN,
 		self::TYPE_FREQUENT,
 		self::TYPE_LIFETIME,
 	];
@@ -58,28 +56,8 @@ class PowerUser {
 	 * A table mapping PU properties to JS variables names
 	 */
 	public static $aPowerUserJSVariables = [
-		self::TYPE_ADMIN => 'wikiaIsPowerUserAdmin',
 		self::TYPE_FREQUENT => 'wikiaIsPowerUserFrequent',
 		self::TYPE_LIFETIME => 'wikiaIsPowerUserLifetime',
-	];
-
-	/**
-	 * An array of the names of groups defining
-	 * PowerUsers of an admin type
-	 * @var array
-	 */
-	public static $aPowerUserAdminGroups = [
-		'sysop',
-	];
-
-	/**
-	 * An array with names of properties that
-	 * give users the PowerUser group right
-	 * @var array
-	 */
-	public static $aPowerUsersRightsMapping = [
-		self::TYPE_FREQUENT,
-		self::TYPE_LIFETIME
 	];
 
 	private $oUser;
@@ -124,7 +102,7 @@ class PowerUser {
 	 */
 	public function addPowerUserSetOption( $sProperty ) {
 		if ( in_array( $sProperty, self::$aPowerUserProperties ) ) {
-			$this->oUser->setOption( $sProperty, true );
+			$this->oUser->setGlobalFlag( $sProperty, true );
 			$this->oUser->saveSettings();
 			$this->logSuccess( $sProperty, self::ACTION_ADD_SET_OPTION );
 			return true;
@@ -142,7 +120,7 @@ class PowerUser {
 	 * @return bool Always return true until the groups is only companion
 	 */
 	public function addPowerUserAddGroup( $sProperty ) {
-		if ( in_array( $sProperty, self::$aPowerUsersRightsMapping )
+		if ( in_array( $sProperty, self::$aPowerUserProperties )
 			&& $this->bUseGroups
 			&& !in_array( self::GROUP_NAME, \UserRights::getGlobalGroups( $this->oUser ) )
 		) {
@@ -171,8 +149,8 @@ class PowerUser {
 	 */
 	public function removePowerUserSetOption( $sProperty ) {
 		if ( in_array( $sProperty, self::$aPowerUserProperties ) ) {
-			if ( $this->oUser->getBoolOption( $sProperty ) === true ) {
-				$this->oUser->setOption( $sProperty, null );
+			if ( (bool)$this->oUser->getGlobalFlag( $sProperty ) === true ) {
+				$this->oUser->setGlobalFlag( $sProperty, null );
 				$this->oUser->saveSettings();
 				$this->logSuccess( $sProperty, self::ACTION_REMOVE_SET_OPTION );
 			}
@@ -192,7 +170,7 @@ class PowerUser {
 	 * @return bool Always return true until the groups is only companion
 	 */
 	public function removePowerUserRemoveGroup( $sProperty ) {
-		if ( in_array( $sProperty, self::$aPowerUsersRightsMapping )
+		if ( in_array( $sProperty, self::$aPowerUserProperties )
 			&& $this->bUseGroups
 			&& $this->isGroupForRemoval( $sProperty )
 		) {
@@ -211,9 +189,9 @@ class PowerUser {
 	 * @return bool
 	 */
 	public function isGroupForRemoval( $sProperty ) {
-		foreach ( self::$aPowerUsersRightsMapping as $sMappedProperty ) {
-			if ( $sMappedProperty !== $sProperty
-				&& $this->oUser->isSpecificPowerUser( $sMappedProperty )
+		foreach ( self::$aPowerUserProperties as $sPowerUserProperty ) {
+			if ( $sPowerUserProperty !== $sProperty
+				&& $this->oUser->isSpecificPowerUser( $sPowerUserProperty )
 			) {
 				return false;
 			}

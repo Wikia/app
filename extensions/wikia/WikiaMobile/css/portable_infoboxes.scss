@@ -17,9 +17,18 @@ $infobox-item-margin: 5px;
 	}
 
 	.portable-infobox-title,
-	.portable-infobox-header {
+	.portable-infobox-header,
+	.portable-infobox-hero-title,
+	.portable-infobox-hero-caption {
 		border: 0;
 		margin: 0;
+	}
+
+	.portable-infobox-hero-caption {
+		font-size: inherit;
+		font-weight: normal;
+		line-height: inherit;
+		padding-top: $infobox-item-margin;
 	}
 
 	.portable-infobox-title {
@@ -30,7 +39,7 @@ $infobox-item-margin: 5px;
 		padding: $infobox-item-margin 0 0;
 	}
 
-	.portable-infobox-header-font {
+	.portable-infobox-secondary-font {
 		font-size: 1rem;
 		font-weight: bold;
 		margin-top: 0;
