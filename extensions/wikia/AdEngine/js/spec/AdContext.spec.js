@@ -270,7 +270,7 @@ describe('AdContext', function () {
 
 	it('enables high impact slot when url param highimpactslot is set', function () {
 		spyOn(mocks.querystring, 'getVal').and.callFake(function (param) {
-			return param === 'highimpactslot';
+			return param === 'highimpactslot' ?  '1' : '0';
 		});
 
 		expect(getModule().getContext().slots.invisibleHighImpact).toBeTruthy();

@@ -76,10 +76,10 @@ define('ext.wikia.adEngine.adContext', [
 			context.providers.openX = true;
 		}
 
-		context.slots.invisibleHighImpact = qs.getVal('highimpactslot', false) || (
+		context.slots.invisibleHighImpact = (
 			context.slots.invisibleHighImpact &&
 			isProperCountry(instantGlobals.wgAdDriverHighImpactSlotCountries)
-		);
+		) ||  parseInt(qs.getVal('highimpactslot', '0'));
 
 		// Krux integration
 		context.targeting.enableKruxTargeting = !!(
