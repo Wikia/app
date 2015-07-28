@@ -647,7 +647,7 @@ class ArticleCommentList {
 	/**
 	 * Centralized memcache purging to avoid getting the cache out of sync.
 	 *
-	 * @param Title $title [description]
+	 * @param Title $title
 	 */
 	static public function purgeCache( Title $title ) {
 		global $wgMemc;
