@@ -24,15 +24,15 @@ class UserAttributes {
 	}
 
 	public function getAttributes( $userId ) {
-		return $this->load( $userId );
+		return $this->loadAttributes( $userId );
 	}
 
-	public function getAttribute( $userId, $attributeName ) {
-		$attributes = $this->load( $userId );
-		return empty( $attributes[$attributeName] ) ? null : $attributes[$attributeName];
+	public function getAttribute( $userId, $attributeName, $default = null ) {
+		$attributes = $this->loadAttributes( $userId );
+		return empty( $attributes[$attributeName] ) ? $default : $attributes[$attributeName];
 	}
 
-	private function load( $userId ) {
+	private function loadAttributes( $userId ) {
 		if ( !isset( $this->attributes[$userId] ) ) {
 			$this->attributes[$userId] = [];
 			/** @var Attribute $attribute */
@@ -48,12 +48,34 @@ class UserAttributes {
 	 * @param string $userId
 	 * @param Attribute $attribute
 	 */
-	public function saveAttribute( $userId, $attribute ) {
-		if ( $userId == 0 ) {
+	public function setAttribute( $userId, $attribute ) {
+		if ( $this->isAnonUser( $userId ) ) {
 			return;
 		}
 
+		$this->loadAttributes( $userId );
+		$this->setAttributeInService( $userId, $attribute );
+		$this->setAttributeInCache( $userId, $attribute );
+
+	}
+
+	private function isAnonUser( $userId ) {
+		return $userId == 0;
+	}
+
+	/**
+	 * @param $userId
+	 * @param Attribute $attribute
+	 */
+	private function setAttributeInService( $userId, $attribute ) {
 		$this->attributeService->setAttribute( $userId, $attribute );
+	}
+
+	/**
+	 * @param $userId
+	 * @param Attribute $attribute
+	 */
+	private function setAttributeInCache( $userId, $attribute ) {
 		$this->attributes[$userId][$attribute->getName()] = $attribute->getValue();
 	}
 }

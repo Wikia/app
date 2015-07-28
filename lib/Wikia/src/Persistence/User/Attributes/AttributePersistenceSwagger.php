@@ -4,7 +4,9 @@ namespace Wikia\Persistence\User\Attributes;
 
 use Swagger\Client\ApiException;
 use Swagger\Client\User\Attributes\Api\UsersAttributesApi;
+use Swagger\Client\User\Attributes\Models\AllUserAttributesHalResponse;
 use Wikia\Domain\User\Attribute;
+use Wikia\Service\ForbiddenException;
 use Wikia\Service\NotFoundException;
 use Wikia\Service\PersistenceException;
 use Wikia\Service\Swagger\ApiProvider;
@@ -27,11 +29,11 @@ class AttributePersistenceSwagger implements AttributePersistence {
 	 * @throws PersistenceException
 	 * @throws UnauthorizedException
 	 */
-	public function save( $userId, $attribute ) {
+	public function saveAttribute( $userId, $attribute ) {
 		try {
 			$this->getApi( $userId )->saveAttributeForUser( $userId, $attribute->getName(), $attribute->getValue() );
 			return true;
-		} catch (ApiException $e) {
+		} catch ( ApiException $e ) {
 			$this->handleApiException($e);
 			return false;
 		}
@@ -45,12 +47,11 @@ class AttributePersistenceSwagger implements AttributePersistence {
 	 * @throws PersistenceException
 	 * @return Attribute[]
 	 */
-	public function get( $userId ) {
+	public function getAttributes( $userId ) {
 
 		$attributes = [];
-		$api = $this->getApi( $userId );
 		try {
-			foreach ( $api->getAllAttributesForUser( $userId )->getEmbedded()->getProperties() as $attribute ) {
+			foreach ( $this->getAttributesFromApi( $userId )  as $attribute ) {
 				$attributes[] = new Attribute( $attribute->getName(), $attribute->getValue() );
 			}
 		} catch ( ApiException $e ) {
@@ -58,6 +59,23 @@ class AttributePersistenceSwagger implements AttributePersistence {
 		}
 
 		return $attributes;
+	}
+
+	private function getAttributesFromApi( $userId ) {
+		$halResponse = $this->getApi( $userId )->getAllAttributesForUser( $userId );
+		$this->assertValidResponse( $halResponse );
+
+		return $halResponse->getEmbedded()->getProperties();
+	}
+
+	/**
+	 * @param AllUserAttributesHalResponse $halResponse
+	 * @throws PersistenceException
+	 */
+	private function assertValidResponse( $halResponse ) {
+		if ( empty( $halResponse ) ) {
+			throw new PersistenceException( "Invalid response from Attribute Service" );
+		}
 	}
 
 	/**
@@ -72,6 +90,7 @@ class AttributePersistenceSwagger implements AttributePersistence {
 	 * @param ApiException $e
 	 * @throws UnauthorizedException
 	 * @throws NotFoundException
+	 * @throws ForbiddenException
 	 * @throws PersistenceException
 	 */
 	private function handleApiException( ApiException $e ) {
@@ -80,6 +99,10 @@ class AttributePersistenceSwagger implements AttributePersistence {
 				throw new UnauthorizedException();
 				break;
 			case NotFoundException::CODE:
+				throw new NotFoundException();
+				break;
+			case ForbiddenException::CODE:
+				throw new ForbiddenException( $e->getMessage() );
 				break;
 			default:
 				throw new PersistenceException( $e->getMessage() );

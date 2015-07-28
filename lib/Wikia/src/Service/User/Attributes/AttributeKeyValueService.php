@@ -34,22 +34,36 @@ class AttributeKeyValueService implements AttributeService {
 
 		try {
 			$profiler_start = $this->startProfile();
-			$ret = $this->persistenceAdapter->save( $userId, $attribute );
+			$ret = $this->persistenceAdapter->saveAttribute( $userId, $attribute );
 			$this->endProfile( AttributeKeyValueService::PROFILE_EVENT, $profiler_start,
 				[ 'user_id' => $userId, 'method' => 'setAttribute' ] );
 
 			return $ret;
-		} catch (\Exception $e) {
-			$this->error($e->getMessage(), [
+		} catch ( \Exception $e ) {
+			$this->error( $e->getMessage(), [
 				'user' => $userId
-			]);
+			] );
 
 			throw $e;
 		}
 	}
 
 	public function getAttributes( $userId ) {
-		return $this->persistenceAdapter->get( $userId );
+		if ( $userId == 0 ) {
+			return [];
+		}
+
+		try {
+			$attributeArray = $this->persistenceAdapter->getAttributes( $userId );
+		} catch ( \Exception $e ) {
+			$this->error( $e->getMessage(), [
+				'user' => $userId
+			] );
+
+			throw $e;
+		}
+
+		return $attributeArray;
 	}
 
 	protected function getLoggerContext() {
