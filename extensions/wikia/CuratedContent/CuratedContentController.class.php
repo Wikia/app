@@ -546,6 +546,9 @@ class CuratedContentController extends WikiaController {
 			'id' => $imageId
 		]);
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+		$this->response->setCacheValidity( WikiaResponse::CACHE_VERY_SHORT );
+		// TODO: CONCF-961 Set more restrictive header
+		$this->response->setHeader( 'Access-Control-Allow-Origin', '*' );
 	}
 
 	/**
