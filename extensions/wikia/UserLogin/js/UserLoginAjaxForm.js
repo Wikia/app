@@ -94,9 +94,12 @@
 			form = this.form;
 
 			form.slideUp(duration, (function () {
+				var newForm = content.find('form');
 				form.replaceWith(content);
 				content.slideDown(duration);
-				content.find(form).on('submit', this.submitLoginAfterResetPass.bind(this));
+				newForm.on('submit', this.submitLoginAfterResetPass.bind(this));
+				this.wikiaForm = new WikiaForm(newForm);
+				this.inputs = this.wikiaForm.inputs;
 			}).bind(this));
 		}
 	};
@@ -153,14 +156,15 @@
 	UserLoginAjaxForm.prototype.ajaxLoginAfterResetPass = function () {
 		$.nirvana.postJson(
 			'UserLoginSpecial',
-			'login',
+			'loginForm',
 			{
 				loginToken: this.loginToken,
 				username: this.inputs.username.val(),
 				password: this.inputs.password.val(),
 				newpassword: this.inputs.newpassword.val(),
 				retype: this.inputs.retype.val(),
-				keeploggedin: this.inputs.keeploggedin.is(':checked')
+				action: this.inputs.action.val(),
+				editToken: this.inputs.editToken.val()
 			},
 			this.submitLoginHandler.bind(this)
 		);
