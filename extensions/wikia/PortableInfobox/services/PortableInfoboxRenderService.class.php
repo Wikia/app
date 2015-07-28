@@ -15,6 +15,7 @@ class PortableInfoboxRenderService extends WikiaService {
 		'image-mobile' => 'PortableInfoboxItemImageMobile.mustache',
 		'data' => 'PortableInfoboxItemData.mustache',
 		'group' => 'PortableInfoboxItemGroup.mustache',
+		'horizontal-group-content' => 'PortableInfoboxHorizontalGroupContent.mustache',
 		'navigation' => 'PortableInfoboxItemNavigation.mustache',
 		'hero-mobile' => 'PortableInfoboxItemHeroMobile.mustache'
 	];
@@ -87,11 +88,18 @@ class PortableInfoboxRenderService extends WikiaService {
 		$dataItems = $groupData[ 'value' ];
 		$layout = $groupData[ 'layout' ];
 
-		foreach ( $dataItems as $item ) {
-			$type = $item[ 'type' ];
+		if ( $layout === 'horizontal' && !$this->isWikiaMobile() ) {
+			$groupHTMLContent .= $this->renderItem(
+				'horizontal-group-content',
+				$this->createHorizontalGroupData( $dataItems )
+			);
+		} else {
+			foreach ( $dataItems as $item ) {
+				$type = $item[ 'type' ];
 
-			if ( $this->validateType( $type ) ) {
-				$groupHTMLContent .= $this->renderItem( $type, $item[ 'data' ] );
+				if ( $this->validateType( $type ) ) {
+					$groupHTMLContent .= $this->renderItem( $type, $item[ 'data' ] );
+				}
 			}
 		}
 
@@ -289,5 +297,31 @@ class PortableInfoboxRenderService extends WikiaService {
 		}
 
 		return $data;
+	}
+
+	/**
+	 * creates special data structure for horizontal group from group data
+	 *
+	 * @param array $groupData
+	 * @return array
+	 */
+	private function createHorizontalGroupData( $groupData ) {
+		$horizontalGroupData =[
+			'labels' => [],
+			'values' => []
+		];
+
+		foreach ( $groupData as $item ) {
+			$data = $item['data'];
+
+			if ( $item['type'] === 'data' ) {
+				array_push( $horizontalGroupData['labels'], $data['label'] );
+				array_push( $horizontalGroupData['values'], $data['value'] );
+			} else if ( $item['type'] === 'header' ) {
+				$horizontalGroupData['header'] = $data['value'];
+			}
+		}
+
+		return $horizontalGroupData;
 	}
 }

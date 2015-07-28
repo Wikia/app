@@ -109,38 +109,29 @@ $infobox-debug-error-msg-bg: black;
 			margin: 0;
 		}
 	}
+}
 
-	.group-layout-horizontal {
-		&.item-type-group {
-			display: table;
-			table-layout: fixed;
-			width: 100%;
-		}
+// **********  Special styles for HORIZONTAL group  ********** //
 
-		.item-type-header {
-			display: table-caption;
-		}
+.portable-infobox-horizontal-group-content {
+	border-spacing: 0;
 
-		.item-type-key-val {
-			border-bottom: 0;
-			display: table-cell;
-			padding: $infobox-item-margin;
-			text-align: center;
-		}
+	.portable-infobox-header {
+		padding: $infobox-item-margin $infobox-item-margin * 4 $infobox-item-margin $infobox-item-margin * 2;
+		text-align: left;
+	}
 
-		.item-type-key-val:not(:last-of-type) {
-			border-right: 1px solid $infobox-section-header-background;
-		}
+	.portable-infobox-horizontal-group-item {
+		padding: $infobox-item-margin $infobox-item-margin * 2;
+		vertical-align: top;
 
-		.portable-infobox-item-label {
-			overflow: hidden;
-			vertical-align: top;
-			white-space: nowrap;
+		&:not(:first-child) {
+			border-left: 1px solid $infobox-section-header-background;
 		}
+	}
 
-		.portable-infobox-item-value {
-			padding-left: 0;
-		}
+	.portable-infobox-item-label {
+		padding-bottom: 0;
 	}
 }
 
