@@ -1,20 +1,6 @@
 @import 'skins/shared/color';
-@import 'skins/shared/mixins/columns';
 @import 'skins/shared/mixins/flexbox';
-
-$infobox-width: 270px;
-// temporary value used to mach with Khal Drogo Infobox
-$infobox-margin: 15px;
-$infobox-item-margin: 5px;
-$infobox-background: mix($color-page, $color-links, 90%);
-@if ($is-dark-wiki) {
-	$infobox-background: mix($color-page, $color-links, 85%);
-}
-
-$infobox-section-header-background: mix($color-page, $color-links, 75%);
-$infobox-debug-line-number-width: 50px;
-$infobox-debug-error-msg-color: white;
-$infobox-debug-error-msg-bg: black;
+@import 'extensions/wikia/PortableInfobox/styles/PortableInfoboxVariables';
 
 .portable-infobox {
 	background-color: $infobox-background;
@@ -23,28 +9,11 @@ $infobox-debug-error-msg-bg: black;
 	margin: 0 0 $infobox-margin $infobox-margin;
 	width: $infobox-width;
 
-	.portable-infobox-item-margins {
-		padding: $infobox-item-margin $infobox-item-margin * 4 $infobox-item-margin $infobox-item-margin * 2;
-	}
-
-	.portable-infobox-image-wrapper {
-		text-align: center;
-	}
-
-	.portable-infobox-image-caption {
-		color: $color-alternate-text;
-		font-size: 12px;
-		font-style: italic;
-		text-align: left;
-	}
-
-	.portable-infobox-secondary-background {
-		background-color: $infobox-section-header-background;
-	}
+	// **********  Overwrite styles from article  ********** //
+	// (placing it within portable-infobox class makes it strong enough) //
 
 	.portable-infobox-secondary-font {
 		font-size: 12px;
-		font-weight: bold;
 		line-height: 18px;
 		margin-top: 0;
 	}
@@ -61,86 +30,123 @@ $infobox-debug-error-msg-bg: black;
 		line-height: 28px;
 	}
 
-	.item-type-key-val:not(:last-of-type),
-	.item-type-group {
-		border-bottom: 1px solid $infobox-section-header-background;
-	}
-
 	> .portable-infobox-item:last-child {
 		border-bottom: 0;
 	}
 
-	.item-type-key-val {
-		@include flexbox;
-		@include flex-direction(row);
-		box-sizing: border-box;
-		overflow: hidden;
-		width: 100%;
-	}
-
 	.portable-infobox-item-label {
-		@include flex-basis($infobox-width / 3);
 		margin-bottom: inherit;
 		margin-top: 0;
 	}
 
 	.portable-infobox-item-value {
-		font-size: 12px;
-		line-height: 18px;
-		padding-left: 0;
-
-		&:not(:first-child) {
-			@include flex-basis($infobox-width * 2 / 3);
-			padding-left: 10px;
-		}
-
-		// fix styles for children of data value
 		> * {
 			margin: 0;
 		}
-
-		ul,
-		ol {
-			list-style-position: inside;
-		}
-
 		li {
 			line-height: 19px;
-			margin: 0;
 		}
 	}
 
-	.group-layout-horizontal {
-		&.item-type-group {
-			display: table;
-			table-layout: fixed;
-			width: 100%;
-		}
+}
 
-		.item-type-header {
-			display: table-caption;
-		}
+// **********  Default infobox styling ********** //
 
-		.item-type-key-val {
-			border-bottom: 0;
-			display: table-cell;
-			padding: $infobox-item-margin;
-			text-align: center;
-		}
+.portable-infobox-item-margins {
+	padding: $infobox-item-margin $infobox-item-margin * 4 $infobox-item-margin $infobox-item-margin * 2;
+}
 
-		.item-type-key-val:not(:last-of-type) {
-			border-right: 1px solid $infobox-section-header-background;
-		}
+.portable-infobox-image-wrapper {
+	text-align: center;
+}
 
-		.portable-infobox-item-label {
-			overflow: hidden;
-			vertical-align: top;
-			white-space: nowrap;
-		}
+.portable-infobox-image-caption {
+	color: $color-alternate-text;
+	font-size: 12px;
+	font-style: italic;
+	text-align: left;
+}
 
-		.portable-infobox-item-value {
-			padding-left: 0;
-		}
+.portable-infobox-secondary-background {
+	background-color: $infobox-section-header-background;
+}
+
+.portable-infobox-secondary-font {
+	font-weight: bold;
+}
+
+.item-type-key-val:not(:last-of-type),
+.item-type-group {
+	border-bottom: 1px solid $infobox-section-header-background;
+}
+
+.item-type-key-val {
+	@include flexbox;
+	@include flex-direction(row);
+	box-sizing: border-box;
+	overflow: hidden;
+	width: 100%;
+}
+
+.portable-infobox-item-label {
+	@include flex-basis($infobox-width / 3);
+}
+
+.portable-infobox-item-value {
+	font-size: 12px;
+	line-height: 18px;
+	padding-left: 0;//Overwritten anyway
+
+	&:not(:first-child) {
+		@include flex-basis($infobox-width * 2 / 3);
+		padding-left: 10px;
+	}
+
+	// fix styles for children of data value
+	> * {
+		margin: 0;
+	}
+
+	ol,
+	ul {
+		list-style-position: inside;
+	}
+
+	li {
+		margin: 0;
+	}
+}
+
+.group-layout-horizontal {
+	&.item-type-group {
+		display: table;
+		table-layout: fixed;
+		width: 100%;
+	}
+
+	.item-type-header {
+		display: table-caption;
+	}
+
+	.item-type-key-val {
+		border-bottom: 0;
+		display: table-cell;
+		padding: $infobox-item-margin;
+		text-align: center;
+	}
+
+	.item-type-key-val:not(:last-of-type) {
+		border-right: 1px solid $infobox-section-header-background;
+	}
+
+	.portable-infobox-item-label {
+		overflow: hidden;
+		vertical-align: top;
+		white-space: nowrap;
+	}
+
+	.portable-infobox-item-value {
+		padding-left: 0;
 	}
 }
 
