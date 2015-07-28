@@ -11,6 +11,7 @@ use Wikia\Sass\Filter\JanusFilter;
 use Wikia\Sass\Filter\MinifyFilter;
 use Wikia\Sass\Compiler\Compiler;
 use Wikia\Sass\Compiler\ExternalRubyCompiler;
+use Wikia\Sass\Compiler\LibSassCompiler;
 
 /**
  * SassService is a one and only class that you will call from Mediawiki code.
@@ -354,12 +355,12 @@ class SassService {
 	/**
 	 * Get a default Sass compiler instance
 	 *
-	 * @return ExternalRubyCompiler
+	 * @return LibSassCompiler
 	 */
 	public static function getDefaultCompiler() {
 		if ( self::$defaultCompiler === null ) {
 			$app = F::app();
-			self::$defaultCompiler = new ExternalRubyCompiler(array(
+			self::$defaultCompiler = new LibSassCompiler(array(
 				'rootDir' => $app->getGlobal('IP'),
 				'sassExecutable' => $app->wg->SassExecutable,
 //				'outputStyle' => 'expanded',

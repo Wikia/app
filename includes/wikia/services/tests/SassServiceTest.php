@@ -1,10 +1,20 @@
 <?php
 
+use Wikia\Sass\Compiler\LibSassCompiler;
+
 class SassServiceTest extends WikiaBaseTest {
 
 	private static $sassVariables = [
 		'color-body' => '#112233',
 	];
+
+	/**
+	 * @see https://github.com/sensational/sassphp
+	 */
+	public function testSassPHPInstalled() {
+		$this->assertTrue( extension_loaded( 'sass' ), 'sassphp PHP extension should be installed for faster SASS parsing' );
+		$this->assertTrue( class_exists( 'Sass' ), 'Sass class is available' );
+	}
 
 	public function testCompileInlineCss() {
 		$css = <<<CSS
@@ -33,5 +43,37 @@ CSS;
 		$this->assertContains( '@import url(/skins/wikia/shared.css);', $result, 'CSS @import statements are kept' );
 		$this->assertContains( 'font-size: 13px;', $result, '@bodytext mixin is expanded' );
 		$this->assertContains( 'color: #112233;', $result, 'Color variable is properly passed' );
+	}
+
+	/**
+	 * @dataProvider encodeSassMapDataProvider
+	 */
+	public function testEncodeSassMap(Array $map, $expected) {
+		$this->assertEquals( $expected, LibSassCompiler::encodeSassMap($map) );
+	}
+
+	public function encodeSassMapDataProvider() {
+		return [
+			[
+				[],
+				'()'
+			],
+			[
+				['a' => 2],
+				'("a": 2)'
+			],
+			[
+				['a' => ''],
+				'("a": "")'
+			],
+			[
+				['a' => 'foo'],
+				'("a": foo)'
+			],
+			[
+				['a' => 1, 'b' => 2],
+				'("a": 1, "b": 2)'
+			],
+		];
 	}
 }
