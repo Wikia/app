@@ -1003,11 +1003,11 @@ class ArticleCommentList {
 	}
 
 	static private function canSetRedirect() {
-		$wg = F::app()->wg;
-		$redirect = $wg->Request->getText( 'redirect', false );
-		$diff = $wg->Request->getText( 'diff', '' );
-		$oldId = $wg->Request->getText( 'oldid', '' );
-		$action = $wg->Request->getText( 'action', '' );
+		$req = F::app()->wg->Request;
+		$redirect = $req->getText( 'redirect', false );
+		$diff = $req->getText( 'diff', '' );
+		$oldId = $req->getText( 'oldid', '' );
+		$action = $req->getText( 'action', '' );
 
 		return (
 			( $redirect != 'no' ) &&
