@@ -533,8 +533,8 @@ class FlagsApiController extends WikiaApiController {
 	 * Tries to get groups and targeting of flags available for the given wikia
 	 */
 	public function getGroupsAndTargetingAsJson() {
-		$this->response->setVal( 'groups', array_values(FlagsHelper::getFlagGroupsFullNames()) );
-		$this->response->setVal( 'targeting', array_values(FlagsHelper::getFlagTargetFullNames()) );
+		$this->response->setVal( 'groups', array_values( FlagsHelper::getFlagGroupsFullNames() ) );
+		$this->response->setVal( 'targeting', array_values( FlagsHelper::getFlagTargetFullNames() ) );
 
 	}
 
