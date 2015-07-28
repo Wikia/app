@@ -1,7 +1,6 @@
 <?php
 
 use VideosModule\Modules;
-use Wikia\Service\User\Attributes;
 
 class VideosModuleController extends WikiaController {
 	const DEFAULT_TEMPLATE_ENGINE = WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
