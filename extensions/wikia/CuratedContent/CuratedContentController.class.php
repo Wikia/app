@@ -524,24 +524,27 @@ class CuratedContentController extends WikiaController {
 	}
 
 	public function getImage() {
-		$fileTitle = $this->request->getVal( 'file' );
+		$titleName = $this->request->getVal( 'title' );
+		$imageSize = $this->request->getInt( 'size', 50 );
 		$url = null;
 		$imageId = 0;
 
-		if ( !empty( $fileTitle ) ) {
-			$imageTitle = Title::newFromText( $fileTitle );
+		if ( !empty( $titleName ) ) {
+			$title = Title::newFromText( $titleName );
 
-			if ( !empty( $imageTitle ) && $imageTitle instanceof Title && $imageTitle->exists() ) {
-				$imageId = $imageTitle->getArticleID();
+			if ( !empty( $title ) && $title instanceof Title && $title->exists() ) {
+				$imageId = $title->getArticleID();
 			}
 		}
 
 		if ( !empty( $imageId ) ) {
-			$url = CuratedContentHelper::getImageUrl( $imageId );
+			$url = CuratedContentHelper::getImageUrl( $imageId, $imageSize );
 		}
 
-		$this->response->setVal( 'url', $url );
-		$this->response->setVal( 'id', $imageId );
+		$this->response->setValues([
+			'url' => $url,
+			'id' => $imageId
+		]);
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 	}
 

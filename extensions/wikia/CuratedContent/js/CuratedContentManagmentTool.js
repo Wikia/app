@@ -191,7 +191,7 @@ require(['wikia.window', 'jquery', 'wikia.nirvana', 'wikia.tracker', 'JSMessages
 						'CuratedContent',
 						'getImage',
 						{
-							file: imgTitle
+							title: imgTitle
 						}
 					).done(
 						function (data) {
