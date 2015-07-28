@@ -62,7 +62,7 @@ class InsightsFlagsModel extends InsightsPageModel {
 		$articlesData = WikiaDataAccess::cache( $cacheKey, self::INSIGHTS_MEMC_TTL, function () {
 			$res = $this->sendQuery();
 
-			if ( count($res) > 0 ) {
+			if ( count( $res ) > 0 ) {
 				$articlesData = $this->prepareData( $res );
 
 				if ( $this->arePageViewsRequired() ) {
@@ -99,6 +99,7 @@ class InsightsFlagsModel extends InsightsPageModel {
 		}
 		return $result;
 	}
+
 	public function prepareData( $res ) {
 		$data = [];
 
