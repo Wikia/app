@@ -268,6 +268,14 @@ describe('AdContext', function () {
 		expect(adContext.getContext().slots.invisibleHighImpact).toBeFalsy();
 	});
 
+	it('enables high impact slot when url param highimpactslot is set', function () {
+		spyOn(mocks.querystring, 'getVal').and.callFake(function (param) {
+			return param === 'highimpactslot';
+		});
+
+		expect(getModule().getContext().slots.invisibleHighImpact).toBeTruthy();
+	});
+
 	it('query param is being passed to the adContext properly', function () {
 		spyOn(mocks.querystring, 'getVal');
 
