@@ -530,38 +530,12 @@ class FlagsApiController extends WikiaApiController {
 	}
 
 	/**
-	 * Tries to get groups of flags available for the given wikia
+	 * Tries to get groups and targeting of flags available for the given wikia
 	 */
-	public function getGroupsAsJson() {
-		$groups = [];
-		$helper = new FlagsHelper();
-		foreach ( $helper->getFlagGroupsFullNames() as $index => $message ){
-			$groups[] = [
-				'name' => $message,
-				'value' => $index,
-			];
-		}
-		$this->response->setVal( 'groups',$groups );
-	}
-
-	/**
-	 * Tries to get targeting of flags available for the given wikia
-	 */
-	public function getTargetingAsJson() {
-		$targeting = [];
-		$helper = new FlagsHelper();
-		foreach ( $helper->getFlagTargetFullNames() as $index => $message ){
-			$targeting[] = [
-				'name' => $message,
-				'value' => $index,
-			];
-		}
-		$this->response->setVal( 'targeting',$targeting );
-	}
-
 	public function getGroupsAndTargetingAsJson() {
-		$this->getGroupsAsJson();
-		$this->getTargetingAsJson();
+		$this->response->setVal( 'groups', array_values(FlagsHelper::getFlagGroupsFullNames()) );
+		$this->response->setVal( 'targeting', array_values(FlagsHelper::getFlagTargetFullNames()) );
+
 	}
 
 	/**

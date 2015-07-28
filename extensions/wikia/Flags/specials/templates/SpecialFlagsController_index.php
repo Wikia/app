@@ -52,8 +52,8 @@
 					endif;
 				?>
 			</td>
-			<td class="flags-special-list-item-group" data-flag-group="<?= Sanitizer::encodeAttribute( $flag['flag_group'] ) ?>"><?= $flagGroups[$flag['flag_group']] ?></td>
-			<td class="flags-special-list-item-targeting" data-flag-targeting="<?= Sanitizer::encodeAttribute( $flag['flag_targeting'] ) ?>"><?= ucfirst( $flagTargeting[$flag['flag_targeting']] ) ?></td>
+			<td class="flags-special-list-item-group" data-flag-group="<?= Sanitizer::encodeAttribute( $flag['flag_group'] ) ?>"><?= $flagGroups[$flag['flag_group']]['name'] ?></td>
+			<td class="flags-special-list-item-targeting" data-flag-targeting="<?= Sanitizer::encodeAttribute( $flag['flag_targeting'] ) ?>"><?= ucfirst( $flagTargeting[$flag['flag_targeting']]['name'] ) ?></td>
 			<td class="flags-special-list-item-actions clearfix">
 				<?php
 					if ( $insightsTitle ): 

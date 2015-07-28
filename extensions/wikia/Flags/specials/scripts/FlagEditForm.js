@@ -12,7 +12,6 @@ define ('ext.wikia.Flags.FlagEditForm',
 			$.when(getFormResources()).done(function(dropdownOptions, formResources) {
 				formResources.dropdownOptions = dropdownOptions[0];
 				setupForm(formResources);
-
 				/** Check prefillData for undefined or null **/
 				if (prefillData == null) {
 					modalConfig.vars.type = 'create';
@@ -219,6 +218,7 @@ define ('ext.wikia.Flags.FlagEditForm',
 		}
 
 		function getDropdownOptions(values) {
+
 			values.groups = formData.dropdownOptions.groups;
 			values.targeting = formData.dropdownOptions.targeting;
 
@@ -230,7 +230,9 @@ define ('ext.wikia.Flags.FlagEditForm',
 						break;
 					}
 				}
+
 			}
+
 
 			if (values.selectedTargeting != null) {
 				// mark selected target
@@ -241,6 +243,7 @@ define ('ext.wikia.Flags.FlagEditForm',
 					}
 				}
 			}
+
 			return values;
 		}
 
