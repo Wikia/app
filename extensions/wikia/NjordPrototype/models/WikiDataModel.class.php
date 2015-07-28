@@ -139,7 +139,7 @@ class WikiDataModel {
 			'imagename' => $this->imageName,
 			'cropposition' => $this->cropPosition
 		] );
-		$newContent = $heroTag . PHP_EOL . $newContent;
+		$newContent = $heroTag . $newContent;
 
 		// save and purge
 		$pageArticleObj->doEdit( $newContent, '' );
