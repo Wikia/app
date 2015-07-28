@@ -115,6 +115,8 @@ $infobox-debug-error-msg-bg: black;
 
 .portable-infobox-horizontal-group-content {
 	border-spacing: 0;
+	table-layout: fixed;
+	width: 100%;
 
 	.portable-infobox-header {
 		padding: $infobox-item-margin $infobox-item-margin * 4 $infobox-item-margin $infobox-item-margin * 2;
