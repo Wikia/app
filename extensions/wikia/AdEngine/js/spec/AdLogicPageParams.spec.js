@@ -113,10 +113,11 @@ describe('AdLogicPageParams', function () {
 		var params = getParams({
 			wikiCategory: 'category',
 			wikiDbName: 'dbname',
-			wikiLanguage: 'xx'
+			wikiLanguage: 'xx',
+			mappedVerticalName: 'mappedVertical'
 		});
 
-		expect(params.s0).toBe('category');
+		expect(params.s0).toBe('mappedVertical');
 		expect(params.s1).toBe('_dbname');
 		expect(params.s2).toBe('article');
 		expect(params.lang).toBe('xx');
