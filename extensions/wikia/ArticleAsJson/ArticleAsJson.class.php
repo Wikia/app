@@ -17,7 +17,7 @@ class ArticleAsJson extends WikiaService {
 	const MEDIA_CONTEXT_INFOBOX = 'infobox';
 
 	private static function createMarker( $width = 0, $height = 0, $isGallery = false ){
-		$blankImgUrl = F::app()->wg->blankImgUrl;
+		$blankImgUrl = 'foo';//F::app()->wg->blankImgUrl;
 		$id = count( self::$media ) - 1;
 		$classes = 'article-media' . ($isGallery ? ' gallery' : '');
 		$width = !empty( $width ) ? " width='{$width}'" : '';
