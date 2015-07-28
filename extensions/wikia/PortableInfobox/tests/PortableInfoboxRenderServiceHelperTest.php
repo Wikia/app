@@ -3,9 +3,13 @@
 use Wikia\PortableInfobox\Helpers\PortableInfoboxRenderServiceHelper;
 
 class PortableInfoboxRenderServiceHelperTest extends WikiaBaseTest {
+	private $helper;
+
 	protected function setUp() {
 		$this->setupFile = dirname( __FILE__ ) . '/../PortableInfobox.setup.php';
 		parent::setUp();
+
+		$this->helper = new PortableInfoboxRenderServiceHelper();
 	}
 
 	/**
@@ -17,8 +21,8 @@ class PortableInfoboxRenderServiceHelperTest extends WikiaBaseTest {
 		$fileWidth = isset( $input[ 'fileWidth' ] ) ? $input[ 'fileWidth' ] : null;
 
 		$fileMock = $this->getMockBuilder('File')
-			->setConstructorArgs( ['TestFile'] )
-			->setMethods( ['getWidth'] )
+			->setConstructorArgs( [ 'TestFile' ] )
+			->setMethods( [ 'getWidth' ] )
 			->getMock();
 		$fileMock->expects($this->any())
 			->method( 'getWidth' )
@@ -36,7 +40,7 @@ class PortableInfoboxRenderServiceHelperTest extends WikiaBaseTest {
 	public function testCreateHorizontalGroupData( $input, $expectedOutput, $description ) {
 		$this->assertEquals(
 			$expectedOutput,
-			PortableInfoboxRenderServiceHelper::getInstance()->createHorizontalGroupData( $input ),
+			$this->helper->createHorizontalGroupData( $input ),
 			$description
 		);
 	}
@@ -138,7 +142,7 @@ class PortableInfoboxRenderServiceHelperTest extends WikiaBaseTest {
 	public function testSanitizeInfoboxTitle( $input, $data, $expected ) {
 		$this->assertEquals(
 			$expected,
-			PortableInfoboxRenderServiceHelper::getInstance()->sanitizeInfoboxTitle( $input , $data )
+			$this->helper->sanitizeInfoboxTitle( $input , $data )
 		);
 	}
 
@@ -168,7 +172,7 @@ class PortableInfoboxRenderServiceHelperTest extends WikiaBaseTest {
 
 		$this->assertEquals(
 			$result,
-			PortableInfoboxRenderServiceHelper::getInstance()->isValidHeroDataItem( $item, $heroData ),
+			$this->helper->isValidHeroDataItem( $item, $heroData ),
 			$description
 		);
 	}
@@ -233,4 +237,37 @@ class PortableInfoboxRenderServiceHelperTest extends WikiaBaseTest {
 		];
 	}
 
+	/**
+	 * @param string $type
+	 * @param boolean $result
+	 * @param string $description
+	 * @param array $mockParams
+	 * @dataProvider testValidateTypeDataProvider
+	 */
+	public function testValidateType( $type, $result, $description ) {
+		$templates = [
+			'testType' => 'testType.mustache'
+		];
+
+		$this->assertEquals(
+			$result,
+			$this->helper->validateType( $type, $templates ),
+			$description
+		);
+	}
+
+	public function testValidateTypeDataProvider() {
+		return [
+			[
+				'type' => 'testType',
+				'result' => true,
+				'description' => 'valid data type'
+			],
+			[
+				'type' => 'invalidTestType',
+				'result' => false,
+				'description' => 'invalid data type'
+			]
+		];
+	}
 }

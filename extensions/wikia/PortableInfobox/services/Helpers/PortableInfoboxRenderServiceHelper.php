@@ -10,20 +10,7 @@ class PortableInfoboxRenderServiceHelper {
 	const MOBILE_THUMBNAIL_WIDTH = 360;
 	const MINIMAL_HERO_IMG_WIDTH = 300;
 
-	private static $instance = null;
-
-	private function __construct() {
-	}
-
-	/**
-	 * @return null|PortableInfoboxRenderServiceHelper
-	 */
-	public static function getInstance() {
-		if ( is_null( self::$instance ) ) {
-			self::$instance = new self;
-		}
-		return self::$instance;
-	}
+	function __construct() {}
 
 	/**
 	 * creates special data structure for horizontal group from group data
@@ -38,13 +25,13 @@ class PortableInfoboxRenderServiceHelper {
 		];
 
 		foreach ( $groupData as $item ) {
-			$data = $item['data'];
+			$data = $item[ 'data' ];
 
-			if ( $item['type'] === 'data' ) {
-				array_push( $horizontalGroupData['labels'], $data['label'] );
-				array_push( $horizontalGroupData['values'], $data['value'] );
-			} else if ( $item['type'] === 'header' ) {
-				$horizontalGroupData['header'] = $data['value'];
+			if ( $item[ 'type' ] === 'data' ) {
+				array_push( $horizontalGroupData[ 'labels' ], $data[ 'label' ] );
+				array_push( $horizontalGroupData[ 'values' ], $data[ 'value' ] );
+			} else if ( $item[ 'type' ] === 'header' ) {
+				$horizontalGroupData[ 'header' ] = $data[ 'value' ];
 			}
 		}
 
@@ -60,12 +47,12 @@ class PortableInfoboxRenderServiceHelper {
 	 * @return array infobox $data with sanitized title param if needed
 	 */
 	public function sanitizeInfoboxTitle( $type, $data ) {
-		if ( $type === 'title' && !empty( $data['value'] ) ) {
-			$data['value'] = trim( strip_tags( $data['value'] ) );
+		if ( $type === 'title' && !empty( $data[ 'value' ] ) ) {
+			$data[ 'value' ] = trim( strip_tags( $data[ 'value' ] ) );
 			return $data;
 		}
-		if ( $type === 'hero-mobile' && !empty( $data['title']['value'] ) ) {
-			$data['title']['value'] = trim( strip_tags( $data['title']['value'] ) );
+		if ( $type === 'hero-mobile' && !empty( $data[ 'title' ][ 'value' ] ) ) {
+			$data[ 'title' ][ 'value' ] = trim( strip_tags( $data[ 'title' ][ 'value' ] ) );
 			return $data;
 		}
 
@@ -115,7 +102,7 @@ class PortableInfoboxRenderServiceHelper {
 		if ( $type === 'image' && !array_key_exists( 'image', $heroData ) ) {
 			$imageWidth = $this->getFileWidth( $item[ 'data' ][ 'name' ] );
 
-			if ( $imageWidth > self::MINIMAL_HERO_IMG_WIDTH ) {
+			if ( $imageWidth >= self::MINIMAL_HERO_IMG_WIDTH ) {
 				return true;
 			}
 		}

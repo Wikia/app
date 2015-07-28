@@ -34,7 +34,7 @@ class PortableInfoboxRenderService extends WikiaService {
 	public function renderInfobox( array $infoboxdata, $theme, $layout ) {
 		wfProfileIn( __METHOD__ );
 
-		$helper = PortableInfoboxRenderServiceHelper::getInstance();
+		$helper = new PortableInfoboxRenderServiceHelper();
 		$infoboxHtmlContent = '';
 		$heroData = [ ];
 
@@ -86,7 +86,7 @@ class PortableInfoboxRenderService extends WikiaService {
 	 * @return string - group HTML markup
 	 */
 	private function renderGroup( $groupData ) {
-		$helper = PortableInfoboxRenderServiceHelper::getInstance();
+		$helper = new PortableInfoboxRenderServiceHelper();;
 		$groupHTMLContent = '';
 		$dataItems = $groupData[ 'value' ];
 		$layout = $groupData[ 'layout' ];
@@ -117,8 +117,10 @@ class PortableInfoboxRenderService extends WikiaService {
 	 * @return string
 	 */
 	private function renderInfoboxHero( $data ) {
+		$helper = new PortableInfoboxRenderServiceHelper();
+
 		if ( array_key_exists( 'image', $data ) ) {
-			$data[ 'image' ] = PortableInfoboxRenderServiceHelper::getInstance()->extendImageData( $data[ 'image' ] );
+			$data[ 'image' ] = $helper->extendImageData( $data[ 'image' ] );
 			$markup = $this->renderItem( 'hero-mobile', $data );
 		} else {
 			$markup = $this->renderItem( 'title', $data[ 'title' ] );
@@ -136,7 +138,7 @@ class PortableInfoboxRenderService extends WikiaService {
 	 * @return bool|string - HTML
 	 */
 	private function renderItem( $type, array $data ) {
-		$helper = PortableInfoboxRenderServiceHelper::getInstance();
+		$helper = new PortableInfoboxRenderServiceHelper();
 
 		if ( $type === 'image' ) {
 			$data = $helper->extendImageData( $data );
