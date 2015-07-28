@@ -27,9 +27,17 @@ class UserAttributeTest extends PHPUnit_Framework_TestCase {
 			->getMock();
 	}
 
+	public function testGetFromDefault() {
+		$defaultAttributes = [ "attr1" => "val1" ];
+		$attributes = new UserAttributes( $this->service, $defaultAttributes );
+
+		$this->assertEquals( "val1", $attributes->getAttribute( $this->userId, "attr1" ) );
+		$this->assertNull( $attributes->getAttribute( $this->userId, "attr2" ) );
+	}
+
 	public function testGet() {
 		$this->setupServiceExpects();
-		$preferences = new UserAttributes( $this->service );
+		$preferences = new UserAttributes( $this->service, [] );
 
 		$this->assertEquals( "female", $preferences->getAttribute( $this->userId, "gender" ) );
 		$this->assertEquals( "Lebowski", $preferences->getAttribute( $this->userId, "nickName") );
@@ -39,7 +47,7 @@ class UserAttributeTest extends PHPUnit_Framework_TestCase {
 
 	public function testGetWithDefaults() {
 		$this->setupServiceExpects();
-		$preferences = new UserAttributes( $this->service );
+		$preferences = new UserAttributes( $this->service, [] );
 
 		$this->assertEquals( "someDefaultValue", $preferences->getAttribute( $this->userId, "attrWithNoValue", "someDefaultValue" ) );
 		$this->assertEquals( "Lebowski", $preferences->getAttribute( $this->userId, "nickName", "someDefaultValue" ) );
@@ -47,7 +55,7 @@ class UserAttributeTest extends PHPUnit_Framework_TestCase {
 
 	public function testSet() {
 		$this->setupServiceExpects();
-		$userAttributes = new UserAttributes( $this->service );
+		$userAttributes = new UserAttributes( $this->service, [] );
 		$userAttributes->setAttribute( $this->userId, new Attribute( "newAttr", "foo" ) );
 		$this->assertEquals( "foo", $userAttributes->getAttribute( $this->userId, "newAttr" ) );
 		$userAttributes->setAttribute( $this->userId, new Attribute( "anotherNewAttr", null ) );

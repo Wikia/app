@@ -5,6 +5,7 @@ namespace Wikia\Service\User\Attributes;
 use Wikia\Domain\User\Attribute;
 
 class UserAttributes {
+	const DEFAULT_ATTRIBUTES = "user_attributes_default_attributes";
 
 	/** @var AttributeService */
 	private $attributeService;
@@ -12,14 +13,20 @@ class UserAttributes {
 	/** @var string[string][string] */
 	private $attributes;
 
+	/** @var string[string] */
+	private $defaultAttributes;
+
 	/**
 	 * @Inject({
 	 *    Wikia\Service\User\Attributes\AttributeService::class,
+	 *    Wikia\Service\User\Attributes\UserAttributes::DEFAULT_ATTRIBUTES
 	 * })
 	 * @param AttributeService $attributeService
+	 * @param string[string] $defaultAttributes
 	 */
-	public function __construct( AttributeService $attributeService ) {
+	public function __construct( AttributeService $attributeService, $defaultAttributes ) {
 		$this->attributeService = $attributeService;
+		$this->defaultAttributes = $defaultAttributes;
 		$this->attributes = [];
 	}
 
@@ -29,7 +36,16 @@ class UserAttributes {
 
 	public function getAttribute( $userId, $attributeName, $default = null ) {
 		$attributes = $this->loadAttributes( $userId );
-		return empty( $attributes[$attributeName] ) ? $default : $attributes[$attributeName];
+
+		if ( !empty( $attributes[$attributeName] ) ) {
+			return $attributes[$attributeName];
+		}
+
+		if ( !empty( $this->defaultAttributes[$attributeName] ) ) {
+			return  $this->defaultAttributes[$attributeName];
+		}
+
+		return $default;
 	}
 
 	private function loadAttributes( $userId ) {
@@ -37,7 +53,7 @@ class UserAttributes {
 			$this->attributes[$userId] = [];
 			/** @var Attribute $attribute */
 			foreach ( $this->attributeService->getAttributes( $userId ) as $attribute ) {
-				$this->attributes[$userId][ $attribute->getName()] = $attribute->getValue();
+				$this->attributes[$userId][$attribute->getName()] = $attribute->getValue();
 			};
 		}
 
