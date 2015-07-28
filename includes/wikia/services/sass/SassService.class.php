@@ -26,7 +26,7 @@ use Wikia\Sass\Compiler\LibSassCompiler;
  */
 class SassService {
 
-	const CACHE_VERSION = 6; # SASS caching does not depend on $wgStyleVersion, use this constant to bust SASS cache
+	const CACHE_VERSION = 7; # SASS caching does not depend on $wgStyleVersion, use this constant to bust SASS cache
 
 	const FILTER_IMPORT_CSS = 1;
 	const FILTER_CDN_REWRITE = 2;
@@ -57,14 +57,9 @@ class SassService {
 		$this->app = F::app();
 		$this->source = $source;
 
-		// set up default cache variant
+		// vary caching for devboxes
 		if (!empty($this->wg->DevelEnvironment)) {
 			$this->setCacheVariant("dev-{$this->wg->DevelEnvironmentName}");
-		} else {
-			$hostPrefix = getHostPrefix();
-			if ( $hostPrefix != null ) {
-				$this->setCacheVariant("staging-{$hostPrefix}");
-			}
 		}
 	}
 
@@ -201,7 +196,7 @@ class SassService {
 		$memc = self::getMemcached();
 		$cacheKey = null;
 		if ( $useCache ) {
-			$cacheKey = __CLASS__ . '-cache-' . $this->getCacheKey();
+			$cacheKey = wfSharedMemcKey( __CLASS__, $this->getCacheKey() );
 			$cachedStyles = $memc->get( $cacheKey );
 			if ( is_string( $cachedStyles ) ) {
 				return $cachedStyles;
