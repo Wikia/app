@@ -215,8 +215,8 @@ class FlagsHelper {
 		 */
 		foreach ( FlagType::$flagGroups as $flagGroupId => $flagGroupKey ) {
 			$flagGroupsFullNames[$flagGroupId] = [
-			'name' => wfMessage( "flags-groups-{$flagGroupKey}" )->escaped(),
-			'value' => $flagGroupId
+				'name' => wfMessage( "flags-groups-{$flagGroupKey}" )->escaped(),
+				'value' => $flagGroupId
 			];
 		}
 		return $flagGroupsFullNames;
