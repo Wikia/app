@@ -6,10 +6,12 @@ define ('ext.wikia.Flags.FlagEditForm',
 			modalConfig,
 			resourcesCacheKey = 'flagEditFormResources',
 			emptyFormCacheKey = 'flagEditFormEmpty',
-			cacheVersion = '1.0';
+			cacheVersion = '1.0',
+			allFlagsNames = [];
 
 		function init(prefillData) {
 			$.when(getFormResources()).done(function (formResources) {
+				getAllFlagNames();
 				setupForm(formResources);
 
 				/** Check prefillData for undefined or null **/
@@ -144,11 +146,16 @@ define ('ext.wikia.Flags.FlagEditForm',
 			modalInstance.show();
 			modalInstance.bind('done', saveEditForm);
 			$('.flags-special-form-params-new-link').on('click', addNewParameterInput);
+			$('.flags-special-form-param-delete-link').on('click', removeParameter);
 		}
 
 		function saveEditForm() {
 			var data = collectFormData(),
 				method;
+
+			if (data === false) {
+				return false;
+			}
 
 			if (modalConfig.vars.type === 'create') {
 				method = 'addFlagType';
@@ -166,44 +173,85 @@ define ('ext.wikia.Flags.FlagEditForm',
 				method: method,
 				data: data,
 				callback: function (json) {
-					if (json.status) {
+					if (json.status === true) {
 						location.reload(true);
+					} else if (json.status === false && json.data === false) {
+						showWarningNotification('flags-special-create-form-save-nochange');
 					} else {
-						new BannerNotification(
-							mw.message('flags-special-create-form-save-failure').escaped(),
-							'error'
-						).show();
+						showErrorNotification('flags-special-create-form-save-failure');
 					}
 				}
 			});
 		}
 
 		function collectFormData() {
-			var params = {};
+			var flagName,
+				flagView,
+				params = {};
 
+			flagName = $('#flags-special-form-name').val();
+			if (flagName.length === 0) {
+				showErrorNotification('flags-special-create-form-invalid-name');
+				return false;
+			}
+
+			var oldFlagName = $('#flags-special-form-name').data('flag-name');
+			if (flagName !== oldFlagName && allFlagsNames.indexOf(flagName) > -1) {
+				showErrorNotification('flags-special-create-form-invalid-name-exists');
+				return false;
+			}
+
+			flagView = $('#flags-special-form-template').val();
+			if (flagView.length === 0) {
+				showErrorNotification('flags-special-create-form-invalid-template');
+				return false;
+			}
+
+			var paramsStatus = true;
 			$('.flags-special-form-param').each(function () {
-				var name = $(this).find('.flags-special-form-param-name-input').val(),
-					description = $(this).find('.flags-special-form-param-description-input').val();
-				params[name] = description;
+				var name = $(this).find('.flags-special-form-param-name-input').val();
+				if (name.length === 0) {
+					paramsStatus = false;
+					return false;
+				} else {
+					params[name] = $(this).find('.flags-special-form-param-description-input').val();
+				}
 			});
+
+			if (!paramsStatus) {
+				showErrorNotification('flags-special-create-form-invalid-param-name');
+				return false;
+			}
 
 			return {
 				edit_token: mw.user.tokens.get('editToken'),
-				flag_name: $('#flags-special-form-name').val(),
-				flag_view: $('#flags-special-form-template').val(),
+				flag_name: flagName,
+				flag_view: flagView,
 				flag_group: $('#flags-special-form-group option:selected').val(),
 				flag_targeting: $('#flags-special-form-targeting option:selected').val(),
 				flag_params_names: JSON.stringify(params)
 			}
 		}
 
-		function addNewParameterInput( param ) {
-			param = param || {};
+		function getAllFlagNames() {
+			if (allFlagsNames.length === 0) {
+				$('.flags-special-list-item-name').each( function() {
+					allFlagsNames.push($(this).data('flag-name'));
+				});
+			}
+		}
 
+		function addNewParameterInput() {
 			var tbody = $('.flags-special-form-params-tbody'),
 				partial = mustache.to_html(formData.partials.createFormParam, param );
 
 			tbody.append(partial);
+			$('.flags-special-form-param-delete-link').on('click', removeParameter);
+		}
+
+		function removeParameter(event) {
+			event.preventDefault;
+			$(event.target).closest('tr').remove();
 		}
 
 		function getResourcesCacheKey() {
@@ -280,6 +328,20 @@ define ('ext.wikia.Flags.FlagEditForm',
 			}
 
 			return values;
+		}
+
+		function showWarningNotification(msgKey) {
+			new BannerNotification(
+				mw.message(msgKey).escaped(),
+				'warning'
+			).show();
+		}
+
+		function showErrorNotification(msgKey) {
+			new BannerNotification(
+				mw.message(msgKey).escaped(),
+				'error'
+			).show();
 		}
 
 		return {
