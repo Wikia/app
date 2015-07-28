@@ -117,6 +117,10 @@ class ConfirmationChangedEmailController extends AbstractEmailConfirmationContro
 
 	const TRACKING_CATEGORY = TrackingCategories::CHANGED_EMAIL_CONFIRMATION;
 
+	protected function getTargetUserEmail() {
+		return $this->targetUser->getNewEmail();
+	}
+
 	protected function getSubject() {
 		return $this->getMessage( 'emailext-emailconfirmation-changed-subject' )->text();
 	}
