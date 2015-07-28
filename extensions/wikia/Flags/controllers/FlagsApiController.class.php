@@ -15,6 +15,7 @@ use Flags\FlagsLogTask;
 use Flags\Models\Flag;
 use Flags\Models\FlagType;
 use Wikia\Logger\Loggable;
+use Flags\FlagsHelper;
 
 class FlagsApiController extends WikiaApiController {
 
@@ -532,11 +533,11 @@ class FlagsApiController extends WikiaApiController {
 	 * Tries to get groups of flags available for the given wikia
 	 */
 	public function getGroupsAsJson() {
-		$this->getRequestParams();
 		$groups = [];
-		foreach ( FlagType::$flagGroups as $index => $slug ){
+		$helper = new FlagsHelper();
+		foreach ( $helper->getFlagGroupsFullNames() as $index => $message ){
 			$groups[] = [
-				'name' => wfMessage( "flags-groups-{$slug}" )->escaped(),
+				'name' => $message,
 				'value' => $index,
 			];
 		}
@@ -547,11 +548,11 @@ class FlagsApiController extends WikiaApiController {
 	 * Tries to get targeting of flags available for the given wikia
 	 */
 	public function getTargetingAsJson() {
-		$this->getRequestParams();
 		$targeting = [];
-		foreach ( FlagType::$flagTargeting as $index => $slug ){
+		$helper = new FlagsHelper();
+		foreach ( $helper->getFlagTargetFullNames() as $index => $message ){
 			$targeting[] = [
-				'name' => wfMessage( "flags-target-{$slug}" )->escaped(),
+				'name' => $message,
 				'value' => $index,
 			];
 		}
