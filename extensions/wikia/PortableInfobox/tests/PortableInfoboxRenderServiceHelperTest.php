@@ -16,15 +16,15 @@ class PortableInfoboxRenderServiceHelperTest extends WikiaBaseTest {
 	public function createHelperMock( $input ) {
 		$fileWidth = isset( $input[ 'fileWidth' ] ) ? $input[ 'fileWidth' ] : null;
 
-		$mock = $this->getMockBuilder( 'PortableInfoboxRenderServiceHelper' )
-			->setMethods( [ 'getFileWidth' ] )
+		$fileMock = $this->getMockBuilder('File')
+			->setConstructorArgs( ['TestFile'] )
+			->setMethods( ['getWidth'] )
 			->getMock();
-
-		$mock->expects( $this->any() )
-			->method( 'getFileWidth' )
+		$fileMock->expects($this->any())
+			->method( 'getWidth' )
 			->will( $this->returnValue( $fileWidth ) );
 
-		return $mock;
+		$this->mockStaticMethod( 'WikiaFileHelper', 'getFileFromTitle', $fileMock );
 	}
 
 	/**
@@ -164,11 +164,11 @@ class PortableInfoboxRenderServiceHelperTest extends WikiaBaseTest {
 	 * @dataProvider testIsValidHeroDataItemDataProvider
 	 */
 	public function testIsValidHeroDataItem( $item, $heroData, $result, $description, $mockParams ) {
-		$helper = $this->createHelperMock( $mockParams );
+		$this->createHelperMock( $mockParams );
 
 		$this->assertEquals(
 			$result,
-			$helper->isValidHeroDataItem( $item, $heroData ),
+			PortableInfoboxRenderServiceHelper::getInstance()->isValidHeroDataItem( $item, $heroData ),
 			$description
 		);
 	}
