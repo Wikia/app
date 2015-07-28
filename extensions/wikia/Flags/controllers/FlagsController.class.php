@@ -317,36 +317,6 @@ class FlagsController extends WikiaController {
 	}
 
 	/**
-	 * @param string name of template treated as view and source of params
-	 * @return bool status
-	 */
-
-	public function getFlagParamsFromTemplate( $template ) {
-		$article = new \Article( \Title::newFromText(
-			$this->request->getVal( 'template' ),
-			NS_TEMPLATE
-		) );
-
-		if ( !$article->exists() ) {
-			return false;
-		}
-
-		$flagParams = ( new \Flags\FlagsParamsComparison() )->compareTemplateVariables(
-			$article->mTitle,
-			'',
-			$article->getContent()
-		);
-
-		if ( !is_null( $flagParams ) && !empty( $flagParams['params'] ) ) {
-			$this->response->setData( $flagParams['params'] );
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-
-	/**
 	 * A method that wraps performing appropriate actions for flags specified in $flagsToChange.
 	 * The array should have one or more of the following indexes:
 	 * 1. `toAdd` an array with data for adding new flags

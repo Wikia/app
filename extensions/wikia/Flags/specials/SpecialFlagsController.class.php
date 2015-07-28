@@ -40,6 +40,70 @@ class SpecialFlagsController extends WikiaSpecialPageController {
 		$this->hasAdminPermissions = $this->wg->User->isAllowed( 'flags-administration' );
 	}
 
+	public function addFlagType() {
+		$data = $this->request->getParams();
+
+		$params = $this->getFlagParamsFromTemplate( $data['flag_view'] );
+		$flagParams = json_decode( $data['flag_params_names'], true );
+
+		foreach ( $flagParams as $param => $description ) {
+			$params[$param] = $description;
+		}
+
+		$data['flag_params_names'] = json_encode( $params, JSON_FORCE_OBJECT );
+
+
+
+		$response = $this->sendRequest( 'FlagsApiController',
+			'addFlagType',
+			$data
+		)->getData();
+
+		$this->response->setValues( $response );
+	}
+
+	public function updateFlagType() {
+		$data = $this->request->getParams();
+
+		$response = $this->sendRequest( 'FlagsApiController',
+			'updateFlagType',
+			$data
+		)->getData();
+
+		$this->response->setValues( $response );
+	}
+
+	/**
+	 * @param string name of template treated as view and source of params
+	 * @return bool status
+	 */
+
+	private function getFlagParamsFromTemplate( $template ) {
+		$params = [];
+
+		$title = \Title::newFromText( $template, NS_TEMPLATE );
+		if ( ! $title instanceof Title ) {
+			return [];
+		}
+
+		$article = new \Article( $title );
+		if ( !$article->exists() ) {
+			return [];
+		}
+
+		$flagParams = ( new \Flags\FlagsParamsComparison() )->compareTemplateVariables(
+			$article->mTitle,
+			'',
+			$article->getContent()
+		);
+
+		if ( !is_null( $flagParams ) && !empty( $flagParams['params'] ) ) {
+			$params = $flagParams['params'];
+		}
+
+		return $params;
+	}
+
 	private function requestGetFlagTypesForWikia( $wikiId ) {
 		return $this->sendRequest( 'FlagsApiController',
 			'getFlagTypes',

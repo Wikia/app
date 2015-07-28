@@ -144,9 +144,6 @@ define ('ext.wikia.Flags.FlagEditForm',
 			modalInstance.show();
 			modalInstance.bind('done', saveEditForm);
 			$('.flags-special-form-params-new-link').on('click', addNewParameterInput);
-			if ( modalConfig.vars.type === 'create' ) {
-				$('#flags-special-form-template').on('focusout', getFlagParamsFromTemplate);
-			}
 		}
 
 		function saveEditForm() {
@@ -165,7 +162,7 @@ define ('ext.wikia.Flags.FlagEditForm',
 			}
 
 			nirvana.sendRequest({
-				controller: 'FlagsApiController',
+				controller: 'SpecialFlagsController',
 				method: method,
 				data: data,
 				callback: function (json) {
@@ -207,34 +204,6 @@ define ('ext.wikia.Flags.FlagEditForm',
 				partial = mustache.to_html(formData.partials.createFormParam, param );
 
 			tbody.append(partial);
-		}
-
-		function getFlagParamsFromTemplate( event ) {
-			var templateName = $( event.target ).val();
-
-			var data = {template: templateName};
-
-			params = nirvana.getJson(
-                                'FlagsController',
-                                'getFlagParamsFromTemplate',
-                                data,
-                                function (json) {
-                                        if (json) {
-						for ( param in json ) {
-							addNewParameterInput({
-								'name': param,
-								'disableName': true
-							});
-						}						
-
-                                        } else {
-                                                new BannerNotification(
-                                                        mw.message('flags-special-create-form-params-fetch-failure').escaped(),
-                                                        'error'
-                                                ).show();
-                                        }
-                                }
-                        );
 		}
 
 		function getResourcesCacheKey() {
