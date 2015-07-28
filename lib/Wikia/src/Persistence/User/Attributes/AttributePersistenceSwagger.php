@@ -61,6 +61,13 @@ class AttributePersistenceSwagger implements AttributePersistence {
 		return $attributes;
 	}
 
+	/**
+	 * @param $userId
+	 * @return \Swagger\Client\User\Attributes\Models\UserAttributeHalResponse[]
+	 * @throws ApiException
+	 * @throws PersistenceException
+	 * @throws \Exception
+	 */
 	private function getAttributesFromApi( $userId ) {
 		$halResponse = $this->getApi( $userId )->getAllAttributesForUser( $userId );
 		$this->assertValidResponse( $halResponse );

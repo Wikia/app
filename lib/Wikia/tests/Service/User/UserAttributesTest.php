@@ -1,12 +1,10 @@
 <?php
 
-namespace Wikia\Service\User\Preferences;
+namespace Wikia\Service\User\Attributes;
 
 use PHPUnit_Framework_MockObject_MockObject;
 use PHPUnit_Framework_TestCase;
 use Wikia\Domain\User\Attribute;
-use Wikia\Service\User\Attributes\AttributeService;
-use Wikia\Service\User\Attributes\UserAttributes;
 
 class UserAttributeTest extends PHPUnit_Framework_TestCase {
 	/** @var int */
@@ -27,7 +25,7 @@ class UserAttributeTest extends PHPUnit_Framework_TestCase {
 			->getMock();
 	}
 
-	public function testGetFromDefault() {
+	public function testGetAttributesFromDefaultAttributes() {
 		$defaultAttributes = [ "attr1" => "val1" ];
 		$attributes = new UserAttributes( $this->service, $defaultAttributes );
 
@@ -35,25 +33,32 @@ class UserAttributeTest extends PHPUnit_Framework_TestCase {
 		$this->assertNull( $attributes->getAttribute( $this->userId, "attr2" ) );
 	}
 
-	public function testGet() {
+	public function testGetAttributes() {
 		$this->setupServiceExpects();
-		$preferences = new UserAttributes( $this->service, [] );
+		$attributes = new UserAttributes( $this->service, [] );
 
-		$this->assertEquals( "female", $preferences->getAttribute( $this->userId, "gender" ) );
-		$this->assertEquals( "Lebowski", $preferences->getAttribute( $this->userId, "nickName") );
-		$this->assertNull( $preferences->getAttribute( $this->userId, "unsetattribute" ) );
-		$this->assertEquals( $this->savedAttributes, $preferences->getAttributes( $this->userId ) );
+		$this->assertEquals( "female", $attributes->getAttribute( $this->userId, "gender" ) );
+		$this->assertEquals( "Lebowski", $attributes->getAttribute( $this->userId, "nickName") );
+		$this->assertNull( $attributes->getAttribute( $this->userId, "unsetattribute" ) );
+		$this->assertEquals( $this->savedAttributes, $attributes->getAttributes( $this->userId ) );
 	}
 
-	public function testGetWithDefaults() {
+	public function testGetAttributesWithDefaultParameter() {
 		$this->setupServiceExpects();
-		$preferences = new UserAttributes( $this->service, [] );
+		$attributes = new UserAttributes( $this->service, [] );
 
-		$this->assertEquals( "someDefaultValue", $preferences->getAttribute( $this->userId, "attrWithNoValue", "someDefaultValue" ) );
-		$this->assertEquals( "Lebowski", $preferences->getAttribute( $this->userId, "nickName", "someDefaultValue" ) );
+		$this->assertEquals( "someDefaultValue", $attributes->getAttribute( $this->userId, "attrWithNoValue", "someDefaultValue" ) );
+		$this->assertEquals( "Lebowski", $attributes->getAttribute( $this->userId, "nickName", "someDefaultValue" ) );
+	}
+	
+	public function testDefaultAttributesOverridesDefaultParameter() {
+		$defaultAttributes = [ "attr1" => "val1" ];
+		$attributes = new UserAttributes( $this->service, $defaultAttributes );
+
+		$this->assertEquals( "val1", $attributes->getAttribute( $this->userId, "attr1", "defaultValue" ) );
 	}
 
-	public function testSet() {
+	public function testSetAttribute() {
 		$this->setupServiceExpects();
 		$userAttributes = new UserAttributes( $this->service, [] );
 		$userAttributes->setAttribute( $this->userId, new Attribute( "newAttr", "foo" ) );
