@@ -38,6 +38,10 @@ abstract class InsightsPageModel extends InsightsModel {
 		return $this->page;
 	}
 
+	public function getPaginationUrlParams() {
+		return [];
+	}
+
 	/**
 	 * @return string A name of the page's template
 	 */

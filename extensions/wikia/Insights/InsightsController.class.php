@@ -265,7 +265,7 @@ class InsightsController extends WikiaSpecialPageController {
 	private function preparePagination() {
 		$total = $this->model->getTotalResultsNum();
 		$itemsPerPage = $this->model->getLimitResultsNum();
-		$params['page'] = '%s';
+		$params = array_merge( $this->model->getPaginationUrlParams(), [ 'page' => '%s' ] );
 
 		$sorting = $this->request->getVal( 'sort', null );
 		if ( $sorting ) {

@@ -14,6 +14,13 @@ class InsightsFlagsModel extends InsightsPageModel {
 		return self::INSIGHT_TYPE;
 	}
 
+	public function getPaginationUrlParams() {
+		if ( $this->flagTypeId ) {
+			return [ 'flagTypeId' => $this->flagTypeId ];
+		}
+		return [];
+	}
+
 	/**
 	 * A key of a message that wraps the number of pages referring to each item of the list.
 	 *
