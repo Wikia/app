@@ -15,6 +15,7 @@ use Flags\FlagsLogTask;
 use Flags\Models\Flag;
 use Flags\Models\FlagType;
 use Wikia\Logger\Loggable;
+use Flags\FlagsHelper;
 
 class FlagsApiController extends WikiaApiController {
 
@@ -526,6 +527,14 @@ class FlagsApiController extends WikiaApiController {
 		$flagTypesForWikia = $this->getFlagTypesForWikiaRawData( $wikiId );
 
 		return $flagsForPage + $flagTypesForWikia;
+	}
+
+	/**
+	 * Tries to get groups and targeting of flags available for the given wikia
+	 */
+	public function getGroupsAndTargetingAsJson() {
+		$this->response->setVal( 'groups', array_values( FlagsHelper::getFlagGroupsFullNames() ) );
+		$this->response->setVal( 'targeting', array_values( FlagsHelper::getFlagTargetFullNames() ) );
 	}
 
 	/**

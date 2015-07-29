@@ -10,10 +10,10 @@ define ('ext.wikia.Flags.FlagEditForm',
 			allFlagsNames = [];
 
 		function init(prefillData) {
-			$.when(getFormResources()).done(function (formResources) {
+			$.when(getFormResources()).done(function(dropdownOptions, formResources) {
+				formResources.dropdownOptions = dropdownOptions[0];
 				getAllFlagNames();
 				setupForm(formResources);
-
 				/** Check prefillData for undefined or null **/
 				if (prefillData == null) {
 					modalConfig.vars.type = 'create';
@@ -30,18 +30,22 @@ define ('ext.wikia.Flags.FlagEditForm',
 
 			/** Check formResources and formResources.resources for undefined or null **/
 			if (formResources == null || formResources.resources == null) {
-				formResources = loader({
-					type: loader.MULTI,
-					resources: {
-						messages: 'FlagsCreateForm',
-						mustache: '/extensions/wikia/Flags/specials/templates/SpecialFlags_createFlagForm.mustache,/extensions/wikia/Flags/specials/templates/createFormParam.mustache',
-						styles: '/extensions/wikia/Flags/specials/styles/CreateForm.scss'
-					}
-				});
-
+				formResources = $.when(
+					nirvana.sendRequest({
+						controller: 'FlagsApiController',
+						method: 'getGroupsAndTargetingAsJson'
+					}),
+					loader({
+						type: loader.MULTI,
+						resources: {
+							messages: 'FlagsCreateForm',
+							mustache: '/extensions/wikia/Flags/specials/templates/SpecialFlags_createFlagForm.mustache,/extensions/wikia/Flags/specials/templates/createFormParam.mustache',
+							styles: '/extensions/wikia/Flags/specials/styles/CreateForm.scss'
+						}
+					})
+				);
 				cache.set(getResourcesCacheKey(), formResources, cache.CACHE_LONG);
 			}
-
 			return formResources;
 		}
 
@@ -55,7 +59,8 @@ define ('ext.wikia.Flags.FlagEditForm',
 				template: formResources.mustache[0],
 				partials: {
 					createFormParam: formResources.mustache[1]
-				}
+				},
+				dropdownOptions: formResources.dropdownOptions
 			};
 
 			modalConfig = {
@@ -97,7 +102,7 @@ define ('ext.wikia.Flags.FlagEditForm',
 
 		function displayFormCreate() {
 			/* TODO - We can get a half-rendered template to avoid escaping messages in front-end */
-			var content = cache.get(getEmptyFormCacheKey());
+			var content = cache.get(getEmptyFormCacheKey(mw.user.options.values.language));
 			/** **/
 			if (content == null) {
 				var formParams = {
@@ -106,7 +111,7 @@ define ('ext.wikia.Flags.FlagEditForm',
 				};
 				content = mustache.to_html(formData.template, formParams, formData.partials);
 
-				cache.set(getEmptyFormCacheKey(), content, cache.CACHE_LONG);
+				cache.set(getEmptyFormCacheKey(mw.user.options.values.language), content, cache.CACHE_LONG);
 			}
 
 			modalConfig.vars.content = content;
@@ -258,67 +263,29 @@ define ('ext.wikia.Flags.FlagEditForm',
 			return resourcesCacheKey + ':' + cacheVersion;
 		}
 
-		function getEmptyFormCacheKey() {
-			return emptyFormCacheKey + ':' + cacheVersion;
+		function getEmptyFormCacheKey(lang) {
+			return emptyFormCacheKey + ':' + lang +':' + cacheVersion;
 		}
 
 		function getDropdownOptions(values) {
-			/* TODO - i18n and move it from here right now! */
-			values.groups = [
-				{
-					name: 'Spoiler',
-					value: 1
-				},
-				{
-					name: 'Disambiguation',
-					value: 2
-				},
-				{
-					name: 'Canon',
-					value: 3
-				},
-				{
-					name: 'Stub',
-					value: 4
-				},
-				{
-					name: 'Delete',
-					value: 5
-				},
-				{
-					name: 'Improvements',
-					value: 6
-				},
-				{
-					name: 'Status',
-					value: 7
-				},
-				{
-					name: 'Other',
-					value: 8
-				},
-			];
-			values.targeting = [
-				{
-					name: 'Readers',
-					value: 1
-				},
-				{
-					name: 'Contributors',
-					value: 2
-				},
-			];
+
+			values.groups = formData.dropdownOptions.groups;
+			values.targeting = formData.dropdownOptions.targeting;
 
 			if (values.selectedGroup != null) {
+				// mark selected group
 				for (var key in values.groups) {
 					if (values.groups[key].value === values.selectedGroup) {
 						values.groups[key].selected = true;
 						break;
 					}
 				}
+
 			}
 
+
 			if (values.selectedTargeting != null) {
+				// mark selected target
 				for (var key in values.targeting) {
 					if (values.targeting[key].value === values.selectedTargeting) {
 						values.targeting[key].selected = true;
