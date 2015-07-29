@@ -231,6 +231,8 @@ class FlagsApiController extends WikiaApiController {
 	 * @requestParam int flag_targeting A level of targeting: 1 -> readers, 2 -> contibutors, 3 -> admins
 	 *
 	 * Optional parameters:
+	 * @requestParam boolean fetch_params if set to true, tries to fetch all variables
+	 * 		in template passed via flag_view parameter
 	 * @requestParam string flag_params_names A JSON-encoded array of names of parameters
 	 * 		It's used for rendering inputs in the "Add a flag" form.
 	 */
@@ -294,7 +296,22 @@ class FlagsApiController extends WikiaApiController {
 		}
 	}
 
+	/**
+	 * Updates a flag type
+	 *
+	 * Required parameters:
+	 * @requestParam int flag_type_id
+	 *
+	 * Optional parameters:
+	 * @requestParam int flag_group One of the keys in flagGroups property of the FlagType model
+	 * @requestParam string flag_name A name of the flag (not longer than 128 characters)
+	 * @requestParam string flag_view A title of a template used for rendering the flag
+	 * @requestParam int flag_targeting A level of targeting: 1 -> readers, 2 -> contibutors, 3 -> admins
+	 * @requestParam string flags_params_names parameters names with its descriptions in JSON format
+	 */
 	public function updateFlagType() {
+		$this->checkAdminPermissions();
+
 		try {
 			$this->processRequest();
 
@@ -623,6 +640,8 @@ class FlagsApiController extends WikiaApiController {
 	}
 
 	/**
+	 * Fetch template variables from template markup
+	 *
 	 * @param string $template name of template treated as view and source of params
 	 * @return Array parameters
 	 */
