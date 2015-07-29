@@ -43,6 +43,16 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 	}
 
 	public function adContextDataProvider() {
+		$defaultParameters = [
+			'titleMockType' => 'article',
+			'flags' => [],
+			'expectedOpts' => [],
+			'expectedTargeting' => [],
+			'expectedProviders' => [],
+			'expectedForceProviders' => null,
+			'expectedSlots' => [],
+		];
+
 		return [
 			[ ],
 			[
@@ -152,6 +162,18 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 				'expectedOpts' => ['pageType' => 'search'],
 				'expectedTargeting' => ['pageType' => 'search', 'pageName' => 'Special:Search']
 			],
+
+			$defaultParameters + ['expectedMappings' => ['tv', 'ent']],
+
+			$defaultParameters + ['expectedMappings' => ['games', 'gaming']],
+
+			$defaultParameters + ['expectedMappings' => ['books', 'ent']],
+
+			$defaultParameters + ['expectedMappings' => ['comics', 'ent']],
+
+			$defaultParameters + ['expectedMappings' => ['lifestyle', 'life']],
+
+			$defaultParameters + ['expectedMappings' => ['not-existing', 'error']],
 		];
 	}
 
@@ -168,7 +190,8 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		$expectedTargeting = [],
 		$expectedProviders = [],
 		$expectedForcedProvider = null,
-		$expectedSlots = []
+		$expectedSlots = [],
+		$expectedMappings = ['other', 'life']
 	) {
 		$langCode = 'xx';
 		$artId = 777;
@@ -221,6 +244,7 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		// Mock WikiFactoryHub
 		$this->mockStaticMethod( 'WikiFactoryHub', 'getCategoryId', $catId );
 		$this->mockStaticMethod( 'WikiFactoryHub', 'getCategoryShort', $shortCat );
+		$this->mockStaticMethod( 'WikiFactoryHub', 'getWikiVertical', ['short'=>$expectedMappings[0]] );
 
 		// Mock HubService
 		$this->mockStaticMethod( 'HubService', 'getCategoryInfoForCity', (object) ['cat_name' => $vertical] );
@@ -248,6 +272,7 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 				'wikiDbName' => $dbName,
 				'wikiLanguage' => $langCode,
 				'wikiVertical' => $vertical,
+				'mappedVerticalName' => $expectedMappings[1]
 			],
 			'providers' => [
 			],
