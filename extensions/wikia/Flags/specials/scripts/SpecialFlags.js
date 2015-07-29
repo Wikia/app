@@ -1,6 +1,6 @@
 require(
-	['jquery', 'mw', 'wikia.nirvana', 'wikia.loader', 'ext.wikia.Flags.FlagEditForm'],
-	function ($, mw, nirvana, loader, FlagEditForm) {
+	['jquery', 'mw', 'wikia.nirvana', 'wikia.loader', 'ext.wikia.Flags.FlagEditForm', 'BannerNotification'],
+	function ($, mw, nirvana, loader, FlagEditForm, BannerNotification) {
 		'use strict';
 
 		var currentRow;
@@ -34,11 +34,12 @@ require(
 		}
 
 		function deleteFlagType(event) {
+			var flagTypeId = getFlagTypeId(event), flagName, confirmMessage;
+
 			event.preventDefault();
 
-			var flagTypeId = getFlagTypeId(event);
 			/** Checking flagTypeId for both undefined and null **/
-			if (flagTypeId == null) {
+			if (!flagTypeId) {
 				return false;
 			}
 
@@ -48,10 +49,10 @@ require(
 			}
 
 			/* TODO - Collect a # of articles using this flag - has to wait for CE-1817 */
-			var flagName = currentRow.find('.flags-special-list-item-name').data('flag-name'),
-				confirmMessage = mw.message('flags-special-autoload-delete-confirm', flagName);
+			flagName = currentRow.find('.flags-special-list-item-name').data('flag-name');
+			confirmMessage = mw.message('flags-special-autoload-delete-confirm', flagName);
 
-			if (confirm(confirmMessage.escaped())) {
+			if (window.confirm(confirmMessage.escaped())) {
 				hideTableRow(currentRow);
 				sendRequestDelete(flagTypeId);
 			}
@@ -105,7 +106,7 @@ require(
 		}
 
 		function getValuesFromTableRow(flagTypeId, row) {
-			var data = {};
+			var data = {}, flagParams, name;
 
 			data.flagTypeId = flagTypeId;
 			data.name = row.find('.flags-special-list-item-name').data('flag-name');
@@ -116,8 +117,8 @@ require(
 
 			data.params = [];
 
-			var flagParams = row.find('.flags-special-list-item-params').data('flag-params-names');
-			for (var name in flagParams) {
+			flagParams = row.find('.flags-special-list-item-params').data('flag-params-names');
+			for (name in flagParams) {
 				data.params.push({
 					name: name,
 					description: flagParams[name]
