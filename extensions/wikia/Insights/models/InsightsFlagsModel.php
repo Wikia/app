@@ -57,7 +57,8 @@ class InsightsFlagsModel extends InsightsPageModel {
 	 * Prepare data of articles - title, last revision, link etc.
 	 */
 	public function fetchArticlesData() {
-		$cacheKey = $this->getMemcKey( self::INSIGHTS_MEMC_ARTICLES_KEY, $this->flagTypeId );
+		$cacheKeyParam = self::INSIGHTS_MEMC_ARTICLES_KEY . ':' . $this->flagTypeId;
+		$cacheKey = $this->getMemcKey( $cacheKeyParam );
 		$articlesData = WikiaDataAccess::cache(
 			$cacheKey,
 			self::INSIGHTS_MEMC_TTL,

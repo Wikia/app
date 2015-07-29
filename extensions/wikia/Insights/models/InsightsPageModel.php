@@ -242,12 +242,11 @@ abstract class InsightsPageModel extends InsightsModel {
 	 * @param null|int $flagTypeId
 	 * @return String
 	 */
-	protected function getMemcKey( $params, $flagTypeId = null ) {
+	protected function getMemcKey( $params ) {
 		return wfMemcKey(
 			self::INSIGHTS_MEMC_PREFIX,
 			$this->getInsightType(),
 			$params,
-			$flagTypeId,
 			self::INSIGHTS_MEMC_VERSION
 		);
 	}
