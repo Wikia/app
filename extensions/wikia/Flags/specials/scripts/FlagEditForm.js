@@ -234,8 +234,9 @@ define ('ext.wikia.Flags.FlagEditForm',
 				flag_view: flagView,
 				flag_group: $('#flags-special-form-group option:selected').val(),
 				flag_targeting: $('#flags-special-form-targeting option:selected').val(),
-				flag_params_names: JSON.stringify(params)
-			}
+				flag_params_names: JSON.stringify(params),
+				fetch_params: 1
+			};
 		}
 
 		function getAllFlagNames() {
@@ -248,7 +249,7 @@ define ('ext.wikia.Flags.FlagEditForm',
 
 		function addNewParameterInput() {
 			var tbody = $('.flags-special-form-params-tbody'),
-				partial = mustache.to_html(formData.partials.createFormParam, {});
+				partial = mustache.to_html(formData.partials.createFormParam, {} );
 
 			tbody.append(partial);
 			$('.flags-special-form-param-delete-link').on('click', removeParameter);
