@@ -19,7 +19,7 @@ class UserAttributeTest extends PHPUnit_Framework_TestCase {
 	protected function setUp() {
 		$this->userId = 1;
 		$this->service = $this->getMockBuilder( AttributeService::class )
-			->setMethods( [ 'setAttribute', 'getAttributes' ] )
+			->setMethods( [ 'set', 'get', 'delete' ] )
 			->disableOriginalConstructor()
 			->disableAutoload()
 			->getMock();
@@ -69,7 +69,7 @@ class UserAttributeTest extends PHPUnit_Framework_TestCase {
 
 	protected function setupServiceExpects() {
 		$this->service->expects( $this->once( ))
-			->method( "getAttributes" )
+			->method( "get" )
 			->with( $this->userId )
 			->willReturn( array_map( function( $key, $value ) {
 				return new Attribute( $key, $value);

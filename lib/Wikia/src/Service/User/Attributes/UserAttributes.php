@@ -84,7 +84,7 @@ class UserAttributes {
 	 * @param Attribute $attribute
 	 */
 	private function setAttributeInService( $userId, $attribute ) {
-		return $this->attributeService->set( $userId, $attribute );
+		$this->attributeService->set( $userId, $attribute );
 	}
 
 	/**
