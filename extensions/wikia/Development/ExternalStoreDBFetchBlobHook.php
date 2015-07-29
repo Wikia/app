@@ -39,9 +39,25 @@ function ExternalStoreDBFetchBlobHook( $cluster, $id, $itemID, &$ret ) {
 	wfProfileIn( __METHOD__ );
 
 	// there's already blob text
-	if ($ret !== false) {
+	if ( $ret !== false ) {
 		wfProfileOut( __METHOD__ );
 		return true;
+	}
+
+	// PLATFORM-1381: don't try to fetch revisions from "dev-archive" cluster from production
+	// @see $wgDefaultExternalStore
+	global $wgDefaultExternalStore;
+
+	if ( is_array( $wgDefaultExternalStore ) ) {
+		list( $proto, $devCluster ) = explode( '://', $wgDefaultExternalStore[0], 2 );
+
+		if ( $cluster === $devCluster ) {
+			wfProfileOut( __METHOD__ );
+			$ret = false;
+
+			wfDebug( sprintf( "%s: blob #%d is missing on %s - won't check the production!\n", __METHOD__, $id, $cluster ) );
+			return true;
+		}
 	}
 
 	// wikia doesn't use $itemID
@@ -54,26 +70,26 @@ function ExternalStoreDBFetchBlobHook( $cluster, $id, $itemID, &$ret ) {
 
 	$response = json_decode( Http::get( $url, "default", array( 'noProxy' => true ) ) );
 
-	if( isset( $response->fetchblob ) ) {
+	if ( isset( $response->fetchblob ) ) {
 		$blob = isset( $response->fetchblob->blob ) ? $response->fetchblob->blob : false;
 		$hash = isset( $response->fetchblob->hash ) ? $response->fetchblob->hash : null;
 
-		if( $blob ) {
+		if ( $blob ) {
 			// pack to binary
 			$blob = pack( "H*", $blob );
 			$hash = md5( $blob );
 			// check md5 sum for binary
-			if(  $hash == $response->fetchblob->hash ) {
+			if (  $hash == $response->fetchblob->hash ) {
 				wfDebug( __METHOD__ . ": md5 sum match\n" );
 				$ret = $blob;
 
 				// now store blob in local database but only when it's Poznan's devbox
 				$isPoznanDevbox = ( F::app()->wg->DevelEnvironment === true && F::app()->wg->WikiaDatacenter == "poz" );
-				if( $isPoznanDevbox ) {
+				if ( $isPoznanDevbox ) {
 					wfDebug( __METHOD__ . ": this is poznań devbox\n" );
 					$store = new ExternalStoreDB();
 					$dbw = $store->getMaster( $cluster );
-					if( $dbw ) {
+					if ( $dbw ) {
 						wfDebug( __METHOD__ . ": storing blob $id on local storage $cluster\n" );
 						$dbw->insert(
 							$store->getTable( $dbw ),
