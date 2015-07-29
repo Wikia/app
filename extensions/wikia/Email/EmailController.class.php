@@ -333,7 +333,7 @@ abstract class EmailController extends \WikiaController {
 	protected function getLangForTracking() {
 		$lang = 'en';
 		if ( preg_match( '/^([^_-]+)/', $this->targetLang, $matches ) ) {
-			$lang = $matches[1];
+			$lang = strtolower( $matches[1] );
 		}
 
 		return in_array( $lang, self::TRACKED_LANGUAGES ) ? $lang : 'xx';
