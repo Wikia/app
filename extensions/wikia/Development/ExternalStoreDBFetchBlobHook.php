@@ -107,7 +107,7 @@ function ExternalStoreDBFetchBlobHook( $cluster, $id, $itemID, &$ret ) {
 		}
 	}
 	else {
-		wfDebug( sprintf( "%s: malformed response from API call (%s)\n", __METHOD__, json_encode( func_get_args() ) ) );
+		wfDebug( __METHOD__ . ": malformed response from API call\n" );
 	}
 	wfProfileOut( __METHOD__ );
 
