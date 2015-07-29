@@ -365,7 +365,6 @@ class FlagsApiController extends FlagsApiBaseController {
 
 	private function purgeFlaggedPages() {
 		( new FlaggedPagesCache() )->purgeAllFlagTypes();
-		( new InsightsFlagsModel() )->purgeFlagsInsights();
 	}
 
 	/**

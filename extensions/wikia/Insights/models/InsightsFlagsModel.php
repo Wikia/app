@@ -55,24 +55,9 @@ class InsightsFlagsModel extends InsightsPageModel {
 
 	/**
 	 * Prepare data of articles - title, last revision, link etc.
-	 */
-	public function fetchArticlesData() {
-		$cacheKeyParam = self::INSIGHTS_MEMC_ARTICLES_KEY . ':' . $this->flagTypeId;
-		$cacheKey = $this->getMemcKey( $cacheKeyParam );
-		$articlesData = WikiaDataAccess::cache(
-			$cacheKey,
-			self::INSIGHTS_MEMC_TTL,
-			[ $this, 'fetchArticlesDataCacheCallback' ]
-		);
-
-		return $articlesData;
-	}
-
-	/**
-	 * Callback method that retrieves and prepares pages data to be cached
 	 * @return array
 	 */
-	public function fetchArticlesDataCacheCallback() {
+	public function fetchArticlesData() {
 		$articlesData = [];
 		$flaggedPages = $this->sendFlaggedPagesRequest();
 
@@ -120,14 +105,6 @@ class InsightsFlagsModel extends InsightsPageModel {
 			$data[ $title->getArticleID() ] = $article;
 		}
 		return $data;
-	}
-
-	public function purgeFlagsInsights() {
-		$flagTypes = F::app()->sendRequest( 'FlagsApiController', 'getFlagTypes' )->getData()['data'];
-		foreach( $flagTypes as $flagType ) {
-			$cacheKey = $this->getMemcKey( self::INSIGHTS_MEMC_ARTICLES_KEY, $flagType['flag_type_id'] );
-			WikiaDataAccess::cachePurge( $cacheKey );
-		}
 	}
 
 	/**
