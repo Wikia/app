@@ -1,0 +1,37 @@
+@import 'skins/shared/color';
+@import 'PortableInfoboxVariables';
+
+.portable-infobox-builder {
+	background-color: $color-page;
+	padding: 20px 50px;
+	position: relative;
+	height: 500px;
+
+	.title {
+		margin-bottom: 50px;
+	}
+
+	.publish-btn {
+		position: absolute;
+		right: 50px;
+		top: 20px;
+	}
+
+	.infobox-preview,
+	.options-pannel {
+		float: left;
+		margin-right: 50px;
+		width: $infobox-width;
+	}
+
+	.options-pannel {
+		background-color: $color-unified-module-background;
+		box-sizing: border-box;
+		color: darken($color-unified-module-background, 30%);
+		font-size: 16px;
+		min-height: 249px;
+		overflow: hidden;
+		padding-top: 20px;
+		text-align: center;
+	}
+}

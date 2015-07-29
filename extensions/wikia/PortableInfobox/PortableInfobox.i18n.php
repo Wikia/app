@@ -17,7 +17,27 @@ $messages[ 'en' ] = [
 	'portable-infobox-xml-parse-error-tag-name-mismatch' => 'Opening and ending tag mismatch',
 	'portable-infobox-xml-parse-error-tag-not-finished' => 'Premature end of tag',
 	'portable-infobox-xml-parse-error-infobox-tag-attribute-unsupported' => 'Attribute "$1" is not supported in
-	<infobox> tag'
+	<infobox> tag',
+
+	// Infobox Builder UI
+	'portable-infobox-builder-publish-button' => 'Publish',
+	'portable-infobox-builder-title' => 'Infobox Builder',
+	'portable-infobox-builder-edit-element-options-placeholder' => 'options placeholder',
+
+	// Infobox builder edit params
+	'portable-infobox-builder-edit-summary' => 'InfoboxBuilder',
+
+	// Infobox builder preview elements text placeholders
+	'portable-infobox-builder-infobox-title-element-placeholder' => 'I\'m the Infobox Title',
+	'portable-infobox-builder-infobox-data-label-element-placeholder' => 'I\'m a Label',
+	'portable-infobox-builder-infobox-data-value-element-placeholder' => 'I\'m a Value',
+
+	// Infobox builder entry point modal
+	'portable-infobox-builder-entry-point-modal-title' => 'Do you want to create an infobox?',
+	'portable-infobox-builder-entry-point-modal-message' => 'Perhaps you are creating a new infobox template? Try out
+	our new Infobox builder UI tool.',
+	'portable-infobox-builder-entry-point-modal-ok-button' => 'Ok',
+	'portable-infobox-builder-entry-point-modal-cancel-button' => 'Cancel',
 ];
 
 $messages[ 'qqq' ] = [
@@ -34,6 +54,33 @@ $messages[ 'qqq' ] = [
 	'portable-infobox-xml-parse-error-gt-required' => 'XML Error: could not find end of tag definition (for example: <data><label </data>',
 	'portable-infobox-xml-parse-error-tag-name-mismatch' => 'XML Error: Opening and ending tag mismatch (for example: <data></label>)',
 	'portable-infobox-xml-parse-error-tag-not-finished' => 'XML Error: premature end of tag',
-	'portable-infobox-xml-parse-error-infobox-tag-attribute-unsupported' => 'Unsupported attribute used inside <infobox> tag. $1 param contains attribute name.'
+	'portable-infobox-xml-parse-error-infobox-tag-attribute-unsupported' => 'Unsupported attribute used inside
+	<infobox> tag. $1 param contains attribute name.',
 
+	// Infobox Builder UI
+	'portable-infobox-builder-publish-button' => 'Button for publishing infobox created using portable infobox
+	builder UI tool',
+	'portable-infobox-builder-title' => 'Title for Infobox Builder UI tool',
+	'portable-infobox-builder-edit-element-options-placeholder' => 'Placeholder text shown in infobox element edit
+	options panel displayed when no element is selected for editing',
+
+	// Infobox builder edit params
+	'portable-infobox-builder-edit-summary' => 'Edit summary for infobox template edit indication that this infobox
+	template was created by Infobox Builder UI tool',
+
+	// Infobox builder preview elements text placeholders
+	'portable-infobox-builder-infobox-title-element-placeholder' => 'Placeholder text for infobox live preview title
+	element',
+	'portable-infobox-builder-infobox-data-label-element-placeholder' => 'Placeholder text for infobox live preview
+	label element',
+	'portable-infobox-builder-infobox-data-value-element-placeholder' => 'Placeholder text for infobox live preview
+	data value element',
+
+	// Infobox builder entry point modal
+	'portable-infobox-builder-entry-point-modal-title' => 'Title for portable infobox builder entry point modal on
+	edit page with a question: Do you want to create infobox?',
+	'portable-infobox-builder-entry-point-modal-message' => 'Message in portable infobox builder asking if user wants
+	 to create an infobox and if she / he would like to use new Infobox Builder UI tool.',
+	'portable-infobox-builder-entry-point-modal-ok-button' => 'Ok button',
+	'portable-infobox-builder-entry-point-modal-cancel-button' => 'Cancel button',
 ];
