@@ -156,7 +156,7 @@ class UserLoginHelper extends WikiaModel {
 		}
 
 		$cbParam = 'cb=' . ( $cbVal ? $cbVal : rand( 1, 10000 ) );
-		$returnParams = urldecode( $this->wg->Request->getVal( 'returntoquery', '' ) );
+		$returnParams = $this->wg->Request->getVal( 'returntoquery', '' );
 
 		if ( !empty( $extraReturnToQuery ) ) {
 			$returnParams .= ( empty( $returnParams ) ? '' : '&' ) . $extraReturnToQuery;
