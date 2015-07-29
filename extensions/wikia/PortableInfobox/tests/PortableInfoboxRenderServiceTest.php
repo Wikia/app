@@ -14,75 +14,38 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 	 *
 	 * @return PHPUnit_Framework_MockObject_MockObject
 	 */
-	private function getInfoboxRenderServiceMock( $input )
-	{
-		$isInvalidImage = isset( $input[ 'isInvalidImage' ] ) && $input[ 'isInvalidImage' ];
+	private function mockInfoboxRenderServiceHelper( $input ) {
+		$isInfoboxHeroEnabled = isset( $input[ 'isInfoboxHeroEnabled' ] ) && $input[ 'isInfoboxHeroEnabled' ];
+		$isValidHeroDataItem = isset( $input[ 'isValidHeroDataItem' ] ) && $input[ 'isValidHeroDataItem' ];
 		$isWikiaMobile = isset( $input[ 'isWikiaMobile' ] ) && $input[ 'isWikiaMobile' ];
-		$fileWidth = isset( $input[ 'fileWidth' ] ) ? $input[ 'fileWidth' ] : null;
+		$createHorizontalGroupData = isset( $input[ 'createHorizontalGroupData' ] ) ?
+			$input[ 'createHorizontalGroupData' ] : null;
+		$extendImageData = isset( $input[ 'extendImageData' ] ) ? $input[ 'extendImageData' ] : null;
 
-		$mockThumbnailImage = $isInvalidImage ? false : $this->getThumbnailImageMock( $input );
-
-		$mock = $this->getMockBuilder( 'PortableInfoboxRenderService' )
-			->setMethods( [ 'getThumbnail', 'isWikiaMobile', 'getFileWidth' ] )
+		$mock = $this->getMockBuilder( 'Wikia\PortableInfobox\Helpers\PortableInfoboxRenderServiceHelper' )
+			->setMethods( [ 'isInfoboxHeroEnabled', 'isValidHeroDataItem', 'validateType', 'isWikiaMobile',
+				'createHorizontalGroupData', 'extendImageData' ] )
 			->getMock();
+		$mock->expects( $this->any() )
+			->method( 'isInfoboxHeroEnabled' )
+			->will( $this->returnValue( $isInfoboxHeroEnabled ) );
+		$mock->expects( $this->any() )
+			->method( 'isValidHeroDataItem' )
+			->will( $this->returnValue( $isValidHeroDataItem ) );
+		$mock->expects( $this->any() )
+			->method( 'validateType' )
+			->will( $this->returnValue( true ) );
 		$mock->expects( $this->any() )
 			->method( 'isWikiaMobile' )
 			->will( $this->returnValue( $isWikiaMobile ) );
 		$mock->expects( $this->any() )
-			->method( 'getThumbnail' )
-			->will( $this->returnValue( $mockThumbnailImage ) );
+			->method( 'createHorizontalGroupData' )
+			->will( $this->returnValue( $createHorizontalGroupData ) );
 		$mock->expects( $this->any() )
-			->method( 'getFileWidth' )
-			->will( $this->returnValue( $fileWidth ) );
+			->method( 'extendImageData' )
+			->will( $this->returnValue( $extendImageData ) );
 
-		return $mock;
-	}
-
-	/**
-	 * @desc Returns the ThumbnailImage with hardcoded values returned by
-	 * 'getUrl', 'getWidth' and 'getHeight' functions.
-	 * Although the thumbnail dimensions can be bigger, we have to verify that image is not
-	 * upsampled - we need to mock the File and it's dimensions as well.
-	 * File mock can be removed when https://wikia-inc.atlassian.net/browse/PLATFORM-1359
-	 * hit the production.
-	 * @param $input
-	 * @return PHPUnit_Framework_MockObject_MockObject
-	 */
-	private function getThumbnailImageMock( $input ) {
-		if ( isset( $input[ 'smallImageDimensions' ] ) ) {
-			$fileWidth = $fileHeight = $input[ 'smallImageDimensions' ];
-		} else {
-			$fileWidth = 400;
-			$fileHeight = 200;
-		}
-
-		$mockThumbnailImage = $this->getMockBuilder( 'ThumbnailImage' )
-			->setMethods( [ 'getUrl', 'getWidth', 'getHeight' ] )
-			->getMock();
-		$mockThumbnailImage->expects( $this->any() )
-			->method( 'getUrl' )
-			->will( $this->returnValue( 'http://image.jpg' ) );
-		$mockThumbnailImage->expects( $this->any() )
-			->method( 'getWidth' )
-			->will( $this->returnValue( 400 ) );
-		$mockThumbnailImage->expects( $this->any() )
-			->method( 'getHeight' )
-			->will( $this->returnValue( 200 ) );
-
-		$mockFile = $this->getMockBuilder( 'File' )
-			->disableOriginalConstructor()
-			->setMethods( [ 'getWidth', 'getHeight' ] )
-			->getMock();
-		$mockFile->expects( $this->any() )
-			->method( 'getWidth' )
-			->will( $this->returnValue( $fileWidth ) );
-		$mockFile->expects( $this->any() )
-			->method( 'getHeight' )
-			->will( $this->returnValue( $fileHeight ) );
-
-		$mockThumbnailImage->file = $mockFile;
-
-		return $mockThumbnailImage;
+		$this->mockClass( 'Wikia\PortableInfobox\Helpers\PortableInfoboxRenderServiceHelper', $mock );
 	}
 
 	/**
@@ -104,8 +67,10 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 	 * @param $description
 	 * @dataProvider testRenderInfoboxDataProvider
 	 */
-	public function testRenderInfobox( $input, $expectedOutput, $description ) {
-		$infoboxRenderService = $this->getInfoboxRenderServiceMock( $input );
+	public function testRenderInfobox( $input, $expectedOutput, $description, $mockParams ) {
+		$this->mockInfoboxRenderServiceHelper( $mockParams );
+
+		$infoboxRenderService = new PortableInfoboxRenderService();
 		$actualOutput = $infoboxRenderService->renderInfobox( $input );
 
 		$expectedHtml = $this->normalizeHTML( $expectedOutput) ;
@@ -144,7 +109,9 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 						'data' => [
 							'alt' => 'image alt',
 							'url' => 'http://image.jpg',
-							'caption' => 'Lorem ipsum dolor'
+							'caption' => 'Lorem ipsum dolor',
+							'name' => 'image',
+							'key' => 'image'
 						]
 					]
 				],
@@ -152,13 +119,25 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 								<div class="portable-infobox-item item-type-image no-margins">
 									<figure class="portable-infobox-image-wrapper">
 										<a href="http://image.jpg" class="image image-thumbnail" title="image alt">
-											<img src="http://image.jpg" class="portable-infobox-image" alt="image alt" width="400" height="200" data-image-key="" data-image-name=""/>
+											<img src="http://thumbnail.jpg" class="portable-infobox-image" alt="image alt" width="400" height="200" data-image-key="image" data-image-name="image"/>
 										</a>
 										<figcaption class="portable-infobox-item-margins portable-infobox-image-caption">Lorem ipsum dolor</figcaption>
 									</figure>
 								</div>
 							</aside>',
-				'description' => 'Only image'
+				'description' => 'Only image',
+				'mockParams' => [
+					'extendImageData' => [
+						'alt' => 'image alt',
+						'url' => 'http://image.jpg',
+						'caption' => 'Lorem ipsum dolor',
+						'name' => 'image',
+						'key' => 'image',
+						'width' => '400',
+						'height' => '200',
+						'thumbnail' => 'http://thumbnail.jpg'
+					]
+				]
 			],
 			[
 				'input' => [
@@ -204,7 +183,9 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 						'type' => 'image',
 						'data' => [
 							'alt' => 'image alt',
-							'value' => 'http://image.jpg'
+							'url' => 'http://image.jpg',
+							'name' => 'image',
+							'key' => 'image'
 						]
 					],
 					[
@@ -221,8 +202,8 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 								</div>
 								<div class="portable-infobox-item item-type-image no-margins">
 									<figure class="portable-infobox-image-wrapper">
-										<a href="" class="image image-thumbnail" title="image alt">
-											<img src="http://image.jpg" class="portable-infobox-image" alt="image alt" width="400" height="200" data-image-key="" data-image-name=""/>
+										<a href="http://image.jpg" class="image image-thumbnail" title="image alt">
+											<img src="http://thumbnail.jpg" class="portable-infobox-image" alt="image alt" width="400" height="200" data-image-key="image" data-image-name="image"/>
 										</a>
 									</figure>
 								</div>
@@ -231,53 +212,21 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 									<div class="portable-infobox-item-value">test value</div>
 									</div>
 							</aside>',
-				'description' => 'Simple infobox with title, image and key-value pair'
-			],
-			[
-				'input' => [
-					'smallImageDimensions' => 100,
-					[
-						'type' => 'title',
-						'data' => [
-							'value' => 'Test Title'
-						]
-					],
-					[
-						'type' => 'image',
-						'data' => [
-							'alt' => 'image alt',
-							'value' => 'http://image.jpg'
-						]
-					],
-					[
-						'type' => 'data',
-						'data' => [
-							'label' => 'test label',
-							'value' => 'test value'
-						]
+				'description' => 'Simple infobox with title, image and key-value pair',
+				'mockParams' => [
+					'extendImageData' => [
+						'alt' => 'image alt',
+						'url' => 'http://image.jpg',
+						'name' => 'image',
+						'key' => 'image',
+						'width' => '400',
+						'height' => '200',
+						'thumbnail' => 'http://thumbnail.jpg'
 					]
-				],
-				'output' => '<aside class="portable-infobox">
-								<div class="portable-infobox-item item-type-title portable-infobox-item-margins">
-									<h2 class="portable-infobox-title">Test Title</h2>
-								</div>
-								<div class="portable-infobox-item item-type-image no-margins">
-									<figure class="portable-infobox-image-wrapper">
-										<a href="" class="image image-thumbnail" title="image alt">
-											<img src="http://image.jpg" class="portable-infobox-image" alt="image alt" width="100" height="100" data-image-key="" data-image-name=""/>
-										</a>
-									</figure>
-								</div>
-								<div class="portable-infobox-item item-type-key-val portable-infobox-item-margins">
-									<h3 class="portable-infobox-item-label portable-infobox-secondary-font">test label</h3>
-									<div class="portable-infobox-item-value">test value</div>
-									</div>
-							</aside>',
-				'description' => 'Simple infobox with title, small (100x100px) image and key-value pair'
+				]
 			],
 			[
 				'input' => [
-					'isInvalidImage' => true,
 					[
 						'type' => 'title',
 						'data' => [
@@ -399,7 +348,14 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 								[
 									'type' => 'header',
 									'data' => [
-										'value' => 'Test Header'
+										'value' => 'Test header'
+									]
+								],
+								[
+									'type' => 'data',
+									'data' => [
+										'label' => 'test label',
+										'value' => 'test value'
 									]
 								],
 								[
@@ -416,16 +372,34 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 				],
 				'output' => '<aside class="portable-infobox">
 								<section class="portable-infobox-item item-type-group group-layout-horizontal">
-									<div class="portable-infobox-item item-type-header portable-infobox-item-margins portable-infobox-secondary-background">
-										<h2 class="portable-infobox-header portable-infobox-secondary-font">Test Header</h2>
-									</div>
-									<div class="portable-infobox-item item-type-key-val portable-infobox-item-margins">
-										<h3 class="portable-infobox-item-label portable-infobox-secondary-font">test label</h3>
-										<div class="portable-infobox-item-value">test value</div>
-									</div>
+									<table class="portable-infobox-horizontal-group-content">
+										<caption
+										class="portable-infobox-header portable-infobox-secondary-font portable-infobox-secondary-background">Test header</caption>
+										<thead>
+											<tr>
+												<th
+												class="portable-infobox-horizontal-group-item portable-infobox-item-label portable-infobox-secondary-font">test label</th>
+												<th
+												class="portable-infobox-horizontal-group-item portable-infobox-item-label portable-infobox-secondary-font">test label</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td class="portable-infobox-horizontal-group-item portable-infobox-item-value">test value</td>
+												<td class="portable-infobox-horizontal-group-item portable-infobox-item-value">test value</td>
+											</tr>
+										</tbody>
+									</table>
 								</section>
 							</aside>',
-				'description' => 'Infobox with title and horizontal group'
+				'description' => 'Infobox with title and horizontal group',
+				'mockParams' => [
+					'createHorizontalGroupData' => [
+						'header' => 'Test header',
+						'labels' => ['test label', 'test label'],
+						'values' => ['test value', 'test value'],
+					]
+				]
 			],
 			[
 				'input' => [
@@ -445,16 +419,14 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 			],
 			[
 				'input' => [
-					'isWikiaMobile' => true,
-					'fileWidth' => '450',
 					[
 						'type' => 'image',
 						'data' => [
 							'alt' => 'image alt',
 							'url' => 'http://image.jpg',
-							'thumbnail' => 'thumbnail.jpg',
 							'ref' => 1,
-							'name' => 'test1'
+							'name' => 'test1',
+							'key' => 'test1'
 						]
 					]
 				],
@@ -463,100 +435,24 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 									<img src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D" data-src="http://image.jpg" class="portable-infobox-image lazy media article-media" alt="image alt"  data-image-key="test1" data-image-name="test1" data-ref="1" data-params=\'[{"name":"test1", "full":"http://image.jpg"}]\' />
 								</div>
 							</aside>',
-				'description' => 'Mobile: Only image. Image is not small- should render hero.'
-			],
-			[
-				'input' => [
-					'isWikiaMobile' => true,
-					'fileWidth' => '290',
-					[
-						'type' => 'image',
-						'data' => [
-							'alt' => 'image alt',
-							'url' => 'http://image.jpg',
-							'thumbnail' => 'thumbnail.jpg',
-							'ref' => 1,
-							'name' => 'test1'
-						]
-					]
-				],
-				'output' => '<aside class="portable-infobox">
-								<div class="portable-infobox-item item-type-image no-margins">
-									<img src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D" data-src="http://image.jpg" class="portable-infobox-image lazy media article-media" alt="image alt"  data-image-key="test1" data-image-name="test1" data-ref="1" data-params=\'[{"name":"test1", "full":"http://image.jpg"}]\' />
-								</div>
-							</aside>',
-				'description' => 'Mobile: A small image. Should not render hero'
-			],
-			[
-			'input' => [
-				'isInvalidImage' => true,
-				'isWikiaMobile' => true,
-				[
-					'type' => 'title',
-					'data' => [
-						'value' => 'Test Title'
-					]
-				],
-				[
-					'type' => 'image',
-					'data' => []
-				],
-				[
-					'type' => 'data',
-					'data' => [
-						'label' => 'test label',
-						'value' => 'test value'
+				'description' => 'Mobile: Only image. Image is not small- should render hero.',
+				'mockParams' => [
+					'isInfoboxHeroEnabled' => true,
+					'isValidHeroDataItem' => true,
+					'extendImageData' => [
+						'alt' => 'image alt',
+						'url' => 'http://image.jpg',
+						'name' => 'test1',
+						'key' => 'test1',
+						'ref' => 1,
+						'width' => '400',
+						'height' => '200',
+						'thumbnail' => 'http://image.jpg'
 					]
 				]
 			],
-			'output' => '<aside class="portable-infobox">
-								<div class="portable-infobox-item item-type-title portable-infobox-item-margins">
-									<h2 class="portable-infobox-title">Test Title</h2>
-								</div>
-								<div class="portable-infobox-item item-type-key-val portable-infobox-item-margins">
-									<h3 class="portable-infobox-item-label portable-infobox-secondary-font">test label</h3>
-									<div class="portable-infobox-item-value">test value</div>
-									</div>
-							</aside>',
-			'description' => 'Mobile: Simple infobox with title, INVALID image and key-value pair'
-		],
-		[
-			'input' => [
-				'isInvalidImage' => true,
-				'isWikiaMobile' => true,
-				[
-					'type' => 'title',
-					'data' => [
-						'value' => 'Test Title'
-					]
-				],
-				[
-					'type' => 'image',
-					'data' => []
-				],
-				[
-					'type' => 'data',
-					'data' => [
-						'label' => 'test label',
-						'value' => 'test value'
-					]
-				]
-			],
-			'output' => '<aside class="portable-infobox">
-							<div class="portable-infobox-item item-type-title portable-infobox-item-margins">
-								<h2 class="portable-infobox-title">Test Title</h2>
-							</div>
-							<div class="portable-infobox-item item-type-key-val portable-infobox-item-margins">
-								<h3 class="portable-infobox-item-label portable-infobox-secondary-font">test label</h3>
-								<div class="portable-infobox-item-value">test value</div>
-								</div>
-						</aside>',
-			'description' => 'Mobile: Simple infobox with title, INVALID image and key-value pair'
-			],
 			[
 				'input' => [
-					'isWikiaMobile' => true,
-					'fileWidth' => '450',
 					[
 						'type' => 'title',
 						'data' => [
@@ -567,15 +463,9 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 						'type' => 'image',
 						'data' => [
 							'url' => 'http://image.jpg',
-							'thumbnail' => 'thumbnail.jpg',
+							'name' => 'test1',
+							'key' => 'test1',
 							'ref' => 44
-						]
-					],
-					[
-						'type' => 'data',
-						'data' => [
-							'label' => 'test label',
-							'value' => 'test value'
 						]
 					]
 				],
@@ -584,14 +474,24 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 								<hgroup class="portable-infobox-hero-title-wrapper portable-infobox-item-margins">
 									<h2 class="portable-infobox-hero-title">Test Title</h2>
 								</hgroup>
-								<img src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D" data-src="http://image.jpg" class="portable-infobox-image lazy media article-media" alt="" data-image-key="" data-image-name="" data-ref="44" data-params=\'[{"name":"", "full":"http://image.jpg"}]\'/>
+								<img src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D" data-src="thumbnail.jpg" class="portable-infobox-image lazy media article-media" alt="" data-image-key="test1" data-image-name="test1" data-ref="44" data-params=\'[{"name":"test1", "full":"http://image.jpg"}]\'/>
 							</div>
-							<div class="portable-infobox-item item-type-key-val portable-infobox-item-margins">
-								<h3 class="portable-infobox-item-label portable-infobox-secondary-font">test label</h3>
-								<div class="portable-infobox-item-value">test value</div>
-								</div>
 						</aside>',
-				'description' => 'Mobile: Infobox with title with HTML tags, image and key-value pair'
+				'description' => 'Mobile: Infobox with full hero module with title with HTML tags',
+				'mockParams' => [
+					'isInfoboxHeroEnabled' => true,
+					'isValidHeroDataItem' => true,
+					'isWikiaMobile' => true,
+					'extendImageData' => [
+						'url' => 'http://image.jpg',
+						'name' => 'test1',
+						'key' => 'test1',
+						'ref' => 44,
+						'width' => '400',
+						'height' => '200',
+						'thumbnail' => 'thumbnail.jpg'
+					]
+				]
 			]
 		];
 	}
