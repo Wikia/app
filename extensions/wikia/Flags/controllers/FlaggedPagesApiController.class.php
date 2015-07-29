@@ -55,15 +55,15 @@ class FlaggedPagesApiController extends FlagsApiBaseController {
 
 		if ( !$flaggedPages ) {
 			$flagModel = new FlaggedPages();
-			$flagsForPage = $flagModel->getFlaggedPagesFromDatabase(
+			$flaggedPages = $flagModel->getFlaggedPagesFromDatabase(
 				$wikiId,
 				$flagTypeId
 			);
 
-			$flagsCache->set( $flagsForPage, $flagTypeId );
+			$flagsCache->set( $flaggedPages, $flagTypeId );
 		}
 
-		return $flagsForPage;
+		return $flaggedPages;
 	}
 
 }
