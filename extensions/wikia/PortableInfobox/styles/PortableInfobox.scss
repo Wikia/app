@@ -2,19 +2,7 @@
 @import 'skins/shared/mixins/columns';
 @import 'skins/shared/mixins/flexbox';
 
-$infobox-width: 270px;
-// temporary value used to mach with Khal Drogo Infobox
-$infobox-margin: 15px;
-$infobox-item-margin: 5px;
-$infobox-background: mix($color-page, $color-links, 90%);
-@if ($is-dark-wiki) {
-	$infobox-background: mix($color-page, $color-links, 85%);
-}
-
-$infobox-section-header-background: mix($color-page, $color-links, 75%);
-$infobox-debug-line-number-width: 50px;
-$infobox-debug-error-msg-color: white;
-$infobox-debug-error-msg-bg: black;
+@import 'PortableInfoboxVariables';
 
 .portable-infobox {
 	background-color: $infobox-background;
@@ -47,6 +35,7 @@ $infobox-debug-error-msg-bg: black;
 	}
 
 	.portable-infobox-image-wrapper {
+		margin: 0;
 		text-align: center;
 	}
 

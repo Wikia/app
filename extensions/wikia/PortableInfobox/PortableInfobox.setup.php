@@ -52,17 +52,24 @@ $wgAutoloadClasses[ 'PortableInfoboxParserTagController' ] = $dir . 'controllers
 $wgAutoloadClasses[ 'ApiPortableInfobox' ] = $dir . 'controllers/ApiPortableInfobox.class.php';
 $wgAutoloadClasses[ 'ApiQueryPortableInfobox' ] = $dir . 'controllers/ApiQueryPortableInfobox.class.php';
 $wgAutoloadClasses[ 'PortableInfoboxHooks' ] = $dir . 'PortableInfoboxHooks.class.php';
+$wgAutoloadClasses[ 'PortableInfoboxBuilderController' ] = $dir . 'controllers/PortableInfoboxBuilderController.class.php';
 
 // hooks
 $wgHooks['ParserFirstCallInit'][] = 'PortableInfoboxParserTagController::parserTagInit';
 $wgHooks['ParserTagHooksBeforeInvoke'][] = 'PortableInfoboxHooks::onParserTagHooksBeforeInvoke';
 $wgHooks['BeforePageDisplay'][] = 'PortableInfoboxHooks::onBeforePageDisplay';
+$wgHooks['SkinAfterBottomScripts'][] = 'PortableInfoboxHooks::onSkinAfterBottomScripts';
 $wgHooks['ParserAfterTidy'][] = 'PortableInfoboxParserTagController::replaceInfoboxMarkers';
 $wgHooks['ImageServing::buildAndGetIndex'][] = 'PortableInfoboxHooks::onImageServingCollectImages';
-
-// i18n mapping
-$wgExtensionMessagesFiles[ 'PortableInfobox' ] = $dir . 'PortableInfobox.i18n.php';
+$wgHooks['EditPageLayoutExecute'][] = 'PortableInfoboxHooks::onEditPageLayoutExecute';
 
 // MW API
 $wgAPIModules['infobox'] = 'ApiPortableInfobox';
 $wgAPIPropModules[ 'infobox' ] = 'ApiQueryPortableInfobox';
+
+// i18n mapping
+$wgExtensionMessagesFiles[ 'PortableInfobox' ] = $dir . 'PortableInfobox.i18n.php';
+
+JSMessages::registerPackage( 'PortableInfoboxBuilder', [
+	'portable-infobox-builder-entry-point-modal-*'
+] );
