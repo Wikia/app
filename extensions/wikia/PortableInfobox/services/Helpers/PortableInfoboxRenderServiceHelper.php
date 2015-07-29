@@ -81,6 +81,7 @@ class PortableInfoboxRenderServiceHelper {
 		$data[ 'width' ] = min( $thumbnail->getWidth(), $thumbnail->file->getWidth() );
 		$data[ 'thumbnail' ] = $thumbnail->getUrl();
 		$data[ 'key' ] = urlencode( $data[ 'key' ] );
+		$data[ 'media-type' ] = $data[ 'isVideo' ] ? 'video' : 'image';
 
 		return $data;
 	}

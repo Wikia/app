@@ -109,7 +109,10 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 						'data' => [
 							'alt' => 'image alt',
 							'url' => 'http://image.jpg',
-							'caption' => 'Lorem ipsum dolor'
+							'name' => 'image',
+							'key' => 'image',
+							'caption' => 'Lorem ipsum dolor',
+							'isVideo' => false
 						]
 					]
 				],
@@ -133,7 +136,57 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 						'key' => 'image',
 						'width' => '400',
 						'height' => '200',
-						'thumbnail' => 'http://thumbnail.jpg'
+						'thumbnail' => 'http://thumbnail.jpg',
+						'media-type' => 'image',
+						'isVideo' => false
+					]
+				]
+			],
+			[
+				'input' => [
+					[
+						'type' => 'image',
+						'data' => [
+							'alt' => 'image alt',
+							'url' => 'http://image.jpg',
+							'caption' => 'Lorem ipsum dolor',
+							'isVideo' => true,
+							'duration' => '1:20',
+							'name' => 'test',
+							'key' => 'test'
+						]
+					]
+				],
+				'output' => '<aside class="portable-infobox">
+								<div class="portable-infobox-item item-type-image no-margins">
+									<figure class="portable-infobox-image-wrapper">
+										<a href="http://image.jpg"
+										class="image image-thumbnail video video-thumbnail small"
+										title="image alt">
+											<img src="http://thumbnail.jpg" class="portable-infobox-image"
+											alt="image alt" width="400" height="200" data-video-key="image"
+											data-video-name="image"/>
+											<span class="duration" itemprop="duration">1:20</span>
+											<span class="play-circle"></span>
+										</a>
+										<figcaption class="portable-infobox-item-margins portable-infobox-image-caption">Lorem ipsum dolor</figcaption>
+									</figure>
+								</div>
+							</aside>',
+				'description' => 'Only video',
+				'mockParams' => [
+					'extendImageData' => [
+						'alt' => 'image alt',
+						'url' => 'http://image.jpg',
+						'caption' => 'Lorem ipsum dolor',
+						'name' => 'image',
+						'key' => 'image',
+						'width' => '400',
+						'height' => '200',
+						'thumbnail' => 'http://thumbnail.jpg',
+						'media-type' => 'video',
+						'isVideo' => true,
+						'duration' => '1:20'
 					]
 				]
 			],
@@ -183,7 +236,8 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 							'alt' => 'image alt',
 							'url' => 'http://image.jpg',
 							'name' => 'image',
-							'key' => 'image'
+							'key' => 'image',
+							'isVideo' => false
 						]
 					],
 					[
@@ -219,7 +273,9 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 						'key' => 'image',
 						'width' => '400',
 						'height' => '200',
-						'thumbnail' => 'http://thumbnail.jpg'
+						'thumbnail' => 'http://thumbnail.jpg',
+						'media-type' => 'image',
+						'isVideo' => false
 					]
 				]
 			],
@@ -424,7 +480,8 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 							'url' => 'http://image.jpg',
 							'ref' => 1,
 							'name' => 'test1',
-							'key' => 'test1'
+							'key' => 'test1',
+							'isVideo' => false
 						]
 					]
 				],
@@ -445,7 +502,9 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 						'ref' => 1,
 						'width' => '400',
 						'height' => '200',
-						'thumbnail' => 'http://image.jpg'
+						'thumbnail' => 'http://image.jpg',
+						'media-type' => 'image',
+						'isVideo' => false
 					]
 				]
 			],
@@ -463,7 +522,8 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 							'url' => 'http://image.jpg',
 							'name' => 'test1',
 							'key' => 'test1',
-							'ref' => 44
+							'ref' => 44,
+							'isVideo' => false
 						]
 					]
 				],
@@ -486,7 +546,9 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 						'ref' => 44,
 						'width' => '400',
 						'height' => '200',
-						'thumbnail' => 'thumbnail.jpg'
+						'thumbnail' => 'thumbnail.jpg',
+						'isVideo' => false,
+						'media-type' => 'image'
 					]
 				]
 			]
