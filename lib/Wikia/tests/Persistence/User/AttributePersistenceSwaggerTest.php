@@ -35,7 +35,7 @@ class AttributePersistenceSwaggerTest extends \PHPUnit_Framework_TestCase {
 			->disableAutoload()
 			->getMock();
 		$this->userAttributesApi = $this->getMockBuilder( UsersAttributesApi::class )
-			->setMethods( [ 'saveAttributeForUser', 'getAllAttributesForUser' ] )
+			->setMethods( [ 'saveAttributeForUser', 'getAllAttributesForUser', 'deleteAttributeForUser' ] )
 			->disableOriginalConstructor()
 			->disableAutoload()
 			->getMock();
@@ -125,6 +125,14 @@ class AttributePersistenceSwaggerTest extends \PHPUnit_Framework_TestCase {
 			->willThrowException( new ApiException( "", ForbiddenException::CODE ) );
 
 		$this->persistence->saveAttribute( $this->userId, $this->attribute );
+	}
+
+	public function testDeleteAttributeSuccess() {
+		$this->userAttributesApi->expects( $this->once( ))
+			->method( 'deleteAttributeForUser' )
+			->with( $this->userId, $this->attribute->getName() );
+
+		$this->assertTrue( $this->persistence->deleteAttribute( $this->userId, $this->attribute ) );
 	}
 
 	private function setUpGetAttributesHalResponse(){

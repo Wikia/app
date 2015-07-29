@@ -20,40 +20,40 @@ class AttributeKeyValueTest extends \PHPUnit_Framework_TestCase {
 		$this->testAttribute_2 = new Attribute( "attr-2-name", "attr-2-value" );
 		$this->testAttributes = [ $this->testAttribute_1, $this->testAttribute_2 ];
 		$this->persistenceMock = $this->getMockBuilder( AttributePersistence::class )
-			->setMethods( [ 'saveAttribute', 'getAttributes' ] )
+			->setMethods( [ 'saveAttribute', 'getAttributes', 'deleteAttribute' ] )
 			->disableOriginalConstructor()
 			->disableAutoload()
 			->getMock();
 	}
 
-	public function testSetAttributeSuccess() {
+	public function testSetSuccess() {
 		$this->persistenceMock->expects( $this->once() )
 			->method( 'saveAttribute' )
 			->with( $this->userId, $this->testAttribute_1 )
 			->willReturn( true );
 
 		$service = new AttributeKeyValueService( $this->persistenceMock );
-		$ret = $service->setAttribute( $this->userId,  $this->testAttribute_1 );
+		$ret = $service->set( $this->userId,  $this->testAttribute_1 );
 
 		$this->assertTrue( $ret, "the attribute was not set" );
 	}
 
-	public function testSetAttributeWithEmptyAttribute() {
+	public function testSetWithEmptyAttribute() {
 		$this->persistenceMock->expects( $this->exactly( 0 ) )
 			->method( 'saveAttribute' );
 
 		$service = new AttributeKeyValueService( $this->persistenceMock );
-		$ret = $service->setAttribute( $this->userId, null );
+		$ret = $service->set( $this->userId, null );
 
 		$this->assertFalse( $ret, "expected false when providing an empty attribute set" );
 	}
 
-	public function testSetAttributeWithAnonUserId() {
+	public function testSetWithAnonUserId() {
 		$this->persistenceMock->expects( $this->exactly( 0 ) )
 			->method( 'saveAttribute' );
 
 		$service = new AttributeKeyValueService( $this->persistenceMock );
-		$ret = $service->setAttribute( $this->anonUserId, null );
+		$ret = $service->set( $this->anonUserId, null );
 
 		$this->assertFalse( $ret, "expected false when providing an empty attribute set" );
 	}
@@ -61,29 +61,29 @@ class AttributeKeyValueTest extends \PHPUnit_Framework_TestCase {
 	/**
 	 * @expectedException \Wikia\Service\PersistenceException
 	 */
-	public function testSetAttributeWithError() {
+	public function testSetWithError() {
 		$this->persistenceMock->expects( $this->once() )
 			->method( 'saveAttribute' )
 			->with( $this->userId, $this->testAttribute_1 )
 			->will( $this->throwException( new PersistenceException() ) );
 
 		$service = new AttributeKeyValueService( $this->persistenceMock );
-		$service->setAttribute( $this->userId, $this->testAttribute_1 );
+		$service->set( $this->userId, $this->testAttribute_1 );
 	}
 
 	/**
 	 * @expectedException \Wikia\Service\PersistenceException
 	 */
-	public function testGetAttributeWithError() {
+	public function testGetWithError() {
 		$this->persistenceMock->expects( $this->once() )
 			->method( 'getAttributes' )
 			->with( $this->userId )
 			->will( $this->throwException( new PersistenceException() ) );
 		$service = new AttributeKeyValueService( $this->persistenceMock );
-		$service->getAttributes( $this->userId );
+		$service->get( $this->userId );
 	}
 
-	public function testGetAttributesSuccess() {
+	public function testGetSuccess() {
 		$this->persistenceMock->expects( $this->once() )
 			->method( 'getAttributes' )
 			->with( $this->userId )
@@ -92,9 +92,35 @@ class AttributeKeyValueTest extends \PHPUnit_Framework_TestCase {
 			);
 
 		$service = new AttributeKeyValueService( $this->persistenceMock );
-		$attributes = $service->getAttributes( $this->userId );
+		$attributes = $service->get( $this->userId );
 
 		$this->assertTrue( is_array( $attributes ), "expecting an array" );
 		$this->assertEquals( $this->testAttribute_1, $attributes[0], "expecting an array" );
+	}
+
+	public function testDeleteSuccess() {
+		$this->persistenceMock->expects( $this->once() )
+			->method( 'deleteAttribute' )
+			->with( $this->userId )
+			->willReturn( true );
+
+		$service = new AttributeKeyValueService( $this->persistenceMock );
+		$this->assertTrue( $service->delete( $this->userId, $this->testAttribute_1 ) );
+	}
+
+	public function testDeleteWithEmptyAttribute() {
+		$this->persistenceMock->expects( $this->exactly( 0 ) )
+			->method( 'deleteAttribute' );
+
+		$service = new AttributeKeyValueService( $this->persistenceMock );
+		$this->assertFalse( $service->delete( $this->userId, null ) );
+	}
+
+	public function testDeleteWithAnonUserId() {
+		$this->persistenceMock->expects( $this->exactly( 0 ) )
+			->method( 'deleteAttribute' );
+
+		$service = new AttributeKeyValueService( $this->persistenceMock );
+		$this->assertFalse( $service->delete( $this->anonUserId, $this->testAttribute_1 ) );
 	}
 }

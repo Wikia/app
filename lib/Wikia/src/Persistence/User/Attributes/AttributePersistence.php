@@ -29,4 +29,11 @@ interface AttributePersistence {
 	 */
 	public function getAttributes( $userId );
 
+	/**
+	 * @param int $userId
+	 * @param Attribute $attribute
+	 * @return true success, exception otherwise
+	 */
+	public function deleteAttribute( $userId, $attribute );
+
 }

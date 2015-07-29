@@ -11,9 +11,9 @@ interface AttributeService {
 	 *
 	 * @param int $userId
 	 * @param Attribute $attribute
-	 * @return bool true when saved false otherwise
+	 * @return bool true when saved, false exception otherwise
 	 */
-	public function setAttribute( $userId, $attribute );
+	public function set( $userId, $attribute );
 
 
 	/**
@@ -22,6 +22,15 @@ interface AttributeService {
 	 * @param int $userId
 	 * @return Attribute[]
 	 */
-	public function getAttributes( $userId );
+	public function get( $userId );
+
+	/**
+	 * Delete attribute for the given user id
+	 *
+	 * @param int $userId
+	 * @param Attribute $attribute
+	 * @return bool true when deleted, false exception otherwise
+	 */
+	public function delete( $userId, $attribute );
 
 }

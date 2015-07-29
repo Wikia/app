@@ -25,7 +25,7 @@ class AttributePersistenceSwagger implements AttributePersistence {
 	/**
 	 * @param int $userId
 	 * @param Attribute $attribute
-	 * @return true success, false or exception otherwise
+	 * @return true success, exception otherwise
 	 * @throws PersistenceException
 	 * @throws UnauthorizedException
 	 */
@@ -35,7 +35,6 @@ class AttributePersistenceSwagger implements AttributePersistence {
 			return true;
 		} catch ( ApiException $e ) {
 			$this->handleApiException($e);
-			return false;
 		}
 	}
 
@@ -62,7 +61,7 @@ class AttributePersistenceSwagger implements AttributePersistence {
 	}
 
 	/**
-	 * @param $userId
+	 * @param int $userId
 	 * @return \Swagger\Client\User\Attributes\Models\UserAttributeHalResponse[]
 	 * @throws ApiException
 	 * @throws PersistenceException
@@ -86,7 +85,25 @@ class AttributePersistenceSwagger implements AttributePersistence {
 	}
 
 	/**
-	 * @param $userId
+	 * @param int $userId
+	 * @param Attribute $attribute
+	 * @return bool
+	 * @throws ForbiddenException
+	 * @throws NotFoundException
+	 * @throws PersistenceException
+	 * @throws UnauthorizedException
+	 */
+	public function deleteAttribute( $userId, $attribute ) {
+		try {
+			$this->getApi( $userId )->deleteAttributeForUser( $userId, $attribute->getName() );
+			return true;
+		} catch ( ApiException $e ) {
+			$this->handleApiException( $e );
+		}
+	}
+
+	/**
+	 * @param int $userId
 	 * @return UsersAttributesApi
 	 */
 	private function getApi( $userId ) {

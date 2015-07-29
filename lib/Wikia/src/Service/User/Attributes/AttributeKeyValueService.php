@@ -27,7 +27,7 @@ class AttributeKeyValueService implements AttributeService {
 		$this->persistenceAdapter = $persistenceAdapter;
 	}
 
-	public function setAttribute( $userId, $attribute ) {
+	public function set( $userId, $attribute ) {
 		if ( empty( $attribute ) || $userId === 0 ) {
 			return false;
 		}
@@ -48,7 +48,7 @@ class AttributeKeyValueService implements AttributeService {
 		}
 	}
 
-	public function getAttributes( $userId ) {
+	public function get( $userId ) {
 		if ( $userId == 0 ) {
 			return [];
 		}
@@ -64,6 +64,23 @@ class AttributeKeyValueService implements AttributeService {
 		}
 
 		return $attributeArray;
+	}
+
+	public function delete( $userId, $attribute ) {
+		if ( empty( $attribute ) || $userId === 0 ) {
+			return false;
+		}
+
+		try {
+			$ret = $this->persistenceAdapter->deleteAttribute( $userId, $attribute );
+			return $ret;
+		} catch ( \Exception $e ) {
+			$this->error( $e->getMessage(), [
+				'user' => $userId
+			] );
+
+			throw $e;
+		}
 	}
 
 	protected function getLoggerContext() {

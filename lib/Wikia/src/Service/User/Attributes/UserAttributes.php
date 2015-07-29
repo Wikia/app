@@ -52,7 +52,7 @@ class UserAttributes {
 		if ( !isset( $this->attributes[$userId] ) ) {
 			$this->attributes[$userId] = [];
 			/** @var Attribute $attribute */
-			foreach ( $this->attributeService->getAttributes( $userId ) as $attribute ) {
+			foreach ( $this->attributeService->get( $userId ) as $attribute ) {
 				$this->attributes[$userId][$attribute->getName()] = $attribute->getValue();
 			};
 		}
@@ -76,7 +76,7 @@ class UserAttributes {
 	}
 
 	private function isAnonUser( $userId ) {
-		return $userId == 0;
+		return $userId === 0;
 	}
 
 	/**
@@ -84,7 +84,7 @@ class UserAttributes {
 	 * @param Attribute $attribute
 	 */
 	private function setAttributeInService( $userId, $attribute ) {
-		$this->attributeService->setAttribute( $userId, $attribute );
+		return $this->attributeService->set( $userId, $attribute );
 	}
 
 	/**
@@ -93,5 +93,9 @@ class UserAttributes {
 	 */
 	private function setAttributeInCache( $userId, $attribute ) {
 		$this->attributes[$userId][$attribute->getName()] = $attribute->getValue();
+	}
+
+	private function deleteAttribute( $userId, $attribute ) {
+		$this->attributeService->delete( $userId, $attribute );
 	}
 }
