@@ -28,14 +28,14 @@ class AttributeKeyValueService implements AttributeService {
 	}
 
 	public function setAttribute( $userId, $attribute ) {
-		if ( empty( $attribute ) || $userId == 0 ) {
+		if ( empty( $attribute ) || $userId === 0 ) {
 			return false;
 		}
 
 		try {
-			$profiler_start = $this->startProfile();
+			$profilerStart = $this->startProfile();
 			$ret = $this->persistenceAdapter->saveAttribute( $userId, $attribute );
-			$this->endProfile( AttributeKeyValueService::PROFILE_EVENT, $profiler_start,
+			$this->endProfile( AttributeKeyValueService::PROFILE_EVENT, $profilerStart,
 				[ 'user_id' => $userId, 'method' => 'saveAttribute' ] );
 
 			return $ret;
