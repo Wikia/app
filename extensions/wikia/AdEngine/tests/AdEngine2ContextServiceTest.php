@@ -163,17 +163,17 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 				'expectedTargeting' => ['pageType' => 'search', 'pageName' => 'Special:Search']
 			],
 
-			$defaultParameters + ['expectedMappings' => ['tv', 'ent']],
+			$defaultParameters + ['expectedMappings' => ['sourceVertical' => 'tv', 'expectedMappedVertical' => 'ent']],
 
-			$defaultParameters + ['expectedMappings' => ['games', 'gaming']],
+			$defaultParameters + ['expectedMappings' => ['sourceVertical' => 'games', 'expectedMappedVertical' => 'gaming']],
 
-			$defaultParameters + ['expectedMappings' => ['books', 'ent']],
+			$defaultParameters + ['expectedMappings' => ['sourceVertical' => 'books', 'expectedMappedVertical' => 'ent']],
 
-			$defaultParameters + ['expectedMappings' => ['comics', 'ent']],
+			$defaultParameters + ['expectedMappings' => ['sourceVertical' => 'comics', 'expectedMappedVertical' => 'ent']],
 
-			$defaultParameters + ['expectedMappings' => ['lifestyle', 'life']],
+			$defaultParameters + ['expectedMappings' => ['sourceVertical' => 'lifestyle', 'expectedMappedVertical' => 'life']],
 
-			$defaultParameters + ['expectedMappings' => ['not-existing', 'error']],
+			$defaultParameters + ['expectedMappings' => ['sourceVertical' => 'not-existing', 'expectedMappedVertical' => 'error']],
 		];
 	}
 
@@ -191,7 +191,7 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		$expectedProviders = [],
 		$expectedForcedProvider = null,
 		$expectedSlots = [],
-		$expectedMappings = ['other', 'life']
+		$verticals = ['sourceVertical' => 'other', 'expectedMappedVertical' => 'life']
 	) {
 		$langCode = 'xx';
 		$artId = 777;
@@ -244,7 +244,7 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		// Mock WikiFactoryHub
 		$this->mockStaticMethod( 'WikiFactoryHub', 'getCategoryId', $catId );
 		$this->mockStaticMethod( 'WikiFactoryHub', 'getCategoryShort', $shortCat );
-		$this->mockStaticMethod( 'WikiFactoryHub', 'getWikiVertical', ['short'=>$expectedMappings[0]] );
+		$this->mockStaticMethod( 'WikiFactoryHub', 'getWikiVertical', ['short'=>$verticals['sourceVertical']] );
 
 		// Mock HubService
 		$this->mockStaticMethod( 'HubService', 'getCategoryInfoForCity', (object) ['cat_name' => $vertical] );
@@ -272,7 +272,7 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 				'wikiDbName' => $dbName,
 				'wikiLanguage' => $langCode,
 				'wikiVertical' => $vertical,
-				'mappedVerticalName' => $expectedMappings[1]
+				'mappedVerticalName' => $verticals['expectedMappedVertical']
 			],
 			'providers' => [
 			],
