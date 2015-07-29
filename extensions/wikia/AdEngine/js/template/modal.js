@@ -67,7 +67,12 @@ define('ext.wikia.adEngine.template.modal', [
 				ratio = Math.min(ratioWidth, ratioHeight, lightboxParams.maximumRatio);
 
 			adIframe.style.transform = 'scale(' + ratio + ')';
+			adIframe.style.msTransform = 'scale(' + ratio + ')';
+			adIframe.style.WebkitTransform = 'scale(' + ratio + ')';
+
 			adIframe.style.transformOrigin = 'top left';
+			adIframe.style.msTransformOrigin = 'top left';
+			adIframe.style.WebkitTransformOrigin = 'top left';
 
 			adContainer.style.width = Math.floor(params.width * ratio) + 'px';
 			adContainer.style.height = Math.floor(params.height * ratio) + 'px';
