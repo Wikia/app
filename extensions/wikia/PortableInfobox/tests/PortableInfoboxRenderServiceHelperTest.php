@@ -15,7 +15,6 @@ class PortableInfoboxRenderServiceHelperTest extends WikiaBaseTest {
 	/**
 	 * @desc mocks WikiaFileHelper methods
 	 * @param array $input
-	 * @return PHPUnit_Framework_MockObject_MockObject
 	 */
 	public function createWikiaFileHelperMock( $input ) {
 		$fileWidth = isset( $input[ 'fileWidth' ] ) ? $input[ 'fileWidth' ] : null;
