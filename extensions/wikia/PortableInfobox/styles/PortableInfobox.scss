@@ -47,7 +47,6 @@
 			line-height: 19px;
 		}
 	}
-
 }
 
 // **********  Default infobox styling ********** //
@@ -117,36 +116,29 @@
 	}
 }
 
-.group-layout-horizontal {
-	&.pi-item-group {
-		display: table;
-		table-layout: fixed;
-		width: 100%;
+// **********  Special styles for HORIZONTAL group  ********** //
+
+.pi-h-group-content {
+	border-spacing: 0;
+	table-layout: fixed;
+	width: 100%;
+
+	.pi-header {
+		padding: $infobox-item-margin $infobox-item-margin * 4 $infobox-item-margin $infobox-item-margin * 2;
+		text-align: left;
 	}
 
-	.pi-item-header {
-		display: table-caption;
-	}
+	.pi-h-group-item {
+		padding: $infobox-item-margin $infobox-item-margin * 2;
+		vertical-align: top;
 
-	.pi-item-data {
-		border-bottom: 0;
-		display: table-cell;
-		padding: $infobox-item-margin;
-		text-align: center;
-	}
-
-	.pi-item-data:not(:last-of-type) {
-		border-right: 1px solid $infobox-section-header-background;
+		&:not(:first-child) {
+			border-left: 1px solid $infobox-section-header-background;
+		}
 	}
 
 	.pi-data-label {
-		overflow: hidden;
-		vertical-align: top;
-		white-space: nowrap;
-	}
-
-	.pi-data-value {
-		padding-left: 0;
+		padding-bottom: 0;
 	}
 }
 

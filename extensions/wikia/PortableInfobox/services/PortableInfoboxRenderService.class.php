@@ -1,10 +1,8 @@
 <?php
 
+use \Wikia\PortableInfobox\Helpers\PortableInfoboxRenderServiceHelper;
+
 class PortableInfoboxRenderService extends WikiaService {
-	const LOGGER_LABEL = 'portable-infobox-render-not-supported-type';
-	const DESKTOP_THUMBNAIL_WIDTH = 270;
-	const MOBILE_THUMBNAIL_WIDTH = 360;
-	const MINIMAL_HERO_IMG_WIDTH = 300;
 	const MOBILE_TEMPLATE_POSTFIX = '-mobile';
 
 	private $templates = [
@@ -15,6 +13,7 @@ class PortableInfoboxRenderService extends WikiaService {
 		'image-mobile' => 'PortableInfoboxItemImageMobile.mustache',
 		'data' => 'PortableInfoboxItemData.mustache',
 		'group' => 'PortableInfoboxItemGroup.mustache',
+		'horizontal-group-content' => 'PortableInfoboxHorizontalGroupContent.mustache',
 		'navigation' => 'PortableInfoboxItemNavigation.mustache',
 		'hero-mobile' => 'PortableInfoboxItemHeroMobile.mustache'
 	];
@@ -34,6 +33,8 @@ class PortableInfoboxRenderService extends WikiaService {
 	 */
 	public function renderInfobox( array $infoboxdata, $theme, $layout ) {
 		wfProfileIn( __METHOD__ );
+
+		$helper = new PortableInfoboxRenderServiceHelper();
 		$infoboxHtmlContent = '';
 		$heroData = [ ];
 
@@ -49,12 +50,12 @@ class PortableInfoboxRenderService extends WikiaService {
 					$infoboxHtmlContent .= $this->renderItem( 'navigation', $data );
 					break;
 				default:
-					if ( $this->isInfoboxHeroEnabled() && $this->isValidHeroDataItem( $item, $heroData ) ) {
+					if ( $helper->isWikiaMobile() && $helper->isValidHeroDataItem( $item, $heroData ) ) {
 						$heroData[ $type ] = $data;
 						continue;
 					}
 
-					if ( $this->validateType( $type ) ) {
+					if ( $helper->isTypeSupportedInTemplates( $type, $this->templates ) ) {
 						$infoboxHtmlContent .= $this->renderItem( $type, $data );
 					};
 			}
@@ -65,7 +66,8 @@ class PortableInfoboxRenderService extends WikiaService {
 		}
 
 		if ( !empty( $infoboxHtmlContent ) ) {
-			$output = $this->renderItem( 'wrapper', [ 'content' => $infoboxHtmlContent, 'theme' => $theme, 'layout' => $layout ] );
+			$output = $this->renderItem( 'wrapper', [ 'content' => $infoboxHtmlContent, 'theme' => $theme,
+				'layout' => $layout ] );
 		} else {
 			$output = '';
 		}
@@ -83,19 +85,47 @@ class PortableInfoboxRenderService extends WikiaService {
 	 * @return string - group HTML markup
 	 */
 	private function renderGroup( $groupData ) {
+		$helper = new PortableInfoboxRenderServiceHelper();;
 		$groupHTMLContent = '';
 		$dataItems = $groupData[ 'value' ];
 		$layout = $groupData[ 'layout' ];
 
-		foreach ( $dataItems as $item ) {
-			$type = $item[ 'type' ];
+		if ( $layout === 'horizontal' && !$helper->isWikiaMobile() ) {
+			$groupHTMLContent .= $this->renderItem(
+				'horizontal-group-content',
+				$helper->createHorizontalGroupData( $dataItems )
+			);
+		} else {
+			foreach ( $dataItems as $item ) {
+				$type = $item[ 'type' ];
 
-			if ( $this->validateType( $type ) ) {
-				$groupHTMLContent .= $this->renderItem( $type, $item[ 'data' ] );
+				if ( $helper->isTypeSupportedInTemplates( $type, $this->templates ) ) {
+					$groupHTMLContent .= $this->renderItem( $type, $item[ 'data' ] );
+				}
 			}
 		}
 
 		return $this->renderItem( 'group', [ 'content' => $groupHTMLContent, 'layout' => $layout ] );
+	}
+
+	/**
+	 * renders infobox hero component
+	 *
+	 * @param array $data - infobox hero component data
+	 *
+	 * @return string
+	 */
+	private function renderInfoboxHero( $data ) {
+		$helper = new PortableInfoboxRenderServiceHelper();
+
+		if ( array_key_exists( 'image', $data ) ) {
+			$data[ 'image' ] = $helper->extendImageData( $data[ 'image' ] );
+			$markup = $this->renderItem( 'hero-mobile', $data );
+		} else {
+			$markup = $this->renderItem( 'title', $data[ 'title' ] );
+		}
+
+		return $markup;
 	}
 
 	/**
@@ -107,187 +137,25 @@ class PortableInfoboxRenderService extends WikiaService {
 	 * @return bool|string - HTML
 	 */
 	private function renderItem( $type, array $data ) {
-		//TODO: with validated the performance of render Service and in the next phase we want to refactor it (make
-		// it modular) While doing this we also need to move this logic to appropriate image render class
+		$helper = new PortableInfoboxRenderServiceHelper();
+
 		if ( $type === 'image' ) {
-			$data = $this->extendImageData( $data );
-			if (!$data) {
+			$data = $helper->extendImageData( $data );
+			if ( !$data ) {
 				return false;
 			}
 
-			if ( $this->isWikiaMobile() ) {
+			if ( $helper->isWikiaMobile() ) {
 				$type = $type . self::MOBILE_TEMPLATE_POSTFIX;
 			}
 		}
 
-		if ( $this->isWikiaMobile() ) {
-			$data = $this->sanitizeInfoboxTitle( $type, $data );
+		if ( $helper->isWikiaMobile() ) {
+			$data = $helper->sanitizeInfoboxTitle( $type, $data );
 		}
 
 		return $this->templateEngine->clearData()
 			->setData( $data )
 			->render( $this->templates[ $type ] );
-	}
-
-	/**
-	 * @desc create a thumb of the image from file title
-	 * @param $title
-	 * @return bool|MediaTransformOutput
-	 */
-	protected function getThumbnail( $title ) {
-		$file = \WikiaFileHelper::getFileFromTitle( $title );
-
-		if ( $file ) {
-			$width = $this->isWikiaMobile() ?
-				self::MOBILE_THUMBNAIL_WIDTH :
-				self::DESKTOP_THUMBNAIL_WIDTH;
-			$thumb = $file->transform( ['width' => $width] );
-
-			if (!is_null($thumb) && !$thumb->isError()) {
-				return $thumb;
-			}
-		}
-		return false;
-	}
-
-	/**
-	 * required for testing mobile template rendering
-	 * @return bool
-	 */
-	protected function isWikiaMobile() {
-		return F::app()->checkSkin( 'wikiamobile' );
-	}
-
-	/**
-	 * return real width of the image.
-	 * @param $title
-	 * @return number
-	 */
-	protected function getFileWidth( $title ) {
-		$file = \WikiaFileHelper::getFileFromTitle( $title );
-
-		if ( $file ) {
-			return $file->getWidth();
-		}
-	}
-
-	/**
-	 * check if item type is supported and logs unsupported types
-	 *
-	 * @param string $type - template type
-	 *
-	 * @return bool
-	 */
-	private function validateType( $type ) {
-		$isValid = true;
-
-		if ( !isset( $this->templates[ $type ] ) ) {
-			Wikia\Logger\WikiaLogger::instance()->info( self::LOGGER_LABEL, [
-				'type' => $type
-			] );
-
-			$isValid = false;
-		}
-
-		return $isValid;
-	}
-
-	/**
-	 * returns true if infobox hero component should be rendered
-	 *
-	 * @return bool
-	 */
-	private function isInfoboxHeroEnabled() {
-		return $this->isWikiaMobile();
-	}
-
-	/**
-	 * checks if infobox data item is valid hero component data.
-	 * If image is smaller than MINIMAL_HERO_IMG_WIDTH const, doesn't render the hero module.
-	 *
-	 * @param array $item - infobox data item
-	 * @param array $heroData - hero component data
-	 *
-	 * @return bool
-	 */
-	private function isValidHeroDataItem( $item, $heroData ) {
-		$type = $item[ 'type' ];
-
-		if ( $type === 'title' && !array_key_exists( 'title', $heroData ) ) {
-			return true;
-		}
-
-		if ( $type === 'image' && !array_key_exists( 'image', $heroData ) ) {
-			$imageWidth = $this->getFileWidth( $item[ 'data' ][ 'name' ] );
-
-			if ( $imageWidth > self::MINIMAL_HERO_IMG_WIDTH ) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-	/**
-	 * renders infobox hero component
-	 *
-	 * @param array $data - infobox hero component data
-	 *
-	 * @return string
-	 */
-	private function renderInfoboxHero( $data ) {
-		if ( array_key_exists( 'image', $data ) ) {
-			$data[ 'image' ] = $this->extendImageData( $data[ 'image' ] );
-			$markup = $this->renderItem( 'hero-mobile', $data );
-		} else {
-			$markup = $this->renderItem( 'title', $data[ 'title' ] );
-		}
-
-		return $markup;
-	}
-
-	/**
-	 * extends image data
-	 *
-	 * @param array $data
-	 *
-	 * @return bool|array
-	 */
-	private function extendImageData( $data ) {
-		$thumbnail = $this->getThumbnail( $data[ 'name' ] );
-
-		if (!$thumbnail) {
-			return false;
-		}
-
-		// TODO: the min() function will be redundant when https://wikia-inc.atlassian.net/browse/PLATFORM-1359
-		// will hit the production
-		$data[ 'height' ] = min( $thumbnail->getHeight(), $thumbnail->file->getHeight() );
-		$data[ 'width' ] = min( $thumbnail->getWidth(), $thumbnail->file->getWidth() );
-		$data[ 'thumbnail' ] = $thumbnail->getUrl();
-		$data[ 'key' ] = urlencode( $data[ 'key' ] );
-
-		return $data;
-	}
-
-	/**
-	 * checks if infobox item is the title or title inside the hero module
-	 * and if so, removes from it all HTML tags.
-	 *
-	 * @param $type type of infobox item
-	 * @param $data infobox item data
-	 * @return infobox $data with sanitized title param if needed
-	 */
-	public function sanitizeInfoboxTitle( $type, $data ) {
-		if ( $type === 'title' && !empty( $data['value'] ) ) {
-			$data['value'] = trim( strip_tags( $data['value'] ) );
-			return $data;
-		}
-		if ( $type === 'hero-mobile' && !empty( $data['title']['value'] ) ) {
-			$data['title']['value'] = trim( strip_tags( $data['title']['value'] ) );
-			return $data;
-		}
-
-		return $data;
 	}
 }
