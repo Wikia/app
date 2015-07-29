@@ -448,6 +448,8 @@ class CuratedContentController extends WikiaController {
 			foreach( $data as &$section ) {
 				unset( $section['node_type'] );
 				unset( $section['image_url'] );
+				$section['title'] = $section['label'];
+				unset( $section['label'] );
 
 				foreach( $section['items'] as &$item ) {
 					unset( $item['node_type'] );
