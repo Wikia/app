@@ -4,12 +4,11 @@ namespace Email;
 
 use TijsVerkoyen\CssToInlineStyles\CssToInlineStyles;
 use Wikia\Logger\WikiaLogger;
-use Email\Tracking\TrackingCategories;
 
 abstract class EmailController extends \WikiaController {
 	const DEFAULT_TEMPLATE_ENGINE = \WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
 
-	const TRACKING_CATEGORY = TrackingCategories::DEFAULT_CATEGORY;
+	const TRACKED_LANGUAGES = [ 'en', 'pl', 'de', 'es', 'fr', 'it', 'ja', 'nl', 'pt', 'ru', 'zh' ];
 
 	const AVATAR_SIZE = 50;
 
@@ -313,13 +312,31 @@ abstract class EmailController extends \WikiaController {
 	}
 
 	/**
-	 * Returns the category string we'll send to sendgrid with this email for
+	 * Returns the category string we'll send to SendGrid with this email for
 	 * tracking purposes.
 	 *
 	 * @return string
 	 */
 	public function getSendGridCategory() {
-		return static::TRACKING_CATEGORY;
+		$short = $this->getControllerShortName();
+		$lang = $this->getLangForTracking();
+
+		return  $short . '-' . $lang;
+	}
+
+	/**
+	 * Return the language code we'll use for tracking.  If the current language is not
+	 * one of our currently supported languages, use code 'xx'.
+	 *
+	 * @return string
+	 */
+	protected function getLangForTracking() {
+		$lang = 'en';
+		if ( preg_match( '/^([^_-]+)/', $this->targetLang, $matches ) ) {
+			$lang = $matches[1];
+		}
+
+		return in_array( $lang, self::TRACKED_LANGUAGES ) ? $lang : 'xx';
 	}
 
 	/**
@@ -716,11 +733,11 @@ abstract class EmailController extends \WikiaController {
 		WikiaLogger::instance()->info( 'Submitting email via UserMailer', [
 			'issue' => 'SOC-910',
 			'method' => __METHOD__,
-			'controller' => get_class( $this ),
+			'controller' => self::getControllerShortName(),
 			'toAddress' => $this->getToAddress()->toString(),
 			'fromAddress' => $this->getFromAddress()->toString(),
 			'subject' => $this->getSubject(),
-			'category' => static::TRACKING_CATEGORY,
+			'category' => $this->getSendGridCategory(),
 			'currentUser' => $this->getCurrentUserName(),
 			'targetUser' => $this->getTargetUserName(),
 			'targetLang' => $this->targetLang,
@@ -743,8 +760,8 @@ abstract class EmailController extends \WikiaController {
 		WikiaLogger::instance()->error( 'Failed to submit email via UserMailer', [
 			'issue' => 'SOC-910',
 			'method' => __METHOD__,
-			'controller' => get_class( $this ),
-			'category' => static::TRACKING_CATEGORY,
+			'controller' => self::getControllerShortName(),
+			'category' => $this->getSendGridCategory(),
 			'errorMessage' => $e->getMessage(),
 			'currentUser' => $currentName,
 			'targetUser' => $targetName,

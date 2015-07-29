@@ -62,15 +62,12 @@ class SpecialSendEmailController extends \WikiaSpecialPageController {
 	 * @template specialSendEmail
 	 */
 	public function index() {
-
 		if ( $this->wg->request->wasPosted() && $this->editTokenValidates() ) {
 			$result = $this->processForm();
 			$this->addBannerNotification( $result );
 		}
 
-		$this->response->setVal(
-			"forms", $this->getForms()
-		);
+		$this->response->setVal( 'forms', $this->getForms() );
 	}
 
 	/**
