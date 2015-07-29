@@ -12,10 +12,11 @@ define ('ext.wikia.Flags.FlagEditForm',
 			allFlagsNames = [];
 
 		function init(prefillData) {
-			$.when(getFormResources()).done(function(dropdownOptions, formResources) {
-				formResources.dropdownOptions = dropdownOptions[0];
+			$.when(getFormResources()).done(function(formValues, formResources) {
+				formResources.formValues = $.extend( {}, prefillData, formValues[0] );
 				getAllFlagNames();
 				setupForm(formResources);
+
 				/** Check prefillData for undefined or null **/
 				if (!prefillData) {
 					modalConfig.vars.type = 'create';
@@ -28,19 +29,18 @@ define ('ext.wikia.Flags.FlagEditForm',
 		}
 
 		function getFormResources() {
-			var formResources = cache.get(getResourcesCacheKey());
+			var formResources = null;//cache.get(getResourcesCacheKey());
 
 			/** Check formResources and formResources.resources for undefined or null **/
-			if (formResources === null || !formResources.resources) {
+			if (formResources === null || !formResources.resources ) {
 				formResources = $.when(
 					nirvana.sendRequest({
-						controller: 'FlagsApiController',
-						method: 'getGroupsAndTargetingAsJson'
+						controller: 'SpecialFlags',
+						method: 'createFlagForm'
 					}),
 					loader({
 						type: loader.MULTI,
 						resources: {
-							messages: 'FlagsCreateForm',
 							mustache: '/extensions/wikia/Flags/specials/templates/SpecialFlags_createFlagForm.mustache,/extensions/wikia/Flags/specials/templates/createFormParam.mustache',
 							styles: '/extensions/wikia/Flags/specials/styles/CreateForm.scss'
 						}
@@ -53,16 +53,13 @@ define ('ext.wikia.Flags.FlagEditForm',
 
 		function setupForm(formResources) {
 			loader.processStyle(formResources.styles);
-			mw.messages.set(formResources.messages);
 
 			formData = {
-				/* TODO - Do something with the damn messages */
-				messages: formResources.messages,
 				template: formResources.mustache[0],
 				partials: {
 					createFormParam: formResources.mustache[1]
 				},
-				dropdownOptions: formResources.dropdownOptions
+				values: formResources.formValues
 			};
 
 			modalConfig = {
@@ -103,40 +100,36 @@ define ('ext.wikia.Flags.FlagEditForm',
 		}
 
 		function displayFormCreate() {
-			/* TODO - We can get a half-rendered template to avoid escaping messages in front-end */
-			var formParams, content = cache.get(getEmptyFormCacheKey(mw.user.options.values.language));
-			/** **/
+			var content = cache.get(getEmptyFormCacheKey(mw.user.options.values.language));
+
 			if (content === null) {
-				formParams = {
-					messages: formData.messages,
-					values: getDropdownOptions({})
-				};
-				content = mustache.to_html(formData.template, formParams, formData.partials);
+				prepareDropdownOptions({});
+
+				content = mustache.to_html(formData.template, formData.values, formData.partials);
 
 				cache.set(getEmptyFormCacheKey(mw.user.options.values.language), content, cache.CACHE_LONG);
 			}
 
-			modalConfig.vars.title = mw.message('flags-special-create-form-title-new').escaped();
+			modalConfig.vars.title = formData.values.messages.titleNew;
 			initModal(content);
 		}
 
 		function displayFormEdit(prefillData) {
-			var content, formParams = {
-				messages: formData.messages,
-				values: getDropdownOptions(prefillData)
-			};
+			var content;
 
-			content = mustache.to_html(formData.template, formParams, formData.partials);
+			prepareDropdownOptions(prefillData);
 
-			modalConfig.vars.title = mw.message('flags-special-create-form-title-edit').escaped();
+			content = mustache.to_html(formData.template, formData.values, formData.partials);
+
+			modalConfig.vars.title = formData.values.messages.titleEdit;
 			initModal(content);
 		}
 
 		function initModal(content) {
 			modalConfig.vars.content = content;
 
-			modalConfig.vars.buttons[0].vars.value = mw.message('flags-special-create-form-save').escaped();
-			modalConfig.vars.buttons[1].vars.value = mw.message('flags-special-create-form-cancel').escaped();
+			modalConfig.vars.buttons[0].vars.value = formData.values.messages.save;
+			modalConfig.vars.buttons[1].vars.value = formData.values.messages.cancel;
 
 			displayModal();
 		}
@@ -184,9 +177,9 @@ define ('ext.wikia.Flags.FlagEditForm',
 					if (json.status === true) {
 						location.reload(true);
 					} else if (json.status === false && json.data === false) {
-						showWarningNotification('flags-special-create-form-save-nochange');
+						showWarningNotification('saveNochange');
 					} else {
-						showErrorNotification('flags-special-create-form-save-failure');
+						showErrorNotification('saveFailure');
 					}
 				}
 			});
@@ -199,19 +192,19 @@ define ('ext.wikia.Flags.FlagEditForm',
 
 			flagName = $('#flags-special-form-name').val();
 			if (flagName.length === 0) {
-				showErrorNotification('flags-special-create-form-invalid-name');
+				showErrorNotification('invalidName');
 				return false;
 			}
 
 			var oldFlagName = $('#flags-special-form-name').data('flag-name');
 			if (flagName !== oldFlagName && allFlagsNames.indexOf(flagName) > -1) {
-				showErrorNotification('flags-special-create-form-invalid-name-exists');
+				showErrorNotification('invalidNameExists');
 				return false;
 			}
 
 			flagView = $('#flags-special-form-template').val();
 			if (flagView.length === 0) {
-				showErrorNotification('flags-special-create-form-invalid-template');
+				showErrorNotification('invalidTemplate');
 				return false;
 			}
 
@@ -227,7 +220,7 @@ define ('ext.wikia.Flags.FlagEditForm',
 			});
 
 			if (!paramsStatus) {
-				showErrorNotification('flags-special-create-form-invalid-param-name');
+				showErrorNotification('invalidParamName');
 				return false;
 			}
 
@@ -271,47 +264,41 @@ define ('ext.wikia.Flags.FlagEditForm',
 			return emptyFormCacheKey + ':' + lang +':' + cacheVersion;
 		}
 
-		function getDropdownOptions(values) {
+		function prepareDropdownOptions(values) {
 			var key;
-
-			values.groups = formData.dropdownOptions.groups;
-			values.targeting = formData.dropdownOptions.targeting;
 
 			if (values.selectedGroup !== null) {
 				// mark selected group
-				for (key in values.groups) {
-					if (values.groups[key].value === values.selectedGroup) {
-						values.groups[key].selected = true;
+				for (key in formData.values.groups) {
+					if (formData.values.groups[key].value === values.selectedGroup) {
+						formData.values.groups[key].selected = true;
 						break;
 					}
 				}
 
 			}
-
 
 			if (values.selectedTargeting !== null) {
 				// mark selected target
-				for (key in values.targeting) {
-					if (values.targeting[key].value === values.selectedTargeting) {
-						values.targeting[key].selected = true;
+				for (key in formData.values.targeting) {
+					if (formData.values.targeting[key].value === values.selectedTargeting) {
+						formData.values.targeting[key].selected = true;
 						break;
 					}
 				}
 			}
-
-			return values;
 		}
 
 		function showWarningNotification(msgKey) {
 			new BannerNotification(
-				mw.message(msgKey).escaped(),
+				formData.values.messages[msgKey],
 				'warning'
 			).show();
 		}
 
 		function showErrorNotification(msgKey) {
 			new BannerNotification(
-				mw.message(msgKey).escaped(),
+				formData.values.messages[msgKey],
 				'error'
 			).show();
 		}
