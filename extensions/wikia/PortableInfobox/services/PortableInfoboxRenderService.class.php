@@ -50,13 +50,13 @@ class PortableInfoboxRenderService extends WikiaService {
 					$infoboxHtmlContent .= $this->renderItem( 'navigation', $data );
 					break;
 				default:
-					if ( $helper->isInfoboxHeroEnabled() &&
+					if ( $helper->isWikiaMobile() &&
 						$helper->isValidHeroDataItem( $item, $heroData ) ) {
 						$heroData[ $type ] = $data;
 						continue;
 					}
 
-					if ( $helper->validateType( $type, $this->templates ) ) {
+					if ( $helper->isTypeSupportedInTemplates( $type, $this->templates ) ) {
 						$infoboxHtmlContent .= $this->renderItem( $type, $data );
 					};
 			}
@@ -100,7 +100,7 @@ class PortableInfoboxRenderService extends WikiaService {
 			foreach ( $dataItems as $item ) {
 				$type = $item[ 'type' ];
 
-				if ( $helper->validateType( $type, $this->templates ) ) {
+				if ( $helper->isTypeSupportedInTemplates( $type, $this->templates ) ) {
 					$groupHTMLContent .= $this->renderItem( $type, $item[ 'data' ] );
 				}
 			}

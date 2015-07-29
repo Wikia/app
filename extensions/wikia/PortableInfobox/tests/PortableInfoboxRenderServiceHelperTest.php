@@ -13,11 +13,11 @@ class PortableInfoboxRenderServiceHelperTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @desc creates mock of PortableInfoboxRenderServiceHelper
+	 * @desc mocks WikiaFileHelper methods
 	 * @param array $input
 	 * @return PHPUnit_Framework_MockObject_MockObject
 	 */
-	public function createHelperMock( $input ) {
+	public function createWikiaFileHelperMock( $input ) {
 		$fileWidth = isset( $input[ 'fileWidth' ] ) ? $input[ 'fileWidth' ] : null;
 
 		$fileMock = $this->getMockBuilder('File')
@@ -168,7 +168,7 @@ class PortableInfoboxRenderServiceHelperTest extends WikiaBaseTest {
 	 * @dataProvider testIsValidHeroDataItemDataProvider
 	 */
 	public function testIsValidHeroDataItem( $item, $heroData, $result, $description, $mockParams ) {
-		$this->createHelperMock( $mockParams );
+		$this->createWikiaFileHelperMock( $mockParams );
 
 		$this->assertEquals(
 			$result,
@@ -242,21 +242,21 @@ class PortableInfoboxRenderServiceHelperTest extends WikiaBaseTest {
 	 * @param boolean $result
 	 * @param string $description
 	 * @param array $mockParams
-	 * @dataProvider testValidateTypeDataProvider
+	 * @dataProvider testIsTypeSupportedInTemplatesDataProvider
 	 */
-	public function testValidateType( $type, $result, $description ) {
+	public function testIsTypeSupportedInTemplates( $type, $result, $description ) {
 		$templates = [
 			'testType' => 'testType.mustache'
 		];
 
 		$this->assertEquals(
 			$result,
-			$this->helper->validateType( $type, $templates ),
+			$this->helper->isTypeSupportedInTemplates( $type, $templates ),
 			$description
 		);
 	}
 
-	public function testValidateTypeDataProvider() {
+	public function testIsTypeSupportedInTemplatesDataProvider() {
 		return [
 			[
 				'type' => 'testType',

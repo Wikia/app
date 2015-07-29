@@ -1,6 +1,10 @@
 <?php
 
 class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
+	//todo: https://wikia-inc.atlassian.net/browse/DAT-3076
+	//todo: we are testing a lot of functionality and have issues with mocking
+	//todo: we should move all render service test to API tests
+
 	protected function setUp() {
 		$this->setupFile = dirname( __FILE__ ) . '/../PortableInfobox.setup.php';
 		parent::setUp();
@@ -15,7 +19,6 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 	 * @return PHPUnit_Framework_MockObject_MockObject
 	 */
 	private function mockInfoboxRenderServiceHelper( $input ) {
-		$isInfoboxHeroEnabled = isset( $input[ 'isInfoboxHeroEnabled' ] ) && $input[ 'isInfoboxHeroEnabled' ];
 		$isValidHeroDataItem = isset( $input[ 'isValidHeroDataItem' ] ) && $input[ 'isValidHeroDataItem' ];
 		$isWikiaMobile = isset( $input[ 'isWikiaMobile' ] ) && $input[ 'isWikiaMobile' ];
 		$createHorizontalGroupData = isset( $input[ 'createHorizontalGroupData' ] ) ?
@@ -23,12 +26,9 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 		$extendImageData = isset( $input[ 'extendImageData' ] ) ? $input[ 'extendImageData' ] : null;
 
 		$mock = $this->getMockBuilder( 'Wikia\PortableInfobox\Helpers\PortableInfoboxRenderServiceHelper' )
-			->setMethods( [ 'isInfoboxHeroEnabled', 'isValidHeroDataItem', 'validateType', 'isWikiaMobile',
+			->setMethods( [ 'isValidHeroDataItem', 'validateType', 'isWikiaMobile',
 				'createHorizontalGroupData', 'extendImageData' ] )
 			->getMock();
-		$mock->expects( $this->any() )
-			->method( 'isInfoboxHeroEnabled' )
-			->will( $this->returnValue( $isInfoboxHeroEnabled ) );
 		$mock->expects( $this->any() )
 			->method( 'isValidHeroDataItem' )
 			->will( $this->returnValue( $isValidHeroDataItem ) );
@@ -437,7 +437,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 							</aside>',
 				'description' => 'Mobile: Only image. Image is not small- should render hero.',
 				'mockParams' => [
-					'isInfoboxHeroEnabled' => true,
+					'isWikiaMobile' => true,
 					'isValidHeroDataItem' => true,
 					'extendImageData' => [
 						'alt' => 'image alt',
@@ -479,7 +479,6 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 						</aside>',
 				'description' => 'Mobile: Infobox with full hero module with title with HTML tags',
 				'mockParams' => [
-					'isInfoboxHeroEnabled' => true,
 					'isValidHeroDataItem' => true,
 					'isWikiaMobile' => true,
 					'extendImageData' => [

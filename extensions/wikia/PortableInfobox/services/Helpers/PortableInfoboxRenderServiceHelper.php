@@ -6,6 +6,8 @@ use \Wikia\Logger\WikiaLogger;
 
 class PortableInfoboxRenderServiceHelper {
 	const LOGGER_LABEL = 'portable-infobox-render-not-supported-type';
+	//todo: https://wikia-inc.atlassian.net/browse/DAT-3075
+	//todo: figure out what to do when user changes default infobox width via custom theming
 	const DESKTOP_THUMBNAIL_WIDTH = 270;
 	const MOBILE_THUMBNAIL_WIDTH = 360;
 	const MINIMAL_HERO_IMG_WIDTH = 300;
@@ -119,15 +121,6 @@ class PortableInfoboxRenderServiceHelper {
 	}
 
 	/**
-	 * returns true if infobox hero component should be rendered
-	 *
-	 * @return bool
-	 */
-	public function isInfoboxHeroEnabled() {
-		return $this->isWikiaMobile();
-	}
-
-	/**
 	 * check if item type is supported and logs unsupported types
 	 *
 	 * @param string $type - template type
@@ -135,7 +128,7 @@ class PortableInfoboxRenderServiceHelper {
 	 *
 	 * @return bool
 	 */
-	public function validateType( $type, $templates ) {
+	public function isTypeSupportedInTemplates( $type, $templates ) {
 		$isValid = true;
 
 		if ( !isset( $templates[ $type ] ) ) {
