@@ -1,6 +1,6 @@
-<div class="pi-item pi-item-hero">
+<div class="pi-item pi-hero">
 	{{#title}}
-		<hgroup class="pi-hero-title-wrapper pi-item-margins">
+		<hgroup class="pi-hero-title-wrapper pi-item-spacing">
 			<h2 class="pi-hero-title">{{{value}}}</h2>
 			{{#image.caption}}
 			<h3 class="pi-hero-caption">{{{image.caption}}}</h3>
@@ -9,7 +9,7 @@
 	{{/title}}
 	{{#image}}
 	<img src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D"
-	     data-src="{{thumbnail}}" class="pi-image lazy media article-media" alt="{{alt}}"
+	     data-src="{{thumbnail}}" class="pi-image-thumbnail lazy media article-media" alt="{{alt}}"
 	     data-image-key="{{name}}" data-image-name="{{name}}" data-ref="{{ref}}"
 	     data-params='[{"name":"{{name}}", "full":"{{url}}"}]'/>
 	{{/image}}

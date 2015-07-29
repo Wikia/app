@@ -8,12 +8,15 @@
 	float: right;
 	margin: 0 0 $infobox-margin $infobox-margin;
 	width: $infobox-width;
+}
 
 	// **********  Overwrite styles from article  ********** //
 	// (placing it within portable-infobox class makes it strong enough) //
 
+.portable-infobox {
 	.pi-secondary-font {
 		font-size: 12px;
+		font-weight: bold;
 		line-height: 18px;
 		margin-top: 0;
 	}
@@ -22,16 +25,11 @@
 	.pi-title {
 		border: 0;
 		margin: 0;
-		padding: 0;
 	}
 
 	.pi-title {
 		font-size: 18px;
 		line-height: 28px;
-	}
-
-	> .pi-item:last-child {
-		border-bottom: 0;
 	}
 
 	.pi-data-label {
@@ -49,14 +47,25 @@
 	}
 }
 
-// **********  Default infobox styling ********** //
+// **********  Common elements styling ********** //
 
-.pi-item-margins {
+.pi-item-spacing {
 	padding: $infobox-item-margin $infobox-item-margin * 4 $infobox-item-margin $infobox-item-margin * 2;
 }
 
-.pi-image-wrapper {
-	text-align: center;
+.pi-secondary-background {
+	background-color: $infobox-section-header-background;
+}
+
+// remove border from last infobox item either <data> or <group>
+.portable-infobox > .pi-item:last-child {
+	border-bottom: 0;
+}
+
+// **********  Individual elements styling ********** //
+
+.pi-image {
+	text-align: center; // center smaller image inside infobox
 }
 
 .pi-caption {
@@ -66,20 +75,12 @@
 	text-align: left;
 }
 
-.pi-secondary-background {
-	background-color: $infobox-section-header-background;
-}
-
-.pi-secondary-font {
-	font-weight: bold;
-}
-
-.pi-item-data:not(:last-of-type),
-.pi-item-group {
+.pi-data:not(:last-of-type),
+.pi-group {
 	border-bottom: 1px solid $infobox-section-header-background;
 }
 
-.pi-item-data {
+.pi-data {
 	@include flexbox;
 	@include flex-direction(row);
 	box-sizing: border-box;
@@ -94,14 +95,15 @@
 .pi-data-value {
 	font-size: 12px;
 	line-height: 18px;
-	padding-left: 0;//Overwritten anyway
+	padding-left: 0;
 
 	&:not(:first-child) {
 		@include flex-basis($infobox-width * 2 / 3);
 		padding-left: 10px;
 	}
 
-	// fix styles for children of data value
+	// overwrite default article styles for children of data value
+
 	> * {
 		margin: 0;
 	}
@@ -118,17 +120,16 @@
 
 // **********  Special styles for HORIZONTAL group  ********** //
 
-.pi-h-group-content {
+.pi-horizontal-group {
 	border-spacing: 0;
 	table-layout: fixed;
 	width: 100%;
 
 	.pi-header {
-		padding: $infobox-item-margin $infobox-item-margin * 4 $infobox-item-margin $infobox-item-margin * 2;
 		text-align: left;
 	}
 
-	.pi-h-group-item {
+	.pi-horizontal-group-item {
 		padding: $infobox-item-margin $infobox-item-margin * 2;
 		vertical-align: top;
 
@@ -142,16 +143,14 @@
 	}
 }
 
-// **********  Overwrite default styles for STACKED layout type  ********** //
+// **********  Overwrite default infobox styles for STACKED layout type  ********** //
 
 .pi-layout-stacked {
-	.pi-item-data {
+	.pi-data {
 		display: block;
 	}
 
 	.pi-data-value {
-		font-size: 14px;
-		line-height: 20px;
 		padding-left: $infobox-item-margin * 2;
 	}
 }
