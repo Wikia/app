@@ -8,7 +8,7 @@ use Wikia\Logger\WikiaLogger;
 abstract class EmailController extends \WikiaController {
 	const DEFAULT_TEMPLATE_ENGINE = \WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
 
-	const TRACKED_LANGUAGES = [ 'en', 'pl', 'de', 'es', 'fr', 'it', 'ja', 'nl', 'pt', 'ru', 'zh' ];
+	const TRACKED_LANGUAGES = [ 'EN', 'PL', 'DE', 'ES', 'FR', 'IT', 'JA', 'NL', 'PT', 'RU', 'ZH' ];
 
 	const AVATAR_SIZE = 50;
 
@@ -331,12 +331,12 @@ abstract class EmailController extends \WikiaController {
 	 * @return string
 	 */
 	protected function getLangForTracking() {
-		$lang = 'en';
+		$lang = 'EN';
 		if ( preg_match( '/^([^_-]+)/', $this->targetLang, $matches ) ) {
-			$lang = strtolower( $matches[1] );
+			$lang = strtoupper( $matches[1] );
 		}
 
-		return in_array( $lang, self::TRACKED_LANGUAGES ) ? $lang : 'xx';
+		return in_array( $lang, self::TRACKED_LANGUAGES ) ? $lang : 'XX';
 	}
 
 	/**
