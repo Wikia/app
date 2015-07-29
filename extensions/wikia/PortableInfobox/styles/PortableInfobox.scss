@@ -37,10 +37,18 @@
 		margin-top: 0;
 	}
 
+	// overwrite default article styles for children of data value
 	.pi-data-value {
-		> * {
+		> *,
+		li {
 			margin: 0;
 		}
+
+		ol,
+		ul {
+			list-style-position: inside;
+		}
+
 		li {
 			line-height: 19px;
 		}
@@ -100,21 +108,6 @@
 	&:not(:first-child) {
 		@include flex-basis($infobox-width * 2 / 3);
 		padding-left: 10px;
-	}
-
-	// overwrite default article styles for children of data value
-
-	> * {
-		margin: 0;
-	}
-
-	ol,
-	ul {
-		list-style-position: inside;
-	}
-
-	li {
-		margin: 0;
 	}
 }
 
