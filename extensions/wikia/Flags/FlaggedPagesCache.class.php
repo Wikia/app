@@ -47,7 +47,7 @@ class FlaggedPagesCache {
 	 * Purges the data on instances of flagged pages on wikia.
 	 */
 	public function purgeAllFlagTypes() {
-		$flagTypes = F::app()->sendRequest( 'FlagsApiController', 'getFlagTypes' )->getData()['data'];
+		$flagTypes = \F::app()->sendRequest( 'FlagsApiController', 'getFlagTypes' )->getData()['data'];
 		foreach( $flagTypes as $flagType ) {
 			$this->purge( $flagType['flag_type_id'] );
 		}
