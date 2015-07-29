@@ -155,37 +155,37 @@ class PortableInfoboxParserTagControllerTest extends WikiaBaseTest {
 		return [
 			[
 				'layout' => [ 'layout' => 'stacked' ],
-				'expectedOutput' => 'portable-infobox-layout-stacked',
+				'expectedOutput' => 'pi-layout-stacked',
 				'text' => '<data><default>test</default></data>',
 				'message' => 'set stacked layout'
 			],
 			[
 				'layout' => [ 'layout' => 'looool' ],
-				'expectedOutput' => 'portable-infobox-layout-default',
+				'expectedOutput' => 'pi-layout-default',
 				'text' => '<data><default>test</default></data>',
 				'message' => 'invalid layout name'
 			],
 			[
 				'layout' => [ 'layout' => '' ],
-				'expectedOutput' => 'portable-infobox-layout-default',
+				'expectedOutput' => 'pi-layout-default',
 				'text' => '<data><default>test</default></data>',
 				'message' => 'layout is empty string'
 			],
 			[
 				'layout' => [ 'layout' => 5 ],
-				'expectedOutput' => 'portable-infobox-layout-default',
+				'expectedOutput' => 'pi-layout-default',
 				'text' => '<data><default>test</default></data>',
 				'message' => 'layout is an integer'
 			],
 			[
 				'layout' => [ 'layout' => [] ],
-				'expectedOutput' => 'portable-infobox-layout-default',
+				'expectedOutput' => 'pi-layout-default',
 				'text' => '<data><default>test</default></data>',
 				'message' => 'layout an empty table'
 			],
 			[
 				'layout' => [],
-				'expectedOutput' => 'portable-infobox-layout-default',
+				'expectedOutput' => 'pi-layout-default',
 				'text' => '<data><default>test</default></data>',
 				'message' => 'layout is not set'
 			]
