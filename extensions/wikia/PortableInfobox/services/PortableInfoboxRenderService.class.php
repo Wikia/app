@@ -154,6 +154,10 @@ class PortableInfoboxRenderService extends WikiaService {
 		if ( $helper->isWikiaMobile() ) {
 			$data = $helper->sanitizeInfoboxTitle( $type, $data );
 		}
+		if ( $type === 'hero-mobile' && !empty( $data['title']['value'] ) ) {
+			$data['title']['value'] = trim( strip_tags( $data['title']['value'] ) );
+			return $data;
+		}
 
 		return $this->templateEngine->clearData()
 			->setData( $data )

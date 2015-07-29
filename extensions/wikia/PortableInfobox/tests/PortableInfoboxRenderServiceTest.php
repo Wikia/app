@@ -109,9 +109,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 						'data' => [
 							'alt' => 'image alt',
 							'url' => 'http://image.jpg',
-							'caption' => 'Lorem ipsum dolor',
-							'name' => 'image',
-							'key' => 'image'
+							'caption' => 'Lorem ipsum dolor'
 						]
 					]
 				],
