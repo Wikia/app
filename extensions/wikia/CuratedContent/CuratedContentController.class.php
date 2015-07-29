@@ -434,6 +434,46 @@ class CuratedContentController extends WikiaController {
 		}
 	}
 
+	public function setData( ) {
+		global $wgCityId, $wgEnableCuratedContentUnauthorizedSave;
+		$status = false;
+
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+
+		if ( !empty( $wgEnableCuratedContentUnauthorizedSave ) ) {
+			$helper = new CuratedContentHelper();
+			$data = $this->request->getArray( 'data', [] );
+
+			// strip data
+			foreach( $data as &$section ) {
+				unset( $section['node_type'] );
+				unset( $section['image_url'] );
+
+				foreach( $section['items'] as &$item ) {
+					unset( $item['node_type'] );
+					unset( $item['image_url'] );
+				}
+			}
+
+			$sections = $helper->processSections( $data );
+			$errors = ( new CuratedContentValidator( $sections ) )->getErrors();
+
+			if ( !empty( $errors ) ) {
+				$this->response->setVal( 'error', $errors );
+			} else {
+				$status = WikiFactory::setVarByName( 'wgWikiaCuratedContent', $wgCityId, $sections );
+
+				if ( $status ) {
+					wfRunHooks( 'CuratedContentSave', [ $sections ] );
+				}
+			}
+		}
+
+		$this->response->setVal( 'status', $status );
+		// TODO: remove following line when Curated Content Manager is relased for all
+		$this->response->setHeader( 'Access-Control-Allow-Origin', '*' );
+	}
+
 	public function getData( ) {
 		global $wgWikiaCuratedContent;
 		$data = [];

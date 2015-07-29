@@ -65,7 +65,7 @@ class CuratedContentValidatorController extends WikiaController {
 	}
 
 	private function respondWithStatus( $status ) {
-		$this->response->setFormat( 'json' );
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 		$this->response->setVal( 'status', $status );
 	}
 }
