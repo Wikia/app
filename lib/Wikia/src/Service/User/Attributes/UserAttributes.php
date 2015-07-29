@@ -95,7 +95,7 @@ class UserAttributes {
 		$this->attributes[$userId][$attribute->getName()] = $attribute->getValue();
 	}
 
-	private function deleteAttribute( $userId, $attribute ) {
+	public function deleteAttribute( $userId, $attribute ) {
 		$this->attributeService->delete( $userId, $attribute );
 	}
 }
