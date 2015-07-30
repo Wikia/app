@@ -6,7 +6,7 @@ class PortableInfoboxParserTagController extends WikiaController {
 	const PARSER_TAG_NAME = 'infobox';
 	const DEFAULT_THEME_NAME = 'wikia';
 	const DEFAULT_LAYOUT_NAME = 'default';
-	const INFOBOX_THEME_PREFIX = 'portable-infobox-theme-';
+	const INFOBOX_THEME_PREFIX = 'pi-theme-';
 	const INFOBOX_LAYOUT_PREFIX = 'pi-layout-';
 
 	private $markerNumber = 0;
