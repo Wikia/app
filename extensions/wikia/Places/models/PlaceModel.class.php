@@ -191,8 +191,6 @@ class PlaceModel {
 	 * Returns data needed to render marker for a given place on a map with multiple places
 	 *
 	 * This method returns article's URL, text snippet and an image for current place
-	 *
-	 * TODO: add caching
 	 */
 	public function getForMap(){
 		if ( $this->isEmpty() ){
@@ -209,31 +207,11 @@ class PlaceModel {
 			return array();
 		}
 
-		// TODO: getImages() are not cached
-		$imageServing = new ImageServing( array( $pageId ), 100, array( 'w' => 1, 'h' => 1 ) );
-		$images = $imageServing->getImages(1);
-		if ( !empty( $images[$pageId][0]['url'] ) ){
-			$imageUrl = $images[$pageId][0]['url'];
-		}
-		else {
-			$imageUrl = '';
-		}
-
-		$oArticleService = new ArticleService();
-		$oArticleService->setArticleById( $pageId );
-
-		$textSnippet = $oArticleService->getTextSnippet( 120 );
-		$strPos = mb_strrpos( $textSnippet, ' ' );
-		$textSnippet = mb_substr( $textSnippet, 0, ( $strPos ) );
-		$textSnippet.= ' ...';
-
 		$ret = array(
 			'lat' => $this->getLat(),
 			'lan' => $this->getLon(),
 			'label' => $oTitle->getText(),
-			'imageUrl' => $imageUrl,
 			'articleUrl' => $oTitle->getLocalUrl(),
-			'textSnippet' => $textSnippet
 		);
 
 		wfProfileOut(__METHOD__);

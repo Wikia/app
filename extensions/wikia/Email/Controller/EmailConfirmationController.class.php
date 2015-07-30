@@ -98,7 +98,7 @@ class EmailConfirmationReminderController extends AbstractEmailConfirmationContr
 	const TRACKING_CATEGORY = TrackingCategories::EMAIL_CONFIRMATION_REMINDER;
 
 	protected function getSubject() {
-		return $this->getMessage( 'emailext-emailconfirmation-reminder-subject', $this->targetUser->getName() )->parse();
+		return $this->getMessage( 'emailext-emailconfirmation-reminder-subject', $this->getTargetUserName() )->parse();
 	}
 
 	protected function getSummary() {
@@ -108,7 +108,7 @@ class EmailConfirmationReminderController extends AbstractEmailConfirmationContr
 	protected function getEmailSpecificFooterMessages() {
 		return [
 			$this->getMessage( 'emailext-emailconfirmation-reminder-footer-1',
-				$this->targetUser->getName() )->parse()
+				$this->getTargetUserName() )->parse()
 		];
 	}
 }
