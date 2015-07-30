@@ -61,7 +61,7 @@ class InsightsFlagsModel extends InsightsPageModel {
 		$articlesData = [];
 		$flaggedPages = $this->sendFlaggedPagesRequest();
 
-		if ( count($flaggedPages) > 0 ) {
+		if ( count( $flaggedPages ) > 0 ) {
 			$articlesData = $this->prepareData( $flaggedPages );
 
 			if ( $this->arePageViewsRequired() ) {
