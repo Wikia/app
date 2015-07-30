@@ -2,7 +2,6 @@
 
 namespace Email;
 
-
 class SpecialSendEmailController extends \WikiaSpecialPageController {
 
 	const DEFAULT_TEMPLATE_ENGINE = \WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
@@ -80,7 +79,7 @@ class SpecialSendEmailController extends \WikiaSpecialPageController {
 	 * @return bool
 	 */
 	private function editTokenValidates() {
-		return $this->wg->User->matchEditToken( $this->request->getVal( 'token' )  );
+		return $this->wg->User->matchEditToken( $this->request->getVal( 'token' ) );
 	}
 
 	/**
@@ -216,5 +215,4 @@ class SpecialSendEmailController extends \WikiaSpecialPageController {
 
 		return $form;
 	}
-
 }
