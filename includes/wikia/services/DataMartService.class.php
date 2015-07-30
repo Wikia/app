@@ -873,12 +873,15 @@ class DataMartService extends Service {
 	public static function getWAM200Wikis() {
 		$app = F::app();
 
-		$wikis = (new WikiaSQL())->cacheGlobal(60*60*12)
+		$db = wfGetDB( DB_SLAVE, [], $app->wg->DWStatsDB );
+
+		$wikis = (new WikiaSQL())->skipIf( !$app->wg->StatsDBEnabled )
+			->cacheGlobal(60*60*12)
 			->SELECT('wiki_id')
 			->FROM('dimension_top_wikis')
 			->ORDER_BY('rank')
 			->LIMIT(200)
-			->runLoop(wfGetDB( DB_SLAVE, [], $app->wg->DWStatsDB ), function(&$wikis, $row) {
+			->runLoop($db, function(&$wikis, $row) {
 				$wikis[] = intval($row->wiki_id);
 			});
 
