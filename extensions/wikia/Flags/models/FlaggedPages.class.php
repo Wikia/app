@@ -30,10 +30,10 @@ class FlaggedPages extends FlagsBaseModel {
 			->SELECT()
 			->DISTINCT( 'page_id' )
 			->FROM( 'flags_to_pages' )
-			->WHERE( 'flags_to_pages.wiki_id' )->EQUAL_TO( $wikiId );
+			->WHERE( 'wiki_id' )->EQUAL_TO( $wikiId );
 
 		if ( $flagTypeId !== null ) {
-			$flaggedPages->AND_( 'flags_to_pages.flag_type_id' )->EQUAL_TO( $flagTypeId );
+			$flaggedPages->AND_( 'flag_type_id' )->EQUAL_TO( $flagTypeId );
 		}
 
 		$flaggedPages = $flaggedPages->runLoop( $db, function( &$flaggedPages, $row ) {

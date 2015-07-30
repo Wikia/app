@@ -15,7 +15,7 @@ $messages['en'] = array(
 	'insights-last-edit' => 'Last edited by $1, $2',
 
 	'insights-list-subtitle-flags' => 'Pages marked with flags',
-	'insights-list-description-flags' => 'These pages may need some work. Look at specific flag type and address suggestions from flags. Once it\'s done you can remove a flag',
+	'insights-list-description-flags' => 'Use Flags to organize and label article pages. This Insight list allows you to view custom reports of flagged articles to find the articles that most need improvements. [[Help:Flags|Learn more about flags]]',
 
 	'insights-list-subtitle-uncategorizedpages' => 'Pages without categories',
 	'insights-list-description-uncategorizedpages' => 'Add categories to these pages. Good categorization is vital to a successfully organized wikia!',
