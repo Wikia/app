@@ -12,7 +12,7 @@ define ('ext.wikia.Flags.FlagEditForm',
 			allFlagsNames = [];
 
 		function init(prefillData) {
-			$.when(getFormResources()).done(function(dropdownOptions, formResources) {
+			$.when(getFormResources()).done(function (dropdownOptions, formResources) {
 				formResources.dropdownOptions = dropdownOptions[0];
 				getAllFlagNames();
 				setupForm(formResources);
@@ -104,7 +104,8 @@ define ('ext.wikia.Flags.FlagEditForm',
 
 		function displayFormCreate() {
 			/* TODO - We can get a half-rendered template to avoid escaping messages in front-end */
-			var formParams, content = cache.get(getEmptyFormCacheKey(mw.user.options.values.language));
+			var formParams,
+				content = cache.get(getEmptyFormCacheKey(mw.user.options.values.language));
 			/** **/
 			if (content === null) {
 				formParams = {
@@ -121,10 +122,11 @@ define ('ext.wikia.Flags.FlagEditForm',
 		}
 
 		function displayFormEdit(prefillData) {
-			var content, formParams = {
-				messages: formData.messages,
-				values: getDropdownOptions(prefillData)
-			};
+			var content,
+				formParams = {
+					messages: formData.messages,
+					values: getDropdownOptions(prefillData)
+				};
 
 			content = mustache.to_html(formData.template, formParams, formData.partials);
 
@@ -244,7 +246,7 @@ define ('ext.wikia.Flags.FlagEditForm',
 
 		function getAllFlagNames() {
 			if (allFlagsNames.length === 0) {
-				$('.flags-special-list-item-name').each( function() {
+				$('.flags-special-list-item-name').each(function () {
 					allFlagsNames.push($(this).data('flag-name'));
 				});
 			}
@@ -252,7 +254,7 @@ define ('ext.wikia.Flags.FlagEditForm',
 
 		function addNewParameterInput() {
 			var tbody = $('.flags-special-form-params-tbody'),
-				partial = mustache.to_html(formData.partials.createFormParam, {} );
+				partial = mustache.to_html(formData.partials.createFormParam, {});
 
 			tbody.append(partial);
 			$('.flags-special-form-param-delete-link').on('click', removeParameter);
@@ -268,7 +270,7 @@ define ('ext.wikia.Flags.FlagEditForm',
 		}
 
 		function getEmptyFormCacheKey(lang) {
-			return emptyFormCacheKey + ':' + lang +':' + cacheVersion;
+			return emptyFormCacheKey + ':' + lang + ':' + cacheVersion;
 		}
 
 		function getDropdownOptions(values) {
@@ -287,7 +289,6 @@ define ('ext.wikia.Flags.FlagEditForm',
 				}
 
 			}
-
 
 			if (values.selectedTargeting !== null) {
 				// mark selected target

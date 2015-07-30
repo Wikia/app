@@ -34,7 +34,9 @@ require(
 		}
 
 		function deleteFlagType(event) {
-			var flagTypeId = getFlagTypeId(event), flagName, confirmMessage;
+			var flagName,
+				confirmMessage,
+				flagTypeId = getFlagTypeId(event);
 
 			event.preventDefault();
 
@@ -106,7 +108,9 @@ require(
 		}
 
 		function getValuesFromTableRow(flagTypeId, row) {
-			var data = {}, flagParams, name;
+			var flagParams,
+				name,
+				data = {};
 
 			data.flagTypeId = flagTypeId;
 			data.name = row.find('.flags-special-list-item-name').data('flag-name');
