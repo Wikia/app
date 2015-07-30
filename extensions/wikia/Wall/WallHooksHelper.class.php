@@ -1489,13 +1489,14 @@ class WallHooksHelper {
 		// Wall code makes up fake Title objects to trick MW into handling its "Thread:1234" style
 		// title text.  It also reuses the same namespaces for Forums, user walls, replies, etc.
 		// Since we need a real Title backed by a DB row, we need to reconstruct a title object
-		// if the current one looks fake.
+		// if the current one looks fake.  If this already is a real Title the normal unwatch handling
+		// that called this hook will take care of this for us.
 		if ( ( $article->getId()  == 0 ) && preg_match( '/^(\d+)$/', $title->getText(), $matches ) ) {
 			$id = $matches[1];
 			$title = Title::newFromID( $id );
-		}
 
-		static::processActionOnWatchlist( $user, $title, 'remove' );
+			static::processActionOnWatchlist( $user, $title, 'remove' );
+		}
 
 		return true;
 	}
