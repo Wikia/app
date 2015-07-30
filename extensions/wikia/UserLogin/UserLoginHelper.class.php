@@ -602,4 +602,19 @@ class UserLoginHelper extends WikiaModel {
 
 		return $result;
 	}
+
+	public function getNewAuthUrl() {
+		return '/join?redirect='
+			. urlencode ( wfExpandUrl( $this->app->wg->request->getRequestURL() ) )
+			. $this->getUselangParam();
+	}
+
+	/**
+	 * Returns string with uselang param to append to login url if Wikia language is different than default
+	 * @return string
+	 */
+	private function getUselangParam() {
+		$lang = $this->wg->ContLang->mCode;
+		return $lang == 'en' ? '' : '&uselang=' . $lang;
+	}
 }
