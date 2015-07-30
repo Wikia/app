@@ -981,6 +981,8 @@ class ArticleCommentList {
 		}
 
 		F::app()->wg->Out->redirect( $redirectTitle->getFullUrl( $query ) );
+
+		return true;
 	}
 
 	/**
@@ -1000,6 +1002,8 @@ class ArticleCommentList {
 		if ( $title->getPrefixedDBkey() != F::app()->wg->Title->getPrefixedDBkey() ) {
 			return false;
 		}
+
+		return true;
 	}
 
 	static private function canSetRedirect() {
