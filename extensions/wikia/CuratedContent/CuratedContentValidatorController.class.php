@@ -27,7 +27,7 @@ class CuratedContentValidatorController extends WikiaController {
 
 	public function validateItem() {
 		$item = $this->request->getVal( 'item' );
-		$isFeatured = $this->request->getVal( 'isFeatured', null );
+		$isFeatured = $this->request->getBool( 'isFeatured', false );
 
 		if ( empty( $item ) ) {
 			$this->respondWithErrors();
@@ -35,11 +35,13 @@ class CuratedContentValidatorController extends WikiaController {
 			// create optional/featured section so we can use CuratedContentValidator class
 			$section = [
 				'title' => '',
-				'featured' => $isFeatured,
 				'items' => [
 					$item
 				]
 			];
+			if ( !empty( $isFeatured ) ) {
+				$section['featured'] = true;
+			}
 			$this->validateCuratedContentData( [ $section ] );
 		}
 	}
@@ -58,7 +60,7 @@ class CuratedContentValidatorController extends WikiaController {
 	}
 
 	private function respondWithErrors( Array $errors = null ) {
-		if ( empty( $errors ) ) {
+		if ( !empty( $errors ) ) {
 			$this->response->setVal('error', $errors);
 		}
 		$this->respondWithStatus( false );
