@@ -134,7 +134,7 @@ abstract class InsightsPageModel extends InsightsModel {
 
 		$pvData = [];
 
-		foreach( $pvTimes as $timeId ) {
+		foreach ( $pvTimes as $timeId ) {
 			$pvData[] = DataMartService::getPageViewsForArticles( $articlesIds, $timeId, $wgCityId );
 		}
 
