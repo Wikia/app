@@ -188,10 +188,10 @@ require(['wikia.window', 'jquery', 'wikia.nirvana', 'wikia.tracker', 'JSMessages
 					$image.startThrobbing();
 
 					nirvana.getJson(
-						'CuratedContentSpecial',
+						'CuratedContent',
 						'getImage',
 						{
-							file: imgTitle
+							title: imgTitle
 						}
 					).done(
 						function (data) {
