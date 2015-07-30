@@ -23,6 +23,8 @@ class DataMartService extends Service {
 
 	const TOP_WIKIS_FOR_HUB = 10;
 
+	const TTL = 43200; // WikiaSQL results caching time (12 hours)
+
 	/**
 	 * get pageviews
 	 * @param integer $periodId
@@ -50,7 +52,7 @@ class DataMartService extends Service {
 
 		$db = DataMartService::getDB();
 		$pageviews = (new WikiaSQL())->skipIf( self::isDisabled() )
-			->cacheGlobal(60*60*12)
+			->cacheGlobal( self::TTL )
 			->SELECT("date_format(time_id,'%Y-%m-%d')")->AS_('date')
 				->FIELD('pageviews')->AS_('cnt')
 			->FROM('rollup_wiki_pageviews')
@@ -94,7 +96,7 @@ class DataMartService extends Service {
 
 		$db = DataMartService::getDB();
 		$pageviews = (new WikiaSQL())->skipIf( self::isDisabled() )
-			->cacheGlobal(60*60*12)
+			->cacheGlobal( self::TTL )
 			->SELECT('wiki_id')
 				->FIELD("date_format(time_id,'%Y-%m-%d')")->AS_('date')
 				->FIELD('pageviews')->AS_('cnt')
@@ -130,7 +132,7 @@ class DataMartService extends Service {
 
 		$db = DataMartService::getDB();
 		$pageviews = (new WikiaSQL())->skipIf( self::isDisabled() )
-			->cacheGlobal(60*60*12)
+			->cacheGlobal( self::TTL )
 			->SELECT('time_id')
 				->SUM('pageviews')->AS_('cnt')
 			->FROM('rollup_wiki_pageviews')
@@ -219,7 +221,7 @@ class DataMartService extends Service {
 		$db = DataMartService::getDB();
 
 		$sql = (new WikiaSQL())->skipIf( self::isDisabled() )
-			->cacheGlobal(43200)
+			->cacheGlobal( self::TTL )
 			->SELECT('r.wiki_id')->AS_('id')
 				->FIELD($field)->AS_('pageviews')
 			->FROM('report_wiki_recent_pageviews')->AS_('r')
@@ -268,7 +270,7 @@ class DataMartService extends Service {
 		$db = DataMartService::getDB();
 
 		$topWikis = (new WikiaSQL())->skipIf( self::isDisabled() )
-			->cacheGlobal(43200)
+			->cacheGlobal( self::TTL )
 			->SELECT('r.wiki_id')->AS_('id')
 				->SUM('views')->AS_('totalViews')
 			->FROM('rollup_wiki_video_views')->AS_('r')
@@ -316,7 +318,7 @@ class DataMartService extends Service {
 
 		$db = DataMartService::getDB();
 		$events = (new WikiaSQL())->skipIf( self::isDisabled() )
-			->cacheGlobal(60*60*12)
+			->cacheGlobal( self::TTL )
 			->SELECT("date_format(time_id,'%Y-%m-%d')")->AS_('date')
 				->SUM('creates')->AS_('creates')
 				->SUM('edits')->AS_('edits')
@@ -882,7 +884,7 @@ class DataMartService extends Service {
 		$db = wfGetDB( DB_SLAVE, [], $app->wg->DWStatsDB );
 
 		$wikis = (new WikiaSQL())->skipIf( self::isDisabled() )
-			->cacheGlobal(60*60*12)
+			->cacheGlobal( self::TTL )
 			->SELECT('wiki_id')
 			->FROM('dimension_top_wikis')
 			->ORDER_BY('rank')
