@@ -38,24 +38,26 @@ class AttributeKeyValueTest extends \PHPUnit_Framework_TestCase {
 		$this->assertTrue( $ret, "the attribute was not set" );
 	}
 
+	/**
+	 * @expectedException \Exception
+	 */
 	public function testSetWithEmptyAttribute() {
 		$this->persistenceMock->expects( $this->exactly( 0 ) )
 			->method( 'saveAttribute' );
 
 		$service = new AttributeKeyValueService( $this->persistenceMock );
 		$ret = $service->set( $this->userId, null );
-
-		$this->assertFalse( $ret, "expected false when providing an empty attribute set" );
 	}
 
+	/**
+	 * @expectedException \Exception
+	 */
 	public function testSetWithAnonUserId() {
 		$this->persistenceMock->expects( $this->exactly( 0 ) )
 			->method( 'saveAttribute' );
 
 		$service = new AttributeKeyValueService( $this->persistenceMock );
 		$ret = $service->set( $this->anonUserId, null );
-
-		$this->assertFalse( $ret, "expected false when providing an empty attribute set" );
 	}
 
 	/**

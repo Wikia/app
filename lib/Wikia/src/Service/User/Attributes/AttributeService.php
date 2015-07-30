@@ -11,7 +11,7 @@ interface AttributeService {
 	 *
 	 * @param int $userId
 	 * @param Attribute $attribute
-	 * @return bool true when saved, false exception otherwise
+	 * @return bool true when saved, exception otherwise
 	 */
 	public function set( $userId, $attribute );
 

@@ -29,7 +29,7 @@ class AttributeKeyValueService implements AttributeService {
 
 	public function set( $userId, $attribute ) {
 		if ( empty( $attribute ) || $userId === 0 ) {
-			return false;
+			throw new \Exception( 'Invalid parameters, $attribute must not be empty and $userId must be > 0' );
 		}
 
 		try {
