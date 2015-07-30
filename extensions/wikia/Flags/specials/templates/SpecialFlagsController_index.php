@@ -33,9 +33,9 @@
 	<?php foreach ( $flagTypes as $flagTypeId => $flag ): ?>
 		<?php $title = Title::newFromText( $flag['flag_view'], NS_TEMPLATE ); ?>
 		<tr class="flags-special-list-item" id="flags-special-list-item-<?= $flagTypeId ?>">
-			<td class="flags-special-list-item-name" data-flag-name="<?= Sanitizer::encodeAttribute( $flag['flag_name'] ) ?>"><?= $flag['flag_name'] ?></td>
+			<td class="flags-special-list-item-name" data-flag-name="<?= Sanitizer::encodeAttribute( $flag['flag_name'] ) ?>"><?= htmlspecialchars( $flag['flag_name'] ) ?></td>
 			<td class="flags-special-list-item-template" data-flag-template="<?= Sanitizer::encodeAttribute( $flag['flag_view'] ) ?>">
-				<?= Linker::link( $title, $flag['flag_view'], [
+				<?= Linker::link( $title, htmlspecialchars( $flag['flag_view'] ), [
 					'class' => 'flags-special-list-item-template-link',
 					'target' => '_blank',
 				] ); ?>
@@ -46,7 +46,7 @@
 					if ( is_array( $paramsNames ) ) :
 				?>
 					<?php foreach ( $paramsNames as $name => $description ): ?>
-						<?= $name ?> <small><em><?= $description ?></em></small><br>
+						<?= htmlspecialchars( $name ) ?> <small><em><?= htmlspecialchars( $description ) ?></em></small><br>
 					<?php endforeach; ?>
 				<?php
 					endif;
@@ -56,7 +56,7 @@
 			<td class="flags-special-list-item-targeting" data-flag-targeting="<?= Sanitizer::encodeAttribute( $flag['flag_targeting'] ) ?>"><?= ucfirst( $flagTargeting[$flag['flag_targeting']]['name'] ) ?></td>
 			<td class="flags-special-list-item-actions clearfix">
 				<?php
-					if ( $insightsTitle ): 
+					if ( $insightsTitle ):
 					$insightUrl = Sanitizer::cleanUrl( $insightsTitle->getFullUrl( [ 'flagTypeId' => $flagTypeId ] ) );
 				?>
 					<a class="flags-special-list-item-actions-insights" href="<?= $insightUrl ?>" target="_blank" title="<?= wfMessage( 'flags-icons-actions-insights' )->escaped() ?>">
