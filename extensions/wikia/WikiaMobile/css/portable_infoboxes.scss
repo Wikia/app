@@ -58,7 +58,7 @@ $infobox-item-margin: 5px;
 .pi-data-value {
 	padding-left: $infobox-item-margin * 2;
 
-	// overwite default article styles for UGS html inside <data> tag value
+	// overwrite default article styles for UGC html inside <data> tag value
 	> * {
 		margin: 0;
 	}
