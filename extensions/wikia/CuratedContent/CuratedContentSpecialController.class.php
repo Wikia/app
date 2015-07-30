@@ -200,25 +200,4 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 		}
 		return $result;
 	}
-
-	public function getImage() {
-		$file = $this->request->getVal( 'file' );
-		$url = '';
-		$imageId = 0;
-
-		if ( !empty( $file ) ) {
-			$imageTitle = Title::newFromText( $file );
-
-			if ( !empty( $imageTitle ) && $imageTitle instanceof Title && $imageTitle->exists() ) {
-				$imageId = $imageTitle->getArticleID();
-			}
-		}
-
-		if ( !empty( $imageId ) ) {
-			$url = CuratedContentHelper::getImageUrl( $imageId );
-		}
-
-		$this->response->setVal( 'url', $url );
-		$this->response->setVal( 'id', $imageId );
-	}
 }
