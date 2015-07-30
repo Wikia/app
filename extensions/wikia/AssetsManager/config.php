@@ -2441,7 +2441,7 @@ $config['portable_infobox_scss'] = [
 	'skin' => ['oasis'],
 	'assets' => [
 		'//extensions/wikia/PortableInfobox/styles/PortableInfobox.scss',
-		/* @TODO DAT-3079 Remove PortableInfoboxMonobook_beforeSimplification.scss
+		/* @TODO DAT-3079 Remove PortableInfobox_beforeSimplification.scss
 		 * once all articles will be purged after release; @see DAT-3009 purging ticket */
 		'//extensions/wikia/PortableInfobox/styles/PortableInfobox_beforeSimplification.scss'
 	]
