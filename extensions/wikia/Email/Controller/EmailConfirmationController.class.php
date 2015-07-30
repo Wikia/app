@@ -117,8 +117,23 @@ class ConfirmationChangedEmailController extends AbstractEmailConfirmationContro
 
 	const TRACKING_CATEGORY = TrackingCategories::CHANGED_EMAIL_CONFIRMATION;
 
+	private $newEmail;
+
+	public function initEmail() {
+		parent::initEmail();
+
+		$this->newEmail = $this->request->getVal( 'newEmail' );
+		$this->assertValidChangedParams();
+	}
+
+	protected function assertValidChangedParams() {
+		if ( empty( $this->newEmail ) ) {
+			throw new Check( "A value must be passed for parameter 'newEmail'" );
+		}
+	}
+
 	protected function getTargetUserEmail() {
-		return $this->targetUser->getNewEmail();
+		return $this->newEmail;
 	}
 
 	protected function getSubject() {
@@ -134,6 +149,19 @@ class ConfirmationChangedEmailController extends AbstractEmailConfirmationContro
 			$this->getMessage( 'emailext-emailconfirmation-changed-footer-1' )->text(),
 			$this->getMessage( 'emailext-emailconfirmation-changed-footer-2' )->text(),
 		];
+	}
+
+	protected static function getEmailSpecificFormFields() {
+		$parentForm = parent::getEmailSpecificFormFields();
+
+		$parentForm['inputs'][] = [
+			'type' => 'text',
+			'name' => 'newEmail',
+			'label' => "New Email",
+			'tooltip' => "The user's new email",
+		];
+
+		return $parentForm;
 	}
 }
 

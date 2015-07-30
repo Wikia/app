@@ -303,7 +303,7 @@ class UserLoginHelper extends WikiaModel {
 		$user->mId = 0;
 		$user->mEmail = $email;
 
-		$result = $user->sendReConfirmationMail( $type );
+		$result = $user->sendReConfirmationMail();
 
 		$user->mId = $userId;
 		$user->mEmail = $userEmail;

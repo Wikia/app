@@ -4052,6 +4052,7 @@ class User {
 	private function sendUsingEmailExtension( $emailController, $url ) {
 		$params = [
 			'targetUser' => $this->getName(),
+			'newEmail' => $this->getNewEmail(),
 			'confirmUrl' => $url,
 		];
 
