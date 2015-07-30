@@ -16,6 +16,7 @@ $messages['en'] = array(
 
 	'insights-list-subtitle-flags' => 'Pages marked with flags',
 	'insights-list-description-flags' => 'Use Flags to organize and label article pages. This Insight list allows you to view custom reports of flagged articles to find the articles that most need improvements. [[Help:Flags|Learn more about flags]]',
+	'insights-notification-message-inprogress-flags' => 'This page is flagged. ',
 
 	'insights-list-subtitle-uncategorizedpages' => 'Pages without categories',
 	'insights-list-description-uncategorizedpages' => 'Add categories to these pages. Good categorization is vital to a successfully organized wikia!',
@@ -76,6 +77,7 @@ $messages['qqq'] = array(
 
 	'insights-landing-title' => 'A title of the Insights landing page appearing as an h1 element.',
 	'insights-landing-lead' => 'A lead for the Insights special page with a general description, appearing below the title.',
+	'insights-notification-message-inprogress-flags' => 'Message displayed on notification banner informing user that this page is flagged.',
 
 	'insights-list-no-items' => 'A message that is shown when there are no items to work on left on a list',
 	'insights-list-header-page' => 'A header of an Insights list table for a column with a title and last revision data',

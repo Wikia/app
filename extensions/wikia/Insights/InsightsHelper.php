@@ -26,6 +26,7 @@ class InsightsHelper {
 	/**
 	 * Used to create the following messages:
 	 *
+	 * 'insights-notification-message-inprogress-flags',
 	 * 'insights-notification-message-inprogress-uncategorizedpages',
 	 * 'insights-notification-message-inprogress-withoutimages',
 	 * 'insights-notification-message-inprogress-deadendpages',
