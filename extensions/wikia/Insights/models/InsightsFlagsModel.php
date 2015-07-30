@@ -10,10 +10,6 @@ class InsightsFlagsModel extends InsightsPageModel {
 		'displayFixItMessage' => false,
 	];
 
-	public function getDataProvider() {
-		return null;
-	}
-
 	public function getInsightType() {
 		return self::INSIGHT_TYPE;
 	}
@@ -46,8 +42,6 @@ class InsightsFlagsModel extends InsightsPageModel {
 	 */
 	public function getContent( $params ) {
 		$this->preparePaginationParams( $params );
-
-		$this->queryPageInstance = $this->getDataProvider();
 
 		$articlesData = $this->fetchArticlesData();
 

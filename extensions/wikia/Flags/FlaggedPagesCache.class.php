@@ -31,7 +31,6 @@ class FlaggedPagesCache {
 
 	/**
 	 * Saves all instances of flagged pages on wikia in the memcache.
-	 * @param int $pageId
 	 * @param array $flags
 	 */
 	public function set( Array $flags ) {

@@ -29,8 +29,8 @@ class FlaggedPages extends FlagsBaseModel {
 			->SELECT()
 			->DISTINCT( 'page_id' )
 			->FROM( 'flags_to_pages' )
-			->WHERE( 'flags_to_pages.wiki_id' )->EQUAL_TO( $wikiId )
-//			->AND_( 'flags_to_pages.flag_type_id' )->EQUAL_TO( ... ) // TODO add filtering by flag type
+			->WHERE( 'wiki_id' )->EQUAL_TO( $wikiId )
+//			->AND_( 'flag_type_id' )->EQUAL_TO( ... ) // TODO add filtering by flag type
 			->runLoop( $db, function( &$flaggedPages, $row ) {
 				$flaggedPages[] = $row->page_id;
 			} );
