@@ -123,8 +123,7 @@
 					id: commentId,
 					method: 'axEdit',
 					rs: 'ArticleCommentsAjax',
-					useskin: window.skin,
-					cb: Date.now()
+					useskin: window.skin
 
 				}, function (json) {
 					if (!json.error) {
