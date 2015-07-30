@@ -79,7 +79,7 @@ class AdEngine2ContextService {
 
 	private function getMappedVerticalName( $cityId ) {
 		$wikiVertical = WikiFactoryHub::getInstance()->getWikiVertical( $cityId );
-		if ( !empty( $wikiVertical[ 'short' ] ) ) {
+		if ( !empty( $wikiVertical['short'] ) ) {
 			$mapping = [
 				'other' => 'life',
 				'tv' => 'ent',
@@ -90,9 +90,9 @@ class AdEngine2ContextService {
 				'music' => 'ent',
 				'movies' => 'ent'
 			];
-			$newVerticalName = strtolower( $wikiVertical[ 'short' ] );
-			if ( !empty( $mapping[ $newVerticalName ] ) ) {
-				return $mapping[ $newVerticalName ];
+			$newVerticalName = strtolower( $wikiVertical['short'] );
+			if ( !empty( $mapping[$newVerticalName] ) ) {
+				return $mapping[$newVerticalName];
 			}
 		}
 		return 'error';
