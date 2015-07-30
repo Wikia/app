@@ -67,5 +67,7 @@ class CuratedContentValidatorController extends WikiaController {
 	private function respondWithStatus( $status ) {
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 		$this->response->setVal( 'status', $status );
+		// TODO: remove following line when Curated Content Manager is relased for all
+		$this->response->setHeader( 'Access-Control-Allow-Origin', '*' );
 	}
 }

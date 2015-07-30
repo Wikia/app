@@ -469,6 +469,7 @@ class CuratedContentController extends WikiaController {
 					wfRunHooks( 'CuratedContentSave', [ $sections ] );
 				}
 			}
+
 		}
 
 		$this->response->setVal( 'status', $status );
