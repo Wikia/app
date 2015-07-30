@@ -23,8 +23,15 @@
 
 global $wgFetchBlobApiURL;
 $wgFetchBlobApiURL = "http://community.wikia.com/api.php";
-// $app->registerHook( "ExternalStoreDB::fetchBlob", "ExternalStoreDBFetchBlobHook" );
+
 $wgHooks[ "ExternalStoreDB::fetchBlob" ][ ] = "ExternalStoreDBFetchBlobHook";
+
+$wgExtensionCredits['other'][] = [
+	'name' => 'ExternalStoreDB fetch blob',
+	'author' => [
+		'Krzysztof Krzyżaniak'
+	],
+];
 
 /**
  * hook for ExternalStoreDB::FetchBlob
@@ -83,22 +90,18 @@ function ExternalStoreDBFetchBlobHook( $cluster, $id, $itemID, &$ret ) {
 				wfDebug( __METHOD__ . ": md5 sum match\n" );
 				$ret = $blob;
 
-				// now store blob in local database but only when it's Poznan's devbox
-				$isPoznanDevbox = ( F::app()->wg->DevelEnvironment === true && F::app()->wg->WikiaDatacenter == "poz" );
-				if ( $isPoznanDevbox ) {
-					wfDebug( __METHOD__ . ": this is poznań devbox\n" );
-					$store = new ExternalStoreDB();
-					$dbw = $store->getMaster( $cluster );
-					if ( $dbw ) {
-						wfDebug( __METHOD__ . ": storing blob $id on local storage $cluster\n" );
-						$dbw->insert(
-							$store->getTable( $dbw ),
-							array( "blob_id" => $id, "blob_text" => $ret ),
-							__METHOD__,
-							array( "IGNORE" )
-						);
-						$dbw->commit();
-					}
+				// now store blob in local database
+				$store = new ExternalStoreDB();
+				$dbw = $store->getMaster( $cluster );
+				if ( $dbw ) {
+					wfDebug( __METHOD__ . ": storing blob $id on local storage $cluster\n" );
+					$dbw->insert(
+						$store->getTable( $dbw ),
+						array( "blob_id" => $id, "blob_text" => $ret ),
+						__METHOD__,
+						array( "IGNORE" )
+					);
+					$dbw->commit();
 				}
 			}
 			else {
