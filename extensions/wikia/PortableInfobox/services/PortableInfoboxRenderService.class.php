@@ -50,8 +50,7 @@ class PortableInfoboxRenderService extends WikiaService {
 					$infoboxHtmlContent .= $this->renderItem( 'navigation', $data );
 					break;
 				default:
-					if ( $helper->isWikiaMobile() &&
-						$helper->isValidHeroDataItem( $item, $heroData ) ) {
+					if ( $helper->isWikiaMobile() && $helper->isValidHeroDataItem( $item, $heroData ) ) {
 						$heroData[ $type ] = $data;
 						continue;
 					}
@@ -106,7 +105,7 @@ class PortableInfoboxRenderService extends WikiaService {
 			}
 		}
 
-		return $this->renderItem( 'group', [ 'content' => $groupHTMLContent, 'layout' => $layout ] );
+		return $this->renderItem( 'group', [ 'content' => $groupHTMLContent ] );
 	}
 
 	/**

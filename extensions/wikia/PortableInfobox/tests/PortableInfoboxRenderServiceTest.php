@@ -95,10 +95,8 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 						]
 					]
 				],
-				'output' => '<aside class="portable-infobox">
-								<div class="portable-infobox-item item-type-title portable-infobox-item-margins">
-									<h2 class="portable-infobox-title">Test Title</h2>
-								</div>
+				'output' => '<aside class="portable-infobox pi-background">
+								<h2 class="pi-item pi-item-spacing pi-title">Test Title</h2>
 							</aside>',
 				'description' => 'Only title'
 			],
@@ -116,15 +114,14 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 						]
 					]
 				],
-				'output' => '<aside class="portable-infobox">
-								<div class="portable-infobox-item item-type-image no-margins">
-									<figure class="portable-infobox-image-wrapper">
-										<a href="http://image.jpg" class="image image-thumbnail" title="image alt">
-											<img src="http://thumbnail.jpg" class="portable-infobox-image" alt="image alt" width="400" height="200" data-image-key="image" data-image-name="image"/>
-										</a>
-										<figcaption class="portable-infobox-item-margins portable-infobox-image-caption">Lorem ipsum dolor</figcaption>
-									</figure>
-								</div>
+				'output' => '<aside class="portable-infobox pi-background">
+								<figure class="pi-item pi-image">
+									<a href="http://image.jpg" class="image image-thumbnail" title="image alt">
+										<img src="http://thumbnail.jpg" class="pi-image-thumbnail" alt="image alt"
+										width="400" height="200" data-image-key="image" data-image-name="image"/>
+									</a>
+									<figcaption class="pi-item-spacing pi-caption">Lorem ipsum dolor</figcaption>
+								</figure>
 							</aside>',
 				'description' => 'Only image',
 				'mockParams' => [
@@ -157,21 +154,19 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 						]
 					]
 				],
-				'output' => '<aside class="portable-infobox">
-								<div class="portable-infobox-item item-type-image no-margins">
-									<figure class="portable-infobox-image-wrapper">
-										<a href="http://image.jpg"
-										class="image image-thumbnail video video-thumbnail small"
-										title="image alt">
-											<img src="http://thumbnail.jpg" class="portable-infobox-image"
-											alt="image alt" width="400" height="200" data-video-key="image"
-											data-video-name="image"/>
-											<span class="duration" itemprop="duration">1:20</span>
-											<span class="play-circle"></span>
-										</a>
-										<figcaption class="portable-infobox-item-margins portable-infobox-image-caption">Lorem ipsum dolor</figcaption>
-									</figure>
-								</div>
+				'output' => '<aside class="portable-infobox pi-background">
+								<figure class="pi-item pi-image">
+									<a href="http://image.jpg"
+									class="image image-thumbnail video video-thumbnail small"
+									title="image alt">
+										<img src="http://thumbnail.jpg" class="pi-image-thumbnail"
+										alt="image alt" width="400" height="200" data-video-key="image"
+										data-video-name="image"/>
+										<span class="duration" itemprop="duration">1:20</span>
+										<span class="play-circle"></span>
+									</a>
+									<figcaption class="pi-item-spacing pi-caption">Lorem ipsum dolor</figcaption>
+								</figure>
 							</aside>',
 				'description' => 'Only video',
 				'mockParams' => [
@@ -199,8 +194,8 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 						]
 					]
 				],
-				'output' => '<aside class="portable-infobox">
-								<nav class="portable-infobox-navigation portable-infobox-item-margins portable-infobox-secondary-background portable-infobox-secondary-font">navigation value</nav>
+				'output' => '<aside class="portable-infobox pi-background">
+								<nav class="pi-navigation pi-item-spacing pi-secondary-background pi-secondary-font">navigation value</nav>
 							</aside>',
 				'description' => 'navigation only'
 			],
@@ -214,10 +209,10 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 						]
 					]
 				],
-				'output' => '<aside class="portable-infobox">
-								<div class="portable-infobox-item item-type-key-val portable-infobox-item-margins">
-									<h3 class="portable-infobox-item-label portable-infobox-secondary-font">test label</h3>
-									<div class="portable-infobox-item-value">test value</div>
+				'output' => '<aside class="portable-infobox pi-background">
+								<div class="pi-item pi-data pi-item-spacing">
+									<h3 class="pi-data-label pi-secondary-font">test label</h3>
+									<div class="pi-data-value pi-font">test value</div>
 								</div>
 							</aside>',
 				'description' => 'Only pair'
@@ -248,20 +243,17 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 						]
 					]
 				],
-				'output' => '<aside class="portable-infobox">
-								<div class="portable-infobox-item item-type-title portable-infobox-item-margins">
-									<h2 class="portable-infobox-title">Test Title</h2>
-								</div>
-								<div class="portable-infobox-item item-type-image no-margins">
-									<figure class="portable-infobox-image-wrapper">
-										<a href="http://image.jpg" class="image image-thumbnail" title="image alt">
-											<img src="http://thumbnail.jpg" class="portable-infobox-image" alt="image alt" width="400" height="200" data-image-key="image" data-image-name="image"/>
-										</a>
-									</figure>
-								</div>
-								<div class="portable-infobox-item item-type-key-val portable-infobox-item-margins">
-									<h3 class="portable-infobox-item-label portable-infobox-secondary-font">test label</h3>
-									<div class="portable-infobox-item-value">test value</div>
+				'output' => '<aside class="portable-infobox pi-background">
+								<h2 class="pi-item pi-item-spacing pi-title">Test Title</h2>
+								<figure class="pi-item pi-image">
+									<a href="http://image.jpg" class="image image-thumbnail" title="image alt">
+										<img src="http://thumbnail.jpg" class="pi-image-thumbnail" alt="image alt"
+										width="400" height="200" data-image-key="image" data-image-name="image"/>
+									</a>
+								</figure>
+								<div class="pi-item pi-data pi-item-spacing">
+									<h3 class="pi-data-label pi-secondary-font">test label</h3>
+									<div class="pi-data-value pi-font">test value</div>
 									</div>
 							</aside>',
 				'description' => 'Simple infobox with title, image and key-value pair',
@@ -299,13 +291,11 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 						]
 					]
 				],
-				'output' => '<aside class="portable-infobox">
-								<div class="portable-infobox-item item-type-title portable-infobox-item-margins">
-									<h2 class="portable-infobox-title">Test Title</h2>
-								</div>
-								<div class="portable-infobox-item item-type-key-val portable-infobox-item-margins">
-									<h3 class="portable-infobox-item-label portable-infobox-secondary-font">test label</h3>
-									<div class="portable-infobox-item-value">test value</div>
+				'output' => '<aside class="portable-infobox pi-background">
+								<h2 class="pi-item pi-item-spacing pi-title">Test Title</h2>
+								<div class="pi-item pi-data pi-item-spacing">
+									<h3 class="pi-data-label pi-secondary-font">test label</h3>
+									<div class="pi-data-value pi-font">test value</div>
 									</div>
 							</aside>',
 				'description' => 'Simple infobox with title, INVALID image and key-value pair'
@@ -326,13 +316,11 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 						]
 					]
 				],
-				'output' => '<aside class="portable-infobox">
-								<div class="portable-infobox-item item-type-title portable-infobox-item-margins">
-									<h2 class="portable-infobox-title">Test Title</h2>
-								</div>
-								<div class="portable-infobox-item item-type-key-val portable-infobox-item-margins">
-									<h3 class="portable-infobox-item-label portable-infobox-secondary-font">test label</h3>
-									<div class="portable-infobox-item-value">test value</div>
+				'output' => '<aside class="portable-infobox pi-background">
+								<h2 class="pi-item pi-item-spacing pi-title">Test Title</h2>
+								<div class="pi-item pi-data pi-item-spacing">
+									<h3 class="pi-data-label pi-secondary-font">test label</h3>
+									<div class="pi-data-value pi-font">test value</div>
 								</div>
 							</aside>',
 				'description' => 'Simple infobox with title, empty image and key-value pair'
@@ -373,21 +361,17 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 						]
 					]
 				],
-				'output' => '<aside class="portable-infobox">
-								<div class="portable-infobox-item item-type-title portable-infobox-item-margins">
-									<h2 class="portable-infobox-title">Test Title</h2>
-								</div>
-								<section class="portable-infobox-item item-type-group">
-									<div class="portable-infobox-item item-type-header portable-infobox-item-margins portable-infobox-secondary-background">
-										<h2 class="portable-infobox-header portable-infobox-secondary-font">Test Header</h2>
+				'output' => '<aside class="portable-infobox pi-background">
+								<h2 class="pi-item pi-item-spacing pi-title">Test Title</h2>
+								<section class="pi-item pi-group">
+									<h2 class="pi-item pi-header pi-secondary-font pi-item-spacing pi-secondary-background">Test Header</h2>
+									<div class="pi-item pi-data pi-item-spacing">
+										<h3 class="pi-data-label pi-secondary-font">test label</h3>
+										<div class="pi-data-value pi-font">test value</div>
 									</div>
-									<div class="portable-infobox-item item-type-key-val portable-infobox-item-margins">
-										<h3 class="portable-infobox-item-label portable-infobox-secondary-font">test label</h3>
-										<div class="portable-infobox-item-value">test value</div>
-									</div>
-									<div class="portable-infobox-item item-type-key-val portable-infobox-item-margins">
-										<h3 class="portable-infobox-item-label portable-infobox-secondary-font">test label</h3>
-										<div class="portable-infobox-item-value">test value</div>
+									<div class="pi-item pi-data pi-item-spacing">
+										<h3 class="pi-data-label pi-secondary-font">test label</h3>
+										<div class="pi-data-value pi-font">test value</div>
 									</div>
 								</section>
 							</aside>',
@@ -424,23 +408,23 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 						]
 					]
 				],
-				'output' => '<aside class="portable-infobox">
-								<section class="portable-infobox-item item-type-group group-layout-horizontal">
-									<table class="portable-infobox-horizontal-group-content">
+				'output' => '<aside class="portable-infobox pi-background">
+								<section class="pi-item pi-group">
+									<table class="pi-horizontal-group">
 										<caption
-										class="portable-infobox-header portable-infobox-secondary-font portable-infobox-secondary-background">Test header</caption>
+										class="pi-header pi-secondary-font pi-secondary-background pi-item-spacing">Test header</caption>
 										<thead>
 											<tr>
 												<th
-												class="portable-infobox-horizontal-group-item portable-infobox-item-label portable-infobox-secondary-font">test label</th>
+												class="pi-horizontal-group-item pi-data-label pi-secondary-font">test label</th>
 												<th
-												class="portable-infobox-horizontal-group-item portable-infobox-item-label portable-infobox-secondary-font">test label</th>
+												class="pi-horizontal-group-item pi-data-label pi-secondary-font">test label</th>
 											</tr>
 										</thead>
 										<tbody>
 											<tr>
-												<td class="portable-infobox-horizontal-group-item portable-infobox-item-value">test value</td>
-												<td class="portable-infobox-horizontal-group-item portable-infobox-item-value">test value</td>
+												<td class="pi-horizontal-group-item pi-data-value pi-font">test value</td>
+												<td class="pi-horizontal-group-item pi-data-value pi-font">test value</td>
 											</tr>
 										</tbody>
 									</table>
@@ -464,8 +448,8 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 						]
 					]
 				],
-				'output' => '<aside class="portable-infobox">
-								<nav class="portable-infobox-navigation portable-infobox-item-margins portable-infobox-secondary-background portable-infobox-secondary-font">
+				'output' => '<aside class="portable-infobox pi-background">
+								<nav class="pi-navigation pi-item-spacing pi-secondary-background pi-secondary-font">
 									<p>Links</p>
 								</nav>
 							</aside>',
@@ -485,9 +469,10 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 						]
 					]
 				],
-				'output' => '<aside class="portable-infobox">
-								<div class="portable-infobox-item item-type-hero">
-									<img src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D" data-src="http://image.jpg" class="portable-infobox-image lazy media article-media" alt="image alt"  data-image-key="test1" data-image-name="test1" data-ref="1" data-params=\'[{"name":"test1", "full":"http://image.jpg"}]\' />
+				'output' => '<aside class="portable-infobox pi-background">
+								<div class="pi-item pi-hero">
+									<img
+									src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D" data-src="http://image.jpg" class="pi-image-thumbnail lazy media article-media" alt="image alt"  data-image-key="test1" data-image-name="test1" data-ref="1" data-params=\'[{"name":"test1", "full":"http://image.jpg"}]\' />
 								</div>
 							</aside>',
 				'description' => 'Mobile: Only image. Image is not small- should render hero.',
@@ -527,14 +512,15 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 						]
 					]
 				],
-				'output' => '<aside class="portable-infobox">
-							<div class="portable-infobox-item item-type-hero">
-								<hgroup class="portable-infobox-hero-title-wrapper portable-infobox-item-margins">
-									<h2 class="portable-infobox-hero-title">Test Title</h2>
-								</hgroup>
-								<img src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D" data-src="thumbnail.jpg" class="portable-infobox-image lazy media article-media" alt="" data-image-key="test1" data-image-name="test1" data-ref="44" data-params=\'[{"name":"test1", "full":"http://image.jpg"}]\'/>
-							</div>
-						</aside>',
+				'output' => '<aside class="portable-infobox pi-background">
+								<div class="pi-item pi-hero">
+									<hgroup class="pi-hero-title-wrapper pi-item-spacing">
+										<h2 class="pi-hero-title">Test Title</h2>
+									</hgroup>
+									<img
+									src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D" data-src="thumbnail.jpg" class="pi-image-thumbnail lazy media article-media" alt="" data-image-key="test1" data-image-name="test1" data-ref="44" data-params=\'[{"name":"test1", "full":"http://image.jpg"}]\'/>
+								</div>
+							</aside>',
 				'description' => 'Mobile: Infobox with full hero module with title with HTML tags',
 				'mockParams' => [
 					'isValidHeroDataItem' => true,
