@@ -223,6 +223,14 @@ class FlagType extends FlagsBaseModel {
 	 * Updating methods
 	 */
 
+
+	/**
+	 * Verify in the fetched array has every required information
+	 * before performing an UPDATE query.
+	 * @param array $params
+	 * @return bool
+	 * @throws \MissingParameterApiException
+	 */
 	public function verifyParamsForUpdate( $params ) {
 		$required = [ 'flag_type_id' ];
 
@@ -235,6 +243,12 @@ class FlagType extends FlagsBaseModel {
 		return true;
 	}
 
+	/**
+	 * Updates definition of flag type
+	 *
+	 * @param $params
+	 * @return bool
+	 */
 	public function updateFlagType( $params ) {
 		$this->verifyParamsForUpdate( $params );
 
