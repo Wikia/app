@@ -414,7 +414,7 @@ $2",
 # Login and logout pages
 'logouttext'                 => "'''Iatzerd bist obgmödt.'''
 
-Du kåst {{SITENAME}} iatzerd anónym weiderdoah, óder di danaid unterm söwing óder am åndern Benutzernåm  $1 .
+Du kåst {{SITENAME}} iatzerd anónym weiderdoah, óder di danaid unterm söwing óder am åndern Benutzernåm $1.
 Beochtt ower, daas oanige Seiten noh åzoang kennern, daas du ågmödt bist, sólång du néd deih Browsercache glaard host.",
 'logouttext-link-text'       => 'åmöden',
 'welcomecreation'            => '== Servas, $1! ==

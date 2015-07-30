@@ -700,7 +700,7 @@ Den angitte grunnen er «''$2''».",
 # Login and logout pages
 'logouttext'                 => "'''Du er nå logget ut.'''
 
-Du kan fortsette å bruke {{SITENAME}} anonymt, eller  $1  som samme eller en annen bruker.
+Du kan fortsette å bruke {{SITENAME}} anonymt, eller $1 som samme eller en annen bruker.
 Merk at noen sider kan vise at du fortsatt er logget inn fram til du tømmer mellomlageret i nettleseren.",
 'logouttext-link-text'       => 'logge inn igjen',
 'welcomecreation'            => '==Velkommen, $1!==

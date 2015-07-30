@@ -521,7 +521,7 @@ A razón data ye ''$2''.",
 # Login and logout pages
 'logouttext'                 => "'''Ha rematato a sesión.'''
 
-Puede continar navegando por {{SITENAME}} anonimament, u puede  $1  una nueva sesión con o mesmo nombre d'usuario u bell atro diferent. Pare cuenta que, entre que se limpia a caché d'o navegador, puet estar que bellas pachinas s'amuestren como si encara continase en a sesión anterior.",
+Puede continar navegando por {{SITENAME}} anonimament, u puede $1 una nueva sesión con o mesmo nombre d'usuario u bell atro diferent. Pare cuenta que, entre que se limpia a caché d'o navegador, puet estar que bellas pachinas s'amuestren como si encara continase en a sesión anterior.",
 'logouttext-link-text'       => 'encetar',
 'welcomecreation'            => "== ¡Bienveniu(da), $1! ==
 S'ha creyato a suya cuenta.

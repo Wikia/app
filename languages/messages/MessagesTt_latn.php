@@ -476,7 +476,7 @@ Ul kürsätkän säbäp: ''$2''.",
 # Login and logout pages
 'logouttext'                 => "'''Sez xisap yazmağızdan çıqtığız.'''
 
-Sez {{SITENAME}} proyektında anonim räweştä qala yäisä şul uq yäki başqa isem belän yañadan  $1  alasız.
+Sez {{SITENAME}} proyektında anonim räweştä qala yäisä şul uq yäki başqa isem belän yañadan $1 alasız.
 Qayber bitlär Sez kergän kebek kürsätelergä mömkin. Monı beterü öçen brauzer keşın çistartığız.",
 'logouttext-link-text'       => 'kerä',
 'welcomecreation'            => '== Räxim itegez, $1! ==

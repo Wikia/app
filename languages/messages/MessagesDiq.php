@@ -410,7 +410,7 @@ Sebeb: "\'\'$2\'\'".',
 # Login and logout pages
 'logouttext'                 => "'''Şıma hesab qefelna.'''
 
-Nıka kamiyê xo eşkera mekere u siteyê {{SITENAME}} ra eşkeni devam bıkeri, ya zi  $1  (wazeni pey nameyê xo, wazeni pey yewna name).
+Nıka kamiyê xo eşkera mekere u siteyê {{SITENAME}} ra eşkeni devam bıkeri, ya zi $1 (wazeni pey nameyê xo, wazeni pey yewna name).
 Wexta ke verhafızayê cıgerayoxê şıma pak beno no benate de taye peli de hesabe şıma akerde aseno.",
 'logouttext-link-text'       => 'newe ra hesabê xo akere',
 'welcomecreation'            => '== Şıma xeyr amey, $1! ==

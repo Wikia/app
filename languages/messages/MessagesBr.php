@@ -571,7 +571,7 @@ Setu amañ perak ''$2''.",
 # Login and logout pages
 'logouttext'                 => "'''Digevreet oc'h bremañ.'''
 
-Gallout a rit kenderc'hel da implijout {{SITENAME}} en un doare dizanv, pe  $1  gant an hevelep anv pe un anv all mar fell deoc'h.
+Gallout a rit kenderc'hel da implijout {{SITENAME}} en un doare dizanv, pe $1 gant an hevelep anv pe un anv all mar fell deoc'h.
 Notit mat e c'hallo pajennoù zo kenderc'hel da vezañ diskwelet evel pa vefec'h kevreet c'hoazh, betek ma vo riñset krubuilh ho merdeer ganeoc'h.",
 'logouttext-link-text'       => 'kevreañ en-dro',
 'welcomecreation'            => '== Degemer mat, $1! ==

@@ -522,7 +522,7 @@ Sababu zilizotolewa ni "\'\'$2\'\'".',
 # Login and logout pages
 'logouttext'                 => "'''Umetoka kwenye akaunti yako.'''
 
-Unaweza kuendelea kutumia {{SITENAME}} bila kutaja jina lako, au unaweza  $1  kwenye akaunti yako. Kumbuka kwamba kurasa nyingine zitaendelea kuonekana kana kwamba bado hujatoka kwenye akaunti yako, hadi utakaposafisha kache ya kivinjari.",
+Unaweza kuendelea kutumia {{SITENAME}} bila kutaja jina lako, au unaweza $1 kwenye akaunti yako. Kumbuka kwamba kurasa nyingine zitaendelea kuonekana kana kwamba bado hujatoka kwenye akaunti yako, hadi utakaposafisha kache ya kivinjari.",
 'logouttext-link-text'       => 'kuingia tena',
 'welcomecreation'            => '== Karibu, $1! ==
 Ushafunguliwa akaunti yako tayari.

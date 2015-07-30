@@ -561,7 +561,7 @@ $2',
 # Login and logout pages
 'logouttext'                 => "'''Dir sidd elo ofgemellt.'''
 
-Dir kënnt {{SITENAME}} elo anonym benotzen, oder Iech  $1 .
+Dir kënnt {{SITENAME}} elo anonym benotzen, oder Iech $1.
 
 Opgepasst: Op verschiddene Säite gesäit et nach esou aus, wéi wann Dir nach ugemellt wiert, bis Dir Ärem Browser säin Tëschespäicher (cache) eidel maacht.",
 'logouttext-link-text'       => 'erëm umellen',

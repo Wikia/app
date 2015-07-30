@@ -416,7 +416,7 @@ Iske kaaran hai ''$2''.",
 # Login and logout pages
 'logouttext'                 => "'''Aap abhi logged out hai.'''
 
-Aap bina naam ke {{SITENAME}} ke kaam me lae sakta hai, nai to aap wahi sadasya ke naam se nai to duusra sadasya ke naam se  $1 .
+Aap bina naam ke {{SITENAME}} ke kaam me lae sakta hai, nai to aap wahi sadasya ke naam se nai to duusra sadasya ke naam se $1.
 Yaad rakhna ki kuch panna wahi rakam se dekhai jaise ki aap log in bhaya hai, jab tak ki browser ke cache safaa nai hoe jaae.",
 'logouttext-link-text'       => 'log in kare sakta hai',
 'welcomecreation'            => '== Swagat, $1! ==

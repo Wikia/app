@@ -707,7 +707,7 @@ La kialo donata estis ''$2''.",
 # Login and logout pages
 'logouttext'                 => "'''Vi nun estas elsalutita.'''
 
-Vi rajtas daŭre vikiumi sennome, aŭ vi povas  $1  kiel la sama aŭ kiel alia uzanto.
+Vi rajtas daŭre vikiumi sennome, aŭ vi povas $1 kiel la sama aŭ kiel alia uzanto.
 Notu ke iuj paĝoj daŭre ŝajnos kvazaŭ vi ankoraŭ estas ensalutita, ĝis vi refreŝigu vian retumilan kaŝmemoron.",
 'logouttext-link-text'       => 'reensaluti',
 'welcomecreation'            => '== Bonvenon, $1! ==

@@ -709,7 +709,7 @@ La rêson balyê est « ''$2'' ».",
 # Login and logout pages
 'logouttext' => "'''Ora, vos éte dèbranchiê.'''
 
-Vos pouede continuar a utilisar {{SITENAME}} de façon anonima, ou ben  $1  desot lo mémo nom ou ben un ôtro.
+Vos pouede continuar a utilisar {{SITENAME}} de façon anonima, ou ben $1 desot lo mémo nom ou ben un ôtro.
 Notâd que quârques pâges pôvont étre adés montrâs coment se vos érâd tojorn branchiê, tant que vos èfaciéd lo cache de voutron navigator.",
 'logouttext-link-text'       => 'vos tornar branchiér',
 'welcomecreation' => '== Benvegnua, $1 ! ==

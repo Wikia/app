@@ -409,7 +409,7 @@ nekorekta interlinguale od interwikale ligilo.',
 # Login and logout pages
 'logouttext'                 => "'''Vu nun esas nun ek {{SITENAME}}.'''
 
-Vu povas durar uzante {{SITENAME}} anonimale, o vu povas  $1  kom la sama o diferenta uzanto.
+Vu povas durar uzante {{SITENAME}} anonimale, o vu povas $1 kom la sama o diferenta uzanto.
 Atencez ke kelka pagini posible duras montresar semblante ke vu ne ekirus, til vu vakuigas la tempala-magazino di vua navigilo.",
 'logouttext-link-text'       => 'enirar itere',
 'welcomecreation'            => '== Bonveno, $1! ==

@@ -702,7 +702,7 @@ De op-egeven reden is ''$2''.",
 # Login and logout pages
 'logouttext'                 => "'''Je bin noen aofemeld.'''
 
-Je kunnen {{SITENAME}} noen anoniem gebruken of je eigen  $1  onder disse of n aandere gebrukersnaam.
+Je kunnen {{SITENAME}} noen anoniem gebruken of je eigen $1 onder disse of n aandere gebrukersnaam.
 t Kan ween dat der wat pagina's bin die weeregeven wörden asof je an-emeld bin totda'j t tussengeheugen van joew webkieker leegmaken.",
 'logouttext-link-text'       => 'opniej anmelden',
 'welcomecreation'            => '== Welkom, $1! ==

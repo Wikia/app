@@ -410,7 +410,7 @@ Ti naited a rason ket ''$2''.",
 # Login and logout pages
 'logouttext'                 => "'''Nakaruarkan.'''
 
-Mabalinmo nga ituloy ti agusar iti {{SITENAME}} a di am-ammo, wenno  $1  iti sigud wenno sabali nga agar-aramat.
+Mabalinmo nga ituloy ti agusar iti {{SITENAME}} a di am-ammo, wenno $1 iti sigud wenno sabali nga agar-aramat.
 Laglagipem a sumagmamano a pampanid ti mabalin a nakaparang latta a kasla nakaserrek ka pay laeng, agingga na nga dalusam ti \"cache\" ti panagbasabasam.",
 'logouttext-link-text'       => 'sumrek ka manen',
 'welcomecreation'            => '== Kablaaw, $1! ==

@@ -619,7 +619,7 @@ A razón dada foi ''$2''.",
 # Login and logout pages
 'logouttext'                 => "'''Agora está fóra do sistema.'''
 
-Pode continuar usando {{SITENAME}} de xeito anónimo, ou pode  $1  co mesmo nome de usuario ou con outro.
+Pode continuar usando {{SITENAME}} de xeito anónimo, ou pode $1 co mesmo nome de usuario ou con outro.
 Teña en conta que mentres non se limpa a memoria caché do seu navegador algunhas páxinas poden continuar aparecendo como se aínda estivese dentro do sistema.",
 'logouttext-link-text'       => 'acceder de novo',
 'welcomecreation'            => '== Reciba a nosa benvida, $1! ==

@@ -490,7 +490,7 @@ Ratio data est "\'\'$2\'\'".',
 # Login and logout pages
 'logouttext'                 => "'''Conventum tuum conclusum est.'''
 
-Ignote continues {{grammar:ablative|{{SITENAME}}}} uti, aut conventum novum vel sub eodem vel novo nomine  $1 .
+Ignote continues {{grammar:ablative|{{SITENAME}}}} uti, aut conventum novum vel sub eodem vel novo nomine $1.
 Nota bene paginas fortasse videantur quasi tuum conventum esset apertum, priusquam navigatrum purgaveris.",
 'logouttext-link-text'       => 'aperias',
 'welcomecreation'            => '== Salve, $1! ==

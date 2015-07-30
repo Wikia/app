@@ -724,7 +724,7 @@ Alasan yang diberikan adalah ''$2''.",
 # Login and logout pages
 'logouttext'                 => "'''Anda telah keluar log dari sistem.'''
 
-Anda dapat terus menggunakan {{SITENAME}} secara anonim, atau Anda dapat  $1  sebagai pengguna yang sama atau pengguna yang lain.
+Anda dapat terus menggunakan {{SITENAME}} secara anonim, atau Anda dapat $1 sebagai pengguna yang sama atau pengguna yang lain.
 Perhatikan bahwa beberapa halaman mungkin masih terus menunjukkan bahwa Anda masih masuk log sampai Anda membersihkan singgahan penjelajah web Anda",
 'logouttext-link-text'       => 'masuk log lagi',
 'welcomecreation'            => '== Selamat datang, $1! ==

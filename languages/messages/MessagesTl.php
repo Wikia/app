@@ -529,7 +529,7 @@ Ang ibinigay na dahilan ay ''$2''.",
 # Login and logout pages
 'logouttext'                 => "'''Nakaalis ka na sa pagkakalagda.'''
 
-Maaari kang tumuloy sa paggamit ng {{SITENAME}} nang hindi nakikilala (anonimo), o maaaring kang  $1  bilang kapareho o ibang tagagamit.
+Maaari kang tumuloy sa paggamit ng {{SITENAME}} nang hindi nakikilala (anonimo), o maaaring kang $1 bilang kapareho o ibang tagagamit.
 Tandaan na may ilang pahinang maaaring magpatuloy na nagpapakitang parang nakalagda ka pa rin, hanggang sa linisin mo ang iyong baunang pambasa-basa (''browser cache'').",
 'logouttext-link-text'       => 'lumagda/tumala muli',
 'welcomecreation'            => '== Maligayang pagdating, $1! ==

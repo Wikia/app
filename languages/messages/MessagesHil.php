@@ -410,7 +410,7 @@ Ang iya rason amo ang "\'\'$2\'\'".',
 # Login and logout pages
 'logouttext'                 => "'''Naka-guha ka na.'''
 
-Makapadayon ka sa gihapon sa paggamit sang {{SITENAME}} nga indi makilal-an, ukon mahimo ka man  $1  bilang amo sa gihapon ukon lain nga nga manug-gamit.
+Makapadayon ka sa gihapon sa paggamit sang {{SITENAME}} nga indi makilal-an, ukon mahimo ka man $1 bilang amo sa gihapon ukon lain nga nga manug-gamit.
 Tandaan nga may mga panid nga mahimo ma-display sa gihapon nga daw nakasulod ka sa gihapon, hasta mapanas mo na ang tinago sang imo brawser.",
 'logouttext-link-text'       => 'magsulod liwat',
 'welcomecreation'            => '== Pagtamyaw, $1! ==

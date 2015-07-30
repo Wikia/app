@@ -413,7 +413,7 @@ Seo am mìneachadh: "\'\'$2\'\'".',
 
 # Login and logout pages
 'logouttext'                 => "'''Chaidh do logadh a-mach.'''
-'S urrainn dhut leantainn air adhart a' cleachdadh {{SITENAME}} a chleachdadh gun urra no 's urrainn dhut  $1  mar an dearbh-chleachdaiche no mar chleachdaiche eile.
+'S urrainn dhut leantainn air adhart a' cleachdadh {{SITENAME}} a chleachdadh gun urra no 's urrainn dhut $1 mar an dearbh-chleachdaiche no mar chleachdaiche eile.
 Thoir an aire gum bi coltas air cuide dhe na duilleagan mar gum biodh tu air logadh a-steach gus am falamhaich thu tasgadan a' bhrabhsair agad.",
 'logouttext-link-text'       => 'logadh a-steach a-rithist',
 'welcomecreation'            => '== Fàilte ort, $1! ==

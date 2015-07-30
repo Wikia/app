@@ -550,7 +550,7 @@ De gegaeve ree is ''$2''.",
 # Login and logout pages
 'logouttext'                 => "'''De bis noe aafgemeld.'''
 
-De kèns {{SITENAME}} noe anoniem (mit vermeljing van IP-adres) gebroeke, of  $1  ónger dezelfde of 'ne angere naam.
+De kèns {{SITENAME}} noe anoniem (mit vermeljing van IP-adres) gebroeke, of $1 ónger dezelfde of 'ne angere naam.
 Mäögelik waere nog 'n deil pazjena's getuind esofs te nog aangemeld bis pès te de cache van diene browser laeg maaks.",
 'logouttext-link-text'       => 'opnuuj aanmelde',
 'welcomecreation'            => '== Wèlkóm, $1! ==

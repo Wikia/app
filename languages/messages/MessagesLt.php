@@ -571,7 +571,7 @@ Nurodyta priežastis yra ''$2''.",
 # Login and logout pages
 'logouttext'                 => "'''Dabar jūs esate atsijungęs.'''
 
-Galite toliau naudoti {{SITENAME}} anonimiškai arba  $1  iš naujo tuo pačiu ar kitu naudotoju.
+Galite toliau naudoti {{SITENAME}} anonimiškai arba $1 iš naujo tuo pačiu ar kitu naudotoju.
 Pastaba: kai kuriuose puslapiuose ir toliau gali rodyti, kad esate prisijungęs iki tol, kol išvalysite savo naršyklės podėlį.",
 'logouttext-link-text'       => 'prisijunkite',
 'welcomecreation'            => '== Sveiki, $1! ==

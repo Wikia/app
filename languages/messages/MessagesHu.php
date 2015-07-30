@@ -703,7 +703,7 @@ A blokkolás oka: „''$2''”.",
 # Login and logout pages
 'logouttext'                 => "'''Sikeresen kijelentkeztél.'''
 
-Folytathatod névtelenül  a(z) {{SITENAME}} használatát, vagy  $1  ugyanezzel, vagy egy másik névvel.
+Folytathatod névtelenül  a(z) {{SITENAME}} használatát, vagy $1 ugyanezzel, vagy egy másik névvel.
 Lehetséges, hogy néhány oldalon továbbra is azt látod, be vagy jelentkezve, mindaddig, amíg nem üríted a böngésződ gyorsítótárát.",
 'logouttext-link-text'       => 'ismét bejelentkezhetsz',
 'welcomecreation'            => '== Köszöntünk, $1! ==

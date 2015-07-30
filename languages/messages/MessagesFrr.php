@@ -415,7 +415,7 @@ Jü späre wörd döör [[User:$1|$1]] ma grün "$2" inruchted.',
 # Login and logout pages
 'logouttext'                 => "'''Dü bast nü oufmälded.'''
 
-Dü koost {{SITENAME}} nü anonüüm widerbrüke, unti de wider uner diseelew unti en oudern brükernoome  $1 .
+Dü koost {{SITENAME}} nü anonüüm widerbrüke, unti de wider uner diseelew unti en oudern brükernoome $1.
 Påås aw, dåt hu side nuch wise koone, dåt dü önjmälded bast, sülung dü ai dan browsercache lääsimååged heest.",
 'logouttext-link-text'       => 'önjmälde',
 'welcomecreation'            => '== Wäljkiimen, $1! ==

@@ -424,7 +424,7 @@ Li motive dat es "\'\'$2\'\'".',
 
 # Login and logout pages
 'logouttext'                 => "'''Vu ha terminat vor session.'''
-Vu posse continuar usar {{SITENAME}} anonimimen, o vu posse  $1  quam li sam usator o quam un diferent usator.
+Vu posse continuar usar {{SITENAME}} anonimimen, o vu posse $1 quam li sam usator o quam un diferent usator.
 Nota que alcun págines posse continuar esser monstrat quam si vu esset registrat, til que vu vacua li cache de tui navigator.",
 'logouttext-link-text'       => 'aperter un session denov',
 'welcomecreation'            => '== Benevenit, $1! ==

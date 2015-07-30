@@ -745,7 +745,7 @@ De gegeven reden is ''$2''.",
 # Login and logout pages
 'logouttext'                 => "'''U bent nu afgemeld.'''
 
-U kunt {{SITENAME}} nu anoniem gebruiken of weer  $1  als dezelfde of een andere gebruiker.
+U kunt {{SITENAME}} nu anoniem gebruiken of weer $1 als dezelfde of een andere gebruiker.
 Mogelijk worden nog een aantal pagina's weergegeven alsof u aangemeld bent totdat u de cache van uw browser leegt.",
 'logouttext-link-text'       => 'aanmelden',
 'welcomecreation'            => '== Welkom, $1! ==

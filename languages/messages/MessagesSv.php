@@ -708,7 +708,7 @@ Den uppgivna anledningen är "\'\'$2\'\'".',
 # Login and logout pages
 'logouttext'                 => "'''Du är nu utloggad.'''
 
-Du kan fortsätta att använda {{SITENAME}} anonymt, eller så kan du  $1  som samma eller som en annan användare.
+Du kan fortsätta att använda {{SITENAME}} anonymt, eller så kan du $1 som samma eller som en annan användare.
 Observera att det, tills du tömmer din webbläsares cache, på vissa sidor kan se ut som att du fortfarande är inloggad.",
 'logouttext-link-text'       => 'logga in igen',
 'welcomecreation'            => '== Välkommen, $1! ==

@@ -590,7 +590,7 @@ Pertanyaan: $2',
 # Login and logout pages
 'logouttext'                 => "'''Anda telah log keluar.'''
 
-Anda boleh terus menggunakan {{SITENAME}} sebagai pengguna tanpa nama, atau anda boleh  $1  sebagai pengguna lain. Anda boleh membersihkan cache pelayar web anda sekiranya terdapat laman yang memaparkan seolah-olah anda masih log masuk.",
+Anda boleh terus menggunakan {{SITENAME}} sebagai pengguna tanpa nama, atau anda boleh $1 sebagai pengguna lain. Anda boleh membersihkan cache pelayar web anda sekiranya terdapat laman yang memaparkan seolah-olah anda masih log masuk.",
 'logouttext-link-text'       => 'log masuk sekali lagi',
 'welcomecreation'            => '== Selamat datang, $1! ==
 

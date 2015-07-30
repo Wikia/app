@@ -456,7 +456,7 @@ El motivu conseñáu ye ''$2''.",
 # Login and logout pages
 'logouttext'                 => "'''Yá tas desconectáu.'''
 
-Pues siguir usando {{SITENAME}} de forma anónima, o pues  $1  como'l mesmu o como otru usuariu.
+Pues siguir usando {{SITENAME}} de forma anónima, o pues $1 como'l mesmu o como otru usuariu.
 Ten en cuenta que dalgunes páxines puen siguir apaeciendo como si tovía tuvieres coneutáu, hasta que llimpies la caché del navegador.",
 'logouttext-link-text'       => 'volver a entrar',
 'welcomecreation'            => "== Bienveníu, $1! ==

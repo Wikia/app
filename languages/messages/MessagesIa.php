@@ -541,7 +541,7 @@ Le motivo specificate es ''$2''.",
 # Login and logout pages
 'logouttext'                 => "'''Tu ha claudite le session.'''
 
-Tu pote continuar a usar {{SITENAME}} anonymemente, o tu pote  $1  con le mesme nomine de usator o con un altere.
+Tu pote continuar a usar {{SITENAME}} anonymemente, o tu pote $1 con le mesme nomine de usator o con un altere.
 Nota que alcun paginas pote continuar a apparer como si tu esserea ancora authenticate. Pro remediar isto, tu pote vacuar le cache de tu navigator.",
 'logouttext-link-text'       => 'aperir un nove session',
 'welcomecreation'            => '== Benvenite, $1! ==

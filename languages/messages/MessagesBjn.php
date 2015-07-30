@@ -447,7 +447,7 @@ Alasan nang dibariakan adalah ''$2''.",
 # Login and logout pages
 'logouttext'                 => "'''Pian parhatan ini sudah kaluar log.'''
 
-Pian kawa manyambung hagan mamuruk {{SITENAME}} kada bangaran, atawa Pian kawa  $1  sawagai pamuruk nang sama atawa sawagai pamuruk balain.
+Pian kawa manyambung hagan mamuruk {{SITENAME}} kada bangaran, atawa Pian kawa $1 sawagai pamuruk nang sama atawa sawagai pamuruk balain.
 Catatan bahwasa babarapa tungkaran pinanya masih ha tarus manampaiakan Pian masih babuat log, sampai Pian mahabisakan timbuluk panjalajah web Pian.",
 'logouttext-link-text'       => 'babuat log pulang',
 'welcomecreation'            => '==Salamat datang, $1!==

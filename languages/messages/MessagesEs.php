@@ -735,7 +735,7 @@ El motivo dado fue: "\'\'$2\'\'".',
 # Login and logout pages
 'logouttext'                 => "'''Ha terminado su sesión.'''
 
-Puedes continuar usando {{SITENAME}} de forma anónima, o puedes  $1  con el mismo u otro usuario.
+Puedes continuar usando {{SITENAME}} de forma anónima, o puedes $1 con el mismo u otro usuario.
 Ten en cuenta que las páginas que tengas abiertas en otras ventanas o pestañas pueden verse como si siguieras identificado hasta que las refresques.",
 'logouttext-link-text'       => 'iniciar sesión otra vez',
 'welcomecreation'            => '== ¡Bienvenido(a), $1! ==

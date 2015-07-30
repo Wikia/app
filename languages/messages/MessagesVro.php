@@ -424,7 +424,7 @@ $2',
 # Login and logout pages
 'logouttext'                 => "'''Olõt nime alt vällä lännüq.'''
 
-Võit {{SITENAME}}t ilma nimeldä edesi toimõndaq vai  $1 .
+Võit {{SITENAME}}t ilma nimeldä edesi toimõndaq vai $1.
 Tähelepandmisõs: niikavva, ku sa olõ-i tühäs tennüq uma võrgokaeja vaihõmällo, võivaq mõnõq leheküleq iks viil näüdädäq, nigu sa olõsi nimega seen.",
 'logouttext-link-text'       => 'vahtsõst sama vai tõõsõ nimega sisse minnäq',
 'welcomecreation'            => '<h2>Tereq, $1!</h2><p>Su konto om valmis. Võit taa hindä perrä sisse säädäq.',

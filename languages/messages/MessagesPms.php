@@ -432,7 +432,7 @@ Coma rason a l'ha butà: ''$2''.",
 # Login and logout pages
 'logouttext'                 => "'''A l'é sortù da 'nt ël sistema.'''
 
-A peul tiré anans a dovré {{SITENAME}} coma Utent anonim, ò pura a peul  $1  con l'istess stranòm che a dovrava prima, ò con un diferent.
+A peul tiré anans a dovré {{SITENAME}} coma Utent anonim, ò pura a peul $1 con l'istess stranòm che a dovrava prima, ò con un diferent.
 Ch'a nòta che chèich pàgine a peulo continué a esse visualisà com s'a fussa ancó ant ël sistema, fin ch'a scancela pa la cache ëd sò navigador.",
 'logouttext-link-text'       => 'rintré torna ant ël sistema',
 'welcomecreation'            => '==Bin ëvnù, $1!==

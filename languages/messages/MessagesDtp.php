@@ -405,7 +405,7 @@ Sasabab no do "\'\'$2\'\'".',
 # Login and logout pages
 'logouttext'                 => "'''Baino nakalabus log ko noh.'''
 
-Milo ko do monilombus mongoguno {{SITENAME}} poinlisok, toi  $1  miagal ngaran di tiinu toi mongoguno ngaran suai.
+Milo ko do monilombus mongoguno {{SITENAME}} poinlisok, toi $1 miagal ngaran di tiinu toi mongoguno ngaran suai.
 Birio do kipipiro bolikon popokito do maso poinsuang log koh poh gisom no do opugas nu dangkob do pogigihumnu.",
 'logouttext-link-text'       => 'sumuang log koh kawagu',
 'welcomecreation'            => '== Kopiwosian, $1! ==

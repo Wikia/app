@@ -476,7 +476,7 @@ An fáth ná ''$2''.",
 # Login and logout pages
 'logouttext'                 => "'''Tá tú logáilte amach anois.'''
 
-Is féidir leat an {{SITENAME}} a úsáid fós gan ainm, nó is féidir leat  $1  mar an úsáideoir céanna, nó mar úsáideoir eile.
+Is féidir leat an {{SITENAME}} a úsáid fós gan ainm, nó is féidir leat $1 mar an úsáideoir céanna, nó mar úsáideoir eile.
 Tabhair faoi deara go taispeáinfear roinnt leathanaigh mar atá tú logáilte isteach fós, go dtí go ghlanfá amach do taisce líonleitheora.",
 'logouttext-link-text'       => 'logáil isteach arís',
 'welcomecreation'            => '== Tá fáilte romhat, $1! ==

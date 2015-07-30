@@ -607,7 +607,7 @@ As Grund is angeven: ''$2''.",
 # Login and logout pages
 'logouttext'                 => "'''Du büst nu afmellt.'''
 
-Du kannst {{SITENAME}} nu anonym wiederbruken oder di ünner dissen oder en annern Brukernaam wedder  $1 .
+Du kannst {{SITENAME}} nu anonym wiederbruken oder di ünner dissen oder en annern Brukernaam wedder $1.
 Denk dor an, dat welk Sieden ünner Ümstänn noch jümmer so wiest warrn köönt, as wenn du anmellt weerst. Dat ännert sik, wenn du den Cache vun dien Browser leddig maakst.",
 'logouttext-link-text'       => 'anmellen',
 'welcomecreation'            => '== Willkamen, $1! ==

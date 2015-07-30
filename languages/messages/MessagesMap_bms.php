@@ -407,7 +407,7 @@ Alesane yakuwe "\'\'$2\'\'".',
 # Login and logout pages
 'logouttext'                 => "'''Rika uwis metu log sekang sistem.'''
 
-Rika teyeng terus nggunakna {{SITENAME}} kanthi anonim, utawa Rika teyeng  $1  nganggo jeneng panganggo sing padha utawa sejene.
+Rika teyeng terus nggunakna {{SITENAME}} kanthi anonim, utawa Rika teyeng $1 nganggo jeneng panganggo sing padha utawa sejene.
 Digatekna ya, nek ana kaca sing esih terus nidokna nek rika esih mlebu log nnganti Rika mbusak singgahan nang panjelajah web-e Rika.",
 'logouttext-link-text'       => 'mlebu log maning',
 'welcomecreation'            => '== Sugeng rawuh, $1! ==

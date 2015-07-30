@@ -705,7 +705,7 @@ A justificação foi "\'\'$2\'\'".',
 # Login and logout pages
 'logouttext'                 => "'''Já não está autenticado.'''
 
-Pode continuar a utilizar a {{SITENAME}} anonimamente, ou pode  $1  com o mesmo nome de utilizador ou com um nome de utilizador diferente.
+Pode continuar a utilizar a {{SITENAME}} anonimamente, ou pode $1 com o mesmo nome de utilizador ou com um nome de utilizador diferente.
 Tenha em atenção que algumas páginas poderão continuar a ser apresentadas como se ainda estivesse autenticado até limpar a cache do seu browser.",
 'logouttext-link-text'       => 'autenticar-se novamente',
 'welcomecreation'            => '== Bem-vindo, $1! ==

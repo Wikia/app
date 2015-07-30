@@ -754,7 +754,7 @@ Le motif avancé est « ''$2'' ».",
 # Login and logout pages
 'logouttext'                 => "'''Vous êtes à présent déconnecté(e).'''
 
-Vous pouvez continuer à utiliser {{SITENAME}} de façon anonyme,  $1  sous le même nom ou un autre.
+Vous pouvez continuer à utiliser {{SITENAME}} de façon anonyme, $1 sous le même nom ou un autre.
 Notez que certaines pages peuvent être encore affichées comme si vous étiez toujours connecté(e), jusqu’à ce que vous effaciez le cache de votre navigateur.",
 'logouttext-link-text'       => 'vous reconnecter',
 'welcomecreation'            => '== Bienvenue, $1 ! ==

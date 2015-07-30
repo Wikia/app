@@ -404,7 +404,7 @@ Di riizn dehn gi a "\'\'$2\'\'".',
 # Login and logout pages
 'logouttext'                 => "'''Yu nou lag out.'''
 
-Yu kiahn kantiniu yuuz {{SITENAME}} ananimosli, ar yu kiahn  $1  az di siem ar az difrant yuuza.
+Yu kiahn kantiniu yuuz {{SITENAME}} ananimosli, ar yu kiahn $1 az di siem ar az difrant yuuza.
 Nuot se som piej maita kantiniu fi displie laik se yu stil log iin, antel yu klier yu brouza kiash.",
 'logouttext-link-text'       => 'lag iin agen',
 'welcomecreation'            => '== Welkom, $1! ==

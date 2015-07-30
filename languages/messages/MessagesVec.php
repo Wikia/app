@@ -531,7 +531,7 @@ $2',
 # Login and logout pages
 'logouttext'                 => "'''Te sì 'ndà fora da la to utensa.'''
 
-Te poli 'ndar vanti doparando {{SITENAME}} come utente anonimo o se nò  $1 , col stesso nome utente o uno difarente.
+Te poli 'ndar vanti doparando {{SITENAME}} come utente anonimo o se nò $1, col stesso nome utente o uno difarente.
 Ocio che serte pagine podarìa èssar che ti 'e vedi come se te fussi 'ncora drento col to nome de prima, fin che no te neti la ''cache'' del to browser.",
 'logouttext-link-text'       => 'entrar da novo',
 'welcomecreation'            => '== Benvegnù, $1! ==

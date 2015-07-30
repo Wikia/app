@@ -510,7 +510,7 @@ Emandako arrazoia ''$2'' izan zen.",
 # Login and logout pages
 'logouttext'                 => "'''Saioa itxi egin duzu.'''
 
-Erabiltzaile anonimo bezala jarrai dezakezu {{SITENAME}} erabiltzen, edo  $1  erabiltzaile berdinarekin edo ezberdin batekin.
+Erabiltzaile anonimo bezala jarrai dezakezu {{SITENAME}} erabiltzen, edo $1 erabiltzaile berdinarekin edo ezberdin batekin.
 Kontuan izan orrialde batzuk saioa hasita bazenu bezala ikus ditzakezula nabigatzailearen katxea garbitu arte.",
 'logouttext-link-text'       => 'saioa has dezakezu berriz',
 'welcomecreation'            => '== Ongi etorri, $1! ==

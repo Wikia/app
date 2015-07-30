@@ -508,7 +508,7 @@ Givin orsøk er "\'\'$2\'\'".',
 
 # Login and logout pages
 'logouttext' => "'''Tú hevur nú ritað út.'''
-Tú kanst halda fram at brúka {{SITENAME}} sum dulnevndur, ella kanst tú  $1  sum sami ella sum annar brúkari.
+Tú kanst halda fram at brúka {{SITENAME}} sum dulnevndur, ella kanst tú $1 sum sami ella sum annar brúkari.
 Legg til merkis, at summar síður framvegis vera vístar, sum um tú enn vart loggaður á, til tú hevur reinsa tín brovsara fyri \"cache\".",
 'logouttext-link-text'       => 'logga á aftur',
 'welcomecreation' => '== Vælkomin, $1! ==

@@ -578,7 +578,7 @@ $2',
 # Login and logout pages
 'logouttext'                 => "'''Du er nu logget af.'''
 
-Du kan fortsætte med at bruge {{SITENAME}} anonymt, eller du kan  $1  som den samme eller en anden bruger.
+Du kan fortsætte med at bruge {{SITENAME}} anonymt, eller du kan $1 som den samme eller en anden bruger.
 Bemærk, at nogle sider stadigvæk kan vises som om du var logget på, indtil du tømmer din browsers cache.",
 'logouttext-link-text'       => 'logge på igen',
 'welcomecreation'            => '== Velkommen, $1! ==

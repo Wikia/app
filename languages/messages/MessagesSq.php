@@ -593,7 +593,7 @@ Arsyeja e dhënë është ''$2''.",
 # Login and logout pages
 'logouttext'                 => "'''Ju keni dalë jashtë.'''
 
- Ju mund të vazhdoni të përdorni {{SITENAME}} në mënyrë anonime, ose mund të  $1  si përdoruesi i mëparshëm ose si një përdorues tjetër.
+ Ju mund të vazhdoni të përdorni {{SITENAME}} në mënyrë anonime, ose mund të $1 si përdoruesi i mëparshëm ose si një përdorues tjetër.
  Kini parasysh që disa faqe mund të shfaqen sikur të ishit i identifikuar derisa të fshini ''cache''-in e shfletuesit tuaj.",
 'logouttext-link-text'       => 'identifikoheni përsëri',
 'welcomecreation'            => '== Mirësevini, $1! ==

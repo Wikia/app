@@ -377,7 +377,7 @@ Drēudisnas pagrintinsna: "$2".',
 # Login and logout pages
 'logouttext'                 => "'''Tū assei teinū izgūbun.'''
 
-Tū mazzi ēmpirsin sadīntun tērpautun {{SITENAME}} kāigi niengūbuns tērpautajs, anga  $1  kāigi šis sūbs anga kits tērpautajs.
+Tū mazzi ēmpirsin sadīntun tērpautun {{SITENAME}} kāigi niengūbuns tērpautajs, anga $1 kāigi šis sūbs anga kits tērpautajs.
 Endirēis, kāi ainuntai pāusai mazzi būtwei waidīntan ikāigi tū būlai ainatīngi engūbun, ērgi tū wīrst skistinnuns lasātlas rānkas minīsnan.",
 'logouttext-link-text'       => 'enēitwei etkūmps',
 'welcomecreation'            => '== Kaīls, $1! ==
