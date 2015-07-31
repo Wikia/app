@@ -210,7 +210,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 					]
 				],
 				'output' => '<aside class="portable-infobox pi-background">
-								<div class="pi-item pi-data pi-item-spacing">
+								<div class="pi-item pi-data pi-item-spacing pi-border-color">
 									<h3 class="pi-data-label pi-secondary-font">test label</h3>
 									<div class="pi-data-value pi-font">test value</div>
 								</div>
@@ -251,7 +251,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 										width="400" height="200" data-image-key="image" data-image-name="image"/>
 									</a>
 								</figure>
-								<div class="pi-item pi-data pi-item-spacing">
+								<div class="pi-item pi-data pi-item-spacing pi-border-color">
 									<h3 class="pi-data-label pi-secondary-font">test label</h3>
 									<div class="pi-data-value pi-font">test value</div>
 									</div>
@@ -293,7 +293,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 				],
 				'output' => '<aside class="portable-infobox pi-background">
 								<h2 class="pi-item pi-item-spacing pi-title">Test Title</h2>
-								<div class="pi-item pi-data pi-item-spacing">
+								<div class="pi-item pi-data pi-item-spacing pi-border-color">
 									<h3 class="pi-data-label pi-secondary-font">test label</h3>
 									<div class="pi-data-value pi-font">test value</div>
 									</div>
@@ -318,7 +318,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 				],
 				'output' => '<aside class="portable-infobox pi-background">
 								<h2 class="pi-item pi-item-spacing pi-title">Test Title</h2>
-								<div class="pi-item pi-data pi-item-spacing">
+								<div class="pi-item pi-data pi-item-spacing pi-border-color">
 									<h3 class="pi-data-label pi-secondary-font">test label</h3>
 									<div class="pi-data-value pi-font">test value</div>
 								</div>
@@ -363,13 +363,13 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 				],
 				'output' => '<aside class="portable-infobox pi-background">
 								<h2 class="pi-item pi-item-spacing pi-title">Test Title</h2>
-								<section class="pi-item pi-group">
+								<section class="pi-item pi-group pi-border-color">
 									<h2 class="pi-item pi-header pi-secondary-font pi-item-spacing pi-secondary-background">Test Header</h2>
-									<div class="pi-item pi-data pi-item-spacing">
+									<div class="pi-item pi-data pi-item-spacing pi-border-color">
 										<h3 class="pi-data-label pi-secondary-font">test label</h3>
 										<div class="pi-data-value pi-font">test value</div>
 									</div>
-									<div class="pi-item pi-data pi-item-spacing">
+									<div class="pi-item pi-data pi-item-spacing pi-border-color">
 										<h3 class="pi-data-label pi-secondary-font">test label</h3>
 										<div class="pi-data-value pi-font">test value</div>
 									</div>
@@ -409,22 +409,24 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 					]
 				],
 				'output' => '<aside class="portable-infobox pi-background">
-								<section class="pi-item pi-group">
+								<section class="pi-item pi-group pi-border-color">
 									<table class="pi-horizontal-group">
 										<caption
 										class="pi-header pi-secondary-font pi-secondary-background pi-item-spacing">Test header</caption>
 										<thead>
 											<tr>
 												<th
-												class="pi-horizontal-group-item pi-data-label pi-secondary-font">test label</th>
+												class="pi-horizontal-group-item pi-data-label pi-secondary-font pi-border-color">test label</th>
 												<th
-												class="pi-horizontal-group-item pi-data-label pi-secondary-font">test label</th>
+												class="pi-horizontal-group-item pi-data-label pi-secondary-font pi-border-color">test label</th>
 											</tr>
 										</thead>
 										<tbody>
 											<tr>
-												<td class="pi-horizontal-group-item pi-data-value pi-font">test value</td>
-												<td class="pi-horizontal-group-item pi-data-value pi-font">test value</td>
+												<td
+												class="pi-horizontal-group-item pi-data-value pi-font pi-border-color">test value</td>
+												<td
+												class="pi-horizontal-group-item pi-data-value pi-font pi-border-color">test value</td>
 											</tr>
 										</tbody>
 									</table>

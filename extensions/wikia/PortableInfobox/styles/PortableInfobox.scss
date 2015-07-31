@@ -65,6 +65,10 @@
 	background-color: $infobox-section-header-background;
 }
 
+.pi-border-color {
+	border-color: $infobox-section-header-background;
+}
+
 // remove border from last infobox item either <data> or <group>
 .portable-infobox > .pi-item:last-child {
 	border-bottom: 0;
@@ -85,7 +89,8 @@
 
 .pi-data:not(:last-of-type),
 .pi-group {
-	border-bottom: 1px solid $infobox-section-header-background;
+	border-bottom-style: solid;
+	border-bottom-width: 1px;
 }
 
 .pi-data {
@@ -127,7 +132,8 @@
 		vertical-align: top;
 
 		&:not(:first-child) {
-			border-left: 1px solid $infobox-section-header-background;
+			border-left-style: solid;
+			border-left-width: 1px;
 		}
 	}
 
@@ -218,4 +224,3 @@
 		margin: $infobox-item-margin 0;
 	}
 }
-
