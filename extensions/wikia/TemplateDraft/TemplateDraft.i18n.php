@@ -58,7 +58,7 @@ $2
 $messages['qqq'] = [
 	'templatedraft-description' => '{{desc}}',
 	'templatedraft-subpage' => 'A name that should be used for subpages of templates that contain a draft content.',
-	'templatedraft-editintro' => "Message informing user that new sub-page with draft version of infobox with new markup was created and user can review it and make any changes. Inform that user can go to help page ($1) about new infobox markup or visit parent page ($2).",
+	'templatedraft-editintro' => "Message informing user that a new sub-page with draft version of infobox with new markup was created and user can review it and make any changes. Params: $1 is a link to the help page for the new infobox markup and $2 is a link to the parent template page.",
 	/**
 	 * Notifications
 	 */
