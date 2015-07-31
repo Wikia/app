@@ -547,10 +547,6 @@ abstract class EmailController extends \WikiaController {
 		if ( !$user instanceof \User ) {
 			throw new Fatal( 'Unable to create user object');
 		}
-
-		if ( $user->getId() == 0 ) {
-			throw new Fatal( 'Unable to find user' );
-		}
 	}
 
 	/**
