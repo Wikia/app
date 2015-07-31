@@ -138,7 +138,7 @@ class FlagsApiController extends FlagsApiBaseController {
 			$modelResponse = $flagModel->addFlagsToPage( $this->params );
 
 			$this->getCache()->purgeFlagsForPage( $this->params['page_id'] );
-			$this->purgeFlaggedPages();
+			$this->purgeFlaggedPages( $this->params['flags'] );
 
 			$this->makeSuccessResponse( $modelResponse );
 			$this->logFlagChange( $this->params['flags'], $this->params['wiki_id'], $this->params['page_id'], self::LOG_ACTION_FLAG_ADDED );
@@ -165,7 +165,7 @@ class FlagsApiController extends FlagsApiBaseController {
 			$modelResponse = $flagModel->removeFlagsFromPage( $this->params['flags'] );
 
 			$this->getCache()->purgeFlagsForPage( $this->params['page_id'] );
-			$this->purgeFlaggedPages();
+			$this->purgeFlaggedPages( $this->params['flags'] );
 
 			$this->makeSuccessResponse( $modelResponse );
 			$this->logFlagChange( $this->params['flags'], $this->params['wiki_id'], $this->params['page_id'], self::LOG_ACTION_FLAG_REMOVED );
@@ -202,7 +202,6 @@ class FlagsApiController extends FlagsApiBaseController {
 			$modelResponse = $flagModel->updateFlagsForPage( $this->params['flags'] );
 
 			$this->getCache()->purgeFlagsForPage( $this->params['page_id'] );
-			$this->purgeFlaggedPages();
 
 			$this->makeSuccessResponse( $modelResponse );
 			$this->logParametersChange( $oldFlags, $this->params['flags'], $this->params['wiki_id'], $this->params['page_id'] );
@@ -264,7 +263,7 @@ class FlagsApiController extends FlagsApiBaseController {
 			$modelResponse = $flagTypeModel->removeFlagType( $this->params );
 
 			$this->getCache()->purgeFlagTypesForWikia();
-			$this->purgeFlaggedPages();
+			( new FlaggedPagesCache() )->purge( $this->params['flag_type_id'] );
 
 			$this->makeSuccessResponse( $modelResponse );
 		} catch( Exception $e ) {
@@ -363,8 +362,26 @@ class FlagsApiController extends FlagsApiBaseController {
 		$this->getRequestParams();
 	}
 
-	private function purgeFlaggedPages() {
-		( new FlaggedPagesCache() )->purgeAllFlagTypes();
+	private function purgeFlaggedPages( Array $flags = [] ) {
+		$flagsIds = $this->prepareFlagTypesIds( $flags );
+
+		if ( !empty( $flagsIds ) ) {
+			( new FlaggedPagesCache() )->purgeFlagTypesByIds( $flagsIds );
+		} else {
+			( new FlaggedPagesCache() )->purgeAllFlagTypes();
+		}
+	}
+
+	private function prepareFlagTypesIds( Array $flags ) {
+		$flagsIds = [];
+
+		foreach ( $flags as $flag ) {
+			if ( !empty( $flag['flag_type_id'] ) ) {
+				$flagsIds[] = $flag['flag_type_id'];
+			}
+		}
+
+		return $flagsIds;
 	}
 
 	/**

@@ -6,9 +6,11 @@
 class InsightsFlagsModel extends InsightsPageModel {
 	const INSIGHT_TYPE = 'flags';
 
-	public $loopNotificationConfig = [
-		'displayFixItMessage' => false,
-	];
+	public
+		$flagTypeId,
+		$loopNotificationConfig = [
+			'displayFixItMessage' => false,
+		];
 
 	public function getInsightType() {
 		return self::INSIGHT_TYPE;
@@ -59,7 +61,7 @@ class InsightsFlagsModel extends InsightsPageModel {
 	 */
 	public function fetchArticlesData() {
 		$articlesData = [];
-		$flaggedPages = $this->sendFlaggedPagesRequest();
+		$flaggedPages = $this->getPagesByFlagType();
 
 		if ( count( $flaggedPages ) > 0 ) {
 			$articlesData = $this->prepareData( $flaggedPages );
@@ -110,7 +112,7 @@ class InsightsFlagsModel extends InsightsPageModel {
 	/**
 	 * @return array
 	 */
-	private function sendFlaggedPagesRequest() {
+	private function getPagesByFlagType() {
 		$app = F::app();
 
 		/* Select first type id by default */
@@ -123,7 +125,7 @@ class InsightsFlagsModel extends InsightsPageModel {
 		$flaggedPages = $app->sendRequest(
 			'FlaggedPagesApiController',
 			'getFlaggedPages',
-			[ 'flagTypeId' => $this->flagTypeId ]
+			[ 'flag_type_id' => $this->flagTypeId ]
 		)->getData()['data'];
 
 		$this->setTotal( count( $flaggedPages ) );

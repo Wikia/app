@@ -239,7 +239,6 @@ abstract class InsightsPageModel extends InsightsModel {
 	 * Get memcache key for insights
 	 *
 	 * @param String $params
-	 * @param null|int $flagTypeId
 	 * @return String
 	 */
 	protected function getMemcKey( $params ) {

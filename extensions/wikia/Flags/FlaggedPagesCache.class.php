@@ -53,6 +53,12 @@ class FlaggedPagesCache {
 		}
 	}
 
+	public function purgeFlagTypesByIds( Array $flagIds ) {
+		foreach( $flagIds as $flagId ) {
+			$this->purge( $flagId );
+		}
+	}
+
 	/**
 	 * Purges the data on instances of flagged pages on wikia.
 	 * @param int|null $flagTypeId makes key per flag type specific
@@ -69,7 +75,6 @@ class FlaggedPagesCache {
 	private function getMemcKey( $flagTypeId = null ) {
 		return wfMemcKey(
 			self::FLAGS_MEMC_KEY_PREFIX,
-			'flaggedPages',
 			$flagTypeId,
 			self::FLAGS_MEMC_VERSION
 		);

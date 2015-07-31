@@ -412,7 +412,6 @@ class MoveNotice extends Maintenance {
 
 		(new FlagsCache())->purgeFlagsForPage( $this->pageId );
 		(new FlaggedPagesCache())->purgeAllFlagTypes();
-		(new InsightsFlagsModel())->purgeFlagsInsights();
 
 		$response = $this->app->sendRequest( 'FlagsApiController',
 			'getFlagsForPage',
