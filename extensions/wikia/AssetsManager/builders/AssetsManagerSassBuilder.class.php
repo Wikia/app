@@ -65,7 +65,7 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 			$cacheId = wfSharedMemcKey( __CLASS__, "minified", $sassService->getCacheKey() );
 			$content = $memc->get( $cacheId );
 		} catch (Exception $e) {
-			$content = "/* {$e->getMessage()} */";
+			$content = $this->makeComment($e->getMessage());
 			$hasErrors = true;
 		}
 
