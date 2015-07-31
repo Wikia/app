@@ -58,12 +58,13 @@ $2
 $messages['qqq'] = [
 	'templatedraft-description' => '{{desc}}',
 	'templatedraft-subpage' => 'A name that should be used for subpages of templates that contain a draft content.',
+	'templatedraft-editintro' => "Message informing user that new sub-page with draft version of infobox with new markup was created and user can review it and make any changes. Inform that user can go to help page ($1) about new infobox markup or visit parent page ($2).",
 	/**
 	 * Notifications
 	 */
 	'templatedraft-approval-no-page-error' => 'Error message displayed on banner notification when approval failed due to not existent draft page',
 	'templatedraft-approval-no-templatedraft-error' => 'Error message displayed on banner notification when approval failed due to action performed on non draft page',
-	'templatedraft-approval-success-confirmation' => 'This template contents was replaced with updated version from draft template and the draft was removed',
+	'templatedraft-approval-success-confirmation' => 'Message dispalyed on banner notification informing user that template contents was successful replaced by template draft contents and the draft was removed.',
 	'templatedraft-approval-summary' => 'Text used as edit summary when code is automatically replacing template with content from draft template on user approval',
 	'templatedraft-draft-removal-summary' => 'Text used as delete summary on draft page removal after draft page was approved to parent page',
 	/**
@@ -79,6 +80,10 @@ $messages['qqq'] = [
 	'templatedraft-module-content-approve' => 'A content of the TemplateDraft module for approving draft that appears in the right rail on Template pages.',
 	'templatedraft-module-button-approve' => 'A button shown in a right rail module for approving draft that moves draft text to parent template and gets user to this parent template',
 	'templatedraft-preview-n-docs' => 'Used when generating documentation for a converted draft of a template',
+
+	'templatedraft-module-editintro-please-convert' => 'Information for user that a draft version of infobox with new markup can be generated automatically by clicking button ($1).',
+	'templatedraft-module-view-parent' => 'Link label to view parent page of this draft',
+	'templatedraft-module-help' => 'Link label to view the help page on Infobox markup',
 
 	'templatedraft-invalid-template' => 'Error message returned by an API method when an invalid or non-existent title was provided.',
 ];
