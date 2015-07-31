@@ -192,7 +192,7 @@
 	padding-left: $infobox-item-margin * 2;
 }
 
-.pi-debug-error-massage {
+.pi-debug-error-message {
 	background-color: $infobox-debug-error-msg-bg;
 	color: $infobox-debug-error-msg-color;
 	font-family: Helvetica, Arial, sans-serif;
@@ -214,7 +214,7 @@
 		width: 0;
 	}
 
-	.pi-debug-error-massage-item {
+	.pi-debug-error-message-item {
 		margin: $infobox-item-margin 0;
 	}
 }
