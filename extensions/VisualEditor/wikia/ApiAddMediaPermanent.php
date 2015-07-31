@@ -41,7 +41,8 @@ class ApiAddMediaPermanent extends ApiAddMedia {
 			$file = new LocalFile( $title, RepoGroup::singleton()->getLocalRepo() );
 			$file->upload( $tempFile->getPath(), '', $pageText ? $pageText : '' );
 			return array(
-				'title' => $file->getTitle()->getText()
+				'title' => $file->getTitle()->getText(),
+				'url' => $file->getUrl()
 			);
 		}
 	}
