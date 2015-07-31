@@ -28,7 +28,10 @@ class AdEngine2ContextService {
 				$monetizationServiceAds = F::app()->sendRequest( 'MonetizationModule', 'index' )->getData()['data'];
 			}
 
-			$sourcePointUrl = ResourceLoader::makeCustomURL( $wg->Out, ['wikia.ext.adengine.sourcepoint'], 'scripts' );
+			$sourcePointUrl = null;
+			if ( $skinName === 'oasis' ) {
+				$sourcePointUrl = ResourceLoader::makeCustomURL( $wg->Out, ['wikia.ext.adengine.sourcepoint'], 'scripts' );
+			}
 
 			$langCode = $title->getPageLanguage()->getCode();
 

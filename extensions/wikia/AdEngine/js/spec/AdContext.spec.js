@@ -325,13 +325,21 @@ describe('AdContext', function () {
 		expect(adContext.getContext().targeting.enableKruxTargeting).toBeFalsy();
 	});
 
+	it('disables SourcePoint when url is not set (e.g. for mercury skin)', function () {
+		mocks.instantGlobals = {wgAdDriverSourcePointCountries: ['XX', 'ZZ']};
+
+		expect(getModule().getContext().opts.sourcePoint).toBe(undefined);
+	});
+
 	it('enables SourcePoint when country in instantGlobals.wgAdDriverSourcePointCountries', function () {
+		mocks.win = {ads: {context: {opts: {sourcePointUrl: '//foo.bar'}}}};
 		mocks.instantGlobals = {wgAdDriverSourcePointCountries: ['XX', 'ZZ']};
 
 		expect(getModule().getContext().opts.sourcePoint).toBeTruthy();
 	});
 
 	it('enables SourcePoint when url param sourcepoint is set', function () {
+		mocks.win = {ads: {context: {opts: {sourcePointUrl: '//foo.bar'}}}};
 		spyOn(mocks.querystring, 'getVal').and.callFake(function (param) {
 			return param === 'sourcepoint' ?  '1' : '0';
 		});

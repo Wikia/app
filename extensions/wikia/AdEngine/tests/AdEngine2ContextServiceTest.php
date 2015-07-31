@@ -274,8 +274,10 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		}
 
 		// Check for SourcePoint URL
-		$this->assertStringMatchesFormat( $expectedSourcePointUrlFormat, $result['opts']['sourcePointUrl'] );
-		unset( $result['opts']['sourcePointUrl'] );
+		if ( $skinName === 'oasis' ) {
+			$this->assertStringMatchesFormat( $expectedSourcePointUrlFormat, $result['opts']['sourcePointUrl'] );
+			unset( $result['opts']['sourcePointUrl'] );
+		}
 
 		// Extra check for SevenOne Media URL
 		if ( isset( $expectedProviders['sevenOneMedia'] ) ) {

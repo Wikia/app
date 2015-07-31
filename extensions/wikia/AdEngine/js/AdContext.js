@@ -38,6 +38,10 @@ define('ext.wikia.adEngine.adContext', [
 		return (countryList && countryList.indexOf && countryList.indexOf(geo.getCountryCode()) > -1);
 	}
 
+	function isBooleanParamSet(parameter) {
+		return parseInt(qs.getVal(parameter, '0'));
+	}
+
 	function setContext(newContext) {
 		var i,
 			len;
@@ -58,8 +62,9 @@ define('ext.wikia.adEngine.adContext', [
 		}
 
 		// SourcePoint integration
-		if (isProperCountry(instantGlobals.wgAdDriverSourcePointCountries) || parseInt(qs.getVal('sourcepoint', '0'))) {
-			context.opts.sourcePoint = true;
+		if (context.opts.sourcePointUrl) {
+			context.opts.sourcePoint = (isBooleanParamSet('sourcepoint') ||
+				isProperCountry(instantGlobals.wgAdDriverSourcePointCountries));
 		}
 
 		// Targeting by page categories
@@ -84,7 +89,7 @@ define('ext.wikia.adEngine.adContext', [
 		context.slots.invisibleHighImpact = (
 			context.slots.invisibleHighImpact &&
 			isProperCountry(instantGlobals.wgAdDriverHighImpactSlotCountries)
-		) ||  parseInt(qs.getVal('highimpactslot', '0'));
+		) || isBooleanParamSet('highimpactslot');
 
 		// Krux integration
 		context.targeting.enableKruxTargeting = !!(
