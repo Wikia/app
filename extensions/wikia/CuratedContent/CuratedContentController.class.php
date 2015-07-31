@@ -440,14 +440,24 @@ class CuratedContentController extends WikiaController {
 
 		if ( !empty( $wgWikiaCuratedContent ) && is_array( $wgWikiaCuratedContent )  ) {
 			foreach ( $wgWikiaCuratedContent as $section ) {
-				// sections
-				if ( !empty( $section['title'] ) && empty( $section['featured'] ) ) {
+				// update information about node type
+				$section['node_type'] = 'section';
+
+				// rename $section['title'] to $section['label']
+				$section['label'] = $section['title'];
+				unset( $section['title'] );
+
+				if ( !empty( $section['label'] ) && empty( $section['featured'] ) ) {
+					// load image for curated content sections (not optional, not featured)
 					$section['image_url'] = CuratedContentHelper::findImageUrl( $section['image_id'] );
 				}
 
-				// items
 				foreach ( $section['items'] as $i => $item ) {
-					$section['items'][$i]['image_url'] = CuratedContentHelper::findImageUrl( $section['image_id'] );
+					// load image for all items
+					$section['items'][$i]['image_url'] = CuratedContentHelper::findImageUrl( $item['image_id'] );
+
+					// update information about node type
+					$section['items'][$i]['node_type'] = 'item';
 				}
 
 				$data[] = $section;
@@ -521,6 +531,34 @@ class CuratedContentController extends WikiaController {
 		$this->response->setVal( 'ids_list', $wikisList );
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
+	}
+
+	public function getImage() {
+		$titleName = $this->request->getVal( 'title' );
+		$imageSize = $this->request->getInt( 'size', 50 );
+		$url = null;
+		$imageId = 0;
+
+		if ( !empty( $titleName ) ) {
+			$title = Title::newFromText( $titleName );
+
+			if ( !empty( $title ) && $title instanceof Title && $title->exists() ) {
+				$imageId = $title->getArticleID();
+			}
+		}
+
+		if ( !empty( $imageId ) ) {
+			$url = CuratedContentHelper::getImageUrl( $imageId, $imageSize );
+		}
+
+		$this->response->setValues([
+			'url' => $url,
+			'id' => $imageId
+		]);
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+		$this->response->setCacheValidity( WikiaResponse::CACHE_VERY_SHORT );
+		// TODO: CONCF-961 Set more restrictive header
+		$this->response->setHeader( 'Access-Control-Allow-Origin', '*' );
 	}
 
 	/**

@@ -109,7 +109,7 @@ class Preferences {
 	 * @return array|String
 	 */
 	static function getUserPreference( $name, $info, $user ) {
-		$val = $user->getGlobalPreference( $name );
+		$val = self::getUserPreferenceHelper($user, $name);
 
 		// Handling for array-type preferences
 		if ( ( isset( $info['type'] ) && $info['type'] == 'multiselect' ) ||
@@ -119,13 +119,21 @@ class Preferences {
 			$val = array();
 
 			foreach ( $options as $value ) {
-				if ( $user->getGlobalPreference( "$prefix$value" ) ) {
+				if ( self::getUserPreferenceHelper( $user, "$prefix$value" ) ) {
 					$val[] = $value;
 				}
 			}
 		}
 
 		return $val;
+	}
+
+	private static function getUserPreferenceHelper(User $user, $property) {
+		if (in_array($property, self::getAttributes())) {
+			return $user->getGlobalAttribute($property);
+		} else {
+			return $user->getGlobalPreference($property);
+		}
 	}
 
 	/**
@@ -1451,6 +1459,13 @@ class Preferences {
 			$formData[$pref] = $user->getGlobalPreference( $pref, null, true );
 		}
 
+		$attributes = self::getAttributes();
+		foreach ($formData as $key => $val) {
+			if (in_array($key, $attributes)) {
+				$user->setGlobalAttribute($key, $val);
+			}
+		}
+
 		//  Keeps old preferences from interfering due to back-compat
 		//  code, etc.
 		// <Wikia> RT#144314
@@ -1566,6 +1581,12 @@ class Preferences {
 		}
 
 		return $arr;
+	}
+
+	// attributes that show up on the preferences page. TODO: separate somehow?
+	private static function getAttributes() {
+		global $wgUserAttributeWhitelist;
+		return $wgUserAttributeWhitelist;
 	}
 }
 
