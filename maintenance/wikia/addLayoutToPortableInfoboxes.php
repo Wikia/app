@@ -1,20 +1,7 @@
 <?php
 
 /**
- * Script goes through all provided pages in pages param and adds layout="stacked"
- *
- * @param string --pages Json encoded array contains list of pages ids and namespaces
- * e.g. before encoding
- * [
- *  [
- *    'page_id' => 123,
- *    'namespace' => 0
- *  ],
- *  [
- *    'page_id' => 124,
- *    'namespace' => 10
- *  ]
- * ]
+ * Script goes through all pages on a wikia that has infoboxes definitions and adds layout="stacked"
  *
  * @author Kamil Koterba
  * @ingroup Maintenance
@@ -36,21 +23,34 @@ class addLayoutToPortableInfoboxes extends Maintenance {
 	}
 
 	public function execute() {
-		$pages = json_decode( $this->getOption( 'pages' ) );
-		foreach ( $pages as $page ) {
-			if ( $page['namespace'] !== 10 ) {
-				continue;
-			}
-			$article = Article::newFromID( $page['page_id'] );
+		global $wgUser;
+		$wgUser = User::newFromName( 'Wikia' );
+		$pages = $this->getPagesWithInfoboxes();
+		foreach ( $pages as $pageId ) {
+			$article = Article::newFromID( $pageId );
 			$content = $article->getContent();
 			$replacedContent = preg_replace_callback( '/<infobox([^>]*)>/i', [ $this,'replace' ], $content );
-
 			$article->getPage()->doEdit( $replacedContent, $this->getSummary() );
 		}
 		$this->output( "\nDone!\n" );
 	}
 
-	public function replace( $matches ) {
+	private function getPagesWithInfoboxes() {
+		global $wgCityId;
+		$app = \F::app();
+		$statsdb = wfGetDB( DB_SLAVE, null, $app->wg->StatsDB );
+		$pages = ( new \WikiaSQL() )
+			->SELECT( 'ct_page_id' )
+			->FROM( 'city_used_tags' )
+			->WHERE( 'ct_kind' )->EQUAL_TO( 'infobox' )
+			->AND_( 'ct_wikia_id' )->EQUAL_TO( $wgCityId )
+			->runLoop( $statsdb, function ( &$pages, $row ) {
+				$pages[] = $row->ct_page_id;
+			} );
+		return $pages;
+	}
+
+	private function replace( $matches ) {
 		if ( $this->hasLayout( $matches[0] ) !== false ) {
 			return $matches[0];
 		}
