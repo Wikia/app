@@ -612,7 +612,7 @@ class UserLoginHelper extends WikiaModel {
 		}
 
 		return '/join?redirect='
-			. urlencode ( wfExpandUrl ($requestUrl) )
+			. urlencode ( wfExpandUrl ( $requestUrl ) )
 			. $this->getUselangParam();
 	}
 
