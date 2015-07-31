@@ -7,8 +7,8 @@
  * @ingroup Maintenance
  */
 
-require_once( dirname( __FILE__ ) . '/../Maintenance.php' );
-require_once( dirname( __FILE__ ) . '/Infoboxes/InfoboxReplaceHelper.class.php' );
+require_once(dirname(__FILE__) . '/../../Maintenance.php');
+require_once(dirname(__FILE__) . '/InfoboxReplaceHelper.class.php');
 
 /**
  * Maintenance script class
