@@ -49,7 +49,7 @@ class  WikiaMobileNavigationService extends WikiaService {
 	 */
 	private function setupLoginLink() {
 		if ( $this->app->wg->EnableNewAuth ) {
-			$this->loginUrl = (new UserLoginHelper())->getNewAuthUrl();
+			$this->loginUrl = ( new UserLoginHelper() )->getNewAuthUrl();
 			$this->loginButtonClass = 'new-login';
 		}
 		else {

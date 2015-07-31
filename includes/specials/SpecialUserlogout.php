@@ -68,8 +68,8 @@ class SpecialUserlogout extends UnlistedSpecialPage {
 
 		$out = $this->getOutput();
 
-		$loginUrl = (F::app()->wg->EnableNewAuth && F::app()->checkSkin( 'wikiamobile' ) )
-			? (new UserLoginHelper())->getNewAuthUrl()
+		$loginUrl = ( F::app()->wg->EnableNewAuth && F::app()->checkSkin( 'wikiamobile' ) )
+			? ( new UserLoginHelper() )->getNewAuthUrl()
 			: SpecialPage::getTitleFor( 'UserLogin' )->getLocalURL();
 		$loginLink = '<a href="' . $loginUrl . '">' . wfMessage( 'logouttext-link-text' )->escaped() . '</a>';
 		$out->addHTML( wfMessage( 'logouttext' )->rawParams( $loginLink )->parse() );
