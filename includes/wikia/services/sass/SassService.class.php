@@ -249,9 +249,10 @@ class SassService {
 		}
 
 		$styles .= "\n\n";
-		$styles .= $this->makeComment(sprintf("SASS processing time (compilation/total): %.3fms/%.3fms",
+		$styles .= $this->makeComment(sprintf("SASS processing time (compilation/total): %.3fms/%.3fms [using %s]",
 			($afterCompilation - $start) * 1000,
-			($end - $start) * 1000
+			($end - $start) * 1000,
+			get_class( self::getDefaultCompiler() )
 		));
 
 		// save it to the cache if everything went correct
