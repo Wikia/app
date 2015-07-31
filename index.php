@@ -57,4 +57,4 @@ if ( isset( $_SERVER['MW_COMPILED'] ) ) {
 $mediaWiki = new MediaWiki();
 $mediaWiki->run();
 
-// SPARROW TEST 2
+// SPARROW TEST 3
