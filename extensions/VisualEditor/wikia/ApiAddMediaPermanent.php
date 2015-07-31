@@ -29,7 +29,9 @@ class ApiAddMediaPermanent extends ApiAddMedia {
 		$duplicate = $this->getFileDuplicate( $tempFile->getLocalRefPath() );
 		if ( $duplicate ) {
 			return array(
-				'title' => $duplicate->getTitle()->getText()
+				'title' => $duplicate->getTitle()->getText(),
+				'url' => $duplicate->getUrl(),
+				'image_id' => $duplicate->getTitle()->getArticleID()
 			);
 		} else {
 			$title = $this->getUniqueTitle(
@@ -42,7 +44,8 @@ class ApiAddMediaPermanent extends ApiAddMedia {
 			$file->upload( $tempFile->getPath(), '', $pageText ? $pageText : '' );
 			return array(
 				'title' => $file->getTitle()->getText(),
-				'url' => $file->getUrl()
+				'url' => $file->getUrl(),
+				'image_id' => $file->getTitle()->getArticleID()
 			);
 		}
 	}

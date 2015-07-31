@@ -26,7 +26,8 @@ class ApiAddMediaTemporary extends ApiAddMedia {
 		if ( $duplicate ) {
 			return array(
 				'title' => $duplicate->getTitle()->getText(),
-				'url' => $duplicate->getUrl()
+				'url' => $duplicate->getUrl(),
+				'image_id' => $duplicate->getTitle()->getArticleID()
 			);
 		} else {
 			// Check whether upload is enabled
