@@ -1,21 +1,10 @@
-/*global describe, it, modules, expect, spyOn*/
+/*global describe, it, modules, expect, spyOn, beforeEach*/
 /*jshint maxlen:200*/
 describe('AdContext', function () {
 	'use strict';
 
 	function noop() {
 		return;
-	}
-
-	function getModule() {
-		return modules['ext.wikia.adEngine.adContext'](
-			mocks.win,
-			mocks.doc,
-			mocks.geo,
-			mocks.instantGlobals,
-			mocks.Querystring,
-			mocks.abTesting
-		);
 	}
 
 	var mocks = {
@@ -40,6 +29,22 @@ describe('AdContext', function () {
 			'openx',
 			'turtle'
 		];
+
+	function getModule() {
+		return modules['ext.wikia.adEngine.adContext'](
+			mocks.win,
+			mocks.doc,
+			mocks.geo,
+			mocks.instantGlobals,
+			mocks.Querystring,
+			mocks.abTesting
+		);
+	}
+
+	beforeEach(function () {
+		mocks.instantGlobals = {};
+		getModule().getContext().opts = {};
+	});
 
 	it(
 		'fills getContext() with context, targeting, providers and forcedProvider ' +
@@ -318,5 +323,19 @@ describe('AdContext', function () {
 		mocks.instantGlobals = {wgAdDriverKruxCountries: ['XX']};
 		adContext = getModule();
 		expect(adContext.getContext().targeting.enableKruxTargeting).toBeFalsy();
+	});
+
+	it('enables SourcePoint when country in instantGlobals.wgAdDriverSourcePointCountries', function () {
+		mocks.instantGlobals = {wgAdDriverSourcePointCountries: ['XX', 'ZZ']};
+
+		expect(getModule().getContext().opts.sourcePoint).toBeTruthy();
+	});
+
+	it('enables SourcePoint when url param sourcepoint is set', function () {
+		spyOn(mocks.querystring, 'getVal').and.callFake(function (param) {
+			return param === 'sourcepoint' ?  '1' : '0';
+		});
+
+		expect(getModule().getContext().opts.sourcePoint).toBeTruthy();
 	});
 });

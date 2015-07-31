@@ -1,11 +1,22 @@
-/*global describe, it, expect, modules, spyOn, document*/
+/*global describe, it, expect, modules, spyOn, document, beforeEach*/
 describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 	'use strict';
 
-	function noop() {}
+	function noop() { return undefined; }
 
 	var googleTag,
+		adContextOpts = {},
 		mocks = {
+			adContext: {
+				getContext: function () {
+					return {
+						opts: adContextOpts
+					};
+				}
+			},
+			adTracker: {
+				track: noop
+			},
 			element: {
 				getId: noop,
 				setSizes: noop,
@@ -38,14 +49,21 @@ describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 					defineSlot: function () {
 						return {
 							addService: noop
-						}
+						};
 					}
 				}
 			}
 		};
 
-	beforeEach(function() {
-		googleTag = modules['ext.wikia.adEngine.provider.gpt.googleTag'](document, mocks.log, mocks.window);
+	beforeEach(function () {
+		adContextOpts = {};
+		googleTag = modules['ext.wikia.adEngine.provider.gpt.googleTag'](
+			mocks.adContext,
+			mocks.adTracker,
+			document,
+			mocks.log,
+			mocks.window
+		);
 	});
 
 	it('Initialization should prepare googletag object and configure pubads', function () {
@@ -63,6 +81,23 @@ describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 		expect(mocks.pubads.disableInitialLoad).toHaveBeenCalled();
 		expect(mocks.pubads.addEventListener).toHaveBeenCalled();
 		expect(mocks.window.googletag.enableServices).toHaveBeenCalled();
+	});
+
+	it('Init should add sp.ready event listener if SourcePoint is enabled', function () {
+		spyOn(document, 'addEventListener');
+		adContextOpts.sourcePoint = true;
+		adContextOpts.sourcePointUrl = '//foo.bar';
+		googleTag.init();
+
+		expect(document.addEventListener.calls.mostRecent().args[0]).toEqual('sp.blocking');
+	});
+
+	it('Init should not add sp.ready event listener if SourcePoint is disabled', function () {
+		spyOn(document, 'addEventListener');
+		adContextOpts.sourcePoint = false;
+		googleTag.init();
+
+		expect(document.addEventListener).not.toHaveBeenCalled();
 	});
 
 	it('Push should call googletag cmd method', function () {

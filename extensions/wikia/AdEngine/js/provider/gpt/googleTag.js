@@ -1,13 +1,17 @@
 /*global define*/
 /*jshint maxlen:125, camelcase:false, maxdepth:7*/
 define('ext.wikia.adEngine.provider.gpt.googleTag', [
+	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.adTracker',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window'
-], function (doc, log, window) {
+], function (adContext, adTracker, doc, log, window) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.gpt.googleTag',
+		sourcePointClientId = 'rMbenHBwnMyAMhR',
+		context = adContext.getContext(),
 		initialized = false,
 		registeredCallbacks = {},
 		slots = {},
@@ -16,23 +20,53 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 		googleTag,
 		pubAds;
 
+	function dispatchEvent(event) {
+		var id;
+
+		log(['dispatchEvent', event], 'info', logGroup);
+
+		for (id in registeredCallbacks) {
+			if (registeredCallbacks.hasOwnProperty(id)) {
+				if (registeredCallbacks[id] && event.slot && event.slot === slots[id]) {
+					log(['dispatchEvent', event, 'Launching registered callback'], 'debug', logGroup);
+					registeredCallbacks[id](event);
+					return;
+				}
+			}
+		}
+
+		log(['dispatchEvent', event, 'No callback registered for this slot render ended event'], 'error', logGroup);
+	}
+
 	function init() {
 		log('init', 'debug', logGroup);
 
 		var gads = doc.createElement('script'),
 			node = doc.getElementsByTagName('script')[0];
 
-		window.googletag = window.googletag || {};
+		googleTag = window.googletag = window.googletag || {};
 		window.googletag.cmd = window.googletag.cmd || [];
 
 		gads.async = true;
 		gads.type = 'text/javascript';
 		gads.src = '//www.googletagservices.com/tag/js/gpt.js';
 
+		if (context.opts.sourcePoint) {
+			gads.src = context.opts.sourcePointUrl;
+			gads.setAttribute('data-client-id', sourcePointClientId);
+			gads.addEventListener('load', function () {
+				var spReadyEvent = new window.Event('sp.ready');
+				window.dispatchEvent(spReadyEvent);
+			});
+
+			doc.addEventListener('sp.blocking', function () {
+				adTracker.track('sourcepoint/blocked');
+			});
+		}
+
 		log('Appending GPT script to head', 'debug', logGroup);
 
 		node.parentNode.insertBefore(gads, node);
-		googleTag = window.googletag;
 
 		// Enable services
 		log(['init', 'googletag.cmd.push'], 'info', logGroup);
@@ -56,10 +90,10 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 	}
 
 	function setPageLevelParams(params) {
-		var name,
-			value;
-
 		googleTag.cmd.push(function () {
+			var name,
+				value;
+
 			pageLevelParams = params;
 			for (name in pageLevelParams) {
 				if (pageLevelParams.hasOwnProperty(name)) {
@@ -116,24 +150,6 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 	function registerCallback(id, callback) {
 		log(['registerCallback', id], 'info', logGroup);
 		registeredCallbacks[id] = callback;
-	}
-
-	function dispatchEvent(event) {
-		var id;
-
-		log(['dispatchEvent', event], 'info', logGroup);
-
-		for (id in registeredCallbacks) {
-			if (registeredCallbacks.hasOwnProperty(id)) {
-				if (registeredCallbacks[id] && event.slot && event.slot === slots[id]) {
-					log(['dispatchEvent', event, 'Launching registered callback'], 'debug', logGroup);
-					registeredCallbacks[id](event);
-					return;
-				}
-			}
-		}
-
-		log(['dispatchEvent', event, 'No callback registered for this slot render ended event'], 'error', logGroup);
 	}
 
 	return {

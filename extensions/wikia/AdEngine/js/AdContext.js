@@ -57,6 +57,11 @@ define('ext.wikia.adEngine.adContext', [
 			context.opts.showAds = false;
 		}
 
+		// SourcePoint integration
+		if (isProperCountry(instantGlobals.wgAdDriverSourcePointCountries) || parseInt(qs.getVal('sourcepoint', '0'))) {
+			context.opts.sourcePoint = true;
+		}
+
 		// Targeting by page categories
 		if (context.targeting.enablePageCategories) {
 			context.targeting.pageCategories = w.wgCategories || getMercuryCategories();

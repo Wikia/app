@@ -1501,6 +1501,13 @@ $wgAdDriverTurtleCountries = null;
 $wgAdDriverOpenXCountries = null;
 
 /**
+ * @name $wgAdDriverSourcePointCountries
+ * List of countries to call ads through SourcePoint
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverSourcePointCountries = null;
+
+/**
  * trusted proxy service registry
  */
 $wgAutoloadClasses[ 'TrustedProxyService'] =  "$IP/includes/wikia/services/TrustedProxyService.class.php" ;
