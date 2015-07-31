@@ -5,23 +5,13 @@
  */
 class CuratedContentValidatorController extends WikiaController {
 
-	public function validateCuratedContent() {
-		$data = $this->request->getVal( 'data' );
-
-		if ( empty( $data ) ) {
-			$this->respondWithErrors();
-		} else {
-			$this->validateCuratedContentData( $data );
-		}
-	}
-
 	public function validateSection() {
 		$section = $this->request->getVal( 'section' );
 
 		if ( empty( $section ) ) {
 			$this->respondWithErrors();
 		} else {
-			$this->validateCuratedContentData( [ $section ] );
+			$this->validateCuratedContent( [ $section ] );
 		}
 	}
 
@@ -42,11 +32,11 @@ class CuratedContentValidatorController extends WikiaController {
 			if ( !empty( $isFeatured ) ) {
 				$section['featured'] = true;
 			}
-			$this->validateCuratedContentData( [ $section ] );
+			$this->validateCuratedContent( [ $section ] );
 		}
 	}
 
-	private function validateCuratedContentData( Array $data ) {
+	private function validateCuratedContent( Array $data ) {
 		$helper = new CuratedContentHelper();
 
 		$sections = $helper->processSections( $data );
