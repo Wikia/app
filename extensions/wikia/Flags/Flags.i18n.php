@@ -33,6 +33,7 @@ $messages['en'] = [
 	'flags-special-create-form-save-success' => 'The flag has been added!',
 	'flags-special-create-form-save-failure' => 'Unfortunately, an error happened. Can you try again?',
 	'flags-special-create-form-save-nochange' => 'It seems that no changes were made.',
+	'flags-special-create-form-no-parameters' => 'No parameters found in given template.',
 	'flags-special-autoload-delete-confirm' => 'Deleting the $1 flag will also remove it from all articles. This cannot be undone. Are you sure?',
 	'flags-special-autoload-delete-success' => 'The flag has been successfully removed.',
 	'flags-special-autoload-delete-error' => 'Unfortunately, we were not able to remove the flag. Please try again or contact us.',

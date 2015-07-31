@@ -245,7 +245,8 @@ class FlagsApiController extends WikiaApiController {
 			$fetchParams = $this->request->getBool( 'fetch_params' );
 
 			if ( $fetchParams && !empty( $this->params['flag_view'] ) ) {
-				$params = $this->getFlagParamsFromTemplate( $this->params['flag_view'] );
+				$params = $this->getTemplateVariables( $this->params['flag_view'] );
+
 				$flagParams = json_decode( $this->params['flag_params_names'], true );
 
 				foreach ( $flagParams as $param => $description ) {
@@ -265,6 +266,61 @@ class FlagsApiController extends WikiaApiController {
 			$this->logResponseException( $e, $this->request );
 			$this->response->setException( $e );
 		}
+	}
+
+
+	/**
+	 * Fetch template variables from template markup
+	 *
+	 * Required parameters:
+	 * @requestParam string flag_view A title of a template used for rendering the flag
+	 */
+	public function getFlagParamsFromTemplate() {
+		try {
+			$this->getRequestParams();
+
+			if ( empty( $this->params['flag_view'] ) ) {
+				throw new MissingParameterApiException( 'flag_view' );
+			}
+
+			$params = $this->getTemplateVariables( $this->params['flag_view'] );
+
+			$this->makeSuccessResponse( $params );
+		} catch( Exception $e ) {
+			print_r($e);
+			$this->logResponseException( $e, $this->request );
+			$this->response->setException( $e );
+		}
+	}
+
+	/**
+	 * Fetch template variables from template markup
+	 *
+	 * @param string $template name of template treated as view and source of params
+	 * @return Array parameters
+	 */
+	private function getTemplateVariables( $template ) {
+		$params = [];
+
+		$title = \Title::newFromText( $template, NS_TEMPLATE );
+		if ( ! $title instanceof Title ) {
+			return [];
+		}
+
+		$article = new \Article( $title );
+		if ( !$article->exists() ) {
+			return [];
+		}
+
+		$flagParams = ( new \TemplateDataExtractor( $title ) )->getTemplateVariables( $article->getContent() );
+
+		if ( !empty( $flagParams ) ) {
+			foreach ( $flagParams as $paramName => $paramData ) {
+				$params[$paramName] = '';
+			}
+		}
+
+		return $params;
 	}
 
 	/**
@@ -637,35 +693,5 @@ class FlagsApiController extends WikiaApiController {
 		if ( !$this->wg->user->isAllowed( 'flags-administration' ) ) {
 			throw new PermissionsException( 'flags-administration' );
 		}
-	}
-
-	/**
-	 * Fetch template variables from template markup
-	 *
-	 * @param string $template name of template treated as view and source of params
-	 * @return Array parameters
-	 */
-	private function getFlagParamsFromTemplate( $template ) {
-		$params = [];
-
-		$title = \Title::newFromText( $template, NS_TEMPLATE );
-		if ( ! $title instanceof Title ) {
-			return [];
-		}
-
-		$article = new \Article( $title );
-		if ( !$article->exists() ) {
-			return [];
-		}
-
-		$flagParams = ( new \TemplateDataExtractor( $title ) )->getTemplateVariables( $article->getContent() );
-
-		if ( !empty( $flagParams ) ) {
-			foreach ( $flagParams as $paramName => $paramData ) {
-				$params[$paramName] = '';
-			}
-		}
-
-		return $params;
 	}
 }
