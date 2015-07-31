@@ -21,18 +21,11 @@ class AdEngine2Hooks {
 	 */
 	public static function onAfterInitialize( $title, $article, $output, $user, WebRequest $request, $wiki ) {
 		global $wgAdDriverUseSevenOneMedia,
-			$wgEnableKruxOnMobile,
-			$wgEnableKruxTargeting,
 			$wgNoExternals,
 			$wgUsePostScribe;
 
 		// TODO: we shouldn't have it in AdEngine - ticket for Platform: PLATFORM-1296
 		$wgNoExternals = $request->getBool( 'noexternals', $wgNoExternals );
-
-		if ( $wgNoExternals ) {
-			$wgEnableKruxTargeting = false;
-			$wgEnableKruxOnMobile = false;
-		}
 
 		// use PostScribe with 71Media - check scriptwriter.js:35
 		if ( $wgAdDriverUseSevenOneMedia ) {
@@ -51,7 +44,9 @@ class AdEngine2Hooks {
 	 */
 	public static function onInstantGlobalsGetVariables( array &$vars )
 	{
+		$vars[] = 'wgAdDriverHighImpactSlotCountries';
 		$vars[] = 'wgAdDriverIncontentPlayerSlotCountries';
+		$vars[] = 'wgAdDriverKruxCountries';
 		$vars[] = 'wgAdDriverTurtleCountries';
 		$vars[] = 'wgAdDriverOpenXCountries';
 		$vars[] = 'wgAmazonMatchCountries';

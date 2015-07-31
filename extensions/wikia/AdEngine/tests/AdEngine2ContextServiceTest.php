@@ -45,7 +45,6 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 	public function adContextDataProvider() {
 		return [
 			[ ],
-
 			[
 				'titleMockType' => 'article',
 				'flags' => ['wgAdDriverEnableAdsInMaps'],
@@ -101,12 +100,6 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 			],
 			[
 				'titleMockType' => 'article',
-				'flags' => ['wgEnableKruxTargeting'],
-				'expectedOpts' => [],
-				'expectedTargeting' => ['enableKruxTargeting' => true]
-			],
-			[
-				'titleMockType' => 'article',
 				'flags' => ['wgEnableOutboundScreenExt'],
 				'expectedOpts' => [],
 				'expectedTargeting' => [],
@@ -147,7 +140,6 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 				'expectedOpts' => [],
 				'expectedTargeting' => ['wikiDirectedAtChildren' => true]
 			],
-
 			[
 				'titleMockType' => 'mainpage',
 				'flags' => [],
@@ -189,7 +181,7 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		$catId = WikiFactoryHub::CATEGORY_ID_LIFESTYLE;
 		$shortCat = 'shortcat';
 		$sevenOneMediaSub2Site = 'customsub2site';
-		$expectedSevenOneMediaUrlFormat = 'http://%s/__load/-/cb%3D%d%26debug%3Dfalse%26lang%3Den%26only%3Dscripts%26skin%3Doasis/wikia.ext.adengine.sevenonemedia';
+		$expectedSevenOneMediaUrlFormat = 'http://%s/__load/-/cb%3D%d%26debug%3Dfalse%26lang%3D%s%26only%3Dscripts%26skin%3Doasis/wikia.ext.adengine.sevenonemedia';
 
 		if ( $titleMockType === 'article' || $titleMockType === 'mainpage' ) {
 			$expectedTargeting['pageArticleId'] = $artId;

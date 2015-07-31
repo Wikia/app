@@ -1,10 +1,11 @@
-/*global define,setTimeout*/
+/*global define*/
 /*jshint maxlen:125, camelcase:false, maxdepth:7*/
 define('ext.wikia.adEngine.provider.gpt.googleTag', [
 	'wikia.document',
 	'wikia.log',
 	'wikia.window'
 ], function (doc, log, window) {
+	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.gpt.googleTag',
 		initialized = false,
@@ -104,13 +105,11 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 		if (!slot) {
 			slot = googleTag.defineSlot(adElement.getSlotPath(), adElement.getSizes(), adElement.getId());
 			slot.addService(pubAds);
-			adElement.configureSlot(slot);
-
 			googleTag.display(adElement.getId());
-
 			slots[adElement.getId()] = slot;
 		}
 
+		adElement.configureSlot(slot);
 		slotQueue.push(slot);
 	}
 

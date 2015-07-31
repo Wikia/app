@@ -106,7 +106,7 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 		$this->signupToken = UserLoginHelper::getSignupToken();
 		$this->uselang = $this->request->getVal( 'uselang', 'en' );
 
-		//fb#38260 -- removed uselang
+		// fb#38260 -- removed uselang
 		$this->avatars = $this->userLoginHelper->getRandomAvatars();
 
 		// template params
@@ -131,14 +131,18 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 		}
 
 		/**
-		 * OPS-6556 Special:UserSignup daily vists
-		 * Contact: ruggero@wikia-inc.com or michal@wikia-inc.com
+		 * OPS-6556 / PLATFORM-1341 Special:UserSignup daily vists
+		 * Contact: ruggero@wikia-inc.com or michal@wikia-inc.com or macbre@wikia-inc.com
 		 */
+		$context = RequestContext::getMain();
+
 		\Wikia\Logger\WikiaLogger::instance()->info(
 			'OPS-6556',
 			[
-				'i18n' => RequestContext::getMain()->getLanguage()->getCode(),
-				'skin' => RequestContext::getMain()->getSkin()->getSkinName()
+				'i18n'         => $context->getLanguage()->getCode(),
+				'skin'         => $context->getSkin()->getSkinName(),
+				'client_ip'    => $context->getRequest()->getIP(),
+				'client_agent' => $context->getRequest()->getHeader( 'User-Agent' ),
 			]
 		);
 	}
@@ -156,8 +160,8 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 			if ( $signupForm->isAllowedRegisterUnconfirmed() ) {
 				$user = User::newFromName( $this->username );
 				// Get and clear redirect page
-				$userSignupRedirect = $user->getOption( UserLoginSpecialController::SIGNUP_REDIRECT_OPTION_NAME );
-				$user->setOption( UserLoginSpecialController::SIGNUP_REDIRECT_OPTION_NAME, null );
+				$userSignupRedirect = $user->getGlobalAttribute( UserLoginSpecialController::SIGNUP_REDIRECT_OPTION_NAME );
+				$user->setGlobalAttribute( UserLoginSpecialController::SIGNUP_REDIRECT_OPTION_NAME, null );
 
 				$user->saveSettings();
 
@@ -464,7 +468,7 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 	private function isValidUser( User $user ) {
 		if ( $user instanceof User && $user->getID() != 0 ) {
 			// break if user is already confirmed
-			if ( !$user->getOption( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME ) ) {
+			if ( !$user->getGlobalFlag( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME ) ) {
 				return $this->setResponseFields(
 					'confirmed',
 					wfMessage(

@@ -24,8 +24,8 @@
 	/**
 	 * Perform database query to get geo data
 	 *
-	 * @param array $filters additional statements to filter geo data by
-	 * @return array set of PlaceModel objects
+	 * @param array $filters additional statements to filter geo data by (can be categories, pages, nearby)
+	 * @return PlaceModel[] set of PlaceModel objects
 	 */
 	private function query(Array $filters = array()) {
 		wfProfileIn(__METHOD__);
@@ -39,7 +39,10 @@
 		);
 
 		// apply filters
-		if (isset($filters['categories'])) {
+		if (isset($filters['pages'])) {
+			$where['page_id'] = $filters['pages'];
+		}
+		else if (isset($filters['categories'])) {
 			$tables[] = 'categorylinks';
 			$where[] = 'cl_from = page_id';
 			$where['cl_to'] = $filters['categories'];
@@ -96,7 +99,7 @@
 	 * Get geo data for all tagged articles on a wiki
 	 *
 	 * @param $limit integer limit the number of places returned
-	 * @return array set of PlaceModel objects
+	 * @return PlaceModel[] set of PlaceModel objects
 	 */
 	public function getAll($limit = 0) {
 		wfProfileIn(__METHOD__);
@@ -110,10 +113,42 @@
 	}
 
 	/**
+	 * Get geo data for all articles provided as a list
+	 *
+	 * @param string $text the list of articles
+	 * @return PlaceModel[] set of PlaceModel objects
+	 */
+	public function getFromText($text) {
+		wfProfileIn(__METHOD__);
+
+		// parse the list
+		$items = explode("\n", trim($text));
+
+		/* @var int[] $pages */
+		$pages = array_map(
+			function($item) {
+				$item = trim($item, '* ');
+
+				// get page ID from the title
+				$title = Title::newFromText($item);
+				return $title instanceof Title ? $title->getArticleID() : 0;
+			},
+			$items
+		);
+
+		$models = $this->query(array(
+			'pages' => $pages
+		));
+
+		wfProfileOut(__METHOD__);
+		return $models;
+	}
+
+	/**
 	 * Get geo data for all tagged articles from gives categorie(s)
 	 *
-	 * @param mixed $categories single category (string) or an array of categories (without namespace prefix)
-	 * @return array set of PlaceModel objects
+	 * @param array|string $categories single category (string) or an array of categories (without namespace prefix)
+	 * @return PlaceModel[] set of PlaceModel objects
 	 */
 	public function getFromCategories($categories) {
 		wfProfileIn(__METHOD__);
@@ -138,7 +173,7 @@
 	 * Get geo data for articles from categories given title belongs to
 	 *
 	 * @param Title $title page title to get places from categories this title belongs to
-	 * @return array set of PlaceModel objects
+	 * @return PlaceModel[] set of PlaceModel objects
 	 */
 	public function getFromCategoriesByTitle( Title $title ) {
 		wfProfileIn(__METHOD__);
@@ -166,7 +201,7 @@
 	 *
 	 * @param PlaceModel $center place to find nearby places for
 	 * @param int $distance define nearby distance (in km)
-	 * @return array set of PlaceModel objects
+	 * @return PlaceModel[] set of PlaceModel objects
 	 */
 	public function getNearby(PlaceModel $center, $distance = 10 /* km */) {
 		wfProfileIn(__METHOD__);
@@ -183,11 +218,9 @@
 	/**
 	 * Get geo data of all "nearby" articles (within given distance in kilometres)
 	 *
-	 * TODO: implement
-	 *
 	 * @param Title $title article title to find nearby places for
 	 * @param int $distance define nearby distance (in km)
-	 * @return array set of PlaceModel objects
+	 * @return PlaceModel[] set of PlaceModel objects
 	 */
 	public function getNearbyByTitle(Title $title, $distance = 10 /* km */) {
 		wfProfileIn(__METHOD__);

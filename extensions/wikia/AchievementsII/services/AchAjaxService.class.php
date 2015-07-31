@@ -87,7 +87,7 @@ class AchAjaxService {
 					$awardingService = new AchAwardingService();
 					$awardingService->awardCustomNotInTrackBadge($userToAward, $badge_type_id);
 
-					if($userToAward->getEmail() != null && !($userToAward->getOption('hidepersonalachievements'))) {
+					if($userToAward->getEmail() != null && !($userToAward->getGlobalPreference( 'hidepersonalachievements' ))) {
 						$bodyParams = array(
 							htmlspecialchars($userToAward->getName()),
 							wfMsgHtml($badgeNameKey),

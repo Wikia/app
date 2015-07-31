@@ -62,10 +62,10 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 				| SassService::FILTER_BASE64 | SassService::FILTER_JANUS
 			);
 
-			$cacheId = __CLASS__ . "-minified-".$sassService->getCacheKey();
+			$cacheId = wfSharedMemcKey( __CLASS__, "minified", $sassService->getCacheKey() );
 			$content = $memc->get( $cacheId );
 		} catch (Exception $e) {
-			$content = "/* {$e->getMessage()} */";
+			$content = $this->makeComment($e->getMessage());
 			$hasErrors = true;
 		}
 
@@ -85,8 +85,7 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 			// This is the final pass on contents which, among other things, performs minification
 			parent::getContent( $processingTimeStart );
 
-			// Prevent cache poisoning if we are serving sass from preview server
-			if ( !empty($cacheId) && getHostPrefix() == null && !$this->mForceProfile && !$hasErrors ) {
+			if ( !empty($cacheId) && !$this->mForceProfile && !$hasErrors ) {
 				$memc->set( $cacheId, $this->mContent, WikiaResponse::CACHE_STANDARD );
 			}
 		}
@@ -103,6 +102,9 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 
 	/**
 	 * Add more params to already existing
+	 * Set to null if want to force fallback to default sass params
+	 * (fallback happens in SassService::getSassVariables)
+	 * by default $this->mParams is empty array so fallback don't happen
 	 * @param array $params
 	 */
 	public function addParams( array $params ) {

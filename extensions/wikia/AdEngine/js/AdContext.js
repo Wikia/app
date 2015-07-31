@@ -34,6 +34,10 @@ define('ext.wikia.adEngine.adContext', [
 		return categoryDict.map(function (item) { return item.title; });
 	}
 
+	function isProperCountry(countryList) {
+		return (countryList && countryList.indexOf && countryList.indexOf(geo.getCountryCode()) > -1);
+	}
+
 	function setContext(newContext) {
 		var i,
 			len;
@@ -58,37 +62,32 @@ define('ext.wikia.adEngine.adContext', [
 			context.targeting.pageCategories = w.wgCategories || getMercuryCategories();
 		}
 
-		// Krux integration
-		if (instantGlobals.wgSitewideDisableKrux) {
-			context.targeting.enableKruxTargeting = false;
-		}
-
 		// Taboola integration
 		if (context.providers.taboola) {
 			context.providers.taboola = abTest && abTest.inGroup('NATIVE_ADS_TABOOLA', 'YES') &&
 				(context.targeting.pageType === 'article' || context.targeting.pageType === 'home');
 		}
 
-		if (instantGlobals.wgAdDriverTurtleCountries &&
-				instantGlobals.wgAdDriverTurtleCountries.indexOf &&
-				instantGlobals.wgAdDriverTurtleCountries.indexOf(geo.getCountryCode()) > -1
-					) {
+		if (isProperCountry(instantGlobals.wgAdDriverTurtleCountries)) {
 			context.providers.turtle = true;
 		}
 
-		if (instantGlobals.wgAdDriverOpenXCountries &&
-			instantGlobals.wgAdDriverOpenXCountries.indexOf &&
-			instantGlobals.wgAdDriverOpenXCountries.indexOf(geo.getCountryCode()) > -1
-		) {
+		if (isProperCountry(instantGlobals.wgAdDriverOpenXCountries)) {
 			context.providers.openX = true;
 		}
 
-		if (instantGlobals.wgAdDriverHighImpactSlotCountries &&
-				instantGlobals.wgAdDriverHighImpactSlotCountries.indexOf &&
-				instantGlobals.wgAdDriverHighImpactSlotCountries.indexOf(geo.getCountryCode()) > -1
-					) {
-			context.slots.invisibleHighImpact = true;
-		}
+		context.slots.invisibleHighImpact = (
+			context.slots.invisibleHighImpact &&
+			isProperCountry(instantGlobals.wgAdDriverHighImpactSlotCountries)
+		) ||  parseInt(qs.getVal('highimpactslot', '0'));
+
+		// Krux integration
+		context.targeting.enableKruxTargeting = !!(
+			context.targeting.enableKruxTargeting &&
+			isProperCountry(instantGlobals.wgAdDriverKruxCountries) &&
+			!instantGlobals.wgSitewideDisableKrux &&
+			!context.targeting.wikiDirectedAtChildren
+		);
 
 		// Export the context back to ads.context
 		// Only used by Lightbox.js, WikiaBar.js and AdsInContext.js

@@ -23,9 +23,6 @@ $optionsWithArgs = array(
 
 require_once( "commandLine.inc" );
 
-// PEAR::Mail::mime
-require_once( "Mail/mime.php" );
-
 class AutomatedDeadWikisDeletionMaintenance {
 
 	const BATCH_SIZE = 100;

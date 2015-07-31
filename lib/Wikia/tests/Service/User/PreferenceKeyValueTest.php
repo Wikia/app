@@ -1,7 +1,9 @@
 <?php
 
-namespace Wikia\Service\User;
+namespace Wikia\Service\User\Preferences;
 use Wikia\Domain\User\Preference;
+use Wikia\Persistence\User\Preferences\PreferencePersistence;
+use Wikia\Service\PersistenceException;
 
 class PreferenceKeyValueTest extends \PHPUnit_Framework_TestCase {
 
@@ -11,7 +13,7 @@ class PreferenceKeyValueTest extends \PHPUnit_Framework_TestCase {
 
 	protected function setUp() {
 		$this->testPreference = new Preference( "pref-name", "pref-value" );
-		$this->persistenceMock = $this->getMockBuilder( '\Wikia\Service\User\PreferencePersistence' )
+		$this->persistenceMock = $this->getMockBuilder( PreferencePersistence::class )
 			->setMethods( ['save', 'get'] )
 			->disableOriginalConstructor()
 			->disableAutoload()
@@ -46,16 +48,28 @@ class PreferenceKeyValueTest extends \PHPUnit_Framework_TestCase {
 	/**
 	 * @expectedException	\Wikia\Service\PersistenceException
 	 */
-	public function testSetWithDatabaseError() {
+	public function testSetWithError() {
 		$this->persistenceMock->expects( $this->once() )
 			->method( 'save' )
 			->with( $this->userId, [$this->testPreference] )
-			->will( $this->throwException( new \Wikia\Service\PersistenceException() ) );
+			->will( $this->throwException( new PersistenceException() ) );
 
 		$service = new PreferenceKeyValueService( $this->persistenceMock );
 		$ret = $service->setPreferences( $this->userId, [ $this->testPreference ] );
 
 		$this->fail( "exception was not thrown" );
+	}
+
+	/**
+	 * @expectedException	\Wikia\Service\PersistenceException
+	 */
+	public function testGetWithError() {
+		$this->persistenceMock->expects( $this->once() )
+			->method( 'get' )
+			->with( $this->userId )
+			->will( $this->throwException( new PersistenceException() ) );
+		$service = new PreferenceKeyValueService( $this->persistenceMock );
+		$service->getPreferences( $this->userId );
 	}
 
 	public function testGetPreferencesSuccess() {

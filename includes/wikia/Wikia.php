@@ -1308,7 +1308,7 @@ class Wikia {
 		#if this opt is set, fake their conf status to OFF, and stop here.
 		$user = User::newFromName( $to->name );
 
-		if( $user instanceof User && $user->getBoolOption('unsubscribed') ) {
+		if( $user instanceof User && (bool)$user->getGlobalPreference('unsubscribed') ) {
 			return false;
 		}
 
@@ -2008,15 +2008,15 @@ class Wikia {
 			$userEmail = $user->getEmail();
 			// Optionally keep email in user property
 			if ( $keepEmail && !empty( $userEmail ) ) {
-				$user->setOption( 'disabled-user-email', $userEmail );
+				$user->setGlobalAttribute( 'disabled-user-email', $userEmail );
 			} elseif ( !$keepEmail ) {
 				// Make sure user property is removed
-				$user->setOption( 'disabled-user-email', null );
+				$user->setGlobalAttribute( 'disabled-user-email', null );
 			}
 			$user->setEmail( '' );
 			$user->setPassword( null );
-			$user->setOption( 'disabled', 1 );
-			$user->setOption( 'disabled_date', wfTimestamp( TS_DB ) );
+			$user->setGlobalFlag( 'disabled', 1);
+			$user->setGlobalAttribute( 'disabled_date', wfTimestamp( TS_DB ) );
 			$user->mToken = null;
 			$user->invalidateEmail();
 			if ( $ajax ) {

@@ -85,6 +85,7 @@ $config['adengine2_desktop_js'] = array(
 		'//extensions/wikia/AdEngine/js/provider/factoryWikiaGpt.js',
 		'//extensions/wikia/AdEngine/js/provider/gpt/adDetect.js',
 		'//extensions/wikia/AdEngine/js/provider/gpt/adElement.js',
+		'//extensions/wikia/AdEngine/js/provider/gpt/adSizeFilter.js',
 		'//extensions/wikia/AdEngine/js/provider/gpt/adSizeConverter.js',
 		'//extensions/wikia/AdEngine/js/provider/gpt/googleTag.js',
 		'//extensions/wikia/AdEngine/js/provider/gpt/helper.js',
@@ -344,6 +345,7 @@ $config['oasis_nojquery_shared_js'] = array(
 		'//extensions/wikia/WikiaStyleGuide/js/Form.js',
 		'//resources/wikia/modules/csspropshelper.js',
 		'//resources/wikia/modules/fluidlayout.js',
+		'//resources/wikia/modules/breakpointsLayout.js',
 
 		// oasis specific files
 		'//resources/wikia/libraries/bootstrap/tooltip.js',
@@ -709,6 +711,7 @@ $config['mobile_base_ads_js'] = array(
 		'//extensions/wikia/AdEngine/js/MessageListener.js',
 		'//extensions/wikia/AdEngine/js/SlotTracker.js',
 		'//extensions/wikia/AdEngine/js/SlotTweaker.js',
+		'//extensions/wikia/AdEngine/js/WikiaAdHelper.js',
 		'//extensions/wikia/AdEngine/js/config/mobile.js',
 		'//extensions/wikia/AdEngine/js/lookup/amazonMatch.js',
 		'//extensions/wikia/AdEngine/js/lookup/services.js',
@@ -716,6 +719,7 @@ $config['mobile_base_ads_js'] = array(
 		'//extensions/wikia/AdEngine/js/provider/factoryWikiaGpt.js',
 		'//extensions/wikia/AdEngine/js/provider/gpt/adDetect.js',
 		'//extensions/wikia/AdEngine/js/provider/gpt/adElement.js',
+		'//extensions/wikia/AdEngine/js/provider/gpt/adSizeFilter.js',
 		'//extensions/wikia/AdEngine/js/provider/gpt/adSizeConverter.js',
 		'//extensions/wikia/AdEngine/js/provider/gpt/googleTag.js',
 		'//extensions/wikia/AdEngine/js/provider/gpt/helper.js',
@@ -783,6 +787,7 @@ $config['interactivemaps_ads_js'] = array(
 		'//extensions/wikia/AdEngine/js/provider/factoryWikiaGpt.js',
 		'//extensions/wikia/AdEngine/js/provider/directGptMaps.js',
 		'//extensions/wikia/AdEngine/js/provider/gpt/adElement.js',
+		'//extensions/wikia/AdEngine/js/provider/gpt/adSizeFilter.js',
 		'//extensions/wikia/AdEngine/js/provider/gpt/adSizeConverter.js',
 		'//extensions/wikia/AdEngine/js/provider/gpt/googleTag.js',
 		'//extensions/wikia/AdEngine/js/provider/gpt/helper.js',
@@ -1013,10 +1018,22 @@ $config['relatedpages_wikiamobile_js'] = array(
 );
 
 /** EditPageLayout **/
+$config['editpage_events_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//extensions/wikia/EditPreview/js/editpage.event.preview.js',
+		'//extensions/wikia/EditPreview/js/editpage.event.diff.js',
+		'//extensions/wikia/EditPreview/js/editpage.event.helper.js',
+		'//extensions/wikia/EditPreview/js/editpage.events.js'
+	)
+];
+
 $config['editpage_common_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'//extensions/wikia/EditPageLayout/js/loaders/EditPageEditorLoader.js',
+		'//extensions/wikia/EditPreview/js/preview.js',
+		'#group_editpage_events_js',
 	)
 );
 
@@ -1638,14 +1655,6 @@ $config['imagedrop_scss'] = array(
 
 /** AnalyticsEngine **/
 /** Note: this group is also used in Oasis! */
-$config['analytics_gas_js'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'wikiamobile', 'venus' ],
-	'assets' => [
-		'//extensions/wikia/AnalyticsEngine/js/analytics.js'
-	]
-);
-
 $config['universal_analytics_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'wikiamobile', 'venus' ],
@@ -1833,6 +1842,7 @@ $config['special_css_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'//resources/wikia/libraries/Ace/wikia.ace.editor.js',
+		'#group_editpage_events_js',
 		'//extensions/wikia/SpecialCss/js/SpecialCss.js',
 		'//resources/wikia/libraries/mustache/mustache.js',
 		'//resources/wikia/libraries/mustache/jquery.mustache.js'
@@ -2482,3 +2492,12 @@ $config['sitemap_page_css'] = array(
 		'//extensions/wikia/SitemapPage/styles/SitemapPage.scss',
 	]
 );
+
+$config['template_draft'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//extensions/wikia/TemplateDraft/scripts/rightRailModule.js',
+		'//extensions/wikia/TemplateDraft/scripts/templateDraft.run.js',
+		'//extensions/wikia/TemplateDraft/scripts/templateDraftTracking.js'
+	]
+];

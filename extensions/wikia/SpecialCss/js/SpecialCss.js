@@ -42,7 +42,7 @@ $(function() {
 		}
 	});
 
-	require(['wikia.ace.editor'], function(ace){
+	require(['wikia.ace.editor', 'editpage.events'], function(ace, events){
 		var options = {
 				showPrintMargin: false,
 				fontFamily: 'Monaco, Menlo, Ubuntu Mono, Consolas, source-code-pro, monospace'
@@ -68,34 +68,6 @@ $(function() {
 				// This call is required for the editor to fix all of
 				// its inner structure for adapting to a change in size
 				editor.resize();
-			},
-			showChangesModalConfig = {
-				vars: {
-					id: 'ShowChangesModal',
-					title: $.msg( 'special-css-diff-modal-title' ),
-					size: 'large',
-					content: '<div class="diffContent modalContent"></div>'
-				}
-			},
-			modalCallback = function(showChangesModal){
-				showChangesModal.deactivate();
-				$.when(
-						$.nirvana.sendRequest({
-							controller: 'SpecialCss',
-							method: 'getDiff',
-							type: 'post',
-							data: {
-								wikitext: ace.getContent()
-							}
-						}),
-
-						// load CSS for diff
-						mw.loader.use( 'mediawiki.action.history.diff' )
-					).done(function( ajaxData ) {
-						showChangesModal.$content.find( '.diffContent' ).html( ajaxData[ 0 ].diff );
-						showChangesModal.activate();
-					});
-				showChangesModal.show();
 			};
 
 		ace.setConfig( config );
@@ -125,11 +97,7 @@ $(function() {
 			}, 100 );
 		});
 
-		$( '#showChanges' ).click(function( event ) {
-			event.preventDefault();
-
-			ace.showDiff(showChangesModalConfig, modalCallback);
-		});
+		events.attachDiff('showChanges');
 
 		//noinspection FunctionWithInconsistentReturnsJS,JSUnusedLocalSymbols
 		$( window ).bind( 'beforeunload', function() {

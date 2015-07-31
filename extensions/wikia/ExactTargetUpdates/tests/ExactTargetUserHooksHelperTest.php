@@ -85,7 +85,7 @@ class ExactTargetUserHooksHelperTest extends WikiaBaseTest {
 
 		$userMock = $this->getMockBuilder( 'User' )
 			->disableOriginalConstructor()
-			->setMethods( [ 'getOption' ] )
+			->setMethods( [ 'getGlobalPreference' ] )
 			->getMock();
 
 		// Create a map of arguments to return values.
@@ -97,7 +97,7 @@ class ExactTargetUserHooksHelperTest extends WikiaBaseTest {
 
 		$userMock
 			->expects( $this->exactly( 3 ) )
-			->method( 'getOption' )
+			->method( 'getGlobalPreference' )
 			->will( $this->returnValueMap( $returnMap ) );
 
 		/* Get mock object of tested class ExactTargetUpdatesHooks without mocking any methods */

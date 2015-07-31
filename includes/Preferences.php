@@ -72,7 +72,7 @@ class Preferences {
 
 		## Prod in defaults from the user
 		foreach ( $defaultPreferences as $name => &$info ) {
-			$prefFromUser = self::getOptionFromUser( $name, $info, $user );
+			$prefFromUser = self::getUserPreference( $name, $info, $user );
 			$field = HTMLForm::loadInputFromParameters( $name, $info ); // For validation
 			$defaultOptions = User::getDefaultOptions();
 			$globalDefault = isset( $defaultOptions[$name] )
@@ -84,9 +84,10 @@ class Preferences {
 				// Already set, no problem
 				continue;
 			} elseif ( !is_null( $prefFromUser ) && // Make sure we're not just pulling nothing
-				$field->validate( $prefFromUser, $user->mOptions ) === true ) {
+				$field->validate( $prefFromUser, $user->getOptions() ) === true
+			) {
 				$info['default'] = $prefFromUser;
-			} elseif ( $field->validate( $globalDefault, $user->mOptions ) === true ) {
+			} elseif ( $field->validate( $globalDefault, $user->getOptions() ) === true ) {
 				$info['default'] = $globalDefault;
 			} else {
 				Wikia::log( __METHOD__, 'JKU', "Global default '$globalDefault' is invalid for field $name" );
@@ -107,8 +108,8 @@ class Preferences {
 	 * @param $user User
 	 * @return array|String
 	 */
-	static function getOptionFromUser( $name, $info, $user ) {
-		$val = $user->getOption( $name );
+	static function getUserPreference( $name, $info, $user ) {
+		$val = self::getUserPreferenceHelper($user, $name);
 
 		// Handling for array-type preferences
 		if ( ( isset( $info['type'] ) && $info['type'] == 'multiselect' ) ||
@@ -118,13 +119,21 @@ class Preferences {
 			$val = array();
 
 			foreach ( $options as $value ) {
-				if ( $user->getOption( "$prefix$value" ) ) {
+				if ( self::getUserPreferenceHelper( $user, "$prefix$value" ) ) {
 					$val[] = $value;
 				}
 			}
 		}
 
 		return $val;
+	}
+
+	private static function getUserPreferenceHelper(User $user, $property) {
+		if (in_array($property, self::getAttributes())) {
+			return $user->getGlobalAttribute($property);
+		} else {
+			return $user->getGlobalPreference($property);
+		}
 	}
 
 	/**
@@ -512,7 +521,7 @@ class Preferences {
 			);
 		}
 
-		$selectedSkin = $user->getOption( 'skin' );
+		$selectedSkin = $user->getGlobalPreference( 'skin' );
 		if ( in_array( $selectedSkin, array( 'cologneblue', 'standard' ) ) ) {
 			$settings = array_flip( $context->getLanguage()->getQuickbarSettings() );
 
@@ -589,7 +598,7 @@ class Preferences {
 		);
 
 		// Grab existing pref.
-		$tzOffset = $user->getOption( 'timecorrection' );
+		$tzOffset = $user->getGlobalPreference( 'timecorrection' );
 		$tz = explode( '|', $tzOffset, 3 );
 
 		$tzOptions = self::getTimezoneOptions( $context );
@@ -1447,7 +1456,14 @@ class Preferences {
 		foreach( $wgHiddenPrefs as $pref ){
 			# If the user has not set a non-default value here, the default will be returned
 			# and subsequently discarded
-			$formData[$pref] = $user->getOption( $pref, null, true );
+			$formData[$pref] = $user->getGlobalPreference( $pref, null, true );
+		}
+
+		$attributes = self::getAttributes();
+		foreach ($formData as $key => $val) {
+			if (in_array($key, $attributes)) {
+				$user->setGlobalAttribute($key, $val);
+			}
 		}
 
 		//  Keeps old preferences from interfering due to back-compat
@@ -1456,9 +1472,7 @@ class Preferences {
 		//$user->resetOptions();
 		// </Wikia>
 
-		foreach ( $formData as $key => $value ) {
-			$user->setOption( $key, $value );
-		}
+		$user->setGlobalPreferences($formData);
 
 		$user->saveSettings();
 
@@ -1561,12 +1575,18 @@ class Preferences {
 		$arr = array();
 
 		foreach ( $searchableNamespaces as $ns => $name ) {
-			if ( $user->getOption( 'searchNs' . $ns ) ) {
+			if ( $user->getGlobalPreference( 'searchNs' . $ns ) ) {
 				$arr[] = $ns;
 			}
 		}
 
 		return $arr;
+	}
+
+	// attributes that show up on the preferences page. TODO: separate somehow?
+	private static function getAttributes() {
+		global $wgUserAttributeWhitelist;
+		return $wgUserAttributeWhitelist;
 	}
 }
 

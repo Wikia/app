@@ -1128,7 +1128,13 @@ class WikiFactory {
 	 *
 	 * return URL specific to current env
 	 * (production, preview, verify, devbox, sandbox)
-	 *
+	 * Handled server patterns
+	 * en.wikiname.wikia.com
+	 * wikiname.wikia.com
+	 * (preview/verify/sandbox).en.wikiname.wikia.com
+	 * (preview/verify/sandbox).wikiname.wikia.com
+	 * en.wikiname.developer.wikia-dev.com
+	 * wikiname.developer.wikia-dev.com
 	 * @access public
 	 * @author pbablok@wikia
 	 * @static
@@ -1138,6 +1144,8 @@ class WikiFactory {
 	 * @return string	url pointing to local env
 	 */
 	static public function getLocalEnvURL( $url ) {
+		global $wgWikiaEnvironment;
+
 		// first - normalize URL
 		$regexp = '/^http:\/\/([^\/]+)\/?(.*)?$/';
 		if ( preg_match( $regexp, $url, $groups ) === 0 ) {
@@ -1146,65 +1154,52 @@ class WikiFactory {
 		}
 		$server = $groups[1];
 		$address = $groups[2];
-		$devbox = '';
 
 		if ( !empty($address) ) {
 			$address = '/' . $address;
 		}
 
-		// what do we use?
-		//  en.wikiname.wikia.com
-		//  wikiname.wikia.com
-		//  (preview/verify/sandbox).en.wikiname.wikia.com
-		//  (preview/verify/sandbox).wikiname.wikia.com
-		//  en.wikiname.developer.wikia-dev.com
-		//  wikiname.developer.wikia-dev.com
+		// strip env-specific pre- and suffixes for staging environment
+		$server = preg_replace( '/^(preview|verify|sandbox-[a-z0-9]+)\./', '', $server );
+		$devboxRegex = '/\.([^\.]+)\.wikia-dev\.com$/';
 
-		$servers = [ 'preview.', 'sandbox-s1.', 'verify.' ];
-		foreach ( $servers as $serv ) {
-			if ( strpos( $server, $serv ) === 0 ) {
-				$server = substr( $server, strlen( $serv ) );
-			}
-		}
-
-		$regexp = '/\.([^\.]+)\.wikia-dev\.com$/';
-		if ( preg_match( $regexp, $server, $groups ) === 1 ) {
-			// devbox
+		if ( preg_match( $devboxRegex, $server, $groups ) === 1 ) {
 			$devbox = $groups[1];
-			$server = str_replace( '.' . $devbox . '.wikia-dev.com', '', $server );
 		} else {
-			$server = str_replace( '.wikia.com', '', $server );
+			$devbox = '';
 		}
+		$server = str_replace( $devbox . '.wikia-dev.com', '', $server );
+		$server = str_replace( '.wikia.com', '', $server );
 
 		// put the address back into shape and return
-		if ( empty($_SERVER['SERVER_NAME']) ) {
-			// maintenance script
-			global $wgDevelEnvironment;
-			if ( empty($wgDevelEnvironment) ) {
-				return 'http://' . $server.'.wikia.com' . $address;
-			} else {
-				$domain = $server . '.' . str_replace('dev-','',gethostname()) . '.wikia-dev.com';
-				return 'http://' . $domain . $address;
-			}
-		}
-
-		$servername = $_SERVER['SERVER_NAME'];
-		if ( strpos( $servername, 'preview.' ) !== false ) {
-			return 'http://preview.' . $server . '.wikia.com'.$address;
-		}
-		if ( strpos( $servername, 'verify.' ) !== false ) {
-			return 'http://verify.' . $server . '.wikia.com'.$address;
-		}
-		if ( strpos( $servername, 'sandbox-s1.' ) !== false ) {
-			return 'http://sandbox-s1.' . $server . '.wikia.com'.$address;
-		}
-		if ( preg_match( $regexp, $servername, $groups ) === 1 ) {
-			return 'http://' . $server . '.' . $groups[1] . '.wikia-dev.com'.$address;
+		switch($wgWikiaEnvironment) {
+			case WIKIA_ENV_PREVIEW:
+				return 'http://preview.' . $server . '.wikia.com'.$address;
+			case WIKIA_ENV_VERIFY:
+				return 'http://verify.' . $server . '.wikia.com'.$address;
+			case WIKIA_ENV_SANDBOX:
+				return 'http://' . self::getExternalHostName() . '.' . $server . '.wikia.com' . $address;
+			case WIKIA_ENV_DEV:
+				return 'http://' . $server . '.' . self::getExternalHostName() . '.wikia-dev.com'.$address;
 		}
 
 		// by default return original address
 		return $url;
+	}
 
+	/**
+	 * returns externally-facing hostname, i.e.
+	 * dev-devbox (as in devbox.wikia-dev.com ) => devbox
+	 */
+	public static function getExternalHostName() {
+		global $wgWikiaEnvironment;
+
+		$hostname = gethostname();
+		if ( $wgWikiaEnvironment == WIKIA_ENV_DEV ) {
+			return mb_ereg_replace( '^dev-', '', $hostname );
+		}
+
+		return $hostname;
 	}
 
 	/**
@@ -2962,7 +2957,7 @@ class WikiFactory {
 	 *
 	 * @param string $lang_code	language code ('en', 'de' ... )
 	 *
-	 * @return id from coty_lang
+	 * @return int|bool ID from city_lang table
 	 */
 	static public function LangCodeToId( $lang_code ) {
 		if ( ! self::isUsed() ) {
@@ -3126,8 +3121,8 @@ class WikiFactory {
 
 	/**
 	 * fetching wiki list with selected variable set to $val
-	 * @param unknown_type $varId
-	 * @param unknown_type $type
+	 * @param int|string $varId
+	 * @param string $type
 	 * @param $selectedCond
 	 * @param unknown_type $val
 	 * @param string $likeVal

@@ -2,6 +2,7 @@
 
 namespace Wikia\Helios;
 
+use LoginForm;
 use Wikia\Logger\WikiaLogger;
 
 /**
@@ -10,7 +11,12 @@ use Wikia\Logger\WikiaLogger;
 class User {
 
 	const ACCESS_TOKEN_COOKIE_NAME = 'access_token';
+	const AUTH_METHOD_NAME = 'auth_method';
 	const MERCURY_ACCESS_TOKEN_COOKIE_NAME = 'sid';
+	const AUTH_TYPE_FAILED = 0;
+	const AUTH_TYPE_NORMAL_PW = 1;
+	const AUTH_TYPE_RESET_PW = 2;
+	const AUTH_TYPE_FB_TOKEN = 4;
 
 	// This is set to 6 months,(365/2)*24*60*60 = 15768000
 	const ACCESS_TOKEN_COOKIE_TTL = 15768000;
@@ -97,7 +103,7 @@ class User {
 					
 					// dont return the user object if it's disabled
 					// @see SERVICES-459
-					if ( $user->getBoolOption( 'disabled' ) ) {
+					if ( (bool)$user->getGlobalFlag( 'disabled' ) ) {
 						self::clearAccessTokenCookie();
 						return null;
 					}
@@ -143,6 +149,7 @@ class User {
 		$heliosClient = new Client( $wgHeliosBaseUri, $wgHeliosClientId, $wgHeliosClientSecret );
 
 		$result = false;
+		$authMethod = self::AUTH_TYPE_FAILED;
 		$throwException = null;
 
 		// Authenticate with username and password.
@@ -161,6 +168,7 @@ class User {
 			}
 
 			$result = !empty( $loginInfo->access_token );
+			$authMethod = isset($loginInfo->auth_method) ? $loginInfo->auth_method : self::AUTH_TYPE_NORMAL_PW;
 		}
 		catch ( ClientException $e ) {
 			$logger->error(
@@ -173,18 +181,34 @@ class User {
 		// save in local cache
 		self::$authenticationCache[$username][$password] = [
 			'result' => $result,
-			'exception' => $throwException
+			'exception' => $throwException,
+			self::AUTH_METHOD_NAME => $authMethod,
 		];
 
 		if ( $throwException ) {
 			throw $throwException;
 		}
 
-		if ( !empty( $loginInfo ) ) {
+		if ( !empty( $loginInfo ) && $authMethod != self::AUTH_TYPE_RESET_PW ) {
 			self::setAccessTokenCookie( $loginInfo->access_token );
 		}
 
 		return $result;
+	}
+
+	/**
+	 * @param $username
+	 * @param $password
+	 *
+	 * @return bool
+	 */
+	public static function wasResetPassAuth( $username, $password ) {
+		if ( empty( self::$authenticationCache[$username][$password][self::AUTH_METHOD_NAME] ) ) {
+			return false;
+		}
+		$authMethod = self::$authenticationCache[$username][$password][self::AUTH_METHOD_NAME];
+
+		return $authMethod == self::AUTH_TYPE_RESET_PW;
 	}
 
 	/**
@@ -277,6 +301,23 @@ class User {
 			}
 
 			$result = $heliosResult;
+		}
+
+		return true;
+	}
+
+	public static function onLoginSuccessModifyRetval($username, $password, &$retval) {
+		if ( isset( self::$authenticationCache[$username][$password][self::AUTH_METHOD_NAME] ) ) {
+			$resultData = self::$authenticationCache[$username][$password];
+
+			switch ($resultData[ self::AUTH_METHOD_NAME ]) {
+				case self::AUTH_TYPE_RESET_PW:
+					$retval = \LoginForm::RESET_PASS;
+					break;
+				case self::AUTH_TYPE_NORMAL_PW:
+					$retval = \LoginForm::SUCCESS;
+					break;
+			}
 		}
 
 		return true;

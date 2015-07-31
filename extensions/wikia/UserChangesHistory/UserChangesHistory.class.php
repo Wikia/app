@@ -35,7 +35,7 @@ class UserChangesHistory {
 	 */
 	static public function LoginHistoryHook( $from, $user, $type = false ) {
 		global $wgCityId; #--- private wikia identifier, you can use wgDBname
-		global $wgEnableScribeReport, $wgStatsDB, $wgStatsDBEnabled;
+		global $wgEnableScribeReport, $wgSpecialsDB;
 
 		if( wfReadOnly() ) { return true; }
 
@@ -57,7 +57,7 @@ class UserChangesHistory {
 						"user_id"   		=> $id,
 						"city_id"   		=> $wgCityId,
 						"ulh_from"  		=> $from,
-						"ulh_rememberme" 	=> $user->getOption('rememberpassword')
+						"ulh_rememberme" 	=> $user->getGlobalPreference('rememberpassword')
 					);
 					if ( !empty($wgEnableScribeReport) ) {
 						# use scribe
@@ -70,31 +70,30 @@ class UserChangesHistory {
 							WScribeClient::singleton('trigger')->send($data);
 						}
 						catch( TException $e ) {
-							Wikia::log( __METHOD__, 'scribeClient exception', $e->getMessage() );
+							Wikia\Logger\WikiaLogger::instance()->error( __METHOD__ . ' - scribeClient exception', [
+								'exception' => $e
+							] );
 						}
 					} else {
-						# use database
-						if ( !empty( $wgStatsDBEnabled ) ) {
-							$dbw = wfGetDB( DB_MASTER, array(), $wgStatsDB ) ;
+						// user_login_history_summary is used in joins with specials.events_local_users table
+						// @see PLATFORM-1309
+						$dbw_specials = wfGetDB( DB_MASTER, array(), $wgSpecialsDB ) ;
 
-							$dbw->insert(
-								"user_login_history",
-								$params,
-								__METHOD__,
-								array('IGNORE')
-							);
+						$dbw_specials->insert(
+							"user_login_history",
+							$params,
+							__METHOD__,
+							array('IGNORE')
+						);
 
-							$dbw->replace(
-								"user_login_history_summary",
-								array( 'user_id' ),
-								array( 'ulh_timestamp' => wfTimestampOrNull(), 'user_id' => $id ),
-								__METHOD__
-							);
+						$dbw_specials->replace(
+							"user_login_history_summary",
+							array( 'user_id' ),
+							array( 'ulh_timestamp' => wfTimestampOrNull(), 'user_id' => $id ),
+							__METHOD__
+						);
 
-							if ( $dbw->getFlag( DBO_TRX ) ) {
-								$dbw->commit(__METHOD__);
-							}
-						}
+						$dbw_specials->commit(__METHOD__);
 					}
 				}
 			}
@@ -120,7 +119,7 @@ class UserChangesHistory {
 	 * @return bool true		process other hooks
 	 */
 	static public function SavePreferencesHook($formData, $error) {
-		global $wgStatsDB, $wgEnableScribeReport, $wgUser, $wgStatsDBEnabled;
+		global $wgSpecialsDB, $wgEnableScribeReport, $wgUser;
 
 		if( wfReadOnly() ) { return true; }
 
@@ -155,7 +154,6 @@ class UserChangesHistory {
 
 			if ( !empty($wgEnableScribeReport) ) {
 				# use scribe
-				$key = "trigger_savepreferences";
 				try {
 					$message = array(
 						'method' => 'savepreferences',
@@ -168,22 +166,19 @@ class UserChangesHistory {
 					Wikia::log( __METHOD__, 'scribeClient exception', $e->getMessage() );
 				}
 			} else {
-				if ( !empty( $wgStatsDBEnabled ) ) {
-					$dbw = wfGetDB( DB_MASTER, array(), $wgStatsDB ) ;
+				$dbw = wfGetDB( DB_MASTER, array(), $wgSpecialsDB ) ;
 
-					/**
-					 * so far encodeOptions is public by default but could be
-					 * private in future
-					 */
-					$dbw->insert(
-						"user_history",
-						$params,
-						__METHOD__
-					);
-					if ( $dbw->getFlag( DBO_TRX ) ) {
-						$dbw->commit(__METHOD__);
-					}
-				}
+				/**
+				 * so far encodeOptions is public by default but could be
+				 * private in future
+				 */
+				$dbw->insert(
+					"user_history",
+					$params,
+					__METHOD__
+				);
+
+				$dbw->commit(__METHOD__);
 			}
 		}
 

@@ -230,13 +230,13 @@ class EmailNotification {
 			}
 
 			// Does that user want to know about minor edits?
-			if ( !$targetUser->getOption( 'enotifminoredits' ) ) {
+			if ( !$targetUser->getGlobalPreference( 'enotifminoredits' ) ) {
 				return false;
 			}
 		}
 
 		// Does that user want to be notified about changes to their talk page?
-		if ( !$targetUser->getOption( 'enotifusertalkpages' ) ) {
+		if ( !$targetUser->getGlobalPreference( 'enotifusertalkpages' ) ) {
 			return false;
 		}
 
@@ -274,7 +274,7 @@ class EmailNotification {
 				// Send mail to user when comment on his user talk has been added
 				$fakeUser = null;
 				wfRunHooks( 'UserMailer::NotifyUser', [ $this->title, &$fakeUser ] );
-				if ( $fakeUser instanceof User && $fakeUser->getOption( 'enotifusertalkpages' ) && $fakeUser->isEmailConfirmed() ) {
+				if ( $fakeUser instanceof User && $fakeUser->getGlobalPreference( 'enotifusertalkpages' ) && $fakeUser->isEmailConfirmed() ) {
 					$this->compose( $fakeUser );
 				}
 			}
@@ -285,11 +285,11 @@ class EmailNotification {
 
 				/* @var $watchingUser User */
 				foreach ( $userArray as $watchingUser ) {
-					if ( $watchingUser->getOption( 'enotifwatchlistpages' ) &&
-						( !$this->isMinorEdit() || $watchingUser->getOption( 'enotifminoredits' ) ) &&
+					if ( $watchingUser->getGlobalPreference( 'enotifwatchlistpages' ) &&
+						( !$this->isMinorEdit() || $watchingUser->getGlobalPreference( 'enotifminoredits' ) ) &&
 						$watchingUser->isEmailConfirmed() &&
 						$watchingUser->getID() != $userTalkId &&
-						!$watchingUser->getBoolOption( 'unsubscribed' ) )
+						!(bool)$watchingUser->getGlobalPreference( 'unsubscribed' ) )
 					{
 						$this->compose( $watchingUser );
 					}
@@ -306,7 +306,7 @@ class EmailNotification {
 		$adminAddress = new MailAddress( F::app()->wg->PasswordSender, F::app()->wg->PasswordSenderName );
 		if ( F::app()->wg->EnotifRevealEditorAddress
 			&& ( $this->editor->getEmail() != '' )
-			&& $this->editor->getOption( 'enotifrevealaddr' ) )
+			&& $this->editor->getGlobalPreference( 'enotifrevealaddr' ) )
 		{
 			$editorAddress = new MailAddress( $this->editor );
 			if ( F::app()->wg->EnotifFromEditor ) {
@@ -357,29 +357,16 @@ class EmailNotification {
 		$keys = [];
 		$postTransformKeys = [];
 
-		if ( $this->isNewPage() ) {
-			// watchlist link tracking
-			list ( $keys['$NEWPAGE'], $keys['$NEWPAGEHTML'] ) = wfMsgHTMLwithLanguageAndAlternative (
-				'enotif_lastvisited',
-				'enotif_lastvisited',
-				F::app()->wg->LanguageCode,
-				[],
-				$this->title->getFullUrl( 's=wldiff&diff=0&previousRevId=' . $this->previousRevId )
-			);
-			$keys['$OLDID']   = $this->previousRevId;
-			$keys['$CHANGEDORCREATED'] = wfMessage( 'changed' )->inContentLanguage()->plain();
+		if ( $action == '' ) {
+			// no previousRevId + empty action = create edit, ok to use newpagetext
+			$keys['$NEWPAGEHTML'] = $keys['$NEWPAGE'] = wfMessage( 'enotif_newpagetext' )->inContentLanguage()->plain();
 		} else {
-			if ( $action == '' ) {
-				// no previousRevId + empty action = create edit, ok to use newpagetext
-				$keys['$NEWPAGEHTML'] = $keys['$NEWPAGE'] = wfMessage( 'enotif_newpagetext' )->inContentLanguage()->plain();
-			} else {
-				// no previousRevId + action = event, dont show anything, confuses users
-				$keys['$NEWPAGEHTML'] = $keys['$NEWPAGE'] = '';
-			}
-			# clear $OLDID placeholder in the message template
-			$keys['$OLDID']   = '';
-			$keys['$CHANGEDORCREATED'] = wfMessage( 'created' )->inContentLanguage()->plain();
+			// no previousRevId + action = event, dont show anything, confuses users
+			$keys['$NEWPAGEHTML'] = $keys['$NEWPAGE'] = '';
 		}
+		# clear $OLDID placeholder in the message template
+		$keys['$OLDID']   = '';
+		$keys['$CHANGEDORCREATED'] = wfMessage( 'created' )->inContentLanguage()->plain();
 
 		$keys['$PAGETITLE'] = $this->title->getPrefixedText();
 		$keys['$PAGETITLE_URL'] = $this->title->getCanonicalUrl( 's=wl' );
@@ -462,8 +449,8 @@ class EmailNotification {
 
 		$controller = false;
 
-		if ( $this->isArticlePageEdit() ) {
-			$controller = 'Email\Controller\WatchedPageEdited';
+		if ( $this->isArticlePageEditOrCreatedPage() ) {
+			$controller = 'Email\Controller\WatchedPageEditedOrCreated';
 		} elseif ( $this->isArticlePageRenamed() ) {
 			$controller = 'Email\Controller\WatchedPageRenamed';
 		} elseif ( $this->isArticlePageProtected() ) {
@@ -472,6 +459,8 @@ class EmailNotification {
 			$controller = 'Email\Controller\WatchedPageUnprotected';
 		} elseif ( $this->isArticlePageDeleted() ) {
 			$controller = 'Email\Controller\WatchedPageDeleted';
+		} elseif ( $this->isArticlePageRestored() ) {
+			$controller = 'Email\Controller\WatchedPageRestored';
 		} elseif ( $this->isArticleComment() ) {
 			$controller = 'Email\Controller\ArticleComment';
 		} elseif ( $this->isBlogComment() ) {
@@ -480,6 +469,10 @@ class EmailNotification {
 			$controller = 'Email\Controller\ListBlogPost';
 		} elseif ( $this->isUserBlogPost() ) {
 			$controller = 'Email\Controller\UserBlogPost';
+		} elseif ( $this->isCategoryAdd() ) {
+			$controller = 'Email\Controller\CategoryAdd';
+		} elseif ( $this->isUserRightsChange() ) {
+			$controller = 'Email\Controller\UserRightsChanged';
 		}
 
 		return $controller;
@@ -518,14 +511,14 @@ class EmailNotification {
 		}
 	}
 	/**
-	 * Returns whether the email notification is for a watched article page which has been edited.
-	 * If $this->action is empty and we have a previous Revision id it's an article page edit.
-	 * The other possible values for action are categoryadd, blogpost, and article_comment.
+	 * Returns whether the email notification is for a watched article page which has been edited,
+	 * or for a newly created page. The other possible values for action are categoryadd, blogpost,
+	 * and article_comment.
 	 *
 	 * @return bool
 	 */
-	private function isArticlePageEdit() {
-		return empty( $this->action ) && !$this->isNewPage();
+	private function isArticlePageEditOrCreatedPage() {
+		return empty( $this->action );
 	}
 
 	/**
@@ -565,12 +558,12 @@ class EmailNotification {
 	}
 
 	/**
-	 * When a page is created, the previousRevId is always 0.
+	 * Check if the performed action is page restoration
 	 *
 	 * @return bool
 	 */
-	private function isNewPage() {
-		return $this->previousRevId == 0;
+	private function isArticlePageRestored() {
+		return $this->action == "restore";
 	}
 
 	private function isArticleComment() {
@@ -606,6 +599,14 @@ class EmailNotification {
 		);
 	}
 
+	private function isCategoryAdd() {
+		return $this->action == FollowHelper::LOG_ACTION_CATEGORY_ADD;
+	}
+
+	private function isUserRightsChange() {
+		return $this->action == 'rights';
+	}
+
 	private function sendUsingUserMailer( \User $user ) {
 		if ( !$this->composedCommon ) {
 			$this->composeCommonMailtext();
@@ -626,7 +627,7 @@ class EmailNotification {
 		$to = new MailAddress( $watchingUser );
 		$body = $this->expandBodyVariables( $watchingUser, $this->body );
 
-		if ( $watchingUser->getOption( 'htmlemails' ) && !empty( $this->bodyHTML ) ) {
+		if ( $watchingUser->getGlobalPreference( 'htmlemails' ) && !empty( $this->bodyHTML ) ) {
 			$bodyHTML = $this->expandBodyVariables( $watchingUser, $this->bodyHTML );
 			# now body is array with text and html version of email
 			$body = [ 'text' => $body, 'html' => $bodyHTML ];

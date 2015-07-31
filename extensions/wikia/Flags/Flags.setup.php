@@ -63,6 +63,7 @@ $wgAutoloadClasses['Flags\Views\FlagView'] = __DIR__ . '/views/FlagView.class.ph
 $wgAutoloadClasses['Flags\FlagsExtractor'] = __DIR__ . '/FlagsExtractor.class.php';
 $wgAutoloadClasses['Flags\FlagsHelper'] = __DIR__ . '/FlagsHelper.class.php';
 $wgAutoloadClasses['Flags\FlagsCache'] = __DIR__ . '/FlagsCache.class.php';
+$wgAutoloadClasses['Flags\FlagsParamsComparison'] = __DIR__ . '/FlagsParamsComparison.class.php';
 
 /**
  * Tasks
@@ -77,9 +78,11 @@ $wgAutoloadClasses['Flags\Hooks'] = __DIR__ . '/Flags.hooks.php';
 $wgHooks['ArticlePreviewAfterParse'][] = 'Flags\Hooks::onArticlePreviewAfterParse';
 $wgHooks['BeforePageDisplay'][] = 'Flags\Hooks::onBeforePageDisplay';
 $wgHooks['BeforeParserCacheSave'][] = 'Flags\Hooks::onBeforeParserCacheSave';
-$wgHooks['LinksUpdateInsertTemplates'][] = 'Flags\Hooks::onLinksUpdateInsertTemplates';
 $wgHooks['PageHeaderDropdownActions'][] = 'Flags\Hooks::onPageHeaderDropdownActions';
 $wgHooks['SkinTemplateNavigation'][] = 'Flags\Hooks::onSkinTemplateNavigation';
+$wgHooks['ArticleSaveComplete'][] = 'Flags\Hooks::onArticleSaveComplete';
+$wgHooks['EditPageLayoutShowIntro'][] = 'Flags\Hooks::onEditPageLayoutShowIntro';
+$wgHooks['BeforeRefreshLinksForTitleUpdate'][] = 'Flags\Hooks::onBeforeRefreshLinksForTitleUpdate';
 
 /**
  * Messages

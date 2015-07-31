@@ -78,7 +78,10 @@ class FacebookSignupController extends WikiaController {
 				// Retrieve user email from Facebook if missing
 				$email = $user->getEmail();
 				if ( empty( $email ) ) {
-					$this->saveEmailAsynchronously( $user->getId() );
+					$this->saveEmailAsynchronously( $user->getId(), true );
+				} else {
+					// Send welcome email
+					F::app()->sendRequest( WikiaConfirmEmailSpecialController::WELCOME_EMAIL_CONTROLLER, 'handle' );
 				}
 			}
 		} else {
@@ -100,13 +103,20 @@ class FacebookSignupController extends WikiaController {
 
 	/**
 	 * Kick off an asynch job to update user's email to be what's reported by Facebook
-	 * @param $userId
+	 * @param integer $userId
+	 * @param boolean $sendWelcomeEmail
 	 */
-	protected function saveEmailAsynchronously( $userId ) {
+	protected function saveEmailAsynchronously( $userId, $sendWelcomeEmail = false ) {
 		$task = new \Wikia\Tasks\Tasks\FacebookTask();
-		$task->dupCheck();
-		$task->call( 'updateEmailFromFacebook', $userId );
-		$task->queue();
+		$taskList = new AsyncTaskList();
+		$taskList->dupCheck()
+			->add( $task->call( 'updateEmailFromFacebook', $userId ) );
+
+		if ( $sendWelcomeEmail ) {
+			$taskList->add( $task->call( 'sendWelcomeEmail' ) );
+		}
+
+		$taskList->queue();
 	}
 
 	/**
@@ -115,7 +125,7 @@ class FacebookSignupController extends WikiaController {
 	 * @return boolean true if the account is disabled, false otherwise
 	 */
 	private function isAccountDisabled( User $user ) {
-		return $user->getBoolOption( 'disabled' ) || (
+		return (bool)$user->getGlobalFlag( 'disabled' ) || (
 			defined( 'CLOSED_ACCOUNT_FLAG' ) &&
 			$user->getRealName() == CLOSED_ACCOUNT_FLAG
 		);
@@ -127,7 +137,7 @@ class FacebookSignupController extends WikiaController {
 	 * @return boolean true if the account is unconfirmed, false otherwise
 	 */
 	private function isAccountUnconfirmed( User $user ) {
-		return $user->getOption( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME );
+		return $user->getGlobalAttribute( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME );
 	}
 
 	/**
@@ -298,7 +308,7 @@ class FacebookSignupController extends WikiaController {
 	protected function getValidWikiaUser( $wikiaUserName, $wikiaPassword ) {
 
 		if ( !$wikiaUserName ) {
-			$this->setErrorResponse( 'userlogin-error-noname', [], self::SIGNUP_USERNAME_KEY);
+			$this->setErrorResponse( 'userlogin-error-noname', [], self::SIGNUP_USERNAME_KEY );
 			return null;
 		}
 

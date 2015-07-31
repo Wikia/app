@@ -4,7 +4,6 @@ use Wikia\PortableInfobox\Parser\Nodes;
 
 class PortableInfoboxParserTagController extends WikiaController {
 	const PARSER_TAG_NAME = 'infobox';
-	const INFOBOXES_PROPERTY_NAME = 'infoboxes';
 	const DEFAULT_THEME_NAME = 'wikia';
 	const DEFAULT_LAYOUT_NAME = 'default';
 	const INFOBOX_THEME_PREFIX = 'portable-infobox-theme-';
@@ -130,9 +129,9 @@ class PortableInfoboxParserTagController extends WikiaController {
 
 	protected function saveToParserOutput( \ParserOutput $parserOutput, Nodes\NodeInfobox $raw ) {
 		if ( $raw ) {
-			$infoboxes = $parserOutput->getProperty( self::INFOBOXES_PROPERTY_NAME );
+			$infoboxes = $parserOutput->getProperty( PortableInfoboxDataService::INFOBOXES_PROPERTY_NAME );
 			$infoboxes[ ] = [ 'data' => $raw->getRenderData(), 'sources' => $raw->getSource() ];
-			$parserOutput->setProperty( self::INFOBOXES_PROPERTY_NAME, $infoboxes );
+			$parserOutput->setProperty( PortableInfoboxDataService::INFOBOXES_PROPERTY_NAME, $infoboxes );
 		}
 	}
 

@@ -28,6 +28,8 @@
 @import 'core/tabs';
 @import 'core/toolbar';
 @import 'core/wide';
+@import 'skins/oasis/css/core/breakpoints-large-typography';
+@import 'skins/oasis/css/core/breakpoints-small-medium-typography';
 @import 'skins/oasis/css/core/responsive-core';
 @import 'skins/oasis/css/core/responsive-variables';
 
@@ -346,6 +348,7 @@ body {
 
 			.ArticlePreviewInner {
 				height: 100%;
+				margin: 0 auto;
 			}
 
 			.preview-modal-msg-wrapper {
@@ -585,5 +588,14 @@ body {
 		height: 100%;
 		margin: 0 auto;
 		width: 100%;
+	}
+}
+
+// add breakpoint typography styles to article preview
+.ArticlePreviewInner {
+	@include breakpoints-small-medium-typography;
+
+	&.large-typography {
+		@include breakpoints-large-typography;
 	}
 }

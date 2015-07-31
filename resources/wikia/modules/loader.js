@@ -314,6 +314,11 @@ define('wikia.loader', ['wikia.window', require.optional('mw'), 'wikia.nirvana',
 				// add a cache buster
 				options.cb = window.wgStyleVersion;
 
+				if (typeof options.styles !== 'undefined') {
+					// Add sass params to ensure per-theme colors Varnish cache and mcache
+					options.sassParams = options.sassParams || window.wgSassParams;
+				}
+
 				nirvana.getJson(
 					'AssetsManager',
 					'getMultiTypePackage',

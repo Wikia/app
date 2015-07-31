@@ -762,7 +762,14 @@ class CurlHttpRequest extends MWHttpRequest {
 			return $this->status;
 		}
 
-		$this->curlOptions[CURLOPT_PROXY] = $this->proxy;
+		// Wikia change PLATFORM-1298 michal@wikia-inc.com
+		if ( $this->parsedUrl['scheme'] == 'https' ) {
+			$this->curlOptions[CURLOPT_PROXY] = null;
+		} else {
+			$this->curlOptions[CURLOPT_PROXY] = $this->proxy;
+		}
+		// End of Wikia change
+
 		$this->curlOptions[CURLOPT_TIMEOUT] = $this->timeout;
 		$this->curlOptions[CURLOPT_HTTP_VERSION] = CURL_HTTP_VERSION_1_0;
 		$this->curlOptions[CURLOPT_WRITEFUNCTION] = $this->callback;
@@ -814,9 +821,26 @@ class CurlHttpRequest extends MWHttpRequest {
 
 		$curlHandle = curl_init( $this->url );
 
+		// Wikia change - begin
+		/**
+		 * @author Michał Roszka <michal@wikia-inc.com>
+		 * @see PLATFORM-1317
+		 * @see PLATFORM-1308
+		 */
 		if ( !curl_setopt_array( $curlHandle, $this->curlOptions ) ) {
-			throw new MWException( "Error setting curl options." );
+			$e = new MWException( "Error setting curl options." );
+			if ( class_exists( 'Wikia\\Logger\\WikiaLogger' ) ) {
+				\Wikia\Logger\WikiaLogger::instance()->debug(
+					'PLATFORM-1317' ,
+					[
+						'curl_options' => bin2hex( serialize( $this->curlOptions ) ),
+						'exception' => $e
+					]
+				);
+			}
+			throw $e;
 		}
+		// Wikia change - end
 
 		if ( $this->followRedirects && $this->canFollowRedirects() ) {
 			wfSuppressWarnings();

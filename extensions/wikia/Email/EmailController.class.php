@@ -17,9 +17,15 @@ abstract class EmailController extends \WikiaController {
 	 * and intended to be overridden by child classes. */
 	const LAYOUT_CSS = 'avatarLayout.css';
 
+	/** Used by emails that don't want to apply any additional styles */
+	const NO_ADDITIONAL_STYLES = '';
+
 	/** Regular expression pattern used to find all email controller classes inside
 	 * of $wgAutoLoadClasses */
 	const EMAIL_CONTROLLER_REGEX = "/^Email\\\\Controller\\\\(.+)Controller$/";
+
+	// Used when needing to specify an anonymous user from the external API
+	const ANONYMOUS_USER_ID = -1;
 
 	/** @var \User The user associated with the current request */
 	protected $currentUser;
@@ -66,7 +72,7 @@ abstract class EmailController extends \WikiaController {
 
 			$this->currentUser = $this->findUserFromRequest( 'currentUser', $this->wg->User );
 			$this->targetUser = $this->findUserFromRequest( 'targetUser', $this->wg->User );
-			$this->targetLang = $this->getVal( 'targetLang', $this->targetUser->getOption( 'language' ) );
+			$this->targetLang = $this->getVal( 'targetLang', $this->targetUser->getGlobalPreference( 'language' ) );
 			$this->test = $this->getVal( 'test', false );
 			$this->marketingFooter = $this->request->getBool( 'marketingFooter' );
 
@@ -77,16 +83,16 @@ abstract class EmailController extends \WikiaController {
 				$this->getVal( 'replyToName', $noReplyName )
 			);
 
-			$fromAddress = $this->getVal( 'fromAddress', '' );
+			$fromAddress = $this->getVal( 'fromAddress', $this->wg->PasswordSender );
 			$this->assertValidFromAddress( $fromAddress );
 
 			$this->fromAddress = new \MailAddress(
 				$fromAddress,
-				$this->getVal( 'fromName', '' )
+				$this->getVal( 'fromName', $this->wg->PasswordSenderName )
 			);
 
 			$this->initEmail();
-		} catch ( ControllerException $e ) {
+		} catch ( \Exception $e ) {
 			$this->setErrorResponse( $e );
 		}
 	}
@@ -155,15 +161,7 @@ abstract class EmailController extends \WikiaController {
 			];
 
 			if ( !$this->test ) {
-				WikiaLogger::instance()->info( 'Submitting email via UserMailer', [
-					'issue' => 'SOC-910',
-					'method' => __METHOD__,
-					'controller' => get_class( $this ),
-					'toAddress' => $toAddress->toString(),
-					'fromAddress' => $fromAddress->toString(),
-					'subject' => $subject,
-					'category' => static::TRACKING_CATEGORY,
-				] );
+				$this->trackEmailEvent();
 
 				$status = \UserMailer::send(
 					$toAddress,
@@ -172,19 +170,15 @@ abstract class EmailController extends \WikiaController {
 					$body,
 					$replyToAddress,
 					$contentType = null,
-					static::TRACKING_CATEGORY
+					$this->getSendGridCategory(),
+					$priority = 0,
+					$attachments = [],
+					$sourceType = 'email-ext' // Remove when this is the only sourceType sent
 				);
 				$this->assertGoodStatus( $status );
 			}
 		} catch ( \Exception $e ) {
-			WikiaLogger::instance()->info( 'Failed to submit email via UserMailer', [
-				'issue' => 'SOC-910',
-				'method' => __METHOD__,
-				'controller' => get_class( $this ),
-				'category' => static::TRACKING_CATEGORY,
-				'errorMessage' => $e->getMessage(),
-			] );
-
+			$this->trackEmailError( $e );
 			$this->setErrorResponse( $e );
 			return;
 		}
@@ -244,7 +238,7 @@ abstract class EmailController extends \WikiaController {
 	 * @return \MailAddress
 	 */
 	protected function getToAddress() {
-		$to = new \MailAddress( $this->targetUser->getEmail(), $this->targetUser->getName() );
+		$to = new \MailAddress( $this->getTargetUserEmail(), $this->getTargetUserName() );
 		return $to;
 	}
 
@@ -319,6 +313,16 @@ abstract class EmailController extends \WikiaController {
 	}
 
 	/**
+	 * Returns the category string we'll send to sendgrid with this email for
+	 * tracking purposes.
+	 *
+	 * @return string
+	 */
+	public function getSendGridCategory() {
+		return static::TRACKING_CATEGORY;
+	}
+
+	/**
 	 * Renders the content unique to each email.
 	 */
 	protected function getContent() {
@@ -360,7 +364,7 @@ abstract class EmailController extends \WikiaController {
 
 	protected function getFooterMessages() {
 		return [
-			$this->getMessage( 'emailext-recipient-notice', $this->targetUser->getEmail() )
+			$this->getMessage( 'emailext-recipient-notice', $this->getTargetUserEmail() )
 				->parse(),
 			$this->getMessage( 'emailext-update-frequency' )
 				->parse(),
@@ -421,16 +425,15 @@ abstract class EmailController extends \WikiaController {
 	 * TODO Move this into unsubscribe extension?
 	 * @return string
 	 */
-	private function getUnsubscribeLink() {
+	protected function getUnsubscribeLink() {
 		$params = [
-			'email' => $this->targetUser->getEmail(),
+			'email' => $this->getTargetUserEmail(),
 			'timestamp' => time()
 		];
 		$params['token'] = wfGenerateUnsubToken( $params['email'], $params['timestamp'] );
 		$unsubscribeTitle = \GlobalTitle::newFromText( 'Unsubscribe', NS_SPECIAL, \Wikia::COMMUNITY_WIKI_ID );
 		return $unsubscribeTitle->getFullURL( $params );
 	}
-
 
 	/**
 	 * @return String
@@ -456,14 +459,22 @@ abstract class EmailController extends \WikiaController {
 	 * @return String
 	 */
 	protected function getCurrentAvatarURL() {
-		return \AvatarService::getAvatarUrl( $this->currentUser, self::AVATAR_SIZE );
+		return $this->getAvatarURL( $this->currentUser );
 	}
 
+	protected function getAvatarURL( \User $user ) {
+		return \AvatarService::getAvatarUrl( $user, self::AVATAR_SIZE );
+	}
 
 	protected function findUserFromRequest( $paramName, \User $default = null ) {
 		$userName = $this->getRequest()->getVal( $paramName );
 		if ( empty( $userName ) ) {
 			return $default;
+		}
+
+		// Allow an anonymous user to be specified
+		if ( $userName == self::ANONYMOUS_USER_ID ) {
+			return \User::newFromId( 0 );
 		}
 
 		return $this->getUserFromName( $userName );
@@ -482,7 +493,13 @@ abstract class EmailController extends \WikiaController {
 			throw new Fatal( 'Required username has been left empty' );
 		}
 
-		$user = \User::newFromName( $username );
+		if ( $username instanceof \User ) {
+			$user = $username;
+		} else if ( is_object( $username ) ) {
+			throw new Fatal( 'Non-user object passed when user object or username expected' );
+		} else {
+			$user = \User::newFromName( $username );
+		}
 		$this->assertValidUser( $user );
 
 		return $user;
@@ -492,8 +509,15 @@ abstract class EmailController extends \WikiaController {
 	 * @return string
 	 */
 	protected function getSalutation() {
-		return $this->getMessage( 'emailext-salutation',
-			$this->targetUser->getName() )->text();
+		return $this->getMessage( 'emailext-salutation', $this->getTargetUserName() )->text();
+	}
+
+	protected function getTargetUserName() {
+		return $this->targetUser->getName();
+	}
+
+	protected function getTargetUserEmail() {
+		return $this->targetUser->getEmail();
 	}
 
 	/**
@@ -533,7 +557,7 @@ abstract class EmailController extends \WikiaController {
 	 * @throws \Email\Fatal
 	 */
 	public function assertUserHasEmail() {
-		$email = $this->targetUser->getEmail();
+		$email = $this->getTargetUserEmail();
 		if ( empty( $email ) ) {
 			throw new Fatal( 'User has no email address' );
 		}
@@ -556,7 +580,7 @@ abstract class EmailController extends \WikiaController {
 	 * @throws \Email\Check
 	 */
 	public function assertUserWantsEmail() {
-		if ( $this->targetUser->getBoolOption( 'unsubscribed' ) ) {
+		if ( (bool)$this->targetUser->getGlobalPreference( 'unsubscribed' ) ) {
 			throw new Check( 'User does not wish to receive email' );
 		}
 	}
@@ -600,16 +624,6 @@ abstract class EmailController extends \WikiaController {
 					'type' => 'hidden',
 					'name' => 'emailController',
 					'value' => get_called_class()
-				],
-				[
-					'type' => 'hidden',
-					'name' => 'fromAddress',
-					'value' => \F::app()->wg->PasswordSender
-				],
-				[
-					'type' => 'hidden',
-					'name' => 'fromName',
-					'value' => \F::app()->wg->PasswordSenderName
 				],
 				[
 					'type' => 'text',
@@ -669,12 +683,22 @@ abstract class EmailController extends \WikiaController {
 	 * @return string
 	 */
 	private static function getLegendName() {
-		$legendName = "";
-		if ( preg_match( self::EMAIL_CONTROLLER_REGEX, get_called_class(), $matches ) ) {
-			$legendName = $matches[1] . " Email";
+		$legendName = self::getControllerShortName() . ' Email';
+		return $legendName;
+	}
+
+	/**
+	 * Get a shortened version of the controller name.  Useful for admin tool and email category
+	 *
+	 * @return string
+	 */
+	public static function getControllerShortName() {
+		$name = get_called_class();
+		if ( preg_match( self::EMAIL_CONTROLLER_REGEX, $name, $matches ) ) {
+			$name = $matches[1];
 		}
 
-		return $legendName;
+		return $name;
 	}
 
 	/**
@@ -686,5 +710,45 @@ abstract class EmailController extends \WikiaController {
 		return call_user_func_array( 'wfMessage', func_get_args() )
 			->useDatabase( false )
 			->inLanguage( $this->targetLang );
+	}
+
+	private function trackEmailEvent() {
+		WikiaLogger::instance()->info( 'Submitting email via UserMailer', [
+			'issue' => 'SOC-910',
+			'method' => __METHOD__,
+			'controller' => get_class( $this ),
+			'toAddress' => $this->getToAddress()->toString(),
+			'fromAddress' => $this->getFromAddress()->toString(),
+			'subject' => $this->getSubject(),
+			'category' => static::TRACKING_CATEGORY,
+			'currentUser' => $this->getCurrentUserName(),
+			'targetUser' => $this->getTargetUserName(),
+			'targetLang' => $this->targetLang,
+		] );
+	}
+
+	private function trackEmailError( \Exception $e ) {
+		if ( $this->currentUser instanceof \User ) {
+			$currentName = $this->currentUser->getName();
+		} else {
+			$currentName = 'unknown';
+		}
+
+		if ( $this->targetUser instanceof \User ) {
+			$targetName = $this->getTargetUserName();
+		} else {
+			$targetName = 'unknown';
+		}
+
+		WikiaLogger::instance()->error( 'Failed to submit email via UserMailer', [
+			'issue' => 'SOC-910',
+			'method' => __METHOD__,
+			'controller' => get_class( $this ),
+			'category' => static::TRACKING_CATEGORY,
+			'errorMessage' => $e->getMessage(),
+			'currentUser' => $currentName,
+			'targetUser' => $targetName,
+			'targetLang' => $this->targetLang,
+		] );
 	}
 }

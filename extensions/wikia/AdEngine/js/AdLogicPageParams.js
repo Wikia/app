@@ -145,7 +145,6 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 		return params;
 	}
 
-
 	function getRefParam() {
 		var hostnameMatch,
 			ref = doc.referrer,
@@ -194,9 +193,14 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 		return 'external';
 	}
 
+	function getAspectRatio() {
+		return win.innerWidth > win.innerHeight ? '4:3' : '3:4';
+	}
+
 	/**
-	 * options
-	 * @param options {includeRawDbName: bool}
+	 * Returns page level params
+	 * @param {Object} options
+	 * @param {Boolean} options.includeRawDbName - to include raw db name or not
 	 * @returns object
 	 */
 	function getPageLevelParams(options) {
@@ -230,6 +234,7 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 			s1: zone1,
 			s2: zone2,
 			ab: getAb(),
+			ar: getAspectRatio(),
 			perfab: getPerformanceAb(),
 			artid: targeting.pageArticleId && targeting.pageArticleId.toString(),
 			cat: getCategories(),
@@ -249,7 +254,7 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 			params.rawDbName = dbName;
 		}
 
-		if (krux && !targeting.wikiDirectedAtChildren) {
+		if (krux && targeting.enableKruxTargeting) {
 			params.u = krux.getUser();
 			params.ksgmnt = krux.getSegments();
 		}

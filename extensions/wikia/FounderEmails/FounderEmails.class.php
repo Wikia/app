@@ -64,22 +64,6 @@ class FounderEmails {
 		return $cityList;
 	}
 
-
-	/**
-	 * send notification email to wiki founder
-	 *
-	 * @param $user User
-	 * @param $event FounderEmailsEvent
-	 */
-	public function notifyFounder( $user, $event, $mailSubject, $mailBody, $mailBodyHTML, $wikiId = 0, $category = 'FounderEmails' ) {
-		global $wgPasswordSender, $wgNoReplyAddress;
-		$from = new MailAddress( $wgPasswordSender, 'Wikia' );
-		$replyTo = new MailAddress ( $wgNoReplyAddress );
-		if ( $event->enabled( $wikiId, $user ) ) {
-			return $user->sendMail( $mailSubject, $mailBody, $from, $replyTo, $category, $mailBodyHTML );
-		}
-	}
-
 	/**
 	 * register new event on wiki
 	 * @param FounderEmailsEvent $event
@@ -161,7 +145,7 @@ class FounderEmails {
 			}
 
 			// If we are in digest mode, grey out the individual email options
-			$disableEmailPrefs = $wgUser->getOption( "founderemails-complete-digest-$wgCityId" );
+			$disableEmailPrefs = $wgUser->getLocalPreference( 'founderemails-complete-digest', $wgCityId );
 
 			/*  This is the old preference, no longer used
 			 *  TODO: Write conversion script from old to new
@@ -305,31 +289,29 @@ class FounderEmails {
 	}
 
 	public function getJoinedUsers ( $cityID, $day = null ) {
-		global $wgStatsDB, $wgStatsDBEnabled;
+		global $wgSpecialsDB;
 
 		wfProfileIn( __METHOD__ );
 
 		$userJoined = array();
-		if ( !empty( $wgStatsDBEnabled ) ) {
-			$today = ( empty( $day ) ) ? date( 'Y-m-d', strtotime( '-1 day' ) ) : $day;
+		$today = ( empty( $day ) ) ? date( 'Y-m-d', strtotime( '-1 day' ) ) : $day;
 
-			$db = wfGetDB( DB_SLAVE, array(), $wgStatsDB );
-			$oRes = $db->select(
-				array( 'user_login_history' ),
-				array( 'user_id', 'min(ulh_timestamp) as min_ts' ),
-				array(
-					'city_id' => $cityID,
-					'user_id > 0'
-				),
-				__METHOD__,
-				array( 'GROUP BY' => 'user_id', 'HAVING' => "min(ulh_timestamp)" .  $db->buildLike( $today, $db->anyString() ) )
-			);
+		$db = wfGetDB( DB_SLAVE, array(), $wgSpecialsDB );
+		$oRes = $db->select(
+			array( 'user_login_history' ),
+			array( 'user_id', 'min(ulh_timestamp) as min_ts' ),
+			array(
+				'city_id' => $cityID,
+				'user_id > 0'
+			),
+			__METHOD__,
+			array( 'GROUP BY' => 'user_id', 'HAVING' => "min(ulh_timestamp)" .  $db->buildLike( $today, $db->anyString() ) )
+		);
 
-			while ( $oRow = $db->fetchObject ( $oRes ) ) {
-				$userJoined[ $oRow->user_id ] = $oRow->min_ts;
-			}
-			$db->freeResult( $oRes );
+		while ( $oRow = $db->fetchObject ( $oRes ) ) {
+			$userJoined[ $oRow->user_id ] = $oRow->min_ts;
 		}
+		$db->freeResult( $oRes );
 
 		wfProfileOut( __METHOD__ );
 		return $userJoined;

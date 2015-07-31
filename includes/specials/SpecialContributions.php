@@ -70,7 +70,7 @@ class SpecialContributions extends SpecialPage {
 
 		$user = $this->getUser();
 
-		$this->opts['limit'] = $request->getInt( 'limit', $user->getOption( 'rclimit' ) );
+		$this->opts['limit'] = $request->getInt( 'limit', $user->getGlobalPreference( 'rclimit' ) );
 		$this->opts['target'] = $target;
 		$this->opts['topOnly'] = $request->getBool( 'topOnly' );
 

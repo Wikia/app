@@ -97,7 +97,6 @@ class FlagsApiController extends WikiaApiController {
 	 * 		int flag_group
 	 * 		string flag_name
 	 * 		string flag_view A name of a template of the flag
-	 * 		string flag_view_url A full URL of the template
 	 * 		int flag_targeting
 	 * 		string|null flag_params_names
 	 *
@@ -268,9 +267,34 @@ class FlagsApiController extends WikiaApiController {
 			$modelResponse = $flagTypeModel->removeFlagType( $this->params );
 
 			$this->getCache()->purgeFlagTypesForWikia();
+			$this->purgePagesWithFlag( $this->params['flag_type_id'] );
 
 			$this->makeSuccessResponse( $modelResponse );
 		} catch( Exception $e ) {
+			$this->logResponseException( $e, $this->request );
+			$this->response->setException( $e );
+		}
+	}
+
+	/**
+	 * Adds a new type of flags.
+	 *
+	 * Required parameters:
+	 * @requestParam int flag_type_id
+	 * @requestParam string flags_params_names parameters names with its descriptions in JSON format
+	 */
+	public function updateFlagTypeParameters() {
+		try {
+			$this->processRequest();
+
+			$flagTypeModel = new FlagType();
+			$modelResponse = $flagTypeModel->updateFlagTypeParameters( $this->params );
+
+			$this->getCache()->purgeFlagTypesForWikia();
+			$this->purgePagesWithFlag( $this->params['flag_type_id'] );
+
+			$this->makeSuccessResponse( $modelResponse );
+		} catch ( Exception $e ) {
 			$this->logResponseException( $e, $this->request );
 			$this->response->setException( $e );
 		}
@@ -313,13 +337,39 @@ class FlagsApiController extends WikiaApiController {
 			$this->getRequestParams();
 
 			if ( empty( $this->params['flag_view'] ) ) {
-				throw new MissingParameterApiException( 'page_id' );
+				throw new MissingParameterApiException( 'flag_view' );
 			}
 
 			$flagTypeModel = new FlagType();
 			$flagTypeId = $flagTypeModel->getFlagTypeIdByTemplate( $this->params['wiki_id'], $this->params['flag_view']);
 
 			$this->makeSuccessResponse( $flagTypeId );
+		} catch( Exception $e ) {
+			$this->logResponseException( $e, $this->request );
+			$this->response->setException( $e );
+		}
+	}
+
+	/**
+	 * Get pages ids on which given flag type is enabled
+	 *
+	 * Required parameter:
+	 * @requestParam string flag_type_id
+	 *
+	 * @return array|null
+	 */
+	public function getPagesWithFlag() {
+		try {
+			$this->getRequestParams();
+
+			if ( empty( $this->params['flag_type_id'] ) ) {
+				throw new MissingParameterApiException( 'flag_type_id' );
+			}
+
+			$flagTypeModel = new FlagType();
+			$pagesIds = $flagTypeModel->getPagesWithFlag( $this->params['flag_type_id'] );
+
+			$this->makeSuccessResponse( $pagesIds );
 		} catch( Exception $e ) {
 			$this->logResponseException( $e, $this->request );
 			$this->response->setException( $e );
@@ -502,5 +552,22 @@ class FlagsApiController extends WikiaApiController {
 		$task->wikiId( $wikiId );
 		$task->createdBy( $this->wg->User->getId() );
 		$task->execute( 'logParametersChange', [ $oldFlags, $flags, $pageId ] );
+	}
+
+	/**
+	 * Purges the data on instances of flags for all pages on which given flag is enabled
+	 *
+	 * @param int $flagTypeId
+	 */
+	private function purgePagesWithFlag( $flagTypeId ) {
+		$pagesIds = $this->app->sendRequest(
+			'FlagsApiController',
+			'getPagesWithFlag',
+			[ 'flag_type_id' => $flagTypeId ]
+		)->getData();
+
+		if ( $pagesIds[self::FLAGS_API_RESPONSE_STATUS] ) {
+			$this->getCache()->purgeFlagsForPages( $pagesIds[self::FLAGS_API_RESPONSE_DATA] );
+		}
 	}
 }

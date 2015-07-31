@@ -173,7 +173,7 @@ class AddVideo extends SpecialPage {
 			'Watch' => array(
 				'type' => 'check',
 				'label-message' => 'watchthisupload',
-				'default' => $this->getUser()->getOption( 'watchdefault' ),
+				'default' => $this->getUser()->getGlobalPreference( 'watchdefault' ),
 			),
 		);
 

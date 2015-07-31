@@ -105,7 +105,7 @@
 
 		.WikiHeader > nav.WikiNav .navbackground {
 			left: -24px;
-			width: 772px;
+			width: 771px;
 		}
 	}
 
@@ -134,7 +134,7 @@
 
 	@media #{$breakpoint-large-up} {
 		.WikiHeader > nav.WikiNav .navbackground {
-			@include width-calc('100% + 9px');
+			@include width-calc('100% + 10px');
 		}
 	}
 
@@ -216,6 +216,7 @@
 
 	.banner-notifications-wrapper {
 		width: auto;
+
 		&.float {
 			@media #{$breakpoint-small-only} {
 				margin-left: $page-width-small / -2;
@@ -249,7 +250,6 @@
 		margin-right: 0;
 	}
 
-	//
 	.ve-activated .WikiaMainContent {
 		position: static;
 	}
@@ -283,7 +283,8 @@
 			}
 
 			> nav.WikiNav {
-				@include width-calc('100% - 250px');
+				// we need to accomodate for additional space while having to count scrollbar
+				@include width-calc('100% - 265px');
 
 				left: 275px;
 				top: 20px;
@@ -295,14 +296,10 @@
 
 				.navbackground {
 					left: 10px;
-					width: 734px; // it's 100% of content minus wordmark
+					// it's content width minus wordmark and padding plus space that ribbon occupies outside of the page
+					width: 714px;
 				 }
 			}
-		}
-
-		// needs to be nested in this way, so it it'll override styles in GlobalNav extension
-		.WikiaSiteWrapper > .global-navigation > .global-navigation-container {
-			width: $content-width-small-plus - $scroll-bar-width;
 		}
 	}
 

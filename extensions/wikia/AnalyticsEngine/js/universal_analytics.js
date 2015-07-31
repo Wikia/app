@@ -108,6 +108,36 @@
         window.ga('special.require', 'displayfeatures');
     }
 
+    if (window.wgGAUserIdHash) {
+        // Separate account for Logged-In users - UA-32132943-7/UA-32132943-8
+        if (isProductionEnv) {
+            // Production Environment
+            window.ga(
+                'create', 'UA-32132943-7', 'auto',
+                {
+                    'name': 'loggedin_users',
+                    'sampleRate': 100,
+                    'allowLinker': true,
+                    'userId': window.wgGAUserIdHash
+                }
+            );
+        } else {
+            // Development Environment
+            window.ga(
+                'create', 'UA-32132943-8', 'auto',
+                {
+                    'name': 'loggedin_users',
+                    'sampleRate': 100,
+                    'allowLinker': true,
+                    'userId': window.wgGAUserIdHash
+                }
+            );
+
+            // Enable Demographics and Interests Reports
+            window.ga('loggedin_users.require', 'displayfeatures');
+        }
+    }
+
     if (isProductionEnv) {
         // VE account - UA-32132943-4'
         window.ga(
@@ -161,6 +191,13 @@
                     spec = args[i].slice();
                     // Send to Special Wikis Account
                     spec[0] = 'special.' + spec[0];
+                    window.ga.apply(window, spec);
+                }
+
+                // If user is logged in we send to Logged-In Users Account
+                if (window.wgGAUserIdHash) {
+                    spec = args[i].slice();
+                    spec[0] = 'loggedin_users.' + spec[0];
                     window.ga.apply(window, spec);
                 }
 
@@ -239,15 +276,19 @@
 
     /**** Medium-Priority Custom Dimensions ****/
     _gaWikiaPush(
-        ['set', 'dimension8', window.wikiaPageType],                           // PageType
-        ['set', 'dimension9', window.wgCityId],                                // CityId
-        ['set', 'dimension14', window.wgGaHasAds ? 'Yes' : 'No'],              // HasAds
-        ['set', 'dimension15', window.wikiaPageIsCorporate ? 'Yes' : 'No'],    // IsCorporatePage
-        ['set', 'dimension16', getKruxSegment()],                              // Krux Segment
-        ['set', 'dimension17', window.wgWikiVertical],                         // Vertical
-        ['set', 'dimension18', window.wgWikiCategories.join(',')],             // Categories
-        ['set', 'dimension19', window.wgArticleType],                          // ArticleType
-        ['set', 'dimension20', window.wgABPerformanceTest || 'not set']        // Performance A/B testing
+        ['set', 'dimension8', window.wikiaPageType],                            // PageType
+        ['set', 'dimension9', window.wgCityId],                                 // CityId
+        ['set', 'dimension14', window.wgGaHasAds ? 'Yes' : 'No'],               // HasAds
+        ['set', 'dimension15', window.wikiaPageIsCorporate ? 'Yes' : 'No'],     // IsCorporatePage
+        ['set', 'dimension16', getKruxSegment()],                               // Krux Segment
+        ['set', 'dimension17', window.wgWikiVertical],                          // Vertical
+        ['set', 'dimension18', window.wgWikiCategories.join(',')],              // Categories
+        ['set', 'dimension19', window.wgArticleType],                           // ArticleType
+        ['set', 'dimension20', window.wgABPerformanceTest || 'not set'],        // Performance A/B testing
+        ['set', 'dimension21', String(window.wgArticleId)],                     // ArticleId
+        ['set', 'dimension23', window.wikiaIsPowerUserFrequent ? 'Yes' : 'No'], // IsPowerUser: Frequent
+        ['set', 'dimension24', window.wikiaIsPowerUserLifetime ? 'Yes' : 'No'], // IsPowerUser: Lifetime
+        ['set', 'dimension25', String(window.wgNamespaceNumber)]                // Namespace Number
     );
 
     /*
@@ -350,6 +391,11 @@
     window.ga('ads.set', 'dimension17', window.wgWikiVertical);                         // Vertical
     window.ga('ads.set', 'dimension18', window.wgWikiCategories.join(','));             // Categories
     window.ga('ads.set', 'dimension19', window.wgArticleType);                          // ArticleType
+    window.ga('ads.set', 'dimension21', String(window.wgArticleId));                    // ArticleId
+    window.ga('ads.set', 'dimension21', String(window.wgArticleId));                     // ArticleId
+    window.ga('ads.set', 'dimension23', window.wikiaIsPowerUserFrequent ? 'Yes' : 'No'); // IsPowerUser: Frequent
+    window.ga('ads.set', 'dimension24', window.wikiaIsPowerUserLifetime ? 'Yes' : 'No'); // IsPowerUser: Lifetime
+    window.ga('ads.set', 'dimension25', String(window.wgNamespaceNumber));               // Namespace Number
 
     /**** Include A/B testing status ****/
     if (window.Wikia && window.Wikia.AbTest) {
