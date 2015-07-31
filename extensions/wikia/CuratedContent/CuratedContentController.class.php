@@ -473,7 +473,7 @@ class CuratedContentController extends WikiaController {
 		}
 
 		$this->response->setVal( 'status', $status );
-		// TODO: remove following line when Curated Content Manager is relased for all
+		// TODO: CONCF-961 Set more restrictive header
 		$this->response->setHeader( 'Access-Control-Allow-Origin', '*' );
 	}
 
@@ -509,7 +509,7 @@ class CuratedContentController extends WikiaController {
 
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 		$this->response->setVal( 'data', $data );
-		// TODO: remove following line when Curated Content Manager is relased for all
+		// TODO: CONCF-961 Set more restrictive header
 		$this->response->setHeader( 'Access-Control-Allow-Origin', '*' );
 	}
 
