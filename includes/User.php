@@ -23,6 +23,7 @@
 use Wikia\DependencyInjection\Injector;
 use Wikia\Logger\Loggable;
 use Wikia\Service\User\Preferences\UserPreferences;
+use Wikia\Service\User\Attributes\UserAttributes;
 use Wikia\Util\Statistics\BernoulliTrial;
 
 /**
@@ -267,6 +268,13 @@ class User {
 	 */
 	private function userPreferences() {
 		return Injector::getInjector()->get(UserPreferences::class);
+	}
+
+	/**
+	 * @return UserAttributes
+	 */
+	private function userAttributes() {
+		return Injector::getInjector()->get(UserAttributes::class);
 	}
 
 	/**
