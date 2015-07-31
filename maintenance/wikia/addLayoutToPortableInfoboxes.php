@@ -8,6 +8,7 @@
  */
 
 require_once( dirname( __FILE__ ) . '/../Maintenance.php' );
+require_once( dirname( __FILE__ ) . '/Infoboxes/InfoboxReplaceHelper.class.php' );
 
 /**
  * Maintenance script class
@@ -29,7 +30,8 @@ class addLayoutToPortableInfoboxes extends Maintenance {
 		foreach ( $pages as $pageId ) {
 			$article = Article::newFromID( $pageId );
 			$content = $article->getContent();
-			$replacedContent = preg_replace_callback( '/<infobox([^>]*)>/i', [ $this,'replace' ], $content );
+			$replaceHelper = new InfoboxReplaceHelper();
+			$replacedContent = $replaceHelper->processLayoutAttribute( $content );
 			$article->getPage()->doEdit( $replacedContent, $this->getSummary() );
 		}
 		$this->output( "\nDone!\n" );
@@ -48,17 +50,6 @@ class addLayoutToPortableInfoboxes extends Maintenance {
 				$pages[] = $row->ct_page_id;
 			} );
 		return $pages;
-	}
-
-	private function replace( $matches ) {
-		if ( $this->hasLayout( $matches[0] ) !== false ) {
-			return $matches[0];
-		}
-		return preg_replace( '/<infobox/i', '<infobox layout="stacked"', $matches[0] );
-	}
-
-	private function hasLayout( $subject ) {
-		return strpos( $subject, 'layout' );
 	}
 
 	private function getSummary() {
