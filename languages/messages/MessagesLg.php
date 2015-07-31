@@ -403,7 +403,7 @@ Ensonga gy\'awadde eri nti "\'\'$2\'\'".',
 
 Osobola okusigala nga okozesa {{SITENAME}} nga at'eyanjudde, ate osobola $1 nga bw'obadde oba nga okozesezza ery'obwa memba eddala.
 Wekkaanye, empapula ezimu ziyinza okukweyolekera nga bwe zibadde nga oyingidde - okutuusa lw'okunkumula eggwanika ezzibizi erya kalambula-neti yo.",
-'logouttext-link-text'       => 'n'okuddamu okuyingira',
+'logouttext-link-text'       => "n'okuddamu okuyingira",
 'welcomecreation'            => "== $1 tukwanirizza! == <br />
 Akawunti yo ekoledwa.<br />
 Tewerabira kwetereereza [[Special:Preferences|enteekateeka yo ey'oku {{SITENAME}}]].",
