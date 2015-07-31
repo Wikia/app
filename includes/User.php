@@ -23,6 +23,7 @@
 use Wikia\DependencyInjection\Injector;
 use Wikia\Logger\Loggable;
 use Wikia\Service\User\Preferences\UserPreferences;
+use Wikia\Service\User\Attributes\UserAttributes;
 use Wikia\Util\Statistics\BernoulliTrial;
 
 /**
@@ -35,7 +36,7 @@ define( 'USER_TOKEN_LENGTH', 32 );
  * Int Serialized record version.
  * @ingroup Constants
  */
-define( 'MW_USER_VERSION', 8 );
+define( 'MW_USER_VERSION', 9 );
 
 /**
  * String Some punctuation to prevent editing from broken text-mangling proxies.
@@ -82,6 +83,8 @@ class User {
 	const EDIT_TOKEN_SUFFIX = EDIT_TOKEN_SUFFIX;
 	const CACHE_PREFERENCES_KEY = "preferences";
 	const GET_SET_OPTION_SAMPLE_RATE = 0.1;
+
+	private static $PROPERTY_UPSERT_SET_BLOCK = [ "up_user = VALUES(up_user)", "up_property = VALUES(up_property)", "up_value = VALUES(up_value)" ];
 
 	/**
 	 * Array of Strings List of member variables which are saved to the
@@ -268,6 +271,13 @@ class User {
 	}
 
 	/**
+	 * @return UserAttributes
+	 */
+	private function userAttributes() {
+		return Injector::getInjector()->get(UserAttributes::class);
+	}
+
+	/**
 	 * @return BernoulliTrial
 	 */
 	private function getOrSetOptionSampler() {
@@ -330,7 +340,7 @@ class User {
 		}
 
 		# Try cache
-		$key = wfMemcKey( 'user', 'id', $this->mId );
+		$key = $this->getCacheKey();
 		$data = $wgMemc->get( $key );
 		if ( !is_array( $data ) || $data['mVersion'] < MW_USER_VERSION ) {
 			# Object is expired, load from DB
@@ -410,11 +420,15 @@ class User {
 		}
 		$data['mVersion'] = MW_USER_VERSION;
 		$data[self::CACHE_PREFERENCES_KEY] = $this->userPreferences()->getPreferences($this->mId);
-		$key = wfMemcKey( 'user', 'id', $this->mId );
+		$key = $this->getCacheKey();
 		global $wgMemc;
 		$wgMemc->set( $key, $data );
 
 		wfDebug( "User: user {$this->mId} stored in cache\n" );
+	}
+
+	private function getCacheKey() {
+		return wfMemcKey('user', 'id', $this->mId);
 	}
 
 	/** @name newFrom*() static factory methods */
@@ -4817,7 +4831,7 @@ class User {
 			$dbw = wfGetDB( DB_MASTER );
 		}
 
-		$insert_rows = array();
+		$insertRows = $deletePrefs = [];
 
 		$saveOptions = $this->mOptions;
 
@@ -4831,7 +4845,9 @@ class User {
 			# Don't bother storing default values
 			# <Wikia>
 			if ( $this->shouldOptionBeStored( $key, $value ) ) {
-				$insert_rows[] = array( 'up_user' => $this->getId(), 'up_property' => $key, 'up_value' => $value );
+				$insertRows[] = [ 'up_user' => $this->getId(), 'up_property' => $key, 'up_value' => $value ];
+			} elseif ($this->isDefaultOption($key, $value)) {
+				$deletePrefs[] = $key;
 			}
 			# </Wikia>
 			if ( $extuser && isset( $wgAllowPrefChange[$key] ) ) {
@@ -4846,32 +4862,23 @@ class User {
 			}
 		}
 
-		// kinda ghetto, but :(
+		$preferencesFromService = [];
 		if ($wgPreferencesUseService) {
-			$preferenceNames = array_keys($this->userPreferences()->getPreferences($this->getId()));
-
-			$sql = (new WikiaSQL())
-				->DELETE('user_properties')
-				->WHERE('up_user')->EQUAL_TO($this->getId());
-
-			if (!empty($preferenceNames)) {
-				$sql->AND_('up_property')->NOT_IN($preferenceNames);
-			}
-
-			$sql->run($dbw);
-
-			$insert_rows = array_reduce($insert_rows, function($result, $current) use ($preferenceNames) {
-				if (!in_array($current['up_property'], $preferenceNames)) {
-					$result[] = $current;
-				}
-
-				return $result;
-			}, []);
-		} else {
-			$dbw->delete( 'user_properties', array( 'up_user' => $this->getId() ), __METHOD__ );
+			$preferencesFromService = array_keys($this->userPreferences()->getPreferences($this->getId()));
 		}
 
-		$dbw->insert( 'user_properties', $insert_rows, __METHOD__ );
+		$deletePrefs = array_diff($deletePrefs, $preferencesFromService);
+
+		// user has default set, so clear any other entries from db
+		if (!empty($deletePrefs)) {
+			(new WikiaSQL())
+				->DELETE('user_properties')
+				->WHERE('up_user')->EQUAL_TO($this->getId())
+					->AND_('up_property')->IN($deletePrefs)
+				->run($dbw);
+		}
+
+		$dbw->upsert('user_properties', $insertRows, [], self::$PROPERTY_UPSERT_SET_BLOCK);
 
 		if ( $extuser ) {
 			$extuser->updateUser();
@@ -4895,6 +4902,10 @@ class User {
 			return true;
 		}
 		return false;
+	}
+
+	private function isDefaultOption($key, $value) {
+		return $value == self::getDefaultOption($key);
 	}
 
 	/**

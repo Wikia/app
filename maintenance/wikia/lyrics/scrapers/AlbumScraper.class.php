@@ -55,14 +55,14 @@ class AlbumScraper extends BaseScraper {
 	public function getDataMap() {
 		return [
 			'article_id' => 'id',
-			'Cover' => 'image',
+			'cover' => 'image',
 			'year' => 'release_date',
 			'Album' => 'album_name',
 			'album_lowercase' => 'album_name_lc',
 			'iTunes' => 'itunes',
 			'genres' => 'genres',
-			'Length' => 'length',
-			'Wikipedia' => 'wikipedia',
+			'length' => 'length',
+			'wikipedia' => 'wikipedia',
 			'romanizedAlbum' => 'romanized_album_name',
 			'asin' => 'asin',
 			'allmusic' => 'allmusic',

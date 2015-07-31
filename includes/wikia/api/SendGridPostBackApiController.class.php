@@ -45,8 +45,9 @@ class SendGridPostbackController extends WikiaApiController {
 
 			$generatedToken = wfGetEmailPostbackToken( $email_id, $email_addr );
 
-			if ( $this->wg->Request->wasPosted() && $token == $generatedToken ) {
-
+			//Quick Owen hack - skip token validation for now as we switch to new mailer
+			//if ( $this->wg->Request->wasPosted() && $token == $generatedToken ) {
+			if ( $this->wg->Request->wasPosted() ) {
 				// log postback data
 				$insert_data = array(
 					"mail_id"      => $email_id,
