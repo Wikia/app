@@ -442,7 +442,6 @@ class CuratedContentController extends WikiaController {
 
 		//TODO Remove this check in CONCF-978
 		if ( !empty( $wgEnableCuratedContentUnauthorizedSave ) ) {
-			$helper = new CuratedContentHelper();
 			$data = $this->request->getArray( 'data', [] );
 
 			// strip excessive data used in mercury interface (added in self::getData method)
@@ -460,8 +459,10 @@ class CuratedContentController extends WikiaController {
 				}
 			}
 
+			$helper = new CuratedContentHelper();
 			$sections = $helper->processSections( $data );
-			$errors = ( new CuratedContentValidator( $sections ) )->getErrors();
+			$validator = new CuratedContentValidator;
+			$errors = $validator->validateData( $sections );
 
 			if ( !empty( $errors ) ) {
 				$this->response->setVal( 'error', $errors );

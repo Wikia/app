@@ -5,6 +5,13 @@
  */
 class CuratedContentValidatorController extends WikiaController {
 
+	private $validator;
+
+	public function __construct() {
+		parent::__construct();
+		$this->validator = new CuratedContentValidator();
+	}
+
 	public function validateSection() {
 		$section = $this->request->getVal( 'section' );
 		$validateItems = $this->request->getBool( 'validateItems', true );
@@ -12,7 +19,11 @@ class CuratedContentValidatorController extends WikiaController {
 		if ( empty( $section ) ) {
 			$this->respondWithErrors();
 		} else {
-			$this->validateCuratedContent( [ $section ], $validateItems );
+			$this->validator->validateSection( $section );
+			if ( $validateItems ) {
+				$this->validator->validateSectionItems( $section );
+			}
+			$this->respond( $this->validator->getErrors() );
 		}
 	}
 
@@ -23,26 +34,16 @@ class CuratedContentValidatorController extends WikiaController {
 		if ( empty( $item ) ) {
 			$this->respondWithErrors();
 		} else {
-			// create optional/featured section so we can use CuratedContentValidator class
-			$section = [
-				'title' => '',
-				'items' => [
-					$item
-				]
-			];
-			if ( !empty( $isFeatured ) ) {
-				$section['featured'] = true;
+			if ( $isFeatured ) {
+				$this->validator->validateItem( $item );
+			} else {
+				$this->validator->validateSectionItem( $item );
 			}
-			$this->validateCuratedContent( [ $section ] );
+			$this->respond( $this->validator->getErrors() );
 		}
 	}
 
-	private function validateCuratedContent( Array $data, $validateItems = true ) {
-		$helper = new CuratedContentHelper();
-
-		$sections = $helper->processSections( $data );
-		$errors = ( new CuratedContentValidator( $sections, $validateItems ) )->getErrors();
-
+	private function respond( $errors ) {
 		if ( !empty( $errors ) ) {
 			$this->respondWithErrors( $errors );
 		} else {
