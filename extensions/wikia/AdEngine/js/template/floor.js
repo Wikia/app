@@ -31,7 +31,7 @@ define('ext.wikia.adEngine.template.floor', [
 	 * Note the standard event bubbling applies, so it's possible some element within the iframe
 	 * stops the event propagation. Flash will stop propagation for sure.
 	 *
-	 * If you supply detectAd, the code sniffs the ad in the supplied code by inspecting the iframe
+	 * If you supply params.canHop, the code sniffs the ad in the supplied code by inspecting the iframe
 	 * contents. The code will issue postMessage with either success or hop, so you need to pass
 	 * the params.slotName as well. The creative will need to have AdEngine_adType = 'floor'
 	 *
@@ -41,7 +41,7 @@ define('ext.wikia.adEngine.template.floor', [
 	 * @param {number}  params.height width of the ad to put into floor container
 	 * @param {number}  [params.onClick] function to call when floor iframe is clicked
 	 * @param {boolean} [params.canHop] detect ad in the embedded iframe
-	 * @param {string}  [params.slotName] name of the original slot (required if detectAd)
+	 * @param {string}  [params.slotName] name of the original slot (required if params.canHop set to true)
 	 */
 	function show(params) {
 		log(['show', params], 'debug', logGroup);
