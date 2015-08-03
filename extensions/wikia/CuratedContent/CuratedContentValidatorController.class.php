@@ -14,15 +14,23 @@ class CuratedContentValidatorController extends WikiaController {
 
 	public function validateSection() {
 		$section = $this->request->getVal( 'section' );
-		$validateItems = $this->request->getBool( 'validateItems', true );
 
 		if ( empty( $section ) ) {
 			$this->respondWithErrors();
 		} else {
 			$this->validator->validateSection( $section );
-			if ( $validateItems ) {
-				$this->validator->validateSectionItems( $section );
-			}
+			$this->respond( $this->validator->getErrors() );
+		}
+	}
+
+	public function validateSectionWithItems() {
+		$section = $this->request->getVal( 'section' );
+
+		if ( empty( $section ) ) {
+			$this->respondWithErrors();
+		} else {
+			$this->validator->validateSection( $section );
+			$this->validator->validateSectionItems( $section );
 			$this->respond( $this->validator->getErrors() );
 		}
 	}
