@@ -12,6 +12,7 @@
 namespace Flags;
 
 use Flags\Models\FlagsBaseModel;
+use Flags\Models\FlagType;
 
 class FlagsCache {
 	const FLAGS_MEMC_KEY_PREFIX = 'flagsData';
@@ -29,10 +30,11 @@ class FlagsCache {
 
 	/**
 	 * Tries to get all types of flags available for the wikia from memcache.
+	 * @param int $targeting @see FlagType::{flag_targeting constants}
 	 * @return array|bool An array if the data is cached, false otherwise.
 	 */
-	public function getFlagTypesForWikia() {
-		return $this->memcache->get( $this->getMemcKeyFlagTypesOnWikia() );
+	public function getFlagTypesForWikia( $targeting = 0 ) {
+		return $this->memcache->get( $this->getMemcKeyFlagTypesOnWikia( $targeting ) );
 	}
 
 	/**
@@ -52,6 +54,8 @@ class FlagsCache {
 	 */
 	public function purgeFlagTypesForWikia() {
 		$this->memcache->delete( $this->getMemcKeyFlagTypesOnWikia() );
+		$this->memcache->delete( $this->getMemcKeyFlagTypesOnWikia( FlagType::FLAG_TARGETING_CONTRIBUTORS ) );
+		$this->memcache->delete( $this->getMemcKeyFlagTypesOnWikia( FlagType::FLAG_TARGETING_READERS ) );
 	}
 
 	/**
@@ -90,12 +94,14 @@ class FlagsCache {
 
 	/**
 	 * Returns a memcache key for data on all types of flags for the wikia.
+	 * @param int $targeting @see FlagType::{flag_targeting constants}
 	 * @return String A memcache key
 	 */
-	private function getMemcKeyFlagTypesOnWikia() {
+	private function getMemcKeyFlagTypesOnWikia( $targeting = 0 ) {
 		return wfMemcKey(
 			self::FLAGS_MEMC_KEY_PREFIX,
 			FlagsBaseModel::FLAGS_TYPES_TABLE,
+			$targeting,
 			self::FLAGS_MEMC_VERSION
 		);
 	}

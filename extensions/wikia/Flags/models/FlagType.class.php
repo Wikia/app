@@ -13,6 +13,9 @@ namespace Flags\Models;
 
 class FlagType extends FlagsBaseModel {
 
+	/**
+	 * flag_targeting DB field constants
+	 */
 	const FLAG_TARGETING_READERS = 1;
 	const FLAG_TARGETING_CONTRIBUTORS = 2;
 
@@ -120,25 +123,31 @@ class FlagType extends FlagsBaseModel {
 	/**
 	 * Fetches all types of flags available on a wikia from the database
 	 * @param int $wikiId
+	 * @param int $targeting @see flag_targeting constants
 	 * @return bool|mixed
 	 */
-	public function getFlagTypesForWikia( $wikiId ) {
+	public function getFlagTypesForWikia( $wikiId, $targeting = 0 ) {
 		$db = $this->getDatabaseForRead();
 
 		$flagTypesForWikia = ( new \WikiaSQL() )
 			->SELECT_ALL()
 			->FROM( self::FLAGS_TYPES_TABLE )
 			->WHERE( 'wiki_id' )->EQUAL_TO( $wikiId )
-			->ORDER_BY( 'flag_name ASC' )
-			->runLoop( $db, function( &$flagTypesForWikia, $row ) {
-				$flagTypesForWikia[$row->flag_type_id] = get_object_vars( $row );
+			->ORDER_BY( 'flag_name ASC' );
 
-				/**
-				 * Create URLs for a template of the flag
-				 */
-				$title = \Title::newFromText( $row->flag_view, NS_TEMPLATE );
-				$flagTypesForWikia[$row->flag_type_id]['flag_view_url'] = $title->getFullURL();
-			} );
+		if ( $targeting ) {
+			$flagTypesForWikia->AND_( 'flag_targeting' )->EQUAL_TO( $targeting );
+		}
+
+		$flagTypesForWikia = $flagTypesForWikia->runLoop( $db, function( &$flagTypesForWikia, $row ) {
+			$flagTypesForWikia[$row->flag_type_id] = get_object_vars( $row );
+
+			/**
+			 * Create URLs for a template of the flag
+			 */
+			$title = \Title::newFromText( $row->flag_view, NS_TEMPLATE );
+			$flagTypesForWikia[$row->flag_type_id]['flag_view_url'] = $title->getFullURL();
+		} );
 
 		return $flagTypesForWikia;
 	}

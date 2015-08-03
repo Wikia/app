@@ -276,7 +276,8 @@ class FlagsApiController extends FlagsApiBaseController {
 	 * Get all flag types for given wiki
 	 *
 	 * Optional parameters:
-	 * @requestParam int wiki_id You can overwrite the current city_id
+	 * @requestParam int wiki_id (optional) You can overwrite the current city_id
+	 * @requestParam int flag_targeting (optional) @see FlagType::{flag_targeting constants}
 	 *
 	 * @response Array all flag types
 	 */
@@ -284,7 +285,10 @@ class FlagsApiController extends FlagsApiBaseController {
 		try {
 			$this->getRequestParams();
 
-			$flagTypes = $this->getFlagTypesForWikiaRawData( $this->params['wiki_id'] );
+			$flagTypes = $this->getFlagTypesForWikiaRawData(
+				$this->params['wiki_id'],
+				$this->request->getInt( 'flag_targeting', null )
+			);
 
 			$this->makeSuccessResponse( $flagTypes );
 		} catch( Exception $e ) {
@@ -408,16 +412,17 @@ class FlagsApiController extends FlagsApiBaseController {
 	/**
 	 * Tries to get the data on types of flags available for the given wikia from cache.
 	 * If it is not cached it gets it from the database and caches it.
-	 * @param $wikiId
+	 * @param int $wikiId
+	 * @param int $targeting @see FlagType::{flag_targeting constants}
 	 * @return bool|mixed
 	 */
-	private function getFlagTypesForWikiaRawData( $wikiId ) {
+	private function getFlagTypesForWikiaRawData( $wikiId, $targeting = 0 ) {
 		$flagsCache = $this->getCache();
 
-		$flagTypesForWikia = $flagsCache->getFlagTypesForWikia();
+		$flagTypesForWikia = $flagsCache->getFlagTypesForWikia( $targeting );
 		if ( !$flagTypesForWikia ) {
 			$flagTypeModel = new FlagType();
-			$flagTypesForWikia = $flagTypeModel->getFlagTypesForWikia( $wikiId );
+			$flagTypesForWikia = $flagTypeModel->getFlagTypesForWikia( $wikiId, $targeting );
 
 			$flagsCache->setFlagTypesForWikia( $flagTypesForWikia );
 		}
