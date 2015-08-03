@@ -40,11 +40,11 @@ class ApiAddMediaPermanent extends ApiAddMedia {
 			$file->upload( $tempFile->getPath(), '', $pageText ? $pageText : '' );
 		}
 
-		return array(
+		return [
 			'title' => $file->getTitle()->getText(),
 			'url' => $file->getUrl(),
 			'article_id' => $file->getTitle()->getArticleID()
-		);
+		];
 	}
 
 	private function executeVideo() {

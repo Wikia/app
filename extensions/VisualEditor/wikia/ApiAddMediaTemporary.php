@@ -24,11 +24,11 @@ class ApiAddMediaTemporary extends ApiAddMedia {
 		global $wgContLanguageCode, $wgEnableCuratedContentUnauthorizedSave;
 		$duplicate = $this->getFileDuplicate( $this->mRequest->getFileTempName( 'file' ) );
 		if ( $duplicate ) {
-			return array(
+			return [
 				'title' => $duplicate->getTitle()->getText(),
 				'url' => $duplicate->getUrl(),
 				'article_id' => $duplicate->getTitle()->getArticleID()
-			);
+			];
 		} else {
 			// Check whether upload is enabled
 			if ( !UploadBase::isEnabled() ) {
@@ -50,11 +50,11 @@ class ApiAddMediaTemporary extends ApiAddMedia {
 
 			$this->verifyUpload();
 			$tempFile = $this->createTempFile( $this->mRequest->getFileTempName( 'file' ) );
-			return array(
+			return [
 				'title' => $this->mUpload->getTitle()->getText(),
 				'tempUrl' => $tempFile->getUrl(),
 				'tempName' => $tempFile->getName()
-			);
+			];
 		}
 	}
 
