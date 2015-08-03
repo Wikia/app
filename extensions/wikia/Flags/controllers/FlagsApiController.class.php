@@ -139,6 +139,7 @@ class FlagsApiController extends FlagsApiBaseController {
 
 			$this->getCache()->purgeFlagsForPage( $this->params['page_id'] );
 			$this->purgeFlaggedPages( $this->params['flags'] );
+			$this->purgeFlagInsights( $this->params['flags'] );
 
 			$this->makeSuccessResponse( $modelResponse );
 			$this->logFlagChange( $this->params['flags'], $this->params['wiki_id'], $this->params['page_id'], self::LOG_ACTION_FLAG_ADDED );
@@ -166,6 +167,7 @@ class FlagsApiController extends FlagsApiBaseController {
 
 			$this->getCache()->purgeFlagsForPage( $this->params['page_id'] );
 			$this->purgeFlaggedPages( $this->params['flags'] );
+			$this->purgeFlagInsights( $this->params['flags'], $this->params['page_id'] );
 
 			$this->makeSuccessResponse( $modelResponse );
 			$this->logFlagChange( $this->params['flags'], $this->params['wiki_id'], $this->params['page_id'], self::LOG_ACTION_FLAG_REMOVED );
@@ -369,6 +371,25 @@ class FlagsApiController extends FlagsApiBaseController {
 			( new FlaggedPagesCache() )->purgeFlagTypesByIds( $flagTypesIds );
 		} else {
 			( new FlaggedPagesCache() )->purgeAllFlagTypes();
+		}
+	}
+
+	private function purgeFlagInsights( Array $flags = [], $pageId = null ) {
+		global $wgEnableInsightsExt;
+
+		if ( !empty( $wgEnableInsightsExt ) ) {
+			$flagsIds = $this->prepareFlagTypesIds( $flags );
+
+			$insightsFlagsModel = new InsightsFlagsModel();
+
+			foreach ( $flagsIds as $flagId ) {
+				$insightsFlagsModel->initModel( [ 'flagTypeId' => $flagId ] );
+				if ( !is_null( $pageId ) ) {
+					$insightsFlagsModel->updateInsightsCache( $pageId );
+				} else {
+					$insightsFlagsModel->purgeInsightsCache();
+				}
+			}
 		}
 	}
 

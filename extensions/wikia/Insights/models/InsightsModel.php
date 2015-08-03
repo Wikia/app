@@ -10,6 +10,7 @@ abstract class InsightsModel {
 
 	abstract public function getContent( $params );
 	abstract public function getInsightType();
+	abstract public function getInsightCacheParams();
 	abstract public function getViewData();
 	abstract public function getTemplate();
 

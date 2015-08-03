@@ -66,6 +66,7 @@ class InsightsController extends WikiaSpecialPageController {
 		 */
 		if ( $this->model instanceof InsightsPageModel ) {
 			$params = $this->request->getParams();
+			$this->model->initModel( $params );
 			$this->setVal( 'content', $this->model->getContent( $params ) );
 			$this->preparePagination();
 			$this->prepareSortingData();
