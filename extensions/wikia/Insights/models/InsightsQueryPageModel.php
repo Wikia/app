@@ -1,27 +1,15 @@
 <?php
 
 /**
- * Class QueryPagesModel
- *
- * A base model for subpages that extend the QueryPage class
+ * Abstract class that defines necessary set of methods for Insights QueryPage models
  */
-abstract class InsightsQuerypageModel extends InsightsModel {
-	const
-		INSIGHTS_MEMC_PREFIX = 'insights',
-		INSIGHTS_MEMC_VERSION = '1.1',
-		INSIGHTS_MEMC_TTL = 259200, // Cache for 3 days
-		INSIGHTS_MEMC_ARTICLES_KEY = 'articlesData',
-		INSIGHTS_LIST_MAX_LIMIT = 100,
-		INSIGHTS_DEFAULT_SORTING = 'pv7';
+abstract class InsightsQueryPageModel extends InsightsPageModel {
 
 	private
-		$queryPageInstance,
-		$template = 'subpageList',
-		$offset = 0,
-		$limit = 100,
-		$total = 0,
-		$page = 0,
 		$sortingArray;
+
+	protected
+		$queryPageInstance;
 
 	public
 		$sorting = [
@@ -41,24 +29,6 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 		];
 
 	abstract function getDataProvider();
-	abstract function isItemFixed( Title $title );
-	abstract function getInsightType();
-
-	public function getTotalResultsNum() {
-		return $this->total;
-	}
-
-	public function getLimitResultsNum() {
-		return $this->limit;
-	}
-
-	public function getOffset() {
-		return $this->offset;
-	}
-
-	public function getPage() {
-		return $this->page;
-	}
 
 	public function getDefaultSorting() {
 		return self::INSIGHTS_DEFAULT_SORTING;
@@ -69,32 +39,6 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 	 */
 	protected function getQueryPageInstance() {
 		return $this->queryPageInstance;
-	}
-
-	/**
-	 * @return string A name of the page's template
-	 */
-	public function getTemplate() {
-		return $this->template;
-	}
-
-	/**
-	 * @return bool
-	 */
-	public function arePageViewsRequired() {
-		return true;
-	}
-
-	public function hasAltAction() {
-		return false;
-	}
-
-	public function getAltAction( Title $title ) {
-		return [];
-	}
-
-	public function isWlhLinkRequired() {
-		return false;
 	}
 
 	public function wlhLinkMessage() {
@@ -121,21 +65,6 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 	}
 
 	/**
-	 * Returns an array of boolean values that you can use
-	 * to toggle columns of a subpage's table view
-	 * (e.g. turn the column with number of views on or off)
-	 *
-	 * @return array An array of boolean values
-	 */
-	public function getViewData() {
-		$data['display'] = [
-			'pageviews'	=> $this->arePageViewsRequired(),
-			'altaction'	=> $this->hasAltAction(),
-		];
-		return $data;
-	}
-
-	/**
 	 * Get list of articles related to the given QueryPage category
 	 *
 	 * @return array
@@ -152,7 +81,7 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 		$articlesData = $this->fetchArticlesData();
 
 		if ( !empty( $articlesData ) ) {
-			$this->total = count( $articlesData );
+			$this->setTotal( count( $articlesData ) );
 
 			/**
 			 * 2. Slice a sorting table to retrieve a page
@@ -165,7 +94,7 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 					$this->sortingArray = array_keys( $articlesData );
 				}
 			}
-			$ids = array_slice( $this->sortingArray, $this->offset, $this->limit, true );
+			$ids = array_slice( $this->sortingArray, $this->getOffset(), $this->getLimitResultsNum(), true );
 
 			/**
 			 * 3. Populate $content array with data for each article id
@@ -183,26 +112,14 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 	 *
 	 * @param $params An array of URL parameters
 	 */
-	private function prepareParams( $params ) {
+	protected function prepareParams( $params ) {
 		global $wgMemc;
 
 		if ( isset( $params['sort'] ) && isset( $this->sorting[ $params['sort'] ] ) ) {
 			$this->sortingArray = $wgMemc->get( $this->getMemcKey( $params['sort'] ) );
 		}
 
-		if ( isset( $params['limit'] ) ) {
-			if ( $params['limit'] <= self::INSIGHTS_LIST_MAX_LIMIT ) {
-				$this->limit = intval( $params['limit'] );
-			} else {
-				$this->limit = self::INSIGHTS_LIST_MAX_LIMIT;
-			}
-		}
-
-		if ( isset( $params['page'] ) ) {
-			$page = intval( $params['page'] );
-			$this->page = --$page;
-			$this->offset = $this->page * $this->limit;
-		}
+		$this->preparePaginationParams( $params );
 	}
 
 	/**
@@ -279,29 +196,6 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 				}
 			}
 		}
-	}
-
-	/**
-	 * Fetches page views data for a given set of articles. The data includes
-	 * number of views for the last four time ids (data points).
-	 *
-	 * @param $articlesIds An array of IDs of articles to fetch views for
-	 * @return array An array with views for the last four time ids
-	 */
-	public function getPageViewsData( $articlesIds ) {
-		global $wgCityId;
-		/**
-		 * Get pv for the last 4 Sundays
-		 */
-		$pvTimes = InsightsHelper::getLastFourTimeIds();
-
-		$pvData = [];
-
-		foreach( $pvTimes as $timeId ) {
-			$pvData[] = DataMartService::getPageViewsForArticles( $articlesIds, $timeId, $wgCityId );
-		}
-
-		return $pvData;
 	}
 
 	/**
@@ -391,76 +285,6 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 	}
 
 	/**
-	 * Prepares all data in a format that is easy to use for display.
-	 *
-	 * @param $res Results to display
-	 * @return array
-	 * @throws MWException
-	 */
-	public function prepareData( $res ) {
-		$data = [];
-		$dbr = wfGetDB( DB_SLAVE );
-		while ( $row = $dbr->fetchObject( $res ) ) {
-			if ( $row->title ) {
-				$article = [];
-				$params = $this->getUrlParams();
-
-				$title = Title::newFromText( $row->title, $row->namespace );
-				$article['link'] = InsightsHelper::getTitleLink( $title, $params );
-
-				$lastRev = $title->getLatestRevID();
-				$rev = Revision::newFromId( $lastRev );
-
-				if ( $rev ) {
-					$article['metadata']['lastRevision'] = $this->prepareRevisionData( $rev );
-				}
-
-				if ( $this->isWlhLinkRequired() ) {
-					$article['metadata']['wantedBy'] = $this->makeWlhLink( $title, $row );
-				}
-
-				if ( $this->arePageViewsRequired() ) {
-					$article['metadata']['pv7'] = 0;
-					$article['metadata']['pv28'] = 0;
-					$article['metadata']['pvDiff'] = 0;
-				}
-
-				if ( $this->hasAltAction() ) {
-					$article['altaction'] = $this->getAltAction( $title );
-				}
-
-				$data[ $title->getArticleID() ] = $article;
-			}
-		}
-
-		return $data;
-	}
-
-	/**
-	 * Get data about revision
-	 * Who and when made last edition
-	 *
-	 * @param Revision $rev
-	 * @return mixed
-	 */
-	public function prepareRevisionData( Revision $rev ) {
-		$data['timestamp'] = wfTimestamp( TS_UNIX, $rev->getTimestamp() );
-
-		$user = $rev->getUserText();
-
-		if ( $rev->getUser() ) {
-			$userpage = Title::newFromText( $user, NS_USER )->getFullURL();
-		} else {
-			$userpage = SpecialPage::getTitleFor( 'Contributions', $user )->getFullUrl();
-		}
-
-		$data['username'] = $user;
-		$data['userpage'] = $userpage;
-
-		return $data;
-	}
-
-	/**
 	 * Prepares a link to a Special:WhatLinksHere page
 	 * for the article
 	 * @param Title $title The target article's title object
@@ -473,19 +297,6 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 		$wlh = SpecialPage::getTitleFor( 'Whatlinkshere', $title->getPrefixedText() );
 		$label = wfMessage( $this->wlhLinkMessage() )->numParams( $result->value )->escaped();
 		return Linker::link( $wlh, $label );
-	}
-
-	/**
-	 * Get a type of a subpage and an edit parameter
-	 * @return array
-	 */
-	public function getUrlParams() {
-		$params = array_merge(
-			InsightsHelper::getEditUrlParams(),
-			$this->getInsightParam()
-		);
-
-		return $params;
 	}
 
 	/**
@@ -517,7 +328,7 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 	/**
 	 * Get data for the next element that a user can take care of.
 	 *
-	 * @param string $type A key of a Querypage
+	 * @param string $type A key of a QueryPage
 	 * @param string $articleName A title of an article
 	 * @return Array The next item's data
 	 */
@@ -543,28 +354,5 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 		}
 
 		return $next;
-	}
-
-	public function purgeInsightsCache() {
-		global $wgMemc;
-
-		$cacheKey = $this->getMemcKey( self::INSIGHTS_MEMC_ARTICLES_KEY );
-
-		$wgMemc->delete( $cacheKey );
-	}
-
-	/**
-	 * Get memcache key for insights
-	 *
-	 * @param String $params
-	 * @return String
-	 */
-	private function getMemcKey( $params ) {
-		return wfMemcKey(
-			self::INSIGHTS_MEMC_PREFIX,
-			$this->getInsightType(),
-			$params,
-			self::INSIGHTS_MEMC_VERSION
-		);
 	}
 }

@@ -1,11 +1,15 @@
 <?php
 
+/**
+ * Top abstract class defining necessary set of methods for Insights models
+ */
 abstract class InsightsModel {
 	const INSIGHTS_FLOW_URL_PARAM = 'insights';
 
 	public $subpage;
 
 	abstract public function getContent( $params );
+	abstract public function getInsightType();
 	abstract public function getViewData();
 	abstract public function getTemplate();
 

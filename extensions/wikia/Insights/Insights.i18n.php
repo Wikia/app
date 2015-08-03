@@ -14,6 +14,9 @@ $messages['en'] = array(
 	'insights-list-header-pageviews' => 'Page views',
 	'insights-last-edit' => 'Last edited by $1, $2',
 
+	'insights-list-subtitle-flags' => 'Pages marked with flags',
+	'insights-list-description-flags' => 'Use Flags to organize and label article pages. This Insight list allows you to view custom reports of flagged articles to find the articles that most need improvements. [[Help:Flags|Learn more about flags]]',
+
 	'insights-list-subtitle-uncategorizedpages' => 'Pages without categories',
 	'insights-list-description-uncategorizedpages' => 'Add categories to these pages. Good categorization is vital to a successfully organized wikia!',
 	'insights-notification-message-inprogress-uncategorizedpages' => 'This page needs categories added. ',
@@ -62,6 +65,9 @@ $messages['en'] = array(
 
 	'insights-altaction-convert' => 'Convert!',
 	'insights-altaction-seedraft' => 'View the draft',
+
+	/* Flags Insights */
+	'insights-flags-filter-label' => 'Filter pages by flag type',
 );
 
 $messages['qqq'] = array(
@@ -76,6 +82,9 @@ $messages['qqq'] = array(
 	'insights-list-header-altaction' => 'A header of an Insights list table for a column with a link to a semi- or fully automatic action taken on the corresponding page',
 	'insights-list-header-pageviews' => 'A header of an Insights list table for a column with a number of views of an article',
 	'insights-last-edit' => 'Information who and when made last edit for chosen article on the list',
+
+	'insights-list-subtitle-flags' => 'A title of a subpage with a list of pages marked with flags',
+	'insights-list-description-flags' => 'A description for a subpage with a list of pages marked with flags',
 
 	'insights-list-subtitle-uncategorizedpages' => 'A title of a subpage with a list of uncategorized pages',
 	'insights-list-description-uncategorizedpages' => 'A description for a subpage with a list of uncategorized pages',
@@ -124,6 +133,9 @@ $messages['qqq'] = array(
 
 	'insights-altaction-convert' => 'A label for a link that takes you to edit mode and presents you an automatically converted infobox markup for your template.',
 	'insights-altaction-seedraft' => 'A label for a link that takes you to a view of an existing draft of a template.',
+
+	/* Flags Insights */
+	'insights-flags-filter-label' => 'Label for select dropdown on flags insights page explaining purpose of it',
 );
 
 $messages['de'] = array(

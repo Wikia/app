@@ -28,6 +28,11 @@
 				</form>
 			</div>
 		<?php endif ?>
+
+		<?php if ( !empty( $flagsFiltering ) ): // Flags filter dropdown ?>
+		<?= $app->renderView( 'Insights', 'flagsFiltering', [ 'selectedFlagTypeId' => $selectedFlagTypeId ] ); ?>
+		<?php endif ?>
+
 		<div class="insights-content">
 			<?php if ( !empty( $content ) ) : ?>
 				<table class="insights-list" data-type="<?= Sanitizer::encodeAttribute( $subpage ) ?>">

@@ -4,6 +4,7 @@ class InsightsHelper {
 	/**
 	 * Used to create the following messages:
 	 *
+	 * 'insights-list-subtitle-flags',
 	 * 'insights-list-subtitle-uncategorizedpages',
 	 * 'insights-list-subtitle-withoutimages',
 	 * 'insights-list-subtitle-deadendpages',
@@ -14,10 +15,11 @@ class InsightsHelper {
 	/**
 	 * Used to create the following messages:
 	 *
-	 * 'insights-list-description-uncategorizedpages',
-	 * 'insights-list-description-withoutimages',
 	 * 'insights-list-description-deadendpages',
+	 * 'insights-list-description-flags',
+	 * 'insights-list-description-uncategorizedpages',
 	 * 'insights-list-description-wantedpages'
+	 * 'insights-list-description-withoutimages',
 	 */
 	const INSIGHT_DESCRIPTION_MSG_PREFIX = 'insights-list-description-';
 
@@ -34,11 +36,12 @@ class InsightsHelper {
 	/**
 	 * Used to create the following messages:
 	 *
-	 * 'insights-notification-message-fixed-uncategorizedpages',
-	 * 'insights-notification-message-fixed-withoutimages',
 	 * 'insights-notification-message-fixed-deadendpages',
-	 * 'insights-notification-message-fixed-wantedpages'
+	 * 'insights-notification-message-fixed-flags'
 	 * 'insights-notification-message-fixed-nonportableinfoboxes'
+	 * 'insights-notification-message-fixed-uncategorizedpages',
+	 * 'insights-notification-message-fixed-wantedpages'
+	 * 'insights-notification-message-fixed-withoutimages',
 	 */
 	const INSIGHT_FIXED_MSG_PREFIX = 'insights-notification-message-fixed-';
 
@@ -56,13 +59,24 @@ class InsightsHelper {
 	 * @return array
 	 */
 	public static function getInsightsPages() {
-		global $wgEnableInsightsInfoboxes;
+		global $wgEnableInsightsInfoboxes, $wgEnableFlagsExt;
 
+		/* Add infoboxes insight */
 		if ( !empty( $wgEnableInsightsInfoboxes )
 			&& !isset( self::$insightsPages[InsightsUnconvertedInfoboxesModel::INSIGHT_TYPE] )
 		) {
 			self::$insightsPages = array_merge(
 				[ InsightsUnconvertedInfoboxesModel::INSIGHT_TYPE => 'InsightsUnconvertedInfoboxesModel' ],
+				self::$insightsPages
+			);
+		}
+
+		/* Add flags insight */
+		if ( !empty( $wgEnableFlagsExt )
+			&& !isset( self::$insightsPages[InsightsFlagsModel::INSIGHT_TYPE] )
+		) {
+			self::$insightsPages = array_merge(
+				[ InsightsFlagsModel::INSIGHT_TYPE => 'InsightsFlagsModel' ],
 				self::$insightsPages
 			);
 		}
