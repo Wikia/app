@@ -34,7 +34,7 @@ abstract class InsightsQueryPageModel extends InsightsPageModel {
 		return true;
 	}
 
-	public function initModel() {
+	public function initModel( $params ) {
 		$this->queryPageInstance = $this->getDataProvider();
 	}
 
