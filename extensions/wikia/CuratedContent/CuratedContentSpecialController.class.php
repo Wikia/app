@@ -172,7 +172,7 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 			$status = WikiFactory::setVarByName( 'wgWikiaCuratedContent', $wgCityId, $sections );
 			$this->response->setVal( 'status', $status );
 
-			if ( $status ) {
+			if ( !empty( $status ) ) {
 				wfRunHooks( 'CuratedContentSave', [ $sections ] );
 			}
 		}

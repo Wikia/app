@@ -452,9 +452,11 @@ class CuratedContentController extends WikiaController {
 				$section['title'] = $section['label'];
 				unset( $section['label'] );
 
-				foreach( $section['items'] as &$item ) {
-					unset( $item['node_type'] );
-					unset( $item['image_url'] );
+				if ( !empty( $section['items'] ) && is_array( $section['items'] ) ) {
+					foreach( $section['items'] as &$item ) {
+						unset( $item['node_type'] );
+						unset( $item['image_url'] );
+					}
 				}
 			}
 
@@ -466,7 +468,7 @@ class CuratedContentController extends WikiaController {
 			} else {
 				$status = WikiFactory::setVarByName( 'wgWikiaCuratedContent', $wgCityId, $sections );
 
-				if ( $status ) {
+				if ( !empty( $status ) ) {
 					wfRunHooks( 'CuratedContentSave', [ $sections ] );
 				}
 			}
