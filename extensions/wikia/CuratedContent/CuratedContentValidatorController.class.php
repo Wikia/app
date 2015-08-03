@@ -30,7 +30,9 @@ class CuratedContentValidatorController extends WikiaController {
 			$this->respondWithErrors();
 		} else {
 			$this->validator->validateSection( $section );
-			$this->validator->validateSectionItems( $section );
+			$this->validator->validateItemsExists( $section );
+			$this->validator->validateItems( $section );
+			$this->validator->validateItemsTypes( $section );
 			$this->respond( $this->validator->getErrors() );
 		}
 	}
@@ -42,10 +44,9 @@ class CuratedContentValidatorController extends WikiaController {
 		if ( empty( $item ) ) {
 			$this->respondWithErrors();
 		} else {
-			if ( $isFeatured ) {
-				$this->validator->validateItem( $item );
-			} else {
-				$this->validator->validateSectionItem( $item );
+			$this->validator->validateItem( $item );
+			if ( !$isFeatured ) {
+				$this->validator->validateItemTypes( $item );
 			}
 			$this->respond( $this->validator->getErrors() );
 		}

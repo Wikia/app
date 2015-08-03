@@ -30,10 +30,12 @@ class CuratedContentValidator {
 		// validate sections
 		foreach ( $data as $section ) {
 			if ( !empty( $section['featured'] ) ) {
-				$this->validateFeaturedSectionItems( $section );
+				$this->validateItems( $section );
 			} else {
 				$this->validateSection( $section );
-				$this->validateSectionItems( $section );
+				$this->validateItemsExists( $section );
+				$this->validateItems( $section );
+				$this->validateItemsTypes( $section );
 			}
 		}
 		// also check section for duplicate title
@@ -70,15 +72,16 @@ class CuratedContentValidator {
 		}
 	}
 
-	public function validateSectionItems( $section ) {
-		if ( !empty( $section['items'] ) && is_array( $section['items'] ) ) {
+	public function validateItemsExists( $section ) {
+		if ( empty( $section['items'] ) || !is_array( $section['items'] ) ) {
+			$this->error( $section, self::ERR_ITEMS_MISSING );
+		}
+	}
+
+	public function validateItems( $section ) {
+		if (!empty($section['items']) && is_array($section['items'])) {
 			foreach ($section['items'] as $item) {
-				$this->validateSectionItem( $item );
-			}
-		} else {
-			// if section doesn't have any items and it's not Featured Section, it's an error
-			if ( empty( $section['featured'] ) ) {
-				$this->error( $section, self::ERR_ITEMS_MISSING );
+				$this->validateItem($item);
 			}
 		}
 	}
@@ -106,11 +109,17 @@ class CuratedContentValidator {
 		}
 	}
 
-	public function validateSectionItem( $item ) {
-		$this->validateItem( $item );
-
+	public function validateItemTypes( $item ) {
 		if ( $item['type'] !== CuratedContentHelper::STR_CATEGORY ) {
 			$this->error( $item, self::ERR_NO_CATEGORY_IN_TAG );
+		}
+	}
+
+	public function validateItemsTypes( $section ) {
+		if ( !empty( $section['items'] ) && is_array( $section['items'] ) ) {
+			foreach ( $section['items'] as $item ) {
+				$this->validateItemTypes( $item );
+			}
 		}
 	}
 
