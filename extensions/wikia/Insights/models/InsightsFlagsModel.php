@@ -28,6 +28,14 @@ class InsightsFlagsModel extends InsightsPageModel {
 	}
 
 	/**
+	 * Get a type of a subpage and an edit parameter
+	 * @return array
+	 */
+	public function getUrlParams() {
+		return $this->getInsightParam();
+	}
+
+	/**
 	 * A key of a message that wraps the number of pages referring to each item of the list.
 	 *
 	 * @return string
