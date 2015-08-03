@@ -149,6 +149,10 @@ define('ext.wikia.adEngine.provider.gpt.adDetect', [
 		return 'inspect_iframe';
 	}
 
+	function getShortSlotName(slotName) {
+		return slotName.replace(/^.*\/([^\/]*)$/, '$1');
+	}
+
 	function onAdLoad(slotName, gptEvent, iframe, adCallback, noAdCallback, forcedAdType) {
 
 		var adType = forcedAdType || getAdType(slotName, gptEvent, iframe),
@@ -158,7 +162,7 @@ define('ext.wikia.adEngine.provider.gpt.adDetect', [
 			expectAsyncSuccessWithSlotName = false,
 			expectAsyncSuccess = false,
 			successTimer,
-			shortSlotName = slotName.replace(/^.*\/([^\/]*)$/, '$1');
+			shortSlotName = getShortSlotName(slotName);
 
 		function noop() { return; }
 
@@ -273,6 +277,8 @@ define('ext.wikia.adEngine.provider.gpt.adDetect', [
 	}
 
 	return {
-		onAdLoad: onAdLoad
+		onAdLoad: onAdLoad,
+		//For tests purpose, if you want to use it, consider creating new class (AdSlot?)
+		getShortSlotName: getShortSlotName
 	};
 });
