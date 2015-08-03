@@ -18,22 +18,27 @@ class FlaggedPages extends FlagsBaseModel {
 	/**
 	 * Retrieves list of pages marked with flags
 	 *
+	 * @param int|null $flagTypeId Flag type id to filter results
 	 * @param int $wikiId
 	 * @return array
 	 * @throws \FluentSql\Exception\SqlException
 	 */
-	public function getFlaggedPagesFromDatabase( $wikiId ) {
+	public function getFlaggedPagesFromDatabase( $wikiId, $flagTypeId = null ) {
 		$db = $this->getDatabaseForRead();
 
 		$flaggedPages = ( new \WikiaSQL() )
 			->SELECT()
 			->DISTINCT( 'page_id' )
 			->FROM( 'flags_to_pages' )
-			->WHERE( 'wiki_id' )->EQUAL_TO( $wikiId )
-//			->AND_( 'flag_type_id' )->EQUAL_TO( ... ) // TODO add filtering by flag type
-			->runLoop( $db, function( &$flaggedPages, $row ) {
-				$flaggedPages[] = $row->page_id;
-			} );
+			->WHERE( 'wiki_id' )->EQUAL_TO( $wikiId );
+
+		if ( $flagTypeId !== null ) {
+			$flaggedPages->AND_( 'flag_type_id' )->EQUAL_TO( $flagTypeId );
+		}
+
+		$flaggedPages = $flaggedPages->runLoop( $db, function( &$flaggedPages, $row ) {
+			$flaggedPages[] = $row->page_id;
+		} );
 
 		return $flaggedPages;
 	}

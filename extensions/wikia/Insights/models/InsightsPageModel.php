@@ -22,8 +22,6 @@ abstract class InsightsPageModel extends InsightsModel {
 		/** @var int Number of current pagination page */
 		$page = 0;
 
-	abstract function getInsightType();
-
 	public function getTotalResultsNum() {
 		return $this->total;
 	}
@@ -38,6 +36,10 @@ abstract class InsightsPageModel extends InsightsModel {
 
 	public function getPage() {
 		return $this->page;
+	}
+
+	public function getPaginationUrlParams() {
+		return [];
 	}
 
 	/**
@@ -125,7 +127,7 @@ abstract class InsightsPageModel extends InsightsModel {
 	 * @param $articlesIds An array of IDs of articles to fetch views for
 	 * @return array An array with views for the last four time ids
 	 */
-	public function getPageViewsData( $articlesIds ) {
+	public function getPageViewsData( array $articlesIds ) {
 		global $wgCityId;
 		/**
 		 * Get pv for the last 4 Sundays
@@ -227,6 +229,7 @@ abstract class InsightsPageModel extends InsightsModel {
 	public function purgeInsightsCache() {
 		global $wgMemc;
 
+		// @TODO Fix purging per flag type
 		$cacheKey = $this->getMemcKey( self::INSIGHTS_MEMC_ARTICLES_KEY );
 
 		$wgMemc->delete( $cacheKey );

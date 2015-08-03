@@ -6,12 +6,21 @@
 class InsightsFlagsModel extends InsightsPageModel {
 	const INSIGHT_TYPE = 'flags';
 
-	public $loopNotificationConfig = [
-		'displayFixItMessage' => false,
-	];
+	public
+		$flagTypeId,
+		$loopNotificationConfig = [
+			'displayFixItMessage' => false,
+		];
 
 	public function getInsightType() {
 		return self::INSIGHT_TYPE;
+	}
+
+	public function getPaginationUrlParams() {
+		if ( $this->flagTypeId ) {
+			return [ 'flagTypeId' => $this->flagTypeId ];
+		}
+		return [];
 	}
 
 	/**
@@ -42,87 +51,86 @@ class InsightsFlagsModel extends InsightsPageModel {
 	 */
 	public function getContent( $params ) {
 		$this->preparePaginationParams( $params );
+		$this->flagTypeId = $params['flagTypeId'];
+		return $this->fetchArticlesData();
+	}
 
-		$articlesData = $this->fetchArticlesData();
+	/**
+	 * Prepare data of articles - title, last revision, link etc.
+	 * @return array
+	 */
+	public function fetchArticlesData() {
+		$articlesData = [];
+		$flaggedPages = $this->getPagesByFlagType();
+
+		if ( count( $flaggedPages ) > 0 ) {
+			$articlesData = $this->prepareData( $flaggedPages );
+
+			if ( $this->arePageViewsRequired() ) {
+				$articlesIds = array_keys( $articlesData );
+				$pageViewsData = $this->getPageViewsData( $articlesIds );
+				$articlesData = $this->assignPageViewsData( $articlesData, $pageViewsData );
+			}
+		}
 
 		return $articlesData;
 	}
 
 	/**
-	 * Prepare data of articles - title, last revision, link etc.
+	 * @param array $pagesIds Array of pages Ids
+	 * @return array
+	 * e.g. result
+	 * [
+	 * 	{page_id} => [
+	 * 		'link' => {link_to_page},
+	 * 		'metadata' => ['lastRevision'=>{array_with_revision_data} ] @see \InsightsPageModel::prepareRevisionData
+	 * 	]
+	 * ]
+	 * @throws MWException
 	 */
-	public function fetchArticlesData() {
-		$cacheKey = $this->getMemcKey( self::INSIGHTS_MEMC_ARTICLES_KEY );
-		$articlesData = WikiaDataAccess::cache( $cacheKey, self::INSIGHTS_MEMC_TTL, function () {
-			$res = $this->sendQuery();
+	public function prepareData( $pagesIds ) {
+		$data = [];
 
-			if ( count( $res ) > 0 ) {
-				$articlesData = $this->prepareData( $res );
+		foreach ( $pagesIds as $pageId ) {
+			$article = [];
 
-				if ( $this->arePageViewsRequired() ) {
-					$articlesIds = array_keys( $articlesData );
-					$pageViewsData = $this->getPageViewsData( $articlesIds );
-					$articlesData = $this->assignPageViewsData( $articlesData, $pageViewsData );
-				}
+			$title = Title::newFromID( $pageId );
+			$params = $this->getUrlParams();
+			$article['link'] = InsightsHelper::getTitleLink( $title, $params );
+
+			$lastRev = $title->getLatestRevID();
+			$rev = Revision::newFromId( $lastRev );
+			if ( $rev ) {
+				$article['metadata']['lastRevision'] = $this->prepareRevisionData( $rev );
 			}
-			return $articlesData;
-		} );
-		return $articlesData;
+
+			$data[ $title->getArticleID() ] = $article;
+		}
+		return $data;
 	}
 
+	/**
+	 * @return array
+	 */
+	private function getPagesByFlagType() {
+		$app = F::app();
 
-	private function sendQuery() {
-		/**
-		 * Sends a request to the FlaggedPagesApiController to list of pages marked with flags
-		 * with and without instances to display in the edit form.
-		 * @return WikiaResponse
-		 */
-		$flaggedPages = F::app()->sendRequest( 'FlaggedPagesApiController', 'getFlaggedPages' )->getData()['data'];
+		/* Select first type id by default */
+		if ( empty( $this->flagTypeId ) ) {
+			$flagTypes = $app->sendRequest( 'FlagsApiController', 'getFlagTypes' )->getData()['data'];
+			$this->flagTypeId = current($flagTypes)['flag_type_id'];
+		}
+
+		/* Get to list of pages marked with flags */
+		$flaggedPages = $app->sendRequest(
+			'FlaggedPagesApiController',
+			'getFlaggedPages',
+			[ 'flag_type_id' => $this->flagTypeId ]
+		)->getData()['data'];
+
 		$this->setTotal( count( $flaggedPages ) );
 		$flaggedPages = array_slice( $flaggedPages, $this->getOffset(), $this->getLimitResultsNum() );
 
-		$result = [];
-		foreach ( $flaggedPages as $pageId ) {
-			$title = Title::newFromID( $pageId );
-			$result[] = [
-				InsightsFlagsModel::INSIGHT_TYPE,
-				0,
-				$title->getNamespace(),
-				$title->getText()
-			];
-		}
-		return $result;
-	}
-
-	public function prepareData( $res ) {
-		$data = [];
-
-		foreach ( $res as $resItem ) {
-			$titleText = $resItem[3];
-			$namespace = $resItem[2];
-			if ( $titleText ) {
-				$article = [];
-				$params = $this->getUrlParams();
-
-				$title = Title::newFromText( $titleText, $namespace );
-				$article['link'] = InsightsHelper::getTitleLink( $title, $params );
-
-				$lastRev = $title->getLatestRevID();
-				$rev = Revision::newFromId( $lastRev );
-
-				if ( $rev ) {
-					$article['metadata']['lastRevision'] = $this->prepareRevisionData( $rev );
-				}
-
-//				if ( $this->arePageViewsRequired() ) {
-//					$article['metadata']['pv7'] = 0;
-//					$article['metadata']['pv28'] = 0;
-//					$article['metadata']['pvDiff'] = 0;
-//				}
-
-				$data[ $title->getArticleID() ] = $article;
-			}
-		}
-		return $data;
+		return $flaggedPages;
 	}
 }
