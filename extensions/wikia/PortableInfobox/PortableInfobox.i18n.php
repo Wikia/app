@@ -39,68 +39,68 @@ $messages['qqq'] = array(
 
 $messages['de'] = array(
 	'portable-infobox-desc' => 'Erstelle mit einfachem mächtigen XML-Markup portable Infoboxen, die in jedem Skin und auf jeder Plattform in sauberem semantischen HTML-Markup gerendert werden.',
-	'unimplemented-infobox-tag' => 'Nicht implementiertes Infobox-Tag: <$1>',
+	'portable-infobox-unimplemented-infobox-tag' => 'Nicht implementiertes Infobox-Tag: <$1>',
 	'xml-parse-error' => 'Fehler im XML-Markup. Bitte überprüfe deinen XML-Code.',
 );
 
 $messages['es'] = array(
 	'portable-infobox-desc' => 'Crea infoboxes portátiles usando marcadores XML de fácil comprensión y renderizádolas en cualquier diseño/plataforma con un claro marcado semántico HTML',
-	'unimplemented-infobox-tag' => 'Etiqueta de la infobox no implementada: <$1>',
+	'portable-infobox-unimplemented-infobox-tag' => 'Etiqueta de la infobox no implementada: <$1>',
 	'xml-parse-error' => 'Marcado XML incorrecto. Por favor, comprueba tu XML.',
 );
 
 $messages['fr'] = array(
 	'portable-infobox-desc' => "À l'aide d'un balisage de type XML facile à comprendre et simple, permet de créer des infoboxes portables et de les afficher sur n'importe quelle apparence/plateforme",
-	'unimplemented-infobox-tag' => "Balise d'infobox non reconnue : <$1>",
+	'portable-infobox-unimplemented-infobox-tag' => "Balise d'infobox non reconnue : <$1>",
 	'xml-parse-error' => 'Balisage XML incorrect. Veuillez valider votre code.',
 );
 
 $messages['it'] = array(
 	'portable-infobox-desc' => 'Crea profili portatili con potenti codici tipo XML facili da capire che possono essere processati su qualunque skin o piattaforma usando semplici codici semantici HTML',
-	'unimplemented-infobox-tag' => 'Tag profilo non inclusi: <$1>',
+	'portable-infobox-unimplemented-infobox-tag' => 'Tag profilo non inclusi: <$1>',
 	'xml-parse-error' => 'Sintassi XML non corretta. Per favore, controlla il tuo XML.',
 );
 
 $messages['ja'] = array(
 	'portable-infobox-desc' => '分かりやすくてパワフルなXML的マークアップを使ってポータブル・インフォボックスを作成し、どんなスキンやプラットフォーム上でも整ったセマンティックHTMLでの表示を可能にします',
-	'unimplemented-infobox-tag' => '実装されていないインフォボックスのタグです：<$1>',
+	'portable-infobox-unimplemented-infobox-tag' => '実装されていないインフォボックスのタグです：<$1>',
 	'xml-parse-error' => 'XMLマークアップに誤りがあります。XMLをもう一度ご確認ください。',
 );
 
 $messages['nl'] = array(
 	'portable-infobox-desc' => 'Create portable infoboxes which can be rendered using clean semantic HTML markup on
 	any skin / platform using using easy to understand powerful XML-like markup',
-	'unimplemented-infobox-tag' => 'Unimplemented infobox tag: <$1>',
+	'portable-infobox-unimplemented-infobox-tag' => 'Unimplemented infobox tag: <$1>',
 	'xml-parse-error' => 'Incorrect XML markup. Please validate your XML.',
 );
 
 $messages['pl'] = array(
 	'portable-infobox-desc' => 'Twórz przenośne infoboksy używając prostej do zrozumienia i zarazem potężnej składni  podobnej do XML. W efekcie powstanie czysta semantyczna składnia HTML, która pozwoli na wyświetlanie infoboksu na każdej skórce i platformie',
-	'unimplemented-infobox-tag' => 'Niezaimplementowany tag infoboksa: <$1>',
+	'portable-infobox-unimplemented-infobox-tag' => 'Niezaimplementowany tag infoboksa: <$1>',
 	'xml-parse-error' => 'Błędna składnia XML. Proszę sprawdź kod XML.',
 );
 
 $messages['pt'] = array(
 	'portable-infobox-desc' => 'Cria infoboxes portáteis usando marcadores semânticos de HTML claros em qualquer skin/ plataforma usando marcadores XML de fácil compreensão',
-	'unimplemented-infobox-tag' => 'Etiqueta de infobox não implementada: <$1>',
+	'portable-infobox-unimplemented-infobox-tag' => 'Etiqueta de infobox não implementada: <$1>',
 	'xml-parse-error' => 'Marcador XML incorreto. Por favor, verifique o seu XML.',
 );
 
 $messages['ru'] = array(
 	'portable-infobox-desc' => 'Создавайте модульные инфобоксы, используя простую и эффективную XML-подобную разметку, которые будут отображаться в любом скине и для любой платформы в простой семантической HTML-разметке',
-	'unimplemented-infobox-tag' => 'Несуществующий тег инфобокса: <$1>',
+	'portable-infobox-unimplemented-infobox-tag' => 'Несуществующий тег инфобокса: <$1>',
 	'xml-parse-error' => 'Некорректная XML-разметка. Пожалуйста, проверьте разметку.',
 );
 
 $messages['zh-hans'] = array(
 	'portable-infobox-desc' => '您可以使用类似XML标记创建简便的信息表格，并且可以使用清晰的语义特性HTML标记在任何皮肤或者平台进行呈现',
-	'unimplemented-infobox-tag' => '未生效的信息表格标签：<$1>',
+	'portable-infobox-unimplemented-infobox-tag' => '未生效的信息表格标签：<$1>',
 	'xml-parse-error' => '不正确的XML标记。请重新验证您的XML。',
 );
 
 $messages['zh-hant'] = array(
 	'portable-infobox-desc' => '您可以使用類似XML標記創建簡便的信息表格，並且可以使用清晰的語義特性HTML標記在任何皮膚或者平台進行呈現',
-	'unimplemented-infobox-tag' => '未生效的信息表格標籤：<$1>',
+	'portable-infobox-unimplemented-infobox-tag' => '未生效的信息表格標籤：<$1>',
 	'xml-parse-error' => '不正確的XML標記。請重新驗證您的XML。',
 );
 
