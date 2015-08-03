@@ -440,12 +440,13 @@ class CuratedContentController extends WikiaController {
 
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 
+		//TODO Remove this check in CONCF-978
 		if ( !empty( $wgEnableCuratedContentUnauthorizedSave ) ) {
 			$helper = new CuratedContentHelper();
 			$data = $this->request->getArray( 'data', [] );
 
-			// strip data
-			foreach( $data as &$section ) {
+			// strip excessive data used in mercury interface (added in self::getData method)
+			foreach ( $data as &$section ) {
 				unset( $section['node_type'] );
 				unset( $section['image_url'] );
 				$section['title'] = $section['label'];
