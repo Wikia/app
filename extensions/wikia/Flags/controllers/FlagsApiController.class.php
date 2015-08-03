@@ -363,25 +363,25 @@ class FlagsApiController extends FlagsApiBaseController {
 	}
 
 	private function purgeFlaggedPages( Array $flags = [] ) {
-		$flagsIds = $this->prepareFlagTypesIds( $flags );
+		$flagTypesIds = $this->prepareFlagTypesIds( $flags );
 
-		if ( !empty( $flagsIds ) ) {
-			( new FlaggedPagesCache() )->purgeFlagTypesByIds( $flagsIds );
+		if ( !empty( $flagTypesIds ) ) {
+			( new FlaggedPagesCache() )->purgeFlagTypesByIds( $flagTypesIds );
 		} else {
 			( new FlaggedPagesCache() )->purgeAllFlagTypes();
 		}
 	}
 
 	private function prepareFlagTypesIds( Array $flags ) {
-		$flagsIds = [];
+		$flagTypesIds = [];
 
 		foreach ( $flags as $flag ) {
 			if ( !empty( $flag['flag_type_id'] ) ) {
-				$flagsIds[] = $flag['flag_type_id'];
+				$flagTypesIds[] = $flag['flag_type_id'];
 			}
 		}
 
-		return $flagsIds;
+		return $flagTypesIds;
 	}
 
 	/**
