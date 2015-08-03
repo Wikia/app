@@ -10,7 +10,7 @@ class CuratedContentValidatorTest extends WikiaBaseTest {
 	 * @dataProvider testValidationDataProvider
 	 */
 	public function testValidation( $errorsExpected, $data, $brokenValidationMessage ) {
-		$this->assertEquals( $errorsExpected, ( new CuratedContentValidator( $data ) )->getErrors(), $brokenValidationMessage );
+		$this->assertEquals( $errorsExpected, ( new CuratedContentValidator )->validateData( $data ), $brokenValidationMessage );
 	}
 
 	public function testValidationDataProvider() {
