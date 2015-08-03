@@ -18,6 +18,10 @@ class CuratedContentValidator {
 	private $titles;
 	private $hasOptionalSection;
 
+	public function __construct() {
+		$this->reset();
+	}
+
 	public function reset() {
 		$this->errors = [ ];
 		$this->titles = [ ];
@@ -39,13 +43,17 @@ class CuratedContentValidator {
 			}
 		}
 		// also check section for duplicate title
+		$this->validateDuplicatedTitles();
+
+		return $this->errors;
+	}
+
+	public function validateDuplicatedTitles() {
 		foreach ( array_count_values( $this->titles ) as $title => $count ) {
 			if ( $count > 1 ) {
 				$this->error( [ 'title' => $title ], self::ERR_DUPLICATED_LABEL );
 			}
 		}
-
-		return $this->errors;
 	}
 
 	public function getErrors() {
