@@ -3,7 +3,12 @@
 /**
  * Data model specific to a subpage with a list of pages marked with flags
  */
+
+use Wikia\Logger\Loggable;
+
 class InsightsFlagsModel extends InsightsPageModel {
+	use Loggable;
+
 	const INSIGHT_TYPE = 'flags';
 
 	public
@@ -95,6 +100,12 @@ class InsightsFlagsModel extends InsightsPageModel {
 			$article = [];
 
 			$title = Title::newFromID( $pageId );
+
+			if ( $title === null ) {
+				$this->error( 'Flags Insights received reference to non existent page' );
+				continue;
+			}
+
 			$params = $this->getUrlParams();
 			$article['link'] = InsightsHelper::getTitleLink( $title, $params );
 
