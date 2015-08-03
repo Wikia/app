@@ -3,9 +3,9 @@
 	<select class="insights-sorting" name="flagTypeId" onchange="this.form.submit()">
 		<?php
 		foreach ( $flagTypes as $flagType ):
-			$selected = ( $flagType['flag_type_id'] == $selectedFlagTypeId ) ? true : false;
+			$selected = ( $flagType['flag_type_id'] == $selectedFlagTypeId );
 		?>
-			<option value="<?= $flagType['flag_type_id']; ?>" <?= $selected ? 'selected="selected"' : ''; ?>><?= $flagType['flag_name'] ?></option>
+			<option value="<?= Sanitizer::encodeAttribute( $flagType['flag_type_id'] ); ?>" <?= $selected ? 'selected="selected"' : ''; ?>><?= htmlspecialchars( $flagType['flag_name'] ) ?></option>
 		<?php
 		endforeach;
 		?>
