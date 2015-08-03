@@ -6,7 +6,7 @@
 			foreach ( $flagTypes as $flagType ):
 				$selected = ( $flagType['flag_type_id'] == $selectedFlagTypeId ) ? true : false;
 			?>
-				<option value="<?= $flagType['flag_type_id']; ?>" <?= $selected ? 'selected="selected"' : ''; ?>><?= $flagType['flag_name'] ?></option>
+				<option value="<?= $flagType['flag_type_id']; ?>" <?= $selected ? 'selected="selected"' : ''; ?>><?= Sanitizer::escapeHtmlAllowEntities( $flagType['flag_name'] ) ?></option>
 			<?php
 			endforeach;
 			?>
