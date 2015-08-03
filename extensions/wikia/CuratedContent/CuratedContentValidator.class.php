@@ -17,11 +17,13 @@ class CuratedContentValidator {
 	private $errors;
 	private $titles;
 	private $hasOptionalSection;
+	private $validateItems;
 
-	public function __construct( $data ) {
+	public function __construct( $data, $validateItems = true ) {
 		$this->errors = [ ];
 		$this->titles = [ ];
 		$this->hasOptionalSection = false;
+		$this->validateItems = $validateItems;
 
 		// validate sections
 		foreach ( $data as $section ) {
@@ -52,7 +54,7 @@ class CuratedContentValidator {
 	private function validateFeaturedSection( $section ) {
 		if ( !empty( $section['items'] ) && is_array( $section['items'] ) ) {
 			foreach ($section['items'] as $item) {
-				$this->validateItem($item);
+				$this->validateItem( $item );
 			}
 		}
 	}
@@ -81,16 +83,18 @@ class CuratedContentValidator {
 			$this->validateImage( $section );
 		}
 
-		if ( !empty( $section['items'] ) && is_array( $section['items'] ) ) {
-			// if section has items - validate them
-			foreach ($section['items'] as $item) {
-				$this->validateCategoryItem($item);
-				$this->validateImage($item);
-			}
-		} else {
-			// if section doesn't have any items and it's not Featured Section, it's an error
-			if ( empty( $section['featured'] ) ) {
-				$this->error( $section, self::ERR_ITEMS_MISSING );
+		if ( !empty( $this->validateItems ) ){
+			if ( !empty( $section['items'] ) && is_array( $section['items'] ) ) {
+				// if section has items - validate them
+				foreach ($section['items'] as $item) {
+					$this->validateCategoryItem($item);
+					$this->validateImage($item);
+				}
+			} else {
+				// if section doesn't have any items and it's not Featured Section, it's an error
+				if ( empty( $section['featured'] ) ) {
+					$this->error( $section, self::ERR_ITEMS_MISSING );
+				}
 			}
 		}
 
