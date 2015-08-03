@@ -28,11 +28,7 @@ class ApiAddMediaPermanent extends ApiAddMedia {
 		);
 		$duplicate = $this->getFileDuplicate( $tempFile->getLocalRefPath() );
 		if ( $duplicate ) {
-			return array(
-				'title' => $duplicate->getTitle()->getText(),
-				'url' => $duplicate->getUrl(),
-				'image_id' => $duplicate->getTitle()->getArticleID()
-			);
+			$file = $duplicate;
 		} else {
 			$title = $this->getUniqueTitle(
 				wfStripIllegalFilenameChars( $this->mParams['title'] )
@@ -42,12 +38,13 @@ class ApiAddMediaPermanent extends ApiAddMedia {
 			}
 			$file = new LocalFile( $title, RepoGroup::singleton()->getLocalRepo() );
 			$file->upload( $tempFile->getPath(), '', $pageText ? $pageText : '' );
-			return array(
-				'title' => $file->getTitle()->getText(),
-				'url' => $file->getUrl(),
-				'image_id' => $file->getTitle()->getArticleID()
-			);
 		}
+
+		return array(
+			'title' => $file->getTitle()->getText(),
+			'url' => $file->getUrl(),
+			'article_id' => $file->getTitle()->getArticleID()
+		);
 	}
 
 	private function executeVideo() {
