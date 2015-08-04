@@ -163,6 +163,8 @@ $messages['de'] = array(
 	'insights-used-on' => 'Wird in $1 Artikel(n) verwendet',
 	'insights-altaction-convert' => 'Konvertieren!',
 	'insights-altaction-seedraft' => 'Entwurf ansehen',
+	'insights-list-subtitle-flags' => 'Mit Markierungen gekennzeichnete Seiten',
+	'insights-list-description-flags' => 'In diese Seiten muss eventuell etwas Arbeit investiert werden. Sieh dir eine spezifische Markierungsart an und nimm Stellung zu den Anregungen in Markierungen. Sobald das erledigt ist, kannst du eine Markierung entfernen.',
 );
 
 $messages['es'] = array(
@@ -222,6 +224,8 @@ $messages['es'] = array(
 	'insights-used-on' => 'Utilizado en $1 artículos',
 	'insights-altaction-convert' => '¡Convertir!',
 	'insights-altaction-seedraft' => 'Ver el borrador',
+	'insights-list-subtitle-flags' => 'Páginas marcadas con avisos',
+	'insights-list-description-flags' => 'Estas páginas podrían necesitar algo de trabajo. Mira el tipo de aviso específico y toma en cuenta las sugerencias de los avisos. Una vez que termines, puedes quitar el aviso',
 );
 
 $messages['fr'] = array(
@@ -269,7 +273,7 @@ $messages['fr'] = array(
 	'insights-list-header-altaction' => 'Action',
 	'insights-list-header-pageviews' => 'Pages vues',
 	'insights-list-subtitle-nonportableinfoboxes' => 'Infoboxes non portables',
-	'insights-list-description-nonportableinfoboxes' => 'Les infoboxes suivantes sont construites avec des tableaux ou des balises <div> ; elles doivent être converties pour utiliser les nouvelles [[Aide:Infoboxes portables|balises]] et apparaître ainsi parfaitement sur toutes les plate-formes . Si vous avez des questions,  [[w:c:community:Thread:841717|visitez notre forum]].',
+	'insights-list-description-nonportableinfoboxes' => 'Les infoboxes suivantes sont construites avec des tableaux ou des balises <div> ; elles doivent être converties pour utiliser les nouvelles [[Aide:Infoboxes portables|balises]] et apparaître ainsi parfaitement sur toutes les plate-formes. Si vous avez des questions, [[w:c:community:Thread:841717|visitez notre forum]].',
 	'insights-notification-message-inprogress-nonportableinfoboxes' => 'Les balises de cette infobox doivent être mises à jour.',
 	'insights-notification-message-fixed-nonportableinfoboxes' => "Fantastique ! L'infobox sur cette page a été convertie avec succès.",
 	'insights-notification-next-item-nonportableinfoboxes' => 'Convertir la prochaine infobox.',
@@ -281,6 +285,8 @@ $messages['fr'] = array(
 	'insights-used-on' => 'Utiliseé sur $1 articles',
 	'insights-altaction-convert' => 'Convertir !',
 	'insights-altaction-seedraft' => 'Voir le brouillon',
+	'insights-list-subtitle-flags' => 'Pages signalées par des flags',
+	'insights-list-description-flags' => "Ces pages ont besoin d'être travaillées. Recherchez un certain type de flag et suivez les suggestions. Une fois que vous avez fini, supprimez le flag.",
 );
 
 $messages['it'] = array(
@@ -340,6 +346,8 @@ $messages['it'] = array(
 	'insights-used-on' => 'Usato in $1 articoli',
 	'insights-altaction-convert' => 'Fai la conversione!',
 	'insights-altaction-seedraft' => 'Visualizza la bozza',
+	'insights-list-subtitle-flags' => 'Pagine contrassegnate',
+	'insights-list-description-flags' => 'Queste pagine hanno bisogno di alcune modifiche. Vedi i diversi tipi di contrassegno e segui i suggerimenti. Una volta terminato il lavoro, puoi rimuovere il contrassegno',
 );
 
 $messages['ja'] = array(
@@ -399,6 +407,8 @@ $messages['ja'] = array(
 	'insights-used-on' => '$1個の記事で使用',
 	'insights-altaction-convert' => '変換する',
 	'insights-altaction-seedraft' => 'ドラフトを表示する',
+	'insights-list-subtitle-flags' => 'フラッグが付けられているページ',
+	'insights-list-description-flags' => 'これらは対処が必要であると思われるページです。フラッグの内容をご確認のうえ、記載の対処方法を行ってみてください。完了すると、フラッグを削除することができます',
 );
 
 $messages['nl'] = array(
@@ -458,6 +468,8 @@ $messages['nl'] = array(
 	'insights-used-on' => 'Used on $1 articles',
 	'insights-altaction-convert' => 'Convert!',
 	'insights-altaction-seedraft' => 'View the draft',
+	'insights-list-subtitle-flags' => 'Pages marked with flags',
+	'insights-list-description-flags' => "These pages may need some work. Look at specific flag type and address suggestions from flags. Once it's done you can remove a flag",
 );
 
 $messages['pl'] = array(
@@ -501,22 +513,24 @@ $messages['pl'] = array(
 	'insights-notification-see-more' => 'Zobacz więcej podpowiedzi.',
 	'insights-wanted-by' => '$1 linków',
 	'insights-module-see-more' => 'Zobacz więcej podpowiedzi',
-	'insights-list-header-page' => 'Page',
-	'insights-list-header-altaction' => 'Action',
-	'insights-list-header-pageviews' => 'Page views',
-	'insights-list-subtitle-nonportableinfoboxes' => 'Non-portable infoboxes',
-	'insights-list-description-nonportableinfoboxes' => "The following infoboxes are built with tables or divs, and should be converted to use the new [[Help:PortableInfoboxes|infobox markup]] so they render appropriately to all visitors. If you're stuck you can also [[w:c:community:Thread:841717|visit our forum thread and ask questions there]].",
-	'insights-notification-message-inprogress-nonportableinfoboxes' => 'This infobox needs to be updated with the new infobox markup.',
-	'insights-notification-message-fixed-nonportableinfoboxes' => 'Awesome! The infobox on this page has been converted.',
-	'insights-notification-next-item-nonportableinfoboxes' => 'Convert the next infobox.',
-	'insights-sort-pv7' => 'Page views, last week',
-	'insights-sort-pv28' => 'Page views, last 4 weeks',
-	'insights-sort-pvDiff' => 'Recent increase in page views',
-	'insights-sort-title' => 'Alphabetical',
-	'insights-notification-message-fixit' => "Let's fix it.",
-	'insights-used-on' => 'Used on $1 articles',
-	'insights-altaction-convert' => 'Convert!',
-	'insights-altaction-seedraft' => 'View the draft',
+	'insights-list-header-page' => 'Strona',
+	'insights-list-header-altaction' => 'Działanie',
+	'insights-list-header-pageviews' => 'Liczba odsłon',
+	'insights-list-subtitle-nonportableinfoboxes' => 'Nieprzenośne infoboksy',
+	'insights-list-description-nonportableinfoboxes' => 'Następujące infoboksy są zbudowane z tabel lub znaczników div i powinny zostać przekształcone, tak aby wykorzystywały nowe [[Pomoc:Przenośne_infoboksy|znaczniki infoboksów]], żeby poprawnie wyświetlały się u wszystkich użytkowników. Jeśli nie wiesz co robić, możesz też [[w:c:community:Thread:841717|odwiedzić nasze forum i zadawać pytania tutaj]].',
+	'insights-notification-message-inprogress-nonportableinfoboxes' => 'Ten infoboks powinien zostać zaktualizowany poprzez dodanie nowych znaczników infoboksów.',
+	'insights-notification-message-fixed-nonportableinfoboxes' => 'Świetnie! Infoboks na tej stronie został przekształcony.',
+	'insights-notification-next-item-nonportableinfoboxes' => 'Przekształć następny infoboks.',
+	'insights-sort-pv7' => 'Odsłon w zeszłym tygodniu',
+	'insights-sort-pv28' => 'Odsłon, ostatnie 4 tygodnie',
+	'insights-sort-pvDiff' => 'Niedawny wzrost liczby odsłon',
+	'insights-sort-title' => 'Alfabetyczne',
+	'insights-notification-message-fixit' => 'Czas to naprawić.',
+	'insights-used-on' => 'Wykorzystywany przez $1 artykułów',
+	'insights-altaction-convert' => 'Przekształć!',
+	'insights-altaction-seedraft' => 'Zobacz wersję roboczą',
+	'insights-list-subtitle-flags' => 'Strony oznaczone flagami',
+	'insights-list-description-flags' => 'Następujące strony mogą wymagać uwagi. Spójrz na określony rodzaj flagi i zajmij się zadaniami sugerowanymi przez flagi. Kiedy już się z nimi rozprawisz, możesz usunąć flagę',
 );
 
 $messages['pt'] = array(
@@ -576,6 +590,8 @@ $messages['pt'] = array(
 	'insights-used-on' => 'Usado em $1 artigos',
 	'insights-altaction-convert' => 'Converter!',
 	'insights-altaction-seedraft' => 'Visualizar o rascunho',
+	'insights-list-subtitle-flags' => 'Páginas marcadas com bandeiras',
+	'insights-list-description-flags' => 'Estas páginas podem precisar de algum trabalho. Observe o tipo específico de bandeira e siga as sugestões oferecidas pelas bandeiras. Depois disso, você pode remover a bandeira',
 );
 
 $messages['ru'] = array(
@@ -587,7 +603,7 @@ $messages['ru'] = array(
 	'insights-list-no-items' => 'Отлично! В очереди больше нет статей, которые бы требовали внимания.',
 	'insights-list-subtitle-uncategorizedpages' => 'Некатегоризованные страницы',
 	'insights-list-description-uncategorizedpages' => 'Добавьте категории данным страницам. Правильно присвоенные категории  – залог хорошо организованной вики!',
-	'insights-notification-message-inprogress-uncategorizedpages' => 'Необходимо добавить категории для данной страницы. Давайте исправим это!',
+	'insights-notification-message-inprogress-uncategorizedpages' => 'Необходимо добавить категории для данной страницы. ',
 	'insights-notification-message-fixed-uncategorizedpages' => 'Отлично, для данной страницы добавлена категория!',
 	'insights-notification-next-item-uncategorizedpages' => 'Перейти к следующей некатегоризованной статье.',
 	'insights-list-subtitle-withoutimages' => 'Страницы без изображений',
@@ -597,12 +613,12 @@ $messages['ru'] = array(
 	'insights-notification-next-item-withoutimages' => ' Перейти к следующей статье без изображения.',
 	'insights-list-subtitle-deadendpages' => 'Страницы без ссылок',
 	'insights-list-description-deadendpages' => 'Эти страницы должны иметь ссылки на другие статьи на вашей вики. Статьи с корректными ссылками помогут читателям найти больше информации по вашей теме, а также повысят позиции в результатах поисковых систем.',
-	'insights-notification-message-inprogress-deadendpages' => 'Необходимо добавить ссылки для данной страницы. Давайте исправим это!',
+	'insights-notification-message-inprogress-deadendpages' => 'Необходимо добавить ссылки для данной страницы. ',
 	'insights-notification-message-fixed-deadendpages' => 'Ура, эта страница теперь имеет ссылки!',
 	'insights-notification-next-item-deadendpages' => 'Перейти к следующей статье без ссылок.',
 	'insights-list-subtitle-wantedpages' => 'Требуемые страницы',
 	'insights-list-description-wantedpages' => 'Страницы, которых не существует, но на них есть ссылки с других страниц данной вики! Создайте статью или перенаправьте их на правильную статью, чтобы помочь читателям ориентироваться по вашему сообществу.',
-	'insights-notification-message-inprogress-wantedpages' => 'Необходимо создать эту страницу. Давайте исправим это!',
+	'insights-notification-message-inprogress-wantedpages' => 'Необходимо создать эту страницу. ',
 	'insights-notification-message-fixed-wantedpages' => 'Благодарим за создание этой страницы!',
 	'insights-notification-next-item-wantedpages' => 'Создать другую статью.',
 	'insights-list-subtitle-popularpages' => 'Популярные страницы',
@@ -635,6 +651,8 @@ $messages['ru'] = array(
 	'insights-used-on' => 'Используется в $1 статье(ях)',
 	'insights-altaction-convert' => 'Конвертировать!',
 	'insights-altaction-seedraft' => 'Просмотр изменений',
+	'insights-list-subtitle-flags' => 'Страницы, отмеченные флагами',
+	'insights-list-description-flags' => 'Возможно, над этими страницами ещё нужно работать. Разные типы флагов показывают, что именно нужно изменить в статье. Как только работа будет завершена, флаг можно будет убрать',
 );
 
 $messages['zh-hans'] = array(
@@ -694,6 +712,8 @@ $messages['zh-hans'] = array(
 	'insights-used-on' => '用于$1篇文章',
 	'insights-altaction-convert' => '转换',
 	'insights-altaction-seedraft' => '查看草稿',
+	'insights-list-subtitle-flags' => '标有提醒的页面',
+	'insights-list-description-flags' => '下列页面可能需要处理。借助于提醒查看特定的提醒类型和建议的地址。一旦完成，即可删除提醒。',
 );
 
 $messages['zh-hant'] = array(
@@ -745,6 +765,8 @@ $messages['zh-hant'] = array(
 	'insights-module-see-more' => '查看更多問題頁面列表',
 	'insights-altaction-convert' => '轉換',
 	'insights-altaction-seedraft' => '查看草圖',
+	'insights-list-subtitle-flags' => '標有提醒的頁面',
+	'insights-list-description-flags' => '下面的頁面可能需要處理。請借助于提醒查看特定的提醒類型和建議的地址。一旦完成，即可刪除提醒。',
 );
 
 $messages['zh-tw'] = array(
