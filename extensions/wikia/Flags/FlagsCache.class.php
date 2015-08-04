@@ -93,11 +93,13 @@ class FlagsCache {
 	}
 
 	/**
-	 * Returns a memcache key for data on all types of flags for the wikia.
+	 * Returns a memcache key for list of flag types on wikia.
+	 * default $targeting = 0 for all flag types or other numbers for specific targeting
 	 * @param int $targeting @see FlagType::{flag_targeting constants}
 	 * @return String A memcache key
 	 */
 	private function getMemcKeyFlagTypesOnWikia( $targeting = 0 ) {
+		$targeting = intval( $targeting );
 		return wfMemcKey(
 			self::FLAGS_MEMC_KEY_PREFIX,
 			FlagsBaseModel::FLAGS_TYPES_TABLE,

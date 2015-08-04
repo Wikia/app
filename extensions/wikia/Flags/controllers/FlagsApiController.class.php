@@ -287,7 +287,7 @@ class FlagsApiController extends FlagsApiBaseController {
 
 			$flagTypes = $this->getFlagTypesForWikiaRawData(
 				$this->params['wiki_id'],
-				$this->request->getInt( 'flag_targeting', null )
+				$this->params['flag_targeting']
 			);
 
 			$this->makeSuccessResponse( $flagTypes );
