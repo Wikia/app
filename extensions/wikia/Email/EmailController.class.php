@@ -494,7 +494,7 @@ abstract class EmailController extends \WikiaController {
 		} else if ( is_object( $username ) ) {
 			throw new Fatal( 'Non-user object passed when user object or username expected' );
 		} else {
-			$user = \User::newFromName( $username );
+			$user = \User::newFromName( $username, $validate = false );
 		}
 		$this->assertValidUser( $user );
 
