@@ -16,7 +16,17 @@ require_once(dirname(__FILE__) . '/InfoboxReplaceHelper.class.php');
 class addLayoutToPortableInfoboxes extends Maintenance {
 
 	private $summaries = [
-		'en' => 'Adding explicit layout parameter'
+		'en' => 'Adding explicit layout parameter',
+		'de' => 'Explizite Layout-Parameter hinzufügen',
+		'es' => 'Agregar parámetro de diseño explícito',
+		'fr' => "Ajout d'un paramètre layout explicite",
+		'ja' => '明示的なlayoutパラメータを追加しています',
+		'pl' => 'Dodanie jawnego parametru layout',
+		'pt' => 'Adicionando o parâmetro de layout explícito',
+		'ru' => 'Добавление параметра разметки',
+		'zh-hant' => '添加顯式layout參數',
+		'zh-hans' => '添加顯式layout參數',
+		'zh' => '添加顯式layout參數',
 	];
 
 	public function __construct() {
