@@ -26,6 +26,7 @@ class InsightsHelper {
 	/**
 	 * Used to create the following messages:
 	 *
+	 * 'insights-notification-message-inprogress-flags',
 	 * 'insights-notification-message-inprogress-uncategorizedpages',
 	 * 'insights-notification-message-inprogress-withoutimages',
 	 * 'insights-notification-message-inprogress-deadendpages',
@@ -46,9 +47,10 @@ class InsightsHelper {
 	const INSIGHT_FIXED_MSG_PREFIX = 'insights-notification-message-fixed-';
 
 	public static $insightsPages = [
+		InsightsFlagsModel::INSIGHT_TYPE			=> 'InsightsFlagsModel',
 		InsightsUncategorizedModel::INSIGHT_TYPE	=> 'InsightsUncategorizedModel',
 		InsightsWithoutimagesModel::INSIGHT_TYPE	=> 'InsightsWithoutimagesModel',
-		InsightsDeadendModel::INSIGHT_TYPE		=> 'InsightsDeadendModel',
+		InsightsDeadendModel::INSIGHT_TYPE			=> 'InsightsDeadendModel',
 		InsightsWantedpagesModel::INSIGHT_TYPE		=> 'InsightsWantedpagesModel'
 	];
 

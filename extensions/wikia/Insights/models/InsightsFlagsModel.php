@@ -3,19 +3,41 @@
 /**
  * Data model specific to a subpage with a list of pages marked with flags
  */
+
+use Wikia\Logger\Loggable;
+
 class InsightsFlagsModel extends InsightsPageModel {
+	use Loggable;
+
 	const INSIGHT_TYPE = 'flags';
 
-	public $loopNotificationConfig = [
-		'displayFixItMessage' => false,
-	];
-
-	public function getDataProvider() {
-		return null;
-	}
+	public
+		$flagTypeId,
+		$loopNotificationConfig = [
+			'displayFixItMessage' => false,
+		];
 
 	public function getInsightType() {
 		return self::INSIGHT_TYPE;
+	}
+
+	public function getInsightCacheParams() {
+		return $this->flagTypeId;
+	}
+
+	public function getPaginationUrlParams() {
+		if ( $this->flagTypeId ) {
+			return [ 'flagTypeId' => $this->flagTypeId ];
+		}
+		return [];
+	}
+
+	/**
+	 * Get a type of a subpage and an edit parameter
+	 * @return array
+	 */
+	public function getUrlParams() {
+		return $this->getInsightParam();
 	}
 
 	/**
@@ -28,42 +50,27 @@ class InsightsFlagsModel extends InsightsPageModel {
 	}
 
 	public function arePageViewsRequired() {
-		return false;
+		return true;
 	}
 
-	/**
-	 * Get a type of a subpage only, we want a user to be directed to view.
-	 * @return array
-	 */
-	public function getUrlParams() {
-		return $this->getInsightParam();
-	}
-
-	/**
-	 * Get list of articles related to the given QueryPage category
-	 *
-	 * @return array
-	 */
-	public function getContent( $params ) {
-		$this->preparePaginationParams( $params );
-
-		$this->queryPageInstance = $this->getDataProvider();
-
-		$articlesData = $this->fetchArticlesData();
-
-		return $articlesData;
+	public function initModel( $params ) {
+		$this->flagTypeId = $params['flagTypeId'];
 	}
 
 	/**
 	 * Prepare data of articles - title, last revision, link etc.
+	 * @return array
 	 */
 	public function fetchArticlesData() {
 		$cacheKey = $this->getMemcKey( self::INSIGHTS_MEMC_ARTICLES_KEY );
-		$articlesData = WikiaDataAccess::cache( $cacheKey, self::INSIGHTS_MEMC_TTL, function () {
-			$res = $this->sendQuery();
 
-			if ( count( $res ) > 0 ) {
-				$articlesData = $this->prepareData( $res );
+		$articlesData = WikiaDataAccess::cache( $cacheKey, self::INSIGHTS_MEMC_TTL, function () {
+			$articlesData = [];
+
+			$flaggedPages = $this->getPagesByFlagType();
+
+			if ( count( $flaggedPages ) > 0 ) {
+				$articlesData = $this->prepareData( $flaggedPages );
 
 				if ( $this->arePageViewsRequired() ) {
 					$articlesIds = array_keys( $articlesData );
@@ -71,64 +78,84 @@ class InsightsFlagsModel extends InsightsPageModel {
 					$articlesData = $this->assignPageViewsData( $articlesData, $pageViewsData );
 				}
 			}
+
 			return $articlesData;
-		} );
+		});
+
 		return $articlesData;
 	}
 
-
-	private function sendQuery() {
-		/**
-		 * Sends a request to the FlaggedPagesApiController to list of pages marked with flags
-		 * with and without instances to display in the edit form.
-		 * @return WikiaResponse
-		 */
-		$flaggedPages = F::app()->sendRequest( 'FlaggedPagesApiController', 'getFlaggedPages' )->getData()['data'];
-		$this->setTotal( count( $flaggedPages ) );
-		$flaggedPages = array_slice( $flaggedPages, $this->getOffset(), $this->getLimitResultsNum() );
-
-		$result = [];
-		foreach ( $flaggedPages as $pageId ) {
-			$title = Title::newFromID( $pageId );
-			$result[] = [
-				InsightsFlagsModel::INSIGHT_TYPE,
-				0,
-				$title->getNamespace(),
-				$title->getText()
-			];
-		}
-		return $result;
-	}
-
-	public function prepareData( $res ) {
+	/**
+	 * @param array $pagesIds Array of pages Ids
+	 * @return array
+	 * e.g. result
+	 * [
+	 * 	{page_id} => [
+	 * 		'link' => {link_to_page},
+	 * 		'metadata' => ['lastRevision'=>{array_with_revision_data} ] @see \InsightsPageModel::prepareRevisionData
+	 * 	]
+	 * ]
+	 * @throws MWException
+	 */
+	public function prepareData( $pagesIds ) {
 		$data = [];
 
-		foreach ( $res as $resItem ) {
-			$titleText = $resItem[3];
-			$namespace = $resItem[2];
-			if ( $titleText ) {
-				$article = [];
-				$params = $this->getUrlParams();
+		foreach ( $pagesIds as $pageId ) {
+			$article = [];
 
-				$title = Title::newFromText( $titleText, $namespace );
-				$article['link'] = InsightsHelper::getTitleLink( $title, $params );
+			$title = Title::newFromID( $pageId );
 
-				$lastRev = $title->getLatestRevID();
-				$rev = Revision::newFromId( $lastRev );
-
-				if ( $rev ) {
-					$article['metadata']['lastRevision'] = $this->prepareRevisionData( $rev );
-				}
-
-//				if ( $this->arePageViewsRequired() ) {
-//					$article['metadata']['pv7'] = 0;
-//					$article['metadata']['pv28'] = 0;
-//					$article['metadata']['pvDiff'] = 0;
-//				}
-
-				$data[ $title->getArticleID() ] = $article;
+			if ( $title === null ) {
+				$this->error( 'Flags Insights received reference to non existent page' );
+				continue;
 			}
+
+			$params = $this->getUrlParams();
+			$article['link'] = InsightsHelper::getTitleLink( $title, $params );
+
+			$lastRev = $title->getLatestRevID();
+			$rev = Revision::newFromId( $lastRev );
+			if ( $rev ) {
+				$article['metadata']['lastRevision'] = $this->prepareRevisionData( $rev );
+			}
+
+			$data[ $title->getArticleID() ] = $article;
 		}
 		return $data;
+	}
+
+	/**
+	 * @return array
+	 */
+	private function getPagesByFlagType() {
+		$app = F::app();
+
+		/* Select first type id by default */
+		if ( empty( $this->flagTypeId ) ) {
+			$flagTypes = $app->sendRequest( 'FlagsApiController', 'getFlagTypes' )->getData()['data'];
+			$this->flagTypeId = current($flagTypes)['flag_type_id'];
+		}
+
+		/* Get to list of pages marked with flags */
+		$flaggedPages = $app->sendRequest(
+			'FlaggedPagesApiController',
+			'getFlaggedPages',
+			[ 'flag_type_id' => $this->flagTypeId ]
+		)->getData()['data'];
+
+		return $flaggedPages;
+	}
+
+	/**
+	 * Notification for flag insights
+	 * @param $subpage
+	 * @return array
+	 */
+	public function getInProgressNotificationForFlags( $subpage ) {
+		$controller = new InsightsController();
+		$params = $controller->getInsightListLinkParams( $subpage );
+		$params['notificationMessage'] = wfMessage( InsightsHelper::INSIGHT_INPROGRESS_MSG_PREFIX . $subpage )->plain()
+			. wfMessage( 'insights-notification-message-set-flags' )->plain();
+		return $params;
 	}
 }

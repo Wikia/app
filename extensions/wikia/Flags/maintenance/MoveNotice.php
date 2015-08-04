@@ -5,6 +5,7 @@ require_once( $dir . 'maintenance/Maintenance.php' );
 
 use Flags\FlagsExtractor;
 use Flags\FlagsCache;
+use Flags\FlaggedPagesCache;
 
 class MoveNotice extends Maintenance {
 
@@ -410,6 +411,7 @@ class MoveNotice extends Maintenance {
 		$pageFlags = [];
 
 		(new FlagsCache())->purgeFlagsForPage( $this->pageId );
+		(new FlaggedPagesCache())->purgeAllFlagTypes();
 
 		$response = $this->app->sendRequest( 'FlagsApiController',
 			'getFlagsForPage',
