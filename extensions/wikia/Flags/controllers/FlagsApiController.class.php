@@ -138,7 +138,8 @@ class FlagsApiController extends FlagsApiBaseController {
 			$modelResponse = $flagModel->addFlagsToPage( $this->params );
 
 			$this->getCache()->purgeFlagsForPage( $this->params['page_id'] );
-			$this->purgeFlaggedPages();
+			$this->purgeFlaggedPages( $this->params['flags'] );
+			$this->purgeFlagInsights( $this->params['flags'] );
 
 			$this->makeSuccessResponse( $modelResponse );
 			$this->logFlagChange( $this->params['flags'], $this->params['wiki_id'], $this->params['page_id'], self::LOG_ACTION_FLAG_ADDED );
@@ -165,7 +166,8 @@ class FlagsApiController extends FlagsApiBaseController {
 			$modelResponse = $flagModel->removeFlagsFromPage( $this->params['flags'] );
 
 			$this->getCache()->purgeFlagsForPage( $this->params['page_id'] );
-			$this->purgeFlaggedPages();
+			$this->purgeFlaggedPages( $this->params['flags'] );
+			$this->purgeFlagInsights( $this->params['flags'], $this->params['page_id'] );
 
 			$this->makeSuccessResponse( $modelResponse );
 			$this->logFlagChange( $this->params['flags'], $this->params['wiki_id'], $this->params['page_id'], self::LOG_ACTION_FLAG_REMOVED );
@@ -202,7 +204,6 @@ class FlagsApiController extends FlagsApiBaseController {
 			$modelResponse = $flagModel->updateFlagsForPage( $this->params['flags'] );
 
 			$this->getCache()->purgeFlagsForPage( $this->params['page_id'] );
-			$this->purgeFlaggedPages();
 
 			$this->makeSuccessResponse( $modelResponse );
 			$this->logParametersChange( $oldFlags, $this->params['flags'], $this->params['wiki_id'], $this->params['page_id'] );
@@ -264,7 +265,7 @@ class FlagsApiController extends FlagsApiBaseController {
 			$modelResponse = $flagTypeModel->removeFlagType( $this->params );
 
 			$this->getCache()->purgeFlagTypesForWikia();
-			$this->purgeFlaggedPages();
+			( new FlaggedPagesCache() )->purge( $this->params['flag_type_id'] );
 
 			$this->makeSuccessResponse( $modelResponse );
 		} catch( Exception $e ) {
@@ -363,8 +364,45 @@ class FlagsApiController extends FlagsApiBaseController {
 		$this->getRequestParams();
 	}
 
-	private function purgeFlaggedPages() {
-		( new FlaggedPagesCache() )->purgeAllFlagTypes();
+	private function purgeFlaggedPages( Array $flags = [] ) {
+		$flagTypesIds = $this->prepareFlagTypesIds( $flags );
+
+		if ( !empty( $flagTypesIds ) ) {
+			( new FlaggedPagesCache() )->purgeFlagTypesByIds( $flagTypesIds );
+		} else {
+			( new FlaggedPagesCache() )->purgeAllFlagTypes();
+		}
+	}
+
+	private function purgeFlagInsights( Array $flags = [], $pageId = null ) {
+		global $wgEnableInsightsExt;
+
+		if ( !empty( $wgEnableInsightsExt ) ) {
+			$flagsIds = $this->prepareFlagTypesIds( $flags );
+
+			$insightsFlagsModel = new InsightsFlagsModel();
+
+			foreach ( $flagsIds as $flagId ) {
+				$insightsFlagsModel->initModel( [ 'flagTypeId' => $flagId ] );
+				if ( !is_null( $pageId ) ) {
+					$insightsFlagsModel->updateInsightsCache( $pageId );
+				} else {
+					$insightsFlagsModel->purgeInsightsCache();
+				}
+			}
+		}
+	}
+
+	private function prepareFlagTypesIds( Array $flags ) {
+		$flagTypesIds = [];
+
+		foreach ( $flags as $flag ) {
+			if ( !empty( $flag['flag_type_id'] ) ) {
+				$flagTypesIds[] = $flag['flag_type_id'];
+			}
+		}
+
+		return $flagTypesIds;
 	}
 
 	/**

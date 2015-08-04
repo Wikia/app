@@ -25,6 +25,10 @@ class FlaggedPagesApiController extends FlagsApiBaseController {
 		try {
 			$this->getRequestParams();
 
+			if ( !isset( $this->params['flag_type_id'] ) ) {
+				throw new \MissingParameterApiException( 'flag_type_id' );
+			}
+
 			$flaggedPages = $this->getFlaggedPagesRawData( $this->params['wiki_id'] );
 
 			$this->makeSuccessResponse( $flaggedPages );
@@ -49,7 +53,7 @@ class FlaggedPagesApiController extends FlagsApiBaseController {
 	 * @return bool|mixed
 	 */
 	private function getFlaggedPagesRawData( $wikiId ) {
-		$flagTypeId = $this->params['flagTypeId'];
+		$flagTypeId = $this->params['flag_type_id'];
 		$flagsCache = $this->getCache();
 		$flaggedPages = $flagsCache->get( $flagTypeId );
 
