@@ -50,7 +50,6 @@ require(
 				return false;
 			}
 
-			/* TODO - Collect a # of articles using this flag - has to wait for CE-1817 */
 			flagName = currentRow.find('.flags-special-list-item-name').data('flag-name');
 			confirmMessage = mw.message('flags-special-autoload-delete-confirm', flagName);
 

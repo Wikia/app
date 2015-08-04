@@ -56,7 +56,6 @@ define ('ext.wikia.Flags.FlagEditForm',
 			mw.messages.set(formResources.messages);
 
 			formData = {
-				/* TODO - Do something with the damn messages */
 				messages: formResources.messages,
 				template: formResources.mustache[0],
 				partials: {
@@ -103,7 +102,6 @@ define ('ext.wikia.Flags.FlagEditForm',
 		}
 
 		function displayFormCreate() {
-			/* TODO - We can get a half-rendered template to avoid escaping messages in front-end */
 			var formParams,
 				content = cache.get(getEmptyFormCacheKey(mw.user.options.values.language));
 			/** **/
