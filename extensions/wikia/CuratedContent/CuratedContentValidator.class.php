@@ -37,7 +37,7 @@ class CuratedContentValidator {
 				$this->validateItems( $section );
 			} else {
 				$this->validateSection( $section );
-				$this->validateItemsExists( $section );
+				$this->validateItemsExist( $section );
 				$this->validateItems( $section );
 				$this->validateItemsTypes( $section );
 			}
@@ -80,7 +80,7 @@ class CuratedContentValidator {
 		}
 	}
 
-	public function validateItemsExists( $section ) {
+	public function validateItemsExist( $section ) {
 		if ( empty( $section['items'] ) || !is_array( $section['items'] ) ) {
 			$this->error( $section, self::ERR_ITEMS_MISSING );
 		}
@@ -89,7 +89,7 @@ class CuratedContentValidator {
 	public function validateItems( $section ) {
 		if (!empty($section['items']) && is_array($section['items'])) {
 			foreach ($section['items'] as $item) {
-				$this->validateItem($item);
+				$this->validateItem( $item );
 			}
 		}
 	}
@@ -117,7 +117,7 @@ class CuratedContentValidator {
 		}
 	}
 
-	public function validateItemTypes( $item ) {
+	public function validateItemType( $item ) {
 		if ( $item['type'] !== CuratedContentHelper::STR_CATEGORY ) {
 			$this->error( $item, self::ERR_NO_CATEGORY_IN_TAG );
 		}
@@ -126,7 +126,7 @@ class CuratedContentValidator {
 	public function validateItemsTypes( $section ) {
 		if ( !empty( $section['items'] ) && is_array( $section['items'] ) ) {
 			foreach ( $section['items'] as $item ) {
-				$this->validateItemTypes( $item );
+				$this->validateItemType( $item );
 			}
 		}
 	}
