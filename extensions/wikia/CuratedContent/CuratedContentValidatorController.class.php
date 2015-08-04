@@ -6,10 +6,12 @@
 class CuratedContentValidatorController extends WikiaController {
 
 	private $validator;
+	private $helper;
 
 	public function __construct() {
 		parent::__construct();
 		$this->validator = new CuratedContentValidator();
+		$this->helper = new CuratedContentHelper();
 	}
 
 	public function validateSection() {
@@ -29,6 +31,7 @@ class CuratedContentValidatorController extends WikiaController {
 		if ( empty( $section ) ) {
 			$this->respondWithErrors();
 		} else {
+			$section = $this->helper->processLogicForSection( $section );
 			$this->validator->validateSection( $section );
 			$this->validator->validateItemsExist( $section );
 			$this->validator->validateItems( $section );
@@ -45,6 +48,7 @@ class CuratedContentValidatorController extends WikiaController {
 		if ( empty( $item ) ) {
 			$this->respondWithErrors();
 		} else {
+			$this->helper->fillItemInfo( $item );
 			$this->validator->validateItem( $item );
 			if ( !$isFeatured ) {
 				$this->validator->validateItemType( $item );

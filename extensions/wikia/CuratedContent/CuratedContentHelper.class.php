@@ -20,7 +20,7 @@ class CuratedContentHelper {
 		return $processedSections;
 	}
 
-	private function processLogicForSection( $section ) {
+	public function processLogicForSection( $section ) {
 		$section['image_id'] = (int)$section['image_id']; // fallback to 0 if it's not set in request
 
 		if ( !empty( $section['items'] ) && is_array( $section['items'] ) ) {
@@ -32,7 +32,7 @@ class CuratedContentHelper {
 		return $section;
 	}
 
-	private function fillItemInfo( &$item ) {
+	public function fillItemInfo( &$item ) {
 		$title = Title::newFromText( $item['title'] );
 		// We cannot check for $title->isEmpty() because it's empty for non-exisitng Articles.
 		// Categories without content are non-existing Articles (their article_id is 0)
