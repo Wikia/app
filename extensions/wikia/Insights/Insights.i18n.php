@@ -57,7 +57,7 @@ $messages['en'] = array(
 	'insights-notification-message-alldone' => 'Congratulations! There are no more items in this queue.',
 	'insights-notification-message-fixit' => "Let's fix it.",
 	'insights-notification-list-button' => 'Go back to the list.',
-	'insights-notification-message-set-flags' => '<button id="ca-flags">Set flags for this page.</button>',
+	'insights-notification-message-set-flags' => '<button class="bn-flags-entry-point">Set flags for this page.</button>',
 	'insights-notification-see-more' => 'See more insights.',
 
 	'insights-wanted-by' => '$1 referral links',

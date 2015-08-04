@@ -130,10 +130,15 @@ class InsightsController extends WikiaSpecialPageController {
 				$this->setMustacheParams( $params, $isFixed, $type);
 
 			} elseif ($model instanceof InsightsPageModel) {
-				$params = $model->getInProgressNotificationForFlags( $subpage );
-				$type = self::FLOW_STATUS_NOTFIXED;
 				$isFixed = false;
-				$this->setMustacheParams( $params, $isFixed, $type);
+				$isEdit = $this->request->getBool( 'isEdit', false );
+				if ( !$isEdit ) {
+					$params = $model->getInProgressNotificationForFlags( $subpage );
+					$type = self::FLOW_STATUS_NOTFIXED;
+					$this->setMustacheParams( $params, $isFixed, $type);
+				}
+
+
 			}
 		}
 	}
