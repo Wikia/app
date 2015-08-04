@@ -383,6 +383,15 @@ abstract class InsightsPageModel extends InsightsModel {
 	}
 
 	/**
+	 * Notification for flag insights
+	 * @param $subpage
+	 * @return string
+	 */
+	public function getInProgressNotificationForFlags( $subpage ) {
+		return '';
+	}
+
+	/**
 	 * Updates the cached articleData and sorting array
 	 *
 	 * @param int $articleId
