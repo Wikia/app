@@ -37,9 +37,11 @@ class CuratedContentValidator {
 				$this->validateItems( $section );
 			} else {
 				$this->validateSection( $section );
-				$this->validateItemsExist( $section );
-				$this->validateItems( $section );
-				$this->validateItemsTypes( $section );
+				if ( !empty( $section['title'] ) ) {
+					$this->validateItemsExist( $section );
+					$this->validateItems( $section );
+					$this->validateItemsTypes( $section );
+				}
 			}
 		}
 		// also check section for duplicate title
