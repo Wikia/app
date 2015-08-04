@@ -135,10 +135,13 @@ class InsightsController extends WikiaSpecialPageController {
 			} elseif ( $model instanceof InsightsPageModel ) {
 				$isFixed = false;
 				$isEdit = $this->request->getBool( 'isEdit', false );
+				/* Show in progress notification when in view mode of article */
 				if ( !$isEdit ) {
-					$params = $model->getInProgressNotificationForFlags( $subpage );
-					$type = self::FLOW_STATUS_NOTFIXED;
-					$this->setMustacheParams( $params, $isFixed, $type );
+					$params = $model->getInProgressNotificationParams();
+					if ( is_array( $params ) ) {
+						$type = self::FLOW_STATUS_NOTFIXED;
+						$this->setMustacheParams( $params, $isFixed, $type );
+					}
 				}
 
 			}

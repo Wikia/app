@@ -13,7 +13,6 @@ $messages['en'] = array(
 	'insights-last-edit' => 'Last edited by $1, $2',
 	'insights-list-subtitle-flags' => 'Pages marked with flags',
 	'insights-list-description-flags' => 'Use Flags to organize and label article pages. This Insight list allows you to view custom reports of flagged articles to find the articles that most need improvements. [[Help:Flags|Learn more about flags]]',
-	'insights-notification-message-inprogress-flags' => 'This page is flagged.',
 	'insights-list-subtitle-uncategorizedpages' => 'Pages without categories',
 	'insights-list-description-uncategorizedpages' => 'Add categories to these pages. Good categorization is vital to a successfully organized wikia!',
 	'insights-notification-message-inprogress-uncategorizedpages' => 'This page needs categories added. ',
@@ -47,7 +46,6 @@ $messages['en'] = array(
 	'insights-notification-message-alldone' => 'Congratulations! There are no more items in this queue.',
 	'insights-notification-message-fixit' => "Let's fix it.",
 	'insights-notification-list-button' => 'Go back to the list.',
-	'insights-notification-message-set-flags' => '<button class="bn-flags-entry-point">Set flags for this page.</button>',
 	'insights-notification-see-more' => 'See more insights.',
 	'insights-wanted-by' => '$1 referral links',
 	'insights-used-on' => 'Used on $1 articles',
@@ -57,6 +55,8 @@ $messages['en'] = array(
 
 	/* Flags Insights */
 	'insights-flags-filter-label' => 'Filter pages by flag type',
+	'insights-notification-message-inprogress-flags' => 'This page is flagged.',
+	'insights-notification-message-set-flags' => 'Set flags for this page',
 );
 
 $messages['qqq'] = array(
@@ -64,7 +64,6 @@ $messages['qqq'] = array(
 	'insights-desc' => 'Insights description',
 	'insights-landing-title' => 'A title of the Insights landing page appearing as an h1 element.',
 	'insights-landing-lead' => 'A lead for the Insights special page with a general description, appearing below the title.',
-	'insights-notification-message-inprogress-flags' => 'Message displayed on notification banner informing user that this page is flagged.',
 	'insights-list-no-items' => 'A message that is shown when there are no items to work on left on a list',
 	'insights-list-header-page' => 'A header of an Insights list table for a column with a title and last revision data',
 	'insights-list-header-altaction' => 'A header of an Insights list table for a column with a link to a semi- or fully automatic action taken on the corresponding page',
@@ -104,7 +103,6 @@ $messages['qqq'] = array(
 	'insights-notification-message-alldone' => 'Message displayed on notification banner informing user that there is no more articles to fix in current Insight type',
 	'insights-notification-message-fixit' => 'Text encouraging user to fix an issue',
 	'insights-notification-list-button' => 'Text on button that redirects to list of insights',
-	'insights-notification-message-set-flags' => 'Text of a button that opens a modal window with a form for editing flags.',
 	'insights-notification-see-more' => 'Link text to redirect to Insights main page to see more Insight types',
 	'insights-wanted-by' => 'An information on how many other articles links to the one displayed above. $1 is a number of articles.',
 	'insights-used-on' => 'An information on how many articles uses the given template. $1 is the number',
@@ -114,6 +112,8 @@ $messages['qqq'] = array(
 
 	/* Flags Insights */
 	'insights-flags-filter-label' => 'Label for select dropdown on flags insights page explaining purpose of it',
+	'insights-notification-message-inprogress-flags' => 'Message displayed on notification banner informing user that this page is flagged.',
+	'insights-notification-message-set-flags' => 'Text of a button that opens a modal window with a form for editing flags.',
 );
 
 $messages['de'] = array(

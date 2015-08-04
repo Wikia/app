@@ -149,15 +149,21 @@ class InsightsFlagsModel extends InsightsPageModel {
 	}
 
 	/**
-	 * Notification for flag insights
-	 * @param $subpage
+	 * Overrides Insights loop notification shown in view mode
 	 * @return array
 	 */
-	public function getInProgressNotificationForFlags( $subpage ) {
+	public function getInProgressNotificationParams() {
 		$controller = new InsightsController();
-		$params = $controller->getInsightListLinkParams( $subpage );
-		$params['notificationMessage'] = wfMessage( InsightsHelper::INSIGHT_INPROGRESS_MSG_PREFIX . $subpage )->plain()
-			. wfMessage( 'insights-notification-message-set-flags' )->plain();
+		$notificationMessageKey = InsightsHelper::INSIGHT_INPROGRESS_MSG_PREFIX . self::INSIGHT_TYPE;
+		$params = [
+			'notificationMessage' => wfMessage( $notificationMessageKey )->plain(),
+			'customButtonText' => wfMessage( 'insights-notification-message-set-flags' )->plain(),
+			'customButtonClass' => 'bn-flags-entry-point'
+		];
+		$params = array_merge(
+			$params,
+			$controller->getInsightListLinkParams( self::INSIGHT_TYPE )
+		);
 		return $params;
 	}
 }

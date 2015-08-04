@@ -383,11 +383,10 @@ abstract class InsightsPageModel extends InsightsModel {
 	}
 
 	/**
-	 * Notification for flag insights
-	 * @param $subpage
+	 * Insights loop notification shown in view mode
 	 * @return string
 	 */
-	public function getInProgressNotificationForFlags( $subpage ) {
+	public function getInProgressNotificationParams() {
 		return '';
 	}
 

@@ -38,7 +38,6 @@ class InsightsHelper {
 	 * Used to create the following messages:
 	 *
 	 * 'insights-notification-message-fixed-deadendpages',
-	 * 'insights-notification-message-fixed-flags'
 	 * 'insights-notification-message-fixed-nonportableinfoboxes'
 	 * 'insights-notification-message-fixed-uncategorizedpages',
 	 * 'insights-notification-message-fixed-wantedpages'
