@@ -151,12 +151,12 @@ class WikiaConfirmEmailSpecialController extends WikiaSpecialPageController {
 
 					$result = $response->getVal( 'result', '' );
 
-					$optionNewEmail = $this->wg->User->getGlobalAttribute( 'new_email' );
+					$optionNewEmail = $this->wg->User->getNewEmail();
 					if ( !empty( $optionNewEmail ) ) {
 						$user->setEmail( $optionNewEmail );
 					}
 					$user->confirmEmail();
-					$user->setGlobalAttribute( 'new_email', null );
+					$user->clearNewEmail();
 					$user->saveSettings();
 
 					// redirect user

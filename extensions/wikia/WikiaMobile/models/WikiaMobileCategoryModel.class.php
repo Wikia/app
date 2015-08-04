@@ -92,7 +92,7 @@ class WikiaMobileCategoryModel extends WikiaModel{
  * CategoryViewer specialization to access the data using the correct sort-keys
  *
  */
-class WikiaMobileCategoryViewer extends CategoryViewer{
+class WikiaMobileCategoryViewer extends CategoryViewer {
 	private $items;
 	private $count;
 
@@ -107,11 +107,11 @@ class WikiaMobileCategoryViewer extends CategoryViewer{
 		$this->count = 0;
 	}
 
-	function addImage( Title $title, $sortkey, $pageLength, $isRedirect = false ){
+	function addImage( Title $title, $sortkey, $pageLength, $isRedirect = false ) {
 		$this->addItem( $title, $sortkey );
 	}
 
-	function addPage( Title $title, $sortkey, $pageLength, $isRedirect = false ){
+	function addPage( Title $title, $sortkey, $pageLength, $isRedirect = false ) {
 		$this->addItem( $title, $sortkey );
 	}
 

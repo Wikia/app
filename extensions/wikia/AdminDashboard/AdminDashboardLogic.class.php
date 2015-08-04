@@ -15,7 +15,6 @@ class AdminDashboardLogic {
 			'Listusers' => true,
 			'ListUsers' => true,
 			'MultipleUpload' => true,
-			'Promote' => true,
 			'Recentchanges' => true,
 			'RecentChanges' => true,
 			'ThemeDesigner' => true,
