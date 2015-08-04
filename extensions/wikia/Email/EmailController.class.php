@@ -170,7 +170,10 @@ abstract class EmailController extends \WikiaController {
 					$body,
 					$replyToAddress,
 					$contentType = null,
-					$this->getSendGridCategory()
+					$this->getSendGridCategory(),
+					$priority = 0,
+					$attachments = [],
+					$sourceType = 'email-ext' // Remove when this is the only sourceType sent
 				);
 				$this->assertGoodStatus( $status );
 			}
@@ -235,7 +238,7 @@ abstract class EmailController extends \WikiaController {
 	 * @return \MailAddress
 	 */
 	protected function getToAddress() {
-		$to = new \MailAddress( $this->targetUser->getEmail(), $this->targetUser->getName() );
+		$to = new \MailAddress( $this->getTargetUserEmail(), $this->getTargetUserName() );
 		return $to;
 	}
 
@@ -361,7 +364,7 @@ abstract class EmailController extends \WikiaController {
 
 	protected function getFooterMessages() {
 		return [
-			$this->getMessage( 'emailext-recipient-notice', $this->targetUser->getEmail() )
+			$this->getMessage( 'emailext-recipient-notice', $this->getTargetUserEmail() )
 				->parse(),
 			$this->getMessage( 'emailext-update-frequency' )
 				->parse(),
@@ -422,16 +425,15 @@ abstract class EmailController extends \WikiaController {
 	 * TODO Move this into unsubscribe extension?
 	 * @return string
 	 */
-	private function getUnsubscribeLink() {
+	protected function getUnsubscribeLink() {
 		$params = [
-			'email' => $this->targetUser->getEmail(),
+			'email' => $this->getTargetUserEmail(),
 			'timestamp' => time()
 		];
 		$params['token'] = wfGenerateUnsubToken( $params['email'], $params['timestamp'] );
 		$unsubscribeTitle = \GlobalTitle::newFromText( 'Unsubscribe', NS_SPECIAL, \Wikia::COMMUNITY_WIKI_ID );
 		return $unsubscribeTitle->getFullURL( $params );
 	}
-
 
 	/**
 	 * @return String
@@ -507,8 +509,15 @@ abstract class EmailController extends \WikiaController {
 	 * @return string
 	 */
 	protected function getSalutation() {
-		return $this->getMessage( 'emailext-salutation',
-			$this->targetUser->getName() )->text();
+		return $this->getMessage( 'emailext-salutation', $this->getTargetUserName() )->text();
+	}
+
+	protected function getTargetUserName() {
+		return $this->targetUser->getName();
+	}
+
+	protected function getTargetUserEmail() {
+		return $this->targetUser->getEmail();
 	}
 
 	/**
@@ -548,7 +557,7 @@ abstract class EmailController extends \WikiaController {
 	 * @throws \Email\Fatal
 	 */
 	public function assertUserHasEmail() {
-		$email = $this->targetUser->getEmail();
+		$email = $this->getTargetUserEmail();
 		if ( empty( $email ) ) {
 			throw new Fatal( 'User has no email address' );
 		}
@@ -674,12 +683,22 @@ abstract class EmailController extends \WikiaController {
 	 * @return string
 	 */
 	private static function getLegendName() {
-		$legendName = "";
-		if ( preg_match( self::EMAIL_CONTROLLER_REGEX, get_called_class(), $matches ) ) {
-			$legendName = $matches[1] . " Email";
+		$legendName = self::getControllerShortName() . ' Email';
+		return $legendName;
+	}
+
+	/**
+	 * Get a shortened version of the controller name.  Useful for admin tool and email category
+	 *
+	 * @return string
+	 */
+	public static function getControllerShortName() {
+		$name = get_called_class();
+		if ( preg_match( self::EMAIL_CONTROLLER_REGEX, $name, $matches ) ) {
+			$name = $matches[1];
 		}
 
-		return $legendName;
+		return $name;
 	}
 
 	/**
@@ -703,7 +722,7 @@ abstract class EmailController extends \WikiaController {
 			'subject' => $this->getSubject(),
 			'category' => static::TRACKING_CATEGORY,
 			'currentUser' => $this->getCurrentUserName(),
-			'targetUser' => $this->targetUser->getName(),
+			'targetUser' => $this->getTargetUserName(),
 			'targetLang' => $this->targetLang,
 		] );
 	}
@@ -716,7 +735,7 @@ abstract class EmailController extends \WikiaController {
 		}
 
 		if ( $this->targetUser instanceof \User ) {
-			$targetName = $this->targetUser->getName();
+			$targetName = $this->getTargetUserName();
 		} else {
 			$targetName = 'unknown';
 		}

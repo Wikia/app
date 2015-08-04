@@ -16,7 +16,7 @@ use Flags\Models\FlagType;
 
 class FlagsCache {
 	const FLAGS_MEMC_KEY_PREFIX = 'flagsData';
-	const FLAGS_MEMC_VERSION = '1.5';
+	const FLAGS_MEMC_VERSION = '1.6';
 
 	private $memcache;
 
@@ -91,6 +91,16 @@ class FlagsCache {
 
 	public function purgeFlagsForPage( $pageId ) {
 		$this->memcache->delete( $this->getMemcKeyFlagsOnPage( $pageId ) );
+	}
+
+	/**
+	 * Purges the data on instances of flags for set of pages.	 *
+	 * @param array $pageIds
+	 */
+	public function purgeFlagsForPages( Array $pageIds ) {
+		foreach ( $pageIds as $pageId ) {
+			$this->purgeFlagsForPage( $pageId );
+		}
 	}
 
 	/**

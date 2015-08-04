@@ -22,11 +22,23 @@ class InsightsFlagsModel extends InsightsPageModel {
 		return self::INSIGHT_TYPE;
 	}
 
+	public function getInsightCacheParams() {
+		return $this->flagTypeId;
+	}
+
 	public function getPaginationUrlParams() {
 		if ( $this->flagTypeId ) {
 			return [ 'flagTypeId' => $this->flagTypeId ];
 		}
 		return [];
+	}
+
+	/**
+	 * Get a type of a subpage and an edit parameter
+	 * @return array
+	 */
+	public function getUrlParams() {
+		return $this->getInsightParam();
 	}
 
 	/**
@@ -39,26 +51,11 @@ class InsightsFlagsModel extends InsightsPageModel {
 	}
 
 	public function arePageViewsRequired() {
-		return false;
+		return true;
 	}
 
-	/**
-	 * Get a type of a subpage only, we want a user to be directed to view.
-	 * @return array
-	 */
-	public function getUrlParams() {
-		return $this->getInsightParam();
-	}
-
-	/**
-	 * Get list of articles related to the given QueryPage category
-	 *
-	 * @return array
-	 */
-	public function getContent( $params ) {
-		$this->preparePaginationParams( $params );
+	public function initModel( $params ) {
 		$this->flagTypeId = $params['flagTypeId'];
-		return $this->fetchArticlesData();
 	}
 
 	/**
@@ -66,18 +63,25 @@ class InsightsFlagsModel extends InsightsPageModel {
 	 * @return array
 	 */
 	public function fetchArticlesData() {
-		$articlesData = [];
-		$flaggedPages = $this->getPagesByFlagType();
+		$cacheKey = $this->getMemcKey( self::INSIGHTS_MEMC_ARTICLES_KEY );
 
-		if ( count( $flaggedPages ) > 0 ) {
-			$articlesData = $this->prepareData( $flaggedPages );
+		$articlesData = WikiaDataAccess::cache( $cacheKey, self::INSIGHTS_MEMC_TTL, function () {
+			$articlesData = [];
 
-			if ( $this->arePageViewsRequired() ) {
-				$articlesIds = array_keys( $articlesData );
-				$pageViewsData = $this->getPageViewsData( $articlesIds );
-				$articlesData = $this->assignPageViewsData( $articlesData, $pageViewsData );
+			$flaggedPages = $this->getPagesByFlagType();
+
+			if ( count( $flaggedPages ) > 0 ) {
+				$articlesData = $this->prepareData( $flaggedPages );
+
+				if ( $this->arePageViewsRequired() ) {
+					$articlesIds = array_keys( $articlesData );
+					$pageViewsData = $this->getPageViewsData( $articlesIds );
+					$articlesData = $this->assignPageViewsData( $articlesData, $pageViewsData );
+				}
 			}
-		}
+
+			return $articlesData;
+		});
 
 		return $articlesData;
 	}
@@ -141,9 +145,19 @@ class InsightsFlagsModel extends InsightsPageModel {
 			[ 'flag_type_id' => $this->flagTypeId ]
 		)->getData()['data'];
 
-		$this->setTotal( count( $flaggedPages ) );
-		$flaggedPages = array_slice( $flaggedPages, $this->getOffset(), $this->getLimitResultsNum() );
-
 		return $flaggedPages;
+	}
+
+	/**
+	 * Notification for flag insights
+	 * @param $subpage
+	 * @return array
+	 */
+	public function getInProgressNotificationForFlags( $subpage ) {
+		$controller = new InsightsController();
+		$params = $controller->getInsightListLinkParams( $subpage );
+		$params['notificationMessage'] = wfMessage( InsightsHelper::INSIGHT_INPROGRESS_MSG_PREFIX . $subpage )->plain()
+			. wfMessage( 'insights-notification-message-set-flags' )->plain();
+		return $params;
 	}
 }

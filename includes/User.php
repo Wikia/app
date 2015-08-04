@@ -23,6 +23,7 @@
 use Wikia\DependencyInjection\Injector;
 use Wikia\Logger\Loggable;
 use Wikia\Service\User\Preferences\UserPreferences;
+use Wikia\Service\User\Attributes\UserAttributes;
 use Wikia\Util\Statistics\BernoulliTrial;
 
 /**
@@ -35,7 +36,7 @@ define( 'USER_TOKEN_LENGTH', 32 );
  * Int Serialized record version.
  * @ingroup Constants
  */
-define( 'MW_USER_VERSION', 8 );
+define( 'MW_USER_VERSION', 9 );
 
 /**
  * String Some punctuation to prevent editing from broken text-mangling proxies.
@@ -82,6 +83,8 @@ class User {
 	const EDIT_TOKEN_SUFFIX = EDIT_TOKEN_SUFFIX;
 	const CACHE_PREFERENCES_KEY = "preferences";
 	const GET_SET_OPTION_SAMPLE_RATE = 0.1;
+
+	private static $PROPERTY_UPSERT_SET_BLOCK = [ "up_user = VALUES(up_user)", "up_property = VALUES(up_property)", "up_value = VALUES(up_value)" ];
 
 	/**
 	 * Array of Strings List of member variables which are saved to the
@@ -268,6 +271,13 @@ class User {
 	}
 
 	/**
+	 * @return UserAttributes
+	 */
+	private function userAttributes() {
+		return Injector::getInjector()->get(UserAttributes::class);
+	}
+
+	/**
 	 * @return BernoulliTrial
 	 */
 	private function getOrSetOptionSampler() {
@@ -330,7 +340,7 @@ class User {
 		}
 
 		# Try cache
-		$key = wfMemcKey( 'user', 'id', $this->mId );
+		$key = $this->getCacheKey();
 		$data = $wgMemc->get( $key );
 		if ( !is_array( $data ) || $data['mVersion'] < MW_USER_VERSION ) {
 			# Object is expired, load from DB
@@ -410,11 +420,15 @@ class User {
 		}
 		$data['mVersion'] = MW_USER_VERSION;
 		$data[self::CACHE_PREFERENCES_KEY] = $this->userPreferences()->getPreferences($this->mId);
-		$key = wfMemcKey( 'user', 'id', $this->mId );
+		$key = $this->getCacheKey();
 		global $wgMemc;
 		$wgMemc->set( $key, $data );
 
 		wfDebug( "User: user {$this->mId} stored in cache\n" );
+	}
+
+	private function getCacheKey() {
+		return wfMemcKey('user', 'id', $this->mId);
 	}
 
 	/** @name newFrom*() static factory methods */
@@ -2077,7 +2091,6 @@ class User {
 			$wgMemc->delete( wfMemcKey( 'user', 'id', $this->mId ) );
 			// Wikia: and save updated user data in the cache to avoid memcache miss and DB query
 			$this->saveToCache();
-			# not uncyclo
 			if( !empty( $wgSharedDB ) ) {
 				$memckey = self::getUserTouchedKey( $this->mId );
 				$wgMemc->set( $memckey, $this->mTouched );
@@ -2288,6 +2301,31 @@ class User {
 		$this->load();
 		wfRunHooks( 'UserGetEmail', array( $this, &$this->mEmail ) );
 		return $this->mEmail;
+	}
+
+	/**
+	 * Return the new email address that is waiting for confirmation
+	 *
+	 * @return string
+	 */
+	public function getNewEmail() {
+		return $this->getGlobalAttribute( 'new_email' );
+	}
+
+	/**
+	 * Sets a new email address, to be confirmed
+	 *
+	 * @param $newEmail
+	 */
+	public function setNewEmail( $newEmail ) {
+		$this->setGlobalAttribute( 'new_email', $newEmail );
+	}
+
+	/**
+	 * Clear out the new email after its been confirmed
+	 */
+	public function clearNewEmail() {
+		$this->setGlobalAttribute( 'new_email', null );
 	}
 
 	/**
@@ -2556,7 +2594,7 @@ class User {
 		global $wgPreferencesUseService;
 		if ( $wgPreferencesUseService ) {
 			$this->load();
-			$this->sanitizePropertyArray( $preferences );
+			$preferences = $this->sanitizePropertyArray( $preferences );
 			$this->userPreferences()->setMultiple( $this->mId, $preferences );
 			if ( array_key_exists( 'skin', $preferences ) ) {
 				unset( $this->mSkin );
@@ -3990,11 +4028,13 @@ class User {
 	private function getEmailController( $mailType ) {
 		$controller = "";
 		if ( $this->isConfirmationMail( $mailType ) ) {
-			$controller = 'Email\Controller\EmailConfirmation';
+			$controller = Email\Controller\EmailConfirmationController::class;
 		} elseif ( $this->isConfirmationReminderMail( $mailType ) ) {
-			$controller = 'Email\Controller\EmailConfirmationReminder';
+			$controller = Email\Controller\EmailConfirmationReminderController::class;
 		} elseif ( $this->isChangeEmailConfirmationMail( $mailType ) ) {
-			$controller = 'Email\Controller\ConfirmationChangedEmail';
+			$controller = Email\Controller\ConfirmationChangedEmailController::class;
+		} elseif ( $this->isReactivateAccountMail( $mailType ) ) {
+			$controller = Email\Controller\ReactivateAccountController::class;
 		}
 
 		return $controller;
@@ -4012,9 +4052,14 @@ class User {
 		return $mailType == "ReConfirmationMail";
 	}
 
+	private function isReactivateAccountMail( $mailType ) {
+		return $mailType == "ReactivationMail";
+	}
+
 	private function sendUsingEmailExtension( $emailController, $url ) {
 		$params = [
 			'targetUser' => $this->getName(),
+			'newEmail' => $this->getNewEmail(),
 			'confirmUrl' => $url,
 		];
 
@@ -4798,7 +4843,7 @@ class User {
 	 * @todo document
 	 */
 	protected function saveOptions() {
-		global $wgAllowPrefChange;
+		global $wgAllowPrefChange, $wgPreferencesUseService;
 
 		$extuser = ExternalUser::newFromUser( $this );
 
@@ -4812,7 +4857,7 @@ class User {
 			$dbw = wfGetDB( DB_MASTER );
 		}
 
-		$insert_rows = array();
+		$insertRows = $deletePrefs = [];
 
 		$saveOptions = $this->mOptions;
 
@@ -4826,7 +4871,9 @@ class User {
 			# Don't bother storing default values
 			# <Wikia>
 			if ( $this->shouldOptionBeStored( $key, $value ) ) {
-				$insert_rows[] = array( 'up_user' => $this->getId(), 'up_property' => $key, 'up_value' => $value );
+				$insertRows[] = [ 'up_user' => $this->getId(), 'up_property' => $key, 'up_value' => $value ];
+			} elseif ($this->isDefaultOption($key, $value)) {
+				$deletePrefs[] = $key;
 			}
 			# </Wikia>
 			if ( $extuser && isset( $wgAllowPrefChange[$key] ) ) {
@@ -4841,8 +4888,23 @@ class User {
 			}
 		}
 
-		$dbw->delete( 'user_properties', array( 'up_user' => $this->getId() ), __METHOD__ );
-		$dbw->insert( 'user_properties', $insert_rows, __METHOD__ );
+		$preferencesFromService = [];
+		if ($wgPreferencesUseService) {
+			$preferencesFromService = array_keys($this->userPreferences()->getPreferences($this->getId()));
+		}
+
+		$deletePrefs = array_diff($deletePrefs, $preferencesFromService);
+
+		// user has default set, so clear any other entries from db
+		if (!empty($deletePrefs)) {
+			(new WikiaSQL())
+				->DELETE('user_properties')
+				->WHERE('up_user')->EQUAL_TO($this->getId())
+					->AND_('up_property')->IN($deletePrefs)
+				->run($dbw);
+		}
+
+		$dbw->upsert('user_properties', $insertRows, [], self::$PROPERTY_UPSERT_SET_BLOCK);
 
 		if ( $extuser ) {
 			$extuser->updateUser();
@@ -4866,6 +4928,10 @@ class User {
 			return true;
 		}
 		return false;
+	}
+
+	private function isDefaultOption($key, $value) {
+		return $value == self::getDefaultOption($key);
 	}
 
 	/**

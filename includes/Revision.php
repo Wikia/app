@@ -890,6 +890,7 @@ class Revision {
 				wfProfileOut( __METHOD__ );
 				return false;
 			}
+			wfDebug( sprintf( "%s: for '%s'\n", __METHOD__, $row->page_title ) ); // Wikia change - PLATFORM-1381
 			$text = ExternalStore::fetchFromURL( $url );
 		}
 

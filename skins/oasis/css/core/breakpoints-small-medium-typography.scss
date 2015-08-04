@@ -20,13 +20,12 @@
 	h2 {
 		font-size: 20px;
 		line-height: 22px;
-
-		.wikia-page-header & {
-			font-size: $default-body-font-size;
-			line-height: $default-body-line-height;
-		}
 	}
 
+	.wikia-page-header h2 {
+		font-size: $default-body-font-size;
+		line-height: $default-body-line-height;
+	}
 
 	h3 {
 		font-size: 17px;
