@@ -129,7 +129,7 @@ class InsightsController extends WikiaSpecialPageController {
 					$type = self::FLOW_STATUS_FIXED;
 				}
 
-				$this->setMustacheParams( $params, $isFixed, $type);
+				$this->setMustacheParams( $params, $isFixed, $type );
 
 			} elseif ( $model instanceof InsightsPageModel ) {
 				$isFixed = false;
@@ -151,7 +151,7 @@ class InsightsController extends WikiaSpecialPageController {
 	 * @param String $type
 	 */
 	private function setMustacheParams( $params, $isFixed, $type ) {
-		$html = \MustacheService::getInstance()->render(
+		$html = MustacheService::getInstance()->render(
 			'extensions/wikia/Insights/templates/Insights_loopNotification.mustache',
 			$params
 		);

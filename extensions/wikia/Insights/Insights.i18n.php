@@ -16,7 +16,7 @@ $messages['en'] = array(
 
 	'insights-list-subtitle-flags' => 'Pages marked with flags',
 	'insights-list-description-flags' => 'Use Flags to organize and label article pages. This Insight list allows you to view custom reports of flagged articles to find the articles that most need improvements. [[Help:Flags|Learn more about flags]]',
-	'insights-notification-message-inprogress-flags' => 'This page is flagged. ',
+	'insights-notification-message-inprogress-flags' => 'This page is flagged.',
 
 	'insights-list-subtitle-uncategorizedpages' => 'Pages without categories',
 	'insights-list-description-uncategorizedpages' => 'Add categories to these pages. Good categorization is vital to a successfully organized wikia!',
@@ -127,7 +127,7 @@ $messages['qqq'] = array(
 	'insights-notification-message-alldone' => 'Message displayed on notification banner informing user that there is no more articles to fix in current Insight type',
 	'insights-notification-message-fixit' => 'Text encouraging user to fix an issue',
 	'insights-notification-list-button' => 'Text on button that redirects to list of insights',
-	'insights-notification-message-set-flags' => 'Button for setting flags',
+	'insights-notification-message-set-flags' => 'Text of a button that opens a modal window with a form for editing flags.',
 	'insights-notification-see-more' => 'Link text to redirect to Insights main page to see more Insight types',
 
 	'insights-wanted-by' => 'An information on how many other articles links to the one displayed above. $1 is a number of articles.',
