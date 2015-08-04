@@ -74,10 +74,8 @@ abstract class AbstractFounderEditController extends FounderController {
 	 * @throws \Email\Check
 	 */
 	private function assertValidRevisionIds() {
-		if ( empty( $this->previousRevId ) ) {
-			throw new Check( "Invalid value passed for previousRevId" );
-		}
-
+		// Only check currentRevId here.  The value for previousRevId can be empty if
+		// this is a new page.
 		if ( empty( $this->currentRevId ) ) {
 			throw new Check( "Invalid value passed for currentRevId" );
 		}
@@ -134,10 +132,15 @@ abstract class AbstractFounderEditController extends FounderController {
 	}
 
 	protected function getChangesLink() {
-		return $this->pageTitle->getFullURL( [
-			'diff' => $this->currentRevId,
-			'oldid' => $this->previousRevId,
-		] );
+		$params =  [ 'diff' => $this->currentRevId ];
+
+		// If we have a previous revision ID (e.g., this is not a page create event)
+		// then make sure to add the old ID for this diff link.
+		if ( $this->previousRevId ) {
+			$params[ 'oldid' ] = $this->previousRevId;
+		}
+
+		return $this->pageTitle->getFullURL( $params );
 	}
 
 	protected function getFooterEncouragement() {

@@ -178,7 +178,6 @@ abstract class EmailController extends \WikiaController {
 				$this->assertGoodStatus( $status );
 			}
 		} catch ( \Exception $e ) {
-			$this->trackEmailError( $e );
 			$this->setErrorResponse( $e );
 			return;
 		}
@@ -212,10 +211,7 @@ abstract class EmailController extends \WikiaController {
 			$result = 'genericError';
 		}
 
-		WikiaLogger::instance()->error( 'Error while sending email', [
-			'result' => $result,
-			'msg' => $e->getMessage(),
-		] );
+		$this->trackEmailError( $e, $result );
 
 		$this->hasErrorResponse = true;
 		$this->response->setData( [
@@ -498,7 +494,7 @@ abstract class EmailController extends \WikiaController {
 		} else if ( is_object( $username ) ) {
 			throw new Fatal( 'Non-user object passed when user object or username expected' );
 		} else {
-			$user = \User::newFromName( $username );
+			$user = \User::newFromName( $username, $validate = false );
 		}
 		$this->assertValidUser( $user );
 
@@ -546,10 +542,6 @@ abstract class EmailController extends \WikiaController {
 	public function assertValidUser( $user ) {
 		if ( !$user instanceof \User ) {
 			throw new Fatal( 'Unable to create user object');
-		}
-
-		if ( $user->getId() == 0 ) {
-			throw new Fatal( 'Unable to find user' );
 		}
 	}
 
@@ -727,7 +719,7 @@ abstract class EmailController extends \WikiaController {
 		] );
 	}
 
-	private function trackEmailError( \Exception $e ) {
+	private function trackEmailError( \Exception $e, $result ) {
 		if ( $this->currentUser instanceof \User ) {
 			$currentName = $this->currentUser->getName();
 		} else {
@@ -749,6 +741,7 @@ abstract class EmailController extends \WikiaController {
 			'currentUser' => $currentName,
 			'targetUser' => $targetName,
 			'targetLang' => $this->targetLang,
+			'result' => $result,
 		] );
 	}
 }
