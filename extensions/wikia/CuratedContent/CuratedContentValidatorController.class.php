@@ -43,7 +43,7 @@ class CuratedContentValidatorController extends WikiaController {
 
 	public function validateItem() {
 		$item = $this->request->getVal( 'item' );
-		$isFeatured = $this->request->getBool( 'isFeatured', false );
+		$isFeatured = $this->request->getBool( 'isFeaturedItem', false );
 
 		if ( empty( $item ) ) {
 			$this->respondWithErrors();
