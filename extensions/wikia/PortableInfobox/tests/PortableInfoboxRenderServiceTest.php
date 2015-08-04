@@ -416,17 +416,17 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 										<thead>
 											<tr>
 												<th
-												class="pi-horizontal-group-item pi-data-label pi-secondary-font pi-border-color">test label</th>
+												class="pi-horizontal-group-item pi-data-label pi-secondary-font pi-border-color pi-item-spacing">test label</th>
 												<th
-												class="pi-horizontal-group-item pi-data-label pi-secondary-font pi-border-color">test label</th>
+												class="pi-horizontal-group-item pi-data-label pi-secondary-font pi-border-color pi-item-spacing">test label</th>
 											</tr>
 										</thead>
 										<tbody>
 											<tr>
 												<td
-												class="pi-horizontal-group-item pi-data-value pi-font pi-border-color">test value</td>
+												class="pi-horizontal-group-item pi-data-value pi-font pi-border-color pi-item-spacing">test value</td>
 												<td
-												class="pi-horizontal-group-item pi-data-value pi-font pi-border-color">test value</td>
+												class="pi-horizontal-group-item pi-data-value pi-font pi-border-color pi-item-spacing">test value</td>
 											</tr>
 										</tbody>
 									</table>
