@@ -153,8 +153,11 @@ define ('ext.wikia.Flags.FlagEditForm',
 		function processInstance(modalInstance) {
 			modalInstance.show();
 			modalInstance.bind('done', saveEditForm);
-			$('.flags-special-form-params-new-link').on('click', addNewParameterInput);
-			$('.flags-special-form-param-delete-link').on('click', removeParameter);
+
+			$('.flags-special-form')
+				.on('click', '.flags-special-form-params-new-link', addNewParameterInput)
+				.on('click', '.flags-special-form-param-delete-link', removeParameter)
+				.on('click', '.form-template-params', getTemplateParams);
 		}
 
 		function saveEditForm() {
@@ -190,6 +193,43 @@ define ('ext.wikia.Flags.FlagEditForm',
 					}
 				}
 			});
+
+			return true;
+		}
+
+		function getTemplateParams() {
+			var param,
+				template = $('#flags-special-form-template').val();
+
+			if ( !template.length ) {
+				showErrorNotification('flags-special-create-form-invalid-template');
+				return false;
+			}
+
+			nirvana.sendRequest({
+				controller: 'FlagsApiController',
+				method: 'getFlagParamsFromTemplate',
+				data: {
+					'flag_view': template
+				},
+				callback: function (json) {
+					if (json.status === true) {
+						$('.flags-special-form-params-tbody').empty();
+
+						for(var name in json.data) {
+							param = {};
+							param.name = name;
+							param.description = '';
+
+							addNewParameterInput(param);
+						}
+					} else {
+						showWarningNotification('flags-special-create-form-no-parameters');
+					}
+				}
+			});
+
+			return true;
 		}
 
 		function collectFormData() {
@@ -250,9 +290,12 @@ define ('ext.wikia.Flags.FlagEditForm',
 			}
 		}
 
-		function addNewParameterInput() {
+		function addNewParameterInput(params) {
 			var tbody = $('.flags-special-form-params-tbody'),
-				partial = mustache.to_html(formData.partials.createFormParam, {});
+				partial;
+
+			params = params || {};
+			partial = mustache.to_html(formData.partials.createFormParam, params);
 
 			tbody.append(partial);
 			$('.flags-special-form-param-delete-link').on('click', removeParameter);
