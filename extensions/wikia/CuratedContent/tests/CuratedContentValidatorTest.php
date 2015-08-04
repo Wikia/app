@@ -469,10 +469,6 @@ class CuratedContentValidatorTest extends WikiaBaseTest {
 						'title' => 'Section Without Items',
 						'reason' => 'itemsMissing',
 					],
-					[
-						'title' => '',
-						'reason' => 'itemsMissing',
-					],
 				],
 				[
 					[
