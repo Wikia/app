@@ -40,10 +40,11 @@ class FlagsCache {
 	/**
 	 * Saves all types of flags in the memcache.
 	 * @param array $flagTypes
+	 * @param int $targeting @see FlagType::{flag_targeting constants}
 	 */
-	public function setFlagTypesForWikia( Array $flagTypes ) {
+	public function setFlagTypesForWikia( Array $flagTypes, $targeting = 0 ) {
 		$this->memcache->set(
-			$this->getMemcKeyFlagTypesOnWikia(),
+			$this->getMemcKeyFlagTypesOnWikia( $targeting ),
 			$flagTypes,
 			\WikiaResponse::CACHE_LONG
 		);

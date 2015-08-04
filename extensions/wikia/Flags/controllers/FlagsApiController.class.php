@@ -424,7 +424,7 @@ class FlagsApiController extends FlagsApiBaseController {
 			$flagTypeModel = new FlagType();
 			$flagTypesForWikia = $flagTypeModel->getFlagTypesForWikia( $wikiId, $targeting );
 
-			$flagsCache->setFlagTypesForWikia( $flagTypesForWikia );
+			$flagsCache->setFlagTypesForWikia( $flagTypesForWikia, $targeting );
 		}
 
 		return $flagTypesForWikia;
