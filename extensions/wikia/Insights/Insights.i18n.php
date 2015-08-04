@@ -57,6 +57,7 @@ $messages['en'] = array(
 	'insights-notification-message-alldone' => 'Congratulations! There are no more items in this queue.',
 	'insights-notification-message-fixit' => "Let's fix it.",
 	'insights-notification-list-button' => 'Go back to the list.',
+	'insights-notification-message-set-flags' => '<button id="ca-flags">Set flags for this page.</button>',
 	'insights-notification-see-more' => 'See more insights.',
 
 	'insights-wanted-by' => '$1 referral links',
@@ -126,6 +127,7 @@ $messages['qqq'] = array(
 	'insights-notification-message-alldone' => 'Message displayed on notification banner informing user that there is no more articles to fix in current Insight type',
 	'insights-notification-message-fixit' => 'Text encouraging user to fix an issue',
 	'insights-notification-list-button' => 'Text on button that redirects to list of insights',
+	'insights-notification-message-set-flags' => 'Button for setting flags',
 	'insights-notification-see-more' => 'Link text to redirect to Insights main page to see more Insight types',
 
 	'insights-wanted-by' => 'An information on how many other articles links to the one displayed above. $1 is a number of articles.',

@@ -226,6 +226,15 @@ abstract class InsightsPageModel extends InsightsModel {
 		return $params;
 	}
 
+	/**
+	 * Notification for flag insights
+	 * @param $subpage
+	 * @return string
+	 */
+	public function getInProgressNotificationForFlags( $subpage ) {
+		return '';
+	}
+
 	public function purgeInsightsCache() {
 		global $wgMemc;
 

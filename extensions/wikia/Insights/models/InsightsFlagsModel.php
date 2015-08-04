@@ -131,4 +131,17 @@ class InsightsFlagsModel extends InsightsPageModel {
 
 		return $flaggedPages;
 	}
+
+	/**
+	 * Notification for flag insights
+	 * @param $subpage
+	 * @return array
+	 */
+	public function getInProgressNotificationForFlags( $subpage ) {
+		$controller = new InsightsController();
+		$params = $controller->getInsightListLinkParams( $subpage );
+		$params['notificationMessage'] = wfMessage( InsightsHelper::INSIGHT_INPROGRESS_MSG_PREFIX . $subpage )->plain()
+			.wfMessage( 'insights-notification-message-set-flags' )->plain();
+		return $params;
+	}
 }
