@@ -39,12 +39,9 @@ class CuratedContentValidatorController extends WikiaController {
 
 			$section = $this->helper->processLogicForSection( $section );
 			$this->validator->validateSection( $section );
-
-			if ( !empty( $section['title'] ) ) {
-				$this->validator->validateItemsExist( $section );
-				$this->validator->validateItems( $section );
-				$this->validator->validateItemsTypes( $section );
-			}
+			$this->validator->validateItemsExist( $section );
+			$this->validator->validateItems( $section );
+			$this->validator->validateItemsTypes( $section );
 			$this->validator->validateDuplicatedTitles();
 			$this->respond( $this->validator->getErrors() );
 		}
