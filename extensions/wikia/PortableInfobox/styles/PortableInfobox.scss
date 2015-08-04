@@ -58,7 +58,7 @@
 // **********  Common elements styling ********** //
 
 .pi-item-spacing {
-	padding: $infobox-item-margin $infobox-item-margin * 4 $infobox-item-margin $infobox-item-margin * 2;
+	padding: $infobox-item-margin $infobox-item-margin * 2;
 }
 
 .pi-secondary-background {
@@ -128,7 +128,6 @@
 	}
 
 	.pi-horizontal-group-item {
-		padding: $infobox-item-margin $infobox-item-margin * 2;
 		vertical-align: top;
 
 		&:not(:first-child) {
