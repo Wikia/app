@@ -48,7 +48,11 @@ class UserPreferences {
 	}
 
 	public function setPreferencesInCache($userId, $preferences) {
-		$this->preferences[$userId] = $preferences;
+		$this->preferences[$userId] = $this->defaultPreferences;
+
+		foreach ($preferences as $key => $val) {
+			$this->preferences[$userId][$key] = $val;
+		}
 	}
 
 	public function get($userId, $pref, $default = null, $ignoreHidden = false) {
@@ -77,12 +81,16 @@ class UserPreferences {
 	 * @param array $prefs
 	 */
 	public function setMultiple( $userId, $prefs ) {
-		$this->load( $userId );
+		$currentPreferences = $this->load( $userId );
 		$prefToSave = [ ];
 
 		foreach ( $prefs as $pref => $val ) {
+			if ($currentPreferences[$pref] == $val) {
+				continue;
+			}
+
 			$default = $this->getFromDefault( $pref );
-			if ( $val == null && isset( $default ) ) {
+			if ( $val === null && isset( $default ) ) {
 				$val = $default;
 			}
 			$this->preferences[ $userId ][ $pref ] = $val;
@@ -102,7 +110,7 @@ class UserPreferences {
 
 	private function load($userId) {
 		if (!isset($this->preferences[$userId])) {
-			$this->preferences[$userId] = [];
+			$this->preferences[$userId] = $this->defaultPreferences;
 			foreach ($this->service->getPreferences($userId) as $pref) {
 				$this->preferences[$userId][$pref->getName()] = $pref->getValue();
 			};

@@ -24,7 +24,7 @@ class ArticleComment {
 
 	/** @var array */
 	public $mMetadata;
-	
+
 	public $mText;
 	public $mRawtext;
 	public $mHeadItems;
@@ -109,7 +109,7 @@ class ArticleComment {
 		$latest = ( new WikiaSQL() )
 			->SELECT( 'page_id' )
 			->FROM( 'page' )
-			->WHERE( 'page_title' )->LIKE( $prefix.'%' )
+			->WHERE( 'page_title' )->LIKE( $prefix . '%' )
 			->AND_( 'page_namespace' )->EQUAL_TO( $commentNamespace )
 			->ORDER_BY( 'page_id' )->DESC()
 			->LIMIT( 1 )

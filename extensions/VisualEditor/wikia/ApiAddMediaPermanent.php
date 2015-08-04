@@ -99,8 +99,9 @@ class ApiAddMediaPermanent extends ApiAddMedia {
 	}
 
 	private function getUniqueTitle( $name ) {
-		$filename = pathinfo( $name, PATHINFO_FILENAME );
-		$extension = pathinfo( $name, PATHINFO_EXTENSION );
+		$pathinfo = mb_pathinfo( $name );
+		$filename = $pathinfo['filename'];
+		$extension = $pathinfo['extension'];
 		$title = Title::makeTitleSafe( NS_IMAGE, $filename . '.' . $extension );
 		if ( !empty( $title ) && $title->exists() ) {
 			for ( $i = 0; $i <= 3; $i++ ) {

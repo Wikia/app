@@ -6,10 +6,13 @@
 class ArticleCommentList {
 	const CACHE_VERSION = 'v2';
 
+	/** @var Title */
 	private $mTitle;
 	private $mText;
 	private $mCommentId = null;
 	private $mComments = false;
+
+	/** @var bool|array */
 	private $mCommentsAll = false;
 	private $mCount = false;       // Count of comments actually loaded after paging rules are applied
 	private $mCountNested = false;
@@ -44,7 +47,7 @@ class ArticleCommentList {
 
 	function __construct() {
 		global $wgArticleCommentsMaxPerPage;
-		$this->setMaxPerPage($wgArticleCommentsMaxPerPage);
+		$this->setMaxPerPage( $wgArticleCommentsMaxPerPage );
 	}
 
 	public function setMaxPerPage( $val ) {
@@ -57,14 +60,17 @@ class ArticleCommentList {
 
 	/**
 	 * setId -- set mCommentId it will limit select to only this comment
+	 *
+	 * @param int $id
 	 */
-
 	public function setId( $id ) {
 		$this->mCommentId = $id;
 	}
 
 	/**
 	 * setTitle -- standard accessor/setter
+	 *
+	 * @param Title $title
 	 */
 	public function setTitle( Title $title ) {
 		$this->mTitle = $title;
@@ -72,8 +78,10 @@ class ArticleCommentList {
 
 	/**
 	 * getTitle -- standard accessor/getter
+	 *
+	 * @return Title
 	 */
-	public function getTitle( ) {
+	public function getTitle() {
 		return $this->mTitle;
 	}
 
@@ -81,8 +89,8 @@ class ArticleCommentList {
 	 * getCountAll -- count 1st level comments
 	 */
 	public function getCountAll() {
-		if ($this->mCountAll === false) {
-			$this->getCommentList(false);
+		if ( $this->mCountAll === false ) {
+			$this->getCommentList( false );
 		}
 		return $this->mCountAll;
 	}
@@ -91,8 +99,8 @@ class ArticleCommentList {
 	 * getCountAllNested -- count all comments - including nested
 	 */
 	public function getCountAllNested() {
-		if ($this->mCountAllNested === false) {
-			$this->getCommentList(false);
+		if ( $this->mCountAllNested === false ) {
+			$this->getCommentList( false );
 		}
 		return $this->mCountAllNested;
 	}
@@ -111,32 +119,32 @@ class ArticleCommentList {
 	 * try not to defeat the paging, getting ALL articles is expensive
 	 */
 
-	public function getCommentPages( $master = true, $page = 1) {
+	public function getCommentPages( $master = true, $page = 1 ) {
 		global $wgRequest;
 
-		//initialize list of comment ids if not done already
-		if ($this->mCommentsAll === false) {
+		// initialize list of comment ids if not done already
+		if ( $this->mCommentsAll === false ) {
 			$this->getCommentList( $master );
 		}
 		$showall = $wgRequest->getText( 'showall', false );
 
-		//pagination
-		if ($page !== false && ($showall != 1 || $this->getCountAllNested() > 200 /*see RT#64641*/)) {
-			$this->mComments = array_slice($this->mCommentsAll, ($page - 1) * $this->mMaxPerPage, $this->mMaxPerPage, true);
+		// pagination
+		if ( $page !== false && ( $showall != 1 || $this->getCountAllNested() > 200 /*see RT#64641*/ ) ) {
+			$this->mComments = array_slice( $this->mCommentsAll, ( $page - 1 ) * $this->mMaxPerPage, $this->mMaxPerPage, true );
 		} else {
 			$this->mComments = $this->mCommentsAll;
 		}
 
-		$this->mCount = count($this->mComments);
+		$this->mCount = count( $this->mComments );
 		$this->mCountNested = 0;
 
 		// grab list of required article IDs
 		$commentsQueue = array();
-		foreach($this->mComments as $id => &$levels) {
-			if(isset($levels['level1'])) {
+		foreach ( $this->mComments as $id => &$levels ) {
+			if ( isset( $levels['level1'] ) ) {
 				$commentsQueue[] = $id;
 			}
-			if(isset($levels['level2'])) {
+			if ( isset( $levels['level2'] ) ) {
 				$commentsQueue = array_merge( $commentsQueue, array_keys( $levels['level2'] ) );
 			}
 		}
@@ -149,13 +157,13 @@ class ArticleCommentList {
 		}
 
 		// grab article contents for each comment
-		foreach($this->mComments as $id => &$levels) {
-			if(isset($levels['level1'])) {
+		foreach ( $this->mComments as $id => &$levels ) {
+			if ( isset( $levels['level1'] ) ) {
 				$levels['level1'] = $comments[$id];
 				$this->mCountNested++;
 			}
-			if(isset($levels['level2'])) {
-				foreach($levels['level2'] as $subid => &$sublevel) {
+			if ( isset( $levels['level2'] ) ) {
+				foreach ( $levels['level2'] as $subid => &$sublevel ) {
 					$sublevel = $comments[$subid];
 					$this->mCountNested++;
 				}
@@ -186,7 +194,7 @@ class ArticleCommentList {
 		/**
 		 * skip cache if purging or using master connection or in case of single comment
 		 */
-		if ( $action != 'purge' && !$master && empty($this->mCommentId) ) {
+		if ( $action != 'purge' && !$master && empty( $this->mCommentId ) ) {
 			$this->mCommentsAll = $wgMemc->get( $memckey );
 		}
 
@@ -197,12 +205,12 @@ class ArticleCommentList {
 
 			$table = array( 'page' );
 			$vars = array( 'page_id', 'page_title' );
-			$conds = $this->getQueryWhere($dbr);
+			$conds = $this->getQueryWhere( $dbr );
 			$options = array( 'ORDER BY' => 'page_id DESC' );
 			$join_conds = array();
 
-			if( !empty( $wgArticleCommentsEnableVoting ) ) {
-				//add votes to the result set
+			if ( !empty( $wgArticleCommentsEnableVoting ) ) {
+				// add votes to the result set
 				$table[] = 'page_vote';
 				$vars[] = 'count(vote) as vote_cnt';
 				$options['GROUP BY'] = 'page_id, page_title';
@@ -215,10 +223,10 @@ class ArticleCommentList {
 
 			$helperArray = array();
 			while ( $row = $dbr->fetchObject( $res ) ) {
-				$parts = ArticleComment::explode($row->page_title);
+				$parts = ArticleComment::explode( $row->page_title );
 				$p0 = $parts['partsStripped'][0];
 
-				if (count($parts['partsStripped']) == 2) {
+				if ( count( $parts['partsStripped'] ) == 2 ) {
 					// push comment replies aside, we'll merge them later
 					$subpages[$p0][$row->page_id] = $row->page_id;
 				} else {
@@ -227,51 +235,51 @@ class ArticleCommentList {
 
 					$pages[$row->page_id]['level1'] = $row->page_id;
 
-					if( !empty( $wgArticleCommentsEnableVoting ) ) {
+					if ( !empty( $wgArticleCommentsEnableVoting ) ) {
 						// check if the answer is in top 3
-						for( $i=0; $i<3; $i++ ) {
-							if( !isset($top3[$i]) ) {
-								$top3[$i] = array('id' => $row->page_id, 'votes' => $row->vote_cnt);
+						for ( $i = 0; $i < 3; $i++ ) {
+							if ( !isset( $top3[$i] ) ) {
+								$top3[$i] = array( 'id' => $row->page_id, 'votes' => $row->vote_cnt );
 								break;
 							}
-							if( $top3[$i]['votes'] > $row->vote_cnt ) {
+							if ( $top3[$i]['votes'] > $row->vote_cnt ) {
 								continue;
 							}
-							if( $top3[$i]['votes'] == $row->vote_cnt && $top3[$i]['id'] > $row->page_id ) {
+							if ( $top3[$i]['votes'] == $row->vote_cnt && $top3[$i]['id'] > $row->page_id ) {
 								continue;
 							}
-							$top3[$i+1] = $top3[$i];
-							$top3[$i] = array('id' => $row->page_id, 'votes' => $row->vote_cnt);
+							$top3[$i + 1] = $top3[$i];
+							$top3[$i] = array( 'id' => $row->page_id, 'votes' => $row->vote_cnt );
 							break;
 						}
 					}
 				}
 			}
 			// attach replies to comments
-			foreach( $subpages as $p0 => $level2 ) {
-				if( !empty($helperArray[$p0]) ) {
+			foreach ( $subpages as $p0 => $level2 ) {
+				if ( !empty( $helperArray[$p0] ) ) {
 					$idx = $helperArray[$p0];
 					$pages[$idx]['level2'] = array_reverse( $level2, true );
 				} else {
-				//if its empty it's an error in our database
-				//someone removed a parent and left its children
-				//or someone removed parent and children and
-				//restored children or a child without restoring parent
-				//--nAndy
+				// if its empty it's an error in our database
+				// someone removed a parent and left its children
+				// or someone removed parent and children and
+				// restored children or a child without restoring parent
+				// --nAndy
 				}
 			}
 
-			if( !empty( $wgArticleCommentsEnableVoting ) ) {
+			if ( !empty( $wgArticleCommentsEnableVoting ) ) {
 				// move 3 most voted answers to the top
 				$newPages = array();
-				for( $i=0; $i<3; $i++ ) {
-					if( isset( $top3[$i] ) ) {
+				for ( $i = 0; $i < 3; $i++ ) {
+					if ( isset( $top3[$i] ) ) {
 						$newPages[$top3[$i]['id']] = $pages[$top3[$i]['id']];
 						$pages[$top3[$i]['id']] = null;
 					}
 				}
-				foreach( $pages as $id => $val ) {
-					if( $val ) {
+				foreach ( $pages as $id => $val ) {
+					if ( $val ) {
 						$newPages[$id] = $val;
 					}
 				}
@@ -281,18 +289,18 @@ class ArticleCommentList {
 			$dbr->freeResult( $res );
 			$this->mCommentsAll = $pages;
 
-			if(empty($this->mCommentId)) {
+			if ( empty( $this->mCommentId ) ) {
 				$wgMemc->set( $memckey, $this->mCommentsAll, 3600 );
 			}
 		}
 
-		$this->mCountAll = count($this->mCommentsAll);
+		$this->mCountAll = count( $this->mCommentsAll );
 		// Set our nested count here RT#85503
 		$this->mCountAllNested = 0;
-		foreach ($this->mCommentsAll as $comment) {
+		foreach ( $this->mCommentsAll as $comment ) {
 			$this->mCountAllNested++;
-			if (isset($comment['level2'])) {
-				$this->mCountAllNested += count($comment['level2']);
+			if ( isset( $comment['level2'] ) ) {
+				$this->mCountAllNested += count( $comment['level2'] );
 			}
 		}
 
@@ -315,7 +323,7 @@ class ArticleCommentList {
 		$res = $dbr->select(
 			array( 'page' ),
 			array( 'page_id', 'page_title' ),
-			$this->getQueryWhere($dbr),
+			$this->getQueryWhere( $dbr ),
 			__METHOD__
 		);
 
@@ -330,40 +338,40 @@ class ArticleCommentList {
 		return $pages;
 	}
 
-	public function getQueryWhere($dbr) {
+	public function getQueryWhere( DatabaseBase $dbr ) {
 		wfProfileIn( __METHOD__ );
 		$like = "page_title" . $dbr->buildLike( sprintf( "%s/%s", $this->mText, ARTICLECOMMENT_PREFIX ), $dbr->anyString() );
 		$namspace = MWNamespace::getTalk( $this->getTitle()->getNamespace() );
 
-		if(empty($this->mCommentId)) {
+		if ( empty( $this->mCommentId ) ) {
 			wfProfileOut( __METHOD__ );
-			return array($like, 'page_namespace' => $namspace);
+			return array( $like, 'page_namespace' => $namspace );
 		}
 
-		$ac = ArticleComment::newFromId($this->mCommentId);
+		$ac = ArticleComment::newFromId( $this->mCommentId );
 		$parent = $ac->getTopParent();
 		$title = $ac->getTitle();
-		if(empty($parent) && (!empty($title))) {
+		if ( empty( $parent ) && ( !empty( $title ) ) ) {
 			$parent = $title->getDBkey();
 		}
 		$like = "page_title" . $dbr->buildLike( $parent, $dbr->anyString() );
 		wfProfileOut( __METHOD__ );
-		return array($like, 'page_namespace' => $namspace);
+		return array( $like, 'page_namespace' => $namspace );
 	}
 
-	//TODO: review - CruiseControl says this is unused.
+	// TODO: review - CruiseControl says this is unused.
 	private function getRemovedCommentPages( $oTitle ) {
 		wfProfileIn( __METHOD__ );
 
 		$pages = array();
 
-		if ($oTitle instanceof Title) {
+		if ( $oTitle instanceof Title ) {
 			$dbr = wfGetDB( DB_SLAVE );
 			$res = $dbr->select(
 				array( 'archive' ),
 				array( 'ar_page_id', 'ar_title' ),
 				array(
-					'ar_namespace' => MWNamespace::getTalk($this->getTitle()->getNamespace()),
+					'ar_namespace' => MWNamespace::getTalk( $this->getTitle()->getNamespace() ),
 					"ar_title" . $dbr->buildLike( sprintf( "%s/%s", $oTitle->getDBkey(), ARTICLECOMMENT_PREFIX ), $dbr->anyString() )
 				),
 				__METHOD__,
@@ -372,7 +380,7 @@ class ArticleCommentList {
 			while ( $row = $dbr->fetchObject( $res ) ) {
 				$pages[ $row->ar_page_id ] = array(
 					'title' => $row->ar_title,
-					'nspace' => MWNamespace::getTalk($this->getTitle()->getNamespace())
+					'nspace' => MWNamespace::getTalk( $this->getTitle()->getNamespace() )
 				);
 			}
 			$dbr->freeResult( $res );
@@ -389,33 +397,33 @@ class ArticleCommentList {
 	 *
 	 * @return array data for comments list
 	 */
-	public function getData($page = 1) {
+	public function getData( $page = 1 ) {
 		global $wgUser, $wgStylePath;
 
-		//$isSysop = in_array('sysop', $groups) || in_array('staff', $groups);
+		// $isSysop = in_array('sysop', $groups) || in_array('staff', $groups);
 		$canEdit = $wgUser->isAllowed( 'edit' );
 		$isBlocked = $wgUser->isBlocked();
 		$isReadOnly = wfReadOnly();
-		//$showall = $wgRequest->getText( 'showall', false );
+		// $showall = $wgRequest->getText( 'showall', false );
 
-		//default to using slave. comments are posted with ajax which hits master db
-		//$commentList = $this->getCommentList(false);
+		// default to using slave. comments are posted with ajax which hits master db
+		// $commentList = $this->getCommentList(false);
 		$countComments = $this->getCountAll();
 		$countCommentsNested = $this->getCountAllNested();
 
-		$countPages = ceil($countComments / $this->mMaxPerPage);
+		$countPages = ceil( $countComments / $this->mMaxPerPage );
 		$pageRequest = (int) $page;
 		$page = 1;
-		if ($pageRequest <= $countPages && $pageRequest > 0) {
+		if ( $pageRequest <= $countPages && $pageRequest > 0 ) {
 			$page = $pageRequest;
 		}
-		$comments = $this->getCommentPages(false, $page);
+		$comments = $this->getCommentPages( false, $page );
 		$this->preloadFirstRevId( $comments );
-		$pagination = $this->doPagination($countComments, count($comments), $page);
+		$pagination = $this->doPagination( $countComments, count( $comments ), $page );
 
 		return array(
-			'avatar' => AvatarService::renderAvatar($wgUser->getName(), 50),
-			'userurl' => AvatarService::getUrl($wgUser->getName()),
+			'avatar' => AvatarService::renderAvatar( $wgUser->getName(), 50 ),
+			'userurl' => AvatarService::getUrl( $wgUser->getName() ),
 			'canEdit' => $canEdit,
 			'commentListRaw' => $comments,
 			'commentingAllowed' => ArticleComment::canComment( $this->mTitle ),
@@ -440,56 +448,56 @@ class ArticleCommentList {
 	 *
 	 * @return String HTML text
 	 */
-	function doPagination($countAll, $countComments, $activePage = 1, $title = null) {
+	function doPagination( $countAll, $countComments, $activePage = 1, $title = null ) {
 		global $wgTitle;
 
 		$maxDisplayedPages = 6;
 		$pagination = '';
 
-		if ( $title == null ){
+		if ( $title == null ) {
 			$title = $wgTitle;
 		}
 
-		if(empty($title)) {
+		if ( empty( $title ) ) {
 			return "";
 		}
 
-		if ($countAll > $countComments) {
-			$numberOfPages = ceil($countAll / $this->mMaxPerPage );
+		if ( $countAll > $countComments ) {
+			$numberOfPages = ceil( $countAll / $this->mMaxPerPage );
 
-			//previous
-			if ($activePage > 1) {
-				$pagination .= '<a href="' . $title->getLinkUrl('page='. (max($activePage - 1, 1)) ) . '#article-comments" id="article-comments-pagination-link-prev" class="article-comments-pagination-link dark_text_1" page="' . (max($activePage - 1, 1)) . '">' . wfMsg('article-comments-prev-page') . '</a>';
+			// previous
+			if ( $activePage > 1 ) {
+				$pagination .= '<a href="' . $title->getLinkUrl( 'page=' . ( max( $activePage - 1, 1 ) ) ) . '#article-comments" id="article-comments-pagination-link-prev" class="article-comments-pagination-link dark_text_1" page="' . ( max( $activePage - 1, 1 ) ) . '">' . wfMsg( 'article-comments-prev-page' ) . '</a>';
 			}
 
-			//first page - always visible
-			$pagination .= '<a href="' . $title->getFullUrl('page=1') . '#article-comments" id="article-comments-pagination-link-1" class="article-comments-pagination-link dark_text_1' . ($activePage == 1 ? ' article-comments-pagination-link-active accent' : '') . '" page="1">1</a>';
+			// first page - always visible
+			$pagination .= '<a href="' . $title->getFullUrl( 'page=1' ) . '#article-comments" id="article-comments-pagination-link-1" class="article-comments-pagination-link dark_text_1' . ( $activePage == 1 ? ' article-comments-pagination-link-active accent' : '' ) . '" page="1">1</a>';
 
-			//calculate the 2nd and the last but one pages to display
-			$firstVisiblePage = max(2, min($numberOfPages - $maxDisplayedPages + 1, $activePage - $maxDisplayedPages + 4));
-			$lastVisiblePage = min($numberOfPages - 1, $maxDisplayedPages + $firstVisiblePage - 2);
+			// calculate the 2nd and the last but one pages to display
+			$firstVisiblePage = max( 2, min( $numberOfPages - $maxDisplayedPages + 1, $activePage - $maxDisplayedPages + 4 ) );
+			$lastVisiblePage = min( $numberOfPages - 1, $maxDisplayedPages + $firstVisiblePage - 2 );
 
-			//add spacer when there is a gap between 1st and 2nd visible page
-			if ($firstVisiblePage > 2) {
-				$pagination .= wfMsg('article-comments-page-spacer');
+			// add spacer when there is a gap between 1st and 2nd visible page
+			if ( $firstVisiblePage > 2 ) {
+				$pagination .= wfMsg( 'article-comments-page-spacer' );
 			}
 
-			//generate links
-			for ($i = $firstVisiblePage; $i <= $lastVisiblePage; $i++) {
-				$pagination .= '<a href="' . $title->getFullUrl('page=' . $i) . '#article-comments" id="article-comments-pagination-link-' . $i . '" class="article-comments-pagination-link dark_text_1' . ($i == $activePage ? ' article-comments-pagination-link-active accent' : '') . '" page="' . $i . '">' . $i . '</a>';
+			// generate links
+			for ( $i = $firstVisiblePage; $i <= $lastVisiblePage; $i++ ) {
+				$pagination .= '<a href="' . $title->getFullUrl( 'page=' . $i ) . '#article-comments" id="article-comments-pagination-link-' . $i . '" class="article-comments-pagination-link dark_text_1' . ( $i == $activePage ? ' article-comments-pagination-link-active accent' : '' ) . '" page="' . $i . '">' . $i . '</a>';
 			}
 
-			//add spacer when there is a gap between 2 last links
-			if ($numberOfPages - $lastVisiblePage > 1) {
-				$pagination .= wfMsg('article-comments-page-spacer');
+			// add spacer when there is a gap between 2 last links
+			if ( $numberOfPages - $lastVisiblePage > 1 ) {
+				$pagination .= wfMsg( 'article-comments-page-spacer' );
 			}
 
-			//add last page - always visible
-			$pagination .= '<a href="' . $title->getFullUrl('page=' . $numberOfPages) . '#article-comments" id="article-comments-pagination-link-' . $numberOfPages . '" class="article-comments-pagination-link dark_text_1' . ($numberOfPages == $activePage ? ' article-comments-pagination-link-active accent' : '') . '" page="' . $numberOfPages . '">' . $numberOfPages . '</a>';
+			// add last page - always visible
+			$pagination .= '<a href="' . $title->getFullUrl( 'page=' . $numberOfPages ) . '#article-comments" id="article-comments-pagination-link-' . $numberOfPages . '" class="article-comments-pagination-link dark_text_1' . ( $numberOfPages == $activePage ? ' article-comments-pagination-link-active accent' : '' ) . '" page="' . $numberOfPages . '">' . $numberOfPages . '</a>';
 
-			//next
-			if ($activePage < $numberOfPages) {
-				$pagination .= '<a href="' . $title->getFullUrl('page=' . (min($activePage + 1, $numberOfPages)) ) . '#article-comments" id="article-comments-pagination-link-next" class="article-comments-pagination-link dark_text_1" page="' . (min($activePage + 1, $numberOfPages)) . '">' . wfMsg('article-comments-next-page') . '</a>';
+			// next
+			if ( $activePage < $numberOfPages ) {
+				$pagination .= '<a href="' . $title->getFullUrl( 'page=' . ( min( $activePage + 1, $numberOfPages ) ) ) . '#article-comments" id="article-comments-pagination-link-next" class="article-comments-pagination-link dark_text_1" page="' . ( min( $activePage + 1, $numberOfPages ) ) . '">' . wfMsg( 'article-comments-next-page' ) . '</a>';
 			}
 		}
 		return $pagination;
@@ -503,14 +511,15 @@ class ArticleCommentList {
 	 * @return String HTML text
 	 */
 	public function blockedPage() {
+		/** @var Language $wgLang */
 		global $wgUser, $wgLang, $wgContLang, $wgRequest;
 
 		// macbre: prevent fatals in code below
-		if (empty($wgUser->mBlock)) {
+		if ( empty( $wgUser->mBlock ) ) {
 			return '';
 		}
 
-		list ($blockerName, $reason, $ip, $blockid, $blockTimestamp, $blockExpiry, $intended) = array(
+		list ( $blockerName, $reason, $ip, $blockid, $blockTimestamp, $blockExpiry, $intended ) = array(
 			User::whoIs( $wgUser->blockedBy() ),
 			$wgUser->blockedFor() ? $wgUser->blockedFor() : wfMsg( 'blockednoreason' ),
 			$wgRequest->getIP(),
@@ -542,7 +551,7 @@ class ArticleCommentList {
 			$msg = 'blockedtext';
 		}
 
-		return wfMsgExt( $msg, array('parse'), $blockerLink, $reason, $ip, $blockerName, $blockid, $blockExpiry, $intended, $blockTimestamp );
+		return wfMsgExt( $msg, array( 'parse' ), $blockerLink, $reason, $ip, $blockerName, $blockid, $blockExpiry, $intended, $blockTimestamp );
 	}
 
 	/**
@@ -555,14 +564,14 @@ class ArticleCommentList {
 	protected function preloadFirstRevId( $comments ) {
 		wfProfileIn( __METHOD__ );
 		$articles = array();
-		foreach ($comments as $id => $levels) {
-			if ( isset($levels['level1']) ) {
+		foreach ( $comments as $id => $levels ) {
+			if ( isset( $levels['level1'] ) ) {
 				if ( !empty( $levels['level1'] ) ) {
 					$articles[$levels['level1']->getTitle()->getArticleID()] = $levels['level1'];
 				}
 			}
-			if ( isset($levels['level2']) ) {
-				foreach ($levels['level2'] as $nested) {
+			if ( isset( $levels['level2'] ) ) {
+				foreach ( $levels['level2'] as $nested ) {
 					if ( !empty( $nested ) ) {
 						$articles[$nested->getTitle()->getArticleID()] = $nested;
 					}
@@ -575,21 +584,22 @@ class ArticleCommentList {
 			$res = $db->select(
 				'revision',
 				array( 'rev_page', 'min(rev_id) AS min_rev_id' ),
-				array( 'rev_page' => array_keys($articles) ),
+				array( 'rev_page' => array_keys( $articles ) ),
 				__METHOD__,
 				array(
 					'GROUP BY' => 'rev_page',
 				)
 			);
 
-			foreach ($res as $row) {
+			/** @var stdClass $row */
+			foreach ( $res as $row ) {
 				if ( isset( $articles[$row->rev_page] ) ) {
 					$articles[$row->rev_page]->setFirstRevId( $row->min_rev_id, DB_SLAVE );
 					unset( $articles[$row->rev_page] );
 				}
 			}
 
-			foreach ($articles as $id => $comment) {
+			foreach ( $articles as $id => $comment ) {
 				$comment->setFirstRevId( false, DB_SLAVE );
 			}
 		}
@@ -615,7 +625,7 @@ class ArticleCommentList {
 		$title = $wikiPage->getTitle();
 
 		if ( empty( self::$mArticlesToDelete ) ) {
-			$listing = ArticleCommentList::newFromTitle($title);
+			$listing = ArticleCommentList::newFromTitle( $title );
 			self::$mArticlesToDelete = $listing->getAllCommentPages();
 		}
 
@@ -637,9 +647,7 @@ class ArticleCommentList {
 	/**
 	 * Centralized memcache purging to avoid getting the cache out of sync.
 	 *
-	 * @param Title $title [description]
-	 *
-	 * @return [type] [description]
+	 * @param Title $title
 	 */
 	static public function purgeCache( Title $title ) {
 		global $wgMemc;
@@ -672,59 +680,59 @@ class ArticleCommentList {
 
 		$title = $wikiPage->getTitle();
 
-		if (!MWNamespace::isTalk($title->getNamespace()) || !ArticleComment::isTitleComment($title)) {
+		if ( !MWNamespace::isTalk( $title->getNamespace() ) || !ArticleComment::isTitleComment( $title ) ) {
 			if ( empty( self::$mArticlesToDelete ) ) {
 				wfProfileOut( __METHOD__ );
 				return true;
 			}
 		}
 
-		if(class_exists('WallHelper') && WallHelper::isWallNamespace( $title->getNamespace() )) {
+		if ( class_exists( 'WallHelper' ) && WallHelper::isWallNamespace( $title->getNamespace() ) ) {
 			wfProfileOut( __METHOD__ );
 			return true;
 		}
 
-		//watch out for recursion
-		if (self::$mDeletionInProgress) {
+		// watch out for recursion
+		if ( self::$mDeletionInProgress ) {
 			wfProfileOut( __METHOD__ );
 			return true;
 		}
 		self::$mDeletionInProgress = true;
 
-		//redirect to article/blog after deleting a comment (or whole article/blog)
-		$parts = ArticleComment::explode($title->getText());
-		$parentTitle = Title::newFromText($parts['title'], MWNamespace::getSubject($title->getNamespace()));
-		$wgOut->redirect($parentTitle->getFullUrl());
+		// redirect to article/blog after deleting a comment (or whole article/blog)
+		$parts = ArticleComment::explode( $title->getText() );
+		$parentTitle = Title::newFromText( $parts['title'], MWNamespace::getSubject( $title->getNamespace() ) );
+		$wgOut->redirect( $parentTitle->getFullUrl() );
 
-		//do not use $reason as it contains content of parent article/comment - not current ones that we delete in a loop
+		// do not use $reason as it contains content of parent article/comment - not current ones that we delete in a loop
 
-		$deleteReason = wfMsgForContent('article-comments-delete-reason');
+		$deleteReason = wfMsgForContent( 'article-comments-delete-reason' );
 
-		//we have comment 1st level - checked in articleDelete() (or 2nd - so do nothing)
-		if (is_array(self::$mArticlesToDelete)) {
+		// we have comment 1st level - checked in articleDelete() (or 2nd - so do nothing)
+		if ( is_array( self::$mArticlesToDelete ) ) {
 			$mDelete = 'live';
-			if ( isset($wgMaxCommentsToDelete) && ( count(self::$mArticlesToDelete) > $wgMaxCommentsToDelete ) ) {
-				if ( !empty($wgEnableMultiDeleteExt) ) {
+			if ( isset( $wgMaxCommentsToDelete ) && ( count( self::$mArticlesToDelete ) > $wgMaxCommentsToDelete ) ) {
+				if ( !empty( $wgEnableMultiDeleteExt ) ) {
 					$mDelete = 'task';
 				}
 			}
 
 			if ( $mDelete == 'live' ) {
-				$irc_backup = $wgRC2UDPEnabled;	//backup
-				$wgRC2UDPEnabled = false; //turn off
-				foreach (self::$mArticlesToDelete as $page_id => $oComment) {
+				$irc_backup = $wgRC2UDPEnabled;	// backup
+				$wgRC2UDPEnabled = false; // turn off
+				foreach ( self::$mArticlesToDelete as $page_id => $oComment ) {
 					$oCommentTitle = $oComment->getTitle();
 					if ( $oCommentTitle instanceof Title ) {
-						$oComment = new ArticleComment($oCommentTitle);
-						$oComment->doDeleteComment($deleteReason);
+						$oComment = new ArticleComment( $oCommentTitle );
+						$oComment->doDeleteComment( $deleteReason );
 					}
 				}
 
-				$wgRC2UDPEnabled = $irc_backup; //restore to whatever it was
-				$listing = ArticleCommentList::newFromTitle($parentTitle);
+				$wgRC2UDPEnabled = $irc_backup; // restore to whatever it was
+				$listing = ArticleCommentList::newFromTitle( $parentTitle );
 				$listing->purge();
 			} else {
-				$taskParams= array(
+				$taskParams = array(
 					'mode' 		=> 'you',
 					'wikis'		=> '',
 					'range'		=> 'one',
@@ -738,7 +746,7 @@ class ArticleCommentList {
 				);
 
 
-				foreach (self::$mArticlesToDelete as $oComment) {
+				foreach ( self::$mArticlesToDelete as $oComment ) {
 					$oCommentTitle = $oComment->getTitle();
 					if ( $oCommentTitle instanceof Title ) {
 						/* @var $oCommentTitle Title */
@@ -746,7 +754,7 @@ class ArticleCommentList {
 						$data['page'] = $oCommentTitle->getFullText();
 
 						$task = new \Wikia\Tasks\Tasks\MultiTask();
-						$task->call('delete', $data);
+						$task->call( 'delete', $data );
 						$submit_id = $task->queue();
 
 						Wikia::log( __METHOD__, 'deletecomment', "Added task ($submit_id) for {$data['page']} page" );
@@ -777,23 +785,23 @@ class ArticleCommentList {
 
 		if ( $oTitle instanceof Title ) {
 			$new_page_id = $oTitle->getArticleId();
-			$listing = ArticleCommentList::newFromTitle($oTitle);
-			$pagesToRecover = $listing->getRemovedCommentPages($oTitle);
-			if ( !empty($pagesToRecover) && is_array($pagesToRecover) ) {
-				$irc_backup = $wgRC2UDPEnabled;	//backup
-				$wgRC2UDPEnabled = false; //turn off
-				foreach ($pagesToRecover as $page_id => $page_value) {
+			$listing = ArticleCommentList::newFromTitle( $oTitle );
+			$pagesToRecover = $listing->getRemovedCommentPages( $oTitle );
+			if ( !empty( $pagesToRecover ) && is_array( $pagesToRecover ) ) {
+				$irc_backup = $wgRC2UDPEnabled;	// backup
+				$wgRC2UDPEnabled = false; // turn off
+				foreach ( $pagesToRecover as $page_id => $page_value ) {
 					$oCommentTitle = Title::makeTitleSafe( $page_value['nspace'], $page_value['title'] );
-					if ($oCommentTitle instanceof Title) {
+					if ( $oCommentTitle instanceof Title ) {
 						$archive = new PageArchive( $oCommentTitle );
-						$ok = $archive->undelete( '', wfMsg('article-comments-undeleted-comment', $new_page_id) );
+						$ok = $archive->undelete( '', wfMsg( 'article-comments-undeleted-comment', $new_page_id ) );
 
-						if ( !is_array($ok) ) {
+						if ( !is_array( $ok ) ) {
 							Wikia::log( __METHOD__, 'error', "cannot restore comment {$page_value['title']} (id: {$page_id})" );
 						}
 					}
 				}
-				$wgRC2UDPEnabled = $irc_backup; //restore to whatever it was
+				$wgRC2UDPEnabled = $irc_backup; // restore to whatever it was
 			}
 		}
 
@@ -818,7 +826,7 @@ class ArticleCommentList {
 	static public function makeChangesListKey( $oChangeList, &$currentName, $oRCCacheEntry ) {
 		global $wgEnableGroupedArticleCommentsRC;
 
-		if ( empty($wgEnableGroupedArticleCommentsRC) ) {
+		if ( empty( $wgEnableGroupedArticleCommentsRC ) ) {
 			return true;
 		}
 
@@ -827,9 +835,9 @@ class ArticleCommentList {
 		$oTitle = $oRCCacheEntry->getTitle();
 		$namespace = $oTitle->getNamespace();
 
-		if( MWNamespace::isTalk($namespace) && ArticleComment::isTitleComment($oTitle) ) {
-			$parts = ArticleComment::explode($oTitle->getText());
-			if ($parts['title'] != '') {
+		if ( MWNamespace::isTalk( $namespace ) && ArticleComment::isTitleComment( $oTitle ) ) {
+			$parts = ArticleComment::explode( $oTitle->getText() );
+			if ( $parts['title'] != '' ) {
 				$currentName = 'ArticleComments' . $parts['title'];
 			}
 		}
@@ -842,31 +850,31 @@ class ArticleCommentList {
 	 * Hook
 	 *
 	 * @param ChangesList $oChangeList -- instance of ChangeList class
-	 * @param String $header    -- current value of RC key
-	 * @param Array of RCCacheEntry $oRCCacheEntryArray  -- array of instance of RCCacheEntry classes
+	 * @param String $header -- current value of RC key
+	 * @param array[RCCacheEntry] $oRCCacheEntryArray
 	 * @param boolean $changeRecentChangesHeader a flag saying Wikia's hook if we want to change header or not
+	 * @param Title $oTitle
 	 * @param string $headerTitle string which will be put as a header for RecentChanges block
 	 *
-	 * @static
-	 * @access public
-	 *
 	 * @return true -- because it's a hook
+	 *
+	 * @throws MWException
 	 */
-	static public function setHeaderBlockGroup($oChangeList, $header, Array /*of oRCCacheEntry*/ $oRCCacheEntryArray, &$changeRecentChangesHeader, $oTitle, &$headerTitle) {
-		global $wgEnableGroupedArticleCommentsRC, $wgEnableWallExt;
+	static public function setHeaderBlockGroup( $oChangeList, $header, array $oRCCacheEntryArray, &$changeRecentChangesHeader, Title $oTitle, &$headerTitle ) {
+		global $wgEnableGroupedArticleCommentsRC;
 		$namespace = $oTitle->getNamespace();
 
-		if ( empty($wgEnableGroupedArticleCommentsRC) ) {
+		if ( empty( $wgEnableGroupedArticleCommentsRC ) ) {
 			return true;
 		}
 
-		if( !is_null($oTitle)
-			&& MWNamespace::isTalk($namespace)
-			&& ArticleComment::isTitleComment($oTitle)
+		if ( !is_null( $oTitle )
+			&& MWNamespace::isTalk( $namespace )
+			&& ArticleComment::isTitleComment( $oTitle )
 		) {
-			$parts = ArticleComment::explode($oTitle->getFullText());
+			$parts = ArticleComment::explode( $oTitle->getFullText() );
 
-			if ($parts['title'] != '') {
+			if ( $parts['title'] != '' ) {
 				$changeRecentChangesHeader = true;
 
 				$title = Title::newFromText( $parts['title'] );
@@ -885,7 +893,7 @@ class ArticleCommentList {
 							$messageKey = 'article-comments-rc-comments';
 						}
 
-						$headerTitle = wfMsgExt($messageKey, array('parseinline'), $title->getPrefixedText());
+						$headerTitle = wfMsgExt( $messageKey, array( 'parseinline' ), $title->getPrefixedText() );
 					} else {
 						Wikia::log( __METHOD__, '2', 'Title does not exist: ' . $text, true );
 					}
@@ -898,7 +906,7 @@ class ArticleCommentList {
 		}
 
 		return true;
-	} // end setHeaderBlockGroup()
+	}
 
 	/**
 	 * formatList
@@ -908,7 +916,7 @@ class ArticleCommentList {
 	 *
 	 * @return String - HTML
 	 */
-	static function formatList($comments) {
+	static function formatList( $comments ) {
 		$template = new EasyTemplate( dirname( __FILE__ ) . '/../templates/' );
 		$template->set_vars( array(
 			'comments'  => $comments
@@ -916,63 +924,102 @@ class ArticleCommentList {
 		return $template->render( 'comment-list' );
 	}
 
-	/*
-	 * @access public
-	 * @deprecated don't use it for Oasis, still needed for non-Oasis skins
-	 * @deprecated - not used in Oasis
+	/**
+	 * @deprecated Don't use it for Oasis, still needed for non-Oasis skins
 	 *
 	 * @return String HTML text with rendered comments section
 	 */
-
 	public function render() {
-		return F::app()->renderView('ArticleComments', 'Index');
+		return F::app()->renderView( 'ArticleComments', 'Index' );
  	}
 
 	/**
-	 * static entry point for hook
+	 * Static entry point for hook
 	 *
 	 * @param Title $title
 	 * @param Article $article
 	 *
-	 * @static
-	 * @access public
+	 * @return bool
 	 */
-	static public function ArticleFromTitle( &$title, &$article ) {
-		if( MWNamespace::isTalk($title->getNamespace()) && ArticleComment::isTitleComment($title) ) {
-			global $wgRequest, $wgOut;
-			$redirect = $wgRequest->getText('redirect', false);
-			$diff = $wgRequest->getText('diff', '');
-			$oldid = $wgRequest->getText('oldid', '');
-			$action = $wgRequest->getText('action', '');
-			$permalink = $wgRequest->getInt( 'permalink', 0 );
+	static public function ArticleFromTitle( Title &$title, &$article ) {
+		// Don't bother checking for redirects if we're not loading this article for the current request
+		if ( !self::isTitleForCurrentRequest( $title ) ) {
+			return true;
+		}
 
-			if (($redirect != 'no') && empty($diff) && empty($oldid) && ($action != 'history') && ($action != 'delete')) {
-				$parts = ArticleComment::explode($title->getText());
-				$redirectTitle = Title::newFromText($parts['title'], MWNamespace::getSubject($title->getNamespace()));
-				$commentId = $title->getArticleID();
+		// Only handle comments
+		if ( !MWNamespace::isTalk( $title->getNamespace() ) || !ArticleComment::isTitleComment( $title ) ) {
+			return true;
+		}
 
-				if ($redirectTitle) {
-					$query = array();
+		// See if this is a special request that can't be redirected
+		if ( !self::canSetRedirect() ) {
+			return true;
+		}
 
-					if ( $permalink || $commentId !== 0 ) {
-						if( $commentId !== 0 ) {
-							/** bugId:11179 @author: nAndy */
-							$permalink = $commentId;
-						}
+		$parts = ArticleComment::explode( $title->getText() );
+		$redirectTitle = Title::newFromText( $parts['title'], MWNamespace::getSubject( $title->getNamespace() ) );
+		if ( empty( $redirectTitle ) ) {
+			return true;
+		}
 
-						$redirectTitle->setFragment("#comm-$permalink");
-						$page = self::getPageForComment( $redirectTitle, $permalink );
-						if ( $page > 1 ) {
-							$query = array( 'page' => $page );
-						}
-					}
+		$query = [];
+		$commentId = $title->getArticleID();
+		$permalink = F::app()->wg->Request->getInt( 'permalink', 0 );
 
-					$wgOut->redirect($redirectTitle->getFullUrl( $query ));
-				}
+		// Use comment ID if available - https://wikia.fogbugz.com/f/cases/11179
+		if ( $commentId !== 0 ) {
+			$permalink = $commentId;
+		}
+
+		if ( $permalink ) {
+			$redirectTitle->setFragment( "#comm-$permalink" );
+			$page = self::getPageForComment( $redirectTitle, $permalink );
+			if ( $page > 1 ) {
+				$query = [ 'page' => $page ];
 			}
 		}
 
+		F::app()->wg->Out->redirect( $redirectTitle->getFullUrl( $query ) );
+
 		return true;
+	}
+
+	/**
+	 * Returns whether the title we're working with now is the same as the title for the
+	 * request itself.  Sometimes, (e.g. the file page when it loads related articles) code will
+	 * load other articles, and we don't want to redirect in those cases.
+	 *
+	 * @param Title $title
+	 *
+	 * @return bool
+	 */
+	static private function isTitleForCurrentRequest( Title $title ) {
+		if ( empty( F::app()->wg->Title ) ) {
+			return false;
+		}
+
+		if ( $title->getPrefixedDBkey() != F::app()->wg->Title->getPrefixedDBkey() ) {
+			return false;
+		}
+
+		return true;
+	}
+
+	static private function canSetRedirect() {
+		$req = F::app()->wg->Request;
+		$redirect = $req->getText( 'redirect', false );
+		$diff = $req->getText( 'diff', '' );
+		$oldId = $req->getText( 'oldid', '' );
+		$action = $req->getText( 'action', '' );
+
+		return (
+			( $redirect != 'no' ) &&
+			empty( $diff ) &&
+			empty( $oldId ) &&
+			( $action != 'history' ) &&
+			( $action != 'delete' )
+		);
 	}
 
 	static private function getPageForComment( $title, $id ) {
@@ -980,18 +1027,18 @@ class ArticleCommentList {
 
 		$articleComment = ArticleCommentList::newFromTitle( $title );
 		$commentList = $articleComment->getCommentList( false );
-		$topLevel = array_keys($commentList);
+		$topLevel = array_keys( $commentList );
 		$found = array_search( $id, $topLevel );
 		if ( $found !== false ) {
 			$page = ceil( ( $found + 1 ) / $articleComment->mMaxPerPage );
 		} else {
 			// not found in top level comments so we have to search 2nd level comments
 			$index = 0;
-			foreach ($commentList as $comment) {
+			foreach ( $commentList as $comment ) {
 				$index ++;
-				if (isset($comment['level2'])) {
-					$found = array_search($id, $comment['level2']);
-					if ($found !== false) {
+				if ( isset( $comment['level2'] ) ) {
+					$found = array_search( $id, $comment['level2'] );
+					if ( $found !== false ) {
 						$page = ceil ( $index / $articleComment->mMaxPerPage  );
 					}
 				}
@@ -1002,15 +1049,21 @@ class ArticleCommentList {
 	}
 
 	/**
-	 * static entry point for hook
+	 * Static entry point for hook
 	 *
-	 * @static
-	 * @access public
+	 * @param string $SimpleCaptcha
+	 * @param EditPage $editPage
+	 * @param string $newtext
+	 * @param int $section
+	 * @param $merged
+	 * @param bool $result
+	 *
+	 * @return bool
 	 */
-	static public function onConfirmEdit(&$SimpleCaptcha, &$editPage, $newtext, $section, $merged, &$result) {
+	static public function onConfirmEdit( &$SimpleCaptcha, &$editPage, $newtext, $section, $merged, &$result ) {
 		$title = $editPage->getArticle()->getTitle();
-		if (MWNamespace::isTalk($title->getNamespace()) && ArticleComment::isTitleComment($title)) {
-			$result = true;	//omit captcha
+		if ( MWNamespace::isTalk( $title->getNamespace() ) && ArticleComment::isTitleComment( $title ) ) {
+			$result = true;	// omit captcha
 			return false;
 		}
 		return true;
@@ -1018,19 +1071,29 @@ class ArticleCommentList {
 
 	/**
 	 * TODO: Document what the parameters are.
+	 *
+	 * @param $changeList
+	 * @param $articlelink
+	 * @param $s
+	 * @param RecentChange $rc
+	 * @param $unpatrolled
+	 * @param $watched
+	 *
+	 * @return bool
+	 * @throws MWException
 	 */
-	static function ChangesListInsertArticleLink($changeList, &$articlelink, &$s, $rc, $unpatrolled, $watched) {
-		$rcTitle = $rc->getAttribute('rc_title');
-		$rcNamespace = $rc->getAttribute('rc_namespace');
-		$title = Title::newFromText($rcTitle, $rcNamespace);
+	static function ChangesListInsertArticleLink( $changeList, &$articlelink, &$s, $rc, $unpatrolled, $watched ) {
+		$rcTitle = $rc->getAttribute( 'rc_title' );
+		$rcNamespace = $rc->getAttribute( 'rc_namespace' );
+		$title = Title::newFromText( $rcTitle, $rcNamespace );
 
-		if( MWNamespace::isTalk($rcNamespace) && ArticleComment::isTitleComment($title) ) {
-			$parts = ArticleComment::explode($rcTitle);
+		if ( MWNamespace::isTalk( $rcNamespace ) && ArticleComment::isTitleComment( $title ) ) {
+			$parts = ArticleComment::explode( $rcTitle );
 
-			$titleMainArticle = Title::newFromText($parts['title'], MWNamespace::getSubject($rcNamespace));
+			$titleMainArticle = Title::newFromText( $parts['title'], MWNamespace::getSubject( $rcNamespace ) );
 
-			//fb#15143
-			if( $titleMainArticle instanceof Title ) {
+			// fb#15143
+			if ( $titleMainArticle instanceof Title ) {
 				if ( ArticleComment::isBlog() ) {
 					$messageKey = 'article-comments-rc-blog-comment';
 				} else {
@@ -1038,15 +1101,15 @@ class ArticleCommentList {
 				}
 
 				$articleId = $title->getArticleId();
-				$articlelink = wfMsgExt($messageKey, array('parseinline'), $title->getFullURL("permalink=$articleId#comm-$articleId"),  $titleMainArticle->getText());
+				$articlelink = wfMsgExt( $messageKey, array( 'parseinline' ), $title->getFullURL( "permalink=$articleId#comm-$articleId" ),  $titleMainArticle->getText() );
 			} else {
-			//it should never happened because $rcTitle is never empty,
-			//ArticleComment::explode() always returns an array with not-empty 'title' element,
-			//(both files: ArticleComments/classes/ArticleComments.class.php
-			//and WallArticleComment/classes/ArticleComments.class.php have
-			//the same definition of explode() method)
-			//and static constructor newFromText() should create a Title instance for $parts['title']
-				Wikia::log( __METHOD__, false, 'WALL_ARTICLE_COMMENT_ERROR: no main article title: '.print_r($parts, true).' namespace: '.$rcNamespace );
+				// it should never happened because $rcTitle is never empty,
+				// ArticleComment::explode() always returns an array with not-empty 'title' element,
+				// (both files: ArticleComments/classes/ArticleComments.class.php
+				// and WallArticleComment/classes/ArticleComments.class.php have
+				// the same definition of explode() method)
+				// and static constructor newFromText() should create a Title instance for $parts['title']
+				Wikia::log( __METHOD__, false, 'WALL_ARTICLE_COMMENT_ERROR: no main article title: ' . print_r( $parts, true ) . ' namespace: ' . $rcNamespace );
 			}
 		}
 
@@ -1057,22 +1120,19 @@ class ArticleCommentList {
 	 * Hook
 	 *
 	 * @param Title $oTitle -- instance of Title class
-	 * @param User    $User    -- current user
+	 * @param User    $oUser    -- current user
 	 * @param string  $reason  -- undeleting reason
-	 *
-	 * @static
-	 * @access public
 	 *
 	 * @return true -- because it's hook
 	 */
-	static public function undeleteComplete($oTitle, $oUser, $reason) {
+	static public function undeleteComplete( $oTitle, $oUser, $reason ) {
 		wfProfileIn( __METHOD__ );
-		if ($oTitle instanceof Title) {
-			if ( in_array($oTitle->getNamespace(), array(NS_BLOG_ARTICLE, NS_BLOG_ARTICLE_TALK)) ) {
+		if ( $oTitle instanceof Title ) {
+			if ( in_array( $oTitle->getNamespace(), array( NS_BLOG_ARTICLE, NS_BLOG_ARTICLE_TALK ) ) ) {
 				$aProps = $oTitle->aProps;
 				$pageId = $oTitle->getArticleId();
-				if (!empty($aProps)) {
-					BlogArticle::setProps($pageId, $aProps);
+				if ( !empty( $aProps ) ) {
+					BlogArticle::setProps( $pageId, $aProps );
 				}
 			}
 		}

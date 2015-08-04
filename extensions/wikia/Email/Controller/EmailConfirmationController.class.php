@@ -31,12 +31,16 @@ abstract class AbstractEmailConfirmationController extends EmailController {
 			'salutation' => $this->getSalutation(),
 			'summary' => $this->getSummary(),
 			'buttonLink' => $this->confirmUrl,
-			'buttonText' => $this->getMessage( 'emailext-emailconfirmation-button-text' )->text(),
+			'buttonText' => $this->getButtonText(),
 			'contentFooterMessages' => $this->getContentFooterMessages()
 		] );
 	}
 
-	abstract protected  function getSummary();
+	abstract protected function getSummary();
+
+	protected function getButtonText() {
+		return $this->getMessage( 'emailext-emailconfirmation-button-text' )->text();
+	}
 
 	protected function getContentFooterMessages() {
 		$commonFooterMessage = $this->getCommonFooterMessages();
@@ -94,7 +98,7 @@ class EmailConfirmationReminderController extends AbstractEmailConfirmationContr
 	const TRACKING_CATEGORY = TrackingCategories::EMAIL_CONFIRMATION_REMINDER;
 
 	protected function getSubject() {
-		return $this->getMessage( 'emailext-emailconfirmation-reminder-subject', $this->targetUser->getName() )->parse();
+		return $this->getMessage( 'emailext-emailconfirmation-reminder-subject', $this->getTargetUserName() )->parse();
 	}
 
 	protected function getSummary() {
@@ -104,7 +108,7 @@ class EmailConfirmationReminderController extends AbstractEmailConfirmationContr
 	protected function getEmailSpecificFooterMessages() {
 		return [
 			$this->getMessage( 'emailext-emailconfirmation-reminder-footer-1',
-				$this->targetUser->getName() )->parse()
+				$this->getTargetUserName() )->parse()
 		];
 	}
 }
@@ -112,6 +116,25 @@ class EmailConfirmationReminderController extends AbstractEmailConfirmationContr
 class ConfirmationChangedEmailController extends AbstractEmailConfirmationController {
 
 	const TRACKING_CATEGORY = TrackingCategories::CHANGED_EMAIL_CONFIRMATION;
+
+	private $newEmail;
+
+	public function initEmail() {
+		parent::initEmail();
+
+		$this->newEmail = $this->request->getVal( 'newEmail' );
+		$this->assertValidChangedParams();
+	}
+
+	protected function assertValidChangedParams() {
+		if ( empty( $this->newEmail ) ) {
+			throw new Check( "A value must be passed for parameter 'newEmail'" );
+		}
+	}
+
+	protected function getTargetUserEmail() {
+		return $this->newEmail;
+	}
 
 	protected function getSubject() {
 		return $this->getMessage( 'emailext-emailconfirmation-changed-subject' )->text();
@@ -125,6 +148,42 @@ class ConfirmationChangedEmailController extends AbstractEmailConfirmationContro
 		return [
 			$this->getMessage( 'emailext-emailconfirmation-changed-footer-1' )->text(),
 			$this->getMessage( 'emailext-emailconfirmation-changed-footer-2' )->text(),
+		];
+	}
+
+	protected static function getEmailSpecificFormFields() {
+		$parentForm = parent::getEmailSpecificFormFields();
+
+		$parentForm['inputs'][] = [
+			'type' => 'text',
+			'name' => 'newEmail',
+			'label' => "New Email",
+			'tooltip' => "The user's new email",
+		];
+
+		return $parentForm;
+	}
+}
+
+class ReactivateAccountController extends AbstractEmailConfirmationController {
+
+	const TRACKING_CATEGORY = TrackingCategories::REACTIVATE_ACCOUNT;
+
+	protected function getSubject() {
+		return $this->getMessage( 'emailext-reactivate-account-subject' )->text();
+	}
+
+	protected function getSummary() {
+		return $this->getMessage( 'emailext-reactivate-account-summary' )->text();
+	}
+
+	protected function getButtonText() {
+		return $this->getMessage( 'emailext-reactivate-account-button-text' )->text();
+	}
+
+	protected function getEmailSpecificFooterMessages() {
+		return [
+			$this->getMessage( 'emailext-reactivate-account-welcome-back' )->text(),
 		];
 	}
 }

@@ -11,6 +11,8 @@
 
 putenv ("SERVER_ID=177");
 
+define('S3CMD_CONFIG', '/etc/s3cmd/amazon_ro.cfg');
+
 $dirName = dirname(__FILE__);
 
 require_once( $dirName . "/../commandLine.inc" );
@@ -38,14 +40,14 @@ if (array_key_exists('p', $opts)) {
 }
 switch($wgWikiaDatacenter) {
 	case WIKIA_DC_POZ:
-		$wgDBdevboxServer1 = 'dev-db-a1-p2';
-		$wgDBdevboxServer2 = 'dev-db-a1-p2';
-		$wgDBdevboxCentral = 'dev-db-central-p2';
+		$wgDBdevboxServer1 = 'dev-db-p1';
+		$wgDBdevboxServer2 = 'dev-db-p1';
+		$wgDBdevboxCentral = 'dev-db-p1';
 		break;
 	case WIKIA_DC_SJC:
-		$wgDBdevboxServer1 = 'dev-db-a1';
-		$wgDBdevboxServer2 = 'dev-db-b1';
-		$wgDBdevboxCentral = 'dev-db-central';
+		$wgDBdevboxServer1 = 'dev-db-s1';
+		$wgDBdevboxServer2 = 'dev-db-s1';
+		$wgDBdevboxCentral = 'dev-db-s1';
 		break;
 	default:
 		die("unknown data center: {$opts['p']}\n$USAGE");
@@ -75,14 +77,10 @@ if ( array_key_exists('h', $opts) || array_key_exists ('f', $opts) ) {
 			exit;
 		}
 		/* Map cluster numbers to letters
-		 * 1->A, 2->B
+		 * 1->a, 2->b
 		 * chr(65)=='A' */
 		$clusterLetter = chr( 64 + $clusterNumberParam );
-		$databaseDirectory = "database_{$clusterLetter}";
-		if ( $clusterNumberParam >= 6 ) {
-			// Way of combining s3_bucket name changed from cluster 6
-			$databaseDirectory = 'database-' . strtolower( $clusterLetter );
-		}
+		$databaseDirectory = 'database-' . strtolower( $clusterLetter );
 		// just being lazy - easier to do this as a separate regex
 		$pattern = '/wgDBname="(.*)"/';
 		preg_match($pattern, $page, $matches);
@@ -105,7 +103,7 @@ if ( array_key_exists('h', $opts) || array_key_exists ('f', $opts) ) {
 	// first check to make sure s3cmd is available
 
 	function getFile($databaseDirectory, $dbname, $filedir) {
-		$response = shell_exec("s3cmd ls s3://".$databaseDirectory."/fulldump* 2>&1");
+		$response = shell_exec("s3cmd --config=" . S3CMD_CONFIG . " ls s3://".$databaseDirectory."/fulldump* 2>&1");
 		if (preg_match('/ERROR/', $response) || preg_match ('/command not found/', $response)) {
 			// some kind of error, print and die
 			exit($response);
@@ -154,7 +152,7 @@ if ( array_key_exists('h', $opts) || array_key_exists ('f', $opts) ) {
 				echo "Searching $dirname...\n";
 				$filename = $databaseDirectory."/$dirname/".$dbname."_$date".".sql.gz" ;
 				echo "Searching for $filename...\n";
-				$response = shell_exec("s3cmd ls s3://".$databaseDirectory."/$dirname/".$dbname."_$date".".sql.gz");
+				$response = shell_exec("s3cmd --config=" . S3CMD_CONFIG . " ls s3://".$databaseDirectory."/$dirname/".$dbname."_$date".".sql.gz");
 				$file_list = explode("\n", $response);
 				$file_list_count = count( $file_list ) - 1;
 				echo "Found " . $file_list_count . " items...\n";
@@ -170,7 +168,7 @@ if ( array_key_exists('h', $opts) || array_key_exists ('f', $opts) ) {
 
 						echo "Found a match: $file\n";
 								echo "Saving to local filesystem:".$filename."\n";
-						shell_exec("s3cmd get --skip-existing ".$file." ".$filename);
+						shell_exec("s3cmd --config=" . S3CMD_CONFIG . " get --skip-existing ".$file." ".$filename);
 						return $filename;
 					}
 				}

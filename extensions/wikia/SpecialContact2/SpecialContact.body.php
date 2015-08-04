@@ -387,9 +387,12 @@ class ContactForm extends SpecialPage {
 
 				if ( $sub === 'close-account' && $closeMyAccountSupported ) {
 					$title = SpecialPage::getTitleFor( 'CloseMyAccount' );
+				} elseif ( $sub === 'dmca-request' ) {
+					$title = GlobalTitle::newFromText( 'DMCARequest', NS_SPECIAL, Wikia::COMMUNITY_WIKI_ID );
 				} else {
 					$title = SpecialPage::getTitleFor( 'Contact', $sub );
 				}
+
 				$msgKey = 'specialcontact-seclink-' . $msg;
 				$newsec['links'][] = $uskin->makeKnownLinkObj( $title, $this->msg( $msgKey )->escaped(), '', '', '', "class={$msgKey}" );
 			}

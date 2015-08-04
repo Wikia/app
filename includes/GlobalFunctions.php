@@ -3628,7 +3628,7 @@ function wfSplitWikiID( $wiki ) {
  * Note 2: use $this->getDB() in maintenance scripts that may be invoked by
  * updater to ensure that a proper database is being updated.
  *
- * @return DatabaseBase
+ * @return DatabaseMysqli
  */
 function &wfGetDB( $db, $groups = array(), $wiki = false ) {
 	// wikia change begin -- SMW DB separation project, @author Krzysztof Krzyżaniak (eloy)
