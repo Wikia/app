@@ -2,6 +2,7 @@
 
 /**
  * Data model specific to a subpage with a list of pages marked with flags
+ * Note: Flags insights are are fetching flags only targeted at contributors
  */
 
 use Wikia\Logger\Loggable;
@@ -132,7 +133,8 @@ class InsightsFlagsModel extends InsightsPageModel {
 
 		/* Select first type id by default */
 		if ( empty( $this->flagTypeId ) ) {
-			$flagTypes = $app->sendRequest( 'FlagsApiController', 'getFlagTypes' )->getData()['data'];
+			$params = [ 'flag_targeting' => \Flags\Models\FlagType::FLAG_TARGETING_CONTRIBUTORS ];
+			$flagTypes = $app->sendRequest( 'FlagsApiController', 'getFlagTypes' , $params )->getData()['data'];
 			$this->flagTypeId = current($flagTypes)['flag_type_id'];
 		}
 
