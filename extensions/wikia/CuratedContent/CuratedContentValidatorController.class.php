@@ -20,6 +20,9 @@ class CuratedContentValidatorController extends WikiaController {
 		if ( empty( $section ) ) {
 			$this->respondWithErrors();
 		} else {
+			$section['title'] = $section['label'];
+			unset( $section['label'] );
+
 			$this->validator->validateSection( $section );
 			$this->respond( $this->validator->getErrors() );
 		}
@@ -31,11 +34,17 @@ class CuratedContentValidatorController extends WikiaController {
 		if ( empty( $section ) ) {
 			$this->respondWithErrors();
 		} else {
+			$section['title'] = $section['label'];
+			unset( $section['label'] );
+
 			$section = $this->helper->processLogicForSection( $section );
 			$this->validator->validateSection( $section );
-			$this->validator->validateItemsExist( $section );
-			$this->validator->validateItems( $section );
-			$this->validator->validateItemsTypes( $section );
+
+			if ( !empty( $section['title'] ) ) {
+				$this->validator->validateItemsExist( $section );
+				$this->validator->validateItems( $section );
+				$this->validator->validateItemsTypes( $section );
+			}
 			$this->validator->validateDuplicatedTitles();
 			$this->respond( $this->validator->getErrors() );
 		}
