@@ -33,13 +33,16 @@ $wgExtensionCredits['other'][] = [
 $wgSpecialPages['Flags'] = 'SpecialFlagsController';
 $wgSpecialPageGroups['Flags'] = 'wikia';
 
-$wgAvailableRights[] = 'flagshq';
-$wgGroupPermissions['*']['flagshq'] = true;
+$wgAvailableRights[] = 'flags-administration';
+$wgGroupPermissions['*']['flags-administration'] = false;
+$wgGroupPermissions['sysop']['flags-administration'] = true;
+$wgGroupPermissions['staff']['flags-administration'] = true;
+
+$wgAutoloadClasses['SpecialFlagsController'] = __DIR__ . '/specials/SpecialFlagsController.class.php';
 
 /**
  * Controllers
  */
-$wgAutoloadClasses['SpecialFlagsController'] = __DIR__ . '/controllers/SpecialFlagsController.class.php';
 $wgAutoloadClasses['FlagsController'] = __DIR__ . '/controllers/FlagsController.class.php';
 $wgAutoloadClasses['FlagsApiController'] = __DIR__ . '/controllers/FlagsApiController.class.php';
 $wgWikiaApiControllers['FlagsApiController'] = __DIR__ . '/controllers/FlagsApiController.class.php';
@@ -89,6 +92,14 @@ $wgHooks['BeforeRefreshLinksForTitleUpdate'][] = 'Flags\Hooks::onBeforeRefreshLi
  */
 $wgExtensionMessagesFiles['Flags'] = __DIR__ . '/Flags.i18n.php';
 $wgExtensionMessagesFiles['FlagsMagic'] = __DIR__ . '/Flags.magic.i18n.php';
+
+JSMessages::registerPackage( 'FlagsCreateForm', [
+	'flags-special-create-*'
+] );
+
+JSMessages::registerPackage( 'FlagsSpecialAutoload', [
+	'flags-special-autoload-*'
+] );
 
 /**
  * Resources Loader module
