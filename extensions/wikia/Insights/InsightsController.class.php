@@ -93,6 +93,7 @@ class InsightsController extends WikiaSpecialPageController {
 	 * Setup method for Insights_loopNotification.mustache template
 	 */
 	public function loopNotification() {
+
 		$subpage = $this->request->getVal( 'insight', null );
 		if ( InsightsHelper::isInsightPage( $subpage ) ) {
 			$model = InsightsHelper::getInsightModel( $subpage );
@@ -103,6 +104,7 @@ class InsightsController extends WikiaSpecialPageController {
 				$articleName = $this->getVal( 'article', null );
 				$title = Title::newFromText( $articleName );
 				$next = $model->getNextItem( $model->getInsightType(), $articleName );
+
 				$isEdit = $this->request->getBool( 'isEdit', false );
 
 				if( !$isEdit ) {
@@ -111,7 +113,6 @@ class InsightsController extends WikiaSpecialPageController {
 						$model->updateInsightsCache( $title->getArticleId() );
 					}
 				}
-
 
 				if ( $isEdit ) {
 					$params = $this->getInProgressNotificationParams( $subpage, $model );
@@ -137,7 +138,6 @@ class InsightsController extends WikiaSpecialPageController {
 					$type = self::FLOW_STATUS_NOTFIXED;
 					$this->setMustacheParams( $params, $isFixed, $type);
 				}
-
 
 			}
 		}
