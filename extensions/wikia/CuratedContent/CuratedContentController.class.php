@@ -467,7 +467,7 @@ class CuratedContentController extends WikiaController {
 				$this->response->setVal( 'error', $errors );
 			} else {
 				$status = WikiFactory::setVarByName( 'wgWikiaCuratedContent', $wgCityId, $sections );
-				wfWaitForSlaves( );
+				wfWaitForSlaves();
 
 				if ( !empty( $status ) ) {
 					wfRunHooks( 'CuratedContentSave', [ $sections ] );
