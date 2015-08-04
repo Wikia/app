@@ -633,7 +633,7 @@ class CuratedContentController extends WikiaController {
 				return $urls;
 			},
 			// Purge all sections list getter URL - no additional params
-			[ self::getUrl( 'getList' ) ]
+			[ self::getUrl( 'getList' ), self::getUrl( 'getData' ) ]
 		) ) ) )->doUpdate();
 
 		// Purge cache for obsolete (not updated) apps.
