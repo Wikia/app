@@ -194,7 +194,7 @@ define('ext.wikia.adEngine.provider.gpt.adDetect', [
 			log(['msgCallback', slotName, 'caught message', data], 'info', logGroup);
 
 			if (data.status === 'success') {
-				if (expectAsyncSuccess || expectAsyncHopWithSlotName) {
+				if (expectAsyncSuccess || expectAsyncSuccessWithSlotName) {
 					callAdCallback(data.extra);
 				} else {
 					log(
