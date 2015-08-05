@@ -173,8 +173,7 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 		$this->response->setFormat( 'json' );
 
 		$sections = $this->helper->processSections( $this->request->getArray( 'sections', [ ] ) );
-
-		$errors = ( new CuratedContentValidator( $sections ) )->getErrors();
+		$errors = ( new CuratedContentValidator )->validateData( $sections );
 
 		if ( !empty( $errors ) ) {
 			$this->response->setVal( 'error', $errors );
@@ -182,7 +181,7 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 			$status = WikiFactory::setVarByName( 'wgWikiaCuratedContent', $wgCityId, $sections );
 			$this->response->setVal( 'status', $status );
 
-			if ( $status ) {
+			if ( !empty( $status ) ) {
 				wfRunHooks( 'CuratedContentSave', [ $sections ] );
 			}
 		}
