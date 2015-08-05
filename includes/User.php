@@ -70,6 +70,7 @@ class User {
 	 * Traits extending the class
 	 */
 	use PowerUserTrait;
+	use GlobalUserDataTrait;
 	# WIKIA CHANGE END
 
 	use Loggable;
