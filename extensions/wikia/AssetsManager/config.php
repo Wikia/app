@@ -2501,3 +2501,10 @@ $config['template_draft'] = [
 		'//extensions/wikia/TemplateDraft/scripts/templateDraftTracking.js'
 	]
 ];
+
+$config['special_broken_rename_fix'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'assets' => [
+		'//extensions/wikia/BrokenRenameFix/styles/SpecialBrokenRenameFix.scss',
+	],
+];
