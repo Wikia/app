@@ -83,10 +83,11 @@ class InsightsController extends WikiaSpecialPageController {
 	 */
 	private function renderFlagsFiltering() {
 		if ( $this->model instanceof InsightsFlagsModel ) {
-			/* Enable flags filter in layout */
+			$flagTypeId = $this->request->getVal( 'flagTypeId' );
+
 			$params = [ 'flag_targeting' => \Flags\Models\FlagType::FLAG_TARGETING_CONTRIBUTORS ];
 			$flagTypes = $this->app->sendRequest( 'FlagsApiController', 'getFlagTypes', $params )->getData()['data'];
-			$flagTypeId = $this->request->getVal( 'flagTypeId' );
+			
 			$this->setVal( 'selectedFlagTypeId', $flagTypeId );
 			$this->setVal( 'flagTypes', $flagTypes );
 		}
