@@ -96,10 +96,13 @@ class ApprovedraftAction extends FormlessAction {
 		$draftPage = WikiPage::newFromID( $draftTitle->getArticleID() );
 		$draftPage->doDeleteArticle( wfMessage( 'templatedraft-draft-removal-summary' )->inContentLanguage()->plain() );
 
-		// Update Insights list
-		$model = InsightsHelper::getInsightModel( InsightsUnconvertedInfoboxesModel::INSIGHT_TYPE );
-		if ( $model instanceof InsightsQuerypageModel ) {
-			$model->updateInsightsCache( $parentTitle->getArticleID() );
+		// Update Insights list if enabled
+		global $wgEnableInsightsInfoboxes;
+		if ( $wgEnableInsightsInfoboxes ) {
+			$model = InsightsHelper::getInsightModel( InsightsUnconvertedInfoboxesModel::INSIGHT_TYPE );
+			if ( $model instanceof InsightsQuerypageModel ) {
+				$model->updateInsightsCache( $parentTitle->getArticleID() );
+			}
 		}
 
 		// Show a confirmation message to a user after redirect

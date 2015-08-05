@@ -204,11 +204,8 @@ class EditPageLayoutHelper {
 	}
 
 	static function isTemplateDraft( $title ) {
-		global $wgEnableTemplateDraftExt, $wgEnableInsightsInfoboxes;
-
-		return !empty( $wgEnableTemplateDraftExt )
-				&& !empty( $wgEnableInsightsInfoboxes )
-				&& TemplateDraftHelper::isTitleDraft( $title );
+		global $wgEnableTemplateDraftExt;
+		return !empty( $wgEnableTemplateDraftExt ) && TemplateDraftHelper::isTitleDraft( $title );
 	}
 
 	/**
