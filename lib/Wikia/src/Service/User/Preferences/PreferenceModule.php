@@ -18,19 +18,7 @@ class PreferenceModule implements Module {
 				return $wgHiddenPrefs;
 			})
 			->bind(UserPreferences::DEFAULT_PREFERENCES)->to(function() {
-				global $wgUserPreferenceWhiteList;
-				$defaultOptions = User::getDefaultOptions();
-				$defaultOptionNames = array_keys($defaultOptions);
-
-				return array_reduce(
-					$defaultOptionNames,
-					function($preferences, $option) use ($wgUserPreferenceWhiteList, $defaultOptions) {
-						if (in_array($option, $wgUserPreferenceWhiteList['literals'])) {
-							$preferences[$option] = $defaultOptions[$option];
-						}
-
-						return $preferences;
-					}, []);
+				return User::getDefaultPreferences();
 			})
 			->bind(UserPreferences::FORCE_SAVE_PREFERENCES)->to(function() {
 				global $wgGlobalUserProperties;
