@@ -1393,6 +1393,22 @@ class User {
 		return $defOpt;
 	}
 
+	public static function getDefaultPreferences() {
+		global $wgUserPreferenceWhiteList;
+		$defaultOptions = User::getDefaultOptions();
+		$defaultOptionNames = array_keys($defaultOptions);
+
+		return array_reduce(
+			$defaultOptionNames,
+			function($preferences, $option) use ($wgUserPreferenceWhiteList, $defaultOptions) {
+				if (in_array($option, $wgUserPreferenceWhiteList['literals'])) {
+					$preferences[$option] = $defaultOptions[$option];
+				}
+
+				return $preferences;
+			}, []);
+	}
+
 	/**
 	 * Get a given default option value.
 	 *
