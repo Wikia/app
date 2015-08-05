@@ -67,6 +67,8 @@ class ApprovedraftAction extends FormlessAction {
 	 * @throws PermissionsException
 	 */
 	private function approveDraft( Title $draftTitle ) {
+		global $wgEnableInsightsInfoboxes;
+
 		// Get Title object of parent page
 		$helper = new TemplateDraftHelper();
 		$parentTitle = $helper->getParentTitle( $draftTitle );
@@ -97,7 +99,6 @@ class ApprovedraftAction extends FormlessAction {
 		$draftPage->doDeleteArticle( wfMessage( 'templatedraft-draft-removal-summary' )->inContentLanguage()->plain() );
 
 		// Update Insights list if enabled
-		global $wgEnableInsightsInfoboxes;
 		if ( $wgEnableInsightsInfoboxes ) {
 			$model = InsightsHelper::getInsightModel( InsightsUnconvertedInfoboxesModel::INSIGHT_TYPE );
 			if ( $model instanceof InsightsQuerypageModel ) {
