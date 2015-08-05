@@ -1,24 +1,23 @@
 /*global define*/
 /*jshint maxlen:125, camelcase:false, maxdepth:7*/
 define('ext.wikia.adEngine.provider.gpt.googleTag', [
-	'ext.wikia.adEngine.adContext',
-	'ext.wikia.adEngine.adTracker',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window'
-], function (adContext, adTracker, doc, log, window) {
+], function (doc, log, window) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.gpt.googleTag',
-		sourcePointClientId = 'rMbenHBwnMyAMhR',
-		context = adContext.getContext(),
-		initialized = false,
 		registeredCallbacks = {},
 		slots = {},
 		slotQueue = [],
 		pageLevelParams,
 		googleTag,
 		pubAds;
+
+	function GoogleTag() {
+		this.initialized = false;
+	}
 
 	function dispatchEvent(event) {
 		var id;
@@ -38,37 +37,10 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 		log(['dispatchEvent', event, 'No callback registered for this slot render ended event'], 'error', logGroup);
 	}
 
-	function init() {
-		log('init', 'debug', logGroup);
-
-		var gads = doc.createElement('script'),
-			node = doc.getElementsByTagName('script')[0];
-
+	GoogleTag.prototype.enableServices = function () {
 		googleTag = window.googletag = window.googletag || {};
 		window.googletag.cmd = window.googletag.cmd || [];
 
-		gads.async = true;
-		gads.type = 'text/javascript';
-		gads.src = '//www.googletagservices.com/tag/js/gpt.js';
-
-		if (context.opts.sourcePoint) {
-			gads.src = context.opts.sourcePointUrl;
-			gads.setAttribute('data-client-id', sourcePointClientId);
-			gads.addEventListener('load', function () {
-				var spReadyEvent = new window.Event('sp.ready');
-				window.dispatchEvent(spReadyEvent);
-			});
-
-			doc.addEventListener('sp.blocking', function () {
-				adTracker.track('sourcepoint/blocked');
-			});
-		}
-
-		log('Appending GPT script to head', 'debug', logGroup);
-
-		node.parentNode.insertBefore(gads, node);
-
-		// Enable services
 		log(['init', 'googletag.cmd.push'], 'info', logGroup);
 		googleTag.cmd.push(function () {
 			pubAds = googleTag.pubads();
@@ -82,14 +54,30 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 
 			log(['init', 'googletag.cmd.push', 'done'], 'debug', logGroup);
 		});
-		initialized = true;
-	}
+	};
 
-	function isInitialized() {
-		return initialized;
-	}
+	GoogleTag.prototype.init = function () {
+		log('init', 'debug', logGroup);
 
-	function setPageLevelParams(params) {
+		var gads = doc.createElement('script'),
+			node = doc.getElementsByTagName('script')[0];
+
+		gads.async = true;
+		gads.type = 'text/javascript';
+		gads.src = '//www.googletagservices.com/tag/js/gpt.js';
+
+		log('Appending GPT script to head', 'debug', logGroup);
+		node.parentNode.insertBefore(gads, node);
+
+		this.enableServices();
+		this.initialized = true;
+	};
+
+	GoogleTag.prototype.isInitialized = function () {
+		return this.initialized;
+	};
+
+	GoogleTag.prototype.setPageLevelParams = function (params) {
 		googleTag.cmd.push(function () {
 			var name,
 				value;
@@ -105,14 +93,14 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 				}
 			}
 		});
-	}
+	};
 
-	function push(callback) {
+	GoogleTag.prototype.push = function (callback) {
 		googleTag.cmd.push(callback);
-	}
+	};
 
-	function flush() {
-		if (!isInitialized()) {
+	GoogleTag.prototype.flush = function () {
+		if (!this.isInitialized()) {
 			log(['flush', 'done', 'No slots to flush'], 'info', logGroup);
 			return;
 		}
@@ -128,9 +116,9 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 
 			log(['flush', 'done'], 'info', logGroup);
 		});
-	}
+	};
 
-	function addSlot(adElement) {
+	GoogleTag.prototype.addSlot = function (adElement) {
 		var slot = slots[adElement.getId()];
 
 		log(['addSlot', adElement], 'debug', logGroup);
@@ -145,20 +133,12 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 
 		adElement.configureSlot(slot);
 		slotQueue.push(slot);
-	}
+	};
 
-	function registerCallback(id, callback) {
+	GoogleTag.prototype.registerCallback = function (id, callback) {
 		log(['registerCallback', id], 'info', logGroup);
 		registeredCallbacks[id] = callback;
-	}
-
-	return {
-		init: init,
-		isInitialized: isInitialized,
-		push: push,
-		flush: flush,
-		addSlot: addSlot,
-		registerCallback: registerCallback,
-		setPageLevelParams: setPageLevelParams
 	};
+
+	return GoogleTag;
 });
