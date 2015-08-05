@@ -264,7 +264,7 @@ class EditPageLayoutHelper {
 		$namespace = $title->getNamespace();
 		$type = '';
 
-		$aceUrl = AssetsManager::getInstance()->getSassCommonURL( '/resources/Ace' );
+		$aceUrl = AssetsManager::getInstance()->getOneCommonURL( 'resources/Ace' );
 		$aceUrlParts = parse_url( $aceUrl );
 		$this->addJsVariable( 'aceScriptsPath', $aceUrlParts['path'] );
 
