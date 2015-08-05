@@ -109,7 +109,9 @@ class CuratedContentHelper {
 
 		if ( empty( $imageId ) ) {
 			$imageId = null;
-			$imageTitle = self::findFirstImageTitleFromArticle( $articleId );
+			$imageTitle = self::findFirstImageTitleFromArticle($articleId);
+		} else if ($imageId === $articleId) {
+			$url = self::getImageUrl($imageId);
 		} else {
 			$imageTitle = Title::newFromID( $imageId );
 		}
