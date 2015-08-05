@@ -39,6 +39,9 @@ class addLayoutToPortableInfoboxes extends Maintenance {
 		$pages = $this->getPagesWithInfoboxes();
 		foreach ( $pages as $pageId ) {
 			$article = Article::newFromID( $pageId );
+			if ( !$article ) {
+				continue;
+			}
 			$content = $article->getContent();
 			$replaceHelper = new InfoboxReplaceHelper();
 			$replacedContent = $replaceHelper->processLayoutAttribute( $content );
