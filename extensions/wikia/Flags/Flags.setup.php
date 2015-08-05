@@ -33,13 +33,16 @@ $wgExtensionCredits['other'][] = [
 $wgSpecialPages['Flags'] = 'SpecialFlagsController';
 $wgSpecialPageGroups['Flags'] = 'wikia';
 
-$wgAvailableRights[] = 'flagshq';
-$wgGroupPermissions['*']['flagshq'] = true;
+$wgAvailableRights[] = 'flags-administration';
+$wgGroupPermissions['*']['flags-administration'] = false;
+$wgGroupPermissions['sysop']['flags-administration'] = true;
+$wgGroupPermissions['staff']['flags-administration'] = true;
+
+$wgAutoloadClasses['SpecialFlagsController'] = __DIR__ . '/specials/SpecialFlagsController.class.php';
 
 /**
  * Controllers
  */
-$wgAutoloadClasses['SpecialFlagsController'] = __DIR__ . '/controllers/SpecialFlagsController.class.php';
 $wgAutoloadClasses['FlagsController'] = __DIR__ . '/controllers/FlagsController.class.php';
 $wgAutoloadClasses['FlagsApiController'] = __DIR__ . '/controllers/FlagsApiController.class.php';
 $wgWikiaApiControllers['FlagsApiController'] = __DIR__ . '/controllers/FlagsApiController.class.php';
@@ -63,6 +66,7 @@ $wgAutoloadClasses['Flags\Views\FlagView'] = __DIR__ . '/views/FlagView.class.ph
 $wgAutoloadClasses['Flags\FlagsExtractor'] = __DIR__ . '/FlagsExtractor.class.php';
 $wgAutoloadClasses['Flags\FlagsHelper'] = __DIR__ . '/FlagsHelper.class.php';
 $wgAutoloadClasses['Flags\FlagsCache'] = __DIR__ . '/FlagsCache.class.php';
+$wgAutoloadClasses['Flags\FlagsParamsComparison'] = __DIR__ . '/FlagsParamsComparison.class.php';
 
 /**
  * Tasks
@@ -79,12 +83,23 @@ $wgHooks['BeforePageDisplay'][] = 'Flags\Hooks::onBeforePageDisplay';
 $wgHooks['BeforeParserCacheSave'][] = 'Flags\Hooks::onBeforeParserCacheSave';
 $wgHooks['PageHeaderDropdownActions'][] = 'Flags\Hooks::onPageHeaderDropdownActions';
 $wgHooks['SkinTemplateNavigation'][] = 'Flags\Hooks::onSkinTemplateNavigation';
+$wgHooks['ArticleSaveComplete'][] = 'Flags\Hooks::onArticleSaveComplete';
+$wgHooks['EditPageLayoutShowIntro'][] = 'Flags\Hooks::onEditPageLayoutShowIntro';
+$wgHooks['BeforeRefreshLinksForTitleUpdate'][] = 'Flags\Hooks::onBeforeRefreshLinksForTitleUpdate';
 
 /**
  * Messages
  */
 $wgExtensionMessagesFiles['Flags'] = __DIR__ . '/Flags.i18n.php';
 $wgExtensionMessagesFiles['FlagsMagic'] = __DIR__ . '/Flags.magic.i18n.php';
+
+JSMessages::registerPackage( 'FlagsCreateForm', [
+	'flags-special-create-*'
+] );
+
+JSMessages::registerPackage( 'FlagsSpecialAutoload', [
+	'flags-special-autoload-*'
+] );
 
 /**
  * Resources Loader module

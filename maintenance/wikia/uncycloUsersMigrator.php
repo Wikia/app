@@ -334,6 +334,10 @@ class UncycloUserMigrator extends Maintenance {
 		$this->renamedUnclycloAccounts++;
 
 		if ( !$this->isDryRun ) {
+			// update user_name in the local user database
+			$dbw = $this->getUncycloDB( DB_MASTER );
+			$dbw->update( self::USER_TABLE,  [ 'user_name' => $newName ], [ 'user_id' => $user->getId() ], __METHOD__ );
+
 			// update user_name in MW tables
 			$this->updateTables(self::UPDATE_TABLE_USER_NAME, $user->getName(), $newName);
 
@@ -354,7 +358,15 @@ class UncycloUserMigrator extends Maintenance {
 	 * @param string $newName new user name
 	 */
 	protected function moveUserPages( $oldName, $newName ) {
-		$oldName = Title::makeTitleSafe( NS_USER, $oldName )->getDBkey();
+		$userPage = Title::makeTitleSafe( NS_USER, $oldName );
+
+		// fails for "~~~~"
+		if ( empty( $userPage ) ) {
+			$this->output( "user pages move failed - user name does not validate\n" );
+			return;
+		}
+
+		$oldName = $userPage->getDBkey();
 
 		$dbr = $this->getUncycloDB(DB_SLAVE);
 		$pages = $dbr->select(
@@ -495,6 +507,8 @@ class UncycloUserMigrator extends Maintenance {
 						'user_token' => '',
 						'user_options' => '',
 						'user_registration' => $dbw->timestamp($user->mRegistration),
+						// avoid Uncyclopedia users be deleted by the cleanup script removing accounts without verified email address
+						'user_email_authenticated' => $dbw->timestamp($user->mRegistration),
 						'user_editcount' => $user->getEditCount(), // use uncyclo counter
 						'user_birthdate' => $user->mBirthDate
 					],
@@ -502,6 +516,10 @@ class UncycloUserMigrator extends Maintenance {
 				);
 
 				$extUser->mId = $dbw->insertId();
+
+				if ( empty( $extUser->mId ) ) {
+					throw new Exception( sprintf( 'Failed inserting "%s" into shared database', $user->getName() ) );
+				}
 
 				// move user settings to the shared DB
 				$res = $this->getUncycloDB()->select(

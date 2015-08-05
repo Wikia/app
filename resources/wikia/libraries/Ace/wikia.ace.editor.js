@@ -170,22 +170,6 @@ define( 'wikia.ace.editor', ['wikia.window', 'jquery'], function(win, $){
 	}
 
 	/**
-	 * Init modal showing difference between last saved and currently edited code
-	 *
-	 * @param initConfig modal config values
-	 * @param modalCallback callback functiona after modal init
-	 */
-	function showDiff( initConfig, modalCallback ) {
-		require( [ 'wikia.ui.factory' ], function( uiFactory ){
-			uiFactory.init( [ 'modal' ] ).then(function( uiModal ) {
-				uiModal.createComponent( initConfig, function( previewModal ) {
-					modalCallback(previewModal, ace);
-				});
-			});
-		});
-	}
-
-	/**
 	 * Public API
 	 */
 	return {
@@ -197,7 +181,6 @@ define( 'wikia.ace.editor', ['wikia.window', 'jquery'], function(win, $){
 		setTheme: setTheme,
 		setMode: setMode,
 		setOptions: setOptions,
-		setConfig: setConfig,
-		showDiff: showDiff
+		setConfig: setConfig
 	};
 });

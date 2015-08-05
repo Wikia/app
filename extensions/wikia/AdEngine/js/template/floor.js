@@ -1,16 +1,17 @@
 /*global define*/
 define('ext.wikia.adEngine.template.floor', [
 	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.provider.gpt.adDetect',
 	'wikia.log',
 	'wikia.document',
 	'wikia.iframeWriter',
 	'wikia.window'
-], function (adContext, log, doc, iframeWriter, win) {
+], function (adContext, adDetect, log, doc, iframeWriter, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.template.floor',
-		footerId = 'ext-wikia-adEngine-template-footer',
-		footerHtml = '<div id="' + footerId + '">' +
+		floorId = 'ext-wikia-adEngine-template-floor',
+		floorHtml = '<div id="' + floorId + '">' +
 			'<div class="background"></div>' +
 			'<div class="ad"></div>' +
 			'<a class="close" title="Close" href="#">' +
@@ -30,11 +31,17 @@ define('ext.wikia.adEngine.template.floor', [
 	 * Note the standard event bubbling applies, so it's possible some element within the iframe
 	 * stops the event propagation. Flash will stop propagation for sure.
 	 *
-	 * @param {Object} params
-	 * @param {string} params.code HTML code to put into floor container
-	 * @param {number} params.width width of the ad to put into floor container
-	 * @param {number} params.height width of the ad to put into floor container
-	 * @param {number} [params.onClick] function to call when floor iframe is clicked
+	 * If you supply params.canHop, the code sniffs the ad in the supplied code by inspecting the iframe
+	 * contents. The code will issue postMessage with either success or hop, so you need to pass
+	 * the params.slotName as well. The creative will need to have AdEngine_adType = 'floor'
+	 *
+	 * @param {Object}  params
+	 * @param {string}  params.code HTML code to put into floor container
+	 * @param {number}  params.width width of the ad to put into floor container
+	 * @param {number}  params.height width of the ad to put into floor container
+	 * @param {number}  [params.onClick] function to call when floor iframe is clicked
+	 * @param {boolean} [params.canHop] detect ad in the embedded iframe
+	 * @param {string}  [params.slotName] name of the original slot (required if params.canHop set to true)
 	 */
 	function show(params) {
 		log(['show', params], 'debug', logGroup);
@@ -44,19 +51,37 @@ define('ext.wikia.adEngine.template.floor', [
 				width: params.width,
 				height: params.height
 			}),
-			skin = adContext.getContext().targeting.skin,
-			$footer = $(footerHtml);
+			$floor = $('#' + floorId),
+			isFloorPresent = $floor.exists(),
+			gptEventMock = {
+				size: {
+					width: params.width,
+					height: params.height
+				}
+			},
+			async = params.canHop && params.slotName;
 
-		if (skin === 'oasis') {
-			win.WikiaBar.hideContainer();
+		function showFloor() {
+			var skin = adContext.getContext().targeting.skin;
+
+			if (skin === 'oasis') {
+				win.WikiaBar.hideContainer();
+			}
+
+			$floor.removeClass('hidden');
 		}
 
-		$footer.find('a.close').click(function (event) {
-			event.preventDefault();
-			$footer.hide();
-		});
+		if (!isFloorPresent) {
+			$floor = $(floorHtml);
+			$floor.addClass('hidden');
+			$(doc.body).append($floor);
+		}
 
-		$footer.find('.ad').append(iframe);
+		$floor.find('a.close').click(function (event) {
+			event.preventDefault();
+			$floor.addClass('hidden');
+		});
+		$floor.find('.ad').html(iframe);
 
 		if (params.onClick) {
 			$(iframe).on('load', function () {
@@ -65,7 +90,23 @@ define('ext.wikia.adEngine.template.floor', [
 			});
 		}
 
-		$(doc.body).append($footer);
+		if (async) {
+			log(['show', params.slotName, 'can hop'], 'info', logGroup);
+			$(iframe).on('load', function () {
+				adDetect.onAdLoad(params.slotName + ' (floor inner iframe)', gptEventMock, iframe, function () {
+					log(['ad detect', params.slotName, 'success'], 'info', logGroup);
+					win.postMessage('{"AdEngine":{"slot_' + params.slotName + '":true,"status":"success"}}', '*');
+					showFloor();
+				}, function () {
+					log(['ad detect', params.slotName, 'hop'], 'info', logGroup);
+					win.postMessage('{"AdEngine":{"slot_' + params.slotName + '":true,"status":"hop"}}', '*');
+				});
+			});
+		}
+
+		if (!async) {
+			showFloor();
+		}
 	}
 
 	return {

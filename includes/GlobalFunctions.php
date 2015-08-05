@@ -3628,7 +3628,7 @@ function wfSplitWikiID( $wiki ) {
  * Note 2: use $this->getDB() in maintenance scripts that may be invoked by
  * updater to ensure that a proper database is being updated.
  *
- * @return DatabaseBase
+ * @return DatabaseMysqli
  */
 function &wfGetDB( $db, $groups = array(), $wiki = false ) {
 	// wikia change begin -- SMW DB separation project, @author Krzysztof Krzyżaniak (eloy)
@@ -4081,4 +4081,21 @@ function wfUnpack( $format, $data, $length=false ) {
 		throw new MWException( "unpack could not unpack binary data" );
 	}
 	return $result;
+}
+
+/**
+ * Get a random string containing a number of pseudo-random hex
+ * characters.
+ * @note This is not secure, if you are trying to generate some sort
+ *       of token please use MWCryptRand instead.
+ *
+ * @param int $length The length of the string to generate
+ * @return string
+ */
+function wfRandomString( $length = 32 ) {
+	$str = '';
+	for ( $n = 0; $n < $length; $n += 7 ) {
+		$str .= sprintf( '%07x', mt_rand() & 0xfffffff );
+	}
+	return substr( $str, 0, $length );
 }

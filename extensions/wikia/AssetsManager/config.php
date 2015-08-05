@@ -711,6 +711,7 @@ $config['mobile_base_ads_js'] = array(
 		'//extensions/wikia/AdEngine/js/MessageListener.js',
 		'//extensions/wikia/AdEngine/js/SlotTracker.js',
 		'//extensions/wikia/AdEngine/js/SlotTweaker.js',
+		'//extensions/wikia/AdEngine/js/WikiaAdHelper.js',
 		'//extensions/wikia/AdEngine/js/config/mobile.js',
 		'//extensions/wikia/AdEngine/js/lookup/amazonMatch.js',
 		'//extensions/wikia/AdEngine/js/lookup/services.js',
@@ -1017,10 +1018,22 @@ $config['relatedpages_wikiamobile_js'] = array(
 );
 
 /** EditPageLayout **/
+$config['editpage_events_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//extensions/wikia/EditPreview/js/editpage.event.preview.js',
+		'//extensions/wikia/EditPreview/js/editpage.event.diff.js',
+		'//extensions/wikia/EditPreview/js/editpage.event.helper.js',
+		'//extensions/wikia/EditPreview/js/editpage.events.js'
+	)
+];
+
 $config['editpage_common_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'//extensions/wikia/EditPageLayout/js/loaders/EditPageEditorLoader.js',
+		'//extensions/wikia/EditPreview/js/preview.js',
+		'#group_editpage_events_js',
 	)
 );
 
@@ -1642,14 +1655,6 @@ $config['imagedrop_scss'] = array(
 
 /** AnalyticsEngine **/
 /** Note: this group is also used in Oasis! */
-$config['analytics_gas_js'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'wikiamobile', 'venus' ],
-	'assets' => [
-		'//extensions/wikia/AnalyticsEngine/js/analytics.js'
-	]
-);
-
 $config['universal_analytics_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'wikiamobile', 'venus' ],
@@ -1837,6 +1842,7 @@ $config['special_css_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'//resources/wikia/libraries/Ace/wikia.ace.editor.js',
+		'#group_editpage_events_js',
 		'//extensions/wikia/SpecialCss/js/SpecialCss.js',
 		'//resources/wikia/libraries/mustache/mustache.js',
 		'//resources/wikia/libraries/mustache/jquery.mustache.js'
@@ -2464,6 +2470,23 @@ $config['flags_editform_js'] = [
 	]
 ];
 
+$config['flags_special_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => [ 'oasis', 'monobook' ],
+	'assets' => [
+		'//extensions/wikia/Flags/specials/styles/SpecialFlags.scss',
+	],
+];
+
+$config['flags_special_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasis', 'monobook' ],
+	'assets' => [
+		'//extensions/wikia/Flags/specials/scripts/SpecialFlags.js',
+		'//extensions/wikia/Flags/specials/scripts/FlagEditForm.js',
+	],
+];
+
 $config['paid_asset_drop_desktop_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
@@ -2486,3 +2509,12 @@ $config['sitemap_page_css'] = array(
 		'//extensions/wikia/SitemapPage/styles/SitemapPage.scss',
 	]
 );
+
+$config['template_draft'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//extensions/wikia/TemplateDraft/scripts/rightRailModule.js',
+		'//extensions/wikia/TemplateDraft/scripts/templateDraft.run.js',
+		'//extensions/wikia/TemplateDraft/scripts/templateDraftTracking.js'
+	]
+];

@@ -58,6 +58,10 @@ class WAMService extends Service {
 		$memKey = wfSharedMemcKey('datamart', self::MEMCACHE_VER, 'wam', $wikiId);
 
 		$getData = function () use ($wikiId) {
+			if ( $this->isDisabled() ) {
+				return 0;
+			}
+
 			$db = $this->getDB();
 
 			$result = $db->select(
@@ -112,6 +116,11 @@ class WAMService extends Service {
 			'wam_results_total' => 0
 		);
 
+		if ( $this->isDisabled() ) {
+			wfProfileOut( __METHOD__ );
+			return $wamIndex;
+		}
+
 		$db = $this->getDB();
 
 		$tables = $this->getWamIndexTables();
@@ -160,6 +169,10 @@ class WAMService extends Service {
 			'min_date' => null
 		);
 
+		if ( $this->isDisabled() ) {
+			return $dates;
+		}
+
 		wfProfileIn(__METHOD__);
 
 		$db = $this->getDB();
@@ -193,6 +206,10 @@ class WAMService extends Service {
 		$memKey = wfSharedMemcKey( 'wam-languages', self::MEMCACHE_VER, $date );
 
 		$getData = function () use ( $date ) {
+			if ( $this->isDisabled() ) {
+				return [];
+			}
+
 			$db = $this->getDB();
 			$result = $db->select(
 				[
@@ -406,5 +423,14 @@ class WAMService extends Service {
 		$db = wfGetDB( DB_SLAVE, array(), $app->wg->DatamartDB );
 		$db->clearFlag( DBO_TRX );
 		return $db;
+	}
+
+	/**
+	 * wgStatsDBEnabled can be used to disable queries to statsdb_mart database
+	 *
+	 * @return bool
+	 */
+	protected function isDisabled() {
+		return empty( F::app()->wg->StatsDBEnabled );
 	}
 }

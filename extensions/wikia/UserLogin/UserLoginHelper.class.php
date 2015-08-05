@@ -75,13 +75,8 @@ class UserLoginHelper extends WikiaModel {
 	 * @return array $wikiUsers
 	 */
 	protected function getWikiUsers( $wikiId = null, $limit = 30 ) {
+		global $wgSpecialsDB;
 		wfProfileIn( __METHOD__ );
-
-		if ( !$this->wg->StatsDBEnabled ) {
-			// no stats DB, can't get list of users with avatars
-			wfProfileOut( __METHOD__ );
-			return array();
-		}
 
 		$wikiId = ( empty( $wikiId ) ) ? $this->wg->CityId : $wikiId;
 
@@ -90,7 +85,7 @@ class UserLoginHelper extends WikiaModel {
 		if ( !is_array( $wikiUsers ) ) {
 			$wikiUsers = array();
 
-			$db = wfGetDB( DB_SLAVE, array(), $this->wg->StatsDB );
+			$db = wfGetDB( DB_SLAVE, array(), $wgSpecialsDB );
 			$result = $db->select(
 				array( 'user_login_history' ),
 				array( 'distinct user_id' ),
@@ -110,11 +105,10 @@ class UserLoginHelper extends WikiaModel {
 				$this->addUserToUserList( $founder, $wikiUsers );
 			}
 
-			$this->wg->Memc->set( $memKey, $wikiUsers, 60 * 60 * 24 );
+			$this->wg->Memc->set( $memKey, $wikiUsers, WikiaResponse::CACHE_STANDARD );
 		}
 
 		wfProfileOut( __METHOD__ );
-
 		return $wikiUsers;
 	}
 
@@ -309,7 +303,7 @@ class UserLoginHelper extends WikiaModel {
 		$user->mId = 0;
 		$user->mEmail = $email;
 
-		$result = $user->sendReConfirmationMail( $type );
+		$result = $user->sendReConfirmationMail();
 
 		$user->mId = $userId;
 		$user->mEmail = $userEmail;
@@ -476,7 +470,7 @@ class UserLoginHelper extends WikiaModel {
 	public function showRequestFormConfirmEmail( EmailConfirmation $pageObj ) {
 		$user = $pageObj->getUser(); /* @var $user User */
 		$out = $pageObj->getOutput(); /* @var $out OutputPage */
-		$optionNewEmail = $user->getGlobalAttribute( 'new_email' );
+		$optionNewEmail = $user->getNewEmail();
 		if ( $pageObj->getRequest()->wasPosted() && $user->matchEditToken( $pageObj->getRequest()->getText( 'token' ) ) ) {
 			// Wikia change -- only allow one email confirmation attempt per hour
 			if ( strtotime( $user->mEmailTokenExpires ) - strtotime( "+6 days 23 hours" ) > 0 ) {

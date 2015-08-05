@@ -1,17 +1,17 @@
-/* Special page */
-.flags-special-list {
-	width: 100%;
-}
-
-.flags-special-zero-status {
-	margin: 20px 0;
-	text-align: center;
-	width: 100%;
-}
 /*  */
 
 .portable-flags {
 	clear: both;
+	margin: 5px 0;
+}
+
+.portable-flags-inline {
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	-ms-flex-direction: column;
+	-webkit-flex-direction: column;
+	flex-direction: column;
 	margin: 5px 0;
 }
 

@@ -18,7 +18,7 @@ require_once( __DIR__ . '/../Maintenance.php' );
 abstract class RemoveUserBase extends Maintenance {
 
 	const BATCH = 1000;
-	const USER_TABLE = 'user';
+	const USER_TABLE = '`user`';
 
 	/**
 	 * Set script options
