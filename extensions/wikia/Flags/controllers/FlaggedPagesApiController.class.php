@@ -33,7 +33,7 @@ class FlaggedPagesApiController extends FlagsApiBaseController {
 
 			$this->makeSuccessResponse( $flaggedPages );
 		} catch ( Exception $e ) {
-			$this->logResponseException( $e, $this->request );
+			$this->logResponseException( $e, $flaggedPages->getRequest() );
 			$this->response->setException( $e );
 		}
 	}

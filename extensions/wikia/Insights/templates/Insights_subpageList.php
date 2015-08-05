@@ -26,8 +26,8 @@
 						<?php endforeach ?>
 					</select>
 				</div>
-				<?php if ( !empty( $flagsFiltering ) ): // Flags filter dropdown ?>
-					<?= $app->renderView( 'Insights', 'flagsFiltering', [ 'selectedFlagTypeId' => $selectedFlagTypeId ] ); ?>
+				<?php if ( !empty( $flagTypes ) ): // Flags filter dropdown ?>
+					<?= $app->renderView( 'Insights', 'flagsFiltering', [ 'selectedFlagTypeId' => $selectedFlagTypeId, 'flagTypes' => $flagTypes ] ); ?>
 				<?php endif ?>
 			</form>
 		<?php endif ?>
@@ -86,11 +86,16 @@
 				<?php if ( $paginatorBar ) : ?>
 					<?= $paginatorBar ?>
 				<?php endif ?>
+			<?php elseif (!empty( $flagTypes ) ) : ?>
+				<p>
+					<?= wfMessage( 'insights-list-no-flag-types' )->escaped(); ?>
+				</p>
 			<?php else: ?>
 				<p>
 					<?= wfMessage( 'insights-list-no-items' )->escaped(); ?>
 				</p>
 			<?php endif; ?>
+
 		</div>
 	</div>
 </div>
