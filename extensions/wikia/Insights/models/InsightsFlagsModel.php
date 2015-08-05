@@ -55,7 +55,11 @@ class InsightsFlagsModel extends InsightsPageModel {
 	}
 
 	public function initModel( $params ) {
-		$this->flagTypeId = $params['flagTypeId'];
+		if ( !isset( $params['flagTypeId'] ) ) {
+			$this->setDefaultType();
+		} else {
+			$this->flagTypeId = $params['flagTypeId'];
+		}
 	}
 
 	/**
@@ -133,9 +137,7 @@ class InsightsFlagsModel extends InsightsPageModel {
 
 		/* Select first type id by default */
 		if ( empty( $this->flagTypeId ) ) {
-			$params = [ 'flag_targeting' => \Flags\Models\FlagType::FLAG_TARGETING_CONTRIBUTORS ];
-			$flagTypes = $app->sendRequest( 'FlagsApiController', 'getFlagTypes' , $params )->getData()['data'];
-			$this->flagTypeId = current($flagTypes)['flag_type_id'];
+			$this->setDefaultType();
 		}
 
 		/* Get to list of pages marked with flags */
@@ -146,6 +148,16 @@ class InsightsFlagsModel extends InsightsPageModel {
 		)->getData()['data'];
 
 		return $flaggedPages;
+	}
+
+	/**
+	 * Select first type ID and use as default
+	 */
+	private function setDefaultType() {
+		$app = F::app();
+		$params = [ 'flag_targeting' => \Flags\Models\FlagType::FLAG_TARGETING_CONTRIBUTORS ];
+		$flagTypes = $app->sendRequest( 'FlagsApiController', 'getFlagTypes' , $params )->getData()['data'];
+		$this->flagTypeId = current( $flagTypes )['flag_type_id'];
 	}
 
 	/**
