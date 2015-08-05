@@ -26,8 +26,8 @@
 						<?php endforeach ?>
 					</select>
 				</div>
-				<?php if ( !empty( $flagsFiltering ) ): // Flags filter dropdown ?>
-					<?= $app->renderView( 'Insights', 'flagsFiltering', [ 'selectedFlagTypeId' => $selectedFlagTypeId ] ); ?>
+				<?php if ( !empty( $flagTypes ) ): // Flags filter dropdown ?>
+					<?= $app->renderView( 'Insights', 'flagsFiltering', [ 'selectedFlagTypeId' => $selectedFlagTypeId, 'flagTypes' => $flagTypes ] ); ?>
 				<?php endif ?>
 			</form>
 		<?php endif ?>

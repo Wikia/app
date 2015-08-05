@@ -47,8 +47,7 @@ class InsightsController extends WikiaSpecialPageController {
 	 */
 	public function flagsFiltering() {
 		$selectedFlagTypeId = $this->request->getVal( 'selectedFlagTypeId' );
-		$params = [ 'flag_targeting' => \Flags\Models\FlagType::FLAG_TARGETING_CONTRIBUTORS ];
-		$flagTypes = $this->app->sendRequest( 'FlagsApiController', 'getFlagTypes', $params )->getData()['data'];
+		$flagTypes = $this->request->getVal( 'flagTypes' );
 		$this->setVal( 'flagTypes', $flagTypes );
 		$this->setVal( 'selectedFlagTypeId', $selectedFlagTypeId );
 	}
@@ -85,9 +84,12 @@ class InsightsController extends WikiaSpecialPageController {
 	private function renderFlagsFiltering() {
 		if ( $this->model instanceof InsightsFlagsModel ) {
 			/* Enable flags filter in layout */
+			$params = [ 'flag_targeting' => \Flags\Models\FlagType::FLAG_TARGETING_CONTRIBUTORS ];
+			$flagTypes = $this->app->sendRequest( 'FlagsApiController', 'getFlagTypes', $params )->getData()['data'];
 			$this->setVal( 'flagsFiltering', true );
 			$flagTypeId = $this->request->getVal( 'flagTypeId' );
 			$this->setVal( 'selectedFlagTypeId', $flagTypeId );
+			$this->setVal( 'flagTypes', $flagTypes );
 		}
 	}
 
