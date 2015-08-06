@@ -18,6 +18,8 @@ $messages['en'] = [
 	'brf-error-invalid-request' => 'It seems that the form was incorrectly submited. Please, try again.',
 	'brf-error-empty-fields' => 'Please, fill all fields of the form.',
 	'brf-error-invalid-user' => 'A user with this ID number does not exist.',
+	'brf-success' => 'The script is running! To monitor the tasks make sure that you are logged in to wikia\'s VPN and go to: ',
+	'brf-success-link-text' => 'Tasks queue',
 ];
 
 /**
@@ -33,4 +35,6 @@ $messages['qqq'] = [
 	'brf-error-invalid-request' => 'A notice shown if the form was sent in an incorrect way.',
 	'brf-error-empty-fields' => 'A notice shown if any of the form\'s fields is empty.',
 	'brf-error-invalid-user' => 'A notice shown if a provided ID of a user is invalid.',
+	'brf-success' => 'A notice shown if the script is successfully run.',
+	'brf-success-link-text' => 'Text of a link to a page with tasks status. Displayed in the success notice.',
 ];

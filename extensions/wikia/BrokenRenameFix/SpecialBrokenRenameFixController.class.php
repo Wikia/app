@@ -33,7 +33,17 @@ class SpecialBrokenRenameFixController extends WikiaSpecialPageController {
 
 	private function submit() {
 		if ( $this->validateForm() ) {
-			
+			/**
+			 * Prevent sending the data again on refresh.
+			 */
+			unset( $_POST );
+
+
+			$task = new BrokenRenameFixTask();
+			$task->call( 'rerunRenameScript', $this->userId, $this->oldName, $this->newName );
+			$task->queue();
+
+			$this->addNotice( wfMessage( 'brf-success' )->escaped() . $this->getTasksLink(), 'success' );
 		} else {
 			$this->prefillFormValues();
 		}
@@ -94,5 +104,13 @@ class SpecialBrokenRenameFixController extends WikiaSpecialPageController {
 			],
 			$text
 		);
+	}
+
+	private function getTasksLink() {
+		$url = sprintf( '%s/tasks?limit=100&type=%s.%s',
+			$this->wg->FlowerUrl, 'BrokenRenameFixTask', 'rerunRenameScript' );
+
+		return Html::rawElement( 'a', [ 'href' => $url, 'target' => '_blank' ],
+			wfMessage( 'brf-success-link-text' )->escaped() );
 	}
 }

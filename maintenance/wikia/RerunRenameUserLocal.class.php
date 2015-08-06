@@ -102,7 +102,7 @@ class RerunRenameUserLocal extends Maintenance {
 				$wikiaBot = User::newFromName( 'WikiaBot' );
 				$wikiPage->doEdit( $this->log,
 					'Logs from an operation of renaming the user.',
-					EDIT_NEW | EDIT_FORCE_BOT | EDIT_SUPPRESS_RC,
+					EDIT_FORCE_BOT | EDIT_SUPPRESS_RC,
 					false,
 					$wikiaBot
 				);
