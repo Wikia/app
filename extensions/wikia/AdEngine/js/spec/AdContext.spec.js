@@ -319,4 +319,24 @@ describe('AdContext', function () {
 		adContext = getModule();
 		expect(adContext.getContext().targeting.enableKruxTargeting).toBeFalsy();
 	});
+
+	it('enables incontent_player slot when country in instatnGlobals.wgAdDriverIncontentPlayerSlotCountries', function () {
+		var adContext;
+
+		mocks.instantGlobals = {wgAdDriverIncontentPlayerSlotCountries: ['HH', 'XX', 'ZZ']};
+		adContext = getModule();
+		expect(adContext.getContext().slots.incontentPlayer).toBeTruthy();
+
+		mocks.instantGlobals = {wgAdDriverIncontentPlayerSlotCountries: ['YY']};
+		adContext = getModule();
+		expect(adContext.getContext().slots.incontentPlayer).toBeFalsy();
+	});
+
+	it('enables incontent_player slot when url param incontentplayer is set', function () {
+		spyOn(mocks.querystring, 'getVal').and.callFake(function (param) {
+			return param === 'incontentplayer' ?  '1' : '0';
+		});
+
+		expect(getModule().getContext().slots.incontentPlayer).toBeTruthy();
+	});
 });
