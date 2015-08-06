@@ -19,7 +19,7 @@ $messages['en'] = [
 	'brf-error-empty-fields' => 'Please, fill all fields of the form.',
 	'brf-error-invalid-user' => 'A user with this ID number does not exist.',
 	'brf-success' => 'The script is running! When it finishes, the logs will be available here: ',
-	'brf-success-link-text' => 'Tasks queue',
+	'brf-success-link-text' => 'Rename rerun logs',
 ];
 
 /**
@@ -36,5 +36,5 @@ $messages['qqq'] = [
 	'brf-error-empty-fields' => 'A notice shown if any of the form\'s fields is empty.',
 	'brf-error-invalid-user' => 'A notice shown if a provided ID of a user is invalid.',
 	'brf-success' => 'A notice shown if the script is successfully run.',
-	'brf-success-link-text' => 'Text of a link to a page with tasks status. Displayed in the success notice.',
+	'brf-success-link-text' => 'Text of a link to a page with logs from the process. Displayed in the success notice.',
 ];

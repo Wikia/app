@@ -13,6 +13,8 @@
 
 		<input type="hidden" name="brf-form-token" value="<?= $editToken ?>">
 
-		<input class="brf-form-submit" type="submit" value="<?= $submitText ?>">
+		<p>
+			<input class="brf-form-submit" type="submit" value="<?= $submitText ?>">
+		</p>
 	</form>
 </div>
