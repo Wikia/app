@@ -44,7 +44,7 @@ class SpecialBrokenRenameFixController extends WikiaSpecialPageController {
 			$task->prioritize();
 			$task->queue();
 
-			$this->addNotice( wfMessage( 'brf-success' )->escaped() . $this->getTasksLink(), 'success' );
+			$this->addNotice( wfMessage( 'brf-success' )->escaped() . $this->getLogsLink(), 'success' );
 		} else {
 			$this->prefillFormValues();
 		}
@@ -107,9 +107,14 @@ class SpecialBrokenRenameFixController extends WikiaSpecialPageController {
 		);
 	}
 
-	private function getTasksLink() {
-		$url = sprintf( '%s/tasks?limit=100&type=%s.%s',
-			$this->wg->FlowerUrl, 'BrokenRenameFixTask', 'rerunRenameScript' );
+	private function getLogsLink() {
+		$logTitleText = sprintf( '%s/%s to %s rename rerun log',
+			$this->newName, $this->oldName, $this->newName );
+		$logTitle = Title::newFromText( $logTitleText, NS_USER );
+		$url = '';
+		if ( $logTitle !== null ) {
+			$url = $logTitle->getFullURL();
+		}
 
 		return Html::rawElement( 'a', [ 'href' => $url, 'target' => '_blank' ],
 			wfMessage( 'brf-success-link-text' )->escaped() );
