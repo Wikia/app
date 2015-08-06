@@ -44,10 +44,15 @@ class CuratedContentHelper {
 	}
 
 	private function processCrop( &$itemOrSection ) {
-		$itemOrSection['image_crop'] = $this->decodeCrop( $itemOrSection['image_crop'] );
-		// do not keep empty data
-		if ( !is_array( $itemOrSection['image_crop'] ) ) {
-			unset( $itemOrSection['image_crop'] );
+		if ( array_key_exists('image_crop', $itemOrSection) ) {
+			if ( is_string( $itemOrSection['image_crop'] ) ) {
+				$itemOrSection['image_crop'] = $this->decodeCrop( $itemOrSection['image_crop'] );
+			}
+
+			// do not keep empty or unknown data
+			if ( !is_array( $itemOrSection['image_crop'] ) ) {
+				unset( $itemOrSection['image_crop'] );
+			}
 		}
 	}
 

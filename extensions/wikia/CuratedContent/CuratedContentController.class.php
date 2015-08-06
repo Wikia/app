@@ -356,11 +356,17 @@ class CuratedContentController extends WikiaController {
 			function ( $ret, $item ) {
 				if ( $item['title'] !== '' && empty( $item['featured'] ) ) {
 					$imageId = $item['image_id'] != 0 ? $item['image_id'] : null;
-					$ret[] = [
+					$val = [
 						'title' => $item['title'],
-						'image_id' => $imageId,
+						'image_id' => $item['image_id'] != 0 ? $item['image_id'] : null,
 						'image_url' => CuratedContentHelper::findImageUrl( $imageId )
 					];
+
+					if ( !empty( $item['image_id'] ) && array_key_exists('image_crop', $item) ) {
+						$val['image_crop'] = $item['image_crop'];
+					}
+
+					$ret[] = $val;
 				}
 
 				return $ret;
@@ -442,7 +448,7 @@ class CuratedContentController extends WikiaController {
 
 		//TODO Remove this check in CONCF-978
 		if ( !empty( $wgEnableCuratedContentUnauthorizedSave ) ) {
-			$data = $this->request->getArray( 'data', [] );
+			$data = $this->request->getArray( 'data', [ ] );
 
 			// strip excessive data used in mercury interface (added in self::getData method)
 			foreach ( $data as &$section ) {
