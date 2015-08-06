@@ -66,7 +66,7 @@ abstract class FlagsApiBaseController extends \WikiaApiController {
 	/**
 	 * Logging methods
 	 */
-	protected function logResponseException( Exception $e, WikiaRequest $request ) {
+	protected function logResponseException( \Exception $e, \WikiaRequest $request ) {
 		$this->error(
 			'FlagsLog Exception',
 			[

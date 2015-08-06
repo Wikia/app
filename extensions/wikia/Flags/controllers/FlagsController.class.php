@@ -463,7 +463,7 @@ class FlagsController extends WikiaController {
 		return $this->helper;
 	}
 
-	private function logResponseException( Exception $e, WikiaRequest $request ) {
+	private function logResponseException( \Exception $e, \WikiaRequest $request ) {
 		$this->error(
 			'FlagsLog Exception',
 			[
