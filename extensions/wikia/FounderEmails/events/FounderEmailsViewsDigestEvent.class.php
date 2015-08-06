@@ -1,6 +1,6 @@
 <?php
 class FounderEmailsViewsDigestEvent extends FounderEmailsEvent {
-	const EMAIL_CONTROLLER = 'Email\Controller\FounderPageViewsDigest';
+	const EMAIL_CONTROLLER = Email\Controller\FounderPageViewsDigestController::class;
 
 	public function __construct( Array $data = array() ) {
 		parent::__construct( 'viewsDigest' );
@@ -32,6 +32,7 @@ class FounderEmailsViewsDigestEvent extends FounderEmailsEvent {
 
 		// Gather daily page view stats for each wiki requesting views digest
 		foreach ( $cityList as $cityID ) {
+			Wikia::initAsyncRequest( $cityID );
 			$userIds = $wikiService->getWikiAdminIds( $cityID );
 			$emailParams = [
 				'pageViews' => $founderEmailObj->getPageViews( $cityID )

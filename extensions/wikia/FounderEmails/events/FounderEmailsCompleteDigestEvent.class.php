@@ -1,7 +1,7 @@
 <?php
 
 class FounderEmailsCompleteDigestEvent extends FounderEmailsEvent {
-	const EMAIL_CONTROLLER = 'Email\Controller\FounderActivityDigest';
+	const EMAIL_CONTROLLER = Email\Controller\FounderActivityDigestController::class;
 
 	public function __construct( Array $data = array() ) {
 		parent::__construct( 'completeDigest' );
@@ -31,6 +31,7 @@ class FounderEmailsCompleteDigestEvent extends FounderEmailsEvent {
 		$wikiService = new WikiService();
 
 		foreach ( $cityList as $cityID ) {
+			Wikia::initAsyncRequest( $cityID );
 			$userIds = $wikiService->getWikiAdminIds( $cityID );
 			$emailParams = [
 				'wikiId' => $cityID,
