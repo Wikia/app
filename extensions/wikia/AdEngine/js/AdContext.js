@@ -90,6 +90,11 @@ define('ext.wikia.adEngine.adContext', [
 		context.slots.incontentPlayer = isProperCountry(instantGlobals.wgAdDriverIncontentPlayerSlotCountries) ||
 			isUrlParamSet('incontentplayer');
 
+		context.opts.refreshPrefooters = (
+			context.opts.refreshPrefooters &&
+			isProperCountry(instantGlobals.wgAdDriverRefreshPrefootersCountries)
+		) || parseInt(qs.getVal('refreshprefooters', '0'));
+
 		// Krux integration
 		context.targeting.enableKruxTargeting = !!(
 			context.targeting.enableKruxTargeting &&

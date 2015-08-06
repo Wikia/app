@@ -1481,6 +1481,13 @@ $wgAdDriverRubiconRTPCountries = null;
 $wgAdDriverKruxCountries = null;
 
 /**
+ * @name $wgAdDriverRefreshPrefootersCountries
+ * List of countries prefooters will be refreshed every time user scrolls down to the top of slot
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverRefreshPrefootersCountries = null;
+
+/**
  * @name $wgHighValueCountries
  * List of countries defined as high-value for revenue purposes
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.

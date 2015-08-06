@@ -56,6 +56,12 @@ define('ext.wikia.adEngine.config.desktop', [
 		return [adDecoratorPageDimensions];
 	}
 
+	function refreshPrefooters() {
+		var result = context.opts.refreshPrefooters;
+		log(['Refresh prefooters', result], 'debug', logGroup);
+		return result
+	}
+
 	function getProviderList(slotName) {
 		var providerList = [];
 
@@ -142,6 +148,7 @@ define('ext.wikia.adEngine.config.desktop', [
 
 	return {
 		getDecorators: getDecorators,
-		getProviderList: getProviderList
+		getProviderList: getProviderList,
+		refreshPrefooters: refreshPrefooters
 	};
 });
