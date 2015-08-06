@@ -199,21 +199,11 @@ class WikiaSendgridMailer {
 		$wikiaId = F::app()->wg->CityId;
 		$dbName = WikiFactory::IDtoDB( F::app()->wg->CityId );
 
-		$token = '';
-		if ( !empty( $headers['X-CallbackToken'] )  ) {
-			$tokenHeader = $headers['X-CallbackToken'];
-
-			if ( preg_match( '/X-CallbackToken: (\S+)/', $tokenHeader, $matches ) ) {
-				$token = $matches[1];
-			}
-		}
-
 		$content = [
 			'category' => $category,
 			'unique_args' => [
 				'wikia-db' => $dbName,
 				'wikia-email-city-id' => $wikiaId,
-				'wikia-token' => $token,
 			],
 		];
 
