@@ -41,6 +41,7 @@ class SpecialBrokenRenameFixController extends WikiaSpecialPageController {
 
 			$task = new BrokenRenameFixTask();
 			$task->call( 'rerunRenameScript', $this->userId, $this->oldName, $this->newName );
+			$task->prioritize();
 			$task->queue();
 
 			$this->addNotice( wfMessage( 'brf-success' )->escaped() . $this->getTasksLink(), 'success' );

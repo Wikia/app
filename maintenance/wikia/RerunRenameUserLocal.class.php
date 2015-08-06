@@ -97,7 +97,7 @@ class RerunRenameUserLocal extends Maintenance {
 		$logTitle = Title::newFromText( $logTitleText, NS_USER );
 
 		try {
-			if ( $logTitle === null ) {
+			if ( $logTitle !== null ) {
 				$wikiPage = new WikiPage( $logTitle );
 				$wikiaBot = User::newFromName( 'WikiaBot' );
 				$wikiPage->doEdit( $this->log,
@@ -113,6 +113,7 @@ class RerunRenameUserLocal extends Maintenance {
 			$msg = $e->getMessage();
 			$this->addLog( "Saving logs to a subpage failed: {$msg}" );
 			$this->logException( $e );
+			$this->sendLogToLogstash();
 		}
 
 		return $this->log;
@@ -127,6 +128,13 @@ class RerunRenameUserLocal extends Maintenance {
 		$logger->error( __CLASS__, [
 			'excptMsg' => $e->getMessage(),
 			'excptTrace' => $e->getTrace()
+		] );
+	}
+
+	private function sendLogToLogstash() {
+		$logger = Wikia\Logger\WikiaLogger::instance();
+		$logger->error( __CLASS__, [
+			'rnmLgs' => $this->log,
 		] );
 	}
 
