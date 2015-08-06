@@ -339,7 +339,7 @@ class MercuryApiController extends WikiaController {
 
 			//CONCF-855: $article is null sometimes, fix added
 			//I add logging as well to be sure that this not happen anymore
-			//TODO: Remove after 2 weeks
+			//TODO: Remove after 2 weeks: CONCF-1012
 			if ( !$article instanceof Article) {
 				\Wikia\Logger\WikiaLogger::instance()->error(
 					'$article should be an instance of an Article',
