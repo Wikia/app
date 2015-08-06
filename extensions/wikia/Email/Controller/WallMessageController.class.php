@@ -178,7 +178,7 @@ class OwnWallMessageController extends WallMessageController {
 	 * @return string
 	 */
 	protected function getSubject() {
-		return $this->getMessage( 'emailext-wallmessage-owned-subject', $this->titleText )->parse();
+		return $this->getMessage( 'emailext-wallmessage-owned-subject', $this->titleText )->text();
 	}
 }
 

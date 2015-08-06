@@ -675,8 +675,9 @@ Iz razloga "\'\'$2\'\'".',
 # Login and logout pages
 'logouttext'                 => "'''Sad ste odjavljeni.'''
 
-Možete nastaviti da koristite {{SITENAME}} anonimno, ili se ponovo [[Special:UserLogin|prijaviti]] kao isti ili kao drugi korisnik.
+Možete nastaviti da koristite {{SITENAME}} anonimno, ili se ponovo $1 kao isti ili kao drugi korisnik.
 Obratite pažnju da neke stranice mogu nastaviti da se prikazuju kao da ste još uvijek prijavljeni, dok ne očistite keš svog preglednika.",
+'logouttext-link-text'       => 'prijaviti',
 'welcomecreation'            => '== Dobro došli, $1 ==
 Vaš nalog je napravljen.
 Ne zaboravite da prilagodite sebi svoja [[Special:Preferences|{{SITENAME}} podešavanja]].',
@@ -812,7 +813,7 @@ $2
 
 {{PLURAL:$3|Ova privremena šifra|Ove privremene šifre}} će isteći za {{PLURAL:$5|jedan dan|$5 dana}}.
 Trebate se prijaviti i odabrati novu šifru. Ako je neko drugi napravio ovaj
-zahtjev, ili ako ste se sjetili Vaše početne šifre, a ne želite je promijeniti, 
+zahtjev, ili ako ste se sjetili Vaše početne šifre, a ne želite je promijeniti,
 možete zanemariti ovu poruku i nastaviti koristiti staru šifru.',
 'passwordreset-emailtext-user'     => 'Korisnik $1 na {{SITENAME}} je zatražio podsjetnik o detaljima Vašeg računa za {{SITENAME}}
 ($4). Sljedeći {{PLURAL:$3|korisnički račun je|korisnički računi su}} povezani s ovom e-mail adresom:
@@ -821,7 +822,7 @@ $2
 
 {{PLURAL:$3|Ova privremena šifra|Ove privremene šifre}} će isteći za {{PLURAL:$5|jedan dan|$5 dana}}.
 Trebate se prijaviti i odabrati novu šifru. Ako je neko drugi napravio ovaj
-zahtjev, ili ako ste se sjetili Vaše originalne šifre, a ne želite je više promijeniti, 
+zahtjev, ili ako ste se sjetili Vaše originalne šifre, a ne želite je više promijeniti,
 možete zanemariti ovu poruku i nastaviti koristiti staru šifru.',
 'passwordreset-emailelement'       => 'Korisničko ime: $1
 Privremena šifra: $2',

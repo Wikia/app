@@ -400,7 +400,8 @@ $2',
 # Login and logout pages
 'logouttext'                 => "'''汝退出正哩。'''
 
-接到汝得匿名使用{{SITENAME}}，或[[Special:UserLogin|登入过]]。除非汝删吥浏览器缓存，只把子页面可能会接到话汝系登入状态。",
+接到汝得匿名使用{{SITENAME}}，或$1。除非汝删吥浏览器缓存，只把子页面可能会接到话汝系登入状态。",
+'logouttext-link-text'       => '登入过',
 'welcomecreation'            => '== 欢迎, $1! ==
 
 建正哩汝𠮶帐户，莫𫍧记设置 [[Special:Preferences|{{SITENAME}}𠮶个人参数]]。',

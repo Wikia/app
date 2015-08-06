@@ -415,8 +415,9 @@ Jü späre wörd döör [[User:$1|$1]] ma grün "$2" inruchted.',
 # Login and logout pages
 'logouttext'                 => "'''Dü bast nü oufmälded.'''
 
-Dü koost {{SITENAME}} nü anonüüm widerbrüke, unti de wider uner diseelew unti en oudern brükernoome [[Special:UserLogin|önjmälde]].
+Dü koost {{SITENAME}} nü anonüüm widerbrüke, unti de wider uner diseelew unti en oudern brükernoome $1.
 Påås aw, dåt hu side nuch wise koone, dåt dü önjmälded bast, sülung dü ai dan browsercache lääsimååged heest.",
+'logouttext-link-text'       => 'önjmälde',
 'welcomecreation'            => '== Wäljkiimen, $1! ==
 
 Din brükerkonto wörd inruchted.
@@ -1094,7 +1095,7 @@ Stal sääker, dåt jü färsjoonshistoori foon en sid histoorisch koräkt as.',
 'linkstoimage'              => '{{PLURAL:$1|Jü füliend sid ferwånt|Da füliende $1 side ferwiinje}} jüdeer dååtäi:',
 'nolinkstoimage'            => 'Nään artiikel brükt detheer datei',
 'sharedupload'              => 'Jüdeer dååtäi ståmt üt $1 än mötj foon ouder prujäkte brükt wårde.',
-'sharedupload-desc-here'    => "Detheer bil as faan $1 an koon faan ööder projekten brükt wurd. 
+'sharedupload-desc-here'    => "Detheer bil as faan $1 an koon faan ööder projekten brükt wurd.
 Det beskriiwang faan't [$2 beskriiwangssidj] woort oner uunwiset.",
 'uploadnewversion-linktext' => 'En nai färsjoon foon jüdeer dåtäi huuchsiinje',
 'shared-repo-from'          => 'foon $1',

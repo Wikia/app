@@ -17,7 +17,7 @@ class EditorUserPropertiesHandler extends WikiaUserPropertiesHandlerBase {
 		} else {
 			$this->throwExceptionForAnons();
 
-			$this->wg->User->setLocalAttribute(MAIN_PAGE_NOTIFICATIONS_HIDDEN_PROP_NAME, true, $this->app->wg->CityId);
+			$this->wg->User->setLocalPreference(MAIN_PAGE_NOTIFICATIONS_HIDDEN_PROP_NAME, true, $this->app->wg->CityId);
 			$this->wg->User->saveSettings();
 			$results->success = true;
 		}
@@ -25,7 +25,7 @@ class EditorUserPropertiesHandler extends WikiaUserPropertiesHandlerBase {
 	}
     
 	public function getEditorMainPageNoticePropertyForCurrentUser() {
-		return $this->wg->User->getLocalAttribute(MAIN_PAGE_NOTIFICATIONS_HIDDEN_PROP_NAME, $this->app->wg->CityId);
+		return $this->wg->User->getLocalPreference(MAIN_PAGE_NOTIFICATIONS_HIDDEN_PROP_NAME, $this->app->wg->CityId);
 	}
 
 }

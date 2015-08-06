@@ -1065,8 +1065,17 @@ $config['ace_editor_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'#group_editpage_common_js',
+		'#group_ace_editor_plugins_js',
 		'//resources/wikia/libraries/Ace/wikia.ace.editor.js',
-		'//extensions/wikia/EditPageLayout/js/editor/AceEditor.js',
+		'//extensions/wikia/EditPageLayout/js/editor/AceEditor.js'
+	)
+);
+
+$config['ace_editor_plugins_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//extensions/wikia/EditPageLayout/js/editor/WikiaEditor.js',
+		'//extensions/wikia/EditPageLayout/js/plugins/Noticearea.js'
 	)
 );
 
@@ -2468,6 +2477,23 @@ $config['flags_editform_js'] = [
 	'assets' => [
 		'//extensions/wikia/Flags/scripts/FlagsModal.js'
 	]
+];
+
+$config['flags_special_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => [ 'oasis', 'monobook' ],
+	'assets' => [
+		'//extensions/wikia/Flags/specials/styles/SpecialFlags.scss',
+	],
+];
+
+$config['flags_special_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasis', 'monobook' ],
+	'assets' => [
+		'//extensions/wikia/Flags/specials/scripts/SpecialFlags.js',
+		'//extensions/wikia/Flags/specials/scripts/FlagEditForm.js',
+	],
 ];
 
 $config['paid_asset_drop_desktop_js'] = [

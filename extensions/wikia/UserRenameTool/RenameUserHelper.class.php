@@ -10,10 +10,6 @@ class RenameUserHelper {
 
 	const CLUSTER_DEFAULT = '';
 
-	public static $excludedWikis = array(
-		425, /* uncyclopedia */
-	);
-
 	/**
 	 * @author Federico "Lox" Lucignano
 	 * @param $userID int the registered user ID
@@ -41,15 +37,11 @@ class RenameUserHelper {
 				$res = $dbr->select('rollup_edit_events', 'wiki_id', ['user_id' => $userID], __METHOD__, ['GROUP BY' => 'wiki_id']);
 
 				while($row = $dbr->fetchObject($res)) {
-					if ( !in_array( $row->wiki_id, self::$excludedWikis ) ) {
-						if ( WikiFactory::isPublic( $row->wiki_id ) ) {
-							$result[] = (int)$row->wiki_id;
-							wfDebugLog(__CLASS__.'::'.__METHOD__, "Registered user with ID {$userID} was active on wiki with ID {$row->wiki_id}");
-						} else {
-							wfDebugLog(__CLASS__.'::'.__METHOD__, "Skipped wiki with ID {$row->wiki_id} (inactive wiki)");
-						}
+					if ( WikiFactory::isPublic( $row->wiki_id ) ) {
+						$result[] = (int)$row->wiki_id;
+						wfDebugLog(__CLASS__.'::'.__METHOD__, "Registered user with ID {$userID} was active on wiki with ID {$row->wiki_id}");
 					} else {
-						wfDebugLog(__CLASS__.'::'.__METHOD__, "Skipped wiki with ID {$row->wiki_id} (excluded wiki)");
+						wfDebugLog(__CLASS__.'::'.__METHOD__, "Skipped wiki with ID {$row->wiki_id} (inactive wiki)");
 					}
 				}
 
@@ -97,10 +89,8 @@ class RenameUserHelper {
 			);
 
 			foreach ( $res as $row ) {
-				if ( !in_array( $row->ml_city_id, self::$excludedWikis ) ) {
-					if ( WikiFactory::isPublic( $row->ml_city_id ) ) {
-						$result[] = (int)$row->ml_city_id;
-					}
+				if ( WikiFactory::isPublic( $row->ml_city_id ) ) {
+					$result[] = (int)$row->ml_city_id;
 				}
 			}
 

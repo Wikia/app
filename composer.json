@@ -18,6 +18,7 @@
     "tijsverkoyen/css-to-inline-styles": "1.5.2",
     "php-di/php-di": "^5.0",
     "doctrine/annotations": "~1.2",
-    "doctrine/cache": "~1.0"
+    "doctrine/cache": "~1.0",
+    "ocramius/proxy-manager": "~1.0"
   }
 }
