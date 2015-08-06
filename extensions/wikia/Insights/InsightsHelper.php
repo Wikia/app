@@ -46,7 +46,6 @@ class InsightsHelper {
 	const INSIGHT_FIXED_MSG_PREFIX = 'insights-notification-message-fixed-';
 
 	public static $insightsPages = [
-		InsightsFlagsModel::INSIGHT_TYPE			=> 'InsightsFlagsModel',
 		InsightsUncategorizedModel::INSIGHT_TYPE	=> 'InsightsUncategorizedModel',
 		InsightsWithoutimagesModel::INSIGHT_TYPE	=> 'InsightsWithoutimagesModel',
 		InsightsDeadendModel::INSIGHT_TYPE			=> 'InsightsDeadendModel',

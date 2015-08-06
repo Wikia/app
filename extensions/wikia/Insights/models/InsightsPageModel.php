@@ -315,7 +315,7 @@ abstract class InsightsPageModel extends InsightsModel {
 
 		}
 
-		foreach ( $this->sorting as $key => $flag ) {
+		foreach ( $this->sorting as $key => $item ) {
 			if ( isset( $sortingData[$key] ) ) {
 				$this->createSortingArray( $sortingData[ $key ], $key );
 			}
@@ -329,7 +329,7 @@ abstract class InsightsPageModel extends InsightsModel {
 	 * keys in the array.
 	 *
 	 * @param $sortingArray The input array with
-	 * @param $key Memcache key
+	 * @param string $key Memcache key
 	 */
 	public function createSortingArray( $sortingArray, $key ) {
 		global $wgMemc;
@@ -425,7 +425,7 @@ abstract class InsightsPageModel extends InsightsModel {
 	private function updateSortingCache( $articleId ) {
 		global $wgMemc;
 
-		foreach ( $this->sorting as $key => $flag ) {
+		foreach ( $this->sorting as $key => $item ) {
 			$cacheKey = $this->getMemcKey( $key );
 			$sortingArray = $wgMemc->get( $cacheKey );
 			if ( is_array( $sortingArray ) ) {

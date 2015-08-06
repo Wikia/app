@@ -82,6 +82,10 @@ class InsightsController extends WikiaSpecialPageController {
 	 * Add flags filter to layout
 	 */
 	private function renderFlagsFiltering() {
+		global $wgEnableFlagsExt;
+		if ( !$wgEnableFlagsExt ) {
+			return;
+		}
 		if ( $this->model instanceof InsightsFlagsModel ) {
 			$flagTypeId = $this->request->getVal( 'flagTypeId' );
 
