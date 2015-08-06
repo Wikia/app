@@ -100,7 +100,7 @@ $wgHooks['ContributionsToolLinks'][] = 'WallHooksHelper::onContributionsToolLink
 // watchlist
 $wgHooks['ArticleCommentBeforeWatchlistAdd'][] = 'WallHooksHelper::onArticleCommentBeforeWatchlistAdd';
 // $wgHooks['WatchArticle'][] = 'WallHooksHelper::onWatchArticle';
-// $wgHooks['UnwatchArticle'][] = 'WallHooksHelper::onUnwatchArticle';
+$wgHooks['UnwatchArticle'][] = 'WallHooksHelper::onUnwatchArticle';
 
 // diff page adjusting
 $wgHooks['DiffViewHeader'][] = 'WallHooksHelper::onDiffViewHeader';

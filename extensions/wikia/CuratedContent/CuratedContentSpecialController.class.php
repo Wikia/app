@@ -162,9 +162,8 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 		$this->response->setFormat( 'json' );
 
 		$helper = new CuratedContentHelper();
-
 		$sections = $helper->processSections( $this->request->getArray( 'sections', [] ) );
-		$errors = ( new CuratedContentValidator( $sections ) )->getErrors();
+		$errors = ( new CuratedContentValidator )->validateData( $sections );
 
 		if ( !empty( $errors ) ) {
 			$this->response->setVal( 'error', $errors );
@@ -172,7 +171,7 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 			$status = WikiFactory::setVarByName( 'wgWikiaCuratedContent', $wgCityId, $sections );
 			$this->response->setVal( 'status', $status );
 
-			if ( $status ) {
+			if ( !empty( $status ) ) {
 				wfRunHooks( 'CuratedContentSave', [ $sections ] );
 			}
 		}
@@ -199,26 +198,5 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 			}
 		}
 		return $result;
-	}
-
-	public function getImage() {
-		$file = $this->request->getVal( 'file' );
-		$url = '';
-		$imageId = 0;
-
-		if ( !empty( $file ) ) {
-			$imageTitle = Title::newFromText( $file );
-
-			if ( !empty( $imageTitle ) && $imageTitle instanceof Title && $imageTitle->exists() ) {
-				$imageId = $imageTitle->getArticleID();
-			}
-		}
-
-		if ( !empty( $imageId ) ) {
-			$url = CuratedContentHelper::getImageUrl( $imageId );
-		}
-
-		$this->response->setVal( 'url', $url );
-		$this->response->setVal( 'id', $imageId );
 	}
 }

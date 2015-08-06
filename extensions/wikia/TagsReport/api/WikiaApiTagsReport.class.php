@@ -38,7 +38,7 @@ class WikiaApiTagsReport extends ApiQueryBase {
 		// apply limits and continue
 		$limit = $params['limit'];
 		$this->addOption( 'LIMIT', $limit + 1 );
-		$this->addWhereRange( 'ct_page_id', 'newer', $params[ 'continue' ] );
+		$this->addWhereRange( 'ct_page_id', 'newer', $params[ 'continue' ], null /* $end */ );
 
 		// run the query and format the results
 		$res = $this->select( __METHOD__ );
