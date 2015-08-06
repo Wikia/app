@@ -88,7 +88,7 @@ class ApprovedraftAction extends FormlessAction {
 		);
 
 		// Get WikiPage object of parent page
-		$page = WikiPage::newFromID( $parentTitle->getArticleID() );
+		$page = WikiPage::factory( $parentTitle );
 		// Save to parent page
 		$page->doEdit( $draftContent, wfMessage( 'templatedraft-approval-summary' )->inContentLanguage()->plain() );
 
