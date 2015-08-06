@@ -212,12 +212,12 @@ class MercuryApiController extends WikiaController {
 		}
 
 		if ( empty( $articleId ) ) {
-			$title = Title::newFromText( $articleTitle, NS_MAIN );
+			$title = Title::newFromText( $articleTitle );
 		} else {
-			$title = Title::newFromId( $articleId, NS_MAIN );
+			$title = Title::newFromId( $articleId );
 		}
 
-		if ( !$title instanceof Title || !$title->isKnown() ) {
+		if ( !$title instanceof Title || !$title->isKnown() || !$title->isContentPage() ) {
 			$title = false;
 		}
 
@@ -335,6 +335,22 @@ class MercuryApiController extends WikiaController {
 				$title = $article->getRedirectTarget();
 				$article = Article::newFromID( $title->getArticleID() );
 				$data['redirected'] = true;
+			}
+
+			//CONCF-855: $article is null sometimes, fix added
+			//I add logging as well to be sure that this not happen anymore
+			//TODO: Remove after 2 weeks
+			if ( !$article instanceof Article) {
+				\Wikia\Logger\WikiaLogger::instance()->error(
+					'$article should be an instance of an Article',
+					[
+						'$article' => $article,
+						'$articleId' => $articleId,
+						'$title' => $title
+					]
+				);
+
+				throw new NotFoundApiException('Article is empty');
 			}
 
 			$data['details'] = $this->getArticleDetails( $article );
