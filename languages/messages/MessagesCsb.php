@@ -353,8 +353,9 @@ Przemëszlë dolmaczënié na [//translatewiki.net/wiki/Main_Page?setlang=csb tr
 
 # Login and logout pages
 'logouttext'                 => "'''Jes wëlogòwóny.'''
-Mòżesz robic dali na {{SITENAME}} jakno anonimòwi brëkòwnik abò sã [[Special:UserLogin|wlogòwac]] znowa jakno równy, a bò jinszi brëkòwnik.
+Mòżesz robic dali na {{SITENAME}} jakno anonimòwi brëkòwnik abò sã $1 znowa jakno równy, a bò jinszi brëkòwnik.
 Bôczë, że do czasu wëczëszczenia pòdrãczny pamiãcë przezérnika, niejedné starnë bãdą wëzdrzëc jakbë të bëł wlogòwóny.",
+'logouttext-link-text'       => 'wlogòwac',
 'welcomecreation'            => ' == Witôj, $1! ==
 Twòjé kònto òstało prawie ùsôdzoné.
 Nie zbëjë zmienic swòjich nastôwów na [[Special:Preferences|{{SITENAME}}]].',

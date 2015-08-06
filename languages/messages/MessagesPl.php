@@ -689,8 +689,9 @@ Uzasadnienie blokady: ''$2''.",
 # Login and logout pages
 'logouttext'                 => "'''Nie jesteś już zalogowany.'''
 
-Możesz kontynuować pracę w {{GRAMMAR:MS.lp|{{SITENAME}}}} jako niezarejestrowany użytkownik albo [[Special:UserLogin|zalogować się ponownie]] jako ten sam lub inny użytkownik.
+Możesz kontynuować pracę w {{GRAMMAR:MS.lp|{{SITENAME}}}} jako niezarejestrowany użytkownik albo $1 jako ten sam lub inny użytkownik.
 Zauważ, że do momentu wyczyszczenia pamięci podręcznej przeglądarki niektóre strony mogą wyglądać tak, jakbyś wciąż był zalogowany.",
+'logouttext-link-text'       => 'zalogować się ponownie',
 'welcomecreation'            => '== Witaj, $1! ==
 Twoje konto zostało utworzone.
 Nie zapomnij dostosować [[Special:Preferences|preferencji dla {{GRAMMAR:D.lp|{{SITENAME}}}}]].',

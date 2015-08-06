@@ -702,8 +702,9 @@ De op-egeven reden is ''$2''.",
 # Login and logout pages
 'logouttext'                 => "'''Je bin noen aofemeld.'''
 
-Je kunnen {{SITENAME}} noen anoniem gebruken of je eigen [[Special:UserLogin|opniej anmelden]] onder disse of n aandere gebrukersnaam.
+Je kunnen {{SITENAME}} noen anoniem gebruken of je eigen $1 onder disse of n aandere gebrukersnaam.
 t Kan ween dat der wat pagina's bin die weeregeven wörden asof je an-emeld bin totda'j t tussengeheugen van joew webkieker leegmaken.",
+'logouttext-link-text'       => 'opniej anmelden',
 'welcomecreation'            => '== Welkom, $1! ==
 Joew gebrukersnaam is an-emaakt.
 Vergeet niet joew [[Special:Preferences|veurkeuren veur {{SITENAME}}]] in te stellen.',
@@ -961,7 +962,7 @@ Je kunnen [[Special:Search/{{PAGENAME}}|zeuken naor disse term]] in aandere pagi
 'userpage-userdoesnotexist-view'   => 'Gebruker "$1" steet hier niet in-eschreven',
 'blocked-notice-logextract'        => 'Disse gebruker is op t moment eblokkeerd.
 De leste regel uut t blokkeerlogboek steet hieronder as referensie:',
-'clearyourcache'                   => "'''Waort je:''' naodat de wiezigingen op-esleugen bin, mut t tussengeheugen van de webkieker nog eleegd wörden um t te kunnen zien. 
+'clearyourcache'                   => "'''Waort je:''' naodat de wiezigingen op-esleugen bin, mut t tussengeheugen van de webkieker nog eleegd wörden um t te kunnen zien.
 *'''Firefox / Safari:''' drok op ''Shift'' terwiel je op ''verniejen'' klikken, of gebruuk ''Ctrl-F5'' of ''Ctrl-R'' (''⌘-R'' op n knipperkiste van Mac)
 * '''Google Chrome:''' drok op ''Ctrl-Shift-R'' (''⌘-Shift-R'' op n knipperkiste van Mac)
 *'''Internet Explorer:''' drok op ''Ctrl'' terwiel je op ''verniejen'' klikken of drok op ''Ctrl-F5''
@@ -1767,8 +1768,8 @@ Gao weerumme naor t [[Special:Upload/stash/$1|bestaandinlaodformulier]] um dit p
 'upload-file-error'         => 'Interne fout',
 'upload-file-error-text'    => 'Bie ons gung der effen wat fout to n tiedelik bestaand op de server an-emaakt wörden. Neem kontakt op mit n [[Special:ListUsers/sysop|systeembeheerder]].',
 'upload-misc-error'         => 'Onbekende fout bie t inlaojen van joew bestaand',
-'upload-misc-error-text'    => 'Der is bie t inlaojen van t bestaand n onbekende fout op-etrejen. 
-Kiek effen nao of de verwiezing t wel döt en probeer t opniej. 
+'upload-misc-error-text'    => 'Der is bie t inlaojen van t bestaand n onbekende fout op-etrejen.
+Kiek effen nao of de verwiezing t wel döt en probeer t opniej.
 As t probleem zo blif, neem dan kontakt op mit één van de [[Special:ListUsers/sysop|systeembeheerders]].',
 'upload-too-many-redirects' => 'Der zatten te veule deurverwiezingen in de URL.',
 'upload-unknown-size'       => 'Onbekende grootte',
@@ -3675,8 +3676,8 @@ Samen mit dit programma heur je n [{{SERVER}}{{SCRIPTPATH}}/COPYING kopie van de
 'filepath'         => 'Bestaandslokasie',
 'filepath-page'    => 'Bestaand:',
 'filepath-submit'  => 'Zeuken',
-'filepath-summary' => 'Disse spesiale pagina geef t hele pad veur n bestaand. 
-Aofbeeldingen wörden in resolusie helemaole weeregeven. 
+'filepath-summary' => 'Disse spesiale pagina geef t hele pad veur n bestaand.
+Aofbeeldingen wörden in resolusie helemaole weeregeven.
 Aandere bestaandstypen wörden gelieke in t mit t MIME-type verbunnen programma opend.',
 
 # Special:FileDuplicateSearch

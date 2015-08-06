@@ -448,8 +448,9 @@ Arsyeja e dhânë âsht "\'\'$2\'\'".',
 # Login and logout pages
 'logouttext'                 => "'''Jeni çlajmërue.'''
 
-Mundeni me vazhdue me shfrytëzue {{SITENAME}} në mënyrë anonime, apo mundeni [[Special:UserLogin|me u kyçë]] si përdoruesi i njêjtë apo si nji tjetër.
+Mundeni me vazhdue me shfrytëzue {{SITENAME}} në mënyrë anonime, apo mundeni $1 si përdoruesi i njêjtë apo si nji tjetër.
 Disa faqe mujnë me u paraqitë prap si t'kishit qenë t'kyçun, derisa ta pastroni memorizimin e shfletuesit.",
+'logouttext-link-text'       => 'me u kyçë',
 'welcomecreation'            => '== Mirësevini, $1! ==
 
 Llogaria juej âsht krijue.
