@@ -1,4 +1,14 @@
 <?php
+/**
+ * Class SpecialBrokenRenameFixController
+ *
+ * A special page with an interface to rerun local rename jobs.
+ *
+ * @author Adam Karmiński <adamk@wikia-inc.com>
+ * @copyright (c) 2015 Wikia, Inc.
+ * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
+ * @package BrokenRenameFix
+ */
 
 class SpecialBrokenRenameFixController extends WikiaSpecialPageController {
 
@@ -31,6 +41,9 @@ class SpecialBrokenRenameFixController extends WikiaSpecialPageController {
 		}
 	}
 
+	/**
+	 * Creates a prioritized task that reruns the local rename jobs.
+	 */
 	private function submit() {
 		if ( $this->validateForm() ) {
 			/**
@@ -50,6 +63,12 @@ class SpecialBrokenRenameFixController extends WikiaSpecialPageController {
 		}
 	}
 
+	/**
+	 * Validates the form's input and returns a status of the checks. It also adds notices
+	 * on each step if something goes wrong.
+	 *
+	 * @return bool
+	 */
 	private function validateForm() {
 		$status = true;
 
@@ -77,12 +96,18 @@ class SpecialBrokenRenameFixController extends WikiaSpecialPageController {
 		return $status;
 	}
 
+	/**
+	 * Sets values used to prefill form if it was submited with errors.
+	 */
 	private function prefillFormValues() {
 		$this->userIdValue = $this->userId;
 		$this->oldNameValue = $this->oldName;
 		$this->newNameValue = $this->newName;
 	}
 
+	/**
+	 * Sets edit token and action URL in the form.
+	 */
 	private function setFormData() {
 		$this->editToken = $this->wg->User->getEditToken();
 		$this->actionUrl = $this->specialPage->getTitle()->getLocalURL( [
@@ -90,6 +115,9 @@ class SpecialBrokenRenameFixController extends WikiaSpecialPageController {
 		] );
 	}
 
+	/**
+	 * Sets all labels and description messages.
+	 */
 	private function setMessages() {
 		$this->description = wfMessage( 'brf-desc' )->escaped();
 		$this->userIdLabel = wfMessage( 'brf-label-user-id' )->escaped();
@@ -98,6 +126,12 @@ class SpecialBrokenRenameFixController extends WikiaSpecialPageController {
 		$this->submitText = wfMessage( 'brf-label-submit' )->escaped();
 	}
 
+	/**
+	 * Adds a notice that are displayed above the form.
+	 *
+	 * @param $text
+	 * @param string $type 'error' or 'success'
+	 */
 	private function addNotice( $text, $type = 'error' ) {
 		$this->notices[] = Html::rawElement( 'p',
 			[
@@ -107,6 +141,12 @@ class SpecialBrokenRenameFixController extends WikiaSpecialPageController {
 		);
 	}
 
+	/**
+	 * Creates a link to logs that will be available after the rename rerun finishes.
+	 *
+	 * @return string An HTML <a> element
+	 * @throws MWException
+	 */
 	private function getLogsLink() {
 		$logTitleText = sprintf( '%s/%s to %s rename rerun log',
 			$this->newName, $this->oldName, $this->newName );

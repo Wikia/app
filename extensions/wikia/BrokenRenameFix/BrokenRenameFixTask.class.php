@@ -1,4 +1,14 @@
 <?php
+/**
+ * Class BrokenRenameFixTask
+ *
+ * A task that runs the RerunRenameUserLocal maintenance script that reruns local rename jobs.
+ *
+ * @author Adam Karmiński <adamk@wikia-inc.com>
+ * @copyright (c) 2015 Wikia, Inc.
+ * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
+ * @package BrokenRenameFix
+ */
 
 use \Wikia\Tasks\Tasks\BaseTask;
 
