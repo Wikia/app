@@ -314,6 +314,6 @@ class ArticleAsJson extends WikiaService {
 	 * @return bool true if size is smaller than ICON_MAX_SIZE
 	 */
 	private static function isIconSize( $sizeParam ) {
-		return isset( $sizeParam ) ? $sizeParam < self::ICON_MAX_SIZE : false;
+		return isset( $sizeParam ) ? $sizeParam <= self::ICON_MAX_SIZE : false;
 	}
 }
