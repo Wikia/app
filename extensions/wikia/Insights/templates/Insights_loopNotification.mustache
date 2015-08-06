@@ -1,7 +1,10 @@
-{{{notificationMessage}}}
+{{notificationMessage}}
 {{#fixItMessage}}
 	{{fixItMessage}}
 {{/fixItMessage}}
+{{#customButtonText}}
+	<button class="{{customButtonClass}}">{{customButtonText}}</button>
+{{/customButtonText}}
 {{#editPageLink}}
 	<a id="InsightsEditPageButton" href="{{editPageLink}}" data-type="back-to-edit">{{editPageText}}</a>
 {{/editPageLink}}
