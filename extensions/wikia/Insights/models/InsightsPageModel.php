@@ -2,7 +2,11 @@
 /**
  * Abstract class that defines necessary set of methods for Insights page models
  */
+use Wikia\Logger\Loggable;
+
 abstract class InsightsPageModel extends InsightsModel {
+	use Loggable;
+
 	const
 		INSIGHTS_MEMC_PREFIX = 'insights',
 		INSIGHTS_MEMC_VERSION = '1.2',
@@ -206,12 +210,16 @@ abstract class InsightsPageModel extends InsightsModel {
 	 */
 	public function getPageViewsData( array $articlesIds ) {
 		global $wgCityId;
+
+		$pvData = [];
+		if ( empty( $articlesIds ) ) {
+			return $pvData;
+		}
+
 		/**
 		 * Get pv for the last 4 Sundays
 		 */
 		$pvTimes = InsightsHelper::getLastFourTimeIds();
-
-		$pvData = [];
 
 		foreach ( $pvTimes as $timeId ) {
 			$pvData[] = DataMartService::getPageViewsForArticles( $articlesIds, $timeId, $wgCityId );
@@ -236,6 +244,10 @@ abstract class InsightsPageModel extends InsightsModel {
 				$params = $this->getUrlParams();
 
 				$title = Title::newFromText( $row->title, $row->namespace );
+				if ( $title === null ) {
+					$this->error( 'InsightsPageModel received reference to non existent page' );
+					continue;
+				}
 				$article['link'] = InsightsHelper::getTitleLink( $title, $params );
 
 				$lastRev = $title->getLatestRevID();
