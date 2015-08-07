@@ -3,7 +3,6 @@
 namespace Email\Controller;
 
 use Email\EmailController;
-use Email\Tracking\TrackingCategories;
 
 /**
  * Class ForgotPasswordController
@@ -13,8 +12,6 @@ use Email\Tracking\TrackingCategories;
  * @package Email\Controller
  */
 class ForgotPasswordController extends EmailController {
-
-	const TRACKING_CATEGORY = TrackingCategories::TEMPORARY_PASSWORD;
 
 	protected $tempPass;
 

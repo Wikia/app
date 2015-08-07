@@ -53,8 +53,9 @@ Overweeg voor vertalingen om [//translatewiki.net/wiki/Main_Page?setlang=nl tran
 # Login and logout pages
 'logouttext'                 => "'''Je bent nu afgemeld.'''
 
-Je kunt {{SITENAME}} nu anoniem gebruiken of weer [[Special:UserLogin|aanmelden]] als dezelfde of een andere gebruiker.
+Je kunt {{SITENAME}} nu anoniem gebruiken of weer $1 als dezelfde of een andere gebruiker.
 Mogelijk worden nog een aantal pagina's weergegeven alsof je aangemeld bent totdat je de cache van uw browser leegt.",
+'logouttext-link-text'       => 'aanmelden',
 'welcomecreation'            => '== Welkom, $1! ==
 Je gebruiker is geregistreerd.
 Vergeet niet je [[Special:Preferences|voorkeuren voor {{SITENAME}}]] aan te passen.',

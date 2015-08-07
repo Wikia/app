@@ -1065,8 +1065,17 @@ $config['ace_editor_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'#group_editpage_common_js',
+		'#group_ace_editor_plugins_js',
 		'//resources/wikia/libraries/Ace/wikia.ace.editor.js',
-		'//extensions/wikia/EditPageLayout/js/editor/AceEditor.js',
+		'//extensions/wikia/EditPageLayout/js/editor/AceEditor.js'
+	)
+);
+
+$config['ace_editor_plugins_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//extensions/wikia/EditPageLayout/js/editor/WikiaEditor.js',
+		'//extensions/wikia/EditPageLayout/js/plugins/Noticearea.js'
 	)
 );
 

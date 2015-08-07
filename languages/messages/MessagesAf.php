@@ -604,8 +604,9 @@ Die rede gegee is ''$2''.",
 # Login and logout pages
 'logouttext'                 => "'''U is nou uitgeteken'''
 
-U kan aanhou om {{SITENAME}} anoniem te gebruik; of u kan weer [[Special:UserLogin|inteken]] as dieselfde of 'n ander gebruiker.
+U kan aanhou om {{SITENAME}} anoniem te gebruik; of u kan weer $1 as dieselfde of 'n ander gebruiker.
 Dit is moontlik dat sommige bladsye nog sal aandui dat u aangeteken is totdat u u webblaaier se kas skoonmaak.",
+'logouttext-link-text'       => 'inteken',
 'welcomecreation'            => '== Welkom, $1! ==
 U rekening is geskep;
 moenie vergeet om u [[Special:Preferences|persoonlike voorkeure vir {{SITENAME}}]] te stel nie.',
