@@ -276,6 +276,26 @@ describe('AdContext', function () {
 		expect(getModule().getContext().slots.invisibleHighImpact).toBeTruthy();
 	});
 
+	it('enables refresh prefooters when country in instantGlobals.wgAdDriverRefreshPrefootersCountries', function () {
+		var adContext;
+
+		mocks.instantGlobals = {wgAdDriverRefreshPrefootersCountries: ['HH', 'XX', 'ZZ']};
+		adContext = getModule();
+		expect(adContext.getContext().opts.refreshPrefooters).toBeTruthy();
+
+		mocks.instantGlobals = {wgAdDriverHighImpactSlotCountries: ['YY']};
+		adContext = getModule();
+		expect(adContext.getContext().opts.refreshPrefooters).toBeFalsy();
+	});
+
+	it('enables refresh prefooters when url param refreshprefooters is set', function () {
+		spyOn(mocks.querystring, 'getVal').and.callFake(function (param) {
+			return param === 'refreshprefooters' ?  '1' : '0';
+		});
+
+		expect(getModule().getContext().opts.refreshPrefooters).toBeTruthy();
+	});
+	
 	it('query param is being passed to the adContext properly', function () {
 		spyOn(mocks.querystring, 'getVal');
 
