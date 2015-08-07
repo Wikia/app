@@ -140,6 +140,11 @@ class InsightsFlagsModel extends InsightsPageModel {
 			$this->setDefaultType();
 		}
 
+		/* If still empty (no flag types on wikia) return empty list */
+		if ( empty( $this->flagTypeId ) ) {
+			return [];
+		}
+
 		/* Get to list of pages marked with flags */
 		$flaggedPages = $app->sendRequest(
 			'FlaggedPagesApiController',
