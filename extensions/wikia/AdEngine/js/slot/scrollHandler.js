@@ -17,7 +17,9 @@ define('ext.wikia.adEngine.slot.scrollHandler', [
             win.addEventListener('scroll', function () {
                 log('Scroll event listener has been added', 'debug', logGroup);
                 for (var slotName in isRefreshed) {
-                    refreshSlot(slotName);
+                    if (isRefreshed.hasOwnProperty(slotName)) {
+                        refreshSlot(slotName);
+                    }
                 }
             });
         }
