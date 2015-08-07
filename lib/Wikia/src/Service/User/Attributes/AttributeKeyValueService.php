@@ -48,10 +48,9 @@ class AttributeKeyValueService implements AttributeService {
 			return $ret;
 		} catch ( \Exception $e ) {
 			$this->error( $e->getMessage(), [
+				'exceptionType' => get_class( $e ),
 				'user' => $userId
 			] );
-
-			throw $e;
 		}
 	}
 

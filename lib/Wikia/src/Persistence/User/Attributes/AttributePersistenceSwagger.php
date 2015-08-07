@@ -120,16 +120,16 @@ class AttributePersistenceSwagger implements AttributePersistence {
 	private function handleApiException( ApiException $e ) {
 		switch ( $e->getCode() ) {
 			case UnauthorizedException::CODE:
-				throw new UnauthorizedException();
+				throw new UnauthorizedException( $e->getResponseBody() );
 				break;
 			case NotFoundException::CODE:
-				throw new NotFoundException();
+				throw new NotFoundException( $e->getResponseBody() );
 				break;
 			case ForbiddenException::CODE:
-				throw new ForbiddenException( $e->getMessage() );
+				throw new ForbiddenException( $e->getResponseBody() );
 				break;
 			default:
-				throw new PersistenceException( $e->getMessage() );
+				throw new PersistenceException( $e->getResponseBody() );
 				break;
 		}
 	}
