@@ -13,7 +13,7 @@ define('ext.wikia.adEngine.slot.scrollHandler', [
         };
 
     function init() {
-        if (adContext.opts.enableScrollHandler) {
+        if (adContext.getContext().opts.enableScrollHandler) {
             win.addEventListener('scroll', function () {
                 log('Scroll event listener has been added', 'debug', logGroup);
                 for (var slotName in config) {

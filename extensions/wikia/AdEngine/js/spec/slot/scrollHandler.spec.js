@@ -9,9 +9,11 @@ describe('ext.wikia.adEngine.slot.scrollHandler', function () {
     var mocks = {
             log: noop,
             context: {
-                opts: {
-                    enableScrollHandler: function () {
-                        return true;
+                getContext: function () {
+                    return {
+                        opts: {
+                            enableScrollHandler: true
+                        }
                     }
                 }
             },
@@ -19,9 +21,7 @@ describe('ext.wikia.adEngine.slot.scrollHandler', function () {
                 innerHeight: 1000,
                 scrollY: 0,
                 adslots2: {
-                    push: function (slotName) {
-                        return slotName
-                    }
+                    push: noop
                 },
                 addEventListener: function (event, callback) {
                     if (event === 'scroll') {
