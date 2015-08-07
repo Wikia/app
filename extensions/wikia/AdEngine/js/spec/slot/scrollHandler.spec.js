@@ -8,6 +8,13 @@ describe('ext.wikia.adEngine.slot.scrollHandler', function () {
 
     var mocks = {
             log: noop,
+            context: {
+                opts: {
+                    enableScrollHandler: function () {
+                        return true;
+                    }
+                }
+            },
             win: {
                 innerHeight: 1000,
                 scrollY: 0,
@@ -38,6 +45,7 @@ describe('ext.wikia.adEngine.slot.scrollHandler', function () {
 
     function getModule() {
         return modules['ext.wikia.adEngine.slot.scrollHandler'](
+            mocks.context,
             mocks.log,
             mocks.doc,
             mocks.win

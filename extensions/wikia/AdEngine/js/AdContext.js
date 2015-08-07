@@ -90,9 +90,9 @@ define('ext.wikia.adEngine.adContext', [
 		context.slots.incontentPlayer = isProperCountry(instantGlobals.wgAdDriverIncontentPlayerSlotCountries) ||
 			isUrlParamSet('incontentplayer');
 
-		context.opts.refreshPrefooters = !!(
-			isProperCountry(instantGlobals.wgAdDriverRefreshPrefootersCountries) ||
-			parseInt(qs.getVal('refreshprefooters', '0'))
+		context.opts.enableScrollHandler = !!(
+			isProperCountry(instantGlobals.wgAdDriverScrollHandlerCountries) ||
+			parseInt(qs.getVal('scrollhandler', '0'))
 		);
 
 		// Krux integration
