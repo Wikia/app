@@ -25,8 +25,8 @@ class BrokenRenameFixTask extends BaseTask {
 			$this->info( "Running the {$rerunRenameScript}. Please wait for the results.
 			It may take a long time, depending on the amount of wikias the user edited at." );
 
-			$cmd = sprintf( 'SERVER_ID=177 php %s --userId=%d --oldName="%s" --newName="%s"',
-				$rerunRenameScript, $userId, $oldName, $newName );
+			$cmd = sprintf( 'SERVER_ID=177 php %s --userId=%d --oldName=%s --newName=%s',
+				$rerunRenameScript, intval( $userId ), wfEscapeShellArg( $oldName ), wfEscapeShellArg( $newName ) );
 
 			$output = wfShellExec( $cmd );
 
