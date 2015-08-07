@@ -2,6 +2,7 @@
 
 namespace Wikia\Service\User\Attributes;
 
+use Wikia\Domain\User\Attribute;
 use Wikia\Logger\Loggable;
 use Wikia\Persistence\User\Attributes\AttributePersistence;
 use Wikia\Util\WikiaProfiler;
@@ -27,7 +28,13 @@ class AttributeKeyValueService implements AttributeService {
 		$this->persistenceAdapter = $persistenceAdapter;
 	}
 
-	public function set( $userId, $attribute ) {
+	/**
+	 * @param int $userId
+	 * @param Attribute $attribute
+	 * @return true
+	 * @throws \Exception
+	 */
+	public function set( $userId, Attribute $attribute ) {
 		if ( empty( $attribute ) || $userId === 0 ) {
 			throw new \Exception( 'Invalid parameters, $attribute must not be empty and $userId must be > 0' );
 		}
@@ -59,14 +66,18 @@ class AttributeKeyValueService implements AttributeService {
 			$this->error( $e->getMessage(), [
 				'user' => $userId
 			] );
-
-			throw $e;
 		}
 
 		return $attributeArray;
 	}
 
-	public function delete( $userId, $attribute ) {
+	/**
+	 * @param int $userId
+	 * @param Attribute $attribute
+	 * @return bool|true
+	 * @throws \Exception
+	 */
+	public function delete( $userId, Attribute $attribute ) {
 		if ( empty( $attribute ) || $userId === 0 ) {
 			return false;
 		}

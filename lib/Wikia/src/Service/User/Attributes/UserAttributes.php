@@ -64,7 +64,7 @@ class UserAttributes {
 	 * @param string $userId
 	 * @param Attribute $attribute
 	 */
-	public function setAttribute( $userId, $attribute ) {
+	public function setAttribute( $userId, Attribute $attribute ) {
 		if ( $this->isAnonUser( $userId ) ) {
 			return;
 		}
@@ -91,11 +91,15 @@ class UserAttributes {
 	 * @param $userId
 	 * @param Attribute $attribute
 	 */
-	private function setAttributeInCache( $userId, $attribute ) {
+	private function setAttributeInCache( $userId, Attribute $attribute ) {
 		$this->attributes[$userId][$attribute->getName()] = $attribute->getValue();
 	}
 
-	public function deleteAttribute( $userId, $attribute ) {
+	/**
+	 * @param $userId
+	 * @param Attribute $attribute
+	 */
+	public function deleteAttribute( $userId, Attribute $attribute ) {
 		$this->attributeService->delete( $userId, $attribute );
 	}
 }

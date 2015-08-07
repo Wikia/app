@@ -17,7 +17,7 @@ interface AttributePersistence {
 	 * @throws PersistenceException
 	 * @throws UnauthorizedException
 	 */
-	public function saveAttribute( $userId, $attribute );
+	public function saveAttribute( $userId, Attribute $attribute );
 
 	/**
 	 * Get the user's attributes.
@@ -36,6 +36,6 @@ interface AttributePersistence {
 	 * @param Attribute $attribute
 	 * @return true success, exception otherwise
 	 */
-	public function deleteAttribute( $userId, $attribute );
+	public function deleteAttribute( $userId, Attribute $attribute );
 
 }

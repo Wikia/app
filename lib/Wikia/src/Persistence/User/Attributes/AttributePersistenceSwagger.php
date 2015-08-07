@@ -29,7 +29,7 @@ class AttributePersistenceSwagger implements AttributePersistence {
 	 * @throws PersistenceException
 	 * @throws UnauthorizedException
 	 */
-	public function saveAttribute( $userId, $attribute ) {
+	public function saveAttribute( $userId, Attribute $attribute ) {
 		try {
 			$this->getApi( $userId )->saveAttributeForUser( $userId, $attribute->getName(), $attribute->getValue() );
 			return true;
@@ -93,7 +93,7 @@ class AttributePersistenceSwagger implements AttributePersistence {
 	 * @throws PersistenceException
 	 * @throws UnauthorizedException
 	 */
-	public function deleteAttribute( $userId, $attribute ) {
+	public function deleteAttribute( $userId, Attribute $attribute ) {
 		try {
 			$this->getApi( $userId )->deleteAttributeForUser( $userId, $attribute->getName() );
 			return true;
