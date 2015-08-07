@@ -11,7 +11,7 @@ describe('ext.wikia.adEngine.slot.scrollHandler', function () {
             win: {
                 innerHeight: 1000,
                 scrollY: 0,
-                adslot2: {
+                adslots2: {
                     push: function (slotName) {
                         return slotName
                     }
@@ -26,7 +26,7 @@ describe('ext.wikia.adEngine.slot.scrollHandler', function () {
                 getElementById: function (slotName) {
                     return {
                         offsetTop: 3000,
-                        offsetParent: 0
+                        offsetParent: null
                     };
                 }
             }
@@ -45,21 +45,17 @@ describe('ext.wikia.adEngine.slot.scrollHandler', function () {
     }
 
     it('Prefooters should be refreshed', function () {
-        var slotNames = {}
-        spyOn(mocks.win.adslot2, 'push').and.returnValue(slotNames);
-
+        spyOn(mocks.win.adslots2, 'push');
         mocks.win.scrollY = 2000;
         getModule().init();
-        expect(slotNames).toBe('');
+        expect(mocks.win.adslots2.push).toHaveBeenCalled();
     });
 
     it('Prefooters should not be refreshed', function () {
-        var slotNames = {}
-        spyOn(mocks.win.adslot2, 'push').and.returnValue(slotNames);
-
+        spyOn(mocks.win.adslots2, 'push')
         mocks.win.scrollY = 1000;
         getModule().init();
-        expect(slotNames).toBe('');
+        expect(mocks.win.adslots2.push).not.toHaveBeenCalled();
     });
 
 });
