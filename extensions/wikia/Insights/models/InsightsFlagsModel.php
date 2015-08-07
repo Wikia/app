@@ -5,10 +5,7 @@
  * Note: Flags insights are are fetching flags only targeted at contributors
  */
 
-use Wikia\Logger\Loggable;
-
 class InsightsFlagsModel extends InsightsPageModel {
-	use Loggable;
 
 	const INSIGHT_TYPE = 'flags';
 
