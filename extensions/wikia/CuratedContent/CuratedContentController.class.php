@@ -448,7 +448,11 @@ class CuratedContentController extends WikiaController {
 			foreach ( $data as &$section ) {
 				unset( $section['node_type'] );
 				unset( $section['image_url'] );
-				$section['title'] = $section['label'];
+				if ( empty( $section['label'] ) && !empty( $section['featured'] ) ) {
+					$section['title'] = wfMessage( 'wikiacuratedcontent-featured-section-name' )->text();
+				} else {
+					$section['title'] = $section['label'];
+				}
 				unset( $section['label'] );
 
 				if ( !empty( $section['items'] ) && is_array( $section['items'] ) ) {
