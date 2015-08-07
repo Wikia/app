@@ -47,7 +47,7 @@ class RerunRenameUserLocal extends Maintenance {
 			$dir = __DIR__;
 			foreach ( $wikis as $wikiId ) {
 				$cmd = sprintf( 'SERVER_ID=%d /usr/bin/php %s/RenameUser_local.php --rename-user-id=%d --rename-old-name="%s" --rename-new-name="%s"',
-					$wikiId, $dir, $this->userId, $this->oldName, $this->newName );
+					intval( $wikiId ), $dir, intval( $this->userId ), wfEscapeShellArg( $this->oldName ), wfEscapeShellArg( $this->newName ) );
 
 				$this->addLog( "Running: {$cmd}" );
 
