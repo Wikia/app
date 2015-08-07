@@ -153,7 +153,8 @@ class ApiMediaSearch extends ApiBase {
 			$item = [
 				'title' => $title->getText(),
 				'type' => $this->getType( $title ),
-				'url' => $this->getUrl( $title )
+				'url' => $this->getUrl( $title ),
+				'id' => $title->getArticleID()
 			];
 			if ( $item['type'] === 'video' ) {
 				$item['duration'] = $this->getDuration( $title );
