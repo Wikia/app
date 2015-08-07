@@ -27,7 +27,11 @@ class FounderEmailsViewsDigestEvent extends FounderEmailsEvent {
 
 		$wgTitle = Title::newMainPage();
 		// Get list of founders with digest mode turned on
-		$cityList = $founderEmailObj->getFoundersWithPreference( 'founderemails-views-digest' );
+		if ( empty( $events ) ) {
+			$cityList = $founderEmailObj->getFoundersWithPreference( 'founderemails-complete-digest' );
+		} else {
+			$cityList = $events;
+		}
 		$wikiService = new WikiService();
 
 		// Gather daily page view stats for each wiki requesting views digest
