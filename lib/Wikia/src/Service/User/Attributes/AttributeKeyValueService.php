@@ -54,9 +54,15 @@ class AttributeKeyValueService implements AttributeService {
 		}
 	}
 
+	/**
+	 * @param int $userId
+	 * @return array
+	 */
 	public function get( $userId ) {
+		$attributeArray = [];
+
 		if ( $userId == 0 ) {
-			return [];
+			return $attributeArray;
 		}
 
 		try {

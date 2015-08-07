@@ -69,6 +69,10 @@ class UserAttributes {
 			return;
 		}
 
+		if ( $this->attributeValueIsNull( $attribute->getValue() ) ) {
+			return;
+		}
+
 		$this->loadAttributes( $userId );
 		$this->setAttributeInService( $userId, $attribute );
 		$this->setAttributeInCache( $userId, $attribute );
@@ -77,6 +81,10 @@ class UserAttributes {
 
 	private function isAnonUser( $userId ) {
 		return $userId === 0;
+	}
+
+	private function attributeValueIsNull( Attribute $attribute ) {
+		return is_null( $attribute->getValue() );
 	}
 
 	/**
