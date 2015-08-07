@@ -3,7 +3,7 @@
 class UnconvertedInfoboxesPageTest extends WikiaBaseTest {
 
 	public function setUp() {
-		$this->setupFile = __DIR__ . '/../Insights.setup.php';
+		$this->setupFile = __DIR__ . '/../InsightsUnconvertedInfoboxes.setup.php';
 		parent::setUp();
 	}
 
