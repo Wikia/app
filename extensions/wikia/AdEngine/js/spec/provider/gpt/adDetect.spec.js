@@ -43,6 +43,8 @@ describe('Method ext.wikia.adEngine.provider.gpt.adDetect.onAdLoad', function ()
 				expect(mocks.success.calls.count()).toBe(0, 'Success callback should not be called');
 				expect(mocks.hop.calls.count()).toBe(1, 'Hop callback should be called');
 			}
+
+			expect(gptHop.getShortSlotName('long/slot/name/'+slotName)).toBe(slotName, 'Last part of slot name');
 		});
 	}
 

@@ -36,7 +36,7 @@ define( 'USER_TOKEN_LENGTH', 32 );
  * Int Serialized record version.
  * @ingroup Constants
  */
-define( 'MW_USER_VERSION', 9 );
+define( 'MW_USER_VERSION', 10 );
 
 /**
  * String Some punctuation to prevent editing from broken text-mangling proxies.
@@ -70,6 +70,7 @@ class User {
 	 * Traits extending the class
 	 */
 	use PowerUserTrait;
+	use GlobalUserDataTrait;
 	# WIKIA CHANGE END
 
 	use Loggable;
@@ -1391,6 +1392,22 @@ class User {
 		wfRunHooks( 'UserGetDefaultOptions', array( &$defOpt ) );
 
 		return $defOpt;
+	}
+
+	public static function getDefaultPreferences() {
+		global $wgUserPreferenceWhiteList;
+		$defaultOptions = User::getDefaultOptions();
+		$defaultOptionNames = array_keys($defaultOptions);
+
+		return array_reduce(
+			$defaultOptionNames,
+			function($preferences, $option) use ($wgUserPreferenceWhiteList, $defaultOptions) {
+				if (in_array($option, $wgUserPreferenceWhiteList['literals'])) {
+					$preferences[$option] = $defaultOptions[$option];
+				}
+
+				return $preferences;
+			}, []);
 	}
 
 	/**
@@ -3075,7 +3092,7 @@ class User {
 	/**
 	 * Check if user is allowed to access a feature / make an action
 	 *
-	 * @internal param \String $varargs permissions to test
+	 * internal param \String $varargs permissions to test
 	 * @return Boolean: True if user is allowed to perform *any* of the given actions
 	 *
 	 * @return bool
@@ -3092,7 +3109,7 @@ class User {
 
 	/**
 	 *
-	 * @internal param $varargs string
+	 * internal param $varargs string
 	 * @return bool True if the user is allowed to perform *all* of the given actions
 	 */
 	public function isAllowedAll( /*...*/ ){

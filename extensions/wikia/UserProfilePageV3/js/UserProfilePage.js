@@ -242,8 +242,14 @@ var UserProfilePage = {
 		'use strict';
 
 		var $avatarUploadInput = modal.find('#UPPLightboxAvatar'),
+			$avatarUploadButton = modal.find('#UPPLightboxAvatarUpload'),
 			$avatarForm = modal.find('#usersAvatar'),
 			$sampleAvatars = modal.find('.sample-avatars');
+
+		// VOLDEV-83: Fix confusing file upload interface
+		$avatarUploadButton.on('click', function() {
+			$avatarUploadInput.click();
+		});
 
 		$avatarUploadInput.change(function () {
 			UserProfilePage.saveAvatarAIM($avatarForm);

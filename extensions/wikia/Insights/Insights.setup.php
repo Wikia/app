@@ -12,7 +12,7 @@
  * @author Kamil Koterba
  */
 
-$dir = dirname( __FILE__ ) . '/';
+$dir = __DIR__ . '/';
 
 $wgExtensionCredits['specialpage'][] = [
 	'name' => 'Insights',
@@ -33,17 +33,10 @@ $wgAutoloadClasses['InsightsController'] = $dir . 'InsightsController.class.php'
 $wgAutoloadClasses['InsightsHelper'] = $dir . 'InsightsHelper.php';
 
 /**
- * Custom QueryPage sub-classes
- */
-$wgAutoloadClasses['UnconvertedInfoboxesPage'] = $dir . 'specials/UnconvertedInfoboxesPage.class.php';
-
-/**
  * Special pages
  */
 $wgSpecialPages['Insights'] = 'InsightsController';
 $wgSpecialPageGroups['Insights'] = 'wikia';
-$wgSpecialPages['Nonportableinfoboxes'] = 'UnconvertedInfoboxesPage';
-$wgSpecialPageGroups['Nonportableinfoboxes'] = 'wikia';
 
 /**
  * Permissions

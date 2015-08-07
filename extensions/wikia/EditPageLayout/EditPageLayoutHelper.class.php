@@ -204,11 +204,8 @@ class EditPageLayoutHelper {
 	}
 
 	static function isTemplateDraft( $title ) {
-		global $wgEnableTemplateDraftExt, $wgEnableInsightsInfoboxes;
-
-		return !empty( $wgEnableTemplateDraftExt )
-				&& !empty( $wgEnableInsightsInfoboxes )
-				&& TemplateDraftHelper::isTitleDraft( $title );
+		global $wgEnableTemplateDraftExt;
+		return !empty( $wgEnableTemplateDraftExt ) && TemplateDraftHelper::isTitleDraft( $title );
 	}
 
 	/**
@@ -264,7 +261,7 @@ class EditPageLayoutHelper {
 		$namespace = $title->getNamespace();
 		$type = '';
 
-		$aceUrl = AssetsManager::getInstance()->getOneCommonURL( '/resources/Ace' );
+		$aceUrl = AssetsManager::getInstance()->getOneCommonURL( 'resources/Ace' );
 		$aceUrlParts = parse_url( $aceUrl );
 		$this->addJsVariable( 'aceScriptsPath', $aceUrlParts['path'] );
 
