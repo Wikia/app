@@ -32,8 +32,9 @@ class FlaggedPagesApiController extends FlagsApiBaseController {
 			$flaggedPages = $this->getFlaggedPagesRawData( $this->params['wiki_id'] );
 
 			$this->makeSuccessResponse( $flaggedPages );
+
 		} catch ( Exception $e ) {
-			$this->logResponseException( $e, $flaggedPages->getRequest() );
+			$this->logResponseException( $e, $this->getRequest() );
 			$this->response->setException( $e );
 		}
 	}
