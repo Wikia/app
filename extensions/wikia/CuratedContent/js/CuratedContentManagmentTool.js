@@ -85,16 +85,17 @@ require(['wikia.window', 'jquery', 'wikia.nirvana', 'wikia.tracker', 'JSMessages
 				 * Validate input elements
 				 *
 				 * @param elements
-				 * @param options array consists of ['checkEmpty', 'required', 'limit']
+				 * @param options array consists of ['checkEmpty', 'required', 'limit', 'duplicates']
 				 */
 				checkInputs = function (elements, options) {
 					var cachedVals = [],
-						optionCheckEmpty, optionRequired, optionLimit;
+						optionCheckEmpty, optionRequired, optionLimit, optionDuplicates;
 
 					if (Array.isArray(options)) {
 						optionCheckEmpty = options.indexOf('checkEmpty') !== -1;
 						optionRequired = options.indexOf('required') !== -1;
 						optionLimit = options.indexOf('limit') !== -1;
+						optionDuplicates = options.indexOf('duplicates') !== -1;
 					}
 
 					elements.each(function () {
@@ -111,17 +112,18 @@ require(['wikia.window', 'jquery', 'wikia.nirvana', 'wikia.tracker', 'JSMessages
 							$this.addError(tooLongLabelError);
 							return true;
 						}
-						// check if value already exists (in cachedVals variable)
-						if (cachedVals.indexOf(val) === -1) {
-							// not exists, add it to cachedVals and remove previous errors
-							cachedVals.push(val);
-
-							$this.removeError();
+						if (optionDuplicates) {
+							// check if value already exists (in cachedVals variable)
+							if (cachedVals.indexOf(val) === -1) {
+								// not exists, add it to cachedVals
+								cachedVals.push(val);
+							} else if (optionCheckEmpty || val !== '') {
+								// if it exists and it's not empty it's duplication
+								$this.addError(duplicateError);
+							}
 							return true;
-						} else if (optionCheckEmpty || val !== '') {
-							// if it exists and it's not empty it's duplication
-							$this.addError(duplicateError);
 						}
+						$this.removeError();
 					});
 				},
 				checkImages = function () {
@@ -140,8 +142,8 @@ require(['wikia.window', 'jquery', 'wikia.nirvana', 'wikia.tracker', 'JSMessages
 				checkForm = function () {
 					$save.removeClass();
 
-					checkInputs($ul.find('.section-input'), ['limit', 'checkEmpty']);
-					checkInputs($ul.find('.item-input'), ['required', 'checkEmpty']);
+					checkInputs($ul.find('.section-input'), ['limit', 'checkEmpty', 'duplicates']);
+					checkInputs($ul.find('.item-input'), ['required']);
 
 					// check images for non-featured sections and items
 					checkImages();
@@ -157,7 +159,7 @@ require(['wikia.window', 'jquery', 'wikia.nirvana', 'wikia.tracker', 'JSMessages
 						if ($items.length === 0 && !$t.hasClass('featured')) {
 							$t.find('.section-input').addError(emptySectionError);
 						} else {
-							checkInputs($items.find('.name'), ['limit']);
+							checkInputs($items.find('.name'), ['limit', 'duplicates']);
 						}
 					});
 
