@@ -41,7 +41,7 @@ $wgGroupPermissions['staff']['flags-administration'] = true;
 /**
  * Controllers
  */
-$wgAutoloadClasses['SpecialFlagsController'] = __DIR__ . '/controllers/SpecialFlagsController.class.php';
+$wgAutoloadClasses['SpecialFlagsController'] = __DIR__ . '/specials/SpecialFlagsController.class.php';
 $wgAutoloadClasses['Flags\FlagsApiBaseController'] = __DIR__ . '/controllers/FlagsApiBaseController.class.php';
 $wgAutoloadClasses['FlagsController'] = __DIR__ . '/controllers/FlagsController.class.php';
 $wgAutoloadClasses['FlagsApiController'] = __DIR__ . '/controllers/FlagsApiController.class.php';
