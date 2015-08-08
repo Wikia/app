@@ -11,6 +11,8 @@ class HAWelcomeTaskHookDispatcher {
 	use Loggable;
 	use IncludeMessagesTrait;
 
+	const WELCOME_SENT_FLAG = 'ha-welcome-msg-sent';
+
 	/** @type \Revision */
 	private $revisionObject = null;
 
@@ -24,13 +26,32 @@ class HAWelcomeTaskHookDispatcher {
 	private $currentUser = null;
 
 	protected function getLoggerContext() {
+		$userId = null;
+		$userEmail = null;
+		$userName = null;
+
+		if ( !empty( $this->currentUser ) ) {
+			$userId = $this->currentUser->getId();
+			$userEmail = $this->currentUser->getEmail();
+			$userName = $this->currentUser->getName();
+		}
+
 		return [
 			'task' => __CLASS__,
-			'hook' => 'onArticleSaveComplete'
-			];
+			'hook' => 'onArticleSaveComplete',
+			'wikiId' => $this->cityId,
+			'userId' => $userId,
+			'userEmail' => $userEmail,
+			'userName' => $userName,
+		];
 	}
 
 	public function dispatch() {
+		if ( $this->currentUser->getLocalFlag( self::WELCOME_SENT_FLAG ) ) {
+			return true;
+		}
+		$this->currentUser->setLocalFlag( self::WELCOME_SENT_FLAG, true );
+
 		// abort if the feature has been disabled by the admin of the wiki.
 		if ( $this->welcomeMessageDisabled() ) {
 			$this->info( "aborting the hook: HAWelcome extension is disabled via the 'welcome-user' message." );
@@ -157,7 +178,7 @@ class HAWelcomeTaskHookDispatcher {
 		return $this;
 	}
 
-	public function setMemcacheClient( \MemcachedPhpBagOStuff $memcacheClient ) {
+	public function setMemcacheClient( \BagOStuff $memcacheClient ) {
 		$this->memcacheClient = $memcacheClient;
 		return $this;
 	}
