@@ -2712,7 +2712,6 @@ class User {
 	 * @see getGlobalFlag for more documentation about flags
 	 */
 	public function getLocalFlag( $flag, $cityId = null, $sep = '-' ) {
-		$cityId = empty( $cityId ) ? F::app()->wg->CityId : $cityId;
 		$name = self::localToGlobalPropertyName( $flag, $cityId, $sep );
 		return $this->getGlobalFlag( $name );
 	}
@@ -2727,7 +2726,6 @@ class User {
 	 * @see getGlobalFlag for more documentation about flags
 	 */
 	public function setLocalFlag( $flag, $value, $cityId = null, $sep = '-' ) {
-		$cityId = empty( $cityId ) ? F::app()->wg->CityId : $cityId;
 		$name = self::localToGlobalPropertyName( $flag, $cityId, $sep );
 		$this->setGlobalFlag( $name, $value );
 	}
