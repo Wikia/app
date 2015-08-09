@@ -52,9 +52,9 @@ require_once( $dir . '/Tags/WikiFactoryTagsQuery.php' );
  * permissions
  */
 $wgAvailableRights[] = 'wikifactory';
-$wgGroupPermissions['util']['wikifactory'] = true;
+$wgGroupPermissions['util']['wikifactory'] = false;
 $wgAvailableRights[] = 'wikifactorymetrics';
-$wgGroupPermissions['staff']['wikifactorymetrics'] = true;
+$wgGroupPermissions['staff']['wikifactorymetrics'] = false;
 
 extAddSpecialPage( dirname(__FILE__) . '/SpecialWikiFactory_body.php', 'WikiFactory', 'WikiFactoryPage' );
 $wgSpecialPageGroups['WikiFactory'] = 'wikia';

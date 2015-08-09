@@ -36,7 +36,7 @@ $wgLogTypes[] = 'piggyback';
 
 //permissions
 $wgAvailableRights[] = 'piggyback';
-$wgGroupPermissions['util']['piggyback'] = true;
+$wgGroupPermissions['util']['piggyback'] = false;
 
 /*
  * event for logout (back to parent user)
