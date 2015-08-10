@@ -435,13 +435,13 @@ class CuratedContentController extends WikiaController {
 	}
 
 	public function setData( ) {
-		global $wgCityId, $wgEnableCuratedContentUnauthorizedSave;
+		global $wgCityId, $wgEnableCuratedContentUnauthorizedSave, $wgUser;
 		$status = false;
 
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 
 		//TODO Remove this check in CONCF-978
-		if ( !empty( $wgEnableCuratedContentUnauthorizedSave ) ) {
+		if ( $wgUser->isAllowed('curatedcontent') || !empty( $wgEnableCuratedContentUnauthorizedSave ) ) {
 			$data = $this->request->getArray( 'data', [] );
 
 			// strip excessive data used in mercury interface (added in self::getData method)
@@ -474,6 +474,9 @@ class CuratedContentController extends WikiaController {
 				}
 			}
 
+		} else {
+			$this->response->setCode(\Wikia\Service\ForbiddenException::CODE);
+			$this->response->setVal('message', 'No permissions to access curated content');
 		}
 
 		$this->response->setVal( 'status', $status );
@@ -482,8 +485,13 @@ class CuratedContentController extends WikiaController {
 	}
 
 	public function getData( ) {
-		global $wgWikiaCuratedContent;
+		global $wgWikiaCuratedContent, $wgUser;
 		$data = [];
+
+		if (!$wgUser->isAllowed('curatedcontent')) {
+			$this->response->setCode(\Wikia\Service\ForbiddenException::CODE);
+			$this->response->setVal('message', 'No permissions to access curated content');
+		}
 
 		if ( !empty( $wgWikiaCuratedContent ) && is_array( $wgWikiaCuratedContent )  ) {
 			foreach ( $wgWikiaCuratedContent as $section ) {
