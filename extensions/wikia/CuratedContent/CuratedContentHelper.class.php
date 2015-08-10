@@ -52,7 +52,7 @@ class CuratedContentHelper {
 			$itemOrSection['image_crop'] = $this->sanitizeCrop( $itemOrSection['image_crop'] );
 
 			// do not keep empty or unknown data
-			if ( !empty( $itemOrSection['image_crop'] ) ) {
+			if ( empty( $itemOrSection['image_crop'] ) ) {
 				unset( $itemOrSection['image_crop'] );
 			}
 		}
