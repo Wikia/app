@@ -1,11 +1,11 @@
 /*
- * VisualEditor user interface WikiaTemplateInsertDialog class.
+ * VisualEditor user interface WikiaInfoboxInsertDialog class.
  */
 
 /*global mw*/
 
 /**
- * Dialog for inserting templates.
+ * Dialog for inserting portable infobox templates.
  *
  * @class
  * @extends ve.ui.FragmentDialog
@@ -63,7 +63,8 @@ ve.ui.WikiaInfoboxInsertDialog.prototype.initialize = function () {
 
 	// Initialization
 	this.$content.addClass( 've-ui-wikiaInfoboxInsertDialog' );
-	// Properties
+
+	// Load select widget
 	this.loadInfoboxTemplates();
 	this.select = new OO.ui.SelectWidget();
 
@@ -91,12 +92,12 @@ ve.ui.WikiaInfoboxInsertDialog.prototype.onInfoboxTemplateSelect = function ( it
 			this.transclusionModel, itemData.data
 		);
 		this.transclusionModel.addPart( template )
-			.done( this.insertTemplate.bind( this ) );
+			.done( this.insertInfoboxTemplate.bind( this ) );
 
-		// Track
+		// TODO: Track
 		ve.track( 'wikia', {
 			action: ve.track.actions.ADD,
-			label: 'infobox-insert-from-plain-list'
+			label: 'infobox-template-insert-from-plain-list'
 		} );
 	}
 };
@@ -113,6 +114,7 @@ ve.ui.WikiaInfoboxInsertDialog.prototype.getInfoboxTemplates = function () {
 		deferred = $.Deferred();
 		$.ajax( {
 			dataType: 'json',
+			//TODO: change to non-mocky url
 			url: 'http://public.diana.wikia-dev.com/infobox_templates.php'
 		} )
 			.done( function ( data ) {
@@ -130,7 +132,7 @@ ve.ui.WikiaInfoboxInsertDialog.prototype.getInfoboxTemplates = function () {
 /**
  * Insert template
  */
-ve.ui.WikiaInfoboxInsertDialog.prototype.insertTemplate = function () {
+ve.ui.WikiaInfoboxInsertDialog.prototype.insertInfoboxTemplate = function () {
 	ve.init.target.constructor.static.apiRequest( {
 		action: 'visualeditor',
 		paction: 'parsefragment',
@@ -139,7 +141,7 @@ ve.ui.WikiaInfoboxInsertDialog.prototype.insertTemplate = function () {
 	}, { type: 'POST' } )
 		.done( this.onParseSuccess.bind( this ) )
 		.fail( function () {
-			// TODO: Implement some proper handling, at least tracking
+		// TODO: Implement some proper handling, at least tracking
 		}.bind( this ) );
 };
 
@@ -171,8 +173,7 @@ ve.ui.WikiaInfoboxInsertDialog.prototype.onParseSuccess = function ( response ) 
 	var deferred = $.Deferred();
 	ve.ce.MWTransclusionNode.prototype.onParseSuccess.call( this, deferred, response );
 	deferred.done( function ( contents ) {
-		var isInline = this.constructor.static.isHybridInline( contents ),
-			type = isInline ? 'mwTransclusionInline' : 'mwTransclusionBlock',
+		var type = 'mwTransclusionBlock',
 			linmod = [
 				{
 					type: type,
@@ -197,26 +198,6 @@ ve.ui.WikiaInfoboxInsertDialog.prototype.onParseSuccess = function ( response ) 
 			.setAutoSelect( true )
 			.insertContent( linmod );
 	}.bind( this ) );
-};
-
-/**
- * Determine if a hybrid element is inline and allowed to be inline in this context
- *
- * We generate block elements for block tags and inline elements for inline
- * tags.
- *
- * @param {HTMLElement[]} domElements DOM elements being converted
- * @returns {boolean} The element is inline
- */
-ve.ui.WikiaInfoboxInsertDialog.static.isHybridInline = function ( domElements ) {
-	var i, length, allTagsInline = true;
-	for ( i = 0, length = domElements.length; i < length; i++ ) {
-		if ( ve.isBlockElement( domElements[i] ) ) {
-			allTagsInline = false;
-			break;
-		}
-	}
-	return allTagsInline;
 };
 
 /**

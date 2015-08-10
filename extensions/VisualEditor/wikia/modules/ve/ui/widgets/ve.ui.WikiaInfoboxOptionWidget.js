@@ -14,34 +14,8 @@ ve.ui.WikiaInfoboxOptionWidget = function VeUiWikiaInfoboxOptionWidget( config )
 	// Parent constructor
 	ve.ui.WikiaInfoboxOptionWidget.super.call( this, config );
 
-	// Properties
-	this.$appears = this.$( '<div>' )
-		.addClass( 've-ui-wikiaInfoboxOptionWidget-appears' );
-	this.$gradient = this.$( '<div>' )
-		.addClass( 've-ui-wikiaInfoboxOptionWidget-gradient' );
-
-	// Initialization
-	if ( config.data.uses ) {
-		this.setAppears( config.data.uses );
-	}
-	this.$element
-		.addClass( 've-ui-wikiaInfoboxOptionWidget' )
-		.append( this.$appears );
-	this.$label
-		.append( this.$gradient );
+	//here we can add the wikia infobox specific classes
 };
 
 /* Inheritance */
-
 OO.inheritClass( ve.ui.WikiaInfoboxOptionWidget, OO.ui.DecoratedOptionWidget );
-
-/* Methods */
-
-/**
- * Set the value of the appears element
- *
- * @param {number} value Number of times the template appears
- */
-ve.ui.WikiaInfoboxOptionWidget.prototype.setAppears = function ( value ) {
-	this.$appears.text( ve.msg( 'wikia-visualeditor-wikiainfoboxoptionwidget-appears', value ) );
-};
