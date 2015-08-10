@@ -43,5 +43,5 @@ $specialPageAliases['zh-hans'] = [
 ];
 
 $specialPageAliases['zh-hant'] = [
-	'Flags' => [ '标识模版' ],
+	'Flags' => [ '標誌模板' ],
 ];
