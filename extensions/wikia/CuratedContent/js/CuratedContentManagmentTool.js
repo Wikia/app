@@ -85,14 +85,13 @@ require(['wikia.window', 'jquery', 'wikia.nirvana', 'wikia.tracker', 'JSMessages
 				 * Validate input elements
 				 *
 				 * @param elements
-				 * @param options array consists of ['checkEmpty', 'required', 'limit', 'duplicates']
+				 * @param options array consists of ['required', 'limit', 'duplicates']
 				 */
 				checkInputs = function (elements, options) {
 					var cachedVals = [],
-						optionCheckEmpty, optionRequired, optionLimit, optionDuplicates;
+						optionRequired, optionLimit, optionDuplicates;
 
 					if (Array.isArray(options)) {
-						optionCheckEmpty = options.indexOf('checkEmpty') !== -1;
 						optionRequired = options.indexOf('required') !== -1;
 						optionLimit = options.indexOf('limit') !== -1;
 						optionDuplicates = options.indexOf('duplicates') !== -1;
@@ -112,12 +111,12 @@ require(['wikia.window', 'jquery', 'wikia.nirvana', 'wikia.tracker', 'JSMessages
 							$this.addError(tooLongLabelError);
 							return true;
 						}
-						if (optionDuplicates) {
+						if (optionDuplicates && val !== '') {
 							// check if value already exists (in cachedVals variable)
 							if (cachedVals.indexOf(val) === -1) {
 								// not exists, add it to cachedVals
 								cachedVals.push(val);
-							} else if (optionCheckEmpty || val !== '') {
+							} else {
 								// if it exists and it's not empty it's duplication
 								$this.addError(duplicateError);
 							}
@@ -142,7 +141,7 @@ require(['wikia.window', 'jquery', 'wikia.nirvana', 'wikia.tracker', 'JSMessages
 				checkForm = function () {
 					$save.removeClass();
 
-					checkInputs($ul.find('.section-input'), ['limit', 'checkEmpty', 'duplicates']);
+					checkInputs($ul.find('.section-input'), ['limit', 'duplicates']);
 					checkInputs($ul.find('.item-input'), ['required']);
 
 					// check images for non-featured sections and items
@@ -285,7 +284,7 @@ require(['wikia.window', 'jquery', 'wikia.nirvana', 'wikia.tracker', 'JSMessages
 					imageId = $lia.find('.image').data('id') || 0,
 					featured = $lia.hasClass('featured') || false,
 					items = [],
-					result = {};
+					result;
 
 				$lia.nextUntil('.section').each(function () {
 					items.push(getItemData(this));
