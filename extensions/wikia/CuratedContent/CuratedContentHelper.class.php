@@ -68,7 +68,7 @@ class CuratedContentHelper {
 				$coords = [ ];
 
 				// iterate through all the coords
-				foreach ($coordNames as $coordName ) {
+				foreach ( $coordNames as $coordName ) {
 					$coords[$coordName] = intval( $originalCoords[$coordName], 10 );
 				}
 
