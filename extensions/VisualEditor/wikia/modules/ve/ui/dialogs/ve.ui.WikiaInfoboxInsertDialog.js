@@ -77,6 +77,11 @@ ve.ui.WikiaInfoboxInsertDialog.prototype.initialize = function () {
 		]
 	});
 
+	// Events
+	this.select.connect( this, {
+		select: 'onInfoboxTemplateSelect'
+	} );
+
 	this.$body.append( this.select.$element );
 };
 
@@ -86,26 +91,8 @@ ve.ui.WikiaInfoboxInsertDialog.prototype.initialize = function () {
  * @method
  * @param {Object|null} itemData Data of selected item, or null
  */
-ve.ui.WikiaInfoboxInsertDialog.prototype.onInfoboxSelect = function ( itemData ) {
-	var template;
-
-	if ( itemData ) {
-		this.$frame.startThrobbing();
-		this.transclusionModel = new ve.dm.WikiaTransclusionModel();
-		template = ve.dm.MWTemplateModel.newFromName(
-			this.transclusionModel, itemData.title
-		);
-		this.transclusionModel.addPart( template )
-			.done( this.insertTemplate.bind( this ) );
-
-		// Track
-		ve.track( 'wikia', {
-			action: ve.track.actions.ADD,
-			// Only suggestions data have "uses" information - so use it to determine where
-			// insertion is coming from
-			label: 'template-insert-from-' + ( 'uses' in itemData ? 'suggestions' : 'search' )
-		} );
-	}
+ve.ui.WikiaInfoboxInsertDialog.prototype.onInfoboxTemplateSelect = function ( itemData ) {
+	console.log("wybrałeś:", itemData);
 };
 
 /**
