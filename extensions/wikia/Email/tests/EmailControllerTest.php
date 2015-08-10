@@ -29,13 +29,13 @@ class EmailControllerTest extends WikiaBaseTest {
 	}
 
 	function testAssertCanAccessControllerSuccess() {
-		$token = 'a-token';
-		$request = new \WikiaRequest(array('token' => $token));
+		$secret = 'a-secret';
+		$request = new \WikiaRequest(array('secret' => $secret));
 		$controller = new \Email\Controller\ForgotPasswordController();
 		$controller->setRequest($request);
 
 		$wrapper = new GlobalStateWrapper( [
-			'wgTheSchwartzSecretToken' => $token
+			'wgTheSchwartzSecretToken' => $secret
 			] );
 
 		$result = $wrapper->wrap( function() use ( $controller ) {
@@ -51,8 +51,8 @@ class EmailControllerTest extends WikiaBaseTest {
 	 * @@expectedException \Email\Fatal
 	 */
 	function testAssertCanAccessControllerFail() {
-		$token = 'a-token';
-		$request = new \WikiaRequest(array('token' => $token));
+		$secret = 'a-secret';
+		$request = new \WikiaRequest(array('secret' => $secret));
 		$controller = new \Email\Controller\ForgotPasswordController();
 		$controller->setRequest($request);
 

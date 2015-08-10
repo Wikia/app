@@ -22,7 +22,7 @@ class ForgotPasswordController extends EmailController {
 	public function assertCanAccessController() {
 		global $wgTheSchwartzSecretToken;
 
-		$token = $this->getVal('token');
+		$token = $this->getVal('secret');
 		if( isset( $token ) && $token == $wgTheSchwartzSecretToken ) {
 			return;
 		}
