@@ -15,7 +15,7 @@ class CuratedContentValidator {
 	const ERR_NO_CATEGORY_IN_TAG = 'noCategoryInTag';
 
 	private $errors;
-	private $titles;
+	private $existingLabels;
 	private $hasOptionalSection;
 
 	public function __construct() {
@@ -24,7 +24,7 @@ class CuratedContentValidator {
 
 	public function reset() {
 		$this->errors = [ ];
-		$this->titles = [ ];
+		$this->existingLabels = [ ];
 		$this->hasOptionalSection = false;
 	}
 
@@ -44,16 +44,20 @@ class CuratedContentValidator {
 				}
 			}
 		}
-		// also check section for duplicate title
-		$this->validateDuplicatedTitles();
+		// also check for duplicate labels
+		$this->validateDuplicatedLabels();
 
 		return $this->errors;
 	}
 
-	public function validateDuplicatedTitles() {
-		foreach ( array_count_values( $this->titles ) as $title => $count ) {
+	public function validateDuplicatedLabels() {
+		foreach ( array_count_values( $this->existingLabels ) as $label => $count ) {
 			if ( $count > 1 ) {
-				$this->error( [ 'title' => $title ], self::ERR_DUPLICATED_LABEL );
+				while ( ( $title = array_search( $label, $this->existingLabels ) ) !== null)
+				{
+					$this->error( [ 'title' => $title ], self::ERR_DUPLICATED_LABEL );
+					unset( $this->existingLabels[$title] );
+				}
 			}
 		}
 	}
@@ -113,9 +117,8 @@ class CuratedContentValidator {
 		if ( empty( $section['featured'] ) && !empty( $section['title'] ) ) {
 			$this->validateImage( $section );
 		}
-
-		if ( strlen( $section['title'] ) ) {
-			$this->titles[] = $section['title'];
+		if ( !empty( $section['title'] ) ) {
+			$this->existingLabels[$section['title']] = $section['title'];
 		}
 	}
 
@@ -160,7 +163,7 @@ class CuratedContentValidator {
 			$this->error( $item, self::ERR_ARTICLE_NOT_FOUND );
 		}
 
-		$this->titles[] = $item['title'];
+		$this->existingLabels[$item['title']] = $item['label'];
 	}
 
 	private static function needsArticleId( $type ) {

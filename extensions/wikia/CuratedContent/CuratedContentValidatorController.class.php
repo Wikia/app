@@ -42,7 +42,7 @@ class CuratedContentValidatorController extends WikiaController {
 			$this->validator->validateItemsExist( $section );
 			$this->validator->validateItems( $section );
 			$this->validator->validateItemsTypes( $section );
-			$this->validator->validateDuplicatedTitles();
+			$this->validator->validateDuplicatedLabels();
 			$this->respond( $this->validator->getErrors() );
 		}
 	}
