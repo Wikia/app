@@ -51,13 +51,11 @@ class CuratedContentValidator {
 	}
 
 	public function validateDuplicatedLabels() {
-		foreach ( array_count_values( $this->existingLabels ) as $label => $count ) {
-			if ( $count > 1 ) {
-				// we found label that has >1 occurences, let's iterate though them
-				while ( ( $title = array_search( $label, $this->existingLabels ) ) !== null)
-				{
+		// we found label that has >1 occurences, let's iterate though them
+		foreach ( $this->existingLabels as $label => $titles ) {
+			if ( sizeof( $titles ) > 1 ) {
+				foreach ( $titles as $title ) {
 					$this->error( [ 'title' => $title ], self::ERR_DUPLICATED_LABEL );
-					unset( $this->existingLabels[$title] );
 				}
 			}
 		}
@@ -117,9 +115,7 @@ class CuratedContentValidator {
 
 		if ( empty( $section['featured'] ) && !empty( $section['title'] ) ) {
 			$this->validateImage( $section );
-		}
-		if ( !empty( $section['title'] ) ) {
-			$this->existingLabels[$section['title']] = $section['title'];
+			$this->addLabelForValidation( $section['title'], $section['title'] );
 		}
 	}
 
@@ -164,7 +160,15 @@ class CuratedContentValidator {
 			$this->error( $item, self::ERR_ARTICLE_NOT_FOUND );
 		}
 
-		$this->existingLabels[$item['title']] = $item['label'];
+		$this->addLabelForValidation( $item['label'], $item['title'] );
+	}
+
+	private function addLabelForValidation( $label, $title ) {
+		if ( array_key_exists( $label, $this->existingLabels ) ) {
+			$this->existingLabels[$label][] = $title;
+		}  else {
+			$this->existingLabels[$label] = [ $title ];
+		}
 	}
 
 	private static function needsArticleId( $type ) {

@@ -306,8 +306,8 @@ class CuratedContentValidatorTest extends WikiaBaseTest {
 								'type' => 'category',
 							],
 							[
-								'title' => 'Featured Title 03',
-								'label' => 'Featured Label 03',
+								'title' => 'Section Optional Title 03',
+								'label' => 'Section Optional Label 03',
 								'image_id' => '3',
 								'type' => 'category',
 							],
@@ -344,30 +344,42 @@ class CuratedContentValidatorTest extends WikiaBaseTest {
 				// Normal sections  - duplicatedLabel (1)
 				[
 					[
-						'title' => 'Section Duplicated Title',
+						'title' => 'Section Duplicated Label',
+						'reason' => 'duplicatedLabel',
+					],
+					[
+						'title' => 'Section Duplicated Label',
+						'reason' => 'duplicatedLabel',
+					],
+					[
+						'title' => 'Section 01 Title 01',
+						'reason' => 'duplicatedLabel',
+					],
+					[
+						'title' => 'Section 02 Title 01',
 						'reason' => 'duplicatedLabel',
 					],
 				],
 				[
 					[
-						'title' => 'Section Duplicated Title',
+						'title' => 'Section Duplicated Label',
 						'image_id' => '1',
 						'items' => [
 							[
 								'title' => 'Section 01 Title 01',
-								'label' => 'Section 01 Label 01',
+								'label' => 'Duplicated Label',
 								'image_id' => '1',
 								'type' => 'category',
 							],
 						],
 					],
 					[
-						'title' => 'Section Duplicated Title',
+						'title' => 'Section Duplicated Label',
 						'image_id' => '1',
 						'items' => [
 							[
 								'title' => 'Section 02 Title 01',
-								'label' => 'Section 02 Label 01',
+								'label' => 'Duplicated Label',
 								'image_id' => '1',
 								'type' => 'category',
 							],
