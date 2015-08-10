@@ -166,6 +166,17 @@ class PhalanxService extends Service {
 			if( ( $action == "match" || $action == "check") ) {
 				if( !is_null( $this->user ) ) {
 					$parameters[ 'user' ][] = $this->user->getName();
+				} else {
+					if ( ( new \Wikia\Util\Statistics\BernoulliTrial( 0.001 ) )->shouldSample() ) {
+						\Wikia\Logger\WikiaLogger::instance()->debug(
+							'PLATFORM-1387',
+							[
+								'exception'    => new Exception,
+								'block_params' => $parameters,
+								'user_name'    => F::app()->wg->User->getName()
+							]
+						);
+					}
 				}
 			}
 			if ($action == "match" && $this->limit != 1) {
