@@ -150,7 +150,7 @@ ve.ui.WikiaInfoboxInsertDialog.prototype.showResults = function ( data ) {
 		for ( i = 0; i < data.length; i++ ) {
 			items.push(
 				new ve.ui.WikiaInfoboxOptionWidget({
-					data: data[i].url,
+					data: data[i].title,
 					label:  data[i].label
 				})
 			);
