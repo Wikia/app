@@ -26,6 +26,7 @@ class InsightsWantedpagesModel extends InsightsQueryPageModel {
 
 				$title = Title::newFromText( $row->title, $row->namespace );
 				if ( $title === null ) {
+					$this->error( 'WantedPagesModel received reference to non existent page' );
 					continue;
 				}
 
