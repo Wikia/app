@@ -36,7 +36,7 @@ define( 'USER_TOKEN_LENGTH', 32 );
  * Int Serialized record version.
  * @ingroup Constants
  */
-define( 'MW_USER_VERSION', 10 );
+define( 'MW_USER_VERSION', 11 );
 
 /**
  * String Some punctuation to prevent editing from broken text-mangling proxies.
@@ -4908,6 +4908,13 @@ class User {
 		$preferencesFromService = [];
 		if ($wgPreferencesUseService) {
 			$preferencesFromService = array_keys($this->userPreferences()->getPreferences($this->getId()));
+			$insertRows = array_reduce($insertRows, function($rows, $current) use ($preferencesFromService) {
+				if (!in_array($current['up_property'], $preferencesFromService)) {
+					$rows[] = $current;
+				}
+
+				return $rows;
+			}, []);
 		}
 
 		$deletePrefs = array_diff($deletePrefs, $preferencesFromService);
