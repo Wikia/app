@@ -438,7 +438,6 @@ $wgAutoloadClasses['ProfilerDataScribeSink'] = "{$IP}/includes/profiler/sinks/Pr
 
 // Skin loading scripts
 $wgHooks['WikiaSkinTopScripts'][] = 'WikiFactoryHubHooks::onWikiaSkinTopScripts';
-//$wgHooks['WikiaSkinTopScripts'][] = 'Wikia\\Logger\\Hooks::onWikiaSkinTopScripts';
 
 // Set the WikiaLogger mode early in the setup process
 $wgHooks['Debug'][] = 'Wikia\\Logger\\Hooks::onDebug';
@@ -1273,12 +1272,6 @@ $wgAmazonMatchCountriesMobile = null;
  * "Utility" var, don't change it here.
  */
 $wgAdPageLevelCategoryLangs = [ 'en' ];
-
-/**
- * @name $wgEnableJavaScriptErrorLogging
- * Enables JavaScript error logging mechanism
- */
-$wgEnableJavaScriptErrorLogging = false;
 
 /**
  * @name $wgEnableAdEngineExt

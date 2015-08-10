@@ -43,13 +43,6 @@
 		trace_l3: 13 // trace level 3
 	};
 
-	function syslog(priority, message, context) {
-		// syslogReport defined in Oasis_Index
-		if (typeof syslogReport == 'function' && priority < SYSLOG_CUTOFF) {
-			syslogReport(priority, message, context);
-		}
-	}
-
 	function logger() {
 		var console = context.console,
 			//used for undefined checks
@@ -135,11 +128,6 @@
 			level = level.toLowerCase();
 			levelID = levels[level];
 			group = group || 'Unknown source';
-
-			if (report && levelID < SYSLOG_CUTOFF) {
-				printMessage(msg, 'syslog');
-				syslog(levelID, msg);
-			}
 
 			if (!enabled ||
 					(msg === undef) ||
