@@ -1,10 +1,11 @@
 /*global define*/
 define('ext.wikia.adEngine.slot.scrollHandler', [
     'ext.wikia.adEngine.adContext',
+    'ext.wikia.adEngine.adHelper',
     'wikia.log',
     'wikia.document',
     'wikia.window'
-], function (adContext, log, doc, win) {
+], function (adContext, adHelper, log, doc, win) {
 
     var logGroup = 'ext.wikia.adEngine.slot.scrollHandler',
         isRefreshed = {
@@ -14,14 +15,14 @@ define('ext.wikia.adEngine.slot.scrollHandler', [
 
     function init() {
         if (adContext.getContext().opts.enableScrollHandler) {
-            win.addEventListener('scroll', function () {
+            win.addEventListener('scroll', adHelper.throttle(function () {
                 log('Scroll event listener has been added', 'debug', logGroup);
                 for (var slotName in isRefreshed) {
                     if (isRefreshed.hasOwnProperty(slotName)) {
                         refreshSlot(slotName);
                     }
                 }
-            });
+            }));
         }
     }
 

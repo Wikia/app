@@ -7,37 +7,42 @@ describe('ext.wikia.adEngine.slot.scrollHandler', function () {
     }
 
     var mocks = {
-            log: noop,
-            context: {
-                getContext: function () {
-                    return {
-                        opts: {
-                            enableScrollHandler: true
-                        }
+        adHelper: {
+            throttle: function (func) {
+                return func;
+            }
+        },
+        log: noop,
+        context: {
+            getContext: function () {
+                return {
+                    opts: {
+                        enableScrollHandler: true
                     }
-                }
-            },
-            win: {
-                innerHeight: 1000,
-                scrollY: 0,
-                adslots2: {
-                    push: noop
-                },
-                addEventListener: function (event, callback) {
-                    if (event === 'scroll') {
-                        callback()
-                    }
-                },
-            },
-            doc: {
-                getElementById: function (slotName) {
-                    return {
-                        offsetTop: 3000,
-                        offsetParent: null
-                    };
                 }
             }
-        };
+        },
+        win: {
+            innerHeight: 1000,
+            scrollY: 0,
+            adslots2: {
+                push: noop
+            },
+            addEventListener: function (event, callback) {
+                if (event === 'scroll') {
+                    callback()
+                }
+            }
+        },
+        doc: {
+            getElementById: function (slotName) {
+                return {
+                    offsetTop: 3000,
+                    offsetParent: null
+                };
+            }
+        }
+    };
 
     beforeEach(function () {
         mocks.win.scrollY = 0;
@@ -46,6 +51,7 @@ describe('ext.wikia.adEngine.slot.scrollHandler', function () {
     function getModule() {
         return modules['ext.wikia.adEngine.slot.scrollHandler'](
             mocks.context,
+            mocks.adHelper,
             mocks.log,
             mocks.doc,
             mocks.win
