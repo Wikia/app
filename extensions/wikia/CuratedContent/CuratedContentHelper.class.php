@@ -44,7 +44,7 @@ class CuratedContentHelper {
 	}
 
 	private function processCrop( &$itemOrSection ) {
-		if ( array_key_exists('image_crop', $itemOrSection) ) {
+		if ( array_key_exists( 'image_crop', $itemOrSection ) ) {
 			if ( is_string( $itemOrSection['image_crop'] ) ) {
 				$itemOrSection['image_crop'] = $this->decodeCrop( $itemOrSection['image_crop'] );
 			}
@@ -60,20 +60,20 @@ class CuratedContentHelper {
 
 	private function sanitizeCrop( $cropData ) {
 		if ( is_array( $cropData ) ) {
-			$sanitizedCropData = [];
-			$coordNames = ['x', 'y', 'width', 'height'];
+			$sanitizedCropData = [ ];
+			$coordNames = [ 'x', 'y', 'width', 'height' ];
 
 			// iterate through all the coord arrays
 			foreach ( $cropData as $type => $originalCoords ) {
-				$coords = [];
+				$coords = [ ];
 
 				// iterate through all the coords
 				foreach ($coordNames as $coordName ) {
-					$sanitizedCoords[$coordName] = intval( $originalCoords[$coordName], 10 );
+					$coords[$coordName] = intval( $originalCoords[$coordName], 10 );
 				}
 
 				// only save when coords we've got are valid
-				if ($coords['x'] >= 0 && $coords['y'] >= 0 && $coords['width'] > 0 && $coords['height'] > 0) {
+				if ( $coords['x'] >= 0 && $coords['y'] >= 0 && $coords['width'] > 0 && $coords['height'] > 0 ) {
 					$sanitizedCropData[$type] = $coords;
 				}
 			}
