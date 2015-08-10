@@ -82,7 +82,23 @@ ve.ui.WikiaInfoboxInsertDialog.prototype.initialize = function () {
  * @param {Object|null} itemData Data of selected item, or null
  */
 ve.ui.WikiaInfoboxInsertDialog.prototype.onInfoboxTemplateSelect = function ( itemData ) {
-	console.log("wybrałeś:", itemData);
+	var template;
+
+	if ( itemData ) {
+		this.$frame.startThrobbing();
+		this.transclusionModel = new ve.dm.WikiaTransclusionModel();
+		template = ve.dm.MWTemplateModel.newFromName(
+			this.transclusionModel, itemData.data
+		);
+		this.transclusionModel.addPart( template )
+			.done( this.insertTemplate.bind( this ) );
+
+		// Track
+		ve.track( 'wikia', {
+			action: ve.track.actions.ADD,
+			label: 'infobox-insert-from-plain-list'
+		} );
+	}
 };
 
 ve.ui.WikiaInfoboxInsertDialog.prototype.loadInfoboxTemplates = function () {

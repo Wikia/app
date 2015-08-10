@@ -59,7 +59,7 @@ ve.ui.WindowAction.prototype.open = function ( name, data ) {
 
 	surface.getView().deactivate();
 
-	if ( windowType === 'toolbar' || name === 'wikiaSourceMode' || name === 'wikiaTemplateInsert' || name === 'transclusion' ) {
+	if ( windowType === 'toolbar' || name === 'wikiaSourceMode' || name === 'wikiaInfoboxInsert' || name === 'wikiaTemplateInsert' || name === 'transclusion' ) {
 		data = ve.extendObject( data, { surface: surface } );
 	}
 
