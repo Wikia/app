@@ -63,6 +63,21 @@ ve.ui.WikiaInfoboxInsertDialog.prototype.initialize = function () {
 
 	// Initialization
 	this.$content.addClass( 've-ui-wikiaInfoboxInsertDialog' );
+	// Properties
+	this.select = new OO.ui.SelectWidget({
+		items:  [
+			new ve.ui.WikiaInfoboxOptionWidget({
+				data: 'ziemniak',
+				label: "infobox template 1"
+			}),
+			new ve.ui.WikiaInfoboxOptionWidget({
+				data: 'slon',
+				label: "infobox template 2"
+			})
+		]
+	});
+
+	this.$body.append( this.select.$element );
 };
 
 /**

@@ -10,7 +10,7 @@
  * @param {Object} [config] Configuration options
  * @cfg {number} [size] Media thumbnail size
  */
-ve.ui.WikiaInfoboxOptionWidget = function VeUiWikiaMapOptionWidget( config ) {
+ve.ui.WikiaInfoboxOptionWidget = function VeUiWikiaInfoboxOptionWidget( config ) {
 	// Parent constructor
 	ve.ui.WikiaInfoboxOptionWidget.super.call( this, config );
 
