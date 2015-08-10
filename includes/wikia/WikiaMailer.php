@@ -185,15 +185,15 @@ class WikiaSendgridMailer {
 		$trace = debug_backtrace();
 
 		// Get rid the same 6 calls that always precede this
-		$removeCallsFrom = 6;
+		$removeCallsUpTo = 6;
 
 		// If for some reason we weren't called the way we expect, only cut off the call
 		// to this function and increase the amount of context we show
 		if ( !empty( $trace[4]['function'] ) && $trace[5]['function'] != 'wfRunHooks' ) {
-			$removeCallsFrom = 1;
+			$removeCallsUpTo = 1;
 			$num += 10;
 		}
-		$trace = array_slice( $trace, $removeCallsFrom );
+		$trace = array_slice( $trace, $removeCallsUpTo );
 
 		$formattedTrace = [];
 		$count = $num;
