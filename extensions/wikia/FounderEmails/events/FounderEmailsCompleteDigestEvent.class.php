@@ -18,7 +18,10 @@ class FounderEmailsCompleteDigestEvent extends FounderEmailsEvent {
 
 	/**
 	 * Called from maintenance script only.  Send Digest emails for any founders with that preference enabled
-	 * @param array $events
+	 *
+	 * @param array $events This array is empty most of the time.  If the --wikiId flag is given to
+	 *                      the maintenance script however, that single wiki ID will be given as the only
+	 *                      array element.
 	 */
 	public function process ( Array $events ) {
 		global $wgTitle;
