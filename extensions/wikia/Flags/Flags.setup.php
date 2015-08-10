@@ -92,6 +92,7 @@ $wgHooks['BeforeRefreshLinksForTitleUpdate'][] = 'Flags\Hooks::onBeforeRefreshLi
  */
 $wgExtensionMessagesFiles['Flags'] = __DIR__ . '/Flags.i18n.php';
 $wgExtensionMessagesFiles['FlagsMagic'] = __DIR__ . '/Flags.magic.i18n.php';
+$wgExtensionMessagesFiles['FlagsAliases'] = __DIR__ . '/specials/SpecialFlags.alias.i18n.php';
 
 JSMessages::registerPackage( 'FlagsCreateForm', [
 	'flags-special-create-*'
