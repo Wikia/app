@@ -308,6 +308,11 @@ class MercuryApiController extends WikiaController {
 			$wikiVariables['facebookAppId'] = $egFacebookAppId;
 		}
 
+		$wikiImages = (new WikiService())->getWikiImages( [$this->wg->CityId], 500 );
+		if ( is_array( $wikiImages ) ) {
+			$wikiVariables['image'] = $wikiImages[$this->wg->CityId];
+		}
+
 		$this->response->setVal( 'data', $wikiVariables );
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 
