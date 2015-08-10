@@ -115,6 +115,7 @@ class CuratedContentValidator {
 
 		if ( empty( $section['featured'] ) && !empty( $section['title'] ) ) {
 			$this->validateImage( $section );
+			// label for section is the same as it's title
 			$this->addLabelForValidation( $section['title'], $section['title'] );
 		}
 	}
@@ -164,11 +165,7 @@ class CuratedContentValidator {
 	}
 
 	private function addLabelForValidation( $label, $title ) {
-		if ( array_key_exists( $label, $this->existingLabels ) ) {
-			$this->existingLabels[$label][] = $title;
-		}  else {
-			$this->existingLabels[$label] = [ $title ];
-		}
+		$this->existingLabels[$label][] = $title;
 	}
 
 	private static function needsArticleId( $type ) {
