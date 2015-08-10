@@ -29,7 +29,9 @@ OO.inheritClass( ve.ui.WikiaInfoboxInsertDialog, ve.ui.FragmentDialog );
 
 ve.ui.WikiaInfoboxInsertDialog.static.name = 'wikiaInfoboxInsert';
 
-ve.ui.WikiaInfoboxInsertDialog.static.title = OO.ui.deferMsg( 'wikia-visualeditor-dialog-template-insert-title' );
+//TODO: introduce new translation
+ve.ui.WikiaInfoboxInsertDialog.static.title = OO.ui.deferMsg( 'wikia-visualeditor-dialog-infobox-insert-title' );
+ve.ui.WikiaInfoboxInsertDialog.static.title = 'Insert infobox :)';
 
 ve.ui.WikiaInfoboxInsertDialog.static.size = '800px';
 
@@ -59,20 +61,8 @@ ve.ui.WikiaInfoboxInsertDialog.prototype.initialize = function () {
 	// Parent method
 	ve.ui.WikiaInfoboxInsertDialog.super.prototype.initialize.call( this );
 
-	// Properties
-	this.search = new ve.ui.WikiaInfoboxSearchWidget( {
-		placeholder: ve.msg( 'wikia-visualeditor-dialog-wikiatemplateinsert-search' ),
-		clearable: true
-	} );
-
-	// Events
-	this.search.connect( this, {
-		select: 'onInfoboxSelect'
-	} );
-
 	// Initialization
 	this.$content.addClass( 've-ui-wikiaInfoboxInsertDialog' );
-	this.$body.append( this.search.$element );
 };
 
 /**
@@ -188,35 +178,13 @@ ve.ui.WikiaInfoboxInsertDialog.static.isHybridInline = function ( domElements ) 
 ve.ui.WikiaInfoboxInsertDialog.prototype.onTransact = function () {
 	ve.track( 'wikia', {
 		action: ve.track.actions.ADD,
-		label: 'dialog-template-insert'
+		label: 'dialog-infobox-insert'
 	} );
 	this.$frame.stopThrobbing();
 	this.close();
 	setTimeout( function () {
 		ve.ui.commandRegistry.getCommandForNode( this.surface.getView().getFocusedNode() ).execute( this.surface );
 	}.bind( this ), 0 );
-};
-
-/**
- * @inheritdoc
- */
-ve.ui.WikiaInfoboxInsertDialog.prototype.getTeardownProcess = function ( data ) {
-	return ve.ui.WikiaInfoboxInsertDialog.super.prototype.getTeardownProcess.call( this, data )
-		.next( function () {
-			// Reset the search widget
-			this.search.reset();
-		}, this );
-};
-
-/**
- * @inheritdoc
- */
-ve.ui.WikiaInfoboxInsertDialog.prototype.getReadyProcess = function ( data ) {
-	return ve.ui.WikiaInfoboxInsertDialog.super.prototype.getReadyProcess.call( this, data )
-		.next( function () {
-			// Focus cursor in search input
-			this.search.focusQuery();
-		}, this );
 };
 
 /* Registration */

@@ -149,6 +149,7 @@ $wgResourceModules += array(
 			've/ui/widgets/ve.ui.WikiaTemplateSearchWidget.js',
 			've/ui/widgets/ve.ui.WikiaTemplateOptionWidget.js',
 			've/ui/widgets/ve.ui.WikiaTemplateGetInfoWidget.js',
+			've/ui/widgets/ve.ui.WikiaInfoboxOptionWidget.js',
 			've/ui/pages/ve.ui.WikiaParameterPage.js',
 
 		),
@@ -217,6 +218,7 @@ $wgResourceModules += array(
 			'wikia-visualeditor-dialog-wikiatemplateinsert-search',
 			'wikia-visualeditor-wikiatemplateoptionwidget-appears',
 			'wikia-visualeditor-dialog-template-insert-title',
+			'wikia-visualeditor-wikiainfoboxoptionwidget-appears',
 			'wikia-visualeditor-dialog-preference-headline',
 			'wikia-visualeditor-dialog-preference-text',
 			'wikia-visualeditor-dialog-preference-link-help',
