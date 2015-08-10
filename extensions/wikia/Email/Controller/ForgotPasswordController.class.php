@@ -15,6 +15,21 @@ class ForgotPasswordController extends EmailController {
 
 	protected $tempPass;
 
+	/**
+	 * @see EmailController::assertCanAccessController
+	 * @throws \Email\Fatal
+	 */
+	public function assertCanAccessController() {
+		global $wgTheSchwartzSecretToken;
+
+		$token = $this->getVal('token');
+		if( isset( $token ) && $token == $wgTheSchwartzSecretToken ) {
+			return;
+		}
+
+		parent::assertCanAccessController();
+	}
+
 	public function initEmail() {
 		$userService = new \UserService();
 		$this->tempPass = $this->request->getVal( 'tempPass' );
