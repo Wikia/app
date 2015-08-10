@@ -53,6 +53,7 @@ class CuratedContentValidator {
 	public function validateDuplicatedLabels() {
 		foreach ( array_count_values( $this->existingLabels ) as $label => $count ) {
 			if ( $count > 1 ) {
+				// we found label that has >1 occurences, let's iterate though them
 				while ( ( $title = array_search( $label, $this->existingLabels ) ) !== null)
 				{
 					$this->error( [ 'title' => $title ], self::ERR_DUPLICATED_LABEL );
@@ -171,6 +172,6 @@ class CuratedContentValidator {
 	}
 
 	private static function isSupportedProvider( $provider ) {
-		return ($provider === 'youtube') || (startsWith( $provider, 'ooyala' ));
+		return ( $provider === 'youtube' ) || ( startsWith( $provider, 'ooyala' ) );
 	}
 }
