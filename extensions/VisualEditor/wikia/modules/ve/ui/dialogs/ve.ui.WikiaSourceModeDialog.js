@@ -125,7 +125,7 @@ ve.ui.WikiaSourceModeDialog.prototype.onSerialize = function ( wikitext ) {
 	this.sourceModeTextarea.setValue( wikitext );
 	this.sourceModeTextarea.$input.focus();
 	this.sourceModeTextarea.$input.scrollTop(0);
-	this.sourceModeTextarea.$input[0].setSelectionRange(0);
+	this.sourceModeTextarea.$input[0].setSelectionRange(0, 0);
 	this.$content.stopThrobbing();
 
 	ve.track( 'wikia', {
