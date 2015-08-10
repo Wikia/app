@@ -64,18 +64,8 @@ ve.ui.WikiaInfoboxInsertDialog.prototype.initialize = function () {
 	// Initialization
 	this.$content.addClass( 've-ui-wikiaInfoboxInsertDialog' );
 	// Properties
-	this.select = new OO.ui.SelectWidget({
-		items:  [
-			new ve.ui.WikiaInfoboxOptionWidget({
-				data: 'ziemniak',
-				label: "infobox template 1"
-			}),
-			new ve.ui.WikiaInfoboxOptionWidget({
-				data: 'slon',
-				label: "infobox template 2"
-			})
-		]
-	});
+	this.loadInfoboxTemplates();
+	this.select = new OO.ui.SelectWidget();
 
 	// Events
 	this.select.connect( this, {
@@ -95,6 +85,32 @@ ve.ui.WikiaInfoboxInsertDialog.prototype.onInfoboxTemplateSelect = function ( it
 	console.log("wybrałeś:", itemData);
 };
 
+ve.ui.WikiaInfoboxInsertDialog.prototype.loadInfoboxTemplates = function () {
+	this.getInfoboxTemplates().done(
+		this.showResults.bind( this )
+	);
+};
+
+ve.ui.WikiaInfoboxInsertDialog.prototype.getInfoboxTemplates = function () {
+	var deferred;
+	if ( !this.gettingTemplateNames ) {
+		deferred = $.Deferred();
+		$.ajax( {
+			dataType: 'json',
+			url: 'http://public.diana.wikia-dev.com/infobox_templates.php'
+		} )
+			.done( function ( data ) {
+				deferred.resolve( data.items );
+			} )
+			.fail( function () {
+				// TODO: Add better error handling.
+				deferred.resolve( [] );
+			} );
+		this.gettingTemplateNames = deferred.promise();
+	}
+	return this.gettingTemplateNames;
+};
+
 /**
  * Insert template
  */
@@ -109,6 +125,22 @@ ve.ui.WikiaInfoboxInsertDialog.prototype.insertTemplate = function () {
 		.fail( function () {
 			// TODO: Implement some proper handling, at least tracking
 		}.bind( this ) );
+};
+
+ve.ui.WikiaInfoboxInsertDialog.prototype.showResults = function ( data ) {
+	var items = [], i;
+
+	if ( data.length > 0 ) {
+		for ( i = 0; i < data.length; i++ ) {
+			items.push(
+				new ve.ui.WikiaInfoboxOptionWidget({
+					data: data[i].url,
+					label:  data[i].label
+				})
+			);
+		}
+		this.select.addItems( items );
+	}
 };
 
 /**
