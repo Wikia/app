@@ -2264,12 +2264,10 @@ class Wikia {
 
 		// In this NS, editinterface applies only to white listed pages and staff users
 		if (in_array($title->getDBKey(), $wgEditInterfaceWhitelist) || in_array('staff', $wgUser->getGroups())) {
-			$result = $wgUser->isAllowed('editinterface');
-			return $result;
-		} else {
-			$result = false;
-			return false;
+			return $wgUser->isAllowed('editinterface');
 		}
+		
+		return false;
 	}
 
 	/**
