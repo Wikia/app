@@ -47,21 +47,17 @@ class HAWelcomeTaskHookDispatcher {
 	}
 
 	public function dispatch() {
-		if ( $this->currentUser->getLocalFlag( self::WELCOME_SENT_FLAG ) ) {
-			return true;
-		}
-		$this->currentUser->setLocalFlag( self::WELCOME_SENT_FLAG, true );
-
 		// abort if the feature has been disabled by the admin of the wiki.
 		if ( $this->welcomeMessageDisabled() ) {
 			$this->info( "aborting the hook: HAWelcome extension is disabled via the 'welcome-user' message." );
 			return true;
 		}
 
-		if ( $this->hasContributorBeenWelcomedRecently() ) {
-			$this->info( "aborting the welcome hook: user has been welcomed recently" );
+		if ( $this->currentUserHasBeenWelcomed() ) {
+			$this->info( "aborting the welcome hook: user has already been welcomed" );
 			return true;
 		}
+		$this->markCurrentUserAsWelcomed();
 
 		if ( $this->revisionObject->getRawUser() ) {
 			// we are working with an edit from a registered contributor
@@ -89,8 +85,12 @@ class HAWelcomeTaskHookDispatcher {
 		return true;
 	}
 
-	protected function hasContributorBeenWelcomedRecently() {
-		return $this->getMemcacheClient()->get( wfMemcKey( 'HAWelcome-isPosted', $this->revisionObject->getRawUserText() ) );
+	protected function currentUserHasBeenWelcomed() {
+		return $this->currentUser->getLocalFlag( self::WELCOME_SENT_FLAG );
+	}
+
+	protected function markCurrentUserAsWelcomed() {
+		$this->currentUser->setLocalFlag( self::WELCOME_SENT_FLAG, true );
 	}
 
 	protected function currentUserIsWelcomeExempt() {
@@ -117,12 +117,12 @@ class HAWelcomeTaskHookDispatcher {
 		$sender = $this->getWelcomeUserFromMessages();
 		if ( in_array( $sender, array( '@latest', '@sysop' ) ) ) {
 			// ... and take the opportunity to update admin activity variable.
-			$groupsArray =  $this->currentUser->getEffectiveGroups();
+			$groupsArray = $this->currentUser->getEffectiveGroups();
 
-			$currentUserIsInSysop  = in_array( 'sysop', $groupsArray );
+			$currentUserIsInSysop = in_array( 'sysop', $groupsArray );
 			$currentUserIsNotInBot = !in_array( 'bot' , $groupsArray );
 			if ( $currentUserIsInSysop && $currentUserIsNotInBot ) {
-				$this->memcacheClient->set( wfMemcKey( 'last-sysop-id' ),  $this->currentUser->getId() );
+				$this->memcacheClient->set( wfMemcKey( 'last-sysop-id' ), $this->currentUser->getId() );
 			}
 		}
 	}
