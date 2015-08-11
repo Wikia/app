@@ -21,7 +21,7 @@ function renderVerbatim( $input ) {
 	global $wgEditInterfaceWhitelist;
 
 	// Begin wikia change
-	if (is_array($wgEditInterfaceWhitelist) and in_array(trim($input), $wgEditInterfaceWhitelist)) {
+	if (!empty($wgEditInterfaceWhitelist) and in_array(ucfirst(trim($input)), $wgEditInterfaceWhitelist)) {
 		// Do not allow CSS transclusion into Verbatim tags
 		return "";
 	}
