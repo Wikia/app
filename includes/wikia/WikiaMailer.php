@@ -13,8 +13,7 @@ use Wikia\Logger\WikiaLogger;
 class WikiaMailer extends UserMailer {
 
 	static $drivers = array(
-		'wgEnablePostfixEmail' => 'smtp',
-		'wgEnableWikiaDBEmail' => 'wikiadb'
+		'wgEnablePostfixEmail' => 'smtp'
 	);
 
 	static private function getDriver() {
@@ -53,7 +52,7 @@ class WikiaMailer extends UserMailer {
 class WikiaSendgridMailer {
 
     // Default mail backend
-	static public $factory = "wikiadb";
+	static public $factory = "smtp";
 
 	static public function send ( $headers, $to, $from, $subject, $body, $priority = 0, $attachments = null, $sourceType = 'mediawiki' ) {
 		global $wgEnotifMaxRecips, $wgSMTP;

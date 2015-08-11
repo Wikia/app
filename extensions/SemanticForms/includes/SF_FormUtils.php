@@ -100,7 +100,7 @@ class SFFormUtils {
 
 		$sfgTabIndex++;
 		if ( !$form_submitted ) {
-			$is_checked = $wgUser->getOption( 'minordefault' );
+			$is_checked = $wgUser->getGlobalPreference( 'minordefault' );
 		}
 
 		if ( $label == null ) {

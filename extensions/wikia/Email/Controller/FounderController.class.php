@@ -8,7 +8,7 @@ use Email\ControllerException;
 use Email\EmailController;
 use Wikia\Logger;
 
-abstract class FounderEditController extends EmailController {
+class FounderEditController extends EmailController {
 
 	/** @var \Title */
 	protected $pageTitle;

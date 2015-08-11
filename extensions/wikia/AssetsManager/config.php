@@ -89,6 +89,7 @@ $config['adengine2_desktop_js'] = array(
 		'//extensions/wikia/AdEngine/js/provider/gpt/adSizeConverter.js',
 		'//extensions/wikia/AdEngine/js/provider/gpt/googleTag.js',
 		'//extensions/wikia/AdEngine/js/provider/gpt/helper.js',
+		'//extensions/wikia/AdEngine/js/provider/gpt/sourcePointTag.js',
 		'//extensions/wikia/AdEngine/js/provider/gpt/sraHelper.js',
 		'//extensions/wikia/AdEngine/js/provider/openX.js',
 		'//extensions/wikia/AdEngine/js/provider/openX.targeting.js',
@@ -2449,7 +2450,10 @@ $config['portable_infobox_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => ['oasis'],
 	'assets' => [
-		'//extensions/wikia/PortableInfobox/styles/PortableInfobox.scss'
+		'//extensions/wikia/PortableInfobox/styles/PortableInfobox.scss',
+		/* @TODO DAT-3079 Remove PortableInfobox_beforeSimplification.scss
+		 * once all articles will be purged after release; @see DAT-3009 purging ticket */
+		'//extensions/wikia/PortableInfobox/styles/PortableInfobox_beforeSimplification.scss'
 	]
 ];
 
@@ -2458,7 +2462,10 @@ $config['portable_infobox_monobook_scss'] = [
 	'skin' => ['monobook'],
 	'assets' => [
 		'#group_portable_infobox_scss',
-		'//extensions/wikia/PortableInfobox/styles/PortableInfoboxMonobook.scss'
+		'//extensions/wikia/PortableInfobox/styles/PortableInfoboxMonobook.scss',
+		/* @TODO DAT-3079 Remove PortableInfoboxMonobook_beforeSimplification.scss
+		 * once all articles will be purged after release; @see DAT-3009 purging ticket */
+		'//extensions/wikia/PortableInfobox/styles/PortableInfoboxMonobook_beforeSimplification.scss'
 	]
 ];
 
