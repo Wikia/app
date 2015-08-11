@@ -101,6 +101,7 @@ $wgResourceModules += array(
 			've/dm/ve.dm.WikiaMapNode.js',
 			've/dm/ve.dm.WikiaTransclusionModel.js',
 			've/dm/ve.dm.WikiaTemplateModel.js',
+			've/dm/ve.dm.WikiaInfoboxTransclusionBlockNode.js',
 
 			// ce
 			've/ce/ve.ce.WikiaVideoNode.js',
@@ -115,6 +116,7 @@ $wgResourceModules += array(
 			've/ce/ve.ce.WikiaGalleryItemNode.js',
 			've/ce/ve.ce.WikiaGalleryNode.js',
 			've/ce/ve.ce.WikiaMapNode.js',
+			've/ce/ve.ce.WikiaInfoboxTransclusionBlockNode.js',
 
 			// ui
 			've/ui/ve.ui.WikiaCommandRegistry.js',

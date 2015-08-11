@@ -166,7 +166,7 @@ ve.ui.WikiaInfoboxInsertDialog.prototype.showResults = function ( data ) {
  * @param {Object} response Response data
  */
 ve.ui.WikiaInfoboxInsertDialog.prototype.onParseSuccess = function () {
-	var type = 'mwTransclusionBlock',
+	var type = 'wikiaInfoboxTransclusionBlock',
 		linmod = [
 			{
 				type: type,
