@@ -5,7 +5,7 @@
  * A class specific to a subpage with a list of pages
  * without categories.
  */
-class InsightsUnconvertedInfoboxesModel extends InsightsQuerypageModel {
+class InsightsUnconvertedInfoboxesModel extends InsightsQueryPageModel {
 	const INSIGHT_TYPE = 'nonportableinfoboxes';
 
 	public $loopNotificationConfig = [

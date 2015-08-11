@@ -29,7 +29,6 @@ class AdEngine2ContextService {
 			}
 
 			$langCode = $title->getPageLanguage()->getCode();
-
 			return [
 				'opts' => $this->filterOutEmptyItems( [
 					'adsInContent' => $wg->EnableAdsInContent,
@@ -44,6 +43,7 @@ class AdEngine2ContextService {
 				'targeting' => $this->filterOutEmptyItems( [
 					'enableKruxTargeting' => $wg->EnableKruxTargeting,
 					'enablePageCategories' => array_search( $langCode, $wg->AdPageLevelCategoryLangs ) !== false,
+					'mappedVerticalName' => $this->getMappedVerticalName( $wg->CityId ), //wikiCategory replacement for AdLogicPageParams.js::getPageLevelParams
 					'pageArticleId' => $title->getArticleId(),
 					'pageIsArticle' => !!$title->getArticleId(),
 					'pageIsHub' => $wikiaPageType->isWikiaHub(),
@@ -75,6 +75,27 @@ class AdEngine2ContextService {
 				'forcedProvider' => $wg->AdDriverForcedProvider
 			];
 		} );
+	}
+
+	private function getMappedVerticalName( $cityId ) {
+		$wikiVertical = WikiFactoryHub::getInstance()->getWikiVertical( $cityId );
+		if ( !empty( $wikiVertical['short'] ) ) {
+			$mapping = [
+				'other' => 'life',
+				'tv' => 'ent',
+				'games' => 'gaming',
+				'books' => 'ent',
+				'comics' => 'ent',
+				'lifestyle' => 'life',
+				'music' => 'ent',
+				'movies' => 'ent'
+			];
+			$newVerticalName = strtolower( $wikiVertical['short'] );
+			if ( !empty( $mapping[$newVerticalName] ) ) {
+				return $mapping[$newVerticalName];
+			}
+		}
+		return 'error';
 	}
 
 	private function filterOutEmptyItems( $input ) {
