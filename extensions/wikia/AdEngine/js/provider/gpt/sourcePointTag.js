@@ -18,7 +18,7 @@ define('ext.wikia.adEngine.provider.gpt.sourcePointTag', [
 		GoogleTag.call(this);
 	}
 
-	SourcePointTag.prototype = Object.create(GoogleTag.prototype);
+	SourcePointTag.prototype = new GoogleTag();
 
 	SourcePointTag.prototype.init = function () {
 		log('init', 'debug', logGroup);
