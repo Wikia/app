@@ -18,5 +18,14 @@ function wfVerbatimExtension( $parser ) {
 
 // The callback function for converting the input text to HTML output
 function renderVerbatim( $input ) {
+	global $wgEditInterfaceWhitelist;
+
+	// Begin wikia change
+	if (is_array($wgEditInterfaceWhitelist) and in_array(trim($input), $wgEditInterfaceWhitelist)) {
+		// Do not allow CSS transclusion into Verbatim tags
+		return "";
+	}
+	// End wikia change
+
     return str_replace("\n",'',wfMsg(trim($input)));
 }
