@@ -39,11 +39,9 @@ class CuratedContentValidator {
 				$this->validateItems( $section );
 			} else {
 				$this->validateSection( $section );
-				if ( !empty( $section['title'] ) ) {
-					$this->validateItemsExist( $section );
-					$this->validateItems( $section );
-					$this->validateItemsTypes( $section );
-				}
+				$this->validateItemsExist( $section );
+				$this->validateItems( $section );
+				$this->validateItemsTypes( $section );
 			}
 		}
 		// also check for duplicate labels
@@ -96,13 +94,16 @@ class CuratedContentValidator {
 	}
 
 	public function validateItemsExist( $section ) {
-		if ( empty( $section['items'] ) || !is_array( $section['items'] ) ) {
+		// only non-optional, non-featured section has mandatory items
+		if ( ( empty( $section['featured'] ) && !empty( $section['title'] ) ) &&
+			( empty( $section['items'] ) || !is_array( $section['items'] ) ) )
+			{
 			$this->error( $section['title'], 'section', self::ERR_ITEMS_MISSING );
 		}
 	}
 
 	public function validateItems( $section ) {
-		if (!empty($section['items']) && is_array($section['items'])) {
+		if ( !empty($section['items'] ) && is_array( $section['items'] ) ) {
 			foreach ($section['items'] as $item) {
 				$this->validateItem( $item );
 			}
@@ -131,7 +132,7 @@ class CuratedContentValidator {
 	}
 
 	public function validateItemType( $item ) {
-		if ( !in_array( $item['type'], [CuratedContentHelper::STR_CATEGORY, CuratedContentHelper::STR_EMPTY_CATEGORY] ) ) {
+		if ( !in_array( $item['type'], [ CuratedContentHelper::STR_CATEGORY ] ) ) {
 			$this->error( $item['label'], 'item', self::ERR_NO_CATEGORY_IN_TAG );
 		}
 	}
@@ -175,7 +176,7 @@ class CuratedContentValidator {
 	}
 
 	private static function needsArticleId( $type ) {
-		return !in_array( $type, [CuratedContentHelper::STR_CATEGORY, CuratedContentHelper::STR_EMPTY_CATEGORY] );
+		return !in_array( $type, [CuratedContentHelper::STR_CATEGORY ] );
 	}
 
 	private static function isSupportedProvider( $provider ) {

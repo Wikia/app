@@ -513,6 +513,11 @@ class CuratedContentValidatorTest extends WikiaBaseTest {
 						'type' => 'item',
 						'reason' => 'noCategoryInTag',
 					],
+					[
+						'target' => 'Section With No Category Label 02',
+						'type' => 'item',
+						'reason' => 'noCategoryInTag',
+					],
 				],
 				[
 					[
@@ -530,7 +535,7 @@ class CuratedContentValidatorTest extends WikiaBaseTest {
 						],
 					],
 					[
-						'title' => 'Section With No Category',
+						'title' => 'Section With No Category 01',
 						'image_id' => '1',
 						'items' => [
 							[
@@ -542,17 +547,16 @@ class CuratedContentValidatorTest extends WikiaBaseTest {
 							],
 						],
 					],
-					// this is completly valid
 					[
-						'title' => 'Section With Empty Category',
+						'title' => 'Section With No Category 02',
 						'image_id' => '1',
 						'items' => [
 							[
-								'title' => 'Section With Empty Category Title 01',
-								'label' => 'Section With Empty Category Label 01',
+								'title' => 'Section With No Category Title 02',
+								'label' => 'Section With No Category Label 02',
 								'image_id' => '1',
 								'article_id' => '1',
-								'type' => 'emptyCategory',
+								'type' => 'article',
 							],
 						],
 					],
