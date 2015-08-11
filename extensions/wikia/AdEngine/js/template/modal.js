@@ -2,12 +2,13 @@
 define('ext.wikia.adEngine.template.modal', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adHelper',
+	'ext.wikia.adEngine.provider.gpt.adDetect',
 	'wikia.document',
 	'wikia.log',
 	'wikia.iframeWriter',
 	'wikia.window',
 	require.optional('wikia.ui.factory')
-], function (adContext, adHelper, doc, log, iframeWriter, win, uiFactory) {
+], function (adContext, adHelper, adDetect, doc, log, iframeWriter, win, uiFactory) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.template.modal',
@@ -29,8 +30,47 @@ define('ext.wikia.adEngine.template.modal', [
 				minHeight: 150,
 				maximumRatio: 2
 			}
-		};
+		},
+		mercuryModalHandler = {
+			show: function () {
+				win.Mercury.Modules.Ads.getInstance().showLightbox();
+			},
 
+			create: function (adContainer, hidden) {
+				win.Mercury.Modules.Ads.getInstance().openLightbox(adContainer, hidden);
+			}
+		},
+		oasisModalHandler = {
+			show: function () {
+				if (this.modal) {
+					this.modal.show();
+				}
+			},
+
+			create: function (adContainer, hidden) {
+				var modalConfig = {
+					vars: {
+						id: modalId,
+						size: 'medium',
+						content: '',
+						title: 'Advertisement',
+						closeText: 'Close',
+						buttons: []
+					}
+				};
+
+				uiFactory.init('modal').then((function (uiModal) {
+					uiModal.createComponent(modalConfig, (function (modal) {
+						this.modal = modal;
+						modal.$content.append(adContainer);
+						modal.$element.width('auto');
+						if (!hidden) {
+							this.show();
+						}
+					}).bind(this));
+				}).bind(this));
+			}
+		};
 	/**
 	 * Show the modal ad
 	 *
@@ -39,6 +79,8 @@ define('ext.wikia.adEngine.template.modal', [
 	 * @param {number} params.width - desired width of the Lightbox
 	 * @param {number} params.height - desired height of the Lightbox
 	 * @param {boolean} params.scalable - extend iframe to maximum sensible size of the Lightbox
+	 * @param {boolean} [params.canHop] detect ad in the embedded iframe
+	 * @param {string}  [params.slotName] name of the original slot (required if params.canHop set to true)
 	 */
 	function show(params) {
 		log(['show', params], 'debug', logGroup);
@@ -50,8 +92,24 @@ define('ext.wikia.adEngine.template.modal', [
 				width: params.width,
 				classes: 'wikia-ad-iframe'
 			}),
+			async = params.canHop && params.slotName,
+			gptEventMock = {
+				size: {
+					width: params.width,
+					height: params.height
+				}
+			},
+			modalHandler,
 			skin = adContext.getContext().targeting.skin,
 			lightboxParams = lightBoxExpansionModel[skin];
+
+		if (skin === 'mercury') {
+			modalHandler = mercuryModalHandler;
+		} else if (skin === 'oasis') {
+			modalHandler = oasisModalHandler;
+		} else {
+			return;
+		}
 
 		function scaleAd() {
 			var availableWidth = Math.max(
@@ -78,27 +136,6 @@ define('ext.wikia.adEngine.template.modal', [
 			adContainer.style.height = Math.floor(params.height * ratio) + 'px';
 		}
 
-		function createAndShowDesktopModal() {
-			var modalConfig = {
-				vars: {
-					id: modalId,
-					size: 'medium',
-					content: '',
-					title: 'Advertisement',
-					closeText: 'Close',
-					buttons: []
-				}
-			};
-
-			uiFactory.init('modal').then(function (uiModal) {
-				uiModal.createComponent(modalConfig, function (modal) {
-					modal.$content.append(adContainer);
-					modal.$element.width('auto');
-					modal.show();
-				});
-			});
-		}
-
 		function scaleAdIfNeeded() {
 			if (params.scalable) {
 				scaleAd();
@@ -111,15 +148,21 @@ define('ext.wikia.adEngine.template.modal', [
 		adIframe.style.maxWidth = 'none';
 		adContainer.appendChild(adIframe);
 
-		if (skin === 'oasis') {
-			scaleAdIfNeeded();
-			createAndShowDesktopModal();
+		if (async) {
+			adIframe.addEventListener('load', function () {
+				adDetect.onAdLoad(params.slotName + ' (modal inner iframe)', gptEventMock, adIframe, function () {
+					log(['ad detect', params.slotName, 'success'], 'info', logGroup);
+					win.postMessage('{"AdEngine":{"slot_' + params.slotName + '":true,"status":"success"}}', '*');
+					modalHandler.show();
+				}, function () {
+					log(['ad detect', params.slotName, 'hop'], 'info', logGroup);
+					win.postMessage('{"AdEngine":{"slot_' + params.slotName + '":true,"status":"hop"}}', '*');
+				});
+			});
 		}
 
-		if (skin === 'mercury') {
-			scaleAdIfNeeded();
-			win.Mercury.Modules.Ads.getInstance().openLightbox(adContainer);
-		}
+		scaleAdIfNeeded();
+		modalHandler.create(adContainer, async);
 	}
 
 	return {
