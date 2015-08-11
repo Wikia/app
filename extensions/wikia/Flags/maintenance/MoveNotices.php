@@ -44,7 +44,7 @@ class MoveNotices extends Maintenance {
 	}
 
 	public function execute() {
-		global $wgCityId;
+		global $wgCityId, $IP;
 
 		$this->app = F::app();
 
@@ -138,7 +138,7 @@ class MoveNotices extends Maintenance {
 		fclose( $this->logFile );
 
 		foreach( $templateNames as $template ) {
-			$cmd = "SERVER_ID=$this->wikiId /usr/bin/php MoveNotice.php --template='$template' $options";
+			$cmd = "SERVER_ID=$this->wikiId /usr/bin/php {$IP}/extensions/wikia/Flags/maintenance/MoveNotice.php --template='$template' $options";
 			$this->output("Run cmd: $cmd\n");
 			$output = wfShellExec( $cmd );
 

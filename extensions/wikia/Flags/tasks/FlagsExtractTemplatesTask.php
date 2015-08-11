@@ -118,5 +118,13 @@ class FlagsExtractTemplatesTask extends BaseTask {
 		}
 	}
 
+	public function migrateTemplatesToFlags( $template ) {
+		global $IP;
 
+		$wikiId = $this->getWikiId();
+
+		$cmd = "SERVER_ID={$wikiId} /usr/bin/php {$IP}/extensions/wikia/Flags/maintenance/MoveNotice.php --template='{$template}' --replaceTop --add --remove";
+		$output = wfShellExec( $cmd );
+		$this->info( $output );
+	}
 }
