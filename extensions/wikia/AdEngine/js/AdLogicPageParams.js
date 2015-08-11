@@ -224,7 +224,7 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 			zone1 = '_' + getDartHubName() + '_hub';
 			zone2 = 'hub';
 		} else {
-			site = targeting.mappedVerticalName;
+			site = targeting.mappedVerticalName || targeting.wikiCategory;
 			zone1 = dbName;
 			zone2 = targeting.pageType || 'article';
 		}

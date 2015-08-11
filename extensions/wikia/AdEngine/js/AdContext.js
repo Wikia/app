@@ -61,6 +61,12 @@ define('ext.wikia.adEngine.adContext', [
 			context.opts.showAds = false;
 		}
 
+		// SourcePoint integration
+		if (context.opts.sourcePointUrl) {
+			context.opts.sourcePoint = (isUrlParamSet('sourcepoint') ||
+				isProperCountry(instantGlobals.wgAdDriverSourcePointCountries));
+		}
+
 		// Targeting by page categories
 		if (context.targeting.enablePageCategories) {
 			context.targeting.pageCategories = w.wgCategories || getMercuryCategories();
@@ -89,6 +95,9 @@ define('ext.wikia.adEngine.adContext', [
 		// INCONTENT_PLAYER slot
 		context.slots.incontentPlayer = isProperCountry(instantGlobals.wgAdDriverIncontentPlayerSlotCountries) ||
 			isUrlParamSet('incontentplayer');
+
+		context.opts.enableScrollHandler = isProperCountry(instantGlobals.wgAdDriverScrollHandlerCountries) ||
+			isUrlParamSet('scrollhandler');
 
 		// Krux integration
 		context.targeting.enableKruxTargeting = !!(

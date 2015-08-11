@@ -29,6 +29,8 @@ $wgHooks['ArticleDeleteComplete']    [] = "Wikia::onArticleDeleteComplete";
 $wgHooks['ContributionsToolLinks']   [] = 'Wikia::onContributionsToolLinks';
 $wgHooks['AjaxAddScript']            [] = 'Wikia::onAjaxAddScript';
 $wgHooks['TitleGetSquidURLs']        [] = 'Wikia::onTitleGetSquidURLs';
+$wgHooks['ImportHandlePageXMLTag']   [] = 'Wikia::onImportHandlePageXMLTagFilter';
+$wgHooks['userCan']                  [] = 'Wikia::canEditInterfaceWhitelist';
 
 # changes in recentchanges (MultiLookup)
 $wgHooks['RecentChange_save']        [] = "Wikia::recentChangesSave";
@@ -2226,6 +2228,48 @@ class Wikia {
 		$urls = array_slice($urls, 0, 1);
 
 		return true;
+	}
+
+	/**
+	 * Restrict imports to the MEDIAWIKI namespace
+	 */
+	static function onImportHandlePageXMLTagFilter ( WikiImporter $importer, &$pageInfo ) {
+
+		$tag = $importer->getReader()->name;
+		if ( $tag == 'title' ) {
+			$workTitle = $importer->nodeContents();
+			$title = Title::newFromText( $workTitle );
+
+			if ( !is_null( $title ) && $title->getNamespace() == NS_MEDAWIKI ) {
+				// skip import of this object
+				return false;
+			}
+		}
+		return true;
+	}
+
+	/**
+	 * Restrict editinterface right to whitelist
+	 * set $result true to allow, false to deny, leave alone means don't care
+	 * usually return true to allow processing other hooks
+	 * return false stops permissions processing and we are totally decided (nothing later can override)
+	 */
+	static function canEditInterfaceWhitelist (&$title, &$wgUser, $action, &$result) {
+		global $wgEditInterfaceWhitelist;
+
+		// List the conditions we don't care about for early exit
+		if ( $action == "read" || $title->getNamespace() != NS_MEDIAWIKI || empty( $wgEditInterfaceWhitelist )) {
+			return true;
+		}
+
+		// In this NS, editinterface applies only to white listed pages and staff users
+		if (in_array($title->getDBKey(), $wgEditInterfaceWhitelist) || in_array('staff', $wgUser->getGroups())) {
+			$result = $wgUser->isAllowed('editinterface');
+			return $result;
+		} else {
+			$result = false;
+			return false;
+		}
 	}
 
 	/**

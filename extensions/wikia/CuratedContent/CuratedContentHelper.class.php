@@ -23,13 +23,64 @@ class CuratedContentHelper {
 	public function processLogicForSection( $section ) {
 		$section['image_id'] = (int)$section['image_id']; // fallback to 0 if it's not set in request
 
+		$this->processCrop( $section );
+
 		if ( !empty( $section['items'] ) && is_array( $section['items'] ) ) {
 			foreach ( $section['items'] as &$item ) {
 				$this->fillItemInfo( $item );
+				$this->processCrop( $item );
 			}
 		}
 
 		return $section;
+	}
+
+	public function decodeCrop( $string = null ) {
+		return empty( $string ) ? null : json_decode( html_entity_decode( $string ), true );
+	}
+
+	public function encodeCrop( Array $cropData = null ) {
+		return empty( $cropData ) ? '' : htmlentities( json_encode( $cropData ), ENT_QUOTES );
+	}
+
+	private function processCrop( &$itemOrSection ) {
+		if ( array_key_exists( 'image_crop', $itemOrSection ) ) {
+			if ( is_string( $itemOrSection['image_crop'] ) ) {
+				$itemOrSection['image_crop'] = $this->decodeCrop( $itemOrSection['image_crop'] );
+			}
+
+			$itemOrSection['image_crop'] = $this->sanitizeCrop( $itemOrSection['image_crop'] );
+
+			// do not keep empty or unknown data
+			if ( empty( $itemOrSection['image_crop'] ) ) {
+				unset( $itemOrSection['image_crop'] );
+			}
+		}
+	}
+
+	private function sanitizeCrop( $cropData ) {
+		if ( is_array( $cropData ) ) {
+			$sanitizedCropData = [ ];
+			$coordNames = [ 'x', 'y', 'width', 'height' ];
+
+			// iterate through all the coord arrays
+			foreach ( $cropData as $type => $originalCoords ) {
+				$coords = [ ];
+
+				// iterate through all the coords
+				foreach ( $coordNames as $coordName ) {
+					$coords[$coordName] = intval( $originalCoords[$coordName], 10 );
+				}
+
+				// only save when coords we've got are valid
+				if ( $coords['x'] >= 0 && $coords['y'] >= 0 && $coords['width'] > 0 && $coords['height'] > 0 ) {
+					$sanitizedCropData[$type] = $coords;
+				}
+			}
+
+			return $sanitizedCropData;
+		}
+		return null;
 	}
 
 	public function fillItemInfo( &$item ) {

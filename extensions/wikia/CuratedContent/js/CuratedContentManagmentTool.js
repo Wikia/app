@@ -200,7 +200,8 @@ require(['wikia.window', 'jquery', 'wikia.nirvana', 'wikia.tracker', 'JSMessages
 									.removeError()
 									.css('backgroundImage', 'url(' + data.url + ')')
 									.data('id', data.id)
-									.attr('data-id', data.id);
+									.attr('data-id', data.id)
+									.attr('data-crop', '');
 
 								if (!catImage) {
 									$image.siblings().last().addClass('photo-remove');
@@ -273,7 +274,8 @@ require(['wikia.window', 'jquery', 'wikia.nirvana', 'wikia.tracker', 'JSMessages
 				return {
 					title: $lia.find('.item-input').val(),
 					label: $lia.find('.name').val(),
-					image_id: $lia.find('.image').data('id') || 0
+					image_id: $lia.find('.image').data('id') || 0,
+					image_crop: $lia.find('.image').data('crop') || ''
 				};
 			}
 
@@ -281,6 +283,7 @@ require(['wikia.window', 'jquery', 'wikia.nirvana', 'wikia.tracker', 'JSMessages
 				var $lia = $(li),
 					name = $lia.find('.section-input').val() || '',
 					imageId = $lia.find('.image').data('id') || 0,
+					imageCrop = $lia.find('.image').data('crop') || '',
 					featured = $lia.hasClass('featured') || false,
 					items = [],
 					result = {};
@@ -292,6 +295,7 @@ require(['wikia.window', 'jquery', 'wikia.nirvana', 'wikia.tracker', 'JSMessages
 				result = {
 					title: name,
 					image_id: imageId,
+					image_crop: imageCrop,
 					items: items
 				};
 				if (featured) {

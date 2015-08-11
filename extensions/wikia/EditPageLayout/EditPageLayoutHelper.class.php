@@ -194,10 +194,13 @@ class EditPageLayoutHelper {
 
 	static public function isInfoboxTemplate( Title $title ) {
 		$namespace = $title->getNamespace();
+		$portableInfobox = PortableInfoboxDataService::newFromTitle( $title )->getData();
 
 		if ( $namespace === NS_TEMPLATE ) {
 			$tc = new TemplateClassification( $title );
-			return $tc->isType( $tc::TEMPLATE_INFOBOX ) || self::isTemplateDraft( $title );
+			return $tc->isType( $tc::TEMPLATE_INFOBOX )
+					|| self::isTemplateDraft( $title )
+					|| !empty( $portableInfobox );
 		}
 
 		return false;
@@ -205,6 +208,7 @@ class EditPageLayoutHelper {
 
 	static function isTemplateDraft( $title ) {
 		global $wgEnableTemplateDraftExt;
+
 		return !empty( $wgEnableTemplateDraftExt ) && TemplateDraftHelper::isTitleDraft( $title );
 	}
 
