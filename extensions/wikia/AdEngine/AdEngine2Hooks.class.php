@@ -47,8 +47,9 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverHighImpactSlotCountries';
 		$vars[] = 'wgAdDriverIncontentPlayerSlotCountries';
 		$vars[] = 'wgAdDriverKruxCountries';
-		$vars[] = 'wgAdDriverTurtleCountries';
 		$vars[] = 'wgAdDriverOpenXCountries';
+		$vars[] = 'wgAdDriverSourcePointCountries';
+		$vars[] = 'wgAdDriverTurtleCountries';
 		$vars[] = 'wgAmazonMatchCountries';
 		$vars[] = 'wgAmazonMatchCountriesMobile';
 		$vars[] = 'wgAmazonMatchOldCountries';
