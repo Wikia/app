@@ -2267,6 +2267,7 @@ class Wikia {
 			$result = $wgUser->isAllowed('editinterface');
 			return $result;
 		} else {
+			$result = false;
 			return false;
 		}
 	}
