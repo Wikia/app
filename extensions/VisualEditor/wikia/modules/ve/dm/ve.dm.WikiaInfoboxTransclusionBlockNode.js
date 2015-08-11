@@ -24,6 +24,8 @@ OO.inheritClass( ve.dm.WikiaInfoboxTransclusionBlockNode, ve.dm.MWTransclusionBl
 
 ve.dm.WikiaInfoboxTransclusionBlockNode.static.name = 'wikiaInfoboxTransclusionBlock';
 
+ve.dm.WikiaInfoboxTransclusionBlockNode.static.matchTagNames = [ 'aside' ];
+
 /* Registration */
 
 ve.dm.modelRegistry.register( ve.dm.WikiaInfoboxTransclusionBlockNode );
