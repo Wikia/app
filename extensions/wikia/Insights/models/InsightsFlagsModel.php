@@ -172,7 +172,8 @@ class InsightsFlagsModel extends InsightsPageModel {
 		$params = [
 			'notificationMessage' => wfMessage( $notificationMessageKey )->plain(),
 			'customButtonText' => wfMessage( 'insights-notification-message-set-flags' )->plain(),
-			'customButtonClass' => 'bn-flags-entry-point'
+			'customButtonClass' => 'bn-flags-entry-point',
+			'customButtonData' => 'edit-flags'
 		];
 		$params = array_merge(
 			$params,
