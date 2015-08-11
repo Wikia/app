@@ -32,8 +32,7 @@ ve.ui.WikiaInfoboxInsertDialog.static.name = 'wikiaInfoboxInsert';
 //TODO: introduce new translation
 ve.ui.WikiaInfoboxInsertDialog.static.title = OO.ui.deferMsg( 'wikia-visualeditor-dialog-infobox-insert-title' );
 ve.ui.WikiaInfoboxInsertDialog.static.title = 'Insert infobox :)';
-
-ve.ui.WikiaInfoboxInsertDialog.static.size = '800px';
+ve.ui.WikiaInfoboxInsertDialog.static.size = 'medium';
 
 /* Methods */
 
@@ -133,7 +132,7 @@ ve.ui.WikiaInfoboxInsertDialog.prototype.getInfoboxTemplates = function () {
  * Insert template
  */
 ve.ui.WikiaInfoboxInsertDialog.prototype.insertInfoboxTemplate = function () {
-	ve.init.target.constructor.static.apiRequest( {
+	ve.init.target.constructor.static.apiRequest({
 		action: 'visualeditor',
 		paction: 'parsefragment',
 		page: mw.config.get( 'wgRelevantPageName' ),
@@ -142,7 +141,7 @@ ve.ui.WikiaInfoboxInsertDialog.prototype.insertInfoboxTemplate = function () {
 		.done( this.onParseSuccess.bind( this ) )
 		.fail( function () {
 		// TODO: Implement some proper handling, at least tracking
-		}.bind( this ) );
+	}.bind( this ) );
 };
 
 ve.ui.WikiaInfoboxInsertDialog.prototype.showResults = function ( data ) {
@@ -166,38 +165,23 @@ ve.ui.WikiaInfoboxInsertDialog.prototype.showResults = function ( data ) {
  *
  * @param {Object} response Response data
  */
-ve.ui.WikiaInfoboxInsertDialog.prototype.onParseSuccess = function ( response ) {
-	// Deferred is used here only to allow for reusing MWTransclusionNode.onParseSuccess
-	// method instead of having to do a code duplication. It's not a prefect approach
-	// and it is a subject to change - based on the future discussion.
-	var deferred = $.Deferred();
-	ve.ce.MWTransclusionNode.prototype.onParseSuccess.call( this, deferred, response );
-	deferred.done( function ( contents ) {
-		var type = 'mwTransclusionBlock',
-			linmod = [
-				{
-					type: type,
-					attributes: {
-						mw: this.transclusionModel.getPlainObject()
-					}
-				},
-				{ type: '/' + type }
-			];
+ve.ui.WikiaInfoboxInsertDialog.prototype.onParseSuccess = function () {
+	var type = 'mwTransclusionBlock',
+		linmod = [
+			{
+				type: type,
+				attributes: {
+					mw: this.transclusionModel.getPlainObject()
+				}
+			},
+			{ type: '/' + type }
+		];
 
-		this.surface.getModel().getDocument().once( 'transact', this.onTransact.bind( this ) );
-
-		// Fill out the cache so MWTransclusionNode does not have to send exact same
-		// parsefragment request.
-		this.fragment.getDocument().getStore().index(
-			contents,
-			OO.getHash( [ ve.dm.MWTransclusionNode.static.getHashObject( linmod[0] ), null ] )
-		);
-
-		this.fragment = this.getFragment()
-			.collapseToEnd()
-			.setAutoSelect( true )
-			.insertContent( linmod );
-	}.bind( this ) );
+	this.surface.getModel().getDocument().once( 'transact', this.onTransact.bind( this ) );
+	this.fragment = this.getFragment()
+		.collapseToEnd()
+		.setAutoSelect( true )
+		.insertContent( linmod );
 };
 
 /**
@@ -213,6 +197,9 @@ ve.ui.WikiaInfoboxInsertDialog.prototype.onTransact = function () {
 	} );
 	this.$frame.stopThrobbing();
 	this.close();
+
+	//setTimeout used for calling command for the node after current stack us cleared.
+	//getFocusedNode can be not known here yet
 	setTimeout( function () {
 		ve.ui.commandRegistry.getCommandForNode( this.surface.getView().getFocusedNode() ).execute( this.surface );
 	}.bind( this ), 0 );
