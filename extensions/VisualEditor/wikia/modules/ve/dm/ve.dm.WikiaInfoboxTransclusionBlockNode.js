@@ -26,6 +26,14 @@ ve.dm.WikiaInfoboxTransclusionBlockNode.static.name = 'wikiaInfoboxTransclusionB
 
 ve.dm.WikiaInfoboxTransclusionBlockNode.static.matchTagNames = [ 'aside' ];
 
+ve.dm.WikiaInfoboxTransclusionBlockNode.static.matchRdfaTypes = [ 'mw:Transclusion' ];
+
+ve.dm.WikiaInfoboxTransclusionBlockNode.static.matchFunction = function ( domElement ) {
+	return ve.indexOf( 'portable-infobox',
+			( domElement.getAttribute( 'class' ) || '' ).split( ' ' )
+		) !== -1;
+};
+
 /* Registration */
 
 ve.dm.modelRegistry.register( ve.dm.WikiaInfoboxTransclusionBlockNode );
