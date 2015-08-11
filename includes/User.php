@@ -36,7 +36,7 @@ define( 'USER_TOKEN_LENGTH', 32 );
  * Int Serialized record version.
  * @ingroup Constants
  */
-define( 'MW_USER_VERSION', 9 );
+define( 'MW_USER_VERSION', 10 );
 
 /**
  * String Some punctuation to prevent editing from broken text-mangling proxies.
@@ -70,6 +70,7 @@ class User {
 	 * Traits extending the class
 	 */
 	use PowerUserTrait;
+	use GlobalUserDataTrait;
 	# WIKIA CHANGE END
 
 	use Loggable;
@@ -1393,6 +1394,22 @@ class User {
 		return $defOpt;
 	}
 
+	public static function getDefaultPreferences() {
+		global $wgUserPreferenceWhiteList;
+		$defaultOptions = User::getDefaultOptions();
+		$defaultOptionNames = array_keys($defaultOptions);
+
+		return array_reduce(
+			$defaultOptionNames,
+			function($preferences, $option) use ($wgUserPreferenceWhiteList, $defaultOptions) {
+				if (in_array($option, $wgUserPreferenceWhiteList['literals'])) {
+					$preferences[$option] = $defaultOptions[$option];
+				}
+
+				return $preferences;
+			}, []);
+	}
+
 	/**
 	 * Get a given default option value.
 	 *
@@ -2304,6 +2321,31 @@ class User {
 	}
 
 	/**
+	 * Return the new email address that is waiting for confirmation
+	 *
+	 * @return string
+	 */
+	public function getNewEmail() {
+		return $this->getGlobalAttribute( 'new_email' );
+	}
+
+	/**
+	 * Sets a new email address, to be confirmed
+	 *
+	 * @param $newEmail
+	 */
+	public function setNewEmail( $newEmail ) {
+		$this->setGlobalAttribute( 'new_email', $newEmail );
+	}
+
+	/**
+	 * Clear out the new email after its been confirmed
+	 */
+	public function clearNewEmail() {
+		$this->setGlobalAttribute( 'new_email', null );
+	}
+
+	/**
 	 * Get the timestamp of the user's e-mail authentication
 	 * @return String TS_MW timestamp
 	 */
@@ -3050,7 +3092,7 @@ class User {
 	/**
 	 * Check if user is allowed to access a feature / make an action
 	 *
-	 * @internal param \String $varargs permissions to test
+	 * internal param \String $varargs permissions to test
 	 * @return Boolean: True if user is allowed to perform *any* of the given actions
 	 *
 	 * @return bool
@@ -3067,7 +3109,7 @@ class User {
 
 	/**
 	 *
-	 * @internal param $varargs string
+	 * internal param $varargs string
 	 * @return bool True if the user is allowed to perform *all* of the given actions
 	 */
 	public function isAllowedAll( /*...*/ ){
@@ -4003,13 +4045,13 @@ class User {
 	private function getEmailController( $mailType ) {
 		$controller = "";
 		if ( $this->isConfirmationMail( $mailType ) ) {
-			$controller = 'Email\Controller\EmailConfirmation';
+			$controller = Email\Controller\EmailConfirmationController::class;
 		} elseif ( $this->isConfirmationReminderMail( $mailType ) ) {
-			$controller = 'Email\Controller\EmailConfirmationReminder';
+			$controller = Email\Controller\EmailConfirmationReminderController::class;
 		} elseif ( $this->isChangeEmailConfirmationMail( $mailType ) ) {
-			$controller = 'Email\Controller\ConfirmationChangedEmail';
+			$controller = Email\Controller\ConfirmationChangedEmailController::class;
 		} elseif ( $this->isReactivateAccountMail( $mailType ) ) {
-			$controller = 'Email\Controller\ReactivateAccount';
+			$controller = Email\Controller\ReactivateAccountController::class;
 		}
 
 		return $controller;
@@ -4034,6 +4076,7 @@ class User {
 	private function sendUsingEmailExtension( $emailController, $url ) {
 		$params = [
 			'targetUser' => $this->getName(),
+			'newEmail' => $this->getNewEmail(),
 			'confirmUrl' => $url,
 		];
 

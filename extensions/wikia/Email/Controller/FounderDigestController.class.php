@@ -4,13 +4,9 @@ namespace Email\Controller;
 
 use Email\EmailController;
 use Email\Check;
-use Email\Tracking\TrackingCategories;
 use Email\ImageHelper;
 
 abstract class FounderDigestController extends EmailController {
-	// Defaults; will be overridden in subclasses
-	const TRACKING_CATEGORY_EN = TrackingCategories::DEFAULT_CATEGORY;
-	const TRACKING_CATEGORY_INT = TrackingCategories::DEFAULT_CATEGORY;
 
 	const LAYOUT_CSS = "digestLayout.css";
 
@@ -62,18 +58,6 @@ abstract class FounderDigestController extends EmailController {
 		}
 	}
 
-	/**
-	 * Determine which sendgrid category to send based on target language and specific
-	 * founder email being sent. See dependent classes for overridden values
-	 *
-	 * @return string
-	 */
-	public function getSendGridCategory() {
-		return strtolower( $this->targetLang ) == 'en'
-			? static::TRACKING_CATEGORY_EN
-			: static::TRACKING_CATEGORY_INT;
-	}
-
 	protected static function getEmailSpecificFormFields() {
 		$formFields = [
 			'inputs' => [
@@ -97,8 +81,6 @@ abstract class FounderDigestController extends EmailController {
 }
 
 class FounderActivityDigestController extends FounderDigestController {
-	const TRACKING_CATEGORY_EN = TrackingCategories::FOUNDER_ACTIVITY_DIGEST_EN;
-	const TRACKING_CATEGORY_INT = TrackingCategories::FOUNDER_ACTIVITY_DIGEST_INT;
 
 	protected $pageEdits;
 	protected $newUsers;
@@ -237,8 +219,6 @@ class FounderActivityDigestController extends FounderDigestController {
 }
 
 class FounderPageViewsDigestController extends FounderDigestController {
-	const TRACKING_CATEGORY_EN = TrackingCategories::FOUNDER_VIEWS_DIGEST_EN;
-	const TRACKING_CATEGORY_INT = TrackingCategories::FOUNDER_VIEWS_DIGEST_INT;
 
 	protected function getSubject() {
 		return $this->getMessage( 'emailext-founder-views-digest-subject', $this->wikiName )->parse();

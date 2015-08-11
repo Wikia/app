@@ -11,6 +11,7 @@ use Wikia\Sass\Filter\JanusFilter;
 use Wikia\Sass\Filter\MinifyFilter;
 use Wikia\Sass\Compiler\Compiler;
 use Wikia\Sass\Compiler\ExternalRubyCompiler;
+use Wikia\Sass\Compiler\LibSassCompiler;
 
 /**
  * SassService is a one and only class that you will call from Mediawiki code.
@@ -23,9 +24,9 @@ use Wikia\Sass\Compiler\ExternalRubyCompiler;
  * @author Władysław Bodzek <wladek@wikia-inc.com>
  *
  */
-class SassService extends WikiaObject {
+class SassService {
 
-	const CACHE_VERSION = 6; # SASS caching does not depend on $wgStyleVersion, use this constant to bust SASS cache
+	const CACHE_VERSION = 7; # SASS caching does not depend on $wgStyleVersion, use this constant to bust SASS cache
 
 	const FILTER_IMPORT_CSS = 1;
 	const FILTER_CDN_REWRITE = 2;
@@ -44,24 +45,21 @@ class SassService extends WikiaObject {
 	protected $debug = null;
 	protected $useSourceMaps = false;
 
+	protected $app;
+
 	/**
 	 * Creates a new SassService object based on the Sass source provided.
 	 * Please use static constructors instead of calling this constructor directly.
 	 *
 	 * @param Source $source
 	 */
-	public function __construct( Source $source ) {
-		parent::__construct();
+	private function __construct( Source $source ) {
+		$this->app = F::app();
 		$this->source = $source;
 
-		// set up default cache variant
+		// vary caching for devboxes
 		if (!empty($this->wg->DevelEnvironment)) {
 			$this->setCacheVariant("dev-{$this->wg->DevelEnvironmentName}");
-		} else {
-			$hostPrefix = getHostPrefix();
-			if ( $hostPrefix != null ) {
-				$this->setCacheVariant("staging-{$hostPrefix}");
-			}
 		}
 	}
 
@@ -198,7 +196,7 @@ class SassService extends WikiaObject {
 		$memc = self::getMemcached();
 		$cacheKey = null;
 		if ( $useCache ) {
-			$cacheKey = __CLASS__ . '-cache-' . $this->getCacheKey();
+			$cacheKey = wfSharedMemcKey( __CLASS__, $this->getCacheKey() );
 			$cachedStyles = $memc->get( $cacheKey );
 			if ( is_string( $cachedStyles ) ) {
 				return $cachedStyles;
@@ -251,14 +249,15 @@ class SassService extends WikiaObject {
 		}
 
 		$styles .= "\n\n";
-		$styles .= $this->makeComment(sprintf("SASS processing time (compilation/total): %.3fms/%.3fms",
+		$styles .= $this->makeComment(sprintf("SASS processing time (compilation/total): %.3fms/%.3fms [using %s]",
 			($afterCompilation - $start) * 1000,
-			($end - $start) * 1000
+			($end - $start) * 1000,
+			get_class( self::getDefaultCompiler() )
 		));
 
 		// save it to the cache if everything went correct
 		if ( $useCache && $ok ) {
-			$memc->set( $cacheKey, $styles );
+			$memc->set( $cacheKey, $styles, WikiaResponse::CACHE_LONG );
 		}
 
 		return $styles;
@@ -284,13 +283,13 @@ class SassService extends WikiaObject {
 	 * @return array Array of filter objects
 	 */
 	protected function getFilterObjects() {
-		$IP = $this->wg->get('IP');
+		$IP = $this->app->getGlobal('IP');
 		$filters = array();
 		if ( $this->filters & self::FILTER_IMPORT_CSS ) {
 			$filters[] = new CssImportsFilter($IP);
 		}
 		if ( $this->filters & self::FILTER_CDN_REWRITE ) {
-			$filters[] = new CdnRewriteFilter($this->wg->CdnStylePath);
+			$filters[] = new CdnRewriteFilter($this->app->wg->CdnStylePath);
 		}
 		if ( $this->filters & self::FILTER_BASE64 ) {
 			$filters[] = new InlineImageFilter($IP);
@@ -352,12 +351,12 @@ class SassService extends WikiaObject {
 	/**
 	 * Get a default Sass compiler instance
 	 *
-	 * @return ExternalRubyCompiler
+	 * @return LibSassCompiler
 	 */
 	public static function getDefaultCompiler() {
 		if ( self::$defaultCompiler === null ) {
 			$app = F::app();
-			self::$defaultCompiler = new ExternalRubyCompiler(array(
+			self::$defaultCompiler = new LibSassCompiler(array(
 				'rootDir' => $app->getGlobal('IP'),
 				'sassExecutable' => $app->wg->SassExecutable,
 //				'outputStyle' => 'expanded',

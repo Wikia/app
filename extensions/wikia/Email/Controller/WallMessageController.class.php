@@ -4,11 +4,8 @@ namespace Email\Controller;
 
 use Email\Check;
 use Email\EmailController;
-use Email\Tracking\TrackingCategories;
 
 abstract class WallMessageController extends EmailController {
-
-	const TRACKING_CATEGORY = TrackingCategories::WALL_NOTIFICATION;
 
 	protected $titleUrl;
 	protected $titleText;
@@ -181,7 +178,7 @@ class OwnWallMessageController extends WallMessageController {
 	 * @return string
 	 */
 	protected function getSubject() {
-		return $this->getMessage( 'emailext-wallmessage-owned-subject', $this->titleText )->parse();
+		return $this->getMessage( 'emailext-wallmessage-owned-subject', $this->titleText )->text();
 	}
 }
 

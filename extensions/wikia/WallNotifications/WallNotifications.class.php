@@ -414,7 +414,8 @@ class WallNotifications {
 				'details' => $text,
 				'targetUser' => $watcherName,
 				'wallUserName' => $notifData->wall_username,
-				'threadId' => $notifData->title_id
+				'threadId' => $notifData->title_id,
+				'parentId' => $notifData->parent_id,
 			];
 
 			F::app()->sendRequest( $controller, 'handle', $params );
@@ -454,16 +455,16 @@ class WallNotifications {
 			&& MWNamespace::getSubject( $notification->data->article_title_ns ) == NS_WIKIA_FORUM_BOARD
 		) {
 			if ( $notification->isMain() ) {
-				$controller = 'Email\Controller\Forum';
+				$controller = Email\Controller\ForumController::class;
 			} else {
-				$controller = 'Email\Controller\ReplyForum';
+				$controller = Email\Controller\ReplyForumController::class;
 			}
 		} else if ( $notification->isMain() && $notification->data->wall_username != $watcherName ) {
-			$controller = 'Email\Controller\FollowedWallMessage';
+			$controller = Email\Controller\FollowedWallMessageController::class;
 		} else if ( !$notification->isMain() ) {
-			$controller = 'Email\Controller\ReplyWallMessage';
+			$controller = Email\Controller\ReplyWallMessageController::class;
 		} else {
-			$controller = 'Email\Controller\OwnWallMessage';
+			$controller = Email\Controller\OwnWallMessageController::class;
 		}
 
 		return $controller;
