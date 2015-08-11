@@ -65,7 +65,7 @@ class CuratedContentValidatorTest extends WikiaBaseTest {
 				[
 					[
 						'target' => 'FEATURED LABEL THAT IS TOO LONG - FEATURED LABEL THAT IS TOO LONG - FEATURED LABEL THAT IS TOO LONG',
-						'type' => 'item',
+						'type' => 'featured',
 						'reason' => 'tooLongLabel',
 					],
 				],
@@ -92,7 +92,7 @@ class CuratedContentValidatorTest extends WikiaBaseTest {
 				[
 					[
 						'target' => '',
-						'type' => 'item',
+						'type' => 'featured',
 						'reason' => 'emptyLabel',
 					],
 				],
@@ -119,7 +119,7 @@ class CuratedContentValidatorTest extends WikiaBaseTest {
 				[
 					[
 						'target' => 'Featured Label Without Image',
-						'type' => 'item',
+						'type' => 'featured',
 						'reason' => 'imageMissing',
 					],
 				],
@@ -146,7 +146,7 @@ class CuratedContentValidatorTest extends WikiaBaseTest {
 				[
 					[
 						'target' => 'Featured Label Not Supported',
-						'type' => 'item',
+						'type' => 'featured',
 						'reason' => 'notSupportedType',
 					],
 				],
@@ -173,7 +173,7 @@ class CuratedContentValidatorTest extends WikiaBaseTest {
 				[
 					[
 						'target' => 'Featured Label Video Without Info',
-						'type' => 'item',
+						'type' => 'featured',
 						'reason' => 'videoNotHaveInfo',
 					],
 				],
@@ -200,7 +200,7 @@ class CuratedContentValidatorTest extends WikiaBaseTest {
 				[
 					[
 						'target' => 'Featured Label Video Not Supported Provider',
-						'type' => 'item',
+						'type' => 'featured',
 						'reason' => 'videoNotSupportProvider',
 					],
 				],
@@ -230,7 +230,7 @@ class CuratedContentValidatorTest extends WikiaBaseTest {
 				[
 					[
 						'target' => 'Featured Label Without Article',
-						'type' => 'item',
+						'type' => 'featured',
 						'reason' => 'articleNotFound',
 					],
 				],

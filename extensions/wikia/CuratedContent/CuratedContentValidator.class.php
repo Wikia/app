@@ -17,6 +17,7 @@ class CuratedContentValidator {
 	private $errors;
 	private $existingSectionLabels;
 	private $existingItemLabels;
+	private $existingFeaturedItemLabels;
 	private $hasOptionalSection;
 
 	public function __construct() {
@@ -27,6 +28,7 @@ class CuratedContentValidator {
 		$this->errors = [ ];
 		$this->existingSectionLabels = [ ];
 		$this->existingItemLabels = [ ];
+		$this->existingFeaturedItemLabels = [ ];
 		$this->hasOptionalSection = false;
 	}
 
@@ -36,7 +38,7 @@ class CuratedContentValidator {
 		// validate sections
 		foreach ( $data as $section ) {
 			if ( !empty( $section['featured'] ) ) {
-				$this->validateItems( $section );
+				$this->validateItems( $section, true );
 			} else {
 				$this->validateSection( $section );
 				$this->validateItemsExist( $section );
@@ -51,6 +53,11 @@ class CuratedContentValidator {
 	}
 
 	public function validateDuplicatedLabels() {
+		foreach ( array_count_values( $this->existingFeaturedItemLabels ) as $label => $count ) {
+			if ( $count > 1 ) {
+				$this->error( $label, 'featured', self::ERR_DUPLICATED_LABEL );
+			}
+		}
 		foreach ( array_count_values( $this->existingSectionLabels ) as $label => $count ) {
 			if ( $count > 1 ) {
 				$this->error( $label, 'section', self::ERR_DUPLICATED_LABEL );
@@ -81,9 +88,12 @@ class CuratedContentValidator {
 		}
 	}
 
-	private function validateImage( $sectionOrItem ) {
+	private function validateImage( $sectionOrItem, $isFeatured = false ) {
 		if ( empty( $sectionOrItem['image_id'] ) ) {
-			if ( array_key_exists( 'label', $sectionOrItem ) ) {
+			if ( $isFeatured ) {
+				// featured item has missing image
+				$this->error( $sectionOrItem['label'], 'featured', self::ERR_IMAGE_MISSING );
+			} elseif ( array_key_exists( 'label', $sectionOrItem ) ) {
 				// item has missing image
 				$this->error( $sectionOrItem['label'], 'item', self::ERR_IMAGE_MISSING );
 			} else {
@@ -102,10 +112,10 @@ class CuratedContentValidator {
 		}
 	}
 
-	public function validateItems( $section ) {
+	public function validateItems( $section, $isFeatured = false ) {
 		if ( !empty($section['items'] ) && is_array( $section['items'] ) ) {
 			foreach ($section['items'] as $item) {
-				$this->validateItem( $item );
+				$this->validateItem( $item, $isFeatured );
 			}
 		}
 	}
@@ -145,34 +155,39 @@ class CuratedContentValidator {
 		}
 	}
 
-	public function validateItem( $item ) {
-		$this->validateImage( $item );
+	public function validateItem( $item, $isFeatured = false ) {
+		$this->validateImage( $item, $isFeatured );
 
 		if ( empty( $item['label'] ) ) {
-			$this->error( '', 'item', self::ERR_EMPTY_LABEL );
+			$this->error( '', $isFeatured ? 'featured' : 'item', self::ERR_EMPTY_LABEL );
 		}
 
 		if ( strlen( $item['label'] ) > self::LABEL_MAX_LENGTH ) {
-			$this->error( $item['label'], 'item', self::ERR_TOO_LONG_LABEL );
+			$this->error( $item['label'], $isFeatured ? 'featured' : 'item', self::ERR_TOO_LONG_LABEL );
 		}
 
 		if ( empty( $item['type'] ) ) {
-			$this->error( $item['label'], 'item', self::ERR_NOT_SUPPORTED_TYPE );
-		}
-
-		if ( $item['type'] === CuratedContentHelper::STR_VIDEO ) {
-			if ( empty( $item['video_info'] ) ) {
-				$this->error( $item['label'], 'item', self::ERR_VIDEO_WITHOUT_INFO );
-			} elseif ( !self::isSupportedProvider( $item['video_info']['provider'] ) ) {
-				$this->error( $item['label'], 'item', self::ERR_VIDEO_NOT_SUPPORTED );
-			}
+			$this->error( $item['label'], $isFeatured ? 'featured' : 'item', self::ERR_NOT_SUPPORTED_TYPE );
 		}
 
 		if ( self::needsArticleId( $item['type'] ) && empty( $item['article_id'] ) ) {
-			$this->error( $item['label'], 'item', self::ERR_ARTICLE_NOT_FOUND );
+			$this->error( $item['label'], $isFeatured ? 'featured' : 'item', self::ERR_ARTICLE_NOT_FOUND );
 		}
 
-		$this->existingItemLabels[] = $item['label'];
+		if ( $isFeatured ) {
+			if ( $item['type'] === CuratedContentHelper::STR_VIDEO ) {
+				if ( empty( $item['video_info'] ) ) {
+					$this->error( $item['label'], 'featured', self::ERR_VIDEO_WITHOUT_INFO );
+				} elseif ( !self::isSupportedProvider( $item['video_info']['provider'] ) ) {
+					$this->error( $item['label'], 'featured', self::ERR_VIDEO_NOT_SUPPORTED );
+				}
+			}
+
+			$this->existingFeaturedItemLabels[] = $item['label'];
+		} else {
+			$this->existingItemLabels[] = $item['label'];
+		}
+
 	}
 
 	private static function needsArticleId( $type ) {

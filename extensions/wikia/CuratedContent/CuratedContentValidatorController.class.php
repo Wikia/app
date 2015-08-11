@@ -38,10 +38,14 @@ class CuratedContentValidatorController extends WikiaController {
 			unset( $section['label'] );
 
 			$section = $this->helper->processLogicForSection( $section );
-			$this->validator->validateSection( $section );
-			$this->validator->validateItemsExist( $section );
-			$this->validator->validateItems( $section );
-			$this->validator->validateItemsTypes( $section );
+			if ( !empty( $section['featured'] ) ) {
+				$this->validator->validateItems( $section, true );
+			} else {
+				$this->validator->validateSection( $section );
+				$this->validator->validateItemsExist( $section );
+				$this->validator->validateItems( $section );
+				$this->validator->validateItemsTypes( $section );
+			}
 			$this->validator->validateDuplicatedLabels();
 			$this->respond( $this->validator->getErrors() );
 		}
