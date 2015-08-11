@@ -131,7 +131,7 @@ class CuratedContentValidator {
 	}
 
 	public function validateItemType( $item ) {
-		if ( $item['type'] !== CuratedContentHelper::STR_CATEGORY ) {
+		if ( !in_array( $item['type'], [CuratedContentHelper::STR_CATEGORY, CuratedContentHelper::STR_EMPTY_CATEGORY] ) ) {
 			$this->error( $item['label'], 'item', self::ERR_NO_CATEGORY_IN_TAG );
 		}
 	}
@@ -175,7 +175,7 @@ class CuratedContentValidator {
 	}
 
 	private static function needsArticleId( $type ) {
-		return $type !== CuratedContentHelper::STR_CATEGORY;
+		return !in_array( $type, [CuratedContentHelper::STR_CATEGORY, CuratedContentHelper::STR_EMPTY_CATEGORY] );
 	}
 
 	private static function isSupportedProvider( $provider ) {

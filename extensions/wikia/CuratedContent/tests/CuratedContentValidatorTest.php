@@ -542,6 +542,20 @@ class CuratedContentValidatorTest extends WikiaBaseTest {
 							],
 						],
 					],
+					// this is completly valid
+					[
+						'title' => 'Section With Empty Category',
+						'image_id' => '1',
+						'items' => [
+							[
+								'title' => 'Section With Empty Category Title 01',
+								'label' => 'Section With Empty Category Label 01',
+								'image_id' => '1',
+								'article_id' => '1',
+								'type' => 'emptyCategory',
+							],
+						],
+					],
 				],
 				'noCategoryInTag',
 			],
