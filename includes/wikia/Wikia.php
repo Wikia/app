@@ -30,6 +30,7 @@ $wgHooks['ContributionsToolLinks']   [] = 'Wikia::onContributionsToolLinks';
 $wgHooks['AjaxAddScript']            [] = 'Wikia::onAjaxAddScript';
 $wgHooks['TitleGetSquidURLs']        [] = 'Wikia::onTitleGetSquidURLs';
 $wgHooks['ImportHandlePageXMLTag']   [] = 'Wikia::onImportHandlePageXMLTagFilter';
+$wgHooks['userCan']                  [] = 'Wikia::canEditInterfaceWhitelist';
 
 # changes in recentchanges (MultiLookup)
 $wgHooks['RecentChange_save']        [] = "Wikia::recentChangesSave";
