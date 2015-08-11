@@ -162,6 +162,7 @@ class ApiMediaSearch extends ApiBase {
 				$file = wfFindFile( $title );
 				$item['width'] = $file->getWidth();
 				$item['height'] = $file->getHeight();
+				$item['id'] = $title->getArticleID();
 			}
 			array_push( $items, $item );
 		}
