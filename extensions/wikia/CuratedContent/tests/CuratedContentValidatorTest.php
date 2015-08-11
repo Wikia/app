@@ -64,7 +64,8 @@ class CuratedContentValidatorTest extends WikiaBaseTest {
 				// Featured - tooLongLabel
 				[
 					[
-						'title' => 'Featured Title Long',
+						'target' => 'FEATURED LABEL THAT IS TOO LONG - FEATURED LABEL THAT IS TOO LONG - FEATURED LABEL THAT IS TOO LONG',
+						'type' => 'item',
 						'reason' => 'tooLongLabel',
 					],
 				],
@@ -90,7 +91,8 @@ class CuratedContentValidatorTest extends WikiaBaseTest {
 				// Featured - emptyLabel
 				[
 					[
-						'title' => 'Featured Title For Empty Label',
+						'target' => '',
+						'type' => 'item',
 						'reason' => 'emptyLabel',
 					],
 				],
@@ -116,7 +118,8 @@ class CuratedContentValidatorTest extends WikiaBaseTest {
 				// Featured - imageMissing
 				[
 					[
-						'title' => 'Featured Title Without Image',
+						'target' => 'Featured Label Without Image',
+						'type' => 'item',
 						'reason' => 'imageMissing',
 					],
 				],
@@ -142,7 +145,8 @@ class CuratedContentValidatorTest extends WikiaBaseTest {
 				// Featured - notSupportedType
 				[
 					[
-						'title' => 'Featured Title Not Supported',
+						'target' => 'Featured Label Not Supported',
+						'type' => 'item',
 						'reason' => 'notSupportedType',
 					],
 				],
@@ -168,7 +172,8 @@ class CuratedContentValidatorTest extends WikiaBaseTest {
 				// Featured - videoNotHaveInfo
 				[
 					[
-						'title' => 'Featured Title Video Without Info',
+						'target' => 'Featured Label Video Without Info',
+						'type' => 'item',
 						'reason' => 'videoNotHaveInfo',
 					],
 				],
@@ -194,7 +199,8 @@ class CuratedContentValidatorTest extends WikiaBaseTest {
 				// Featured - videoNotSupportProvider
 				[
 					[
-						'title' => 'Featured Title Video Not Supported Provider',
+						'target' => 'Featured Label Video Not Supported Provider',
+						'type' => 'item',
 						'reason' => 'videoNotSupportProvider',
 					],
 				],
@@ -223,7 +229,8 @@ class CuratedContentValidatorTest extends WikiaBaseTest {
 				// Featured - articleNotFound
 				[
 					[
-						'title' => 'Featured Title Without Article',
+						'target' => 'Featured Label Without Article',
+						'type' => 'item',
 						'reason' => 'articleNotFound',
 					],
 				],
@@ -320,7 +327,8 @@ class CuratedContentValidatorTest extends WikiaBaseTest {
 				// Normal sections  - tooLongLabel
 				[
 					[
-						'title' => 'TOO LONG LABEL - TOO LONG LABEL - TOO LONG LABEL - TOO LONG LABEL - TOO LONG LABEL - TOO LONG LABEL',
+						'target' => 'TOO LONG LABEL - TOO LONG LABEL - TOO LONG LABEL - TOO LONG LABEL - TOO LONG LABEL - TOO LONG LABEL',
+						'type' => 'section',
 						'reason' => 'tooLongLabel',
 					],
 				],
@@ -344,19 +352,13 @@ class CuratedContentValidatorTest extends WikiaBaseTest {
 				// Normal sections  - duplicatedLabel (1)
 				[
 					[
-						'title' => 'Section Duplicated Label',
+						'target' => 'Section Duplicated Label',
+						'type' => 'section',
 						'reason' => 'duplicatedLabel',
 					],
 					[
-						'title' => 'Section Duplicated Label',
-						'reason' => 'duplicatedLabel',
-					],
-					[
-						'title' => 'Section 01 Title 01',
-						'reason' => 'duplicatedLabel',
-					],
-					[
-						'title' => 'Section 02 Title 01',
+						'target' => 'Duplicated Label',
+						'type' => 'item',
 						'reason' => 'duplicatedLabel',
 					],
 				],
@@ -392,7 +394,8 @@ class CuratedContentValidatorTest extends WikiaBaseTest {
 				// Normal sections  - duplicatedLabel (2)
 				[
 					[
-						'title' => '',
+						'target' => '',
+						'type' => 'section',
 						'reason' => 'duplicatedLabel',
 					],
 				],
@@ -428,7 +431,8 @@ class CuratedContentValidatorTest extends WikiaBaseTest {
 				// Normal sections  - imageMissing
 				[
 					[
-						'title' => 'Section Without Image',
+						'target' => 'Section Without Image',
+						'type' => 'section',
 						'reason' => 'imageMissing',
 					],
 				],
@@ -478,7 +482,8 @@ class CuratedContentValidatorTest extends WikiaBaseTest {
 				// Normal sections  - itemsMissing
 				[
 					[
-						'title' => 'Section Without Items',
+						'target' => 'Section Without Items',
+						'type' => 'section',
 						'reason' => 'itemsMissing',
 					],
 				],
@@ -504,7 +509,8 @@ class CuratedContentValidatorTest extends WikiaBaseTest {
 				// Normal sections  - noCategoryInTag
 				[
 					[
-						'title' => 'Section With No Category Title 01',
+						'target' => 'Section With No Category Label 01',
+						'type' => 'item',
 						'reason' => 'noCategoryInTag',
 					],
 				],
