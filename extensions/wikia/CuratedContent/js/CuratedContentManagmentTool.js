@@ -158,9 +158,14 @@ require(['wikia.window', 'jquery', 'wikia.nirvana', 'wikia.tracker', 'JSMessages
 						if ($items.length === 0 && !$t.hasClass('featured')) {
 							$t.find('.section-input').addError(emptySectionError);
 						} else {
-							checkInputs($items.find('.name'), ['limit', 'duplicates']);
+							checkInputs($items.find('.name'), ['limit']);
 						}
 					});
+
+					// validate duplicates in featured items
+					checkInputs($ul.find('.featured').nextUntil('.section').find('.name'), ['duplicates']);
+					// check for duplicated in items
+					checkInputs($ul.find('.section:not(.featured)').first().nextAll().find('.name'), ['duplicates']);
 
 					if (d.getElementsByClassName('error').length > 0) {
 						$save.attr('disabled', true);
@@ -328,55 +333,31 @@ require(['wikia.window', 'jquery', 'wikia.nirvana', 'wikia.tracker', 'JSMessages
 				}
 				return errReason;
 			}
-
-			function checkItemsForErrors($items, errTitle, errReason, reasonMessage) {
-				$items.each(function () {
-					if (this.value === errTitle) {
-						var $itemWithError;
-
-						switch (errReason) {
-							case 'missingImage':
-								$itemWithError = $(this).parent().find('.image');
-								break;
-							case 'emptyLabel':
-							case 'tooLongLabel':
-								$itemWithError = $(this).next();
-								break;
-							default:
-								$itemWithError = $(this);
-						}
-						if ($itemWithError) {
-							$itemWithError.addError(reasonMessage);
-							return false;
-						}
-					}
-					return true;
-				});
+			function addErrorToItem($selector, errReason, reasonMessage) {
+				switch (errReason) {
+					case 'imageMissing':
+						$selector.find('.image').addError(reasonMessage);
+						break;
+					case 'emptyLabel':
+						// intended fall
+					case 'duplicatedLabel':
+						// intended fall
+					case 'tooLongLabel':
+						$selector.find('.name').addError(reasonMessage);
+						break;
+					default:
+						$selector.find('.item-input').addError(reasonMessage);
+				}
 			}
-			function checkSectionsForErrors($sections, errTitle, errReason, reasonMessage) {
-				$sections.each(function () {
-					if (this.value === errTitle) {
-						var $itemWithError;
-
-						switch (errReason) {
-							case 'missingImage':
-								$itemWithError = $(this).parent().find('.image');
-								break;
-							case 'duplicatedLabel':
-							// intended fall
-							case 'tooLongLabel':
-								$itemWithError = $(this);
-								break;
-						}
-						if ($itemWithError) {
-							$itemWithError.addError(reasonMessage);
-							return false;
-						}
-					}
-					return true;
-				});
+			function addErrorToSection($selector, errReason, reasonMessage) {
+				switch (errReason) {
+					case 'imageMissing':
+						$selector.find('.image').addError(reasonMessage);
+						break;
+					default:
+						$selector.find('.section-input').addError(reasonMessage);
+				}
 			}
-
 
 			window._gaq.push(['_setSampleRate', '100']);
 
@@ -409,17 +390,43 @@ require(['wikia.window', 'jquery', 'wikia.nirvana', 'wikia.tracker', 'JSMessages
 							sections: data
 						}
 					}).done(function (data) {
-						if (data.error) {
-							var $items = $form.find('.item-input'),
-								$sections = $form.find('.section-input');
+						var $itemsFeatured = $ul.find('.featured').nextUntil('.section'),
+							$items = $ul.find('.section:not(.featured)').first().nextAll(),
+							$sections = $ul.find('.section:not(.featured)');
 
-							[].forEach.call(data.error, function(err) {
-								var errTitle = err.title,
-									errReason = err.reason,
+						if (data.error) {
+							[].forEach.call(data.error, function(error) {
+								// error := { target: <label>, type: [ item,section,featured], reason: error }
+								var errLabel = error.target,
+									errType = error.type,
+									errReason = error.reason,
 									reasonMessage = gerErrorMessageFromErrReason(errReason);
 
-								checkItemsForErrors($items, errTitle, errReason, reasonMessage);
-								checkSectionsForErrors($sections, errTitle, errReason, reasonMessage);
+								if (errType === 'item') {
+									$items.each(function() {
+										var $this = $(this);
+										// label for items is held in .name
+										if ($this.find('.name').val() === errLabel) {
+											addErrorToItem($this, errReason, reasonMessage);
+										}
+									});
+								} else if (errType === 'section') {
+									$sections.each(function() {
+										var $this = $(this);
+										// label for items is held in .section-input
+										if ($this.find('.section-input').val() === errLabel) {
+											addErrorToSection($this, errReason, reasonMessage);
+										}
+									});
+								} else if (errType === 'featured') {
+									$itemsFeatured.each(function() {
+										var $this = $(this);
+										// label for featured is held in .name
+										if ($this.find('.name').val() === errLabel) {
+											addErrorToItem($this, errReason, reasonMessage);
+										}
+									});
+								}
 							});
 
 							$save.addClass('err');

@@ -164,19 +164,18 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 		$helper = new CuratedContentHelper();
 		$sections = $helper->processSections( $this->request->getArray( 'sections', [] ) );
 		$errors = ( new CuratedContentValidator )->validateData( $sections );
-		
-		s($errors);
-		sd($sections);
 
 		if ( !empty( $errors ) ) {
 			$this->response->setVal( 'error', $errors );
+			$this->response->setVal( 'status', false );
 		} else {
-			$status = WikiFactory::setVarByName( 'wgWikiaCuratedContent', $wgCityId, $sections );
-			$this->response->setVal( 'status', $status );
+			$this->response->setVal( 'status', true );
+			//$status = WikiFactory::setVarByName( 'wgWikiaCuratedContent', $wgCityId, $sections );
+			//$this->response->setVal( 'status', $status );
 
-			if ( !empty( $status ) ) {
-				wfRunHooks( 'CuratedContentSave', [ $sections ] );
-			}
+			//if ( !empty( $status ) ) {
+			//	wfRunHooks( 'CuratedContentSave', [ $sections ] );
+			//}
 		}
 		return true;
 	}
