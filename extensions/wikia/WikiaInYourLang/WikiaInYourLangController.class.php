@@ -69,7 +69,7 @@ class WikiaInYourLangController extends WikiaController {
 					$sMessagesAry = $this->prepareMessage( $sTargetLanguage, $aMessageParams );
 					$this->response->setVal( 'success', true );
 					$this->response->setVal( 'message', $sMessagesAry['desktop'] );
-					$this->response->setVal( 'message-mobile', $sMessagesAry['mobile'] );
+					$this->response->setVal( 'messageMobile', $sMessagesAry['mobile'] );
 				}
 			}
 		}
