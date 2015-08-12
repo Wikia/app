@@ -815,7 +815,7 @@ class WikiImporter {
 			$this->notice( 'import-error-create', $title->getPrefixedText() );
 			return false;
 			// Wikia change start
-		} elseif( $title->getNamespace() == NS_MEDAWIKI  ) {
+		} elseif( $title->getNamespace() == NS_MEDIAWIKI  ) {
 			# Do not import if pages in the MediaWikia Namespace
 			return false;
 		}	// Wikia change end
