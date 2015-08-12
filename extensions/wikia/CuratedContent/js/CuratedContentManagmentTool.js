@@ -417,7 +417,7 @@ require(['wikia.window', 'jquery', 'wikia.nirvana', 'wikia.tracker', 'JSMessages
 						if (data.error) {
 							[].forEach.call(data.error, function(error) {
 								// error := { target: <label>, type: [item,section,featured], reason: <error> }
-								var message = gerErrorMessageFromErrReason(errReason);
+								var message = gerErrorMessageFromErrReason(err.reason);
 
 								iterateItemsForErrors($items, err, message);
 								iterateItemsForErrors($featuredItems, err, message);
