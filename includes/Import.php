@@ -60,28 +60,22 @@ class WikiImporter {
 		$this->setPageOutCallback( array( $this, 'finishImportPage' ) );
 	}
 
-	/**
-	 * @return null|\XMLReader
-	 */
-	public function getReader() {
-		return $this->reader;
-	}
-	public function throwXmlError( $err ) {
+	private function throwXmlError( $err ) {
 		$this->debug( "FAILURE: $err" );
 		wfDebug( "WikiImporter XML error: $err\n" );
 	}
 
-	public function debug( $data ) {
+	private function debug( $data ) {
 		if( $this->mDebug ) {
 			wfDebug( "IMPORT: $data\n" );
 		}
 	}
 
-	public function warn( $data ) {
+	private function warn( $data ) {
 		wfDebug( "IMPORT: $data\n" );
 	}
 
-	public function notice( $msg /*, $param, ...*/ ) {
+	private function notice( $msg /*, $param, ...*/ ) {
 		$params = func_get_args();
 		array_shift( $params );
 
@@ -336,8 +330,9 @@ class WikiImporter {
 	 * Fetches text contents of the current element, assuming
 	 * no sub-elements or such scary things.
 	 * @return string
+	 * @access private
 	 */
-	public function nodeContents() {
+	private function nodeContents() {
 		if( $this->reader->isEmptyElement ) {
 			return "";
 		}
