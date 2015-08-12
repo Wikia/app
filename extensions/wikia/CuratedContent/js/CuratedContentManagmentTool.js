@@ -415,8 +415,8 @@ require(['wikia.window', 'jquery', 'wikia.nirvana', 'wikia.tracker', 'JSMessages
 							$sections = $ul.find('.section:not(.featured)');
 
 						if (data.error) {
-							[].forEach.call(data.error, function(error) {
-								// error := { target: <label>, type: [item,section,featured], reason: <error> }
+							[].forEach.call(data.error, function(err) {
+								// err := { target: <label>, type: [item,section,featured], reason: <error> }
 								var message = gerErrorMessageFromErrReason(err.reason);
 
 								iterateItemsForErrors($items, err, message);
