@@ -237,6 +237,8 @@ class FlagsApiController extends FlagsApiBaseController {
 	 * 		It's used for rendering inputs in the "Add a flag" form.
 	 */
 	public function addFlagType() {
+		global $wgHideFlagsExt;
+
 		$this->checkAdminPermissions();
 
 		try {
@@ -260,7 +262,7 @@ class FlagsApiController extends FlagsApiBaseController {
 			$flagTypeModel = new FlagType();
 			$modelResponse = $flagTypeModel->addFlagType( $this->params );
 
-			if ( $migrateTemplates ) {
+			if ( $migrateTemplates && empty( $wgHideFlagsExt ) ) {
 				$task = new FlagsExtractTemplatesTask();
 				$task->wikiId( $this->params['wiki_id'] );
 				$task->call( 'migrateTemplatesToFlags', $this->params['flag_view'] );
@@ -715,7 +717,7 @@ class FlagsApiController extends FlagsApiBaseController {
 	 * @param Array $pagesIds
 	 */
 	private function purgePagesWithFlag( Array $pagesIds ) {
-		if ( !empty($pagesIds) ) {
+		if ( !empty( $pagesIds ) ) {
 			$this->getCache()->purgeFlagsForPages( $pagesIds );
 		}
 	}
