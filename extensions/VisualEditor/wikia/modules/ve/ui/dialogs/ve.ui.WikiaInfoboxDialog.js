@@ -1,5 +1,5 @@
 /*
- * VisualEditor user interface MWInfoboxDialog class.
+ * VisualEditor user interface WikiaInfoboxDialog class.
  *
  * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
@@ -17,9 +17,9 @@
  * @constructor
  * @param {Object} [config] Configuration options
  */
-ve.ui.MWInfoboxDialog = function VeUiMWInfoboxDialog( config ) {
+ve.ui.WikiaInfoboxDialog = function VeUiWikiaInfoboxDialog( config ) {
 	// Parent constructor
-	ve.ui.MWInfoboxDialog.super.call( this, config );
+	ve.ui.WikiaInfoboxDialog.super.call( this, config );
 
 	// Properties
 	this.transclusionModel = null;
@@ -34,17 +34,17 @@ ve.ui.MWInfoboxDialog = function VeUiMWInfoboxDialog( config ) {
 
 /* Inheritance */
 
-OO.inheritClass( ve.ui.MWInfoboxDialog, ve.ui.NodeDialog );
+OO.inheritClass( ve.ui.WikiaInfoboxDialog, ve.ui.NodeDialog );
 
 /* Static Properties */
 
-ve.ui.MWInfoboxDialog.static.name = 'infoboxTemplate';
+ve.ui.WikiaInfoboxDialog.static.name = 'infoboxTemplate';
 
-ve.ui.MWInfoboxDialog.static.icon = 'template';
+ve.ui.WikiaInfoboxDialog.static.icon = 'template';
 
-ve.ui.MWInfoboxDialog.static.modelClasses = [ ve.dm.MWTransclusionNode ];
+ve.ui.WikiaInfoboxDialog.static.modelClasses = [ ve.dm.MWTransclusionNode ];
 
-ve.ui.MWInfoboxDialog.static.actions = [
+ve.ui.WikiaInfoboxDialog.static.actions = [
 	{
 		action: 'apply',
 		label: OO.ui.deferMsg( 'visualeditor-dialog-action-apply' ),
@@ -71,7 +71,7 @@ ve.ui.MWInfoboxDialog.static.actions = [
  * @property {Object}
  * @inheritable
  */
-ve.ui.MWInfoboxDialog.static.bookletLayoutConfig = {
+ve.ui.WikiaInfoboxDialog.static.bookletLayoutConfig = {
 	continuous: true,
 	outlined: false,
 	autoFocus: false
@@ -82,7 +82,7 @@ ve.ui.MWInfoboxDialog.static.bookletLayoutConfig = {
 /**
  * Handle the transclusion being ready to use.
  */
-ve.ui.MWInfoboxDialog.prototype.onTransclusionReady = function () {
+ve.ui.WikiaInfoboxDialog.prototype.onTransclusionReady = function () {
 	this.loaded = true;
 	this.$element.addClass( 've-ui-mwInfoboxDialog-ready' );
 	this.popPending();
@@ -94,7 +94,7 @@ ve.ui.MWInfoboxDialog.prototype.onTransclusionReady = function () {
  * @param {ve.dm.MWTransclusionPartModel} removed Removed part
  * @param {ve.dm.MWTransclusionPartModel} added Added part
  */
-ve.ui.MWInfoboxDialog.prototype.onReplacePart = function ( removed, added ) {
+ve.ui.WikiaInfoboxDialog.prototype.onReplacePart = function ( removed, added ) {
 	var i, len, page, name, names, params, partPage, reselect, addedCount,
 		removePages = [];
 
@@ -169,7 +169,7 @@ ve.ui.MWInfoboxDialog.prototype.onReplacePart = function ( removed, added ) {
  *
  * @param {ve.dm.MWParameterModel} param Added param
  */
-ve.ui.MWInfoboxDialog.prototype.onAddParameter = function ( param ) {
+ve.ui.WikiaInfoboxDialog.prototype.onAddParameter = function ( param ) {
 	var page,test;
 debugger;
 	if ( param.getName() ) {
@@ -206,14 +206,14 @@ debugger;
  *
  * @param {ve.ui.MWParameterPage} page Parameter page object
  */
-ve.ui.MWInfoboxDialog.prototype.onAddParameterBeforeLoad = function () {};
+ve.ui.WikiaInfoboxDialog.prototype.onAddParameterBeforeLoad = function () {};
 
 /**
  * Handle remove param events.
  *
  * @param {ve.dm.MWParameterModel} param Removed param
  */
-ve.ui.MWInfoboxDialog.prototype.onRemoveParameter = function ( param ) {
+ve.ui.WikiaInfoboxDialog.prototype.onRemoveParameter = function ( param ) {
 	var page = this.bookletLayout.getPage( param.getId() ),
 		reselect = this.bookletLayout.getClosestPage( page );
 
@@ -229,7 +229,7 @@ ve.ui.MWInfoboxDialog.prototype.onRemoveParameter = function ( param ) {
  * If the transclusion is empty or only contains a placeholder it will not be insertable.
  * If the transclusion only contains a placeholder it will not be editable.
  */
-ve.ui.MWInfoboxDialog.prototype.setApplicableStatus = function () {
+ve.ui.WikiaInfoboxDialog.prototype.setApplicableStatus = function () {
 	var parts = this.transclusionModel && this.transclusionModel.getParts();
 
 	if ( this.loading.state() !== 'resolved' ) {
@@ -244,7 +244,7 @@ ve.ui.MWInfoboxDialog.prototype.setApplicableStatus = function () {
 /**
  * @inheritdoc
  */
-ve.ui.MWInfoboxDialog.prototype.getBodyHeight = function () {
+ve.ui.WikiaInfoboxDialog.prototype.getBodyHeight = function () {
 	return 400;
 };
 
@@ -254,7 +254,7 @@ ve.ui.MWInfoboxDialog.prototype.getBodyHeight = function () {
  * @param {ve.dm.MWTransclusionModel} part Part to get page for
  * @return {OO.ui.PageLayout|null} Page for part, null if no matching page could be found
  */
-ve.ui.MWInfoboxDialog.prototype.getPageFromPart = function ( part ) {
+ve.ui.WikiaInfoboxDialog.prototype.getPageFromPart = function ( part ) {
 	if ( part instanceof ve.dm.MWTemplateModel ) {
 		return new ve.ui.MWTemplatePage( part, part.getId(), { $: this.$ } );
 	} else if ( part instanceof ve.dm.MWTemplatePlaceholderModel ) {
@@ -273,7 +273,7 @@ ve.ui.MWInfoboxDialog.prototype.getPageFromPart = function ( part ) {
  * @param {ve.dm.MWTemplateModel|ve.dm.MWTemplatePlaceholderModel} part Part to check
  * @returns {string} Label of template or template placeholder
  */
-ve.ui.MWInfoboxDialog.prototype.getTemplatePartLabel = function ( part ) {//@todo CHECK USAGE OF getTemplatePartLabel
+ve.ui.WikiaInfoboxDialog.prototype.getTemplatePartLabel = function ( part ) {//@todo CHECK USAGE OF getTemplatePartLabel
 	return part instanceof ve.dm.MWTemplateModel ?
 		part.getSpec().getLabel() : ve.msg( 'visualeditor-dialog-transclusion-placeholder' );
 };
@@ -281,8 +281,8 @@ ve.ui.MWInfoboxDialog.prototype.getTemplatePartLabel = function ( part ) {//@tod
 /**
  * @inheritdoc
  */
-ve.ui.MWInfoboxDialog.prototype.getSelectedNode = function ( data ) {
-	var selectedNode = ve.ui.MWInfoboxDialog.super.prototype.getSelectedNode.call( this );
+ve.ui.WikiaInfoboxDialog.prototype.getSelectedNode = function ( data ) {
+	var selectedNode = ve.ui.WikiaInfoboxDialog.super.prototype.getSelectedNode.call( this );
 
 	// Data initialization
 	data = data || {};
@@ -302,7 +302,7 @@ ve.ui.MWInfoboxDialog.prototype.getSelectedNode = function ( data ) {
  *
  * @param {string} name Page name
  */
-ve.ui.MWInfoboxDialog.prototype.setPageByName = function ( name ) {
+ve.ui.WikiaInfoboxDialog.prototype.setPageByName = function ( name ) {
 	if ( this.bookletLayout.isOutlined() ) {
 		this.bookletLayout.getOutline().selectItem(
 			this.bookletLayout.getOutline().getItemFromData( name )
@@ -315,7 +315,7 @@ ve.ui.MWInfoboxDialog.prototype.setPageByName = function ( name ) {
 /**
  * Update the dialog title.
  */
-ve.ui.MWInfoboxDialog.prototype.updateTitle = function () {
+ve.ui.WikiaInfoboxDialog.prototype.updateTitle = function () {
 	var parts = this.transclusionModel && this.transclusionModel.getParts();
 
 	this.title.setLabel(
@@ -328,9 +328,9 @@ ve.ui.MWInfoboxDialog.prototype.updateTitle = function () {
 /**
  * @inheritdoc
  */
-ve.ui.MWInfoboxDialog.prototype.initialize = function () {
+ve.ui.WikiaInfoboxDialog.prototype.initialize = function () {
 	// Parent method
-	ve.ui.MWInfoboxDialog.super.prototype.initialize.call( this );
+	ve.ui.WikiaInfoboxDialog.super.prototype.initialize.call( this );
 
 	// Properties
 	this.panels = new OO.ui.StackLayout( { $: this.$ } );
@@ -354,7 +354,7 @@ ve.ui.MWInfoboxDialog.prototype.initialize = function () {
  * Otherwise, the returned deferred will be rejected.
  * @returns {jQuery.Deferred}
  */
-ve.ui.MWInfoboxDialog.prototype.checkRequiredParameters = function () {
+ve.ui.WikiaInfoboxDialog.prototype.checkRequiredParameters = function () {
 	var blankRequired = [], deferred = $.Deferred();
 	$.each( this.bookletLayout.pages, function () {
 		if ( !( this instanceof ve.ui.MWParameterPage ) ) {
@@ -398,7 +398,7 @@ ve.ui.MWInfoboxDialog.prototype.checkRequiredParameters = function () {
 /**
  * @inheritdoc
  */
-ve.ui.MWInfoboxDialog.prototype.getActionProcess = function ( action ) {
+ve.ui.WikiaInfoboxDialog.prototype.getActionProcess = function ( action ) {
 	if ( action === 'apply' || action === 'insert' ) {
 		return new OO.ui.Process( function () {
 			var deferred = $.Deferred();
@@ -423,15 +423,15 @@ ve.ui.MWInfoboxDialog.prototype.getActionProcess = function ( action ) {
 		}, this );
 	}
 
-	return ve.ui.MWInfoboxDialog.super.prototype.getActionProcess.call( this, action );
+	return ve.ui.WikiaInfoboxDialog.super.prototype.getActionProcess.call( this, action );
 };
 
 /**
  * @inheritdoc
  */
-ve.ui.MWInfoboxDialog.prototype.getSetupProcess = function ( data ) {
+ve.ui.WikiaInfoboxDialog.prototype.getSetupProcess = function ( data ) {
 	data = data || {};
-	return ve.ui.MWInfoboxDialog.super.prototype.getSetupProcess.call( this, data )
+	return ve.ui.WikiaInfoboxDialog.super.prototype.getSetupProcess.call( this, data )
 		.next( function () {
 			var template, promise;
 
@@ -477,7 +477,7 @@ ve.ui.MWInfoboxDialog.prototype.getSetupProcess = function ( data ) {
  *
  * @method
  */
-ve.ui.MWInfoboxDialog.prototype.initializeNewTemplateParameters = function () {
+ve.ui.WikiaInfoboxDialog.prototype.initializeNewTemplateParameters = function () {
 	var i, parts = this.transclusionModel.getParts();
 	for ( i = 0; i < parts.length; i++ ) {
 		if ( parts[i] instanceof ve.dm.MWTemplateModel ) {
@@ -491,12 +491,12 @@ ve.ui.MWInfoboxDialog.prototype.initializeNewTemplateParameters = function () {
  *
  * @method
  */
-ve.ui.MWInfoboxDialog.prototype.initializeTemplateParameters = function () {};
+ve.ui.WikiaInfoboxDialog.prototype.initializeTemplateParameters = function () {};
 
 /**
  * @inheritdoc
  */
-ve.ui.MWInfoboxDialog.prototype.getReadyProcess = function ( data ) {
+ve.ui.WikiaInfoboxDialog.prototype.getReadyProcess = function ( data ) {
 	return ve.ui.MWTemplateDialog.super.prototype.getReadyProcess.call( this, data )
 		.next( function () {
 			// TODO: Uncomment this when OOUI is updated so .focus() on an empty booklet doesn't crash
@@ -520,4 +520,4 @@ ve.ui.MWTemplateDialog.prototype.getTeardownProcess = function ( data ) {
 		}, this );
 };
 
-ve.ui.windowFactory.register( ve.ui.MWInfoboxDialog );
+ve.ui.windowFactory.register( ve.ui.WikiaInfoboxDialog );

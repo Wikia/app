@@ -14,28 +14,28 @@
  * @param {OO.ui.ToolGroup} toolGroup
  * @param {Object} [config] Configuration options
  */
-ve.ui.MWInfoboxDialogTool = function VeUiMWInfoboxDialogTool( toolGroup, config ) {
+ve.ui.WikiaInfoboxDialogTool = function VeUiWikiaInfoboxDialogTool( toolGroup, config ) {
 	ve.ui.DialogTool.call( this, toolGroup, config );
 };
 
 /* Inheritance */
 
-OO.inheritClass( ve.ui.MWInfoboxDialogTool, ve.ui.DialogTool );
+OO.inheritClass( ve.ui.WikiaInfoboxDialogTool, ve.ui.DialogTool );
 
 /* Static Properties */
 
-ve.ui.MWInfoboxDialogTool.static.name = 'infoboxTemplate';
+ve.ui.WikiaInfoboxDialogTool.static.name = 'infoboxTemplate';
 
-ve.ui.MWInfoboxDialogTool.static.group = 'object';
+ve.ui.WikiaInfoboxDialogTool.static.group = 'object';
 
-ve.ui.MWInfoboxDialogTool.static.icon = 'template';
+ve.ui.WikiaInfoboxDialogTool.static.icon = 'template';
 
-ve.ui.MWInfoboxDialogTool.static.title =
+ve.ui.WikiaInfoboxDialogTool.static.title =
 	OO.ui.deferMsg( 'visualeditor-dialogbutton-template-tooltip' );
 
-ve.ui.MWInfoboxDialogTool.static.modelClasses = [ ve.dm.MWTransclusionNode ];
+ve.ui.WikiaInfoboxDialogTool.static.modelClasses = [ ve.dm.MWTransclusionNode ];
 
-ve.ui.MWInfoboxDialogTool.static.commandName = 'infoboxTemplate';
+ve.ui.WikiaInfoboxDialogTool.static.commandName = 'infoboxTemplate';
 
 /**
  * Only display tool for single-template transclusions of these templates.
@@ -44,14 +44,14 @@ ve.ui.MWInfoboxDialogTool.static.commandName = 'infoboxTemplate';
  * @static
  * @inheritable
  */
-ve.ui.MWInfoboxDialogTool.static.template = null;
+ve.ui.WikiaInfoboxDialogTool.static.template = null;
 
 /* Methods */
 
 /**
  * @inheritdoc
  */
-ve.ui.MWInfoboxDialogTool.static.isCompatibleWith = function ( model ) {
+ve.ui.WikiaInfoboxDialogTool.static.isCompatibleWith = function ( model ) {
 	var compatible;
 
 	// Parent method
@@ -66,4 +66,4 @@ ve.ui.MWInfoboxDialogTool.static.isCompatibleWith = function ( model ) {
 
 /* Registration */
 
-ve.ui.toolFactory.register( ve.ui.MWInfoboxDialogTool );
+ve.ui.toolFactory.register( ve.ui.WikiaInfoboxDialogTool );
