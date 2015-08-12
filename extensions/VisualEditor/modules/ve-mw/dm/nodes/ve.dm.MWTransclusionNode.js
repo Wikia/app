@@ -78,7 +78,7 @@ ve.dm.MWTransclusionNode.static.toDataElement = function ( domElements, converte
 		mwDataJSON = domElements[0].getAttribute( 'data-mw' ),
 		mwData = mwDataJSON ? JSON.parse( mwDataJSON ) : {},
 		isInline = this.isHybridInline( domElements, converter ),
-		type = isInline ? 'mwTransclusionInline' : 'mwTransclusionBlock';
+		type = isInline ? 'mwTransclusionInline' : this.name;
 
 	dataElement = {
 		type: type,
