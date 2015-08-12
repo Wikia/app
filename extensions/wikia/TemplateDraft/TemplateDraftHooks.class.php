@@ -76,7 +76,7 @@ class TemplateDraftHooks {
 	 */
 	public static function onEditPageLayoutShowIntro( &$preloads, Title $title ) {
 		if ( $title->getNamespace() == NS_TEMPLATE ) {
-			$contentText = ( new WikiPage( $title ) )->getText();
+			$model = InsightsHelper::getInsightModel( InsightsUnconvertedInfoboxesModel::INSIGHT_TYPE );
 			if ( TemplateDraftHelper::isTitleDraft( $title ) ) {
 				$base = Title::newFromText( $title->getBaseText(), NS_TEMPLATE );
 				$baseHelp = Title::newFromText( 'Help:PortableInfoboxes' );
@@ -95,8 +95,9 @@ class TemplateDraftHooks {
 							wfMessage( 'templatedraft-module-view-parent' )->plain() )
 					)->escaped(),
 				];
+
 			} elseif ( !TemplateDraftHelper::titleHasPortableInfobox( $title )
-				&& UnconvertedInfoboxesPage::isTitleWithNonportableInfobox( $title->getText(), $contentText ) ) {
+				&& isset( $model->fetchArticlesData()[$title->getArticleID()] ) ) {
 				$draft = wfMessage( 'templatedraft-subpage' )->inContentLanguage()->escaped();
 				$base = Title::newFromText( $title->getBaseText() .'/'. $draft, NS_TEMPLATE );
 				$draftUrl = $base->getFullUrl( [
