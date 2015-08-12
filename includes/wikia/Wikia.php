@@ -29,7 +29,6 @@ $wgHooks['ArticleDeleteComplete']    [] = "Wikia::onArticleDeleteComplete";
 $wgHooks['ContributionsToolLinks']   [] = 'Wikia::onContributionsToolLinks';
 $wgHooks['AjaxAddScript']            [] = 'Wikia::onAjaxAddScript';
 $wgHooks['TitleGetSquidURLs']        [] = 'Wikia::onTitleGetSquidURLs';
-$wgHooks['ImportHandlePageXMLTag']   [] = 'Wikia::onImportHandlePageXMLTagFilter';
 $wgHooks['userCan']                  [] = 'Wikia::canEditInterfaceWhitelist';
 
 # changes in recentchanges (MultiLookup)
@@ -2227,24 +2226,6 @@ class Wikia {
 		// purge only the first thumbnail
 		$urls = array_slice($urls, 0, 1);
 
-		return true;
-	}
-
-	/**
-	 * Restrict imports to the MEDIAWIKI namespace
-	 */
-	static function onImportHandlePageXMLTagFilter ( WikiImporter $importer, &$pageInfo ) {
-
-		$tag = $importer->getReader()->name;
-		if ( $tag == 'title' ) {
-			$workTitle = $importer->nodeContents();
-			$title = Title::newFromText( $workTitle );
-
-			if ( !is_null( $title ) && $title->getNamespace() == NS_MEDAWIKI ) {
-				// skip import of this object
-				return false;
-			}
-		}
 		return true;
 	}
 
