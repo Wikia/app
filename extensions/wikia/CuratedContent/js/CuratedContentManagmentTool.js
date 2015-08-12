@@ -14,6 +14,9 @@ require(['wikia.window', 'jquery', 'wikia.nirvana', 'wikia.tracker', 'JSMessages
 			.popover('destroy')
 			.popover({content: message});
 	};
+	$.fn.findSelectorFromList = function(list, reason) {
+		return this.find(list[reason] || list.default);
+	};
 
 	$(function () {
 		mw.loader.using(['jquery.autocomplete', 'jquery.ui.sortable', 'wikia.aim', 'wikia.yui'], function () {
@@ -334,20 +337,19 @@ require(['wikia.window', 'jquery', 'wikia.nirvana', 'wikia.tracker', 'JSMessages
 				return errReason;
 			}
 			function addErrorToItem($selector, reason, message) {
-				if (reason === 'imageMissing') {
-					$selector.find('.image').addError(message);
-				} else if (reason === 'emptyLabel' || reason === 'duplicatedLabel' || reason === 'tooLongLabel') {
-					$selector.find('.name').addError(message);
-				} else {
-					$selector.find('.item-input').addError(message);
-				}
+				$selector.findSelectorFromList({
+						imageMissing: '.image',
+						emptyLabel: '.name',
+						duplicatedLabel: '.name',
+						tooLongLabel: '.name',
+						default: '.item-input'
+					}, reason).addError(message);
 			}
 			function addErrorToSection($selector, reason, message) {
-				if (reason === 'imageMissing') {
-					$selector.find('.image').addError(message);
-				} else {
-					$selector.find('.section-input').addError(message);
-				}
+				$selector.findSelectorFromList({
+					imageMissing: '.image',
+					default: '.section-input'
+				}, reason).addError(message);
 			}
 			function iterateItemsForErrors($nodes, err, message) {
 				var errLabel = err.target;
@@ -414,7 +416,7 @@ require(['wikia.window', 'jquery', 'wikia.nirvana', 'wikia.tracker', 'JSMessages
 
 						if (data.error) {
 							[].forEach.call(data.error, function(error) {
-								// error := { target: <label>, type: [ item,section,featured], reason: error }
+								// error := { target: <label>, type: [item,section,featured], reason: <error> }
 								var message = gerErrorMessageFromErrReason(errReason);
 
 								iterateItemsForErrors($items, err, message);

@@ -142,7 +142,7 @@ class CuratedContentValidator {
 	}
 
 	public function validateItemType( $item ) {
-		if ( !in_array( $item['type'], [ CuratedContentHelper::STR_CATEGORY ] ) ) {
+		if ( $item['type'] !== CuratedContentHelper::STR_CATEGORY ) {
 			$this->error( $item['label'], 'item', self::ERR_NO_CATEGORY_IN_TAG );
 		}
 	}
@@ -157,21 +157,22 @@ class CuratedContentValidator {
 
 	public function validateItem( $item, $isFeatured = false ) {
 		$this->validateImage( $item, $isFeatured );
+		$type = $isFeatured ? 'featured' : 'item';
 
 		if ( empty( $item['label'] ) ) {
-			$this->error( '', $isFeatured ? 'featured' : 'item', self::ERR_EMPTY_LABEL );
+			$this->error( '', $type, self::ERR_EMPTY_LABEL );
 		}
 
 		if ( strlen( $item['label'] ) > self::LABEL_MAX_LENGTH ) {
-			$this->error( $item['label'], $isFeatured ? 'featured' : 'item', self::ERR_TOO_LONG_LABEL );
+			$this->error( $item['label'], $type, self::ERR_TOO_LONG_LABEL );
 		}
 
 		if ( empty( $item['type'] ) ) {
-			$this->error( $item['label'], $isFeatured ? 'featured' : 'item', self::ERR_NOT_SUPPORTED_TYPE );
+			$this->error( $item['label'], $type, self::ERR_NOT_SUPPORTED_TYPE );
 		}
 
 		if ( self::needsArticleId( $item['type'] ) && empty( $item['article_id'] ) ) {
-			$this->error( $item['label'], $isFeatured ? 'featured' : 'item', self::ERR_ARTICLE_NOT_FOUND );
+			$this->error( $item['label'], $type, self::ERR_ARTICLE_NOT_FOUND );
 		}
 
 		if ( $isFeatured ) {
