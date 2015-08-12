@@ -2248,6 +2248,28 @@ class Wikia {
 	}
 
 	/**
+	 * Restrict editinterface right to whitelist
+	 * set $result true to allow, false to deny, leave alone means don't care
+	 * usually return true to allow processing other hooks
+	 * return false stops permissions processing and we are totally decided (nothing later can override)
+	 */
+	static function canEditInterfaceWhitelist (&$title, &$wgUser, $action, &$result) {
+		global $wgEditInterfaceWhitelist;
+
+		// List the conditions we don't care about for early exit
+		if ( $action == "read" || $title->getNamespace() != NS_MEDIAWIKI || empty( $wgEditInterfaceWhitelist )) {
+			return true;
+		}
+
+		// In this NS, editinterface applies only to white listed pages and staff users
+		if (in_array($title->getDBKey(), $wgEditInterfaceWhitelist) || in_array('staff', $wgUser->getGroups())) {
+			return $wgUser->isAllowed('editinterface');
+		}
+		
+		return false;
+	}
+
+	/**
 	 * Get an array of country codes and return the country names array indexed by corresponding codes
 	 * @param array $countryCodes
 	 * @return array Country names indexed by code
