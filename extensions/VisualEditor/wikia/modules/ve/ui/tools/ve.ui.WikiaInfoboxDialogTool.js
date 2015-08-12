@@ -1,5 +1,5 @@
 /*!
- * VisualEditor MediaWiki UserInterface transclusion tool classes.
+ * VisualEditor MediaWiki Infobox Dialog transclusion tool classes.
  *
  * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
@@ -26,14 +26,11 @@ OO.inheritClass( ve.ui.WikiaInfoboxDialogTool, ve.ui.DialogTool );
 
 ve.ui.WikiaInfoboxDialogTool.static.name = 'infoboxTemplate';
 
-ve.ui.WikiaInfoboxDialogTool.static.group = 'object';
+ve.ui.WikiaInfoboxDialogTool.static.icon = 'source';
 
-ve.ui.WikiaInfoboxDialogTool.static.icon = 'template';
+ve.ui.WikiaInfoboxDialogTool.static.title = OO.ui.deferMsg( 'visualeditor-dialogbutton-infobox-tooltip' );
 
-ve.ui.WikiaInfoboxDialogTool.static.title =
-	OO.ui.deferMsg( 'visualeditor-dialogbutton-template-tooltip' );
-
-ve.ui.WikiaInfoboxDialogTool.static.modelClasses = [ ve.dm.MWTransclusionNode ];
+ve.ui.WikiaInfoboxDialogTool.static.modelClasses = [ ve.dm.WikiaInfoboxTransclusionBlockNode ];
 
 ve.ui.WikiaInfoboxDialogTool.static.commandName = 'infoboxTemplate';
 
@@ -45,24 +42,6 @@ ve.ui.WikiaInfoboxDialogTool.static.commandName = 'infoboxTemplate';
  * @inheritable
  */
 ve.ui.WikiaInfoboxDialogTool.static.template = null;
-
-/* Methods */
-
-/**
- * @inheritdoc
- */
-ve.ui.WikiaInfoboxDialogTool.static.isCompatibleWith = function ( model ) {
-	var compatible;
-
-	// Parent method
-	compatible = ve.ui.DialogTool.static.isCompatibleWith.call( this, model );
-
-	if ( compatible && this.template ) {
-		return model.isSingleTemplate( this.template );
-	}
-
-	return compatible;
-};
 
 /* Registration */
 
