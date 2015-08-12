@@ -44,6 +44,13 @@ ve.ui.commandRegistry.register(
 
 ve.ui.commandRegistry.register(
 	new ve.ui.Command(
+		'infoboxTemplate', 'window', 'open',
+		{ args: ['infoboxTemplate'] }
+	)
+);
+
+ve.ui.commandRegistry.register(
+	new ve.ui.Command(
 		'wikiaTemplateInsert', 'window', 'open',
 		{ args: ['wikiaTemplateInsert'] }
 	)

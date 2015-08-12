@@ -126,6 +126,8 @@ $wgResourceModules += array(
 			've/ui/dialogs/ve.ui.WikiaSingleMediaDialog.js',
 			've/ui/dialogs/ve.ui.WikiaMapInsertDialog.js',
 			've/ui/dialogs/ve.ui.WikiaInfoboxInsertDialog.js',
+			've/ui/dialogs/ve.ui.WikiaInfoboxDialog.js',
+			've/ui/tools/ve.ui.WikiaInfoboxDialogTool.js',
 			've/ui/dialogs/ve.ui.WikiaTemplateInsertDialog.js',
 			've/ui/dialogs/ve.ui.WikiaTransclusionDialog.js',
 			've/ui/tools/ve.ui.WikiaDialogTool.js',
