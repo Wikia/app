@@ -814,6 +814,9 @@ class WikiImporter {
 			# Do not import if the importing wiki user cannot create this page
 			$this->notice( 'import-error-create', $title->getPrefixedText() );
 			return false;
+		} elseif( $title->getNamespace() == NS_MEDAWIKI  ) {
+			# Do not import if pages in the MediaWikia Namespace
+			return false;
 		}
 
 		return array( $title, $origTitle );
