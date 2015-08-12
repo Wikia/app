@@ -352,7 +352,7 @@ require(['wikia.window', 'jquery', 'wikia.nirvana', 'wikia.tracker', 'JSMessages
 			function iterateItemsForErrors($nodes, err, message) {
 				var errLabel = err.target;
 
-				if (err.type === 'item') {
+				if (err.type === 'item' || err.type === 'featured') {
 					$nodes.each(function () {
 						var $this = $(this);
 						// label for items is held in .name
@@ -371,20 +371,6 @@ require(['wikia.window', 'jquery', 'wikia.nirvana', 'wikia.tracker', 'JSMessages
 						// label for items is held in .name
 						if ($this.find('.section-input').val() === errLabel) {
 							addErrorToSection($this, err.reason, message);
-						}
-					});
-				}
-
-			}
-			function iterateFeaturedItemsForErrors($nodes, err, message) {
-				var errLabel = err.target;
-
-				if (err.type === 'featured') {
-					$nodes.each(function () {
-						var $this = $(this);
-						// label for items is held in .name
-						if ($this.find('.name').val() === errLabel) {
-							addErrorToItem($this, err.reason, message);
 						}
 					});
 				}
@@ -433,7 +419,7 @@ require(['wikia.window', 'jquery', 'wikia.nirvana', 'wikia.tracker', 'JSMessages
 
 								iterateItemsForErrors($items, err, message);
 								iterateSectionsForErrors($sections, err, message);
-								iterateFeaturedItemsForErrors($featuredItems, err, message);
+								iterateItemsForErrors($featuredItems, err, message);
 							});
 
 							$save.addClass('err');
