@@ -418,8 +418,8 @@ require(['wikia.window', 'jquery', 'wikia.nirvana', 'wikia.tracker', 'JSMessages
 								var message = gerErrorMessageFromErrReason(errReason);
 
 								iterateItemsForErrors($items, err, message);
-								iterateSectionsForErrors($sections, err, message);
 								iterateItemsForErrors($featuredItems, err, message);
+								iterateSectionsForErrors($sections, err, message);
 							});
 
 							$save.addClass('err');
