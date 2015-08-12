@@ -95,7 +95,6 @@ class TemplateDraftHooks {
 							wfMessage( 'templatedraft-module-view-parent' )->plain() )
 					)->escaped(),
 				];
-
 			} elseif ( !TemplateDraftHelper::titleHasPortableInfobox( $title )
 				&& isset( $model->fetchArticlesData()[$title->getArticleID()] ) ) {
 				$draft = wfMessage( 'templatedraft-subpage' )->inContentLanguage()->escaped();
