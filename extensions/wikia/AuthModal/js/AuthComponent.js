@@ -14,7 +14,7 @@ define('AuthComponent', function () {
 	AuthComponent.prototype.open = function (page) {
 		if (this.rootElement instanceof HTMLElement) {
 			var authIframe = document.createElement('iframe');
-			authIframe.src = '/' + page;
+			authIframe.src = window.location.origin + '/' + page;
 			this.rootElement.appendChild(authIframe);
 		}
 	};
