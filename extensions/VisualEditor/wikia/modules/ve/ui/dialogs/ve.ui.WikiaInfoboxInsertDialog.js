@@ -30,7 +30,7 @@ OO.inheritClass( ve.ui.WikiaInfoboxInsertDialog, ve.ui.FragmentDialog );
 ve.ui.WikiaInfoboxInsertDialog.static.name = 'wikiaInfoboxInsert';
 
 ve.ui.WikiaInfoboxInsertDialog.static.title = OO.ui.deferMsg( 'wikia-visualeditor-dialog-infobox-insert-title' );
-ve.ui.WikiaInfoboxInsertDialog.static.size = 'medium';
+ve.ui.WikiaInfoboxInsertDialog.static.size = 'small';
 
 /* Methods */
 
