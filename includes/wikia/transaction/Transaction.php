@@ -38,6 +38,7 @@ class Transaction {
 	const PARAM_API_ACTION = 'api_action';
 	const PARAM_WIKI = 'wiki';
 	const PARAM_DPL = 'dpl';
+	const PARAM_AB_PERFORMANCE_TEST = 'perf_test';
 
 	const PSEUDO_PARAM_TYPE = 'type';
 
@@ -50,6 +51,8 @@ class Transaction {
 	const EVENT_ARTICLE_PARSE = 'article_parse';
 	const EVENT_MEMCACHE_STATS_COUNTERS = 'memcache_stats_counters';
 	const EVENT_MEMCACHE_STATS_KEYS = 'memcache_stats_keys';
+	const EVENT_USER_PREFERENCES = 'user_preferences';
+	const EVENT_USER_ATTRIBUTES = 'user_attributes';
 
 	/**
 	 * Returns TransactionTrace singleton instance

@@ -24,6 +24,10 @@ class SFDateTimeInput extends SFDateInput {
 		return array( '_dat' );
 	}
 
+	public static function getDefaultCargoTypes() {
+		return array( 'Datetime' => array() );
+	}
+
 	public static function getHTML( $datetime, $input_name, $is_mandatory, $is_disabled, $other_args ) {
 		global $sfgTabIndex, $sfg24HourTime;
 
@@ -52,9 +56,10 @@ class SFDateTimeInput extends SFDateInput {
 					$timezone = $datetime['timezone'];
 				}
 			} else {
-				// TODO - this should change to use SMW's own
-				// date-handling class, just like
-				// dateEntryHTML() does.
+				// Parse the date.
+				// We get only the time data here - the main
+				// date data is handled by the call to
+				// parent::getMainHTML().
 
 				// Handle 'default=now'.
 				if ( $datetime == 'now' ) {
@@ -95,15 +100,15 @@ class SFDateTimeInput extends SFDateInput {
 
 		$text = parent::getMainHTML( $datetime, $input_name, $is_mandatory, $is_disabled, $other_args );
 		$disabled_text = ( $is_disabled ) ? 'disabled' : '';
-		$text .= '	&#160;<input tabindex="' . $sfgTabIndex . '" name="' . $input_name . '[hour]" type="text" value="' . $hour . '" size="2"/ ' . $disabled_text . '>';
+		$text .= '	&#160;<input tabindex="' . $sfgTabIndex . '" name="' . $input_name . '[hour]" type="text" class="hoursInput" value="' . $hour . '" size="2"/ ' . $disabled_text . '>';
 		$sfgTabIndex++;
-		$text .= '	:<input tabindex="' . $sfgTabIndex . '" name="' . $input_name . '[minute]" type="text" value="' . $minute . '" size="2"/ ' . $disabled_text . '>';
+		$text .= '	:<input tabindex="' . $sfgTabIndex . '" name="' . $input_name . '[minute]" type="text" class="minutesInput" value="' . $minute . '" size="2"/ ' . $disabled_text . '>';
 		$sfgTabIndex++;
-		$text .= ':<input tabindex="' . $sfgTabIndex . '" name="' . $input_name . '[second]" type="text" value="' . $second . '" size="2"/ ' . $disabled_text . '>' . "\n";
+		$text .= ':<input tabindex="' . $sfgTabIndex . '" name="' . $input_name . '[second]" type="text" class="secondsInput" value="' . $second . '" size="2"/ ' . $disabled_text . '>' . "\n";
 
 		if ( !$sfg24HourTime ) {
 			$sfgTabIndex++;
-			$text .= '	 <select tabindex="' . $sfgTabIndex . '" name="' . $input_name . "[ampm24h]\" $disabled_text>\n";
+			$text .= '	 <select tabindex="' . $sfgTabIndex . '" name="' . $input_name . "[ampm24h]\" class=\"ampmInput\" $disabled_text>\n";
 			$ampm24h_options = array( '', 'AM', 'PM' );
 			foreach ( $ampm24h_options as $value ) {
 				$text .= "				<option value=\"$value\"";
@@ -126,7 +131,7 @@ class SFDateTimeInput extends SFDateInput {
 		$params[] = array(
 			'name' => 'include timezone',
 			'type' => 'boolean',
-			'description' => wfMsg( 'sf_forminputs_includetimezone' )
+			'description' => wfMessage( 'sf_forminputs_includetimezone' )->text()
 		);
 		return $params;
 	}

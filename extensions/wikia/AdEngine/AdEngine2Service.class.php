@@ -27,16 +27,9 @@ class AdEngine2Service {
 	}
 
 	public static function shouldLoadLiftium() {
-		global $wgAdEngineDisableLateQueue;
-
 		$pageType = ( new AdEngine2PageTypeService() )->getPageType();
 
-		return !$wgAdEngineDisableLateQueue && ($pageType !== AdEngine2PageTypeService::PAGE_TYPE_NO_ADS);
-	}
-
-	public static function shouldLoadLateQueue() {
-		global $wgAdEngineDisableLateQueue;
-		return !$wgAdEngineDisableLateQueue;
+		return $pageType !== AdEngine2PageTypeService::PAGE_TYPE_NO_ADS;
 	}
 
 	/**

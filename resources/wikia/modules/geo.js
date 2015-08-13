@@ -44,6 +44,18 @@
 		}
 
 		/**
+		 * Set the country code
+		 *
+		 * @public
+		 * @param {String} countryCode
+		 */
+		function setCountryCode(countryCode) {
+			var data = getGeoData();
+			data.country = countryCode;
+			cookies.set(cookieName, JSON.stringify(data));
+		}
+
+		/**
 		 * Returns the code for the continent
 		 *
 		 * @public
@@ -60,7 +72,8 @@
 		return {
 			getGeoData: getGeoData,
 			getCountryCode: getCountryCode,
-			getContinentCode: getContinentCode
+			getContinentCode: getContinentCode,
+			setCountryCode: setCountryCode
 		};
 	}
 

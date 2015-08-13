@@ -12,7 +12,7 @@ describe('AdLogicPageParams', function () {
 				return {
 					opts: {},
 					targeting: targeting || {},
-					forceProviders: {}
+					forcedProvider: null
 				};
 			},
 			addCallback: function () {
@@ -21,15 +21,17 @@ describe('AdLogicPageParams', function () {
 		};
 	}
 
-	function mockWindow(document, hostname, amzn_targs) {
-
-		hostname = hostname || 'example.org';
+	function mockWindow(opts) {
+		opts.hostname = opts.hostname || 'example.org';
 
 		return {
-			document: document || {},
-			location: { origin: 'http://' + hostname, hostname: hostname },
-			amzn_targs: amzn_targs,
-			wgCookieDomain: hostname.substr(hostname.indexOf('.'))
+			innerWidth: opts.innerWidth,
+			innerHeight: opts.innerHeight,
+			document: opts.document || {},
+			location: { origin: 'http://' + opts.hostname, hostname: opts.hostname },
+			amzn_targs: opts.amzn_targs,
+			wgCookieDomain: opts.hostname.substr(opts.hostname.indexOf('.')),
+			wgABPerformanceTest: opts.perfab
 		};
 	}
 
@@ -92,7 +94,7 @@ describe('AdLogicPageParams', function () {
 				},
 				getGroup: function () { return; }
 			} : undefined,
-			windowMock = mockWindow(opts.document, opts.hostname, opts.amzn_targs);
+			windowMock = mockWindow(opts);
 
 		return modules['ext.wikia.adEngine.adLogicPageParams'](
 			mockAdContext(targeting),
@@ -100,6 +102,7 @@ describe('AdLogicPageParams', function () {
 			logMock,
 			windowMock.document,
 			windowMock.location,
+			windowMock,
 			undefined,
 			abTestMock,
 			kruxMock
@@ -108,12 +111,13 @@ describe('AdLogicPageParams', function () {
 
 	it('getPageLevelParams simple params correct', function () {
 		var params = getParams({
+			mappedVerticalName: 'mappedVertical',
 			wikiCategory: 'category',
 			wikiDbName: 'dbname',
 			wikiLanguage: 'xx'
 		});
 
-		expect(params.s0).toBe('category');
+		expect(params.s0).toBe('mappedVertical');
 		expect(params.s1).toBe('_dbname');
 		expect(params.s2).toBe('article');
 		expect(params.lang).toBe('xx');
@@ -210,10 +214,10 @@ describe('AdLogicPageParams', function () {
 			kruxSegmentsFew = ['kxsgmntA', 'kxsgmntB', 'kxsgmntC', 'kxsgmntD'],
 			params;
 
-		params = getParams({}, {kruxSegments: kruxSegmentsNone});
+		params = getParams({enableKruxTargeting: true}, {kruxSegments: kruxSegmentsNone});
 		expect(params.ksgmnt).toEqual(kruxSegmentsNone, 'No segments');
 
-		params = getParams({}, {kruxSegments: kruxSegmentsFew});
+		params = getParams({enableKruxTargeting: true}, {kruxSegments: kruxSegmentsFew});
 		expect(params.ksgmnt).toEqual(kruxSegmentsFew, 'A few segments');
 	});
 
@@ -250,6 +254,16 @@ describe('AdLogicPageParams', function () {
 		expect(params.ab).toEqual(['17_34', '19_45', '76_112'], 'ab params passed');
 	});
 
+	it('getPageLevelParams abPerfTest info', function () {
+		var params;
+
+		params = getParams();
+		expect(params.perfab).toEqual(undefined);
+
+		params = getParams({}, {perfab: 'foo'});
+		expect(params.perfab).toEqual('foo');
+	});
+
 	it('getPageLevelParams includeRawDbName', function () {
 		var params = getParams({
 			wikiDbName: 'xyz'
@@ -267,7 +281,6 @@ describe('AdLogicPageParams', function () {
 
 		expect(params.rawDbName).toBe('_xyz');
 	});
-
 
 // Very specific tests for hubs:
 
@@ -332,7 +345,7 @@ describe('AdLogicPageParams', function () {
 		var kruxSegments = ['kxsgmntA', 'kxsgmntB', 'kxsgmntC', 'kxsgmntD'],
 			params;
 
-		params = getParams({}, {kruxSegments: kruxSegments});
+		params = getParams({enableKruxTargeting: true}, {kruxSegments: kruxSegments});
 		expect(params.ksgmnt).toEqual(kruxSegments, 'Krux on regular wiki');
 
 		params = getParams({wikiDirectedAtChildren: true}, {kruxSegments: kruxSegments});
@@ -379,7 +392,6 @@ describe('AdLogicPageParams', function () {
 
 	it('getPageLevelParams ref param', function () {
 		var params;
-
 
 		params = getParams({}, { document: {
 			referrer: ''
@@ -442,7 +454,23 @@ describe('AdLogicPageParams', function () {
 		});
 
 		expect(params.ref).toBe('external');
+	});
 
+	it('getPageLevelParams aspect ratio for landscape orientation', function () {
+		var params = getParams({}, {
+			innerWidth: 1024,
+			innerHeight: 600
+		});
 
+		expect(params.ar).toBe('4:3');
+	});
+
+	it('getPageLevelParams aspect ratio for portrait orientation', function () {
+		var params = getParams({}, {
+			innerWidth: 360,
+			innerHeight: 640
+		});
+
+		expect(params.ar).toBe('3:4');
 	});
 });

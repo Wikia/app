@@ -7,14 +7,16 @@ define('ext.wikia.adEngine.adContext', [
 	'wikia.document',
 	'wikia.geo',
 	'wikia.instantGlobals',
+	'wikia.querystring',
 	require.optional('wikia.abTest')
-], function (w, doc, geo, instantGlobals, abTest) {
+], function (w, doc, geo, instantGlobals, Querystring, abTest) {
 	'use strict';
 
 	instantGlobals = instantGlobals || {};
 
 	var context,
-		callbacks = [];
+		callbacks = [],
+		qs = new Querystring();
 
 	function getContext() {
 		return context;
@@ -32,6 +34,14 @@ define('ext.wikia.adEngine.adContext', [
 		return categoryDict.map(function (item) { return item.title; });
 	}
 
+	function isProperCountry(countryList) {
+		return (countryList && countryList.indexOf && countryList.indexOf(geo.getCountryCode()) > -1);
+	}
+
+	function isUrlParamSet(param) {
+		return !!parseInt(qs.getVal(param, '0'));
+	}
+
 	function setContext(newContext) {
 		var i,
 			len;
@@ -41,28 +51,25 @@ define('ext.wikia.adEngine.adContext', [
 
 		// Always have objects in all categories
 		context.opts = context.opts || {};
+		context.slots = context.slots || {};
 		context.targeting = context.targeting || {};
 		context.providers = context.providers || {};
-		context.forceProviders = context.forceProviders || {};
+		context.forcedProvider = qs.getVal('forcead', null) || context.forcedProvider || null;
 
 		// Don't show ads when Sony requests the page
 		if (doc && doc.referrer && doc.referrer.match(/info\.tvsideview\.sony\.net/)) {
 			context.opts.showAds = false;
 		}
 
-		// Use PostScribe for ScriptWriter implementation when SevenOne Media ads are enabled
-		if (context.providers.sevenOneMedia) {
-			context.opts.usePostScribe = true;
+		// SourcePoint integration
+		if (context.opts.sourcePointUrl) {
+			context.opts.sourcePoint = (isUrlParamSet('sourcepoint') ||
+				isProperCountry(instantGlobals.wgAdDriverSourcePointCountries));
 		}
 
 		// Targeting by page categories
 		if (context.targeting.enablePageCategories) {
 			context.targeting.pageCategories = w.wgCategories || getMercuryCategories();
-		}
-
-		// Krux integration
-		if (instantGlobals.wgSitewideDisableKrux) {
-			context.targeting.enableKruxTargeting = false;
 		}
 
 		// Taboola integration
@@ -71,17 +78,34 @@ define('ext.wikia.adEngine.adContext', [
 				(context.targeting.pageType === 'article' || context.targeting.pageType === 'home');
 		}
 
-		// Turtle
-		if (context.forceProviders.turtle) {
+		if (isProperCountry(instantGlobals.wgAdDriverTurtleCountries)) {
 			context.providers.turtle = true;
 		}
 
-		if (instantGlobals.wgAdDriverTurtleCountries &&
-				instantGlobals.wgAdDriverTurtleCountries.indexOf &&
-				instantGlobals.wgAdDriverTurtleCountries.indexOf(geo.getCountryCode()) > -1
-					) {
-			context.providers.turtle = true;
+		if (isProperCountry(instantGlobals.wgAdDriverOpenXCountries)) {
+			context.providers.openX = true;
 		}
+
+		// INVISIBLE_HIGH_IMPACT slot
+		context.slots.invisibleHighImpact = (
+			context.slots.invisibleHighImpact &&
+			isProperCountry(instantGlobals.wgAdDriverHighImpactSlotCountries)
+		) || isUrlParamSet('highimpactslot');
+
+		// INCONTENT_PLAYER slot
+		context.slots.incontentPlayer = isProperCountry(instantGlobals.wgAdDriverIncontentPlayerSlotCountries) ||
+			isUrlParamSet('incontentplayer');
+
+		context.opts.enableScrollHandler = isProperCountry(instantGlobals.wgAdDriverScrollHandlerCountries) ||
+			isUrlParamSet('scrollhandler');
+
+		// Krux integration
+		context.targeting.enableKruxTargeting = !!(
+			context.targeting.enableKruxTargeting &&
+			isProperCountry(instantGlobals.wgAdDriverKruxCountries) &&
+			!instantGlobals.wgSitewideDisableKrux &&
+			!context.targeting.wikiDirectedAtChildren
+		);
 
 		// Export the context back to ads.context
 		// Only used by Lightbox.js, WikiaBar.js and AdsInContext.js

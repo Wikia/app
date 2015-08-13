@@ -43,6 +43,7 @@ class WikiaResponse {
 	const CACHE_LONG = 2592000; // 30 days
 	const CACHE_STANDARD = 86400; // 24 hours
 	const CACHE_SHORT = 10800; // 3 hours
+	const CACHE_VERY_SHORT = 300; // 5 minutes
 
 	/**
 	 * Caching policy

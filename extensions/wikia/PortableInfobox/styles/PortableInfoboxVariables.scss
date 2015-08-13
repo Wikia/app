@@ -1,0 +1,14 @@
+@import 'skins/shared/color';
+
+$infobox-background: mix($color-page, $color-links, 90%);
+@if ($is-dark-wiki) {
+	$infobox-background: mix($color-page, $color-links, 85%);
+}
+$infobox-item-margin: 5px;
+$infobox-margin: 15px;
+$infobox-width: 270px;
+
+$infobox-debug-error-msg-bg: black;
+$infobox-debug-error-msg-color: white;
+$infobox-debug-line-number-width: 50px;
+$infobox-section-header-background: mix($color-page, $color-links, 75%);

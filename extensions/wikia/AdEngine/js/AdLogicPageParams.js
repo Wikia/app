@@ -6,10 +6,11 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 	'wikia.log',
 	'wikia.document',
 	'wikia.location',
+	'wikia.window',
 	require.optional('ext.wikia.adEngine.lookup.services'),
 	require.optional('wikia.abTest'),
 	require.optional('wikia.krux')
-], function (adContext, pvCounter, log, doc, loc, lookups, abTest, krux) {
+], function (adContext, pvCounter, log, doc, loc, win, lookups, abTest, krux) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.adLogicPageParams',
@@ -83,6 +84,15 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 	}
 
 	/**
+	 * Get the AbPerformanceTesting experiment name
+	 *
+	 * @returns {string}
+	 */
+	function getPerformanceAb() {
+		return win.wgABPerformanceTest;
+	}
+
+	/**
 	 * Adds the info from the second hash into the first.
 	 * If the same key is in both, the key in the second object overrides what's in the first object.
 	 *
@@ -135,7 +145,6 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 		return params;
 	}
 
-
 	function getRefParam() {
 		var hostnameMatch,
 			ref = doc.referrer,
@@ -184,9 +193,14 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 		return 'external';
 	}
 
+	function getAspectRatio() {
+		return win.innerWidth > win.innerHeight ? '4:3' : '3:4';
+	}
+
 	/**
-	 * options
-	 * @param options {includeRawDbName: bool}
+	 * Returns page level params
+	 * @param {Object} options
+	 * @param {Boolean} options.includeRawDbName - to include raw db name or not
 	 * @returns object
 	 */
 	function getPageLevelParams(options) {
@@ -210,7 +224,7 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 			zone1 = '_' + getDartHubName() + '_hub';
 			zone2 = 'hub';
 		} else {
-			site = targeting.wikiCategory;
+			site = targeting.mappedVerticalName || targeting.wikiCategory;
 			zone1 = dbName;
 			zone2 = targeting.pageType || 'article';
 		}
@@ -220,6 +234,8 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 			s1: zone1,
 			s2: zone2,
 			ab: getAb(),
+			ar: getAspectRatio(),
+			perfab: getPerformanceAb(),
 			artid: targeting.pageArticleId && targeting.pageArticleId.toString(),
 			cat: getCategories(),
 			dmn: getDomain(),
@@ -238,7 +254,7 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 			params.rawDbName = dbName;
 		}
 
-		if (krux && !targeting.wikiDirectedAtChildren) {
+		if (krux && targeting.enableKruxTargeting) {
 			params.u = krux.getUser();
 			params.ksgmnt = krux.getSegments();
 		}

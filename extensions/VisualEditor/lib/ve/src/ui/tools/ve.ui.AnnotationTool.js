@@ -42,6 +42,14 @@ ve.ui.AnnotationTool.static.deactivateOnSelect = false;
 /**
  * @inheritdoc
  */
+ve.ui.AnnotationTool.prototype.onSelect = function () {
+	ve.track( 'tool.annotation.select', { name: this.constructor.static.name } );
+	ve.ui.Tool.prototype.onSelect.apply( this, arguments );
+};
+
+/**
+ * @inheritdoc
+ */
 ve.ui.AnnotationTool.prototype.onUpdateState = function ( fragment ) {
 	// Parent method
 	ve.ui.Tool.prototype.onUpdateState.apply( this, arguments );

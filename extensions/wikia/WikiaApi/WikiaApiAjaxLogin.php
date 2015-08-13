@@ -46,7 +46,7 @@ class WikiaApiAjaxLogin extends ApiBase {
 					$injected_html = '';
 					wfRunHooks('UserLoginComplete', array(&$wgUser, &$injected_html));
 
-					$wgUser->setOption( 'rememberpassword', $Remember ? 1 : 0 );
+					$wgUser->setGlobalPreference( 'rememberpassword', $Remember ? 1 : 0 );
 					$wgUser->setCookies();
 
 					$result['result'] = 'Success';
@@ -75,7 +75,7 @@ class WikiaApiAjaxLogin extends ApiBase {
 					$result['text'] = wfMsg('wrongpassword'); #set default normal message
 					$attemptedUser = User::newFromName( $Name );
 					if ( !is_null( $attemptedUser ) ) {
-						$disOpt = $attemptedUser->getOption('disabled');
+						$disOpt = $attemptedUser->getGlobalFlag('disabled');
 						if( !empty($disOpt) ||
 							(defined( 'CLOSED_ACCOUNT_FLAG' ) && $attemptedUser->getRealName() == CLOSED_ACCOUNT_FLAG ) ){
 							#either closed account flag was present, override fail message

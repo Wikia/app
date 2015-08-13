@@ -1,0 +1,53 @@
+@import 'skins/oasis/css/core/breakpoints-variables';
+@import 'GlobalNavigationVariables';
+
+@if $widthType == 0 {
+	@media #{$breakpoint-not-supported} {
+		.global-navigation {
+			position: relative;
+			width: $content-width-small;
+		}
+	}
+
+	@media #{$breakpoint-below-small-plus} {
+		.global-navigation .global-navigation-container {
+			width: $content-width-small - $scroll-bar-width;
+
+			.start-wikia-container {
+				padding-left: 21px;
+
+				.start-wikia {
+					line-height: $start-a-wikia-logo-size - 2 * $content-border-width;
+					width: $start-a-wikia-logo-size;
+
+					&:after {
+						content: '+';
+						display: block;
+					}
+
+					span {
+						display: none;
+					}
+				}
+			}
+		}
+	}
+
+	@media #{$breakpoint-small-plus} {
+		.global-navigation .global-navigation-container {
+			width: $content-width-small-plus;
+		}
+	}
+
+	@media #{$breakpoint-medium-only} {
+		.global-navigation .global-navigation-container {
+			width: $content-width-medium;
+		}
+	}
+
+	@media #{$breakpoint-large-up} {
+		.global-navigation .global-navigation-container {
+			width: $content-width-large;
+		}
+	}
+}

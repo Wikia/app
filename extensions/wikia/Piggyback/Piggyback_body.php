@@ -61,10 +61,10 @@ class PBLoginForm extends LoginForm {
 
 		$this->mType = 'login';
 		/* fake to don't change remember password */
-		$this->mRemember = (bool) $wgUser->getOption( 'rememberpassword' );
+		$this->mRemember = (bool) $wgUser->getGlobalPreference( 'rememberpassword' );
 	}
 
-	function mainLoginForm( $msg, $msgtype = 'error' ) {
+	function mainLoginForm( $msg, $msgtype = 'error', $errParam = '' ) {
 		$this->templateData['messagetype'] = $msgtype;
 		$this->templateData['message'] = $msg;
 		$this->templateData['name'] = $this->mUsername;
@@ -118,7 +118,7 @@ class PBLoginForm extends LoginForm {
 
 	function switchUser( $u ) {
 		global $wgUser, $wgAuth, $wgOut, $wgRequest, $wgLang;
-		$oldUserlang = $wgUser->getOption( 'language' );
+		$oldUserlang = $wgUser->getGlobalPreference( 'language' );
 		$wgAuth->updateUser( $u );
 		$wgUser = $u;
 		$wgUser->setCookies();

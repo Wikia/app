@@ -2,15 +2,6 @@
 
 class UserLoginHooksHelper {
 
-	// send reconfirmation mail
-	public static function onUserSendReConfirmationMail( User &$user, &$result ) {
-		$userLoginHelper = ( new UserLoginHelper );
-		$emailTextTemplate = $userLoginHelper->getReconfirmationEmailTempalte( $user );
-		$result = $user->sendConfirmationMail( false, 'ReConfirmationMail', 'usersignup-reconfirmation-email', true, $emailTextTemplate );
-
-		return true;
-	}
-
 	// get error message when abort new account
 	public static function onAbortNewAccountErrorMessage( &$abortError, &$errParam ) {
 		if ( $abortError == wfMessage( 'phalanx-user-block-new-account' )->escaped() ) {
@@ -63,7 +54,7 @@ class UserLoginHooksHelper {
 	public static function onGetEmailAuthentication( User &$user, IContextSource $context, &$disableEmailPrefs, &$emailauthenticated ) {
 		if ( $user->getEmail() ) {
 			$emailTimestamp = $user->getEmailAuthenticationTimestamp();
-			$optionNewEmail = $user->getOption( 'new_email' );
+			$optionNewEmail = $user->getNewEmail();
 			$msgKeyPrefixEmail = ( empty( $optionNewEmail ) && !$emailTimestamp ) ? 'usersignup-user-pref-unconfirmed-' : 'usersignup-user-pref-';
 			if ( empty( $optionNewEmail ) && $emailTimestamp ) {
 				$lang = $context->getLanguage();
@@ -103,9 +94,9 @@ class UserLoginHooksHelper {
 	public static function onSetUserEmail( User $user, $newEmail, &$result, &$info ) {
 		$app = F::app();
 		$oldEmail = $user->getEmail();
-		$optionNewEmail = $user->getOption( 'new_email' );
+		$optionNewEmail = $user->getNewEmail();
 		if ( ( empty( $optionNewEmail ) &&  $newEmail != $oldEmail ) || ( !empty( $optionNewEmail ) &&  $newEmail != $optionNewEmail ) ) {
-			$user->setOption( 'new_email', $newEmail );
+			$user->setNewEmail( $newEmail );
 			$user->invalidateEmail();
 			if ( $app->wg->EmailAuthentication ) {
 				$userLoginHelper = new UserLoginHelper();
@@ -202,24 +193,6 @@ class UserLoginHooksHelper {
 			$scssPackages[] = 'wikiamobile_usersignup_scss';
 		}
 
-		return true;
-	}
-
-	/**
-	 * Hook introducing additional control over account creation
-	 * Currently forbids to create an account if username contains
-	 * circled latin characters, e.g. Ⓐ or ⓜ
-	 * @param User $user
-	 * @param String $message
-	 * @return bool
-	 */
-	static public function onAbortNewAccount( $user, &$message ) {
-		$username = $user->getName();
-		$forbiddenCharactersRegex = '/[\x{24B6}-\x{24E9}]|[\x{1F150}-\x{1F169}]/u';
-		if ( preg_match( $forbiddenCharactersRegex, $username ) ) {
-			$message = wfMessage( 'usersignup-error-symbols-in-username' )->escaped();
-			return false;
-		}
 		return true;
 	}
 

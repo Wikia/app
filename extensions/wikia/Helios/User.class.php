@@ -2,22 +2,38 @@
 
 namespace Wikia\Helios;
 
+use LoginForm;
+use Wikia\Logger\WikiaLogger;
+
 /**
  * A helper class for dealing with user-related objects.
  */
 class User {
 
+	const ACCESS_TOKEN_COOKIE_NAME = 'access_token';
+	const AUTH_METHOD_NAME = 'auth_method';
+	const MERCURY_ACCESS_TOKEN_COOKIE_NAME = 'sid';
+	const AUTH_TYPE_FAILED = 0;
+	const AUTH_TYPE_NORMAL_PW = 1;
+	const AUTH_TYPE_RESET_PW = 2;
+	const AUTH_TYPE_FB_TOKEN = 4;
+
+	// This is set to 6 months,(365/2)*24*60*60 = 15768000
+	const ACCESS_TOKEN_COOKIE_TTL = 15768000;
+
 	private static $authenticationCache = [];
 
 	/**
 	 * Logs character encoding data for the given password.
+	 *
+	 * @param string $password
+	 * @param string $callingMethod
 	 */
-	public static function debugLogin( $password, $callingMethod )
-	{
+	public static function debugLogin( $password, $callingMethod ) {
 		$detectedEncoding = mb_detect_encoding( $password );
 		$internalEncoding = mb_internal_encoding();
 
-		\Wikia\Logger\WikiaLogger::instance()->info( $callingMethod, [
+		WikiaLogger::instance()->info( $callingMethod, [
 			'byte_length'			=> strlen( $password ),
 			'character_length_detected'	=> mb_strlen( $password, $detectedEncoding ),
 			'character_length_internal'	=> mb_strlen( $password, $internalEncoding ),
@@ -27,35 +43,77 @@ class User {
 	}
 
 	/**
-	 * Creates a MediaWiki User object based on the token given in the HTTP request.
+	 * Extracts access token from HTTP request data.
+	 *
+	 * @param \WebRequest $request the HTTP request data as an object
+	 * @return String access token or null
 	 */
-	public static function newFromToken( \WebRequest $request )
-	{
+	public static function getAccessToken( \WebRequest $request ) {
+		// A cookie takes precedence over an HTTP header.
+		$token = $request->getCookie( self::ACCESS_TOKEN_COOKIE_NAME, '' );
 
-		$header = $request->getHeader( 'AUTHORIZATION' );
-
-		if ( $header ) {
+		// No access token in the cookie, try the HTTP header.
+		if ( ! $token ) {
+			$header = $request->getHeader( 'AUTHORIZATION' );
 
 			$matches = [];
 			preg_match( '/^Bearer\s*(\S*)$/', $header, $matches );
 
-			if ( !empty( $matches[1] ) ) {
+			if ( ! empty( $matches[1] ) ) {
+				$token = $matches[1];
+			}
+		}
 
-				global $wgHeliosBaseUri, $wgHeliosClientId, $wgHeliosClientSecret;
+		// Normalize the value so the method returns a non-empty string or null.
+		if ( empty( $token ) ) {
+			return null;
+		}
 
-				$heliosClient = new Client( $wgHeliosBaseUri, $wgHeliosClientId, $wgHeliosClientSecret );
+		return $token;
+	}
 
-				try {
-					// Authenticate with the token and create a MediaWiki User object.
-					$tokenInfo = $heliosClient->info( $matches[1] );
-					if ( !empty( $tokenInfo->user_id ) ) {
-						return \User::newFromId( $tokenInfo->user_id );
+	/**
+	 * Creates a MediaWiki User object based on the token given in the HTTP request.
+	 *
+	 * @param \WebRequest $request the HTTP request data as an object
+	 *
+	 * @return \User on successful authentication
+	 */
+	public static function newFromToken( \WebRequest $request ) {
+		// Extract access token from HTTP request data.
+		$token = self::getAccessToken( $request );
+
+		// Authenticate with the token, if present.
+		if ( $token ) {
+			global $wgHeliosBaseUri, $wgHeliosClientId, $wgHeliosClientSecret;
+			$heliosClient = new Client( $wgHeliosBaseUri, $wgHeliosClientId, $wgHeliosClientSecret );
+
+			// start the session if there's none so far
+			// the code is borrowed from SpecialUserlogin
+			// @see PLATFORM-1261
+			if ( session_id() == '' ) {
+				wfSetupSession();
+				WikiaLogger::instance()->debug( __METHOD__ . '::startSession' );
+			}
+
+			try {
+				$tokenInfo = $heliosClient->info( $token );
+				if ( !empty( $tokenInfo->user_id ) ) {
+					$user = \User::newFromId( $tokenInfo->user_id );
+					
+					// dont return the user object if it's disabled
+					// @see SERVICES-459
+					if ( (bool)$user->getGlobalFlag( 'disabled' ) ) {
+						self::clearAccessTokenCookie();
+						return null;
 					}
+					// return a MediaWiki's User object
+					return $user;
 				}
+			}
 
-				catch ( \Wikia\Helios\ClientException $e ) {
-					\Wikia\Logger\WikiaLogger::instance()->error( __METHOD__, [ 'exception' => $e ] );
-				}
+			catch ( ClientException $e ) {
+				WikiaLogger::instance()->error( __METHOD__, [ 'exception' => $e ] );
 			}
 		}
 
@@ -82,7 +140,7 @@ class User {
 			return $resultData[ 'result' ];
 		}
 
-		$logger = \Wikia\Logger\WikiaLogger::instance();
+		$logger = WikiaLogger::instance();
 		$logger->info( 'HELIOS_LOGIN authenticate', [ 'method' => __METHOD__, 'username' => $username ] );
 
 		self::debugLogin( $password, __METHOD__ );
@@ -91,13 +149,14 @@ class User {
 		$heliosClient = new Client( $wgHeliosBaseUri, $wgHeliosClientId, $wgHeliosClientSecret );
 
 		$result = false;
+		$authMethod = self::AUTH_TYPE_FAILED;
 		$throwException = null;
 
 		// Authenticate with username and password.
 		try {
 			$loginInfo = $heliosClient->login( $username, $password );
 
-			if ( !empty($loginInfo->error) ) {
+			if ( !empty( $loginInfo->error ) ) {
 				if ( $loginInfo->error === 'access_denied' ) {
 					$logger->info(
 						'HELIOS_LOGIN authentication_failed',
@@ -109,9 +168,9 @@ class User {
 			}
 
 			$result = !empty( $loginInfo->access_token );
+			$authMethod = isset($loginInfo->auth_method) ? $loginInfo->auth_method : self::AUTH_TYPE_NORMAL_PW;
 		}
-		catch ( ClientException $e )
-		{
+		catch ( ClientException $e ) {
 			$logger->error(
 				'HELIOS_LOGIN authentication_error',
 				[ 'exception' => $e, 'response' => $e->getResponse(), 'username' => $username, 'method' => __METHOD__ ]
@@ -121,15 +180,66 @@ class User {
 
 		// save in local cache
 		self::$authenticationCache[$username][$password] = [
-			'result'=> $result,
-			'exception' => $throwException
+			'result' => $result,
+			'exception' => $throwException,
+			self::AUTH_METHOD_NAME => $authMethod,
 		];
 
 		if ( $throwException ) {
 			throw $throwException;
 		}
 
+		if ( !empty( $loginInfo ) && $authMethod != self::AUTH_TYPE_RESET_PW ) {
+			self::setAccessTokenCookie( $loginInfo->access_token );
+		}
+
 		return $result;
+	}
+
+	/**
+	 * @param $username
+	 * @param $password
+	 *
+	 * @return bool
+	 */
+	public static function wasResetPassAuth( $username, $password ) {
+		if ( empty( self::$authenticationCache[$username][$password][self::AUTH_METHOD_NAME] ) ) {
+			return false;
+		}
+		$authMethod = self::$authenticationCache[$username][$password][self::AUTH_METHOD_NAME];
+
+		return $authMethod == self::AUTH_TYPE_RESET_PW;
+	}
+
+	/**
+	 * Set the access_token cookie with the token value passed.
+	 *
+	 * @param string $accessToken
+	 */
+	public static function setAccessTokenCookie( $accessToken ) {
+		$response = \RequestContext::getMain()->getRequest()->response();
+		$response->setcookie(
+			self::ACCESS_TOKEN_COOKIE_NAME,
+			$accessToken,
+			time() + self::ACCESS_TOKEN_COOKIE_TTL,
+			\WebResponse::NO_COOKIE_PREFIX
+		);
+	}
+
+	/**
+	 * Clear the access token cookie by setting a time in the past
+	 */
+	public static function clearAccessTokenCookie() {
+		self::clearCookie( self::ACCESS_TOKEN_COOKIE_NAME );
+
+		/*
+		 * Mercury's backend (Hapi) is setting access_token cookie in an encrypted form, so we need
+		 * to destroy this one as well on UserLogout
+		 * This is a temporary change which will be deleted while implementing SOC-798
+		 */
+		self::clearCookie( self::MERCURY_ACCESS_TOKEN_COOKIE_NAME );
+
+		return true; // So that wfRunHooks evaluates to true.
 	}
 
 	/**
@@ -144,7 +254,6 @@ class User {
 			unset( self::$authenticationCache[$username] );
 		}
 	}
-
 
 	/**
 	 * Listens for any authentication attempts and uses Helios to determine the result
@@ -165,8 +274,7 @@ class User {
 		try {
 			$heliosResult = self::authenticate( $username, $password );
 		}
-		catch ( ClientException $e )
-		{
+		catch ( ClientException $e ) {
 			$heliosException = $e;
 		}
 
@@ -177,7 +285,7 @@ class User {
 			// Detect discrepancies between Helios and MediaWiki results.
 			if ( $heliosResult !== null && $heliosResult != $mediawikiResult ) {
 				self::debugLogin( $password, __METHOD__ );
-				\Wikia\Logger\WikiaLogger::instance()->error(
+				WikiaLogger::instance()->error(
 					'HELIOS_LOGIN check_password_discrepancy',
 					[	'helios'         => $heliosResult,
 						'mediawiki'      => $mediawikiResult,
@@ -198,6 +306,124 @@ class User {
 		return true;
 	}
 
+	public static function onLoginSuccessModifyRetval($username, $password, &$retval) {
+		if ( isset( self::$authenticationCache[$username][$password][self::AUTH_METHOD_NAME] ) ) {
+			$resultData = self::$authenticationCache[$username][$password];
+
+			switch ($resultData[ self::AUTH_METHOD_NAME ]) {
+				case self::AUTH_TYPE_RESET_PW:
+					$retval = \LoginForm::RESET_PASS;
+					break;
+				case self::AUTH_TYPE_NORMAL_PW:
+					$retval = \LoginForm::SUCCESS;
+					break;
+			}
+		}
+
+		return true;
+	}
+
+	/**
+	 * Called in ExternalUser_Wikia registers a user.
+	 *
+	 * @param string $username The username
+	 * @param string $password The plaintext password the user entered
+	 * @param string $email The user's email
+	 * @param string $langCode The language code of the community the user is registering on
+	 * @param string $birthDate
+	 *
+	 * @return bool true on success, false otherwise
+	 */
+	public static function register( $username, $password, $email, $birthDate, $langCode ) {
+		$logger = WikiaLogger::instance();
+		$logger->info( 'HELIOS_REGISTRATION START', [ 'method' => __METHOD__ ] );
+
+		global $wgHeliosBaseUri, $wgHeliosClientId, $wgHeliosClientSecret;
+		$helios = new Client( $wgHeliosBaseUri, $wgHeliosClientId, $wgHeliosClientSecret );
+
+		try {
+			$registration = $helios->register( $username, $password, $email, $birthDate, $langCode );
+			$result = !empty( $registration->success );
+
+			if ( !empty( $registration->error ) ) {
+				$logger->error(
+					'HELIOS_REGISTRATION ERROR_FROM_SERVICE',
+					[ 'method' => __METHOD__ ]
+				);
+			}
+		}
+
+		catch ( ClientException $e ) {
+			$logger->error(
+				'HELIOS_REGISTRATION ERROR_FROM_CLIENT',
+				[ 'exception' => $e, 'method' => __METHOD__ ]
+			);
+			$result = false;
+		}
+
+		return $result;
+	}
+
+	/**
+	 * @param bool $result
+	 * @param int $userId
+	 * @param \User $user
+	 * @param string $password
+	 * @param string $email
+	 *
+	 * @return bool
+	 */
+	public static function onRegister( &$result, &$userId, $user, $password, $email ) {
+		global $wgLang;
+
+		$heliosUserId = null;
+		$heliosResult = self::register( $user->mName, $password, $email, $user->mBirthDate, $wgLang->getCode() );
+		$logger = WikiaLogger::instance();
+
+		global $wgHeliosRegistrationShadowMode;
+
+		if ( $heliosResult ) {
+
+			global $wgExternalSharedDB;
+
+			$table = $wgHeliosRegistrationShadowMode ? 'user_helios' : '`user`';
+
+			$dbw = \wfGetDB( DB_MASTER, [], $wgExternalSharedDB );
+			$dbw->commit(); // PLATFORM-1151 This commit is required in order to refresh the database state.
+			$heliosUserId = $dbw->selectField( $table, 'user_id', [ 'user_name' => $user->mName ], __METHOD__ );
+
+			if ( $heliosUserId ) {
+
+				if ( ! $wgHeliosRegistrationShadowMode ) {
+					$result = $heliosResult;
+					$userId = $heliosUserId;
+				}
+
+				$logger->info( 'HELIOS_REGISTRATION SUCCESS', [
+					'method' => __METHOD__,
+					'user_id' => $heliosUserId,
+					'user_name' => $user->mName,
+					'shadow' => $wgHeliosRegistrationShadowMode
+				] );
+			} else {
+				$logger->error( 'HELIOS_REGISTRATION FAILURE FETCH_ID', [
+					'method' => __METHOD__,
+					'user_id' => null,
+					'user_name' => $user->mName,
+					'shadow' => $wgHeliosRegistrationShadowMode
+				] );
+			}
+
+		} else {
+			$logger->error( 'HELIOS_REGISTRATION FAILURE CALL', [
+				'method' => __METHOD__,
+				'user_name' => $user->mName,
+				'shadow' => $wgHeliosRegistrationShadowMode
+			] );
+		}
+
+		return true;
+	}
 
 	/**
 	 * Listens for any user data save events and purges the authentication cache
@@ -210,4 +436,18 @@ class User {
 		return true;
 	}
 
+	/**
+	 * Clears selected cookie
+	 *
+	 * @param $cookieName
+	 */
+	private static function clearCookie( $cookieName ) {
+		$response = \RequestContext::getMain()->getRequest()->response();
+		$response->setcookie(
+			$cookieName,
+			'',
+			time() - self::ACCESS_TOKEN_COOKIE_TTL,
+			\WebResponse::NO_COOKIE_PREFIX
+		);
+	}
 }

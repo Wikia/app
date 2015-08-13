@@ -218,8 +218,8 @@ $edit-box-color: mix($color-page, #000, 95%);
 	}
 }
 
-@if ( $responsive-layout-enabled ) {
-	@media screen and (max-width: $breakpoint-small) {
+@if ( $responsive-or-breakpoints-layout-enabled ) {
+	@media screen and (max-width: 1024px) {
 		.css-editor,
 		.css-side-bar {
 			float: none;

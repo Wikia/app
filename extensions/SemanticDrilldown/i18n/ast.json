@@ -1,0 +1,33 @@
+{
+	"@metadata": {
+		"authors": [
+			"Xuacu"
+		]
+	},
+	"semanticdrilldown-desc": "Interfaz de ''drilldown'' pa navegar pelos datos semánticos.",
+	"specialpages-group-sd_group": "Semantic Drilldown",
+	"browsedata": "Navegar pelos datos",
+	"sd_browsedata_choosecategory": "Escoyer una categoría",
+	"sd_browsedata_viewcategory": "ver categoría",
+	"sd_browsedata_docu": "Calca nún o más elementos d'abaxo p'acotar los resultaos.",
+	"sd_browsedata_subcategory": "Subcategoría",
+	"sd_browsedata_other": "Otru",
+	"sd_browsedata_none": "Dengún",
+	"sd_browsedata_filterbyvalue": "Peñerar por esti valor",
+	"sd_browsedata_filterbysubcategory": "Peñerar por esta subcategoría",
+	"sd_browsedata_otherfilter": "Amosar páxines con otru valor pa esta peñera",
+	"sd_browsedata_nonefilter": "Amosar páxines con dengún valor pa esta peñera",
+	"sd_browsedata_or": "o",
+	"sd_browsedata_removefilter": "Desaniciar esta peñera",
+	"sd_browsedata_removesubcategoryfilter": "Desaniciar esta peñera de subcategoría",
+	"sd_browsedata_resetfilters": "Reestablecer peñeres",
+	"sd_browsedata_addanothervalue": "Calca na flecha p'amestar otru valor",
+	"sd_browsedata_daterangestart": "Aniciu:",
+	"sd_browsedata_daterangeend": "Fin:",
+	"sd_browsedata_novalues": "Nun hai valores pa esta peñera",
+	"sd_createfilter_usepropertyvalues": "Usar tolos valores d'esta propiedá pa la peñera",
+	"sd_createfilter_usecategoryvalues": "Sacar los valores pa la peñera d'esta categoría:",
+	"sd_createfilter_requirefilter": "Otra peñera que se tien de seleicionar enantes d'amosar esta:",
+	"sd-pageschemas-filter": "Peñera",
+	"sd-pageschemas-values": "Valores"
+}

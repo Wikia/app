@@ -45,6 +45,14 @@ ve.ui.FormatTool.static.format = null;
 /**
  * @inheritdoc
  */
+ve.ui.FormatTool.prototype.onSelect = function () {
+	ve.track( 'tool.format.select', { name: this.constructor.static.name } );
+	ve.ui.Tool.prototype.onSelect.apply( this, arguments );
+};
+
+/**
+ * @inheritdoc
+ */
 ve.ui.FormatTool.prototype.onUpdateState = function ( fragment ) {
 	// Parent method
 	ve.ui.FormatTool.super.prototype.onUpdateState.apply( this, arguments );

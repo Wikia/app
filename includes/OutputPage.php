@@ -656,7 +656,7 @@ class OutputPage extends ContextSource {
 			wfDebug( __METHOD__ . ": CACHE DISABLED\n", false );
 			return false;
 		}
-		if( $this->getUser()->getOption( 'nocache' ) ) {
+		if( $this->getUser()->getGlobalPreference( 'nocache' ) ) {
 			wfDebug( __METHOD__ . ": USER DISABLED CACHE\n", false );
 			return false;
 		}
@@ -2384,8 +2384,8 @@ class OutputPage extends ContextSource {
 			$params = array(
 				'id'   => 'wpTextbox1',
 				'name' => 'wpTextbox1',
-				'cols' => $this->getUser()->getOption( 'cols' ),
-				'rows' => $this->getUser()->getOption( 'rows' ),
+				'cols' => $this->getUser()->getGlobalPreference( 'cols' ),
+				'rows' => $this->getUser()->getGlobalPreference( 'rows' ),
 				'readonly' => 'readonly',
 				'lang' => $pageLang->getHtmlCode(),
 				'dir' => $pageLang->getDir(),
@@ -2621,17 +2621,17 @@ $templates
 				$this->addModules( 'mediawiki.action.watch.ajax' );
 			}
 
-			if ( $wgEnableMWSuggest && !$this->getUser()->getOption( 'disablesuggest', false ) ) {
+			if ( $wgEnableMWSuggest && !$this->getUser()->getGlobalPreference( 'disablesuggest', false ) ) {
 				$this->addModules( 'mediawiki.legacy.mwsuggest' );
 			}
 		}
 
-		if ( $this->getUser()->getBoolOption( 'editsectiononrightclick' ) ) {
+		if ( (bool)$this->getUser()->getGlobalPreference( 'editsectiononrightclick' ) ) {
 			$this->addModules( 'mediawiki.action.view.rightClickEdit' );
 		}
 
 		# Crazy edit-on-double-click stuff
-		if ( $this->isArticle() && $this->getUser()->getOption( 'editondblclick' ) ) {
+		if ( $this->isArticle() && $this->getUser()->getGlobalPreference( 'editondblclick' ) ) {
 			$this->addModules( 'mediawiki.action.view.dblClickEdit' );
 		}
 	}
@@ -3053,7 +3053,6 @@ $templates
 		$vars = array(
 			'wgCanonicalNamespace' => $nsname,
 			'wgCanonicalSpecialPageName' => $canonicalName,
-			'wgNamespaceNumber' => $title->getNamespace(),
 			'wgPageName' => $title->getPrefixedDBKey(),
 			'wgTitle' => $title->getText(),
 			'wgCurRevisionId' => $latestRevID,
@@ -3075,7 +3074,7 @@ $templates
 		foreach ( $title->getRestrictionTypes() as $type ) {
 			$vars['wgRestriction' . ucfirst( $type )] = $title->getRestrictions( $type );
 		}
-		if ( $wgUseAjax && $wgEnableMWSuggest && !$this->getUser()->getOption( 'disablesuggest', false ) ) {
+		if ( $wgUseAjax && $wgEnableMWSuggest && !$this->getUser()->getGlobalPreference( 'disablesuggest', false ) ) {
 			$vars['wgSearchNamespaces'] = SearchEngine::userNamespaces( $this->getUser() );
 		}
 		if ( $title->isMainPage() ) {
@@ -3134,7 +3133,7 @@ $templates
 			$wgSitename, $wgVersion, $wgHtml5, $wgMimeType,
 			$wgFeed, $wgOverrideSiteFeed, $wgAdvertisedFeedTypes,
 			$wgDisableLangConversion, $wgCanonicalLanguageLinks,
-			$wgRightsPage, $wgRightsUrl;
+			$wgRightsPage, $wgRightsUrl, $wgDevelEnvironment, $wgStagingEnvironment;
 
 		$tags = array();
 
@@ -3161,6 +3160,12 @@ $templates
 		) );
 
 		$p = "{$this->mIndexPolicy},{$this->mFollowPolicy}";
+		// Wikia change - begin
+		if ( !empty( $wgDevelEnvironment ) || !empty( $wgStagingEnvironment ) ) {
+			$p = "noindex,nofollow";
+		}
+		// Wikia change - end
+
 		if( $p !== 'index,follow' ) {
 			// http://www.robotstxt.org/wc/meta-user.html
 			// Only show if it's different from the default robots policy

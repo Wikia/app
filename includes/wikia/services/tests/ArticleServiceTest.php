@@ -6,12 +6,13 @@ class ArticleServiceTest extends WikiaBaseTest {
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.03939 ms
-	 * @covers ArticleService::getUncachedSnippetFromArticle
-	 * @covers ArticleService::getTextSnippet
+	 * @covers       ArticleService::getUncachedSnippetFromArticle
+	 * @covers       ArticleService::getTextSnippet
 	 * @dataProvider getTextSnippetDataProvider
-	 * @param $snippetLength maximum length of text snippet to be pulled
-	 * @param $rawArticleText raw text of article to be snippeted
-	 * @param $expSnippetText expected output text snippet
+	 *
+	 * @param int $snippetLength maximum length of text snippet to be pulled
+	 * @param string $articleText raw text of article from which to create a snippet
+	 * @param string $expSnippetText expected output text snippet
 	 */
 	public function testGetTextSnippetAsArticleTest($snippetLength, $articleText, $expSnippetText) {
 		$randId = (int) ( rand() * microtime() );
@@ -59,11 +60,14 @@ class ArticleServiceTest extends WikiaBaseTest {
 		                ->setConstructorArgs( [ $mockArticle ] )
 		                ->setMethods( [ 'getTextFromSolr' ] )
 		                ->getMock();
-		$service
-		    ->expects( $this->once() )
-		    ->method ( 'getTextFromSolr' )
-		    ->will   ( $this->returnValue( '' ) )
-		;
+
+		// Only mock this in production.  The return value used is meant to force a fallback
+		// to the next method of retrieving text.  In DEV this will fallback on its own.
+		if ( !F::app()->wg->DevelEnvironment && !empty( F::app()->wg->SolrMaster ) ) {
+			$service->expects( $this->once() )
+				->method( 'getTextFromSolr' )
+				->will( $this->returnValue( '' ) );
+		}
 		$snippet = $service->getTextSnippet( $snippetLength );
 		$this->assertEquals( $expSnippetText, $snippet );
 	}
@@ -75,8 +79,6 @@ class ArticleServiceTest extends WikiaBaseTest {
 		$randId = (int) ( rand() * microtime() );
 		$mockTitle = $this->getMock( 'Title' );
 		$mockCache = $this->getMock( 'MemCachedClientforWiki', array( 'get', 'set' ), array( array() ) );
-		$mockPage = $this->getMock( 'WikiPage', array( 'getParserOutput', 'makeParserOptions' ), array( $mockTitle ) );
-		$mockOutput = $this->getMock( 'OutputPage', array( 'getText' ), array() );
 		$mockArticle = $this->getMock( 'Article', array( 'getPage', 'getID' ), array( $mockTitle ) );
 
 		$mockCache->expects( $this->any() )
@@ -95,14 +97,21 @@ class ArticleServiceTest extends WikiaBaseTest {
 
 		$service = $this->getMockBuilder( 'ArticleService' )
 		                ->setConstructorArgs( [ $mockArticle ] )
-		                ->setMethods( [ 'getTextFromSolr' ] )
+		                ->setMethods( [ 'getTextFromSolr', 'getUncachedSnippetFromArticle' ] )
 		                ->getMock();
-		$service
-		    ->expects( $this->once() )
-		    ->method ( 'getTextFromSolr' )
-		    ->will   ( $this->returnValue( 'solr text as a snippet' ) )
-		;
-		$this->assertEquals( 'solr text as a snippet', $service->getTextSnippet() );
+
+		if ( !F::app()->wg->DevelEnvironment && !empty( F::app()->wg->SolrMaster ) ) {
+			$service->expects( $this->once() )
+				->method( 'getTextFromSolr' )
+				->will( $this->returnValue( 'text as a snippet' ) );
+		} else {
+			// There is no DEV SOLR instance, so mock the fallback method instead
+			$service->expects( $this->once() )
+				->method( 'getUncachedSnippetFromArticle' )
+				->will( $this->returnValue( 'text as a snippet' ) );
+		}
+
+		$this->assertEquals( 'text as a snippet', $service->getTextSnippet() );
 	}
 
 	/**
@@ -119,31 +128,30 @@ class ArticleServiceTest extends WikiaBaseTest {
 
 		$mockArticle
 		    ->expects( $this->once() )
-		    ->method ( 'getId' )
-		    ->will   ( $this->returnValue( 123 ) )
-		;
+		    ->method( 'getId' )
+		    ->will( $this->returnValue( 123 ) );
+
 		$mockDocumentService
 		    ->expects( $this->once() )
 		    ->method( 'setArticleId' )
-		    ->with  ( 123 )
-		;
+		    ->with( 123 );
+
 		$mockDocumentService
 		    ->expects( $this->once() )
-		    ->method ( 'getResult' )
-		    ->will   ( $this->returnValue( $mockResult ) )
-		;
+		    ->method( 'getResult' )
+		    ->will( $this->returnValue( $mockResult ) );
+
 		$mockResult
 		    ->expects( $this->once() )
-		    ->method ( 'offsetExists' )
-		    ->with   ( 'snippet_s' )
-		    ->will   ( $this->returnValue( true ) )
-		;
+		    ->method( 'offsetExists' )
+		    ->with( 'snippet_s' )
+		    ->will( $this->returnValue( true ) );
+
 		$mockResult
 		    ->expects( $this->any() )
-		    ->method ( 'offsetGet' )
-		    ->with   ( 'snippet_s' )
-		    ->will   ( $this->returnValue( 'foo' ) )
-		;
+		    ->method( 'offsetGet' )
+		    ->with( 'snippet_s' )
+		    ->will( $this->returnValue( 'foo' ) );
 
 		$this->mockClass( 'SolrDocumentService', $mockDocumentService );
 

@@ -1,0 +1,61 @@
+$insights-module-gray: #ccc;
+
+.insights-light {
+	.insights-icon-uncategorizedpages {
+		background-image: url('/extensions/wikia/Insights/images/uncategorized.svg'); /* inline */
+	}
+
+	.insights-icon-withoutimages {
+		background-image: url('/extensions/wikia/Insights/images/withoutimages.svg'); /* inline */
+	}
+
+	.insights-icon-deadendpages {
+		background-image: url('/extensions/wikia/Insights/images/deadendpages.svg'); /* inline */
+	}
+
+	.insights-icon-wantedpages {
+		background-image: url('/extensions/wikia/Insights/images/wantedpages.svg'); /* inline */
+	}
+}
+
+.insights-dark {
+	.insights-icon-uncategorizedpages {
+		background-image: url('/extensions/wikia/Insights/images/uncategorized_dark.svg'); /* inline */
+	}
+
+	.insights-icon-withoutimages {
+		background-image: url('/extensions/wikia/Insights/images/withoutimages_dark.svg'); /* inline */
+	}
+
+	.insights-icon-deadendpages {
+		background-image: url('/extensions/wikia/Insights/images/deadendpages_dark.svg'); /* inline */
+	}
+
+	.insights-icon-wantedpages {
+		background-image: url('/extensions/wikia/Insights/images/wantedpages_dark.svg'); /* inline */
+	}
+}
+
+.insights-module-list {
+	margin: 0;
+}
+
+.insights-module-item {
+	background-position: 5% 50%;
+	background-repeat: no-repeat;
+	background-size: auto 21px;
+	border-bottom: 1px solid $insights-module-gray;
+	list-style-type: none;
+	margin: 0;
+	padding: 5px 0;
+
+	&:last-child {
+		border-bottom: 0;
+	}
+}
+
+.insights-module-link {
+	display: block;
+	padding: 10px 10px 10px 55px;
+	text-decoration: none;
+}

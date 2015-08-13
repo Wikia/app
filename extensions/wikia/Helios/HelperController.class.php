@@ -118,8 +118,7 @@ class HelperController extends \WikiaController
 			return;
 		}
 
-		$mailTemplate = $this->app->renderView( 'UserLogin', 'GeneralMail', [ 'language' => $user->getOption( 'language' ), 'type' => 'confirmation-email' ] );
-		$mailStatus = $user->sendConfirmationMail( false, 'ConfirmationMail', 'usersignup-confirmation-email', true, $mailTemplate );
+		$mailStatus = $user->sendConfirmationMail();
 
 		if ( ! $mailStatus->isGood() ) {
 			$this->response->setVal( 'message', 'could not send an email message' );

@@ -53,11 +53,11 @@ class SFRadioButtonInput extends SFEnumInput {
 			} elseif ( count( $possible_values ) == 0 ) {
 				$cur_value = '';
 			} else {
-				$cur_value = $possible_values[0];
+				$cur_value = reset($possible_values);
 			}
 		}
 
-		$text = '';
+		$text = "\n";
 		$itemClass = 'radioButtonItem';
 		if ( array_key_exists( 'class', $other_args ) ) {
 			$itemClass .= ' ' . $other_args['class'];
@@ -73,14 +73,19 @@ class SFRadioButtonInput extends SFEnumInput {
 				'id' => $input_id,
 				'tabindex' => $sfgTabIndex,
 			);
+			if ( array_key_exists( 'origName', $other_args ) ) {
+				$radiobutton_attrs['origname'] = $other_args['origName'];
+			}
+			$isChecked = false;
 			if ( $cur_value == $possible_value ) {
-				$radiobutton_attrs['checked'] = true;
+				$isChecked = true;
+				//$radiobutton_attrs['checked'] = true;
 			}
 			if ( $is_disabled ) {
 				$radiobutton_attrs['disabled'] = true;
 			}
 			if ( $possible_value === '' ) { // blank/"None" value
-				$label = wfMsg( 'sf_formedit_none' );
+				$label = wfMessage( 'sf_formedit_none' )->text();
 			} elseif (
 				array_key_exists( 'value_labels', $other_args ) &&
 				is_array( $other_args['value_labels'] ) &&
@@ -91,8 +96,14 @@ class SFRadioButtonInput extends SFEnumInput {
 				$label = $possible_value;
 			}
 
-			$text .= "\t" . Html::rawElement( 'span', $itemAttrs,
-				Html::input( $input_name, $possible_value, 'radio', $radiobutton_attrs ) . " $label" ) . "\n";
+			$text .= "\t" . Html::rawElement( 'label', $itemAttrs,
+				// Using Xml::radio() here because Html::input()
+				// unfortunately doesn't include the "value="
+				// attribute if the value is blank - which
+				// somehow leads to the string "on" being passed
+				// to the page.
+				//Html::input( $input_name, $possible_value, 'radio', $radiobutton_attrs ) . " $label" ) . "\n";
+				Xml::radio( $input_name, $possible_value, $isChecked, $radiobutton_attrs ) . " $label" ) . "\n";
 		}
 
 		$spanClass = 'radioButtonSpan';

@@ -116,8 +116,8 @@ class WikiaHubsV3Controller extends WikiaController {
 	 * Render one module with given data
 	 *
 	 * @param EditHubModel $editHubModel
-	 * @param string $moduleName
-	 * @param array  $moduleData
+	 * @param int $moduleId
+	 * @param string  $moduleName
 	 *
 	 * @return string
 	 */
@@ -210,10 +210,7 @@ class WikiaHubsV3Controller extends WikiaController {
 		$this->model = new WikiaHubsModel();
 	}
 
-
 	protected function initHubTimestamp() {
 		$this->hubTimestamp = $this->getRequest()->getVal('hubTimestamp');
 	}
-
-
 }

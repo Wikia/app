@@ -50,6 +50,19 @@ ve.ui.InspectorTool.static.isCompatibleWith = function ( model ) {
 /**
  * @inheritdoc
  */
+ve.ui.InspectorTool.prototype.onSelect = function () {
+	ve.track( 'tool.inspector.select', {
+		name: this.constructor.static.name,
+		// HACK: which toolbar is this coming from?
+		// TODO: this should probably be passed into the config or something
+		toolbar: ( this.toolbar.constructor === ve.ui.Toolbar ? 'surface' : 'target' )
+	} );
+	ve.ui.Tool.prototype.onSelect.apply( this, arguments );
+};
+
+/**
+ * @inheritdoc
+ */
 ve.ui.InspectorTool.prototype.onUpdateState = function ( fragment ) {
 	var i, len, models,
 		active = false;

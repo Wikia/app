@@ -31,10 +31,7 @@ class GlobalWatchlistTask extends BaseTask {
 	}
 
 	/**
-	 * Adds entries for watched pages in the global_watchlist table. This
-	 * also kicks off a job to send the weekly digest 7 days from now. Since
-	 * that job does a dedup check, any subsequent attempts to schedule that
-	 * weekly digest job will be ignored until the initial one is sent.
+	 * Adds entries for watched pages in the global_watchlist table.
 	 * @param String $databaseKey
 	 * @param String $nameSpace
 	 * @param array $watchers
@@ -43,25 +40,33 @@ class GlobalWatchlistTask extends BaseTask {
 		$titleObj = Title::newFromText( $databaseKey, $nameSpace );
 		if ( $titleObj instanceof Title && $titleObj->exists() ) {
 			$revision = Revision::newFromTitle( $titleObj );
-			$globalWatchlistBot = new GlobalWatchlistBot();
 
-			$db = wfGetDB( DB_MASTER, [], \F::app()->wg->ExternalDatawareDB );
-			foreach ( $watchers as $watcherID ) {
-				if ( $globalWatchlistBot->shouldNotSendDigest( $watcherID ) ) {
-					$this->clearGlobalWatchlistAll( $watcherID );
-					continue;
+			// Skip revisions that doesn't exist
+			if ( !empty( $revision ) ) {
+				$globalWatchlistBot = new GlobalWatchlistBot();
+
+				$db = wfGetDB( DB_MASTER, [ ], \F::app()->wg->ExternalDatawareDB );
+				foreach ( $watchers as $watcherID ) {
+					if ( $globalWatchlistBot->shouldNotSendDigest( $watcherID ) ) {
+						$this->clearGlobalWatchlistAll( $watcherID );
+						continue;
+					}
+
+					( new WikiaSQL() )
+						->INSERT()->INTO( GlobalWatchlistTable::TABLE_NAME )
+						->SET( GlobalWatchlistTable::COLUMN_USER_ID, $watcherID )
+						->SET( GlobalWatchlistTable::COLUMN_CITY_ID, \F::app()->wg->CityId )
+						->SET( GlobalWatchlistTable::COLUMN_TITLE, $databaseKey )
+						->SET( GlobalWatchlistTable::COLUMN_NAMESPACE, $nameSpace )
+						->SET( GlobalWatchlistTable::COLUMN_REVISION_ID, $revision->getId() )
+						->SET( GlobalWatchlistTable::COLUMN_REVISION_TIMESTAMP, $revision->getTimestamp() )
+						->SET( GlobalWatchlistTable::COLUMN_TIMESTAMP, $revision->getTimestamp() )
+						// Do nothing on duplicate key - we already have that record in place
+						->ON_DUPLICATE_KEY_UPDATE(
+							[ GlobalWatchlistTable::COLUMN_USER_ID => $watcherID ]
+						)
+						->run( $db );
 				}
-
-				( new WikiaSQL() )
-					->INSERT()->INTO( GlobalWatchlistTable::TABLE_NAME )
-					->SET( GlobalWatchlistTable::COLUMN_USER_ID, $watcherID )
-					->SET( GlobalWatchlistTable::COLUMN_CITY_ID, \F::app()->wg->CityId )
-					->SET( GlobalWatchlistTable::COLUMN_TITLE, $databaseKey )
-					->SET( GlobalWatchlistTable::COLUMN_NAMESPACE, $nameSpace )
-					->SET( GlobalWatchlistTable::COLUMN_REVISION_ID, $revision->getId() )
-					->SET( GlobalWatchlistTable::COLUMN_REVISION_TIMESTAMP, $revision->getTimestamp() )
-					->SET( GlobalWatchlistTable::COLUMN_TIMESTAMP, $revision->getTimestamp() )
-					->run( $db );
 			}
 		}
 	}

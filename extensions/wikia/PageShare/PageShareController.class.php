@@ -2,10 +2,6 @@
 
 class PageShareController extends WikiaController {
 
-	const MEMC_KEY_SOCIAL_ICONS_EN = 'mShareIconsEN';
-	const MEMC_KEY_SOCIAL_ICONS_VERSION = 1;
-	const MEMC_EXPIRY = 3600;
-
 	public function index() {
 		Wikia::addAssetsToOutput( 'page_share_scss' );
 		Wikia::addAssetsToOutput( 'page_share_js' );
@@ -14,58 +10,38 @@ class PageShareController extends WikiaController {
 	}
 
 	public function getShareIcons() {
-		global $wgMemc;
+		$requestlang = $this->getVal( 'lang' );
+		$title = $this->getVal( 'title' );
+		$url = $this->getVal( 'url' );
+		$lang = PageShareHelper::getLangForPageShare( $requestlang );
 
-		$browserLang = $this->getVal( 'browserLang' );
-		$useLang = $this->getVal( 'useLang' );
-		$shareLang = PageShareHelper::getLangForPageShare( $browserLang, $useLang );
+		$renderedSocialIcons = \MustacheService::getInstance()->render(
+			__DIR__ . '/templates/PageShare_index.mustache',
+			['services' => $this->prepareShareServicesData( $lang, $title, $url )]
+		);
 
-		// If social icons should be enabled for EN users, and language is different than EN return false
-		if ( empty( $wgEnablePageShareWorldwide ) && $shareLang !== PageShareHelper::SHARE_DEFAULT_LANGUAGE ) {
-			$this->setVal( 'socialIcons', false );
-		} else {
-			$memcKey = $this->getMemcKey();
-			$socialIcons = $wgMemc->get( $memcKey );
-			if ( !empty( $socialIcons ) ) {
-				$this->setVal( 'socialIcons', $socialIcons );
-			} else {
-				$renderedSocialIcons = \MustacheService::getInstance()->render(
-					__DIR__ . '/templates/PageShare_index.mustache',
-					['services' => $this->prepareShareServicesData( $shareLang )]
-				);
-				$wgMemc->set( $memcKey, $renderedSocialIcons, self::MEMC_EXPIRY );
-				$this->setVal( 'socialIcons', $renderedSocialIcons );
-			}
-		}
+		$this->setVal( 'socialIcons', $renderedSocialIcons );
+		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
 	}
 
 	/**
 	 * Prepare and normalize data from $wgPageShareServices
 	 *
-	 * @param $shareLang
+	 * @param String $lang
 	 * @return Array
 	 */
-	private function prepareShareServicesData( $shareLang ) {
+	private function prepareShareServicesData( $lang ) {
 		global $wgPageShareServices;
+		$isTouchScreen = $this->getVal( 'isTouchScreen' );
 
-		$protocol = ( !empty( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443 ) ? 'https://' : 'http://';
-		$location = $protocol . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
 		$services = [];
 
 		foreach ( $wgPageShareServices as $service ) {
-			if ( PageShareHelper::isValidShareService( $service, $shareLang ) ) {
-				$service['href'] = str_replace( '$1', urlencode( $location ), $service['url'] );
+			if ( PageShareHelper::isValidShareService( $service, $lang, $isTouchScreen ) ) {
 				$service['icon'] = PageShareHelper::getIcon( $service['name'] );
 				$services[] = $service;
 			}
 		}
 		return $services;
-	}
-
-	private function getMemcKey() {
-		return wfSharedMemcKey(
-			self::MEMC_KEY_SOCIAL_ICONS_EN,
-			self::MEMC_KEY_SOCIAL_ICONS_VERSION
-		);
 	}
 }

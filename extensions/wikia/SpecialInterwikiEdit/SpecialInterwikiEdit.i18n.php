@@ -167,6 +167,13 @@ $messages['cs'] = array(
 	'iwedit-success' => 'Odkaz byl úspěšně vytvořen.',
 );
 
+/** Chuvash (Чӑвашла)
+ * @author Chuvash2014
+ */
+$messages['cv'] = array(
+	'iwedit-update' => 'Çĕнет',
+);
+
 /** German (Deutsch)
  * @author Claudia Hattitten
  * @author LWChris
@@ -212,6 +219,14 @@ $messages['es'] = array(
 	'iwedit-success' => 'El vínculo se creó correctamente.',
 	'iwedit-local' => '¿interwiki sólo local? (es decir, no global)',
 	'iwedit-trans' => 'Activar la transclusión temeraria',
+);
+
+/** Basque (euskara)
+ * @author Subi
+ */
+$messages['eu'] = array(
+	'iwedit-all-interwikis' => 'interwiki guztiak',
+	'iwedit-update' => 'Eguneratu',
 );
 
 /** Persian (فارسی)
@@ -390,6 +405,7 @@ $messages['ko'] = array(
 	'interwikiedit' => '인터위키 편집기',
 	'iwedit-title' => '인터위키 편집기',
 	'iwedit-all-interwikis' => '모든 인터위키',
+	'iwedit-local' => '해당 언어 사이의 인터위키입니까?',
 );
 
 /** Karachay-Balkar (къарачай-малкъар)
@@ -412,7 +428,7 @@ $messages['lb'] = array(
 	'iwedit-success' => 'De Link gouf ugeluecht.',
 );
 
-/** لوری (لوری)
+/** Northern Luri (لوری مینجایی)
  * @author Mogoeilor
  */
 $messages['lrc'] = array(
@@ -512,6 +528,7 @@ $messages['pl'] = array(
 	'iwedit-error' => 'Wystąpił błąd.',
 	'iwedit-success' => 'Utworzono link.',
 	'iwedit-local' => 'Lokalna interwiki? (tzn. nie globalna)',
+	'iwedit-trans' => 'Włącz przerażającą transkluzję',
 );
 
 /** Piedmontese (Piemontèis)
@@ -532,6 +549,7 @@ $messages['pms'] = array(
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
+	'iwedit-language-interwikis' => 'يوازې ويکيخپلمنځي ژبه',
 	'iwedit-update' => 'اوسمهالول',
 );
 
@@ -633,6 +651,7 @@ $messages['sr-ec'] = array(
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
+	'interwikiedit-desc' => 'Special:InterwikiEdit för webbaserad hantering av interwikilänkar',
 	'interwikiedit' => 'Interwiki-redigerare',
 	'iwedit-title' => 'Interwikiredigerare',
 	'iwedit-language-interwikis' => 'bara språkinterwikis',
@@ -678,8 +697,10 @@ $messages['tr'] = array(
 
 /** Ukrainian (українська)
  * @author Base
+ * @author Капитан Джон Шепард
  */
 $messages['uk'] = array(
+	'interwikiedit-desc' => 'Спеціальна:InterwikiEdit для web на основі обробки інтервікі-посилань',
 	'interwikiedit' => 'Редактор інтервікі',
 	'iwedit-title' => 'Редактор інтервікі',
 	'iwedit-language-interwikis' => 'лише мовні інтервікі',
@@ -687,6 +708,8 @@ $messages['uk'] = array(
 	'iwedit-update' => 'Оновити',
 	'iwedit-error' => 'Сталася помилка.',
 	'iwedit-success' => 'Посилання успішно створено.',
+	'iwedit-local' => 'Локальна інтервікі? (тобто не глобальна)',
+	'iwedit-trans' => 'Включити межвікі-включення',
 );
 
 /** Vietnamese (Tiếng Việt)

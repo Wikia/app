@@ -437,8 +437,9 @@ $2',
 # Login and logout pages
 'logouttext'                 => "'''子去簿矣'''
 
-子可匿名還覽{{SITENAME}}，或[[Special:UserLogin|復登]]同簿、異簿。
+子可匿名還覽{{SITENAME}}，或$1同簿、異簿。
 未清謄本，覽器文舊，且慎之。",
+'logouttext-link-text'       => '復登',
 'welcomecreation'            => '== $1大駕光臨! ==
 子簿增矣，敬更[[Special:Preferences|簿註]]。',
 'yourname'                   => '名',

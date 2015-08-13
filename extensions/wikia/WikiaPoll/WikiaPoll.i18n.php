@@ -294,6 +294,13 @@ $messages['diq'] = array(
 	'wikiamobile-wikiapoll-poll' => 'Anket',
 );
 
+/** British English (British English)
+ * @author Caliburn
+ */
+$messages['en-gb'] = array(
+	'wikiapoll-question' => '$1?',
+);
+
 /** Spanish (español)
  * @author Ciencia Al Poder
  * @author VegaDark
@@ -779,6 +786,8 @@ $messages['ps'] = array(
 	'wikiapoll-publish-label' => 'خپرول',
 	'wikiapoll-error-duplicate' => 'په دې نوم يوه ټولپوښتنه له پخوا نه شته.',
 	'wikiapoll-error-invalid-title' => 'د پوښتنې متن سم نه دی.',
+	'wikiamobile-wikiapoll-open-poll' => 'تاسې څه فکر کوۍ؟',
+	'wikiamobile-wikiapoll-thanks-voting' => 'ستاسې له رايې څخه مننه!',
 );
 
 /** Portuguese (português)
@@ -898,6 +907,13 @@ $messages['ru'] = array(
 	'wikiamobile-wikiapoll-thanks-voting' => 'Спасибо за ваш голос!',
 	'wikiamobile-wikiapoll-poll' => 'Опрос',
 	'wikiamobile-wikiapoll-user-voted' => 'Вы проголосовали за $1',
+);
+
+/** Scots (Scots)
+ * @author Caliburn
+ */
+$messages['sco'] = array(
+	'wikiapoll-question' => '$1?',
 );
 
 /** Slovak (slovenčina)
@@ -1126,6 +1142,7 @@ $messages['zh-hans'] = array(
 
 /** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
+ * @author LNDDYL
  * @author Liuxinyu970226
  */
 $messages['zh-hant'] = array(
@@ -1135,7 +1152,7 @@ $messages['zh-hant'] = array(
 	'wikiapoll-thanks-for-vote' => '謝謝！',
 	'wikiapoll-vote' => '投票 ！',
 	'wikiapoll-votes' => '$1 票',
-	'wikiapoll-createpoll-headline' => '創建投票',
+	'wikiapoll-createpoll-headline' => '建立投票',
 	'wikiapoll-editpoll-headline' => '編輯投票',
 	'wikiapoll-question-label' => '問題',
 	'wikiapoll-addnewitem-label' => '增加新項目',

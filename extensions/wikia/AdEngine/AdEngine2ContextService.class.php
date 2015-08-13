@@ -16,7 +16,6 @@ class AdEngine2ContextService {
 			$hubService = new HubService();
 			$adPageTypeService = new AdEngine2PageTypeService();
 			$wikiaPageType = new WikiaPageType();
-			$adEngineService = new AdEngine2Service();
 
 			$sevenOneMediaCombinedUrl = null;
 			if ( !empty( $wg->AdDriverUseSevenOneMedia ) ) {
@@ -24,21 +23,33 @@ class AdEngine2ContextService {
 				$sevenOneMediaCombinedUrl = ResourceLoader::makeCustomURL( $wg->Out, ['wikia.ext.adengine.sevenonemedia'], 'scripts' );
 			}
 
-			$langCode = $title->getPageLanguage()->getCode();
+			$monetizationServiceAds = null;
+			if ( !empty( $wg->AdDriverUseMonetizationService ) && !empty( $wg->EnableMonetizationModuleExt ) ) {
+				$monetizationServiceAds = F::app()->sendRequest( 'MonetizationModule', 'index' )->getData()['data'];
+			}
 
+			$sourcePointUrl = null;
+			if ( $skinName === 'oasis' ) {
+				$sourcePointUrl = ResourceLoader::makeCustomURL( $wg->Out, ['wikia.ext.adengine.sourcepoint'], 'scripts' );
+			}
+
+			$langCode = $title->getPageLanguage()->getCode();
 			return [
 				'opts' => $this->filterOutEmptyItems( [
 					'adsInContent' => $wg->EnableAdsInContent,
-					'disableLateQueue' => $wg->AdEngineDisableLateQueue,
+					'delayBtf' => $wg->AdDriverDelayBelowTheFold,
 					'enableAdsInMaps' => $wg->AdDriverEnableAdsInMaps,
 					'pageType' => $adPageTypeService->getPageType(),
+					'paidAssetDropConfig' => $wg->PaidAssetDropConfig, // @see extensions/wikia/PaidAssetDrop
 					'showAds' => $adPageTypeService->areAdsShowableOnPage(),
-					'usePostScribe' => $wg->Request->getBool( 'usepostscribe', false ),
 					'trackSlotState' => $wg->AdDriverTrackState,
+					'usePostScribe' => $wg->Request->getBool( 'usepostscribe', false ),
+					'sourcePointUrl' => $sourcePointUrl,
 				] ),
 				'targeting' => $this->filterOutEmptyItems( [
 					'enableKruxTargeting' => $wg->EnableKruxTargeting,
-					'enablePageCategories' => array_search($langCode, $wg->AdPageLevelCategoryLangs) !== false,
+					'enablePageCategories' => array_search( $langCode, $wg->AdPageLevelCategoryLangs ) !== false,
+					'mappedVerticalName' => $this->getMappedVerticalName( $wg->CityId ), //wikiCategory replacement for AdLogicPageParams.js::getPageLevelParams
 					'pageArticleId' => $title->getArticleId(),
 					'pageIsArticle' => !!$title->getArticleId(),
 					'pageIsHub' => $wikiaPageType->isWikiaHub(),
@@ -56,20 +67,41 @@ class AdEngine2ContextService {
 					'wikiVertical' => $hubService->getCategoryInfoForCity( $wg->CityId )->cat_name,
 				] ),
 				'providers' => $this->filterOutEmptyItems( [
+					'monetizationService' => $wg->AdDriverUseMonetizationService,
+					'monetizationServiceAds' => $monetizationServiceAds,
 					'sevenOneMedia' => $wg->AdDriverUseSevenOneMedia,
 					'sevenOneMediaCombinedUrl' => $sevenOneMediaCombinedUrl,
 					'taboola' => $wg->AdDriverUseTaboola,
 				] ),
 				'slots' => $this->filterOutEmptyItems( [
+					'exitstitial' => $wg->EnableOutboundScreenExt,
+					'exitstitialRedirectDelay' => $wg->OutboundScreenRedirectDelay,
+					'invisibleHighImpact' => $wg->AdDriverEnableInvisibleHighImpactSlot,
 				] ),
-				// TODO: make it like forceadprovider=liftium
-				'forceProviders' => $this->filterOutEmptyItems( [
-					'directGpt' => $wg->AdDriverForceDirectGptAd,
-					'liftium' => $wg->AdDriverForceLiftiumAd,
-					'turtle' => $wg->AdDriverForceTurtleAd,
-				] ),
+				'forcedProvider' => $wg->AdDriverForcedProvider
 			];
 		} );
+	}
+
+	private function getMappedVerticalName( $cityId ) {
+		$wikiVertical = WikiFactoryHub::getInstance()->getWikiVertical( $cityId );
+		if ( !empty( $wikiVertical['short'] ) ) {
+			$mapping = [
+				'other' => 'life',
+				'tv' => 'ent',
+				'games' => 'gaming',
+				'books' => 'ent',
+				'comics' => 'ent',
+				'lifestyle' => 'life',
+				'music' => 'ent',
+				'movies' => 'ent'
+			];
+			$newVerticalName = strtolower( $wikiVertical['short'] );
+			if ( !empty( $mapping[$newVerticalName] ) ) {
+				return $mapping[$newVerticalName];
+			}
+		}
+		return 'error';
 	}
 
 	private function filterOutEmptyItems( $input ) {

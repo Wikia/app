@@ -24,6 +24,7 @@ $messages['en'] = array(
 	'places-geolocation-modal-not-available' => 'Oops! This feature is currently available only on mobile devices.<br /><br />Want to give it a try? Just visit this page using your mobile device of choice.',
 
 	'places-error-no-article' => 'You have to specify an page',
+	'places-error-no-matches' => '<places> tag: no pages were found',
 	'places-error-place-already-exists' => 'This page is already geo tagged',
 
 	'places-updated-geolocation' => 'Geotagged this page',
@@ -42,6 +43,7 @@ $messages['qqq'] = array(
 	'places-editor-title-create-new' => 'Title of places editor modal when creating a new geotag',
 	'places-editor-title-edit' => 'Title of places editor modal when editing an existing geotag',
 	'places-geolocation-modal-error-title' => '{{Identical|Error}}',
+	'places-error-no-matches' => 'Displayed when there are no matches for a given places query',
 );
 
 /** Old English (Ænglisc)
@@ -418,9 +420,11 @@ $messages['ko'] = array(
 );
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
+ * @author Bikarhêner
  * @author George Animal
  */
 $messages['ku-latn'] = array(
+	'places-editor-search' => 'Lê bigere',
 	'places-geolocation-modal-error-title' => 'Çewtî',
 );
 
@@ -437,7 +441,7 @@ $messages['lb'] = array(
 	'places-error-no-article' => 'Dir musst eng Säit uginn',
 );
 
-/** لوری (لوری)
+/** Northern Luri (لوری مینجایی)
  * @author Mogoeilor
  */
 $messages['lrc'] = array(
@@ -557,7 +561,19 @@ $messages['nl'] = array(
 	'places-category-switch-off' => 'Geocodering inschakelen',
 );
 
-/** Pälzisch (Pälzisch)
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'places-editor-search' => 'Recercar',
+	'places-editor-title-create-new' => 'Apondre una balisa geografica',
+	'places-editor-title-edit' => 'Modificar una balisa geografica',
+	'places-geolocation-button-label' => 'Apondre un emplaçament',
+	'places-geolocation-modal-add-title' => 'Apondètz un emplaçament',
+	'places-geolocation-modal-error-title' => 'Error',
+);
+
+/** Palatine German (Pälzisch)
  * @author Manuae
  */
 $messages['pfl'] = array(
@@ -587,6 +603,7 @@ $messages['pl'] = array(
 	'places-geolocation-modal-error' => 'Wystąpił błąd podczas próby określenia twojej pozycji:<br />$1',
 	'places-geolocation-modal-not-available' => 'Ta funkcja jest obecnie dostępna tylko na urządzeniach przenośnych.<br /><br />Chcesz ją wypróbować? Odwiedź tę stronę za pomocą wybranego urządzenia przenośnego.',
 	'places-error-no-article' => 'Musisz określić stronę',
+	'places-error-no-matches' => 'Tag <places>: nie znaleziono stron pasujących do zapytania',
 	'places-error-place-already-exists' => 'Ta strona jest już geo oznaczona',
 	'places-updated-geolocation' => 'Geooznaczono tę stronę',
 	'places-category-switch' => 'Wyłącz geotagowanie',
@@ -626,6 +643,7 @@ $messages['pms'] = array(
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
+	'places' => 'ځايونه په دې ويکي',
 	'places-editor-search' => 'پلټل',
 	'places-geolocation-button-label' => 'ځای ورگډول',
 	'places-geolocation-modal-add-title' => 'ځای ورگډول',

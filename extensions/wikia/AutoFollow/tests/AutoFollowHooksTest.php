@@ -46,9 +46,9 @@ class AutoFollowHooksTest extends \WikiaBaseTest {
 		 * @var object User
 		 */
 		$newUser = new \User();
-		$newUser->setOption( 'language', $sLanguage );
-		$newUser->setOption( 'marketingallowed', 1 );
-		$newUser->setOption( $wgAutoFollowFlag, 0 );
+		$newUser->setGlobalPreference( 'language', $sLanguage );
+		$newUser->setGlobalPreference( 'marketingallowed', 1 );
+		$newUser->setGlobalFlag( $wgAutoFollowFlag, 0 );
 
 		/**
 		 * For the given set of data a task should be queued once
@@ -106,9 +106,9 @@ class AutoFollowHooksTest extends \WikiaBaseTest {
 		 * @var object User
 		 */
 		$newUser = new \User();
-		$newUser->setOption( 'language', $sLanguage );
-		$newUser->setOption( 'marketingallowed', $iMarketingAllowed );
-		$newUser->setOption( $wgAutoFollowFlag, $iAutoFollowFlag );
+		$newUser->setGlobalPreference( 'language', $sLanguage );
+		$newUser->setGlobalPreference( 'marketingallowed', $iMarketingAllowed );
+		$newUser->setGlobalFlag( $wgAutoFollowFlag, $iAutoFollowFlag );
 
 		/**
 		 * For the given set of data a task shouldn't be queued

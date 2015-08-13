@@ -89,7 +89,14 @@ function wfCreatePageSetupVars(Array &$vars ) {
 		$contentNamespaces[] = $wgContLang->getNsText( $contentNs );
 	}
 
-	$vars['WikiaEnableNewCreatepage'] = $wgUser->getOption( 'createpagepopupdisabled', false ) ? false : $wgWikiaEnableNewCreatepageExt;
+	/**
+	 * In some cases create page popup may be disabled
+	 * This avoids overwriting this variable if it's already set
+	 * For example see: InsightsHooks::onMakeGlobalVariablesScript
+	 */
+	if ( !isset( $vars['WikiaEnableNewCreatepage'] ) ) {
+		$vars['WikiaEnableNewCreatepage'] = $wgUser->getGlobalPreference( 'createpagepopupdisabled', false ) ? false : $wgWikiaEnableNewCreatepageExt;
+	}
 
 	if (!empty( $wgWikiaDisableDynamicLinkCreatePagePopup )) {
 		$vars['WikiaDisableDynamicLinkCreatePagePopup'] = true;
@@ -209,7 +216,7 @@ function wfCreatePageAjaxGetDialog() {
 
 	$wgCreatePageDialogWidth = ( $detectedWidth > $wgCreatePageDialogWidth ) ? ( $detectedWidth + ( CREATEPAGE_DIALOG_SIDE_PADDING * 2 ) ) : $wgCreatePageDialogWidth;
 
-	$defaultLayout = $wgUser->getOption( 'createpagedefaultblank', false ) ?  'blank' : 'format';
+	$defaultLayout = $wgUser->getGlobalPreference( 'createpagedefaultblank', false ) ?  'blank' : 'format';
 
 	// some extensions (e.g. PLB) can remove "format" option, so fallback to first available option here
 	if(!array_key_exists($defaultLayout, $options) ) {

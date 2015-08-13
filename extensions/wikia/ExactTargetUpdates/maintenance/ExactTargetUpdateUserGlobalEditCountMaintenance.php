@@ -23,15 +23,10 @@ class ExactTargetUpdateUserGlobalEditCountMaintenance extends Maintenance {
 	 */
 	public function execute() {
 		global $wgDWStatsDB;
-		// Get DB
 		$oStatsDBr = wfGetDB( DB_SLAVE, [], $wgDWStatsDB );
-		// Get timestamp param
 		$sStartDate = $this->getLastDayDate();
-		// Get user ids
 		$aUsersIds = $this->getListOfUsersIdsEdited( $oStatsDBr, $sStartDate );
-		// Prepare user data required for update
 		$aUsersData = $this->prepareUsersParams( $aUsersIds );
-		// Add update tasks
 		$this->addUsersUpdateTasks( $aUsersData );
 	}
 

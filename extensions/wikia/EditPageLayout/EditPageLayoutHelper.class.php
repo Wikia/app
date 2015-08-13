@@ -110,7 +110,7 @@ class EditPageLayoutHelper {
 		if ( $user->isLoggedIn() ) {
 			global $wgRTEDisablePreferencesChange;
 			$wgRTEDisablePreferencesChange = true;
-			$this->addJsVariable( 'wgEditPageWideSourceMode', (bool)$user->getOption( 'editwidth' ) );
+			$this->addJsVariable( 'wgEditPageWideSourceMode', (bool)$user->getGlobalPreference( 'editwidth' ) );
 			unset( $wgRTEDisablePreferencesChange );
 		}
 
@@ -173,10 +173,11 @@ class EditPageLayoutHelper {
 	static public function isCodePage( Title $articleTitle ) {
 		$namespace = $articleTitle->getNamespace();
 
-		return $articleTitle->isCssOrJsPage()
-				|| $articleTitle->isCssJsSubpage()
-				// Lua module
-				|| $namespace === NS_MODULE;
+		return ( $articleTitle->isCssOrJsPage()
+			|| $articleTitle->isCssJsSubpage()
+			|| $namespace === NS_MODULE
+			|| self::isInfoboxTemplate( $articleTitle )
+		);
 	}
 
 	/**
@@ -191,6 +192,26 @@ class EditPageLayoutHelper {
 		return self::isCodePage( $articleTitle ) && $wgEnableEditorSyntaxHighlighting;
 	}
 
+	static public function isInfoboxTemplate( Title $title ) {
+		$namespace = $title->getNamespace();
+		$portableInfobox = PortableInfoboxDataService::newFromTitle( $title )->getData();
+
+		if ( $namespace === NS_TEMPLATE ) {
+			$tc = new TemplateClassification( $title );
+			return $tc->isType( $tc::TEMPLATE_INFOBOX )
+					|| self::isTemplateDraft( $title )
+					|| !empty( $portableInfobox );
+		}
+
+		return false;
+	}
+
+	static function isTemplateDraft( $title ) {
+		global $wgEnableTemplateDraftExt;
+
+		return !empty( $wgEnableTemplateDraftExt ) && TemplateDraftHelper::isTitleDraft( $title );
+	}
+
 	/**
 	 * Check if wikitext syntax highlighting is enabled, so
 	 * - $wgEnableEditorSyntaxHighlighting is set to true
@@ -202,7 +223,7 @@ class EditPageLayoutHelper {
 		global $wgEnableEditorSyntaxHighlighting, $wgUser;
 
 		return $wgEnableEditorSyntaxHighlighting
-				&& !$wgUser->getOption( 'disablesyntaxhighlighting' );
+				&& !$wgUser->getGlobalPreference( 'disablesyntaxhighlighting' );
 	}
 
 	/**
@@ -216,11 +237,23 @@ class EditPageLayoutHelper {
 	 * @return bool
 	 */
 	public function showMobilePreview( Title $title ) {
-		$blacklistedPage = self::isCodePage( $title )
-				|| $title->isMainPage()
-				|| NavigationModel::isWikiNavMessage( $title );
+		$blacklistedPage = ( self::isCodePage( $title )
+				&& !self::isCodePageWithPreview( $title ) )
+			|| $title->isMainPage()
+			|| NavigationModel::isWikiNavMessage( $title );
 
 		return !$blacklistedPage;
+	}
+
+	/**
+	 * This method checks if the $title comes from one of whitelisted code pages with
+	 * a preview enabled for them. DO NOT check for self::isCodePage, it makes no sense if
+	 * by definition you include only code pages here.
+	 * @param Title $title
+	 * @return bool
+	 */
+	public static function isCodePageWithPreview( Title $title ) {
+		return self::isInfoboxTemplate( $title );
 	}
 
 	/**
@@ -232,11 +265,12 @@ class EditPageLayoutHelper {
 		$namespace = $title->getNamespace();
 		$type = '';
 
-		$aceUrl = AssetsManager::getInstance()->getOneCommonURL( '/resources/Ace' );
+		$aceUrl = AssetsManager::getInstance()->getOneCommonURL( 'resources/Ace' );
 		$aceUrlParts = parse_url( $aceUrl );
 		$this->addJsVariable( 'aceScriptsPath', $aceUrlParts['path'] );
 
 		$this->addJsVariable( 'wgEnableCodePageEditor', true );
+		$this->addJsVariable( 'showPagePreview', self::showMobilePreview( $title ) );
 
 		if ( $namespace === NS_MODULE ) {
 			$type = 'lua';
@@ -244,6 +278,8 @@ class EditPageLayoutHelper {
 			$type = 'css';
 		} elseif ( $title->isJsPage() || $title->isJsSubpage() ) {
 			$type = 'javascript';
+		} elseif ( self::isInfoboxTemplate( $title ) ) {
+			$type = 'xml';
 		}
 
 		$this->addJsVariable( 'codePageType', $type );

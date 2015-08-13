@@ -64,7 +64,7 @@ class AvatarServiceTest extends WikiaBaseTest {
 		$user->setName( $userName );
 
 		if ( $userId > 0 ) {
-			$user->setOption( AVATAR_USER_OPTION_NAME, $userId );
+			$user->setGlobalAttribute( AVATAR_USER_OPTION_NAME, $userId );
 		}
 
 		$this->assertStringEndsWith( $url, AvatarService::getAvatarUrl( $user, $avatarSize ) );
@@ -74,14 +74,14 @@ class AvatarServiceTest extends WikiaBaseTest {
 		return [
 			// anon
 			[
-				'url' => '/images/1/19/Avatar.jpg/revision/latest/scale-to-width/20',
+				'url' => '/images/1/19/Avatar.jpg/revision/latest/scale-to-width-down/20',
 				'userName' => '80.2.3.4',
 				'userId' => 0,
 				'avatarSize' => 20,
 			],
 			// logged-in
 			[
-				'url' => '/images/e/e1/123456/revision/latest/scale-to-width/20',
+				'url' => '/images/e/e1/123456/revision/latest/scale-to-width-down/20',
 				'userName' => 'TestUser123',
 				'userId' => 123456,
 				'avatarSize' => 20,
@@ -94,13 +94,13 @@ class AvatarServiceTest extends WikiaBaseTest {
 		$user = $this->getMock( 'User' );
 		$user
 			->expects( $this->any() )
-			->method( 'getOption' )
+			->method( 'getGlobalAttribute' )
 			->will( $this->returnValue( '/a/ab/12345.png' ) );
 
 		$masthead = $this->getMock( 'Masthead', [], [$user] );
 
 		$this->assertEquals(
-			'http://vignette.wikia-dev.com/common/avatars/a/ab/12345.png/revision/latest/scale-to-width/150?cb=789&format=jpg',
+			'http://vignette.wikia-dev.com/common/avatars/a/ab/12345.png/revision/latest/scale-to-width-down/150?cb=789&format=jpg',
 			AvatarService::getVignetteUrl( $masthead, 150, 789 )
 		);
 	}
@@ -109,7 +109,7 @@ class AvatarServiceTest extends WikiaBaseTest {
 		$user = $this->getMock( 'User' );
 		$user
 			->expects( $this->any() )
-			->method( 'getOption' )
+			->method( 'getGlobalAttribute' )
 			->will( $this->returnValue( 'http://images.domain.com/user/nelson.jpg' ) );
 
 		$masthead = $this->getMock( 'Masthead', [], [$user] );
@@ -125,13 +125,13 @@ class AvatarServiceTest extends WikiaBaseTest {
 		$user = $this->getMock( 'User' );
 		$user
 			->expects( $this->any() )
-			->method( 'getOption' )
+			->method( 'getGlobalAttribute' )
 			->will( $this->returnValue( 'Fish.jpg' ) );
 
 		$masthead = $this->getMock( 'Masthead', [], [$user] );
 
 		$this->assertEquals(
-			'http://vignette.wikia-dev.com/messaging/images/f/fe/Fish.jpg/revision/latest/scale-to-width/150?cb=789&format=jpg',
+			'http://vignette.wikia-dev.com/messaging/images/f/fe/Fish.jpg/revision/latest/scale-to-width-down/150?cb=789&format=jpg',
 			AvatarService::getVignetteUrl( $masthead, 150, 789 )
 		);
 	}
@@ -141,7 +141,7 @@ class AvatarServiceTest extends WikiaBaseTest {
 		$user = $this->getMock( 'User' );
 		$user
 			->expects( $this->any() )
-			->method( 'getOption' )
+			->method( 'getGlobalPreference' )
 			->will( $this->returnValue( null ) );
 
 		$masthead = $this->getMock( 'Masthead', [], [$user] );
@@ -151,7 +151,7 @@ class AvatarServiceTest extends WikiaBaseTest {
 			->will( $this->returnValue( ['http://images.wikia.com/messaging/images/1/19/Avatar.jpg'] ) );
 
 		$this->assertEquals(
-			'http://vignette.wikia-dev.com/messaging/images/1/19/Avatar.jpg/revision/latest/scale-to-width/150?cb=789&format=jpg',
+			'http://vignette.wikia-dev.com/messaging/images/1/19/Avatar.jpg/revision/latest/scale-to-width-down/150?cb=789&format=jpg',
 			AvatarService::getVignetteUrl( $masthead, 150, 789 )
 		);
 	}

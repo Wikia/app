@@ -1,7 +1,5 @@
 /*global require*/
-/*jslint newcap:true*/
 /*jshint camelcase:false*/
-/*jshint maxlen:200*/
 require([
 	'ext.wikia.adEngine.adEngine',
 	'ext.wikia.adEngine.adLogicHighValueCountry',
@@ -11,6 +9,7 @@ require([
 	'ext.wikia.adEngine.dartHelper',
 	'ext.wikia.adEngine.messageListener',
 	'ext.wikia.adEngine.provider.evolve',
+	'ext.wikia.adEngine.slot.scrollHandler',
 	'ext.wikia.adEngine.slotTracker',
 	'ext.wikia.adEngine.slotTweaker',
 	'wikia.krux',
@@ -24,19 +23,20 @@ require([
 	dartHelper,
 	messageListener,
 	providerEvolve,
+	scrollHandler,
 	slotTracker,
 	slotTweaker,
 	krux,
-	window
+	win
 ) {
 	'use strict';
 
 	var kruxSiteId = 'JU3_GW1b';
 
-	window.AdEngine_getTrackerStats = slotTracker.getStats;
+	win.AdEngine_getTrackerStats = slotTracker.getStats;
 
 	// DART API for Liftium
-	window.LiftiumDART = {
+	win.LiftiumDART = {
 		getUrl: function (slotname, slotsize) {
 			if (slotsize) {
 				slotsize += ',1x1';
@@ -53,31 +53,64 @@ require([
 	messageListener.init();
 
 	// Register Evolve hop
-	window.evolve_hop = providerEvolve.hop;
+	win.evolve_hop = providerEvolve.hop;
 
 	// Register window.wikiaDartHelper so jwplayer can use it
-	window.wikiaDartHelper = dartHelper;
+	win.wikiaDartHelper = dartHelper;
 
 	// Register adLogicHighValueCountry as so Liftium can use it
-	window.adLogicHighValueCountry = adLogicHighValueCountry;
+	win.adLogicHighValueCountry = adLogicHighValueCountry;
 
 	// Register adSlotTweaker so DART creatives can use it
 	// https://www.google.com/dfp/5441#delivery/CreateCreativeTemplate/creativeTemplateId=10017012
-	window.adSlotTweaker = slotTweaker;
+	win.adSlotTweaker = slotTweaker;
 
 	// Custom ads (skins, footer, etc)
-	window.loadCustomAd = customAdsLoader.loadCustomAd;
+	win.loadCustomAd = customAdsLoader.loadCustomAd;
 
 	// Everything starts after content and JS
-	window.wgAfterContentAndJS.push(function () {
+	win.wgAfterContentAndJS.push(function () {
 		// Ads
 		adTracker.measureTime('adengine.init', 'queue.desktop').track();
-		window.adslots2 = window.adslots2 || [];
-		adEngine.run(adConfigDesktop, window.adslots2, 'queue.desktop');
+		win.adslots2 = win.adslots2 || [];
+		adEngine.run(adConfigDesktop, win.adslots2, 'queue.desktop');
+
+		scrollHandler.init();
 
 		// Krux
 		krux.load(kruxSiteId);
 	});
+});
+
+// Inject extra slots
+require([
+	'ext.wikia.adEngine.slot.inContentPlayer',
+	'ext.wikia.adEngine.slot.skyScraper3',
+	'wikia.document',
+	'wikia.window',
+	require.optional('ext.wikia.adEngine.slot.exitstitial'),
+	require.optional('ext.wikia.adEngine.slot.inContentDesktop')
+], function (inContentPlayer, skyScraper3, doc, win, exitstitial, inContentDesktop) {
+	'use strict';
+
+	function initDesktopSlots() {
+		inContentPlayer.init();
+		skyScraper3.init();
+
+		if (inContentDesktop) {
+			inContentDesktop.init();
+		}
+
+		if (exitstitial) {
+			exitstitial.init();
+		}
+	}
+
+	if (doc.readyState === 'complete') {
+		initDesktopSlots();
+	} else {
+		win.addEventListener('load', initDesktopSlots);
+	}
 });
 
 // FPS meter

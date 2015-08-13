@@ -79,6 +79,8 @@ $wgAutoloadClasses['ExactTargetSoapClient'] =  $dir . '/lib/exacttarget_soap_cli
 
 /* Other classes */
 $wgAutoloadClasses['Wikia\ExactTarget\ExactTargetDataComparisonHelper'] =  $dir . '/tasks/ExactTargetDataComparisonHelper.php' ;
+$wgAutoloadClasses['Wikia\ExactTarget\ExactTargetRedoSoapRequestTask'] =  $dir . '/tasks/ExactTargetRedoSoapRequestTask.php' ;
+$wgAutoloadClasses['Wikia\ExactTarget\ExactTargetSoapErrorHandler'] =  $dir . '/lib/ExactTargetSoapErrorHandler.php' ;
 
 
 /**

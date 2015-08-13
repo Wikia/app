@@ -11,6 +11,8 @@
 
 putenv ("SERVER_ID=177");
 
+define('S3CMD_CONFIG', '/etc/s3cmd/amazon_ro.cfg');
+
 $dirName = dirname(__FILE__);
 
 require_once( $dirName . "/../commandLine.inc" );
@@ -38,14 +40,14 @@ if (array_key_exists('p', $opts)) {
 }
 switch($wgWikiaDatacenter) {
 	case WIKIA_DC_POZ:
-		$wgDBdevboxServer1 = 'dev-db-a1-p2';
-		$wgDBdevboxServer2 = 'dev-db-a1-p2';
-		$wgDBdevboxCentral = 'dev-db-central-p2';
+		$wgDBdevboxServer1 = 'dev-db-p1';
+		$wgDBdevboxServer2 = 'dev-db-p1';
+		$wgDBdevboxCentral = 'dev-db-p1';
 		break;
 	case WIKIA_DC_SJC:
-		$wgDBdevboxServer1 = 'dev-db-a1';
-		$wgDBdevboxServer2 = 'dev-db-b1';
-		$wgDBdevboxCentral = 'dev-db-central';
+		$wgDBdevboxServer1 = 'dev-db-s1';
+		$wgDBdevboxServer2 = 'dev-db-s1';
+		$wgDBdevboxCentral = 'dev-db-s1';
 		break;
 	default:
 		die("unknown data center: {$opts['p']}\n$USAGE");
@@ -69,12 +71,16 @@ if ( array_key_exists('h', $opts) || array_key_exists ('f', $opts) ) {
 		$pattern = '/city_id: (\d+), cluster: c([1-9])/';
 		preg_match($pattern, $page, $matches);
 		$city_id = $matches[1];
-		$cluster = strtr($matches[2], '123456', 'ABCDEF');
-		$databaseDirectory = "database_$cluster";
-		if ($cluster == 'F') {
-			// FIXME
-			$databaseDirectory = "database-f";
+		$clusterNumberParam = $matches[2];
+		if ( $clusterNumberParam > 26 ) {
+			echo "Clusters higher than 26 (Z letter) are not yet operated by this script. Time to update the script.\n";
+			exit;
 		}
+		/* Map cluster numbers to letters
+		 * 1->a, 2->b
+		 * chr(65)=='A' */
+		$clusterLetter = chr( 64 + $clusterNumberParam );
+		$databaseDirectory = 'database-' . strtolower( $clusterLetter );
 		// just being lazy - easier to do this as a separate regex
 		$pattern = '/wgDBname="(.*)"/';
 		preg_match($pattern, $page, $matches);
@@ -84,7 +90,7 @@ if ( array_key_exists('h', $opts) || array_key_exists ('f', $opts) ) {
 		print_r("curl failed\n");
 	}
 
-	echo "Found city_id: $city_id dbname: $dbname cluster: $cluster\n";
+	echo "Found city_id: $city_id dbname: $dbname cluster: $clusterLetter\n";
 	echo "Press enter to continue or Ctrl-C to abort.\n";
 	$line = trim(fgets(STDIN));
 
@@ -97,7 +103,7 @@ if ( array_key_exists('h', $opts) || array_key_exists ('f', $opts) ) {
 	// first check to make sure s3cmd is available
 
 	function getFile($databaseDirectory, $dbname, $filedir) {
-		$response = shell_exec("s3cmd ls s3://".$databaseDirectory."/fulldump* 2>&1");
+		$response = shell_exec("s3cmd --config=" . S3CMD_CONFIG . " ls s3://".$databaseDirectory."/fulldump* 2>&1");
 		if (preg_match('/ERROR/', $response) || preg_match ('/command not found/', $response)) {
 			// some kind of error, print and die
 			exit($response);
@@ -146,10 +152,13 @@ if ( array_key_exists('h', $opts) || array_key_exists ('f', $opts) ) {
 				echo "Searching $dirname...\n";
 				$filename = $databaseDirectory."/$dirname/".$dbname."_$date".".sql.gz" ;
 				echo "Searching for $filename...\n";
-				$response = shell_exec("s3cmd ls s3://".$databaseDirectory."/$dirname/".$dbname."_$date".".sql.gz");
+				$response = shell_exec("s3cmd --config=" . S3CMD_CONFIG . " ls s3://".$databaseDirectory."/$dirname/".$dbname."_$date".".sql.gz");
 				$file_list = explode("\n", $response);
-				echo "Found " . count($file_list) . " items...\n";
-				if (count($file_list) == 1) continue;
+				$file_list_count = count( $file_list ) - 1;
+				echo "Found " . $file_list_count . " items...\n";
+				if ( $file_list_count == 0 ) {
+					continue;
+				}
 				foreach ($file_list as $file) {
 					$regs = array();
 					$file = preg_split('/\s+/' ,$file);
@@ -159,7 +168,7 @@ if ( array_key_exists('h', $opts) || array_key_exists ('f', $opts) ) {
 
 						echo "Found a match: $file\n";
 								echo "Saving to local filesystem:".$filename."\n";
-						shell_exec("s3cmd get --skip-existing ".$file." ".$filename);
+						shell_exec("s3cmd --config=" . S3CMD_CONFIG . " get --skip-existing ".$file." ".$filename);
 						return $filename;
 					}
 				}
@@ -184,11 +193,11 @@ if ( array_key_exists('h', $opts) || array_key_exists ('f', $opts) ) {
 		require_once( $dirName . "/../../../config/DB.php" );
 	}
 
-	if ( isset( $wgDBbackenduser, $wgDBbackendpassword, $wgLBFactoryConf['hostsByName']['sharedb-s1'] ) ) {
+	if ( isset( $wgDBbackenduser, $wgDBbackendpassword, $wgLBFactoryConf['hostsByName']['sharedb-s4'] ) ) {
 		// prepare raw output for consumption as csv. changes " => \"; \t => ","; beginning of line => ", end of line => "
 		$prepareCsv = "sed 's/\"/\\\\\"/g;s/\\t/\",\"/g;s/^/\"/;s/$/\"/;s/\\n//g'";
 
-		$dbhost = $wgLBFactoryConf['hostsByName']['sharedb-s1'];
+		$dbhost = $wgLBFactoryConf['hostsByName']['sharedb-s4'];
 	    // dump city_list row to local CSV file and import into local database
 		$response = `mysql -u $wgDBbackenduser -p$wgDBbackendpassword --database wikicities -h $dbhost -ss -e "SELECT * from city_list where city_id = $city_id " | $prepareCsv > /tmp/city_list.csv`;
 		print "city_list dump ok\n";

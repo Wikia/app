@@ -9,6 +9,8 @@
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
+/*global veTrack, Wikia */
+
 /**
  * Platform preparation for the MediaWiki view page. This loads (when user needs it) the
  * actual MediaWiki integration and VisualEditor library.
@@ -20,6 +22,11 @@
 	var conf, tabMessages, uri, pageExists, viewUri, veEditUri, isViewPage,
 		init, support, targetDeferred,
 		plugins = [],
+		// Used by tracking calls that go out before ve.track is available.
+		trackerConfig = {
+			category: 'editor-ve',
+			trackingMethod: 'both'
+		},
 		spinnerTimeoutId = null,
 		vePreferred;
 
@@ -228,6 +235,19 @@
 
 			e.preventDefault();
 
+			Wikia.Tracker.track( trackerConfig, {
+				action: Wikia.Tracker.ACTIONS.CLICK,
+				category: 'article',
+				label: 've-edit'
+			} );
+
+			if ( window.veTrack ) {
+				veTrack( {
+					action: 've-edit-page-start',
+					trigger: 'onEditTabClick'
+				} );
+			}
+
 			getTarget().done( function ( target ) {
 				target.activate()
 					.done( function () {
@@ -256,6 +276,19 @@
 			}
 
 			e.preventDefault();
+
+			Wikia.Tracker.track( trackerConfig, {
+				action: Wikia.Tracker.ACTIONS.CLICK,
+				category: 'article',
+				label: 've-section-edit'
+			} );
+
+			if ( window.veTrack ) {
+				veTrack( {
+					action: 've-edit-page-start',
+					trigger: 'onEditSectionLinkClick'
+				} );
+			}
 
 			getTarget().done( function ( target ) {
 				target.saveEditSection( $( e.target ).closest( 'h1, h2, h3, h4, h5, h6' ).get( 0 ) );
@@ -360,6 +393,12 @@
 				init.showLoading();
 
 				ve.track( 'mwedit.init', { type: isSection ? 'section' : 'page', mechanism: 'url' } );
+				if ( window.veTrack ) {
+					veTrack( {
+						action: 've-edit-page-start',
+						trigger: 'activateOnPageLoad'
+					} );
+				}
 				getTarget().done( function ( target ) {
 					target.activate()
 						.done( function () {

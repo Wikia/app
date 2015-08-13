@@ -4,6 +4,15 @@ This extension allows emails to be constructed using standard Wikia headers and 
 
 ## Testing an Email
 
+### Special:SendEmail
+
+Special:SendEmail is a special page which presents a list of forms you can use to send off any of our emails. You must
+be logged in with a staff account to access the page, and each form contains fields which correspond to the required
+parameters for each of the emails.
+
+### Testing Email Via an HTTP Request
+
+In addition to sending an email through Special:SendEmail, you can also send an email by making a request to wikia.php.
 To test an email you must know:
  
 * The name of the email controller

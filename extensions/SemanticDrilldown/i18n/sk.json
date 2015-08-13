@@ -1,0 +1,34 @@
+{
+	"@metadata": {
+		"authors": [
+			"Helix84",
+			"Teslaton"
+		]
+	},
+	"semanticdrilldown-desc": "Rozhranie na navigáciu sémantickými údajmi",
+	"specialpages-group-sd_group": "Sémantické operácie",
+	"browsedata": "Prehliadať údaje",
+	"sd_browsedata_choosecategory": "Vyberte kategóriu",
+	"sd_browsedata_viewcategory": "zobraziť kategóriu",
+	"sd_browsedata_docu": "Výsledky môžete zúžiť kliknutím na jednu alebo viac dolu uvedených položiek.",
+	"sd_browsedata_subcategory": "Podkategória",
+	"sd_browsedata_other": "Iné",
+	"sd_browsedata_none": "Žiadne",
+	"sd_browsedata_filterbyvalue": "Filtrovať podľa tejto hodnoty",
+	"sd_browsedata_filterbysubcategory": "Filtrovať podľa tejto podkategórie",
+	"sd_browsedata_otherfilter": "Zobraziť stránky s inou hodnotou tohto filtra",
+	"sd_browsedata_nonefilter": "Zobraziť stránky s bez hodnoty tohto filtra",
+	"sd_browsedata_or": "alebo",
+	"sd_browsedata_removefilter": "Odstrániť tento filter",
+	"sd_browsedata_removesubcategoryfilter": "Odstrániť tento filter podkategórie",
+	"sd_browsedata_resetfilters": "Resetovať filtre",
+	"sd_browsedata_addanothervalue": "Ďalšiu hodnotu pridáte kliknutím na šípku",
+	"sd_browsedata_daterangestart": "Začiatok:",
+	"sd_browsedata_daterangeend": "Koniec:",
+	"sd_browsedata_novalues": "Pre tento filter nie sú žiadne hodnoty",
+	"sd_createfilter_usepropertyvalues": "Použiť všetky hodnoty tejto vlastnosti pre tento filter",
+	"sd_createfilter_usecategoryvalues": "Získať hodnoty filtra z tejto kategórie:",
+	"sd_createfilter_requirefilter": "Vyžadovať, aby bol vybraný iný filter než sa zobrazí tento:",
+	"sd-pageschemas-filter": "Filter",
+	"sd-pageschemas-values": "Hodnoty"
+}

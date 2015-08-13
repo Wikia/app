@@ -138,6 +138,9 @@ class PageHeaderController extends WikiaController {
 		$actions = array_merge( $editActions,
 			array( 'history', 'move', 'protect', 'unprotect', 'delete', 'undelete', 'replace-file' ) );
 
+		// Enable to modify actions list on dropdown
+		wfRunHooks( 'PageHeaderDropdownActions', [ &$actions ] );
+
 		foreach ( $actions as $action ) {
 			if ( isset( $this->content_actions[$action] ) ) {
 				$ret[$action] = $this->content_actions[$action];

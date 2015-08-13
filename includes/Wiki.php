@@ -23,7 +23,7 @@
 /**
  * The MediaWiki class is the helper class for the index.php entry point.
  *
- * @internal documentation reviewed 15 Mar 2010
+ * internal documentation reviewed 15 Mar 2010
  */
 class MediaWiki {
 
@@ -243,7 +243,7 @@ class MediaWiki {
 		} elseif ( $request->getVal( 'action', 'view' ) == 'view' && !$request->wasPosted()
 			&& ( $request->getVal( 'title' ) === null ||
 				$title->getPrefixedDBKey() != $request->getVal( 'title' ) )
-			&& !count( $request->getValueNames( array( 'action', 'title' ) ) )
+			&& !count( $request->getValueNames( array( 'action', 'title', '_ga' ) ) )
 			&& wfRunHooks( 'TestCanonicalRedirect', array( $request, $title, $output ) ) )
 		{
 			if ( $title->isSpecialPage() ) {
@@ -277,6 +277,11 @@ class MediaWiki {
 				wfProfileOut( __METHOD__ );
 				throw new HttpError( 500, $message );
 			} else {
+				if ( !empty( $gaParams = $request->getVal( '_ga' ) ) ) {
+					// add GA cross domain tracking parameter when redirecting
+					$targetUrl = wfExpandUrl( $title->getFullURL( [ '_ga' => $gaParams ] ), PROTO_CURRENT );
+				}
+
 				$output->setSquidMaxage( 1200 );
 				$output->redirect( $targetUrl, '301' );
 			}

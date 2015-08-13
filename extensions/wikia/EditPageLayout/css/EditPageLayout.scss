@@ -28,6 +28,8 @@
 @import 'core/tabs';
 @import 'core/toolbar';
 @import 'core/wide';
+@import 'skins/oasis/css/core/breakpoints-large-typography';
+@import 'skins/oasis/css/core/breakpoints-small-medium-typography';
 @import 'skins/oasis/css/core/responsive-core';
 @import 'skins/oasis/css/core/responsive-variables';
 
@@ -46,7 +48,7 @@ body {
 
 .WikiaPage {
 	border-bottom: 0;
-	@if ($responsive-layout-enabled == false) {
+	@if (not $responsive-or-breakpoints-layout-enabled) {
 		margin: 0 auto;
 	}
 	padding: 0;
@@ -346,6 +348,7 @@ body {
 
 			.ArticlePreviewInner {
 				height: 100%;
+				margin: 0 auto;
 			}
 
 			.preview-modal-msg-wrapper {
@@ -475,7 +478,7 @@ body {
 	@include sprite-edit-mw-toolbar-deep-embed(23px, 23px);
 }
 
-@if ($responsive-layout-enabled) {
+@if ($responsive-or-breakpoints-layout-enabled) {
 	// START - edit page fixes
 	.editor .WikiaMainContent {
 		float: none;
@@ -517,7 +520,7 @@ body {
 			padding-right: $width-rail;
 
 			.cke_toolbar_expand > a {
-				right: $width-rail + $width-padding;
+				right: $width-rail + 5px;
 			}
 		}
 	}
@@ -585,5 +588,14 @@ body {
 		height: 100%;
 		margin: 0 auto;
 		width: 100%;
+	}
+}
+
+// add breakpoint typography styles to article preview
+.ArticlePreviewInner {
+	@include breakpoints-small-medium-typography;
+
+	&.large-typography {
+		@include breakpoints-large-typography;
 	}
 }

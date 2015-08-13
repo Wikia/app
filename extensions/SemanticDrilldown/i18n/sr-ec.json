@@ -1,0 +1,17 @@
+{
+	"@metadata": {
+		"authors": [
+			"Rancher",
+			"Sasa Stefanovic",
+			"Михајло Анђелковић"
+		]
+	},
+	"sd_browsedata_choosecategory": "Изабери категорију",
+	"sd_browsedata_viewcategory": "погледај категорију",
+	"sd_browsedata_subcategory": "Поткатегорија",
+	"sd_browsedata_other": "Друго",
+	"sd_browsedata_none": "Нема",
+	"sd_browsedata_or": "или",
+	"sd_browsedata_daterangestart": "Почетак:",
+	"sd_browsedata_daterangeend": "Крај:"
+}

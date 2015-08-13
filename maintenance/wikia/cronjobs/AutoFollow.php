@@ -44,11 +44,11 @@ while ( $row = $dbr->fetchRow( $res ) ) {
 		continue;
 	}
 
-	if ( $user->getOption( $alreadyWatchedKey ) == 1 ) {
+	if ( $user->getGlobalFlag( $alreadyWatchedKey ) == 1 ) {
 		continue;
 	}
 
-	$userLanguage = strtolower( $user->getOption( 'language' ) );
+	$userLanguage = strtolower( $user->getGlobalPreference( 'language' ) );
 	// Include dialects like pt-br
 	$userLanguageSplit = explode( '-', $userLanguage );
 	$userLanguage = $userLanguageSplit[0];
@@ -61,7 +61,7 @@ while ( $row = $dbr->fetchRow( $res ) ) {
 		continue;
 	}
 
-	if ( $user->getOption( 'marketingallowed' ) != 1 ) {
+	if ( $user->getGlobalPreference( 'marketingallowed' ) != 1 ) {
 		continue;
 	}
 
@@ -97,7 +97,7 @@ while ( $row = $dbr->fetchRow( $res ) ) {
 	}
 
 	if ( $status ) {
-		$user->setOption( $alreadyWatchedKey, 1 );
+		$user->setGlobalFlag( $alreadyWatchedKey, 1 );
 		$user->saveSettings();
 	}
 }

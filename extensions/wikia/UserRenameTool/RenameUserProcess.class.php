@@ -89,6 +89,7 @@ class RenameUserProcess {
 	private $mRequestorName = '';
 	private $mReason = null;
 	private $mRenameIP = false;
+	private $mNotifyUser;
 
 	private $mErrors = array();
 	private $mWarnings = array();
@@ -105,13 +106,19 @@ class RenameUserProcess {
 	private $mLogTask = null;
 
 	/**
+	 * @var string
+	 */
+	private $mUserRenameTaskId = null;
+
+	/**
 	 * Creates new rename user process
 	 *
 	 * @param $oldUsername string Old username
 	 * @param $newUsername string New username
 	 * @param $confirmed bool Has the user confirmed all the warnings he got?
+	 * @param $notifyUser bool Whether to notify the renamed user
 	 */
-	public function __construct( $oldUsername, $newUsername, $confirmed = false, $reason = null ) {
+	public function __construct( $oldUsername, $newUsername, $confirmed = false, $reason = null, $notifyUser = true ) {
 		global $wgContLang, $wgUser;
 
 		// Save original request data
@@ -123,6 +130,7 @@ class RenameUserProcess {
 		$this->mReason = $reason;
 		$this->mRequestorId = $wgUser ? $wgUser->getId() : 0;
 		$this->mRequestorName = $wgUser ? $wgUser->getName() : '';
+		$this->mNotifyUser = $notifyUser;
 
 		$this->addInternalLog("construct: old={$oldUsername} new={$newUsername}");
 	}
@@ -157,6 +165,10 @@ class RenameUserProcess {
 
 	public function getPhalanxBlockID(){
 		return $this->mPhalanxBlockId;
+	}
+
+	public function getUserRenameTaskId() {
+		return $this->mUserRenameTaskId;
 	}
 
 	/**
@@ -381,7 +393,7 @@ class RenameUserProcess {
 			$olduser->invalidateCache();
 			$olduser = User::newFromName($oldTitle->getText(), false);
 
-			$renameData = $olduser->getOption( 'renameData', '' );
+			$renameData = $olduser->getGlobalAttribute( 'renameData', '' );
 
 			$this->addInternalLog("post-invalidate: titletext={$oldTitle->getText()} old={$olduser->getName()}:{$olduser->getId()}");
 
@@ -505,7 +517,7 @@ class RenameUserProcess {
 
 			$problems = array_merge($this->mErrors, $this->mWarnings);
 
-			$this->addMainLog("fail", RenameUserLogFormatter::fail($this->mRequestorName, $this->mOldUsername, $this->mNewUsername, $this->mReason, $tasks));
+			$this->addMainLog("fail", RenameUserLogFormatter::fail($this->mRequestorName, $this->mOldUsername, $this->mNewUsername, $this->mReason));
 		}
 
 		wfProfileOut(__METHOD__);
@@ -588,52 +600,17 @@ class RenameUserProcess {
 				$fakeUser->addToDatabase();
 			}
 
-			$fakeUser->setOption( 'renameData', self::RENAME_TAG . '=' . $this->mNewUsername . ';' . self::PROCESS_TAG . '=' . '1' );
-			$fakeUser->setOption( 'disabled', 1 );
+			$fakeUser->setGlobalAttribute( 'renameData', self::RENAME_TAG . '=' . $this->mNewUsername . ';' . self::PROCESS_TAG . '=' . '1' );
+			$fakeUser->setGlobalFlag( 'disabled', 1 );
 			$fakeUser->saveSettings();
 			$this->mFakeUserId = $fakeUser->getId();
-			$this->addLog("Created fake user account for {$fakeUser->getName()} with ID {$this->mFakeUserId} and renameData '{$fakeUser->getOption( 'renameData', '')}'");
+			$this->addLog("Created fake user account for {$fakeUser->getName()} with ID {$this->mFakeUserId} and renameData '{$fakeUser->getGlobalAttribute( 'renameData', '')}'");
 		} else {
 			$fakeUser = User::newFromId($this->mFakeUserId);
 			$this->addLog("Fake user account already exists: {$this->mFakeUserId}");
 		}
 
 		$this->invalidateUser($this->mOldUsername);
-
-		//Block the user from logging in before logging him out
-		$this->addLog("Creating a Phalanx block for the user.");
-
-		if(empty($this->mPhalanxBlockId)){
-			$data = array(
-				'id'          => $this->mPhalanxBlockId,
-				'text'        => $this->mNewUsername,
-				'exact'       => 1,
-				'case'        => 1,
-				'regex'       => 0,
-				'timestamp'   => wfTimestampNow(),
-				'expire'      => null,
-				'author_id'   => $this->mRequestorId,
-				'reason'      => 'User rename process requested',
-				'lang'        => null,
-				'type'        => Phalanx::TYPE_USER
-			);
-
-			wfRunHooks( "EditPhalanxBlock", array( &$data ) );
-			$this->mPhalanxBlockId = $data['id'];
-			if(!$this->mPhalanxBlockId) {
-				$this->addLog("Creation of the block failed.");
-				$this->addError( wfMessage('userrenametool-error-cannot-create-block')->inContentLanguage()->text() );
-				wfProfileOut(__METHOD__);
-				return false;
-			} else {
-				$fakeUser->setOption( 'renameData', $fakeUser->getOption( 'renameData', '') . ';' . self::PHALANX_BLOCK_TAG . '=' . $this->mPhalanxBlockId);
-				$fakeUser->saveSettings();
-				$this->addLog("Block created with ID {$this->mPhalanxBlockId}.");
-			}
-		}
-		else{
-			$this->addLog("Block with ID {$this->mPhalanxBlockId} already exists.");
-		}
 
 		$hookName = 'UserRename::AfterAccountRename';
 		$this->addLog("Broadcasting hook: {$hookName}");
@@ -652,11 +629,12 @@ class RenameUserProcess {
 			'rename_fake_user_id' => $this->mFakeUserId,
 			'phalanx_block_id' => $this->mPhalanxBlockId,
 			'reason' => $this->mReason,
+			'notify_renamed' => $this->mNotifyUser,
 		);
 		$task = ( new UserRenameTask() )
 			->setPriority( \Wikia\Tasks\Queues\PriorityQueue::NAME );
 		$task->call( 'renameUser', $wikiIDs, $callParams );
-		$task->queue();
+		$this->mUserRenameTaskId = $task->queue();
 
 		wfProfileOut(__METHOD__);
 		return true;
@@ -957,28 +935,12 @@ class RenameUserProcess {
 	 * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
 	 * Performs action for cleaning up temporary data at the very end of a process
 	 */
-	public function cleanup(){
-		//remove phalanx user block
-
-		if ( $this->mPhalanxBlockId ) {
-			if ( !wfRunHooks( "DeletePhalanxBlock", array( $this->mPhalanxBlockId ) ) ) {
-				$result = false;
-			} else {
-				$result = true;
-			}
-
-			if ( !$result ) {
-				$this->addLog("Error removing Phalanx user block with ID {$this->mPhalanxBlockId}");
-			} else {
-				$this->addLog("Phalanx user block with ID {$this->mPhalanxBlockId} has been removed");
-			}
-		}
-
+	public function cleanup() {
 		if($this->mFakeUserId){
 			$this->addLog("Cleaning up process data in user option renameData for ID {$this->mFakeUserId}");
 
 			$fakeUser = User::newFromId($this->mFakeUserId);
-			$fakeUser->setOption( 'renameData', self::RENAME_TAG . '=' . $this->mNewUsername);
+			$fakeUser->setGlobalAttribute( 'renameData', self::RENAME_TAG . '=' . $this->mNewUsername);
 			$fakeUser->saveSettings();
 			$fakeUser->saveToCache();
 		}

@@ -21,12 +21,14 @@ class ApiAddMediaTemporary extends ApiAddMedia {
 	}
 
 	private function executeImage() {
+		global $wgContLanguageCode, $wgEnableCuratedContentUnauthorizedSave;
 		$duplicate = $this->getFileDuplicate( $this->mRequest->getFileTempName( 'file' ) );
 		if ( $duplicate ) {
-			return array(
+			return [
 				'title' => $duplicate->getTitle()->getText(),
-				'url' => $duplicate->getUrl()
-			);
+				'url' => $duplicate->getUrl(),
+				'article_id' => $duplicate->getTitle()->getArticleID()
+			];
 		} else {
 			// Check whether upload is enabled
 			if ( !UploadBase::isEnabled() ) {
@@ -37,14 +39,22 @@ class ApiAddMediaTemporary extends ApiAddMedia {
 				$this->mRequest->getFileName( 'file' ),
 				$this->mRequest->getUpload( 'file' )
 			);
-			$this->checkPermissions();
+
+			// If wiki is Japanese content, then we do not check permissions. INT-102
+			// Enable unauthorized save for Curated Main Page Editor
+			// if $wgEnableCuratedContentUnauthorizedSave not empty (CONCF-741)
+			// Ticket for removal wg check: CONCF-978
+			if ( $wgContLanguageCode !== 'ja' && empty( $wgEnableCuratedContentUnauthorizedSave ) ) {
+				$this->checkPermissions();
+			}
+
 			$this->verifyUpload();
 			$tempFile = $this->createTempFile( $this->mRequest->getFileTempName( 'file' ) );
-			return array(
+			return [
 				'title' => $this->mUpload->getTitle()->getText(),
 				'tempUrl' => $tempFile->getUrl(),
 				'tempName' => $tempFile->getName()
-			);
+			];
 		}
 	}
 
@@ -100,6 +110,7 @@ class ApiAddMediaTemporary extends ApiAddMedia {
 			if ( !UploadBase::isEnabled() ) {
 				$this->dieUsageMsg( 'uploaddisabled' );
 			}
+			F::app()->wg->DisableProxy = true;
 			$this->mUpload = new UploadFromUrl();
 			$this->mUpload->initializeFromRequest( new FauxRequest(
 				array(

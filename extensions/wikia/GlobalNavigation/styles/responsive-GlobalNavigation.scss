@@ -1,0 +1,57 @@
+@import 'skins/shared/mixins/calc';
+@import 'skins/oasis/css/core/responsive-variables';
+@import 'GlobalNavigationColors';
+@import 'GlobalNavigationVariables';
+
+@if $widthType > 0 {
+	@media #{$breakpoint-not-supported} {
+		.global-navigation {
+			min-width: 767px;
+			position: relative;
+		}
+	}
+
+	@media screen and (max-width: $breakpoint-content) {
+		.global-navigation {
+			min-width: $width-outside-min;
+
+			.start-wikia-container {
+				padding-left: 21px;
+
+				.start-wikia {
+					line-height: $start-a-wikia-logo-size - 2 * $content-border-width;
+					width: $start-a-wikia-logo-size;
+
+					&:after {
+						content: '+';
+						display: block;
+					}
+
+					span {
+						display: none;
+					}
+				}
+			}
+
+			.global-navigation-container {
+				@include width-calc('100% - 20px');
+				margin: 0 10px;
+			}
+		}
+	}
+
+	@media screen and (min-width: $breakpoint-fluid) and (max-width: $breakpoint-max - 1) {
+		.global-navigation .global-navigation-container {
+			margin: 0 $width-adskin;
+			width: auto;
+		}
+	}
+
+	@media screen and (min-width: $breakpoint-max) {
+		.global-navigation .global-navigation-container {
+			margin: 0 auto;
+			width: $width-outside-max;
+		}
+	}
+}
+

@@ -29,6 +29,7 @@ $wgHooks['ArticleDeleteComplete']    [] = "Wikia::onArticleDeleteComplete";
 $wgHooks['ContributionsToolLinks']   [] = 'Wikia::onContributionsToolLinks';
 $wgHooks['AjaxAddScript']            [] = 'Wikia::onAjaxAddScript';
 $wgHooks['TitleGetSquidURLs']        [] = 'Wikia::onTitleGetSquidURLs';
+$wgHooks['userCan']                  [] = 'Wikia::canEditInterfaceWhitelist';
 
 # changes in recentchanges (MultiLookup)
 $wgHooks['RecentChange_save']        [] = "Wikia::recentChangesSave";
@@ -69,7 +70,10 @@ $wgHooks['LocalFilePurgeThumbnailsUrls'][] = 'Wikia::onLocalFilePurgeThumbnailsU
 class Wikia {
 
 	const REQUIRED_CHARS = '0123456789abcdefG';
-	const COMMUNITY_WIKI_ID = 177;
+
+	const COMMUNITY_WIKI_ID = 177; // community.wikia.com
+	const NEWSLETTER_WIKI_ID = 223496; // wikianewsletter.wikia.com
+
 	const FAVICON_URL_CACHE_KEY = 'favicon-v1';
 
 	private static $vars = array();
@@ -1305,7 +1309,7 @@ class Wikia {
 		#if this opt is set, fake their conf status to OFF, and stop here.
 		$user = User::newFromName( $to->name );
 
-		if( $user instanceof User && $user->getBoolOption('unsubscribed') ) {
+		if( $user instanceof User && (bool)$user->getGlobalPreference('unsubscribed') ) {
 			return false;
 		}
 
@@ -1596,8 +1600,10 @@ class Wikia {
 
 		$wgUseSiteJs = $request->getBool( 'usesitejs', $wgUseSiteJs ) !== false;
 		$wgUseSiteCss = $request->getBool( 'usesitecss', $wgUseSiteCss ) !== false;
-		$wgAllowUserJs = $request->getBool( 'allowuserjs', $wgAllowUserJs ) !== false;
-		$wgAllowUserCss = $request->getBool( 'allowusercss', $wgAllowUserCss ) !== false;
+		$wgAllowUserJs = $request->getBool( 'useuserjs',
+			$request->getBool( 'allowuserjs', $wgAllowUserJs ) ) !== false;
+		$wgAllowUserCss = $request->getBool( 'useusercss',
+			$request->getBool( 'allowusercss', $wgAllowUserCss ) ) !== false;
 		$wgBuckySampling = $request->getInt( 'buckysampling', $wgBuckySampling );
 
 		return true;
@@ -2003,15 +2009,15 @@ class Wikia {
 			$userEmail = $user->getEmail();
 			// Optionally keep email in user property
 			if ( $keepEmail && !empty( $userEmail ) ) {
-				$user->setOption( 'disabled-user-email', $userEmail );
+				$user->setGlobalAttribute( 'disabled-user-email', $userEmail );
 			} elseif ( !$keepEmail ) {
 				// Make sure user property is removed
-				$user->setOption( 'disabled-user-email', null );
+				$user->setGlobalAttribute( 'disabled-user-email', null );
 			}
 			$user->setEmail( '' );
 			$user->setPassword( null );
-			$user->setOption( 'disabled', 1 );
-			$user->setOption( 'disabled_date', wfTimestamp( TS_DB ) );
+			$user->setGlobalFlag( 'disabled', 1);
+			$user->setGlobalAttribute( 'disabled_date', wfTimestamp( TS_DB ) );
 			$user->mToken = null;
 			$user->invalidateEmail();
 			if ( $ajax ) {
@@ -2221,6 +2227,28 @@ class Wikia {
 		$urls = array_slice($urls, 0, 1);
 
 		return true;
+	}
+
+	/**
+	 * Restrict editinterface right to whitelist
+	 * set $result true to allow, false to deny, leave alone means don't care
+	 * usually return true to allow processing other hooks
+	 * return false stops permissions processing and we are totally decided (nothing later can override)
+	 */
+	static function canEditInterfaceWhitelist (&$title, &$wgUser, $action, &$result) {
+		global $wgEditInterfaceWhitelist;
+
+		// List the conditions we don't care about for early exit
+		if ( $action == "read" || $title->getNamespace() != NS_MEDIAWIKI || empty( $wgEditInterfaceWhitelist )) {
+			return true;
+		}
+
+		// In this NS, editinterface applies only to white listed pages and users in the util group
+		if (in_array($title->getDBKey(), $wgEditInterfaceWhitelist) || in_array('util', $wgUser->getGroups())) {
+			return $wgUser->isAllowed('editinterface');
+		}
+
+		return false;
 	}
 
 	/**

@@ -44,9 +44,7 @@
 				'ga_label',
 				'ga_value'
 			],
-			// @see /extensions/wikia/AnalyticsEngine/js/analytics.js
-			gaTrackAdEvent = window.gaTrackAdEvent,
-			gaTrackEvent = window.gaTrackEvent,
+			// @see /extensions/wikia/AnalyticsEngine/js/universal_analytics.js
 			guaTrackEvent = window.guaTrackEvent,
 			guaTrackAdEvent = window.guaTrackAdEvent,
 			logGroup = 'Wikia.Tracker',
@@ -298,23 +296,15 @@
 				' [' + trackingMethod + ' track]', 'info', logGroup );
 
 			// No-interactive = true
-			// @see /extensions/wikia/AnalyticsEngine/js/analytics.js
+			// @see /extensions/wikia/AnalyticsEngine/js/universal_analytics.js
 			analyticsArgs.push( true );
 
 			if ( tracking.ad ) {
-				if ( gaTrackAdEvent ) {
-					gaTrackAdEvent.apply(null, analyticsArgs);
-				}
-
 				if ( guaTrackAdEvent ) {
 					guaTrackAdEvent.apply( null, analyticsArgs );
 				}
 			} else {
 				if ( tracking.analytics ) {
-					if ( gaTrackEvent ) {
-						gaTrackEvent.apply(null, analyticsArgs);
-					}
-
 					if ( guaTrackEvent ) {
 						guaTrackEvent.apply( null, analyticsArgs );
 					}

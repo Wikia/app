@@ -186,7 +186,7 @@ class EmailCLI extends Maintenance {
 
 		$classes = \F::app()->wg->AutoloadClasses;
 		foreach ( $classes as $className => $classPath ) {
-			if ( preg_match( "/^Email\\\\Controller\\\\(.+)Controller$/", $className, $matches ) ) {
+			if ( preg_match( \Email\EmailController::EMAIL_CONTROLLER_REGEX, $className, $matches ) ) {
 				$shortName = $matches[1];
 				echo "\t* $shortName\n";
 
