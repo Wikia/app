@@ -52,14 +52,14 @@ describe('AdContext', function () {
 		function () {
 			var adContext = getModule();
 
-			expect(adContext.getContext().opts).toEqual({});
+			expect(adContext.getContext().opts).toEqual({enableScrollHandler: false});
 			expect(adContext.getContext().targeting).toEqual({enableKruxTargeting: false});
 			expect(adContext.getContext().providers).toEqual({});
 			expect(adContext.getContext().forcedProvider).toEqual(null);
 
 			mocks.win = {ads: {context: {}}};
 			adContext = getModule();
-			expect(adContext.getContext().opts).toEqual({});
+			expect(adContext.getContext().opts).toEqual({enableScrollHandler: false});
 			expect(adContext.getContext().targeting).toEqual({enableKruxTargeting: false});
 			expect(adContext.getContext().providers).toEqual({});
 			expect(adContext.getContext().forcedProvider).toEqual(null);
@@ -281,6 +281,26 @@ describe('AdContext', function () {
 		expect(getModule().getContext().slots.invisibleHighImpact).toBeTruthy();
 	});
 
+	it('enables scroll handler when country in instantGlobals.wgAdDriverScrollHandlerCountries', function () {
+		var adContext;
+
+		mocks.instantGlobals = {wgAdDriverScrollHandlerCountries: ['HH', 'XX', 'ZZ']};
+		adContext = getModule();
+		expect(adContext.getContext().opts.enableScrollHandler).toBeTruthy();
+
+		mocks.instantGlobals = {wgAdDriverScrollHandlerCountries: ['YY']};
+		adContext = getModule();
+		expect(adContext.getContext().opts.enableScrollHandler).toBeFalsy();
+	});
+
+	it('enables scroll handler when url param scrollhandler is set', function () {
+		spyOn(mocks.querystring, 'getVal').and.callFake(function (param) {
+			return param === 'scrollhandler' ?  '1' : '0';
+		});
+
+		expect(getModule().getContext().opts.enableScrollHandler).toBeTruthy();
+	});
+	
 	it('query param is being passed to the adContext properly', function () {
 		spyOn(mocks.querystring, 'getVal');
 
