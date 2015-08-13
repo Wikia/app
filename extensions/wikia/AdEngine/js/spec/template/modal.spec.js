@@ -7,7 +7,8 @@ describe('ext.wikia.adEngine.template.modal', function () {
 	}
 
 	var adsModule = {
-			openLightbox: noop
+			openLightbox: noop,
+			showLightbox: noop
 		},
 		mocks = {
 			log: noop,

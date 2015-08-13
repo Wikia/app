@@ -36,8 +36,8 @@ define('ext.wikia.adEngine.template.modal', [
 				win.Mercury.Modules.Ads.getInstance().showLightbox();
 			},
 
-			create: function (adContainer, hidden) {
-				win.Mercury.Modules.Ads.getInstance().openLightbox(adContainer, hidden);
+			create: function (adContainer, modalVisible) {
+				win.Mercury.Modules.Ads.getInstance().openLightbox(adContainer, modalVisible);
 			}
 		},
 		oasisModalHandler = {
@@ -47,7 +47,7 @@ define('ext.wikia.adEngine.template.modal', [
 				}
 			},
 
-			create: function (adContainer, hidden) {
+			create: function (adContainer, modalVisible) {
 				var modalConfig = {
 					vars: {
 						id: modalId,
@@ -64,7 +64,7 @@ define('ext.wikia.adEngine.template.modal', [
 						this.modal = modal;
 						modal.$content.append(adContainer);
 						modal.$element.width('auto');
-						if (!hidden) {
+						if (modalVisible) {
 							this.show();
 						}
 					}).bind(this));
@@ -162,7 +162,7 @@ define('ext.wikia.adEngine.template.modal', [
 		}
 
 		scaleAdIfNeeded();
-		modalHandler.create(adContainer, async);
+		modalHandler.create(adContainer, !async);
 	}
 
 	return {
