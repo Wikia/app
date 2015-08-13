@@ -9,6 +9,12 @@ class ContentReviewApiController extends WikiaApiController {
 
 	public function submitPageForReview() {
 		try {
+			if ( !$this->request->wasPosted()
+				|| !$this->wg->User->matchEditToken( $this->request->getVal( 'editToken' ) )
+			) {
+				throw new BadRequestApiException();
+			}
+
 			$wikiId = $this->request->getInt( 'wikiId' );
 			$pageId = $this->request->getInt( 'pageId' );
 
@@ -16,7 +22,9 @@ class ContentReviewApiController extends WikiaApiController {
 
 			// TODO: Make exceptions more specific
 			// TODO: Check permissions!!!
-			if ( !$submitUserId > 0 ) {
+			if ( !$submitUserId > 0
+				|| !$this->canUserSubmit( $pageId )
+			) {
 				throw new Exception( 'Invalid user' );
 			}
 
@@ -51,6 +59,11 @@ class ContentReviewApiController extends WikiaApiController {
 		} catch ( Exception $e ) {
 			$this->makeExceptionResponse( $e );
 		}
+	}
+
+	private function canUserSubmit( $pageId ) {
+		$title = Title::newFromID( $pageId );
+		return $title->userCan( 'edit' );
 	}
 
 	private function makeSuccessResponse( Array $data = [] ) {
