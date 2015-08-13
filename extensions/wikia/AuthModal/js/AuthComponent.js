@@ -2,7 +2,6 @@ define('AuthComponent', function () {
 	'use strict';
 
 	function AuthComponent (rootElement) {
-		this.baseUrl = 'https://www.wikia.com/';
 		this.pages = {
 				login: 'login',
 				facebookConnect: 'login?method=facebook',
@@ -13,10 +12,10 @@ define('AuthComponent', function () {
 	}
 
 	AuthComponent.prototype.open = function (page) {
-		if (this.parentElement instanceof HTMLElement) {
+		if (this.rootElement instanceof HTMLElement) {
 			var authIframe = document.createElement('iframe');
-			authIframe.src = this.baseUrl + page;
-			this.parentElement.appendChild(authIframe);
+			authIframe.src = '/' + page;
+			this.rootElement.appendChild(authIframe);
 		}
 	};
 
