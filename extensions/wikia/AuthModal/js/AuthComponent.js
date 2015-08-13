@@ -3,10 +3,10 @@ define('AuthComponent', function () {
 
 	function AuthComponent (rootElement) {
 		this.pages = {
-				login: 'login?modal=1',
-				facebookConnect: 'login?method=facebook',
-				register: 'register',
-				facebookRegister: 'register?method=facebook'
+				login: 'signin?modal=1',
+				facebookConnect: 'signin?method=facebook&modal=1',
+				register: 'register?modal=1',
+				facebookRegister: 'register?method=facebook&modal=1'
 			};
 		this.rootElement = rootElement;
 	}
