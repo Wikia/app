@@ -68,14 +68,55 @@ ve.ui.WikiaInfoboxDialog.prototype.onTransclusionReady = function () {
 };
 
 ve.ui.WikiaInfoboxDialog.prototype.initializeTemplateParameters = function () {
-	var parts = this.transclusionModel.getParts(),
-		infoboxTemplate = parts[0];
+	var parts = this.transclusionModel.getParts();
+	this.infoboxTemplate = parts[0];
 
-	if ( infoboxTemplate instanceof ve.dm.MWTemplateModel ) {
-		infoboxTemplate.addPromptedParameters();
+	if ( this.infoboxTemplate instanceof ve.dm.MWTemplateModel ) {
+		this.infoboxTemplate.addPromptedParameters();
 	}
-	this.fullParamsList = infoboxTemplate.spec.params;
+	this.fullParamsList = this.infoboxTemplate.spec.params;
 	console.log("this.fullParamsList:", this.fullParamsList);
+	this.showItem();
+};
+
+ve.ui.WikiaInfoboxDialog.prototype.showItem = function () {
+	var param,
+		page,
+		template,
+		key,
+		val;
+	key = 'dianaaaa';
+	this.initializeLayout();
+	template = new ve.dm.WikiaTemplateModel( this.transclusionModel, this.infoboxTemplate.target );
+	// Get param value with fallback to default. Is there a ready method to do it?
+	val = this.fullParamsList[ key ].wt ? this.fullParamsList[ key ].wt : this.fullParamsList[ key ].default;
+	param = new ve.dm.MWParameterModel( template, key, val );
+
+	page = new ve.ui.WikiaParameterPage( param, param.getId(), { $: this.$ } );
+
+	this.bookletLayout.addPages( [ page ], this.transclusionModel.getIndex( param ) );
+}
+
+ve.ui.WikiaInfoboxDialog.prototype.initializeLayout = function () {
+	this.panels = new OO.ui.StackLayout( { $: this.$ } );
+
+	this.bookletLayout = new OO.ui.BookletLayout(
+		ve.extendObject(
+			{ $: this.$ },
+			this.constructor.static.bookletLayoutConfig
+		)
+	);
+
+	this.$body.append( this.panels.$element );
+	this.panels.addItems( [ this.bookletLayout ] );
+
+}
+
+/**
+ * @inheritdoc
+ */
+ve.ui.WikiaInfoboxDialog.prototype.getBodyHeight = function () {
+	return 400;
 };
 
 ve.ui.windowFactory.register( ve.ui.WikiaInfoboxDialog );
