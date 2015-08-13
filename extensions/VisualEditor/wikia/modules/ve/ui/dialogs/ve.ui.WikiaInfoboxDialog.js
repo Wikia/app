@@ -26,7 +26,7 @@ OO.inheritClass( ve.ui.WikiaInfoboxDialog, ve.ui.NodeDialog );
 
 /* Static Properties */
 
-ve.ui.WikiaInfoboxDialog.static.name = 'infoboxTemplate';
+ve.ui.WikiaInfoboxDialog.static.name = 'wikiaInfobox';
 
 ve.ui.WikiaInfoboxDialog.static.modelClasses = [ ve.dm.WikiaInfoboxTransclusionBlockNode ];
 

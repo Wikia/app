@@ -24,7 +24,7 @@ OO.inheritClass( ve.ui.WikiaInfoboxDialogTool, ve.ui.DialogTool );
 
 /* Static Properties */
 
-ve.ui.WikiaInfoboxDialogTool.static.name = 'infoboxTemplate';
+ve.ui.WikiaInfoboxDialogTool.static.name = 'wikiaInfobox';
 
 ve.ui.WikiaInfoboxDialogTool.static.icon = 'source';
 
@@ -32,7 +32,7 @@ ve.ui.WikiaInfoboxDialogTool.static.title = OO.ui.deferMsg( 'visualeditor-dialog
 
 ve.ui.WikiaInfoboxDialogTool.static.modelClasses = [ ve.dm.WikiaInfoboxTransclusionBlockNode ];
 
-ve.ui.WikiaInfoboxDialogTool.static.commandName = 'infoboxTemplate';
+ve.ui.WikiaInfoboxDialogTool.static.commandName = 'wikiaInfobox';
 
 /**
  * Only display tool for single-template transclusions of these templates.
