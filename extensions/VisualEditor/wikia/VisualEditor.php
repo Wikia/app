@@ -190,6 +190,7 @@ $wgResourceModules += array(
 			'wikia-visualeditor-dialog-transclusion-filter',
 			'wikia-visualeditor-dialogbutton-transclusion-tooltip',
 			'wikia-visualeditor-dialog-transclusion-zerostate',
+			'wikia-visualeditor-dialog-infobox-insert-title',
 			'wikia-visualeditor-savedialog-label-save',
 			'wikia-visualeditor-savedialog-label-restore',
 			'wikia-visualeditor-toolbar-savedialog',
