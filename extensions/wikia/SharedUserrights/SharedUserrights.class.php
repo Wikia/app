@@ -66,7 +66,7 @@ class UserRights {
 	 */
 	public static function onUserLoadGroups( User $user ) {
 		$userId = $user->getId();
-		if ( !self::isCentralWiki() || $user->isAnon() ) {
+		if ( $user->isAnon() ) {
 			return true;
 		} elseif ( !isset( self::$globalGroups[$userId] ) ) {
 			// Load the global groups into the class variable
