@@ -8,7 +8,8 @@
 	position: fixed;
 	top: 0;
 	width: 100%;
-	z-index: 10000000;
+	//overrides global navigation
+	z-index: 5000102;
 }
 
 .auth-modal {
@@ -22,7 +23,7 @@
 	}
 
 	a {
-		background: url('/extensions/wikia/AuthModal/svg/close.svg');
+		background: url('/extensions/wikia/AuthModal/svg/close.svg'); /* inline */
 		background-position: center;
 		background-repeat: no-repeat;
 		box-sizing: content-box;
