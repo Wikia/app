@@ -6,6 +6,9 @@ namespace Wikia\Helios;
  */
 class HelperController extends \WikiaController
 {
+
+	protected $authService;
+
 	/**
 	 * AntiSpoof: verify whether the name is legal for a new account.
 	 *
@@ -127,4 +130,49 @@ class HelperController extends \WikiaController
 
 		$this->response->setVal( 'success', true );
 	}
+
+	public function isBlocked() {
+		if (!$this->authenticateViaTheSchwartz()) {
+			return;
+		}
+
+		$username = $this->getFieldFromRequest('username', 'invalid username');
+		if (!isset($username)) {
+			return;
+		}
+
+		$blocked = $this->getAuthService()->isUsernameBlocked($username);
+
+		$this->response->setData(array('blocked' => $blocked));
+	}
+
+	protected function getFieldFromRequest($field, $failureMessage) {
+		$username = $this->getVal('username', null);
+		if (!isset($username)) {
+			$this->response->setVal('message', $failureMessage);
+			$this->response->setCode(\WikiaResponse::RESPONSE_CODE_BAD_REQUEST);
+		}
+
+		return $username;
+	}
+
+	protected function authenticateViaTheSchwartz() {
+		if ( $this->getVal( 'secret' ) != $this->wg->TheSchwartzSecretToken ) {
+			$this->response->setVal( 'allow', false );
+			$this->response->setVal( 'message', 'invalid secret' );
+			$this->response->setCode(\WikiaResponse::RESPONSE_CODE_FORBIDDEN);
+			return false;
+		}
+
+		return true;
+	}
+
+	public function setAuthService(\Wikia\Service\User\Auth $authService) {
+		$this->authService = $authService;
+	}
+
+	public function getAuthService() {
+		return $this->authService;
+	}
+
 }
