@@ -32,4 +32,50 @@ ve.ui.WikiaInfoboxDialog.static.modelClasses = [ ve.dm.WikiaInfoboxTransclusionB
 
 /* Methods */
 
+
+/**
+ * Intentionally empty. This is provided for Wikia extensibility.
+ *
+ * @method
+ */
+//ve.ui.WikiaInfoboxDialog.prototype.initializeTemplateParameters = function () {};
+
+ve.ui.WikiaInfoboxDialog.prototype.getSetupProcess = function ( data ) {
+
+	data = data || {};
+	this.data = data;
+	console.log(this);
+
+	return ve.ui.WikiaInfoboxDialog.super.prototype.getSetupProcess.call( this, data )
+		.next( function () {
+			this.transclusionModel = new ve.dm.WikiaTransclusionModel();
+
+			// Load existing infobox template
+			this.transclusionModel
+				.load( ve.copy( this.selectedNode.getAttribute( 'mw' ) ) )
+				.done( this.initializeTemplateParameters.bind( this ) );
+		}, this);
+
+};
+
+/**
+ * Handle the transclusion being ready to use.
+ */
+ve.ui.WikiaInfoboxDialog.prototype.onTransclusionReady = function () {
+	this.loaded = true;
+	this.$element.addClass( 've-ui-mwInfoboxDialog-ready' );
+	this.popPending();
+};
+
+ve.ui.WikiaInfoboxDialog.prototype.initializeTemplateParameters = function () {
+	var parts = this.transclusionModel.getParts(),
+		infoboxTemplate = parts[0];
+
+	if ( infoboxTemplate instanceof ve.dm.MWTemplateModel ) {
+		infoboxTemplate.addPromptedParameters();
+	}
+	this.fullParamsList = infoboxTemplate.spec.params;
+	console.log("this.fullParamsList:", this.fullParamsList);
+};
+
 ve.ui.windowFactory.register( ve.ui.WikiaInfoboxDialog );

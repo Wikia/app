@@ -102,6 +102,7 @@ $wgResourceModules += array(
 			've/dm/ve.dm.WikiaTransclusionModel.js',
 			've/dm/ve.dm.WikiaTemplateModel.js',
 			've/dm/ve.dm.WikiaInfoboxTransclusionBlockNode.js',
+			've/dm/ve.dm.WikiaInfoboxSpecModel.js',
 
 			// ce
 			've/ce/ve.ce.WikiaVideoNode.js',
