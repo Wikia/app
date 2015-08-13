@@ -210,6 +210,7 @@ require(
 									.css('backgroundImage', 'url(' + data.url + ')')
 									.data('id', data.id)
 									.attr('data-id', data.id)
+									.data('crop', '')
 									.removeAttr('data-crop');
 
 								if (!catImage) {
@@ -457,7 +458,12 @@ require(
 				on('click', '.photo-remove', function () {
 					var $this = $(this),
 						$line = $this.parent(),
-						$image = $line.find('.image').removeAttr('data-id').removeAttr('data-crop');
+						$image = $line
+							.find('.image')
+							.data('id', 0)
+							.removeAttr('data-id')
+							.data('crop', '')
+							.removeAttr('data-crop');
 
 					$this.removeClass('photo-remove');
 					loadImage($image, $line.find('.item-input').val(), true);
