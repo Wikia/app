@@ -32,6 +32,7 @@ $wgGroupPermissions['staff']['content-review'] = true;
  * Controllers
  */
 $wgAutoloadClasses['ContentReviewApiController'] = __DIR__ . '/controllers/ContentReviewApiController.class.php';
+$wgAutoloadClasses['SpecialContentReviewController'] = __DIR__ . '/controllers/SpecialContentReviewController.class.php';
 
 /**
  * Models
@@ -53,3 +54,8 @@ $wgAutoloadClasses['ContentReviewModuleController'] = $IP . '/skins/oasis/module
  * Messages
  */
 $wgExtensionMessagesFiles['ContentReview'] = __DIR__ . '/ContentReview.i18n.php';
+
+/**
+ * Special page
+ */
+$wgSpecialPages['ContentReview'] = 'SpecialContentReviewController';

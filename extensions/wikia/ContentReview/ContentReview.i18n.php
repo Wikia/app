@@ -8,6 +8,7 @@ $messages = [];
 $messages['en'] = [
 	'content-review-desc' => 'After a major exploit of customizable JavaScript we can no longer allow for unreviewed code to be executed on wikia\'s pages. This extension is the control room for code reviewing.',
 
+	'content-review-special-title' => 'Content Review',
 	'content-review-module-title' => 'This page has unreviewed changes',
 	'content-review-module-description' => 'For security reasons every change made in the MediaWiki namespace has to be reviewed by a Wikia\'s staff member. For development you can use the unreviewed version, however it is not going to be served to other users that are not in the development mode.',
 	'content-review-module-submit' => 'Submit page for a review',
@@ -23,6 +24,7 @@ $messages['en'] = [
 $messages['qqq'] = [
 	'content-review-desc' => '{{desc}}',
 
+	'content-review-special-title' => 'Content Review',
 	'content-review-module-title' => 'Title of a the right rail module with a button to submit a page to review.',
 	'content-review-module-description' => 'The content of the right rail module explaining that the current version of a page has not been reviewed.',
 	'content-review-module-submit' => 'Text of a button that sends a page to review.',
