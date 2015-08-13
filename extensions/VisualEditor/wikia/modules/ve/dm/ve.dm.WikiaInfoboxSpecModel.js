@@ -208,3 +208,53 @@ ve.dm.WikiaInfoboxSpecModel.prototype.isParameterRequired = function ( name ) {
 ve.dm.WikiaInfoboxSpecModel.prototype.getParameterGroups = function () {
 	return this.groups;
 };
+
+/**
+ * Check if parameter is deprecated.
+ *
+ * @param {string} name Parameter name
+ * @returns {boolean} Parameter is deprecated
+ */
+ve.dm.WikiaInfoboxSpecModel.prototype.isParameterDeprecated = function ( name ) {
+	return this.params[name].deprecated !== false;
+};
+
+/**
+ * Get a parameter description.
+ *
+ * @param {string} name Parameter name
+ * @param {string} [lang] Language to get description
+ * @returns {string|null} Parameter description
+ */
+ve.dm.WikiaInfoboxSpecModel.prototype.getParameterDescription = function ( name, lang ) {
+	var value = this.params[name].description;
+	return ve.isPlainObject( value ) ? OO.ui.getLocalValue( value, lang ) : value;
+};
+
+/**
+ * Get a parameter auto value.
+ *
+ * @param {string} name Parameter name
+ * @returns {string} Auto-value for the parameter
+ */
+ve.dm.WikiaInfoboxSpecModel.prototype.getParameterAutoValue = function ( name ) {
+	return this.params[name].autovalue;
+};
+
+/**
+ * Get all primary parameter names.
+ *
+ * @returns {string[]} Parameter names
+ */
+ve.dm.WikiaInfoboxSpecModel.prototype.getParameterNames = function () {
+	var name,
+		names = [];
+
+	for ( name in this.params ) {
+		if ( this.params[name].name === name ) {
+			names.push( name );
+		}
+	}
+
+	return names;
+};
