@@ -2535,3 +2535,11 @@ $config['template_draft'] = [
 		'//extensions/wikia/TemplateDraft/scripts/templateDraftTracking.js'
 	]
 ];
+
+$config['content_review_module_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//extensions/wikia/ContentReview/scripts/contentReviewModule.run.js',
+		'//extensions/wikia/ContentReview/scripts/contentReviewModule.js',
+	]
+];
