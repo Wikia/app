@@ -1,5 +1,5 @@
 /*!
- * VisualEditor ContentEditable WikiaMapNode class.
+ * VisualEditor ContentEditable WikiaInfoboxTransclusionBlockNode class.
  */
 
 /**
