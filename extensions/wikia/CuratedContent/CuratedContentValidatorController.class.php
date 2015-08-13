@@ -59,7 +59,7 @@ class CuratedContentValidatorController extends WikiaController {
 			$this->respondWithErrors();
 		} else {
 			$this->helper->fillItemInfo( $item );
-			$this->validator->validateItem( $item );
+			$this->validator->validateItem( $item, $isFeatured );
 			if ( !$isFeatured ) {
 				$this->validator->validateItemType( $item );
 			}
