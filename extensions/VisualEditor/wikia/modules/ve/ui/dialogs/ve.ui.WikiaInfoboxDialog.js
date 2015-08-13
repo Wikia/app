@@ -30,8 +30,19 @@ ve.ui.WikiaInfoboxDialog.static.name = 'wikiaInfobox';
 
 ve.ui.WikiaInfoboxDialog.static.modelClasses = [ ve.dm.WikiaInfoboxTransclusionBlockNode ];
 
-/* Methods */
+ve.ui.WikiaInfoboxDialog.static.actions = [
+	{
+		action: 'apply',
+		label: OO.ui.deferMsg( 'visualeditor-dialog-action-apply' ),
+		flags: 'primary'
+	},
+	{
+		label: OO.ui.deferMsg( 'visualeditor-dialog-action-cancel' ),
+		flags: 'safe'
+	}
+];
 
+/* Methods */
 
 /**
  * Intentionally empty. This is provided for Wikia extensibility.
@@ -44,7 +55,6 @@ ve.ui.WikiaInfoboxDialog.prototype.getSetupProcess = function ( data ) {
 
 	data = data || {};
 	this.data = data;
-	console.log(this);
 
 	return ve.ui.WikiaInfoboxDialog.super.prototype.getSetupProcess.call( this, data )
 		.next( function () {
