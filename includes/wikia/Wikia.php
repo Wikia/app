@@ -63,7 +63,7 @@ $wgHooks['TitleGetLangVariants'][] = 'Wikia::onTitleGetLangVariants';
 $wgHooks['LocalFilePurgeThumbnailsUrls'][] = 'Wikia::onLocalFilePurgeThumbnailsUrls';
 
 /**
- * This class have only static methods so they can be used anywhere
+ * This class has only static methods so they can be used anywhere
  *
  */
 
@@ -79,8 +79,6 @@ class Wikia {
 	private static $vars = array();
 	private static $cachedLinker;
 
-	private static $apacheHeaders = null;
-
 	public static function setVar($key, $value) {
 		Wikia::$vars[$key] = $value;
 	}
@@ -95,6 +93,31 @@ class Wikia {
 
 	public static function unsetVar($key) {
 		unset(Wikia::$vars[$key]);
+	}
+
+	/**
+	 * Set some basic wiki variables.  For use in cron jobs and tasks where some wiki
+	 * context is required to construct URLs
+	 *
+	 * @param int $wikiId ID to use as the current wiki
+	 * @param User|int|null $user User object or ID to use as the current user
+	 */
+	public static function initAsyncRequest( $wikiId, $user = null ) {
+		$wg = F::app()->wg;
+		$wg->CityID = $wikiId;
+		$wg->DBname = WikiFactory::IDtoDB( $wikiId );
+		$wg->Server = trim( WikiFactory::DBtoUrl( $wg->DBname ), '/' );
+
+		if ( !empty( $wg->DevelEnvironment ) ) {
+			$wg->Server = WikiFactory::getLocalEnvURL( $wg->Server );
+		}
+
+		// Update wgUser if its been set to a reasonable value
+		if ( is_object( $user ) ) {
+			$wg->User = $user;
+		} elseif ( is_numeric( $user ) ) {
+			$wg->User = User::newFromId( $user );
+		}
 	}
 
 	public static function getFaviconFullUrl() {
@@ -145,8 +168,6 @@ class Wikia {
 
 		return $themes;
 	}
-
-
 
     /**
      * successbox
