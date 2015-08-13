@@ -1,11 +1,5 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: mariusz
- * Date: 13.08.15
- * Time: 16:22
- */
 class SpecialContentReviewController extends WikiaSpecialPageController {
 
 	function __construct() {
