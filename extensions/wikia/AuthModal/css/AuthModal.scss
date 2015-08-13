@@ -1,3 +1,9 @@
+@keyframes auth-throbber-spin {
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
 .auth-blackout {
 	background: rgba(0, 0, 0, .7);
 	box-sizing: border-box;
@@ -17,12 +23,38 @@
 	height: 100%;
 	position: relative;
 
+	&.loading {
+		background: white;
+
+		span {
+			animation: auth-throbber-spin 1s linear infinite;
+			background: url('/extensions/wikia/AuthModal/svg/wikia-logo-circled.svg'); /* inline */
+			display: block;
+			height:62px;
+			left: 50%;
+			margin-left: -31px;
+			margin-top: -31px;
+			position: absolute;
+			top: 50%;
+			width:62px;
+		}
+
+		iframe {
+			display: none;
+		}
+	}
+
+	span {
+		display: none;
+	}
+
 	iframe {
+		display: block;
 		height: 100%;
 		width: 100%;
 	}
 
-	a {
+	.close {
 		background: url('/extensions/wikia/AuthModal/svg/close.svg'); /* inline */
 		background-position: center;
 		background-repeat: no-repeat;

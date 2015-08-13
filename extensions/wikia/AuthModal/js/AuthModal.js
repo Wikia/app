@@ -6,7 +6,7 @@ define('AuthModal', ['jquery', 'AuthComponent', 'wikia.document'], function ($, 
 
 	function open () {
 		$('.WikiaSiteWrapper').append(
-			'<div class="auth-blackout"><div class="auth-modal"><a class="close"></div></div>'
+			'<div class="auth-blackout"><div class="auth-modal loading"><span></span><a class="close"></div></div>'
 		);
 		$blackout = $('.auth-blackout');
 		modal = $blackout.find('.auth-modal')[0];
@@ -19,22 +19,28 @@ define('AuthModal', ['jquery', 'AuthComponent', 'wikia.document'], function ($, 
 		}
 	}
 
+	function onAuthComponentLoaded () {
+		if (modal) {
+			$(modal).removeClass('loading');
+		}
+	}
+
 	return {
 		login: function () {
 			open();
-			new AuthComponent(modal).login();
+			new AuthComponent(modal).login(onAuthComponentLoaded);
 		},
 		register: function () {
 			open();
-			new AuthComponent(modal).register();
+			new AuthComponent(modal).register(onAuthComponentLoaded);
 		},
 		facebookConnect: function () {
 			open();
-			new AuthComponent(modal).facebookConnect();
+			new AuthComponent(modal).facebookConnect(onAuthComponentLoaded);
 		},
 		facebookRegister: function () {
 			open();
-			new AuthComponent(modal).facebookRegister();
+			new AuthComponent(modal).facebookRegister(onAuthComponentLoaded);
 		}
 	};
 });

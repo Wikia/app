@@ -11,29 +11,33 @@ define('AuthComponent', function () {
 		this.rootElement = rootElement;
 	}
 
-	AuthComponent.prototype.open = function (page) {
+	AuthComponent.prototype.open = function (page, callback) {
 		if (this.rootElement instanceof HTMLElement) {
 			var authIframe = document.createElement('iframe');
 			authIframe.src = window.location.origin + '/' + page;
+			authIframe.onload = function () {
+				if (typeof callback === 'function') {
+					callback();
+				}
+			};
 			this.rootElement.appendChild(authIframe);
-			this.rootElement.appendChild(document.createElement('a'));
 		}
 	};
 
-	AuthComponent.prototype.login = function () {
-		this.open(this.pages.login);
+	AuthComponent.prototype.login = function (callback) {
+		this.open(this.pages.login, callback);
 	};
 
-	AuthComponent.prototype.facebookConnect = function () {
-		this.open(this.pages.facebookConnect);
+	AuthComponent.prototype.facebookConnect = function (callback) {
+		this.open(this.pages.facebookConnect, callback);
 	};
 
-	AuthComponent.prototype.register = function () {
-		this.open(this.pages.register);
+	AuthComponent.prototype.register = function (callback) {
+		this.open(this.pages.register, callback);
 	};
 
-	AuthComponent.prototype.facebookRegister = function () {
-		this.open(this.pages.facebookRegister);
+	AuthComponent.prototype.facebookRegister = function (callback) {
+		this.open(this.pages.facebookRegister, callback);
 	};
 
 	return AuthComponent;
