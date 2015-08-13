@@ -132,25 +132,25 @@ class HelperController extends \WikiaController
 	}
 
 	public function isBlocked() {
-		if (!$this->authenticateViaTheSchwartz()) {
+		if ( !$this->authenticateViaTheSchwartz() ) {
 			return;
 		}
 
-		$username = $this->getFieldFromRequest('username', 'invalid username');
-		if (!isset($username)) {
+		$username = $this->getFieldFromRequest( 'username', 'invalid username' );
+		if ( !isset( $username ) ) {
 			return;
 		}
 
-		$blocked = $this->getAuthService()->isUsernameBlocked($username);
+		$blocked = $this->getAuthService()->isUsernameBlocked( $username );
 
-		$this->response->setData(array('blocked' => $blocked));
+		$this->response->setData( array( 'blocked' => $blocked ) );
 	}
 
-	protected function getFieldFromRequest($field, $failureMessage) {
-		$username = $this->getVal('username', null);
-		if (!isset($username)) {
-			$this->response->setVal('message', $failureMessage);
-			$this->response->setCode(\WikiaResponse::RESPONSE_CODE_BAD_REQUEST);
+	protected function getFieldFromRequest( $field, $failureMessage ) {
+		$username = $this->getVal( 'username', null );
+		if ( !isset( $username ) ) {
+			$this->response->setVal( 'message', $failureMessage );
+			$this->response->setCode( \WikiaResponse::RESPONSE_CODE_BAD_REQUEST );
 		}
 
 		return $username;
@@ -160,14 +160,14 @@ class HelperController extends \WikiaController
 		if ( $this->getVal( 'secret' ) != $this->wg->TheSchwartzSecretToken ) {
 			$this->response->setVal( 'allow', false );
 			$this->response->setVal( 'message', 'invalid secret' );
-			$this->response->setCode(\WikiaResponse::RESPONSE_CODE_FORBIDDEN);
+			$this->response->setCode( \WikiaResponse::RESPONSE_CODE_FORBIDDEN );
 			return false;
 		}
 
 		return true;
 	}
 
-	public function setAuthService(\Wikia\Service\User\Auth $authService) {
+	public function setAuthService( \Wikia\Service\User\Auth $authService ) {
 		$this->authService = $authService;
 	}
 

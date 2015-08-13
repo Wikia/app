@@ -3,7 +3,7 @@
 namespace Wikia\Helios;
 use Wikia\Service\User\Auth;
 
-include_once(__DIR__ . '/HelperControllerWrapper.php');
+include_once( __DIR__ . '/HelperControllerWrapper.php' );
 
 class HelperControllerTest extends \WikiaBaseTest {
 
@@ -20,11 +20,11 @@ class HelperControllerTest extends \WikiaBaseTest {
 		$this->mockGlobalVariable( 'wgTheSchwartzSecretToken', $this->secret );
 
 		$this->controller = new HelperControllerWrapper();
-		$this->controller->setRequest($this->wikiaRequestMock);
-		$this->controller->setResponse($this->wikiaResponseMock);
+		$this->controller->setRequest( $this->wikiaRequestMock );
+		$this->controller->setResponse( $this->wikiaResponseMock );
 
-		$this->authService = $this->getMock( '\Wikia\Service\User\Auth', ['isUsernameBlocked'], []);
-		$this->controller->setAuthService($this->authService);
+		$this->authService = $this->getMock( '\Wikia\Service\User\Auth', ['isUsernameBlocked'], [] );
+		$this->controller->setAuthService( $this->authService );
 
 		parent::setUp();
 	}
@@ -35,17 +35,17 @@ class HelperControllerTest extends \WikiaBaseTest {
 			->with( 'secret' )
 			->willReturn( "foo" );
 
-		$this->wikiaResponseMock->expects( $this->at(0) )
+		$this->wikiaResponseMock->expects( $this->at( 0 ) )
 			->method( 'setVal' )
 			->with( 'allow', false );
-		$this->wikiaResponseMock->expects( $this->at(1) )
+		$this->wikiaResponseMock->expects( $this->at( 1 ) )
 			->method( 'setVal' )
 			->with( 'message', 'invalid secret' );
-		$this->wikiaResponseMock->expects( $this->at(2) )
+		$this->wikiaResponseMock->expects( $this->at( 2 ) )
 			->method( 'setCode' )
 			->with( \WikiaResponse::RESPONSE_CODE_FORBIDDEN );
 
-		$this->assertFalse($this->controller->authenticateViaTheSchwartz());
+		$this->assertFalse( $this->controller->authenticateViaTheSchwartz() );
 	}
 
 	public function testAuthenticateAuthenticationSuccess() {
@@ -57,46 +57,46 @@ class HelperControllerTest extends \WikiaBaseTest {
 		$this->wikiaResponseMock->expects( $this->never() )
 			->method( 'setVal' );
 
-		$this->assertTrue($this->controller->authenticateViaTheSchwartz());
+		$this->assertTrue( $this->controller->authenticateViaTheSchwartz() );
 	}
 
 
 	public function testIsUserBlockedYes() {
-		$this->wikiaRequestMock->expects( $this->at(0) )
+		$this->wikiaRequestMock->expects( $this->at( 0 ) )
 			->method( 'getVal' )
 			->with( 'secret' )
 			->willReturn( $this->secret );
-		$this->wikiaRequestMock->expects( $this->at(1) )
-			->method('getVal')
-			->with('username')
-			->willReturn($this->username);
+		$this->wikiaRequestMock->expects( $this->at( 1 ) )
+			->method( 'getVal' )
+			->with( 'username' )
+			->willReturn( $this->username );
 
-		$this->authService->expects($this->once())
+		$this->authService->expects( $this->once() )
 			->method( 'isUsernameBlocked' )
-			->with($this->username)
-			->willReturn(true);
+			->with( $this->username )
+			->willReturn( true );
 
 		$this->controller->isBlocked();
-		$this->assertEquals(true, $this->controller->getResponse()->getVal('blocked'));
+		$this->assertEquals( true, $this->controller->getResponse()->getVal( 'blocked' ) );
 	}
 
 	public function testIsUserBlockedNo() {
-		$this->wikiaRequestMock->expects( $this->at(0) )
+		$this->wikiaRequestMock->expects( $this->at( 0 ) )
 			->method( 'getVal' )
 			->with( 'secret' )
 			->willReturn( $this->secret );
-		$this->wikiaRequestMock->expects( $this->at(1) )
-			->method('getVal')
-			->with('username')
-			->willReturn($this->username);
+		$this->wikiaRequestMock->expects( $this->at( 1 ) )
+			->method( 'getVal' )
+			->with( 'username' )
+			->willReturn( $this->username );
 
-		$this->authService->expects($this->once())
+		$this->authService->expects( $this->once() )
 			->method( 'isUsernameBlocked' )
-			->with($this->username)
-			->willReturn(false);
+			->with( $this->username )
+			->willReturn( false );
 
 		$this->controller->isBlocked();
-		$this->assertEquals(false, $this->controller->getResponse()->getVal('blocked'));
+		$this->assertEquals( false, $this->controller->getResponse()->getVal( 'blocked' ) );
 	}
 
 }

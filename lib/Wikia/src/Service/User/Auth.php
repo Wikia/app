@@ -10,5 +10,5 @@ interface Auth {
 	 * @param string $username
 	 * @return bool true if blocked, false otherwise
 	 */
-	public function isUsernameBlocked($username);
+	public function isUsernameBlocked( $username );
 }
