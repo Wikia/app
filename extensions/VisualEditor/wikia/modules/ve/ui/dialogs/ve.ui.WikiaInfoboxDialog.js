@@ -86,20 +86,33 @@ ve.ui.WikiaInfoboxDialog.prototype.initializeTemplateParameters = function () {
 	}
 	this.fullParamsList = this.infoboxTemplate.spec.params;
 	console.log("this.fullParamsList:", this.fullParamsList);
-	this.showItem();
+	this.showItems();
 };
 
-ve.ui.WikiaInfoboxDialog.prototype.showItem = function () {
+ve.ui.WikiaInfoboxDialog.prototype.showItems = function () {
+	var key,
+		obj;
+
+	this.initializeLayout();
+	for ( key in this.fullParamsList ) {
+		if ( this.fullParamsList.hasOwnProperty( key ) ) {
+			obj = this.fullParamsList[key];
+			if ( obj.type === 'data' ) {
+				this.showDataItem( obj, key );
+			}
+		}
+	}
+}
+
+ve.ui.WikiaInfoboxDialog.prototype.showDataItem = function ( obj, key ) {
 	var param,
 		page,
 		template,
-		key,
 		val;
-	key = 'dianaaaa';
-	this.initializeLayout();
+
 	template = new ve.dm.WikiaTemplateModel( this.transclusionModel, this.infoboxTemplate.target );
 	// Get param value with fallback to default. Is there a ready method to do it?
-	val = this.fullParamsList[ key ].wt ? this.fullParamsList[ key ].wt : this.fullParamsList[ key ].default;
+	val = obj.wt ? obj.wt : obj.default;
 	param = new ve.dm.MWParameterModel( template, key, val );
 
 	page = new ve.ui.WikiaParameterPage( param, param.getId(), { $: this.$ } );

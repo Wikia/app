@@ -242,6 +242,18 @@ ve.dm.WikiaInfoboxSpecModel.prototype.getParameterAutoValue = function ( name ) 
 };
 
 /**
+ * Get parameter deprecation description.
+ *
+ * @param {string} name Parameter name
+ * @returns {string} Explaining of why parameter is deprecated, empty if parameter is either not
+ *   deprecated or no description has been specified
+ */
+ve.dm.WikiaInfoboxSpecModel.prototype.getParameterDeprecationDescription = function ( name ) {
+	return typeof this.params[name].deprecated === 'string' ?
+		this.params[name].deprecated : '';
+};
+
+/**
  * Get all primary parameter names.
  *
  * @returns {string[]} Parameter names
