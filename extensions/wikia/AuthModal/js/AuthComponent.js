@@ -3,7 +3,7 @@ define('AuthComponent', function () {
 
 	function AuthComponent (rootElement) {
 		this.pages = {
-				login: 'login',
+				login: 'login?modal=1',
 				facebookConnect: 'login?method=facebook',
 				register: 'register',
 				facebookRegister: 'register?method=facebook'
@@ -16,6 +16,7 @@ define('AuthComponent', function () {
 			var authIframe = document.createElement('iframe');
 			authIframe.src = window.location.origin + '/' + page;
 			this.rootElement.appendChild(authIframe);
+			this.rootElement.appendChild(document.createElement('a'));
 		}
 	};
 
