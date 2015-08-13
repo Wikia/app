@@ -686,8 +686,33 @@ class WallHooksHelper {
 		return true;
 	}
 
-	static public function onRecentChangeSave( $recentChange ) {
-		wfProfileIn( __METHOD__ );
+	/**
+	 * Adjusting Recent Changes for Wall
+	 * Change RC db key to affect Watchlist behavior
+	 * @author TK-999 <https://github.com/TK-999>
+	 * @param RecentChange $rc
+	 * @return bool true because it is a hook
+	 */
+	static public function onRecentChangeBeforeSave( RecentChange &$rc ) {
+		$app = F::app();
+
+		if ( MWNamespace::isTalk( $rc->getAttribute( 'rc_namespace' ) ) &&
+			in_array( MWNamespace::getSubject( $rc->getAttribute( 'rc_namespace' )), $app->wg->WallNS )
+		) {
+			$wm = new WallMessage( $rc->getTitle() );
+			$wm->load();
+
+			if ( !$wm->isMain() ) {
+				$parentTitle = $wm->getTopParentObj()->getTitle();
+				$rc->mAttribs['rc_namespace'] = $parentTitle->getNamespace();
+				$rc->mAttribs['rc_title'] = $parentTitle->getDBKey();
+			}
+		}
+
+		return true;
+	}
+
+	static public function onRecentChangeSave( RecentChange $recentChange ){
 		// notifications
 		$app = F::app();
 
@@ -902,20 +927,26 @@ class WallHooksHelper {
 				$title = $wm->getMetaTitle();
 				$titleText = $wm->getArticleTitle()->getPrefixedText();
 				$pageText = $wm->getMainPageText();
-				$class = '';
 
-				$articleLink = ' <a href="' . $link . '" class="' . $class . '" >' . $title . '</a> ' . wfMessage( static::getMessagePrefix( $rc->getAttribute( 'rc_namespace' ) ) . '-new-message', array( $titleText, $pageText ) )->parse();
+				$attribs = [
+					'class' => '',
+					'href' => $link,
+					'title' => $title
+				];
 
-				# Bolden pages watched by this user
-				# Check if the user is following the thread or the board
-				$user = $app->wg->User;
-				if ( $wm->isWatched( $user ) || $wm->isWallWatched( $user ) ) {
+				$articleLink = ' ' . Html::element( 'a', $attribs, $title ) . ' '
+					. $list->msg( static::getMessagePrefix( $rc->getAttribute( 'rc_namespace' ) ) . '-new-message', $titleText, $pageText )->parse();
+
+				// VOLDEV-3: Bolden pages watched by this user
+				$user = $list->getUser();
+				$specialPageTitle = $list->getTitle();
+				if ( self::boldenFollowedLink( $user, $specialPageTitle, $wm ) ) {
 					$articleLink = '<strong class="mw-watched">' . $articleLink . '</strong>';
 				}
 			}
 
 			# RTL/LTR marker
-			$articleLink .= $app->wg->ContLang->getDirMark();
+			$articleLink .= $list->getLanguage()->getDirMark();
 		}
 
 		return true;
@@ -1310,6 +1341,15 @@ class WallHooksHelper {
 				->rawParams( $threadLink )
 				->params( $titleData['wallTitleTxt'], $titleData['wallPageName'] )
 				->parse();
+
+			// VOLDEV-3: Bolden pages watched by this user
+			$user = $oChangeList->getUser();
+			$specialPageTitle = $oChangeList->getTitle();
+			if ( self::boldenFollowedLink( $user, $specialPageTitle, WallMessage::newFromTitle( $oTitle ) ) ) {
+				$headerTitle = '<strong class="mw-watched">' . $headerTitle . '</strong>';
+			}
+
+			$headerTitle .= $oChangeList->getLanguage()->getDirMark();
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -1458,9 +1498,14 @@ class WallHooksHelper {
 		return true;
 	}
 
-	static public function onAllowNotifyOnPageChange( $editor, $title ) {
-		$app = F::app();
-		if ( in_array( MWNamespace::getSubject( $title->getNamespace() ), $app->wg->WallNS ) || $title->getNamespace() == NS_USER_WALL_MESSAGE_GREETING ) {
+	/**
+	 * Don't send email for Wall changes
+	 * @param User $editor
+	 * @param Title $title
+	 * @return bool
+	 */
+	static public function onAllowNotifyOnPageChange( User $editor, Title $title ) {
+		if ( in_array( MWNamespace::getSubject( $title->getNamespace() ), F::app()->wg->WallNS ) || $title->getNamespace() == NS_USER_WALL_MESSAGE_GREETING ) {
 			return false;
 		}
 		return true;
@@ -2219,6 +2264,24 @@ class WallHooksHelper {
 		}
 
 		return true;
+	}
+
+	/**
+	 * Determine whether a link pointing to a followed thread should be bold
+	 * A link should be bold if it's followed by the user, we are on Special:Watchlist
+	 * and the page was changed since the user's last visit
+	 * @param User $user
+	 * @param Title $title Title of the special page (RecentChanges or Watchlist)
+	 * @param WallMessage $wm
+	 * @return bool Whether to bolden the link
+	 */
+	private static function boldenFollowedLink( User $user, Title $title, WallMessage $wm ) {
+		$isWatchlist = $title->isSpecial( 'Watchlist' );
+		return ( F::app()->wg->ShowUpdatedMarker && !$user->isAnon()
+			&& ( $wm->isWatched( $user ) || $wm->isWallWatched( $user ) || $wm->isWallOwner( $user ) )
+			&& ( ( $isWatchlist && ( $wm->getTitle()->getNotificationTimestamp( $user ) || $wm->getArticleTitle()->getNotificationTimestamp( $user ) ) )
+				|| !$isWatchlist )
+		);
 	}
 
 	/**
