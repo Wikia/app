@@ -26,7 +26,7 @@ class Hooks {
 			/**
 			 * 1. If the latest rev_id is equal to the current reviewed one - do nothing
 			 */
-			if ( intval( $currentPageData['currentRevisionId'] ) !== $latestRevId ) {
+			if ( intval( $currentPageData['reviewedRevisionId'] ) !== $latestRevId ) {
 				/**
 				 * 2. If there is no revision in review - display the module with a submit call.
 				 */

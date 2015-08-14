@@ -58,7 +58,7 @@ class ContentReviewApiController extends WikiaApiController {
 			$reviewData = $reviewModel->getPageStatus( $wikiId, $pageId );
 
 			$data = [
-				'currentRevisionId' => $revisionData['revision_id'],
+				'reviewedRevisionId' => $revisionData['revision_id'],
 				'touched' => $revisionData['touched'],
 				'revisionInReviewId' => $reviewData['revision_id'],
 				'reviewStatus' => $reviewData['status'],
