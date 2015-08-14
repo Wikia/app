@@ -168,7 +168,7 @@ class ResourceLoaderHooks {
 	 * @return bool
 	 */
 	public static function onResourceLoaderSiteModuleGetPages( $module, $context, &$pages ) {
-		global $wgResourceLoaderAssetsSkinMapping, $wgOasisLoadCommonCSS, $wgLoadCommonCSS;
+		global $wgResourceLoaderAssetsSkinMapping, $wgOasisLoadCommonCSS, $wgLoadCommonCSS, $wgEnableContentReviewExt;
 
 		// handle skin name changes
 		$skinName = $context->getSkin();
@@ -192,9 +192,12 @@ class ResourceLoaderHooks {
 			unset($pages['MediaWiki:Common.css']);
 		}
 
-		foreach ( $pages as &$page ) {
-			if ( $page['type'] === 'script' ) {
-				$page['reviewed'] = $reviewed;
+		if ( $wgEnableContentReviewExt && !empty( $reviewed ) ) {
+			$contentRevisionHelper = new Wikia\ContentReview\Helper();
+			foreach ($pages as $pageName => &$page) {
+				if ($page['type'] === 'script' ) {
+					$page['revision'] = $contentRevisionHelper->getReviewedRevisionIdFromText($pageName);
+				}
 			}
 		}
 
