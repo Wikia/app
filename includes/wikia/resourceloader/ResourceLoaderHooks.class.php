@@ -172,6 +172,8 @@ class ResourceLoaderHooks {
 
 		// handle skin name changes
 		$skinName = $context->getSkin();
+		$reviewed = $context->getRequest()->getVal( 'reviewed', null );
+
 		if ( isset( $wgResourceLoaderAssetsSkinMapping[$skinName] ) ) {
 			$mappedName = $wgResourceLoaderAssetsSkinMapping[$skinName];
 			$mapping = array(
@@ -188,6 +190,12 @@ class ResourceLoaderHooks {
 		// TODO: Remove $wgOasisLoadCommonCSS after renaming it to $wgLoadCommonCSS in WF after release
 		if ( in_array($skinName, ['oasis', 'venus']) && empty( $wgOasisLoadCommonCSS ) && empty( $wgLoadCommonCSS ) ) {
 			unset($pages['MediaWiki:Common.css']);
+		}
+
+		foreach ( $pages as &$page ) {
+			if ( $page['type'] === 'script' ) {
+				$page['reviewed'] = $reviewed;
+			}
 		}
 
 		// todo: add user-defined site scripts here
@@ -218,6 +226,7 @@ class ResourceLoaderHooks {
 			);
 			$pages = Wikia::renameArrayKeys($pages,$mapping);
 		}
+
 
 		// todo: add user-defined user scripts here
 
