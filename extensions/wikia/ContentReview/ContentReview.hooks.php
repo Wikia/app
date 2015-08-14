@@ -7,7 +7,10 @@ class Hooks {
 	public static function onGetRailModuleList( Array &$railModuleList ) {
 		global $wgCityId, $wgTitle, $wgUser;
 
-		if ( $wgTitle->inNamespace( NS_MEDIAWIKI ) && $wgTitle->userCan( 'edit', $wgUser ) ) {
+		if ( $wgTitle->inNamespace( NS_MEDIAWIKI )
+			&& $wgTitle->isJsPage()
+			&& $wgTitle->userCan( 'edit', $wgUser )
+		) {
 			$currentPageData = \F::app()->sendRequest(
 				'ContentReviewApiController',
 				'getCurrentPageData',
