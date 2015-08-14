@@ -17,7 +17,7 @@ CREATE INDEX content_review_status_page_id_idx ON content_review_status (page_id
 CREATE INDEX content_review_status_idx         ON content_review_status (status);
 
 -- Table current_reviewed_revisions
-DROP TABLE IF EXISTS content_reviewed_revisions;
+DROP TABLE IF EXISTS current_reviewed_revisions;
 CREATE TABLE current_reviewed_revisions (
   wiki_id     INT unsigned NOT NULL,
   page_id     INT unsigned NOT NULL,

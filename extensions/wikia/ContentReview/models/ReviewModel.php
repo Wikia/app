@@ -2,13 +2,11 @@
 
 namespace Wikia\ContentReview\Models;
 
-use Wikia\Util\GlobalStateWrapper;
+class ReviewModel extends ContentReviewBaseModel {
 
-class ReviewModel extends \WikiaModel {
 	/**
-	 * Names of tables used by the extension
+	 * Possible states a review can be in
 	 */
-	const CONTENT_REVIEW_STATUS_TABLE = 'content_review_status';
 	const CONTENT_REVIEW_STATUS_UNREVIEWED = 0;
 	const CONTENT_REVIEW_STATUS_IN_REVIEW = 1;
 	const CONTENT_REVIEW_STATUS_APPROVED = 2;
@@ -134,46 +132,5 @@ class ReviewModel extends \WikiaModel {
 
 			throw $e;
 		}
-	}
-
-	/**
-	 * Connects to a database with an intent of performing SELECT queries
-	 * @return \DatabaseBase
-	 */
-	private function getDatabaseForRead() {
-		return $this->getDatabase( DB_SLAVE );
-	}
-
-	/**
-	 * Connects to a database with an intent of performing INSERT, UPDATE and DELETE queries
-	 * @return \DatabaseBase
-	 */
-	private function getDatabaseForWrite() {
-		return $this->getDatabase( DB_MASTER );
-	}
-
-	/**
-	 * Get connection to flags database
-	 *
-	 * Flags database is encoded in utf-8, while in most cases MW communicate with
-	 * databases using latin1, so sometimes we get strings in wrong encoding.
-	 * The only way to force utf-8 communication (adding SET NAMES utf8) is setting
-	 * global variable wgDBmysql5.
-	 *
-	 * @see https://github.com/Wikia/app/blob/dev/includes/db/DatabaseMysqlBase.php#L113
-	 *
-	 * @param int $dbType master or slave
-	 * @return \DatabaseBase
-	 */
-	private function getDatabase( $dbType ) {
-		$wrapper = new GlobalStateWrapper( [
-			'wgDBmysql5' => true
-		] );
-
-		$db = $wrapper->wrap( function () use ( $dbType ) {
-			return wfGetDB( $dbType, [], $this->wg->ContentReviewDB );
-		} );
-
-		return $db;
 	}
 }

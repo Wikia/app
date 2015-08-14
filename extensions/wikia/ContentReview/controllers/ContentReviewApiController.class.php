@@ -1,5 +1,6 @@
 <?php
 
+use Wikia\ContentReview\Models\CurrentRevisionModel;
 use Wikia\ContentReview\Models\ReviewModel;
 
 class ContentReviewApiController extends WikiaApiController {
@@ -55,6 +56,24 @@ class ContentReviewApiController extends WikiaApiController {
 				$this->makeFailureResponse( [
 					'action' => $responseAction
 				] );
+			}
+		} catch ( Exception $e ) {
+			$this->makeExceptionResponse( $e );
+		}
+	}
+
+	public function getLatestReviewedRevision() {
+		try {
+			$wikiId = $this->request->getInt( 'wikiId' );
+			$pageId = $this->request->getInt( 'pageId' );
+
+			$revisionModel = new CurrentRevisionModel();
+			$revisionData = $revisionModel->getLatestReviewedRevision( $wikiId, $pageId );
+
+			if ( !empty( $revisionData ) ) {
+				$this->makeSuccessResponse( $revisionData );
+			} else {
+				$this->makeFailureResponse();
 			}
 		} catch ( Exception $e ) {
 			$this->makeExceptionResponse( $e );
