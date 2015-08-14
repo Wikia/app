@@ -19,6 +19,13 @@ class CurrentRevisionModel extends ContentReviewBaseModel {
 				];
 			} );
 
+		if ( empty( $revisionData ) ) {
+			$revisionData = [
+				'revision_id' => null,
+				'touched' => null,
+			];
+		}
+
 		return (array) $revisionData;
 	}
 }

@@ -3,10 +3,16 @@
 class ContentReviewModuleController extends WikiaController {
 
 	/**
-	 * Controller method for a module that allows sending a page to a review
+	 * Executed when a page has unreviewed changes and has not yet been submitted for review
 	 * @param $params
 	 */
 	public function executeUnreviewed( $params ) {
 		Wikia::addAssetsToOutput( 'content_review_module_js' );
+		JSMessages::enqueuePackage( 'ContentReviewModule' );
+	}
+
+	public function executeInReview( $params ) {
+		Wikia::addAssetsToOutput( 'content_review_module_js' );
+		JSMessages::enqueuePackage( 'ContentReviewModule' );
 	}
 }

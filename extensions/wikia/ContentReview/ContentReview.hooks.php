@@ -8,9 +8,9 @@ class Hooks {
 		global $wgCityId, $wgTitle, $wgUser;
 
 		if ( $wgTitle->inNamespace( NS_MEDIAWIKI ) && $wgTitle->userCan( 'edit', $wgUser ) ) {
-			$revisionData = \F::app()->sendRequest(
+			$currentPageData = \F::app()->sendRequest(
 				'ContentReviewApiController',
-				'getLatestReviewedRevision',
+				'getCurrentPageData',
 				[
 					'wikiId' => $wgCityId,
 					'pageId' => $wgTitle->getArticleID(),
@@ -20,10 +20,14 @@ class Hooks {
 
 			$wikiPage = new \WikiPage( $wgTitle );
 
-			if ( !( $revisionData['status'] )
-				|| intval( $revisionData['revision_id'] ) !== $wikiPage->getLatest()
+			if ( !( $currentPageData['status'] )
+				|| intval( $currentPageData['revision_id'] ) !== $wikiPage->getLatest()
 			) {
-				$railModuleList[1503] = [ 'ContentReviewModule', 'Unreviewed', null ];
+				if ( intval( $currentPageData['review_status'] ) !== null ) {
+					$railModuleList[1503] = [ 'ContentReviewModule', 'InReview', null ];
+				} else {
+					$railModuleList[1503] = [ 'ContentReviewModule', 'Unreviewed', null ];
+				}
 			}
 		}
 

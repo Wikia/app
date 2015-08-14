@@ -19,13 +19,9 @@ class ContentReviewApiController extends WikiaApiController {
 			$wikiId = $this->request->getInt( 'wikiId' );
 			$pageId = $this->request->getInt( 'pageId' );
 
-			$submitUserId = $this->wg->User->getId();
-
 			// TODO: Make exceptions more specific
-			// TODO: Check permissions!!!
-			if ( !$submitUserId > 0
-				|| !$this->canUserSubmit( $pageId )
-			) {
+			$submitUserId = $this->wg->User->getId();
+			if ( !$submitUserId > 0 || !$this->canUserSubmit( $pageId )	) {
 				throw new Exception( 'Invalid user' );
 			}
 
@@ -57,6 +53,23 @@ class ContentReviewApiController extends WikiaApiController {
 					'action' => $responseAction
 				] );
 			}
+		} catch ( Exception $e ) {
+			$this->makeExceptionResponse( $e );
+		}
+	}
+
+	public function getCurrentPageData() {
+		try {
+			$wikiId = $this->request->getInt( 'wikiId' );
+			$pageId = $this->request->getInt( 'pageId' );
+
+			$revisionModel = new CurrentRevisionModel();
+			$revisionData = $revisionModel->getLatestReviewedRevision( $wikiId, $pageId );
+
+			$reviewModel = new ReviewModel();
+			$reviewData = [ 'review_status' => $reviewModel->getPageStatus( $wikiId, $pageId ) ];
+
+			$this->makeSuccessResponse( array_merge( $revisionData, $reviewData ) );
 		} catch ( Exception $e ) {
 			$this->makeExceptionResponse( $e );
 		}

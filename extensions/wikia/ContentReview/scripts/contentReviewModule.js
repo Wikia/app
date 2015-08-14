@@ -1,11 +1,20 @@
 define(
 	'ext.wikia.contentReview.module',
-	['jquery', 'mw', 'wikia.nirvana', 'BannerNotification'],
-	function($, mw, nirvana, BannerNotification) {
+	['jquery', 'mw', 'wikia.loader', 'wikia.nirvana', 'BannerNotification'],
+	function($, mw, loader, nirvana, BannerNotification) {
 		'use strict';
 
 		function init() {
-			bindEvents();
+			$.when(loader({
+				type: loader.MULTI,
+				resources: {
+					messages: 'ContentReviewModule'
+				}
+			})).done(function (res) {
+				console.log(res);
+				mw.messages.set(res.messages);
+				bindEvents();
+			});
 		}
 
 		function bindEvents() {

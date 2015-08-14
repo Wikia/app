@@ -7,18 +7,16 @@ class ReviewModel extends ContentReviewBaseModel {
 	/**
 	 * Possible states a review can be in
 	 */
-	const CONTENT_REVIEW_STATUS_UNREVIEWED = 0;
-	const CONTENT_REVIEW_STATUS_IN_REVIEW = 1;
-	const CONTENT_REVIEW_STATUS_APPROVED = 2;
-	const CONTENT_REVIEW_STATUS_REJECTED = 3;
+	const CONTENT_REVIEW_STATUS_UNREVIEWED = 1;
+	const CONTENT_REVIEW_STATUS_IN_REVIEW = 2;
+	const CONTENT_REVIEW_STATUS_APPROVED = 3;
+	const CONTENT_REVIEW_STATUS_REJECTED = 4;
 
 	public function getPageStatus( $wikiId, $pageId ) {
 		try {
 			$db = $this->getDatabaseForRead();
 
-			$status = null;
-
-			( new \WikiaSQL() )
+			$status = ( new \WikiaSQL() )
 				->SELECT( 'status' )
 				->FROM( self::CONTENT_REVIEW_STATUS_TABLE )
 				->WHERE( 'wiki_id' )->EQUAL_TO( $wikiId )
@@ -28,6 +26,10 @@ class ReviewModel extends ContentReviewBaseModel {
 				->runLoop( $db, function ( &$status, $row ) {
 					$status = $row->status;
 				} );
+
+			if ( empty( $status ) ) {
+				$status = null;
+			}
 
 			return $status;
 		} catch ( \Exception $e ) {
