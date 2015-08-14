@@ -118,7 +118,7 @@ abstract class ResourceLoaderGlobalWikiModule extends ResourceLoaderWikiModule {
 
 			// Fall back to parent logic
 			if ( !$content && !isset( $options['revision'] ) ) {
-				$content = parent::getContent($title, $options);
+				$content = parent::getContent( $title, $options );
 			}
 		}
 
