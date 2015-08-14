@@ -172,7 +172,7 @@ class HelperController extends \WikiaController
 		return true;
 	}
 
-	public function setAuthService( \Wikia\Service\User\Auth\AuthService $authService ) {
+	public function setAuthService( AuthService $authService ) {
 		$this->authService = $authService;
 	}
 
