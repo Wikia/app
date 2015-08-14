@@ -41,6 +41,11 @@ $wgAutoloadClasses['Wikia\ContentReview\Models\CurrentRevisionModel'] = __DIR__ 
 $wgAutoloadClasses['Wikia\ContentReview\Models\ReviewModel'] = __DIR__ . '/models/ReviewModel.php';
 
 /**
+ * Helpers
+ */
+$wgAutoloadClasses['Wikia\ContentReview\Helper'] = __DIR__ . '/ContentReviewHelper.php';
+
+/**
  * Hooks
  */
 $wgAutoloadClasses['Wikia\ContentReview\Hooks'] = __DIR__ . '/ContentReview.hooks.php';

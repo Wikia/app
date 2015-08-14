@@ -168,10 +168,12 @@ class ResourceLoaderHooks {
 	 * @return bool
 	 */
 	public static function onResourceLoaderSiteModuleGetPages( $module, $context, &$pages ) {
-		global $wgResourceLoaderAssetsSkinMapping, $wgOasisLoadCommonCSS, $wgLoadCommonCSS;
+		global $wgResourceLoaderAssetsSkinMapping, $wgOasisLoadCommonCSS, $wgLoadCommonCSS, $wgEnableContentReviewExt;
 
 		// handle skin name changes
 		$skinName = $context->getSkin();
+		$reviewed = $context->getRequest()->getVal( 'reviewed', null );
+
 		if ( isset( $wgResourceLoaderAssetsSkinMapping[$skinName] ) ) {
 			$mappedName = $wgResourceLoaderAssetsSkinMapping[$skinName];
 			$mapping = array(
@@ -188,6 +190,15 @@ class ResourceLoaderHooks {
 		// TODO: Remove $wgOasisLoadCommonCSS after renaming it to $wgLoadCommonCSS in WF after release
 		if ( in_array($skinName, ['oasis', 'venus']) && empty( $wgOasisLoadCommonCSS ) && empty( $wgLoadCommonCSS ) ) {
 			unset($pages['MediaWiki:Common.css']);
+		}
+
+		if ( $wgEnableContentReviewExt && !empty( $reviewed ) ) {
+			$contentReviewHelper = new Wikia\ContentReview\Helper();
+			foreach ( $pages as $pageName => &$page ) {
+				if ( $page['type'] === 'script' ) {
+					$page['revision'] = $contentReviewHelper->getReviewedRevisionIdFromText( $pageName );
+				}
+			}
 		}
 
 		// todo: add user-defined site scripts here
@@ -218,6 +229,7 @@ class ResourceLoaderHooks {
 			);
 			$pages = Wikia::renameArrayKeys($pages,$mapping);
 		}
+
 
 		// todo: add user-defined user scripts here
 

@@ -28,4 +28,22 @@ class CurrentRevisionModel extends ContentReviewBaseModel {
 
 		return $revisionData;
 	}
+
+	public function getLatestReviewedRevisionForWiki( $wikiId ) {
+		$db = $this->getDatabaseForRead();
+
+		$revisionData = ( new \WikiaSQL() )
+			->SELECT( 'page_id', 'revision_id', 'touched' )
+			->FROM( self::CONTENT_REVIEW_CURRENT_REVISIONS_TABLE )
+			->WHERE( 'wiki_id' )->EQUAL_TO( $wikiId )
+			->runLoop( $db, function( &$revisionData, $row ) {
+				$revisionData[$row->page_id] = [
+					'page_id' => $row->page_id,
+					'revision_id' => $row->revision_id,
+					'touched' => $row->touched,
+				];
+			} );
+
+		return $revisionData;
+	}
 }
