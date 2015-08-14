@@ -2,7 +2,9 @@
 namespace Wikia\Helios;
 
 /**
- * A helper controller to provide end points exposing MediaWiki functionality to Helios.
+ * This is a wrapper that allows protected methods to be tested. By default,
+ * Nirvana exposes all methods via the API. If you don't want the exposed they
+ * need to be something other than public.
  */
 class HelperControllerWrapper extends HelperController {
 
