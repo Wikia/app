@@ -1,0 +1,123 @@
+<?php
+
+class ResourceLoaderAdEngineTest extends WikiaBaseTest {
+
+	private $resourceLoaderContext;
+	const REMOTE_SCRIPT_MOCK_CONTENT = '[remote]';
+	const LOCAL_SCRIPT_MOCK_CONTENT = '[mock]';
+	const INLINE_SCRIPT_MOCK_CONTENT = '[inline]';
+	const FALLBACK_DATA_MOCK_CONTENT = '[fallback]';
+	const MEMCACHED_DATA_MOCK_CONTENT = '[memc]';
+
+	public function setUp() {
+		global $IP;
+		$this->setupFile = "$IP/extensions/wikia/AdEngine/AdEngine2.setup.php";
+		$this->resourceLoaderContext = new ResourceLoaderContext( new ResourceLoader(), new WebRequest() );
+		parent::setUp();
+	}
+
+	public function testSevenOneMediaResourceLoaderNoMemc() {
+		$this->disableMemCache();
+		ResourceLoaderAdEngineSevenOneMediaModule::$localCache = null;
+
+		$mock = $this->getMockBuilder('ResourceLoaderAdEngineSevenOneMediaModule')
+				->disableOriginalConstructor()
+				->setMethods( [ 'fetchRemoteScript', 'fetchLocalScript', 'getInlineScript' ] )
+				->getMock();
+
+		$mock->method( 'fetchRemoteScript' )->willReturn( self::REMOTE_SCRIPT_MOCK_CONTENT );
+		$mock->method( 'fetchLocalScript' )->willReturn( self::LOCAL_SCRIPT_MOCK_CONTENT );
+		$mock->method( 'getInlineScript' )->willReturn( self::INLINE_SCRIPT_MOCK_CONTENT );
+
+		$script = $mock->getScript( $this->resourceLoaderContext );
+
+		$sevenOneMediaScripts = [
+			self::INLINE_SCRIPT_MOCK_CONTENT,
+			self::LOCAL_SCRIPT_MOCK_CONTENT,
+			self::INLINE_SCRIPT_MOCK_CONTENT,
+			self::REMOTE_SCRIPT_MOCK_CONTENT,
+			self::REMOTE_SCRIPT_MOCK_CONTENT
+		];
+
+		$this->assertEquals( implode( PHP_EOL, $sevenOneMediaScripts ), $script );
+		$this->assertEquals( $mock->getModifiedTime( $this->resourceLoaderContext )
+								+ ResourceLoaderAdEngineSevenOneMediaModule::TTL_SCRIPTS, $mock->getTtl() );
+
+	}
+
+	public function testSevenOneMediaResourceLoaderRequestFailed() {
+		$this->disableMemCache();
+		ResourceLoaderAdEngineSevenOneMediaModule::$localCache = null;
+		$mock = $this->getMockBuilder('ResourceLoaderAdEngineSevenOneMediaModule')
+			->disableOriginalConstructor()
+			->setMethods( [ 'fetchRemoteScript', 'fetchLocalScript', 'getInlineScript', 'getFallbackDataWhenRequestFails' ] )
+			->getMock();
+
+		$mock->method( 'fetchRemoteScript' )->willReturn( false );
+		$mock->method( 'fetchLocalScript' )->willReturn( self::LOCAL_SCRIPT_MOCK_CONTENT );
+		$mock->method( 'getInlineScript' )->willReturn( self::INLINE_SCRIPT_MOCK_CONTENT );
+		$mock->method( 'getFallbackDataWhenRequestFails')->willReturn( ['script'=>self::FALLBACK_DATA_MOCK_CONTENT] );
+
+		$this->assertEquals( self::FALLBACK_DATA_MOCK_CONTENT, $mock->getScript( $this->resourceLoaderContext ) );
+	}
+
+	public function testSevenOneMediaResourceLoaderRequestFailWithCachedGradce() {
+
+		ResourceLoaderAdEngineSevenOneMediaModule::$localCache = null;
+		$now = time();
+		$past = $now - 48 * 3600;
+
+		$wgMemcMock = $this->getMockBuilder( 'MWMemcached' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'get' ] )
+			->getMock();
+
+		$wgMemcMock->expects( $this->any() )
+			->method( 'get' )
+			->willReturn( [
+				'script' => self::MEMCACHED_DATA_MOCK_CONTENT,
+				'modTime' => $past,
+				'ttl' => $past + ResourceLoaderAdEngineSevenOneMediaModule::TTL_SCRIPTS,
+			] );
+
+		$this->mockGlobalVariable( 'wgMemc', $wgMemcMock );
+
+		$mock = $this->getMockBuilder('ResourceLoaderAdEngineSevenOneMediaModule')
+			->disableOriginalConstructor()
+			->setMethods( [ 'fetchRemoteScript', 'fetchLocalScript', 'getInlineScript', 'getFallbackDataWhenRequestFails' ] )
+			->getMock();
+
+		$mock->method( 'fetchRemoteScript' )->willReturn( false );
+		$mock->method( 'fetchLocalScript' )->willReturn( self::LOCAL_SCRIPT_MOCK_CONTENT );
+		$mock->method( 'getInlineScript' )->willReturn( self::INLINE_SCRIPT_MOCK_CONTENT );
+		$mock->method( 'getFallbackDataWhenRequestFails')->willReturn( ['script'=>self::FALLBACK_DATA_MOCK_CONTENT] );
+
+		$this->assertEquals( self::MEMCACHED_DATA_MOCK_CONTENT, $mock->getScript( $this->resourceLoaderContext ) );
+	}
+
+	public function testSourcePointModule() {
+		$this->disableMemCache();
+		ResourceLoaderAdEngineSourcePointModule::$localCache = null;
+
+		$mock = $this->getMockBuilder('ResourceLoaderAdEngineSourcePointModule')
+			->disableOriginalConstructor()
+			->setMethods( [ 'fetchRemoteScript', 'fetchLocalScript', 'getInlineScript' ] )
+			->getMock();
+
+		$mock->method( 'fetchRemoteScript' )->willReturn( self::REMOTE_SCRIPT_MOCK_CONTENT );
+		$mock->method( 'fetchLocalScript' )->willReturn( self::LOCAL_SCRIPT_MOCK_CONTENT );
+		$mock->method( 'getInlineScript' )->willReturn( self::INLINE_SCRIPT_MOCK_CONTENT );
+
+		$script = $mock->getScript( $this->resourceLoaderContext );
+
+		$sevenOneMediaScripts = [
+			self::REMOTE_SCRIPT_MOCK_CONTENT,
+			self::REMOTE_SCRIPT_MOCK_CONTENT
+		];
+
+		$this->assertEquals( implode( PHP_EOL, $sevenOneMediaScripts ), $script );
+		$this->assertEquals( $mock->getModifiedTime( $this->resourceLoaderContext )
+			+ ResourceLoaderAdEngineSourcePointModule::TTL_SCRIPTS, $mock->getTtl() );
+	}
+
+}

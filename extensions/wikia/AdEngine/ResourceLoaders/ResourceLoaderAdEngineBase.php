@@ -4,7 +4,7 @@ abstract class ResourceLoaderAdEngineBase extends ResourceLoaderModule {
 	const TTL_SCRIPTS = 1800; // half an hour -- cache scripts from ad.71i.de for this time
 	const TTL_GRACE = 300;    // five minutes -- cache last response additionally for this time if we can't download the scripts anymore
 	const CACHE_BUSTER = 8;   // increase this any time the local files change
-
+	public static $localCache = null;
 	/**
 	 * Configure scripts that should be loaded into one package
 	 * @return array of ResourceLoaderScript
@@ -35,6 +35,10 @@ abstract class ResourceLoaderAdEngineBase extends ResourceLoaderModule {
 		return file_get_contents( $path );
 	}
 
+	protected function getInlineScript( $scriptValue ) {
+		return $scriptValue;
+	}
+
 	/**
 	 * Merges sripts into one
 	 * @param array $scriptItems
@@ -54,7 +58,7 @@ abstract class ResourceLoaderAdEngineBase extends ResourceLoaderModule {
 				$script = $this->fetchLocalScript( $scriptItem->getValue() );
 			}
 			elseif ( $scriptItem->getType() == ResourceLoaderScript::TYPE_INLINE ) {
-				$script = $scriptItem->getValue();
+				$script = $this->getInlineScript( $scriptItem->getValue() );
 			}
 
 			if ( $script === false ) {
@@ -85,10 +89,9 @@ abstract class ResourceLoaderAdEngineBase extends ResourceLoaderModule {
 	 */
 	protected function getData() {
 		global $wgMemc;
-		static $localCache;
 
-		if ($localCache) {
-			return $localCache;
+		if (static::$localCache) {
+			return static::$localCache;
 		}
 
 		$now = $this->getCurrentTimestamp();
@@ -98,7 +101,7 @@ abstract class ResourceLoaderAdEngineBase extends ResourceLoaderModule {
 		$cached = $wgMemc->get($memKey);
 		if (is_array($cached) && $cached['ttl'] > $now) {
 			// Cache hit!
-			$localCache = $cached;
+			static::$localCache = $cached;
 			return $cached;
 		}
 
@@ -114,15 +117,13 @@ abstract class ResourceLoaderAdEngineBase extends ResourceLoaderModule {
 
 				$cached['ttl'] = $now + static::TTL_GRACE;
 				$wgMemc->set($memKey, $cached);
-
-				$localCache = $cached;
+				static::$localCache = $cached;
 				return $cached;
 			}
-
 			$data = $this->getFallbackDataWhenRequestFails();
 			$wgMemc->set($memKey, $data);
 
-			$localCache = $data;
+			static::$localCache = $data;
 			return $data;
 		}
 
@@ -138,12 +139,16 @@ abstract class ResourceLoaderAdEngineBase extends ResourceLoaderModule {
 
 		$wgMemc->set($memKey, $data);
 
-		$localCache = $data;
+		static::$localCache = $data;
 		return $data;
 	}
 
 	public function getModifiedTime(ResourceLoaderContext $context) {
 		return $this->getData()['modTime'];
+	}
+
+	public function getTtl() {
+		return $this->getData()['ttl'];
 	}
 
 	public function getScript(ResourceLoaderContext $context) {
