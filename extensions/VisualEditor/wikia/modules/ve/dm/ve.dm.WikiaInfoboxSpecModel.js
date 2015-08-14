@@ -29,13 +29,17 @@ ve.dm.WikiaInfoboxSpecModel = function VeDmWikiaInfoboxSpecModel( template ) {
 			type: 'image'
 		},
 		'param ze specki': {
+			name: 'param ze specki',
 			wt : '[[spodnie]]',
 			parent : 'group1',
 			type: 'data'
+		},
+		'date of birth': {
+			name: 'date of birth',
+			wt : '10.05.2005',
+			type: 'data'
 		}
 	};
-
-	this.params['dianaaaa'] = this.getDefaultParameterSpec( 'fhjsjfesgfbsbhfehbj' );
 	this.paramOrder = [];
 	this.groups = [
 		{
@@ -159,6 +163,16 @@ ve.dm.WikiaInfoboxSpecModel.prototype.isParameterKnown = function ( name ) {
 };
 
 /**
+ * There is no such a thing like suggested infobox param.
+ *
+ * @param {string} name Parameter name
+ * @returns {boolean} false
+ */
+ve.dm.WikiaInfoboxSpecModel.prototype.isParameterSuggested = function ( name ) {
+	return false;
+};
+
+/**
  * Get a parameter label.
  *
  * @param {string} name Parameter name
@@ -177,7 +191,7 @@ ve.dm.WikiaInfoboxSpecModel.prototype.getParameterLabel = function ( name, lang 
  * @returns {string} Default parameter value
  */
 ve.dm.WikiaInfoboxSpecModel.prototype.getParameterDefaultValue = function ( name ) {
-	return this.params[name]['default'];
+	return this.params[name]['default'] || '';
 };
 
 /**
@@ -254,6 +268,18 @@ ve.dm.WikiaInfoboxSpecModel.prototype.getParameterDeprecationDescription = funct
 };
 
 /**
+ * Get the parameter name, resolving an alias.
+ *
+ * If a parameter is not an alias of another, the output will be the same as the input.
+ *
+ * @param {string} name Parameter alias
+ * @returns {string} Parameter name
+ */
+ve.dm.WikiaInfoboxSpecModel.prototype.getParameterName = function ( name ) {
+	return this.params[name].name;
+};
+
+/**
  * Get all primary parameter names.
  *
  * @returns {string[]} Parameter names
@@ -269,4 +295,16 @@ ve.dm.WikiaInfoboxSpecModel.prototype.getParameterNames = function () {
 	}
 
 	return names;
+};
+
+/**
+ * Infobox params will not have a paramater aliases.
+ * Function implemented to be compatibile with call to this.spec.getParameterAliases
+ * in ve.dm.MWTemplateModel.hasParameter
+ *
+ * @param {string} name Parameter name
+ * @returns {string[]} Alternate parameter names
+ */
+ve.dm.WikiaInfoboxSpecModel.prototype.getParameterAliases = function ( name ) {
+	return [];
 };

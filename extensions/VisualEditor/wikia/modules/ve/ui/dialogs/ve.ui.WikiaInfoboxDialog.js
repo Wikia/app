@@ -81,44 +81,38 @@ ve.ui.WikiaInfoboxDialog.prototype.initializeTemplateParameters = function () {
 	var parts = this.transclusionModel.getParts();
 	this.infoboxTemplate = parts[0];
 
-	if ( this.infoboxTemplate instanceof ve.dm.MWTemplateModel ) {
-		this.infoboxTemplate.addPromptedParameters();
-	}
+	this.infoboxTemplate.addUnusedParameters();
 	this.fullParamsList = this.infoboxTemplate.spec.params;
-	console.log("this.fullParamsList:", this.fullParamsList);
 	this.showItems();
 };
 
 ve.ui.WikiaInfoboxDialog.prototype.showItems = function () {
 	var key,
-		obj;
+		obj,
+		tab = [];
 
 	this.initializeLayout();
 	for ( key in this.fullParamsList ) {
 		if ( this.fullParamsList.hasOwnProperty( key ) ) {
 			obj = this.fullParamsList[key];
 			if ( obj.type === 'data' ) {
-				this.showDataItem( obj, key );
+				tab.push(this.showDataItem( obj ));
 			}
 		}
 	}
+
+	this.bookletLayout.addPages( tab, 0);
 }
 
-ve.ui.WikiaInfoboxDialog.prototype.showDataItem = function ( obj, key ) {
+ve.ui.WikiaInfoboxDialog.prototype.showDataItem = function ( obj ) {
 	var param,
-		page,
-		template,
-		val;
+		template;
 
-	template = new ve.dm.WikiaTemplateModel( this.transclusionModel, this.infoboxTemplate.target );
-	// Get param value with fallback to default. Is there a ready method to do it?
-	val = obj.wt ? obj.wt : obj.default;
-	param = new ve.dm.MWParameterModel( template, key, val );
+	template = this.transclusionModel.getParts()[0];
+	param = template.getParameter(obj.name);
 
-	page = new ve.ui.WikiaParameterPage( param, param.getId(), { $: this.$ } );
-
-	this.bookletLayout.addPages( [ page ], this.transclusionModel.getIndex( param ) );
-}
+	return new ve.ui.WikiaParameterPage( param, param.name, { $: this.$ } );
+};
 
 ve.ui.WikiaInfoboxDialog.prototype.initializeLayout = function () {
 	this.panels = new OO.ui.StackLayout( { $: this.$ } );
@@ -133,13 +127,26 @@ ve.ui.WikiaInfoboxDialog.prototype.initializeLayout = function () {
 	this.$body.append( this.panels.$element );
 	this.panels.addItems( [ this.bookletLayout ] );
 
-}
+};
 
 /**
  * @inheritdoc
  */
 ve.ui.WikiaInfoboxDialog.prototype.getBodyHeight = function () {
 	return 400;
+};
+
+/**
+ * Configuration for booklet layout.
+ *
+ * @static
+ * @property {Object}
+ * @inheritable
+ */
+ve.ui.WikiaInfoboxDialog.static.bookletLayoutConfig = {
+	continuous: true,
+	outlined: false,
+	autoFocus: false
 };
 
 ve.ui.windowFactory.register( ve.ui.WikiaInfoboxDialog );
