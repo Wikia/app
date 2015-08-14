@@ -141,7 +141,24 @@ class Client
 		);
 	}
 
-    /**
+	/**
+	 * A shortcut method for token invalidation requests.
+	 *
+	 * @param $token string - a token to be invalidated
+	 *
+	 * @return string - json encoded response
+	 */
+	public function invalidateToken( $token )
+	{
+		return $this->request(
+			'token',
+			[ 'code' => $token ],
+			[],
+			[ 'method' => 'DELETE' ]
+		);
+	}
+
+	/**
      * A shortcut method for register requests.
      */
     public function register( $username, $password, $email, $birthdate, $langCode )
