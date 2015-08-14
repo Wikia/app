@@ -37,11 +37,8 @@ class HelperControllerTest extends \WikiaBaseTest {
 
 		$this->wikiaResponseMock->expects( $this->at( 0 ) )
 			->method( 'setVal' )
-			->with( 'allow', false );
-		$this->wikiaResponseMock->expects( $this->at( 1 ) )
-			->method( 'setVal' )
 			->with( 'message', 'invalid secret' );
-		$this->wikiaResponseMock->expects( $this->at( 2 ) )
+		$this->wikiaResponseMock->expects( $this->at( 1 ) )
 			->method( 'setCode' )
 			->with( \WikiaResponse::RESPONSE_CODE_FORBIDDEN );
 

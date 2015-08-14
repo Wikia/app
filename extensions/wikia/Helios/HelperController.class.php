@@ -23,9 +23,8 @@ class HelperController extends \WikiaController
 		$this->response->setFormat( 'json' );
 		$this->response->setCacheValidity( \WikiaResponse::CACHE_DISABLED );
 
-		if ( $this->getVal( 'secret' ) != $this->wg->TheSchwartzSecretToken ) {
+		if ( !$this->authenticateViaTheSchwartz() ) {
 			$this->response->setVal( 'allow', false );
-			$this->response->setVal( 'message', 'invalid secret' );
 			return;
 		}
 
@@ -55,8 +54,7 @@ class HelperController extends \WikiaController
 		$this->response->setCacheValidity( \WikiaResponse::CACHE_DISABLED );
 		$this->response->setVal( 'success', false );
 
-		if ( $this->getVal( 'secret' ) != $this->wg->TheSchwartzSecretToken ) {
-			$this->response->setVal( 'message', 'invalid secret' );
+		if ( !$this->authenticateViaTheSchwartz() ) {
 			return;
 		}
 
@@ -78,8 +76,7 @@ class HelperController extends \WikiaController
 		$this->response->setCacheValidity( \WikiaResponse::CACHE_DISABLED );
 		$this->response->setVal( 'success', false );
 
-		if ( $this->getVal( 'secret' ) != $this->wg->TheSchwartzSecretToken ) {
-			$this->response->setVal( 'message', 'invalid secret' );
+		if ( !$this->authenticateViaTheSchwartz() ) {
 			return;
 		}
 
@@ -167,7 +164,6 @@ class HelperController extends \WikiaController
 
 	protected function authenticateViaTheSchwartz() {
 		if ( $this->getVal( 'secret' ) != $this->wg->TheSchwartzSecretToken ) {
-			$this->response->setVal( 'allow', false );
 			$this->response->setVal( 'message', 'invalid secret' );
 			$this->response->setCode( \WikiaResponse::RESPONSE_CODE_FORBIDDEN );
 			return false;
