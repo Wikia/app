@@ -44,5 +44,3 @@ define('AuthModal', ['jquery', 'AuthComponent', 'wikia.document'], function ($, 
 		}
 	};
 });
-
-require(['AuthModal'], function(AuthModal){AuthModal.register();});
