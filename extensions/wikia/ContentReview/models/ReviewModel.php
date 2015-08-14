@@ -51,7 +51,7 @@ class ReviewModel extends ContentReviewBaseModel {
 				}
 			} );
 
-		if ( !$reviewId > 0 ) {
+		if ( empty( $reviewId ) ) {
 			$reviewId = null;
 		}
 
