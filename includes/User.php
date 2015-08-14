@@ -392,7 +392,9 @@ class User {
 
 			if (isset($data[self::CACHE_PREFERENCES_KEY])) {
 				$this->userPreferences()->setPreferencesInCache($this->mId, $data[self::CACHE_PREFERENCES_KEY]);
-				$this->userAttributes()->setAttributesInCache( $this->mId, $data[self::CACHE_ATTRIBUTES_KEY] );
+			}
+			if (isset($data[self::CACHE_ATTRIBUTES_KEY])) {
+				$this->userAttributes()->setAttributesInCache($this->mId, $data[self::CACHE_ATTRIBUTES_KEY]);
 			}
 		}
 		return true;
