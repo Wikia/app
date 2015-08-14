@@ -7,7 +7,7 @@
 class AuthModalHooks {
 
 	/**
-	 * Adds assets for BannerNotifications on the bottom of the body on Monobook
+	 * Adds assets for AuthPages on each Oasis pageview
 	 *
 	 * @param {String} $skin
 	 * @param {String} $text
