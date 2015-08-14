@@ -21,9 +21,7 @@ class Hooks {
 				true
 			)->getData();
 
-			if ( !( $currentPageData['status'] )
-				|| intval( $currentPageData['revision_id'] ) !== $wgTitle->getLatestRevID()
-			) {
+			if ( intval( $currentPageData['revision_id'] ) !== $wgTitle->getLatestRevID() ) {
 				if ( intval( $currentPageData['review_status'] ) !== null ) {
 					$railModuleList[1503] = [ 'ContentReviewModule', 'InReview', null ];
 				} else {
