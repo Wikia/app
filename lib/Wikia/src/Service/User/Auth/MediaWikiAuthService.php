@@ -10,7 +10,8 @@ class MediaWikiAuthService implements AuthService {
 	 */
 	public function isUsernameBlocked( $username ) {
 		$user = \User::newFromName( $username );
-		if ( !isset( $user ) ) {
+
+		if ( !$user ) {
 			return null;
 		}
 
