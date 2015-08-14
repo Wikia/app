@@ -33,13 +33,11 @@ class ContentReviewApiController extends WikiaApiController {
 			$revisionId = $title->getLatestRevID();
 
 			$reviewModel= new ReviewModel();
-			$reviewStatus = $reviewModel->addOrUpdatePageForReview( $wikiId, $pageId,
+			$reviewStatus = $reviewModel->submitPageForReview( $wikiId, $pageId,
 				$revisionId, $submitUserId );
 
 			if ( $reviewStatus['status'] ) {
-				$this->makeSuccessResponse( [
-					'action' => $reviewStatus['action'],
-				] );
+				$this->makeSuccessResponse();
 			} else {
 				$this->makeFailureResponse();
 			}

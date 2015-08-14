@@ -64,7 +64,7 @@ class ReviewModel extends ContentReviewBaseModel {
 		return $reviewId;
 	}
 
-	public function addOrUpdatePageForReview( $wikiId, $pageId, $revisionId, $submitUserId ) {
+	public function submitPageForReview( $wikiId, $pageId, $revisionId, $submitUserId ) {
 		try {
 			$db = $this->getDatabaseForWrite();
 
