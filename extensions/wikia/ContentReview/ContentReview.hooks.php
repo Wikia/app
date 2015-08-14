@@ -21,10 +21,8 @@ class Hooks {
 				true
 			)->getData();
 
-			$wikiPage = new \WikiPage( $wgTitle );
-
 			if ( !( $currentPageData['status'] )
-				|| intval( $currentPageData['revision_id'] ) !== $wikiPage->getLatest()
+				|| intval( $currentPageData['revision_id'] ) !== $wgTitle->getLatestRevID()
 			) {
 				if ( intval( $currentPageData['review_status'] ) !== null ) {
 					$railModuleList[1503] = [ 'ContentReviewModule', 'InReview', null ];
