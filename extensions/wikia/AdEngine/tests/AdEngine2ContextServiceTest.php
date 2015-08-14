@@ -43,6 +43,16 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 	}
 
 	public function adContextDataProvider() {
+		$defaultParameters = [
+			'titleMockType' => 'article',
+			'flags' => [],
+			'expectedOpts' => [],
+			'expectedTargeting' => [],
+			'expectedProviders' => [],
+			'expectedForceProviders' => null,
+			'expectedSlots' => [],
+		];
+
 		return [
 			[ ],
 			[
@@ -152,6 +162,18 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 				'expectedOpts' => ['pageType' => 'search'],
 				'expectedTargeting' => ['pageType' => 'search', 'pageName' => 'Special:Search']
 			],
+
+			$defaultParameters + ['expectedMappings' => ['sourceVertical' => 'tv', 'expectedMappedVertical' => 'ent']],
+
+			$defaultParameters + ['expectedMappings' => ['sourceVertical' => 'games', 'expectedMappedVertical' => 'gaming']],
+
+			$defaultParameters + ['expectedMappings' => ['sourceVertical' => 'books', 'expectedMappedVertical' => 'ent']],
+
+			$defaultParameters + ['expectedMappings' => ['sourceVertical' => 'comics', 'expectedMappedVertical' => 'ent']],
+
+			$defaultParameters + ['expectedMappings' => ['sourceVertical' => 'lifestyle', 'expectedMappedVertical' => 'life']],
+
+			$defaultParameters + ['expectedMappings' => ['sourceVertical' => 'not-existing', 'expectedMappedVertical' => 'error']],
 		];
 	}
 
@@ -168,7 +190,8 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		$expectedTargeting = [],
 		$expectedProviders = [],
 		$expectedForcedProvider = null,
-		$expectedSlots = []
+		$expectedSlots = [],
+		$verticals = ['sourceVertical' => 'other', 'expectedMappedVertical' => 'life']
 	) {
 		$langCode = 'xx';
 		$artId = 777;
@@ -182,6 +205,7 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		$shortCat = 'shortcat';
 		$sevenOneMediaSub2Site = 'customsub2site';
 		$expectedSevenOneMediaUrlFormat = 'http://%s/__load/-/cb%3D%d%26debug%3Dfalse%26lang%3D%s%26only%3Dscripts%26skin%3Doasis/wikia.ext.adengine.sevenonemedia';
+		$expectedSourcePointUrlFormat = 'http://%s/__load/-/cb%3D%d%26debug%3Dfalse%26lang%3D%s%26only%3Dscripts%26skin%3Doasis/wikia.ext.adengine.sourcepoint';
 
 		if ( $titleMockType === 'article' || $titleMockType === 'mainpage' ) {
 			$expectedTargeting['pageArticleId'] = $artId;
@@ -221,6 +245,7 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		// Mock WikiFactoryHub
 		$this->mockStaticMethod( 'WikiFactoryHub', 'getCategoryId', $catId );
 		$this->mockStaticMethod( 'WikiFactoryHub', 'getCategoryShort', $shortCat );
+		$this->mockStaticMethod( 'WikiFactoryHub', 'getWikiVertical', ['short'=>$verticals['sourceVertical']] );
 
 		// Mock HubService
 		$this->mockStaticMethod( 'HubService', 'getCategoryInfoForCity', (object) ['cat_name' => $vertical] );
@@ -248,6 +273,7 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 				'wikiDbName' => $dbName,
 				'wikiLanguage' => $langCode,
 				'wikiVertical' => $vertical,
+				'mappedVerticalName' => $verticals['expectedMappedVertical']
 			],
 			'providers' => [
 			],
@@ -270,6 +296,12 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 
 		foreach ( $expectedSlots as $var => $val ) {
 			$expected['slots'][$var] = $val;
+		}
+
+		// Check for SourcePoint URL
+		if ( $skinName === 'oasis' ) {
+			$this->assertStringMatchesFormat( $expectedSourcePointUrlFormat, $result['opts']['sourcePointUrl'] );
+			unset( $result['opts']['sourcePointUrl'] );
 		}
 
 		// Extra check for SevenOne Media URL

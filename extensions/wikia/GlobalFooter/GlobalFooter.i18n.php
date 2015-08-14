@@ -352,13 +352,13 @@ $messages['vi'] = array(
 );
 
 $messages['zh-hans'] = array(
-	'shared-Oasis-footer-wikia-links' => '*http://zh.wikia.com/wiki/%E5%85%B3%E4%BA%8E%E6%88%91%E4%BB%AC|<span>关于我们</span>
+	'shared-Oasis-footer-wikia-links' => '*http://www.wikia.com/About_Us|<span>关于我们</span>
 		*http://zh.community.wikia.com/wiki/Help:内容|帮助
-		*http://www.wikia.com/Hiring|<span>招聘</span>
+		*http://www.wikia.com/Hiring|<span>维基招聘</span>
 		*http://www.wikia.com/Advertising|<span>广告服务</span>
 		*Special:Contact|联系我们
-		*http://zh.wikia.com/wiki/%E4%BD%BF%E7%94%A8%E6%9D%A1%E6%AC%BE|<span>使用条款</span>
-		*http://zh.wikia.com/wiki/%E9%9A%90%E7%A7%81%E6%9D%83%E6%96%B9%E9%92%88|<span>隐私政策</span>
+		*http://zh.community.wikia.com/wiki/Wikia中文:使用条款|<span>使用条款</span>
+		*http://www.wikia.com/Privacy_Policy|<span>隐私政策</span>
 		*http://www.wikia.com/Special:CreateWiki|<span>创建维基</span>
 		*http://www.wikia.com/Sitemap|网站地图
 		*_LICENSE_',
@@ -377,17 +377,7 @@ $messages['zh-hans'] = array(
 		* [http://www.wikia.com/wiki/Wikia:Advertising_on_Wikia Advertise]',
 );
 
-$messages['zh-tw'] = array(
-	'shared-Oasis-footer-wikia-links' => '*http://zh-tw.wikia.com/wiki/%E9%97%9C%E6%96%BC%E6%88%91%E5%80%91|<span>關於我們</span>
-		*http://zh.community.wikia.com/wiki/Help:内容|使用說明
-		*http://www.wikia.com/Hiring|<span>招聘</span>
-		*http://www.wikia.com/Advertising|<span>廣告服務</span>
-		*Special:Contact|聯繫我們
-		*http://zh-tw.wikia.com/wiki/%E4%BD%BF%E7%94%A8%E6%A2%9D%E6%AC%BE|<span>使用條款</span>
-		*http://zh-tw.wikia.com/wiki/%E9%9A%B1%E7%A7%81%E6%AC%8A%E6%96%B9%E9%87%9D|<span>隱私政策</span>
-		*http://www.wikia.com/Special:CreateWiki|<span>創建維基</span>
-		*http://www.wikia.com/Sitemap|網站地圖
-		*_LICENSE_',
+$messages['zh-hant'] = array(
 	'global-footer-vertical-tv-link' => 'http://tvhub.wikia.com/wiki/TV_Hub',
 	'global-footer-vertical-comics-link' => 'http://comicshub.wikia.com/wiki/Comics_Hub',
 	'global-footer-vertical-movies-link' => 'http://movieshub.wikia.com/wiki/Movies_Hub',
@@ -396,10 +386,19 @@ $messages['zh-tw'] = array(
 	'global-footer-vertical-games-link' => 'http://gameshub.wikia.com/wiki/Games_Hub',
 	'global-footer-vertical-lifestyle-link' => 'http://lifestylehub.wikia.com/wiki/Lifestyle_Hub',
 	'global-footer-desc' => 'GlobalFooter',
+	'shared-Oasis-footer-wikia-links' => '*http://www.wikia.com/About_Us|<span>關於我們</span>
+		*http://zh.community.wikia.com/wiki/Help:内容|使用說明
+		*http://www.wikia.com/Hiring|<span>維基招聘</span>
+		*http://www.wikia.com/Advertising|<span>廣告服務</span>
+		*Special:Contact|聯繫我們
+		*http://zh.community.wikia.com/wiki/Wikia中文:使用条款|<span>使用條款</span>
+		*http://www.wikia.com/Privacy_Policy|<span>隱私政策</span>
+		*http://www.wikia.com/Special:CreateWiki|<span>創建維基</span>
+		*http://www.wikia.com/Sitemap|網站地圖
+		*_LICENSE_',
 	'shared-Monobook-footer-wikia-links' => '* [http://www.wikia.com/wiki/Wikia:Privacy_Policy Privacy]
 		* [http://www.wikia.com/wiki/Wikia:About About Wikia]
 		* [http://www.wikia.com/wiki/Wikia:Terms_of_use Terms of use]
 		* [[Special:Contact|Contact]]
 		* [http://www.wikia.com/wiki/Wikia:Advertising_on_Wikia Advertise]',
 );
-

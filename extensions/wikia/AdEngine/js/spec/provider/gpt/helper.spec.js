@@ -1,4 +1,4 @@
-/*global describe, it, expect, modules, spyOn*/
+/*global document, describe, it, expect, modules, spyOn, beforeEach*/
 describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 	'use strict';
 
@@ -8,23 +8,12 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 		callbacks = [],
 		mocks = {
 			log: noop,
-			googleTag: {
-				isInitialized: function () {
-					return true;
-				},
-				init: noop,
-				registerCallback: function (id, callback) {
-					callbacks.push(callback);
-				},
-				push: function (callback) {
-					callback();
-				},
-				addSlot: noop,
-				flush: noop,
-				setPageLevelParams: noop
-			},
+			googleTag: function () {},
 			adContext: {
-				addCallback: noop
+				addCallback: noop,
+				getContext: function () {
+					return { opts: {} };
+				}
 			},
 			adDetect: {},
 			adLogicPageParams: {
@@ -45,6 +34,20 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 				}
 			}
 		};
+	mocks.googleTag.prototype.isInitialized = function () {
+		return true;
+	};
+	mocks.googleTag.prototype.init = noop;
+	mocks.googleTag.prototype.registerCallback = function (id, callback) {
+		callbacks.push(callback);
+	};
+	mocks.googleTag.prototype.push = function (callback) {
+		callback();
+	};
+	mocks.googleTag.prototype.addSlot = noop;
+	mocks.googleTag.prototype.flush = noop;
+	mocks.googleTag.prototype.setPageLevelParams = noop;
+	mocks.sourcePointTag = mocks.googleTag;
 
 	function getModule() {
 		return modules['ext.wikia.adEngine.provider.gpt.helper'](
@@ -55,11 +58,12 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 			AdElement,
 			mocks.googleTag,
 			mocks.slotTweaker,
+			mocks.sourcePointTag,
 			mocks.sraHelper
 		);
 	}
 
-	beforeEach(function() {
+	beforeEach(function () {
 		AdElement = noop;
 
 		AdElement.prototype.getId = function () {
@@ -80,61 +84,61 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 	});
 
 	it('Initialize googletag when module is not initialized yet', function () {
-		spyOn(mocks.googleTag, 'isInitialized').and.returnValue(false);
-		spyOn(mocks.googleTag, 'init');
+		spyOn(mocks.googleTag.prototype, 'isInitialized').and.returnValue(false);
+		spyOn(mocks.googleTag.prototype, 'init');
 
 		getModule().pushAd('TOP_LEADERBOARD', mocks.slotElement, '/foo/slot/path', {}, {});
 
-		expect(mocks.googleTag.init).toHaveBeenCalled();
+		expect(mocks.googleTag.prototype.init).toHaveBeenCalled();
 	});
 
 	it('Prevent initializing googletag if module is already initialized', function () {
-		spyOn(mocks.googleTag, 'init');
+		spyOn(mocks.googleTag.prototype, 'init');
 
 		getModule().pushAd('TOP_LEADERBOARD', mocks.slotElement, '/foo/slot/path', {}, {});
 
-		expect(mocks.googleTag.init).not.toHaveBeenCalled();
+		expect(mocks.googleTag.prototype.init).not.toHaveBeenCalled();
 	});
 
 	it('Push and flush ATF slot when SRA is not enabled', function () {
-		spyOn(mocks.googleTag, 'push');
-		spyOn(mocks.googleTag, 'flush');
+		spyOn(mocks.googleTag.prototype, 'push');
+		spyOn(mocks.googleTag.prototype, 'flush');
 
 		getModule().pushAd('TOP_LEADERBOARD', mocks.slotElement, '/foo/slot/path', {}, {});
 
-		expect(mocks.googleTag.push).toHaveBeenCalled();
-		expect(mocks.googleTag.flush).toHaveBeenCalled();
+		expect(mocks.googleTag.prototype.push).toHaveBeenCalled();
+		expect(mocks.googleTag.prototype.flush).toHaveBeenCalled();
 	});
 
 	it('Only push ATF slot when SRA is enabled', function () {
-		spyOn(mocks.googleTag, 'push');
-		spyOn(mocks.googleTag, 'flush');
+		spyOn(mocks.googleTag.prototype, 'push');
+		spyOn(mocks.googleTag.prototype, 'flush');
 		spyOn(mocks.sraHelper, 'shouldFlush').and.returnValue(false);
 
 		getModule().pushAd('TOP_LEADERBOARD', mocks.slotElement, '/foo/slot/path', {}, { sraEnabled: true });
 
-		expect(mocks.googleTag.push).toHaveBeenCalled();
-		expect(mocks.googleTag.flush).not.toHaveBeenCalled();
+		expect(mocks.googleTag.prototype.push).toHaveBeenCalled();
+		expect(mocks.googleTag.prototype.flush).not.toHaveBeenCalled();
 	});
 
 	it('Always push and flush BTF slot even if SRA is enabled', function () {
-		spyOn(mocks.googleTag, 'push');
-		spyOn(mocks.googleTag, 'flush');
+		spyOn(mocks.googleTag.prototype, 'push');
+		spyOn(mocks.googleTag.prototype, 'flush');
 
 		getModule().pushAd('TOP_RIGHT_BOXAD', mocks.slotElement, '/foo/slot/path', {}, { sraEnabled: true });
 
-		expect(mocks.googleTag.push).toHaveBeenCalled();
-		expect(mocks.googleTag.flush).toHaveBeenCalled();
+		expect(mocks.googleTag.prototype.push).toHaveBeenCalled();
+		expect(mocks.googleTag.prototype.flush).toHaveBeenCalled();
 	});
 
 	it('Prevent push when given slot is flushOnly', function () {
-		spyOn(mocks.googleTag, 'push');
-		spyOn(mocks.googleTag, 'flush');
+		spyOn(mocks.googleTag.prototype, 'push');
+		spyOn(mocks.googleTag.prototype, 'flush');
 
 		getModule().pushAd('GPT_FLUSH', mocks.slotElement, '/foo/slot/path', { flushOnly: true }, {});
 
-		expect(mocks.googleTag.push).not.toHaveBeenCalled();
-		expect(mocks.googleTag.flush).toHaveBeenCalled();
+		expect(mocks.googleTag.prototype.push).not.toHaveBeenCalled();
+		expect(mocks.googleTag.prototype.flush).toHaveBeenCalled();
 	});
 
 	it('Register slot callback on push', function () {

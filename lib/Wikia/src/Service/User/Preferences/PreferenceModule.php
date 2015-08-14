@@ -10,6 +10,8 @@ use Wikia\Persistence\User\Preferences\PreferencePersistenceModuleMySQL;
 use Wikia\Persistence\User\Preferences\PreferencePersistenceSwaggerService;
 
 class PreferenceModule implements Module {
+	const SWAGGER_SERVICE_RAMP_USAGE = 0;
+
 	public function configure(InjectorBuilder $builder) {
 		$builder
 			->bind(PreferenceService::class)->toClass(PreferenceKeyValueService::class)
@@ -25,8 +27,17 @@ class PreferenceModule implements Module {
 				return $wgGlobalUserProperties;
 			});
 
-		self::bindMysqlService($builder);
-//		self::bindSwaggerService($builder);
+		self::bindService($builder);
+	}
+
+	private static function bindService(InjectorBuilder $builder) {
+		global $wgCityId;
+
+		if (isset($wgCityId) && $wgCityId % 100 < self::SWAGGER_SERVICE_RAMP_USAGE) {
+			self::bindSwaggerService($builder);
+		} else {
+			self::bindMysqlService($builder);
+		}
 	}
 
 	private static function bindMysqlService(InjectorBuilder $builder) {

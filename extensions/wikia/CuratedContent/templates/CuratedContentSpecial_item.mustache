@@ -1,5 +1,5 @@
 <li class=item>
-	<div class=image {{#image_id}}data-id="{{image_id}}"{{/image_id}} {{#image_url}}style="background-image:url('{{image_url}}')"{{/image_url}}></div>
+	<div class=image {{#image_id}}data-id="{{image_id}}"{{/image_id}} {{#image_crop}}data-crop="{{image_crop}}"{{/image_crop}} {{#image_url}}style="background-image:url('{{image_url}}')"{{/image_url}}></div>
 	<input class=item-input placeholder="{{item_placeholder}}" value="{{item_value}}"/>
 	<input class=name placeholder="{{name_placeholder}}" value="{{name_value}}"/>
 	<span class="sprite remove"></span><span class="sprite drag"></span><span class="sprite photo{{#image_set}} photo-remove{{/image_set}}"></span>

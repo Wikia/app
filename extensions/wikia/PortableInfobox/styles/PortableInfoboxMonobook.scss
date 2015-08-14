@@ -1,13 +1,15 @@
 // fix issues with default infobox styles on monobook
+$background-color: #f9f9f9;
+$background-color-secondary: #e5e5e5;
 
 .portable-infobox {
-	background-color: #f9f9f9;
+	background-color: $background-color;
 
 	figure {
 		margin: 0;
 	}
 
-	.portable-infobox-secondary-background {
-		background-color: #e5e5e5;
+	.pi-secondary-background {
+		background-color: $background-color-secondary;
 	}
 }
