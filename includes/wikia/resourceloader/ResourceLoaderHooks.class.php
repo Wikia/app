@@ -194,9 +194,9 @@ class ResourceLoaderHooks {
 
 		if ( $wgEnableContentReviewExt && !empty( $reviewed ) ) {
 			$contentReviewHelper = new Wikia\ContentReview\Helper();
-			foreach ($pages as $pageName => &$page) {
-				if ($page['type'] === 'script' ) {
-					$page['revision'] = $contentReviewHelper->getReviewedRevisionIdFromText($pageName);
+			foreach ( $pages as $pageName => &$page ) {
+				if ( $page['type'] === 'script' ) {
+					$page['revision'] = $contentReviewHelper->getReviewedRevisionIdFromText( $pageName );
 				}
 			}
 		}
