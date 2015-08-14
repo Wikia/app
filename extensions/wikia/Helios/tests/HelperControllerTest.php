@@ -23,7 +23,7 @@ class HelperControllerTest extends \WikiaBaseTest {
 		$this->controller->setRequest( $this->wikiaRequestMock );
 		$this->controller->setResponse( $this->wikiaResponseMock );
 
-		$this->authService = $this->getMock( '\Wikia\Service\User\Auth', ['isUsernameBlocked'], [] );
+		$this->authService = $this->getMock( '\Wikia\Service\User\Auth\AuthService', ['isUsernameBlocked'], [] );
 		$this->controller->setAuthService( $this->authService );
 
 		parent::setUp();

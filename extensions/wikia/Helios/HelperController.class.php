@@ -1,6 +1,9 @@
 <?php
 namespace Wikia\Helios;
 
+use Wikia\DependencyInjection\Injector;
+use Wikia\Service\User\Auth\AuthService;
+
 /**
  * A helper controller to provide end points exposing MediaWiki functionality to Helios.
  */
@@ -8,6 +11,7 @@ class HelperController extends \WikiaController
 {
 
 	protected $authService;
+
 
 	/**
 	 * AntiSpoof: verify whether the name is legal for a new account.
@@ -142,6 +146,11 @@ class HelperController extends \WikiaController
 		}
 
 		$blocked = $this->getAuthService()->isUsernameBlocked( $username );
+		if ( $blocked === null ) {
+			$this->response->setVal( 'message', 'user not found' );
+			$this->response->setCode( \WikiaResponse::RESPONSE_CODE_NOT_FOUND );
+			return;
+		}
 
 		$this->response->setData( array( 'blocked' => $blocked ) );
 	}
@@ -167,11 +176,15 @@ class HelperController extends \WikiaController
 		return true;
 	}
 
-	public function setAuthService( \Wikia\Service\User\Auth $authService ) {
+	public function setAuthService( \Wikia\Service\User\Auth\AuthService $authService ) {
 		$this->authService = $authService;
 	}
 
 	public function getAuthService() {
+		if (!isset($this->authService)) {
+			$this->authService = Injector::getInjector()->get(AuthService::class);
+		}
+
 		return $this->authService;
 	}
 
