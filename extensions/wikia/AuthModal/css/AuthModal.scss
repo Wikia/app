@@ -1,13 +1,14 @@
+@import 'skins/shared/mixins/transform';
+
 @keyframes auth-throbber-spin {
 	100% {
-		transform: rotate(360deg);
+		@include transform (rotate(360deg));
 	}
 }
 
 .auth-blackout {
 	background: rgba(0, 0, 0, .7);
 	box-sizing: border-box;
-	display: flex;
 	height: 100%;
 	left: 0;
 	padding: 50px 10%;
@@ -19,24 +20,25 @@
 }
 
 .auth-modal {
-	flex: 1;
+	box-sizing: border-box;
 	height: 100%;
 	position: relative;
+	width: 100%;
 
-	&.loading {
+  &.loading {
 		background: white;
 
 		span {
 			animation: auth-throbber-spin 1s linear infinite;
 			background: url('/extensions/wikia/AuthModal/svg/wikia-logo-circled.svg'); /* inline */
 			display: block;
-			height:62px;
+			height: 62px;
 			left: 50%;
 			margin-left: -31px;
 			margin-top: -31px;
 			position: absolute;
 			top: 50%;
-			width:62px;
+			width: 62px;
 		}
 
 		iframe {
