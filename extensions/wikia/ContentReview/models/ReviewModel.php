@@ -16,18 +16,24 @@ class ReviewModel extends ContentReviewBaseModel {
 		$db = $this->getDatabaseForRead();
 
 		$status = ( new \WikiaSQL() )
-			->SELECT( 'status' )
+			->SELECT( 'revision_id', 'status' )
 			->FROM( self::CONTENT_REVIEW_STATUS_TABLE )
 			->WHERE( 'wiki_id' )->EQUAL_TO( $wikiId )
 				->AND_( 'page_id' )->EQUAL_TO( $pageId )
 			->ORDER_BY( 'submit_time' )->DESC()
 			->LIMIT( 1 )
 			->runLoop( $db, function ( &$status, $row ) {
-				$status = $row->status;
+				$status = [
+					'revision_id' => $row->revision_id,
+					'status' => $row->status,
+				];
 			} );
 
 		if ( empty( $status ) ) {
-			$status = null;
+			$status = [
+				'revision_id' => null,
+				'status' => null,
+			];
 		}
 
 		return $status;
@@ -58,13 +64,13 @@ class ReviewModel extends ContentReviewBaseModel {
 		return $reviewId;
 	}
 
-	public function markPageAsUnreviewed( $wikiId, $pageId, $revisionId, $submitUserId ) {
+	public function addOrUpdatePageForReview( $wikiId, $pageId, $revisionId, $submitUserId ) {
 		try {
 			$db = $this->getDatabaseForWrite();
 
 			( new \WikiaSQL() )
 				->INSERT( self::CONTENT_REVIEW_STATUS_TABLE )
-				// review_id is auto_increment
+				// wiki_id, page_id and revision_id are a unique key
 				->SET( 'wiki_id', $wikiId )
 				->SET( 'page_id', $pageId )
 				->SET( 'revision_id', $revisionId )
@@ -72,17 +78,22 @@ class ReviewModel extends ContentReviewBaseModel {
 				->SET( 'submit_user_id', $submitUserId )
 				// submit_time has a default value set to CURRENT_TIMESTAMP
 				// review_user_id is NULL
-				// review_time is NULL
+				// review_start is NULL
 				->run( $db );
 
-			$reviewId = $db->insertId();
-			if ( !$reviewId > 0 ) {
+			$affectedRows = $db->affectedRows();
+
+			if ( $affectedRows === 0 ) {
 				throw new \Exception( 'The INSERT operation failed.' );
+			} else {
+				$status = true;
 			}
 
 			$db->commit();
 
-			return $reviewId;
+			return [
+				'status' => $status,
+			];
 		} catch ( \Exception $e ) {
 			if ( $db !== null ) {
 				$db->rollback;

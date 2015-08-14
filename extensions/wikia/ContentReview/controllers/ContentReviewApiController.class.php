@@ -25,33 +25,23 @@ class ContentReviewApiController extends WikiaApiController {
 				throw new Exception( 'Invalid user' );
 			}
 
-			$wikiPage = WikiPage::newFromID( $pageId );
-			if ( $wikiPage === null ) {
+			$title = Title::newFromID( $pageId );
+			if ( $title === null ) {
 				throw new Exception( 'Invalid page' );
 			}
 
-			$revisionId = $wikiPage->getLatest();
+			$revisionId = $title->getLatestRevID();
 
 			$reviewModel= new ReviewModel();
-			$currentUnreviewedId = $reviewModel->getCurrentUnreviewedId( $wikiId, $pageId );
+			$reviewStatus = $reviewModel->addOrUpdatePageForReview( $wikiId, $pageId,
+				$revisionId, $submitUserId );
 
-			if ( $currentUnreviewedId === null ) {
-				$reviewId = $reviewModel->markPageAsUnreviewed( $wikiId, $pageId, $revisionId, $submitUserId );
-				$responseAction = self::CONTENT_REVIEW_RESPONSE_ACTION_INSERT;
-			} else {
-				$reviewId = $reviewModel->updateReviewById( $currentUnreviewedId, $revisionId, $submitUserId );
-				$responseAction = self::CONTENT_REVIEW_RESPONSE_ACTION_UPDATE;
-			}
-
-			if ( $reviewId > 0 ) {
+			if ( $reviewStatus['status'] ) {
 				$this->makeSuccessResponse( [
-					'reviewId' => $reviewId,
-					'action' => $responseAction
+					'action' => $reviewStatus['action'],
 				] );
 			} else {
-				$this->makeFailureResponse( [
-					'action' => $responseAction
-				] );
+				$this->makeFailureResponse();
 			}
 		} catch ( Exception $e ) {
 			$this->makeExceptionResponse( $e );
@@ -67,9 +57,15 @@ class ContentReviewApiController extends WikiaApiController {
 			$revisionData = $revisionModel->getLatestReviewedRevision( $wikiId, $pageId );
 
 			$reviewModel = new ReviewModel();
-			$reviewData = [ 'review_status' => $reviewModel->getPageStatus( $wikiId, $pageId ) ];
+			$reviewData = $reviewModel->getPageStatus( $wikiId, $pageId );
 
-			$this->makeSuccessResponse( array_merge( $revisionData, $reviewData ) );
+			$data = [
+				'currentRevisionId' => $revisionData['revision_id'],
+				'touched' => $revisionData['touched'],
+				'revisionInReviewId' => $reviewData['revision_id'],
+				'reviewStatus' => $reviewData['status'],
+			];
+			$this->makeSuccessResponse( $data );
 		} catch ( Exception $e ) {
 			$this->makeExceptionResponse( $e );
 		}
