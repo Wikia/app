@@ -99,4 +99,28 @@ class HelperControllerTest extends \WikiaBaseTest {
 		$this->assertEquals( false, $this->controller->getResponse()->getVal( 'blocked' ) );
 	}
 
+	public function testIsBlockedNotFound() {
+		$this->wikiaRequestMock->expects( $this->at( 0 ) )
+			->method( 'getVal' )
+			->with( 'secret' )
+			->willReturn( $this->secret );
+		$this->wikiaRequestMock->expects( $this->at( 1 ) )
+			->method( 'getVal' )
+			->with( 'username' )
+			->willReturn( $this->username );
+
+		$this->authService->expects( $this->once() )
+			->method( 'isUsernameBlocked' )
+			->with( $this->username )
+			->willReturn( null );
+
+		$this->wikiaResponseMock->expects( $this->once() )
+			->method( 'setVal' )
+			->with( 'message', 'user not found' );
+		$this->wikiaResponseMock->expects( $this->once() )
+			->method( 'setCode' )
+			->with( \WikiaResponse::RESPONSE_CODE_NOT_FOUND );
+
+		$this->controller->isBlocked();
+	}
 }
