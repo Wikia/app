@@ -2,8 +2,7 @@
 
 namespace Wikia\ContentReview;
 
-class Helper
-{
+class Helper {
 
 	public function getSiteJsScriptsHash() {
 		global $wgCityId;
