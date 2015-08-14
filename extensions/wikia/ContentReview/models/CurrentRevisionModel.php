@@ -26,6 +26,6 @@ class CurrentRevisionModel extends ContentReviewBaseModel {
 			];
 		}
 
-		return (array) $revisionData;
+		return $revisionData;
 	}
 }

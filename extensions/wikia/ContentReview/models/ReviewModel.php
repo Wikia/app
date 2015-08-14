@@ -13,65 +13,49 @@ class ReviewModel extends ContentReviewBaseModel {
 	const CONTENT_REVIEW_STATUS_REJECTED = 4;
 
 	public function getPageStatus( $wikiId, $pageId ) {
-		try {
-			$db = $this->getDatabaseForRead();
+		$db = $this->getDatabaseForRead();
 
-			$status = ( new \WikiaSQL() )
-				->SELECT( 'status' )
-				->FROM( self::CONTENT_REVIEW_STATUS_TABLE )
-				->WHERE( 'wiki_id' )->EQUAL_TO( $wikiId )
-					->AND_( 'page_id' )->EQUAL_TO( $pageId )
-				->ORDER_BY( 'submit_time' )->DESC()
-				->LIMIT( 1 )
-				->runLoop( $db, function ( &$status, $row ) {
-					$status = $row->status;
-				} );
+		$status = ( new \WikiaSQL() )
+			->SELECT( 'status' )
+			->FROM( self::CONTENT_REVIEW_STATUS_TABLE )
+			->WHERE( 'wiki_id' )->EQUAL_TO( $wikiId )
+				->AND_( 'page_id' )->EQUAL_TO( $pageId )
+			->ORDER_BY( 'submit_time' )->DESC()
+			->LIMIT( 1 )
+			->runLoop( $db, function ( &$status, $row ) {
+				$status = $row->status;
+			} );
 
-			if ( empty( $status ) ) {
-				$status = null;
-			}
-
-			return $status;
-		} catch ( \Exception $e ) {
-			if ( $db !== null ) {
-				$db->rollback;
-			}
-
-			throw $e;
+		if ( empty( $status ) ) {
+			$status = null;
 		}
+
+		return $status;
 	}
 
 	public function getCurrentUnreviewedId( $wikiId, $pageId ) {
-		try {
-			$db = $this->getDatabaseForRead();
+		$db = $this->getDatabaseForRead();
 
-			$reviewId = ( new \WikiaSQL() )
-				->SELECT( 'review_id', 'status' )
-				->FROM( self::CONTENT_REVIEW_STATUS_TABLE )
-				->WHERE( 'wiki_id' )->EQUAL_TO( $wikiId )
-				->AND_( 'page_id' )->EQUAL_TO( $pageId )
-				->ORDER_BY( 'submit_time' )->DESC()
-				->LIMIT( 1 )
-				->runLoop( $db, function ( &$reviewId, $row ) {
-					if ( intval( $row->status ) === self::CONTENT_REVIEW_STATUS_UNREVIEWED ) {
-						$reviewId = $row->review_id;
-					} else {
-						$reviewId = null;
-					}
-				} );
+		$reviewId = ( new \WikiaSQL() )
+			->SELECT( 'review_id', 'status' )
+			->FROM( self::CONTENT_REVIEW_STATUS_TABLE )
+			->WHERE( 'wiki_id' )->EQUAL_TO( $wikiId )
+			->AND_( 'page_id' )->EQUAL_TO( $pageId )
+			->ORDER_BY( 'submit_time' )->DESC()
+			->LIMIT( 1 )
+			->runLoop( $db, function ( &$reviewId, $row ) {
+				if ( intval( $row->status ) === self::CONTENT_REVIEW_STATUS_UNREVIEWED ) {
+					$reviewId = $row->review_id;
+				} else {
+					$reviewId = null;
+				}
+			} );
 
-			if ( !$reviewId > 0 ) {
-				$reviewId = null;
-			}
-
-			return $reviewId;
-		} catch ( \Exception $e ) {
-			if ( $db !== null ) {
-				$db->rollback;
-			}
-
-			throw $e;
+		if ( !$reviewId > 0 ) {
+			$reviewId = null;
 		}
+
+		return $reviewId;
 	}
 
 	public function markPageAsUnreviewed( $wikiId, $pageId, $revisionId, $submitUserId ) {

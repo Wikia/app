@@ -11,7 +11,6 @@ define(
 					messages: 'ContentReviewModule'
 				}
 			})).done(function (res) {
-				console.log(res);
 				mw.messages.set(res.messages);
 				bindEvents();
 			});
