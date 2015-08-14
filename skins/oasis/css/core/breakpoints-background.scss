@@ -5,8 +5,6 @@
 $background-height: get_command_line_param('background-image-height', 0);
 $background-width: get_command_line_param('background-image-width', 0);
 $gradient-width: 40px;
-$adskin-width: 179px;
-$large-breakpoint-content-and-adskin-width: $content-width-large + 2 * $adskin-width;
 
 // convert unitless int values to pixels
 @if unitless($background-height) {
@@ -82,7 +80,7 @@ body.skin-oasis {
 
 @if ($widthType == 0) {
 	body.background-dynamic.skin-oasis {
-		background: $color-body;
+		background-color: $color-body;
 
 		&::after,
 		&::before {
@@ -167,7 +165,7 @@ body.skin-oasis {
 		}
 	}
 
-	@media screen and (min-width: $large-breakpoint-content-and-adskin-width) {
+	@media screen and (min-width: $breakpoint-upper) {
 		@include background-max;
 	}
 }

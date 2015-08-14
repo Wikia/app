@@ -40,6 +40,7 @@ class TemplateDraftHooks {
 	 */
 	public static function onEditFormPreloadText( &$text, Title $title ) {
 		$helper = new TemplateDraftHelper();
+
 		if ( $helper->isTitleNewDraft( $title )
 			&& TemplateConverter::isConversion()
 		) {
@@ -94,7 +95,8 @@ class TemplateDraftHooks {
 					)->escaped(),
 				];
 			} elseif ( !TemplateDraftHelper::titleHasPortableInfobox( $title ) ) {
-				$base = Title::newFromText( $title->getBaseText() .'/'. wfMessage( 'templatedraft-subpage' ), NS_TEMPLATE );
+				$draft = wfMessage( 'templatedraft-subpage' )->inContentLanguage()->escaped();
+				$base = Title::newFromText( $title->getBaseText() .'/'. $draft, NS_TEMPLATE );
 				$draftUrl = $base->getFullUrl( [
 					'action' => 'edit',
 					TemplateConverter::CONVERSION_MARKER => 1,

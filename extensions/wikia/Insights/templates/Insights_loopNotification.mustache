@@ -3,7 +3,7 @@
 	{{fixItMessage}}
 {{/fixItMessage}}
 {{#customButtonText}}
-	<button class="{{customButtonClass}}">{{customButtonText}}</button>
+	<button {{#customButtonData}}data-type="{{customButtonData}}"{{/customButtonData}} class="{{customButtonClass}}">{{customButtonText}}</button>
 {{/customButtonText}}
 {{#editPageLink}}
 	<a id="InsightsEditPageButton" href="{{editPageLink}}" data-type="back-to-edit">{{editPageText}}</a>

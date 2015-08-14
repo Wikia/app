@@ -5,10 +5,7 @@
  * Note: Flags insights are are fetching flags only targeted at contributors
  */
 
-use Wikia\Logger\Loggable;
-
 class InsightsFlagsModel extends InsightsPageModel {
-	use Loggable;
 
 	const INSIGHT_TYPE = 'flags';
 
@@ -175,7 +172,8 @@ class InsightsFlagsModel extends InsightsPageModel {
 		$params = [
 			'notificationMessage' => wfMessage( $notificationMessageKey )->plain(),
 			'customButtonText' => wfMessage( 'insights-notification-message-set-flags' )->plain(),
-			'customButtonClass' => 'bn-flags-entry-point'
+			'customButtonClass' => 'bn-flags-entry-point',
+			'customButtonData' => 'edit-flags'
 		];
 		$params = array_merge(
 			$params,

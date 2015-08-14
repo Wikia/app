@@ -36,7 +36,7 @@ define( 'USER_TOKEN_LENGTH', 32 );
  * Int Serialized record version.
  * @ingroup Constants
  */
-define( 'MW_USER_VERSION', 10 );
+define( 'MW_USER_VERSION', 11 );
 
 /**
  * String Some punctuation to prevent editing from broken text-mangling proxies.
@@ -1357,6 +1357,8 @@ class User {
 		$this->mEffectiveGroups = null;
 		$this->mImplicitGroups = null;
 		$this->mOptions = null;
+		$this->mOptionOverrides = null;
+		$this->mOptionsLoaded = false;
 
 		if ( $reloadFrom ) {
 			$this->mLoadedItems = array();
@@ -2105,7 +2107,7 @@ class User {
 		$this->load();
 		if( $this->mId ) {
 			global $wgMemc, $wgSharedDB; # Wikia
-			$wgMemc->delete( wfMemcKey( 'user', 'id', $this->mId ) );
+			$wgMemc->delete( $this->getCacheKey() );
 			// Wikia: and save updated user data in the cache to avoid memcache miss and DB query
 			$this->saveToCache();
 			if( !empty( $wgSharedDB ) ) {
@@ -4923,6 +4925,13 @@ class User {
 		$preferencesFromService = [];
 		if ($wgPreferencesUseService) {
 			$preferencesFromService = array_keys($this->userPreferences()->getPreferences($this->getId()));
+			$insertRows = array_reduce($insertRows, function($rows, $current) use ($preferencesFromService) {
+				if (!in_array($current['up_property'], $preferencesFromService)) {
+					$rows[] = $current;
+				}
+
+				return $rows;
+			}, []);
 		}
 
 		$deletePrefs = array_diff($deletePrefs, $preferencesFromService);

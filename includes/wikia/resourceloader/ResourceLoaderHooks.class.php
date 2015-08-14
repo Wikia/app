@@ -345,7 +345,7 @@ class ResourceLoaderHooks {
 		}
 		else {
 			$cb = $context->getRequest()->getVal('cb', false);
-			$ts = false;
+			$ts = 0;
 		}
 
 		// check if at least one of required modules serves dynamic content
