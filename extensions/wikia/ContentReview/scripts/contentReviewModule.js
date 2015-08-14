@@ -23,7 +23,8 @@ define(
 		function submitPageForReview(event) {
 			event.preventDefault();
 
-			var data = {
+			var moduleType = $(this).data('type'),
+				data = {
 				pageId: mw.config.get('wgArticleId'),
 				wikiId: mw.config.get('wgCityId'),
 				editToken: mw.user.tokens.get('editToken')
@@ -43,7 +44,7 @@ define(
 							 * content-review-module-submit-success-insert
 							 * content-review-module-submit-success-update
 							 */
-							mw.message('content-review-module-submit-success-' + response.action).escaped(),
+							mw.message('content-review-module-submit-success-' + moduleType).escaped(),
 							'confirm'
 						);
 
