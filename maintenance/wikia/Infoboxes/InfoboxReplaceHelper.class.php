@@ -10,6 +10,7 @@ class InfoboxReplaceHelper {
 		if ( $this->hasLayout( $matches[0] ) ) {
 			return $matches[0];
 		}
+		print( "... replaced!\n" );
 		return preg_replace( '/<infobox/i', '<infobox layout="stacked"', $matches[0] );
 	}
 

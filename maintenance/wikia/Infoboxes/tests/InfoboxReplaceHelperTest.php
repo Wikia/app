@@ -72,6 +72,8 @@ theme-source="location"
 		$infoboxWithHorizontalLayout = '<infobox theme="My Custom theme" layout="horizontal" >
   ' . $infoboxBody . '</infobox>';
 
+$infoboxWithTabularLayout = '<infobox theme="My Custom theme" layout="tabular" >
+  ' . $infoboxBody . '</infobox>';
 
 		$infoboxWithPrecedingText = 'test test
 test<infobox theme="My Custom theme">
@@ -101,6 +103,7 @@ test<infobox layout="stacked" theme="My Custom theme">
 			[ $infoboxWithAttributes, $infoboxWithAttributesExpected, 'Infobox with some attributes' ],
 			[ $infoboxWithStackedLayout, $infoboxWithStackedLayout, 'Infobox with stacked layout already defined' ],
 			[ $infoboxWithHorizontalLayout, $infoboxWithHorizontalLayout, 'Infobox with horizontal layout already defined' ],
+			[ $infoboxWithTabularLayout, $infoboxWithTabularLayout, 'Infobox with tabular layout already defined' ],
 			[ $infoboxWithPrecedingText, $infoboxWithPrecedingTextExpected, 'Infobox with preceding text' ],
 			[ $infoboxWithMultilineAttributes, $infoboxWithMultilineAttributesExpected, 'Multiple infoboxes definitions in one article' ],
 			[ $infoboxWithMultilineLayoutStacked, $infoboxWithMultilineLayoutStacked, 'Multiple infoboxes definitions in one article' ],

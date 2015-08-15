@@ -42,6 +42,7 @@ class addLayoutToPortableInfoboxes extends Maintenance {
 			if ( !$article ) {
 				continue;
 			}
+			$this->output( "\n*processing article: $pageId..." );
 			$content = $article->getContent();
 			$replaceHelper = new InfoboxReplaceHelper();
 			$replacedContent = $replaceHelper->processLayoutAttribute( $content );
@@ -52,6 +53,7 @@ class addLayoutToPortableInfoboxes extends Maintenance {
 
 	private function getPagesWithInfoboxes() {
 		global $wgCityId;
+		$this->output( "\nSTART for ID: $wgCityId\n" );
 		$app = \F::app();
 		$statsdb = wfGetDB( DB_SLAVE, null, $app->wg->StatsDB );
 		$pages = ( new \WikiaSQL() )
