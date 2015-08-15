@@ -2264,8 +2264,13 @@ class Wikia {
 			return true;
 		}
 
-		// In this NS, editinterface applies only to white listed pages and users in the util group
-		if (in_array($title->getDBKey(), $wgEditInterfaceWhitelist) || in_array('util', $wgUser->getGroups())) {
+		// Allow trusted users to edit interface messages (util, vstf, select admins)
+		if ( $wgUser->isAllowed('editinterfacetrusted') ) {
+			return true;
+		}
+
+		// In this NS, editinterface applies only to white listed pages
+		if (in_array($title->getDBKey(), $wgEditInterfaceWhitelist)) {
 			return $wgUser->isAllowed('editinterface');
 		}
 

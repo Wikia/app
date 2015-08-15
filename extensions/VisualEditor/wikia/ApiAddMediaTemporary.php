@@ -43,7 +43,7 @@ class ApiAddMediaTemporary extends ApiAddMedia {
 			// If wiki is Japanese content, then we check if anonyous edit is allowed. INT-158
 			// Enable unauthorized save for Curated Main Page Editor
 			// if $wgEnableCuratedContentUnauthorizedSave not empty (CONCF-741)
-			// Ticket for removal wg check: CONCF-978
+			// Ticket for removal wg check: CONCF-900
 			if ( $wgContLanguageCode === 'ja' ) {
 				$this->checkPermissionsForJA();
 			} else if ( empty( $wgEnableCuratedContentUnauthorizedSave ) ) {
