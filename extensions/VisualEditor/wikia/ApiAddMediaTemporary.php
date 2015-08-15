@@ -44,9 +44,9 @@ class ApiAddMediaTemporary extends ApiAddMedia {
 			// Enable unauthorized save for Curated Main Page Editor
 			// if $wgEnableCuratedContentUnauthorizedSave not empty (CONCF-741)
 			// Ticket for removal wg check: CONCF-978
-			if ( $wgContLanguageCode === 'ja') {
+			if ( $wgContLanguageCode === 'ja' ) {
 				$this->checkPermissionsForJA();
-			} else if (empty( $wgEnableCuratedContentUnauthorizedSave ) ) {
+			} else if ( empty( $wgEnableCuratedContentUnauthorizedSave ) ) {
 				$this->checkPermissions();
 			}
 
@@ -160,7 +160,7 @@ class ApiAddMediaTemporary extends ApiAddMedia {
 		global $wgDisableAnonymousEditing;
 
 		if ( $wgDisableAnonymousEditing ) {
-			$this->dieUsageMsg( array( 'mustbeloggedin', 'upload' ) );
+			$this->dieUsageMsg( 'noedit-anon' );
 		}
 	}
 
