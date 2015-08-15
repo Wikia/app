@@ -46,6 +46,7 @@ $wgAutoloadClasses[ 'Wikia\PortableInfobox\Helpers\ImageFilenameSanitizer' ] = $
 $wgAutoloadClasses[ 'Wikia\PortableInfobox\Helpers\SimpleXmlUtil' ] = $dir . 'services/Helpers/SimpleXmlUtil.php';
 $wgAutoloadClasses[ 'Wikia\PortableInfobox\Helpers\InfoboParamsValidator' ] = $dir . 'services/Helpers/InfoboParamsValidator.php';
 $wgAutoloadClasses[ 'Wikia\PortableInfobox\Helpers\PortableInfoboxDataBag' ] = $dir . 'services/Helpers/PortableInfoboxDataBag.php';
+$wgAutoloadClasses[ 'Wikia\PortableInfobox\Helpers\PortableInfoboxRenderServiceHelper' ] = $dir . 'services/Helpers/PortableInfoboxRenderServiceHelper.php';
 
 // controller classes
 $wgAutoloadClasses[ 'PortableInfoboxParserTagController' ] = $dir . 'controllers/PortableInfoboxParserTagController.class.php';

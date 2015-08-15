@@ -375,7 +375,7 @@ Amangan no addan sabali a nangikkat.',
 Adda ngata nagyan a maysa wenno ad-adu pay a kababalin a saan a mausar iti titulo.',
 'perfcached'           => 'Ti sumaganad a data ket naka-cached ken mabalin a saan a napabaro. T kangato a {{PLURAL:$1|maysa a nagbanagan ket|$1 dagiti nagbanagan}} ket magun-od idiay cache.',
 'perfcachedts'         => 'Ti sumaganad a data ket naka-cached, ken naudi a napabaro idi $1. T kangato a {{PLURAL:$4|maysa a nagbanagan ket|$4 dagiti nagbanagan}} ket magun-od idiay cache.',
-'querypage-no-updates' => 'Dagiti panangpabaro iti daytoy a panid ket agdama a nabaldado. 
+'querypage-no-updates' => 'Dagiti panangpabaro iti daytoy a panid ket agdama a nabaldado.
 Saan a mipasaradiwa ita dagiti data ditoy.',
 'wrong_wfQuery_params' => 'Kamali a parametro iti wfQuery()<br />
 Opisio: $1<br />
@@ -410,8 +410,9 @@ Ti naited a rason ket ''$2''.",
 # Login and logout pages
 'logouttext'                 => "'''Nakaruarkan.'''
 
-Mabalinmo nga ituloy ti agusar iti {{SITENAME}} a di am-ammo, wenno [[Special:UserLogin|sumrek ka manen]] iti sigud wenno sabali nga agar-aramat.
+Mabalinmo nga ituloy ti agusar iti {{SITENAME}} a di am-ammo, wenno $1 iti sigud wenno sabali nga agar-aramat.
 Laglagipem a sumagmamano a pampanid ti mabalin a nakaparang latta a kasla nakaserrek ka pay laeng, agingga na nga dalusam ti \"cache\" ti panagbasabasam.",
+'logouttext-link-text'       => 'sumrek ka manen',
 'welcomecreation'            => '== Kablaaw, $1! ==
 Naramiden ti pakabilangam.
 Dimo liplipatan a sukatan dagita kaykayatmo idiay [[Special:Preferences|{{SITENAME}} kaykayat]].',
@@ -455,7 +456,7 @@ Usarem dagita galietas mo, ipadas mo manen daytoy a panid.',
 'noname'                     => 'Saan mo a nainaganan ti maisu a nagan ti agar-aramat.',
 'loginsuccesstitle'          => 'Balligi ti panagserrek',
 'loginsuccess'               => "'''Nakastrekkan iti {{SITENAME}} a kas ni \"\$1\".'''",
-'nosuchuser'                 => 'Awan ti agar-aramat nga agnagan iti "$1". 
+'nosuchuser'                 => 'Awan ti agar-aramat nga agnagan iti "$1".
 
 Kitaem ti panangiletra, wenno [[Special:UserLogin/signup|agaramid ka ti baro a pakabilangan]].',
 'nosuchusershort'            => 'Awan ti agar-aramat nga addaan iti nagan a "$1".
@@ -522,7 +523,7 @@ Tapno malpas ka a makastrek, mangikabil ka ti baro a kontrasenias ditoy:',
 'newpassword'               => 'Baro a kontrasenias:',
 'retypenew'                 => 'Isurat manen ti baro a kontrasenias:',
 'resetpass_submit'          => 'Ikabil ti kontrasenias ken sumrek',
-'resetpass_success'         => 'Nagballigi a nabaliwan ti kontrasenias mo! 
+'resetpass_success'         => 'Nagballigi a nabaliwan ti kontrasenias mo!
 </br>
 Iserrek kan...',
 'resetpass_forbidden'       => 'Saan a masukatan dagiti kontrasenias',
@@ -552,8 +553,8 @@ nakairaman iti daytoy nga e-surat a pagtaengan:
 $2
 
 {{PLURAL:$3|Daytoy a saan nga agnayon a kontrasenias|Dagitoy a saan nga agnayon a kontrasenias}} ket agpaso iti {{PLURAL:$5|maysa nga aldaw|$5 nga al-aldaw}}.
-Sumrekka kuman ta agpili ka ti baro a kontrasenias mo tattan. No adda met sabali a nagaramid daytoy a 
-panagkiddaw, wenno malagip mo ti dati a kontrasenias mo, ket saan mo a kayaten a sukatan, saan mo nga ikaskaso daytoy a mensahe ken 
+Sumrekka kuman ta agpili ka ti baro a kontrasenias mo tattan. No adda met sabali a nagaramid daytoy a
+panagkiddaw, wenno malagip mo ti dati a kontrasenias mo, ket saan mo a kayaten a sukatan, saan mo nga ikaskaso daytoy a mensahe ken
 agtuloy ka nga agusar ti daan a kontrasenias.',
 'passwordreset-emailtext-user'     => 'Daytoy nga  agar-aramat  $1 iti {{SITENAME}} ket nagkiddaw ti palagip para dagiti detalye ti pakabilangan iti {{SITENAME}}
 ($4) . Ti sumaganad {{PLURAL:$3|a pakabilangan|kadagiti pakabilangan}}  ti agar-aramat ket
@@ -562,8 +563,8 @@ nakairaman iti daytoy nga e-surat a pagtaengan:
 $2
 
 {{PLURAL:$3|Daytoy a saan nga agnayon a kontrasenias|Dagitoy a saan nga agnayon a kontrasenias}} ket agpaso iti {{PLURAL:$5|maysa nga aldaw|$5 nga al-aldaw}}.
-Sumrekka kuman ta agpili ka ti baro a kontrasenias mo tattan. No adda met sabali a nagaramid daytoy a 
-panagkiddaw, wenno malagip mo ti dati a kontrasenias mo, ket saan mo a kayaten a sukatan, saan mo nga ikaskaso daytoy a mensahe ken 
+Sumrekka kuman ta agpili ka ti baro a kontrasenias mo tattan. No adda met sabali a nagaramid daytoy a
+panagkiddaw, wenno malagip mo ti dati a kontrasenias mo, ket saan mo a kayaten a sukatan, saan mo nga ikaskaso daytoy a mensahe ken
 agtuloy kan nga agusar ti daan a kontrasenias mo.',
 'passwordreset-emailelement'       => 'Nagan ti agar-aramat: $1
 Saan nga agnayon a kontrasenias: $2',
@@ -623,7 +624,7 @@ No agtakla ka ti \"{{int:savearticle}}\" manen, maidulin ti inurnos mo nga awan 
 'blockedtitle'                     => 'Naseraan ti agar-aramat',
 'blockedtext'                      => "'''Naseraan ti nagan wenno ti IP a pagtaengam.'''
 
-Ni $1 ti nangserra kenka. 
+Ni $1 ti nangserra kenka.
 Ti rason ket ''$2''.
 
 * Rugi ti panangserra: $8
@@ -668,7 +669,7 @@ Ti kontrasenias ti baro a pakabilangan ket masukatan idiay ''[[Special:ChangePas
 'anontalkpagetext'                 => "----''Daytoy ti pakitungtungan a panid para iti di am-ammo nga agar-aramat a saan pay a nakaaramid ti pakabilangan, wenno saan na nga us-usaren.
 Dakami ket agusar kami ti numero nga IP a pagtaengan ti panangilasin dagiti lalaki/babai.
 Ti kastoy nga IP a pagtaengan ket us-usaren a bingayan ti adu pay a sabsabali nga agar-aramat.
-No sika ket maysa a di am-ammo nga agar-aramat ken dagiti awan ti kapategan a komentario ket napaitudo kenka, pangngaasi ta [[Special:UserLogin/signup|agaramid ka ti pakabilangam]] wenno [[Special:UserLogin|sumrekka]] 
+No sika ket maysa a di am-ammo nga agar-aramat ken dagiti awan ti kapategan a komentario ket napaitudo kenka, pangngaasi ta [[Special:UserLogin/signup|agaramid ka ti pakabilangam]] wenno [[Special:UserLogin|sumrekka]]
 tapno maawanan ti pinakaulaw kadagiti sabali a di am-ammo nga agar-aramat.",
 'noarticletext'                    => 'Awan pay ti  nagyan na daytoy a panid.
 Mabalinmo ti [[Special:Search/{{PAGENAME}}|agsapul iti kastoy a titulo ti panid]] iti sabsabali a pampanid,
@@ -678,7 +679,7 @@ wenno [{{fullurl:{{NAMESPACE}}:{{PAGENAME}}|action=edit}} urnosem daytoy a panid
 Mabalinmo ti [[Special:Search/{{PAGENAME}}|agsapul iti kastoy a titulo ti panid]] iti sabsabali a pampanid,
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} agbirukka],
 wenno <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} agbiruk ka kadagiti maikabagian a listaan]</span>.',
-'userpage-userdoesnotexist'        => 'Ti pakabilangan ti agar-aramat "$1" ket saan a nakarehistro. 
+'userpage-userdoesnotexist'        => 'Ti pakabilangan ti agar-aramat "$1" ket saan a nakarehistro.
 Pangngaasim ta kitaem no kayatmo ti agaramid/urnosen daytoy a panid.',
 'userpage-userdoesnotexist-view'   => 'Ti pakabilangan ni agar-aramat "$1" ket saan a nakarehistro.',
 'blocked-notice-logextract'        => 'Naserraan tatta daytoy nga agar-aramat.
@@ -734,7 +735,7 @@ Adda sabali a mausar tapno makaurnos ka kadagiti panid: Ti saan nga-ASCII a kaba
 'editingold'                       => "'''Ballag: Ururnosem ti daan a panag-baliw iti daytoy a panid.'''
 No idulin mo, mapukaw amin a sinukatam iti daytoy a panag-baliw.",
 'yourdiff'                         => 'Dagiti nagdudumaan',
-'copyrightwarning'                 => "Laglagipenyo koma, apo, nga amin a parawad iti {{SITENAME}} ket maibilang a nairuar iti babaen ti $2 (kitaen ti $1 para kadagiti detalye). 
+'copyrightwarning'                 => "Laglagipenyo koma, apo, nga amin a parawad iti {{SITENAME}} ket maibilang a nairuar iti babaen ti $2 (kitaen ti $1 para kadagiti detalye).
 No dimo kayat a ti sinuratmo ket maurnos nga awanan-asi ken maiwaras nga awan sungsungbatan kenka, saanmo laengen nga ip-ipan wenno ipabpablaak ditoy.<br />
 Kasta met nga ikarim kadakami a bukodmo a sinurat wenno gapuanan daytoy, wenno tinuladmo ngem iti maysa a nawaya a pagturayan ti publiko wenno pumadmad a libre a pagtaudan.
  '''Saan a mangipan iti addaan a karbengan ti pinagpablaak nga obra no awan ti  pammalubos!'''",
@@ -2453,7 +2454,7 @@ Mapabarom a kas automatiko dagiti baw-inga nakatudo dita kasigud a titulo.
 No agpili ka a saan mo a kayat, pasaraduam nga kitaen ti [[Special:DoubleRedirects|doble]] wenno [[Special:BrokenRedirects|nadadael a baw-ing]].
 Rebbengem ti mangpatalged nga amin a panilpo ket agtultuloy a nakatudo iti nasken a papananda.
 
-Laglagipen a ti panid ket '''saan''' a maiyalis no addan sigud a panid iti baro a titulo, malaksid no awan linaonna wenno no maysa a baw-ing a panid ken awan ti panagbaliw iti pakasaritaan ti napalabas. 
+Laglagipen a ti panid ket '''saan''' a maiyalis no addan sigud a panid iti baro a titulo, malaksid no awan linaonna wenno no maysa a baw-ing a panid ken awan ti panagbaliw iti pakasaritaan ti napalabas.
 Kayat a sawen daytoy a mabalinmo a suktan ti nagan ti maysa a panid manipud iti punto ti pannakasukat ti nagan no nagbiddutka, ken saan mo a mabalin a suratan manen ti addaan a panid.
 
 '''Ballaag!'''
@@ -2464,7 +2465,7 @@ Ti daan a titulo ket agbalin baw-ing a panid idiay baro a titulo.
 Pasaruduam a kitaen ti [[Special:DoubleRedirects|doble]] wenno [[Special:BrokenRedirects|nadadael a baw-ing]].
 Rebbengem ti mangpatalged nga amin a panilpo ket agtultuloy a nakatudo iti nasken a papananda.
 
-Laglagipen a ti panid ket '''saan''' a maiyalis no addan sigud a panid iti baro a titulo, malaksid no awan linaonna wenno no maysa a baw-ing a panid ken awan ti panagbaliw iti pakasaritaan ti napalabas. 
+Laglagipen a ti panid ket '''saan''' a maiyalis no addan sigud a panid iti baro a titulo, malaksid no awan linaonna wenno no maysa a baw-ing a panid ken awan ti panagbaliw iti pakasaritaan ti napalabas.
 Kayat a sawen daytoy a mabalinmo a suktan ti nagan ti maysa a panid manipud iti punto ti pannakasukat ti nagan no nagbiddutka, ken saan mo a mabalin a suratan manen ti addaan a panid.
 
 '''Ballaag!'''
@@ -3280,7 +3281,7 @@ Mabalinmon [[Special:UserLogin|sumrek]] ken naragsak a panag-wiki.',
 'confirmemail_body'         => 'Addaan, baka sika, ti naggapu ti IP a pagtaengan $1,
 ket nagrehistro ti pakabilangan "$2" iti daytoy nga e-surat a pagtaengan idiay {{SITENAME}}
 
-Tapno mapasingkedan a daytoy a pakabilangan ket kukuam ken ti 
+Tapno mapasingkedan a daytoy a pakabilangan ket kukuam ken ti
 pinagpabalin ti e-surat a kita idiay {{SITENAME}}, lukatam daytoy a panilpo dita pabasabasam:
 
 $3
@@ -3294,7 +3295,7 @@ Daytoy a kodigo a pasingkedan ket agpaso iti $4.',
 'confirmemail_body_changed' => 'Addaan, baka sika, ti naggapu ti IP a apagtaengam $1,
 ket nangsukat ti e-surat a pagtaengan ti pakabilangan "$2" iti daytoy a pagtaengan idiay {{SITENAME}}
 
-Tapno mapasingkedan daytoy a pakabilangan ket kukuam ken ti 
+Tapno mapasingkedan daytoy a pakabilangan ket kukuam ken ti
 pinagpabalin ti e-surat a kita idiay {{SITENAME}}, lukatam daytoy a panilpo dita pabasabasam:
 
 $3
@@ -3308,7 +3309,7 @@ Daytoy a kodigo a pasingkedan ket agpaso iti $4.',
 'confirmemail_body_set'     => 'Addaan, baka sika, ti naggapu ti IP a pagtaengam $1,
 ket nangikabil ti e-surat a pagtaengan ti pakabilangan "$2" iti daytoy a pagtaengan idiay {{SITENAME}}
 
-Tapno mapasingkedan daytoy a pakabilangan ket kukuam ken ti 
+Tapno mapasingkedan daytoy a pakabilangan ket kukuam ken ti
 pinagpabalin ti e-surat a kita idiay {{SITENAME}}, lukatam daytoy a panilpo dita pabasabasam:
 
 $3
@@ -3487,7 +3488,7 @@ Dagiti imahen ket agparang iti kadakkelan a resolusion, dagiti sabali a kita ti 
 # External image whitelist
 'external_image_whitelist' => ' #Baybayan daytoy a linia a kastoy<pre>
 #Ikabil ti "regular expression fragments" (idiay laeng paset nga ikabil ti tengnga ti  //) dita baba
-#Dagitoy ipada na ti URLs ti ruar (ti napudot a naikapet) imahen 
+#Dagitoy ipada na ti URLs ti ruar (ti napudot a naikapet) imahen
 #Dagiti agpada ket agparang nga  imahen, ket no saan ti panilpo ti imahen ti agparang laeng
 #Dagiti linia nga  umuna iti # ket maipabalin a komentario
 #Daytoy ket "sensetibo ti kadakkel ti letra"

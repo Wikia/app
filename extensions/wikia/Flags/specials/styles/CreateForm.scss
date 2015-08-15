@@ -1,0 +1,68 @@
+@import './settings';
+
+/* Create form for a flag */
+
+.flag-edit-form {
+
+	input {
+		padding: 5px;
+	}
+}
+
+.flags-special-form-fieldset {
+
+	&:first-child {
+
+		.flags-special-form-legend {
+			margin-top: 0;
+		}
+	}
+}
+
+.flags-special-form-table {
+	width: 100%;
+}
+
+.flags-special-form-legend {
+	display: block;
+	font-size: 125%;
+	padding: 10px 0 5px;
+}
+
+.flags-special-form-label {
+	font-weight: bold;
+	padding: 0 0 10px;
+}
+
+.flags-special-form-input {
+	padding: 0 0 10px 10px;
+	width: 100%;
+
+	input {
+		width: 50%;
+	}
+}
+
+.flags-special-form-params-th {
+	text-align: left;
+}
+
+.flags-special-form-param-name {
+	width: 40%;
+
+	input {
+		width: 90%;
+	}
+}
+
+.flags-special-form-param-description {
+	width: 55%;
+
+	input {
+		width: 90%;
+	}
+}
+
+.flags-special-form-params-new {
+	padding: 15px 0 0;
+}

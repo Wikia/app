@@ -19,6 +19,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 }
 
 class EditAccount extends SpecialPage {
+	/** @var User */
 	var $mUser = null;
 	var $mStatus = null;
 	var $mStatusMsg;
@@ -209,7 +210,7 @@ class EditAccount extends SpecialPage {
 			$this->mUser->load();
 
 			// get new email (unconfirmed)
-			$optionNewEmail = $this->mUser->getGlobalAttribute( 'new_email' );
+			$optionNewEmail = $this->mUser->getNewEmail();
 			$changeEmailRequested = ( empty($optionNewEmail) ) ? '' : wfMsg( 'editaccount-email-change-requested', $optionNewEmail ) ;
 
 			// emailStatus is the status of the email in the "Set new email address" field
@@ -240,13 +241,12 @@ class EditAccount extends SpecialPage {
 	 * @return Boolean: true on success, false on failure (i.e. if we were given an invalid email address)
 	 */
 	function setEmail( $email, $changeReason = '' ) {
-		$oldEmail = $this->mUser->getEmail();
 		if ( Sanitizer::validateEmail( $email ) || $email == '' ) {
 			$this->mUser->setEmail( $email );
 			if ( $email != '' ) {
 				UserLoginHelper::removeNotConfirmedFlag( $this->mUser );
 				$this->mUser->confirmEmail();
-				$this->mUser->setGlobalAttribute( 'new_email', null );
+				$this->mUser->clearNewEmail();
 			} else {
 				if ( $this->mUser->getGlobalFlag( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME ) ) {
 					// User not confirmed on signup can't has empty email

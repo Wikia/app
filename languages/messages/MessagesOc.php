@@ -679,8 +679,9 @@ Lo motiu avançat es « ''$2'' ».",
 # Login and logout pages
 'logouttext'                 => "'''Ara, sètz desconnect{{GENDER:||at|ada}}..'''
 
-Podètz contunhar d'utilizar {{SITENAME}} anonimament, o vos podètz [[Special:UserLogin|tornar connectar]] jol meteis nom o amb un autre nom.
+Podètz contunhar d'utilizar {{SITENAME}} anonimament, o vos podètz $1 jol meteis nom o amb un autre nom.
 Notatz que d'unas paginas pòdon èsser encara afichadas coma s'eratz encara connect{{GENDER:||at|ada}}, fins al moment qu'escafaretz l'amagatal de vòstre navigador.",
+'logouttext-link-text'       => 'tornar connectar',
 'welcomecreation'            => "== Benvenguda, $1 ! ==
 Vòstre compte d'utilizaire es estat creat.
 Doblidetz pas de personalizar vòstras [[Special:Preferences|{{SITENAME}} preferéncias]].",
