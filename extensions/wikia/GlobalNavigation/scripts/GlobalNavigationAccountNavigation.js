@@ -10,6 +10,7 @@ require([
 	var $globalNavigation = $('#globalNavigation'),
 		loginAjaxForm = false,
 		$entryPoint;
+	;
 
 	/**
 	 * @desc Handle click on entry point for logged in users.
@@ -21,7 +22,7 @@ require([
 		var $this = $(event.currentTarget);
 		event.preventDefault();
 		event.stopImmediatePropagation();
-		
+
 		if ($entryPoint.hasClass('active')) {
 			win.location = $this.attr('href') || $this.children('a').attr('href');
 		} else {
@@ -47,7 +48,7 @@ require([
 
 	function onDropdownClose() {
 		var activeElementId = document.activeElement.id;
-		
+
 		if (!win.wgUserName) {
 			if (activeElementId === 'usernameInput' || activeElementId === 'passwordInput') {
 				//don't close menu if one of inputs is focused
@@ -56,7 +57,7 @@ require([
 		}
 	}
 
-	$(function () {
+	function oldAccountNav () {
 		var $userLoginDropdown = $('#UserLoginDropdown');
 		$entryPoint = $('#AccountNavigation');
 
@@ -86,6 +87,29 @@ require([
 				.on('blur', '#usernameInput, #passwordInput', function () {
 					scrollFix.restoreScrollY($globalNavigation);
 				});
+		}
+	}
+
+	$(function () {
+		var $registerEntryPoint, $signInEntryPoint;
+
+		if (true || win.wgEnableNewAuth) {
+			$registerEntryPoint = $('.auth-label.register');
+			$signInEntryPoint = $('.auth-label.sign-in');
+
+			$registerEntryPoint.click(function () {
+				require(['AuthModal'], function (authModal) {
+					authModal.register();
+				});
+			});
+			$signInEntryPoint.click(function () {
+				require(['AuthModal'], function (authModal) {
+					authModal.login();
+				});
+			});
+		}
+		else {
+			oldAccountNav();
 		}
 	});
 });
