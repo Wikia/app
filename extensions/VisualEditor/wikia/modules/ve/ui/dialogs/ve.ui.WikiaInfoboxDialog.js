@@ -115,7 +115,7 @@ ve.ui.WikiaInfoboxDialog.prototype.showItems = function () {
 	}
 
 	this.bookletLayout.addPages( tab, 0);
-}
+};
 
 ve.ui.WikiaInfoboxDialog.prototype.showDataItem = function ( obj ) {
 	var param,

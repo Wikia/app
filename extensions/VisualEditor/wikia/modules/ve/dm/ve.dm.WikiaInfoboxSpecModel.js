@@ -17,26 +17,30 @@ ve.dm.WikiaInfoboxSpecModel = function VeDmWikiaInfoboxSpecModel( template ) {
 	// Properties
 	this.template = template;
 	this.params = {
-		'dianaImage': {
-			name: 'dianaImage name',
-			wt : 'diana.jpg',
-			type: 'image'
-		},
-		'element jakiś': {
-			name: 'element jakiś name',
-			wt : 'heheszki',
-			parent : 'group1',
-			type: 'image'
-		},
-		'param ze specki': {
-			name: 'param ze specki',
-			wt : '[[spodnie]]',
-			parent : 'group1',
+		'Title': {
+			name: 'Title',
 			type: 'data'
 		},
-		'date of birth': {
-			name: 'date of birth',
-			wt : '10.05.2005',
+		'Image': {
+			name: 'Image',
+			type: 'image'
+		},
+		'Height': {
+			name: 'Height',
+			parent : 'Size',
+			type: 'data'
+		},
+		'Weight': {
+			name: 'Weight',
+			parent : 'Size',
+			type: 'data'
+		},
+		'Date of birth': {
+			name: 'Date of birth',
+			type: 'data'
+		},
+		'Param from spec': {
+			name: 'Param from spec',
 			type: 'data'
 		}
 	};
@@ -168,7 +172,7 @@ ve.dm.WikiaInfoboxSpecModel.prototype.isParameterKnown = function ( name ) {
  * @param {string} name Parameter name
  * @returns {boolean} false
  */
-ve.dm.WikiaInfoboxSpecModel.prototype.isParameterSuggested = function ( name ) {
+ve.dm.WikiaInfoboxSpecModel.prototype.isParameterSuggested = function () {
 	return false;
 };
 
@@ -305,6 +309,6 @@ ve.dm.WikiaInfoboxSpecModel.prototype.getParameterNames = function () {
  * @param {string} name Parameter name
  * @returns {string[]} Alternate parameter names
  */
-ve.dm.WikiaInfoboxSpecModel.prototype.getParameterAliases = function ( name ) {
+ve.dm.WikiaInfoboxSpecModel.prototype.getParameterAliases = function () {
 	return [];
 };
