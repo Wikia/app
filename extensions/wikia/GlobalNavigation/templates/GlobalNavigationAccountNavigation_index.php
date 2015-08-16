@@ -1,5 +1,5 @@
 <ul id="AccountNavigation" class="AccountNavigation table-cell">
-	<?php if (true || $wgEnableNewAuth): ?>
+	<?php if ($enableNewAuth): ?>
 		<li class="account-navigation-item">
 			<div class="links-container<?php if ($isAnon): ?> anon <?php endif; ?>">
 				<?= $navItemLinkOpeningTag ?>
