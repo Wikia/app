@@ -25,12 +25,15 @@
 		border: 0;
 	}
 
-	.account-navigation-first-item {
+	.account-navigation-item {
 		list-style: none;
 
 		.links-container {
 			display: table-row;
 			height: $global-navigation-height-without-margin;
+			font-size: 12px;
+			padding-top: 2px;
+			vertical-align: middle;
 
 			.chevron {
 				@include global-nav-chevron;
@@ -73,14 +76,24 @@
 		}
 	}
 
-	.sign-in-label {
+	.auth-label {
 		color: $global-navigation-text-color;
 		display: table-cell;
 		font-size: 12px;
 		padding-top: 2px;
 		vertical-align: middle;
 
-		&:hover {
+		&.register {
+			padding-left: 7px;
+			padding-right: 7px;
+		}
+
+		&.sign-in {
+			padding-left: 7px;
+		}
+
+		&.sign-in:hover,
+		&.register:hover {
 			text-decoration: none;
 		}
 	}

@@ -5,7 +5,9 @@ $messages['en'] = [
 	'global-navigation-desc' => 'Wikia\'s Global Navigation',
 	'global-navigation-create-wiki' => 'Start a wikia',
 	'global-navigation-hubs-menu-more-of' => 'More $1',
-	'global-navigation-sign-in' => 'Sign in',
+	'global-navigation-or' => 'or',
+	'global-navigation-register' => 'Register',
+	'global-navigation-sign-in' => 'Sign In',
 	'global-navigation-hubs-menu' => "*http://comicshub.wikia.com/wiki/Comics_Hub|Comics|comics
 
 **#|Hot off the Press
