@@ -1,4 +1,4 @@
-<ul id="AccountNavigation" class="AccountNavigation table-cell">
+<ul id="AccountNavigation" class="AccountNavigation table-cell <?= $enableNewAuth ? 'newAuth' : '' ?> ">
 	<?php if ($enableNewAuth): ?>
 		<li class="account-navigation-item">
 			<div class="links-container<?php if ($isAnon): ?> anon <?php endif; ?>">

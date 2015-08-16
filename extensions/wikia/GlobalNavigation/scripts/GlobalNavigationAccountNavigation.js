@@ -59,7 +59,6 @@ require([
 
 	function oldAccountNav () {
 		var $userLoginDropdown = $('#UserLoginDropdown');
-		$entryPoint = $('#AccountNavigation');
 
 		dropdowns.attachDropdown($entryPoint, {
 			onOpen: onDropdownOpen,
@@ -91,9 +90,11 @@ require([
 	}
 
 	$(function () {
-		var $registerEntryPoint, $signInEntryPoint;
+		var $registerEntryPoint, $signInEntryPoint
 
-		if (true || win.wgEnableNewAuth) {
+		$entryPoint = $('#AccountNavigation');
+
+		if ($entryPoint.hasClass('newAuth')) {
 			$registerEntryPoint = $('.auth-label.register');
 			$signInEntryPoint = $('.auth-label.sign-in');
 

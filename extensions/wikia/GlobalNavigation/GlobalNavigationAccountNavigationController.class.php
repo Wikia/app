@@ -12,10 +12,10 @@ class GlobalNavigationAccountNavigationController extends WikiaController {
 	public function index() {
 		wfProfileIn( __METHOD__ );
 
-		global $wgEnableNewAuth, $wgUser;
+		global $wgUser;
 
 		$this->isAnon = $wgUser->isAnon();
-		$this->enableNewAuth = $wgEnableNewAuth;
+		$this->enableNewAuth = $this->app->wg->EnableNewAuth;
 		$this->username = $wgUser->getName();
 		$this->avatarContainerAdditionalClass = '';
 		$this->profileAvatar = '';
