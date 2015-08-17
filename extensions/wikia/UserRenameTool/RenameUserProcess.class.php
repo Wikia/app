@@ -435,15 +435,6 @@ class RenameUserProcess {
 					}
 			}
 
-			/**
-			 * Not needed, process must be resumable even in case of fatal errors, if 2 processes are run nothing bad happens
-			//if the process is already running throw an error
-			if($processing){
-				$this->addError( wfMessage( 'userrenametool-errorprocessing', $olduser->getName(), $newuser->getName())->inContentLanguage()->text() );
-				wfProfileOut(__METHOD__);
-				return false;
-			}*/
-
 			if ( $repeating ) {
 				$this->addWarning( wfMessage( 'userrenametool-warn-repeat', $this->mRequestData->oldUsername, $this->mRequestData->newUsername )->inContentLanguage()->text() );
 				// Swap the uids because the real user ID is the new user ID in this special case
