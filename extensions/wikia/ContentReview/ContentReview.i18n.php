@@ -33,7 +33,7 @@ $messages['en'] = [
 	'content-review-module-submit-exception' => 'Unfortunately, we could not submit the changes for a review due to the following error: $1.',
 	'content-review-module-submit-error' => 'Unfortunately, we could not submit the changes for a review.',
 
-	'content-review-special-list-header-wiki-id' => 'Wiki id',
+	'content-review-special-list-header-wiki-name' => 'Wiki name',
 	'content-review-special-list-header-page-name' => 'Page name',
 	'content-review-special-list-header-revision-id' => 'Revision id',
 	'content-review-special-list-header-submit-user' => 'Submit user',
@@ -41,9 +41,9 @@ $messages['en'] = [
 	'content-review-special-list-header-submit-time' => 'Submit time',
 	'content-review-special-list-header-reviewer' => 'Reviewer id',
 	'content-review-special-list-header-review-start' => 'Review start',
-	'content-review-icons-actions-diff' => 'Start review',
 	'content-review-special-list-header-actions' => 'Actions',
-
+	'content-review-icons-actions-diff' => 'Start review',
+	
 	'content-review-status-unreviewed' => 'Unreviewed',
 	'content-review-status-in-review' => 'In review',
 	'content-review-status-approved' => 'Approved',
@@ -77,4 +77,20 @@ $messages['qqq'] = [
 	'content-review-module-submit-success-update' => 'A message shown to a user in a Banner Notification if a page had an unreviewed version submitted and it got updated.',
 	'content-review-module-submit-success-exception' => 'A message shown to a user in a Banner Notification if a known error happened. $1 is the error message.',
 	'content-review-module-submit-success-error' => 'A message shown to a user in a Banner Notification if an unknown error happened.',
+
+	'content-review-special-list-header-wiki-name' => 'A column name for a Wiki name',
+	'content-review-special-list-header-page-name' => 'A column name for a Page name',
+	'content-review-special-list-header-revision-id' => 'A column name for a Revision id',
+	'content-review-special-list-header-submit-user' => 'A column name for a Submit user',
+	'content-review-special-list-header-status' => 'A column name for a Status',
+	'content-review-special-list-header-submit-time' => 'A column name for a Submit time',
+	'content-review-special-list-header-reviewer' => 'A column name for a Reviewer id',
+	'content-review-special-list-header-review-start' => 'A column name for a Review start',
+	'content-review-special-list-header-actions' => 'A column name for Actions',
+	'content-review-icons-actions-diff' => 'Button text start review',
+
+	'content-review-status-unreviewed' => 'Status Unreviewed',
+	'content-review-status-in-review' => 'Status In review',
+	'content-review-status-approved' => 'StatusApproved',
+	'content-review-status-rejected' => 'StatusRejected,'
 ];

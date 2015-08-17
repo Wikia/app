@@ -8,7 +8,7 @@
 <table class="article-table sortable content-review-special-list">
 	<thead>
 	<tr class="content-review-special-list-headers">
-		<th class="content-review-special-list-header-wiki-id"><?= wfMessage( 'content-review-special-list-header-wiki-id' )->escaped() ?></th>
+		<th class="content-review-special-list-header-wiki-name"><?= wfMessage( 'content-review-special-list-header-wiki-name' )->escaped() ?></th>
 		<th class="content-review-special-list-header-page-name"><?= wfMessage( 'content-review-special-list-header-page-name' )->escaped() ?></th>
 		<th class="content-review-special-list-header-revison-id"><?= wfMessage( 'content-review-special-list-header-revision-id' )->escaped() ?></th>
 		<th class="content-review-special-list-header-status"><?= wfMessage( 'content-review-special-list-header-status' )->escaped() ?></th>
@@ -26,13 +26,13 @@
 	<tr class="content-review-special-list-item" id="content-review-special-list-item-<?= $contentReviewId ?>">
 		<?php $title = GlobalTitle::newFromID( $content['page_id'], $content['wiki_id'] );
 		$user = User::newFromId( $content['submit_user_id'] );?>
-		<td class="content-review-special-list-item-wiki-id data-wiki-id="<?= Sanitizer::encodeAttribute( $title ) ?>">
-		<?= Linker::link( $title, htmlspecialchars( $content['wiki_id'] ), [
+		<td class="content-review-special-list-item-wiki-name data-wiki-name="<?= Sanitizer::encodeAttribute( $title ) ?>">
+		<?= Linker::link( $title, htmlspecialchars( $title->getDatabaseName() ), [
 			'class' => 'content-review-special-list-item-mediawiki-link',
 			'target' => '_blank',
 		] ); ?>
 		</td>
-		<td class="content-review-special-list-item-page-name data-page-name="<?= Sanitizer::encodeAttribute( $content['page_id'] ) ?>"><?= htmlspecialchars( $title ) ?></td>
+		<td class="content-review-special-list-item-page-name data-page-name="<?= Sanitizer::encodeAttribute( $title->getBaseText() ) ?>"><?= htmlspecialchars( $title->getBaseText() ) ?></td>
 		<td class="content-review-special-list-item-revision-id data-revision-id="<?= Sanitizer::encodeAttribute( $content['revision_id'] ) ?>"><?= htmlspecialchars( $content['revision_id'] ) ?></td>
 		<td class="content-review-special-list-item-status data-review-status="<?= Sanitizer::encodeAttribute( $status[$content['status']] ) ?>"><?= htmlspecialchars( $status[$content['status']] ) ?></td>
 		<td class="content-review-special-list-item-submit-user data-user-name="<?= Sanitizer::encodeAttribute( $user ) ?>"><?= htmlspecialchars( $user ) ?></td>
@@ -41,7 +41,7 @@
 		<td class="content-review-special-list-item-review-start data-review-start="<?= Sanitizer::encodeAttribute( $content['review_start'] ) ?>"><?= htmlspecialchars( $content['review_start'] ) ?></td>
 		<td class="content-review-special-list-item-actions clearfix">
 		<a class="content-review-special-list-item-actions-diff  wikia-button primary" href="#" title="<?= wfMessage( 'content-review-icons-actions-diff' )->escaped() ?>" data-content-review-id="<?= Sanitizer::encodeAttribute( $contentReviewId ) ?>">
-				<span class="flags-icons-special flags-icons-edit">
+				<span class="content-review-icons-special content-review-icons-diff">
 						<?= wfMessage( 'content-review-icons-actions-diff' )->escaped() ?>
 				</span>
 		</a>
