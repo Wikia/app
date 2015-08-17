@@ -37,7 +37,7 @@ define('ext.wikia.adEngine.template.modal', [
 			},
 
 			create: function (adContainer, modalVisible) {
-				win.Mercury.Modules.Ads.getInstance().openLightbox(adContainer, modalVisible);
+				win.Mercury.Modules.Ads.getInstance().createLightbox(adContainer, modalVisible);
 			}
 		},
 		oasisModalHandler = {
