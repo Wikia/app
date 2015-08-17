@@ -7,14 +7,16 @@
  * @author Maciej Brencz
  */
 
-$wgExtensionCredits['other'][] = array(
+$wgExtensionCredits['other'][] = [
 	'name' => 'Oasis Skin',
 	'version' => '1.0',
-	'author' => array('Wikia'),
-);
+	'author' => 'Maciej Brencz',
+	'descriptionmsg' => 'oasis-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/Oasis'
+];
 
 // Messages
-$wgExtensionMessagesFiles['Oasis'] = dirname(__FILE__) . '/Oasis.i18n.php';
+$wgExtensionMessagesFiles['Oasis'] = __DIR__ . '/Oasis.i18n.php';
 
 $wgExtensionFunctions[] = 'wfOasisSetup';
 
@@ -22,34 +24,18 @@ function wfOasisSetup() {
 	global $wgHooks;
 
 	// modules and services
-	$wgHooks['ArticleDeleteComplete'][] = 'PageStatsService::onArticleDeleteComplete';
 	$wgHooks['ArticleSaveComplete'][] = 'LatestActivityController::onArticleSaveComplete';
 	$wgHooks['ArticleSaveComplete'][] = 'PageHeaderController::onArticleSaveComplete';
-	$wgHooks['ArticleSaveComplete'][] = 'PageStatsService::onArticleSaveComplete';
 	$wgHooks['BlogTemplateGetResults'][] = 'BlogListingController::getResults';
 	$wgHooks['BlogsRenderBlogArticlePage'][] = 'BlogListingController::renderBlogListing';
 	$wgHooks['DoEditSectionLink'][] = 'ContentDisplayController::onDoEditSectionLink';
 	$wgHooks['EditPage::showEditForm:initial'][] = 'BodyController::onEditPageRender';
 	$wgHooks['EditPageLayoutModifyPreview'][] = 'WikiNavigationController::onEditPageLayoutModifyPreview';
 	$wgHooks['EditPageMakeGlobalVariablesScript'][] = 'WikiNavigationController::onEditPageMakeGlobalVariablesScript';
-	$wgHooks['FileDeleteComplete'][] = 'LatestPhotosController::onImageDelete';
 	$wgHooks['MakeHeadline'][] = 'ContentDisplayController::onMakeHeadline';
-	$wgHooks['MessageCacheReplace'][] = 'LatestPhotosController::onMessageCacheReplace';
 	$wgHooks['MessageCacheReplace'][] = 'WikiNavigationController::onMessageCacheReplace';
 	$wgHooks['Parser::showEditLink'][] = 'ContentDisplayController::onShowEditLink';
-	$wgHooks['UploadComplete'][] = 'LatestPhotosController::onImageUploadComplete';
-	$wgHooks['FileUpload'][] = 'LatestPhotosController::onImageUpload';
-	$wgHooks['SpecialMovepageAfterMove'][] = 'LatestPhotosController::onImageRenameCompleated';
 	$wgHooks['WikiFactoryChanged'][] = 'WikiNavigationController::onWikiFactoryChanged';
-
-	// confirmations
-	$wgHooks['ArticleDeleteComplete'][] = 'NotificationsController::addPageDeletedConfirmation';
-	$wgHooks['ArticleUndelete'][] = 'NotificationsController::addPageUndeletedConfirmation';
-	#$wgHooks['EditPageSuccessfulSave'][] = 'NotificationsController::addSaveConfirmation'; // BugId:10129
-	$wgHooks['SkinTemplatePageBeforeUserMsg'][] = 'NotificationsController::addFacebookConnectConfirmation';
-	$wgHooks['SpecialMovepageAfterMove'][] = 'NotificationsController::addPageMovedConfirmation';
-	$wgHooks['SpecialPreferencesOnRender'][] = 'NotificationsController::addPreferencesConfirmation';
-	$wgHooks['UserLogoutComplete'][] = 'NotificationsController::addLogOutConfirmation';
 
 	// notifications
 	$wgHooks['AchievementsNotification'][] = 'NotificationsController::addBadgeNotification';
@@ -59,20 +45,7 @@ function wfOasisSetup() {
 	$wgHooks['SkinTemplateOutputPageBeforeExec'][] = 'NotificationsController::addMessageNotification';
 
 	// misc
-	$wgHooks['UploadVerification'][] = 'Oasis_UploadVerification';
-	$wgHooks['ArticleViewHeader'][]  = 'UserPagesHeaderController::saveFacebookConnectProfile';
-	$wgHooks['ArticlePurge'][] = 'ArticleService::onArticlePurge';
-	$wgHooks['ArticleSaveComplete'][] = 'ArticleService::onArticleSaveComplete';
-	$wgHooks['SkinCopyrightFooter'][] = 'CorporateFooterController::onSkinCopyrightFooter';
 	$wgHooks['MakeGlobalVariablesScript'][] = 'OasisController::onMakeGlobalVariablesScript';
-
-	/*
-	 * TODO remove after Global Header ABtesting
-	 */
-	$wgHooks['WikiaSkinTopScripts'][] = 'OasisController::onWikiaSkinTopScripts';
-	/*
-	 *  END TODO
-	 */
 
 	// support "noexternals" URL param
 	global $wgNoExternals, $wgRequest;
@@ -89,22 +62,12 @@ function wfOasisSetup() {
 	));
 
 	// Generic messages that can be used by all extensions such as error messages
-	$jsMessages->registerPackage('Oasis-generic', array(
+	$jsMessages->registerPackage( 'Oasis-generic', [
 		'oasis-generic-error',
-	));
-	$jsMessages->enqueuePackage('Oasis-generic', JSMessages::EXTERNAL);
+	] );
+	$jsMessages->enqueuePackage( 'Oasis-generic', JSMessages::EXTERNAL );
 }
 
-// TODO: why do we have this code here? It should be placed in ThemeDesigner
-function Oasis_UploadVerification($destName, $tempPath, &$error) {
-	$destName = strtolower($destName);
-	if($destName == 'wiki-wordmark.png' || $destName == 'wiki-background') {
-		// BugId:983
-		$error = wfMsg('themedesigner-manual-upload-error');
-		return false;
-	}
-	return true;
-}
 
 // Mapping of themename to an array of key/value pairs to send to SASS.
 // Sean says: Since SASS is used to generate the CSS files, this config is all that's needed for the themes.

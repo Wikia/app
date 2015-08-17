@@ -32,7 +32,6 @@ $dir = dirname( __FILE__ ) . '/';
 $wgExtensionCredits['other'][] = array(
 	'path'              => __FILE__,
 	'name'              => 'HAWelcome',
-	'description'       => 'Sends a welcome message to users after their first edits.',
 	'descriptionmsg'    => 'welcome-description',
 	'version'           => 1009,
 	'author'            => array(
@@ -45,11 +44,10 @@ $wgExtensionCredits['other'][] = array(
 
 $wgAvailableRights[] = 'welcomeexempt';
 $wgGroupPermissions['bot']['welcomeexempt'] = true;
-
+$wgGroupPermissions['staff']['welcomeexempt'] = true;
 
 $wgExtensionMessagesFiles[ 'HAWelcome' ] = $dir . '/HAWelcome.i18n.php';
 
-$wgAutoloadClasses['HAWelcomeJob'] =  $dir . 'HAWelcomeJob.php' ;
 $wgAutoloadClasses['HAWelcomeHooks'] =  $dir . 'HAWelcomeHooks.php' ;
 $wgAutoloadClasses['HAWelcomeTask'] =  $dir . 'HAWelcomeTask.php' ;
 $wgAutoloadClasses['HAWelcomeTaskHooks'] =  $dir . 'HAWelcomeTaskHooks.php' ;
@@ -69,9 +67,3 @@ $wgHooks['UserRights'][] = 'HAWelcomeHooks::onUserRightsChange';
  * @see http://www.mediawiki.org/wiki/Manual:RunJobs.php
  */
 define( 'HAWELCOME_JOB_IDENTIFIER', 'HAWelcome' );
-
-/**
- * @global Array Map jobs to their handling classes.
- * @see http://www.mediawiki.org/wiki/Manual:$wgJobClasses
- */
-$wgJobClasses[HAWELCOME_JOB_IDENTIFIER] = 'HAWelcomeJob';

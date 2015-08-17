@@ -56,7 +56,7 @@ class InstantGlobalsModule extends ResourceLoaderModule {
 	 *
 	 * @return int
 	 */
-	public function getModifiedTime() {
+	public function getModifiedTime( ResourceLoaderContext $context ) {
 		return time();
 	}
 

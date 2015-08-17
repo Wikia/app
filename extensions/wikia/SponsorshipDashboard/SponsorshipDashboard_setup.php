@@ -17,6 +17,7 @@ $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'SponsorshipDashboard',
 	'descriptionmsg' => 'sponsorshipdashboard-desc',
 	'author' => 'Jakub Kurcek',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/SponsorshipDashboard'
 );
 
 $dir = dirname(__FILE__) . '/';

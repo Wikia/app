@@ -10,15 +10,18 @@
  */
 $wgExtensionCredits['parserhook'][] = array(
   'name'	=> 'WidgetTag',
-  'url'		=> 'http://help.wikia.com/wiki/Help:WidgetTag',
+  'url'		=> 'https://github.com/Wikia/app/tree/dev/extensions/wikia/WidgetTag',
   'author'	=> 'Maciej Brencz',
-  'description'	=> 'Adds &lt;widget&gt; tag for dynamic embedding of Wikia widgets',
+  'description'	=> 'widgettag-desc',
   'version'	=> 0.2
 );
 
 $wgHooks['ParserFirstCallInit'][] = 'efWidgetTagSetup';
 
 $wgAutoloadClasses['WidgetTagRenderer'] = dirname(__FILE__) . '/WidgetTagRenderer.class.php';
+
+//i18n
+$wgExtensionMessagesFiles['WidgetTag'] = __DIR__ . '/WidgetTag.i18n.php';
 
 /**
  * Setup parser hook

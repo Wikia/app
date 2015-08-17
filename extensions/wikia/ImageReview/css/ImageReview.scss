@@ -1,4 +1,4 @@
-@import "../../../../skins/oasis/css/mixins/clearfix";
+@import "skins/shared/mixins/clearfix";
 
 #ImageReviewForm {
 	margin: 1em 0;
@@ -92,8 +92,6 @@
 header .tally {
 	float: right;
 	margin-left: 20px;
-#	display: inline;
-#	border-right: 1px solid #ccc;
 
 	span {
 		float: left;

@@ -1,7 +1,8 @@
-@import "../core/color";
+@import "skins/shared/color";
 @import "../core/layout";
 
 .GameStarLogo {
+	display: block;
 	float: right;
 	margin: -3px -132px 0 0;
 	width: 132px;

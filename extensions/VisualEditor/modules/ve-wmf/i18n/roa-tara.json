@@ -1,7 +1,9 @@
 {
 	"@metadata": {
 		"authors": [
-			"Joetaras"
+			"Joetaras",
+			"Muhammad Shuaib",
+			"Jdforrester"
 		]
 	},
 	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]]",

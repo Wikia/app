@@ -1,4 +1,4 @@
-@import "skins/oasis/css/core/color";
+@import "skins/shared/color";
 @import "skins/oasis/css/core/layout";
 
 .errorbox, .successbox {
@@ -52,7 +52,6 @@ img.contactCaptch {
 		/* VOLDEV-56: Don't use monospaced font */
 		font: inherit;
 		-moz-box-sizing: border-box; 
-		-webkit-box-sizing: border-box; 
 		box-sizing: border-box;
 		width: 100%;
 		height: 15em;
@@ -61,9 +60,6 @@ img.contactCaptch {
 			width: 500px;
 			height: 3em;
 		}
-	}
-	.additionalScreenShot {
-		display: none;
 	}
 }
 
@@ -75,7 +71,7 @@ img.contactCaptch {
 	width: 675px;
 }
 
-@if ( $responsive-layout-enabled ) {
+@if ( $responsive-or-breakpoints-layout-enabled ) {
 	.special-contact-picker {
 		width: 100%;
 	}

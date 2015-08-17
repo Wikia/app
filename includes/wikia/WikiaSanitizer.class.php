@@ -19,4 +19,25 @@ class WikiaSanitizer {
 		return trim( preg_replace( '/^[\pZ\pC]+|[\pZ\pC]+$/u', '', $string ) );
 	}
 
+	/**
+	 * @brief Simply adds the http:// part if no scheme is included
+	 *
+	 * @param String $string a string which is supposed to be an URL address
+	 *
+	 * @return String
+	 */
+	public static function prepUrl( $string ) {
+		if( $string === 'http://' || $string === '' ) {
+			return '';
+		}
+
+		$url = parse_url($string);
+
+		if( !$string || !isset( $url['scheme'] ) ) {
+			return 'http://' . $string;
+		}
+
+		return $string;
+	}
+
 }

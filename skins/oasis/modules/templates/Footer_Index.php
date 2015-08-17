@@ -1,9 +1,4 @@
 <footer id="WikiaFooter" class="WikiaFooter <?= $showToolbar ? '' : 'notoolbar' ?>">
-	<?php
-		if (!WikiaPageType::isMainPage()) {
-			echo F::app()->renderView('Ad', 'Index', array('slotName' => 'LEFT_SKYSCRAPER_3'));
-		}
-	?>
 	<?php if( $showToolbar ): ?>
 		<div class="toolbar">
 			<?= F::app()->renderView('Notifications', 'Index'); ?>
@@ -17,5 +12,7 @@
 		<?= F::app()->renderView('Notifications', 'Index'); ?>
 	<?php endif; ?>
 
-	<?= F::app()->renderView('Spotlights', 'Index'); ?>
+	<? if ( $wg->EnableOpenXSPC ) : ?>
+		<?= F::app()->renderView('Spotlights', 'Index'); ?>
+	<? endif; ?>
 </footer>

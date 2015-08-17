@@ -15,10 +15,13 @@
  * Note: edit user interface and cache support functions have been
  * moved to separate EditPage and HTMLFileCache classes.
  *
- * @internal documentation reviewed 15 Mar 2010
+ * internal documentation reviewed 15 Mar 2010
  *
  * //Wikia Change Start - helping PHP lint
  * @property Title mTitle
+ * @method exists
+ * @method getID
+ * @method getRedirectTarget
  * //Wikia Change End
  */
 class Article extends Page {
@@ -101,8 +104,8 @@ class Article extends Page {
 	/**
 	 * Create an Article object of the appropriate class for the given page.
 	 *
-	 * @param $title Title
-	 * @param $context IContextSource
+	 * @param Title $title
+	 * @param IContextSource $context
 	 * @return Article object
 	 */
 	public static function newFromTitle( $title, IContextSource $context ) {
@@ -453,6 +456,7 @@ class Article extends Page {
 		$parserCache = ParserCache::singleton();
 
 		$parserOptions = $this->getParserOptions();
+
 		# Render printable version, use printable version cache
 		if ( $wgOut->isPrintable() ) {
 			$parserOptions->setIsPrintable( true );
@@ -679,6 +683,10 @@ class Article extends Page {
 		# Adjust title for main page & pages with displaytitle
 		if ( $pOutput ) {
 			$this->adjustDisplayTitle( $pOutput );
+
+			if ($pOutput->getText() == '') {
+				\Wikia\Logger\WikiaLogger::instance()->error( 'PLATFORM-1212 - empty parser output' );
+			}
 		}
 
 		# For the main page, overwrite the <title> element with the con-
@@ -725,7 +733,7 @@ class Article extends Page {
 
 		$diff = $wgRequest->getVal( 'diff' );
 		$rcid = $wgRequest->getVal( 'rcid' );
-		$diffOnly = $wgRequest->getBool( 'diffonly', $wgUser->getOption( 'diffonly' ) );
+		$diffOnly = $wgRequest->getBool( 'diffonly', $wgUser->getGlobalPreference( 'diffonly' ) );
 		$purge = $wgRequest->getVal( 'action' ) == 'purge';
 		$unhide = $wgRequest->getInt( 'unhide' ) == 1;
 		$oldid = $this->getOldID();
@@ -1494,7 +1502,7 @@ class Article extends Page {
 		} else {
 			$suppress = '';
 		}
-		$checkWatch = $user->getBoolOption( 'watchdeletion' ) || $this->getTitle()->userIsWatching();
+		$checkWatch = (bool)$user->getGlobalPreference( 'watchdeletion' ) || $this->getTitle()->userIsWatching();
 
 		$form = Xml::openElement( 'form', array( 'method' => 'post',
 			'action' => $this->getTitle()->getLocalURL( 'action=delete' ), 'id' => 'deleteconfirm' ) ) .

@@ -49,7 +49,8 @@ class LoginForm extends SpecialPage {
 	var $mType, $mReason, $mName, $mRealName;
 	var $mAbortLoginErrorMsg = 'login-abort-generic';
 	private $mLoaded = false;
-	var $mMarketingOptIn, $wpBirthYear, $wpBirthMonth, $wpBirthDay, $wpMsgPrefix;
+	var $mMarketingOptIn, $mRegistrationCountry;
+	var $wpBirthYear, $wpBirthMonth, $wpBirthDay, $wpMsgPrefix;
 	var $wpUserLoginExt, $wpUserBirthDay;
 
 	/**
@@ -75,7 +76,7 @@ class LoginForm extends SpecialPage {
 	 * Loader
 	 */
 	function load() {
-		global $wgAuth, $wgHiddenPrefs, $wgEnableEmail, $wgRedirectOnLogin, $wgEnableUserLoginExt;
+		global $wgAuth, $wgHiddenPrefs, $wgEnableEmail, $wgRedirectOnLogin;
 
 		if ( $this->mLoaded ) {
 			return;
@@ -91,6 +92,21 @@ class LoginForm extends SpecialPage {
 		$this->mType = $request->getText( 'type' );
 		$this->mUsername = $request->getText( 'wpName' );
 		$this->mPassword = $request->getText( 'wpPassword' );
+
+		global $wgEnableHeliosExt;
+		if ( $wgEnableHeliosExt ) {
+			// The line below duplicates what WebRequest::__construct() does. The reason for that
+			// is that raw and unprocessed data are required here for debugging purposes. This will
+			// provided the information whether the original user input is somehow malformed
+			// before it is passed to hashing methods.
+			$aData = $_POST + $_GET;
+			if ( isset( $aData['wpPassword'] ) ) {
+				\Wikia\Helios\User::debugLogin( $aData['wpPassword'], __METHOD__ . '-raw' );
+			}
+			unset( $aData );
+			\Wikia\Helios\User::debugLogin( $this->mPassword, __METHOD__ . '-getText' );
+		}
+
 		$this->mRetype = $request->getText( 'wpRetype' );
 		$this->mDomain = $request->getText( 'wpDomain' );
 		$this->mReason = $request->getText( 'wpReason' );
@@ -108,6 +124,7 @@ class LoginForm extends SpecialPage {
 		$this->mRemember = $request->getCheck( 'wpRemember' );
 		$this->mStickHTTPS = $request->getCheck( 'wpStickHTTPS' );
 		$this->mMarketingOptIn = $request->getCheck( 'wpMarketingOptIn' );
+		$this->mRegistrationCountry = $request->getVal( 'wpRegistrationCountry' );
 		$this->mLanguage = $request->getText( 'uselang' );
 		$this->mSkipCookieCheck = $request->getCheck( 'wpSkipCookieCheck' );
 		$this->mToken = ( $this->mType == 'signup' ) ? $request->getVal( 'wpCreateaccountToken' ) : $request->getVal( 'wpLoginToken' );
@@ -142,13 +159,8 @@ class LoginForm extends SpecialPage {
 		}
 		$wgAuth->setDomain( $this->mDomain );
 
-		if ( empty( $wgEnableUserLoginExt ) ) {
-			$this->wpMsgPrefix = '';
-			$this->wpUserLoginExt = false;
-		} else {
-			$this->wpMsgPrefix = 'userlogin-error-';
-			$this->wpUserLoginExt = true;
-		}
+		$this->wpMsgPrefix = 'userlogin-error-';
+		$this->wpUserLoginExt = true;
 
 		$title = Title::newFromText($this->mReturnTo);
 		if (!empty($title))
@@ -239,14 +251,14 @@ class LoginForm extends SpecialPage {
 
 		# Create the account and abort if there's a problem doing so
 		$u = $this->addNewAccountInternal();
-		if( $u == null ) {
-			return;
+		if( ! $u  ) {
+			return false;
 		}
 
 		# If we showed up language selection links, and one was in use, be
 		# smart (and sensible) and save that language as the user's preference
 		if( $wgLoginLanguageSelector && $this->mLanguage ) {
-			$u->setOption( 'language', $this->mLanguage );
+			$u->setGlobalPreference( 'language', $this->mLanguage );
 		}
 
 		$out = $this->getOutput();
@@ -348,6 +360,11 @@ class LoginForm extends SpecialPage {
 	 * @private
 	 * Wikia change - add new param ($errParam) to function mainLoginForm()
 	 * Wikia change - add prefix to message key for User Login Ext
+	 *
+	 * @return bool|User User on success; false otherwise.
+	 *
+	 * @throws ReadOnlyError
+	 * @throws PermissionsError
 	 */
 	function addNewAccountInternal() {
 		global $wgAuth, $wgMemc, $wgAccountCreationThrottle,
@@ -504,7 +521,7 @@ class LoginForm extends SpecialPage {
 				if ( !$value ) {
 					$wgMemc->set( $key, 0, 86400 );
 				}
-				if ( $value >= $wgAccountCreationThrottle ) {
+				if ( !F::app()->wg->DevelEnvironment && $value >= $wgAccountCreationThrottle ) {
 					$this->throttleHit( $wgAccountCreationThrottle );
 					return false;
 				}
@@ -519,17 +536,12 @@ class LoginForm extends SpecialPage {
 
 		self::clearCreateaccountToken();
 		$u->mBirthDate = date( 'Y-m-d', $this->wpUserBirthDay );
-		$u = $this->initUser( $u, false );
-		$user_id = $u->getID();
-		if( !empty($user_id) ) {
-			$dbw = wfGetDB(DB_MASTER);
-			$dbw->update(
-				'user',
-				array( 'user_birthdate' => date( 'Y-m-d', $this->wpUserBirthDay ) ),
-				array( 'user_id' => $user_id ),
-				__METHOD__
-			);
+
+		if ( ! $this->initUser( $u, false ) ) {
+			$this->mainLoginForm( $this->msg( $this->wpMsgPrefix . 'externaldberror' )->text() );
+			return false;
 		}
+
 		return $u;
 	}
 
@@ -539,18 +551,20 @@ class LoginForm extends SpecialPage {
 	 *
 	 * @param $u User object.
 	 * @param $autocreate boolean -- true if this is an autocreation via auth plugin
-	 * @return User object.
+	 * @return boolean true on success; false otherwise
 	 * @private
 	 */
-	function initUser( $u, $autocreate ) {
+	function initUser( User &$u, $autocreate ) {
 		global $wgAuth, $wgExternalAuthType;
 
 		if ( $wgExternalAuthType ) {
-			$u = ExternalUser_Wikia::addUser( $u, $this->mPassword, $this->mEmail, $this->mRealName );
-			if ( is_object( $u ) ) {
+			if ( ExternalUser_Wikia::addUser( $u, $this->mPassword, $this->mEmail, $this->mRealName ) ) {
 				$this->mExtUser = ExternalUser_Wikia::newFromName( $this->mUsername );
+			} else {
+				// Terminate on failure.
+				return false;
 			}
-		} else{
+		} else {
 			$u->addToDatabase();
 		}
 
@@ -572,16 +586,19 @@ class LoginForm extends SpecialPage {
 			}
 		}
 
-		$u->setOption( 'rememberpassword', $this->mRemember ? 1 : 0 );
-		$u->setOption( 'marketingallowed', $this->mMarketingOptIn ? 1 : 0 );
-		$u->setOption('skinoverwrite', 1);
+		$u->setGlobalAttribute( 'registrationCountry', $this->mRegistrationCountry );
+		$u->setGlobalPreferences([
+			'skinoverwrite' => 1,
+			'rememberpassword' => $this->mRemember ? 1 : 0,
+			'marketingallowed' => $this->mMarketingOptIn ? 1 : 0,
+		]);
 		$u->saveSettings();
 
 		# Update user count
 		$ssUpdate = new SiteStatsUpdate( 0, 0, 0, 0, 1 );
 		$ssUpdate->doUpdate();
 
-		return $u;
+		return true;
 	}
 
 	/**
@@ -651,14 +668,29 @@ class LoginForm extends SpecialPage {
 
 		$this->mExtUser = ExternalUser_Wikia::newFromName( $this->mUsername );
 
-		global $wgExternalAuthType, $wgAutocreatePolicy;
-		if ( $wgExternalAuthType && $wgAutocreatePolicy != 'never'
+		global $wgEnableHeliosExt;
+		if ( $wgEnableHeliosExt ) {
+			\Wikia\Helios\User::debugLogin( $this->mPassword, __METHOD__ );
+		}
+
+		global $wgExternalAuthType;
+		if ( $wgExternalAuthType
 		&& is_object( $this->mExtUser )
 		&& $this->mExtUser->authenticate( $this->mPassword ) ) {
 			# The external user and local user have the same name and
 			# password, so we assume they're the same.
 			$this->mExtUser->linkToLocal( $this->mExtUser->getId() );
 		}
+
+		// Wikia change - begin - author: @wladek
+		if ( $wgExternalAuthType
+			&& is_object( $this->mExtUser )
+			&& $this->mExtUser->getLastAuthenticationError() )
+		{
+			$this->mAbortLoginErrorMsg = $this->mExtUser->getLastAuthenticationError();
+			return self::ABORTED;
+		}
+		// Wikia change - end
 
 		# TODO: Allow some magic here for invalid external names, e.g., let the
 		# user choose a different wiki name.
@@ -684,29 +716,13 @@ class LoginForm extends SpecialPage {
 		}
 
 		global $wgBlockDisablesLogin;
-		if ( !$u->checkPassword( $this->mPassword ) ) {
+		$abortedMessageKey = null;
+		if ( !$u->checkPassword( $this->mPassword, $abortedMessageKey ) ) {
+			if ( $abortedMessageKey ) {
+				$this->mAbortLoginErrorMsg = $abortedMessageKey;
+				return self::ABORTED;
+			}
 			if( $u->checkTemporaryPassword( $this->mPassword ) ) {
-				// The e-mailed temporary password should not be used for actu-
-				// al logins; that's a very sloppy habit, and insecure if an
-				// attacker has a few seconds to click "search" on someone's o-
-				// pen mail reader.
-				//
-				// Allow it to be used only to reset the password a single time
-				// to a new value, which won't be in the user's e-mail ar-
-				// chives.
-				//
-				// For backwards compatibility, we'll still recognize it at the
-				// login form to minimize surprises for people who have been
-				// logging in with a temporary password for some time.
-				//
-				// As a side-effect, we can authenticate the user's e-mail ad-
-				// dress if it's not already done, since the temporary password
-				// was sent via e-mail.
-				if( !$u->isEmailConfirmed() ) {
-					$u->confirmEmail();
-					$u->saveSettings();
-				}
-
 				// At this point we just return an appropriate code/ indicating
 				// that the UI should show a password reset form; bot inter-
 				// faces etc will probably just fail cleanly here.
@@ -714,31 +730,74 @@ class LoginForm extends SpecialPage {
 			} else {
 				$retval = ( $this->mPassword  == '' ) ? self::EMPTY_PASS : self::WRONG_PASS;
 			}
+		} elseif ( $wgEnableHeliosExt && Wikia\Helios\User::wasResetPassAuth( $this->mUsername, $this->mPassword ) ) {
+			$retval = self::RESET_PASS;
 		} elseif ( $wgBlockDisablesLogin && $u->isBlocked() ) {
 			// If we've enabled it, make it so that a blocked user cannot login
 			$retval = self::USER_BLOCKED;
 		} else {
-			$wgAuth->updateUser( $u );
-			$wgUser = $u;
-			// This should set it for OutputPage and the Skin
-			// which is needed or the personal links will be
-			// wrong.
-			$this->getContext()->setUser( $u );
-
-			// Please reset throttle for successful logins, thanks!
-			if ( $throttleCount ) {
-				self::clearLoginThrottle( $this->mUsername );
-			}
-
-			if ( $isAutoCreated ) {
-				// Must be run after $wgUser is set, for correct new user log
-				wfRunHooks( 'AuthPluginAutoCreate', array( $u ) );
-			}
-
 			$retval = self::SUCCESS;
 		}
+
+		if ( in_array( $retval, [ self::SUCCESS, self::RESET_PASS ] ) ) {
+			wfRunHooks( 'LoginSuccessModifyRetval', [ $u->getName(), $this->mPassword, &$retval ] );
+		}
+
+		switch ($retval) {
+			case self::SUCCESS:
+				$this->onAuthenticateUserDataSuccess($u, $isAutoCreated, $throttleCount);
+				break;
+			case self::RESET_PASS:
+				$this->onAuthenticateUserDataResetPass($u);
+				break;
+		}
+
 		wfRunHooks( 'LoginAuthenticateAudit', array( $u, $this->mPassword, $retval ) );
 		return $retval;
+	}
+
+	private function onAuthenticateUserDataSuccess(User $u, $isAutoCreated, $throttleCount) {
+		global $wgAuth, $wgUser;
+
+		$wgAuth->updateUser( $u );
+		$wgUser = $u;
+		// This should set it for OutputPage and the Skin
+		// which is needed or the personal links will be
+		// wrong.
+		$this->getContext()->setUser( $u );
+
+		// Please reset throttle for successful logins, thanks!
+		if ( $throttleCount ) {
+			self::clearLoginThrottle( $this->mUsername );
+		}
+
+		if ( $isAutoCreated ) {
+			// Must be run after $wgUser is set, for correct new user log
+			wfRunHooks( 'AuthPluginAutoCreate', array( $u ) );
+		}
+	}
+
+	private function onAuthenticateUserDataResetPass(User $u) {
+		// The e-mailed temporary password should not be used for actu-
+		// al logins; that's a very sloppy habit, and insecure if an
+		// attacker has a few seconds to click "search" on someone's o-
+		// pen mail reader.
+		//
+		// Allow it to be used only to reset the password a single time
+		// to a new value, which won't be in the user's e-mail ar-
+		// chives.
+		//
+		// For backwards compatibility, we'll still recognize it at the
+		// login form to minimize surprises for people who have been
+		// logging in with a temporary password for some time.
+		//
+		// As a side-effect, we can authenticate the user's e-mail ad-
+		// dress if it's not already done, since the temporary password
+		// was sent via e-mail.
+		if( !$u->isEmailConfirmed() ) {
+			$u->confirmEmail();
+			$u->saveSettings();
+		}
 	}
 
 	/**
@@ -792,7 +851,7 @@ class LoginForm extends SpecialPage {
 	 * @return integer Status code
 	 */
 	function attemptAutoCreate( $user ) {
-		global $wgAuth, $wgAutocreatePolicy;
+		global $wgAuth;
 
 		if ( $this->getUser()->isBlockedFromCreateAccount() ) {
 			wfDebug( __METHOD__ . ": user is blocked from account creation\n" );
@@ -805,11 +864,6 @@ class LoginForm extends SpecialPage {
 		 * yet logged in.
 		 */
 		if ( $this->mExtUser ) {
-			# mExtUser is neither null nor false, so use the new ExternalAuth
-			# system.
-			if ( $wgAutocreatePolicy == 'never' ) {
-				return self::NOT_EXISTS;
-			}
 			if ( !$this->mExtUser->authenticate( $this->mPassword ) ) {
 				return self::WRONG_PLUGIN_PASS;
 			}
@@ -848,8 +902,8 @@ class LoginForm extends SpecialPage {
 			case self::SUCCESS:
 				# We've verified now, update the real record
 				$user = $this->getUser();
-				if( (bool)$this->mRemember != (bool)$user->getOption( 'rememberpassword' ) ) {
-					$user->setOption( 'rememberpassword', $this->mRemember ? 1 : 0 );
+				if( (bool)$this->mRemember != (bool)$user->getGlobalPreference( 'rememberpassword' ) ) {
+					$user->setGlobalPreference( 'rememberpassword', $this->mRemember ? 1 : 0 );
 					$user->saveSettings();
 				} else {
 					$user->invalidateCache();
@@ -866,7 +920,7 @@ class LoginForm extends SpecialPage {
 					/* Replace the language object to provide user interface in
 					 * correct language immediately on this first page load.
 					 */
-					$code = $request->getVal( 'uselang', $user->getOption( 'language' ) );
+					$code = $request->getVal( 'uselang', $user->getGlobalPreference( 'language' ) );
 					$userLang = Language::factory( $code );
 					$wgLang = $userLang;
 					$this->getContext()->setLanguage( $userLang );
@@ -1050,14 +1104,7 @@ class LoginForm extends SpecialPage {
 
 		$np = $u->randomPassword();
 		$u->setNewpassword( $np, $throttle );
-
-		/* Wikia change begin */
-		//@TODO get rid of TempUser handling when it will be globally disabled
-		$tempUser = null;
-		wfRunHooks( 'MailPasswordTempUser' , array( &$u, &$tempUser ) );
-		if ( empty($tempUser) ) {
-			$u->saveSettings();
-		}
+		$u->saveSettings();
 
 		/* Wikia change begin - @author: Uberfuzzy */
 		/* use noReply address (if available) */
@@ -1067,15 +1114,15 @@ class LoginForm extends SpecialPage {
 		}
 		/* Wikia change begin - @author: Marooned */
 		/* HTML e-mails functionality */
+		$userLanguage = $u->getGlobalPreference( 'language' );
 		$priority = 2;  // Password emails are higher than default priority of 0 and confirmation emails priority of 1
 		if (empty($wgEnableRichEmails)) {
-			$userLanguage = $u->getOption( 'language' );
 			$m = $this->msg( $emailText, $ip, $u->getName(), $np, $wgServer . $wgScript,
 				round( $wgNewPasswordExpiry / 86400 ) )->inLanguage( $userLanguage )->text();
 			$result = $u->sendMail( $this->msg( $emailTitle )->inLanguage( $userLanguage )->text(), $m, null, $nr, 'TemporaryPassword', $priority );
 		} else {
-			$wantHTML = $u->isAnon() || $u->getOption('htmlemails');
-			list($m, $mHTML) = wfMsgHTMLwithLanguage($emailText, $u->getOption('language'), array( 'parsemag' ), array($ip, $u->getName(), $np, $wgServer . $wgScript, round( $wgNewPasswordExpiry / 86400 )), $wantHTML);
+			$wantHTML = $u->isAnon() || $u->getGlobalPreference('htmlemails');
+			list($m, $mHTML) = wfMsgHTMLwithLanguage($emailText, $u->getGlobalPreference('language'), array( 'parsemag' ), array($ip, $u->getName(), $np, $wgServer . $wgScript, round( $wgNewPasswordExpiry / 86400 )), $wantHTML);
 			if ( !empty($emailTextTemplate) && $wantHTML ) {
 				$emailParams = array(
 					'$USERNAME' => $u->getName(),
@@ -1083,7 +1130,8 @@ class LoginForm extends SpecialPage {
 				);
 				$mHTML = strtr($emailTextTemplate, $emailParams);
 			}
-			$result = $u->sendMail( $this->msg( $emailTitle )->text(), $m, null, $nr, 'TemporaryPassword', $mHTML, $priority );
+			$result = $u->sendMail( $this->msg( $emailTitle )->inLanguage( $userLanguage )->text(), $m, null,
+				$nr, 'TemporaryPassword', $mHTML, $priority );
 		}
 
 		return $result;
@@ -1307,7 +1355,7 @@ class LoginForm extends SpecialPage {
 		$template->set( 'resetlink', $resetLink );
 		$template->set( 'canremember', ( $wgCookieExpiration > 0 ) );
 		$template->set( 'usereason', $user->isLoggedIn() );
-		$template->set( 'remember', $user->getOption( 'rememberpassword' ) || $this->mRemember );
+		$template->set( 'remember', $user->getGlobalPreference( 'rememberpassword' ) || $this->mRemember );
 		$template->set( 'cansecurelogin', ( $wgSecureLogin === true ) );
 		$template->set( 'stickHTTPS', $this->mStickHTTPS );
 
@@ -1449,17 +1497,12 @@ class LoginForm extends SpecialPage {
 	 * Renew the user's session id, using strong entropy
 	 */
 	private function renewSessionId() {
-		if ( wfCheckEntropy() ) {
-			session_regenerate_id( false );
-		} else {
-			//If we don't trust PHP's entropy, we have to replace the session manually
-			$tmp = $_SESSION;
-			session_unset();
-			session_write_close();
-			session_id( MWCryptRand::generateHex( 32 ) );
-			session_start();
-			$_SESSION = $tmp;
+		global $wgSecureLogin, $wgCookieSecure;
+		if ( $wgSecureLogin && !$this->mStickHTTPS ) {
+			$wgCookieSecure = false;
 		}
+
+		wfResetSessionID();
 	}
 
 	/**

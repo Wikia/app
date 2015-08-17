@@ -10,7 +10,7 @@ abstract class Page {}
  * Some fields are public only for backwards-compatibility. Use accessors.
  * In the past, this class was part of Article.php and everything was public.
  *
- * @internal documentation reviewed 15 Mar 2010
+ * internal documentation reviewed 15 Mar 2010
  */
 class WikiPage extends Page {
 	// doDeleteArticleReal() return values. Values less than zero indicate fatal errors,
@@ -590,10 +590,12 @@ class WikiPage extends Page {
 	 *
 	 * The target will be fetched from the redirect table if possible.
 	 * If this page doesn't have an entry there, call insertRedirect()
+	 *
+	 * @param int $flags
 	 * @return Title|mixed object, or null if this page is not a redirect
 	 */
-	public function getRedirectTarget() {
-		if ( !$this->mTitle->isRedirect() ) {
+	public function getRedirectTarget( $flags = 0 ) {
+		if ( !$this->mTitle->isRedirect( $flags ) ) {
 			return null;
 		}
 
@@ -602,7 +604,8 @@ class WikiPage extends Page {
 		}
 
 		# Query the redirect table
-		$dbr = wfGetDB( DB_SLAVE );
+		$useMasterDb = $flags & Title::GAID_FOR_UPDATE;
+		$dbr = $useMasterDb ? wfGetDB( DB_MASTER ) : wfGetDB( DB_SLAVE );
 		$row = $dbr->selectRow( 'redirect',
 			array( 'rd_namespace', 'rd_title', 'rd_fragment', 'rd_interwiki' ),
 			array( 'rd_from' => $this->getId() ),
@@ -837,10 +840,10 @@ class WikiPage extends Page {
 	 *               get the current revision (default value)
 	 * @return ParserOutput or false if the revision was not found
 	 */
-	public function getParserOutput( ParserOptions $parserOptions, $oldid = null ) {
+	public function getParserOutput( ParserOptions $parserOptions, $oldid = null, $fromCache = true ) {
 		wfProfileIn( __METHOD__ );
 
-		$useParserCache = $this->isParserCacheUsed( $parserOptions, $oldid );
+		$useParserCache = $this->isParserCacheUsed( $parserOptions, $oldid ) && $fromCache;
 		wfDebug( __METHOD__ . ': using parser cache: ' . ( $useParserCache ? 'yes' : 'no' ) . "\n" );
 		if ( $parserOptions->getStubThreshold() ) {
 			wfIncrStats( 'pcache_miss_stub' );
@@ -1245,7 +1248,8 @@ class WikiPage extends Page {
 	 *
 	 *  Compatibility note: this function previously returned a boolean value indicating success/failure
 	 */
-	public function doEdit( $text, $summary, $flags = 0, $baseRevId = false, $user = null ) {
+	public function doEdit( $text, $summary, $flags = 0, $baseRevId = false, $user = null,
+							$forcePatrolled = false) {
 		global $wgUser, $wgDBtransactions, $wgUseAutomaticEditSummaries;
 
 		# Low-level sanity check
@@ -1375,7 +1379,7 @@ class WikiPage extends Page {
 						# Add RC row to the DB
 						$rc = RecentChange::notifyEdit( $now, $this->mTitle, $isminor, $user, $summary,
 							$oldid, $this->getTimestamp(), $bot, '', $oldsize, $newsize,
-							$revisionId, $patrolled
+							$revisionId, $patrolled || $forcePatrolled
 						);
 
 						# Log auto-patrolled edits
@@ -1461,7 +1465,7 @@ class WikiPage extends Page {
 					$this->mTitle->getUserPermissionsErrors( 'autopatrol', $user ) );
 				# Add RC row to the DB
 				$rc = RecentChange::notifyNew( $now, $this->mTitle, $isminor, $user, $summary, $bot,
-					'', strlen( $text ), $revisionId, $patrolled );
+					'', strlen( $text ), $revisionId, $patrolled || $forcePatrolled);
 
 				# Log auto-patrolled edits
 				if ( $patrolled ) {
@@ -1594,17 +1598,9 @@ class WikiPage extends Page {
 
 		if ( wfRunHooks( 'ArticleEditUpdatesDeleteFromRecentchanges', array( &$this ) ) ) {
 			if ( 0 == mt_rand( 0, 99 ) ) {
-				// Flush old entries from the `recentchanges` table; we do this on
-				// random requests so as to avoid an increase in writes for no good reason
-				global $wgRCMaxAge;
-
-				$dbw = wfGetDB( DB_MASTER );
-				$cutoff = $dbw->timestamp( time() - $wgRCMaxAge );
-				$dbw->delete(
-					'recentchanges',
-					array( "rc_timestamp < '$cutoff'" ),
-					__METHOD__
-				);
+				// Flush old entries from the `recentchanges` table
+				// Wikia: use a job backported from MediaWiki 1.25 (@see PLATFORM-965)
+				Wikia\Tasks\Tasks\RecentChangesUpdateTask::newPurgeTask();
 			}
 		}
 
@@ -2393,18 +2389,13 @@ class WikiPage extends Page {
 		# Images
 		if ( $title->getNamespace() == NS_FILE ) {
 			// Wikia Change Start @author Scott Rabin (srabin@wikia-inc.com)
-			if ( TaskRunner::isModern('HTMLCacheUpdate') ) {
-				global $wgCityId;
+			global $wgCityId;
 
-				$task = ( new \Wikia\Tasks\Tasks\HTMLCacheUpdateTask() )
-					->wikiId( $wgCityId )
-					->title( $title );
-				$task->call( 'purge', 'imagelinks' );
-				$task->queue();
-			} else {
-				$update = new HTMLCacheUpdate( $title, 'imagelinks' );
-				$update->doUpdate();
-			}
+			$task = ( new \Wikia\Tasks\Tasks\HTMLCacheUpdateTask() )
+				->wikiId( $wgCityId )
+				->title( $title );
+			$task->call( 'purge', 'imagelinks' );
+			$task->queue();
 			// Wikia Change End
 		}
 
@@ -2428,24 +2419,15 @@ class WikiPage extends Page {
 	 */
 	public static function onArticleEdit( $title ) {
 		// Wikia Change Start @author Scott Rabin (srabin@wikia-inc.com)
-		if ( TaskRunner::isModern('HTMLCacheUpdate') ) {
-			global $wgCityId;
+		global $wgCityId;
 
-			$task = ( new \Wikia\Tasks\Tasks\HTMLCacheUpdateTask() )
-				->wikiId( $wgCityId )
-				->title( $title );
-			// Invalidate caches of articles which include this page and those
-			// that redirect to it
-			$task->call( 'purge', ['templatelinks', 'redirect'] );
-			$task->queue();
-		} else {
-			// Invalidate caches of articles which include this page
-			DeferredUpdates::addHTMLCacheUpdate( $title, 'templatelinks' );
-
-
-			// Invalidate the caches of all pages which redirect here
-			DeferredUpdates::addHTMLCacheUpdate( $title, 'redirect' );
-		}
+		$task = ( new \Wikia\Tasks\Tasks\HTMLCacheUpdateTask() )
+			->wikiId( $wgCityId )
+			->title( $title );
+		// Invalidate caches of articles which include this page and those
+		// that redirect to it
+		$task->call( 'purge', ['templatelinks', 'redirect'] );
+		$task->queue();
 		// Wikia Change End
 
 		# Purge squid for this page only
@@ -3020,6 +3002,14 @@ class PoolWorkArticleView extends PoolCounterWork {
 
 		# <Wikia>
 		$this->parserOutput->setPerformanceStats( 'time', $time );
+		Transaction::addEvent( Transaction::EVENT_ARTICLE_PARSE, array(
+			'real' => $time,
+			'article' => $this->page->getTitle()->getPrefixedDBkey(),
+			'input_length' => strlen($text),
+			'options_used' => implode(',',$this->parserOutput->getUsedOptions()),
+			'options_hash' => $this->parserOptions->optionsHash($this->parserOutput->getUsedOptions()),
+			'output_cacheable' => $this->parserOutput->isCacheable() && !$this->parserOutput->containsOldMagic(),
+		));
 		# </Wikia>
 
 		# Timing hack

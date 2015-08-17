@@ -57,7 +57,7 @@ OO.inheritClass( ve.ui.MWEditModeSourceTool, ve.ui.MWEditModeTool );
 ve.ui.MWEditModeSourceTool.static.name = 'editModeSource';
 ve.ui.MWEditModeSourceTool.static.icon = 'source';
 ve.ui.MWEditModeSourceTool.static.title =
-	OO.ui.deferMsg( 'visualeditor-mweditmodesource-title' );
+	OO.ui.deferMsg( 'visualeditor-mweditmodesource-tool' );
 /**
  * @inheritdoc
  */

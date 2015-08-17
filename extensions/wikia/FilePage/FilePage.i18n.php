@@ -12,7 +12,8 @@ $messages['en'] = array(
 	'video-page-global-file-list-header' => 'Appears on these wikis',
 	'video-page-from-provider' => 'From $1',
 	'video-page-expires' => 'Content expires on $1',
-	'video-page-regional-restrictions' => 'This video can only be viewed in $1',
+	'video-page-regional-restrictions-viewable' => 'This video is regionally restricted',
+	'video-page-regional-restrictions-unviewable' => 'This video is not viewable in your location',
 	'video-page-views' => '$1 {{PLURAL:$1|View|Views}}',
 	'video-page-see-more-info' => 'Show more info',
 	'video-page-see-less-info' => 'Show less info',
@@ -32,6 +33,7 @@ Enter the description here.',
 );
 
 /** Message documentation (Message documentation)
+ * @author Liuxinyu970226
  * @author Shirayuki
  * @author Siebrand
  */
@@ -43,8 +45,8 @@ $messages['qqq'] = array(
 * $1 is the provider name.',
 	'video-page-expires' => 'After the date specified, the video content will no longer be available to view. Parameters:
 * $1 is a date',
-	'video-page-regional-restrictions' => 'Denotes the countries where the video is available for viewing. Parameters:
-* $1 - comma-separated country names.',
+	'video-page-regional-restrictions-viewable' => 'Message shown when a video has viewing restricted by region and is currently viewable',
+	'video-page-regional-restrictions-unviewable' => 'Message shown when a video has viewing restricted by region but is currently not viewable',
 	'video-page-views' => 'Shows total number of views (plays) of the video. Parameters:
 * $1 - a number of views (integer)
 {{Identical|View}}',
@@ -55,7 +57,8 @@ $messages['qqq'] = array(
 	'video-page-description-zero-state' => 'Placeholder file page content that states there is no description',
 	'video-page-add-description-link-text' => 'This is a link that takes you to the edit page where you can add a description for a video or image. The description, once added, will be a section in the file page content.',
 	'video-page-file-list-pagination' => 'Pagination for file listing.  e.g. 1 of 2.  $1 is current page, $2 is total pages',
-	'file-page-replace-button' => 'Replace button label, hidden in menu button',
+	'file-page-replace-button' => 'Replace button label, hidden in menu button
+{{Identical|Replace}}',
 	'file-page-tab-about' => 'Navigation tab label for the "about" section on a File Page.
 {{Identical|About}}',
 	'file-page-tab-history' => 'Navigation tab label for the "File History" section on a File Page.',
@@ -66,6 +69,7 @@ $messages['qqq'] = array(
 
 /** Arabic (العربية)
  * @author Achraf94
+ * @author Test Create account
  */
 $messages['ar'] = array(
 	'filepage-desc' => 'تعديل صفحة ملف ميدياويكي القياسية لدعم الفيديو',
@@ -73,6 +77,7 @@ $messages['ar'] = array(
 	'video-page-global-file-list-header' => 'يظهر في هذه الويكيات',
 	'video-page-from-provider' => 'من $1',
 	'video-page-expires' => 'انتهاء صلاحية المحتوى في $1',
+	'video-page-regional-restrictions-unviewable' => 'هذا الفيديو غير متاح لموقعك',
 	'video-page-views' => '$1 {{PLURAL:$1|مشاهدة|عدد المشاهدات}}',
 	'video-page-see-more-info' => 'إظهار المزيد من المعلومات',
 	'video-page-see-less-info' => 'إظهار معلومات أقل',
@@ -136,9 +141,18 @@ Skrivit amañ an deskrivadur.',
 	'file-page-more-links' => 'Gwelet ar roll klok',
 );
 
+/** Iriga Bicolano (Iriga Bicolano)
+ * @author Filipinayzd
+ */
+$messages['bto'] = array(
+	'video-page-from-provider' => 'Galin sa $1',
+);
+
 /** Catalan (català)
+ * @author Fitoschido
  * @author Luckas
  * @author Marcmpujol
+ * @author Unapersona
  */
 $messages['ca'] = array(
 	'filepage-desc' => "Modificación de l'espai MediaWiki de fitxers per a suport de vídeo",
@@ -146,6 +160,8 @@ $messages['ca'] = array(
 	'video-page-global-file-list-header' => 'Apareix en aquests wikis',
 	'video-page-from-provider' => 'De $1',
 	'video-page-expires' => 'Expira el $1',
+	'video-page-regional-restrictions-viewable' => 'Aquest vídeo està regionalment restringit',
+	'video-page-regional-restrictions-unviewable' => 'Aquest vídeo no és visible en la vostra ubicació',
 	'video-page-views' => '$1 {{PLURAL:$1|Vista|Vistes}}',
 	'video-page-see-more-info' => 'Mostrar més informació',
 	'video-page-see-less-info' => 'Mostrar menys informació',
@@ -169,6 +185,35 @@ $messages['ce'] = array(
 	'video-page-description-heading' => 'Цуьнах лаьцна',
 );
 
+/** Czech (čeština)
+ * @author Darth Daron
+ * @author Draceane
+ * @author H4nek
+ */
+$messages['cs'] = array(
+	'filepage-desc' => 'Modifikace standardní MediaWiki stránky pro soubory s podporou videa',
+	'video-page-file-list-header' => 'Vyskytuje se na těchto stránkách',
+	'video-page-global-file-list-header' => 'Vyskytuje se na těchto wiki',
+	'video-page-from-provider' => 'Z $1',
+	'video-page-expires' => 'Obsah vyprší $1',
+	'video-page-regional-restrictions-viewable' => 'Toto video je regionálně omezeno.',
+	'video-page-regional-restrictions-unviewable' => 'Toto video není dostupné ve Vaší lokalitě.',
+	'video-page-views' => '$1 {{PLURAL:$1|zhlédnutí}}',
+	'video-page-see-more-info' => 'Více informací',
+	'video-page-see-less-info' => 'Méně informací',
+	'video-page-description-heading' => 'Popis',
+	'video-page-description-zero-state' => 'Zatím zde není žádný popis.',
+	'video-page-add-description-link-text' => 'Přidat popis.',
+	'video-page-default-description-header-and-text' => '== Popis ==
+Zadejte popis zde.',
+	'video-page-file-list-pagination' => '$1 z $2',
+	'file-page-replace-button' => 'Nahradit',
+	'file-page-tab-about' => 'O souboru',
+	'file-page-tab-history' => 'Historie souboru',
+	'file-page-tab-metadata' => 'Metadata',
+	'file-page-more-links' => 'Viz celý seznam',
+);
+
 /** Danish (dansk)
  * @author Luckas
  */
@@ -185,7 +230,8 @@ $messages['de'] = array(
 	'video-page-global-file-list-header' => 'Erscheint auf diesen Wikis',
 	'video-page-from-provider' => 'Von $1',
 	'video-page-expires' => 'Inhalt läuft am $1 ab',
-	'video-page-regional-restrictions' => 'Dieses Video kann nur in $1 angesehen werden',
+	'video-page-regional-restrictions-viewable' => 'Dieses Video ist nur regional beschränkt abrufbar',
+	'video-page-regional-restrictions-unviewable' => 'Dieses Video ist in deinem Land nicht verfügbar',
 	'video-page-views' => '{{PLURAL:$1|Ein Aufruf|$1 Aufrufe}}',
 	'video-page-see-more-info' => 'Mehr Informationen anzeigen',
 	'video-page-see-less-info' => 'Weniger Informationen anzeigen',
@@ -219,7 +265,8 @@ $messages['es'] = array(
 	'video-page-global-file-list-header' => 'Aparece en estos wikis',
 	'video-page-from-provider' => 'De $1',
 	'video-page-expires' => 'Expira el $1',
-	'video-page-regional-restrictions' => 'Este video solo puede verse en $1',
+	'video-page-regional-restrictions-viewable' => 'Este vídeo está restringido en algunas regiones',
+	'video-page-regional-restrictions-unviewable' => 'Este video no es visible en su ubicación',
 	'video-page-views' => '$1 {{PLURAL:$1|Vista|Vistas}}',
 	'video-page-see-more-info' => 'Mostrar más información',
 	'video-page-see-less-info' => 'Mostrar menos información',
@@ -247,13 +294,34 @@ $messages['et'] = array(
 	'file-page-more-links' => 'Vaata täielikku nimekirja',
 );
 
+/** Basque (euskara)
+ * @author Subi
+ */
+$messages['eu'] = array(
+	'video-page-see-more-info' => 'Ikusi informazio gehiago',
+	'video-page-see-less-info' => 'Ikusi informazio gutxiago',
+	'video-page-description-heading' => 'Deskribapena',
+	'video-page-description-zero-state' => 'Deskribapenik ez oraindik.',
+	'video-page-add-description-link-text' => 'Gehitu deskribapena.',
+	'video-page-default-description-header-and-text' => '==Deskribapena==
+Sar ezazu deskribapena hemen.',
+	'file-page-more-links' => 'Ikusi zerrenda osoa',
+);
+
 /** Persian (فارسی)
+ * @author Movyn
  * @author Reza1615
  */
 $messages['fa'] = array(
 	'video-page-from-provider' => 'از $1',
+	'video-page-see-more-info' => 'نمایش اطلاعات بیشتر',
+	'video-page-see-less-info' => 'نمایش اطلاعات کمتر',
 	'video-page-description-heading' => 'توضیحات',
+	'video-page-add-description-link-text' => 'افزودن توضیحات.',
+	'video-page-file-list-pagination' => '$1 از $2',
+	'file-page-replace-button' => 'جایگزینی',
 	'file-page-tab-about' => 'درباره',
+	'file-page-tab-metadata' => 'فراداده',
 );
 
 /** Finnish (suomi)
@@ -320,7 +388,8 @@ $messages['fr'] = array(
 	'video-page-global-file-list-header' => 'Apparaît sur ces wikis',
 	'video-page-from-provider' => 'De $1',
 	'video-page-expires' => 'Le contenu expire le $1',
-	'video-page-regional-restrictions' => 'Cette vidéo ne peut être vue qu’en $1',
+	'video-page-regional-restrictions-viewable' => "Des restrictions régionales s'appliquent à cette vidéo",
+	'video-page-regional-restrictions-unviewable' => "Cette vidéo n'est pas consultable d'où vous vous trouvez",
 	'video-page-views' => '$1 {{PLURAL:$1|vue|vues}}',
 	'video-page-see-more-info' => "Afficher plus d'informations",
 	'video-page-see-less-info' => "Afficher moins d'informations",
@@ -335,6 +404,14 @@ Saisissez la description ici.',
 	'file-page-tab-history' => 'Historique du fichier',
 	'file-page-tab-metadata' => 'Métadonnées',
 	'file-page-more-links' => 'Afficher la liste',
+);
+
+/** Western Frisian (Frysk)
+ * @author Robin0van0der0vliet
+ */
+$messages['fy'] = array(
+	'video-page-description-heading' => 'Beskriuwing',
+	'file-page-tab-about' => 'Oer',
 );
 
 /** Galician (galego)
@@ -365,11 +442,26 @@ Insira aquí a descrición.',
 /** Hebrew (עברית)
  * @author Amire80
  * @author ExampleTomer
+ * @author LaG roiL
  */
 $messages['he'] = array(
+	'video-page-file-list-header' => 'מופיע בדפים להלן',
+	'video-page-global-file-list-header' => 'מופיע במיזמים להלן',
+	'video-page-from-provider' => 'מתוך $1',
+	'video-page-regional-restrictions-unviewable' => 'סרטון זה אינו ניתן לצפייה ממיקומך',
+	'video-page-views' => '$1 {{PLURAL:$1|צפייה אחת|צפיות}}',
+	'video-page-see-more-info' => 'הצגת מידע נוסף',
+	'video-page-see-less-info' => 'הסתרת מידע נוסף',
 	'video-page-description-heading' => 'תיאור',
+	'video-page-description-zero-state' => 'אין תיאור.',
 	'video-page-add-description-link-text' => 'הוספת תיאור.',
+	'video-page-default-description-header-and-text' => '==תיאור==
+הוסיפו תיאור כאן.',
+	'video-page-file-list-pagination' => '$1 מתוך $2',
+	'file-page-replace-button' => 'החלפה',
 	'file-page-tab-about' => 'אודות',
+	'file-page-tab-history' => 'היסטוריה',
+	'file-page-tab-metadata' => 'מטא־נתונים',
 	'file-page-more-links' => 'רשימה מלאה',
 );
 
@@ -397,17 +489,27 @@ $messages['hu'] = array(
 
 /** Indonesian (Bahasa Indonesia)
  * @author C5st4wr6ch
+ * @author Fate Kage
+ * @author Riemogerz
  */
 $messages['id'] = array(
 	'filepage-desc' => 'Modifikasi dari halaman berkas MediaWiki standar untuk dukungan video',
 	'video-page-file-list-header' => 'Muncul pada halaman-halaman ini',
 	'video-page-global-file-list-header' => 'Muncul pada wiki ini',
 	'video-page-from-provider' => 'Dari $1',
+	'video-page-expires' => 'Konten berakhir pada $1',
+	'video-page-views' => 'dilihat $1 {{PLURAL:$1|kali|kali}}',
+	'video-page-see-more-info' => 'Tampilkan info lanjutan',
+	'video-page-see-less-info' => 'Tampilkan sedikit info',
 	'video-page-description-heading' => 'Deskripsi',
+	'video-page-description-zero-state' => 'Belum ada deskripsi.',
 	'video-page-add-description-link-text' => 'Tambahkan deskripsi.',
 	'video-page-default-description-header-and-text' => '==Deskripsi==
 Masukkan deskripsi di sini.',
 	'video-page-file-list-pagination' => '$1 dari $2',
+	'file-page-replace-button' => 'Ganti',
+	'file-page-tab-about' => 'Tentang',
+	'file-page-tab-history' => 'Riwayat berkas',
 	'file-page-tab-metadata' => 'Metadata',
 	'file-page-more-links' => 'Lihat daftar lengkap',
 );
@@ -416,7 +518,27 @@ Masukkan deskripsi di sini.',
  * @author Luckas
  */
 $messages['it'] = array(
+	'filepage-desc' => 'Modifica della pagina file MediaWiki standard per supporto video',
+	'video-page-file-list-header' => 'Appare su queste pagine',
+	'video-page-global-file-list-header' => 'Appare su queste wiki',
+	'video-page-from-provider' => 'Da $1',
+	'video-page-expires' => 'Il contenuto scade il $1',
+	'video-page-regional-restrictions-viewable' => 'Questo video è limitato per regione',
+	'video-page-regional-restrictions-unviewable' => 'Questo video non è visualizzabile nella tua regione',
+	'video-page-views' => '$1 {{PLURAL:$1|Visualizzazione|Visualizzazioni}}',
+	'video-page-see-more-info' => 'Visualizza ulteriori informazioni',
+	'video-page-see-less-info' => 'Mostra meno informazioni',
 	'video-page-description-heading' => 'Descrizione',
+	'video-page-description-zero-state' => "Non c'è ancora nessuna descrizione.",
+	'video-page-add-description-link-text' => 'Aggiungi una descrizione.',
+	'video-page-default-description-header-and-text' => '== Descrizione ==
+Aggiungi la descrizione qui.',
+	'video-page-file-list-pagination' => '$1 di $2',
+	'file-page-replace-button' => 'Sostituisci',
+	'file-page-tab-about' => 'Chi siamo',
+	'file-page-tab-history' => 'Cronologia file',
+	'file-page-tab-metadata' => 'Metadati',
+	'file-page-more-links' => 'Vedi elenco completo',
 );
 
 /** Japanese (日本語)
@@ -429,6 +551,8 @@ $messages['ja'] = array(
 	'video-page-global-file-list-header' => '全ウィキアでの使用状況',
 	'video-page-from-provider' => '提供元: $1',
 	'video-page-expires' => '有効期限: $1',
+	'video-page-regional-restrictions-viewable' => 'この動画は地域制限がされています',
+	'video-page-regional-restrictions-unviewable' => 'この動画はあなたの地域では表示できません',
 	'video-page-views' => '閲覧数: $1',
 	'video-page-see-more-info' => '詳細を表示',
 	'video-page-see-less-info' => '詳細を非表示',
@@ -469,13 +593,39 @@ $messages['kn'] = array(
 );
 
 /** Korean (한국어)
+ * @author Miri-Nae
  * @author 관인생략
  * @author 아라
  */
 $messages['ko'] = array(
+	'video-page-file-list-header' => '다음 페이지에서 사용 중입니다',
+	'video-page-global-file-list-header' => '다음 위키에서 사용 중입니다',
+	'video-page-from-provider' => '제공: $1',
+	'video-page-expires' => '콘텐츠 만료일: $1',
+	'video-page-regional-restrictions-viewable' => '이 동영상은 지역적으로 제한되어 있습니다',
+	'video-page-regional-restrictions-unviewable' => '이 동영상은 당신의 지역에서는 볼 수 없습니다',
+	'video-page-views' => '$1번 {{PLURAL:$1|조회}}',
+	'video-page-see-more-info' => '더 많은 정보 보기',
+	'video-page-see-less-info' => '간단한 정보 보기',
+	'video-page-description-heading' => '설명',
+	'video-page-description-zero-state' => '아직 파일 설명이 없습니다.',
+	'video-page-add-description-link-text' => '설명을 추가하세요.',
 	'video-page-default-description-header-and-text' => '==설명==
 여기에 설명을 입력하세요.',
+	'video-page-file-list-pagination' => '$1 / $2',
+	'file-page-replace-button' => '바꾸기',
+	'file-page-tab-about' => '소개',
+	'file-page-tab-history' => '파일 역사',
+	'file-page-tab-metadata' => '메타 데이터',
 	'file-page-more-links' => '전체 목록 보기',
+);
+
+/** Kurdish (Latin script) (Kurdî (latînî)‎)
+ * @author Bikarhêner
+ */
+$messages['ku-latn'] = array(
+	'file-page-tab-about' => 'Derbarê',
+	'file-page-tab-metadata' => 'Daneyên meta',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -483,6 +633,8 @@ $messages['ko'] = array(
  */
 $messages['lb'] = array(
 	'video-page-from-provider' => 'Vu(n) $1',
+	'video-page-regional-restrictions-viewable' => 'Dëse Video ass nëmme regional limitéiert disponibel',
+	'video-page-regional-restrictions-unviewable' => 'Dëse Videa ka bei Iech net gekuckt ginn',
 	'video-page-see-more-info' => 'Méi Informatioune weisen',
 	'video-page-see-less-info' => 'Manner Informatioune weisen',
 	'video-page-description-heading' => 'Beschreiwung',
@@ -496,14 +648,14 @@ Gitt d'Beschreiwung hei an.",
 	'file-page-more-links' => 'Ganz Lëscht weisen',
 );
 
-/** لوری (لوری)
+/** Northern Luri (لوری مینجایی)
  * @author Mogoeilor
  */
 $messages['lrc'] = array(
 	'video-page-from-provider' => 'د $1',
 	'file-page-replace-button' => 'جاگزينشت',
 	'file-page-tab-about' => 'دباره',
-	'file-page-tab-history' => 'ويرگار فايل',
+	'file-page-tab-history' => 'ويرگار جانیا',
 	'file-page-tab-metadata' => 'داديا  فره گپ',
 );
 
@@ -534,6 +686,8 @@ $messages['mk'] = array(
 	'video-page-global-file-list-header' => 'Се јавува на следниве викија',
 	'video-page-from-provider' => 'Од $1',
 	'video-page-expires' => 'Содржината истекува на $1',
+	'video-page-regional-restrictions-viewable' => 'Ова видео е регионално ограничено',
+	'video-page-regional-restrictions-unviewable' => 'Ова видео не може да се гледа од вашето место',
 	'video-page-views' => '$1 {{PLURAL:$1|преглед|прегледи}}',
 	'video-page-see-more-info' => 'Прикажи повеќе информации',
 	'video-page-see-less-info' => 'Помалку информации',
@@ -559,6 +713,8 @@ $messages['ms'] = array(
 	'video-page-global-file-list-header' => 'Muncul di wiki-wiki ini',
 	'video-page-from-provider' => 'Daripada $1',
 	'video-page-expires' => 'Kandungan luput pada $1',
+	'video-page-regional-restrictions-viewable' => 'Video ini dikenakan sekatan rantauan',
+	'video-page-regional-restrictions-unviewable' => 'Video ini tidak boleh ditonton di lokasi anda',
 	'video-page-views' => '$1 Tontonan',
 	'video-page-see-more-info' => 'Tunjukkan maklumat lanjut',
 	'video-page-see-less-info' => 'Tutup maklumat lanjut',
@@ -611,7 +767,8 @@ $messages['nl'] = array(
 	'video-page-global-file-list-header' => "Gebruikt op deze wiki's",
 	'video-page-from-provider' => 'Van provider $1',
 	'video-page-expires' => 'Inhoud verloopt op $1',
-	'video-page-regional-restrictions' => 'Deze video kan alleen worden weergegeven in $1',
+	'video-page-regional-restrictions-viewable' => 'Deze video heeft een regiobeperking',
+	'video-page-regional-restrictions-unviewable' => 'Deze video kan niet worden bekeken in uw locatie',
 	'video-page-views' => '$1 {{PLURAL:$1|keer}} bekeken',
 	'video-page-see-more-info' => 'Meer informatie weergeven',
 	'video-page-see-less-info' => 'Minder informatie weergeven',
@@ -664,7 +821,8 @@ $messages['pl'] = array(
 	'video-page-global-file-list-header' => 'Wykorzystanie na innych wiki',
 	'video-page-from-provider' => 'Od $1',
 	'video-page-expires' => 'Wygasa $1',
-	'video-page-regional-restrictions' => 'Ten film wideo mogą być oglądane tylko w $1',
+	'video-page-regional-restrictions-viewable' => 'Ten film ograniczony regionalnie',
+	'video-page-regional-restrictions-unviewable' => 'Ten film nie jest dostępny z Twojej lokalizacji',
 	'video-page-views' => '$1 {{PLURAL:$1|Wyświetlenie|Wyświetlenia|Wyświetleń}}',
 	'video-page-see-more-info' => 'Więcej informacji',
 	'video-page-see-less-info' => 'Mniej informacji',
@@ -701,6 +859,8 @@ $messages['pt'] = array(
 	'video-page-global-file-list-header' => 'Aparece nestas wikis',
 	'video-page-from-provider' => 'De $1',
 	'video-page-expires' => 'Conteúdo disponível até $1',
+	'video-page-regional-restrictions-viewable' => 'Este vídeo é restrito regionalmente',
+	'video-page-regional-restrictions-unviewable' => 'Este vídeo não é visível na sua região',
 	'video-page-views' => '$1 {{PLURAL:$1|Visionamento|Visionamentos}}',
 	'video-page-see-more-info' => 'Mostrar mais informações',
 	'video-page-see-less-info' => 'Mostrar menos informações',
@@ -727,6 +887,8 @@ $messages['pt-br'] = array(
 	'video-page-global-file-list-header' => 'Aparece nestas wikis',
 	'video-page-from-provider' => 'De $1',
 	'video-page-expires' => 'Conteúdo expirará em $1',
+	'video-page-regional-restrictions-viewable' => 'Este vídeo é restrito regionalmente',
+	'video-page-regional-restrictions-unviewable' => 'Este vídeo não é visível na sua região',
 	'video-page-views' => '$1 {{PLURAL:$1|visualização|visualizações}}',
 	'video-page-see-more-info' => 'Mostrar mais informações',
 	'video-page-see-less-info' => 'Mostrar menos informações',
@@ -752,6 +914,8 @@ $messages['roa-tara'] = array(
 	'video-page-global-file-list-header' => 'Iesse sus a ste uicchi',
 	'video-page-from-provider' => 'Da $1',
 	'video-page-expires' => "Condenute ca scade 'u $1",
+	'video-page-regional-restrictions-viewable' => 'Stu video jè ristrette reggionalmende',
+	'video-page-regional-restrictions-unviewable' => "Stu video non se pò vedè jndr'à 'u paese tune",
 	'video-page-views' => '$1 {{PLURAL:$1|Viste}}',
 	'video-page-see-more-info' => "Fà vedè cchiù 'mbormaziune",
 	'video-page-see-less-info' => "Fà vedè mene 'mbormaziune",
@@ -778,7 +942,8 @@ $messages['ru'] = array(
 	'video-page-global-file-list-header' => 'Появляется в следующих проектах',
 	'video-page-from-provider' => 'Из $1',
 	'video-page-expires' => 'Содержимое истекает $1',
-	'video-page-regional-restrictions' => 'Это видео можно просматривать только в $1',
+	'video-page-regional-restrictions-viewable' => 'Это видео имеет региональные ограничения',
+	'video-page-regional-restrictions-unviewable' => 'Это видео не предназначено для просмотра в вашем регионе',
 	'video-page-views' => '$1 {{PLURAL:$1|просмотр|просмотров}}',
 	'video-page-see-more-info' => 'Показать подробнее',
 	'video-page-see-less-info' => 'Показать меньше',
@@ -803,9 +968,12 @@ $messages['sl'] = array(
 );
 
 /** Serbian (Cyrillic script) (српски (ћирилица)‎)
+ * @author Aktron
  * @author Milicevic01
  */
 $messages['sr-ec'] = array(
+	'video-page-regional-restrictions-viewable' => 'Ово видео је доступно само у појединим регијама.',
+	'video-page-regional-restrictions-unviewable' => 'Ово видео није доступно у вашој локацији',
 	'video-page-add-description-link-text' => 'Додајте опис',
 );
 
@@ -818,6 +986,8 @@ $messages['sv'] = array(
 	'video-page-global-file-list-header' => 'Visas på dessa wikis',
 	'video-page-from-provider' => 'Från $1',
 	'video-page-expires' => 'Innehållet upphör den $1',
+	'video-page-regional-restrictions-viewable' => 'Detta videoklipp är regionalt begränsat',
+	'video-page-regional-restrictions-unviewable' => 'Detta videoklipp kan inte visas på din plats',
 	'video-page-views' => '$1 {{PLURAL:$1|visning|visningar}}',
 	'video-page-see-more-info' => 'Visa mer information',
 	'video-page-see-less-info' => 'Visa mindre information',
@@ -832,6 +1002,15 @@ Ange en beskrivning här.',
 	'file-page-tab-history' => 'Filhistorik',
 	'file-page-tab-metadata' => 'Metadata',
 	'file-page-more-links' => 'Se hela listan',
+);
+
+/** Tamil (தமிழ்)
+ * @author ElangoRamanujam
+ */
+$messages['ta'] = array(
+	'file-page-tab-history' => 'கோப்பு வரலாறு',
+	'file-page-tab-metadata' => 'மேல் நிலைத் தரவு',
+	'file-page-more-links' => 'முழுப் பட்டியலைக் காண்க',
 );
 
 /** Telugu (తెలుగు)
@@ -895,6 +1074,8 @@ $messages['uk'] = array(
 	'video-page-global-file-list-header' => 'Використовується на наступних вікі:',
 	'video-page-from-provider' => 'З $1',
 	'video-page-expires' => 'Вміст придатний до $1',
+	'video-page-regional-restrictions-viewable' => 'Це відео має регіональні обмеження',
+	'video-page-regional-restrictions-unviewable' => 'Це відео неможливо переглянути у вашій місцевості',
 	'video-page-views' => '$1 {{PLURAL:$1|перегляд|перегляди|переглядів}}',
 	'video-page-see-more-info' => 'Показати додаткову інформацію',
 	'video-page-see-less-info' => 'Показати менше інформації',
@@ -942,6 +1123,8 @@ $messages['vi'] = array(
 	'video-page-global-file-list-header' => 'Xuất hiện trên các wiki',
 	'video-page-from-provider' => 'Từ $1',
 	'video-page-expires' => 'Nội dung hết hạn trên $1',
+	'video-page-regional-restrictions-viewable' => 'Video này là khu vực bị giới hạn',
+	'video-page-regional-restrictions-unviewable' => 'Video này không phù hợp ở vị trí của bạn.',
 	'video-page-views' => '$1 {{PLURAL:$1|lượt truy cập|lượt truy cập}}',
 	'video-page-see-more-info' => 'Hiển thị thêm thông tin',
 	'video-page-see-less-info' => 'Hiển thị thông tin ít',
@@ -973,7 +1156,8 @@ $messages['zh-hans'] = array(
 	'video-page-global-file-list-header' => '出现在这些 wiki 上',
 	'video-page-from-provider' => '来自$1',
 	'video-page-expires' => '内容过期时间 $1',
-	'video-page-regional-restrictions' => '此视频只能在$1查看',
+	'video-page-regional-restrictions-viewable' => '这个视频受区域播放限制',
+	'video-page-regional-restrictions-unviewable' => '这个视频在您所在的国家或者地区不能播放',
 	'video-page-views' => '$1次浏览',
 	'video-page-see-more-info' => '显示更多信息',
 	'video-page-see-less-info' => '显示较少信息',
@@ -983,7 +1167,7 @@ $messages['zh-hans'] = array(
 	'video-page-default-description-header-and-text' => '==说明==
 在这里输入说明。',
 	'video-page-file-list-pagination' => '$2的$1',
-	'file-page-replace-button' => '取代',
+	'file-page-replace-button' => '替换',
 	'file-page-tab-about' => '关于',
 	'file-page-tab-history' => '文件历史',
 	'file-page-tab-metadata' => '元数据',
@@ -992,23 +1176,31 @@ $messages['zh-hans'] = array(
 
 /** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
+ * @author LNDDYL
+ * @author Liuxinyu970226
  * @author Simon Shek
  */
 $messages['zh-hant'] = array(
+	'filepage-desc' => '影片支援的標準MediaWiki檔案修改頁面',
 	'video-page-file-list-header' => '出現在這些頁面上',
-	'video-page-global-file-list-header' => '出現在這些 wiki 上',
-	'video-page-from-provider' => '出自$1',
-	'video-page-see-more-info' => '顯示更多資訊',
-	'video-page-see-less-info' => '顯示較少資訊',
+	'video-page-global-file-list-header' => '出現在這些wiki上',
+	'video-page-from-provider' => '來自$1',
+	'video-page-expires' => '內容過期時間 $1',
+	'video-page-regional-restrictions-viewable' => '這個影片受區域播放限制',
+	'video-page-regional-restrictions-unviewable' => '這個影片在您所在的國家或者地區不能播放',
+	'video-page-views' => '$1 次{{PLURAL:$1|查看}}',
+	'video-page-see-more-info' => '展開',
+	'video-page-see-less-info' => '折疊',
 	'video-page-description-heading' => '描述',
-	'video-page-description-zero-state' => '現在還沒有描述',
-	'video-page-add-description-link-text' => '添加說明。',
-	'video-page-default-description-header-and-text' => '在這裡輸入描述。',
+	'video-page-description-zero-state' => '目前還沒有任何描述',
+	'video-page-add-description-link-text' => '添加描述。',
+	'video-page-default-description-header-and-text' => '==描述==
+在這裡輸入描述性內容。',
 	'video-page-file-list-pagination' => '$2的$1',
 	'file-page-replace-button' => '取代',
 	'file-page-tab-about' => '關於',
 	'file-page-tab-history' => '檔案歷史',
-	'file-page-tab-metadata' => '元數據',
+	'file-page-tab-metadata' => '後設資料',
 	'file-page-more-links' => '查看完整清單',
 );
 

@@ -1,4 +1,4 @@
-@import "color";
+@import "skins/shared/color";
 
 .WikiaBarWrapper {
   @include linear-gradient($color-header, left, $color-header-alt, 0, $color-header, 50%, $color-header-alt, 100%);

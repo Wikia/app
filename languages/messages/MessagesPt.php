@@ -705,8 +705,9 @@ A justificação foi "\'\'$2\'\'".',
 # Login and logout pages
 'logouttext'                 => "'''Já não está autenticado.'''
 
-Pode continuar a utilizar a {{SITENAME}} anonimamente, ou pode [[Special:UserLogin|autenticar-se novamente]] com o mesmo nome de utilizador ou com um nome de utilizador diferente.
+Pode continuar a utilizar a {{SITENAME}} anonimamente, ou pode $1 com o mesmo nome de utilizador ou com um nome de utilizador diferente.
 Tenha em atenção que algumas páginas poderão continuar a ser apresentadas como se ainda estivesse autenticado até limpar a cache do seu browser.",
+'logouttext-link-text'       => 'autenticar-se novamente',
 'welcomecreation'            => '== Bem-vindo, $1! ==
 A sua conta foi criada.
 Não se esqueça de personalizar as suas [[Special:Preferences|preferências na {{SITENAME}}]].',
@@ -2615,6 +2616,7 @@ Consulte a [[Special:BlockList|lista de IPs bloqueados]] para rever os bloqueios
 'unblocked'                       => '[[User:$1|$1]] foi desbloqueado',
 'unblocked-range'                 => 'A gama $1 foi desbloqueada',
 'unblocked-id'                    => 'O bloqueio de $1 foi removido com sucesso',
+'unblocked-ip'                    => '[[Special:Contributions/$1|$1]] foi desbloqueado.',
 'blocklist'                       => 'Utilizadores bloqueados',
 'ipblocklist'                     => 'Utilizadores bloqueados',
 'ipblocklist-legend'              => 'Procurar um utilizador bloqueado',

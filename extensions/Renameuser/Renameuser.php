@@ -64,10 +64,8 @@ function wfRenameUserLogActionText( $type, $action, $title = null, $skin = null,
 }
 
 $wgAutoloadClasses['SpecialRenameuser'] = dirname( __FILE__ ) . '/Renameuser_body.php';
-$wgAutoloadClasses['RenameUserJob'] = dirname( __FILE__ ) . '/RenameUserJob.php';
 $wgSpecialPages['Renameuser'] = 'SpecialRenameuser';
 $wgSpecialPageGroups['Renameuser'] = 'users';
-$wgJobClasses['renameUser'] = 'RenameUserJob';
 
 $wgHooks['ShowMissingArticle'][] = 'wfRenameUserShowLog';
 $wgHooks['ContributionsToolLinks'][] = 'wfRenameuserOnContribsLink';

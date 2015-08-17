@@ -779,11 +779,9 @@ class LocalFile extends File {
 		$purgeList = array();
 		$purgeList = array( $this->getThumbUrl( ) ); # wikia change
 		foreach ( $files as $file ) {
-			# Check that the base file name is part of the thumb name
-			# This is a basic sanity check to avoid erasing unrelated directories
-			if ( strpos( $file, $this->getName() ) !== false ) {
-				$purgeList[] = "{$dir}/{$file}";
-			}
+			# Wikia change - remove all thumbnails in all formats (PLATFORM-441)
+			# e.g. PNG file can have a WebP thumbnail
+			$purgeList[] = "{$dir}/{$file}";
 		}
 
 		# Delete the thumbnails
@@ -984,6 +982,8 @@ class LocalFile extends File {
 	function recordUpload2(
 		$oldver, $comment, $pageText, $props = false, $timestamp = false, $user = null
 	) {
+		global $wgCityId;
+
 		if ( is_null( $user ) ) {
 			global $wgUser;
 			$user = $wgUser;
@@ -1178,18 +1178,11 @@ class LocalFile extends File {
 
 		# Invalidate cache for all pages using this file
 		// Wikia change begin @author Scott Rabin (srabin@wikia-inc.com)
-		if ( TaskRunner::isModern('HTMLCacheUpdate') ) {
-			global $wgCityId;
-
-			$task = ( new \Wikia\Tasks\Tasks\HTMLCacheUpdateTask() )
-				->wikiId( $wgCityId )
-				->title( $this->getTitle() );
-			$task->call( 'purge', 'imagelinks' );
-			$task->queue();
-		} else {
-			$update = new HTMLCacheUpdate( $this->getTitle(), 'imagelinks' );
-			$update->doUpdate();
-		}
+		$task = ( new \Wikia\Tasks\Tasks\HTMLCacheUpdateTask() )
+			->wikiId( $wgCityId )
+			->title( $this->getTitle() );
+		$task->call( 'purge', 'imagelinks' );
+		$task->queue();
 		// Wikia change end
 
 		# Invalidate cache for all pages that redirects on this page
@@ -1197,18 +1190,11 @@ class LocalFile extends File {
 
 		foreach ( $redirs as $redir ) {
 			// Wikia change begin @author Scott Rabin (srabin@wikia-inc.com)
-			if ( TaskRunner::isModern('HTMLCacheUpdate') ) {
-				global $wgCityId;
-
-				$task = ( new \Wikia\Tasks\Tasks\HTMLCacheUpdateTask() )
-					->wikiId( $wgCityId )
-					->title( $redir );
-				$task->call( 'purge', 'imagelinks' );
-				$task->queue();
-			} else {
-				$update = new HTMLCacheUpdate( $redir, 'imagelinks' );
-				$update->doUpdate();
-			}
+			$task = ( new \Wikia\Tasks\Tasks\HTMLCacheUpdateTask() )
+				->wikiId( $wgCityId )
+				->title( $redir );
+			$task->call( 'purge', 'imagelinks' );
+			$task->queue();
 			// Wikia change end
 		}
 

@@ -1,4 +1,7 @@
 <?php
+
+use \Wikia\Util\GlobalStateWrapper;
+
 /**
  * WikiaBaseTest class - part of Wikia UnitTest Framework - W(U)TF
  * @author ADi
@@ -17,6 +20,7 @@
  * }
  */
 abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
+	const MOCK_DEV_NAME = 'mockdevname';
 
 	protected static $alternativeConstructors = [
 		'Article' => [ 'newFromID', 'newFromTitle', 'newFromWikiPage' ],
@@ -215,7 +219,8 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	 * @param $retVal mixed result to be returned by mocked method
 	 */
 	protected function mockStaticMethod($className, $methodName, $retVal) {
-		$this->getMockProxy()->getStaticMethod($className,$methodName)
+		$this->getMockProxy()
+			->getStaticMethod($className, $methodName)
 			->willReturn($retVal);
 	}
 
@@ -246,24 +251,14 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	 * @param $inputParams array
 	 * @throws Exception
 	 */
-	protected function mockGlobalFunction( $functionName, $returnValue, $callsNum = null, $inputParams = null ) {
-		// sanity check to prevent deprecated way of using this function
-		if ( !function_exists($functionName) && function_exists('wf'.ucfirst($functionName)) ) {
-			throw new Exception("You have to specify full global function name including 'wf' prefix");
-		}
-
-		if ( func_num_args() > 2 ) {
-			throw new Exception("You are using deprecated version of mockGlobalFunction");
-		}
+	protected function mockGlobalFunction( $functionName, $returnValue ) {
 
 		list( $namespace, $baseName ) = WikiaMockProxy::parseGlobalFunctionName( $functionName );
 
 		$mock = $this->getGlobalFunctionMock( $functionName );
-		$expect = $mock->expects( $callsNum !== null ? $this->exactly( $callsNum ) : $this->any() )
-			->method( $baseName );
-		if ( $inputParams !== null ) {
-			$expect = call_user_func_array( array( $expect, 'with' ), $inputParams );
-		}
+		$expect = $mock->expects( $this->any() )
+						->method( $baseName );
+
 		$expect->will( $this->returnValue( $returnValue ) );
 
 		$this->getMockProxy()->getGlobalFunction($functionName)
@@ -402,17 +397,6 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 		return WikiaMockProxyAction::currentInvocation();
 	}
 
-	/**
-	 * @deprecated
-	 */
-	protected function mockApp() {
-		// noop
-	}
-
-	protected function proxyClass() {
-		return call_user_func_array( array( $this, 'mockClass' ), func_get_args() );
-	}
-
 	private function unsetGlobals() {
 		/** @var $mock WikiaGlobalVariableMock */
 		foreach ($this->mockedGlobalVariables as $globalName => $mock) {
@@ -471,6 +455,99 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 			return [ '', $functionName ];
 		} else {
 			return [ ltrim( substr( $functionName, 0, $last + 1 ), '\\' ), substr( $functionName, $last + 1 ) ];
+		}
+	}
+
+	/**
+	 * @return PHPUnit_Framework_MockObject_MockObject
+	 */
+	private function getMemCacheMock() {
+		$wgMemcMock = $this->getMockBuilder( 'MWMemcached' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'get' ] )
+			->getMock();
+		$wgMemcMock->expects( $this->any() )
+			->method( 'get' )
+			->willReturn( null );
+
+		return $wgMemcMock;
+	}
+
+	/**
+	 * Mocks global $wgMemc->get() so it always returns null
+	 */
+	protected function disableMemCache() {
+		$this->mockGlobalVariable( 'wgMemc', $this->getMemCacheMock() );
+	}
+
+	/**
+	 * Run given callback in a context that has memcache disabled
+	 *
+	 * @see PLATFORM-1337
+	 *
+	 * @param callable $callback function to run
+	 * @return mixed the value returned by $callback
+	 */
+	protected function memCacheDisabledSection( callable $callback ) {
+		$globalState = new GlobalStateWrapper( [
+			'wgMemc' => $this->getMemCacheMock()
+		] );
+
+		return $globalState->wrap( $callback );
+	}
+
+	protected function mockPreviewEnv() {
+		$this->mockGlobalVariable( 'wgDevelEnvironment', false );
+		$this->mockGlobalVariable( 'wgStagingEnvironment', true );
+		$this->mockGlobalVariable( 'wgWikiaEnvironment', WIKIA_ENV_PREVIEW );
+	}
+
+	protected function mockVerifyEnv() {
+		$this->mockGlobalVariable( 'wgDevelEnvironment', false );
+		$this->mockGlobalVariable( 'wgStagingEnvironment', true );
+		$this->mockGlobalVariable( 'wgWikiaEnvironment', WIKIA_ENV_VERIFY );
+	}
+
+	protected function mockSandboxEnv() {
+		$this->mockGlobalVariable( 'wgDevelEnvironment', false );
+		$this->mockGlobalVariable( 'wgStagingEnvironment', false );
+		$this->mockGlobalVariable( 'wgWikiaEnvironment', WIKIA_ENV_SANDBOX );
+		$this->getStaticMethodMock( 'WikiFactory', 'getExternalHostName' )
+			->expects( $this->any() )
+			->method( 'getExternalHostName' )
+			->willReturn( 'sandbox-s1' );
+	}
+
+	protected function mockProdEnv() {
+		$this->mockGlobalVariable( 'wgDevelEnvironment', false );
+		$this->mockGlobalVariable( 'wgWikiaEnvironment', WIKIA_ENV_PROD );
+	}
+
+	protected function mockDevEnv() {
+		$this->mockGlobalVariable( 'wgDevelEnvironmentName', self::MOCK_DEV_NAME );
+		$this->getStaticMethodMock( 'WikiFactory', 'getExternalHostName' )
+			->expects( $this->any() )
+			->method( 'getExternalHostName' )
+			->willReturn( self::MOCK_DEV_NAME );
+	}
+
+	protected function mockEnvironment( $environment ) {
+		switch ( $environment ) {
+			case WIKIA_ENV_PROD:
+				$this->mockProdEnv();
+				break;
+			case WIKIA_ENV_PREVIEW:
+				$this->mockPreviewEnv();
+				break;
+			case WIKIA_ENV_VERIFY:
+				$this->mockVerifyEnv();
+				break;
+			case WIKIA_ENV_SANDBOX:
+				$this->mockSandboxEnv();
+				break;
+			case WIKIA_ENV_DEV:
+				$this->mockDevEnv();
+				break;
 		}
 	}
 }

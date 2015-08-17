@@ -1,4 +1,7 @@
-/*global ToolbarCustomize:true*/
+/**
+* global ToolbarCustomize:true
+* global require
+**/
 var WikiaFooterApp = {
 
 	init: function() {
@@ -12,12 +15,11 @@ var WikiaFooterApp = {
 			this.footer = $( '#WikiaFooter' );
 		}
 		this.toolbar = this.footer.children( '.toolbar' );
-		this.gn = $( '.global-notification' );
 		this.windowObj = $( window );
 		this.originalWidth = this.toolbar.width();
 
 		// avoid stack overflow in IE (RT #98938)
-		if ( this.toolbar.exists() || this.gn.exists() ) {
+		if ( this.toolbar.exists() ) {
 			if (
 				!( navigator.platform in {'iPad':'', 'iPhone':'', 'iPod':''} ||
 					( navigator.userAgent.match( /android/i ) !== null ) )
@@ -30,7 +32,7 @@ var WikiaFooterApp = {
 	},
 	addScrollEvent: function() {
 		'use strict';
-		WikiaFooterApp.windowObj.off( 'scroll.FooterAp' ); // GlobalNotifications could be re-binding this event.
+		WikiaFooterApp.windowObj.off( 'scroll.FooterAp' );
 		WikiaFooterApp.windowObj.on( 'scroll.FooterAp', WikiaFooterApp.resolvePosition ).triggerHandler( 'scroll' );
 	},
 	addResizeEvent: function (){
@@ -73,11 +75,6 @@ var WikiaFooterApp = {
 		} else if ( scroll < line && !WikiaFooterApp.footer.hasClass( 'float' ) ) {
 			WikiaFooterApp.footer.addClass( 'float' );
 			WikiaFooterApp.centerBar();
-		}
-
-		// GlobalNotification uses same scroll event for performance reasons (BugId:33365)
-		if ( window.GlobalNotification && !window.GlobalNotification.isModal() ) {
-			window.GlobalNotification.onScroll( scrollTop );
 		}
 	}
 };
@@ -197,16 +194,23 @@ var WikiaFooterApp = {
 
 			var that = this;
 
+			//Attach event listener to an event which is triggered after updating user tools
+			$('body').on('userToolsItemAdded', function(event, data) {
+				that.load(data);
+			});
+
 			require( ['wikia.fluidlayout'], function( fluidlayout ) {
 				that.handleOverflowMenu( fluidlayout.getBreakpointSmall(), 2 * fluidlayout.getAdSkinWidth(),
 					window.wgOasisResponsive ? false : fluidlayout.getBreakpointSmall() );
-			} );
+			});
 		},
 
 		openConfiguration: function( evt ) {
 			evt.preventDefault();
-			var conf = new TC.ConfigurationLoader( this );
-			conf.show();
+			require( ['wikia.toolsCustomization'], function( TC ) {
+				new TC.ToolsCustomization( this).show();
+				return false;
+			} );
 		},
 
 		buildOveflowItem: function () {
@@ -319,27 +323,7 @@ var WikiaFooterApp = {
 		}
 
 	} );
-
-	TC.ConfigurationLoader = $.createClass( Object, {
-
-		constructor: function( toolbar ) {
-			this.toolbar = toolbar;
-		},
-
-		show: function() {
-			$.loadLibrary( 'ToolbarCustomize',
-				window.stylepath + '/oasis/js/ToolbarCustomize.js',
-				typeof TC.Configuration,
-				$.proxy( function() {
-					var c = new TC.Configuration( this.toolbar );
-					c.show();
-				}, this )
-			);
-		}
-
-	} );
-
-} )();
+})();
 
 $( function() {
 	'use strict';

@@ -162,9 +162,10 @@ $messages['ia'] = array(
 
 /** Indonesian (Bahasa Indonesia)
  * @author Kenrick95
+ * @author Riemogerz
  */
 $messages['id'] = array(
-	'quickcreate-desc' => 'Menambahkan tombol membuat halaman baru dengan kemampuan untuk masuk log untuk pengguna anonim', # Fuzzy
+	'quickcreate-desc' => 'Menambahkan tombol buat halaman baru dengan permintaan masuk log untuk pengguna anonim',
 	'quickcreate' => 'kirimkan resep Anda',
 );
 
@@ -368,8 +369,9 @@ $messages['zh-hans'] = array(
 
 /** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
+ * @author LNDDYL
  */
 $messages['zh-hant'] = array(
-	'quickcreate-desc' => '增加“創建新頁面”按钮，要求匿名用戶登錄編輯。',
+	'quickcreate-desc' => '增加“建立新頁面”按钮，要求匿名使用者登入編輯。',
 	'quickcreate' => '提交您的方案',
 );

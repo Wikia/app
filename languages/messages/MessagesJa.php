@@ -75,8 +75,11 @@ $namespaceNames = array(
 	NS_MEDIA            => 'メディア',
 	NS_SPECIAL          => '特別',
 	NS_TALK             => 'トーク',
-	NS_USER             => '利用者',
-	NS_USER_TALK        => '利用者・トーク',
+	// begin wikia change
+	// VOLDEV-90
+	NS_USER             => 'ユーザー',
+	NS_USER_TALK        => 'ユーザー・トーク',
+	// end wikia change
 	NS_PROJECT_TALK     => '$1・トーク',
 	NS_FILE             => 'ファイル',
 	NS_FILE_TALK        => 'ファイル・トーク',
@@ -91,16 +94,21 @@ $namespaceNames = array(
 );
 
 $namespaceAliases = array(
-	'ノート'           => NS_TALK,
-	'利用者‐会話'        => NS_USER_TALK,
-	'$1‐ノート'        => NS_PROJECT_TALK,
-	'画像'            => NS_FILE,
-	'画像‐ノート'        => NS_FILE_TALK,
-	'ファイル‐ノート'      => NS_FILE_TALK,
-	'MediaWiki‐ノート' => NS_MEDIAWIKI_TALK,
-	'Template‐ノート'  => NS_TEMPLATE_TALK,
-	'Help‐ノート'      => NS_HELP_TALK,
-	'Category‐ノート'  => NS_CATEGORY_TALK
+	'ノート'			=> NS_TALK,
+	// begin wikia change
+	// VOLDEV-90
+	'利用者'			=> NS_USER,
+	'利用者・トーク'		=> NS_USER_TALK,
+	// end wikia change
+	'利用者‐会話'		=> NS_USER_TALK,
+	'$1‐ノート'		=> NS_PROJECT_TALK,
+	'画像'			=> NS_FILE,
+	'画像‐ノート'		=> NS_FILE_TALK,
+	'ファイル‐ノート'		=> NS_FILE_TALK,
+	'MediaWiki‐ノート'	=> NS_MEDIAWIKI_TALK,
+	'Template‐ノート'		=> NS_TEMPLATE_TALK,
+	'Help‐ノート'		=> NS_HELP_TALK,
+	'Category‐ノート'		=> NS_CATEGORY_TALK
 );
 
 $specialPageAliases = array(
@@ -755,8 +763,9 @@ $2',
 # Login and logout pages
 'logouttext'                 => "'''ログアウトしました。'''
 
-このまま匿名で{{SITENAME}}を使い続けることができます。同じあるいは別の利用者として[[Special:UserLogin|もう一度ログインする]]こともできます。
+このまま匿名で{{SITENAME}}を使い続けることができます。同じあるいは別の利用者として$1こともできます。
 なお、ページによっては、ブラウザのキャッシュをクリアするまで、ログインしているかのように表示され続けることがあるので注意してください。",
+'logouttext-link-text'       => 'もう一度ログインする',
 'welcomecreation'            => '== ようこそ、$1さん！ ==
 アカウントが作成されました。
 [[Special:Preferences|{{SITENAME}}の個人設定]]の変更も忘れないようにしてください。',
@@ -807,7 +816,7 @@ $2',
 綴りが正しいことを再度確認してください。',
 'nouserspecified'            => '利用者名を指定してください。',
 'login-userblocked'          => 'この利用者はブロックされています。ログインは拒否されます。',
-'wrongpassword'              => 'パスワードが間違っています。 
+'wrongpassword'              => 'パスワードが間違っています。
 もう一度やり直してください。',
 'wrongpasswordempty'         => 'パスワードを空にすることはできません。
 もう一度やり直してください。',
@@ -1750,7 +1759,7 @@ HTMLタグを見直してください。',
 'reuploaddesc'                => 'アップロードを中止してアップロードフォームへ戻る',
 'upload-tryagain'             => '修正したファイル解説を投稿',
 'uploadnologin'               => 'ログインしていません',
-'uploadnologintext'           => 'ファイルをアップロードするには[[Special:UserLogin|ログイン]]する必要があります。',
+'uploadnologintext'           => 'ファイルのアップロードや動画の挿入をするには、$1してください。',
 'upload_directory_missing'    => 'アップロード先ディレクトリー（$1）が見つからず、ウェブサーバーによって作成できませんでした。',
 'upload_directory_read_only'  => 'アップロード先ディレクトリー（$1）に、ウェブサーバーが書き込めません。',
 'uploaderror'                 => 'アップロードのエラー',

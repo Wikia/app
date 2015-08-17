@@ -2186,14 +2186,6 @@
 			$().log(params, "showEdit params");
 			var self = WikiaPhotoGallery;
 
-			// for anons show ComboAjaxLogin
-			if (typeof showComboAjaxForPlaceHolder == 'function') {
-				if (showComboAjaxForPlaceHolder('', false, '', false, true)) { // last true shows the 'login required for this action' message.
-					self.log('please login to use this feature');
-					return;
-				}
-			}
-
 			// check lock to catch double-clicks on toolbar button
 			if (self.lockEditor) {
 				self.log('lock detected - please wait for dialog to load');
@@ -2214,7 +2206,7 @@
 			// get full height available (RT #55203)
 			var height = parseInt($(window).height() - 125);
 
-			if (skin == 'oasis') {
+			if (skin == 'oasis' || skin == 'venus') {
 				height -= 150;
 				width = 740;
 			}
@@ -2279,7 +2271,7 @@
 					$('#WikiaPhotoGalleryEditorLoader').remove();
 
 					// mark editor dialog title node
-					if (skin == 'oasis') {
+					if (skin == 'oasis' || skin == 'venus') {
 						$('#WikiaPhotoGalleryEditor').children('h1').attr('id', 'WikiaPhotoGalleryEditorTitle');
 					}
 					else {
@@ -2554,7 +2546,7 @@
 		track: (function() {
 			var config = {
 					action: Wikia.Tracker.ACTIONS.CLICK,
-					trackingMethod: 'both'
+					trackingMethod: 'analytics'
 				},
 				slice = [].slice;
 

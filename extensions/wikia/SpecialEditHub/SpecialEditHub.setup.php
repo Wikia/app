@@ -14,14 +14,15 @@ $dir = dirname(__FILE__) . '/';
 
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Edit Hub',
-	'description' => 'Internal tool to configure Hub page',
+	'descriptionmsg' => 'edithub-desc',
 	'authors' => array(
 		'Damian Jóźwiak',
 		'Sebastian Marzjan',
 		'Łukasz Konieczny',
 		'Bartosz Bentkowski'
 	),
-	'version' => 1.0
+	'version' => 1.0,
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/SpecialEditHub'
 );
 
 //classes
@@ -45,7 +46,5 @@ $wgAvailableRights[] = 'edithub';
 
 $wgGroupPermissions['*']['edithub'] = false;
 $wgGroupPermissions['staff']['edithub'] = true;
-$wgGroupPermissions['sysop']['edithub'] = true;
-$wgGroupPermissions['bureaucrat']['edithub'] = true;
 $wgGroupPermissions['helper']['edithub'] = true;
 

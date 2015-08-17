@@ -79,7 +79,7 @@ if ( isset( $options['o'] ) ) {
 	}
 	if ( $lastupdate !== $lastmod || $force ) {
 		if ($verbose) echo "lastupdate != lastmod (or forced update)\n";
-		wfWaitForSlaves( 100 );
+		wfWaitForSlaves();
 		$dbw = wfGetDB( DB_MASTER );
 		if ( $dbw != false ) {
 			if ( $verbose ) {

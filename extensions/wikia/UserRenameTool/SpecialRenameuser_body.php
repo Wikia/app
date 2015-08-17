@@ -68,7 +68,7 @@ class SpecialRenameuser extends SpecialPage {
 			$wgRequest->getText( 'token' ) !== '' &&
 			$wgUser->matchEditToken($wgRequest->getVal('token'))
 		){
-			$process = new RenameUserProcess( $oldusername, $newusername, $confirmaction, $reason );
+			$process = new RenameUserProcess( $oldusername, $newusername, $confirmaction, $reason, $notifyRenamed );
 			$status = $process->run();
 			$warnings = $process->getWarnings();
 			$errors = $process->getErrors();
@@ -83,12 +83,12 @@ class SpecialRenameuser extends SpecialPage {
 
 		if ( !empty( $oldusername ) ) {
 			$olduser = User::newFromName( $oldusername );
-			if ( $olduser->getOption( 'requested-rename', 0 ) ) {
+			if ( $olduser->getGlobalFlag( 'requested-rename', 0 ) ) {
 				$infos[] = wfMsg( 'userrenametool-requested-rename', $oldusername );
 			} else {
 				$errors[] = wfMsg( 'userrenametool-did-not-request-rename', $oldusername );
 			}
-			if ( $olduser->getOption( 'wasRenamed', 0 ) ) {
+			if ( $olduser->getGlobalFlag( 'wasRenamed', 0 ) ) {
 				$errors[] = wfMsg( 'userrenametool-previously-renamed', $oldusername );
 			}
 		}

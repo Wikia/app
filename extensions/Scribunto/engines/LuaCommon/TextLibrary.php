@@ -6,6 +6,8 @@ class Scribunto_LuaTextLibrary extends Scribunto_LuaLibraryBase {
 
 		$lib = array(
 			'unstrip' => array( $this, 'textUnstrip' ),
+			'unstripNoWiki' => array( $this, 'textUnstripNoWiki' ),
+			'killMarkers' => array( $this, 'killMarkers' ),
 			'getEntityTable' => array( $this, 'getEntityTable' ),
 		);
 		$opts = array(
@@ -37,7 +39,18 @@ class Scribunto_LuaTextLibrary extends Scribunto_LuaLibraryBase {
 
 	function textUnstrip( $s ) {
 		$this->checkType( 'unstrip', 1, $s, 'string' );
-		return array( $this->getParser()->mStripState->unstripBoth( $s ) );
+		$stripState = $this->getParser()->mStripState;
+		return array( $stripState->killMarkers( $stripState->unstripNoWiki( $s ) ) );
+	}
+
+	function textUnstripNoWiki( $s ) {
+		$this->checkType( 'unstripNoWiki', 1, $s, 'string' );
+		return array( $this->getParser()->mStripState->unstripNoWiki( $s ) );
+	}
+
+	function killMarkers( $s ) {
+		$this->checkType( 'killMarkers', 1, $s, 'string' );
+		return array( $this->getParser()->mStripState->killMarkers( $s ) );
 	}
 
 	function getEntityTable() {

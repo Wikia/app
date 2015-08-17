@@ -33,7 +33,7 @@ $wgConf = new SiteConfiguration;
 /** @endcond */
 
 /** MediaWiki version number */
-$wgVersion = '1.19.17';
+$wgVersion = '1.19.24';
 
 /** Name of the site. It must be changed in LocalSettings.php */
 $wgSitename = 'MediaWiki';
@@ -521,7 +521,7 @@ $wgHashedSharedUploadDirectory = true;
  *
  * Please specify the namespace, as in the example below.
  */
-$wgRepositoryBaseUrl = "http://commons.wikimedia.org/wiki/File:";
+$wgRepositoryBaseUrl = "https://commons.wikimedia.org/wiki/File:";
 
 /**
  * This is the list of preferred extensions for uploading files. Uploading files
@@ -1422,7 +1422,7 @@ $wgDefaultExternalStore = false;
  *
  * Set to 0 to disable, or number of seconds before cache expiry.
  */
-$wgRevisionCacheExpiry = 0;
+$wgRevisionCacheExpiry = 86400 * 30; // a month
 
 /** @} */ # end text storage }
 
@@ -2667,6 +2667,27 @@ $wgResourceLoaderValidateStaticJS = false;
  */
 $wgResourceLoaderExperimentalAsyncLoading = false;
 
+/**
+ * Whether to allow site-wide CSS (MediaWiki:Common.css and friends) on
+ * restricted pages like Special:UserLogin or Special:Preferences where
+ * JavaScript is disabled for security reasons. As it is possible to
+ * execute JavaScript through CSS, setting this to true opens up a
+ * potential security hole. Some sites may "skin" their wiki by using
+ * site-wide CSS, causing restricted pages to look unstyled and different
+ * from the rest of the site.
+ *
+ * @since 1.25
+ */
+$wgAllowSiteCSSOnRestrictedPages = false;
+
+/**
+ * When OutputHandler is used, mangle any output that contains
+ * <cross-domain-policy>. Without this, an attacker can send their own
+ * cross-domain policy unless it is prevented by the crossdomain.xml file at
+ * the domain root.
+ */
+$wgMangleFlashPolicy = true;
+
 /** @} */ # End of resource loader settings }
 
 
@@ -2772,7 +2793,7 @@ $wgLocalInterwiki = false;
 /**
  * Expiry time for cache of interwiki table
  */
-$wgInterwikiExpiry = 10800;
+$wgInterwikiExpiry = 86400;
 
 /** Interwiki caching settings.
 	$wgInterwikiCache specifies path to constant database file
@@ -3318,16 +3339,6 @@ $wgExternalAuthType = null;
 $wgExternalAuthConf = array();
 
 /**
- * When should we automatically create local accounts when external accounts
- * already exist, if using ExternalAuth?  Can have three values: 'never',
- * 'login', 'view'.  'view' requires the external database to support cookies,
- * and implies 'login'.
- *
- * TODO: Implement 'view' (currently behaves like 'login').
- */
-$wgAutocreatePolicy = 'login';
-
-/**
  * Policies for how each preference is allowed to be changed, in the presence
  * of external authentication.  The keys are preference keys, e.g., 'password'
  * or 'emailaddress' (see Preferences.php et al.).  The value can be one of the
@@ -3458,6 +3469,7 @@ $wgGroupPermissions['*']['edit']             = true;
 $wgGroupPermissions['*']['createpage']       = true;
 $wgGroupPermissions['*']['createtalk']       = true;
 $wgGroupPermissions['*']['writeapi']         = true;
+$wgGroupPermissions['*']['editmyoptions']    = true;
 //$wgGroupPermissions['*']['patrolmarks']      = false; // let anons see what was patrolled
 
 // Implicit group for all logged-in accounts
@@ -4905,10 +4917,6 @@ $wgHooks = &Hooks::getHandlersArray();
  * can add to this to provide custom jobs
  */
 $wgJobClasses = array(
-	'refreshLinks' => 'RefreshLinksJob',
-	'refreshLinks2' => 'RefreshLinksJob2',
-	'htmlCacheUpdate' => 'HTMLCacheUpdateJob',
-	'html_cache_update' => 'HTMLCacheUpdateJob', // backwards-compatible
 	'fixDoubleRedirect' => 'DoubleRedirectJob',
 );
 
@@ -5600,7 +5608,7 @@ $wgJobRunRate = 1;
 /**
  * Number of rows to update per job
  */
-$wgUpdateRowsPerJob = 500;
+$wgUpdateRowsPerJob = 50;
 
 /**
  * Number of rows to update per query

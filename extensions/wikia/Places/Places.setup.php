@@ -14,11 +14,12 @@
 
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Places',
-	'version' => '2.0',
+	'version' => '2.1',
 	'author' => array(
 		'Maciej Brencz',
 		'Jakub Kurcek' ),
-	'descriptionmsg' => 'places-desc'
+	'descriptionmsg' => 'places-desc',
+	'url' => 'https://github.com/Wikia/app/blob/dev/extensions/wikia/Places/README.md'
 );
 
 $dir = dirname( __FILE__ );
@@ -74,6 +75,7 @@ $wgAPIModules['places'] = 'WikiaApiPlaces';
  * messages
  */
 $wgExtensionMessagesFiles['Places'] = $dir . '/Places.i18n.php';
+$wgExtensionMessagesFiles['PlacesAliases'] = $dir . '/Places.alias.php';
 
 JSMessages::registerPackage('Places', array(
 	'places-toolbar-button-*',

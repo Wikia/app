@@ -198,10 +198,19 @@ $( function () {
 			$groupLink = "";
 			$link = $wgContLang->ucfirst( $group['name'] );
 		}
+		
+		$checked = '';
+		if ( count( $obj->mDefGroups ) === 0 || in_array( $groupName, $obj->mDefGroups ) ) {
+			$checked = 'checked="checked"';
+		}
 ?>
 		<td valign="middle" style="padding:0px 2px 0px 1px;">
-			<span style="vertical-align:middle"><input type="checkbox" name="lu_target" class="lu_target" value="<?=$groupName?>" <?=( in_array( $groupName, $obj->mDefGroups ) )?"checked=\"checked\"":''?>></span>
-			<span style="padding-bottom:5px;"><?= $link ?> <small>(<?= wfMessage( 'listuserscount', ( isset( $group['count'] ) ) ? intval($group['count']) : 0 )->parse() ?>)</small></span>
+			<label for="checkBoxFor<?=$groupName?>">
+				<span style="vertical-align:middle">
+					<input type="checkbox" name="lu_target" class="lu_target" value="<?=$groupName?>" <?=$checked?> id="checkBoxFor<?=$groupName?>">
+				</span>
+				<span style="padding-bottom:5px;"><?= $link ?> <small>(<?= wfMessage( 'listuserscount', ( isset( $group['count'] ) ) ? intval($group['count']) : 0 )->parse() ?>)</small></span>
+			</label>
 		</td>
 <?
 		$i++;

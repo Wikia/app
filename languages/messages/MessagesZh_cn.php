@@ -28,5 +28,6 @@ $messages = array(
 
 # Edit pages
 'editing' => '正在编辑 $1',
+'uploadnologintext'           => '你必须$1才能上传图片和视频内容。',
 
 );

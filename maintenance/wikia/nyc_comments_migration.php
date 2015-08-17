@@ -39,11 +39,11 @@ while( $row = $res->fetchObject() ) {
 
 	$wArticle = new Article( $wTitle );
 	if ( !$wArticle->exists() && is_object( $parentTitle ) && $parentTitle->exists() ) {
-		wfWaitForSlaves( 3 );
+		wfWaitForSlaves();
 
 		$wArticle->doEdit( $content, 'Importing comments from old armchair', EDIT_FORCE_BOT, false, $user );
 
-		wfWaitForSlaves( 3 );
+		wfWaitForSlaves();
 	} else {
 		echo "skipped one: ID {$row->Comment_ID}\n";
 	}

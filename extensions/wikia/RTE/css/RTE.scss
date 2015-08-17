@@ -1,8 +1,8 @@
 // This file is used for styling the edit page
-@import "skins/oasis/css/core/color";
-@import "skins/oasis/css/mixins/box-shadow";
-@import "skins/oasis/css/mixins/clearfix";
-@import "skins/oasis/css/mixins/gradient";
+@import "skins/shared/color";
+@import "skins/shared/mixins/box-shadow";
+@import "skins/shared/mixins/clearfix";
+@import "skins/shared/mixins/gradient";
 
 // positioning for first run notice
 .editform {
@@ -211,7 +211,7 @@
 }
 
 .RTEPlaceholderPreviewTitleBar span {
-	background: transparent url(/skins/oasis/images/sprite.png) no-repeat -1146px -81px; /* $wgCdnStylePath */
+	background: transparent url(/skins/shared/images/sprite.png) no-repeat -1146px -81px; /* $wgCdnStylePath */
 	cursor: pointer;
 	height: 12px;
 	position: absolute;
@@ -585,7 +585,9 @@
 
 // CK modal tweaks
 .skin-oasis.rte,
-.skin-oasis.MiniEditor {
+.skin-oasis.MiniEditor,
+.skin-venus.rte,
+.skin-venus.MiniEditor{
 	.cke_dialog {
 		border: 5px solid $color-body;
 		padding: 15px 15px 0 15px;

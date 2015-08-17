@@ -104,7 +104,7 @@ class UserProfilePageHooks {
 			return true;
 		}
 		// abort if user has been disabled (v2, both need to be checked for a while)
-		$disabledOpt = $user->getOption('disabled');
+		$disabledOpt = $user->getGlobalFlag('disabled');
 		if (!empty($disabledOpt)) {
 			wfProfileOut(__METHOD__);
 			return true;
@@ -149,35 +149,6 @@ class UserProfilePageHooks {
 		wfProfileOut(__METHOD__);
 		return true;
 	}
-
-	/**
-	 * Don't send 404 status for user pages with filled in masthead (bugid:44602)
-	 * @brief hook handler
-	 *
-	 * @param Article $article
-	 *
-	 * @return Boolean
-	 */
-	static public function onBeforeDisplayNoArticleText($article) {
-		global $UPPNamespaces;
-		$wg = F::app()->wg;
-
-		$title = $article->getTitle();
-		if ($title instanceof Title && in_array($title->getNamespace(), $UPPNamespaces)) {
-			$user = UserProfilePageHelper::getUserFromTitle($title);
-			if ( $user instanceof User && $user->getId() > 0) {
-				$userIdentityBox = new UserIdentityBox( $user );
-				$userData = $userIdentityBox->getFullData();
-				if ( is_array( $userData ) && array_key_exists( 'showZeroStates', $userData ) ) {
-					if ( !$userData['showZeroStates'] ) {
-						$wg->Out->setStatusCode ( 200 );
-					}
-				}
-			}
-		}
-		return true;
-	}
-
 
 	/**
 	 * @brief Hook on WikiFactory change and update wikis's visibility if the wgGroupPermissionsLocal is changed

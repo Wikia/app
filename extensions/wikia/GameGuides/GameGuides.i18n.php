@@ -9,6 +9,7 @@ $messages['en'] = array(
 	'wikiagameguides-preview-description' => 'This is just a preview of how pages would look like in a Wikia Game Guides application.',
 
 	//Content Managment tool
+	'wikiagameguides-content-have-been-deprecated-by' => 'Game Guides content management tool have been deprecated. Please use <a href="$1">$2</a> instead.',
 	'wikiagameguides-content-title' => 'Wikia Game Guides content managment tool',
 	'wikiagameguides-content-category' => 'Category',
 	'wikiagameguides-content-tag' => 'Category Tag (optional)',
@@ -21,6 +22,7 @@ $messages['en'] = array(
 	'wikiagameguides-content-duplicate-entry' => 'This value is duplicated',
 	'wikiagameguides-content-empty-tag' => 'This tag needs some categories',
 
+	'wikiagameguides-content-description-soft-redirect' => 'New interface for content curation is available on special:CuratedContent page. Firstly turn it on on Special:WikiFeatures page.',
 	'wikiagameguides-content-description-categories' => 'Add wiki "Categories" and rename them as you\'d like them to appear in Game Guides with "Game Guide Names".',
 	'wikiagameguides-content-description-tag' => 'Does it make sense to group categories under a game series installment? Add a category "Tag," and drag and drop wiki categories under it.',
 	'wikiagameguides-content-description-organize' => 'Feel free to delete or add more lines, and reorder them by dragging and dropping.',
@@ -53,7 +55,7 @@ $messages['en'] = array(
  */
 $messages['qqq'] = array(
 	'wikiagameguides-desc' => 'Wikia Game Guides is the name of a product, do not translate on a per-word basis',
-
+	'wikiagameguides-content-have-been-deprecated-by' => 'Information about GameGuides being deprecated and functionality moved to CuratedContent',
 
 	//Preview page
 	'wikiagameguides-preview-description' => 'Message displayed on GameGuidesPreview page indicating that what user see is just a preview',
@@ -71,6 +73,7 @@ $messages['qqq'] = array(
 	'wikiagameguides-content-duplicate-entry' => 'Message shown to a user next to an input that has duplicated content',
 	'wikiagameguides-content-empty-tag' => 'Message shown to a a user if he has not added any categories to a tag',
 
+	'wikiagameguides-content-description-soft-redirect' => 'Message about moving tool to Curated Content',
 	'wikiagameguides-content-description-categories' => 'Message describing a purpose and usage of the tool',
 	'wikiagameguides-content-description-tag' => 'Message describing a purpose and usage of the tool',
 	'wikiagameguides-content-description-organize' => 'Message describing a purpose and usage of the tool',

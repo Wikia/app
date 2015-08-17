@@ -1,5 +1,5 @@
 // Monobook skin specific styling
-@import "../../../../../skins/wikia/css/color";
+@import "skins/shared/color";
 
 .Forum {
 	.DiscussionBox {
@@ -43,7 +43,7 @@
 
 		.thread {
 			&:hover {
-				background-color: $color-page-border;
+				background-color: #FAFAFA;
 			}
 		}
 	}

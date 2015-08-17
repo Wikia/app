@@ -53,6 +53,7 @@ class Http {
 				$req->setHeader( $name, $value );
 			}
 		}
+
 		// Wikia change - end
 		if( isset( $options['userAgent'] ) ) {
 			$req->setUserAgent( $options['userAgent'] );
@@ -65,25 +66,27 @@ class Http {
 		$status = $req->execute();
 
 		// Wikia change - @author: mech - begin
-		// log all the requests we make (except valid Phalanx calls, as we have a lot of them)
-		$caller =  wfGetCallerClassMethod( [ __CLASS__, 'Hooks', 'ApiService' ] );
+		// log all the requests we make
+		$caller =  wfGetCallerClassMethod( [ __CLASS__, 'Hooks', 'ApiService', 'Solarium_Client', 'Solarium_Client_Adapter_Curl' ] );
 		$isOk = $status->isOK();
-		if ( class_exists( 'Wikia\\Logger\\WikiaLogger' ) && ( !$isOk || false === strpos( $caller, 'Phalanx' ) ) ) {
+		if ( class_exists( 'Wikia\\Logger\\WikiaLogger' ) ) {
 
 			$requestTime = (int)( ( microtime( true ) - $requestTime ) * 1000.0 );
+			$backendTime = $req->getResponseHeader('x-backend-response-time') ?: 0;
+
 			$params = [
 				'statusCode' => $req->getStatus(),
 				'reqMethod' => $method,
 				'reqUrl' => $url,
 				'caller' => $caller,
 				'isOk' => $isOk,
-				'requestTimeMS' => $requestTime
+				'requestTimeMS' => $requestTime,
+				'backendTimeMS' => intval( 1000 * $backendTime),
 			];
 			if ( !$isOk ) {
 				$params[ 'statusMessage' ] = $status->getMessage();
 			}
 			\Wikia\Logger\WikiaLogger::instance()->debug( 'Http request' , $params );
-
 		}
 
 		// Wikia change - @author: nAndy - begin
@@ -241,6 +244,17 @@ class MWHttpRequest {
 	protected $respStatus = "200 Ok";
 	protected $respHeaders = array();
 
+	// Wikia change - begin - @author: wladek
+	/**
+	 * Send X-Request-Id and X-Request-Origin-Host headers
+	 * @var bool
+	 */
+	protected $internalRequest = false;
+	// Wikia change - end
+
+	/**
+	 * @var Status
+	 */
 	public $status;
 
 	/**
@@ -271,6 +285,7 @@ class MWHttpRequest {
 		// Wikia change - @author: wladek - begin
 		// allow overriding of curl options
 		$members[] = "curlOptions";
+		$members[] = "internalRequest";
 		// Wikia change - end
 
 		foreach ( $members as $o ) {
@@ -471,6 +486,17 @@ class MWHttpRequest {
 		if ( !isset( $this->reqHeaders['User-Agent'] ) ) {
 			$this->setUserAgent( Http::userAgent() );
 		}
+
+		// @author macbre
+		// pass Request ID to internal requests
+		$this->setHeader( Wikia\Util\RequestId::REQUEST_HEADER_NAME, Wikia\Util\RequestId::instance()->getRequestId() );
+
+		// Wikia change - begin - @author: wladek
+		// Append extra headers for internal requests, currently only X-Request-Origin-Host
+		if ( $this->internalRequest ) {
+			$this->setHeader( Wikia\Util\RequestId::REQUEST_HEADER_ORIGIN_HOST, wfHostname() );
+		}
+		// Wikia change - end
 	}
 
 	/**
@@ -736,7 +762,14 @@ class CurlHttpRequest extends MWHttpRequest {
 			return $this->status;
 		}
 
-		$this->curlOptions[CURLOPT_PROXY] = $this->proxy;
+		// Wikia change PLATFORM-1298 michal@wikia-inc.com
+		if ( $this->parsedUrl['scheme'] == 'https' ) {
+			$this->curlOptions[CURLOPT_PROXY] = null;
+		} else {
+			$this->curlOptions[CURLOPT_PROXY] = $this->proxy;
+		}
+		// End of Wikia change
+
 		$this->curlOptions[CURLOPT_TIMEOUT] = $this->timeout;
 		$this->curlOptions[CURLOPT_HTTP_VERSION] = CURL_HTTP_VERSION_1_0;
 		$this->curlOptions[CURLOPT_WRITEFUNCTION] = $this->callback;
@@ -777,13 +810,37 @@ class CurlHttpRequest extends MWHttpRequest {
 			// Wikia change - end
 		}
 
+		// Wikia change - begin
+		// remove CURLOPT_TIMEOUT if CURLOPT_TIMEOUT_MS is set
+		if ( isset( $this->curlOptions[CURLOPT_TIMEOUT_MS] ) ) {
+			unset( $this->curlOptions[CURLOPT_TIMEOUT] );
+		}
+		// Wikia change - end
+
 		$this->curlOptions[CURLOPT_HTTPHEADER] = $this->getHeaderList();
 
 		$curlHandle = curl_init( $this->url );
 
+		// Wikia change - begin
+		/**
+		 * @author Michał Roszka <michal@wikia-inc.com>
+		 * @see PLATFORM-1317
+		 * @see PLATFORM-1308
+		 */
 		if ( !curl_setopt_array( $curlHandle, $this->curlOptions ) ) {
-			throw new MWException( "Error setting curl options." );
+			$e = new MWException( "Error setting curl options." );
+			if ( class_exists( 'Wikia\\Logger\\WikiaLogger' ) ) {
+				\Wikia\Logger\WikiaLogger::instance()->debug(
+					'PLATFORM-1317' ,
+					[
+						'curl_options' => bin2hex( serialize( $this->curlOptions ) ),
+						'exception' => $e
+					]
+				);
+			}
+			throw $e;
 		}
+		// Wikia change - end
 
 		if ( $this->followRedirects && $this->canFollowRedirects() ) {
 			wfSuppressWarnings();
@@ -797,7 +854,9 @@ class CurlHttpRequest extends MWHttpRequest {
 		}
 
 		if ( false === curl_exec( $curlHandle ) ) {
-			$code = curl_error( $curlHandle );
+			// Wikia changes - begin
+			$code = curl_errno( $curlHandle );
+			// Wikia change - end
 
 			if ( isset( self::$curlMessageMap[$code] ) ) {
 				$this->status->fatal( self::$curlMessageMap[$code] );

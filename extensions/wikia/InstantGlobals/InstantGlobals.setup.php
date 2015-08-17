@@ -21,7 +21,9 @@
 $wgExtensionCredits['other'][] = [
 	'name' => 'InstantGlobals',
 	'author' => 'Maciej Brencz',
-	'version' => '1.0'
+	'version' => '1.0',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/InstantGlobals',
+	'descriptionmsg' => 'instantglobals-desc'
 ];
 
 /**
@@ -31,6 +33,9 @@ $dir = __DIR__;
 
 $wgAutoloadClasses['InstantGlobalsHooks'] = "{$dir}/InstantGlobalsHooks.class.php";
 $wgAutoloadClasses['InstantGlobalsModule'] = "{$dir}/InstantGlobalsModule.class.php";
+
+// i18n
+$wgExtensionMessagesFiles['InstantGlobals'] = $dir . '/InstantGlobals.i18n.php';
 
 /**
  * hooks
@@ -42,4 +47,13 @@ $wgHooks['WikiaSkinTopShortTTLModules'][] =  'InstantGlobalsHooks::onWikiaSkinTo
  */
 $wgResourceModules['wikia.ext.instantGlobals'] = [
 	'class' => 'InstantGlobalsModule',
+];
+
+/**
+ * Register Resource Loader module for querystring-based
+ * overriding tool for InstantGlobals
+ */
+$wgResourceModules['wikia.ext.instantGlobalsOverride'] = [
+	'scripts' => "extensions/wikia/InstantGlobals/js/instantGlobalsOverride.js",
+	'source'  => 'common',
 ];

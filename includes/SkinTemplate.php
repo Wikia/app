@@ -288,7 +288,7 @@ class SkinTemplate extends Skin {
 		$tpl->set( 'rtl', $lang->isRTL() );
 
 		$tpl->set( 'capitalizeallnouns', $lang->capitalizeAllNouns() ? ' capitalize-all-nouns' : '' );
-		$tpl->set( 'showjumplinks', $user->getOption( 'showjumplinks' ) );
+		$tpl->set( 'showjumplinks', $user->getGlobalPreference( 'showjumplinks' ) );
 		$tpl->set( 'username', $this->loggedin ? $this->username : null );
 		$tpl->setRef( 'userpage', $this->userpage );
 		$tpl->setRef( 'userpageurl', $this->userpageUrlDetails['href'] );
@@ -490,7 +490,7 @@ class SkinTemplate extends Skin {
 			$pageLang = $title->getPageLanguage();
 			$realBodyAttribs['lang'] = $pageLang->getHtmlCode();
 			$realBodyAttribs['dir'] = $pageLang->getDir();
-			$realBodyAttribs['class'] = 'mw-content-'.$pageLang->getDir();
+			$realBodyAttribs['class'] = 'mw-content-'.$pageLang->getDir().' mw-content-text';
 		}
 
 		$out->mBodytext = Html::rawElement( 'div', $realBodyAttribs, $out->mBodytext );

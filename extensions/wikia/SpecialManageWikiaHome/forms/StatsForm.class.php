@@ -20,7 +20,7 @@ class StatsForm extends FormBuilderService {
 						'max' => 100
 					] ),
 			],
-			'edits' => [
+			'editsDefault' => [
 				'label' => wfMessage( 'manage-wikia-home-stats-edits-default-label' )->text(),
 				'validator' => new WikiaValidatorInteger( [
 						'required' => true,

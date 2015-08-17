@@ -4,22 +4,19 @@
  * User Login Helper
  * @author Hyun
  * @author Saipetch
- *
  */
 class UserLoginHelper extends WikiaModel {
-
-	protected static $instance = NULL;
 
 	const LIMIT_EMAIL_CHANGES = 5;
 	const LIMIT_EMAILS_SENT = 5;
 	const LIMIT_AVATARS = 4;
 	const LIMIT_WIKIS = 3;
 
-	const WIKIA_CITYID_COMMUNITY = 177;
 	const WIKIA_EMAIL_DOMAIN = "@wikia-inc.com";
 
 	/**
-	 * get random avatars from the current wiki
+	 * Get random avatars from the current wiki
+	 *
 	 * @responseParam array avatars
 	 */
 	public function getRandomAvatars() {
@@ -27,18 +24,18 @@ class UserLoginHelper extends WikiaModel {
 
 		$memKey = wfMemcKey( 'userlogin', 'random_avatars' );
 		$avatars = $this->wg->Memc->get( $memKey );
-		if ( !is_array($avatars) ) {
+		if ( !is_array( $avatars ) ) {
 			$avatars = $this->getRandomWikiAvatars( self::LIMIT_AVATARS );
-			if ( count($avatars) < self::LIMIT_AVATARS ) {
-				$additions = $this->getRandomWikiAvatars( self::LIMIT_AVATARS, self::WIKIA_CITYID_COMMUNITY );
+			if ( count( $avatars ) < self::LIMIT_AVATARS ) {
+				$additions = $this->getRandomWikiAvatars( self::LIMIT_AVATARS, WikiFactory::COMMUNITY_CENTRAL );
 				$diff = array_diff_assoc( $additions, $avatars );
-				foreach( $diff as $userId => $avatar ) {
+				foreach ( $diff as $userId => $avatar ) {
 					$avatars[$userId] = $avatar;
-					if ( count($avatars) >= self::LIMIT_AVATARS )
+					if ( count( $avatars ) >= self::LIMIT_AVATARS )
 						break;
 				}
 			}
-			$this->wg->Memc->set( $memKey, $avatars, 60*60*24 );
+			$this->wg->Memc->set( $memKey, $avatars, 60 * 60 * 24 );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -47,15 +44,16 @@ class UserLoginHelper extends WikiaModel {
 	}
 
 	/**
-	 * get a list of random avatars from the wiki
+	 * Get a list of random avatars from the wiki
+	 *
 	 * @param integer $require (number of avatars)
 	 * @param integer $wikiId
 	 * @return array $avatars
 	 */
-	protected function getRandomWikiAvatars( $require, $wikiId=null ) {
+	protected function getRandomWikiAvatars( $require, $wikiId = null ) {
 		$avatars = array();
 		$users = $this->getWikiUsers( $wikiId );
-		if ( count($users) < $require ) {
+		if ( count( $users ) < $require ) {
 			$randomList = array_keys( $users );
 		} else {
 			$randomList = array_rand( $users, $require );
@@ -70,28 +68,24 @@ class UserLoginHelper extends WikiaModel {
 	}
 
 	/**
-	 * get users with avatar who sign up on the wiki (include founder)
+	 * Get users with avatar who sign up on the wiki (include founder)
+	 *
 	 * @param integer $wikiId
 	 * @param integer $limit (number of users)
 	 * @return array $wikiUsers
 	 */
-	protected function getWikiUsers( $wikiId=null, $limit=30 ) {
+	protected function getWikiUsers( $wikiId = null, $limit = 30 ) {
+		global $wgSpecialsDB;
 		wfProfileIn( __METHOD__ );
 
-		if( !$this->wg->StatsDBEnabled ) {
-			//no stats DB, can't get list of users with avatars
-			wfProfileOut( __METHOD__ );
-			return array();
-		}
-
-		$wikiId = (empty($wikiId)) ? $this->wg->CityId : $wikiId;
+		$wikiId = ( empty( $wikiId ) ) ? $this->wg->CityId : $wikiId;
 
 		$memKey = wfSharedMemcKey( 'userlogin', 'users_with_avatar', $wikiId );
 		$wikiUsers = $this->wg->Memc->get( $memKey );
-		if ( !is_array($wikiUsers) ) {
+		if ( !is_array( $wikiUsers ) ) {
 			$wikiUsers = array();
 
-			$db = wfGetDB( DB_SLAVE, array(), $this->wg->StatsDB );
+			$db = wfGetDB( DB_SLAVE, array(), $wgSpecialsDB );
 			$result = $db->select(
 				array( 'user_login_history' ),
 				array( 'distinct user_id' ),
@@ -100,27 +94,27 @@ class UserLoginHelper extends WikiaModel {
 				array( 'LIMIT' => $limit )
 			);
 
-			while( $row = $db->fetchObject($result) ) {
+			while ( $row = $db->fetchObject( $result ) ) {
 				$this->addUserToUserList( $row->user_id, $wikiUsers );
 			}
 			$db->freeResult( $result );
 
 			// add founder if not exist
 			$founder = WikiFactory::getWikiById( $wikiId )->city_founding_user;
-			if ( !array_key_exists($founder, $wikiUsers) ) {
+			if ( !array_key_exists( $founder, $wikiUsers ) ) {
 				$this->addUserToUserList( $founder, $wikiUsers );
 			}
 
-			$this->wg->Memc->set( $memKey, $wikiUsers, 60*60*24 );
+			$this->wg->Memc->set( $memKey, $wikiUsers, WikiaResponse::CACHE_STANDARD );
 		}
 
 		wfProfileOut( __METHOD__ );
-
 		return $wikiUsers;
 	}
 
 	/**
-	 * add user who has avatar to the user list
+	 * Add user who has avatar to the user list
+	 *
 	 * @param integer $userId
 	 * @param array $userList
 	 */
@@ -133,97 +127,83 @@ class UserLoginHelper extends WikiaModel {
 	}
 
 	/**
-	 * get a list of random popular wikis
-	 * @param integer $require (number of wikis)
-	 * @return array $wikis
+	 * Redirect the user to the appropriate page after login.
+	 *
+	 * @param string $extraReturnToQuery Use this to add any additional parameters to the query string
+	 * @param int $cbVal Send a specific CB value (mostly for testing)
 	 */
-	public function getRandomWikis( $require=self::LIMIT_WIKIS ) {
-		return array();
-/**
-		$memKey = wfSharedMemcKey( 'userlogin', 'random_wikis' );
-		$wikis = $this->wg->Memc->get( $memKey );
-		if ( !is_array($wikis) ) {
-			$popularWikis = $this->getPopularWikis();
-			shuffle( $popularWikis );
-			$wikis = array();
-
-			foreach( $popularWikis as $wikiId ) {
-				$themeSettings = WikiFactory::getVarValueByName( 'wgOasisThemeSettings', $wikiId);
-				if( !empty($themeSettings['wordmark-image-url']) ) {
-					$wikis[] = $themeSettings['wordmark-image-url'];
-				}
-
-				if ( count($wikis) >= $require )
-					break;
-			}
-
-			$this->wg->Memc->set( $memKey, $wikis, 60*60*24 );
-		}
-
-		return $wikis;
- **/
+	public function doRedirect( $extraReturnToQuery = '', $cbVal = 0 ) {
+		$this->wg->out->redirect( $this->getRedirectUrl( $extraReturnToQuery, $cbVal ) );
 	}
 
 	/**
-	 * get popular wikis
-	 * @param integer $wikiId
-	 * @param integer $limit (number of users)
-	 * @return array $popularWikis
+	 * Determine the URL that should be redirected to after the current login action.  If
+	 * there is a returnto URL and it's valid then send them there.  Otherwise send the
+	 * user to the wikia's main page.
+	 *
+	 * @param string $extraReturnToQuery Use this to add any additional parameters to the query string
+	 * @param int $cbVal Send a specific CB value (mostly for testing)
+	 *
+	 * @return String
+	 * @throws MWException
 	 */
-	protected function getPopularWikis( $limit=50 ) {
-		wfProfileIn( __METHOD__ );
-
-		$memKey = wfSharedMemcKey( 'userlogin', 'popular_wikis' );
-		$popularWikis = $this->wg->Memc->get( $memKey );
-		if ( empty($popularWikis) ) {
-			$popularWikis = array_keys( DataMartService::getTopWikisByPageviews( DataMartService::PERIOD_ID_MONTHLY, $limit ) );
-
-			if ( empty($popularWikis) ) {
-				$popularWikis[] = self::WIKIA_CITYID_COMMUNITY;
-			}
-
-			$this->wg->Memc->set( $memKey, $popularWikis, 60*60*24 );
-		}
-
-		wfProfileOut( __METHOD__ );
-
-		return $popularWikis;
-	}
-
-	/**
-	 * redirect page
-	 * @requestParam string returnUrl
-	 */
-	public function doRedirect(){
+	public function getRedirectUrl( $extraReturnToQuery = '', $cbVal = 0 ) {
 		$returnUrl = $this->wg->Request->getVal( 'returnto', '' );
-		$returnToQuery = $this->wg->Request->getVal('returntoquery', '');
 		$titleObj = Title::newFromText( $returnUrl );
-		if ( (!$titleObj instanceof Title) ||
-				$titleObj->isSpecial("Userlogout") ||
-				$titleObj->isSpecial("Signup") ||
-				$titleObj->isSpecial("Userlogin") ) {
+
+		if ( $this->isInvalidLoginRedirect( $titleObj ) ) {
 			$titleObj = Title::newMainPage();
 		}
-		$this->wg->out->redirect( $titleObj->getFullURL($returnToQuery."&cb=".rand(1,10000)) );
+
+		$cbParam = 'cb=' . ( $cbVal ? $cbVal : rand( 1, 10000 ) );
+		$returnParams = $this->wg->Request->getVal( 'returntoquery', '' );
+
+		if ( !empty( $extraReturnToQuery ) ) {
+			$returnParams .= ( empty( $returnParams ) ? '' : '&' ) . $extraReturnToQuery;
+		}
+
+		$returnParams .= ( empty( $returnParams ) ? '' : '&' ) . $cbParam;
+
+		return $titleObj->getFullURL( $returnParams );
 	}
 
 	/**
-	 * send email
+	 * @param Title|null $title
+	 *
+	 * @return bool
+	 */
+	public function isInvalidLoginRedirect( $title ) {
+		return (
+			!$title instanceof Title ||
+			$title->isSpecial( 'Userlogout' ) ||
+			$title->isSpecial( 'Signup' ) ||
+			$title->isSpecial( 'Connect' ) ||
+			$title->isSpecial( 'FacebookConnect' ) ||
+			$title->isSpecial( 'UserLogin' )
+		);
+	}
+
+	/**
+	 * Send an HTML/text email
+	 *
 	 * @param User object $user
 	 * @param string $category
 	 * @param string $msgSubject
 	 * @param string $msgBody
 	 * @param array $emailParams
 	 * @param string $templateType
-	 * @return Status object
+	 * @param string $template
+	 * @param int $priority
+	 *
+	 * @return Status
 	 */
-	public function sendEmail( User $user, $category, $msgSubject, $msgBody, $emailParams, $templateType, $template='GeneralMail', $priority=0 ) {
+	public function sendEmail( User $user, $category, $msgSubject, $msgBody, $emailParams, $templateType, $template = 'GeneralMail', $priority = 0 ) {
 		$subject = strtr( wfMessage( $msgSubject )->escaped(), $emailParams );
 		$body = strtr( wfMessage( $msgBody )->escaped(), $emailParams );
-		if ( empty($this->wg->EnableRichEmails) ) {
+		if ( empty( $this->wg->EnableRichEmails ) ) {
 			$bodyHTML = null;
 		} else {
-			$emailTextTemplate = $this->app->renderView( "UserLogin", $template, array('language' => $user->getOption('language'), 'type' => $templateType) );
+			$emailTextTemplate = $this->app->renderView( "UserLogin", $template, array( 'language' => $user->getGlobalPreference( 'language' ), 'type' => $templateType ) );
 			$bodyHTML = strtr( $emailTextTemplate, $emailParams );
 		}
 
@@ -231,13 +211,18 @@ class UserLoginHelper extends WikiaModel {
 	}
 
 	/**
-	 * send confirmation email
+	 * Send confirmation email
+	 *
 	 * @param string $username
-	 * @return array result { array( 'result' => result status[error/ok/invalidsession/confirmed], 'msg' => result message ) }
+	 * @return array The format of this array is:
+	 * 		[
+	 * 			'result' => result status[error/ok/invalidsession/confirmed],
+	 * 			'msg' => result message
+	 * 		]
 	 */
-	public function sendConfirmationEmail( $username, $user=null ) {
+	public function sendConfirmationEmail( $username ) {
 		global $wgExternalSharedDB;
-		if ( empty($username) ) {
+		if ( empty( $username ) ) {
 			$result['result'] = 'error';
 			$result['msg'] = wfMessage( 'userlogin-error-noname' )->escaped();
 			return $result;
@@ -245,15 +230,15 @@ class UserLoginHelper extends WikiaModel {
 
 		// Check whether user already exists or is already confirmed
 		wfWaitForSlaves(); // Wait for local DB - Wikis that keep user data in local DB (e.g. Uncyclopedia/Internal)
-		wfWaitForSlaves( false, $wgExternalSharedDB ); // Wait for external shared DB
+		wfWaitForSlaves( $wgExternalSharedDB ); // Wait for external shared DB
 		$user = User::newFromName( $username );
-		if ( !($user instanceof User) || $user->getID() == 0 ) {
+		if ( !( $user instanceof User ) || $user->getID() == 0 ) {
 			// User doesn't exist
 			$result['result'] = 'error';
 			$result['msg'] = wfMessage( 'userlogin-error-nosuchuser' )->escaped();
 			return $result;
 		} else {
-			if ( !$user->getOption( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME ) && $user->isEmailConfirmed()) {
+			if ( !$user->getGlobalFlag(UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME ) && $user->isEmailConfirmed() ) {
 				// User already confirmed on signup
 				$result['result'] = 'confirmed';
 				$result['msg'] = wfMessage( 'usersignup-error-confirmed-user', $username, $user->getUserPage()->getFullURL() )->parse();
@@ -282,21 +267,20 @@ class UserLoginHelper extends WikiaModel {
 
 		// Signup throttle check
 		$memKey = $this->getMemKeyConfirmationEmailsSent( $user->getId() );
-		$emailSent = intval( $this->wg->Memc->get($memKey) );
-		if( $user->isEmailConfirmationPending() && (strtotime($user->mEmailTokenExpires) - strtotime("+6 days") > 0) && $emailSent >= self::LIMIT_EMAILS_SENT ) {
+		$emailSent = intval( $this->wg->Memc->get( $memKey ) );
+		if ( $user->isEmailConfirmationPending() && ( strtotime( $user->mEmailTokenExpires ) - strtotime( "+6 days" ) > 0 ) && $emailSent >= self::LIMIT_EMAILS_SENT ) {
 			$result['result'] = 'error';
 			$result['msg'] = wfMessage( 'usersignup-error-throttled-email' )->escaped();
 			return $result;
 		}
 
-		$emailTextTemplate = $this->app->renderView( "UserLogin", "GeneralMail", array('language' => $user->getOption('language'), 'type' => 'confirmation-email') );
-		$response = $user->sendConfirmationMail( false, 'ConfirmationMail', 'usersignup-confirmation-email', true, $emailTextTemplate );
-		if( !$response->isGood() ) {
+		$response = $user->sendConfirmationMail( false, 'ConfirmationMail' );
+		if ( !$response->isGood() ) {
 			$result['result'] = 'error';
 			$result['msg'] = wfMessage( 'userlogin-error-mail-error' )->escaped();
 		} else {
 			$result['result'] = 'ok';
-			$result['msg'] = wfMessage( 'usersignup-confirmation-email-sent', htmlspecialchars($user->getEmail()) )->parse();
+			$result['msg'] = wfMessage( 'usersignup-confirmation-email-sent', htmlspecialchars( $user->getEmail() ) )->parse();
 			$this->incrMemc( $memKey );
 		}
 
@@ -304,18 +288,12 @@ class UserLoginHelper extends WikiaModel {
 	}
 
 	/**
-	 * @param User $user
-	 * @return string
-	 */
-	public function getReconfirmationEmailTempalte( $user ) {
-		$emailTextTemplate = $this->app->renderView( "UserLogin", "GeneralMail", array('language' => $user->getOption('language'), 'type' => 'reconfirmation-email') );
-		return $emailTextTemplate;
-	}
-
-	/**
-	 * send reconfirmation email to the email address without saving that email address
+	 * Send reconfirmation email to the email address without saving that email address
+	 *
 	 * @param User $user
 	 * @param string $email
+	 * @param string $type
+	 *
 	 * @return Status object
 	 */
 	public function sendReconfirmationEmail( &$user, $email, $type = 'change' ) {
@@ -325,7 +303,7 @@ class UserLoginHelper extends WikiaModel {
 		$user->mId = 0;
 		$user->mEmail = $email;
 
-		$result = $user->sendReConfirmationMail( $type );
+		$result = $user->sendReConfirmationMail();
 
 		$user->mId = $userId;
 		$user->mEmail = $userEmail;
@@ -335,17 +313,17 @@ class UserLoginHelper extends WikiaModel {
 	}
 
 	/**
-	 * send reminder email
+	 * Send a reminder email
+	 *
 	 * @param User $user
 	 * @return Status object
 	 */
-	public function sendConfirmationReminderEmail( &$user ) {
-		if( ($user->getOption("cr_mailed", 0) == 1) ) {
+	public function sendConfirmationReminderEmail( $user ) {
+		if ( ( $user->getGlobalFlag( "cr_mailed", 0 ) == 1 ) ) {
 			return Status::newFatal( 'userlogin-error-confirmation-reminder-already-sent' );
 		}
-		$emailTextTemplate = $this->app->renderView( "UserLogin", "GeneralMail", array('language' => $user->getOption('language'), 'type' => 'confirmation-reminder-email') );
-		$user->setOption( "cr_mailed","1" );
-		return $user->sendConfirmationMail( false, 'ConfirmationReminderMail', 'usersignup-confirmation-reminder-email', true, $emailTextTemplate );
+		$user->setGlobalFlag( "cr_mailed", "1" );
+		return $user->sendConfirmationMail( false, 'ConfirmationReminderMail' );
 	}
 
 	/**
@@ -360,9 +338,9 @@ class UserLoginHelper extends WikiaModel {
 	 */
 	public function isPasswordThrottled( $username ) {
 		$passwordThrottled = false;
-		$throttleCount = 0;
+
 		if ( is_array( $this->wg->PasswordAttemptThrottle ) ) {
-			$throttleKey = wfMemcKey( 'password-throttle', wfGetIP(), md5( $username ) );
+			$throttleKey = $this->getPasswordThrottleCacheKey( $username );
 			$count = $this->wg->PasswordAttemptThrottle['count'];
 			$period = $this->wg->PasswordAttemptThrottle['seconds'];
 
@@ -370,7 +348,7 @@ class UserLoginHelper extends WikiaModel {
 			if ( !$throttleCount ) {
 				$this->wg->Memc->add( $throttleKey, 1, $period ); // start counter
 			} else if ( $throttleCount < $count ) {
-				$this->wg->Memc->incr($throttleKey);
+				$this->wg->Memc->incr( $throttleKey );
 			} else if ( $throttleCount >= $count ) {
 				$passwordThrottled = true;
 			}
@@ -378,19 +356,20 @@ class UserLoginHelper extends WikiaModel {
 		return $passwordThrottled;
 	}
 
-	/*
-	 * get memcache key for confirmation emails sent
+	/**
+	 * Get memcache key for confirmation emails sent
 	 */
 	public function getMemKeyConfirmationEmailsSent( $userId ) {
 		return wfSharedMemcKey( 'wikialogin', 'confirmation_emails_sent', $userId );
 	}
 
-	/*
-	 * set or increase counter in memcache
-	 * @param string memKey
-	 * @param integer period (time to expire data at)
+	/**
+	 * Set or increase counter in memcache
+	 *
+	 * @param string $memKey
+	 * @param integer $period (time to expire data at)
 	 */
-	public function incrMemc( $memKey, $period=86400 ) {
+	public function incrMemc( $memKey, $period = 86400 ) {
 		$value = $this->wg->Memc->get( $memKey );
 		if ( !$value ) {
 			$this->wg->Memc->add( $memKey, 1, $period );
@@ -401,25 +380,38 @@ class UserLoginHelper extends WikiaModel {
 
 	/**
 	 * clear password-throttle cache
+	 *
 	 * @param string $username
 	 */
 	public function clearPasswordThrottle( $username ) {
-		$key = wfMemcKey( 'password-throttle', wfGetIP(), md5($username) );
+		$key = $this->getPasswordThrottleCacheKey( $username );
 		$this->wg->Memc->delete( $key );
+	}
+
+	/**
+	 * @param $username
+	 *
+	 * @return String
+	 * @throws MWException
+	 */
+	public function getPasswordThrottleCacheKey( $username ) {
+		return wfMemcKey( 'password-throttle', $this->wg->Request->getIP(), md5( $username ) );
 	}
 
 	/**
 	 * Add a newuser log entry for the user
 	 *
 	 * @param User $user
-	 * @param $byEmail Boolean: account made by email?
+	 * @param bool $byEmail account made by email?
+	 *
+	 * @return bool
 	 */
 	public function addNewUserLogEntry( $user, $byEmail = false ) {
-		if( empty( $this->wg->NewUserLog ) ) {
+		if ( empty( $this->wg->NewUserLog ) ) {
 			return true; // disabled
 		}
 
-		if( !$byEmail ) {
+		if ( !$byEmail ) {
 			$action = 'create';
 			$doer = $user;
 		} else {
@@ -439,7 +431,8 @@ class UserLoginHelper extends WikiaModel {
 	}
 
 	/**
-	 * get login token
+	 * Get a login token
+	 *
 	 * @return string loginToken
 	 */
 	public static function getLoginToken() {
@@ -454,7 +447,7 @@ class UserLoginHelper extends WikiaModel {
 	}
 
 	/**
-	 * get signup token
+	 * Get a signup token
 	 * @return string signupToken
 	 */
 	public static function getSignupToken() {
@@ -468,22 +461,24 @@ class UserLoginHelper extends WikiaModel {
 		return LoginForm::getCreateaccountToken();
 	}
 
-	/*
+	/**
 	 * Show a nice form for the user to request a confirmation mail
 	 * original function: showRequestForm() in EmailConfirmation class (Special:Confirmemail page)
+	 *
+	 * @param EmailConfirmation $pageObj
 	 */
-	public function showRequestFormConfirmEmail( $pageObj ) {
+	public function showRequestFormConfirmEmail( EmailConfirmation $pageObj ) {
 		$user = $pageObj->getUser(); /* @var $user User */
 		$out = $pageObj->getOutput(); /* @var $out OutputPage */
-		$optionNewEmail = $user->getOption( 'new_email' );
-		if( $pageObj->getRequest()->wasPosted() && $user->matchEditToken( $pageObj->getRequest()->getText( 'token' ) ) ) {
+		$optionNewEmail = $user->getNewEmail();
+		if ( $pageObj->getRequest()->wasPosted() && $user->matchEditToken( $pageObj->getRequest()->getText( 'token' ) ) ) {
 			// Wikia change -- only allow one email confirmation attempt per hour
-			if (strtotime($user->mEmailTokenExpires) - strtotime("+6 days 23 hours") > 0) {
+			if ( strtotime( $user->mEmailTokenExpires ) - strtotime( "+6 days 23 hours" ) > 0 ) {
 				$out->addWikiMsg( 'usersignup-error-throttled-email' );
 				return;
 			}
 
-			$email = ( $user->isEmailConfirmed() && !empty($optionNewEmail) ) ? $optionNewEmail : $user->getEmail() ;
+			$email = ( $user->isEmailConfirmed() && !empty( $optionNewEmail ) ) ? $optionNewEmail : $user->getEmail() ;
 			$status = $this->sendReconfirmationEmail( $user, $email );
 			if ( $status->isGood() ) {
 				$out->addWikiMsg( 'usersignup-user-pref-reconfirmation-email-sent', $email );
@@ -491,7 +486,7 @@ class UserLoginHelper extends WikiaModel {
 				$out->addWikiText( $status->getWikiText( 'userlogin-error-mail-error' ) );
 			}
 		} else {
-			if ( $user->isEmailConfirmed() && empty($optionNewEmail) ) {
+			if ( $user->isEmailConfirmed() && empty( $optionNewEmail ) ) {
 				// date and time are separate parameters to facilitate localisation.
 				// $time is kept for backward compat reasons.
 				// 'emailauthenticated' is also used in SpecialPreferences.php
@@ -504,9 +499,9 @@ class UserLoginHelper extends WikiaModel {
 				return;
 			}
 
-			if ( $user->isEmailConfirmationPending() || !empty($optionNewEmail) ) {
+			if ( $user->isEmailConfirmationPending() || !empty( $optionNewEmail ) ) {
 				$out->addWikiMsg( 'usersignup-confirm-email-unconfirmed-emailnotauthenticated' );
-				if (strtotime($user->mEmailTokenExpires) - strtotime("+6 days 23 hours") > 0)
+				if ( strtotime( $user->mEmailTokenExpires ) - strtotime( "+6 days 23 hours" ) > 0 )
 					return;
 			}
 
@@ -519,7 +514,7 @@ class UserLoginHelper extends WikiaModel {
 	}
 
 	public static function clearNotConfirmedUserSession() {
-		unset($_SESSION['notConfirmedUserId']);
+		unset( $_SESSION['notConfirmedUserId'] );
 	}
 
 	public static function setNotConfirmedUserSession( $userId ) {
@@ -528,15 +523,16 @@ class UserLoginHelper extends WikiaModel {
 
 	/**
 	 * Removes not confirmed option from user's properties
-	 * 
+	 *
 	 * @param User $user
 	 * @return bool
 	 */
 	public static function removeNotConfirmedFlag( User &$user ) {
-		$user->setOption( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME, null );
-		$user->setOption( UserLoginSpecialController::SIGNED_UP_ON_WIKI_OPTION_NAME, null );
+		$user->setGlobalFlag( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME, null );
+		$user->setGlobalFlag( UserLoginSpecialController::SIGNED_UP_ON_WIKI_OPTION_NAME, null );
 		$user->saveSettings();
 		$user->saveToCache();
+		wfRunHooks( 'SignupConfirmEmailComplete', array( $user ) );
 		return true;
 	}
 
@@ -565,7 +561,7 @@ class UserLoginHelper extends WikiaModel {
 			&& !self::isWikiaEmail( $sEmail )
 		) {
 			$key = wfSharedMemcKey( "UserLogin", "AccountsPerEmail", $sEmail );
-			$count = $wgMemc->get($key);
+			$count = $wgMemc->get( $key );
 			if ( $count !== false
 				&& (int)$count >= (int)$wgAccountsPerEmail
 			) {
@@ -597,11 +593,35 @@ class UserLoginHelper extends WikiaModel {
 		// Execute custom callable
 		if ( is_callable( $function ) ) {
 			$result = $function( $params );
+		} else {
+			$result = null;
 		}
+
 		// and bring back the old value
 		$wgCaptchaTriggers = $oldValue;
 
 		return $result;
 	}
 
+	public function getNewAuthUrl() {
+		if ( $this->app->wg->title->isSpecial( 'Userlogout' ) ) {
+			$requestUrl = Title::newMainPage()->getLocalURL();
+		}
+		else {
+			$requestUrl = $this->app->wg->request->getRequestURL();
+		}
+
+		return '/join?redirect='
+			. urlencode ( wfExpandUrl ( $requestUrl ) )
+			. $this->getUselangParam();
+	}
+
+	/**
+	 * Returns string with uselang param to append to login url if Wikia language is different than default
+	 * @return string
+	 */
+	private function getUselangParam() {
+		$lang = $this->wg->ContLang->mCode;
+		return $lang == 'en' ? '' : '&uselang=' . $lang;
+	}
 }

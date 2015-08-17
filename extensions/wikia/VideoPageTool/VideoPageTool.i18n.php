@@ -8,6 +8,7 @@
 $messages = array();
 
 $messages['en'] = array(
+	'videopagetool-desc' => 'Wikia\'s Video Tool',
 	'videopagetool-page-title' => 'Wikia Video Tool',
 	'videopagetool-error-permission' => 'You cannot access this tool.',
 	'videopagetool-error-invalid-language' => 'Invalid language',
@@ -87,6 +88,7 @@ $messages['en'] = array(
 );
 
 $messages['qqq'] = array(
+	'videopagetool-desc' => '{{desc}}',
 	'videopagetool-page-title' => 'This is the page header/title (h1 tag) that is displayed at the top of the page.',
 	'videopagetool-error-permission' => 'This text appears if user does not have permission to access the tool.',
 	'videopagetool-error-invalid-language' => 'This text appears if the language is invalid.',

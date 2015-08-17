@@ -31,6 +31,7 @@ $wgExtensionCredits['other'][] =
 		),
 		'descriptionmsg' => 'abtesting-desc',
 		'version' => '1.0',
+		'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/AbTesting',
 	);
 
 /**
@@ -52,6 +53,7 @@ $wgExtensionMessagesFiles['AbTesting'] = "{$dir}/AbTesting.i18n.php";
 $wgHooks['WikiaSkinTopScripts'][] =  'AbTesting::onWikiaSkinTopScripts';
 $wgHooks['WikiaSkinTopShortTTLModules'][] =  'AbTesting::onWikiaSkinTopShortTTLModules';
 $wgHooks['WikiaMobileAssetsPackages'][] = 'AbTesting::onWikiaMobileAssetsPackages';
+$wgHooks['VenusAssetsPackages'][] = 'AbTesting::onVenusAssetsPackages';
 // Add js code in Oasis
 $wgHooks['OasisSkinAssetGroupsBlocking'][] = 'AbTesting::onOasisSkinAssetGroupsBlocking';
 

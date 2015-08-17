@@ -18,6 +18,11 @@
 class GlobalTitle extends Title {
 
 	/**
+	 * Default wgArticlePath
+	 */
+	const DEFAULT_ARTICLE_PATH = '/wiki/$1';
+
+	/**
 	 * public, used in static constructor
 	 */
 	public $mText = false;
@@ -31,6 +36,9 @@ class GlobalTitle extends Title {
 	 * others, private
 	 */
 	private $mServer = false;
+	/**
+	 * @var Language $mContLang
+	 */
 	private $mContLang = false;
 	private $mLang = false;
 	private $mArticlePath = false;
@@ -114,7 +122,7 @@ class GlobalTitle extends Title {
 			throw new \Exception( 'Invalid $city_id.' );
 		}
 
-		$memkey = sprintf( "GlobalTitle:%d:%d", $id, $city_id );
+		$memkey = wfSharedMemcKey( "GlobalTitle", $id, $city_id );
 		$res = $wgMemc->get( $memkey );
 		if ( empty($res) && WikiFactory::isPublic($city_id) ) {
 			$dbname = ( $dbname ) ? $dbname : WikiFactory::IDtoDB($city_id);
@@ -152,6 +160,20 @@ class GlobalTitle extends Title {
 	}
 
 	/**
+	 * @param $wikiId
+	 * @return string
+	 */
+	protected static function getWgArticlePath( $wikiId ) {
+		$destinationWgArticlePath = WikiFactory::getVarValueByName( 'wgArticlePath', $wikiId );
+
+		if ( !isset( $destinationWgArticlePath ) ) {
+			$destinationWgArticlePath = self::DEFAULT_ARTICLE_PATH;
+		}
+
+		return $destinationWgArticlePath;
+	}
+
+	/**
 	 * loadAll
 	 *
 	 *  constructor doesnt load anything from database. This is the place
@@ -183,7 +205,7 @@ class GlobalTitle extends Title {
 	/**
 	 * Get a database connection to this object database
 	 *
-	 * @param $type Master or slave constants
+	 * @param $type string Master or slave constants
 	 * @param $groups array Query group
 	 * @return DatabaseBase
 	 */
@@ -266,7 +288,7 @@ class GlobalTitle extends Title {
 	 * Get a real URL referring to this title
 	 *
 	 * @param string $query an optional query string
-	 * @param string $variant language variant of url (for sr, zh..)
+	 * @param string|bool $variant language variant of url (for sr, zh..)
 	 *
 	 * @return string the URL
 	 */
@@ -298,7 +320,7 @@ class GlobalTitle extends Title {
 	 * getInternalUrl from Title is not working corretly with GlobalTitle so it is fixed by getting FullURL
 	 *
 	 * @param string $query an optional query string
-	 * @param string $query2 (deprecated) language variant of url (for sr, zh..)
+	 * @param string|bool $query2 (deprecated) language variant of url (for sr, zh..)
 	 *
 	 * @return string
 	 */
@@ -310,7 +332,7 @@ class GlobalTitle extends Title {
 	 * local url doesn't make sense in this context. we always return full URL
 	 *
 	 * @param string $query an optional query string
-	 * @param string $variant language variant of url (for sr, zh..)
+	 * @param string|bool $variant language variant of url (for sr, zh..)
 	 *
 	 * @return string
 	 */
@@ -321,7 +343,7 @@ class GlobalTitle extends Title {
 	/**
 	 * Get a date of last edit
 	 *
-	 * @return MW timestamp
+	 * @return string MW timestamp
 	 */
 	public function getLastEdit() {
 		$this->loadAll();
@@ -549,9 +571,15 @@ class GlobalTitle extends Title {
 	 * This is a helper function, it doesn't return GlobalTitle (to be honest, it's more like ReversedGlobalTitle)
 	 */
 	public static function explodeURL( $url ) {
-		$app = F::app();
+		global $wgDevelEnvironment;
 
 		$urlParts = parse_url( $url );
+
+		if ( $wgDevelEnvironment ){
+			$explodedServer = explode( '.', $url );
+			$url = $explodedServer[0].'.wikia.com';
+		}
+		$wikiId = WikiFactory::UrlToID( $url );
 
 		if ( isset( $urlParts['query'] ) ) {
 			parse_str( $urlParts['query'], $queryParts );
@@ -559,15 +587,9 @@ class GlobalTitle extends Title {
 		if ( isset( $queryParts['title'] ) ) {
 			$articleName = $queryParts['title'];
 		} else {
-			$articleName = preg_replace( '!^/wiki/!i', '', $urlParts['path'] );
+			$destinationWgArticlePath = self::getWgArticlePath( $wikiId );
+			$articleName = self::stripArticlePath($urlParts['path'], $destinationWgArticlePath );
 		}
-
-		if ( $app->wg->develEnvironment ){
-			$explodedServer = explode( '.', $url );
-			$url = $explodedServer[0].'.wikia.com';
-		}
-
-		$wikiId = WikiFactory::UrlToID( $url );
 
 		$result = array(
 			'wikiId' => $wikiId,
@@ -577,11 +599,15 @@ class GlobalTitle extends Title {
 		return $result;
 	}
 
+	public static function stripArticlePath($path, $articlePath) {
+		$articlePath = preg_replace( '!/\$1$!i', '', $articlePath );
+		return preg_replace( '!^' . $articlePath . '/!i', '', $path );
+	}
 
 	/**
 	 * check if page exists
 	 *
-	 * @return 0/1
+	 * @return int 0/1
 	 */
 	public function exists() {
 		$this->loadAll();
@@ -623,28 +649,16 @@ class GlobalTitle extends Title {
 		/**
 		 * don't do this twice
 		 */
-		if( $this->mServer ) {
-			return $this->mServer;
-		}
-
-		$server = WikiFactory::getVarValueByName( "wgServer", $this->mCityId );
-
-		/**
-		 * special handling for dev boxes
-		 *
-		 * @author macbre
-		 */
-		global $wgDevelEnvironment;
-		if (!empty($wgDevelEnvironment)) {
-			$this->mServer = WikiFactory::getLocalEnvURL($server);
+		if ( $this->mServer ) {
 			return $this->mServer;
 		}
 
 		/**
 		 * get value from city_variables
 		 */
-		if( $server ) {
-			$this->mServer = $server;
+		$server = WikiFactory::getVarValueByName( "wgServer", $this->mCityId );
+		if ( $server ) {
+			$this->mServer = self::normalizeEnvURL( $server );
 			return $server;
 		}
 
@@ -660,13 +674,30 @@ class GlobalTitle extends Title {
 			$city = WikiFactory::getWikiByID( $this->mCityId, true );
 		}
 
-		if( $city ) {
+		if ( $city ) {
 			$server = rtrim( $city->city_url, "/" );
-			$this->mServer = $server;
+			$this->mServer = self::normalizeEnvURL( $server );
 			return $server;
 		}
 
 		return false;
+	}
+
+	/**
+	 *
+	 * Normalizes URL passed to this method to generate environment-specific paths
+	 *
+	 * @param $server
+	 * @return string
+	 */
+	private static function normalizeEnvURL( $server ) {
+		global $wgWikiaEnvironment;
+
+		if ( !in_array( $wgWikiaEnvironment, [ WIKIA_ENV_PROD, WIKIA_ENV_INTERNAL ] ) ) {
+			return WikiFactory::getLocalEnvURL( $server );
+		}
+
+		return $server;
 	}
 
 	/**
@@ -722,36 +753,33 @@ class GlobalTitle extends Title {
 	 *
 	 * Determine wgContLang value from WikiFactory variables
 	 *
-	 * @return Lang object
+	 * @return Language lang object
 	 */
 	private function loadContLang() {
 
 		/**
 		 * don't do this twice
 		 */
-		if( $this->mContLang ) {
+		if( $this->mContLang instanceof Language ) {
 			return $this->mContLang;
 		}
 
 		/**
 		 * maybe value from cache
 		 */
-		if( $this->mLang ) {
-			$lang = $this->mLang;
-		}
-		else {
+		if( !$this->mLang ) {
 			/**
 			 * so maybe value from database?
 			 */
-			$lang = WikiFactory::getVarValueByName( "wgLanguageCode", $this->mCityId );
-			if( !$lang ) {
+			$this->mLang = WikiFactory::getVarValueByName( "wgLanguageCode", $this->mCityId );
+			if( !$this->mLang ) {
 				/**
 				 * nope, only default language which is english
 				 */
-				$lang = "en";
+				$this->mLang = "en";
 			}
 		}
-		$this->mContLang = Language::factory( $lang );
+		$this->mContLang = Language::factory( $this->mLang );
 
 		return $this->mContLang;
 	}
@@ -797,15 +825,7 @@ class GlobalTitle extends Title {
 	 * @return string
 	 */
 	private function memcKey() {
-		global $wgSharedDB, $wgDevelEnvironmentName;
-
-		$parts = array( $wgSharedDB, "globaltitle", $this->mCityId );
-
-		if (!empty($wgDevelEnvironmentName)) {
-			$parts[] = $wgDevelEnvironmentName;
-		}
-
-		return implode(":", $parts);
+		return wfSharedMemcKey( 'globaltitle', $this->mCityId );
 	}
 
 	/**
@@ -820,11 +840,11 @@ class GlobalTitle extends Title {
 
 		$values = $wgMemc->get( $this->memcKey() );
 		if( is_array( $values ) ) {
-			$this->mLang = isset( $value[ "lang" ] ) ? $value[ "lang" ] : false;
+			$this->mLang = isset( $values[ "lang" ] ) ? $values[ "lang" ] : false;
 			$this->mServer = isset( $values[ "server" ] ) ? $values[ "server" ] : false;
 			$this->mArticlePath = isset( $values[ "path" ] ) ? $values[ "path" ] : false;
-			$this->mNamespaceNames = isset( $value[ "namespaces" ] ) ? $value[ "namespaces" ] : false;
-			$this->mLastEdit = isset( $value[ "lastedit" ] ) ? $value[ "lastedit" ] : false;
+			$this->mNamespaceNames = isset( $values[ "namespaces" ] ) ? $values[ "namespaces" ] : false;
+			$this->mLastEdit = isset( $values[ "lastedit" ] ) ? $values[ "lastedit" ] : false;
 
 			return true;
 		}
@@ -850,7 +870,7 @@ class GlobalTitle extends Title {
 				"namespaces" => $this->mNamespaceNames,
 				"lastedit" => $this->mLastEdit,
 			),
-			3600
+			WikiaResponse::CACHE_SHORT
 		);
 	}
 }

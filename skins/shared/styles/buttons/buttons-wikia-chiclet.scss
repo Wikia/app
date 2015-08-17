@@ -1,0 +1,49 @@
+@import "skins/shared/color";
+
+/*****************************
+Wikia Chiclet Button
+This list-based button is used in the page header for edit/history/delete actions
+******************************/
+
+$button-chiclet-opacity: .3;
+@if $is-dark-wiki {
+	$button-chiclet-opacity: .7;
+}
+
+.wikia-chiclet-button {
+	background-image: none;
+	border: 0;
+	border-radius: 0;
+	cursor: pointer;
+	display: inline-block;
+	height: 19px;
+	opacity: $button-chiclet-opacity;
+	padding: 0;
+	position: relative;
+	width: 19px;
+	img {
+		height: 15px;
+		left: 2px;
+		position: absolute;
+		top: 2px;
+		width: 15px;
+	}
+	&:hover {
+		opacity: 1;
+		background-image: none;
+	}
+}
+button.wikia-chiclet-button {
+	line-height: 1px;
+	img {
+		position: static;
+		vertical-align: middle;
+	}
+}
+
+.wikia-button.loginToEditProtectedPage{
+	padding: 0px 5px;
+	img {
+		margin-right: 8px;
+	}
+}

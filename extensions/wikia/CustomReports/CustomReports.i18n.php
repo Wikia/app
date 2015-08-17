@@ -3,6 +3,7 @@
 $messages = array();
 
 $messages['en'] = array(
+	'custom-reports-desc' => 'Allows priveleged users to see various custom reports.',
 	'report-no-data' => 'No data.',
 
 	'report-xaxis' => 'Date',

@@ -31,6 +31,9 @@ linters:
   HexFormat:
     enabled: true
 
+  HexNotation:
+    enabled: false
+
   IdWithExtraneousSelector:
     enabled: true
 
@@ -57,6 +60,9 @@ linters:
   SelectorDepth:
     enabled: true
     max_depth: 4 # was 3 but I found a possible legit use case for 4 in article.scss .toc
+
+  SelectorFormat:
+    enabled: false
 
   Shorthand:
     enabled: true

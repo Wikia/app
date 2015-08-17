@@ -150,7 +150,7 @@ class RecentChange {
 			# resetArticleID clears this memcached key when its likely we
 			# just set it earlier in this request.  BugID 42735
 			global $wgEnableFastLinkCache;
-			if (!$wgEnableFastLinkCache) {
+			if (empty($wgEnableFastLinkCache)) {
 				# Make sure the correct page ID is process cached
 				$this->mTitle->resetArticleID( $this->mAttribs['rc_cur_id'] );
 			}
@@ -239,13 +239,14 @@ class RecentChange {
 			$title = Title::makeTitle( $this->mAttribs['rc_namespace'], $this->mAttribs['rc_title'] );
 
 			# @todo FIXME: This would be better as an extension hook
-			$enotif = new EmailNotification();
-			$status = $enotif->notifyOnPageChange( $editor, $title,
+			$enotif = new EmailNotification( $editor, $title,
 				$this->mAttribs['rc_timestamp'],
 				$this->mAttribs['rc_comment'],
 				$this->mAttribs['rc_minor'],
+				$this->mAttribs['rc_this_oldid'],
 				$this->mAttribs['rc_last_oldid'],
 				$this->mAttribs['rc_log_action'] );
+			$enotif->notifyOnPageChange();
 		}
 
 		// temporary code begin /Inez

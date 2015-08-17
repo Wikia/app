@@ -6,6 +6,16 @@
  * @author Jakub Olek <jolek(at)wikia-inc.com>
  */
 class WikiaMobileController extends WikiaController{
+	function __construct() {
+		//Some internal methods called from this controller need the skin to be wikiamobile
+		//It makes sense to set it explicitly here as other skins shouldn't use it anyway
+		RequestContext::getMain()->setSkin(
+			Skin::newFromKey( 'wikiamobile' )
+		);
+
+		parent::__construct();
+	}
+
 	/**
 	 * Fetches the requested batch for a specific index
 	 * section in a category page

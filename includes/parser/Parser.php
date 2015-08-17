@@ -181,6 +181,19 @@ class Parser {
 	var $mUniqPrefix;
 
 	/**
+	 * Wikia change begin
+	 *
+	 * Wikia vars
+	 */
+
+	var $mIsMainParse;	# Is main article content currently parsed
+	var $mFlagsParsed = false; # Have you already parsed the article's flags?
+
+	/**
+	 * Wikia change end
+	 */
+
+	/**
 	 * Constructor
 	 *
 	 * @param $conf array
@@ -329,7 +342,6 @@ class Parser {
 		 * First pass--just handle <nowiki> sections, pass the rest off
 		 * to internalParse() which does all the real work.
 		 */
-
 		global $wgUseTidy, $wgAlwaysUseTidy, $wgDisableLangConversion, $wgDisableTitleConversion;
 		$fname = __METHOD__.'-' . wfGetCaller();
 		wfProfileIn( __METHOD__ );
@@ -378,7 +390,6 @@ class Parser {
 		/* Wikia change end */
 
 		$text = $this->doBlockLevels( $text, $linestart );
-
 		$this->replaceLinkHolders( $text );
 
 		/**
@@ -488,8 +499,11 @@ class Parser {
 			// which looks much like the problematic '-'.
 			$limitReport = str_replace( array( '-', '&' ), array( '‐', '&amp;' ), $limitReport );
 
-			$text .= "\n<!-- \n$limitReport-->\n";
+			if ( !empty( $limitReport ) ) {
+				$text .= "\n<!-- \n$limitReport-->\n";
+			}
 		}
+
 		$this->mOutput->setText( $text );
 
 		$this->mRevisionId = $oldRevisionId;
@@ -1753,6 +1767,7 @@ class Parser {
 
 		$imagesfrom = $this->mOptions->getAllowExternalImagesFrom();
 		$imagesexception = !empty( $imagesfrom );
+		$isValidImageUrl = VignetteRequest::isVignetteUrl($url) || preg_match(self::EXT_IMAGE_REGEX, $url);
 		$text = false;
 		# $imagesfrom could be either a single string or an array of strings, parse out the latter
 		if ( $imagesexception && is_array( $imagesfrom ) ) {
@@ -1771,13 +1786,12 @@ class Parser {
 		if ( $this->mOptions->getAllowExternalImages()
 			 || ( !empty( $wgAllowExternalWhitelistImages ) && wfRunHooks( 'outputMakeExternalImage', array( &$url ) ) )
 			 || ( $imagesexception && $imagematch ) ) {
-			if ( preg_match( self::EXT_IMAGE_REGEX, $url ) ) {
+			if ( $isValidImageUrl ) {
 				# Image found
 				$text = Linker::makeExternalImage( $url );
 			}
 		}
-		if ( !$text && $this->mOptions->getEnableImageWhitelist()
-			 && preg_match( self::EXT_IMAGE_REGEX, $url ) ) {
+		if ( !$text && $this->mOptions->getEnableImageWhitelist() && $isValidImageUrl ) {
 			$whitelist = explode( "\n", wfMsgForContent( 'external_image_whitelist' ) );
 			foreach ( $whitelist as $entry ) {
 				# Sanitize the regex fragment, make it case-insensitive, ignore blank entries/comments
@@ -2000,7 +2014,7 @@ class Parser {
 
 			if ( $might_be_img ) { # if this is actually an invalid link
 				wfProfileIn( __METHOD__."-might_be_img" );
-				if ( ( $ns == NS_FILE || $ns == NS_VIDEO ) && $noforce ) { # but might be an image
+				if ( ( $ns == NS_FILE ) && $noforce ) { # but might be an image
 					$found = false;
 					while ( true ) {
 						# look at the next 'line' to see if we can close it there
@@ -2549,7 +2563,7 @@ class Parser {
 				wfProfileIn( __METHOD__."-paragraph" );
 				# No prefix (not in list)--go to paragraph mode
 				# XXX: use a stack for nestable elements like span, table and div
-				$openmatch = preg_match('/(?:<table|<h1|<h2|<h3|<h4|<h5|<h6|<pre|<tr|<p|<ul|<ol|<li|<\\/tr|<\\/td|<\\/th)/iS', $t );
+				$openmatch = preg_match('/(?:<aside|<table|<h1|<h2|<h3|<h4|<h5|<h6|<pre|<tr|<p|<ul|<ol|<li|<\\/tr|<\\/td|<\\/th)/iS', $t );
 
 				/**
 				 * Wikia change start
@@ -2558,9 +2572,9 @@ class Parser {
 				 * Stop the parser from wrapping figure tags in paragraphs
 				 */
 				$closematch = preg_match(
-					'/(?:<\\/table|<\\/h1|<\\/h2|<\\/h3|<\\/h4|<\\/h5|<\\/h6|'.
+					'/(?:<\\/?aside|<\\/table|<\\/h1|<\\/h2|<\\/h3|<\\/h4|<\\/h5|<\\/h6|'.
 				#	'<td|<th|<\\/?div|<hr|<\\/pre|<\\/p|'.$this->mUniqPrefix.'-pre|<\\/li|<\\/ul|<\\/ol|<\\/?center)/iS', $t );
-					'<td|<th|<\\/?div|<\\/?figure|<hr|<\\/pre|<\\/p|'.$this->mUniqPrefix.'-pre|'.$this->mUniqPrefix.'-bloglist|<\\/li|<\\/ul|<\\/ol|<\\/?center)/iS', $t );
+					'<td|<th|<\\/?div|<\\/?figure|<hr|<\\/pre|<\\/p|'.$this->mUniqPrefix.'-pre|'.$this->mUniqPrefix.'-bloglist|'.$this->mUniqPrefix.'-infobox|<\\/li|<\\/ul|<\\/ol|<\\/?center)/iS', $t );
 				/**
 				 * Wikia change end
 				 */
@@ -4130,6 +4144,9 @@ class Parser {
 				if ( !is_callable( $this->mTagHooks[$name] ) ) {
 					throw new MWException( "Tag hook for $name is not callable\n" );
 				}
+
+				wfRunHooks( 'ParserTagHooksBeforeInvoke', [ $name, $marker, $content, $attributes, $this, $frame ] );
+
 				$output = call_user_func_array( $this->mTagHooks[$name],
 					array( $content, $attributes, $this, $frame ) );
 			} elseif ( isset( $this->mFunctionTagHooks[$name] ) ) {
@@ -4320,6 +4337,10 @@ class Parser {
 	 */
 	function formatHeadings( $text, $origText, $isMain=true ) {
 		global $wgMaxTocLevel, $wgHtml5, $wgExperimentalHtmlIds;
+
+		// Wikia change start
+		$this->mIsMainParse = $isMain;
+		// Wikia change end
 
 		# Inhibit editsection links if requested in the page
 		if ( isset( $this->mDoubleUnderscores['noeditsection'] ) ) {
@@ -4836,10 +4857,10 @@ class Parser {
 
 		# If not given, retrieve from the user object.
 		if ( $nickname === false )
-			$nickname = $user->getOption( 'nickname' );
+			$nickname = $user->getGlobalAttribute( 'nickname' );
 
 		if ( is_null( $fancySig ) ) {
-			$fancySig = $user->getBoolOption( 'fancysig' );
+			$fancySig = (bool)$user->getGlobalAttribute( 'fancysig' );
 		}
 
 		$nickname = $nickname == null ? $username : $nickname;
@@ -5603,6 +5624,14 @@ class Parser {
 		}
 		$this->mOutput->setCacheTime( -1 ); // old style, for compatibility
 		$this->mOutput->updateCacheExpiry( 0 ); // new style, for consistency
+
+		// Wikia change - begin
+		Wikia\Logger\WikiaLogger::instance()->info(__METHOD__, [
+			'exception' => new Exception()
+		]);
+
+		Transaction::setAttribute( Transaction::PARAM_PARSER_CACHE_DISABLED, true );
+		// Wikia change - end
 	}
 
 	/**

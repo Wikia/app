@@ -58,7 +58,7 @@ class UserRatings extends SpecialPage {
 			{
 			    date_default_timezone_set("UTC");
 
-				$timecorrection = $wgUser->getOption( 'timecorrection' );
+				$timecorrection = $wgUser->getGlobalPreference( 'timecorrection' );
 				$timecurent = $wgLang->date( wfTimestamp( TS_MW, $array['timestamp'] ), true, false, $timecorrection );
 
 			    $out = '* ';

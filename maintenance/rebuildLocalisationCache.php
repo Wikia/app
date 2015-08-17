@@ -38,6 +38,7 @@ class RebuildLocalisationCache extends Maintenance {
 		$this->addOption( 'threads', 'Fork more than one thread', false, true );
 		// Wikia change begin
 		$this->addOption( 'cache-dir', 'Override the value of $wgCacheDirectory', false, true );
+		$this->addOption( 'primary', 'Only rebuild the Wikia supported languages', false, false, '-p' );
 		// Wikia change end
 	}
 
@@ -51,6 +52,7 @@ class RebuildLocalisationCache extends Maintenance {
 		// Wikia change begin
 		global $wgCacheDirectory;
 		$wgCacheDirectory = $this->getOption( 'cache-dir', $wgCacheDirectory );
+		$primaryOnly = $this->hasOption( 'primary' );
 		// Wikia change end
 
 		$force = $this->hasOption( 'force' );
@@ -75,10 +77,11 @@ class RebuildLocalisationCache extends Maintenance {
 		}
 		$lc = new LocalisationCache_BulkLoad( $conf );
 
-		$codes = array_keys( Language::getLanguageNames( true ) );
+		// Don't get all the language codes if --primary was given
+		$codes = $primaryOnly ? [] : array_keys( Language::getLanguageNames( true ) );
 
-		// Define a list of language codes we should rebuild first
-		$firstCodes = array( 'en', 'de', 'es', 'fr','pl', 'it' );
+		// Define the list of Wikia supported language codes we should rebuild first
+		$firstCodes = [ 'en', 'pl', 'de', 'es', 'fr', 'it', 'ja', 'nl', 'pt', 'ru', 'zh-hans', 'zh-tw' ];
 
 		// Filter these out of the full language code list
 		$codes = array_filter( $codes,
@@ -105,7 +108,9 @@ class RebuildLocalisationCache extends Maintenance {
 				mt_srand( getmypid() );
 				$numRebuilt = $this->doRebuild( $codes, $lc, $force );
 				// Abuse the exit value for the count of rebuild languages
-				exit( $numRebuilt );
+				// If --force was passed in, just report success or failure
+				$exitcode = $force ? ( count( $codes ) == $numRebuilt ? 0 : 1 ) : $numRebuilt;
+				exit( $exitcode );
 			} elseif ( $pid === -1 ) {
 				// Fork failed or one thread, do it serialized
 				$numRebuilt += $this->doRebuild( $codes, $lc, $force );
@@ -122,11 +127,27 @@ class RebuildLocalisationCache extends Maintenance {
 			$numRebuilt += pcntl_wexitstatus( $status );
 		}
 
+		// Default exit code
+		$exitcode = 0;
+
+		if ( $force && ( $numRebuilt != $total ) ) {
+			if ($numRebuilt == 0 ) {
+				// The rebuild was successful so assume all languages were rebuilt
+				$numRebuilt = $total;
+			} else {
+				// We have no way of knowing how many languages were rebuilt in this case
+				$numRebuilt = '???';
+				$exitcode = 1;
+			}
+		}
+
 		$this->output( "$numRebuilt languages rebuilt out of $total\n" );
 
 		if ( $numRebuilt === 0 ) {
 			$this->output( "Use --force to rebuild the caches which are still fresh.\n" );
 		}
+
+		exit( $exitcode );
 	}
 
 	/**

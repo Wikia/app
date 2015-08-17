@@ -390,7 +390,7 @@ class WikiaMiniUpload {
 		);
 
 		$thumb =  $file->transform( $hp );
-		$more = htmlspecialchars( wfMsg( 'thumbnail-more' ) );
+		$more = wfMessage( 'thumbnail-more' )->escaped();
 
 		if ( !$thumbnail ) {
 			// cater for full size here
@@ -416,7 +416,7 @@ class WikiaMiniUpload {
 					'<a href="'.$url.'" class="internal" title="'.$more.'">'.
 					'<img src="'.$wgStylePath.'/common/images/magnify-clip.png" ' .
 					'width="15" height="11" alt="" /></a></div>';
-			$s .= '  <div class="thumbcaption">'.$zoomicon.$caption."</div></div></div>";
+			$s .= '  <div class="thumbcaption">'.$zoomicon. htmlspecialchars( $caption ) ."</div></div></div>";
 		}
 		return str_replace("\n", ' ', $s);
 	}
@@ -581,7 +581,7 @@ class WikiaMiniUpload {
 					$this->tempFileClearInfo( $tempid );
 				}
 
-				if ( $wgUser->getOption( 'watchdefault' ) || ( $newFile && $wgUser->getOption( 'watchcreations' ) ) ) {
+				if ( $wgUser->getGLobalPreference( 'watchdefault' ) || ( $newFile && $wgUser->getGlobalPreference( 'watchcreations' ) ) ) {
 					$wgUser->addWatch($title);
 				}
 				$db =& wfGetDB(DB_MASTER);

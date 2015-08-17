@@ -6,7 +6,7 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 	'wikia.log',
 	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.adHelper'
-], function (window, document, log, slotTweaker, adHelper) {
+], function (win, doc, log, slotTweaker, adHelper) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.adLogicPageDimensions',
@@ -26,51 +26,45 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 		pageHeight,
 
 		/**
-		 * Slots based on whether there's a right rail on page or not
-		 */
-		slotsOnlyWithRail = {
-			LEFT_SKYSCRAPER_3: true
-		},
-		rightRailPresent = !!document.getElementById('WikiaRail'),
-
-		/**
-		 * Slots based on screen width
+		 * Slots based on screen width for responsive design
 		 *
 		 * @see skins/oasis/css/core/responsive-variables.scss
 		 * @see skins/oasis/css/core/responsive-background.scss
 		 */
+		slotsToHideOnMediaQuery = {
+			VIRTUAL_INCONTENT:       'twoColumns', // "virtual" slot to launch INCONTENT_* slots
+			INCONTENT_1A:            'twoColumns',
+			INCONTENT_1B:            'twoColumns',
+			INCONTENT_1C:            'twoColumns',
+			INCONTENT_LEADERBOARD_1: 'twoColumns',
+			TOP_BUTTON_WIDE:         'noTopButton',
+			'TOP_BUTTON_WIDE.force': 'noTopButton',
+			TOP_RIGHT_BOXAD:         'oneColumn',
+			HOME_TOP_RIGHT_BOXAD:    'oneColumn',
+			LEFT_SKYSCRAPER_2:       'oneColumn',
+			LEFT_SKYSCRAPER_3:       'oneColumn',
+			INCONTENT_BOXAD_1:       'oneColumn'
+		},
 		mediaQueriesToCheck = {
 			twoColumns: 'screen and (min-width: 1024px)',
 			oneColumn: 'screen and (max-width: 1023px)',
-			noTopButton: 'screen and (max-width: 1030px)',
-			noSkins: 'screen and (max-width: 1260px)'
-		},
-		slotsToHideOnMediaQuery = {
-			TOP_IN_CONTENT_BOXAD: 'twoColumns',
-			TOP_BUTTON_WIDE: 'noTopButton',
-			'TOP_BUTTON_WIDE.force': 'noTopButton',
-			TOP_RIGHT_BOXAD: 'oneColumn',
-			HOME_TOP_RIGHT_BOXAD: 'oneColumn',
-			LEFT_SKYSCRAPER_2: 'oneColumn',
-			LEFT_SKYSCRAPER_3: 'oneColumn',
-			INCONTENT_BOXAD_1: 'oneColumn',
-			INVISIBLE_SKIN: 'noSkins'
+			noTopButton: 'screen and (max-width: 1063px)'
 		},
 		mediaQueriesMet,
 		matchMedia;
 
 	function matchMediaMoz(query) {
-		return window.matchMedia(query).matches;
+		return win.matchMedia(query).matches;
 	}
 
 	function matchMediaIe(query) {
-		return window.styleMedia.matchMedium(query);
+		return win.styleMedia.matchMedium(query);
 	}
 
 	// Chose proper implementation of machMedia
-	matchMedia = window.matchMedia && matchMediaMoz;
-	matchMedia = matchMedia || (window.styleMedia && window.styleMedia.matchMedium && matchMediaIe);
-	matchMedia = matchMedia || (window.media && window.media.matchMedium);
+	matchMedia = win.matchMedia && matchMediaMoz;
+	matchMedia = matchMedia || (win.styleMedia && win.styleMedia.matchMedium && matchMediaIe);
+	matchMedia = matchMedia || (win.media && win.media.matchMedium);
 
 	if (!matchMedia) {
 		log('No working matchMedia implementation found', 'user', logGroup);
@@ -79,7 +73,7 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 	/**
 	 * Logic to check for given slot on every window resize
 	 *
-	 * @param slotname
+	 * @param {string} slotname
 	 * @returns {boolean}
 	 */
 	function shouldBeShown(slotname) {
@@ -87,11 +81,6 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 			wideEnough = false,
 			conflictingMediaQuery;
 
-		if (slotsOnlyWithRail[slotname]) {
-			if (!rightRailPresent) {
-				return false;
-			}
-		}
 		if (pageHeight) {
 			longEnough = !slotsOnlyOnLongPages[slotname] || pageHeight > slotsOnlyOnLongPages[slotname];
 		}
@@ -104,14 +93,18 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 			}
 		}
 
-		return longEnough && wideEnough;
+		if (!longEnough || !wideEnough) {
+			return false;
+		}
+
+		return true;
 	}
 
 	/**
 	 * Refresh an ad and show/hide based on the changed window size
-	 * No logging here, it needs to be super fast
+	 * Logging on state changes only, it needs to be super fast
 	 *
-	 * @param ad one of the wrappedAds
+	 * @param {object} ad one of the wrappedAds
 	 */
 	function refresh(ad) {
 		if (shouldBeShown(ad.slotname)) {
@@ -133,28 +126,30 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 				log(['Hiding empty slot ' + ad.slotname, ad], 'info', logGroup);
 
 				slotTweaker.hide(ad.slotname);
+				slotTweaker.hackChromeRefresh(ad.slotname);
 				ad.state = 'ready';
 
 			} else if (ad.state === 'shown') {
 				log(['Hiding slot ' + ad.slotname, ad], 'info', logGroup);
 
 				slotTweaker.hide(ad.slotname);
+				slotTweaker.hackChromeRefresh(ad.slotname);
 				ad.state = 'hidden';
 			}
 		}
 	}
 
 	/**
-	 * Update the pageHeight and trigger refresh of all ads.
+	 * Update the pageHeight and mediaQueriesMet
 	 * No logging here, it needs to be super fast
 	 */
-	function onResize() {
-		var slotname,
-			mediaQueryIndex;
+	function updateVars() {
+		var mediaQueryIndex;
 
-		pageHeight = document.documentElement.scrollHeight;
+		pageHeight = doc.documentElement.scrollHeight;
 
-		if (window.wgOasisResponsive) {
+		// All ads should be shown on non-responsive oasis
+		if (win.wgOasisResponsive || win.wgOasisBreakpoints) {
 			if (matchMedia) {
 				mediaQueriesMet = {};
 				for (mediaQueryIndex in mediaQueriesToCheck) {
@@ -171,6 +166,14 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 				}
 			}
 		}
+	}
+
+	/**
+	 * Refresh all ads
+	 * No logging here, it needs to be super fast
+	 */
+	function refreshAll() {
+		var slotname;
 
 		for (slotname in wrappedAds) {
 			if (wrappedAds.hasOwnProperty(slotname)) {
@@ -179,16 +182,22 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 		}
 	}
 
+	/**
+	 * Update the pageHeight and trigger refresh of all ads
+	 */
+	function onResize() {
+		updateVars();
+		refreshAll();
+	}
 
 	/**
 	 * If supported, bind to resize event (and fire it once)
 	 */
 	function init() {
 		log('init', 'debug', logGroup);
-		if (window.addEventListener) {
-			onResize();
-			window.addEventListener('orientationchange', adHelper.throttle(onResize, 100));
-			window.addEventListener('resize', adHelper.throttle(onResize, 100));
+		if (win.addEventListener) {
+			win.addEventListener('orientationchange', adHelper.throttle(onResize, 100));
+			win.addEventListener('resize', adHelper.throttle(onResize, 100));
 		} else {
 			log('No support for addEventListener. No dimension-dependent ads will be shown', 'error', logGroup);
 		}
@@ -199,8 +208,8 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 	/**
 	 * Add an ad to the wrappedAds
 	 *
-	 * @param slotname
-	 * @param loadCallback -- the function to call when an ad shows up the first time
+	 * @param {string} slotname
+	 * @param {function} loadCallback -- the function to call when an ad shows up the first time
 	 */
 	function add(slotname, loadCallback) {
 		log(['add', slotname, loadCallback], 'debug', logGroup);
@@ -208,6 +217,8 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 		if (!initCalled) {
 			init();
 		}
+
+		updateVars();
 
 		wrappedAds[slotname] = {
 			slotname: slotname,
@@ -219,21 +230,9 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 	}
 
 	/**
-	 * Check if page should have prefooters (note it can change later)
-	 *
-	 * @returns {boolean}
-	 */
-	function hasPreFooters() {
-		log('hasPreFooters', 'debug', logGroup);
-		pageHeight = document.documentElement.scrollHeight;
-		log(['hasPreFooters', {pageHeight: pageHeight, preFootersThreshold: preFootersThreshold}], 'debug', logGroup);
-		return pageHeight > preFootersThreshold;
-	}
-
-	/**
 	 * Check if window size logic is applicable to the given slot
 	 *
-	 * @param slotname
+	 * @param {string} slotname
 	 * @return {boolean}
 	 */
 	function isApplicable(slotname) {
@@ -241,14 +240,12 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 
 		return !!(
 			slotsOnlyOnLongPages[slotname] ||
-				slotsToHideOnMediaQuery[slotname] ||
-				slotsOnlyWithRail[slotname]
+			slotsToHideOnMediaQuery[slotname]
 		);
 	}
 
 	return {
 		isApplicable: isApplicable,
-		addSlot: add,
-		hasPreFooters: hasPreFooters
+		addSlot: add
 	};
 });

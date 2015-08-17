@@ -33,6 +33,8 @@ class SpecialUserlogout extends UnlistedSpecialPage {
 	}
 
 	function execute( $par ) {
+		global $wgUser;		/* wikia change */
+
 		/**
 		 * Some satellite ISPs use broken precaching schemes that log people out straight after
 		 * they're logged in (bug 17790). Luckily, there's a way to detect such requests.
@@ -49,17 +51,37 @@ class SpecialUserlogout extends UnlistedSpecialPage {
 		$oldName = $user->getName();
 		$user->logout();
 
+		/*
+		 * Special pages use the new-style context-based user object.  However, much of the rest of the world
+		 * (e.g. Global Nav) uses the old-style global wgUser object.  As such, when we log out we need to
+		 * ensure that both copies of the user object are properly addressed, or else parts of the page will still
+		 * believe they have an authenticated user object.
+		 *
+		 * Once the old-style global wgUser object is fully deprecated, this line can be removed.
+		*/
+		$wgUser->logout();	 /* wikia change */
+
+		// Wikia change
+		// regenerate session ID on user logout to avoid race conditions with
+		// long running requests logging the user back in (@see PLATFORM-1028)
+		wfResetSessionID();
+
 		$out = $this->getOutput();
-		$out->addWikiMsg( 'logouttext' );
+
+		$loginUrl = ( F::app()->wg->EnableNewAuth && F::app()->checkSkin( 'wikiamobile' ) )
+			? ( new UserLoginHelper() )->getNewAuthUrl()
+			: SpecialPage::getTitleFor( 'UserLogin' )->getLocalURL();
+		$loginLink = '<a href="' . $loginUrl . '">' . wfMessage( 'logouttext-link-text' )->escaped() . '</a>';
+		$out->addHTML( wfMessage( 'logouttext' )->rawParams( $loginLink )->parse() );
 
 		// Hook.
 		$injected_html = '';
 		wfRunHooks( 'UserLogoutComplete', array( &$user, &$injected_html, $oldName ) );
 		$out->addHTML( $injected_html );
 
-		$mReturnTo = $this->getRequest()->getVal( 'returnto' );		
+		$mReturnTo = $this->getRequest()->getVal( 'returnto' );
 		$mReturnToQuery = $this->getRequest()->getVal( 'returntoquery' );
-		
+
 		$title = Title::newFromText($mReturnTo);
 		if ( !empty($title) ) {
 			$mResolvedReturnTo = strtolower( array_shift( SpecialPageFactory::resolveAlias( $title->getDBKey() ) ) );
@@ -69,7 +91,7 @@ class SpecialUserlogout extends UnlistedSpecialPage {
 				$mReturnToQuery = '';
 			}
 		}
-		
+
 		$out->returnToMain(false, $mReturnTo, $mReturnToQuery);
 	}
 }

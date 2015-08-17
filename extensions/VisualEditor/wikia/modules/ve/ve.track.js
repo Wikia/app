@@ -12,56 +12,56 @@ require( ['wikia.tracker'], function ( tracker ) {
 		mwTopics = {
 			'behavior.lastTransactionTillSaveDialogOpen': function ( data ) {
 				return {
-					'action': actions.OPEN,
-					'label': 'dialog-save',
-					'value': normalizeDuration( data.duration )
+					action: actions.OPEN,
+					label: 'dialog-save',
+					value: normalizeDuration( data.duration )
 				};
 			},
 			'behavior.saveDialogClose': function ( data ) {
 				return {
-					'action': actions.CLOSE,
-					'label': 'dialog-save',
-					'value': normalizeDuration( data.duration )
+					action: actions.CLOSE,
+					label: 'dialog-save',
+					value: normalizeDuration( data.duration )
 				};
 			},
 			'command.execute': function ( data ) {
 				return {
-					'action': actions.KEYPRESS,
-					'label': 'tool-' + nameToLabel( data.name )
+					action: actions.KEYPRESS,
+					label: 'tool-' + nameToLabel( data.name )
 				};
 			},
 			'error.createdocumentfromhtml': function ( data ) {
 				return {
-					'action': actions.ERROR,
-					'label': 'createdocumentfromhtml-' + data.message
+					action: actions.ERROR,
+					label: 'createdocumentfromhtml-' + data.message
 				};
 			},
 			'performance.system.activation': function ( data ) {
 				return {
-					'action': actions.IMPRESSION,
-					'label': 'edit-page-ready',
-					'value': normalizeDuration( data.duration )
+					action: actions.IMPRESSION,
+					label: 'edit-page-ready',
+					value: normalizeDuration( data.duration )
 				};
 			},
 			'performance.user.reviewComplete': function ( data ) {
 				return {
-					'action': actions.SUCCESS,
-					'label': 'dialog-save-review-changes',
-					'value': normalizeDuration( data.duration )
+					action: actions.SUCCESS,
+					label: 'dialog-save-review-changes',
+					value: normalizeDuration( data.duration )
 				};
 			},
 			'performance.user.reviewError': function ( data ) {
 				return {
-					'action': actions.ERROR,
-					'label': 'dialog-save-review-changes',
-					'value': normalizeDuration( data.duration )
+					action: actions.ERROR,
+					label: 'dialog-save-review-changes',
+					value: normalizeDuration( data.duration )
 				};
 			},
 			'performance.user.saveComplete': function ( data ) {
 				return {
-					'action': actions.SUCCESS,
-					'label': 'publish',
-					'value': normalizeDuration( data.duration )
+					action: actions.SUCCESS,
+					label: 'publish',
+					value: normalizeDuration( data.duration )
 				};
 			},
 			'performance.user.saveError': function ( data, topics ) {
@@ -69,27 +69,27 @@ require( ['wikia.tracker'], function ( tracker ) {
 					data.type = topics[ topics.length - 1 ];
 				}
 				return {
-					'action': actions.ERROR,
-					'label': 'publish-' + data.type,
-					'retries': data.retries,
-					'value': normalizeDuration( data.duration )
+					action: actions.ERROR,
+					label: 'publish-' + data.type,
+					retries: data.retries,
+					value: normalizeDuration( data.duration )
 				};
 			},
-			'tool': function ( data ) {
+			tool: function ( data ) {
 				return {
-					'action': actions.CLICK,
-					'label': 'tool-' + nameToLabel( data.name ),
-					'value': data.toolbar === 'surface' ? 1 : 0
+					action: actions.CLICK,
+					label: 'tool-' + nameToLabel( data.name ),
+					value: data.toolbar === 'surface' ? 1 : 0
 				};
 			}
 		},
 		// @see {@link nameToLabel} for more information
 		nameToLabelMap = {
-			'meta': 'page-settings',
-			'mwSave': 'save',
-			'transclusion': 'template',
-			'wikiaMediaInsert': 'media-insert',
-			'wikiaSourceMode': 'source'
+			meta: 'page-settings',
+			mwSave: 'save',
+			transclusion: 'template',
+			wikiaMediaInsert: 'media-insert',
+			wikiaSourceMode: 'source'
 		},
 		// A lot of the events sent in the 'wikia' topic are tracked generically (for example,
 		// all dialog 'open' and 'close' events). Sometimes this isn't desired because we want
@@ -140,7 +140,7 @@ require( ['wikia.tracker'], function ( tracker ) {
 		var i, mwEvent, topics,
 			params = {
 				category: 'editor-ve',
-				trackingMethod: 'both'
+				trackingMethod: 'analytics'
 			};
 
 		// MW events
@@ -175,8 +175,32 @@ require( ['wikia.tracker'], function ( tracker ) {
 			return;
 		}
 
+		// Funnel tracking
+		handleFunnel( data );
+
 		// Send off to Wikia.Tracker
 		tracker.track( ve.extendObject( params, data ) );
+	}
+
+	/**
+	 * Track fake pageviews in GA for certain events
+	 * @method
+	 * @param {Object} data The tracking data
+	 */
+	function handleFunnel( data ) {
+		var funnelEvents = [
+			'edit-page-ready/impression',
+			'button-publish/enable',
+			'button-cancel/click',
+			'button-publish/click',
+			'dialog-save-publish/click',
+			'publish/success'
+		],
+		funnelEvent = data.label + '/' + data.action;
+
+		if ( funnelEvents.indexOf( funnelEvent ) !== -1 ) {
+			window.guaTrackPageview( '/fake-visual-editor/' + funnelEvent, 've' );
+		}
 	}
 
 	/**
@@ -194,9 +218,9 @@ require( ['wikia.tracker'], function ( tracker ) {
 	if ( mw.libs.ve.activateOnPageLoad ) {
 		mw.hook( 've.activationComplete' ).add( function () {
 			ve.track( 'wikia', {
-				'action': actions.IMPRESSION,
-				'label': 'edit-page-ready-from-page-load',
-				'value': normalizeDuration( ve.now() - window.wgNow )
+				action: actions.IMPRESSION,
+				label: 'edit-page-ready-from-page-load',
+				value: normalizeDuration( ve.now() - window.wgNow )
 			} );
 		} );
 	}

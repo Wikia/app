@@ -14,6 +14,8 @@ use Wikia;
  */
 class ExternalRubyCompiler extends Compiler {
 
+	use Wikia\Logger\Loggable;
+
 	protected $tempDir;
 	protected $rootDir;
 	protected $sassExecutable;
@@ -52,14 +54,17 @@ class ExternalRubyCompiler extends Compiler {
 			$cmd = escapeshellcmd("cat {$localFile}") . " | " . $cmd;
 		}
 
-		exec($cmd, $sassOutput, $status);
+		$sassOutput = wfShellExec($cmd, $status);
 		if ($status !== 0) { // 0 => success
-			$sassOutput = implode("\n", $sassOutput);
-			Wikia::log('sass-errors-WIKIA', false, "status: $status, out: " . preg_replace('#\n\s+#', ' ', trim($sassOutput)). " / cmd: $cmd", true /* $always */);
 			if ( file_exists( $outputFile ) ) {
 				unlink($outputFile);
 			}
 
+			$this->error( "SASS rendering failed", [
+				'cmd' => $cmd,
+				'output' => preg_replace( '#\n\s+#', ' ', trim( $sassOutput ) ),
+				'status' => $status
+			]);
 			throw new Wikia\Sass\Exception("SASS compilation failed: {$sassOutput}\nFull commandline: $cmd");
 		}
 
@@ -67,7 +72,7 @@ class ExternalRubyCompiler extends Compiler {
 		unlink($outputFile);
 
 		if ($styles === false) {
-			Wikia\Logger\WikiaLogger::instance()->debug("Reading SASS file failed", [
+			$this->error("Reading SASS file failed", [
 				'input' => $inputFile,
 				'output' => $outputFile,
 			]);
@@ -78,5 +83,4 @@ class ExternalRubyCompiler extends Compiler {
 
 		return $styles;
 	}
-
 }

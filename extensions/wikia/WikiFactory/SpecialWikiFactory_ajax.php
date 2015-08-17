@@ -273,6 +273,7 @@ function axWFactoryDomainCRUD($type="add") {
     global $wgRequest, $wgUser, $wgExternalSharedDB, $wgOut;
     $sDomain = $wgRequest->getVal("domain");
     $city_id = $wgRequest->getVal("cityid");
+    $reason  = $wgRequest->getVal("reason");
 
     if ( !$wgUser->isAllowed( 'wikifactory' ) ) {
         $wgOut->readOnlyPage(); #--- later change to something reasonable
@@ -296,7 +297,7 @@ function axWFactoryDomainCRUD($type="add") {
 				$sInfo .= "Error: Domain <em>{$sDomain}</em> is invalid (or empty) so it's not added.";
 			}
 			else {
-				$added = WikiFactory::addDomain( $city_id, $sDomain );
+				$added = WikiFactory::addDomain( $city_id, $sDomain, $reason );
 				if ( $added ) {
 					$sInfo .= "Success: Domain <em>{$sDomain}</em> added.";
 				}
@@ -335,12 +336,21 @@ function axWFactoryDomainCRUD($type="add") {
                         "city_domain" => strtolower($sDomain)
                     )
                 );
-				$dbw->commit();
+
+		$sLogMessage = "Domain <em>{$sDomain}</em> changed to <em>{$sNewDomain}</em>.";
+
+		if ( !empty( $reason ) ) {
+			$sLogMessage .= " (reason: {$reason})";
+		}
+
+		WikiFactory::log( WikiFactory::LOG_DOMAIN, $sLogMessage,  $city_id );
+
+		$dbw->commit();
                 $sInfo .= "Success: Domain <em>{$sDomain}</em> changed to <em>{$sNewDomain}</em>.";
             }
             break;
         case "remove":
-		$removed = WikiFactory::removeDomain( $city_id, $sDomain );
+		$removed = WikiFactory::removeDomain( $city_id, $sDomain, $reason );
 		if ( $removed ) {
 			$sInfo .= "Success: Domain <em>{$sDomain}</em> removed.";
 		} else {
@@ -376,7 +386,7 @@ function axWFactoryDomainCRUD($type="add") {
             break;
         case "setmain":
 						try {
-							$setmain = WikiFactory::setmainDomain( $city_id, $sDomain );
+							$setmain = WikiFactory::setmainDomain( $city_id, $sDomain, $reason );
 							if ( $setmain ) {
 								$sInfo .= "Success: Domain <em>{$sDomain}</em> set as main.";
 							} else {
@@ -616,15 +626,20 @@ function axWFactoryDomainQuery() {
 		 */
 		$query = strtolower( $query );
 		$dbr = WikiFactory::db( DB_SLAVE );
+		$cityDomainLike = $dbr->buildLike( $dbr->anyString(), $query, $dbr->anyString() );
+
 		$sth = $dbr->select(
-			array( "city_domains" ),
-			array( "city_id", "city_domain" ),
-			array(
+			[ "city_domains" ],
+			[ "city_id", "city_domain" ],
+			[
 				"city_domain not like 'www.%'",
 				"city_domain not like '%.wikicities.com'",
-				"city_domain like '%{$query}%'"
-			),
-			__METHOD__
+				"city_domain {$cityDomainLike}"
+			],
+			__METHOD__,
+			[
+				'LIMIT' => 15
+			]
 		);
 
 		while( $domain = $dbr->fetchObject( $sth ) ) {
@@ -642,7 +657,9 @@ function axWFactoryDomainQuery() {
 		$return[ "data" ] = array_merge( $exact[ "data" ], $match[ "suggestions" ] );
 	}
 
-	return json_encode( $return );
+	$resp = new AjaxResponse( json_encode( $return ) );
+	$resp->setContentType( 'application/json; charset=utf-8' );
+	return $resp;
 }
 
 /**
@@ -655,29 +672,29 @@ function axWFactoryDomainQuery() {
  *
  * @return string: json string with array of variables
  */
-function axWFactoryFilterVariables( )
-{
-    global $wgRequest;
-    $defined = wfStrToBool( $wgRequest->getVal("defined", "false") );
-    $editable = wfStrToBool( $wgRequest->getVal("editable", "false") );
-    $wiki_id = $wgRequest->getVal("wiki", 0);
-    $group = $wgRequest->getVal("group", 0);
+function axWFactoryFilterVariables() {
+	global $wgRequest, $wgUser;
+
+	if ( !$wgUser->isAllowed('wikifactory') ) {
+		return '';
+	}
+	$defined = wfStrToBool( $wgRequest->getVal("defined", "false") );
+	$editable = wfStrToBool( $wgRequest->getVal("editable", "false") );
+	$wiki_id = $wgRequest->getVal("wiki", 0);
+	$group = $wgRequest->getVal("group", 0);
 	$string = $wgRequest->getVal("string", false );
 
-    #--- cache it?
-    $Variables = WikiFactory::getVariables( "cv_name", $wiki_id, $group, $defined, $editable, $string );
-    $selector = "";
+	#--- cache it?
+	$Variables = WikiFactory::getVariables( "cv_name", $wiki_id, $group, $defined, $editable, $string );
+	$selector = "";
 
-    foreach( $Variables as $Var) {
-        $selector .= sprintf(
-			"<option value=\"%d\">%s</option>\n",
-            $Var->cv_id, $Var->cv_name
-        );
-    }
+	foreach( $Variables as $Var) {
+		$selector .= Xml::element( 'option', [ 'value' => $Var->cv_id ], $Var->cv_name );
+	}
 
-    return json_encode(array(
-        "selector" => $selector,
-    ));
+	return json_encode(array(
+	    "selector" => $selector,
+	));
 }
 
 /**

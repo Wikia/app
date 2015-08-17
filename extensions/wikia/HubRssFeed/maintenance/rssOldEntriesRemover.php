@@ -9,7 +9,7 @@ echo "Rss old entries remover start: ".date("Y-m-d H:i:s")."\n";
 
 require_once( dirname( __FILE__ ) .'/../../../../maintenance/Maintenance.php' );
 
-class MaintenanceRss extends Maintenance {
+class MaintenanceRssCleaner extends Maintenance {
 	const DAYS_TO_KEEP_OLD_FEED_ITEMS = 28;
 
 	function __construct() {
@@ -22,12 +22,12 @@ class MaintenanceRss extends Maintenance {
 	}
 
 	function removeOldEntries() {
-		global $wgExternalDatawareDB, $wgHubRssFeeds;
+		global $wgExternalDatawareDB, $wgHubRssFeeds, $wgLanguageCode;
 		$prefix = BaseRssModel::getStagingPrefix();
 
 		$feedNames = [ ];
 		foreach ( $wgHubRssFeeds as $feedName ) {
-			$feedNames[ ] = $prefix . $feedName;
+			$feedNames[ ] = $prefix . $feedName. $wgLanguageCode;
 		}
 
 		$db = wfGetDB( DB_MASTER, null, $wgExternalDatawareDB );
@@ -47,6 +47,6 @@ class MaintenanceRss extends Maintenance {
 	}
 }
 
-$maintClass = 'MaintenanceRss';
+$maintClass = 'MaintenanceRssCleaner';
 require_once( RUN_MAINTENANCE_IF_MAIN );
 

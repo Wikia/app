@@ -1,15 +1,16 @@
-@import "color";
-@import "layout";
-@import "responsive-variables";
-@import "../mixins/clearfix";
-@import "../mixins/gradient";
+@import 'skins/shared/color';
+@import 'layout';
+@import 'responsive-variables';
+@import 'breakpoints-variables';
+@import 'skins/shared/mixins/clearfix';
+@import 'skins/shared/mixins/gradient';
+@import 'ads-floor';
+@import 'ads-in-content';
 
 /** Hide invisible slots and 1x1 iframes **/
-.wikia-ad[id^="INVISIBLE_"], .wikia-ad iframe[width="1"][height="1"], .wikia-ad > .hidden {
-	display: none;
-}
-
-.wikia-ad.hidden {
+.wikia-ad[id^="INVISIBLE_"],
+.wikia-ad.hidden,
+.wikia-ad .hidden {
 	display: none !important;
 }
 
@@ -41,7 +42,7 @@
 }
 
 #TOP_BUTTON_WIDE {
-  margin-right: 10px;
+	margin-right: 10px;
 }
 
 #LEFT_SKYSCRAPER_2, #LEFT_SKYSCRAPER_3, #HOME_TOP_LEADERBOARD, #TOP_LEADERBOARD, #CORP_TOP_LEADERBOARD, #HUB_TOP_LEADERBOARD {
@@ -52,31 +53,35 @@
 	>div[id^=Liftium_] {
 		text-align: center;
 	}
+}
+
+#HOME_TOP_LEADERBOARD, #TOP_LEADERBOARD, #CORP_TOP_LEADERBOARD, #HUB_TOP_LEADERBOARD {
 	&.default-height {
 		height: 90px;
 	}
 }
 
 /** Skyscrapers **/
+@media #{$breakpoint-small-plus-up} {
+	#WikiaRail.left-skyscraper-3-present {
+		padding-bottom: 660px;
+	}
+}
+
 #LEFT_SKYSCRAPER_2 {
-	// FIXME: this is bad. Is it necessary?
-	@extend section;
+	margin-bottom: 20px;
+	font-size: 0;
+	text-align: center;
+	> div, > iframe {
+		display: inline-block;
+	}
 }
 
 #LEFT_SKYSCRAPER_3 {
 	clear: both;
 	position: absolute;
-	right: 80px;
+	right: 70px;
 	top: -640px;
-}
-
-#RIGHT_SKYSCRAPER {
-	// FIXME: this is bad. Is it necessary?
-	@extend .module;
-	text-align: center;
-	img {
-		margin: 40px auto;
-	}
 }
 
 /** Box ads **/
@@ -84,14 +89,8 @@
 	float: right;
 }
 
-.home-top-right-ads.top-right-ads-in-content {
-  display: none;
-  margin-left: 10px;
-  margin-bottom: 10px;
-}
-
 .home-top-right-ads.hidden {
-  display: none;
+	display: none;
 }
 
 #HOME_TOP_RIGHT_BOXAD {
@@ -125,17 +124,13 @@
 	height: 250px;
 }
 
-#PREFOOTER_LEFT_BOXAD {
+#PREFOOTER_LEFT_BOXAD, #PREFOOTER_RIGHT_BOXAD {
 	float: left;
 	margin: 0 15px;
-}
 
-#PREFOOTER_RIGHT_BOXAD {
-	margin: 0 15px;
-}
-
-#PREFOOTER_LEFT_BOXAD.default-height, #PREFOOTER_RIGHT_BOXAD.default-height {
-	height: 250px;
+	&.default-height {
+		height: 250px;
+	}
 }
 
 /** Spotlights **/
@@ -193,11 +188,6 @@
 	}
 }
 
-/** Invisible ads **/
-#INVISIBLE_1, #INVISIBLE_2 {
-	position: absolute;
-}
-
 /** DART calls for INVISIBLE slots return a pixel. Hide this pixel. **/
 body >a >img[src$="noad.gif"] {
 	position: absolute;
@@ -217,7 +207,6 @@ body >a >img[src$="noad.gif"] {
 	.ad-centered-wrapper {
 		height: 400px;
 		margin-bottom: 20px;
-		margin-top: 20;
 	}
 }
 
@@ -234,15 +223,6 @@ body >a >img[src$="noad.gif"] {
 	}
 }
 
-// Right rail ads centering
-#LEFT_SKYSCRAPER_2 {
-	font-size: 0;
-	text-align: center;
-	> div, > iframe {
-		display: inline-block;
-	}
-}
-
 // Floating medrec
 #WikiaAdInContentPlaceHolder {
 	position: absolute;
@@ -250,42 +230,40 @@ body >a >img[src$="noad.gif"] {
 		height: 250px;
 		width: 300px;
 		position: relative;
-		@if ( not $responsive-layout-enabled ) {
-			margin-left: 15px;
-			margin-right: 15px;
+	}
+}
+
+#NATIVE_TABOOLA {
+	max-width: 700px;
+}
+
+.wikia-ad-interactive-map {
+	height: 50px;
+	position: absolute;
+	right: 10px;
+	top: 10px;
+	width: 320px;
+
+	& > iframe {
+		width: 320px;
+		height: 50px;
+	}
+}
+
+#ext-wikia-adEngine-template-modal {
+	> section {
+		overflow: hidden;
+		padding: 0px;
+		> div {
+			overflow: hidden;
 		}
 	}
 }
 
-#BOTTOM_LEADERBOARD {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  z-index: 1;
-  text-align: center;
-
-  & > div {
-    display: inline-block;
-  }
-}
-
-.wikia-ad-interactive-map {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  width: 250px;
-  height: 50px;
-
-  & > iframe {
-    width: 250px;
-    height: 50px;
-  }
-
-}
-
-
-@media screen and (max-width: $breakpoint-small) {
-  .home-top-right-ads.top-right-ads-in-content {
-    display: block;
-  }
+//@TODO remove .oasis-responsive after deprecating responsive (July 2015)
+.oasis-breakpoints, .oasis-responsive {
+	#WikiaArticleBottomAd {
+		clear: both;
+		margin: 0;
+	}
 }

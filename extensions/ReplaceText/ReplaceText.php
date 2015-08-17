@@ -32,7 +32,6 @@ $wgExtensionCredits['specialpage'][] = array(
 $rtgIP = dirname( __FILE__ ) . '/';
 $wgExtensionMessagesFiles['ReplaceText'] = $rtgIP . 'ReplaceText.i18n.php';
 $wgExtensionMessagesFiles['ReplaceTextAlias'] = $rtgIP . 'ReplaceText.alias.php';
-$wgJobClasses['replaceText'] = 'ReplaceTextJob';
 
 // This extension uses its own permission type, 'replacetext'
 $wgAvailableRights[] = 'replacetext';
@@ -43,7 +42,6 @@ $wgHooks['AdminLinks'][] = 'rtAddToAdminLinks';
 $wgSpecialPages['ReplaceText'] = 'ReplaceText';
 $wgSpecialPageGroups['ReplaceText'] = 'wiki';
 $wgAutoloadClasses['ReplaceText'] = $rtgIP . 'SpecialReplaceText.php';
-$wgAutoloadClasses['ReplaceTextJob'] = $rtgIP . 'ReplaceTextJob.php';
 $wgAutoloadClasses['ReplaceTextTask'] = $rtgIP . 'ReplaceTextTask.php';
 
 // This function should really go into a "ReplaceText_body.php" file.

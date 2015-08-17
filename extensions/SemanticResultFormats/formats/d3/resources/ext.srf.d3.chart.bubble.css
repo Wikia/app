@@ -1,0 +1,31 @@
+/**
+ * CSS for SRF D3 module
+ *
+ * Based on the official D3 Bar Chart tutorial
+ *
+ * @licence: GNU GPL v2 or later
+ * @author:  mwjames
+ *
+ * @release: 0.1
+ */
+.srf-d3-chart-bubble circle {
+	fill: rgb(31, 119, 180);
+	fill-opacity: .25;
+	stroke: rgb(31, 119, 180);
+	stroke-width: 1px;
+}
+
+.srf-d3-chart-bubble .node circle {
+	fill: transparency;
+	stroke: transparency;
+	stroke-width: 0px;
+}
+
+.srf-d3-chart-bubble .leaf circle {
+	fill: #ff7f0e;
+	fill-opacity: 1;
+}
+
+.srf-d3-chart-bubble text {
+	font: 10px sans-serif;
+}

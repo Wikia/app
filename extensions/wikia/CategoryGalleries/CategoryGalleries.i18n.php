@@ -9,7 +9,7 @@ $messages['en'] = array(
 	'categorygalleries-desc' => 'Shows a pages gallery on category pages',
 );
 
-/** Tunisian Spoken Arabic (   زَوُن)
+/** Tunisian Arabic (تونسي/Tûnsî)
  * @author Csisc
  */
 $messages['aeb'] = array(
@@ -107,6 +107,13 @@ $messages['es'] = array(
 	'categorygalleries-desc' => 'Muestra una galería de páginas encima de las páginas de la categoría',
 );
 
+/** Persian (فارسی)
+ * @author Movyn
+ */
+$messages['fa'] = array(
+	'categorygalleries-desc' => 'نمایش صفحه گالری در صفحه رده',
+);
+
 /** Finnish (suomi)
  * @author VezonThunder
  */
@@ -175,6 +182,13 @@ $messages['it'] = array(
  */
 $messages['ja'] = array(
 	'categorygalleries-desc' => 'カテゴリページでページをギャラリー形式で表示する',
+);
+
+/** Korean (한국어)
+ * @author Miri-Nae
+ */
+$messages['ko'] = array(
+	'categorygalleries-desc' => '분류 페이지에 갤러리 표시',
 );
 
 /** Colognian (Ripoarisch)

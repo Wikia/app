@@ -401,8 +401,9 @@ Alasan nan diberikan adolah ''$2''.",
 # Login and logout pages
 'logouttext'                 => "'''Sanak alah kalua log dari sistem.'''
 
-Sanak dapek taruih manggunoan {{SITENAME}} sacaro anonim, atau Sanak dapek [[Special:UserLogin|masuak log liak]] sabagai pangguno nan samo atau pangguno nan lain.
+Sanak dapek taruih manggunoan {{SITENAME}} sacaro anonim, atau Sanak dapek $1 sabagai pangguno nan samo atau pangguno nan lain.
 Parhatian bahawa bara laman mungkin masih taruih manunjukkan bahawa Sanak masih masuak log sampai Sanak mambarasihan singgahan panjelajah web Sanak.",
+'logouttext-link-text'       => 'masuak log liak',
 'welcomecreation'            => '== Salamaik datang, $1! ==
 
 Akun Sanak alah dibuek. Jan lupo maatur konfigurasi [[Special:Preferences|preferensi {{SITENAME}}]] Sanak.',
@@ -737,7 +738,7 @@ Sabagai referensi, barikuik adolah log panghapusan dan pamindahan laman iko.',
 'post-expand-template-inclusion-warning'  => "'''Peringatan:''' Ukuran templat talalu gadang.
 Babarapo templat akan diabaikan.",
 'post-expand-template-inclusion-category' => 'Laman nan ukurannyo templatnyo malabiahi bateh',
-'post-expand-template-argument-warning'   => 'Peringatan: Laman ko barisi satidaknyo ciek uraian templat na baukuran ekspansi nan talalu gadang. 
+'post-expand-template-argument-warning'   => 'Peringatan: Laman ko barisi satidaknyo ciek uraian templat na baukuran ekspansi nan talalu gadang.
 Uraian-uraian tu alah diabaikan.',
 'post-expand-template-argument-category'  => 'Laman nan barisi uraian template nan diabaikan',
 
@@ -1209,7 +1210,7 @@ Pranala-pranala salanjuiknyo pado barih nan samo dianggap sabagai pengecualian, 
 'metadata-help'     => 'Berkas ko mengandung informasi tambahan yang mungkin ditambahkan dek kamera digital atau pemindai yang digunokan untuak mambuek atau mendigitalisasi berkas. Jiko berkas ko lah mangalami modifikasi, rincian yang ado mungkin indak sacaro penuh merefleksikan modifikasi berkas tu.',
 'metadata-expand'   => 'Tampilkan rincian tambahan',
 'metadata-collapse' => 'Suruakkan rincian tambahan',
-'metadata-fields'   => 'Tapak metadata gambar nan disenaraikan dalam pasan ko akan di masuakan pado tampilan laman gambar katiko tabel metadata disuruakkan. 
+'metadata-fields'   => 'Tapak metadata gambar nan disenaraikan dalam pasan ko akan di masuakan pado tampilan laman gambar katiko tabel metadata disuruakkan.
 Nan lainnyo akan tasuruak sacaro default.
 * make
 * model

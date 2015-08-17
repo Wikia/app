@@ -10,18 +10,23 @@
  */
 
 $wgExtensionCredits['other'][] = array(
-	'name'			=> 'InWikiExternalForm',
-	'author'		=> 'Andrzej "nAndy" Łukaszewski, Marcin Maciejewski, Sebastian Marzjan',
-	'description'	=> 'In Wiki External Form - putting an external form under specific URL',
-	'version'		=> 1.0
+	'name'		    	=> 'InWikiExternalForm',
+	'author'		    => 'Andrzej "nAndy" Łukaszewski, Marcin Maciejewski, Sebastian Marzjan',
+	'descriptionmsg'	=> 'inwikiexternalform-desc',
+	'version'		    => 1.0,
+	'url'               => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/InWikiExternalForm'
 );
 
 
 $dir = dirname(__FILE__);
 $app = F::app();
 
+//i18n
+$wgExtensionMessagesFiles['InWikiExternalForm'] = $dir . '/InWikiExternalForm.i18n.php';
+
 // classes
 $wgAutoloadClasses['InWikiExternalFormController'] =  $dir . '/InWikiExternalFormController.class.php';
 
 // pages
 $wgSpecialPages['Play'] = 'InWikiExternalFormController';
+

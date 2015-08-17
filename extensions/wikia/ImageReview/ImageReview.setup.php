@@ -20,6 +20,7 @@ $wgExtensionCredits['specialpage'][] = array(
 		'[http://www.wikia.com/wiki/User:Mech.wikia Jacek Woźniak]',
 		"[http://community.wikia.com/wiki/User:TOR Lucas 'TOR' Garczewski]",
 	),
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/ImageReview'
 );
 
 $dir = dirname(__FILE__) . '/';
@@ -27,19 +28,17 @@ $app = F::app();
 
 // classes
 $wgAutoloadClasses['Wikia\\Tasks\\Tasks\\ImageReviewTask'] = "{$dir}ImageReviewTask.class.php";
-$wgAutoloadClasses['ImageReviewTask'] =  $dir . 'ImageReviewTask.php';
-if ( function_exists( 'extAddBatchTask' ) ) {
-	extAddBatchTask( $dir . "../ImageReview/ImageReviewTask.php", "imagereview", "ImageReviewTask" );
-}
 
 $wgAutoloadClasses['ImageReviewSpecialController'] =  $dir . 'ImageReviewSpecialController.class.php';
 $wgAutoloadClasses['ImageReviewHelperBase'] =  $dir . 'ImageReviewHelperBase.class.php';
 $wgAutoloadClasses['ImageReviewHelper'] =  $dir . 'ImageReviewHelper.class.php';
+$wgAutoloadClasses['ImageReviewDatabaseHelper'] =  $dir . 'ImageReviewDatabaseHelper.class.php';
+$wgAutoloadClasses['ImageReviewHooks'] =  $dir . 'ImageReview.hooks.php';
 
 $wgSpecialPages['ImageReview'] = 'ImageReviewSpecialController';
 
-// hooks
-$wgHooks['WikiFactoryPublicStatusChange'][] = 'ImageReviewHelper::onWikiFactoryPublicStatusChange' ;
+// hooks setup
+$wgExtensionFunctions[] = 'ImageReviewHooks::setupHooks';
 
 // rights
 $wgAvailableRights[] = 'imagereview';
@@ -47,6 +46,8 @@ $wgGroupPermissions['util']['imagereview'] = true;
 $wgGroupPermissions['vstf']['imagereview'] = true;
 
 $wgGroupPermissions['reviewer']['imagereview'] = true;
+$wgGroupPermissions['reviewer']['deletedhistory'] = true;
+$wgGroupPermissions['reviewer']['deletedtext'] = true;
 $wgGroupPermissions['reviewer']['edit'] = false;
 
 $wgAvailableRights[] = 'questionableimagereview';

@@ -117,7 +117,7 @@
 		 *
 		 *     var track = Wikia.Tracker.buildTrackingFunction({
 		 *         category: 'myCategory',
-		 *         trackingMethod: 'ga'
+		 *         trackingMethod: 'analytics'
 		 *     });
 		 *
 		 *     track({
@@ -160,7 +160,10 @@
 	window.Wikia.Tracker = tracker( window );
 
 	if ( window.define && window.define.amd ) {
-		window.define( 'wikia.tracker', [ 'wikia.window' ], tracker );
+		window.define( 'wikia.tracker', function() {
+			// Returning Wikia.Tracker instance, in order to spooled events to work with AMD module.
+			return Wikia.Tracker;
+		});
 	}
 
 })( window, undefined );
@@ -218,9 +221,16 @@ function veTrack( data ) {
 			defaultData.anonEditWarning = !!window.anoneditwarning ? 'yes' : 'no';
 		}
 
+		// new/old VE
+		try {
+			defaultData.whichVE = ( 'showLoading' in mw.libs.ve ) ? 'new' : 'old';
+		} catch ( e ) {
+			defaultData.whichVE = 'unknown';
+		}
+
 		finalData = $.extend( {}, defaultData, data );
 	} catch( e ) {
 		finalData = { failed: true };
 	}
-	syslogReport( 6, 'veTrack-v5', finalData );
+	syslogReport( 6, 'veTrack-v6', finalData );
 }

@@ -292,6 +292,7 @@ $messages['bg'] = array(
 /** Breton (brezhoneg)
  * @author Fohanno
  * @author Fulup
+ * @author Gwenn-Ael
  * @author Y-M D
  */
 $messages['br'] = array(
@@ -341,7 +342,9 @@ $messages['br'] = array(
 	'themedesigner-button-change-text' => 'Kemmañ an destenn',
 	'themedesigner-size-error' => 'Direizh eo ment ar restr',
 	'themedesigner-type-error' => 'Seurt restr direizh',
+	'themedesigner-favicon-heading' => 'Favicon',
 	'themedesigner-wodmark-preview' => 'Rakwelet',
+	'themedesigner-wordmark-preview-error' => "Hopopop ! Ne c'hall ket anv ar wiki bezañ goullo, lakait anv ar wiki da enrollañ, mar plij.",
 );
 
 /** Bosnian (bosanski)
@@ -368,6 +371,7 @@ $messages['bs'] = array(
  * @author CuBaN VeRcEttI
  * @author Marcmpujol
  * @author Pintor Smeargle
+ * @author Unapersona
  */
 $messages['ca'] = array(
 	'action-themedesigner' => 'accedir al Dissenyador de Temes',
@@ -376,7 +380,8 @@ $messages['ca'] = array(
 	'themedesigner-title' => 'Dissenyador de Temes de Wikia',
 	'themedesigner-background' => 'Fons',
 	'themedesigner-page' => 'Pàgina',
-	'themedesigner-color' => 'color', # Fuzzy
+	'themedesigner-color' => 'Principal',
+	'themedesigner-color-middle' => 'Mig',
 	'themedesigner-graphic' => 'gràfic',
 	'themedesigner-buttons' => 'botons',
 	'themedesigner-links' => 'enllaços',
@@ -412,7 +417,7 @@ $messages['ca'] = array(
 	'themedesigner-button-save' => 'Desa',
 	'themedesigner-upload-a-graphic' => 'carrega un gràfic',
 	'themedesigner-rules-wordmark' => 'Carregar un arxiu en format .png de 250x65 píxels o menys.',
-	'themedesigner-rules-favicon' => 'Pujar un arxiu en format .ico de 16x16 píxels. Un favicon és una icona petita que apareix en la pestanya del teu navegador. [http://community.wikia.com/wiki/Help:Favicon Aprendre més.]', # Fuzzy
+	'themedesigner-rules-favicon' => 'Pujar un arxiu en format .ico de 16x16 píxels. Un favicon és una icona petita que apareix en la pestanya del teu navegador. [http://community.wikia.com/wiki/Help:Favicon Aprendre més.]',
 	'themedesigner-dont-use-a-graphic' => 'treure',
 	'themedesigner-history-item' => '$1 de $2',
 	'themedesigner-button-change-text' => 'Canvia el text',
@@ -425,6 +430,7 @@ $messages['ca'] = array(
 	'themedesigner-favicon-heading' => 'Favicon',
 	'themedesigner-wodmark-preview' => 'Previsualització',
 	'themedesigner-wordmark-preview-error' => 'Error! El nom del wiki no pot estar en blanc, si us plau, escriu el nom del wiki per desar.',
+	'themedesigner-upload-disabled' => 'Ho sentim, hem desactiven temporalment les càrregues.',
 );
 
 /** Chechen (нохчийн)
@@ -432,9 +438,12 @@ $messages['ca'] = array(
  */
 $messages['ce'] = array(
 	'themedesigner-header' => 'корта',
-	'themedesigner-preview-mode' => 'Хьалха муха ю хьажа...',
+	'themedesigner-preview-mode' => 'Хьалха хьажар...',
+	'themedesigner-button-upload' => 'Чуяккха',
+	'themedesigner-button-upload-wordmark' => 'Чуяккха',
 	'themedesigner-font' => 'шрифт',
-	'themedesigner-wodmark-preview' => 'Хьалха муха ю хьажа',
+	'themedesigner-upload-a-graphic' => 'чуяккха',
+	'themedesigner-wodmark-preview' => 'Хьалха хьажар',
 );
 
 /** Czech (čeština)
@@ -675,7 +684,7 @@ $messages['es'] = array(
 	'themedesigner-button-upload' => 'Subir',
 	'themedesigner-button-upload-wordmark' => 'Subir',
 	'themedesigner-rules-background' => 'jpg, gif o png. De máximo {{PLURAL:$1|$1 kilobyte|$1 kilobytes}}',
-	'themedesigner-default' => 'Por defecto',
+	'themedesigner-default' => 'Predeterminado',
 	'themedesigner-font' => 'fuente',
 	'themedesigner-size' => 'tamaño',
 	'themedesigner-button-save' => 'Guardar',
@@ -701,7 +710,9 @@ $messages['es'] = array(
  * @author Subi
  */
 $messages['eu'] = array(
+	'themedesigner-previous-versions' => 'Aurreko bertsioak',
 	'themedesigner-button-ok' => 'Ados',
+	'themedesigner-button-save' => 'Gorde',
 );
 
 /** Persian (فارسی)
@@ -882,6 +893,16 @@ $messages['fr'] = array(
 	'themedesigner-wordmark-preview-error' => 'Oups ! Le nom du wiki ne peut pas être vide,
 veuillez entrer le nom du wiki pour sauvegarder.',
 	'themedesigner-upload-disabled' => 'Désolé, nous avons temporairement désactivé les téléchargements. Vérifiez prochainement pour faire des modifications',
+);
+
+/** Western Frisian (Frysk)
+ * @author Robin0van0der0vliet
+ */
+$messages['fy'] = array(
+	'themedesigner-background' => 'Eftergrûn',
+	'themedesigner-small' => 'Lyts',
+	'themedesigner-large' => 'Grut',
+	'themedesigner-button-cancel' => 'Annulearje',
 );
 
 /** Galician (galego)
@@ -1076,12 +1097,13 @@ $messages['ia'] = array(
  * @author Sapral Mikail
  */
 $messages['inh'] = array(
-	'themedesigner-page' => 'ОагIув',
-	'themedesigner-color' => 'бос', # Fuzzy
-	'themedesigner-links' => 'Iинкаш',
+	'themedesigner-page' => 'Оаг|ув',
+	'themedesigner-color' => 'кертера',
+	'themedesigner-links' => 'хьожадергаш',
 );
 
 /** Japanese (日本語)
+ * @author Barrel0116
  * @author Schu
  * @author Shirayuki
  * @author Tommy6
@@ -1129,7 +1151,7 @@ $messages['ja'] = array(
 	'themedesigner-button-save' => '保存',
 	'themedesigner-upload-a-graphic' => '画像をアップロード',
 	'themedesigner-rules-wordmark' => '.png ファイル (250 x 65 ピクセル以下) をアップロードしてください。',
-	'themedesigner-rules-favicon' => '16x16 ピクセルの .ico ファイルをアップロードしてください。favicon は、ウィキのブラウザータブに表示される小さいアイコンです。 [http://community.wikia.com/wiki/Help:Favicon 詳細。]', # Fuzzy
+	'themedesigner-rules-favicon' => '16x16 ピクセルの .ico ファイルをアップロードしてください。ファビコンは、ウィキのブラウザータブに表示される小さいアイコンです。 [http://community.wikia.com/wiki/Help:Favicon ファビコンについてもっと知る。]',
 	'themedesigner-dont-use-a-graphic' => '除去',
 	'themedesigner-history-item' => '$2 により $1',
 	'themedesigner-button-change-text' => 'テキストを変更',
@@ -1198,6 +1220,8 @@ $messages['kn'] = array(
 /** Korean (한국어)
  * @author Cafeinlove
  * @author Hym411
+ * @author Miri-Nae
+ * @author Revi
  * @author 아라
  */
 $messages['ko'] = array(
@@ -1208,6 +1232,7 @@ $messages['ko'] = array(
 	'themedesigner-background' => '배경',
 	'themedesigner-page' => '문서',
 	'themedesigner-color' => '색상', # Fuzzy
+	'themedesigner-color-middle' => '가운데',
 	'themedesigner-graphic' => '그림',
 	'themedesigner-buttons' => '버튼',
 	'themedesigner-links' => '링크',
@@ -1219,6 +1244,7 @@ $messages['ko'] = array(
 	'themedesigner-large' => '크게',
 	'themedesigner-tile-background' => '바둑판식',
 	'themedesigner-fix-background' => '고치기',
+	'themedesigner-not-split-background' => '나누지 않음',
 	'themedesigner-transparency' => '투명도',
 	'themedesigner-tab-theme' => '테마',
 	'themedesigner-tab-customize' => '사용자 설정',
@@ -1227,14 +1253,31 @@ $messages['ko'] = array(
 	'themedesigner-previous-versions' => '이전 버전',
 	'themedesigner-button-save-im-done' => '저장하고 완료',
 	'themedesigner-button-cancel' => '취소',
+	'themedesigner-button-ok' => '확인',
+	'themedesigner-button-upload' => '올리기',
+	'themedesigner-button-upload-wordmark' => '올리기',
+	'themedesigner-default' => '기본',
+	'themedesigner-font' => '글꼴',
+	'themedesigner-size' => '크기',
+	'themedesigner-button-save' => '저장',
+	'themedesigner-dont-use-a-graphic' => '제거',
+	'themedesigner-size-error' => '잘못된 파일 크기',
+	'themedesigner-type-error' => '잘못된 파일 형식',
+	'themedesigner-favicon-heading' => '파비콘',
+	'themedesigner-wodmark-preview' => '미리 보기',
 );
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
+ * @author Bikarhêner
  * @author George Animal
  */
 $messages['ku-latn'] = array(
+	'themedesigner-or' => 'an',
 	'themedesigner-page' => 'rûpel',
-	'themedesigner-color' => 'reng', # Fuzzy
+	'themedesigner-color' => 'sereke',
+	'themedesigner-graphic' => 'grafîk',
+	'themedesigner-buttons' => 'bişkoj',
+	'themedesigner-links' => 'girêdan',
 	'themedesigner-small' => 'Biçûk',
 	'themedesigner-large' => 'Mezin',
 	'themedesigner-button-cancel' => 'Betal bike',
@@ -1249,13 +1292,17 @@ $messages['ku-latn'] = array(
 $messages['lb'] = array(
 	'themedesigner-background' => 'Hannergrond',
 	'themedesigner-page' => 'Säit',
+	'themedesigner-small' => 'Kleng',
+	'themedesigner-medium' => 'Mëttel',
+	'themedesigner-large' => 'Grouss',
+	'themedesigner-button-cancel' => 'Ofbriechen',
 	'themedesigner-button-ok' => 'OK',
 	'themedesigner-button-upload' => 'Eroplueden',
 	'themedesigner-button-save' => 'Späicheren',
 	'themedesigner-wordmark-preview-error' => 'Ups! Den Numm vun der Wiki kann net eidel sinn, gitt w.e.g. den Numm vun der Wiki a fir se ze späicheren.',
 );
 
-/** لوری (لوری)
+/** Northern Luri (لوری مینجایی)
  * @author Mogoeilor
  */
 $messages['lrc'] = array(
@@ -1274,7 +1321,7 @@ $messages['lrc'] = array(
 	'themedesigner-default' => 'پيش فرض',
 	'themedesigner-font' => 'فونت',
 	'themedesigner-size' => 'انازه',
-	'themedesigner-button-save' => 'ذخيره كردن',
+	'themedesigner-button-save' => 'اماییه كردن',
 	'themedesigner-dont-use-a-graphic' => 'ؤرداشتن',
 	'themedesigner-history-item' => '$1 وا
 $2',
@@ -1581,10 +1628,48 @@ $messages['nl'] = array(
 	'themedesigner-wodmark-preview' => 'Voorvertoning',
 	'themedesigner-wordmark-preview-error' => 'De naam van de wiki mag niet leeg zijn.
 Geef een naam op voor de wiki.',
-	'themedesigner-upload-disabled' => 'Sorry, we hebben uploads tijdelijk uitgeschakeld. Probeer het binnenkort opnieuw om veranderingen te maken.',
+	'themedesigner-upload-disabled' => 'We hebben uploads tijdelijk uitgeschakeld. Probeer het binnenkort opnieuw om veranderingen te maken.',
 );
 
-/** Deitsch (Deitsch)
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'themedesigner-or' => 'o',
+	'themedesigner-page' => 'Pagina',
+	'themedesigner-color' => 'principal',
+	'themedesigner-color-middle' => 'mitan',
+	'themedesigner-graphic' => 'grafic',
+	'themedesigner-buttons' => 'botons',
+	'themedesigner-links' => 'ligams',
+	'themedesigner-header' => 'entèsta',
+	'themedesigner-small' => 'Pichon',
+	'themedesigner-medium' => 'Mejan',
+	'themedesigner-large' => 'Grand',
+	'themedesigner-tile-background' => 'mosaïca',
+	'themedesigner-fix-background' => 'fixe',
+	'themedesigner-not-split-background' => 'pas de separacion',
+	'themedesigner-transparency' => 'transparéncia',
+	'themedesigner-tab-theme' => 'Tèma',
+	'themedesigner-tab-customize' => 'Personalizar',
+	'themedesigner-button-cancel' => 'Anullar',
+	'themedesigner-button-ok' => "D'acòrdi",
+	'themedesigner-button-upload' => 'Importar',
+	'themedesigner-button-upload-wordmark' => 'Importar',
+	'themedesigner-rules-background' => 'jpg, gif o png. Limit : {{PLURAL:$1|$1 ko|$1 ko}}', # Fuzzy
+	'themedesigner-default' => 'Per defaut',
+	'themedesigner-font' => 'poliça',
+	'themedesigner-size' => 'talha',
+	'themedesigner-button-save' => 'Enregistrar',
+	'themedesigner-dont-use-a-graphic' => 'levar',
+	'themedesigner-history-item' => '$1 per $2',
+	'themedesigner-button-change-text' => 'Modificar lo tèxte',
+	'themedesigner-size-error' => 'Talha de fichièr incorrècta',
+	'themedesigner-favicon-heading' => 'Favicon',
+	'themedesigner-wodmark-preview' => 'Apercebut',
+);
+
+/** Pennsylvania German (Deitsch)
  */
 $messages['pdc'] = array(
 	'themedesigner-small' => 'Glee',
@@ -1825,7 +1910,9 @@ escreve o nome da wiki para guardar.',
 /** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
  * @author Caio1478
+ * @author Dianakc
  * @author Giro720
+ * @author Jefersonmoraes
  * @author Luckas
  * @author Luckas Blade
  */
@@ -1853,12 +1940,12 @@ $messages['pt-br'] = array(
 	'themedesigner-not-split-background' => 'sem divisão',
 	'themedesigner-rules-not-split-background' => "Se seu gráfico de fundo é maior que $1px você tem uma opção de ''não'' dividir uma imagem.",
 	'themedesigner-transparency' => 'transparência',
-	'themedesigner-tab-theme' => 'Variante',
+	'themedesigner-tab-theme' => 'Tema',
 	'themedesigner-tab-customize' => 'Personalizar',
 	'themedesigner-tab-wordmark' => 'Símbolo',
-	'themedesigner-preview-mode' => 'Modo de Antevisão...',
+	'themedesigner-preview-mode' => 'Modo pré-visualização...',
 	'themedesigner-previous-versions' => 'Versões anteriores',
-	'themedesigner-button-save-im-done' => 'Terminei, gravar',
+	'themedesigner-button-save-im-done' => 'Pronto, salvar',
 	'themedesigner-button-cancel' => 'Cancelar',
 	'themedesigner-pick-a-color' => 'Escolher uma cor',
 	'themedesigner-enter-your-own' => 'Introduzir',
@@ -1876,7 +1963,7 @@ $messages['pt-br'] = array(
 	'themedesigner-button-save' => 'Salvar',
 	'themedesigner-upload-a-graphic' => 'upload de um padrão gráfico',
 	'themedesigner-rules-wordmark' => 'Carregar um arquivo .png que de 250 x 65 pixels ou menos.',
-	'themedesigner-rules-favicon' => 'Envie um arquivo .ico 16x16 pixel. Um favicon é um pequeno ícone que aparece na aba do navegador da sua wiki. [http://comunidade.wikia.com/wiki/Ajuda:Favicon Leia mais.]',
+	'themedesigner-rules-favicon' => 'Envie um arquivo .ico 16x16 pixel. Um favicon é um pequeno ícone que aparece na aba do navegador da sua wikia. [http://comunidade.wikia.com/wiki/Ajuda:Favicon Leia mais.]',
 	'themedesigner-dont-use-a-graphic' => 'remover',
 	'themedesigner-history-item' => '$1 de $2',
 	'themedesigner-button-change-text' => 'Alterar texto',
@@ -1884,12 +1971,12 @@ $messages['pt-br'] = array(
 	'themedesigner-size-error' => 'Tamanho de arquivo incorreto',
 	'themedesigner-dimensions-error' => 'A imagem excede os limites de tamanho',
 	'themedesigner-type-error' => 'Tipo de arquivo incorreto',
-	'themedesigner-unknown-error' => 'Ocorreu um erro que não é possível identificar. Tente novamente, por favor.',
-	'themedesigner-manual-upload-error' => 'Use o Designer de Temas para fazer o upload do wordmark ou fundo da wiki',
+	'themedesigner-unknown-error' => 'Ocorreu um erro que não é possível identificar. Por favor, tente novamente.',
+	'themedesigner-manual-upload-error' => 'Use o Designer de Temas para fazer o upload do wordmark ou fundo da wikia',
 	'themedesigner-favicon-heading' => 'Favicon',
 	'themedesigner-wodmark-preview' => 'Pré-visualizar',
-	'themedesigner-wordmark-preview-error' => 'Ops! O nome da wiki não pode ficar em branco, 
-digite o nome da wiki para salvar.',
+	'themedesigner-wordmark-preview-error' => 'Ops! O nome da wikia não pode ficar em branco, 
+digite o nome da wikia para salvar.',
 	'themedesigner-upload-disabled' => 'Desculpe, nós desativamos os uploads temporariamente. Volte em breve para fazer mudanças',
 );
 
@@ -2204,7 +2291,7 @@ $messages['tl'] = array(
 	'themedesigner-wodmark-preview' => 'Paunang tingin',
 );
 
-/** толышә зывон (толышә зывон)
+/** Talysh (толышә зывон)
  * @author Erdemaslancan
  */
 $messages['tly'] = array(
@@ -2281,36 +2368,37 @@ $messages['uk'] = array(
 /** Vietnamese (Tiếng Việt)
  * @author Baonguyen21022003
  * @author Minh Nguyen
+ * @author Rémy Lee
  * @author Xiao Qiao
  * @author XiaoQiaoGrace
  */
 $messages['vi'] = array(
-	'action-themedesigner' => 'truy cập vào chủ đề thiết kế',
+	'action-themedesigner' => 'truy cập Thiết kế chủ đề',
 	'themedesigner-or' => 'hoặc',
-	'themedesigner-desc' => 'Cho phép các bảo quản viên wiki thiết kế chủ đề cho một wiki',
-	'themedesigner-title' => 'Thiết kế Chủ đề Wikia',
-	'themedesigner-background' => 'Nền',
+	'themedesigner-desc' => 'Cho phép các bảo quản viên thiết kế chủ đề trên wiki',
+	'themedesigner-title' => 'Thiết kế chủ đề Wikia',
+	'themedesigner-background' => 'Hình nền',
 	'themedesigner-page' => 'Trang',
-	'themedesigner-color' => 'Chính',
+	'themedesigner-color' => 'chính',
 	'themedesigner-color-middle' => 'ở giữa',
 	'themedesigner-rules-color-middle' => 'Các màu sắc khác nhau cho giữa trang',
 	'themedesigner-graphic' => 'đồ họa',
 	'themedesigner-buttons' => 'nút',
 	'themedesigner-links' => 'liên kết',
 	'themedesigner-header' => 'tiêu đề',
-	'themedesigner-text-wordmark' => 'Logo Văn bản',
-	'themedesigner-graphic-wordmark' => 'Logo Đồ họa',
+	'themedesigner-text-wordmark' => 'Biểu trưng văn bản',
+	'themedesigner-graphic-wordmark' => 'Biểu trưng đồ họa',
 	'themedesigner-small' => 'Nhỏ',
 	'themedesigner-medium' => 'Vừa',
 	'themedesigner-large' => 'Lớn',
 	'themedesigner-tile-background' => 'lặp nền',
-	'themedesigner-fix-background' => 'giữa',
-	'themedesigner-not-split-background' => 'không phân chia',
-	'themedesigner-rules-not-split-background' => "Nếu nền đồ họa của bạn rộng hơn $1 px bạn có một tùy chọn ''không'' chia tách một hình ảnh.",
+	'themedesigner-fix-background' => 'cân đối',
+	'themedesigner-not-split-background' => 'không phân tách',
+	'themedesigner-rules-not-split-background' => "Nếu hình nền đồ họa của bạn rộng hơn $1px bạn sẽ có tùy chọn ''không'' chia tách hình ảnh.",
 	'themedesigner-transparency' => 'trong suốt',
 	'themedesigner-tab-theme' => 'Chủ đề',
 	'themedesigner-tab-customize' => 'Tùy chỉnh',
-	'themedesigner-tab-wordmark' => 'Logo',
+	'themedesigner-tab-wordmark' => 'Biểu trưng',
 	'themedesigner-preview-mode' => 'Chế độ trước',
 	'themedesigner-previous-versions' => 'Phiên bản cũ',
 	'themedesigner-button-save-im-done' => 'Lưu, tôi đã xong',
@@ -2319,35 +2407,35 @@ $messages['vi'] = array(
 	'themedesigner-enter-your-own' => 'Nhập riêng cho bạn',
 	'themedesigner-color-name-or-hex-code' => 'Tên màu hoặc mã thập lục phân',
 	'themedesigner-button-ok' => 'Ok',
-	'themedesigner-pick-an-image' => 'Chọn một hình ảnh',
-	'themedesigner-dont-use-a-background' => 'Không dùng nền',
+	'themedesigner-pick-an-image' => 'Chọn hình ảnh',
+	'themedesigner-dont-use-a-background' => 'Không dùng hình nền',
 	'themedesigner-upload-your-own' => 'Tải lên của riêng bạn',
 	'themedesigner-button-upload' => 'Tải lên',
 	'themedesigner-button-upload-wordmark' => 'Tải lên',
-	'themedesigner-rules-background' => 'jpg, gif hoặc png. giới hạn {{PLURAL:$1|$1 kilobyte|$1 kilobyte}}',
+	'themedesigner-rules-background' => 'jpg, gif hoặc png. Giới hạn {{PLURAL:$1|$1 kilobyte|$1 kilobyte}}',
 	'themedesigner-default' => 'Mặc định',
 	'themedesigner-font' => 'phông chữ',
-	'themedesigner-size' => 'Dung lượng',
-	'themedesigner-button-save' => 'Lưu trang',
-	'themedesigner-upload-a-graphic' => 'tải lên một đồ họa',
+	'themedesigner-size' => 'dung lượng',
+	'themedesigner-button-save' => 'Lưu',
+	'themedesigner-upload-a-graphic' => 'tải lên đồ họa',
 	'themedesigner-rules-wordmark' => 'Tải lên một tập tin .png có kích thước 250 x 65 pixel hoặc ít hơn.',
-	'themedesigner-rules-favicon' => 'Tải lên một tập tin .ico 16x16 pixel. Favicon là một biểu tượng nhỏ xuất hiện trên wiki của bạn trên thanh trình duyệt.[http://community.wikia.com/wiki/Help:Favicon Tìm hiểu thêm.]',
+	'themedesigner-rules-favicon' => 'Tải lên một tập tin .ico 16x16 pixel. Favicon là một biểu tượng nhỏ xuất hiện trên thanh trình duyệt wiki của bạn.[http://vi.wikia.com/wiki/Trợ giúp:Favicon Tìm hiểu thêm.]',
 	'themedesigner-dont-use-a-graphic' => 'dời bỏ',
 	'themedesigner-history-item' => '$1 bởi $2',
 	'themedesigner-button-change-text' => 'Thay đổi văn bản',
-	'themedesigner-reason' => 'Thiết kế chủ đề - đã xong bởi $1',
-	'themedesigner-size-error' => 'Dung lượng không chính xác',
+	'themedesigner-reason' => 'Thiết kế chủ đề - lưu bởi $1',
+	'themedesigner-size-error' => 'Dung lượng không hợp lệ',
 	'themedesigner-dimensions-error' => 'Hình ảnh vượt quá dung lượng giới hạn',
-	'themedesigner-type-error' => 'Loại tệp không chính xác',
-	'themedesigner-unknown-error' => 'Lỗi đã xảy ra, tiếc là chúng tôi không thể xác định nó, xin vui lòng thử lại',
-	'themedesigner-manual-upload-error' => 'Sử dụng Thiết kế chủ đề để tải lên nhãn hiệu hoặc nền cho wiki',
+	'themedesigner-type-error' => 'Loại tệp không hợp lệ',
+	'themedesigner-unknown-error' => 'Lỗi đã xảy ra, tiếc là chúng tôi chưa thể xác định, xin vui lòng thử lại',
+	'themedesigner-manual-upload-error' => 'Sử dụng Thiết kế chủ đề để tải lên biểu trưng hoặc hình nền cho wiki',
 	'themedesigner-favicon-heading' => 'Favicon',
 	'themedesigner-wodmark-preview' => 'Xem thử',
 	'themedesigner-wordmark-preview-error' => 'Rất tiếc! Tên của wiki không được phép để trống. Xin vui lòng nhập tên của wiki để lưu lại.',
-	'themedesigner-upload-disabled' => 'Xin lỗi, chúng tôi đã tạm thời vô hiệu tải lên. Kiểm tra lại ngay để thực hiện thay đổi',
+	'themedesigner-upload-disabled' => 'Xin lỗi, chúng tôi đã tạm thời vô hiệu hóa việc tải lên. Hãy quay lại sau khi có thay đổi',
 );
 
-/** Wu (吴语)
+/** Wu Chinese (吴语)
  * @author 十弌
  */
 $messages['wuu'] = array(
@@ -2427,6 +2515,7 @@ $messages['zh-hans'] = array(
 
 /** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
+ * @author LNDDYL
  */
 $messages['zh-hant'] = array(
 	'action-themedesigner' => '訪問主題設計器',
@@ -2475,7 +2564,7 @@ $messages['zh-hant'] = array(
 	'themedesigner-button-save' => '儲存',
 	'themedesigner-upload-a-graphic' => '上傳一個圖案',
 	'themedesigner-rules-wordmark' => '上傳一個250 x 65 圖元或更少的.png 檔 。',
-	'themedesigner-rules-favicon' => '上傳一个16x16像素的.ico文件。Favicon就是出现在wiki瀏覽器標簽左上角的小圖標。 [http://community.wikia.com/wiki/Help:Favicon 了解更多。]',
+	'themedesigner-rules-favicon' => '上傳一个16x16像素的.ico檔案。Favicon就是出现在wiki瀏覽器分頁左上角的小圖示。 [http://community.wikia.com/wiki/Help:Favicon 瞭解更多。]',
 	'themedesigner-dont-use-a-graphic' => '移除',
 	'themedesigner-history-item' => '$1 由 $2',
 	'themedesigner-button-change-text' => '更改文本',

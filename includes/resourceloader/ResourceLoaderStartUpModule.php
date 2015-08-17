@@ -100,11 +100,13 @@ class ResourceLoaderStartUpModule extends ResourceLoaderModule {
 			'wgSassParams' => SassUtil::getSassSettings(),
 			// Wikia - change end
 		);
+
 		if ( $wgUseAjax && $wgEnableMWSuggest ) {
 			$vars['wgMWSuggestTemplate'] = SearchEngine::getMWSuggestTemplate();
 		}
 
 		wfRunHooks( 'ResourceLoaderGetConfigVars', array( &$vars ) );
+		wfRunHooks( 'ResourceLoaderGetConfigVarsWithContext', array( &$vars, $context ) );
 
 		return $vars;
 	}

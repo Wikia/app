@@ -40,26 +40,6 @@
 							</a>
 						</li>
 					<? } ?>
-					<? if ($displayPageLayoutBuilder) { ?>
-						<li class="control" data-tooltip="<?= wfMessage("admindashboard-control-page-layout-builder-tooltip")->text(); ?>">
-							<a href="<?= $urlPageLayoutBuilder ?>" class="set" data-tracking="page-layout-builder">
-								<span class="representation">
-									<span class="icon pagelayoutbuilder"></span>
-								</span>
-								<?= wfMessage("admindashboard-control-page-layout-builder-label") ?>
-							</a>
-						</li>
-					<? } ?>
-					<? if ($displaySpecialPromote) { ?>
-						<li class="control" data-tooltip="<?= wfMessage("admindashboard-control-admin-upload-tool-tooltip")->text(); ?>">
-							<a href="<?= $urlGetPromoted ?>" class="set" data-tracking="promote-image-tool">
-								<span class="representation">
-									<span class="icon promoteimagetool"></span>
-								</span>
-								<?= wfMessage("admindashboard-control-admin-upload-tool-label")->text(); ?>
-							</a>
-						</li>
-					<? } ?>
 					<? if ($displaySpecialCss) { ?>
 						<li class="control" data-tooltip="<?= wfMessage("admindashboard-control-special-css-tooltip")->text(); ?>">
 							<a href="<?= $urlSpecialCss ?>" class="set" data-tracking="special-css">

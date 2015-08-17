@@ -6,35 +6,29 @@ $slotTopHeight: 50px;
 
 #MOBILE_TOP_LEADERBOARD {
 	background-color: white;
-
-	margin: 0 auto;
-	text-align: center;
-
-	height: 50px;
+	min-height: 50px;
+	margin: 3px auto 0;
+	width: 320px;
 
 	&.hidden, .hidden {
 		display: none;
 	}
 }
 
+#NATIVE_TABOOLA {
+	max-width: 480px;
+	margin: 0 auto;
+}
+
 .ad-in-content {
-	visibility: hidden;
-
-	position: relative;
-	margin: 1rem auto;
-
+	border-top: 1px solid $border-color;
 	//compensate for wkPage margin
 	left: -3.125%;
+	margin: 1rem auto;
 	min-width: $slotWidth;
-
-	&.show {
-		visibility: visible;
-
-		padding: 15px 0;
-		text-align: center;
-
-		border-top: 1px solid $border-color;
-	}
+	padding: 15px 0;
+	position: relative;
+	text-align: center;
 
 	&.hidden, .hidden {
 		display: none;
@@ -58,15 +52,26 @@ $slotTopHeight: 50px;
 	}
 }
 
-.wikia-ad-interactive-map {
+#mw-content-text div.wikia-ad-interactive-map,
+.int-map-mobile-map-page #mw-content-text > div.wikia-interactive-map-wrapper > div.wikia-ad-interactive-map {
 	height: 50px;
 	margin: 0 auto 15px;
-	width: 250px;
+	width: 320px;
 
 	& > iframe {
 		border: none;
 		height: 50px;
-		width: 250px;
+		left: auto;
+		margin: 0;
+		padding: 0;
+		position: relative;
+		top: auto;
+		width: 320px;
+		z-index: 10;
 	}
+}
 
+.int-map-mobile-map-page #mw-content-text > div.wikia-interactive-map-wrapper > div.wikia-ad-interactive-map {
+	height: 60px;
+	padding-top: 10px;
 }

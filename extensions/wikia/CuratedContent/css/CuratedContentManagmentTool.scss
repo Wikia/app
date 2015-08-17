@@ -1,0 +1,160 @@
+@import "skins/shared/color";
+
+#contentManagmentForm {
+  text-align: center;
+
+  margin-top: 30px;
+  margin-right: 0;
+  margin-left: 0;
+  margin-bottom: 120px;
+  position: relative;
+
+  .header {
+    text-align: left;
+  }
+
+  ul {
+    margin: 0 auto;
+    text-align: left;
+
+    width: 800px;
+
+    counter-reset: first;
+
+    li {
+      list-style: none;
+
+      position: relative;
+
+      padding-left: 50px;
+
+      &::before {
+        width: 30px;
+        display: inline-block;
+      }
+
+      &.language {
+        padding: 0;
+      }
+    }
+
+    .section ~ .item {
+      padding-left: 100px;
+    }
+  }
+
+  .autocomplete {
+    div {
+      background: white;
+      line-height: 30px;
+    }
+    .selected {
+      background: grey;
+      color: white;
+    }
+  }
+
+  input {
+    height: 25px;
+    width: 280px;
+    margin: 10px;
+
+    border: 1px solid grey;
+    box-shadow: inset -2px 2px 10px -5px black;
+
+    -webkit-transition: all .3s;
+    -moz-transition: all .3s;
+    -ms-transition: all .3s;
+    -o-transition: all .3s;
+    transition: all .3s;
+  }
+
+  .error{
+    box-shadow: inset -2px 2px 10px -5px black, 0 0 5px red;
+    border: 1px solid red;
+  }
+
+  .autocomplete {
+    border: 3px solid grey;
+  }
+
+  .drop {
+    border: dashed $color-alternate-text 2px;
+    padding: 20px;
+  }
+
+  .sprite {
+    position: absolute;
+    top: 16px;
+
+    cursor: pointer
+  }
+
+  .remove {
+    right: 35px;
+  }
+
+  .drag {
+    right: 10px;
+
+    cursor: move;
+  }
+
+  .photo {
+    right: 55px;
+  }
+
+  .photo-remove {
+    background-image: url('/extensions/wikia/CuratedContent/images/remove_photo.png'); /* inline */
+    background-position: center;
+
+    padding: 0 1px;
+  }
+}
+
+.image {
+  border: 1px solid transparent;
+  cursor: pointer;
+
+  position: absolute;
+  left: 0;
+
+  display: inline-block;
+  height: 100%;
+  width: 50px;
+
+  background-size: cover;
+  background-image: url('/extensions/wikia/CuratedContent/images/placeholder_search.png'); /* inline */
+
+  box-shadow: 0 0 10px -4px;
+  &.error {
+    border-color: red;
+  }
+}
+
+.section, .language{
+  background-color: $color-body;
+}
+
+#save {
+  position: relative;
+
+  &::after {
+    font-size: 2em;
+
+    position: absolute;
+    right: -25px;
+  }
+
+  &.ok::after {
+    color: green;
+
+    content: '✓';
+  }
+
+  &.err::after {
+    color: red;
+
+    content: 'X';
+  }
+}

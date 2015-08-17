@@ -1,0 +1,33 @@
+{
+	"@metadata": {
+		"authors": [
+			"Naudefj"
+		]
+	},
+	"visualeditor": "Vereenvoudigde teksverwerker",
+	"visualeditor-aliennode-tooltip": "Jammer, die element kan tans net in die wysig bron-modus verander word.",
+	"visualeditor-annotationbutton-bold-tooltip": "Vet",
+	"visualeditor-annotationbutton-italic-tooltip": "Kursief",
+	"visualeditor-annotationbutton-link-tooltip": "Skakel",
+	"visualeditor-clearbutton-tooltip": "Verwyder formatering",
+	"visualeditor-dialog-action-apply": "Pas wysigings toe",
+	"visualeditor-dialog-action-cancel": "Kanselleer",
+	"visualeditor-dialog-action-goback": "Gaan terug",
+	"visualeditor-formatdropdown-format-heading1": "Opskrif 1",
+	"visualeditor-formatdropdown-format-heading2": "Opskrif 2",
+	"visualeditor-formatdropdown-format-heading3": "Opskrif 3",
+	"visualeditor-formatdropdown-format-heading4": "Opskrif 4",
+	"visualeditor-formatdropdown-format-heading5": "Opskrif 5",
+	"visualeditor-formatdropdown-format-heading6": "Opskrif 5",
+	"visualeditor-formatdropdown-format-paragraph": "Paragraaf",
+	"visualeditor-formatdropdown-format-preformatted": "Vooraf geformatteer",
+	"visualeditor-formatdropdown-title": "Verander formaat",
+	"visualeditor-historybutton-redo-tooltip": "Doen weer",
+	"visualeditor-historybutton-undo-tooltip": "Maak ongedaan",
+	"visualeditor-indentationbutton-indent-tooltip": "Vergroot inkeping",
+	"visualeditor-indentationbutton-outdent-tooltip": "Verklein inkeping",
+	"visualeditor-inspector-close-tooltip": "Sluit",
+	"visualeditor-inspector-remove-tooltip": "Verwyder",
+	"visualeditor-listbutton-bullet-tooltip": "Ongenommerde lys",
+	"visualeditor-listbutton-number-tooltip": "Genommerde lys"
+}

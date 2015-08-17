@@ -350,9 +350,6 @@ SQL;
 	public function getRegularVideoList( $sort, $page, $useMaster = false ) {
 		wfProfileIn( __METHOD__ );
 
-		// Get the play button image to overlay on the video
-		$playButton = WikiaFileHelper::videoPlayButtonOverlay( self::THUMBNAIL_WIDTH, self::THUMBNAIL_HEIGHT );
-
 		// Get the list of videos that haven't been swapped yet
 		$videoList = $this->getUnswappedVideoList( $sort, self::VIDEOS_PER_PAGE, $page, $useMaster );
 
@@ -360,7 +357,7 @@ SQL;
 		$helper = new VideoHandlerHelper();
 
 		// Get a list of what videos the user has already looked at
-		$visitedList = unserialize( $this->wg->User->getOption( LicensedVideoSwapHelper::USER_VISITED_LIST ) );
+		$visitedList = unserialize( $this->wg->User->getGlobalAttribute( LicensedVideoSwapHelper::USER_VISITED_LIST ) );
 
 		// Go through each video and add additional detail needed to display the video
 		$videos = array();
@@ -374,10 +371,7 @@ SQL;
 
 			$videoDetail = $helper->getVideoDetail( $videoInfo, $this->defaultVideoOptions );
 			if ( !empty( $videoDetail ) ) {
-				$videoOverlay =  WikiaFileHelper::videoInfoOverlay( self::THUMBNAIL_WIDTH, $videoDetail['fileTitle'] );
 
-				$videoDetail['videoPlayButton'] = $playButton;
-				$videoDetail['videoOverlay'] = $videoOverlay;
 				$videoDetail['videoSuggestions'] = $suggestions;
 
 				$seeMoreLink = SpecialPage::getTitleFor( "WhatLinksHere" )->escapeLocalUrl();
@@ -536,9 +530,6 @@ SQL;
 		// Reuse code from VideoHandlerHelper
 		$helper = new VideoHandlerHelper();
 
-		// Get the play button image to overlay on the video
-		$playButton = WikiaFileHelper::videoPlayButtonOverlay( self::THUMBNAIL_WIDTH, self::THUMBNAIL_HEIGHT );
-
 		foreach ( $videoRows as $videoInfo ) {
 			$rowTitle = preg_replace( '/^File:/', '',  $videoInfo['title'] );
 			$videoRowTitleTokenized = $this->getNormalizedTokens( $rowTitle );
@@ -589,11 +580,6 @@ SQL;
 				}
 				continue;
 			}
-
-			// get video overlay
-			$videoOverlay =  WikiaFileHelper::videoInfoOverlay( self::THUMBNAIL_WIDTH, $videoDetail['fileTitle'] );
-			$videoDetail['videoPlayButton'] = $playButton;
-			$videoDetail['videoOverlay'] = $videoOverlay;
 
 			$videos[] = $videoDetail;
 
@@ -1285,7 +1271,7 @@ SQL;
 		if ( !is_array( $total ) || !array_key_exists( $userId, $total ) ) {
 			$statusNew = self::STATUS_NEW;
 			$pageStatus = WPP_LVS_STATUS;
-			$visitedDate = $this->wg->User->getOption( self::USER_VISITED_DATE );
+			$visitedDate = $this->wg->User->getGlobalAttribute( self::USER_VISITED_DATE );
 			if ( empty( $visitedDate ) ) {
 				$sqlJoin = '';
 			} else {

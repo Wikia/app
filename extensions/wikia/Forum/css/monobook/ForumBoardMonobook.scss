@@ -1,7 +1,7 @@
 // Monobook skin specific styling
-@import "../../../../../skins/wikia/css/color";
-@import "../../../../../skins/oasis/css/mixins/arrow";
-@import "../../../../../skins/oasis/css/mixins/box-shadow";
+@import "skins/wikia/css/color";
+@import "skins/shared/mixins/arrow";
+@import "skins/shared/mixins/box-shadow";
 
 .ContentHeader {
 	border-bottom: 1px solid $color-page-border;

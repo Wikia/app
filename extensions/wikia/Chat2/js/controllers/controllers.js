@@ -16,6 +16,7 @@ var NodeChatSocketWrapper = $.createClass(Observable,{
 		NodeChatSocketWrapper.superclass.constructor.apply(this,arguments);
 		this.sessionData = null;
 		this.roomId = roomId;
+		this.serverId = WIKIA_NODE_INSTANCE;
 	},
 
 	send: function($msg) {
@@ -26,11 +27,13 @@ var NodeChatSocketWrapper = $.createClass(Observable,{
 	},
 
 	connect: function() {
+		// Global vars from env
 		var url = 'http://' + WIKIA_NODE_HOST + ':' + WIKIA_NODE_PORT;
 		$().log(url, 'Chat server');
-		
+		console.log("connecting to url: " + url);
+
 		if( this.socket ) {
-			if(this.socket.socket.connected) {
+			if(this.socket.connected) {
 				return true;
 			} else {
 				this.socket.removeAllListeners('message');
@@ -50,10 +53,10 @@ var NodeChatSocketWrapper = $.createClass(Observable,{
 
 			socket.on('message', this.proxy( this.onMsgReceived, this ) );
 			socket.on('connect', this.proxy( function(){this.onConnect(socket, [ 'xhr-polling' ]); }, this ) );
-			
+
 			var connectionFail = this.proxy( function(delay, count) {
 				if(count == 8) {
-					if(socket) { 
+					if(socket) {
 						socket.disconnect();
 					}
 					this.fire( "reConnectFail", {} );
@@ -87,7 +90,7 @@ var NodeChatSocketWrapper = $.createClass(Observable,{
 
 		};
 
-		this.proxy(callback, this)('name=' + encodedWgUserName + '&key=' + wgChatKey + '&roomId=' + this.roomId );
+		this.proxy(callback, this)('name=' + encodedWgUserName + '&key=' + wgChatKey + '&roomId=' + this.roomId + '&serverId=' + this.serverId );
 	},
 
 

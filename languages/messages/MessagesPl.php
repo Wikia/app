@@ -689,8 +689,9 @@ Uzasadnienie blokady: ''$2''.",
 # Login and logout pages
 'logouttext'                 => "'''Nie jesteś już zalogowany.'''
 
-Możesz kontynuować pracę w {{GRAMMAR:MS.lp|{{SITENAME}}}} jako niezarejestrowany użytkownik albo [[Special:UserLogin|zalogować się ponownie]] jako ten sam lub inny użytkownik.
+Możesz kontynuować pracę w {{GRAMMAR:MS.lp|{{SITENAME}}}} jako niezarejestrowany użytkownik albo $1 jako ten sam lub inny użytkownik.
 Zauważ, że do momentu wyczyszczenia pamięci podręcznej przeglądarki niektóre strony mogą wyglądać tak, jakbyś wciąż był zalogowany.",
+'logouttext-link-text'       => 'zalogować się ponownie',
 'welcomecreation'            => '== Witaj, $1! ==
 Twoje konto zostało utworzone.
 Nie zapomnij dostosować [[Special:Preferences|preferencji dla {{GRAMMAR:D.lp|{{SITENAME}}}}]].',
@@ -1660,7 +1661,7 @@ Strony z [[Special:Watchlist|listy obserwowanych]] są '''wytłuszczone'''.",
 'reuploaddesc'                => 'Przerwij wysyłanie i wróć do formularza wysyłki',
 'upload-tryagain'             => 'Zapisz zmieniony opis pliku',
 'uploadnologin'               => 'Nie jesteś zalogowany',
-'uploadnologintext'           => 'Musisz się [[Special:UserLogin|zalogować]] przed przesłaniem plików.',
+'uploadnologintext'           => 'Musisz $1 żeby móc przesyłać pliki i dodawać filmy.',
 'upload_directory_missing'    => 'Katalog dla przesyłanych plików ($1) nie istnieje i nie może zostać utworzony przez serwer WWW.',
 'upload_directory_read_only'  => 'Serwer nie może zapisywać do katalogu ($1) przeznaczonego na przesyłane pliki.',
 'uploaderror'                 => 'Błąd wysyłania',
@@ -2610,6 +2611,7 @@ Przejdź do [[Special:BlockList|listy zablokowanych adresów IP]], by przejrzeć
 'unblocked'                       => '[[User:$1|$1]] {{GENDER:$1|został odblokowany|została odblokowana|został odblokowany}}.',
 'unblocked-range'                 => '$1 został odblokowany',
 'unblocked-id'                    => 'Blokada $1 została zdjęta',
+'unblocked-ip'                    => '[[Special:Contributions/$1|$1]] został odblokowany.',
 'blocklist'                       => 'Zablokowani użytkownicy',
 'ipblocklist'                     => 'Zablokowani użytkownicy',
 'ipblocklist-legend'              => 'Znajdź zablokowanego użytkownika',

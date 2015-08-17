@@ -3,7 +3,7 @@ Copyright (c) 2003-2009, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
-@import "../../../../../../../skins/oasis/css/core/color";
+@import "skins/shared/color";
 
 .cke_skin_wikia
 {
@@ -75,7 +75,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 	font-size: 13px;
 	line-height: 140%;
 	background-color: $color-page;
-	white-space: pre;
+	white-space: pre-wrap;
 	overflow: auto;
 }
 

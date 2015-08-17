@@ -102,7 +102,7 @@ class ImagePage extends Article {
 		 */
 
 		$diff = $wgRequest->getVal( 'diff' );
-		$diffOnly = $wgRequest->getBool( 'diffonly', $wgUser->getOption( 'diffonly' ) );
+		$diffOnly = $wgRequest->getBool( 'diffonly', $wgUser->getGlobalPreference( 'diffonly' ) );
 
 		if ( $this->getTitle()->getNamespace() != NS_FILE || ( isset( $diff ) && $diffOnly ) ) {
 			return parent::view();
@@ -305,7 +305,7 @@ class ImagePage extends Article {
 		/* Wikia change end */
 
 		$r = "<div class=\"mw-imagepage-section-metadata\">";
-		$r .= wfMsgNoTrans( 'metadata-help' );
+		$r .= wfMessage( 'metadata-help' )->plain();
 		$r .= "<table id=\"mw_metadata\" class=\"mw_metadata\">\n";
 		foreach ( $metadata as $type => $stuff ) {
 			foreach ( $stuff as $v ) {
@@ -352,7 +352,7 @@ class ImagePage extends Article {
 
 		$this->loadFile();
 
-		$sizeSel = intval( $wgUser->getOption( 'imagesize' ) );
+		$sizeSel = intval( $wgUser->getGlobalPreference( 'imagesize' ) );
 		if ( !isset( $wgImageLimits[$sizeSel] ) ) {
 			$sizeSel = User::getDefaultOption( 'imagesize' );
 
@@ -1017,7 +1017,7 @@ class ImageHistoryList {
 	 * @return string
 	 */
 	public function imageHistoryLine( $iscur, $file ) {
-		global $wgUser, $wgLang, $wgContLang;
+		global $wgUser, $wgLang, $wgContLang, $wgEnableVignette;
 
 		$timestamp = wfTimestamp( TS_MW, $file->getTimestamp() );
 		$img = $iscur ? $file->getName() : $file->getArchiveName();
@@ -1119,7 +1119,11 @@ class ImageHistoryList {
 			}
 			$row .= '<span class="history-deleted">' . $url . '</span>';
 		} else {
-			$url = $iscur ? $this->current->getUrl() : $this->current->getArchiveUrl( $img );
+			if ( $wgEnableVignette ) {
+				$url = $iscur ? $this->current->getUrl() : $file->getUrl();
+			} else {
+				$url = $iscur ? $this->current->getUrl() : $this->current->getArchiveUrl( $img );
+			}
 			$row .= Xml::element( 'a', array( 'href' => $url ), $wgLang->timeanddate( $timestamp, true ) );
 		}
 		$row .= "</td>";

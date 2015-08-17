@@ -14,7 +14,8 @@ $wgExtensionCredits['other'][] = array(
 		'Piotr Molski (moli@wikia-inc.com)',
 		'Krzysztof Krzyżaniak (eloy@wikia-inc.com)',
 		'Maciej Szumocki (szumo@wikia-inc.com)'
-	)
+	),
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/PhalanxII'
 );
 
 define( "PHALANX_VERSION",  2 );
@@ -60,6 +61,7 @@ $phalanxhooks = array(
 			'AbortMove'          => 'abortMove',
 			'EditContent'        => 'editContent',
 			'CheckContent'       => 'checkContent',
+			'APIEditBeforeSave'  => 'filterAPIEditBeforeSave',
 		),
 	'PhalanxTitleBlock' =>
 		array(
@@ -84,6 +86,9 @@ $phalanxhooks = array(
 			'EditPhalanxBlock'                => 'onEditPhalanxBlock',
 			'DeletePhalanxBlock'              => 'onDeletePhalanxBlock',
 			'AfterFormatPermissionsErrorMessage' => 'onAfterFormatPermissionsErrorMessage',
+			// temp logging for PLATFORM-317
+			'GetBlockedStatus'                => 'onGetBlockedStatus',
+			'ContributionsLogEventsList'      => 'onContributionsLogEventsList',
 		)
 );
 

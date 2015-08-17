@@ -1,0 +1,34 @@
+{
+	"@metadata": {
+		"authors": [
+			"Als-Chlämens",
+			"Als-Holder"
+		]
+	},
+	"semanticdrilldown-desc": "E Drilldown-Benutzerschnittstell go dur semantischi Date z navigiere",
+	"specialpages-group-sd_group": "Semantisch Drilldown",
+	"browsedata": "Date aaluege",
+	"sd_browsedata_choosecategory": "Kategorii uuswehle",
+	"sd_browsedata_viewcategory": "Kategorii aaluege",
+	"sd_browsedata_docu": "Druck uf ein oder meh Filter go s Ergebnis yyschränke.",
+	"sd_browsedata_subcategory": "Unterkategorii",
+	"sd_browsedata_other": "Anders",
+	"sd_browsedata_none": "Keis",
+	"sd_browsedata_filterbyvalue": "Iber dää Wärt filtere",
+	"sd_browsedata_filterbysubcategory": "Filter fir die Subkategorii",
+	"sd_browsedata_otherfilter": "Zeig Syte mit eme andere Wärt fir dää Filter",
+	"sd_browsedata_nonefilter": "Zeig Syte mit keim Wärt fir dää Filter",
+	"sd_browsedata_or": "oder",
+	"sd_browsedata_removefilter": "Dää Filter lesche",
+	"sd_browsedata_removesubcategoryfilter": "Dää Subkategorii-Filter lesche",
+	"sd_browsedata_resetfilters": "Filter zruggsetze",
+	"sd_browsedata_addanothervalue": "Druck uf dr Pfyyl go ne andere Wärt zuefiege",
+	"sd_browsedata_daterangestart": "Aafang:",
+	"sd_browsedata_daterangeend": "Änd:",
+	"sd_browsedata_novalues": "S het kei Wärt fir dää Filter",
+	"sd_createfilter_usepropertyvalues": "Alli Wärt vu däre Eigeschaft fir dr Filter bruuche.",
+	"sd_createfilter_usecategoryvalues": "D Wärt fir dr Filter vu däre Kategorii verwände:",
+	"sd_createfilter_requirefilter": "Voreb dää Filter aazeigt wird, muess dää ander Filter gsetzt syy:",
+	"sd-pageschemas-filter": "Filter",
+	"sd-pageschemas-values": "Wärt"
+}

@@ -18,10 +18,5 @@ $dbr = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 $aCondition = array("task_id" => $options['TASK_ID']);
 $oTask = $dbr->selectRow( "wikia_tasks", "*", $aCondition, __METHOD__, array( "ORDER BY" => "task_id") );
 
-if (TaskRunner::isModern('MultiDeleteTask')) {
-	$task = new \Wikia\Tasks\Tasks\MultiTask();
-	$task->delete(unserialize($oTask->task_arguments));
-} else {
-	$Maintenance = new MultiDeleteTask();
-	$Maintenance->execute($oTask);
-}
+$task = new \Wikia\Tasks\Tasks\MultiTask();
+$task->delete(unserialize($oTask->task_arguments));

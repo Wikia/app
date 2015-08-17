@@ -2,10 +2,9 @@
  * @brief Styles comments as speech bubbles
  * @details Used by both ArticleComments and Wall
  */
-@import "color";
-@import "../mixins/bodytext";
-@import "../mixins/box-sizing";
-@import "../mixins/clearfix";
+@import "skins/shared/color";
+@import "skins/shared/mixins/bodytext";
+@import "skins/shared/mixins/clearfix";
 
 .SpeechBubble {
 	@include clearfix;
@@ -103,7 +102,7 @@
 	}
 
 	textarea {
-		@include box-sizing;
+		box-sizing: border-box;
 		line-height: 21px;
 		font-family: "Helvetica", "Arial", sans-serif;
 		font-size: 11px;

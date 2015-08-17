@@ -1,25 +1,33 @@
 /*jshint camelcase:false*/
 /*global define, require*/
 define('ext.wikia.adEngine.adLogicPageParams', [
+	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.adLogicPageViewCounter',
 	'wikia.log',
+	'wikia.document',
+	'wikia.location',
 	'wikia.window',
-	require.optional('ext.wikia.adEngine.krux'),
-	require.optional('ext.wikia.adEngine.adLogicPageDimensions'),
-	require.optional('wikia.abTest')
-], function (log, window, Krux, adLogicPageDimensions, abTest) {
+	require.optional('ext.wikia.adEngine.lookup.services'),
+	require.optional('wikia.abTest'),
+	require.optional('wikia.krux')
+], function (adContext, pvCounter, log, doc, loc, win, lookups, abTest, krux) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.adLogicPageParams',
-		hostname = window.location.hostname.toString(),
-		adsInHeadExperiment = window.wgLoadAdsInHead && abTest && abTest.getGroup('ADS_IN_HEAD'),
+		hostname = loc.hostname,
 		maxNumberOfCategories = 3,
-		maxNumberOfKruxSegments = 27; // keep the DART URL part for Krux segments below 500 chars
+		skin = adContext.getContext().targeting.skin,
+		context = {};
+
+	function updateContext() {
+		context = adContext.getContext();
+	}
 
 	function getDartHubName() {
-		if (window.cscoreCat === 'Entertainment') {
+		if (context.targeting.wikiVertical === 'Entertainment') {
 			return 'ent';
 		}
-		if (window.cscoreCat === 'Gaming') {
+		if (context.targeting.wikiVertical === 'Gaming') {
 			return 'gaming';
 		}
 		return 'life';
@@ -52,11 +60,12 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 	}
 
 	function getCategories() {
-		if (window.wgAdDriverUseCatParam) {
-			if (window.wgCategories instanceof Array && window.wgCategories.length > 0) {
-				var categories = window.wgCategories.slice(0, maxNumberOfCategories);
-				return categories.join('|').toLowerCase().replace(/ /g, '_').split('|');
-			}
+		var categories = context.targeting.pageCategories,
+			outCategories;
+
+		if (categories instanceof Array && categories.length > 0) {
+			outCategories = categories.slice(0, maxNumberOfCategories);
+			return outCategories.join('|').toLowerCase().replace(/ /g, '_').split('|');
 		}
 	}
 
@@ -72,6 +81,15 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 		}
 
 		return ab;
+	}
+
+	/**
+	 * Get the AbPerformanceTesting experiment name
+	 *
+	 * @returns {string}
+	 */
+	function getPerformanceAb() {
+		return win.wgABPerformanceTest;
 	}
 
 	/**
@@ -127,63 +145,143 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 		return params;
 	}
 
-	function getPageLevelParams() {
-		// TODO: cache results (keep in mind some of them may change while executing page)
+	function getRefParam() {
+		var hostnameMatch,
+			ref = doc.referrer,
+			refHostname,
+			searchDomains = /(google|search\.yahooo|bing|baidu|ask|yandex)/,
+			wikiDomains = [
+				'wikia.com', 'ffxiclopedia.org', 'jedipedia.de',
+				'memory-alpha.org', 'uncyclopedia.org',
+				'websitewiki.de', 'wowwiki.com', 'yoyowiki.org'
+			],
+			wikiDomainsRegex = new RegExp('(^|\\.)(' + wikiDomains.join('|').replace(/\./g, '\\.') + ')$');
 
+		if (!ref || typeof ref !== 'string') {
+			return 'direct';
+		}
+
+		refHostname = ref.match(/\/\/([^\/]+)\//);
+
+		if (refHostname) {
+			refHostname = refHostname[1];
+		}
+
+		hostnameMatch = refHostname === loc.hostname;
+
+		if (hostnameMatch && ref.indexOf('search=') > -1) {
+			return 'wiki_search';
+		}
+		if (hostnameMatch) {
+			return 'wiki';
+		}
+
+		hostnameMatch = wikiDomainsRegex.test(refHostname);
+
+		if (hostnameMatch && ref.indexOf('search=') > -1) {
+			return 'wikia_search';
+		}
+
+		if (hostnameMatch) {
+			return 'wikia';
+		}
+
+		if (searchDomains.test(refHostname)) {
+			return 'external_search';
+		}
+
+		return 'external';
+	}
+
+	function getAspectRatio() {
+		return win.innerWidth > win.innerHeight ? '4:3' : '3:4';
+	}
+
+	/**
+	 * Returns page level params
+	 * @param {Object} options
+	 * @param {Boolean} options.includeRawDbName - to include raw db name or not
+	 * @returns object
+	 */
+	function getPageLevelParams(options) {
+		// TODO: cache results (keep in mind some of them may change while executing page)
 		log('getPageLevelParams', 9, logGroup);
 
 		var site,
+			dbName,
 			zone1,
 			zone2,
-			params;
+			params,
+			targeting = context.targeting,
+			pvs = pvCounter.get();
 
-		if (window.wikiaPageIsHub) {
+		options = options || {};
+
+		dbName = '_' + (targeting.wikiDbName || 'wikia').replace('/[^0-9A-Z_a-z]/', '_');
+
+		if (targeting.pageIsHub) {
 			site = 'hub';
 			zone1 = '_' + getDartHubName() + '_hub';
 			zone2 = 'hub';
 		} else {
-			site = window.cityShort;
-			zone1 = '_' + (window.wgDBname || 'wikia').replace('/[^0-9A-Z_a-z]/', '_');
-			zone2 = window.wikiaPageType || 'article';
+			site = targeting.mappedVerticalName || targeting.wikiCategory;
+			zone1 = dbName;
+			zone2 = targeting.pageType || 'article';
 		}
 
 		params = {
 			s0: site,
 			s1: zone1,
 			s2: zone2,
-			artid: window.wgArticleId && window.wgArticleId.toString(),
+			ab: getAb(),
+			ar: getAspectRatio(),
+			perfab: getPerformanceAb(),
+			artid: targeting.pageArticleId && targeting.pageArticleId.toString(),
+			cat: getCategories(),
 			dmn: getDomain(),
 			hostpre: getHostname(),
-			wpage: window.wgPageName && window.wgPageName.toLowerCase(),
-			lang: window.wgContentLanguage || 'unknown',
-			cat: getCategories(),
-			ab: getAb()
+			skin: targeting.skin,
+			lang: targeting.wikiLanguage || 'unknown',
+			wpage: targeting.pageName && targeting.pageName.toLowerCase(),
+			ref: getRefParam()
 		};
 
-		if (window.wgArticleId) {
-			params.pageid = zone1 + '/' + window.wgArticleId;
+		if (pvs) {
+			params.pv = pvs.toString();
 		}
 
-		if (adLogicPageDimensions && adLogicPageDimensions.hasPreFooters()) {
-			params.hasp = 'yes';
-		} else {
-			params.hasp = 'no';
+		if (options.includeRawDbName) {
+			params.rawDbName = dbName;
 		}
 
-		if (Krux && !window.wgWikiDirectedAtChildren) {
-			params.u = Krux.user;
-			params.ksgmnt = Krux.segments && Krux.segments.slice(0, maxNumberOfKruxSegments);
+		if (krux && targeting.enableKruxTargeting) {
+			params.u = krux.getUser();
+			params.ksgmnt = krux.getSegments();
 		}
 
-		extend(params, decodeLegacyDartParams(window.wgDartCustomKeyValues));
+		if (targeting.wikiIsTop1000) {
+			params.top = '1k';
+		}
 
-		if (!adsInHeadExperiment) {
-			extend(params, decodeLegacyDartParams(window.amzn_targs));
+		extend(params, decodeLegacyDartParams(targeting.wikiCustomKeyValues));
+		if (lookups) {
+			lookups.extendPageTargeting(params);
+		}
+
+		if (!params.esrb) {
+			params.esrb = targeting.wikiDirectedAtChildren ? 'ec' : 'teen';
 		}
 
 		log(params, 9, logGroup);
 		return params;
 	}
+
+	if (skin && skin !== 'mercury') {
+		pvCounter.increment();
+	}
+
+	updateContext();
+	adContext.addCallback(updateContext);
 
 	return {
 		getPageLevelParams: getPageLevelParams

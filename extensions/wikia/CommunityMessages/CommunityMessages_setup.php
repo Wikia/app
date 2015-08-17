@@ -24,7 +24,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 $wgExtensionCredits['other'][] = array(
 	'name' => 'CommunityMessages',
 	'author' => '[http://www.wikia.com/wiki/User:Marooned Maciej Błaszkowski (Marooned)]',
-	'description' => 'Helper extension for Community Messages.',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/CommunityMessages',
 	'description-msg' => 'communitymessages-desc',
 );
 

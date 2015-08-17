@@ -8,6 +8,7 @@
 $messages = array();
 
 $messages['en'] = array(
+	'edithub-desc' => 'Internal tool to configure Hub page',
 	'edithub' => 'Edit Hub',
 	'action-edithub' => 'Edit Hub',
 	'edit-hub-title' => 'Edit Hub',
@@ -43,6 +44,7 @@ $messages['en'] = array(
 );
 
 $messages['qqq'] = array(
+	'edithub-desc' => '{{desc}}',
 	'action-edithub' => 'Edit Hub Special Page Name',
 	'edit-hub-title' => 'Edit Hub Special Page title',
 	'edit-hub-hub-module-explore-link-url' => 'The parameter here is alphanumeric: for sections it reads "Header 1." for links in section "Header a." in example',

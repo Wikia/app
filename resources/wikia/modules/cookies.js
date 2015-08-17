@@ -69,7 +69,7 @@
 		 * @param {String} name The name of the cookie
 		 * @param {Mixed} value The value of the cookie
 		 * @param {Object} options Options that apply to the cookie:
-		 * - {Mixed} expires An integer (relative time from now) or a Date instance
+		 * - {Mixed} expires An integer (relative time from now in milliseconds), a Date instance, or 'never'
 		 * - {String} path The cookie's path
 		 * - {String} domain The domain of validity
 		 * - {Boolean} secure
@@ -78,6 +78,7 @@
 		 */
 		function set(name, value, options) {
 			var expDate,
+				currYear,
 				cookieString,
 				data = [],
 				x,
@@ -91,7 +92,11 @@
 			}
 
 			if (options.expires) {
-				if (typeof options.expires === 'number') {
+				if (options.expires === 'never') {
+					// Set it to a date so far in the future, it's practically never.
+					currYear = new Date().getFullYear();
+					expDate = new Date(currYear + 20, 0);
+				} else if (typeof options.expires === 'number') {
 					expDate = new Date();
 					expDate.setTime(expDate.getTime() + (options.expires));
 				} else if (options.expires instanceof Date) {

@@ -12,6 +12,12 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 		global $IP;
 		parent::__construct($request);
 
+		// TODO: the background image shouldn't be passed as the url - we should pass a File reference and derive ourselves
+		if (isset($this->mParams['background-image']) && VignetteRequest::isVignetteUrl($this->mParams['background-image']) && isset($this->mParams['path-prefix'])) {
+			$connector = strpos($this->mParams['background-image'], '?') === false ? '?' : '&';
+			$this->mParams['background-image'] .= "{$connector}path-prefix={$this->mParams['path-prefix']}";
+		}
+
 		if (strpos($this->mOid, '..') !== false) {
 			throw new Exception('File path must not contain \'..\'.');
 		}
@@ -56,10 +62,10 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 				| SassService::FILTER_BASE64 | SassService::FILTER_JANUS
 			);
 
-			$cacheId = __CLASS__ . "-minified-".$sassService->getCacheKey();
+			$cacheId = wfSharedMemcKey( __CLASS__, "minified", $sassService->getCacheKey() );
 			$content = $memc->get( $cacheId );
 		} catch (Exception $e) {
-			$content = "/* {$e->getMessage()} */";
+			$content = $this->makeComment($e->getMessage());
 			$hasErrors = true;
 		}
 
@@ -79,9 +85,8 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 			// This is the final pass on contents which, among other things, performs minification
 			parent::getContent( $processingTimeStart );
 
-			// Prevent cache poisoning if we are serving sass from preview server
-			if ( !empty($cacheId) && getHostPrefix() == null && !$this->mForceProfile && !$hasErrors ) {
-				$memc->set( $cacheId, $this->mContent, 0 );
+			if ( !empty($cacheId) && !$this->mForceProfile && !$hasErrors ) {
+				$memc->set( $cacheId, $this->mContent, WikiaResponse::CACHE_STANDARD );
 			}
 		}
 
@@ -93,6 +98,17 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 		wfProfileOut(__METHOD__);
 
 		return $this->mContent;
+	}
+
+	/**
+	 * Add more params to already existing
+	 * Set to null if want to force fallback to default sass params
+	 * (fallback happens in SassService::getSassVariables)
+	 * by default $this->mParams is empty array so fallback don't happen
+	 * @param array $params
+	 */
+	public function addParams( array $params ) {
+		$this->mParams = array_merge( $this->mParams, $params );
 	}
 
 	/**

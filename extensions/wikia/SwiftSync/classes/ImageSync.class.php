@@ -14,9 +14,9 @@ class ImageSync implements \Iterator {
 	protected $current;
 	
 	/* 
-	 * @param $res ResultWrapper
+	 * @param $res \ResultWrapper
 	 */
-	function __construct( $res ) {
+	function __construct( \ResultWrapper $res ) {
 		$this->res = $res;
 		$this->inx = 0;
 		$this->setCurrent( $this->res->current() );
@@ -46,10 +46,7 @@ class ImageSync implements \Iterator {
 		$syncResult = null;
 		if ( !is_null( $result ) ) {
 			$syncResult = new ImageSync( $result );
-		} else {
-			\Wikia\SwiftStorage::log( __METHOD__, 'No image to sync to other DC' );
 		}
-		
 		wfProfileOut( __METHOD__ );
 		
 		return $syncResult;
@@ -78,7 +75,7 @@ class ImageSync implements \Iterator {
 		return $this->current;
 	}
 
-	/* @return void */
+	/* @return int */
 	function key() {
 		return $this->inx;
 	}

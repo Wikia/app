@@ -97,6 +97,13 @@ $messages['es'] = array(
 	'tog-redirected-from' => '&ndash; redirigido desde $1',
 );
 
+/** Persian (فارسی)
+ * @author Reza1615
+ */
+$messages['fa'] = array(
+	'linksuggest-desc' => 'پیوندهای پیشنهادشده به ویراستاران برای نمایش ویرایش',
+);
+
 /** Finnish (suomi)
  * @author Centerlink
  * @author Nedergard
@@ -171,8 +178,10 @@ $messages['ia'] = array(
  * @author Aldnonymous
  * @author Bennylin
  * @author C5st4wr6ch
+ * @author Fate Kage
  */
 $messages['id'] = array(
+	'linksuggest-desc' => 'Menyarankan pranala kepada editor pada tampilan suntingan',
 	'tog-disablelinksuggest' => 'Jangan menampilkan saran pranala',
 	'tog-redirected-from' => '&ndash; dialihkan dari $1',
 );
@@ -203,6 +212,13 @@ $messages['ja'] = array(
  */
 $messages['km'] = array(
 	'tog-disablelinksuggest' => 'កុំបង្ហាញសំណើតំណភ្ជាប់', # Fuzzy
+);
+
+/** Korean (한국어)
+ * @author Miri-Nae
+ */
+$messages['ko'] = array(
+	'tog-disablelinksuggest' => '소스 모드에서 링크 제안을 보이지 않기',
 );
 
 /** Colognian (Ripoarisch)
@@ -456,10 +472,11 @@ $messages['zh-hans'] = array(
 /** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
  * @author Frankou
+ * @author LNDDYL
  * @author Lauhenry
  */
 $messages['zh-hant'] = array(
-	'linksuggest-desc' => '在編輯畫面中提供編輯者一些鏈接建議',
-	'tog-disablelinksuggest' => '源代碼模式時不顯示鏈接建議',
+	'linksuggest-desc' => '在編輯畫面中提供編輯者一些連結建議',
+	'tog-disablelinksuggest' => '原始碼模式時不顯示連結建議',
 	'tog-redirected-from' => '&ndash;重定向自$1',
 );

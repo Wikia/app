@@ -662,10 +662,13 @@ class XmlDumpWriter {
 			$archiveName = '';
 		}
 		if ( $dumpContents ) {
+			$be = $file->getRepo()->getBackend();
 			# Dump file as base64
 			# Uses only XML-safe characters, so does not need escaping
+			# @TODO: too bad this loads the contents into memory (script might swap)
 			$contents = '      <contents encoding="base64">' .
-				chunk_split( base64_encode( file_get_contents( $file->getPath() ) ) ) .
+				chunk_split( base64_encode(
+					$be->getFileContents( array( 'src' => $file->getPath() ) ) ) ) .
 				"      </contents>\n";
 		} else {
 			$contents = '';
@@ -791,6 +794,17 @@ class DumpFileOutput extends DumpOutput {
 		$this->filename = $file;
 	}
 
+	/**
+	 * @param string $string
+	 */
+	function writeCloseStream( $string ) {
+		parent::writeCloseStream( $string );
+		if ( $this->handle ) {
+			fclose( $this->handle );
+			$this->handle = false;
+		}
+	}
+
 	function write( $string ) {
 		fputs( $this->handle, $string );
 	}
@@ -840,6 +854,7 @@ class DumpFileOutput extends DumpOutput {
  */
 class DumpPipeOutput extends DumpFileOutput {
 	protected $command, $filename;
+	protected $procOpenResource = false;
 
 	function __construct( $command, $file = null ) {
 		if ( !is_null( $file ) ) {
@@ -849,6 +864,17 @@ class DumpPipeOutput extends DumpFileOutput {
 		$this->startCommand( $command );
 		$this->command = $command;
 		$this->filename = $file;
+	}
+
+	/**
+	 * @param string $string
+	 */
+	function writeCloseStream( $string ) {
+		parent::writeCloseStream( $string );
+		if ( $this->procOpenResource ) {
+			proc_close( $this->procOpenResource );
+			$this->procOpenResource = false;
+		}
 	}
 
 	function startCommand( $command ) {
@@ -901,6 +927,40 @@ class DumpBZip2Output extends DumpPipeOutput {
 }
 
 /**
+ * Sends dump output via PHP bzwrite() functions.
+ *
+ * No proc_open() and external binaries involved
+ *
+ * @see http://php.net/manual/en/function.bzwrite.php
+ * @ingroup Dump
+ *
+ * Wikia change
+ * @author macbre
+ */
+class DumpBzOutput extends DumpFileOutput {
+
+	function __construct( $file ) {
+		$this->handle = bzopen( $file, "w" );
+		$this->filename = $file;
+	}
+
+	/**
+	 * @param string $string
+	 */
+	function writeCloseStream( $string ) {
+		parent::writeCloseStream( $string );
+		if ( $this->handle ) {
+			bzclose( $this->handle );
+			$this->handle = false;
+		}
+	}
+
+	function write( $string ) {
+		bzwrite( $this->handle, $string );
+	}
+}
+
+/**
  * Sends dump output via the p7zip compressor.
  * @ingroup Dump
  */
@@ -912,7 +972,9 @@ class Dump7ZipOutput extends DumpPipeOutput {
 	}
 
 	function setup7zCommand( $file ) {
-		$command = "7za a -bd -si " . wfEscapeShellArg( $file );
+		// Wikia change - begin - @upstream: I07ab5f93ecd6d706460691db5181de89ef31cbea
+		$command = "7za a -bd -si -mx=4 " . wfEscapeShellArg( $file );
+		// Wikia change - end
 		// Suppress annoying useless crap from p7zip
 		// Unfortunately this could suppress real error messages too
 		$command .= ' >' . wfGetNull() . ' 2>&1';

@@ -1,6 +1,6 @@
-@import "../../../../skins/oasis/css/core/color";
-@import "../../../../skins/oasis/css/mixins/clearfix";
-@import "../../../../skins/oasis/css/mixins/gradient";
+@import "skins/shared/color";
+@import "skins/shared/mixins/clearfix";
+@import "skins/shared/mixins/gradient";
 
 // colors to be used for results
 $color-poll-result-bar: $color-buttons;

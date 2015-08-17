@@ -1,0 +1,95 @@
+@import 'skins/shared/mixins/calc';
+@import 'skins/shared/mixins/clearfix';
+@import 'skins/oasis/css/core/responsive-variables';
+@import 'skins/oasis/css/core/breakpoints-variables';
+@import 'GlobalNavigationColors';
+@import 'GlobalNavigationVariables';
+
+.global-navigation {
+	background-color: $global-wikia-background-color;
+	box-shadow: 0 0 0 2px rgba(0, 0, 0, .3);
+	box-sizing: border-box;
+	color: $nav-foreground-dark-color;
+	height: $global-navigation-height;
+	margin-top: -$global-navigation-height - 1px;
+	position: fixed;
+	transition-duration: .5s;
+	transition-property: background-color;
+	width: 100%;
+	z-index: $global-navigation-z-index;
+
+	*, *::before, *::after {
+		box-sizing: inherit;
+	}
+
+	&.static {
+		position: absolute;
+	}
+
+	.global-navigation-container {
+		@include clearfix;
+
+		display: table;
+		margin: 0 auto;
+		white-space: nowrap;
+		width: $width-outside;
+	}
+
+	.table-cell {
+		display: table-cell;
+		vertical-align: middle;
+	}
+
+	.wikia-logo-container {
+		padding-right: 15px;
+
+		.wikia-logo img {
+			background-position: right center;
+			vertical-align: sub;
+		}
+	}
+
+	.start-wikia-container {
+		padding-left: 10px;
+
+		.start-wikia {
+			border: solid 1px $global-navigation-text-color;
+			color: $global-navigation-text-color;
+			display: inline-block;
+			font-size: 12px;
+			height: $start-a-wikia-logo-size;
+			line-height: 28px;
+			margin-bottom: $global-navigation-margin-size + 1px;
+			margin-top: $global-navigation-margin-size + 1px;
+			padding: 0 10px;
+
+			&:hover {
+				background-color: $global-navigation-active-color;
+				color: $global-wikia-background-color;
+				text-decoration: none;
+			}
+
+			span {
+				display: inline-block;
+				padding-top: 1px;
+			}
+		}
+	}
+}
+
+
+.WikiaSiteWrapper {
+	padding-top: $global-navigation-height + 1px;
+}
+
+.ve .global-navigation {
+	position: absolute;
+	z-index: $global-navigation-z-index - 1;
+}
+
+.sso-login.hidden {
+	display: none;
+}
+
+@import 'breakpoints-GlobalNavigation';
+@import 'responsive-GlobalNavigation';

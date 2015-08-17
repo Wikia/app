@@ -2,6 +2,7 @@
 include_once dirname( __FILE__ ) . '/../../' . "models/BaseRssModel.class.php";
 
 class DummyModel extends BaseRssModel {
+	const LANGUAGE = 'en';
 	/**
 	 * Ability to switch on/off function for fixing duplicated timestamps
 	 */
@@ -12,9 +13,6 @@ class DummyModel extends BaseRssModel {
 	}
 
 	public function getFeedTitle() {
-	}
-
-	public function getFeedLanguage() {
 	}
 
 	public function getFeedDescription() {
@@ -163,10 +161,8 @@ class DummyModel extends BaseRssModel {
 }
 
 class DummyNotMockedModel extends BaseRssModel {
+	const LANGUAGE = 'en';
 	public function getFeedTitle() {
-	}
-
-	public function getFeedLanguage() {
 	}
 
 	public function getFeedDescription() {
@@ -742,5 +738,5 @@ class BaseRssModelTest extends WikiaBaseTest
 			);
 		return $processedData;
 	}
-
 }
+

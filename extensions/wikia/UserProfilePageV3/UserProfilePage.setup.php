@@ -43,6 +43,7 @@ $wgAutoloadClasses['HiddenWikisFilter'] = $dir . '/filters/HiddenWikisFilter.cla
 $wgAutoloadClasses['UserWikisFilterDecorator'] = $dir . '/filters/UserWikisFilterDecorator.class.php';
 $wgAutoloadClasses['UserWikisFilterUniqueDecorator'] = $dir . '/filters/UserWikisFilterUniqueDecorator.class.php';
 $wgAutoloadClasses['UserWikisFilterRestrictedDecorator'] = $dir . '/filters/UserWikisFilterRestrictedDecorator.class.php';
+$wgAutoloadClasses['UserWikisFilterPrivateDecorator'] = $dir . '/filters/UserWikisFilterPrivateDecorator.class.php';
 
 /**
  * hooks
@@ -50,7 +51,6 @@ $wgAutoloadClasses['UserWikisFilterRestrictedDecorator'] = $dir . '/filters/User
 $wgAutoloadClasses['UserProfilePageHooks'] =  $dir . '/UserProfilePageHooks.class.php';
 
 $wgHooks['SkinTemplateOutputPageBeforeExec'][] = 'UserProfilePageHooks::onSkinTemplateOutputPageBeforeExec';
-$wgHooks['BeforeDisplayNoArticleText'][] = 'UserProfilePageHooks::onBeforeDisplayNoArticleText';
 $wgHooks['SkinSubPageSubtitleAfterTitle'][] = 'UserProfilePageHooks::onSkinSubPageSubtitleAfterTitle';
 $wgHooks['ArticleSaveComplete'][] = 'UserProfilePageHooks::onArticleSaveComplete';
 $wgHooks['WikiaMobileAssetsPackages'][] = 'UserProfilePageHooks::onWikiaMobileAssetsPackages';

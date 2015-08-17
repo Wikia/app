@@ -7,7 +7,9 @@
 
 $wgExtensionCredits['specialpage'][] = array(
 	'name'   => 'VideoPageTool',
-	'author' => array( 'Garth Webb', 'Kenneth Kouot', 'Liz Lee', 'Saipetch Kongkatong' )
+	'author' => array( 'Garth Webb', 'Kenneth Kouot', 'Liz Lee', 'Saipetch Kongkatong' ),
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/VideoPageTool',
+	'descriptionmsg' => 'videopagetool-desc'
 );
 
 $dir = dirname(__FILE__) . '/';

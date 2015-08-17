@@ -190,7 +190,7 @@ class CloseMyAccountSpecialController extends WikiaSpecialPageController {
 			$user = User::newFromName( $this->username );
 			if ( $user->getId() != $expUser->getId() ) {
 				$this->success = false;
-				$this->resultMessage = $this->msg( 'wikiaconfirmemail-error-user-not-match' )->escaped();
+				$this->resultMessage = $this->msg( 'wikiaconfirmemail-error-user-not-match' )->parse();
 				$this->errParam = 'username';
 				wfProfileOut( __METHOD__ );
 				return;
@@ -328,15 +328,4 @@ class CloseMyAccountSpecialController extends WikiaSpecialPageController {
 
 		wfProfileOut( __METHOD__ );
 	}
-
-	public function email() {
-		$this->language = $this->getVal( 'language' );
-		$this->greeting = $this->msg( 'closemyaccount-reactivation-email-greeting' )
-		                       ->inLanguage( $this->language )->useDatabase( false )->text();
-		$this->content = $this->msg( 'closemyaccount-reactivation-email-content' )
-		                      ->inLanguage( $this->language )->useDatabase( false )->text();
-		$this->signature = $this->msg( 'closemyaccount-reactivation-email-signature' )
-		                        ->inLanguage( $this->language )->useDatabase( false )->text();
-	}
-
 }

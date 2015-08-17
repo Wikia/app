@@ -83,16 +83,24 @@ class DefaultContent extends AbstractService
 				'page_images'                => count( $response['parse']['images'] ),
 				'iscontent'                  => $service->isPageIdContent( $pageId ) ? 'true' : 'false',
 				'is_main_page'               => $service->isPageIdMainPage( $pageId ) ? 'true' : 'false',
-				];
-		return array_merge(
+				'indexed'                    => gmdate("Y-m-d\TH:i:s\Z")
+		];
+
+		$returnValue = array_merge(
 				$this->getPageContentFromParseResponse( $response ),
-				$this->getArticleSnippet( $response ),
 				$this->getCategoriesFromParseResponse( $response ),
 				$this->getHeadingsFromParseResponse( $response ),
 				$this->getOutboundLinks(),
 				$pageFields,
 				$this->getNolangTxt()
 				);
+
+		$poiMetadata = $this->getPOIMetadata();
+		if ( is_array( $poiMetadata ) && count( $poiMetadata ) > 0 ) {
+			$returnValue = array_merge( $returnValue, $poiMetadata );
+		}
+
+		return $returnValue;
 	}
 
 	/**
@@ -132,15 +140,6 @@ class DefaultContent extends AbstractService
 	 */
 	protected function field( $field ) {
 		return $this->getService()->getGlobal( 'AppStripsHtml' ) ? (new Utilities)->field( $field ) : $field;
-	}
-
-	protected function getArticleSnippet( array $response ) {
-		$html = empty( $response['parse']['text']['*'] ) ? '' : $response['parse']['text']['*'];
-		$jsonFormatService = new JsonFormatService();
-		$text = $jsonFormatService->getArticleSnippet( $html );
-		return [
-			'snippet_s' => $text
-		];
 	}
 
 	/**
@@ -334,5 +333,24 @@ class DefaultContent extends AbstractService
 	protected function getPlaintextFromDom( simple_html_dom $dom ) {
 		$tables = $this->extractAsidesFromDom( $dom );
 		return preg_replace( '/\s+/', ' ', strip_tags( $dom->plaintext . ' ' . $tables ) );
+	}
+
+	protected function getPOIMetadata() {
+		$service = $this->getService();
+		$extensionEnabled = $service->getGlobal( 'EnablePOIExt' );
+		if ( $extensionEnabled ) {
+			$articleMetadata = new \ArticleMetadataModel( $this->currentPageId, true );
+			$solrMapping = $articleMetadata->getSolrMapping();
+			$metadata = $articleMetadata->getMetadata();
+
+			$output = [];
+			foreach ( $metadata as $field => $value ) {
+				if ( isset($solrMapping[$field]) ) {
+					$output[ $solrMapping[$field] ] = $value;
+				}
+			}
+			return $output;
+		}
+		return null;
 	}
 }

@@ -642,7 +642,8 @@ $2',
 # Login and logout pages
 'logouttext'                 => "'''您现在已经退出。'''
 
-您可以继续以匿名方式使用{{SITENAME}}，或再次以相同或不同用户身份[[Special:UserLogin|登录]]。请注意一些页面可能仍然显示您为登录状态，直到您清空您的浏览器缓存为止。",
+您可以继续以匿名方式使用{{SITENAME}}，或再次以相同或不同用户身份$1。请注意一些页面可能仍然显示您为登录状态，直到您清空您的浏览器缓存为止。",
+'logouttext-link-text'       => '登录',
 'welcomecreation'            => '== 欢迎，$1！ ==
 您的账户已经建立。别忘了设置您的[[Special:Preferences|{{SITENAME}}个人参数]]。',
 'yourname'                   => '用户名：',

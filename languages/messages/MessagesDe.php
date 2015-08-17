@@ -773,8 +773,9 @@ Die Sperre wurde durch [[User:$1|$1]] mit der Begründung ''„$2“'' eingerich
 # Login and logout pages
 'logouttext'                 => "'''Du bist nun abgemeldet.'''
 
-Du kannst {{SITENAME}} jetzt anonym weiternutzen, oder dich erneut unter demselben oder einem anderen Benutzernamen [[Special:UserLogin|anmelden]].
+Du kannst {{SITENAME}} jetzt anonym weiternutzen, oder dich erneut unter demselben oder einem anderen Benutzernamen $1.
 Beachte, dass einige Seiten noch anzeigen können, dass du angemeldet bist, solange du nicht deinen Browsercache geleert hast.",
+'logouttext-link-text'       => 'anmelden',
 'welcomecreation'            => '== Willkommen, $1! ==
 
 Dein Benutzerkonto wurde eingerichtet.
@@ -1713,7 +1714,7 @@ Stand: $4, $5 Uhr.",
 'reuploaddesc'                => 'Abbrechen und zurück zur Hochladen-Seite',
 'upload-tryagain'             => 'Geänderte Dateibeschreibung abschicken',
 'uploadnologin'               => 'Nicht angemeldet',
-'uploadnologintext'           => 'Du musst [[Special:UserLogin|angemeldet sein]], um Dateien hochladen zu können.',
+'uploadnologintext'           => 'Du musst dich $1, um Dateien hochzuladen oder Videos einzufügen.',
 'upload_directory_missing'    => 'Das Upload-Verzeichnis ($1) fehlt und konnte durch den Webserver auch nicht erstellt werden.',
 'upload_directory_read_only'  => 'Der Webserver hat keine Schreibrechte für das Upload-Verzeichnis ($1).',
 'uploaderror'                 => 'Fehler beim Hochladen',
@@ -1949,7 +1950,7 @@ Aus Sicherheitsgründen ist img_auth.php deaktiviert.',
 'upload_source_file' => ' (eine Datei auf deinem Computer)',
 
 # Special:ListFiles
-'listfiles-summary'     => 'Diese Spezialseite listet alle hochgeladenen Dateien auf. 
+'listfiles-summary'     => 'Diese Spezialseite listet alle hochgeladenen Dateien auf.
 Sofern nach einem bestimmten Benutzer gefiltert wird, werden nur die Dateien gezeigt, bei denen er die letzte Version hochgeladen hat.',
 'listfiles_search_for'  => 'Suche nach Datei:',
 'imgfile'               => 'Datei',
@@ -2646,6 +2647,7 @@ Zur Aufhebung der Sperre siehe die [[Special:BlockList|Liste aller aktiven Sperr
 'unblocked'                       => '[[User:$1|$1]] wurde freigegeben',
 'unblocked-range'                 => 'Sperre für $1 wurde aufgehoben',
 'unblocked-id'                    => 'Sperr-ID $1 wurde freigegeben',
+'unblocked-ip'                    => '[[Special:Contributions/$1|$1]] wurde freigegeben.',
 'blocklist'                       => 'Gesperrte Benutzer',
 'ipblocklist'                     => 'Gesperrte Benutzer',
 'ipblocklist-legend'              => 'Suche nach einem gesperrten Benutzer',

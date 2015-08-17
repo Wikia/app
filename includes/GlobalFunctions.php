@@ -76,6 +76,55 @@ if ( !function_exists( 'istainted' ) ) {
 	define( 'TC_PCRE', 1 );
 	define( 'TC_SELF', 1 );
 }
+
+/** Wikia change begin - backport hash_equals from MW 1.24 **/
+// hash_equals function only exists in PHP >= 5.6.0
+if ( !function_exists( 'hash_equals' ) ) {
+	/**
+	 * Check whether a user-provided string is equal to a fixed-length secret without
+	 * revealing bytes of the secret through timing differences.
+	 *
+	 * This timing guarantee -- that a partial match takes the same time as a complete
+	 * mismatch -- is why this function is used in some security-sensitive parts of the code.
+	 * For example, it shouldn't be possible to guess an HMAC signature one byte at a time.
+	 *
+	 * Longer explanation: http://www.emerose.com/timing-attacks-explained
+	 *
+	 * @codeCoverageIgnore
+	 * @param string $known_string Fixed-length secret to compare against
+	 * @param string $user_string User-provided string
+	 * @return bool True if the strings are the same, false otherwise
+	 */
+	function hash_equals( $known_string, $user_string ) {
+		// Strict type checking as in PHP's native implementation
+		if ( !is_string( $known_string ) ) {
+			trigger_error( 'hash_equals(): Expected known_string to be a string, ' .
+				gettype( $known_string ) . ' given', E_USER_WARNING );
+
+			return false;
+		}
+
+		if ( !is_string( $user_string ) ) {
+			trigger_error( 'hash_equals(): Expected user_string to be a string, ' .
+				gettype( $user_string ) . ' given', E_USER_WARNING );
+
+			return false;
+		}
+
+		// Note that we do one thing PHP doesn't: try to avoid leaking information about
+		// relative lengths of $known_string and $user_string, and of multiple $known_strings.
+		// However, lengths may still inevitably leak through, for example, CPU cache misses.
+		$known_string_len = strlen( $known_string );
+		$user_string_len = strlen( $user_string );
+		$result = $known_string_len ^ $user_string_len;
+		for ( $i = 0; $i < $user_string_len; $i++ ) {
+			$result |= ord( $known_string[$i % $known_string_len] ) ^ ord( $user_string[$i] );
+		}
+
+		return ( $result === 0 );
+	}
+}
+/** Wikia change -end **/
 /// @endcond
 
 /**
@@ -1172,11 +1221,22 @@ function wfLogProfilingData() {
 	if ( $wgUser->isItemLoaded( 'id' ) && $wgUser->isAnon() ) {
 		$forward .= ' anon';
 	}
-	$log = sprintf( "%s\t%04.3f\t%s\n",
-		gmdate( 'YmdHis' ), $elapsed,
-		urldecode( $wgRequest->getRequestURL() . $forward ) );
 
-	wfErrorLog( $log . $profiler->getOutput(), $wgDebugLogFile );
+	// Wikia change - begin - FauxRequest::getRequestURL() is not implemented and throws exception
+	// in maintenance scripts
+	try {
+		$log = sprintf( "%s\t%04.3f\t%s\n",
+			gmdate( 'YmdHis' ), $elapsed,
+			urldecode( $wgRequest->getRequestURL() . $forward ) );
+
+		wfErrorLog( $log . $profiler->getOutput(), $wgDebugLogFile );
+	} catch (MWException $e) {
+		// double-check it is the case
+		if ( $e->getMessage() !== "FauxRequest::getRequestURL() not implemented" ) {
+			throw $e;
+		}
+	}
+	// Wikia change - end
 }
 
 /**
@@ -1752,10 +1812,11 @@ function wfDebugBacktrace( $limit = 0 ) {
  *
  * @return string
  */
-function wfBacktrace() {
+function wfBacktrace( $forceCommandLineMode = false ) {
 	global $wgCommandLineMode;
 
-	if ( $wgCommandLineMode ) {
+	$commandLinemode = $wgCommandLineMode || $forceCommandLineMode;
+	if ( $commandLinemode ) {
 		$msg = '';
 	} else {
 		$msg = "<ul>\n";
@@ -1773,7 +1834,7 @@ function wfBacktrace() {
 		} else {
 			$line = '-';
 		}
-		if ( $wgCommandLineMode ) {
+		if ( $commandLinemode ) {
 			$msg .= "$file line $line calls ";
 		} else {
 			$msg .= '<li>' . $file . ' line ' . $line . ' calls ';
@@ -1783,13 +1844,13 @@ function wfBacktrace() {
 		}
 		$msg .= $call['function'] . '()';
 
-		if ( $wgCommandLineMode ) {
+		if ( $commandLinemode ) {
 			$msg .= "\n";
 		} else {
 			$msg .= "</li>\n";
 		}
 	}
-	if ( $wgCommandLineMode ) {
+	if ( $commandLinemode ) {
 		$msg .= "\n";
 	} else {
 		$msg .= "</ul>\n";
@@ -2825,11 +2886,11 @@ function wfEscapeShellArg( ) {
  * Execute a shell command, with time and memory limits mirrored from the PHP
  * configuration if supported.
  * @param $cmd String Command line, properly escaped for shell.
- * @param &$retval optional, will receive the program's exit code.
+ * @param &$retval int optional, will receive the program's exit code.
  *                 (non-zero is usually failure)
  * @param $environ Array optional environment variables which should be
  *                 added to the executed command environment.
- * @return collected stdout as a string (trailing newlines stripped)
+ * @return string collected stdout as a string (trailing newlines stripped)
  */
 function wfShellExec( $cmd, &$retval = null, $environ = array() ) {
 	global $IP, $wgMaxShellMemory, $wgMaxShellFileSize, $wgMaxShellTime;
@@ -2907,9 +2968,20 @@ function wfShellExec( $cmd, &$retval = null, $environ = array() ) {
 	$output = ob_get_contents();
 	ob_end_clean();
 
+	// Wikia change - begin
+	if ( $retval > 0 ) {
+		Wikia\Logger\WikiaLogger::instance()->error( 'wfShellExec failed', [
+			'exception' => new Exception( $cmd, $retval ),
+			'output' => $output,
+			'load_avg' => implode( ', ', sys_getloadavg() ),
+		]);
+	}
+	// Wikia change - end
+
 	if ( $retval == 127 ) {
 		wfDebugLog( 'exec', "Possibly missing executable file: $cmd\n" );
 	}
+
 	return $output;
 }
 
@@ -3367,17 +3439,33 @@ function wfCheckEntropy() {
  */
 function wfFixSessionID() {
 	// If the cookie or session id is already set we already have a session and should abort
-	if ( isset( $_COOKIE[ session_name() ] ) || session_id() ) {
+	if ( !empty( $_COOKIE[ session_name() ] ) || session_id() ) {
 		return;
 	}
+	session_id( MWCryptRand::generateHex( 32 ) );
+}
 
-	$entropyEnabled = wfCheckEntropy();
-
-	// If built-in entropy is not enabled or not sufficient override php's built in session id generation code
-	if ( !$entropyEnabled ) {
-		wfDebug( __METHOD__ . ": PHP's built in entropy is disabled or not sufficient, overriding session id generation using our cryptrand source.\n" );
-		session_id( MWCryptRand::generateHex( 32 ) );
+/**
+ * Reset the session_id
+ *
+ * Backported from MW 1.22
+ */
+function wfResetSessionID() {
+	global $wgCookieSecure;
+	$oldSessionId = session_id();
+	$cookieParams = session_get_cookie_params();
+	if ( wfCheckEntropy() && $wgCookieSecure == $cookieParams['secure'] ) {
+		session_regenerate_id( true ); // Wikia - $delete_old_session = true
+	} else {
+		$tmp = $_SESSION;
+		session_destroy();
+		wfSetupSession( MWCryptRand::generateHex( 32 ) );
+		$_SESSION = $tmp;
 	}
+	$newSessionId = session_id();
+	Hooks::run( 'ResetSessionID', array( $oldSessionId, $newSessionId ) );
+
+	wfDebug( sprintf( "%s: new ID is '%s'\n", __METHOD__, $newSessionId ) );
 }
 
 /**
@@ -3426,6 +3514,16 @@ function wfSetupSession( $sessionId = false ) {
 	wfSuppressWarnings();
 	session_start();
 	wfRestoreWarnings();
+
+	// Wikia change - start
+	// log all sessions started with 1% sampling (PLATFORM-1266)
+	if ( ( new Wikia\Util\Statistics\BernoulliTrial( 0.01 ) )->shouldSample() ) {
+		Wikia\Logger\WikiaLogger::instance()->info( __METHOD__, [
+			'caller' => wfGetAllCallers(),
+			'exception' => new Exception()
+		] );
+	}
+	// Wikia change - end
 }
 
 /**
@@ -3530,7 +3628,7 @@ function wfSplitWikiID( $wiki ) {
  * Note 2: use $this->getDB() in maintenance scripts that may be invoked by
  * updater to ensure that a proper database is being updated.
  *
- * @return DatabaseBase
+ * @return DatabaseMysqli
  */
 function &wfGetDB( $db, $groups = array(), $wiki = false ) {
 	// wikia change begin -- SMW DB separation project, @author Krzysztof Krzyżaniak (eloy)
@@ -3709,10 +3807,9 @@ function wfGetNull() {
  *
  * Wikia note: provide external DB name in $wiki parameter to wait for external DB
  *
- * @param $maxLag Integer (deprecated)
  * @param $wiki mixed Wiki identifier accepted by wfGetLB
  */
-function wfWaitForSlaves( $maxLag = false, $wiki = false ) {
+function wfWaitForSlaves( $wiki = false ) {
 	$lb = wfGetLB( $wiki );
 	// bug 27975 - Don't try to wait for slaves if there are none
 	// Prevents permission error when getting master position
@@ -3720,7 +3817,25 @@ function wfWaitForSlaves( $maxLag = false, $wiki = false ) {
 		/* Wikia change - added array() and $wiki parameters to getConnection to be able to wait for various DBs */
 		$dbw = $lb->getConnection( DB_MASTER, array(), $wiki );
 		$pos = $dbw->getMasterPos();
-		$lb->waitForAll( $pos );
+		$lb->waitForAll( $pos, $wiki );
+
+		// Wikia change - begin
+		// OPS-6313 - sleep-based implementaion for consul-powered DB clusters
+		$masterHostName = $lb->getServerName(0);
+		if ( strpos( $masterHostName, '.service.consul' ) !== false ) {
+			# I am terribly sorry, but we do really need to wait for all slaves
+			# not just the one returned by consul
+			sleep( 1 );
+
+			/* @var MySQLMasterPos $pos */
+			\Wikia\Logger\WikiaLogger::instance()->info( 'wfWaitForSlaves for consul clusters',  [
+				'exception' => new Exception(),
+				'master' => $masterHostName,
+				'pos' => $pos->__toString(),
+				'wiki' => $wiki
+			] );
+		}
+		// Wikia change - end
 	}
 }
 
@@ -3966,4 +4081,21 @@ function wfUnpack( $format, $data, $length=false ) {
 		throw new MWException( "unpack could not unpack binary data" );
 	}
 	return $result;
+}
+
+/**
+ * Get a random string containing a number of pseudo-random hex
+ * characters.
+ * @note This is not secure, if you are trying to generate some sort
+ *       of token please use MWCryptRand instead.
+ *
+ * @param int $length The length of the string to generate
+ * @return string
+ */
+function wfRandomString( $length = 32 ) {
+	$str = '';
+	for ( $n = 0; $n < $length; $n += 7 ) {
+		$str .= sprintf( '%07x', mt_rand() & 0xfffffff );
+	}
+	return substr( $str, 0, $length );
 }

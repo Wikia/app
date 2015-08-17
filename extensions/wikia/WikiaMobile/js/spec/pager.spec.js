@@ -1,55 +1,54 @@
-/*global describe, it, runs, waitsFor, expect, require, document*/
-describe("Pager module", function () {
+/*global describe, it, expect*/
+describe('Pager module', function () {
 	'use strict';
 
 	var windowMock = {
-			setTimeout: function(func){
+			setTimeout: function (func) {
 				func();
 			},
-			addEventListener: function(){}
+			addEventListener: function () {}
 		},
 		p = modules.pager(windowMock);
 
-	it('should be defined', function(){
+	it('should be defined', function () {
 		expect(p).toBeDefined();
 		expect(typeof p).toBe('function');
 	});
 
-	it('should throw', function(done){
-		expect(function(){
+	it('should throw', function (done) {
+		expect(function () {
 			p();
 		}).toThrow();
 
-		expect(function(){
+		expect(function () {
 			p({
 				container: ''
 			});
 		}).toThrow();
 
-		expect(function(){
+		expect(function () {
 			p({
 				pages: ''
 			});
 		}).toThrow();
 
-		expect(function(){
+		expect(function () {
 			p({
 				container: '',
 				pages: ''
 			});
 		}).toThrow();
+
+		done();
 	});
 
-	it('should return helper functions', function(){
+	it('should return helper functions', function () {
 		var pager = p({
 			container: {
-				childNodes: [
-					{},
-					{}
-				],
-				addEventListener: function(){}
+				childNodes: [{}, {}],
+				addEventListener: function () {}
 			},
-			pages: ['1','2']
+			pages: ['1', '2']
 		});
 
 		expect(typeof pager.prev).toBe('function');
@@ -59,15 +58,14 @@ describe("Pager module", function () {
 		expect(typeof pager.getCurrent).toBe('function');
 	});
 
-	it('should return current page', function(){
+	it('should return current page', function () {
 		var secondPage = {
 				className: '',
 				innerHTML: 2,
 				style: {}
 			},
 			container = {
-				childNodes: [
-					{
+				childNodes: [{
 						className: '',
 						innerHTML: 1,
 						style: {},
@@ -75,7 +73,7 @@ describe("Pager module", function () {
 					},
 					secondPage
 				],
-				addEventListener: function(){}
+				addEventListener: function () {}
 			},
 			pager = p({
 				container: container,

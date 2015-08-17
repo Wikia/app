@@ -3,6 +3,7 @@
 $messages = array();
 
 $messages['en'] = array(
+	'wikiawidget-desc' => 'Create Wikia Widgets for use on external sites or for inclusion on your wiki',
 	'wikiawidget' => 'Wikia widgets',
 );
 
@@ -10,6 +11,7 @@ $messages['en'] = array(
  * @author Siebrand
  */
 $messages['qqq'] = array(
+	'wikiawidget-desc' => '{{desc}}',
 	'wikiawidget' => 'Special page name as displayed on Special:SpecialPages and page title of special page.',
 );
 
@@ -55,6 +57,14 @@ $messages['be-tarask'] = array(
 	'wikiawidget' => 'Прылады Wikia',
 );
 
+/** Bengali (বাংলা)
+ * @author Aftab1995
+ * @author Aftabuzzaman
+ */
+$messages['bn'] = array(
+	'wikiawidget' => 'উইকিয়া উইজেট',
+);
+
 /** Breton (brezhoneg)
  * @author Gwenn-Ael
  * @author Y-M D
@@ -78,16 +88,20 @@ $messages['ca'] = array(
 );
 
 /** Czech (čeština)
+ * @author Darth Daron
  * @author Mr. Richard Bolla
  */
 $messages['cs'] = array(
+	'wikiawidget-desc' => 'Vytvořte Wikia widget pro vložení na externí webové stránky nebo do Vaší wiki.',
 	'wikiawidget' => 'Wikia widgety',
 );
 
 /** German (Deutsch)
  * @author LWChris
+ * @author Metalhead64
  */
 $messages['de'] = array(
+	'wikiawidget-desc' => 'Erstellt Wikia-Widgets zur Verwendung auf externen Websites oder für die Einbindung in dein Wiki',
 	'wikiawidget' => 'Wikia Widgets',
 );
 
@@ -108,8 +122,10 @@ $messages['diq'] = array(
 /** Spanish (español)
  * @author Peter17
  * @author Translationista
+ * @author VegaDark
  */
 $messages['es'] = array(
+	'wikiawidget-desc' => 'Crea widgets para el uso en sitios externos o para su inclusión en el wiki',
 	'wikiawidget' => 'Wikia widgets',
 );
 
@@ -128,10 +144,12 @@ $messages['fi'] = array(
 );
 
 /** French (français)
+ * @author Gomoko
  * @author IAlex
  * @author Peter17
  */
 $messages['fr'] = array(
+	'wikiawidget-desc' => 'Créer des widgets Wikia pour une utilisation sur des sites externes ou pour inclusion dans votre wiki',
 	'wikiawidget' => 'Widgets Wikia',
 );
 
@@ -212,6 +230,13 @@ $messages['kn'] = array(
 	'wikiawidget' => 'ವಿಕಿಯಾ ವಿಡ್ಜೆಟ್‍ಗಳು',
 );
 
+/** Korean (한국어)
+ * @author Miri-Nae
+ */
+$messages['ko'] = array(
+	'wikiawidget' => '위키아 위젯',
+);
+
 /** Karachay-Balkar (къарачай-малкъар)
  * @author Къарачайлы
  */
@@ -251,6 +276,7 @@ $messages['mk'] = array(
  * @author Anakmalaysia
  */
 $messages['ms'] = array(
+	'wikiawidget-desc' => 'Cipta Wikia Widget untuk kegunaan di laman web luaran atau disertakan dalam wiki anda',
 	'wikiawidget' => 'Widget Wikia',
 );
 
@@ -297,7 +323,7 @@ $messages['pap'] = array(
 	'wikiawidget' => 'Wikia widgetnan',
 );
 
-/** Deitsch (Deitsch)
+/** Pennsylvania German (Deitsch)
  * @author Xqt
  */
 $messages['pdc'] = array(
@@ -306,8 +332,10 @@ $messages['pdc'] = array(
 
 /** Polish (polski)
  * @author Sp5uhe
+ * @author VerMa
  */
 $messages['pl'] = array(
+	'wikiawidget-desc' => 'Twórz Wikia Widgety do użytku na stronach zewnętrznych lub do wstawienia na twoją wiki',
 	'wikiawidget' => 'Wikia — widgety',
 );
 
@@ -344,6 +372,7 @@ $messages['ro'] = array(
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
+	'wikiawidget-desc' => "Ccreje 'nu widget de Uicchia pe ausà le site de fore o pa 'nglusione jndr'à uicchi toje",
 	'wikiawidget' => 'Uicchi gingille',
 );
 
@@ -364,8 +393,10 @@ $messages['sr-ec'] = array(
 
 /** Swedish (svenska)
  * @author Sertion
+ * @author WikiPhoenix
  */
 $messages['sv'] = array(
+	'wikiawidget-desc' => 'Skapa Wikia-widgets att använda på externa webbplatser eller på din wiki',
 	'wikiawidget' => 'Wikia widgets',
 );
 
@@ -406,22 +437,28 @@ $messages['tt-cyrl'] = array(
 
 /** Ukrainian (українська)
  * @author Ast
+ * @author Капитан Джон Шепард
  */
 $messages['uk'] = array(
+	'wikiawidget-desc' => 'Створити Вікії віджети для використання на зовнішніх ресурсах або для включення на Вікі',
 	'wikiawidget' => 'Віджети Wikia',
 );
 
 /** Vietnamese (Tiếng Việt)
  * @author Baonguyen21022003
+ * @author Dinhxuanduyet
  */
 $messages['vi'] = array(
+	'wikiawidget-desc' => 'Tạo Wikia Widget để sử dụng trên các trang web bên ngoài hoặc để đưa vào wiki của bạn',
 	'wikiawidget' => 'Wikia widget',
 );
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Hydra
+ * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
+	'wikiawidget-desc' => '创建Wikia小部件以供在外部网站上或者内嵌到您的wiki上使用',
 	'wikiawidget' => 'Wikia 窗口小部件',
 );
 

@@ -12,14 +12,14 @@
 	<testsuite name="Wikia Test Suite">
 		<directory>./unit/</directory>
 	</testsuite>
+	<testsuite name="Wikia Lib Test Suite">
+		<directory>../lib/Wikia/tests/</directory>
+	</testsuite>
 	<testsuite name="Wikia Includes Test Suite">
 		<directory>../includes/wikia/</directory>
 	</testsuite>
 	<testsuite name="Wikia ResourceLoader Test Suite">
 		<directory>../includes/resourceloader/wikia/</directory>
-	</testsuite>
-	<testsuite name="Facebook Connect Extension">
-		<directory>../extensions/FBConnect/</directory>
 	</testsuite>
 	<testsuite name="Wikia Extensions Test Suite">
 		<directory>../extensions/wikia/</directory>
@@ -47,15 +47,16 @@
 			<group>Stub</group>
 		</exclude>
 	</groups>
-	<!-- Exclude the following from code coverage reports -->
 	<filter>
+		<!-- Exclude the following from code coverage reports -->
 		<blacklist>
 			<directory>../bin</directory>
 			<directory>../config</directory>
 			<directory>../docs</directory>
 			<directory>../images</directory>
 			<directory>../languages</directory>
-			<directory>../lib</directory>
+			<directory>../lib/composer</directory>
+			<directory>../lib/vendor</directory>
 			<directory>../maintenance</directory>
 			<directory>../math</directory>
 			<directory>../resources</directory>

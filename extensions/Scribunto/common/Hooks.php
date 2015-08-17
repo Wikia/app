@@ -136,7 +136,7 @@ class ScribuntoHooks {
 	 * @return bool
 	 */
 	public static function handleScriptView( $text, $title, $output ) {
-		global $wgScribuntoUseGeSHi;
+		global $wgScribuntoUseGeSHi, $wgUseSiteCss;
 
 		if( $title->getNamespace() == NS_MODULE ) {
 			$engine = Scribunto::newDefaultEngine();
@@ -150,6 +150,11 @@ class ScribuntoHooks {
 					if( $code ) {
 						$output->addHeadItem( "source-{$language}", SyntaxHighlight_GeSHi::buildHeadItem( $geshi ) );
 						$output->addHTML( "<div dir=\"ltr\">{$code}</div>" );
+						/** Wikia change begin - add support for MediaWiki:Geshi.css (CE-1024) **/
+						if ( $wgUseSiteCss ) {
+							$output->addModuleStyles( 'ext.geshi.local' );
+						}
+						/** Wikia change end **/
 						return false;
 					}
 				}
@@ -260,7 +265,10 @@ class ScribuntoHooks {
 	 */
 	public static function onAfterDisplayingTextbox( EditPage $editPage, &$hidden ) {
 		$app = F::app();
-		if ( !$app->checkSkin( 'oasis' ) || $editPage->getTitle()->getNamespace() !== NS_MODULE ) {
+		if ( !$app->checkSkin( 'oasis' )
+			|| !( $editPage instanceof EditPageLayout )
+			|| $editPage->getTitle()->getNamespace() !== NS_MODULE
+		) {
 			return true;
 		}
 

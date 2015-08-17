@@ -1,54 +1,95 @@
 <?php
 
+use VideosModule\Modules;
+
 class VideosModuleController extends WikiaController {
 	const DEFAULT_TEMPLATE_ENGINE = WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
+	const DEFAULT_REGION = 'US';
+
+	/** @var $staffModule VideosModule\Modules\Staff */
+	protected $staffModule;
+
+	/** @var $generalModule VideosModule\Modules\Base */
+	protected $generalModule;
 
 	/**
 	 * VideosModule
-	 * Returns videos to populate the Videos Module. First check if
-	 * local videos are being requested from the front-end (this is not
-	 * yet in use but will be used for A/B testing down the line). If not,
-	 * check if there are categories associated with this wiki for the
-	 * Videos Module and pull premium videos from those categories. Finally, if
-	 * neither of those first conditions are true, search for premium
-	 * videos related to the wiki.
-	 * @requestParam integer limit - number of videos shown in the module
-	 * @requestParam string local [true/false] - show local content
-	 * @requestParam string sort [recent/trend] - how to sort the results
-	 * @responseParam string $result [ok/error]
-	 * @responseParam string $msg - result message
+	 * Returns videos to populate the Videos Module. First check if there are
+	 * categories associated with this wiki for the Videos Module and pull
+	 * premium videos from those categories. Finally, if neither of those
+	 * first conditions are true, search for premium videos related to the wiki.
+	 * @responseParam string $title - i18n'ized title of the videos module
 	 * @responseParam array $videos - list of videos
 	 * @responseParam array $staffVideos - list of staff picked videos
 	 */
 	public function index() {
-		wfProfileIn( __METHOD__ );
+		$this->initModules();
 
-		$this->title = wfMessage( 'videosmodule-title-default' )->plain();
-		$numRequired = $this->request->getVal( 'limit', VideosModule::LIMIT_VIDEOS );
-		$localContent = ( $this->request->getVal( 'local' ) == 'true' );
-		$sort = $this->request->getVal( 'sort', 'trend' );
-		$userRegion = $this->request->getVal( 'userRegion', VideosModule::DEFAULT_REGION );
+		$staffVideos = $this->staffModule->getVideos();
+		$videos = $this->generalModule->getVideos();
 
-		$module = new VideosModule( $userRegion );
-		$staffVideos = $module->getStaffPicks();
-		if ( $localContent ) {
-			$videos = $module->getLocalVideos( $numRequired, $sort );
-		} else {
-			$videos = $module->getVideosByCategory();
-			if ( empty( $videos ) ) {
-				$videos = $module->getWikiRelatedVideosTopics( $numRequired );
-			}
-		}
+		$videos = $this->removeDuplicates( $videos, $staffVideos );
 
-		$this->result = "ok";
-		$this->msg = '';
-		$this->videos = $videos;
-		$this->staffVideos = $staffVideos;
+		$this->response->setData( [
+			'title'	 => wfMessage( 'videosmodule-title-default' )->escaped(),
+			'videos' => $videos,
+			'staffVideos' => $staffVideos
+		] );
 
-		// set cache
-		$this->response->setCacheValidity( 600 );
-
-		wfProfileOut( __METHOD__ );
+		// Set client cache
+		$this->response->setCacheValidity( Modules\Base::CACHE_TTL );
 	}
 
+	/**
+	 * Clears the VideosModule cache.  Takes same parameters as the index method.
+	 */
+	public function clear() {
+		$this->initModules();
+
+		$this->staffModule->clearCache();
+		$this->generalModule->clearCache();
+
+		$this->response->setVal( 'result', 'ok' );
+	}
+
+	/**
+	 * Initialize the modules used in this request.
+	 */
+	protected function initModules() {
+		$userRegion = $this->request->getVal( 'userRegion', self::DEFAULT_REGION );
+
+		$this->staffModule = new Modules\Staff( $userRegion );
+
+		if ( !empty( $this->wg->VideosModuleCategories )  ) {
+			$this->generalModule = new Modules\Category( $userRegion );
+		} else {
+			$this->generalModule = new Modules\Related( $userRegion );
+		}
+	}
+
+	/**
+	 * Since VideosModule is using Async cache, its not practical to send a list of video titles to the offline job.
+	 * Dedup the titles here instead of in VideosModule
+	 *
+	 * @param array $removeFromList
+	 * @param array $existingList
+	 *
+	 * @return array
+	 */
+	protected function removeDuplicates( array $removeFromList, array $existingList ) {
+		$existingTitles = [];
+		foreach ( $existingList as $videoDetail ) {
+			$existingTitles[] = $videoDetail['title'];
+		}
+
+		$resultList = [];
+		foreach ( $removeFromList as $videoDetail ) {
+			if ( array_key_exists( $videoDetail['title'], $existingTitles ) ) {
+				continue;
+			}
+			$resultList[] = $videoDetail;
+		}
+
+		return $resultList;
+	}
 }

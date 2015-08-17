@@ -30,12 +30,6 @@ class WikiaHomePageTest extends WikiaBaseTest {
 		$this->setUpMockObject('stdClass', $memcParams, false, 'wgMemc');
 
 		$this->mockGlobalVariable('wgCityId', self::TEST_CITY_ID);
-
-		$this->mockGlobalVariable('wgWikiaHubsPages', array(
-			1 => array('Lifestyle'),
-			2 => array('Video_Games'),
-			3 => array('Entertainment')
-		));
 	}
 
 	protected function setUpMockObject($objectName, $objectParams = null, $needSetInstance = false, $globalVarName = null, $callOriginalConstructor = true, $globalFunc = array()) {
@@ -104,72 +98,6 @@ class WikiaHomePageTest extends WikiaBaseTest {
 		return $mockObject;
 	}
 
-	/**
-	 * @group Slow
-	 * @slowExecutionTime 0.0574 ms
-	 * @dataProvider getHubV2ImagesDataProvider
-	 */
-	public function testGetHubV2Images($mockedImageUrl, $expHubImages) {
-		// setup
-		$this->mockGlobalVariable('wgEnableWikiaHubsV2Ext', true);
-		$this->mockGlobalVariable('wgWikiaHubsV2Pages', array(
-			WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT => 'Entertainment',
-			WikiFactoryHub::CATEGORY_ID_GAMING => 'Video_games',
-			WikiFactoryHub::CATEGORY_ID_LIFESTYLE => 'Lifestyle',
-		));
-
-		$mock_cache = $this->getMock('stdClass', array('get', 'set'));
-		$mock_cache->expects($this->any())
-			->method('get')
-			->will($this->returnValue(null));
-		$mock_cache->expects($this->any())
-			->method('set');
-		$this->mockGlobalVariable('wgMemc', $mock_cache);
-
-		$homePageMock = $this->getMock('WikiaHomePageController', array('getHubSliderData'));
-		$homePageMock->expects($this->any())
-			->method('getHubSliderData')
-			->will($this->returnValue(array(
-					'data' => array(
-						'slides' => array(
-							0 => array(
-								'photoUrl' => $mockedImageUrl
-							)
-						)
-					)
-				)
-			));
-
-		$this->mockClass('WikiaHomePageController', $homePageMock);
-
-		$this->setUpMock();
-
-		$response = $this->app->sendRequest('WikiaHomePage', 'getHubImages');
-		$responseData = $response->getVal('hubImages');
-
-		$this->assertEquals($expHubImages, $responseData);
-	}
-
-	public function getHubV2ImagesDataProvider() {
-		return array(
-			array(
-				null,
-				array(
-					WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT => null,
-					WikiFactoryHub::CATEGORY_ID_GAMING => null,
-					WikiFactoryHub::CATEGORY_ID_LIFESTYLE => null,
-				)
-			),
-			array(
-				'testUrl.png/330px-testUrl.png.jpg',
-				array(
-					WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT => 'testUrl.png/330px-testUrl.png.jpg',
-					WikiFactoryHub::CATEGORY_ID_GAMING => 'testUrl.png/330px-testUrl.png.jpg',
-					WikiFactoryHub::CATEGORY_ID_LIFESTYLE => 'testUrl.png/330px-testUrl.png.jpg',
-				)
-			),
-		);
-	}
 
 	/**
 	 * @group Slow

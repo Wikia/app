@@ -75,7 +75,7 @@ class VideoHandlerHelper extends WikiaModel {
 	 * @param $file - The file object for the video
 	 * @return bool - Returns true if successful, false otherwise
 	 */
-	public function addDefaultVideoDescription( $file ) {
+	public function addDefaultVideoDescription( File $file ) {
 		wfProfileIn( __METHOD__ );
 
 		$title = $file->getTitle();
@@ -259,7 +259,7 @@ class VideoHandlerHelper extends WikiaModel {
 
 		/** @var Title $title */
 		$title = $videoInfo['title'];
-		/** @var LocalFile $file */
+		/** @var LocalFile|WikiaLocalFileShared $file */
 		$file = WikiaFileHelper::getVideoFileFromTitle( $title );
 
 		if ( $file ) {
@@ -310,7 +310,7 @@ class VideoHandlerHelper extends WikiaModel {
 				'truncatedList'        => $truncatedList,
 				'isTruncated'          => $isTruncated,
 				'timestamp'            => empty( $videoInfo['addedAt'] ) ? '' : $videoInfo['addedAt'],
-				'duration'             => $file->getMetadataDuration(),
+				'duration'             => (float) $file->getMetadataDuration(),
 				'viewsTotal'           => empty( $videoInfo['viewsTotal'] ) ? 0 : $videoInfo['viewsTotal'],
 				'provider'             => $file->getProviderName(),
 				'embedUrl'             => $file->getHandler()->getEmbedUrl(),
@@ -493,4 +493,23 @@ class VideoHandlerHelper extends WikiaModel {
 		return $status;
 	}
 
+	/**
+	 * Check if video's provider is supported base on its URL.
+	 * Logic is partially ported from ApiWrapperFactory::getApiWrapper method.
+	 * @param $url
+	 * @return bool
+	 */
+	public function isVideoProviderSupported( $url ) {
+		global $wgVideoMigrationProviderMap;
+
+		$parsed = parse_url( strtolower( $url ), PHP_URL_HOST );
+
+		foreach( $wgVideoMigrationProviderMap as $name ) {
+			$className = $name . 'ApiWrapper';
+			if ( class_exists( $className ) && $className::isMatchingHostname( $parsed ) ) {
+				return true;
+			}
+		}
+		return false;
+	}
 }

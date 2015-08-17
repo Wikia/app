@@ -10,15 +10,18 @@ $messages['en'] = [
 	'styleguide-description-modal-content' => 'Modal content; it can be a HTML markup',
 	'styleguide-description-modal-classes' => 'An array of strings; each string is a class name passed to class attribute of modal container',
 	'styleguide-description-modal-title' => 'Title visible on the top of modal',
+	'styleguide-description-modal-html-title' => 'Modal title that includes html as opposed to just a string',
 	'styleguide-description-modal-close-button' => "If set to true then a close button will be displayed in the modal's header otherwise it won't be rendered; by default it's set to true",
 	'styleguide-description-modal-alt-link' => "OPTIONAL alternative link data in a modal's footer",
 	'styleguide-description-modal-secondary-button' => "OPTIONAL secondary button in a modal's footer; result of UIComponent->render() method (HTML markup)",
 	'styleguide-description-modal-primary-button' => "OPTIONAL primary button in a modal's footer; result of UIComponent->render() method (HTML markup)",
+	'styleguide-description-modal-escape-to-close' => 'Whether or not pressing the escape button will close the modal. Default: true.',
 
 	// examples
 	'styleguide-example-modal-small-description' => "A small modal is centered horizontally and vertically. Its height equals 250px and width 400px. It should be use for rendering... As all modals please remember the title will have only one line.",
 	'styleguide-example-modal-medium-description' => "A medium modal is centered horizontally and vertically. Its height equals 400px and width is fixed but depends on screen size (500 or 700px). It should be use for rendering... As all modals please remember the title will have only one line.",
 	'styleguide-example-modal-large-description' => "A large modal covers almost all view port. It should be use for rendering... As all modals please remember the title will have only one line.",
+	'styleguide-example-modal-html-title-description' => "If you need HTML in the title field, set the 'htmlTitle' value instead of 'title'.",
 	'styleguide-example-modal-small-over-large-title' => "Small modal",
 	'styleguide-example-modal-small-over-large-message' => "Small modal over large one example",
 ];

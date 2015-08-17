@@ -95,6 +95,7 @@ class SitemapPage extends UnlistedSpecialPage {
 			// cache on both CDN and client
 			header( "Cache-Control: s-maxage=86400", true );
 			header( "X-Pass-Cache-Control: public, max-age=86400", true );
+			header( "X-Robots-Tag: noindex" );
 
 			$this->mTitle = SpecialPage::getTitleFor( "Sitemap", $subpage );
 			$this->getNamespacesList();
@@ -117,6 +118,7 @@ class SitemapPage extends UnlistedSpecialPage {
 	 * get all namespaces, take them from article so will only have
 	 * pages for existed namespaces
 	 *
+	 * @return array
 	 * @access public
 	 */
 	public function getNamespacesList() {
@@ -124,7 +126,7 @@ class SitemapPage extends UnlistedSpecialPage {
 
 		if ( is_array( $wgSitemapNamespaces ) ) {
 			$this->mNamespaces = $wgSitemapNamespaces;
-			return;
+			return $this->mNamespaces;
 		}
 
 		$excludeList = array(NS_USER, NS_PROJECT, NS_MEDIAWIKI, NS_TEMPLATE, NS_HELP, 110, 1100, 1200, 1202);

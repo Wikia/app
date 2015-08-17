@@ -92,4 +92,13 @@ final class InfoboxBuilderHooks {
 				$parserError. "</span></strong>";
 		}
 	}
+	/**
+	 * Function that adds SCSS to output.
+	 * @param  EditPageLayoutController $controller
+	 * @return true (to proceed with hooks loading)
+	 */
+	public static function addInfoboxBuilderStyles( \EditPageLayoutController $controller ) {
+		$controller->wg->Out->addModuleStyles( 'ext.wikia.InfoboxBuilder' );
+		return true;
+	}
 }

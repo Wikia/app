@@ -98,7 +98,6 @@ class HubRssControllerTest extends WikiaBaseTest {
 			->with( 'HubRssFeedSpecial', 'notfound' );
 
 		$mock->currentTitle = $mockTitle;
-
 		$mock->request = $mockRequest;
 		$mock->index();
 	}

@@ -103,7 +103,8 @@ abstract class ResourceLoaderGlobalWikiModule extends ResourceLoaderWikiModule {
 			}
 
 		// Try to load the contents of an article before falling back to a message (BugId:45352)
-		} elseif ( WikiFactory::isWikiPrivate( $wgCityId ) == false ) {
+		// CE-1225 Load scripts from the MediaWiki namespace
+		} elseif ( WikiFactory::isWikiPrivate( $wgCityId ) == false || $title->getNamespace() == NS_MEDIAWIKI ) {
 			$revision = Revision::newFromTitle( $title );
 
 			if ($revision) {

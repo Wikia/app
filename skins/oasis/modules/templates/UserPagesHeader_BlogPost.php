@@ -1,5 +1,5 @@
 <header id="WikiaUserPagesHeader" class="WikiaUserPagesHeader WikiaBlogPostHeader">
-	<?= F::app()->renderView('CommentsLikes', 'Index', array('comments' => $comments, 'likes' => $likes)); ?>
+	<?= F::app()->renderView('CommentsLikes', 'Index', array('comments' => $comments)); ?>
 	<?php
 		if (!empty($actionMenu['action'])) {
 			echo F::app()->renderView('MenuButton', 'Index', array(

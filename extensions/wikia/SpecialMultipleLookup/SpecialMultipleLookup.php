@@ -16,6 +16,7 @@ $wgExtensionCredits['specialpage'][] = array(
 	'description' => 'Provides user lookup on multiple wikis',
 	'descriptionmsg' => 'specialmultiplelookup-desc',
 	'author' => array( 'Bartek Lapinski', 'Piotr Molski' ),
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/SpecialMultipleLookup'
 );
 define( "MULTILOOKUP_NO_CACHE", false );
 define( "ML_TEST", 0 );

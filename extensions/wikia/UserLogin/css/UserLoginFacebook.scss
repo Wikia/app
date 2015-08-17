@@ -1,164 +1,88 @@
 // core styles
-@import "skins/oasis/css/core/color";
+@import 'skins/shared/color';
 
 // core mixins
-@import "skins/oasis/css/mixins/box-sizing";
-@import "skins/oasis/css/mixins/box-shadow";
-@import "skins/oasis/css/mixins/clearfix";
-@import "skins/oasis/css/mixins/transition";
-
-// local mixins
-@import "../mixins/submitpane";
-@import "../mixins/tooltip-icon";
+@import 'skins/shared/mixins/box-shadow';
+@import 'skins/shared/mixins/clearfix';
+@import 'skins/shared/mixins/transition';
 
 // variables
 $section-padding: 20px;
 $fieldset-padding: 12px;
+
+// extra .modal tacked on for specificity
+.facebook-signup-modal.modal {
+	> header {
+		height: auto;
+
+		h3 {
+			box-sizing: border-box;
+			clear: right;
+			float: left;
+			font-size: 23px;
+			margin: auto;
+			overflow: visible;
+			padding: 5px 10% 15px;
+			text-align: center;
+			white-space: normal;
+			width: 50%;
+		}
+	}
+
+	footer {
+		display: none;
+	}
+}
 
 .UserLoginFacebookWrapper {
 	@include clearfix;
 	margin-bottom: 25px;
 
 	> section {
-		@include box-sizing();
+		box-sizing: border-box;
 		float: left;
 		width: 50%;
 	}
-}
 
-.UserLoginFacebookLeft {
-	border-right: solid 1px $color-page-border;
-	padding-right: $section-padding;
-
-	.modal-pane {
-		@include submitpane;
+	.UserLoginFacebookLeft {
+		border-right: solid 1px $color-page-border;
+		padding-right: $section-padding;
 	}
 
-	.WikiaForm {
-		.input-group {
-			float: none;
+	.UserLoginFacebookRight {
+		padding-left: $section-padding;
+		padding-top: 4px;
+	}
 
-			input[type=text],
-			input[type=password] {
-				@include box-sizing();
-				width: 100%;
-			}
+	.wikia-terms, .forgot-password-container {
+		font-size: 12px;
+		line-height: 18px;
+	}
+
+	.login-button {
+		width: 100%;
+	}
+
+	.input-group {
+		float: none;
+
+		[type='text'],
+		[type='password'],
+		[type='email'] {
+			box-sizing: border-box;
+			width: 100%;
 		}
-
-		.tooltip-icon-wrapper {
-			line-height: 15px;
-			position: relative;
-		}
-
-		.tooltip-icon {
-			@include tooltip-icon;
-			right: -15px;
-		}
-
-		.email {
-			margin-bottom: 0;
-		}
-
-	}
-}
-
-.UserLoginFacebookRight {
-	padding-left: $section-padding;
-	padding-top: 4px;
-
-	> h1 {
-		font-size: 17px;
 	}
 
-	> p {
-		font-size: 14px;
-		padding: 19px 0;
+	.email {
+		margin-bottom: 0;
 	}
 
-	> .wikia-button {
-		display: inline-block;
-	}
-}
-
-.FacebookSignupConfigHeader {
-	text-decoration: none;
-
-	.chevron {
-		border-top-color: $color-links;
-		border-bottom-color: $color-page;
-		float: left;
-		height: 2px;
-		margin: 5px 4px 0 0;
-		opacity: .5;
-		vertical-align: bottom;
+	.opt-in-container label {
+		margin: 0;
 	}
 
-	.hide {
+	.hidden {
 		display: none;
-	}
-
-	.show {
-		display: block;
-	}
-
-	&.on {
-		.chevron {
-			border-bottom-color: $color-links;
-			border-top-color: $color-page;
-			margin: -2px 4px 0 0;
-		}
-
-		.hide {
-			display: block;
-		}
-
-		.show {
-			display: none;
-		}
-	}
-}
-
-.FacebookSignupConfig {
-	display: none;
-	margin: 10px 0 -7px 0;
-
-	legend {
-		font-weight: bold;
-		left: $fieldset-padding;
-		position: absolute;
-		top: $fieldset-padding;
-	}
-
-	> fieldset {
-		@include box-shadow(0, 0, 5px, mix($color-page, #000000, 90%), true, 1px);
-		@if $is-dark-wiki {
-			background-color: mix($color-page, #ffffff, 85%);
-		} @else {
-			background-color: mix($color-page, #000000, 95%);
-		}
-		padding: 40px 0 $fieldset-padding 0;
-		position: relative;
-
-		> .input-group {
-			@include box-sizing();
-			clear: none;
-			float: left;
-			padding: 0 $fieldset-padding;
-			width: 50%;
-		}
-
-		.indented {
-			padding-top: 10px;
-		}
-	}
-
-	label {
-		padding-left: 40px;
-		position: relative;
-
-		input {
-			left: 0;
-			position: absolute;
-		}
 	}
 }

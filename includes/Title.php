@@ -26,13 +26,20 @@
  * @note This class can fetch various kinds of data from the database;
  *       however, it does so inefficiently.
  *
- * @internal documentation reviewed 15 Mar 2010
+ * internal documentation reviewed 15 Mar 2010
  */
 class Title {
 	/** @name Static cache variables */
 	// @{
 	static private $titleCache = array();
 	// @}
+
+	# Wikia change begins
+	/**
+	 * Traits
+	 */
+	use TitleTrait;
+	# Wikia change ends
 
 	/**
 	 * Title::newFromText maintains a cache to avoid expensive re-normalization of
@@ -875,7 +882,7 @@ class Title {
 	 * Is this in a namespace that allows actual pages?
 	 *
 	 * @return Bool
-	 * @internal note -- uses hardcoded namespace index instead of constants
+	 * internal note -- uses hardcoded namespace index instead of constants
 	 */
 	public function canExist() {
 		return $this->mNamespace >= NS_MAIN;
@@ -1095,6 +1102,30 @@ class Title {
 	}
 
 	/**
+	 * Is this a .js page?
+	 *
+	 * @return Bool
+	 */
+	public function isJsPage() {
+		$retval = $this->mNamespace == NS_MEDIAWIKI
+			&& preg_match( '!\.(js)$!u', $this->mTextform ) > 0;
+
+		return $retval;
+	}
+
+	/**
+	 * Is this a .css page?
+	 *
+	 * @return Bool
+	 */
+	public function isCssPage() {
+		$retval = $this->mNamespace == NS_MEDIAWIKI
+			&& preg_match( '!\.(css)$!u', $this->mTextform ) > 0;
+
+		return $retval;
+	}
+
+	/**
 	 * Is this a .css subpage of a user page?
 	 *
 	 * @return Bool
@@ -1127,7 +1158,12 @@ class Title {
 	 * @return Title the object for the talk page
 	 */
 	public function getTalkPage() {
-		return Title::makeTitle( MWNamespace::getTalk( $this->getNamespace() ), $this->getDBkey() );
+		// begin wikia change
+		// VOLDEV-66
+		$talkPageTitle = Title::makeTitle( MWNamespace::getTalk( $this->getNamespace() ), $this->getDBkey() );
+		wfRunHooks( 'GetTalkPage', [$this, &$talkPageTitle] );
+		return $talkPageTitle;
+		// end wikia change
 	}
 
 	/**
@@ -4452,28 +4488,18 @@ class Title {
 	 */
 	public function touchLinks() {
 		// Wikia Change Start @author Scott Rabin (srabin@wikia-inc.com)
-		if ( TaskRunner::isModern('HTMLCacheUpdate') ) {
-			global $wgCityId;
+		global $wgCityId;
 
-			$affectedTables = [ 'pagelinks' ];
-			if ( $this->getNamespace() == NS_CATEGORY ) {
-				$affectedTables[] = 'categorylinks';
-			}
-
-			$task = ( new \Wikia\Tasks\Tasks\HTMLCacheUpdateTask() )
-				->wikiId( $wgCityId )
-				->title( $this );
-			$task->call( 'purge', $affectedTables );
-			$task->queue();
-		} else {
-			$u = new HTMLCacheUpdate( $this, 'pagelinks' );
-			$u->doUpdate();
-
-			if ( $this->getNamespace() == NS_CATEGORY ) {
-				$u = new HTMLCacheUpdate( $this, 'categorylinks' );
-				$u->doUpdate();
-			}
+		$affectedTables = [ 'pagelinks' ];
+		if ( $this->getNamespace() == NS_CATEGORY ) {
+			$affectedTables[] = 'categorylinks';
 		}
+
+		$task = ( new \Wikia\Tasks\Tasks\HTMLCacheUpdateTask() )
+			->wikiId( $wgCityId )
+			->title( $this );
+		$task->call( 'purge', $affectedTables );
+		$task->queue();
 		// Wikia Change End
 	}
 

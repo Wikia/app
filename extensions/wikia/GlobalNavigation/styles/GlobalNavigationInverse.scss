@@ -1,0 +1,82 @@
+$global-nav-inverse-background: rgba(0,0,0,.65);
+$global-nav-inverse-text-color: rgb(255,255,255);
+$global-nav-inverse-background-hover: #656E78;
+
+.global-navigation {
+	&.inverse {
+		background-color: $global-nav-inverse-background;
+		box-shadow: 0 0 0 2px rgba(0,0,0,0);
+
+		.wikia-logo-container img {
+				background-image: url('/extensions/wikia/WikiaLogo/images/wikia_logo_white.svg'); /* inline */
+		}
+
+		.start-wikia-container {
+			.start-wikia {
+				border-color: $global-nav-inverse-text-color;
+				color: $global-nav-inverse-text-color;
+
+				&:hover {
+					background-color: $global-nav-inverse-background-hover;
+				}
+			}
+		}
+
+		.hubs-container {
+			&.active {
+				background-color: $global-nav-inverse-background-hover;
+			}
+
+			.hubs-entry-point {
+				background-image: url('/extensions/wikia/GlobalNavigation/images/hubs_entry_point_white.svg'); /* inline */
+
+				&:after {
+					border-top-color: $global-nav-inverse-text-color;
+				}
+			}
+		}
+
+		.account-navigation-container {
+
+			.AccountNavigation.active {
+				background-color: $global-nav-inverse-background-hover;
+			}
+
+			.anon-avatar-placeholder, .logged-avatar-placeholder {
+				background-image: url('/extensions/wikia/GlobalNavigation/images/signin_icon_white.svg'); /* inline */
+			}
+
+			.logged-avatar, .logged-avatar-placeholder {
+				border: 1px solid $global-nav-inverse-text-color;
+				height: 30px;
+				width: 30px;
+			}
+
+			.logged-avatar-placeholder {
+				border-radius: 50%;
+			}
+
+			.sign-in-label {
+				color: $global-nav-inverse-text-color;
+			}
+
+			.chevron {
+				border-top-color: $global-nav-inverse-text-color;
+			}
+		}
+
+		.notifications-container {
+			&.active {
+				background-color: $global-nav-inverse-background-hover;
+			}
+
+			.notifications-entry-point {
+				background-image: url('/extensions/wikia/GlobalNavigation/images/notifications_icon_white.svg'); /* inline */
+
+				&:after {
+					border-top-color: $global-nav-inverse-text-color;
+				}
+			}
+		}
+	}
+}

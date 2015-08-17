@@ -82,8 +82,28 @@ class Solarium_Client_Adapter_Curl extends Solarium_Client_Adapter
     protected function _getData($request)
     {
         // @codeCoverageIgnoreStart
+		// Wikia change - begin
+		// @author macbre
+		$requestTime = microtime( true );
+		// Wikia change - end
+
         $handle = $this->createHandle($request);
         $httpResponse = curl_exec($handle);
+
+		// Wikia change - begin
+		// @author macbre
+		$requestTime = (int)( ( microtime( true ) - $requestTime ) * 1000.0 );
+		$info = curl_getinfo($handle);
+
+		$params = [
+			'statusCode' => $info['http_code'],
+			'reqMethod' => $request->getMethod(),
+			'reqUrl' => $info['url'],
+			'caller' => __CLASS__,
+			'requestTimeMS' => $requestTime
+		];
+		\Wikia\Logger\WikiaLogger::instance()->debug( 'Http request' , $params );
+		// Wikia change - end
 
         return $this->getResponse($handle, $httpResponse);
         // @codeCoverageIgnoreEnd

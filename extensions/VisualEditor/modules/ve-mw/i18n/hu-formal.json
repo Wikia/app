@@ -1,0 +1,19 @@
+{
+	"@metadata": {
+		"authors": [
+			"Tacsipacsi"
+		]
+	},
+	"visualeditor-beta-warning": "A VisualEditor „béta” állapotban van. Találkozhat szoftveres hibákkal, és az oldal néhány részét nem biztos, hogy fogja tudni szerkeszteni. A forráskódnézetre való  váltáshoz - ha nem akarja elveszíteni az eddigi változtatásait, - kattintson a lenyíló menüre a „{{int:visualeditor-toolbar-savedialog}}” gomb mellett, és válassza a „{{int:visualeditor-mweditmodesource-tool}}” lehetőséget.",
+	"visualeditor-dialog-beta-welcome-title": "{{GENDER:$1|Üdvözlöm}} a VisualEditorban",
+	"visualeditor-dialog-transclusion-no-template-description": "Éppen a(z) \"$1\" sablont {{GENDER:$3|adja hozzá}} ehhez a laphoz. Még nincs leírása, de a <a $2>leírólapja</a> további információkkal szolgálhat.",
+	"visualeditor-editconflict": "A módosítások nem menthetők egy szerkesztésütközés miatt. Szeretné kézileg megoldani a problémát?",
+	"visualeditor-loadwarning": "Hiba a kiszolgálóról való letöltés közben: $1. Megpróbálja újra?",
+	"visualeditor-loadwarning-token": "Hiba a kiszolgálóról való szerkesztőtoken-letöltés közben: $1. Megpróbálja újra?",
+	"visualeditor-savedialog-identify-anon": "Szeretné az oldalt inkább egy névtelen felhasználóval elmenteni? Az IP címe látható lesz a laptörténetben.",
+	"visualeditor-savedialog-identify-user": "Bejelentkezett, mint [[User:$1|$1]]. A szerkesztése ehhez a felhasználóhoz fog tartozni, ha elmenti.",
+	"visualeditor-savedialog-warning-dirty": "A változások megsérülhettek, kérem ellenőrizze.",
+	"visualeditor-timeout": "Úgy tűnik, hogy a szerkesztő jelenleg nem elérhető. Szeretne helyette forráskód módban szerkeszteni?",
+	"visualeditor-viewpage-savewarning-title": "Biztos benne?",
+	"visualeditor-wikitext-warning": "Most a VisualEditorral szerkeszt - a [[{{MediaWiki:visualeditor-wikitext-warning-link}}|wikiszöveg]] itt nem működik. A forráskód nézetre való váltáshoz - ha nem akarja elveszíteni a változtatásait, - kattintson a lenyíló menüre a „{{int:visualeditor-toolbar-savedialog}}” gomb mellett, és válassza a „{{int:visualeditor-mweditmodesource-title}}” lehetőséget."
+}

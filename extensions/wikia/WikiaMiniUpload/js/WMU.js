@@ -346,11 +346,6 @@ function WMU_loadMainFromView() {
 				$('#ImageUploadTextCont').hide();
 				$('#ImageUploadMessageLink').html('[' + wmu_show_message  + ']');
 			}
-
-			// macbre: RT #19150
-			if ( window.wgEnableAjaxLogin == true && $('#ImageUploadLoginMsg').length ) {
-				$('#ImageUploadLoginMsg').click(openLogin).css('cursor', 'pointer').log('WMU: ajax login enabled');
-			}
 		}
 	}
 
@@ -380,7 +375,7 @@ function WMU_show( event, options ) {
 			category: track.category || 'vet',
 			label: track.label || '',
 			value: track.value || null,
-			trackingMethod: track.method || 'both'
+			trackingMethod: track.method || 'analytics'
 		});
 	}
 
@@ -548,11 +543,6 @@ function WMU_loadMain() {
 		if (cookieMsg > -1 && document.cookie.charAt(cookieMsg + 12) == 0) {
 			$('#ImageUploadTextCont').hide();
 			$('#ImageUploadMessageLink').html('[' + wmu_show_message  + ']');
-		}
-
-		// macbre: RT #19150
-		if ( window.wgEnableAjaxLogin == true && $('#ImageUploadLoginMsg').exists() ) {
-			$('#ImageUploadLoginMsg').click(openLogin).css('cursor', 'pointer').log('WMU: ajax login enabled');
 		}
 	}
 	WMU_indicator(1, true);
@@ -1335,5 +1325,5 @@ var WMU_uploadCallback = {
 var WMU_track = Wikia.Tracker.buildTrackingFunction( Wikia.trackEditorComponent, {
 	action: Wikia.Tracker.ACTIONS.CLICK,
 	category: 'photo-tool',
-	trackingMethod: 'both'
+	trackingMethod: 'analytics'
 });

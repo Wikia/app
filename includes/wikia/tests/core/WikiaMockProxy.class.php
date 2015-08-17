@@ -58,6 +58,11 @@ class WikiaMockProxy {
 	 * @return WikiaMockProxyAction
 	 */
 	public function getStaticMethod( $className, $methodName ) {
+		// PLATFORM-280 - make sure a static method is mocked
+		if (!is_callable("{$className}::{$methodName}")) {
+			throw new WikiaException("Only static methods can be mocked via WikiaBaseTest::mockClass - got {$className}::{$methodName}");
+		}
+
 		return $this->get( array(
 			'type' => self::STATIC_METHOD,
 			'className' => $className,

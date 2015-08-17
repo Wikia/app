@@ -51,18 +51,6 @@ var Achievements = {
 			clearTimeout(self.timer);
 			$(this).prevAll('.profile-hover').hide();
 		});
-
-		$('#about-achievements').find('a').click(function(e) {
-			if (mw.config.get('wgUserName') == null) {
-				var callbackLink = $(e.target).attr('href');
-				showComboAjaxForPlaceHolder(false, false, function() {
-					AjaxLogin.doSuccess = function() {
-						window.location = callbackLink;
-					}
-				});
-				return false;
-			}
-		});
 	},
 
 	submitPicture: function(form) {

@@ -9,11 +9,15 @@
 $dir = dirname( __FILE__ ) . '/';
 
 $wgExtensionCredits[ 'other' ][] = array(
-	'name'        => 'Optimizely',
-	'author'      => [ 'Damian Jóźwiak', 'Bartosz "V." Bentkowski' ],
-	'description' => 'Optimizely loader',
-	'version'     => 1
+	'name'           => 'Optimizely',
+	'author'         => [ 'Damian Jóźwiak', 'Bartosz "V." Bentkowski' ],
+	'descriptionmsg' => 'optimizely-desc',
+	'version'        => 1,
+	'url'            => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/Optimizely'
 );
+
+//i18n
+$wgExtensionMessagesFiles['Optimizely'] = $dir . 'Optimizely.i18n.php';
 
 // classes
 $wgAutoloadClasses[ 'Optimizely' ] =  $dir . 'Optimizely.class.php';
@@ -22,3 +26,4 @@ $wgAutoloadClasses[ 'OptimizelyController' ] = $dir . '/OptimizelyController.cla
 // hooks
 $wgHooks[ 'WikiaSkinTopScripts' ][] = 'Optimizely::onWikiaSkinTopScripts';
 $wgHooks[ 'OasisSkinAssetGroupsBlocking' ][] = 'Optimizely::onOasisSkinAssetGroupsBlocking';
+$wgHooks[ 'VenusAssetsPackages' ][] = 'Optimizely::onVenusAssetsPackages';

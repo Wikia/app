@@ -15,7 +15,8 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 $wgExtensionCredits['specialpage'][] = array(
 	"name" => "Local users",
 	"description-msg" => "listusers-desc",
-	"author" => "Piotr Molski"
+	"author" => "Piotr Molski",
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/Listusers'
 );
 
 /**

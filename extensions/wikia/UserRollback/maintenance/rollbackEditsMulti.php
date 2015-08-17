@@ -24,9 +24,9 @@
 require_once( dirname(__FILE__) . '/../../../../maintenance/Maintenance.php' );
 
 class RollbackEditsMulti extends Maintenance {
-	
+
 	const USER_NAME = 'Maintenance script';
-	
+
 	public function __construct() {
 		parent::__construct();
 		$this->mDescription = "Rollback all edits by a given user or IP provided they're the most recent edit";
@@ -40,22 +40,22 @@ class RollbackEditsMulti extends Maintenance {
 
 	public function execute() {
 		global $wgUser, $wgSharedDB;
-		
+
 		if ( $this->getOption( 'onlyshared', false ) && empty($wgSharedDB) ) {
 			$this->output( "Skipping wiki due to non-shared users database\n" );
 			return;
 		}
-		
+
 		$wgUser = User::newFromName(self::USER_NAME);
 		$bot = true;
-		
+
 		$time = $this->getOption( 'time' );
 		$time = wfTimestamp( TS_UNIX, $time );
 		if ( !$time ) {
 			$this->error( 'Invalid time', true );
 		}
 		$time = wfTimestamp( TS_MW, $time );
-		
+
 		$users = explode('|', $this->getOption( 'users' ));
 		foreach ($users as $user) {
 			$username = User::isIP( $user ) ? $user : User::getCanonicalName( $user );
@@ -84,9 +84,9 @@ class RollbackEditsMulti extends Maintenance {
 			$this->output( "No suitable titles to be rolled back\n" );
 			return;
 		}
-		
+
 		$this->output( "Found " . count($titles) . " title(s) to process\n" );
-		
+
 		global $wgTitle;
 		foreach ( $titles as $t ) {
 			$wgTitle = $t;
@@ -111,8 +111,8 @@ class RollbackEditsMulti extends Maintenance {
 		$results = $dbr->select(
 			array( 'page', 'revision' ),
 			array( 'page_namespace', 'page_title' ),
-			array( 
-				'page_latest = rev_id', 
+			array(
+				'page_latest = rev_id',
 				'rev_user_text' => $users,
 				"rev_timestamp >= \"{$time}\"",
 			),
@@ -126,20 +126,20 @@ class RollbackEditsMulti extends Maintenance {
 		}
 		return $titles;
 	}
-	
+
 	private function rollbackTitle( $title, $users, $time, $summary, &$messages = '' ) {
 		global $wgUser;
-		
+
 		// build article object and find article id
 		$a = new Article($title);
 		$pageId = $a->getID();
-		
+
 		// check if article exists
 		if ( $pageId <= 0 ) {
 			$messages = 'page not found';
 			return false;
 		}
-		
+
 		// fetch revisions from this article
 		$dbw = wfGetDB( DB_MASTER );
 		$res = $dbw->select(
@@ -153,18 +153,18 @@ class RollbackEditsMulti extends Maintenance {
 				'ORDER BY' => 'rev_id DESC',
 			)
 		);
-		
+
 		// find the newest edit done by other user
 		$revertRevId = false;
 		while ( $row = $dbw->fetchObject($res) ) {
 			if ( !in_array( $row->rev_user_text, $users ) || $row->rev_timestamp < $time ) {
 				$revertRevId = $row->rev_id;
 				break;
-			} 
+			}
 		}
 		$dbw->freeResult($res);
-		
-		
+
+
 		if ($revertRevId) { // found an edit by other user - reverting
 			$rev = Revision::newFromId($revertRevId);
 			$text = $rev->getRawText();
@@ -187,17 +187,14 @@ class RollbackEditsMulti extends Maintenance {
 		}
 		return false;
 	}
-	
+
 	private function deleteArticle( $article, $reason, $suppress = false, &$error = '' ) {
-		global $wgOut, $wgUser;
 		$id = $article->getTitle()->getArticleID( Title::GAID_FOR_UPDATE );
 
-		if ( wfRunHooks( 'ArticleDelete', array( &$article, &$wgUser, &$reason, &$error ) ) ) {
-			if ( $article->doDeleteArticle( $reason, $suppress, $id ) ) {
-				wfRunHooks( 'ArticleDeleteComplete', array( &$article, &$wgUser, $reason, $id ) );
-				return true;
-			}
+		if ( $article->doDeleteArticle( $reason, $suppress, $id ) ) {
+			return true;
 		}
+
 		return false;
 	}
 }

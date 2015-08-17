@@ -1,13 +1,15 @@
 /* jshint camelcase:false, maxparams:false */
-/*global define*/
+/*global define,require*/
 define('ext.wikia.adEngine.sevenOneMediaHelper', [
+	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.adLogicPageParams',
 	'jquery',
+	require.optional('wikia.krux'),
 	'wikia.log',
-	'wikia.window',
-	'wikia.tracker',
 	'wikia.scriptwriter',
-	'ext.wikia.adEngine.adLogicPageParams'
-], function ($, log, window, tracker, scriptWriter, adLogicPageParams) {
+	'wikia.tracker',
+	'wikia.window'
+], function (adContext, adLogicPageParams, $, krux, log, scriptWriter, tracker, window) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.sevenOneMediaHelper',
@@ -17,7 +19,17 @@ define('ext.wikia.adEngine.sevenOneMediaHelper', [
 		initialized = false,
 		pageLevelParams = adLogicPageParams.getPageLevelParams(),
 		soiKeywordsParams = ['pform', 'media', 'gnre', 'egnre', 's1'],
-
+		soiKeywordsSegments = {
+			'ocr05ve5z': true,
+			'ocr1te1tc': true,
+			'ocr2nqlbs': true,
+			'ocry7a4xg': true,
+			'ocr52415y': true,
+			'ocr7jc18a': true,
+			'ocr6m2jd6': true,
+			'ocr8h7h1n': true,
+			'ocr88oqh9': true
+		},
 		slotVars = {
 			'popup1': {
 				SOI_PU1: true,
@@ -27,7 +39,7 @@ define('ext.wikia.adEngine.sevenOneMediaHelper', [
 			},
 			'fullbanner2': {
 				SOI_FB2: true,
-				SOI_PB: true,    // powerbanner (728x180)
+				SOI_PB: false,   // powerbanner (728x180)
 				SOI_PD: true,    // pushdown
 				SOI_BB: true,    // billboard
 				SOI_WP: true,    // wallpaper
@@ -52,6 +64,12 @@ define('ext.wikia.adEngine.sevenOneMediaHelper', [
 			}
 		},
 		slotsQueue = [];
+
+	if (!window.wgOasisBreakpoints && !window.wgOasisResponsive) {
+		// turn off skyscrapers if it's not responsive Oasis or Oasis breakpoints view i.e. hubs pages (ADEN-1792)
+		slotVars.skyscraper1.SOI_SC1 = false;
+		slotVars.skyscraper1.SOI_SB = false;
+	}
 
 	function track(action) {
 		log(['track', action], 'info', logGroup);
@@ -141,7 +159,7 @@ define('ext.wikia.adEngine.sevenOneMediaHelper', [
 
 		scriptWriter.injectScriptByUrl(
 			javaScriptsPlaceHolder,
-			window.wgAdDriverSevenOneMediaCombinedUrl,
+			adContext.getContext().providers.sevenOneMediaCombinedUrl,
 			function () {
 				if (!window.SEVENONEMEDIA_CSS) {
 					error('sevenonemedia_css');
@@ -209,7 +227,7 @@ define('ext.wikia.adEngine.sevenOneMediaHelper', [
 	function generateSoiKeywords() {
 		log('generateSoiKeywords', 'debug', logGroup);
 
-		var i, len, param, val, valIndex, valLen, keywords = [];
+		var i, len, param, val, valIndex, valLen, keywords = [], kruxSegments;
 
 		// Get all values for params defined in soiKeywordsParams
 		for (i = 0, len = soiKeywordsParams.length; i < len; i += 1) {
@@ -228,15 +246,34 @@ define('ext.wikia.adEngine.sevenOneMediaHelper', [
 			}
 		}
 
+		if( krux ) {
+			kruxSegments = krux.getSegments();
+		}
+
+		if (kruxSegments && kruxSegments.length) {
+			for (i = 0, len = kruxSegments.length; i < len; i += 1) {
+				if (soiKeywordsSegments[kruxSegments[i]]) {
+					keywords.push(kruxSegments[i]);
+				}
+			}
+		}
+
 		log(['generateSoiKeywords', keywords], 'debug', logGroup);
 		return filterSoiKeywords(keywords).join(',');
 	}
 
 	function initialize(firstSlotname) {
-		var subsite = window.cscoreCat && window.cscoreCat.toLowerCase(),
-			sub2site = pageLevelParams.s1.replace('_', ''),
-			sub3site = subsite === 'lifestyle' ? window.cityShort : '',
-			sub4site = window.wgAdDriverSevenOneMediaSub4Site || '';
+		var subsite, sub2site, sub3site, targeting = adContext.getContext().targeting;
+
+		subsite = targeting.wikiVertical && targeting.wikiVertical.toLowerCase();
+
+		if (targeting.sevenOneMediaSub2Site) {
+			sub2site = targeting.sevenOneMediaSub2Site;
+			sub3site = pageLevelParams.s1.replace('_', '');
+		} else {
+			sub2site = pageLevelParams.s1.replace('_', '');
+			sub3site = subsite === 'lifestyle' ? targeting.wikiCategory : '';
+		}
 
 		initialized = true;
 
@@ -247,7 +284,6 @@ define('ext.wikia.adEngine.sevenOneMediaHelper', [
 			SOI_SUBSITE: subsite,
 			SOI_SUB2SITE: sub2site,
 			SOI_SUB3SITE: sub3site,
-			SOI_SUB4SITE: sub4site,
 			SOI_CONTENT: 'content',
 			SOI_WERBUNG: true
 		});
@@ -296,8 +332,8 @@ define('ext.wikia.adEngine.sevenOneMediaHelper', [
 	 * beforeFinish (optional) is a callback that will be run before calling myAd.finishAd
 	 * afterFinish (optional) is a callback that will be run after myAd.finishAd
 	 *
-	 * @param slotname
-	 * @param params {beforeFinish: callback, afterFinish: callback}
+	 * @param {String} slotname
+	 * @param {Object} params {beforeFinish: callback, afterFinish: callback}
 	 */
 	function pushAd(slotname, params) {
 		log(['pushAd', slotname, params], 'info', logGroup);

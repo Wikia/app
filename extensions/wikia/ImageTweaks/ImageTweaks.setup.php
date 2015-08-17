@@ -26,7 +26,8 @@ $app->wg->append(
 			'Maciej Błaszkowski',
 			'Christian Williams',
 			'Federico "Lox" Lucignano <federico@wikia-inc.com>'
-		)
+		),
+		"url" => "https://github.com/Wikia/app/tree/dev/extensions/wikia/ImageTweaks"
 	),
 	'other'
 );

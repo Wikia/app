@@ -26,7 +26,7 @@
 							<a href="<?= empty($vid['fileUrl']) ? '' : $vid['fileUrl'] ?>">
 								<img width="200" src="<?= empty($vid['thumbUrl']) ? '' : $vid['thumbUrl'] ?>" />
 								<?= empty($vid['title']) ? '<br/><span style="color: red">Empty Title</span>' : $vid['title'] ?>
-								<? if (empty($vid['fileUrl'])):  gbug("===== VID: ", $vid); ?><br/><span style="color: red">No file URL</span><? endif ?>
+								<? if (empty($vid['fileUrl'])): ?><br/><span style="color: red">No file URL</span><? endif ?>
 								<? if (empty($vid['thumbUrl'])): ?><br/><span style="color: red">No thumb URL</span><? endif ?>
 							</a>
 						</li>

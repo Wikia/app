@@ -26,7 +26,7 @@ class CategorySelectController extends WikiaController {
 		}
 
 		$categories = $this->wg->out->getCategories();
-		$showHidden = $this->wg->User->getBoolOption( 'showhiddencats' );
+		$showHidden = (bool)$this->wg->User->getGlobalPreference( 'showhiddencats' );
 		$userCanEdit = $this->request->getVal( 'userCanEdit', CategorySelectHelper::isEditable() );
 
 		// There are no categories present and user can't edit, skip rendering
@@ -46,10 +46,17 @@ class CategorySelectController extends WikiaController {
 
 		$categoriesLink = Linker::link( Title::newFromText( $categoriesLinkPage ), $categoriesLinkText, $categoriesLinkAttributes );
 
+		Wikia::addAssetsToOutput( 'category_select_css' );
+		Wikia::addAssetsToOutput( 'category_select_js' );
+
 		$this->response->setVal( 'categories', $categories );
 		$this->response->setVal( 'categoriesLink', $categoriesLink );
 		$this->response->setVal( 'showHidden', $showHidden );
 		$this->response->setVal( 'userCanEdit', $userCanEdit );
+
+		if ( $this->app->checkSkin( 'venus' ) ) {
+			$this->overrideTemplate( 'articlePageVenus' );
+		}
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -71,16 +78,20 @@ class CategorySelectController extends WikiaController {
 			$name = is_array( $category ) ? $category[ 'name' ] : $category;
 			$originalName = $name;
 			$title = Title::makeTitleSafe( NS_CATEGORY, $name );
-			$this->wg->ContLang->findVariantLink( $name, $title, true );
-			if ( $name != $originalName && array_key_exists( $name, $data ) ) {
-				continue;
+			if ( $title != null ) {
+				$this->wg->ContLang->findVariantLink( $name, $title, true );
+				if ( $name != $originalName && array_key_exists( $name, $data ) ) {
+					continue;
+				}
+				$text = $this->wg->ContLang->convertHtml( $title->getText() );
+				$data[ $name ] = array(
+					'link' => Linker::link( $title, $text ),
+					'name' => $text,
+					'type' => CategoryHelper::getCategoryType( $originalName ),
+				);
+			} else {
+				\Wikia\Logger\WikiaLogger::instance()->warning( "Unsafe category provided", [ 'name' => $name ] );
 			}
-			$text = $this->wg->ContLang->convertHtml( $title->getText() );
-			$data[ $name ] = array(
-				'link' => Linker::link( $title, $text ),
-				'name' => $text,
-				'type' => CategoryHelper::getCategoryType( $originalName ),
-			);
 		}
 
 		$this->response->setVal( 'categories', $data );

@@ -1,9 +1,9 @@
-var WAMPage = function() {};
+var WAMPage = function () {};
 
 WAMPage.prototype = {
-	init: function() {
+	init: function () {
 		var wamIndex = document.getElementById('wam-index');
-		if( wamIndex ) {
+		if (wamIndex) {
 			wamIndex.addEventListener(
 				'click',
 				WAMPage.clickTrackingHandler,
@@ -11,11 +11,22 @@ WAMPage.prototype = {
 			);
 		}
 
+		document.querySelector('.wam-verticals-tabs').addEventListener(
+			'click',
+			function(event) {
+				event.preventDefault();
+				var target = event.target;
+				if (target.tagName === 'A') {
+					WAMPage.filterWamIndexByVertical(target);
+				}
+			}
+		)
+
 		var wamIndexSearch = document.getElementById('wam-index-search');
-		if( wamIndexSearch ) {
+		if (wamIndexSearch) {
 			wamIndexSearch.addEventListener(
 				'change',
-				$.proxy(function(event) {
+				$.proxy(function (event) {
 					WAMPage.clickTrackingHandler(event);
 					WAMPage.filterWamIndex($(event.target));
 				}, this),
@@ -25,15 +36,19 @@ WAMPage.prototype = {
 
 		var track = Wikia.Tracker.buildTrackingFunction({
 			category: 'wam-page',
-			trackingMethod: 'both',
+			trackingMethod: 'analytics',
 			action: Wikia.Tracker.ACTIONS.IMPRESSION
 		});
-		
-		if( window.wgTitle ) {
-			if( window.wgWAMPageName && wgTitle === wgWAMPageName ) {
-				track({label: 'index'});
-			} else if( window.wgWAMFAQPageName && wgTitle === wgWAMFAQPageName ) {
-				track({label: 'faq'});
+
+		if (window.wgTitle) {
+			if (window.wgWAMPageName && wgTitle === wgWAMPageName) {
+				track({
+					label: 'index'
+				});
+			} else if (window.wgWAMFAQPageName && wgTitle === wgWAMFAQPageName) {
+				track({
+					label: 'faq'
+				});
 			}
 		}
 
@@ -41,33 +56,35 @@ WAMPage.prototype = {
 			// jQuery UI datepicker plugin
 			mw.loader.use(['jquery.ui.datepicker'])
 		).done(
-			$.proxy(function(getResourcesData) {
-				var minDate = new Date( window.wamFilterMinMaxDates.min_date * 1000 ),
-					maxDate = new Date( window.wamFilterMinMaxDates.max_date * 1000 );
+			$.proxy(function (getResourcesData) {
+				var minDate = new Date(window.wamFilterMinMaxDates.min_date * 1000),
+					maxDate = new Date(window.wamFilterMinMaxDates.max_date * 1000);
 
-				minDate.setMinutes( minDate.getMinutes() + minDate.getTimezoneOffset() );
-				maxDate.setMinutes( maxDate.getMinutes() + maxDate.getTimezoneOffset() );
+				minDate.setMinutes(minDate.getMinutes() + minDate.getTimezoneOffset());
+				maxDate.setMinutes(maxDate.getMinutes() + maxDate.getTimezoneOffset());
 
-				$( '#WamFilterHumanDate' ).datepicker( {
+				$('#WamFilterHumanDate').datepicker({
 					showOtherMonths: true,
 					selectOtherMonths: true,
 					minDate: minDate,
 					maxDate: maxDate,
 					altField: '#WamFilterDate',
 					altFormat: '@',
-					dateFormat: (typeof window.wamFilterDateFormat !== 'undefined' && window.wamFilterDateFormat) ?
-						window.wamFilterDateFormat : undefined,
-					onSelect: $.proxy( function () {
-						var $date = $( '#WamFilterDate' ),
-							timestamp = parseInt( $date.val(), 10 ),
-							currentTimezoneOffset = (new Date( timestamp )).getTimezoneOffset();
-						$date.val( (timestamp / 1000) - currentTimezoneOffset * 60 );
-						WAMPage.trackClick( 'WamPage', Wikia.Tracker.ACTIONS.CLICK, 'wam-search-filter-change',
-							null, {lang: wgContentLanguage, filter: 'date'} );
-						WAMPage.filterWamIndex( $date );
-					}, this )
-				} );
-			}, this )
+					dateFormat: window.wamFilterDateFormat,
+					onSelect: $.proxy(function () {
+						var $date = $('#WamFilterDate'),
+							timestamp = parseInt($date.val(), 10),
+							currentTimezoneOffset = (new Date(timestamp)).getTimezoneOffset();
+						$date.val((timestamp / 1000) - currentTimezoneOffset * 60);
+						WAMPage.trackClick('WamPage', Wikia.Tracker.ACTIONS.CLICK, 'wam-search-filter-change',
+							null, {
+								lang: wgContentLanguage,
+								filter: 'date'
+							});
+						WAMPage.filterWamIndex($date);
+					}, this)
+				});
+			}, this)
 		);
 	},
 
@@ -77,7 +94,7 @@ WAMPage.prototype = {
 			browserEvent: event,
 			category: category,
 			label: label,
-			trackingMethod: 'both',
+			trackingMethod: 'analytics',
 			value: value
 		}, params);
 	},
@@ -86,21 +103,35 @@ WAMPage.prototype = {
 		var node = $(e.target),
 			lang = wgContentLanguage,
 			searchPhrase;
-		
-		if( node.closest('.wam-index-search button').length > 0 ) {
+
+		if (node.closest('.wam-index-search button').length > 0) {
 			searchPhrase = $('.wam-index-search button img')
 				.parents('form')
 				.find('input[name="searchPhrase"]')
 				.val();
-			WAMPage.trackClick('wam-page', Wikia.Tracker.ACTIONS.SUBMIT, 'wam-search', null, {lang: lang, phrase: searchPhrase}, e);
-		} else if ( e.type === 'change' && node.closest('.wam-index-search select[name=langCode]').length > 0 ) {
-			WAMPage.trackClick('wam-page', Wikia.Tracker.ACTIONS.CLICK, 'wam-search-filter-change', null, {lang: lang, filter: 'langCode'}, e);
-		} else if ( e.type === 'change' && node.closest('.wam-index-search select[name=verticalId]').length > 0 ) {
-			WAMPage.trackClick('wam-page', Wikia.Tracker.ACTIONS.CLICK, 'wam-search-filter-change', null, {lang: lang, filter: 'verticalId'}, e);
+			WAMPage.trackClick('wam-page', Wikia.Tracker.ACTIONS.SUBMIT, 'wam-search', null, {
+				lang: lang,
+				phrase: searchPhrase
+			}, e);
+		} else if (e.type === 'change' && node.closest('.wam-index-search select[name=langCode]').length > 0) {
+			WAMPage.trackClick('wam-page', Wikia.Tracker.ACTIONS.CLICK, 'wam-search-filter-change', null, {
+				lang: lang,
+				filter: 'langCode'
+			}, e);
+		} else if (e.type === 'change' && node.closest('.wam-index-search select[name=verticalId]').length > 0) {
+			WAMPage.trackClick('wam-page', Wikia.Tracker.ACTIONS.CLICK, 'wam-search-filter-change', null, {
+				lang: lang,
+				filter: 'verticalId'
+			}, e);
 		}
 	},
 
-	filterWamIndex: function(target) {
+	filterWamIndexByVertical: function (tab) {
+		$('.wam-filtering-vertical-id').val($(tab).data('vertical-id'));
+		$('.wam-index-search').submit();
+	},
+
+	filterWamIndex: function (target) {
 		target.parents('.wam-index-search').submit();
 	}
 };

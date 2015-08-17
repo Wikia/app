@@ -90,6 +90,7 @@ $messages['qqq'] = array(
 	'lookupuser-account-status-tempuser' => 'The status of a temporary user account that hasn\'t been confirmed yet',
 	'lookupuser-account-status-realuser' => 'The status of a real user account',
 	'action-lookupuser' => '{{doc-action|lookupuser}}',
+	'lookupuser-username-blocked-globally' => 'Informs staff that user is globally blocked and provides a link to check block status in Phalanx.'
 );
 
 /** Afrikaans (Afrikaans)

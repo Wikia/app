@@ -12,15 +12,11 @@
  */
 class WikiaResponse {
 	/**
-	 * headers
-	 */
-	const ERROR_HEADER_NAME = 'X-Wikia-Error';
-
-	/**
 	 * Response codes
 	 */
 	const RESPONSE_CODE_OK = 200;
 	const RESPONSE_CODE_ERROR = 501;
+	const RESPONSE_CODE_BAD_REQUEST = 400;
 	const RESPONSE_CODE_FORBIDDEN = 403;
 	const RESPONSE_CODE_NOT_FOUND = 404;
 
@@ -38,6 +34,7 @@ class WikiaResponse {
 	 */
 	const TEMPLATE_ENGINE_PHP = 'php';
 	const TEMPLATE_ENGINE_MUSTACHE = 'mustache';
+	const TEMPLATE_ENGINE_HANDLEBARS = 'handlebars';
 
 	/**
 	 * Caching times
@@ -47,6 +44,7 @@ class WikiaResponse {
 	const CACHE_LONG = 2592000; // 30 days
 	const CACHE_STANDARD = 86400; // 24 hours
 	const CACHE_SHORT = 10800; // 3 hours
+	const CACHE_VERY_SHORT = 300; // 5 minutes
 
 	/**
 	 * Caching policy
@@ -96,6 +94,9 @@ class WikiaResponse {
 		$this->request = $request;
 	}
 
+	/**
+	 * @return WikiaRequest
+	 */
 	public function getRequest() {
 		return $this->request;
 	}
@@ -403,7 +404,7 @@ class WikiaResponse {
 	}
 
 	/**
-	 * @return WikiaException
+	 * @return WikiaException|WikiaHttpException
 	 */
 	public function getException() {
 		return $this->exception;
@@ -429,7 +430,11 @@ class WikiaResponse {
 	}
 
 	public function setTemplateEngine( $engine ) {
-		if ( in_array( $engine, array(self::TEMPLATE_ENGINE_PHP, self::TEMPLATE_ENGINE_MUSTACHE)) ) {
+		if ( in_array( $engine, array(
+				self::TEMPLATE_ENGINE_PHP,
+				self::TEMPLATE_ENGINE_MUSTACHE,
+				self::TEMPLATE_ENGINE_HANDLEBARS)
+		) ) {
 			$this->templateEngine = $engine;
 		}
 	}
@@ -439,11 +444,6 @@ class WikiaResponse {
 	}
 
 	public function sendHeaders() {
-		if ( ( $this->getFormat() == WikiaResponse::FORMAT_JSON ) && $this->hasException() ) {
-			// set error header for JSON response (as requested for mobile apps)
-			$this->setHeader( self::ERROR_HEADER_NAME, $this->getException()->getMessage() );
-		}
-
 		if ( !$this->hasContentType() ) {
 			if ( ( $this->getFormat() == WikiaResponse::FORMAT_JSON ) ) {
 				$this->setContentType( 'application/json; charset=utf-8' );
@@ -549,6 +549,12 @@ class WikiaResponse {
 
 	// @codeCoverageIgnoreStart
 	protected function sendHeader( $header, $replace ) {
+		if ( strpos( $header, "\n" ) !== false ) {
+			\Wikia\Logger\WikiaLogger::instance()->warning( 'New line in header detected', [
+				'header' => $header,
+				'exception' => new Exception()
+			] );
+		}
 		header( $header, $replace );
 	}
 	// @codeCoverageIgnoreEnd

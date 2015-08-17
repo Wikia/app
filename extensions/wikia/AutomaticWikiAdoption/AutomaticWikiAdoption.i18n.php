@@ -120,6 +120,7 @@ Helpful Tools:
  * @author TK-999
  */
 $messages['qqq'] = array(
+	'wikiadoption-desc' => '{{desc}}',
 	'tog-adoptionmails' => 'Parameters:
 * $1 is the wiki name potentially up for adoption.',
 	'wikiadoption-pref-label' => 'This message is located within the Email tab of Special:Preferences. Parameters:
@@ -342,14 +343,19 @@ $messages['bg'] = array(
 );
 
 /** Bengali (বাংলা)
+ * @author Aftab1995
+ * @author Aftabuzzaman
  * @author Tauhid16
  */
 $messages['bn'] = array(
+	'wikiadoption-adopt-inquiry' => 'আরও জানুন!',
 	'wikiadoption-know-more-header' => 'আরো জানতে চান?',
+	'wikiadoption-adoption-successed' => 'অভিনন্দন! আপনি এখন এই উইকির একজন প্রশাসক!',
 );
 
 /** Breton (brezhoneg)
  * @author Fohanno
+ * @author Fulup
  * @author Gwenn-Ael
  * @author Y-M D
  */
@@ -371,11 +377,33 @@ $messages['br'] = array(
 	'wikiadoption-log-reason' => 'Degemer ur wiki ez-emgefre',
 	'wikiadoption-notification' => "$1 a zo prest da vezañ degemeret ! Gellout a rit bezañ ar perc'henn nevez. '''Degemer bremañ !'''", # Fuzzy
 	'wikiadoption-mail-first-subject' => "N'hon eus ket gwelet ac'hanoc'h abaoe pell",
+	'wikiadoption-mail-first-content' => "Se a ra meur a sizhunvezh n'hon eus gwelet merour ebet war 
+Demat $1,
+
+#WIKINAME. Ar verourien zo ul lod eus #WIKINAME ha pouezus eo bezañ sur e vezont gwelet ingal. Ma n'eus merour oberiant ebet e-pad ur prantad hir e c'hall ar wiki-mañ bezañ bezañ adkemeret evit ma c'hallo un implijer all dont da vezañ ur merour. 
+
+
+M'ho peus ezhomm da vezañ skoazellet e c'hallit ober war-dro ar wiki-mañ. Gallout a rit ivez aotren izili all eusar gumuniezh da zont vezañ merourien bremañ o vont war $2.
+
+Skipailh Wikia.
+
+Gallout a rit digoumanantiñ ar c'hemmoù diouzh listenn amañ : $3",
+	'wikiadoption-mail-first-content-HTML' => "Demat \$1,
+Se a ra meur a sizhunvezh n'hon eus ket gwelet merourien war #WIKINAME. Ar verourien zo ul lod eus #WIKINAME ha pouezus eo bezañ sur e vezont gwelet ingal. Ma n'eus merour oberiant ebet e-pad ur prantad hir e c'hall ar wiki-mañ bezañ bezañ adkemeret evit ma c'hallo un implijer all dont da vezañ ur merour. <br/<br/>
+
+
+M'ho peus ezhomm da vezañ skoazellet e c'hallit ober war-dro ar wiki-mañ. Gallout a rit ivez aotren izili all eus ar gumuniezh da zont da vezañ merourien bremañ o vont war \$2\">merour gwirioù an implijerien</a>. Emichañs e welimp ac'hanoc'h a-benn nebeut war #WIKINAME!<br/><br/>
+
+<b>Skipailh Wikia<br/><br/>
+
+Gallout a rit <a href=\"\$3\">digoumanantiñ diouzh</a> an hizivadurioù eus al listenn-mañ.
+
+Gallout a rit digoumanantiñ ar c'hemmoù diouzh listenn amañ : \$3", # Fuzzy
 	'wikiadoption-mail-second-subject' => '#WIKINAME a vo lakaet da zegemer a-benn nebeut',
 	'wikiadoption-mail-adoption-subject' => '#WIKINAME a zo bet degemeret',
 	'tog-adoptionmails' => 'Kasit din ur gemennadenn ma vez dieub $1 da zegemer',
 	'wikiadoption-pref-label' => 'Kemmañ an dibarzhioù-mañ en do un efed war posteloù $1 hepken.',
-	'wikiadoption-welcome-header' => "Gourc'hemennoù ! Degemeret ho peus {{SITENAME}} !",
+	'wikiadoption-welcome-header' => "Gourc'hemennoù ! Degemeret hoc'h eus {{SITENAME}} !",
 );
 
 /** Bosnian (bosanski)
@@ -393,6 +421,7 @@ $messages['bs'] = array(
  * @author Marcmpujol
  * @author Pintor Smeargle
  * @author Roxas Nobody 15
+ * @author Unapersona
  */
 $messages['ca'] = array(
 	'wikiadoption' => 'Adopció automàtica de wikis',
@@ -400,10 +429,10 @@ $messages['ca'] = array(
 	'wikiadoption-header' => 'Adopta aquest wiki',
 	'wikiadoption-button-adopt' => 'Si, vull adoptar {{SITENAME}}!',
 	'wikiadoption-adopt-inquiry' => 'Busca més!',
-	'wikiadoption-description' => "$1, estàs disposat a adoptar {{SITENAME}}?!<br /><br />
-No hi ha hagut un administrador actiu al {{SITENAME}} per un temps, i estem buscant un nou líder per ajudar a què aquest contingut viqui i la comunitat creixin! Com que vas contribuir a {{SITENAME}}, ens preguntàvem si voldríeu la feina.
+	'wikiadoption-description' => "$1, estàs disposat a adoptar {{SITENAME}}?<br /><br />
+No hi ha hagut un administrador actiu al {{SITENAME}} per un temps, i estem buscant un nou líder per ajudar a què aquest contingut wiki i la comunitat creixin! Com que vas contribuir a {{SITENAME}}, ens preguntàvem si voldríeu la feina.
 <br /><br />
-Mitjançant l'adopció de la viqui, seràs promocionat a administrador i un buròcrata et facilitarà les eines que necessitaràs per gestionar la comunitat i el contingut de la viqui. També seràs capaç de crear altres administradors per ajudar, suprimir, revertir, moure i protegir pàgines.
+Mitjançant l'adopció de la wiki, seràs promocionat a administrador i un buròcrata et facilitarà les eines que necessitaràs per gestionar la comunitat i el contingut de la wiki. També seràs capaç de crear altres administradors per ajudar, suprimir, revertir, moure i protegir pàgines.
 <br /><br />
 Estàs preparat per seguir els propers passos per ajudar {{SITENAME}}?",
 	'wikiadoption-know-more-header' => 'Vols saber més?',
@@ -415,16 +444,16 @@ Estàs preparat per seguir els propers passos per ajudar {{SITENAME}}?",
 	'wikiadoption-adopted-recently' => "Vaja!! Ja heu adoptat un altre wiki recentment. Haureu d'esperar un temps abans de poder adoptar una nova wiki.",
 	'wikiadoption-log-reason' => 'Adopció Automàtica de wikis',
 	'wikiadoption-notification' => '{{SITENAME}} ésta en adopció.Estas interessat en convertir-se en un líder aquí? Adopta aquesta wiki per començar! <span class="notranslate" traduir="no">$2</span>',
-	'wikiadoption-mail-first-subject' => 'No ho hem vist tot en un temps',
+	'wikiadoption-mail-first-subject' => "No t'hem vist per aquí durant un temps",
 	'wikiadoption-mail-first-content' => 'Hola <span class="notranslate" traduir="no">$1</span>,
 
-Fa un parell de setmanes ja hem vist que ets administrador en #WIKINAME. Els administradors són una part integral de  #WIKINAME i és important que tenen una presència regular. Si no hi ha actiu administradors d\'un llarg període de temps, aquest wiki es pot posar cap amunt de per a l\'adopció de permetre a un usuari per esdevenir un administrador.
+Fa un parell de setmanes ja hem vist que ets administrador en #WIKINAME. Els administradors són una part integral de  #WIKINAME i és important que tinguin una presència regular. Si no hi ha administradors actius durant un llarg període de temps, aquest wiki serà disponible per a la seva adopció. Això permetrà a un usuari esdevenir administrador.
 
-Si vostè necessita ajuda per tenir cura de la wiki, també podeu permetre que altres membres de la comunitat a ser administradors ara per anar a <span class="notranslate" traduir="no">$2</span>. Esperem veure-us a #WIKINAME aviat!!!
+Si necessites ajuda per tenir cura delwiki, també podeu permetre que altres membres de la comunitat siguin administradors anant a <span class="notranslate" traduir="no">$2</span>. Esperem veure-us a #WIKINAME aviat!!!
 
 Equip de Wikia
 
-Que pot donar-se de baixa de canvis a aquesta llista aquí: <span class="notranslate" traduir="no">$3</span>',
+Que pot donar-se de baixa d\'aquests correus aquí: <span class="notranslate" traduir="no">$3</span>',
 	'wikiadoption-mail-first-content-HTML' => 'Hola <span class="notranslate" traduir="no">$1</span>,<br /><br />
 
 Fa un parell de setmanes ja hem vist que ets administrador #WIKINAME. Els administradors són una part integral de la #WIKINAME i és important que tinguen una presència regular. Si no hi ha cpa actiu en un llarg període de temps, aquest wiki es pot posar cap amunt de per a l\'adopció de permetre a un usuari per esdevenir un administrador.<br /><br />
@@ -443,68 +472,95 @@ Des De fa tants dies ja que no hi ha un administrador actiu, #WIKINAME ara serà
 Equip Comunitari de Wikia
 
 Que pot donar-se de baixa de canvis a aquesta llista aquí: <span class="notranslate" traduir="no">$3</span>',
-	'wikiadoption-mail-second-content-HTML' => 'Hola <span class="notranslate" traduir="no">$1</span>,
-Oh, no! Ha estat gairebé 60 dies des que hi ha hagut un actiu administrador #WIKINAME. És important que els administradors apareixen regularment i contribuisquen a la wiki perque puga continuar funcionant sense problemes.
+	'wikiadoption-mail-second-content-HTML' => 'Hola $1,<br /><br />
+Oh, no! Han passat 60 dies sense un administrador actiu a #WIKINAME. És important que els administradors apareixin regularment i contribueixin a la wiki perquè pugui continuar funcionant sense problemes.
 
-Des De fa tants dies ja que no hi ha un administrador actiu, #WIKINAME ara serà ofertat en adopció a altres editors.
+Com que fa tants dies de que cap administrador a aparegut, #WIKINAME serà ofert per l\'adopció d\'altres editors. <br /><br />
 
-Equip Comunitari de Wikia
+L\'Equip de Wikia<br /><br />
 
-Que pot donar-se de baixa de canvis a aquesta llista aquí: <span class="notranslate" traduir="no">$3</span>',
+Pots <a href="$3">cancel·lar la subscripció</a> dels canvis d\'aquesta llista.',
 	'wikiadoption-mail-adoption-subject' => '#WIKINAME ha estat adoptat',
 	'wikiadoption-mail-adoption-content' => "Hi $1,
 
-#WIKINAME ha estat adoptat.  les Wikis són disponibles per adoptar quan cap dels administradors actuals són actius durant 60 dies o més.
+#WIKINAME ha estat adoptat. Els Wikis es poden adoptar quan cap dels administradors actuals són actius durant 60 dies o més.
 
-L'usuari adopció #WIKINAME tindran ara estatus de buròcrata i admin.  No et preocupis, vostè també el seu estatus d'administrador en aquest wiki i estan convidats a tornar i continuar col•laborant en qualsevol moment!
+L'usuari que adopti #WIKINAME tindrà ara drets de buròcrata i administrador. No et preocupis, tu continuaràs sent administrador d'aquest wiki i seràs benvingut si vols tornar a contribuir!
 
 L'equip de Wikia
 
-Vostè pot revocar els canvis a aquesta llista aquí:$3",
+Pots cancel·lar la subscripció dels canvis d'aquesta llista aquí:$3",
 	'wikiadoption-mail-adoption-content-HTML' => "Hola \$1,<br /><br />
 
 #WIKINAME ha estat adoptat. Les viquis s'han d'adoptar quan cap dels administradors actuals estan actius durant 60 dies o més.<br /><br />
+Hi \$1,
 
-L'usuari que ha adoptat #WIKINAME tindrà ara estatus de buròcrata i administrador. No et preocupis, també mantindràs el teu estatus d'administrador en aquesta viqui i estàs convidat a tornar i seguir col·laborant qualsevol moment!<br /><br />
+#WIKINAME ha estat adoptat. Els Wikis es poden adoptar quan cap dels administradors actuals són actius durant 60 dies o més.
 
-L'equip de Wikia<br /><br />
+L'usuari que adopti #WIKINAME tindrà ara drets de buròcrata i administrador. No et preocupis, tu continuaràs sent administrador d'aquest wiki i seràs benvingut si vols tornar a contribuir!
 
-Pots <a href=\"\$3\">donar-te de baixa</a> dels canvis en aquesta llista.",
-	'tog-adoptionmails' => 'Envia\'m un correu electrònic si <span class="notranslate" traduir="no">$1</span> estarà disponible per a altres usuaris a adoptar',
-	'tog-adoptionmails-v2' => '...si el wiki estarà disponible per a altres usuaris a adoptar',
-	'wikiadoption-pref-label' => 'Canviar aquestes preferències afectarà només missatges de correu electrònic des de  $1 .',
+L'equip de Wikia
+
+Pots <a href=\"\$3\">cancel·lar la subscripció</a> dels canvis d'aquesta llista.",
+	'tog-adoptionmails' => "Envia'm un correu electrònic quan $1 estigui disponible per a l'adopció.",
+	'tog-adoptionmails-v2' => '...si el wiki està disponible per a altres usuaris a adoptar',
+	'wikiadoption-pref-label' => 'Canviar aquestes preferències afectarà només missatges de correu electrònic des de  $1.',
 	'wikiadoption-welcome-header' => 'Felicitats! Heu adoptat {{SITENAME}}!',
-	'wikiadoption-welcome-body' => "Ara ets un buròcrata en aquesta viqui. Amb aquest nou estatus, ara tindràs accés a totes les eines que t'ajudaran a gestionar {{SITENAME}}.
+	'wikiadoption-welcome-body' => "Ara ets un buròcrata en aquesta wiki. Amb aquest nou estatus, ara tindràs accés a totes les eines que t'ajudaran a gestionar {{SITENAME}}.
 <br /><br />
 La cosa més important que pots fer per ajudar {{SITENAME}} a créixer és seguir editant.
 <br /><br />
-Si no hi ha cap administrador actiu en una viqui es pot proposar per l'adopció, per això assegura't de comprovar la viqui amb regularitat.
+Si no hi ha cap administrador actiu en una wiki es pot proposar per a l'adopció, per això assegura't de comprovar la wiki amb regularitat.
 <br /><br />
 Eines útils:
 <br /><br />
-[[Special:ThemeDesigner|ThemeDesigner]]
+[[Special:ThemeDesigner|Dissenyador de Temes]]
 <br />
 [[Special:LayoutBuilder|Constructor de dissenys de pàgina]]
 <br />
 [[Special:ListUsers|Llista d'usuaris]]
 <br />
-[[Special:UserRights|Gestió de drets]]",
+[[Special:UserRights|Gestió de drets d'usuari]]",
 );
 
 /** Czech (čeština)
+ * @author Aktron
  * @author Chmee2
+ * @author H4nek
  * @author Jezevec
  */
 $messages['cs'] = array(
+	'wikiadoption' => 'Automatické přijetí wiki',
 	'wikiadoption-header' => 'Přijmout tuto wiki',
 	'wikiadoption-button-adopt' => 'Ano, chci přijmout {{SITENAME}}!',
 	'wikiadoption-adopt-inquiry' => 'Zjistěte více!',
 	'wikiadoption-know-more-header' => 'Chcete vědět více?',
 	'wikiadoption-adoption-successed' => 'Blahopřejeme! Pro tento okamžik jste správce této wiki.',
+	'wikiadoption-adoption-failed' => 'Je nám líto. Pokoušeli jsme se vám přidat správcovská oprávnění, nicméně nespěšně. Můžete nás nicméně [http://community.wikia.com/Special:Contact kontaktovat] a my se vám pokusíme pomoci.',
 	'wikiadoption-not-allowed' => 'Je nám to líto. Právě teď nemůžete přijmout tuto wiki.',
+	'wikiadoption-not-enough-edits' => 'Ajaj! Jestli chcete tuto wiki přijmout, musíte mít více než 10 editací.',
 	'wikiadoption-log-reason' => 'Automatické přijetí Wiki',
 	'wikiadoption-mail-first-subject' => 'Chvíli jsme vás zde neviděli',
 	'wikiadoption-mail-adoption-subject' => '#WIKINAME byla přijata',
+	'tog-adoptionmails' => 'Pošlete mi e-mail, pokud $1 bude k dispozici k převzetí pro ostatní uživatele',
+	'tog-adoptionmails-v2' => '...pokud bude wiki k dispozici k převzetí pro ostatní uživatele',
+	'wikiadoption-welcome-header' => 'Gratulujeme! Převzal jste {{SITENAME}}!',
+);
+
+/** Welsh (Cymraeg)
+ * @author Robin Owain
+ */
+$messages['cy'] = array(
+	'wikiadoption' => 'Mabwysiadu wiki awtomatig',
+	'wikiadoption-desc' => 'Estyniad OtomaticMabwysiaduWici ar gyfer MediaWiki',
+	'wikiadoption-header' => 'Mabwysiadu y wici hwn',
+	'wikiadoption-button-adopt' => 'Ydw, rwyf eisiau mabwysiadu{{SITENAME}}!',
+	'wikiadoption-adopt-inquiry' => 'Dysgwch ragor!',
+	'wikiadoption-know-more-header' => 'Eisiau gwybod mwy?',
+	'wikiadoption-adoption-successed' => "Llongyfarchiadau! Rydych chi'n awr yn weinyddwr ar y wici hwn!",
+	'wikiadoption-adoption-failed' => 'Yr ydym yn flin. Ceisiasom rich gwneud yn weinyddwr, ond methom. Os gwelwch yn dda [http://community.wikia.com/Special:Contact cysylltwch â ni], a byddwn yn ceisio eich helpu.',
+	'wikiadoption-not-allowed' => "Ymddiheurwn! Fedrwch chi ddim mabwysiadu'r wici hwn nawr.",
+	'wikiadoption-not-enough-edits' => "Wwwwps! Mae angen dros 10 golygiad cyn y gallwch fabwysiadu'r wici yma.",
 );
 
 /** German (Deutsch)
@@ -514,6 +570,7 @@ $messages['cs'] = array(
  * @author Geitost
  * @author Inkowik
  * @author LWChris
+ * @author Luke081515
  * @author MF-Warburg
  * @author PtM
  * @author Quedel
@@ -600,7 +657,7 @@ Das Wikia-Team<br /><br />
 <br /><br />
 Am meisten hilfst du {{SITENAME}} beim Wachsen immer noch, indem du weiterhin Seiten bearbeitest.
 <br /><br />
-Wenn in einem Wiki kein aktiver Administrator ist, kann es zur Adoption freigegeben werden, also solltest du regelmäßig im Wiki vorbeischauen.
+Wenn in einem Wiki kein aktiver Administrator vorhanden ist, kann es zur Adoption freigegeben werden, also solltest du regelmäßig im Wiki vorbeischauen.
 <br /><br />
 Hilfreiche Werkzeuge:
 <br /><br />
@@ -653,13 +710,14 @@ $messages['el'] = array(
 /** Spanish (español)
  * @author Armando-Martin
  * @author Dalton2
+ * @author Macofe
  * @author VegaDark
  */
 $messages['es'] = array(
 	'wikiadoption' => 'Adopción automática de wikis',
 	'wikiadoption-desc' => 'Una extensión sobre Adopción Automática de Wikis para MediaWiki',
 	'wikiadoption-header' => 'Adopta este wiki',
-	'wikiadoption-button-adopt' => 'Sí, ¡quiero adoptar {{SITENAME}}!',
+	'wikiadoption-button-adopt' => 'Sí, ¡quiero adoptar a {{SITENAME}}!',
 	'wikiadoption-adopt-inquiry' => '¡Descubre más!',
 	'wikiadoption-description' => '$1, ¿preparado para adoptar {{SITENAME}}?
 <br /><br />
@@ -732,7 +790,7 @@ Puede<a href="$3">darse de baja</a> de los cambios realizados en esta lista.',
 	'tog-adoptionmails' => 'Notificarme por correo electrónico si $1 está disponible para otros usuarios para adoptar.',
 	'tog-adoptionmails-v2' => '...si el wiki estuviera disponible para que otros usuarios lo adopten',
 	'wikiadoption-pref-label' => 'Cambiar estas preferencias solo afectarán los correos electrónicos de $1.',
-	'wikiadoption-welcome-header' => '¡Felicitaciones! ¡Has adoptado {{SITENAME}}!',
+	'wikiadoption-welcome-header' => '¡Felicitaciones! ¡Has adoptado a {{SITENAME}}!',
 	'wikiadoption-welcome-body' => 'Ahora eres burócrata en este wiki. Con tu nuevo cargo, ahora tienes acceso a todas las herramientas que te ayudarán a administrar {{SITENAME}}.
 <br /><br />
 Lo más importante que puedes hacer para ayudar a {{SITENAME}} es editar con regularidad.
@@ -782,10 +840,12 @@ Kasulikud tööriistad:
 $messages['eu'] = array(
 	'wikiadoption-adopt-inquiry' => 'Jakin ezazu gehiago!',
 	'wikiadoption-know-more-header' => 'Gehiago jakin nahi duzu?',
+	'wikiadoption-adoption-successed' => 'Zorionak! Wiki honetako administratzailea zara orain!',
 );
 
 /** Persian (فارسی)
  * @author Ebraminio
+ * @author Movyn
  * @author Wayiran
  * @author پاناروما
  */
@@ -795,6 +855,9 @@ $messages['fa'] = array(
 	'wikiadoption-button-adopt' => 'هم‌اکنون اتخاذ کن', # Fuzzy
 	'wikiadoption-adopt-inquiry' => 'بیشتر بیاب',
 	'wikiadoption-know-more-header' => 'چگونه بیشتر بدانیم؟',
+	'wikiadoption-adoption-successed' => 'تبریک می‌گوییم! شما اکنون مدیر این ویکی هستید!',
+	'wikiadoption-adoption-failed' => 'متاسفیم. ما تلاش کردیم گروه شما را به مدیریت ارتقا دهیم اما عمل نکرد. لطفا [http://community.wikia.com/Special:Contact با ما ارتباط برقرار کنید] تا ما بتوانیم کمک کنیم.',
+	'wikiadoption-mail-first-subject' => 'مدتی است شما را این اطراف ندیدیم',
 );
 
 /** Finnish (suomi)
@@ -931,6 +994,7 @@ $messages['fo'] = array(
 );
 
 /** French (français)
+ * @author 0x010C
  * @author Balzac 40
  * @author Notafish
  * @author Urhixidur
@@ -943,7 +1007,7 @@ $messages['fr'] = array(
 	'wikiadoption-desc' => 'Une extension AutomaticWikiAdoption pour MediaWiki',
 	'wikiadoption-header' => 'Adopter ce wiki',
 	'wikiadoption-button-adopt' => 'Oui, je veux adopter {{SITENAME}} !',
-	'wikiadoption-adopt-inquiry' => 'Pour en savoir plus !',
+	'wikiadoption-adopt-inquiry' => 'En savoir plus !',
 	'wikiadoption-description' => '$1, prêt à adopter {{SITENAME}} ?
 <br /><br />
 Il n’y a pas eu d’administrateur actif sur {{SITENAME}} depuis un moment et nous recherchons un nouveau responsable pour aider à développer le contenu de ce wiki et en agrandir la communauté ! En tant que personne ayant déjà contribué à {{SITENAME}}, nous nous demandons si vous aimeriez ce travail.
@@ -1016,8 +1080,8 @@ L’utilisateur ayant adopté #WIKINAME y aura maintenant les statuts de bureauc
 L’équipe Wikia<br /><br />
 
 Vous pouvez <a href="$3">vous désabonner</a> des mises à jour de cette liste.',
-	'tog-adoptionmails' => "Envoyez-moi un message si $1 devient disponible pour l'adoption",
-	'tog-adoptionmails-v2' => '...le wiki devient disponible à l’adoption',
+	'tog-adoptionmails' => "Envoyez-moi un message si $1 devient disponible à l'adoption",
+	'tog-adoptionmails-v2' => '...si le wiki devient disponible à l’adoption',
 	'wikiadoption-pref-label' => 'La modification de ces préférences affectera seulement les courriels de $1.',
 	'wikiadoption-welcome-header' => 'Félicitations ! Vous avez adopté {{SITENAME}} !',
 	'wikiadoption-welcome-body' => 'Vous êtes maintenant bureaucrate sur ce wiki. Avec votre nouveau statut, vous avez maintenant accès à tous les outils qui vous aideront à gérer {{SITENAME}}.
@@ -1138,6 +1202,80 @@ Ferramentas de axuda:
 [[Special:UserRights|Xestionar os dereitos]]',
 );
 
+/** Hebrew (עברית)
+ * @author LaG roiL
+ */
+$messages['he'] = array(
+	'wikiadoption' => 'אימוץ ויקי אוטומטי',
+	'wikiadoption-header' => 'אימוץ מיזם זה',
+	'wikiadoption-button-adopt' => 'כן, ברצוני לאמץ את {{SITENAME}}.',
+	'wikiadoption-adopt-inquiry' => 'מידע נוסף',
+	'wikiadoption-description' => '$1, {{GENDER:מוכן|מוכנה}} לאמץ את {{SITENAME}}?
+<br /><br />
+כבר מזמן לא היה מפעיל מערכת פעיל ב-{{SITENAME}}, ואנחנו מחפשים {{GENDER:מנהיג חדש שיעזור|מנהיגה חדשה שתעזור}} להרחיב את תוכן וקהילת המיזם! בתור {{GENDER:משתמש שתרם|משתמשת שתרמה}} ל-{{SITENAME}}, תהינו אם היית {{GENDER:מסכים|מסכימה}} לתפקיד.
+<br /><br />
+בעזרת אימוץ המיזם, {{GENDER:תהיה|תהיי}} ל{{GENDER:מפעיל מערכת ובירוקרט|מפעילת מערכת ובירוקרטית}} על מנת לקבל את הכלים  לניהול קהילת ותוכן המיזם. בוסף, {{GENDER:תוכל|תוכלי}} לגייס מפעילי מערכת נוספים על מנת לעזור, למחוק, לשחזר, להעביר ולהגן על דפים.
+<br /><br />
+{{GENDER:מוכן|מוכנה}} לנקוט את הצעדים הבאים בסיוע ל-{{SITENAME}}?',
+	'wikiadoption-know-more-header' => 'רוצים לדעת עוד?',
+	'wikiadoption-know-more-description' => 'בדקו את הקישורים להלן למידע נוסף. וכמובן, תרגישו חופשיים לפנות אלינו במידת הצורך!',
+	'wikiadoption-adoption-successed' => 'כל הכבוד! כעת {{GENDER:אתה מפעיל מערכת|את מפעילת מערכת}} במיזם זה!',
+	'wikiadoption-adoption-failed' => 'מצטערים. ניסינו למנותך ל{{GENDER:מפעיל מערכת|מפעילת מערכת}}, אך הדבר לא עבד. אנא [http://community.wikia.com/Special:Contact {{GENDER:פנה אלינו|פני אלינו}}], וננסה לעזור לך.',
+	'wikiadoption-not-allowed' => 'מצטערים. כעת אינך {{GENDER:יכול|יכולה}} לאמץ את מיזם זה.',
+	'wikiadoption-not-enough-edits' => 'עליך להיות {{GENDER:בעל|בעלת}} למעלה מ-10 עריכות על מנת לאמץ את מיזם זה.',
+	'wikiadoption-adopted-recently' => 'לאחרונה כבר אימצת מיזם אחד. {{GENDER:תיאלץ|תיאלצי}} לחכות זמן מה לפני ש{{GENDER:תוכל|תוכלי}} לאמץ מיזם חדש.',
+	'wikiadoption-log-reason' => 'אימוץ ויקי אוטומטי',
+	'wikiadoption-notification' => '{{SITENAME}} זמין לאימוץ. {{GENDER:מעוניין|מעוניינת}} להיות ל{{GENDER:מנהיג|מנהיגה}} שם? {{GENDER:אמץ|אמצי}} את המיזם ו{{GENDER:תתחיל|תתחילי}}! $2',
+	'wikiadoption-mail-first-subject' => 'מזמן לא ראינו אותך',
+	'wikiadoption-mail-first-content' => 'שלום, $1,
+
+עברו כמה שבועות לאחר שהיה לנו מפעיל/ת מערכת ב-#WIKINAME. מפעילי מערכת הם חלק אינטגרלי מ-#WIKINAME וחשוב שהם יהיו בסביבה בקביעות. אם לא יהיו מפעילי מערכת פעילים למשך תקופה ארוכה, ייתכן כי מיזם זה יהיה לאימוץ על מנת לאפשר למשתמש/ת אחר/ת להיות למפעיל/ת מערכת.
+
+אם תזדקק/י לעזרה בטיפול במיזם, ניתן לתת לחברי קהילה אחרים להיות עכשיו למפעילים על ידי לחיצה כאן: $2.  מקווים לראותך ב-#WIKINAME בקרוב!
+
+צוות ויקיה
+
+ניתן לבטל את המנוי לשינויים ברשימה זו כאן: $3',
+	'wikiadoption-mail-second-subject' => '#WIKINAME יהיה זמין לאימוץ בקרוב',
+	'wikiadoption-mail-second-content' => 'Hi $1,
+אוי ואבוי! עברו כמעט 60 ימים מאז שהיה מפעיל מערכת פעיל ב-#WIKINAME. חשוב שמפעילי מערכת יהיו ויתרמו בקביעות על מנת להבטיח על תפקוד תקני של המיזם.
+
+מכיוון שעברו כל כך הרבה ימים מאז הופעת מפעיל מערכת פעיל, #WIKINAME יהיה זמין לאימוץ על ידי עורכים אחרים.
+
+צוות ויקיה
+
+ניתן לבטל את המנוי לשינויים ברשימה כאן: $3',
+	'wikiadoption-mail-adoption-subject' => '#WIKINAME אומץ',
+	'wikiadoption-mail-adoption-content' => 'שלום, $1.
+
+#WIKINAME אומץ. מיזמי ויקיה זמינים לאימוץ כשאף אחד ממפעילי המערכת הנוכחיים לא פעיל במשך 60 ימים ומעלה.
+
+ה{{GENDER:משתמש המאמץ|משתמשת המאמצת}} של #WIKINAME {{GENDER:יהיה|תהיה}} עכשיו {{GENDER:בעל|בעלת}} מעמד בירוקרט ומפעיל מערכת. אל דאגה, מעמד {{GENDER|מפעיל המערכת|מפעילת המערכת}} שלך במיזם זה יישאר, והינך {{GENDER|מוזמן|מוזמנת}} לשוב ולהמשיך לתרום בכל עת!
+
+צוות ויקיה
+
+ניתן לבטל את המנוי לשינויים ברשימה כאן: $3',
+	'tog-adoptionmails' => 'שלחו לי הודעת דוא"ל אם $1 יהיה זמין לאימוץ על ידי משתמשים אחרים.',
+	'tog-adoptionmails-v2' => 'אם המיזם יהיה זמין לאימוץ על ידי משתמשים אחרים...',
+	'wikiadoption-pref-label' => 'שינוי ההעדפות הללו יחל רק על הודעות דוא"ל מ$1.',
+	'wikiadoption-welcome-header' => 'כל הכבוד! אימצת את {{SITENAME}}!',
+	'wikiadoption-welcome-body' => 'כעת {{GENDER:אתה בירוקרט|את בירוקרטית}} במיזם זה. עם מעמדך החדש, {{GENDER:אתה עכשיו בעל|את עכשיו בעלת}} גישה לכל הכלים שיעזרו לך לנהל את {{SITENAME}}.
+<br /><br />
+הדבר החשוב ביותר ש{{GENDER:תוכל|תוכלי}} לעשות על מנת לעזור להרחיב את {{SITENAME}} הוא להמשיך לערוך.
+<br /><br />
+אם אין מפעיל מערכת פעיל במיזם, ניתן למסורו לאימוץ, ולכן מומלץ לבדוק את המיזם לעתים קרובות.
+<br /><br />
+כלים שימושיים:
+<br /><br />
+[[Special:ThemeDesigner|מעצב ערכת נושא]]
+<br />
+[[Special:LayoutBuilder|בונה תסדיר דף]]
+<br />
+[[Special:ListUsers|רשימת משתמשים]]
+<br />
+[[Special:UserRights|ניהול הראשות]]',
+);
+
 /** Hunsrik (Hunsrik)
  * @author Paul Beppler
  */
@@ -1151,6 +1289,7 @@ $messages['hrx'] = array(
 );
 
 /** Hungarian (magyar)
+ * @author Csega
  * @author Dani
  * @author TK-999
  */
@@ -1158,7 +1297,7 @@ $messages['hu'] = array(
 	'wikiadoption' => 'Automatikus wiki örökbefogadás',
 	'wikiadoption-desc' => 'AutomaticWikiAdoption (automatikus wiki&ndash;örökbefogadás) kiterjesztés a MediaWikihez',
 	'wikiadoption-header' => 'Wiki örökbefogadása',
-	'wikiadoption-button-adopt' => 'Igen, szeretném örökbefogadni a {{SITENAME}}-t!',
+	'wikiadoption-button-adopt' => 'Igen, szeretném örökbefogadni a(z) {{SITENAME}}-t!',
 	'wikiadoption-adopt-inquiry' => 'Tudj meg többet!',
 	'wikiadoption-description' => '$1, készen állsz a(z) {{SITENAME}} örökbefogadására?
 <br /><br />
@@ -1168,12 +1307,12 @@ A wiki örökbefogadásával adminisztrátor és bürokrata jogokat kapsz, hogy 
 <br /><br />
 Készen állsz a(z) {{SITENAME}} megsegítéséhez szükséges következő lépések megtételére?',
 	'wikiadoption-know-more-header' => 'Szeretnél többet tudni?',
-	'wikiadoption-know-more-description' => 'Kövesd ezeket a hivatkozásokat további információért. Természetesen lépj kapcsolatba velünk, ha bármilyen kérdésed van!',
+	'wikiadoption-know-more-description' => 'Kövesd ezeket a hivatkozásokat további információért. Lépj kapcsolatba velünk, ha bármilyen kérdésed van!',
 	'wikiadoption-adoption-successed' => 'Gratulálunk! Immár a wiki adminisztrátora vagy!',
-	'wikiadoption-adoption-failed' => 'Megpróbáltunk adminisztrátorrá tenni, de nem sikerült. Kérjük, [http://community.wikia.com/Special:Contact lépj kapcsolatba velünk], hogy kisegíthessünk.',
-	'wikiadoption-not-allowed' => 'Sajnáljuk, jelenleg nem adoptálhatod ezt a wikit.',
+	'wikiadoption-adoption-failed' => 'Megpróbáltunk adminisztrátorrá tenni, de nem sikerült. Kérjük, [http://community.wikia.com/Special:Contact lépj kapcsolatba velünk], hogy segíthessünk.',
+	'wikiadoption-not-allowed' => 'Sajnáljuk, jelenleg nem fogadhatod örökbe ezt a wikit.',
 	'wikiadoption-not-enough-edits' => 'Hoppá! Több mint 10 szerkesztés szükséges a wiki örökbefogadásához.',
-	'wikiadoption-adopted-recently' => 'Hoppá! Nemrégiben már örökbefogadtál egy másik wikit, így késleltetned kell más wikik örökbefogadását.',
+	'wikiadoption-adopted-recently' => 'Hoppá! Nemrégiben már örökbefogadtál egy másik wikit, így várnod kell, míg más wikiket is örökbefogadhatsz.',
 	'wikiadoption-log-reason' => 'Automatikus wiki–örökbefogadás',
 	'wikiadoption-notification' => 'A(z) {{SITENAME}} örökbefogadható. Szeretnél rajta vezető lenni? Fogadd örökbe a wikit kezdésként! $2',
 	'wikiadoption-mail-first-subject' => 'Már nem láttunk téged erre egy ideje',
@@ -1355,6 +1494,7 @@ Instrumentos utile:
 
 /** Indonesian (Bahasa Indonesia)
  * @author C5st4wr6ch
+ * @author Fate Kage
  * @author Riemogerz
  */
 $messages['id'] = array(
@@ -1364,12 +1504,12 @@ $messages['id'] = array(
 	'wikiadoption-button-adopt' => 'Ya, saya ingin mengadopsi {{SITENAME}}!',
 	'wikiadoption-adopt-inquiry' => 'Cari tahu lebih lanjut!',
 	'wikiadoption-description' => '$1, siap untuk mengadopsi {{SITENAME}}?
-<br><br>
+<br /><br />
 Belum ada pengurus aktif pada {{SITENAME}} untuk sementara, dan kami sedang mencari pemimpin baru untuk membantu tumbuh kembang komunitas dan konten wiki ini! Kami berharap Anda mau menjadi pengurus untuk {{SITENAME}}.
-<br><br>
-Dengan mengadopsi wiki, Anda akan dipromosikan menjadi pengurus dan birokrat yang diberikan peralatan khusus untuk mengelola komunitas dan konten wiki. Anda juga akan mampu mengangkat pengurus baru untuk membantu, menghapus, rollback, bergerak dan melindungi halaman.
-<br><br>
-Apakah Anda siap untuk membantu kami dalam {{SITENAME}}?', # Fuzzy
+<br /><br />
+Dengan mengadopsi wiki, Anda akan dipromosikan menjadi pengurus dan birokrat yang diberikan peralatan khusus untuk mengelola komunitas dan konten wiki. Anda juga akan mampu mengangkat pengurus baru untuk membantu, menghapus, mengembalikan, memindahkan dan melindungi halaman.
+<br /><br />
+Apakah Anda siap untuk membantu kami dalam {{SITENAME}}?',
 	'wikiadoption-know-more-header' => 'Ingin mengetahui lebih banyak?',
 	'wikiadoption-know-more-description' => 'Periksalah pranala ini untuk informasi lebih lanjut. Dan tentu saja, silakan hubungi kami jika Anda memiliki pertanyaan!',
 	'wikiadoption-adoption-successed' => 'Selamat! Anda sekarang adalah pengurus di wiki ini!',
@@ -1435,6 +1575,7 @@ Tim Wikia<br /><br />
 
 Anda dapat <a href="$3">berhenti berlangganan</a> dari perubahan pada daftar ini.',
 	'tog-adoptionmails' => 'Email saya jika  $1  akan menjadi tersedia untuk pengguna lain untuk mengadopsi',
+	'tog-adoptionmails-v2' => '...jika wiki akan tersedia bagi pengguna lain untuk diadopsi',
 	'wikiadoption-pref-label' => 'Mengubah preferensi ini hanya akan mempengaruhi surel dari $1.',
 	'wikiadoption-welcome-header' => 'Selamat! Anda telah mengadopsi {{SITENAME}}!',
 	'wikiadoption-welcome-body' => 'Anda sekarang adalah birokrat di wiki ini. Dengan status baru Anda sekarang Anda memiliki akses ke seluruh peralatan yang akan membantu Anda mengelola {{SITENAME}}.
@@ -1453,6 +1594,7 @@ Peralatan yang Membantu:
  * @author Gianfranco
  * @author Minerva Titani
  * @author PeppeAeco
+ * @author TecnoMaster
  * @author Ximo17
  */
 $messages['it'] = array(
@@ -1461,6 +1603,13 @@ $messages['it'] = array(
 	'wikiadoption-header' => 'Adotta questa wiki',
 	'wikiadoption-button-adopt' => 'Sì, voglio adottare {{SITENAME}}!',
 	'wikiadoption-adopt-inquiry' => 'Per saperne di più!',
+	'wikiadoption-description' => "$1, pronto ad adottare {{SITENAME}}?
+<br /> <br />
+Non c'è stato un amministratore attivo su {{SITENAME}} per un po ', e stiamo cercando un nuovo leader per aiutare il contenuto di questo wiki e la comunità a crescere! Come qualcuno che ha contribuito a {{SITENAME}} ci chiedevamo se desidera il lavoro.
+<br /> <br />
+Adottando il wiki, ti verrà promosso a amministratore e burocrate e vi verranno dati gli strumenti necessari per gestire la comunità del wiki e i contenuti. Potrai anche essere in grado di creare altri amministratori per aiutare, eliminare, ripristinare, spostare e proteggere le pagine.
+<br /> <br />
+Sei pronto a fare i prossimi passi per aiutare {{SITENAME}}?",
 	'wikiadoption-know-more-header' => 'Vuoi saperne di più?',
 	'wikiadoption-know-more-description' => 'Per maggiori informazioni clicca sui seguenti links. Ovviamente, per qualsiasi problema non esitare a contattarci!',
 	'wikiadoption-adoption-successed' => 'Congratulazioni! Ora sei amministratore di questo wiki!',
@@ -1469,6 +1618,8 @@ $messages['it'] = array(
 	'wikiadoption-not-enough-edits' => 'Oops! Devi avere più di 10 edits per adottare questo wiki.',
 	'wikiadoption-adopted-recently' => "Oop! Hai già adottato un altro wiki recentemente. Devi aspettare un po' di tempo prima di adottarne un altro.",
 	'wikiadoption-log-reason' => 'Adozione Automatica di Wiki',
+	'wikiadoption-notification' => '{{SITENAME}} è in adozione. Sei interessato a diventare un leader qui? Adottare questo wiki per iniziare! 2$', # Fuzzy
+	'wikiadoption-mail-first-subject' => "non ti abbiamo visto in giro per un po'",
 	'wikiadoption-mail-adoption-subject' => '#WIKINAME è stata adottata',
 	'tog-adoptionmails' => "Mandami una mail se $1 diventa disponibile per l'adozione da parte di altri utenti",
 	'tog-adoptionmails-v2' => "...se la wiki diventa disponibile per l'adozione da parte di altri utenti",
@@ -1477,6 +1628,7 @@ $messages['it'] = array(
 );
 
 /** Japanese (日本語)
+ * @author Barrel0116
  * @author BryghtShadow
  */
 $messages['ja'] = array(
@@ -1484,6 +1636,7 @@ $messages['ja'] = array(
 	'wikiadoption-header' => 'このウィキを採用する',
 	'wikiadoption-button-adopt' => 'はい、私は{{SITENAME}}を採用したいと思います！',
 	'wikiadoption-adopt-inquiry' => '詳細を調べる！',
+	'wikiadoption-know-more-header' => 'もっと知りたいですか？',
 	'wikiadoption-mail-adoption-subject' => '#WIKINAMEが採用されました',
 	'wikiadoption-welcome-header' => 'おめでとうございます！あなたは{{SITENAME}}を採用しました！',
 );
@@ -1559,30 +1712,39 @@ $messages['kn'] = array(
  * @author Hym411
  * @author Leehoy
  * @author Miri-Nae
+ * @author Revi
  * @author 아라
  */
 $messages['ko'] = array(
-	'wikiadoption' => '자동 위키 합치기',
-	'wikiadoption-desc' => '미디어위키를 위한 자동 위키 합치기 확장 기능',
-	'wikiadoption-header' => '이 위키 합치기',
-	'wikiadoption-button-adopt' => '네, {{SITENAME}}을 합칩니다',
-	'wikiadoption-adopt-inquiry' => '자세히 찾기!',
-	'wikiadoption-know-more-header' => '더 알고 싶나요?',
-	'wikiadoption-know-more-description' => '자세한 내용은 이 링크를 확인하십시오. 당연히, 질문이 있다면 자유롭게 저희에게 연락하십시오!',
+	'wikiadoption' => '자동 관리자 변경',
+	'wikiadoption-desc' => '미디어위키 자동 관리자 변경 확장 기능',
+	'wikiadoption-header' => '이 위키의 관리자되기',
+	'wikiadoption-button-adopt' => '네, {{SITENAME}}의 관리자가 되고 싶습니다!',
+	'wikiadoption-adopt-inquiry' => '더 많은 정보!',
+	'wikiadoption-description' => '$1 사용자 님, {{SITENAME}}의 관리자가 될 준비가 되셨나요?
+<br /><br />
+{{SITENAME}}에는 몇 일 동안 관리자가 접속하지 않았습니다. 저희는 {{SITENAME}}에 기여해주고, 새 단장해줄 관리자를 찾고 있습니다! 이 일에 관심이 있으신가요?
+<br /><br />
+관리자가 되면 관리 권한을 얻게 되며, 위키를 관리하는 데 유용한 도구를 사용할 수 있습니다. 원한다면 다른 사람을 또 다른 관리자로 임명해 문서 관리를 돕게 할 수도 있습니다.
+<br /><br />
+{{SITENAME}}의 관리자가 되기 위한 다음 단계로 진행할까요?',
+	'wikiadoption-know-more-header' => '더 알고 싶으신가요?',
+	'wikiadoption-know-more-description' => '자세한 내용은 이 링크를 확인하십시오. 질문이 있다면 원하는대로 저희에게 연락해주세요!',
 	'wikiadoption-adoption-successed' => '축하합니다! 당신은 이제 이 위키의 관리자입니다!',
-	'wikiadoption-adoption-failed' => '죄송합니다. 저희는 당신을 관리자로 만들기 위해 노력했지만, 불가능했습니다. [http://community.wikia.com/Special:Contact 저희에게 연락]해 주시면 도와드리겠습니다.',
-	'wikiadoption-not-allowed' => '죄송합니다. 당신은 현재 이 위키를 합칠 수 없습니다.',
-	'wikiadoption-not-enough-edits' => '이런! 이 위키를 합치려면 편집 10번 이상이 필요합니다.',
-	'wikiadoption-adopted-recently' => '이런! 최근에 다른 위키를 합친 적이 있습니다. 새 위키를 합치기 전에 기다려야 합니다.',
-	'wikiadoption-log-reason' => '자동 위키 합치기',
-	'wikiadoption-mail-first-subject' => '오랜만이군요',
+	'wikiadoption-adoption-failed' => '죄송합니다. 저희는 당신을 관리자로 만들기 위해 노력했지만, 불가능했습니다. [http://community.wikia.com/Special:Contact 저희에게 연락]해 주시면 다시 도와드릴 수 있습니다.',
+	'wikiadoption-not-allowed' => '죄송합니다. 당신은 현재 이 위키의 관리자가 될 수 없습니다.',
+	'wikiadoption-not-enough-edits' => '이런! 이 위키의 관리자가 되기 위해선 적어도 10번은 기여해야 합니다.',
+	'wikiadoption-adopted-recently' => '이런! 최근에 다른 위키의 관리자가 된 적이 있습니다. 새 위키의 권한을 얻기 전에 기다려주세요.',
+	'wikiadoption-log-reason' => '자동 관리자 변경',
+	'wikiadoption-notification' => '{{SITENAME}}에는 관리자 자리가 비어있습니다. 직접 관리자가 되고 싶으신가요? 당장 도전해보세요! $2',
+	'wikiadoption-mail-first-subject' => '오랜만입니다',
 	'wikiadoption-mail-first-content' => '안녕하세요$1,
 
 #WIKINAME의 관리자가 접속하지 않은 지 몇 주가 지났습니다. 관리자는 #WIKINAME에 있어서 매우 중요한 부분입니다. 관리자가 오랫동안 접속하지 않을 시, 다른 사용자로 관리자가 교체될 수 있습니다.
 
 필요하다면 $2에서 다른 커뮤니티 회원을 관리자로 임명할 수 있습니다. 다음에 또 봐요!
 
-The Wikia Team
+위키아 팀
 
 이곳에서 리스트를 변경하면 주시를 해제할 수 있습니다: $3',
 	'wikiadoption-mail-first-content-HTML' => '안녕하세요$1,<br /><br />
@@ -1591,10 +1753,10 @@ The Wikia Team
 
 필요하다면 <a href="$2">사용자 권한 조정</a>에서 다른 커뮤니티 회원을 관리자로 임명할 수 있습니다. 다음에 또 봐요!
 
-The Wikia Team<br /><br />
+위키아 팀<br /><br />
 
 <a href="$3">이곳</a>에서 리스트를 변경하면 주시를 해제할 수 있습니다.',
-	'wikiadoption-mail-second-subject' => '#WIKINAME 이 합쳐질 대상이 될 수 있습니다',
+	'wikiadoption-mail-second-subject' => '곧 #WIKINAME의 관리자 권한이 빌 것입니다',
 	'wikiadoption-mail-second-content' => '안녕하세요$1,
 세상에! #WIKINAME의 관리자가 활동하지 않은 지 거의 60일이 지났습니다. 정상적인 위키 지속에 있어서 관리자의 위키 접속 및 기여는 매우 주요한 부분입니다.
 
@@ -1611,14 +1773,14 @@ The Wikia Team<br /><br />
 위키아 팀<br /><br />
 
 <a href="$3">이곳</a>에서 리스트를 변경하면 주시를 해제할 수 있습니다.',
-	'wikiadoption-mail-adoption-subject' => '#WIKINAME 이 합쳐졌습니다',
+	'wikiadoption-mail-adoption-subject' => '#WIKINAME의 관리자가 변경되었습니다',
 	'wikiadoption-mail-adoption-content' => '안녕하세요$1,
 
 #WIKINAME의 관리자가 변경되었습니다. 관리자 중 아무도 60일 동안 접속하지 않으면 위키의 관리자가 변경될 수 있습니다.
 
 #WIKINAME의 새로운 관리자는 이제 관리자 권한을 얻게 됩니다. 걱정 마세요, 언제든지 다시 돌아와 관리자 권한을 되찾고, 위키에 기여할 수 수 있으니까요.
 
-The Wikia Team
+위키아 팀
 
 이곳에서 리스트를 변경하면 주시를 해제할 수 있습니다: $3',
 	'wikiadoption-mail-adoption-content-HTML' => '안녕하세요$1,<br /><br />
@@ -1627,10 +1789,27 @@ The Wikia Team
 
 #WIKINAME의 새로운 관리자는 이제 관리자 권한을 얻게 됩니다. 걱정 마세요, 언제든지 다시 돌아와 관리자 권한을 되찾고, 위키에 기여할 수 수 있으니까요.<br /><br />
 
-The Wikia Team<br /><br />
+위키아 팀<br /><br />
 
 <a href="$3">이곳</a>에서 리스트를 변경하면 주시를 해제할 수 있습니다.',
-	'wikiadoption-welcome-header' => '축하합니다! {{SITENAME}} 프로젝트를 합쳤습니다!',
+	'tog-adoptionmails' => '$1의 관리자 자리를 내놓을 준비가 되었다면 이메일을 보내주세요',
+	'tog-adoptionmails-v2' => '...관리자를 내놓을 준비가 되었다면',
+	'wikiadoption-pref-label' => '해당 설정은 $1의 메일 알림에만 영향을 미칩니다.',
+	'wikiadoption-welcome-header' => '축하합니다! {{SITENAME}} 프로젝트의 관리자 권한을 얻었습니다!',
+	'wikiadoption-welcome-body' => '관리자로 임명되셨습니다. 새로운 권한으로 {{SITENAME}}의 관리를 도와줄 도구를 사용할 수 있습니다.
+<br /><br />
+{{SITENAME}}를 성장시키는 데 가장 중요한 것은 지속적인 문서 편집입니다.
+<br /><br />
+자주 위키를 확인하세요. 오랫동안 관리자의 활동이 없으면 관리자가 변경될 수 있습니다.<br /><br />
+유용한 도구들:
+<br /><br />
+[[Special:ThemeDesigner|테마 디자이너]]
+<br />
+[[Special:LayoutBuilder|페이지 레이아웃 빌더]]
+<br />
+[[Special:ListUsers|사용자 목록]]
+<br />
+[[Special:UserRights|권한 조정]]',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -1651,11 +1830,11 @@ $messages['lb'] = array(
 	'wikiadoption-welcome-header' => 'Gratulatioun! Dir hutt {{SITENAME}} adoptéiert!',
 );
 
-/** لوری (لوری)
+/** Northern Luri (لوری مینجایی)
  * @author Mogoeilor
  */
 $messages['lrc'] = array(
-	'wikiadoption' => 'سازگاری خودکارویکی',
+	'wikiadoption' => 'سازگاری خودانجوم ویکی',
 	'wikiadoption-header' => 'ای ویکی نه سازگار کو',
 	'wikiadoption-adopt-inquiry' => 'بیشتر بفمیت',
 	'wikiadoption-know-more-header' => 'میهایت بیشتر بفمیت؟',
@@ -2282,8 +2461,10 @@ Sètz prèst a passar a las autras etapas per ajudar {{SITENAME}} ?",
 
 /** Polish (polski)
  * @author BeginaFelicysym
+ * @author Devwebtel
  * @author Sovq
  * @author Sp5uhe
+ * @author VerMa
  */
 $messages['pl'] = array(
 	'wikiadoption' => 'Automatyczna adopcja wiki',
@@ -2303,11 +2484,11 @@ Czy jesteś gotów aby pomóc {{SITENAME}}?',
 	'wikiadoption-adoption-successed' => 'Gratulacje! Jesteś teraz administratorem na tej wiki!',
 	'wikiadoption-adoption-failed' => 'Przepraszamy. Próbowaliśmy dać Ci uprawnienia administratora, ale coś poszło nie tak. Prosimy [http://community.wikia.com/Special:Contact skontaktuj się z nami], a spróbujemy Ci pomóc.',
 	'wikiadoption-not-allowed' => 'Przepraszamy. Nie możesz teraz adoptować tej wiki.',
-	'wikiadoption-not-enough-edits' => 'Potrzebujesz więcej niż 10 edycji aby adoptować tą wiki.',
-	'wikiadoption-adopted-recently' => 'Ostatnio adoptowałeś inną wiki. Będziesz musiał poczekać, zanim możliwa będzie adopcja kolejnej.',
-	'wikiadoption-log-reason' => 'Automatyczna Adopcja Wiki.',
+	'wikiadoption-not-enough-edits' => 'Potrzebujesz więcej niż 10 edycji aby adoptować tę wiki.',
+	'wikiadoption-adopted-recently' => 'Ostatnio adoptowałeś inną wiki. Musisz poczekac, zanim adoptujesz kolejną wiki.',
+	'wikiadoption-log-reason' => 'Automatyczna Adopcja Wiki',
 	'wikiadoption-notification' => '{{SITENAME}} może być adoptowana. Chcesz zostać administratorem? Adoptuj wiki! $2',
-	'wikiadoption-mail-first-subject' => 'Nie widzieliśmy cię czas jakiś',
+	'wikiadoption-mail-first-subject' => 'Nie widzieliśmy cię jakiś czas',
 	'wikiadoption-mail-first-content' => 'Witaj $1,
 
 Od kilku tygodni na #WIKINAME nie było aktywnych administratorów.Administratorzy są niezbędni aby #WIKINAME mogła poprawnie funkcjonować. Jeśli w dłuższym okresie na wiki nie ma administratorów, może ona zostać udostępniona do adopcji, tak, aby inni aktywni użytkownicy mogli dostać dodatkowe uprawnienia.
@@ -2326,7 +2507,7 @@ Jeśli potrzebujesz pomocy w dbaniu o wiki, możesz pozwolić innym użytkowniko
 Zespół Wikia<br /><br />
 
 Możesz <a href="$3">zrezygnować</a> z otrzymywania powiadomień.',
-	'wikiadoption-mail-second-subject' => '#WIKINAME będzie dostępna do adopcji wkrótce',
+	'wikiadoption-mail-second-subject' => '#WIKINAME będzie wkrótce dostępna do adopcji',
 	'wikiadoption-mail-second-content' => 'Witaj $1,
 
 Minęło 60 dni od momentu, gdy aktywny był administrator na wiki $WIKINAME. Regularna obecność administratorów jest ważna dla poprawnego rozwoju wiki.
@@ -2364,7 +2545,7 @@ Użytkownik, który adoptował #WIKINAME, otrzymał uprawnienia administratora i
 Zespół Wikia<br /><br />
 
 Możesz <a href="$3">zrezygnować</a> z otrzymywania powiadomień.',
-	'tog-adoptionmails' => 'Powiadom mnie gdy $1 stanie się dostępna do adopcji',
+	'tog-adoptionmails' => 'Powiadom mnie emailem gdy $1 stanie się dostępna do adopcji',
 	'tog-adoptionmails-v2' => '...wiki stanie się dostępna do adopcji',
 	'wikiadoption-pref-label' => 'Te ustawienia dotyczą jedynie powiadomień z $1.',
 	'wikiadoption-welcome-header' => 'Gratulacje! Adoptowałeś {{SITENAME}}!',
@@ -2502,6 +2683,7 @@ $messages['ps'] = array(
  * @author Hamilton Abreu
  * @author Pttraduc
  * @author Rhaijin
+ * @author Vitorvicentevalente
  */
 $messages['pt'] = array(
 	'wikiadoption' => 'Adoção automática de wikis',
@@ -2517,7 +2699,7 @@ Ao adotar a wiki será promovido a administrador e burocrata para que tenha aces
 <br /><br />
 Está preparado(a) para dar os próximos passos e ajudar a {{SITENAME}}?',
 	'wikiadoption-know-more-header' => 'Quer saber mais?',
-	'wikiadoption-know-more-description' => 'Para mais informações visite estes links. E claro, contacte-nos se tiver alguma pergunta!',
+	'wikiadoption-know-more-description' => 'Para mais informações visite estas ligações. E claro, contacte-nos se tiver alguma pergunta!',
 	'wikiadoption-adoption-successed' => 'Parabéns! Agora é administrador desta wiki!',
 	'wikiadoption-adoption-failed' => 'Infelizmente, tentámos torná-lo administrador desta wiki mas não funcionou. [http://community.wikia.com/Special:Contact Contacte-nos] e tentaremos ajudá-lo.',
 	'wikiadoption-not-allowed' => 'Desculpe. Não pode adotar esta wiki agora.',
@@ -2605,36 +2787,37 @@ Ferramentas Úteis:
 /** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
  * @author Caio1478
+ * @author Jefersonmoraes
  * @author 555
  */
 $messages['pt-br'] = array(
 	'wikiadoption' => 'Adoção automática de wikis',
 	'wikiadoption-desc' => 'Uma extensão do MediaWiki para Adoção Automática de Wikis',
-	'wikiadoption-header' => 'Adotar esta wiki',
+	'wikiadoption-header' => 'Adotar esta wikia',
 	'wikiadoption-button-adopt' => 'Sim, eu quero adotar {{SITENAME}}!',
 	'wikiadoption-adopt-inquiry' => 'Saiba mais!',
 	'wikiadoption-description' => '$1, pronto(a) para adotar a {{SITENAME}}?
 <br /><br />
-Há já algum tempo que o wiki {{SITENAME}} não possui um administrador ativo. Estamos à procura de uma nova liderança, para ajudar a aumentar os conteúdos e comunidade deste wiki! Como você tem contribuído em {{SITENAME}}, gostaríamos de saber se aceita o cargo.
+Há já algum tempo que a wikia {{SITENAME}} não possui um administrador ativo. Estamos à procura de uma nova liderança, para ajudar a aumentar os conteúdos e comunidade desta wikia! Como você tem contribuído em {{SITENAME}}, gostaríamos de saber se aceita o cargo.
 <br /><br />
-Ao adotar a wiki você será promovido a administrador e burocrata, para que tenha acesso às ferramentas necessárias para gerir a comunidade e o conteúdo da wiki. Será possível que também conceda privilégios de administração para ajudar, eliminar, desfazer edições, mover e proteger páginas.
+Ao adotar a wikia você será promovido a administrador e burocrata, para que tenha acesso às ferramentas necessárias para gerir a comunidade e o conteúdo da wikia. Será possível que também conceda privilégios de administração para ajudar, eliminar, desfazer edições, mover e proteger páginas.
 <br /><br />
-Está preparado(a) para dar os próximos passos e ajudar o wiki {{SITENAME}}?',
+Está preparado(a) para dar os próximos passos e ajudar a wikia {{SITENAME}}?',
 	'wikiadoption-know-more-header' => 'Quer saber mais?',
 	'wikiadoption-know-more-description' => 'Para mais informações visite estes links. E claro, contate-nos se tiver alguma pergunta!',
-	'wikiadoption-adoption-successed' => 'Parabéns! Você se tornou administrador neste wiki!',
+	'wikiadoption-adoption-successed' => 'Parabéns! Você se tornou administrador nesta wikia!',
 	'wikiadoption-adoption-failed' => 'Desculpe-nos. Nós tentamos torná-lo um administrador, mas não deu certo. Por favor [http://comunidade.wikia.com/Especial:Contact contate-nos], e nós vamos tentar ajudá-lo.',
-	'wikiadoption-not-allowed' => 'Desculpe-nos. Você não pode adotar esta wiki agora.',
-	'wikiadoption-not-enough-edits' => 'Oops! Você precisa ter mais de 10 edições para adotar este wiki.',
-	'wikiadoption-adopted-recently' => 'Oops! Você já adotou outro wiki recentemente. Será necessário esperar algum tempo até poder adotar mais um wiki.',
-	'wikiadoption-log-reason' => 'Adoção Automática de Wikis',
-	'wikiadoption-notification' => 'O wiki {{SITENAME}} está preparado para ser adotado. Tem interesse em tornar-se o(a) novo(a) líder? Adote este wiki para começar!  $2',
+	'wikiadoption-not-allowed' => 'Desculpe-nos. Você não pode adotar esta wikia agora.',
+	'wikiadoption-not-enough-edits' => 'Oops! Você precisa ter mais de 10 edições para adotar este wikia.',
+	'wikiadoption-adopted-recently' => 'Oops! Você já adotou outro wikia recentemente. Será necessário esperar algum tempo até poder adotar mais um wikia.',
+	'wikiadoption-log-reason' => 'Adoção Automática de Wikias',
+	'wikiadoption-notification' => 'A wikia {{SITENAME}} está preparada para ser adotada. Tem interesse em tornar-se o(a) novo(a) líder? Adote esta wikia para começar!  $2',
 	'wikiadoption-mail-first-subject' => 'Nós não nos vemos há algum tempo',
 	'wikiadoption-mail-first-content' => 'Olá $1,
 
-Já fazem algumas semanas que nenhum administrador visita o wiki #WIKINAME. Os administradores são parte do wiki #WIKINAME; é importante que tenham uma presença regular. Se por um longo período nenhum administrador estiver ativo, este wiki ficará disponível para adoção, para permitir que outro usuário se torne administrador.
+Já faz algumas semanas que nenhum administrador visita a wikia #WIKINAME. Os administradores são parte da wikia #WIKINAME; é importante que tenham uma presença regular. Se por um longo período nenhum administrador estiver ativo, esta wikia ficará disponível para adoção, para permitir que outro usuário se torne administrador.
 
-Se precisar de ajuda para cuidar do wiki, você pode permitir que outros membros da comunidade também sejam administradores através da página $2. Esperamos que regresse à #WIKINAME dentro de pouco tempo.
+Se precisar de ajuda para cuidar da wikia, você pode permitir que outros membros da comunidade também sejam administradores através da página $2. Esperamos que regresse à #WIKINAME dentro de pouco tempo.
 
 A equipe da Wikia
 
@@ -2651,9 +2834,9 @@ A equipe da Wikia<br /><br />
 	'wikiadoption-mail-second-subject' => 'A #WIKINAME será disponibilizada para adoção em breve',
 	'wikiadoption-mail-second-content' => 'Olá $1,
 
-Infelizmente, há quase 60 dias que nenhum administrador esteve ativo no wiki #WIKINAME. É importante que existam administradores ativos contribuindo no wiki, para que ele continue funcionando sem problemas.
+Infelizmente, há quase 60 dias que nenhum administrador esteve ativo na wikia #WIKINAME. É importante que existam administradores ativos contribuindo na wikia, para que ela continue funcionando sem problemas.
 
-Como já se passaram tantos dias desde a última aparição de um dos administradores, o wiki #WIKINAME será disponibilizado para outros usuários o adotarem.
+Como já se passaram tantos dias desde a última aparição de um dos administradores, a wikia #WIKINAME será disponibilizada para outros usuários a adotarem.
 
 A equipe da Wikia
 
@@ -2834,6 +3017,7 @@ $messages['ru'] = array(
 );
 
 /** Serbian (Cyrillic script) (српски (ћирилица)‎)
+ * @author Aktron
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -2843,6 +3027,7 @@ $messages['sr-ec'] = array(
 	'wikiadoption-adopt-inquiry' => 'Сазнајте више.',
 	'wikiadoption-know-more-header' => 'Желите да сазнате више?',
 	'wikiadoption-adoption-successed' => 'Честитамо! Постали сте администратор овог викија!',
+	'wikiadoption-mail-first-subject' => 'Нисмо се дуго видели.',
 );
 
 /** Swedish (svenska)
@@ -3111,6 +3296,8 @@ Eğer wiki topluluğuna gelerek içeriği yönetmek için gerekli araçların ve
 /** Ukrainian (українська)
  * @author A1
  * @author Andriykopanytsia
+ * @author Erami
+ * @author Mykola Swarnyk
  * @author Steve.rusyn
  * @author SteveR
  * @author Ua2004
@@ -3124,37 +3311,36 @@ $messages['uk'] = array(
 	'wikiadoption-adopt-inquiry' => 'Дізнайтеся більше!',
 	'wikiadoption-description' => '$1, Ви готові прийняти {{SITENAME}}?
 <br /><br />
-На {{SITENAME}} не було активного адміністратора тривалий час і ми шукаємо нового лідера, який би допоміг цій Вікі та її спільності вирости! Оскільки ви сприяли розвитку {{SITENAME}}, нам цікаво, чи не хочете Ви лишитися тут?
+На {{SITENAME}} не було активного адміністратора тривалий час і ми шукаємо нового лідера, який би допоміг цій вікі та її спільності вирости! Оскільки ви сприяли розвитку {{SITENAME}}, нам цікаво, чи не хочете Ви лишитися тут?
 <br /><br />
-Прийнявши цю вікі, ви будете підвищені до статусу адміністратора та бюрократа, щоб отримати інструменти для управління спільнотою вікі та її вмістом. Ви також зможете давати іншим учасникам права адміністратора, щоби допомогти Вам вилучати, відновлювати, переміщувати та захищати сторінки.
+Прийнявши цю вікі, ви будете підвищені до статусу адміністратора та бюрократа, щоб отримати інструменти для управління спільнотою вікі та її вмістом. Ви також зможете давати іншим учасникам права адміністратора, щоби допомогти вам вилучати, відновлювати, переміщувати та захищати сторінки.
 <br /><br />
 Ви готові здійснити наступні кроки, щоб допомогти {{SITENAME}}?',
 	'wikiadoption-know-more-header' => 'Хочете знати більше?',
 	'wikiadoption-know-more-description' => "Перевірте ці посилання для отримання додаткової інформації. І, звичайно ж, не соромтеся зв'язатися з нами, якщо у вас є будь-які питання!",
 	'wikiadoption-adoption-successed' => 'Вітаємо! Тепер Ви адміністратор цієї вікі!',
-	'wikiadoption-adoption-failed' => "Приносимо свої вибачення. Ми намагалися зробити Вас адміністратором, однак нічого не вийшло. Будь ласка,[http://community.wikia.com/Special:Contact зв'яжіться з нами], і ми постараємося Вам допомогти.",
-	'wikiadoption-not-allowed' => 'Ми шкодуємо. Ви не можете прийняти це вікі прямо зараз.',
-	'wikiadoption-not-enough-edits' => 'На жаль! Ви повинні мати більше 10 редагувань, щоб прийняти це вікі.',
-	'wikiadoption-adopted-recently' => 'Ви вже прийняли інше вікі нещодавно. Вам доведеться почекати якийсь час, перш ніж можна буде прийняти нову вікі.',
-	'wikiadoption-log-reason' => 'Автоматичне всиновлення вікі',
-	'wikiadoption-notification' => '{{SITENAME}} виставлено на прийняття. Хочете стати лідером тут? Прийміть цей вікі, щоб почати!$2',
-	'wikiadoption-mail-first-subject' => 'Ми не бачили вас давненько',
+	'wikiadoption-adoption-failed' => "Приносимо свої вибачення. Ми намагалися зробити вас адміністратором, однак нічого не вийшло. Будь ласка,[http://community.wikia.com/Special:Contact зв'яжіться з нами], і ми постараємося вам допомогти.",
+	'wikiadoption-not-allowed' => 'Ми шкодуємо. Ви не можете прийняти цю вікі прямо зараз.',
+	'wikiadoption-not-enough-edits' => 'От халепа! Ви повинні мати більше 10 редагувань, щоб прийняти цю вікі.',
+	'wikiadoption-adopted-recently' => 'Ви вже прийняли іншу вікі нещодавно. Вам доведеться почекати якийсь час, перш ніж можна буде прийняти нову вікі.',
+	'wikiadoption-log-reason' => 'Автоматичне Прийняття вікі',
+	'wikiadoption-notification' => '{{SITENAME}} виставлено на прийняття. Хочете стати лідером тут? Прийміть цю вікі, щоб почати! $2',
+	'wikiadoption-mail-first-subject' => 'Щось давненько ми вас не бачили',
 	'wikiadoption-mail-first-content' => "Привіт $1,
 
-Вже кілька тижнів пройшло з тих пір, коли ми бачили вас на #WIKINAME. Адміністратори є невід'ємною частиною #WIKINAME і дуже важливо, щоб вони регулярно були присутні на вікі. Якщо на вікі нема
- активних адміністраторів тривалий час, то ця вікі може бути віддана іншому учаснику і статус адміністратора перейде до нього.
+Вже кілька тижнів пройшло, відколи ми востаннє бачили вас на #WIKINAME. Адміністратори є невід'ємною частиною #WIKINAME і дуже важливо, щоб вони регулярно були присутні на вікі. Якщо на вікі нема активних адміністраторів тривалий час, то ця вікі може бути віддана іншому учаснику і статус адміністратора перейде до нього.
 
-Якщо вам потрібна допомога, щоб піклуватися про вікі, то ви зможете дати права адміністратора іншим учасникам спільноти, перейшовши у $2. Сподіваємося побачити вас скоро на #WIKINAME!
+Якщо вам потрібна допомога, щоб піклуватися про вікі, ви можете дати права адміністратора іншим учасникам спільноти, перейшовши у $2. Сподіваємося побачити вас скоро на #WIKINAME!
 
-Команда Вікія.
+Команда Вікії.
 
-Ви зможете відмовитися від розсилки у цьому списку: $3",
+Ви можете відмовитись від розсилки в цьому списку: $3",
 	'wikiadoption-mail-first-content-HTML' => 'Привіт $1,<br /><br />
 
-Вже кілька тижнів пройшло з тих пір, коли ми бачили адміністратора на #WIKINAME. Адміністратори є невід\'ємною частиною #WIKINAME і дуже важливо, щоб вони регулярно були присутні на вікі. Якщо на вікі нема
+Вже кілька тижнів минуло, відколи ми востаннє дбачили адміністратора на #WIKINAME. Адміністратори є невід\'ємною частиною #WIKINAME і дуже важливо, щоб вони регулярно були присутні на вікі. Якщо на вікі нема
  активних адміністраторів тривалий час, то ця вікі може бути віддана іншому учаснику і статус адміністратора перейде до нього.<br /><br />
 
-Якщо вам потрібна допомога, щоб піклуватися про вікі, то ви зможете дати <a href="$2">права адміністратора</a> іншим учасникам спільноти. Сподіваємося побачити вас скоро на #WIKINAME!<br /><br />
+Якщо вам потрібна допомога, щоб піклуватися про вікі, то ви зможете дати <a href="$2">права адміністратора</a> іншим учасникам спільноти. Сподіваємось побачити вас скоро на #WIKINAME!<br /><br />
 
 Команда Вікія.<br /><br />
 
@@ -3219,12 +3405,13 @@ $messages['uk'] = array(
 
 /** Vietnamese (Tiếng Việt)
  * @author Baonguyen21022003
+ * @author KhangND
  */
 $messages['vi'] = array(
-	'wikiadoption' => 'Nhận tự động wiki',
+	'wikiadoption' => 'Tự động nhận wiki',
 	'wikiadoption-desc' => 'Một phần mở rộng AutomaticWikiAdoption cho MediaWiki',
-	'wikiadoption-header' => 'Áp dụng wiki này',
-	'wikiadoption-button-adopt' => 'Có, tôi muốn áp dụng {{SITENAME}}!',
+	'wikiadoption-header' => 'Nhận wiki này',
+	'wikiadoption-button-adopt' => 'Có, tôi muốn nhận {{SITENAME}}!',
 	'wikiadoption-adopt-inquiry' => 'Tìm hiểu thêm',
 	'wikiadoption-description' => '$1, sẵn sàng để áp dụng {{SITENAME}}?
 <br /><br />
@@ -3234,14 +3421,14 @@ Bằng việc áp dụng wiki, bạn sẽ được lên đến người quản t
 <br /><br />
 Bạn đã sẵn sàng để thực hiện các bước tiếp theo để giúp {{SITENAME}} trở nên thành công hơn?',
 	'wikiadoption-know-more-header' => 'Bạn có muốn biết thêm chi tiết?',
-	'wikiadoption-know-more-description' => 'Kiểm tra những liên kết này cho biết thêm thông tin. Và tất nhiên, cảm thấy tự do để liên hệ với chúng tôi nếu bạn có bất kỳ câu hỏi!',
+	'wikiadoption-know-more-description' => 'Kiểm tra những liên kết này để biết thêm thông tin. Và tất nhiên, thoải mái liên hệ với chúng tôi nếu bạn có bất kỳ câu hỏi!',
 	'wikiadoption-adoption-successed' => 'Chúc mừng bạn! Bây giờ bạn là một bảo quản viên trên wiki này!',
-	'wikiadoption-adoption-failed' => 'Chúng tôi rất tiếc. Chúng tôi đã cố gắng để làm cho bạn một bảo quản viên, nhưng không có hiệu quả. Xin vui lòng [http://community.wikia.com/Special:Contact liên hệ chúng tôi], và chúng tôi sẽ cố gắng giúp bạn ra ngoài.',
-	'wikiadoption-not-allowed' => 'Chúng tôi rất tiếc. Bạn không thể áp dụng wiki này ngay bây giờ được.',
-	'wikiadoption-not-enough-edits' => 'Rất tiếc! Bạn cần phải có nhiều hơn 10 sửa đổi mới thông qua wiki này.',
-	'wikiadoption-adopted-recently' => 'Rất tiếc! Bạn đã thông qua một wiki mới. Bạn sẽ cần phải chờ đợi một thời gian nữa trước khi bạn có thể áp dụng một wiki mới.',
-	'wikiadoption-log-reason' => 'Nhận tự động wiki',
-	'wikiadoption-notification' => '{{SITENAME}} là một wiki của bạn. Muốn trở thành một nhà lãnh đạo ở đây? Áp dụng wiki này để bắt đầu!$2',
+	'wikiadoption-adoption-failed' => 'Chúng tôi rất tiếc. Chúng tôi đã cố gắng cấp cho bạn quyền bảo quản viên, nhưng không thành công. Xin vui lòng [http://community.wikia.com/Special:Contact liên hệ chúng tôi], và chúng tôi sẽ cố gắng hỗ trợ bạn.',
+	'wikiadoption-not-allowed' => 'Chúng tôi rất tiếc. Bạn không thể nhận wiki này ngay bây giờ.',
+	'wikiadoption-not-enough-edits' => 'Rất tiếc! Bạn cần phải có hơn 10 sửa đổi mới có quyền nhận wiki này.',
+	'wikiadoption-adopted-recently' => 'Rất tiếc! Bạn đã vừa mới nhận một wiki gần đây. Bạn cần phải đợi một thời gian nữa trước khi bạn có thể nhận một wiki mới.',
+	'wikiadoption-log-reason' => 'Tự động nhận wiki',
+	'wikiadoption-notification' => '{{SITENAME}} là wiki có thể được nhận. Muốn trở thành một quản trị ở đây? Nhận wiki này để bắt đầu! $2',
 	'wikiadoption-mail-first-subject' => 'Chúng tôi đã không nhìn thấy bạn xung quanh trong một thời gian',
 	'wikiadoption-mail-first-content' => 'Xin chào $1,
 
@@ -3348,12 +3535,12 @@ $messages['zh-hans'] = array(
 	'wikiadoption-not-allowed' => '我们很抱歉。您现在不能认领此维基。',
 	'wikiadoption-not-enough-edits' => '糟糕！您需要编辑10次以上方能领养此维基。',
 	'wikiadoption-adopted-recently' => '糟糕！您最近已认领了一个维基。您需要等待一段时间之后再认领一个新的维基。',
-	'wikiadoption-log-reason' => '制动维基领养',
+	'wikiadoption-log-reason' => '自动认领维基',
 	'wikiadoption-notification' => '{{SITENAME}}正等待认领。您是否对领导此维基感兴趣？那就从认领它开始吧！$2',
-	'wikiadoption-mail-first-subject' => '我们没有看到你在一段时间',
+	'wikiadoption-mail-first-subject' => '我们已经有一段时间没有看到你了',
 	'wikiadoption-mail-first-content' => '嗨！$1，
 
-因为我们在#WIKINAME上关注到有管理员有几个星期。管理员是#WIKINAME的组成部分之一，它是重要的并且应经常出现。如果此处长期没有活跃管理员，这个wiki可能通过允许其他用户成为管理员。
+距我们上次在#WIKINAME上关注到有管理员已经过了几个星期。管理员是#WIKINAME的组成部分之一，其经常出现是十分重要的。如果此处长期没有活跃管理员，这个wiki开放认领以允许其他用户成为管理员。
 
 如果您需要帮助照顾此wiki，您还可以允许其他社群成员加入$2成为管理员。我们盼望不久您活跃在#WIKINAME上！
 
@@ -3429,7 +3616,9 @@ Wikia团队<br /><br />
 );
 
 /** Traditional Chinese (中文（繁體）‎)
+ * @author Citizen01
  * @author Ffaarr
+ * @author LNDDYL
  */
 $messages['zh-hant'] = array(
 	'wikiadoption' => '自動wiki認領',
@@ -3438,7 +3627,10 @@ $messages['zh-hant'] = array(
 	'wikiadoption-adopt-inquiry' => '瞭解更多 ！',
 	'wikiadoption-know-more-header' => '想知道更多嗎？',
 	'wikiadoption-adoption-successed' => '恭喜 ！你現在是這個 wiki 的管理員了 ！',
-	'wikiadoption-adoption-failed' => '我們很抱歉。我們試圖使您成為管理員，但它並不成功。請 [http://community.wikia.com/Special:Contact 聯繫我們]，我們會儘量幫助你。',
+	'wikiadoption-adoption-failed' => '我們很抱歉。我們試圖使您成為管理員，但並不成功。請 [http://community.wikia.com/Special:Contact 聯絡我們]，我們會儘量幫助你。',
 	'wikiadoption-not-allowed' => '很抱歉。你現在不能認領此 wiki。',
 	'wikiadoption-not-enough-edits' => '哎呀 ！您需要有超過 10 次對本wiki的編輯才能認領它。',
+	'wikiadoption-log-reason' => '自動 Wiki 認領',
+	'wikiadoption-mail-first-subject' => '我們有一段時間沒有看到你',
+	'wikiadoption-welcome-header' => '恭喜！您已認領 {{SITENAME}}！',
 );

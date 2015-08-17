@@ -17,10 +17,12 @@ class MoviesApiController extends WikiaApiController {
 
 		$result = $this->findMovie( $movieName, $lang, $quality );
 
-		$response = $this->getResponse();
-		$response->setValues( $result );
+		$this->setResponseData(
+			$result,
+			[ 'urlFields' => [ 'contentUrl', 'url' ] ],
+			self::RESPONSE_CACHE_VALIDITY
+		);
 
-		$response->setCacheValidity( self::RESPONSE_CACHE_VALIDITY );
 	}
 
 	protected function findMovie( $movieName, $lang, $minQuality ) {

@@ -3,10 +3,10 @@
 
 	var EditHub = {
 		disableArrow: function () {
-			var toolboxForm = $('#edit-hub-form').find('.module-box');
-			toolboxForm.find('button.navigation').removeAttr('disabled');
-			toolboxForm.filter(':first').find('.nav-up').attr('disabled', 'disabled');
-			toolboxForm.filter(':last').find('.nav-down').attr('disabled', 'disabled');
+			var editHubForm = $('#edit-hub-form').find('.module-box');
+			editHubForm.find('button.navigation').removeAttr('disabled');
+			editHubForm.filter(':first').find('.nav-up').attr('disabled', 'disabled');
+			editHubForm.filter(':last').find('.nav-down').attr('disabled', 'disabled');
 		},
 
 		init: function () {
@@ -20,10 +20,16 @@
 			$('.module-popular-videos').on('click', '.remove', $.proxy(this.popularVideosRemove, this));
 			$('#edit-hub-removeall').click($.proxy(this.popularVideosRemoveAll, this));
 			editHubMain.find('.vet-show').each(function () {
-				var $this = $(this);
+				var $this = $(this),
+					videoEmbedMain;
 
 				$this.addVideoButton({
 					callbackAfterSelect: function (url, VET) {
+						require( ['wikia.throbber'], function( throbber ) {
+							videoEmbedMain = $('#VideoEmbedMain');
+							throbber.show(videoEmbedMain);
+						});
+
 						$.nirvana.sendRequest({
 							controller: 'EditHubController',
 							method: 'uploadAndGetVideo',
@@ -32,12 +38,15 @@
 								'url': url
 							},
 							callback: function (response) {
+								require( ['wikia.throbber'], function( throbber ) {
+									throbber.remove(videoEmbedMain);
+								});
 								var selectedModule = parseInt(window.wgEditHubModuleIdSelected),
 									box;
 
-								window.GlobalNotification.hide();
 								if (response.error) {
-									window.GlobalNotification.show(response.error, 'error');
+									new window.BannerNotification(response.error, 'error')
+										.show();
 								} else {
 									if (selectedModule === parseInt(window.wgEditHubModuleIdFeaturedVideo)) {
 										box = $this.parents('.module-box:first');
@@ -60,7 +69,7 @@
 												$.loadMustache(),
 												Wikia.getMultiTypePackage({
 													mustache: 'extensions/wikia/WikiaHubsServices/modules/templates/' +
-														'MarketingToolbox_popularVideoRow.mustache'
+														'WikiaHubs_popularVideoRow.mustache'
 												})
 											).done(function (libData, packagesData) {
 												initThis.popularVideosAdd(packagesData[0].mustache[0], response);

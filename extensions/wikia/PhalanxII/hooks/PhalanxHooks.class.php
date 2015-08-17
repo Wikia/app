@@ -1,5 +1,7 @@
 <?php
 
+use \Wikia\Logger\WikiaLogger;
+
 class PhalanxHooks extends WikiaObject {
 	function __construct() {
 		parent::__construct();
@@ -222,5 +224,56 @@ class PhalanxHooks extends WikiaObject {
 		}
 
 		return true;
+	}
+
+	/**
+	 * Log cases when Fastly does not pass a "secret" request header with
+	 * client original IP.
+	 *
+	 * @see PLATFORM-317
+	 * @author macbre
+	 *
+	 * @param User $user
+	 * @return bool true
+	 */
+	static public function onGetBlockedStatus( User $user ) {
+		global $wgRequest, $wgClientIPHeader;
+
+		// get the client IP using Fastly-generated request header
+		$clientIPFromFastly = $wgRequest->getHeader( $wgClientIPHeader );
+
+		if ( !User::isIP( $clientIPFromFastly ) ) {
+			WikiaLogger::instance()->error( 'Phalanx user IP incorrect', [
+				'ip_from_fastly' => $clientIPFromFastly,
+				'ip_from_user' => $user->getName(),
+				'ip_from_request' => $wgRequest->getIP(),
+			] );
+		}
+
+		return true;
+	}
+
+	/**
+	 * Outputs information about users global block and prevents displaying extract from local log which does not contain
+	 * information about phalanx block.
+	 *
+	 * @see PLATFORM-470
+	 * @author jcellary
+	 *
+	 * @param OutputPage $out
+	 * @param User $user
+	 * @return bool false
+	 */
+	static public function onContributionsLogEventsList( OutputPage $out, User $user ) {
+
+		$blockedGlobally = $user->mBlockedGlobally;
+
+		if ($blockedGlobally) {
+			$message = wfMessage( 'phalanx-sp-contributions-blocked-globally' )->text();
+			$message = '<div class="'.LogEventsList::WARN_BOX_DIV_CLASS.'">'.$message.'</div>';
+			$out->addHTML($message);
+		}
+
+		return !$blockedGlobally; //If blocked globally disable listing local log
 	}
 }

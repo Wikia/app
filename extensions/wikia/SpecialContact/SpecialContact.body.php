@@ -110,7 +110,7 @@ class ContactForm extends SpecialPage {
 		$uid = $wgUser->getID();
 		if( !empty($uid) ) {
 			$items[] = 'uID: ' . $uid . " (User:". $wgUser->getName() .")";
-			$items[] = 'uLang: ' . $wgUser->getOption('language');
+			$items[] = 'uLang: ' . $wgUser->getGlobalPreference('language');
 		}
 
 		//smush it all together

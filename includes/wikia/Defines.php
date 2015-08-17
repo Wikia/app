@@ -46,6 +46,9 @@ define("WPP_WALL_ARCHIVE", 11);
 define("WPP_WALL_ACTIONREASON", 12);
 define("WPP_WALL_REMOVE", 13);
 define("WPP_WALL_POSTEDBYBOT", 14);
+define("WPP_WALL_MODERATORREMOVE", 25);
+define("WPP_WALL_MODERATORARCHIVE", 26);
+define("WPP_WALL_MODERATORREOPEN", 27);
 
 //Content warning
 define("WPP_CONTENT_WARNING", 15);
@@ -68,6 +71,9 @@ define( "WPP_LYRICFIND_MARKED_FOR_REMOVAL", 23 );
 
 // Video status (ie, working, deleted, private, other)
 define("WPP_VIDEO_STATUS", 24);
+
+// Palantir metadata
+define("WPP_PALANTIR_METADATA", 250);
 
 // Any types listed in this array will not have their values serialized
 // This should only be used for properties that are simple strings or integers

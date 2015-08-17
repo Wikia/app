@@ -44,7 +44,7 @@ ve.dm.MWInlineImageNode.static.isContent = true;
 ve.dm.MWInlineImageNode.static.name = 'mwInlineImage';
 
 ve.dm.MWInlineImageNode.static.storeHtmlAttributes = {
-	'blacklist': [ 'typeof', 'class', 'src', 'resource', 'width', 'height', 'href' ]
+	blacklist: [ 'typeof', 'class', 'src', 'resource', 'width', 'height', 'href' ]
 };
 
 ve.dm.MWInlineImageNode.static.matchTagNames = [ 'span' ];
@@ -132,7 +132,7 @@ ve.dm.MWInlineImageNode.static.toDataElement = function ( domElements, converter
 	// Store unrecognized classes so we can restore them on the way out
 	attributes.unrecognizedClasses = OO.simpleArrayDifference( classes, recognizedClasses );
 
-	dataElement = { 'type': this.name, 'attributes': attributes };
+	dataElement = { type: this.name, attributes: attributes };
 
 	this.storeGeneratedContents( dataElement, dataElement.attributes.src, converter.getStore() );
 
@@ -149,7 +149,8 @@ ve.dm.MWInlineImageNode.static.toDomElements = function ( data, doc ) {
 
 	ve.setDomAttributes( img, data.attributes, [ 'src', 'width', 'height', 'resource' ] );
 
-	if ( !this.typeToRdfa ) {
+	// Checking hasOwnProperty because subclasses may implement their own rdfaToType (Wikia VE-1533).
+	if ( !this.hasOwnProperty( 'typeToRdfa' ) ) {
 		this.typeToRdfa = {};
 		for ( rdfa in this.rdfaToType ) {
 			this.typeToRdfa[this.rdfaToType[rdfa]] = rdfa;

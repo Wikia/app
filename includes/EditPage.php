@@ -512,7 +512,9 @@ class EditPage {
 		} elseif ( $this->section == 'new' ) {
 			// Nothing *to* preview for new sections
 			return false;
-		} elseif ( ( $wgRequest->getVal( 'preload' ) !== null || $this->mTitle->exists() ) && $wgUser->getOption( 'previewonfirst' ) ) {
+		} elseif ( ( $wgRequest->getVal( 'preload' ) !== null || $this->mTitle->exists() ) &&
+			$wgUser->getGlobalPreference( 'previewonfirst' )
+		) {
 			// Standard preference behaviour
 			return true;
 		} elseif ( !$this->mTitle->exists() &&
@@ -665,7 +667,8 @@ class EditPage {
 			{
 				$this->allowBlankSummary = true;
 			} else {
-				$this->allowBlankSummary = $request->getBool( 'wpIgnoreBlankSummary' ) || !$wgUser->getOption( 'forceeditsummary');
+				$this->allowBlankSummary = $request->getBool( 'wpIgnoreBlankSummary' ) ||
+					!$wgUser->getGlobalPreference( 'forceeditsummary' );
 			}
 
 			# <Wikia>
@@ -756,17 +759,17 @@ class EditPage {
 		$this->textbox1 = $this->getContent( false );
 		// activate checkboxes if user wants them to be always active
 		# Sort out the "watch" checkbox
-		if ( $wgUser->getOption( 'watchdefault' ) ) {
+		if ( $wgUser->getGlobalPreference( 'watchdefault' ) ) {
 			# Watch all edits
 			$this->watchthis = true;
-		} elseif ( $wgUser->getOption( 'watchcreations' ) && !$this->mTitle->exists() ) {
+		} elseif ( $wgUser->getGlobalPreference( 'watchcreations' ) && !$this->mTitle->exists() ) {
 			# Watch creations
 			$this->watchthis = true;
 		} elseif ( $this->mTitle->userIsWatching() ) {
 			# Already watched
 			$this->watchthis = true;
 		}
-		if ( $wgUser->getOption( 'minordefault' ) && !$this->isNew ) {
+		if ( $wgUser->getGlobalPreference( 'minordefault' ) && !$this->isNew ) {
 			$this->minoredit = true;
 		}
 		if ( $this->textbox1 === false ) {
@@ -1017,6 +1020,18 @@ class EditPage {
 			case self::AS_SUCCESS_NEW_ARTICLE:
 				$query = $resultDetails['redirect'] ? 'redirect=no' : '';
 				$anchor = isset ( $resultDetails['sectionanchor'] ) ? $resultDetails['sectionanchor'] : '';
+
+				/**
+				 * Wikia change begin
+				 * Running similar hook that is run on update to give
+				 * extensions a chance to modify URL before a redirect
+				 * @see CE-1596
+				 */
+				wfRunHooks( 'ArticleCreateBeforeRedirect', [ $this->mArticle, &$anchor, &$query ] );
+				/**
+				 * Wikia change end
+				 */
+
 				$wgOut->redirect( $this->mTitle->getFullURL( $query ) . $anchor );
 				return false;
 
@@ -1629,7 +1644,7 @@ class EditPage {
 
 		$wgOut->addModules( 'mediawiki.action.edit' );
 
-		if ( $wgUser->getOption( 'uselivepreview', false ) ) {
+		if ( $wgUser->getGlobalPreference( 'uselivepreview', false ) ) {
 			$wgOut->addModules( 'mediawiki.legacy.preview' );
 		}
 
@@ -1773,7 +1788,7 @@ class EditPage {
 
 		$wgOut->addHTML( $this->editFormPageTop );
 
-		if ( $wgUser->getOption( 'previewontop' ) ) {
+		if ( $wgUser->getGlobalPreference( 'previewontop' ) ) {
 			$this->displayPreviewArea( $previewOutput, true );
 		}
 
@@ -1865,7 +1880,9 @@ class EditPage {
 		/* Wikia change end */
 
 		/* Wikia change begin - @author: kflorence (BugId:40705) */
-		if ( !$this->isCssJsSubpage && $showToolbar && ( !( $wgUser->getSkin() instanceof SkinMonobook ) || $wgUser->getOption( 'showtoolbar' ) ) ) {
+		if ( !$this->isCssJsSubpage &&
+			$showToolbar &&
+			( !( $wgUser->getSkin() instanceof SkinMonobook ) || $wgUser->getGlobalPreference( 'showtoolbar' ) ) ) {
 			$wgOut->addHTML( EditPage::getEditToolbar() );
 		}
 		/* Wikia change end */
@@ -1886,9 +1903,9 @@ class EditPage {
 		// wikia change begin
 		wfRunHooks ('EditForm:AfterDisplayingTextbox', array (&$this, &$hidden /* TODO: remove? */) ) ;
 
-		$rows = $wgUser->getIntOption( 'rows' );
-		$cols = $wgUser->getIntOption( 'cols' );
-		$ew = $wgUser->getOption( 'editwidth' );
+		$rows = intval($wgUser->getGlobalPreference( 'rows' ));
+		$cols = intval($wgUser->getGlobalPreference( 'cols' ));
+		$ew = $wgUser->getGlobalPreference( 'editwidth' );
 
 		wfRunHooks( 'EditForm::MultiEdit:Form', array( $rows, $cols, $ew, htmlspecialchars( $this->safeUnicodeOutput( $this->textbox1 ) ) ) );
 		// wikia change end
@@ -1938,7 +1955,7 @@ class EditPage {
 		}
 		/* Wikia change end */
 
-		if ( !$wgUser->getOption( 'previewontop' ) ) {
+		if ( !$wgUser->getGlobalPreference( 'previewontop' ) ) {
 			$this->displayPreviewArea( $previewOutput, false );
 		}
 
@@ -2083,11 +2100,16 @@ class EditPage {
 				if ( $this->isWrongCaseCssJsPage ) {
 					$wgOut->wrapWikiMsg( "<div class='error' id='mw-userinvalidcssjstitle'>\n$1\n</div>", array( 'userinvalidcssjstitle', $this->mTitle->getSkinFromCssJsSubpage() ) );
 				}
+				if ( $this->getTitle()->isSubpageOf( $wgUser->getUserPage() ) ) {
 				if ( $this->formtype !== 'preview' ) {
-					if ( $this->isCssSubpage )
+						if ( $this->isCssSubpage ) {
 						$wgOut->wrapWikiMsg( "<div id='mw-usercssyoucanpreview'>\n$1\n</div>", array( 'usercssyoucanpreview' ) );
-					if ( $this->isJsSubpage )
+						}
+
+						if ( $this->isJsSubpage ) {
 						$wgOut->wrapWikiMsg( "<div id='mw-userjsyoucanpreview'>\n$1\n</div>", array( 'userjsyoucanpreview' ) );
+						}
+					}
 				}
 			}
 		}
@@ -2242,6 +2264,9 @@ HTML
 		);
 		if ( !$this->checkUnicodeCompliantBrowser() )
 			$wgOut->addHTML(Html::hidden( 'safemode', '1' ));
+
+		$isSourceEditor = !( class_exists( "RTE" ) && RTE::isWysiwygModeEnabled() ) ?  1 : 0;
+		$wgOut->addHTML( Html::hidden( 'isMediaWikiEditor', $isSourceEditor ) );
 	}
 
 	protected function showFormAfterText() {
@@ -2336,8 +2361,8 @@ HTML
 		$attribs = $customAttribs + array(
 			'accesskey' => ',',
 			'id'   => $name,
-			'cols' => $wgUser->getIntOption( 'cols' ),
-			'rows' => $wgUser->getIntOption( 'rows' ),
+			'cols' => intval($wgUser->getGlobalPreference( 'cols' )),
+			'rows' => intval($wgUser->getGlobalPreference( 'rows' )),
 			'style' => '' // avoid php notices when appending preferences (appending allows customAttribs['style'] to still work
 		);
 
@@ -2642,7 +2667,7 @@ HTML
 		// TODO: remove?
 		// @see https://trac.wikia-inc.com/changeset/6028
 		global $wgRequest;
-		if ($wgUser->getOption( 'showtoolbar' ) && !$wgUser->getOption( 'riched_disable' ) && !$this->previewOnOpen() ) {
+		if ($wgUser->getGlobalPreference( 'showtoolbar' ) && !$wgUser->getGlobalPreference( 'riched_disable' ) && !$this->previewOnOpen() ) {
 			$oldTextBox1 = $this->textbox1;
 			$this->importFormData( $wgRequest );
 		}

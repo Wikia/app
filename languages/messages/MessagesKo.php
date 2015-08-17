@@ -67,6 +67,10 @@ $specialPageAliases = array(
 	'Booksources'               => array( '책찾기' ),
 	'BrokenRedirects'           => array( '끊긴넘겨주기' ),
 	'Categories'                => array( '분류' ),
+	// begin wikia change
+	// VOLDEV-97
+	'ChangeEmail'				=> array( '이메일변경' ),
+	// end wikia change
 	'ChangePassword'            => array( '비밀번호변경', '비밀번호바꾸기' ),
 	'ComparePages'              => array( '문서비교' ),
 	'Confirmemail'              => array( '이메일인증' ),
@@ -690,8 +694,9 @@ $2',
 # Login and logout pages
 'logouttext'                 => "'''{{SITENAME}}에서 로그아웃했습니다.'''
 
-이대로 이름 없이 {{SITENAME}}을(를) 이용하거나, 방금 사용했던 계정이나 다른 계정으로 다시 [[Special:UserLogin|로그인]]해서 이용할 수 있습니다.
+이대로 이름 없이 {{SITENAME}}을(를) 이용하거나, 방금 사용했던 계정이나 다른 계정으로 다시 $1해서 이용할 수 있습니다.
 웹 브라우저의 캐시를 지우지 않으면 몇몇 문서에서 로그인이 되어 있는 것처럼 보일 수 있다는 점을 유의해 주세요.",
+'logouttext-link-text'       => '로그인',
 'welcomecreation'            => '== $1 님, 환영합니다! ==
 계정이 만들어졌습니다.
 [[Special:Preferences|{{SITENAME}} 사용자 환경 설정]]을 바꿀 수 있습니다.',
@@ -1619,7 +1624,7 @@ $1",
 'reuploaddesc'                => '올리기를 취소하고 올리기 양식으로 돌아가기',
 'upload-tryagain'             => '수정된 파일 설명을 저장',
 'uploadnologin'               => '로그인하지 않음',
-'uploadnologintext'           => '파일을 올리려면 [[Special:UserLogin|로그인]]해야 합니다.',
+'uploadnologintext'           => '파일을 업로드하거나 동영상을 삽입하려면 반드시 $1해야 합니다.',
 'upload_directory_missing'    => '파일 올리기용 디렉토리($1)가 없고 웹 서버가 생성하지 못했습니다.',
 'upload_directory_read_only'  => '파일 저장 디렉토리($1)에 쓰기 권한이 없습니다.',
 'uploaderror'                 => '올리기 오류',
@@ -2556,6 +2561,7 @@ $1',
 'unblocked'                       => '[[User:$1|$1]] 사용자 차단 해제됨',
 'unblocked-range'                 => '$1 대역이 차단 해제되었습니다.',
 'unblocked-id'                    => '차단 $1 해제됨',
+'unblocked-ip'                    => '[[Special:Contributions/$1|$1]] 사용자가 차단 해제되었습니다.',
 'blocklist'                       => '차단된 사용자 목록',
 'ipblocklist'                     => '현재 차단된 IP 주소/사용자 이름',
 'ipblocklist-legend'              => '차단 중인 사용자 찾기',

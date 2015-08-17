@@ -13,13 +13,13 @@ if ( ! defined( 'MEDIAWIKI' ) ){
 
 $wgExtensionCredits['other'][] = array(
 	"name" => "CategoryExhibition",
-	"description" => "New loot to category page",
-	"descriptionmsg" => "catexhibition-desc",
-	"author" => array('Jakub Kurcek')
+	"descriptionmsg" => "category-exhibition-desc",
+	"author" => 'Jakub Kurcek',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/CategoryExhibition',
 );
 
 // Calculate the base directory and use it later a few times
-$dir = dirname(__FILE__).'/';
+$dir = dirname(__FILE__) . '/';
 
 // Autoload Category Page classes
 $wgAutoloadClasses[ 'CategoryExhibitionPage' ]		= $dir . 'CategoryExhibitionPage.php';

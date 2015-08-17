@@ -6,35 +6,27 @@
  *
  * @author Adrian 'ADi' Wieczorek <adi(at)wikia.com>
  * @author Piotr 'Moli' Molski <moli(at)wikia.com>
+ * @author James Sutterfield <james@wikia-inc.com>
  *
  */
 
-if ( !defined( 'MEDIAWIKI' ) ) {
-	echo( "This file is an extension to the MediaWiki software and cannot be used standalone.\n" );
-	exit( 1 ) ;
-}
-
-$wgExtensionCredits['specialpage'][] = array(
+$wgExtensionCredits['specialpage'][] = [
 	'name' => 'GlobalWatchlist',
-	'author' => '[http://www.wikia.com/wiki/User:Adi3ek Adrian \'ADi\' Wieczorek], [http://www.wikia.com/wiki/User:Moli.wikia Piotr Molski]',
+	'author' => ['[http://www.wikia.com/wiki/User:Adi3ek Adrian \'ADi\' Wieczorek]', '[http://www.wikia.com/wiki/User:Moli.wikia Piotr Molski]'],
 	'descriptionmsg' => 'globalwatchlist-desc',
-);
-
-// configuration
-$wgGlobalWatchlistMaxDigestedArticlesPerWiki = 50;
-
-// message file
-$wgExtensionMessagesFiles['GlobalWatchlist'] = dirname( __FILE__ ) . '/GlobalWatchlist.i18n.php';
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/GlobalWatchlist'
+];
 
 // classes
-$wgAutoloadClasses['GlobalWatchlistBot'] = dirname( __FILE__ ) . '/GlobalWatchlist.bot.php';
-$wgAutoloadClasses['GlobalWatchlistHook'] = dirname( __FILE__ ) . '/GlobalWatchlist.hooks.php';
+$wgAutoloadClasses['GlobalWatchlistBot'] = dirname( __FILE__ ) . '/GlobalWatchlistBot.class.php';
+$wgAutoloadClasses['GlobalWatchlistHooks'] = dirname( __FILE__ ) . '/GlobalWatchlistHooks.class.php';
+$wgAutoloadClasses['GlobalWatchlistTask'] = dirname( __FILE__ ) . '/GlobalWatchlistTask.class.php';
+$wgAutoloadClasses['GlobalWatchlistTable'] = dirname( __FILE__ ) . '/GlobalWatchlistTable.class.php';
 
 // hooks
-$wgHooks[ 'GetPreferences' ][] = 'GlobalWatchlistHook::getPreferences';
-$wgHooks[ 'WatchedItem::addWatch' ][] = 'GlobalWatchlistHook::addGlobalWatch';
-$wgHooks[ 'WatchedItem::removeWatch' ][] = 'GlobalWatchlistHook::removeGlobalWatch';
-$wgHooks[ 'WatchedItem::updateWatch' ][] = 'GlobalWatchlistHook::updateGlobalWatch';
-$wgHooks[ 'WatchedItem::replaceWatch'][] = 'GlobalWatchlistHook::replaceGlobalWatch';
-$wgHooks[ 'SpecialEditWatchlist::clearWatchlist'][] = 'GlobalWatchlistHook::clearGlobalWatch';
-$wgHooks[ 'User::resetWatch' ][] = 'GlobalWatchlistHook::resetGlobalWatch';
+$wgHooks['GetPreferences'][] = 'GlobalWatchlistHooks::getPreferences';
+$wgHooks['SavePreferences'][] = 'GlobalWatchlistHooks::savePreferences';
+$wgHooks['WatchedItem::updateWatch'][] = 'GlobalWatchlistHooks::updateGlobalWatchList';
+$wgHooks['WatchedItem::replaceWatch'][] = 'GlobalWatchlistHooks::renameTitleInGlobalWatchlist';
+$wgHooks['SpecialEditWatchlist::clearWatchlist'][] = 'GlobalWatchlistHooks::clearGlobalWatch';
+$wgHooks['User::resetWatch'][] = 'GlobalWatchlistHooks::clearGlobalWatch';

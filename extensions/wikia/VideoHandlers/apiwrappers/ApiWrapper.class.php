@@ -110,6 +110,10 @@ abstract class ApiWrapper {
 		return false;
 	}
 
+	public function videoExists() {
+		return true;
+	}
+
 	public function getNonemptyMetadata() {
 		$meta = $this->getMetadata();
 		// get rid of empty fields - no need to store them in db
@@ -121,19 +125,6 @@ abstract class ApiWrapper {
 		return $meta;
 	}
 
-/*
-	protected function isIngestedFromFeed() {
-
-		wfProfileIn( __METHOD__ );
-		// need to check cached metadata
-		$memcKey = wfMemcKey( $this->getMetadataCacheKey() );
-		$metadata = F::app()->wg->memc->get( $memcKey );
-		wfProfileOut( __METHOD__ );
-
-		return !empty( $metadata['ingestedFromFeed'] );
-	}
-*/
-
 	protected function postProcess( $return ){
 		return $return;
 	}
@@ -142,16 +133,15 @@ abstract class ApiWrapper {
 		return $videoId;
 	}
 
-	protected function initializeInterfaceObject(){
-		$this->interfaceObj = $this->getInterfaceObjectFromType( static::$RESPONSE_FORMAT );
+	protected function initializeInterfaceObject() {
+		$this->interfaceObj = $this->getInterfaceObjectFromType();
 	}
 
-	protected function getInterfaceObjectFromType( $type ) {
+	protected function getInterfaceObjectFromType() {
 
 		wfProfileIn( __METHOD__ );
 
 		$apiUrl = $this->getApiUrl();
-
 		// use URL's hash to avoid going beyond 250 characters limit of memcache key
 		$memcKey = wfMemcKey( static::$CACHE_KEY, md5($apiUrl), static::$CACHE_KEY_VERSION );
 		if ( empty($this->videoId) ){
@@ -170,18 +160,14 @@ abstract class ApiWrapper {
 				if ( empty( $response ) ) {
 					wfProfileOut( __METHOD__ );
 					throw new EmptyResponseException($apiUrl);
-				} else {
-
 				}
 			} else {
 				$this->checkForResponseErrors( $req->status, $req->getContent(), $apiUrl );
 			}
 		}
-		$processedResponse = $this->processResponse( $response, $type );
+		$processedResponse = $this->processResponse( $response );
 		if ( $cacheMe ) F::app()->wg->memc->set( $memcKey, $response, static::$CACHE_EXPIRY );
-
 		wfProfileOut( __METHOD__ );
-
 		return $processedResponse;
 	}
 
@@ -210,12 +196,10 @@ abstract class ApiWrapper {
 		throw new NegativeResponseException( $status, $content, $apiUrl );
 	}
 
-	protected function processResponse( $response, $type ){
+	protected function processResponse( $response ){
 
 		wfProfileIn( __METHOD__ );
-
-		$return = '';
-		switch ( $type ){
+		switch ( static::$RESPONSE_FORMAT ){
 			case self::RESPONSE_FORMAT_JSON :
 				 $return = json_decode( $response, true );
 			break;
@@ -636,6 +620,7 @@ class NegativeResponseException extends Exception {
 class VideoIsPrivateException extends NegativeResponseException {}
 class VideoNotFoundException extends NegativeResponseException {}
 class VideoQuotaExceededException extends NegativeResponseException {}
+class VideoWrongApiCall extends NegativeResponseException {}
 
 class UnsuportedTypeSpecifiedException extends Exception {}
 class VideoNotFound extends Exception {}

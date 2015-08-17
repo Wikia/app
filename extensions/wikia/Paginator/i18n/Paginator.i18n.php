@@ -3,6 +3,7 @@
 $messages = array();
 
 $messages['en'] = array(
+	'paginator-desc'    => 'Paginator extension',
 	'paginator-next'	=> 'Next',
 	'paginator-back'	=> 'Back',
 );
@@ -11,6 +12,7 @@ $messages['en'] = array(
  * @author Shirayuki
  */
 $messages['qqq'] = array(
+	'paginator-desc' => '{{desc}}',
 	'paginator-next' => '{{Identical|Next}}',
 	'paginator-back' => '{{Identical|Back}}',
 );
@@ -57,8 +59,10 @@ $messages['br'] = array(
 
 /** Catalan (català)
  * @author BroOk
+ * @author Unapersona
  */
 $messages['ca'] = array(
+	'paginator-desc' => 'Extensió de paginació',
 	'paginator-next' => 'Següent',
 	'paginator-back' => 'Enrere',
 );
@@ -71,9 +75,11 @@ $messages['ce'] = array(
 );
 
 /** Czech (čeština)
+ * @author Darth Daron
  * @author Dontlietome7
  */
 $messages['cs'] = array(
+	'paginator-desc' => 'Rozšíření Paginator',
 	'paginator-next' => 'Další',
 	'paginator-back' => 'Zpět',
 );
@@ -86,8 +92,10 @@ $messages['cy'] = array(
 );
 
 /** German (Deutsch)
+ * @author Metalhead64
  */
 $messages['de'] = array(
+	'paginator-desc' => 'Paginator-Erweiterung',
 	'paginator-next' => 'Vor',
 	'paginator-back' => 'Zurück',
 );
@@ -101,8 +109,10 @@ $messages['diq'] = array(
 );
 
 /** Spanish (español)
+ * @author VegaDark
  */
 $messages['es'] = array(
+	'paginator-desc' => 'Extensión de paginación',
 	'paginator-next' => 'Siguiente',
 	'paginator-back' => 'Atrás',
 );
@@ -132,11 +142,21 @@ $messages['fi'] = array(
 );
 
 /** French (français)
+ * @author Gomoko
  * @author Wyz
  */
 $messages['fr'] = array(
+	'paginator-desc' => 'Extension de pagination',
 	'paginator-next' => 'Suivant',
 	'paginator-back' => 'Précédent',
+);
+
+/** Western Frisian (Frysk)
+ * @author Robin0van0der0vliet
+ */
+$messages['fy'] = array(
+	'paginator-next' => 'Folgjende',
+	'paginator-back' => 'Foarige',
 );
 
 /** Galician (galego)
@@ -178,12 +198,29 @@ $messages['it'] = array(
 	'paginator-back' => 'Indietro',
 );
 
+/** Japanese (日本語)
+ * @author Plover-Y
+ */
+$messages['ja'] = array(
+	'paginator-next' => '次へ',
+	'paginator-back' => '戻る',
+);
+
 /** Kannada (ಕನ್ನಡ)
  * @author VASANTH S.N.
  */
 $messages['kn'] = array(
 	'paginator-next' => 'ನಂತರ',
 	'paginator-back' => 'ಹಿಂದಕ್ಕೆ',
+);
+
+/** Korean (한국어)
+ * @author Miri-Nae
+ * @author 아라
+ */
+$messages['ko'] = array(
+	'paginator-next' => '다음',
+	'paginator-back' => '뒤로',
 );
 
 /** Colognian (Ripoarisch)
@@ -194,6 +231,14 @@ $messages['ksh'] = array(
 	'paginator-back' => 'Zeröck',
 );
 
+/** Kurdish (Latin script) (Kurdî (latînî)‎)
+ * @author Bikarhêner
+ */
+$messages['ku-latn'] = array(
+	'paginator-next' => 'Pêşve',
+	'paginator-back' => 'Paşve',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  */
 $messages['lb'] = array(
@@ -201,7 +246,7 @@ $messages['lb'] = array(
 	'paginator-back' => 'Zréck',
 );
 
-/** لوری (لوری)
+/** Northern Luri (لوری مینجایی)
  * @author Mogoeilor
  */
 $messages['lrc'] = array(
@@ -213,6 +258,7 @@ $messages['lrc'] = array(
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
+	'paginator-desc' => 'Додаток „Страничар“',
 	'paginator-next' => 'Следна',
 	'paginator-back' => 'Назад',
 );
@@ -228,6 +274,7 @@ $messages['ml'] = array(
  * @author Anakmalaysia
  */
 $messages['ms'] = array(
+	'paginator-desc' => 'Sambungan Paginator',
 	'paginator-next' => 'Seterusnya',
 	'paginator-back' => 'Kembali',
 );
@@ -265,7 +312,7 @@ $messages['oc'] = array(
 	'paginator-back' => 'Precedent',
 );
 
-/** Pälzisch (Pälzisch)
+/** Palatine German (Pälzisch)
  * @author Manuae
  */
 $messages['pfl'] = array(
@@ -314,6 +361,7 @@ $messages['pt-br'] = array(
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
+	'paginator-desc' => 'Estenzione de paginatore',
 	'paginator-next' => 'Prossime',
 	'paginator-back' => 'Rrete',
 );
@@ -335,8 +383,10 @@ $messages['sr-ec'] = array(
 
 /** Swedish (svenska)
  * @author Tobulos1
+ * @author WikiPhoenix
  */
 $messages['sv'] = array(
+	'paginator-desc' => 'Tillägget Paginator',
 	'paginator-next' => 'Nästa',
 	'paginator-back' => 'Tillbaka',
 );
@@ -406,8 +456,10 @@ $messages['wa'] = array(
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Hydra
+ * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
+	'paginator-desc' => '分页器扩展',
 	'paginator-next' => '下一步',
 	'paginator-back' => '前一步',
 );

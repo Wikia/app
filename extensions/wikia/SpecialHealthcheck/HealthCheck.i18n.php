@@ -191,7 +191,7 @@ $messages['lb'] = array(
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
-	'healthcheck-desc' => '[[Special:HealthCheck|Специјална страница]] за проверка на состојбата на опслужувачот',
+	'healthcheck-desc' => '[[Special:HealthCheck|Службена страница]] за проверка на состојбата на опслужувачот',
 );
 
 /** Malay (Bahasa Melayu)

@@ -8,7 +8,7 @@ class UserService extends Service {
 
 	public static function getNameFromUrl($url) {
 		$out = false;
-		
+
 		$userUrlParted = explode(':', $url, 3);
 		if( isset($userUrlParted[2]) ) {
 			$user = User::newFromName( urldecode($userUrlParted[2]) );
@@ -41,6 +41,36 @@ class UserService extends Service {
 
 		wfProfileOut( __METHOD__ );
 		return array_unique( $result );
+	}
+
+	/**
+	 * Given a user object, this method will create a temporary password and save it to the
+	 * user's account.  Every time this is called, the reset password throttle is reset, which
+	 * means the method User::isPasswordReminderThrottled will return true for the next
+	 * $wgPasswordReminderResendTime hours
+	 *
+	 * @param User $targetUser
+	 *
+	 * @return String
+	 *
+	 * @throws MWException
+	 */
+	public function resetPassword( User $targetUser ) {
+		$context = RequestContext::getMain();
+		$currentUser = $context->getUser();
+		$currentIp = $context->getRequest()->getIP();
+
+		wfRunHooks( 'User::mailPasswordInternal', [
+			$currentUser,
+			$currentIp,
+			$targetUser,
+		] );
+
+		$tempPass = $targetUser->randomPassword();
+		$targetUser->setNewpassword( $tempPass, $resetThrottle = true );
+		$targetUser->saveSettings();
+
+		return $tempPass;
 	}
 
 	/** Helper methods for getUsers */
@@ -175,10 +205,24 @@ class UserService extends Service {
 
 	private function getUserFromMemCacheById( $id ) {
 		$cacheIdKey = wfSharedMemcKey( "UserCache:".$id );
-		if ( ( $value = F::app()->wg->memc->get( $cacheIdKey ) ) !== false ) {
-			//cache locally
-			$this->cacheLocalUser( $value );
-			return $value;
+		$value = F::app()->wg->memc->get( $cacheIdKey );
+
+		if ( $value instanceof User ) {
+			try {
+				//cache locally
+				$this->cacheLocalUser( $value );
+				return $value;
+			} catch ( Exception $e ) {
+				Wikia\Logger\WikiaLogger::instance()->debug(
+					'HG-519 MemCache returned invalid value from UserCache',
+					[
+						'id' => $id,
+						'cacheIdKey' => $cacheIdKey,
+						'value' => $value,
+						'stack' => $e->getTraceAsString()
+					]
+				);
+			}
 		}
 		return false;
 	}
@@ -210,7 +254,7 @@ class UserService extends Service {
 	/**
 	 * @param $user User
 	 */
-	private function cacheUser( $user ) {
+	private function cacheUser( User $user ) {
 		$cacheIdKey = wfSharedMemcKey( "UserCache:".$user->getId() );
 		$cacheNameKey = wfSharedMemcKey( "UserCache:".$user->getName() );
 		F::app()->wg->memc->set( $cacheIdKey, $user, static::CACHE_EXPIRATION );
@@ -222,7 +266,7 @@ class UserService extends Service {
 	/**
 	 * @param $user User
 	 */
-	private function cacheLocalUser( $user ) {
+	private function cacheLocalUser( User $user ) {
 		static::$userCacheMapping[ $user->getName() ] = $user->getId();
 		static::$userCache[ $user->getId() ] = $user;
 	}

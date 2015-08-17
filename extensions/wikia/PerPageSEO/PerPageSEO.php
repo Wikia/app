@@ -30,7 +30,12 @@ $wgExtensionCredits['specialpage'][] = array(
         'name' => 'PerPageSEO',
         'version' => '1.0',
         'author' => "[http://www.wikia.com/wiki/User:TOR Łukasz 'TOR' Garczewski]",
+		'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/PerPageSEO',
+		'descriptionmsg' => 'perpageseo-desc'
 );
+
+//i18n
+$wgExtensionMessagesFiles['PerPageSEO'] = __DIR__ . '/PerPageSEO.i18n.php';
 
 $wgHooks['BeforePageDisplay'][] = 'efPerPageSEO';
 

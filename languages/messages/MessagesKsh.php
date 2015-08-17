@@ -624,8 +624,9 @@ $2',
 # Login and logout pages
 'logouttext'                 => "'''Jetz bes de usjelogg'''
 
-Do künnts heh em Wiki wigger maache, als ene namelose Metmaacher. Do kanns De ävver och [[Special:UserLogin|widder enlogge]], als däselve oder och ene andere Metmaacher.
+Do künnts heh em Wiki wigger maache, als ene namelose Metmaacher. Do kanns De ävver och $1, als däselve oder och ene andere Metmaacher.
 Künnt sin, dat De de ein oder ander Sigg immer wigger aanjezeich kriss, wie wann de noch enjelogg wörs. Dun Dingem Brauser singe <i lang=\"en\">Cache</i> fottschmieße oder leddich maache, öm us dä Nummer erus ze kumme!",
+'logouttext-link-text'       => 'widder enlogge',
 'welcomecreation'            => '== Dach, $1! ==
 Dinge Zojang för heh es do.
 Do bes jetz aanjemeldt.
@@ -2233,7 +2234,7 @@ eins vun all däm op eimol.',
 'linksearch-ok'    => 'Söhke',
 'linksearch-text'  => 'Di {{int:nstab-special}} heh mäd_et müjjelesch noh Sigge ze söke, woh beshtemmpte Links op Websigge dren enthallde sin.
 
-Beim Söke künnd_Er Schtäänsche aanjevve för e Schtöcksche fun ennem Name, wo mer nit jenou weiß, wi et heiß udder wat me nit kenne deit,  zem Beishpöll esu: <tt>http://*.example.com</tt> un ene bövverschte Name för en Domain moß aanjejovve sin, zem Beishpöll esu: <tt>http://*.org</tt> 
+Beim Söke künnd_Er Schtäänsche aanjevve för e Schtöcksche fun ennem Name, wo mer nit jenou weiß, wi et heiß udder wat me nit kenne deit,  zem Beishpöll esu: <tt>http://*.example.com</tt> un ene bövverschte Name för en Domain moß aanjejovve sin, zem Beishpöll esu: <tt>http://*.org</tt>
 
 De Brauserprotokolle, di beim Söke aanjejovve wäde künne, sen: <tt>$1</tt>es',
 'linksearch-line'  => '„$2“ hät ene Link op $1',
@@ -2387,7 +2388,7 @@ Do kanns ävver och all die Merker för e-mail för die Sigge en Dinger Oppassli
 
 Ene schöne Jroß {{GRAMMAR:vun|{{SITENAME}}}}.
 
--- 
+--
 Öm de Enshtällonge för Nohreeschet aan Desch ze ändere, jangk op:
 {{canonicalurl:{{#special:Preferences}}}}
 

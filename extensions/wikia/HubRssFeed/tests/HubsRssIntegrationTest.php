@@ -34,7 +34,7 @@ class HubsRssIntegrationTest extends WikiaBaseTest {
 		$itemCount = $rss->channel->item->count();
 		$this->assertGreaterThan(0, $itemCount);
 
-		$this->verifyRssItem( $rss->channel->item[0], $hub );
+		$this->verifyRssItem( $rss->channel->item[0] );
 	}
 
 	/**
@@ -53,14 +53,14 @@ class HubsRssIntegrationTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * Check rss hub data
+	 * Check that all required fields exist in the RSS item
 	 */
-	private function verifyRssItem( $item, $hub ) {
-		$this->assertNotEmpty( $item->title->__toString(),  $hub . ' RSS item title is empty' );
-		$this->assertNotEmpty( $item->description->__toString(),  $hub . ' RSS item description is empty' );
-		$this->assertNotEmpty( $item->link->__toString(),  $hub . ' RSS item link is empty' );
-		$this->assertNotEmpty( $item->guid->__toString(),  $hub . ' RSS item guid is empty' );
-		$this->assertNotEmpty( $item->pubDate->__toString(),  $hub . ' RSS item pubDate is empty' );
+	private function verifyRssItem( $item ) {
+		$this->assertContains( 'title',  $item . ' RSS item title is missing' );
+		$this->assertContains( 'description',  $item . ' RSS item description is missing' );
+		$this->assertContains( 'link',  $item . ' RSS item link is missing' );
+		$this->assertContains( 'guid',  $item . ' RSS item guid is missing' );
+		$this->assertContains( 'pubDate',  $item . ' RSS item pubDate is missing' );
 	}
 
 	public function hubsRssLinksDataProvider() {

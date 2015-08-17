@@ -48,6 +48,8 @@ class LogEventsList {
 	 */
 	protected $mDefaultQuery;
 
+	const WARN_BOX_DIV_CLASS = 'mw-warning-with-logexcerpt';
+
 	public function __construct( $skin, $out, $flags = 0 ) {
 		$this->skin = $skin;
 		$this->out = $out;
@@ -214,6 +216,11 @@ class LogEventsList {
 	}
 
 	public function getContext() {
+		if ( !is_object( $this->out ) ) {
+			\Wikia\Logger\WikiaLogger::instance()->debug( 'LogEventsList getContext not an object', [
+				'exception' => new Exception(),
+			]);
+		}
 		return $this->out->getContext();
 	}
 
@@ -670,7 +677,7 @@ class LogEventsList {
 		$s = '';
 		if( $logBody ) {
 			if ( $msgKey[0] ) {
-				$s = '<div class="mw-warning-with-logexcerpt">';
+				$s = '<div class="'.LogEventsList::WARN_BOX_DIV_CLASS.'">';
 
 				if ( count( $msgKey ) == 1 ) {
 					$s .= wfMsgExt( $msgKey[0], array( 'parse' ) );

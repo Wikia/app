@@ -8,6 +8,13 @@ if ( !defined('MEDIAWIKI') ) {
  * @package MediaWiki
  * @subpackage SpecialPage
  */
+ 
+$wgExtensionCredits[ 'specialpage' ][ ] = array(
+	'name' => 'SpecialContact',
+	'author' => 'Wikia',
+	'descriptionmsg' => 'specialcontact-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/SpecialContact2',
+);
 
 require_once('UserMailer.php');
 

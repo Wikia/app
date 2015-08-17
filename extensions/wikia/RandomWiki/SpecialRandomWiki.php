@@ -28,7 +28,8 @@ $wgExtensionCredits['specialpage'][] = array(
 		'Owen Davis',
 		'Federico "Lox" Lucignano'
 	),
-	'descriptionmsg' => 'randomwiki-desc'
+	'descriptionmsg' => 'randomwiki-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/RandomWiki'
 );
 
 // Set up the new special page
@@ -43,4 +44,4 @@ $wgSpecialPages['RandomWiki'] = 'RandomWiki';
 $wgSpecialPageGroups['RandomWiki'] = 'redirects';
 
 // i18n
-$wgExtensionMessagesFiles['SpecialRandomWiki'] = $dir . '/SpecialRandomWiki.i18n.php';
+$wgExtensionMessagesFiles['RandomWiki'] = $dir . 'SpecialRandomWiki.i18n.php';

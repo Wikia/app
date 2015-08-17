@@ -323,6 +323,35 @@ class AssetsManager {
 		return substr($url, -5) == '.scss';
 	}
 
+	/**
+	 * determines whether a given url is for JS group
+	 *
+	 * Example: http://slot1.images1.wikia.nocookie.net/__am/1413971462/group/noexternals%3D1/monetization_module_js
+	 *
+	 * @param string $url the url to check
+	 * @return bool true if the url is a JS group, false otherwise
+	 */
+	public function isGroupUrl($url) {
+		return is_string( $url ) && ( strpos( $url, '/group/' ) !== false );
+	}
+
+	/**
+	 * Return AM group name from given URL
+	 *
+	 * If the given URL is not a valid group URL, false is returned
+	 *
+	 * @param string $url the URL to extract group name from
+	 * @return bool|false group name or false if URL is invalid
+	 */
+	public function getGroupNameFromUrl($url) {
+		if ( $this->isGroupUrl( $url ) ) {
+			$parts = explode( '/', $url );
+			return end( $parts );
+		} else {
+			return false;
+		}
+	}
+
 	public function getSassesUrl($sassList) {
 		if (!is_array($sassList)) {
 			$sassList = [$sassList];
@@ -560,31 +589,14 @@ class AssetsManager {
 	}
 
 	private function getAMLocalURL($type, $oid, $params = array()) {
-		wfProfileIn( __METHOD__ );
-
-		global $wgAssetsManagerQuery, $IP, $wgSpeedBox, $wgDevelEnvironment;
-
-		$cb = $this->mCacheBuster;
-
-		if ( !empty( $wgSpeedBox ) && !empty( $wgDevelEnvironment ) ) {
-			if ( $type == 'sass' ) {
-				$cb = hexdec( substr( wfAssetManagerGetSASShash( $IP . '/' . $oid ), 0, 8 ) );
-
-			} else if ( $type == 'one' && endsWith( $oid, '.js' ) ) {
-				$cb = filemtime( $IP . '/' . $oid );
-			}
-		}
-
+		global $wgAssetsManagerQuery;
 		$url = sprintf($wgAssetsManagerQuery,
 			/* 1 */ $type,
 			/* 2 */ $oid,
 			/* 3 */ !empty($params) ? urlencode(http_build_query($params)) : '-',
-			/* 4 */ $cb);
-
-		wfProfileOut( __METHOD__ );
+			/* 4 */ $this->mCacheBuster);
 		return $url;
 	}
-
 
 	public function getAllowedAssetExtensions(){
 		return $this->mAllowedAssetExtensions;
@@ -616,10 +628,15 @@ class AssetsManager {
 	public function checkAssetUrlForSkin( $url, WikiaSkin $skin ) {
 		wfProfileIn( __METHOD__ );
 
+		// ResourceLoader has its own skin filtering mechanism, skip the check for /__load/ URLs - CON-2113
+		if ( strpos( $url, '/__load/' ) !== false ) {
+			wfProfileOut( __METHOD__ );
+			return true;
+		}
+
 		//lazy loading of AssetsConfig
 		$this->loadConfig();
 		$group = null;
-		$skinName = $skin->getSkinName();
 		$strict = $skin->isStrict();
 
 		if ( is_string( $url ) && array_key_exists($url, $this->mGeneratedUrls) ) {
@@ -641,15 +658,28 @@ class AssetsManager {
 			return !$strict;
 		}
 
-		$registeredSkin = $this->mAssetsConfig->getGroupSkin( $group );
-		$check = ( is_array( $registeredSkin ) ) ? in_array( $skinName, $registeredSkin ) : $skinName === $registeredSkin;
-
-		//if not strict packages with no skin registered are positive
-		if ( $strict === false ) {
-			$check = $check || empty( $registeredSkin );
-		}
+		$check = $this->checkIfGroupForSkin($group, $skin);
 
 		wfProfileOut( __METHOD__ );
+		return $check;
+	}
+
+	/**
+	 * Checks if given asset's group should be loaded for provided skin
+	 * @param string $group - Asset Manager group name
+	 * @param Skin $skin - skin instance
+	 * @return bool whether group should be loaded for given skin
+	 */
+	public function checkIfGroupForSkin($group, Skin $skin) {
+		$this->loadConfig();
+		$skinName = $skin->getSkinName();
+		$registeredSkin = $this->mAssetsConfig->getGroupSkin( $group );
+		$check = ( is_array( $registeredSkin ) ) ?
+			in_array( $skinName, $registeredSkin ) : $skinName === $registeredSkin;
+		//if not strict packages with no skin registered are positive
+		if ( ( $skin instanceof WikiaSkin ) && ( $skin->isStrict() === false ) ) {
+			$check = $check || empty( $registeredSkin );
+		}
 		return $check;
 	}
 
@@ -742,5 +772,57 @@ class AssetsManager {
 			wfProfileOut( __METHOD__ );
 			throw new WikiaException( 'No resources to load specified' );
 		}
+	}
+
+	/**
+	 * Gets the URL and converts it to minified one if it points to single static file (JS or CSS)
+	 * If it's not recognized as static asset the original URL is returned
+	 *
+	 * @param $url string URL to be inspected
+	 * @return string
+	 */
+	public function minifySingleAsset( $url ) {
+		global $wgAllInOne, $wgExtensionsPath, $wgStylePath, $wgResourceBasePath;
+
+		if ( !empty( $wgAllInOne ) ) {
+			static $map;
+			if (empty($map)) {
+				$map = [
+					[ $wgExtensionsPath, 'extensions/' ],
+					[ $wgStylePath, 'skins/' ],
+					// $wgResourceBasePath = $wgCdnStylePath (there's no /resources in it)
+					[ $wgResourceBasePath . '/resources', 'resources/' ],
+				];
+			}
+
+			// BugId:38195 - don't minify already minified assets
+			if (strpos($url, '/__am/') !== false) {
+				return $url;
+			}
+
+			// don't minify already minified JS files
+			if (strpos($url, '.min.js') !== false) {
+				return $url;
+			}
+
+			foreach ($map as $item) {
+				list( $prefix, $replacement ) = $item;
+
+				// BugId: 38195 - wgExtensionPath / stylePath / ResourceBasePath do not end with a slash
+				// add one to remove double slashes in resulting URL
+				$prefix .= '/';
+
+				if (startsWith($url, $prefix)) {
+					$nurl = substr($url,strlen($prefix));
+					$matches = array();
+					if (preg_match("/^([^?]+)/",$nurl,$matches)) {
+						if (preg_match("/\\.(css|js)\$/i",$matches[1])) {
+							return $this->getOneCommonURL($replacement . $matches[1], true);
+						}
+					}
+				}
+			}
+		}
+		return $url;
 	}
 }

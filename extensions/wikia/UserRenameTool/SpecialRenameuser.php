@@ -24,7 +24,7 @@ $wgExtensionCredits['specialpage'][] = array(
 	'path' => __FILE__,
 	'name' => 'UserRenameTool',
 	'author'         => array( 'Federico "Lox" Lucignano', 'Władysław Bodzek' ),
-	'url'            => '',
+	'url'            => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/UserRenameTool',
 	'description'    => 'Renames a user (need \'\'renameuser\'\' right)',
 	'descriptionmsg' => 'userrenametool-desc',
 );
@@ -63,10 +63,6 @@ global $wgLogTypes, $wgLogNames, $wgLogHeaders, $wgLogActions;
 $wgLogTypes[]                          = 'renameuser';
 $wgLogNames['renameuser']              = 'userrenametool-logpage';
 $wgLogHeaders['renameuser']            = 'userrenametool-logpagetext';
-
-//task types
-extAddBatchTask(dirname(__FILE__)."/UserRenameLocalTask.php", "renameuser_local", "UserRenameLocalTask");
-extAddBatchTask(dirname(__FILE__)."/UserRenameGlobalTask.php", "renameuser_global", "UserRenameGlobalTask");
 
 //hooks
 $wgHooks['StaffLog::formatRow'][] = 'UserRenameToolStaffLogFormatRow';

@@ -34,10 +34,20 @@
 					"type" : "string",
 					"description" : "styleguide-description-modal-title"
 				},
+				"htmlTitle": {
+					"templateVar" : "htmlTitle",
+					"type" : "string",
+					"description" : "styleguide-description-modal-html-title"
+				},
 				"closeText": {
 					"templateVar" : "closeText",
 					"type" : "string",
 					"description" : "styleguide-description-modal-close-text"
+				},
+				"escapeToClose" : {
+					"templateVar" : "escapeToClose",
+					"type" : "boolean",
+					"description" : "styleguide-description-modal-escape-to-close"
 				},
 				"altLink" : {
 					"templateVar" : "altLink",

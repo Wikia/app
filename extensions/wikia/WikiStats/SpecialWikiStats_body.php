@@ -49,16 +49,20 @@ class WikiStatsPage extends IncludableSpecialPage
     }
 
     public function execute( $subpage ) {
-        global $wgUser, $wgOut, $wgRequest, $wgCityId, $wgDBname, $wgLang;
+        global $wgUser, $wgOut, $wgRequest, $wgCityId, $wgDBname, $wgLang, $wgStatsDBEnabled;
 
         if ( $wgUser->isBlocked() ) {
-			throw new UserBlockedError( $this->getUser()->mBlock );
+			throw new UserBlockedError( $this->getUser()->getBlock() );
         }
 
         if ( wfReadOnly() ) {
             $wgOut->readOnlyPage();
             return;
         }
+
+		if ( !$wgStatsDBEnabled ) {
+			throw new MWException( 'We have a problem connecting to our statistics database. We are very sorry for the inconvenience, please try again later.' );
+		}
 
 		// Set the current wiki ID, DB name and user from globals
 		$this->mCityId     = $wgCityId;
@@ -209,7 +213,7 @@ class WikiStatsPage extends IncludableSpecialPage
 		asort($aLanguages);
 		#-
 		$hubs = WikiFactoryHub::getInstance();
-		$_cats = $hubs->getCategories();
+		$_cats = $hubs->getAllCategories();
 		$aCategories = array();
 		if ( !empty($_cats) ) {
 			foreach ( $_cats as $id => $cat ) {
@@ -384,7 +388,7 @@ class WikiStatsPage extends IncludableSpecialPage
 		asort($aLanguages);
 		#-
 		$hubs = WikiFactoryHub::getInstance();
-		$_cats = $hubs->getCategories();
+		$_cats = $hubs->getAllCategories();
 		$aCategories = array();
 		if ( !empty($_cats) ) {
 			foreach ( $_cats as $id => $cat ) {

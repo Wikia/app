@@ -21,7 +21,7 @@ class SpecialVideosHelper extends WikiaModel {
 	 * @return string $description
 	 */
 	public function getMetaTagDescription() {
-		$catInfo = HubService::getComscoreCategory( $this->wg->CityId );
+		$catInfo = HubService::getCategoryInfoForCity( $this->wg->CityId );
 
 		$descriptionKey = 'specialvideos-meta-description';
 
@@ -116,7 +116,7 @@ class SpecialVideosHelper extends WikiaModel {
 				'useTemplate' => true,
 				'fluid'       => true,
 				'forceSize'   => 'small',
-				'imgClass'    => 'media',
+				'img-class'    => 'media',
 				'dataParams'  => true,
 			];
 		} else {
@@ -264,7 +264,7 @@ class SpecialVideosHelper extends WikiaModel {
 			$queryString = '';
 			foreach( [ 'sort', 'category', 'provider'] as $key ) {
 				if ( !empty( $videoParams[$key] ) ) {
-					$queryString .= "&$key=".$videoParams[$key];
+					$queryString .= "&$key=" . urlencode( $videoParams[$key] );
 				}
 			}
 

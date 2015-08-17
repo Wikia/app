@@ -6,7 +6,6 @@
  */
 
 class EditorPreference {
-	const OPTION_EDITOR_DEFAULT = 0;
 	const OPTION_EDITOR_SOURCE = 1;
 	const OPTION_EDITOR_VISUAL = 2;
 	const OPTION_EDITOR_CK = 3;
@@ -20,17 +19,20 @@ class EditorPreference {
 	 * @return bool
 	 */
 	public static function onEditingPreferencesBefore( $user, &$preferences ) {
+		global $wgVisualEditorNeverPrimary;
 		$preferences[PREFERENCE_EDITOR] = array(
 			'type' => 'select',
 			'label-message' => 'editor-preference',
 			'section' => 'editing/editing-experience',
 			'options' => array(
-				wfMessage( 'option-default-editor' )->text() => self::OPTION_EDITOR_DEFAULT,
 				wfMessage( 'option-visual-editor' )->text() => self::OPTION_EDITOR_VISUAL,
 				wfMessage( 'option-ck-editor' )->text() => self::OPTION_EDITOR_CK,
 				wfMessage( 'option-source-editor' )->text() => self::OPTION_EDITOR_SOURCE,
 			),
 		);
+		if ( $wgVisualEditorNeverPrimary ) {
+			$preferences[PREFERENCE_EDITOR]['help-message'] = 'editor-preference-help';
+		}
 		return true;
 	}
 
@@ -87,6 +89,14 @@ class EditorPreference {
 				$editTab['text'] = wfMessage( $editMessageKey )->setContext( $skin->getContext() )->text();
 				$editTab['main'] = !$visualEditorTab['main'];
 
+				if ( $isVisualEditorPrimaryEditor ) {
+					$visualEditorTab['accesskey'] = 'e';
+					$editTab['accesskey'] = 's';
+				} else {
+					$visualEditorTab['accesskey'] = 's';
+					$editTab['accesskey'] = 'e';
+				}
+
 				$newViews['edit'] = $editTab;
 				$newViews['ve-edit'] = $visualEditorTab;
 			} else {
@@ -118,10 +128,10 @@ class EditorPreference {
 	 * @return integer The editor option value
 	 */
 	public static function getPrimaryEditor() {
-		global $wgUser, $wgEnableVisualEditorUI, $wgEnableRTEExt, $wgForceVisualEditor;
-		$selectedOption = (int)$wgUser->getOption( PREFERENCE_EDITOR );
+		global $wgUser, $wgEnableVisualEditorUI, $wgEnableRTEExt, $wgVisualEditorNeverPrimary;
+		$selectedOption = (int)$wgUser->getGlobalPreference( PREFERENCE_EDITOR );
 
-		if ( $selectedOption === self::OPTION_EDITOR_VISUAL ) {
+		if ( !$wgVisualEditorNeverPrimary && $selectedOption === self::OPTION_EDITOR_VISUAL ) {
 			return self::OPTION_EDITOR_VISUAL;
 		}
 		elseif ( $selectedOption === self::OPTION_EDITOR_SOURCE ) {
@@ -132,7 +142,7 @@ class EditorPreference {
 		}
 		else {
 			// Default option based on other settings
-			if ( $wgEnableVisualEditorUI || ( $wgUser->isAnon() && $wgForceVisualEditor ) ) {
+			if ( !$wgVisualEditorNeverPrimary && ( $wgEnableVisualEditorUI || $wgUser->isAnon() ) ) {
 				return self::OPTION_EDITOR_VISUAL;
 			}
 			elseif ( !$wgEnableVisualEditorUI && $wgEnableRTEExt ) {
@@ -150,7 +160,7 @@ class EditorPreference {
 	 *
 	 * @return boolean True if VisualEditor is primary and false otherwise
 	 */
-	private static function isVisualEditorPrimary() {
+	public static function isVisualEditorPrimary() {
 		return self::getPrimaryEditor() === self::OPTION_EDITOR_VISUAL;
 	}
 
@@ -161,31 +171,13 @@ class EditorPreference {
 	 * @return boolean
 	 */
 	public static function shouldShowVisualEditorLink( $skin ) {
-		global $wgTitle, $wgEnableVisualEditorExt, $wgVisualEditorNamespaces, $wgUser;
-		return $skin->getSkinName() === 'oasis' &&
+		global $wgTitle, $wgEnableVisualEditorExt, $wgVisualEditorNamespaces, $wgVisualEditorSupportedSkins, $wgUser;
+		return in_array( $skin->getSkinName(), $wgVisualEditorSupportedSkins ) &&
 			!$wgUser->isBlockedFrom( $wgTitle ) &&
 			!$wgTitle->isRedirect() &&
 			$wgEnableVisualEditorExt &&
 			( is_array( $wgVisualEditorNamespaces ) ?
 				in_array( $wgTitle->getNamespace(), $wgVisualEditorNamespaces ) : false );
-	}
-
-	/**
-	 * Set the editor preference for newly-registered users.
-	 *
-	 * @param User $user The current user
-	 * @return boolean
-	 */
-	public static function onAddNewAccount( User $user ) {
-		global $wgForceVisualEditor;
-		if ( $wgForceVisualEditor ) {
-			// Force new users to set VisualEditor as preference
-			$user->setOption( PREFERENCE_EDITOR, self::OPTION_EDITOR_VISUAL );
-			$user->saveSettings();
-		}
-		// If the editor preference is not set here, the default preference
-		// is set in CommonSettings.
-		return true;
 	}
 
 	/**

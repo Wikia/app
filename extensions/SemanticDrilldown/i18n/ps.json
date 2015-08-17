@@ -1,0 +1,19 @@
+{
+	"@metadata": {
+		"authors": [
+			"Ahmed-Najib-Biabani-Ibrahimkhel"
+		]
+	},
+	"browsedata": "مالومات سپړل",
+	"sd_browsedata_choosecategory": "يوه وېشنيزه ټاکل",
+	"sd_browsedata_viewcategory": "وېشنيزه ښکاره کول",
+	"sd_browsedata_subcategory": "څېرمه وېشنيزه",
+	"sd_browsedata_other": "بل",
+	"sd_browsedata_none": "هېڅ",
+	"sd_browsedata_filterbysubcategory": "د همدې وړې-وېشنيزې له مخې چاڼول",
+	"sd_browsedata_or": "يا",
+	"sd_browsedata_removefilter": "همدا چاڼگر لرې کول",
+	"sd_browsedata_daterangestart": "پيل:",
+	"sd_browsedata_daterangeend": "پای:",
+	"sd-pageschemas-filter": "چاڼگر"
+}

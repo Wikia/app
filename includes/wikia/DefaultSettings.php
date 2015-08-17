@@ -40,7 +40,6 @@ require_once ( $IP."/includes/wikia/Wikia.php" );
 require_once ( $IP."/includes/wikia/WikiaMailer.php" );
 require_once ( $IP."/extensions/Math/Math.php" );
 
-
 /**
  * Add composer dependencies before proceeding to lib/Wikia. For now, we are committing
  * dependencies added via composer to lib/composer until external dependencies with composer/packagist
@@ -56,6 +55,8 @@ FluentSql\StaticSQL::setClass("\\WikiaSQL");
  */
 require_once ( $IP."/lib/Wikia/autoload.php");
 
+require_once ( $IP."/lib/Swagger/autoload.php");
+
 global $wgDBname;
 if($wgDBname != 'uncyclo') {
 	include_once( "$IP/extensions/wikia/SkinChooser/SkinChooser.php" );
@@ -65,7 +66,6 @@ if($wgDBname != 'uncyclo') {
  * autoload classes
  */
 global $wgAutoloadClasses;
-
 
 /**
  * Nirvana framework classes
@@ -158,7 +158,8 @@ $wgAutoloadClasses['ActivityApiController'] = "{$IP}/includes/wikia/api/Activity
 $wgAutoloadClasses['UserApiController'] = "{$IP}/includes/wikia/api/UserApiController.class.php";
 $wgAutoloadClasses['TvApiController'] = "{$IP}/includes/wikia/api/TvApiController.class.php";
 $wgAutoloadClasses['MoviesApiController'] = "{$IP}/includes/wikia/api/MoviesApiController.class.php";
-
+$wgAutoloadClasses['InfoboxApiController'] = "{$IP}/includes/wikia/api/InfoboxApiController.class.php";
+$wgExtensionMessagesFiles['WikiaApi'] = "{$IP}/includes/wikia/api/WikiaApi.i18n.php";
 
 $wgWikiaApiControllers['DiscoverApiController'] = "{$IP}/includes/wikia/api/DiscoverApiController.class.php";
 $wgWikiaApiControllers['NavigationApiController'] = "{$IP}/includes/wikia/api/NavigationApiController.class.php";
@@ -170,19 +171,35 @@ $wgWikiaApiControllers['ActivityApiController'] = "{$IP}/includes/wikia/api/Acti
 $wgWikiaApiControllers['UserApiController'] = "{$IP}/includes/wikia/api/UserApiController.class.php";
 $wgWikiaApiControllers['TvApiController'] = "{$IP}/includes/wikia/api/TvApiController.class.php";
 $wgWikiaApiControllers['MoviesApiController'] = "{$IP}/includes/wikia/api/MoviesApiController.class.php";
+$wgWikiaApiControllers['InfoboxApiController'] = "{$IP}/includes/wikia/api/InfoboxApiController.class.php";
 
 //Wikia Api exceptions classes
 $wgAutoloadClasses[ 'ApiAccessService' ] = "{$IP}/includes/wikia/api/services/ApiAccessService.php";
-$wgAutoloadClasses[ 'BadRequestApiException'] =  "{$IP}/includes/wikia/api/ApiExceptions.php" ;
-$wgAutoloadClasses[ 'OutOfRangeApiException'] =  "{$IP}/includes/wikia/api/ApiExceptions.php" ;
-$wgAutoloadClasses[ 'MissingParameterApiException'] =  "{$IP}/includes/wikia/api/ApiExceptions.php" ;
-$wgAutoloadClasses[ 'InvalidParameterApiException'] =  "{$IP}/includes/wikia/api/ApiExceptions.php" ;
-$wgAutoloadClasses[ 'LimitExceededApiException'] =  "{$IP}/includes/wikia/api/ApiExceptions.php" ;
-$wgAutoloadClasses[ 'NotFoundApiException'] =  "{$IP}/includes/wikia/api/ApiExceptions.php" ;
+$wgAutoloadClasses[ 'ApiOutboundingLinksService' ] = "{$IP}/includes/wikia/api/services/ApiOutboundingLinksService.php";
+$wgAutoloadClasses[ 'BadRequestApiException'] = "{$IP}/includes/wikia/api/ApiExceptions.php";
+$wgAutoloadClasses[ 'OutOfRangeApiException'] = "{$IP}/includes/wikia/api/ApiExceptions.php";
+$wgAutoloadClasses[ 'MissingParameterApiException'] = "{$IP}/includes/wikia/api/ApiExceptions.php";
+$wgAutoloadClasses[ 'InvalidParameterApiException'] = "{$IP}/includes/wikia/api/ApiExceptions.php";
+$wgAutoloadClasses[ 'InvalidDataApiException' ] = "{$IP}/includes/wikia/api/ApiExceptions.php";
+$wgAutoloadClasses[ 'LimitExceededApiException'] = "{$IP}/includes/wikia/api/ApiExceptions.php";
+$wgAutoloadClasses[ 'NotFoundApiException'] = "{$IP}/includes/wikia/api/ApiExceptions.php";
 
+//Recommendations
+$wgAutoloadClasses['Wikia\\Api\\Recommendations\\Collector'] = "{$IP}/includes/wikia/api/Recommendations/Collector.class.php";
+$wgAutoloadClasses['Wikia\\Api\\Recommendations\\DataProviders\\IDataProvider'] = "{$IP}/includes/wikia/api/Recommendations/DataProviders/IDataProvider.interface.php";
+$wgAutoloadClasses['Wikia\\Api\\Recommendations\\DataProviders\\Category'] = "{$IP}/includes/wikia/api/Recommendations/DataProviders/Category.class.php";
+$wgAutoloadClasses['Wikia\\Api\\Recommendations\\DataProviders\\Video'] = "{$IP}/includes/wikia/api/Recommendations/DataProviders/Video.class.php";
+$wgAutoloadClasses['Wikia\\Api\\Recommendations\\DataProviders\\TopArticles'] = "{$IP}/includes/wikia/api/Recommendations/DataProviders/TopArticles.class.php";
+$wgAutoloadClasses['RecommendationsApiController'] = "{$IP}/includes/wikia/api/RecommendationsApiController.class.php";
+$wgWikiaApiControllers['RecommendationsApiController'] = "{$IP}/includes/wikia/api/RecommendationsApiController.class.php";
 /**
  * Wikia API end
  */
+
+/**
+ * Modular main pages hooks
+ */
+$wgAutoloadClasses['NjordHooks'] =  "{$IP}/extensions/wikia/NjordPrototype/NjordHooks.class.php";
 
 /**
  * Wikia Skins
@@ -204,6 +221,7 @@ $wgAutoloadClasses['WikiaSpamRegexBatch'] = $IP . '/extensions/wikia/WikiaSpamRe
 $wgAutoloadClasses[ 'Wikia\Template\Engine' ] = "{$IP}/includes/wikia/template/Engine.class.php";
 $wgAutoloadClasses[ 'Wikia\Template\PHPEngine' ] = "{$IP}/includes/wikia/template/PHPEngine.class.php";
 $wgAutoloadClasses[ 'Wikia\Template\MustacheEngine' ] = "{$IP}/includes/wikia/template/MustacheEngine.class.php";
+$wgAutoloadClasses[ 'Wikia\Template\HandlebarsEngine' ] = "{$IP}/includes/wikia/template/HandlebarsEngine.class.php";
 //deprecated, will be removed
 $wgAutoloadClasses[ 'EasyTemplate' ] = "{$IP}/includes/wikia/EasyTemplate.php";
 
@@ -215,8 +233,10 @@ $wgAutoloadClasses[ "GlobalTitle"                     ] = "$IP/includes/wikia/Gl
 $wgAutoloadClasses[ "GlobalFile"                      ] = "$IP/includes/wikia/GlobalFile.class.php";
 $wgAutoloadClasses[ "WikiFactory"                     ] = "$IP/extensions/wikia/WikiFactory/WikiFactory.php";
 $wgAutoloadClasses[ "WikiFactoryHub"                  ] = "$IP/extensions/wikia/WikiFactory/Hubs/WikiFactoryHub.php";
+$wgAutoloadClasses[ "WikiFactoryHubHooks"             ] = "$IP/extensions/wikia/WikiFactory/Hubs/WikiFactoryHubHooks.class.php";
 $wgAutoloadClasses[ 'SimplePie'                       ] = "$IP/lib/vendor/SimplePie/simplepie.inc";
 $wgAutoloadClasses[ 'MustachePHP'                     ] = "$IP/lib/vendor/mustache.php/Mustache.php";
+$wgAutoloadClasses[ 'Handlebars\\Autoloader'          ] = "$IP/lib/vendor/Handlebars/Autoloader.php";
 $wgAutoloadClasses[ 'GMetricClient'                   ] = "$IP/lib/vendor/GMetricClient.class.php";
 $wgAutoloadClasses[ 'FakeLocalFile'                   ] = "$IP/includes/wikia/FakeLocalFile.class.php";
 $wgAutoloadClasses[ 'WikiaUploadStash'                ] = "$IP/includes/wikia/upload/WikiaUploadStash.class.php";
@@ -226,7 +246,6 @@ $wgAutoloadClasses[ 'WikiaSkinMonoBook'               ] = "$IP/skins/wikia/Wikia
 $wgAutoloadClasses[ 'PaginationController'            ] = "$IP/includes/wikia/services/PaginationController.class.php";
 $wgAutoloadClasses[ 'MemcacheSync'                    ] = "$IP/includes/wikia/MemcacheSync.class.php";
 $wgAutoloadClasses[ 'LibmemcachedBagOStuff'           ] = "$IP/includes/cache/wikia/LibmemcachedBagOStuff.php";
-$wgAutoloadClasses[ 'LibmemcachedSessionHandler'      ] = "$IP/includes/cache/wikia/LibmemcachedSessionHandler.php";
 $wgAutoloadClasses[ 'WikiaAssets'                     ] = "$IP/includes/wikia/WikiaAssets.class.php";
 $wgAutoloadClasses[ "ExternalUser_Wikia"              ] = "$IP/includes/wikia/ExternalUser_Wikia.php";
 $wgAutoloadClasses[ 'AutomaticWikiAdoptionGatherData' ] = "$IP/extensions/wikia/AutomaticWikiAdoption/maintenance/AutomaticWikiAdoptionGatherData.php";
@@ -256,14 +275,34 @@ $wgAutoloadClasses[ 'WikiaSQL'                        ] = "$IP/includes/wikia/Wi
 $wgAutoloadClasses[ 'WikiaSQLCache'                   ] = "$IP/includes/wikia/WikiaSQLCache.class.php";
 $wgAutoloadClasses[ 'WikiaSanitizer'                  ] = "$IP/includes/wikia/WikiaSanitizer.class.php";
 $wgAutoloadClasses[ 'ScribePurge'                     ] = "$IP/includes/cache/wikia/ScribePurge.class.php";
-$wgAutoloadClasses[ 'Transaction'                     ] = "$IP/includes/wikia/transactiontrace/Transaction.php";
-$wgAutoloadClasses[ 'TransactionTrace'                ] = "$IP/includes/wikia/transactiontrace/TransactionTrace.php";
-$wgAutoloadClasses[ 'TransactionClassifier'           ] = "$IP/includes/wikia/transactiontrace/TransactionClassifier.php";
-$wgAutoloadClasses[ 'TransactionTraceNewrelic'        ] = "$IP/includes/wikia/transactiontrace/TransactionTraceNewrelic.php";
+$wgAutoloadClasses[ 'CeleryPurge'                     ] = "$IP/includes/cache/wikia/CeleryPurge.class.php";
+$wgAutoloadClasses[ 'Transaction'                     ] = "$IP/includes/wikia/transaction/Transaction.php";
+$wgAutoloadClasses[ 'TransactionTrace'                ] = "$IP/includes/wikia/transaction/TransactionTrace.php";
+$wgAutoloadClasses[ 'TransactionClassifier'           ] = "$IP/includes/wikia/transaction/TransactionClassifier.php";
+$wgAutoloadClasses[ 'TransactionTraceNewrelic'        ] = "$IP/includes/wikia/transaction/TransactionTraceNewrelic.php";
+$wgAutoloadClasses[ 'TransactionTraceScribe'          ] = "$IP/includes/wikia/transaction/TransactionTraceScribe.php";
 $wgHooks          [ 'ArticleViewAddParserOutput'      ][] = 'Transaction::onArticleViewAddParserOutput';
 $wgHooks          [ 'RestInPeace'                     ][] = 'Transaction::onRestInPeace';
 $wgHooks          [ 'RestInPeace'                     ][] = 'ScribePurge::onRestInPeace';
+$wgHooks          [ 'RestInPeace'                     ][] = 'CeleryPurge::onRestInPeace';
 $wgAutoloadClasses[ 'Wikia\\Blogs\\BlogTask'          ] = "$IP/extensions/wikia/Blogs/BlogTask.class.php";
+$wgAutoloadClasses[ 'TemplatePageHelper'              ] = "$IP/includes/wikia/helpers/TemplatePageHelper.php";
+$wgAutoloadClasses[ 'CrossOriginResourceSharingHeaderHelper' ] = "$IP/includes/wikia/helpers/CrossOriginResourceSharingHeaderHelper.php";
+$wgAutoloadClasses[ 'VignetteRequest'                 ] = "{$IP}/includes/wikia/vignette/VignetteRequest.php";
+$wgAutoloadClasses[ 'UrlGeneratorInterface'           ] = "{$IP}/includes/wikia/vignette/UrlGeneratorInterface.php";
+$wgAutoloadClasses[ 'VignetteUrlToUrlGenerator'       ] = "{$IP}/includes/wikia/vignette/VignetteUrlToUrlGenerator.php";
+$wgAutoloadClasses[ 'Wikia\\Cache\\AsyncCacheTask'    ] = "$IP/includes/wikia/AsyncCacheTask.php";
+$wgAutoloadClasses[ 'Wikia\\Cache\\AsyncCache'        ] = "$IP/includes/wikia/AsyncCache.php";
+$wgAutoloadClasses['Swagger'] = "$IP/includes/wikia/swagger/Swagger.php";
+$wgAutoloadClasses['SwaggerResource'] = "$IP/includes/wikia/swagger/SwaggerResource.php";
+$wgAutoloadClasses['SwaggerApi'] = "$IP/includes/wikia/swagger/SwaggerApi.php";
+$wgAutoloadClasses['SwaggerOperation'] = "$IP/includes/wikia/swagger/SwaggerOperation.php";
+$wgAutoloadClasses['SwaggerParameter'] = "$IP/includes/wikia/swagger/SwaggerParameter.php";
+$wgAutoloadClasses['SwaggerModel'] = "$IP/includes/wikia/swagger/SwaggerModel.php";
+$wgAutoloadClasses['SwaggerModelProperty'] = "$IP/includes/wikia/swagger/SwaggerModelProperty.php";
+$wgAutoloadClasses['SwaggerErrorResponse'] = "$IP/includes/wikia/swagger/SwaggerErrorResponse.php";
+$wgAutoloadClasses['TemplateClassification'] = "$IP/includes/wikia/TemplateClassification.class.php";
+$wgAutoloadClasses['TemplateDataExtractor'] = "$IP/includes/wikia/TemplateDataExtractor.class.php";
 
 /**
  * Resource Loader enhancements
@@ -287,15 +326,14 @@ $wgAutoloadClasses['ApiService']  =  $IP.'/includes/wikia/services/ApiService.cl
 $wgAutoloadClasses['ArticleService'] = $IP.'/includes/wikia/services/ArticleService.class.php';
 $wgAutoloadClasses['AvatarService'] = $IP.'/includes/wikia/services/AvatarService.class.php';
 $wgAutoloadClasses['MediaQueryService'] = $IP.'/includes/wikia/services/MediaQueryService.class.php';
-$wgHooks['ArticleEditUpdates'][] = 'MediaQueryService::onArticleEditUpdates';
 $wgAutoloadClasses['OasisService']  =  $IP.'/includes/wikia/services/OasisService.php';
 $wgAutoloadClasses['PageStatsService']  =  $IP.'/includes/wikia/services/PageStatsService.class.php';
 $wgAutoloadClasses['UserContribsProviderService'] = $IP.'/includes/wikia/services/UserContribsProviderService.class.php';
 $wgAutoloadClasses['UserStatsService'] = $IP.'/includes/wikia/services/UserStatsService.class.php';
 $wgAutoloadClasses['CategoriesService'] = $IP.'/includes/wikia/services/CategoriesService.class.php';
 $wgAutoloadClasses['UserCommandsService'] = $IP.'/includes/wikia/services/UserCommandsService.class.php';
-$wgAutoloadClasses['ToolbarService'] = $IP.'/includes/wikia/services/OasisToolbarService.class.php';
-$wgAutoloadClasses['OasisToolbarService'] = $IP.'/includes/wikia/services/OasisToolbarService.class.php';
+$wgAutoloadClasses['ToolbarService'] = $IP.'/includes/wikia/services/ToolbarService.class.php';
+$wgAutoloadClasses['SharedToolbarService'] = $IP.'/includes/wikia/services/SharedToolbarService.class.php';
 $wgAutoloadClasses['CsvService'] = $IP . '/includes/wikia/services/CsvService.class.php';
 $wgAutoloadClasses['MobileService'] = $IP . '/includes/wikia/services/MobileService.class.php';
 $wgAutoloadClasses['TemplateService'] = $IP . '/includes/wikia/services/TemplateService.class.php';
@@ -310,6 +348,7 @@ $wgAutoloadClasses['WAMService'] = $IP . '/includes/wikia/services/WAMService.cl
 $wgAutoloadClasses['VideoService'] = $IP . '/includes/wikia/services/VideoService.class.php';
 $wgAutoloadClasses['UserService']  =  $IP.'/includes/wikia/services/UserService.class.php';
 $wgAutoloadClasses['MustacheService'] = $IP . '/includes/wikia/services/MustacheService.class.php';
+$wgAutoloadClasses['HandlebarsService'] = $IP . '/includes/wikia/services/HandlebarsService.class.php';
 $wgAutoloadClasses['RevisionService'] = $IP . '/includes/wikia/services/RevisionService.class.php';
 $wgAutoloadClasses['InfoboxesService'] = $IP . '/includes/wikia/services/InfoboxesService.class.php';
 $wgAutoloadClasses['RenderContentOnlyHelper'] = $IP . '/includes/wikia/RenderContentOnlyHelper.class.php';
@@ -317,7 +356,14 @@ $wgAutoloadClasses['SolrDocumentService'] = $IP . '/includes/wikia/services/Solr
 $wgAutoloadClasses['FormBuilderService']  =  $IP.'/includes/wikia/services/FormBuilderService.class.php';
 $wgAutoloadClasses['LicensedWikisService']  =  $IP.'/includes/wikia/services/LicensedWikisService.class.php';
 $wgAutoloadClasses['ArticleQualityService'] = $IP.'/includes/wikia/services/ArticleQualityService.php';
-$wgAutoloadClasses['ArticleTypeService'] = $IP.'/includes/wikia/services/ArticleTypeService.class.php';
+$wgAutoloadClasses['PortableInfoboxDataService'] = $IP . '/extensions/wikia/PortableInfobox/services/PortableInfoboxDataService.class.php';
+
+// services hooks
+$wgHooks['ArticleEditUpdates'][] = 'MediaQueryService::onArticleEditUpdates';
+$wgHooks['ArticlePurge'][] = 'ArticleService::onArticlePurge';
+$wgHooks['ArticleSaveComplete'][] = 'ArticleService::onArticleSaveComplete';
+$wgHooks['ArticleDeleteComplete'][] = 'PageStatsService::onArticleDeleteComplete';
+$wgHooks['ArticleSaveComplete'][] = 'PageStatsService::onArticleSaveComplete';
 
 // data models
 $wgAutoloadClasses['WikisModel'] = "{$IP}/includes/wikia/models/WikisModel.class.php";
@@ -331,24 +377,18 @@ $wgAutoloadClasses['OasisController'] = $IP.'/skins/oasis/modules/OasisControlle
 $wgAutoloadClasses['BodyController'] = $IP.'/skins/oasis/modules/BodyController.class.php';
 $wgAutoloadClasses['BodyContentOnlyController'] = $IP.'/skins/oasis/modules/BodyContentOnlyController.class.php';
 $wgAutoloadClasses['ContentDisplayController'] = $IP.'/skins/oasis/modules/ContentDisplayController.class.php';
-$wgAutoloadClasses['GlobalHeaderController'] = $IP.'/skins/oasis/modules/GlobalHeaderController.class.php';
-$wgAutoloadClasses['CorporateFooterController'] = $IP.'/skins/oasis/modules/CorporateFooterController.class.php';
 $wgAutoloadClasses['WikiHeaderController'] = $IP.'/skins/oasis/modules/WikiHeaderController.class.php';
 $wgAutoloadClasses['SearchController'] = $IP.'/skins/oasis/modules/SearchController.class.php';
 $wgAutoloadClasses['PageHeaderController'] = $IP.'/skins/oasis/modules/PageHeaderController.class.php';
 $wgAutoloadClasses['LatestActivityController'] = $IP.'/skins/oasis/modules/LatestActivityController.class.php';
-$wgAutoloadClasses['LatestPhotosController'] = $IP.'/skins/oasis/modules/LatestPhotosController.class.php';
 $wgAutoloadClasses['FooterController'] = $IP.'/skins/oasis/modules/FooterController.class.php';
-$wgAutoloadClasses['GameStarLogoController'] = $IP.'/skins/oasis/modules/GameStarLogoController.class.php';
 $wgAutoloadClasses['ArticleCategoriesController'] = $IP.'/skins/oasis/modules/ArticleCategoriesController.class.php';
 $wgAutoloadClasses['AchievementsController'] = $IP.'/skins/oasis/modules/AchievementsController.class.php';
 $wgAutoloadClasses['AccountNavigationController'] = $IP.'/skins/oasis/modules/AccountNavigationController.class.php';
-$wgAutoloadClasses['RailController'] = $IP.'/skins/oasis/modules/RailController.class.php';
 $wgAutoloadClasses['AdController'] = $IP.'/skins/oasis/modules/AdController.class.php';
 $wgAutoloadClasses['FollowedPagesController'] = $IP.'/skins/oasis/modules/FollowedPagesController.class.php';
 $wgAutoloadClasses['MyToolsController'] = $IP.'/skins/oasis/modules/MyToolsController.class.php';
 $wgAutoloadClasses['UserPagesHeaderController'] = $IP.'/skins/oasis/modules/UserPagesHeaderController.class.php';
-$wgAutoloadClasses['SpotlightsController'] = $IP.'/skins/oasis/modules/SpotlightsController.class.php';
 $wgAutoloadClasses['MenuButtonController'] = $IP.'/skins/oasis/modules/MenuButtonController.class.php';
 $wgAutoloadClasses['CommentsLikesController'] = $IP.'/skins/oasis/modules/CommentsLikesController.class.php';
 $wgAutoloadClasses['BlogListingController'] = $IP.'/skins/oasis/modules/BlogListingController.class.php';
@@ -362,7 +402,6 @@ $wgAutoloadClasses['ArticleInterlangController'] = $IP.'/skins/oasis/modules/Art
 $wgAutoloadClasses['PagesOnWikiController'] = $IP.'/skins/oasis/modules/PagesOnWikiController.class.php';
 $wgAutoloadClasses['ContributeMenuController'] = $IP.'/skins/oasis/modules/ContributeMenuController.class.php';
 $wgAutoloadClasses['WikiNavigationController'] = $IP.'/skins/oasis/modules/WikiNavigationController.class.php';
-$wgAutoloadClasses['SharingToolbarController'] = $IP.'/skins/oasis/modules/SharingToolbarController.class.php';
 $wgAutoloadClasses['UploadPhotosController'] = $IP.'/skins/oasis/modules/UploadPhotosController.class.php';
 $wgAutoloadClasses['WikiaTempFilesUpload'] = $IP.'/includes/wikia/WikiaTempFilesUpload.class.php';
 $wgAutoloadClasses['ThemeSettings'] = $IP.'/extensions/wikia/ThemeDesigner/ThemeSettings.class.php';
@@ -382,17 +421,14 @@ $wgAutoloadClasses['Wikia\UI\DataException'] = $IP . '/includes/wikia/ui/excepti
 $wgAutoloadClasses['Wikia\UI\UIFactoryApiController'] = $IP . '/includes/wikia/ui/UIFactoryApiController.class.php';
 
 // Traits
-$wgAutoloadClasses['PreventBlockedUsers'] = $IP . '/includes/wikia/traits/PreventBlockedUsers.trait.php';
-$wgAutoloadClasses['PreventBlockedUsersThrowsError'] = $IP . '/includes/wikia/traits/PreventBlockedUsers.trait.php';
-$wgAutoloadClasses['UserAllowedRequirement'] = $IP . '/includes/wikia/traits/UserAllowedRequirement.trait.php';
-$wgAutoloadClasses['UserAllowedRequirementThrowsError'] = $IP . '/includes/wikia/traits/UserAllowedRequirement.trait.php';
+$wgAutoloadClasses['PreventBlockedUsersTrait'] = $IP . '/includes/wikia/traits/PreventBlockedUsersTrait.php';
+$wgAutoloadClasses['PreventBlockedUsersThrowsErrorTrait'] = $IP . '/includes/wikia/traits/PreventBlockedUsersTrait.php';
+$wgAutoloadClasses['UserAllowedRequirementTrait'] = $IP . '/includes/wikia/traits/UserAllowedRequirementTrait.php';
+$wgAutoloadClasses['UserAllowedRequirementThrowsErrorTrait'] = $IP . '/includes/wikia/traits/UserAllowedRequirementTrait.php';
 $wgAutoloadClasses['IncludeMessagesTrait'] = $IP . '/includes/wikia/traits/IncludeMessagesTrait.php';
-
-// Spotlights AB test
-$wgAutoloadClasses['SpotlightsABTestController'] = $IP.'/skins/oasis/modules/SpotlightsABTestController.class.php';
-$wgAutoloadClasses['SpotlightsModel'] = "{$IP}/includes/wikia/models/SpotlightsModel.class.php";
-$wgAutoloadClasses['ReadMoreController'] = $IP.'/skins/oasis/modules/ReadMoreController.class.php';
-$wgAutoloadClasses['ReadMoreModel'] = "{$IP}/includes/wikia/models/ReadMoreModel.class.php";
+$wgAutoloadClasses['PowerUserTrait'] = $IP . '/includes/wikia/traits/PowerUserTrait.php';
+$wgAutoloadClasses['GlobalUserDataTrait'] = $IP . '/includes/wikia/traits/GlobalUserDataTrait.php';
+$wgAutoloadClasses['TitleTrait'] = $IP . '/includes/wikia/traits/TitleTrait.php';
 
 // Profiler classes
 $wgAutoloadClasses['ProfilerData'] = "{$IP}/includes/profiler/ProfilerData.php";
@@ -401,13 +437,29 @@ $wgAutoloadClasses['ProfilerDataUdpSink'] = "{$IP}/includes/profiler/sinks/Profi
 $wgAutoloadClasses['ProfilerDataScribeSink'] = "{$IP}/includes/profiler/sinks/ProfilerDataScribeSink.php";
 
 // Skin loading scripts
-$wgHooks['WikiaSkinTopScripts'][] = 'SpotlightsABTestController::onWikiaSkinTopScripts';
-$wgHooks['WikiaSkinTopScripts'][] = 'ReadMoreController::onWikiaSkinTopScripts';
-$wgHooks['WikiaSkinTopScripts'][] = 'Wikia\\Logger\\Hooks::onWikiaSkinTopScripts';
+$wgHooks['WikiaSkinTopScripts'][] = 'WikiFactoryHubHooks::onWikiaSkinTopScripts';
+//$wgHooks['WikiaSkinTopScripts'][] = 'Wikia\\Logger\\Hooks::onWikiaSkinTopScripts';
 
 // Set the WikiaLogger mode early in the setup process
+$wgHooks['Debug'][] = 'Wikia\\Logger\\Hooks::onDebug';
 $wgHooks['WikiFactory::execute'][] = 'Wikia\\Logger\\Hooks::onWikiFactoryExecute';
 $wgHooks['WikiFactory::onExecuteComplete'][] = 'Wikia\\Logger\\Hooks::onWikiFactoryExecuteComplete';
+
+// memcache stats (PLATFORM-292)
+$wgAutoloadClasses['Wikia\\Memcached\\MemcachedStats'] = "$IP/includes/wikia/memcached/MemcachedStats.class.php";
+$wgHooks['RestInPeace'][] = 'Wikia\\Memcached\\MemcachedStats::onRestInPeace';
+
+# list of groups for wfDebugLog calls that will be logged using WikiaLogger
+# @see PLATFORM-424
+$wgDebugLogGroups = [
+	'ExternalStorage' => true,
+	'ExternalStoreDB' => true,
+	'MessageCache' => true,
+	'poolcounter' => true,  // errors from PoolCounterWork
+	'replication' => true,  // replication errros / excessive lags
+	'squid' => true,        // timeouts and errors from SquidPurgeClient
+	'createwiki' => true,   // CreateWiki process
+];
 
 // Register \Wikia\Sass namespace
 spl_autoload_register( function( $class ) {
@@ -457,7 +509,6 @@ $wgAutoloadClasses[ "WikiaApiQuerySiteInfo"         ] = "$IP/extensions/wikia/Wi
 $wgAutoloadClasses[ "WikiaApiQueryPageinfo"         ] = "$IP/extensions/wikia/WikiaApi/WikiaApiQueryPageinfo.php";
 $wgAutoloadClasses[ "WikiaApiCreatorReminderEmail"  ] = "$IP/extensions/wikia/CreateNewWiki/WikiaApiCreatorReminderEmail.php";
 $wgAutoloadClasses[ "WikiFactoryTags"               ] = "$IP/extensions/wikia/WikiFactory/Tags/WikiFactoryTags.php";
-$wgAutoloadClasses[ "WikiaApiQueryEventsData"       ] = "$IP/extensions/wikia/WikiaApi/WikiaApiQueryEventsData.php";
 $wgAutoloadClasses[ "WikiaApiQueryAllUsers"         ] = "$IP/extensions/wikia/WikiaApi/WikiaApiQueryAllUsers.php";
 $wgAutoloadClasses[ "WikiaApiQueryLastEditors"      ] = "$IP/extensions/wikia/WikiaApi/WikiaApiQueryLastEditors.php";
 $wgAutoloadClasses[ "WikiaApiResetPasswordTime"     ] = "$IP/extensions/wikia/WikiaApi/WikiaApiResetPasswordTime.php";
@@ -492,6 +543,13 @@ $wgAutoloadClasses[ 'WikiaValidatorUsersUrl'        ] = "$IP/includes/wikia/vali
 include_once("$IP/includes/wikia/validators/WikiaValidatorsExceptions.php");
 
 /**
+ * MediaWiki Config
+ */
+$wgAutoloadClasses['Config'] = $IP . '/includes/config/Config.php';
+$wgAutoloadClasses['ConfigFactory'] = $IP . '/includes/config/ConfigFactory.php';
+$wgAutoloadClasses['GlobalVarConfig'] = $IP . '/includes/config/GlobalVarConfig.php';
+
+/**
  * registered API methods
  */
 global $wgAPIListModules;
@@ -520,7 +578,6 @@ global $wgAjaxExportList;
  */
 global $wgAPIPropModules;
 $wgAPIPropModules[ "info"         ] = "WikiaApiQueryPageinfo";
-$wgAPIPropModules[ "wkevinfo"     ] = "WikiaApiQueryEventsData";
 $wgAPIPropModules[ "wklasteditors"] = "WikiaApiQueryLastEditors";
 
 /*
@@ -567,6 +624,17 @@ include_once( "$IP/extensions/wikia/FilePage/FilePage.setup.php" );
 include_once( "$IP/extensions/wikia/CityVisualization/CityVisualization.setup.php" );
 include_once( "$IP/extensions/wikia/Thumbnails/Thumbnails.setup.php" );
 include_once( "$IP/extensions/wikia/InstantGlobals/InstantGlobals.setup.php" );
+include_once( "$IP/extensions/wikia/UserTools/UserTools.setup.php" );
+include_once( "$IP/extensions/wikia/BannerNotifications/BannerNotifications.setup.php" );
+include_once( "$IP/extensions/wikia/LatestPhotos/LatestPhotos.setup.php" );
+include_once( "$IP/extensions/wikia/PowerUser/PowerUser.setup.php" );
+include_once( "$IP/extensions/wikia/AutoFollow/AutoFollow.setup.php" );
+include_once( "$IP/extensions/wikia/GlobalFooter/GlobalFooter.setup.php" );
+include_once( "$IP/extensions/wikia/WikiaLogo/WikiaLogo.setup.php" );
+include_once( "$IP/extensions/wikia/Rail/Rail.setup.php" );
+include_once( "$IP/extensions/wikia/PageShare/PageShare.setup.php" );
+include_once( "$IP/extensions/wikia/PaidAssetDrop/PaidAssetDrop.setup.php" );
+include_once( "$IP/extensions/wikia/CreateNewWiki/CreateNewWiki_global_setup.php" );
 
 /**
  * @name $wgSkipSkins
@@ -613,6 +681,7 @@ $wgSkipSkins = array(
 		'efmonaco',
 		'answers',
 		'vector',
+		'venus',
 		'campfire',
 		'wikiamobile'
 );
@@ -628,13 +697,6 @@ $wgSkipOldSkins = array(
 		'simple',
 		'standard',
 );
-
-/**
- * @name wgReleaseNumber
- * release number is used for building links
- */
-$HeadURL = explode('/', '$HeadURL$');
-$wgReleaseNumber = (!isset($HeadURL[4]) || $HeadURL[4] === "trunk" ) ? "trunk" : $HeadURL[5];
 
 /**
  * @name $wgBiggestCategoriesBlacklist
@@ -665,7 +727,6 @@ $wgLangCreationVariables = array();
  */
 $wgJobClasses[ "CWLocal" ] = "CreateWikiLocalJob";
 include_once( "$IP/extensions/wikia/CreateNewWiki/CreateWikiLocalJob.php" );
-$wgAutoloadClasses[ 'CreateNewWikiTask' ] = "$IP/extensions/wikia/CreateNewWiki/CreateNewWikiTask.class.php";
 
 /**
  * Tasks
@@ -710,17 +771,19 @@ $wgWikiFactoryTags = array();
 /**
  * external databases
  */
+$wgFlagsDB = 'portable_flags';
 $wgExternalDatawareDB = 'dataware';
 $wgExternalArchiveDB = 'archive';
 $wgStatsDB = 'stats';
-$wgKnowledgeDB = 'dataknowledge';
 $wgDatamartDB = 'statsdb_mart';
 $wgDWStatsDB = 'statsdb';
 $wgStatsDBEnabled = true;
 $wgExternalWikiaStatsDB = 'wikiastats';
 $wgSpecialsDB = 'specials';
+$wgSwiftSyncDB = 'swift_sync';
 $wgSharedKeyPrefix = "wikicities"; // default value for shared key prefix, @see wfSharedMemcKey
 $wgWikiaMailerDB = 'wikia_mailer';
+$wgForceMasterDatabase = false;  // true only during wiki creation process
 
 $wgAutoloadClasses['LBFactory_Wikia'] = "$IP/includes/wikia/LBFactory_Wikia.php";
 
@@ -1072,17 +1135,16 @@ $wgPasswordSenderName = 'Wikia';
  *
  * @var array
  */
-$wgResourceLoaderAssetsSkinMapping = array(
+$wgResourceLoaderAssetsSkinMapping = [
 	'oasis' => 'wikia', // in Oasis we use Wikia.js (and Wikia.css) instead of Oasis.js (Oasis.css)
-);
-
-$wgWikiaHubsPages = array();
+	'venus' => 'wikia', // in Venus we use Wikia.js (and Wikia.css) instead of Venus.js (Venus.css) - CON-2113
+];
 
 /**
  * @see https://wikia.fogbugz.com/default.asp?36946
  * core mediawiki feature variable
  */
-$wgArticleCountMethod = "comma";
+$wgArticleCountMethod = "any";
 
 /**
  * Javascript minifier used by ResourceLoader
@@ -1173,24 +1235,44 @@ $wgWikiaHubsFileRepoPath = 'http://corp.wikia.com/';
 $wgWikiaHubsFileRepoDirectory = '/images/c/corp/images';
 
 /**
- * @name $wgEnableAmazonDirectTargetedBuy
- * Enables AmazonDirectTargetedBuy integration
+ * @name $wgEnableAmazonMatchOld
+ * Enables AmazonMatch old integration (id=3006)
  */
-$wgEnableAmazonDirectTargetedBuy = true;
+$wgEnableAmazonMatchOld = true;
 
 /**
- * @name $wgAmazonDirectTargetedBuyCountries
- * Enables AmazonDirectTargetedBuy integration in theese countries (given AmazonDirectTargetedBuy is also true)
- * "Utility" var, don't change it here.
+ * @name $wgAmazonMatchOldCountries
+ * Enables AmazonMatch old integration (id=3006) in these countries (given wgEnableAmazonMatchOld is also true).
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
-$wgAmazonDirectTargetedBuyCountries = null;
+$wgAmazonMatchOldCountries = null;
+
+/**
+ * @name $wgEnableAmazonMatch
+ * Enables AmazonMatch new integration (id=3115)
+ */
+$wgEnableAmazonMatch = true;
+
+/**
+ * @name $wgAmazonMatchCountries
+ * Enables AmazonMatch new integration (id=3115) in these countries (given wgEnableAmazonMatch is also true).
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAmazonMatchCountries = null;
+
+/**
+ * @name $wgAmazonMatchCountriesMobile
+ * Enables AmazonMatch on mobile in these countries
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAmazonMatchCountriesMobile = null;
 
 /**
  * @name $wgAdPageLevelCategoryLangs
  * Enables DART category page param for these content languages
  * "Utility" var, don't change it here.
  */
-$wgAdPageLevelCategoryLangs = [ 'en' => true ];;
+$wgAdPageLevelCategoryLangs = [ 'en' ];
 
 /**
  * @name $wgEnableJavaScriptErrorLogging
@@ -1199,52 +1281,141 @@ $wgAdPageLevelCategoryLangs = [ 'en' => true ];;
 $wgEnableJavaScriptErrorLogging = false;
 
 /**
- * @name $wgEnableRHonDesktop
- * Enables RH- hack on Desktop
- */
-$wgEnableRHonDesktop = false;
-
-/**
- * @name $wgLoadLateAdsAfterPageLoad
- * Enables postpones start for ads in late queue until page "load" event.
- */
-$wgLoadLateAdsAfterPageLoad = false;
-
-/**
- * @name $wgAdDriverEnableRemnantGptMobile
- * Enables Remnant Gpti on Mobile experiment
- */
-$wgAdDriverEnableRemnantGptMobile = false;
-
-/**
  * @name $wgEnableAdEngineExt
  * Enables ad engine
  */
 $wgEnableAdEngineExt = true;
 
 /**
- * @name $wgAdDriverUseEbay
- * Whether to enable AdProviderEbay (true) or not (false)
+ * @name $wgAdDriverDelayBelowTheFold
+ * Prevents from loading BTF before ATF ad slots
  */
-$wgAdDriverUseEbay = false;
+$wgAdDriverDelayBelowTheFold = false;
 
 /**
- * @name $wgAdDriverUseBottomLeaderboard
- * Whether to enable new fancy footer ad BOTTOM_LEADERBOARD
+ * @name $wgAdDriverEnableInvisibleHighImpactSlot
+ * Enables INVISIBLE_HIGH_IMPACT slot
  */
-$wgAdDriverUseBottomLeaderboard = false;
+$wgAdDriverEnableInvisibleHighImpactSlot = true;
+
+/**
+ * @name $wgAdDriverUseAdsAfterInfobox
+ * Enable new mobile_in_content slot after infobox placement
+ */
+$wgAdDriverUseAdsAfterInfobox = false;
+
+/**
+ * @name $wgAdDriverUseTaboola
+ * Whether to enable AdProviderTaboola (true) or not (false)
+ */
+$wgAdDriverUseTaboola = false;
 
 /**
  * @name $wgAdDriverUseTopInContentBoxad
- * Whether to enable new in-content top ad TOP_IN_CONTENT_BOXAD
+ * Whether to enable the in-content ads for Oasis (for narrow screens)
  */
-$wgAdDriverUseTopInContentBoxad = false;
+$wgAdDriverUseTopInContentBoxad = true;
+
+/** @name $wgSitewideDisableAdsOnMercury
+ * Disable ads on Mercury if set to true.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgSitewideDisableAdsOnMercury = false;
 
 /**
- * @name $wgAdDriverBottomLeaderboardImpressionCapping
- * Impression capping for BOTTOM_LEADERBOARD. Array with the numbers of the potential ad calls.
+ * @name $wgSitewideDisableGpt
+ * @link https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
+ * @link http://community.wikia.com/wiki/Special:WikiFactory/community/variables/wgSitewideDisableGpt
+ *
+ * Disable all GPT (DART) ads sitewide in case a disaster happens.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ * For more details consult https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
  */
-$wgAdDriverBottomLeaderboardImpressionCapping = [2, 4, 6];
+$wgSitewideDisableGpt = false;
+
+/**
+ * @name $wgSitewideDisableIVW2
+ * @link https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
+ * @link http://community.wikia.com/wiki/Special:WikiFactory/community/variables/wgSitewideDisableIVW2
+ *
+ * Disable IVW2 Analytics pixel sitewide in case a disaster happens.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ * For more details consult https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
+ */
+$wgSitewideDisableIVW2 = false;
+
+/**
+ * @name $wgSitewideDisableLiftium
+ * @link https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
+ * @link http://community.wikia.com/wiki/Special:WikiFactory/community/variables/wgSitewideDisableLiftium
+ *
+ * Disable Liftium sitewide in case a disaster happens.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ * For more details consult https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
+ */
+$wgSitewideDisableLiftium = false;
+
+/**
+ * @name $wgSitewideDisablePaidAssetDrop
+ * @link https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
+ * @link http://community.wikia.com/wiki/Special:WikiFactory/community/variables/wgSitewideDisablePaidAssetDrop
+ *
+ * Disable Paid Asset Drop (PAD) sitewide in case a disaster happens.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ * For more details consult https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
+ */
+$wgSitewideDisablePaidAssetDrop = false;
+
+/**
+ * @name $wgSitewideDisableRubiconRTP
+ * @link https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
+ * @link http://community.wikia.com/wiki/Special:WikiFactory/community/variables/wgSitewideDisableRubiconRTP
+ *
+ * Disable Rubicon RTP Analytics pixel sitewide in case a disaster happens.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ * For more details consult https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
+ */
+$wgSitewideDisableRubiconRTP = false;
+
+/**
+ * @name $wgSitewideDisableSevenOneMedia
+ * @link https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
+ * @link http://community.wikia.com/wiki/Special:WikiFactory/community/variables/wgSitewideDisableSevenOneMedia
+ *
+ * Disable SevenOneMedia sitewide in case a disaster happens.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ * For more details consult https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
+ */
+$wgSitewideDisableSevenOneMedia = false;
+
+/**
+ * @name $wgEnableKruxTargeting
+ *
+ * Enables Krux Targeting
+ */
+$wgEnableKruxTargeting = true;
+
+/**
+ * @name $wgSitewideDisableKrux
+ * @link https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
+ * @link http://community.wikia.com/wiki/Special:WikiFactory/community/variables/wgSitewideDisableKrux
+ *
+ * Disable Krux sitewide in case a disaster happens.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ * For more details consult https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
+ */
+$wgSitewideDisableKrux = false;
+
+/**
+ * @name $wgSitewideDisableMonetizationService
+ * @link https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
+ * @link http://community.wikia.com/wiki/Special:WikiFactory/community/variables/wgSitewideDisableMonetizationService
+ *
+ * Disable MonetizationService sitewide in case a disaster happens.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ * For more details consult https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
+ */
+$wgSitewideDisableMonetizationService = false;
 
 /**
  * @name $wgAdDriverUseSevenOneMedia
@@ -1255,18 +1426,10 @@ $wgAdDriverUseSevenOneMedia = null;
 $wgAdDriverUseSevenOneMediaInLanguages = ['de'];
 
 /**
- * @name $wgAdDriverSevenOneMediaSub4Site
- * Global variable SOI_SUB4SITE value for SevenOne Media ads
+ * @name $wgAdDriverSevenOneMediaOverrideSub2Site
+ * Enable override SOI_SUB2SITE with string defined in value for SevenOne Media ads
  */
-$wgAdDriverSevenOneMediaSub4Site = null;
-
-/**
- * @name $wgAdDriverUseDartForSlotsBelowTheFold
- * Whether to call DART for additional slots below the fold. Also known as "Coffee cup".
- * Set to null for to restrict only to Entertainment vertical
- * TODO: add an internal page for the reasons
- */
-$wgAdDriverUseDartForSlotsBelowTheFold = null;
+$wgAdDriverSevenOneMediaOverrideSub2Site = null;
 
 /**
  * @name $wgAdDriverTrackState
@@ -1275,47 +1438,82 @@ $wgAdDriverUseDartForSlotsBelowTheFold = null;
 $wgAdDriverTrackState = false;
 
 /**
- * @name $wgAdDriverForceDirectGptAd
- * Forces to use AdProviderDirectGpt for all slots managed by this provider
+ * @name $wgAdDriverForcedProvider
+ * @example 'liftium', 'turtle' or 'openx'
+ * Forces to use passed provider for all slots managed by this provider and disables other providers.
  */
-$wgAdDriverForceDirectGptAd = false;
-
-/**
- * @name $wgAdDriverForceLiftiumAd
- * Forces to use AdProviderLiftium for all slots managed by this provider
- */
-$wgAdDriverForceLiftiumAd = false;
+$wgAdDriverForcedProvider = null;
 
 /**
  * @name $wgAdDriverEnableAdsInMaps
  * Whether to display ads within interactive maps
  */
-$wgAdDriverEnableAdsInMaps = false;
+$wgAdDriverEnableAdsInMaps = true;
+
+/**
+ * @name $wgAdDriverRubiconRTPConfig
+ * @example [[
+ *  'disabled' => true/false
+ *  'oz_site' => 'XX/XXX',
+ *  'oz_zone' => 'XXXXX'
+ *  'oz_ad_slot_size' => 'NNNxNNN',
+ *  'slotname' : [ 'top_leaderboard' ],
+ *  'skin' : ['oasis']
+ *  ]]
+ *
+ * Rubicon RTP configuration variable.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverRubiconRTPConfig = null;
+
+/**
+ * @name $wgAdDriverRubiconRTPCountries
+ * List of countries RTP call will be issued.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverRubiconRTPCountries = null;
+
+/**
+ * @name $wgAdDriverKruxCountries
+ * List of countries Krux will be enabled on
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverKruxCountries = null;
+
+/**
+ * @name $wgAdDriverScrollHandlerCountries
+ * List of countries scroll handler will be enabled on
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverScrollHandlerCountries = null;
 
 /**
  * @name $wgHighValueCountries
  * List of countries defined as high-value for revenue purposes
- * Value set in WikiFactory for Community acts as global value. Can be overridden per wiki.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgHighValueCountries = null;
 
 /**
- * @name $wgAdVideoTargeting
- * Enables page-level video ad targeting
+ * @name $wgAdDriverTurtleCountries
+ * List of countries to call Turtle ad partner in
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
-$wgAdVideoTargeting = true;
+$wgAdDriverTurtleCountries = null;
 
 /**
- * @name $wgAnalyticsProviderPageFair
- * Site ID for PageFair analytics provider.
+ * @name $wgAdDriverOpenXCountries
+ * List of countries to call OpenX ad partner in
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
-$wgAnalyticsProviderPageFair = null;
+$wgAdDriverOpenXCountries = null;
 
 /**
- * @name $wgAnalyticsProviderPageFairSlotIds
- * Slot IDs for PageFair analytics provider.
+ * @name $wgAdDriverSourcePointCountries
+ * List of countries to call ads through SourcePoint
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
-$wgAnalyticsProviderPageFairSlotIds = [ 'LEADERBOARD' => null, 'MEDREC' => null, 'SKYSCRAPER' => null ];
+$wgAdDriverSourcePointCountries = null;
 
 /**
  * trusted proxy service registry
@@ -1464,14 +1662,34 @@ $wgEnableSpecialSearchCaching = true;
  * @name wgEnableBuckyExt
  * Enables real user performance reporting via Bucky
  */
-$wgEnableBuckyExt = false;
+$wgEnableBuckyExt = true;
 
 /*
  * @name wgBuckySampling
  * Sets the sampling rate for Bucky reporting, sampling applied at each page view.
  * Unit: percent (100 = all, 1 = 1%, 0.1 = 0.1%)
  */
-$wgBuckySampling = 1;
+$wgBuckySampling = 10;
+
+/*
+ * @name wgBuckyEnabledSkins
+ * List of skins where Bucky reporting should be enabled
+ */
+$wgBuckyEnabledSkins = [
+	'monobook',
+	'oasis',
+	'venus',
+	'uncyclopedia',
+	'wikiamobile',
+];
+
+/**
+ * @name wgMemcacheStatsSampling
+ * Sets the sampling rate for Memcache stats reporting, sampling applied at each page view
+ *
+ * Unit: percent (0-100)
+ */
+$wgMemcacheStatsSampling = 1;
 
 /*
  * @name wgXhprofUDPHost
@@ -1502,3 +1720,70 @@ $wgProfilerSendViaScribe = true;
  */
 $wgDisableWAMOnHubs = false;
 
+/* @name wgIncludeWikiInCorporateFooterDropdown
+ * Include link to this wiki in the Corporate Footer dropdown (the one with flags).
+ */
+$wgIncludeWikiInCorporateFooterDropdown = false;
+
+/**
+ * Force ImageServing to return an empty list
+ * see PLATFORM-392
+ */
+$wgImageServingForceNoResults = false;
+
+/**
+ * @name wgOasisTypography
+ * Enable typography changes on oasis breakpoints.
+ * Works only if wgOasisBreakpoints set to true
+ */
+$wgOasisTypography = true;
+
+/**
+ * Force new breakpoints $wgOasisBreakpoints
+ * see CONCF-186
+ * todo Remove when removing responsive
+ */
+$wgOasisBreakpoints = true;
+
+/**
+ * Force new breakpoints $wgOasisBreakpoints for German wikis
+ * see CONCF-433
+ * todo remove when 71M adjusts their styles
+ */
+$wgOasisBreakpointsDE = true;
+
+/**
+ * Add poweruser to implicit groups
+ */
+$wgImplicitGroups[] = 'poweruser';
+
+/**
+ * Enable updated GlobalFooter
+ * @TODO CONCF-444 - remove this variable
+ */
+$wgEnableUpdatedGlobalFooter = true;
+
+/**
+ * Enable page share icons worldwide
+ */
+$wgEnablePageShareExt = true;
+
+/**
+ * @name $wgPaidAssetDropConfig
+ *
+ * Disables Paid Asset Drop campaign if set to false. Enables it if set to an array with two dates (YYYY-MM-DD format).
+ * https://one.wikia-inc.com/wiki/Ad_Engineering/Paid_Asset_Drop
+ */
+$wgPaidAssetDropConfig = false;
+
+/**
+ * @name $wgAdDriverIncontentPlayerSlotCountries
+ * Enables INCONTENT_PLAYER slot in these countries
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverIncontentPlayerSlotCountries = null;
+
+/**
+ * flag for using (possibly external) service for managing a user's preferences
+ */
+$wgPreferencesUseService = false;

@@ -959,15 +959,22 @@ class MediaWikiService
 		wfProfileIn( __METHOD__ );
 		if ( in_array( $title->getNamespace(), array( NS_WIKIA_FORUM_BOARD_THREAD, NS_USER_WALL_MESSAGE ) ) ) {
 			$wm = \WallMessage::newFromId( $title->getArticleID() );
-			$wm->load();
-			
-			if ( !$wm->isMain() && ( $main = $wm->getTopParentObj() ) && !empty( $main ) ) {
-				$main->load();
-				$wm = $main;
-			}
-			wfProfileOut( __METHOD__ );
 
-			return (string) $wm->getMetaTitle();
+			if ( $wm ) {
+				$wm->load();
+
+				if ( !$wm->isMain() && ( $main = $wm->getTopParentObj() ) && !empty( $main ) ) {
+					$main->load();
+					$wm = $main;
+				}
+				wfProfileOut( __METHOD__ );
+
+				return (string)$wm->getMetaTitle();
+			} else {
+				\Wikia\Logger\WikiaLogger::instance()->warning( 'Null WallMessage',
+					['message_id' => $title->getArticleID()]
+				);
+			}
 		}
 		wfProfileOut(__METHOD__);
 		return $title->getFullText();

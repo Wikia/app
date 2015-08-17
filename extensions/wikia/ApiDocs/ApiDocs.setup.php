@@ -5,13 +5,17 @@ if ( ! defined( 'MEDIAWIKI' ) )
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'ApiDocs',
 	'author' => 'Artur Dwornik',
-//	'descriptionmsg' => 'imageserving-desc',
+	'descriptionmsg' => 'apidocs-desc',
 	'version' => '0.1',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/ApiDocs',
 );
 
 $dir = __DIR__ . '/';
 
 $app = F::app();
+
+//i18n
+$wgExtensionMessagesFiles['ApiDocs'] = $dir . 'i18n/ApiDocs.i18n.php';
 
 $wgAutoloadClasses['ApiDocsController'] = "{$dir}ApiDocsController.class.php";
 $wgAutoloadClasses['DocsApiController'] = "{$dir}DocsApiController.class.php";
@@ -21,26 +25,6 @@ $wgAutoloadClasses['Wikia\ApiDocs\Services\CachingApiDocsService'] = "{$dir}serv
 $wgAutoloadClasses['Wikia\ApiDocs\Services\ApiDocsService'] = "{$dir}services/ApiDocsService.php";
 
 global $IP;
-// load swagger
-$swaggerRoot = $IP . "/lib/vendor/swagger-php/";
-$wgAutoloadClasses['Swagger\Parser']  = $swaggerRoot . "library/Swagger/Parser.php";
-$wgAutoloadClasses['Swagger\Logger']  = $swaggerRoot . "library/Swagger/Logger.php";
-$wgAutoloadClasses['Swagger\Swagger'] = $swaggerRoot . "library/Swagger/Swagger.php";
-
-$wgAutoloadClasses['Swagger\Annotations\Parameter']          = $swaggerRoot . "library/Swagger/Annotations/Parameter.php";
-$wgAutoloadClasses['Swagger\Annotations\Parameters']         = $swaggerRoot . "library/Swagger/Annotations/Parameters.php";
-$wgAutoloadClasses['Swagger\Annotations\Model']              = $swaggerRoot . "library/Swagger/Annotations/Model.php";
-$wgAutoloadClasses['Swagger\Annotations\ErrorResponse']      = $swaggerRoot . "library/Swagger/Annotations/ErrorResponse.php";
-$wgAutoloadClasses['Swagger\Annotations\AllowableValues']    = $swaggerRoot . "library/Swagger/Annotations/AllowableValues.php";
-$wgAutoloadClasses['Swagger\Annotations\AbstractAnnotation'] = $swaggerRoot . "library/Swagger/Annotations/AbstractAnnotation.php";
-$wgAutoloadClasses['Swagger\Annotations\Resource']           = $swaggerRoot . "library/Swagger/Annotations/Resource.php";
-$wgAutoloadClasses['Swagger\Annotations\Operation']          = $swaggerRoot . "library/Swagger/Annotations/Operation.php";
-$wgAutoloadClasses['Swagger\Annotations\Property']           = $swaggerRoot . "library/Swagger/Annotations/Property.php";
-$wgAutoloadClasses['Swagger\Annotations\ErrorResponses']     = $swaggerRoot . "library/Swagger/Annotations/ErrorResponses.php";
-$wgAutoloadClasses['Swagger\Annotations\Items']              = $swaggerRoot . "library/Swagger/Annotations/Items.php";
-$wgAutoloadClasses['Swagger\Annotations\Properties']         = $swaggerRoot . "library/Swagger/Annotations/Properties.php";
-$wgAutoloadClasses['Swagger\Annotations\Operations']         = $swaggerRoot . "library/Swagger/Annotations/Operations.php";
-$wgAutoloadClasses['Swagger\Annotations\Api']                = $swaggerRoot . "library/Swagger/Annotations/Api.php";
 
 // load doctrine
 $doctrineCommonRoot = $IP . "/lib/vendor/DoctrineCommon-2.3.0/Doctrine/Common/";

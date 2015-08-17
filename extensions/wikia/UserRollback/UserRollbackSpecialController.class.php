@@ -115,29 +115,19 @@ class UserRollbackSpecialController extends WikiaSpecialPageController {
 
 		$params = $request->getTaskArguments();
 
-		if ( TaskRunner::isModern('UserRollback') ) {
-			$userNames = $this->processUsers( $request );
-			$timestamp = $params['time'];
-			$queue = \Wikia\Tasks\Queues\Queue::NAME;
-			if ( $params['priority'] > 1 ) {
-				$queue = \Wikia\Tasks\Queues\PriorityQueue::NAME;
-			}
-
-			$task = ( new UserRollbackTask() )
-				->wikiId( $wgCityId )
-				->setPriority( $queue );
-			$task->call( 'enqueueRollback', $userNames, $timestamp, $queue );
-
-			return $task->queue();
-		} else {
-			$priority = $params['priority'] > 1 ? BatchTask::PRIORITY_HIGH : BatchTask::PRIORITY_LOW;
-			unset( $params['priority'] );
-
-			$task = new OldUserRollbackTask();
-			$taskId = $task->createTask( $params, TASK_QUEUED, $priority );
-
-			return $taskId > 0;
+		$userNames = $this->processUsers( $request );
+		$timestamp = $params['time'];
+		$queue = \Wikia\Tasks\Queues\Queue::NAME;
+		if ( $params['priority'] > 1 ) {
+			$queue = \Wikia\Tasks\Queues\PriorityQueue::NAME;
 		}
+
+		$task = ( new UserRollbackTask() )
+			->wikiId( $wgCityId )
+			->setPriority( $queue );
+		$task->call( 'enqueueRollback', $userNames, $timestamp, $queue );
+
+		return $task->queue();
 	}
 
 	public function displayErrors() {

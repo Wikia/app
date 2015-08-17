@@ -1,5 +1,7 @@
 <?php
 
+use \Wikia\Logger\WikiaLogger;
+
 class ScribeEventProducer {
 	private $app = null;
 	private $mParams, $mKey, $mEventType;
@@ -49,7 +51,7 @@ class ScribeEventProducer {
 		$this->setCategory();
 	}
 
-	public function buildEditPackage( $oPage, $oUser, $oRevision = null, $revision_id = null ) {
+	public function buildEditPackage( $oPage, $oUser, $oRevision = null, $revision_id = null, $oLocalFile = null ) {
 		wfProfileIn( __METHOD__ );
 
 		if ( !is_object( $oPage ) ) {
@@ -106,9 +108,17 @@ class ScribeEventProducer {
 		$this->setIsRedirect( $oTitle->isRedirect() );
 		$this->setRevisionTimestamp( wfTimestamp( TS_DB, $rev_timestamp ) );
 		$this->setRevisionSize( $rev_size );
-		$this->setMediaType( $oTitle );
 		$this->setMediaLinks( $oPage );
 		$this->setTotalWords( str_word_count( $rev_text ) );
+
+		if ( $oLocalFile instanceof File ) {
+			$this->setMediaType( $oTitle );
+			$this->setIsLocalFile( $oLocalFile );
+			$this->setIsTop200( $this->app->wg->CityId );
+			$this->setIsImageForReview();
+		} else {
+			$this->setIsImageForReview( false );
+		}
 
 		$t = microtime(true);
 		$micro = sprintf("%06d",($t - floor($t)) * 1000000);
@@ -173,7 +183,7 @@ class ScribeEventProducer {
 		return $logid;
 	}
 
-	public function buildUndeletePackage( $oTitle ) {
+	public function buildUndeletePackage( $oTitle, $created = false ) {
 		wfProfileIn( __METHOD__ );
 
 		if ( !is_object( $oTitle ) ) {
@@ -183,7 +193,7 @@ class ScribeEventProducer {
 		}
 
 		$oPage = WikiPage::factory( $oTitle );
-		if ( !$oPage instanceof Article ) {
+		if ( !$oPage instanceof WikiPage ) {
 			Wikia::log( __METHOD__, "error", "Cannot send log using scribe ({$this->app->wg->CityId}): invalid WikiPage object" );
 			wfProfileOut( __METHOD__ );
 			return true;
@@ -203,9 +213,14 @@ class ScribeEventProducer {
 			return true;
 		}
 
+		$oLocalFile = null;
+		if ( $created && $oTitle->getNamespace() == NS_FILE ) {
+			$oLocalFile = wfLocalFile( $oTitle );
+		}
+
 		wfProfileOut( __METHOD__ );
 
-		return $this->buildEditPackage( $oPage, $oUser );
+		return $this->buildEditPackage( $oPage, $oUser, null, null, $oLocalFile );
 	}
 
 	public function buildMovePackage( $oTitle, $oUser, $page_id = null, $redirect_id = null ) {
@@ -312,6 +327,15 @@ class ScribeEventProducer {
 		$this->mParams['eventTS'] = $ts;
 	}
 
+	public function setIsLocalFile ( File $oLocalFile ) {
+		if( $oLocalFile instanceof File && $oLocalFile->exists() ) {
+			$bIsLocalFile = true;
+		} else {
+			$bIsLocalFile = false;
+		}
+		$this->mParams['isLocalFile'] = intval( $bIsLocalFile );
+	}
+
 	public function setMediaType ( $oTitle ) {
 		wfProfileIn( __METHOD__ );
 
@@ -321,7 +345,6 @@ class ScribeEventProducer {
 
 			$mediaType = MEDIATYPE_UNKNOWN;
 			$oLocalFile = RepoGroup::singleton()->getLocalRepo()->newFile( $oTitle );
-
 			if ( $oLocalFile instanceof LocalFile ) {
 				$mediaType = $oLocalFile->getMediaType();
 			}
@@ -373,9 +396,95 @@ class ScribeEventProducer {
 		$this->mParams['languageId'] = WikiFactory::LangCodeToId($lang_code);
 	}
 
-
 	public function setCategory() {
+		//This field is called categoryId but getCategory returns an object with cat_id and cat_name fields
 		$this->mParams['categoryId'] = WikiFactory::getCategory( $this->app->wg->CityId );
+
+		// The code should probably be changed to this after double checking the scribe consumers
+		//$category = WikiFactory::getCategory( $this->app->wg->CityId );
+		//$this->mParams['categoryId'] = isset($category->cat_id) ? $category->cat_id : 0;
+		//
+		// And when categories are updated:
+		//$this->mParams['categories'] = WikiFactory::getCategories( $this->app->wg->CityId );
+
+	}
+
+	public function setIsTop200( $city_id ) {
+		$this->mParams['isTop200'] = intval( $this->isTop200( $city_id ) );
+	}
+
+	/**
+	 * Checks if a given wikia is in the top 200 in terms of pageviews
+	 * @param  int     $city_id
+	 * @return boolean
+	 */
+	public function isTop200( $city_id ) {
+		wfProfileIn( __METHOD__ );
+
+		$sCacheKey = wfSharedMemcKey( __CLASS__, __METHOD__ );
+
+		// Check in memcache before using DataMartService
+		if ( !is_null( $this->app->wg->Memc->get( $sCacheKey ) ) ) {
+			$aTop200Wikis = $this->app->wg->Memc->get( $sCacheKey );
+		} else {
+			$aTop200Wikis = DataMartService::getTopWikisByPageviews( DataMartService::PERIOD_ID_MONTHLY );
+			$this->app->wg->Memc->set( $sCacheKey, $aTop200Wikis, \WikiaResponse::CACHE_LONG );
+		}
+
+		// city_ids are keys; return true if that one is set.
+		if ( isset( $aTop200Wikis[$city_id] ) ) {
+			wfProfileOut( __METHOD__ );
+			return true;
+		}
+
+		wfProfileOut( __METHOD__ );
+		return false;
+	}
+
+	public function setIsImageForReview( $bProvidedValue = null ) {
+		if ( $bProvidedValue === null ) {
+			$aAllowedTypes = [
+				1 => MEDIATYPE_BITMAP,
+				2 => MEDIATYPE_DRAWING,
+			];
+
+			if ( in_array( $this->mParams['pageNamespace'], $this->mediaNS )
+				&& isset( $aAllowedTypes[ $this->mParams['mediaType'] ] )
+			) {
+				if ( $this->mParams['isRedirect'] == 1 ) {
+					$sLogMessage = 'The page is a redirect';
+					$bIsImageForReview = false;
+				} elseif ( $this->mParams['isLocalFile'] == 0 ) {
+					$sLogMessage = 'The file is from an external repo';
+					$bIsImageForReview = false;
+				} elseif ( $this->mParams['isTop200'] == 1 ) {
+					$sLogMessage = 'The image was uploaded to one of the Top200 wikias';
+					$bIsImageForReview = false;
+				} else {
+					$sLogMessage = 'The image was sent for a review';
+					$bIsImageForReview = true;
+				}
+
+				$this->mParams['isImageForReview'] = intval( $bIsImageForReview );
+				$this->sendImageReviewLog( $sLogMessage );
+			}
+		} else {
+			$this->mParams['isImageForReview'] = intval( $bProvidedValue );
+		}
+	}
+
+	/**
+	 * Sends a unified ImageReviewLog message
+	 * @param  string $sLogMessage  A log message
+	 * @return void
+	 */
+	private function sendImageReviewLog( $sLogMessage ) {
+		WikiaLogger::instance()->info( 'ImageReviewLog', [
+			'method' => __METHOD__,
+			'status' => $this->mParams['isImageForReview'],
+			'message' => $sLogMessage,
+			'params' => $this->mParams,
+		] );
 	}
 
 	public function sendLog() {

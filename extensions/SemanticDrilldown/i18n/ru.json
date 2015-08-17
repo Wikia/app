@@ -1,0 +1,37 @@
+{
+	"@metadata": {
+		"authors": [
+			"Ferrer",
+			"Innv",
+			"Lockal",
+			"Okras",
+			"Александр Сигачёв"
+		]
+	},
+	"semanticdrilldown-desc": "Развёрнутый интерфейс для навигации в семантических данных",
+	"specialpages-group-sd_group": "Развёрнутая семантика",
+	"browsedata": "Обзор данных",
+	"sd_browsedata_choosecategory": "Выберите категорию",
+	"sd_browsedata_viewcategory": "просмотр категории",
+	"sd_browsedata_docu": "Нажмите на одном или больше элементов для уменьшения ваших результатов.",
+	"sd_browsedata_subcategory": "Подкатегория",
+	"sd_browsedata_other": "Другие",
+	"sd_browsedata_none": "Нет",
+	"sd_browsedata_filterbyvalue": "Фильтр по этому значению",
+	"sd_browsedata_filterbysubcategory": "Фильтр по этой подкатегории",
+	"sd_browsedata_otherfilter": "Показать страницы с другими значениями по этому фильтру",
+	"sd_browsedata_nonefilter": "Показать страницы без значений по этому фильтру",
+	"sd_browsedata_or": "или",
+	"sd_browsedata_removefilter": "Убрать этот фильтр",
+	"sd_browsedata_removesubcategoryfilter": "Убрать этот фильтр по подкатегории",
+	"sd_browsedata_resetfilters": "Сбросить фильтры",
+	"sd_browsedata_addanothervalue": "Нажмите на стрелку, чтобы добавить другое значение",
+	"sd_browsedata_daterangestart": "Начало:",
+	"sd_browsedata_daterangeend": "Конец:",
+	"sd_browsedata_novalues": "Нет значений для этого фильтра",
+	"sd_createfilter_usepropertyvalues": "Использовать все значения этого свойства для фильтра",
+	"sd_createfilter_usecategoryvalues": "Получить значения для фильтра из этой категории:",
+	"sd_createfilter_requirefilter": "Требовать выбора другого фильтра, перед тем, как отображать этот:",
+	"sd-pageschemas-filter": "Фильтр",
+	"sd-pageschemas-values": "Значения"
+}

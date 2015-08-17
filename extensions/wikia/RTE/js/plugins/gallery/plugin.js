@@ -83,7 +83,11 @@ CKEDITOR.plugins.add('rte-gallery',
 				if ( (wgUserName == null) && (UserLogin) ) {
 					UserLogin.rteForceLogin();
 				}
-				else {
+
+				// Do not show gallery editor if new galleries are enabled. Once we have a new gallery editor
+				// to go along with the new galleries we can turn this back on. See VID-1990 and VID-1855.
+				// When removing this, also remove check in app/extensions/wikia/RTE/js/plugins/media/plugin.js
+				if (!window.wgEnableMediaGalleryExt) {
 					WikiaPhotoGallery.showEditor({
 						from: 'wysiwyg',
 						gallery: gallery

@@ -54,11 +54,9 @@ class CategoryDataService extends Service {
 
 		$db = wfGetDB( DB_SLAVE );
 
-		// Get a count of articles in a category.  Give at least a very small cache TTL
-		$query = (new WikiaSQL())->cache( 5 )
-			->SELECT( 'count(distinct page_title)' )->AS_( 'count' )
+		$query = (new WikiaSQL())
+			->SELECT()->COUNT('page_title')->AS_( 'count' )
 			->FROM( 'page' )
-				->LEFT_JOIN( 'revision' )->ON( 'rev_page', 'page_id' )
 				->JOIN( 'categorylinks' )->ON( 'cl_from', 'page_id' )
 			->WHERE( 'cl_to' )->EQUAL_TO( $sCategoryDBKey );
 
@@ -85,36 +83,6 @@ class CategoryDataService extends Service {
 
 		// Make sure we default to zero
 		return $count;
-	}
-
-	/**
-	 * Return a list of articles in a particular category, ordered by their last edit date
-	 *
-	 * @param string $sCategoryDBKey
-	 * @param string $mNamespace
-	 * @param bool $negative
-	 * @return array
-	 */
-	public static function getRecentlyEdited( $sCategoryDBKey, $mNamespace, $negative = false  ) {
-		wfProfileIn( __METHOD__ );
-
-		$dbr = wfGetDB( DB_SLAVE );
-		$res = $dbr->select(
-			array( 'page', 'revision', 'categorylinks' ),
-			array( 'page_id', 'page_title' ),
-			array(
-				'cl_to' => $sCategoryDBKey,
-				'page_namespace ' . ($negative ? 'NOT ' : '') . 'IN(' . $mNamespace . ')'
-			),
-			__METHOD__,
-			array(	'ORDER BY' => 'rev_timestamp DESC, page_title' ),
-			array(	'revision'  => array( 'LEFT JOIN', 'rev_page = page_id' ),
-				'categorylinks'  => array( 'INNER JOIN', 'cl_from = page_id' ))
-		);
-
-		wfProfileOut( __METHOD__ );
-
-		return self::tableFromResult( $res );
 	}
 
 	/**

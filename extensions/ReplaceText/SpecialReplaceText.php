@@ -96,28 +96,19 @@ class ReplaceText extends SpecialPage {
 					}
 
 					if ( $title !== null ) {
-						if (TaskRunner::isModern('ReplaceTextJob')) {
-							global $wgCityId;
+						global $wgCityId;
 
-							$task = (new ReplaceTextTask())
-								->title($title)
-								->createdBy($this->user->getId())
-								->wikiId($wgCityId);
-							$task->call($taskAction, $replacement_params);
-							$jobs[] = $task;
-						} else {
-							$jobs[] = new ReplaceTextJob( $title, $replacement_params );
-						}
+						$task = (new ReplaceTextTask())
+							->title($title)
+							->createdBy($this->user->getId())
+							->wikiId($wgCityId);
+						$task->call($taskAction, $replacement_params);
+						$jobs[] = $task;
 					}
 				}
 			}
 
-			if (TaskRunner::isModern('ReplaceTextJob')) {
-				\Wikia\Tasks\Tasks\BaseTask::batch($jobs);
-			} else {
-				Job::batchInsert( $jobs );
-			}
-
+			\Wikia\Tasks\Tasks\BaseTask::batch($jobs);
 			$count = $wgLang->formatNum( count( $jobs ) );
 			$wgOut->addWikiMsg( 'replacetext_success', "<tt><nowiki>{$this->target}</nowiki></tt>", "<tt><nowiki>{$this->replacement}</nowiki></tt>", $count );
 
@@ -465,7 +456,7 @@ class ReplaceText extends SpecialPage {
 	function extractContext( $text, $target, $use_regex = false ) {
 		global $wgLang;
 
-		$cw = $this->user->getOption( 'contextchars', 40 );
+		$cw = $this->user->getGlobalPreference( 'contextchars', 40 );
 
 		// Get all indexes
 		if ( $use_regex ) {

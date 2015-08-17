@@ -16,8 +16,8 @@ $wgExtensionCredits[ 'other' ][] = array(
 		'[http://www.wikia.com/wiki/User:Marooned Maciej Błaszkowski (Marooned)]',
 		'Kyle Florence',
 	),
-	'description' => 'Provides an interface for managing categories in article without editing whole article.',
-	'description-msg' => 'categoryselect-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/CategorySelect',
+	'descriptionmsg' => 'categoryselect-desc',
 );
 
 $dir = dirname( __FILE__ ) . '/';

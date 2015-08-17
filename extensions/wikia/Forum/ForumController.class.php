@@ -9,7 +9,13 @@ class ForumController extends WallBaseController {
 	}
 
 	public function init() {
-		$this->response->addAsset( 'extensions/wikia/Forum/css/Forum.scss' );
+		/**
+		 * Include Forum.scss only if
+		 * the method is called in a Forum context
+		 */
+		if ( ForumHelper::isForum() ) {
+			$this->response->addAsset( 'extensions/wikia/Forum/css/Forum.scss' );
+		}
 	}
 
 	public function board() {
@@ -277,12 +283,12 @@ class ForumController extends WallBaseController {
 		$selected = $this->wg->request->getVal( 'sort' );
 
 		if ( empty( $selected ) ) {
-			$selected = $this->app->wg->User->getOption( 'forum_sort_' . $this->sortingType );
+			$selected = $this->app->wg->User->getGlobalPreference( 'forum_sort_' . $this->sortingType );
 		} else {
-			$selectedDB = $this->app->wg->User->getOption( 'forum_sort_' . $this->sortingType );
+			$selectedDB = $this->app->wg->User->getGlobalPreference( 'forum_sort_' . $this->sortingType );
 
 			if ( $selectedDB != $selected ) {
-				$this->app->wg->User->setOption( 'forum_sort_' . $this->sortingType, $selected );
+				$this->app->wg->User->setGlobalPreference( 'forum_sort_' . $this->sortingType, $selected );
 				$this->app->wg->User->saveSettings();
 			}
 		}

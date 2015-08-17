@@ -144,7 +144,7 @@ if (isset($options['verbose'])) echo(implode("\n", $inserts));
 if (!isset($options['dryrun'])) {
 	$dbw = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB);
 	foreach ($inserts as $insert) {
-		wfWaitForSlaves(5);
+		wfWaitForSlaves();
 		$dbw->query($insert);
 	}
 	//make sure we commit transaction

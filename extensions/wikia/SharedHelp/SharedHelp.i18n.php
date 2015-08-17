@@ -47,7 +47,7 @@ $messages['qqq'] = array(
  * @author Malhargan
  */
 $messages['ar'] = array(
-	'sharedhelp-desc' => 'تأخذ صفحات من [[w:Help:Contents|ويكي المساعدة]] وتدرجها في نطاق ال{{ns:help}} في هذه الويكي', # Fuzzy
+	'sharedhelp-desc' => 'تأخذ صفحات من [[w:Help:Contents|ويكي المساعدة]] وتدرجها في نطاق ال{{ns:help}} في هذه الويكي',
 	'sharedhelp-autotalkcreate-summary' => 'إنشاء صفحة نقاش تلقائيا',
 	'sharedhelp-searchprofile' => 'صفحات المساعدة',
 	'sharedhelp-searchprofile-tooltip' => 'البحث في صفحات المساعدة',
@@ -76,12 +76,21 @@ $messages['br'] = array(
 
 /** Catalan (català)
  * @author Marcmpujol
+ * @author Unapersona
  */
 $messages['ca'] = array(
-	'sharedhelp-desc' => "Pren pàgines de [[w:Help:Contents|Community Central]] i incereix-los en l'espai de nom {{ns:help}} en aquest wiki", # Fuzzy
+	'sharedhelp-desc' => "Agafa les pàgines de la [[w:Ayuda:Contenidos|Comunitat Central]] i els afegeix a l'espai de noms {{ns:help}} d'aquest wiki.",
 	'sharedhelp-autotalkcreate-summary' => 'Pàgina de discussió creada automàticament',
 	'sharedhelp-searchprofile' => "Pàgines d'ajuda",
 	'sharedhelp-searchprofile-tooltip' => "Cercar pàgines d'ajuda",
+	'shared_help_info' => 'Preguntes? Pregunta al [[w:c:ca:Special:Forum|Fòrum comunitari]].', # Fuzzy
+	'shared_help_edit_info' => "El text dins d'aquesta caixa està emmagatzemat a [[w:c:comunidad:Ayuda:$1|Ajuda:$1]] al wiki $2. Vegeu [[Ajuda:Ajuda compartida]] per més informació.
+
+Qualsevol canvi que vulguis fer a ''tots'' els wikis s'ha de fer a la còpia del wiki $2. [[w:c:comunidad:Ayuda_discusión:$1|Suggeriu canvis aquí]].
+
+Només has d'afegir text en aquesta pàgina si vols especificar les polítiques i directrius de {{SITENAME}}. El text que afegiu en aquesta caixa d'edició es mostrarà a sobre de l'ajuda compartida.", # Fuzzy
+	'shared_help_search_info' => "Per buscar ajuda sobre l'edició, si us plau visita la [http://c.wikia.com/wiki/Special:Search?search=$1 Community Central]",
+	'shared_help_was_redirect' => 'Aquesta pàgina és una redirecció cap a $1',
 );
 
 /** Czech (čeština)
@@ -143,6 +152,13 @@ El texto debe colocarse en esta página si deseas explicar las su uso, estilo y 
 	'shared_help_was_redirect' => 'Esta página es una redirección a $1',
 );
 
+/** Persian (فارسی)
+ * @author Movyn
+ */
+$messages['fa'] = array(
+	'sharedhelp-searchprofile-tooltip' => 'جستجوی صفحات راهنما',
+);
+
 /** Finnish (suomi)
  * @author Elseweyr
  * @author Ilkea
@@ -152,10 +168,10 @@ $messages['fi'] = array(
 	'sharedhelp-autotalkcreate-summary' => 'Keskustelusivu luotiin automaattisesti',
 	'sharedhelp-searchprofile' => 'Ohjesivut',
 	'sharedhelp-searchprofile-tooltip' => 'Etsi ohjesivuja',
-	'shared_help_info' => 'Kysymyksiä tai huolia? Apua löytyy [[w:fi:|Yhteisöwikistä]].', # Fuzzy
-	'shared_help_edit_info' => "Tämän laatikon ohjeteksti säilytetään $2n sivulla [[w:fi:Ohje:$1|Ohje:$1]]. Katso [[Ohje:Jaetut ohjeet]] saadaksesi lisätietoa.
+	'shared_help_info' => 'Kysymyksiä tai huolia? Apua löytyy [[w:c:yhteiso:Toiminnot:Forum|Yhteisöwikin foorumeista]].', # Fuzzy
+	'shared_help_edit_info' => "Tämän laatikon ohjeteksti säilytetään $2n sivulla [[w:c:yhteiso:Ohje:$1|Ohje:$1]]. Katso [[Ohje:Jaetut ohjeet]] saadaksesi lisätietoa.
 
-'''Kaikkia wikioita''' koskevat muutokset tulee tehdä $2n kappaleelle. [[w:fi:Keskustelu_ohjeesta:$1|Ehdota muutoksista täällä]].
+'''Kaikkia wikioita''' koskevat muutokset tulee tehdä $2n kappaleelle. [[w:c:yhteiso:Keskustelu_ohjeesta:$1|Ehdota muutoksista täällä]].
 
 Mikäli haluat lisätä vain sivustoa {{SITENAME}} koskevia ohjeita liittyen esimerkiksi käyttöön, käytäntöön tai tyyliin, voit muokata tätä sivua. Tähän laatikkoon lisätty teksti näkyy jaetun ohjesivun sisällön yläpuolella.", # Fuzzy
 	'shared_help_search_info' => 'Mikäli haluat hakea neuvoja muokkaamiseen, siirry [http://yhteiso.wikia.com/wiki/Special:Search?search=$1 Yhteisöwikiin]',
@@ -203,10 +219,12 @@ $messages['hsb'] = array(
 
 /** Hungarian (magyar)
  * @author TK-999
+ * @author Tacsipacsi
  */
 $messages['hu'] = array(
 	'sharedhelp-desc' => 'A [[w:Help:Contents|Community Central]] oldalait illeszti be az {{ns:help}} névtérbe ezen a wikin',
 	'sharedhelp-autotalkcreate-summary' => 'Automatikusan létrehozott vitalap',
+	'sharedhelp-searchprofile-tooltip' => 'Keresés a Segítség lapokon',
 	'shared_help_info' => 'Kérdéseid vannak? Tedd fel őket a [[w:Special:Forum|Közösségi Központ fórumain]].',
 );
 
@@ -239,11 +257,14 @@ $messages['it'] = array(
 );
 
 /** Japanese (日本語)
+ * @author Plover-Y
  * @author Tommy6
  */
 $messages['ja'] = array(
 	'sharedhelp-desc' => '[[w:Help:Contents|Community Central]] のページをこのウィキの {{ns:help}} 名前空間に挿入する。',
 	'sharedhelp-autotalkcreate-summary' => 'ノートページの自動作成',
+	'sharedhelp-searchprofile' => 'ヘルプページ',
+	'sharedhelp-searchprofile-tooltip' => 'ヘルプの検索',
 );
 
 /** Kannada (ಕನ್ನಡ)
@@ -251,6 +272,13 @@ $messages['ja'] = array(
  */
 $messages['kn'] = array(
 	'sharedhelp-searchprofile' => 'ಸಹಾಯ ಪುಟಗಳು',
+);
+
+/** Korean (한국어)
+ * @author Miri-Nae
+ */
+$messages['ko'] = array(
+	'sharedhelp-searchprofile' => '도움말',
 );
 
 /** Colognian (Ripoarisch)
@@ -363,6 +391,7 @@ $messages['oc'] = array(
 
 /** Polish (polski)
  * @author Chrumps
+ * @author NexGaming
  * @author Pio387
  * @author Sovq
  * @author Sp5uhe
@@ -372,7 +401,7 @@ $messages['pl'] = array(
 	'sharedhelp-autotalkcreate-summary' => 'Strona dyskusji utworzona automatycznie',
 	'sharedhelp-searchprofile' => 'Strony pomocy',
 	'sharedhelp-searchprofile-tooltip' => 'Przeszukaj strony pomocy',
-	'shared_help_info' => 'Pytania? Zadaj je na [[w:c:spolecznosc:Specjalna:Forum|Forum Społeczności]].', # Fuzzy
+	'shared_help_info' => 'Masz jakieś pytania? Zadaj je na [[w:c:spolecznosc:Specjalna:Forum|Forum Społeczności]].', # Fuzzy
 	'shared_help_search_info' => 'Jeżeli szukasz pomocy z edytowaniem, odwiedź [http://pl.c.wikia.com/wiki/Special:Search?search=$1 Centrum Społeczności]',
 	'shared_help_was_redirect' => 'Ta strona jest przekierowaniem do $1',
 );
@@ -425,6 +454,8 @@ $messages['roa-tara'] = array(
 	'sharedhelp-autotalkcreate-summary' => "Pàgene de le 'ngazzaminde ccrejate automaticamende",
 	'sharedhelp-searchprofile' => "Pàgene d'ajute",
 	'sharedhelp-searchprofile-tooltip' => 'Cirche le pàggene de ajute',
+	'shared_help_info' => "Domande? Cirche sus a 'u [[w:Special:Forum|Forum d'a Comunitate]].",
+	'shared_help_was_redirect' => 'Sta pàgene jè redirezionate sus a $1',
 );
 
 /** Russian (русский)
@@ -477,6 +508,7 @@ $messages['tl'] = array(
 
 /** Ukrainian (українська)
  * @author Andriykopanytsia
+ * @author Mykola Swarnyk
  * @author Steve.rusyn
  * @author SteveR
  * @author Ua2004
@@ -488,18 +520,25 @@ $messages['uk'] = array(
 	'sharedhelp-searchprofile' => 'Сторінки довідки',
 	'sharedhelp-searchprofile-tooltip' => 'Пошук у довідці',
 	'shared_help_info' => 'Питання? Запитайте на [[w:Special:Forum|Форумі спільноти]].',
+	'shared_help_edit_info' => 'Текст довідки у вікні зберігається в [[w:Help:$1|Help:$1]] на Вікії $2. Див. [[Help:Shared Help]] для додаткової інформації.
+
+Будь-які зміни, які поширюються на "всі" Вікії, повинні бути виконані на примірнику Вікії $2. [[w:Help_talk:$1|Запропонувати зміни тут]].
+
+Якщо ви захочете пояснити використання, стиль і вказівки до процедур, які будуть застосовуватись лише на {{SITENAME}}, текст має бути розміщений на цій сторінці. Текст, доданий у цьому полі редагування, буде відображатися понад рамкою вікна довідкового тексту.',
 	'shared_help_search_info' => 'Щоб знайти допомогу з редагування, будь ласка, відвідайте  [http://c.wikia.com/wiki/Special:Search?search=$1 Портал спільноти]',
 	'shared_help_was_redirect' => 'Ця сторінка є переспрямуванням до $1',
 );
 
 /** Vietnamese (Tiếng Việt)
  * @author Baonguyen21022003
+ * @author Dinhxuanduyet
  */
 $messages['vi'] = array(
 	'sharedhelp-desc' => 'Mất trang từ [[w:Help:Contents|Community Central]] và chèn chúng vào không gian tên {{ns:help}} wiki này',
 	'sharedhelp-autotalkcreate-summary' => 'Thảo luận trang tự động tạo ra',
 	'sharedhelp-searchprofile' => 'Trang trợ giúp',
 	'sharedhelp-searchprofile-tooltip' => 'Trang trợ giúp tìm kiếm',
+	'shared_help_info' => 'Muốn hỏi? Hãy yêu cầu trên [[w:Special:Forum|Diễn đàn cộng đồng]].',
 );
 
 /** Simplified Chinese (中文（简体）‎)
@@ -523,10 +562,11 @@ $messages['zh-hans'] = array(
 
 /** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
+ * @author LNDDYL
  */
 $messages['zh-hant'] = array(
-	'sharedhelp-desc' => '自[[w:c:Help|Wikia幫助]]獲取頁面並嵌入到這個維基的 {{ns:help}}命名空間',
-	'sharedhelp-autotalkcreate-summary' => '討論頁已自動創建',
+	'sharedhelp-desc' => '自[[w:c:Help|Wikia幫助]]獲取頁面並嵌入到這個維基的 {{ns:help}}命名空間', # Fuzzy
+	'sharedhelp-autotalkcreate-summary' => '討論頁已自動建立',
 	'sharedhelp-searchprofile' => '幫助頁面',
-	'sharedhelp-searchprofile-tooltip' => '搜尋幫助頁面',
+	'sharedhelp-searchprofile-tooltip' => '搜尋使用說明頁面',
 );

@@ -8,8 +8,8 @@
  */
 
 class TasksSpecialController extends WikiaSpecialPageController {
-	use PreventBlockedUsersThrowsError;
-	use UserAllowedRequirementThrowsError;
+	use PreventBlockedUsersThrowsErrorTrait;
+	use UserAllowedRequirementThrowsErrorTrait;
 
 	/** @var TasksModel */
 	private $model;

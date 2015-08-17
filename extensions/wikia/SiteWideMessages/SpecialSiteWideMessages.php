@@ -30,7 +30,8 @@ $wgExtensionCredits['specialpage'][] = array(
 		'[http://www.wikia.com/wiki/User:Marooned Maciej Błaszkowski (Marooned)]',
 		'[http://www.wikia.com/wiki/User:Grunny Daniel Grunwell (Grunny)]'
 	),
-	'description' => 'This extension provides an interface for sending messages seen on all wikis.'
+	'descriptionmsg' => 'sidewidemessages-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/SiteWideMessages'
 );
 //Allow group STAFF to use this extension.
 $wgAvailableRights[] = 'messagetool';

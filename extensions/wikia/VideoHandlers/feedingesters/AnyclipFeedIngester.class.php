@@ -4,7 +4,6 @@ class AnyclipFeedIngester extends VideoFeedIngester {
 	protected static $API_WRAPPER = 'AnyclipApiWrapper';
 	protected static $PROVIDER = 'anyclip';
 	protected static $FEED_URL = 'https://mrss.anyclip.com/$1.xml';
-	protected static $CLIP_TYPE_BLACKLIST = array();
 
 	public function downloadFeed( $startDate ) {
 		wfProfileIn( __METHOD__ );
@@ -15,7 +14,7 @@ class AnyclipFeedIngester extends VideoFeedIngester {
 
 		$content = $this->getUrlContent( $url );
 		if ( !$content ) {
-			$this->videoErrors( "ERROR: problem downloading content.\n" );
+			$this->logger->videoErrors( "ERROR: problem downloading content.\n" );
 			wfProfileOut( __METHOD__ );
 
 			return 0;
@@ -36,18 +35,16 @@ class AnyclipFeedIngester extends VideoFeedIngester {
 		return $url;
 	}
 
-	public function import( $content = '', $params = array() ) {
+	public function import( $content = '', array $params = [] ) {
 		wfProfileIn( __METHOD__ );
 
 		$articlesCreated = 0;
-		$debug = !empty( $params['debug'] );
-		$addlCategories = empty( $params['addlCategories'] ) ? array() : $params['addlCategories'];
 
 		$doc = new DOMDocument( '1.0', 'UTF-8' );
 		@$doc->loadXML( $content );
 		$items = $doc->getElementsByTagName( 'item' );
 		$numItems = $items->length;
-		$this->videoFound( $numItems );
+		$this->logger->videoFound( $numItems );
 
 		for ( $i = 0; $i < $numItems; $i++ ) {
 			$item = $items->item( $i );
@@ -58,7 +55,7 @@ class AnyclipFeedIngester extends VideoFeedIngester {
 				$clipData['titleName'] = html_entity_decode( $elements->item(0)->textContent );
 				$clipData['uniqueName'] = $clipData['titleName'];
 			} else {
-				$this->videoSkipped();
+				$this->logger->videoSkipped();
 				continue;
 			}
 
@@ -76,12 +73,12 @@ class AnyclipFeedIngester extends VideoFeedIngester {
 			}
 
 			if ( !array_key_exists( 'videoId', $clipData ) ) {
-				$this->videoWarnings( "ERROR: videoId NOT found for {$clipData['titleName']} - {$clipData['description']}.\n" );
+				$this->logger->videoWarnings( "ERROR: videoId NOT found for {$clipData['titleName']} - {$clipData['description']}.\n" );
 				continue;
 			}
 
 			if ( empty( $clipData['videoId'] ) ) {
-				$this->videoWarnings( "ERROR: Empty videoId for {$clipData['titleName']} - {$clipData['description']}.\n" );
+				$this->logger->videoWarnings( "ERROR: Empty videoId for {$clipData['titleName']} - {$clipData['description']}.\n" );
 				continue;
 			}
 
@@ -90,7 +87,7 @@ class AnyclipFeedIngester extends VideoFeedIngester {
 			$clipData['ageGate'] = ( $elements->length > 0 && $elements->item(0)->textContent == 'nonadult' ) ? 0 : 1;
 
 			if ( $clipData['ageGate'] ) {
-				$this->videoSkipped( "SKIP: Skipping adult video: {$clipData['titleName']} ({$clipData['videoId']}).\n" );
+				$this->logger->videoSkipped( "SKIP: Skipping adult video: {$clipData['titleName']} ({$clipData['videoId']}).\n" );
 				continue;
 			}
 
@@ -119,18 +116,18 @@ class AnyclipFeedIngester extends VideoFeedIngester {
 
 			$elements = $item->getElementsByTagNameNS( 'http://search.yahoo.com/mrss/', 'content' );
 			if ( $elements->length > 0 ) {
-				$clipData['language'] = $this->getCldrCode( $elements->item(0)->getAttribute( 'lang' ), 'language', false );
+				$clipData['language'] = $this->getCLDRCode( $elements->item(0)->getAttribute( 'lang' ), 'language', false );
 				$clipData['duration'] = $elements->item(0)->getAttribute( 'duration' );
 			}
 
-			$genres = array();
+			$genres = [];
 			$elements = $item->getElementsByTagName( 'genre' );
 			foreach ( $elements as $element ) {
 				$genres[] = $element->textContent;
 			}
 			$clipData['genres'] = implode( ', ', $genres );
 
-			$actors = array();
+			$actors = [];
 			$elements = $item->getElementsByTagNameNS( 'http://search.yahoo.com/mrss/', 'credit' );
 			foreach ( $elements as $element ) {
 				if ( $element->getAttribute( 'role' ) == 'actor' ) {
@@ -142,19 +139,7 @@ class AnyclipFeedIngester extends VideoFeedIngester {
 			$clipData['hd'] = 0;
 			$clipData['provider'] = 'anyclip';
 
-			$msg = '';
-			if ( $this->isClipTypeBlacklisted( $clipData ) ) {
-				if ( $debug ) {
-					$this->videoSkipped( "Skipping {$clipData['titleName']} - {$clipData['description']}. On clip type blacklist\n" );
-				}
-			} else {
-				$createParams = array( 'addlCategories' => $addlCategories, 'debug' => $debug );
-				$articlesCreated += $this->createVideo( $clipData, $msg, $createParams );
-			}
-
-			if ( $msg ) {
-				print "ERROR: $msg\n";
-			}
+			$articlesCreated += $this->createVideo( $clipData );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -164,46 +149,39 @@ class AnyclipFeedIngester extends VideoFeedIngester {
 
 	/**
 	 * Create a list of category names to add to the new file page
-	 * @param array $data
-	 * @param array $categories
+	 * @param array $addlCategories
 	 * @return array $categories
 	 */
-	public function generateCategories( $data, $categories ) {
+	public function generateCategories( array $addlCategories ) {
 		wfProfileIn( __METHOD__ );
 
-		$categories[] = 'AnyClip';
-		$categories[] = 'Entertainment';
-		if ( stristr( $data['titleName'], 'trailer' ) ) {
-			$categories[] = 'Trailers';
+		$addlCategories[] = 'AnyClip';
+		$addlCategories[] = 'Entertainment';
+		if ( preg_match( '/trailer/', $this->videoData['titleName'] ) ) {
+			$addlCategories[] = 'Trailers';
 		}
 
-		if ( !empty( $data['name'] ) ) {
-			$categories[] = $data['name'];
-			$addition = $this->getAdditionalPageCategory( $data['name'] );
+		if ( !empty( $this->videoData['name'] ) ) {
+			$addlCategories[] = $this->videoData['name'];
+			$addition = $this->getAdditionalPageCategory( $this->videoData['name'] );
 			if ( !empty( $addition ) ) {
-				$categories[] = $addition;
+				$addlCategories[] = $addition;
 			}
 		}
 
 		wfProfileOut( __METHOD__ );
 
-		return $this->getUniqueArray( $categories );
+		return wfGetUniqueArrayCI( $addlCategories );
 	}
 
 	/**
 	 * generate metadata
-	 * @param array $data
-	 * @param sring $errorMsg
-	 * @return array|int $metadata or 0 on error
+	 * @return array
 	 */
-	public function generateMetadata( $data, &$errorMsg ) {
-		$metadata = parent::generateMetadata( $data, $errorMsg );
-		if ( empty( $metadata ) ) {
-			return 0;
-		}
-
-		$metadata['videoUrl'] = empty( $data['videoUrl'] ) ? '' : $data['videoUrl'];
-		$metadata['uniqueName'] = empty( $data['uniqueName'] ) ? '' : $data['uniqueName'];
+	public function generateMetadata() {
+		$metadata = parent::generateMetadata();
+		$metadata['videoUrl'] = $this->getVideoData( 'videoUrl' );
+		$metadata['uniqueName'] = $this->getVideoData( 'uniqueName' );
 
 		return $metadata;
 	}
@@ -217,7 +195,7 @@ class AnyclipFeedIngester extends VideoFeedIngester {
 		wfProfileIn( __METHOD__ );
 
 		$url = AnyclipApiWrapper::getApi( $code );
-		$response = Http::request( 'GET', $url, array( 'noProxy' => true ) );
+		$response = Http::request( 'GET', $url, [ 'noProxy' => true ] );
 		if ( $response !== false ) {
 			$content = json_decode( $response, true );
 

@@ -8,9 +8,11 @@
 $messages = array();
 
 $messages['en'] = array(
+	'recentchanges-desc' => 'Recent changes - Wikia implementation',
 	'recentchanges-dropdown-select-all' => 'Select All',
 );
 
 $messages['qqq'] = array(
+	'recentchanges-desc' => '{{desc}}',
 	'recentchanges-dropdown-select-all' => 'Shown next to checkbox in toolbar. Used for selecting all other checkboxes.',
 );

@@ -24,6 +24,8 @@ class WikiFeaturesHelper extends WikiaModel {
 		4 => array('title' => 'Idea', 'msg' => 'wikifeatures-an-idea-for-project'),
 	);
 
+	// These numbers are totally arbitrary and not used for anything other than to exist in this array.  This mostly
+	// exists to verify that feedback from labs is for a known feature.
 	public static $feedbackAreaIDs = array (
 		'wgEnableAjaxPollExt' => 280,
 		'wgShowTopListsInCreatePage' => 199,
@@ -34,8 +36,9 @@ class WikiFeaturesHelper extends WikiaModel {
 		'wgEnableChat' => 258,
 		'wgEnableWallExt' => 258,
 		'wgEnableForumExt' => 259,
-		'wgEnableVisualEditorUI' => 259,
 		'wgEnableWikiaInteractiveMaps' => 260,
+		'wgEnableMediaGalleryExt' => 1,
+		'wgEnableNjordExt' => 2,
 	);
 
 	// no need to add feature to $release_date if not require "new" flag
@@ -44,7 +47,6 @@ class WikiFeaturesHelper extends WikiaModel {
 		'wgShowTopListsInCreatePage' => '2012-02-12',
 		'wgEnableAchievementsExt' => '2012-02-12',
 		'wgEnableForumExt' => '2012-11-29',
-		'wgEnableVisualEditorUI' => '2013-12-04',
 		'wgEnableWikiaInteractiveMaps' => '2014-07-23',
 	);
 
@@ -89,13 +91,16 @@ class WikiFeaturesHelper extends WikiaModel {
 	public function getFeatureLabs() {
 		$list = array();
 		if (isset($this->wg->WikiFeatures['labs']) && is_array($this->wg->WikiFeatures['labs'])) {
+			//allow adding features in runtime
+			wfrunHooks( 'WikiFeatures::onGetFeatureLabs' );
+
 			foreach ($this->wg->WikiFeatures['labs'] as $feature) {
 				$list[] = array(
 					'name' => $feature,
 					'enabled' => $this->getFeatureEnabled($feature),
 					'new' => self::isNew($feature),
 					'active' => $this->wg->Lang->formatNum( $this->getNumActiveWikis( $feature ) ),
-					'imageExtension' => $feature == 'wgEnableVisualEditorUI' ? '.gif' : '.png'
+					'imageExtension' => '.png'
 				);
 			}
 		}
@@ -202,10 +207,11 @@ class WikiFeaturesHelper extends WikiaModel {
 	 * @param string $message feedback message
 	 * @param User $user user object
 	 * @param integer $feedbackCat feedback category which is defined above in $feedbackCategories property
+	 *
+	 * @return \Status
 	 */
 	public function sendFeedback( $feature, $user, $message, $category, $priority = 5 ) {
 
-		$areaId = self::$feedbackAreaIDs[$feature];
 		$title = $feature .' - '.self::$feedbackCategories[$category]['title'];
 
 		$message = <<<MSG

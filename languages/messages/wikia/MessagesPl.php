@@ -156,6 +156,15 @@ Zmień [[Special:Preferences#prefsection-1|swoje preferencje]], aby używać wid
 'hub-Lifestyle' => 'Lifestyle',
 'hub-Wikia' => 'Wikia',
 
+# vertical names
+'vertical-tv' => 'TV',
+'vertical-games' => 'Gry',
+'vertical-books' => 'Książki',
+'vertical-comics' => 'Komiksy',
+'vertical-lifestyle' => 'Lifestyle',
+'vertical-music' => 'Muzyka',
+'vertical-movies' => 'Filmy',
+
 
 	'shared-Globalnavigation' => "*w:c:pl:Gry|Gry|video-games-vertical-color
 

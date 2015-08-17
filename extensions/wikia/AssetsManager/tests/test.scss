@@ -1,7 +1,7 @@
 #foo {
-	background-image: url(/skins/oasis/images/sprite.png); /* $wgCdnStylePath */
+	background-image: url(/skins/shared/images/sprite.png); /* $wgCdnStylePath */
 }
 
 #bar {
-	background-image: url(/skins/common/blank.gif); /* base64 */
+	background-image: url(/skins/common/blank.gif); /* inline */
 }

@@ -1,28 +1,26 @@
 <?php
 class FounderEmailsViewsDigestEvent extends FounderEmailsEvent {
+	const EMAIL_CONTROLLER = Email\Controller\FounderPageViewsDigestController::class;
+
 	public function __construct( Array $data = array() ) {
 		parent::__construct( 'viewsDigest' );
 		$this->setData( $data );
 	}
 
-	public function enabled ( $wgCityId, $user ) {
-		if (self::isAnswersWiki())
+	public function enabled ( User $user, $wikiId = null ) {
+		if ( self::isAnswersWiki() ) {
 			return false;
+		}
 
-		// If complete digest mode is enabled, do not send views only digest
-		if ( $user->getOption( "founderemails-complete-digest-$wgCityId" ) ) {
-			return false;
-		}
-		if ( $user->getOption( "founderemails-views-digest-$wgCityId" ) ) {
-			return true;
-		}
-		return false;
+		return true;
 	}
 
 	/**
 	 * Called from maintenance script only.  Send Digest emails for any founders with that preference enabled
 	 *
-	 * @param array $events Events is empty for this type
+	 * @param array $events This array is empty most of the time.  If the --wikiId flag is given to
+	 *                      the maintenance script however, that single wiki ID will be given as the only
+	 *                      array element.
 	 */
 	public function process ( Array $events ) {
 		global $wgTitle;
@@ -31,50 +29,33 @@ class FounderEmailsViewsDigestEvent extends FounderEmailsEvent {
 
 		$wgTitle = Title::newMainPage();
 		// Get list of founders with digest mode turned on
-		$cityList = $founderEmailObj->getFoundersWithPreference('founderemails-views-digest');
-		$wikiService = (new WikiService);
+		if ( empty( $events ) ) {
+			$cityList = $founderEmailObj->getFoundersWithPreference( 'founderemails-complete-digest' );
+		} else {
+			$cityList = $events;
+		}
+		$wikiService = new WikiService();
 
 		// Gather daily page view stats for each wiki requesting views digest
-		foreach ($cityList as $cityID) {
-			$user_ids = $wikiService->getWikiAdminIds( $cityID );
-			$foundingWiki = WikiFactory::getWikiById( $cityID );
-			$page_url = GlobalTitle::newFromText( 'Createpage', NS_SPECIAL, $cityID )->getFullUrl( array('modal' => 'AddPage') );
+		foreach ( $cityList as $cityID ) {
+			Wikia::initAsyncRequest( $cityID );
+			$userIds = $wikiService->getWikiAdminIds( $cityID );
+			$emailParams = [
+				'pageViews' => $founderEmailObj->getPageViews( $cityID )
+			];
 
-			$emailParams = array(
-				'$WIKINAME' => $foundingWiki->city_title,
-				'$WIKIURL' => $foundingWiki->city_url,
-				'$PAGEURL' => $page_url,
-				'$UNIQUEVIEWS' => $founderEmailObj->getPageViews( $cityID ),
-			);
-
-			foreach ($user_ids as $user_id) {
-				$user = User::newFromId($user_id);
+			foreach ( $userIds as $userId ) {
+				$user = User::newFromId( $userId );
 
 				// skip if not enable
-				if (!$this->enabled($cityID, $user)) {
+				if ( !$this->enabled( $user, $cityID ) ) {
 					continue;
 				}
-				self::addParamsUser($cityID, $user->getName(), $emailParams);
 
-				$langCode = $user->getOption( 'language' );
-				$links = array(
-					'$WIKINAME' => $emailParams['$WIKIURL'],
-				);
-				$mailSubject = strtr(wfMsgExt('founderemails-email-views-digest-subject', array('content')), $emailParams);
-				$mailBody = strtr(wfMsgExt('founderemails-email-views-digest-body', array('content','parsemag'), $emailParams['$UNIQUEVIEWS']), $emailParams);
-				$mailBodyHTML = F::app()->renderView("FounderEmails", "GeneralUpdate", array_merge($emailParams, array('language' => 'en', 'type' => 'views-digest')));
-				$mailBodyHTML = strtr($mailBodyHTML, FounderEmails::addLink($emailParams,$links));
-				$mailCategory = FounderEmailsEvent::CATEGORY_VIEWS_DIGEST.(!empty($langCode) && $langCode == 'en' ? 'EN' : 'INT');
-
-				$founderEmailObj->notifyFounder( $user, $this, $mailSubject, $mailBody, $mailBodyHTML, $cityID, $mailCategory );
+				$emailParams['targetUser'] = $user->getName();
+				F::app()->sendRequest( self::EMAIL_CONTROLLER, 'handle', $emailParams );
 			}
 		}
 		wfProfileOut( __METHOD__ );
 	}
-
-	/*  Not used by DailyDigest event
-	public static function register ( ) {
-
-	}
-	 */
 }

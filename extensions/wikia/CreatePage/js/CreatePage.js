@@ -5,8 +5,11 @@ var CreatePage = {
 	loading: false,
 	context: null,
 	wgArticlePath: mw.config.get( 'wgArticlePath' ),
-	canUseVisualEditor: ( mw.libs && mw.libs.ve ? mw.libs.ve.canCreatePageUsingVE() : false ),
 	redlinkParam: '',
+
+	canUseVisualEditor: function() {
+		return mw.libs && mw.libs.ve ? mw.libs.ve.canCreatePageUsingVE() : false;
+	},
 
 	checkTitle: function( title ) {
 		'use strict';
@@ -18,11 +21,11 @@ var CreatePage = {
 		function( response ) {
 			var articlePath;
 			if ( response.result === 'ok' ) {
-				if ( CreatePage.canUseVisualEditor && mw.libs.ve.isInValidNamespace( title ) ) {
+				if ( CreatePage.canUseVisualEditor() && mw.libs.ve.isInValidNamespace( title ) ) {
 					articlePath = CreatePage.wgArticlePath.replace( '$1', encodeURIComponent( title ) );
 					location.href = articlePath + '?veaction=edit' + CreatePage.redlinkParam;
 				} else {
-					location.href = CreatePage.options[ CreatePage.canUseVisualEditor ? 'blank' :
+					location.href = CreatePage.options[ CreatePage.canUseVisualEditor() ? 'blank' :
 						CreatePage.pageLayout ].submitUrl.replace( '$1', encodeURIComponent( title ) ) +
 						CreatePage.redlinkParam;
 				}
@@ -55,7 +58,7 @@ var CreatePage = {
 		}
 
 		// VE and <createbox>
-		if ( CreatePage.canUseVisualEditor && $( e.target ).hasClass( 'createboxButton' ) ) {
+		if ( CreatePage.canUseVisualEditor() && $( e.target ).hasClass( 'createboxButton' ) ) {
 			CreatePage.checkTitle( titleText );
 			return;
 		}
@@ -63,7 +66,7 @@ var CreatePage = {
 		if ( false === CreatePage.loading ) {
 			CreatePage.loading = true;
 
-			if ( CreatePage.canUseVisualEditor && titleText ) {
+			if ( CreatePage.canUseVisualEditor() && titleText ) {
 				rs = 'wfCreatePageAjaxGetVEDialog';
 				dialogCallback = CreatePage.openVEDialog;
 			} else {
@@ -219,7 +222,7 @@ var CreatePage = {
 					$( '#wpCreatePageDialogTitle' ).focus();
 
 					// Hide formats if ve is available
-					if ( CreatePage.canUseVisualEditor ) {
+					if ( CreatePage.canUseVisualEditor() ) {
 						$( '#CreatePageDialogChoose, #CreatePageDialogChoices' ).hide();
 					}
 					CreatePage.loading = false;
@@ -260,32 +263,25 @@ var CreatePage = {
 
 	redLinkClick: function( e, titleText ) {
 		'use strict';
+		var title = new mw.Title.newFromText( titleText ),
+			namespace = title.getNamespacePrefix().replace( ':', '' ),
+			visualEditorActive = $( 'html' ).hasClass( 've-activated' );
+
 		CreatePage.redlinkParam = '&redlink=1';
 
-		if ( CreatePage.canUseVisualEditor ) {
+		if ( CreatePage.canUseVisualEditor() ) {
 			CreatePage.track( { action: 'click', label: 've-redlink-click' } );
 		}
 
-		var title = titleText.split( ':' ),
-			isContentNamespace = false,
-			i;
-
-		if ( window.ContentNamespacesText && ( title.length > 1 ) ) {
-			for ( i in window.ContentNamespacesText ) {
-				if ( title[ 0 ] === window.ContentNamespacesText[ i ] ) {
-					isContentNamespace = true;
-				}
-			}
-		}
-		else {
-			isContentNamespace = true;
-		}
-
-		if ( isContentNamespace ) {
-			CreatePage.requestDialog( e, titleText );
-		}
-		else {
+		if (
+			visualEditorActive ||
+			mw.config.get( 'wgNamespaceIds' )[ namespace.toLowerCase() ] &&
+			window.ContentNamespacesText &&
+			window.ContentNamespacesText.indexOf( title[0] ) === -1
+		) {
 			return false;
+		} else {
+			CreatePage.requestDialog( e, titleText );
 		}
 	},
 
@@ -319,7 +315,7 @@ var CreatePage = {
 				}
 			}
 
-			$( 'a.new' ).bind( 'click', function( e ) {
+			$( '#WikiaArticle' ).on( 'click', 'a.new', function( e ) {
 				CreatePage.redLinkClick( e, CreatePage.getTitleFromUrl( this.href ) );
 			});
 

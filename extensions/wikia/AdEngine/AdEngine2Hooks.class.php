@@ -3,53 +3,35 @@
  * AdEngine II Hooks
  */
 class AdEngine2Hooks {
+	const ASSET_GROUP_ADENGINE_DESKTOP = 'adengine2_desktop_js';
+	const ASSET_GROUP_VENUS_ADS = 'adengine2_venus_ads_js';
+	const ASSET_GROUP_OASIS_IN_CONTENT_ADS = 'adengine2_oasis_in_content_ads_js';
+	const ASSET_GROUP_ADENGINE_AMAZON_MATCH = 'adengine2_amazon_match_js';
+	const ASSET_GROUP_ADENGINE_MOBILE = 'wikiamobile_ads_js';
+	const ASSET_GROUP_ADENGINE_RUBICON_RTP = 'adengine2_rubicon_rtp_js';
+	const ASSET_GROUP_ADENGINE_TABOOLA = 'adengine2_taboola_js';
+	const ASSET_GROUP_ADENGINE_TRACKING = 'adengine2_tracking_js';
+	const ASSET_GROUP_LIFTIUM = 'liftium_ads_js';
+	const ASSET_GROUP_LIFTIUM_EXTRA = 'liftium_ads_extra_js';
 
 	/**
 	 * Handle URL parameters and set proper global variables early enough
 	 *
 	 * @author Sergey Naumov
 	 */
-	static public function onAfterInitialize($title, $article, $output, $user, WebRequest $request, $wiki) {
+	public static function onAfterInitialize( $title, $article, $output, $user, WebRequest $request, $wiki ) {
+		global $wgAdDriverUseSevenOneMedia,
+			$wgNoExternals,
+			$wgUsePostScribe;
 
-		// TODO: review top and bottom vars (important for adsinhead)
-
-		global $wgAdDriverForceDirectGptAd, $wgAdDriverForceLiftiumAd, $wgEnableRHonDesktop, $wgEnableRHonMobile,
-			   $wgLiftiumOnLoad, $wgNoExternals, $wgAdVideoTargeting, $wgAdPageType, $wgEnableKruxTargeting,
-			   $wgAdEngineDisableLateQueue, $wgLoadAdsInHead, $wgLoadLateAdsAfterPageLoad;
-
+		// TODO: we shouldn't have it in AdEngine - ticket for Platform: PLATFORM-1296
 		$wgNoExternals = $request->getBool( 'noexternals', $wgNoExternals );
-		$wgLiftiumOnLoad = $request->getBool( 'liftiumonload', (bool)$wgLiftiumOnLoad );
-		$wgAdVideoTargeting = $request->getBool( 'videotargetting', (bool)$wgAdVideoTargeting );
 
-		$wgEnableRHonDesktop = $request->getBool( 'gptremnant', $wgEnableRHonDesktop );
-		$wgEnableRHonMobile = $request->getBool( 'gptremnant', $wgEnableRHonMobile );
-
-		$wgAdEngineDisableLateQueue = $request->getBool( 'noremnant', $wgAdEngineDisableLateQueue );
-
-		$wgAdDriverForceDirectGptAd = $request->getBool( 'forcedirectgpt', $wgAdDriverForceDirectGptAd );
-		$wgAdDriverForceLiftiumAd = $request->getBool( 'forceliftium', $wgAdDriverForceLiftiumAd );
-		$wgAdPageType = AdEngine2Service::getPageType();
-
-		$wgLoadAdsInHead = $request->getBool( 'adsinhead', $wgLoadAdsInHead );
-		$wgLoadLateAdsAfterPageLoad = $request->getBool( 'lateadsafterload', $wgLoadLateAdsAfterPageLoad );
-
-		$wgEnableKruxTargeting = !$wgAdEngineDisableLateQueue && !$wgNoExternals && $wgEnableKruxTargeting;
-
-		return true;
-	}
-
-
-	/**
-	 * Register global JS variables bottom
-	 *
-	 * @param array $vars
-	 *
-	 * @return bool
-	 */
-	static public function onMakeGlobalVariablesScript(array &$vars) {
-		foreach (AdEngine2Service::getBottomJsVariables() as $varName => $varValue) {
-			$vars[$varName] = $varValue;
+		// use PostScribe with 71Media - check scriptwriter.js:35
+		if ( $wgAdDriverUseSevenOneMedia ) {
+			$wgUsePostScribe = true;
 		}
+
 		return true;
 	}
 
@@ -60,10 +42,30 @@ class AdEngine2Hooks {
 	 *
 	 * @return bool
 	 */
-	static public function onInstantGlobalsGetVariables(array &$vars)
+	public static function onInstantGlobalsGetVariables( array &$vars )
 	{
-		$vars[] = 'wgHighValueCountries';
-		$vars[] = 'wgAmazonDirectTargetedBuyCountries';
+		$vars[] = 'wgAdDriverHighImpactSlotCountries';
+		$vars[] = 'wgAdDriverIncontentPlayerSlotCountries';
+		$vars[] = 'wgAdDriverKruxCountries';
+		$vars[] = 'wgAdDriverOpenXCountries';
+		$vars[] = 'wgAdDriverSourcePointCountries';
+		$vars[] = 'wgAdDriverScrollHandlerCountries';
+		$vars[] = 'wgAdDriverTurtleCountries';
+		$vars[] = 'wgAmazonMatchCountries';
+		$vars[] = 'wgAmazonMatchCountriesMobile';
+		$vars[] = 'wgAmazonMatchOldCountries';
+		$vars[] = 'wgHighValueCountries'; // Used by Liftium only
+
+		/**
+		 * Disaster Recovery
+		 * @link https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
+		 */
+		$vars[] = 'wgSitewideDisableGpt';
+		$vars[] = 'wgSitewideDisableKrux';
+		$vars[] = 'wgSitewideDisableLiftium';
+		$vars[] = 'wgSitewideDisableMonetizationService';
+		$vars[] = 'wgSitewideDisableRubiconRTP';
+		$vars[] = 'wgSitewideDisableSevenOneMedia';
 
 		return true;
 	}
@@ -76,10 +78,29 @@ class AdEngine2Hooks {
 	 *
 	 * @return bool
 	 */
-	static public function onWikiaSkinTopScripts(&$vars, &$scripts) {
-		foreach (AdEngine2Service::getTopJsVariables() as $varName => $varValue) {
-			$vars[$varName] = $varValue;
-		}
+	public static function onWikiaSkinTopScripts( &$vars, &$scripts ) {
+		global $wgTitle, $wgUsePostScribe;
+		$skin = RequestContext::getMain()->getSkin();
+		$skinName = $skin->getSkinName();
+
+		$adContext = ( new AdEngine2ContextService() )->getContext( $wgTitle, $skinName );
+
+		$vars['ads'] = [
+			'context' => $adContext,
+			'runtime' => [],
+		];
+
+		// Legacy vars:
+		$vars['adslots2'] = [];                  // Queue for ads registration
+		$vars['adDriverLastDARTCallNoAds'] = []; // Used to hop by DART ads
+		$vars['adDriver2ForcedStatus'] = [];     // 3rd party code (eg. dart collapse slot template) can force AdDriver2 to respect unusual slot status
+
+		// GA vars
+		$vars['wgGaHasAds'] = isset( $adContext['opts']['showAds'] );
+
+		// 71Media
+		$vars['wgUsePostScribe'] = $wgUsePostScribe;
+
 		return true;
 	}
 
@@ -90,37 +111,23 @@ class AdEngine2Hooks {
 	 *
 	 * @return bool
 	 */
-	static public function onOasisSkinAssetGroups(&$jsAssets) {
+	public static function onOasisSkinAssetGroups( &$jsAssets ) {
 
-		global $wgAdDriverUseBottomLeaderboard, $wgAdDriverUseTopInContentBoxad;
+		global $wgAdDriverUseTopInContentBoxad, $wgAdDriverUseTaboola;
 
-		$coreGroupIndex = array_search(AdEngine2Service::ASSET_GROUP_CORE, $jsAssets);
-		if ($coreGroupIndex === false) {
-			// Do nothing. oasis_shared_core_js must be present for ads to work
-			return true;
+		$jsAssets[] = self::ASSET_GROUP_ADENGINE_DESKTOP;
+
+		if ( AdEngine2Service::shouldLoadLiftium() ) {
+			$jsAssets[] = self::ASSET_GROUP_LIFTIUM;
+			$jsAssets[] = self::ASSET_GROUP_LIFTIUM_EXTRA;
 		}
 
-		if (!AdEngine2Service::areAdsInHead()) {
-			// Add ad asset to JavaScripts loaded on bottom (with regular JavaScripts)
-			array_splice($jsAssets, $coreGroupIndex + 1, 0, AdEngine2Service::ASSET_GROUP_ADENGINE);
-			$coreGroupIndex = $coreGroupIndex + 1;
-
-			if ($wgAdDriverUseTopInContentBoxad === true) {
-				array_unshift($jsAssets, 'adengine2_top_in_content_boxad_js');
-			}
+		if ( $wgAdDriverUseTopInContentBoxad ) {
+			$jsAssets[] = self::ASSET_GROUP_OASIS_IN_CONTENT_ADS;
 		}
 
-		if (AdEngine2Service::shouldLoadLateQueue()) {
-			$coreGroupIndex = $coreGroupIndex + (int)AdEngine2Service::areAdsInHead();
-			array_splice($jsAssets, $coreGroupIndex, 0, AdEngine2Service::ASSET_GROUP_ADENGINE_LATE);
-		}
-
-		if (AdEngine2Service::shouldLoadLiftium()) {
-			$jsAssets[] = AdEngine2Service::ASSET_GROUP_LIFTIUM;
-		}
-
-		if ($wgAdDriverUseBottomLeaderboard === true) {
-			$jsAssets[] = 'adengine2_bottom_leaderboard_js';
+		if ( $wgAdDriverUseTaboola === true ) {
+			$jsAssets[] = self::ASSET_GROUP_ADENGINE_TABOOLA;
 		}
 
 		$jsAssets[] = 'adengine2_interactive_maps_js';
@@ -129,24 +136,25 @@ class AdEngine2Hooks {
 	}
 
 	/**
-	 * Modify assets appended to the top of the page
+	 * Modify assets appended to the top of the page: add RubiconRtp and AmazonMatch lookup services
 	 *
 	 * @param array $jsAssets
 	 *
 	 * @return bool
 	 */
-	static public function onOasisSkinAssetGroupsBlocking(&$jsAssets) {
+	public static function onOasisSkinAssetGroupsBlocking( &$jsAssets ) {
 
-		global $wgAdDriverUseTopInContentBoxad;
+		// Tracking should be available very early, so we can track how lookup calls (Amazon, Rubicon) perform
+		$jsAssets[] = self::ASSET_GROUP_ADENGINE_TRACKING;
 
-		if (AdEngine2Service::areAdsInHead()) {
-			// Add ad asset to JavaScripts loaded on top (in <head>)
-			$jsAssets[] = AdEngine2Service::ASSET_GROUP_ADENGINE;
-
-			if ($wgAdDriverUseTopInContentBoxad === true) {
-				array_unshift($jsAssets, 'adengine2_top_in_content_boxad_js');
-			}
+		if ( AnalyticsProviderRubiconRTP::isEnabled() ) {
+			$jsAssets[] = self::ASSET_GROUP_ADENGINE_RUBICON_RTP;
 		}
+
+		if ( AnalyticsProviderAmazonMatch::isEnabled() ) {
+			$jsAssets[] = self::ASSET_GROUP_ADENGINE_AMAZON_MATCH;
+		}
+
 		return true;
 	}
 
@@ -160,33 +168,91 @@ class AdEngine2Hooks {
 	 * @param $skin
 	 * @return bool
 	 */
-	static public function onWikiaSkinTopModules(&$scriptModules, $skin) {
-		if (AdEngine2Service::areAdsInHead() || AnalyticsProviderAmazonDirectTargetedBuy::isEnabled()) {
-			$scriptModules[] = 'wikia.instantGlobals';
-			$scriptModules[] = 'wikia.cookies';
-			$scriptModules[] = 'wikia.geo';
-			$scriptModules[] = 'wikia.window';
+	public static function onWikiaSkinTopModules( &$scriptModules, $skin ) {
+		$scriptModules[] = 'wikia.abTest';
+		$scriptModules[] = 'wikia.cache';
+		$scriptModules[] = 'wikia.cookies';
+		$scriptModules[] = 'wikia.document';
+		$scriptModules[] = 'wikia.geo';
+		$scriptModules[] = 'wikia.instantGlobals';
+		$scriptModules[] = 'wikia.localStorage';
+		$scriptModules[] = 'wikia.location';
+		$scriptModules[] = 'wikia.log';
+		$scriptModules[] = 'wikia.querystring';
+		$scriptModules[] = 'wikia.tracker.stub';
+		$scriptModules[] = 'wikia.window';
+		return true;
+	}
+
+	/**
+	 * Modify assets appended to the bottom of wikiaMobileSkin
+	 *
+	 * @static
+	 * @param $jsStaticPackages
+	 * @param $jsExtensionPackages
+	 * @param $scssPackages
+	 * @return bool
+	 */
+	public static function onWikiaMobileAssetsPackages( array &$jsStaticPackages, array &$jsExtensionPackages, array &$scssPackages ) {
+
+		global $wgAdDriverUseTaboola;
+
+		$coreGroupIndex = array_search( self::ASSET_GROUP_ADENGINE_MOBILE, $jsStaticPackages );
+
+		if ( $coreGroupIndex === false ) {
+			// Do nothing. ASSET_GROUP_ADENGINE_MOBILE must be present for ads to work
+			return true;
 		}
-		if (AdEngine2Service::areAdsInHead()) {
-			$scriptModules[] = 'wikia.document';
-			$scriptModules[] = 'wikia.abTest';
-			$scriptModules[] = 'wikia.cache';
-			$scriptModules[] = 'wikia.localStorage';
-			$scriptModules[] = 'wikia.location';
-			$scriptModules[] = 'wikia.log';
-			$scriptModules[] = 'wikia.querystring';
-			$scriptModules[] = 'wikia.tracker.stub';
+
+		if ( $wgAdDriverUseTaboola === true ) {
+			array_splice( $jsStaticPackages, $coreGroupIndex, 0, self::ASSET_GROUP_ADENGINE_TABOOLA );
+		}
+
+		return true;
+	}
+
+	public static function onSkinAfterContent( &$text ) {
+		global $wgTitle, $wgAdDriverUseTaboola;
+
+		if ( !$wgAdDriverUseTaboola ) {
+			return true;
+		}
+
+		$skin = RequestContext::getMain()->getSkin()->getSkinName();
+
+		// File pages handle their own rendering of related pages wrapper
+		if ( ( $skin === 'oasis' ) && $wgTitle->getNamespace() !== NS_FILE ) {
+			$text = $text . F::app()->renderView( 'Ad', 'Index', ['slotName' => 'NATIVE_TABOOLA'] );
+		}
+
+		return true;
+	}
+
+	public static function onSkinAfterBottomScripts( Skin $skin, &$text ) {
+		// TODO: Check whether this works also on Oasis!
+		if ( $skin->getSkinName() === 'venus' ) {
+			$text .= AdEngine2Controller::getLiftiumOptionsScript();
+			$text .= Html::inlineScript( 'Liftium.init();' ) . "\n";
 		}
 		return true;
 	}
 
-	public static function onWikiaMobileAssetsPackages(&$jsBodyPackages, &$jsExtensionPackages, &$scssPackages) {
-		global $wgAdDriverUseEbay;
+	public static function onVenusAssetsPackages( array &$jsHeadGroups, array &$jsBodyGroups, array &$cssGroups ) {
+		$jsHeadGroups[] = self::ASSET_GROUP_ADENGINE_TRACKING;
+		$jsHeadGroups[] = self::ASSET_GROUP_ADENGINE_DESKTOP;
+		$jsHeadGroups[] = self::ASSET_GROUP_VENUS_ADS;
 
-		if ($wgAdDriverUseEbay) {
-			$scssPackages[] = 'adengine2_ebay_scss_wikiamobile';
+		if ( AnalyticsProviderRubiconRTP::isEnabled() ) {
+			$jsHeadGroups[] = self::ASSET_GROUP_ADENGINE_RUBICON_RTP;
 		}
 
+		if ( AnalyticsProviderAmazonMatch::isEnabled() ) {
+			$jsHeadGroups[] = self::ASSET_GROUP_ADENGINE_AMAZON_MATCH;
+		}
+
+		if ( AdEngine2Service::shouldLoadLiftium() ) {
+			$jsBodyGroups[] = self::ASSET_GROUP_LIFTIUM;
+		}
 		return true;
 	}
 }

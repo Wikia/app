@@ -14,8 +14,8 @@ if ( ! defined( 'MEDIAWIKI' ) ){
 $wgExtensionCredits['other'][] = array(
 	"name" => "CategoryGalleries",
 	'descriptionmsg' => 'categorygalleries-desc',
-//	"url" => "http://help.wikia.com/wiki/Help:Category_Galleries",
-	"author" => array('Władysław Bodzek')
+	"url" => "https://github.com/Wikia/app/tree/dev/extensions/wikia/CategoryGalleries",
+	"author" => 'Władysław Bodzek'
 );
 
 // Calculate the base directory and use it later a few times

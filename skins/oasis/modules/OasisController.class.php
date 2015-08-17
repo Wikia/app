@@ -40,7 +40,8 @@ class OasisController extends WikiaController {
 		// initialize variables
 		$this->comScore = null;
 		$this->quantServe = null;
-		$this->amazonDirectTargetedBuy = null;
+		$this->amazonMatch = null;
+		$this->rubiconRtp = null;
 		$this->dynamicYield = null;
 		$this->ivw2 = null;
 
@@ -55,30 +56,10 @@ class OasisController extends WikiaController {
 	 */
 	public static function onMakeGlobalVariablesScript(Array &$vars) {
 		$vars['wgOasisResponsive'] = BodyController::isResponsiveLayoutEnabled();
+		$vars['wgOasisBreakpoints'] = BodyController::isOasisBreakpoints();
 		$vars['verticalName'] = HubService::getCurrentWikiaVerticalName();
 		return true;
 	}
-
-	/*
-	 * TODO remove after Global Header ABtesting
-	 */
-	public static function onWikiaSkinTopScripts( &$vars, &$scripts, $skin ) {
-		$app = F::app();
-		if ( $app->checkSkin( ['oasis'], $skin ) ) {
-			$globalSearch = GlobalTitle::newFromText(
-				'Search',
-				NS_SPECIAL,
-				WikiService::WIKIAGLOBAL_CITY_ID
-			)->getFullURL();
-
-			$vars['wgGlobalSearchUrl'] = $globalSearch;
-		}
-
-		return true;
-	}
-	/*
-	 *  END TODO
-	 */
 
 	/**
 	 * Business-logic for determining if the javascript should be at the bottom of the page (it usually should be
@@ -183,6 +164,11 @@ class OasisController extends WikiaController {
 			$bodyClasses[] = 'oasis-dark-theme';
 		}
 
+		/**
+		 * Login status based CSS class
+		 */
+		$bodyClasses[] = $skin->getUserLoginStatusClass();
+
 		// sets background settings by adding classes to <body>
 		$bodyClasses = array_merge($bodyClasses, $this->getOasisBackgroundClasses($wgOasisThemeSettings));
 
@@ -195,44 +181,12 @@ class OasisController extends WikiaController {
 		}
 
     	// Reset (this ensures no duplication in CSS links)
-		$this->cssLinks = '';
-		$this->cssPrintLinks = '';
+		$sassFiles = ['skins/oasis/css/oasis.scss'];
 
-		$sassFiles = [];
-		foreach ( $skin->getStyles() as $s ) {
-			if ( !empty($s['url']) ) {
-				$tag = $s['tag'];
-				if ( !empty( $wgAllInOne ) ) {
-					$url = $this->minifySingleAsset($s['url']);
-					if ($url !== $s['url']) {
-						$tag = str_replace($s['url'],$url,$tag);
-					}
-				}
+		$this->cssLinks = $skin->getStylesWithCombinedSASS($sassFiles);
 
-				// Print styles will be loaded separately at the bottom of the page
-				if ( stripos($tag, 'media="print"') !== false ) {
-					$this->cssPrintLinks .= $tag;
-				} elseif ($wgAllInOne && $this->assetsManager->isSassUrl($s['url'])) {
-					$sassFiles[] = $s['url'];
-				} else {
-					$this->cssLinks .= $tag;
-				}
-			} else {
-				$this->cssLinks .= $s['tag'];
-			}
-		}
-
-		$mainSassFile = 'skins/oasis/css/oasis.scss';
-		if (!empty($sassFiles)) {
-			array_unshift($sassFiles, $mainSassFile);
-			$sassFiles = $this->assetsManager->getSassFilePath($sassFiles);
-			$sassFilesUrl = $this->assetsManager->getSassesUrl($sassFiles);
-
-			$this->cssLinks = Html::linkedStyle($sassFilesUrl) . $this->cssLinks;
-			$this->bottomScripts .= Html::inlineScript("var wgSassLoadedScss = ".json_encode($sassFiles).";");
-		} else {
-			$this->cssLinks = Html::linkedStyle($this->assetsManager->getSassCommonURL($mainSassFile)) . $this->cssLinks;
-		}
+		// $sassFiles will be updated by getStylesWithCombinedSASS method will all extracted and concatenated SASS files
+		$this->bottomScripts .= Html::inlineScript("var wgSassLoadedScss = ".json_encode($sassFiles).";");
 
 		$this->headLinks = $wgOut->getHeadLinks();
 		$this->headItems = $skin->getHeadItems();
@@ -255,38 +209,12 @@ class OasisController extends WikiaController {
 		// setup loading of JS/CSS
 		$this->loadJs();
 
-		// FIXME: create separate module for stats stuff?
-		// load Google Analytics code
-		$this->googleAnalytics = AnalyticsEngine::track('GA_Urchin', AnalyticsEngine::EVENT_PAGEVIEW);
-
-		// onewiki GA
-		$this->googleAnalytics .= AnalyticsEngine::track('GA_Urchin', 'onewiki', array($wgCityId));
-
-		// track page load time
-		$this->googleAnalytics .= AnalyticsEngine::track('GA_Urchin', 'pagetime', array('oasis'));
-
-		// track browser height TODO NEF no browser height tracking code anymore, remove
-		//$this->googleAnalytics .= AnalyticsEngine::track('GA_Urchin', 'browser-height');
-
-		// record which varnish this page was served by
-		$this->googleAnalytics .= AnalyticsEngine::track('GA_Urchin', 'varnish-stat');
-
-		// TODO NEF not used, remove
-		//$this->googleAnalytics .= AnalyticsEngine::track('GA_Urchin', 'noads');
-
-		// TODO NEF we dont do AB this way anymore, remove
-		//$this->googleAnalytics .= AnalyticsEngine::track('GA_Urchin', 'abtest');
-
-		// Add important Gracenote analytics for reporting needed for licensing on LyricWiki.
-		if (43339 == $wgCityId){
-			$this->googleAnalytics .= AnalyticsEngine::track('GA_Urchin', 'lyrics');
-		}
-
 		// macbre: RT #25697 - hide Comscore & QuantServe tags on edit pages
 		if(!in_array($wgRequest->getVal('action'), array('edit', 'submit'))) {
 			$this->comScore = AnalyticsEngine::track('Comscore', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->quantServe = AnalyticsEngine::track('QuantServe', AnalyticsEngine::EVENT_PAGEVIEW);
-			$this->amazonDirectTargetedBuy = AnalyticsEngine::track('AmazonDirectTargetedBuy', AnalyticsEngine::EVENT_PAGEVIEW);
+			$this->amazonMatch = AnalyticsEngine::track('AmazonMatch', AnalyticsEngine::EVENT_PAGEVIEW);
+			$this->rubiconRtp = AnalyticsEngine::track('RubiconRTP', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->dynamicYield = AnalyticsEngine::track('DynamicYield', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->ivw2 = AnalyticsEngine::track('IVW2', AnalyticsEngine::EVENT_PAGEVIEW);
 		}
@@ -298,41 +226,6 @@ class OasisController extends WikiaController {
 		}
 
 		wfProfileOut(__METHOD__);
-	}
-
-	private function rewriteJSlinks( $link ) {
-		global $IP;
-		wfProfileIn( __METHOD__ );
-
-		$parts = explode( "?cb=", $link ); // look for http://*/filename.js?cb=XXX
-
-		if ( count( $parts ) == 2 ) {
-			//$hash = md5(file_get_contents($IP . '/' . $parts[0]));
-			$fileName = $parts[0];
-			$fileName = preg_replace("#^(https?:)?//[^/]+#","",$fileName);
-			$hash = filemtime( $IP . '/' . $fileName);
-			$link = $parts[0].'?cb='.$hash;
-		} else {
-			$ret = preg_replace_callback(
-				'#(/__cb)([0-9]+)/([^ ]*)#', // look for http://*/__cbXXXXX/* type of URLs
-				function ( $matches ) {
-					global $IP, $wgStyleVersion;
-					$filename = explode('?',$matches[3]); // some filenames may additionaly end with ?$wgStyleVersion
-					//$hash = hexdec(substr(md5(file_get_contents( $IP . '/' . $filename[0])),0,6));
-					$hash = filemtime( $IP . '/' . $filename[0] );
-					return str_replace( $wgStyleVersion, $hash, $matches[0]);
-				},
-				$link
-			);
-
-			if ( $ret ) {
-				$link = $ret;
-			}
-		}
-		//error_log( $link );
-
-		wfProfileOut( __METHOD__ );
-		return $link;
 	}
 
 	/**
@@ -388,7 +281,7 @@ class OasisController extends WikiaController {
 
 	// TODO: implement as a separate module?
 	private function loadJs() {
-		global $wgJsMimeType, $wgUser, $wgSpeedBox, $wgDevelEnvironment, $wgEnableAdEngineExt, $wgAllInOne;
+		global $wgJsMimeType, $wgUser, $wgDevelEnvironment, $wgEnableAdEngineExt, $wgAllInOne;
 		wfProfileIn(__METHOD__);
 
 		$this->jsAtBottom = self::JsAtBottom();
@@ -402,17 +295,13 @@ class OasisController extends WikiaController {
 		$blockingScripts = $this->assetsManager->getURL($jsAssetGroups);
 
 		foreach($blockingScripts as $blockingFile) {
-			if( $wgSpeedBox && $wgDevelEnvironment ) {
-				$blockingFile = $this->rewriteJSlinks( $blockingFile );
-			}
-
 			$this->globalBlockingScripts .= "<script type=\"$wgJsMimeType\" src=\"$blockingFile\"></script>";
 		}
 
 		// move JS files added to OutputPage to list of files to be loaded
 		$scripts = RequestContext::getMain()->getSkin()->getScripts();
 
-		foreach ( $scripts as $s ) {
+			foreach ( $scripts as $s ) {
 			//add inline scripts to jsFiles and move non-inline to the queue
 			if ( !empty( $s['url'] ) ) {
 				// FIXME: quick hack to load MW core JavaScript at the top of the page - really, please fix me!
@@ -425,9 +314,6 @@ class OasisController extends WikiaController {
 					if ( $wgAllInOne ) {
 						$url = $this->minifySingleAsset( $url );
 					}
-					if ( !empty( $wgSpeedBox ) && !empty( $wgDevelEnvironment ) ) {
-						$url = $this->rewriteJSlinks( $url );
-					}
 					$jsReferences[] = $url;
 				}
 			} else {
@@ -437,7 +323,13 @@ class OasisController extends WikiaController {
 		$isLoggedIn = $wgUser->isLoggedIn();
 
 		$assetGroups = ['oasis_shared_core_js', 'oasis_shared_js'];
-		$assetGroups[] = $isLoggedIn ? 'oasis_user_js' : 'oasis_anon_js';
+
+		if ( $isLoggedIn ) {
+			$assetGroups[] = 'oasis_user_js';
+		} else {
+			$assetGroups[] = 'oasis_anon_js';
+		}
+
 
 		$jsLoader = '';
 
@@ -452,14 +344,7 @@ class OasisController extends WikiaController {
 		// disabled - not needed atm (and skipped in wsl-version anyway)
 		// $assets[] = $this->assetsManager->getURL( $isLoggedIn ? 'oasis_nojquery_shared_js_user' : 'oasis_nojquery_shared_js_anon' );
 
-		// get urls
-		if (!empty($wgSpeedBox) && !empty($wgDevelEnvironment)) {
-			foreach ($assets as $index => $url) {
-				$assets[$index] = $this->rewriteJSlinks( $url );
-			}
-		}
-
-		// as $jsReferences
+		// add $jsReferences
 		$assets = array_merge($assets, $jsReferences);
 
 		// generate direct script tags

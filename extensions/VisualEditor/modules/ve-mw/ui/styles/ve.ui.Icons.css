@@ -11,9 +11,20 @@
 	background-image: url(images/icons/alienextension.svg);
 }
 
-.oo-ui-icon-gallery {
+/* @noflip */
+.ve-ui-dir-block-rtl .oo-ui-icon-gallery,
+/* HACK */ .ve-ui-surface-dir-rtl .oo-ui-icon-gallery,
+/* HACK */ .oo-ui-rtl .oo-ui-icon-gallery {
 	/* @embed */
-	background-image: url(images/icons/gallery.svg);
+	background-image: url(images/icons/gallery-rtl.svg);
+}
+
+/* @noflip */
+.ve-ui-dir-block-ltr .oo-ui-icon-gallery,
+/* HACK */ .ve-ui-surface-dir-ltr .oo-ui-icon-gallery,
+/* HACK */ .oo-ui-ltr .oo-ui-icon-gallery {
+	/* @embed */
+	background-image: url(images/icons/gallery-ltr.svg);
 }
 
 .oo-ui-icon-image-none {
@@ -38,22 +49,60 @@
 
 .oo-ui-icon-parameter {
 	/* @embed */
-	background-image: url(images/icons/parameter.svg);
+	background-image: url(images/icons/parameter-ltr.svg);
 }
 
 .oo-ui-icon-parameter-set {
 	/* @embed */
-	background-image: url(images/icons/parameter-set.svg);
+	background-image: url(images/icons/parameter-set-ltr.svg);
 }
 
-.oo-ui-icon-reference {
+/* @noflip */
+.ve-ui-dir-block-rtl .oo-ui-icon-reference,
+/* HACK */ .ve-ui-surface-dir-rtl .oo-ui-icon-reference,
+/* HACK */ .oo-ui-rtl .oo-ui-icon-reference {
 	/* @embed */
-	background-image: url(images/icons/reference.svg);
+	background-image: url(images/icons/reference-rtl.svg);
 }
 
-.oo-ui-icon-references {
+/* @noflip */
+.ve-ui-dir-block-ltr .oo-ui-icon-reference,
+/* HACK */ .ve-ui-surface-dir-ltr .oo-ui-icon-reference,
+/* HACK */ .oo-ui-ltr .oo-ui-icon-reference {
 	/* @embed */
-	background-image: url(images/icons/references.svg);
+	background-image: url(images/icons/reference-ltr.svg);
+}
+
+/* @noflip */
+.ve-ui-dir-block-rtl .oo-ui-icon-reference-existing,
+/* HACK */ .ve-ui-surface-dir-rtl .oo-ui-icon-reference-existing,
+/* HACK */ .oo-ui-rtl .oo-ui-icon-reference-existing {
+	/* @embed */
+	background-image: url(images/icons/reference-existing-rtl.svg);
+}
+
+/* @noflip */
+.ve-ui-dir-block-ltr .oo-ui-icon-reference-existing,
+/* HACK */ .ve-ui-surface-dir-ltr .oo-ui-icon-reference-existing,
+/* HACK */ .oo-ui-ltr .oo-ui-icon-reference-existing {
+	/* @embed */
+	background-image: url(images/icons/reference-existing-ltr.svg);
+}
+
+/* @noflip */
+.ve-ui-dir-block-rtl .oo-ui-icon-references,
+/* HACK */ .ve-ui-surface-dir-rtl .oo-ui-icon-references,
+/* HACK */ .oo-ui-rtl .oo-ui-icon-references {
+	/* @embed */
+	background-image: url(images/icons/references-rtl.svg);
+}
+
+/* @noflip */
+.ve-ui-dir-block-ltr .oo-ui-icon-references,
+/* HACK */ .ve-ui-surface-dir-ltr .oo-ui-icon-references,
+/* HACK */ .oo-ui-ltr .oo-ui-icon-references {
+	/* @embed */
+	background-image: url(images/icons/references-ltr.svg);
 }
 
 .oo-ui-icon-ref-cite-book {
@@ -61,14 +110,36 @@
 	background-image: url(images/icons/ref-cite-book.svg);
 }
 
-.oo-ui-icon-ref-cite-journal {
+/* @noflip */
+.ve-ui-dir-block-rtl .oo-ui-icon-ref-cite-journal,
+/* HACK */ .ve-ui-surface-dir-rtl .oo-ui-icon-ref-cite-journal,
+/* HACK */ .oo-ui-rtl .oo-ui-icon-ref-cite-journal {
 	/* @embed */
-	background-image: url(images/icons/ref-cite-journal.svg);
+	background-image: url(images/icons/ref-cite-journal-rtl.svg);
 }
 
-.oo-ui-icon-ref-cite-news {
+/* @noflip */
+.ve-ui-dir-block-ltr .oo-ui-icon-ref-cite-journal,
+/* HACK */ .ve-ui-surface-dir-ltr .oo-ui-icon-ref-cite-journal,
+/* HACK */ .oo-ui-ltr .oo-ui-icon-ref-cite-journal {
 	/* @embed */
-	background-image: url(images/icons/ref-cite-news.svg);
+	background-image: url(images/icons/ref-cite-journal-ltr.svg);
+}
+
+/* @noflip */
+.ve-ui-dir-block-rtl .oo-ui-icon-ref-cite-news,
+/* HACK */ .ve-ui-surface-dir-rtl .oo-ui-icon-ref-cite-news,
+/* HACK */ .oo-ui-rtl .oo-ui-icon-ref-cite-news {
+	/* @embed */
+	background-image: url(images/icons/ref-cite-news-rtl.svg);
+}
+
+/* @noflip */
+.ve-ui-dir-block-ltr .oo-ui-icon-ref-cite-news,
+/* HACK */ .ve-ui-surface-dir-ltr .oo-ui-icon-ref-cite-news,
+/* HACK */ .oo-ui-ltr .oo-ui-icon-ref-cite-news {
+	/* @embed */
+	background-image: url(images/icons/ref-cite-news-ltr.svg);
 }
 
 .oo-ui-icon-ref-cite-web {

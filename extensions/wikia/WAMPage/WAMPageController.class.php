@@ -28,23 +28,14 @@ class WAMPageController extends WikiaController
 		$title = $this->wg->Title;
 		if( $title instanceof Title ) {
 			$this->redirectIfMisspelledWamMainPage($title);
-
-			$this->subpageText = $title->getSubpageText();
-			$currentTabIndex = $this->model->getTabIndexBySubpageText($this->subpageText);
-
-			$this->redirectIfUnknownTab($currentTabIndex, $title);
-			$this->redirectIfFirstTab($currentTabIndex, $this->subpageText);
-
-			$this->subpageText = $this->model->getSubpageTextByIndex($currentTabIndex, $this->subpageText);
 		}
 
 		$this->faqPage = !empty($faqPageName) ? $faqPageName : '#';
-		$this->tabs = $this->model->getTabs($currentTabIndex, $this->filterParams);
-		$this->visualizationWikis = $this->model->getVisualizationWikis($currentTabIndex);
+		$this->visualizationWikis = $this->model->getVisualizationWikis( $this->selectedVerticalId );
 
-		$this->indexWikis = $this->model->getIndexWikis($this->getIndexParams());
+		$this->indexWikis = $this->model->getIndexWikis( $this->getIndexParams() );
 
-		$total = ( empty($this->indexWikis['wam_results_total']) ) ? 0 : $this->indexWikis['wam_results_total'];
+		$total = ( empty( $this->indexWikis['wam_results_total'] ) ) ? 0 : $this->indexWikis['wam_results_total'];
 		$itemsPerPage = $this->model->getItemsPerPage();
 		if( $total > $itemsPerPage ) {
 			$paginator = Paginator::newFromArray( array_fill( 0, $total, '' ), $itemsPerPage );
@@ -55,17 +46,21 @@ class WAMPageController extends WikiaController
 
 	protected function collectRequestParameters() {
 		$this->filterVerticals = $this->model->getVerticals();
+		$this->verticalsShorts = $this->model->getVerticalsShorts();
+		$this->verticalsNamesMsgKeys = $this->model->generateVerticalsNamesMsgKeys( $this->verticalsShorts );
 
-		$this->searchPhrase = htmlspecialchars($this->getVal('searchPhrase', null));
-		$this->selectedVerticalId = $this->getVal('verticalId', null);
-		$this->selectedLangCode = $this->getVal('langCode', null);
-		$this->selectedDate = $this->getVal('date', null);
+		$this->searchPhrase = htmlspecialchars( $this->getVal( 'searchPhrase', null ) );
+		$this->selectedVerticalId = intval( $this->getVal( 'verticalId', null ) );
+		$this->selectedLangCode = $this->getVal( 'langCode', null );
+		$this->selectedDate = $this->getVal( 'date', null );
 
-		$this->selectedVerticalId = ($this->selectedVerticalId !== '') ? $this->selectedVerticalId : null;
-		$this->selectedLangCode = ($this->selectedLangCode !== '') ? $this->selectedLangCode : null;
-		$this->selectedDate = ($this->selectedDate !== '') ? $this->selectedDate : null;
+		$this->selectedVerticalId = ( $this->selectedVerticalId !== '' ) ? $this->selectedVerticalId : null;
+		$this->selectedLangCode = ( $this->selectedLangCode !== '' ) ? $this->selectedLangCode : null;
+		$this->selectedDate = ( $this->selectedDate !== '' ) ? $this->selectedDate : null;
 
-		$this->page = $this->getVal('page', $this->model->getFirstPage());
+		$this->isSingleVertical = ( $this->selectedVerticalId != WikiFactoryHub::VERTICAL_ID_OTHER );
+
+		$this->page = intval( $this->getVal( 'page', $this->model->getFirstPage() ) );
 
 		$verticalValidator = new WikiaValidatorSelect(array('allowed' => array_keys($this->filterVerticals)));
 		if (!$verticalValidator->isValid($this->selectedVerticalId)) {
@@ -128,10 +123,10 @@ class WAMPageController extends WikiaController
 
 		$indexParams = [
 			'searchPhrase' => $this->searchPhrase,
-			'verticalId' => $this->selectedVerticalId,
+			'verticalId' => Sanitizer::encodeAttribute( $this->selectedVerticalId ),
 			'langCode' => $this->selectedLangCode,
 			'date' => isset($this->selectedDate) ? $this->selectedDate : null,
-			'page' => $page,
+			'page' => Sanitizer::encodeAttribute( $page ),
 		];
 
 		return $indexParams;
@@ -187,4 +182,3 @@ class WAMPageController extends WikiaController
 		$this->wamPageUrl = $this->model->getWAMMainPageUrl();
 	}
 }
-

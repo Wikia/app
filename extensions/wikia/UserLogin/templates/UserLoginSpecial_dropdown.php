@@ -33,9 +33,11 @@
 				'label' => wfMessage('yourpassword')->escaped(),
 				'tabindex' => ++$tabIndex,
 			),
+
 			array(
-				'type' => 'custom',
-				'output' => '<a href="#" class="forgot-password" tabindex="0">'.wfMessage('userlogin-forgot-password')->escaped().'</a>',
+				'type' => 'nirvanaview',
+				'controller' => 'UserLogin',
+				'view' => 'forgotPasswordLink',
 			),
 			array(
 				'type' => 'checkbox',

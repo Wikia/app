@@ -1,0 +1,226 @@
+@import 'skins/shared/color';
+@import 'skins/shared/mixins/flexbox';
+@import 'extensions/wikia/PortableInfobox/styles/PortableInfoboxVariables';
+
+.portable-infobox {
+	background-color: $infobox-background;
+	clear: right;
+	float: right;
+	margin: 0 0 $infobox-margin $infobox-margin;
+	width: $infobox-width;
+}
+
+	// **********  Overwrite styles from article  ********** //
+	// (placing it within portable-infobox class makes it strong enough) //
+
+.portable-infobox {
+	.pi-secondary-font {
+		font-size: 12px;
+		font-weight: bold;
+		line-height: 18px;
+		margin-top: 0;
+	}
+
+	.pi-header,
+	.pi-title {
+		border: 0;
+		margin: 0;
+	}
+
+	.pi-title {
+		font-size: 18px;
+		line-height: 28px;
+	}
+
+	.pi-data-label {
+		margin-bottom: inherit;
+		margin-top: 0;
+	}
+
+	// overwrite default article styles for children of data value
+	.pi-data-value {
+		> *,
+		li {
+			margin: 0;
+		}
+
+		ol,
+		ul {
+			list-style-position: inside;
+		}
+
+		li {
+			line-height: 19px;
+		}
+	}
+}
+
+// **********  Common elements styling ********** //
+
+.pi-item-spacing {
+	padding: $infobox-item-margin $infobox-item-margin * 2;
+}
+
+.pi-secondary-background {
+	background-color: $infobox-section-header-background;
+}
+
+.pi-border-color {
+	border-color: $infobox-section-header-background;
+}
+
+// remove border from last infobox item either <data> or <group>
+.portable-infobox > .pi-item:last-child {
+	border-bottom: 0;
+}
+
+// **********  Individual elements styling ********** //
+
+.pi-image {
+	text-align: center; // center smaller image inside infobox
+}
+
+.pi-caption {
+	color: $color-alternate-text;
+	font-size: 12px;
+	font-style: italic;
+	text-align: left;
+}
+
+.pi-data:not(:last-of-type),
+.pi-group {
+	border-bottom-style: solid;
+	border-bottom-width: 1px;
+}
+
+.pi-data {
+	@include flexbox;
+	@include flex-direction(row);
+	box-sizing: border-box;
+	overflow: hidden;
+	width: 100%;
+}
+
+.pi-data-label {
+	@include flex-basis($infobox-width / 3);
+}
+
+.pi-data-value {
+	font-size: 12px;
+	line-height: 18px;
+	padding-left: 0;
+
+	&:not(:first-child) {
+		@include flex-basis($infobox-width * 2 / 3);
+		padding-left: 10px;
+	}
+}
+
+// **********  Special styles for HORIZONTAL group  ********** //
+
+.pi-horizontal-group {
+	border-spacing: 0;
+	table-layout: fixed;
+	text-align: center;
+	width: 100%;
+
+	.pi-header {
+		text-align: left;
+	}
+
+	.pi-horizontal-group-item {
+		vertical-align: top;
+
+		&:not(:first-child) {
+			border-left-style: solid;
+			border-left-width: 1px;
+		}
+	}
+
+	.pi-data-label {
+		padding-bottom: 0;
+	}
+}
+
+// **********  Overwrite default infobox styles for STACKED layout type  ********** //
+
+.pi-layout-stacked {
+	.pi-data {
+		display: block;
+	}
+
+	.pi-data-value {
+		padding-left: $infobox-item-margin * 2;
+	}
+}
+
+// **********  Error handling styles  ********** //
+
+.WikiaArticle {
+	.pi-error-info {
+		background-color: $color-error;
+		color: $infobox-debug-error-msg-color;
+		font-size: 18px;
+		line-height: 28px;
+		margin: 0;
+		padding: $infobox-margin * 2 $infobox-debug-line-number-width;
+	}
+
+	.pi-debug {
+		background-color: $color-unified-module-background;
+		font-family: monospace;
+		list-style: none;
+		margin: 0;
+		width: 100%;
+
+		li {
+			margin: 0;
+		}
+
+		.error {
+			font-size: inherit;
+		}
+	}
+}
+
+.pi-debug-line {
+	@include flexbox();
+}
+
+.pi-debug-line-number,
+.pi-debug-line-code {
+	box-sizing: border-box;
+}
+
+.pi-debug-line-number {
+	@include flex-basis($infobox-debug-line-number-width);
+	@include flex-shrink(0);
+	padding-left: $infobox-item-margin * 2;
+}
+
+.pi-debug-error-message {
+	background-color: $infobox-debug-error-msg-bg;
+	color: $infobox-debug-error-msg-color;
+	font-family: Helvetica, Arial, sans-serif;
+	margin: 20px 0 10px 25px;
+	padding: $infobox-item-margin * 2 $infobox-item-margin * 3;
+	position: relative;
+	width: 400px;
+
+	&:before {
+		border-bottom: $infobox-margin solid $infobox-debug-error-msg-bg;
+		border-left: $infobox-margin solid transparent;
+		border-right: $infobox-margin solid transparent;
+		content: '';
+		display: block;
+		height: 0;
+		left: 25px;
+		position: absolute;
+		top: -$infobox-margin;
+		width: 0;
+	}
+
+	.pi-debug-error-message-item {
+		margin: $infobox-item-margin 0;
+	}
+}

@@ -7,9 +7,15 @@ define('thumbnails.views.titleThumbnail', [
 	// TODO: Alias this template name to a property that follows jscs's settings (camelCase)
 	var thumbnailTemplateName = 'Thumbnail_title';
 
+	/**
+	 *
+	 * @param {Object} options - Config for view; options.model is required.
+	 * @constructor
+	 */
 	function TitleView(options) {
 		this.model = options.model;
 		this.el = document.createElement(options.el || 'div');
+		this.$el = $(this.el);
 		this.isFluid = (typeof options.isFluid === 'undefined') ? true : options.isFluid;
 		this.initialize();
 	}

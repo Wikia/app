@@ -104,6 +104,7 @@ class HAWelcomeTaskTest extends WikiaBaseTest {
 
 	public function testPostTalkPageToRecipientWhenNotExists() {
 		$sender = $this->getMock( '\User', ['getName'] );
+		$defaultWelcomer = $this->getMock( '\User' );
 		$recipient = $this->getMock( '\User', ['getName'] );
 
 		$talkPage = $this->getMock( '\Article', ['exists', 'getContent', 'doEdit'], [], '', false );
@@ -117,7 +118,7 @@ class HAWelcomeTaskTest extends WikiaBaseTest {
 			->method( 'getContent' )
 			->will( $this->returnValue( $talkPageContent ) );
 
-		$task = $this->getMock( '\HAWelcomeTask', ['getRecipientTalkPage', 'getTextVersionOfMessage'], [], '', false );
+		$task = $this->getMock( '\HAWelcomeTask', ['getRecipientTalkPage', 'getTextVersionOfMessage', 'getDefaultWelcomerUser'], [], '', false );
 
 		$task->expects( $this->exactly( 2 ) )
 			->method( 'getRecipientTalkPage' )
@@ -127,6 +128,10 @@ class HAWelcomeTaskTest extends WikiaBaseTest {
 		$task->expects( $this->once() )
 			->method( 'getTextVersionOfMessage' )
 			->will( $this->returnValue( $textMessage ) );
+
+		$task->expects( $this->once() )
+			->method( 'getDefaultWelcomerUser' )
+			->will( $this->returnValue( $defaultWelcomer ) );
 
 		$sender->expects( $this->once() )
 			->method( 'getName' )
@@ -138,7 +143,7 @@ class HAWelcomeTaskTest extends WikiaBaseTest {
 
 		$talkPage->expects( $this->once() )
 			->method( 'doEdit' )
-			->with( null, $textMessage, 0, false, $sender )
+			->with( null, $textMessage, 0, false, $defaultWelcomer )
 			->will( $this->returnValue( null ) );
 
 		$task->setSenderObject( $sender );
@@ -148,13 +153,14 @@ class HAWelcomeTaskTest extends WikiaBaseTest {
 	}
 
 	public function testCreateUserProfilePage() {
-		$sender = $this->getMock( '\User', ['getName'] );
+		$welcomer = $this->getMock( '\User' );
 		$recipient = $this->getMock( '\User', ['getName'] );
 
 		$profilePage = $this->getMock( '\Article', ['exists', 'doEdit'], [], '', false );
 		$task = $this->getMock( '\HAWelcomeTask', [
 			'getRecipientProfilePage',
 			'getWelcomePageTemplateForRecipient',
+			'getDefaultWelcomerUser',
 			] );
 
 		$profilePage->expects( $this->once() )
@@ -171,9 +177,9 @@ class HAWelcomeTaskTest extends WikiaBaseTest {
 			->method( 'getWelcomePageTemplateForRecipient' )
 			->will( $this->returnValue( $welcomePageTemplate ) );
 
-		$sender->expects( $this->once() )
-			->method( 'getName' )
-			->will( $this->returnValue( 'sender' ) );
+		$task->expects( $this->once() )
+			->method( 'getDefaultWelcomerUser' )
+			->will( $this->returnValue( $welcomer ) );
 
 		$recipient->expects( $this->once() )
 			->method( 'getName' )
@@ -181,10 +187,9 @@ class HAWelcomeTaskTest extends WikiaBaseTest {
 
 		$profilePage->expects( $this->once() )
 			->method( 'doEdit' )
-			->with( $welcomePageTemplate, false, 0, false, $sender )
+			->with( $welcomePageTemplate, false, 0, false, $welcomer )
 			->will( $this->returnValue( null ) );
 
-		$task->setSenderObject( $sender );
 		$task->setRecipientObject( $recipient );
 		$task->createUserProfilePage();
 	}
@@ -389,5 +394,43 @@ class HAWelcomeTaskTest extends WikiaBaseTest {
 		$task->sendWelcomeMessage( $params );
 	}
 
+	public function testExecuteAndPostMessage() {
+		$defaultUser = $this->getMock( '\User' );
+		$sender      = $this->getMock( '\User' );
+		$wallMessage = $this->getMock( '\WallMessage', ['setPostedAsBot', 'sendNotificationAboutLastRev'], [], '', false );
+		$task = $this->getMock( '\HAWelcomeTask', ['getDefaultWelcomerUser', 'getTextVersionOfMessage', 'executeBuildAndPostWallMessage'], [], '', false );
+
+		$welcomeMessage = "hello";
+		$recipientName  = "bob";
+		$textMessage    = "a text message";
+
+		$task->setWelcomeMessage( $welcomeMessage );
+		$task->setRecipientUserName( $recipientName );
+		$task->setSenderObject( $sender );
+
+		$task->expects( $this->once() )
+			->method( 'getTextVersionOfMessage' )
+			->with( 'welcome-message-log' )
+			->will( $this->returnValue( $textMessage ) );
+
+		$task->expects( $this->once() )
+			->method( 'executeBuildAndPostWallMessage' )
+			->with( $defaultUser, $welcomeMessage, $recipientName, $textMessage )
+			->will( $this->returnValue( $wallMessage ) );
+
+		$wallMessage->expects( $this->once() )
+			->method( 'setPostedAsBot' )
+			->with( $sender );
+
+		$wallMessage->expects( $this->once() )
+			->method( 'sendNotificationAboutLastRev' );
+
+		$task->expects( $this->once() )
+			->method( 'getDefaultWelcomerUser' )
+			->will( $this->returnValue( $defaultUser ) );
+
+		$message = $task->postWallMessageToRecipient();
+		$this->assertEquals( $wallMessage, $message );
+	}
 
 }

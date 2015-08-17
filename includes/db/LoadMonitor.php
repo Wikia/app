@@ -124,7 +124,7 @@ class LoadMonitor_MySQL implements LoadMonitor {
 			$wgMemc = wfGetMainCache();
 
 		$masterName = $this->parent->getServerName( 0 );
-		$memcKey = wfMemcKey( 'db', 'lag_times', $masterName );
+		$memcKey = wfSharedMemcKey( 'db', 'lag_times', $masterName ); // Wikia change - PLATFORM-983
 		$times = $wgMemc->get( $memcKey );
 		if ( $times ) {
 			# Randomly recache with probability rising over $expiry

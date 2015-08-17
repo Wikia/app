@@ -1,0 +1,57 @@
+.ve-ui-mwTemplateDialog {
+	.ve-ui-mwParameterPage-infoButton,
+	.ve-ui-mwParameterPage-removeButton,
+	.ve-ui-mwParameterPage-addButton,
+	.ve-ui-mwTemplatePage-description {
+		display: none;
+	}
+	.ve-ui-mwTemplateDialog-filter {
+		background: $color-page;
+		border-bottom: 1px solid $color-page-border;
+		left: 0;
+		padding: 1.5em 2em;
+		position: absolute;
+		right: 0;
+
+		.oo-ui-textInputWidget {
+			width: 100%;
+		}
+	}
+	.ve-ui-wikiaTemplateGetInfoWidget-templateInfoButton {
+		.oo-ui-buttonElement-button {
+			.oo-ui-iconElement-icon {
+				float: right;
+				height: 18px;
+				margin-left: 5px;
+				width: 18px;
+			}
+		}
+
+		.oo-ui-labelElement-label {
+			line-height: 18px;
+		}
+	}
+}
+
+.ve-ui-mwTemplateDialog-editFlow {
+	&.ve-ui-mwTransclusionDialog-single {
+		.oo-ui-gridLayout {
+			margin-top: 5.6em;
+		}
+		.ve-ui-mwTemplatePage {
+			display: none;
+		}
+	}
+	&.ve-ui-wikiaTransclusionDialog-zeroState {
+		.oo-ui-gridLayout {
+			margin-top: 0;
+		}
+		.ve-ui-wikiaTemplateGetInfoWidget-templateInfoButton {
+			margin-top: 1em;
+
+			.oo-ui-labeledElement-label {
+				margin-left: 0;
+			}
+		}
+	}
+}

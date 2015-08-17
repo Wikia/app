@@ -1,18 +1,5 @@
 <div id=contentManagmentForm>
 	<ol class=header>
-		{{#descriptions}}
-		<li>{{.}}</li>
-		{{/descriptions}}
+		<h1>{{{game_guides_have_moved}}}</h1>
 	</ol>
-	<ul>
-		{{{list}}}
-		{{^list}}
-			{{{tag}}}
-			{{{category}}}
-			{{{category}}}
-		{{/list}}
-	</ul>
-    <button class=secondary id=addTag>{{addTag}}</button>
-    <button class=secondary id=addCategory>{{addCategory}}</button>
-	<button id=save>{{save}}</button>
 </div>

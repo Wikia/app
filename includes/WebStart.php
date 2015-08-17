@@ -214,3 +214,5 @@ EOD;
 
 	}
 }
+
+Transaction::setAttribute(Transaction::PARAM_WIKI,$wgDBname);

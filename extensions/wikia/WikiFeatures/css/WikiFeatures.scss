@@ -1,10 +1,10 @@
-@import "../../../../skins/oasis/css/mixins/bodytext";
-@import "../../../../skins/oasis/css/mixins/box-shadow";
-@import "../../../../skins/oasis/css/mixins/clearfix";
-@import "../../../../skins/oasis/css/mixins/gradient";
-@import "../../../../skins/oasis/css/mixins/transform";
-@import "../../../../skins/oasis/css/mixins/transition";
-@import "../../../../skins/oasis/css/core/color";
+@import "skins/shared/mixins/bodytext";
+@import "skins/shared/mixins/box-shadow";
+@import "skins/shared/mixins/clearfix";
+@import "skins/shared/mixins/gradient";
+@import "skins/shared/mixins/transform";
+@import "skins/shared/mixins/transition";
+@import "skins/shared/color";
 
 .WikiFeatures {
 	padding: 10px;
@@ -30,7 +30,13 @@
 		list-style: none;
 		.feature {
 			@include clearfix;
+			max-height: 300px;
+			overflow-y: hidden;
 			padding-bottom: 30px;
+			transition-property: all;
+			transition-duration: 1s;
+			transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+
 			h3 {
 				border-bottom: 1px solid $color-page-border;
 				font-size: 20px;
@@ -39,6 +45,10 @@
 			}
 			&:first-child {
 				border-top: 0;
+			}
+			&.faded {
+				max-height: 0;
+				padding-bottom: 0;
 			}
 			.representation {
 				border: 1px solid $color-page-border;
@@ -242,12 +252,12 @@
 .star-rating {
 	@include clearfix;
 	>img {
-		background: url('/extensions/wikia/WikiFeatures/images/star-inactive.png'); /* base64 */
+		background: url('/extensions/wikia/WikiFeatures/images/star-inactive.png'); /* inline */
 		height: 16px;
 		float: left;
 		width: 16px;
 		&.active {
-			background: url('/extensions/wikia/WikiFeatures/images/star-active.png'); /* base64 */
+			background: url('/extensions/wikia/WikiFeatures/images/star-active.png'); /* inline */
 		}
 	}
 }

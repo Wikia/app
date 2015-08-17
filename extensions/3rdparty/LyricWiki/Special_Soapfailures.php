@@ -55,7 +55,11 @@ class Soapfailures extends SpecialPage{
 		parent::__construct('Soapfailures');
 	}
 
-	function execute(){
+	/**
+	 *
+	 * @param $par String subpage string, if one was specified
+	 */
+	function execute( $par ){
 		global $wgOut;
 		global $wgRequest, $wgUser, $wgMemc;
 
@@ -104,17 +108,23 @@ class Soapfailures extends SpecialPage{
 
 			if(($songResult['lyrics'] == $failedLyrics) || ($songResult['lyrics'] == "")){
 				print "<html><head><title>Error</title></head><body>\n"; // TODO: i18n
-				print "<div style='background-color:#fcc'>Sorry, but $artist:$song song still failed.</div>\n";
+				print '<div style="background-color:#fcc">Sorry, but ' . htmlspecialchars( $artist ) . ':' . htmlspecialchars( $song ) . " song still failed.</div>\n";
 				print_r($songResult);
 			} else {
-				$artist = str_replace("'", "\\'", $artist);
-				$song = str_replace("'", "\\'", $song);
-
-				$db = &wfGetDB(DB_MASTER)->getProperty('mConn');
+				$dbw = wfGetDB( DB_MASTER );
 
 				print "<html><head><title>Success</title></head><body>\n"; // TODO: i18n
 				print "Deleting record... ";
-				if(mysql_query("DELETE FROM lw_soap_failures WHERE request_artist='$artist' AND request_song='$song'", $db)){
+
+				$result = $dbw->delete(
+					'lw_soap_failures',
+					[
+						'request_artist' => $artist,
+						'request_song' => $song,
+					],
+					__METHOD__
+				);
+				if ( $result ) {
 					print "Deleted.";
 				} else {
 					print "Failed. ".mysql_error();
@@ -255,9 +265,9 @@ class Soapfailures extends SpecialPage{
 						$wgOut->addWikiText("$lookedFor");
 						$wgOut->addHTML("</td><td>");
 						$wgOut->addHTML("<form action='' method='POST' target='_blank'>
-								<input type='hidden' name='artist' value=\"$artist\"/>
-								<input type='hidden' name='song' value=\"$song\"/>
-								<input type='submit' name='fixed' value='".wfMsg('soapfailures-fixed')."'/>
+								<input type='hidden' name='artist' value=\"" . Sanitizer::encodeAttribute( $artist ) . "\"/>
+								<input type='hidden' name='song' value=\"" . Sanitizer::encodeAttribute( $song ) . "\"/>
+								<input type='submit' name='fixed' value=\"" . wfMessage( 'soapfailures-fixed' )->escaped() . "\"/>
 							</form>\n");
 						$wgOut->addHTML("</td>");
 						$wgOut->addHTML("</tr>\n");

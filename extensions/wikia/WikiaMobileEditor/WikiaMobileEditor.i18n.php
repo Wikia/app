@@ -5,6 +5,7 @@ $messages['en'] = array(
 	'tag-mobileedit' => 'Mobile',
 	'tag-mobileedit-description' => 'Edit made using mobile skin',
 
+	'wikiamobileeditor-desc' => 'WikiaMobile Editor enhancements',
 	'wikiamobileeditor-cancel' => 'Cancel',
 	'wikiamobileeditor-publish' => 'Publish',
 	'wikiamobileeditor-preview' => 'Preview',
@@ -23,6 +24,7 @@ $messages['qqq'] = array(
 	'tag-mobileedit' => 'Shown on lists of changes (history, recentchanges, etc.) for each edit made using mobile skin.',
 	'tag-mobileedit-description' => 'Long description of the mobileedit tag.',
 
+	'wikiamobileeditor-desc' => '{{desc}}',
 	'wikiamobileeditor-cancel' => 'Message on mobile edit page that closses edit page and go back to an article',
 	'wikiamobileeditor-publish' => 'message on a button to publish an edit',
 	'wikiamobileeditor-preview' => 'message on a button to open a modal with preview of an aricle',

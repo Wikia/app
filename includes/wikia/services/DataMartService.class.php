@@ -4,6 +4,7 @@
  */
 
 use FluentSql\StaticSQL as sql;
+use Wikia\Logger\WikiaLogger;
 
 class DataMartService extends Service {
 
@@ -19,6 +20,10 @@ class DataMartService extends Service {
 	const PERIOD_ID_ROLLING_24HOURS = 10024; // every 15 minutes
 	const CACHE_TOP_ARTICLES = 86400;
 	const LOCK_TOP_ARTICLES = 10;
+
+	const TOP_WIKIS_FOR_HUB = 10;
+
+	const TTL = 43200; // WikiaSQL results caching time (12 hours)
 
 	/**
 	 * get pageviews
@@ -45,8 +50,9 @@ class DataMartService extends Service {
 			}
 		}
 
-		$db = wfGetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
-		$pageviews = (new WikiaSQL())->skipIf(empty($app->wg->StatsDBEnabled))->cacheGlobal(60*60*12)
+		$db = DataMartService::getDB();
+		$pageviews = (new WikiaSQL())->skipIf( self::isDisabled() )
+			->cacheGlobal( self::TTL )
 			->SELECT("date_format(time_id,'%Y-%m-%d')")->AS_('date')
 				->FIELD('pageviews')->AS_('cnt')
 			->FROM('rollup_wiki_pageviews')
@@ -88,8 +94,9 @@ class DataMartService extends Service {
 			}
 		}
 
-		$db = wfGetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
-		$pageviews = (new WikiaSQL())->skipIf(empty($app->wg->StatsDBEnabled))->cacheGlobal(60*60*12)
+		$db = DataMartService::getDB();
+		$pageviews = (new WikiaSQL())->skipIf( self::isDisabled() )
+			->cacheGlobal( self::TTL )
 			->SELECT('wiki_id')
 				->FIELD("date_format(time_id,'%Y-%m-%d')")->AS_('date')
 				->FIELD('pageviews')->AS_('cnt')
@@ -123,8 +130,9 @@ class DataMartService extends Service {
 			return array();
 		}
 
-		$db = wfGetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
-		$pageviews = (new WikiaSQL())->skipIf(empty($app->wg->StatsDBEnabled))->cacheGlobal(60*60*12)
+		$db = DataMartService::getDB();
+		$pageviews = (new WikiaSQL())->skipIf( self::isDisabled() )
+			->cacheGlobal( self::TTL )
 			->SELECT('time_id')
 				->SUM('pageviews')->AS_('cnt')
 			->FROM('rollup_wiki_pageviews')
@@ -210,8 +218,10 @@ class DataMartService extends Service {
 				break;
 		}
 
-		$db = wfGetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
-		$sql = (new WikiaSQL())->skipIf(empty($app->wg->StatsDBEnabled))->cacheGlobal(43200)
+		$db = DataMartService::getDB();
+
+		$sql = (new WikiaSQL())->skipIf( self::isDisabled() )
+			->cacheGlobal( self::TTL )
 			->SELECT('r.wiki_id')->AS_('id')
 				->FIELD($field)->AS_('pageviews')
 			->FROM('report_wiki_recent_pageviews')->AS_('r')
@@ -237,6 +247,8 @@ class DataMartService extends Service {
 			$topWikis[$row->id] = $row->pageviews;
 		});
 
+		$topWikis = array_slice($topWikis, 0, $limit, true);
+
 		wfProfileOut(__METHOD__);
 		return $topWikis;
 	}
@@ -255,8 +267,10 @@ class DataMartService extends Service {
 		$app = F::app();
 		wfProfileIn(__METHOD__);
 
-		$db = wfGetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
-		$topWikis = (new WikiaSQL())->skipIf(empty($app->wg->StatsDBEnabled))->cacheGlobal(43200)
+		$db = DataMartService::getDB();
+
+		$topWikis = (new WikiaSQL())->skipIf( self::isDisabled() )
+			->cacheGlobal( self::TTL )
 			->SELECT('r.wiki_id')->AS_('id')
 				->SUM('views')->AS_('totalViews')
 			->FROM('rollup_wiki_video_views')->AS_('r')
@@ -302,8 +316,9 @@ class DataMartService extends Service {
 			}
 		}
 
-		$db = wfGetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
-		$events = (new WikiaSQL())->skipIf(empty($app->wg->StatsDBEnabled))->cacheGlobal(60*60*12)
+		$db = DataMartService::getDB();
+		$events = (new WikiaSQL())->skipIf( self::isDisabled() )
+			->cacheGlobal( self::TTL )
 			->SELECT("date_format(time_id,'%Y-%m-%d')")->AS_('date')
 				->SUM('creates')->AS_('creates')
 				->SUM('edits')->AS_('edits')
@@ -371,8 +386,8 @@ class DataMartService extends Service {
 			wfSharedMemcKey('datamart', 'user_edits', $wikiId, $userIdsKey, $periodId, $rollupDate),
 			86400 /* 24 hours */,
 			function () use ($app, $wikiId, $userIds, $periodId, $rollupDate) {
-				$db = wfGetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
-				$events = (new WikiaSQL())->skipIf(empty($app->wg->StatsDBEnabled))
+				$db = DataMartService::getDB();
+				$events = (new WikiaSQL())->skipIf( self::isDisabled() )
 					->SELECT('user_id')
 						->SUM('creates')->AS_('creates')
 						->SUM('edits')->AS_('edits')
@@ -430,11 +445,11 @@ class DataMartService extends Service {
 
 	public static function findLastRollupsDate( $period_id, $numTry = 5 ){
 		$app = F::app();
-		$db = wfGetDB( DB_SLAVE, array(), $app->wg->DatamartDB );
+		$db = DataMartService::getDB();
 		//compensation for NOW
 		$date = date( 'Y-m-d' ) . ' 00:00:01';
 		do {
-			$date = ( new WikiaSQL() )->skipIf( empty( $app->wg->StatsDBEnabled ) )
+			$date = ( new WikiaSQL() )->skipIf( self::isDisabled() )
 				->SELECT( 'max(time_id) as t' )
 				->FROM( 'rollup_wiki_article_pageviews' )
 				->WHERE( 'time_id' )->LESS_THAN( $date )
@@ -453,14 +468,14 @@ class DataMartService extends Service {
 				break;
 			}
 
-			$found =  ( new WikiaSQL() )->skipIf( empty( $app->wg->StatsDBEnabled ) )
+			$found =  ( new WikiaSQL() )->skipIf( self::isDisabled() )
 				->SELECT( '1 as c' )
 				->FROM( 'rollup_wiki_article_pageviews' )
 				->WHERE( 'time_id' )->EQUAL_TO( $date )
 				->AND_( 'period_id' )->EQUAL_TO( $period_id )
 				->LIMIT( 1 )
 				->cache( self::CACHE_TOP_ARTICLES )
-				->run( $db, function ( $result ) {
+				->run( $db, function ( ResultWrapper $result ) {
 					$row = $result->fetchObject( $result );
 
 					if ( $row && isset( $row->c ) ) {
@@ -483,15 +498,17 @@ class DataMartService extends Service {
 	 * @param Array $namespaces [OPTIONAL] A list of namespace ID's to restrict the list (inclusive)
 	 * @param boolean $excludeNamespaces [OPTIONAL] Sets $namespaces as an exclusive list, defaults to false
 	 * @param integer $limit [OPTIONAL] The maximum number of items in the list, defaults to 200
+	 * @param integer $rollupDate [OPTIONAL] Rollup ID to get (instead of the recent one)
 	 *
 	 * @return Array The list, the key contains article ID's and each item as a "namespace_id" and "pageviews" key
 	 */
-	public static function getTopArticlesByPageview( $wikiId,
-	                                                 Array $articleIds = null,
-	                                                 Array $namespaces = null,
-	                                                 $excludeNamespaces = false,
-	                                                 $limit = 200,
-	                                                 $rollupDate = null
+	private static function doGetTopArticlesByPageview( 
+		$wikiId,
+                Array $articleIds = null,
+                Array $namespaces = null,
+                $excludeNamespaces = false,
+                $limit = 200,
+                $rollupDate = null
 	) {
 		$app = F::app();
 		wfProfileIn( __METHOD__ );
@@ -534,8 +551,8 @@ class DataMartService extends Service {
 			multiple partitions kills kittens
 			*/
 
-			$db = wfGetDB( DB_SLAVE, array(), $app->wg->DatamartDB );
-			$sql = (new WikiaSQL())->skipIf(empty($app->wg->StatsDBEnabled))
+			$db = DataMartService::getDB();
+			$sql = (new WikiaSQL())->skipIf( self::isDisabled() )
 				->SELECT('namespace_id', 'article_id', 'pageviews as pv')
 				->FROM('rollup_wiki_article_pageviews')
 				->WHERE('time_id')->EQUAL_TO(
@@ -575,6 +592,12 @@ class DataMartService extends Service {
 				];
 			});
 
+			if ( empty( $topArticles ) ) {
+				WikiaLogger::instance()->error( 'DataMartService::doGetTopArticlesByPageview emptyQueryResult', [
+					'raw_sql' => (string) $sql->injectParams( $db, $sql->build() )
+				]);
+			}
+
 			wfProfileOut( __CLASS__ . '::TopArticlesQuery' );
 			return $topArticles;
 		};
@@ -590,6 +613,166 @@ class DataMartService extends Service {
 		$topArticles = array_slice( $topArticles, 0, $limit, true );
 		wfProfileOut( __METHOD__ );
 		return $topArticles;
+	}
+
+	/**
+	 * Gets the list of top articles for a wiki on a weekly pageviews basis
+	 *
+	 * It internally calls doGetTopArticlesByPageview() method,
+	 * but applies a fallback to the last rollup when the current one is not replicated
+	 *
+	 * It's A Nasty And Ugly Hack (TM) before we have a proper rollups solution.
+	 *
+	 * @see https://wikia-inc.atlassian.net/browse/OPS-5465
+	 *
+	 * @param integer $wikiId A valid Wiki ID to fetch the list from
+	 * @param Array $articleIds [OPTIONAL] A list of article ID's to restrict the list
+	 * @param Array $namespaces [OPTIONAL] A list of namespace ID's to restrict the list (inclusive)
+	 * @param boolean $excludeNamespaces [OPTIONAL] Sets $namespaces as an exclusive list, defaults to false
+	 * @param integer $limit [OPTIONAL] The maximum number of items in the list, defaults to 200
+	 * @param integer $rollupDate [OPTIONAL] Rollup ID to get (instead of the recent one)
+	 *
+	 * @return Array The list, the key contains article ID's and each item as a "namespace_id" and "pageviews" key
+	 */
+	public static function getTopArticlesByPageview( 
+		$wikiId,
+ 		Array $articleIds = null,
+		Array $namespaces = null,
+		$excludeNamespaces = false,
+		$limit = 200,
+		$rollupDate = null
+	) {
+		wfProfileIn( __METHOD__ );
+
+		$articles = self::doGetTopArticlesByPageview(
+			$wikiId,
+			$articleIds,
+			$namespaces,
+			$excludeNamespaces,
+			$limit,
+			$rollupDate
+		);
+
+		if ( empty( $articles ) ) {
+			// log when the fallback takes place
+			WikiaLogger::instance()->error( __METHOD__ . ' fallback', [
+				'wiki_id' => $wikiId,
+				'rollup_date' => $rollupDate
+			]);
+
+			$fallbackDate = self::findLastRollupsDate( self::PERIOD_ID_WEEKLY );
+			if ( $fallbackDate ) {
+				$articles = self::doGetTopArticlesByPageview(
+					$wikiId,
+					$articleIds,
+					$namespaces,
+					$excludeNamespaces,
+					$limit,
+					$fallbackDate
+				);
+			}
+		}
+
+		wfProfileOut( __METHOD__ );
+		return $articles;
+	}
+
+	/**
+	 * Get most popular cross wiki articles based on pageviews in last week.
+	 * Unfortunately according to performance reasons we need to fetch most popular wikis
+	 * and then fetch most popular articles on those wikis.
+	 *
+	 * @param string $hub
+	 * @param string $langs
+	 * @param array|null $namespaces
+	 * @param int $limit
+	 * @return array of wikis with articles. Format:
+	 * [
+	 *   [
+	 *     'wiki' => [
+	 *       'id' => 1030786,
+	 *       'name' => 'Wiki name',
+	 *       'language' => 'language code',
+	 *       'domain' => 'Full url',
+	 *     ],
+	 *     'articles' => [
+	 *        ['id' => 1, 'ns' => 0],
+	 *        ['id' => 2, 'ns' => -1]
+	 *      ]
+	 *   ],
+	 *   [
+	 *     'wiki' => [
+	 *       'id' => 1030786,
+	 *       'name' => 'Wiki name',
+	 *       'language' => 'language code',
+	 *       'domain' => 'Full url',
+	 *     ],
+	 *     'articles' => [
+	 *        ['id' => 1, 'ns' => 0],
+	 *        ['id' => 2, 'ns' => -1]
+	 *      ]
+	 *   ],
+	 * ]
+	 */
+	public static function getTopCrossWikiArticlesByPageview( $hub, $langs, $namespaces = null, $limit = 200 ) {
+		wfProfileIn( __METHOD__ );
+
+		//fetch the top 10 wikis on a weekly pageviews basis
+		//this has it's own cache
+		$wikis = DataMartService::getTopWikisByPageviews(
+			DataMartService::PERIOD_ID_WEEKLY,
+			self::TOP_WIKIS_FOR_HUB,
+			$langs,
+			$hub,
+			1 /* only pubic */
+		);
+
+		$wikisCount = count( $wikis );
+		$res = [];
+
+		if ( $wikisCount >= 1 ) {
+			$articlesPerWiki = ceil( $limit / $wikisCount );
+
+			//fetch $articlesPerWiki articles from each wiki
+			//see FB#73094 for performance review
+			foreach ( $wikis as $wikiId => $data ) {
+				//this has it's own cache
+				$articles = DataMartService::getTopArticlesByPageview(
+					$wikiId,
+					null,
+					$namespaces,
+					false,
+					$articlesPerWiki
+				);
+
+				if ( count( $articles ) == 0 ) {
+					continue;
+				}
+
+				$item = [
+					'wiki' => [
+						'id' => $wikiId,
+						//WF data has it's own cache
+						'name' => WikiFactory::getVarValueByName( 'wgSitename', $wikiId ),
+						'language' => WikiFactory::getVarValueByName( 'wgLanguageCode', $wikiId ),
+						'domain' => WikiFactory::getVarValueByName( 'wgServer', $wikiId )
+					],
+					'articles' => []
+				];
+
+				foreach ( $articles as $articleId => $article ) {
+					$item['articles'][] = [
+						'id' => $articleId,
+						'ns' => $article['namespace_id']
+					];
+				}
+
+				$res[] = $item;
+			}
+		}
+
+		wfProfileOut( __METHOD__ );
+		return $res;
 	}
 
 	/**
@@ -626,8 +809,8 @@ class DataMartService extends Service {
 		$tagViews = $app->wg->Memc->get($memKey);
 		if (!is_array($tagViews)) {
 			$tagViews = array();
-			if (!empty($app->wg->StatsDBEnabled)) {
-				$db = wfGetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
+			if ( !self::isDisabled() ) {
+				$db = DataMartService::getDB();
 
 				$tables = array(
 					'r' => 'rollup_wiki_pageviews',
@@ -669,18 +852,65 @@ class DataMartService extends Service {
 		return $tagViews;
 	}
 
+	/**
+	 * Gets page views for given articles
+	 *
+	 * @param array $articlesIds
+	 * @param datetime $timeId
+	 * @return array
+	 */
+	public static function getPageViewsForArticles( Array $articlesIds, $timeId, $wikiId, $periodId = self::PERIOD_ID_WEEKLY ) {
+		$app = F::app();
+
+		$db = wfGetDB( DB_SLAVE, [], $app->wg->DWStatsDB );
+
+		$articlePageViews = ( new WikiaSQL() )->skipIf( self::isDisabled() )
+			->SELECT( 'article_id', 'pageviews' )
+			->FROM( 'rollup_wiki_article_pageviews' )
+			->WHERE( 'article_id' )->IN( $articlesIds )
+			->AND_( 'time_id' )->EQUAL_TO( $timeId )
+			->AND_( 'wiki_id' )->EQUAL_TO( intval( $wikiId ) )
+			->AND_( 'period_id' )->EQUAL_TO( intval( $periodId ) )
+			->runLoop( $db, function( &$articlePageViews, $row ) {
+				$articlePageViews[ $row->article_id ] = $row->pageviews;
+			} );
+
+		return $articlePageViews;
+	}
+
 	public static function getWAM200Wikis() {
 		$app = F::app();
 
-		$wikis = (new WikiaSQL())->cacheGlobal(60*60*12)
+		$db = wfGetDB( DB_SLAVE, [], $app->wg->DWStatsDB );
+
+		$wikis = (new WikiaSQL())->skipIf( self::isDisabled() )
+			->cacheGlobal( self::TTL )
 			->SELECT('wiki_id')
 			->FROM('dimension_top_wikis')
 			->ORDER_BY('rank')
 			->LIMIT(200)
-			->runLoop(wfGetDB( DB_SLAVE, [], $app->wg->DWStatsDB ), function(&$wikis, $row) {
+			->runLoop($db, function(&$wikis, $row) {
 				$wikis[] = intval($row->wiki_id);
 			});
 
 		return $wikis;
 	}
+
+	protected static function getDB() {
+		$app = F::app();
+		wfGetLB( $app->wg->DatamartDB )->allowLagged(true);
+		$db = wfGetDB( DB_SLAVE, array(), $app->wg->DatamartDB );
+		$db->clearFlag( DBO_TRX );
+		return $db;
+	}
+
+	/**
+	 * wgStatsDBEnabled can be used to disable queries to statsdb_mart database
+	 *
+	 * @return bool
+	 */
+	protected static function isDisabled() {
+		return empty( F::app()->wg->StatsDBEnabled );
+	}
+
 }

@@ -754,8 +754,9 @@ Správce serveru, který úložiště zamkl, poskytl toto zdůvodnění: „''$3
 # Login and logout pages
 'logouttext' => "'''Nyní jste odhlášeni.'''
 
-Můžete pokračovat v anonymním prohlížení a editaci {{grammar:2sg|{{SITENAME}}}}, nebo se můžete [[Special:UserLogin|znovu přihlásit]] jako stejný či jiný uživatel.
+Můžete pokračovat v anonymním prohlížení a editaci {{grammar:2sg|{{SITENAME}}}}, nebo se můžete $1 jako stejný či jiný uživatel.
 Uvědomte si, že některé stránky se mohou i nadále zobrazovat, jako byste byli dosud přihlášeni, pokud nevymažete cache prohlížeče.",
+'logouttext-link-text'       => 'znovu přihlásit',
 'welcomecreation' => '== Vítejte, $1! ==
 Váš účet byl úspěšně vytvořen.
 Nezapomeňte si upravit své [[Special:Preferences|nastavení {{grammar:2sg|{{SITENAME}}}}]].',
@@ -2654,6 +2655,7 @@ Můžete si prohlédnout [[Special:BlockList|seznam zablokovaných uživatelů]]
 'unblocked' => '{{GENDER:$1|||Uživatel}} [[User:$1|$1]] {{GENDER:$1|byl odblokován|byla odblokována|byl odblokován}}',
 'unblocked-range' => '$1 bylo odblokováno',
 'unblocked-id' => 'Blok $1 byl zrušen',
+'unblocked-ip' => 'Adresa [[Special:Contributions/$1|$1]] byla odblokována.',
 'blocklist' => 'Zablokovaní uživatelé',
 'ipblocklist' => 'Zablokovaní uživatelé',
 'ipblocklist-legend' => 'Hledat zablokovaného uživatele',
@@ -3168,7 +3170,7 @@ Otevřením souboru můžete ohrozit svůj počítač.",
 'minutes' => '{{PLURAL:$1|$1 minuta|$1 minuty|$1 minut}}',
 'hours' => '{{PLURAL:$1|$1 hodina|$1 hodiny|$1 hodin}}',
 'days' => '{{PLURAL:$1|$1 den|$1 dny|$1 dní}}',
-'ago' => 'před 
+'ago' => 'před
 $1',
 
 # Bad image list

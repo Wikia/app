@@ -1,0 +1,6 @@
+#!/bin/sh
+
+# Allow spaces or commas (needs to be commas when passed to GROUP param)
+GROUPS=`echo $* | sed -e 's/ /,/g'`
+
+make phpunit-group GROUP="$GROUPS"

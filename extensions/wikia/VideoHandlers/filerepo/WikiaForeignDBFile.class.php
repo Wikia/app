@@ -74,6 +74,22 @@ class WikiaForeignDBFile extends ForeignDBFile {
 		return $this->oLocalFileLogic;
 	}
 
+	public function getBucket() {
+		$wikiDbName = $this->repo->getDBName();
+		$wikiId = WikiFactory::DBtoID( $wikiDbName );
+		$wikiUploadPath = WikiFactory::getVarValueByName( 'wgUploadPath', $wikiId );
+
+		return VignetteRequest::parseBucket( $wikiUploadPath );
+	}
+
+	function getPathPrefix() {
+		$wikiDbName = $this->repo->getDBName();
+		$wikiId = WikiFactory::DBtoID( $wikiDbName );
+		$wikiUploadPath = WikiFactory::getVarValueByName( 'wgUploadPath', $wikiId );
+
+		return VignetteRequest::parsePathPrefix( $wikiUploadPath );
+	}
+
 	// Not everything can be transparent, because __call skips already defined methods.
 	// These methods work as a layer of communication between this class and SharedLogic
 

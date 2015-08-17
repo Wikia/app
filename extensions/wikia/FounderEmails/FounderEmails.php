@@ -12,8 +12,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Founder Emails',
 	'author' => 'Adrian \'ADi\' Wieczorek',
-	'url' => 'http://www.wikia.com' ,
-	'description' => 'Helps informing founders about changes on their wiki',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/FounderEmails',
 	'descriptionmsg' => 'founderemails-desc'
 );
 
@@ -25,34 +24,30 @@ $wgExtensionMessagesFiles['FounderEmails'] = dirname( __FILE__ ) . '/FounderEmai
 /**
  * extension config
  */
-$wgFounderEmailsExtensionConfig = array(
-	'events' => array(
-		'edit'       => array(
-			'className'  => 'FounderEmailsEditEvent',
-			'threshold'  => 1,
-			'hookName'   => 'RecentChange_save',
-			'skipUsers'  => array( 929702 /* CreateWiki script */, 22439 /* Wikia */ )
-		),
-		'register'   => array(
-			'className'  => 'FounderEmailsRegisterEvent',
-			'threshold'  => 1,
-			'hookName'   => 'AddNewAccount'
-		),
-		'daysPassed' => array(
-			'className'  => 'FounderEmailsDaysPassedEvent',
-			'hookName'   => 'CreateWikiLocalJob-complete',
-			'days'       => array( 0, 3, 10 )
-		),
-		'completeDigest' => array(
-			'className'  => 'FounderEmailsCompleteDigestEvent',
-			'hookName'   => null
-		),
-		'viewsDigest' => array(
-			'className'  => 'FounderEmailsViewsDigestEvent',
-			'hookName'   => null
-		)
-	)
-);
+$wgFounderEmailsEvents = [
+	'edit'       => [
+		'className'  => 'FounderEmailsEditEvent',
+		'hookName'   => 'RecentChange_save',
+		'skipUsers'  => [ 929702 /* CreateWiki script */, 22439 /* Wikia */ ]
+	],
+	'register'   => [
+		'className'  => 'FounderEmailsRegisterEvent',
+		'hookName'   => 'AddNewAccount'
+	],
+	'daysPassed' => [
+		'className'  => 'FounderEmailsDaysPassedEvent',
+		'hookName'   => 'CreateWikiLocalJob-complete',
+		'days'       => [ 0, 3, 10 ]
+	],
+	'completeDigest' => [
+		'className'  => 'FounderEmailsCompleteDigestEvent',
+		'hookName'   => null
+	],
+	'viewsDigest' => [
+		'className'  => 'FounderEmailsViewsDigestEvent',
+		'hookName'   => null
+	]
+];
 
 /**
  * setup functions
@@ -60,7 +55,7 @@ $wgFounderEmailsExtensionConfig = array(
 $wgExtensionFunctions[] = 'wfFounderEmailsInit';
 
 function wfFounderEmailsInit() {
-	global $wgHooks, $wgAutoloadClasses, $wgFounderEmailsExtensionConfig, $wgDefaultUserOptions, $wgCityId;
+	global $wgHooks, $wgAutoloadClasses, $wgFounderEmailsEvents, $wgDefaultUserOptions, $wgCityId;
 
 	$dir = dirname( __FILE__ ) . '/';
 
@@ -71,7 +66,7 @@ function wfFounderEmailsInit() {
 	$wgAutoloadClasses['FounderEmailsEvent'] = $dir . 'FounderEmailsEvent.class.php';
 
 	// add event classes & hooks
-	foreach ( $wgFounderEmailsExtensionConfig['events'] as $event ) {
+	foreach ( $wgFounderEmailsEvents as $event ) {
 		$wgAutoloadClasses[$event['className']] = $dir . 'events/' . $event['className'] . '.class.php';
 		if ( !empty( $event['hookName'] ) ) {
 			$wgHooks[$event['hookName']][] = $event['className'] . '::register';
@@ -89,7 +84,7 @@ function wfFounderEmailsInit() {
 	$wgDefaultUserOptions["founderemails-complete-digest-$wgCityId"] = 0;
 }
 
-$dir = dirname(__FILE__).'/';
+$dir = dirname( __FILE__ ) . '/';
 $wgAutoloadClasses['FounderEmailsController'] = $dir . 'FounderEmailsController.class.php';
 $wgAutoloadClasses['SpecialFounderEmails'] = $dir . 'SpecialFounderEmails.class.php';
 

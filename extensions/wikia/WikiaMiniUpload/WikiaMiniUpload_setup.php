@@ -9,7 +9,12 @@ if(!defined('MEDIAWIKI')) {
 
 $wgExtensionCredits['other'][] = array(
         'name' => 'WikiaMiniUpload (Add Images)',
-        'author' => 'Inez Korczyński, Bartek Łapiński',
+        'author' => array(
+			'Inez Korczyński', 
+			'Bartek Łapiński'
+		),
+		'descriptionmsg' => 'wmu-desc',
+		'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/WikiaMiniUpload'
 );
 
 $dir = dirname(__FILE__).'/';
@@ -70,9 +75,20 @@ function WMU() {
 	$method = $wgRequest->getVal('method');
 	$wmu = new WikiaMiniUpload();
 
-	$html = $wmu->$method();
-	$ar = new AjaxResponse($html);
-	$ar->setContentType('text/html; charset=utf-8');
+	if ( method_exists( $wmu, $method ) ) {
+		$html = $wmu->$method();
+		$ar = new AjaxResponse( $html );
+		$ar->setContentType( 'text/html; charset=utf-8' );
+	} else {
+		$errorMessage = 'WMU::' . $method . ' does not exist';
+
+		\Wikia\Logger\WikiaLogger::instance()->error( $errorMessage );
+
+		$payload = json_encode( [ 'message' => $errorMessage ] );
+		$ar = new AjaxResponse( $payload );
+		$ar->setResponseCode( '501 Not implemented' );
+		$ar->setContentType( 'application/json; charset=utf-8' );
+	}
 	return $ar;
 }
 

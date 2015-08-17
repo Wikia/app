@@ -1,6 +1,6 @@
 <li>
 	<div class="avatar"><?= AvatarService::renderAvatar($username, 30) ?></div>
-	<blockquote class="message">
+	<div class="message">
 		<div class="author">
 			<a href="<?= $user_author_url ?>"><?= $displayname ?></a>
 			<? if (!empty($isStaff)): ?>
@@ -53,5 +53,5 @@
 			<?= $app->getView('MiniEditorController', 'Footer')->render() ?>
 		<? endif ?>
 		<div class="throbber"></div>
-	</blockquote>
+	</div>
 </li>

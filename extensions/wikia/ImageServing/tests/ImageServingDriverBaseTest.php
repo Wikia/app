@@ -2,6 +2,7 @@
 /**
  * @author Adam Robak <adamr@wikia-inc.com>
  * @group Integration
+ * @group MediaFeatures
  */
 
 class ImageServingDriverBaseTest extends WikiaBaseTest {
@@ -24,7 +25,7 @@ class ImageServingDriverBaseTest extends WikiaBaseTest {
 		$driver = $this->getMockBuilder( 'ImageServingDriverMainNS' )
 			->setConstructorArgs( [ null, $mockedIs, null ] )
 			->enableOriginalConstructor()
-			->setMethods( [ 'getImageFile' ] )
+			->setMethods( [ 'getFileByName' ] )
 			->getMock();
 
 		$imgFile = $this->getMockBuilder( 'WikiaLocalFile' )
@@ -46,11 +47,11 @@ class ImageServingDriverBaseTest extends WikiaBaseTest {
 
 		if ( $imgExist ) {
 			$driver->expects( $this->any() )
-				->method( 'getImageFile' )
+				->method( 'getFileByName' )
 				->will( $this->returnValue( $imgFile ) );
 		} else {
 			$driver->expects( $this->any() )
-				->method( 'getImageFile' )
+				->method( 'getFileByName' )
 				->will( $this->returnValue( null ) );
 		}
 

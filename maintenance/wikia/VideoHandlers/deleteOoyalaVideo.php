@@ -2,7 +2,7 @@
 
 /**
 * Maintenance script to delete video for Ooyala
-* This is one time use script
+*
 * @author Saipetch Kongkatong
 */
 

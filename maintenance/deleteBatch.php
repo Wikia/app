@@ -101,7 +101,6 @@ class DeleteBatch extends Maintenance {
 			$success = $page->doDeleteArticle( $reason, false, 0, false, $error, $user );
 			$dbw->commit();
 			if ( $success ) {
-				wfRunHooks('ArticleDeleteComplete', array(&$art, &$wgUser, $reason, $page_id));
 				$this->output( " Deleted!\n" );
 			} else {
 				$this->output( " FAILED to delete article\n" );

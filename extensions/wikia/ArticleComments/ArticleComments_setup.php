@@ -23,7 +23,9 @@
 $wgExtensionCredits['other'][] = array(
 	'name' => 'ArticleComments',
 	'version' => '2.0',
-	'author' => array('[http://www.wikia.com/wiki/User:Eloy.wikia Krzysztof Krzyżaniak (eloy)]', '[http://www.wikia.com/wiki/User:Marooned Maciej Błaszkowski (Marooned)]')
+	'author' => array('[http://www.wikia.com/wiki/User:Eloy.wikia Krzysztof Krzyżaniak (eloy)]', '[http://www.wikia.com/wiki/User:Marooned Maciej Błaszkowski (Marooned)]'),
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/ArticleComments',
+	'descriptionmsg' => 'article-comments-desc'
 );
 
 define('ARTICLECOMMENTORDERCOOKIE_NAME', 'articlecommentorder');
@@ -141,6 +143,11 @@ function ArticleCommentsAjax() {
 			// send text as text/html
 			$response = new AjaxResponse($data);
 			$response->setContentType('text/html; charset=utf-8');
+		}
+
+		// Don't cache requests made to edit comment, see SOC-788
+		if ( $method == "axEdit" ) {
+			$response->setCacheDuration(0);
 		}
 
 		wfProfileOut(__METHOD__);

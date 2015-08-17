@@ -1,9 +1,8 @@
-@import "skins/oasis/css/core/color.scss";
+@import "skins/shared/color.scss";
 @import "skins/oasis/css/core/layout.scss";
-@import "skins/oasis/css/mixins/blackout.scss";
-@import "skins/oasis/css/mixins/box-shadow.scss";
-@import "skins/oasis/css/mixins/box-sizing.scss";
-@import "skins/oasis/css/mixins/transition.scss";
+@import "skins/shared/mixins/blackout.scss";
+@import "skins/shared/mixins/box-shadow.scss";
+@import "skins/shared/mixins/transition.scss";
 
 $drawer-background-color: #fff;
 $drawer-base-z-index: $zTop + 10;
@@ -23,9 +22,9 @@ $subdrawer-width: 225px;
 .drawer,
 .subdrawer {
 	@include box-shadow(0px, 0px, $drawer-shadow-size, $drawer-shadow-color);
-	@include box-sizing;
 
 	background: $drawer-background-color;
+	box-sizing: border-box;
 	bottom: 0;
 	color: $drawer-text-color;
 	opacity: 0;
@@ -64,7 +63,7 @@ $subdrawer-width: 225px;
 	}
 
 	.close-button {
-		background: url($drawer-close-image); /* base64 */
+		background: url($drawer-close-image); /* inline */
 		background-position: 0 3px;
 		background-repeat: no-repeat;
 		cursor: pointer;

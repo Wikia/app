@@ -1,6 +1,6 @@
 @import "../core/layout";
-@import "../core/color";
-@import "../mixins/box-shadow";
+@import "skins/shared/color";
+@import "skins/shared/mixins/box-shadow";
 
 .wikia-tooltip{
 	/* @include box-shadow(-2px, 2px, 12px, mix($color-active-tab-shadow, $color-page, 40%)); */

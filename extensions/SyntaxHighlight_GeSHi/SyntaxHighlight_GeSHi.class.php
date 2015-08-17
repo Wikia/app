@@ -267,6 +267,8 @@ class SyntaxHighlight_GeSHi {
 	 * @return GeSHi
 	 */
 	public static function prepare( $text, $lang ) {
+		global $wgTitle, $wgOut;
+
 		self::initialise();
 		$geshi = new GeSHi( $text, $lang );
 		if( $geshi->error() == GESHI_ERROR_NO_SUCH_LANG ) {
@@ -276,6 +278,20 @@ class SyntaxHighlight_GeSHi {
 		$geshi->enable_classes();
 		$geshi->set_overall_class( "source-$lang" );
 		$geshi->enable_keyword_links( false );
+
+		// Wikia change start
+		if( $wgTitle instanceof Title && EditPageLayoutHelper::isCodeSyntaxHighlightingEnabled( $wgTitle ) ) {
+			$theme = 'solarized-light';
+			if( SassUtil::isThemeDark() ) {
+				$theme = 'solarized-dark';
+			}
+			$geshi->set_language_path(GESHI_ROOT . $theme . DIRECTORY_SEPARATOR);
+			$geshi->set_overall_id('theme-' . $theme);
+
+			$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/SyntaxHighlight_GeSHi/styles/solarized.scss'));
+		}
+		// Wikia change end
+
 		return $geshi;
 	}
 
@@ -288,6 +304,33 @@ class SyntaxHighlight_GeSHi {
 	 */
 	public static function buildHeadItem( $geshi ) {
 		global $wgUseSiteCss, $wgSquidMaxage;
+		// begin Wikia change
+		// VOLDEV-85
+		// backporting core fix to monobook font size
+		/**
+		 * GeSHi comes by default with a font-family set to monospace, which
+		 * causes the font-size to be smaller than one would expect.
+		 * We append a CSS hack to the default GeSHi styles: specifying 'monospace'
+		 * twice "resets" the browser font-size specified for monospace.
+		 *
+		 * The hack is documented in MediaWiki core under
+		 * docs/uidesign/monospace.html and in bug 33496.
+		 */
+		// Preserve default since we don't want to override the other style
+		// properties set by geshi (padding, font-size, vertical-align etc.)
+		$geshi->set_code_style(
+			'font-family: monospace, monospace;',
+			/* preserve defaults = */ true
+		);
+
+		// No need to preserve default (which is just "font-family: monospace;")
+		// outputting both is unnecessary
+		$geshi->set_overall_style(
+			'font-family: monospace, monospace;',
+			/* preserve defaults = */ false
+		);
+		// end Wikia change
+
 		$lang = $geshi->language;
 		$css = array();
 		$css[] = '<style type="text/css">/*<![CDATA[*/';

@@ -258,24 +258,26 @@ function InfoboxBuilderView.render( input, vars )
 		:attr( 'cellpadding', '0' )
 		:addClass( 'infobox-table' )
 
-	-- Iterate over each field and render a row
+	-- Iterate over each field and render a row if a value is not empty
 	for index, field in ipairs( fields ) do
-		if field.Type == "Line" and not HF.isempty( field.Value ) then
-			table:node( addRowLine( field ) )
-		elseif field.Type == "Header" and input.sections[index] == "On" then
-			table:node( addRowHeader( field ) )
-		elseif field.Type == "Title" then
-			table:node( addRowTitle( field ) )
-		elseif field.Type == "MainImage" then
-			table:node( addRowMainImage( field ) )
-		elseif field.Type == "Image" then
-			table:node( addRowImage( field ) )
-		elseif field.Type == "Footer" then
-			table:node( addRowFooter( field ) )
-		elseif field.Type == "Split" then
-			table:node( addRowSplit( field ) )
-		elseif field.Type == "Custom" then
-			table:node( addRowCustom( field ) )
+		if not HF.isempty( field.Value ) then
+			if field.Type == "Line" then
+				table:node( addRowLine( field ) )
+			elseif field.Type == "Header" and input.sections[index] == "On" then
+				table:node( addRowHeader( field ) )
+			elseif field.Type == "Title" then
+				table:node( addRowTitle( field ) )
+			elseif field.Type == "MainImage" then
+				table:node( addRowMainImage( field ) )
+			elseif field.Type == "Image" then
+				table:node( addRowImage( field ) )
+			elseif field.Type == "Footer" then
+				table:node( addRowFooter( field ) )
+			elseif field.Type == "Custom" then
+				table:node( addRowCustom( field ) )
+			elseif field.Type == "Split" then
+				table:node( addRowSplit( field ) )
+			end
 		end
 	end
 

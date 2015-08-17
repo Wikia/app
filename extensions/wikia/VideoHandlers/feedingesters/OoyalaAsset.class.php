@@ -11,7 +11,7 @@ class OoyalaAsset extends WikiaModel {
 	 * @param array $cond - conditions for query
 	 * @return string $url
 	 */
-	public static function getApiUrlAssets( $apiPageSize = 100, $nextPage = '', $cond = array() ) {
+	public static function getApiUrlAssets( $apiPageSize = 100, $nextPage = '', $cond = [] ) {
 		wfProfileIn( __METHOD__ );
 
 		// only live video
@@ -52,7 +52,7 @@ class OoyalaAsset extends WikiaModel {
 		$req = MWHttpRequest::factory( $url, $options );
 		$status = $req->execute();
 		if ( $status->isGood() ) {
-			$result = json_decode( $req->getContent(), true );
+			$result = json_decode( iconv( "UTF-8", "UTF-8//IGNORE", $req->getContent() ), true );
 		} else {
 			$result = false;
 			print( "ERROR: problem downloading content (".$status->getMessage().").\n" );
@@ -73,7 +73,7 @@ class OoyalaAsset extends WikiaModel {
 
 		$method = 'GET';
 		$reqPath = '/v2/assets/'.$videoId;
-		$params = array();
+		$params = [];
 
 		$url = OoyalaApiWrapper::getApi( $method, $reqPath, $params );
 		print( "Connecting to $url...\n" );
@@ -88,18 +88,17 @@ class OoyalaAsset extends WikiaModel {
 	/**
 	 * Get assets by sourceid in metadata
 	 * @param string $sourceId
-	 * @param string $source
+	 * @param string $provider
 	 * @param string $assetType [remote_asset]
 	 * @param int $max
 	 * @return array $assets
 	 */
-	public static function getAssetsBySourceId( $sourceId, $source, $assetType = 'remote_asset', $max = 3 ) {
+	public static function getAssetsBySourceId( $sourceId, $provider, $assetType = 'remote_asset', $max = 3 ) {
 		wfProfileIn( __METHOD__ );
 
 		$cond = [
 			"asset_type='$assetType'",
 			"metadata.sourceid='$sourceId'",
-			"metadata.source='$source'",
 		];
 
 		$params = [
@@ -111,11 +110,17 @@ class OoyalaAsset extends WikiaModel {
 		$reqPath = '/v2/assets';
 
 		$url = OoyalaApiWrapper::getApi( $method, $reqPath, $params );
-		print( "Connecting to $url...\n" );
-
 		$response = self::getApiContent( $url );
 
-		$assets = empty( $response['items'] ) ? array() : $response['items'];
+		$assets = [];
+		if ( !empty( $response['items'] ) ) {
+			$asset = $response['items'][0];
+			// Make sure the video returned by Ooyala is from the same provider we're expecting (this is just
+			// in case 2 providers might share the same videoId, aka sourceId)
+			if ( !empty( $asset['metadata']['source'] ) && $asset['metadata']['source'] == $provider ) {
+				$assets = $response['items'];
+			}
+		}
 
 		wfProfileOut( __METHOD__ );
 
@@ -140,9 +145,9 @@ class OoyalaAsset extends WikiaModel {
 			return $result;
 		}
 
-		$labels = empty( $result['items'] ) ? array() : $result['items'];
+		$labels = empty( $result['items'] ) ? [] : $result['items'];
 
-		$providers = array();
+		$providers = [];
 		foreach ( $labels as $label ) {
 			if ( !empty( $label['full_name'] ) && preg_match( '/\/Providers\/([\w\s]+)/', $label['full_name'] ) ) {
 				$providers[$label['id']] = $label['name'];
@@ -187,7 +192,7 @@ class OoyalaAsset extends WikiaModel {
 	 * @param array $data
 	 * @return boolean $resp
 	 */
-	public function addRemoteAsset( $data ) {
+	public function addRemoteAsset( $data, &$videoId = null ) {
 		wfProfileIn( __METHOD__ );
 
 		$resp = false;
@@ -196,7 +201,7 @@ class OoyalaAsset extends WikiaModel {
 		$reqPath = '/v2/assets';
 		$reqBody = json_encode( $this->generateRemoteAssetParams( $data ) );
 
-		$url = OoyalaApiWrapper::getApi( $method, $reqPath, array(), $reqBody );
+		$url = OoyalaApiWrapper::getApi( $method, $reqPath, [], $reqBody );
 		//print( "Connecting to $url...\n" );
 
 		$options = [
@@ -210,6 +215,7 @@ class OoyalaAsset extends WikiaModel {
 			$response = $req->getContent();
 			$asset = json_decode( $response, true );
 
+			$videoId = $asset['embed_code'];
 			print( "Ooyala: Uploaded Remote Asset: $data[provider]: $asset[name] \n" );
 			foreach( explode( "\n", var_export( $asset, 1 ) ) as $line ) {
 				print ":: $line\n";
@@ -293,7 +299,7 @@ class OoyalaAsset extends WikiaModel {
 
 		$reqBody = json_encode( $assetData );
 
-		$url = OoyalaApiWrapper::getApi( $method, $reqPath, array(), $reqBody );
+		$url = OoyalaApiWrapper::getApi( $method, $reqPath, [], $reqBody );
 		//print( "Connecting to $url...\n" );
 
 		$options = [
@@ -344,7 +350,7 @@ class OoyalaAsset extends WikiaModel {
 		$method = 'PATCH';
 		$reqBody = json_encode( $params );
 
-		$url = OoyalaApiWrapper::getApi( $method, $reqPath, array(), $reqBody );
+		$url = OoyalaApiWrapper::getApi( $method, $reqPath, [], $reqBody );
 		echo "\tRequest to update asset: $url\n";
 
 		$options = [
@@ -389,7 +395,7 @@ class OoyalaAsset extends WikiaModel {
 	 * @return array $metadata
 	 */
 	public function getAssetMetadata( $data ) {
-		$metadata = array();
+		$metadata = [];
 
 		if ( !empty( $data['category'] ) ) {
 			$metadata['category'] = $data['category'];
@@ -635,7 +641,7 @@ class OoyalaAsset extends WikiaModel {
 
 		$method = 'PUT';
 		$reqPath = '/v2/assets/'.$videoId.'/player/'.$playerId;
-		$params = array();
+		$params = [];
 
 		$resp = $this->sendRequest( $method, $reqPath, $params );
 
@@ -674,7 +680,7 @@ class OoyalaAsset extends WikiaModel {
 
 		$method = 'PUT';
 		$reqPath = '/v2/assets/'.$videoId.'/ad_set/'.$adSet;
-		$params = array();
+		$params = [];
 
 		$resp = $this->sendRequest( $method, $reqPath, $params );
 
@@ -692,7 +698,7 @@ class OoyalaAsset extends WikiaModel {
 	public function setLabels( $videoId, $data ) {
 		wfProfileIn( __METHOD__ );
 
-		$params = array();
+		$params = [];
 		if ( !empty( $data['ageRequired'] ) && !empty( $this->wg->OoyalaApiConfig['LabelAgeGate'] ) ) {
 			$params[] = $this->wg->OoyalaApiConfig['LabelAgeGate'];
 		}
@@ -724,12 +730,12 @@ class OoyalaAsset extends WikiaModel {
 	 * @param array $params
 	 * @return boolean $result
 	 */
-	protected function sendRequest( $method, $reqPath, $params = array() ) {
+	protected function sendRequest( $method, $reqPath, $params = [] ) {
 		wfProfileIn( __METHOD__ );
 
 		$reqBody = empty( $params ) ? '' : json_encode( $params );
 
-		$url = OoyalaApiWrapper::getApi( $method, $reqPath, array(), $reqBody );
+		$url = OoyalaApiWrapper::getApi( $method, $reqPath, [], $reqBody );
 		//print( "Connecting to $url...\n" );
 
 		$options = [
@@ -743,14 +749,6 @@ class OoyalaAsset extends WikiaModel {
 		if ( $status->isGood() ) {
 			$result = true;
 			print( "Ooyala: sent $reqPath request: \n" );
-
-			// for debugging
-			//$resp = json_decode( $req->getContent(), true );
-			//if ( !empty( $resp ) ) {
-			//	foreach( explode( "\n", var_export( $resp, true ) ) as $line ) {
-			//		print ":: $line\n";
-			//	}
-			//}
 		} else {
 			$result = false;
 			print( "ERROR: problem sending $reqPath request (".$status->getMessage().").\n" );

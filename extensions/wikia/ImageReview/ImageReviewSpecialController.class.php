@@ -1,8 +1,10 @@
 <?php
 
+use \Wikia\Logger\WikiaLogger;
+
 class ImageReviewSpecialController extends WikiaSpecialPageController {
 	const ACTION_QUESTIONABLE = 'questionable';
-	const ACTION_REJECTED = 'rejected';
+	const ACTION_REJECTED     = 'rejected';
 
 	var $statsHeaders = array( 'user', 'total reviewed', 'approved', 'deleted', 'qustionable', 'distance to avg.' );
 
@@ -100,23 +102,31 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		$newestTs = $this->wg->Memc->get( $user_key );
 
 		if ( $ts > $newestTs ) {
-			error_log("ImageReview: I've got the newest ts ($ts), I won't refetch the images");
+			WikiaLogger::instance()->info( 'ImageReviewLog', [
+				'method' => __METHOD__,
+				'message' => "I've got the newest ts ({$ts}), I won't refetch the images",
+			]);
 			$this->imageList = array();
 			$this->wg->memc->set( $user_key, $ts, 3600 /* 1h */ );
 		} else {
 			$this->imageList = $helper->refetchImageListByTimestamp( $ts );
 		}
 
-		if ( count($this->imageList) == 0 ) {
+		if ( count( $this->imageList ) == 0 ) {
 			$do = array( 
 				self::ACTION_QUESTIONABLE	=> ImageReviewStatuses::STATE_QUESTIONABLE,
 				self::ACTION_REJECTED		=> ImageReviewStatuses::STATE_REJECTED,
-				'default'			=> ImageReviewStatuses::STATE_UNREVIEWED
+				'default'					=> ImageReviewStatuses::STATE_UNREVIEWED
 			);
-			$this->imageList = $helper->getImageList( $ts, isset( $do[ $action ] ) ? $do[ $action ] : $do['default'], $order );
-		}
 
-		if ( $this->accessQuestionable ) {
+			if ( isset( $do[ $action ] ) ) {
+				$this->imageList = $helper->getImageList( $ts, $do[ $action ], $order );
+				$this->imageCount = $helper->getImageCount();
+			} else {
+				$this->imageList = $helper->getImageList( $ts, $do[ 'default' ], $order );
+				$this->imageCount = $helper->getImageCount( 'unreviewed', count( $this->imageList ) );
+			}
+		} else {
 			$this->imageCount = $helper->getImageCount();
 		}
 	}
@@ -125,11 +135,11 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		if ($this->wg->user->isAllowed('imagereviewcontrols')) {
 			$order = (int)$this->getVal('sort', -1);
 			if ($order >= 0) {
-				$this->app->wg->User->setOption('imageReviewSort', $order);
+				$this->app->wg->User->setGlobalPreference('imageReviewSort', $order);
 				$this->app->wg->User->saveSettings();
 			}
 
-			$order = $this->app->wg->User->getOption('imageReviewSort');
+			$order = $this->app->wg->User->getGlobalPreference('imageReviewSort');
 			return $order;
 		} else {
 			$order = -1;

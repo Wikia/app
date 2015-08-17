@@ -41,7 +41,11 @@ class Linkstoredirects extends SpecialPage{
 		parent::__construct('Linkstoredirects');
 	}
 
-	function execute(){
+	/**
+	 *
+	 * @param $par String subpage string, if one was specified
+	 */
+	function execute( $par ){
 		global $wgOut;
 		global $wgRequest, $wgUser;
 
@@ -172,8 +176,7 @@ class Linkstoredirects extends SpecialPage{
 										12 => "Help",
 										13 => "Help_talk",
 										14 => ":Category",
-										15 => "Category_talk",
-										NS_GRACENOTE => "Gracenote"
+										15 => "Category_talk"
 									);
 						$idToTitle = array();
 						$ids = array_unique($ids);

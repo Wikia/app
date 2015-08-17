@@ -40,6 +40,7 @@ class AssetsManagerServer {
 
 		} catch (Exception $e) {
 			header('HTTP/1.1 404 Not Found');
+			header('Content-Type: text/plain;  charset=UTF-8');
 			echo $e->getMessage();
 			return;
 		}
@@ -68,14 +69,17 @@ class AssetsManagerServer {
 			// return HTTP 503 in case of SASS processing error (BAC-592)
 			// Varnish will cache such response for 5 seconds
 			header('HTTP/1.1 503');
+			header('Content-Type: text/plain;  charset=UTF-8');
 
 			// log exception messages
-			$msg = $e->getMessage();
-			Wikia::log(__METHOD__, $type, str_replace("\n", ' ', $msg), true);
+			\Wikia\Logger\WikiaLogger::instance()->error( 'AssetsManagerServer::serve failed', [
+				'type' => $type,
+				'exception' => $e
+			]);
 
 			// emit full message on devboxes only
 			global $wgDevelEnvironment;
-			$content = !empty($wgDevelEnvironment) ? $msg : '/* SASS processing failed! */';
+			$content = !empty( $wgDevelEnvironment ) ? $msg = $e->getMessage() : '/* SASS processing failed! */';
 		}
 
 		if($cacheDuration > 0) {

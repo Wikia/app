@@ -18,6 +18,34 @@ var $fieldsets = $preferences.children( 'fieldset' )
 var $legends = $fieldsets.children( 'legend' )
 	.addClass( 'mainLegend' );
 
+/**
+ * Wikia Function - @see UC-206
+ * Normalize given class name using the prefix
+ * @param {string} prefix
+ * @param {string} tabClass
+ * @returns {string}
+ */
+var normalizeTabClass = function (prefix, tabClass) {
+	'use strict';
+	return tabClass.replace('mw-prefsection', prefix);
+};
+
+/**
+ * Wikia Function - @see UC-145
+ * Make tabs distinguishable based on provided id
+ * @param {Element} element
+ * @param {string} selectedTabId
+ */
+var makeTabsTargetable = function (element, selectedTabId) {
+	'use strict';
+	var prefix = 'container',
+		classes = element[0].className.split(' ').filter(function (className) {
+			return className.lastIndexOf(prefix, 0) !== 0;
+		});
+	element[0].className = $.trim(classes.join(' '));
+	$preferences.addClass(normalizeTabClass(prefix, selectedTabId));
+};
+
 // Populate the prefToc
 $legends.each( function( i, legend ) {
 	var $legend = $(legend);
@@ -26,8 +54,11 @@ $legends.each( function( i, legend ) {
 	}
 	var ident = $legend.parent().attr( 'id' );
 
-	var $li = $( '<li/>', {
-		'class' : ( i === 0 ) ? 'selected' : null
+	/** Wikia Change start - Add a class - @see UC-206 */
+	var $tabName = normalizeTabClass('tab', ident),
+		$li = $( '<li/>', {
+		'class' : $tabName + (( i === 0 ) ? ' selected' : '')
+		/** Wikia Change end */
 	});
 	var $a = $( '<a/>', {
 		text : $legend.text(),
@@ -43,6 +74,15 @@ $legends.each( function( i, legend ) {
 
 		$preftoc.find( 'li' ).removeClass( 'selected' );
 		$(this).parent().addClass( 'selected' );
+
+		/** Wikia change begin */
+		// Make elements outside tabs targetable based on selected tab - @see UC-145
+		makeTabsTargetable($preferences, ident);
+
+		// Add a custom event per tab - @see UC-206
+		$(document).trigger($tabName + '-click');
+		/** Wikia change end */
+
 		$( '#preferences > fieldset' ).hide();
 		$( '#' + ident ).show();
 	});

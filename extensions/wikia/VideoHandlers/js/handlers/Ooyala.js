@@ -10,10 +10,11 @@
 define('wikia.videohandler.ooyala', [
 	'jquery',
 	'wikia.window',
+	require.optional('ext.wikia.adEngine.adContext'),
 	require.optional('ext.wikia.adEngine.dartVideoHelper'),
 	'wikia.loader',
 	'wikia.log'
-], function ($, window, dartVideoHelper, loader, log) {
+], function ($, window, adContext, dartVideoHelper, loader, log) {
 	'use strict';
 
 	/**
@@ -80,7 +81,7 @@ define('wikia.videohandler.ooyala', [
 
 		createParams.onCreate = onCreate;
 
-		if (window.wgAdVideoTargeting && window.wgShowAds) {
+		if (adContext && adContext.getContext().opts.showAds) {
 			if (!dartVideoHelper) {
 				throw 'ext.wikia.adEngine.dartVideoHelper is not defined and it should as we need to display ads';
 			}
@@ -116,7 +117,12 @@ define('wikia.videohandler.ooyala', [
 					resources: params.jsFile[ 1 ]
 				}).done(function() {
 					log( 'All Ooyala assets loaded', log.levels.info, 'VideoBootstrap' );
-					window.OO.Player.create( containerId, params.videoId, createParams );
+
+					window.OO.ready(function (OO) {
+						log( 'Ooyala OO.ready', log.levels.info, 'VideoBootstrap' );
+						OO.Player.create( containerId, params.videoId, createParams );
+					});
+
 				}).fail( loadFail );
 			}).fail( loadFail );
 		} else {

@@ -14,6 +14,7 @@ $wgExtensionCredits[ 'specialpage' ][ ] = array(
 	'name' => 'Blog Edit Category Prompter',
 	'author' => 'Nelson Monterroso',
 	'descriptionmsg' => 'becp-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/BlogEditCategoryPrompter',
 	'version' => '1.0.0',
 );
 

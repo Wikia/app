@@ -1040,8 +1040,9 @@ The reason given is "\'\'$2\'\'".',
 # Login and logout pages
 'logouttext'                 => "'''You are now logged out.'''
 
-You can continue to use {{SITENAME}} anonymously, or you can [[Special:UserLogin|log in again]] as the same or as a different user.
+You can continue to use {{SITENAME}} anonymously, or you can $1 as the same or as a different user.
 Note that some pages may continue to be displayed as if you were still logged in, until you clear your browser cache.",
+'logouttext-link-text'       => 'log in again',
 'welcomecreation'            => '== Welcome, $1! ==
 Your account has been created.
 Do not forget to change your [[Special:Preferences|{{SITENAME}} preferences]].',
@@ -2089,8 +2090,9 @@ Pages on [[Special:Watchlist|your watchlist]] are '''bold'''.",
 'upload-tryagain'             => 'Submit modified file description',
 'uploadnologin'               => 'Not logged in',
 /* Wikia change begin - @author: Jakub Olek */
-/* remove 'be' for better message and allow of use of returnto and returntoquery in a link*/
-'uploadnologintext'           => 'You must $1 to upload files.',
+/* remove 'be' for better message and allow of use of returnto and returntoquery in a link */
+/* added ' and insert videos' to make message more universal */
+'uploadnologintext'           => 'You must $1 to upload files and insert videos.',
 /* Wikia change end */
 'upload_directory_missing'    => 'The upload directory ($1) is missing and could not be created by the webserver.',
 'upload_directory_read_only'  => 'The upload directory ($1) is not writable by the webserver.',
@@ -3119,6 +3121,7 @@ See [[Special:BlockList|IP block list]] to review blocks.',
 'unblocked'                       => '[[User:$1|$1]] has been unblocked',
 'unblocked-range'                 => '$1 has been unblocked',
 'unblocked-id'                    => 'Block $1 has been removed',
+'unblocked-ip'                    => '[[Special:Contributions/$1|$1]] has been unblocked.',
 'blocklist'                       => 'Blocked users',
 'ipblocklist'                     => 'Blocked users',
 'ipblocklist-legend'              => 'Find a blocked user',
@@ -4552,35 +4555,36 @@ You can also [[Special:EditWatchlist|use the standard editor]].',
 'duplicate-defaultsort' => '\'\'\'Warning:\'\'\' Default sort key "$2" overrides earlier default sort key "$1".',
 
 # Special:Version
-'version'                       => 'Version',
-'version-extensions'            => 'Installed extensions',
-'version-specialpages'          => 'Special pages',
-'version-parserhooks'           => 'Parser hooks',
-'version-variables'             => 'Variables',
-'version-antispam'              => 'Spam prevention',
-'version-skins'                 => 'Skins',
-'version-api'                   => 'API', # only translate this message to other languages if you have to change it
-'version-other'                 => 'Other',
-'version-mediahandlers'         => 'Media handlers',
-'version-hooks'                 => 'Hooks',
-'version-extension-functions'   => 'Extension functions',
-'version-parser-extensiontags'  => 'Parser extension tags',
-'version-parser-function-hooks' => 'Parser function hooks',
-'version-hook-name'             => 'Hook name',
-'version-hook-subscribedby'     => 'Subscribed by',
-'version-version'               => '(Version $1)',
-'version-svn-revision'          => '(r$2)', # only translate this message to other languages if you have to change it
-'version-license'               => 'License',
-'version-poweredby-credits'     => "This wiki is powered by '''[//www.mediawiki.org/ MediaWiki]''', copyright © 2001-$1 $2.",
-'version-poweredby-others'      => 'others',
-'version-license-info'          => 'MediaWiki is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
+'version'                         => 'Version',
+'version-extensions'              => 'Installed extensions',
+'version-specialpages'            => 'Special pages',
+'version-parserhooks'             => 'Parser hooks',
+'version-variables'               => 'Variables',
+'version-antispam'                => 'Spam prevention',
+'version-skins'                   => 'Skins',
+'version-api'                     => 'API', # only translate this message to other languages if you have to change it
+'version-other'                   => 'Other',
+'version-mediahandlers'           => 'Media handlers',
+'version-hooks'                   => 'Hooks',
+'version-extension-functions'     => 'Extension functions',
+'version-parser-extensiontags'    => 'Parser extension tags',
+'version-parser-function-hooks'   => 'Parser function hooks',
+'version-hook-name'               => 'Hook name',
+'version-hook-subscribedby'       => 'Subscribed by',
+'version-version'                 => '(Version $1)',
+'version-svn-revision'            => '(r$2)', # only translate this message to other languages if you have to change it
+'version-license'                 => 'License',
+'version-poweredby-credits'       => "This wiki is powered by '''[//www.mediawiki.org/ MediaWiki]''', copyright © 2001-$1 $2.",
+'version-poweredby-others'        => 'others',
+'version-license-info'            => 'MediaWiki is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
 
 MediaWiki is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 
 You should have received [{{SERVER}}{{SCRIPTPATH}}/COPYING a copy of the GNU General Public License] along with this program; if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA or [//www.gnu.org/licenses/old-licenses/gpl-2.0.html read it online].',
-'version-software'              => 'Installed software',
-'version-software-product'      => 'Product',
-'version-software-version'      => 'Version',
+'version-software'                => 'Installed software',
+'version-software-product'        => 'Product',
+'version-software-version'        => 'Version',
+'version-file-extensions-allowed' => 'File extensions allowed for upload',
 
 # Special:FilePath
 'filepath'         => 'File path',

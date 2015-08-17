@@ -13,17 +13,18 @@
 			"Jduranboger",
 			"PoLuX124",
 			"Ralgis",
-			"Thehelpfulone"
+			"Thehelpfulone",
+			"Macofe"
 		]
 	},
 	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|Editor visual]]",
-	"tag-visualeditor-description": "Modificación hecha con el [[{{MediaWiki:visualeditor-descriptionpagelink}}|editor visual]]",
-	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|Editor visual: Comprobar]]",
-	"tag-visualeditor-needcheck-description": "Edición realizada con el [[{{MediaWiki:visualeditor-descriptionpagelink}}|editor visual]] en la que el sistema detectó posibles cambios no intencionales.",
-	"tag-visualeditor-switched": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor: Switched]]",
-	"tag-visualeditor-switched-description": "Usuario comenzó a editar utilizando el Editor Visual y luego cambió al editor en modo fuente.",
-	"visualeditor-feedback-link": "Wikipedia:Editor visual/Comentar",
+	"tag-visualeditor-description": "Modificación hecha con el [[{{MediaWiki:visualeditor-descriptionpagelink}}|Editor visual]]",
+	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|Editor visual: comprobar]]",
+	"tag-visualeditor-needcheck-description": "Edición realizada con el [[{{MediaWiki:visualeditor-descriptionpagelink}}|Editor visual]] en la que el sistema detectó posibles cambios no intencionales.",
+	"tag-visualeditor-switched": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|Editor visual: cambiado]]",
+	"tag-visualeditor-switched-description": "El usuario comenzó a editar utilizando el Editor visual y luego cambió al editor de wikitexto.",
+	"visualeditor-feedback-link": "Project:Editor visual/Comentar",
 	"visualeditor-feedback-tool": "Comentar",
 	"visualeditor-help-label": "Leer la guía de usuario",
-	"visualeditor-help-title": "Guía de usuario para utilizar el editor"
+	"visualeditor-help-title": "Guía para utilizar el editor"
 }

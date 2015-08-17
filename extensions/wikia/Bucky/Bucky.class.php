@@ -2,40 +2,37 @@
 
 /**
  * Hook handlers for loading the required scripts and bootstrapping Bucky RUM reporting.
- * Currently works only on Oasis.
  */
 class Bucky {
 
 	const DEFAULT_SAMPLING = 1; // percentage
 	const BASE_URL = '//speed.wikia.net/__rum';
 
-	static public function onSkinAfterBottomScripts( Skin $skin, &$bottomScripts ) {
+	/**
+	 * Adds wgWeppyConfig global JS variable
+	 *
+	 * @param array $vars
+	 * @param OutputPage $out
+	 * @return bool true - it's a hook
+	 */
+	static public function onMakeGlobalVariablesScript( array &$vars, OutputPage $out ) {
 		$app = F::app();
-		if ( $app->checkSkin('oasis',$skin) ) {
+		if ( $app->checkSkin( $app->wg->BuckyEnabledSkins ) ) {
+			// todo: find better place for it
 			$wgBuckySampling = $app->wg->BuckySampling;
 			$url = self::BASE_URL; // "/v1/send" is automatically appended
-			$sample = (isset($wgBuckySampling) ? $wgBuckySampling : self::DEFAULT_SAMPLING) / 100;
-			$context = array_merge(array(
-				'env' => $app->wg->WikiaEnvironment,
-			),Transaction::getAll());
-			$config = json_encode(array(
+			// Bucky sampling can be set by request param so we want to check if it's in range from 0 to 100
+			$sample = ( ( isset( $wgBuckySampling ) && $wgBuckySampling >= 0 && $wgBuckySampling <= 100 )
+					? $wgBuckySampling : self::DEFAULT_SAMPLING ) / 100;
+			$config = array(
 				'host' => $url,
 				'sample' => $sample,
 				'aggregationInterval' => 1000,
-				'protocol' => 2,
-				'context' => $context,
-			));
-			$script = "<script>$(function(){Bucky.setOptions({$config});$(window).load(function(){setTimeout(function(){Bucky.sendPagePerformance(false);},0);});});</script>";
-			$bottomScripts .= $script;
+			);
+
+			$vars['wgWeppyConfig'] = $config;
 		}
 
 		return true;
 	}
-
-	static public function onOasisSkinAssetGroups( &$assetGroups ) {
-		$assetGroups[] = 'bucky_js';
-
-		return true;
-	}
-
 }

@@ -5,6 +5,7 @@
  */
 class CategoryExhibitionSection {
 	const CACHE_VERSION = 3;
+	const EXHIBITION_LIMIT = 2000;
 
 	protected $thumbWidth = 130;
 	protected $thumbHeight = 115;
@@ -12,11 +13,11 @@ class CategoryExhibitionSection {
 	protected $displayOption = false;	// current state of display option
 	protected $sortOption = false;		// current state of sort option
 
-	protected $allowedSortOptions = array( 'mostvisited', 'alphabetical', 'recentedits' );
+	protected $categoryExhibitionEnabled;
+	protected $allowedSortOptions = array( 'mostvisited', 'alphabetical' );
 	protected $allowedDisplayOptions = array( 'exhibition', 'page' );
 
 	protected $verifyChecker = '';
-
 	public $urlParameter = 'section';	// contains section url variable that stores pagination
 	public $paginatorPosition = 1;		// default pagination
 	public $sUrl = '';
@@ -35,6 +36,30 @@ class CategoryExhibitionSection {
 			$this->setDisplayTypeFromParam();
 			$this->setSortTypeFromParam();
 		}
+	}
+
+	/**
+	 * @return boolean
+	 */
+	public function isCategoryExhibitionEnabled() {
+		if ( !isset( $this->categoryExhibitionEnabled ) ) {
+			$this->categoryExhibitionEnabled = false;
+			$oTmpArticle = new Article( $this->categoryTitle );
+			if ( !is_null( $oTmpArticle ) ) {
+				if ( $this->categoryTitle->isRedirect() ) {
+					$rdTitle = $oTmpArticle->getRedirectTarget();
+				} else {
+					$rdTitle = $this->categoryTitle;
+				}
+
+				if ( !is_null( $rdTitle ) && ( $rdTitle->getNamespace() == NS_CATEGORY ) ) {
+					$sCategoryDBKey = $rdTitle->getDBkey();
+					$this->categoryExhibitionEnabled =
+						CategoryDataService::getArticleCount( $sCategoryDBKey ) > self::EXHIBITION_LIMIT ? false : true;
+				}
+			}
+		}
+		return $this->categoryExhibitionEnabled;
 	}
 
 	/**
@@ -75,7 +100,6 @@ class CategoryExhibitionSection {
 				//FB#26239 - fall back to alphabetical order if most visited data is empty
 				return ( !empty( $res ) ) ? $res : CategoryDataService::getAlphabetical( $sCategoryDBKey, $ns, $negative );
 			case 'alphabetical': return CategoryDataService::getAlphabetical( $sCategoryDBKey, $ns, $negative );
-			case 'recentedits': return CategoryDataService::getRecentlyEdited( $sCategoryDBKey, $ns, $negative );
 		}
 		return array();
 	}
@@ -100,7 +124,7 @@ class CategoryExhibitionSection {
 			$this->setSortTypeFromParam();
 			$return = $this->sortOption;
 		} else {
-			$return = $wgUser->getOption( 'CategoryExhibitionSortType', $this->allowedSortOptions[0] );
+			$return = $wgUser->getGlobalPreference( 'CategoryExhibitionSortType', $this->allowedSortOptions[0] );
 		}
 
 		if ( !empty( $return ) && in_array( $return, $this->allowedSortOptions ) ){
@@ -116,7 +140,7 @@ class CategoryExhibitionSection {
 
 		if ( in_array( $sortType, $this->allowedSortOptions ) ) {
 			if ( !$wgUser->isAnon() ) {
-				$wgUser->setOption('CategoryExhibitionSortType', $sortType );
+				$wgUser->setGlobalPreference('CategoryExhibitionSortType', $sortType );
 				$wgUser->saveSettings();
 			}
 			$this->sortOption = $sortType;
@@ -152,7 +176,7 @@ class CategoryExhibitionSection {
 		global $wgUser;
 		if ( in_array( $displayType, $this->allowedDisplayOptions ) ) {
 			if ( !$wgUser->isAnon() ) {
-				$wgUser->setOption('CategoryExhibitionDisplayType', $displayType );
+				$wgUser->setGlobalPreference('CategoryExhibitionDisplayType', $displayType );
 				$wgUser->saveSettings();
 			}
 			$this->displayOption = $displayType;
@@ -171,7 +195,7 @@ class CategoryExhibitionSection {
 			$this->setDisplayTypeFromParam();
 			$return = $this->displayOption;
 		} else {
-			$return = $wgUser->getOption( 'CategoryExhibitionDisplayType', $this->allowedDisplayOptions[0] );
+			$return = $wgUser->getGlobalPreference( 'CategoryExhibitionDisplayType', $this->allowedDisplayOptions[0] );
 		}
 
 		if ( !empty( $return ) && in_array( $return, $this->allowedDisplayOptions ) ){
@@ -373,7 +397,7 @@ class CategoryExhibitionSection {
 		};
 		$return = array();
 		foreach( $reqValues AS $key => $value ) {
-			$return[] = $key.'='.$value;
+			$return[] = urlencode( $key ) . '=' . urlencode( $value );
 		}
 
 		$url = $wgTitle->getFullURL().'?'.implode( '&', $return );

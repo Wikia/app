@@ -11,24 +11,6 @@ class HubService extends Service {
 	];
 
 	/**
-	 * Get proper category to report to Comscore for given cityId
-	 * (wgTitle GLOBAL will be used in case the city is corporate wiki)
-	 *
-	 * @deprecated use getCategoryInfoForCity or getCategoryInfoForCurrentPage instead
-	 *
-	 * @param int $cityId The wiki ID
-	 *
-	 * @return stdClass ($row->cat_id $row->cat_name)
-	 */
-	public static function getComscoreCategory($cityId) {
-		if( WikiaPageType::isCorporatePage() && $cityId == F::app()->wg->CityId ) {
-			// Page-level hub-related vertical checking only works locally
-			return self::getCategoryInfoForCurrentPage();
-		}
-		return self::getCategoryInfoForCity($cityId);
-	}
-
-	/**
 	 * Given category id (from Wiki Factor or from configuration variable)
 	 * return one of selected category ids:
 	 *
@@ -79,6 +61,33 @@ class HubService extends Service {
 	}
 
 	/**
+	 * Get canonical vertical name for given cityId.
+	 * For Lifestyle and Gaming return their names.
+	 * For corporate pages return false - we don't want to track traffic from there in Comscore
+	 * For rest of values return Entertainment.
+	 * @param $cityId
+	 * @return Boolean|String
+	 */
+	public static function getVerticalNameForComscore( $cityId ) {
+		$verticalId = WikiFactoryHub::getInstance()->getVerticalId( $cityId );
+
+		switch ($verticalId) {
+			case WikiFactoryHub::VERTICAL_ID_VIDEO_GAMES:
+				return 'gaming';
+			case WikiFactoryHub::VERTICAL_ID_LIFESTYLE:
+				return 'lifestyle';
+			case WikiFactoryHub::VERTICAL_ID_OTHER:
+				if ( WikiaPageType::isCorporatePage() ) {
+					return false;
+				} else {
+					return 'lifestyle';
+				}
+			default:
+				return 'entertainment';
+		}
+	}
+
+	/**
 	 * Get category info for given cityId
 	 *
 	 * @param int $city_id city id
@@ -97,15 +106,7 @@ class HubService extends Service {
 	public static function getCategoryInfoForCurrentPage() {
 		$cityId = F::app()->wg->CityId;
 
-		$categoryId = null;
-
-		if( WikiaPageType::isCorporatePage() ) {
-			$categoryId = self::getHubIdForCurrentPage();
-		}
-
-		if( empty($categoryId) ) {
-			$categoryId = self::getCategoryIdForCity($cityId);
-		}
+		$categoryId = self::getCategoryIdForCity($cityId);
 
 		return self::constructCategoryInfoFromCategoryId($categoryId);
 	}
@@ -120,13 +121,9 @@ class HubService extends Service {
 	private static function getCategoryIdForCity($cityId) {
 		$categoryId = null;
 
-		if( WikiaPageType::isWikiaHomePage() && $cityId == F::app()->wg->CityId ) {
-			$categoryId = WikiFactoryHub::CATEGORY_ID_CORPORATE;
-		} else {
-			$category = WikiFactory::getCategory($cityId);
-			if ($category) {
-				$categoryId = $category->cat_id;
-			}
+		$category = WikiFactory::getCategory($cityId);
+		if ($category) {
+			$categoryId = $category->cat_id;
 		}
 
 		// Look for Comscore tag
@@ -145,42 +142,6 @@ class HubService extends Service {
 		}
 
 		return $categoryId;
-	}
-
-	/**
-	 * Check if current page is a Wikia hub
-	 *
-	 * @return bool
-	 */
-	public static function isCurrentPageAWikiaHub() {
-		return !!self::getHubIdForCurrentPage();
-	}
-
-	private static function getHubIdForCurrentPage() {
-		$categoryId = null;
-		if (F::app()->wg->EnableWikiaHubsV2Ext) {
-			$categoryId = self::getHubIdForCurrentPageV2();
-		}
-		return $categoryId;
-	}
-
-	private static function getHubIdForCurrentPageV2() {
-		$baseText = F::app()->wg->Title->getBaseText();
-
-		/** @var $tmpTitle Title */
-		$tmpTitle = Title::newFromText($baseText);
-
-		$hubsPages = F::app()->wg->WikiaHubsV2Pages;
-
-		if ($tmpTitle instanceof Title) {
-			/* @var $title Title */
-			$hubName = $tmpTitle->getDbKey();
-
-			if ($hubName) {
-				return array_search($hubName, $hubsPages);
-			}
-		}
-		return false;
 	}
 
 	private static function constructCategoryInfoFromCategoryId($categoryId) {

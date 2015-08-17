@@ -9,6 +9,7 @@ $wgExtensionCredits['other'][] = array(
 	'name'           => 'SkinChooser',
 	'author'         => 'Inez Korczynski',
 	'descriptionmsg' => 'skinchooser-desc',
+	'url'            => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/SkinChooser'
 );
 
 // basic permissions

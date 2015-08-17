@@ -1,0 +1,10 @@
+{
+	"@metadata": {
+		"authors": [
+			"Тест"
+		]
+	},
+	"sf_createproperty_proptype": "Тып:",
+	"templates": "Шаблоны",
+	"sf_createform_template": "Шаблон:"
+}

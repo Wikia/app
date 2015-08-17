@@ -45,7 +45,6 @@ class FinishCreateWikiController extends WikiaController {
 		$this->title = wfMessage( 'cnw-welcome-headline', $this->app->wg->Sitename )->text();
 		$this->instruction1 = wfMessage( 'cnw-welcome-instruction1' )->text();
 		$this->button = \Wikia\UI\Factory::getInstance()->init( 'button' )->render( $buttonParams );
-		$this->instruction2 = wfMessage( 'cnw-welcome-instruction2' )->text();
 		$this->help = wfMessage( 'cnw-welcome-help' )->text();
 
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
@@ -60,17 +59,14 @@ class FinishCreateWikiController extends WikiaController {
 	 * The values are read from the session and only accessible by the admin.
 	 */
 	public function FinishCreate() {
-		global $wgUser, $wgSitename;
+		global $wgUser, $wgOut, $wgEnableNjordExt;
 
 		if ( !$wgUser->isAllowed( 'finishcreate' ) ) {
 			return false;
 		}
 
 		$this->skipRendering();
-
-		global $wgOut;
 		$this->LoadState();
-
 		$mainPage = wfMsgForContent( 'mainpage' );
 
 		// set theme
@@ -81,20 +77,19 @@ class FinishCreateWikiController extends WikiaController {
 
 		// set description on main page
 		if(!empty($this->params['wikiDescription'])) {
-			$mainTitle = Title::newFromText($mainPage);
+			$mainTitle = Title::newFromText( $mainPage );
 			$mainId = $mainTitle->getArticleID();
-			$mainArticle = Article::newFromID($mainId);
-			if (!empty($mainArticle)) {
-				global $wgParser;
-				$mainPageText = $mainArticle->getRawText();
-				$matches = array();
-				$description = $this->params['wikiDescription'];
-				if(preg_match('/={2,3}[^=]+={2,3}/', $mainPageText, $matches)) {
-					$newSectionTitle = str_replace('Wiki', $wgSitename, $matches[0]);
-					$description = "{$newSectionTitle}\n{$description}";
+			$mainArticle = Article::newFromID( $mainId );
+
+			if ( !empty( $mainArticle ) ) {
+				if ( !empty( $wgEnableNjordExt ) ) {
+					$newMainPageText = $this->getMoMMainPage( $mainArticle );
+				} else {
+					$newMainPageText = $this->getClassicMainPage( $mainArticle );
 				}
-				$newMainPageText = $wgParser->replaceSection( $mainPageText, 1, $description );
-				$mainArticle->doEdit($newMainPageText, '');
+
+				$mainArticle->doEdit( $newMainPageText, '' );
+				$this->initHeroModule( $mainPage );
 			}
 		}
 
@@ -105,4 +100,48 @@ class FinishCreateWikiController extends WikiaController {
 		$wgOut->redirect($mainPage.'?wiki-welcome=1');
 	}
 
+	/**
+	 * initialize hero module on modular main page
+	 * @param $mainPageTitle string
+	 */
+	private function initHeroModule( $mainPageTitle ) {
+		global $wgSitename;
+
+		$wikiDataModel = new WikiDataModel( $mainPageTitle );
+		$wikiDataModel->title = $wgSitename;
+		$wikiDataModel->description = $this->params['wikiDescription'];
+		$wikiDataModel->storeInProps();
+		$wikiDataModel->storeInPage();
+	}
+
+	/**
+	 * Gets markup for empty Modular Main Page
+	 * @returns string - main page article wiki text
+	 */
+	private function getMoMMainPage( $mainPageTitle ) {
+		return 	'<mainpage-leftcolumn-start /><mainpage-endcolumn />
+				<mainpage-rightcolumn-start /><mainpage-endcolumn />';
+	}
+
+	/**
+	 * setup main page article content for classic main page
+	 * @param $mainArticle Article
+	 * @return string - main page article wiki text
+	 */
+	private function getClassicMainPage( $mainArticle ) {
+		global $wgParser, $wgSitename;
+
+		$mainPageText = $mainArticle->getRawText();
+		$matches = array();
+		$description = $this->params['wikiDescription'];
+
+		if ( preg_match( '/={2,3}[^=]+={2,3}/', $mainPageText, $matches ) ) {
+			$newSectionTitle = str_replace( 'Wiki', $wgSitename, $matches[0] );
+			$description = "{$newSectionTitle}\n{$description}";
+		}
+
+		$newMainPageText = $wgParser->replaceSection( $mainPageText, 1, $description );
+
+		return $newMainPageText;
+	}
 }

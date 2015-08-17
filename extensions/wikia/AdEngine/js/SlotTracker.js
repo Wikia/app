@@ -1,17 +1,14 @@
-/*global setTimeout, define, require*/
+/*global setTimeout, define*/
 /*jshint camelcase:false, maxparams:5*/
 
 define('ext.wikia.adEngine.slotTracker', [
-	'wikia.log',
-	'wikia.window',
-	'wikia.tracker',
-	require.optional('wikia.abTest')
-], function (log, window, tracker, abTest) {
+	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.adTracker'
+], function (adContext, adTracker) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.adEngine.slotTracker',
-		timeBuckets = [0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.5, 5.0, 8.0, 20.0, 60.0],
-		timeCheckpoints = [2.0, 5.0, 8.0, 20.0],
+	var timeCheckpoints = [2.0, 5.0, 8.0, 20.0],
+		context = adContext.getContext(),
 		stats = {
 			allEvents: 0,
 			interestingEvents: 0
@@ -24,9 +21,11 @@ define('ext.wikia.adEngine.slotTracker', [
 			HOME_TOP_RIGHT_BOXAD:   'medrec',
 			HUB_TOP_LEADERBOARD:    'leaderboard',
 			INCONTENT_BOXAD_1:      'medrec',
-			INVISIBLE_1:            'pixel',
-			INVISIBLE_2:            'pixel',
 			INVISIBLE_SKIN:         'pixel',
+			INCONTENT_1A:           'incontent',
+			INCONTENT_1B:           'incontent',
+			INCONTENT_1C:           'incontent',
+			INCONTENT_LEADERBOARD_1:'incontent',
 			MOBILE_IN_CONTENT:      'mobile_content',
 			MOBILE_TOP_LEADERBOARD: 'mobile_leaderboard',
 			MOBILE_PREFOOTER:       'mobile_prefooter',
@@ -35,6 +34,7 @@ define('ext.wikia.adEngine.slotTracker', [
 			MODAL_INTERSTITIAL_2:   'interstitial',
 			MODAL_INTERSTITIAL_3:   'interstitial',
 			MODAL_INTERSTITIAL_4:   'interstitial',
+			MODAL_INTERSTITIAL_5:   'interstitial',
 			LEFT_SKYSCRAPER_2:      'skyscraper',
 			LEFT_SKYSCRAPER_3:      'skyscraper',
 			PREFOOTER_LEFT_BOXAD:   'prefooter',
@@ -43,9 +43,7 @@ define('ext.wikia.adEngine.slotTracker', [
 			TOP_LEADERBOARD:        'leaderboard',
 			TOP_RIGHT_BOXAD:        'medrec',
 			WIKIA_BAR_BOXAD_1:      'wikiabar'
-		},
-		adsInHead = window.wgLoadAdsInHead && abTest && abTest.getGroup('ADS_IN_HEAD'),
-		adsAfterPageLoad = window.wgLoadLateAdsAfterPageLoad && abTest && abTest.getGroup('ADS_AFTER_PAGE_LOAD');
+		};
 
 	// The filtering function
 	function isInteresting(eventName, data) {
@@ -68,80 +66,31 @@ define('ext.wikia.adEngine.slotTracker', [
 			return false;
 		}
 		// Don't track state events yet
-		if (!window.wgAdDriverTrackState && eventName.match(/^state/)) {
+		if (!context.opts.trackSlotState && eventName.match(/^state/)) {
 			return false;
 		}
 
 		return true;
 	}
 
-	function buildExtraParamsString(extraParams) {
-		var out = [], key;
-		for (key in extraParams) {
-			if (extraParams.hasOwnProperty(key)) {
-				out.push(key + '=' + extraParams[key]);
-			}
-		}
-		return out.join(';');
-	}
-
 	function trackEvent(eventName, data, value) {
-		var interesting = isInteresting(eventName, data),
-			slotname = data.slotname,
+		var slotname = data.slotname,
 			slotType = slotTypes[slotname] || 'other',
 			extraParams = data.extraParams || {},
-			gaCategory,
-			gaAction,
-			gaLabel,
-			gaValue;
+			forcedLabel = data.state;
 
 		extraParams.pos = data.slotname;
 
-		gaCategory = ['ad', eventName, data.provider, slotType].join('/');
-		gaAction = buildExtraParamsString(extraParams);
-		gaLabel = data.state || data.timeBucket || 0;
-		gaValue = value;
-
 		stats.allEvents += 1;
-		if (interesting) {
+		if (isInteresting(eventName, data)) {
 			stats.interestingEvents += 1;
-
-			log(['Pushing to GA', gaCategory, gaAction, gaLabel, gaValue], 'info', logGroup);
-
-			tracker.track({
-				ga_category: gaCategory,
-				ga_action: gaAction,
-				ga_label: gaLabel,
-				ga_value: Math.round(gaValue),
-				trackingMethod: 'ad'
-			});
-		} else {
-			log(['Not pushing to GA (not interesting)',
-				gaCategory, gaAction, gaLabel, gaValue], 'debug', logGroup
-					);
+			adTracker.track(
+				[eventName, data.provider, slotType].join('/'),
+				extraParams,
+				value,
+				forcedLabel
+			);
 		}
-	}
-
-	function getTimeBucket(time) {
-		var i,
-			len = timeBuckets.length,
-			bucket;
-
-		for (i = 0; i < len; i += 1) {
-			if (time >= timeBuckets[i]) {
-				bucket = i;
-			}
-		}
-
-		if (bucket === len - 1) {
-			return timeBuckets[bucket] + '+';
-		}
-
-		if (bucket >= 0) {
-			return timeBuckets[bucket] + '-' + timeBuckets[bucket + 1];
-		}
-
-		return 'invalid';
 	}
 
 	function slotTracker(provider, slotname, source) {
@@ -152,21 +101,7 @@ define('ext.wikia.adEngine.slotTracker', [
 			len;
 
 		function trackState(timeCheckPoint) {
-			var eventName = 'state/' + timeCheckPoint + 's',
-				experimentName = [];
-
-			if (adsInHead || adsAfterPageLoad) {
-
-				if (adsInHead) {
-					experimentName.push('adsinhead=' + adsInHead);
-				}
-
-				if (adsAfterPageLoad) {
-					experimentName.push('lateadsafterload=' + adsAfterPageLoad);
-				}
-
-				eventName = 'state/' + experimentName.join(';') + '/' + timeCheckPoint + 's';
-			}
+			var eventName = 'state/' + timeCheckPoint + 's';
 
 			setTimeout(function () {
 				trackEvent(
@@ -183,22 +118,16 @@ define('ext.wikia.adEngine.slotTracker', [
 
 		function track(eventName, extraParams) {
 			var timeEnd = new Date().getTime(),
-				timeElapsed = (timeEnd - timeStart) / 1000,
-				timeBucket = getTimeBucket(timeElapsed);
+				timeElapsed = (timeEnd - timeStart) / 1000;
 
 			eventsTracked.push(eventName);
 			lastEventTime = timeElapsed;
-
-			if (/\+$/.test(timeBucket)) {
-				eventName = 'error/' + eventName;
-			}
 
 			trackEvent(
 				eventName,
 				{
 					provider: provider,
 					slotname: slotname,
-					timeBucket: timeBucket,
 					extraParams: extraParams
 				},
 				timeElapsed * 1000
@@ -221,7 +150,6 @@ define('ext.wikia.adEngine.slotTracker', [
 	}
 
 	slotTracker.getStats = getStats;
-	slotTracker.getTimeBucket = getTimeBucket; // for AdEngine_trackPageInteractive
 
 	return slotTracker;
 });

@@ -19,15 +19,7 @@ class AssetsManagerSassBuilderTest extends WikiaBaseTest {
 	 * @slowExecutionTime 0.85936 ms
 	 */
 	public function testSassBuilder() {
-		// disable memcache layer in this test
-		$mock_memc = $this->getMock('stdClass',array('get','set'));
-		$mock_memc->expects($this->any())
-			->method('get')
-			->will($this->returnValue(false));
-		$mock_memc->expects($this->any())
-			->method('set')
-			->will($this->returnValue(true));
-		$this->mockGlobalVariable('wgMemc', $mock_memc);
+		$this->disableMemCache();
 
 		$request = new WebRequest();
 		$request->setVal('oid', self::SASS_FILE);
@@ -39,7 +31,7 @@ class AssetsManagerSassBuilderTest extends WikiaBaseTest {
 
 		// test URLs rewriting
 		$this->assertContains('sprite.png', $builder->getContent());
-		$this->assertContains("{$this->cdn}/skins/oasis/images/sprite.png", $builder->getContent());
+		$this->assertContains("{$this->cdn}/skins/shared/images/sprite.png", $builder->getContent());
 		$this->assertNotContains('/* $wgCdnStylePath */', $builder->getContent());
 
 		// test base64 encoding

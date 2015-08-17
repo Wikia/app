@@ -39,7 +39,10 @@ $namespaceNames = array(
 	NS_SPECIAL          => 'Toiminnot',
 	NS_TALK             => 'Keskustelu',
 	NS_USER             => 'Käyttäjä',
-	NS_USER_TALK        => 'Keskustelu_käyttäjästä',
+	// begin Wikia change
+	// VOLDEV-64
+	NS_USER_TALK        => 'Käyttäjän_keskustelusivu',
+	// end Wikia change
 	NS_PROJECT_TALK     => 'Keskustelu_{{GRAMMAR:elative|$1}}',
 	NS_FILE             => 'Tiedosto',
 	NS_FILE_TALK        => 'Keskustelu_tiedostosta',
@@ -54,6 +57,10 @@ $namespaceNames = array(
 );
 
 $namespaceAliases = array(
+	// begin Wikia change
+	// VOLDEV-64
+	'Keskustelu_käyttäjästä' => NS_USER_TALK,
+	// end Wikia change
 	'Kuva' => NS_FILE,
 	'Keskustelu_kuvasta' => NS_FILE_TALK,
 );
@@ -256,7 +263,10 @@ $specialPageAliases = array(
 	'Mostrevisions'             => array( 'Muokatuimmat_sivut' ),
 	'Movepage'                  => array( 'Siirrä_sivu' ),
 	'Mycontributions'           => array( 'Omat_muokkaukset' ),
-	'Mypage'                    => array( 'Oma_sivu' ),
+	// begin Wikia change
+	// VOLDEV-64
+	'Mypage'                    => array( 'Omasivu', 'Oma_sivu' ),
+	// end Wikia change
 	'Mytalk'                    => array( 'Oma_keskustelu' ),
 	'Myuploads'                 => array( 'Omat_tiedostot' ),
 	'Newimages'                 => array( 'Uudet_tiedostot', 'Uudet_kuvat' ),
@@ -697,8 +707,9 @@ $2',
 # Login and logout pages
 'logouttext'                 => "'''Olet nyt kirjautunut ulos.'''
 
-Voit jatkaa {{GRAMMAR:genitive|{{SITENAME}}}} käyttöä nimettömänä, tai [[Special:UserLogin|kirjautua uudelleen sisään]].
+Voit jatkaa {{GRAMMAR:genitive|{{SITENAME}}}} käyttöä nimettömänä, tai $1.
 Huomaa, että jotkut sivut saattavat näkyä edelleen kuin olisit kirjautunut sisään, kunnes tyhjennät selaimen välimuistin.",
+'logouttext-link-text'       => 'kirjautua uudelleen sisään',
 'welcomecreation'            => '== Tervetuloa $1! ==
 Käyttäjätunnuksesi on luotu.
 Älä unohda virittää {{GRAMMAR:genitive|{{SITENAME}}}} [[Special:Preferences|asetuksiasi]].',
@@ -953,7 +964,7 @@ Alla on viimeisin estolokin tapahtuma:',
 'userjsyoucanpreview'              => 'Voit testata uutta JavaScriptiä ennen tallennusta käyttämällä painiketta ”{{int:showpreview}}”.',
 'usercsspreview'                   => "'''Tämä on CSS:n esikatselu. Muutoksia ei ole vielä tallennettu.'''",
 'userjspreview'                    => "'''Tämä on JavaScriptin esikatselu.'''",
-'sitecsspreview'                   => "'''Huomaa, että tämä on vasta CSS:n esikatselu.''' 
+'sitecsspreview'                   => "'''Huomaa, että tämä on vasta CSS:n esikatselu.'''
 '''Muutoksia ei ole vielä tallennettu.'''",
 'sitejspreview'                    => "'''Huomaa, että tämä on vasta JavaScript-koodin esikatselu.'''
 '''Muutoksia ei ole vielä tallennettu.'''",
@@ -1614,7 +1625,7 @@ Tässä satunnaisesti tuotettu arvo, jota voit käyttää: $1',
 'reuploaddesc'                => 'Peruuta tallennus ja palaa tallennuslomakkeelle.',
 'upload-tryagain'             => 'Lähetä muutettu tiedostokuvaus',
 'uploadnologin'               => 'Et ole kirjautunut sisään',
-'uploadnologintext'           => 'Sinun pitää olla [[Special:UserLogin|kirjautuneena sisään]], jotta voisit tallentaa tiedostoja.',
+'uploadnologintext'           => 'Sinun täytyy $1 ladataksesi tiedostoja tai lisätäksesi videoita.',
 'upload_directory_missing'    => 'Tallennushakemisto $1 puuttuu, eikä palvelin pysty luomaan sitä.',
 'upload_directory_read_only'  => 'Palvelimella ei ole kirjoitusoikeuksia tallennushakemistoon $1.',
 'uploaderror'                 => 'Tallennusvirhe',
@@ -2518,6 +2529,7 @@ Nykyiset estot löytyvät [[Special:BlockList|estolistalta]].',
 'unblocked'                       => 'Käyttäjän [[User:$1|$1]] esto on poistettu',
 'unblocked-range'                 => '$1 ei ole enää estettynä',
 'unblocked-id'                    => 'Esto $1 on poistettu',
+'unblocked-ip'                    => 'Käyttäjän [[Special:Contributions/$1|$1]] esto on poistettu.',
 'blocklist'                       => 'Estetyt käyttäjät',
 'ipblocklist'                     => 'Estetyt käyttäjät',
 'ipblocklist-legend'              => 'Haku',
@@ -3514,7 +3526,7 @@ Varmennuskoodi vanhenee $4.',
 'confirmrecreate'          => "Käyttäjä '''[[User:$1|$1]]''' ([[User talk:$1|keskustelu]]) on poistanut sivun sen jälkeen, kun aloit muokata sitä. Syy oli:
 : ''$2''
 Varmista, että haluat luoda sivun uudelleen.",
-'confirmrecreate-noreason' => "Käyttäjä '''[[User:$1|$1]]''' ([[User talk:$1|keskustelu]]) on poistanut tämän sivun sen jälkeen, kun aloit muokata sitä. 
+'confirmrecreate-noreason' => "Käyttäjä '''[[User:$1|$1]]''' ([[User talk:$1|keskustelu]]) on poistanut tämän sivun sen jälkeen, kun aloit muokata sitä.
 Varmista, että haluat luoda sivun uudelleen.",
 'recreate'                 => 'Luo uudelleen',
 

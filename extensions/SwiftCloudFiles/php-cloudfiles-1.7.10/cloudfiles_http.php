@@ -795,8 +795,14 @@ class CF_Http
         return array($return_code,$this->response_reason);
     }
 
-    # PUT /v1/Account/Container/Object
-    #
+	/**
+	 * PUT /v1/Account/Container/Object
+	 *
+	 * @param CF_Object $obj
+	 * @param resource $fp
+	 * @return array
+	 * @throws SyntaxException
+	 */
     function put_object(&$obj, &$fp)
     {
         if (!is_object($obj) || get_class($obj) != "CF_Object") {
@@ -1482,15 +1488,13 @@ class CF_Http
 				break;
 			}
 
-			// log errors
-			if ( is_numeric( $res ) ) {
-				$message = json_encode( [ $conn_type, $url_path, $hdrs, "HTTP {$res}" ] );
-			}
-			else {
-				$message = $this->error_str;
-			}
-
-			\Wikia\SwiftStorage::log( __CLASS__ . '::retryRequest::' . $retriesLeft, $message );
+			Wikia\Logger\WikiaLogger::instance()->error( 'SwiftStorage: retry', [
+				'exception'    => new Exception( $this->error_str, is_numeric($res) ? $res : 0 ),
+				'retries-left' => $retriesLeft,
+				'headers'      => $hdrs,
+				'conn-type'    => $conn_type,
+				'path'         => $url_path
+			] );
 
 			// wait a bit before retrying the request
 			usleep( self::RETRY_DELAY * 1000 );

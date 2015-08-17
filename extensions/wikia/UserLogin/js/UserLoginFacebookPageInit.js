@@ -1,3 +1,4 @@
-$(function() {
-	UserLoginFacebook.init( UserLoginFacebook.origins.PAGE );
+$(function () {
+	'use strict';
+	window.FacebookLogin.init(window.FacebookLogin.origins.PAGE);
 });

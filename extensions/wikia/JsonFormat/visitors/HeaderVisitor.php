@@ -33,7 +33,11 @@ class HeaderVisitor extends DOMNodeVisitorBase {
 		DomHelper::verifyDomElementArgument( $currentNode, "currentNode" );
 
 		if( $this->verifyFirstChildHasClass( $currentNode, "mw-headline" ) ) {			
-			$text = DomHelper::getTextValue($currentNode->childNodes->item(0));
+			$text = DomHelper::getTextValue(
+				$currentNode->childNodes->item( 0 ),
+				[ '#text','a','b','i','u','h1','h2','h3','h4','p', 'span' ],
+				[ 'editsection' ]
+			);
 			$section = new JsonFormatSectionNode( intval($currentNode->tagName[1]), $text );
 			$this->getJsonFormatBuilder()->pushSection($section);
 		} else {

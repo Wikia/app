@@ -8,6 +8,7 @@
 $messages = array();
 
 $messages['en'] = array(
+	'autopagecreate-desc' => 'AutoPageCreate extension',
 	"autopagecreate-empty" => "-",
 	"autopagecreate-newpage-notice-content"	=> "<p>'''This article is just starting. You can help by adding a sentence or a photo!'''</p>",
 	"autopagecreate-newpage-notice-talk"	=> "<p>'''This article is just starting. You can help by adding a sentence or a photo!'''</p>",
@@ -17,4 +18,8 @@ $messages['en'] = array(
 	"autopagecreate-newpage-notice-forum"	=> "<p>'''This article is just starting. You can help by adding a sentence or a photo!'''</p>",
 	"autopagecreate-newpage-notice-blog"	=> "<p>'''This article is just starting. You can help by adding a sentence or a photo!'''</p>",
 	"autopagecreate-newpage-notice-other"	=> "<p>'''This article is just starting. You can help by adding a sentence or a photo!'''</p>",
+);
+
+$messages['qqq'] = array(
+	'autopagecreate-desc' => '{{desc}}',
 );

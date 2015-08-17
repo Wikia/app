@@ -210,10 +210,13 @@ class ParserCache {
 
 	/**
 	 * @param $parserOutput ParserOutput
-	 * @param $article Article
+	 * @param $article Page
 	 * @param $popts ParserOptions
 	 */
-	public function save( $parserOutput, $article, $popts ) {
+	public function save( ParserOutput $parserOutput, Page $article, ParserOptions $popts ) {
+
+		wfRunHooks( 'BeforeParserCacheSave', [ $parserOutput, $article ] );
+
 		$expire = $parserOutput->getCacheExpiry();
 
 		if( $expire > 0 ) {
@@ -237,9 +240,14 @@ class ParserCache {
 			// Wikia change - begin
 			// @author macbre - BAC-1172
 			#$info = "Saved in parser cache with key $parserOutputKey and timestamp $now";
-			$info = "Saved in parser cache with key $parserOutputKey";
+			global $wgArticleAsJson;
 
-			$parserOutput->mText .= "\n<!-- $info -->\n";
+			if ( !$wgArticleAsJson ) {
+				$info = "Saved in parser cache with key $parserOutputKey";
+
+				$parserOutput->mText .= "\n<!-- $info -->\n";
+			}
+
 			wfDebug( "$info\n" );
 			// Wikia change - end
 

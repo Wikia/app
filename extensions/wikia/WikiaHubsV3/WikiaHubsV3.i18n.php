@@ -9,8 +9,9 @@ $messages = array();
 
 $messages['en'] = array(
 	// general
+	'wikiahubs-v3-desc' => 'Wikia Hubs v3',
 	'wikiahubs-v3-button-cancel' => 'Cancel',
-	'wikiahubs-v3-search-placeholder' => 'Search Wikia',
+	'wikiahubs-search-placeholder' => 'Search Wikia',
 
 	// suggest article
 	'wikiahubs-v3-suggest-article-header' => 'Suggest an Article',
@@ -21,11 +22,6 @@ $messages['en'] = array(
 	'wikiahubs-v3-suggest-article-success' => 'Thanks for suggesting an article, our editors will look over it. Check back often to see if it\'s up!',
 	'wikiahubs-v3-error-invalid-article-url-length' => 'Article url requires at least 10 characters',
 	'wikiahubs-v3-error-invalid-reason-length' => 'Comment must be between 1 and 140 characters',
-
-	// wikia hubs
-	'wikiahubs-v3-vertical-VideoGames' => 'Video Games',
-	'wikiahubs-v3-vertical-Entertainment' => 'Entertainment',
-	'wikiahubs-v3-vertical-Lifestyle' => 'Lifestyle',
 
 	//WAM
 	'wikiahubs-v3-wam-header' => 'WAM Score',
@@ -58,7 +54,7 @@ $messages['en'] = array(
 
 $messages['de'] = array(
 	'wikiahubs-v3-button-cancel' => 'Abbrechen',
-	'wikiahubs-v3-search-placeholder' => 'Wikia durchsuchen',
+	'wikiahubs-search-placeholder' => 'Wikia durchsuchen',
 
 	// suggest article
 	'wikiahubs-v3-suggest-article-header' => 'Artikel vorschlagen',
@@ -76,11 +72,6 @@ $messages['de'] = array(
 	'wikiahubs-v3-wam-rank' => 'Rang',
 	'wikiahubs-v3-wam-score' => 'WAM-Punktzahl',
 	'wikiahubs-v3-wam-wiki-url' => "Name",
-
-	// wikia hubs
-	'wikiahubs-v3-vertical-video-games' => 'Videospiele',
-	'wikiahubs-v3-vertical-entertainment' => 'Entertainment',
-	'wikiahubs-v3-vertical-lifestyle' => 'Lifestyle',
 
 	// from the community
 	'wikiahubs-v3-from-community-promoted' => 'Artikel vorschlagen',
@@ -106,7 +97,7 @@ $messages['de'] = array(
 $messages['fr'] = array(
 	// general
 	'wikiahubs-v3-button-cancel' => 'Annuler',
-	'wikiahubs-v3-search-placeholder' => 'Rechercher sur Wikia',
+	'wikiahubs-search-placeholder' => 'Rechercher sur Wikia',
 
 	// suggest article
 	'wikiahubs-v3-suggest-article-header' => 'Suggérer un article',
@@ -124,11 +115,6 @@ $messages['fr'] = array(
 	'wikiahubs-v3-wam-rank' => 'Classement',
 	'wikiahubs-v3-wam-score' => 'Score WAM',
 	'wikiahubs-v3-wam-wiki-url' => "Nom",
-
-	// wikia hubs
-	'wikiahubs-v3-vertical-VideoGames' => 'Jeux vidéo',
-	'wikiahubs-v3-vertical-Entertainment' => 'Divertissement',
-	'wikiahubs-v3-vertical-Lifestyle' => 'Mode de vie',
 
 	// from the community
 	'wikiahubs-v3-from-community-promoted' => 'Promouvoir',
@@ -154,7 +140,7 @@ $messages['fr'] = array(
 $messages['es'] = array(
 	// general
 	'wikiahubs-v3-button-cancel' => 'Cancelar',
-	'wikiahubs-v3-search-placeholder' => 'Buscar en Wikia',
+	'wikiahubs-search-placeholder' => 'Buscar en Wikia',
 
 	// suggest article
 	'wikiahubs-v3-suggest-article-header' => 'Sugerir un artículo',
@@ -172,11 +158,6 @@ $messages['es'] = array(
 	'wikiahubs-v3-wam-rank' => 'Clasificación',
 	'wikiahubs-v3-wam-score' => 'Puntuación en el WAM',
 	'wikiahubs-v3-wam-wiki-url' => "Nombre",
-
-	// wikia hubs
-	'wikiahubs-v3-vertical-VideoGames' => 'Videojuegos',
-	'wikiahubs-v3-vertical-Entertainment' => 'Entretenimiento',
-	'wikiahubs-v3-vertical-Lifestyle' => 'Otros',
 
 	// from the community
 	'wikiahubs-v3-from-community-promoted' => 'Promociónate',
@@ -199,7 +180,7 @@ $messages['es'] = array(
 $messages['pl'] = [
 	// general
 	'wikiahubs-v3-button-cancel' => 'Anuluj',
-	'wikiahubs-v3-search-placeholder' => 'Szukaj na Wikii',
+	'wikiahubs-search-placeholder' => 'Szukaj na Wikii',
 
 	// suggest article
 	'wikiahubs-v3-suggest-article-header' => 'Zasugeruj artykuł',
@@ -209,11 +190,6 @@ $messages['pl'] = [
 	'wikiahubs-v3-suggest-article-success' => 'Dzięki za zasugerowanie artykułu, nasi edytorzy przyjrzą się zgłoszeniu. Zajrzyj wkrótce aby zobaczyć artykuł na stronie.!',
 	'wikiahubs-v3-error-invalid-article-url-length' => 'Adres URL artykułu musi mieć co najmniej 10 znaków',
 	'wikiahubs-v3-error-invalid-reason-length' => 'Komentarz musi mieć od 1 do 140 znaków',
-
-	// wikia hubs
-	'wikiahubs-v3-vertical-VideoGames' => 'Gry',
-	'wikiahubs-v3-vertical-Entertainment' => 'Rozrywka',
-	'wikiahubs-v3-vertical-Lifestyle' => 'Lifestyle',
 
 	//WAM
 	'wikiahubs-v3-wam-header' => 'Punktacja WAM',
@@ -247,7 +223,7 @@ $messages['pl'] = [
 $messages['ja'] = array(
 	// general
 	'wikiahubs-v3-button-cancel' => 'キャンセル',
-	'wikiahubs-v3-search-placeholder' => 'ウィキアを検索する',
+	'wikiahubs-search-placeholder' => 'ウィキアを検索する',
 
 	// suggest article
 	'wikiahubs-v3-suggest-article-header' => '記事を投稿する',
@@ -257,11 +233,6 @@ $messages['ja'] = array(
 	'wikiahubs-v3-suggest-article-success' => '記事についてご提案をいただきありがとうございます。編集者が目を通し確認をいたします。!',
 	'wikiahubs-v3-error-invalid-article-url-length' => '記事ページのurlは最低でも10文字必要です。',
 	'wikiahubs-v3-error-invalid-reason-length' => 'コメントは1から140文字以内でお願いします。',
-
-	// wikia hubs
-	'wikiahubs-v3-vertical-VideoGames' => 'ゲーム',
-	'wikiahubs-v3-vertical-Entertainment' => 'エンターテイメント',
-	'wikiahubs-v3-vertical-Lifestyle' => 'ライフスタイル',
 
 	//WAM
 	'wikiahubs-v3-wam-header' => 'WAM スコア',
@@ -306,11 +277,6 @@ $messages['qqq'] = array(
 	'wikiahubs-v3-suggest-article-success' => 'Get promoted - message after successful add',
 	'wikiahubs-v3-error-invalid-article-url-length' => 'Get promoted - Article url validation error message',
 	'wikiahubs-v3-error-invalid-reason-length' => 'Get promoted - Reason validation error message',
-
-	// wikia hubs
-	'wikiahubs-v3-vertical-VideoGames' => 'Video Games hub name',
-	'wikiahubs-v3-vertical-Entertainment' => 'Entertainment hub name',
-	'wikiahubs-v3-vertical-Lifestyle' => 'Lifestyle hub name',
 
 	//WAM
 	'wikiahubs-v3-wam-top-wikis-headline' => 'the parameter is a vertical name i.e. Video Games or Entertainment',

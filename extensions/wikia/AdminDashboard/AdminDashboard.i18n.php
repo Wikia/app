@@ -8,6 +8,7 @@
 $messages = array();
 
 $messages['en'] = array(
+	'admindashboard-desc' => 'A dashboard for administrators with easy access to their tools',
 	'admindashboard-loading' => 'Loading…',
 	'admindashboard-title' => '{{SITENAME}} Dashboard',
 	'admindashboard-header' => 'Admin Dashboard',
@@ -26,8 +27,6 @@ $messages['en'] = array(
 	'admindashboard-control-wiki-features-tooltip' => 'Wiki Features lets you enable additional features on your wiki.',
 	'admindashboard-control-page-layout-builder-label' => 'Page Layout Builder',
 	'admindashboard-control-page-layout-builder-tooltip' => 'Page Layout Builder allows you to create page outlines for users to choose from and use to create new pages.',
-	'admindashboard-control-admin-upload-tool-label' => 'Promote',
-	'admindashboard-control-admin-upload-tool-tooltip' => 'This page allows you to promote your wiki by making it eligible to appear on wikia.com!',
 	'admindashboard-control-special-css-label' => 'CSS',
 	'admindashboard-control-special-css-tooltip' => 'Customize your wiki with local CSS.',
 // Community Controls
@@ -68,6 +67,7 @@ $messages['en'] = array(
 
 /** Message documentation (Message documentation) */
 $messages['qqq'] = array(
+	'admindashboard-desc' => '{{desc}}',
 	'admindashboard-title' => 'html <title> element displayed on admin dashboard pages',
 	'admindashboard-header' => 'page header for Admin Dashboard - html <h1> element',
 	'admindashboard-toolbar-link' => 'used by wikia toolbar extension as a label for the link to the admin dashboard',

@@ -4,6 +4,8 @@
  */
 namespace Wikia\SwiftSync;
 
+use \Wikia\Logger\WikiaLogger;
+
 /**
  * SwiftSync class needed to sync files between DC
  * 
@@ -28,9 +30,7 @@ class Queue {
 	const SYNC_TABLE = 'image_sync';
 	/* archive sync files table */
 	const SYNC_ARCH_TABLE = 'image_sync_done';
-	/* sync files db */
-	const SYNC_DB = 'swift_sync';
-	
+
 	/*
 	 * constructor
 	 */
@@ -40,7 +40,20 @@ class Queue {
 		$this->dst     = $dst;
 		$this->src     = $src;
 	}
-	
+
+	/**
+	 * Log erros from newFromParams method
+	 *
+	 * @param string $message
+	 * @param object $row row that caused an issue
+	 */
+	private static function log($message, $row) {
+		WikiaLogger::instance()->error( 'SwiftStorage: queue item error', [
+			'exception' => new \Exception( $message ),
+			'row'       => (array) $row
+		]);
+	}
+
 	/*
 	 * set id
 	 */
@@ -96,23 +109,23 @@ class Queue {
 		wfProfileIn( __METHOD__ );
 		
 		if ( !isset( $row->img_dest ) ) {
-			\Wikia\SwiftStorage::log( __METHOD__, 'Image destination is empty' );
+			self::log( 'Image destination is empty', $row );
 			wfProfileOut( __METHOD__ );
 			return false;
 		}
 		
 		if ( is_null( $row->city_id ) ) {
-			\Wikia\SwiftStorage::log( __METHOD__, 'Wikia identify is empty' );
+			self::log( 'Wikia identify is empty', $row );
 			wfProfileOut( __METHOD__ );
 			return false;
 		}
 		
 		if ( empty( $row->img_action ) ) {
-			\Wikia\SwiftStorage::log( __METHOD__, 'Sync action is empty' );
+			self::log( 'Sync action is empty', $row );
 			wfProfileOut( __METHOD__ );
 			return false;
 		}
-		
+
 		$obj = new Queue( $row->city_id, $row->img_action, $row->img_dest, $row->img_src );
 		
 		if ( $obj ) {
@@ -124,26 +137,18 @@ class Queue {
 	}
 	
 	static public function getTable() {
-		return sprintf( "`%s`.`%s`", self::SYNC_DB, self::SYNC_TABLE );
+		return self::SYNC_TABLE;
 	}
 	
 	static public function getArchTable() {
-		return sprintf( "`%s`.`%s`", self::SYNC_DB, self::SYNC_ARCH_TABLE );
+		return self::SYNC_ARCH_TABLE;
 	}
 	
 	static public function getDB( $master = false ) {
-		global $wgSpecialsDB;
-		
-		return wfGetDB( ( empty( $master ) ) ? DB_SLAVE : DB_MASTER, array(), $wgSpecialsDB );
+		global $wgSwiftSyncDB;
+		return wfGetDB( ( empty( $master ) ) ? DB_SLAVE : DB_MASTER, array(), $wgSwiftSyncDB );
 	}
-	
-	/*
-	 * Return list of columns in self::SYNC_TABLE 
-	 */
-	private function tableColumns() {
-		
-	}
-	
+
 	/* 
 	 * Save information about uploaded image in database 
 	 * @return Boolean True/False

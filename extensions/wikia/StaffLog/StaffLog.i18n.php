@@ -52,6 +52,7 @@ $messages['qqq'] = array(
 * $4 is the reason of the change.',
 	'stafflog-filter-label' => '{{Identical|Filter}}',
 	'stafflog-filter-user' => '{{Identical|User}}',
+	'stafflog-filter-apply' => '{{Identical|Apply filter}}',
 	'action-stafflog' => '{{doc-action|stafflog}}',
 );
 
@@ -233,6 +234,8 @@ $messages['es'] = array(
 $messages['fa'] = array(
 	'stafflog-filter-label' => 'پالایه',
 	'stafflog-filter-user' => 'کاربر:',
+	'stafflog-filter-type' => 'نوع:',
+	'stafflog-filter-apply' => 'اعمال پالایش',
 	'stafflog-filter-type-block' => 'بلوک‌ها',
 );
 
@@ -258,6 +261,13 @@ $messages['fr'] = array(
 	'stafflog-filter-type-renameuser' => 'Renommages d’utilisateur',
 	'stafflog-filter-type-wikifactory' => 'Statut du wiki',
 	'action-stafflog' => 'voir le journal de l’équipe d’administration',
+);
+
+/** Western Frisian (Frysk)
+ * @author Robin0van0der0vliet
+ */
+$messages['fy'] = array(
+	'stafflog-filter-user' => 'Brûker:',
 );
 
 /** Galician (galego)
@@ -343,22 +353,48 @@ $messages['kn'] = array(
 	'stafflog-filter-type-renameuser' => 'ಬಳಕೆದಾರ ಹೆಸರುಗಳು',
 );
 
+/** Korean (한국어)
+ * @author Miri-Nae
+ */
+$messages['ko'] = array(
+	'stafflog' => '스태프 로그',
+	'right-stafflog' => '스태프 로그 열람',
+	'stafflog-filter-label' => '필터',
+	'stafflog-filter-user' => '사용자:',
+	'stafflog-filter-type' => '유형:',
+	'stafflog-filter-apply' => '필터 적용',
+	'stafflog-filter-type-block' => '차단',
+	'stafflog-filter-type-wikifactory' => '위키 통계',
+);
+
+/** Kurdish (Latin script) (Kurdî (latînî)‎)
+ * @author Bikarhêner
+ */
+$messages['ku-latn'] = array(
+	'stafflog-filter-label' => 'Fîltre',
+	'stafflog-filter-user' => 'Bikarhêner:',
+	'stafflog-filter-type' => 'Cure:',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
  */
 $messages['lb'] = array(
 	'stafflog-desc' => 'Zentraliséiert Logge vun de Staff-Mataarbechter',
 	'stafflog-blockmsg' => '$1 $2 huet versicht de Staff-Mataarbechter $3 op der Wiki $4 ze spären: Grond: $5',
+	'stafflog-filter-label' => 'Filter',
+	'stafflog-filter-user' => 'Benotzer:',
 );
 
-/** لوری (لوری)
+/** Northern Luri (لوری مینجایی)
  * @author Mogoeilor
  */
 $messages['lrc'] = array(
 	'stafflog-filter-label' => 'فيلتر',
-	'stafflog-filter-user' => 'كارور',
+	'stafflog-filter-user' => 'کاریار',
 	'stafflog-filter-type' => 'نوع:',
-	'stafflog-filter-apply' => 'وه كار بردن فيلتر',
-	'stafflog-filter-type-block' => 'بخشیا',
+	'stafflog-filter-apply' => 'وه کار بسن فیلتر',
+	'stafflog-filter-type-block' => 'بهرجایا',
 );
 
 /** Macedonian (македонски)
@@ -733,4 +769,19 @@ $messages['zh-hans'] = array(
 	'stafflog-filter-type-renameuser' => '重命名用户',
 	'stafflog-filter-type-wikifactory' => 'Wiki状态',
 	'action-stafflog' => '查看集中式的员工日志',
+);
+
+/** Traditional Chinese (中文（繁體）‎)
+ * @author Liuxinyu970226
+ */
+$messages['zh-hant'] = array(
+	'stafflog-filter-label' => '篩選器',
+	'stafflog-filter-user' => '使用者：',
+);
+
+/** Chinese (Hong Kong) (中文（香港）‎)
+ * @author Liuxinyu970226
+ */
+$messages['zh-hk'] = array(
+	'stafflog-filter-user' => '用戶：',
 );

@@ -10,6 +10,7 @@ class JsonFormatTest extends WikiaBaseTest {
 	public function setUp() {
 		global $IP;
 		$this->setupFile = "$IP/extensions/wikia/JsonFormat/JsonFormat.setup.php";
+	 	$this->mockGlobalVariable( 'wgTitle', Title::newFromText( 'TestPageDoesNotExist' ) );
 		parent::setUp();
 	}
 
@@ -90,8 +91,12 @@ class JsonFormatTest extends WikiaBaseTest {
 	protected function checkContent( $data, $content ) {
 		foreach ( $content as $key => $params ) {
 			if ( is_numeric( $key ) ) {
-				$element = $data[ $key ];
-				$this->checkContent( $element, $params );
+				if ( empty( $data[$key] ) ) {
+					$this->fail( "Key $key not found in data.  Expecting: " . print_r( [ $key => $params ], true ) );
+				} else {
+					$element = $data[ $key ];
+					$this->checkContent( $element, $params );
+				}
 			} else {
 				//do assertion
 				if ( $key == 'child' ) {
@@ -132,23 +137,25 @@ class JsonFormatTest extends WikiaBaseTest {
 	}
 
 	protected function getParsedOutput( $wikitext ) {
-		global $wgOut;
-		if ( !isset( $this->parser ) ) {
-			$this->parser = new Parser();
-		}
-		$htmlOutput = $this->parser->parse( $wikitext, new Title(), $wgOut->parserOptions() );
+		return $this->memCacheDisabledSection(function() use ($wikitext) {
+			global $wgOut;
+			if (!isset($this->parser)) {
+				$this->parser = new Parser();
+			}
+			$htmlOutput = $this->parser->parse($wikitext, new Title(), $wgOut->parserOptions());
 
-		//check for empty result
-		if ( !empty( $wikitext ) ) {
-			$this->assertNotEmpty( $htmlOutput->getText(), 'Provided WikiText could not be parsed.' );
-		}
+			//check for empty result
+			if (!empty($wikitext)) {
+				$this->assertNotEmpty($htmlOutput->getText(), 'Provided WikiText could not be parsed.');
+			}
 
-		if ( !isset( $this->htmlParser ) ) {
-			$this->htmlParser = new \Wikia\JsonFormat\HtmlParser();
-		}
-		$jsonOutput = $this->htmlParser->parse( $htmlOutput->getText() );
+			if (!isset($this->htmlParser)) {
+				$this->htmlParser = new \Wikia\JsonFormat\HtmlParser();
+			}
+			$jsonOutput = $this->htmlParser->parse($htmlOutput->getText());
 
-		return $jsonOutput;
+			return $jsonOutput;
+		});
 	}
 
 	/* Test providers */

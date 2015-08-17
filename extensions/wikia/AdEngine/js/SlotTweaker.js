@@ -12,26 +12,32 @@ define('ext.wikia.adEngine.slotTweaker', [
 		standardLeaderboardSizeClass = 'standard-leaderboard';
 
 	function removeClass(element, cls) {
-		var elClasses = ' ' + element.className.replace(rclass, ' ') + ' ',
-			newClasses = elClasses.replace(' ' + cls + ' ', ' ');
+		var oldClasses,
+			newClasses = ' ' + element.className.replace(rclass, ' ') + ' ';
+
+		// Remove all instances of class in the className string
+		while (oldClasses !== newClasses) {
+			oldClasses = newClasses;
+			newClasses = oldClasses.replace(' ' + cls + ' ', ' ');
+		}
 
 		log(['removeClass ' + cls, element], 8, logGroup);
 		element.className = newClasses;
 	}
 
-	// TODO: called always with usingClass=true
 	function hide(slotname) {
 		log('hide ' + slotname + ' using class hidden', 6, logGroup);
 
 		var slot = document.getElementById(slotname);
 
 		if (slot) {
+			removeClass(slot, 'hidden');
 			slot.className += ' hidden';
 		}
 	}
 
 	function show(slotname) {
-		log('hide ' + slotname + ' using class hidden', 6, logGroup);
+		log('show ' + slotname + ' removing class hidden', 6, logGroup);
 
 		var slot = document.getElementById(slotname);
 
@@ -85,7 +91,6 @@ define('ext.wikia.adEngine.slotTweaker', [
 	// TODO: fix it, it's a hack!
 	function adjustLeaderboardSize(slotname) {
 		var slot = document.getElementById(slotname);
-
 		if (isLeaderboard(slotname) && isStandardLeaderboardSize(slotname)) {
 			slot.className += ' ' + standardLeaderboardSizeClass;
 		}
@@ -99,7 +104,27 @@ define('ext.wikia.adEngine.slotTweaker', [
 		}
 		if (isLeaderboard(slotname) && isStandardLeaderboardSize(slotname)) {
 			log('pushing TOP_BUTTON_WIDE.force to Liftium2 queue', 2, logGroup);
-			window.adslots2.push(['TOP_BUTTON_WIDE.force', null, 'Liftium2']);
+			window.adslots2.push('TOP_BUTTON_WIDE.force');
+		}
+	}
+
+	function noop() {
+		return;
+	}
+
+	/**
+	 * Triggers repaint to hide empty slot placeholders in Chrome
+	 * This is a temporary workaround
+	 * @param {string} slotId
+	 */
+	function hackChromeRefresh(slotId) {
+		var slot = document.getElementById(slotId),
+			parent = slot && slot.parentElement;
+
+		if (parent && slotId.match(/^INCONTENT/)) {
+			parent.style.display = 'none';
+			noop(parent.offsetHeight);
+			parent.style.display = '';
 		}
 	}
 
@@ -109,6 +134,7 @@ define('ext.wikia.adEngine.slotTweaker', [
 		removeTopButtonIfNeeded: removeTopButtonIfNeeded,
 		adjustLeaderboardSize: adjustLeaderboardSize,
 		hide: hide,
-		show: show
+		show: show,
+		hackChromeRefresh: hackChromeRefresh
 	};
 });

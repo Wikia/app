@@ -9,6 +9,7 @@ define('media', [
 	'modal',
 	'throbber',
 	'wikia.querystring',
+	'wikia.history',
 	require.optional( 'popover' ),
 	'track',
 	require.optional( 'share' ),
@@ -24,6 +25,7 @@ function(
 	modal,
 	throbber,
 	querystring,
+	history,
 	popover,
 	track,
 	share,
@@ -179,14 +181,14 @@ function(
 				// after a short delay so the user will know they are on an article page
 				setTimeout(function () {
 					clickSource = 'share';
-					qs.pushState();
+					history.pushState();
 					openModal( shrImgIdx );
 				}, 2000 );
 			} else {
 				// file specified in querystring doesn't exist on the page
 				toast.show( msg( 'wikiamobile-shared-file-not-available' ) );
 				if ( !Features.gameguides ) {
-					qs.removeVal( 'file' ).replaceState();
+					history.replaceState(null, null, qs.removeVal( 'file' ));
 				}
 			}
 		}
@@ -215,7 +217,7 @@ function(
 					track.event( 'special-videos', track.CLICK, {
 						label: 'thumbnail',
 						value: Array.prototype.indexOf.call( document.getElementsByClassName('media'), t ),
-						method: 'both'
+						method: 'analytics'
 					});
 				}
 
@@ -314,7 +316,7 @@ function(
 
 			// update url for sharing
 			if ( !Features.gameguides ) {
-				currQS.setVal( 'file', imgTitle, true )[stateAction]();
+				history[stateAction](null, null, currQS.setVal( 'file', imgTitle, true ));
 			}
 		} else if ( currentMedia.type == Media.types.IMAGE ){
 			var img = new Image();
@@ -354,7 +356,7 @@ function(
 
 			// update url for sharing
 			if ( !Features.gameguides ) {
-				currQS.setVal( 'file', imgTitle, true )[stateAction]();
+				history[stateAction](null, null, currQS.setVal( 'file', imgTitle, true ));
 			}
 		} else if ( currentMedia.type ) {//custom
 			var data = {
@@ -373,7 +375,7 @@ function(
 
 			// We're showing an ad or other custom media type.  Don't support sharing.
 			if ( !Features.gameguides ) {
-				currQS.removeVal( 'file' )[stateAction]();
+				history[stateAction](null, null, currQS.removeVal( 'file' ));
 			}
 		}
 
@@ -400,7 +402,10 @@ function(
 				} else {
 					//if caption is not a string and img.caption is set to true grab it from DOM
 					//and then cache it in media object
-					currentMedia.caption = cap = $( currentMedia.element ).parents( 'figure' ).find( '.thumbcaption' ).text();
+					//div here is used to escape html that is coming from caption
+					currentMedia.caption = cap = $('<div />').text(
+						$( currentMedia.element ).parents( 'figure' ).find( '.thumbcaption' ).text()
+					).html();
 				}
 			} else {
 				cap = '';
@@ -608,7 +613,7 @@ function(
 
 				// remove file=title from URL
 				if ( !Features.gameguides ) {
-					qs.removeVal( 'file' ).replaceState();
+					history.replaceState(null, null, qs.removeVal( 'file' ));
 				}
 				// reset tracking clickSource
 				clickSource = 'embed';

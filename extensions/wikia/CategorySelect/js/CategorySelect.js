@@ -231,7 +231,7 @@
 					if ( options.popover ) {
 						$.extend( self.popover.options, {
 							content: $.msg( 'categoryselect-error-duplicate-category-name', existing.name ),
-							placement: 'right',
+							placement: 'top',
 							type: 'error'
 						});
 
@@ -302,7 +302,7 @@
 						uiFactory.init( [ 'modal' ] ).then( function( uiModal ) {
 							var categoryEditModalConfig = {
 								vars: {
-									id: 'CategorySelectEditModal',
+									id: 'categorySelectEditModal',
 									size: 'small',
 									content: Mustache.render( template.content, data ),
 									title: cached.messages.categoryEdit,
@@ -703,8 +703,7 @@
 				}
 			},
 			autocomplete: {
-				appendTo: '.CategorySelect',
-
+				appendTo: '.article-categories, .CategorySelect',
 				// Non-standard
 				limit: 6
 			},
@@ -743,7 +742,7 @@
 		track: Wikia.Tracker.buildTrackingFunction( Wikia.trackEditorComponent, {
 			action: Wikia.Tracker.ACTIONS.CLICK,
 			category: 'category-tool',
-			trackingMethod: 'both'
+			trackingMethod: 'analytics'
 		})
 	});
 

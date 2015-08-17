@@ -29,7 +29,6 @@ class AdminDashboardSpecialPageController extends WikiaSpecialPageController {
 		$this->urlRecentChanges = Title::newFromText('RecentChanges', NS_SPECIAL)->getFullURL();
 		$this->urlTopNavigation = Title::newFromText('Wiki-navigation', NS_MEDIAWIKI)->getFullURL('action=edit');
 		$this->urlWikiFeatures = Title::newFromText('WikiFeatures', NS_SPECIAL)->getFullURL();
-		$this->urlPageLayoutBuilder = Title::newFromText('PageLayoutBuilder', NS_SPECIAL)->getFullURL('action=list');
 
 		$this->urlListUsers = Title::newFromText('ListUsers', NS_SPECIAL)->getFullURL();
 		$this->urlUserRights = Title::newFromText('UserRights', NS_SPECIAL)->getFullURL();
@@ -48,16 +47,13 @@ class AdminDashboardSpecialPageController extends WikiaSpecialPageController {
 		$this->urlCreateBlogPage = Title::newFromText('CreateBlogPage', NS_SPECIAL)->getFullURL();
 		$this->urlMultipleUpload = Title::newFromText('MultipleUpload', NS_SPECIAL)->getFullURL();
 		$this->urlLVS = Title::newFromText('LicensedVideoSwap', NS_SPECIAL)->getFullURL();
-		$this->urlGetPromoted = Title::newFromText('Promote', NS_SPECIAL)->getFullURL();
 		$this->urlSpecialCss = SpecialPage::getTitleFor('CSS')->getFullURL();
 
 		// special:specialpages
 		$this->advancedSection = (string)$this->app->sendRequest( 'AdminDashboardSpecialPage', 'getAdvancedSection', array());
 
 		// icon display logic
-		$this->displayPageLayoutBuilder = !empty($this->wg->EnablePageLayoutBuilder);
 		$this->displayWikiFeatures = !empty($this->wg->EnableWikiFeatures);
-		$this->displaySpecialPromote = !empty($this->wg->EnableSpecialPromoteExt);
 		$this->displaySpecialCss = !empty($this->wg->EnableSpecialCssExt);
 
 		// LicensedVideoSwap
@@ -74,6 +70,10 @@ class AdminDashboardSpecialPageController extends WikiaSpecialPageController {
 
 		// add messages package
 		JSMessages::enqueuePackage('AdminDashboard', JSMessages::INLINE);
+
+		// Add Upload Photos Dialog
+		Wikia::addAssetsToOutput( 'upload_photos_dialog_js' );
+		Wikia::addAssetsToOutput( 'upload_photos_dialog_scss' );
 	}
 
 	/**

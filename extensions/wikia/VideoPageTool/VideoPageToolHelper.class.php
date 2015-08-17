@@ -225,7 +225,6 @@ class VideoPageToolHelper extends WikiaModel {
 		$memcKey = $this->getMemcKeyVideosByCategory( $dbKey );
 		$db = wfGetDB( DB_SLAVE );
 
-		$thumbOptions['useTemplate'] = true;
 		$thumbOptions['fluid'] = true;
 		$thumbOptions['forceSize'] = 'small';
 

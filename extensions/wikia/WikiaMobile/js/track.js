@@ -22,7 +22,7 @@ define( 'track', ['wikia.tracker'], function ( tracker ) {
 					category: 'wikiamobile-' + category,
 					href: options.href,
 					label: options.label,
-					trackingMethod: options.method || 'ga',
+					trackingMethod: options.method || 'analytics',
 					value: options.value
 				} );
 			}

@@ -3,6 +3,7 @@
 $messages = array();
 
 $messages['en'] = array(
+	'vet-desc' => 'Wikia\'s Video Embed Tool',
 	'vet-add-from-preview' => 'Add video',
 	'vet-added-from-placeholder' => 'Video added from video placeholder',
 	'vet-back' => 'Back',
@@ -71,6 +72,7 @@ $messages['en'] = array(
  * @author mech
  */
 $messages['qqq'] = array(
+	'vet-desc' => '{{desc}}',
 	'vet-add-from-preview' => 'Add video from preview window',
 	'vet-added-from-placeholder' => '{{Identical|Video added from video placeholder}}',
 	'vet-back' => '{{Identical|Back}}',

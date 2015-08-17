@@ -33,7 +33,7 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		}
 
 		// set last visit date
-		$user->setOption( LicensedVideoSwapHelper::USER_VISITED_DATE, wfTimestamp() );
+		$user->setGlobalAttribute( LicensedVideoSwapHelper::USER_VISITED_DATE, wfTimestamp() );
 		$user->saveSettings();
 
 		$helper = new LicensedVideoSwapHelper();
@@ -92,7 +92,7 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		$this->getContext()->getOutput()->setPageTitle( wfMessage('lvs-history-page-title')->text() );
 
 		// Get the user preference skin, not the current skin of the page
-		$skin = F::app()->wg->User->getOption( 'skin' );
+		$skin = F::app()->wg->User->getGlobalPreference( 'skin' );
 
 		// for monobook users, specify wikia skin in querystring
 		$queryArr = [];
@@ -276,8 +276,8 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		$helper->moveSuggestionData( $articleId, $title->getArticleID() );
 
 		// add to log
-		$reason = wfMessage( 'lvs-log-swap', $file->getTitle()->getText(), $newFile->getTitle()->getText() )->text();
-		$helper->addLog( $file->getTitle(), 'licensedvideoswap_swap', $reason );
+		$reason = wfMessage( 'lvs-log-summary', $file->getTitle()->getText(), $newFile->getTitle()->getText() )->text();
+		$helper->addLog( $file->getTitle(), wfMessage( 'lvs-log-description' )->text(), $reason );
 
 		// clear cache for total videos
 		$helper->invalidateCacheTotalVideos();
@@ -615,7 +615,7 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		// Get the list of videos already played
 		/** @var User $user */
 		$user = $this->getUser();
-		$visitedList = $user->getOption( LicensedVideoSwapHelper::USER_VISITED_LIST );
+		$visitedList = $user->getGlobalAttribute( LicensedVideoSwapHelper::USER_VISITED_LIST );
 		if ( $visitedList ) {
 			$visitedList = unserialize( $visitedList );
 		} else {
@@ -642,7 +642,7 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		}
 
 		// set last visit date
-		$user->setOption( LicensedVideoSwapHelper::USER_VISITED_LIST, serialize($visitedList) );
+		$user->setGlobalAttribute( LicensedVideoSwapHelper::USER_VISITED_LIST, serialize($visitedList) );
 		$user->saveSettings();
 
 		return true;

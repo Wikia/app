@@ -1,0 +1,27 @@
+pre {
+	white-space: pre-wrap;
+}
+
+.dmca-form {
+	.input-group {
+		min-width: 30%;
+
+		input[type="text"],
+		input[type="email"],
+		textarea {
+			width: 100%;
+		}
+
+		textarea {
+			height: 50px;
+		}
+	}
+}
+
+.TablePager {
+	.dmcarequest-list-submitted {
+		td {
+			background-color: #DDFFDD;
+		}
+	}
+}

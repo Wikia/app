@@ -24,28 +24,17 @@ class WikiaHubsModel extends WikiaModel {
 	}
 
 	public function getVerticalName($verticalId) {
-		/** @var WikiFactoryHub $wikiFactoryHub */
-		$wikiFactoryHub = WikiFactoryHub::getInstance();
-		$wikiaHub = $wikiFactoryHub->getCategory($verticalId);
-		return wfMessage('hub-' . $wikiaHub['name'])->inContentLanguage()->text();
+		return WikiFactoryHub::getInstance()->getVerticalNameMessage( $verticalId )->inContentLanguage()->text();
 	}
 
 	public function getCanonicalVerticalName($verticalId) {
-		/** @var WikiFactoryHub $wikiFactoryHub */
-		$wikiFactoryHub = WikiFactoryHub::getInstance();
-		$wikiaHub = $wikiFactoryHub->getCategory($verticalId);
-		return wfMessage('hub-' . $wikiaHub['name'])->inLanguage(self::HUB_CANONICAL_LANG)->text();
+		return WikiFactoryHub::getInstance()
+			->getVerticalNameMessage( $verticalId )
+			->inLanguage( self::HUB_CANONICAL_LANG )
+			->text();
 	}
 
 	public function getCanonicalVerticalNameById($cityId) {
-		/** @var WikiFactoryHub $wikiFactoryHub */
-		$wikiFactoryHub = WikiFactoryHub::getInstance();
-		$wikiaHub = $wikiFactoryHub->getCategoryName($cityId);
-		return wfMessage('hub-' . $wikiaHub)->inLanguage(self::HUB_CANONICAL_LANG)->text();
-	}
-
-	public function getVerticalId($cityId) {
-		$wikiFactoryHub = WikiFactoryHub::getInstance();
-		return $wikiFactoryHub->getCategoryId($cityId);
+		return $this->getCanonicalVerticalName( WikiFactoryHub::getInstance()->getVerticalId( $cityId ) );
 	}
 }

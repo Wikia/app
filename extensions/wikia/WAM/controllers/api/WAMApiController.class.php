@@ -14,8 +14,7 @@ class WAMApiController extends WikiaApiController {
 	const DEFAULT_AVATAR_SIZE = 28;
 	const DEFAULT_WIKI_IMAGE_WIDTH = 150;
 	const DEFAULT_WIKI_ADMINS_LIMIT = 5;
-
-	const MEMCACHE_VER = '1.04';
+	const WAM_RESPONSE_CACHE_VALIDITY = 21600;
 
 	/**
 	 * A method to get WAM index (list of wikis with their WAM ranks)
@@ -53,7 +52,7 @@ class WAMApiController extends WikiaApiController {
 	 * 		last_peak - the last time that the Wiki was at its peak_wam_rank
 	 * 		title - wiki title
 	 * 		url - wiki url
-	 * 		hub_id - wiki hub id
+	 * 		vertical_id - wiki vertical id
 	 * 		wam_change - wam score change from $wam_previous_day
 	 * 		wam_is_new - 1 if wiki wasn't classified on $wam_previous_day, 0 if this wiki was in index
 	 * @responseParam array $wam_results_total The total count of wikis available for provided params
@@ -66,7 +65,7 @@ class WAMApiController extends WikiaApiController {
 		$wamIndex = WikiaDataAccess::cacheWithLock(
 			wfSharedMemcKey(
 				'wam_index_table',
-				self::MEMCACHE_VER,
+				WAMService::MEMCACHE_VER,
 				$app->wg->ContLang->getCode(),
 				implode(':', $options)
 			),
@@ -100,15 +99,20 @@ class WAMApiController extends WikiaApiController {
 				return $wamIndex;
 			}
 		);
-
+		
 		if (!$this->request->isInternal() && empty($wamIndex['wam_index'])) {
 			$wamIndex['wam_index'] = (object)$wamIndex['wam_index'];
 		}
 
-		$this->response->setVal('wam_index', $wamIndex['wam_index']);
-		$this->response->setVal('wam_results_total', $wamIndex['wam_results_total']);
-		$this->response->setVal('wam_index_date', $wamIndex['wam_index_date']);
-		$this->response->setCacheValidity(6 * 60 * 60);
+		$this->setResponseData(
+			[
+				'wam_index' => $wamIndex[ 'wam_index' ],
+				'wam_results_total' => $wamIndex[ 'wam_results_total' ],
+				'wam_index_date' => $wamIndex[ 'wam_index_date' ]
+			],
+			[ 'urlFields' => [ 'avatarUrl', 'userPageUrl', 'userContributionsUrl' ] ],
+			self::WAM_RESPONSE_CACHE_VALIDITY
+		);
 	}
 
 	/**
@@ -147,7 +151,7 @@ class WAMApiController extends WikiaApiController {
 		$wamDates = WikiaDataAccess::cache(
 			wfSharedMemcKey(
 				'wam_minmax_date',
-				self::MEMCACHE_VER
+				WAMService::MEMCACHE_VER
 			),
 			2 * 60 * 60,
 			function () {
@@ -168,7 +172,7 @@ class WAMApiController extends WikiaApiController {
 		$options['wikiLang'] = $this->request->getVal('wiki_lang', null);
 		$options['wikiId'] = $this->request->getInt('wiki_id', null);
 		$options['wikiWord'] = $this->request->getVal('wiki_word', null);
-		$options['excludeBlacklist'] = $this->request->getVal('exclude_blacklist', false);
+		$options['excludeBlacklist'] = $this->request->getVal('exclude_blacklist', true);
 		$options['excludeNonCommercial'] = $this->hideNonCommercialContent();
 		$options['fetchAdmins'] = $this->request->getBool('fetch_admins', false);
 		$options['avatarSize'] = $this->request->getInt('avatar_size', self::DEFAULT_AVATAR_SIZE);

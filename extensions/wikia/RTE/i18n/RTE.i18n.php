@@ -162,6 +162,7 @@ $messages['ca'] = array(
  * @author Умар
  */
 $messages['ce'] = array(
+	'rte-edgecase-redirect' => 'дӀасахьажор',
 	'prefs-rte' => 'Визуальни йозан тадар (RTE)',
 );
 
@@ -247,6 +248,7 @@ $messages['el'] = array(
 /** Spanish (español)
  * @author Bola
  * @author Crazymadlover
+ * @author Fitoschido
  * @author VegaDark
  */
 $messages['es'] = array(
@@ -256,7 +258,7 @@ $messages['es'] = array(
 	'rte-edgecase-info' => 'Edición de texto enriquecido ha sido deshabilitado porque la página contiene código complejo.',
 	'rte-edgecase-comment' => 'Comentarios HTML',
 	'rte-edgecase-triplecurls' => 'parámetros de plantilla',
-	'rte-edgecase-nowysiwyg' => 'el comando "no wysiwyg"',
+	'rte-edgecase-nowysiwyg' => 'la orden «no WYSIWYG»',
 	'rte-edgecase-complex-description' => 'una URL externa o una plantilla sin descripción',
 	'rte-edgecase-template-with-link' => 'una plantilla con un enlace como parámetro',
 	'rte-edgecase-syntax' => 'sintaxis no permitida',
@@ -415,6 +417,13 @@ $messages['ja'] = array(
 	'prefs-rte' => 'リッチテキストエディタ',
 );
 
+/** Georgian (ქართული)
+ * @author Otogi
+ */
+$messages['ka'] = array(
+	'rte-edgecase-triplecurls' => 'თარგის პარამეტრები',
+);
+
 /** Kannada (ಕನ್ನಡ)
  * @author VASANTH S.N.
  */
@@ -422,11 +431,28 @@ $messages['kn'] = array(
 	'rte-edgecase-redirect' => 'ಪುನರ್ನಿರ್ದೇಶನಗಳು',
 );
 
+/** Korean (한국어)
+ * @author Miri-Nae
+ */
+$messages['ko'] = array(
+	'rte-edgecase-comment' => 'HTML 댓글',
+	'rte-edgecase-triplecurls' => '틀 매개변수',
+	'rte-edgecase-redirect' => '넘겨주기',
+	'rte-edgecase-unclosed-tags' => 'HTML 태그가 닫히지 않음',
+);
+
 /** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
 	'rte-edgecase-redirect' => 'en Ömleidong',
+);
+
+/** Kurdish (Latin script) (Kurdî (latînî)‎)
+ * @author Bikarhêner
+ */
+$messages['ku-latn'] = array(
+	'rte-edgecase-redirect' => 'beralîkirin',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -541,7 +567,7 @@ $messages['nl'] = array(
 	'enablerichtexteditor' => 'Uitgebreide tekstverwerker inschakelen (in aanvulling op broncodemodus)',
 	'rte-enablerichtexteditormessage' => 'De uitgebreide tekstverwerker is ingeschakeld.',
 	'rte-first-run-notice' => 'We hebben een aantal verbeteringen gemaakt aan de tekstverwerker. [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news Lees ook de aankondiging].',
-	'prefs-rte' => 'Uitgebreide tekstbewerker',
+	'prefs-rte' => 'Uitgebreide tekstverwerker',
 );
 
 /** Nederlands (informeel)‎ (Nederlands (informeel)‎)
@@ -832,10 +858,20 @@ $messages['uk'] = array(
 
 /** Vietnamese (Tiếng Việt)
  * @author Baonguyen21022003
+ * @author Dinhxuanduyet
  */
 $messages['vi'] = array(
+	'rte-desc' => 'CKeditor tích hợp cho MediaWiki',
+	'rte-no-js-fallback' => 'Trình soạn thảo văn bản định dạng không hoạt động với JavaScript bị tắt. Xin vui lòng hoặc kích hoạt nó trong tuỳ chọn trình duyệt của bạn, hoặc truy cập [[Special:Preferences|tùy chọn cá nhân]] của bạn để chuyển sang dạng sửa đổi cũ của MediaWiki',
 	'rte-edgecase-info-title' => 'Chế độ nguồn yêu cầu',
 	'rte-edgecase-info' => 'Chỉnh sửa nội dung bằng chế độ trực quan đã bị vô hiệu hóa do trang chứa nhiều mã phức tạp.',
+	'rte-edgecase-comment' => 'Ý kiến về HTML',
+	'rte-edgecase-triplecurls' => 'Tham số bản mẫu',
+	'rte-edgecase-nowysiwyg' => 'lệnh "không WYSIWYG"',
+	'rte-edgecase-syntax' => 'cú pháp này không được phép',
+	'rte-edgecase-redirect' => 'đổi hướng',
+	'rte-enablerichtexteditormessage' => 'Trình Soạn Thảo Văn Bản đã được kích hoạt!',
+	'rte-first-run-notice' => 'Chúng tôi đã thực hiện một số cải tiến để trình biên tập. Để tìm hiểu thêm, xin vui lòng đọc [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news thông báo] để biết thêm chi tiết.',
 );
 
 /** Chinese (中文)
@@ -857,17 +893,28 @@ $messages['zh'] = array(
  */
 $messages['zh-hans'] = array(
 	'rte-desc' => '为MediaWiki提供的CKeditor整合',
+	'rte-no-js-fallback' => '富文本编辑器在JavaScript被关闭时不能工作。请在您的浏览器选项中启用它，或者访问您的[[Special:Preferences|参数设置]]切换到旧版MediaWiki编辑器',
 	'rte-edgecase-info-title' => '需要源模式',
+	'rte-edgecase-info' => '因为该页面包含复杂代码，富文本编辑器已被禁用。',
 	'rte-edgecase-comment' => 'HTML注释',
 	'rte-edgecase-triplecurls' => '模板参数',
 	'rte-edgecase-nowysiwyg' => '“禁用所见即所得”命令',
 	'rte-edgecase-complex-description' => '链接描述之内的外部URL或模板',
 	'rte-edgecase-template-with-link' => '带有作为参数连接的模板',
 	'rte-edgecase-syntax' => '不允许的语法',
+	'rte-edgecase-image-with-link' => '图像描述中有链接',
 	'rte-edgecase-redirect' => '重定向',
+	'rte-edgecase-templateintable' => '一个表格定义中调用了模板',
 	'rte-edgecase-unclosed-tags' => '封闭的HTML标签',
 	'enablerichtexteditor' => '在可视模式下启用编辑（除源模式之外）',
 	'rte-enablerichtexteditormessage' => 'RTF编辑器启用！',
 	'rte-first-run-notice' => '我们对编辑器做出了一些改进。[http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news 点此]了解更多。',
 	'prefs-rte' => 'RTF编辑器',
+);
+
+/** Traditional Chinese (中文（繁體）‎)
+ * @author Liuxinyu970226
+ */
+$messages['zh-hant'] = array(
+	'rte-edgecase-triplecurls' => '模板參數',
 );

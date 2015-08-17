@@ -17,7 +17,7 @@ function (
 	'use strict';
 
 	var d = w.document,
-		wkPrfTgl = d.getElementById('wkPrfTgl'),
+		loginButton = d.getElementById('wkPrfTgl'),
 		navBar = d.getElementById('wkTopNav'),
 		$navBar = $(navBar),
 		wkPrf = d.getElementById('wkPrf'),
@@ -121,11 +121,11 @@ function (
 	//end search setup
 
 	//profile/login setup
-	if (wkPrfTgl) {
+	if (loginButton && !loginButton.classList.contains('new-login')) {
 		//Fix for ios 4.x not respecting fully event.preventDefault()
 		// (it shows url bar for a second (and this is ugly (really)))
-		wkPrfTgl.href = '';
-		wkPrfTgl.addEventListener('click', function (event) {
+		loginButton.href = '';
+		loginButton.addEventListener('click', function (event) {
 			event.preventDefault();
 
 			if ($navBar.hasClass('prf')) {
@@ -213,10 +213,7 @@ function (
 					form.setAttribute('action',
 						qs(form.getAttribute('action'))
 						.setVal('returnto',
-							w.wgCanonicalSpecialPageName &&
-							w.wgCanonicalSpecialPageName.match(/Userlogin|Userlogout/) ?
-							w.wgMainPageTitle :
-							w.wgPageName,
+							createReturnToString(),
 							true
 						).setHash(hash)
 						.toString()
@@ -230,8 +227,25 @@ function (
 						}
 					});
 				}
-			);
+			).fail(function () {
+				qs()
+					.setPath(w.wgArticlePath.replace('$1', 'Special:UserLogin'))
+					.setVal('returnto', createReturnToString(), true)
+					.goTo();
+			});
 		}
+	}
+
+	/**
+	 *
+	 * @return {String} MainPage title or current page title
+	 */
+	function createReturnToString() {
+		return w.wgCanonicalSpecialPageName &&
+			// TODO: special page URL matching needs to be consolidated. @see UC-187
+			w.wgCanonicalSpecialPageName.match(/Userlogin|Userlogout|UserSignup/) ?
+			w.wgMainPageTitle :
+			w.wgPageName;
 	}
 
 	function showPage() {

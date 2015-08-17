@@ -15,6 +15,7 @@ $wgExtensionCredits['specialpage'][] = array(
 	'author' => 'Tomasz Odrobny',
 	'descriptionmsg' => 'piggyback-desc',
 	'version' => '0.0.1',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/Piggyback'
 );
 
 $dir = dirname(__FILE__) . '/';
@@ -67,5 +68,14 @@ function efPiggybackAddToolLinks( $id, $nt, &$tools ) {
 		'Piggyback'
 	);
 
+	return true;
+}
+
+$wgHooks['RequestContextOverrideUser'][] = 'efPiggybackRequestContextOverrideUser';
+function efPiggybackRequestContextOverrideUser( &$user, $request ) {
+	if ( PBLoginForm::isPiggyback() ) {
+		$user = User::newFromSession( $request );
+		return false;
+	}
 	return true;
 }

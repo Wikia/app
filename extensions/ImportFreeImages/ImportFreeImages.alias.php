@@ -103,6 +103,14 @@ $specialPageAliases['ja'] = array(
 	'ImportFreeImages' => array( 'フリー画像のインポート', 'フリーの画像をインポート' ),
 );
 
+// begin wikia change
+// VOLDEV-97
+/** Korean (한국어) */
+$specialPageAliases['ko'] = array(
+	'ImportFreeImages' => array( '자유그림가져오기' ),
+);
+// end wikia change
+
 /** Colognian (Ripoarisch) */
 $specialPageAliases['ksh'] = array(
 	'ImportFreeImages' => array( 'Frei_Bellder_Empotteere', 'FreiBellderEmpotteere' ),
@@ -202,6 +210,14 @@ $specialPageAliases['tl'] = array(
 $specialPageAliases['tr'] = array(
 	'ImportFreeImages' => array( 'ÖzgürResimAktar', 'ÖzgürResimİçeAktar' ),
 );
+
+// begin wikia change
+// VOLDEV-94
+/** Vietnamese (Tiếng Việt) */
+$specialPageAliases['vi'] = array(
+	'ImportFreeImages' => array( 'Nhập_ảnh_tự_do' ),
+);
+// end wikia change
 
 /** Simplified Chinese (‪中文(简体)‬) */
 $specialPageAliases['zh-hans'] = array(

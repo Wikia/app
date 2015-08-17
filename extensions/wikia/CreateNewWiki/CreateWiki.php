@@ -12,15 +12,21 @@
  * @version 1.0
  */
 
+use Wikia\CreateNewWiki\Starters;
+
 class CreateWiki {
 
+	use \Wikia\Logger\Loggable;
+
 	/* @var $mDBw DatabaseMysql */
-	private $mName, $mDomain, $mLanguage, $mHub, $mStarters, $mIP,
+	/* @var $mClusterDB string */
+	private $mName, $mDomain, $mLanguage, $mVertical, $mCategories, $mIP,
 		$mPHPbin, $mMYSQLbin, $mMYSQLdump, $mNewWiki, $mFounder,
 		$mLangSubdomain, $mDBw, $mWFSettingVars, $mWFVars,
 		$mDefaultTables, $mAdditionalTables,
-		$mStarterTables, $sDbStarter, $mFounderIp,
-		$mCurrTime;
+		$sDbStarter, $mFounderIp,
+		$mCurrTime,
+		$mClusterDB; // eg. "wikicities_c7"
 
 	const ERROR_BAD_EXECUTABLE_PATH                    = 1;
 	const ERROR_DOMAIN_NAME_TAKEN                      = 2;
@@ -35,21 +41,21 @@ class CreateWiki {
 	const ERROR_DATABASE_WRITE_TO_CITY_DOMAINS_BROKEN  = 11;
 	const ERROR_USER_IN_ANON                           = 12;
 	const ERROR_READONLY                               = 13;
-	const ERROR_DBLIGHTMODE                            = 14;
 	const ERROR_DATABASE_WRITE_TO_CITY_LIST_BROKEN     = 15;
 
 	const IMGROOT              = "/images/";
 	const IMAGEURL             = "http://images.wikia.com/";
 	const CREATEWIKI_LOGO      = "http://images.wikia.com/central/images/2/22/Wiki_Logo_Template.png";
-	const DEFAULT_STAFF        = "Angela";
+	const DEFAULT_STAFF        = "Wikia";
 	const DEFAULT_USER         = 'Default';
 	const DEFAULT_DOMAIN       = "wikia.com";
-	const ACTIVE_CLUSTER       = "c6";
+	const ACTIVE_CLUSTER       = "c7";
 	const DEFAULT_SLOT         = "slot1";
 	const DEFAULT_NAME         = "Wiki";
 	const DEFAULT_WIKI_TYPE    = "";
 	const DEFAULT_WIKI_LOGO    = '$wgUploadPath/b/bc/Wiki.png';
 
+	const SANITIZED_BUCKET_NAME_MAXIMUM_LENGTH = 55;
 
 	/**
 	 * constructor
@@ -57,9 +63,8 @@ class CreateWiki {
 	 * @param string $name - name of wiki (set later as $wgSiteinfo)
 	 * @param string $domain - domain part without '.wikia.com'
 	 * @param string $language - language code
-	 * @param integer $hub - category/hub which should be set for created wiki
 	 */
-	public function __construct( $name, $domain, $language, $hub ) {
+	public function __construct( $name, $domain, $language, $vertical, $categories ) {
 		global $wgUser, $IP, $wgAutoloadClasses, $wgRequest;
 
 		// wiki containter
@@ -68,7 +73,8 @@ class CreateWiki {
 		$this->mDomain = $domain;
 		$this->mName = $name;
 		$this->mLanguage = $language;
-		$this->mHub = $hub;
+		$this->mVertical = $vertical;
+		$this->mCategories = $categories;
 		$this->mIP = $IP;
 
 		// founder of wiki
@@ -76,39 +82,6 @@ class CreateWiki {
 		$this->mFounderIp = $wgRequest->getIP();
 
 		wfDebugLog( "createwiki", "founder: " . print_r($this->mFounder, true) . "\n", true );
-		/**
-		 * starters map: langcode => database name
-		 *
-		 * "*" is default
-		 */
-		$this->mStarters = array(
-			"*" => array(
-				"*"  => "aastarter",
-				"en" => "starter",
-				"ja" => "jastarter",
-				"de" => "destarter",
-				"fr" => "frstarter",
-				"nl" => "nlstarter",
-				"es" => "esstarter",
-				"pl" => "plstarter",
-				"ru" => "rustarter",
-				"it" => "italianstarter",
-				'fi' => 'fistarter',
-			)
-		);
-
-		$this->mStarterTables = array(
-			"*" => array(
-				'categorylinks',
-				'externallinks',
-				'langlinks',
-				'page',
-				'pagelinks',
-				'revision',
-				'templatelinks',
-				'text'
-			)
-		);
 
 		/* default tables */
 		$this->mDefaultTables = array(
@@ -144,45 +117,86 @@ class CreateWiki {
 		$wgAutoloadClasses[ "CreateWikiLocalJob" ] = __DIR__ . "/CreateWikiLocalJob.php";
 	}
 
+	/**
+	 * Add more context to messages sent to LogStash
+	 *
+	 * @return array
+	 */
+	protected function getLoggerContext() {
+		return [
+			'cityid'   => $this->mNewWiki->city_id,
+			'domain'   => $this->mDomain,
+			'dbname'   => $this->mNewWiki->dbname,
+			'logGroup' => 'createwiki',
+		];
+	}
+
+	/**
+	 * Wait for shared DB and the current DB cluster slaves
+	 *
+	 * @param string $fname
+	 * @see PLATFORM-1219
+	 */
+	private function waitForSlaves( $fname ){
+		global $wgExternalSharedDB;
+		$then = microtime( true );
+
+		// commit the changes
+		$res = $this->mNewWiki->dbw->commit( $fname );
+
+		# PLATFORM-1219 - wait for slaves to catch up (shared DB, cluster's shared DB and the new wiki DB)
+		wfWaitForSlaves( $wgExternalSharedDB );     // wikicities (shared DB)
+		wfWaitForSlaves( $this->mClusterDB );       // wikicities_c7
+		wfWaitForSlaves( $this->mNewWiki->dbname ); // new_wiki_db
+
+		$this->info( __METHOD__, [
+			'commit_res' => $res,
+			'cluster'    => $this->mClusterDB,
+			'fname'      => $fname,
+			'took'       => microtime( true ) - $then,
+		] );
+	}
 
 	/**
 	 * main entry point, create wiki with given parameters
 	 *
-	 * @return integer status of operation, 0 for success, non 0 for error
+	 * @throw CreateWikiException an exception with status of operation set
 	 */
 	public function create() {
-		global $wgWikiaLocalSettingsPath, $wgExternalSharedDB, $wgSharedDB, $wgUser;
+		global $wgExternalSharedDB, $wgSharedDB, $wgUser;
+
+		$then = microtime( true );
+
+		// Set this flag to ensure that all select operations go against master
+		// Slave lag can cause random errors during wiki creation process
+		global $wgForceMasterDatabase;
+		$wgForceMasterDatabase = true;
 
 		wfProfileIn( __METHOD__ );
 
 		if ( wfReadOnly() ) {
 			wfProfileOut( __METHOD__ );
-			return self::ERROR_READONLY;
-		}
-
-		if ( wfIsDBLightMode() ) {
-			wfProfileOut( __METHOD__ );
-			return self::ERROR_DBLIGHTMODE;
+			throw new CreateWikiException('DB is read only', self::ERROR_READONLY);
 		}
 
 		// check founder
 		if ( $this->mFounder->isAnon() ) {
 			wfProfileOut( __METHOD__ );
-			return self::ERROR_USER_IN_ANON;
+			throw new CreateWikiException('Founder is anon', self::ERROR_USER_IN_ANON);
 		}
 
 		// check executables
 		$status = $this->checkExecutables();
 		if( $status != 0 ) {
 			wfProfileOut( __METHOD__ );
-			return $status;
+			throw new CreateWikiException('checkExecutables() failed', $status);
 		}
 
 		// check domains
 		$status = $this->checkDomain();
 		if( $status != 0 ) {
 			wfProfileOut( __METHOD__ );
-			return $status;
+			throw new CreateWikiException('Check domain failed', $status);
 		}
 
 		// prepare all values needed for creating wiki
@@ -191,7 +205,7 @@ class CreateWiki {
 		// prevent domain to be registered more than once
 		if ( !AutoCreateWiki::lockDomain($this->mDomain) ) {
 			wfProfileOut( __METHOD__ );
-			return self::ERROR_DOMAIN_NAME_TAKEN;
+			throw new CreateWikiException('Domain name taken', self::ERROR_DOMAIN_NAME_TAKEN);
 		}
 
 		// start counting time
@@ -210,15 +224,14 @@ class CreateWiki {
 		// set $activeCluster to false if you want to create wikis on first
 		// cluster
 		//
-		$clusterdb = ( self::ACTIVE_CLUSTER ) ? "wikicities_" . self::ACTIVE_CLUSTER : "wikicities";
-		$this->mNewWiki->dbw = wfGetDB( DB_MASTER, array(), $clusterdb ); // database handler, old $dbwTarget
+		$this->mClusterDB = ( self::ACTIVE_CLUSTER ) ? "wikicities_" . self::ACTIVE_CLUSTER : "wikicities";
+		$this->mNewWiki->dbw = wfGetDB( DB_MASTER, array(), $this->mClusterDB ); // database handler, old $dbwTarget
 
 		// check if database is creatable
 		// @todo move all database creation checkers to canCreateDatabase
 		if( !$this->canCreateDatabase() ) {
-			wfDebugLog( "createwiki", "Database {$this->mNewWiki->dbname} exists\n", true );
 			wfProfileOut( __METHOD__ );
-			return self::ERROR_DATABASE_ALREADY_EXISTS;
+			throw new CreateWikiException('DB exists - ' . $this->mNewWiki->dbname, self::ERROR_DATABASE_ALREADY_EXISTS);
 		}
 		else {
 			$this->mNewWiki->dbw->query( sprintf( "CREATE DATABASE `%s`", $this->mNewWiki->dbname ) );
@@ -232,15 +245,14 @@ class CreateWiki {
 		if ( ! $this->addToCityList() ) {
 			wfDebugLog( "createwiki", __METHOD__ .": Cannot set data in city_list table\n", true );
 			wfProfileOut( __METHOD__ );
-			return self::ERROR_DATABASE_WRITE_TO_CITY_LIST_BROKEN;
+			throw new CreateWikiException('Cannot add wiki to city_list', self::ERROR_DATABASE_WRITE_TO_CITY_LIST_BROKEN);
 		}
 
 		// set new city_id
 		$this->mNewWiki->city_id = $this->mDBw->insertId();
 		if ( empty( $this->mNewWiki->city_id ) ) {
-			wfDebugLog( "createwiki", __METHOD__ . ": Cannot set data in city_list table. city_id is empty after insert\n", true );
 			wfProfileOut( __METHOD__ );
-			return self::ERROR_DATABASE_WIKI_FACTORY_TABLES_BROKEN;
+			throw new CreateWikiException('Cannot set data in city_list table. city_id is empty after insert', self::ERROR_DATABASE_WIKI_FACTORY_TABLES_BROKEN);
 		}
 
 		wfDebugLog( "createwiki", __METHOD__ . ": Row added added into city_list table, city_id = {$this->mNewWiki->city_id}\n", true );
@@ -249,9 +261,8 @@ class CreateWiki {
 		 * add domain and www.domain to the city_domains table
 		 */
 		if ( ! $this->addToCityDomains() ) {
-			wfDebugLog( "createwiki", __METHOD__ .": Cannot set data in city_domains table\n", true );
 			wfProfileOut( __METHOD__ );
-			return self::ERROR_DATABASE_WRITE_TO_CITY_DOMAINS_BROKEN;
+			throw new CreateWikiException('Cannot set data in city_domains table', self::ERROR_DATABASE_WRITE_TO_CITY_DOMAINS_BROKEN);
 		}
 
 		wfDebugLog( "createwiki", __METHOD__ . ": Row added into city_domains table, city_id = {$this->mNewWiki->city_id}\n", true );
@@ -280,6 +291,8 @@ class CreateWiki {
 		$tmpSharedDB = $wgSharedDB;
 		$wgSharedDB = $this->mNewWiki->dbname;
 
+		$this->mDBw->commit( __METHOD__ ); // commit shared DB changes
+
 		/**
 		 * we got empty database created, now we have to create tables and
 		 * populate it with some default values
@@ -289,16 +302,8 @@ class CreateWiki {
 		$this->mNewWiki->dbw = wfGetDB( DB_MASTER, array(), $this->mNewWiki->dbname );
 
 		if ( !$this->createTables() ) {
-			wfDebugLog( "createwiki", __METHOD__ . ": Creating tables not finished\n", true );
 			wfProfileOut( __METHOD__ );
-			return self::ERROR_SQL_FILE_BROKEN;
-		}
-
-		// Hack to slow down the devbox database creation because createTables() returns
-		// before the tables are created on the slave, and the uploadImage function hits the slave
-		global $wgDevelEnvironment;
-		if (isset($wgDevelEnvironment)) {
-			sleep(15);
+			throw new CreateWikiException('Creating tables not finished', self::ERROR_SQL_FILE_BROKEN);
 		}
 
 		/**
@@ -306,7 +311,7 @@ class CreateWiki {
 		 */
 		if ( !$this->importStarter() ) {
 			wfProfileOut( __METHOD__ );
-			return self::ERROR_SQL_FILE_BROKEN;
+			throw new CreateWikiException('Starter import failed', self::ERROR_SQL_FILE_BROKEN);
 		}
 
 		/**
@@ -335,37 +340,20 @@ class CreateWiki {
 		}
 
 		/**
-		 * add local job
-		 */
-		$job_params = new stdClass();
-		foreach ( $this->mNewWiki as $id => $value ) {
-			if ( !is_object($value) ) {
-				$job_params->$id = $value;
-			}
-		}
-		// BugId:15644 - I need to pass this to CreateWikiLocalJob::changeStarterContributions
-		$job_params->sDbStarter = $this->sDbStarter;
-
-		if (!TaskRunner::isModern('CreateWikiLocalJob')) {
-			$localJob = new CreateWikiLocalJob( Title::newFromText( NS_MAIN, "Main" ), $job_params );
-			$localJob->WFinsert( $this->mNewWiki->city_id, $this->mNewWiki->dbname );
-		}
-
-		wfDebugLog( "createwiki", __METHOD__ . ": New createWiki local job created \n", true );
-
-		/**
 		 * destroy connection to newly created database
 		 */
-		$this->mNewWiki->dbw->commit();
-		wfDebugLog( "createwiki", __METHOD__ . ": Database changes commited \n", true );
+		$this->waitForSlaves( __METHOD__ );
+
 		$wgSharedDB = $tmpSharedDB;
 
-		/**
-		 * set hub/category
-		 */
+
 		$oHub = WikiFactoryHub::getInstance();
-		$oHub->setCategory( $this->mNewWiki->city_id, $this->mNewWiki->hub, "CW Setup" );
-		wfDebugLog( "createwiki", __METHOD__ . ": Wiki added to the category hub: {$this->mNewWiki->hub} \n", true );
+		$oHub->setVertical( $this->mNewWiki->city_id, $this->mNewWiki->vertical, "CW Setup" );
+		wfDebugLog( "createwiki", __METHOD__ . ": Wiki added to the vertical: {$this->mNewWiki->vertical} \n", true );
+		for($i = 0; $i < count($this->mNewWiki->categories); $i++) {
+			$oHub->addCategory( $this->mNewWiki->city_id, $this->mNewWiki->categories[$i] );
+			wfDebugLog( "createwiki", __METHOD__ . ": Wiki added to the category: {$this->mNewWiki->categories[$i]} \n", true );
+		}
 
 		/**
 		 * define wiki type
@@ -420,8 +408,6 @@ class CreateWiki {
 			$tags->addTagsByName( $langTag );
 		}
 
-		$tags->addTagsByName( $this->mNewWiki->hub );
-
 		/**
 		 * move main page -> this code exists in CreateWikiLocalJob - so it is not needed anymore
 		 */
@@ -435,41 +421,35 @@ class CreateWiki {
 		$wgUser = $oldUser;
 		unset($oldUser);
 
-		if (TaskRunner::isModern('CreateWikiLocalJob')) {
-			$creationTask = new CreateNewWikiTask();
+		/**
+		 * Schedule an async task
+		 */
+		$creationTask = new \Wikia\Tasks\Tasks\CreateNewWikiTask();
 
-			(new \Wikia\Tasks\AsyncTaskList())
-				->wikiId($this->mNewWiki->city_id)
-				->prioritize()
-				->add($creationTask->call('postCreationSetup', $job_params))
-				->add($creationTask->call('maintenance', rtrim($this->mNewWiki->url, "/")))
-				->queue();
-		} else {
-			/**
-			 * inform task manager
-			 */
-			$Task = new LocalMaintenanceTask();
-			$Task->createTask(
-				array(
-					"city_id" => $this->mNewWiki->city_id,
-					"command" => "maintenance/runJobs.php",
-					"type"    => "CWLocal",
-					"data"    => $this->mNewWiki,
-					"server"  => rtrim( $this->mNewWiki->url, "/" )
-				),
-				TASK_QUEUED,
-				BatchTask::PRIORITY_HIGH
-			);
+		$job_params = new stdClass();
+		foreach ( $this->mNewWiki as $id => $value ) {
+			if ( !is_object($value) ) {
+				$job_params->$id = $value;
+			}
 		}
+		// BugId:15644 - I need to pass this to CreateWikiLocalJob::changeStarterContributions
+		$job_params->sDbStarter = $this->sDbStarter;
 
-		wfDebugLog( "createwiki", __METHOD__ . ": Local maintenance task added\n", true );
+		$task_id = (new \Wikia\Tasks\AsyncTaskList())
+			->wikiId($this->mNewWiki->city_id)
+			->prioritize()
+			->add($creationTask->call('postCreationSetup', $job_params))
+			->add($creationTask->call('maintenance', rtrim($this->mNewWiki->url, "/")))
+			->queue();
+
+		wfDebugLog( "createwiki", __METHOD__ . ": Local maintenance task added as {$task_id}\n", true );
+
+		$this->info( __METHOD__ . ': done', [
+			'task_id' => $task_id,
+			'took' => microtime( true ) - $then,
+		] );
 
 		wfProfileOut( __METHOD__ );
-
-		/**
-		 * return success
-		 */
-		return 0;
 	}
 
 
@@ -580,8 +560,18 @@ class CreateWiki {
 		$this->mDomain = preg_replace( "/^(\-)+/", "", $this->mDomain );
 		$this->mNewWiki->domain = strtolower( trim( $this->mDomain ) );
 
-		// hub
-		$this->mNewWiki->hub = $this->mHub;
+		$this->mNewWiki->vertical = $this->mVertical;
+
+		// Map new verticals to old categories while in transition so that "hub" code still works
+		// If a user selects a vertical we will also add the old category that matches best with it
+		// This code can be removed after we are fully using the new verticals (PLATFORM-403)
+
+		// uses array_unshift to make sure hub category is first, because we take the first cat from SQL
+		if ( $this->mVertical == 2 ) array_unshift($this->mCategories, 2);	// Video games
+		if ( in_array( $this->mVertical, [1,3,4,6,7] ) ) array_unshift($this->mCategories, 3); // Entertainment
+		if ( $this->mVertical == 5 ) array_unshift($this->mCategories, 9);	// Lifestyle
+
+		$this->mNewWiki->categories = $this->mCategories;
 
 		// name
 		$this->mNewWiki->name = strtolower( trim( $this->mDomain ) );
@@ -640,7 +630,27 @@ class CreateWiki {
 	}
 
 	/**
-	 * check folder exists
+	 * Check if the given upload directory name is available for use.
+	 *
+	 * @access public
+	 * @author Michał Roszka <michal@wikia-inc.com>
+	 *
+	 * @param $sDirectoryName the path to check
+	 */
+	public static function wgUploadDirectoryExists( $sDirectoryName ) {
+		wfProfileIn( __METHOD__ );
+		$iVarId = WikiFactory::getVarIdByName( 'wgUploadDirectory' );
+
+		// Crash immediately if $iVarId is not a positive integer!
+		\Wikia\Util\Assert::true( $iVarId );
+
+		$aCityIds = WikiFactory::getCityIDsFromVarValue( $iVarId, $sDirectoryName, '=' );
+		wfProfileOut( __METHOD__ );
+		return !empty( $aCityIds );
+	}
+
+	/**
+	 * "calculates" the value for wgUploadDirectory
 	 *
 	 * @access private
 	 * @author Piotr Molski (Moli)
@@ -653,8 +663,8 @@ class CreateWiki {
 		wfDebug( __METHOD__ . ": Checking {$name} folder" );
 
 		$isExist = false; $suffix = "";
-		$prefix = strtolower( substr( $name, 0, 1 ) );
-		$dir_base = $name;
+		$dir_base = self::sanitizeS3BucketName($name);
+		$prefix = strtolower( substr( $dir_base, 0, 1 ) );
 		$dir_lang = ( isset( $language ) && $language !== "en" )
 				? "/" . strtolower( $language )
 				: "";
@@ -662,7 +672,7 @@ class CreateWiki {
 		while ( $isExist == false ) {
 			$dirName = self::IMGROOT . $prefix . "/" . $dir_base . $suffix . $dir_lang . "/images";
 
-			if ( file_exists( $dirName ) ) {
+			if ( self::wgUploadDirectoryExists($dirName) ) {
 				$suffix = rand(1, 9999);
 			}
 			else {
@@ -671,8 +681,62 @@ class CreateWiki {
 			}
 		}
 
+		wfDebug( __METHOD__ . ": Returning '{$dir_base}'\n" );
 		wfProfileOut( __METHOD__ );
 		return $dir_base;
+	}
+
+	/**
+	 * Sanitizes a name to be a valid S3 bucket name. It means it can contain only letters and numbers
+	 * and optionally hyphens in the middle. Maximum length is 63 characters, we're trimming it to 55
+	 * characters here as some random suffix may be added to solve duplicates.
+	 *
+	 * Note that different arguments may lead to the same results so the conflicts need to be solved
+	 * at a later stage of processing.
+	 *
+	 * @see http://docs.aws.amazon.com/AmazonS3/latest/dev/BucketRestrictions.html
+	 *      Wikia change: We accept underscores wherever hyphens are allowed.
+	 *
+	 * @param $name string Directory name
+	 * @return string Sanitized name
+	 */
+	private static function sanitizeS3BucketName( $name ) {
+		if ( $name == 'admin' ) {
+			$name .= 'x';
+		}
+
+		$RE_VALID = "/^[a-z0-9](?:[-_a-z0-9]{0,53}[a-z0-9])?(?:[a-z0-9](?:\\.[-_a-z0-9]{0,53}[a-z0-9])?)*\$/";
+		# check if it's already valid
+		$name = mb_strtolower($name);
+		if ( preg_match( $RE_VALID, $name ) && strlen($name) <= self::SANITIZED_BUCKET_NAME_MAXIMUM_LENGTH ) {
+			return $name;
+		}
+
+		# try fixing the simplest and most popular cases
+		$check_name = str_replace(['.',' ','(',')'],'_',$name);
+		if ( in_array( substr($check_name,-1), [ '-', '_' ] ) ) {
+			$check_name .= '0';
+		}
+		if ( preg_match( $RE_VALID, $check_name ) && strlen($check_name) <= self::SANITIZED_BUCKET_NAME_MAXIMUM_LENGTH ) {
+			return $check_name;
+		}
+
+		# replace invalid ASCII characters with their hex values
+		$s = '';
+		for ($i=0;$i<strlen($name);$i++) {
+			$c = $name[$i];
+			if ( $c >= 'a' && $c <= 'z' || $c >= '0' && $c <= '9' ) {
+				$s .= $c;
+			} else {
+				$s .= bin2hex($c);
+			}
+			if ( strlen($s) >= self::SANITIZED_BUCKET_NAME_MAXIMUM_LENGTH ) {
+				break;
+			}
+		}
+		$name = substr($s, 0, self::SANITIZED_BUCKET_NAME_MAXIMUM_LENGTH);
+
+		return $name;
 	}
 
 	/**
@@ -885,6 +949,10 @@ class CreateWiki {
 			}
 		}
 
+		// we need to wait for slaves to catch up
+		// the next method called (importStarter) connects to the newly created wiki using slave DB
+		$this->waitForSlaves( __METHOD__ );
+
 		return true;
 	}
 
@@ -913,6 +981,10 @@ class CreateWiki {
 		$this->mWFSettingVars['wgEnableSectionEdit']      = true;
 		$this->mWFSettingVars['wgEnableSwiftFileBackend'] = true;
 		$this->mWFSettingVars['wgOasisLoadCommonCSS']     = true;
+
+		if ( $this->getInitialNjordExtValue() ) {
+			$this->mWFSettingVars['wgEnableNjordExt'] = true;
+		}
 
 		// rt#60223: colon allowed in sitename, breaks project namespace
 		if( mb_strpos( $this->mWFSettingVars['wgSitename'], ':' ) !== false ) {
@@ -969,95 +1041,45 @@ class CreateWiki {
 	 *
 	 * @author Krzysztof Krzyzaniak <eloy@wikia-inc.com>
 	 * @author Piotr Molski <moli@wikia-inc.com>
-	 * @access private
-	 *
+	 * @author macbre
 	 */
 	private function importStarter() {
-		global $wgDBadminuser, $wgDBadminpassword, $wgWikiaLocalSettingsPath;
+		global $IP;
 
-		$dbStarter = ( isset( $this->mStarters[ "*" ][ $this->mNewWiki->language ] ) )
-					? $this->mStarters[ "*" ][ $this->mNewWiki->language ]
-					: $this->mStarters[ "*" ][ "*" ];
+		// BugId:15644 - I need to pass $this->sDbStarter to CreateWikiLocalJob::changeStarterContributions
+		$starterDatabase = $this->sDbStarter = Starters::getStarterByLanguage( $this->mNewWiki->language );
 
-		/**
-		 * determine if exists
-		 */
-		$starter = null;
-		try {
-			$dbr = wfGetDB( DB_SLAVE, array(), $dbStarter );
-			/**
-			 * read info about connection
-			 */
-			$starter = $dbr->getLBInfo();
+		// import a starter database XML dump from DFS
+		$then = microtime( true );
 
-			/**
-			 * get UploadDirectory
-			 */
-			$starter[ "dbStarter" ] = $dbStarter;
+		$cmd = sprintf(
+			"SERVER_ID=%d %s %s/maintenance/importStarter.php",
+			$this->mNewWiki->city_id,
+			$this->mPHPbin,
+			"{$IP}/extensions/wikia/CreateNewWiki"
+		);
+		wfShellExec( $cmd, $retVal );
 
-			// BugId:15644 - I need to pass this to CreateWikiLocalJob::changeStarterContributions
-			$this->sDbStarter = $dbStarter;
-
-			wfDebugLog( "createwiki", __METHOD__ . ": starter $dbStarter exists\n", true );
-		}
-		catch( DBConnectionError $e ) {
-			/**
-			 * well, it means that starter doesn't exists
-			 */
-			wfDebugLog( "createwiki", __METHOD__ . ": starter $dbStarter doesn't exist\n", true );
+		if ($retVal > 0) {
+			$this->error( 'starter dump import failed', [
+				'starter' => $starterDatabase,
+				'retval'  => $retVal
+			] );
+			return false;
 		}
 
-		if ( $starter ) {
-			$tables = $this->mStarterTables[ "*" ];
+		$this->info( 'importStarter: from XML dump', [
+			'retval'  => $retVal,
+			'starter' => $starterDatabase,
+			'took'    => microtime( true ) - $then,
+		] );
 
-			$cmd = sprintf(
-				"%s -h%s -u%s -p%s %s %s | %s -h%s -u%s -p%s %s",
-				$this->mMYSQLdump,
-				$starter[ "host"      ],
-				$starter[ "user"      ],
-				$starter[ "password"  ],
-				$starter[ "dbStarter" ],
-				implode( " ", $tables ),
-				$this->mMYSQLbin,
-				$this->mNewWiki->dbw->getLBInfo( 'host' ),
-				$wgDBadminuser,
-				$wgDBadminpassword,
-				$this->mNewWiki->dbname
-			);
-			wfShellExec( $cmd );
+		$this->waitForSlaves( __METHOD__ );
 
-			wfDebugLog( "createwiki", __METHOD__ . ": Import {$this->mIP}/maintenance/cleanupStarter.sql \n", true );
-			$error = $this->mNewWiki->dbw->sourceFile( "{$this->mIP}/maintenance/cleanupStarter.sql" );
-			if ($error !== true) {
-				wfDebugLog( "createwiki", __METHOD__ . ": Import starter failed\n", true );
-				return false;
-			}
-
-			$cmd = sprintf(
-				"SERVER_ID=%d %s %s/maintenance/updateArticleCount.php --update --conf %s",
-				$this->mNewWiki->city_id,
-				$this->mPHPbin,
-				$this->mIP,
-				$wgWikiaLocalSettingsPath
-			);
-			wfShellExec( $cmd );
-
-			wfDebugLog( "createwiki", __METHOD__ . ": Starter database copied \n", true );
-		}
-
+		wfDebugLog( "createwiki", __METHOD__ . ": Starter database imported \n", true );
 		return true;
 	}
 
-	/**
-	 * importStarter
-	 *
-	 * get starter data for current parameters
-	 *
-	 * @author Krzysztof Krzyzaniak <eloy@wikia-inc.com>
-	 * @author Piotr Molski <moli@wikia-inc.com>
-	 * @access private
-	 *
-	 */
 	private function addUserToGroups() {
 		if ( !$this->mNewWiki->founderId ) {
 			return false;
@@ -1112,5 +1134,16 @@ class CreateWiki {
 	public function getWikiInfo($key) {
 		$ret = $this->mNewWiki->$key;
 		return $ret;
+	}
+
+	/**
+	 * gets initial value for wgEnableNjordExt for new created wiki
+	 * Set to false to stop beta version progression.
+	 * @see DAT-2752
+	 *
+	 * @return bool
+	 */
+	private function getInitialNjordExtValue() {
+		return false;
 	}
 }

@@ -1,0 +1,37 @@
+.ve-ui-wikiaFocusWidget {
+	left: 0;
+	opacity: .5;
+	position: absolute;
+	right: 0;
+	top: 0;
+	z-index: $zTop;
+
+	/* When focusing on a node, increase z-index to cover toolbar and animate shields */
+	&.ve-ui-wikiaFocusWidget-node {
+		z-index: $zTop + 4;
+		.ve-ui-wikiaFocusWidget-shield {
+			@include transition-shorthand( all 250ms ease-in-out );
+		}
+	}
+
+	.ve-ui-wikiaFocusWidget-shield {
+		background-color: #000;
+		left: 0;
+		position: absolute;
+		top: 0;
+	}
+	.ve-ui-wikiaFocusWidget-rightShield {
+		left: auto;
+		right: 0;
+	}
+	.ve-ui-wikiaFocusWidget-stroke {
+		background-color: $color-page-border;
+		position: absolute;
+	}
+	.ve-ui-wikiaFocusWidget-leftStroke, .ve-ui-wikiaFocusWidget-rightStroke {
+		width: 1px;
+	}
+	.ve-ui-wikiaFocusWidget-topStroke, .ve-ui-wikiaFocusWidget-bottomStroke {
+		height: 1px;
+	}
+}
