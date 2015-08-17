@@ -35,6 +35,10 @@ abstract class ResourceLoaderAdEngineBase extends ResourceLoaderModule {
 		return file_get_contents( $path );
 	}
 
+	/**
+	 * @param $scriptValue
+	 * @return mixed
+	 */
 	protected function getInlineScript( $scriptValue ) {
 		return $scriptValue;
 	}
