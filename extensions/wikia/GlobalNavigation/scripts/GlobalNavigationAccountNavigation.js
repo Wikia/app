@@ -94,7 +94,7 @@ require([
 
 		$entryPoint = $('#AccountNavigation');
 
-		if ($entryPoint.hasClass('newAuth')) {
+		if (!win.wgUserName && $entryPoint.hasClass('newAuth')) {
 			$registerEntryPoint = $('.auth-label.register');
 			$signInEntryPoint = $('.auth-label.sign-in');
 
