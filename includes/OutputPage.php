@@ -2894,7 +2894,7 @@ $templates
 	 * @return string
 	 */
 	function getScriptsForBottomQueue( $inHead ) {
-		global $wgUseSiteJs, $wgAllowUserJs;
+		global $wgUseSiteJs, $wgAllowUserJs, $wgEnableContentReviewExt;
 
 		$asyncMWload = true;
 
@@ -2933,8 +2933,12 @@ $templates
 
 		// Add site JS if enabled
 		if ( $wgUseSiteJs ) {
+			$extraQuery = [];
+			if ( $wgEnableContentReviewExt ) {
+				$extraQuery['reviewed'] = ( new Wikia\ContentReview\Helper() )->getSiteJsScriptsHash();
+			}
 			$scripts .= $this->makeResourceLoaderLink( 'site', ResourceLoaderModule::TYPE_SCRIPTS,
-				/* $useESI = */ false, /* $extraQuery = */ array(), /* $loadCall = */ $inHead
+				/* $useESI = */ false, /* $extraQuery = */ $extraQuery, /* $loadCall = */ $inHead
 			);
 			if( $this->getUser()->isLoggedIn() ){
 				$userScripts[] = 'user.groups';

@@ -1,5 +1,6 @@
 <?php
 
+use Wikia\ContentReview\Models\CurrentRevisionModel;
 use Wikia\ContentReview\Models\ReviewModel;
 
 class ContentReviewApiController extends WikiaApiController {
@@ -9,48 +10,86 @@ class ContentReviewApiController extends WikiaApiController {
 
 	public function submitPageForReview() {
 		try {
+			if ( !$this->request->wasPosted()
+				|| !$this->wg->User->matchEditToken( $this->request->getVal( 'editToken' ) )
+			) {
+				throw new BadRequestApiException();
+			}
+
 			$wikiId = $this->request->getInt( 'wikiId' );
 			$pageId = $this->request->getInt( 'pageId' );
 
-			$submitUserId = $this->wg->User->getId();
-
 			// TODO: Make exceptions more specific
-			// TODO: Check permissions!!!
-			if ( !$submitUserId > 0 ) {
+			$submitUserId = $this->wg->User->getId();
+			if ( !$submitUserId > 0 || !$this->canUserSubmit( $pageId )	) {
 				throw new Exception( 'Invalid user' );
 			}
 
-			$wikiPage = WikiPage::newFromID( $pageId );
-			if ( $wikiPage === null ) {
+			$title = Title::newFromID( $pageId );
+			if ( $title === null ) {
 				throw new Exception( 'Invalid page' );
 			}
 
-			$revisionId = $wikiPage->getLatest();
+			$revisionId = $title->getLatestRevID();
 
 			$reviewModel= new ReviewModel();
-			$currentUnreviewedId = $reviewModel->getCurrentUnreviewedId( $wikiId, $pageId );
+			$reviewStatus = $reviewModel->submitPageForReview( $wikiId, $pageId,
+				$revisionId, $submitUserId );
 
-			if ( $currentUnreviewedId === null ) {
-				$reviewId = $reviewModel->markPageAsUnreviewed( $wikiId, $pageId, $revisionId, $submitUserId );
-				$responseAction = self::CONTENT_REVIEW_RESPONSE_ACTION_INSERT;
+			if ( $reviewStatus['status'] ) {
+				$this->makeSuccessResponse();
 			} else {
-				$reviewId = $reviewModel->updateReviewById( $currentUnreviewedId, $revisionId, $submitUserId );
-				$responseAction = self::CONTENT_REVIEW_RESPONSE_ACTION_UPDATE;
-			}
-
-			if ( $reviewId > 0 ) {
-				$this->makeSuccessResponse( [
-					'reviewId' => $reviewId,
-					'action' => $responseAction
-				] );
-			} else {
-				$this->makeFailureResponse( [
-					'action' => $responseAction
-				] );
+				$this->makeFailureResponse();
 			}
 		} catch ( Exception $e ) {
 			$this->makeExceptionResponse( $e );
 		}
+	}
+
+	public function getCurrentPageData() {
+		try {
+			$wikiId = $this->request->getInt( 'wikiId' );
+			$pageId = $this->request->getInt( 'pageId' );
+
+			$revisionModel = new CurrentRevisionModel();
+			$revisionData = $revisionModel->getLatestReviewedRevision( $wikiId, $pageId );
+
+			$reviewModel = new ReviewModel();
+			$reviewData = $reviewModel->getPageStatus( $wikiId, $pageId );
+
+			$data = [
+				'reviewedRevisionId' => $revisionData['revision_id'],
+				'touched' => $revisionData['touched'],
+				'revisionInReviewId' => $reviewData['revision_id'],
+				'reviewStatus' => $reviewData['status'],
+			];
+			$this->makeSuccessResponse( $data );
+		} catch ( Exception $e ) {
+			$this->makeExceptionResponse( $e );
+		}
+	}
+
+	public function getLatestReviewedRevision() {
+		try {
+			$wikiId = $this->request->getInt( 'wikiId' );
+			$pageId = $this->request->getInt( 'pageId' );
+
+			$revisionModel = new CurrentRevisionModel();
+			$revisionData = $revisionModel->getLatestReviewedRevision( $wikiId, $pageId );
+
+			if ( !empty( $revisionData ) ) {
+				$this->makeSuccessResponse( $revisionData );
+			} else {
+				$this->makeFailureResponse();
+			}
+		} catch ( Exception $e ) {
+			$this->makeExceptionResponse( $e );
+		}
+	}
+
+	private function canUserSubmit( $pageId ) {
+		$title = Title::newFromID( $pageId );
+		return $title->userCan( 'edit' );
 	}
 
 	private function makeSuccessResponse( Array $data = [] ) {

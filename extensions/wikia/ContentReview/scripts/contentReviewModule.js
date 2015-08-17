@@ -1,11 +1,19 @@
 define(
 	'ext.wikia.contentReview.module',
-	['jquery', 'mw', 'wikia.nirvana', 'BannerNotification'],
-	function($, mw, nirvana, BannerNotification) {
+	['jquery', 'mw', 'wikia.loader', 'wikia.nirvana', 'BannerNotification'],
+	function($, mw, loader, nirvana, BannerNotification) {
 		'use strict';
 
 		function init() {
-			bindEvents();
+			$.when(loader({
+				type: loader.MULTI,
+				resources: {
+					messages: 'ContentReviewModule'
+				}
+			})).done(function (res) {
+				mw.messages.set(res.messages);
+				bindEvents();
+			});
 		}
 
 		function bindEvents() {
@@ -15,7 +23,8 @@ define(
 		function submitPageForReview(event) {
 			event.preventDefault();
 
-			var data = {
+			var moduleType = $(this).data('type'),
+				data = {
 				pageId: mw.config.get('wgArticleId'),
 				wikiId: mw.config.get('wgCityId'),
 				editToken: mw.user.tokens.get('editToken')
@@ -35,7 +44,7 @@ define(
 							 * content-review-module-submit-success-insert
 							 * content-review-module-submit-success-update
 							 */
-							mw.message('content-review-module-submit-success-' + response.action).escaped(),
+							mw.message('content-review-module-submit-success-' + moduleType).escaped(),
 							'confirm'
 						);
 

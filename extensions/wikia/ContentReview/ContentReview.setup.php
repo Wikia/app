@@ -37,7 +37,14 @@ $wgAutoloadClasses['SpecialContentReviewController'] = __DIR__ . '/controllers/S
 /**
  * Models
  */
+$wgAutoloadClasses['Wikia\ContentReview\Models\ContentReviewBaseModel'] = __DIR__ . '/models/ContentReviewBaseModel.php';
+$wgAutoloadClasses['Wikia\ContentReview\Models\CurrentRevisionModel'] = __DIR__ . '/models/CurrentRevisionModel.php';
 $wgAutoloadClasses['Wikia\ContentReview\Models\ReviewModel'] = __DIR__ . '/models/ReviewModel.php';
+
+/**
+ * Helpers
+ */
+$wgAutoloadClasses['Wikia\ContentReview\Helper'] = __DIR__ . '/ContentReviewHelper.php';
 
 /**
  * Hooks
@@ -59,3 +66,8 @@ $wgExtensionMessagesFiles['ContentReview'] = __DIR__ . '/ContentReview.i18n.php'
  * Special page
  */
 $wgSpecialPages['ContentReview'] = 'SpecialContentReviewController';
+
+JSMessages::registerPackage( 'ContentReviewModule', [
+	'content-review-module-*'
+] );
+
