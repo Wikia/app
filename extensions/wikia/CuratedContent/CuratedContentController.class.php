@@ -494,13 +494,14 @@ class CuratedContentController extends WikiaController {
 	}
 
 	public function getData( ) {
-		global $wgWikiaCuratedContent, $wgUser;
+		global $wgWikiaCuratedContent, $wgUser, $wgEnableCuratedContentUnauthorizedSave;
 
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 		// TODO: CONCF-961 Set more restrictive header
 		$this->response->setHeader( 'Access-Control-Allow-Origin', '*' );
 
-		if ( $wgUser->isAllowed( 'curatedcontent' ) ) {
+		// TODO Remove $wgEnableCuratedContentUnauthorizedSave check in CONCF-900
+		if ( $wgUser->isAllowed( 'curatedcontent' ) || !empty( $wgEnableCuratedContentUnauthorizedSave ) ) {
 			$data = [];
 			if ( !empty( $wgWikiaCuratedContent ) && is_array( $wgWikiaCuratedContent ) ) {
 				foreach ( $wgWikiaCuratedContent as $section ) {

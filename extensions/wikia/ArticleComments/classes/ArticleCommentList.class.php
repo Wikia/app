@@ -519,17 +519,37 @@ class ArticleCommentList {
 			return '';
 		}
 
-		list ( $blockerName, $reason, $ip, $blockid, $blockTimestamp, $blockExpiry, $intended ) = array(
+		list( $blockerName, $reason, $ip, $blockid, $blockTimestamp, $blockExpiry, $intended, $isGlobal ) = array(
 			User::whoIs( $wgUser->blockedBy() ),
 			$wgUser->blockedFor() ? $wgUser->blockedFor() : wfMsg( 'blockednoreason' ),
 			$wgRequest->getIP(),
 			$wgUser->getBlockId(),
 			$wgLang->timeanddate( wfTimestamp( TS_MW, $wgUser->mBlock->mTimestamp ), true ),
 			$wgUser->mBlock->mExpiry,
-			$wgUser->mBlock->mAddress
+			$wgUser->mBlock->mAddress,
+			$wgUser->mBlockedGlobally
 		);
 
-		$blockerLink = '[[' . $wgContLang->getNsText( NS_USER ) . ":{$blockerName}|{$blockerName}]]";
+		// Hide username of blocker if this is a global block (see lines 2112-2129 of includes/Title.php)
+		if ( $isGlobal ) {
+			$blocker = User::newFromName( $blockerName );
+			if ( $blocker instanceof User ) {
+				// user groups to be displayed instead of user name
+				$groups = [
+					'staff',
+					'vstf',
+				];
+				$blockerGroups = $blocker->getEffectiveGroups();
+
+				foreach ( $groups as $group ) {
+					if ( in_array( $group, $blockerGroups ) ) {
+						$blockerLink = wfMessage( "group-$group" )->plain();
+					}
+				}
+			}
+		} else {
+			$blockerLink = '[[' . $wgContLang->getNsText( NS_USER ) . ":{$blockerName}|{$blockerName}]]";
+		}
 
 		if ( $blockExpiry == 'infinity' ) {
 			$scBlockExpiryOptions = wfMsg( 'ipboptions' );
