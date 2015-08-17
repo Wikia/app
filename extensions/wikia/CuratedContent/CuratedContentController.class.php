@@ -500,6 +500,7 @@ class CuratedContentController extends WikiaController {
 		// TODO: CONCF-961 Set more restrictive header
 		$this->response->setHeader( 'Access-Control-Allow-Origin', '*' );
 
+		// TODO Remove $wgEnableCuratedContentUnauthorizedSave check in CONCF-900
 		if ( $wgUser->isAllowed( 'curatedcontent' ) || !empty( $wgEnableCuratedContentUnauthorizedSave ) ) {
 			$data = [];
 			if ( !empty( $wgWikiaCuratedContent ) && is_array( $wgWikiaCuratedContent ) ) {
