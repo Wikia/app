@@ -2,7 +2,8 @@ define('AuthModal', ['jquery', 'AuthComponent', 'wikia.document'], function ($, 
 	'use strict';
 
 	var modal,
-		$blackout;
+		$blackout,
+		track;
 
 	function open () {
 		$('.WikiaSiteWrapper').append(
@@ -11,10 +12,19 @@ define('AuthModal', ['jquery', 'AuthComponent', 'wikia.document'], function ($, 
 		$blackout = $('.auth-blackout');
 		modal = $blackout.find('.auth-modal')[0];
 		$('.auth-blackout, .auth-modal .close').click(close);
+
+		track = Wikia.Tracker.buildTrackingFunction({
+			action: Wikia.Tracker.ACTIONS.CLOSE,
+			category: 'user-login-desktop-modal',
+			trackingMethod: 'analytics'
+		});
 	}
 
 	function close () {
 		if (modal) {
+			track({
+				label: 'username-login-modal'
+			});
 			$blackout.remove();
 		}
 	}
