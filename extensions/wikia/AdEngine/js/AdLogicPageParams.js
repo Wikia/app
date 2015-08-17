@@ -203,7 +203,7 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 		if (getHostname() === 'showcase' || qs.getVal('showcase', '0') === '1') {
 			return 'showcase';
 		}
-		return targeting.mappedVerticalName || targeting.wikiCategory;
+		return targeting.mappedVerticalName;
 	}
 
 	/**
