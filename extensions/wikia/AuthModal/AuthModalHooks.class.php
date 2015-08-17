@@ -5,6 +5,7 @@
  */
 
 class AuthModalHooks {
+	const REGISTRATION_SUCCESS_COOKIE_NAME = 'registerSuccess';
 
 	/**
 	 * Adds assets for AuthPages on each Oasis pageview
@@ -30,9 +31,14 @@ class AuthModalHooks {
 
 		if (
 			$wgUser->isLoggedIn() &&
-			$wgRequest->getCookie( 'registerSuccess', WebResponse::NO_COOKIE_PREFIX ) === '1'
+			$wgRequest->getCookie( self::REGISTRATION_SUCCESS_COOKIE_NAME, WebResponse::NO_COOKIE_PREFIX ) === '1'
 		) {
-			$wgRequest->response()->setcookie( 'registerSuccess', '', time() - 3600, WebResponse::NO_COOKIE_PREFIX );
+			$wgRequest->response()->setcookie(
+				self::REGISTRATION_SUCCESS_COOKIE_NAME,
+				'',
+				time() - 3600,
+				WebResponse::NO_COOKIE_PREFIX
+			);
 			BannerNotificationsController::addConfirmation(
 				wfMessage( 'authmodal-registration-success', $wgUser->getName() )->escaped()
 			);
