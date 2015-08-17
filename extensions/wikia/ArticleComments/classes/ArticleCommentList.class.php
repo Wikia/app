@@ -531,9 +531,9 @@ class ArticleCommentList {
 		);
 
 		// Hide username of blocker if this is a global block (see lines 2112-2129 of includes/Title.php)
-		if ($isGlobal) {
-			$blocker = User::newFromName($blockerName);
-			if ($blocker instanceof User) {
+		if ( $isGlobal ) {
+			$blocker = User::newFromName( $blockerName );
+			if ( $blocker instanceof User ) {
 				// user groups to be displayed instead of user name
 				$groups = [
 					'staff',
@@ -541,9 +541,9 @@ class ArticleCommentList {
 				];
 				$blockerGroups = $blocker->getEffectiveGroups();
 
-				foreach($groups as $group) {
-					if (in_array($group, $blockerGroups)) {
-						$blockerLink = wfMessage("group-$group")->plain();
+				foreach ( $groups as $group ) {
+					if ( in_array( $group, $blockerGroups ) ) {
+						$blockerLink = wfMessage( "group-$group" )->plain();
 					}
 				}
 			}
