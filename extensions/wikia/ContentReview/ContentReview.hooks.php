@@ -56,4 +56,20 @@ class Hooks {
 
 		return true;
 	}
+
+	public static function onMakeGlobalVariablesScript(&$vars) {
+		$vars['contentReviewTestModeEnabled'] = Helper::isContentReviewTestModeEnabled();
+
+		return true;
+
+	}
+
+	public static function onBeforePageDisplay( \OutputPage $out, \Skin $skin ) {
+		if ( Helper::isContentReviewTestModeEnabled() ) {
+			\Wikia::addAssetsToOutput( 'content_review_test_mode_js' );
+			\JSMessages::enqueuePackage( 'ContentReviewTestMode', \JSMessages::EXTERNAL );
+		}
+
+		return true;
+	}
 }

@@ -30,4 +30,64 @@ class Helper {
 
 		return $revision['revision_id'];
 	}
+
+	public static function getContentReviewTestModeWikis() {
+		global $wgRequest;
+
+		$key = \ContentReviewApiController::CONTENT_REVIEW_TEST_MODE_KEY;
+
+		$wikiIds = $wgRequest->getSessionData( $key );
+
+		if ( !empty( $wikiIds ) ) {
+			$wikiIds = unserialize( $wikiIds );
+		} else {
+			$wikiIds = [];
+		}
+
+		return $wikiIds;
+	}
+
+	public static function setContentReviewTestMode() {
+		global $wgCityId, $wgRequest;
+
+		$key = \ContentReviewApiController::CONTENT_REVIEW_TEST_MODE_KEY;
+
+		$wikiIds = self::getContentReviewTestModeWikis();
+
+		if ( !in_array( $wgCityId, $wikiIds ) ) {
+			$wikiIds[] = $wgCityId;
+			$wgRequest->setSessionData( $key, serialize( $wikiIds ) );
+		}
+	}
+
+	public static function disableContentReviewTestMode() {
+		global $wgCityId, $wgRequest;
+
+		$key = \ContentReviewApiController::CONTENT_REVIEW_TEST_MODE_KEY;
+
+		$wikiIds = self::getContentReviewTestModeWikis();
+		$wikiKey = array_search( $wgCityId, $wikiIds );
+
+		if ( $wikiKey !== false ) {
+			unset( $wikiIds[$wikiKey]);
+			$wgRequest->setSessionData( $key, serialize( $wikiIds ) );
+		}
+
+	}
+
+	public static function isContentReviewTestModeEnabled() {
+		global $wgUser, $wgCityId;
+
+		$contentReviewTestModeEnabled = false;
+
+		if ( $wgUser->isLoggedIn() ) {
+			$wikisIds = self::getContentReviewTestModeWikis();
+
+			if ( !empty( $wikisIds ) && in_array( $wgCityId, $wikisIds ) ) {
+				$contentReviewTestModeEnabled = true;
+			}
+		}
+
+		return $contentReviewTestModeEnabled;
+	}
 }
