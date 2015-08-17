@@ -22,15 +22,16 @@
 .auth-modal {
 	box-sizing: border-box;
 	height: 100%;
+	margin: auto;
+	max-width: 768px;
 	position: relative;
 	width: 100%;
 
-  &.loading {
-		background: white;
-
-		span {
-			animation: auth-throbber-spin 1s linear infinite;
+	&.loading {
+		&::after {
+			animation: auth-throbber-spin 1s ease-in infinite;
 			background: url('/extensions/wikia/AuthModal/svg/wikia-logo-circled.svg'); /* inline */
+			content: " ";
 			display: block;
 			height: 62px;
 			left: 50%;
@@ -44,10 +45,10 @@
 		iframe {
 			display: none;
 		}
-	}
 
-	span {
-		display: none;
+		.close {
+			display: none;
+		}
 	}
 
 	iframe {

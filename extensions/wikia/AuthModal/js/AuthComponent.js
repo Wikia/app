@@ -11,10 +11,17 @@ define('AuthComponent', function () {
 		this.rootElement = rootElement;
 	}
 
-	AuthComponent.prototype.open = function (page, callback) {
+	AuthComponent.prototype.getUselangParam  = function (language) {
+		if (typeof language !== 'string') {
+			return '';
+		}
+		return '&uselang=' + language;
+	};
+
+	AuthComponent.prototype.open = function (page, callback, language) {
 		if (this.rootElement instanceof HTMLElement) {
 			var authIframe = document.createElement('iframe');
-			authIframe.src = window.location.origin + '/' + page;
+			authIframe.src = window.location.origin + '/' + page + this.getUselangParam(language);
 			authIframe.onload = function () {
 				if (typeof callback === 'function') {
 					callback();
@@ -24,20 +31,20 @@ define('AuthComponent', function () {
 		}
 	};
 
-	AuthComponent.prototype.login = function (callback) {
-		this.open(this.pages.login, callback);
+	AuthComponent.prototype.login = function (callback, language) {
+		this.open(this.pages.login, callback, language);
 	};
 
-	AuthComponent.prototype.facebookConnect = function (callback) {
-		this.open(this.pages.facebookConnect, callback);
+	AuthComponent.prototype.facebookConnect = function (callback, language) {
+		this.open(this.pages.facebookConnect, callback, language);
 	};
 
-	AuthComponent.prototype.register = function (callback) {
-		this.open(this.pages.register, callback);
+	AuthComponent.prototype.register = function (callback, language) {
+		this.open(this.pages.register, callback, language);
 	};
 
-	AuthComponent.prototype.facebookRegister = function (callback) {
-		this.open(this.pages.facebookRegister, callback);
+	AuthComponent.prototype.facebookRegister = function (callback, language) {
+		this.open(this.pages.facebookRegister, callback, language);
 	};
 
 	return AuthComponent;
