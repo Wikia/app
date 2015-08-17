@@ -35,7 +35,6 @@ class UserAttributeTest extends PHPUnit_Framework_TestCase {
 		$this->service = $this->getMockBuilder( AttributeService::class )
 			->setMethods( [ 'set', 'get', 'delete' ] )
 			->disableOriginalConstructor()
-			->disableAutoload()
 			->getMock();
 		$this->attribute1 = new Attribute( "nickName", "Lebowski" );
 		$this->attribute2 = new Attribute( "gender", "female" );

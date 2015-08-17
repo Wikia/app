@@ -22,7 +22,6 @@ class AttributeKeyValueTest extends \PHPUnit_Framework_TestCase {
 		$this->persistenceMock = $this->getMockBuilder( AttributePersistence::class )
 			->setMethods( [ 'saveAttribute', 'getAttributes', 'deleteAttribute' ] )
 			->disableOriginalConstructor()
-			->disableAutoload()
 			->getMock();
 	}
 
