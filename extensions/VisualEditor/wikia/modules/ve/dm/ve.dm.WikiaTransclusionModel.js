@@ -30,7 +30,6 @@ ve.dm.WikiaTransclusionModel.prototype.fetchRequest = function ( titles, specs, 
 };
 
 ve.dm.WikiaTransclusionModel.prototype.fetchInfoboxParamsRequest = function ( titles, specs, queue ) {
-
 	return ve.init.target.constructor.static.apiRequest( {
 		action: 'query',
 		prop: 'infobox',
@@ -49,12 +48,12 @@ ve.dm.WikiaTransclusionModel.prototype.fetchRequestDone = function ( specs, data
 		for ( id in data.pages ) {
 			page = data.pages[id];
 			if ( ! specs[page.title] ) {
-			specs[page.title] = {
-				title: data.pages[id].title,
-				description: '',
-				params: {},
-				paramOrder: page.params
-			};
+				specs[page.title] = {
+					title: data.pages[id].title,
+					description: '',
+					params: {},
+					paramOrder: page.params
+				};
 			}
 			// Map parameters from flat array to collection where parameter name is the key and value is empty
 			// because later it's extended with ve.dm.MWTemplateSpecModel.prototype.getDefaultParameterSpec
@@ -68,6 +67,7 @@ ve.dm.WikiaTransclusionModel.prototype.fetchRequestDone = function ( specs, data
 
 ve.dm.WikiaTransclusionModel.prototype.fetchInfoboxParamsRequestDone = function ( specs, data ) {
 	var id, page, i;
+
 	if ( data && data.query && data.query.pages ) {
 		for ( id in data.query.pages ) {
 			page = data.query.pages[id];
@@ -75,17 +75,20 @@ ve.dm.WikiaTransclusionModel.prototype.fetchInfoboxParamsRequestDone = function 
 				specs[page.title] = {
 					title: page.title,
 					description: '',
-					params: {}
+					params: {},
+					paramOrder: []
 				};
 			}
 
 			if (page.infoboxes) {
-				// TODO: "infoboxes" might not exists. Also handle order in some way
+				//for now we don't want to support complex (with more than one infobox) templates
 				for ( i = 0; i < page.infoboxes[0].sources.length; i++ ) {
 					specs[page.title].params[ page.infoboxes[0].sources[i] ] = {};
+					specs[page.title].paramOrder.push( page.infoboxes[0].sources[i] );
 				}
 			}
 		}
+
 		ve.extendObject( this.specCache, specs );
 	}
 };
