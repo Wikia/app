@@ -18,25 +18,48 @@ class CuratedContentValidator {
 	private $titles;
 	private $hasOptionalSection;
 
-	public function __construct( $data ) {
+	public function __construct() {
+		$this->reset();
+	}
+
+	public function reset() {
 		$this->errors = [ ];
 		$this->titles = [ ];
 		$this->hasOptionalSection = false;
+	}
+
+	public function validateData( $data ) {
+		$this->reset();
 
 		// validate sections
 		foreach ( $data as $section ) {
 			if ( !empty( $section['featured'] ) ) {
-				$this->validateFeaturedSection( $section );
+				$this->validateItems( $section );
 			} else {
 				$this->validateSection( $section );
+				if ( !empty( $section['title'] ) ) {
+					$this->validateItemsExist( $section );
+					$this->validateItems( $section );
+					$this->validateItemsTypes( $section );
+				}
 			}
 		}
 		// also check section for duplicate title
+		$this->validateDuplicatedTitles();
+
+		return $this->errors;
+	}
+
+	public function validateDuplicatedTitles() {
 		foreach ( array_count_values( $this->titles ) as $title => $count ) {
 			if ( $count > 1 ) {
 				$this->error( [ 'title' => $title ], self::ERR_DUPLICATED_LABEL );
 			}
 		}
+	}
+
+	public function getErrors() {
+		return $this->errors;
 	}
 
 	private function error( $itemWithTitle, $errorString ) {
@@ -45,14 +68,10 @@ class CuratedContentValidator {
 		}
 	}
 
-	public function getErrors() {
-		return $this->errors;
-	}
-
-	private function validateFeaturedSection( $section ) {
+	public function validateFeaturedSectionItems( $section ) {
 		if ( !empty( $section['items'] ) && is_array( $section['items'] ) ) {
 			foreach ($section['items'] as $item) {
-				$this->validateItem($item);
+				$this->validateItem( $item );
 			}
 		}
 	}
@@ -63,7 +82,21 @@ class CuratedContentValidator {
 		}
 	}
 
-	private function validateSection( $section ) {
+	public function validateItemsExist( $section ) {
+		if ( empty( $section['items'] ) || !is_array( $section['items'] ) ) {
+			$this->error( $section, self::ERR_ITEMS_MISSING );
+		}
+	}
+
+	public function validateItems( $section ) {
+		if (!empty($section['items']) && is_array($section['items'])) {
+			foreach ($section['items'] as $item) {
+				$this->validateItem( $item );
+			}
+		}
+	}
+
+	public function validateSection( $section ) {
 		// check for "optional" section - it has empty label, but there can be only ONE
 		if ( empty( $section['title'] ) ) {
 			if ( $this->hasOptionalSection ) {
@@ -81,33 +114,26 @@ class CuratedContentValidator {
 			$this->validateImage( $section );
 		}
 
-		if ( !empty( $section['items'] ) && is_array( $section['items'] ) ) {
-			// if section has items - validate them
-			foreach ($section['items'] as $item) {
-				$this->validateCategoryItem($item);
-				$this->validateImage($item);
-			}
-		} else {
-			// if section doesn't have any items and it's not Featured Section, it's an error
-			if ( empty( $section['featured'] ) ) {
-				$this->error( $section, self::ERR_ITEMS_MISSING );
-			}
-		}
-
 		if ( strlen( $section['title'] ) ) {
 			$this->titles[] = $section['title'];
 		}
 	}
 
-	private function validateCategoryItem( $item ) {
-		$this->validateItem( $item );
-
+	public function validateItemType( $item ) {
 		if ( $item['type'] !== CuratedContentHelper::STR_CATEGORY ) {
 			$this->error( $item, self::ERR_NO_CATEGORY_IN_TAG );
 		}
 	}
 
-	private function validateItem( $item ) {
+	public function validateItemsTypes( $section ) {
+		if ( !empty( $section['items'] ) && is_array( $section['items'] ) ) {
+			foreach ( $section['items'] as $item ) {
+				$this->validateItemType( $item );
+			}
+		}
+	}
+
+	public function validateItem( $item ) {
 		$this->validateImage( $item );
 
 		if ( empty( $item['label'] ) ) {

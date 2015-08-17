@@ -504,7 +504,7 @@ Edit section: $1',
 Ju mund të keni bërë një gabim në shkrimin e URL-së, ose keni ndjekur një lidhje të pasaktë.
 Kjo mund të vijë edhe si rezultat i një gabimi në programin e përdorur nga {{SITENAME}}.',
 'nosuchspecialpage' => 'Nuk ekziston kjo faqe speciale',
-'nospecialpagetext' => '<strong>Ju keni kërkuar një faqe speciale të pavlefshme.</strong> 
+'nospecialpagetext' => '<strong>Ju keni kërkuar një faqe speciale të pavlefshme.</strong>
 
  Një listë e faqeve speciale të vlefshme mund të gjendet në [[Special:SpecialPages|{{int: specialpages }}]].',
 
@@ -518,7 +518,7 @@ Pyetja e fundit që i keni bërë regjistrit ishte:
 <blockquote><tt>$1</tt></blockquote>
 nga funksioni "<tt>$2</tt>".
 MySQL kthehu gabimin "<tt>$3: $4</tt>".',
-'dberrortextcl'        => 'Ka ndodhur një gabim me sintaksën query në databazë. 
+'dberrortextcl'        => 'Ka ndodhur një gabim me sintaksën query në databazë.
 Query e fundit që i keni bërë regjistrit ishte:
 "$1"
 nga funksioni "$2".
@@ -572,7 +572,7 @@ Ju lutemi, provojeni përsëri pas disa minutash.',
 'viewsourcetext'       => 'Ju mund të shikoni dhe kopjoni tekstin e kësaj faqeje:',
 'viewyourtext'         => "Ju mund të shikoni dhe të kopjoni tekstin e '''ndryshimeve tuaja''' tek kjo faqe:",
 'protectedinterface'   => 'Kjo faqe përmban tekstin e dritares së programit, për këtë arsye mbrohet për të shmangur abuzimet.',
-'editinginterface'     => "'''Kujdes:''' Po redaktoni një faqe që përdoret për tekstin dritares së programit. 
+'editinginterface'     => "'''Kujdes:''' Po redaktoni një faqe që përdoret për tekstin dritares së programit.
 Ndryshimet në këtë faqe do të ndikojnë pamjen e dritares për përdoruesit e tjerë.
 Për përkthime, ju lutem konsideroni përdorimin e [//translatewiki.net/wiki/Main_Page?setlang=en translatewiki.net], projektin e lokalizimit MediaWiki.",
 'sqlhidden'            => '(Query SQL e fshehur)',
@@ -591,12 +591,13 @@ Arsyeja e dhënë është ''$2''.",
 'virus-unknownscanner' => 'antivirus i pa njohur:',
 
 # Login and logout pages
-'logouttext'                 => "'''Ju keni dalë jashtë.''' 
+'logouttext'                 => "'''Ju keni dalë jashtë.'''
 
- Ju mund të vazhdoni të përdorni {{SITENAME}} në mënyrë anonime, ose mund të [[Special:UserLogin|identifikoheni përsëri]] si përdoruesi i mëparshëm ose si një përdorues tjetër. 
+ Ju mund të vazhdoni të përdorni {{SITENAME}} në mënyrë anonime, ose mund të $1 si përdoruesi i mëparshëm ose si një përdorues tjetër.
  Kini parasysh që disa faqe mund të shfaqen sikur të ishit i identifikuar derisa të fshini ''cache''-in e shfletuesit tuaj.",
-'welcomecreation'            => '== Mirësevini, $1! == 
- Llogaria juaj është krijuar. 
+'logouttext-link-text'       => 'identifikoheni përsëri',
+'welcomecreation'            => '== Mirësevini, $1! ==
+ Llogaria juaj është krijuar.
  Mos harroni të ndryshoni [[Special:Preferences|{{SITENAME}} preferencat]] tuaja.',
 'yourname'                   => 'Fusni nofkën tuaj',
 'yourpassword'               => 'Fusni fjalëkalimin tuaj',
@@ -622,7 +623,7 @@ Arsyeja e dhënë është ''$2''.",
 'createaccountmail'          => 'me email',
 'createaccountreason'        => 'Arsyeja:',
 'badretype'                  => 'Fjalëkalimet nuk janë njësoj.',
-'userexists'                 => 'Emri i përdoruesit që kërkuat është në përdorim. 
+'userexists'                 => 'Emri i përdoruesit që kërkuat është në përdorim.
 Zgjidhni një emër tjetër.',
 'loginerror'                 => 'Gabim gjatë identifikimit',
 'createaccounterror'         => 'I pamundur krijimi i llogarisë: $1',
@@ -713,7 +714,7 @@ Për të hyrë tërësisht duhet të vendosni një fjalëkalim të ri këtu:',
 'passwordreset-capture-help'       => "Nëse shënoni këtë kuti, e-mail-i (dhe fjalekalimi i përkohshëm) që do t'i dërgohen përdoruesit, do të të tregohen edhe ty.",
 'passwordreset-email'              => 'Posta elektronike',
 'passwordreset-emailtitle'         => 'Detajet e llogarisë në {{SITENAME}}',
-'passwordreset-emailtext-ip'       => 'Dikush (ndoshta ju, nga IP adresa $1) kërkoi një kujtesë për 
+'passwordreset-emailtext-ip'       => 'Dikush (ndoshta ju, nga IP adresa $1) kërkoi një kujtesë për
 detajet e llogarisë suaj {{SITENAME}} ($4).Përdoruesi në vijim {{PLURAL:$3|llogari është|llogaritë janë}} të lidhur me këtë postë elektronike:
 
 $2
@@ -721,7 +722,7 @@ $2
 {{PLURAL:$3|Ky fjalëkalim i përkohshëm|Këto fjalëkalime të përkohshme}} do të përfundojë për {{PLURAL:$5|një ditë|$5 ditë}}.
 
 Ju duhet të kyçeni dhe të zgjidhni një fjalëkalim të ri tani. Nëse dikush tjetër e ka bërë këtë kërkesës, ose në qoftë se ju mbani mend fjalëkalimin tuaj origjinal, dhe ju nuk dëshirojni të ndryshoni atë, ju mund të injoroni këtë mesazh dhe do të vazhdoni përdorimin e fjalëkalimit tuaj të vjetër.',
-'passwordreset-emailtext-user'     => 'Përdoruesi  $1 në {{SITENAME }} ka kërkuar një kujtesë për të dhënat e llogarisë suaj për {{SITENAME }} ($4). Përdoruesi në vijim {{PLURAL: $3 | llogaria është | llogaritë janë}} të lidhur me këtë postë elektronike: 
+'passwordreset-emailtext-user'     => 'Përdoruesi  $1 në {{SITENAME }} ka kërkuar një kujtesë për të dhënat e llogarisë suaj për {{SITENAME }} ($4). Përdoruesi në vijim {{PLURAL: $3 | llogaria është | llogaritë janë}} të lidhur me këtë postë elektronike:
 
 $2
 
@@ -774,7 +775,7 @@ Fjalëkalimi i përkohshëm: $2',
 'showpreview'                      => 'Shfaq për shqyrtim',
 'showlivepreview'                  => 'Shqyrtim i menjëhershëm',
 'showdiff'                         => 'Trego ndryshimet',
-'anoneditwarning'                  => "'''Kujdes:''' Ju nuk jeni identifikuar. 
+'anoneditwarning'                  => "'''Kujdes:''' Ju nuk jeni identifikuar.
 Adresa juaj IP do të regjistrohet në historinë e redaktimeve të kësaj faqeje.",
 'anonpreviewwarning'               => '"Ju nuk jeni identifikuar. Ruajtja e ndryshimeve do të bëjë që adresa juaj IP të regjistrohet në historikun e redaktimeve të kësaj faqeje."',
 'missingsummary'                   => "'''Vërejtje:''' Ju nuk keni lënë shënim për redaktimet e kryera.
@@ -830,8 +831,8 @@ Fjalëkalimi për këtë llogari mund të ndryshohet në faqen ''[[Special:Chang
 'newarticletext'                   => "Ju keni ndjekur nje lidhje drejt një faqeje që nuk ekziston.
 Për ta krijuar këtë faqe ju mund të shkruani në kutinë e mëposhtme (shih [[{{MediaWiki:Helppage}}|faqen e ndihmës]] për më shumë informacion).
 Nëse ju keni mbërritur këtu gabimisht, atëherë klikoni butonin '''pas''' të shfletuesit tuaj.",
-'anontalkpagetext'                 => "----'' Kjo është një faqe diskutimi për një përdorues anonim i cili nuk ka krijuar akoma një llogari, ose qe nuk e përdor atë. 
- Prandaj, ne duhet të përdorim adresën IP numerike për identifikimin e tij. 
+'anontalkpagetext'                 => "----'' Kjo është një faqe diskutimi për një përdorues anonim i cili nuk ka krijuar akoma një llogari, ose qe nuk e përdor atë.
+ Prandaj, ne duhet të përdorim adresën IP numerike për identifikimin e tij.
 Kjo adresë IP mund të përdoret nga disa përdorues.
  Në qoftë se jeni një përdorues anonim dhe mendoni se ndaj jush janë bërë komente të parëndësishme, ju lutem [[Special:UserLogin/signup|krijoni një llogari]] ose [[Special:UserLogin|identifikohuni]] për të shmangur konfuzionin në të ardhmen me përdorues të tjerë anonim .''",
 'noarticletext'                    => 'Momentalisht nuk ka tekst në këtë faqe.
@@ -842,12 +843,12 @@ ose [{{fullurl:{{FULLPAGENAME}}|action=edit}} të redaktoni këtë faqe]</span>.
 Ju mundeni [[Special:Search/{{PAGENAME}}|me kërku këtë titull]] në faqe tjera,
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} me kërku në regjistrat tematikisht të afërm],
 apo [{{fullurl:{{FULLPAGENAME}}|action=edit}} me redaktu këtë faqe]</span>.',
-'userpage-userdoesnotexist'        => 'Llogaria e përdoruesit "<nowiki>$1</nowiki>" nuk është e regjistruar. 
+'userpage-userdoesnotexist'        => 'Llogaria e përdoruesit "<nowiki>$1</nowiki>" nuk është e regjistruar.
 Ju lutem kontrolloni nëse dëshironi të krijoni/redaktoni këtë faqe.',
 'userpage-userdoesnotexist-view'   => 'Llogaria i përdoruesit "$1" nuk është e regjistruar.',
 'blocked-notice-logextract'        => "Ky përdorues është  aktualisht i bllokuar.
 Më poshtë mund t'i referoheni shënimit të regjistruar për bllokimin e fundit:",
-'clearyourcache'                   => "''Shënim:''' Pas ruajtjes, juve mund t'iu duhet të anashkaloni \"cache-in\" e shfletuesit tuaj për të parë ndryshimet. 
+'clearyourcache'                   => "''Shënim:''' Pas ruajtjes, juve mund t'iu duhet të anashkaloni \"cache-in\" e shfletuesit tuaj për të parë ndryshimet.
 * '''Firefox / Safari:''' Mbaj të shtypur ''Shift'' ndërkohë që klikon ''Reload'', ose shtyp ''Ctrl-F5'' ose ''Ctrl-R'' (''⌘-R'' në Mac)
 * '''Google Chrome:''' Shtyp ''Ctrl-Shift-R'' (''''⌘-R'''' në Mac)
 * '''Internet Explorer:''' Mbaj të shtypur ''Ctrl''  ndërkohë që klikon ''Refresh'', ose shtyp ''Ctrl-F5''
@@ -860,7 +861,7 @@ Më poshtë mund t'i referoheni shënimit të regjistruar për bllokimin e fundi
 'userjspreview'                    => "'''Vini re se kjo është vetëm një provë ose parapamje e faqes tuaj JavaScript, ajo nuk është ruajtur akoma!'''",
 'sitecsspreview'                   => "'''Vini re! Ju jeni duke inspektuar CSS-në !'''
 '''Nuk është ruajtur ende!'''",
-'sitejspreview'                    => "'''Vini re! Ju jeni duke inspektuar këtë kod JavaScript.''' 
+'sitejspreview'                    => "'''Vini re! Ju jeni duke inspektuar këtë kod JavaScript.'''
 '''Nuk është ruajtur ende!'''",
 'userinvalidcssjstitle'            => "'''Kujdes:''' Nuk ka pamje të quajtur \"\$1\". Vini re se faqet .css dhe .js përdorin titull me gërma të vogla, p.sh. {{ns:user}}:Foo/vector.css, jo {{ns:user}}:Foo/Vector.css.",
 'updated'                          => '(E ndryshuar)',
@@ -899,7 +900,7 @@ Në qoftë se e ruani, çdo ndryshim i bërë deri tani do të humbasë.'''",
 Nëse ju nuk dëshironi që shkrimet tuaja të redaktohen pa mëshirë dhe të shpërndahen sipas dëshirës, atëherë mos i vendosni këtu.<br />
 Gjithashtu, ju po na premtoni ne që gjithçka e keni shkruar vetë, ose e keni kopjuar nga një domain publik ose nga burime të tjera  te hapura.
 '''Mos vendosni material të mbrojtur nga e drejta e autorit pa leje!'''",
-'copyrightwarning2'                => "Ju lutemi, vini re! Të gjitha kontributet në {{SITENAME}} mund të redaktohen, ndryshohen ose hiqen nga përdorues të tjerë  (shiko $1 për më shumë detaje). 
+'copyrightwarning2'                => "Ju lutemi, vini re! Të gjitha kontributet në {{SITENAME}} mund të redaktohen, ndryshohen ose hiqen nga përdorues të tjerë  (shiko $1 për më shumë detaje).
 Nëse ju nuk dëshironi që shkrimet tuaja të redaktohen pa mëshirë dhe të shpërndahen sipas dëshirës, atëherë mos i vendosni këtu<br />
 Gjithashtu, ju po na premtoni ne që gjithçka e keni shkruar vetë, ose e keni kopjuar nga një domain publik ose nga burime të tjera  te hapura.
 '''Mos vendosni material të mbrojtur nga e drejta e autorit pa leje!'''",
@@ -962,7 +963,7 @@ Këto parametra nuk janë përfshirë.",
 'language-converter-depth-warning'        => 'Konvertimi i gjuhës ka kaluar limitin e lejuar: ($1)',
 
 # "Undo" feature
-'undo-success' => 'Redaktimi nuk mund të zhbëhet. 
+'undo-success' => 'Redaktimi nuk mund të zhbëhet.
 Ju lutemi, kontrolloni krahasimin e mëposhtëm për të vërtetuar nëse kjo është ajo që dëshironi dhe pastaj kryeni ndryshimet për të plotësuar zhbërjen e redaktimit.',
 'undo-failure' => 'Redaktimi nuk mund të zhbëhet për shkak të redaktimeve konfliktuese të ndërmjetshme.',
 'undo-norev'   => 'Redaktimi nuk mund të zhbëhet sepse nuk ekziston ose është fshirë.',
@@ -1017,9 +1018,9 @@ Ju akoma mund ta [$1 shikoni këtë version] nëse doni të vazhdoni.",
 'rev-suppressed-text-unhide'  => "Ky version i faqes është '''grisur'''.
 Detajet mund të gjenden tek [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAME}}}} regjistri i grisjeve].
 Ju akoma mund ta [$1 shikoni këtë version] nëse doni të vazhdoni.",
-'rev-deleted-text-view'       => "Ky version i faqes është '''grisur'''. 
+'rev-deleted-text-view'       => "Ky version i faqes është '''grisur'''.
 Ju mund ta shikoni; detajet mund të gjenden te [{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} regjistri i grisjeve].",
-'rev-suppressed-text-view'    => "Ky version i faqes është '''shtypur'''. 
+'rev-suppressed-text-view'    => "Ky version i faqes është '''shtypur'''.
 Ju mund ta shikoni; detajet mund të gjenden te [{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} regjistri i shtypjeve].",
 'rev-deleted-no-diff'         => "Ju nuk mund ta shikoni këtë ndryshim sepse një nga versionet është '''fshirë'''.
 Detajet mund të gjenden tek [{{fullurl:{{#Special:Log}}/delete={{FULLPAGENAME}}}} regjistri i grisjeve].",
@@ -1050,9 +1051,9 @@ Ju mund ta shikoni këtë ndryshim; detajet mund të gjenden te [{{fullurl:{{#Sp
 'logdelete-selected'          => "'''{{PLURAL:$1|Veprimi i zgjedhur në regjistër|Veprimet e zgjedhura në regjistër}}:'''",
 'revdelete-text'              => "'''Përmbajtja dhe pjesët e tjera nuk janë të dukshme për të gjithë, por figurojnë në historikun e versioneve.''' Administratorët munden përmbajtjen e larguar ta shikojnë dhe restaurojnë, përveç në rastet kur një gjë e tillë është ndaluar ekstra.",
 'revdelete-confirm'           => 'Ju lutem konfirmoni që keni ndër mënd ta bëni këtë, që i kuptoni pasojat, dhe që ju po veproni në përputhje me [[{{MediaWiki:Policy-url}}|politiken]].',
-'revdelete-suppress-text'     => "Shuarje duhet'''vetëm'''të përdoret për rastet e mëposhtme: 
- * Potencialisht e informacionit shpifës 
- * Informacion i pa kriter personal 
+'revdelete-suppress-text'     => "Shuarje duhet'''vetëm'''të përdoret për rastet e mëposhtme:
+ * Potencialisht e informacionit shpifës
+ * Informacion i pa kriter personal
  *: Adresat në shtëpi''dhe numrat e telefonit, numrat e sigurimeve shoqërore, etj''",
 'revdelete-legend'            => 'Vendosni kufizimet për versionin:',
 'revdelete-hide-text'         => 'Fshihe tekstin e versionit',
@@ -1079,7 +1080,7 @@ $1",
 'revdel-restore-visible'      => 'rivizionet e dukshme',
 'pagehist'                    => 'Historiku i faqes',
 'deletedhist'                 => 'Historiku i grisjeve',
-'revdelete-hide-current'      => 'Gabim në fshehje të pikës me datë $2, $1: ky është rivizioni i tanishëm. 
+'revdelete-hide-current'      => 'Gabim në fshehje të pikës me datë $2, $1: ky është rivizioni i tanishëm.
 Nuk mund të fshihet',
 'revdelete-show-no-access'    => 'Gabim gjatë shfaqjes së artikullit të datës $2, $1: ky artikull ka qenë i shënuar si "i kufizuar".
 Ju nuk keni akses.',
@@ -1261,8 +1262,8 @@ Kini kujdes se përdorimi i lidhjeve të shfletimit do të ndryshojë përzgjedh
 'recentchangesdays-max'         => '(maksimum $1 {{PLURAL:$1|dit|ditë}})',
 'recentchangescount'            => 'Numri i redaktimeve për të treguar:',
 'prefs-help-recentchangescount' => 'Kjo përfshin ndryshimet e freskëta, historikun e faqes dhe regjistrat.',
-'prefs-help-watchlist-token'    => 'Plotësimi në këtë fushë me një kyç të fshehtë do të gjenerojë një RSS për të listës mbikqyrëse tuaj. 
- Kushdo që e di të rëndësishme në këtë fushë do të jetë në gjendje për të lexuar lista mbikqyrëse e juaj, kështu që zgjidhni një vlerë të sigurt. 
+'prefs-help-watchlist-token'    => 'Plotësimi në këtë fushë me një kyç të fshehtë do të gjenerojë një RSS për të listës mbikqyrëse tuaj.
+ Kushdo që e di të rëndësishme në këtë fushë do të jetë në gjendje për të lexuar lista mbikqyrëse e juaj, kështu që zgjidhni një vlerë të sigurt.
  Këtu ka një vlerë të rastësishme-generated ju mund të përdorni: $1',
 'savedprefs'                    => 'Parapëlqimet tuaja janë ruajtur.',
 'timezonelegend'                => 'Zona kohore:',
@@ -1616,9 +1617,9 @@ Nëse skeda e kontrolluar është e së njëjtës madhësi me origjinalen atëhe
 'file-thumbnail-no'           => "Emri i skedës fillon me '''<tt>$1</tt>'''.
 Duket se është një figurë me madhësi të zvogëluar ''(thumbnail)''.
 Nëse keni këtë figurë me madhësi të plotë ju lutem të ngarkoni atë, përndryshe ju lutem të ndryshoni emrin e skedës.",
-'fileexists-forbidden'        => 'Ekziston një skedë me të njëjtin emër. Ju lutemi kthehuni mbrapsht dhe ngarkoni këtë skedë me një emër të ri. 
+'fileexists-forbidden'        => 'Ekziston një skedë me të njëjtin emër. Ju lutemi kthehuni mbrapsht dhe ngarkoni këtë skedë me një emër të ri.
 [[File:$1|thumb|center|$1]]',
-'fileexists-shared-forbidden' => 'Ekziston një skedë me të njëjtin emër në magazinën e përbashkët. Ju lutem kthehuni mbrapsht dhe ngarkojeni këtë skedë me një emër të ri. 
+'fileexists-shared-forbidden' => 'Ekziston një skedë me të njëjtin emër në magazinën e përbashkët. Ju lutem kthehuni mbrapsht dhe ngarkojeni këtë skedë me një emër të ri.
  [[File:$1|thumb|center|$1]]',
 'file-exists-duplicate'       => 'Kjo skedë është dyfish i {{PLURAL:$1|skedës|skedave}} në vijim:',
 'file-deleted-duplicate'      => 'Një skedë identike më këtë skedë ([[:$1]]) është grisur më përpara.
@@ -2211,7 +2212,7 @@ Nuk do të ketë njoftime të tjera për ndryshimet e ardhshme përveç nëse e 
 --
 Për të ndryshuar parapëlqimet e mbikqyrjes shikoni {{canonicalurl:Special:Watchlist/edit}}
 
-Për të larguar faqen nga lista juaj mbikqyrëse, shikoni 
+Për të larguar faqen nga lista juaj mbikqyrëse, shikoni
 $UNWATCHURL
 
 Për të na dhënë përshtypjet tuaja ose për ndihmë të mëtejshme:
@@ -2226,7 +2227,7 @@ Për të na dhënë përshtypjet tuaja ose për ndihmë të mëtejshme:
 'exblank'                => 'faqja është bosh',
 'delete-confirm'         => 'Grise "$1"',
 'delete-legend'          => 'Grise',
-'historywarning'         => "'''Kujdes:''' Kjo faqe të cilën po e grisni ka histori me rreth $1 
+'historywarning'         => "'''Kujdes:''' Kjo faqe të cilën po e grisni ka histori me rreth $1
 {{PLURAL:$1|version|redaktime}}:",
 'confirmdeletetext'      => 'Jeni duke grisur një faqe me tërë historinë e saj. Ju lutemi konfirmoni që po e bëni qëllimisht, që i kuptoni pasojat, dhe që po veproni në përputhje me [[{{MediaWiki:Policy-url}}]].',
 'actioncomplete'         => 'Veprimi u krye',
@@ -2926,7 +2927,7 @@ $1',
 'nextdiff'     => 'Ndryshimi më pas →',
 
 # Media information
-'mediawarning'           => "''Kujdes''': Kjo skedë mund të ketë përmbajtje të dëmshme. 
+'mediawarning'           => "''Kujdes''': Kjo skedë mund të ketë përmbajtje të dëmshme.
 Duke e përdorur sistemi juaj mund të rrezikohet.",
 'imagemaxsize'           => "Kufizoni madhësinë e fotos:<br />''(për faqet e përshkrimit të skedave)''",
 'thumbsize'              => 'Madhësia fotove përmbledhëse:',
@@ -3653,7 +3654,7 @@ Figurat tregohen me madhësi të plotë, skedat e tjera hapen me programet përk
 
 # Database error messages
 'dberr-header'      => 'Kjo wiki ka një problem',
-'dberr-problems'    => 'Na vjen keq! 
+'dberr-problems'    => 'Na vjen keq!
 Kjo faqe është duke përjetuar vështirësi teknike.',
 'dberr-again'       => 'Pritni disa minuta dhe provoni të ringarkoni faqen.',
 'dberr-info'        => '(Nuk mund të lidhet me serverin bazë e të dhënave : $1)',

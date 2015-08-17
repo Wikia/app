@@ -36,7 +36,7 @@ define( 'USER_TOKEN_LENGTH', 32 );
  * Int Serialized record version.
  * @ingroup Constants
  */
-define( 'MW_USER_VERSION', 9 );
+define( 'MW_USER_VERSION', 11 );
 
 /**
  * String Some punctuation to prevent editing from broken text-mangling proxies.
@@ -70,6 +70,7 @@ class User {
 	 * Traits extending the class
 	 */
 	use PowerUserTrait;
+	use GlobalUserDataTrait;
 	# WIKIA CHANGE END
 
 	use Loggable;
@@ -1356,6 +1357,8 @@ class User {
 		$this->mEffectiveGroups = null;
 		$this->mImplicitGroups = null;
 		$this->mOptions = null;
+		$this->mOptionOverrides = null;
+		$this->mOptionsLoaded = false;
 
 		if ( $reloadFrom ) {
 			$this->mLoadedItems = array();
@@ -1391,6 +1394,22 @@ class User {
 		wfRunHooks( 'UserGetDefaultOptions', array( &$defOpt ) );
 
 		return $defOpt;
+	}
+
+	public static function getDefaultPreferences() {
+		global $wgUserPreferenceWhiteList;
+		$defaultOptions = User::getDefaultOptions();
+		$defaultOptionNames = array_keys($defaultOptions);
+
+		return array_reduce(
+			$defaultOptionNames,
+			function($preferences, $option) use ($wgUserPreferenceWhiteList, $defaultOptions) {
+				if (in_array($option, $wgUserPreferenceWhiteList['literals'])) {
+					$preferences[$option] = $defaultOptions[$option];
+				}
+
+				return $preferences;
+			}, []);
 	}
 
 	/**
@@ -2088,7 +2107,7 @@ class User {
 		$this->load();
 		if( $this->mId ) {
 			global $wgMemc, $wgSharedDB; # Wikia
-			$wgMemc->delete( wfMemcKey( 'user', 'id', $this->mId ) );
+			$wgMemc->delete( $this->getCacheKey() );
 			// Wikia: and save updated user data in the cache to avoid memcache miss and DB query
 			$this->saveToCache();
 			if( !empty( $wgSharedDB ) ) {
@@ -2301,6 +2320,31 @@ class User {
 		$this->load();
 		wfRunHooks( 'UserGetEmail', array( $this, &$this->mEmail ) );
 		return $this->mEmail;
+	}
+
+	/**
+	 * Return the new email address that is waiting for confirmation
+	 *
+	 * @return string
+	 */
+	public function getNewEmail() {
+		return $this->getGlobalAttribute( 'new_email' );
+	}
+
+	/**
+	 * Sets a new email address, to be confirmed
+	 *
+	 * @param $newEmail
+	 */
+	public function setNewEmail( $newEmail ) {
+		$this->setGlobalAttribute( 'new_email', $newEmail );
+	}
+
+	/**
+	 * Clear out the new email after its been confirmed
+	 */
+	public function clearNewEmail() {
+		$this->setGlobalAttribute( 'new_email', null );
 	}
 
 	/**
@@ -2661,16 +2705,31 @@ class User {
 	}
 
 	/**
-	 * Get a user flag local to this wikia.
+	 * Get a user flag local to a wikia.
 	 *
 	 * @param string $flag the flag name
 	 * @param int $cityId the city id
 	 * @param string $sep the separator between the name and the city id
-	 * @return string
+	 * @return bool
 	 * @see getGlobalFlag for more documentation about flags
 	 */
-	public function getLocalFlag($flag, $cityId = null, $sep = "-") {
-		return $this->getGlobalFlag(self::localToGlobalPropertyName($flag, $cityId, $sep));
+	public function getLocalFlag( $flag, $cityId = null, $sep = '-' ) {
+		$name = self::localToGlobalPropertyName( $flag, $cityId, $sep );
+		return $this->getGlobalFlag( $name );
+	}
+
+	/**
+	 * Set a user flag local to a wikia.
+	 *
+	 * @param string $flag the flag name
+	 * @param bool $value The value of the flag
+	 * @param int $cityId the city id
+	 * @param string $sep the separator between the name and the city id
+	 * @see getGlobalFlag for more documentation about flags
+	 */
+	public function setLocalFlag( $flag, $value, $cityId = null, $sep = '-' ) {
+		$name = self::localToGlobalPropertyName( $flag, $cityId, $sep );
+		$this->setGlobalFlag( $name, $value );
 	}
 
 	/**
@@ -3050,7 +3109,7 @@ class User {
 	/**
 	 * Check if user is allowed to access a feature / make an action
 	 *
-	 * @internal param \String $varargs permissions to test
+	 * internal param \String $varargs permissions to test
 	 * @return Boolean: True if user is allowed to perform *any* of the given actions
 	 *
 	 * @return bool
@@ -3067,7 +3126,7 @@ class User {
 
 	/**
 	 *
-	 * @internal param $varargs string
+	 * internal param $varargs string
 	 * @return bool True if the user is allowed to perform *all* of the given actions
 	 */
 	public function isAllowedAll( /*...*/ ){
@@ -4003,13 +4062,13 @@ class User {
 	private function getEmailController( $mailType ) {
 		$controller = "";
 		if ( $this->isConfirmationMail( $mailType ) ) {
-			$controller = 'Email\Controller\EmailConfirmation';
+			$controller = Email\Controller\EmailConfirmationController::class;
 		} elseif ( $this->isConfirmationReminderMail( $mailType ) ) {
-			$controller = 'Email\Controller\EmailConfirmationReminder';
+			$controller = Email\Controller\EmailConfirmationReminderController::class;
 		} elseif ( $this->isChangeEmailConfirmationMail( $mailType ) ) {
-			$controller = 'Email\Controller\ConfirmationChangedEmail';
+			$controller = Email\Controller\ConfirmationChangedEmailController::class;
 		} elseif ( $this->isReactivateAccountMail( $mailType ) ) {
-			$controller = 'Email\Controller\ReactivateAccount';
+			$controller = Email\Controller\ReactivateAccountController::class;
 		}
 
 		return $controller;
@@ -4034,6 +4093,7 @@ class User {
 	private function sendUsingEmailExtension( $emailController, $url ) {
 		$params = [
 			'targetUser' => $this->getName(),
+			'newEmail' => $this->getNewEmail(),
 			'confirmUrl' => $url,
 		];
 
@@ -4865,6 +4925,13 @@ class User {
 		$preferencesFromService = [];
 		if ($wgPreferencesUseService) {
 			$preferencesFromService = array_keys($this->userPreferences()->getPreferences($this->getId()));
+			$insertRows = array_reduce($insertRows, function($rows, $current) use ($preferencesFromService) {
+				if (!in_array($current['up_property'], $preferencesFromService)) {
+					$rows[] = $current;
+				}
+
+				return $rows;
+			}, []);
 		}
 
 		$deletePrefs = array_diff($deletePrefs, $preferencesFromService);

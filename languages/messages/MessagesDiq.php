@@ -277,7 +277,7 @@ $1',
 'badaccess-groups' => 'No fealiyetê şımawo waşte tenya karberanê {{PLURAL:$2|grubi|gruban ra yewi}} rê akerdeyo: $1.',
 
 'versionrequired'     => 'No $1 MediaWiki lazımo',
-'versionrequiredtext' => 'Seba gurenayışê na pele versiyonê MediaWiki $1 lazımo. 
+'versionrequiredtext' => 'Seba gurenayışê na pele versiyonê MediaWiki $1 lazımo.
 [[Special:Version|Versiyonê pele]] bıvêne.',
 
 'ok'                      => 'Temam',
@@ -410,8 +410,9 @@ Sebeb: "\'\'$2\'\'".',
 # Login and logout pages
 'logouttext'                 => "'''Şıma hesab qefelna.'''
 
-Nıka kamiyê xo eşkera mekere u siteyê {{SITENAME}} ra eşkeni devam bıkeri, ya zi [[Special:UserLogin|newe ra hesabê xo akere]] (wazeni pey nameyê xo, wazeni pey yewna name).
+Nıka kamiyê xo eşkera mekere u siteyê {{SITENAME}} ra eşkeni devam bıkeri, ya zi $1 (wazeni pey nameyê xo, wazeni pey yewna name).
 Wexta ke verhafızayê cıgerayoxê şıma pak beno no benate de taye peli de hesabe şıma akerde aseno.",
+'logouttext-link-text'       => 'newe ra hesabê xo akere',
 'welcomecreation'            => '== Şıma xeyr amey, $1! ==
 
 Hesabê şıma biyo a.

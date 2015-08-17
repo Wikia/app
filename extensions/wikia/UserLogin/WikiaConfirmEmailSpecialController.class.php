@@ -7,7 +7,7 @@
  *
  */
 class WikiaConfirmEmailSpecialController extends WikiaSpecialPageController {
-	const WELCOME_EMAIL_CONTROLLER = 'Email\Controller\Welcome';
+	const WELCOME_EMAIL_CONTROLLER = Email\Controller\WelcomeController::class;
 
 	public function __construct() {
 		parent::__construct( 'WikiaConfirmEmail', '', false );
@@ -151,12 +151,12 @@ class WikiaConfirmEmailSpecialController extends WikiaSpecialPageController {
 
 					$result = $response->getVal( 'result', '' );
 
-					$optionNewEmail = $this->wg->User->getGlobalAttribute( 'new_email' );
+					$optionNewEmail = $this->wg->User->getNewEmail();
 					if ( !empty( $optionNewEmail ) ) {
 						$user->setEmail( $optionNewEmail );
 					}
 					$user->confirmEmail();
-					$user->setGlobalAttribute( 'new_email', null );
+					$user->clearNewEmail();
 					$user->saveSettings();
 
 					// redirect user

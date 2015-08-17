@@ -683,8 +683,9 @@ Správca, ktorý ho zamkol ponúkol toto vysvetlenie: „$3“.',
 # Login and logout pages
 'logouttext' => "'''Práve ste sa odhlásili.'''
 
-Odteraz môžete používať {{GRAMMAR:akuzatív|{{SITENAME}}}} ako anonymný používateľ alebo sa môžete opäť [[Special:UserLogin|prihlásiť]] pod rovnakým alebo odlišným používateľským menom.
+Odteraz môžete používať {{GRAMMAR:akuzatív|{{SITENAME}}}} ako anonymný používateľ alebo sa môžete opäť $1 pod rovnakým alebo odlišným používateľským menom.
 Uvedomte si, že niektoré stránky sa môžu naďalej zobrazovať ako keby ste boli prihlásený, až kým nevymažete vyrovnávaciu pamäť vášho prehliadača.",
+'logouttext-link-text'       => 'prihlásiť',
 'welcomecreation' => '== Vitaj, $1! ==
 
 Vaše konto je vytvorené.
@@ -719,7 +720,7 @@ Zvoľte si prosím iné meno.',
 'createaccounterror' => 'Nepodarilo sa vytvoriť účet: $1',
 'nocookiesnew' => 'Používateľské konto bolo vytvorené, ale nie ste prihlásený. {{SITENAME}} používa cookies na prihlásenie. Máte cookies vypnuté. Zapnite ich a potom sa prihláste pomocou vášho nového používateľského mena a hesla.',
 'nocookieslogin' => '{{SITENAME}} používa cookies na prihlásenie. Vy máte cookies vypnuté. Prosíme, zapnite ich a skúste znovu.',
-'nocookiesfornew' => 'Používateľský účet nebol vytvorený, pretože sme nemohli potvrdiť jeho zdroj. 
+'nocookiesfornew' => 'Používateľský účet nebol vytvorený, pretože sme nemohli potvrdiť jeho zdroj.
 Ubezpečte sa, že máte povolené cookies, obnovte túto stránku a skúste to znova.',
 'noname' => 'Nezadali ste platné používateľské meno.',
 'loginsuccesstitle' => 'Prihlásenie úspešné',
@@ -3624,7 +3625,7 @@ ktorý zruší potvrdenie emailovej adresy:
 $5
 
 Platnosť tohto potvrdzovacieho kódu vyprší $4.',
-'confirmemail_body_set' => 'Niekto, pravdepodobne vy, z IP adresy $1, 
+'confirmemail_body_set' => 'Niekto, pravdepodobne vy, z IP adresy $1,
 nastavil e-mailovú adresu účtu „$2“ na túto adresu na {{GRAMMAR:genitív|{{SITENAME}}}}.
 
 Ak chcete potvrdiť, že tento účet skutočne patrí vám a aktivovať
@@ -3757,7 +3758,7 @@ Tiež môžete [[Special:EditWatchlist|použiť štandardný editor]].',
 'version-license' => 'Licencia',
 'version-poweredby-credits' => "Táto wiki beží na '''[//www.mediawiki.org/ MediaWiki]''', copyright © 2001-$1 $2.",
 'version-poweredby-others' => 'ďalší',
-'version-license-info' => 'MediaWiki je slobodný softvér; môžete ho šíriť a / alebo modifikovať podľa podmienok GNU General Public License, ktorú vydala Free Software Foundation; a to buď verzie 2 tejto licencie alebo (podľa vášho uváženia) ktorejkoľvek neskoršej verzie. 
+'version-license-info' => 'MediaWiki je slobodný softvér; môžete ho šíriť a / alebo modifikovať podľa podmienok GNU General Public License, ktorú vydala Free Software Foundation; a to buď verzie 2 tejto licencie alebo (podľa vášho uváženia) ktorejkoľvek neskoršej verzie.
 
 MediaWiki je šírený v nádeji, že bude užitočný, avšak BEZ AKEJKOĽVEK ZÁRUKY; neposkytujú sa ani implicitné záruky PREDAJNOSTI alebo VHODNOSTI NA URČITÝ ÚČEL. Ďalšie informácie nájdete v GNU General Public License.
 
@@ -3903,7 +3904,7 @@ Obrázky sa zobrazia v plnom rozlíšení, ostatné typy súborov sa spustia v p
 'newuserlog-byemail' => 'heslo poslané emailom',
 
 # Feedback
-'feedback-bugornote' => 'Ak ste pripravený podrobne popísať technický problém, prosím pošlite [$1 hlásenie o chybe]. 
+'feedback-bugornote' => 'Ak ste pripravený podrobne popísať technický problém, prosím pošlite [$1 hlásenie o chybe].
 V opačnom prípade môžete použiť zjednodušený formulár nižšie. Váš komentár sa pridá na stránku „[$3 $2]“ spolu s vašim používateľským meno a prehliadačom, ktorý používate.',
 'feedback-subject' => 'Predmet:',
 'feedback-message' => 'Správa:',

@@ -513,9 +513,10 @@ Die Sperri isch dur [[User:$1|$1]] yygrichtet wore mit dr Begrindig ''„$2“''
 # Login and logout pages
 'logouttext'                 => "'''Du bisch jetz abgmäldet.'''
 
-Du chasch {{SITENAME}} wyter anonym bruche, oder Du chasch di [[Special:UserLogin|wider aamälde]] mit em glyche oder eme andere Benutzername.
+Du chasch {{SITENAME}} wyter anonym bruche, oder Du chasch di $1 mit em glyche oder eme andere Benutzername.
 
 Ochat: s cha syy, ass bstimmti Syte eso aazeigt wäre, wie wänn Du allno aagmäldet wärsch, bis Du dr Zwischespycher vu Dyym Browser glescht hesch.",
+'logouttext-link-text'       => 'wider aamälde',
 'welcomecreation'            => '==Willcho, $1!==
 Dyy Benutzerkonto isch aaglait wore.
 Vergiss nid, dyni [[Special:Preferences|{{SITENAME}}-Yystellige]] aazpasse.',
