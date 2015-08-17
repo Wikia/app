@@ -308,8 +308,8 @@ class MercuryApiController extends WikiaController {
 			$wikiVariables['facebookAppId'] = $egFacebookAppId;
 		}
 
-		$wikiImages = (new WikiService())->getWikiImages( [$this->wg->CityId], 500 );
-		if ( is_array( $wikiImages ) && is_string( $wikiImages[$this->wg->CityId] ) ) {
+		$wikiImages = ( new WikiService() )->getWikiImages( [ $this->wg->CityId ], 500 );
+		if ( is_array( $wikiImages ) && !empty( $wikiImages[$this->wg->CityId] ) ) {
 			$wikiVariables['image'] = $wikiImages[$this->wg->CityId];
 		}
 
