@@ -1,7 +1,7 @@
 define(
 	'ext.wikia.contentReview.module',
-	['jquery', 'mw', 'wikia.loader', 'wikia.nirvana', 'wikia.window', 'BannerNotification'],
-	function($, mw, loader, nirvana, win, BannerNotification) {
+	['jquery', 'mw', 'wikia.loader', 'wikia.nirvana', 'BannerNotification'],
+	function($, mw, loader, nirvana, BannerNotification) {
 		'use strict';
 
 		function init() {
