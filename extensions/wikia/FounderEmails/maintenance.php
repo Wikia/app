@@ -26,14 +26,14 @@ if ( isset( $options['help'] ) ) {
 		--quiet			do not print anything to output\n\n" );
 }
 
-$events = array(
+$events = [
 	'daysPassed',
 	'viewsDigest',    // Process events for any users that want the daily views digest
 	'completeDigest', // Process events for any users that want the complete digest
-);
+];
 
 if ( isset( $options['event'] ) && in_array( $options['event'], $events ) ) {
-	$events = array( $options['event'] );
+	$events = [ $options['event'] ];
 }
 
 $wikiId = null;
