@@ -20,6 +20,23 @@ class AuthModalHooks {
 			\Wikia::addAssetsToOutput( 'auth_modal_js' );
 		}
 
+		self::displaySuccessRegistrationNotification();
+
 		return true;
+	}
+
+	private static function displaySuccessRegistrationNotification() {
+		global $wgUser, $wgRequest;
+
+		if (
+			$wgUser->isLoggedIn() &&
+			$wgRequest->getCookie( 'registerSuccess', WebResponse::NO_COOKIE_PREFIX ) === '1'
+		) {
+			$wgRequest->response()->setcookie( 'registerSuccess', '', time() - 3600, WebResponse::NO_COOKIE_PREFIX );
+			BannerNotificationsController::addConfirmation(
+				wfMessage( 'authmodal-registration-success', $wgUser->getName() )->escaped()
+			);
+		}
+
 	}
 }
