@@ -33,6 +33,22 @@ $messages['en'] = [
 	'content-review-module-submit-exception' => 'Unfortunately, we could not submit the changes for a review due to the following error: $1.',
 	'content-review-module-submit-error' => 'Unfortunately, we could not submit the changes for a review.',
 
+	'content-review-special-list-header-wiki-id' => 'Wiki id',
+	'content-review-special-list-header-page-name' => 'Page name',
+	'content-review-special-list-header-revision-id' => 'Revision id',
+	'content-review-special-list-header-submit-user' => 'Submit user',
+	'content-review-special-list-header-status' => 'Status',
+	'content-review-special-list-header-submit-time' => 'Submit time',
+	'content-review-special-list-header-reviewer' => 'Reviewer id',
+	'content-review-special-list-header-review-start' => 'Review start',
+	'content-review-icons-actions-diff' => 'Start review',
+	'content-review-special-list-header-actions' => 'Actions',
+
+	'content-review-status-unreviewed' => 'Unreviewed',
+	'content-review-status-in-review' => 'In review',
+	'content-review-status-approved' => 'Approved',
+	'content-review-status-rejected' => 'Rejected,'
+
 ];
 
 /**
