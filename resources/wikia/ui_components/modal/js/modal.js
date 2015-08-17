@@ -174,7 +174,7 @@ define('wikia.ui.modal', [
 		this.$element = $(jQuerySelector);
 		this.$content = this.$element.children('section');
 		this.$close = this.$element.find('.' + CLOSE_CLASS);
-		this.$blackout = $('#' + blackoutId).addClass(BLACKOUT_HIDDEN_CLASS);
+		this.$blackout = $('#' + blackoutId);
 
 		/** ATTACHING EVENT HANDLERS TO MODAL */
 

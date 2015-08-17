@@ -21,9 +21,6 @@ describe('Modal module', function () {
 				},
 				on: function () {},
 				click: function () {},
-				addClass: function () {
-					return this;
-				},
 				removeClass: function () {
 					return this;
 				}
