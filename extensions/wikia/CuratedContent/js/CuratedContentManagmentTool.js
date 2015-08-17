@@ -1,14 +1,18 @@
-/* global wgNamespaceIds, wgFormattedNamespaces, mw, wgServer, wgScript */
+/* global mw, wgServer, wgScript */
 /* jshint maxlen: false */
 /* jshint loopfunc: false */
 /* jshint camelcase: false */
 'use strict';
 
-require(['wikia.window', 'jquery', 'wikia.nirvana', 'wikia.tracker', 'JSMessages'], function (window, $, nirvana, tracker, msg) {
+require(
+	['wikia.window', 'jquery', 'wikia.nirvana', 'wikia.tracker', 'JSMessages'],
+	function (window, $, nirvana, tracker, msg)
+{
 	// usefull shortcuts
 	$.fn.removeError = function () {
 		return this.removeClass('error').popover('destroy');
 	};
+
 	$.fn.addError = function (message) {
 		return this.addClass('error')
 			.popover('destroy')
@@ -20,7 +24,6 @@ require(['wikia.window', 'jquery', 'wikia.nirvana', 'wikia.tracker', 'JSMessages
 
 	$(function () {
 		mw.loader.using(['jquery.autocomplete', 'jquery.ui.sortable', 'wikia.aim', 'wikia.yui'], function () {
-
 
 			var d = document,
 				item = mw.config.get('itemTemplate'),
@@ -67,6 +70,7 @@ require(['wikia.window', 'jquery', 'wikia.nirvana', 'wikia.tracker', 'JSMessages
 					// validate form on init
 					checkForm();
 				},
+
 				addNew = function (row, elem) {
 					var cat;
 
@@ -87,8 +91,8 @@ require(['wikia.window', 'jquery', 'wikia.nirvana', 'wikia.tracker', 'JSMessages
 				/**
 				 * Validate input elements
 				 *
-				 * @param elements
-				 * @param options array consists of ['required', 'limit', 'duplicates']
+				 * @param {jQuery} elements
+				 * @param {array} options array consists of ['required', 'limit', 'duplicates']
 				 */
 				checkInputs = function (elements, options) {
 					var cachedVals = [],
@@ -128,6 +132,7 @@ require(['wikia.window', 'jquery', 'wikia.nirvana', 'wikia.tracker', 'JSMessages
 						$this.removeError();
 					});
 				},
+
 				checkImages = function () {
 					$ul.find('.image.error').removeError();
 
@@ -141,6 +146,7 @@ require(['wikia.window', 'jquery', 'wikia.nirvana', 'wikia.tracker', 'JSMessages
 						$lastSection.parent().find('.image').removeError();
 					}
 				},
+
 				checkForm = function () {
 					$save.removeClass();
 
@@ -178,11 +184,13 @@ require(['wikia.window', 'jquery', 'wikia.nirvana', 'wikia.tracker', 'JSMessages
 						return true;
 					}
 				},
+
 				track = tracker.buildTrackingFunction({
 					action: Wikia.Tracker.ACTIONS.CLICK,
 					category: 'special-curated-content',
 					trackingMethod: 'analytics'
 				}),
+
 				onImageLoadFail = function ($image) {
 					$image
 						.addError(imageMissingError)
@@ -193,6 +201,7 @@ require(['wikia.window', 'jquery', 'wikia.nirvana', 'wikia.tracker', 'JSMessages
 					$image.stopThrobbing();
 					checkForm();
 				},
+
 				loadImage = function ($image, imgTitle, catImage) {
 					$image.startThrobbing();
 
@@ -209,7 +218,9 @@ require(['wikia.window', 'jquery', 'wikia.nirvana', 'wikia.tracker', 'JSMessages
 									.removeError()
 									.css('backgroundImage', 'url(' + data.url + ')')
 									.data('id', data.id)
-									.attr('data-id', data.id);
+									.attr('data-id', data.id)
+									.data('crop', '')
+									.removeAttr('data-crop');
 
 								if (!catImage) {
 									$image.siblings().last().addClass('photo-remove');
@@ -247,8 +258,8 @@ require(['wikia.window', 'jquery', 'wikia.nirvana', 'wikia.tracker', 'JSMessages
 							// This has to happen inside setTimeout because updating value from autocomplete
 							// happens after blur event so value passed to loadImage is wrong.
 							// With setTimeout we are waiting for correct value to appear inside input
-							setTimeout(function() {
-								loadImage($imageForSection, $(self).val())
+							setTimeout(function () {
+								loadImage($imageForSection, $(self).val());
 							}, 500);
 						}
 					} else {
@@ -282,7 +293,8 @@ require(['wikia.window', 'jquery', 'wikia.nirvana', 'wikia.tracker', 'JSMessages
 				return {
 					title: $lia.find('.item-input').val(),
 					label: $lia.find('.name').val(),
-					image_id: $lia.find('.image').data('id') || 0
+					image_id: $lia.find('.image').data('id') || 0,
+					image_crop: $lia.find('.image').data('crop') || ''
 				};
 			}
 
@@ -290,6 +302,7 @@ require(['wikia.window', 'jquery', 'wikia.nirvana', 'wikia.tracker', 'JSMessages
 				var $lia = $(li),
 					name = $lia.find('.section-input').val() || '',
 					imageId = $lia.find('.image').data('id') || 0,
+					imageCrop = $lia.find('.image').data('crop') || '',
 					featured = $lia.hasClass('featured') || false,
 					items = [],
 					result;
@@ -301,11 +314,14 @@ require(['wikia.window', 'jquery', 'wikia.nirvana', 'wikia.tracker', 'JSMessages
 				result = {
 					title: name,
 					image_id: imageId,
+					image_crop: imageCrop,
 					items: items
 				};
+
 				if (featured) {
 					result.featured = true;
 				}
+
 				return result;
 			}
 
@@ -403,6 +419,7 @@ require(['wikia.window', 'jquery', 'wikia.nirvana', 'wikia.tracker', 'JSMessages
 						}
 						data.push(sectionData);
 					});
+
 					nirvana.sendRequest({
 						controller: 'CuratedContentSpecial',
 						method: 'save',
@@ -415,7 +432,7 @@ require(['wikia.window', 'jquery', 'wikia.nirvana', 'wikia.tracker', 'JSMessages
 							$sections = $ul.find('.section:not(.featured)');
 
 						if (data.error) {
-							[].forEach.call(data.error, function(err) {
+							[].forEach.call(data.error, function (err) {
 								// err := { target: <label>, type: [item,section,featured], reason: <error> }
 								var message = gerErrorMessageFromErrReason(err.reason);
 
@@ -444,7 +461,12 @@ require(['wikia.window', 'jquery', 'wikia.nirvana', 'wikia.tracker', 'JSMessages
 				on('click', '.photo-remove', function () {
 					var $this = $(this),
 						$line = $this.parent(),
-						$image = $line.find('.image').removeAttr('data-id');
+						$image = $line
+							.find('.image')
+							.data('id', 0)
+							.removeAttr('data-id')
+							.data('crop', '')
+							.removeAttr('data-crop');
 
 					$this.removeClass('photo-remove');
 					loadImage($image, $line.find('.item-input').val(), true);
