@@ -10,9 +10,8 @@
 .auth-blackout {
 	@include blackout;
 	box-sizing: border-box;
-  opacity: 1;
-
-  padding: 50px 10%;
+	opacity: 1;
+	padding: 50px 10%;
 }
 
 .auth-modal {

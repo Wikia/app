@@ -12,6 +12,13 @@ define('AuthModal', ['jquery', 'AuthComponent', 'wikia.window'], function ($, Au
 		$blackout = $('.auth-blackout');
 		modal = $blackout.find('.auth-modal')[0];
 		$('.auth-blackout, .auth-modal .close').click(close);
+		$(window.document).keyup(onKeyUp);
+	}
+
+	function onKeyUp (event) {
+		if (event.keyCode === 27) {
+			close();
+		}
 	}
 
 	function close () {
