@@ -1,76 +1,18 @@
-/*global define, require*/
+/*global define*/
 define('ext.wikia.adEngine.template.modal', [
-	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adHelper',
 	'ext.wikia.adEngine.provider.gpt.adDetect',
+	'ext.wikia.adEngine.template.modalHandlerFactory',
 	'wikia.document',
 	'wikia.log',
 	'wikia.iframeWriter',
-	'wikia.window',
-	require.optional('wikia.ui.factory')
-], function (adContext, adHelper, adDetect, doc, log, iframeWriter, win, uiFactory) {
+	'wikia.window'
+], function (adHelper, adDetect, modalHandlerFactory, doc, log, iframeWriter, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.template.modal',
-		modalId = 'ext-wikia-adEngine-template-modal',
-		lightBoxExpansionModel = {
-			mercury: {
-				availableHeightRatio: 1,
-				availableWidthRatio: 1,
-				heightSubtract: 80,
-				minWidth: 100,
-				minHeight: 100,
-				maximumRatio: 3
-			},
-			oasis: {
-				availableHeightRatio: 0.8,
-				availableWidthRatio: 0.9,
-				heightSubtract: 90,
-				minWidth: 200,
-				minHeight: 150,
-				maximumRatio: 2
-			}
-		},
-		mercuryModalHandler = {
-			show: function () {
-				win.Mercury.Modules.Ads.getInstance().showLightbox();
-			},
+		modalHandler = modalHandlerFactory.create();
 
-			create: function (adContainer, modalVisible) {
-				win.Mercury.Modules.Ads.getInstance().createLightbox(adContainer, modalVisible);
-			}
-		},
-		oasisModalHandler = {
-			show: function () {
-				if (this.modal) {
-					this.modal.show();
-				}
-			},
-
-			create: function (adContainer, modalVisible) {
-				var modalConfig = {
-					vars: {
-						id: modalId,
-						size: 'medium',
-						content: '',
-						title: 'Advertisement',
-						closeText: 'Close',
-						buttons: []
-					}
-				};
-
-				uiFactory.init('modal').then((function (uiModal) {
-					uiModal.createComponent(modalConfig, (function (modal) {
-						this.modal = modal;
-						modal.$content.append(adContainer);
-						modal.$element.width('auto');
-						if (modalVisible) {
-							this.show();
-						}
-					}).bind(this));
-				}).bind(this));
-			}
-		};
 	/**
 	 * Show the modal ad
 	 *
@@ -99,15 +41,9 @@ define('ext.wikia.adEngine.template.modal', [
 					height: params.height
 				}
 			},
-			modalHandler,
-			skin = adContext.getContext().targeting.skin,
-			lightboxParams = lightBoxExpansionModel[skin];
+			lightboxParams = modalHandler.getExpansionModel();
 
-		if (skin === 'mercury') {
-			modalHandler = mercuryModalHandler;
-		} else if (skin === 'oasis') {
-			modalHandler = oasisModalHandler;
-		} else {
+		if (modalHandler === null) {
 			return;
 		}
 
