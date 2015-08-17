@@ -1,4 +1,5 @@
 @import 'skins/shared/mixins/transform';
+@import 'skins/shared/mixins/blackout';
 
 @keyframes auth-throbber-spin {
 	100% {
@@ -7,16 +8,11 @@
 }
 
 .auth-blackout {
-	background: rgba(0, 0, 0, .7);
+	@include blackout;
 	box-sizing: border-box;
-	height: 100%;
-	left: 0;
-	padding: 50px 10%;
-	position: fixed;
-	top: 0;
-	width: 100%;
-	//overrides global navigation
-	z-index: 5000102;
+  opacity: 1;
+
+  padding: 50px 10%;
 }
 
 .auth-modal {
