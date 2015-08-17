@@ -80,13 +80,13 @@ ve.dm.WikiaTransclusionModel.prototype.fetchInfoboxParamsRequestDone = function 
 				};
 			}
 
-			if (page.infoboxes) {
+			page.infoboxes.forEach(function( infobox ) {
 				//for now we don't want to support complex (with more than one infobox) templates
-				for ( i = 0; i < page.infoboxes[0].sources.length; i++ ) {
-					specs[page.title].params[ page.infoboxes[0].sources[i] ] = {};
-					specs[page.title].paramOrder.push( page.infoboxes[0].sources[i] );
+				for ( i = 0; i < infobox.sources.length; i++ ) {
+					specs[page.title].params[ infobox.sources[i] ] = {};
+					specs[page.title].paramOrder.push( infobox.sources[i] );
 				}
-			}
+			})
 		}
 
 		ve.extendObject( this.specCache, specs );
