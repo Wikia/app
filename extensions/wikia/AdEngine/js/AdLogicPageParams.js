@@ -6,11 +6,12 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 	'wikia.log',
 	'wikia.document',
 	'wikia.location',
+	'wikia.querystring',
 	'wikia.window',
 	require.optional('ext.wikia.adEngine.lookup.services'),
 	require.optional('wikia.abTest'),
 	require.optional('wikia.krux')
-], function (adContext, pvCounter, log, doc, loc, win, lookups, abTest, krux) {
+], function (adContext, pvCounter, log, doc, loc, Querystring, win, lookups, abTest, krux) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.adLogicPageParams',
@@ -197,6 +198,14 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 		return win.innerWidth > win.innerHeight ? '4:3' : '3:4';
 	}
 
+	function getVerticalName(targeting) {
+		var qs = new Querystring();
+		if (getHostname() === 'showcase' || qs.getVal('showcase', '0') === '1') {
+			return 'showcase';
+		}
+		return targeting.mappedVerticalName || targeting.wikiCategory;
+	}
+
 	/**
 	 * Returns page level params
 	 * @param {Object} options
@@ -224,7 +233,7 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 			zone1 = '_' + getDartHubName() + '_hub';
 			zone2 = 'hub';
 		} else {
-			site = targeting.mappedVerticalName || targeting.wikiCategory;
+			site = getVerticalName(targeting);
 			zone1 = dbName;
 			zone2 = targeting.pageType || 'article';
 		}
