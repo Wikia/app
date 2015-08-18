@@ -26,8 +26,8 @@ class PortableInfoboxClassification {
 		if ( strripos( $titleText, $titleNeedle ) !== false ) {
 			$portableInfoboxNeedle = '<infobox';
 
-			// If a portable infobox markup was found
-			// it means that the template doesn't have a non-portable infobox
+			// if a portable infobox was not found
+			// it means that the template has a non-portable one
 			return strpos( $contentText, $portableInfoboxNeedle ) === false;
 		} else {
 			$nonportableInfoboxRegEx = '/class=\"[^\"]*infobox[^\"]*\"/i';
