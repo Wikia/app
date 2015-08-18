@@ -13,7 +13,7 @@ class ContentReviewApiController extends WikiaApiController {
 	 * Check permissions and add page to review queue
 	 *
 	 * @throws BadRequestApiException
-	 * @throws InvalidDataApiException
+	 * @throws NotFoundApiException
 	 * @throws PermissionsException
 	 * @throws \FluentSql\Exception\SqlException
 	 */
@@ -27,17 +27,22 @@ class ContentReviewApiController extends WikiaApiController {
 		$wikiId = $this->request->getInt( 'wikiId' );
 		$pageId = $this->request->getInt( 'pageId' );
 
+		$title = Title::newFromID( $pageId );
+		if ( $title === null || !$title->isJsPage() ) {
+			throw new NotFoundApiException( "Page for ID {$pageId} does not exist.");
+		}
+
 		$submitUserId = $this->wg->User->getId();
 		if ( !$submitUserId > 0 || !$this->canUserSubmit( $pageId ) ) {
 			throw new PermissionsException( 'edit' );
 		}
 
-		$title = Title::newFromID( $pageId );
-		if ( $title === null ) {
-			throw new InvalidDataApiException( "Page for ID {$pageId} does not exist.");
-		}
-
 		$revisionId = $title->getLatestRevID();
+		$revisionData = $this->getLatestReviewedRevisionFromDB( $wikiId, $pageId );
+
+		if ( $revisionId == $revisionData['revision_id'] ) {
+			throw new BadRequestApiException( 'Current revision is already reviewed.');
+		}
 
 		( new ReviewModel() )->submitPageForReview( $wikiId, $pageId,
 			$revisionId, $submitUserId );
@@ -49,7 +54,7 @@ class ContentReviewApiController extends WikiaApiController {
 	 * Enable test mode
 	 *
 	 * @throws BadRequestApiException
-	 * @throws InvalidDataApiException
+	 * @throws NotFoundApiException
 	 * @throws PermissionsException
 	 */
 	public function enableTestMode() {
@@ -61,14 +66,14 @@ class ContentReviewApiController extends WikiaApiController {
 
 		$pageId = $this->request->getInt( 'pageId' );
 
+		$title = Title::newFromID( $pageId );
+		if ( $title === null || !$title->isJsPage() ) {
+			throw new NotFoundApiException( "Page for ID {$pageId} does not exist.");
+		}
+
 		$submitUserId = $this->wg->User->getId();
 		if ( !$submitUserId > 0 || !$this->canUserSubmit( $pageId )	) {
 			throw new PermissionsException( 'edit' );
-		}
-
-		$title = Title::newFromID( $pageId );
-		if ( $title === null || !$title->isJsPage() ) {
-			throw new InvalidDataApiException();
 		}
 
 		Wikia\ContentReview\Helper::setContentReviewTestMode();
@@ -93,8 +98,7 @@ class ContentReviewApiController extends WikiaApiController {
 		$wikiId = $this->request->getInt( 'wikiId' );
 		$pageId = $this->request->getInt( 'pageId' );
 
-		$revisionModel = new CurrentRevisionModel();
-		$revisionData = $revisionModel->getLatestReviewedRevision( $wikiId, $pageId );
+		$revisionData = $this->getLatestReviewedRevisionFromDB( $wikiId, $pageId );
 
 		$reviewModel = new ReviewModel();
 		$reviewData = $reviewModel->getPageStatus( $wikiId, $pageId );
@@ -112,8 +116,7 @@ class ContentReviewApiController extends WikiaApiController {
 		$wikiId = $this->request->getInt( 'wikiId' );
 		$pageId = $this->request->getInt( 'pageId' );
 
-		$revisionModel = new CurrentRevisionModel();
-		$revisionData = $revisionModel->getLatestReviewedRevision( $wikiId, $pageId );
+		$revisionData = $this->getLatestReviewedRevisionFromDB( $wikiId, $pageId );
 
 		$this->makeSuccessResponse( $revisionData );
 	}
@@ -127,6 +130,10 @@ class ContentReviewApiController extends WikiaApiController {
 		);
 
 		$this->notification = $notification;
+	}
+
+	private function getLatestReviewedRevisionFromDB( $wikiId, $pageId ) {
+		return ( new CurrentRevisionModel() )->getLatestReviewedRevision( $wikiId, $pageId );
 	}
 
 	private function canUserSubmit( $pageId ) {
