@@ -12,6 +12,7 @@ class MercuryApiController extends WikiaController {
 	const DEFAULT_PAGE = 1;
 
 	const WIKI_VARIABLES_CACHE_TTL = 60;
+	const WIKI_IMAGE_SIZE = 500;
 
 	private $mercuryApi = null;
 
@@ -308,7 +309,7 @@ class MercuryApiController extends WikiaController {
 			$wikiVariables['facebookAppId'] = $egFacebookAppId;
 		}
 
-		$wikiImages = ( new WikiService() )->getWikiImages( [ $this->wg->CityId ], 500 );
+		$wikiImages = ( new WikiService() )->getWikiImages( [ $this->wg->CityId ], self::WIKI_IMAGE_SIZE );
 		if ( !empty( $wikiImages[$this->wg->CityId] ) ) {
 			$wikiVariables['image'] = $wikiImages[$this->wg->CityId];
 		}
