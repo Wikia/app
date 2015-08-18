@@ -844,6 +844,8 @@ class CurlHttpRequest extends MWHttpRequest {
 							'value_raw'  => $value,
 							'valid_handle' => is_resource( $curlHandle ),
 							'url'        => $this->url,
+							'error'      => curl_error( $curlHandle ),
+							'errno'      => curl_errno( $curlHandle ),
 							'exception'  => $e
 						]
 					);
