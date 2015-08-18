@@ -28,7 +28,7 @@ class ContentReviewApiController extends WikiaApiController {
 		$pageId = $this->request->getInt( 'pageId' );
 
 		$submitUserId = $this->wg->User->getId();
-		if ( !$submitUserId > 0 || !$this->canUserSubmit( $pageId )	) {
+		if ( !$submitUserId > 0 || !$this->canUserSubmit( $pageId ) ) {
 			throw new PermissionsException( 'edit' );
 		}
 
