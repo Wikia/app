@@ -72,7 +72,7 @@ $messages['qqq'] = [
 
 	'content-review-module-current-title' => 'Title of a the right rail module on a page already sent for a review with the current version.',
 	'content-review-module-current-description' => 'The content of the right rail module explaining that the current version of a page is awaiting for a review.',
-	
+
 	'content-review-module-submit-success-insert' => 'A message shown to a user in a Banner Notification if a page has been added to review.',
 	'content-review-module-submit-success-update' => 'A message shown to a user in a Banner Notification if a page had an unreviewed version submitted and it got updated.',
 	'content-review-module-submit-success-exception' => 'A message shown to a user in a Banner Notification if a known error happened. $1 is the error message.',
