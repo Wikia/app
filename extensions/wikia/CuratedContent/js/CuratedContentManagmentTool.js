@@ -364,14 +364,25 @@ require(
 					default: '.section-input'
 				}, reason).addError(message);
 			}
+			function isFeaturedItem($node) {
+				return $node.closest('li').prevUntil('.section').prev().last().hasClass('featured');
+			}
 			function iterateItemsForErrors($nodes, err, message) {
 				var errLabel = err.target;
 
-				if (err.type === 'item' || err.type === 'featured') {
+				if (err.type === 'item' ) {
 					$nodes.each(function () {
 						var $this = $(this);
 						// label for items is held in .name
-						if ($this.find('.name').val() === errLabel) {
+						if ($this.find('.name').val() === errLabel && !isFeaturedItem($this)) {
+							addErrorToItem($this, err.reason, message);
+						}
+					});
+				} else if (err.type === 'featured') {
+					$nodes.each(function () {
+						var $this = $(this);
+						// label for items is held in .name
+						if ($this.find('.name').val() === errLabel && isFeaturedItem($this)) {
 							addErrorToItem($this, err.reason, message);
 						}
 					});
