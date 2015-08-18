@@ -139,7 +139,7 @@ class MoveNotices extends Maintenance {
 
 		foreach( $templateNames as $template ) {
 			$escapedTemplate = wfEscapeShellArg( $template );
-			$cmd = "SERVER_ID=$this->wikiId /usr/bin/php {$IP}/extensions/wikia/Flags/maintenance/MoveNotice.php --template='{$escapedTemplate}' {$options}";
+			$cmd = "SERVER_ID=$this->wikiId /usr/bin/php {$IP}/extensions/wikia/Flags/maintenance/MoveNotice.php --template={$escapedTemplate} {$options}";
 			$this->output("Run cmd: $cmd\n");
 			$output = wfShellExec( $cmd );
 
@@ -231,7 +231,7 @@ class MoveNotices extends Maintenance {
 
 		if ( $logName ) {
 			$logName = wfEscapeShellArg( $logName );
-			$options .= " --logFile='$logName'";
+			$options .= " --logFile=$logName";
 		}
 
 		return $options;

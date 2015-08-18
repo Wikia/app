@@ -124,7 +124,7 @@ class FlagsExtractTemplatesTask extends BaseTask {
 		$wikiId = $this->getWikiId();
 		$escapedTemplate = wfEscapeShellArg( $template );
 
-		$cmd = "SERVER_ID={$wikiId} /usr/bin/php {$IP}/extensions/wikia/Flags/maintenance/MoveNotice.php --template='{$escapedTemplate}' --replaceTop --add --remove";
+		$cmd = "SERVER_ID={$wikiId} /usr/bin/php {$IP}/extensions/wikia/Flags/maintenance/MoveNotice.php --template={$escapedTemplate} --replaceTop --add --remove";
 		$output = wfShellExec( $cmd );
 		$this->info( $output );
 	}
