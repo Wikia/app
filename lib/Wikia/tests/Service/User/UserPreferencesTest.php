@@ -29,8 +29,8 @@ class UserPreferencesTest extends PHPUnit_Framework_TestCase {
 		$defaultPrefs = ["pref1" => "val1"];
 		$preferences = new UserPreferences($this->service, [], $defaultPrefs, []);
 
-		$this->assertEquals("val1", $preferences->getFromDefault("pref1"));
-		$this->assertNull($preferences->getFromDefault("pref2"));
+		$this->assertEquals("val1", $preferences->getFromDefault("pref1")->get());
+		$this->assertNull($preferences->getFromDefault("pref2")->get());
 	}
 
 	public function testGet() {

@@ -3,6 +3,7 @@
 namespace Wikia\Service\User\Preferences;
 
 use Wikia\Domain\User\Preference;
+use Wikia\Util\Optional\Optional;
 
 class UserPreferences {
 	const HIDDEN_PREFS = "user_preferences_hidden_prefs";
@@ -59,7 +60,7 @@ class UserPreferences {
 		$preferences = $this->load($userId);
 
 		if (in_array($pref, $this->hiddenPrefs) && !$ignoreHidden) {
-			return $this->getFromDefault($pref);
+			return $this->getFromDefault($pref)->orElse($default);
 		} elseif (!array_key_exists($pref, $preferences)) {
 			return $default;
 		}
@@ -90,8 +91,8 @@ class UserPreferences {
 			}
 
 			$default = $this->getFromDefault( $pref );
-			if ( $val === null && isset( $default ) ) {
-				$val = $default;
+			if ( $val === null && $default->isPresent() ) {
+				$val = $default->get();
 			}
 			$this->preferences[ $userId ][ $pref ] = $val;
 			$prefToSave[ ] = new Preference( $pref, $val );
@@ -100,12 +101,16 @@ class UserPreferences {
 		$this->save( $userId, $prefToSave );
 	}
 
+	/**
+	 * @param $pref
+	 * @return Optional
+	 */
 	public function getFromDefault($pref) {
 		if (isset($this->defaultPreferences[$pref])) {
-			return $this->defaultPreferences[$pref];
+			return Optional::ofNullable($this->defaultPreferences[$pref]);
 		}
 
-		return null;
+		return Optional::emptyOptional();
 	}
 
 	private function load($userId) {
@@ -144,7 +149,9 @@ class UserPreferences {
 	private function prefIsSaveable($pref, $value) {
 		$default = $this->getFromDefault($pref);
 
-		return in_array($pref, $this->forceSavePrefs) || $value != $default ||
-			($default != null && $value !== false && $value !== null);
+		return
+			in_array($pref, $this->forceSavePrefs) ||
+			!$default->isPresent() ||
+			$value !== $default->get();
 	}
 }
