@@ -242,8 +242,6 @@ abstract class Base extends \WikiaModel {
 				}
 				$this->addVideo( $video );
 			}
-		} else {
-			$this->logInfo('videos in response from VideoHandler:getVideoList is empty');
 		}
 	}
 
