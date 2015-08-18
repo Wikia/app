@@ -50,7 +50,7 @@ class RenameUserHelper {
 		}
 		else { // on devbox - set up the list manually
 			$result = array(
-				//165, // firefly
+				165, // firefly
 				831, // muppet
 			);
 		}
