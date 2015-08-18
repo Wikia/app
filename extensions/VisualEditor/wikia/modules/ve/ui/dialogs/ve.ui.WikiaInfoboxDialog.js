@@ -81,6 +81,23 @@ ve.ui.WikiaInfoboxDialog.prototype.getSetupProcess = function ( data ) {
 
 };
 
+
+/**
+ * @inheritdoc
+ */
+ve.ui.WikiaInfoboxDialog.prototype.getTeardownProcess = function ( data ) {
+	return ve.ui.WikiaInfoboxDialog.super.prototype.getTeardownProcess.call( this, data )
+		.first( function () {
+			// Cleanup
+			this.$element.removeClass( 've-ui-mwInfoboxDialog-ready' );
+			this.transclusionModel.disconnect( this );
+			this.transclusionModel.abortRequests();
+			this.transclusionModel = null;
+			this.bookletLayout.clearPages();
+			this.content = null;
+		}, this )
+};
+
 /**
  * Handle the transclusion being ready to use.
  */
@@ -108,7 +125,8 @@ ve.ui.WikiaInfoboxDialog.prototype.showItems = function () {
 	for ( key in this.fullParamsList ) {
 		if ( this.fullParamsList.hasOwnProperty( key ) ) {
 			obj = this.fullParamsList[key];
-			if ( obj.type === 'data' ) {
+			//TODO: add displaying different imputs according to param type
+			if ( obj.type === 'data' || obj.type === 'image') {
 				tab.push(this.showDataItem( obj ));
 			}
 		}

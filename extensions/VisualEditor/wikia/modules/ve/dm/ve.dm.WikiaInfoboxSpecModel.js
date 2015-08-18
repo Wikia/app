@@ -35,12 +35,12 @@ ve.dm.WikiaInfoboxSpecModel = function VeDmWikiaInfoboxSpecModel( template ) {
 			parent: 'Size',
 			type: 'data'
 		},
-		Date_of_birth: {
-			name: 'Date of birth',
+		date_of_birth: {
+			name: 'date_of_birth',
 			type: 'data'
 		},
-		Param_from_spec: {
-			name: 'Param_from_spec',
+		param_from_spec: {
+			name: 'param_from_spec',
 			type: 'data'
 		}
 	};
