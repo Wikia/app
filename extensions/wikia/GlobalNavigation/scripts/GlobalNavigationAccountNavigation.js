@@ -10,7 +10,6 @@ require([
 	var $globalNavigation = $('#globalNavigation'),
 		loginAjaxForm = false,
 		$entryPoint;
-	;
 
 	/**
 	 * @desc Handle click on entry point for logged in users.
@@ -22,11 +21,10 @@ require([
 		var $this = $(event.currentTarget);
 		event.preventDefault();
 		event.stopImmediatePropagation();
-
 		if ($entryPoint.hasClass('active')) {
 			win.location = $this.attr('href') || $this.children('a').attr('href');
 		} else {
-			dropdowns.openDropdown.call($entryPoint.get(0));
+			dropdowns.openDropdown.call(this.$entryPoint.get(0));
 		}
 	}
 
@@ -57,13 +55,13 @@ require([
 		}
 	}
 
-	function oldAccountNav () {
+	function oldAccountNav ($entryPoint) {
 		var $userLoginDropdown = $('#UserLoginDropdown');
 
 		dropdowns.attachDropdown($entryPoint, {
 			onOpen: onDropdownOpen,
 			onClose: onDropdownClose,
-			onClick: !!win.wgUserName ? onEntryPointClick : false,
+			onClick: !!win.wgUserName ? onEntryPointClick.bind({$entryPoint: $entryPoint}) : false,
 			onClickTarget: '.links-container'
 		});
 
@@ -110,7 +108,7 @@ require([
 			});
 		}
 		else {
-			oldAccountNav();
+			oldAccountNav($entryPoint);
 		}
 	});
 });
