@@ -17,6 +17,7 @@ use Flags\FlagsLogTask;
 use Flags\Models\Flag;
 use Flags\Models\FlagType;
 use Flags\FlagsHelper;
+use Flags\FlagsExtractTemplatesTask;
 
 class FlagsApiController extends FlagsApiBaseController {
 
@@ -230,16 +231,21 @@ class FlagsApiController extends FlagsApiBaseController {
 	 * Optional parameters:
 	 * @requestParam boolean fetch_params if set to true, tries to fetch all variables
 	 * 		in template passed via flag_view parameter
+	 * @requestParam boolean migrate_templates if set to true, launch task which migrate
+	 * 		existing template (flag_view) on articles to flag
 	 * @requestParam string flag_params_names A JSON-encoded array of names of parameters
 	 * 		It's used for rendering inputs in the "Add a flag" form.
 	 */
 	public function addFlagType() {
+		global $wgHideFlagsExt;
+
 		$this->checkAdminPermissions();
 
 		try {
 			$this->processRequest();
 
 			$fetchParams = $this->request->getBool( 'fetch_params' );
+			$migrateTemplates = $this->request->getBool( 'migrate_templates' );
 
 			if ( $fetchParams && !empty( $this->params['flag_view'] ) ) {
 				$params = $this->getTemplateVariables( $this->params['flag_view'] );
@@ -255,6 +261,14 @@ class FlagsApiController extends FlagsApiBaseController {
 
 			$flagTypeModel = new FlagType();
 			$modelResponse = $flagTypeModel->addFlagType( $this->params );
+
+			if ( $migrateTemplates && empty( $wgHideFlagsExt ) ) {
+				$task = new FlagsExtractTemplatesTask();
+				$task->wikiId( $this->params['wiki_id'] );
+				$task->call( 'migrateTemplatesToFlags', $this->params['flag_view'] );
+				$task->prioritize();
+				$task->queue();
+			}
 
 			$this->getCache()->purgeFlagTypesForWikia();
 
@@ -334,11 +348,13 @@ class FlagsApiController extends FlagsApiBaseController {
 		try {
 			$this->processRequest();
 
+			$pagesIds = $this->getPageIdsWithFlag( $this->params['flag_type_id'] );
+
 			$flagTypeModel = new FlagType();
 			$modelResponse = $flagTypeModel->removeFlagType( $this->params );
 
 			$this->getCache()->purgeFlagTypesForWikia();
-			$this->purgePagesWithFlag( $this->params['flag_type_id'] );
+			$this->purgePagesWithFlag( $pagesIds );
 
 			$this->makeSuccessResponse( $modelResponse );
 		} catch( Exception $e ) {
@@ -370,7 +386,8 @@ class FlagsApiController extends FlagsApiBaseController {
 			$modelResponse = $flagTypeModel->updateFlagType( $this->params );
 
 			$this->getCache()->purgeFlagTypesForWikia();
-			$this->purgePagesWithFlag( $this->params['flag_type_id'] );
+			$pagesIds = $this->getPageIdsWithFlag( $this->params['flag_type_id'] );
+			$this->purgePagesWithFlag( $pagesIds );
 
 			$this->makeSuccessResponse( $modelResponse );
 		} catch ( Exception $e ) {
@@ -396,7 +413,8 @@ class FlagsApiController extends FlagsApiBaseController {
 			$modelResponse = $flagTypeModel->updateFlagTypeParameters( $this->params );
 
 			$this->getCache()->purgeFlagTypesForWikia();
-			$this->purgePagesWithFlag( $this->params['flag_type_id'] );
+			$pagesIds = $this->getPageIdsWithFlag( $this->params['flag_type_id'] );
+			$this->purgePagesWithFlag( $pagesIds );
 
 			$this->makeSuccessResponse( $modelResponse );
 		} catch ( Exception $e ) {
@@ -672,19 +690,35 @@ class FlagsApiController extends FlagsApiBaseController {
 	}
 
 	/**
-	 * Purges the data on instances of flags for all pages on which given flag is enabled
+	 * Gets pages ids on which given flag is enabled
 	 *
 	 * @param int $flagTypeId
+	 * @return array
 	 */
-	private function purgePagesWithFlag( $flagTypeId ) {
-		$pagesIds = $this->app->sendRequest(
+	private function getPageIdsWithFlag( $flagTypeId ) {
+		$pagesIds = [];
+
+		$pages = $this->app->sendRequest(
 			'FlagsApiController',
 			'getPagesWithFlag',
 			[ 'flag_type_id' => $flagTypeId ]
 		)->getData();
 
-		if ( $pagesIds[self::FLAGS_API_RESPONSE_STATUS] ) {
-			$this->getCache()->purgeFlagsForPages( $pagesIds[self::FLAGS_API_RESPONSE_DATA] );
+		if ( $pages[self::FLAGS_API_RESPONSE_STATUS] ) {
+			$pagesIds = $pages[self::FLAGS_API_RESPONSE_DATA];
+		}
+
+		return $pagesIds;
+	}
+
+	/**
+	 * Purges the data on instances of flags for all pages on which given flag is enabled
+	 *
+	 * @param Array $pagesIds
+	 */
+	private function purgePagesWithFlag( Array $pagesIds ) {
+		if ( !empty( $pagesIds ) ) {
+			$this->getCache()->purgeFlagsForPages( $pagesIds );
 		}
 	}
 
