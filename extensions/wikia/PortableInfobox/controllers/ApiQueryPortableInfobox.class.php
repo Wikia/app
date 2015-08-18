@@ -23,16 +23,27 @@ class ApiQueryPortableInfobox extends ApiQueryBase {
 		 * @var Article $article
 		 */
 		foreach ( $articles as $id => $article ) {
-			$d = $article->getParserOutput()->getProperty( PortableInfoboxDataService::INFOBOXES_PROPERTY_NAME );
-			if ( is_array( $d ) ) {
+			$parsedInfoboxes = $article->getParserOutput()->getProperty( PortableInfoboxDataService::INFOBOXES_PROPERTY_NAME );
 
+			//if in template there are no infoboxes, skip the <includeonly> tags and parse again
+			if (!$parsedInfoboxes) {
+				$templateText = $article->fetchContent();
+				$parser = new Parser();
+				$templateText = $parser->getPreloadText($templateText, $article->getTitle(), new ParserOptions());
+
+				PortableInfoboxParserTagController::getInstance()->render($templateText, $parser, $parser->getPreprocessor()->newFrame() );
+
+				$parsedInfoboxes = $parser->getOutput()->getProperty(PortableInfoboxDataService::INFOBOXES_PROPERTY_NAME);
+			}
+
+			if ( is_array( $parsedInfoboxes ) ) {
 				$inf = [ ];
 				foreach ( array_keys( $d ) as $k => $v ) {
 					$inf[ $k ] = [ ];
 				}
 				$pageSet->getResult()->setIndexedTagName( $inf, 'infobox' );
 				$pageSet->getResult()->addValue( [ 'query', 'pages', $id ], 'infoboxes', $inf );
-				foreach ( $d as $count => $infobox ) {
+				foreach ( $parsedInfoboxes as $count => $infobox ) {
 					$s = isset( $infobox[ 'sources' ] ) ? $infobox[ 'sources' ] : [ ];
 					$pageSet->getResult()->addValue( [ 'query', 'pages', $id, 'infoboxes', $count ], 'id', $count );
 					$pageSet->getResult()->setIndexedTagName( $s, "source" );
