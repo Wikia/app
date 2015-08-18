@@ -6,7 +6,8 @@
 class HAWelcomeTaskHookDispatcherTest extends WikiaBaseTest {
 
 	public function testDispatchWhenDisabled() {
-		$dispatcher = $this->getMock( '\HAWelcomeTaskHookDispatcher', ['welcomeMessageDisabled'], [], '', false );
+		/** @var HAWelcomeTaskHookDispatcher|PHPUnit_Framework_MockObject_MockObject $dispatcher */
+		$dispatcher = $this->getMock( HAWelcomeTaskHookDispatcher::class, ['welcomeMessageDisabled'], [], '', false );
 		$dispatcher->expects( $this->once() )
 			->method( 'welcomeMessageDisabled' )
 			->will( $this->returnValue( true ) );
@@ -15,23 +16,26 @@ class HAWelcomeTaskHookDispatcherTest extends WikiaBaseTest {
 	}
 
 	public function testDispatchBeenWelcomed() {
-		$dispatcher = $this->getMock( '\HAWelcomeTaskHookDispatcher', ['hasContributorBeenWelcomedRecently', 'welcomeMessageDisabled'] );
+		/** @var HAWelcomeTaskHookDispatcher|PHPUnit_Framework_MockObject_MockObject $dispatcher */
+		$dispatcher = $this->getMock( HAWelcomeTaskHookDispatcher::class, ['currentUserHasBeenWelcomed', 'welcomeMessageDisabled'] );
 
 		$dispatcher->expects( $this->once() )
 			->method( 'welcomeMessageDisabled' )
 			->will( $this->returnValue( false ) );
 
 		$dispatcher->expects( $this->once() )
-			->method( 'hasContributorBeenWelcomedRecently' )
+			->method( 'currentUserHasBeenWelcomed' )
 			->will( $this->returnValue( true ) );
 
 		$this->assertTrue( $dispatcher->dispatch() );
 	}
 
 	public function testDispatchAnonymousUser() {
-		$dispatcher = $this->getMock( '\HAWelcomeTaskHookDispatcher', [
+		/** @var HAWelcomeTaskHookDispatcher|PHPUnit_Framework_MockObject_MockObject $dispatcher */
+		$dispatcher = $this->getMock( HAWelcomeTaskHookDispatcher::class, [
 			'welcomeMessageDisabled',
-			'hasContributorBeenWelcomedRecently',
+			'currentUserHasBeenWelcomed',
+			'markCurrentUserAsWelcomed',
 			'markHAWelcomePosted',
 			'getTitleObjectFromRevision',
 			'queueWelcomeTask',
@@ -42,20 +46,24 @@ class HAWelcomeTaskHookDispatcherTest extends WikiaBaseTest {
 			->will( $this->returnValue( false ) );
 
 		$dispatcher->expects( $this->once() )
-			->method( 'hasContributorBeenWelcomedRecently' )
+			->method( 'currentUserHasBeenWelcomed' )
 			->will( $this->returnValue( false ) );
+
+		$dispatcher->expects( $this->once() )
+			->method( 'markCurrentUserAsWelcomed' );
 
 		$dispatcher->expects( $this->once() )
 			->method( 'markHAWelcomePosted' )
 			->will( $this->returnValue( null ) );
 
-		$revision = $this->getMock( '\Revision', ['getRawUser'], [], '', false );
+		/** @var Revision|PHPUnit_Framework_MockObject_MockObject $revision */
+		$revision = $this->getMock( Revision::class, ['getRawUser'], [], '', false );
 
 		$revision->expects( $this->once() )
 			->method( 'getRawUser' )
 			->will( $this->returnValue( 0 ) );
 
-		$title = $this->getMock( '\Title', [] );
+		$title = $this->getMock( Title::class, [] );
 
 		$dispatcher->expects( $this->once() )
 			->method( 'getTitleObjectFromRevision' )
@@ -71,9 +79,11 @@ class HAWelcomeTaskHookDispatcherTest extends WikiaBaseTest {
 	}
 
 	public function testDispatchRegisteredUserShortCircuit() {
-		$dispatcher = $this->getMock( '\HAWelcomeTaskHookDispatcher', [
+		/** @var HAWelcomeTaskHookDispatcher|PHPUnit_Framework_MockObject_MockObject $dispatcher */
+		$dispatcher = $this->getMock( HAWelcomeTaskHookDispatcher::class, [
 			'welcomeMessageDisabled',
-			'hasContributorBeenWelcomedRecently',
+			'currentUserHasBeenWelcomed',
+			'markCurrentUserAsWelcomed',
 			'currentUserIsWelcomeExempt',
 			] );
 
@@ -82,14 +92,18 @@ class HAWelcomeTaskHookDispatcherTest extends WikiaBaseTest {
 			->will( $this->returnValue( false ) );
 
 		$dispatcher->expects( $this->once() )
-			->method( 'hasContributorBeenWelcomedRecently' )
+			->method( 'currentUserHasBeenWelcomed' )
 			->will( $this->returnValue( false ) );
+
+		$dispatcher->expects( $this->once() )
+			->method( 'markCurrentUserAsWelcomed' );
 
 		$dispatcher->expects( $this->once() )
 			->method( 'currentUserIsWelcomeExempt' )
 			->will( $this->returnValue( true ) );
 
-		$revision = $this->getMock( '\Revision', ['getRawUser'], [], '', false );
+		/** @var Revision|PHPUnit_Framework_MockObject_MockObject $revision */
+		$revision = $this->getMock( Revision::class, ['getRawUser'], [], '', false );
 
 		$revision->expects( $this->once() )
 			->method( 'getRawUser' )
@@ -100,9 +114,11 @@ class HAWelcomeTaskHookDispatcherTest extends WikiaBaseTest {
 	}
 
 	public function testDispatchRegisteredUserHasLocalEdits() {
-		$dispatcher = $this->getMock( '\HAWelcomeTaskHookDispatcher', [
+		/** @var HAWelcomeTaskHookDispatcher|PHPUnit_Framework_MockObject_MockObject $dispatcher */
+		$dispatcher = $this->getMock( HAWelcomeTaskHookDispatcher::class, [
 			'welcomeMessageDisabled',
-			'hasContributorBeenWelcomedRecently',
+			'currentUserHasBeenWelcomed',
+			'markCurrentUserAsWelcomed',
 			'currentUserIsWelcomeExempt',
 			'currentUserIsDefaultWelcomer',
 			'currentUserIsFounder',
@@ -115,8 +131,11 @@ class HAWelcomeTaskHookDispatcherTest extends WikiaBaseTest {
 			->will( $this->returnValue( false ) );
 
 		$dispatcher->expects( $this->once() )
-			->method( 'hasContributorBeenWelcomedRecently' )
+			->method( 'currentUserHasBeenWelcomed' )
 			->will( $this->returnValue( false ) );
+
+		$dispatcher->expects( $this->once() )
+			->method( 'markCurrentUserAsWelcomed' );
 
 		$dispatcher->expects( $this->once() )
 			->method( 'currentUserIsWelcomeExempt' )
@@ -138,7 +157,8 @@ class HAWelcomeTaskHookDispatcherTest extends WikiaBaseTest {
 			->method( 'updateAdminActivity' )
 			->will( $this->returnValue( true ) );
 
-		$revision = $this->getMock( '\Revision', ['getRawUser'], [], '', false );
+		/** @var Revision|PHPUnit_Framework_MockObject_MockObject $revision */
+		$revision = $this->getMock( Revision::class, ['getRawUser'], [], '', false );
 
 		$revision->expects( $this->once() )
 			->method( 'getRawUser' )
@@ -149,9 +169,11 @@ class HAWelcomeTaskHookDispatcherTest extends WikiaBaseTest {
 	}
 
 	public function testDispatchRegisteredUserQueueTask() {
-		$dispatcher = $this->getMock( '\HAWelcomeTaskHookDispatcher', [
+		/** @var HAWelcomeTaskHookDispatcher|PHPUnit_Framework_MockObject_MockObject $dispatcher */
+		$dispatcher = $this->getMock( HAWelcomeTaskHookDispatcher::class, [
 			'welcomeMessageDisabled',
-			'hasContributorBeenWelcomedRecently',
+			'currentUserHasBeenWelcomed',
+			'markCurrentUserAsWelcomed',
 			'currentUserIsWelcomeExempt',
 			'currentUserIsDefaultWelcomer',
 			'currentUserIsFounder',
@@ -166,8 +188,11 @@ class HAWelcomeTaskHookDispatcherTest extends WikiaBaseTest {
 			->will( $this->returnValue( false ) );
 
 		$dispatcher->expects( $this->once() )
-			->method( 'hasContributorBeenWelcomedRecently' )
+			->method( 'currentUserHasBeenWelcomed' )
 			->will( $this->returnValue( false ) );
+
+		$dispatcher->expects( $this->once() )
+			->method( 'markCurrentUserAsWelcomed' );
 
 		$dispatcher->expects( $this->once() )
 			->method( 'currentUserIsWelcomeExempt' )
@@ -189,13 +214,14 @@ class HAWelcomeTaskHookDispatcherTest extends WikiaBaseTest {
 			->method( 'markHAWelcomePosted' )
 			->will( $this->returnValue( null ) );
 
-		$revision = $this->getMock( '\Revision', ['getRawUser'], [], '', false );
+		/** @var Revision|PHPUnit_Framework_MockObject_MockObject $revision */
+		$revision = $this->getMock( Revision::class, ['getRawUser'], [], '', false );
 
 		$revision->expects( $this->once() )
 			->method( 'getRawUser' )
 			->will( $this->returnValue( 1 ) );
 
-		$title = $this->getMock( '\Title', [] );
+		$title = $this->getMock( Title::class, [] );
 
 		$dispatcher->expects( $this->once() )
 			->method( 'getTitleObjectFromRevision' )
@@ -211,9 +237,11 @@ class HAWelcomeTaskHookDispatcherTest extends WikiaBaseTest {
 	}
 
 	public function testDispatchRegisteredUserMarkHAWelcomePosted() {
-		$dispatcher = $this->getMock( '\HAWelcomeTaskHookDispatcher', [
+		/** @var HAWelcomeTaskHookDispatcher|PHPUnit_Framework_MockObject_MockObject $dispatcher */
+		$dispatcher = $this->getMock( HAWelcomeTaskHookDispatcher::class, [
 			'welcomeMessageDisabled',
-			'hasContributorBeenWelcomedRecently',
+			'currentUserHasBeenWelcomed',
+			'markCurrentUserAsWelcomed',
 			'currentUserIsWelcomeExempt',
 			'currentUserIsDefaultWelcomer',
 			'currentUserIsFounder',
@@ -227,8 +255,11 @@ class HAWelcomeTaskHookDispatcherTest extends WikiaBaseTest {
 			->will( $this->returnValue( false ) );
 
 		$dispatcher->expects( $this->once() )
-			->method( 'hasContributorBeenWelcomedRecently' )
+			->method( 'currentUserHasBeenWelcomed' )
 			->will( $this->returnValue( false ) );
+
+		$dispatcher->expects( $this->once() )
+			->method( 'markCurrentUserAsWelcomed' );
 
 		$dispatcher->expects( $this->once() )
 			->method( 'currentUserIsWelcomeExempt' )
@@ -246,14 +277,16 @@ class HAWelcomeTaskHookDispatcherTest extends WikiaBaseTest {
 			->method( 'currentUserHasLocalEdits' )
 			->will( $this->returnValue( false ) );
 
-		$memcacheClient = $this->getMock( '\MemcachedPhpBagOStuff', ['set'] );
+		/** @var MemcachedPhpBagOStuff|PHPUnit_Framework_MockObject_MockObject $memcacheClient */
+		$memcacheClient = $this->getMock( MemcachedPhpBagOStuff::class, ['set'] );
 
 		$memcacheClient->expects( $this->once() )
 			->method( 'set' )
 			->with( $this->stringContains( 'HAWelcome-isPosted' ) )
 			->will( $this->returnValue( null ) );
 
-		$revision = $this->getMock( '\Revision', ['getRawUser', 'getRawUserText'], [], '', false );
+		/** @var Revision|PHPUnit_Framework_MockObject_MockObject $revision */
+		$revision = $this->getMock( Revision::class, ['getRawUser', 'getRawUserText'], [], '', false );
 
 		$revision->expects( $this->once() )
 			->method( 'getRawUser' )
@@ -263,7 +296,7 @@ class HAWelcomeTaskHookDispatcherTest extends WikiaBaseTest {
 			->method( 'getRawUserText' )
 			->will( $this->returnValue( 'someone' ) );
 
-		$title = $this->getMock( '\Title', [] );
+		$title = $this->getMock( Title::class, [] );
 
 		$dispatcher->expects( $this->once() )
 			->method( 'getTitleObjectFromRevision' )
@@ -281,13 +314,15 @@ class HAWelcomeTaskHookDispatcherTest extends WikiaBaseTest {
 
 
 	public function testUpdateAdminActivityNotBot() {
-		$dispatcher = $this->getMock( '\HAWelcomeTaskHookDispatcher', ['getWelcomeUserFromMessages'] );
+		/** @var HAWelcomeTaskHookDispatcher|PHPUnit_Framework_MockObject_MockObject $dispatcher */
+		$dispatcher = $this->getMock( HAWelcomeTaskHookDispatcher::class, ['getWelcomeUserFromMessages'] );
 
 		$dispatcher->expects( $this->once() )
 			->method( 'getWelcomeUserFromMessages' )
 			->will( $this->returnValue( '@latest' ) );
 
-		$user = $this->getMock( '\User', ['getEffectiveGroups', 'getId'] );
+		/** @var User|PHPUnit_Framework_MockObject_MockObject $user */
+		$user = $this->getMock( User::class, ['getEffectiveGroups', 'getId'] );
 
 		$userGroups = array( 'sysop' );
 		$user->expects( $this->once() )
@@ -298,7 +333,8 @@ class HAWelcomeTaskHookDispatcherTest extends WikiaBaseTest {
 			->method( 'getId' )
 			->will( $this->returnValue( 1 ) );
 
-		$memcacheClient = $this->getMock( '\MemcachedPhpBagOStuff', ['set'] );
+		/** @var MemcachedPhpBagOStuff|PHPUnit_Framework_MockObject_MockObject $memcacheClient */
+		$memcacheClient = $this->getMock( MemcachedPhpBagOStuff::class, ['set'] );
 
 		$memcacheClient->expects( $this->once() )
 			->method( 'set' )
@@ -312,7 +348,8 @@ class HAWelcomeTaskHookDispatcherTest extends WikiaBaseTest {
 	}
 
 	public function testUpdateAdminActivityBot() {
-		$dispatcher = $this->getMock( '\HAWelcomeTaskHookDispatcher', ['getWelcomeUserFromMessages'] );
+		/** @var HAWelcomeTaskHookDispatcher|PHPUnit_Framework_MockObject_MockObject $dispatcher */
+		$dispatcher = $this->getMock( HAWelcomeTaskHookDispatcher::class, ['getWelcomeUserFromMessages'] );
 
 		$dispatcher->expects( $this->once() )
 			->method( 'getWelcomeUserFromMessages' )

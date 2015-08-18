@@ -38,11 +38,15 @@ class CuratedContentValidatorController extends WikiaController {
 			unset( $section['label'] );
 
 			$section = $this->helper->processLogicForSection( $section );
-			$this->validator->validateSection( $section );
-			$this->validator->validateItemsExist( $section );
-			$this->validator->validateItems( $section );
-			$this->validator->validateItemsTypes( $section );
-			$this->validator->validateDuplicatedTitles();
+			if ( !empty( $section['featured'] ) ) {
+				$this->validator->validateItems( $section, true );
+			} else {
+				$this->validator->validateSection( $section );
+				$this->validator->validateItemsExist( $section );
+				$this->validator->validateItems( $section );
+				$this->validator->validateItemsTypes( $section );
+			}
+			$this->validator->validateDuplicatedLabels();
 			$this->respond( $this->validator->getErrors() );
 		}
 	}
@@ -55,7 +59,7 @@ class CuratedContentValidatorController extends WikiaController {
 			$this->respondWithErrors();
 		} else {
 			$this->helper->fillItemInfo( $item );
-			$this->validator->validateItem( $item );
+			$this->validator->validateItem( $item, $isFeatured );
 			if ( !$isFeatured ) {
 				$this->validator->validateItemType( $item );
 			}

@@ -52,7 +52,7 @@ define('ext.wikia.adEngine.template.floor', [
 				height: params.height
 			}),
 			$floor = $('#' + floorId),
-			isFloorPresent = $floor.exists(),
+			isFloorPresent = $floor.length > 0,
 			gptEventMock = {
 				size: {
 					width: params.width,

@@ -6,8 +6,10 @@
 
 namespace Wikia\Tasks\Tasks;
 
+use Email\Controller\WelcomeController;
+
 class FacebookTask extends BaseTask {
-	const WELCOME_EMAIL_CONTROLLER = 'Email\Controller\Welcome';
+	const WELCOME_EMAIL_CONTROLLER = WelcomeController::class;
 
 	/**
 	 * Update User email to become Facebook-reported email
@@ -52,7 +54,7 @@ class FacebookTask extends BaseTask {
 	 * Send user a welcome email
 	 */
 	public function sendWelcomeEmail() {
-		F::app()->sendRequest( self::WELCOME_EMAIL_CONTROLLER, 'handle' );
+		\F::app()->sendRequest( self::WELCOME_EMAIL_CONTROLLER, 'handle' );
 	}
 
 	/**

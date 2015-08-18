@@ -1,4 +1,5 @@
 <?php
+use Wikia\PortableInfobox\Helpers\PortableInfoboxClassification;
 
 /**
  * Class InsightsNonportableInfoboxesModel
@@ -91,6 +92,6 @@ class InsightsUnconvertedInfoboxesModel extends InsightsQueryPageModel {
 	public function isItemFixed( Title $title ) {
 		$titleText = $title->getText();
 		$contentText = ( new WikiPage( $title ) )->getText();
-		return !UnconvertedInfoboxesPage::isTitleWithNonportableInfobox( $titleText, $contentText );
+		return !PortableInfoboxClassification::isTitleWithNonportableInfobox( $titleText, $contentText );
 	}
 }

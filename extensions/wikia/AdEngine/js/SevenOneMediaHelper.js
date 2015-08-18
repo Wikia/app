@@ -246,7 +246,7 @@ define('ext.wikia.adEngine.sevenOneMediaHelper', [
 			}
 		}
 
-		if( krux ) {
+		if (krux) {
 			kruxSegments = krux.getSegments();
 		}
 
@@ -272,7 +272,7 @@ define('ext.wikia.adEngine.sevenOneMediaHelper', [
 			sub3site = pageLevelParams.s1.replace('_', '');
 		} else {
 			sub2site = pageLevelParams.s1.replace('_', '');
-			sub3site = subsite === 'lifestyle' ? targeting.wikiCategory : '';
+			sub3site = subsite === 'lifestyle' ? targeting.mappedVerticalName : '';
 		}
 
 		initialized = true;
