@@ -29,11 +29,10 @@ define('AuthComponent', function () {
 	};
 
 	AuthComponent.prototype.getPageUrl = function (page, language) {
-		var pageObj = this.pages[page],
-			url = window.location.origin + pageObj.path,
+		var url = window.location.origin + page.path,
 			search = '?modal=1',
 			uselang = this.getUselangParam(language),
-			pageSearch = pageObj.search;
+			pageSearch = page.search;
 		if (pageSearch) {
 			search += '&' + pageSearch;
 		}
