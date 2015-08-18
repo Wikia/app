@@ -12,6 +12,7 @@ define('wikia.ui.modal', [
 	// constants for modal component
 	var BLACKOUT_ID = 'blackout',
 		BLACKOUT_VISIBLE_CLASS = 'visible',
+		BLACKOUT_HIDDEN_CLASS = 'hidden',
 		BODY_WITH_BLACKOUT_CLASS = 'with-blackout',
 		FAKE_SCROLLBAR_CLASS = 'fake-scrollbar',
 		CLOSE_CLASS = 'close',
@@ -251,7 +252,7 @@ define('wikia.ui.modal', [
 			blockPageScrolling();
 		}
 
-		this.$blackout.addClass(BLACKOUT_VISIBLE_CLASS);
+		this.$blackout.addClass(BLACKOUT_VISIBLE_CLASS).removeClass(BLACKOUT_HIDDEN_CLASS);
 
 		// IE flex-box fallback for small and medium modals
 		if (browserDetect.isIE()) {
