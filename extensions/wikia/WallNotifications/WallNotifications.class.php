@@ -1,4 +1,5 @@
 <?php
+
 use Wikia\Logger\WikiaLogger;
 
 /**
@@ -488,6 +489,14 @@ class WallNotifications {
 	protected function getWatchlist( $name, $titleDbkey, $ns = NS_USER_WALL ) {
 		// TODO: add some caching
 		$userTitle = Title::newFromText( $name, MWNamespace::getSubject( $ns ) );
+		if ( empty( $userTitle ) ) {
+			WikiaLogger::instance()->error( 'User page is non-existent', [
+				'issue' => 'SOC-1070',
+				'name' => $name,
+				'ns' => $ns,
+			] );
+			return [];
+		}
 
 		$dbw = $this->getLocalDB( true );
 		$res = $dbw->select(
