@@ -24,6 +24,7 @@ define(
 			event.preventDefault();
 
 			var moduleType = $(this).data('type'),
+				notification,
 				data = {
 				pageId: mw.config.get('wgArticleId'),
 				wikiId: mw.config.get('wgCityId'),
@@ -34,34 +35,30 @@ define(
 				controller: 'ContentReviewApiController',
 				method: 'submitPageForReview',
 				data: data,
-				callback: function (response) {
-					var notification;
+				callback: function () {
+					notification = new BannerNotification(
+						/**
+						 * The following message keys may be generated:
+						 * content-review-module-submit-success-insert
+						 * content-review-module-submit-success-update
+						 */
+						mw.message('content-review-module-submit-success-' + moduleType).escaped(),
+						'confirm'
+					);
 
-					if (response.status) {
-						notification = new BannerNotification(
-							/**
-							 * The following message keys may be generated:
-							 * content-review-module-submit-success-insert
-							 * content-review-module-submit-success-update
-							 */
-							mw.message('content-review-module-submit-success-' + moduleType).escaped(),
-							'confirm'
-						);
+					$('.content-review-module').hide();
 
-						$('.content-review-module').hide();
-					} else if ( response.exception.length > 0 ) {
+					notification.show();
+				},
+				onErrorCallback: function(response) {
+					if ( response.responseText.length > 0 ) {
 						notification = new BannerNotification(
-							mw.message('content-review-module-submit-exception', response.exception).escaped(),
+							mw.message('content-review-module-submit-exception', response.responseText).escaped(),
 							'error'
 						);
-					} else {
-						notification = new BannerNotification(
-							mw.message('content-review-module-submit-error').escaped(),
-							'error'
-						);
+
+						notification.show();
 					}
-
-					notification.show()
 				}
 			});
 		}
