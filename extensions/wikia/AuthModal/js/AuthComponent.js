@@ -21,7 +21,7 @@ define('AuthComponent', function () {
 		this.rootElement = rootElement;
 	}
 
-	AuthComponent.prototype.getUselangParam  = function (language) {
+	AuthComponent.prototype.getUselangParam = function (language) {
 		if (typeof language !== 'string') {
 			return '';
 		}
