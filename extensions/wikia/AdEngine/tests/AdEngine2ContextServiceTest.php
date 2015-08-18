@@ -32,16 +32,6 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		return $title;
 	}
 
-	private function mockMonetizationModule() {
-		$name = 'MonetizationModuleHelper';
-		$mock = $this->getMock( $name );
-		$mock->method( 'getMonetizationUnits' )->willReturn( ['below_category' => 'testing'] );
-		$mock->method( 'getWikiVertical' )->willReturn( 'other' );
-		$mock->method( 'getCacheVersion' )->willReturn( 'v1' );
-		$this->mockClass( $name, $mock );
-		$this->mockStaticMethod( $name, 'canShowModule', true );
-	}
-
 	public function adContextDataProvider() {
 		$defaultParameters = [
 			'titleMockType' => 'article',
@@ -274,11 +264,6 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		// Mock HubService
 		$this->mockStaticMethod( 'HubService', 'getCategoryInfoForCity', (object) ['cat_name' => $vertical] );
 
-		// Mock MonetizationModule
-		if ( in_array( 'wgAdDriverUseMonetizationService', $flags ) ) {
-			$this->mockMonetizationModule();
-		}
-
 		$adContextService = new AdEngine2ContextService();
 		$result = $adContextService->getContext( $this->getTitleMock( $titleMockType, $langCode, $artId, $artDbKey ), $skinName );
 
@@ -332,13 +317,6 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		if ( isset( $expectedProviders['sevenOneMedia'] ) ) {
 			$this->assertStringMatchesFormat( $expectedSevenOneMediaUrlFormat, $result['providers']['sevenOneMediaCombinedUrl'] );
 			unset( $result['providers']['sevenOneMediaCombinedUrl'] );
-		}
-
-		// Extra check for Monetization Service
-		if ( isset( $expectedProviders['monetizationService'] ) ) {
-			$this->assertTrue( is_array( $result['providers']['monetizationServiceAds'] ) );
-			$this->assertNotEmpty( $result['providers']['monetizationServiceAds'] );
-			unset( $result['providers']['monetizationServiceAds'] );
 		}
 
 		$this->assertEquals( $expected, $result );

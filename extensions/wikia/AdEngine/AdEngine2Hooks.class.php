@@ -113,7 +113,7 @@ class AdEngine2Hooks {
 	 */
 	public static function onOasisSkinAssetGroups( &$jsAssets ) {
 
-		global $wgAdDriverUseTopInContentBoxad, $wgAdDriverUseTaboola;
+		global $wgAdDriverUseTaboola, $wgAdDriverUseTopInContentBoxad;
 
 		$jsAssets[] = self::ASSET_GROUP_ADENGINE_DESKTOP;
 

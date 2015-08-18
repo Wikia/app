@@ -1,12 +1,15 @@
+/*global define*/
 define('ext.wikia.adEngine.provider.monetizationService', [
-	'ext.wikia.adEngine.adContext',
-	'wikia.loader',
+	'ext.wikia.adEngine.monetizationServiceHelper',
+	'jquery',
 	'wikia.log',
-	'wikia.scriptwriter',
-], function (adContext, loader, log, scriptWriter) {
+	'wikia.nirvana',
+	'wikia.window'
+], function (monetizationServiceHelper, $, log, nirvana, window) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.monetizationService',
+		isLoaded = false,
 		slotMap = {
 			MON_ABOVE_TITLE: 'above_title',
 			MON_BELOW_TITLE: 'below_title',
@@ -28,20 +31,53 @@ define('ext.wikia.adEngine.provider.monetizationService', [
 		return false;
 	}
 
+	function validateSlot(slot) {
+		log(['validateSlot', slot], 'debug', logGroup);
+
+		if (slot === 'mon_below_category' && $('#mon_in_content').hasclass('end-content')) {
+			log(['validateSlot', slot, false], 'debug', logGroup);
+			return false;
+		}
+
+		log(['validateSlot', slot, true], 'debug', logGroup);
+		return true;
+	}
+
+	function getModules(success, hop) {
+		log(['getModules', 'send request'], 'debug', logGroup);
+		nirvana.getjson(
+			'monetizationmodule',
+			'getModules',
+			{
+				adengine: true,
+				articleid: window.wgArticleId,
+				fromsearch: window.fromsearch,
+				max: monetizationServiceHelper.getMaxAds(),
+				geo: monetizationServiceHelper.getCountryCode()
+			}
+		).done(function (json) {
+			var modules = json.data;
+			if (modules) {
+				$.each(slotMap, function (slot, slotname) {
+					if (modules[slotname] && validateSlot(slotname)) {
+						log(['getModules', slot, 'injectscript'], 'debug', logGroup);
+						monetizationServiceHelper.injectContent(slot, modules[slotname], success);
+					} else {
+						log(['getModules', slot, 'empty data'], 'debug', logGroup);
+						hop();
+					}
+				});
+			}
+		});
+	}
+
 	function fillInSlot(slot, slotElement, success, hop) {
 		log(['fillInSlot', slot, slotElement], 'debug', logGroup);
 
-		var slotName = slotMap[slot],
-			context = adContext.getContext();
-
-		if (context.providers.monetizationServiceAds && context.providers.monetizationServiceAds[slotName]) {
-			log(['fillInSlot', slot, 'injectScript'], 'debug', logGroup);
-
-			scriptWriter.injectHtml(slotElement, context.providers.monetizationServiceAds[slotName], function () {
-				success();
-			});
-		} else {
-			hop();
+		if (!isLoaded) {
+			log(['fillInSlot', slot, 'getModules'], 'debug', logGroup);
+			getModules(success, hop);
+			isLoaded = true;
 		}
 	}
 

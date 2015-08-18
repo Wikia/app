@@ -207,13 +207,15 @@ describe('ext.wikia.adEngine.config.desktop', function () {
 	});
 
 	it('any country, Monetization Service on, Monetization Service slot', function () {
-		spyOn(mocks, 'getAdContextProviders').and.returnValue({monetizationService: true});
+		var providers = {monetizationService: true};
+		spyOn(mocks, 'getAdContextProviders').and.returnValue(providers);
 		spyOn(mocks.providers.monetizationService, 'canHandleSlot').and.returnValue(true);
 		expect(getProviders('foo')).toEqual('monetizationService');
 	});
 
-	it('any country, Monetization Service on, non Monetization Service slot', function () {
-		spyOn(mocks, 'getAdContextProviders').and.returnValue({monetizationService: true});
+	it('any country, Monetization Service on, not Monetization Service slot', function () {
+		var providers = {monetizationService: true};
+		spyOn(mocks, 'getAdContextProviders').and.returnValue(providers);
 		expect(getProviders('foo')).not.toEqual('monetizationService');
 	});
 
