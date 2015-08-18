@@ -1,20 +1,6 @@
 @import 'skins/shared/color';
-@import 'skins/shared/mixins/columns';
 @import 'skins/shared/mixins/flexbox';
-
-$infobox-width: 270px;
-// temporary value used to mach with Khal Drogo Infobox
-$infobox-margin: 15px;
-$infobox-item-margin: 5px;
-$infobox-background: mix($color-page, $color-links, 90%);
-@if ($is-dark-wiki) {
-	$infobox-background: mix($color-page, $color-links, 85%);
-}
-
-$infobox-section-header-background: mix($color-page, $color-links, 75%);
-$infobox-debug-line-number-width: 50px;
-$infobox-debug-error-msg-color: white;
-$infobox-debug-error-msg-bg: black;
+@import 'extensions/wikia/PortableInfobox/styles/PortableInfoboxVariables';
 
 .portable-infobox {
 	background-color: $infobox-background;
@@ -22,130 +8,156 @@ $infobox-debug-error-msg-bg: black;
 	float: right;
 	margin: 0 0 $infobox-margin $infobox-margin;
 	width: $infobox-width;
+}
 
-	// TODO: experimental wide infobox styles (remove or refactor)
-	&.wide-infobox {
-		@include column-count(3);
-		@include column-gap($infobox-item-margin * 2);
+	// **********  Overwrite styles from article  ********** //
+	// (placing it within portable-infobox class makes it strong enough) //
 
-		clear: both;
-		float: none;
-		margin: 0;
-		width: 100%;
-
-		.portable-infobox-item:not(.item-type-title) {
-			@include column-break-inside(avoid);
-		}
-
-		.item-type-title {
-			@include column-span(all);
-		}
-	}
-
-	.portable-infobox-item-margins {
-		padding: $infobox-item-margin $infobox-item-margin * 4 $infobox-item-margin $infobox-item-margin * 2;
-	}
-
-	.portable-infobox-image-wrapper {
-		text-align: center;
-	}
-
-	.portable-infobox-image-caption {
-		color: $color-alternate-text;
-		font-size: 12px;
-		font-style: italic;
-		text-align: left;
-	}
-
-	.portable-infobox-secondary-background {
-		background-color: $infobox-section-header-background;
-	}
-
-	.portable-infobox-secondary-font {
+.portable-infobox {
+	.pi-secondary-font {
 		font-size: 12px;
 		font-weight: bold;
 		line-height: 18px;
 		margin-top: 0;
 	}
 
-	.portable-infobox-header,
-	.portable-infobox-title {
+	.pi-header,
+	.pi-title {
 		border: 0;
-
 		margin: 0;
-		padding: 0;
 	}
 
-	.portable-infobox-title {
+	.pi-title {
 		font-size: 18px;
 		line-height: 28px;
 	}
 
-	.item-type-key-val:not(:last-of-type),
-	.item-type-group {
-		border-bottom: 1px solid $infobox-section-header-background;
-	}
-
-	> .portable-infobox-item:last-child {
-		border-bottom: 0;
-	}
-
-	.portable-infobox-item-label {
+	.pi-data-label {
+		margin-bottom: inherit;
 		margin-top: 0;
 	}
 
-	.portable-infobox-item-value {
-		font-size: 14px;
-		line-height: 20px;
-		padding-left: $infobox-item-margin * 2;
-
-		// experiment with removing margins on all children of data value
-		> * {
+	// overwrite default article styles for children of data value
+	.pi-data-value {
+		> *,
+		li {
 			margin: 0;
 		}
 
-		ul,
-		ol {
+		ol,
+		ul {
 			list-style-position: inside;
 		}
-	}
 
-	.group-layout-horizontal {
-		&.item-type-group {
-			display: table;
-			table-layout: fixed;
-			width: 100%;
-		}
-
-		.item-type-header {
-			display: table-caption;
-		}
-
-		.item-type-key-val {
-			border-bottom: 0;
-			display: table-cell;
-			padding: $infobox-item-margin;
-			text-align: center;
-		}
-
-		.item-type-key-val:not(:last-of-type) {
-			border-right: 1px solid $infobox-section-header-background;
-		}
-
-		.portable-infobox-item-label {
-			overflow: hidden;
-			vertical-align: top;
-			white-space: nowrap;
-		}
-
-		.portable-infobox-item-value {
-			padding-left: 0;
+		li {
+			line-height: 19px;
 		}
 	}
 }
 
+// **********  Common elements styling ********** //
+
+.pi-item-spacing {
+	padding: $infobox-item-margin $infobox-item-margin * 2;
+}
+
+.pi-secondary-background {
+	background-color: $infobox-section-header-background;
+}
+
+.pi-border-color {
+	border-color: $infobox-section-header-background;
+}
+
+// remove border from last infobox item either <data> or <group>
+.portable-infobox > .pi-item:last-child {
+	border-bottom: 0;
+}
+
+// **********  Individual elements styling ********** //
+
+.pi-image {
+	text-align: center; // center smaller image inside infobox
+}
+
+.pi-caption {
+	color: $color-alternate-text;
+	font-size: 12px;
+	font-style: italic;
+	text-align: left;
+}
+
+.pi-data:not(:last-of-type),
+.pi-group {
+	border-bottom-style: solid;
+	border-bottom-width: 1px;
+}
+
+.pi-data {
+	@include flexbox;
+	@include flex-direction(row);
+	box-sizing: border-box;
+	overflow: hidden;
+	width: 100%;
+}
+
+.pi-data-label {
+	@include flex-basis($infobox-width / 3);
+}
+
+.pi-data-value {
+	font-size: 12px;
+	line-height: 18px;
+	padding-left: 0;
+
+	&:not(:first-child) {
+		@include flex-basis($infobox-width * 2 / 3);
+		padding-left: 10px;
+	}
+}
+
+// **********  Special styles for HORIZONTAL group  ********** //
+
+.pi-horizontal-group {
+	border-spacing: 0;
+	table-layout: fixed;
+	text-align: center;
+	width: 100%;
+
+	.pi-header {
+		text-align: left;
+	}
+
+	.pi-horizontal-group-item {
+		vertical-align: top;
+
+		&:not(:first-child) {
+			border-left-style: solid;
+			border-left-width: 1px;
+		}
+	}
+
+	.pi-data-label {
+		padding-bottom: 0;
+	}
+}
+
+// **********  Overwrite default infobox styles for STACKED layout type  ********** //
+
+.pi-layout-stacked {
+	.pi-data {
+		display: block;
+	}
+
+	.pi-data-value {
+		padding-left: $infobox-item-margin * 2;
+	}
+}
+
+// **********  Error handling styles  ********** //
+
 .WikiaArticle {
-	.portable-infobox-error-info {
+	.pi-error-info {
 		background-color: $color-error;
 		color: $infobox-debug-error-msg-color;
 		font-size: 18px;
@@ -154,7 +166,7 @@ $infobox-debug-error-msg-bg: black;
 		padding: $infobox-margin * 2 $infobox-debug-line-number-width;
 	}
 
-	.portable-infobox-debug {
+	.pi-debug {
 		background-color: $color-unified-module-background;
 		font-family: monospace;
 		list-style: none;
@@ -171,22 +183,22 @@ $infobox-debug-error-msg-bg: black;
 	}
 }
 
-.portable-infobox-debug-line {
+.pi-debug-line {
 	@include flexbox();
 }
 
-.portable-infobox-debug-line-number,
-.portable-infobox-debug-line-code {
+.pi-debug-line-number,
+.pi-debug-line-code {
 	box-sizing: border-box;
 }
 
-.portable-infobox-debug-line-number {
+.pi-debug-line-number {
 	@include flex-basis($infobox-debug-line-number-width);
 	@include flex-shrink(0);
 	padding-left: $infobox-item-margin * 2;
 }
 
-.portable-infobox-debug-error-massage {
+.pi-debug-error-message {
 	background-color: $infobox-debug-error-msg-bg;
 	color: $infobox-debug-error-msg-color;
 	font-family: Helvetica, Arial, sans-serif;
@@ -208,43 +220,7 @@ $infobox-debug-error-msg-bg: black;
 		width: 0;
 	}
 
-	.portable-infobox-debug-error-massage-item {
+	.pi-debug-error-message-item {
 		margin: $infobox-item-margin 0;
 	}
 }
-
-.portable-infobox-layout-tabular {
-	> .item-type-key-val,
-	.item-type-group:not(.group-layout-horizontal) .item-type-key-val {
-		@include flexbox;
-		@include flex-direction(row);
-		box-sizing: border-box;
-		overflow: hidden;
-		width: 100%;
-
-		.portable-infobox-item-label {
-			@include flex-basis($infobox-width / 3);
-			margin-bottom: inherit;
-		}
-
-		.portable-infobox-item-value {
-			padding-left: 0;
-		}
-
-		.portable-infobox-item-value:not(:first-child) {
-			@include flex-basis($infobox-width * 2 / 3);
-			padding-left: 10px;
-		}
-
-		li {
-			line-height: 19px;
-			margin: 0;
-		}
-	}
-
-	.portable-infobox-item-value {
-		font-size: 12px;
-		line-height: 18px;
-	}
-}
-

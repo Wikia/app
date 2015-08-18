@@ -193,7 +193,7 @@ $messages['ru'] = array(
 	'portable-infobox-xml-parse-error-gt-required' => 'Тег объявлен неправильно',
 	'portable-infobox-xml-parse-error-tag-name-mismatch' => 'Несоответствие открывающего и закрывающего тегов',
 	'portable-infobox-xml-parse-error-tag-not-finished' => 'Закрывающий тег объявлен слишком рано',
-	'portable-infobox-xml-parse-error-infobox-tag-attribute-unsupported' => 'Атрибут "$1" не поддерживается
+	'portable-infobox-xml-parse-error-infobox-tag-attribute-unsupported' => 'Атрибут "$1" не поддерживается 
 	тегом <infobox>',
 );
 
@@ -211,7 +211,7 @@ $messages['zh-hans'] = array(
 	'portable-infobox-xml-parse-error-gt-required' => '标签定义结束得不恰当',
 	'portable-infobox-xml-parse-error-tag-name-mismatch' => '开始和结束标记不匹配',
 	'portable-infobox-xml-parse-error-tag-not-finished' => '标签结束得过早',
-	'portable-infobox-xml-parse-error-infobox-tag-attribute-unsupported' => '<infobox>标签不支持属性"$1"
+	'portable-infobox-xml-parse-error-infobox-tag-attribute-unsupported' => '<infobox>标签不支持属性"$1" 
 	',
 );
 
@@ -232,3 +232,4 @@ $messages['zh-hant'] = array(
 	'portable-infobox-xml-parse-error-infobox-tag-attribute-unsupported' => '<infobox>標記不支持屬性"$1"
 	',
 );
+

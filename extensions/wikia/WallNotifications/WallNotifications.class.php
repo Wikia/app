@@ -414,6 +414,7 @@ class WallNotifications {
 				'details' => $text,
 				'targetUser' => $watcherName,
 				'wallUserName' => $notifData->wall_username,
+				'threadId' => $notifData->title_id,
 				'parentId' => $notifData->parent_id,
 			];
 
