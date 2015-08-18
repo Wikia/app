@@ -17,38 +17,38 @@ ve.dm.WikiaInfoboxSpecModel = function VeDmWikiaInfoboxSpecModel( template ) {
 	// Properties
 	this.template = template;
 	this.params = {
-		'Title': {
+		Title: {
 			name: 'Title',
 			type: 'data'
 		},
-		'Image': {
+		Image: {
 			name: 'Image',
 			type: 'image'
 		},
-		'Height': {
+		Height: {
 			name: 'Height',
-			parent : 'Size',
+			parent: 'Size',
 			type: 'data'
 		},
-		'Weight': {
+		Weight: {
 			name: 'Weight',
-			parent : 'Size',
+			parent: 'Size',
 			type: 'data'
 		},
-		'Date of birth': {
+		Date_of_birth: {
 			name: 'Date of birth',
 			type: 'data'
 		},
-		'Param from spec': {
-			name: 'Param from spec',
+		Param_from_spec: {
+			name: 'Param_from_spec',
 			type: 'data'
 		}
 	};
 	this.paramOrder = [];
 	this.groups = [
 		{
-			"label": "Date",
-			"params": ["year", "month", "day"]
+			label: 'Date',
+			params: ['year', 'month', 'day']
 		}
 	];
 
@@ -214,8 +214,8 @@ ve.dm.WikiaInfoboxSpecModel.prototype.getParameterType = function ( name ) {
  * @param {string} name Parameter name
  * @returns {boolean} Parameter is required
  */
-ve.dm.WikiaInfoboxSpecModel.prototype.isParameterRequired = function ( name ) {
-	return !!this.params[name].required;
+ve.dm.WikiaInfoboxSpecModel.prototype.isParameterRequired = function () {
+	return false;
 };
 
 /**
@@ -233,8 +233,8 @@ ve.dm.WikiaInfoboxSpecModel.prototype.getParameterGroups = function () {
  * @param {string} name Parameter name
  * @returns {boolean} Parameter is deprecated
  */
-ve.dm.WikiaInfoboxSpecModel.prototype.isParameterDeprecated = function ( name ) {
-	return this.params[name].deprecated !== false;
+ve.dm.WikiaInfoboxSpecModel.prototype.isParameterDeprecated = function () {
+	return false;
 };
 
 /**

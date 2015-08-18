@@ -29,9 +29,6 @@ OO.inheritClass( ve.ce.WikiaInfoboxTransclusionBlockNode, ve.ce.MWTransclusionBl
 ve.ce.WikiaInfoboxTransclusionBlockNode.static.name = 'wikiaInfoboxTransclusionBlock';
 ve.ce.WikiaInfoboxTransclusionBlockNode.static.primaryCommandName = 'wikiaInfobox';
 
-/* Methods */
-
-
 /* Registration */
 
 ve.ce.nodeFactory.register( ve.ce.WikiaInfoboxTransclusionBlockNode );

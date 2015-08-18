@@ -104,7 +104,6 @@ if ( mw.config.get( 'wgEnableWikiaInteractiveMaps' ) === true ) {
 	ve.ui.toolFactory.register( ve.ui.WikiaMapInsertDialogTool );
 }
 
-
 /**
  * UserInterface WikiaInfoboxInsertDialog tool.
  *
