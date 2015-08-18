@@ -1,13 +1,14 @@
-define('AuthModal', ['jquery', 'AuthComponent', 'wikia.document'], function ($, AuthComponent) {
+define('AuthModal', ['jquery', 'AuthComponent', 'wikia.window'], function ($, AuthComponent, window) {
 	'use strict';
 
 	var modal,
 		$blackout,
+		language = window.wgContentLanguage,
 		track;
 
 	function open () {
 		$('.WikiaSiteWrapper').append(
-			'<div class="auth-blackout"><div class="auth-modal loading"><span></span><a class="close"></div></div>'
+			'<div class="auth-blackout blackout visible"><div class="auth-modal loading"><a class="close"></div></div>'
 		);
 		$blackout = $('.auth-blackout');
 		modal = $blackout.find('.auth-modal')[0];
@@ -18,6 +19,13 @@ define('AuthModal', ['jquery', 'AuthComponent', 'wikia.document'], function ($, 
 			category: 'user-login-desktop-modal',
 			trackingMethod: 'analytics'
 		});
+		$(window.document).keyup(onKeyUp);
+	}
+
+	function onKeyUp (event) {
+		if (event.keyCode === 27) {
+			close();
+		}
 	}
 
 	function close () {
@@ -38,19 +46,19 @@ define('AuthModal', ['jquery', 'AuthComponent', 'wikia.document'], function ($, 
 	return {
 		login: function () {
 			open();
-			new AuthComponent(modal).login(onAuthComponentLoaded);
+			new AuthComponent(modal).login(onAuthComponentLoaded, language);
 		},
 		register: function () {
 			open();
-			new AuthComponent(modal).register(onAuthComponentLoaded);
+			new AuthComponent(modal).register(onAuthComponentLoaded, language);
 		},
 		facebookConnect: function () {
 			open();
-			new AuthComponent(modal).facebookConnect(onAuthComponentLoaded);
+			new AuthComponent(modal).facebookConnect(onAuthComponentLoaded, language);
 		},
 		facebookRegister: function () {
 			open();
-			new AuthComponent(modal).facebookRegister(onAuthComponentLoaded);
+			new AuthComponent(modal).facebookRegister(onAuthComponentLoaded, language);
 		}
 	};
 });
