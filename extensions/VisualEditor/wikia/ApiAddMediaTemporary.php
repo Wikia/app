@@ -41,6 +41,7 @@ class ApiAddMediaTemporary extends ApiAddMedia {
 			);
 
 			// If wiki is Japanese content, then we check if anonymous edit is allowed. INT-158
+			// This condition will be changed as soon as Mercury has login for all wikis. 
 			// Enable unauthorized save for Curated Main Page Editor
 			// if $wgEnableCuratedContentUnauthorizedSave not empty and wiki is not Japanese(CONCF-741)
 			// Ticket for removal wg check: CONCF-900
