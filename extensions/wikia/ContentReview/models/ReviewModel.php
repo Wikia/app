@@ -79,6 +79,9 @@ class ReviewModel extends ContentReviewBaseModel {
 				// submit_time has a default value set to CURRENT_TIMESTAMP
 				// review_user_id is NULL
 				// review_start is NULL
+				->ON_DUPLICATE_KEY_UPDATE(
+					[ 'revision_id' => $revisionId ]
+				)
 				->run( $db );
 
 			$affectedRows = $db->affectedRows();
@@ -96,7 +99,7 @@ class ReviewModel extends ContentReviewBaseModel {
 			];
 		} catch ( \Exception $e ) {
 			if ( $db !== null ) {
-				$db->rollback;
+				$db->rollback();
 			}
 
 			throw $e;
@@ -124,7 +127,7 @@ class ReviewModel extends ContentReviewBaseModel {
 			return $reviewId;
 		} catch ( \Exception $e ) {
 			if ( $db !== null ) {
-				$db->rollback;
+				$db->rollback();
 			}
 
 			throw $e;
