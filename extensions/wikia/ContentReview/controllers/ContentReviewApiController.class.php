@@ -133,8 +133,7 @@ class ContentReviewApiController extends WikiaApiController {
 		$notification.= Xml::element(
 			'a',
 			[ 'id' => 'content-review-test-mode-disable', 'href' => '#' ],
-			wfMessage( 'content-review-test-mode-disable' )->escaped(),
-			false
+			wfMessage( 'content-review-test-mode-disable' )->plain()
 		);
 
 		$this->notification = $notification;
