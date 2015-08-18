@@ -842,6 +842,7 @@ class CurlHttpRequest extends MWHttpRequest {
 							'option'     => $option,
 							'value'      => bin2hex( serialize( $value ) ),
 							'value_raw'  => $value,
+							'valid_handle' => is_resource( $curlHandle ),
 							'exception'  => $e
 						]
 					);
