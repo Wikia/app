@@ -18,12 +18,13 @@ class ResourceLoaderAdEngineTest extends WikiaBaseTest {
 
 	public function testSevenOneMediaResourceLoaderNoMemc() {
 		$this->disableMemCache();
-		ResourceLoaderAdEngineSevenOneMediaModule::$localCache = null;
 
 		$mock = $this->getMockBuilder('ResourceLoaderAdEngineSevenOneMediaModule')
 				->disableOriginalConstructor()
 				->setMethods( [ 'fetchRemoteScript', 'fetchLocalScript', 'getInlineScript' ] )
 				->getMock();
+
+		ResourceLoaderAdEngineSevenOneMediaModule::$localCache[get_class($mock)] = null;
 
 		$mock->method( 'fetchRemoteScript' )->willReturn( self::REMOTE_SCRIPT_MOCK_CONTENT );
 		$mock->method( 'fetchLocalScript' )->willReturn( self::LOCAL_SCRIPT_MOCK_CONTENT );
@@ -47,12 +48,11 @@ class ResourceLoaderAdEngineTest extends WikiaBaseTest {
 
 	public function testSevenOneMediaResourceLoaderRequestFailed() {
 		$this->disableMemCache();
-		ResourceLoaderAdEngineSevenOneMediaModule::$localCache = null;
 		$mock = $this->getMockBuilder('ResourceLoaderAdEngineSevenOneMediaModule')
 			->disableOriginalConstructor()
 			->setMethods( [ 'fetchRemoteScript', 'fetchLocalScript', 'getInlineScript', 'getFallbackDataWhenRequestFails' ] )
 			->getMock();
-
+		ResourceLoaderAdEngineSevenOneMediaModule::$localCache[get_class($mock)] = null;
 		$mock->method( 'fetchRemoteScript' )->willReturn( false );
 		$mock->method( 'fetchLocalScript' )->willReturn( self::LOCAL_SCRIPT_MOCK_CONTENT );
 		$mock->method( 'getInlineScript' )->willReturn( self::INLINE_SCRIPT_MOCK_CONTENT );
@@ -61,9 +61,7 @@ class ResourceLoaderAdEngineTest extends WikiaBaseTest {
 		$this->assertEquals( self::FALLBACK_DATA_MOCK_CONTENT, $mock->getScript( $this->resourceLoaderContext ) );
 	}
 
-	public function testSevenOneMediaResourceLoaderRequestFailWithCachedGradce() {
-
-		ResourceLoaderAdEngineSevenOneMediaModule::$localCache = null;
+	public function testSevenOneMediaResourceLoaderRequestFailWithCachedGrace() {
 		$now = time();
 		$past = $now - 48 * 3600;
 
@@ -86,7 +84,7 @@ class ResourceLoaderAdEngineTest extends WikiaBaseTest {
 			->disableOriginalConstructor()
 			->setMethods( [ 'fetchRemoteScript', 'fetchLocalScript', 'getInlineScript', 'getFallbackDataWhenRequestFails' ] )
 			->getMock();
-
+		ResourceLoaderAdEngineSevenOneMediaModule::$localCache[get_class($mock)] = null;
 		$mock->method( 'fetchRemoteScript' )->willReturn( false );
 		$mock->method( 'fetchLocalScript' )->willReturn( self::LOCAL_SCRIPT_MOCK_CONTENT );
 		$mock->method( 'getInlineScript' )->willReturn( self::INLINE_SCRIPT_MOCK_CONTENT );
@@ -97,13 +95,12 @@ class ResourceLoaderAdEngineTest extends WikiaBaseTest {
 
 	public function testSourcePointModule() {
 		$this->disableMemCache();
-		ResourceLoaderAdEngineSourcePointModule::$localCache = null;
 
 		$mock = $this->getMockBuilder('ResourceLoaderAdEngineSourcePointModule')
 			->disableOriginalConstructor()
 			->setMethods( [ 'fetchRemoteScript', 'fetchLocalScript', 'getInlineScript' ] )
 			->getMock();
-
+		ResourceLoaderAdEngineSourcePointModule::$localCache[get_class($mock)] = null;
 		$mock->method( 'fetchRemoteScript' )->willReturn( self::REMOTE_SCRIPT_MOCK_CONTENT );
 		$mock->method( 'fetchLocalScript' )->willReturn( self::LOCAL_SCRIPT_MOCK_CONTENT );
 		$mock->method( 'getInlineScript' )->willReturn( self::INLINE_SCRIPT_MOCK_CONTENT );
