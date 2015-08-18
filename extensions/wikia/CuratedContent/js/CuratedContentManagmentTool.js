@@ -111,12 +111,10 @@ require(
 						// check if field value is empty and it's required
 						if (optionRequired && val === '') {
 							$this.addError(requiredError);
-							return true;
 						}
 						// check if field value is too long
 						if (optionLimit && val.length > maxAllowedLength) {
 							$this.addError(tooLongLabelError);
-							return true;
 						}
 						if (optionDuplicates && val !== '') {
 							// check if value already exists (in cachedVals variable)
@@ -127,15 +125,11 @@ require(
 								// if it exists and it's not empty it's duplication
 								$this.addError(duplicateError);
 							}
-							return true;
 						}
-						$this.removeError();
 					});
 				},
 
 				checkImages = function () {
-					$ul.find('.image.error').removeError();
-
 					// find all images for items and sections except Featured Section and...
 					$ul.find('.section:not(.featured), .item')
 						.find('.image:not([style*="background-image"])')
@@ -150,6 +144,9 @@ require(
 				checkForm = function () {
 					$save.removeClass();
 
+					// clear errors from all possible items / sections / images
+					$ul.find('.section-input.error, .item-input.error, .name.error, .image.error').removeError();
+
 					checkInputs($ul.find('.section-input'), ['limit', 'duplicates']);
 					checkInputs($ul.find('.item-input'), ['required']);
 
@@ -157,7 +154,6 @@ require(
 					checkImages();
 
 					// validate orphans
-					$ul.find('.section ~ .item.error').removeError();
 					$ul.find('.item:not(.section ~ .item)').addError(orphanError);
 
 					$ul.find('.section').each(function () {
@@ -262,6 +258,7 @@ require(
 								loadImage($imageForSection, $(self).val());
 							}, 500);
 						}
+						checkForm();
 					} else {
 						this.value = val;
 						checkForm();
