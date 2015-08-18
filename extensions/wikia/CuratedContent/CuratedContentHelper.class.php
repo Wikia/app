@@ -7,7 +7,6 @@ class CuratedContentHelper {
 	const STR_BLOG = 'blog';
 	const STR_FILE = 'file';
 	const STR_CATEGORY = 'category';
-	const STR_EMPTY_CATEGORY = 'emptyCategory';
 	const STR_VIDEO = 'video';
 
 	public function processSections( $sections ) {
@@ -105,12 +104,7 @@ class CuratedContentHelper {
 
 				case self::STR_CATEGORY:
 					$category = Category::newFromTitle( $title );
-					if ( $category instanceof Category && $category->getID() ) {
-						$count = $category->getPageCount();
-						if ( empty( $count ) ) {
-							$item['type'] = self::STR_EMPTY_CATEGORY;
-						}
-					} else {
+					if ( !( $category instanceof Category && $category->getID() ) ) {
 						$item['type'] = null;
 					}
 					break;
