@@ -12,8 +12,10 @@ class ContentReviewModuleController extends WikiaController {
 	 */
 	public function executeRender( $params ) {
 		Wikia::addAssetsToOutput( 'content_review_module_js' );
-		JSMessages::enqueuePackage( 'ContentReviewModule' );
+		JSMessages::enqueuePackage( 'ContentReviewModule', JSMessages::EXTERNAL );
+
 
 		$this->moduleType = $params['moduleType'];
+		$this->isTestModeEnabled = Wikia\ContentReview\Helper::isContentReviewTestModeEnabled();
 	}
 }

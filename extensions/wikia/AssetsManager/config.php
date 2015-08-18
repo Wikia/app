@@ -2541,5 +2541,14 @@ $config['content_review_module_js'] = [
 	'assets' => [
 		'//extensions/wikia/ContentReview/scripts/contentReviewModule.run.js',
 		'//extensions/wikia/ContentReview/scripts/contentReviewModule.js',
+		'#group_content_review_test_mode_js'
+	]
+];
+
+$config['content_review_test_mode_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//extensions/wikia/ContentReview/scripts/contentReviewTestMode.run.js',
+		'//extensions/wikia/ContentReview/scripts/contentReviewTestMode.js',
 	]
 ];

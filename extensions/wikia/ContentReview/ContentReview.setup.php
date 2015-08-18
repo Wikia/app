@@ -50,6 +50,8 @@ $wgAutoloadClasses['Wikia\ContentReview\Helper'] = __DIR__ . '/ContentReviewHelp
  */
 $wgAutoloadClasses['Wikia\ContentReview\Hooks'] = __DIR__ . '/ContentReview.hooks.php';
 $wgHooks['GetRailModuleList'][] = 'Wikia\ContentReview\Hooks::onGetRailModuleList';
+$wgHooks['MakeGlobalVariablesScript'][] = 'Wikia\ContentReview\Hooks::onMakeGlobalVariablesScript';
+$wgHooks['BeforePageDisplay'][] = 'Wikia\ContentReview\Hooks::onBeforePageDisplay';
 
 /**
  * Right rail module
@@ -63,4 +65,8 @@ $wgExtensionMessagesFiles['ContentReview'] = __DIR__ . '/ContentReview.i18n.php'
 
 JSMessages::registerPackage( 'ContentReviewModule', [
 	'content-review-module-*'
+] );
+
+JSMessages::registerPackage( 'ContentReviewTestMode', [
+	'content-review-test-mode-*'
 ] );
