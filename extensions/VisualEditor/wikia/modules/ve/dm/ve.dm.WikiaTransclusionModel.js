@@ -71,7 +71,12 @@ ve.dm.WikiaTransclusionModel.prototype.fetchInfoboxParamsRequestDone = function 
 	if ( data && data.query && data.query.pages ) {
 		for ( id in data.query.pages ) {
 			page = data.query.pages[id];
-			if ( ! specs[page.title] ) {
+
+			if ( !page.infoboxes ) {
+				return;
+			}
+
+			if ( !specs[page.title] ) {
 				specs[page.title] = {
 					title: page.title,
 					description: '',
@@ -80,8 +85,7 @@ ve.dm.WikiaTransclusionModel.prototype.fetchInfoboxParamsRequestDone = function 
 				};
 			}
 
-			page.infoboxes.forEach(function( infobox ) {
-				//for now we don't want to support complex (with more than one infobox) templates
+			page.infoboxes.forEach( function ( infobox ) {
 				for ( i = 0; i < infobox.sources.length; i++ ) {
 					specs[page.title].params[ infobox.sources[i] ] = {};
 					specs[page.title].paramOrder.push( infobox.sources[i] );
