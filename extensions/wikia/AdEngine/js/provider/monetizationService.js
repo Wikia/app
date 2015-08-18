@@ -1,15 +1,13 @@
 /*global define*/
 define('ext.wikia.adEngine.provider.monetizationService', [
 	'ext.wikia.adEngine.monetizationServiceHelper',
-	'jquery',
 	'wikia.log',
 	'wikia.nirvana',
 	'wikia.window'
-], function (monetizationServiceHelper, $, log, nirvana, window) {
+], function (monetizationServiceHelper, log, nirvana, window) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.monetizationService',
-		isLoaded = false,
 		slotMap = {
 			MON_ABOVE_TITLE: 'above_title',
 			MON_BELOW_TITLE: 'below_title',
@@ -17,7 +15,8 @@ define('ext.wikia.adEngine.provider.monetizationService', [
 			MON_BELOW_CATEGORY: 'below_category',
 			MON_ABOVE_FOOTER: 'above_footer',
 			MON_FOOTER: 'footer'
-		};
+		},
+		modules;
 
 	function canHandleSlot(slotName) {
 		log(['canHandleSlot', slotName], 'debug', logGroup);
@@ -31,59 +30,42 @@ define('ext.wikia.adEngine.provider.monetizationService', [
 		return false;
 	}
 
-	function validateSlot(slot) {
-		log(['validateSlot', slot], 'debug', logGroup);
-
-		if (slot === 'mon_below_category' && $('#mon_in_content').hasclass('end-content')) {
-			log(['validateSlot', slot, false], 'debug', logGroup);
-			return false;
-		}
-
-		log(['validateSlot', slot, true], 'debug', logGroup);
-		return true;
-	}
-
-	function getModules(success, hop) {
-		log(['getModules', 'send request'], 'debug', logGroup);
-		nirvana.getjson(
-			'monetizationmodule',
+	function initialize(success) {
+		log(['initialize', 'send request'], 'debug', logGroup);
+		nirvana.getJson(
+			'MonetizationModule',
 			'getModules',
 			{
-				adengine: true,
-				articleid: window.wgArticleId,
-				fromsearch: window.fromsearch,
+				adEngine: true,
+				articleId: window.wgArticleId,
+				fromSearch: window.fromsearch,
 				max: monetizationServiceHelper.getMaxAds(),
 				geo: monetizationServiceHelper.getCountryCode()
 			}
 		).done(function (json) {
-			var modules = json.data;
-			if (modules) {
-				$.each(slotMap, function (slot, slotname) {
-					if (modules[slotname] && validateSlot(slotname)) {
-						log(['getModules', slot, 'injectscript'], 'debug', logGroup);
-						monetizationServiceHelper.injectContent(slot, modules[slotname], success);
-					} else {
-						log(['getModules', slot, 'empty data'], 'debug', logGroup);
-						hop();
-					}
-				});
-			}
+			modules = json.data;
+			success();
 		});
 	}
 
-	function fillInSlot(slot, slotElement, success, hop) {
-		log(['fillInSlot', slot, slotElement], 'debug', logGroup);
+	function fillInSlot(slotName, slotElement, success, hop) {
+		log(['fillInSlot', slotName, slotElement], 'debug', logGroup);
 
-		if (!isLoaded) {
-			log(['fillInSlot', slot, 'getModules'], 'debug', logGroup);
-			getModules(success, hop);
-			isLoaded = true;
+		var moduleContent = modules[slotMap[slotName]];
+
+		if (moduleContent) {
+			log(['fillInSlot', slotName, 'injectContent'], 'debug', logGroup);
+			monetizationServiceHelper.injectContent(slotElement, moduleContent, success);
+		} else {
+			log(['fillInSlot', slotName, 'empty data'], 'debug', logGroup);
+			hop();
 		}
 	}
 
 	return {
-		name: 'MonetizationService',
+		canHandleSlot: canHandleSlot,
 		fillInSlot: fillInSlot,
-		canHandleSlot: canHandleSlot
+		initialize: initialize,
+		name: 'MonetizationService'
 	};
 });

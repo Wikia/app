@@ -4,7 +4,7 @@ define('ext.wikia.adEngine.slot.monetizationServiceInContent', [
 	'ext.wikia.adEngine.adContext',
 	'jquery',
 	'wikia.log',
-	'wikia.window',
+	'wikia.window'
 ], function (adContext, $, log, window) {
 	'use strict';
 

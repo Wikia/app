@@ -93,13 +93,13 @@ define('ext.wikia.adEngine.monetizationServiceHelper', [
 
 	/**
 	 * @desc Inject content to the slot
-	 * @param {string} slot
+	 * @param {HTMLElement} slotElement
 	 * @param {string} content
 	 * @param {function} success
 	 */
-	function injectContent(slot, content, success) {
-		scriptWriter.injectHtml(slot, content, function () {
-			var $container = $('#' + slot).find('.monetization-module');
+	function injectContent(slotElement, content, success) {
+		scriptWriter.injectHtml(slotElement, content, function () {
+			var $container = $(slotElement).find('.monetization-module');
 
 			trackImpression($container);
 			trackClickEvent($container);
