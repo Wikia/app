@@ -47,7 +47,7 @@ ve.dm.WikiaTransclusionModel.prototype.fetchRequestDone = function ( specs, data
 	if ( data && data.pages ) {
 		for ( id in data.pages ) {
 			page = data.pages[id];
-			if ( ! specs[page.title] ) {
+			if ( !specs[page.title] ) {
 				specs[page.title] = {
 					title: data.pages[id].title,
 					description: '',
