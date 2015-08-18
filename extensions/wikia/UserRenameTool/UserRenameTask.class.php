@@ -8,7 +8,7 @@
 use Wikia\Tasks\Tasks\BaseTask;
 
 class UserRenameTask extends BaseTask {
-	const EMAIL_CONTROLLER = 'Email\Controller\UserNameChange';
+	const EMAIL_CONTROLLER = \Email\Controller\UserNameChangeController::class;
 
 	/**
 	 * Marshal & execute the RenameUserProcess functions to rename a user
