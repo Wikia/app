@@ -167,7 +167,7 @@ class PhalanxService extends Service {
 				if( !is_null( $this->user ) ) {
 					$parameters[ 'user' ][] = $this->user->getName();
 				} else {
-					if ( ( new \Wikia\Util\Statistics\BernoulliTrial( 0.001 ) )->shouldSample() ) {
+					if ( ( new \Wikia\Util\Statistics\BernoulliTrial( 0.01 ) )->shouldSample() ) {
 						\Wikia\Logger\WikiaLogger::instance()->debug(
 							'PLATFORM-1387',
 							[
