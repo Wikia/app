@@ -29,11 +29,11 @@ class ContentReviewApiController extends WikiaApiController {
 
 		$title = Title::newFromID( $pageId );
 		if ( $title === null || !$title->isJsPage() ) {
-			throw new NotFoundApiException( "Page for ID {$pageId} does not exist.");
+			throw new NotFoundApiException( "JS page with ID {$pageId} does not exist.");
 		}
 
 		$submitUserId = $this->wg->User->getId();
-		if ( !$submitUserId > 0 || !$this->canUserSubmit( $pageId ) ) {
+		if ( !$submitUserId > 0 || !$this->canUserSubmit( $pageId )	) {
 			throw new PermissionsException( 'edit' );
 		}
 
@@ -68,7 +68,7 @@ class ContentReviewApiController extends WikiaApiController {
 
 		$title = Title::newFromID( $pageId );
 		if ( $title === null || !$title->isJsPage() ) {
-			throw new NotFoundApiException( "Page for ID {$pageId} does not exist.");
+			throw new NotFoundApiException( "JS page with ID {$pageId} does not exist.");
 		}
 
 		$submitUserId = $this->wg->User->getId();
