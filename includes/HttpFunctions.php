@@ -755,6 +755,10 @@ class CurlHttpRequest extends MWHttpRequest {
 		return strlen( $content );
 	}
 
+	/**
+	 * @return Status
+	 * @throws MWException
+	 */
 	public function execute() {
 		parent::execute();
 
@@ -824,21 +828,26 @@ class CurlHttpRequest extends MWHttpRequest {
 		// Wikia change - begin
 		/**
 		 * @author Michał Roszka <michal@wikia-inc.com>
+		 * @author macbre
 		 * @see PLATFORM-1317
 		 * @see PLATFORM-1308
 		 */
-		if ( !curl_setopt_array( $curlHandle, $this->curlOptions ) ) {
-			$e = new MWException( "Error setting curl options." );
-			if ( class_exists( 'Wikia\\Logger\\WikiaLogger' ) ) {
-				\Wikia\Logger\WikiaLogger::instance()->debug(
-					'PLATFORM-1317' ,
-					[
-						'curl_options' => bin2hex( serialize( $this->curlOptions ) ),
-						'exception' => $e
-					]
-				);
+		foreach ( $this->curlOptions as $option => $value ) {
+			if ( !curl_setopt( $curlHandle, $option, $value ) ) {
+				$e = new MWException( "Error setting curl options." );
+				if ( class_exists( 'Wikia\\Logger\\WikiaLogger' ) ) {
+					\Wikia\Logger\WikiaLogger::instance()->debug(
+						'PLATFORM-1317' ,
+						[
+							'option'     => $option,
+							'value'      => bin2hex( serialize( $value ) ),
+							'value_raw'  => $value,
+							'exception'  => $e
+						]
+					);
+				}
+				throw $e;
 			}
-			throw $e;
 		}
 		// Wikia change - end
 

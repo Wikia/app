@@ -344,7 +344,7 @@ function axWFactoryDomainCRUD($type="add") {
 		}
 
 		WikiFactory::log( WikiFactory::LOG_DOMAIN, $sLogMessage,  $city_id );
-	
+
 		$dbw->commit();
                 $sInfo .= "Success: Domain <em>{$sDomain}</em> changed to <em>{$sNewDomain}</em>.";
             }
@@ -672,29 +672,29 @@ function axWFactoryDomainQuery() {
  *
  * @return string: json string with array of variables
  */
-function axWFactoryFilterVariables( )
-{
-    global $wgRequest;
-    $defined = wfStrToBool( $wgRequest->getVal("defined", "false") );
-    $editable = wfStrToBool( $wgRequest->getVal("editable", "false") );
-    $wiki_id = $wgRequest->getVal("wiki", 0);
-    $group = $wgRequest->getVal("group", 0);
+function axWFactoryFilterVariables() {
+	global $wgRequest, $wgUser;
+
+	if ( !$wgUser->isAllowed('wikifactory') ) {
+		return '';
+	}
+	$defined = wfStrToBool( $wgRequest->getVal("defined", "false") );
+	$editable = wfStrToBool( $wgRequest->getVal("editable", "false") );
+	$wiki_id = $wgRequest->getVal("wiki", 0);
+	$group = $wgRequest->getVal("group", 0);
 	$string = $wgRequest->getVal("string", false );
 
-    #--- cache it?
-    $Variables = WikiFactory::getVariables( "cv_name", $wiki_id, $group, $defined, $editable, $string );
-    $selector = "";
+	#--- cache it?
+	$Variables = WikiFactory::getVariables( "cv_name", $wiki_id, $group, $defined, $editable, $string );
+	$selector = "";
 
-    foreach( $Variables as $Var) {
-        $selector .= sprintf(
-			"<option value=\"%d\">%s</option>\n",
-            $Var->cv_id, $Var->cv_name
-        );
-    }
+	foreach( $Variables as $Var) {
+		$selector .= Xml::element( 'option', [ 'value' => $Var->cv_id ], $Var->cv_name );
+	}
 
-    return json_encode(array(
-        "selector" => $selector,
-    ));
+	return json_encode(array(
+	    "selector" => $selector,
+	));
 }
 
 /**

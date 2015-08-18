@@ -106,17 +106,22 @@ class ImageLazyLoad  {
 	}
 
 	/**
-	 * Add wgEnableWebPThumbnails global JS variables
+	 * Add wgEnableWebPSupportStats and wgEnableWebPThumbnails global JS variables
 	 *
+	 * wgEnableWebPSupportStats: report WebP support when enabled
 	 * wgEnableWebPThumbnails: request WebP thumbnails if enabled (and supported by the browser)
 	 *
 	 * @param array $vars JS variables
 	 * @return bool true
 	 */
 	public static function onMakeGlobalVariablesScript( Array &$vars ) {
-		global $wgEnableWebPThumbnails;
+		global $wgEnableWebPSupportStats, $wgEnableWebPThumbnails;
 
 		if ( self::isEnabled() ) {
+			if ( !empty( $wgEnableWebPSupportStats ) ) {
+				$vars['wgEnableWebPSupportStats'] = true;
+			}
+
 			if ( !empty( $wgEnableWebPThumbnails ) ) {
 				$vars['wgEnableWebPThumbnails'] = true;
 			}
