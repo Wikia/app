@@ -43,7 +43,7 @@ $messages['en'] = [
 	'content-review-special-list-header-review-start' => 'Review start',
 	'content-review-special-list-header-actions' => 'Actions',
 	'content-review-icons-actions-diff' => 'Start review',
-	
+
 	'content-review-status-unreviewed' => 'Unreviewed',
 	'content-review-status-in-review' => 'In review',
 	'content-review-status-approved' => 'Approved',
