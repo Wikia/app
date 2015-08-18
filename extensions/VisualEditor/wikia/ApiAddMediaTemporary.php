@@ -44,11 +44,11 @@ class ApiAddMediaTemporary extends ApiAddMedia {
 			// Enable unauthorized save for Curated Main Page Editor
 			// if $wgEnableCuratedContentUnauthorizedSave not empty and wiki is not Japanese(CONCF-741)
 			// Ticket for removal wg check: CONCF-900
-			if ( $wgContLanguageCode === 'ja') {
+			if ( $wgContLanguageCode === 'ja' ) {
 				if ( $wgDisableAnonymousEditing ) {
 					$this->dieUsageMsg( 'noedit-anon' );
 				}
-			} else if ( empty( $wgEnableCuratedContentUnauthorizedSave ) ) {
+			} elseif ( empty( $wgEnableCuratedContentUnauthorizedSave ) ) {
 				$this->checkPermissions();
 			}
 
