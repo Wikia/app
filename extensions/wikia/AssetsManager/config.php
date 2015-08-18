@@ -2539,3 +2539,20 @@ $config['template_draft'] = [
 		'//extensions/wikia/TemplateDraft/scripts/templateDraftTracking.js'
 	]
 ];
+
+$config['auth_modal_scss'] = array(
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/AuthModal/css/AuthModal.scss',
+	]
+);
+
+$config['auth_modal_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/AuthModal/js/AuthModal.js',
+		'//extensions/wikia/AuthModal/js/AuthComponent.js',
+	]
+);
