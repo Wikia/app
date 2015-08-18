@@ -3,10 +3,20 @@ define('AuthComponent', function () {
 
 	function AuthComponent (rootElement) {
 		this.pages = {
-				login: 'signin?modal=1',
-				facebookConnect: 'signin?method=facebook&modal=1',
-				register: 'register?modal=1',
-				facebookRegister: 'register?method=facebook&modal=1'
+				login: {
+					path: '/signin'
+				},
+				facebookConnect: {
+					path: '/signin',
+					search: 'method=facebook'
+				},
+				register: {
+					path: '/register'
+				},
+				facebookRegister: {
+					path: '/register',
+					search: 'method=facebook'
+				}
 			};
 		this.rootElement = rootElement;
 	}
@@ -15,13 +25,29 @@ define('AuthComponent', function () {
 		if (typeof language !== 'string') {
 			return '';
 		}
-		return '&uselang=' + language;
+		return 'uselang=' + language;
+	};
+
+	AuthComponent.prototype.getPageUrl = function (page, language) {
+		var pageObj = this.pages[page],
+			url = window.location.origin + pageObj.path,
+			search = '?modal=1',
+			uselang = this.getUselangParam(language),
+			pageSearch = pageObj.search;
+		if (pageSearch) {
+			search += '&' + pageSearch;
+		}
+		if (uselang) {
+			search += '&' + uselang;
+		}
+
+		return url + search;
 	};
 
 	AuthComponent.prototype.open = function (page, callback, language) {
 		if (this.rootElement instanceof HTMLElement) {
 			var authIframe = document.createElement('iframe');
-			authIframe.src = window.location.origin + '/' + page + this.getUselangParam(language);
+			authIframe.src = this.getPageUrl(page, language);
 			authIframe.onload = function () {
 				if (typeof callback === 'function') {
 					callback();
