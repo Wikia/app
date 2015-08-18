@@ -19,26 +19,32 @@ class ApiQueryPortableInfobox extends ApiQueryBase {
 		$articles = array_map( function ( Title $item ) {
 			return Article::newFromTitle( $item, RequestContext::getMain() );
 		}, $pageSet->getGoodTitles() );
+		$parser = new Parser();
+		$parserOptions = new ParserOptions();
 		/**
 		 * @var Article $article
 		 */
 		foreach ( $articles as $id => $article ) {
 			$parsedInfoboxes = $article->getParserOutput()->getProperty( PortableInfoboxDataService::INFOBOXES_PROPERTY_NAME );
 
-			//if in template there are no infoboxes, skip the <includeonly> tags and parse again
-			if (!$parsedInfoboxes) {
+			// if in template there are no infoboxes, thay can be hidden, so skip the <includeonly> tags
+			// and parse again to check their presence
+			if ( !$parsedInfoboxes ) {
 				$templateText = $article->fetchContent();
-				$parser = new Parser();
-				$templateText = $parser->getPreloadText($templateText, $article->getTitle(), new ParserOptions());
+				$templateText = $parser->getPreloadText($templateText, $article->getTitle(), $parserOptions);
 
-				PortableInfoboxParserTagController::getInstance()->render($templateText, $parser, $parser->getPreprocessor()->newFrame() );
+				$infoboxes = $this->validateTemplate( $templateText );
+
+				foreach ( $infoboxes as $infobox ) {
+					PortableInfoboxParserTagController::getInstance()->render($infobox, $parser, $parser->getPreprocessor()->newFrame() );
+				}
 
 				$parsedInfoboxes = $parser->getOutput()->getProperty(PortableInfoboxDataService::INFOBOXES_PROPERTY_NAME);
 			}
 
 			if ( is_array( $parsedInfoboxes ) ) {
 				$inf = [ ];
-				foreach ( array_keys( $d ) as $k => $v ) {
+				foreach ( array_keys( $parsedInfoboxes ) as $k => $v ) {
 					$inf[ $k ] = [ ];
 				}
 				$pageSet->getResult()->setIndexedTagName( $inf, 'infobox' );
@@ -51,5 +57,33 @@ class ApiQueryPortableInfobox extends ApiQueryBase {
 				}
 			}
 		}
+	}
+
+	protected function validateTemplate( $text ) {
+		$infoboxesCount = substr_count($text, '<infobox');
+		$firstInfoboxTagPosition = strpos($text, '<infobox');
+		$firstInfoboxCloseTagPosition = strpos($text, '</infobox>');
+		$result = [];
+
+		if ($infoboxesCount === 0 ) {
+			return [];
+		}
+
+		if ( $infoboxesCount === 1 && $firstInfoboxTagPosition === 0 && $firstInfoboxCloseTagPosition === strlen($text) - 10) {
+			return [$text];
+		}
+		var_dump($text);
+		while ( $firstInfoboxTagPosition ) {
+			//wyszukaj infoboxy i dodawaj do tablicy wynikowej
+			$cuttedInfobox = substr($text, $firstInfoboxTagPosition, ($firstInfoboxCloseTagPosition + strlen('</infobox>')) - $firstInfoboxTagPosition);
+
+			$text = str_replace($cuttedInfobox, '', $text);
+			$result[] = $cuttedInfobox;
+
+			$firstInfoboxTagPosition = strpos($text, '<infobox');
+			$firstInfoboxCloseTagPosition = strpos($text, '</infobox>');
+		}
+
+		return $result;
 	}
 }
