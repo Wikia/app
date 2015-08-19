@@ -7,10 +7,10 @@
 				</div>
 				</a>
 				<?php if ($isAnon):
-					if($enableNewAuth): ?>
-						<a class="auth-label register" href="#"><?= wfMessage( 'global-navigation-register' )->escaped(); ?></a>
+					if ($enableNewAuth): ?>
+						<a class="auth-link register" href="#"><?= wfMessage( 'global-navigation-register' )->escaped(); ?></a>
 						<span class="auth-label"><?= wfMessage( 'global-navigation-or' )->escaped(); ?></span>
-						<a class="auth-label sign-in" href="#"><?= wfMessage( 'global-navigation-sign-in' )->escaped(); ?></a>
+						<a class="auth-link sign-in" href="#"><?= wfMessage( 'global-navigation-sign-in' )->escaped(); ?></a>
 					<?php else: ?>
 						<span class="auth-label sign-in"><?= wfMessage( 'global-navigation-sign-in' )->escaped(); ?></span>
 					<?php endif;

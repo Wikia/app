@@ -76,7 +76,8 @@
 		}
 	}
 
-	.auth-label {
+	.auth-label,
+	.auth-link {
 		color: $global-navigation-text-color;
 		display: table-cell;
 		font-size: 12px;
@@ -94,6 +95,7 @@
 
 		&.sign-in:hover,
 		&.register:hover {
+			color: #1A5EB8;
 			text-decoration: none;
 		}
 	}
