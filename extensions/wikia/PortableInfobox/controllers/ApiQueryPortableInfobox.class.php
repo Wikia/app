@@ -56,13 +56,10 @@ class ApiQueryPortableInfobox extends ApiQueryBase {
 	protected function getParsedInfoboxes( $article, $parser, $parserOptions, $frame ) {
 		$parsedInfoboxes = $article->getParserOutput()->getProperty( PortableInfoboxDataService::INFOBOXES_PROPERTY_NAME );
 
-		// if in template there are no infoboxes, thay can be hidden, so skip the <includeonly> tags
-		// and parse again to check their presence
 		if ( !$parsedInfoboxes ) {
 			$templateText = $article->fetchContent();
-			$templateText = $parser->getPreloadText( $templateText, $article->getTitle(), $parserOptions );
-
-			$infoboxes = $this->processTemplate( $templateText );
+			$templateTextWithoutIncludeonly = $parser->getPreloadText( $templateText, $article->getTitle(), $parserOptions );
+			$infoboxes = $this->processTemplate( $templateTextWithoutIncludeonly );
 
 			foreach ( $infoboxes as $infobox ) {
 				PortableInfoboxParserTagController::getInstance()->render( $infobox, $parser, $frame );
@@ -82,27 +79,8 @@ class ApiQueryPortableInfobox extends ApiQueryBase {
 	 * @return array of striped infoboxes ready to parse
 	 */
 	protected function processTemplate( $text ) {
-		$infoboxTag = '<infobox';
-		$infoboxCloseTag = '</infobox>';
-		$infoboxTagPosition = strpos( $text, $infoboxTag );
-		$infoboxCloseTagPosition = strpos( $text, $infoboxCloseTag );
-		$infoboxTagLength = strlen( $infoboxCloseTag );
-		$result = [];
+		preg_match_all( "/<infobox.+<\/infobox>/sU", $text, $result );
 
-		if ( !$infoboxTagPosition ) {
-			return [];
-		}
-
-		while ( $infoboxTagPosition && $infoboxCloseTagPosition ) {
-			//substract an infobox from a string
-			$onlyInfobox = substr( $text, $infoboxTagPosition, ( $infoboxCloseTagPosition + $infoboxTagLength ) - $infoboxTagPosition );
-			$text = str_replace( $onlyInfobox, '', $text );
-			$result[] = $onlyInfobox;
-
-			$infoboxTagPosition = strpos( $text, $infoboxTag );
-			$infoboxCloseTagPosition = strpos( $text, $infoboxCloseTag );
-		}
-
-		return $result;
+		return $result[0];
 	}
 }
