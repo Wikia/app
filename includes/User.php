@@ -2673,7 +2673,31 @@ class User {
 	 * @return string
 	 */
 	public function getGlobalAttribute($attribute, $default=null) {
-		return $this->getOptionHelper($attribute, $default);
+		global $wgEnableReadsFromAttributeService;
+
+		$valueFromMW = $this->getOptionHelper($attribute, $default);
+		if (!empty($wgEnableReadsFromAttributeService)) {
+			$this->compareAttributeValueFromService($valueFromMW, $attribute, $default);
+		}
+
+		return $valueFromMW;
+	}
+
+	private function compareAttributeValueFromService($valueFromMW, $attribute, $default) {
+		$valueFromService = $this->userAttributes()->getAttribute($this->getId(), $attribute, $default);
+		if ($valueFromMW !== $valueFromService) {
+			$this->logAttributeMismatch($valueFromMW, $valueFromService, $attribute, $default);
+		}
+	}
+
+	private function logAttributeMismatch($valueFromMW, $valueFromService, $attribute, $default) {
+		$this->error("USER_ATTRIBUTES attribute_mismatch", [
+				"valueFromMW" => $valueFromMW,
+				"valueFromService" => $valueFromService,
+				"attribute" => $attribute,
+				"default" => $default,
+				"userId" => $this->getId()
+			]);
 	}
 
 	/**
