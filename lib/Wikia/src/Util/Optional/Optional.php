@@ -2,6 +2,7 @@
 
 namespace Wikia\Util\Optional;
 
+use Exception;
 use Wikia\Util\Assert;
 
 class Optional {
@@ -29,7 +30,7 @@ class Optional {
 		return $value;
 	}
 
-	public function orElseThrow($exception=null) {
+	public function orElseThrow(Exception $exception=null) {
 		if ($this->isPresent()) {
 			return $this->value;
 		}
