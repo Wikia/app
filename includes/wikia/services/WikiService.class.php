@@ -52,12 +52,11 @@ class WikiService extends WikiaModel {
 	 * @return array of $userIds
 	 */
 	public function getWikiAdminIds( $wikiId = 0, $useMaster = false, $excludeBots = false, $limit = null, $includeFounder = true ) {
-
 		if ( !empty( $this->wg->FounderEmailsDebugUserId ) ) {
 			return [ $this->wg->FounderEmailsDebugUserId ];
 		}
 
-		if ( !empty($this->wg->EnableAnswers) ) {
+		if ( !empty( $this->wg->EnableAnswers ) ) {
 			return [];
 		}
 
