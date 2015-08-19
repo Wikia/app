@@ -31,7 +31,7 @@ class AttributeKeyValueService implements AttributeService {
 	/**
 	 * @param int $userId
 	 * @param Attribute $attribute
-	 * @return true
+	 * @return bool
 	 * @throws \Exception
 	 */
 	public function set( $userId, Attribute $attribute ) {
