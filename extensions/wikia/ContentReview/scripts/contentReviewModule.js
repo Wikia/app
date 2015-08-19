@@ -51,9 +51,16 @@ define(
 					notification.show();
 				},
 				onErrorCallback: function(response) {
-					if ( response.responseText.length > 0 ) {
+					var e, errorMsg;
+					if (response.responseText.length > 0) {
+						e = $.parseJSON(response.responseText);
+						if (e.exception.details.length > 0) {
+							errorMsg = e.exception.details;
+						} else {
+							errorMsg = e.exception.message;
+						}
 						notification = new BannerNotification(
-							mw.message('content-review-module-submit-exception', response.responseText).escaped(),
+							mw.message('content-review-module-submit-exception', errorMsg).escaped(),
 							'error'
 						);
 

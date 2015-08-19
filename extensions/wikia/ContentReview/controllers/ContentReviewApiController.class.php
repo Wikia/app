@@ -29,7 +29,7 @@ class ContentReviewApiController extends WikiaApiController {
 
 		$title = Title::newFromID( $pageId );
 		if ( $title === null || !$title->isJsPage() ) {
-			throw new NotFoundApiException( "JS page with ID {$pageId} does not exist.");
+			throw new NotFoundApiException( "JS page with ID {$pageId} does not exist");
 		}
 
 		$submitUserId = $this->wg->User->getId();
@@ -41,7 +41,7 @@ class ContentReviewApiController extends WikiaApiController {
 		$revisionData = $this->getLatestReviewedRevisionFromDB( $wikiId, $pageId );
 
 		if ( $revisionId == $revisionData['revision_id'] ) {
-			throw new BadRequestApiException( 'Current revision is already reviewed.');
+			throw new BadRequestApiException( 'Current revision is already reviewed');
 		}
 
 		( new ReviewModel() )->submitPageForReview( $wikiId, $pageId,
@@ -68,7 +68,7 @@ class ContentReviewApiController extends WikiaApiController {
 
 		$title = Title::newFromID( $pageId );
 		if ( $title === null || !$title->isJsPage() ) {
-			throw new NotFoundApiException( "JS page with ID {$pageId} does not exist.");
+			throw new NotFoundApiException( "JS page with ID {$pageId} does not exist");
 		}
 
 		$submitUserId = $this->wg->User->getId();
