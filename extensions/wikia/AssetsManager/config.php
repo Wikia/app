@@ -2556,3 +2556,13 @@ $config['auth_modal_js'] = array(
 		'//extensions/wikia/AuthModal/js/AuthComponent.js',
 	]
 );
+
+$config['curated_content_tool_button_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis'],
+	'assets' => [
+		'//resources/wikia/libraries/Ponto/ponto.js',
+		'//extensions/wikia/CuratedContent/js/CuratedContentToolButton.js',
+		'//extensions/wikia/CuratedContent/js/CuratedContentToolPontoBridge.js'
+	]
+];
