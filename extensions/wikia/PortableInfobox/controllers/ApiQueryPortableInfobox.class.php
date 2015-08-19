@@ -22,26 +22,9 @@ class ApiQueryPortableInfobox extends ApiQueryBase {
 		$parser = new Parser();
 		$parserOptions = new ParserOptions();
 		$frame = $parser->getPreprocessor()->newFrame();
-		/**
-		 * @var Article $article
-		 */
+
 		foreach ( $articles as $id => $article ) {
-			$parsedInfoboxes = $article->getParserOutput()->getProperty( PortableInfoboxDataService::INFOBOXES_PROPERTY_NAME );
-
-			// if in template there are no infoboxes, thay can be hidden, so skip the <includeonly> tags
-			// and parse again to check their presence
-			if ( !$parsedInfoboxes ) {
-				$templateText = $article->fetchContent();
-				$templateText = $parser->getPreloadText( $templateText, $article->getTitle(), $parserOptions );
-
-				$infoboxes = $this->processTemplate( $templateText );
-
-				foreach ( $infoboxes as $infobox ) {
-					PortableInfoboxParserTagController::getInstance()->render( $infobox, $parser, $frame );
-				}
-
-				$parsedInfoboxes = $parser->getOutput()->getProperty( PortableInfoboxDataService::INFOBOXES_PROPERTY_NAME );
-			}
+			$parsedInfoboxes = $this->getParsedInfoboxes( $article, $parser, $parserOptions, $frame );
 
 			if ( is_array( $parsedInfoboxes ) ) {
 				$inf = [ ];
@@ -58,6 +41,37 @@ class ApiQueryPortableInfobox extends ApiQueryBase {
 				}
 			}
 		}
+	}
+
+	/**
+	 * @desc For given Article, get property 'infoboxes' from parser output. If property is empty, this may mean that
+	 * template is inside the <noinclude> tag. In this case, we want to skip the <includeonly> tags, get from this only
+	 * infoboxes and parse them again to check their presence and get params.
+	 * @param $article
+	 * @param $parser
+	 * @param $parserOptions
+	 * @param $frame
+	 * @return mixed
+	 */
+	protected function getParsedInfoboxes( $article, $parser, $parserOptions, $frame ) {
+		$parsedInfoboxes = $article->getParserOutput()->getProperty( PortableInfoboxDataService::INFOBOXES_PROPERTY_NAME );
+
+		// if in template there are no infoboxes, thay can be hidden, so skip the <includeonly> tags
+		// and parse again to check their presence
+		if ( !$parsedInfoboxes ) {
+			$templateText = $article->fetchContent();
+			$templateText = $parser->getPreloadText( $templateText, $article->getTitle(), $parserOptions );
+
+			$infoboxes = $this->processTemplate( $templateText );
+
+			foreach ( $infoboxes as $infobox ) {
+				PortableInfoboxParserTagController::getInstance()->render( $infobox, $parser, $frame );
+			}
+
+			$parsedInfoboxes = $parser->getOutput()->getProperty( PortableInfoboxDataService::INFOBOXES_PROPERTY_NAME );
+		}
+
+		return $parsedInfoboxes;
 	}
 
 	/**
