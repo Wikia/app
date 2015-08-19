@@ -36,11 +36,11 @@ class ContentReviewSpecialController extends WikiaSpecialPageController {
 				wfMessage( 'content-review-icons-actions-diff' )->escaped(),
 				array(
 					'target' => '_blank',
-					'class' => 'content-review-special-list-item-actions-diff  wikia-button primary'
+					'class' => 'content-review-special-list-item-actions-diff  wikia-button primary',
 				),
 				array(
 					'diff' => $reviews[$contentReviewId]['revision_id'],
-					'oldid' => $reviews[$contentReviewId]['revision_id'],
+					'oldid' => $reviews[$contentReviewId]['reviewed_id'],
 				)
 			);
 		}
