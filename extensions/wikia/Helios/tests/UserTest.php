@@ -2,7 +2,7 @@
 
 namespace Wikia\Helios;
 
-use Wikia\DependencyInjection\Injector;
+use DI\Container;
 use Wikia\DependencyInjection\InjectorBuilder;
 use Wikia\Service\Helios\ClientException;
 use Wikia\Service\Helios\HeliosClient;
@@ -11,25 +11,30 @@ class UserTest extends \WikiaBaseTest {
 
 	private $webRequestMock;
 
+	/** @var Container */
+	private $container;
+
 	public function setUp() {
 		$this->setupFile = __DIR__ . '/../Helios.setup.php';
+		parent::setUp();
 		$this->webRequestMock = $this->getMock( '\WebRequest', [ 'getHeader', 'getCookie' ], [ ], '', false );
 		$this->mockGlobalVariable( 'wgHeliosLoginSamplingRate', 100 );
 		$this->mockGlobalVariable( 'wgHeliosLoginShadowMode', false );
 		User::purgeAuthenticationCache();
 
-		Injector::setInjector(
-			( new InjectorBuilder() )
-				->bind( HeliosClient::class )->to( function () {
-					return
-						$this->getMock( 'Wikia\Service\Helios\HeliosClient',
-							[ 'info', 'login', 'invalidateToken', 'register' ],
-							[ ],
-							'',
-							false );
-				} )->build() );
+		$this->container = ( new InjectorBuilder() )
+			->bind( HeliosClient::class )->to( function () {
+				return
+					$this->getMock( 'Wikia\Service\Helios\HeliosClient',
+						[ 'info', 'login', 'invalidateToken', 'register' ],
+						[ ],
+						'',
+						false );
+			} )->build();
 
-		parent::setUp();
+		$this->mockStaticMethod( '\Wikia\Helios\User', 'getHeliosClient', $this->container->get( HeliosClient::class ) );
+
+
 	}
 
 	public function testGetAccessTokenFromCookie() {
@@ -171,7 +176,7 @@ class UserTest extends \WikiaBaseTest {
 		$userInfo = new \StdClass;
 		$userInfo->user_id = 1;
 
-		$oClientMock = Injector::getInjector()->get(HeliosClient::class);
+		$oClientMock = $this->container->get( HeliosClient::class );
 		$oClientMock->expects( $this->once() )
 			->method( 'info' )
 			->with( 'qi8H8R7OM4xMUNMPuRAZxlY' )
@@ -199,7 +204,7 @@ class UserTest extends \WikiaBaseTest {
 
 		$userInfo = new \StdClass;
 
-		$clientMock = Injector::getInjector()->get(HeliosClient::class);
+		$clientMock = $this->container->get( HeliosClient::class );
 		$clientMock->expects( $this->once() )
 			->method( 'info' )
 			->with( 'qi8H8R7OM4xMUNMPuRAZxlY' )
@@ -214,7 +219,7 @@ class UserTest extends \WikiaBaseTest {
 		$username = 'SomeName';
 		$password = 'Password';
 
-		$client = Injector::getInjector()->get(HeliosClient::class);
+		$client = $this->container->get( HeliosClient::class );
 		$client->expects( $this->once() )
 			->method( 'login' )
 			->with( $username, $password )
@@ -229,7 +234,7 @@ class UserTest extends \WikiaBaseTest {
 		$username = 'SomeName';
 		$password = 'Password';
 
-		$client = Injector::getInjector()->get(HeliosClient::class);
+		$client = $this->container->get( HeliosClient::class );
 		$client->expects( $this->once() )
 			->method( 'login' )
 			->with( $username, $password )
@@ -246,7 +251,7 @@ class UserTest extends \WikiaBaseTest {
 		$loginInfo = new \StdClass;
 		$loginInfo->access_token = 'orvb9pM6wX';
 
-		$client = Injector::getInjector()->get(HeliosClient::class);
+		$client = $this->container->get( HeliosClient::class );
 		$client->expects( $this->once() )
 			->method( 'login' )
 			->with( $username, $password )
@@ -257,4 +262,3 @@ class UserTest extends \WikiaBaseTest {
 	}
 
 }
-

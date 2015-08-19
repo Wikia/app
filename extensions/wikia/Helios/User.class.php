@@ -465,10 +465,10 @@ class User {
 	}
 
 	/**
-	 * wrapper function added for strong typing
+	 * wrapper function added for strong typing and testing
 	 * @return \Wikia\Service\Helios\HeliosClient
 	 */
-	private static function getHeliosClient() {
+	public static function getHeliosClient() {
 		return Injector::getInjector()->get(HeliosClient::class);
 	}
 }
