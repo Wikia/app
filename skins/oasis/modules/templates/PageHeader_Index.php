@@ -7,12 +7,20 @@ if ( !empty( $wg->EnableMonetizationModuleExt ) ) {
 	}
 }
 
+if ( $showCuratedContentToolBtn ) {
+	$curatedContentToolButton = '<a id="CuratedContentTool" class="wikia-button">' . wfMsg( 'edit-mobile-main-page' ) . '</a>';
+} else {
+	$curatedContentToolButton = null;
+}
+
 $runNjord = ( !empty( $wg->EnableNjordExt ) && WikiaPageType::isMainPage() );
 if ( $runNjord ) {
 	// edit button with actions dropdown
 	if ( !empty( $action ) ) {
 		echo F::app()->renderView( 'MenuButton', 'Index', array( 'action' => $action, 'image' => $actionImage, 'dropdown' => $dropdown, 'name' => $actionName ) );
 	}
+
+	echo $curatedContentToolButton;
 } else {
 	?>
 	<!-- @TODO CONCF-189 everything inside this if should be removed when social buttons are live -->
@@ -25,6 +33,8 @@ if ( $runNjord ) {
 			if ( !empty( $action ) ) {
 				echo F::app()->renderView( 'MenuButton', 'Index', array( 'action' => $action, 'image' => $actionImage, 'dropdown' => $dropdown, 'name' => $actionName ) );
 			}
+
+			echo $curatedContentToolButton;
 
 			// TODO: use PageHeaderIndexExtraButtons hook for these buttons
 
@@ -101,6 +111,10 @@ if ( $runNjord ) {
 			// edit button with actions dropdown
 			if ( !empty( $action ) ) {
 				echo F::app()->renderView( 'MenuButton', 'Index', array( 'action' => $action, 'image' => $actionImage, 'dropdown' => $dropdown, 'name' => $actionName ) );
+			}
+
+			if ( $curatedContentToolButton !== null ) {
+				echo $curatedContentToolButton;
 			}
 
 			// TODO: use PageHeaderIndexExtraButtons hook for these buttons

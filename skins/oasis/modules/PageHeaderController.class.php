@@ -157,13 +157,20 @@ class PageHeaderController extends WikiaController {
 	 *    key: showSearchBox (default: false)
 	 */
 	public function executeIndex( $params ) {
-		global $wgTitle, $wgArticle, $wgOut, $wgUser, $wgContLang, $wgSupressPageTitle, $wgSupressPageSubtitle, $wgSuppressNamespacePrefix, $wgEnableWallExt;
+		global $wgTitle, $wgArticle, $wgOut, $wgUser, $wgContLang, $wgSupressPageTitle, $wgSupressPageSubtitle,
+		       $wgSuppressNamespacePrefix, $wgEnableCuratedContentExt, $wgEnableWallExt;
+
 		wfProfileIn( __METHOD__ );
 
 		$this->isUserLoggedIn = $wgUser->isLoggedIn();
 
 		// check for video add button permissions
 		$this->showAddVideoBtn = $wgUser->isAllowed( 'videoupload' );
+
+		$this->showCuratedContentToolBtn =
+			WikiaPageType::isMainPage() &&
+			!empty( $wgEnableCuratedContentExt ) &&
+			$wgUser->isAllowed( 'curatedcontent' );
 
 		// page namespace
 		$ns = $wgTitle->getNamespace();
