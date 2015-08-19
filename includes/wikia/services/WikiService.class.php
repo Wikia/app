@@ -92,7 +92,7 @@ class WikiService extends WikiaModel {
 		return $userIds;
 	}
 
-	private function getAdminIdsFromDB( DatabaseBase $db, $excludeBots = false, $limit = null ) {
+	private static function getAdminIdsFromDB( DatabaseBase $db, $excludeBots = false, $limit = null ) {
 		$conditions = [ "ug_group in ('sysop','bureaucrat')" ];
 
 		if ( $excludeBots ) {
