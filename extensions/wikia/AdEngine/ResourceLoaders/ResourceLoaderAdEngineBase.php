@@ -121,13 +121,17 @@ abstract class ResourceLoaderAdEngineBase extends ResourceLoaderModule {
 
 				$cached['ttl'] = $now + static::TTL_GRACE;
 				$wgMemc->set($memKey, $cached);
-				static::$localCache[get_class($this)] = $cached;
+				static::$localCache[get_class( $this )] = $cached;
 				return $cached;
 			}
 			$data = $this->getFallbackDataWhenRequestFails();
 			$wgMemc->set($memKey, $data);
 
-			static::$localCache[get_class($this)] = $data;
+			\Wikia\Logger\WikiaLogger::instance()
+				->warning( 'ResourceLoaderAdEngine - failed to fetch new data',
+					['class' => get_class( $this )] );
+
+			static::$localCache[get_class( $this )] = $data;
 			return $data;
 		}
 
@@ -136,6 +140,16 @@ abstract class ResourceLoaderAdEngineBase extends ResourceLoaderModule {
 			'modTime' => $now,
 			'ttl' => $now + static::TTL_SCRIPTS,
 		];
+
+		if ( md5($data['script']) != md5($cached['script']) ) {
+			\Wikia\Logger\WikiaLogger::instance()
+				->info( 'ResourceLoaderAdEngine - scripts updated',
+					['class' => get_class( $this )] );
+		} else {
+			\Wikia\Logger\WikiaLogger::instance()
+				->info( 'ResourceLoaderAdEngine - scripts downloaded without change to previous version',
+					['class' => get_class( $this )] );
+		}
 
 		if ($generated === $cached['script']) {
 			$data['modTime'] = $cached['modTime'];
