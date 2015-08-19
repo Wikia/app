@@ -47,10 +47,8 @@ class AttributeKeyValueService implements AttributeService {
 
 			return $ret;
 		} catch ( \Exception $e ) {
-			$this->error( $e->getMessage(), [
-				'exceptionType' => get_class( $e ),
-				'user' => $userId
-			] );
+			$this->logError( $userId, $e );
+			return false;
 		}
 	}
 
@@ -68,9 +66,7 @@ class AttributeKeyValueService implements AttributeService {
 		try {
 			$attributeArray = $this->persistenceAdapter->getAttributes( $userId );
 		} catch ( \Exception $e ) {
-			$this->error( $e->getMessage(), [
-				'user' => $userId
-			] );
+			$this->logError( $userId, $e );
 		}
 
 		return $attributeArray;
@@ -79,24 +75,28 @@ class AttributeKeyValueService implements AttributeService {
 	/**
 	 * @param int $userId
 	 * @param Attribute $attribute
-	 * @return bool|true
+	 * @return bool
 	 * @throws \Exception
 	 */
 	public function delete( $userId, Attribute $attribute ) {
 		if ( empty( $attribute ) || $userId === 0 ) {
-			return false;
+			throw new \Exception( 'Invalid parameters, $attribute must not be empty and $userId must be > 0' );
 		}
 
 		try {
 			$ret = $this->persistenceAdapter->deleteAttribute( $userId, $attribute );
 			return $ret;
 		} catch ( \Exception $e ) {
-			$this->error( $e->getMessage(), [
-				'user' => $userId
-			] );
-
-			throw $e;
+			$this->logError( $userId, $e );
+			return false;
 		}
+	}
+
+	private function logError( $userId, \Exception $e ) {
+		$this->error( $e->getMessage(), [
+			'user' => $userId,
+			'exceptionType' => get_class( $e ),
+		] );
 	}
 
 	protected function getLoggerContext() {
