@@ -1,6 +1,6 @@
 /*global define*/
 define('ext.wikia.adEngine.provider.monetizationService', [
-	'ext.wikia.adEngine.monetizationServiceHelper',
+	'ext.wikia.adEngine.provider.monetizationService.helper',
 	'wikia.log',
 	'wikia.nirvana',
 	'wikia.window'
@@ -37,8 +37,8 @@ define('ext.wikia.adEngine.provider.monetizationService', [
 			'getModules',
 			{
 				adEngine: true,
-				articleId: window.wgArticleId,
-				fromSearch: window.fromsearch,
+				articleId: window.wgArticleId, // TODO: use ad context
+				fromSearch: window.fromsearch, // TODO: convert window.fromsearch to a module
 				max: monetizationServiceHelper.getMaxAds(),
 				geo: monetizationServiceHelper.getCountryCode()
 			}

@@ -1,5 +1,5 @@
 /*global define*/
-define('ext.wikia.adEngine.monetizationServiceHelper', [
+define('ext.wikia.adEngine.provider.monetizationService.helper', [
 	'jquery',
 	'wikia.geo',
 	'wikia.scriptwriter',

@@ -1,5 +1,5 @@
 /*global describe, it, expect, modules, spyOn*/
-describe('ext.wikia.adEngine.monetizationServiceHelper', function () {
+describe('ext.wikia.adEngine.provider.monetizationService.helper', function () {
 	'use strict';
 
 	var mocks, monetizationServiceHelper;
@@ -22,7 +22,7 @@ describe('ext.wikia.adEngine.monetizationServiceHelper', function () {
 		}
 	};
 
-	monetizationServiceHelper = modules['ext.wikia.adEngine.monetizationServiceHelper'](
+	monetizationServiceHelper = modules['ext.wikia.adEngine.provider.monetizationService.helper'](
 		jQuery,
 		mocks.geo,
 		mocks.scriptwriter,
