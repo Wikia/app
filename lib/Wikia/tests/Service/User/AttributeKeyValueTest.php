@@ -101,11 +101,14 @@ class AttributeKeyValueTest extends \PHPUnit_Framework_TestCase {
 		$this->assertTrue( $service->delete( $this->userId, $this->testAttribute_1 ) );
 	}
 
+	/**
+	 * @expectedException \Exception
+	 */
 	public function testDeleteWithAnonUserId() {
 		$this->persistenceMock->expects( $this->exactly( 0 ) )
 			->method( 'deleteAttribute' );
 
 		$service = new AttributeKeyValueService( $this->persistenceMock );
-		$this->assertFalse( $service->delete( $this->anonUserId, $this->testAttribute_1 ) );
+		$service->delete( $this->anonUserId, $this->testAttribute_1 );
 	}
 }
