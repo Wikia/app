@@ -87,16 +87,15 @@
 		&.register,
 		&.sign-in {
 			padding-left: 7px;
+
+			&:hover {
+				color: #1a5eb8;
+				text-decoration: none;
+			}
 		}
 
 		&.register {
 			padding-right: 7px;
-		}
-
-		&.sign-in:hover,
-		&.register:hover {
-			color: #1A5EB8;
-			text-decoration: none;
 		}
 	}
 
