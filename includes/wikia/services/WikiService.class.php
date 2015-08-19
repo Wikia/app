@@ -56,10 +56,6 @@ class WikiService extends WikiaModel {
 			return [ $this->wg->FounderEmailsDebugUserId ];
 		}
 
-		if ( !empty( $this->wg->EnableAnswers ) ) {
-			return [];
-		}
-
 		$wikiId = empty( $wikiId ) ? $this->wg->CityId : $wikiId ;
 		$wiki = WikiFactory::getWikiById( $wikiId );
 
@@ -71,6 +67,10 @@ class WikiService extends WikiaModel {
 		$userIds = [];
 		if ( $includeFounder ) {
 			$userIds[] = $wiki->city_founding_user;
+		}
+
+		if ( !empty( $this->wg->EnableAnswers ) ) {
+			return $userIds;
 		}
 
 		// Get admins and bureaucrats
