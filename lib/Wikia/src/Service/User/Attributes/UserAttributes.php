@@ -73,8 +73,8 @@ class UserAttributes {
 			return;
 		}
 
-		$this->setAttributeInCache( $userId, $attribute );
 		$this->setAttributeInService( $userId, $attribute );
+		$this->setAttributeInCache( $userId, $attribute );
 	}
 
 	private function isAnonUser( $userId ) {
@@ -82,7 +82,7 @@ class UserAttributes {
 	}
 
 	private function attributeValueAlreadySet( $userId, Attribute $attribute ) {
-		return $this->getAttribute( $userId, $attribute->getName() ) == $attribute->getValue();
+		return $this->getAttribute( $userId, $attribute->getName() ) === $attribute->getValue();
 	}
 
 	/**
@@ -120,9 +120,8 @@ class UserAttributes {
 			return;
 		}
 
-		$this->deleteAttributeFromCache( $userId, $attribute );
 		$this->deleteAttributeFromService( $userId, $attribute );
-
+		$this->deleteAttributeFromCache( $userId, $attribute );
 	}
 
 	private function attributeNotSetForUser( $userId, Attribute $attribute ) {
