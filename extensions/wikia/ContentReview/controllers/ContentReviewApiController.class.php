@@ -7,6 +7,7 @@ class ContentReviewApiController extends WikiaApiController {
 
 	const CONTENT_REVIEW_RESPONSE_ACTION_INSERT = 'insert';
 	const CONTENT_REVIEW_RESPONSE_ACTION_UPDATE = 'update';
+	const CONTENT_REVIEW_TEST_MODE_KEY = 'contentReviewTestMode';
 
 	public function submitPageForReview() {
 		try {
@@ -41,6 +42,46 @@ class ContentReviewApiController extends WikiaApiController {
 			} else {
 				$this->makeFailureResponse();
 			}
+		} catch ( Exception $e ) {
+			$this->makeExceptionResponse( $e );
+		}
+	}
+
+	public function enableTestMode() {
+		try {
+			if ( !$this->request->wasPosted()
+				|| !$this->wg->User->matchEditToken( $this->request->getVal( 'editToken' ) )
+			) {
+				throw new BadRequestApiException();
+			}
+
+			$pageId = $this->request->getInt( 'pageId' );
+
+			$submitUserId = $this->wg->User->getId();
+			if ( !$submitUserId > 0 || !$this->canUserSubmit( $pageId )	) {
+				throw new Exception( 'Invalid user' );
+			}
+
+			$title = Title::newFromID( $pageId );
+			if ( $title === null || !$title->isJsPage() ) {
+				throw new Exception( 'Invalid page' );
+			}
+
+			Wikia\ContentReview\Helper::setContentReviewTestMode();
+			$this->makeSuccessResponse();
+		} catch ( Exception $e ) {
+			$this->makeExceptionResponse( $e );
+		}
+	}
+
+	public function disableTestMode() {
+		try {
+			if ( !$this->request->wasPosted() ) {
+				throw new BadRequestApiException();
+			}
+
+			Wikia\ContentReview\Helper::disableContentReviewTestMode();
+			$this->makeSuccessResponse();
 		} catch ( Exception $e ) {
 			$this->makeExceptionResponse( $e );
 		}
@@ -85,6 +126,17 @@ class ContentReviewApiController extends WikiaApiController {
 		} catch ( Exception $e ) {
 			$this->makeExceptionResponse( $e );
 		}
+	}
+
+	public function showTestModeNotificaion() {
+		$notification = wfMessage( 'content-review-test-mode-enabled' )->escaped();
+		$notification.= Xml::element(
+			'a',
+			[ 'id' => 'content-review-test-mode-disable', 'href' => '#' ],
+			wfMessage( 'content-review-test-mode-disable' )->plain()
+		);
+
+		$this->notification = $notification;
 	}
 
 	private function canUserSubmit( $pageId ) {
