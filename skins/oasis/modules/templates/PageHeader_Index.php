@@ -8,7 +8,7 @@ if ( !empty( $wg->EnableMonetizationModuleExt ) ) {
 }
 
 if ( $showCuratedContentToolBtn ) {
-	$curatedContentToolButton = '<a id="CuratedContentTool" class="wikia-button">' . wfMsg( 'edit-mobile-main-page' ) . '</a>';
+	$curatedContentToolButton = '<a id="CuratedContentTool" class="wikia-button">' . wfMsg( 'wikiacuratedcontent-edit-mobile-main-page' ) . '</a>';
 } else {
 	$curatedContentToolButton = null;
 }
