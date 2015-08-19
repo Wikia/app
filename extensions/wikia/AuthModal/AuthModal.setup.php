@@ -1,5 +1,11 @@
 <?php
+$dir = dirname(__FILE__) . '/';
 
-$wgAutoloadClasses['AuthModalHooks'] = dirname( __FILE__ ) . '/' . 'AuthModalHooks.class.php';
+$wgAutoloadClasses['AuthModalHooks'] = $dir . 'AuthModalHooks.class.php';
 
 $wgHooks['BeforePageDisplay'][] = 'AuthModalHooks::onBeforePageDisplay';
+
+/**
+ * i18n
+ */
+$wgExtensionMessagesFiles['AuthModal'] = $dir . 'AuthModal.i18n.php';
