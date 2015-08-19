@@ -1436,7 +1436,7 @@ class User {
 	 *                    done against master.
 	 */
 	private function getBlockedStatus( $bFromSlave = true ) {
-		global $wgProxyWhitelist, $wgUser;
+		global $wgProxyWhitelist;
 
 		if ( -1 != $this->mBlockedby ) {
 			return;
@@ -1455,7 +1455,7 @@ class User {
 		# We only need to worry about passing the IP address to the Block generator if the
 		# user is not immune to autoblocks/hardblocks, and they are the current user so we
 		# know which IP address they're actually coming from
-		if ( !$this->isAllowed( 'ipblock-exempt' ) && $this->getID() == $wgUser->getID() ) {
+		if ( !$this->isAllowed( 'ipblock-exempt' ) && $this->isCurrent() ) {
 			$ip = $this->getRequest()->getIP();
 		} else {
 			$ip = null;
@@ -3096,6 +3096,18 @@ class User {
 	 */
 	public function isAnon() {
 		return !$this->isLoggedIn();
+	}
+
+	/**
+	 * Get whether the user is the current performer
+	 *
+	 * Inspired by User::equals() and its usage in MW 1.25
+	 * @return Bool
+	 * @author Michał Roszka <michal@wikia-inc.com>
+	 */
+	public function isCurrent() {
+		global $wgUser;
+		return $this->getName() === $wgUser->getName();
 	}
 
 	/**
@@ -4782,12 +4794,12 @@ class User {
 	 * @return int|bool True if not $wgNewUserLog; otherwise ID of log item or 0 on failure
 	 */
 	public function addNewUserLogEntry( $byEmail = false, $reason = '' ) {
-		global $wgUser, $wgContLang, $wgNewUserLog;
+		global $wgContLang, $wgNewUserLog;
 		if( empty( $wgNewUserLog ) ) {
 			return true; // disabled
 		}
 
-		if( $this->getName() == $wgUser->getName() ) {
+		if( $this->isCurrent() ) {
 			$action = 'create';
 		} else {
 			$action = 'create2';
