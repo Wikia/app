@@ -770,7 +770,7 @@ class CurlHttpRequest extends MWHttpRequest {
 		if ( $this->parsedUrl['scheme'] == 'https' ) {
 			$this->curlOptions[CURLOPT_PROXY] = '';
 		} else {
-			$this->curlOptions[CURLOPT_PROXY] = $this->proxy;
+			$this->curlOptions[CURLOPT_PROXY] = (string) $this->proxy; // cast to string to avoid setting a proxy to a null (PLATFORM-1317)
 		}
 		// End of Wikia change
 
