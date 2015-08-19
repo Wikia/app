@@ -16,6 +16,7 @@
 			this.submitButton = this.wikiaForm.inputs.submit;
 
 			this.setupValidation();
+			this.setupHumanTracking();
 
 			// imported via UserSignupMixin
 			this.setCountryValue(this.wikiaForm);
@@ -43,6 +44,24 @@
 				.add(inputs.birthmonth)
 				.add(inputs.birthyear)
 				.on('change.UserSignup', this.validator.validateBirthdate.bind(this.validator));
+		},
+
+		setupHumanTracking: function () {
+			$(document).on(
+				'mousemove.humanTracking keypress.humanTracking touchstart.humanTracking',
+				function(event) {
+					$(this).off('.humanTracking');
+
+					require(['wikia.tracker'], function (tracker) {
+						tracker.track({
+							category: 'user-sign-up',
+							trackingMethod: 'analytics',
+							action: tracker.ACTIONS.VIEW,
+							label: 'human-pageview-' + event.type
+						});
+					});
+				}
+			);
 		}
 	};
 
