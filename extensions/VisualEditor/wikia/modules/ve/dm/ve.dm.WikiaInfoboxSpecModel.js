@@ -11,7 +11,7 @@
  * @class
  *
  * @constructor
- * @param {ve.dm.MWTemplateModel} template Template
+ * @param template TemplateModel
  */
 ve.dm.WikiaInfoboxSpecModel = function VeDmWikiaInfoboxSpecModel( template ) {
 	// Properties

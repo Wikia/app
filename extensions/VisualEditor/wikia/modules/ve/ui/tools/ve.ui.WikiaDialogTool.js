@@ -119,7 +119,7 @@ ve.ui.WikiaInfoboxInsertDialogTool = function VEUIWikiaInfoboxInsertDialogTool( 
 OO.inheritClass( ve.ui.WikiaInfoboxInsertDialogTool, ve.ui.DialogTool );
 ve.ui.WikiaInfoboxInsertDialogTool.static.name = 'wikiaInfoboxInsert';
 ve.ui.WikiaInfoboxInsertDialogTool.static.group = 'object';
-ve.ui.WikiaInfoboxInsertDialogTool.static.icon = 'template';
+ve.ui.WikiaInfoboxInsertDialogTool.static.icon = 'infobox';
 ve.ui.WikiaInfoboxInsertDialogTool.static.title =
 	OO.ui.deferMsg( 'visualeditor-dialogbutton-infobox-tooltip' );
 ve.ui.WikiaInfoboxInsertDialogTool.static.commandName = 'wikiaInfoboxInsert';

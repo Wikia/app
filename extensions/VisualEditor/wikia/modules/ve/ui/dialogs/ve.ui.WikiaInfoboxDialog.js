@@ -72,6 +72,7 @@ ve.ui.WikiaInfoboxDialog.prototype.getSetupProcess = function ( data ) {
 	return ve.ui.WikiaInfoboxDialog.super.prototype.getSetupProcess.call( this, data )
 		.next( function () {
 			this.transclusionModel = new ve.dm.WikiaTransclusionModel();
+			this.transclusionModel.setIsInfobox( true );
 
 			// Load existing infobox template
 			this.transclusionModel

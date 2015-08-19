@@ -49,3 +49,7 @@ ve.dm.WikiaTransclusionModel.prototype.fetchRequestDone = function ( specs, data
 		ve.extendObject( this.specCache, specs );
 	}
 };
+
+ve.dm.WikiaTransclusionModel.prototype.setIsInfobox = function ( isInfobox ) {
+	this.isInfobox = isInfobox;
+}

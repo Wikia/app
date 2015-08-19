@@ -86,6 +86,7 @@ ve.ui.WikiaInfoboxInsertDialog.prototype.onInfoboxTemplateSelect = function ( it
 	if ( itemData ) {
 		this.$frame.startThrobbing();
 		this.transclusionModel = new ve.dm.WikiaTransclusionModel();
+		this.transclusionModel.setIsInfobox( true );
 		template = ve.dm.MWTemplateModel.newFromName(
 			this.transclusionModel, itemData.data
 		);

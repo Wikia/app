@@ -28,8 +28,8 @@ ve.dm.MWTemplateModel = function VeDmMWTemplateModel( transclusion, target ) {
 	this.title = ( target.href && target.href.replace( /^(\.\.?\/)*/, '' ) ) || null;
 	this.sequence = null;
 	this.params = {};
-	//this.spec = new ve.dm.MWTemplateSpecModel( this );
-	this.spec = new ve.dm.WikiaInfoboxSpecModel( this );
+	this.spec = new ve.dm.MWTemplateSpecModel( this );
+
 	this.originalData = null;
 };
 
