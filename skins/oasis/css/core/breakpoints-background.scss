@@ -80,7 +80,7 @@ body.skin-oasis {
 
 @if ($widthType == 0) {
 	body.background-dynamic.skin-oasis {
-		background-color: $color-body;
+		background: $color-body;
 
 		&::after,
 		&::before {
