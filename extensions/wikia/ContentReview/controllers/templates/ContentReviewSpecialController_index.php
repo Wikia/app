@@ -1,7 +1,7 @@
 <div class="content-review-special-header">
 	<div class="content-review-special-header-content">
 		<h1 class="content-review-special-header-content-title">
-			<?= wfMessage( 'content-review-special-title' )->escaped() ?>
+			<?= wfMessage( 'contentreview' )->escaped() ?>
 		</h1>
 	</div>
 </div>
@@ -28,19 +28,21 @@
 				</td>
 				<td><?= htmlspecialchars( $content['title'] ) ?></td>
 				<td><?= htmlspecialchars( $content['revision_id'] ) ?></td>
-				<td><?= htmlspecialchars( wfMessage( SpecialContentReviewController::$status[$content['status']] ) ) ?></td>
+				<td><?= wfMessage( ContentReviewSpecialController::$status[$content['status']] )->escaped() ?></td>
 				<td><?= htmlspecialchars( $content['user'] ) ?></td>
 				<td><?= htmlspecialchars( $content['submit_time'] ) ?></td>
 				<td><?= htmlspecialchars( $content['review_user_id'] ) ?></td>
 				<td><?= htmlspecialchars( $content['review_start'] ) ?></td>
 				<td class="content-review-special-list-item-actions clearfix">
-					<a class="content-review-special-list-item-actions-diff  wikia-button primary" href="#"
+					<a class="content-review-special-list-item-actions-diff  wikia-button primary" href="<?= $content['diff'] ?>"
+					   target="_blank"
 					   title="<?= wfMessage( 'content-review-icons-actions-diff' )->escaped() ?>"
 					   data-content-review-id="<?= Sanitizer::encodeAttribute( $contentReviewId ) ?>">
 				<span class="content-review-icons-special content-review-icons-diff">
 						<?= wfMessage( 'content-review-icons-actions-diff' )->escaped() ?>
 				</span>
 					</a>
+				</td>
 			</tr>
 		<?php endforeach; ?>
 	<?php endif; ?>

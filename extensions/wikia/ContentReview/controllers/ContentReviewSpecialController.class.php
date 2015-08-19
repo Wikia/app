@@ -1,7 +1,7 @@
 <?php
 use  Wikia\ContentReview\Models\ReviewModel;
 
-class SpecialContentReviewController extends WikiaSpecialPageController {
+class ContentReviewSpecialController extends WikiaSpecialPageController {
 
 	public static $status = [
 		ReviewModel::CONTENT_REVIEW_STATUS_UNREVIEWED => 'content-review-status-unreviewed',
@@ -11,22 +11,23 @@ class SpecialContentReviewController extends WikiaSpecialPageController {
 	];
 
 	function __construct() {
-		parent::__construct( 'ContentReview', 'ContentReview', true );
+		parent::__construct( 'ContentReview', 'content-review', true );
 	}
 
 	public function index() {
-		$this->wg->Out->setPageTitle( wfMessage( 'content-review-special-title' )->escaped() );
+		$this->specialPage->setHeaders();
 		$model = new ReviewModel();
 		$reviews = $model->getContentToReviewFromDatabase();
 		$reviews = $this->prepareReviewData( $reviews );
 		$this->reviews = $reviews;
 	}
 
-	public function prepareReviewData( $reviews ) {
+	private function prepareReviewData( $reviews ) {
 		foreach ( $reviews as $contentReviewId => $content ) {
-			$reviews[$contentReviewId]['url'] = GlobalTitle::newFromID( $content['page_id'], $content['wiki_id'] )->getFullURL();
-			$reviews[$contentReviewId]['title'] = GlobalTitle::newFromID( $content['page_id'], $content['wiki_id'] )->getBaseText();
-			$reviews[$contentReviewId]['wiki'] = GlobalTitle::newFromID( $content['page_id'], $content['wiki_id'] )->getDatabaseName();
+			$title = GlobalTitle::newFromID( $content['page_id'], $content['wiki_id'] );
+			$reviews[$contentReviewId]['url'] = $title->getFullURL();
+			$reviews[$contentReviewId]['title'] = $title->getBaseText();
+			$reviews[$contentReviewId]['wiki'] = $title->getDatabaseName();
 			$reviews[$contentReviewId]['user'] = User::newFromId( $content['submit_user_id'] )->getName();
 		}
 	return $reviews;

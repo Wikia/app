@@ -32,7 +32,7 @@ $wgGroupPermissions['staff']['content-review'] = true;
  * Controllers
  */
 $wgAutoloadClasses['ContentReviewApiController'] = __DIR__ . '/controllers/ContentReviewApiController.class.php';
-$wgAutoloadClasses['SpecialContentReviewController'] = __DIR__ . '/controllers/SpecialContentReviewController.class.php';
+$wgAutoloadClasses['ContentReviewSpecialController'] = __DIR__ . '/controllers/ContentReviewSpecialController.class.php';
 
 /**
  * Models
@@ -67,7 +67,7 @@ $wgExtensionMessagesFiles['ContentReview'] = __DIR__ . '/ContentReview.i18n.php'
 /**
  * Special page
  */
-$wgSpecialPages['ContentReview'] = 'SpecialContentReviewController';
+$wgSpecialPages['ContentReview'] = 'ContentReviewSpecialController';
 
 JSMessages::registerPackage( 'ContentReviewModule', [
 	'content-review-module-*'
@@ -76,4 +76,5 @@ JSMessages::registerPackage( 'ContentReviewModule', [
 JSMessages::registerPackage( 'ContentReviewTestMode', [
 	'content-review-test-mode-*'
 ] );
+
 

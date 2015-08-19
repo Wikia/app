@@ -134,11 +134,11 @@ class ReviewModel extends ContentReviewBaseModel {
 	public function getContentToReviewFromDatabase() {
 		$db = $this->getDatabaseForRead();
 
-		$content = ( new \WikiaSQL() )
+		$data = ( new \WikiaSQL() )
 			->SELECT( '*' )
 			->FROM( 'content_review_status' );
 
-		$content = $content->runLoop( $db, function( &$content, $row ) {
+		$content = $data->runLoop( $db, function( &$content, $row ) {
 			$content[] = get_object_vars( $row );
 		} );
 

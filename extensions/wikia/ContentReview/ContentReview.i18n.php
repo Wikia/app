@@ -8,7 +8,6 @@ $messages = [];
 $messages['en'] = [
 	'content-review-desc' => 'After a major exploit of customizable JavaScript we can no longer allow for unreviewed code to be executed on wikia\'s pages. This extension is the control room for code reviewing.',
 
-	'content-review-special-title' => 'Content Review',
 	'content-review-module-title' => 'This page has unreviewed changes',
 	'content-review-module-description' => 'For security reasons every change made in the MediaWiki namespace has to be reviewed by a Wikia\'s staff member. For development you can use the unreviewed version, however it is not going to be served to other users that are not in the development mode.',
 	'content-review-module-submit' => 'Submit page for a review',
@@ -39,6 +38,7 @@ $messages['en'] = [
 	'content-review-module-submit-exception' => 'Unfortunately, we could not submit the changes for a review due to the following error: $1.',
 	'content-review-module-submit-error' => 'Unfortunately, we could not submit the changes for a review.',
 
+	'contentreview' => 'Content Review',
 	'content-review-special-list-header-wiki-name' => 'Wiki name',
 	'content-review-special-list-header-page-name' => 'Page name',
 	'content-review-special-list-header-revision-id' => 'Revision id',
@@ -53,8 +53,7 @@ $messages['en'] = [
 	'content-review-status-unreviewed' => 'Unreviewed',
 	'content-review-status-in-review' => 'In review',
 	'content-review-status-approved' => 'Approved',
-	'content-review-status-rejected' => 'Rejected,'
-
+	'content-review-status-rejected' => 'Rejected,',
 ];
 
 /**
@@ -63,7 +62,6 @@ $messages['en'] = [
 $messages['qqq'] = [
 	'content-review-desc' => '{{desc}}',
 
-	'content-review-special-title' => 'Content Review',
 	'content-review-module-title' => 'Title of a the right rail module with a button to submit a page to review.',
 	'content-review-module-description' => 'The content of the right rail module explaining that the current version of a page has not been reviewed.',
 	'content-review-module-submit' => 'Text of a button that sends a page to review.',
@@ -84,6 +82,7 @@ $messages['qqq'] = [
 	'content-review-module-submit-success-exception' => 'A message shown to a user in a Banner Notification if a known error happened. $1 is the error message.',
 	'content-review-module-submit-success-error' => 'A message shown to a user in a Banner Notification if an unknown error happened.',
 
+	'content-review-special-title' => 'Content Review',
 	'content-review-special-list-header-wiki-name' => 'A column name for a Wiki name',
 	'content-review-special-list-header-page-name' => 'A column name for a Page name',
 	'content-review-special-list-header-revision-id' => 'A column name for a Revision id',
