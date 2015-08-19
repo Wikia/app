@@ -3,7 +3,10 @@
 namespace Wikia\Helios;
 
 use LoginForm;
+use Wikia\DependencyInjection\Injector;
 use Wikia\Logger\WikiaLogger;
+use Wikia\Service\Helios\ClientException;
+use Wikia\Service\Helios\HeliosClient;
 
 /**
  * A helper class for dealing with user-related objects.
@@ -461,8 +464,11 @@ class User {
 		);
 	}
 
+	/**
+	 * wrapper function added for strong typing
+	 * @return \Wikia\Service\Helios\HeliosClient
+	 */
 	private static function getHeliosClient() {
-		global $wgHeliosBaseUri, $wgHeliosClientId, $wgHeliosClientSecret;
-		return new Client( $wgHeliosBaseUri, $wgHeliosClientId, $wgHeliosClientSecret );
+		return Injector::getInjector()->get(HeliosClient::class);
 	}
 }

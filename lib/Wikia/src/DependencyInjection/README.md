@@ -30,7 +30,8 @@ class MyTest extends PHPUnit_Framework_TestCase {
   public function setUp() {
     Injector::setInjector(
       (new InjectorBuilder())
-        ->bind(PreferenceService::class)->to(new MockPreferenceService()));
+        ->bind(PreferenceService::class)->to(new MockPreferenceService())
+        ->build());
   }
   
   public function testSomething() {
