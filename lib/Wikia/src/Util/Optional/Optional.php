@@ -6,14 +6,15 @@ use Wikia\Util\Assert;
 
 class Optional {
 
-	/** @var bool */
-	private $isPresent;
-
 	/** @var mixed */
 	private $value;
 
+	private function __construct($value) {
+		$this->value = $value;
+	}
+
 	public function isPresent() {
-		return $this->isPresent;
+		return $this->value !== null;
 	}
 
 	public function get() {
@@ -21,7 +22,7 @@ class Optional {
 	}
 
 	public function orElse($value) {
-		if ($this->isPresent) {
+		if ($this->isPresent()) {
 			return $this->value;
 		}
 
@@ -29,7 +30,7 @@ class Optional {
 	}
 
 	public function orElseThrow($exception=null) {
-		if ($this->isPresent) {
+		if ($this->isPresent()) {
 			return $this->value;
 		}
 
@@ -42,12 +43,7 @@ class Optional {
 
 	public static function of($value) {
 		Assert::true($value !== null);
-
-		$optional = new Optional();
-		$optional->value = $value;
-		$optional->isPresent = true;
-
-		return $optional;
+		return new Optional($value);
 	}
 
 	public static function ofNullable($value) {
@@ -59,9 +55,6 @@ class Optional {
 	}
 
 	public static function emptyOptional() {
-		$optional = new Optional();
-		$optional->isPresent = false;
-
-		return $optional;
+		return new Optional(null);
 	}
 }
