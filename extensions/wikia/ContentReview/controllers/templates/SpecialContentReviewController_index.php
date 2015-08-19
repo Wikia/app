@@ -24,15 +24,12 @@
 		<?php foreach ( $reviews as $contentReviewId => $content ): ?>
 			<tr class="content-review-special-list-item" id="content-review-special-list-item-<?= $contentReviewId ?>">
 				<td>
-					<?= Linker::link( $reviewData['title'][$contentReviewId], htmlspecialchars( $reviewData['title'][$contentReviewId]->getDatabaseName() ), [
-						'class' => 'content-review-special-list-item-mediawiki-link',
-						'target' => '_blank',
-					] ); ?>
+					<a href="<?= $content['url'] ?>" target="_blank"><?= $content['wiki'] ?></a>
 				</td>
-				<td><?= htmlspecialchars( $reviewData['title'][$contentReviewId]->getBaseText() ) ?></td>
+				<td><?= htmlspecialchars( $content['title'] ) ?></td>
 				<td><?= htmlspecialchars( $content['revision_id'] ) ?></td>
 				<td><?= htmlspecialchars( wfMessage( SpecialContentReviewController::$status[$content['status']] ) ) ?></td>
-				<td><?= htmlspecialchars( $reviewData['user'][$contentReviewId] ) ?></td>
+				<td><?= htmlspecialchars( $content['user'] ) ?></td>
 				<td><?= htmlspecialchars( $content['submit_time'] ) ?></td>
 				<td><?= htmlspecialchars( $content['review_user_id'] ) ?></td>
 				<td><?= htmlspecialchars( $content['review_start'] ) ?></td>

@@ -18,17 +18,17 @@ class SpecialContentReviewController extends WikiaSpecialPageController {
 		$this->wg->Out->setPageTitle( wfMessage( 'content-review-special-title' )->escaped() );
 		$model = new ReviewModel();
 		$reviews = $model->getContentToReviewFromDatabase();
-		$reviewData = $this->prepareReviewData( $reviews );
+		$reviews = $this->prepareReviewData( $reviews );
 		$this->reviews = $reviews;
-		$this->reviewData = $reviewData;
 	}
 
 	public function prepareReviewData( $reviews ) {
-		$reviewData = [];
 		foreach ( $reviews as $contentReviewId => $content ) {
-			$reviewData['title'][$contentReviewId] = GlobalTitle::newFromID( $content['page_id'], $content['wiki_id'] );
-			$reviewData['user'][$contentReviewId] = User::newFromId( $content['submit_user_id'] );
+			$reviews[$contentReviewId]['url'] = GlobalTitle::newFromID( $content['page_id'], $content['wiki_id'] )->getFullURL();
+			$reviews[$contentReviewId]['title'] = GlobalTitle::newFromID( $content['page_id'], $content['wiki_id'] )->getBaseText();
+			$reviews[$contentReviewId]['wiki'] = GlobalTitle::newFromID( $content['page_id'], $content['wiki_id'] )->getDatabaseName();
+			$reviews[$contentReviewId]['user'] = User::newFromId( $content['submit_user_id'] )->getName();
 		}
-	return $reviewData;
+	return $reviews;
 	}
 }
