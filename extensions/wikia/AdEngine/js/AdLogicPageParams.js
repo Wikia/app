@@ -14,11 +14,12 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 ], function (adContext, pvCounter, log, doc, loc, Querystring, win, lookups, abTest, krux) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.adEngine.adLogicPageParams',
+	var context = {},
 		hostname = loc.hostname,
+		logGroup = 'ext.wikia.adEngine.adLogicPageParams',
 		maxNumberOfCategories = 3,
 		skin = adContext.getContext().targeting.skin,
-		context = {};
+		qs = new Querystring();
 
 	function updateContext() {
 		context = adContext.getContext();
@@ -199,7 +200,6 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 	}
 
 	function getVerticalName(targeting) {
-		var qs = new Querystring();
 		if (getHostname() === 'showcase' || qs.getVal('showcase', '0') === '1') {
 			return 'showcase';
 		}
