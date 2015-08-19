@@ -170,7 +170,8 @@ class UserMailer {
 		$contentType = null,
 		$category = 'UserMailer',
 		$priority = 0,
-		$attachments = []
+		$attachments = [],
+		$sourceType = 'mediawiki' // remove when no more 'mediawiki' types are sent
 	) {
 
 		if ( !is_array( $to ) ) {
@@ -241,7 +242,7 @@ class UserMailer {
 			$headers['X-Priority'] = $priority;
 		}
 
-		$ret = wfRunHooks( 'AlternateUserMailer', [ $headers, $to, $from, $subject, $body , $priority, $attachments ] );
+		$ret = wfRunHooks( 'AlternateUserMailer', [ $headers, $to, $from, $subject, $body , $priority, $attachments, $sourceType ] );
 		if ( $ret === false ) {
 			return Status::newGood();
 		} elseif ( $ret !== true ) {
@@ -260,14 +261,14 @@ class UserMailer {
 			#
 
 			if ( function_exists( 'stream_resolve_include_path' ) ) {
-				$found = stream_resolve_include_path( 'Mail.php' );
+				$found = stream_resolve_include_path( 'Mail2.php' );
 			} else {
-				$found = Fallback::stream_resolve_include_path( 'Mail.php' );
+				$found = Fallback::stream_resolve_include_path( 'Mail2.php' );
 			}
 			if ( !$found ) {
 				throw new MWException( 'PEAR mail package is not installed' );
 			}
-			require_once( 'Mail.php' );
+			require_once( 'Mail2.php' );
 
 			wfSuppressWarnings();
 

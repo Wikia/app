@@ -320,6 +320,10 @@ class CreateNewWikiController extends WikiaController {
 				$this->statusMsg = wfMessage( 'cnw-error-general' )->parse();
 				$this->statusHeader = wfMessage( 'cnw-error-general-heading' )->escaped();
 
+				$this->errClass = get_class( $ex );
+				$this->errCode = $ex->getCode();
+				$this->errMessage = $ex->getMessage();
+
 				$this->error('CreateWiki: failed to create new wiki', [
 					'code' => $error_code,
 					'params' => $params,

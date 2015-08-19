@@ -383,8 +383,9 @@ $2',
 # Login and logout pages
 'logouttext'                 => "侬已经登出哉。'''
 
-侬可以继续匿名使用{{SITENAME}} ，也可以再次以相同或者两样个用户名[[Special:UserLogin|登录]]。
+侬可以继续匿名使用{{SITENAME}} ，也可以再次以相同或者两样个用户名$1。
 注意，有眼页面作兴还是会搭侬登出前头一样显示，一脚到侬清除浏览器缓存。",
+'logouttext-link-text'       => '登录',
 'welcomecreation'            => '== 欢迎侬， $1！ ==
 
 侬个户头已经建立好哉。弗要忘记脱设定侬个[[Special:Preferences|{{SITENAME}}的个人参数]]噢。',

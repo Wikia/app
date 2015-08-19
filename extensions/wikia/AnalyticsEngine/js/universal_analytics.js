@@ -40,6 +40,9 @@
             a.src = g;
             m.parentNode.insertBefore(a, m);
         })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+    } else {
+        // prevent errors when wgNoExternals is set
+        window.ga = function () {};
     }
 
     var cookieExists, isProductionEnv;
@@ -276,16 +279,19 @@
 
     /**** Medium-Priority Custom Dimensions ****/
     _gaWikiaPush(
-        ['set', 'dimension8', window.wikiaPageType],                           // PageType
-        ['set', 'dimension9', window.wgCityId],                                // CityId
-        ['set', 'dimension14', window.wgGaHasAds ? 'Yes' : 'No'],              // HasAds
-        ['set', 'dimension15', window.wikiaPageIsCorporate ? 'Yes' : 'No'],    // IsCorporatePage
-        ['set', 'dimension16', getKruxSegment()],                              // Krux Segment
-        ['set', 'dimension17', window.wgWikiVertical],                         // Vertical
-        ['set', 'dimension18', window.wgWikiCategories.join(',')],             // Categories
-        ['set', 'dimension19', window.wgArticleType],                          // ArticleType
-        ['set', 'dimension20', window.wgABPerformanceTest || 'not set'],       // Performance A/B testing
-        ['set', 'dimension21', String(window.wgArticleId)]                     // ArticleId
+        ['set', 'dimension8', window.wikiaPageType],                            // PageType
+        ['set', 'dimension9', window.wgCityId],                                 // CityId
+        ['set', 'dimension14', window.wgGaHasAds ? 'Yes' : 'No'],               // HasAds
+        ['set', 'dimension15', window.wikiaPageIsCorporate ? 'Yes' : 'No'],     // IsCorporatePage
+        ['set', 'dimension16', getKruxSegment()],                               // Krux Segment
+        ['set', 'dimension17', window.wgWikiVertical],                          // Vertical
+        ['set', 'dimension18', window.wgWikiCategories.join(',')],              // Categories
+        ['set', 'dimension19', window.wgArticleType],                           // ArticleType
+        ['set', 'dimension20', window.wgABPerformanceTest || 'not set'],        // Performance A/B testing
+        ['set', 'dimension21', String(window.wgArticleId)],                     // ArticleId
+        ['set', 'dimension23', window.wikiaIsPowerUserFrequent ? 'Yes' : 'No'], // IsPowerUser: Frequent
+        ['set', 'dimension24', window.wikiaIsPowerUserLifetime ? 'Yes' : 'No'], // IsPowerUser: Lifetime
+        ['set', 'dimension25', String(window.wgNamespaceNumber)]                // Namespace Number
     );
 
     /*
@@ -389,6 +395,10 @@
     window.ga('ads.set', 'dimension18', window.wgWikiCategories.join(','));             // Categories
     window.ga('ads.set', 'dimension19', window.wgArticleType);                          // ArticleType
     window.ga('ads.set', 'dimension21', String(window.wgArticleId));                    // ArticleId
+    window.ga('ads.set', 'dimension21', String(window.wgArticleId));                     // ArticleId
+    window.ga('ads.set', 'dimension23', window.wikiaIsPowerUserFrequent ? 'Yes' : 'No'); // IsPowerUser: Frequent
+    window.ga('ads.set', 'dimension24', window.wikiaIsPowerUserLifetime ? 'Yes' : 'No'); // IsPowerUser: Lifetime
+    window.ga('ads.set', 'dimension25', String(window.wgNamespaceNumber));               // Namespace Number
 
     /**** Include A/B testing status ****/
     if (window.Wikia && window.Wikia.AbTest) {

@@ -43,7 +43,7 @@ class ImageServingDriverMainNS extends ImageServingDriverBase {
 			}
 
 			foreach ( [ 'AUDIO', 'VIDEO' ] as $type ) {
-				foreach ( $mimeTypes->mMediaTypes[$type] as $mime ) {
+				foreach ( $mimeTypes->mMediaTypes[ $type ] as $mime ) {
 					// parse mime type - "image/svg" -> "svg"
 					list( , $mimeMinor ) = explode( '/', $mime );
 					$mimeTypesBlacklist[] = $mimeMinor;
@@ -56,16 +56,21 @@ class ImageServingDriverMainNS extends ImageServingDriverBase {
 		}
 	}
 
-	protected function loadImagesFromDb( $articleIds = array() ) {
+	protected function loadImagesFromDb( $articleIds = [ ] ) {
 		wfProfileIn( __METHOD__ );
 
-		//load infobox images at start
-		$this->loadImagesFromInfoboxes( $articleIds );
+		//load infobox images at start, set number of images from infoboxes
+		$imageCount = $this->loadImagesFromInfoboxes( $articleIds );
 
 		$articleImageIndex = $this->getImageIndex( $articleIds, 2 * self::QUERY_LIMIT );
 		foreach ( $articleImageIndex as $articleId => $imageIndex ) {
-			foreach ( $imageIndex as $orderKey => $imageData ) {
-				$this->addImage( $imageData, $articleId, $orderKey, self::QUERY_LIMIT );
+			// make sure images are in correct order
+			ksort( $imageIndex );
+			foreach ( $imageIndex as $imageData ) {
+				if ( $this->addImage( $imageData, $articleId, $imageCount, self::QUERY_LIMIT ) ) {
+					// increment order count when new image added
+					$imageCount++;
+				}
 			}
 		}
 
@@ -75,27 +80,27 @@ class ImageServingDriverMainNS extends ImageServingDriverBase {
 	protected function getImageIndex( $articleIds, $limitPerArticle ) {
 		wfProfileIn( __METHOD__ );
 
-		$out = array();
+		$out = [ ];
 		if ( !empty ( $articleIds ) && is_array( $articleIds ) ) {
 			$res = $this->db->select(
-				array( 'page_wikia_props' ),
-				array(
+				[ 'page_wikia_props' ],
+				[
 					'page_id',
 					'props'
-				),
-				array(
+				],
+				[
 					'page_id' => $articleIds,
 					'propname' => WPP_IMAGE_SERVING
-				),
+				],
 				__METHOD__
 			);
 
 
 			/* build list of images to get info about it */
 			while ( $row = $this->db->fetchRow( $res ) ) {
-				$imageIndex = unserialize( $row['props'] );
+				$imageIndex = unserialize( $row[ 'props' ] );
 				if ( is_array( $imageIndex ) ) {
-					$out[$row['page_id']] = array_slice( $imageIndex, 0, $limitPerArticle );
+					$out[ $row[ 'page_id' ] ] = array_slice( $imageIndex, 0, $limitPerArticle );
 				}
 			}
 		}
@@ -112,7 +117,7 @@ class ImageServingDriverMainNS extends ImageServingDriverBase {
 	 *
 	 * @param array $imageNames
 	 */
-	protected function loadImageDetails( $imageNames = array() ) {
+	protected function loadImageDetails( $imageNames = [ ] ) {
 		wfProfileIn( __METHOD__ );
 
 		if ( empty( $imageNames ) ) {
@@ -121,8 +126,8 @@ class ImageServingDriverMainNS extends ImageServingDriverBase {
 			return;
 		}
 
-		$imagePopularity = array();
-		$imageDetails = array();
+		$imagePopularity = [ ];
+		$imageDetails = [ ];
 
 		// filter out images that are too widely used
 		if ( !empty( $imageNames ) ) {
@@ -228,9 +233,8 @@ class ImageServingDriverMainNS extends ImageServingDriverBase {
 			if ( $popularity > $limit ) {
 				unset( $result[ $row->image ] );
 				wfDebug( __METHOD__ . ": filtered out {$row->image} - used {$popularity} time(s)\n" );
-			}
-			else {
-				$result[$row->image] = $popularity;
+			} else {
+				$result[ $row->image ] = $popularity;
 			}
 		}
 
@@ -242,8 +246,13 @@ class ImageServingDriverMainNS extends ImageServingDriverBase {
 	protected function loadImagesFromInfoboxes( $articleIds ) {
 		wfProfileIn( __METHOD__ );
 		$images = [ ];
+		$imageCount = 0;
 		foreach ( $articleIds as $id ) {
-			$images = array_merge( $images, PortableInfoboxDataService::newFromPageID( $id )->getImages() );
+			$articleImages = $this->getInfoboxImagesForId( $id );
+			foreach ( $articleImages as $image ) {
+				$this->addImage( $image, $id, $imageCount++ );
+			}
+			$images = array_merge( $images, $articleImages );
 		}
 
 		if ( $images ) {
@@ -253,6 +262,15 @@ class ImageServingDriverMainNS extends ImageServingDriverBase {
 				$this->addImageDetails( $row->img_name, '1', $row->img_width, $row->img_height, $row->img_minor_mime );
 			}
 		}
+
 		wfProfileOut( __METHOD__ );
+
+		return $imageCount;
+	}
+
+	protected function getInfoboxImagesForId( $id ) {
+		$articleImages = PortableInfoboxDataService::newFromPageID( $id )->getImages();
+
+		return $articleImages;
 	}
 }

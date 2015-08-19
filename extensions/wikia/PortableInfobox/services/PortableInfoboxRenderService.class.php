@@ -1,9 +1,8 @@
 <?php
 
+use \Wikia\PortableInfobox\Helpers\PortableInfoboxRenderServiceHelper;
+
 class PortableInfoboxRenderService extends WikiaService {
-	const LOGGER_LABEL = 'portable-infobox-render-not-supported-type';
-	const DESKTOP_THUMBNAIL_WIDTH = 270;
-	const MOBILE_THUMBNAIL_WIDTH = 360;
 	const MOBILE_TEMPLATE_POSTFIX = '-mobile';
 
 	private $templates = [
@@ -14,7 +13,9 @@ class PortableInfoboxRenderService extends WikiaService {
 		'image-mobile' => 'PortableInfoboxItemImageMobile.mustache',
 		'data' => 'PortableInfoboxItemData.mustache',
 		'group' => 'PortableInfoboxItemGroup.mustache',
-		'navigation' => 'PortableInfoboxItemNavigation.mustache'
+		'horizontal-group-content' => 'PortableInfoboxHorizontalGroupContent.mustache',
+		'navigation' => 'PortableInfoboxItemNavigation.mustache',
+		'hero-mobile' => 'PortableInfoboxItemHeroMobile.mustache'
 	];
 	private $templateEngine;
 
@@ -27,11 +28,15 @@ class PortableInfoboxRenderService extends WikiaService {
 	 * renders infobox
 	 *
 	 * @param array $infoboxdata
+	 *
 	 * @return string - infobox HTML
 	 */
 	public function renderInfobox( array $infoboxdata, $theme, $layout ) {
 		wfProfileIn( __METHOD__ );
+
+		$helper = new PortableInfoboxRenderServiceHelper();
 		$infoboxHtmlContent = '';
+		$heroData = [ ];
 
 		foreach ( $infoboxdata as $item ) {
 			$data = $item[ 'data' ];
@@ -45,14 +50,24 @@ class PortableInfoboxRenderService extends WikiaService {
 					$infoboxHtmlContent .= $this->renderItem( 'navigation', $data );
 					break;
 				default:
-					if ( $this->validateType( $type ) ) {
+					if ( $helper->isWikiaMobile() && $helper->isValidHeroDataItem( $item, $heroData ) ) {
+						$heroData[ $type ] = $data;
+						continue;
+					}
+
+					if ( $helper->isTypeSupportedInTemplates( $type, $this->templates ) ) {
 						$infoboxHtmlContent .= $this->renderItem( $type, $data );
 					};
 			}
 		}
 
-		if(!empty($infoboxHtmlContent)) {
-			$output = $this->renderItem( 'wrapper', [ 'content' => $infoboxHtmlContent, 'theme' => $theme, 'layout' => $layout ] );
+		if ( !empty( $heroData ) ) {
+			$infoboxHtmlContent = $this->renderInfoboxHero( $heroData ) . $infoboxHtmlContent;
+		}
+
+		if ( !empty( $infoboxHtmlContent ) ) {
+			$output = $this->renderItem( 'wrapper', [ 'content' => $infoboxHtmlContent, 'theme' => $theme,
+				'layout' => $layout ] );
 		} else {
 			$output = '';
 		}
@@ -66,92 +81,81 @@ class PortableInfoboxRenderService extends WikiaService {
 	 * renders group infobox component
 	 *
 	 * @param array $groupData
+	 *
 	 * @return string - group HTML markup
 	 */
 	private function renderGroup( $groupData ) {
+		$helper = new PortableInfoboxRenderServiceHelper();;
 		$groupHTMLContent = '';
-		$dataItems = $groupData['value'];
-		$layout = $groupData['layout'];
+		$dataItems = $groupData[ 'value' ];
+		$layout = $groupData[ 'layout' ];
 
-		foreach ( $dataItems as $item ) {
-			$type = $item['type'];
+		if ( $layout === 'horizontal' && !$helper->isWikiaMobile() ) {
+			$groupHTMLContent .= $this->renderItem(
+				'horizontal-group-content',
+				$helper->createHorizontalGroupData( $dataItems )
+			);
+		} else {
+			foreach ( $dataItems as $item ) {
+				$type = $item[ 'type' ];
 
-			if ( $this->validateType( $type ) ) {
-				$groupHTMLContent .= $this->renderItem( $type, $item['data'] );
+				if ( $helper->isTypeSupportedInTemplates( $type, $this->templates ) ) {
+					$groupHTMLContent .= $this->renderItem( $type, $item[ 'data' ] );
+				}
 			}
 		}
 
-		return $this->renderItem( 'group', [ 'content' => $groupHTMLContent, 'layout' => $layout] );
+		return $this->renderItem( 'group', [ 'content' => $groupHTMLContent ] );
+	}
+
+	/**
+	 * renders infobox hero component
+	 *
+	 * @param array $data - infobox hero component data
+	 *
+	 * @return string
+	 */
+	private function renderInfoboxHero( $data ) {
+		$helper = new PortableInfoboxRenderServiceHelper();
+
+		if ( array_key_exists( 'image', $data ) ) {
+			$data[ 'image' ] = $helper->extendImageData( $data[ 'image' ] );
+			$markup = $this->renderItem( 'hero-mobile', $data );
+		} else {
+			$markup = $this->renderItem( 'title', $data[ 'title' ] );
+		}
+
+		return $markup;
 	}
 
 	/**
 	 * renders part of infobox
+	 * If image element has invalid thumbnail, doesn't render this element at all.
 	 *
 	 * @param string $type
 	 * @param array $data
-	 * @return string - HTML
+	 * @return bool|string - HTML
 	 */
 	private function renderItem( $type, array $data ) {
-		//TODO: with validated the performance of render Service and in the next phase we want to refactor it (make
-		// it modular) While doing this we also need to move this logic to appropriate image render class
-		if ( $type === 'image' ) {
-			$data[ 'thumbnail' ] = $this->getThumbnailUrl( $data['name'] );
-			$data[ 'key' ] = urlencode( $data[ 'key' ] );
+		$helper = new PortableInfoboxRenderServiceHelper();
 
-			if ( $this->isWikiaMobile() ) {
+		if ( $type === 'image' ) {
+			$data = $helper->extendImageData( $data );
+			if ( !$data ) {
+				return false;
+			}
+
+			if ( $helper->isWikiaMobile() ) {
 				$type = $type . self::MOBILE_TEMPLATE_POSTFIX;
 			}
+		}
+
+		if ( $helper->isWikiaMobile() ) {
+			$data = $helper->sanitizeInfoboxTitle( $type, $data );
 		}
 
 		return $this->templateEngine->clearData()
 			->setData( $data )
 			->render( $this->templates[ $type ] );
-	}
-
-	/**
-	 * @desc returns the thumbnail url
-	 * @param string $title
-	 * @return string thumbnail url
-	 */
-	protected function getThumbnailUrl( $title ) {
-		$file = \WikiaFileHelper::getFileFromTitle( $title );
-
-		if ( $file ) {
-			return $file->createThumb(
-				$this->isWikiaMobile() ?
-					self::MOBILE_THUMBNAIL_WIDTH :
-					self::DESKTOP_THUMBNAIL_WIDTH
-			);
-		}
-
-		return '';
-	}
-
-	/** 
-	 * required for testing mobile template rendering
-	 * @return bool
-	 */
-	protected function isWikiaMobile() {
-		return F::app()->checkSkin( 'wikiamobile' );
-	}
-
-	/**
-	 * check if item type is supported and logs unsupported types
-	 *
-	 * @param string $type - template type
-	 * @return bool
-	 */
-	private function validateType( $type ) {
-		$isValid = true;
-
-		if ( !isset( $this->templates[ $type ] ) ) {
-			Wikia\Logger\WikiaLogger::instance()->info( self::LOGGER_LABEL, [
-				'type' => $type
-			] );
-
-			$isValid = false;
-		}
-
-		return $isValid;
 	}
 }

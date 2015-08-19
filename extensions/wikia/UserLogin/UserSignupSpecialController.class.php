@@ -131,14 +131,18 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 		}
 
 		/**
-		 * OPS-6556 Special:UserSignup daily vists
-		 * Contact: ruggero@wikia-inc.com or michal@wikia-inc.com
+		 * OPS-6556 / PLATFORM-1341 Special:UserSignup daily vists
+		 * Contact: ruggero@wikia-inc.com or michal@wikia-inc.com or macbre@wikia-inc.com
 		 */
+		$context = RequestContext::getMain();
+
 		\Wikia\Logger\WikiaLogger::instance()->info(
 			'OPS-6556',
 			[
-				'i18n' => RequestContext::getMain()->getLanguage()->getCode(),
-				'skin' => RequestContext::getMain()->getSkin()->getSkinName()
+				'i18n'         => $context->getLanguage()->getCode(),
+				'skin'         => $context->getSkin()->getSkinName(),
+				'client_ip'    => $context->getRequest()->getIP(),
+				'client_agent' => $context->getRequest()->getHeader( 'User-Agent' ),
 			]
 		);
 	}

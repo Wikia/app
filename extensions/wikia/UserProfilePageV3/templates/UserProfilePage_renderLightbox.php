@@ -22,7 +22,7 @@
 					<? if ( $isUploadsPossible ): ?>
 						<div class="input-group">
 							<label for="UPPLightboxAvatar">
-								<?= wfMessage( 'user-identity-box-avatar-upload-avatar' )->escaped(); ?>
+								<button id="UPPLightboxAvatarUpload"><?= wfMessage( 'user-identity-box-avatar-upload-avatar' )->escaped(); ?></button>
 							</label>
 							<input type="file" name="UPPLightboxAvatar" id="UPPLightboxAvatar">
 							<input type="hidden" name="UPPLightboxDefaultAvatar" id="UPPLightboxDefaultAvatar" value="">
@@ -64,7 +64,7 @@
 						<option value="0">--</option>
 						<?php
 						$selectedMonth = isset( $user['birthday']['month'] ) ? intval( $user['birthday']['month'] ) : 0;
-						for ( $i = 1; $i < 13; $i++ ) {
+						for ( $i = 1; $i <= 12; $i++ ) {
 							echo Xml::option( F::app()->wg->Lang->getMonthName( $i ), $i, $selectedMonth === $i );
 						}
 						?>

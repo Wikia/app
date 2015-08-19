@@ -43,24 +43,13 @@ class  WikiaMobileNavigationService extends WikiaService {
 	}
 
 	/**
-	 * Returns string with uselang param to append to login url if Wikia language is different than default
-	 * @return string
-	 */
-	private function getUselangParam() {
-		$lang = $this->wg->ContLang->mCode;
-		return $lang == 'en' ? '' : '&uselang=' . $lang;
-	}
-
-	/**
 	 * If WikiFactory wgEnableNewAuth variable is set to true, then this method sets login url for the New Auth Flow login page.
 	 * Also new class is set for the login button.
 	 * Otherwise it sets url to the old Special:Login page.
 	 */
 	private function setupLoginLink() {
 		if ( $this->app->wg->EnableNewAuth ) {
-			$this->loginUrl = '/join?redirect='
-				.urlencode ( wfExpandUrl( $this->app->wg->request->getRequestURL() ) )
-				.$this->getUselangParam();
+			$this->loginUrl = ( new UserLoginHelper() )->getNewAuthUrl();
 			$this->loginButtonClass = 'new-login';
 		}
 		else {

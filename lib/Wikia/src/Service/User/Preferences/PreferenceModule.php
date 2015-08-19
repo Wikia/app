@@ -10,6 +10,8 @@ use Wikia\Persistence\User\Preferences\PreferencePersistenceModuleMySQL;
 use Wikia\Persistence\User\Preferences\PreferencePersistenceSwaggerService;
 
 class PreferenceModule implements Module {
+	const SWAGGER_SERVICE_RAMP_USAGE = 5;
+
 	public function configure(InjectorBuilder $builder) {
 		$builder
 			->bind(PreferenceService::class)->toClass(PreferenceKeyValueService::class)
@@ -18,28 +20,55 @@ class PreferenceModule implements Module {
 				return $wgHiddenPrefs;
 			})
 			->bind(UserPreferences::DEFAULT_PREFERENCES)->to(function() {
-				return User::getDefaultOptions();
+				return User::getDefaultPreferences();
 			})
 			->bind(UserPreferences::FORCE_SAVE_PREFERENCES)->to(function() {
 				global $wgGlobalUserProperties;
 				return $wgGlobalUserProperties;
 			});
 
-		self::bindMysqlService($builder);
-//		self::bindSwaggerService($builder);
+		self::bindService($builder);
+	}
+
+	private static function bindService(InjectorBuilder $builder) {
+		global $wgCityId;
+
+		if (isset($wgCityId) && $wgCityId % 100 < self::SWAGGER_SERVICE_RAMP_USAGE) {
+			self::bindSwaggerService($builder);
+		} else {
+			self::bindMysqlService($builder);
+		}
 	}
 
 	private static function bindMysqlService(InjectorBuilder $builder) {
 		$masterProvider = function() {
-			global $wgExternalSharedDB;
-			return wfGetDB(DB_MASTER, [], $wgExternalSharedDB);
+			global $wgExternalSharedDB, $wgSharedDB;
+
+			if (isset($wgSharedDB)) {
+				$db = wfGetDB(DB_MASTER, [], $wgExternalSharedDB);
+			} else {
+				$db = wfGetDB(DB_MASTER);
+			}
+
+			return $db;
 		};
 		$slaveProvider = function() {
-			global $wgExternalSharedDB;
-			return wfGetDB(DB_SLAVE, [], $wgExternalSharedDB);
+			global $wgExternalSharedDB, $wgSharedDB;
+
+			if (isset($wgSharedDB)) {
+				$db = wfGetDB(DB_SLAVE, [], $wgExternalSharedDB);
+			} else {
+				$db = wfGetDB(DB_SLAVE);
+			}
+
+			return $db;
+		};
+		$whiteListProvider = function() {
+			global $wgUserPreferenceWhiteList;
+			return $wgUserPreferenceWhiteList;
 		};
 
-		$builder->addModule(new PreferencePersistenceModuleMySQL($masterProvider, $slaveProvider));
+		$builder->addModule(new PreferencePersistenceModuleMySQL($masterProvider, $slaveProvider, $whiteListProvider));
 	}
 
 	private static function bindSwaggerService(InjectorBuilder $builder) {

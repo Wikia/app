@@ -7,28 +7,8 @@ use Email\Check;
 use Email\ControllerException;
 use Email\EmailController;
 use Wikia\Logger;
-use Email\Tracking\TrackingCategories;
 
-abstract class FounderController extends EmailController {
-	// Defaults; will be overridden in subclasses
-	const TRACKING_CATEGORY_EN = TrackingCategories::DEFAULT_CATEGORY;
-	const TRACKING_CATEGORY_INT = TrackingCategories::DEFAULT_CATEGORY;
-
-	/**
-	 * Determine which sendgrid category to send based on target language and specific
-	 * founder email being sent. See dependent classes for overridden values
-	 *
-	 * @return string
-	 */
-	public function getSendGridCategory() {
-		return strtolower( $this->targetLang ) == 'en'
-			? static::TRACKING_CATEGORY_EN
-			: static::TRACKING_CATEGORY_INT;
-	}
-
-}
-
-abstract class AbstractFounderEditController extends FounderController {
+class FounderEditController extends EmailController {
 
 	/** @var \Title */
 	protected $pageTitle;
@@ -74,10 +54,8 @@ abstract class AbstractFounderEditController extends FounderController {
 	 * @throws \Email\Check
 	 */
 	private function assertValidRevisionIds() {
-		if ( empty( $this->previousRevId ) ) {
-			throw new Check( "Invalid value passed for previousRevId" );
-		}
-
+		// Only check currentRevId here.  The value for previousRevId can be empty if
+		// this is a new page.
 		if ( empty( $this->currentRevId ) ) {
 			throw new Check( "Invalid value passed for currentRevId" );
 		}
@@ -134,10 +112,15 @@ abstract class AbstractFounderEditController extends FounderController {
 	}
 
 	protected function getChangesLink() {
-		return $this->pageTitle->getFullURL( [
-			'diff' => $this->currentRevId,
-			'oldid' => $this->previousRevId,
-		] );
+		$params =  [ 'diff' => $this->currentRevId ];
+
+		// If we have a previous revision ID (e.g., this is not a page create event)
+		// then make sure to add the old ID for this diff link.
+		if ( $this->previousRevId ) {
+			$params[ 'oldid' ] = $this->previousRevId;
+		}
+
+		return $this->pageTitle->getFullURL( $params );
 	}
 
 	protected function getFooterEncouragement() {
@@ -211,23 +194,14 @@ abstract class AbstractFounderEditController extends FounderController {
 
 }
 
-class FounderEditController extends AbstractFounderEditController {
-	const TRACKING_CATEGORY_EN = TrackingCategories::FOUNDER_FIRST_EDIT_USER_EN;
-	const TRACKING_CATEGORY_INT = TrackingCategories::FOUNDER_FIRST_EDIT_USER_INT;
-}
-
-class FounderMultiEditController extends AbstractFounderEditController {
-	const TRACKING_CATEGORY_EN = TrackingCategories::FOUNDER_EDIT_USER_EN;
-	const TRACKING_CATEGORY_INT = TrackingCategories::FOUNDER_EDIT_USER_INT;
+class FounderMultiEditController extends FounderEditController {
 
 	protected function getFooterEncouragementKey() {
 		return 'emailext-founder-multi-encourage';
 	}
 }
 
-class FounderAnonEditController extends AbstractFounderEditController {
-	const TRACKING_CATEGORY_EN = TrackingCategories::FOUNDER_EDIT_ANON_EN;
-	const TRACKING_CATEGORY_INT = TrackingCategories::FOUNDER_EDIT_ANON_INT;
+class FounderAnonEditController extends FounderEditController {
 
 	public function getSubject() {
 		$articleTitle = $this->pageTitle->getText();
@@ -262,7 +236,7 @@ class FounderAnonEditController extends AbstractFounderEditController {
 	}
 }
 
-class FounderActiveController extends FounderController {
+class FounderActiveController extends EmailController {
 
 	/**
 	 * Define this and do nothing since we don't need the checks of our parent
@@ -344,7 +318,7 @@ class FounderActiveController extends FounderController {
 			'rctype' => implode( '|', [ 'new', 'edit' ] ),
 			'rcprop' => implode( '|', [ 'user', 'title' ] ),
 			'rcnamespace' => implode( '|', $wg->ContentNamespaces),
-			'rcexcludeuser' => $this->targetUser->getName(),
+			'rcexcludeuser' => $this->getTargetUserName(),
 			'rcshow' => implode( '|', [ '!minor', '!bot', '!anon', '!redirect' ] ),
 			'rclimit' => $num,
 			'rctoponly' => 1,
@@ -380,9 +354,7 @@ class FounderActiveController extends FounderController {
 	}
 }
 
-class FounderNewMemberController extends FounderController {
-	const TRACKING_CATEGORY_EN = TrackingCategories::FOUNDER_NEW_MEMBER_EN;
-	const TRACKING_CATEGORY_INT = TrackingCategories::FOUNDER_NEW_MEMBER_INT;
+class FounderNewMemberController extends EmailController {
 
 	/**
 	 * @template avatarLayout
@@ -447,5 +419,238 @@ class FounderNewMemberController extends FounderController {
 		if ( !(bool)$this->targetUser->getLocalPreference( "founderemails-joins", $wikiId ) ) {
 			throw new Check( "Founder doesn't want to be emailed about new members joining this wiki" );
 		}
+	}
+}
+
+class FounderTipsController extends EmailController {
+
+	const LAYOUT_CSS = "digestLayout.css";
+
+	protected $wikiName;
+	protected $wikiId;
+	protected $wikiUrl;
+
+	public function initEmail() {
+		$this->wikiName = $this->getVal( 'wikiName' );
+		$this->wikiId = $this->getVal( 'wikiId' );
+		$this->wikiUrl = $this->getVal( 'wikiUrl' );
+
+		$this->assertValidParams();
+	}
+
+	/**
+	 * Validate the params passed in by the client
+	 */
+	private function assertValidParams() {
+		$this->assertValidWikiName();
+		$this->assertValidWikiId();
+		$this->assertValidWikiUrl();
+	}
+
+	private function assertValidWikiName() {
+		if ( empty( $this->wikiName ) ) {
+			throw new Check( "Must pass in value for wikiName!" );
+		}
+	}
+
+	private function assertValidWikiId() {
+		if ( empty( $this->wikiId ) ) {
+			throw new Check( "Must pass in value for wikiId!" );
+		}
+	}
+
+	private function assertValidWikiUrl() {
+		if ( empty( $this->wikiUrl ) ) {
+			throw new Check( "Must pass in value for wikiUrl!" );
+		}
+	}
+
+	protected function getSubject() {
+		return $this->getMessage( 'emailext-founder-newly-created-subject', $this->wikiName )->text();
+	}
+
+	/**
+	 * @template founderTips
+	 */
+	public function body() {
+		$this->response->setData( [
+			'salutation' => $this->getSalutation(),
+			'summary' => $this->getMessage( 'emailext-founder-newly-created-summary', $this->wikiUrl, $this->wikiName )->parse(),
+			'extendedSummary' => $this->getMessage( 'emailext-founder-newly-created-summary-extended' )->text(),
+			'details' => $this->getDetailsList(),
+			'contentFooterMessages' => [
+				$this->getMessage( 'emailext-founder-visit-community', $this->wikiUrl, $this->wikiName )->parse(),
+				$this->getMessage( 'emailext-founder-happy-wikia-building' )->text(),
+				$this->getMessage( 'emailext-emailconfirmation-community-team' )->text(),
+			],
+		] );
+	}
+
+	/**
+	 * Returns list of details (icons, headers, and blurbs for those icons) for the founder tips email
+	 *
+	 * @return array
+	 */
+	protected function getDetailsList() {
+		return [
+			[
+				"iconSrc" => Email\ImageHelper::getFileUrl( "Add_page.png" ),
+				"iconLink" => \GlobalTitle::newFromText( "CreatePage", NS_SPECIAL, $this->wikiId )->getFullURL( [ "modal" => "AddPage" ] ),
+				"detailsHeader" => $this->getMessage( "emailext-founder-add-pages-header" )->text(),
+				"details" => $this->getMessage( "emailext-founder-add-pages-details" )->text()
+			],
+			[
+				"iconSrc" => Email\ImageHelper::getFileUrl( "Add_photo.png" ),
+				"iconLink" => \GlobalTitle::newFromText( "NewFiles", NS_SPECIAL, $this->wikiId )->getFullURL( [ "modal" => "UploadImage" ] ),
+				"detailsHeader" => $this->getMessage( "emailext-founder-add-photos-header" )->text(),
+				"details" => $this->getMessage( "emailext-founder-add-photos-details" )->text()
+			],
+			[
+				"iconSrc" => Email\ImageHelper::getFileUrl( "Customize.png" ),
+				"iconLink" => \GlobalTitle::newFromText( wfMessage( "mainpage" )->text(), NS_MAIN, $this->wikiId )->getFullURL( [ "action" => "edit" ] ),
+				"detailsHeader" => $this->getMessage( "emailext-founder-customize-header" )->text(),
+				"details" => $this->getMessage( "emailext-founder-customize-details" )->text()
+			],
+			[
+				"iconSrc" => Email\ImageHelper::getFileUrl( "Share.png" ),
+				"detailsHeader" => $this->getMessage( "emailext-founder-share-header" )->text(),
+				"details" => $this->getMessage( "emailext-founder-share-details" )->text()
+			]
+		];
+	}
+
+	protected static function getEmailSpecificFormFields() {
+		$formFields = [
+			'inputs' => [
+				[
+					'type' => 'text',
+					'name' => 'wikiName',
+					'label' => "Wiki Name",
+					'value' => \F::app()->wg->Sitename,
+					'tooltip' => "The name of the Wiki (defaults to current wiki)"
+				],
+				[
+					'type' => 'text',
+					'name' => 'wikiId',
+					'label' => "Wiki ID",
+					'value' => \F::app()->wg->CityId,
+					'tooltip' => "The ID of the Wiki (defaults to current wiki)"
+				],
+				[
+					'type' => 'text',
+					'name' => 'wikiUrl',
+					'label' => "Wiki URL",
+					'value' => \F::app()->wg->Server,
+					'tooltip' => "The URL of the Wiki (defaults to current wiki)"
+				],
+			]
+		];
+
+		return array_merge_recursive( $formFields, parent::getEmailSpecificFormFields() );
+	}
+}
+
+class FounderTipsThreeDaysController extends FounderTipsController {
+
+	const WAM_LINK = "http://www.wikia.com/WAM";
+
+	protected function getSubject() {
+		return $this->getMessage( 'emailext-founder-3-days-subject', $this->wikiName )->text();
+	}
+
+	/**
+	 * @template founderTips
+	 */
+	public function body() {
+		$this->response->setData( [
+			'salutation' => $this->getSalutation(),
+			'summary' => $this->getMessage( 'emailext-founder-3-days-summary', $this->wikiUrl, $this->wikiName )->parse(),
+			'extendedSummary' => $this->getMessage( 'emailext-founder-3-days-extended-summary' )->text(),
+			'details' => $this->getDetailsList(),
+			'contentFooterMessages' => [
+				$this->getMessage( 'emailext-founder-3-days-need-help', $this->wikiName )->parse(),
+				$this->getMessage( 'emailext-founder-3-days-great-work' )->text(),
+				$this->getMessage( 'emailext-emailconfirmation-community-team' )->text(),
+			],
+		] );
+	}
+
+	/**
+	 * Returns list of details (icons, headers, and blurbs for those icons) for the founder tips email
+	 *
+	 * @return array
+	 */
+	protected function getDetailsList() {
+		$themeDesignerUrl = \GlobalTitle::newFromText( "ThemeDesigner", NS_SPECIAL, $this->wikiId )->getFullURL();
+		return [
+			[
+				"iconSrc" => Email\ImageHelper::getFileUrl( "Add_photo.png" ),
+				"iconLink" => \GlobalTitle::newFromText( "Videos", NS_SPECIAL, $this->wikiId )->getFullURL(),
+				"detailsHeader" => $this->getMessage( "emailext-founder-3-days-add-videos-header" )->text(),
+				"details" => $this->getMessage( "emailext-founder-3-days-add-videos-details" )->text()
+			],
+			[
+				"iconSrc" => Email\ImageHelper::getFileUrl( "Update-theme.png" ),
+				"iconLink" => $themeDesignerUrl,
+				"detailsHeader" => $this->getMessage( "emailext-founder-3-days-update-theme-header" )->text(),
+				"details" => $this->getMessage( "emailext-founder-3-days-update-theme-details", $themeDesignerUrl )->parse()
+			],
+			[
+				"iconSrc" => Email\ImageHelper::getFileUrl( "Get-inspired.png" ),
+				"iconLink" => self::WAM_LINK,
+				"detailsHeader" => $this->getMessage( "emailext-founder-3-days-wam-header" )->text(),
+				"details" => $this->getMessage( "emailext-founder-3-days-wam-details", self::WAM_LINK )->parse()
+			]
+		];
+	}
+
+
+}
+class FounderTipsTenDaysController extends FounderTipsController {
+
+	protected function getSubject() {
+		return $this->getMessage( 'emailext-founder-10-days-subject', $this->wikiName )->text();
+	}
+
+	/**
+	 * @template founderTips
+	 */
+	public function body() {
+		$this->response->setData( [
+			'salutation' => $this->getSalutation(),
+			'summary' => $this->getMessage( 'emailext-founder-10-days-summary', $this->wikiUrl, $this->wikiName )->parse(),
+			'extendedSummary' => $this->getMessage( 'emailext-founder-10-days-extended-summary' )->text(),
+			'details' => $this->getDetailsList(),
+			'contentFooterMessages' => [
+				$this->getMessage( 'emailext-founder-10-days-email-what-next' )->text(),
+				$this->getMessage( 'emailext-emailconfirmation-community-team' )->text(),
+			],
+		] );
+	}
+
+	/**
+	 * Returns list of details (icons, headers, and blurbs for those icons) for the founder tips email
+	 *
+	 * @return array
+	 */
+	protected function getDetailsList() {
+		return [
+			[
+				"iconSrc" => Email\ImageHelper::getFileUrl( "Share.png" ),
+				"detailsHeader" => $this->getMessage( "emailext-founder-10-days-sharing-header" )->text(),
+				"details" => $this->getMessage( "emailext-founder-10-days-sharing-details" )->text()
+			],
+			[
+				"iconSrc" => Email\ImageHelper::getFileUrl( "Power-of-email.png" ),
+				"detailsHeader" => $this->getMessage( "emailext-founder-10-days-email-power-header" )->text(),
+				"details" => $this->getMessage( "emailext-founder-10-days-email-power-details" )->text()
+			],
+			[
+				"iconSrc" => Email\ImageHelper::getFileUrl( "Get-with-google.png" ),
+				"iconLink" => $this->getMessage( "emailext-founder-get-with-google" )->text(),
+				"detailsHeader" => $this->getMessage( "emailext-founder-10-days-email-google-header" )->text(),
+				"details" => $this->getMessage( "emailext-founder-10-days-email-google-details" )->text()
+			]
+		];
 	}
 }

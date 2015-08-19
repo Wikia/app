@@ -5,13 +5,14 @@ require_once( $dir . 'maintenance/Maintenance.php' );
 
 use Flags\FlagsExtractor;
 use Flags\FlagsCache;
+use Flags\FlaggedPagesCache;
 
 class MoveNotice extends Maintenance {
 
 	const
 		SECTION_DEFAULT = 0,
 		SECTION_ALL = 'all',
-		EDIT_SUMMARY = 'Moving notices templates to our new Flags feature.',
+		EDIT_SUMMARY = 'Moving notices templates to our new [[Special:Flags]] feature.',
 		EDIT_USER = 'WikiaBot';
 
 	private
@@ -79,7 +80,6 @@ class MoveNotice extends Maintenance {
 
 		if ( !$this->logFile ) {
 			$this->output( "[WARNING] Log file is not set.\n" );
-			exit();
 		}
 
 		if ( !$this->templateName ) {
@@ -121,8 +121,7 @@ class MoveNotice extends Maintenance {
 		if ( empty( $rows ) ) {
 			$this->addToLog( "[WARNING] This template is not used \n" );
 			$this->addToLog( "================================================== \n\n\n" );
-			fwrite( $this->logFile, $this->log );
-			$this->output( $this->log );
+			$this->writeToLog();;
 			exit();
 		}
 
@@ -296,8 +295,8 @@ class MoveNotice extends Maintenance {
 	private function writeToLog() {
 		if ( $this->logFile ) {
 			fwrite( $this->logFile, $this->log );
-			$this->output( $this->log );
 		}
+		$this->output( $this->log );
 	}
 
 	/**
@@ -410,6 +409,7 @@ class MoveNotice extends Maintenance {
 		$pageFlags = [];
 
 		(new FlagsCache())->purgeFlagsForPage( $this->pageId );
+		(new FlaggedPagesCache())->purgeAllFlagTypes();
 
 		$response = $this->app->sendRequest( 'FlagsApiController',
 			'getFlagsForPage',

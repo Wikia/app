@@ -991,16 +991,6 @@ function wfRenderModule($name, $action = 'Index', $params = null) {
 }
 
 /**
- * Given the email id (from 'mail' table in 'wikia_mailer' db), and the email address
- * of the recipient, generate a token that will be given to SendGrid to send back to
- * us with any bounce/spam/open/etc. reports.
- */
-function wfGetEmailPostbackToken($emailId, $emailAddr){
-	global $wgEmailPostbackTokenKey;
-	return sha1("$emailId|$emailAddr|$wgEmailPostbackTokenKey");
-} // end wfGetEmailPostbackToken()
-
-/**
  * wfAutomaticReadOnly
  *
  * @author tor
@@ -1612,4 +1602,24 @@ function wfGetUniqueArrayCI( array $arr ) {
 	$lower = array_map( 'strtolower', $arr );
 	$unique = array_intersect_key( $arr, array_unique( $lower ) );
 	return array_filter( $unique );
+}
+
+/**
+ * Like pathinfo but with support for multibyte - copied from http://php.net/manual/en/function.pathinfo.php#107461
+ */
+function mb_pathinfo( $filepath ) {
+	preg_match( '%^(.*?)[\\\\/]*(([^/\\\\]*?)(\.([^\.\\\\/]+?)|))[\\\\/\.]*$%im', $filepath, $m );
+	if ( $m[1] ) {
+		$ret['dirname'] = $m[1];
+	}
+	if ( $m[2] ) {
+		$ret['basename'] = $m[2];
+	}
+	if ( $m[5] ) {
+		$ret['extension'] = $m[5];
+	}
+	if ( $m[3] ) {
+		$ret['filename'] = $m[3];
+	}
+	return $ret;
 }

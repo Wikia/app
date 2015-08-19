@@ -28,8 +28,13 @@ class AdEngine2ContextService {
 				$monetizationServiceAds = F::app()->sendRequest( 'MonetizationModule', 'index' )->getData()['data'];
 			}
 
-			$langCode = $title->getPageLanguage()->getCode();
+			$sourcePointUrl = null;
+			if ( $skinName === 'oasis' ) {
+				$sourcePointUrl = ResourceLoader::makeCustomURL( $wg->Out, ['wikia.ext.adengine.sourcepoint'], 'scripts' );
+			}
 
+			$langCode = $title->getPageLanguage()->getCode();
+			$wikiVertical = $hubService->getCategoryInfoForCity( $wg->CityId )->cat_name;
 			return [
 				'opts' => $this->filterOutEmptyItems( [
 					'adsInContent' => $wg->EnableAdsInContent,
@@ -40,9 +45,12 @@ class AdEngine2ContextService {
 					'showAds' => $adPageTypeService->areAdsShowableOnPage(),
 					'trackSlotState' => $wg->AdDriverTrackState,
 					'usePostScribe' => $wg->Request->getBool( 'usepostscribe', false ),
+					'sourcePointUrl' => $sourcePointUrl,
 				] ),
 				'targeting' => $this->filterOutEmptyItems( [
+					'enableKruxTargeting' => $wg->EnableKruxTargeting,
 					'enablePageCategories' => array_search( $langCode, $wg->AdPageLevelCategoryLangs ) !== false,
+					'mappedVerticalName' => $this->getMappedVerticalName( $wg->CityId, $wikiVertical ), //wikiCategory replacement for AdLogicPageParams.js::getPageLevelParams
 					'pageArticleId' => $title->getArticleId(),
 					'pageIsArticle' => !!$title->getArticleId(),
 					'pageIsHub' => $wikiaPageType->isWikiaHub(),
@@ -57,7 +65,7 @@ class AdEngine2ContextService {
 					'wikiIsCorporate' => $wikiaPageType->isCorporatePage(),
 					'wikiIsTop1000' => $wg->AdDriverWikiIsTop1000,
 					'wikiLanguage' => $langCode,
-					'wikiVertical' => $hubService->getCategoryInfoForCity( $wg->CityId )->cat_name,
+					'wikiVertical' => $wikiVertical,
 				] ),
 				'providers' => $this->filterOutEmptyItems( [
 					'monetizationService' => $wg->AdDriverUseMonetizationService,
@@ -74,6 +82,30 @@ class AdEngine2ContextService {
 				'forcedProvider' => $wg->AdDriverForcedProvider
 			];
 		} );
+	}
+
+	private function getMappedVerticalName( $cityId, $wikiVertical ) {
+		if ($wikiVertical === 'Wikia') {
+			return 'wikia';
+		}
+		$wikiVertical = WikiFactoryHub::getInstance()->getWikiVertical( $cityId );
+		if ( !empty( $wikiVertical['short'] ) ) {
+			$mapping = [
+				'other' => 'life',
+				'tv' => 'ent',
+				'games' => 'gaming',
+				'books' => 'ent',
+				'comics' => 'ent',
+				'lifestyle' => 'life',
+				'music' => 'ent',
+				'movies' => 'ent'
+			];
+			$newVerticalName = strtolower( $wikiVertical['short'] );
+			if ( !empty( $mapping[$newVerticalName] ) ) {
+				return $mapping[$newVerticalName];
+			}
+		}
+		return 'error';
 	}
 
 	private function filterOutEmptyItems( $input ) {

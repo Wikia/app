@@ -10,21 +10,23 @@ $wgExtensionCredits[ 'specialpage' ][ ] = array(
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/CuratedContent',
 );
 
-$dir = dirname( __FILE__ );
 /**
  * classes
  */
-$wgAutoloadClasses['CuratedContentController'] = "{$dir}/CuratedContentController.class.php";
-$wgAutoloadClasses['CuratedContentWrongAPIVersionException'] = "{$dir}/CuratedContentController.class.php";
-$wgAutoloadClasses['CuratedContentModel'] =  "{$dir}/CuratedContentModel.class.php" ;
+$wgAutoloadClasses['CuratedContentHelper'] = __DIR__ . '/CuratedContentHelper.class.php';
+$wgAutoloadClasses['CuratedContentValidator'] = __DIR__ . '/CuratedContentValidator.class.php';
+$wgAutoloadClasses['CuratedContentValidatorController'] = __DIR__ . '/CuratedContentValidatorController.class.php';
+$wgAutoloadClasses['CuratedContentController'] = __DIR__ . '/CuratedContentController.class.php';
+$wgAutoloadClasses['CuratedContentWrongAPIVersionException'] = __DIR__ . '/CuratedContentController.class.php';
+$wgAutoloadClasses['CuratedContentModel'] =  __DIR__ . '/CuratedContentModel.class.php' ;
 /**
  * message files
  */
-$wgExtensionMessagesFiles['CuratedContent'] = "{$dir}/CuratedContent.i18n.php";
-$wgExtensionMessagesFiles['CuratedContentAlias'] = "{$dir}/CuratedContent.alias.php";
+$wgExtensionMessagesFiles['CuratedContent'] = __DIR__ . '/CuratedContent.i18n.php';
+$wgExtensionMessagesFiles['CuratedContentAlias'] = __DIR__ . '/CuratedContent.alias.php';
 
 //Special Page for Content Managment Tool
-$wgAutoloadClasses[ 'CuratedContentSpecialController'] =  "{$dir}/CuratedContentSpecialController.class.php" ;
+$wgAutoloadClasses[ 'CuratedContentSpecialController'] =  __DIR__ . '/CuratedContentSpecialController.class.php' ;
 $wgSpecialPages[ 'CuratedContent' ] =  'CuratedContentSpecialController';
 
 $wgGroupPermissions['*']['curatedcontent'] = false;

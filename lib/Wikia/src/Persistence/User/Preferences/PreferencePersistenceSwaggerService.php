@@ -5,6 +5,7 @@ namespace Wikia\Persistence\User\Preferences;
 use Swagger\Client\ApiException;
 use Swagger\Client\User\Preferences\Api\UserPreferencesApi;
 use Wikia\Domain\User\Preference;
+use Wikia\Service\NotFoundException;
 use Wikia\Service\PersistenceException;
 use Wikia\Service\Swagger\ApiProvider;
 use Wikia\Service\UnauthorizedException;
@@ -75,13 +76,16 @@ class PreferencePersistenceSwaggerService implements PreferencePersistence {
 
 	/**
 	 * @param ApiException $e
-	 * @throws PersistenceException
 	 * @throws UnauthorizedException
+	 * @throws NotFoundException
+	 * @throws PersistenceException
 	 */
 	private function handleApiException(ApiException $e) {
 		switch ($e->getCode()) {
 			case UnauthorizedException::CODE:
 				throw new UnauthorizedException();
+				break;
+			case NotFoundException::CODE:
 				break;
 			default:
 				throw new PersistenceException($e->getMessage());

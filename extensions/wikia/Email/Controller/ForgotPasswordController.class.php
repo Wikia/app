@@ -3,7 +3,6 @@
 namespace Email\Controller;
 
 use Email\EmailController;
-use Email\Tracking\TrackingCategories;
 
 /**
  * Class ForgotPasswordController
@@ -14,9 +13,22 @@ use Email\Tracking\TrackingCategories;
  */
 class ForgotPasswordController extends EmailController {
 
-	const TRACKING_CATEGORY = TrackingCategories::FORGOT_PASSWORD;
+	protected $tempPass;
 
-	private $tempPass;
+	/**
+	 * @see EmailController::assertCanAccessController
+	 * @throws \Email\Fatal
+	 */
+	public function assertCanAccessController() {
+		global $wgTheSchwartzSecretToken;
+
+		$token = $this->getVal('secret');
+		if( isset( $token ) && $token == $wgTheSchwartzSecretToken ) {
+			return;
+		}
+
+		parent::assertCanAccessController();
+	}
 
 	public function initEmail() {
 		$userService = new \UserService();
@@ -31,7 +43,7 @@ class ForgotPasswordController extends EmailController {
 	}
 
 	/**
-	 * @template forgotPassword
+	 * @template temporaryPassword
 	 */
 	public function body() {
 		$this->response->setData( [
@@ -39,7 +51,7 @@ class ForgotPasswordController extends EmailController {
 			'summary' => $this->getSummary(),
 			'passwordIntro' => $this->getIntro(),
 			'tempPassword' => $this->tempPass,
-			'unrequested' => $this->getMessage( 'emailext-password-unrequested' )->text(),
+			'instructions' => $this->getMessage( 'emailext-password-unrequested' )->text(),
 			'questions' => $this->getMessage( 'emailext-password-questions' )->parse(),
 			'signature' => $this->getMessage( 'emailext-password-signature' )->text(),
 		] );

@@ -64,29 +64,6 @@ class FounderEmails {
 		return $cityList;
 	}
 
-
-	/**
-	 * send notification email to wiki founder
-	 *
-	 * @param $user User
-	 * @param $event FounderEmailsEvent
-	 * @param $mailSubject
-	 * @param $mailBody
-	 * @param $mailBodyHTML
-	 * @param int $wikiId
-	 * @param string $category
-	 *
-	 * @return Status
-	 */
-	public function notifyFounder( $user, $event, $mailSubject, $mailBody, $mailBodyHTML, $wikiId = 0, $category = 'FounderEmails' ) {
-		global $wgPasswordSender, $wgNoReplyAddress;
-		$from = new MailAddress( $wgPasswordSender, 'Wikia' );
-		$replyTo = new MailAddress ( $wgNoReplyAddress );
-		if ( $event->enabled( $user, $wikiId ) ) {
-			return $user->sendMail( $mailSubject, $mailBody, $from, $replyTo, $category, $mailBodyHTML );
-		}
-	}
-
 	/**
 	 * register new event on wiki
 	 * @param FounderEmailsEvent $event
@@ -120,6 +97,10 @@ class FounderEmails {
 
 		// Digest event types do not have records in the event table so just process them.
 		if ( $eventType == 'viewsDigest' || $eventType == "completeDigest" ) {
+			if ( $wikiId != null ) {
+				$aEventsData[] = $wikiId;
+			}
+
 			$oEvent = FounderEmailsEvent::newFromType( $eventType );
 			$result = $oEvent->process( $aEventsData );
 		} else {

@@ -34,6 +34,14 @@ define('ext.wikia.adEngine.adContext', [
 		return categoryDict.map(function (item) { return item.title; });
 	}
 
+	function isProperCountry(countryList) {
+		return (countryList && countryList.indexOf && countryList.indexOf(geo.getCountryCode()) > -1);
+	}
+
+	function isUrlParamSet(param) {
+		return !!parseInt(qs.getVal(param, '0'));
+	}
+
 	function setContext(newContext) {
 		var i,
 			len;
@@ -53,6 +61,12 @@ define('ext.wikia.adEngine.adContext', [
 			context.opts.showAds = false;
 		}
 
+		// SourcePoint integration
+		if (context.opts.sourcePointUrl) {
+			context.opts.sourcePoint = (isUrlParamSet('sourcepoint') ||
+				isProperCountry(instantGlobals.wgAdDriverSourcePointCountries));
+		}
+
 		// Targeting by page categories
 		if (context.targeting.enablePageCategories) {
 			context.targeting.pageCategories = w.wgCategories || getMercuryCategories();
@@ -64,43 +78,34 @@ define('ext.wikia.adEngine.adContext', [
 				(context.targeting.pageType === 'article' || context.targeting.pageType === 'home');
 		}
 
-		if (instantGlobals.wgAdDriverTurtleCountries &&
-				instantGlobals.wgAdDriverTurtleCountries.indexOf &&
-				instantGlobals.wgAdDriverTurtleCountries.indexOf(geo.getCountryCode()) > -1
-					) {
+		if (isProperCountry(instantGlobals.wgAdDriverTurtleCountries)) {
 			context.providers.turtle = true;
 		}
 
-		if (instantGlobals.wgAdDriverOpenXCountries &&
-			instantGlobals.wgAdDriverOpenXCountries.indexOf &&
-			instantGlobals.wgAdDriverOpenXCountries.indexOf(geo.getCountryCode()) > -1
-		) {
+		if (isProperCountry(instantGlobals.wgAdDriverOpenXCountries)) {
 			context.providers.openX = true;
 		}
 
-		if (instantGlobals.wgAdDriverHighImpactSlotCountries &&
-				instantGlobals.wgAdDriverHighImpactSlotCountries.indexOf &&
-				instantGlobals.wgAdDriverHighImpactSlotCountries.indexOf(geo.getCountryCode()) > -1
-					) {
-			context.slots.invisibleHighImpact = true;
-		}
+		// INVISIBLE_HIGH_IMPACT slot
+		context.slots.invisibleHighImpact = (
+			context.slots.invisibleHighImpact &&
+			isProperCountry(instantGlobals.wgAdDriverHighImpactSlotCountries)
+		) || isUrlParamSet('highimpactslot');
+
+		// INCONTENT_PLAYER slot
+		context.slots.incontentPlayer = isProperCountry(instantGlobals.wgAdDriverIncontentPlayerSlotCountries) ||
+			isUrlParamSet('incontentplayer');
+
+		context.opts.enableScrollHandler = isProperCountry(instantGlobals.wgAdDriverScrollHandlerCountries) ||
+			isUrlParamSet('scrollhandler');
 
 		// Krux integration
-		context.targeting.enableKruxTargeting = false;
-		if (instantGlobals.wgAdDriverKruxCountries &&
-			instantGlobals.wgAdDriverKruxCountries.indexOf &&
-			instantGlobals.wgAdDriverKruxCountries.indexOf(geo.getCountryCode()) > -1
-		) {
-			context.targeting.enableKruxTargeting = true;
-		}
-
-		if (instantGlobals.wgSitewideDisableKrux) {
-			context.targeting.enableKruxTargeting = false;
-		}
-
-		if (context.targeting.wikiDirectedAtChildren) {
-			context.targeting.enableKruxTargeting = false;
-		}
+		context.targeting.enableKruxTargeting = !!(
+			context.targeting.enableKruxTargeting &&
+			isProperCountry(instantGlobals.wgAdDriverKruxCountries) &&
+			!instantGlobals.wgSitewideDisableKrux &&
+			!context.targeting.wikiDirectedAtChildren
+		);
 
 		// Export the context back to ads.context
 		// Only used by Lightbox.js, WikiaBar.js and AdsInContext.js

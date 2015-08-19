@@ -194,13 +194,22 @@ class EditPageLayoutHelper {
 
 	static public function isInfoboxTemplate( Title $title ) {
 		$namespace = $title->getNamespace();
+		$portableInfobox = PortableInfoboxDataService::newFromTitle( $title )->getData();
 
-		if ( $namespace === NS_TEMPLATE && class_exists( 'TemplateClassificationController' ) ) {
-			$tc = new TemplateClassificationController( $title );
-			return $tc->isType( $tc::TEMPLATE_INFOBOX ) || TemplateDraftHelper::isTitleDraft( $title );
+		if ( $namespace === NS_TEMPLATE ) {
+			$tc = new TemplateClassification( $title );
+			return $tc->isType( $tc::TEMPLATE_INFOBOX )
+					|| self::isTemplateDraft( $title )
+					|| !empty( $portableInfobox );
 		}
 
 		return false;
+	}
+
+	static function isTemplateDraft( $title ) {
+		global $wgEnableTemplateDraftExt;
+
+		return !empty( $wgEnableTemplateDraftExt ) && TemplateDraftHelper::isTitleDraft( $title );
 	}
 
 	/**
@@ -228,15 +237,23 @@ class EditPageLayoutHelper {
 	 * @return bool
 	 */
 	public function showMobilePreview( Title $title ) {
-		$blacklistedPage = self::isCodePage( $title )
-				|| $title->isMainPage()
-				|| NavigationModel::isWikiNavMessage( $title );
+		$blacklistedPage = ( self::isCodePage( $title )
+				&& !self::isCodePageWithPreview( $title ) )
+			|| $title->isMainPage()
+			|| NavigationModel::isWikiNavMessage( $title );
 
 		return !$blacklistedPage;
 	}
 
+	/**
+	 * This method checks if the $title comes from one of whitelisted code pages with
+	 * a preview enabled for them. DO NOT check for self::isCodePage, it makes no sense if
+	 * by definition you include only code pages here.
+	 * @param Title $title
+	 * @return bool
+	 */
 	public static function isCodePageWithPreview( Title $title ) {
-		return self::isCodePage( $title ) && self::isInfoboxTemplate( $title );
+		return self::isInfoboxTemplate( $title );
 	}
 
 	/**
@@ -248,12 +265,12 @@ class EditPageLayoutHelper {
 		$namespace = $title->getNamespace();
 		$type = '';
 
-		$aceUrl = AssetsManager::getInstance()->getOneCommonURL( '/resources/Ace' );
+		$aceUrl = AssetsManager::getInstance()->getOneCommonURL( 'resources/Ace' );
 		$aceUrlParts = parse_url( $aceUrl );
 		$this->addJsVariable( 'aceScriptsPath', $aceUrlParts['path'] );
 
 		$this->addJsVariable( 'wgEnableCodePageEditor', true );
-		$this->addJsVariable( 'showPagePreview', self::showMobilePreview( $title ));
+		$this->addJsVariable( 'showPagePreview', self::showMobilePreview( $title ) );
 
 		if ( $namespace === NS_MODULE ) {
 			$type = 'lua';

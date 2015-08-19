@@ -78,7 +78,10 @@ class FacebookSignupController extends WikiaController {
 				// Retrieve user email from Facebook if missing
 				$email = $user->getEmail();
 				if ( empty( $email ) ) {
-					$this->saveEmailAsynchronously( $user->getId() );
+					$this->saveEmailAsynchronously( $user->getId(), true );
+				} else {
+					// Send welcome email
+					F::app()->sendRequest( WikiaConfirmEmailSpecialController::WELCOME_EMAIL_CONTROLLER, 'handle' );
 				}
 			}
 		} else {
@@ -99,14 +102,22 @@ class FacebookSignupController extends WikiaController {
 	}
 
 	/**
-	 * Kick off an asynch job to update user's email to be what's reported by Facebook
-	 * @param $userId
+	 * Kick off an async job to update user's email to be what's reported by Facebook
+	 *
+	 * @param integer $userId
+	 * @param boolean $sendWelcomeEmail
 	 */
-	protected function saveEmailAsynchronously( $userId ) {
+	protected function saveEmailAsynchronously( $userId, $sendWelcomeEmail = false ) {
 		$task = new \Wikia\Tasks\Tasks\FacebookTask();
-		$task->dupCheck();
-		$task->call( 'updateEmailFromFacebook', $userId );
-		$task->queue();
+		$taskList = new \Wikia\Tasks\AsyncTaskList();
+		$taskList->dupCheck()
+			->add( $task->call( 'updateEmailFromFacebook', $userId ) );
+
+		if ( $sendWelcomeEmail ) {
+			$taskList->add( $task->call( 'sendWelcomeEmail' ) );
+		}
+
+		$taskList->queue();
 	}
 
 	/**
@@ -168,8 +179,10 @@ class FacebookSignupController extends WikiaController {
 	public function modalHeader() {
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 
-		$this->signupMsg = wfMessage( 'usersignup-facebook-signup-header' )->escaped();
-		$this->loginMsg = wfMessage( 'usersignup-facebook-login-header' )->escaped();
+		$this->response->setData( [
+			'signupMsg' => wfMessage( 'usersignup-facebook-signup-header' )->escaped(),
+			'loginMsg' => wfMessage( 'usersignup-facebook-login-header' )->escaped(),
+		] );
 	}
 
 	/**
@@ -190,10 +203,10 @@ class FacebookSignupController extends WikiaController {
 
 		switch ( $signupResponse['result'] ) {
 			case 'ok':
-				$this->result = 'ok';
+				$this->response->setVal( 'result', 'ok' );
 				break;
 			case 'unconfirm':
-				$this->result = 'unconfirm';
+				$this->response->setVal( 'result', 'unconfirm' );
 				break;
 			case 'error':
 			default:
