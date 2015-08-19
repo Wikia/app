@@ -84,13 +84,13 @@
 		padding-top: 2px;
 		vertical-align: middle;
 
-		&.register {
-			padding-left: 7px;
-			padding-right: 7px;
-		}
-
+		&.register,
 		&.sign-in {
 			padding-left: 7px;
+		}
+
+		&.register {
+			padding-right: 7px;
 		}
 
 		&.sign-in:hover,
