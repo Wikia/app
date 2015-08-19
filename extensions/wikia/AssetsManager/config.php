@@ -2563,6 +2563,7 @@ $config['curated_content_tool_button_js'] = [
 	'assets' => [
 		'//resources/wikia/libraries/Ponto/ponto.js',
 		'//extensions/wikia/CuratedContent/js/CuratedContentToolButton.js',
+		'//extensions/wikia/CuratedContent/js/CuratedContentToolModal.js',
 		'//extensions/wikia/CuratedContent/js/CuratedContentToolPontoBridge.js'
 	]
 ];

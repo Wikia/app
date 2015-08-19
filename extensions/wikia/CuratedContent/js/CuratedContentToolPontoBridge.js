@@ -10,11 +10,13 @@ define(
 		 * @constructor
 		 */
 		function PontoBridge() {
-			this.exit = function (params, callbackId) {
-				console.log('MW ponto received openMainPage event', params, callbackId);
-				ponto.respond({
-					mwWorks: true
-				}, callbackId);
+			this.exit = function (params) {
+				// TODO we should use params.saved boolean to decide what message to display
+				console.log(params.saved);
+
+				require(['curatedContentTool.modal'], function (modal) {
+					modal.close();
+				});
 			}
 		}
 
