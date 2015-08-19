@@ -9,123 +9,116 @@ class ContentReviewApiController extends WikiaApiController {
 	const CONTENT_REVIEW_RESPONSE_ACTION_UPDATE = 'update';
 	const CONTENT_REVIEW_TEST_MODE_KEY = 'contentReviewTestMode';
 
+	/**
+	 * Check permissions and add page to review queue
+	 *
+	 * @throws BadRequestApiException
+	 * @throws NotFoundApiException
+	 * @throws PermissionsException
+	 * @throws \FluentSql\Exception\SqlException
+	 */
 	public function submitPageForReview() {
-		try {
-			if ( !$this->request->wasPosted()
-				|| !$this->wg->User->matchEditToken( $this->request->getVal( 'editToken' ) )
-			) {
-				throw new BadRequestApiException();
-			}
-
-			$wikiId = $this->request->getInt( 'wikiId' );
-			$pageId = $this->request->getInt( 'pageId' );
-
-			// TODO: Make exceptions more specific
-			$submitUserId = $this->wg->User->getId();
-			if ( !$submitUserId > 0 || !$this->canUserSubmit( $pageId )	) {
-				throw new Exception( 'Invalid user' );
-			}
-
-			$title = Title::newFromID( $pageId );
-			if ( $title === null ) {
-				throw new Exception( 'Invalid page' );
-			}
-
-			$revisionId = $title->getLatestRevID();
-
-			$reviewModel= new ReviewModel();
-			$reviewStatus = $reviewModel->submitPageForReview( $wikiId, $pageId,
-				$revisionId, $submitUserId );
-
-			if ( $reviewStatus['status'] ) {
-				$this->makeSuccessResponse();
-			} else {
-				$this->makeFailureResponse();
-			}
-		} catch ( Exception $e ) {
-			$this->makeExceptionResponse( $e );
+		if ( !$this->request->wasPosted()
+			|| !$this->wg->User->matchEditToken( $this->request->getVal( 'editToken' ) )
+		) {
+			throw new BadRequestApiException();
 		}
+
+		$wikiId = $this->request->getInt( 'wikiId' );
+		$pageId = $this->request->getInt( 'pageId' );
+
+		$title = Title::newFromID( $pageId );
+		if ( $title === null || !$title->isJsPage() ) {
+			throw new NotFoundApiException( "JS page with ID {$pageId} does not exist");
+		}
+
+		$submitUserId = $this->wg->User->getId();
+		if ( !$submitUserId > 0 || !$this->canUserSubmit( $pageId ) ) {
+			throw new PermissionsException( 'edit' );
+		}
+
+		$revisionId = $title->getLatestRevID();
+		$revisionData = $this->getLatestReviewedRevisionFromDB( $wikiId, $pageId );
+
+		if ( $revisionId == $revisionData['revision_id'] ) {
+			throw new BadRequestApiException( 'Current revision is already reviewed');
+		}
+
+		( new ReviewModel() )->submitPageForReview( $wikiId, $pageId,
+			$revisionId, $submitUserId );
+
+		$this->makeSuccessResponse();
 	}
 
+	/**
+	 * Enable test mode
+	 *
+	 * @throws BadRequestApiException
+	 * @throws NotFoundApiException
+	 * @throws PermissionsException
+	 */
 	public function enableTestMode() {
-		try {
-			if ( !$this->request->wasPosted()
-				|| !$this->wg->User->matchEditToken( $this->request->getVal( 'editToken' ) )
-			) {
-				throw new BadRequestApiException();
-			}
-
-			$pageId = $this->request->getInt( 'pageId' );
-
-			$submitUserId = $this->wg->User->getId();
-			if ( !$submitUserId > 0 || !$this->canUserSubmit( $pageId )	) {
-				throw new Exception( 'Invalid user' );
-			}
-
-			$title = Title::newFromID( $pageId );
-			if ( $title === null || !$title->isJsPage() ) {
-				throw new Exception( 'Invalid page' );
-			}
-
-			Wikia\ContentReview\Helper::setContentReviewTestMode();
-			$this->makeSuccessResponse();
-		} catch ( Exception $e ) {
-			$this->makeExceptionResponse( $e );
+		if ( !$this->request->wasPosted()
+			|| !$this->wg->User->matchEditToken( $this->request->getVal( 'editToken' ) )
+		) {
+			throw new BadRequestApiException();
 		}
+
+		$pageId = $this->request->getInt( 'pageId' );
+
+		$title = Title::newFromID( $pageId );
+		if ( $title === null || !$title->isJsPage() ) {
+			throw new NotFoundApiException( "JS page with ID {$pageId} does not exist");
+		}
+
+		$submitUserId = $this->wg->User->getId();
+		if ( !$submitUserId > 0 || !$this->canUserSubmit( $pageId )	) {
+			throw new PermissionsException( 'edit' );
+		}
+
+		Wikia\ContentReview\Helper::setContentReviewTestMode();
+		$this->makeSuccessResponse();
 	}
 
+	/**
+	 * Disable test mode
+	 *
+	 * @throws BadRequestApiException
+	 */
 	public function disableTestMode() {
-		try {
-			if ( !$this->request->wasPosted() ) {
-				throw new BadRequestApiException();
-			}
-
-			Wikia\ContentReview\Helper::disableContentReviewTestMode();
-			$this->makeSuccessResponse();
-		} catch ( Exception $e ) {
-			$this->makeExceptionResponse( $e );
+		if ( !$this->request->wasPosted() ) {
+			throw new BadRequestApiException();
 		}
+
+		Wikia\ContentReview\Helper::disableContentReviewTestMode();
+		$this->makeSuccessResponse();
 	}
 
 	public function getCurrentPageData() {
-		try {
-			$wikiId = $this->request->getInt( 'wikiId' );
-			$pageId = $this->request->getInt( 'pageId' );
+		$wikiId = $this->request->getInt( 'wikiId' );
+		$pageId = $this->request->getInt( 'pageId' );
 
-			$revisionModel = new CurrentRevisionModel();
-			$revisionData = $revisionModel->getLatestReviewedRevision( $wikiId, $pageId );
+		$revisionData = $this->getLatestReviewedRevisionFromDB( $wikiId, $pageId );
 
-			$reviewModel = new ReviewModel();
-			$reviewData = $reviewModel->getPageStatus( $wikiId, $pageId );
+		$reviewModel = new ReviewModel();
+		$reviewData = $reviewModel->getPageStatus( $wikiId, $pageId );
 
-			$data = [
-				'reviewedRevisionId' => $revisionData['revision_id'],
-				'touched' => $revisionData['touched'],
-				'revisionInReviewId' => $reviewData['revision_id'],
-				'reviewStatus' => $reviewData['status'],
-			];
-			$this->makeSuccessResponse( $data );
-		} catch ( Exception $e ) {
-			$this->makeExceptionResponse( $e );
-		}
+		$data = [
+			'reviewedRevisionId' => $revisionData['revision_id'],
+			'touched' => $revisionData['touched'],
+			'revisionInReviewId' => $reviewData['revision_id'],
+			'reviewStatus' => $reviewData['status'],
+		];
+		$this->makeSuccessResponse( $data );
 	}
 
 	public function getLatestReviewedRevision() {
-		try {
-			$wikiId = $this->request->getInt( 'wikiId' );
-			$pageId = $this->request->getInt( 'pageId' );
+		$wikiId = $this->request->getInt( 'wikiId' );
+		$pageId = $this->request->getInt( 'pageId' );
 
-			$revisionModel = new CurrentRevisionModel();
-			$revisionData = $revisionModel->getLatestReviewedRevision( $wikiId, $pageId );
+		$revisionData = $this->getLatestReviewedRevisionFromDB( $wikiId, $pageId );
 
-			if ( !empty( $revisionData ) ) {
-				$this->makeSuccessResponse( $revisionData );
-			} else {
-				$this->makeFailureResponse();
-			}
-		} catch ( Exception $e ) {
-			$this->makeExceptionResponse( $e );
-		}
+		$this->makeSuccessResponse( $revisionData );
 	}
 
 	public function showTestModeNotificaion() {
@@ -139,6 +132,10 @@ class ContentReviewApiController extends WikiaApiController {
 		$this->notification = $notification;
 	}
 
+	private function getLatestReviewedRevisionFromDB( $wikiId, $pageId ) {
+		return ( new CurrentRevisionModel() )->getLatestReviewedRevision( $wikiId, $pageId );
+	}
+
 	private function canUserSubmit( $pageId ) {
 		$title = Title::newFromID( $pageId );
 		return $title->userCan( 'edit' );
@@ -150,18 +147,5 @@ class ContentReviewApiController extends WikiaApiController {
 		foreach ( $data as $key => $value ) {
 			$this->setVal( $key, $value );
 		}
-	}
-
-	private function makeFailureResponse( Array $data = [] ) {
-		$this->response->setVal( 'status', false );
-
-		foreach ( $data as $key => $value ) {
-			$this->setVal( $key, $value );
-		}
-	}
-
-	private function makeExceptionResponse( \Exception $e ) {
-		$this->response->setVal( 'status', false );
-		$this->response->setVal( 'exception', $e->getMessage() );
 	}
 }

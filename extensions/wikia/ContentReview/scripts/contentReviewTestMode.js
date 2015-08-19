@@ -36,16 +36,10 @@ define(
 			method: 'enableTestMode',
 			data: data,
 			callback: function (response) {
-				if ( response.status ) {
-					win.location.reload();
-				} else {
-					var notification = new BannerNotification(
-						mw.message('content-review-test-mode-error').escaped(),
-						'error'
-					);
-
-					notification.show();
-				}
+				win.location.reload();
+			},
+			onErrorCallback: function(response) {
+				showErrorMessage();
 			}
 		});
 	}
@@ -55,16 +49,10 @@ define(
 			controller: 'ContentReviewApiController',
 			method: 'disableTestMode',
 			callback: function (response) {
-				if ( response.status ) {
-					win.location.reload();
-				} else {
-					var notification = new BannerNotification(
-						mw.message('content-review-test-mode-error').escaped(),
-						'error'
-					);
-
-					notification.show();
-				}
+				win.location.reload();
+			},
+			onErrorCallback: function(response) {
+				showErrorMessage();
 			}
 		});
 	}
@@ -87,6 +75,15 @@ define(
 				}
 			});
 		}
+	}
+
+	function showErrorMessage() {
+		var notification = new BannerNotification(
+			mw.message('content-review-test-mode-error').escaped(),
+			'error'
+		);
+
+		notification.show();
 	}
 
 	return {
