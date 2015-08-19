@@ -63,7 +63,6 @@ class UserAttributeTest extends PHPUnit_Framework_TestCase {
 			$attributes->getAttribute( $this->userId, $this->attribute2->getName() ) );
 
 		$this->assertNull( $attributes->getAttribute( $this->userId, "unsetattribute" ) );
-		//$this->assertEquals( $this->savedAttributesForUser, $attributes->getAttributes( $this->userId ) );
 	}
 
 	public function testGetAttributesWithDefaultParameter() {
