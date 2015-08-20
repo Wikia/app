@@ -74,7 +74,7 @@ class PortableInfoboxDataService {
 			$parserOutput->getProperty( self::INFOBOXES_PROPERTY_NAME )
 			: false;
 
-		if ( !$parsedInfoboxes && $title->getNamespace() === 10 ) {
+		if ( !$parsedInfoboxes && $title->getNamespace() === NS_TEMPLATE ) {
 			$parser = new Parser();
 			$parserOptions = new ParserOptions();
 			$frame = $parser->getPreprocessor()->newFrame();
