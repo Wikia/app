@@ -18,7 +18,7 @@ class ApiQueryPortableInfobox extends ApiQueryBase {
 	protected function runOnPageSet( ApiPageSet $pageSet ) {
 		$articles = $pageSet->getGoodTitles();
 
-		foreach ( $articles as $articleTitle ) {
+		foreach ( $articles as $id => $articleTitle ) {
 			$parsedInfoboxes = PortableInfoboxDataService::newFromTitle( $articleTitle )->getData();
 
 			if ( is_array( $parsedInfoboxes ) && count( $parsedInfoboxes ) ) {
