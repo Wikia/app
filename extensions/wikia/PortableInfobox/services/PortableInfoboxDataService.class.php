@@ -68,41 +68,55 @@ class PortableInfoboxDataService {
 	 */
 	protected function getParsedInfoboxes( $title ) {
 		$article = Article::newFromTitle( $title, RequestContext::getMain() );
+
+		if ( $title->getNamespace() === NS_TEMPLATE ) {
+			$parser = new Parser();
+			$parserOptions = new ParserOptions();
+			$frame = $parser->getPreprocessor()->newFrame();
+
+			$templateText = $article->fetchContent();
+			$includeonlyText = $this->getIncludeonlyText( $templateText );
+			$templateTextWithoutIncludeonly = $parser->getPreloadText( $includeonlyText, $article->getTitle(), $parserOptions );
+			$infoboxes = $this->getInfoboxes( $templateTextWithoutIncludeonly );
+
+			if ( $infoboxes ) {
+				foreach ( $infoboxes as $infobox ) {
+					PortableInfoboxParserTagController::getInstance()->render( $infobox, $parser, $frame );
+				}
+				return $parser->getOutput()->getProperty( self::INFOBOXES_PROPERTY_NAME );
+			}
+		}
+
 		//on empty parser cache this should be regenerated, see WikiPage.php:2996
 		$parserOutput = $article->getParserOutput();
 		$parsedInfoboxes = $parserOutput ?
 			$parserOutput->getProperty( self::INFOBOXES_PROPERTY_NAME )
 			: false;
 
-		if ( !$parsedInfoboxes && $title->getNamespace() === NS_TEMPLATE ) {
-			$parser = new Parser();
-			$parserOptions = new ParserOptions();
-			$frame = $parser->getPreprocessor()->newFrame();
-
-			$templateText = $article->fetchContent();
-			$templateTextWithoutIncludeonly = $parser->getPreloadText( $templateText, $article->getTitle(), $parserOptions );
-			$infoboxes = $this->processTemplate( $templateTextWithoutIncludeonly );
-
-			foreach ( $infoboxes as $infobox ) {
-				PortableInfoboxParserTagController::getInstance()->render( $infobox, $parser, $frame );
-			}
-
-			$parsedInfoboxes = $parser->getOutput()->getProperty( self::INFOBOXES_PROPERTY_NAME );
-		}
-
 		return $parsedInfoboxes;
 	}
 
 	/**
-	 * @desc From the template string with removed <includeonly> tags, creates an array of
+	 * @desc From the template without <includeonly> tags, creates an array of
 	 * strings containing only infoboxes. All template content which is not an infobox is removed.
 	 *
 	 * @param $text string Content of template which uses the <includeonly> tags
 	 * @return array of striped infoboxes ready to parse
 	 */
-	protected function processTemplate( $text ) {
+	protected function getInfoboxes( $text ) {
 		preg_match_all( "/<infobox.+<\/infobox>/sU", $text, $result );
 
 		return $result[0];
+	}
+
+	/**
+	 * @desc returns the text from inside of the first <includeonly> tag
+	 * @param $text string template text
+	 * @return mixed
+	 */
+	protected function getIncludeonlyText( $text ) {
+		preg_match_all( "/<includeonly>(.+)<\/includeonly>/sU", $text, $result );
+
+		return $result[1][0];
 	}
 }
