@@ -2544,6 +2544,14 @@ $config['content_review_module_js'] = [
 	]
 ];
 
+$config['content_review_test_mode_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//extensions/wikia/ContentReview/scripts/contentReviewTestMode.run.js',
+		'//extensions/wikia/ContentReview/scripts/contentReviewTestMode.js',
+	]
+];
+
 $config['content_review_special_page_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
