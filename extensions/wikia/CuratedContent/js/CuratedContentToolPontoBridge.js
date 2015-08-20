@@ -11,8 +11,7 @@ define(
 		 */
 		function PontoBridge() {
 			this.exit = function (params) {
-				// TODO we should use params.saved boolean to decide what message to display
-				console.log(params.saved);
+				// TODO we can use params.saved boolean to display some notification
 
 				require(['curatedContentTool.modal'], function (modal) {
 					modal.close();
