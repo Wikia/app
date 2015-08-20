@@ -270,7 +270,6 @@ class MercuryApiController extends WikiaController {
 	 *
 	 */
 	public function getWikiVariables() {
-		global $egFacebookAppId;
 
 		$wikiVariables = $this->mercuryApi->getWikiVariables();
 
@@ -303,10 +302,6 @@ class MercuryApiController extends WikiaController {
 		$smartBannerConfig = $this->getSmartBannerConfig();
 		if ( !is_null( $smartBannerConfig ) ) {
 			$wikiVariables['smartBanner'] = $smartBannerConfig;
-		}
-
-		if ( !is_null( $egFacebookAppId ) ) {
-			$wikiVariables['facebookAppId'] = $egFacebookAppId;
 		}
 
 		$wikiImages = ( new WikiService() )->getWikiImages( [ $this->wg->CityId ], self::WIKI_IMAGE_SIZE );

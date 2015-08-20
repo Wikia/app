@@ -2,6 +2,7 @@
 
 namespace Wikia\Service\User\Attributes;
 
+use Wikia\Domain\User\Attribute;
 use Wikia\Logger\Loggable;
 use Wikia\Persistence\User\Attributes\AttributePersistence;
 use Wikia\Util\WikiaProfiler;
@@ -27,7 +28,13 @@ class AttributeKeyValueService implements AttributeService {
 		$this->persistenceAdapter = $persistenceAdapter;
 	}
 
-	public function set( $userId, $attribute ) {
+	/**
+	 * @param int $userId
+	 * @param Attribute $attribute
+	 * @return bool
+	 * @throws \Exception
+	 */
+	public function set( $userId, Attribute $attribute ) {
 		if ( empty( $attribute ) || $userId === 0 ) {
 			throw new \Exception( 'Invalid parameters, $attribute must not be empty and $userId must be > 0' );
 		}
@@ -40,47 +47,56 @@ class AttributeKeyValueService implements AttributeService {
 
 			return $ret;
 		} catch ( \Exception $e ) {
-			$this->error( $e->getMessage(), [
-				'user' => $userId
-			] );
-
-			throw $e;
+			$this->logError( $userId, $e );
+			return false;
 		}
 	}
 
+	/**
+	 * @param int $userId
+	 * @return array
+	 */
 	public function get( $userId ) {
+		$attributeArray = [];
+
 		if ( $userId == 0 ) {
-			return [];
+			return $attributeArray;
 		}
 
 		try {
 			$attributeArray = $this->persistenceAdapter->getAttributes( $userId );
 		} catch ( \Exception $e ) {
-			$this->error( $e->getMessage(), [
-				'user' => $userId
-			] );
-
-			throw $e;
+			$this->logError( $userId, $e );
 		}
 
 		return $attributeArray;
 	}
 
-	public function delete( $userId, $attribute ) {
+	/**
+	 * @param int $userId
+	 * @param Attribute $attribute
+	 * @return bool
+	 * @throws \Exception
+	 */
+	public function delete( $userId, Attribute $attribute ) {
 		if ( empty( $attribute ) || $userId === 0 ) {
-			return false;
+			throw new \Exception( 'Invalid parameters, $attribute must not be empty and $userId must be > 0' );
 		}
 
 		try {
 			$ret = $this->persistenceAdapter->deleteAttribute( $userId, $attribute );
 			return $ret;
 		} catch ( \Exception $e ) {
-			$this->error( $e->getMessage(), [
-				'user' => $userId
-			] );
-
-			throw $e;
+			$this->logError( $userId, $e );
+			return false;
 		}
+	}
+
+	private function logError( $userId, \Exception $e ) {
+		$this->error( $e->getMessage(), [
+			'user' => $userId,
+			'exceptionType' => get_class( $e ),
+		] );
 	}
 
 	protected function getLoggerContext() {
