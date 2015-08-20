@@ -7,11 +7,7 @@ use Wikia\ContentReview\Models;
 
 class ReviewedRevision extends Maintenance {
 
-	public static $jsPages = [
-		'Wikia.js',
-		'Common.js',
-		'Monobook.js'
-	];
+	const JS_FILE_EXTENSION = '.js';
 
 	public $revisionModel;
 
@@ -28,19 +24,15 @@ class ReviewedRevision extends Maintenance {
 
 		$this->output( "Processing wiki id: {$wgCityId}\n" );
 
-		foreach ( self::$jsPages as $jsPage ) {
-			$title = Title::newFromText( $jsPage, NS_MEDIAWIKI );
-			if ( $title->exists() ) {
-				$pageId = $title->getArticleID();
-				$latestRevId = $title->getLatestRevID();
+		$jsPages = $this->getJsPages();
 
-				if ( !empty( $pageId ) && !empty( $latestRevId ) ) {
-					try {
-						$this->getRevisionModel()->approveRevision( $wgCityId, $pageId, $latestRevId );
-						$this->output( "Added revision id for page {$jsPage} (ID: {$pageId})\n" );
-					} catch( FluentSql\Exception\SqlException $e ) {
-						$this->output( $e->getMessage() . "\n" );
-					}
+		foreach ( $jsPages as $jsPage ) {
+			if ( !empty( $jsPage['page_id'] ) && !empty( $jsPage['page_latest'] ) ) {
+				try {
+					$this->getRevisionModel()->approveRevision( $wgCityId, $jsPage['page_id'], $jsPage['page_latest'] );
+					$this->output( "Added revision id for page {$jsPage['page_title']} (ID: {$jsPage['page_id']})\n" );
+				} catch( FluentSql\Exception\SqlException $e ) {
+					$this->output( $e->getMessage() . "\n" );
 				}
 			}
 		}
@@ -52,6 +44,24 @@ class ReviewedRevision extends Maintenance {
 		}
 
 		return $this->revisionModel;
+	}
+
+	private function getJsPages() {
+		$db = wfGetDB( DB_SLAVE );
+
+		$jsPages = ( new \WikiaSQL() )
+			->SELECT( 'page_id', 'page_title', 'page_latest' )
+			->FROM( 'page' )
+			->WHERE( 'page_namespace' )->EQUAL_TO( NS_MEDIAWIKI )
+			->AND_( 'LOWER (page_title)' )->LIKE( '%' . self::JS_FILE_EXTENSION )
+			->runLoop( $db, function ( &$jsPages, $row ) {
+				$jsPages[$row->page_id] = get_object_vars( $row );
+			} );
+
+		$db->commit();
+
+		return $jsPages;
+
 	}
 }
 
