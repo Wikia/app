@@ -2,28 +2,26 @@
 
 class ApiQueryAllinfoboxes extends ApiQueryBase {
 
+	const CACHE_TTL = 86400;
+
 	public function execute() {
-		$data = WikiaDataAccess::cache( wfMemcKey( 'allinfoboxes-list' ), 3600, function () {
+		$data = WikiaDataAccess::cache( wfMemcKey( 'allinfoboxes-list' ), self::CACHE_TTL, function () {
 			$dbr = wfGetDB( DB_SLAVE );
-			$result = ( new WikiaSQL() )
-				->SELECT( 'page_id', 'page_title' )
-				->FROM( 'page' )
-				->WHERE( 'page_namespace' )->EQUAL_TO( NS_TEMPLATE )
-				->AND_( 'page_is_redirect' )->EQUAL_TO( 0 )
+
+			return ( new WikiaSQL() )
+				->SELECT( 'qc_value', 'qc_namespace', 'qc_title' )
+				->FROM( 'querycache' )
+				->WHERE( 'qc_type' )->EQUAL_TO( AllinfoboxesQueryPage::ALL_INFOBOXES_TYPE )
 				->run( $dbr, function ( ResultWrapper $result ) {
 					$out = [ ];
 					while ( $row = $result->fetchRow() ) {
-						$out[] = [ 'pageid' => $row[ 'page_id' ], 'title' => $row[ 'page_title' ] ];
+						$out[] = [ 'pageid' => $row[ 'qc_value' ],
+								   'title' => $row[ 'qc_title' ],
+								   'ns' => $row[ 'qc_namespace' ] ];
 					}
 
 					return $out;
 				} );
-
-			return array_filter( $result, function ( $tmpl ) {
-				$data = PortableInfoboxDataService::newFromPageID( $tmpl[ 'pageid' ] )->getData();
-
-				return !empty( $data );
-			} );
 		} );
 
 		foreach ( $data as $id => $infobox ) {
