@@ -21,6 +21,7 @@
  */
 
 use Wikia\DependencyInjection\Injector;
+use Wikia\Domain\User\Attribute;
 use Wikia\Logger\Loggable;
 use Wikia\Service\User\Preferences\UserPreferences;
 use Wikia\Service\User\Attributes\UserAttributes;
@@ -83,6 +84,7 @@ class User {
 	const MW_USER_VERSION = MW_USER_VERSION;
 	const EDIT_TOKEN_SUFFIX = EDIT_TOKEN_SUFFIX;
 	const CACHE_PREFERENCES_KEY = "preferences";
+	const CACHE_ATTRIBUTES_KEY = "attributes";
 	const GET_SET_OPTION_SAMPLE_RATE = 0.1;
 
 	private static $PROPERTY_UPSERT_SET_BLOCK = [ "up_user = VALUES(up_user)", "up_property = VALUES(up_property)", "up_value = VALUES(up_value)" ];
@@ -389,7 +391,10 @@ class User {
 			}
 
 			if (isset($data[self::CACHE_PREFERENCES_KEY])) {
-				 $this->userPreferences()->setPreferencesInCache($this->mId, $data[self::CACHE_PREFERENCES_KEY]);
+				$this->userPreferences()->setPreferencesInCache($this->mId, $data[self::CACHE_PREFERENCES_KEY]);
+			}
+			if (isset($data[self::CACHE_ATTRIBUTES_KEY])) {
+				$this->userAttributes()->setAttributesInCache($this->mId, $data[self::CACHE_ATTRIBUTES_KEY]);
 			}
 		}
 		return true;
@@ -421,6 +426,7 @@ class User {
 		}
 		$data['mVersion'] = MW_USER_VERSION;
 		$data[self::CACHE_PREFERENCES_KEY] = $this->userPreferences()->getPreferences($this->mId);
+		$data[self::CACHE_ATTRIBUTES_KEY] = $this->userAttributes()->getAttributes($this->mId);
 		$key = $this->getCacheKey();
 		global $wgMemc;
 		$wgMemc->set( $key, $data );
@@ -2702,6 +2708,25 @@ class User {
 	 */
 	public function setGlobalAttribute($attribute, $value) {
 		$this->setOptionHelper($attribute, $value);
+		$this->setAttributeInService($attribute, $value);
+	}
+
+	/**
+	 * Sets an attribute into the User Attribute Service
+	 *
+	 * @param $attributeName
+	 * @param $attributeValue
+	 */
+	private function setAttributeInService($attributeName, $attributeValue) {
+		$attribute = new Attribute($attributeName, $this->sanitizeProperty($attributeValue));
+
+		if (is_null($attribute->getValue())) {
+			$this->userAttributes()->deleteAttribute($this->getId(), $attribute);
+		} else {
+			$this->userAttributes()->setAttribute($this->getId(), $attribute);
+		}
+
+		$this->clearSharedCache();
 	}
 
 	/**
@@ -4895,7 +4920,7 @@ class User {
 
 		$this->loadOptions();
 		// wikia change
-		global $wgExternalSharedDB, $wgSharedDB, $wgGlobalUserProperties;
+		global $wgExternalSharedDB, $wgSharedDB;
 		if( isset( $wgSharedDB ) ) {
 			$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 		}

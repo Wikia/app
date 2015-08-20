@@ -32,12 +32,10 @@ class AttributePersistenceSwaggerTest extends \PHPUnit_Framework_TestCase {
 		$this->apiProvider = $this->getMockBuilder( ApiProvider::class )
 			->setMethods( [ 'getAuthenticatedApi' ] )
 			->disableOriginalConstructor()
-			->disableAutoload()
 			->getMock();
 		$this->userAttributesApi = $this->getMockBuilder( UsersAttributesApi::class )
 			->setMethods( [ 'saveAttributeForUser', 'getAllAttributesForUser', 'deleteAttributeForUser' ] )
 			->disableOriginalConstructor()
-			->disableAutoload()
 			->getMock();
 		$this->apiProvider->expects( $this->any() )
 			->method('getAuthenticatedApi')
