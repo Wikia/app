@@ -93,7 +93,7 @@ class WikiService extends WikiaModel {
 	}
 
 	private static function getAdminIdsFromDB( DatabaseBase $db, $excludeBots = false, $limit = null ) {
-		$conditions = [ "ug_group in ('sysop','bureaucrat')" ];
+		$conditions = [ 'ug_group' => [ 'sysop', 'bureaucrat' ] ];
 
 		if ( $excludeBots ) {
 			$groupList = $db->makeList( self::$botGroups );
