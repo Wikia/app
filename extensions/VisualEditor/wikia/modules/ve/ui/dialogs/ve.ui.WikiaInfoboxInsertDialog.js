@@ -205,6 +205,23 @@ ve.ui.WikiaInfoboxInsertDialog.prototype.onTransact = function () {
 	}.bind( this ), 0 );
 };
 
+/**
+ * @inheritdoc
+ */
+ve.ui.WikiaInfoboxInsertDialog.prototype.getTeardownProcess = function ( data ) {
+	return ve.ui.WikiaInfoboxInsertDialog.super.prototype.getTeardownProcess.call( this, data )
+		.next( function () {
+			this.select.selectItem();
+		}, this );
+};
+
+/**
+ * @inheritdoc
+ */
+ve.ui.WikiaInfoboxInsertDialog.prototype.getReadyProcess = function ( data ) {
+	return ve.ui.WikiaInfoboxInsertDialog.super.prototype.getReadyProcess.call( this, data );
+};
+
 /* Registration */
 
 ve.ui.windowFactory.register( ve.ui.WikiaInfoboxInsertDialog );
