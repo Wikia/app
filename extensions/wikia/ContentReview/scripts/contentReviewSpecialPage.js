@@ -5,7 +5,9 @@ define(
     'ext.wikia.contentReview.special.page',
     ['jquery', 'mw', 'wikia.loader', 'wikia.nirvana'],
     function ($, mw, loader, nirvana) {
-
+        /**
+         * TODO add messages
+         */
         function init() {
             $.when(loader({
                 type: loader.MULTI,
