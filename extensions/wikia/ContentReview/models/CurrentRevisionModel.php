@@ -4,6 +4,40 @@ namespace Wikia\ContentReview\Models;
 
 class CurrentRevisionModel extends ContentReviewBaseModel {
 
+	/**
+	 * Approve revision
+	 *
+	 * @param int $wikiId
+	 * @param int $pageId
+	 * @param int $revisionId
+	 * @return bool
+	 * @throws \FluentSql\Exception\SqlException
+	 */
+	public function approveRevision( $wikiId, $pageId, $revisionId ) {
+		$db = $this->getDatabaseForWrite();
+
+		( new \WikiaSQL() )
+			->INSERT( self::CONTENT_REVIEW_CURRENT_REVISIONS_TABLE )
+			->SET( 'wiki_id', $wikiId )
+			->SET( 'page_id', $pageId )
+			->SET( 'revision_id', $revisionId )
+			// submit_time has a default value set to CURRENT_TIMESTAMP
+			->ON_DUPLICATE_KEY_UPDATE(
+				[ 'revision_id' => $revisionId ]
+			)
+			->run( $db );;
+
+		$affectedRows = $db->affectedRows();
+
+		if ( $affectedRows === 0 ) {
+			throw new \FluentSql\Exception\SqlException( 'The INSERT operation failed.' );
+		}
+
+		$db->commit();
+
+		return true;
+	}
+
 	public function getLatestReviewedRevision( $wikiId, $pageId ) {
 		$db = $this->getDatabaseForRead();
 

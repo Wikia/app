@@ -64,71 +64,44 @@ class ReviewModel extends ContentReviewBaseModel {
 		return $reviewId;
 	}
 
+	/**
+	 * Add page to content review queue
+	 *
+	 * @param int $wikiId
+	 * @param int $pageId
+	 * @param int $revisionId
+	 * @param int $submitUserId
+	 * @return bool
+	 * @throws \FluentSql\Exception\SqlException
+	 */
 	public function submitPageForReview( $wikiId, $pageId, $revisionId, $submitUserId ) {
-		try {
-			$db = $this->getDatabaseForWrite();
+		$db = $this->getDatabaseForWrite();
 
-			( new \WikiaSQL() )
-				->INSERT( self::CONTENT_REVIEW_STATUS_TABLE )
-				// wiki_id, page_id and revision_id are a unique key
-				->SET( 'wiki_id', $wikiId )
-				->SET( 'page_id', $pageId )
-				->SET( 'revision_id', $revisionId )
-				->SET( 'status', self::CONTENT_REVIEW_STATUS_UNREVIEWED )
-				->SET( 'submit_user_id', $submitUserId )
-				// submit_time has a default value set to CURRENT_TIMESTAMP
-				// review_user_id is NULL
-				// review_start is NULL
-				->run( $db );
+		( new \WikiaSQL() )
+			->INSERT( self::CONTENT_REVIEW_STATUS_TABLE )
+			// wiki_id, page_id and revision_id are a unique key
+			->SET( 'wiki_id', $wikiId )
+			->SET( 'page_id', $pageId )
+			->SET( 'revision_id', $revisionId )
+			->SET( 'status', self::CONTENT_REVIEW_STATUS_UNREVIEWED )
+			->SET( 'submit_user_id', $submitUserId )
+			// submit_time has a default value set to CURRENT_TIMESTAMP
+			// review_user_id is NULL
+			// review_start is NULL
+			->ON_DUPLICATE_KEY_UPDATE(
+				[ 'revision_id' => $revisionId ]
+			)
+			->run( $db );
 
-			$affectedRows = $db->affectedRows();
+		$affectedRows = $db->affectedRows();
 
-			if ( $affectedRows === 0 ) {
-				throw new \Exception( 'The INSERT operation failed.' );
-			} else {
-				$status = true;
-			}
-
-			$db->commit();
-
-			return [
-				'status' => $status,
-			];
-		} catch ( \Exception $e ) {
-			if ( $db !== null ) {
-				$db->rollback;
-			}
-
-			throw $e;
+		if ( $affectedRows === 0 ) {
+			throw new \FluentSql\Exception\SqlException( 'The INSERT operation failed.' );
 		}
-	}
 
-	public function updateReviewById( $reviewId, $revisionId, $submitUserId ) {
-		try {
-			$db = $this->getDatabaseForWrite();
+		$db->commit();
 
-			( new \WikiaSQL() )
-				->UPDATE( self::CONTENT_REVIEW_STATUS_TABLE )
-				->SET( 'revision_id', $revisionId )
-				->SET( 'submit_user_id', $submitUserId )
-				->SET( 'submit_time', 'DEFAULT', true )
-				->WHERE( 'review_id' )->EQUAL_TO( $reviewId )
-				->run( $db );
-
-			if ( $db->affectedRows() === 0 ) {
-				throw new \Exception( 'The UPDATE operation failed.' );
-			}
-
-			$db->commit();
-
-			return $reviewId;
-		} catch ( \Exception $e ) {
-			if ( $db !== null ) {
-				$db->rollback;
-			}
-
-			throw $e;
-		}
+		return true;
 	}
 
 	public function updateRevisionStatus( $wiki_id, $page_id, $status ) {
