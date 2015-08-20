@@ -38,7 +38,7 @@ use \ArrayAccess;
  * Representation Class Doc Comment
  *
  * @category    Class
- * @description 
+ * @description
  * @package     Swagger\Client
  * @author      http://github.com/swagger-api/swagger-codegen
  * @license     http://www.apache.org/licenses/LICENSE-2.0 Apache Licene v2
@@ -47,7 +47,7 @@ use \ArrayAccess;
 class Representation implements ArrayAccess
 {
     /**
-      * Array of property to type mappings. Used for (de)serialization 
+      * Array of property to type mappings. Used for (de)serialization
       * @var string[]
       */
     static $swaggerTypes = array(
@@ -59,10 +59,10 @@ class Representation implements ArrayAccess
         'resources' => '\Swagger\Client\Model\Entry[]',
         'properties' => 'map[string,object]'
     );
-  
-    /** 
+
+    /**
       * Array of attributes where the key is the local name, and the value is the original name
-      * @var string[] 
+      * @var string[]
       */
     static $attributeMap = array(
         'namespaces' => 'namespaces',
@@ -73,7 +73,7 @@ class Representation implements ArrayAccess
         'resources' => 'resources',
         'properties' => 'properties'
     );
-  
+
     /**
       * Array of attributes to setter functions (for deserialization of responses)
       * @var string[]
@@ -87,7 +87,7 @@ class Representation implements ArrayAccess
         'resources' => 'setResources',
         'properties' => 'setProperties'
     );
-  
+
     /**
       * Array of attributes to getter functions (for serialization of requests)
       * @var string[]
@@ -101,58 +101,58 @@ class Representation implements ArrayAccess
         'resources' => 'getResources',
         'properties' => 'getProperties'
     );
-  
-    
+
+
     /**
-      * $namespaces 
+      * $namespaces
       * @var map[string,string]
       */
     protected $namespaces;
-    
+
     /**
-      * $links 
+      * $links
       * @var \Swagger\Client\Model\Link[]
       */
     protected $links;
-    
+
     /**
-      * $resource_link 
+      * $resource_link
       * @var \Swagger\Client\Model\Link
       */
     protected $resource_link;
-    
+
     /**
-      * $canonical_links 
+      * $canonical_links
       * @var \Swagger\Client\Model\Link[]
       */
     protected $canonical_links;
-    
+
     /**
-      * $resource_map 
+      * $resource_map
       * @var map[string,\Swagger\Client\Model\List]
       */
     protected $resource_map;
-    
+
     /**
-      * $resources 
+      * $resources
       * @var \Swagger\Client\Model\Entry[]
       */
     protected $resources;
-    
+
     /**
-      * $properties 
+      * $properties
       * @var map[string,object]
       */
     protected $properties;
-    
+
 
     /**
      * Constructor
      * @param mixed[] $data Associated array of property value initalizing the model
      */
-    public function __construct(array $data = null)
+    public function __construct( array $data = null )
     {
-        if ($data != null) {
+        if ( $data != null ) {
             $this->namespaces = $data["namespaces"];
             $this->links = $data["links"];
             $this->resource_link = $data["resource_link"];
@@ -162,7 +162,7 @@ class Representation implements ArrayAccess
             $this->properties = $data["properties"];
         }
     }
-    
+
     /**
      * Gets namespaces
      * @return map[string,string]
@@ -171,19 +171,19 @@ class Representation implements ArrayAccess
     {
         return $this->namespaces;
     }
-  
+
     /**
      * Sets namespaces
-     * @param map[string,string] $namespaces 
+     * @param map[string,string] $namespaces
      * @return $this
      */
-    public function setNamespaces($namespaces)
+    public function setNamespaces( $namespaces )
     {
-        
+
         $this->namespaces = $namespaces;
         return $this;
     }
-    
+
     /**
      * Gets links
      * @return \Swagger\Client\Model\Link[]
@@ -192,19 +192,19 @@ class Representation implements ArrayAccess
     {
         return $this->links;
     }
-  
+
     /**
      * Sets links
-     * @param \Swagger\Client\Model\Link[] $links 
+     * @param \Swagger\Client\Model\Link[] $links
      * @return $this
      */
-    public function setLinks($links)
+    public function setLinks( $links )
     {
-        
+
         $this->links = $links;
         return $this;
     }
-    
+
     /**
      * Gets resource_link
      * @return \Swagger\Client\Model\Link
@@ -213,19 +213,19 @@ class Representation implements ArrayAccess
     {
         return $this->resource_link;
     }
-  
+
     /**
      * Sets resource_link
-     * @param \Swagger\Client\Model\Link $resource_link 
+     * @param \Swagger\Client\Model\Link $resource_link
      * @return $this
      */
-    public function setResourceLink($resource_link)
+    public function setResourceLink( $resource_link )
     {
-        
+
         $this->resource_link = $resource_link;
         return $this;
     }
-    
+
     /**
      * Gets canonical_links
      * @return \Swagger\Client\Model\Link[]
@@ -234,19 +234,19 @@ class Representation implements ArrayAccess
     {
         return $this->canonical_links;
     }
-  
+
     /**
      * Sets canonical_links
-     * @param \Swagger\Client\Model\Link[] $canonical_links 
+     * @param \Swagger\Client\Model\Link[] $canonical_links
      * @return $this
      */
-    public function setCanonicalLinks($canonical_links)
+    public function setCanonicalLinks( $canonical_links )
     {
-        
+
         $this->canonical_links = $canonical_links;
         return $this;
     }
-    
+
     /**
      * Gets resource_map
      * @return map[string,\Swagger\Client\Model\List]
@@ -255,19 +255,19 @@ class Representation implements ArrayAccess
     {
         return $this->resource_map;
     }
-  
+
     /**
      * Sets resource_map
-     * @param map[string,\Swagger\Client\Model\List] $resource_map 
+     * @param map[string,\Swagger\Client\Model\List] $resource_map
      * @return $this
      */
-    public function setResourceMap($resource_map)
+    public function setResourceMap( $resource_map )
     {
-        
+
         $this->resource_map = $resource_map;
         return $this;
     }
-    
+
     /**
      * Gets resources
      * @return \Swagger\Client\Model\Entry[]
@@ -276,19 +276,19 @@ class Representation implements ArrayAccess
     {
         return $this->resources;
     }
-  
+
     /**
      * Sets resources
-     * @param \Swagger\Client\Model\Entry[] $resources 
+     * @param \Swagger\Client\Model\Entry[] $resources
      * @return $this
      */
-    public function setResources($resources)
+    public function setResources( $resources )
     {
-        
+
         $this->resources = $resources;
         return $this;
     }
-    
+
     /**
      * Gets properties
      * @return map[string,object]
@@ -297,70 +297,70 @@ class Representation implements ArrayAccess
     {
         return $this->properties;
     }
-  
+
     /**
      * Sets properties
-     * @param map[string,object] $properties 
+     * @param map[string,object] $properties
      * @return $this
      */
-    public function setProperties($properties)
+    public function setProperties( $properties )
     {
-        
+
         $this->properties = $properties;
         return $this;
     }
-    
+
     /**
      * Returns true if offset exists. False otherwise.
-     * @param  integer $offset Offset 
+     * @param  integer $offset Offset
      * @return boolean
      */
-    public function offsetExists($offset)
+    public function offsetExists( $offset )
     {
-        return isset($this->$offset);
+        return isset( $this->$offset );
     }
-  
+
     /**
      * Gets offset.
-     * @param  integer $offset Offset 
-     * @return mixed 
+     * @param  integer $offset Offset
+     * @return mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet( $offset )
     {
         return $this->$offset;
     }
-  
+
     /**
      * Sets value based on offset.
-     * @param  integer $offset Offset 
+     * @param  integer $offset Offset
      * @param  mixed   $value  Value to be set
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet( $offset, $value )
     {
         $this->$offset = $value;
     }
-  
+
     /**
      * Unsets offset.
-     * @param  integer $offset Offset 
+     * @param  integer $offset Offset
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset( $offset )
     {
-        unset($this->$offset);
+        unset( $this->$offset );
     }
-  
+
     /**
      * Gets the string presentation of the object
      * @return string
      */
     public function __toString()
     {
-        if (defined('JSON_PRETTY_PRINT')) {
-            return json_encode(get_object_vars($this), JSON_PRETTY_PRINT);
+        if ( defined( 'JSON_PRETTY_PRINT' ) ) {
+            return json_encode( get_object_vars( $this ), JSON_PRETTY_PRINT );
         } else {
-            return json_encode(get_object_vars($this));
+            return json_encode( get_object_vars( $this ) );
         }
     }
 }
