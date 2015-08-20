@@ -29,7 +29,6 @@ ve.dm.MWTemplateModel = function VeDmMWTemplateModel( transclusion, target ) {
 	this.sequence = null;
 	this.params = {};
 	this.spec = new ve.dm.MWTemplateSpecModel( this );
-
 	this.originalData = null;
 };
 

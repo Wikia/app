@@ -52,4 +52,4 @@ ve.dm.WikiaTransclusionModel.prototype.fetchRequestDone = function ( specs, data
 
 ve.dm.WikiaTransclusionModel.prototype.setIsInfobox = function ( isInfobox ) {
 	this.isInfobox = isInfobox;
-}
+};

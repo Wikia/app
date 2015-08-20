@@ -96,7 +96,7 @@ ve.ui.WikiaInfoboxDialog.prototype.getTeardownProcess = function ( data ) {
 			this.transclusionModel = null;
 			this.bookletLayout.clearPages();
 			this.content = null;
-		}, this )
+		}, this );
 };
 
 /**
