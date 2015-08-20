@@ -70,20 +70,23 @@ class PortableInfoboxDataService {
 		$article = Article::newFromTitle( $title, RequestContext::getMain() );
 
 		if ( $title->getNamespace() === NS_TEMPLATE ) {
-			$parser = new Parser();
-			$parserOptions = new ParserOptions();
-			$frame = $parser->getPreprocessor()->newFrame();
-
 			$templateText = $article->fetchContent();
 			$includeonlyText = $this->getIncludeonlyText( $templateText );
-			$templateTextWithoutIncludeonly = $parser->getPreloadText( $includeonlyText, $article->getTitle(), $parserOptions );
-			$infoboxes = $this->getInfoboxes( $templateTextWithoutIncludeonly );
 
-			if ( $infoboxes ) {
-				foreach ( $infoboxes as $infobox ) {
-					PortableInfoboxParserTagController::getInstance()->render( $infobox, $parser, $frame );
+			if ( $includeonlyText ) {
+				$parser = new Parser();
+				$parserOptions = new ParserOptions();
+				$frame = $parser->getPreprocessor()->newFrame();
+
+				$templateTextWithoutIncludeonly = $parser->getPreloadText( $includeonlyText, $article->getTitle(), $parserOptions );
+				$infoboxes = $this->getInfoboxes( $templateTextWithoutIncludeonly );
+
+				if ( $infoboxes ) {
+					foreach ( $infoboxes as $infobox ) {
+						PortableInfoboxParserTagController::getInstance()->render( $infobox, $parser, $frame );
+					}
+					return $parser->getOutput()->getProperty( self::INFOBOXES_PROPERTY_NAME );
 				}
-				return $parser->getOutput()->getProperty( self::INFOBOXES_PROPERTY_NAME );
 			}
 		}
 
@@ -117,6 +120,6 @@ class PortableInfoboxDataService {
 	protected function getIncludeonlyText( $text ) {
 		preg_match_all( "/<includeonly>(.+)<\/includeonly>/sU", $text, $result );
 
-		return $result[1][0];
+		return isset( $result[1][0] ) ? $result[1][0] : false;
 	}
 }
