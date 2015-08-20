@@ -130,6 +130,8 @@ $messages['qqq'] = array(
 	'wikia-visualeditor-dialog-transclusion-zerostate' => 'Text that appears in the transclusion dialog when the template takes no parameters',
 	'wikia-visualeditor-dialogbutton-transclusion-tooltip' => 'Tooltip for the transclusion tool button.
 {{Identical|Template}}',
+	'wikia-visualeditor-dialogbutton-infobox-tooltip' => 'Infobox label used in menu.',
+	'wikia-visualeditor-dialog-infobox-insert-title' => 'Call to action to choose infobox from the given list',
 	'wikia-visualeditor-savedialog-label-save' => 'Label text for save button when the user is editing a current revision of an extant page.
 {{Identical|Publish}}',
 	'wikia-visualeditor-savedialog-label-restore' => 'Label text for save button when the user is editing a previous revision.
