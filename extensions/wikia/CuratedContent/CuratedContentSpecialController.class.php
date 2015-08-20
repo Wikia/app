@@ -177,6 +177,7 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 
 		if ( !empty( $errors ) ) {
 			$this->response->setVal( 'error', $errors );
+			$this->response->setVal( 'status', false );
 		} else {
 			$status = WikiFactory::setVarByName( 'wgWikiaCuratedContent', $wgCityId, $sections );
 			$this->response->setVal( 'status', $status );
