@@ -141,7 +141,7 @@ abstract class ResourceLoaderAdEngineBase extends ResourceLoaderModule {
 			'ttl' => $now + static::TTL_SCRIPTS,
 		];
 
-		if ( md5($data['script']) != md5($cached['script']) ) {
+		if ( md5($data['script']) !== md5($cached['script']) ) {
 			\Wikia\Logger\WikiaLogger::instance()
 				->info( 'ResourceLoaderAdEngine - scripts updated',
 					['class' => get_class( $this )] );
