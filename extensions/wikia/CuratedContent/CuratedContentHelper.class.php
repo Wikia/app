@@ -19,7 +19,7 @@ class CuratedContentHelper {
 		}
 
 		// remove null elements from array
-		return array_filter($processedSections, function($section) { return !is_null($section); } );
+		return array_values( array_filter($processedSections, function($section) { return !is_null($section); } ) );
 	}
 
 	public function processLogicForSection( $section ) {
