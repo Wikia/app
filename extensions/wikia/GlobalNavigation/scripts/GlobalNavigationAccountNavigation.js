@@ -88,13 +88,13 @@ require([
 	}
 
 	$(function () {
-		var $registerEntryPoint, $signInEntryPoint
+		var $registerEntryPoint, $signInEntryPoint;
 
 		$entryPoint = $('#AccountNavigation');
 
 		if (!win.wgUserName && $entryPoint.hasClass('newAuth')) {
-			$registerEntryPoint = $('.auth-label.register');
-			$signInEntryPoint = $('.auth-label.sign-in');
+			$registerEntryPoint = $('.auth-link.register');
+			$signInEntryPoint = $('.auth-link.sign-in');
 
 			$registerEntryPoint.click(function () {
 				require(['AuthModal'], function (authModal) {
