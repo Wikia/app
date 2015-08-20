@@ -26,6 +26,8 @@ class GlobalNavigationAccountNavigationController extends WikiaController {
 			$this->navItemLinkOpeningTag = $this->renderPersonalUrl( 'login', true );
 			$this->avatarContainerAdditionalClass = ' anon-avatar-placeholder';
 			$this->loginDropdown = F::app()->renderView( 'UserLoginSpecial', 'dropdown', [ 'template' => 'globalNavigationDropdown', 'registerLink' => $this->renderPersonalUrl( 'register' ) ] );
+			$this->authOptions = $this->getAuthOptions();
+
 		} else {
 			$this->navItemLinkOpeningTag = $this->renderPersonalUrl( 'userpage', true );
 
@@ -128,6 +130,19 @@ class GlobalNavigationAccountNavigationController extends WikiaController {
 
 		wfProfileOut( __METHOD__ );
 		return $markup;
+	}
+
+	public function getAuthOptions() {
+		return wfMessage( 'global-navigation-account-navigation-options', [
+			$this->app->renderView('GlobalNavigation', 'authLink', [
+				'linkTitle' => wfMessage( 'global-navigation-sign-in' )->escaped(),
+				'linkClassName' => 'sign-in'
+			]),
+			$this->app->renderView('GlobalNavigation', 'authLink', [
+				'linkTitle' => wfMessage( 'global-navigation-register' )->escaped(),
+				'linkClassName' => 'register'
+			])
+		] )->text();
 	}
 
 	/**
