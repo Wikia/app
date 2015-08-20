@@ -1,6 +1,7 @@
 $global-nav-inverse-background: rgba(0,0,0,.65);
 $global-nav-inverse-text-color: rgb(255,255,255);
 $global-nav-inverse-background-hover: #656E78;
+$global-nav-inverse-link-hover-color: #C5CED9;
 
 .global-navigation {
 	&.inverse {
@@ -56,8 +57,15 @@ $global-nav-inverse-background-hover: #656E78;
 				border-radius: 50%;
 			}
 
-			.auth-label {
+			.auth-label,
+			.auth-link {
 				color: $global-nav-inverse-text-color;
+				&.register,
+				&.sign-in {
+					&:hover {
+						color: $global-nav-inverse-link-hover-color;
+					}
+				}
 			}
 
 			.chevron {
