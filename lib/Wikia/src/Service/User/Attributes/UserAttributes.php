@@ -37,11 +37,11 @@ class UserAttributes {
 	public function getAttribute( $userId, $attributeName, $default = null ) {
 		$attributes = $this->loadAttributes( $userId );
 
-		if ( !empty( $attributes[$attributeName] ) ) {
+		if ( !is_null( $attributes[$attributeName] ) ) {
 			return $attributes[$attributeName];
 		}
 
-		if ( !empty( $this->defaultAttributes[$attributeName] ) ) {
+		if ( !is_null( $this->defaultAttributes[$attributeName] ) ) {
 			return  $this->defaultAttributes[$attributeName];
 		}
 
