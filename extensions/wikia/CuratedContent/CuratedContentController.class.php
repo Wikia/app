@@ -548,15 +548,16 @@ class CuratedContentController extends WikiaController {
 	}
 
 	private function getItemsFromSections( $content, $sections ) {
-		$return = [ ];
-		foreach ( $sections as $section ) {
-			$categoriesForSection = $this->getSectionItems( $content, $section['title'] );
-			foreach ( $categoriesForSection as $category ) {
-				$return[] = $category;
+		$items = [ ];
+		if( is_array( $sections ) ) {
+			foreach ( $sections as $section ) {
+				$categoriesForSection = $this->getSectionItems( $content, $section['title'] );
+				foreach ( $categoriesForSection as $category ) {
+					$items[] = $category;
+				}
 			}
 		}
-
-		return $return;
+		return $items;
 	}
 
 	private function getCuratedContentQualityForWiki( $wikiID ) {
@@ -564,29 +565,32 @@ class CuratedContentController extends WikiaController {
 		$tooLongTitleCount = 0;
 		$missingImagesCount = 0;
 		$totalNumberOfItems = 0;
-		foreach ( $curatedContent as $curatedContentModule => $items ) {
-			foreach ( $items as $item ) {
-				if ( $item['type'] == 'category' || $curatedContentModule == 'featured' ) {
-					if ( strlen( $item['label'] ) > CuratedContentValidator::LABEL_MAX_LENGTH ) {
-						$tooLongTitleCount++;
+		if ( is_array( $curatedContent ) ) {
+			foreach ( $curatedContent as $curatedContentModule => $items ) {
+				foreach ( $items as $item ) {
+					if ( $item['type'] == 'category' || $curatedContentModule == 'featured' ) {
+						if ( strlen( $item['label'] ) > CuratedContentValidator::LABEL_MAX_LENGTH ) {
+							$tooLongTitleCount++;
+						}
+					} else {
+						if ( strlen( $item['title'] ) > CuratedContentValidator::LABEL_MAX_LENGTH ) {
+							$tooLongTitleCount++;
+						}
 					}
-				} else {
-					if ( strlen( $item['title'] ) > CuratedContentValidator::LABEL_MAX_LENGTH ) {
-						$tooLongTitleCount++;
+					if ( empty( $item['image_id'] ) ) {
+						$missingImagesCount++;
 					}
+					$totalNumberOfItems++;
 				}
-				if ( empty( $item['image_id'] ) ) {
-					$missingImagesCount++;
-				}
-				$totalNumberOfItems++;
 			}
-		}
 
-		return [
-			'tooLongTitlesCount' => $tooLongTitleCount,
-			'missingImagesCount' => $missingImagesCount,
-			'totalNumberOfItems' => $totalNumberOfItems
-		];
+			return [
+				'tooLongTitlesCount' => $tooLongTitleCount,
+				'missingImagesCount' => $missingImagesCount,
+				'totalNumberOfItems' => $totalNumberOfItems
+			];
+		}
+		return [ ];
 	}
 
 	public function getWikisWithCuratedContent() {

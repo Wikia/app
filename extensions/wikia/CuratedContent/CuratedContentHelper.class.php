@@ -148,21 +148,29 @@ class CuratedContentHelper {
 		return $imageUrl;
 	}
 
-	public static function findImageIdAndUrl( $imageId, $articleId = 0 ) {
+	/**
+	 * Get image ID and URL for an image base on passed data.
+	 * When imageId is null and articleId is an id of existing page ask image serving for first image's title.
+	 * Base on this title generate thumb URL.
+	 * When imageId isn't empty ask image serving for thumb URL.
+	 * @param int $imageId
+	 * @param int $articleId
+	 * @return array
+	 */
+	public static function findImageIdAndUrl( $imageId = 0, $articleId = 0 ) {
 		$url = null;
 		$imageTitle = null;
 
 		if ( empty( $imageId ) ) {
-			$imageId = null;
-			$imageTitle = self::findFirstImageTitleFromArticle($articleId);
-		} else if ($imageId === $articleId) {
-			$url = self::getImageUrl($imageId);
+			if ( !empty( $articleId ) ) {
+				$imageTitle = self::findFirstImageTitleFromArticle( $articleId );
+				if ( $imageTitle instanceof Title && $imageTitle->exists() ) {
+					$imageId = $imageTitle->getArticleID();
+					$url = self::getUrlFromImageTitle( $imageTitle );
+				}
+			}
 		} else {
-			$imageTitle = Title::newFromID( $imageId );
-		}
-		if ( $imageTitle instanceof Title && $imageTitle->exists() ) {
-			$url = self::getUrlFromImageTitle( $imageTitle );
-			$imageId = $imageTitle->getArticleId();
+			$url = self::getImageUrl( $imageId );
 		}
 
 		return [ $imageId, $url ];
