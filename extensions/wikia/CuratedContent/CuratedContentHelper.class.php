@@ -12,14 +12,18 @@ class CuratedContentHelper {
 	public function processSections( $sections ) {
 		$processedSections = [ ];
 
-		if ( !empty( $sections ) && is_array( $sections ) ) {
+		if ( is_array( $sections ) ) {
 			foreach ( $sections as $section ) {
 				$processedSections[] = $this->processLogicForSection( $section );
 			}
 		}
 
 		// remove null elements from array
-		return array_values( array_filter($processedSections, function($section) { return !is_null($section); } ) );
+		return $this->removeEmptySections( $processedSections );
+	}
+
+	public function removeEmptySections( $sections ) {
+		return array_values( array_filter( $sections, function( $section ) { return !is_null( $section ); } ) );
 	}
 
 	public function processLogicForSection( $section ) {

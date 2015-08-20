@@ -3,45 +3,55 @@ require_once( $IP . '/extensions/wikia/CuratedContent/CuratedContentHelper.class
 
 class CuratedContentHelperTest extends WikiaBaseTest {
 	/**
-	 * @param array $resultExpected
 	 * @param array $data
+	 * @param array $resultExpected
 	 *
-	 * @dataProvider testProcessSectionsDataProvider
+	 * @dataProvider testRemoveEmptySectionsDataProvider
 	 */
-	public function testProcessSections( $resultExpected, $data ) {
-		$this->getMock( 'CuratedContentHelper', [ 'processCrop', 'fillItemInfo' ] );
-
-		$this->assertEquals( $resultExpected, ( new CuratedContentHelper )->processSections( $data ) );
+	public function testRemoveEmptySections( $data, $resultExpected ) {
+		$this->assertEquals( $resultExpected, ( new CuratedContentHelper )->removeEmptySections( $data ) );
 	}
 
-	public function testProcessSectionsDataProvider() {
+	public function testRemoveEmptySectionsDataProvider() {
 		return [
 			[
 				[ ],
 				[ ]
 			],
 			[
+				[ null, null, null ],
 				[ ],
-				[ null, null, null ]
 			],
 			[
-				[ ],
-				[ [ ], [ ], [ ] ]
+				[ null, [ ], null ],
+				[ [ ] ],
 			],
+		];
+	}
+
+	/**
+	 * @param array $section
+	 * @param array $resultExpected
+	 *
+	 * @dataProvider testProcessLogicForSectionDataProvider
+	 */
+	public function testProcessLogicForSection( $section, $resultExpected ) {
+		$this->getMock( 'CuratedContentHelper', [ 'processCrop', 'fillItemInfo' ] );
+
+		$this->assertEquals( $resultExpected, ( new CuratedContentHelper )->processLogicForSection( $section ) );
+	}
+
+	public function testProcessLogicForSectionDataProvider() {
+		return [
+			// bad data - empty items
 			[
-				[ ],
-				[ [ 'items' => [ ] ] ]
+				[ 'items' => [ ] ],
+				null,
 			],
+			// good data, non-empty items
 			[
-				[ [ 'items' => [ [ ], [ ], [ ] ], 'image_id' => 0 ] ],
-				[ [ 'items' => [ [ ], [ ], [ ] ] ] ]
-			],
-			[
-				[
-					[ 'items' => [ [ ], [ ], [ ] ], 'image_id' => 0 ],
-					[ 'items' => [ [ ], [ ], [ ] ], 'image_id' => 0 ]
-				],
-				[ [ 'items' => [ [ ], [ ], [ ] ] ], [ 'items' => [ [ ], [ ], [ ] ] ] ]
+				[ 'items' => [ [ ], [ ], [ ] ] ],
+				[ 'items' => [ [ ], [ ], [ ] ], 'image_id' => 0 ],
 			],
 		];
 	}
