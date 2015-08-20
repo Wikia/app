@@ -1391,7 +1391,6 @@ $wgResourceModules += array(
 			'visualeditor-dialog-transclusion-single-mode',
 			'visualeditor-dialog-transclusion-title',
 			'visualeditor-dialog-transclusion-wikitext-label',
-			'visualeditor-dialogbutton-infobox-tooltip',
 			'visualeditor-dialogbutton-template-tooltip',
 			'visualeditor-dialogbutton-transclusion-tooltip',
 			'visualeditor-parameter-input-placeholder',

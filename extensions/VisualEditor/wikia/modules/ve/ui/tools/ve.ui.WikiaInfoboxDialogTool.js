@@ -28,7 +28,7 @@ ve.ui.WikiaInfoboxDialogTool.static.name = 'wikiaInfobox';
 
 ve.ui.WikiaInfoboxDialogTool.static.icon = 'infobox';
 
-ve.ui.WikiaInfoboxDialogTool.static.title = OO.ui.deferMsg( 'visualeditor-dialogbutton-infobox-tooltip' );
+ve.ui.WikiaInfoboxDialogTool.static.title = OO.ui.deferMsg( 'wikia-visualeditor-dialogbutton-infobox-tooltip' );
 
 ve.ui.WikiaInfoboxDialogTool.static.modelClasses = [ ve.dm.WikiaInfoboxTransclusionBlockNode ];
 

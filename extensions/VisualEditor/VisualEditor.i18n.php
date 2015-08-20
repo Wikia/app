@@ -395,7 +395,6 @@ $messages['en'] = array (
   'visualeditor-dialogbutton-reference-tooltip' => 'Reference',
   'visualeditor-dialogbutton-referenceslist-tooltip' => 'References list',
   'visualeditor-dialogbutton-template-tooltip' => 'Template',
-  'visualeditor-dialogbutton-infobox-tooltip' => 'Infobox',
   'visualeditor-dialogbutton-transclusion-tooltip' => 'Transclusion',
   'visualeditor-diff-nochanges' => 'Could not start the review because your revision matches the latest version of this page.',
   'visualeditor-differror' => 'Error loading data from server: $1.',
