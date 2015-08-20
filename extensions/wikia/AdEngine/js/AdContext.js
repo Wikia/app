@@ -67,6 +67,11 @@ define('ext.wikia.adEngine.adContext', [
 				isProperCountry(instantGlobals.wgAdDriverSourcePointCountries));
 		}
 
+		// Showcase.*
+		if (isUrlParamSet('showcase')) {
+			context.opts.showcase = true;
+		}
+
 		// Targeting by page categories
 		if (context.targeting.enablePageCategories) {
 			context.targeting.pageCategories = w.wgCategories || getMercuryCategories();

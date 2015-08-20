@@ -105,8 +105,12 @@ class Wikia {
 	public static function initAsyncRequest( $wikiId, $user = null ) {
 		$wg = F::app()->wg;
 		$wg->CityID = $wikiId;
-		$wg->DBname = WikiFactory::IDtoDB( $wikiId );
-		$wg->Server = trim( WikiFactory::DBtoUrl( $wg->DBname ), '/' );
+
+		// Do NOT set $wgDbname here.  The wfGetDB method will no longer do
+		// what you think it should since it pulls from a LoadBalance cache
+		// that likely already has cached DB handles for the previous value
+		$dbName = WikiFactory::IDtoDB( $wikiId );
+		$wg->Server = trim( WikiFactory::DBtoUrl( $dbName ), '/' );
 
 		if ( !empty( $wg->DevelEnvironment ) ) {
 			$wg->Server = WikiFactory::getLocalEnvURL( $wg->Server );
@@ -220,8 +224,7 @@ class Wikia {
      *
      * @return string composed HTML/XML code
      */
-    static public function errormsg($what)
-    {
+    static public function errormsg($what) {
         return Xml::element("span", array( "style"=> "color: #fe0000; font-weight: bold;"), $what);
     }
 
@@ -242,8 +245,7 @@ class Wikia {
      *
      * @return string composed HTML/XML code
      */
-    static public function linkTag($url, $title, $attribs = null )
-    {
+    static public function linkTag($url, $title, $attribs = null ) {
         return Xml::element("a", array( "href"=> $url), $title);
     }
 
@@ -260,8 +262,7 @@ class Wikia {
      *
      * @return string composed HTML/XML code
      */
-    static public function successmsg($what)
-    {
+    static public function successmsg($what) {
         return Xml::element("span", array( "style"=> "color: darkgreen; font-weight: bold;"), $what);
     }
 
