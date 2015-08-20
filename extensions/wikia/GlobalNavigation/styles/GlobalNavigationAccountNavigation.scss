@@ -62,7 +62,6 @@
 
 			&.anon-avatar-placeholder {
 				height: 16px;
-				margin-top: 7px;
 				width: 18px;
 			}
 
@@ -144,6 +143,14 @@
 
 			&:first-child a {
 				border-top: 0;
+			}
+		}
+	}
+
+	&.newAuth {
+		.avatar-container {
+			&.anon-avatar-placeholder {
+				margin-top: 7px;
 			}
 		}
 	}

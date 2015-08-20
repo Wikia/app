@@ -92,7 +92,7 @@ require([
 		$entryPoint = $('#AccountNavigation');
 
 		if (!win.wgUserName && $entryPoint.hasClass('newAuth')) {
-			$authEntryPoints = $('.auth-link.register, .auth-link.sign-in');
+			$authEntryPoints = $('.auth-link.register, .auth-link.sign-in, a.sign-in');
 
 			$authEntryPoints.click(function (event) {
 				if (event.which !== 1 || event.shiftKey || event.altKey || event.metaKey || event.ctrlKey) {

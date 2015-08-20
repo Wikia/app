@@ -12,6 +12,10 @@
 	box-sizing: border-box;
 	opacity: 1;
 	padding: 50px 10%;
+
+	&.visible {
+		z-index: $zTop + 500;
+	}
 }
 
 .auth-modal {
