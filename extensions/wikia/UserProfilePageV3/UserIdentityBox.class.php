@@ -350,8 +350,8 @@ class UserIdentityBox {
 		}
 
 		if( !$this->hasUserEditedMastheadBefore($wgCityId) ) {
-			$this->user->setGlobalAttribute(self::USER_EDITED_MASTHEAD_PROPERTY . $wgCityId, true);
-			$this->user->setGlobalAttribute(self::USER_FIRST_MASTHEAD_EDIT_DATE_PROPERTY . $wgCityId, date('YmdHis'));
+			$this->user->setGlobalFlag(self::USER_EDITED_MASTHEAD_PROPERTY . $wgCityId, true);
+			$this->user->setGlobalFlag(self::USER_FIRST_MASTHEAD_EDIT_DATE_PROPERTY . $wgCityId, date('YmdHis'));
 
 			$this->addTopWiki($wgCityId);
 			$changed = true;
