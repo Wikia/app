@@ -25,12 +25,10 @@ class ContentReviewSpecialController extends WikiaSpecialPageController {
 	private function prepareReviewData( $reviews ) {
 		foreach ( $reviews as $contentReviewId => $content ) {
 			$title = GlobalTitle::newFromID( $content['page_id'], $content['wiki_id'] );
-
 			$reviews[$contentReviewId]['url'] = $title->getFullURL();
 			$reviews[$contentReviewId]['title'] = $title->getBaseText();
 			$reviews[$contentReviewId]['wiki'] = $title->getDatabaseName();
 			$reviews[$contentReviewId]['user'] = User::newFromId( $content['submit_user_id'] )->getName();
-
 			$reviews[$contentReviewId]['diff'] = Linker::linkKnown(
 				$title,
 				wfMessage( 'content-review-icons-actions-diff' )->escaped(),

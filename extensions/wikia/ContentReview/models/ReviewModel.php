@@ -135,6 +135,7 @@ class ReviewModel extends ContentReviewBaseModel {
 		$db = $this->getDatabaseForRead();
 
 		$data = ( new \WikiaSQL() )
+
 			->SELECT( 'content_review_status.*', 'current_reviewed_revisions.revision_id AS reviewed_id' )
 			->FROM( self::CONTENT_REVIEW_STATUS_TABLE  )
 			->INNER_JOIN( self::CONTENT_REVIEW_CURRENT_REVISIONS_TABLE )
