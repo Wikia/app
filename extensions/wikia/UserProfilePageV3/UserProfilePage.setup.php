@@ -26,7 +26,12 @@ $wgAutoloadClasses['UserProfilePageHelper'] =  $dir . '/UserProfilePageHelper.cl
  * controllers
  */
 $wgAutoloadClasses['UserProfilePageController'] =  $dir . '/UserProfilePageController.class.php';
+
+/**
+ * avatars handling
+ */
 $wgAutoloadClasses['Masthead'] =  $dir . '/Masthead.class.php';
+$wgAutoloadClasses['UserAvatarsService'] =  $dir . '/api/UserAvatarsService.class.php';
 
 /**
  * helper classes (strategies)
