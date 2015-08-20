@@ -20,6 +20,8 @@ class ContentReviewSpecialController extends WikiaSpecialPageController {
 		$reviews = $model->getContentToReviewFromDatabase();
 		$reviews = $this->prepareReviewData( $reviews );
 		$this->reviews = $reviews;
+		\Wikia::addAssetsToOutput('content_review_special_page_js');
+		\JSMessages::enqueuePackage( 'ContentReviewSpecialPage', \JSMessages::EXTERNAL );
 	}
 
 	private function prepareReviewData( $reviews ) {
@@ -34,7 +36,9 @@ class ContentReviewSpecialController extends WikiaSpecialPageController {
 				wfMessage( 'content-review-icons-actions-diff' )->escaped(),
 				array(
 					'target' => '_blank',
-					'class' => 'content-review-special-list-item-actions-diff  wikia-button primary',
+					'class' => 'content-review-diff  wikia-button primary',
+					'data-wiki-id' => $content['wiki_id'],
+					'data-page-id' => $content['page_id']
 				),
 				array(
 					'diff' => $reviews[$contentReviewId]['revision_id'],
@@ -43,5 +47,14 @@ class ContentReviewSpecialController extends WikiaSpecialPageController {
 			);
 		}
 		return $reviews;
+	}
+
+	public function updateReviewsStatus() {
+		$pageId = $this->request->getInt( 'pageId' );
+		$wikiId = $this->request->getInt( 'wikiId' );
+		$status = $this->request->getInt( 'status' );
+
+		$model = new ReviewModel();
+		$model->updateRevisionStatus( $wikiId, $pageId, $status );
 	}
 }

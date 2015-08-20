@@ -53,6 +53,7 @@ $wgAutoloadClasses['Wikia\ContentReview\Hooks'] = __DIR__ . '/ContentReview.hook
 $wgHooks['GetRailModuleList'][] = 'Wikia\ContentReview\Hooks::onGetRailModuleList';
 $wgHooks['MakeGlobalVariablesScript'][] = 'Wikia\ContentReview\Hooks::onMakeGlobalVariablesScript';
 $wgHooks['BeforePageDisplay'][] = 'Wikia\ContentReview\Hooks::onBeforePageDisplay';
+$wgHooks['DiffViewHeader'][] = 'Wikia\ContentReview\Hooks::onDiffViewHeader';
 
 /**
  * Right rail module
@@ -75,6 +76,10 @@ JSMessages::registerPackage( 'ContentReviewModule', [
 
 JSMessages::registerPackage( 'ContentReviewTestMode', [
 	'content-review-test-mode-*'
+] );
+
+JSMessages::registerPackage( 'ContentReviewSpecialPage', [
+	'content-review-special-page-*'
 ] );
 
 
