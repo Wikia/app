@@ -79,17 +79,19 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 			googleApi.addSlot(element);
 		}
 
-		function gptCallback(gptEvent) {
-			log(['gptCallback', element.getId(), gptEvent], 'info', logGroup);
-			element.updateDataParams(gptEvent);
-
-			var iframe = element.getNode().querySelector('div[id*="_container_"] iframe');
-
+		function onAdLoadCallback(slotElementId, gptEvent, iframe) {
 			// IE doesn't allow us to inspect GPT iframe at this point.
 			// Let's launch our callback in a setTimeout instead.
 			setTimeout(function () {
-				adDetect.onAdLoad(element.getId(), gptEvent, iframe, callSuccess, callError, extra.forcedAdType);
+				log(['onAdLoadCallback', slotElementId], 'info', logGroup);
+				adDetect.onAdLoad(slotElementId, gptEvent, iframe, callSuccess, callError, extra.forcedAdType);
 			}, 0);
+		}
+
+		function gptCallback(gptEvent) {
+			log(['gptCallback', element.getId(), gptEvent], 'info', logGroup);
+			element.updateDataParams(gptEvent);
+			googleApi.onAdLoad(slotName, element, gptEvent, onAdLoadCallback);
 		}
 
 		if (!googleApi.isInitialized()) {
