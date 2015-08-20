@@ -52,9 +52,8 @@ class AllinfoboxesQueryPage extends PageQueryPage {
 			->WHERE( 'qc_type' )->EQUAL_TO( $this->getName() )
 			->run( $dbw );
 
-		$num = 0;
+		$inserted = 0;
 		if ( !empty( $infoboxes ) ) {
-
 			( new WikiaSQL() )
 				->INSERT()->INTO( 'querycache', [
 					'qc_type',
@@ -65,16 +64,16 @@ class AllinfoboxesQueryPage extends PageQueryPage {
 				->VALUES( $infoboxes )
 				->run( $dbw );
 
-			$num = $dbw->affectedRows();
-			if ( $num === 0 ) {
+			$inserted = $dbw->affectedRows();
+			if ( $inserted === 0 ) {
 				$dbw->rollback();
-				$num = false;
-			} else {
-				$dbw->commit();
+
+				return false;
 			}
+			$dbw->commit();
 		}
 
-		return $num;
+		return $inserted;
 	}
 
 	/**

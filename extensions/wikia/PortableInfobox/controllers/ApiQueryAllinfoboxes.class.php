@@ -3,9 +3,10 @@
 class ApiQueryAllinfoboxes extends ApiQueryBase {
 
 	const CACHE_TTL = 86400;
+	const MCACHE_KEY = 'allinfoboxes-list';
 
 	public function execute() {
-		$data = WikiaDataAccess::cache( wfMemcKey( 'allinfoboxes-list' ), self::CACHE_TTL, function () {
+		$data = WikiaDataAccess::cache( wfMemcKey( self::MCACHE_KEY ), self::CACHE_TTL, function () {
 			$dbr = wfGetDB( DB_SLAVE );
 
 			return ( new WikiaSQL() )
