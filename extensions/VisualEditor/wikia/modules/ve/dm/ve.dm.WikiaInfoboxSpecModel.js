@@ -16,41 +16,9 @@
 ve.dm.WikiaInfoboxSpecModel = function VeDmWikiaInfoboxSpecModel( template ) {
 	// Properties
 	this.template = template;
-	this.params = {
-		Title: {
-			name: 'Title',
-			type: 'data'
-		},
-		Image: {
-			name: 'Image',
-			type: 'image'
-		},
-		Height: {
-			name: 'Height',
-			parent: 'Size',
-			type: 'data'
-		},
-		Weight: {
-			name: 'Weight',
-			parent: 'Size',
-			type: 'data'
-		},
-		date_of_birth: {
-			name: 'date_of_birth',
-			type: 'data'
-		},
-		param_from_spec: {
-			name: 'param_from_spec',
-			type: 'data'
-		}
-	};
+	this.params = {};
 	this.paramOrder = [];
-	this.groups = [
-		{
-			label: 'Date',
-			params: ['year', 'month', 'day']
-		}
-	];
+	this.groups = [];
 
 	// Initialization
 	this.fill();

@@ -111,13 +111,14 @@ ve.ui.WikiaInfoboxInsertDialog.prototype.getInfoboxTemplates = function () {
 	var deferred;
 	if ( !this.gettingTemplateNames ) {
 		deferred = $.Deferred();
-		$.ajax( {
-			dataType: 'json',
-			//TODO: change to non-mocky url
-			url: 'http://public.diana.wikia-dev.com/infobox_templates.php'
+		ve.init.target.constructor.static.apiRequest( {
+			action: 'query',
+				prop: 'infobox',
+				list: 'allinfoboxes'
 		} )
 			.done( function ( data ) {
-				deferred.resolve( data.items );
+				var res = data.query ? data.query.allinfoboxes : [];
+				deferred.resolve( res );
 			} )
 			.fail( function () {
 				// TODO: Add better error handling.
