@@ -6,20 +6,18 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 	'wikia.log',
 	'wikia.document',
 	'wikia.location',
-	'wikia.querystring',
 	'wikia.window',
 	require.optional('ext.wikia.adEngine.lookup.services'),
 	require.optional('wikia.abTest'),
 	require.optional('wikia.krux')
-], function (adContext, pvCounter, log, doc, loc, Querystring, win, lookups, abTest, krux) {
+], function (adContext, pvCounter, log, doc, loc, win, lookups, abTest, krux) {
 	'use strict';
 
 	var context = {},
 		hostname = loc.hostname,
 		logGroup = 'ext.wikia.adEngine.adLogicPageParams',
 		maxNumberOfCategories = 3,
-		skin = adContext.getContext().targeting.skin,
-		qs = new Querystring();
+		skin = adContext.getContext().targeting.skin;
 
 	function updateContext() {
 		context = adContext.getContext();
@@ -200,7 +198,7 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 	}
 
 	function getVerticalName(targeting) {
-		if (getHostname() === 'showcase' || qs.getVal('showcase', '0') === '1') {
+		if (getHostname() === 'showcase' || context.opts.showcase === true) {
 			return 'showcase';
 		}
 		return targeting.mappedVerticalName;
