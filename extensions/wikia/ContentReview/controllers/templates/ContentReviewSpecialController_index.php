@@ -34,14 +34,7 @@
 				<td><?= htmlspecialchars( $content['review_user_id'] ) ?></td>
 				<td><?= htmlspecialchars( $content['review_start'] ) ?></td>
 				<td class="content-review-special-list-item-actions clearfix">
-					<a class="content-review-special-list-item-actions-diff  wikia-button primary" href="<?= $content['diff'] ?>"
-					   target="_blank"
-					   title="<?= wfMessage( 'content-review-icons-actions-diff' )->escaped() ?>"
-					   data-content-review-id="<?= Sanitizer::encodeAttribute( $contentReviewId ) ?>">
-				<span class="content-review-icons-special content-review-icons-diff">
-						<?= wfMessage( 'content-review-icons-actions-diff' )->escaped() ?>
-				</span>
-					</a>
+					<?= $content['diff'] ?>
 				</td>
 			</tr>
 		<?php endforeach; ?>

@@ -29,7 +29,19 @@ class ContentReviewSpecialController extends WikiaSpecialPageController {
 			$reviews[$contentReviewId]['title'] = $title->getBaseText();
 			$reviews[$contentReviewId]['wiki'] = $title->getDatabaseName();
 			$reviews[$contentReviewId]['user'] = User::newFromId( $content['submit_user_id'] )->getName();
+			$reviews[$contentReviewId]['diff'] = Linker::linkKnown(
+				$title,
+				wfMessage( 'content-review-icons-actions-diff' )->escaped(),
+				array(
+					'target' => '_blank',
+					'class' => 'content-review-special-list-item-actions-diff  wikia-button primary',
+				),
+				array(
+					'diff' => $reviews[$contentReviewId]['revision_id'],
+					'oldid' => $reviews[$contentReviewId]['reviewed_id'],
+				)
+			);
 		}
-	return $reviews;
+		return $reviews;
 	}
 }
