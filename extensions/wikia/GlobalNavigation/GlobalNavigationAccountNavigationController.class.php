@@ -137,12 +137,12 @@ class GlobalNavigationAccountNavigationController extends WikiaController {
 			$this->app->renderView('GlobalNavigation', 'authLink', [
 				'linkTitle' => wfMessage( 'global-navigation-sign-in' )->escaped(),
 				'linkClassName' => 'sign-in',
-				'linkHref' => '/signin'
+				'linkHref' => $this->personalUrls['login']['href']
 			]),
 			$this->app->renderView('GlobalNavigation', 'authLink', [
 				'linkTitle' =>  wfMessage( 'global-navigation-register' )->escaped(),
 				'linkClassName' => 'register',
-				'linkHref' => '/register'
+				'linkHref' => $this->personalUrls['register']['href']
 			])
 		] )->text();
 	}
@@ -162,8 +162,13 @@ class GlobalNavigationAccountNavigationController extends WikiaController {
 			}
 			$returnto = wfGetReturntoParam( $returnto );
 
-			$this->personalUrls[ 'login' ] = [ 'title' => wfMessage( 'login' )->text(), 'href' => Skin::makeSpecialUrl( 'UserLogin', $returnto ), 'class' => 'ajaxLogin table-cell' ];
-			$this->personalUrls[ 'register' ] = [ 'text' => wfMessage( 'oasis-signup' )->text(), 'href' => Skin::makeSpecialUrl( 'UserSignup' ), 'class' => 'ajaxRegister' ];
+			if ($this->enableNewModalAuth) {
+				$this->personalUrls['login'] = [ 'title' => wfMessage( 'global-navigation-sign-in' )->escaped(), 'href' => '/signin', 'class' => 'sign-in' ];
+				$this->personalUrls['register'] = [ 'title' => wfMessage( 'global-navigation-register' )->escaped(), 'href' => '/register', 'class' => 'register' ];
+			} else {
+				$this->personalUrls['login'] = [ 'title' => wfMessage( 'login' )->text(), 'href' => Skin::makeSpecialUrl( 'UserLogin', $returnto ), 'class' => 'ajaxLogin table-cell' ];
+				$this->personalUrls['register'] = [ 'text' => wfMessage( 'global-navigation-register' )->text(), 'href' => Skin::makeSpecialUrl( 'UserSignup' ), 'class' => 'register' ];
+			}
 		} else {
 			$this->personalUrls[ 'userpage' ] = [ 'title' => $this->username . ' - ' . wfMessage( 'mypage' )->text(), 'href' => AvatarService::getUrl( $this->username ), 'class' => 'ajaxLogin table-cell' ];
 		}
