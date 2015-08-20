@@ -43,7 +43,7 @@ class TwitterTagHooks {
 		if( !empty( $args['alt-text'] ) ) {
 			$html .= '>' . htmlspecialchars( $args['alt-text'] );
 		} else {
-			$html .= '>Tweets by @' . htmlspecialchars( $args['user'] );
+			$html .= '>' . wfMessage( 'twittertag-alt-text' )->params( htmlspecialchars( $args['user'] ) )->escaped();
 		}
 		
 		$html .= '</a>';
