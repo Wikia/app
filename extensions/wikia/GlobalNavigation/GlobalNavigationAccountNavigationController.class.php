@@ -15,7 +15,7 @@ class GlobalNavigationAccountNavigationController extends WikiaController {
 		global $wgUser;
 
 		$this->isAnon = $wgUser->isAnon();
-		$this->enableNewAuth = $this->app->wg->EnableNewAuth;
+		$this->enableNewModalAuth = $this->app->wg->EnableNewAuth;
 		$this->username = $wgUser->getName();
 		$this->avatarContainerAdditionalClass = '';
 		$this->profileAvatar = '';
@@ -136,11 +136,13 @@ class GlobalNavigationAccountNavigationController extends WikiaController {
 		return wfMessage( 'global-navigation-account-navigation-options', [
 			$this->app->renderView('GlobalNavigation', 'authLink', [
 				'linkTitle' => wfMessage( 'global-navigation-sign-in' )->escaped(),
-				'linkClassName' => 'sign-in'
+				'linkClassName' => 'sign-in',
+				'linkHref' => '/signin'
 			]),
 			$this->app->renderView('GlobalNavigation', 'authLink', [
-				'linkTitle' => wfMessage( 'global-navigation-register' )->escaped(),
-				'linkClassName' => 'register'
+				'linkTitle' =>  wfMessage( 'global-navigation-register' )->escaped(),
+				'linkClassName' => 'register',
+				'linkHref' => '/register'
 			])
 		] )->text();
 	}

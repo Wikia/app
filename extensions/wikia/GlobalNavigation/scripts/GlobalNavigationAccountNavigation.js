@@ -87,23 +87,31 @@ require([
 	}
 
 	$(function () {
-		var $entryPoint, $registerEntryPoint, $signInEntryPoint;
+		var $entryPoint, $authEntryPoints;
 
 		$entryPoint = $('#AccountNavigation');
 
 		if (!win.wgUserName && $entryPoint.hasClass('newAuth')) {
-			$registerEntryPoint = $('.auth-link.register');
-			$signInEntryPoint = $('.auth-link.sign-in');
+			$authEntryPoints = $('.auth-link.register, .auth-link.sign-in');
 
-			$registerEntryPoint.click(function () {
-				require(['AuthModal'], function (authModal) {
-					authModal.register();
-				});
-			});
-			$signInEntryPoint.click(function () {
-				require(['AuthModal'], function (authModal) {
-					authModal.login();
-				});
+			$authEntryPoints.click(function (event) {
+				if (event.which !== 1 || event.shiftKey || event.altKey || event.metaKey || event.ctrlKey) {
+					return;
+				}
+				if (event) {
+					event.preventDefault();
+					event.stopPropagation();
+				}
+
+				if (event.target.classList.contains('register')) {
+					require(['AuthModal'], function (authModal) {
+						authModal.register();
+					});
+				} else {
+					require(['AuthModal'], function (authModal) {
+						authModal.login();
+					});
+				}
 			});
 		}
 		else {
