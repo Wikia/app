@@ -1,5 +1,5 @@
 <?php
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 
 $wgExtensionCredits[ 'parserhook' ][] = [
 	'name' => 'Portable Infobox',
@@ -20,11 +20,11 @@ $wgAutoloadClasses[ 'PortableInfoboxRenderService' ] = $dir . 'services/Portable
 $wgAutoloadClasses[ 'PortableInfoboxErrorRenderService' ] = $dir . 'services/PortableInfoboxErrorRenderService.class.php';
 
 // parser
-$wgAutoloadClasses[ 'Wikia\\PortableInfobox\\Parser\\ExternalParser'] = $dir . 'services/Parser/ExternalParser.php';
-$wgAutoloadClasses[ 'Wikia\\PortableInfobox\\Parser\\SimpleParser'] = $dir . 'services/Parser/SimpleParser.php';
-$wgAutoloadClasses[ 'Wikia\\PortableInfobox\\Parser\\XmlParser'] = $dir . 'services/Parser/XmlParser.php';
-$wgAutoloadClasses[ 'Wikia\\PortableInfobox\\Parser\\DummyParser'] = $dir . 'services/Parser/DummyParser.php';
-$wgAutoloadClasses[ 'Wikia\\PortableInfobox\\Parser\\MediaWikiParserService'] = $dir . 'services/Parser/MediaWikiParserService.php';
+$wgAutoloadClasses[ 'Wikia\\PortableInfobox\\Parser\\ExternalParser' ] = $dir . 'services/Parser/ExternalParser.php';
+$wgAutoloadClasses[ 'Wikia\\PortableInfobox\\Parser\\SimpleParser' ] = $dir . 'services/Parser/SimpleParser.php';
+$wgAutoloadClasses[ 'Wikia\\PortableInfobox\\Parser\\XmlParser' ] = $dir . 'services/Parser/XmlParser.php';
+$wgAutoloadClasses[ 'Wikia\\PortableInfobox\\Parser\\DummyParser' ] = $dir . 'services/Parser/DummyParser.php';
+$wgAutoloadClasses[ 'Wikia\\PortableInfobox\\Parser\\MediaWikiParserService' ] = $dir . 'services/Parser/MediaWikiParserService.php';
 $wgInfoboxParserNodes = [
 	'Node',
 	'NodeNavigation',
@@ -38,7 +38,7 @@ $wgInfoboxParserNodes = [
 ];
 $wgAutoloadClasses[ 'Wikia\\PortableInfobox\\Parser\\Nodes\\NodeFactory' ] = $dir . 'services/Parser/Nodes/NodeFactory.class.php';
 foreach ( $wgInfoboxParserNodes as $parserNode ) {
-	$wgAutoloadClasses[ 'Wikia\\PortableInfobox\\Parser\\Nodes\\'.$parserNode ] = $dir . 'services/Parser/Nodes/'.$parserNode.'.php';
+	$wgAutoloadClasses[ 'Wikia\\PortableInfobox\\Parser\\Nodes\\' . $parserNode ] = $dir . 'services/Parser/Nodes/' . $parserNode . '.php';
 }
 
 // helpers
@@ -54,17 +54,19 @@ $wgAutoloadClasses[ 'PortableInfoboxParserTagController' ] = $dir . 'controllers
 $wgAutoloadClasses[ 'ApiPortableInfobox' ] = $dir . 'controllers/ApiPortableInfobox.class.php';
 $wgAutoloadClasses[ 'ApiQueryPortableInfobox' ] = $dir . 'controllers/ApiQueryPortableInfobox.class.php';
 $wgAutoloadClasses[ 'PortableInfoboxHooks' ] = $dir . 'PortableInfoboxHooks.class.php';
+$wgAutoloadClasses[ 'ApiQueryAllinfoboxes' ] = $dir . 'controllers/ApiQueryAllinfoboxes.class.php';
 
 // hooks
-$wgHooks['ParserFirstCallInit'][] = 'PortableInfoboxParserTagController::parserTagInit';
-$wgHooks['ParserTagHooksBeforeInvoke'][] = 'PortableInfoboxHooks::onParserTagHooksBeforeInvoke';
-$wgHooks['BeforePageDisplay'][] = 'PortableInfoboxHooks::onBeforePageDisplay';
-$wgHooks['ParserAfterTidy'][] = 'PortableInfoboxParserTagController::replaceInfoboxMarkers';
-$wgHooks['ImageServing::buildAndGetIndex'][] = 'PortableInfoboxHooks::onImageServingCollectImages';
+$wgHooks[ 'ParserFirstCallInit' ][] = 'PortableInfoboxParserTagController::parserTagInit';
+$wgHooks[ 'ParserTagHooksBeforeInvoke' ][] = 'PortableInfoboxHooks::onParserTagHooksBeforeInvoke';
+$wgHooks[ 'BeforePageDisplay' ][] = 'PortableInfoboxHooks::onBeforePageDisplay';
+$wgHooks[ 'ParserAfterTidy' ][] = 'PortableInfoboxParserTagController::replaceInfoboxMarkers';
+$wgHooks[ 'ImageServing::buildAndGetIndex' ][] = 'PortableInfoboxHooks::onImageServingCollectImages';
 
 // i18n mapping
 $wgExtensionMessagesFiles[ 'PortableInfobox' ] = $dir . 'PortableInfobox.i18n.php';
 
 // MW API
-$wgAPIModules['infobox'] = 'ApiPortableInfobox';
+$wgAPIModules[ 'infobox' ] = 'ApiPortableInfobox';
 $wgAPIPropModules[ 'infobox' ] = 'ApiQueryPortableInfobox';
+$wgAPIListModules[ 'allinfoboxes' ] = 'ApiQueryAllinfoboxes';
