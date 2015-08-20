@@ -58,8 +58,6 @@ class ReviewedRevision extends Maintenance {
 				$jsPages[$row->page_id] = get_object_vars( $row );
 			} );
 
-		$db->commit();
-
 		return $jsPages;
 
 	}
