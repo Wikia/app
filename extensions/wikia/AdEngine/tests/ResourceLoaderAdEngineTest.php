@@ -107,12 +107,12 @@ class ResourceLoaderAdEngineTest extends WikiaBaseTest {
 
 		$script = $mock->getScript( $this->resourceLoaderContext );
 
-		$sevenOneMediaScripts = [
+		$sourcePointScripts = [
 			self::REMOTE_SCRIPT_MOCK_CONTENT,
 			self::REMOTE_SCRIPT_MOCK_CONTENT
 		];
 
-		$this->assertEquals( implode( PHP_EOL, $sevenOneMediaScripts ), $script );
+		$this->assertEquals( implode( PHP_EOL, $sourcePointScripts ), $script );
 		$this->assertEquals( $mock->getModifiedTime( $this->resourceLoaderContext )
 			+ ResourceLoaderAdEngineSourcePointModule::TTL_SCRIPTS, $mock->getTtl() );
 	}
