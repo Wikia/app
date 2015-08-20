@@ -54,19 +54,21 @@
 		setupHumanTracking: function () {
 			$(document).on(
 				'mousemove.humanTracking keypress.humanTracking touchstart.humanTracking',
-				function(event) {
-					$(this).off('.humanTracking');
-
-					require(['wikia.tracker'], function (tracker) {
-						tracker.track({
-							category: 'user-sign-up',
-							trackingMethod: 'analytics',
-							action: tracker.ACTIONS.VIEW,
-							label: 'human-pageview-' + event.type
-						});
-					});
-				}
+				this.humanTrackingCallback
 			);
+		},
+
+		humanTrackingCallback: function (event) {
+			$(this).off('.humanTracking');
+
+			require(['wikia.tracker'], function (tracker) {
+				tracker.track({
+					category: 'user-sign-up',
+					trackingMethod: 'analytics',
+					action: tracker.ACTIONS.VIEW,
+					label: 'human-pageview-' + event.type
+				});
+			});
 		}
 	};
 
