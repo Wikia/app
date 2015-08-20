@@ -29,8 +29,7 @@ class PortableInfoboxDataService {
 	 */
 	public function getData() {
 		if ( $this->title && $this->title->exists() ) {
-			$article = Article::newFromTitle( $this->title, RequestContext::getMain() );
-			$data = $this->getParsedInfoboxes( $article );
+			$data = $this->getParsedInfoboxes( $this->title );
 
 			//return empty [] to prevent false on non existing infobox data
 			return $data ? $data : [ ];
@@ -61,20 +60,21 @@ class PortableInfoboxDataService {
 	}
 
 	/**
-	 * @desc For given Article, get property 'infoboxes' from parser output. If property is empty, this may mean that
+	 * @desc For given Title, get property 'infoboxes' from parser output. If property is empty, this may mean that
 	 * template is inside the <noinclude> tag. In this case, we want to skip the <includeonly> tags, get from this only
 	 * infoboxes and parse them again to check their presence and get params.
-	 * @param $article
+	 * @param $title Title
 	 * @return mixed
 	 */
-	protected function getParsedInfoboxes( $article ) {
+	protected function getParsedInfoboxes( $title ) {
+		$article = Article::newFromTitle( $title, RequestContext::getMain() );
 		//on empty parser cache this should be regenerated, see WikiPage.php:2996
 		$parserOutput = $article->getParserOutput();
 		$parsedInfoboxes = $parserOutput ?
 			$parserOutput->getProperty( self::INFOBOXES_PROPERTY_NAME )
 			: false;
 
-		if ( !$parsedInfoboxes ) {
+		if ( !$parsedInfoboxes && $title->getNamespace()) {
 			$parser = new Parser();
 			$parserOptions = new ParserOptions();
 			$frame = $parser->getPreprocessor()->newFrame();
