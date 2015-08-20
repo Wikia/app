@@ -548,16 +548,16 @@ class CuratedContentController extends WikiaController {
 	}
 
 	private function getItemsFromSections( $content, $sections ) {
-		$return = [ ];
+		$items = [ ];
 		if( is_array( $sections ) ) {
 			foreach ( $sections as $section ) {
 				$categoriesForSection = $this->getSectionItems( $content, $section['title'] );
 				foreach ( $categoriesForSection as $category ) {
-					$return[] = $category;
+					$items[] = $category;
 				}
 			}
 		}
-		return $return;
+		return $items;
 	}
 
 	private function getCuratedContentQualityForWiki( $wikiID ) {
