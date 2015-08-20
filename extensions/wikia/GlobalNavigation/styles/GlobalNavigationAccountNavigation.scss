@@ -83,10 +83,12 @@
 		padding-top: 2px;
 		vertical-align: middle;
 
+		&.sign-in {
+			padding-left: 7px;
+		}
+
 		&.sign-in,
 		.auth-link {
-			padding-left: 7px;
-
 			&:hover {
 				color: $global-navigation-link-hover-color;
 				text-decoration: none;
@@ -96,8 +98,8 @@
 		.auth-link {
 			color: $global-navigation-text-color;
 
-			&.register {
-				padding-right: 7px;
+			&:first-child {
+				padding-left: 7px;
 			}
 		}
 
