@@ -12,11 +12,15 @@
 	box-sizing: border-box;
 	opacity: 1;
 	padding: 50px 10%;
+
+	&.visible {
+		z-index: $zTop + 500;
+	}
 }
 
 .auth-modal {
 	box-sizing: border-box;
-	height: 100%;
+	height: 700px;
 	margin: auto;
 	max-width: 768px;
 	position: relative;

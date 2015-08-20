@@ -233,7 +233,7 @@ define('ext.wikia.adEngine.provider.gpt.adDetect', [
 			shouldPollForSuccess = true; // TODO: there's no way to detect the GumGum success :-(
 		}
 
-		if (adType === 'floor') {
+		if (adType === 'highimpact') {
 			expectAsyncHopWithSlotName = true;
 			expectAsyncSuccessWithSlotName = true;
 		}

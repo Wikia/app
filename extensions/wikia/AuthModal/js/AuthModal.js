@@ -3,15 +3,27 @@ define('AuthModal', ['jquery', 'AuthComponent', 'wikia.window'], function ($, Au
 
 	var modal,
 		$blackout,
-		language = window.wgContentLanguage;
+		modalEnabled,
+		language = window.wgContentLanguage,
+		track;
 
 	function open () {
+		if (modalEnabled) {
+			close();
+		}
 		$('.WikiaSiteWrapper').append(
-			'<div class="auth-blackout blackout visible"><div class="auth-modal loading"><a class="close"></div></div>'
+			'<div class="auth-blackout blackout visible"><div class="auth-modal loading"><a class="close" href="#"></div></div>'
 		);
+		modalEnabled = true;
 		$blackout = $('.auth-blackout');
 		modal = $blackout.find('.auth-modal')[0];
 		$('.auth-blackout, .auth-modal .close').click(close);
+
+		track = Wikia.Tracker.buildTrackingFunction({
+			action: Wikia.Tracker.ACTIONS.CLOSE,
+			category: 'user-login-desktop-modal',
+			trackingMethod: 'analytics'
+		});
 		$(window.document).keyup(onKeyUp);
 	}
 
@@ -21,9 +33,17 @@ define('AuthModal', ['jquery', 'AuthComponent', 'wikia.window'], function ($, Au
 		}
 	}
 
-	function close () {
+	function close (event) {
+		if (event) {
+			event.preventDefault();
+		}
+
 		if (modal) {
+			track({
+				label: 'username-login-modal'
+			});
 			$blackout.remove();
+			modalEnabled = false;
 		}
 	}
 

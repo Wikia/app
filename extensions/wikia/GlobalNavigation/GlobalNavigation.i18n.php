@@ -5,7 +5,9 @@ $messages['en'] = [
 	'global-navigation-desc' => 'Wikia\'s Global Navigation',
 	'global-navigation-create-wiki' => 'Start a wikia',
 	'global-navigation-hubs-menu-more-of' => 'More $1',
-	'global-navigation-sign-in' => 'Sign in',
+	'global-navigation-register' => 'Register',
+	'global-navigation-sign-in' => 'Sign In',
+	'global-navigation-account-navigation-options' => '$1 or $2',
 	'global-navigation-hubs-menu' => "*http://comicshub.wikia.com/wiki/Comics_Hub|Comics|comics
 
 **#|Hot off the Press
@@ -442,6 +444,9 @@ $messages['qqq'] = [
 	'global-navigation-desc' => '{{desc}}',
 	'global-navigation-create-wiki' => 'Label on create new wikia button on Global Navigation - top bar',
 	'global-navigation-hubs-menu-more-of' => 'Global Navigation Hubs Menu - Link that goes to specific hub\'s mainpage. First parameter is hub\'s name (Video Games, Life, etc.)',
+	'global-navigation-register' => 'Link that shows registration modal',
+	'global-navigation-sign-in' => 'Link that shows sign-in modal',
+	'global-navigation-account-navigation-options' => 'Sentence that says to register or sign-in, $1 is "global-navigation-register", $2 is "global-navigation-sign-in"',
 	'global-navigation-hubs-menu' => 'Global Navigation Hubs Menu structure. For example see English translation.',
 	'global-navigation-local-search-placeholder' => 'Placeholder in search input in global nav',
 	'global-navigation-local-search' => 'Local search value in search dropdown',

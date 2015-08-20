@@ -8,8 +8,7 @@ require([
 ], function ($, scrollFix, win, browserDetect, delayedHover, dropdowns) {
 	'use strict';
 	var $globalNavigation = $('#globalNavigation'),
-		loginAjaxForm = false,
-		$entryPoint;
+		loginAjaxForm = false;
 
 	/**
 	 * @desc Handle click on entry point for logged in users.
@@ -21,11 +20,10 @@ require([
 		var $this = $(event.currentTarget);
 		event.preventDefault();
 		event.stopImmediatePropagation();
-		
-		if ($entryPoint.hasClass('active')) {
+		if (this.$entryPoint.hasClass('active')) {
 			win.location = $this.attr('href') || $this.children('a').attr('href');
 		} else {
-			dropdowns.openDropdown.call($entryPoint.get(0));
+			dropdowns.openDropdown.call(this.$entryPoint.get(0));
 		}
 	}
 
@@ -38,7 +36,7 @@ require([
 		}
 
 		if (!win.wgUserName && !loginAjaxForm) {
-			loginAjaxForm = new win.UserLoginAjaxForm($entryPoint, {
+			loginAjaxForm = new win.UserLoginAjaxForm(this.$entryPoint, {
 				skipFocus: true
 			});
 			win.FacebookLogin.init(win.FacebookLogin.origins.DROPDOWN);
@@ -47,7 +45,7 @@ require([
 
 	function onDropdownClose() {
 		var activeElementId = document.activeElement.id;
-		
+
 		if (!win.wgUserName) {
 			if (activeElementId === 'usernameInput' || activeElementId === 'passwordInput') {
 				//don't close menu if one of inputs is focused
@@ -56,14 +54,13 @@ require([
 		}
 	}
 
-	$(function () {
+	function oldAccountNav ($entryPoint) {
 		var $userLoginDropdown = $('#UserLoginDropdown');
-		$entryPoint = $('#AccountNavigation');
 
 		dropdowns.attachDropdown($entryPoint, {
-			onOpen: onDropdownOpen,
+			onOpen: onDropdownOpen.bind({$entryPoint: $entryPoint}),
 			onClose: onDropdownClose,
-			onClick: !!win.wgUserName ? onEntryPointClick : false,
+			onClick: !!win.wgUserName ? onEntryPointClick.bind({$entryPoint: $entryPoint}) : false,
 			onClickTarget: '.links-container'
 		});
 
@@ -86,6 +83,39 @@ require([
 				.on('blur', '#usernameInput, #passwordInput', function () {
 					scrollFix.restoreScrollY($globalNavigation);
 				});
+		}
+	}
+
+	$(function () {
+		var $entryPoint, $authEntryPoints;
+
+		$entryPoint = $('#AccountNavigation');
+
+		if (!win.wgUserName && $entryPoint.hasClass('newAuth')) {
+			$authEntryPoints = $('.auth-link.register, .auth-link.sign-in, a.sign-in');
+
+			$authEntryPoints.click(function (event) {
+				if (event.which !== 1 || event.shiftKey || event.altKey || event.metaKey || event.ctrlKey) {
+					return;
+				}
+				if (event) {
+					event.preventDefault();
+					event.stopPropagation();
+				}
+
+				if (event.target.classList.contains('register')) {
+					require(['AuthModal'], function (authModal) {
+						authModal.register();
+					});
+				} else {
+					require(['AuthModal'], function (authModal) {
+						authModal.login();
+					});
+				}
+			});
+		}
+		else {
+			oldAccountNav($entryPoint);
 		}
 	});
 });

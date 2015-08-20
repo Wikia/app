@@ -101,6 +101,16 @@ class GlobalNavigationController extends WikiaController {
 		$this->response->setVal( 'menuSections', $menuSections );
 	}
 
+	public function authLink() {
+		$linkClassName= $this->request->getVal( 'linkClassName', '' );
+		$linkTitle = $this->request->getVal( 'linkTitle', '' );
+		$linkHref = $this->request->getVal( 'linkHref', '' );
+
+		$this->linkClassName = $linkClassName;
+		$this->linkTitle = $linkTitle;
+		$this->linkHref = $linkHref;
+	}
+
 	public function lazyLoadHubsMenu() {
 		$lazyLoadMenuNodes = $this->getMenuNodes();
 
