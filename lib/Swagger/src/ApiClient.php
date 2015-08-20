@@ -160,7 +160,10 @@ class ApiClient
         }
         // return the result on success, rather than just TRUE
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-  
+
+		var_dump(__METHOD__);
+		var_dump($headers);
+
         curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
   
         if (! empty($queryParams)) {
