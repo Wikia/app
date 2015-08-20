@@ -34,6 +34,7 @@ class AdEngine2ContextService {
 			}
 
 			$langCode = $title->getPageLanguage()->getCode();
+			$wikiVertical = $hubService->getCategoryInfoForCity( $wg->CityId )->cat_name;
 			return [
 				'opts' => $this->filterOutEmptyItems( [
 					'adsInContent' => $wg->EnableAdsInContent,
@@ -49,7 +50,7 @@ class AdEngine2ContextService {
 				'targeting' => $this->filterOutEmptyItems( [
 					'enableKruxTargeting' => $wg->EnableKruxTargeting,
 					'enablePageCategories' => array_search( $langCode, $wg->AdPageLevelCategoryLangs ) !== false,
-					'mappedVerticalName' => $this->getMappedVerticalName( $wg->CityId ), //wikiCategory replacement for AdLogicPageParams.js::getPageLevelParams
+					'mappedVerticalName' => $this->getMappedVerticalName( $wg->CityId, $wikiVertical ), //wikiCategory replacement for AdLogicPageParams.js::getPageLevelParams
 					'pageArticleId' => $title->getArticleId(),
 					'pageIsArticle' => !!$title->getArticleId(),
 					'pageIsHub' => $wikiaPageType->isWikiaHub(),
@@ -64,7 +65,7 @@ class AdEngine2ContextService {
 					'wikiIsCorporate' => $wikiaPageType->isCorporatePage(),
 					'wikiIsTop1000' => $wg->AdDriverWikiIsTop1000,
 					'wikiLanguage' => $langCode,
-					'wikiVertical' => $hubService->getCategoryInfoForCity( $wg->CityId )->cat_name,
+					'wikiVertical' => $wikiVertical,
 				] ),
 				'providers' => $this->filterOutEmptyItems( [
 					'monetizationService' => $wg->AdDriverUseMonetizationService,
@@ -83,7 +84,10 @@ class AdEngine2ContextService {
 		} );
 	}
 
-	private function getMappedVerticalName( $cityId ) {
+	private function getMappedVerticalName( $cityId, $wikiVertical ) {
+		if ($wikiVertical === 'Wikia') {
+			return 'wikia';
+		}
 		$wikiVertical = WikiFactoryHub::getInstance()->getWikiVertical( $cityId );
 		if ( !empty( $wikiVertical['short'] ) ) {
 			$mapping = [

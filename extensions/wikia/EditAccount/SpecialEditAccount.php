@@ -30,7 +30,7 @@ $wgExtensionCredits['specialpage'][] = array(
 // New user right, required to use the extension.
 $wgAvailableRights[] = 'editaccount';
 $wgGroupPermissions['*']['editaccount'] = false;
-$wgGroupPermissions['util']['editaccount'] = false;
+$wgGroupPermissions['util']['editaccount'] = true;
 
 // Log definition
 $wgLogTypes[] = 'editaccnt';

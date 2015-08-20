@@ -97,6 +97,10 @@ class FounderEmails {
 
 		// Digest event types do not have records in the event table so just process them.
 		if ( $eventType == 'viewsDigest' || $eventType == "completeDigest" ) {
+			if ( $wikiId != null ) {
+				$aEventsData[] = $wikiId;
+			}
+
 			$oEvent = FounderEmailsEvent::newFromType( $eventType );
 			$result = $oEvent->process( $aEventsData );
 		} else {
