@@ -10,7 +10,7 @@ use Wikia\Persistence\User\Preferences\PreferencePersistenceModuleMySQL;
 use Wikia\Persistence\User\Preferences\PreferencePersistenceSwaggerService;
 
 class PreferenceModule implements Module {
-	const SWAGGER_SERVICE_RAMP_USAGE = 0;
+	const SWAGGER_SERVICE_RAMP_USAGE = 5;
 
 	public function configure(InjectorBuilder $builder) {
 		$builder

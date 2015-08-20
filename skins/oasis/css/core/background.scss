@@ -188,7 +188,7 @@ $background-is-wide: if( $background-width > $breakpoint-fluid, true, false );
 // responive layout logic
 @if ( $responsive-layout-enabled ) {
 	body.background-dynamic.skin-oasis {
-		background-color: $color-body;
+		background: $color-body;
 		overflow: hidden;
 		position: relative;
 

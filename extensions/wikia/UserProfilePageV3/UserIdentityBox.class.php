@@ -358,7 +358,7 @@ class UserIdentityBox {
 		}
 
 		if (true === $changed) {
-			$this->user->setGlobalAttribute(self::USER_EVER_EDITED_MASTHEAD, true);
+			$this->user->setGlobalFlag(self::USER_EVER_EDITED_MASTHEAD, true);
 
 			$this->user->saveSettings();
 			$this->saveMemcUserIdentityData($data);

@@ -170,6 +170,7 @@ define ('ext.wikia.Flags.FlagEditForm',
 
 			if (modalConfig.vars.type === 'create') {
 				method = 'addFlagType';
+				data.migrate_templates = 1;
 			} else if (modalConfig.vars.type === 'edit') {
 				method = 'updateFlagType';
 

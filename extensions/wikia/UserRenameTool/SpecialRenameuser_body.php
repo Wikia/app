@@ -24,7 +24,7 @@ class SpecialRenameuser extends SpecialPage {
 	 * @param mixed $par Parameter passed to the page
 	 */
 	public function execute( $par ) {
-		wfProfileIn(__METHOD__);
+		wfProfileIn( __METHOD__ );
 
 		global $wgOut, $wgUser, $wgTitle, $wgRequest, $wgStatsDBEnabled, $wgJsMimeType;
 
@@ -35,15 +35,15 @@ class SpecialRenameuser extends SpecialPage {
 		$sSrc = $oAssetsManager->getOneCommonURL( '/extensions/wikia/UserRenameTool/js/NewUsernameUrlEncoder.js' );
 		$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$sSrc}\"></script>" );
 
-		if( wfReadOnly() || !$wgStatsDBEnabled ) {
+		if ( wfReadOnly() || !$wgStatsDBEnabled ) {
 			$wgOut->readOnlyPage();
 
 			wfProfileOut( __METHOD__ );
 			return;
 		}
 
-		if( !$wgUser->isAllowed( 'renameuser' ) ) {
-			wfProfileOut(__METHOD__);
+		if ( !$wgUser->isAllowed( 'renameuser' ) ) {
+			wfProfileOut( __METHOD__ );
 			throw new PermissionsError( 'renameuser' );
 		}
 
@@ -55,7 +55,7 @@ class SpecialRenameuser extends SpecialPage {
 		$notifyRenamed = $wgRequest->getBool( 'notify_renamed', false );
 		$confirmaction = false;
 
-		if ($wgRequest->wasPosted() && $wgRequest->getInt('confirmaction')){
+		if ( $wgRequest->wasPosted() && $wgRequest->getInt( 'confirmaction' ) ) {
 			$confirmaction = true;
 		}
 
@@ -66,14 +66,14 @@ class SpecialRenameuser extends SpecialPage {
 		if (
 			$wgRequest->wasPosted() &&
 			$wgRequest->getText( 'token' ) !== '' &&
-			$wgUser->matchEditToken($wgRequest->getVal('token'))
-		){
+			$wgUser->matchEditToken( $wgRequest->getVal( 'token' ) )
+		) {
 			$process = new RenameUserProcess( $oldusername, $newusername, $confirmaction, $reason, $notifyRenamed );
 			$status = $process->run();
 			$warnings = $process->getWarnings();
 			$errors = $process->getErrors();
-			if ($status) {
-				$infos[] = wfMessage('userrenametool-info-in-progress')->inContentLanguage()->text();
+			if ( $status ) {
+				$infos[] = wfMessage( 'userrenametool-info-in-progress' )->inContentLanguage()->text();
 			}
 		}
 
@@ -98,9 +98,9 @@ class SpecialRenameuser extends SpecialPage {
 			array (
 				"submitUrl"     	=> $wgTitle->getLocalUrl(),
 				"oldusername"   	=> $oldusername,
-				"oldusername_hsc"	=> htmlspecialchars($oldusername),
+				"oldusername_hsc"	=> htmlspecialchars( $oldusername ),
 				"newusername"   	=> $newusername,
-				"newusername_hsc"	=> htmlspecialchars($newusername),
+				"newusername_hsc"	=> htmlspecialchars( $newusername ),
 				"reason"        	=> $reason,
 				"move_allowed"  	=> $wgUser->isAllowed( 'move' ),
 				"confirmaction" 	=> $confirmaction,
@@ -114,9 +114,9 @@ class SpecialRenameuser extends SpecialPage {
 		);
 
 		$text = $template->render( "rename-form" );
-		$wgOut->addHTML($text);
+		$wgOut->addHTML( $text );
 
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 		return;
 	}
 }
