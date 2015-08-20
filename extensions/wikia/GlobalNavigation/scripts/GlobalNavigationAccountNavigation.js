@@ -8,8 +8,7 @@ require([
 ], function ($, scrollFix, win, browserDetect, delayedHover, dropdowns) {
 	'use strict';
 	var $globalNavigation = $('#globalNavigation'),
-		loginAjaxForm = false,
-		$entryPoint;
+		loginAjaxForm = false;
 
 	/**
 	 * @desc Handle click on entry point for logged in users.
@@ -21,7 +20,7 @@ require([
 		var $this = $(event.currentTarget);
 		event.preventDefault();
 		event.stopImmediatePropagation();
-		if ($entryPoint.hasClass('active')) {
+		if (this.$entryPoint.hasClass('active')) {
 			win.location = $this.attr('href') || $this.children('a').attr('href');
 		} else {
 			dropdowns.openDropdown.call(this.$entryPoint.get(0));
@@ -37,7 +36,7 @@ require([
 		}
 
 		if (!win.wgUserName && !loginAjaxForm) {
-			loginAjaxForm = new win.UserLoginAjaxForm($entryPoint, {
+			loginAjaxForm = new win.UserLoginAjaxForm(this.$entryPoint, {
 				skipFocus: true
 			});
 			win.FacebookLogin.init(win.FacebookLogin.origins.DROPDOWN);
@@ -59,7 +58,7 @@ require([
 		var $userLoginDropdown = $('#UserLoginDropdown');
 
 		dropdowns.attachDropdown($entryPoint, {
-			onOpen: onDropdownOpen,
+			onOpen: onDropdownOpen.bind({$entryPoint: $entryPoint}),
 			onClose: onDropdownClose,
 			onClick: !!win.wgUserName ? onEntryPointClick.bind({$entryPoint: $entryPoint}) : false,
 			onClickTarget: '.links-container'
@@ -88,7 +87,7 @@ require([
 	}
 
 	$(function () {
-		var $registerEntryPoint, $signInEntryPoint;
+		var $entryPoint, $registerEntryPoint, $signInEntryPoint;
 
 		$entryPoint = $('#AccountNavigation');
 
