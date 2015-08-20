@@ -67,6 +67,36 @@ class UserAvatarsService {
 	}
 
 	/**
+	 * Remove the avatar for the current user
+	 *
+	 * @return bool the operation result
+	 */
+	function remove() {
+		wfProfileIn( __METHOD__ );
+
+		try {
+			$response = $this->getApiClient()->deleteUserAvatar( $this->mUserId );
+			wfDebug( __METHOD__ . ': resp - ' . json_encode( $response ) . "\n" );
+
+			$this->info( 'Avatar removed' );
+		}
+		catch ( ApiException $e ) {
+			wfDebug( __METHOD__ . ': error - ' . $e->getMessage() . "\n" );
+
+			$this->error( 'Avatar remove failed', [
+				'exception' => $e,
+				'response' => $e->getResponseBody()
+			] );
+
+			wfProfileOut( __METHOD__ );
+			return false;
+		}
+
+		wfProfileOut( __METHOD__ );
+		return true;
+	}
+
+	/**
 	 * Get Swagger-generated API client authenticated for the current user
 	 *
 	 * @return UserAvatarsApi
