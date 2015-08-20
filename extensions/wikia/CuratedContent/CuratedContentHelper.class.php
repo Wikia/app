@@ -19,24 +19,24 @@ class CuratedContentHelper {
 		}
 
 		// remove null elements from array
-		return array_filter($processedSections, function($var) { return !is_null($var); } );
+		return array_filter($processedSections, function($section) { return !is_null($section); } );
 	}
 
 	public function processLogicForSection( $section ) {
-		if ( !empty( $section['items'] ) && is_array( $section['items'] ) ) {
-			$section['image_id'] = (int)$section['image_id']; // fallback to 0 if it's not set in request
-			$this->processCrop( $section );
-
-			foreach ( $section['items'] as &$item ) {
-				$this->fillItemInfo( $item );
-				$this->processCrop( $item );
-			}
-
-			return $section;
-		} else {
+		if ( empty ( $section['items'] ) || !is_array( $section['items'] ) ) {
 			// return null if we don't have any items inside section
 			return null;
 		}
+
+		$section['image_id'] = (int)$section['image_id']; // fallback to 0 if it's not set in request
+		$this->processCrop( $section );
+
+		foreach ( $section['items'] as &$item ) {
+			$this->fillItemInfo( $item );
+			$this->processCrop( $item );
+		}
+
+		return $section;
 	}
 
 	public function decodeCrop( $string = null ) {
