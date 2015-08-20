@@ -29,7 +29,6 @@ describe('AdLogicPageParams', function () {
 			innerHeight: opts.innerHeight,
 			document: opts.document || {},
 			location: { origin: 'http://' + opts.hostname, hostname: opts.hostname },
-			Querystring: function() { return { getVal: function(){return;} }; },
 			amzn_targs: opts.amzn_targs,
 			wgCookieDomain: opts.hostname.substr(opts.hostname.indexOf('.')),
 			wgABPerformanceTest: opts.perfab
@@ -103,7 +102,6 @@ describe('AdLogicPageParams', function () {
 			logMock,
 			windowMock.document,
 			windowMock.location,
-			windowMock.Querystring,
 			windowMock,
 			undefined,
 			abTestMock,
