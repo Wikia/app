@@ -21,6 +21,7 @@
  */
 
 use Wikia\DependencyInjection\Injector;
+use Wikia\Domain\User\Attribute;
 use Wikia\Logger\Loggable;
 use Wikia\Service\User\Preferences\UserPreferences;
 use Wikia\Service\User\Attributes\UserAttributes;
@@ -36,7 +37,7 @@ define( 'USER_TOKEN_LENGTH', 32 );
  * Int Serialized record version.
  * @ingroup Constants
  */
-define( 'MW_USER_VERSION', 11 );
+define( 'MW_USER_VERSION', 12 );
 
 /**
  * String Some punctuation to prevent editing from broken text-mangling proxies.
@@ -83,6 +84,7 @@ class User {
 	const MW_USER_VERSION = MW_USER_VERSION;
 	const EDIT_TOKEN_SUFFIX = EDIT_TOKEN_SUFFIX;
 	const CACHE_PREFERENCES_KEY = "preferences";
+	const CACHE_ATTRIBUTES_KEY = "attributes";
 	const GET_SET_OPTION_SAMPLE_RATE = 0.1;
 
 	private static $PROPERTY_UPSERT_SET_BLOCK = [ "up_user = VALUES(up_user)", "up_property = VALUES(up_property)", "up_value = VALUES(up_value)" ];
@@ -389,7 +391,10 @@ class User {
 			}
 
 			if (isset($data[self::CACHE_PREFERENCES_KEY])) {
-				 $this->userPreferences()->setPreferencesInCache($this->mId, $data[self::CACHE_PREFERENCES_KEY]);
+				$this->userPreferences()->setPreferencesInCache($this->mId, $data[self::CACHE_PREFERENCES_KEY]);
+			}
+			if (isset($data[self::CACHE_ATTRIBUTES_KEY])) {
+				$this->userAttributes()->setAttributesInCache($this->mId, $data[self::CACHE_ATTRIBUTES_KEY]);
 			}
 		}
 		return true;
@@ -421,6 +426,7 @@ class User {
 		}
 		$data['mVersion'] = MW_USER_VERSION;
 		$data[self::CACHE_PREFERENCES_KEY] = $this->userPreferences()->getPreferences($this->mId);
+		$data[self::CACHE_ATTRIBUTES_KEY] = $this->userAttributes()->getAttributes($this->mId);
 		$key = $this->getCacheKey();
 		global $wgMemc;
 		$wgMemc->set( $key, $data );
@@ -1436,7 +1442,7 @@ class User {
 	 *                    done against master.
 	 */
 	private function getBlockedStatus( $bFromSlave = true ) {
-		global $wgProxyWhitelist, $wgUser;
+		global $wgProxyWhitelist;
 
 		if ( -1 != $this->mBlockedby ) {
 			return;
@@ -1455,7 +1461,7 @@ class User {
 		# We only need to worry about passing the IP address to the Block generator if the
 		# user is not immune to autoblocks/hardblocks, and they are the current user so we
 		# know which IP address they're actually coming from
-		if ( !$this->isAllowed( 'ipblock-exempt' ) && $this->getID() == $wgUser->getID() ) {
+		if ( !$this->isAllowed( 'ipblock-exempt' ) && $this->isCurrent() ) {
 			$ip = $this->getRequest()->getIP();
 		} else {
 			$ip = null;
@@ -2646,7 +2652,7 @@ class User {
 	 * @see getGlobalPreference for documentation about preferences
 	 */
 	public function getDefaultGlobalPreference($preference) {
-		return $this->userPreferences()->getFromDefault($preference);
+		return $this->userPreferences()->getFromDefault($preference)->orElse(null);
 	}
 
 	/**
@@ -2702,6 +2708,25 @@ class User {
 	 */
 	public function setGlobalAttribute($attribute, $value) {
 		$this->setOptionHelper($attribute, $value);
+		$this->setAttributeInService($attribute, $value);
+	}
+
+	/**
+	 * Sets an attribute into the User Attribute Service
+	 *
+	 * @param $attributeName
+	 * @param $attributeValue
+	 */
+	private function setAttributeInService($attributeName, $attributeValue) {
+		$attribute = new Attribute($attributeName, $this->sanitizeProperty($attributeValue));
+
+		if (is_null($attribute->getValue())) {
+			$this->userAttributes()->deleteAttribute($this->getId(), $attribute);
+		} else {
+			$this->userAttributes()->setAttribute($this->getId(), $attribute);
+		}
+
+		$this->clearSharedCache();
 	}
 
 	/**
@@ -3096,6 +3121,18 @@ class User {
 	 */
 	public function isAnon() {
 		return !$this->isLoggedIn();
+	}
+
+	/**
+	 * Get whether the user is the current performer
+	 *
+	 * Inspired by User::equals() and its usage in MW 1.25
+	 * @return Bool
+	 * @author Michał Roszka <michal@wikia-inc.com>
+	 */
+	public function isCurrent() {
+		global $wgUser;
+		return $this->getName() === $wgUser->getName();
 	}
 
 	/**
@@ -4782,12 +4819,12 @@ class User {
 	 * @return int|bool True if not $wgNewUserLog; otherwise ID of log item or 0 on failure
 	 */
 	public function addNewUserLogEntry( $byEmail = false, $reason = '' ) {
-		global $wgUser, $wgContLang, $wgNewUserLog;
+		global $wgContLang, $wgNewUserLog;
 		if( empty( $wgNewUserLog ) ) {
 			return true; // disabled
 		}
 
-		if( $this->getName() == $wgUser->getName() ) {
+		if( $this->isCurrent() ) {
 			$action = 'create';
 		} else {
 			$action = 'create2';
@@ -4883,7 +4920,7 @@ class User {
 
 		$this->loadOptions();
 		// wikia change
-		global $wgExternalSharedDB, $wgSharedDB, $wgGlobalUserProperties;
+		global $wgExternalSharedDB, $wgSharedDB;
 		if( isset( $wgSharedDB ) ) {
 			$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 		}
