@@ -1,9 +1,6 @@
 define(
 	'curatedContentTool.pontoBridge',
-	[
-		'wikia.window',
-		'ponto'
-	],
+	['wikia.window','ponto'],
 	function (w, ponto) {
 		/**
 		 * @desc Ponto scope object required for communication between iframe and window

@@ -626,6 +626,13 @@ class CuratedContentController extends WikiaController {
 		// TODO: CONCF-961 Set more restrictive header
 		$this->response->setHeader( 'Access-Control-Allow-Origin', '*' );
 	}
+
+	public function editButton() {
+		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
+		$this->response->setVal(
+			'editMobileMainPageMessage', wfMessage( 'wikiacuratedcontent-edit-mobile-main-page' )->text()
+		);
+	}
 }
 
 class CuratedContentWrongAPIVersionException extends WikiaException {

@@ -167,13 +167,15 @@ class PageHeaderController extends WikiaController {
 		// check for video add button permissions
 		$this->showAddVideoBtn = $wgUser->isAllowed( 'videoupload' );
 
-		$this->showCuratedContentToolBtn =
-			WikiaPageType::isMainPage() &&
-			!empty( $wgEnableCuratedContentExt ) &&
-			$wgUser->isAllowed( 'curatedcontent' );
-
 		// page namespace
 		$ns = $wgTitle->getNamespace();
+
+		if( !empty( $wgEnableCuratedContentExt ) &&
+			WikiaPageType::isMainPage() &&
+			$wgUser->isAllowed( 'curatedcontent' ) )
+		{
+			$this->curatedContentToolButton = $this->app->sendRequest( 'CuratedContent', 'editButton' );
+		}
 
 		/** start of wikia changes @author nAndy */
 		$this->isWallEnabled = ( !empty( $wgEnableWallExt ) && $ns == NS_USER_WALL );

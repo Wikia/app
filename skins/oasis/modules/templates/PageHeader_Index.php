@@ -7,12 +7,6 @@ if ( !empty( $wg->EnableMonetizationModuleExt ) ) {
 	}
 }
 
-if ( $showCuratedContentToolBtn ) {
-	$curatedContentToolButton = '<a id="CuratedContentTool" class="wikia-button">' . wfMsg( 'wikiacuratedcontent-edit-mobile-main-page' ) . '</a>';
-} else {
-	$curatedContentToolButton = null;
-}
-
 $runNjord = ( !empty( $wg->EnableNjordExt ) && WikiaPageType::isMainPage() );
 if ( $runNjord ) {
 	// edit button with actions dropdown
@@ -113,9 +107,7 @@ if ( $runNjord ) {
 				echo F::app()->renderView( 'MenuButton', 'Index', array( 'action' => $action, 'image' => $actionImage, 'dropdown' => $dropdown, 'name' => $actionName ) );
 			}
 
-			if ( $curatedContentToolButton !== null ) {
-				echo $curatedContentToolButton;
-			}
+			echo $curatedContentToolButton;
 
 			// TODO: use PageHeaderIndexExtraButtons hook for these buttons
 			// "Add a photo" button

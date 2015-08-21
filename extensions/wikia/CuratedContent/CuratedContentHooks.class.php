@@ -60,7 +60,7 @@ class CuratedContentHooks {
 		global $wgEnableCuratedContentExt, $wgUser;
 
 		return WikiaPageType::isMainPage() &&
-		!empty( $wgEnableCuratedContentExt ) &&
-		$wgUser->isAllowed( 'curatedcontent' );
+			!empty( $wgEnableCuratedContentExt ) &&
+			$wgUser->isAllowed( 'curatedcontent' );
 	}
 }

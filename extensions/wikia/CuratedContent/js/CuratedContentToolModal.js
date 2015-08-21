@@ -1,9 +1,7 @@
 define(
 	'curatedContentTool.modal',
-	[
-		'wikia.ui.factory'
-	],
-	function (uiFactory) {
+	['wikia.ui.factory', 'curatedContentTool.pontoBridge'],
+	function (uiFactory, pontoBridge) {
 		var modalInstance;
 
 		function open(title, content) {
@@ -21,10 +19,7 @@ define(
 					modalInstance = _modal;
 
 					_modal.show();
-
-					require(['curatedContentTool.pontoBridge'], function (pontoBridge) {
-						pontoBridge.init(_modal.$content.find('#CuratedContentToolIframe')[0]);
-					});
+					pontoBridge.init(_modal.$content.find('#CuratedContentToolIframe')[0]);
 				});
 			});
 		}
