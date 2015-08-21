@@ -2552,3 +2552,11 @@ $config['content_review_test_mode_js'] = [
 		'//extensions/wikia/ContentReview/scripts/contentReviewTestMode.js',
 	]
 ];
+
+$config['content_review_special_page_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//extensions/wikia/ContentReview/scripts/contentReviewSpecialPage.run.js',
+		'//extensions/wikia/ContentReview/scripts/contentReviewSpecialPage.js',
+	]
+];

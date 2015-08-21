@@ -72,4 +72,16 @@ class Hooks {
 
 		return true;
 	}
+
+	public static function onDiffViewHeader( $diff, $oldRev, $newRev ) {
+		global $wgTitle;
+
+		if ( $wgTitle->inNamespace( NS_MEDIAWIKI )
+			&& $wgTitle->isJsPage()
+			&& $wgTitle->userCan( 'content-review')
+		) {
+
+		}
+		return true;
+	}
 }

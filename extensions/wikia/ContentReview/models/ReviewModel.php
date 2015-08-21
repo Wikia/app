@@ -103,4 +103,33 @@ class ReviewModel extends ContentReviewBaseModel {
 
 		return true;
 	}
+
+	public function updateRevisionStatus( $wiki_id, $page_id, $status ) {
+		$db = $this->getDatabaseForWrite();
+
+		( new \WikiaSQL() )
+			->UPDATE( self::CONTENT_REVIEW_STATUS_TABLE )
+			->SET( 'status', $status )
+			->WHERE( 'wiki_id' )->EQUAL_TO( $wiki_id )
+			->AND_( 'page_id' )->EQUAL_TO( $page_id )
+			->run( $db );
+
+		return $status;
+	}
+
+	public function getContentToReviewFromDatabase() {
+		$db = $this->getDatabaseForRead();
+
+		$content = ( new \WikiaSQL() )
+			->SELECT( self::CONTENT_REVIEW_STATUS_TABLE .'.*', self::CONTENT_REVIEW_CURRENT_REVISIONS_TABLE .'.revision_id AS reviewed_id' )
+			->FROM( self::CONTENT_REVIEW_STATUS_TABLE )
+			->LEFT_JOIN( self::CONTENT_REVIEW_CURRENT_REVISIONS_TABLE )
+			->ON( self::CONTENT_REVIEW_STATUS_TABLE.'.wiki_id', self::CONTENT_REVIEW_CURRENT_REVISIONS_TABLE.'.wiki_id' )
+			->AND_( self::CONTENT_REVIEW_STATUS_TABLE.'.page_id', self::CONTENT_REVIEW_CURRENT_REVISIONS_TABLE.'.page_id' )
+			->runLoop( $db, function ( &$content, $row ) {
+				$content[] = get_object_vars( $row );
+			} );
+
+		return $content;
+	}
 }
