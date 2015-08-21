@@ -66,7 +66,7 @@ ve.dm.WikiaTransclusionModel.prototype.fetchRequestDone = function ( specs, data
 };
 
 ve.dm.WikiaTransclusionModel.prototype.fetchInfoboxParamsRequestDone = function ( specs, data ) {
-	var id, page, i, j;
+	var id, page, i, j, k;
 
 	if ( data && data.query && data.query.pages ) {
 		for ( id in data.query.pages ) {
@@ -74,6 +74,14 @@ ve.dm.WikiaTransclusionModel.prototype.fetchInfoboxParamsRequestDone = function 
 
 			if ( !page.infoboxes ) {
 				return;
+			}
+
+			if ( data.query.normalized ) {
+				for ( k = 0; k < data.query.normalized.length; k++ ) {
+					if (data.query.normalized[k].to === page.title ) {
+						page.title = data.query.normalized[k].from;
+					}
+				}
 			}
 
 			if ( !specs[page.title] ) {

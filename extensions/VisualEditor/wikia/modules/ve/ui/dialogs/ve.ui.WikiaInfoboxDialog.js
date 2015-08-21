@@ -79,7 +79,6 @@ ve.ui.WikiaInfoboxDialog.prototype.getSetupProcess = function ( data ) {
 		}, this );
 };
 
-
 /**
  * @inheritdoc
  */
