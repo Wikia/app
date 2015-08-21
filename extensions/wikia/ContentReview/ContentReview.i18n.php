@@ -40,7 +40,8 @@ $messages['en'] = [
 	'content-review-special-list-header-reviewer' => 'Reviewer id',
 	'content-review-special-list-header-review-start' => 'Review start',
 	'content-review-special-list-header-actions' => 'Actions',
-	'content-review-icons-actions-diff' => 'Start review',
+	'content-review-start-review' => 'Start review',
+	'content-review-continue-review' => 'Continue review',
 
 	'content-review-status-unreviewed' => 'Unreviewed',
 	'content-review-status-in-review' => 'In review',
@@ -80,7 +81,8 @@ $messages['qqq'] = [
 	'content-review-special-list-header-reviewer' => 'A column name for a Reviewer id',
 	'content-review-special-list-header-review-start' => 'A column name for a Review start',
 	'content-review-special-list-header-actions' => 'A column name for Actions',
-	'content-review-icons-actions-diff' => 'Button text start review',
+	'content-review-start-review' => 'Text on button to start review',
+	'content-review-continue-review' => 'Text on button to continue review',
 
 	'content-review-status-unreviewed' => 'Status Unreviewed',
 	'content-review-status-in-review' => 'Status In review',

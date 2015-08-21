@@ -14,42 +14,34 @@ class ContentReviewSpecialController extends WikiaSpecialPageController {
 		parent::__construct( 'ContentReview', 'content-review', true );
 	}
 
-	public function index() {
+	public function init() {
 		$this->specialPage->setHeaders();
-		$model = new ReviewModel();
-		$reviews = $model->getContentToReviewFromDatabase();
-		$this->reviews = $this->prepareReviewData( $reviews );
-		$this->inReview = ReviewModel::CONTENT_REVIEW_STATUS_IN_REVIEW;
+
 		\Wikia::addAssetsToOutput('content_review_special_page_js');
 		\JSMessages::enqueuePackage( 'ContentReviewSpecialPage', \JSMessages::EXTERNAL );
 	}
 
-	private function prepareReviewData( $reviews ) {
-		foreach ( $reviews as $contentReviewId => $content ) {
-			$title = GlobalTitle::newFromID( $content['page_id'], $content['wiki_id'] );
-			$reviews[$contentReviewId]['url'] = $title->getFullURL();
-			$reviews[$contentReviewId]['title'] = $title->getBaseText();
-			$reviews[$contentReviewId]['wiki'] = $title->getDatabaseName();
-			$reviews[$contentReviewId]['user'] = User::newFromId( $content['submit_user_id'] )->getName();
-			$reviews[$contentReviewId]['diff'] = $title->getFullURL( [
-				'diff' => $reviews[$contentReviewId]['revision_id'],
-				'oldid' => $reviews[$contentReviewId]['reviewed_id']
-			] );
-		}
-		return $reviews;
+	public function index() {
+		$model = new ReviewModel();
+		$reviews = $model->getContentToReviewFromDatabase();
+		$this->reviews = $this->prepareReviewData( $reviews );
 	}
 
-	/**
-	 * TODO add permissions
-	 */
-	public function updateReviewsStatus() {
-
-		$pageId = $this->request->getInt( 'pageId' );
-		$wikiId = $this->request->getInt( 'wikiId' );
-		$status = $this->request->getInt( 'status' );
-
-		$model = new ReviewModel();
-		$model->updateRevisionStatus( $wikiId, $pageId, $status );
-
+	private function prepareReviewData( $reviews ) {
+		foreach ( $reviews as &$review ) {
+			$title = GlobalTitle::newFromID( $review['page_id'], $review['wiki_id'] );
+			$review['url'] = $title->getFullURL();
+			$review['title'] = $title->getBaseText();
+			$review['wiki'] = $title->getDatabaseName();
+			$review['user'] = User::newFromId( $review['submit_user_id'] )->getName();
+			$review['diff'] = $title->getFullURL( [
+				'diff' => $review['revision_id'],
+				'oldid' => $review['reviewed_id']
+			] );
+			$review['diffText'] = $review['status'] == ReviewModel::CONTENT_REVIEW_STATUS_UNREVIEWED
+				? wfMessage( 'content-review-start-review' )->escaped()
+				: wfMessage( 'content-review-continue-review' )->escaped();
+		}
+		return $reviews;
 	}
 }

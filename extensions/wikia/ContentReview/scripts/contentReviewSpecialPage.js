@@ -19,18 +19,20 @@ define(
         }
 
         function bindEvents() {
-            $('.content-review-diff').on('click', updateReviewStatus);
+            $('.content-review-status-unreviewed').on('click', updateReviewStatus);
         }
 
         function updateReviewStatus() {
-            var self = $(this);
-            var data = {
-                wikiId: self.attr("data-wiki-id"),
-                pageId: self.attr("data-page-id"),
-                status: self.attr("data-status")
-            };
+            var self = $(this),
+                data = {
+                    wikiId: self.attr('data-wiki-id'),
+                    pageId: self.attr('data-page-id'),
+                    status: self.attr('data-status'),
+                    editToken: mw.user.tokens.get('editToken')
+                };
+
             nirvana.sendRequest({
-                controller: 'ContentReviewSpecialController',
+                controller: 'ContentReviewApiController',
                 method: 'updateReviewsStatus',
                 data: data
             });
