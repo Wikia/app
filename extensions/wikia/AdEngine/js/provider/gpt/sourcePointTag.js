@@ -18,9 +18,9 @@ define('ext.wikia.adEngine.provider.gpt.sourcePointTag', [
 		GoogleTag.call(this);
 	}
 
-	function track(eventName) {
+	function track(eventLabel) {
 		tracker.track({
-			eventName: eventName,
+			label: eventLabel,
 			ga_category: 'ads-sourcepoint-detection',
 			ga_action: 'impression',
 			trackingMethod: 'analytics'
