@@ -85,6 +85,3 @@ JSMessages::registerPackage( 'ContentReviewSpecialPage', [
 JSMessages::registerPackage( 'ContentReviewDiffPage', [
 	'content-review-diff-page-*'
 ] );
-
-
-
