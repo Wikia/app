@@ -76,8 +76,24 @@
 		}
 	}
 
-	.auth-label {
+	.auth-link {
 		color: $global-navigation-text-color;
+
+		&:hover {
+			color: $global-navigation-link-hover-color;
+			text-decoration: none;
+		}
+	}
+
+	a {
+		&.auth-link {
+			&:first-child {
+				padding-left: 7px;
+			}
+		}
+	}
+
+	.auth-label {
 		display: table-cell;
 		font-size: 12px;
 		padding-top: 2px;
@@ -85,22 +101,6 @@
 
 		&.sign-in {
 			padding-left: 7px;
-		}
-
-		&.sign-in,
-		.auth-link {
-			&:hover {
-				color: $global-navigation-link-hover-color;
-				text-decoration: none;
-			}
-		}
-
-		.auth-link {
-			color: $global-navigation-text-color;
-
-			&:first-child {
-				padding-left: 7px;
-			}
 		}
 
 		&.register {

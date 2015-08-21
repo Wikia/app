@@ -57,14 +57,11 @@ $global-nav-inverse-link-hover-color: #C5CED9;
 				border-radius: 50%;
 			}
 
-			.auth-label,
 			.auth-link {
 				color: $global-nav-inverse-text-color;
-				&.register,
-				&.sign-in {
-					&:hover {
-						color: $global-nav-inverse-link-hover-color;
-					}
+
+				&:hover {
+					color: $global-nav-inverse-link-hover-color;
 				}
 			}
 

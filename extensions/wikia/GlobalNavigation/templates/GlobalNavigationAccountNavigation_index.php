@@ -12,7 +12,7 @@
 					<?= $authOptions ?>
 				</span>
 			<?php else: ?>
-				<span class="auth-label sign-in"><?= wfMessage( 'global-navigation-sign-in' )->escaped(); ?></span>
+				<span class="auth-label auth-link sign-in"><?= wfMessage( 'global-navigation-sign-in' )->escaped(); ?></span>
 			<?php endif;
 		else : ?>
 			<img class="chevron" src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D"/>
