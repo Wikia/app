@@ -142,23 +142,23 @@ class ReviewModel extends ContentReviewBaseModel {
 	public function backupCompletedReview( $review, $status ) {
 		$db = $this->getDatabaseForWrite();
 
-		(new \WikiaSQL())
-			->INSERT(self::CONTENT_REVIEW_LOG_TABLE)
-			->SET('wiki_id', $review['wiki_id'])
-			->SET('page_id', $review['page_id'])
-			->SET('revision_id', $review['revision_id'])
-			->SET('status', $status)
-			->SET('submit_user_id', $review['submit_user_id'])
-			->SET('submit_time', $review['submit_time'])
-			->SET('review_user_id', $review['review_user_id'])
-			->SET('review_start', $review['review_start'])
+		( new \WikiaSQL() )
+			->INSERT( self::CONTENT_REVIEW_LOG_TABLE )
+			->SET( 'wiki_id', $review['wiki_id'] )
+			->SET( 'page_id', $review['page_id'] )
+			->SET( 'revision_id', $review['revision_id'] )
+			->SET( 'status', $status )
+			->SET( 'submit_user_id', $review['submit_user_id'] )
+			->SET( 'submit_time', $review['submit_time'] )
+			->SET( 'review_user_id', $review['review_user_id'] )
+			->SET( 'review_start', $review['review_start'] )
 			// review_end has a default value set to CURRENT_TIMESTAMP
-			->run($db);
+			->run( $db );
 
 		$affectedRows = $db->affectedRows();
 
-		if ($affectedRows === 0) {
-			throw new \FluentSql\Exception\SqlException('The INSERT operation failed.');
+		if ( $affectedRows === 0 ) {
+			throw new \FluentSql\Exception\SqlException( 'The INSERT operation failed.' );
 		}
 
 		return true;
