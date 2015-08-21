@@ -1,6 +1,3 @@
-/**
- * Created by mariusz on 20.08.15.
- */
 define(
     'ext.wikia.contentReview.special.page',
     ['jquery', 'mw', 'wikia.loader', 'wikia.nirvana'],
