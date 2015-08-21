@@ -18,10 +18,16 @@ $wgExtensionCredits['other'][] = array(
 	'descriptionmsg' => 'twittertag-desc',
 );
 
-$dir = dirname( __FILE__ ) . '/';
+$dir = __DIR__ . '/';
  
 $wgAutoloadClasses['TwitterTagHooks'] = $dir . "TwitterTagHooks.class.php";
 
 $wgExtensionMessagesFiles['TwitterTag'] = $dir . 'TwitterTag.i18n.php';
 
 $wgHooks['ParserFirstCallInit'][] = 'TwitterTagHooks::onParserFirstCallInit';
+
+$wgResourceModules['ext.TwitterTag'] = [
+	'scripts' => 'js/ext.twittertag.js',
+	'localBasePath' => __DIR__,
+	'remoteExtPath' => 'wikia/TwitterTag'
+];
