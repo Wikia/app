@@ -38,18 +38,4 @@ class ContentReviewSpecialController extends WikiaSpecialPageController {
 		}
 		return $reviews;
 	}
-
-	/**
-	 * TODO add permissions
-	 */
-	public function updateReviewsStatus() {
-
-		$pageId = $this->request->getInt( 'pageId' );
-		$wikiId = $this->request->getInt( 'wikiId' );
-		$status = $this->request->getInt( 'status' );
-
-		$model = new ReviewModel();
-		$model->updateRevisionStatus( $wikiId, $pageId, $status );
-
-	}
 }
