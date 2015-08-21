@@ -11,6 +11,7 @@ class ContentReviewBaseModel extends \WikiaModel {
 	 */
 	const CONTENT_REVIEW_STATUS_TABLE = 'content_review_status';
 	const CONTENT_REVIEW_CURRENT_REVISIONS_TABLE = 'current_reviewed_revisions';
+	const CONTENT_REVIEW_LOG_TABLE = 'reviewed_content_logs';
 
 	/**
 	 * Connects to a database with an intent of performing SELECT queries
