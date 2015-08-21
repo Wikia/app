@@ -19,21 +19,21 @@ define(
         }
 
         function bindEvents() {
-            $('.content-review-diff-approve').on('click', updateReviewStatus);
-            $('.content-review-diff-reject').on('click', updateReviewStatus);
+            $('.content-review-diff-approve').on('click', removeAndUpdateLogs);
+            $('.content-review-diff-reject').on('click', removeAndUpdateLogs);
         }
 
-        function updateReviewStatus() {
-            var self = $(this);
-            var data = {
-                wikiId: self.attr("data-wiki-id"),
-                pageId: self.attr("data-page-id"),
-                status: self.attr("data-status")
-            };
-            console.log(data);
+        function removeAndUpdateLogs(e) {
+            var self = $(this),
+                data = {
+                    wikiId: self.attr("data-wiki-id"),
+                    pageId: self.attr("data-page-id"),
+                    status: self.attr("data-status")
+                };
+            e.preventDefault();
             nirvana.sendRequest({
                 controller: 'ContentReviewApiController',
-                method: '',
+                method: 'changeRevisionStatus',
                 data: data
             });
         }

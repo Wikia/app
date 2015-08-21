@@ -78,34 +78,35 @@ class Hooks {
 	public static function onArticleContentOnDiff( $diffEngine, \OutputPage $output ) {
 		global $wgTitle, $wgCityId;
 
-		\Wikia::addAssetsToOutput('content_review_diff_page_js');
+		\Wikia::addAssetsToOutput( 'content_review_diff_page_js' );
 		\JSMessages::enqueuePackage( 'ContentReviewDiffPage', \JSMessages::EXTERNAL );
 
 		if ( $wgTitle->inNamespace( NS_MEDIAWIKI )
 			&& $wgTitle->isJsPage()
-			&& $wgTitle->userCan( 'content-review')	) {
-			$output->prependHTML(\Linker::link(
+			&& $wgTitle->userCan( 'content-review' )
+		) {
+			$output->prependHTML( \Linker::link(
 				$wgTitle,
-				wfMessage('content-review-diff-reject'),
+				wfMessage( 'content-review-diff-reject' ),
 				[
 					'class' => 'content-review-diff-reject  wikia-button primary',
-					'data-wiki-id' => ($wgCityId),
-					'data-page-id' => \Title::newFromText($wgTitle->getArticleID()),
+					'data-wiki-id' => ( $wgCityId ),
+					'data-page-id' => \Title::newFromText( $wgTitle->getArticleID() ),
 					'data-status' => ReviewModel::CONTENT_REVIEW_STATUS_REJECTED
 				]
 
-			));
-			$output->prependHTML(\Linker::link(
+			) );
+			$output->prependHTML( \Linker::link(
 				$wgTitle,
-				wfMessage('content-review-diff-approve'),
+				wfMessage( 'content-review-diff-approve' ),
 				[
 					'class' => 'content-review-diff-approve  wikia-button primary',
-					'data-wiki-id' => ($wgCityId),
-					'data-page-id' => \Title::newFromText($wgTitle->getArticleID()),
+					'data-wiki-id' => ( $wgCityId ),
+					'data-page-id' => \Title::newFromText( $wgTitle->getArticleID() ),
 					'data-status' => ReviewModel::CONTENT_REVIEW_STATUS_APPROVED
 				]
 
-			));
+			) );
 
 		}
 		return true;

@@ -139,7 +139,7 @@ class ReviewModel extends ContentReviewBaseModel {
 	 * @return bool
 	 * @throws \FluentSql\Exception\SqlException
 	 */
-	public function backupCompletedReview( $review, $status ) {
+	public function backupCompletedReview( $review, $status, $reviewUserId ) {
 		$db = $this->getDatabaseForWrite();
 
 		( new \WikiaSQL() )
@@ -150,7 +150,7 @@ class ReviewModel extends ContentReviewBaseModel {
 			->SET( 'status', $status )
 			->SET( 'submit_user_id', $review['submit_user_id'] )
 			->SET( 'submit_time', $review['submit_time'] )
-			->SET( 'review_user_id', $review['review_user_id'] )
+			->SET( 'review_user_id', $reviewUserId )
 			->SET( 'review_start', $review['review_start'] )
 			// review_end has a default value set to CURRENT_TIMESTAMP
 			->run( $db );
@@ -164,12 +164,14 @@ class ReviewModel extends ContentReviewBaseModel {
 		return true;
 	}
 
-	public function updateRevisionStatus( $wiki_id, $page_id, $status ) {
+	public function updateRevisionStatus( $wiki_id, $page_id, $status, $reviewUserId ) {
 		$db = $this->getDatabaseForWrite();
 
 		( new \WikiaSQL() )
 			->UPDATE( self::CONTENT_REVIEW_STATUS_TABLE )
 			->SET( 'status', $status )
+			->SET( 'review_user_id', $reviewUserId )
+			->SET( 'review_start', \wfTimestamp(TS_DB))
 			->WHERE( 'wiki_id' )->EQUAL_TO( $wiki_id )
 			->AND_( 'page_id' )->EQUAL_TO( $page_id )
 			->run( $db );
@@ -188,6 +190,23 @@ class ReviewModel extends ContentReviewBaseModel {
 			->AND_( self::CONTENT_REVIEW_STATUS_TABLE.'.page_id', self::CONTENT_REVIEW_CURRENT_REVISIONS_TABLE.'.page_id' )
 			->runLoop( $db, function ( &$content, $row ) {
 				$content[] = get_object_vars( $row );
+			} );
+
+		return $content;
+	}
+
+	public function getRowToLogDatabase( $wiki_id, $page_id, $status ) {
+		$db = $this->getDatabaseForRead();
+
+		$content = ( new \WikiaSQL() )
+			->SELECT( '*' )
+			->FROM( self::CONTENT_REVIEW_STATUS_TABLE )
+			->WHERE( 'wiki_id' )->EQUAL_TO( $wiki_id )
+			->AND_( 'page_id' )->EQUAL_TO( $page_id )
+			->AND_( 'status' )->EQUAL_TO( $status )
+			->LIMIT(1)
+			->runLoop( $db, function ( &$content, $row ) {
+				$content = get_object_vars( $row );
 			} );
 
 		return $content;

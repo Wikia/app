@@ -48,9 +48,10 @@ class ContentReviewSpecialController extends WikiaSpecialPageController {
 		$pageId = $this->request->getInt( 'pageId' );
 		$wikiId = $this->request->getInt( 'wikiId' );
 		$status = $this->request->getInt( 'status' );
+		$reviewUserId = $this->wg->User->getId();
 
 		$model = new ReviewModel();
-		$model->updateRevisionStatus( $wikiId, $pageId, $status );
+		$model->updateRevisionStatus( $wikiId, $pageId, $status, $reviewUserId );
 
 	}
 }
