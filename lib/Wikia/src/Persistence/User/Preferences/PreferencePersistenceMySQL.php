@@ -83,6 +83,10 @@ class PreferencePersistenceMySQL implements PreferencePersistence {
 	}
 
 	public function save( $userId, array $preferences ) {
+		// temorary read-only mode for SERVICES-644
+		return false;
+
+
 		// Filtering preferences against the whiteList if needed
 		$preferences = $this->applyWhitelist( $preferences );
 
