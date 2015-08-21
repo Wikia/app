@@ -9,6 +9,7 @@ define(
 				var modalConfig = {
 					vars: {
 						id: 'CuratedContentToolModal',
+						classes: 'no-scroll',
 						size: 'medium',
 						title: title,
 						content: content

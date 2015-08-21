@@ -87,6 +87,10 @@ $large-modal-margin: 50px;
 	> section {
 		@include flex-grow(1);
 		overflow: auto;
+
+		&.no-scroll {
+			overflow-y: hidden;
+		}
 	}
 
 	// IE flex-box fallback
