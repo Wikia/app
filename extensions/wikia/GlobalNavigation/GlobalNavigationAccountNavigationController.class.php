@@ -138,10 +138,10 @@ class GlobalNavigationAccountNavigationController extends WikiaController {
 		return wfMessage( 'global-navigation-account-navigation-options', [
 			Xml::element( 'a', [
 				'class' => $loginMarkupObj['class'], 'href' => $loginMarkupObj['href']
-			], wfMessage( 'global-navigation-sign-in' )->escaped() ),
+			], $loginMarkupObj['title'] ),
 			Xml::element( 'a',[
 				'class' => $registerMarkupObj['class'], 'href' => $registerMarkupObj['href']
-			], wfMessage( 'global-navigation-register' )->escaped() )
+			], $registerMarkupObj['title'] )
 		] )->text();
 	}
 
