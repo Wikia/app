@@ -3,7 +3,7 @@
 class TwitterTagHooks {
 	
 	static public function onParserFirstCallInit( Parser &$parser ) {
-		$parser->setHook( 'twitter', array( __CLASS__, 'parseTwitterTag' ));
+		$parser->setHook( 'twitter', [ __CLASS__, 'parseTwitterTag' ] );
 		return true;
 	}
 	
@@ -45,10 +45,11 @@ class TwitterTagHooks {
 		if( !empty( $args['alt-text'] ) ) {
 			$html = Html::element( 'a', $attributes, $args['alt-text'] );
 		} else {
-			$html = Html::element( 'a', 
-									$attributes, 
-									wfMessage( 'twittertag-alt-text' )->params( $args['user'] )->parse() 
-					);
+			$html = Html::element( 
+				'a', 
+				$attributes, 
+				wfMessage( 'twittertag-alt-text' )->params( $args['user'] )->parse() 
+			);
 		}
 
 		$parser->getOutput()->addModules( 'ext.TwitterTag' );

@@ -10,13 +10,13 @@
  *
  */
  
-$wgExtensionCredits['other'][] = array(
+$wgExtensionCredits['other'][] = [
 	'name' => 'TwitterTag',
 	'version' => '1.0',
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/TwitterTag',
 	'author' => '[http://community.wikia.com/wiki/User:TyA TyA]',
 	'descriptionmsg' => 'twittertag-desc',
-);
+];
 
 $dir = __DIR__ . '/';
  
