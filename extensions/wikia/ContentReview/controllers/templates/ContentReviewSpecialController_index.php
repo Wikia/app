@@ -23,10 +23,8 @@
 	<?php if ( !empty( $reviews ) ): ?>
 		<?php foreach ( $reviews as $contentReviewId => $content ): ?>
 			<tr class="content-review-special-list-item" id="content-review-special-list-item-<?= $contentReviewId ?>">
-				<td>
-					<a href="<?= $content['url'] ?>" target="_blank"><?= $content['wiki'] ?></a>
-				</td>
-				<td><?= htmlspecialchars( $content['title'] ) ?></td>
+				<td><?= htmlspecialchars( $content['wiki'] ) ?></td>
+				<td><a href="<?= $content['url'] ?>" target="_blank"><?= $content['title'] ?></a></td>
 				<td><?= $content['revision_id'] ?></td>
 				<td><?= wfMessage( ContentReviewSpecialController::$status[$content['status']] )->escaped() ?></td>
 				<td><?= htmlspecialchars( $content['user'] ) ?></td>

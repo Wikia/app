@@ -132,7 +132,10 @@ class ContentReviewApiController extends WikiaApiController {
 		$this->notification = $notification;
 	}
 
-	public function approveRevision() {
+	public function changeRevisionStatus() {
+		$pageId = $this->request->getInt( 'pageId' );
+		$wikiId = $this->request->getInt( 'wikiId' );
+		$status = $this->request->getInt( 'status' );
 
 	}
 

@@ -23,10 +23,11 @@ define(
         }
 
         function updateReviewStatus() {
+            var self = $(this);
             var data = {
-                wikiId: $(this).attr("data-wiki-id"),
-                pageId: $(this).attr("data-page-id"),
-                status: $(this).attr("data-status")
+                wikiId: self.attr("data-wiki-id"),
+                pageId: self.attr("data-page-id"),
+                status: self.attr("data-status")
             };
             nirvana.sendRequest({
                 controller: 'ContentReviewSpecialController',

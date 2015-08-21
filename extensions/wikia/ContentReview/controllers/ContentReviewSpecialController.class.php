@@ -31,11 +31,11 @@ class ContentReviewSpecialController extends WikiaSpecialPageController {
 			$reviews[$contentReviewId]['title'] = $title->getBaseText();
 			$reviews[$contentReviewId]['wiki'] = $title->getDatabaseName();
 			$reviews[$contentReviewId]['user'] = User::newFromId( $content['submit_user_id'] )->getName();
-			$reviews[$contentReviewId]['diff'] = $title->getFullURL(
-				[
-					'diff' => $reviews[$contentReviewId]['revision_id'],
-					'oldid' => $reviews[$contentReviewId]['reviewed_id']
-				] );
+			$reviews[$contentReviewId]['diff'] = $title->getFullURL( [
+				'diff' => $reviews[$contentReviewId]['revision_id'],
+				'oldid' => $reviews[$contentReviewId]['reviewed_id']
+			] );
+
 		}
 		return $reviews;
 	}
