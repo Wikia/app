@@ -133,17 +133,14 @@ class GlobalNavigationAccountNavigationController extends WikiaController {
 	}
 
 	public function getAuthOptions() {
+		Xml::element( 'a', [ 'class' => 'auth-link sign-in', 'href' => $this->personalUrls['register']['href'] ], wfMessage( 'global-navigation-sign-in' )->escaped() );
 		return wfMessage( 'global-navigation-account-navigation-options', [
-			$this->app->renderView('GlobalNavigation', 'authLink', [
-				'linkTitle' => wfMessage( 'global-navigation-sign-in' )->escaped(),
-				'linkClassName' => 'sign-in',
-				'linkHref' => $this->personalUrls['login']['href']
-			]),
-			$this->app->renderView('GlobalNavigation', 'authLink', [
-				'linkTitle' =>  wfMessage( 'global-navigation-register' )->escaped(),
-				'linkClassName' => 'register',
-				'linkHref' => $this->personalUrls['register']['href']
-			])
+			Xml::element( 'a', [
+				'class' => 'auth-link sign-in', 'href' => $this->personalUrls['login']['href']
+			], wfMessage( 'global-navigation-sign-in' )->escaped() ),
+			Xml::element( 'a',[
+				'class' => 'auth-link register', 'href' => $this->personalUrls['register']['href']
+			], wfMessage( 'global-navigation-sign-in' )->escaped() )
 		] )->text();
 	}
 
