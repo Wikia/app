@@ -11,7 +11,7 @@ class AuthModule implements Module {
 
 	public function configure( InjectorBuilder $builder ) {
 		$builder
-			->bind( AuthService::class )->toClass( MediaWikiAuthService::class )
+			->bind( AuthService::class )->toClass( HeliosAuthService::class )
 			->bind( HeliosClient::class )->toClass( HeliosClientImpl::class )
 			->bind( HeliosClientImpl::BASE_URI )->to( function () {
 				global $wgHeliosBaseUri;
