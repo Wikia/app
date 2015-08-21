@@ -5,6 +5,14 @@ namespace Wikia\Service\User\Auth;
 interface AuthService {
 
 	/**
+	 * Perform logout action
+	 *
+	 * @return mixed
+	 */
+
+	public function logout();
+
+	/**
 	 * Given a username, determine if the user is blocked.
 	 *
 	 * @param string $username

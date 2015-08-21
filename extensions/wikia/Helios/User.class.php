@@ -7,6 +7,8 @@ use Wikia\DependencyInjection\Injector;
 use Wikia\Logger\WikiaLogger;
 use Wikia\Service\Helios\ClientException;
 use Wikia\Service\Helios\HeliosClient;
+use Wikia\Service\Helios\HeliosHelper;
+use Wikia\Service\User\Auth\AuthService;
 
 /**
  * A helper class for dealing with user-related objects.
@@ -15,7 +17,6 @@ class User {
 
 	const ACCESS_TOKEN_COOKIE_NAME = 'access_token';
 	const AUTH_METHOD_NAME = 'auth_method';
-	const MERCURY_ACCESS_TOKEN_COOKIE_NAME = 'sid';
 	const AUTH_TYPE_FAILED = 0;
 	const AUTH_TYPE_NORMAL_PW = 1;
 	const AUTH_TYPE_RESET_PW = 2;
@@ -45,35 +46,6 @@ class User {
 		] );
 	}
 
-	/**
-	 * Extracts access token from HTTP request data.
-	 *
-	 * @param \WebRequest $request the HTTP request data as an object
-	 * @return String access token or null
-	 */
-	public static function getAccessToken( \WebRequest $request ) {
-		// A cookie takes precedence over an HTTP header.
-		$token = $request->getCookie( self::ACCESS_TOKEN_COOKIE_NAME, '' );
-
-		// No access token in the cookie, try the HTTP header.
-		if ( ! $token ) {
-			$header = $request->getHeader( 'AUTHORIZATION' );
-
-			$matches = [];
-			preg_match( '/^Bearer\s*(\S*)$/', $header, $matches );
-
-			if ( ! empty( $matches[1] ) ) {
-				$token = $matches[1];
-			}
-		}
-
-		// Normalize the value so the method returns a non-empty string or null.
-		if ( empty( $token ) ) {
-			return null;
-		}
-
-		return $token;
-	}
 
 	/**
 	 * Creates a MediaWiki User object based on the token given in the HTTP request.
@@ -84,7 +56,7 @@ class User {
 	 */
 	public static function newFromToken( \WebRequest $request ) {
 		// Extract access token from HTTP request data.
-		$token = self::getAccessToken( $request );
+		$token = HeliosHelper::getAccessToken( $request );
 
 		// Authenticate with the token, if present.
 		if ( $token ) {
@@ -106,7 +78,7 @@ class User {
 					// dont return the user object if it's disabled
 					// @see SERVICES-459
 					if ( (bool)$user->getGlobalFlag( 'disabled' ) ) {
-						self::clearAccessTokenCookie();
+						HeliosHelper::clearAccessTokenCookie();
 						return null;
 					}
 					// return a MediaWiki's User object
@@ -225,35 +197,6 @@ class User {
 			time() + self::ACCESS_TOKEN_COOKIE_TTL,
 			\WebResponse::NO_COOKIE_PREFIX
 		);
-	}
-
-	public static function onUserLogout() {
-		self::invalidateAccessTokenInHelios();
-		self::clearAccessTokenCookie();
-		return true; // So that wfRunHooks evaluates to true.
-	}
-
-	/**
-	 * Call helios invalidate token.
-	 */
-	private static function invalidateAccessTokenInHelios() {
-		$request = \RequestContext::getMain()->getRequest();
-		$heliosClient = self::getHeliosClient();
-		$heliosClient->invalidateToken( self::getAccessToken( $request ) );
-	}
-
-	/**
-	 * Clear the access token cookie by setting a time in the past
-	 */
-	public static function clearAccessTokenCookie() {
-		self::clearCookie( self::ACCESS_TOKEN_COOKIE_NAME );
-
-		/*
-		 * Mercury's backend (Hapi) is setting access_token cookie in an encrypted form, so we need
-		 * to destroy this one as well on UserLogout
-		 * This is a temporary change which will be deleted while implementing SOC-798
-		 */
-		self::clearCookie( self::MERCURY_ACCESS_TOKEN_COOKIE_NAME );
 	}
 
 	/**
@@ -447,21 +390,6 @@ class User {
 	public static function onUserSave( \User $user ) {
 		self::purgeAuthenticationCache( $user->getName() );
 		return true;
-	}
-
-	/**
-	 * Clears selected cookie
-	 *
-	 * @param $cookieName
-	 */
-	private static function clearCookie( $cookieName ) {
-		$response = \RequestContext::getMain()->getRequest()->response();
-		$response->setcookie(
-			$cookieName,
-			'',
-			time() - self::ACCESS_TOKEN_COOKIE_TTL,
-			\WebResponse::NO_COOKIE_PREFIX
-		);
 	}
 
 	/**

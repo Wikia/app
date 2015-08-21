@@ -23,6 +23,7 @@
 use Wikia\DependencyInjection\Injector;
 use Wikia\Domain\User\Attribute;
 use Wikia\Logger\Loggable;
+use Wikia\Service\User\Auth\AuthService;
 use Wikia\Service\User\Preferences\UserPreferences;
 use Wikia\Service\User\Attributes\UserAttributes;
 use Wikia\Util\Statistics\BernoulliTrial;
@@ -3469,6 +3470,8 @@ class User {
 	 */
 	public function logout() {
 		if( wfRunHooks( 'UserLogout', array( &$this ) ) ) {
+			$authService = Injector::getInjector()->get(AuthService::class);
+			$authService->logout();
 			$this->doLogout();
 		}
 	}
