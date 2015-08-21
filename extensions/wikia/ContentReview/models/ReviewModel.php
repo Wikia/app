@@ -142,25 +142,55 @@ class ReviewModel extends ContentReviewBaseModel {
 	public function backupCompletedReview( $review, $status ) {
 		$db = $this->getDatabaseForWrite();
 
-		( new \WikiaSQL() )
-			->INSERT( self::CONTENT_REVIEW_LOG_TABLE )
-			->SET( 'wiki_id', $review['wiki_id'] )
-			->SET( 'page_id', $review['page_id'] )
-			->SET( 'revision_id', $review['revision_id'] )
-			->SET( 'status', $status )
-			->SET( 'submit_user_id', $review['submit_user_id'] )
-			->SET( 'submit_time', $review['submit_time'] )
-			->SET( 'review_user_id', $review['review_user_id'] )
-			->SET( 'review_start', $review['review_start'] )
+		(new \WikiaSQL())
+			->INSERT(self::CONTENT_REVIEW_LOG_TABLE)
+			->SET('wiki_id', $review['wiki_id'])
+			->SET('page_id', $review['page_id'])
+			->SET('revision_id', $review['revision_id'])
+			->SET('status', $status)
+			->SET('submit_user_id', $review['submit_user_id'])
+			->SET('submit_time', $review['submit_time'])
+			->SET('review_user_id', $review['review_user_id'])
+			->SET('review_start', $review['review_start'])
 			// review_end has a default value set to CURRENT_TIMESTAMP
-			->run( $db );
+			->run($db);
 
 		$affectedRows = $db->affectedRows();
 
-		if ( $affectedRows === 0 ) {
-			throw new \FluentSql\Exception\SqlException( 'The INSERT operation failed.' );
+		if ($affectedRows === 0) {
+			throw new \FluentSql\Exception\SqlException('The INSERT operation failed.');
 		}
 
 		return true;
+	}
+
+	public function updateRevisionStatus( $wiki_id, $page_id, $status ) {
+		$db = $this->getDatabaseForWrite();
+
+		( new \WikiaSQL() )
+			->UPDATE( self::CONTENT_REVIEW_STATUS_TABLE )
+			->SET( 'status', $status )
+			->WHERE( 'wiki_id' )->EQUAL_TO( $wiki_id )
+			->AND_( 'page_id' )->EQUAL_TO( $page_id )
+			->run( $db );
+
+		return $status;
+	}
+
+	public function getContentToReviewFromDatabase() {
+		$db = $this->getDatabaseForRead();
+
+		$content = ( new \WikiaSQL() )
+			->SELECT( self::CONTENT_REVIEW_STATUS_TABLE .'.*', self::CONTENT_REVIEW_CURRENT_REVISIONS_TABLE .'.revision_id AS reviewed_id' )
+			->FROM( self::CONTENT_REVIEW_STATUS_TABLE )
+			->LEFT_JOIN( self::CONTENT_REVIEW_CURRENT_REVISIONS_TABLE )
+			->ON( self::CONTENT_REVIEW_STATUS_TABLE.'.wiki_id', self::CONTENT_REVIEW_CURRENT_REVISIONS_TABLE.'.wiki_id' )
+			->AND_( self::CONTENT_REVIEW_STATUS_TABLE.'.page_id', self::CONTENT_REVIEW_CURRENT_REVISIONS_TABLE.'.page_id' )
+			->runLoop( $db, function ( &$content, $row ) {
+				$content[] = get_object_vars( $row );
+			} );
+
+		return $content;
+
 	}
 }

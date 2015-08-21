@@ -32,6 +32,7 @@ $wgGroupPermissions['staff']['content-review'] = true;
  * Controllers
  */
 $wgAutoloadClasses['ContentReviewApiController'] = __DIR__ . '/controllers/ContentReviewApiController.class.php';
+$wgAutoloadClasses['ContentReviewSpecialController'] = __DIR__ . '/controllers/ContentReviewSpecialController.class.php';
 
 /**
  * Models
@@ -52,6 +53,7 @@ $wgAutoloadClasses['Wikia\ContentReview\Hooks'] = __DIR__ . '/ContentReview.hook
 $wgHooks['GetRailModuleList'][] = 'Wikia\ContentReview\Hooks::onGetRailModuleList';
 $wgHooks['MakeGlobalVariablesScript'][] = 'Wikia\ContentReview\Hooks::onMakeGlobalVariablesScript';
 $wgHooks['BeforePageDisplay'][] = 'Wikia\ContentReview\Hooks::onBeforePageDisplay';
+$wgHooks['DiffViewHeader'][] = 'Wikia\ContentReview\Hooks::onDiffViewHeader';
 
 /**
  * Right rail module
@@ -63,6 +65,11 @@ $wgAutoloadClasses['ContentReviewModuleController'] = $IP . '/skins/oasis/module
  */
 $wgExtensionMessagesFiles['ContentReview'] = __DIR__ . '/ContentReview.i18n.php';
 
+/**
+ * Special page
+ */
+$wgSpecialPages['ContentReview'] = 'ContentReviewSpecialController';
+
 JSMessages::registerPackage( 'ContentReviewModule', [
 	'content-review-module-*'
 ] );
@@ -70,3 +77,9 @@ JSMessages::registerPackage( 'ContentReviewModule', [
 JSMessages::registerPackage( 'ContentReviewTestMode', [
 	'content-review-test-mode-*'
 ] );
+
+JSMessages::registerPackage( 'ContentReviewSpecialPage', [
+	'content-review-special-page-*'
+] );
+
+
