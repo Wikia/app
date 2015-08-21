@@ -4,7 +4,8 @@ define('AuthModal', ['jquery', 'AuthComponent', 'wikia.window'], function ($, Au
 	var modal,
 		$blackout,
 		isOpen,
-		language = window.wgContentLanguage;
+		language = window.wgContentLanguage,
+		track;
 
 	function open () {
 		if (isOpen) {
@@ -19,7 +20,8 @@ define('AuthModal', ['jquery', 'AuthComponent', 'wikia.window'], function ($, Au
 		modal = $blackout.find('.auth-modal')[0];
 		$('.auth-blackout, .auth-modal .close').click(close);
 
-		getTrackingFunction(Wikia.Tracker.ACTIONS.OPEN)({
+		track = getTrackingFunction(Wikia.Tracker.ACTIONS.OPEN);
+		track({
 			label: 'username-login-modal'
 		});
 
@@ -46,7 +48,8 @@ define('AuthModal', ['jquery', 'AuthComponent', 'wikia.window'], function ($, Au
 		}
 
 		if (modal) {
-			getTrackingFunction(Wikia.Tracker.ACTIONS.CLOSE)({
+			track({
+				action: Wikia.Tracker.ACTIONS.CLOSE,
 				label: 'username-login-modal'
 			});
 			$blackout.remove();
