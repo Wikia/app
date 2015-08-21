@@ -37,7 +37,7 @@ define( 'USER_TOKEN_LENGTH', 32 );
  * Int Serialized record version.
  * @ingroup Constants
  */
-define( 'MW_USER_VERSION', 12 );
+define( 'MW_USER_VERSION', 11 );
 
 /**
  * String Some punctuation to prevent editing from broken text-mangling proxies.
@@ -2652,7 +2652,7 @@ class User {
 	 * @see getGlobalPreference for documentation about preferences
 	 */
 	public function getDefaultGlobalPreference($preference) {
-		return $this->userPreferences()->getFromDefault($preference)->orElse(null);
+		return $this->userPreferences()->getFromDefault($preference);
 	}
 
 	/**
