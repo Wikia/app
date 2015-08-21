@@ -7,6 +7,7 @@
 	 */
 	var UserSignup = {
 		invalidInputs: {},
+		humanEvents: 0,
 
 		/**
 		 * Enable user signup form with ajax validation
@@ -54,12 +55,17 @@
 		setupHumanTracking: function () {
 			$(document).on(
 				'mousemove.humanTracking keypress.humanTracking touchstart.humanTracking',
-				this.humanTrackingCallback
+				this.humanTrackingCallback.bind(this)
 			);
 		},
 
 		humanTrackingCallback: function (event) {
-			$(this).off('.humanTracking');
+			// Don't track first mousemove events because of Chrome on Windows triggers this event without moving mouse
+			if (event.type === 'mousemove' && this.humanEvents++ < 10) {
+				return false;
+			}
+
+			$(document).off('.humanTracking');
 
 			require(['wikia.tracker'], function (tracker) {
 				tracker.track({
