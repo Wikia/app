@@ -5,16 +5,15 @@ define('ext.wikia.adEngine.provider.gpt.sourcePointTag', [
 	'ext.wikia.adEngine.adTracker',
 	'ext.wikia.adEngine.provider.gpt.googleTag',
 	'wikia.document',
+	'wikia.lazyqueue',
 	'wikia.log',
 	'wikia.window'
-], function (adContext, adTracker, GoogleTag, doc, log, window) {
+], function (adContext, adTracker, GoogleTag, doc, lazyQueue, log, window) {
 	'use strict';
 
 	var blocking = false,
-		cmdQueue = [],
 		context = adContext.getContext(),
 		logGroup = 'ext.wikia.adEngine.provider.gpt.sourcePointTag',
-		ready = false,
 		sourcePointClientId = 'rMbenHBwnMyAMhR';
 
 	/**
@@ -49,6 +48,11 @@ define('ext.wikia.adEngine.provider.gpt.sourcePointTag', [
 
 	function SourcePointTag() {
 		GoogleTag.call(this);
+
+		this.cmdQueue = [];
+		lazyQueue.makeQueue(this.cmdQueue, (function (cmd) {
+			GoogleTag.prototype.push.call(this, cmd);
+		}).bind(this));
 	}
 
 	SourcePointTag.prototype = new GoogleTag();
@@ -57,14 +61,7 @@ define('ext.wikia.adEngine.provider.gpt.sourcePointTag', [
 		log('init', 'debug', logGroup);
 
 		var gads = doc.createElement('script'),
-			node = doc.getElementsByTagName('script')[0],
-
-			pushQueue = function () {
-				cmdQueue.forEach((function (callback) {
-					GoogleTag.prototype.push.call(this, callback);
-				}).bind(this));
-				cmdQueue = [];
-			};
+			node = doc.getElementsByTagName('script')[0];
 
 		gads.async = true;
 		gads.type = 'text/javascript';
@@ -82,16 +79,14 @@ define('ext.wikia.adEngine.provider.gpt.sourcePointTag', [
 
 			doc.body.classList.add('source-point');
 			blocking = true;
-			pushQueue();
-			ready = true;
+			this.cmdQueue.start();
 		}).bind(this));
 
 		doc.addEventListener('sp.not_blocking', (function () {
 			log(['sp.not_blocking'], 'debug', logGroup);
 			adTracker.track('sourcepoint/not_blocked');
 
-			pushQueue();
-			ready = true;
+			this.cmdQueue.start();
 		}).bind(this));
 
 		log('Appending GPT script to head', 'debug', logGroup);
@@ -103,12 +98,8 @@ define('ext.wikia.adEngine.provider.gpt.sourcePointTag', [
 	};
 
 	SourcePointTag.prototype.push = function (callback) {
-		log(['push', ready], 'debug', logGroup);
-		if (!ready) {
-			cmdQueue.push(callback);
-		} else {
-			GoogleTag.prototype.push.call(this, callback);
-		}
+		log(['push', 'cmdQueue', callback], 'debug', logGroup);
+		this.cmdQueue.push(callback);
 	};
 
 	SourcePointTag.prototype.addSlot = function (adElement) {
