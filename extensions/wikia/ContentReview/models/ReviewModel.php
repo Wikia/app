@@ -191,6 +191,5 @@ class ReviewModel extends ContentReviewBaseModel {
 			} );
 
 		return $content;
-
 	}
 }
