@@ -27,14 +27,20 @@
 					<a href="<?= $content['url'] ?>" target="_blank"><?= $content['wiki'] ?></a>
 				</td>
 				<td><?= htmlspecialchars( $content['title'] ) ?></td>
-				<td><?= htmlspecialchars( $content['revision_id'] ) ?></td>
+				<td><?= $content['revision_id'] ?></td>
 				<td><?= wfMessage( ContentReviewSpecialController::$status[$content['status']] )->escaped() ?></td>
 				<td><?= htmlspecialchars( $content['user'] ) ?></td>
-				<td><?= htmlspecialchars( $content['submit_time'] ) ?></td>
-				<td><?= htmlspecialchars( $content['review_user_id'] ) ?></td>
-				<td><?= htmlspecialchars( $content['review_start'] ) ?></td>
+				<td><?= $content['submit_time'] ?></td>
+				<td><?= $content['review_user_id'] ?></td>
+				<td><?= $content['review_start'] ?></td>
 				<td class="content-review-special-list-item-actions clearfix">
-					<?= $content['diff'] ?>
+					<a href="<?= $content['diff'] ?>" target="_blank"
+					   class="content-review-diff  wikia-button primary"
+					   data-wiki-id="<?= $content['wiki_id'] ?>"
+					   data-page-id="<?= $content['page_id'] ?>"
+					   data-status="<?= $inReview ?>">
+						<?= wfMessage( 'content-review-icons-actions-diff' )->escaped() ?>
+					</a>
 				</td>
 			</tr>
 		<?php endforeach; ?>
