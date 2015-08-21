@@ -228,7 +228,9 @@ class Masthead {
 				/**
 				 * uploaded file, we are adding common/avatars path
 				 */
-				// avatars selected from "samples" are stored as full URLs (BAC-1195)
+				// avatars selected from "samples" are stored as full URLs (BAC-1105)
+				// e.g http://vignette4.wikia.nocookie.net/messaging/images/1/19/Avatar.jpg/revision/latest/scale-to-width/150?format=jpg
+				// e.g http://images3.wikia.nocookie.net/__cb2/messaging/images/thumb/1/19/Avatar.jpg/150px-Avatar.jpg
 				if ( strpos( $url, 'http://' ) === false ) {
 					$url = $wgBlogAvatarPath . rtrim( $thumb, '/' ) . $url;
 				}
