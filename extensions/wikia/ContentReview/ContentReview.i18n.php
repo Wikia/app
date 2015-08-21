@@ -84,6 +84,6 @@ $messages['qqq'] = [
 
 	'content-review-status-unreviewed' => 'Status Unreviewed',
 	'content-review-status-in-review' => 'Status In review',
-	'content-review-status-approved' => 'StatusApproved',
-	'content-review-status-rejected' => 'StatusRejected,'
+	'content-review-status-approved' => 'Status Approved',
+	'content-review-status-rejected' => 'Status Rejected,'
 ];
