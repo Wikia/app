@@ -17,6 +17,10 @@ class AvatarsMigratorTest extends WikiaBaseTest {
 	function isDefaultAvatarDataProvider() {
 		return [
 			[
+				null,
+				true
+			],
+			[
 				'',
 				true
 			],
