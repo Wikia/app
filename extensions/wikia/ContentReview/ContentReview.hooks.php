@@ -82,6 +82,6 @@ class Hooks {
 		) {
 
 		}
-	return true;
+		return true;
 	}
 }
