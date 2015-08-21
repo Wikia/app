@@ -62,6 +62,8 @@ $wgHooks['TitleGetLangVariants'][] = 'Wikia::onTitleGetLangVariants';
 # don't purge all thumbs - PLATFORM-161
 $wgHooks['LocalFilePurgeThumbnailsUrls'][] = 'Wikia::onLocalFilePurgeThumbnailsUrls';
 
+$wgHooks['BeforePageDisplay'][] = 'Wikia::onBeforePageDisplay';
+
 /**
  * This class has only static methods so they can be used anywhere
  *
@@ -2310,5 +2312,27 @@ class Wikia {
 		}
 
 		return $countryNames;
+	}
+
+	/**
+	 * Displays a warning when viewing site JS pages if JavaScript is disabled
+	 * on the wikia.
+	 *
+	 * @param  OutputPage $out  The OutputPage object
+	 * @param  Skin       $skin The Skin object that will be used to render the page.
+	 * @return boolean
+	 */
+	public static function onBeforePageDisplay( OutputPage $out, Skin $skin ) {
+		global $wgUseSiteJs;
+		$title = $out->getTitle();
+
+		if ( !$wgUseSiteJs && $title->isJsPage() ) {
+			\BannerNotificationsController::addConfirmation(
+				wfMessage( 'usesitejs-disabled-warning' )->escaped(),
+				\BannerNotificationsController::CONFIRMATION_NOTIFY
+			);
+		}
+
+		return true;
 	}
 }
