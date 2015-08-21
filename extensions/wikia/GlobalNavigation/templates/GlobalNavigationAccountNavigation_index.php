@@ -1,4 +1,4 @@
-<ul id="AccountNavigation" class="AccountNavigation table-cell <?= $enableNewModalAuth ? 'newAuth' : '' ?> ">
+<ul id="AccountNavigation" class="AccountNavigation table-cell <?= $enableNewAuthModal ? 'newAuth' : '' ?> ">
 		<li class="account-navigation-item">
 			<div class="links-container<?php if ($isAnon): ?> anon <?php endif; ?>">
 				<?= $navItemLinkOpeningTag ?>
@@ -7,7 +7,7 @@
 				</div>
 				</a>
 				<?php if ($isAnon):
-					if ($enableNewModalAuth): ?>
+					if ($enableNewAuthModal): ?>
 						<span class="auth-label">
 							<?= $authOptions ?>
 						</span>
