@@ -18,9 +18,9 @@ define('ext.wikia.adEngine.provider.gpt.sourcePointTag', [
 		GoogleTag.call(this);
 	}
 
-	function track(adsBlocked) {
+	function track(eventName) {
 		tracker.track({
-			eventName: adsBlocked ? 'ads-blocked' : 'ads-not-blocked',
+			eventName: eventName,
 			ga_category: 'ads-sourcepoint-detection',
 			ga_action: 'impression',
 			trackingMethod: 'analytics'
@@ -46,11 +46,11 @@ define('ext.wikia.adEngine.provider.gpt.sourcePointTag', [
 		});
 
 		doc.addEventListener('sp.blocking', function () {
-			track(true);
+			track('ads-blocked');
 		});
 
 		doc.addEventListener('sp.not_blocking', function () {
-			track(false);
+			track('ads-not-blocked');
 		});
 
 		log('Appending GPT script to head', 'debug', logGroup);

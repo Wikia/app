@@ -243,6 +243,14 @@
         return kruxSegment;
     }
 
+    function setAdBlockDimension(value) {
+        var cookieValue = value === 'Yes' ? '1' : '0';
+
+        _gaWikiaPush(['set', 'dimension6', value]);
+        window.ga('ads.set', 'dimension6', value);
+        window.Wikia.Cookies.set('sp.block',  cookieValue);
+    }
+
     /**** High-Priority Custom Dimensions ****/
     _gaWikiaPush(
         ['set', 'dimension1', window.wgDBname],                        // DBname
@@ -251,6 +259,20 @@
         ['set', 'dimension4', window.skin],                            // Skin
         ['set', 'dimension5', !!window.wgUserName ? 'user' : 'anon']  // LoginStatus
     );
+
+    if (window.ads.context.opts.showAds) {
+        var adBlockCookie = window.Wikia.Cookies.get('sp.block');
+
+        if (adBlockCookie) {
+            _gaWikiaPush(['set', 'dimension6', adBlockCookie === '1' ? 'Yes' : 'No']);
+        }
+        document.addEventListener('sp.blocking', function () {
+            setAdBlockDimension('Yes');
+        });
+        document.addEventListener('sp.not_blocking', function () {
+            setAdBlockDimension('No');
+        });
+    }
 
     /*
      * Remove when SOC-217 ABTest is finished
