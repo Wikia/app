@@ -1622,11 +1622,11 @@ class Wikia {
 			wfDebug("Wikia: using resource loader debug mode\n");
 		}
 
-		$wgUseSiteJs = $request->getBool( 'usesitejs', $wgUseSiteJs ) !== false;
-		$wgUseSiteCss = $request->getBool( 'usesitecss', $wgUseSiteCss ) !== false;
-		$wgAllowUserJs = $request->getBool( 'useuserjs',
+		$wgUseSiteJs = $wgUseSiteJs && $request->getBool( 'usesitejs', $wgUseSiteJs ) !== false;
+		$wgUseSiteCss = $wgUseSiteCss && $request->getBool( 'usesitecss', $wgUseSiteCss ) !== false;
+		$wgAllowUserJs = $wgAllowUserJs && $request->getBool( 'useuserjs',
 			$request->getBool( 'allowuserjs', $wgAllowUserJs ) ) !== false;
-		$wgAllowUserCss = $request->getBool( 'useusercss',
+		$wgAllowUserCss = $wgAllowUserCss && $request->getBool( 'useusercss',
 			$request->getBool( 'allowusercss', $wgAllowUserCss ) ) !== false;
 		$wgBuckySampling = $request->getInt( 'buckysampling', $wgBuckySampling );
 
