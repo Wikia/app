@@ -27,10 +27,6 @@ define('AuthModal', ['jquery', 'AuthComponent', 'wikia.window'], function ($, Au
 	}
 
 	function getTrackingFunction (action) {
-		if (!Wikia.Tracker.ACTIONS.hasOwnProperty(action)) {
-			return null;
-		}
-
 		return Wikia.Tracker.buildTrackingFunction({
 			action: action,
 			category: 'user-login-desktop-modal',

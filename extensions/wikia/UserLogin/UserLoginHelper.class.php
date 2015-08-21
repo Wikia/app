@@ -603,7 +603,7 @@ class UserLoginHelper extends WikiaModel {
 		return $result;
 	}
 
-	public function getNewAuthUrl() {
+	public function getNewAuthUrl($page = 'join') {
 		if ( $this->app->wg->title->isSpecial( 'Userlogout' ) ) {
 			$requestUrl = Title::newMainPage()->getLocalURL();
 		}
@@ -611,7 +611,7 @@ class UserLoginHelper extends WikiaModel {
 			$requestUrl = $this->app->wg->request->getRequestURL();
 		}
 
-		return '/join?redirect='
+		return $page . '?redirect='
 			. urlencode ( wfExpandUrl ( $requestUrl ) )
 			. $this->getUselangParam();
 	}

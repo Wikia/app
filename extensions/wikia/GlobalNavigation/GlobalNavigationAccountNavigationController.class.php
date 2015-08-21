@@ -133,14 +133,15 @@ class GlobalNavigationAccountNavigationController extends WikiaController {
 	}
 
 	public function getAuthOptions() {
-		Xml::element( 'a', [ 'class' => 'auth-link sign-in', 'href' => $this->personalUrls['register']['href'] ], wfMessage( 'global-navigation-sign-in' )->escaped() );
+		$loginMarkupObj = $this->personalUrls['login'];
+		$registerMarkupObj = $this->personalUrls['register'];
 		return wfMessage( 'global-navigation-account-navigation-options', [
 			Xml::element( 'a', [
-				'class' => 'auth-link sign-in', 'href' => $this->personalUrls['login']['href']
+				'class' => $loginMarkupObj['class'], 'href' => $loginMarkupObj['href']
 			], wfMessage( 'global-navigation-sign-in' )->escaped() ),
 			Xml::element( 'a',[
-				'class' => 'auth-link register', 'href' => $this->personalUrls['register']['href']
-			], wfMessage( 'global-navigation-sign-in' )->escaped() )
+				'class' => $registerMarkupObj['class'], 'href' => $registerMarkupObj['href']
+			], wfMessage( 'global-navigation-register' )->escaped() )
 		] )->text();
 	}
 
@@ -160,8 +161,17 @@ class GlobalNavigationAccountNavigationController extends WikiaController {
 			$returnto = wfGetReturntoParam( $returnto );
 
 			if ($this->enableNewAuthModal) {
-				$this->personalUrls['login'] = [ 'title' => wfMessage( 'global-navigation-sign-in' )->escaped(), 'href' => '/signin', 'class' => 'sign-in' ];
-				$this->personalUrls['register'] = [ 'title' => wfMessage( 'global-navigation-register' )->escaped(), 'href' => '/register', 'class' => 'register' ];
+				$userLoginHelper = new UserLoginHelper();
+				$this->personalUrls['login'] = [
+					'title' => wfMessage( 'global-navigation-sign-in' )->escaped(),
+					'href' => $userLoginHelper->getNewAuthUrl('signin'),
+					'class' => 'auth-link sign-in'
+				];
+				$this->personalUrls['register'] = [
+					'title' => wfMessage( 'global-navigation-register' )->escaped(),
+					'href' => $userLoginHelper->getNewAuthUrl('signin'),
+					'class' => 'auth-link register'
+				];
 			} else {
 				$this->personalUrls['login'] = [ 'title' => wfMessage( 'login' )->text(), 'href' => Skin::makeSpecialUrl( 'UserLogin', $returnto ), 'class' => 'ajaxLogin table-cell' ];
 				$this->personalUrls['register'] = [ 'text' => wfMessage( 'global-navigation-register' )->text(), 'href' => Skin::makeSpecialUrl( 'UserSignup' ), 'class' => 'register' ];

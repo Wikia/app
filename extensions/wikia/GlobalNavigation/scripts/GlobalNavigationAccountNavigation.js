@@ -92,9 +92,10 @@ require([
 		$entryPoint = $('#AccountNavigation');
 
 		if (!win.wgUserName && $entryPoint.hasClass('newAuth')) {
-			$authEntryPoints = $('.auth-link.register, .auth-link.sign-in, a.sign-in');
+			$authEntryPoints = $entryPoint.find('.auth-link.register, .auth-link.sign-in, a.sign-in');
 
 			$authEntryPoints.click(function (event) {
+				//Prevent opening modal with shift / alt / ctrl / let only left mouse click
 				if (event.which !== 1 || event.shiftKey || event.altKey || event.metaKey || event.ctrlKey) {
 					return;
 				}
@@ -103,15 +104,13 @@ require([
 					event.stopPropagation();
 				}
 
-				if (event.target.classList.contains('register')) {
-					require(['AuthModal'], function (authModal) {
+				require(['AuthModal'], function (authModal) {
+					if (event.target.classList.contains('register')) {
 						authModal.register();
-					});
-				} else {
-					require(['AuthModal'], function (authModal) {
+					} else {
 						authModal.login();
-					});
-				}
+					}
+				});
 			});
 		}
 		else {
