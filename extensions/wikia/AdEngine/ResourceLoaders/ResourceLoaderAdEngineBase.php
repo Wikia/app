@@ -128,8 +128,13 @@ abstract class ResourceLoaderAdEngineBase extends ResourceLoaderModule {
 			$wgMemc->set($memKey, $data);
 
 			\Wikia\Logger\WikiaLogger::instance()
-				->warning( 'ResourceLoaderAdEngine - failed to fetch new data',
-					['class' => get_class( $this )] );
+				->warning(
+					'ResourceLoaderAdEngine - failed to fetch new data',
+					[
+						'class' => get_class( $this ),
+						'memKey' => $memKey,
+					]
+				);
 
 			static::$localCache[get_class( $this )] = $data;
 			return $data;
@@ -143,12 +148,22 @@ abstract class ResourceLoaderAdEngineBase extends ResourceLoaderModule {
 
 		if ( md5($data['script']) !== md5($cached['script']) ) {
 			\Wikia\Logger\WikiaLogger::instance()
-				->info( 'ResourceLoaderAdEngine - scripts updated',
-					['class' => get_class( $this )] );
+				->info(
+					'ResourceLoaderAdEngine - scripts updated',
+					[
+						'class' => get_class( $this ),
+						'memKey' => $memKey,
+					]
+				);
 		} else {
 			\Wikia\Logger\WikiaLogger::instance()
-				->info( 'ResourceLoaderAdEngine - scripts downloaded without change to previous version',
-					['class' => get_class( $this )] );
+				->info(
+					'ResourceLoaderAdEngine - scripts downloaded without change to previous version',
+					[
+						'class' => get_class( $this ),
+						'memKey' => $memKey,
+					]
+				);
 		}
 
 		if ($generated === $cached['script']) {
