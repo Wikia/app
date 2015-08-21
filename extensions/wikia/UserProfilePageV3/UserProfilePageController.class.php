@@ -475,7 +475,7 @@ class UserProfilePageController extends WikiaController {
 	 * @return bool
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
-	public function saveUsersAvatar( $userId = null, $data = null ) {
+	private function saveUsersAvatar( $userId = null, $data = null ) {
 		wfProfileIn( __METHOD__ );
 
 		if ( is_null( $userId ) ) {
@@ -498,12 +498,12 @@ class UserProfilePageController extends WikiaController {
 				case 'sample':
 					// remove old avatar file
 					Masthead::newFromUser( $user )->removeFile( false );
-					$user->setGlobalAttribute( 'avatar', $data->file );
+					$user->setGlobalAttribute( AVATAR_USER_OPTION_NAME, $data->file );
 					break;
 				case 'uploaded':
 					$errorMsg = wfMessage( 'userprofilepage-interview-save-internal-error' )->escaped();
 					$avatar = $this->saveAvatarFromUrl( $user, $data->file, $errorMsg );
-					$user->setGlobalAttribute( 'avatar', $avatar );
+					$user->setGlobalAttribute( AVATAR_USER_OPTION_NAME, $avatar );
 					break;
 				default:
 					break;
@@ -800,7 +800,7 @@ class UserProfilePageController extends WikiaController {
 			empty( $this->wg->AvatarsMaintenance )
 		);
 
-		$this->setVal( 'avatarName', $user->getGlobalAttribute( 'avatar' ) );
+		$this->setVal( 'avatarName', $user->getGlobalAttribute( AVATAR_USER_OPTION_NAME ) );
 		$this->setVal( 'userId', $userId );
 		$this->setVal( 'avatarMaxSize', self::AVATAR_MAX_SIZE );
 		$this->setVal( 'avatar', AvatarService::renderAvatar( $user->getName(), self::AVATAR_DEFAULT_SIZE ) );
