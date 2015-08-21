@@ -543,6 +543,13 @@ class SkinTemplate extends Skin {
 			$tpl->set( 'headscripts', $out->getHeadScripts() . $out->getHeadItems() );
 		}
 
+		//wikia change - start//
+		$showcase = 'showcase';
+		if ( substr($_SERVER['HTTP_HOST'], 0, strlen($showcase)) === $showcase ) {
+			$out->setRobotPolicy( 'noindex,nofollow' );
+		}
+		//wikia change - end//
+
 		$tpl->set( 'debughtml', $this->generateDebugHTML() );
 		$tpl->set( 'reporttime', wfReportTime() );
 
