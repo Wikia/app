@@ -19,6 +19,7 @@ class ContentReviewSpecialController extends WikiaSpecialPageController {
 		$model = new ReviewModel();
 		$reviews = $model->getContentToReviewFromDatabase();
 		$this->reviews = $this->prepareReviewData( $reviews );
+		$this->inReview = ReviewModel::CONTENT_REVIEW_STATUS_IN_REVIEW;
 		\Wikia::addAssetsToOutput('content_review_special_page_js');
 		\JSMessages::enqueuePackage( 'ContentReviewSpecialPage', \JSMessages::EXTERNAL );
 	}
@@ -30,21 +31,11 @@ class ContentReviewSpecialController extends WikiaSpecialPageController {
 			$reviews[$contentReviewId]['title'] = $title->getBaseText();
 			$reviews[$contentReviewId]['wiki'] = $title->getDatabaseName();
 			$reviews[$contentReviewId]['user'] = User::newFromId( $content['submit_user_id'] )->getName();
-			$reviews[$contentReviewId]['diff'] = Linker::linkKnown(
-				$title,
-				wfMessage( 'content-review-icons-actions-diff' )->escaped(),
-				array(
-					'target' => '_blank',
-					'class' => 'content-review-diff  wikia-button primary',
-					'data-wiki-id' => $content['wiki_id'],
-					'data-page-id' => $content['page_id'],
-					'data-status' => ReviewModel::CONTENT_REVIEW_STATUS_IN_REVIEW
-				),
-				array(
+			$reviews[$contentReviewId]['diff'] = $title->getFullURL(
+				[
 					'diff' => $reviews[$contentReviewId]['revision_id'],
-					'oldid' => $reviews[$contentReviewId]['reviewed_id'],
-				)
-			);
+					'oldid' => $reviews[$contentReviewId]['reviewed_id']
+				] );
 		}
 		return $reviews;
 	}

@@ -2560,3 +2560,11 @@ $config['content_review_special_page_js'] = [
 		'//extensions/wikia/ContentReview/scripts/contentReviewSpecialPage.js',
 	]
 ];
+
+$config['content_review_diff_page_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//extensions/wikia/ContentReview/scripts/contentReviewDiffPage.run.js',
+		'//extensions/wikia/ContentReview/scripts/contentReviewDiffPage.js',
+	]
+];

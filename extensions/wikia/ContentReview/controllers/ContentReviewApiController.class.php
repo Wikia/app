@@ -132,6 +132,10 @@ class ContentReviewApiController extends WikiaApiController {
 		$this->notification = $notification;
 	}
 
+	public function approveRevision() {
+
+	}
+
 	private function getLatestReviewedRevisionFromDB( $wikiId, $pageId ) {
 		return ( new CurrentRevisionModel() )->getLatestReviewedRevision( $wikiId, $pageId );
 	}
