@@ -2,8 +2,6 @@
  * VisualEditor user interface WikiaInfoboxInsertDialog class.
  */
 
-/*global mw*/
-
 /**
  * Dialog for inserting portable infobox templates.
  *
@@ -75,7 +73,7 @@ ve.ui.WikiaInfoboxInsertDialog.prototype.initialize = function () {
 };
 
 /**
- * Handle selecting results.
+ * Handle selecting infobox template.
  *
  * @method
  * @param {Object|null} itemData Data of selected item, or null
@@ -101,24 +99,28 @@ ve.ui.WikiaInfoboxInsertDialog.prototype.onInfoboxTemplateSelect = function ( it
 	}
 };
 
+/**
+ * Prepare infobox template names
+ */
 ve.ui.WikiaInfoboxInsertDialog.prototype.loadInfoboxTemplates = function () {
 	this.getInfoboxTemplates().done(
 		this.showResults.bind( this )
 	);
 };
 
+/**
+ * Fetch infobox template names from API
+ */
 ve.ui.WikiaInfoboxInsertDialog.prototype.getInfoboxTemplates = function () {
 	var deferred;
 	if ( !this.gettingTemplateNames ) {
 		deferred = $.Deferred();
 		ve.init.target.constructor.static.apiRequest( {
 			action: 'query',
-				prop: 'infobox',
-				list: 'allinfoboxes'
+			list: 'allinfoboxes'
 		} )
 			.done( function ( data ) {
-				var res = data.query ? data.query.allinfoboxes : [];
-				deferred.resolve( res );
+				deferred.resolve( data );
 			} )
 			.fail( function () {
 				// TODO: Add better error handling.
@@ -145,15 +147,22 @@ ve.ui.WikiaInfoboxInsertDialog.prototype.insertInfoboxTemplate = function () {
 	}.bind( this ) );
 };
 
+/**
+ * Add the infobox template names to the dialog's SelectWidget
+ *
+ * @param {Object} data Response data from API
+ */
 ve.ui.WikiaInfoboxInsertDialog.prototype.showResults = function ( data ) {
-	var items = [], i;
+	var i,
+		items = [],
+		infoboxes = data.query ? data.query.allinfoboxes : [];
 
-	if ( data.length > 0 ) {
-		for ( i = 0; i < data.length; i++ ) {
+	if ( infoboxes.length > 0 ) {
+		for ( i = 0; i < infoboxes.length; i++ ) {
 			items.push(
 				new ve.ui.WikiaInfoboxOptionWidget({
-					data: data[i].title,
-					label:  data[i].label
+					data: infoboxes[i].title,
+					label:  infoboxes[i].title
 				})
 			);
 		}
@@ -162,9 +171,7 @@ ve.ui.WikiaInfoboxInsertDialog.prototype.showResults = function ( data ) {
 };
 
 /**
- * Handle a successful response from the parser for the wikitext fragment.
- *
- * @param {Object} response Response data
+ * Insert prepared linear model to surface.
  */
 ve.ui.WikiaInfoboxInsertDialog.prototype.onParseSuccess = function () {
 	var type = 'wikiaInfoboxTransclusionBlock',

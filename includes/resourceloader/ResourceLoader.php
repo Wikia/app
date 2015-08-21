@@ -133,6 +133,8 @@ class ResourceLoader {
 		global $wgResourceLoaderMinifierStatementsOnOwnLine, $wgResourceLoaderMinifierMaxLineLength;
 		wfProfileIn( __METHOD__ );
 
+		return $data;
+
 		// For empty/whitespace-only data or for unknown filters, don't perform
 		// any caching or processing
 		if ( trim( $data ) === ''

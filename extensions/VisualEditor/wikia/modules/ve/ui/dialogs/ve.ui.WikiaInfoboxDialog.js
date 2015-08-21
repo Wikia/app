@@ -1,15 +1,11 @@
 /*
  * VisualEditor user interface WikiaInfoboxDialog class.
- *
- * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
- * @license The MIT License (MIT); see LICENSE.txt
  */
 
 /**
- * Dialog for inserting and editing Wikia Portable Infoboxes.
+ * Dialog for inserting and editing Wikia Infobox templates.
  *
  * @class
- * @abstract
  * @extends ve.ui.NodeDialog
  *
  * @constructor
@@ -64,8 +60,10 @@ ve.ui.WikiaInfoboxDialog.prototype.getActionProcess = function ( action ) {
 	return ve.ui.WikiaInfoboxDialog.super.prototype.getActionProcess.call( this, action );
 };
 
+/**
+ * @inheritdoc
+ */
 ve.ui.WikiaInfoboxDialog.prototype.getSetupProcess = function ( data ) {
-
 	data = data || {};
 	this.data = data;
 
@@ -79,7 +77,6 @@ ve.ui.WikiaInfoboxDialog.prototype.getSetupProcess = function ( data ) {
 				.load( ve.copy( this.selectedNode.getAttribute( 'mw' ) ) )
 				.done( this.initializeTemplateParameters.bind( this ) );
 		}, this );
-
 };
 
 
@@ -108,15 +105,22 @@ ve.ui.WikiaInfoboxDialog.prototype.onTransclusionReady = function () {
 	this.popPending();
 };
 
+/**
+ * Make sure all infobox template params will be shown
+ */
 ve.ui.WikiaInfoboxDialog.prototype.initializeTemplateParameters = function () {
 	var parts = this.transclusionModel.getParts();
 	this.infoboxTemplate = parts[0];
 
+	//TODO: check this out
 	this.infoboxTemplate.addUnusedParameters();
 	this.fullParamsList = this.infoboxTemplate.spec.params;
 	this.showItems();
 };
 
+/**
+ * Prepare layout and show list of all infobox params on it
+ */
 ve.ui.WikiaInfoboxDialog.prototype.showItems = function () {
 	var key,
 		obj,
@@ -126,16 +130,19 @@ ve.ui.WikiaInfoboxDialog.prototype.showItems = function () {
 	for ( key in this.fullParamsList ) {
 		if ( this.fullParamsList.hasOwnProperty( key ) ) {
 			obj = this.fullParamsList[key];
-			//TODO: add displaying different imputs according to param type
-			if ( obj.type === 'data' || obj.type === 'image') {
-				tab.push(this.showDataItem( obj ));
-			}
+			//TODO: add displaying different imputs according to type eg.data, image, group element
+			tab.push(this.showDataItem( obj ));
 		}
 	}
 
 	this.bookletLayout.addPages( tab, 0);
 };
 
+/**
+ * Show a single infobox param element
+ *
+ * @param {Object} obj item to show
+ */
 ve.ui.WikiaInfoboxDialog.prototype.showDataItem = function ( obj ) {
 	var param,
 		template;
@@ -146,6 +153,9 @@ ve.ui.WikiaInfoboxDialog.prototype.showDataItem = function ( obj ) {
 	return new ve.ui.WikiaParameterPage( param, param.name, { $: this.$ } );
 };
 
+/**
+ * Initialize booklet layout and add to dialog body
+ */
 ve.ui.WikiaInfoboxDialog.prototype.initializeLayout = function () {
 	this.panels = new OO.ui.StackLayout( { $: this.$ } );
 

@@ -1,8 +1,5 @@
 /*!
  * VisualEditor DataModel WikiaInfoboxSpecModel class.
- *
- * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
- * @license The MIT License (MIT); see LICENSE.txt
  */
 
 /**
@@ -117,7 +114,6 @@ ve.dm.WikiaInfoboxSpecModel.prototype.getLabel = function () {
 /**
  * Get parameter order.
  *
- * @method
  * @returns {string[]} Canonically ordered parameter names
  */
 ve.dm.WikiaInfoboxSpecModel.prototype.getParameterOrder = function () {
@@ -137,7 +133,6 @@ ve.dm.WikiaInfoboxSpecModel.prototype.isParameterKnown = function ( name ) {
 /**
  * There is no such a thing like suggested infobox param.
  *
- * @param {string} name Parameter name
  * @returns {boolean} false
  */
 ve.dm.WikiaInfoboxSpecModel.prototype.isParameterSuggested = function () {
@@ -145,15 +140,13 @@ ve.dm.WikiaInfoboxSpecModel.prototype.isParameterSuggested = function () {
 };
 
 /**
- * Get a parameter label.
+ * Get a parameter label. For now - the same as name.
  *
  * @param {string} name Parameter name
- * @param {string} [lang] Language to get label in
  * @returns {string} Parameter label
  */
-ve.dm.WikiaInfoboxSpecModel.prototype.getParameterLabel = function ( name, lang ) {
-	var value = this.params[name].label || name;
-	return ve.isPlainObject( value ) ? OO.ui.getLocalValue( value, lang ) : value;
+ve.dm.WikiaInfoboxSpecModel.prototype.getParameterLabel = function ( name ) {
+	return name;
 };
 
 /**
@@ -167,38 +160,17 @@ ve.dm.WikiaInfoboxSpecModel.prototype.getParameterDefaultValue = function ( name
 };
 
 /**
- * Get a parameter type.
+ * None of infobox parameters is required.
  *
- * @param {string} name Parameter name
- * @returns {string} Parameter type
- */
-ve.dm.WikiaInfoboxSpecModel.prototype.getParameterType = function ( name ) {
-	return this.params[name].type;
-};
-
-/**
- * Check if parameter is required.
- *
- * @param {string} name Parameter name
- * @returns {boolean} Parameter is required
+ * @returns {boolean} false- parameter is not required
  */
 ve.dm.WikiaInfoboxSpecModel.prototype.isParameterRequired = function () {
 	return false;
 };
 
 /**
- * Get parameter groups.
- *
- * @returns {Object[]} Lists of parameter group descriptors
- */
-ve.dm.WikiaInfoboxSpecModel.prototype.getParameterGroups = function () {
-	return this.groups;
-};
-
-/**
  * Check if parameter is deprecated.
  *
- * @param {string} name Parameter name
  * @returns {boolean} Parameter is deprecated
  */
 ve.dm.WikiaInfoboxSpecModel.prototype.isParameterDeprecated = function () {
@@ -206,43 +178,36 @@ ve.dm.WikiaInfoboxSpecModel.prototype.isParameterDeprecated = function () {
 };
 
 /**
- * Get a parameter description.
+ * Infobox parameter description are not used so far.
  *
- * @param {string} name Parameter name
- * @param {string} [lang] Language to get description
- * @returns {string|null} Parameter description
+ * @returns {null} Empty parameter description
  */
-ve.dm.WikiaInfoboxSpecModel.prototype.getParameterDescription = function ( name, lang ) {
-	var value = this.params[name].description;
-	return ve.isPlainObject( value ) ? OO.ui.getLocalValue( value, lang ) : value;
+ve.dm.WikiaInfoboxSpecModel.prototype.getParameterDescription = function () {
+	return null;
 };
 
 /**
- * Get a parameter auto value.
+ * Infobox parameter auto values are not used so far.
  *
- * @param {string} name Parameter name
- * @returns {string} Auto-value for the parameter
+ * @returns {string} ''
  */
-ve.dm.WikiaInfoboxSpecModel.prototype.getParameterAutoValue = function ( name ) {
-	return this.params[name].autovalue;
+ve.dm.WikiaInfoboxSpecModel.prototype.getParameterAutoValue = function () {
+	return '';
 };
 
 /**
- * Get parameter deprecation description.
+ * Infobox parameter deprecation description for now is always empty.
  *
- * @param {string} name Parameter name
- * @returns {string} Explaining of why parameter is deprecated, empty if parameter is either not
- *   deprecated or no description has been specified
+ * @returns {string} ''
  */
-ve.dm.WikiaInfoboxSpecModel.prototype.getParameterDeprecationDescription = function ( name ) {
-	return typeof this.params[name].deprecated === 'string' ?
-		this.params[name].deprecated : '';
+ve.dm.WikiaInfoboxSpecModel.prototype.getParameterDeprecationDescription = function () {
+	return '';
 };
 
 /**
- * Get the parameter name, resolving an alias.
+ * Get the parameter name.
  *
- * If a parameter is not an alias of another, the output will be the same as the input.
+ * Infobox parameter cannot be an alias of another, so the output will be the same as the input.
  *
  * @param {string} name Parameter alias
  * @returns {string} Parameter name
@@ -274,8 +239,7 @@ ve.dm.WikiaInfoboxSpecModel.prototype.getParameterNames = function () {
  * Function implemented to be compatibile with call to this.spec.getParameterAliases
  * in ve.dm.MWTemplateModel.hasParameter
  *
- * @param {string} name Parameter name
- * @returns {string[]} Alternate parameter names
+ * @returns {string[]} Infobox parameter names dont't have aliases
  */
 ve.dm.WikiaInfoboxSpecModel.prototype.getParameterAliases = function () {
 	return [];
