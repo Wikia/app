@@ -110,7 +110,7 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 
 			log(['flush', 'refresh', slotQueue], 'debug', logGroup);
 			if (slotQueue.length) {
-				pubAds.refresh(slotQueue);
+				pubAds.refresh(slotQueue, {changeCorrelator: false});
 				slotQueue = [];
 			}
 
