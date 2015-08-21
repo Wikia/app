@@ -7,14 +7,15 @@
 			</div>
 		</a>
 		<?php if ($isAnon):
-			if ($enableNewModalAuth): ?>
+			if ($enableNewAuthModal): ?>
 				<span class="auth-label">
 					<?= $authOptions ?>
 				</span>
 			<?php else: ?>
 				<span class="auth-label auth-link sign-in"><?= wfMessage( 'global-navigation-sign-in' )->escaped(); ?></span>
 			<?php endif;
-		else : ?>
+		endif;
+		if ( !($isAnon && $enableNewAuthModal) ) : ?>
 			<img class="chevron" src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D"/>
 		<? endif; ?>
 	</div>
