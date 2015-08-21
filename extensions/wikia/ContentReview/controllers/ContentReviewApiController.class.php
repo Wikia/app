@@ -108,13 +108,13 @@ class ContentReviewApiController extends WikiaApiController {
 			throw new BadRequestApiException();
 		}
 
-		$pageId = $this->request->getInt( 'pageId' );
-		$wikiId = $this->request->getInt( 'wikiId' );
-		$status = $this->request->getInt( 'status' );
-
 		if ( !$this->wg->User->isAllowed( 'content-review' ) ) {
 			throw new PermissionsException( 'content-review' );
 		}
+
+		$pageId = $this->request->getInt( 'pageId' );
+		$wikiId = $this->request->getInt( 'wikiId' );
+		$status = $this->request->getInt( 'status' );
 
 		$model = new ReviewModel();
 		$model->updateRevisionStatus( $wikiId, $pageId, $status );

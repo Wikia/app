@@ -23,11 +23,11 @@ define(
         }
 
         function updateReviewStatus() {
-            var self = $(this),
+            var $button = $(this),
                 data = {
-                    wikiId: self.attr('data-wiki-id'),
-                    pageId: self.attr('data-page-id'),
-                    status: self.attr('data-status'),
+                    wikiId: $button.attr('data-wiki-id'),
+                    pageId: $button.attr('data-page-id'),
+                    status: $button.attr('data-status'),
                     editToken: mw.user.tokens.get('editToken')
                 };
 
