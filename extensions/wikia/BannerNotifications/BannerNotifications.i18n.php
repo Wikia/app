@@ -10,6 +10,7 @@ $messages = array();
 $messages['en'] = array(
 	'bannernotifications-desc' => 'Displays system notifications for events such as AJAX failures',
 	'bannernotifications-general-ajax-failure' => 'The browser could not connect to the Wikia.  Try again later.',
+	'bannernotifications-not-confirmed-email' => 'Oh no! Your email address has not yet been confirmed. You should have a confirmation message in your inbox. Didn\'t get it? [[Special:ConfirmEmail|Click here and we\'ll send a new one.]] If you need to change your address, head to your [[Special:Preferences#mw-prefsection-emailv2|Preferences page]].'
 );
 
 /** Message documentation (Message documentation)
@@ -17,6 +18,7 @@ $messages['en'] = array(
 $messages['qqq'] = array(
 	'bannernotifications-desc' => 'Description of this extension',
 	'bannernotifications-general-ajax-failure' => 'General message for AJAX failure to be put on banner notification',
+	'bannernotifications-not-confirmed-email' => 'TODO'
 );
 
 /** Arabic (العربية)

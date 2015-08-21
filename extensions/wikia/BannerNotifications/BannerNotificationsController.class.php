@@ -15,6 +15,8 @@ class BannerNotificationsController extends WikiaController {
 	const CONFIRMATION_ERROR = 'error'; // Red
 	const CONFIRMATION_WARN = 'warn'; // Yellow
 
+	const OPTION_NON_DISMISSIBLE = 'nonDismissible';
+
 
 	public function init() {
 		$this->confirmation = null;
@@ -27,14 +29,23 @@ class BannerNotificationsController extends WikiaController {
 	 * @param String $message - message text
 	 * @param String $type - notification type, one of CONFIRMATION_ constants
 	 * @param Bool $force - flag that enforces to override existing notification
+	 * @param Array $options
+	 * 	self::OPTION_NON_DISMISSIBLE - removes close button from notification
 	 */
-	public static function addConfirmation( $message, $type = self::CONFIRMATION_CONFIRM, $force = false ) {
+	public static function addConfirmation(
+		$message,
+		$type = self::CONFIRMATION_CONFIRM,
+		$force = false,
+		$options = []
+	) {
 		//Add confirmation if there was none set yet or if it's forced
 		if ( !empty( $message ) &&
 			( empty( $_SESSION[self::SESSION_KEY] ) || $force === true ) ) {
+			// TODO allow multiple notifications
 			$_SESSION[self::SESSION_KEY] = array(
 				'message' => $message,
 				'type' => $type,
+				'options' => $options
 			);
 
 			wfDebug( __METHOD__ . " - {$message}\n" );
@@ -57,7 +68,12 @@ class BannerNotificationsController extends WikiaController {
 			$entry = $_SESSION[self::SESSION_KEY];
 
 			$this->confirmation = $entry['message'];
-			$this->confirmationClass = $entry['type'];
+			$confirmationClass = $entry['type'];
+
+			if ( !empty( $entry['options'][ self::OPTION_NON_DISMISSIBLE ] ) ) {
+				$confirmationClass .= ' non-dismissible';
+			}
+			$this->confirmationClass = $confirmationClass;
 
 			// clear confirmation stack
 			self::clearConfirmation();
@@ -269,6 +285,17 @@ class BannerNotificationsController extends WikiaController {
 	 * @return bool
 	 */
 	public static function onBeforePageDisplay( \OutputPage $out ) {
+		global $wgUser;
+
+		if ( !$wgUser->isEmailConfirmed() ) {
+			self::addConfirmation(
+				wfMessage('bannernotifications-not-confirmed-email')->parse(),
+				self::CONFIRMATION_WARN,
+				false,
+				[ self::OPTION_NON_DISMISSIBLE => true ]
+			);
+		}
+
 		$out->addModules( 'ext.bannerNotifications' );
 		return true;
 	}
