@@ -22,19 +22,25 @@ class UserPreferences {
 	/** @var string[string] */
 	private $defaultPreferences;
 
+	/** @var string[] */
+	private $forceSavePrefs;
+
 	/**
 	 * @Inject({
 	 *    Wikia\Service\User\Preferences\PreferenceService::class,
 	 *    Wikia\Service\User\Preferences\UserPreferences::HIDDEN_PREFS,
-	 *    Wikia\Service\User\Preferences\UserPreferences::DEFAULT_PREFERENCES})
+	 *    Wikia\Service\User\Preferences\UserPreferences::DEFAULT_PREFERENCES,
+	 *    Wikia\Service\User\Preferences\UserPreferences::FORCE_SAVE_PREFERENCES})
 	 * @param PreferenceService $preferenceService
 	 * @param string[] $hiddenPrefs
 	 * @param string[string] $defaultPrefs
+	 * @param string[] $forceSavePrefs
 	 */
-	public function __construct(PreferenceService $preferenceService, $hiddenPrefs, $defaultPrefs) {
+	public function __construct(PreferenceService $preferenceService, $hiddenPrefs, $defaultPrefs, $forceSavePrefs) {
 		$this->service = $preferenceService;
 		$this->hiddenPrefs = $hiddenPrefs;
 		$this->defaultPreferences = $defaultPrefs;
+		$this->forceSavePrefs = $forceSavePrefs;
 		$this->preferences = [];
 	}
 
@@ -127,8 +133,25 @@ class UserPreferences {
 			return;
 		}
 
-		if (!empty($prefs)) {
-			$this->service->setPreferences($userId, $prefs);
+		$prefsToSave = [];
+
+		foreach ($prefs as $p) {
+			if ($this->prefIsSaveable($p->getName(), $p->getValue())) {
+				$prefsToSave[] = $p;
+			}
 		}
+
+		if (!empty($prefsToSave)) {
+			$this->service->setPreferences($userId, $prefsToSave);
+		}
+	}
+
+	private function prefIsSaveable($pref, $value) {
+		$default = $this->getFromDefault($pref);
+
+		return
+			in_array($pref, $this->forceSavePrefs) ||
+			!$default->isPresent() ||
+			$value !== $default->get();
 	}
 }
