@@ -27,7 +27,6 @@ define(
 				notification,
 				data = {
 				pageId: mw.config.get('wgArticleId'),
-				wikiId: mw.config.get('wgCityId'),
 				editToken: mw.user.tokens.get('editToken')
 			};
 
