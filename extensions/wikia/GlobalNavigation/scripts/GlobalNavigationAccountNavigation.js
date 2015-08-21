@@ -95,6 +95,7 @@ require([
 			$authEntryPoints = $entryPoint.find('.auth-link.register, .auth-link.sign-in, a.sign-in');
 
 			$authEntryPoints.click(function (event) {
+				//Prevent opening modal with shift / alt / ctrl / let only left mouse click
 				if (event.which !== 1 || event.shiftKey || event.altKey || event.metaKey || event.ctrlKey) {
 					return;
 				}
