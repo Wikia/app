@@ -21,8 +21,10 @@
  */
 
 use Wikia\DependencyInjection\Injector;
+use Wikia\Domain\User\Attribute;
 use Wikia\Logger\Loggable;
 use Wikia\Service\User\Preferences\UserPreferences;
+use Wikia\Service\User\Attributes\UserAttributes;
 use Wikia\Util\Statistics\BernoulliTrial;
 
 /**
@@ -35,7 +37,7 @@ define( 'USER_TOKEN_LENGTH', 32 );
  * Int Serialized record version.
  * @ingroup Constants
  */
-define( 'MW_USER_VERSION', 9 );
+define( 'MW_USER_VERSION', 15 );
 
 /**
  * String Some punctuation to prevent editing from broken text-mangling proxies.
@@ -69,6 +71,7 @@ class User {
 	 * Traits extending the class
 	 */
 	use PowerUserTrait;
+	use GlobalUserDataTrait;
 	# WIKIA CHANGE END
 
 	use Loggable;
@@ -81,6 +84,7 @@ class User {
 	const MW_USER_VERSION = MW_USER_VERSION;
 	const EDIT_TOKEN_SUFFIX = EDIT_TOKEN_SUFFIX;
 	const CACHE_PREFERENCES_KEY = "preferences";
+	const CACHE_ATTRIBUTES_KEY = "attributes";
 	const GET_SET_OPTION_SAMPLE_RATE = 0.1;
 
 	private static $PROPERTY_UPSERT_SET_BLOCK = [ "up_user = VALUES(up_user)", "up_property = VALUES(up_property)", "up_value = VALUES(up_value)" ];
@@ -270,6 +274,13 @@ class User {
 	}
 
 	/**
+	 * @return UserAttributes
+	 */
+	private function userAttributes() {
+		return Injector::getInjector()->get(UserAttributes::class);
+	}
+
+	/**
 	 * @return BernoulliTrial
 	 */
 	private function getOrSetOptionSampler() {
@@ -380,7 +391,10 @@ class User {
 			}
 
 			if (isset($data[self::CACHE_PREFERENCES_KEY])) {
-				 $this->userPreferences()->setPreferencesInCache($this->mId, $data[self::CACHE_PREFERENCES_KEY]);
+				$this->userPreferences()->setPreferencesInCache($this->mId, $data[self::CACHE_PREFERENCES_KEY]);
+			}
+			if (isset($data[self::CACHE_ATTRIBUTES_KEY])) {
+				$this->userAttributes()->setAttributesInCache($this->mId, $data[self::CACHE_ATTRIBUTES_KEY]);
 			}
 		}
 		return true;
@@ -412,6 +426,7 @@ class User {
 		}
 		$data['mVersion'] = MW_USER_VERSION;
 		$data[self::CACHE_PREFERENCES_KEY] = $this->userPreferences()->getPreferences($this->mId);
+		$data[self::CACHE_ATTRIBUTES_KEY] = $this->userAttributes()->getAttributes($this->mId);
 		$key = $this->getCacheKey();
 		global $wgMemc;
 		$wgMemc->set( $key, $data );
@@ -1348,6 +1363,8 @@ class User {
 		$this->mEffectiveGroups = null;
 		$this->mImplicitGroups = null;
 		$this->mOptions = null;
+		$this->mOptionOverrides = null;
+		$this->mOptionsLoaded = false;
 
 		if ( $reloadFrom ) {
 			$this->mLoadedItems = array();
@@ -1385,6 +1402,22 @@ class User {
 		return $defOpt;
 	}
 
+	public static function getDefaultPreferences() {
+		global $wgUserPreferenceWhiteList;
+		$defaultOptions = User::getDefaultOptions();
+		$defaultOptionNames = array_keys($defaultOptions);
+
+		return array_reduce(
+			$defaultOptionNames,
+			function($preferences, $option) use ($wgUserPreferenceWhiteList, $defaultOptions) {
+				if (in_array($option, $wgUserPreferenceWhiteList['literals'])) {
+					$preferences[$option] = $defaultOptions[$option];
+				}
+
+				return $preferences;
+			}, []);
+	}
+
 	/**
 	 * Get a given default option value.
 	 *
@@ -1409,7 +1442,7 @@ class User {
 	 *                    done against master.
 	 */
 	private function getBlockedStatus( $bFromSlave = true ) {
-		global $wgProxyWhitelist, $wgUser;
+		global $wgProxyWhitelist;
 
 		if ( -1 != $this->mBlockedby ) {
 			return;
@@ -1428,7 +1461,7 @@ class User {
 		# We only need to worry about passing the IP address to the Block generator if the
 		# user is not immune to autoblocks/hardblocks, and they are the current user so we
 		# know which IP address they're actually coming from
-		if ( !$this->isAllowed( 'ipblock-exempt' ) && $this->getID() == $wgUser->getID() ) {
+		if ( !$this->isAllowed( 'ipblock-exempt' ) && $this->isCurrent() ) {
 			$ip = $this->getRequest()->getIP();
 		} else {
 			$ip = null;
@@ -2080,10 +2113,9 @@ class User {
 		$this->load();
 		if( $this->mId ) {
 			global $wgMemc, $wgSharedDB; # Wikia
-			$wgMemc->delete( wfMemcKey( 'user', 'id', $this->mId ) );
+			$wgMemc->delete( $this->getCacheKey() );
 			// Wikia: and save updated user data in the cache to avoid memcache miss and DB query
 			$this->saveToCache();
-			# not uncyclo
 			if( !empty( $wgSharedDB ) ) {
 				$memckey = self::getUserTouchedKey( $this->mId );
 				$wgMemc->set( $memckey, $this->mTouched );
@@ -2294,6 +2326,31 @@ class User {
 		$this->load();
 		wfRunHooks( 'UserGetEmail', array( $this, &$this->mEmail ) );
 		return $this->mEmail;
+	}
+
+	/**
+	 * Return the new email address that is waiting for confirmation
+	 *
+	 * @return string
+	 */
+	public function getNewEmail() {
+		return $this->getGlobalAttribute( 'new_email' );
+	}
+
+	/**
+	 * Sets a new email address, to be confirmed
+	 *
+	 * @param $newEmail
+	 */
+	public function setNewEmail( $newEmail ) {
+		$this->setGlobalAttribute( 'new_email', $newEmail );
+	}
+
+	/**
+	 * Clear out the new email after its been confirmed
+	 */
+	public function clearNewEmail() {
+		$this->setGlobalAttribute( 'new_email', null );
 	}
 
 	/**
@@ -2651,19 +2708,53 @@ class User {
 	 */
 	public function setGlobalAttribute($attribute, $value) {
 		$this->setOptionHelper($attribute, $value);
+		$this->setAttributeInService($attribute, $value);
 	}
 
 	/**
-	 * Get a user flag local to this wikia.
+	 * Sets an attribute into the User Attribute Service
+	 *
+	 * @param $attributeName
+	 * @param $attributeValue
+	 */
+	private function setAttributeInService($attributeName, $attributeValue) {
+		$attribute = new Attribute($attributeName, $this->sanitizeProperty($attributeValue));
+
+		if (is_null($attribute->getValue())) {
+			$this->userAttributes()->deleteAttribute($this->getId(), $attribute);
+		} else {
+			$this->userAttributes()->setAttribute($this->getId(), $attribute);
+		}
+
+		$this->clearSharedCache();
+	}
+
+	/**
+	 * Get a user flag local to a wikia.
 	 *
 	 * @param string $flag the flag name
 	 * @param int $cityId the city id
 	 * @param string $sep the separator between the name and the city id
-	 * @return string
+	 * @return bool
 	 * @see getGlobalFlag for more documentation about flags
 	 */
-	public function getLocalFlag($flag, $cityId = null, $sep = "-") {
-		return $this->getGlobalFlag(self::localToGlobalPropertyName($flag, $cityId, $sep));
+	public function getLocalFlag( $flag, $cityId = null, $sep = '-' ) {
+		$name = self::localToGlobalPropertyName( $flag, $cityId, $sep );
+		return $this->getGlobalFlag( $name );
+	}
+
+	/**
+	 * Set a user flag local to a wikia.
+	 *
+	 * @param string $flag the flag name
+	 * @param bool $value The value of the flag
+	 * @param int $cityId the city id
+	 * @param string $sep the separator between the name and the city id
+	 * @see getGlobalFlag for more documentation about flags
+	 */
+	public function setLocalFlag( $flag, $value, $cityId = null, $sep = '-' ) {
+		$name = self::localToGlobalPropertyName( $flag, $cityId, $sep );
+		$this->setGlobalFlag( $name, $value );
 	}
 
 	/**
@@ -3033,6 +3124,18 @@ class User {
 	}
 
 	/**
+	 * Get whether the user is the current performer
+	 *
+	 * Inspired by User::equals() and its usage in MW 1.25
+	 * @return Bool
+	 * @author Michał Roszka <michal@wikia-inc.com>
+	 */
+	public function isCurrent() {
+		global $wgUser;
+		return $this->getName() === $wgUser->getName();
+	}
+
+	/**
 	 * Whether this user is Wikia staff or not
 	 * @return bool
 	 */
@@ -3043,7 +3146,7 @@ class User {
 	/**
 	 * Check if user is allowed to access a feature / make an action
 	 *
-	 * @internal param \String $varargs permissions to test
+	 * internal param \String $varargs permissions to test
 	 * @return Boolean: True if user is allowed to perform *any* of the given actions
 	 *
 	 * @return bool
@@ -3060,7 +3163,7 @@ class User {
 
 	/**
 	 *
-	 * @internal param $varargs string
+	 * internal param $varargs string
 	 * @return bool True if the user is allowed to perform *all* of the given actions
 	 */
 	public function isAllowedAll( /*...*/ ){
@@ -3996,13 +4099,13 @@ class User {
 	private function getEmailController( $mailType ) {
 		$controller = "";
 		if ( $this->isConfirmationMail( $mailType ) ) {
-			$controller = 'Email\Controller\EmailConfirmation';
+			$controller = Email\Controller\EmailConfirmationController::class;
 		} elseif ( $this->isConfirmationReminderMail( $mailType ) ) {
-			$controller = 'Email\Controller\EmailConfirmationReminder';
+			$controller = Email\Controller\EmailConfirmationReminderController::class;
 		} elseif ( $this->isChangeEmailConfirmationMail( $mailType ) ) {
-			$controller = 'Email\Controller\ConfirmationChangedEmail';
+			$controller = Email\Controller\ConfirmationChangedEmailController::class;
 		} elseif ( $this->isReactivateAccountMail( $mailType ) ) {
-			$controller = 'Email\Controller\ReactivateAccount';
+			$controller = Email\Controller\ReactivateAccountController::class;
 		}
 
 		return $controller;
@@ -4027,6 +4130,7 @@ class User {
 	private function sendUsingEmailExtension( $emailController, $url ) {
 		$params = [
 			'targetUser' => $this->getName(),
+			'newEmail' => $this->getNewEmail(),
 			'confirmUrl' => $url,
 		];
 
@@ -4715,12 +4819,12 @@ class User {
 	 * @return int|bool True if not $wgNewUserLog; otherwise ID of log item or 0 on failure
 	 */
 	public function addNewUserLogEntry( $byEmail = false, $reason = '' ) {
-		global $wgUser, $wgContLang, $wgNewUserLog;
+		global $wgContLang, $wgNewUserLog;
 		if( empty( $wgNewUserLog ) ) {
 			return true; // disabled
 		}
 
-		if( $this->getName() == $wgUser->getName() ) {
+		if( $this->isCurrent() ) {
 			$action = 'create';
 		} else {
 			$action = 'create2';
@@ -4816,7 +4920,7 @@ class User {
 
 		$this->loadOptions();
 		// wikia change
-		global $wgExternalSharedDB, $wgSharedDB, $wgGlobalUserProperties;
+		global $wgExternalSharedDB, $wgSharedDB;
 		if( isset( $wgSharedDB ) ) {
 			$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 		}
@@ -4858,6 +4962,13 @@ class User {
 		$preferencesFromService = [];
 		if ($wgPreferencesUseService) {
 			$preferencesFromService = array_keys($this->userPreferences()->getPreferences($this->getId()));
+			$insertRows = array_reduce($insertRows, function($rows, $current) use ($preferencesFromService) {
+				if (!in_array($current['up_property'], $preferencesFromService)) {
+					$rows[] = $current;
+				}
+
+				return $rows;
+			}, []);
 		}
 
 		$deletePrefs = array_diff($deletePrefs, $preferencesFromService);

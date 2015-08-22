@@ -394,7 +394,7 @@ Bittscheh vasuachs in a por Minunten nuamoi.',
 'viewsourcetext'       => "Du kåst ower 'n Quötext åschaung und kópirn:",
 'viewyourtext'         => "Du kåst 'n Quejtext vah '''deiner Beorwatung''' derer Seiten betrochten und kópiern:",
 'protectedinterface'   => "Dé Seiten do enthoit Text fyr d' Benutzerówerflächen voh da Software und is gschytzd, um an Missbrauch vurzbeing.",
-'editinginterface'     => "'''Ówocht:''' Dé Seiten do enthoit voh da MediaWiki-Software gnutzden Text. 
+'editinginterface'     => "'''Ówocht:''' Dé Seiten do enthoit voh da MediaWiki-Software gnutzden Text.
 Änderrungen auf derer Seiten wirken sé auf d' Benutzerówerflächen aus.
 Ziag bittscheh im Foi voh Ywersétzungen in Betrocht, dé bei [//translatewiki.net/wiki/Main_Page?setlang=de translatewiki.net], da Lókaalisiarungsblottform fyr MediaWiki, durchzfyrn.",
 'sqlhidden'            => '(SQL-Obfrog vastéckt)',
@@ -414,8 +414,9 @@ $2",
 # Login and logout pages
 'logouttext'                 => "'''Iatzerd bist obgmödt.'''
 
-Du kåst {{SITENAME}} iatzerd anónym weiderdoah, óder di danaid unterm söwing óder am åndern Benutzernåm [[Special:UserLogin|åmöden]].
+Du kåst {{SITENAME}} iatzerd anónym weiderdoah, óder di danaid unterm söwing óder am åndern Benutzernåm $1.
 Beochtt ower, daas oanige Seiten noh åzoang kennern, daas du ågmödt bist, sólång du néd deih Browsercache glaard host.",
+'logouttext-link-text'       => 'åmöden',
 'welcomecreation'            => '== Servas, $1! ==
 
 Deih Benutzerkontó is grood eihgrichtt worn.
@@ -1224,7 +1225,7 @@ Ryckmödungen und a weidre Hüf: {{canonicalurl:{{MediaWiki:Helppage}}}}',
 
 # Undelete
 'undelete'                  => 'Gléschde Seiten weiderherstön',
-'undeletehistorynoadmin'    => 'Dé Seiten is gléscht worn. Da Léschgrund is in da Zaummfossung auhgeem, 
+'undeletehistorynoadmin'    => 'Dé Seiten is gléscht worn. Da Léschgrund is in da Zaummfossung auhgeem,
 genauasó wia Details zum létzden Benutzer, der dé Seiten vur da Léschung borweidt hod.
 Da aktuöje Text voh da gléschden Seiten is netter fyr Administraatorn zuagänglich.',
 'undelete-revision'         => 'Geléschde Versión voh $1 (vom $4 um $5 Uar), $3:',
@@ -1367,7 +1368,7 @@ Du kauhst Weiderloatungen, dé auf dén Originoititel valinken, autómaatisch ko
 Stö sicher, daas du im Auhschlus olle [[Special:DoubleRedirects|dóppéden]] óder [[Special:BrokenRedirects|dé hienigen Weiderloatungen]] ywerpriaffst.
 Du bist dodafyr vaauntwortlich, daas Links weiderhih aufs richtige Zü vaweisen.
 
-Dé Seiten werd '''néd''' vaschóm, waunns bereits a Seiten mim vurgseegernen Titel gibt, ausser dé is laar óder a Weiderloatung óne a Versiónsgschicht. 
+Dé Seiten werd '''néd''' vaschóm, waunns bereits a Seiten mim vurgseegernen Titel gibt, ausser dé is laar óder a Weiderloatung óne a Versiónsgschicht.
 Dés bdeitt, daas du d' Umbenénnung ryckgängig mochen kauhst, waunn du an Feeler gmocht host.  Du kauhst hihgéng koah Seiten ywerschreim.
 
 '''Ówocht!'''

@@ -1,6 +1,10 @@
 @import './insights-settings';
 
 @if $is-dark-wiki {
+	.insights-icon-flags {
+		background-image: url('/extensions/wikia/Insights/images/flags_dark.svg'); /* inline */
+	}
+
 	.insights-icon-uncategorizedpages {
 		background-image: url('/extensions/wikia/Insights/images/uncategorized_dark.svg'); /* inline */
 	}
@@ -21,6 +25,10 @@
 		background-image: url('/extensions/wikia/Insights/images/genericinsights_dark.svg'); /* inline */
 	}
 } @else {
+	.insights-icon-flags {
+		background-image: url('/extensions/wikia/Insights/images/flags.svg'); /* inline */
+	}
+
 	.insights-icon-uncategorizedpages {
 		background-image: url('/extensions/wikia/Insights/images/uncategorized.svg'); /* inline */
 	}

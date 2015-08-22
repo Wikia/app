@@ -38,6 +38,10 @@ define('ext.wikia.adEngine.adContext', [
 		return (countryList && countryList.indexOf && countryList.indexOf(geo.getCountryCode()) > -1);
 	}
 
+	function isUrlParamSet(param) {
+		return !!parseInt(qs.getVal(param, '0'));
+	}
+
 	function setContext(newContext) {
 		var i,
 			len;
@@ -55,6 +59,17 @@ define('ext.wikia.adEngine.adContext', [
 		// Don't show ads when Sony requests the page
 		if (doc && doc.referrer && doc.referrer.match(/info\.tvsideview\.sony\.net/)) {
 			context.opts.showAds = false;
+		}
+
+		// SourcePoint integration
+		if (context.opts.sourcePointUrl) {
+			context.opts.sourcePoint = (isUrlParamSet('sourcepoint') ||
+				isProperCountry(instantGlobals.wgAdDriverSourcePointCountries));
+		}
+
+		// Showcase.*
+		if (isUrlParamSet('showcase')) {
+			context.opts.showcase = true;
 		}
 
 		// Targeting by page categories
@@ -76,10 +91,18 @@ define('ext.wikia.adEngine.adContext', [
 			context.providers.openX = true;
 		}
 
+		// INVISIBLE_HIGH_IMPACT slot
 		context.slots.invisibleHighImpact = (
 			context.slots.invisibleHighImpact &&
 			isProperCountry(instantGlobals.wgAdDriverHighImpactSlotCountries)
-		) ||  parseInt(qs.getVal('highimpactslot', '0'));
+		) || isUrlParamSet('highimpactslot');
+
+		// INCONTENT_PLAYER slot
+		context.slots.incontentPlayer = isProperCountry(instantGlobals.wgAdDriverIncontentPlayerSlotCountries) ||
+			isUrlParamSet('incontentplayer');
+
+		context.opts.enableScrollHandler = isProperCountry(instantGlobals.wgAdDriverScrollHandlerCountries) ||
+			isUrlParamSet('scrollhandler');
 
 		// Krux integration
 		context.targeting.enableKruxTargeting = !!(

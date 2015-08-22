@@ -12,7 +12,7 @@ class FlagsParamsComparison {
 	 * @param $flagVariables
 	 * @return bool|mixed|null
 	 */
-	public function compareTemplateVariables( $title, $oldText, $newText, $flagVariables ) {
+	public function compareTemplateVariables( $title, $oldText, $newText, $flagVariables = [] ) {
 		$oldText = str_replace( "\r\n", "\n", $oldText );
 		$newText = str_replace( "\r\n", "\n", $newText );
 

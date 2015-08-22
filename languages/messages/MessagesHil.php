@@ -410,8 +410,9 @@ Ang iya rason amo ang "\'\'$2\'\'".',
 # Login and logout pages
 'logouttext'                 => "'''Naka-guha ka na.'''
 
-Makapadayon ka sa gihapon sa paggamit sang {{SITENAME}} nga indi makilal-an, ukon mahimo ka man [[Special:UserLogin|magsulod liwat]] bilang amo sa gihapon ukon lain nga nga manug-gamit.
+Makapadayon ka sa gihapon sa paggamit sang {{SITENAME}} nga indi makilal-an, ukon mahimo ka man $1 bilang amo sa gihapon ukon lain nga nga manug-gamit.
 Tandaan nga may mga panid nga mahimo ma-display sa gihapon nga daw nakasulod ka sa gihapon, hasta mapanas mo na ang tinago sang imo brawser.",
+'logouttext-link-text'       => 'magsulod liwat',
 'welcomecreation'            => '== Pagtamyaw, $1! ==
 Ang imo account nahimo na.
 Indi pagkalimti ang pag-ilis sang imo mga [[Special:Preferences|{{SITENAME}} pagpasulabi]].',
@@ -448,7 +449,7 @@ Ang {{SITENAME}} nagagamit sang kokes (cookies) para makasulod ang mga manug-gam
 Ang imo kokes wala nabuksan.
 Palihog bukas sa ila, dayon magsulod gamit ang imo bag-o nga gamit-pangalan kag pasword.',
 'nocookieslogin'             => 'Ang {{SITENAME}} nagagamit sang kokes (cookies) para makasulod ang mga manug-gamit.
-Ang imo kokes wala nabuksan. 
+Ang imo kokes wala nabuksan.
 Palihog bukas sa ila, dayon magsulod gamit ang imo bag-o nga gamit-pangalan kag pasword.',
 'nocookiesfornew'            => 'Ang akawnt sang manug-gamit wala nabuhat, bangud nga wala namon mahibal-i ang iya ginhalinan.
 Palihog sigurado kon nakabukas ang imo kokes, dayon ipakarga liwat ang ini nga panid kag tilawan mo liwat.',
@@ -472,7 +473,7 @@ Palihog tilawi liwat butang.',
 'mailmypassword'             => 'i-E-mail ang bag-o na pasword',
 'passwordremindertitle'      => 'Bag-o nga temporaryo nga pasword para sa {{SITENAME}}',
 'passwordremindertext'       => 'May yara nga nagpangayo (basi ikaw, may IP address nga $1) sang bag-o
-nga pasword para sa {{SITENAME}} ($4). May temporaryo nga pasword 
+nga pasword para sa {{SITENAME}} ($4). May temporaryo nga pasword
 nga para kay "$2" kag ini amo ang "$3". Kon imo ini nga kagustohan,
 kinahanglan mo magsulod kag magpili sang bag-o nga pasword dayon.
 Ang imo temporaryo nga pasword magatapos sa {{PLURAL:$5|isa ka adlaw|$5 ka adlaw}}.
@@ -559,7 +560,7 @@ $2
 Kinahanglan mo nga magsulod kag magpili sang bag-o nga pasword subong. Kon lain nga tawo ang nagbuhat sini
 nga pagpangabay, ukon nadumduman mo na ang imo pasword, kag indi mo na kinahanglan nga ini
 paga-ilisan, mahimo mo nga pabay-an ang ini nga pahanumdom kag magpadayon sa paggamit sang imo daan nga pasword.',
-'passwordreset-emailtext-user'     => 'Ang manuggamit nga si $1 sa {{SITENAME}} nagpangabay sang pahanumdom sang mga detalye sang imo akawnt para sa {{SITENAME}} 
+'passwordreset-emailtext-user'     => 'Ang manuggamit nga si $1 sa {{SITENAME}} nagpangabay sang pahanumdom sang mga detalye sang imo akawnt para sa {{SITENAME}}
 ($4). Ang masunod nga {{PLURAL:$3|akawnt|mga akawnt}} sang manuggamit may kabahin sa sini nga adres sang e-mail:
 
 $2
@@ -858,7 +859,7 @@ Tilawi ang [[Special:Search|searching on the wiki]] para sa mga napamatud-an nga
 'rev-deleted-user-contribs'   => '[ang gamit-pangalan ukon adres sang IP ginkakas - ang pag-ilis gintago halin sa mga ginhatag]',
 'rev-deleted-text-permission' => "Ang pagbag-o sa sini nga panid '''ginpanas'''.
 Makita ang mga detalye sa [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} log sang pagpanas].",
-'rev-deleted-text-unhide'     => "Ang pagbag-o sa sini nga panid '''ginpanas'''. 
+'rev-deleted-text-unhide'     => "Ang pagbag-o sa sini nga panid '''ginpanas'''.
 Makita ang mga detalye sa [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} log sang pagpanas].
 Bilang administrador makita mo man ini sa gihapon [$1 lantawon ang ini nga pagbag-o] kon luyag mo pa magpadayon.",
 'rev-suppressed-text-unhide'  => "Ang isa sang mga pagbag-o sang sini nga panid '''ginpahugotan'''.

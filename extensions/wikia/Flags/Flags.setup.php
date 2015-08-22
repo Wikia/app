@@ -33,22 +33,28 @@ $wgExtensionCredits['other'][] = [
 $wgSpecialPages['Flags'] = 'SpecialFlagsController';
 $wgSpecialPageGroups['Flags'] = 'wikia';
 
-$wgAvailableRights[] = 'flagshq';
-$wgGroupPermissions['*']['flagshq'] = true;
+$wgAvailableRights[] = 'flags-administration';
+$wgGroupPermissions['*']['flags-administration'] = false;
+$wgGroupPermissions['sysop']['flags-administration'] = true;
+$wgGroupPermissions['staff']['flags-administration'] = true;
 
 /**
  * Controllers
  */
-$wgAutoloadClasses['SpecialFlagsController'] = __DIR__ . '/controllers/SpecialFlagsController.class.php';
+$wgAutoloadClasses['SpecialFlagsController'] = __DIR__ . '/specials/SpecialFlagsController.class.php';
+$wgAutoloadClasses['Flags\FlagsApiBaseController'] = __DIR__ . '/controllers/FlagsApiBaseController.class.php';
 $wgAutoloadClasses['FlagsController'] = __DIR__ . '/controllers/FlagsController.class.php';
 $wgAutoloadClasses['FlagsApiController'] = __DIR__ . '/controllers/FlagsApiController.class.php';
 $wgWikiaApiControllers['FlagsApiController'] = __DIR__ . '/controllers/FlagsApiController.class.php';
+$wgAutoloadClasses['FlaggedPagesApiController'] = __DIR__ . '/controllers/FlaggedPagesApiController.class.php';
+$wgWikiaApiControllers['FlaggedPagesApiController'] = __DIR__ . '/controllers/FlaggedPagesApiController.class.php';
 
 /**
  * Models
  */
 $wgAutoloadClasses['Flags\Models\FlagsBaseModel'] = __DIR__ . '/models/FlagsBaseModel.class.php';
 $wgAutoloadClasses['Flags\Models\Flag'] = __DIR__ . '/models/Flag.class.php';
+$wgAutoloadClasses['Flags\Models\FlaggedPages'] = __DIR__ . '/models/FlaggedPages.class.php';
 $wgAutoloadClasses['Flags\Models\FlagType'] = __DIR__ . '/models/FlagType.class.php';
 $wgAutoloadClasses['Flags\Models\FlagParameter'] = __DIR__ . '/models/FlagParameter.class.php';
 
@@ -63,6 +69,7 @@ $wgAutoloadClasses['Flags\Views\FlagView'] = __DIR__ . '/views/FlagView.class.ph
 $wgAutoloadClasses['Flags\FlagsExtractor'] = __DIR__ . '/FlagsExtractor.class.php';
 $wgAutoloadClasses['Flags\FlagsHelper'] = __DIR__ . '/FlagsHelper.class.php';
 $wgAutoloadClasses['Flags\FlagsCache'] = __DIR__ . '/FlagsCache.class.php';
+$wgAutoloadClasses['Flags\FlaggedPagesCache'] = __DIR__ . '/FlaggedPagesCache.class.php';
 $wgAutoloadClasses['Flags\FlagsParamsComparison'] = __DIR__ . '/FlagsParamsComparison.class.php';
 
 /**
@@ -89,6 +96,15 @@ $wgHooks['BeforeRefreshLinksForTitleUpdate'][] = 'Flags\Hooks::onBeforeRefreshLi
  */
 $wgExtensionMessagesFiles['Flags'] = __DIR__ . '/Flags.i18n.php';
 $wgExtensionMessagesFiles['FlagsMagic'] = __DIR__ . '/Flags.magic.i18n.php';
+$wgExtensionMessagesFiles['FlagsAliases'] = __DIR__ . '/specials/SpecialFlags.alias.i18n.php';
+
+JSMessages::registerPackage( 'FlagsCreateForm', [
+	'flags-special-create-*'
+] );
+
+JSMessages::registerPackage( 'FlagsSpecialAutoload', [
+	'flags-special-autoload-*'
+] );
 
 /**
  * Resources Loader module

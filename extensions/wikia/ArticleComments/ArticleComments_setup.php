@@ -145,6 +145,11 @@ function ArticleCommentsAjax() {
 			$response->setContentType('text/html; charset=utf-8');
 		}
 
+		// Don't cache requests made to edit comment, see SOC-788
+		if ( $method == "axEdit" ) {
+			$response->setCacheDuration(0);
+		}
+
 		wfProfileOut(__METHOD__);
 		return $response;
 	}

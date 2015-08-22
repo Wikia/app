@@ -111,12 +111,13 @@ describe('AdLogicPageParams', function () {
 
 	it('getPageLevelParams simple params correct', function () {
 		var params = getParams({
+			mappedVerticalName: 'mappedVertical',
 			wikiCategory: 'category',
 			wikiDbName: 'dbname',
 			wikiLanguage: 'xx'
 		});
 
-		expect(params.s0).toBe('category');
+		expect(params.s0).toBe('mappedVertical');
 		expect(params.s1).toBe('_dbname');
 		expect(params.s2).toBe('article');
 		expect(params.lang).toBe('xx');
@@ -387,6 +388,11 @@ describe('AdLogicPageParams', function () {
 		var params = getParams({skin: 'mercury'}, {pvCount: 13});
 
 		expect(params.pv).toBe('13');
+	});
+
+	it ('test showcase - s0 should be showcase', function () {
+		var params = getParams({}, {hostname:'showcase.gta.wikia.com'});
+		expect(params.s0).toBe('showcase');
 	});
 
 	it('getPageLevelParams ref param', function () {

@@ -1,6 +1,6 @@
 <?php
 class FounderEmailsViewsDigestEvent extends FounderEmailsEvent {
-	const EMAIL_CONTROLLER = 'Email\Controller\FounderPageViewsDigest';
+	const EMAIL_CONTROLLER = Email\Controller\FounderPageViewsDigestController::class;
 
 	public function __construct( Array $data = array() ) {
 		parent::__construct( 'viewsDigest' );
@@ -18,7 +18,9 @@ class FounderEmailsViewsDigestEvent extends FounderEmailsEvent {
 	/**
 	 * Called from maintenance script only.  Send Digest emails for any founders with that preference enabled
 	 *
-	 * @param array $events Events is empty for this type
+	 * @param array $events This array is empty most of the time.  If the --wikiId flag is given to
+	 *                      the maintenance script however, that single wiki ID will be given as the only
+	 *                      array element.
 	 */
 	public function process ( Array $events ) {
 		global $wgTitle;
@@ -27,11 +29,16 @@ class FounderEmailsViewsDigestEvent extends FounderEmailsEvent {
 
 		$wgTitle = Title::newMainPage();
 		// Get list of founders with digest mode turned on
-		$cityList = $founderEmailObj->getFoundersWithPreference( 'founderemails-views-digest' );
+		if ( empty( $events ) ) {
+			$cityList = $founderEmailObj->getFoundersWithPreference( 'founderemails-complete-digest' );
+		} else {
+			$cityList = $events;
+		}
 		$wikiService = new WikiService();
 
 		// Gather daily page view stats for each wiki requesting views digest
 		foreach ( $cityList as $cityID ) {
+			Wikia::initAsyncRequest( $cityID );
 			$userIds = $wikiService->getWikiAdminIds( $cityID );
 			$emailParams = [
 				'pageViews' => $founderEmailObj->getPageViews( $cityID )
