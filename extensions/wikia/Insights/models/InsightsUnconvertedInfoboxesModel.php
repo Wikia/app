@@ -1,12 +1,11 @@
 <?php
-use Wikia\PortableInfobox\Helpers\PortableInfoboxClassification;
 
 /**
  * Class InsightsNonportableInfoboxesModel
  * A class specific to a subpage with a list of pages
  * without categories.
  */
-class InsightsUnconvertedInfoboxesModel extends InsightsQueryPageModel {
+class InsightsUnconvertedInfoboxesModel extends InsightsQuerypageModel {
 	const INSIGHT_TYPE = 'nonportableinfoboxes';
 
 	public $loopNotificationConfig = [
@@ -92,6 +91,6 @@ class InsightsUnconvertedInfoboxesModel extends InsightsQueryPageModel {
 	public function isItemFixed( Title $title ) {
 		$titleText = $title->getText();
 		$contentText = ( new WikiPage( $title ) )->getText();
-		return !PortableInfoboxClassification::isTitleWithNonportableInfobox( $titleText, $contentText );
+		return !UnconvertedInfoboxesPage::isTitleWithNonportableInfobox( $titleText, $contentText );
 	}
 }

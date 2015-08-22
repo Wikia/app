@@ -43,7 +43,8 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 			HOME_TOP_RIGHT_BOXAD:    'oneColumn',
 			LEFT_SKYSCRAPER_2:       'oneColumn',
 			LEFT_SKYSCRAPER_3:       'oneColumn',
-			INCONTENT_BOXAD_1:       'oneColumn'
+			INCONTENT_BOXAD_1:       'oneColumn',
+			INCONTENT_PLAYER:        'oneColumn'
 		},
 		mediaQueriesToCheck = {
 			twoColumns: 'screen and (min-width: 1024px)',

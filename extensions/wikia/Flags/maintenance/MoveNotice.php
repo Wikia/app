@@ -5,7 +5,6 @@ require_once( $dir . 'maintenance/Maintenance.php' );
 
 use Flags\FlagsExtractor;
 use Flags\FlagsCache;
-use Flags\FlaggedPagesCache;
 
 class MoveNotice extends Maintenance {
 
@@ -80,6 +79,7 @@ class MoveNotice extends Maintenance {
 
 		if ( !$this->logFile ) {
 			$this->output( "[WARNING] Log file is not set.\n" );
+			exit();
 		}
 
 		if ( !$this->templateName ) {
@@ -121,7 +121,8 @@ class MoveNotice extends Maintenance {
 		if ( empty( $rows ) ) {
 			$this->addToLog( "[WARNING] This template is not used \n" );
 			$this->addToLog( "================================================== \n\n\n" );
-			$this->writeToLog();;
+			fwrite( $this->logFile, $this->log );
+			$this->output( $this->log );
 			exit();
 		}
 
@@ -295,8 +296,8 @@ class MoveNotice extends Maintenance {
 	private function writeToLog() {
 		if ( $this->logFile ) {
 			fwrite( $this->logFile, $this->log );
+			$this->output( $this->log );
 		}
-		$this->output( $this->log );
 	}
 
 	/**
@@ -409,7 +410,6 @@ class MoveNotice extends Maintenance {
 		$pageFlags = [];
 
 		(new FlagsCache())->purgeFlagsForPage( $this->pageId );
-		(new FlaggedPagesCache())->purgeAllFlagTypes();
 
 		$response = $this->app->sendRequest( 'FlagsApiController',
 			'getFlagsForPage',

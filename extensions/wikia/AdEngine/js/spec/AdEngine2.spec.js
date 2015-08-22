@@ -7,7 +7,6 @@ describe('ext.wikia.adEngine.adEngine', function () {
 
 	var eventDispatcher = { trigger: function () { return true; }},
 		noop = function () { return; },
-		originalLazyQueue = modules['wikia.lazyqueue'](),
 		adDecoratorLegacyParamFormatMock = function (fillInSlot) { return fillInSlot; },
 		slotTrackerMock = function () { return { track: noop }; },
 		slotTweakerMock = { show: noop, hide: noop },
@@ -107,6 +106,10 @@ describe('ext.wikia.adEngine.adEngine', function () {
 					canHandleSlot: noop
 				},
 				adConfigMock = mockAdConfig([fakeProvider]),
+				lazyQueueMock = mockLazyQueue(function (callback) {
+					callback('slot1');
+					callback('slot2');
+				}),
 				adEngine,
 				adDecoratorLegacyParamFormatMockLocal;
 
@@ -115,8 +118,8 @@ describe('ext.wikia.adEngine.adEngine', function () {
 			spyOn(fakeProvider, 'canHandleSlot').and.returnValue(true);
 
 			adDecoratorLegacyParamFormatMockLocal = modules['ext.wikia.adEngine.adDecoratorLegacyParamFormat'](logMock);
-			adEngine = getAdEngine(originalLazyQueue, adDecoratorLegacyParamFormatMockLocal);
-			adEngine.run(adConfigMock, ['slot1', 'slot2']);
+			adEngine = getAdEngine(lazyQueueMock, adDecoratorLegacyParamFormatMockLocal);
+			adEngine.run(adConfigMock, []);
 
 			expect(adConfigMock.getProviderList.calls.count()).toBe(2, 'adConfig.getProviderList called 2 times');
 			expect(adConfigMock.getProviderList.calls.argsFor(0)).toEqual(
@@ -202,6 +205,9 @@ describe('ext.wikia.adEngine.adEngine', function () {
 				canHandleSlot: noop
 			},
 			adConfigMock = mockAdConfig([fakeProvider1, fakeProvider2, fakeProvider3]),
+			lazyQueueMock = mockLazyQueue(function (callback) {
+				callback({slotName: 'slot1'});
+			}),
 			adEngine;
 
 		spyOn(fakeProvider1, 'fillInSlot').and.callFake(callHop);
@@ -212,8 +218,8 @@ describe('ext.wikia.adEngine.adEngine', function () {
 		spyOn(fakeProvider2, 'canHandleSlot').and.returnValue(true);
 		spyOn(fakeProvider3, 'canHandleSlot').and.returnValue(true);
 
-		adEngine = getAdEngine(originalLazyQueue);
-		adEngine.run(adConfigMock, [{slotName: 'slot1'}]);
+		adEngine = getAdEngine(lazyQueueMock);
+		adEngine.run(adConfigMock, []);
 
 		expect(fakeProvider1.fillInSlot).toHaveBeenCalled();
 		expect(fakeProvider2.fillInSlot).toHaveBeenCalled();

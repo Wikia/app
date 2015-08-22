@@ -7,8 +7,28 @@ use Email\Check;
 use Email\ControllerException;
 use Email\EmailController;
 use Wikia\Logger;
+use Email\Tracking\TrackingCategories;
 
-class FounderEditController extends EmailController {
+abstract class FounderController extends EmailController {
+	// Defaults; will be overridden in subclasses
+	const TRACKING_CATEGORY_EN = TrackingCategories::DEFAULT_CATEGORY;
+	const TRACKING_CATEGORY_INT = TrackingCategories::DEFAULT_CATEGORY;
+
+	/**
+	 * Determine which sendgrid category to send based on target language and specific
+	 * founder email being sent. See dependent classes for overridden values
+	 *
+	 * @return string
+	 */
+	public function getSendGridCategory() {
+		return strtolower( $this->targetLang ) == 'en'
+			? static::TRACKING_CATEGORY_EN
+			: static::TRACKING_CATEGORY_INT;
+	}
+
+}
+
+abstract class AbstractFounderEditController extends FounderController {
 
 	/** @var \Title */
 	protected $pageTitle;
@@ -54,8 +74,10 @@ class FounderEditController extends EmailController {
 	 * @throws \Email\Check
 	 */
 	private function assertValidRevisionIds() {
-		// Only check currentRevId here.  The value for previousRevId can be empty if
-		// this is a new page.
+		if ( empty( $this->previousRevId ) ) {
+			throw new Check( "Invalid value passed for previousRevId" );
+		}
+
 		if ( empty( $this->currentRevId ) ) {
 			throw new Check( "Invalid value passed for currentRevId" );
 		}
@@ -112,15 +134,10 @@ class FounderEditController extends EmailController {
 	}
 
 	protected function getChangesLink() {
-		$params =  [ 'diff' => $this->currentRevId ];
-
-		// If we have a previous revision ID (e.g., this is not a page create event)
-		// then make sure to add the old ID for this diff link.
-		if ( $this->previousRevId ) {
-			$params[ 'oldid' ] = $this->previousRevId;
-		}
-
-		return $this->pageTitle->getFullURL( $params );
+		return $this->pageTitle->getFullURL( [
+			'diff' => $this->currentRevId,
+			'oldid' => $this->previousRevId,
+		] );
 	}
 
 	protected function getFooterEncouragement() {
@@ -194,14 +211,23 @@ class FounderEditController extends EmailController {
 
 }
 
-class FounderMultiEditController extends FounderEditController {
+class FounderEditController extends AbstractFounderEditController {
+	const TRACKING_CATEGORY_EN = TrackingCategories::FOUNDER_FIRST_EDIT_USER_EN;
+	const TRACKING_CATEGORY_INT = TrackingCategories::FOUNDER_FIRST_EDIT_USER_INT;
+}
+
+class FounderMultiEditController extends AbstractFounderEditController {
+	const TRACKING_CATEGORY_EN = TrackingCategories::FOUNDER_EDIT_USER_EN;
+	const TRACKING_CATEGORY_INT = TrackingCategories::FOUNDER_EDIT_USER_INT;
 
 	protected function getFooterEncouragementKey() {
 		return 'emailext-founder-multi-encourage';
 	}
 }
 
-class FounderAnonEditController extends FounderEditController {
+class FounderAnonEditController extends AbstractFounderEditController {
+	const TRACKING_CATEGORY_EN = TrackingCategories::FOUNDER_EDIT_ANON_EN;
+	const TRACKING_CATEGORY_INT = TrackingCategories::FOUNDER_EDIT_ANON_INT;
 
 	public function getSubject() {
 		$articleTitle = $this->pageTitle->getText();
@@ -236,7 +262,7 @@ class FounderAnonEditController extends FounderEditController {
 	}
 }
 
-class FounderActiveController extends EmailController {
+class FounderActiveController extends FounderController {
 
 	/**
 	 * Define this and do nothing since we don't need the checks of our parent
@@ -354,7 +380,9 @@ class FounderActiveController extends EmailController {
 	}
 }
 
-class FounderNewMemberController extends EmailController {
+class FounderNewMemberController extends FounderController {
+	const TRACKING_CATEGORY_EN = TrackingCategories::FOUNDER_NEW_MEMBER_EN;
+	const TRACKING_CATEGORY_INT = TrackingCategories::FOUNDER_NEW_MEMBER_INT;
 
 	/**
 	 * @template avatarLayout
@@ -422,7 +450,9 @@ class FounderNewMemberController extends EmailController {
 	}
 }
 
-class FounderTipsController extends EmailController {
+class FounderTipsController extends FounderController {
+	const TRACKING_CATEGORY_EN = TrackingCategories::FOUNDER_TIPS_0_DAY_EN;
+	const TRACKING_CATEGORY_INT = TrackingCategories::FOUNDER_TIPS_0_DAY_INT;
 
 	const LAYOUT_CSS = "digestLayout.css";
 
@@ -551,6 +581,8 @@ class FounderTipsController extends EmailController {
 }
 
 class FounderTipsThreeDaysController extends FounderTipsController {
+	const TRACKING_CATEGORY_EN = TrackingCategories::FOUNDER_TIPS_3_DAY_EN;
+	const TRACKING_CATEGORY_INT = TrackingCategories::FOUNDER_TIPS_3_DAY_INT;
 
 	const WAM_LINK = "http://www.wikia.com/WAM";
 
@@ -607,6 +639,8 @@ class FounderTipsThreeDaysController extends FounderTipsController {
 
 }
 class FounderTipsTenDaysController extends FounderTipsController {
+	const TRACKING_CATEGORY_EN = TrackingCategories::FOUNDER_TIPS_10_DAY_EN;
+	const TRACKING_CATEGORY_INT = TrackingCategories::FOUNDER_TIPS_10_DAY_INT;
 
 	protected function getSubject() {
 		return $this->getMessage( 'emailext-founder-10-days-subject', $this->wikiName )->text();

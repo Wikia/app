@@ -19,7 +19,15 @@ class AssetsManagerSassBuilderTest extends WikiaBaseTest {
 	 * @slowExecutionTime 0.85936 ms
 	 */
 	public function testSassBuilder() {
-		$this->disableMemCache();
+		// disable memcache layer in this test
+		$mock_memc = $this->getMock('stdClass',array('get','set'));
+		$mock_memc->expects($this->any())
+			->method('get')
+			->will($this->returnValue(false));
+		$mock_memc->expects($this->any())
+			->method('set')
+			->will($this->returnValue(true));
+		$this->mockGlobalVariable('wgMemc', $mock_memc);
 
 		$request = new WebRequest();
 		$request->setVal('oid', self::SASS_FILE);

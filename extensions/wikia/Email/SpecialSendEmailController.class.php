@@ -2,6 +2,7 @@
 
 namespace Email;
 
+
 class SpecialSendEmailController extends \WikiaSpecialPageController {
 
 	const DEFAULT_TEMPLATE_ENGINE = \WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
@@ -61,16 +62,15 @@ class SpecialSendEmailController extends \WikiaSpecialPageController {
 	 * @template specialSendEmail
 	 */
 	public function index() {
-		if ( $this->wg->request->wasPosted() ) {
-			if ( $this->editTokenValidates() ) {
-				$result = $this->processForm();
-				$this->addBannerNotificationFromResult( $result );
-			} else {
-				$this->addErrorBannerNotification( 'Invalid edit token' );
-			}
+
+		if ( $this->wg->request->wasPosted() && $this->editTokenValidates() ) {
+			$result = $this->processForm();
+			$this->addBannerNotification( $result );
 		}
 
-		$this->response->setVal( 'forms', $this->getForms() );
+		$this->response->setVal(
+			"forms", $this->getForms()
+		);
 	}
 
 	/**
@@ -78,7 +78,7 @@ class SpecialSendEmailController extends \WikiaSpecialPageController {
 	 * @return bool
 	 */
 	private function editTokenValidates() {
-		return $this->wg->User->matchEditToken( $this->request->getVal( 'token' ) );
+		return 	$this->wg->User->matchEditToken( $this->request->getVal( 'token' )  );
 	}
 
 	/**
@@ -97,27 +97,17 @@ class SpecialSendEmailController extends \WikiaSpecialPageController {
 	 * add an error banner notification and output the error from the Email Controller.
 	 * @param \WikiaResponse $result
 	 */
-	private function addBannerNotificationFromResult( $result ) {
+	private function addBannerNotification( $result ) {
 		$responseData = $result->getData();
 		if ( $responseData['result'] == 'ok' ) {
-			$this->addSuccessBannerNotification( "Successfully sent email!" );
+			\BannerNotificationsController::addConfirmation(
+				"Successfully sent email!",
+				\BannerNotificationsController::CONFIRMATION_CONFIRM );
 		} else {
-			$this->addErrorBannerNotification( $responseData['msg'] );
+			\BannerNotificationsController::addConfirmation(
+				"Errors: " . $responseData['msg'],
+				\BannerNotificationsController::CONFIRMATION_ERROR );
 		}
-	}
-
-	private function addSuccessBannerNotification( $msg ) {
-		\BannerNotificationsController::addConfirmation(
-			$msg,
-			\BannerNotificationsController::CONFIRMATION_CONFIRM
-		);
-	}
-
-	private function addErrorBannerNotification( $msg ) {
-		\BannerNotificationsController::addConfirmation(
-			"Errors: " . $msg,
-			\BannerNotificationsController::CONFIRMATION_ERROR
-		);
 	}
 
 	/**
@@ -214,4 +204,5 @@ class SpecialSendEmailController extends \WikiaSpecialPageController {
 
 		return $form;
 	}
+
 }

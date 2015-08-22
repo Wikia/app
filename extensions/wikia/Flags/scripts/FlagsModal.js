@@ -64,7 +64,7 @@ require(
 	labelForSubmitAction = 'submit-form-untouched';
 
 	function init() {
-		$('body').on('click', '#ca-flags, .bn-flags-entry-point', showModal);
+		$('#ca-flags').on('click', showModal);
 		addFlagsButton();
 	}
 

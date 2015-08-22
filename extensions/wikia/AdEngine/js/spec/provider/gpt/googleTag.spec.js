@@ -1,22 +1,11 @@
-/*global describe, it, expect, modules, spyOn, document, beforeEach*/
+/*global describe, it, expect, modules, spyOn, document*/
 describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 	'use strict';
 
-	function noop() { return undefined; }
+	function noop() {}
 
-	var googleApi,
-		adContextOpts = {},
+	var googleTag,
 		mocks = {
-			adContext: {
-				getContext: function () {
-					return {
-						opts: adContextOpts
-					};
-				}
-			},
-			adTracker: {
-				track: noop
-			},
 			element: {
 				getId: noop,
 				setSizes: noop,
@@ -49,20 +38,14 @@ describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 					defineSlot: function () {
 						return {
 							addService: noop
-						};
+						}
 					}
 				}
 			}
 		};
 
-	beforeEach(function () {
-		adContextOpts = {};
-		var GoogleTag = modules['ext.wikia.adEngine.provider.gpt.googleTag'](
-			document,
-			mocks.log,
-			mocks.window
-		);
-		googleApi = new GoogleTag();
+	beforeEach(function() {
+		googleTag = modules['ext.wikia.adEngine.provider.gpt.googleTag'](document, mocks.log, mocks.window);
 	});
 
 	it('Initialization should prepare googletag object and configure pubads', function () {
@@ -72,9 +55,9 @@ describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 		spyOn(mocks.pubads, 'addEventListener');
 		spyOn(mocks.window.googletag, 'enableServices');
 
-		googleApi.init();
+		googleTag.init();
 
-		expect(googleApi.isInitialized()).toBe(true);
+		expect(googleTag.isInitialized()).toBe(true);
 		expect(mocks.pubads.collapseEmptyDivs).toHaveBeenCalled();
 		expect(mocks.pubads.enableSingleRequest).toHaveBeenCalled();
 		expect(mocks.pubads.disableInitialLoad).toHaveBeenCalled();
@@ -84,9 +67,9 @@ describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 
 	it('Push should call googletag cmd method', function () {
 		spyOn(mocks.window.googletag.cmd, 'push');
-		googleApi.init();
+		googleTag.init();
 
-		googleApi.push(noop);
+		googleTag.push(noop);
 
 		expect(mocks.window.googletag.cmd.push).toHaveBeenCalled();
 	});
@@ -94,45 +77,45 @@ describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 	it('Cannot flush without initialization', function () {
 		spyOn(mocks.window.googletag.cmd, 'push');
 
-		googleApi.flush();
+		googleTag.flush();
 
 		expect(mocks.window.googletag.cmd.push).not.toHaveBeenCalled();
 	});
 
 	it('Flush with empty slots queue should not refresh pubads', function () {
 		spyOn(mocks.pubads, 'refresh');
-		googleApi.init();
+		googleTag.init();
 
-		googleApi.flush();
+		googleTag.flush();
 
 		expect(mocks.pubads.refresh).not.toHaveBeenCalled();
 	});
 
 	it('Flush with not empty slots queue should refresh pubads', function () {
 		spyOn(mocks.pubads, 'refresh');
-		googleApi.init();
-		googleApi.addSlot(mocks.element);
+		googleTag.init();
+		googleTag.addSlot(mocks.element);
 
-		googleApi.flush();
+		googleTag.flush();
 
 		expect(mocks.pubads.refresh).toHaveBeenCalled();
 	});
 
 	it('Already added slot should be displayed once (called display method on googletag)', function () {
 		spyOn(mocks.window.googletag, 'display');
-		googleApi.init();
+		googleTag.init();
 
-		googleApi.addSlot(mocks.element);
-		googleApi.addSlot(mocks.element);
+		googleTag.addSlot(mocks.element);
+		googleTag.addSlot(mocks.element);
 
 		expect(mocks.window.googletag.display.calls.count()).toEqual(1);
 	});
 
 	it('Set page targeting params using pubads', function () {
 		spyOn(mocks.pubads, 'setTargeting');
-		googleApi.init();
+		googleTag.init();
 
-		googleApi.setPageLevelParams({
+		googleTag.setPageLevelParams({
 			foo: 7,
 			bar: 6
 		});

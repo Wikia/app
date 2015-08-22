@@ -9,19 +9,14 @@ class WikiService extends WikiaModel {
 	const CACHE_VERSION = '5';
 	const MAX_WIKI_RESULTS = 300;
 
-	const MOST_LINKED_CACHE_TTL = 86400; // 86400 == 24h
+	const MOST_LINKED_CACHE_TTL = 86400; //24h
 	const MOST_LINKED_LIMIT = 50;
-
-	const WIKI_ADMIN_IDS_CACHE_TTL = 10800; // 10800 == 3hrs;
-
 	const WIKIAGLOBAL_CITY_ID = 80433;
-
 	const FLAG_PROMOTED = 4;
 	const FLAG_BLOCKED = 8;
 	const FLAG_OFFICIAL = 16;
-
-	static $botGroups = [ 'bot', 'bot-global' ];
-	static $excludedWikiaUsers = [
+	static $botGroups = array('bot', 'bot-global');
+	static $excludedWikiaUsers = array(
 		22439, //Wikia
 		/* Abuse filter users start */
 		519362,
@@ -34,7 +29,7 @@ class WikiService extends WikiaModel {
 		15510531,
 		24039613
 		/* Abuse filter users start */
-	];
+	);
 
 	protected $cityVisualizationObject = null;
 	protected $wikisModel;
@@ -52,71 +47,64 @@ class WikiService extends WikiaModel {
 	 * @return array of $userIds
 	 */
 	public function getWikiAdminIds( $wikiId = 0, $useMaster = false, $excludeBots = false, $limit = null, $includeFounder = true ) {
-		if ( !empty( $this->wg->FounderEmailsDebugUserId ) ) {
-			return [ $this->wg->FounderEmailsDebugUserId ];
-		}
+		wfProfileIn( __METHOD__ );
 
-		$wikiId = empty( $wikiId ) ? $this->wg->CityId : $wikiId ;
-		$wiki = WikiFactory::getWikiById( $wikiId );
+		$userIds = array();
+		if ( empty($this->wg->FounderEmailsDebugUserId) ) {
+			// get founder
+			$wikiId = ( empty($wikiId) ) ? $this->wg->CityId : $wikiId ;
+			$wiki = WikiFactory::getWikiById($wikiId);
+			if ( !empty($wiki) && $wiki->city_public == 1 ) {
+				if ($includeFounder) {
+					$userIds[] = $wiki->city_founding_user;
+				}
 
-		if ( empty( $wiki ) || $wiki->city_public != 1 ) {
-			return [];
-		}
+				// get admin and bureaucrat
+				if ( empty($this->wg->EnableAnswers) ) {
+					$memKey = $this->getMemKeyAdminIds( $wikiId, $excludeBots, $limit );
 
-		// Get founder
-		$userIds = [];
-		if ( $includeFounder ) {
-			$userIds[] = $wiki->city_founding_user;
-		}
+					$adminIds = WikiaDataAccess::cache(
+						$memKey,
+						60 * 60 * 3,
+						function() use ($wiki, $useMaster, $excludeBots, $limit) {
+							$dbname = $wiki->city_dbname;
+							$dbType = ( $useMaster ) ? DB_MASTER : DB_SLAVE;
+							$db = wfGetDB( $dbType, array(), $dbname );
 
-		if ( !empty( $this->wg->EnableAnswers ) ) {
-			return $userIds;
-		}
+							$conditions = array("ug_group in ('sysop','bureaucrat')");
 
-		// Get admins and bureaucrats
-		$memKey = $this->getMemKeyAdminIds( $wikiId, $excludeBots, $limit );
-		$adminIds = WikiaDataAccess::cache(
-			$memKey,
-			self::WIKI_ADMIN_IDS_CACHE_TTL,
-			function() use ( $wiki, $useMaster, $excludeBots, $limit ) {
-				$dbName = $wiki->city_dbname;
-				$dbType = $useMaster ? DB_MASTER : DB_SLAVE;
-				$db = wfGetDB( $dbType, [], $dbName );
+							if ($excludeBots) {
+								$conditions[] = "ug_user not in (select distinct ug_user from user_groups where ug_group in (" .
+									$db->makeList(self::$botGroups) .
+									"))";
+							}
 
-				return self::getAdminIdsFromDB( $db, $excludeBots, $limit );
+							$result = $db->select(
+								'user_groups',
+								'distinct ug_user',
+								$conditions,
+								__METHOD__,
+								(!empty($limit))?(array('LIMIT' => $limit)):array()
+							);
+
+							$adminIds = array();
+							while ( $row = $db->fetchObject($result) ) {
+								$adminIds[] = $row->ug_user;
+							}
+							$db->freeResult( $result );
+							return $adminIds;
+						}
+					);
+
+					$userIds = array_unique( array_merge($userIds, $adminIds) );
+				}
 			}
-		);
+		} else {
+			$userIds[] = $this->wg->FounderEmailsDebugUserId;
+		}
 
-		$userIds = array_unique( array_merge( $userIds, $adminIds ) );
-
+		wfProfileOut( __METHOD__ );
 		return $userIds;
-	}
-
-	private static function getAdminIdsFromDB( DatabaseBase $db, $excludeBots = false, $limit = null ) {
-		$conditions = [ 'ug_group' => [ 'sysop', 'bureaucrat' ] ];
-
-		if ( $excludeBots ) {
-			$groupList = $db->makeList( self::$botGroups );
-			$subQuery = "select distinct ug_user from user_groups where ug_group in ($groupList)";
-
-			$conditions[] = "ug_user not in ($subQuery)";
-		}
-
-		$result = $db->select(
-			'user_groups',
-			'distinct ug_user',
-			$conditions,
-			__METHOD__,
-			!empty( $limit ) ? [ 'LIMIT' => $limit ] : []
-		);
-
-		$adminIds = [];
-		while ( $row = $db->fetchObject( $result ) ) {
-			$adminIds[] = $row->ug_user;
-		}
-		$db->freeResult( $result );
-
-		return $adminIds;
 	}
 
 	/**

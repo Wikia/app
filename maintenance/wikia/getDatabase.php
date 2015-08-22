@@ -41,13 +41,13 @@ if (array_key_exists('p', $opts)) {
 switch($wgWikiaDatacenter) {
 	case WIKIA_DC_POZ:
 		$wgDBdevboxServer1 = 'dev-db-p1';
-		$wgDBdevboxServer2 = 'dev-db-p1';
+		$wgDBdevboxServer2 = 'dev-db-p2';
 		$wgDBdevboxCentral = 'dev-db-p1';
 		break;
 	case WIKIA_DC_SJC:
-		$wgDBdevboxServer1 = 'dev-db-s1';
-		$wgDBdevboxServer2 = 'dev-db-s1';
-		$wgDBdevboxCentral = 'dev-db-s1';
+		$wgDBdevboxServer1 = 'dev-db-a1';
+		$wgDBdevboxServer2 = 'dev-db-b1';
+		$wgDBdevboxCentral = 'dev-db-central';
 		break;
 	default:
 		die("unknown data center: {$opts['p']}\n$USAGE");

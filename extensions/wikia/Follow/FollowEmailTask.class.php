@@ -5,7 +5,15 @@ use Wikia\Tasks\Tasks\BaseTask;
 class FollowEmailTask extends BaseTask {
 
 	public function emailFollowNotifications( $initiatingUser, $aWatchers, $iUserId, $iNamespace, $sMessage, $sAction ) {
-		Wikia::initAsyncRequest( $this->getWikiId(), $initiatingUser );
+		$wg = F::app()->wg;
+		$wg->DBname = WikiFactory::IDtoDB( $this->getWikiId() );
+		$wg->Server = trim( WikiFactory::DBtoUrl( F::app()->wg->DBname ), '/' );
+
+		if ( !empty( $wg->DevelEnvironment ) ) {
+			$wg->Server = WikiFactory::getLocalEnvURL( $wg->Server );
+		}
+
+		$wg->User = User::newFromId( $initiatingUser );
 
 		$targetUser = User::newFromId( $iUserId );
 

@@ -43,7 +43,10 @@ class SendGridPostbackController extends WikiaApiController {
 			$status 	= $this->safe_get($event, 'status', '');
 			$reason		= $this->safe_get($event, 'reason', '');
 
-			if ( $this->wg->Request->wasPosted() ) {
+			$generatedToken = wfGetEmailPostbackToken( $email_id, $email_addr );
+
+			if ( $this->wg->Request->wasPosted() && $token == $generatedToken ) {
+
 				// log postback data
 				$insert_data = array(
 					"mail_id"      => $email_id,

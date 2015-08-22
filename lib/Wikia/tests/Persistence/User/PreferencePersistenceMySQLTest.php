@@ -19,6 +19,7 @@ class PreferencePersistenceMySQLTest extends \PHPUnit_Framework_TestCase {
 		$this->mysqliMockSlave = $this->getMockBuilder( '\DatabaseMysqli' )
 			->setMethods( [ 'select', 'mysqlRealEscapeString' ] )
 			->disableOriginalConstructor()
+			->disableAutoload()
 			->getMock();
 
 		$this->mysqliMockSlave
@@ -28,6 +29,7 @@ class PreferencePersistenceMySQLTest extends \PHPUnit_Framework_TestCase {
 		$this->mysqliMockMaster = $this->getMockBuilder( '\DatabaseMysqli' )
 			->setMethods( [ 'upsert', 'mysqlRealEscapeString' ] )
 			->disableOriginalConstructor()
+			->disableAutoload()
 			->getMock();
 
 		$this->mysqliMockMaster

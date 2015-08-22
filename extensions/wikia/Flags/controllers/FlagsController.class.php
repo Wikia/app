@@ -9,6 +9,7 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
 
+use Flags\FlagsCache;
 use Flags\FlagsHelper;
 use Flags\Views\FlagView;
 use Wikia\Logger\Loggable;
@@ -463,7 +464,7 @@ class FlagsController extends WikiaController {
 		return $this->helper;
 	}
 
-	private function logResponseException( \Exception $e, \WikiaRequest $request ) {
+	private function logResponseException( Exception $e, WikiaRequest $request ) {
 		$this->error(
 			'FlagsLog Exception',
 			[

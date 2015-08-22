@@ -230,18 +230,18 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 
 	private function getEmailController( User $admin, array $eventData ) {
 		if ( $this->hasHitNotificationLimit( $admin ) ) {
-			return Email\Controller\FounderActiveController::class;
+			return 'Email\Controller\FounderActive';
 		}
 
 		if ( $eventData['registeredUserFirstEdit'] ) {
-			return Email\Controller\FounderEditController::class;
+			return 'Email\Controller\FounderEdit';
 		}
 
 		if ( $eventData['registeredUser'] ) {
-			return Email\Controller\FounderMultiEditController::class;
+			return 'Email\Controller\FounderMultiEdit';
 		}
 
-		return Email\Controller\FounderAnonEditController::class;
+		return 'Email\Controller\FounderAnonEdit';
 	}
 
 	/**

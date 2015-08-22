@@ -1,0 +1,18 @@
+{
+	"@metadata": {
+		"authors": [
+			"Dj",
+			"Einstein2",
+			"Misibacsi",
+			"ViDam"
+		]
+	},
+	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]]",
+	"tag-visualeditor-description": "A szerkesztés a [[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]]ral készült.",
+	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor: Ellenőrizendő]]",
+	"tag-visualeditor-needcheck-description": "A szerkesztés a [[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]]ral készült, és a rendszer észlelte, hogy a wikiszövegben nem kívánt módosítások történhettek.",
+	"visualeditor-feedback-link": "Project:VisualEditor/Visszajelzés",
+	"visualeditor-feedback-tool": "Visszajelzés",
+	"visualeditor-help-label": "Felhasználói útmutató elolvasása",
+	"visualeditor-help-title": "Felhasználói útmutató a szerkesztő használatához"
+}

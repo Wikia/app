@@ -4,11 +4,12 @@ namespace Email;
 
 use TijsVerkoyen\CssToInlineStyles\CssToInlineStyles;
 use Wikia\Logger\WikiaLogger;
+use Email\Tracking\TrackingCategories;
 
 abstract class EmailController extends \WikiaController {
 	const DEFAULT_TEMPLATE_ENGINE = \WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
 
-	const TRACKED_LANGUAGES = [ 'EN', 'PL', 'DE', 'ES', 'FR', 'IT', 'JA', 'NL', 'PT', 'RU', 'ZH' ];
+	const TRACKING_CATEGORY = TrackingCategories::DEFAULT_CATEGORY;
 
 	const AVATAR_SIZE = 50;
 
@@ -177,6 +178,7 @@ abstract class EmailController extends \WikiaController {
 				$this->assertGoodStatus( $status );
 			}
 		} catch ( \Exception $e ) {
+			$this->trackEmailError( $e );
 			$this->setErrorResponse( $e );
 			return;
 		}
@@ -210,7 +212,10 @@ abstract class EmailController extends \WikiaController {
 			$result = 'genericError';
 		}
 
-		$this->trackEmailError( $e, $result );
+		WikiaLogger::instance()->error( 'Error while sending email', [
+			'result' => $result,
+			'msg' => $e->getMessage(),
+		] );
 
 		$this->hasErrorResponse = true;
 		$this->response->setData( [
@@ -308,31 +313,13 @@ abstract class EmailController extends \WikiaController {
 	}
 
 	/**
-	 * Returns the category string we'll send to SendGrid with this email for
+	 * Returns the category string we'll send to sendgrid with this email for
 	 * tracking purposes.
 	 *
 	 * @return string
 	 */
 	public function getSendGridCategory() {
-		$short = $this->getControllerShortName();
-		$lang = $this->getLangForTracking();
-
-		return  $short . '-' . $lang;
-	}
-
-	/**
-	 * Return the language code we'll use for tracking.  If the current language is not
-	 * one of our currently supported languages, use code 'xx'.
-	 *
-	 * @return string
-	 */
-	protected function getLangForTracking() {
-		$lang = 'EN';
-		if ( preg_match( '/^([^_-]+)/', $this->targetLang, $matches ) ) {
-			$lang = strtoupper( $matches[1] );
-		}
-
-		return in_array( $lang, self::TRACKED_LANGUAGES ) ? $lang : 'XX';
+		return static::TRACKING_CATEGORY;
 	}
 
 	/**
@@ -511,7 +498,7 @@ abstract class EmailController extends \WikiaController {
 		} else if ( is_object( $username ) ) {
 			throw new Fatal( 'Non-user object passed when user object or username expected' );
 		} else {
-			$user = \User::newFromName( $username, $validate = false );
+			$user = \User::newFromName( $username );
 		}
 		$this->assertValidUser( $user );
 
@@ -559,6 +546,10 @@ abstract class EmailController extends \WikiaController {
 	public function assertValidUser( $user ) {
 		if ( !$user instanceof \User ) {
 			throw new Fatal( 'Unable to create user object');
+		}
+
+		if ( $user->getId() == 0 ) {
+			throw new Fatal( 'Unable to find user' );
 		}
 	}
 
@@ -725,18 +716,18 @@ abstract class EmailController extends \WikiaController {
 		WikiaLogger::instance()->info( 'Submitting email via UserMailer', [
 			'issue' => 'SOC-910',
 			'method' => __METHOD__,
-			'controller' => self::getControllerShortName(),
+			'controller' => get_class( $this ),
 			'toAddress' => $this->getToAddress()->toString(),
 			'fromAddress' => $this->getFromAddress()->toString(),
 			'subject' => $this->getSubject(),
-			'category' => $this->getSendGridCategory(),
+			'category' => static::TRACKING_CATEGORY,
 			'currentUser' => $this->getCurrentUserName(),
 			'targetUser' => $this->getTargetUserName(),
 			'targetLang' => $this->targetLang,
 		] );
 	}
 
-	private function trackEmailError( \Exception $e, $result ) {
+	private function trackEmailError( \Exception $e ) {
 		if ( $this->currentUser instanceof \User ) {
 			$currentName = $this->currentUser->getName();
 		} else {
@@ -752,13 +743,12 @@ abstract class EmailController extends \WikiaController {
 		WikiaLogger::instance()->error( 'Failed to submit email via UserMailer', [
 			'issue' => 'SOC-910',
 			'method' => __METHOD__,
-			'controller' => self::getControllerShortName(),
-			'category' => $this->getSendGridCategory(),
+			'controller' => get_class( $this ),
+			'category' => static::TRACKING_CATEGORY,
 			'errorMessage' => $e->getMessage(),
 			'currentUser' => $currentName,
 			'targetUser' => $targetName,
 			'targetLang' => $this->targetLang,
-			'result' => $result,
 		] );
 	}
 }

@@ -1,29 +1,32 @@
 /*global define*/
 define('ext.wikia.adEngine.slot.inContentPlayer', [
-	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adTracker',
 	'wikia.geo',
+	'wikia.instantGlobals',
 	'wikia.log',
 	'wikia.window'
-], function (adContext, adTracker, geo, log, win) {
+], function (adTracker, geo, instantGlobals, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.slot.inContentPlayer',
 		selector = '#mw-content-text > h2',
 		slotName = 'INCONTENT_PLAYER',
 		adHtml = '<div id="' + slotName + '" class="wikia-ad default-height"></div>',
-		context = adContext.getContext(),
 		header;
 
 	/**
 	 * If conditions are met adds dynamically new slot in the right place and sends tracking data
 	 */
 	function init() {
-		var logMessage,
+		var incontentPlayerCountries = instantGlobals.wgAdDriverIncontentPlayerSlotCountries,
+			logMessage,
 			logWikiData = '(wikiId: ' + win.wgCityId + ' articleId: ' + win.wgArticleId + ')',
 			$header;
 
-		if (!context.slots.incontentPlayer) {
+		if (!incontentPlayerCountries ||
+			!incontentPlayerCountries.indexOf ||
+			incontentPlayerCountries.indexOf(geo.getCountryCode()) === -1
+		) {
 			log('INCONTENT_PLAYER not added - INCONTENT_PLAYER disabled in this country', 'debug', logGroup);
 			return;
 		}

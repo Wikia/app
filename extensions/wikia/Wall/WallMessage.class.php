@@ -935,9 +935,7 @@ class WallMessage {
 	public function removeWatch( User $user ) {
 		if ( !$this->isMain() ) {
 			$parent = $this->getTopParentObj();
-			if ( $parent ) {
-				$user->removeWatch( $parent->getTitle() );
-			}
+			if ( $parent ) $user->removeWatch( $parent->getTitle() );
 		} else {
 			$user->removeWatch( $this->title );
 		}

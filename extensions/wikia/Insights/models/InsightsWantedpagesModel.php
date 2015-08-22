@@ -5,7 +5,7 @@
  * A class specific to a subpage with a list of pages
  * that do not exist and have been referred to.
  */
-class InsightsWantedpagesModel extends InsightsQueryPageModel {
+class InsightsWantedpagesModel extends InsightsQuerypageModel {
 	const INSIGHT_TYPE = 'wantedpages';
 
 	public function getDataProvider() {
@@ -26,7 +26,6 @@ class InsightsWantedpagesModel extends InsightsQueryPageModel {
 
 				$title = Title::newFromText( $row->title, $row->namespace );
 				if ( $title === null ) {
-					$this->error( 'WantedPagesModel received reference to non existent page' );
 					continue;
 				}
 

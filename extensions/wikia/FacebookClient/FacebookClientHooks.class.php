@@ -1,7 +1,5 @@
 <?php
 
-use Wikia\Logger\WikiaLogger;
-
 /**
  * Class FacebookClientHooks
  */
@@ -133,15 +131,8 @@ class FacebookClientHooks {
 			$fbStatus = F::app()->wg->Request->getVal( 'fbconnected' );
 
 			if ( $fbStatus  == '1' ) {
-				try {
-					// check if current user is connected to facebook
-					$map = FacebookClient::getInstance()->getMapping();
-				} catch ( Exception $e ) {
-					WikiaLogger::instance()->error( 'Could not find mapping ', [
-						'issue' => 'SOC-1112',
-						'error' => $e->getMessage(),
-					] );
-				}
+				// check if current user is connected to facebook
+				$map = FacebookClient::getInstance()->getMapping();
 				if ( !empty( $map ) ) {
 					BannerNotificationsController::addConfirmation(
 						wfMessage( 'fbconnect-connect-msg' )->escaped()

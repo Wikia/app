@@ -4,6 +4,7 @@ namespace Email\Controller;
 
 use Email\EmailController;
 use Email\Check;
+use Email\Tracking\TrackingCategories;
 
 abstract class AbstractEmailConfirmationController extends EmailController {
 
@@ -73,6 +74,8 @@ abstract class AbstractEmailConfirmationController extends EmailController {
 
 class EmailConfirmationController extends AbstractEmailConfirmationController {
 
+	const TRACKING_CATEGORY = TrackingCategories::EMAIL_CONFIRMATION;
+
 	protected function getSubject() {
 		return $this->getMessage( 'emailext-emailconfirmation-subject' )->text();
 	}
@@ -92,6 +95,8 @@ class EmailConfirmationController extends AbstractEmailConfirmationController {
 
 class EmailConfirmationReminderController extends AbstractEmailConfirmationController {
 
+	const TRACKING_CATEGORY = TrackingCategories::EMAIL_CONFIRMATION_REMINDER;
+
 	protected function getSubject() {
 		return $this->getMessage( 'emailext-emailconfirmation-reminder-subject', $this->getTargetUserName() )->parse();
 	}
@@ -110,24 +115,7 @@ class EmailConfirmationReminderController extends AbstractEmailConfirmationContr
 
 class ConfirmationChangedEmailController extends AbstractEmailConfirmationController {
 
-	private $newEmail;
-
-	public function initEmail() {
-		parent::initEmail();
-
-		$this->newEmail = $this->request->getVal( 'newEmail' );
-		$this->assertValidChangedParams();
-	}
-
-	protected function assertValidChangedParams() {
-		if ( empty( $this->newEmail ) ) {
-			throw new Check( "A value must be passed for parameter 'newEmail'" );
-		}
-	}
-
-	protected function getTargetUserEmail() {
-		return $this->newEmail;
-	}
+	const TRACKING_CATEGORY = TrackingCategories::CHANGED_EMAIL_CONFIRMATION;
 
 	protected function getSubject() {
 		return $this->getMessage( 'emailext-emailconfirmation-changed-subject' )->text();
@@ -143,22 +131,11 @@ class ConfirmationChangedEmailController extends AbstractEmailConfirmationContro
 			$this->getMessage( 'emailext-emailconfirmation-changed-footer-2' )->text(),
 		];
 	}
-
-	protected static function getEmailSpecificFormFields() {
-		$parentForm = parent::getEmailSpecificFormFields();
-
-		$parentForm['inputs'][] = [
-			'type' => 'text',
-			'name' => 'newEmail',
-			'label' => "New Email",
-			'tooltip' => "The user's new email",
-		];
-
-		return $parentForm;
-	}
 }
 
 class ReactivateAccountController extends AbstractEmailConfirmationController {
+
+	const TRACKING_CATEGORY = TrackingCategories::REACTIVATE_ACCOUNT;
 
 	protected function getSubject() {
 		return $this->getMessage( 'emailext-reactivate-account-subject' )->text();

@@ -14,8 +14,4 @@ $default-blackout-background-color: rgba(0, 0, 0, 0.5);
 	&.visible {
 		z-index: $zTop;
 	}
-
-	&.hidden {
-		display: none;
-	}
 }

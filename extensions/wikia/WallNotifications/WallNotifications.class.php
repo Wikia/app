@@ -1,5 +1,4 @@
 <?php
-
 use Wikia\Logger\WikiaLogger;
 
 /**
@@ -415,8 +414,7 @@ class WallNotifications {
 				'details' => $text,
 				'targetUser' => $watcherName,
 				'wallUserName' => $notifData->wall_username,
-				'threadId' => $notifData->title_id,
-				'parentId' => $notifData->parent_id,
+				'threadId' => $notifData->title_id
 			];
 
 			F::app()->sendRequest( $controller, 'handle', $params );
@@ -456,16 +454,16 @@ class WallNotifications {
 			&& MWNamespace::getSubject( $notification->data->article_title_ns ) == NS_WIKIA_FORUM_BOARD
 		) {
 			if ( $notification->isMain() ) {
-				$controller = Email\Controller\ForumController::class;
+				$controller = 'Email\Controller\Forum';
 			} else {
-				$controller = Email\Controller\ReplyForumController::class;
+				$controller = 'Email\Controller\ReplyForum';
 			}
 		} else if ( $notification->isMain() && $notification->data->wall_username != $watcherName ) {
-			$controller = Email\Controller\FollowedWallMessageController::class;
+			$controller = 'Email\Controller\FollowedWallMessage';
 		} else if ( !$notification->isMain() ) {
-			$controller = Email\Controller\ReplyWallMessageController::class;
+			$controller = 'Email\Controller\ReplyWallMessage';
 		} else {
-			$controller = Email\Controller\OwnWallMessageController::class;
+			$controller = 'Email\Controller\OwnWallMessage';
 		}
 
 		return $controller;
@@ -489,14 +487,6 @@ class WallNotifications {
 	protected function getWatchlist( $name, $titleDbkey, $ns = NS_USER_WALL ) {
 		// TODO: add some caching
 		$userTitle = Title::newFromText( $name, MWNamespace::getSubject( $ns ) );
-		if ( empty( $userTitle ) ) {
-			WikiaLogger::instance()->error( 'User page is non-existent', [
-				'issue' => 'SOC-1070',
-				'name' => $name,
-				'ns' => $ns,
-			] );
-			return [];
-		}
 
 		$dbw = $this->getLocalDB( true );
 		$res = $dbw->select(

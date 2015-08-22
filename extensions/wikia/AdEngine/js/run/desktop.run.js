@@ -9,7 +9,6 @@ require([
 	'ext.wikia.adEngine.dartHelper',
 	'ext.wikia.adEngine.messageListener',
 	'ext.wikia.adEngine.provider.evolve',
-	'ext.wikia.adEngine.slot.scrollHandler',
 	'ext.wikia.adEngine.slotTracker',
 	'ext.wikia.adEngine.slotTweaker',
 	'wikia.krux',
@@ -23,7 +22,6 @@ require([
 	dartHelper,
 	messageListener,
 	providerEvolve,
-	scrollHandler,
 	slotTracker,
 	slotTweaker,
 	krux,
@@ -74,8 +72,6 @@ require([
 		adTracker.measureTime('adengine.init', 'queue.desktop').track();
 		win.adslots2 = win.adslots2 || [];
 		adEngine.run(adConfigDesktop, win.adslots2, 'queue.desktop');
-
-		scrollHandler.init();
 
 		// Krux
 		krux.load(kruxSiteId);

@@ -4,9 +4,10 @@ namespace Email\Controller;
 
 use Email\EmailController;
 use Email\Check;
+use Email\Tracking\TrackingCategories;
 
 class UserNameChangeController extends EmailController {
-
+	const TRACKING_CATEGORY = TrackingCategories::USER_NAME_CHANGE;
 	const LAYOUT_CSS = 'userNameLayout.css';
 
 	protected $oldUserName;

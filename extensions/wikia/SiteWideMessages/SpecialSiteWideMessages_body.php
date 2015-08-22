@@ -54,7 +54,7 @@ class SiteWideMessages extends SpecialPage {
 		global $wgUser, $wgOut, $wgRequest, $wgTitle, $wgParser;
 
 		//add CSS (from static file)
-		global $wgExtensionsPath, $wgExternalSharedDB, $wgDWStatsDB;
+		global $wgExtensionsPath, $wgExternalSharedDB;
 		$wgOut->addScript("\n\t<link rel=\"stylesheet\" type=\"text/css\" href=\"$wgExtensionsPath/wikia/SiteWideMessages/SpecialSiteWideMessages.css\" />");
 
 		$template = 'editor';	//default template
@@ -85,18 +85,18 @@ class SiteWideMessages extends SpecialPage {
 		$formData['mLang'] = $wgRequest->getArray('mLang');
 
 		//fetching hub list
-		$DB = wfGetDB( DB_SLAVE, array(), $wgDWStatsDB );
+		$DB = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
 		$dbResult = $DB->select(
-			[ 'dimension_verticals' ],
-			[ 'id, name' ],
+			array( 'city_cats' ),
+			array( 'cat_id, cat_name' ),
 			null,
 			__METHOD__,
-			[ 'ORDER BY' => 'id' ]
+			array( 'ORDER BY' => 'cat_name' )
 		);
 
-		$hubList = [];
+		$hubList = array();
 		while ($row = $DB->FetchObject($dbResult)) {
-			$hubList[$row->id] = $row->name;
+			$hubList[$row->cat_id] = $row->cat_name;
 		}
 		if ($dbResult !== false) {
 			$DB->FreeResult($dbResult);
@@ -105,7 +105,6 @@ class SiteWideMessages extends SpecialPage {
 		$formData['hubNames'] = $hubList;
 
 		//fetching cluster list
-		$DB = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
 		$dbResult = $DB->select(
 			array( 'city_list' ),
 			array( 'city_cluster' ),
@@ -232,9 +231,7 @@ class SiteWideMessages extends SpecialPage {
 						$taskLink = Linker::linkKnown(
 							GlobalTitle::newFromText( 'Tasks/log', NS_SPECIAL, 177 ),
 							"#{$mTaskId}",
-							[
-								'target' => '_blank'
-							],
+							array(),
 							array(
 								'id' => $mTaskId,
 							)

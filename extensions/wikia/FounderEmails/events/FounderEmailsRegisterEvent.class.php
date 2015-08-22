@@ -2,7 +2,7 @@
 
 class FounderEmailsRegisterEvent extends FounderEmailsEvent {
 
-	const EMAIL_CONTROLLER = Email\Controller\FounderNewMemberController::class;
+	const EMAIL_CONTROLLER = 'Email\Controller\FounderNewMember';
 
 	public function __construct( Array $eventData = [] ) {
 		parent::__construct( 'register' );

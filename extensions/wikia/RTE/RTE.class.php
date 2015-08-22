@@ -678,15 +678,10 @@ HTML
 	 * Modify values returned by User::getGlobalPreference() when wysiwyg is enabled
 	 */
 	static public function userGetOption($options, $name, &$value) {
-		global $wgRequest;
 		wfProfileIn(__METHOD__);
 
-		$useEditor = $wgRequest->getVal('useeditor', false);
-
 		// do not continue if user didn't turn on wysiwyg in preferences
-		if ( ( $options['editor'] === '1' && empty( $useEditor ) )
-				|| ( $useEditor === 'source' || $useEditor === 'mediawiki' )
-		) {
+		if (empty($options['enablerichtext'])) {
 			wfProfileOut(__METHOD__);
 			return true;
 		}
@@ -707,7 +702,6 @@ HTML
 		if ( array_key_exists($name, $values) ) {
 			// don't continue when on Special:Preferences (actually only check namespace ID, it's faster)
 			global $wgTitle, $wgRTEDisablePreferencesChange;
-
 			if ( !empty($wgRTEDisablePreferencesChange) || !empty($wgTitle) && ($wgTitle->getNamespace() == NS_SPECIAL) ) {
 				wfProfileOut(__METHOD__);
 				return true;

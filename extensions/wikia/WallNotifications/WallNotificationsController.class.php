@@ -1,13 +1,16 @@
 <?php
-
-/**
- * Class WallNotificationsController
- *
- * Render Notifications in top-right corner of Wikia interface
+/*
+ * in here we render Notifications in top-right corner of Wikia interface
  */
+
+
 class WallNotificationsController extends WikiaController {
 
 	const NOTIFICATION_TITLE_LIMIT = 48;
+
+	public function __construct() {
+		$this->app = F::App();
+	}
 
 	public function Index() {
 		global $wgUser, $wgEnableWallExt, $wgEnableForumExt;
@@ -138,22 +141,20 @@ class WallNotificationsController extends WikiaController {
 	}
 
 	public function Notification() {
-		$wg = F::app()->wg;
+		global $wgUser;
 
 		$notify = $this->request->getVal( 'notify' );
 		if ( empty( $notify['grouped'][0] ) ) {
-			// Do not try to render notifications missing this data
-			return;
+			// do not render this notification, it's bugged
+			return false;
 		}
-		/** @var WallNotificationEntity $firstEntity */
-		$firstEntity = $notify['grouped'][0];
 
-		$data = $firstEntity->data;
+		$data = $notify['grouped'][0]->data;
 		if ( isset( $data->type ) && $data->type === 'ADMIN' ) {
 			$this->forward( __CLASS__, 'NotificationAdmin' );
 			return;
 		}
-
+		$data = $notify['grouped'][0]->data;
 		if ( isset( $data->type ) && $data->type === 'OWNER' ) {
 			$this->forward( __CLASS__, 'NotificationAdmin' );
 			return;
@@ -180,16 +181,16 @@ class WallNotificationsController extends WikiaController {
 
 		$msg = "";
 		wfRunHooks( 'NotificationGetNotificationMessage', [
-			&$this, &$msg, $firstEntity->isMain(), $data, $authors, $userCount,  $wg->User->getName()
+			&$this, &$msg, $notify['grouped'][0]->isMain(), $data, $authors, $userCount,  $wgUser->getName()
 		] );
 
 		if ( empty( $msg ) ) {
 			$msg = $this->getNotificationMessage(
-				$firstEntity->isMain(),
+				$notify['grouped'][0]->isMain(),
 				$data,
 				$authors,
 				$userCount,
-				$wg->User->getName()
+				$wgUser->getName()
 			);
 		}
 
@@ -205,9 +206,11 @@ class WallNotificationsController extends WikiaController {
 		// chronological order. We want the url to point to the oldest unread item (which is the last element in the
 		// array) instead of the most recent so that they start reading where the left off. See bugid 64560.
 		$oldestEntity = end( $notify['grouped'] );
-		$url = empty( $oldestEntity->data->url ) ? '' :  $oldestEntity->data->url;
+		if ( empty( $oldestEntity->data->url ) ) {
+			$oldestEntity->data->url = '';
+		}
 
-		$this->response->setVal( 'url', $this->fixNotificationURL( $url ) );
+		$this->response->setVal( 'url', $this->fixNotificationURL( $oldestEntity->data->url ) );
 		$this->response->setVal( 'authors', array_reverse( $authors ) );
 		$this->response->setVal( 'title', $data->thread_title );
 		$this->response->setVal( 'iso_timestamp',  wfTimestamp( TS_ISO_8601, $data->timestamp ) );

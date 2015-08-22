@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="24px"
+	 height="24px" viewBox="0 0 24 24" style="enable-background:new 0 0 24 24;" xml:space="preserve">
+<g id="parameter-set" style="opacity:0.75;">
+	<path id="offset_front" style="fill-rule:evenodd;clip-rule:evenodd;" d="M16.504,11.019h-3.987c-0.998,0-1.496,0.498-1.496,1.494v2.991
+		c0,0.998,0.498,1.496,1.496,1.496h3.987C17.502,17,18,16.502,18,15.504v-2.991C18,11.517,17.502,11.019,16.504,11.019z
+		 M17.002,15.504c0,0.234-0.259,0.498-0.498,0.498h-2.991V12h2.991c0.239,0,0.498,0.279,0.498,0.513V15.504z"/>
+	<path id="box_middle" style="fill-rule:evenodd;clip-rule:evenodd;" d="M9.516,11.513c0-0.996,0.504-1.513,1.502-1.513h3.912
+		c-0.153-0.655-0.616-1-1.426-1H9.517c-0.998,0-1.496,0.498-1.496,1.494v2.991c0,0.998,0.498,1.496,1.496,1.496L9.516,11.513z"/>
+	<path id="box_back" style="fill-rule:evenodd;clip-rule:evenodd;" d="M6.516,9.513C6.516,8.517,7.02,8,8.018,8h3.912
+		c-0.153-0.655-0.616-1-1.426-1H6.517C5.519,7,5.021,7.498,5.021,8.494v2.991c0,0.998,0.498,1.496,1.496,1.496L6.516,9.513z"/>
+</g>
+</svg>

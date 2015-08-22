@@ -755,10 +755,6 @@ class CurlHttpRequest extends MWHttpRequest {
 		return strlen( $content );
 	}
 
-	/**
-	 * @return Status
-	 * @throws MWException
-	 */
 	public function execute() {
 		parent::execute();
 
@@ -768,14 +764,9 @@ class CurlHttpRequest extends MWHttpRequest {
 
 		// Wikia change PLATFORM-1298 michal@wikia-inc.com
 		if ( $this->parsedUrl['scheme'] == 'https' ) {
-			$this->proxy = null;
-		}
-
-		// PLATFORM-1317: only set when the proxy is not an empty value [macbre]
-		if ( $this->proxy && !$this->noProxy ) {
+			$this->curlOptions[CURLOPT_PROXY] = null;
+		} else {
 			$this->curlOptions[CURLOPT_PROXY] = $this->proxy;
-
-			wfDebug( sprintf( "%s: setting a proxy to '%s'\n", __METHOD__, $this->proxy ) );
 		}
 		// End of Wikia change
 
@@ -833,26 +824,21 @@ class CurlHttpRequest extends MWHttpRequest {
 		// Wikia change - begin
 		/**
 		 * @author Michał Roszka <michal@wikia-inc.com>
-		 * @author macbre
 		 * @see PLATFORM-1317
 		 * @see PLATFORM-1308
 		 */
-		foreach ( $this->curlOptions as $option => $value ) {
-			if ( !curl_setopt( $curlHandle, $option, $value ) ) {
-				$e = new MWException( "Error setting curl options." );
-				if ( class_exists( 'Wikia\\Logger\\WikiaLogger' ) ) {
-					\Wikia\Logger\WikiaLogger::instance()->debug(
-						'PLATFORM-1317' ,
-						[
-							'option'     => $option,
-							'value'      => bin2hex( serialize( $value ) ),
-							'value_raw'  => $value,
-							'exception'  => $e
-						]
-					);
-				}
-				throw $e;
+		if ( !curl_setopt_array( $curlHandle, $this->curlOptions ) ) {
+			$e = new MWException( "Error setting curl options." );
+			if ( class_exists( 'Wikia\\Logger\\WikiaLogger' ) ) {
+				\Wikia\Logger\WikiaLogger::instance()->debug(
+					'PLATFORM-1317' ,
+					[
+						'curl_options' => bin2hex( serialize( $this->curlOptions ) ),
+						'exception' => $e
+					]
+				);
 			}
+			throw $e;
 		}
 		// Wikia change - end
 

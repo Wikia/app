@@ -81,14 +81,10 @@ class UserPreferences {
 	 * @param array $prefs
 	 */
 	public function setMultiple( $userId, $prefs ) {
-		$currentPreferences = $this->load( $userId );
+		$this->load( $userId );
 		$prefToSave = [ ];
 
 		foreach ( $prefs as $pref => $val ) {
-			if ($currentPreferences[$pref] == $val) {
-				continue;
-			}
-
 			$default = $this->getFromDefault( $pref );
 			if ( $val === null && isset( $default ) ) {
 				$val = $default;

@@ -64,9 +64,6 @@ class WikiaLogger {
 				$priorityString = 'Fatal Error';
 				break;
 			case E_STRICT:
-				$method = 'warning';
-				$priorityString = 'Strict Standards';
-				break;
 			case E_PARSE:
 			case E_COMPILE_ERROR:
 			case E_COMPILE_WARNING:

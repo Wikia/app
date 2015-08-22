@@ -1,0 +1,1 @@
+window.rangy = rangy;

@@ -21,14 +21,13 @@ class ApiAddMediaTemporary extends ApiAddMedia {
 	}
 
 	private function executeImage() {
-		global $wgContLanguageCode, $wgEnableCuratedContentUnauthorizedSave, $wgDisableAnonymousEditing;
+		global $wgContLanguageCode;
 		$duplicate = $this->getFileDuplicate( $this->mRequest->getFileTempName( 'file' ) );
 		if ( $duplicate ) {
-			return [
+			return array(
 				'title' => $duplicate->getTitle()->getText(),
-				'url' => $duplicate->getUrl(),
-				'article_id' => $duplicate->getTitle()->getArticleID()
-			];
+				'url' => $duplicate->getUrl()
+			);
 		} else {
 			// Check whether upload is enabled
 			if ( !UploadBase::isEnabled() ) {
@@ -40,26 +39,18 @@ class ApiAddMediaTemporary extends ApiAddMedia {
 				$this->mRequest->getUpload( 'file' )
 			);
 
-			// If wiki is Japanese content, then we check if anonymous edit is allowed. INT-158
-			// This condition will be changed as soon as Mercury has login for all wikis. 
-			// Enable unauthorized save for Curated Main Page Editor
-			// if $wgEnableCuratedContentUnauthorizedSave not empty and wiki is not Japanese(CONCF-741)
-			// Ticket for removal wg check: CONCF-900
-			if ( $wgContLanguageCode === 'ja' ) {
-				if ( $wgDisableAnonymousEditing ) {
-					$this->dieUsageMsg( 'noedit-anon' );
-				}
-			} elseif ( empty( $wgEnableCuratedContentUnauthorizedSave ) ) {
+			// If wiki is Japanese content, then we do not check permissions. INT-102
+			if ($wgContLanguageCode !== 'ja') {
 				$this->checkPermissions();
 			}
 
 			$this->verifyUpload();
 			$tempFile = $this->createTempFile( $this->mRequest->getFileTempName( 'file' ) );
-			return [
+			return array(
 				'title' => $this->mUpload->getTitle()->getText(),
 				'tempUrl' => $tempFile->getUrl(),
 				'tempName' => $tempFile->getName()
-			];
+			);
 		}
 	}
 

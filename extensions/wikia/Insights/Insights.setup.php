@@ -12,7 +12,7 @@
  * @author Kamil Koterba
  */
 
-$dir = __DIR__ . '/';
+$dir = dirname( __FILE__ ) . '/';
 
 $wgExtensionCredits['specialpage'][] = [
 	'name' => 'Insights',
@@ -33,10 +33,17 @@ $wgAutoloadClasses['InsightsController'] = $dir . 'InsightsController.class.php'
 $wgAutoloadClasses['InsightsHelper'] = $dir . 'InsightsHelper.php';
 
 /**
+ * Custom QueryPage sub-classes
+ */
+$wgAutoloadClasses['UnconvertedInfoboxesPage'] = $dir . 'specials/UnconvertedInfoboxesPage.class.php';
+
+/**
  * Special pages
  */
 $wgSpecialPages['Insights'] = 'InsightsController';
 $wgSpecialPageGroups['Insights'] = 'wikia';
+$wgSpecialPages['Nonportableinfoboxes'] = 'UnconvertedInfoboxesPage';
+$wgSpecialPageGroups['Nonportableinfoboxes'] = 'wikia';
 
 /**
  * Permissions
@@ -48,13 +55,12 @@ $wgGroupPermissions['*']['insights'] = true;
  * Models
  */
 $wgAutoloadClasses['InsightsModel'] = $dir . 'models/InsightsModel.php';
-$wgAutoloadClasses['InsightsPageModel'] = $dir . 'models/InsightsPageModel.php';
-$wgAutoloadClasses['InsightsQueryPageModel'] = $dir . 'models/InsightsQueryPageModel.php';
-$wgAutoloadClasses['InsightsDeadendModel'] = $dir . 'models/InsightsDeadendModel.php';
+$wgAutoloadClasses['InsightsQuerypageModel'] = $dir . 'models/InsightsQuerypageModel.php';
 $wgAutoloadClasses['InsightsUncategorizedModel'] = $dir . 'models/InsightsUncategorizedModel.php';
-$wgAutoloadClasses['InsightsUnconvertedInfoboxesModel'] = $dir . 'models/InsightsUnconvertedInfoboxesModel.php';
-$wgAutoloadClasses['InsightsWantedpagesModel'] = $dir . 'models/InsightsWantedpagesModel.php';
 $wgAutoloadClasses['InsightsWithoutimagesModel'] = $dir . 'models/InsightsWithoutimagesModel.php';
+$wgAutoloadClasses['InsightsDeadendModel'] = $dir . 'models/InsightsDeadendModel.php';
+$wgAutoloadClasses['InsightsWantedpagesModel'] = $dir . 'models/InsightsWantedpagesModel.php';
+$wgAutoloadClasses['InsightsUnconvertedInfoboxesModel'] = $dir . 'models/InsightsUnconvertedInfoboxesModel.php';
 
 /**
  * The right rail module

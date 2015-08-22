@@ -5,7 +5,7 @@
  * A class specific to a subpage with a list of pages
  * without images.
  */
-class InsightsWithoutimagesModel extends InsightsQueryPageModel {
+class InsightsWithoutimagesModel extends InsightsQuerypageModel {
 	const INSIGHT_TYPE = 'withoutimages';
 
 	public function getDataProvider() {

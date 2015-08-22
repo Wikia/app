@@ -23,6 +23,8 @@ class UserRights {
 	/**
 	 * data provider
 	 *
+	 * @author Maciej Błaszkowski <marooned at wikia-inc.com>
+	 *
 	 * @param User $user
 	 * @return array list of global groups
 	 */
@@ -39,7 +41,7 @@ class UserRights {
 				self::getMemcKey( $user ),
 				WikiaResponse::CACHE_LONG,
 				function() use ( $userId, $fname ) {
-					$dbr = self::getDB( DB_MASTER );
+					$dbr = self::getDB();
 
 					return $dbr->selectFieldValues(
 						'user_groups',
@@ -58,15 +60,13 @@ class UserRights {
 	}
 
 	/**
-	 * Get group data for the user object.
-	 * Global groups are always loaded here.
-	 * We filter them out for the add/remove hooks so that global groups can't be edited from local wikis.
+	 * Get group data for the user object. Needed for removing global group rights.
 	 *
-	 * @author grunny, owen
+	 * @author grunny
 	 */
 	public static function onUserLoadGroups( User $user ) {
 		$userId = $user->getId();
-		if ( $user->isAnon() ) {
+		if ( !self::isCentralWiki() || $user->isAnon() ) {
 			return true;
 		} elseif ( !isset( self::$globalGroups[$userId] ) ) {
 			// Load the global groups into the class variable
@@ -84,13 +84,9 @@ class UserRights {
 	static function addGlobalGroup( User $user, $group ) {
 		global $wgWikiaGlobalUserGroups;
 
-		if ( !self::isCentralWiki() || !in_array( $group, $wgWikiaGlobalUserGroups ) ) {
+		if ( !in_array( $group, $wgWikiaGlobalUserGroups ) ) {
 			return true;
 		}
-
-		// Purge cache first so in case of DB failure we don't leave inconsistent data in cache
-		WikiaDataAccess::cachePurge( self::getMemcKey( $user ) );
-		unset(self::$globalGroups[$user->getID()]);
 
 		$dbw = self::getDB( DB_MASTER );
 		if ( $user->getId() ) {
@@ -102,6 +98,8 @@ class UserRights {
 				__METHOD__
 			);
 		}
+
+		WikiaDataAccess::cachePurge( self::getMemcKey( $user ) );
 
 		wfRunHooks( 'AfterUserAddGlobalGroup', [ $user, $group ] );
 
@@ -118,13 +116,9 @@ class UserRights {
 	static function removeGlobalGroup( User $user, $group ) {
 		global $wgWikiaGlobalUserGroups;
 
-		if ( !self::isCentralWiki() || !in_array( $group, $wgWikiaGlobalUserGroups ) ) {
+		if ( !in_array( $group, $wgWikiaGlobalUserGroups ) ) {
 			return true;
 		}
-
-		// Purge cache first so in case of DB failure we don't leave inconsistent data in cache
-		WikiaDataAccess::cachePurge( self::getMemcKey( $user ) );
-		unset(self::$globalGroups[$user->getID()]);
 
 		$dbw = self::getDB( DB_MASTER );
 		$dbw->delete( 'user_groups',
@@ -145,6 +139,8 @@ class UserRights {
 				[ 'IGNORE' ]
 		);
 
+		WikiaDataAccess::cachePurge( self::getMemcKey( $user ) );
+
 		wfRunHooks( 'AfterUserRemoveGlobalGroup', [ $user, $group ] );
 
 		// return true to let the User class clean up any residual staff rights stored locally
@@ -164,6 +160,8 @@ class UserRights {
 
 	/**
 	 * hook handler
+	 *
+	 * @author Maciej Błaszkowski <marooned at wikia-inc.com>
 	 */
 	static function userEffectiveGroups( User $user, Array &$groups ) {
 		$groups = array_unique( array_merge( $groups, self::getGlobalGroups( $user ) ) );
@@ -172,6 +170,8 @@ class UserRights {
 
 	/**
 	 * hook handler
+	 *
+	 * @author Maciej Błaszkowski <marooned at wikia-inc.com>
 	 */
 	static function showEditUserGroupsForm( User $user, Array &$groups ) {
 		$groups = array_unique( array_merge( $groups, self::getGlobalGroups( $user ) ) );
@@ -181,6 +181,8 @@ class UserRights {
 
 	/**
 	 * hook handler
+	 *
+	 * @author Maciej Błaszkowski <marooned at wikia-inc.com>
 	 */
 	static function groupCheckboxes( $group, &$disabled, &$irreversible ) {
 		global $wgWikiaGlobalUserGroups;

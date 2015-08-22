@@ -32,14 +32,14 @@ class FounderEmailsDaysPassedEvent extends FounderEmailsEvent {
 			if ( empty( $emailController ) ) {
 				continue;
 			}
-			Wikia::initAsyncRequest( $wikiId );
 
 			$adminIds = ( new WikiService )->getWikiAdminIds( $wikiId );
 			foreach ( $adminIds as $adminId ) {
+
 				$emailParams = [
 					"targetUser" => User::newFromId( $adminId ),
 					"wikiName" => $eventData['wikiName'],
-					"wikiId" => $wikiId,
+					"wikiId" => $eventData['wikiId'],
 					"wikiUrl" => $eventData['wikiUrl'],
 					"marketingFooter" => true
 				];
@@ -68,11 +68,11 @@ class FounderEmailsDaysPassedEvent extends FounderEmailsEvent {
 
 		$emailController = "";
 		if ( $activateDay == 0 ) {
-			$emailController = Email\Controller\FounderTipsController::class;
+			$emailController = 'Email\Controller\FounderTipsController';
 		} elseif ( $activateDay == 3 ) {
-			$emailController = Email\Controller\FounderTipsThreeDaysController::class;
+			$emailController = 'Email\Controller\FounderTipsThreeDaysController';
 		} elseif ( $activateDay == 10 ) {
-			$emailController = Email\Controller\FounderTipsTenDaysController::class;
+			$emailController = 'Email\Controller\FounderTipsTenDaysController';
 		}
 
 		return $emailController;

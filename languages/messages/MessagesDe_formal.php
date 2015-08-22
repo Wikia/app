@@ -71,9 +71,8 @@ Ziehen Sie bitte im Fall von Übersetzungen in Betracht, diese bei [http://trans
 # Login and logout pages
 'logouttext'                 => "'''Sie sind nun abgemeldet.'''
 
-Sie können {{SITENAME}} jetzt anonym weiternutzen, oder sich erneut unter demselben oder einem anderen Benutzernamen $1.
+Sie können {{SITENAME}} jetzt anonym weiternutzen, oder sich erneut unter demselben oder einem anderen Benutzernamen [[Special:UserLogin|anmelden]].
 Beachten Sie, dass einige Seiten noch anzeigen können, dass Sie angemeldet sind, solange Sie nicht Ihren Browsercache geleert haben.",
-'logouttext-link-text'       => 'anmelden',
 'welcomecreation'            => '== Willkommen, $1! ==
 
 Ihr Benutzerkonto wurde eingerichtet.

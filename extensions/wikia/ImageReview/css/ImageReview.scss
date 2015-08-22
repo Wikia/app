@@ -92,6 +92,8 @@
 header .tally {
 	float: right;
 	margin-left: 20px;
+#	display: inline;
+#	border-right: 1px solid #ccc;
 
 	span {
 		float: left;

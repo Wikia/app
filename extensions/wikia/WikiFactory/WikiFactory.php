@@ -1679,7 +1679,6 @@ class WikiFactory {
 			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
 			return false;
 		}
-		$dbr = self::db( DB_MASTER );
 
 		$aVariables = [];
 		$tables = [ "city_variables_pool", "city_variables_groups" ];
@@ -1698,7 +1697,7 @@ class WikiFactory {
 		}
 
 		if ( $string ) {
-			$where[] = 'cv_name' . $dbr->buildLike( $dbr->anyString(), $string, $dbr->anyString() );
+			$where[] = "cv_name like '%$string%'";
 		}
 
 		if ( $defined === true && $wiki != 0 ) {
@@ -1710,6 +1709,8 @@ class WikiFactory {
 		}
 
 		#--- now construct query
+
+		$dbr = self::db( DB_MASTER );
 
 		$oRes = $dbr->select(
 			$tables,

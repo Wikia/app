@@ -1,0 +1,20 @@
+{
+	"@metadata": {
+		"authors": [
+			"George Animal",
+			"Nrowe",
+			"Purodha"
+		]
+	},
+	"visualeditor": "Chanjyel welesek",
+	"visualeditor-aliennode-tooltip": "Diharesow, ny yllir chanjya an elven-ma marnas y'n modh pennfenten rag an termyn.",
+	"visualeditor-annotationbutton-bold-tooltip": "Tew",
+	"visualeditor-annotationbutton-code-tooltip": "Koden jynn amontya",
+	"visualeditor-annotationbutton-italic-tooltip": "Italek",
+	"visualeditor-annotationbutton-language-tooltip": "Yeth",
+	"visualeditor-annotationbutton-link-tooltip": "Kevren",
+	"visualeditor-clearbutton-tooltip": "Klerhe an furvyans",
+	"visualeditor-dialog-action-apply": "Gweytha an chanjyow",
+	"visualeditor-dialog-action-cancel": "Hedhi",
+	"visualeditor-dialog-action-goback": "Mos war-dhelergh"
+}

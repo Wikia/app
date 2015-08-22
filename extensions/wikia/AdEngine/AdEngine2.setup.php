@@ -16,11 +16,7 @@ $wgAutoloadClasses['AdEngine2ExitstitialHooks'] =  __DIR__ . '/AdEngine2Exitstit
 $wgAutoloadClasses['AdEngine2Hooks'] =  __DIR__ . '/AdEngine2Hooks.class.php';
 $wgAutoloadClasses['AdEngine2PageTypeService'] = __DIR__ . '/AdEngine2PageTypeService.class.php';
 $wgAutoloadClasses['AdEngine2Service'] =  __DIR__ . '/AdEngine2Service.class.php';
-$wgAutoloadClasses['ResourceLoaderAdEngineBase'] = __DIR__ . '/ResourceLoaders/ResourceLoaderAdEngineBase.php';
-$wgAutoloadClasses['ResourceLoaderScript'] = __DIR__ . '/ResourceLoaders/ResourceLoaderScript.php';
-$wgAutoloadClasses['ResourceLoaderAdEngineSevenOneMediaModule'] = __DIR__ . '/ResourceLoaders/ResourceLoaderAdEngineSevenOneMediaModule.php';
-$wgAutoloadClasses['ResourceLoaderAdEngineSourcePointModule'] = __DIR__ . '/ResourceLoaders/ResourceLoaderAdEngineSourcePointModule.php';
-$wgAutoloadClasses['ResourceLoaderAdEngineSourcePointDetectionModule'] = __DIR__ . '/ResourceLoaders/ResourceLoaderAdEngineSourcePointDetectionModule.php';
+$wgAutoloadClasses['ResourceLoaderAdEngineSevenOneMediaModule'] = __DIR__ . '/ResourceLoaderAdEngineSevenOneMediaModule.php';
 
 // Hooks for Exitstitial ads
 $wgHooks['LinkerMakeExternalLink'][] = 'AdEngine2ExitstitialHooks::onLinkerMakeExternalLink';
@@ -49,14 +45,6 @@ $wgExtensionFunctions[] = function() {
 // Register Resource Loader module for SevenOne Media files
 $wgResourceModules['wikia.ext.adengine.sevenonemedia'] = array(
 	'class' => 'ResourceLoaderAdEngineSevenOneMediaModule',
-);
-
-$wgResourceModules['wikia.ext.adengine.sourcepoint'] = array(
-	'class' => 'ResourceLoaderAdEngineSourcePointModule',
-);
-
-$wgResourceModules['wikia.ext.adengine.sourcepoint.detection'] = array(
-	'class' => 'ResourceLoaderAdEngineSourcePointDetectionModule',
 );
 
 // Special page for importing ad test

@@ -67,21 +67,16 @@ class SpecialUserlogout extends UnlistedSpecialPage {
 		wfResetSessionID();
 
 		$out = $this->getOutput();
-
-		$loginUrl = ( F::app()->wg->EnableNewAuth && F::app()->checkSkin( 'wikiamobile' ) )
-			? ( new UserLoginHelper() )->getNewAuthUrl()
-			: SpecialPage::getTitleFor( 'UserLogin' )->getLocalURL();
-		$loginLink = '<a href="' . $loginUrl . '">' . wfMessage( 'logouttext-link-text' )->escaped() . '</a>';
-		$out->addHTML( wfMessage( 'logouttext' )->rawParams( $loginLink )->parse() );
+		$out->addWikiMsg( 'logouttext' );
 
 		// Hook.
 		$injected_html = '';
 		wfRunHooks( 'UserLogoutComplete', array( &$user, &$injected_html, $oldName ) );
 		$out->addHTML( $injected_html );
 
-		$mReturnTo = $this->getRequest()->getVal( 'returnto' );
+		$mReturnTo = $this->getRequest()->getVal( 'returnto' );		
 		$mReturnToQuery = $this->getRequest()->getVal( 'returntoquery' );
-
+		
 		$title = Title::newFromText($mReturnTo);
 		if ( !empty($title) ) {
 			$mResolvedReturnTo = strtolower( array_shift( SpecialPageFactory::resolveAlias( $title->getDBKey() ) ) );
@@ -91,7 +86,7 @@ class SpecialUserlogout extends UnlistedSpecialPage {
 				$mReturnToQuery = '';
 			}
 		}
-
+		
 		$out->returnToMain(false, $mReturnTo, $mReturnToQuery);
 	}
 }

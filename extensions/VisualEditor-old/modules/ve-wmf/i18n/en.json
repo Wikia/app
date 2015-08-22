@@ -1,0 +1,30 @@
+{
+    "@metadata": {
+        "authors": [
+            "Trevor Parscal",
+            "Ed Sanders",
+            "James D. Forrester",
+            "Raimond Spekking",
+            "Erik Moeller",
+            "Moriel Schottlender",
+            "Yuki Shira",
+            "Siebrand Mazeland",
+            "Rob Moen",
+            "Timo Tijhof",
+            "Roan Kattouw",
+            "Christian Williams",
+            "Amir E. Aharoni"
+        ]
+    },
+    "tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]]",
+    "tag-visualeditor-description": "Edit made using the [[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]]",
+    "tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor: Check]]",
+    "tag-visualeditor-needcheck-description": "Edit made using the [[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]] where the system detected the wikitext possibly having unintended changes.",
+    "tag-visualeditor-switched": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor: Switched]]",
+    "tag-visualeditor-switched-description": "User started to edit using VisualEditor then changed to the wikitext editor.",
+    "visualeditor-feedback-link": "Project:VisualEditor\/Feedback",
+    "visualeditor-feedback-tool": "Leave feedback",
+    "visualeditor-help-label": "Read the user guide",
+    "visualeditor-help-link": "mw:Special:MyLanguage\/Help:VisualEditor\/User guide",
+    "visualeditor-help-title": "User guide for how to use the editor"
+}

@@ -1,0 +1,20 @@
+{
+	"@metadata": {
+		"authors": [
+			"AiseluRB",
+			"Amire80",
+			"Assele",
+			"Haqmar",
+			"Sagan",
+			"Рустам Нурыев"
+		]
+	},
+	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|Күҙләгес мөхәррир]]",
+	"tag-visualeditor-description": "Төҙәтеү [[{{MediaWiki:visualeditor-descriptionpagelink}}|Күҙләгес мөхәррир]] ҡулланып башҡарылған",
+	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|Күҙләгес мөхәррир: Тикшерергә]]",
+	"tag-visualeditor-needcheck-description": "Система [[{{MediaWiki:visualeditor-descriptionpagelink}}|Күҙләгес мөхәррир]]е ҡулланып төҙәтеү эшләгәндә викитекста осраҡлы үҙгәртеүҙәр булыуын асыҡланы.",
+	"visualeditor-feedback-link": "Project:VisualEditor/Баһалау",
+	"visualeditor-feedback-tool": "Баһа биреү",
+	"visualeditor-help-label": "Күрһәтмәләрҙе уҡығыҙ",
+	"visualeditor-help-title": "Күҙләгес мөхәррирҙе файҙаланыу ҡулланмаһы"
+}

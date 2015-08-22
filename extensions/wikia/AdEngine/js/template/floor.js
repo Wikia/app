@@ -1,17 +1,16 @@
 /*global define*/
 define('ext.wikia.adEngine.template.floor', [
 	'ext.wikia.adEngine.adContext',
-	'ext.wikia.adEngine.provider.gpt.adDetect',
 	'wikia.log',
 	'wikia.document',
 	'wikia.iframeWriter',
 	'wikia.window'
-], function (adContext, adDetect, log, doc, iframeWriter, win) {
+], function (adContext, log, doc, iframeWriter, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.template.floor',
-		floorId = 'ext-wikia-adEngine-template-floor',
-		floorHtml = '<div id="' + floorId + '">' +
+		footerId = 'ext-wikia-adEngine-template-footer',
+		footerHtml = '<div id="' + footerId + '">' +
 			'<div class="background"></div>' +
 			'<div class="ad"></div>' +
 			'<a class="close" title="Close" href="#">' +
@@ -31,17 +30,11 @@ define('ext.wikia.adEngine.template.floor', [
 	 * Note the standard event bubbling applies, so it's possible some element within the iframe
 	 * stops the event propagation. Flash will stop propagation for sure.
 	 *
-	 * If you supply params.canHop, the code sniffs the ad in the supplied code by inspecting the iframe
-	 * contents. The code will issue postMessage with either success or hop, so you need to pass
-	 * the params.slotName as well. The creative will need to have AdEngine_adType = 'floor'
-	 *
-	 * @param {Object}  params
-	 * @param {string}  params.code HTML code to put into floor container
-	 * @param {number}  params.width width of the ad to put into floor container
-	 * @param {number}  params.height width of the ad to put into floor container
-	 * @param {number}  [params.onClick] function to call when floor iframe is clicked
-	 * @param {boolean} [params.canHop] detect ad in the embedded iframe
-	 * @param {string}  [params.slotName] name of the original slot (required if params.canHop set to true)
+	 * @param {Object} params
+	 * @param {string} params.code HTML code to put into floor container
+	 * @param {number} params.width width of the ad to put into floor container
+	 * @param {number} params.height width of the ad to put into floor container
+	 * @param {number} [params.onClick] function to call when floor iframe is clicked
 	 */
 	function show(params) {
 		log(['show', params], 'debug', logGroup);
@@ -51,37 +44,19 @@ define('ext.wikia.adEngine.template.floor', [
 				width: params.width,
 				height: params.height
 			}),
-			$floor = $('#' + floorId),
-			isFloorPresent = $floor.length > 0,
-			gptEventMock = {
-				size: {
-					width: params.width,
-					height: params.height
-				}
-			},
-			async = params.canHop && params.slotName;
+			skin = adContext.getContext().targeting.skin,
+			$footer = $(footerHtml);
 
-		function showFloor() {
-			var skin = adContext.getContext().targeting.skin;
-
-			if (skin === 'oasis') {
-				win.WikiaBar.hideContainer();
-			}
-
-			$floor.removeClass('hidden');
+		if (skin === 'oasis') {
+			win.WikiaBar.hideContainer();
 		}
 
-		if (!isFloorPresent) {
-			$floor = $(floorHtml);
-			$floor.addClass('hidden');
-			$(doc.body).append($floor);
-		}
-
-		$floor.find('a.close').click(function (event) {
+		$footer.find('a.close').click(function (event) {
 			event.preventDefault();
-			$floor.addClass('hidden');
+			$footer.hide();
 		});
-		$floor.find('.ad').html(iframe);
+
+		$footer.find('.ad').append(iframe);
 
 		if (params.onClick) {
 			$(iframe).on('load', function () {
@@ -90,23 +65,7 @@ define('ext.wikia.adEngine.template.floor', [
 			});
 		}
 
-		if (async) {
-			log(['show', params.slotName, 'can hop'], 'info', logGroup);
-			$(iframe).on('load', function () {
-				adDetect.onAdLoad(params.slotName + ' (floor inner iframe)', gptEventMock, iframe, function () {
-					log(['ad detect', params.slotName, 'success'], 'info', logGroup);
-					win.postMessage('{"AdEngine":{"slot_' + params.slotName + '":true,"status":"success"}}', '*');
-					showFloor();
-				}, function () {
-					log(['ad detect', params.slotName, 'hop'], 'info', logGroup);
-					win.postMessage('{"AdEngine":{"slot_' + params.slotName + '":true,"status":"hop"}}', '*');
-				});
-			});
-		}
-
-		if (!async) {
-			showFloor();
-		}
+		$(doc.body).append($footer);
 	}
 
 	return {

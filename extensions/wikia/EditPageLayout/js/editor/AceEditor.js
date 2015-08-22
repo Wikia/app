@@ -25,8 +25,6 @@ define(
 		ace.init('editarea', inputAttr);
 		initOptions();
 		initStyles();
-		initPlugins();
-
 		ace.setTheme(theme);
 		ace.setMode(win.codePageType);
 
@@ -71,15 +69,6 @@ define(
 		var editor = ace.getEditor();
 
 		editor.css('fontSize', '14px');
-	}
-
-	/**
-	 * Init some functionality of Wikia Editor (plugins)
-	 */
-	function initPlugins() {
-		var notice = new win.WikiaEditor.plugins.noticearea(ace.getEditor());
-
-		notice.initDom(ace);
 	}
 
 	/**

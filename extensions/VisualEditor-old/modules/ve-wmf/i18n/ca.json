@@ -1,0 +1,21 @@
+{
+	"@metadata": {
+		"authors": [
+			"Alvaro Vidal-Abarca",
+			"Amire80",
+			"Arnaugir",
+			"Pginer",
+			"QuimGil",
+			"SMP",
+			"Vriullop"
+		]
+	},
+	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|Editor visual]]",
+	"tag-visualeditor-description": "Modificació feta amb l'[[{{MediaWiki:visualeditor-descriptionpagelink}}|editor visual]]",
+	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|Editor visual: a comprovar]]",
+	"tag-visualeditor-needcheck-description": "Edició feta amb l'[[{{MediaWiki:visualeditor-descriptionpagelink}}|editor visual]], en la qual el sistema ha detectat que el text wiki pot contenir canvis no desitjats.",
+	"visualeditor-feedback-link": "Project:Editor visual/Comentaris",
+	"visualeditor-feedback-tool": "Comentaris",
+	"visualeditor-help-label": "Llegiu la guia d'usuari",
+	"visualeditor-help-title": "Guia d'usuari sobre la utilització de l'editor"
+}

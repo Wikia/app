@@ -286,7 +286,7 @@ EOT
 		$wgOut->addWikiText( '*' . wfMessage( 'lookupuser-birthdate', $birthDate )->text() );
 
 
-		$newEmail = $user->getNewEmail();
+		$newEmail = $user->getGlobalAttribute( 'new_email' );
 		if ( !empty( $newEmail ) ) {
 			$wgOut->addWikiText( '*' . wfMessage( 'lookupuser-email-change-requested', $newEmail )->plain() );
 		}

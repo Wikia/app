@@ -1,0 +1,17 @@
+{
+	"@metadata": {
+		"authors": [
+			"Iltever"
+		]
+	},
+	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|Визуал редактор]]",
+	"tag-visualeditor-description": "Тюрлендириу, [[{{MediaWiki:visualeditor-descriptionpagelink}}|визуал редактор]] бла этилгенди",
+	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|Визуал редактор]]: тинт",
+	"tag-visualeditor-needcheck-description": "Система, иш этиб тюрлендирилмеген вики-текст табхан, [[{{MediaWiki:visualeditor-descriptionpagelink}}|визуал редакторну]] болушлугъу бла этилген тюрлендириу.",
+	"tag-visualeditor-switched": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|Визуал редактор]]: кёчгенди",
+	"tag-visualeditor-switched-description": "Редакторлукъ этиу VisualEditor бла башланнганды, сора уа викитекст редакторгъа кёчюлгенди.",
+	"visualeditor-feedback-link": "Project:VisualEditor/Оюмла",
+	"visualeditor-feedback-tool": "Оюм къой",
+	"visualeditor-help-label": "Хайырланыу гидни окъу",
+	"visualeditor-help-title": "Хайырланыу гид — редакторну къалай хайырландырыргъа керек болгъанына юретеди"
+}

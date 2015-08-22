@@ -176,7 +176,7 @@ class FlagsHelper {
 	 *
 	 * @return array An array of localized names of targets of Flags
 	 */
-	public static function getFlagTargetFullNames() {
+	public function getFlagTargetFullNames() {
 		$flagTargetFullNames = [];
 
 		/**
@@ -185,10 +185,7 @@ class FlagsHelper {
 		 * flags-target-contributors
 		 */
 		foreach ( FlagType::$flagTargeting as $flagTargetId => $flagTargetKey ) {
-			$flagTargetFullNames[$flagTargetId] = [
-				'name' => wfMessage( "flags-target-{$flagTargetKey}" )->escaped(),
-				'value' => $flagTargetId
-			];
+			$flagTargetFullNames[$flagTargetId] = wfMessage( "flags-target-{$flagTargetKey}" )->escaped();
 		}
 
 		return $flagTargetFullNames;
@@ -199,8 +196,9 @@ class FlagsHelper {
 	 *
 	 * @return array An array of localized names of groups of Flags
 	 */
-	public static function getFlagGroupsFullNames() {
+	public function getFlagGroupsFullNames() {
 		$flagGroupsFullNames = [];
+
 		/**
 		 * Generates the following messages:
 		 * flags-groups-spoiler
@@ -214,11 +212,9 @@ class FlagsHelper {
 		 * flags-groups-other
 		 */
 		foreach ( FlagType::$flagGroups as $flagGroupId => $flagGroupKey ) {
-			$flagGroupsFullNames[$flagGroupId] = [
-				'name' => wfMessage( "flags-groups-{$flagGroupKey}" )->escaped(),
-				'value' => $flagGroupId
-			];
+			$flagGroupsFullNames[$flagGroupId] = wfMessage( "flags-groups-{$flagGroupKey}" )->escaped();
 		}
+
 		return $flagGroupsFullNames;
 	}
 }

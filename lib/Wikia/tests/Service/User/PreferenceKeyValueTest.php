@@ -16,6 +16,7 @@ class PreferenceKeyValueTest extends \PHPUnit_Framework_TestCase {
 		$this->persistenceMock = $this->getMockBuilder( PreferencePersistence::class )
 			->setMethods( ['save', 'get'] )
 			->disableOriginalConstructor()
+			->disableAutoload()
 			->getMock();
 	}
 

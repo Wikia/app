@@ -350,15 +350,15 @@ class UserIdentityBox {
 		}
 
 		if( !$this->hasUserEditedMastheadBefore($wgCityId) ) {
-			$this->user->setGlobalFlag(self::USER_EDITED_MASTHEAD_PROPERTY . $wgCityId, true);
-			$this->user->setGlobalFlag(self::USER_FIRST_MASTHEAD_EDIT_DATE_PROPERTY . $wgCityId, date('YmdHis'));
+			$this->user->setGlobalAttribute(self::USER_EDITED_MASTHEAD_PROPERTY . $wgCityId, true);
+			$this->user->setGlobalAttribute(self::USER_FIRST_MASTHEAD_EDIT_DATE_PROPERTY . $wgCityId, date('YmdHis'));
 
 			$this->addTopWiki($wgCityId);
 			$changed = true;
 		}
 
 		if (true === $changed) {
-			$this->user->setGlobalFlag(self::USER_EVER_EDITED_MASTHEAD, true);
+			$this->user->setGlobalAttribute(self::USER_EVER_EDITED_MASTHEAD, true);
 
 			$this->user->saveSettings();
 			$this->saveMemcUserIdentityData($data);

@@ -1,18 +1,11 @@
 <?php
 namespace Wikia\Helios;
 
-use Wikia\DependencyInjection\Injector;
-use Wikia\Service\User\Auth\AuthService;
-
 /**
  * A helper controller to provide end points exposing MediaWiki functionality to Helios.
  */
 class HelperController extends \WikiaController
 {
-
-	protected $authService;
-
-
 	/**
 	 * AntiSpoof: verify whether the name is legal for a new account.
 	 *
@@ -23,8 +16,9 @@ class HelperController extends \WikiaController
 		$this->response->setFormat( 'json' );
 		$this->response->setCacheValidity( \WikiaResponse::CACHE_DISABLED );
 
-		if ( !$this->authenticateViaTheSchwartz() ) {
+		if ( $this->getVal( 'secret' ) != $this->wg->TheSchwartzSecretToken ) {
 			$this->response->setVal( 'allow', false );
+			$this->response->setVal( 'message', 'invalid secret' );
 			return;
 		}
 
@@ -54,7 +48,8 @@ class HelperController extends \WikiaController
 		$this->response->setCacheValidity( \WikiaResponse::CACHE_DISABLED );
 		$this->response->setVal( 'success', false );
 
-		if ( !$this->authenticateViaTheSchwartz() ) {
+		if ( $this->getVal( 'secret' ) != $this->wg->TheSchwartzSecretToken ) {
+			$this->response->setVal( 'message', 'invalid secret' );
 			return;
 		}
 
@@ -76,7 +71,8 @@ class HelperController extends \WikiaController
 		$this->response->setCacheValidity( \WikiaResponse::CACHE_DISABLED );
 		$this->response->setVal( 'success', false );
 
-		if ( !$this->authenticateViaTheSchwartz() ) {
+		if ( $this->getVal( 'secret' ) != $this->wg->TheSchwartzSecretToken ) {
+			$this->response->setVal( 'message', 'invalid secret' );
 			return;
 		}
 
@@ -131,57 +127,4 @@ class HelperController extends \WikiaController
 
 		$this->response->setVal( 'success', true );
 	}
-
-	public function isBlocked() {
-		if ( !$this->authenticateViaTheSchwartz() ) {
-			return;
-		}
-
-		$username = $this->getFieldFromRequest( 'username', 'invalid username' );
-		if ( !isset( $username ) ) {
-			return;
-		}
-
-		$blocked = $this->getAuthService()->isUsernameBlocked( $username );
-		if ( $blocked === null ) {
-			$this->response->setVal( 'message', 'user not found' );
-			$this->response->setCode( \WikiaResponse::RESPONSE_CODE_NOT_FOUND );
-			return;
-		}
-
-		$this->response->setData( array( 'blocked' => $blocked ) );
-	}
-
-	protected function getFieldFromRequest( $field, $failureMessage ) {
-		$username = $this->getVal( 'username', null );
-		if ( !isset( $username ) ) {
-			$this->response->setVal( 'message', $failureMessage );
-			$this->response->setCode( \WikiaResponse::RESPONSE_CODE_BAD_REQUEST );
-		}
-
-		return $username;
-	}
-
-	protected function authenticateViaTheSchwartz() {
-		if ( $this->getVal( 'secret' ) != $this->wg->TheSchwartzSecretToken ) {
-			$this->response->setVal( 'message', 'invalid secret' );
-			$this->response->setCode( \WikiaResponse::RESPONSE_CODE_FORBIDDEN );
-			return false;
-		}
-
-		return true;
-	}
-
-	public function setAuthService( AuthService $authService ) {
-		$this->authService = $authService;
-	}
-
-	public function getAuthService() {
-		if (!isset($this->authService)) {
-			$this->authService = Injector::getInjector()->get(AuthService::class);
-		}
-
-		return $this->authService;
-	}
-
 }

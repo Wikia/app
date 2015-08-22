@@ -29,7 +29,6 @@ $wgHooks['ArticleDeleteComplete']    [] = "Wikia::onArticleDeleteComplete";
 $wgHooks['ContributionsToolLinks']   [] = 'Wikia::onContributionsToolLinks';
 $wgHooks['AjaxAddScript']            [] = 'Wikia::onAjaxAddScript';
 $wgHooks['TitleGetSquidURLs']        [] = 'Wikia::onTitleGetSquidURLs';
-$wgHooks['userCan']                  [] = 'Wikia::canEditInterfaceWhitelist';
 
 # changes in recentchanges (MultiLookup)
 $wgHooks['RecentChange_save']        [] = "Wikia::recentChangesSave";
@@ -62,10 +61,8 @@ $wgHooks['TitleGetLangVariants'][] = 'Wikia::onTitleGetLangVariants';
 # don't purge all thumbs - PLATFORM-161
 $wgHooks['LocalFilePurgeThumbnailsUrls'][] = 'Wikia::onLocalFilePurgeThumbnailsUrls';
 
-$wgHooks['BeforePageDisplay'][] = 'Wikia::onBeforePageDisplay';
-
 /**
- * This class has only static methods so they can be used anywhere
+ * This class have only static methods so they can be used anywhere
  *
  */
 
@@ -81,6 +78,8 @@ class Wikia {
 	private static $vars = array();
 	private static $cachedLinker;
 
+	private static $apacheHeaders = null;
+
 	public static function setVar($key, $value) {
 		Wikia::$vars[$key] = $value;
 	}
@@ -95,35 +94,6 @@ class Wikia {
 
 	public static function unsetVar($key) {
 		unset(Wikia::$vars[$key]);
-	}
-
-	/**
-	 * Set some basic wiki variables.  For use in cron jobs and tasks where some wiki
-	 * context is required to construct URLs
-	 *
-	 * @param int $wikiId ID to use as the current wiki
-	 * @param User|int|null $user User object or ID to use as the current user
-	 */
-	public static function initAsyncRequest( $wikiId, $user = null ) {
-		$wg = F::app()->wg;
-		$wg->CityID = $wikiId;
-
-		// Do NOT set $wgDbname here.  The wfGetDB method will no longer do
-		// what you think it should since it pulls from a LoadBalance cache
-		// that likely already has cached DB handles for the previous value
-		$dbName = WikiFactory::IDtoDB( $wikiId );
-		$wg->Server = trim( WikiFactory::DBtoUrl( $dbName ), '/' );
-
-		if ( !empty( $wg->DevelEnvironment ) ) {
-			$wg->Server = WikiFactory::getLocalEnvURL( $wg->Server );
-		}
-
-		// Update wgUser if its been set to a reasonable value
-		if ( is_object( $user ) ) {
-			$wg->User = $user;
-		} elseif ( is_numeric( $user ) ) {
-			$wg->User = User::newFromId( $user );
-		}
 	}
 
 	public static function getFaviconFullUrl() {
@@ -174,6 +144,8 @@ class Wikia {
 
 		return $themes;
 	}
+
+
 
     /**
      * successbox
@@ -226,7 +198,8 @@ class Wikia {
      *
      * @return string composed HTML/XML code
      */
-    static public function errormsg($what) {
+    static public function errormsg($what)
+    {
         return Xml::element("span", array( "style"=> "color: #fe0000; font-weight: bold;"), $what);
     }
 
@@ -247,7 +220,8 @@ class Wikia {
      *
      * @return string composed HTML/XML code
      */
-    static public function linkTag($url, $title, $attribs = null ) {
+    static public function linkTag($url, $title, $attribs = null )
+    {
         return Xml::element("a", array( "href"=> $url), $title);
     }
 
@@ -264,7 +238,8 @@ class Wikia {
      *
      * @return string composed HTML/XML code
      */
-    static public function successmsg($what) {
+    static public function successmsg($what)
+    {
         return Xml::element("span", array( "style"=> "color: darkgreen; font-weight: bold;"), $what);
     }
 
@@ -1622,11 +1597,11 @@ class Wikia {
 			wfDebug("Wikia: using resource loader debug mode\n");
 		}
 
-		$wgUseSiteJs = $wgUseSiteJs && $request->getBool( 'usesitejs', $wgUseSiteJs ) !== false;
-		$wgUseSiteCss = $wgUseSiteCss && $request->getBool( 'usesitecss', $wgUseSiteCss ) !== false;
-		$wgAllowUserJs = $wgAllowUserJs && $request->getBool( 'useuserjs',
+		$wgUseSiteJs = $request->getBool( 'usesitejs', $wgUseSiteJs ) !== false;
+		$wgUseSiteCss = $request->getBool( 'usesitecss', $wgUseSiteCss ) !== false;
+		$wgAllowUserJs = $request->getBool( 'useuserjs',
 			$request->getBool( 'allowuserjs', $wgAllowUserJs ) ) !== false;
-		$wgAllowUserCss = $wgAllowUserCss && $request->getBool( 'useusercss',
+		$wgAllowUserCss = $request->getBool( 'useusercss',
 			$request->getBool( 'allowusercss', $wgAllowUserCss ) ) !== false;
 		$wgBuckySampling = $request->getInt( 'buckysampling', $wgBuckySampling );
 
@@ -2254,33 +2229,6 @@ class Wikia {
 	}
 
 	/**
-	 * Restrict editinterface right to whitelist
-	 * set $result true to allow, false to deny, leave alone means don't care
-	 * usually return true to allow processing other hooks
-	 * return false stops permissions processing and we are totally decided (nothing later can override)
-	 */
-	static function canEditInterfaceWhitelist (&$title, &$wgUser, $action, &$result) {
-		global $wgEditInterfaceWhitelist;
-
-		// List the conditions we don't care about for early exit
-		if ( $action == "read" || $title->getNamespace() != NS_MEDIAWIKI || empty( $wgEditInterfaceWhitelist )) {
-			return true;
-		}
-
-		// Allow trusted users to edit interface messages (util, vstf, select admins)
-		if ( $wgUser->isAllowed('editinterfacetrusted') ) {
-			return true;
-		}
-
-		// In this NS, editinterface applies only to white listed pages
-		if (in_array($title->getDBKey(), $wgEditInterfaceWhitelist)) {
-			return $wgUser->isAllowed('editinterface');
-		}
-
-		return false;
-	}
-
-	/**
 	 * Get an array of country codes and return the country names array indexed by corresponding codes
 	 * @param array $countryCodes
 	 * @return array Country names indexed by code
@@ -2312,27 +2260,5 @@ class Wikia {
 		}
 
 		return $countryNames;
-	}
-
-	/**
-	 * Displays a warning when viewing site JS pages if JavaScript is disabled
-	 * on the wikia.
-	 *
-	 * @param  OutputPage $out  The OutputPage object
-	 * @param  Skin       $skin The Skin object that will be used to render the page.
-	 * @return boolean
-	 */
-	public static function onBeforePageDisplay( OutputPage $out, Skin $skin ) {
-		global $wgUseSiteJs;
-		$title = $out->getTitle();
-
-		if ( !$wgUseSiteJs && $title->isJsPage() ) {
-			\BannerNotificationsController::addConfirmation(
-				wfMessage( 'usesitejs-disabled-warning' )->escaped(),
-				\BannerNotificationsController::CONFIRMATION_NOTIFY
-			);
-		}
-
-		return true;
 	}
 }

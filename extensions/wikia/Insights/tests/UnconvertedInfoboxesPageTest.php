@@ -1,10 +1,9 @@
 <?php
-use Wikia\PortableInfobox\Helpers\PortableInfoboxClassification;
 
 class UnconvertedInfoboxesPageTest extends WikiaBaseTest {
 
 	public function setUp() {
-		$this->setupFile = __DIR__ . '/../InsightsUnconvertedInfoboxes.setup.php';
+		$this->setupFile = __DIR__ . '/../Insights.setup.php';
 		parent::setUp();
 	}
 
@@ -12,7 +11,7 @@ class UnconvertedInfoboxesPageTest extends WikiaBaseTest {
 	 * @dataProvider getInfoboxTitles
 	 */
 	public function testIsTitleWithNonportableInfobox( $titleText, $contentText, $expected ) {
-		$result = PortableInfoboxClassification::isTitleWithNonportableInfobox( $titleText, $contentText );
+		$result = UnconvertedInfoboxesPage::isTitleWithNonportableInfobox( $titleText, $contentText );
 		$this->assertSame( $expected, $result );
 	}
 

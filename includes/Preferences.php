@@ -1460,16 +1460,20 @@ class Preferences {
 		}
 
 		$attributes = self::getAttributes();
-		$preferences = [];
 		foreach ($formData as $key => $val) {
 			if (in_array($key, $attributes)) {
 				$user->setGlobalAttribute($key, $val);
-			} else {
-				$preferences[$key] = $val;
 			}
 		}
 
-		$user->setGlobalPreferences($preferences);
+		//  Keeps old preferences from interfering due to back-compat
+		//  code, etc.
+		// <Wikia> RT#144314
+		//$user->resetOptions();
+		// </Wikia>
+
+		$user->setGlobalPreferences($formData);
+
 		$user->saveSettings();
 
 		return $result;

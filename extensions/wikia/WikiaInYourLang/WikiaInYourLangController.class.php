@@ -66,10 +66,9 @@ class WikiaInYourLangController extends WikiaController {
 						$oNativeWiki->city_title,
 					];
 
-					$sMessagesAry = $this->prepareMessage( $sTargetLanguage, $aMessageParams );
+					$sMessage = $this->prepareMessage( $sTargetLanguage, $aMessageParams );
 					$this->response->setVal( 'success', true );
-					$this->response->setVal( 'message', $sMessagesAry['desktop'] );
-					$this->response->setVal( 'messageMobile', $sMessagesAry['mobile'] );
+					$this->response->setVal( 'message', $sMessage );
 				}
 			}
 		}
@@ -210,11 +209,6 @@ class WikiaInYourLangController extends WikiaController {
 			->inLanguage( $sTargetLanguage )
 			->parse();
 
-		$sMsgMobile = wfMessage( 'wikia-in-your-lang-available-for-mobile' )
-			->params( $aMessageParams )
-			->inLanguage( $sTargetLanguage )
-			->parse();
-
-		return ['desktop' => $sMsg, 'mobile' => $sMsgMobile];
+		return $sMsg;
 	}
 }

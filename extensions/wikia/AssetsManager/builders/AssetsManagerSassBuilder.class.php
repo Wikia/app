@@ -62,10 +62,10 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 				| SassService::FILTER_BASE64 | SassService::FILTER_JANUS
 			);
 
-			$cacheId = wfSharedMemcKey( __CLASS__, "minified", $sassService->getCacheKey() );
+			$cacheId = __CLASS__ . "-minified-".$sassService->getCacheKey();
 			$content = $memc->get( $cacheId );
 		} catch (Exception $e) {
-			$content = $this->makeComment($e->getMessage());
+			$content = "/* {$e->getMessage()} */";
 			$hasErrors = true;
 		}
 
@@ -85,7 +85,8 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 			// This is the final pass on contents which, among other things, performs minification
 			parent::getContent( $processingTimeStart );
 
-			if ( !empty($cacheId) && !$this->mForceProfile && !$hasErrors ) {
+			// Prevent cache poisoning if we are serving sass from preview server
+			if ( !empty($cacheId) && getHostPrefix() == null && !$this->mForceProfile && !$hasErrors ) {
 				$memc->set( $cacheId, $this->mContent, WikiaResponse::CACHE_STANDARD );
 			}
 		}

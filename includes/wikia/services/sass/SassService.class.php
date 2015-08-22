@@ -10,7 +10,7 @@ use Wikia\Sass\Filter\InlineImageFilter;
 use Wikia\Sass\Filter\JanusFilter;
 use Wikia\Sass\Filter\MinifyFilter;
 use Wikia\Sass\Compiler\Compiler;
-use Wikia\Sass\Compiler\LibSassCompiler;
+use Wikia\Sass\Compiler\ExternalRubyCompiler;
 
 /**
  * SassService is a one and only class that you will call from Mediawiki code.
@@ -23,9 +23,9 @@ use Wikia\Sass\Compiler\LibSassCompiler;
  * @author Władysław Bodzek <wladek@wikia-inc.com>
  *
  */
-class SassService {
+class SassService extends WikiaObject {
 
-	const CACHE_VERSION = 7; # SASS caching does not depend on $wgStyleVersion, use this constant to bust SASS cache
+	const CACHE_VERSION = 6; # SASS caching does not depend on $wgStyleVersion, use this constant to bust SASS cache
 
 	const FILTER_IMPORT_CSS = 1;
 	const FILTER_CDN_REWRITE = 2;
@@ -44,21 +44,24 @@ class SassService {
 	protected $debug = null;
 	protected $useSourceMaps = false;
 
-	protected $app;
-
 	/**
 	 * Creates a new SassService object based on the Sass source provided.
 	 * Please use static constructors instead of calling this constructor directly.
 	 *
 	 * @param Source $source
 	 */
-	private function __construct( Source $source ) {
-		$this->app = F::app();
+	public function __construct( Source $source ) {
+		parent::__construct();
 		$this->source = $source;
 
-		// vary caching for devboxes
+		// set up default cache variant
 		if (!empty($this->wg->DevelEnvironment)) {
 			$this->setCacheVariant("dev-{$this->wg->DevelEnvironmentName}");
+		} else {
+			$hostPrefix = getHostPrefix();
+			if ( $hostPrefix != null ) {
+				$this->setCacheVariant("staging-{$hostPrefix}");
+			}
 		}
 	}
 
@@ -195,7 +198,7 @@ class SassService {
 		$memc = self::getMemcached();
 		$cacheKey = null;
 		if ( $useCache ) {
-			$cacheKey = wfSharedMemcKey( __CLASS__, $this->getCacheKey() );
+			$cacheKey = __CLASS__ . '-cache-' . $this->getCacheKey();
 			$cachedStyles = $memc->get( $cacheKey );
 			if ( is_string( $cachedStyles ) ) {
 				return $cachedStyles;
@@ -208,7 +211,7 @@ class SassService {
 		$afterCompilation = 0;
 		$end = 0;
 		try {
-			/** @var $compiler LibSassCompiler */
+			/** @var $compiler ExternalRubyCompiler */
 			$compiler = self::getDefaultCompiler()->withOptions(array(
 				'sassVariables' => $this->getSassVariables(),
 				'useSourceMaps' => $this->useSourceMaps
@@ -248,15 +251,14 @@ class SassService {
 		}
 
 		$styles .= "\n\n";
-		$styles .= $this->makeComment(sprintf("SASS processing time (compilation/total): %.3fms/%.3fms [using %s]",
+		$styles .= $this->makeComment(sprintf("SASS processing time (compilation/total): %.3fms/%.3fms",
 			($afterCompilation - $start) * 1000,
-			($end - $start) * 1000,
-			get_class( self::getDefaultCompiler() )
+			($end - $start) * 1000
 		));
 
 		// save it to the cache if everything went correct
 		if ( $useCache && $ok ) {
-			$memc->set( $cacheKey, $styles, WikiaResponse::CACHE_LONG );
+			$memc->set( $cacheKey, $styles );
 		}
 
 		return $styles;
@@ -282,13 +284,13 @@ class SassService {
 	 * @return array Array of filter objects
 	 */
 	protected function getFilterObjects() {
-		$IP = $this->app->getGlobal('IP');
+		$IP = $this->wg->get('IP');
 		$filters = array();
 		if ( $this->filters & self::FILTER_IMPORT_CSS ) {
 			$filters[] = new CssImportsFilter($IP);
 		}
 		if ( $this->filters & self::FILTER_CDN_REWRITE ) {
-			$filters[] = new CdnRewriteFilter($this->app->wg->CdnStylePath);
+			$filters[] = new CdnRewriteFilter($this->wg->CdnStylePath);
 		}
 		if ( $this->filters & self::FILTER_BASE64 ) {
 			$filters[] = new InlineImageFilter($IP);
@@ -350,14 +352,16 @@ class SassService {
 	/**
 	 * Get a default Sass compiler instance
 	 *
-	 * @return LibSassCompiler
+	 * @return ExternalRubyCompiler
 	 */
 	public static function getDefaultCompiler() {
 		if ( self::$defaultCompiler === null ) {
 			$app = F::app();
-			self::$defaultCompiler = new LibSassCompiler( [
+			self::$defaultCompiler = new ExternalRubyCompiler(array(
 				'rootDir' => $app->getGlobal('IP'),
-			] );
+				'sassExecutable' => $app->wg->SassExecutable,
+//				'outputStyle' => 'expanded',
+			));
 		}
 
 		return self::$defaultCompiler;

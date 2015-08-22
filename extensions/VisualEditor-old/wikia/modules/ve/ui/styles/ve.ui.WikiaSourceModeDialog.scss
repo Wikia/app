@@ -1,0 +1,32 @@
+@import "skins/shared/color";
+@import "color";
+
+.ve-ui-wikiaSourceModeDialog-content {
+	.oo-ui-window-body .oo-ui-textInputWidget {
+		height: 100%;
+		padding: 0.75em 0;
+		width: 100%;
+		textarea {
+			font-family: monospace;
+			font-size: 13px;
+			height: 100%;
+			line-height: 140%;
+			width: 100%;
+		}
+	}
+	.ve-ui-wikiaSourceModeDialog-helplink {
+		font-weight: bold;
+		line-height: 3em;
+	}
+}
+
+.ve-ui-noIconDialogTool .oo-ui-tool-link .oo-ui-iconedElement-icon {
+	display: none;
+}
+
+.ve-ui-noIconDialogTool .oo-ui-tool-link .oo-ui-tool-title {
+	display: inline-block;
+	font-size: 0.8em;
+	line-height: 2em;
+	vertical-align: middle;
+}

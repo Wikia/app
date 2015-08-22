@@ -451,8 +451,7 @@ Ngirte li mu joxe mooy ne « ''$2'' ».",
 # Login and logout pages
 'logouttext'                 => "Fi mu nekk nii génn nga.'''
 
-Man ngaa wéy di jëfandikoo {{SITENAME}} ci anam buñ la dul xamme walla nga  $1 ak wenn tur wi walla ak weneen.",
-'logouttext-link-text'       => 'duggewaat',
+Man ngaa wéy di jëfandikoo {{SITENAME}} ci anam buñ la dul xamme walla nga  [[Special:UserLogin|duggewaat]] ak wenn tur wi walla ak weneen.",
 'welcomecreation'            => '== Dalal-jàmm, $1 ! ==
 Sosees na sa sàq.
 Bul fatte soppi say [[Special:Preferences|{{SITENAME}} tànneef]].',

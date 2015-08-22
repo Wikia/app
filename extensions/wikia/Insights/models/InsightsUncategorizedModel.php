@@ -5,7 +5,7 @@
  * A class specific to a subpage with a list of pages
  * without categories.
  */
-class InsightsUncategorizedModel extends InsightsQueryPageModel {
+class InsightsUncategorizedModel extends InsightsQuerypageModel {
 	const INSIGHT_TYPE = 'uncategorizedpages';
 
 	public function getDataProvider() {
