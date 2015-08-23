@@ -122,7 +122,7 @@ ve.ui.WikiaInfoboxDialog.prototype.initializeTemplateParameters = function () {
 ve.ui.WikiaInfoboxDialog.prototype.showItems = function () {
 	var key, obj,
 		templateGetInfoWidget,
-		zeroStatePage
+		zeroStatePage,
 		tab = [];
 
 	this.initializeLayout();
