@@ -111,7 +111,6 @@ ve.ui.WikiaInfoboxDialog.prototype.initializeTemplateParameters = function () {
 	var parts = this.transclusionModel.getParts();
 	this.infoboxTemplate = parts[0];
 
-	//TODO: check this out
 	this.infoboxTemplate.addUnusedParameters();
 	this.fullParamsList = this.infoboxTemplate.spec.params;
 	this.showItems();
@@ -126,15 +125,33 @@ ve.ui.WikiaInfoboxDialog.prototype.showItems = function () {
 		tab = [];
 
 	this.initializeLayout();
-	for ( key in this.fullParamsList ) {
-		if ( this.fullParamsList.hasOwnProperty( key ) ) {
-			obj = this.fullParamsList[key];
-			//TODO: add displaying different imputs according to type eg.data, image, group element
-			tab.push(this.showDataItem( obj ));
+	if ( Object.keys( this.fullParamsList ).length > 0 ) {
+		for ( key in this.fullParamsList ) {
+			if ( this.fullParamsList.hasOwnProperty( key ) ) {
+				obj = this.fullParamsList[key];
+				//TODO: add displaying different inputs according to type eg.data, image, group element
+				tab.push( this.showDataItem( obj ) );
+			}
 		}
-	}
+		this.bookletLayout.addPages( tab, 0 );
+	} else {
+		var zeroStatePage, templateGetInfoWidget;
+		this.$content.addClass('ve-ui-wikiaInfoboxDialog-zeroState');
 
-	this.bookletLayout.addPages( tab, 0);
+		// Content
+		zeroStatePage = new OO.ui.PageLayout( 'zeroState', {} );
+		templateGetInfoWidget = new ve.ui.WikiaTemplateGetInfoWidget( {template: this.infoboxTemplate} );
+		zeroStatePage.$element
+			.text( ve.msg( 'wikia-visualeditor-dialog-transclusion-zerostate') )
+			.append( templateGetInfoWidget.$element );
+		this.bookletLayout.addPages( [zeroStatePage] );
+
+		// Track
+		ve.track( 'wikia', {
+			action: ve.track.actions.OPEN,
+			label: 'dialog-infobox-no-parameters'
+		} );
+	}
 };
 
 /**

@@ -160,7 +160,7 @@ ve.ui.WikiaInfoboxInsertDialog.prototype.showResults = function ( data ) {
 	if ( infoboxes.length > 0 ) {
 		for ( i = 0; i < infoboxes.length; i++ ) {
 			items.push(
-				new ve.ui.WikiaInfoboxOptionWidget({
+				new OO.ui.DecoratedOptionWidget({
 					data: infoboxes[i].title,
 					label:  infoboxes[i].title
 				})

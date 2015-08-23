@@ -7,11 +7,7 @@ ve.dm.WikiaTemplateModel = function VeDmWikiaTemplateModel( transclusion, target
 	// Parent constructor
 	ve.dm.WikiaTemplateModel.super.call( this, transclusion, target );
 
-	if ( transclusion.isInfobox ) {
-		this.spec = new ve.dm.WikiaInfoboxSpecModel( this );
-	} else {
-		this.spec = new ve.dm.MWTemplateSpecModel( this );
-	}
+	this.spec = transclusion.isInfobox ? new ve.dm.WikiaInfoboxSpecModel( this ) : new ve.dm.MWTemplateSpecModel( this );
 };
 
 /* Inheritance */
