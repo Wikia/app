@@ -120,8 +120,9 @@ ve.ui.WikiaInfoboxDialog.prototype.initializeTemplateParameters = function () {
  * Prepare layout and show list of all infobox params on it
  */
 ve.ui.WikiaInfoboxDialog.prototype.showItems = function () {
-	var key,
-		obj,
+	var key, obj,
+		templateGetInfoWidget,
+		zeroStatePage
 		tab = [];
 
 	this.initializeLayout();
@@ -135,12 +136,11 @@ ve.ui.WikiaInfoboxDialog.prototype.showItems = function () {
 		}
 		this.bookletLayout.addPages( tab, 0 );
 	} else {
-		var zeroStatePage, templateGetInfoWidget;
-		this.$content.addClass('ve-ui-wikiaInfoboxDialog-zeroState');
+		this.$content.addClass( 've-ui-wikiaInfoboxDialog-zeroState' );
 
 		// Content
 		zeroStatePage = new OO.ui.PageLayout( 'zeroState', {} );
-		templateGetInfoWidget = new ve.ui.WikiaTemplateGetInfoWidget( {template: this.infoboxTemplate} );
+		templateGetInfoWidget = new ve.ui.WikiaTemplateGetInfoWidget( { template: this.infoboxTemplate } );
 		zeroStatePage.$element
 			.text( ve.msg( 'wikia-visualeditor-dialog-transclusion-zerostate') )
 			.append( templateGetInfoWidget.$element );
@@ -164,7 +164,7 @@ ve.ui.WikiaInfoboxDialog.prototype.showDataItem = function ( obj ) {
 		template;
 
 	template = this.transclusionModel.getParts()[0];
-	param = template.getParameter(obj.name);
+	param = template.getParameter( obj.name );
 
 	return new ve.ui.WikiaParameterPage( param, param.name, { $: this.$ } );
 };
