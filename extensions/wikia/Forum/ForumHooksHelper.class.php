@@ -239,7 +239,7 @@ class ForumHooksHelper {
 	/**
 	 * Override button on archived forums (when Special:Forum is active)
 	 *
-	 * @param array $button
+	 * @param array $button 'Edit' button and dropdown
 	 * @return bool true
 	 */
 	static public function onPageHeaderIndexAfterActionButtonPrepared( array &$button ) {
@@ -261,7 +261,6 @@ class ForumHooksHelper {
 				$button['image'] = MenuButtonController::LOCK_ICON;
 				$button['action'] = $action;
 
-				// @todo check this
 				return false;
 			}
 		}

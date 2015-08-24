@@ -8,10 +8,10 @@ class PlacesHooks {
 	}
 
 	/**
+	 * Adds to buttosns to category pages to enabled/disable geotagging
 	 *
-	 *
-	 * @param array $extraButtons
-	 * @return bool
+	 * @param array $extraButtons An array of strings to add extra buttons to
+	 * @return bool true
 	 */
 	static public function onPageHeaderIndexExtraButtons( array &$extraButtons ){
 		$app = F::app();
@@ -31,7 +31,7 @@ class PlacesHooks {
 				[
 					'action' => [
 						"href" => "#",
-						"text" => wfMessage('places-category-switch')->escaped()
+						"text" => wfMessage( 'places-category-switch' )->escaped()
 					],
 					'class' =>  !$isGeotaggingEnabled ? $commonClasses . $disabled : $commonClasses,
 					'name' => 'places-category-switch-on'
@@ -44,7 +44,7 @@ class PlacesHooks {
 				[
 					'action' => [
 						"href" => "#",
-						"text" => wfMessage('places-category-switch-off')->escaped()
+						"text" => wfMessage( 'places-category-switch-off' )->escaped()
 					],
 					'class' => $isGeotaggingEnabled ? $commonClasses . $disabled : $commonClasses,
 					'name' => 'places-category-switch-off'

@@ -9,8 +9,8 @@ class LicensedVideoSwapHooksHelper {
 	 * Handler for the hook that allows HTML to be placed after the main <h1> page title.
 	 * Use this to add the history page button
 	 *
-	 * @param array $extraButtons
-	 * @return bool
+	 * @param array $extraButtons An array of strings to add extra buttons to
+	 * @return bool true
 	 */
 	public static function onPageHeaderIndexExtraButtons( array &$extraButtons ) {
 		$app = F::app();

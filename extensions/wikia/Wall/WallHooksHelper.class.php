@@ -529,7 +529,7 @@ class WallHooksHelper {
 	/**
 	 * @brief Adds an action button on user talk archive page
 	 *
-	 * @param array $button
+	 * @param array $button 'Edit' button and dropdown
 	 * @return bool true
 	 *
 	 * @author Andrzej 'nAndy' Łukaszewski
@@ -1715,27 +1715,26 @@ class WallHooksHelper {
 	}
 
 	/**
-	 * Changes fields in a PageHeaderModule instance to display correct content in
+	 * Changes fields in a PageHeaderController instance to display correct content in
 	 * <h1> and <h2> tags
 	 *
-	 * @param PageHeaderModule $pageHeaderModule
-	 * @param int $ns
-	 * @param Boolean $isPreview
-	 * @param Boolean $isShowChanges
-	 * @param Boolean $isDiff
-	 * @param Boolean $isEdit
-	 * @param Boolean $isHistory
+	 * @param PageHeaderModule $pageHeaderModule Instance of PageHeaderController
+	 * @param int $ns The current namespace
+	 * @param Boolean $isPreview If the the page is currently being previewed
+	 * @param Boolean $isShowChanges If the page is current showing proposed changes
+	 * @param Boolean $isDiff If the page is a diff
+	 * @param Boolean $isEdit If the page is being edited
+	 * @param Boolean $isHistory If the page history is being shown
 	 *
 	 * @return bool true
 	 */
-	static public function onPageHeaderEditPage( $pageHeaderModule, $ns, $isPreview, $isShowChanges, $isDiff, $isEdit, $isHistory ) {
-		if (  WallHelper::isWallNamespace( $ns ) && $isDiff ) {
+	static public function onPageHeaderEditPage( PageHeaderController $pageHeaderModule, $ns, bool $isPreview, bool $isShowChanges, bool $isDiff, bool $isEdit, bool $isHistory ) {
+		if ( WallHelper::isWallNamespace( $ns ) && $isDiff ) {
 			$app = F::App();
 
 			$app->wg->Out->addExtensionStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/Wall/css/WallDiffPage.scss' ) );
 
 			$wmRef = '';
-			// @todo should wmRef be passed by reference?
 			$meta = static::getMetatitleFromTitleObject( $app->wg->Title, $wmRef );
 
 			$pageHeaderModule->title = wfMessage( 'oasis-page-header-diff' )
