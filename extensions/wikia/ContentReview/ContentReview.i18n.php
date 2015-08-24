@@ -88,6 +88,7 @@ $messages['qqq'] = [
 	'content-review-special-continue-review' => 'Text on button to continue review',
 	'content-review-special-review-started' => 'A message shown when user starts new review process.',
 	'content-review-special-review-open' => 'A message shown when another review for the page is in progress and ask user to complete that first.',
+	'content-review-special-error' => 'Information that some error occurs.',
 
 	'content-review-status-unreviewed' => 'Status Unreviewed',
 	'content-review-status-in-review' => 'Status In review',

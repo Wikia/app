@@ -178,7 +178,7 @@ class ReviewModel extends ContentReviewBaseModel {
 			->run( $db );
 
 		$affectedRows = $db->affectedRows();
-		
+
 		if ( $affectedRows === 0 ) {
 			throw new \FluentSql\Exception\SqlException( 'The UPDATE operation failed.' );
 		}
