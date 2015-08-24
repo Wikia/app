@@ -278,7 +278,7 @@ function deny( ) {
 }
 
 /**
- * check for preview & verify
+ * check for staging machines (for example: preview or verify)
  */
 $headers = function_exists('apache_request_headers') ? apache_request_headers() : array();
 
