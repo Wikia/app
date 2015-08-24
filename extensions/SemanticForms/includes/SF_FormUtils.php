@@ -132,10 +132,10 @@ class SFFormUtils {
 		// figure out if the checkbox should be checked -
 		// this code borrowed from /includes/EditPage.php
 		if ( !$form_submitted ) {
-			if ( $wgUser->getOption( 'watchdefault' ) ) {
+			if ( $wgUser->getGlobalPreference( 'watchdefault' ) ) {
 				# Watch all edits
 				$is_checked = true;
-			} elseif ( $wgUser->getOption( 'watchcreations' ) && !$wgTitle->exists() ) {
+			} elseif ( $wgUser->getGlobalPreference( 'watchcreations' ) && !$wgTitle->exists() ) {
 				# Watch creations
 				$is_checked = true;
 			} elseif ( $wgTitle->userIsWatching() ) {

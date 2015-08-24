@@ -2,6 +2,59 @@
 require_once( $IP . '/extensions/wikia/CuratedContent/CuratedContentHelper.class.php' );
 
 class CuratedContentHelperTest extends WikiaBaseTest {
+	/**
+	 * @param array $data
+	 * @param array $resultExpected
+	 *
+	 * @dataProvider testRemoveEmptySectionsDataProvider
+	 */
+	public function testRemoveEmptySections( $data, $resultExpected ) {
+		$this->assertEquals( $resultExpected, ( new CuratedContentHelper )->removeEmptySections( $data ) );
+	}
+
+	public function testRemoveEmptySectionsDataProvider() {
+		return [
+			[
+				[ ],
+				[ ]
+			],
+			[
+				[ null, null, null ],
+				[ ],
+			],
+			[
+				[ null, [ ], null ],
+				[ [ ] ],
+			],
+		];
+	}
+
+	/**
+	 * @param array $section
+	 * @param array $resultExpected
+	 *
+	 * @dataProvider testProcessLogicForSectionDataProvider
+	 */
+	public function testProcessLogicForSection( $section, $resultExpected ) {
+		$this->getMock( 'CuratedContentHelper', [ 'processCrop', 'fillItemInfo' ] );
+
+		$this->assertEquals( $resultExpected, ( new CuratedContentHelper )->processLogicForSection( $section ) );
+	}
+
+	public function testProcessLogicForSectionDataProvider() {
+		return [
+			// bad data - empty items
+			[
+				[ 'items' => [ ] ],
+				null,
+			],
+			// good data, non-empty items
+			[
+				[ 'items' => [ [ ], [ ], [ ] ] ],
+				[ 'items' => [ [ ], [ ], [ ] ], 'image_id' => 0 ],
+			],
+		];
+	}
 
 	public function testFindImageIdAndUrlWhenImageAndArticleEmpty() {
 		$this->getStaticMethodMock( 'CuratedContentHelper', 'findFirstImageTitleFromArticle' )
