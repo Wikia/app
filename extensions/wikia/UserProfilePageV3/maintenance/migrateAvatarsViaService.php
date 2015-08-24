@@ -20,7 +20,26 @@ class AvatarsMigratorException extends Exception {}
  */
 class AvatarsMigrator extends Maintenance {
 
+	private $isDryRun = true;
+
+	/**
+	 * Set script options
+	 */
+	public function __construct() {
+		parent::__construct();
+
+		$this->addOption('dry-run', 'Don\'t perform any operations [default]');
+		$this->addOption( 'force', 'Apply the changes made by the script' );
+
+		$this->mDescription = 'This script migrates the user avatars from DFS to user avatars service';
+	}
+
 	public function execute() {
+		// read options
+		$this->isDryRun = $this->hasOption( 'dry-run' ) || !$this->hasOption( 'force' );
+
+		if ($this->isDryRun) $this->output( "Running in dry-run mode!\n\n" );
+
 		$this->output( "Getting the list of all accounts...\n" );
 
 		// get all accounts
