@@ -243,7 +243,7 @@
         return kruxSegment;
     }
 
-    function setAdBlock(value) {
+    function trackBlocking(value) {
         _gaWikiaPush(['set', 'dimension6', value]);
         window.ga('ads.set', 'dimension6', value);
         guaTrackEvent('ads-sourcepoint-detection', 'impression', value);
@@ -355,10 +355,10 @@
 
     if (window.ads.context.opts.showAds) {
         document.addEventListener('sp.blocking', function () {
-            setAdBlock('Yes');
+            trackBlocking('Yes');
         });
         document.addEventListener('sp.not_blocking', function () {
-            setAdBlock('No');
+            trackBlocking('No');
         });
     }
 
