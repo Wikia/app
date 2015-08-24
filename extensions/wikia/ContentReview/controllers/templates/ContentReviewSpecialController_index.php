@@ -21,24 +21,29 @@
 	</thead>
 	<tbody>
 	<?php if ( !empty( $reviews ) ): ?>
-		<?php foreach ( $reviews as $contentReviewId => $content ): ?>
+		<?php foreach ( $reviews as $contentReviewId => $review ): ?>
 			<tr class="content-review-special-list-item" id="content-review-special-list-item-<?= $contentReviewId ?>">
-				<td><?= htmlspecialchars( $content['wiki'] ) ?></td>
-				<td><a href="<?= $content['url'] ?>" target="_blank"><?= $content['title'] ?></a></td>
-				<td><?= $content['revision_id'] ?></td>
-				<td><?= wfMessage( ContentReviewSpecialController::$status[$content['status']] )->escaped() ?></td>
-				<td><?= htmlspecialchars( $content['user'] ) ?></td>
-				<td><?= $content['submit_time'] ?></td>
-				<td><?= $content['review_user_id'] ?></td>
-				<td><?= $content['review_start'] ?></td>
+				<td><?= htmlspecialchars( $review['wiki'] ) ?></td>
+				<td><a href="<?= Sanitizer::encodeAttribute( $review['url'] ) ?>" target="_blank"><?= htmlspecialchars( $review['title'] ) ?></a></td>
+				<td><?= $review['revision_id'] ?></td>
+				<td><?= wfMessage( ContentReviewSpecialController::$status[$review['status']] )->escaped() ?></td>
+				<td><?= htmlspecialchars( $review['user'] ) ?></td>
+				<td><?= $review['submit_time'] ?></td>
+				<td><?= $review['review_user_id'] ?></td>
+				<td><?= $review['review_start'] ?></td>
 				<td class="content-review-special-list-item-actions clearfix">
-					<a href="<?= $content['diff'] ?>" target="_blank"
-					   class="content-review-diff  wikia-button primary"
-					   data-wiki-id="<?= $content['wiki_id'] ?>"
-					   data-page-id="<?= $content['page_id'] ?>"
-					   data-status="<?= $inReview ?>">
-						<?= wfMessage( 'content-review-icons-actions-diff' )->escaped() ?>
-					</a>
+					<? if ( !empty( $review['hide'] ) ): ?>
+						<?= wfMessage( 'content-review-special-review-open' )->escaped() ?>
+					<? else: ?>
+						<a href="<?= Sanitizer::encodeAttribute( $review['diff'] ) ?>" target="_blank"
+						   class="<?= ContentReviewSpecialController::$status[$review['status']] ?><?= $review['class'] ?> wikia-button primary"
+						   data-wiki-id="<?= $review['wiki_id'] ?>"
+						   data-page-id="<?= $review['page_id'] ?>"
+						   data-old-status="<?= $review['status'] ?>"
+						   data-status="<?= Wikia\ContentReview\Models\ReviewModel::CONTENT_REVIEW_STATUS_IN_REVIEW ?>">
+							<?= $review['diffText'] ?>
+						</a>
+					<? endif ?>
 				</td>
 			</tr>
 		<?php endforeach; ?>

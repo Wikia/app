@@ -42,7 +42,13 @@ $messages['en'] = [
 	'content-review-special-list-header-reviewer' => 'Reviewer id',
 	'content-review-special-list-header-review-start' => 'Review start',
 	'content-review-special-list-header-actions' => 'Actions',
-	'content-review-icons-actions-diff' => 'Start review',
+
+	'content-review-special-start-review' => 'Start review',
+	'content-review-special-continue-review' => 'Continue review',
+	'content-review-special-review-started' => 'You have started review process.',
+	'content-review-special-review-open' => 'Please complete open review for this page first.',
+	'content-review-special-error' => 'Unfortunately, an error happened.',
+
 	'content-review-diff-approve' => 'Approve',
 	'content-review-diff-reject' => 'Reject',
 
@@ -86,7 +92,12 @@ $messages['qqq'] = [
 	'content-review-special-list-header-reviewer' => 'A column name for a Reviewer id',
 	'content-review-special-list-header-review-start' => 'A column name for a Review start',
 	'content-review-special-list-header-actions' => 'A column name for Actions',
-	'content-review-icons-actions-diff' => 'Button text start review',
+
+	'content-review-special-start-review' => 'Text on button to start review',
+	'content-review-special-continue-review' => 'Text on button to continue review',
+	'content-review-special-review-started' => 'A message shown when user starts new review process.',
+	'content-review-special-review-open' => 'A message shown when another review for the page is in progress and ask user to complete that first.',
+	'content-review-special-error' => 'Information that some error occurs.',
 
 	'content-review-status-unreviewed' => 'Status Unreviewed',
 	'content-review-status-in-review' => 'Status In review',
