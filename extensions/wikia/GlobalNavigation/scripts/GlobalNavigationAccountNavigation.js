@@ -54,6 +54,25 @@ require([
 		}
 	}
 
+	function authModalOpen(methodName) {
+		require(['AuthModal'], function (authModal) {
+			authModal[methodName]();
+		});
+	}
+
+	function globalNavAuthButtonsClick(event) {
+		//Prevent opening modal with shift / alt / ctrl / let only left mouse click
+		if (event.which !== 1 || event.shiftKey || event.altKey || event.metaKey || event.ctrlKey) {
+			return;
+		}
+		if (event) {
+			event.preventDefault();
+			event.stopPropagation();
+		}
+
+		authModalOpen(event.target.classList.contains('register') ? 'register' : 'login');
+	}
+
 	function oldAccountNav ($entryPoint) {
 		var $userLoginDropdown = $('#UserLoginDropdown');
 
@@ -94,24 +113,7 @@ require([
 		if (!win.wgUserName && $entryPoint.hasClass('newAuth')) {
 			$authEntryPoints = $entryPoint.find('.auth-link.register, .auth-link.sign-in, a.sign-in');
 
-			$authEntryPoints.click(function (event) {
-				//Prevent opening modal with shift / alt / ctrl / let only left mouse click
-				if (event.which !== 1 || event.shiftKey || event.altKey || event.metaKey || event.ctrlKey) {
-					return;
-				}
-				if (event) {
-					event.preventDefault();
-					event.stopPropagation();
-				}
-
-				require(['AuthModal'], function (authModal) {
-					if (event.target.classList.contains('register')) {
-						authModal.register();
-					} else {
-						authModal.login();
-					}
-				});
-			});
+			$authEntryPoints.click(globalNavAuthButtonsClick);
 		}
 		else {
 			oldAccountNav($entryPoint);
