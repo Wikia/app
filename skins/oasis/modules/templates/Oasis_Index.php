@@ -8,6 +8,12 @@
 <?php else : ?>
 	<meta name="viewport" content="width=1200">
 <?php endif ?>
+
+<? if ( Wikia::isMainPage() ): ?>
+	<? global $wgServer ?>
+	<link rel="alternate" media="only screen and (max-width: 640px)" href="<?= $wgServer ?>">
+<? endif; ?>
+
 <?= $headLinks ?>
 
 <title><?= $pageTitle ?></title>
