@@ -1,14 +1,22 @@
-<div id="WikiaPageHeader" class="WikiaPageHeader WikiaPageHeaderDiffHistory">
-	<?php
-	if( !empty($isHistory) && !empty($isUserTalkArchiveModeEnabled) ) { ?>
-		<?= F::app()->renderView('CommentsLikes', 'Index', array('comments' => $comments)); ?>
-	<?php } ?>
-	<h1><?= !empty($displaytitle) ? $title : htmlspecialchars($title) ?></h1>
-<?php
-	// edit button
-	if (!empty($action)) {
-		echo F::app()->renderView('MenuButton', 'Index', array('action' => $action, 'dropdown' => $dropdown, 'image' => $actionImage, 'name' => $actionName));
+<div id="pageHeader" class="page-header editpage">
+	<h1><?= $title ?></h1>
+	<?php if ( !empty( $button['action'] ) ) {
+		echo $app->renderView(
+			'MenuButton',
+			'Index',
+			$button
+		);
 	}
-?>
-	<p><?= $subtitle ?></p>
+
+	if( !empty( $isHistory ) && !empty( $isUserTalkArchiveModeEnabled ) ) {
+		echo $app->renderView(
+			'CommentsLikes',
+			'Index',
+			[ 'comments' => $comments ]
+		);
+	}
+
+	if ( !empty( $subtitle ) ) { ?>
+		<h2 class="breadcrumbs"><?= $subtitle ?></h2>
+	<?php } ?>
 </div>
