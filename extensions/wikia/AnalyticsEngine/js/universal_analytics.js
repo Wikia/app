@@ -353,7 +353,7 @@
     // Unleash
     _gaWikiaPush(['send', 'pageview']);
 
-    if (window.ads.context.opts.showAds) {
+    if (window.ads && window.ads.context.opts.showAds) {
         document.addEventListener('sp.blocking', function () {
             trackBlocking('Yes');
         });
