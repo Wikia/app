@@ -61,20 +61,25 @@ class BannerNotificationsController extends WikiaController {
 	 */
 	public function executeConfirmation() {
 		if ( !empty( $_SESSION[self::SESSION_KEY] ) ) {
-			$entry = $_SESSION[self::SESSION_KEY];
+			$notifications = [];
 
-			$this->confirmation = $entry['message'];
-			$confirmationClass = $entry['type'];
+			foreach( $_SESSION[self::SESSION_KEY] as $sessionEntities ) {
+				$notification = [
+					'message' => $sessionEntities['message'],
+					'class' => $sessionEntities['type']
+				];
 
-			if ( !empty( $entry['options'][ self::OPTION_NON_DISMISSIBLE ] ) ) {
-				$confirmationClass .= ' non-dismissible';
+				if ( !empty( $sessionEntities['options'][self::OPTION_NON_DISMISSIBLE] ) ) {
+					$notification['class'] .= ' non-dismissible';
+				}
+
+				$notifications[] = $notification;
 			}
-			$this->confirmationClass = $confirmationClass;
+
+			$this->notifications = $notifications;
 
 			// clear confirmation stack
 			self::clearConfirmation();
-
-			wfDebug( __METHOD__ . " - {$this->confirmation}\n" );
 		}
 
 	}
