@@ -53,10 +53,15 @@ class AvatarsMigrator extends Maintenance {
 			__METHOD__
 		);
 
+		$rows = $res->numRows();
+		$this->output( "Processing {$rows} users...\n" );
+
 		// process users
-		foreach ( $res as $row ) {
+		foreach ( $res as $n => $row ) {
 			try {
-				$this->processUser( User::newFromId( $row->id ) );
+				$user = User::newFromId( $row->id );
+				$this->output( sprintf( "\n%d (%.2f%%) [User #%d / %s]: ", ($n+1), (($n+1) / $rows * 100), $user->getId(), $user->getName() ) );
+				$this->processUser( $user );
 			}
 			catch ( AvatarsMigratorException $e ) {
 				\Wikia\Logger\WikiaLogger::instance()->error( __CLASS__, [
@@ -67,8 +72,6 @@ class AvatarsMigrator extends Maintenance {
 				$this->output( sprintf( "\n\t%s", $e->getMessage() ) );
 			}
 		}
-
-		$this->output( "Processing {$res->numRows()} users...\n" );
 	}
 
 	/**
@@ -78,8 +81,6 @@ class AvatarsMigrator extends Maintenance {
 	 * @throws AvatarsMigratorException
 	 */
 	private function processUser( User $user ) {
-		$this->output( sprintf( "\n[User #%d]: ", $user->getId() ) );
-
 		$avatar = $user->getGlobalAttribute( AVATAR_USER_OPTION_NAME );
 
 		// no avatar set, skip this account
@@ -91,12 +92,17 @@ class AvatarsMigrator extends Maintenance {
 		// no need to store default avatars in user properties - remove the entry
 		else if ( self::isDefaultAvatar( $avatar ) ) {
 			$this->output( 'default avatar set - removing an attribute' );
+
+			if ($this->isDryRun) return;
+
 			$user->removeGlobalPreference( AVATAR_USER_OPTION_NAME );
 			$user->saveSettings();
 		}
 		// TODO: predefined avatar (Avatar*.jpg)
 		else if ( false ) {
 			$this->output( 'predefined avatar set - setting a full URL' );
+
+			if ($this->isDryRun) return;
 
 			// TODO: // set the full URL using user properties service
 		}
@@ -107,10 +113,12 @@ class AvatarsMigrator extends Maintenance {
 			// fetch the user-uploaded avatar
 			$masthead = Masthead::newFromUser( $user );
 			$avatarUrl = $masthead->getPurgeUrl();
-			$avatarContent = Http::get( $avatarUrl );
 
 			$this->output( sprintf( 'uploading <%s>', $avatarUrl ) );
 
+			if ($this->isDryRun) return;
+
+			$avatarContent = Http::get( $avatarUrl );
 			if ( empty( $avatarContent ) ) {
 				throw new AvatarsMigratorException( 'Avatar fetch failed' );
 			}
