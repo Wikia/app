@@ -4,47 +4,18 @@ define('ext.wikia.adEngine.provider.gpt.sourcePointTag', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adTracker',
 	'ext.wikia.adEngine.provider.gpt.googleTag',
+	'ext.wikia.adEngine.utils.cssTweaker',
 	'wikia.document',
 	'wikia.lazyqueue',
 	'wikia.log',
 	'wikia.window'
-], function (adContext, adTracker, GoogleTag, doc, lazyQueue, log, window) {
+], function (adContext, adTracker, GoogleTag, cssTweaker, doc, lazyQueue, log, window) {
 	'use strict';
 
 	var blocking = false,
 		context = adContext.getContext(),
 		logGroup = 'ext.wikia.adEngine.provider.gpt.sourcePointTag',
 		sourcePointClientId = 'rMbenHBwnMyAMhR';
-
-	/**
-	 * Create cssText based on computedStyle
-	 * Custom method because of Firefox bug #137687
-	 */
-	function getComputedStyleCssText(element) {
-		var style = window.getComputedStyle(element),
-			cssText;
-
-		if (style.cssText !== '') {
-			return style.cssText;
-		}
-
-		cssText = '';
-		for (var i = 0; i < style.length; i++) {
-			cssText += style[i] + ':' + style.getPropertyValue(style[i]) + ';';
-		}
-
-		return cssText;
-	}
-
-	function copyStyles(from, to) {
-		log(['copyStyles', from, to], 'debug', logGroup);
-		var source = doc.getElementById(from),
-			destination = doc.getElementById(to);
-
-		if (destination) {
-			destination.style.cssText = getComputedStyleCssText(source);
-		}
-	}
 
 	function SourcePointTag() {
 		GoogleTag.call(this);
@@ -125,7 +96,7 @@ define('ext.wikia.adEngine.provider.gpt.sourcePointTag', [
 			newSlotName = slotElementId.replace(/(.*)([\/])([^\/]*$)/, '$3');
 
 			if (slotName !== newSlotName) {
-				copyStyles(slotName, newSlotName);
+				cssTweaker.copyStyles(slotName, newSlotName);
 
 				iframe = doc.getElementById(slotElementId).querySelector('div[id*="_container_"] iframe');
 				iframe.addEventListener('load', function () {

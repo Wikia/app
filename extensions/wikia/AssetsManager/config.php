@@ -103,6 +103,7 @@ $config['adengine2_desktop_js'] = array(
 		'//extensions/wikia/AdEngine/js/template/modalHandlerFactory.js',
 		'//extensions/wikia/AdEngine/js/template/modalOasisHandler.js',
 		'//extensions/wikia/AdEngine/js/template/skin.js',
+		'//extensions/wikia/AdEngine/js/utils/cssTweaker.js',
 		'//resources/wikia/modules/krux.js',
 
 		// was: late queue
