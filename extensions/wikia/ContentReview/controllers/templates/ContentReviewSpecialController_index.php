@@ -24,7 +24,7 @@
 		<?php foreach ( $reviews as $contentReviewId => $review ): ?>
 			<tr class="content-review-special-list-item" id="content-review-special-list-item-<?= $contentReviewId ?>">
 				<td><?= htmlspecialchars( $review['wiki'] ) ?></td>
-				<td><a href="<?= Sanitizer::cleanUrl( $review['url'] ) ?>" target="_blank"><?= htmlspecialchars( $review['title'] ) ?></a></td>
+				<td><a href="<?= Sanitizer::encodeAttribute( $review['url'] ) ?>" target="_blank"><?= htmlspecialchars( $review['title'] ) ?></a></td>
 				<td><?= $review['revision_id'] ?></td>
 				<td><?= wfMessage( ContentReviewSpecialController::$status[$review['status']] )->escaped() ?></td>
 				<td><?= htmlspecialchars( $review['user'] ) ?></td>
@@ -35,7 +35,7 @@
 					<? if ( !empty( $review['hide'] ) ): ?>
 						<?= wfMessage( 'content-review-special-review-open' )->escaped() ?>
 					<? else: ?>
-						<a href="<?= Sanitizer::cleanUrl( $review['diff'] ) ?>" target="_blank"
+						<a href="<?= Sanitizer::encodeAttribute( $review['diff'] ) ?>" target="_blank"
 						   class="<?= ContentReviewSpecialController::$status[$review['status']] ?><?= $review['class'] ?> wikia-button primary"
 						   data-wiki-id="<?= $review['wiki_id'] ?>"
 						   data-page-id="<?= $review['page_id'] ?>"
