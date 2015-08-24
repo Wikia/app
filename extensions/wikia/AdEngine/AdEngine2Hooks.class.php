@@ -258,11 +258,10 @@ class AdEngine2Hooks {
 	}
 
 	public static function onSkinTemplateOutputPageBeforeExec( Skin $skin, $template) {
-		$out = $skin->getOutput();
 		$stagingHeader = $skin->getRequest()->getHeader('X-Staging');
 
-		if ( startsWith( $stagingHeader, static::ADS_STAGING_HEADER ) ) {
-			$out->setRobotPolicy( 'noindex,nofollow' );
+		if ( startsWith( $stagingHeader, static::ADS_STAGING_HEADER ) !== false ) {
+			$skin->getOutput()->setRobotPolicy( 'noindex,nofollow' );
 		}
 
 		return true;
