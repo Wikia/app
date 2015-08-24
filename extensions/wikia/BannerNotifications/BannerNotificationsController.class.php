@@ -28,25 +28,21 @@ class BannerNotificationsController extends WikiaController {
 	 *
 	 * @param String $message - message text
 	 * @param String $type - notification type, one of CONFIRMATION_ constants
-	 * @param Bool $force - flag that enforces to override existing notification
 	 * @param Array $options
 	 * 	self::OPTION_NON_DISMISSIBLE - removes close button from notification
 	 */
-	public static function addConfirmation(
-		$message,
-		$type = self::CONFIRMATION_CONFIRM,
-		$force = false,
-		$options = []
-	) {
+	public static function addConfirmation( $message, $type = self::CONFIRMATION_CONFIRM, $options = [] ) {
 		//Add confirmation if there was none set yet or if it's forced
-		if ( !empty( $message ) &&
-			( empty( $_SESSION[self::SESSION_KEY] ) || $force === true ) ) {
-			// TODO allow multiple notifications
-			$_SESSION[self::SESSION_KEY] = array(
+		if ( !empty( $message ) ) {
+			if ( !isset( $_SESSION[self::SESSION_KEY] ) ) {
+				$_SESSION[self::SESSION_KEY] = [];
+			}
+
+			$_SESSION[self::SESSION_KEY][] = [
 				'message' => $message,
 				'type' => $type,
 				'options' => $options
-			);
+			];
 
 			wfDebug( __METHOD__ . " - {$message}\n" );
 		}
@@ -177,7 +173,7 @@ class BannerNotificationsController extends WikiaController {
 
 			wfRunHooks( 'OasisAddPageDeletedConfirmationMessage', array( &$title, &$message ) );
 
-			self::addConfirmation( $message, self::CONFIRMATION_CONFIRM, true );
+			self::addConfirmation( $message, self::CONFIRMATION_CONFIRM );
 
 			// redirect to main page
 			$wgOut->redirect( Title::newMainPage()->getFullUrl( array( 'cb' => rand( 1, 1000 ) ) ) );
@@ -291,7 +287,6 @@ class BannerNotificationsController extends WikiaController {
 			self::addConfirmation(
 				wfMessage('bannernotifications-not-confirmed-email')->parse(),
 				self::CONFIRMATION_WARN,
-				false,
 				[ self::OPTION_NON_DISMISSIBLE => true ]
 			);
 		}

@@ -18,7 +18,7 @@ $messages['en'] = array(
 $messages['qqq'] = array(
 	'bannernotifications-desc' => 'Description of this extension',
 	'bannernotifications-general-ajax-failure' => 'General message for AJAX failure to be put on banner notification',
-	'bannernotifications-not-confirmed-email' => 'TODO'
+	'bannernotifications-not-confirmed-email' => 'Banner Notification text - informs user that account has not confirmed email address. In order to confirm email address user has to follow instructions from email that was sent by Wikia. User can resend that email by going to [[Special:ConfirmEmail]] or change email address on preferences page - [[Special:Preferences#mw-prefsection-emailv2]]'
 );
 
 /** Arabic (العربية)
