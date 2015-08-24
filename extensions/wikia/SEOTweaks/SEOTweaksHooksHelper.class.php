@@ -28,7 +28,7 @@ class SEOTweaksHooksHelper {
 		if ( !empty( $wgSEOGooglePlusLink ) ) {
 			$out->addLink( array( 'href' => $wgSEOGooglePlusLink, 'rel' => 'publisher' ) );
 		}
-		if ( Wikia::isMainPage() ) {
+		if ( WikiaPageType::isMainPage() ) {
 			$out->addLink( [ 'href' => $wgServer, 'rel' => 'alternate', 'media' => 'only screen and (max-width: 640px)' ] );
 		}
 		return true;
