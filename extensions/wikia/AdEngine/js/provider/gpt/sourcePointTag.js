@@ -5,9 +5,8 @@ define('ext.wikia.adEngine.provider.gpt.sourcePointTag', [
 	'ext.wikia.adEngine.provider.gpt.googleTag',
 	'wikia.document',
 	'wikia.log',
-	'wikia.tracker',
 	'wikia.window'
-], function (adContext, GoogleTag, doc, log, tracker, window) {
+], function (adContext, GoogleTag, doc, log, window) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.gpt.sourcePointTag',
@@ -16,15 +15,6 @@ define('ext.wikia.adEngine.provider.gpt.sourcePointTag', [
 
 	function SourcePointTag() {
 		GoogleTag.call(this);
-	}
-
-	function track(eventLabel) {
-		tracker.track({
-			action: 'impression',
-			category: 'ads-sourcepoint-detection',
-			label: eventLabel,
-			trackingMethod: 'analytics'
-		});
 	}
 
 	SourcePointTag.prototype = new GoogleTag();
@@ -43,14 +33,6 @@ define('ext.wikia.adEngine.provider.gpt.sourcePointTag', [
 		gads.addEventListener('load', function () {
 			var spReadyEvent = new window.Event('sp.ready');
 			window.dispatchEvent(spReadyEvent);
-		});
-
-		doc.addEventListener('sp.blocking', function () {
-			track('ads-blocked');
-		});
-
-		doc.addEventListener('sp.not_blocking', function () {
-			track('ads-not-blocked');
 		});
 
 		log('Appending GPT script to head', 'debug', logGroup);

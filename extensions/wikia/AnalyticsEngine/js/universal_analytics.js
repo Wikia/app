@@ -243,12 +243,10 @@
         return kruxSegment;
     }
 
-    function setAdBlockDimension(value) {
-        var cookieValue = value === 'Yes' ? '1' : '0';
-
+    function setAdBlock(value) {
         _gaWikiaPush(['set', 'dimension6', value]);
         window.ga('ads.set', 'dimension6', value);
-        window.Wikia.Cookies.set('sp.block',  cookieValue);
+        guaTrackEvent('ads-sourcepoint-detection', 'impression', value);
     }
 
     /**** High-Priority Custom Dimensions ****/
@@ -259,20 +257,6 @@
         ['set', 'dimension4', window.skin],                            // Skin
         ['set', 'dimension5', !!window.wgUserName ? 'user' : 'anon']  // LoginStatus
     );
-
-    if (window.ads.context.opts.showAds) {
-        var adBlockCookie = window.Wikia.Cookies.get('sp.block');
-
-        if (adBlockCookie) {
-            _gaWikiaPush(['set', 'dimension6', adBlockCookie === '1' ? 'Yes' : 'No']);
-        }
-        document.addEventListener('sp.blocking', function () {
-            setAdBlockDimension('Yes');
-        });
-        document.addEventListener('sp.not_blocking', function () {
-            setAdBlockDimension('No');
-        });
-    }
 
     /*
      * Remove when SOC-217 ABTest is finished
@@ -368,6 +352,15 @@
 
     // Unleash
     _gaWikiaPush(['send', 'pageview']);
+
+    if (window.ads.context.opts.showAds) {
+        document.addEventListener('sp.blocking', function () {
+            setAdBlock('Yes');
+        });
+        document.addEventListener('sp.not_blocking', function () {
+            setAdBlock('No');
+        });
+    }
 
     /**
      * Advertisement Tracker, pushed separatedly.
