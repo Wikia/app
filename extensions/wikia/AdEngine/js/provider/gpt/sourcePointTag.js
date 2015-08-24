@@ -4,12 +4,13 @@ define('ext.wikia.adEngine.provider.gpt.sourcePointTag', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adTracker',
 	'ext.wikia.adEngine.provider.gpt.googleTag',
+	'ext.wikia.adEngine.slot.adSlot',
 	'ext.wikia.adEngine.utils.cssTweaker',
 	'wikia.document',
 	'wikia.lazyqueue',
 	'wikia.log',
 	'wikia.window'
-], function (adContext, adTracker, GoogleTag, cssTweaker, doc, lazyQueue, log, window) {
+], function (adContext, adTracker, GoogleTag, adSlot, cssTweaker, doc, lazyQueue, log, window) {
 	'use strict';
 
 	var blocking = false,
@@ -93,7 +94,7 @@ define('ext.wikia.adEngine.provider.gpt.sourcePointTag', [
 
 		if (blocking && gptEvent.slot && gptEvent.slot.getSlotElementId) {
 			slotElementId = gptEvent.slot.getSlotElementId() || element.getId();
-			newSlotName = slotElementId.replace(/(.*)([\/])([^\/]*$)/, '$3');
+			newSlotName = adSlot.getShortSlotName(slotElementId);
 
 			if (slotName !== newSlotName) {
 				cssTweaker.copyStyles(slotName, newSlotName);
