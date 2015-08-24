@@ -43,8 +43,7 @@ class AvatarsMigrator extends Maintenance {
 		$this->output( "Getting the list of all accounts...\n" );
 
 		// get all accounts
-		global $wgExternalSharedDB;
-		$db = $this->getDB( DB_SLAVE, [], $wgExternalSharedDB );
+		$db = $this->getDB( DB_SLAVE );
 
 		$res = $db->select(
 			'`user`',
@@ -97,6 +96,8 @@ class AvatarsMigrator extends Maintenance {
 
 			$user->removeGlobalPreference( AVATAR_USER_OPTION_NAME );
 			$user->saveSettings();
+
+			$this->getDB( DB_MASTER )->commit( __METHOD__ );
 		}
 		// TODO: predefined avatar (Avatar*.jpg)
 		else if ( false ) {
@@ -162,6 +163,15 @@ class AvatarsMigrator extends Maintenance {
 	 */
 	public static function isNewAvatar( $url ) {
 		return !self::isDefaultAvatar( $url ) && startsWith( $url, 'http://' );
+	}
+
+	/**
+	 * @param int $db DB_SLAVE|DB_MASTER
+	 * @return DatabaseBase
+	 */
+	protected function getDB($db = DB_SLAVE) {
+		global $wgExternalSharedDB;
+		return wfGetDB( $db, [], $wgExternalSharedDB );
 	}
 }
 
