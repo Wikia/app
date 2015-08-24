@@ -32,13 +32,18 @@
 				<td><?= $review['review_user_id'] ?></td>
 				<td><?= $review['review_start'] ?></td>
 				<td class="content-review-special-list-item-actions clearfix">
-					<a href="<?= $review['diff'] ?>" target="_blank"
-					   class="<?= ContentReviewSpecialController::$status[$review['status']] ?> wikia-button primary"
-					   data-wiki-id="<?= $review['wiki_id'] ?>"
-					   data-page-id="<?= $review['page_id'] ?>"
-					   data-status="<?= Wikia\ContentReview\Models\ReviewModel::CONTENT_REVIEW_STATUS_IN_REVIEW ?>">
-						<?= $review['diffText'] ?>
-					</a>
+					<? if ( !empty( $review['hide'] ) ): ?>
+						<?= wfMessage( 'content-review-special-review-open' )->escaped() ?>
+					<? else: ?>
+						<a href="<?= $review['diff'] ?>" target="_blank"
+						   class="<?= ContentReviewSpecialController::$status[$review['status']] ?><?= $review['class'] ?> wikia-button primary"
+						   data-wiki-id="<?= $review['wiki_id'] ?>"
+						   data-page-id="<?= $review['page_id'] ?>"
+						   data-old-status="<?= $review['status'] ?>"
+						   data-status="<?= Wikia\ContentReview\Models\ReviewModel::CONTENT_REVIEW_STATUS_IN_REVIEW ?>">
+							<?= $review['diffText'] ?>
+						</a>
+					<? endif ?>
 				</td>
 			</tr>
 		<?php endforeach; ?>

@@ -164,15 +164,24 @@ class ReviewModel extends ContentReviewBaseModel {
 		return true;
 	}
 
-	public function updateRevisionStatus( $wiki_id, $page_id, $status ) {
+	public function updateRevisionStatus( $wiki_id, $page_id, $oldStatus, $status, $reviewerId  ) {
 		$db = $this->getDatabaseForWrite();
 
 		( new \WikiaSQL() )
 			->UPDATE( self::CONTENT_REVIEW_STATUS_TABLE )
 			->SET( 'status', $status )
+			->SET( 'review_user_id', $reviewerId )
+			->SET( 'review_start', wfTimestamp( TS_DB ) )
 			->WHERE( 'wiki_id' )->EQUAL_TO( $wiki_id )
 			->AND_( 'page_id' )->EQUAL_TO( $page_id )
+			->AND_( 'status' )->EQUAL_TO( $oldStatus )
 			->run( $db );
+
+		$affectedRows = $db->affectedRows();
+		
+		if ( $affectedRows === 0 ) {
+			throw new \FluentSql\Exception\SqlException( 'The UPDATE operation failed.' );
+		}
 
 		return $status;
 	}
@@ -187,7 +196,7 @@ class ReviewModel extends ContentReviewBaseModel {
 			->ON( self::CONTENT_REVIEW_STATUS_TABLE.'.wiki_id', self::CONTENT_REVIEW_CURRENT_REVISIONS_TABLE.'.wiki_id' )
 			->AND_( self::CONTENT_REVIEW_STATUS_TABLE.'.page_id', self::CONTENT_REVIEW_CURRENT_REVISIONS_TABLE.'.page_id' )
 			->runLoop( $db, function ( &$content, $row ) {
-				$content[] = get_object_vars( $row );
+				$content[$row->page_id][$row->status] = get_object_vars( $row );
 			} );
 
 		return $content;

@@ -17,7 +17,7 @@ class ContentReviewSpecialController extends WikiaSpecialPageController {
 	public function init() {
 		$this->specialPage->setHeaders();
 
-		\Wikia::addAssetsToOutput('content_review_special_page_js');
+		\Wikia::addAssetsToOutput( 'content_review_special_page_js' );
 		\JSMessages::enqueuePackage( 'ContentReviewSpecialPage', \JSMessages::EXTERNAL );
 	}
 
@@ -27,21 +27,34 @@ class ContentReviewSpecialController extends WikiaSpecialPageController {
 		$this->reviews = $this->prepareReviewData( $reviews );
 	}
 
-	private function prepareReviewData( $reviews ) {
-		foreach ( $reviews as &$review ) {
-			$title = GlobalTitle::newFromID( $review['page_id'], $review['wiki_id'] );
-			$review['url'] = $title->getFullURL();
-			$review['title'] = $title->getBaseText();
-			$review['wiki'] = $title->getDatabaseName();
-			$review['user'] = User::newFromId( $review['submit_user_id'] )->getName();
-			$review['diff'] = $title->getFullURL( [
-				'diff' => $review['revision_id'],
-				'oldid' => $review['reviewed_id']
-			] );
-			$review['diffText'] = $review['status'] == ReviewModel::CONTENT_REVIEW_STATUS_UNREVIEWED
-				? wfMessage( 'content-review-start-review' )->escaped()
-				: wfMessage( 'content-review-continue-review' )->escaped();
+	private function prepareReviewData( $reviewsRaw ) {
+		$reviews = [];
+
+		foreach ( $reviewsRaw as $reviewStatuses ) {
+			foreach ( $reviewStatuses as $review ) {
+				$title = GlobalTitle::newFromID($review['page_id'], $review['wiki_id']);
+				$review['url'] = $title->getFullURL();
+				$review['title'] = $title->getBaseText();
+				$review['wiki'] = $title->getDatabaseName();
+				$review['user'] = User::newFromId($review['submit_user_id'])->getName();
+				$review['diff'] = $title->getFullURL([
+					'diff' => $review['revision_id'],
+					'oldid' => $review['reviewed_id']
+				]);
+				$review['diffText'] = $review['status'] == ReviewModel::CONTENT_REVIEW_STATUS_UNREVIEWED
+					? wfMessage('content-review-special-start-review')->escaped()
+					: wfMessage('content-review-special-continue-review')->escaped();
+
+				if ( $review['status'] == ReviewModel::CONTENT_REVIEW_STATUS_UNREVIEWED
+					&& isset( $reviewStatuses[ReviewModel::CONTENT_REVIEW_STATUS_IN_REVIEW] )
+				) {
+					$review['hide'] = true;
+				}
+
+				$reviews[] = $review;
+			}
 		}
+
 		return $reviews;
 	}
 }

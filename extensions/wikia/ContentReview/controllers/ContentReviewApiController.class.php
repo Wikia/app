@@ -114,10 +114,12 @@ class ContentReviewApiController extends WikiaApiController {
 
 		$pageId = $this->request->getInt( 'pageId' );
 		$wikiId = $this->request->getInt( 'wikiId' );
+		$oldStatus = $this->request->getInt( 'oldStatus' );
 		$status = $this->request->getInt( 'status' );
+		$reviewerId = $this->wg->User->getId();
 
 		$model = new ReviewModel();
-		$model->updateRevisionStatus( $wikiId, $pageId, $status );
+		$model->updateRevisionStatus( $wikiId, $pageId, $oldStatus, $status, $reviewerId );
 	}
 
 	public function getCurrentPageData() {
