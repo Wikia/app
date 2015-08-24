@@ -164,12 +164,12 @@ class GlobalNavigationAccountNavigationController extends WikiaController {
 				$userLoginHelper = new UserLoginHelper();
 				$this->personalUrls['login'] = [
 					'title' => wfMessage( 'global-navigation-sign-in' )->escaped(),
-					'href' => $userLoginHelper->getNewAuthUrl('signin'),
+					'href' => $userLoginHelper->getNewAuthUrl('/signin'),
 					'class' => 'auth-link sign-in'
 				];
 				$this->personalUrls['register'] = [
 					'title' => wfMessage( 'global-navigation-register' )->escaped(),
-					'href' => $userLoginHelper->getNewAuthUrl('signin'),
+					'href' => $userLoginHelper->getNewAuthUrl('/register'),
 					'class' => 'auth-link register'
 				];
 			} else {
