@@ -15,26 +15,19 @@ class ContentReviewSpecialController extends WikiaSpecialPageController {
 	}
 
 	protected function checkAccess() {
-		wfProfileIn(__METHOD__);
-
 		if( !$this->wg->User->isLoggedIn() || !$this->wg->User->isAllowed('content-review') ) {
 			wfProfileOut(__METHOD__);
 			return false;
 		}
-
-		wfProfileOut(__METHOD__);
 		return true;
 	}
 
 	public function index() {
-		wfProfileIn(__METHOD__);
 		$this->specialPage->setHeaders();
 
 		if( !$this->checkAccess() ) {
-			wfProfileOut(__METHOD__);
-			$this->forward('ContentReviewSpecialController', 'onWrongRights');
+			$this->forward('ContentReviewSpecial', 'onWrongRights');
 		}
-
 		$model = new ReviewModel();
 		$reviews = $model->getContentToReviewFromDatabase();
 		$this->reviews = $this->prepareReviewData( $reviews );
@@ -58,7 +51,6 @@ class ContentReviewSpecialController extends WikiaSpecialPageController {
 				'diff' => $reviews[$contentReviewId]['revision_id'],
 				'oldid' => $reviews[$contentReviewId]['reviewed_id']
 			] );
-
 		}
 		return $reviews;
 	}
@@ -67,7 +59,6 @@ class ContentReviewSpecialController extends WikiaSpecialPageController {
 	 * TODO add permissions
 	 */
 	public function updateReviewsStatus() {
-
 		$pageId = $this->request->getInt( 'pageId' );
 		$wikiId = $this->request->getInt( 'wikiId' );
 		$status = $this->request->getInt( 'status' );
@@ -75,6 +66,5 @@ class ContentReviewSpecialController extends WikiaSpecialPageController {
 
 		$model = new ReviewModel();
 		$model->updateRevisionStatus( $wikiId, $pageId, $status, $reviewUserId );
-
 	}
 }

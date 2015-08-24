@@ -23,14 +23,16 @@ define(
         }
 
         function updateReviewStatus() {
-            var self = $(this);
-            var data = {
-                wikiId: self.attr("data-wiki-id"),
-                pageId: self.attr("data-page-id"),
-                status: self.attr("data-status")
-            };
+            var $button = $(this),
+                data = {
+                    wikiId: $button.attr('data-wiki-id'),
+                    pageId: $button.attr('data-page-id'),
+                    status: $button.attr('data-status'),
+                    editToken: mw.user.tokens.get('editToken')
+                };
+
             nirvana.sendRequest({
-                controller: 'ContentReviewSpecialController',
+                controller: 'ContentReviewApiController',
                 method: 'updateReviewsStatus',
                 data: data
             });

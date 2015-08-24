@@ -1,1 +1,1 @@
-<p><?= wfMsg('content-review-wrong-rights'); ?></p>
+<p><?= wfMessage('content-review-wrong-rights')->escaped() ?></p>

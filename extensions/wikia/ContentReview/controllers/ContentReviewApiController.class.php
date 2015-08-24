@@ -18,13 +18,14 @@ class ContentReviewApiController extends WikiaApiController {
 	 * @throws \FluentSql\Exception\SqlException
 	 */
 	public function submitPageForReview() {
+		global $wgCityId;
+
 		if ( !$this->request->wasPosted()
 			|| !$this->wg->User->matchEditToken( $this->request->getVal( 'editToken' ) )
 		) {
 			throw new BadRequestApiException();
 		}
 
-		$wikiId = $this->request->getInt( 'wikiId' );
 		$pageId = $this->request->getInt( 'pageId' );
 
 		$title = Title::newFromID( $pageId );
@@ -38,13 +39,13 @@ class ContentReviewApiController extends WikiaApiController {
 		}
 
 		$revisionId = $title->getLatestRevID();
-		$revisionData = $this->getLatestReviewedRevisionFromDB( $wikiId, $pageId );
+		$revisionData = $this->getLatestReviewedRevisionFromDB( $wgCityId, $pageId );
 
 		if ( $revisionId == $revisionData['revision_id'] ) {
 			throw new BadRequestApiException( 'Current revision is already reviewed');
 		}
 
-		( new ReviewModel() )->submitPageForReview( $wikiId, $pageId,
+		( new ReviewModel() )->submitPageForReview( $wgCityId, $pageId,
 			$revisionId, $submitUserId );
 
 		$this->makeSuccessResponse();
@@ -92,6 +93,31 @@ class ContentReviewApiController extends WikiaApiController {
 
 		Wikia\ContentReview\Helper::disableContentReviewTestMode();
 		$this->makeSuccessResponse();
+	}
+
+	/**
+	 * Update revison request status
+	 *
+	 * @throws BadRequestApiException
+	 * @throws PermissionsException
+	 */
+	public function updateReviewsStatus() {
+		if ( !$this->request->wasPosted()
+			|| !$this->wg->User->matchEditToken( $this->request->getVal( 'editToken' ) )
+		) {
+			throw new BadRequestApiException();
+		}
+
+		if ( !$this->wg->User->isAllowed( 'content-review' ) ) {
+			throw new PermissionsException( 'content-review' );
+		}
+
+		$pageId = $this->request->getInt( 'pageId' );
+		$wikiId = $this->request->getInt( 'wikiId' );
+		$status = $this->request->getInt( 'status' );
+
+		$model = new ReviewModel();
+		$model->updateRevisionStatus( $wikiId, $pageId, $status );
 	}
 
 	public function getCurrentPageData() {
