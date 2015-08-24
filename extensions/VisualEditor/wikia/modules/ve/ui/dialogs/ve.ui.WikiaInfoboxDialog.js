@@ -120,7 +120,8 @@ ve.ui.WikiaInfoboxDialog.prototype.initializeTemplateParameters = function () {
  * Prepare layout and show list of all infobox params on it
  */
 ve.ui.WikiaInfoboxDialog.prototype.showItems = function () {
-	var key, obj,
+	var key,
+		obj,
 		templateGetInfoWidget,
 		zeroStatePage,
 		tab = [];

@@ -66,7 +66,7 @@ ve.dm.WikiaTransclusionModel.prototype.fetchRequestDone = function ( specs, data
 };
 
 ve.dm.WikiaTransclusionModel.prototype.fetchInfoboxParamsRequestDone = function ( specs, data ) {
-	var id, page, i, j, k;
+	var id, page, i, j;
 
 	if ( data && data.query && data.query.pages ) {
 		for ( id in data.query.pages ) {
@@ -76,13 +76,7 @@ ve.dm.WikiaTransclusionModel.prototype.fetchInfoboxParamsRequestDone = function 
 				return;
 			}
 
-			if ( data.query.normalized ) {
-				for ( k = 0; k < data.query.normalized.length; k++ ) {
-					if (data.query.normalized[k].to === page.title ) {
-						page.title = data.query.normalized[k].from;
-					}
-				}
-			}
+			page.title = this.denormalizeInfoboxTemplateTitle( page.title, data );
 
 			if ( !specs[page.title] ) {
 				specs[page.title] = {
@@ -107,4 +101,23 @@ ve.dm.WikiaTransclusionModel.prototype.fetchInfoboxParamsRequestDone = function 
 
 ve.dm.WikiaTransclusionModel.prototype.setIsInfobox = function ( isInfobox ) {
 	this.isInfobox = isInfobox;
+};
+
+/**
+ * @desc The template names which contain _ are normalized in infobox API and the title from response contain spaces.
+ * It's inconsistent with the template API. However, the response from infobox API contains field 'normalized'
+ * where we can take the requested title from.
+ */
+ve.dm.WikiaTransclusionModel.prototype.denormalizeInfoboxTemplateTitle = function ( title, data ) {
+	var k;
+
+	if ( data.query.normalized ) {
+		for ( k = 0; k < data.query.normalized.length; k++ ) {
+			if (data.query.normalized[k].to === title ) {
+				title = data.query.normalized[k].from;
+			}
+		}
+	}
+
+	return title;
 };

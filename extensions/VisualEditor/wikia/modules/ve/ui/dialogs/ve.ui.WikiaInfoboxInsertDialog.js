@@ -174,7 +174,7 @@ ve.ui.WikiaInfoboxInsertDialog.prototype.showResults = function ( data ) {
  * Insert prepared linear model to surface.
  */
 ve.ui.WikiaInfoboxInsertDialog.prototype.onParseSuccess = function () {
-	var type = 'wikiaInfoboxTransclusionBlock',
+	var type = ve.dm.WikiaInfoboxTransclusionBlockNode.static.name,
 		linmod = [
 			{
 				type: type,
@@ -206,7 +206,7 @@ ve.ui.WikiaInfoboxInsertDialog.prototype.onTransact = function () {
 	this.$frame.stopThrobbing();
 	this.close();
 
-	//setTimeout used for calling command for the node after current stack us cleared.
+	//setTimeout used for calling command for the node after current stack is cleared.
 	//getFocusedNode can be not known here yet
 	setTimeout( function () {
 		ve.ui.commandRegistry.getCommandForNode( this.surface.getView().getFocusedNode() ).execute( this.surface );

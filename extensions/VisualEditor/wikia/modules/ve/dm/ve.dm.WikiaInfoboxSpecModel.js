@@ -37,7 +37,7 @@ ve.dm.WikiaInfoboxSpecModel = function VeDmWikiaInfoboxSpecModel( template ) {
  * @param {string[][]} [data.groups] Lists of param groups
  */
 ve.dm.WikiaInfoboxSpecModel.prototype.extend = function ( data ) {
-	var key, param;
+	var key;
 
 	if ( Array.isArray( data.paramOrder ) ) {
 		this.paramOrder = data.paramOrder.slice();
@@ -48,7 +48,6 @@ ve.dm.WikiaInfoboxSpecModel.prototype.extend = function ( data ) {
 			if ( !this.params[key] ) {
 				this.params[key] = this.getDefaultParameterSpec( key );
 			}
-			param = this.params[key];
 			// Extend existing spec
 			ve.extendObject( true, this.params[key], data.params[key] );
 		}
@@ -98,13 +97,14 @@ ve.dm.WikiaInfoboxSpecModel.prototype.getDefaultParameterSpec = function ( name 
 ve.dm.WikiaInfoboxSpecModel.prototype.getLabel = function () {
 	var titleObj,
 		title = this.template.getTitle(),
-		target = this.template.getTarget();
+		target = this.template.getTarget(),
+		templateNamespace = 10;
 
 	if ( title ) {
 		try {
 			// Normalize and remove namespace prefix if in the Template: namespace
 			titleObj = new mw.Title( title );
-			title = titleObj.getRelativeText( 10 );
+			title = titleObj.getRelativeText( templateNamespace );
 		} catch ( e ) { }
 	}
 
