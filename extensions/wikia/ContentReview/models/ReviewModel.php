@@ -195,6 +195,7 @@ class ReviewModel extends ContentReviewBaseModel {
 			->LEFT_JOIN( self::CONTENT_REVIEW_CURRENT_REVISIONS_TABLE )
 			->ON( self::CONTENT_REVIEW_STATUS_TABLE.'.wiki_id', self::CONTENT_REVIEW_CURRENT_REVISIONS_TABLE.'.wiki_id' )
 			->AND_( self::CONTENT_REVIEW_STATUS_TABLE.'.page_id', self::CONTENT_REVIEW_CURRENT_REVISIONS_TABLE.'.page_id' )
+			->ORDER_BY( ['submit_time', 'asc'], ['status', 'desc'] )
 			->runLoop( $db, function ( &$content, $row ) {
 				$content[$row->page_id][$row->status] = get_object_vars( $row );
 			} );
