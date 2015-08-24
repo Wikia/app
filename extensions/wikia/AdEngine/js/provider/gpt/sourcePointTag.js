@@ -20,9 +20,9 @@ define('ext.wikia.adEngine.provider.gpt.sourcePointTag', [
 
 	function track(eventLabel) {
 		tracker.track({
+			action: 'impression',
+			category: 'ads-sourcepoint-detection',
 			label: eventLabel,
-			ga_category: 'ads-sourcepoint-detection',
-			ga_action: 'impression',
 			trackingMethod: 'analytics'
 		});
 	}
