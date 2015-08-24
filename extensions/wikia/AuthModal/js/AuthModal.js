@@ -33,7 +33,7 @@ define('AuthModal', ['jquery', 'AuthComponent', 'wikia.window'], function ($, Au
 		if (track) {
 			return track;
 		}
-		return Wikia.Tracker.buildTrackingFunction({
+		return track = Wikia.Tracker.buildTrackingFunction({
 			category: 'user-login-desktop-modal',
 			trackingMethod: 'analytics'
 		});
