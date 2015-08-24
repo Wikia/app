@@ -122,6 +122,43 @@ class ContentReviewApiController extends WikiaApiController {
 		$model->updateRevisionStatus( $wikiId, $pageId, $oldStatus, $status, $reviewerId );
 	}
 
+	/**
+	 * @throws BadRequestApiException
+	 * @throws PermissionsException
+	 */
+	public function removeCompletedAndUpdateLogs() {
+		if ( !$this->request->wasPosted()
+			|| !$this->wg->User->matchEditToken( $this->request->getVal( 'editToken' ) )
+		) {
+			throw new BadRequestApiException();
+		}
+
+		if ( !$this->wg->User->isAllowed( 'content-review' ) ) {
+			throw new PermissionsException( 'content-review' );
+		}
+
+		$currentRevisionModel = new CurrentRevisionModel();
+		$reviewModel = new ReviewModel();
+
+		$reviewerId = $this->wg->User->getId();
+		$pageId = $this->request->getInt( 'pageId' );
+		$wikiId = $this->request->getInt( 'wikiId' );
+		$status = $this->request->getInt( 'status' );
+
+		$review = $reviewModel->getReviewedContent( $wikiId, $pageId, ReviewModel::CONTENT_REVIEW_STATUS_IN_REVIEW );
+
+		$reviewModel->backupCompletedReview( $review, $status, $reviewerId );
+
+		if( $status === ReviewModel::CONTENT_REVIEW_STATUS_APPROVED ) {
+			$currentRevisionModel->approveRevision( $wikiId, $pageId, $review['revision_id'] );
+			$this->notification = wfMessage( 'content-review-diff-approve-confirmation' )->escaped();
+		}
+		elseif( $status === ReviewModel::CONTENT_REVIEW_STATUS_REJECTED )  {
+			$this->notification = wfMessage( 'content-review-diff-reject-confirmation' )->escaped();
+		}
+		$reviewModel->removeCompletedReview( $wikiId, $pageId );
+	}
+
 	public function getCurrentPageData() {
 		$wikiId = $this->request->getInt( 'wikiId' );
 		$pageId = $this->request->getInt( 'pageId' );
@@ -158,31 +195,6 @@ class ContentReviewApiController extends WikiaApiController {
 		);
 
 		$this->notification = $notification;
-	}
-
-	/**
-	 * @throws \FluentSql\Exception\SqlException
-	 * TODO add permissions
-	 */
-	public function removeCompletedAndUpdateLogs() {
-		$currentRevisionModel = new CurrentRevisionModel();
-		$reviewModel = new ReviewModel();
-		$reviewUserId = $this->wg->User->getId();
-		$pageId = $this->request->getInt( 'pageId' );
-		$wikiId = $this->request->getInt( 'wikiId' );
-		$status = $this->request->getInt( 'status' );
-
-		$review = $reviewModel->getReviewedContent( $wikiId, $pageId, ReviewModel::CONTENT_REVIEW_STATUS_IN_REVIEW );
-		$reviewModel->backupCompletedReview( $review, $status, $reviewUserId );
-
-		if( $status === ReviewModel::CONTENT_REVIEW_STATUS_APPROVED ) {
-			$currentRevisionModel->approveRevision( $wikiId, $pageId, $review['revision_id'] );
-			$this->notification = wfMessage( 'content-review-diff-approve-confirmation' )->escaped();
-		}
-		elseif( $status === ReviewModel::CONTENT_REVIEW_STATUS_REJECTED )  {
-			$this->notification = wfMessage( 'content-review-diff-reject-confirmation' )->escaped();
-		}
-		$reviewModel->removeCompletedReview( $wikiId, $pageId );
 	}
 
 	private function getLatestReviewedRevisionFromDB( $wikiId, $pageId ) {
