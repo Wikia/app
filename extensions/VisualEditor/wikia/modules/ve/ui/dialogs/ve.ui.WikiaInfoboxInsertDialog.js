@@ -91,7 +91,6 @@ ve.ui.WikiaInfoboxInsertDialog.prototype.onInfoboxTemplateSelect = function ( it
 		this.transclusionModel.addPart( template )
 			.done( this.insertInfoboxTemplate.bind( this ) );
 
-		// TODO: Track
 		ve.track( 'wikia', {
 			action: ve.track.actions.ADD,
 			label: 'infobox-template-insert-from-plain-list'
@@ -124,6 +123,10 @@ ve.ui.WikiaInfoboxInsertDialog.prototype.getInfoboxTemplates = function () {
 			} )
 			.fail( function () {
 				// TODO: Add better error handling.
+				ve.track( 'wikia', {
+					action: ve.track.actions.ERROR,
+					label: 'infobox-templates-api'
+				} );
 				deferred.resolve( [] );
 			} );
 		this.gettingTemplateNames = deferred.promise();
@@ -143,8 +146,12 @@ ve.ui.WikiaInfoboxInsertDialog.prototype.insertInfoboxTemplate = function () {
 	}, { type: 'POST' } )
 		.done( this.onParseSuccess.bind( this ) )
 		.fail( function () {
-		// TODO: Implement some proper handling, at least tracking
-	}.bind( this ) );
+			// TODO: Add better error handling.
+			ve.track( 'wikia', {
+				action: ve.track.actions.ERROR,
+				label: 'dialog-infobox-template-insert'
+			} );
+		}.bind( this ) );
 };
 
 /**

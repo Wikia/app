@@ -147,7 +147,6 @@ ve.ui.WikiaInfoboxDialog.prototype.showItems = function () {
 			.append( templateGetInfoWidget.$element );
 		this.bookletLayout.addPages( [zeroStatePage] );
 
-		// Track
 		ve.track( 'wikia', {
 			action: ve.track.actions.OPEN,
 			label: 'dialog-infobox-no-parameters'

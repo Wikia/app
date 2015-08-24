@@ -105,7 +105,12 @@ ve.dm.WikiaInfoboxSpecModel.prototype.getLabel = function () {
 			// Normalize and remove namespace prefix if in the Template: namespace
 			titleObj = new mw.Title( title );
 			title = titleObj.getRelativeText( templateNamespace );
-		} catch ( e ) { }
+		} catch ( e ) {
+			ve.track( 'wikia', {
+				action: ve.track.actions.ERROR,
+				label: 'infobox-spec-invalid-title'
+			} );
+		}
 	}
 
 	return title || target.wt;
