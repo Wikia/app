@@ -15,8 +15,7 @@ class ContentReviewSpecialController extends WikiaSpecialPageController {
 	}
 
 	protected function checkAccess() {
-		if( !$this->wg->User->isLoggedIn() || !$this->wg->User->isAllowed('content-review') ) {
-			wfProfileOut(__METHOD__);
+		if( !$this->wg->User->isLoggedIn() || !$this->wg->User->isAllowed( 'content-review' ) ) {
 			return false;
 		}
 		return true;
@@ -26,7 +25,7 @@ class ContentReviewSpecialController extends WikiaSpecialPageController {
 		$this->specialPage->setHeaders();
 
 		if( !$this->checkAccess() ) {
-			$this->forward('ContentReviewSpecial', 'onWrongRights');
+			$this->forward( 'ContentReviewSpecial', 'onWrongRights' );
 		}
 		$model = new ReviewModel();
 		$reviews = $model->getContentToReviewFromDatabase();

@@ -86,26 +86,26 @@ class Hooks {
 			\JSMessages::enqueuePackage( 'ContentReviewDiffPage', \JSMessages::EXTERNAL );
 
 			$output->prependHTML(
-				\Xml::submitButton(
-					wfMessage( 'content-review-diff-reject' ),
+				\Xml::element( 'button',
 					[
-						'class' => 'content-review-diff-button  wikia-button primary',
+						'class' => 'content-review-diff-button',
 						'data-wiki-id' => ( $wgCityId ),
 						'data-page-id' => \Title::newFromText( $wgTitle->getArticleID() ),
 						'data-status' => ReviewModel::CONTENT_REVIEW_STATUS_REJECTED
-					]
+					],
+					wfMessage( 'content-review-diff-reject' )->plain()
 				)
 			);
 
 			$output->prependHTML(
-				\Xml::submitButton(
-					wfMessage( 'content-review-diff-approve' ),
+				\Xml::element( 'button',
 					[
-						'class' => 'content-review-diff-button  wikia-button primary',
+						'class' => 'content-review-diff-button',
 						'data-wiki-id' => ( $wgCityId ),
 						'data-page-id' => \Title::newFromText( $wgTitle->getArticleID() ),
-						'data-status' => ReviewModel::CONTENT_REVIEW_STATUS_REJECTED
-					]
+						'data-status' => ReviewModel::CONTENT_REVIEW_STATUS_APPROVED
+					],
+					wfMessage( 'content-review-diff-approve' )->plain()
 				)
 			);
 		}
