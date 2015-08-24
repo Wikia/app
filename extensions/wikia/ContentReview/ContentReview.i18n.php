@@ -30,6 +30,8 @@ $messages['en'] = [
 	'content-review-module-submit-exception' => 'Unfortunately, we could not submit the changes for a review due to the following error: $1.',
 	'content-review-module-submit-error' => 'Unfortunately, we could not submit the changes for a review.',
 
+	'content-review-wrong-rights' => 'Sorry, you do not have access!',
+
 	'contentreview' => 'Content Review',
 	'content-review-special-list-header-wiki-name' => 'Wiki name',
 	'content-review-special-list-header-page-name' => 'Page name',
@@ -71,6 +73,8 @@ $messages['qqq'] = [
 	'content-review-module-submit-success-update' => 'A message shown to a user in a Banner Notification if a page had an unreviewed version submitted and it got updated.',
 	'content-review-module-submit-success-exception' => 'A message shown to a user in a Banner Notification if a known error happened. $1 is the error message.',
 	'content-review-module-submit-success-error' => 'A message shown to a user in a Banner Notification if an unknown error happened.',
+
+	'content-review-wrong-rights' => 'A message shown when user do not have rights',
 
 	'content-review-special-title' => 'Content Review',
 	'content-review-special-list-header-wiki-name' => 'A column name for a Wiki name',

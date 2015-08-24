@@ -14,14 +14,37 @@ class ContentReviewSpecialController extends WikiaSpecialPageController {
 		parent::__construct( 'ContentReview', 'content-review', true );
 	}
 
+	protected function checkAccess() {
+		wfProfileIn(__METHOD__);
+
+		if( !$this->wg->User->isLoggedIn() || !$this->wg->User->isAllowed('content-review') ) {
+			wfProfileOut(__METHOD__);
+			return false;
+		}
+
+		wfProfileOut(__METHOD__);
+		return true;
+	}
+
 	public function index() {
+		wfProfileIn(__METHOD__);
 		$this->specialPage->setHeaders();
+
+		if( !$this->checkAccess() ) {
+			wfProfileOut(__METHOD__);
+			$this->forward('ContentReviewSpecialController', 'onWrongRights');
+		}
+
 		$model = new ReviewModel();
 		$reviews = $model->getContentToReviewFromDatabase();
 		$this->reviews = $this->prepareReviewData( $reviews );
 		$this->inReview = ReviewModel::CONTENT_REVIEW_STATUS_IN_REVIEW;
 		\Wikia::addAssetsToOutput('content_review_special_page_js');
 		\JSMessages::enqueuePackage( 'ContentReviewSpecialPage', \JSMessages::EXTERNAL );
+	}
+
+	public function onWrongRights() {
+		//we use only its template here...
 	}
 
 	private function prepareReviewData( $reviews ) {
