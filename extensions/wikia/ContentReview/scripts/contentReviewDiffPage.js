@@ -1,7 +1,8 @@
 define(
 	'ext.wikia.contentReview.diff.page',
-	['jquery', 'mw', 'wikia.loader', 'wikia.nirvana'],
-	function ($, mw, loader, nirvana) {
+	['BannerNotification', 'jquery', 'mw', 'wikia.loader', 'wikia.nirvana'],
+	function (BannerNotification, $, mw, loader, nirvana) {
+		'use strict';
 
 		function init() {
 			$.when(loader({
@@ -21,13 +22,13 @@ define(
 
 		function removeCompletedAndUpdateLogs() {
 			var $button = $(this),
-				notification
+				notification,
 				data = {
 					wikiId: $button.attr('data-wiki-id'),
 					pageId: $button.attr('data-page-id'),
 					status: $button.attr('data-status'),
 					editToken: mw.user.tokens.get('editToken')
-                };
+				};
 
 			nirvana.sendRequest({
 				controller: 'ContentReviewApiController',
