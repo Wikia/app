@@ -63,8 +63,14 @@ define('ext.wikia.adEngine.adContext', [
 
 		// SourcePoint integration
 		if (context.opts.sourcePointUrl) {
-			context.opts.sourcePoint = (isUrlParamSet('sourcepoint') ||
-				isProperCountry(instantGlobals.wgAdDriverSourcePointCountries));
+			context.opts.sourcePoint = isUrlParamSet('sourcepoint') ||
+				isProperCountry(instantGlobals.wgAdDriverSourcePointCountries);
+		}
+
+		// SourcePoint detection integration
+		if (context.opts.sourcePointDetectionUrl) {
+			context.opts.sourcePointDetection = isUrlParamSet('sourcepointdetection') ||
+				isProperCountry(instantGlobals.wgAdDriverSourcePointDetectionCountries);
 		}
 
 		// Showcase.*
