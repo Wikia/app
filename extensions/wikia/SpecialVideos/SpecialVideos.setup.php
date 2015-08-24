@@ -13,13 +13,13 @@ $wgExtensionCredits['specialpage'][] = [
 
 
 // classes
-$wgAutoloadClasses['SpecialVideosSpecialController'] =  __DIR__ . '/SpecialVideosSpecialController.class.php' ;
-$wgAutoloadClasses['SpecialVideosHelper'] =  __DIR__ . '/SpecialVideosHelper.class.php' ;
+$wgAutoloadClasses['SpecialVideosSpecialController'] =  __DIR__ . '/SpecialVideosSpecialController.class.php';
+$wgAutoloadClasses['SpecialVideosHelper'] =  __DIR__ . '/SpecialVideosHelper.class.php';
 $wgAutoloadClasses['SpecialVideosHooks'] = __DIR__ . '/SpecialVideosHooks.php';
 
 // i18n mapping
-$wgExtensionMessagesFiles['SpecialVideos'] = __DIR__ . '/SpecialVideos.i18n.php' ;
-$wgExtensionMessagesFiles['SpecialVideosAliases'] = __DIR__ . '/SpecialVideos.alias.php' ;
+$wgExtensionMessagesFiles['SpecialVideos'] = __DIR__ . '/SpecialVideos.i18n.php';
+$wgExtensionMessagesFiles['SpecialVideosAliases'] = __DIR__ . '/SpecialVideos.alias.php';
 
 // special pages
 $wgSpecialPages['Videos'] =  'SpecialVideosSpecialController';

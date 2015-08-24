@@ -171,16 +171,8 @@ class PageHeaderController extends WikiaController {
 
 		// wrap talk page ns in strong tags
 		} else if ( $wg->Title->isTalkPage() ) {
-			// @todo move this to a message
-			// @todo this gets confusing on non ns-2 pages, e.g. NS_USER_TALK
 			$title = Xml::element( 'strong', [], $wg->ContLang->getNsText( NS_TALK ) . ':' );
 			$title .= htmlspecialchars( $wg->Title->getText() );
-
-			/*
-			$title = wfMessage( 'oasis-talk-title' )
-				->params( NS_TALK, $wg->Title->getText() )
-				->parse();
-			*/
 
 		// remove prefixes from certain namespaces
 		// needs to be after the above so it doesn't affect NS_USER_TALK
@@ -214,7 +206,6 @@ class PageHeaderController extends WikiaController {
 	 * @param array $params
 	 */
 	public function executeIndex( $params ) {
-		wfProfileIn( __METHOD__ );
 		$wg = $this->wg;
 		$isMainPage = WikiaPageType::isMainPage();
 		$ns = $wg->Title->getNamespace();
@@ -300,7 +291,7 @@ class PageHeaderController extends WikiaController {
 				}
 
 				if ( $wg->Title->isSpecial( 'LicensedVideoSwap' ) ) {
-					$this->pageType = "";
+					$this->pageType = '';
 				}
 
 				break;
@@ -381,8 +372,6 @@ class PageHeaderController extends WikiaController {
 		if ( !empty( $params['monetizationModules'] ) ) {
 			$this->monModules = $params['monetizationModules'];
 		}
-
-		wfProfileOut(__METHOD__);
 	}
 
 	/**
@@ -395,13 +384,11 @@ class PageHeaderController extends WikiaController {
 	 * - ?action=edit (only when $wgReadOnly is set)
 	 */
 	public function executeEditPage() {
-		wfProfileIn( __METHOD__ );
 		$wg = $this->wg;
 		$ns = $wg->Title->getNamespace();
 
 		// special handling for special pages (CreateBlogPost, CreatePage)
 		if ( $ns == NS_SPECIAL ) {
-			wfProfileOut( __METHOD__ );
 			return;
 		}
 
@@ -509,17 +496,13 @@ class PageHeaderController extends WikiaController {
 		wfRunHooks( 'PageHeaderEditPage', [&$this, $ns, $isPreview, $isShowChanges, $isDiff, $isEdit, $isHistory] );
 
 		$pipe = wfMessage( 'pipe-separator' )->escaped();
-		$this->subtitle = implode( " ${pipe} ", $subtitle );
-		// implode( " {$pipe} ", $pageSubtitle );
-
-		wfProfileOut( __METHOD__ );
+		$this->subtitle = implode( " {$pipe} ", $subtitle );
 	}
 
 	/**
 	 * Called instead of executeIndex when the CorporatePage extension is enabled.
 	 */
 	public function executeCorporate() {
-		wfProfileIn( __METHOD__ );
 		$wg = $this->wg;
 
 		$this->canAct = $wg->User->isAllowed( 'edit' );
@@ -534,8 +517,6 @@ class PageHeaderController extends WikiaController {
 		if ( WikiaPageType::isMainPage() ) {
 			$this->subtitle = '';
 		}
-
-		wfProfileOut( __METHOD__ );
 	}
 
 	/**
@@ -544,7 +525,6 @@ class PageHeaderController extends WikiaController {
 	 * @param: array $params
 	 */
 	public function executeHubs( $params ) {
-		wfProfileIn( __METHOD__ );
 		$wg = $this->wg;
 
 		// Leave this for now. To discuss do we want PageTitle
@@ -583,12 +563,8 @@ class PageHeaderController extends WikiaController {
 	 * @return bool
 	 */
 	public static function onArticleViewCustom( $text, $title, OutputPage $output ) {
-		global $wgParser;
-
-		$skin = RequestContext::getMain()->getSkin();
-
 		// only affect oasis
-		if ( $skin === 'oasis' ) {
+		if ( F::app()->checkSkin( ['oasis', 'wikia'], $output->getSkin() ) ) {
 			return true;
 		}
 
@@ -599,12 +575,11 @@ class PageHeaderController extends WikiaController {
 			$output->addHTML( $article->viewRedirect( $rt, /* $appendSubtitle = */ false ) );
 
 			$parserOptions = $article->getParserOptions();
-			$parserOutput = $wgParser->parse( $text, $title, $parserOptions );
+			$parserOutput = ParserPool::parse( $text, $title, $parserOptions );
 			$output->addParserOutputNoText( $parserOutput );
 		}
 
 		return false;
-		
 	}
 
 }

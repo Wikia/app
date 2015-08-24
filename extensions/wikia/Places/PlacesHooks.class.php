@@ -30,8 +30,8 @@ class PlacesHooks {
 				'Index',
 				[
 					'action' => [
-						"href" => "#",
-						"text" => wfMessage( 'places-category-switch' )->escaped()
+						'href' => '#',
+						'text' => wfMessage( 'places-category-switch' )->escaped()
 					],
 					'class' =>  !$isGeotaggingEnabled ? $commonClasses . $disabled : $commonClasses,
 					'name' => 'places-category-switch-on'
@@ -43,8 +43,8 @@ class PlacesHooks {
 				'Index',
 				[
 					'action' => [
-						"href" => "#",
-						"text" => wfMessage( 'places-category-switch-off' )->escaped()
+						'href' => '#',
+						'text' => wfMessage( 'places-category-switch-off' )->escaped()
 					],
 					'class' => $isGeotaggingEnabled ? $commonClasses . $disabled : $commonClasses,
 					'name' => 'places-category-switch-off'

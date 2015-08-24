@@ -24,13 +24,13 @@ class LicensedVideoSwapHooksHelper {
 			$skin = $app->wg->User->getGlobalPreference( 'skin' );
 
 			// for monobook users, specify wikia skin in querystring
-			$query = "";
+			$query = '';
 
-			if ( $skin == "monobook" ) {
-				$query = "useskin=wikia";
+			if ( $skin == 'monobook' ) {
+				$query = 'useskin=wikia';
 			}
 
-			$href = SpecialPage::getTitleFor( "LicensedVideoSwap/History" )
+			$href = SpecialPage::getTitleFor( 'LicensedVideoSwap/History' )
 				->escapeLocalURL( $query );
 
 			$extraButtons[] = Xml::element(
@@ -39,9 +39,9 @@ class LicensedVideoSwapHooksHelper {
 					'class' => 'button lvs-history-btn',
 					'href' => $href,
 					'rel' => 'tooltip',
-					'title' => wfMessage( "lvs-tooltip-history" )->escaped(),
+					'title' => wfMessage( 'lvs-tooltip-history' )->escaped(),
 				],
-				wfMessage( "lvs-history-button-text" )->escaped()
+				wfMessage( 'lvs-history-button-text' )->escaped()
 			);
 		}
 

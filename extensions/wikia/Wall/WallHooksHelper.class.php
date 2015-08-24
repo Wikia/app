@@ -1728,7 +1728,7 @@ class WallHooksHelper {
 	 *
 	 * @return bool true
 	 */
-	static public function onPageHeaderEditPage( PageHeaderController $pageHeaderModule, $ns, bool $isPreview, bool $isShowChanges, bool $isDiff, bool $isEdit, bool $isHistory ) {
+	static public function onPageHeaderEditPage( PageHeaderController $pageHeaderModule, $ns, $isPreview, $isShowChanges, $isDiff, $isEdit, $isHistory ) {
 		if ( WallHelper::isWallNamespace( $ns ) && $isDiff ) {
 			$app = F::App();
 
