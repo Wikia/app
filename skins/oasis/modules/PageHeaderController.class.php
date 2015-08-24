@@ -158,7 +158,7 @@ class PageHeaderController extends WikiaController {
 	 */
 	public function executeIndex( $params ) {
 		global $wgTitle, $wgArticle, $wgOut, $wgUser, $wgContLang, $wgSupressPageTitle, $wgSupressPageSubtitle,
-			$wgSuppressNamespacePrefix, $wgEnableCuratedContentExt, $wgEnableWallExt, $wgDBName;
+			$wgSuppressNamespacePrefix, $wgEnableCuratedContentExt, $wgEnableWallExt;
 
 		wfProfileIn( __METHOD__ );
 
@@ -173,8 +173,6 @@ class PageHeaderController extends WikiaController {
 		if ( !empty( $wgEnableCuratedContentExt ) &&
 			WikiaPageType::isMainPage() &&
 			$wgUser->isAllowed( 'curatedcontent' )
-			//@TODO This check is equal to varnish check and should be removed when SOC-(PLACEHOLDER) is closed
-//			&& in_array( $wgDBName, [ 'glee', 'creepypasta', 'castle-clash', 'clashofclans', 'mobileregressiontesting', 'concf' ])
 		)
 		{
 			$this->curatedContentToolButton = $this->app->sendRequest( 'CuratedContent', 'editButton' );
