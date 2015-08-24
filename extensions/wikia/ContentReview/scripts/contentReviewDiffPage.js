@@ -17,10 +17,10 @@ define(
         }
 
         function bindEvents() {
-            $('.content-review-diff-button').on('click', removeAndUpdateLogs);
+            $('.content-review-diff-button').on('click', removeCompletedAndUpdateLogs);
         }
 
-        function removeAndUpdateLogs(e) {
+        function removeCompletedAndUpdateLogs(e) {
             var self = $(this),
                 data = {
                     wikiId: self.attr("data-wiki-id"),
@@ -30,11 +30,11 @@ define(
             e.preventDefault();
             nirvana.sendRequest({
                 controller: 'ContentReviewApiController',
-                method: 'changeRevisionStatus',
+                method: 'removeCompletedAndUpdateLogs',
                 data: data,
                 callback: function (response) {
                     var notification;
-                    if ( response.notification ) {
+                    if (response.notification) {
                         notification = new BannerNotification(
                             response.notification,
                             'confirm'
@@ -42,7 +42,7 @@ define(
                         notification.show();
                     }
                 },
-                onErrorCallback: function() {
+                onErrorCallback: function () {
                     var notification = new BannerNotification(
                         mw.message('content-review-diff-page-error').escaped(),
                         'error'

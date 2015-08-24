@@ -162,7 +162,7 @@ class ContentReviewApiController extends WikiaApiController {
 	 * @throws \FluentSql\Exception\SqlException
 	 * TODO add permissions
 	 */
-	public function changeRevisionStatus() {
+	public function removeCompletedAndUpdateLogs() {
 		$currentRevisionModel = new CurrentRevisionModel();
 		$reviewModel = new ReviewModel();
 		$reviewUserId = $this->wg->User->getId();
