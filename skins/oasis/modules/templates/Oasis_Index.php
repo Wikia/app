@@ -8,7 +8,6 @@
 <?php else : ?>
 	<meta name="viewport" content="width=1200">
 <?php endif ?>
-
 <?= $headLinks ?>
 
 <title><?= $pageTitle ?></title>
