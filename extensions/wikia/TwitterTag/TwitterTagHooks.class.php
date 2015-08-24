@@ -28,13 +28,13 @@ class TwitterTagHooks {
 	 * @return $html - The HTML for the twitter tag
 	 */
 	static public function parseTwitterTag( $input, array $args, Parser $parser, PPFrame $frame ) {
-		if( empty( $args['user'] ) ) {
-			$html = wfMessage( "twittertag-nouser" )->parse();
-			return "<strong class='error'>" . $html . "</strong>";
+		if ( empty( $args['user'] ) ) {
+			$html = wfMessage( 'twittertag-nouser' )->parse();
+			return "<strong class='error'>$html</strong>";
 			
 		} else if ( empty( $args['id'] ) ) {
 			$html = wfMessage( 'twittertag-noid' )->parse();
-			return "<strong class='error'>" . $html . "</strong>";
+			return "<strong class='error'>$html</strong>";
 		}
 		
 		$quickChecks = [
@@ -45,25 +45,25 @@ class TwitterTagHooks {
 		
 		$attributes = array_intersect_key( $args, $quickChecks );
 		
-		$attributes['class'] = "twitter-timeline";
-		$attributes['href'] = "https://twitter.come/" . $args['user'];
+		$attributes['class'] = 'twitter-timeline';
+		$attributes['href'] = 'https://twitter.com/' . urlencode( $args['user'] );
 		$attributes['data-widget-id'] = $args['id'];
 		
-		if( !empty ( $args['limit'] ) )  {
+		if ( !empty ( $args['limit'] ) )  {
 			$attributes['data-tweet-limit'] = $args['limit'];
 		}
 		
-		if( !empty ( $args['aria-polite'] ) ) {
+		if ( !empty ( $args['aria-polite'] ) ) {
 			$attributes['data-aria-polite'] = $args['aria-polite'];
 		}
 		
-		if( !empty( $args['alt-text'] ) ) {
+		if ( !empty( $args['alt-text'] ) ) {
 			$html = Html::element( 'a', $attributes, $args['alt-text'] );
 		} else {
 			$html = Html::element( 
 				'a', 
 				$attributes, 
-				wfMessage( 'twittertag-alt-text' )->params( $args['user'] )->parse() 
+				wfMessage( 'twittertag-alt-text' )->params( $args['user'] )->plain() 
 			);
 		}
 
