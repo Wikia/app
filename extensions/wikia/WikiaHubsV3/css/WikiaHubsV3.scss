@@ -22,67 +22,45 @@ $wikiahubs-line-height: 16px;
 	padding-bottom: 70px;
 }
 
-.wikinav2 .WikiaPageContentWrapper .WikiaMainContentContainer  {
-	.wikia-page-header {
-		border-bottom: solid 1px $color-page-border;
-	}
-
-	.WikiaPageHeader {
-		padding: 15px 0;
-		h1 {
-			display: block;
-			font-size: 28px;
-			font-weight: inherit;
-			line-height: 32px;
-		}
-
-		.tally {
-			position: relative;
-			float: right;
-			right: 0;
-			margin-right:20px;
-		}
-
-		.WikiaSearchHeader {
-			.WikiaSearch {
-				position: relative;
-			}
-			float: right;
-			position: relative;
-			right: 0;
-		}
-	}
-}
-
-.WikiaPageHeader {
-	p {
-		display: none;
-	}
-
+.page-header.hubs {
 	.social-links {
 		float: right;
-		margin: 0 20px;
+		margin-right: 20px;
+		margin-top: 4px;
+
 		a {
 			display: block;
 			float: left;
 			padding: 5px 10px;
+
+			&:first-child {
+				padding-left: 0;
+			}
 		}
-		a:first-child {
-			padding-left: 0;
-		}
+
 		img {
 			height: 20px;
 			width: 20px;
 		}
+
 		.facebook {
 			background-image: url("/extensions/wikia/WikiaHubsV3/images/fb.png"); /* inline */
 		}
+
 		.twitter {
 			background-image: url("/extensions/wikia/WikiaHubsV3/images/twitter.png"); /* inline */
 		}
+
 		.gplus {
 			background-image: url("/extensions/wikia/WikiaHubsV3/images/gplus.png"); /* inline */
 		}
+	}
+
+	h1 {
+		// making this display:none causes the bottom border to go above/across
+		// the social links because they're floated instead of using flex
+		// like the default page header
+		visibility: hidden;
 	}
 }
 

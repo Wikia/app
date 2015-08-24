@@ -529,86 +529,50 @@ class WallHooksHelper {
 	/**
 	 * @brief Adds an action button on user talk archive page
 	 *
-	 * @param $response
-	 * @param $ns
-	 * @param $skin
-	 * @return bool
+	 * @param array $button
+	 * @return bool true
 	 *
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
-	static public function onPageHeaderIndexAfterActionButtonPrepared( $response, $ns, $skin ) {
+	static public function onPageHeaderIndexAfterActionButtonPrepared( array &$button ) {
 		$app = F::App();
 		$helper = new WallHelper();
 
 		if ( !empty( $app->wg->EnableWallExt ) ) {
 			$title = $app->wg->Title;
+			$ns = $title->getNamespace();
 			$parts = explode( '/', $title->getText() );
-			$action = $response->getVal( 'action' );
-			$dropdown = $response->getVal( 'dropdown' );
 			$canEdit = $app->wg->User->isAllowed( 'editwallarchivedpages' );
 
-			if ( $ns === NS_USER_WALL
+			if (
+				$ns === NS_USER_WALL
 				&& $title->isSubpage()
 				&& !empty( $parts[1] )
-				&& mb_strtolower( str_replace( ' ', '_', $parts[1] ) ) === mb_strtolower( $helper->getArchiveSubPageText() )
-			) {
-				// user talk archive
-				$userTalkPageTitle = $helper->getTitle( NS_USER_TALK );
-
-				$action = array(
-						'class' => '',
-						'text' => wfMessage( 'viewsource' )->text(),
-						'href' => $userTalkPageTitle->getLocalUrl( array( 'action' => 'edit' ) ),
-				);
-
-				$dropdown = array(
-						'history' => array(
-								'href' => $userTalkPageTitle->getLocalUrl( array( 'action' => 'history' ) ),
-								'text' => wfMessage( 'history_short' )->text(),
-						),
-				);
-
-				if ( $canEdit ) {
-					$action['text'] = wfMessage( 'edit' )->text();
-					$action['id'] = 'talkArchiveEditButton';
-				}
-
-				$response->setVal( 'action', $action );
-				$response->setVal( 'dropdown', $dropdown );
-			}
-
-			if ( $title->getNamespace() === NS_USER_WALL
-					&& $title->isSubpage()
-					&& !empty( $parts[1] )
-					&& mb_strtolower( str_replace( ' ', '_', $parts[1] ) ) !== mb_strtolower( $helper->getArchiveSubPageText() )
+				&& mb_strtolower( str_replace( ' ', '_', $parts[1] ) ) !== mb_strtolower( $helper->getArchiveSubPageText() )
 			) {
 				// subpage
 				$userTalkPageTitle = $helper->getTitle( NS_USER_TALK, $parts[1] );
 
-				$action = array(
-						'class' => '',
-						'text' => wfMessage( 'viewsource' )->text(),
-						'href' => $userTalkPageTitle->getLocalUrl( array( 'action' => 'edit' ) ),
-				);
+				$button['action'] = [
+					'class' => '',
+					'text' => wfMessage( 'viewsource' )->escaped(),
+					'href' => $userTalkPageTitle->getLocalUrl( ['action' => 'edit'] ),
+				];
 
-				$dropdown = array(
-						'history' => array(
-								'href' => $userTalkPageTitle->getLocalUrl( array( 'action' => 'history' ) ),
-								'text' => wfMessage( 'history_short' )->text(),
-						),
-				);
+				$button['image'] = MenuButtonController::LOCK_ICON;
+
+				$button['dropdown'] = [
+					'history' => [
+						'href' => $userTalkPageTitle->getLocalUrl( ['action' => 'history'] ),
+						'text' => wfMessage( 'history_short' )->escaped(),
+					],
+				];
 
 				if ( $canEdit ) {
-					$action['text'] = wfMessage( 'edit' )->text();
-					$action['id'] = 'talkArchiveEditButton';
+					$button['action']['text'] = wfMessage( 'edit' )->escaped();
+					$button['action']['id'] = 'talkArchiveEditButton';
 				}
-
-				$response->setVal( 'action', $action );
-				$response->setVal( 'dropdown', $dropdown );
 			}
-			// update the response object with any changes
-			$response->setVal( 'action', $action );
-			$response->setVal( 'dropdown', $dropdown );
 		}
 
 		return true;
@@ -1751,7 +1715,8 @@ class WallHooksHelper {
 	}
 
 	/**
-	 * Changes fields in a PageHeaderModule instance to display correct content in <h1 /> and <h2 /> tags
+	 * Changes fields in a PageHeaderModule instance to display correct content in
+	 * <h1> and <h2> tags
 	 *
 	 * @param PageHeaderModule $pageHeaderModule
 	 * @param int $ns
@@ -1761,7 +1726,7 @@ class WallHooksHelper {
 	 * @param Boolean $isEdit
 	 * @param Boolean $isHistory
 	 *
-	 * @return true
+	 * @return bool true
 	 */
 	static public function onPageHeaderEditPage( $pageHeaderModule, $ns, $isPreview, $isShowChanges, $isDiff, $isEdit, $isHistory ) {
 		if (  WallHelper::isWallNamespace( $ns ) && $isDiff ) {
@@ -1770,9 +1735,17 @@ class WallHooksHelper {
 			$app->wg->Out->addExtensionStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/Wall/css/WallDiffPage.scss' ) );
 
 			$wmRef = '';
+			// @todo should wmRef be passed by reference?
 			$meta = static::getMetatitleFromTitleObject( $app->wg->Title, $wmRef );
-			$pageHeaderModule->title = wfMessage( 'oasis-page-header-diff' )->rawParams( htmlspecialchars( $meta ) )->parse();
-			$pageHeaderModule->subtitle = Xml::element( 'a', array( 'href' => $wmRef->getMessagePageUrl() ), wfMessage( 'oasis-page-header-back-to-article' )->text() );
+
+			$pageHeaderModule->title = wfMessage( 'oasis-page-header-diff' )
+				->rawParams( htmlspecialchars( $meta ) )
+				->parse();
+			$pageHeaderModule->subtitle = Xml::element(
+				'a',
+				['href' => $wmRef->getMessagePageUrl()],
+				wfMessage( 'oasis-page-header-back-to-article' )->escaped()
+			);
 		}
 
 		return true;

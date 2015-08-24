@@ -25,7 +25,7 @@ function wfOasisSetup() {
 
 	// modules and services
 	$wgHooks['ArticleSaveComplete'][] = 'LatestActivityController::onArticleSaveComplete';
-	$wgHooks['ArticleSaveComplete'][] = 'PageHeaderController::onArticleSaveComplete';
+	$wgHooks['ArticleViewCustom'][] = 'PageHeaderController::onArticleViewCustom';
 	$wgHooks['BlogTemplateGetResults'][] = 'BlogListingController::getResults';
 	$wgHooks['BlogsRenderBlogArticlePage'][] = 'BlogListingController::renderBlogListing';
 	$wgHooks['DoEditSectionLink'][] = 'ContentDisplayController::onDoEditSectionLink';

@@ -37,7 +37,7 @@ define('wikia.pageShare', [
 				title = encodeURIComponent(win.document.title),
 				description = encodeURIComponent($('meta[property="og:description"]').attr('content'));
 
-			$('#PageShareContainer')
+			$('#pageShareContainer')
 				.html(data.socialIcons
 					.replace(/\$url/g, url)
 					.replace(/\$title/g, title)
