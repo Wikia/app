@@ -441,14 +441,13 @@ class CuratedContentController extends WikiaController {
 	}
 
 	public function setData( ) {
-		global $wgCityId, $wgEnableCuratedContentUnauthorizedSave, $wgUser;
+		global $wgCityId, $wgUser;
 
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 		// TODO: CONCF-961 Set more restrictive header
 		$this->response->setHeader( 'Access-Control-Allow-Origin', '*' );
 
-		// TODO Remove $wgEnableCuratedContentUnauthorizedSave check in CONCF-900
-		if ( $wgUser->isAllowed( 'curatedcontent' ) || !empty( $wgEnableCuratedContentUnauthorizedSave ) ) {
+		if ( $wgUser->isAllowed( 'curatedcontent' ) ) {
 			$data = $this->request->getArray( 'data', [ ] );
 			$status = false;
 
@@ -494,14 +493,13 @@ class CuratedContentController extends WikiaController {
 	}
 
 	public function getData( ) {
-		global $wgWikiaCuratedContent, $wgUser, $wgEnableCuratedContentUnauthorizedSave;
+		global $wgWikiaCuratedContent, $wgUser;
 
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 		// TODO: CONCF-961 Set more restrictive header
 		$this->response->setHeader( 'Access-Control-Allow-Origin', '*' );
 
-		// TODO Remove $wgEnableCuratedContentUnauthorizedSave check in CONCF-900
-		if ( $wgUser->isAllowed( 'curatedcontent' ) || !empty( $wgEnableCuratedContentUnauthorizedSave ) ) {
+		if ( $wgUser->isAllowed( 'curatedcontent' ) ) {
 			$data = [];
 			if ( !empty( $wgWikiaCuratedContent ) && is_array( $wgWikiaCuratedContent ) ) {
 				foreach ( $wgWikiaCuratedContent as $section ) {
