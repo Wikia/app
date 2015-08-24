@@ -1037,5 +1037,5 @@ hu',
 
 'shared-News_box' => '[http://www.wikia.com/Hiring Wikia is now hiring for several open positions]',
 
-'usesitejs-disabled-warning' => 'JavaScript customizations are disabled on this wikia.',
+'usesitejs-disabled-warning' => 'Custom JavaScript is disabled on this wikia.',
 ));
