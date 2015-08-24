@@ -43,8 +43,12 @@ $messages['en'] = [
 	'content-review-special-list-header-review-start' => 'Review start',
 	'content-review-special-list-header-actions' => 'Actions',
 	'content-review-icons-actions-diff' => 'Start review',
+
 	'content-review-diff-approve' => 'Approve',
 	'content-review-diff-reject' => 'Reject',
+	'content-review-diff-approve-confirmation' => 'Reviewed code has been approved.',
+	'content-review-diff-reject-confirmation' => 'Reviewed code has been rejected.',
+	'content-review-diff-page-error' => 'Something went wrong. Please try again later.',
 
 	'content-review-status-unreviewed' => 'Unreviewed',
 	'content-review-status-in-review' => 'In review',
@@ -87,6 +91,10 @@ $messages['qqq'] = [
 	'content-review-special-list-header-review-start' => 'A column name for a Review start',
 	'content-review-special-list-header-actions' => 'A column name for Actions',
 	'content-review-icons-actions-diff' => 'Button text start review',
+
+	'content-review-diff-approve-confirmation' => 'A message shown after click approve button.',
+	'content-review-diff-reject-confirmation' => 'A message shown after click reject button.',
+	'content-review-diff-page-error' => 'A message shown when something go wrong on diff page.',
 
 	'content-review-status-unreviewed' => 'Status Unreviewed',
 	'content-review-status-in-review' => 'Status In review',

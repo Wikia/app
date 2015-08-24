@@ -2,9 +2,7 @@ define(
     'ext.wikia.contentReview.diff.page',
     ['jquery', 'mw', 'wikia.loader', 'wikia.nirvana'],
     function ($, mw, loader, nirvana) {
-        /**
-         * TODO add messages
-         */
+
         function init() {
             $.when(loader({
                 type: loader.MULTI,
@@ -33,7 +31,24 @@ define(
             nirvana.sendRequest({
                 controller: 'ContentReviewApiController',
                 method: 'changeRevisionStatus',
-                data: data
+                data: data,
+                callback: function (response) {
+                    var notification;
+                    if ( response.notification ) {
+                        notification = new BannerNotification(
+                            response.notification,
+                            'confirm'
+                        );
+                        notification.show();
+                    }
+                },
+                onErrorCallback: function() {
+                    var notification = new BannerNotification(
+                        mw.message('content-review-diff-page-error').escaped(),
+                        'error'
+                    );
+                    notification.show();
+                }
             });
         }
 

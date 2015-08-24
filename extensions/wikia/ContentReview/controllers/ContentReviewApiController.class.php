@@ -147,7 +147,7 @@ class ContentReviewApiController extends WikiaApiController {
 		$this->makeSuccessResponse( $revisionData );
 	}
 
-	public function showTestModeNotificaion() {
+	public function showTestModeNotification() {
 		$notification = wfMessage( 'content-review-test-mode-enabled' )->escaped();
 		$notification.= Xml::element(
 			'a',
@@ -169,9 +169,19 @@ class ContentReviewApiController extends WikiaApiController {
 		$pageId = $this->request->getInt( 'pageId' );
 		$wikiId = $this->request->getInt( 'wikiId' );
 		$status = $this->request->getInt( 'status' );
+
 		$review = $reviewModel->getReviewedContent( $wikiId, $pageId, ReviewModel::CONTENT_REVIEW_STATUS_IN_REVIEW );
 		$reviewModel->backupCompletedReview( $review, $status, $reviewUserId );
-		$currentRevisionModel->approveRevision( $wikiId, $pageId, $review['revision_id'] );
+
+		if( $status === ReviewModel::CONTENT_REVIEW_STATUS_APPROVED ) {
+			$currentRevisionModel->approveRevision( $wikiId, $pageId, $review['revision_id'] );
+			$notification = wfMessage( 'content-review-diff-approve-confirmation' )->escaped();
+			$this->notification = $notification;
+		}
+		elseif( $status === ReviewModel::CONTENT_REVIEW_STATUS_REJECTED )  {
+			$notification = wfMessage( 'content-review-diff-reject-confirmation' )->escaped();
+			$this->notification = $notification;
+		}
 		$reviewModel->removeCompletedReview( $wikiId, $pageId );
 	}
 
