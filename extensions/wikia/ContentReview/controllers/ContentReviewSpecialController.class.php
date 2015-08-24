@@ -21,7 +21,20 @@ class ContentReviewSpecialController extends WikiaSpecialPageController {
 		\JSMessages::enqueuePackage( 'ContentReviewSpecialPage', \JSMessages::EXTERNAL );
 	}
 
+	protected function checkAccess() {
+		if( !$this->wg->User->isLoggedIn() || !$this->wg->User->isAllowed( 'content-review' ) ) {
+			return false;
+		}
+		return true;
+	}
+
 	public function index() {
+		$this->specialPage->setHeaders();
+
+		if( !$this->checkAccess() ) {
+			$this->forward( 'ContentReviewSpecial', 'onWrongRights' );
+		}
+
 		$model = new ReviewModel();
 		$reviews = $model->getContentToReviewFromDatabase();
 		$this->reviews = $this->prepareReviewData( $reviews );
@@ -30,8 +43,8 @@ class ContentReviewSpecialController extends WikiaSpecialPageController {
 	private function prepareReviewData( $reviewsRaw ) {
 		$reviews = [];
 
-		foreach ( $reviewsRaw as $reviewStatuses ) {
-			foreach ( $reviewStatuses as $review ) {
+		foreach ($reviewsRaw as $reviewStatuses) {
+			foreach ($reviewStatuses as $review) {
 				$title = GlobalTitle::newFromID($review['page_id'], $review['wiki_id']);
 				$review['url'] = $title->getFullURL();
 				$review['title'] = $title->getBaseText();
@@ -45,8 +58,8 @@ class ContentReviewSpecialController extends WikiaSpecialPageController {
 					? wfMessage('content-review-special-start-review')->escaped()
 					: wfMessage('content-review-special-continue-review')->escaped();
 
-				if ( $review['status'] == ReviewModel::CONTENT_REVIEW_STATUS_UNREVIEWED
-					&& isset( $reviewStatuses[ReviewModel::CONTENT_REVIEW_STATUS_IN_REVIEW] )
+				if ($review['status'] == ReviewModel::CONTENT_REVIEW_STATUS_UNREVIEWED
+					&& isset($reviewStatuses[ReviewModel::CONTENT_REVIEW_STATUS_IN_REVIEW])
 				) {
 					$review['hide'] = true;
 				}
@@ -56,5 +69,9 @@ class ContentReviewSpecialController extends WikiaSpecialPageController {
 		}
 
 		return $reviews;
+	}
+
+	public function onWrongRights() {
+		//we use only its template here...
 	}
 }

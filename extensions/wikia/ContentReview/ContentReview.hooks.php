@@ -2,6 +2,8 @@
 
 namespace Wikia\ContentReview;
 
+use Wikia\ContentReview\Models\ReviewModel;
+
 class Hooks {
 
 	public static function onGetRailModuleList( Array &$railModuleList ) {
@@ -73,15 +75,41 @@ class Hooks {
 		return true;
 	}
 
-	public static function onDiffViewHeader( $diff, $oldRev, $newRev ) {
-		global $wgTitle;
+	public static function onArticleContentOnDiff( $diffEngine, \OutputPage $output ) {
+		global $wgTitle, $wgCityId;
 
 		if ( $wgTitle->inNamespace( NS_MEDIAWIKI )
 			&& $wgTitle->isJsPage()
-			&& $wgTitle->userCan( 'content-review')
+			&& $wgTitle->userCan( 'content-review' )
 		) {
+			\Wikia::addAssetsToOutput( 'content_review_diff_page_js' );
+			\JSMessages::enqueuePackage( 'ContentReviewDiffPage', \JSMessages::EXTERNAL );
 
+			$output->prependHTML(
+				\Xml::element( 'button',
+					[
+						'class' => 'content-review-diff-button',
+						'data-wiki-id' => ( $wgCityId ),
+						'data-page-id' => \Title::newFromText( $wgTitle->getArticleID() ),
+						'data-status' => ReviewModel::CONTENT_REVIEW_STATUS_REJECTED
+					],
+					wfMessage( 'content-review-diff-reject' )->plain()
+				)
+			);
+
+			$output->prependHTML(
+				\Xml::element( 'button',
+					[
+						'class' => 'content-review-diff-button',
+						'data-wiki-id' => ( $wgCityId ),
+						'data-page-id' => \Title::newFromText( $wgTitle->getArticleID() ),
+						'data-status' => ReviewModel::CONTENT_REVIEW_STATUS_APPROVED
+					],
+					wfMessage( 'content-review-diff-approve' )->plain()
+				)
+			);
 		}
+
 		return true;
 	}
 }

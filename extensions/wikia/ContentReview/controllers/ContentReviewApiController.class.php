@@ -160,6 +160,23 @@ class ContentReviewApiController extends WikiaApiController {
 		$this->notification = $notification;
 	}
 
+	/**
+	 * @throws \FluentSql\Exception\SqlException
+	 * TODO add permissions
+	 */
+	public function changeRevisionStatus() {
+		$currentRevisionModel = new CurrentRevisionModel();
+		$reviewModel = new ReviewModel();
+		$reviewUserId = $this->wg->User->getId();
+		$pageId = $this->request->getInt( 'pageId' );
+		$wikiId = $this->request->getInt( 'wikiId' );
+		$status = $this->request->getInt( 'status' );
+		$review = $reviewModel->getReviewedContent( $wikiId, $pageId, ReviewModel::CONTENT_REVIEW_STATUS_IN_REVIEW );
+		$reviewModel->backupCompletedReview( $review, $status, $reviewUserId );
+		$currentRevisionModel->approveRevision( $wikiId, $pageId, $review['revision_id'] );
+		$reviewModel->removeCompletedReview( $wikiId, $pageId );
+	}
+
 	private function getLatestReviewedRevisionFromDB( $wikiId, $pageId ) {
 		return ( new CurrentRevisionModel() )->getLatestReviewedRevision( $wikiId, $pageId );
 	}

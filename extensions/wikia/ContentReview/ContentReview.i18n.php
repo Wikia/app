@@ -30,6 +30,8 @@ $messages['en'] = [
 	'content-review-module-submit-exception' => 'Unfortunately, we could not submit the changes for a review due to the following error: $1.',
 	'content-review-module-submit-error' => 'Unfortunately, we could not submit the changes for a review.',
 
+	'content-review-wrong-rights' => 'Sorry, you do not have access!',
+
 	'contentreview' => 'Content Review',
 	'content-review-special-list-header-wiki-name' => 'Wiki name',
 	'content-review-special-list-header-page-name' => 'Page name',
@@ -40,11 +42,15 @@ $messages['en'] = [
 	'content-review-special-list-header-reviewer' => 'Reviewer id',
 	'content-review-special-list-header-review-start' => 'Review start',
 	'content-review-special-list-header-actions' => 'Actions',
+
 	'content-review-special-start-review' => 'Start review',
 	'content-review-special-continue-review' => 'Continue review',
 	'content-review-special-review-started' => 'You have started review process.',
 	'content-review-special-review-open' => 'Please complete open review for this page first.',
 	'content-review-special-error' => 'Unfortunately, an error happened.',
+
+	'content-review-diff-approve' => 'Approve',
+	'content-review-diff-reject' => 'Reject',
 
 	'content-review-status-unreviewed' => 'Unreviewed',
 	'content-review-status-in-review' => 'In review',
@@ -74,6 +80,8 @@ $messages['qqq'] = [
 	'content-review-module-submit-success-exception' => 'A message shown to a user in a Banner Notification if a known error happened. $1 is the error message.',
 	'content-review-module-submit-success-error' => 'A message shown to a user in a Banner Notification if an unknown error happened.',
 
+	'content-review-wrong-rights' => 'A message shown when user do not have rights',
+
 	'content-review-special-title' => 'Content Review',
 	'content-review-special-list-header-wiki-name' => 'A column name for a Wiki name',
 	'content-review-special-list-header-page-name' => 'A column name for a Page name',
@@ -84,6 +92,7 @@ $messages['qqq'] = [
 	'content-review-special-list-header-reviewer' => 'A column name for a Reviewer id',
 	'content-review-special-list-header-review-start' => 'A column name for a Review start',
 	'content-review-special-list-header-actions' => 'A column name for Actions',
+
 	'content-review-special-start-review' => 'Text on button to start review',
 	'content-review-special-continue-review' => 'Text on button to continue review',
 	'content-review-special-review-started' => 'A message shown when user starts new review process.',
