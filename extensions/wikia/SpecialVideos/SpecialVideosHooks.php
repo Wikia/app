@@ -18,7 +18,7 @@ class SpecialVideosHooks {
 			$app->wg->Title->isSpecial( 'Videos' ) &&
 			$app->wg->User->isAllowed( 'videoupload' )
 		) {
-			$text = Xml::element(
+			$text = Html::element(
 				'img',
 				[
 					'src' => wfBlankImgUrl(),

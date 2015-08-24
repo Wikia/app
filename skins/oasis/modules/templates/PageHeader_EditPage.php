@@ -9,7 +9,7 @@
 	}
 
 	if( !empty( $isHistory ) && !empty( $isUserTalkArchiveModeEnabled ) ) {
-		echo $app()->renderView(
+		echo $app->renderView(
 			'CommentsLikes',
 			'Index',
 			['comments' => $comments]
