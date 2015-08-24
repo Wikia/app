@@ -78,15 +78,14 @@ ve.dm.MWTransclusionNode.static.getHashObject = function ( dataElement ) {
  * @returns {string} type of Node
  */
 ve.dm.MWTransclusionNode.static.getDataElementType = function ( domElements, converter ) {
-	var isInline = this.isHybridInline( domElements, converter),
-		transclusionInline = 'mwTransclusionInline',
-		transclusionBlock = 'mwTransclusionBlock',
-		infoboxTransclusionBlock = 'wikiaInfoboxTransclusionBlock';
+	var isInline = this.isHybridInline( domElements, converter);
 
 	if ( isInline ) {
-		return transclusionInline;
+		return ve.dm.MWTransclusionInlineNode.static.name;
 	}
-	return ( this.name === infoboxTransclusionBlock ) ? infoboxTransclusionBlock : transclusionBlock;
+	return this.name === ve.dm.WikiaInfoboxTransclusionBlockNode.static.name ?
+		ve.dm.WikiaInfoboxTransclusionBlockNode.static.name :
+		ve.dm.MWTransclusionBlockNode.static.name;
 };
 
 ve.dm.MWTransclusionNode.static.toDataElement = function ( domElements, converter ) {

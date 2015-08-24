@@ -109,12 +109,12 @@ ve.dm.WikiaTransclusionModel.prototype.setIsInfobox = function ( isInfobox ) {
  * where we can take the requested title from.
  */
 ve.dm.WikiaTransclusionModel.prototype.denormalizeInfoboxTemplateTitle = function ( title, data ) {
-	var k;
+	var i;
 
 	if ( data.query.normalized ) {
-		for ( k = 0; k < data.query.normalized.length; k++ ) {
-			if (data.query.normalized[k].to === title ) {
-				title = data.query.normalized[k].from;
+		for ( i = 0; i < data.query.normalized.length; i++ ) {
+			if (data.query.normalized[i].to === title ) {
+				title = data.query.normalized[i].from;
 			}
 		}
 	}
