@@ -38,6 +38,7 @@ $global-nav-inverse-link-hover-color: #C5CED9;
 		}
 
 		.account-navigation-container {
+			color: $global-nav-inverse-text-color;
 
 			.AccountNavigation.active {
 				background-color: $global-nav-inverse-background-hover;
