@@ -13,6 +13,7 @@ class AdEngine2Hooks {
 	const ASSET_GROUP_ADENGINE_TRACKING = 'adengine2_tracking_js';
 	const ASSET_GROUP_LIFTIUM = 'liftium_ads_js';
 	const ASSET_GROUP_LIFTIUM_EXTRA = 'liftium_ads_extra_js';
+	const ADS_STAGING_HEADER = 'externaltest';
 
 	/**
 	 * Handle URL parameters and set proper global variables early enough
@@ -255,4 +256,16 @@ class AdEngine2Hooks {
 		}
 		return true;
 	}
+
+	public static function onSkinTemplateOutputPageBeforeExec( Skin $skin, $template) {
+		$out = $skin->getOutput();
+		$stagingHeader = $skin->getRequest()->getHeader('X-Staging');
+
+		if ( startsWith( $stagingHeader, static::ADS_STAGING_HEADER ) ) {
+			$out->setRobotPolicy( 'noindex,nofollow' );
+		}
+
+		return true;
+	}
+
 }
