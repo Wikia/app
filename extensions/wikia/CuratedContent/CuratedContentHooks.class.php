@@ -47,10 +47,17 @@ class CuratedContentHooks {
 	 */
 	public static function onSkinAfterBottomScripts( $skin, &$text ) {
 		if ( self::shouldDisplayCuratedContentToolButton() ) {
-			$scripts = AssetsManager::getInstance()->getURL( 'curated_content_tool_button_js' );
+			$assetsManager = AssetsManager::getInstance();
+			$scripts = $assetsManager->getURL( 'curated_content_tool_button_js' );
 
 			foreach ( $scripts as $script ) {
 				$text .= Html::linkedScript( $script );
+			}
+
+			$styles = $assetsManager->getSassGroupCommonURL( 'curated_content_tool_button_scss' );
+
+			foreach ( $styles as $style ) {
+				$text .= Html::linkedStyle( $style );
 			}
 		}
 		return true;

@@ -2,6 +2,7 @@ define(
 	'curatedContentTool.modal',
 	['wikia.ui.factory', 'curatedContentTool.pontoBridge'],
 	function (uiFactory, pontoBridge) {
+		'use strict';
 		var modalInstance;
 
 		function open(title, content) {
@@ -9,7 +10,7 @@ define(
 				var modalConfig = {
 					vars: {
 						id: 'CuratedContentToolModal',
-						classes: ['no-scroll'],
+						classes: ['no-scroll', 'curated-content-tool-modal'],
 						size: 'medium',
 						title: title,
 						content: content

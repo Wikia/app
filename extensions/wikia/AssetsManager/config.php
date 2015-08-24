@@ -2567,3 +2567,11 @@ $config['curated_content_tool_button_js'] = [
 		'//extensions/wikia/CuratedContent/js/CuratedContentToolPontoBridge.js'
 	]
 ];
+
+$config['curated_content_tool_button_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => ['oasis'],
+	'assets' => [
+		'//extensions/wikia/CuratedContent/css/CuratedContentTool.scss'
+	]
+];
