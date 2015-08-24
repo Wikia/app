@@ -126,7 +126,7 @@ class ContentReviewApiController extends WikiaApiController {
 	 * @throws BadRequestApiException
 	 * @throws PermissionsException
 	 */
-	public function changeRevisionStatus() {
+	public function removeCompletedAndUpdateLogs() {
 		if ( !$this->request->wasPosted()
 			|| !$this->wg->User->matchEditToken( $this->request->getVal( 'editToken' ) )
 		) {
@@ -148,7 +148,14 @@ class ContentReviewApiController extends WikiaApiController {
 		$review = $reviewModel->getReviewedContent( $wikiId, $pageId, ReviewModel::CONTENT_REVIEW_STATUS_IN_REVIEW );
 
 		$reviewModel->backupCompletedReview( $review, $status, $reviewerId );
-		$currentRevisionModel->approveRevision( $wikiId, $pageId, $review['revision_id'] );
+
+		if( $status === ReviewModel::CONTENT_REVIEW_STATUS_APPROVED ) {
+			$currentRevisionModel->approveRevision( $wikiId, $pageId, $review['revision_id'] );
+			$this->notification = wfMessage( 'content-review-diff-approve-confirmation' )->escaped();
+		}
+		elseif( $status === ReviewModel::CONTENT_REVIEW_STATUS_REJECTED )  {
+			$this->notification = wfMessage( 'content-review-diff-reject-confirmation' )->escaped();
+		}
 		$reviewModel->removeCompletedReview( $wikiId, $pageId );
 	}
 
@@ -179,7 +186,7 @@ class ContentReviewApiController extends WikiaApiController {
 		$this->makeSuccessResponse( $revisionData );
 	}
 
-	public function showTestModeNotificaion() {
+	public function showTestModeNotification() {
 		$notification = wfMessage( 'content-review-test-mode-enabled' )->escaped();
 		$notification.= Xml::element(
 			'a',

@@ -30,9 +30,8 @@ $messages['en'] = [
 	'content-review-module-submit-exception' => 'Unfortunately, we could not submit the changes for a review due to the following error: $1.',
 	'content-review-module-submit-error' => 'Unfortunately, we could not submit the changes for a review.',
 
-	'content-review-wrong-rights' => 'Sorry, you do not have access!',
-
 	'contentreview' => 'Content Review',
+	'action-content-review' => 'Content Review',
 	'content-review-special-list-header-wiki-name' => 'Wiki name',
 	'content-review-special-list-header-page-name' => 'Page name',
 	'content-review-special-list-header-revision-id' => 'Revision id',
@@ -51,6 +50,9 @@ $messages['en'] = [
 
 	'content-review-diff-approve' => 'Approve',
 	'content-review-diff-reject' => 'Reject',
+	'content-review-diff-approve-confirmation' => 'Reviewed code has been approved.',
+	'content-review-diff-reject-confirmation' => 'Reviewed code has been rejected.',
+	'content-review-diff-page-error' => 'Something went wrong. Please try again later.',
 
 	'content-review-status-unreviewed' => 'Unreviewed',
 	'content-review-status-in-review' => 'In review',
@@ -80,9 +82,8 @@ $messages['qqq'] = [
 	'content-review-module-submit-success-exception' => 'A message shown to a user in a Banner Notification if a known error happened. $1 is the error message.',
 	'content-review-module-submit-success-error' => 'A message shown to a user in a Banner Notification if an unknown error happened.',
 
-	'content-review-wrong-rights' => 'A message shown when user do not have rights',
-
-	'content-review-special-title' => 'Content Review',
+	'content-review-special-title' => 'Title for special page',
+	'action-content-review' => 'Title for permissions',
 	'content-review-special-list-header-wiki-name' => 'A column name for a Wiki name',
 	'content-review-special-list-header-page-name' => 'A column name for a Page name',
 	'content-review-special-list-header-revision-id' => 'A column name for a Revision id',
@@ -98,6 +99,10 @@ $messages['qqq'] = [
 	'content-review-special-review-started' => 'A message shown when user starts new review process.',
 	'content-review-special-review-open' => 'A message shown when another review for the page is in progress and ask user to complete that first.',
 	'content-review-special-error' => 'Information that some error occurs.',
+
+	'content-review-diff-approve-confirmation' => 'A message shown after click approve button.',
+	'content-review-diff-reject-confirmation' => 'A message shown after click reject button.',
+	'content-review-diff-page-error' => 'A message shown when something go wrong on diff page.',
 
 	'content-review-status-unreviewed' => 'Status Unreviewed',
 	'content-review-status-in-review' => 'Status In review',

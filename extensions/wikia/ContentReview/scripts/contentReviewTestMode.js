@@ -61,7 +61,7 @@ define(
 		if ( win.contentReviewTestModeEnabled ) {
 			nirvana.sendRequest({
 				controller: 'ContentReviewApiController',
-				method: 'showTestModeNotificaion',
+				method: 'showTestModeNotification',
 				callback: function (response) {
 					var notification;
 					if ( response.notification ) {

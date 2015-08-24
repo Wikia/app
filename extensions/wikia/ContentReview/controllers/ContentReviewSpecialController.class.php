@@ -32,7 +32,8 @@ class ContentReviewSpecialController extends WikiaSpecialPageController {
 		$this->specialPage->setHeaders();
 
 		if( !$this->checkAccess() ) {
-			$this->forward( 'ContentReviewSpecial', 'onWrongRights' );
+			$this->displayRestrictionError();
+			return false;
 		}
 
 		$model = new ReviewModel();
@@ -71,7 +72,4 @@ class ContentReviewSpecialController extends WikiaSpecialPageController {
 		return $reviews;
 	}
 
-	public function onWrongRights() {
-		//we use only its template here...
-	}
 }
