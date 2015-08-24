@@ -476,6 +476,7 @@ class UserProfilePageController extends WikiaController {
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
 	private function saveUsersAvatar( $userId = null, $data = null ) {
+		global $wgAvatarsUseService;
 		wfProfileIn( __METHOD__ );
 
 		if ( is_null( $userId ) ) {
@@ -498,20 +499,31 @@ class UserProfilePageController extends WikiaController {
 				case 'sample':
 					// remove old avatar file
 					Masthead::newFromUser( $user )->removeFile( false );
-					$user->setGlobalAttribute( AVATAR_USER_OPTION_NAME, $data->file );
+
+					// user avatars service updates user preferences on its own
+					if ( empty( $wgAvatarsUseService ) ) {
+						$user->setGlobalAttribute(AVATAR_USER_OPTION_NAME, $data->file);
+					}
 					break;
 				case 'uploaded':
 					$errorMsg = wfMessage( 'userprofilepage-interview-save-internal-error' )->escaped();
 					$avatar = $this->saveAvatarFromUrl( $user, $data->file, $errorMsg );
-					$user->setGlobalAttribute( AVATAR_USER_OPTION_NAME, $avatar );
+
+					// user avatars service updates user preferences on its own
+					if ( empty( $wgAvatarsUseService ) ) {
+						$user->setGlobalAttribute(AVATAR_USER_OPTION_NAME, $avatar);
+					}
 					break;
 				default:
 					break;
 			}
 
-			// TODO: $user->getTouched() get be used to invalidate avatar URLs instead
-			$user->setGlobalAttribute( 'avatar_rev', date( 'U' ) );
-			$user->saveSettings();
+			// user avatars service updates user preferences on its own
+			if ( empty( $wgAvatarsUseService ) ) {
+				// TODO: $user->getTouched() get be used to invalidate avatar URLs instead
+				$user->setGlobalAttribute('avatar_rev', date('U'));
+				$user->saveSettings();
+			}
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -766,13 +778,18 @@ class UserProfilePageController extends WikiaController {
 			$oAvatarObj = Masthead::newFromUser( $user );
 			$localPath = $this->getLocalPath( $user );
 			$errorNo = $oAvatarObj->uploadByUrl( $url );
-			/**
-			 * @var $userIdentityBox UserIdentityBox
-			 */
-			$userIdentityBox = new UserIdentityBox( $user );
-			$userData = $userIdentityBox->getFullData();
-			$userData['avatar'] = $localPath;
-			$userIdentityBox->saveUserData( $userData );
+
+			// user avatars service updates user preferences on its own
+			global $wgAvatarsUseService;
+			if ( empty( $wgAvatarsUseService ) ) {
+				/**
+				 * @var $userIdentityBox UserIdentityBox
+				 */
+				$userIdentityBox = new UserIdentityBox($user);
+				$userData = $userIdentityBox->getFullData();
+				$userData['avatar'] = $localPath;
+				$userIdentityBox->saveUserData($userData);
+			}
 		} else {
 			$errorNo = UPLOAD_ERR_EXTENSION;
 		}

@@ -456,13 +456,13 @@ class Masthead {
 	 * @return bool result
 	 */
 	private function doRemoveFile() {
-		wfProfileIn( __METHOD__ );
-
 		if ( !$this->fileExists() ) {
 			return true;
 		}
 
-		global $wgAvatarsUseSwiftStorage;
+		wfProfileIn( __METHOD__ );
+
+		global $wgAvatarsUseSwiftStorage, $wgAvatarsUseService;
 		if ( !empty( $wgAvatarsUseSwiftStorage ) ) {
 			$swift = $this->getSwiftStorage();
 
@@ -470,11 +470,15 @@ class Masthead {
 			$status = $swift->remove( $avatarRemotePath );
 
 			$res = $status->isOk();
-		}
 
-		if ( $res ) {
-			// remove thumbnails
-			$this->purgeThumbnails();
+			if ( $res ) {
+				// remove thumbnails
+				$this->purgeThumbnails();
+			}
+		}
+		else if ( !empty( $wgAvatarsUseService ) ) {
+			$service = new UserAvatarsService( $this->mUser->getId() );
+			$res = $service->remove();
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -490,12 +494,17 @@ class Masthead {
 	private function fileExists() {
 		wfProfileIn( __METHOD__ );
 
-		global $wgAvatarsUseSwiftStorage;
+		global $wgAvatarsUseSwiftStorage, $wgAvatarsUseService;
 		if ( !empty( $wgAvatarsUseSwiftStorage ) ) {
 			$swift = $this->getSwiftStorage();
 
 			$avatarRemotePath = $this->getLocalPath();
 			$res = $swift->exists( $avatarRemotePath );
+		}
+		else if ( !empty( $wgAvatarsUseService ) ) {
+			// default avatar set means that there's no custom one uploaded
+			// so there's nothing to delete
+			$res = !$this->isDefault();
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -520,8 +529,13 @@ class Masthead {
 		if ( $result === false ) {
 			Wikia::log( __METHOD__, false, 'cannot remove avatar - ' . $this->getLocalPath() );
 		} else {
-			$this->mUser->setGlobalAttribute( AVATAR_USER_OPTION_NAME, "" );
-			$this->mUser->saveSettings();
+			global $wgAvatarsUseService;
+
+			// user avatars service updates user preferences on its own
+			if ( empty( $wgAvatarsUseService ) ) {
+				$this->mUser->setGlobalAttribute(AVATAR_USER_OPTION_NAME, "");
+				$this->mUser->saveSettings();
+			}
 
 			/* add log */
 			if ( !empty( $addLog ) ) {
@@ -683,7 +697,7 @@ class Masthead {
 	 * @return integer UPLOAD_* error code
 	 */
 	private function postProcessImageInternal( $sTmpFile, &$errorNo = UPLOAD_ERR_OK, &$errorMsg = '' ) {
-		global $wgAvatarsUseSwiftStorage, $wgBlogAvatarSwiftContainer, $wgBlogAvatarSwiftPathPrefix;
+		global $wgAvatarsUseSwiftStorage, $wgBlogAvatarSwiftContainer, $wgBlogAvatarSwiftPathPrefix, $wgAvatarsUseService;
 
 		wfProfileIn( __METHOD__ );
 		$aImgInfo = getimagesize( $sTmpFile );
@@ -761,6 +775,13 @@ class Masthead {
 
 				wfRunHooks( "Masthead::AvatarSavedToSwift", array( $sFilePath, $mwStorePath ) );
 			}
+
+			// remove generated thumbnails
+			$this->purgeThumbnails();
+		}
+		else if ( !empty( $wgAvatarsUseService ) ) {
+			$service = new UserAvatarsService( $this->mUser->getId() );
+			$errorNo = $service->upload( $sFilePath );
 		}
 
 		$sUserText = $this->mUser->getName();
@@ -776,9 +797,6 @@ class Masthead {
 		if ( $wgEnableUploadInfoExt ) {
 			UploadInfo::log( $mUserPage, $sFilePath, $this->getLocalPath() );
 		}
-
-		// remove generated thumbnails
-		$this->purgeThumbnails();
 
 		wfProfileOut( __METHOD__ );
 
