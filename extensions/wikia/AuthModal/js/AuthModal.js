@@ -20,17 +20,20 @@ define('AuthModal', ['jquery', 'AuthComponent', 'wikia.window'], function ($, Au
 		modal = $blackout.find('.auth-modal')[0];
 		$('.auth-blackout, .auth-modal .close').click(close);
 
-		track = getTrackingFunction(Wikia.Tracker.ACTIONS.OPEN);
+		track = getTrackingFunction();
 		track({
+			action: Wikia.Tracker.ACTIONS.OPEN,
 			label: 'username-login-modal'
 		});
 
 		$(window.document).keyup(onKeyUp);
 	}
 
-	function getTrackingFunction (action) {
+	function getTrackingFunction () {
+		if (track) {
+			return track;
+		}
 		return Wikia.Tracker.buildTrackingFunction({
-			action: action,
 			category: 'user-login-desktop-modal',
 			trackingMethod: 'analytics'
 		});
