@@ -14,14 +14,29 @@ class ContentReviewSpecialController extends WikiaSpecialPageController {
 		parent::__construct( 'ContentReview', 'content-review', true );
 	}
 
+	protected function checkAccess() {
+		if( !$this->wg->User->isLoggedIn() || !$this->wg->User->isAllowed( 'content-review' ) ) {
+			return false;
+		}
+		return true;
+	}
+
 	public function index() {
 		$this->specialPage->setHeaders();
+
+		if( !$this->checkAccess() ) {
+			$this->forward( 'ContentReviewSpecial', 'onWrongRights' );
+		}
 		$model = new ReviewModel();
 		$reviews = $model->getContentToReviewFromDatabase();
 		$this->reviews = $this->prepareReviewData( $reviews );
 		$this->inReview = ReviewModel::CONTENT_REVIEW_STATUS_IN_REVIEW;
 		\Wikia::addAssetsToOutput('content_review_special_page_js');
 		\JSMessages::enqueuePackage( 'ContentReviewSpecialPage', \JSMessages::EXTERNAL );
+	}
+
+	public function onWrongRights() {
+		//we use only its template here...
 	}
 
 	private function prepareReviewData( $reviews ) {
@@ -37,5 +52,18 @@ class ContentReviewSpecialController extends WikiaSpecialPageController {
 			] );
 		}
 		return $reviews;
+	}
+
+	/**
+	 * TODO add permissions
+	 */
+	public function updateReviewsStatus() {
+		$pageId = $this->request->getInt( 'pageId' );
+		$wikiId = $this->request->getInt( 'wikiId' );
+		$status = $this->request->getInt( 'status' );
+		$reviewUserId = $this->wg->User->getId();
+
+		$model = new ReviewModel();
+		$model->updateRevisionStatus( $wikiId, $pageId, $status, $reviewUserId );
 	}
 }
