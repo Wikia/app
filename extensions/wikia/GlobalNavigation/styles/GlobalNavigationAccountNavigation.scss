@@ -93,6 +93,12 @@
 		}
 	}
 
+	.links-container {
+		> .auth-link {
+			display: block;
+		}
+	}
+
 	.auth-label {
 		display: table-cell;
 		font-size: 12px;
