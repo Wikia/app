@@ -163,17 +163,41 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 				'expectedTargeting' => ['pageType' => 'search', 'pageName' => 'Special:Search']
 			],
 
-			$defaultParameters + ['expectedMappings' => ['sourceVertical' => 'tv', 'expectedMappedVertical' => 'ent']],
+			$defaultParameters + ['expectedMappings' => [
+				'sourceVertical' => 'tv',
+				'expectedMappedVertical' => 'ent'
+			]],
 
-			$defaultParameters + ['expectedMappings' => ['sourceVertical' => 'games', 'expectedMappedVertical' => 'gaming']],
+			$defaultParameters + ['expectedMappings' => [
+				'sourceVertical' => 'games',
+				'expectedMappedVertical' => 'gaming'
+			]],
 
-			$defaultParameters + ['expectedMappings' => ['sourceVertical' => 'books', 'expectedMappedVertical' => 'ent']],
+			$defaultParameters + ['expectedMappings' => [
+				'sourceVertical' => 'books',
+				'expectedMappedVertical' => 'ent'
+			]],
 
-			$defaultParameters + ['expectedMappings' => ['sourceVertical' => 'comics', 'expectedMappedVertical' => 'ent']],
+			$defaultParameters + ['expectedMappings' => [
+				'sourceVertical' => 'comics',
+				'expectedMappedVertical' => 'ent'
+			]],
 
-			$defaultParameters + ['expectedMappings' => ['sourceVertical' => 'lifestyle', 'expectedMappedVertical' => 'life']],
+			$defaultParameters + ['expectedMappings' => [
+				'sourceVertical' => 'lifestyle',
+				'expectedMappedVertical' => 'life'
+			]],
 
-			$defaultParameters + ['expectedMappings' => ['sourceVertical' => 'not-existing', 'expectedMappedVertical' => 'error']],
+			$defaultParameters + ['expectedMappings' => [
+				'sourceVertical' => 'not-existing',
+				'expectedMappedVertical' => 'error'
+			]],
+
+			$defaultParameters + ['expectedMappings' => [
+				'verticalFromCategoryInfo' => 'Wikia',
+				'sourceVertical' => 'other',
+				'expectedMappedVertical' => 'wikia']
+			],
 		];
 	}
 
@@ -197,7 +221,7 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		$artId = 777;
 		$artDbKey = 'articledbkey';
 		$skinName = 'someskin';
-		$vertical = 'Fakevertical';
+		$vertical = isset($verticals['verticalFromCategoryInfo']) ? $verticals['verticalFromCategoryInfo'] : 'Fakevertical';
 		$dbName = 'mydbname';
 		$cityId = 666;
 		$customDartKvs = 'a=b;c=d';

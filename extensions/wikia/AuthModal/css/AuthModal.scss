@@ -1,0 +1,68 @@
+@import 'skins/shared/mixins/transform';
+@import 'skins/shared/mixins/blackout';
+
+@keyframes auth-throbber-spin {
+	100% {
+		@include transform (rotate(360deg));
+	}
+}
+
+.auth-blackout {
+	@include blackout;
+	box-sizing: border-box;
+	opacity: 1;
+	padding: 50px 10%;
+}
+
+.auth-modal {
+	box-sizing: border-box;
+	height: 100%;
+	margin: auto;
+	max-width: 768px;
+	position: relative;
+	width: 100%;
+
+	&.loading {
+		&::after {
+			animation: auth-throbber-spin 1s ease-in infinite;
+			background: url('/extensions/wikia/AuthModal/svg/wikia-logo-circled.svg'); /* inline */
+			content: " ";
+			display: block;
+			height: 62px;
+			left: 50%;
+			margin-left: -31px;
+			margin-top: -31px;
+			position: absolute;
+			top: 50%;
+			width: 62px;
+		}
+
+		iframe {
+			display: none;
+		}
+
+		.close {
+			display: none;
+		}
+	}
+
+	iframe {
+		display: block;
+		height: 100%;
+		width: 100%;
+	}
+
+	.close {
+		background: url('/extensions/wikia/AuthModal/svg/close.svg'); /* inline */
+		background-position: center;
+		background-repeat: no-repeat;
+		box-sizing: content-box;
+		float: right;
+		height: 15px;
+		padding: 15px 20px;
+		position: absolute;
+		right: 0;
+		top: 0;
+		width: 15px;
+	}
+}

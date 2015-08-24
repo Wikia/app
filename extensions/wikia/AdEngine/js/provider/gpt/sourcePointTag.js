@@ -4,14 +4,14 @@ define('ext.wikia.adEngine.provider.gpt.sourcePointTag', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adTracker',
 	'ext.wikia.adEngine.provider.gpt.googleTag',
+	'ext.wikia.adEngine.sourcePoint',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window'
-], function (adContext, adTracker, GoogleTag, doc, log, window) {
+], function (adContext, adTracker, GoogleTag, sourcePoint, doc, log, window) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.gpt.sourcePointTag',
-		sourcePointClientId = 'rMbenHBwnMyAMhR',
 		context = adContext.getContext();
 
 	function SourcePointTag() {
@@ -29,7 +29,7 @@ define('ext.wikia.adEngine.provider.gpt.sourcePointTag', [
 		gads.async = true;
 		gads.type = 'text/javascript';
 		gads.src = context.opts.sourcePointUrl;
-		gads.setAttribute('data-client-id', sourcePointClientId);
+		gads.setAttribute('data-client-id', sourcePoint.getClientId());
 
 		gads.addEventListener('load', function () {
 			var spReadyEvent = new window.Event('sp.ready');

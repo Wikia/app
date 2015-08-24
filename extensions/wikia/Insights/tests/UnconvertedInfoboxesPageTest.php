@@ -1,4 +1,5 @@
 <?php
+use Wikia\PortableInfobox\Helpers\PortableInfoboxClassification;
 
 class UnconvertedInfoboxesPageTest extends WikiaBaseTest {
 
@@ -11,7 +12,7 @@ class UnconvertedInfoboxesPageTest extends WikiaBaseTest {
 	 * @dataProvider getInfoboxTitles
 	 */
 	public function testIsTitleWithNonportableInfobox( $titleText, $contentText, $expected ) {
-		$result = UnconvertedInfoboxesPage::isTitleWithNonportableInfobox( $titleText, $contentText );
+		$result = PortableInfoboxClassification::isTitleWithNonportableInfobox( $titleText, $contentText );
 		$this->assertSame( $expected, $result );
 	}
 
