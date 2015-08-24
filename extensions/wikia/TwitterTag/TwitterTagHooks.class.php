@@ -10,7 +10,7 @@ class TwitterTagHooks {
 	 * @param $parser - The parser
 	 * @return true
 	 */
-	static public function onParserFirstCallInit( Parser &$parser ) {
+	static public function onParserFirstCallInit( Parser $parser ) {
 		$parser->setHook( 'twitter', [ __CLASS__, 'parseTwitterTag' ] );
 		return true;
 	}
