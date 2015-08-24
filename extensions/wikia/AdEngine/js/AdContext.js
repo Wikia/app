@@ -35,7 +35,7 @@ define('ext.wikia.adEngine.adContext', [
 	}
 
 	function isProperCountry(countryList) {
-		return (countryList && countryList.indexOf && countryList.indexOf(geo.getCountryCode()) > -1);
+		return !!(countryList && countryList.indexOf && countryList.indexOf(geo.getCountryCode()) > -1);
 	}
 
 	function isUrlParamSet(param) {
