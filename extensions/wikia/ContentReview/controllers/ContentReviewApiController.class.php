@@ -143,10 +143,10 @@ class ContentReviewApiController extends WikiaApiController {
 		$pageId = $this->request->getInt( 'pageId' );
 		$wikiId = $this->request->getInt( 'wikiId' );
 		$status = $this->request->getInt( 'status' );
-		$review = $reviewModel->getRowToLogDatabase( $wikiId, $pageId, ReviewModel::CONTENT_REVIEW_STATUS_IN_REVIEW );
+		$review = $reviewModel->getReviewedContent( $wikiId, $pageId, ReviewModel::CONTENT_REVIEW_STATUS_IN_REVIEW );
 		$reviewModel->backupCompletedReview( $review, $status, $reviewUserId );
 		$currentRevisionModel->approveRevision( $wikiId, $pageId, $review['revision_id'] );
-		$reviewModel->removeCompletedReview( $wikiId, $pageId);
+		$reviewModel->removeCompletedReview( $wikiId, $pageId );
 	}
 
 	private function getLatestReviewedRevisionFromDB( $wikiId, $pageId ) {

@@ -19,8 +19,7 @@ define(
         }
 
         function bindEvents() {
-            $('.content-review-diff-approve').on('click', removeAndUpdateLogs);
-            $('.content-review-diff-reject').on('click', removeAndUpdateLogs);
+            $('.content-review-diff-button').on('click', removeAndUpdateLogs);
         }
 
         function removeAndUpdateLogs(e) {

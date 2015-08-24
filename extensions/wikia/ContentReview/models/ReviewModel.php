@@ -195,7 +195,7 @@ class ReviewModel extends ContentReviewBaseModel {
 		return $content;
 	}
 
-	public function getRowToLogDatabase( $wiki_id, $page_id, $status ) {
+	public function getReviewedContent( $wiki_id, $page_id, $status ) {
 		$db = $this->getDatabaseForRead();
 
 		$content = ( new \WikiaSQL() )
