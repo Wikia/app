@@ -150,6 +150,17 @@ class PageHeaderController extends WikiaController {
 		return $ret;
 	}
 
+	private function getCuratedContentButtonForCurrent() {
+		global $wgUser, $wgEnableCuratedContentExt;
+
+		if ( !empty( $wgEnableCuratedContentExt ) && WikiaPageType::isMainPage() &&
+			$wgUser->isAllowed( 'curatedcontent' ) ) {
+			return $this->app->sendRequest( 'CuratedContent', 'editButton' );
+		} else {
+			return null;
+		}
+	}
+
 	/**
 	 * Render default page header (with edit dropdown, history dropdown, ...)
 	 *
@@ -158,7 +169,7 @@ class PageHeaderController extends WikiaController {
 	 */
 	public function executeIndex( $params ) {
 		global $wgTitle, $wgArticle, $wgOut, $wgUser, $wgContLang, $wgSupressPageTitle, $wgSupressPageSubtitle,
-			$wgSuppressNamespacePrefix, $wgEnableCuratedContentExt, $wgEnableWallExt;
+			$wgSuppressNamespacePrefix, , $wgEnableWallExt;
 
 		wfProfileIn( __METHOD__ );
 
@@ -170,13 +181,7 @@ class PageHeaderController extends WikiaController {
 		// page namespace
 		$ns = $wgTitle->getNamespace();
 
-		if ( !empty( $wgEnableCuratedContentExt ) &&
-			WikiaPageType::isMainPage() &&
-			$wgUser->isAllowed( 'curatedcontent' )
-		)
-		{
-			$this->curatedContentToolButton = $this->app->sendRequest( 'CuratedContent', 'editButton' );
-		}
+		$this->curatedContentToolButton = $this->getCuratedContentButtonForCurrent();
 
 		/** start of wikia changes @author nAndy */
 		$this->isWallEnabled = ( !empty( $wgEnableWallExt ) && $ns == NS_USER_WALL );
