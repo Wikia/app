@@ -2,7 +2,6 @@
 /*jshint maxlen:125, camelcase:false, maxdepth:7*/
 define('ext.wikia.adEngine.provider.gpt.sourcePointTag', [
 	'ext.wikia.adEngine.adContext',
-	'ext.wikia.adEngine.adTracker',
 	'ext.wikia.adEngine.provider.gpt.googleTag',
 	'ext.wikia.adEngine.slot.adSlot',
 	'ext.wikia.adEngine.sourcePoint',
@@ -11,7 +10,7 @@ define('ext.wikia.adEngine.provider.gpt.sourcePointTag', [
 	'wikia.lazyqueue',
 	'wikia.log',
 	'wikia.window'
-], function (adContext, adTracker, GoogleTag, adSlot, sourcePoint, cssTweaker, doc, lazyQueue, log, window) {
+], function (adContext, GoogleTag, adSlot, sourcePoint, cssTweaker, doc, lazyQueue, log, window) {
 	'use strict';
 
 	var blocking = false,
@@ -47,8 +46,6 @@ define('ext.wikia.adEngine.provider.gpt.sourcePointTag', [
 
 		doc.addEventListener('sp.blocking', (function () {
 			log(['sp.blocking'], 'debug', logGroup);
-			adTracker.track('sourcepoint/blocked');
-
 			doc.body.classList.add('source-point');
 			blocking = true;
 			this.cmdQueue.start();
@@ -56,8 +53,6 @@ define('ext.wikia.adEngine.provider.gpt.sourcePointTag', [
 
 		doc.addEventListener('sp.not_blocking', (function () {
 			log(['sp.not_blocking'], 'debug', logGroup);
-			adTracker.track('sourcepoint/not_blocked');
-
 			this.cmdQueue.start();
 		}).bind(this));
 
