@@ -115,11 +115,11 @@ class PortableInfoboxDataService {
 	/**
 	 * @desc returns the text from inside of the first <includeonly> tag
 	 * @param $text string template text
-	 * @return mixed
+	 * @return string
 	 */
 	protected function getIncludeonlyText( $text ) {
 		preg_match_all( "/<includeonly>(.+)<\/includeonly>/sU", $text, $result );
 
-		return isset( $result[1][0] ) ? $result[1][0] : false;
+		return isset( $result[1][0] ) ? $result[1][0] : null;
 	}
 }
