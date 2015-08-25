@@ -20,7 +20,7 @@ class ResourceLoaderAdEngineSourcePointDetectionModule extends ResourceLoaderAdE
 	 */
 	protected function getFallbackDataWhenRequestFails() {
 		$scripts = [];
-		$scripts[] = (new ResourceLoaderScript())->setTypeLocal()->setValue(__DIR__ . '/SourcePoint/detection.js');
+		$scripts[] = (new ResourceLoaderScript())->setTypeLocal()->setValue(__DIR__ . '/../SourcePoint/detection.js');
 		$data = [
 			'script' => $this->generateData( $scripts ),
 			'modTime' => $this->getCurrentTimestamp(),

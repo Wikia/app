@@ -25,8 +25,8 @@ class ResourceLoaderAdEngineSourcePointModule extends ResourceLoaderAdEngineBase
 	 */
 	protected function getFallbackDataWhenRequestFails() {
 		$scripts = [];
-		$scripts[] = (new ResourceLoaderScript())->setTypeLocal()->setValue(__DIR__ . '/SourcePoint/recovery.js');
-		$scripts[] = (new ResourceLoaderScript())->setTypeLocal()->setValue(__DIR__ . '/SourcePoint/delivery.js');
+		$scripts[] = (new ResourceLoaderScript())->setTypeLocal()->setValue(__DIR__ . '/../SourcePoint/recovery.js');
+		$scripts[] = (new ResourceLoaderScript())->setTypeLocal()->setValue(__DIR__ . '/../SourcePoint/delivery.js');
 		$data = [
 			'script' => $this->generateData( $scripts ),
 			'modTime' => $this->getCurrentTimestamp(),

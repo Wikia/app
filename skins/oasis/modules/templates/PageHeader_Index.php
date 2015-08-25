@@ -15,6 +15,8 @@ if ( $runNjord ) {
 			$button
 		);
 	}
+
+	echo $curatedContentToolButton;
 } else { ?>
 	<header id="pageHeader" class="page-header index">
 		<div class="header-column header-left">
@@ -26,6 +28,8 @@ if ( $runNjord ) {
 					$button
 				);
 			}
+
+			echo $curatedContentToolButton;
 
 			// comments & like button
 			if ( !$isWallEnabled ) {

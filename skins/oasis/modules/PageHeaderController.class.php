@@ -148,6 +148,23 @@ class PageHeaderController extends WikiaController {
 	}
 
 	/**
+	 * Get the curated content button for main pages
+	 *
+	 * @return string
+	 */
+	private function getCuratedContentButton() {
+		if (
+			!empty( $this->wg->EnableCuratedContentExt ) &&
+			WikiaPageType::isMainPage() &&
+			$this->wg->User->isAllowed( 'curatedcontent' )
+		) {
+			return $this->app->sendRequest( 'CuratedContent', 'editButton' );
+		} else {
+			return '';
+		}
+	}
+
+	/**
 	 * Get the page title
 	 * Used by executeIndex and executeCorporate
 	 *
@@ -221,6 +238,8 @@ class PageHeaderController extends WikiaController {
 		$this->button = $this->prepareActionButton();
 		// allow other extensions to modify the main button and/or dropdown
 		wfRunHooks( 'PageHeaderIndexAfterActionButtonPrepared', [&$this->button] );
+
+		$this->curatedContentToolButton = $this->getCuratedContentButton();
 
 		// comments button (for talk page)
 		if ( !$this->isWallEnabled &&
