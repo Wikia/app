@@ -19,6 +19,8 @@ $wgAutoloadClasses['CuratedContentValidatorController'] = __DIR__ . '/CuratedCon
 $wgAutoloadClasses['CuratedContentController'] = __DIR__ . '/CuratedContentController.class.php';
 $wgAutoloadClasses['CuratedContentWrongAPIVersionException'] = __DIR__ . '/CuratedContentController.class.php';
 $wgAutoloadClasses['CuratedContentModel'] =  __DIR__ . '/CuratedContentModel.class.php' ;
+$wgAutoloadClasses['CuratedContentHooks'] =  __DIR__ . '/CuratedContentHooks.class.php' ;
+
 /**
  * message files
  */
@@ -53,7 +55,8 @@ JSMessages::registerPackage( 'CuratedContentMsg', [
 ] );
 
 //hooks
-$wgHooks['CuratedContentSave'][] = 'CuratedContentController::onCuratedContentSave';
+$wgHooks['CuratedContentSave'][] = 'CuratedContentHooks::onCuratedContentSave';
+$wgHooks['SkinAfterBottomScripts'][] = 'CuratedContentHooks::onSkinAfterBottomScripts';
 
 //minimal package of messages in CuratedContent
 JSMessages::registerPackage( 'CuratedContent', [

@@ -629,41 +629,11 @@ class CuratedContentController extends WikiaController {
 		$this->response->setHeader( 'Access-Control-Allow-Origin', '*' );
 	}
 
-	/**
-	 * @brief Whenever data is saved in Curated Content Management Tool
-	 * purge Varnish cache for it and Game Guides
-	 *
-	 * @return bool
-	 */
-	static function onCuratedContentSave() {
-		global $wgServer, $wgWikiaCuratedContent;
-
-		( new SquidUpdate( array_unique( array_reduce(
-			$wgWikiaCuratedContent,
-			function ( $urls, $item ) use ( $wgServer ) {
-				if ( $item['title'] !== '' && empty( $item['featured'] ) ) {
-					// Purge section URLs using urlencode() (standard for MediaWiki), which uses implements RFC 1738
-					// https://tools.ietf.org/html/rfc1738#section-2.2 - spaces encoded as `+`.
-					// iOS apps use this variant.
-					$urls[] = self::getUrl( 'getList' ) . '&section=' . urlencode( $item['title'] );
-					// Purge section URLs using rawurlencode(), which uses implements RFC 3986
-					// https://tools.ietf.org/html/rfc3986#section-2.1 - spaces encoded as `%20`.
-					// Android apps use this variant.
-					$urls[] = self::getUrl( 'getList' ) . '&section=' . rawurlencode( $item['title'] );
-				}
-
-				return $urls;
-			} ,
-			// Purge all sections list getter URL - no additional params
-			[ self::getUrl( 'getList' ), self::getUrl( 'getData' ) ]
-		) ) ) )->doUpdate();
-
-		// Purge cache for obsolete (not updated) apps.
-		if ( class_exists( 'GameGuidesController' ) ) {
-			GameGuidesController::purgeMethod( 'getList' );
-		}
-
-		return true;
+	public function editButton() {
+		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
+		$this->response->setVal(
+			'editMobileMainPageMessage', wfMessage( 'wikiacuratedcontent-edit-mobile-main-page' )->text()
+		);
 	}
 }
 
