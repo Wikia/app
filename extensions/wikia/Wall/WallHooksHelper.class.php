@@ -548,7 +548,7 @@ class WallHooksHelper {
 				$ns === NS_USER_WALL
 				&& $title->isSubpage()
 				&& !empty( $parts[1] )
-				&& mb_strtolower( str_replace( ' ', '_', $parts[1] ) ) !== mb_strtolower( $helper->getArchiveSubPageText() )
+				&& mb_strtolower( str_replace( ' ', '_', $parts[1] ) ) === mb_strtolower( $helper->getArchiveSubPageText() )
 			) {
 				// subpage
 				$userTalkPageTitle = $helper->getTitle( NS_USER_TALK, $parts[1] );
@@ -571,6 +571,7 @@ class WallHooksHelper {
 				if ( $canEdit ) {
 					$button['action']['text'] = wfMessage( 'edit' )->escaped();
 					$button['action']['id'] = 'talkArchiveEditButton';
+					$button['image'] = MenuButtonController::EDIT_ICON;
 				}
 			}
 		}
