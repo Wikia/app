@@ -38,7 +38,7 @@ $messages['en'] = [
 	'content-review-special-list-header-submit-user' => 'Submit user',
 	'content-review-special-list-header-status' => 'Status',
 	'content-review-special-list-header-submit-time' => 'Submit time',
-	'content-review-special-list-header-reviewer' => 'Reviewer id',
+	'content-review-special-list-header-reviewer' => 'Reviewer',
 	'content-review-special-list-header-review-start' => 'Review start',
 	'content-review-special-list-header-actions' => 'Actions',
 
@@ -90,7 +90,7 @@ $messages['qqq'] = [
 	'content-review-special-list-header-submit-user' => 'A column name for a Submit user',
 	'content-review-special-list-header-status' => 'A column name for a Status',
 	'content-review-special-list-header-submit-time' => 'A column name for a Submit time',
-	'content-review-special-list-header-reviewer' => 'A column name for a Reviewer id',
+	'content-review-special-list-header-reviewer' => 'A column name for a Reviewer name',
 	'content-review-special-list-header-review-start' => 'A column name for a Review start',
 	'content-review-special-list-header-actions' => 'A column name for Actions',
 
