@@ -13,17 +13,14 @@
 /*jshint camelcase:false*/
 define('ext.wikia.adEngine.lookup.services', [
 	'wikia.log',
-	'wikia.window',
 	require.optional('ext.wikia.adEngine.lookup.amazonMatch'),
-	require.optional('ext.wikia.adEngine.lookup.amazonMatchOld'),
 	require.optional('ext.wikia.adEngine.lookup.rubiconRtp')
-], function (log, win, amazonMatch, amazonMatchOld, rtp) {
+], function (log, amazonMatch, rtp) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.lookup.services',
 		rtpLookupTracked = false,
-		amazonLookupTracked = false,
-		amazonOldLookupTracked = false;
+		amazonLookupTracked = false;
 
 	function trackState(module) {
 		if (module && module.wasCalled()) {
@@ -65,54 +62,7 @@ define('ext.wikia.adEngine.lookup.services', [
 		}
 	}
 
-	// Copied from AdLogicPageParams
-	// No longer needed when AmazonOld is removed
-	function decodeLegacyDartParams(dartString) {
-		var params = {},
-			kvs,
-			kv,
-			key,
-			value,
-			i,
-			len;
-
-		log(['decodeLegacyDartParams', dartString], 'debug', logGroup);
-
-		if (typeof dartString === 'string') {
-			kvs = dartString.split(';');
-			for (i = 0, len = kvs.length; i < len; i += 1) {
-				kv = kvs[i].split('=');
-				key = kv[0];
-				value = kv[1];
-				if (key && value) {
-					params[key] = params[key] || [];
-					params[key].push(value);
-				}
-			}
-		}
-
-		return params;
-	}
-
-	// No longer needed when AmazonOld is removed
-	function extendPageTargeting(pageTargeting) {
-		var amazonParams;
-
-		if (!amazonOldLookupTracked) {
-			amazonOldLookupTracked  = true;
-			trackState(amazonMatchOld);
-		}
-
-		if (amazonMatchOld && amazonMatchOld.wasCalled() && Object.keys) {
-			amazonParams = decodeLegacyDartParams(win.amzn_targs);
-			Object.keys(amazonParams).forEach(function (key) {
-				pageTargeting[key] = amazonParams[key];
-			});
-		}
-	}
-
 	return {
-		extendSlotTargeting: extendSlotTargeting,
-		extendPageTargeting: extendPageTargeting
+		extendSlotTargeting: extendSlotTargeting
 	};
 });

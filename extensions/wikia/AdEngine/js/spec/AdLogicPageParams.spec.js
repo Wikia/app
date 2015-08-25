@@ -56,17 +56,6 @@ describe('AdLogicPageParams', function () {
 		};
 	}
 
-	function mockAmazonMatchOld(enabled) {
-		return {
-			wasCalled: function () {
-				return !!enabled;
-			},
-			trackState: function () {
-				return;
-			}
-		};
-	}
-
 	/**
 	 * Keys for opts:
 	 *  - amazonPageParams
