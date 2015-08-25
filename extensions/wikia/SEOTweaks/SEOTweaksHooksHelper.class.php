@@ -9,7 +9,7 @@
 
 class SEOTweaksHooksHelper {
 	const DELETED_PAGES_STATUS_CODE = 410;
-	
+
 	/**
 	 * List of hosts associated with external sharing services
 	 */
@@ -21,12 +21,15 @@ class SEOTweaksHooksHelper {
 	 * @return bool true
 	 */
 	static function onBeforePageDisplay( $out ) {
-		global $wgSEOGoogleSiteVerification, $wgSEOGooglePlusLink;
+		global $wgSEOGoogleSiteVerification, $wgSEOGooglePlusLink, $wgServer;
 		if ( !empty( $wgSEOGoogleSiteVerification ) ) {
 			$out->addMeta( 'google-site-verification', $wgSEOGoogleSiteVerification );
 		}
 		if ( !empty( $wgSEOGooglePlusLink ) ) {
 			$out->addLink( array( 'href' => $wgSEOGooglePlusLink, 'rel' => 'publisher' ) );
+		}
+		if ( WikiaPageType::isMainPage() ) {
+			$out->addLink( [ 'rel' => 'alternate', 'href' => $wgServer, 'media' => 'only screen and (max-width: 640px)' ] );
 		}
 		return true;
 	}
@@ -98,7 +101,7 @@ class SEOTweaksHooksHelper {
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Prepends alt text for an image if that image does not have that option set
 	 * @param  Parser $parser
@@ -114,11 +117,11 @@ class SEOTweaksHooksHelper {
 			$alt = implode( '.', array_slice( explode( '.', $text ), 0, -1 ) ); // lop off text after the ultimate dot (e.g. JPG)
 			$parts[] = "alt={$alt}";
 		}
-		
+
 		return true;
-		
+
 	}
-	
+
 	/**
 	 * Attempts to recover a URL that was truncated by an external service (e.g. /wiki/Wanted! --> /wiki/Wanted)
 	 * @param Article $article
@@ -127,9 +130,9 @@ class SEOTweaksHooksHelper {
 	 */
 	static public function onArticleViewHeader( &$article, &$outputDone, &$pcache ) {
 		$title = $article->getTitle();
-		if ( ( ! $title->exists() ) 
-			&& ( isset( $_SERVER['HTTP_REFERER'] ) ) 
-			&& preg_match( self::SHARING_HOSTS_REGEX, parse_url( $_SERVER['HTTP_REFERER'], PHP_URL_HOST ) ) 
+		if ( ( ! $title->exists() )
+			&& ( isset( $_SERVER['HTTP_REFERER'] ) )
+			&& preg_match( self::SHARING_HOSTS_REGEX, parse_url( $_SERVER['HTTP_REFERER'], PHP_URL_HOST ) )
 		    ) {
 			$dbr = wfGetDB( DB_SLAVE );
 			$result = $dbr->query( sprintf( 'SELECT page_title FROM page WHERE page_title %s LIMIT 1', $dbr->buildLike( $title->getDBKey(), $dbr->anyString() ) ), __METHOD__ );
