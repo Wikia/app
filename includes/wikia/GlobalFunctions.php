@@ -484,10 +484,10 @@ function getMessageForContentAsArray( $messageKey ) {
  * @author Michał Roszka (Mix) <michal@wikia-inc.com>
  * @return array
  */
-function getMessageAsArray( $messageKey ) {
-	$message = trim( wfMsg( $messageKey ) );
-	if ( !wfEmptyMsg( $messageKey, $message ) ) {
-		$lines = explode( "\n", $message );
+function getMessageAsArray( $messageKey, $params = [] ) {
+	$message = wfMessage( $messageKey )->params( $params );
+	if ( !$message->isBlank() ) {
+		$lines = explode( "\n", trim( $message->plain() ) );
 		if ( count( $lines ) > 0 ) {
 			return $lines;
 		}
