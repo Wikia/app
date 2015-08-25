@@ -40,10 +40,6 @@ class PreferenceKeyValueService implements PreferenceService {
 	}
 
 	public function setPreferences( $userId, array $preferences ) {
-		// temorary read-only mode for SERVICES-644
-		return false;
-
-
 		if ( !is_array( $preferences ) || empty( $preferences ) || $userId == 0 ) {
 			return false;
 		}
