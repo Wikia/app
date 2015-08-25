@@ -179,7 +179,13 @@ class CuratedContentHelper {
 				}
 			}
 		} else {
-			$url = self::getImageUrl( $imageId );
+			$imageTitle = Title::newFromID( $imageId );
+			if ( $imageTitle instanceof Title && $imageTitle->exists() ) {
+				$url = self::getUrlFromImageTitle( $imageTitle );
+				$imageId = $imageTitle->getArticleId();
+			} else {
+				$url = self::getImageUrl( $imageId );
+			}
 		}
 
 		return [ $imageId, $url ];
