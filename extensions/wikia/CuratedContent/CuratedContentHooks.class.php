@@ -63,10 +63,23 @@ class CuratedContentHooks {
 		return true;
 	}
 
+	//TODO: Temporary, remove with CONCF-1095
+	private static $buttonEnabled = false;
+	private static function isAllowedWikia() {
+		$host = RequestContext::getMain()->getRequest()->getHeader('HOST');
+
+		return (bool) preg_match(
+			'/creepypasta|glee|castle-clash|clashofclans|mobileregressiontesting|concf/i',
+			$host
+		);
+	}
+
 	private static function shouldDisplayCuratedContentToolButton() {
 		global $wgEnableCuratedContentExt, $wgUser;
 
-		return WikiaPageType::isMainPage() &&
+		return self::$buttonEnabled &&
+			WikiaPageType::isMainPage() &&
+			self::isAllowedWikia() &&
 			!empty( $wgEnableCuratedContentExt ) &&
 			$wgUser->isAllowed( 'curatedcontent' );
 	}
