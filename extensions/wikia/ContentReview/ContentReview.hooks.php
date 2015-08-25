@@ -83,8 +83,8 @@ class Hooks {
 			&& $wgTitle->userCan( 'content-review' )
 		) {
 			$reviewModel = new ReviewModel();
-			$reviewData = $reviewModel->getReviewedContent( $wgCityId,
-				\Title::newFromText( $wgTitle->getArticleID() ), ReviewModel::CONTENT_REVIEW_STATUS_IN_REVIEW );
+			$pageId = \Title::newFromText( $wgTitle->getArticleID() );
+			$reviewData = $reviewModel->getReviewedContent( $wgCityId, $pageId, ReviewModel::CONTENT_REVIEW_STATUS_IN_REVIEW );
 			$diff = $wgRequest->getInt( 'diff' );
 			if ( !empty( $reviewData ) && (int)$reviewData['revision_id'] === $diff ) {
 
@@ -95,8 +95,8 @@ class Hooks {
 					\Xml::element( 'button',
 						[
 							'class' => 'content-review-diff-button',
-							'data-wiki-id' => ( $wgCityId ),
-							'data-page-id' => \Title::newFromText( $wgTitle->getArticleID() ),
+							'data-wiki-id' => $wgCityId,
+							'data-page-id' => $pageId,
 							'data-status' => ReviewModel::CONTENT_REVIEW_STATUS_REJECTED
 						],
 						wfMessage( 'content-review-diff-reject' )->plain()
@@ -116,6 +116,7 @@ class Hooks {
 				);
 			}
 		}
+		
 		return true;
 	}
 }
