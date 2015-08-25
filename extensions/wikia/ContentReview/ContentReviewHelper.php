@@ -16,7 +16,14 @@ class Helper {
 			$maxTimestamp = max( $maxTimestamp, $revision['touched'] );
 		}
 
-		return $maxTimestamp;
+		if ( empty( $maxTimestamp ) ) {
+			return 0;
+		}
+
+		$datetime = new \DateTime( $maxTimestamp );
+		$timestamp = $datetime->getTimestamp();
+
+		return $timestamp;
 	}
 
 	public function getReviewedRevisionIdFromText( $pageName ) {
@@ -27,6 +34,10 @@ class Helper {
 
 		$currentRevisionModel = new Models\CurrentRevisionModel();
 		$revision = $currentRevisionModel->getLatestReviewedRevision( $wgCityId, $pageId );
+
+		if ( is_null( $revision['revision_id'] ) ) {
+			return 0;
+		}
 
 		return $revision['revision_id'];
 	}
