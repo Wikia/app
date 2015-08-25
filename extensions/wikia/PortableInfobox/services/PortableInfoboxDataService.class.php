@@ -113,13 +113,32 @@ class PortableInfoboxDataService {
 	}
 
 	/**
-	 * @desc returns the text from inside of the first <includeonly> tag
+	 * @desc returns the text from inside of the first <includeonly> tag and
+	 * without the nowiki and pre tags.
 	 * @param $text string template text
 	 * @return string
 	 */
 	protected function getIncludeonlyText( $text ) {
 		preg_match_all( "/<includeonly>(.+)<\/includeonly>/sU", $text, $result );
 
-		return isset( $result[1][0] ) ? $result[1][0] : null;
+		if ( !isset( $result[1][0] ) ) {
+			return null;
+		}
+
+		$result = $this->removeNowikiPre( $result[1][0] );
+		return $result;
+
+	}
+
+	/**
+	 * @desc for given template text returns it without text in <nowiki> and <pre> tags
+	 * @param $text string
+	 * @return string
+	 */
+	protected function removeNowikiPre( $text ) {
+		$text = preg_replace( "/<nowiki>.+<\/nowiki>/sU", '', $text );
+		$text = preg_replace( "/<pre>.+<\/pre>/sU", '', $text );
+
+		return $text;
 	}
 }
