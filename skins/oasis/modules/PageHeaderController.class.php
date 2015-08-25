@@ -169,7 +169,7 @@ class PageHeaderController extends WikiaController {
 	 */
 	public function executeIndex( $params ) {
 		global $wgTitle, $wgArticle, $wgOut, $wgUser, $wgContLang, $wgSupressPageTitle, $wgSupressPageSubtitle,
-			$wgSuppressNamespacePrefix, , $wgEnableWallExt;
+			$wgSuppressNamespacePrefix, $wgEnableWallExt;
 
 		wfProfileIn( __METHOD__ );
 
