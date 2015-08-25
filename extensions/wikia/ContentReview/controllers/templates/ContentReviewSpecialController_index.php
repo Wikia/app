@@ -29,7 +29,7 @@
 				<td><?= wfMessage( ContentReviewSpecialController::$status[$review['status']] )->escaped() ?></td>
 				<td><?= htmlspecialchars( $review['user'] ) ?></td>
 				<td><?= $review['submit_time'] ?></td>
-				<td><?= $review['review_user_id'] ?></td>
+				<td><?= htmlspecialchars( $review['review_user_id'] ) ?></td>
 				<td><?= $review['review_start'] ?></td>
 				<td class="content-review-special-list-item-actions clearfix">
 					<? if ( !empty( $review['hide'] ) ): ?>
