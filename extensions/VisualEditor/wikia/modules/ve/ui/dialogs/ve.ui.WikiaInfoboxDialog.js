@@ -47,12 +47,7 @@ ve.ui.WikiaInfoboxDialog.prototype.getActionProcess = function ( action ) {
 	if ( action === 'apply' ) {
 		return new OO.ui.Process( function () {
 			var surfaceModel = this.getFragment().getSurface();
-
-			//check to be sure, user clicked on infobox so it always has to be an instance of MWTransclusionNode
-			if ( this.selectedNode instanceof ve.dm.MWTransclusionNode ) {
-				this.transclusionModel.updateTransclusionNode( surfaceModel, this.selectedNode );
-			}
-
+			this.transclusionModel.updateTransclusionNode( surfaceModel, this.selectedNode );
 			this.close( { action: action } );
 		}, this );
 	}

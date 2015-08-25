@@ -16,8 +16,7 @@ ve.ce.WikiaInfoboxTransclusionBlockNode = function VeCeWikiaInfoboxTransclusionB
 	// Parent constructor
 	ve.ce.WikiaInfoboxTransclusionBlockNode.super.call( this, model, config );
 
-	this.$element
-		.addClass( 've-ce-wikiaInfoboxTransclusionBlockNode' );
+	this.$element.addClass( 've-ce-wikiaInfoboxTransclusionBlockNode' );
 };
 
 /* Inheritance */
@@ -27,6 +26,7 @@ OO.inheritClass( ve.ce.WikiaInfoboxTransclusionBlockNode, ve.ce.MWTransclusionBl
 /* Static Properties */
 
 ve.ce.WikiaInfoboxTransclusionBlockNode.static.name = 'wikiaInfoboxTransclusionBlock';
+
 ve.ce.WikiaInfoboxTransclusionBlockNode.static.primaryCommandName = 'wikiaInfobox';
 
 /* Registration */
