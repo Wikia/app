@@ -154,154 +154,140 @@ class BodyController extends WikiaController {
 	}
 
 	public function getRailModuleList() {
-		wfProfileIn(__METHOD__);
-		global $wgTitle, $wgUser, $wgEnableAchievementsExt, $wgContentNamespaces,
-			$wgExtraNamespaces, $wgExtraNamespacesLocal,
-			$wgEnableWikiAnswers, $wgEnableHuluVideoPanel,
-			$wgEnableWallEngine, $wgRequest,
-			$wgEnableForumExt;
+		$wg = $this->wg;
 
-		$namespace = $wgTitle->getNamespace();
+		$namespace = $wg->Title->getNamespace();
 		$subjectNamespace = MWNamespace::getSubject($namespace);
 
-		$railModuleList = array();
+		$railModuleList = [];
 
-		$latestActivityKey = $wgUser->isAnon() ? 1250 : 1300;
-		$huluVideoPanelKey = $wgUser->isAnon() ? 1390 : 1280;
+		$latestActivityKey = $wg->User->isAnon() ? 1250 : 1300;
+		$huluVideoPanelKey = $wg->User->isAnon() ? 1390 : 1280;
 
 		// Forum Extension
-		if ($wgEnableForumExt && ForumHelper::isForum()) {
-			$railModuleList = array (
-				1202 => array('Forum', 'forumRelatedThreads', null),
-				1201 => array('Forum', 'forumActivityModule', null),
-				1490 => array('Ad', 'Index', ['slotName' => 'TOP_RIGHT_BOXAD']),
-			);
+		if ( $wg->EnableForumExt && ForumHelper::isForum() ) {
+			$railModuleList[1202] = ['Forum', 'forumRelatedThreads', null];
+			$railModuleList[1201] = ['Forum', 'forumActivityModule', null];
+			$railModuleList[1490] = ['Ad', 'Index', ['slotName' => 'TOP_RIGHT_BOXAD']];
 
 			// Include additional modules from other extensions (like chat)
-			wfRunHooks( 'GetRailModuleList', array( &$railModuleList ) );
+			wfRunHooks( 'GetRailModuleList', [&$railModuleList] );
 
-			wfProfileOut(__METHOD__);
 			return $railModuleList;
 		}
 
-		if($namespace == NS_SPECIAL) {
-			if (WikiaPageType::isSearch()) {
-				if (empty($this->wg->EnableWikiaHomePageExt)) {
-					$railModuleList = array(
-						$latestActivityKey => array('LatestActivity', 'Index', null),
-					);
+		if ( $namespace == NS_SPECIAL ) {
+			if ( WikiaPageType::isSearch() ) {
+				if ( empty( $wg->EnableWikiaHomePageExt ) ) {
+					$railModuleList[$latestActivityKey] = ['LatestActivity', 'Index', null];
+					$railModuleList[1450] = ['PagesOnWiki', 'Index', null];
 
-					$railModuleList[1450] = array('PagesOnWiki', 'Index', null);
-
-					if( empty( $wgEnableWikiAnswers ) ) {
-						if ($wgEnableHuluVideoPanel) {
-							$railModuleList[$huluVideoPanelKey] = array('HuluVideoPanel', 'Index', null);
+					if ( empty( $wg->EnableWikiAnswers ) ) {
+						if ( $wg->EnableHuluVideoPanel ) {
+							$railModuleList[$huluVideoPanelKey] = ['HuluVideoPanel', 'Index', null];
 						}
 					}
 				}
-			} else if ($wgTitle->isSpecial('Leaderboard')) {
-				$railModuleList = array (
-					$latestActivityKey => array('LatestActivity', 'Index', null),
-					1290 => array('LatestEarnedBadges', 'Index', null)
-				);
-			} else if ($wgTitle->isSpecial('WikiActivity')) {
-				$railModuleList = array (
-					1102 => array('HotSpots', 'Index', null),
-					1101 => array('CommunityCorner', 'Index', null),
-				);
-				$railModuleList[1450] = array('PagesOnWiki', 'Index', null);
-			} else if ($wgTitle->isSpecial('Following') || $wgTitle->isSpecial('Contributions') ) {
-				// intentional nothing here
-			} else if ($wgTitle->isSpecial('ThemeDesignerPreview') ) {
-				$railModuleList = array (
-					$latestActivityKey => array('LatestActivity', 'Index', null),
-				);
+			} else if ( $wg->Title->isSpecial( 'Leaderboard' ) ) {
+				$railModuleList[$latestActivityKey] = ['LatestActivity', 'Index', null];
+				$railModuleList[1290] = ['LatestEarnedBadges', 'Index', null];
+			} else if ( $wg->Title->isSpecial( 'WikiActivity' ) ) {
+				$railModuleList[1102] = ['HotSpots', 'Index', null];
+				$railModuleList[1101] = ['CommunityCorner', 'Index', null];
+				$railModuleList[1450] = ['PagesOnWiki', 'Index', null];
+			} else if (
+				$wg->Title->isSpecial( 'Following' ) ||
+				$wg->Title->isSpecial( 'Contributions' )
+			) {
+				// intentionally nothing here
+			} else if ( $wg->Title->isSpecial( 'ThemeDesignerPreview' ) ) {
+				$railModuleList[$latestActivityKey] = ['LatestActivity', 'Index', null];
+				$railModuleList[1450] = ['PagesOnWiki', 'Index', null];
 
-				$railModuleList[1450] = array('PagesOnWiki', 'Index', null);
-
-				if( empty( $wgEnableWikiAnswers ) ) {
-					if ($wgEnableHuluVideoPanel) {
-						$railModuleList[$huluVideoPanelKey] = array('HuluVideoPanel', 'Index', null);
+				if ( empty( $wg->EnableWikiAnswers ) ) {
+					if ( $wg->EnableHuluVideoPanel ) {
+						$railModuleList[$huluVideoPanelKey] = ['HuluVideoPanel', 'Index', null];
 					}
 				}
 			} else {
 				// don't show any module for MW core special pages
-				$railModuleList = array();
-				wfRunHooks( 'GetRailModuleSpecialPageList', array( &$railModuleList ) );
-				wfProfileOut(__METHOD__);
+				wfRunHooks( 'GetRailModuleSpecialPageList', [&$railModuleList] );
 				return $railModuleList;
 			}
 		}
 
 		// Content, category and forum namespaces.  FB:1280 Added file,video,mw,template
-		if(	$wgTitle->isSubpage() && $wgTitle->getNamespace() == NS_USER ||
-			in_array($subjectNamespace, array (NS_CATEGORY, NS_CATEGORY_TALK, NS_FORUM, NS_PROJECT, NS_FILE, NS_MEDIAWIKI, NS_TEMPLATE, NS_HELP)) ||
-			in_array($subjectNamespace, $wgContentNamespaces) ||
-			array_key_exists( $subjectNamespace, $wgExtraNamespaces ) ) {
+		if (
+			$wg->Title->isSubpage() && $wg->Title->getNamespace() == NS_USER ||
+			in_array( $subjectNamespace, [NS_CATEGORY, NS_CATEGORY_TALK, NS_FORUM, NS_PROJECT, NS_FILE, NS_MEDIAWIKI, NS_TEMPLATE, NS_HELP] ) ||
+			in_array( $subjectNamespace, $wg->ContentNamespaces ) ||
+			array_key_exists( $subjectNamespace, $wg->ExtraNamespaces )
+		) {
 			// add any content page related rail modules here
+			$railModuleList[$latestActivityKey] = ['LatestActivity', 'Index', null];
+			$railModuleList[1450] = ['PagesOnWiki', 'Index', null];
 
-			$railModuleList[$latestActivityKey] = array('LatestActivity', 'Index', null);
-			$railModuleList[1450] = array('PagesOnWiki', 'Index', null);
-
-			if( empty( $wgEnableWikiAnswers ) ) {
-				if ($wgEnableHuluVideoPanel) {
-					$railModuleList[$huluVideoPanelKey] = array('HuluVideoPanel', 'Index', null);
+			if ( empty( $wg->EnableWikiAnswers ) ) {
+				if ( $wg->EnableHuluVideoPanel ) {
+					$railModuleList[$huluVideoPanelKey] = ['HuluVideoPanel', 'Index', null];
 				}
 			}
 		}
 
 		// User page namespaces
-		if( in_array($wgTitle->getNamespace(), self::getUserPagesNamespaces() ) ) {
-			$page_owner = User::newFromName($wgTitle->getText());
+		if ( in_array( $wg->Title->getNamespace(), self::getUserPagesNamespaces() ) ) {
+			$page_owner = User::newFromName( $wg->Title->getText() );
 
-			if($page_owner) {
-				if ( !$page_owner->getGlobalPreference('hidefollowedpages') ) {
-					$railModuleList[1101] = array('FollowedPages', 'Index', null);
+			if ( $page_owner ) {
+				if ( !$page_owner->getGlobalPreference( 'hidefollowedpages' ) ) {
+					$railModuleList[1101] = ['FollowedPages', 'Index', null];
 				}
 
-				if ( $wgEnableAchievementsExt ) {
-					$railModuleList[1102] = array('Achievements', 'Index', null);
+				if ( $wg->EnableAchievementsExt ) {
+					$railModuleList[1102] = ['Achievements', 'Index', null];
 				}
 			}
 		}
 
-		if (self::isBlogPost() || self::isBlogListing()) {
-			$railModuleList[1250] = array('PopularBlogPosts', 'Index', null);
+		if ( self::isBlogPost() || self::isBlogListing() ) {
+			$railModuleList[1250] = ['PopularBlogPosts', 'Index', null];
 		}
 
 		//  No rail on main page or edit page for oasis skin
 		// except &action=history of wall
-		if( !empty($wgEnableWallEngine) ) {
-			$isEditPage = !WallHelper::isWallNamespace($namespace) && BodyController::isEditPage() || $wgRequest->getVal('diff');
+		if ( !empty( $wg->EnableWallEngine ) ) {
+			$isEditPage = !WallHelper::isWallNamespace( $namespace ) && BodyController::isEditPage() || $wg->Request->getVal('diff');
 		} else {
 			$isEditPage = BodyController::isEditPage();
 		}
 
 		if ( $isEditPage || WikiaPageType::isMainPage() ) {
-			$modules = array();
-			wfRunHooks( 'GetEditPageRailModuleList', array( &$modules ) );
+			$modules = [];
+			wfRunHooks( 'GetEditPageRailModuleList', [&$modules] );
 			wfProfileOut(__METHOD__);
 			return $modules;
 		}
+
 		// No modules on Custom namespaces, unless they are in the ContentNamespaces list, those get the content rail
-		if (is_array($wgExtraNamespacesLocal) && array_key_exists($subjectNamespace, $wgExtraNamespacesLocal) && !in_array($subjectNamespace, $wgContentNamespaces)) {
-			wfProfileOut(__METHOD__);
-			return array();
-		}
-		// If the entire page is non readable due to permissions, don't display the rail either RT#75600
-		if (!$wgTitle->userCan( 'read' )) {
-			wfProfileOut(__METHOD__);
-			return array();
+		if (
+			is_array( $wg->ExtraNamespacesLocal ) &&
+			array_key_exists( $subjectNamespace, $wg->ExtraNamespacesLocal ) &&
+			!in_array( $subjectNamespace, $wg->ContentNamespaces )
+		) {
+			return [];
 		}
 
-		$railModuleList[1440] = array('Ad', 'Index', ['slotName' => 'TOP_RIGHT_BOXAD']);
-		$railModuleList[1100] = array('Ad', 'Index', ['slotName' => 'LEFT_SKYSCRAPER_2']);
+		// If the entire page is non readable due to permissions, don't display the rail either RT#75600
+		if (!$wg->Title->userCan( 'read' )) {
+			return [];
+		}
+
+		$railModuleList[1440] = ['Ad', 'Index', ['slotName' => 'TOP_RIGHT_BOXAD']];
+		$railModuleList[1100] = ['Ad', 'Index', ['slotName' => 'LEFT_SKYSCRAPER_2']];
 
 		unset($railModuleList[1450]);
 
-		wfRunHooks( 'GetRailModuleList', array( &$railModuleList ) );
-
-		wfProfileOut(__METHOD__);
+		wfRunHooks( 'GetRailModuleList', [&$railModuleList] );
 
 		return $railModuleList;
 	}

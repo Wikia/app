@@ -212,7 +212,8 @@ class PageHeaderController extends WikiaController {
 		$skin = RequestContext::getMain()->getSkin();
 
 		$this->runNjord = ( !empty( $wg->EnableNjordExt ) && $isMainPage );
-		// @todo is this needed? wall is handled by userpagesheader
+		// this only happens on archived talk pages, which are subpages of NS_USER_WALL
+		// however the history of those pages are in NS_USER_TALK
 		$this->isWallEnabled = ( !empty( $wg->EnableWallExt ) && $ns == NS_USER_WALL );
 		$this->isSpecialVideos = $wg->Title->isSpecial( 'Videos' );
 
