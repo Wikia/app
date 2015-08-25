@@ -60,7 +60,7 @@ class ContentReviewSpecialController extends WikiaSpecialPageController {
 					: wfMessage( 'content-review-special-continue-review' )->escaped();
 
 				if ( !empty( $review['review_user_id'] ) ) {
-					$review['review_user_id'] = User::newFromId( $review['review_user_id'] )->getName();
+					$review['review_user_name'] = User::newFromId( $review['review_user_id'] )->getName();
 				}
 				if ( $review['status'] == ReviewModel::CONTENT_REVIEW_STATUS_UNREVIEWED
 					&& isset($reviewStatuses[ReviewModel::CONTENT_REVIEW_STATUS_IN_REVIEW] )
