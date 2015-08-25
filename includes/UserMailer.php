@@ -134,10 +134,7 @@ class UserMailer {
 		if ( !$success ) {
 			Wikia\Logger\WikiaLogger::instance()->error(
 				'UserMailerError',
-				[
-					'exception' => new Exception,
-					'message'   => $message
-				]
+				[ 'exception' => new Exception( $message ) ]
 			);
 			return Status::newFatal( 'pear-mail-error', $message );
 		}
@@ -316,10 +313,7 @@ class UserMailer {
 			catch ( Mail2_Exception $e ) {
 				Wikia\Logger\WikiaLogger::instance()->error(
 					'UserMailerError',
-					[
-						'exception' => $e,
-						'message'   => $e->getMessage
-					]
+					[ 'exception' => $e ]
 				);
 				wfRestoreWarnings();
 				return Status::newFatal( 'pear-mail-error', $e->getMessage() );
