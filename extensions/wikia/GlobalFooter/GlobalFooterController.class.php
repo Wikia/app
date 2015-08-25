@@ -5,13 +5,13 @@ use Wikia\Logger\WikiaLogger;
 class GlobalFooterController extends WikiaController {
 
 	const MEMC_KEY_GLOBAL_FOOTER_LINKS = 'mGlobalFooterLinks';
-	const MEMC_KEY_GLOBAL_FOOTER_VERSION = 1;
+	const MEMC_KEY_GLOBAL_FOOTER_VERSION = 2;
 	const MESSAGE_KEY_GLOBAL_FOOTER_LINKS = 'shared-Oasis-footer-wikia-links';
 	const MEMC_EXPIRY = 3600;
 
 	public function index() {
-		Wikia::addAssetsToOutput('global_footer_scss');
-		Wikia::addAssetsToOutput('global_footer_js');
+		Wikia::addAssetsToOutput( 'global_footer_scss' );
+		Wikia::addAssetsToOutput( 'global_footer_js' );
 
 		$this->response->setVal( 'footerLinks', $this->getGlobalFooterLinks() );
 		$this->response->setVal( 'copyright', RequestContext::getMain()->getSkin()->getCopyright() );
@@ -26,12 +26,12 @@ class GlobalFooterController extends WikiaController {
 
 		wfProfileIn( __METHOD__ );
 
-		$verticalId = WikiFactoryHub::getInstance()->getVerticalId( $wgCityId );
 		$memcKey = wfSharedMemcKey(
 			self::MEMC_KEY_GLOBAL_FOOTER_LINKS,
 			$wgContLang->getCode(),
 			$wgLang->getCode(),
-			$verticalId,
+			$wgCityId,
+			WikiaPageType::isMainPage(),
 			self::MEMC_KEY_GLOBAL_FOOTER_VERSION
 		);
 
@@ -41,15 +41,17 @@ class GlobalFooterController extends WikiaController {
 			return $globalFooterLinks;
 		}
 
-		if ( is_null( $globalFooterLinks = getMessageAsArray( self::MESSAGE_KEY_GLOBAL_FOOTER_LINKS . '-' . $verticalId ) ) ) {
-			if ( is_null( $globalFooterLinks = getMessageAsArray( self::MESSAGE_KEY_GLOBAL_FOOTER_LINKS ) ) ) {
-				wfProfileOut( __METHOD__ );
-				WikiaLogger::instance()->error(
-					"Global Footer's links not found in messages",
-					[ 'exception' => new Exception() ]
-				);
-				return [];
-			}
+		$globalFooterLinks = getMessageAsArray( self::MESSAGE_KEY_GLOBAL_FOOTER_LINKS, [
+			$this->getSitemapLink()
+		] );
+
+		if ( is_null( $globalFooterLinks ) ) {
+			wfProfileOut( __METHOD__ );
+			WikiaLogger::instance()->error(
+				"Global Footer's links not found in messages",
+				[ 'exception' => new Exception() ]
+			);
+			return [];
 		}
 
 		$parsedLinks = [];
@@ -104,5 +106,18 @@ class GlobalFooterController extends WikiaController {
 			return $wikiVertical['short'];
 		}
 		return null;
+	}
+
+	private function getSitemapLink() {
+		global $wgCityId;
+
+		if ( WikiaPageType::isMainPage()
+			|| WikiaPageType::isCorporatePage()
+			|| $wgCityId === COMMUNITY_CENTRAL_CITY_ID
+		) {
+			return 'http://www.wikia.com/Sitemap';
+		}
+
+		return 'Special:AllPages';
 	}
 }
