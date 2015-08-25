@@ -2672,7 +2672,7 @@ class User {
 	 * @param mixed $default
 	 * @return string
 	 */
-	public function getGlobalAttribute( $attribute, $default=null ) {
+	public function getGlobalAttribute( $attribute, $default = null ) {
 		global $wgEnableReadsFromAttributeService;
 
 		$valueFromMW = $this->getOptionHelper( $attribute, $default );
