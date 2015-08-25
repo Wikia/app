@@ -132,7 +132,13 @@ class UserMailer {
 		}
 
 		if ( !$success ) {
-			wfDebug( "PEAR::Mail failed: " . $message . "\n" );
+			Wikia\Logger\WikiaLogger::instance()->error(
+				'UserMailerError',
+				[
+					'exception' => new Exception,
+					'message'   => $message
+				]
+			);
 			return Status::newFatal( 'pear-mail-error', $message );
 		}
 
@@ -308,7 +314,13 @@ class UserMailer {
 			}
 
 			catch ( Mail2_Exception $e ) {
-				wfDebug( "PEAR::Mail factory failed: " . $e->getMessage() . "\n" );
+				Wikia\Logger\WikiaLogger::instance()->error(
+					'UserMailerError',
+					[
+						'exception' => $e,
+						'message'   => $e->getMessage
+					]
+				);
 				wfRestoreWarnings();
 				return Status::newFatal( 'pear-mail-error', $e->getMessage() );
 			}
