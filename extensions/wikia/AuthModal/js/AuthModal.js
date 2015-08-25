@@ -1,10 +1,9 @@
-define('AuthModal', ['jquery', 'AuthComponent', 'wikia.window'], function ($, AuthComponent, window) {
+define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 	'use strict';
 
 	var modal,
 		$blackout,
 		isOpen,
-		language = window.wgContentLanguage,
 		track;
 
 	function open () {
@@ -66,22 +65,22 @@ define('AuthModal', ['jquery', 'AuthComponent', 'wikia.window'], function ($, Au
 		}
 	}
 
+	function loadPage (url, callback) {
+		var authIframe = window.document.createElement('iframe');
+		authIframe.src = url + '&modal=1';
+		authIframe.onload = function () {
+			if (typeof callback === 'function') {
+				callback();
+			}
+		};
+		modal.appendChild(authIframe);
+
+	};
+
 	return {
-		login: function () {
+		load: function (url) {
 			open();
-			new AuthComponent(modal).login(onAuthComponentLoaded, language);
-		},
-		register: function () {
-			open();
-			new AuthComponent(modal).register(onAuthComponentLoaded, language);
-		},
-		facebookConnect: function () {
-			open();
-			new AuthComponent(modal).facebookConnect(onAuthComponentLoaded, language);
-		},
-		facebookRegister: function () {
-			open();
-			new AuthComponent(modal).facebookRegister(onAuthComponentLoaded, language);
+			loadPage(url, onAuthComponentLoaded);
 		}
 	};
 });

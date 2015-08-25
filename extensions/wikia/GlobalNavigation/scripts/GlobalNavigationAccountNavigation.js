@@ -54,9 +54,9 @@ require([
 		}
 	}
 
-	function authModalOpen(methodName) {
+	function authModalOpen(url) {
 		require(['AuthModal'], function (authModal) {
-			authModal[methodName]();
+			authModal.load(url);
 		});
 	}
 
@@ -70,7 +70,7 @@ require([
 			event.stopPropagation();
 		}
 
-		authModalOpen(event.target.classList.contains('register') ? 'register' : 'login');
+		authModalOpen(event.target.href);
 	}
 
 	function oldAccountNav ($entryPoint) {
