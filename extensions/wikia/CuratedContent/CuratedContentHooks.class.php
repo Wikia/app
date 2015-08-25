@@ -64,6 +64,7 @@ class CuratedContentHooks {
 	}
 
 	//TODO: Temporary, remove with CONCF-1095
+	private static $buttonEnabled = false;
 	private static function isAllowedWikia() {
 		$host = RequestContext::getMain()->getRequest()->getHeader('HOST');
 
@@ -76,7 +77,8 @@ class CuratedContentHooks {
 	private static function shouldDisplayCuratedContentToolButton() {
 		global $wgEnableCuratedContentExt, $wgUser;
 
-		return WikiaPageType::isMainPage() &&
+		return self::$buttonEnabled &&
+			WikiaPageType::isMainPage() &&
 			self::isAllowedWikia() &&
 			!empty( $wgEnableCuratedContentExt ) &&
 			$wgUser->isAllowed( 'curatedcontent' );
