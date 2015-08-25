@@ -76,40 +76,46 @@ class Hooks {
 	}
 
 	public static function onArticleContentOnDiff( $diffEngine, \OutputPage $output ) {
-		global $wgTitle, $wgCityId;
+		global $wgTitle, $wgCityId, $wgRequest;
 
 		if ( $wgTitle->inNamespace( NS_MEDIAWIKI )
 			&& $wgTitle->isJsPage()
 			&& $wgTitle->userCan( 'content-review' )
 		) {
-			\Wikia::addAssetsToOutput( 'content_review_diff_page_js' );
-			\JSMessages::enqueuePackage( 'ContentReviewDiffPage', \JSMessages::EXTERNAL );
+			$reviewModel = new ReviewModel();
+			$reviewData = $reviewModel->getReviewedContent( $wgCityId,
+				\Title::newFromText( $wgTitle->getArticleID() ), ReviewModel::CONTENT_REVIEW_STATUS_IN_REVIEW );
+			$diff = $wgRequest->getInt( 'diff' );
+			if ( !empty( $reviewData ) && (int)$reviewData['revision_id'] === $diff ) {
 
-			$output->prependHTML(
-				\Xml::element( 'button',
-					[
-						'class' => 'content-review-diff-button',
-						'data-wiki-id' => ( $wgCityId ),
-						'data-page-id' => \Title::newFromText( $wgTitle->getArticleID() ),
-						'data-status' => ReviewModel::CONTENT_REVIEW_STATUS_REJECTED
-					],
-					wfMessage( 'content-review-diff-reject' )->plain()
-				)
-			);
+				\Wikia::addAssetsToOutput( 'content_review_diff_page_js' );
+				\JSMessages::enqueuePackage( 'ContentReviewDiffPage', \JSMessages::EXTERNAL );
 
-			$output->prependHTML(
-				\Xml::element( 'button',
-					[
-						'class' => 'content-review-diff-button',
-						'data-wiki-id' => ( $wgCityId ),
-						'data-page-id' => \Title::newFromText( $wgTitle->getArticleID() ),
-						'data-status' => ReviewModel::CONTENT_REVIEW_STATUS_APPROVED
-					],
-					wfMessage( 'content-review-diff-approve' )->plain()
-				)
-			);
+				$output->prependHTML(
+					\Xml::element( 'button',
+						[
+							'class' => 'content-review-diff-button',
+							'data-wiki-id' => ( $wgCityId ),
+							'data-page-id' => \Title::newFromText( $wgTitle->getArticleID() ),
+							'data-status' => ReviewModel::CONTENT_REVIEW_STATUS_REJECTED
+						],
+						wfMessage( 'content-review-diff-reject' )->plain()
+					)
+				);
+
+				$output->prependHTML(
+					\Xml::element( 'button',
+						[
+							'class' => 'content-review-diff-button',
+							'data-wiki-id' => ( $wgCityId ),
+							'data-page-id' => \Title::newFromText( $wgTitle->getArticleID() ),
+							'data-status' => ReviewModel::CONTENT_REVIEW_STATUS_APPROVED
+						],
+						wfMessage( 'content-review-diff-approve' )->plain()
+					)
+				);
+			}
 		}
-
 		return true;
 	}
 }

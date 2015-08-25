@@ -40,6 +40,8 @@ define(
 							response.notification,
 							'confirm'
 						);
+						$('.content-review-diff-button').hide();
+
 						notification.show();
 					}
 				},
