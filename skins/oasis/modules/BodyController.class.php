@@ -229,6 +229,10 @@ class BodyController extends WikiaController {
 
 		$railModuleList = [];
 
+		// temp plocation for testing
+		// @todo figure out where this should go
+		$railModuleList[1460] = ['Contribute', 'index', null];
+
 		$latestActivityKey = $wg->User->isAnon() ? 1250 : 1300;
 		$huluVideoPanelKey = $wg->User->isAnon() ? 1390 : 1280;
 

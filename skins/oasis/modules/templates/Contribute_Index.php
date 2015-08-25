@@ -1,4 +1,8 @@
 <section id="contributeModule" class="contribute-module module">
-	<?= $app->renderView( 'ContributeMenu', 'Index' ) ?>
-	<?= $tally ?>
+	<div class="tally">
+		<?= $tally ?>
+	</div>
+	<div class="buttons">
+		<?= $app->renderView( 'ContributeMenu', 'Index' ) ?>
+	</div>
 </section>
