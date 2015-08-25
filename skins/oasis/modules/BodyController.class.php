@@ -12,43 +12,74 @@ class BodyController extends WikiaController {
 	}
 	/**
 	 * This method is called when edit form is rendered
+	 *
+	 * @param $editPage
+	 * @return bool true
 	 */
-	public static function onEditPageRender(&$editPage) {
+	public static function onEditPageRender( &$editPage ) {
 		self::$onEditPage = true;
 		return true;
 	}
 
 	/**
 	 * Detect we're on edit (or diff) page
+	 *
+	 * @return bool
 	 */
 	public static function isEditPage() {
-		global $wgRequest;
-		return !empty(self::$onEditPage) ||
-			!is_null($wgRequest->getVal('diff')) /* diff pages - RT #69931 */ ||
-			in_array($wgRequest->getVal('action', 'view'), array('edit' /* view source page */, 'formedit' /* SMW edit pages */, 'history' /* history pages */, 'submit' /* conflicts, etc */));
+		$app = F::app();
+
+		return (
+			!empty( self::$onEditPage ) ||
+			// diff pages - RT #69931
+			!is_null( $app->wg->Request->getVal( 'diff' ) ) ||
+			in_array(
+				$app->wg->Request->getVal( 'action', 'view' ), [
+					'edit',		// view source page
+					'formedit',	// SMW edit pages
+					'history',	// history pages
+					'submit',	// conflicts, etc.
+				]
+			)
+		);
 	}
 
 	/**
 	 * Check whether current page is blog post
+	 *
+	 * @return bool
 	 */
 	public static function isBlogPost() {
-		global $wgTitle;
-		return defined('NS_BLOG_ARTICLE') && $wgTitle->getNamespace() == NS_BLOG_ARTICLE && $wgTitle->isSubpage();
+		$app = F::app();
+
+		return (
+			defined( 'NS_BLOG_ARTICLE' ) &&
+			$app->wg->Title->getNamespace() == NS_BLOG_ARTICLE &&
+			$app->wg->Title->isSubpage()
+		);
 	}
 
 	/**
 	 * Check whether current page is blog listing
+	 *
+	 * @return bool
 	 */
 	public static function isBlogListing() {
-		global $wgTitle;
-		return defined('NS_BLOG_LISTING') && $wgTitle->getNamespace() == NS_BLOG_LISTING;
+		$app = F::app();
+
+		return (
+			defined( 'NS_BLOG_LISTING' ) &&
+			$app->wg->Title->getNamespace() == NS_BLOG_LISTING
+		);
 	}
 
 	/**
 	 * Returns if current layout should be applying gridlayout
+	 *
+	 * @return bool
 	 */
 	public static function isGridLayoutEnabled() {
-		if ( self::isOasisBreakpoints( ) ) {
+		if ( self::isOasisBreakpoints() ) {
 			return false;
 		}
 
@@ -59,17 +90,20 @@ class BodyController extends WikiaController {
 			return false;
 		}
 
-		if( !empty($app->wg->OasisGrid) ) {
+		if ( !empty( $app->wg->OasisGrid ) ) {
 			return true;
 		}
 
 		$ns = $app->wg->Title->getNamespace();
 
-		if( in_array( MWNamespace::getSubject($ns), $app->wg->WallNS) ) {
+		if ( in_array( MWNamespace::getSubject( $ns ), $app->wg->WallNS ) ) {
 			return true;
 		}
 
-		if( defined("NS_WIKIA_FORUM_TOPIC_BOARD") && $ns == NS_WIKIA_FORUM_TOPIC_BOARD ) {
+		if (
+			defined( 'NS_WIKIA_FORUM_TOPIC_BOARD' ) &&
+			$ns == NS_WIKIA_FORUM_TOPIC_BOARD
+		) {
 			return true;
 		}
 
@@ -77,82 +111,116 @@ class BodyController extends WikiaController {
 	}
 
 	/**
-	 * @return Boolean
+	 * Decide whether Oasisbreakpoints should be enabled.
+	 *
+	 * @return bool
 	 */
 	public static function isOasisBreakpoints() {
-		global $wgOasisBreakpoints, $wgRequest, $wgLanguageCode, $wgOasisBreakpointsDE;
+		$app = F::app();
 
 		//For now we want to disable breakpoints for German wikis if not turn on explicitly.
 		//@TODO remove when 71Media fixes their styles and $wgOasisBreakpointsDE will retire
-		if ( strtolower( $wgLanguageCode ) == 'de' && empty( $wgOasisBreakpointsDE ) ) {
-			$wgOasisBreakpoints = false;
+		if (
+			strtolower( $app->wg->LanguageCode ) == 'de'
+			&& empty( $app->wg->OasisBreakpointsDE )
+		) {
+			$app->wg->OasisBreakpoints = false;
 		}
 
-		$wgOasisBreakpoints = $wgRequest->getBool( 'oasisbreakpoints', $wgOasisBreakpoints ) !== false;
-		return !empty( $wgOasisBreakpoints );
+		$app->wg->OasisBreakpoints = $app->wg->Request->getBool( 'oasisbreakpoints', $app->wg->OasisBreakpoints ) !== false;
+		return !empty( $app->wg->OasisBreakpoints );
 	}
 
 	/**
-	 * Decide on which pages responsive / liquid layout should be turned on.
-	 * @return Boolean
+	 * Decide on which pages responsive/liquid layout should be turned on.
+	 *
+	 * @return bool
 	 */
 	public static function isResponsiveLayoutEnabled() {
-		global $wgOasisResponsive;
+		$app = F::app();
 
-		return !self::isOasisBreakpoints() && !empty( $wgOasisResponsive );
+		return !self::isOasisBreakpoints() && !empty( $app->wg->OasisResponsive );
 	}
 
+	/**
+	 * Decide whether OasisTypography should be enabled
+	 *
+	 * @return bool
+	 */
 	public static function isOasisTypography() {
-		global $wgOasisTypography, $wgRequest;
+		$app = F::app();
 
-		$wgOasisTypography = $wgRequest->getBool( 'oasistypography', $wgOasisTypography ) !== false;
-		return !empty( $wgOasisTypography );
+		$app->wg->OasisTypography = $app->wg->Request->getBool( 'oasistypography', $app->wg->OasisTypography ) !== false;
+		return !empty( $app->wg->OasisTypography );
 	}
 
 	/**
 	 * Decide whether to show user pages header on current page
+	 *
+	 * @return bool
 	 */
 	public static function showUserPagesHeader() {
-		wfProfileIn(__METHOD__);
-
 		global $wgTitle;
+		$app = F::app();
+		$wgTitle = $app->wg->Title;
 
 		// perform namespace and special page check
-		$isUserPage = in_array($wgTitle->getNamespace(), self::getUserPagesNamespaces());
+		$isUserPage = in_array(
+			$wgTitle->getNamespace(),
+			self::getUserPagesNamespaces()
+		);
 
-		$ret = ($isUserPage && !$wgTitle->isSubpage() )
-				|| $wgTitle->isSpecial( 'Following' )
-				|| $wgTitle->isSpecial( 'Contributions' )
-				|| (defined('NS_BLOG_LISTING') && $wgTitle->getNamespace() == NS_BLOG_LISTING)
-				|| (defined('NS_BLOG_ARTICLE') && $wgTitle->getNamespace() == NS_BLOG_ARTICLE);
+		$ret = ( $isUserPage && !$wgTitle->isSubpage() ) ||
+				$wgTitle->isSpecial( 'Following' ) ||
+				$wgTitle->isSpecial( 'Contributions' ) ||
+				(
+					defined( 'NS_BLOG_LISTING' ) &&
+					$wgTitle->getNamespace() == NS_BLOG_LISTING
+				) ||
+				(
+					defined( 'NS_BLOG_ARTICLE' ) &&
+					$wgTitle->getNamespace() == NS_BLOG_ARTICLE
+				);
 
-		wfProfileOut(__METHOD__);
 		return $ret;
 	}
 
 	/**
 	 * Return list of namespaces on which user pages header should be shown
+	 *
+	 * @return array $namespaces
 	 */
 	public static function getUserPagesNamespaces() {
-		global $wgEnableWallExt;
+		$app = F::app();
+		$namespaces = [NS_USER];
 
-		$namespaces = array(NS_USER);
-		if( empty($wgEnableWallExt) ) {
+		if ( empty( $app->wg->EnableWallExt ) ) {
 			$namespaces[] = NS_USER_TALK;
 		}
-		if (defined('NS_BLOG_ARTICLE')) {
+
+		if ( defined( 'NS_BLOG_ARTICLE' ) ) {
 			$namespaces[] = NS_BLOG_ARTICLE;
 		}
-		if (defined('NS_BLOG_LISTING')) {
-			// FIXME: THIS IS NOT REALLY PART OF THE USER PAGES NAMESPACES
-			//$namespaces[] = NS_BLOG_LISTING;
+
+		/*
+		// FIXME: THIS IS NOT REALLY PART OF THE USER PAGES NAMESPACES
+		if ( defined( 'NS_BLOG_LISTING' ) ) {		
+			$namespaces[] = NS_BLOG_LISTING;
 		}
-		if (defined('NS_USER_WALL')) {
+		*/
+
+		if ( defined( 'NS_USER_WALL' ) ) {
 			$namespaces[] = NS_USER_WALL;
 		}
+
 		return $namespaces;
 	}
 
+	/**
+	 * Get a list of rail modules
+	 *
+	 * @return array $railModuleList
+	 */
 	public function getRailModuleList() {
 		$wg = $this->wg;
 
@@ -277,76 +345,80 @@ class BodyController extends WikiaController {
 			return [];
 		}
 
-		// If the entire page is non readable due to permissions, don't display the rail either RT#75600
-		if (!$wg->Title->userCan( 'read' )) {
+		// If the entire page is non readable due to permissions
+		// don't display the rail either RT#75600
+		if ( !$wg->Title->userCan( 'read' ) ) {
 			return [];
 		}
 
 		$railModuleList[1440] = ['Ad', 'Index', ['slotName' => 'TOP_RIGHT_BOXAD']];
 		$railModuleList[1100] = ['Ad', 'Index', ['slotName' => 'LEFT_SKYSCRAPER_2']];
 
-		unset($railModuleList[1450]);
+		unset( $railModuleList[1450] );
 
 		wfRunHooks( 'GetRailModuleList', [&$railModuleList] );
 
 		return $railModuleList;
 	}
 
-
+	/**
+	 * Index method for Body template
+	 */
 	public function executeIndex() {
-		global $wgOut, $wgTitle, $wgEnableInfoBoxTest, $wgMaximizeArticleAreaArticleIds, $wgEnableAdminDashboardExt, $wgEnableWikiaHomePageExt;
-
-		wfProfileIn(__METHOD__);
+		$wg = $this->wg;
 
 		// set up global vars
-		if (is_array($wgMaximizeArticleAreaArticleIds)
-		&& in_array($wgTitle->getArticleId(), $wgMaximizeArticleAreaArticleIds)) {
-			$this->wg->SuppressRail = true;
-			$this->wg->SuppressPageHeader = true;
+		if (
+			is_array( $wg->MaximizeArticleAreaArticleIds ) &&
+			in_array( $wg->Title->getArticleId(), $wg->MaximizeArticleAreaArticleIds )
+		) {
+			$wg->SuppressRail = true;
+			$wg->SuppressPageHeader = true;
 		}
 
 		// Double-click to edit
-		$this->body_ondblclick = ''; // FIXME handling moved to OutputPage::addDefaultModules()
-
-		// InfoBox - Testing
-		$this->wg->EnableInfoBoxTest = $wgEnableInfoBoxTest;
+		// FIXME handling moved to OutputPage::addDefaultModules()
+		$this->body_ondblclick = '';
 
 		// Replaces ContentDisplayModule->index()
 		$this->bodytext = $this->app->getSkinTemplateObj()->data['bodytext'];
 
 		$this->railModuleList = $this->getRailModuleList();
+
 		// this hook allows adding extra HTML just after <body> opening tag
 		// append your content to $html variable instead of echoing
 		// (taken from Monaco skin)
 		$skin = RequestContext::getMain()->getSkin();
 		$afterBodyHtml = '';
-		wfRunHooks('GetHTMLAfterBody', array($skin, &$afterBodyHtml));
+		wfRunHooks( 'GetHTMLAfterBody', [$skin, &$afterBodyHtml] );
 		$this->afterBodyHtml = $afterBodyHtml;
 
 		// this hook is needed for SMW's factbox
 		$afterContentHookText = '';
-		wfRunHooks('SkinAfterContent', array( &$afterContentHookText ) );
+		wfRunHooks( 'SkinAfterContent', [&$afterContentHookText] );
 		$this->afterContentHookText = $afterContentHookText;
 
 		$this->headerModuleAction = 'Index';
-		$this->headerModuleParams = array ('showSearchBox' => false);
+		$this->headerModuleParams = ['showSearchBox' => false];
 
 		// show user pages header on this page?
-		if (self::showUserPagesHeader()) {
+		if ( self::showUserPagesHeader() ) {
 			$this->headerModuleName = 'UserPagesHeader';
+
 			// is this page a blog post?
-			if( self::isBlogPost() ) {
+			if ( self::isBlogPost() ) {
 				$this->headerModuleAction = 'BlogPost';
-			}
+
 			// is this page a blog listing?
-			else if (self::isBlogListing()) {
+			} else if ( self::isBlogListing() ) {
 				$this->headerModuleAction = 'BlogListing';
 			}
+
 		// show corporate header on this page?
-		} else if( WikiaPageType::isCorporatePage() || WikiaPageType::isWikiaHub()) {
+		} else if ( WikiaPageType::isCorporatePage() || WikiaPageType::isWikiaHub() ) {
 			$this->headerModuleName = 'PageHeader';
 
-			if( self::isEditPage() ) {
+			if ( self::isEditPage() ) {
 				$this->headerModuleAction = 'EditPage';
 			} else {
 				$this->headerModuleAction = 'Corporate';
@@ -354,28 +426,31 @@ class BodyController extends WikiaController {
 
 			if ( WikiaPageType::isWikiaHubMain() ) {
 				$this->headerModuleAction = 'Hubs';
-			}
+
 			// FIXME: move to separate module
-			elseif( WikiaPageType::isMainPage() ) {
-				$this->wg->SuppressFooter = true;
-				$this->wg->SuppressArticleCategories = true;
-				$this->wg->SuppressPageHeader = true;
-				$this->wg->SuppressWikiHeader = true;
-				$this->wg->SuppressSlider = true;
+			} elseif ( WikiaPageType::isMainPage() ) {
+				$wg->SuppressFooter = true;
+				$wg->SuppressArticleCategories = true;
+				$wg->SuppressPageHeader = true;
+				$wg->SuppressWikiHeader = true;
+				$wg->SuppressSlider = true;
 			}
 		} else {
 			$this->headerModuleName = 'PageHeader';
-			if( self::isEditPage() ) {
+			if ( self::isEditPage() ) {
 				$this->headerModuleAction = 'EditPage';
 			}
 		}
 
 		// Display Control Center Header on certain special pages
-		if (!empty($wgEnableAdminDashboardExt) && AdminDashboardLogic::displayAdminDashboard($this->app, $wgTitle)) {
+		if (
+			!empty( $wg->EnableAdminDashboardExt) &&
+			AdminDashboardLogic::displayAdminDashboard($this->app, $wg->Title)
+		) {
 			$this->headerModuleName = null;
 			$this->wgSuppressAds = true;
 			$this->displayAdminDashboard = true;
-			$this->displayAdminDashboardChromedArticle = ($wgTitle->getText() != SpecialPage::getTitleFor( 'AdminDashboard' )->getText());
+			$this->displayAdminDashboardChromedArticle = ($wg->Title->getText() != SpecialPage::getTitleFor( 'AdminDashboard' )->getText());
 		} else {
 			$this->displayAdminDashboard = false;
 			$this->displayAdminDashboardChromedArticle = false;
@@ -384,7 +459,7 @@ class BodyController extends WikiaController {
 		$this->railModulesExist = true;
 
 		// use one column layout for pages with no right rail modules
-		if( count($this->railModuleList ) == 0 || !empty($this->wg->SuppressRail) ) {
+		if( count( $this->railModuleList ) == 0 || !empty( $wg->SuppressRail) ) {
 			// Special:AdminDashboard doesn't need this class, but pages chromed with it do
 			if ( !$this->displayAdminDashboard || $this->displayAdminDashboardChromedArticle ) {
 				OasisController::addBodyClass('oasis-one-column');
@@ -405,49 +480,59 @@ class BodyController extends WikiaController {
 		}
 
 		//@TODO remove this check after deprecating responsive (July 2015)
-		if( $this->isResponsiveLayoutEnabled() ) {
+		if ( $this->isResponsiveLayoutEnabled() ) {
 			OasisController::addBodyClass( 'oasis-responsive' );
 		}
 
 		// if we are on a special search page, pull in the css file and don't render a header
-		if($wgTitle && $wgTitle->isSpecial( 'Search' ) && !$this->wg->WikiaSearchIsDefault) {
-			$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL("skins/oasis/css/modules/SpecialSearch.scss"));
+		if (
+			$wg->Title &&
+			$wg->Title->isSpecial( 'Search' ) &&
+			!$wg->WikiaSearchIsDefault
+		) {
+			$wg->Out->addStyle(AssetsManager::getInstance()->getSassCommonURL("skins/oasis/css/modules/SpecialSearch.scss"));
 			$this->headerModuleName = null;
 		}
 
 		// Inter-wiki search
-		if($wgTitle && ($wgTitle->isSpecial( 'WikiaSearch' ) || ($wgTitle->isSpecial( 'Search' ) && $this->wg->WikiaSearchIsDefault ))) {
+		if (
+			$wg->Title &&
+			(
+				$wg->Title->isSpecial( 'WikiaSearch' ) ||
+				( $wg->Title->isSpecial( 'Search' ) && $wg->WikiaSearchIsDefault )
+			)
+		) {
 			$this->headerModuleName = null;
 		}
 
 		// load CSS for Special:Preferences
-		if (!empty($wgTitle) && $wgTitle->isSpecial('Preferences')) {
-			$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('skins/oasis/css/modules/SpecialPreferences.scss'));
+		if ( !empty( $wg->Title ) && $wg->Title->isSpecial( 'Preferences' ) ) {
+			$wg->Out->addStyle(AssetsManager::getInstance()->getSassCommonURL('skins/oasis/css/modules/SpecialPreferences.scss'));
 		}
 
 		// load CSS for Special:Upload
-		if (!empty($wgTitle) && $wgTitle->isSpecial('Upload')) {
-			$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('skins/oasis/css/modules/SpecialUpload.scss'));
+		if (!empty($wg->Title) && $wg->Title->isSpecial('Upload')) {
+			$wg->Out->addStyle(AssetsManager::getInstance()->getSassCommonURL('skins/oasis/css/modules/SpecialUpload.scss'));
 		}
 
 		// load CSS for Special:MultipleUpload
-		if (!empty($wgTitle) && $wgTitle->isSpecial('MultipleUpload')) {
-			$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('skins/oasis/css/modules/SpecialMultipleUpload.scss'));
+		if (!empty($wg->Title) && $wg->Title->isSpecial('MultipleUpload')) {
+			$wg->Out->addStyle(AssetsManager::getInstance()->getSassCommonURL('skins/oasis/css/modules/SpecialMultipleUpload.scss'));
 		}
 
 		// load CSS for Special:Allpages
-		if (!empty($wgTitle) && $wgTitle->isSpecial('Allpages')) {
-			$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('skins/oasis/css/modules/SpecialAllpages.scss'));
+		if (!empty($wg->Title) && $wg->Title->isSpecial('Allpages')) {
+			$wg->Out->addStyle(AssetsManager::getInstance()->getSassCommonURL('skins/oasis/css/modules/SpecialAllpages.scss'));
 		}
 
 		// Forum Extension
-		if (!empty($this->wg->EnableForumExt) && ForumHelper::isForum()) {
-			$this->wg->SuppressPageHeader = true;
+		if (!empty($wg->EnableForumExt) && ForumHelper::isForum()) {
+			$wg->SuppressPageHeader = true;
 		}
 
 		// MonetizationModule Extension
-		if ( !empty( $this->wg->EnableMonetizationModuleExt ) ) {
-			if ( empty( $this->wg->AdDriverUseMonetizationService ) ) {
+		if ( !empty( $wg->EnableMonetizationModuleExt ) ) {
+			if ( empty( $wg->AdDriverUseMonetizationService ) ) {
 				$this->monetizationModules = $this->sendRequest( 'MonetizationModule', 'index' )->getData()['data'];
 				$this->headerModuleParams['monetizationModules'] = $this->monetizationModules;
 			} else {
@@ -459,16 +544,16 @@ class BodyController extends WikiaController {
 			$this->bodytext = MonetizationModuleHelper::insertIncontentUnit( $this->bodytext, $this->monetizationModules );
 		}
 
-		$namespace = $wgTitle->getNamespace();
+		$namespace = $wg->Title->getNamespace();
 		// extra logic for subpages (RT #74091)
 		if (!empty($this->subtitle)) {
 			switch($namespace) {
 				// for user subpages add link to theirs talk pages
 				case NS_USER:
-					$talkPage = $wgTitle->getTalkPage();
+					$talkPage = $wg->Title->getTalkPage();
 
 					// get number of revisions for talk page
-					$service = new PageStatsService($wgTitle->getArticleId());
+					$service = new PageStatsService($wg->Title->getArticleId());
 					$comments = $service->getCommentsCount();
 
 					// render comments bubble
@@ -480,7 +565,7 @@ class BodyController extends WikiaController {
 					break;
 
 				case NS_USER_TALK:
-					$subjectPage = $wgTitle->getSubjectPage();
+					$subjectPage = $wg->Title->getSubjectPage();
 
 					$this->subtitle .= ' | ';
 					$this->subtitle .= Wikia::link($subjectPage);
@@ -489,9 +574,6 @@ class BodyController extends WikiaController {
 		}
 
 		// bugid-70243: optionally hide navigation h1s for SEO
-		$this->setVal( 'displayHeader', !$this->wg->HideNavigationHeaders );
-
-		wfProfileOut(__METHOD__);
+		$this->setVal( 'displayHeader', !$wg->HideNavigationHeaders );
 	}
-
 }
