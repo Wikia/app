@@ -147,6 +147,9 @@ class ContentReviewApiController extends WikiaApiController {
 
 		$review = $reviewModel->getReviewedContent( $wikiId, $pageId, ReviewModel::CONTENT_REVIEW_STATUS_IN_REVIEW );
 
+		if ( empty( $review ) ) {
+			throw new ErrorException( 'Requested data not present in the database.' );
+		}
 		$reviewModel->backupCompletedReview( $review, $status, $reviewerId );
 
 		if( $status === ReviewModel::CONTENT_REVIEW_STATUS_APPROVED ) {
