@@ -192,7 +192,7 @@ class ResourceLoaderHooks {
 			unset($pages['MediaWiki:Common.css']);
 		}
 
-		if ( $wgEnableContentReviewExt && !empty( $reviewed ) ) {
+		if ( $wgEnableContentReviewExt && !is_null( $reviewed ) ) {
 			$contentReviewHelper = new Wikia\ContentReview\Helper();
 			foreach ( $pages as $pageName => &$page ) {
 				if ( $page['type'] === 'script' ) {
