@@ -150,7 +150,7 @@ class PageHeaderController extends WikiaController {
 		return $ret;
 	}
 
-	private function getCuratedContentButtonForCurrent() {
+	private function getCuratedContentButton() {
 		global $wgUser, $wgEnableCuratedContentExt;
 
 		if ( !empty( $wgEnableCuratedContentExt ) && WikiaPageType::isMainPage() &&
@@ -181,7 +181,7 @@ class PageHeaderController extends WikiaController {
 		// page namespace
 		$ns = $wgTitle->getNamespace();
 
-		$this->curatedContentToolButton = $this->getCuratedContentButtonForCurrent();
+		$this->curatedContentToolButton = $this->getCuratedContentButton();
 
 		/** start of wikia changes @author nAndy */
 		$this->isWallEnabled = ( !empty( $wgEnableWallExt ) && $ns == NS_USER_WALL );
