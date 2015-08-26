@@ -1,7 +1,11 @@
+@import 'skins/shared/mixins/animation';
 @import 'skins/shared/mixins/transform';
 @import 'skins/shared/mixins/blackout';
 
-@keyframes auth-throbber-spin {
+@include keyframes (auth-throbber-spin) {
+	0% {
+		@include transform (rotate(0deg));
+	}
 	100% {
 		@include transform (rotate(360deg));
 	}
@@ -28,7 +32,7 @@
 
 	&.loading {
 		&::after {
-			animation: auth-throbber-spin 1s ease-in infinite;
+			@include animation(auth-throbber-spin 1s ease-in infinite);
 			background: url('/extensions/wikia/AuthModal/svg/wikia-logo-circled.svg'); /* inline */
 			content: " ";
 			display: block;
