@@ -6,7 +6,7 @@ class GlobalFooterController extends WikiaController {
 
 	const MEMC_KEY_GLOBAL_FOOTER_LINKS = 'mGlobalFooterLinks';
 	const MEMC_KEY_GLOBAL_FOOTER_VERSION = 2;
-	const MESSAGE_KEY_GLOBAL_FOOTER_LINKS = 'shared-Oasis-footer-wikia-links-with-sitemap';
+	const MESSAGE_KEY_GLOBAL_FOOTER_LINKS = 'shared-Oasis-footer-wikia-links';
 	const MEMC_EXPIRY = 3600;
 
 	public function index() {
