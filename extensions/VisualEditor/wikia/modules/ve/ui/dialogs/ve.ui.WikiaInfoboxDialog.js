@@ -155,11 +155,8 @@ ve.ui.WikiaInfoboxDialog.prototype.showItems = function () {
  * @param {Object} obj item to show
  */
 ve.ui.WikiaInfoboxDialog.prototype.showDataItem = function ( obj ) {
-	var param,
-		template;
-
-	template = this.transclusionModel.getParts()[0];
-	param = template.getParameter( obj.name );
+	var template = this.transclusionModel.getParts()[0],
+		param = template.getParameter( obj.name );
 
 	return new ve.ui.WikiaParameterPage( param, param.name, { $: this.$ } );
 };
