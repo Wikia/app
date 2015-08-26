@@ -1,8 +1,8 @@
 @mixin animation($animation) {
-	transform: $animation;
-	-webkit-transform: $animation;
-	-moz-transform: $animation;
-	-ms-transform: $animation;
+	animation: $animation;
+	-webkit-animation: $animation;
+	-moz-animation: $animation;
+	-ms-animation: $animation;
 }
 
 @mixin keyframes($name) {
