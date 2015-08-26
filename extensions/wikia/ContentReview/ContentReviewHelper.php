@@ -93,7 +93,7 @@ class Helper {
 		return $contentReviewTestModeEnabled;
 	}
 
-	public function isPageInReviewProcess() {
+	public function isDiffPageInReviewProcess() {
 		global $wgTitle, $wgCityId, $wgRequest;
 
 		$reviewModel = new ReviewModel();

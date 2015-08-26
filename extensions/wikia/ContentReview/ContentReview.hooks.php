@@ -82,7 +82,7 @@ class Hooks {
 		if ( $wgTitle->inNamespace( NS_MEDIAWIKI )
 			&& $wgTitle->isJsPage()
 			&& $wgTitle->userCan( 'content-review' )
-			&& $helper->isPageInReviewProcess()
+			&& $helper->isDiffPageInReviewProcess()
 		) {
 			\Wikia::addAssetsToOutput( 'content_review_diff_page_js' );
 			\JSMessages::enqueuePackage( 'ContentReviewDiffPage', \JSMessages::EXTERNAL );

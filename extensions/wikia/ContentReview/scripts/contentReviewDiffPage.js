@@ -29,7 +29,7 @@ define(
 					status: $button.attr('data-status'),
 					editToken: mw.user.tokens.get('editToken')
 				};
-			$('.content-review-diff-button').prop("disabled",true);
+			$('.content-review-diff-button').prop('disabled',true);
 			nirvana.sendRequest({
 				controller: 'ContentReviewApiController',
 				method: 'removeCompletedAndUpdateLogs',
@@ -48,7 +48,7 @@ define(
 						mw.message('content-review-diff-page-error').escaped(),
 						'error'
 					);
-					$('.content-review-diff-button').prop("disabled",false);
+					$('.content-review-diff-button').prop('disabled',false);
 					notification.show();
 				}
 			});
