@@ -79,9 +79,11 @@ class Hooks {
 	public static function onArticleContentOnDiff( $diffEngine, \OutputPage $output ) {
 		global $wgTitle, $wgCityId;
 
+		$helper = new Helper();
 		if ( $wgTitle->inNamespace( NS_MEDIAWIKI )
 			&& $wgTitle->isJsPage()
 			&& $wgTitle->userCan( 'content-review' )
+			&& $helper->isDiffPageInReviewProcess()
 		) {
 			\Wikia::addAssetsToOutput( 'content_review_diff_page_js' );
 			\JSMessages::enqueuePackage( 'ContentReviewDiffPage', \JSMessages::EXTERNAL );
@@ -90,8 +92,8 @@ class Hooks {
 				\Xml::element( 'button',
 					[
 						'class' => 'content-review-diff-button',
-						'data-wiki-id' => ( $wgCityId ),
-						'data-page-id' => \Title::newFromText( $wgTitle->getArticleID() ),
+						'data-wiki-id' => $wgCityId,
+						'data-page-id' => $wgTitle->getArticleID(),
 						'data-status' => ReviewModel::CONTENT_REVIEW_STATUS_REJECTED
 					],
 					wfMessage( 'content-review-diff-reject' )->plain()
@@ -102,13 +104,14 @@ class Hooks {
 				\Xml::element( 'button',
 					[
 						'class' => 'content-review-diff-button',
-						'data-wiki-id' => ( $wgCityId ),
-						'data-page-id' => \Title::newFromText( $wgTitle->getArticleID() ),
+						'data-wiki-id' => $wgCityId,
+						'data-page-id' => $wgTitle->getArticleID(),
 						'data-status' => ReviewModel::CONTENT_REVIEW_STATUS_APPROVED
 					],
 					wfMessage( 'content-review-diff-approve' )->plain()
 				)
 			);
+
 		}
 
 		return true;

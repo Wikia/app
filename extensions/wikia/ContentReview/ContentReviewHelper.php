@@ -2,6 +2,8 @@
 
 namespace Wikia\ContentReview;
 
+use Wikia\ContentReview\Models\ReviewModel;
+
 class Helper {
 
 	public function getSiteJsScriptsHash() {
@@ -100,5 +102,18 @@ class Helper {
 		}
 
 		return $contentReviewTestModeEnabled;
+	}
+
+	public function isDiffPageInReviewProcess() {
+		global $wgTitle, $wgCityId, $wgRequest;
+
+		$reviewModel = new ReviewModel();
+		$reviewData = $reviewModel->getReviewedContent( $wgCityId, $wgTitle->getArticleID(), ReviewModel::CONTENT_REVIEW_STATUS_IN_REVIEW );
+		$diff = $wgRequest->getInt( 'diff' );
+
+		if ( !empty( $reviewData ) && (int)$reviewData['revision_id'] === $diff ) {
+			return true;
+		}
+		return false;
 	}
 }
