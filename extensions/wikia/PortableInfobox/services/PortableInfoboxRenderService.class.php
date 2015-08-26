@@ -1,5 +1,7 @@
 <?php
 
+use Wikia\PortableInfobox\Helpers\PortableInfoboxRenderServiceHelper;
+
 class PortableInfoboxRenderService extends WikiaService {
 	const LOGGER_LABEL = 'portable-infobox-render-not-supported-type';
 	const DESKTOP_THUMBNAIL_WIDTH = 270;
@@ -7,7 +9,7 @@ class PortableInfoboxRenderService extends WikiaService {
 	const MINIMAL_HERO_IMG_WIDTH = 300;
 	const MOBILE_TEMPLATE_POSTFIX = '-mobile';
 
-	private $templates = [
+	private static $templates = [
 		'wrapper' => 'PortableInfoboxWrapper.mustache',
 		'title' => 'PortableInfoboxItemTitle.mustache',
 		'header' => 'PortableInfoboxItemHeader.mustache',
@@ -22,7 +24,15 @@ class PortableInfoboxRenderService extends WikiaService {
 
 	function __construct() {
 		$this->templateEngine = ( new Wikia\Template\MustacheEngine )
-			->setPrefix( dirname( __FILE__ ) . '/../templates' );
+			->setPrefix( self::getTemplatesDir() );
+	}
+
+	public static function getTemplatesDir() {
+		return dirname( __FILE__ ) . '/../templates';
+	}
+
+	public static function getTemplates() {
+		return self::$templates;
 	}
 
 	/**
@@ -65,7 +75,8 @@ class PortableInfoboxRenderService extends WikiaService {
 		}
 
 		if ( !empty( $infoboxHtmlContent ) ) {
-			$output = $this->renderItem( 'wrapper', [ 'content' => $infoboxHtmlContent, 'theme' => $theme, 'layout' => $layout ] );
+			$output = $this->renderItem( 'wrapper', [ 'content' => $infoboxHtmlContent, 'theme' => $theme,
+													  'layout' => $layout ] );
 		} else {
 			$output = '';
 		}
@@ -252,7 +263,7 @@ class PortableInfoboxRenderService extends WikiaService {
 	 *
 	 * @param array $data
 	 *
-	 * @return bool|array
+	 * @return bool|string - HTML
 	 */
 	private function extendImageData( $data ) {
 		$thumbnail = $this->getThumbnail( $data[ 'name' ] );
