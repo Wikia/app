@@ -1589,6 +1589,7 @@ class Wikia {
 
 		$out = $skinTemplate->getOutput();
 		$title = $skinTemplate->getTitle();
+		$stagingHeader = $skinTemplate->getRequest()->getHeader('X-Staging');
 
 		# quick hack for rt#15730; if you ever feel temptation to add 'elseif' ***CREATE A PROPER HOOK***
 		if (($title instanceof Title) && NS_CATEGORY == $title->getNamespace()) { // FIXME
@@ -1598,6 +1599,10 @@ class Wikia {
 		// Pass parameters to skin, see: Login friction project (Marooned)
 		$tpl->set( 'thisurl', $title->getPrefixedURL() );
 		$tpl->set( 'thisquery', $skinTemplate->thisquery );
+
+		if( !empty($stagingHeader) ) {
+			$out->setRobotPolicy( 'noindex,nofollow' );
+		}
 
 		wfProfileOut(__METHOD__);
 		return true;

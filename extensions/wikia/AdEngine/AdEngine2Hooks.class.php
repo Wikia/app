@@ -14,9 +14,6 @@ class AdEngine2Hooks {
 	const ASSET_GROUP_LIFTIUM = 'liftium_ads_js';
 	const ASSET_GROUP_LIFTIUM_EXTRA = 'liftium_ads_extra_js';
 
-	// it's externaltest because: https://github.com/Wikia/wikia-vcl/blob/master/wikia.com/control-stage.vcl#L19
-	const ADS_STAGING_HEADER = 'externaltest';
-
 	/**
 	 * Handle URL parameters and set proper global variables early enough
 	 *
@@ -256,16 +253,6 @@ class AdEngine2Hooks {
 		if ( AdEngine2Service::shouldLoadLiftium() ) {
 			$jsBodyGroups[] = self::ASSET_GROUP_LIFTIUM;
 		}
-		return true;
-	}
-
-	public static function onSkinTemplateOutputPageBeforeExec( Skin $skin, $template) {
-		$stagingHeader = $skin->getRequest()->getHeader('X-Staging');
-
-		if ( startsWith( $stagingHeader, static::ADS_STAGING_HEADER ) !== false ) {
-			$skin->getOutput()->setRobotPolicy( 'noindex,nofollow' );
-		}
-
 		return true;
 	}
 

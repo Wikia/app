@@ -40,9 +40,6 @@ $wgHooks['VenusAssetsPackages'][] = 'AdEngine2Hooks::onVenusAssetsPackages';
 $wgHooks['SkinAfterContent'][] = 'AdEngine2Hooks::onSkinAfterContent';
 $wgHooks['SkinAfterBottomScripts'][] = 'AdEngine2Hooks::onSkinAfterBottomScripts';
 
-// Hooks for showcase.* alias
-$wgHooks['SkinTemplateOutputPageBeforeExec'][] = 'AdEngine2Hooks::onSkinTemplateOutputPageBeforeExec';
-
 // i18n
 $wgExtensionMessagesFiles['AdEngine'] = __DIR__ . '/AdEngine.i18n.php';
 $wgExtensionFunctions[] = function() {
