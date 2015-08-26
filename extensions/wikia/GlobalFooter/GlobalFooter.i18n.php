@@ -10,7 +10,7 @@ $messages['en'] = array(
 	'global-footer-vertical-games-link' => 'http://gameshub.wikia.com/wiki/Games_Hub',
 	'global-footer-vertical-lifestyle-link' => 'http://lifestylehub.wikia.com/wiki/Lifestyle_Hub',
 	'global-footer-desc' => 'GlobalFooter',
-	'shared-Oasis-footer-wikia-links' => '*http://www.wikia.com/About|<span>About</span>
+	'shared-Oasis-footer-wikia-links-with-sitemap' => '*http://www.wikia.com/About|<span>About</span>
 		*http://community.wikia.com/wiki/Help:Contents|Help
 		*http://community.wikia.com|<span>Community Central</span>
 		*http://www.wikia.com/Careers|Careers
@@ -37,13 +37,14 @@ $messages['qqq'] = array(
 	'global-footer-vertical-games-link' => 'URL to games hub wiki',
 	'global-footer-vertical-lifestyle-link' => 'URL to lifestyle hub wiki',
 	'global-footer-desc' => '{{desc}}',
-	'shared-Oasis-footer-wikia-links' => 'All global footer links written in wiki text',
+	'shared-Oasis-footer-wikia-links-with-sitemap' => 'All global footer links written in wiki text.
+		$1 is replaced with the URL or page name of the sitemap',
 	'shared-Monobook-footer-wikia-links' => 'All global footer links written
 	in wiki text displayed on Monobook skin',
 );
 
 $messages['ca'] = array(
-	'shared-Oasis-footer-wikia-links' => "*http://ca.wikia.com/wiki/Sobre_nosaltres|<span>Sobre Wikia</span>
+	'shared-Oasis-footer-wikia-links-with-sitemap' => "*http://ca.wikia.com/wiki/Sobre_nosaltres|<span>Sobre Wikia</span>
 		*http://ca.wikia.com|<span>Comunitat Central</span>
 		*http://www.wikia.com/Hiring|Contractacions
 		*http://mediakit.wikia.com/wiki/Media_Kit_Wiki|Publicitat
@@ -66,7 +67,7 @@ $messages['de'] = array(
 	'global-footer-vertical-books-link' => 'http://de.literaturhub.wikia.com/wiki/Literatur_Hub',
 	'global-footer-vertical-games-link' => 'http://de.videospielehub.wikia.com/wiki/Videospiele_Hub',
 	'global-footer-vertical-lifestyle-link' => 'http://de.lifestylehub.wikia.com/wiki/Lifestyle_Hub',
-	'shared-Oasis-footer-wikia-links' => '**http://de.wikia.com/wiki/%C3%9Cber_Wikia|Über Wikia
+	'shared-Oasis-footer-wikia-links-with-sitemap' => '**http://de.wikia.com/wiki/%C3%9Cber_Wikia|Über Wikia
 		*http://de.community.wikia.com/wiki/Hilfe:%C3%9Cbersicht|Hilfe
 		*http://de.community.wikia.com|Community
 		*http://de.wikia.com/Stellen|Stellenangebote
@@ -93,7 +94,7 @@ $messages['es'] = array(
 	'global-footer-vertical-books-link' => 'http://es.bookshub.wikia.com/wiki/Wiki_Libros_Hub',
 	'global-footer-vertical-games-link' => 'http://es.gameshub.wikia.com/wiki/Wiki_Videojuegos_Hub',
 	'global-footer-vertical-lifestyle-link' => 'http://es.lifestylehub.wikia.com/wiki/Wiki_Estilo_de_vida_Hub',
-	'shared-Oasis-footer-wikia-links' => '*http://es.wikia.com/Sobre_nosotros|<span>Sobre Wikia</span>
+	'shared-Oasis-footer-wikia-links-with-sitemap' => '*http://es.wikia.com/Sobre_nosotros|<span>Sobre Wikia</span>
 		*http://comunidad.wikia.com/wiki/Ayuda:Contenidos|Ayuda
 		*http://comunidad.wikia.com|<span>Comunidad Central</span>
 		*http://www.wikia.com/Hiring|Contrataciones
@@ -113,7 +114,7 @@ $messages['es'] = array(
 );
 
 $messages['fa'] = array(
-	'shared-Oasis-footer-wikia-links' => '*http://www.wikia.com/About_Us|<span>دربارهٔ ما</span>
+	'shared-Oasis-footer-wikia-links-with-sitemap' => '*http://www.wikia.com/About_Us|<span>دربارهٔ ما</span>
 		*http://www.community.wikia.com|<span>جامعهٔ مرکزی</span>
 		*http://www.wikia.com/Careers|فرصت‌های شغلی
 		*http://www.wikia.com/Advertising|تبلیغات
@@ -125,7 +126,7 @@ $messages['fa'] = array(
 );
 
 $messages['fi'] = array(
-	'shared-Oasis-footer-wikia-links' => '*http://www.wikia.com/About|<span>Tietoa meistä</span>
+	'shared-Oasis-footer-wikia-links-with-sitemap' => '*http://www.wikia.com/About|<span>Tietoa meistä</span>
 		*http://yhteiso.wikia.com|Yhteisöwiki
 		*http://www.wikia.com/Hiring|Rekrytointi
 		*http://www.wikia.com/Advertising|Mainonta
@@ -141,7 +142,7 @@ $messages['fr'] = array(
 	'global-footer-vertical-books-link' => 'http://portail-divertissement.wikia.com/wiki/Portail_divertissement',
 	'global-footer-vertical-games-link' => 'http://portail-jeuxvideo.wikia.com/wiki/Portail_jeux_vid%C3%A9o',
 	'global-footer-vertical-lifestyle-link' => 'http://portail-modedevie.wikia.com/wiki/Portail_mode_de_vie',
-	'shared-Oasis-footer-wikia-links' => "*http://fr.wikia.com/À_propos|À propos
+	'shared-Oasis-footer-wikia-links-with-sitemap' => "*http://fr.wikia.com/À_propos|À propos
 		*http://communaute.wikia.com/wiki/Aide:Contenu|Aide
 		*http://communaute.wikia.com|Centre des communautés
 		*http://www.wikia.com/Careers|Emplois
@@ -167,7 +168,7 @@ $messages['gl'] = array(
 );
 
 $messages['it'] = array(
-	'shared-Oasis-footer-wikia-links' => '* http://www.wikia.com/About_Us |Su di noi
+	'shared-Oasis-footer-wikia-links-with-sitemap' => '* http://www.wikia.com/About_Us |Su di noi
 		* http://it.community.wikia.com/wiki/Aiuto |Aiuto
 		* http://www.wikia.com/Hiring |Lavoro
 		* http://www.wikia.com/Advertising |Pubblicità
@@ -198,7 +199,7 @@ $messages['ja'] = array(
 	'global-footer-vertical-movies-link' => 'http://ja.entertainmenthub.wikia.com/wiki/%E3%82%A8%E3%83%B3%E3%82%BF%E3%83%BC%E3%83%86%E3%82%A4%E3%83%A1%E3%83%B3%E3%83%88%E3%83%8F%E3%83%96_Wiki',
 	'global-footer-vertical-books-link' => 'http://ja.community.wikia.com/wiki/%E3%83%A6%E3%83%BC%E3%82%B6%E3%83%BC%E3%83%96%E3%83%AD%E3%82%B0:Gurgate/%E6%80%A7%E6%A0%BC%E8%A8%BA%E6%96%AD%E3%83%86%E3%82%B9%E3%83%88%E3%82%92%E3%82%84%E3%81%A3%E3%81%A6%E3%81%BF%E3%82%88%E3%81%86',
 	'global-footer-vertical-games-link' => 'http://ja.videogameshub.wikia.com/wiki/%E3%83%93%E3%83%87%E3%82%AA%E3%82%B2%E3%83%BC%E3%83%A0%E3%83%8F%E3%83%96_Wiki',
-	'shared-Oasis-footer-wikia-links' => '*http://ja.wikia.com/ウィキアについて|<span>ウィキアについて</span>
+	'shared-Oasis-footer-wikia-links-with-sitemap' => '*http://ja.wikia.com/ウィキアについて|<span>ウィキアについて</span>
 		*http://ja.community.wikia.com/wiki/ヘルプ:コンテンツ|ヘルプ
 		*w:c:ja.community|<span>コミュニティセントラル</span>
 		*http://www.wikia.com/Careers|キャリア
@@ -220,7 +221,7 @@ $messages['ja'] = array(
 );
 
 $messages['ko'] = array(
-	'shared-Oasis-footer-wikia-links' => '*http://www.wikia.com/About_Us|<span>회사 소개</span>
+	'shared-Oasis-footer-wikia-links-with-sitemap' => '*http://www.wikia.com/About_Us|<span>회사 소개</span>
 		*http://ko.community.wikia.com/wiki/도움말:콘텐츠|도움말
 		*http://ko.community.wikia.com|<span>중앙 커뮤니티</span>
 		*http://www.wikia.com/Hiring|채용정보
@@ -241,7 +242,7 @@ $messages['nl'] = array(
 	'global-footer-vertical-games-link' => 'http://gameshub.wikia.com/wiki/Games_Hub',
 	'global-footer-vertical-lifestyle-link' => 'http://lifestylehub.wikia.com/wiki/Lifestyle_Hub',
 	'global-footer-desc' => 'GlobalFooter',
-	'shared-Oasis-footer-wikia-links' => '*http://www.wikia.com/About|<span>About</span>
+	'shared-Oasis-footer-wikia-links-with-sitemap' => '*http://www.wikia.com/About|<span>About</span>
 		*http://community.wikia.com/wiki/Help:Contents|Help
 		*http://community.wikia.com|<span>Community Central</span>
 		*http://www.wikia.com/Careers|Careers
@@ -267,7 +268,7 @@ $messages['pl'] = array(
 	'global-footer-vertical-books-link' => 'http://pl.lifestylehub.wikia.com/wiki/Lifestyle',
 	'global-footer-vertical-games-link' => 'http://gryhub.wikia.com/wiki/Gry',
 	'global-footer-vertical-lifestyle-link' => 'http://pl.lifestylehub.wikia.com/wiki/Lifestyle',
-	'shared-Oasis-footer-wikia-links' => '*http://pl.wikia.com/O_nas|O nas
+	'shared-Oasis-footer-wikia-links-with-sitemap' => '*http://pl.wikia.com/O_nas|O nas
 		*http://spolecznosc.wikia.com/wiki/Pomoc:Zawarto%C5%9B%C4%87|Pomoc
 		*http://www.spolecznosc.wikia.com|Centrum Społeczności
 		*http://kariera.wikia.com/|Kariera
@@ -295,7 +296,7 @@ $messages['pt'] = array(
 	'global-footer-vertical-games-link' => 'http://pt.videogameshub.wikia.com/wiki/Wiki_Videogameshub',
 	'global-footer-vertical-lifestyle-link' => 'http://pt.estilodevida.wikia.com/wiki/Wiki_Estilo_de_Vida',
 	'global-footer-desc' => 'GlobalFooter',
-	'shared-Oasis-footer-wikia-links' => '*http://www.wikia.com/About_Us|<span>Sobre nós</span>
+	'shared-Oasis-footer-wikia-links-with-sitemap' => '*http://www.wikia.com/About_Us|<span>Sobre nós</span>
 		*http://comunidade.wikia.com/wiki/Ajuda:Conteúdos| Ajuda
 		*http://www.wikia.com/Hiring| Carreiras
 		*http://www.wikia.com/Advertising| Anuncie
@@ -313,7 +314,7 @@ $messages['pt'] = array(
 );
 
 $messages['ru'] = array(
-	'shared-Oasis-footer-wikia-links' => '*http://www.wikia.com/About_Us|<span>О Викия</span>
+	'shared-Oasis-footer-wikia-links-with-sitemap' => '*http://www.wikia.com/About_Us|<span>О Викия</span>
 		*http://ru.community.wikia.com/wiki/%D0%A1%D0%BF%D1%80%D0%B0%D0%B2%D0%BA%D0%B0:%D0%A1%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D0%B5|Справка
 		*http://www.community.wikia.com|<span>Центральная Вики</span>
 		*http://www.wikia.com/Careers|Карьера
@@ -340,7 +341,7 @@ $messages['ru'] = array(
 );
 
 $messages['vi'] = array(
-	'shared-Oasis-footer-wikia-links' => '*http://congdong.wikia.com/wiki/Giới_thiệu|<span>Giới thiệu</span>
+	'shared-Oasis-footer-wikia-links-with-sitemap' => '*http://congdong.wikia.com/wiki/Giới_thiệu|<span>Giới thiệu</span>
 		*http://congdong.wikia.com|<span>Cộng đồng Wikia tiếng Việt</span>
 		*http://www.wikia.com/Careers|Tuyển dụng
 		*http://www.wikia.com/Advertising|Quảng cáo
@@ -352,7 +353,7 @@ $messages['vi'] = array(
 );
 
 $messages['zh-hans'] = array(
-	'shared-Oasis-footer-wikia-links' => '*http://www.wikia.com/About_Us|<span>关于我们</span>
+	'shared-Oasis-footer-wikia-links-with-sitemap' => '*http://www.wikia.com/About_Us|<span>关于我们</span>
 		*http://zh.community.wikia.com/wiki/Help:内容|帮助
 		*http://www.wikia.com/Hiring|<span>维基招聘</span>
 		*http://www.wikia.com/Advertising|<span>广告服务</span>
@@ -386,7 +387,7 @@ $messages['zh-hant'] = array(
 	'global-footer-vertical-games-link' => 'http://gameshub.wikia.com/wiki/Games_Hub',
 	'global-footer-vertical-lifestyle-link' => 'http://lifestylehub.wikia.com/wiki/Lifestyle_Hub',
 	'global-footer-desc' => 'GlobalFooter',
-	'shared-Oasis-footer-wikia-links' => '*http://www.wikia.com/About_Us|<span>關於我們</span>
+	'shared-Oasis-footer-wikia-links-with-sitemap' => '*http://www.wikia.com/About_Us|<span>關於我們</span>
 		*http://zh.community.wikia.com/wiki/Help:内容|使用說明
 		*http://www.wikia.com/Hiring|<span>維基招聘</span>
 		*http://www.wikia.com/Advertising|<span>廣告服務</span>
