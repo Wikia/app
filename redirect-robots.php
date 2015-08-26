@@ -282,14 +282,10 @@ function deny( ) {
  */
 $headers = function_exists('apache_request_headers') ? apache_request_headers() : array();
 
-$isdeny = !empty( $headers[ "X-Staging" ] ) &&
-	preg_match("@^(sandbox|preview$|verify$|showcase$)@", $headers["X-Staging"])
-	? true
-	: false;
+$isdeny = !empty( $headers[ "X-Staging" ] ) ? true : false;
 
 if( $isdeny ) {
 	deny();
-}
-else{
+} else {
 	newrobots();
 }
