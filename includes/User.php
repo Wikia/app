@@ -2741,7 +2741,6 @@ class User {
 	 */
 	public function setGlobalAttribute($attribute, $value) {
 		$this->setOptionHelper($attribute, $value);
-		$this->setAttributeInService($attribute, $value);
 	}
 
 	/**
