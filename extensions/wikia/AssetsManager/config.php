@@ -2545,6 +2545,13 @@ $config['content_review_module_js'] = [
 	]
 ];
 
+$config['content_review_module_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'assets' => [
+		'//skins/oasis/css/modules/ContentReview.scss',
+	],
+];
+
 $config['content_review_test_mode_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [

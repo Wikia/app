@@ -7,28 +7,35 @@ $messages = [];
  */
 $messages['en'] = [
 	'content-review-desc' => 'After a major exploit of customizable JavaScript we can no longer allow for unreviewed code to be executed on wikia\'s pages. This extension is the control room for code reviewing.',
+	'content-review-module-title' => 'Custom JavaScript status',
 
-	'content-review-module-unreviewed-title' => 'This page has unreviewed changes',
-	'content-review-module-unreviewed-description' => 'For security reasons every change made in the MediaWiki namespace has to be reviewed by a Wikia\'s staff member. For development you can use the unreviewed version, however it is not going to be served to other users that are not in the development mode.',
-	'content-review-module-unreviewed-submit' => 'Submit page for a review',
-	'content-review-module-enable-test-mode' => 'Enable Test Mode',
-	'content-review-module-disable-test-mode' => 'Disable Test Mode',
+	'content-review-module-header-latest' => 'Latest revision:',
+	'content-review-module-header-last' => 'Last reviewed revision:',
+	'content-review-module-header-live' => 'Live revision:',
 
-	'content-review-module-inreview-title' => 'A version of this page is waiting for a review',
-	'content-review-module-inreview-description' => 'For security reasons every change made in the MediaWiki namespace has to be reviewed by a Wikia\'s staff member. This page is waiting for a review. Use the button if you want to update the version submitted for a review.',
-	'content-review-module-inreview-submit' => 'Update the unreviewed changes',
+	'content-review-module-status-none' => 'None',
+	'content-review-module-status-unsubmitted' => 'needs to be submitted',
+	'content-review-module-status-live' => 'is live!',
+	'content-review-module-status-awaiting' => 'is awaiting review',
+	'content-review-module-status-approved' => 'was approved',
+	'content-review-module-status-rejected' => 'was rejected',
 
-	'content-review-module-current-title' => 'The current version of this page is waiting for a review',
-	'content-review-module-current-description' => 'For security reasons every change made in the MediaWiki namespace has to be reviewed by a Wikia\'s staff member. The current version page is waiting for a review.',
+	'content-review-rejection-reason-link' => 'Why?',
 
-	'content-review-test-mode-disable' => 'Disable Test Mode',
-	'content-review-test-mode-error' => 'Something went wrong. Please try again later.',
-	'content-review-test-mode-enabled' => 'You are now in test mode.',
+	'content-review-module-help' => '[[Help:Custom Javascript|Help]]',
 
+	'content-review-module-submit' => 'Submit for review',
 	'content-review-module-submit-success-unreviewed' => 'The changes have been successfully submitted for a review.',
 	'content-review-module-submit-success-inreview' => 'The previous unreviewed revision has been successfully updated with the changes.',
 	'content-review-module-submit-exception' => 'Unfortunately, we could not submit the changes for a review due to the following error: $1.',
 	'content-review-module-submit-error' => 'Unfortunately, we could not submit the changes for a review.',
+
+	'content-review-module-enable-test-mode' => 'Enter test mode',
+	'content-review-module-disable-test-mode' => 'Exit test mode',
+
+	'content-review-test-mode-disable' => 'Exit test mode',
+	'content-review-test-mode-error' => 'Something went wrong. Please try again later.',
+	'content-review-test-mode-enabled' => 'You are currently using unreviewed versions of custom JavaScript files. ',
 
 	'contentreview' => 'Content Review',
 	'action-content-review' => 'Content Review',

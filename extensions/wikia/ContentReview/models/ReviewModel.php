@@ -15,28 +15,35 @@ class ReviewModel extends ContentReviewBaseModel {
 	public function getPageStatus( $wikiId, $pageId ) {
 		$db = $this->getDatabaseForRead();
 
-		$status = ( new \WikiaSQL() )
+		$pageStatus = ( new \WikiaSQL() )
 			->SELECT( 'revision_id', 'status' )
 			->FROM( self::CONTENT_REVIEW_STATUS_TABLE )
 			->WHERE( 'wiki_id' )->EQUAL_TO( $wikiId )
 				->AND_( 'page_id' )->EQUAL_TO( $pageId )
-			->ORDER_BY( 'submit_time' )->DESC()
-			->LIMIT( 1 )
-			->runLoop( $db, function ( &$status, $row ) {
-				$status = [
-					'revision_id' => $row->revision_id,
-					'status' => $row->status,
-				];
+			->ORDER_BY( 'submit_time' )
+			->runLoop( $db, function ( &$pageStatus, $row ) {
+				if ( in_array( $row->status, [
+					self::CONTENT_REVIEW_STATUS_UNREVIEWED,
+					self::CONTENT_REVIEW_STATUS_IN_REVIEW,
+				] ) ) {
+					$pageStatus['latestId'] = $row->revision_id;
+					$pageStatus['latestStatus'] = $row->status;
+				} else {
+					$pageStatus['lastReviewedId'] = $row->revision_id;
+					$pageStatus['lastReviewedStatus'] = $row->status;
+				}
 			} );
 
-		if ( empty( $status ) ) {
-			$status = [
-				'revision_id' => null,
-				'status' => null,
+		if ( empty( $pageStatus ) ) {
+			$pageStatus = [
+				'latestId' => null,
+				'latestStatus' => null,
+				'lastReviewedId' => null,
+				'lastReviewedStatus' => null,
 			];
 		}
 
-		return $status;
+		return $pageStatus;
 	}
 
 	public function getCurrentUnreviewedId( $wikiId, $pageId ) {

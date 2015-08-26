@@ -159,22 +159,20 @@ class ContentReviewApiController extends WikiaApiController {
 		$reviewModel->removeCompletedReview( $wikiId, $pageId );
 	}
 
-	public function getCurrentPageData() {
+	public function getPageStatus() {
 		$wikiId = $this->request->getInt( 'wikiId' );
 		$pageId = $this->request->getInt( 'pageId' );
 
-		$revisionData = $this->getLatestReviewedRevisionFromDB( $wikiId, $pageId );
+		$liveRevisionData = [
+			'liveId' => $this->getLatestReviewedRevisionFromDB( $wikiId, $pageId )['revision_id'],
+		];
 
 		$reviewModel = new ReviewModel();
 		$reviewData = $reviewModel->getPageStatus( $wikiId, $pageId );
 
-		$data = [
-			'reviewedRevisionId' => $revisionData['revision_id'],
-			'touched' => $revisionData['touched'],
-			'revisionInReviewId' => $reviewData['revision_id'],
-			'reviewStatus' => $reviewData['status'],
-		];
-		$this->makeSuccessResponse( $data );
+		$currentPageData = array_merge( $liveRevisionData, $reviewData );
+
+		$this->makeSuccessResponse( $currentPageData );
 	}
 
 	public function getLatestReviewedRevision() {
