@@ -124,8 +124,12 @@ class Hooks {
 			$latestRevId = $title->getLatestRevID();
 
 			$latestReviewedRev = ( new CurrentRevisionModel() )->getLatestReviewedRevision( $wgCityId, $pageId );
+			$isContentReviewTestMode = Helper::isContentReviewTestModeEnabled();
 
-			if ( !empty( $latestReviewedRev['revision_id'] ) && $latestReviewedRev['revision_id'] != $latestRevId ) {
+			if ( !empty( $latestReviewedRev['revision_id'] )
+				&& $latestReviewedRev['revision_id'] != $latestRevId
+				&& !$isContentReviewTestMode
+			) {
 				$revision = \Revision::newFromId( $latestReviewedRev['revision_id'] );
 
 				if ( $revision ) {

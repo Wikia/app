@@ -53,7 +53,9 @@ class ResourceLoaderCustomWikiModule extends ResourceLoaderGlobalWikiModule {
 			foreach ( $pages as $pageName => &$page ) {
 				if ( $page['type'] === 'script' ) {
 					$title = Title::newFromText( $pageName );
-					if ( $title->getNamespace() === NS_MEDIAWIKI ) {
+					$isContentReviewTestMode = $contentReviewHelper::isContentReviewTestModeEnabled();
+
+					if ( $title->getNamespace() === NS_MEDIAWIKI && !$isContentReviewTestMode ) {
 						$page['revision'] = $contentReviewHelper->getReviewedRevisionIdFromText( $pageName );
 					}
 				}
