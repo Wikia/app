@@ -59,7 +59,7 @@ define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 		}
 	}
 
-	function onAuthComponentLoaded () {
+	function onPageLoaded () {
 		if (modal) {
 			$(modal).removeClass('loading');
 		}
@@ -80,7 +80,7 @@ define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 	return {
 		load: function (url) {
 			open();
-			loadPage(url, onAuthComponentLoaded);
+			loadPage(url, onPageLoaded);
 		}
 	};
 });
