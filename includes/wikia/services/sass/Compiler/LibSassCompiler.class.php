@@ -111,7 +111,7 @@ SASS;
 		return sprintf( "(%s)", join( ', ', $pairs ) );
 	}
 
-	private function quoteIfNeeded( $item, $key ) {
+	public function quoteIfNeeded( $item, $key ) {
 		if ( !is_numeric( $item ) && strpos( $key, 'color' ) === false ) {
 			$item = "'{$item}'";
 		}
