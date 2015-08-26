@@ -1368,7 +1368,8 @@ class WikiPage extends Page {
 
 					\Wikia\Logger\WikiaLogger::instance()->error('PLATFORM-1311', [
 						'reason' => 'ArticleDoEdit rollback - updateRevisionOn failed',
-						'exception' => new Exception()
+						'exception' => new Exception(),
+						'name' => $this->mTitle->getPrefixedDBkey(),
 					]);
 
 					$revisionId = 0;
@@ -1435,7 +1436,8 @@ class WikiPage extends Page {
 			if ( $newid === false ) {
 				\Wikia\Logger\WikiaLogger::instance()->error('PLATFORM-1311', [
 					'reason' => 'ArticleDoEdit rollback - insertOn failed',
-					'exception' => new Exception()
+					'exception' => new Exception(),
+					'name' => $this->mTitle->getPrefixedDBkey(),
 				]);
 
 				$dbw->rollback();

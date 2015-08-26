@@ -1543,7 +1543,8 @@ class LocalFile extends File {
 	function unlockAndRollback() {
 		\Wikia\Logger\WikiaLogger::instance()->error('PLATFORM-1311', [
 			'reason' => 'LocalFile::unlockAndRollback',
-			'exception' => new Exception()
+			'exception' => new Exception(),
+			'name' => $this->getName(),
 		]);
 
 		$this->locked = false;
