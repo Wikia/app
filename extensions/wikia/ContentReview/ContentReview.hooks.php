@@ -2,6 +2,7 @@
 
 namespace Wikia\ContentReview;
 
+use Wikia\ContentReview\Models\CurrentRevisionModel;
 use Wikia\ContentReview\Models\ReviewModel;
 
 class Hooks {
@@ -108,6 +109,35 @@ class Hooks {
 					wfMessage( 'content-review-diff-approve' )->plain()
 				)
 			);
+		}
+
+		return true;
+	}
+
+	public static function onRawPageViewBeforeOutput( \RawAction $rawAction, &$text ) {
+		global $wgCityId;
+
+		$title = $rawAction->getTitle();
+
+		if ( $title->inNamespace( NS_MEDIAWIKI ) && $title->isJsPage() ) {
+			$pageId = $title->getArticleID();
+			$latestRevId = $title->getLatestRevID();
+
+			$latestReviewedRev = ( new CurrentRevisionModel() )->getLatestReviewedRevision( $wgCityId, $pageId );
+			$isContentReviewTestMode = Helper::isContentReviewTestModeEnabled();
+
+			if ( !empty( $latestReviewedRev['revision_id'] )
+				&& $latestReviewedRev['revision_id'] != $latestRevId
+				&& !$isContentReviewTestMode
+			) {
+				$revision = \Revision::newFromId( $latestReviewedRev['revision_id'] );
+
+				if ( $revision ) {
+					$text = $revision->getRawText();
+				} else {
+					$text = '';
+				}
+			}
 		}
 
 		return true;
