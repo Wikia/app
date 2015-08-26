@@ -1,6 +1,6 @@
 define(
 	'ext.wikia.contentReview.diff.page',
-	['BannerNotification', 'wikia.querystring','jquery', 'mw', 'wikia.loader', 'wikia.nirvana'],
+	['BannerNotification', 'wikia.querystring', 'jquery', 'mw', 'wikia.loader', 'wikia.nirvana'],
 	function (BannerNotification, Querystring, $, mw, loader, nirvana) {
 		'use strict';
 		var qs = new Querystring(),

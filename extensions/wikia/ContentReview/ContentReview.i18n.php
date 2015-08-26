@@ -106,7 +106,7 @@ $messages['qqq'] = [
 	'content-review-diff-page-error' => 'A message shown when something go wrong on diff page.',
 	'content-review-diff-already-done' => 'A message shown when someone is trying approve/reject on not in review or with wrong oldid revision',
 
-		'content-review-status-unreviewed' => 'Status Unreviewed',
+	'content-review-status-unreviewed' => 'Status Unreviewed',
 	'content-review-status-in-review' => 'Status In review',
 	'content-review-status-approved' => 'Status Approved',
 	'content-review-status-rejected' => 'Status Rejected,'
