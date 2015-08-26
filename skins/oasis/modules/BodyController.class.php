@@ -515,22 +515,22 @@ class BodyController extends WikiaController {
 		}
 
 		// load CSS for Special:Upload
-		if (!empty($wg->Title) && $wg->Title->isSpecial('Upload')) {
-			$wg->Out->addStyle(AssetsManager::getInstance()->getSassCommonURL('skins/oasis/css/modules/SpecialUpload.scss'));
+		if ( !empty( $wg->Title ) && $wg->Title->isSpecial( 'Upload' ) ) {
+			$wg->Out->addStyle(AssetsManager::getInstance()->getSassCommonURL('skins/oasis/css/modules/SpecialUpload.scss' ) );
 		}
 
 		// load CSS for Special:MultipleUpload
-		if (!empty($wg->Title) && $wg->Title->isSpecial('MultipleUpload')) {
-			$wg->Out->addStyle(AssetsManager::getInstance()->getSassCommonURL('skins/oasis/css/modules/SpecialMultipleUpload.scss'));
+		if ( !empty( $wg->Title ) && $wg->Title->isSpecial( 'MultipleUpload' ) ) {
+			$wg->Out->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'skins/oasis/css/modules/SpecialMultipleUpload.scss' ) );
 		}
 
 		// load CSS for Special:Allpages
-		if (!empty($wg->Title) && $wg->Title->isSpecial('Allpages')) {
-			$wg->Out->addStyle(AssetsManager::getInstance()->getSassCommonURL('skins/oasis/css/modules/SpecialAllpages.scss'));
+		if ( !empty( $wg->Title ) && $wg->Title->isSpecial('Allpages' ) ) {
+			$wg->Out->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'skins/oasis/css/modules/SpecialAllpages.scss' ) );
 		}
 
 		// Forum Extension
-		if (!empty($wg->EnableForumExt) && ForumHelper::isForum()) {
+		if ( !empty( $wg->EnableForumExt ) && ForumHelper::isForum() ) {
 			$wg->SuppressPageHeader = true;
 		}
 
@@ -550,29 +550,33 @@ class BodyController extends WikiaController {
 
 		$namespace = $wg->Title->getNamespace();
 		// extra logic for subpages (RT #74091)
-		if (!empty($this->subtitle)) {
-			switch($namespace) {
+		if ( !empty( $this->subtitle ) ) {
+			switch ( $namespace ) {
 				// for user subpages add link to theirs talk pages
 				case NS_USER:
 					$talkPage = $wg->Title->getTalkPage();
 
 					// get number of revisions for talk page
-					$service = new PageStatsService($wg->Title->getArticleId());
+					$service = new PageStatsService( $wg->Title->getArticleId() );
 					$comments = $service->getCommentsCount();
 
 					// render comments bubble
-					$bubble = F::app()->renderView('CommentsLikes', 'Index', array('comments' => $comments, 'bubble' => true));
+					$bubble = $this->app->renderView(
+						'CommentsLikes',
+						'Index',
+						['comments' => $comments, 'bubble' => true]
+					);
 
 					$this->subtitle .= ' | ';
 					$this->subtitle .= $bubble;
-					$this->subtitle .= Wikia::link($talkPage);
+					$this->subtitle .= Wikia::link( $talkPage );
 					break;
 
 				case NS_USER_TALK:
 					$subjectPage = $wg->Title->getSubjectPage();
 
 					$this->subtitle .= ' | ';
-					$this->subtitle .= Wikia::link($subjectPage);
+					$this->subtitle .= Wikia::link( $subjectPage );
 					break;
 			}
 		}
