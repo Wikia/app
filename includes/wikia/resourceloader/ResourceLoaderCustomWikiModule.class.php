@@ -13,6 +13,8 @@ class ResourceLoaderCustomWikiModule extends ResourceLoaderGlobalWikiModule {
 	}
 
 	public function getPages( ResourceLoaderContext $context ) {
+		global $wgEnableContentReviewExt;
+
 		$pages = array();
 		$missingCallback = $context->getRequest()->getVal('missingCallback');
 
@@ -43,6 +45,18 @@ class ResourceLoaderCustomWikiModule extends ResourceLoaderGlobalWikiModule {
 				}
 
 				$pages[$pageKey] = $pageInfo;
+			}
+		}
+
+		if ( $wgEnableContentReviewExt ) {
+			$contentReviewHelper = new Wikia\ContentReview\Helper();
+			foreach ( $pages as $pageName => &$page ) {
+				if ( $page['type'] === 'script' ) {
+					$title = Title::newFromText( $pageName );
+					if ( $title->getNamespace() === NS_MEDIAWIKI ) {
+						$page['revision'] = $contentReviewHelper->getReviewedRevisionIdFromText( $pageName );
+					}
+				}
 			}
 		}
 
