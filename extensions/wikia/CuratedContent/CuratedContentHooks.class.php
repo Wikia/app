@@ -74,7 +74,7 @@ class CuratedContentHooks {
 		);
 	}
 
-	private static function shouldDisplayCuratedContentToolButton() {
+	public static function shouldDisplayCuratedContentToolButton() {
 		global $wgEnableCuratedContentExt, $wgUser;
 
 		return self::$buttonEnabled &&
