@@ -13,6 +13,8 @@ class AdEngine2Hooks {
 	const ASSET_GROUP_ADENGINE_TRACKING = 'adengine2_tracking_js';
 	const ASSET_GROUP_LIFTIUM = 'liftium_ads_js';
 	const ASSET_GROUP_LIFTIUM_EXTRA = 'liftium_ads_extra_js';
+
+	// it's externaltest because: https://github.com/Wikia/wikia-vcl/blob/master/wikia.com/control-stage.vcl#L19
 	const ADS_STAGING_HEADER = 'externaltest';
 
 	/**
