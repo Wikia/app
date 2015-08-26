@@ -114,12 +114,12 @@ class Hooks {
 		return true;
 	}
 
-	public static function onRawPageViewBeforeOutput( \RawAction &$rawAction, &$text ) {
+	public static function onRawPageViewBeforeOutput( \RawAction $rawAction, &$text ) {
 		global $wgCityId;
 
 		$title = $rawAction->getTitle();
 
-		if ( $title->getNamespace() === NS_MEDIAWIKI && $title->isJsPage() ) {
+		if ( $title->inNamespace( NS_MEDIAWIKI ) && $title->isJsPage() ) {
 			$pageId = $title->getArticleID();
 			$latestRevId = $title->getLatestRevID();
 

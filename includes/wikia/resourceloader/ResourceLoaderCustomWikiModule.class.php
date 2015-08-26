@@ -55,7 +55,7 @@ class ResourceLoaderCustomWikiModule extends ResourceLoaderGlobalWikiModule {
 					$title = Title::newFromText( $pageName );
 					$isContentReviewTestMode = $contentReviewHelper::isContentReviewTestModeEnabled();
 
-					if ( $title->getNamespace() === NS_MEDIAWIKI && !$isContentReviewTestMode ) {
+					if ( $title->inNamespace( NS_MEDIAWIKI ) && !$isContentReviewTestMode ) {
 						$page['revision'] = $contentReviewHelper->getReviewedRevisionIdFromText( $pageName );
 					}
 				}
