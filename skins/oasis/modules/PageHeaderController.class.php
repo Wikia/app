@@ -153,8 +153,7 @@ class PageHeaderController extends WikiaController {
 	private function getCuratedContentButton() {
 		global $wgUser, $wgEnableCuratedContentExt;
 
-		if ( !empty( $wgEnableCuratedContentExt ) && WikiaPageType::isMainPage() &&
-			$wgUser->isAllowed( 'curatedcontent' ) ) {
+		if ( !empty( $wgEnableCuratedContentExt ) && CuratedContentHooks::shouldDisplayCuratedContentToolButton() ) {
 			return $this->app->sendRequest( 'CuratedContent', 'editButton' );
 		} else {
 			return null;
