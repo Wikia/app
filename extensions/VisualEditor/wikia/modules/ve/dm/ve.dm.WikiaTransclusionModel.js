@@ -111,15 +111,15 @@ ve.dm.WikiaTransclusionModel.prototype.fetchInfoboxParamsRequestDone = function 
  * @param data from infobox params API
  */
 ve.dm.WikiaTransclusionModel.prototype.denormalizeInfoboxTemplateTitles = function ( data ) {
-	var i, j, title, pages = data.query.pages;
+	var i, id, title, pages = data.query.pages;
 
 	if ( data.query.normalized ) {
 		for ( i = 0; i < data.query.normalized.length; i++ ) {
 			title = data.query.normalized[i];
 
-			for ( j = 0; j < pages.length; j++ ) {
-				if ( title.to === pages[j].title ) {
-					pages[j].title = title.from;
+			for ( id in pages ) {
+				if ( title.to === pages[id].title ) {
+					pages[id].title = title.from;
 					break;
 				}
 			}
