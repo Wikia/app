@@ -8,6 +8,8 @@ class GlobalFooterController extends WikiaController {
 	const MEMC_KEY_GLOBAL_FOOTER_VERSION = 2;
 	const MESSAGE_KEY_GLOBAL_FOOTER_LINKS = 'shared-Oasis-footer-wikia-links';
 	const MEMC_EXPIRY = 3600;
+	const SITEMAP_GLOBAL = 'http://www.wikia.com/Sitemap';
+	const SITEMAP_LOCAL = 'Special:AllPages';
 
 	public function index() {
 		Wikia::addAssetsToOutput( 'global_footer_scss' );
@@ -22,20 +24,16 @@ class GlobalFooterController extends WikiaController {
 	}
 
 	private function getGlobalFooterLinks() {
-		global $wgCityId, $wgContLang, $wgLang, $wgMemc;
-
 		wfProfileIn( __METHOD__ );
 
-		$memcKey = wfSharedMemcKey(
+		$memcKey = wfMemcKey(
 			self::MEMC_KEY_GLOBAL_FOOTER_LINKS,
-			$wgContLang->getCode(),
-			$wgLang->getCode(),
-			$wgCityId,
+			$this->wg->Lang->getCode(),
 			WikiaPageType::isMainPage(),
 			self::MEMC_KEY_GLOBAL_FOOTER_VERSION
 		);
 
-		$globalFooterLinks = $wgMemc->get( $memcKey );
+		$globalFooterLinks = $this->wg->Memc->get( $memcKey );
 		if ( !empty( $globalFooterLinks ) ) {
 			wfProfileOut( __METHOD__ );
 			return $globalFooterLinks;
@@ -68,7 +66,7 @@ class GlobalFooterController extends WikiaController {
 			}
 		}
 
-		$wgMemc->set( $memcKey, $parsedLinks, self::MEMC_EXPIRY );
+		$this->wg->Memc->set( $memcKey, $parsedLinks, self::MEMC_EXPIRY );
 
 		wfProfileOut( __METHOD__ );
 
@@ -76,18 +74,16 @@ class GlobalFooterController extends WikiaController {
 	}
 
 	private function verticalNameMessage() {
-		global $wgCityId;
 		$wikiFactoryHub = WikiFactoryHub::getInstance();
 
-		return $wikiFactoryHub->getVerticalNameMessage( $wikiFactoryHub->getVerticalId( $wgCityId ) );
+		return $wikiFactoryHub->getVerticalNameMessage( $wikiFactoryHub->getVerticalId( $this->wg->CityId ) );
 	}
 
 	private function getLogoLink() {
 		$verticalShortName = $this->getVerticalShortName();
 
 		if ( WikiaPageType::isWikiaHomePage() || $verticalShortName === null ) {
-			global $wgLang;
-			$link = ( new WikiaLogoHelper() )->getCentralUrlForLang( $wgLang->getCode() );
+			$link = ( new WikiaLogoHelper() )->getCentralUrlForLang( $this->wg->Lang->getCode() );
 		} else {
 			/* possible message keys: global-footer-vertical-tv-link, global-footer-vertical-comics-link,
 			global-footer-vertical-movies-link, global-footer-vertical-music-link, global-footer-vertical-books-link,
@@ -99,9 +95,7 @@ class GlobalFooterController extends WikiaController {
 	}
 
 	private function getVerticalShortName() {
-		global $wgCityId;
-
-		$wikiVertical = WikiFactoryHub::getInstance()->getWikiVertical( $wgCityId );
+		$wikiVertical = WikiFactoryHub::getInstance()->getWikiVertical( $this->wg->CityId );
 		if ( $wikiVertical['id'] ) {
 			return $wikiVertical['short'];
 		}
@@ -109,15 +103,13 @@ class GlobalFooterController extends WikiaController {
 	}
 
 	private function getSitemapLink() {
-		global $wgCityId;
-
 		if ( WikiaPageType::isMainPage()
 			|| WikiaPageType::isCorporatePage()
-			|| $wgCityId === COMMUNITY_CENTRAL_CITY_ID
+			|| $this->wg->CityId === COMMUNITY_CENTRAL_CITY_ID
 		) {
-			return 'http://www.wikia.com/Sitemap';
+			return self::SITEMAP_GLOBAL;
 		}
 
-		return 'Special:AllPages';
+		return self::SITEMAP_LOCAL;
 	}
 }
