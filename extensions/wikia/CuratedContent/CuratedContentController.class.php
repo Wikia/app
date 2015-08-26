@@ -630,10 +630,14 @@ class CuratedContentController extends WikiaController {
 	}
 
 	public function editButton() {
-		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
-		$this->response->setVal(
-			'editMobileMainPageMessage', wfMessage( 'wikiacuratedcontent-edit-mobile-main-page' )->text()
-		);
+		if ( CuratedContentHelper::shouldDisplayToolButton() ) {
+			$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
+			$this->response->setVal(
+				'editMobileMainPageMessage', wfMessage( 'wikiacuratedcontent-edit-mobile-main-page' )->text()
+			);
+		} else {
+			return false; // skip rendering
+		}
 	}
 }
 
