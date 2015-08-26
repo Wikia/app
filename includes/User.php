@@ -37,7 +37,7 @@ define( 'USER_TOKEN_LENGTH', 32 );
  * Int Serialized record version.
  * @ingroup Constants
  */
-define( 'MW_USER_VERSION', 12 );
+define( 'MW_USER_VERSION', 15 );
 
 /**
  * String Some punctuation to prevent editing from broken text-mangling proxies.
@@ -242,6 +242,8 @@ class User {
 	 * @var Block
 	 */
 	private $mBlockedFromCreateAccount = false;
+
+	var $mIsCurrent = false; # Wikia - indicates that the instance represents the current performer
 
 	static $idCacheByName = array();
 
@@ -1886,6 +1888,13 @@ class User {
 	}
 
 	/**
+	 * Mark that the instance represents the current performer
+	 */
+	public function setCurrent() {
+		$this->mIsCurrent = true;
+	}
+
+	/**
 	 * Get the user name, or the IP of an anonymous user
 	 * @return String User's name or IP address
 	 */
@@ -2652,7 +2661,7 @@ class User {
 	 * @see getGlobalPreference for documentation about preferences
 	 */
 	public function getDefaultGlobalPreference($preference) {
-		return $this->userPreferences()->getFromDefault($preference)->orElse(null);
+		return $this->userPreferences()->getFromDefault($preference);
 	}
 
 	/**
@@ -2678,8 +2687,32 @@ class User {
 	 * @param mixed $default
 	 * @return string
 	 */
-	public function getGlobalAttribute($attribute, $default=null) {
-		return $this->getOptionHelper($attribute, $default);
+	public function getGlobalAttribute( $attribute, $default = null ) {
+		global $wgEnableReadsFromAttributeService;
+
+		$valueFromMW = $this->getOptionHelper( $attribute, $default );
+		if ( !empty( $wgEnableReadsFromAttributeService ) ) {
+			$this->compareAttributeValueFromService( $valueFromMW, $attribute, $default );
+		}
+
+		return $valueFromMW;
+	}
+
+	private function compareAttributeValueFromService( $valueFromMW, $attribute, $default ) {
+		$valueFromService = $this->userAttributes()->getAttribute( $this->getId(), $attribute, $default );
+		if ( $valueFromMW !== $valueFromService ) {
+			$this->logAttributeMismatch( $valueFromMW, $valueFromService, $attribute, $default );
+		}
+	}
+
+	private function logAttributeMismatch( $valueFromMW, $valueFromService, $attribute, $default ) {
+		$this->error( 'USER_ATTRIBUTES attribute_mismatch', [
+				'valueFromMW' => $valueFromMW,
+				'valueFromService' => $valueFromService,
+				'attribute' => $attribute,
+				'default' => $default,
+				'userId' => $this->getId()
+			] );
 	}
 
 	/**
@@ -3124,15 +3157,25 @@ class User {
 	}
 
 	/**
-	 * Get whether the user is the current performer
+	 * Get whether the instance represents the current performer
 	 *
-	 * Inspired by User::equals() and its usage in MW 1.25
 	 * @return Bool
 	 * @author Michał Roszka <michal@wikia-inc.com>
 	 */
 	public function isCurrent() {
+		// This is the first implementation. I still rely on $wgUser here
+		// and want to log all cases when mIsCurrent property is false
+		// for the current performer and fix it for future checks.
 		global $wgUser;
-		return $this->getName() === $wgUser->getName();
+		if ( !$this->mIsCurrent && $this->getName() === $wgUser->getName() ) {
+			Wikia\Logger\WikiaLogger::instance()->error(
+				'wrong-mIsCurrent',
+				[ 'exception' => new Exception ]
+			);
+			// fix the wrong mIsCurrent
+			$this->setCurrent();
+		}
+		return $this->mIsCurrent;
 	}
 
 	/**
