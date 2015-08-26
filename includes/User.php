@@ -256,6 +256,11 @@ class User {
 	private $attributesToSet = [];
 
 	/**
+	 * @var UserAttributes
+	 */
+	private $attributeService;
+
+	/**
 	 * Lightweight constructor for an anonymous user.
 	 * Use the User::newFrom* factory functions for other kinds of users.
 	 *
@@ -287,7 +292,11 @@ class User {
 	 * @return UserAttributes
 	 */
 	private function userAttributes() {
-		return Injector::getInjector()->get(UserAttributes::class);
+		if ( is_null( $this->attributeService ) ) {
+			$this->attributeService = Injector::getInjector()->get( UserAttributes::class );
+		}
+
+		return $this->attributeService;
 	}
 
 	/**
