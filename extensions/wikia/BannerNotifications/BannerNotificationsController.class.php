@@ -288,7 +288,7 @@ class BannerNotificationsController extends WikiaController {
 	public static function onBeforePageDisplay( \OutputPage $out ) {
 		global $wgUser;
 
-		if ( !$wgUser->isEmailConfirmed() ) {
+		if ( $wgUser->isLoggedIn() && !$wgUser->isEmailConfirmed() ) {
 			self::addConfirmation(
 				wfMessage('bannernotifications-not-confirmed-email')->parse(),
 				self::CONFIRMATION_WARN,
