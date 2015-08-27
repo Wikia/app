@@ -1366,6 +1366,12 @@ class WikiPage extends Page {
 						$dbw->delete( 'revision', array( 'rev_id' => $revisionId ), __METHOD__ );
 					}
 
+					\Wikia\Logger\WikiaLogger::instance()->error('PLATFORM-1311', [
+						'reason' => 'ArticleDoEdit rollback - updateRevisionOn failed',
+						'exception' => new Exception(),
+						'name' => $this->mTitle->getPrefixedDBkey(),
+					]);
+
 					$revisionId = 0;
 					$dbw->rollback(__METHOD__);
 				} else {
@@ -1428,6 +1434,12 @@ class WikiPage extends Page {
 			$newid = $this->insertOn( $dbw );
 
 			if ( $newid === false ) {
+				\Wikia\Logger\WikiaLogger::instance()->error('PLATFORM-1311', [
+					'reason' => 'ArticleDoEdit rollback - insertOn failed',
+					'exception' => new Exception(),
+					'name' => $this->mTitle->getPrefixedDBkey(),
+				]);
+
 				$dbw->rollback();
 				$status->fatal( 'edit-already-exists' );
 
