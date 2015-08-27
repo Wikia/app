@@ -1,8 +1,11 @@
 define(
 	'ext.wikia.contentReview.diff.page',
-	['BannerNotification', 'jquery', 'mw', 'wikia.loader', 'wikia.nirvana'],
-	function (BannerNotification, $, mw, loader, nirvana) {
+	['BannerNotification', 'wikia.querystring', 'jquery', 'mw', 'wikia.loader', 'wikia.nirvana'],
+	function (BannerNotification, Querystring, $, mw, loader, nirvana) {
 		'use strict';
+		var qs = new Querystring(),
+			diff = qs.getVal('diff', null),
+			oldid = qs.getVal('oldid', null);
 
 		function init() {
 			$.when(loader({
@@ -21,15 +24,18 @@ define(
 		}
 
 		function removeCompletedAndUpdateLogs() {
-			var $button = $(this),
+			var	$button = $(this),
 				notification,
 				data = {
 					wikiId: $button.attr('data-wiki-id'),
 					pageId: $button.attr('data-page-id'),
 					status: $button.attr('data-status'),
+					diff: diff,
+					oldid: oldid,
 					editToken: mw.user.tokens.get('editToken')
 				};
 
+			$('.content-review-diff-button').prop('disabled',true);
 			nirvana.sendRequest({
 				controller: 'ContentReviewApiController',
 				method: 'removeCompletedAndUpdateLogs',
@@ -48,6 +54,7 @@ define(
 						mw.message('content-review-diff-page-error').escaped(),
 						'error'
 					);
+					$('.content-review-diff-button').prop('disabled',false);
 					notification.show();
 				}
 			});

@@ -53,6 +53,7 @@ $messages['en'] = [
 	'content-review-diff-approve-confirmation' => 'Reviewed code has been approved.',
 	'content-review-diff-reject-confirmation' => 'Reviewed code has been rejected.',
 	'content-review-diff-page-error' => 'Something went wrong. Please try again later.',
+	'content-review-diff-already-done' => 'You are trying to add an changes to the a non-existent revision.',
 
 	'content-review-status-unreviewed' => 'Unreviewed',
 	'content-review-status-in-review' => 'In review',
@@ -103,6 +104,7 @@ $messages['qqq'] = [
 	'content-review-diff-approve-confirmation' => 'A message shown after click approve button.',
 	'content-review-diff-reject-confirmation' => 'A message shown after click reject button.',
 	'content-review-diff-page-error' => 'A message shown when something go wrong on diff page.',
+	'content-review-diff-already-done' => 'A message shown when someone is trying approve/reject on not in review or with wrong oldid revision',
 
 	'content-review-status-unreviewed' => 'Status Unreviewed',
 	'content-review-status-in-review' => 'Status In review',
