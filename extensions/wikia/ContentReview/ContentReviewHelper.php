@@ -90,16 +90,14 @@ class Helper {
 	}
 
 	public static function isContentReviewTestModeEnabled() {
-		global $wgUser, $wgCityId;
+		global $wgCityId;
 
 		$contentReviewTestModeEnabled = false;
 
-		if ( $wgUser->isLoggedIn() ) {
-			$wikisIds = self::getContentReviewTestModeWikis();
+		$wikisIds = self::getContentReviewTestModeWikis();
 
-			if ( !empty( $wikisIds ) && in_array( $wgCityId, $wikisIds ) ) {
-				$contentReviewTestModeEnabled = true;
-			}
+		if ( !empty( $wikisIds ) && in_array( $wgCityId, $wikisIds ) ) {
+			$contentReviewTestModeEnabled = true;
 		}
 
 		return $contentReviewTestModeEnabled;
