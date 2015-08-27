@@ -98,11 +98,11 @@ class Hooks {
 				'section' => 'new',
 				'useMessage' => 'content-review-rejection-explanation'
 			];
-			$talkPage = $wgTitle->getTalkPage($params);
+			$talkPage = $wgTitle->getTalkPage( $params );
 			$output->prependHTML(
 				\Xml::element( 'a',
 					[
-						'href' => $talkPage->getFullURL($params)
+						'href' => $talkPage->getFullURL( $params )
 					],
 					wfMessage( 'content-review-feedback-link-text' )->plain()
 				)
