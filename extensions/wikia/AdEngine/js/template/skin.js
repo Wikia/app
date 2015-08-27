@@ -46,19 +46,10 @@ define('ext.wikia.adEngine.template.skin', [
 						skinImageHeight: 800,
 						backgroundTiled: false,
 						backgroundFixed: true,
-						backgroundDynamic: true,
-						backgroundColor: 'transparent' // TODO: Revisit this hack after CONCF-842 is fixed
+						backgroundDynamic: true
 					};
 					if (params.backgroundColor) {
-						doc.documentElement.style.backgroundColor = '#' + params.backgroundColor;
-
-						// The SevenOne Media hack (ADEN-2223)
-						//
-						// Ad skins used to work in release-310 without it
-						// TODO: Revisit this hack after CONCF-842 is fixed
-						if (sevenOneMedia) {
-							doc.body.style.backgroundColor = 'transparent';
-						}
+						bcParams.backgroundColor = '#' + params.backgroundColor;
 					}
 					if (params.middleColor) {
 						bcParams.backgroundMiddleColor = '#' + params.middleColor;
