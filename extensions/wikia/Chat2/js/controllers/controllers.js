@@ -221,7 +221,7 @@ var NodeRoomController = $.createClass(Observable,{
 			this.isInitialized = true;
 			$().log(this.isInitialized, "isInitialized");
 			if(this.isMain()) {
-				var newChatEntry = new models.InlineAlert({text: $.msg('chat-welcome-message', wgSiteName ) });
+				var newChatEntry = new models.InlineAlert({text: $.msgHtml('chat-welcome-message', wgSiteName ) });
 				this.model.chats.add(newChatEntry);
 			}
 
@@ -365,7 +365,7 @@ var NodeRoomController = $.createClass(Observable,{
 			if(this.isMain()) {
 				if(joinedUser.get('name') != wgUserName) {
 					// Create the inline-alert (on client side so that we only display it if the user actually IS new to the room and not just disconnecting/reconnecting).
-					var newChatEntry = new models.InlineAlert({text: $.msg('chat-user-joined', [this.sanitizeHtml(joinedUser.get('name'))] ) });
+					var newChatEntry = new models.InlineAlert({text: $.msgHtml('chat-user-joined', [this.sanitizeHtml(joinedUser.get('name'))] ) });
 					this.model.chats.add(newChatEntry);
 				}
 			}
@@ -430,7 +430,7 @@ var NodeRoomController = $.createClass(Observable,{
 			}
 
 			this.onPartBase(kickEvent.get('kickedUserName'), true);
-			var newChatEntry = new models.InlineAlert({text: $.msg('chat-user-was-' + mode, this.sanitizeHtml(kickEvent.get('kickedUserName')), this.sanitizeHtml(kickEvent.get('moderatorName')), undoLink ) });
+			var newChatEntry = new models.InlineAlert({text: $.msgHtml('chat-user-was-' + mode, this.sanitizeHtml(kickEvent.get('kickedUserName')), this.sanitizeHtml(kickEvent.get('moderatorName')), undoLink ) });
 
 			this.model.chats.add(newChatEntry);
 		} else {
@@ -468,7 +468,7 @@ var NodeRoomController = $.createClass(Observable,{
 
 			//TODO: move it to other class
 			if(this.isMain() && (connectedUser.get('name') != wgUserName) && (!skipAlert)) {
-				var newChatEntry = new models.InlineAlert({text: $.msg('chat-user-parted', [this.sanitizeHtml(connectedUser.get('name'))] ) });
+				var newChatEntry = new models.InlineAlert({text: $.msgHtml('chat-user-parted', [this.sanitizeHtml(connectedUser.get('name'))] ) });
 				this.model.chats.add(newChatEntry);
 			}
 

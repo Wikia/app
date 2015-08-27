@@ -59,6 +59,14 @@
 			return ret;
 		};
 
+		JSMessages.html = function(){
+			var expandedText = this.msg.apply(this, arguments),
+				div = document.createElement('div');
+
+			div.appendChild(document.createTextNode(expandedText));
+			return div.innerHTML;
+		};
+
 		/**
 		 * Load messages from given package(s)
 		 *
@@ -224,6 +232,7 @@
 		var msg = JSMessages(jQuery.nirvana, jQuery, context);
 		jQuery.extend(jQuery, {
 			msg: msg,
+			msgHtml: msg.html,
 			getMessages: msg.get,
 			getMessagesForContent: msg.getForContent
 		})
