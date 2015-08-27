@@ -7,29 +7,36 @@ $messages = [];
  */
 $messages['en'] = [
 	'content-review-desc' => 'After a major exploit of customizable JavaScript we can no longer allow for unreviewed code to be executed on wikia\'s pages. This extension is the control room for code reviewing.',
+	'content-review-module-title' => 'Custom JavaScript status',
 
-	'content-review-module-unreviewed-title' => 'This page has unreviewed changes',
-	'content-review-module-unreviewed-description' => 'For security reasons every change made in the MediaWiki namespace has to be reviewed by a Wikia\'s staff member. For development you can use the unreviewed version, however it is not going to be served to other users that are not in the development mode.',
-	'content-review-module-unreviewed-submit' => 'Submit page for a review',
-	'content-review-module-enable-test-mode' => 'Enable Test Mode',
+	'content-review-module-header-latest' => 'Latest revision:',
+	'content-review-module-header-last' => 'Last reviewed revision:',
+	'content-review-module-header-live' => 'Live revision:',
 
-	'content-review-module-inreview-title' => 'A version of this page is waiting for a review',
-	'content-review-module-inreview-description' => 'For security reasons every change made in the MediaWiki namespace has to be reviewed by a Wikia\'s staff member. This page is waiting for a review. Use the button if you want to update the version submitted for a review.',
-	'content-review-module-inreview-submit' => 'Update the unreviewed changes',
+	'content-review-module-status-none' => 'None',
+	'content-review-module-status-unsubmitted' => 'needs to be submitted',
+	'content-review-module-status-live' => 'is live!',
+	'content-review-module-status-awaiting' => 'is awaiting review',
+	'content-review-module-status-approved' => 'was approved',
+	'content-review-module-status-rejected' => 'was rejected',
 
-	'content-review-module-current-title' => 'The current version of this page is waiting for a review',
-	'content-review-module-current-description' => 'For security reasons every change made in the MediaWiki namespace has to be reviewed by a Wikia\'s staff member. The current version page is waiting for a review.',
+	'content-review-rejection-reason-link' => 'Why?',
 
-	'content-review-test-mode-disable' => 'Disable Test Mode',
-	'content-review-test-mode-error' => 'Something went wrong. Please try again later.',
-	'content-review-test-mode-enabled' => 'You are now in test mode.',
+	'content-review-module-help' => '[[Help:Custom Javascript|Help]]',
 
-	'content-review-module-submit-success-unreviewed' => 'The changes have been successfully submitted for a review.',
-	'content-review-module-submit-success-inreview' => 'The previous unreviewed revision has been successfully updated with the changes.',
+	'content-review-module-submit' => 'Submit for review',
+	'content-review-module-submit-success' => 'The changes have been successfully submitted for a review.',
 	'content-review-module-submit-exception' => 'Unfortunately, we could not submit the changes for a review due to the following error: $1.',
 	'content-review-module-submit-error' => 'Unfortunately, we could not submit the changes for a review.',
 
-	'contentreview' => 'Content Review',
+	'content-review-module-enable-test-mode' => 'Enter test mode',
+	'content-review-module-disable-test-mode' => 'Exit test mode',
+
+	'content-review-test-mode-disable' => 'Exit test mode',
+	'content-review-test-mode-error' => 'Something went wrong. Please try again later.',
+	'content-review-test-mode-enabled' => 'You are currently using unreviewed versions of custom JavaScript files. ',
+
+	'content-review-special-title' => 'Content Review',
 	'action-content-review' => 'Content Review',
 	'content-review-special-list-header-wiki-name' => 'Wiki name',
 	'content-review-special-list-header-page-name' => 'Page name',
@@ -43,8 +50,8 @@ $messages['en'] = [
 
 	'content-review-special-start-review' => 'Start review',
 	'content-review-special-continue-review' => 'Continue review',
-	'content-review-special-review-started' => 'You have started review process.',
-	'content-review-special-review-open' => 'Please complete open review for this page first.',
+	'content-review-special-review-started' => 'You have started a review process.',
+	'content-review-special-review-open' => 'Please complete a review process for a previous revision first.',
 	'content-review-special-error' => 'Unfortunately, an error happened.',
 
 	'content-review-diff-approve' => 'Approve',
@@ -57,7 +64,7 @@ $messages['en'] = [
 	'content-review-status-unreviewed' => 'Unreviewed',
 	'content-review-status-in-review' => 'In review',
 	'content-review-status-approved' => 'Approved',
-	'content-review-status-rejected' => 'Rejected,',
+	'content-review-status-rejected' => 'Rejected',
 ];
 
 /**
@@ -65,22 +72,34 @@ $messages['en'] = [
  */
 $messages['qqq'] = [
 	'content-review-desc' => '{{desc}}',
+	'content-review-module-title' => 'Title of a the right rail module with information on a page status.',
 
-	'content-review-module-unreviewed-title' => 'Title of a the right rail module with a button to submit a page to review.',
-	'content-review-module-unreviewed-description' => 'The content of the right rail module explaining that the current version of a page has not been reviewed.',
-	'content-review-module-unreviewed-submit' => 'Text of a button that sends a page to review.',
+	'content-review-module-header-latest' => 'Header of a section of the right rail module with information on the latest revision submitted for a review.',
+	'content-review-module-header-last' => 'Header of a section of the right rail module with information on the last reviewed revision.',
+	'content-review-module-header-live' => 'Header of a section of the right rail module with information on the revision that is currently live and served to users.',
 
-	'content-review-module-inreview-title' => 'Title of a the right rail module with a button to update a version of a page already sent for a review.',
-	'content-review-module-inreview-description' => 'The content of the right rail module explaining that a page is awaiting a review and that a user can update the submitted code with the current changes.',
-	'content-review-module-inreview-submit' => 'Text of a button that updates the version submitted for a review.',
+	'content-review-module-status-none' => 'Message shown as a revision\'s status when there is no information on it.',
+	'content-review-module-status-unsubmitted' => 'Message shown as a revision\'s status when the latest made revision has not yet been sent for a review.',
+	'content-review-module-status-live' => 'Message shown as a revision\'s status when it is currently live and served to users.',
+	'content-review-module-status-awaiting' => 'Message shown as a revision\'s status when a revision is waiting for a review.',
+	'content-review-module-status-approved' => 'Message shown as a revision\'s status if ',
+	'content-review-module-status-rejected' => 'was rejected',
 
-	'content-review-module-current-title' => 'Title of a the right rail module on a page already sent for a review with the current version.',
-	'content-review-module-current-description' => 'The content of the right rail module explaining that the current version of a page is awaiting for a review.',
+	'content-review-rejection-reason-link' => 'Text of a link that leads a users to a Talk page with an explanation on why their code was rejected.',
 
-	'content-review-module-submit-success-insert' => 'A message shown to a user in a Banner Notification if a page has been added to review.',
-	'content-review-module-submit-success-update' => 'A message shown to a user in a Banner Notification if a page had an unreviewed version submitted and it got updated.',
-	'content-review-module-submit-success-exception' => 'A message shown to a user in a Banner Notification if a known error happened. $1 is the error message.',
-	'content-review-module-submit-success-error' => 'A message shown to a user in a Banner Notification if an unknown error happened.',
+	'content-review-module-help' => 'A link to a Help page explaining how the review system works.',
+
+	'content-review-module-submit' => 'A text of a button that sends a given page for a review.',
+	'content-review-module-submit-success' => 'A message shown to a user in a Banner Notification if a page has been added to review.',
+	'content-review-module-submit-exception' => 'A message shown to a user in a Banner Notification if a known error happened. $1 is the error message.',
+	'content-review-module-submit-error' => 'A message shown to a user in a Banner Notification if an unknown error happened.',
+
+	'content-review-module-enable-test-mode' => 'A text of a button which clicked enables user to test unreviewed changes made in JavaScript articles.',
+	'content-review-module-disable-test-mode' => 'A text of a button which clicked disables serving unreviewed JavaScript to a user.',
+
+	'content-review-test-mode-disable' => 'A text of a link that disables serving unreviewed JavaScript to a user. Shown in a Banner Notification.',
+	'content-review-test-mode-error' => 'A message shown if there was a problem with enabling the test mode to a user.',
+	'content-review-test-mode-enabled' => 'A message shown in Banner Notification with an information that a user is curently being served unreviewed JavaScript pages.',
 
 	'content-review-special-title' => 'Title for special page',
 	'action-content-review' => 'Title for permissions',
@@ -100,13 +119,14 @@ $messages['qqq'] = [
 	'content-review-special-review-open' => 'A message shown when another review for the page is in progress and ask user to complete that first.',
 	'content-review-special-error' => 'Information that some error occurs.',
 
-	'content-review-diff-approve-confirmation' => 'A message shown after click approve button.',
-	'content-review-diff-reject-confirmation' => 'A message shown after click reject button.',
-	'content-review-diff-page-error' => 'A message shown when something go wrong on diff page.',
-	'content-review-diff-already-done' => 'A message shown when someone is trying approve/reject on not in review or with wrong oldid revision',
+	'content-review-diff-approve' => 'A text of a button which clicked approves a given revision.',
+	'content-review-diff-reject' => 'A text of a button which clicked rejects a given revision.',
+	'content-review-diff-approve-confirmation' => 'A message shown in a Banner Notification after a click on the approve button if everything went well.',
+	'content-review-diff-reject-confirmation' => 'A message shown in a Banner Notification after click reject button if everything went well.',
+	'content-review-diff-page-error' => 'A message shown in a Banner Notification when something go wrong on diff page.',
 
-	'content-review-status-unreviewed' => 'Status Unreviewed',
-	'content-review-status-in-review' => 'Status In review',
-	'content-review-status-approved' => 'Status Approved',
-	'content-review-status-rejected' => 'Status Rejected,'
+	'content-review-status-unreviewed' => 'A name of a status of a revision that has not yet been reviewed.',
+	'content-review-status-in-review' => 'A name of a status of a revision that is being reviewed.',
+	'content-review-status-approved' => 'A name of a status of a revision that has been approved.',
+	'content-review-status-rejected' => 'A name of a status of a revision that has been rejected.'
 ];

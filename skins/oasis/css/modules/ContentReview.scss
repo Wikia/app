@@ -1,0 +1,55 @@
+/* Variables */
+$content-review-status-border: 14px solid;
+$content-review-color-none: #aaa;
+$content-review-color-live: #76bf06;
+$content-review-color-approved: #76bf06;
+$content-review-color-rejected: #e1390b;
+$content-review-color-awaiting: #008cce;
+$content-review-color-unsubmitted: #ffad00;
+
+.content-review-module-help {
+	text-align: right;
+}
+
+.content-review-module-submit-container {
+	margin-top: 15px;
+	text-align: center;
+}
+
+.content-review-module-test-mode {
+	margin-top: 15px;
+	text-align: center;
+}
+
+.content-review-module-header {
+	margin-top: 15px;
+}
+
+.content-review-status {
+	border-left: $content-review-status-border;
+	padding-left: 10px;
+}
+
+.content-review-status-none {
+	border-color: $content-review-color-none;
+}
+
+.content-review-status-approved {
+	border-color: $content-review-color-approved;
+}
+
+.content-review-status-live {
+	border-color: $content-review-color-live;
+}
+
+.content-review-status-rejected {
+	border-color: $content-review-color-rejected;
+}
+
+.content-review-status-unsubmitted {
+	border-color: $content-review-color-unsubmitted;
+}
+
+.content-review-status-awaiting {
+	border-color: $content-review-color-awaiting;
+}

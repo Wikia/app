@@ -105,6 +105,14 @@ class Helper {
 		return $contentReviewTestModeEnabled;
 	}
 
+	public static function isStatusAwaiting( $status ) {
+		return in_array( (int) $status, [
+				ReviewModel::CONTENT_REVIEW_STATUS_UNREVIEWED,
+				ReviewModel::CONTENT_REVIEW_STATUS_IN_REVIEW,
+			]
+		);
+	}
+
 	public function isDiffPageInReviewProcess( $wikiId, $pageId, $diff ) {
 
 		$reviewModel = new ReviewModel();

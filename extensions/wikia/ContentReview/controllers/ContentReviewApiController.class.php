@@ -150,7 +150,9 @@ class ContentReviewApiController extends WikiaApiController {
 		$oldid = $this->request->getInt( 'oldid' );
 
 
-		if ( $helper->hasPageApprovedId( $wikiId, $pageId, $oldid  ) && $helper->isDiffPageInReviewProcess( $wikiId, $pageId, $diff ) ) {
+		if ( $helper->hasPageApprovedId( $wikiId, $pageId, $oldid  )
+			&& $helper->isDiffPageInReviewProcess( $wikiId, $pageId, $diff ) )
+		{
 			$review = $reviewModel->getReviewedContent( $wikiId, $pageId, ReviewModel::CONTENT_REVIEW_STATUS_IN_REVIEW );
 
 			if ( empty( $review ) ) {
@@ -164,29 +166,28 @@ class ContentReviewApiController extends WikiaApiController {
 			} elseif ( $status === ReviewModel::CONTENT_REVIEW_STATUS_REJECTED ) {
 				$this->notification = wfMessage( 'content-review-diff-reject-confirmation' )->escaped();
 			}
-			$reviewModel->removeCompletedReview( $wikiId, $pageId );
+
+			$reviewModel->updateCompletedReview( $wikiId, $pageId, $review['revision_id'], $status );
 		}
 		else {
 			$this->notification = wfMessage( 'content-review-diff-already-done' )->escaped();
 		}
 	}
 
-	public function getCurrentPageData() {
+	public function getPageStatus() {
 		$wikiId = $this->request->getInt( 'wikiId' );
 		$pageId = $this->request->getInt( 'pageId' );
 
-		$revisionData = $this->getLatestReviewedRevisionFromDB( $wikiId, $pageId );
+		$liveRevisionData = [
+			'liveId' => $this->getLatestReviewedRevisionFromDB( $wikiId, $pageId )['revision_id'],
+		];
 
 		$reviewModel = new ReviewModel();
 		$reviewData = $reviewModel->getPageStatus( $wikiId, $pageId );
 
-		$data = [
-			'reviewedRevisionId' => $revisionData['revision_id'],
-			'touched' => $revisionData['touched'],
-			'revisionInReviewId' => $reviewData['revision_id'],
-			'reviewStatus' => $reviewData['status'],
-		];
-		$this->makeSuccessResponse( $data );
+		$currentPageData = array_merge( $liveRevisionData, $reviewData );
+
+		$this->makeSuccessResponse( $currentPageData );
 	}
 
 	public function getLatestReviewedRevision() {
