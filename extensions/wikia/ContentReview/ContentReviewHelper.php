@@ -126,4 +126,19 @@ class Helper {
 		}
 		return false;
 	}
+
+	/**
+	 * Link for adding new section on script talk page. Prefilled with standard explanation of rejection.
+	 * @param \Title $title Title object of JS page
+	 * @return string full link to edit page
+	 */
+	public function prepareProvideFeedbackLink( \Title $title ) {
+		$params = [
+			'action' => 'edit',
+			'section' => 'new',
+			'useMessage' => 'content-review-rejection-explanation'
+		];
+		$talkPage = $title->getTalkPage();
+		return $talkPage->getFullURL( $params );
+	}
 }
