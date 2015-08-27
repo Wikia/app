@@ -12,7 +12,6 @@ $messages['en'] = [
 	'content-review-module-unreviewed-description' => 'For security reasons every change made in the MediaWiki namespace has to be reviewed by a Wikia\'s staff member. For development you can use the unreviewed version, however it is not going to be served to other users that are not in the development mode.',
 	'content-review-module-unreviewed-submit' => 'Submit page for a review',
 	'content-review-module-enable-test-mode' => 'Enable Test Mode',
-	'content-review-module-disable-test-mode' => 'Disable Test Mode',
 
 	'content-review-module-inreview-title' => 'A version of this page is waiting for a review',
 	'content-review-module-inreview-description' => 'For security reasons every change made in the MediaWiki namespace has to be reviewed by a Wikia\'s staff member. This page is waiting for a review. Use the button if you want to update the version submitted for a review.',

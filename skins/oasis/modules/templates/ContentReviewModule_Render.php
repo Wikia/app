@@ -23,7 +23,7 @@
 		</a>
 	<? endif; ?>
 	<? if ( $isTestModeEnabled ) : ?>
-		<button id="content-review-module-disable-test-mode"><?= wfMessage('content-review-module-disable-test-mode')->escaped() ?></button>
+		<button class="content-review-test-mode-disable"><?= wfMessage('content-review-test-mode-disable')->escaped() ?></button>
 	<? else: ?>
 		<button id="content-review-module-enable-test-mode"><?= wfMessage('content-review-module-enable-test-mode')->escaped() ?></button>
 	<? endif ?>
