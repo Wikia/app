@@ -282,7 +282,7 @@ function deny( ) {
  */
 $headers = function_exists('apache_request_headers') ? apache_request_headers() : array();
 
-$isdeny = !empty( $headers[ "X-Staging" ] ) ? true : false;
+$isdeny = !empty( $headers[ "X-Staging" ] );
 
 if( $isdeny ) {
 	deny();
