@@ -1,11 +1,11 @@
 <?php
 
-use \Wikia\PortableInfobox\Helpers\PortableInfoboxRenderServiceHelper;
+use Wikia\PortableInfobox\Helpers\PortableInfoboxRenderServiceHelper;
 
 class PortableInfoboxRenderService extends WikiaService {
 	const MOBILE_TEMPLATE_POSTFIX = '-mobile';
 
-	private $templates = [
+	private static $templates = [
 		'wrapper' => 'PortableInfoboxWrapper.mustache',
 		'title' => 'PortableInfoboxItemTitle.mustache',
 		'header' => 'PortableInfoboxItemHeader.mustache',
@@ -21,7 +21,15 @@ class PortableInfoboxRenderService extends WikiaService {
 
 	function __construct() {
 		$this->templateEngine = ( new Wikia\Template\MustacheEngine )
-			->setPrefix( dirname( __FILE__ ) . '/../templates' );
+			->setPrefix( self::getTemplatesDir() );
+	}
+
+	public static function getTemplatesDir() {
+		return dirname( __FILE__ ) . '/../templates';
+	}
+
+	public static function getTemplates() {
+		return self::$templates;
 	}
 
 	/**
@@ -67,7 +75,7 @@ class PortableInfoboxRenderService extends WikiaService {
 
 		if ( !empty( $infoboxHtmlContent ) ) {
 			$output = $this->renderItem( 'wrapper', [ 'content' => $infoboxHtmlContent, 'theme' => $theme,
-				'layout' => $layout ] );
+													  'layout' => $layout ] );
 		} else {
 			$output = '';
 		}
@@ -134,6 +142,7 @@ class PortableInfoboxRenderService extends WikiaService {
 	 *
 	 * @param string $type
 	 * @param array $data
+	 *
 	 * @return bool|string - HTML
 	 */
 	private function renderItem( $type, array $data ) {
