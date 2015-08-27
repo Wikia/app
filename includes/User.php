@@ -2664,19 +2664,6 @@ class User {
 	}
 
 	/**
-	 * Get a user attribute local to this wikia.
-	 *
-	 * @param string $attr the attribute name
-	 * @param int $cityId the city id
-	 * @param string $sep the separator between the name and the city id
-	 * @return string
-	 * @see getGlobalAttribute for more documentation about attributes
-	 */
-	public function getLocalAttribute($attr, $cityId = null, $sep = "-") {
-		return $this->getGlobalAttribute(self::localToGlobalPropertyName($attr, $cityId, $sep));
-	}
-
-	/**
 	 * Get a global user attribute.
 	 *
 	 * Attributes are facts about the user such as their avatar URL, their
@@ -2712,23 +2699,6 @@ class User {
 				'default' => $default,
 				'userId' => $this->getId()
 			] );
-	}
-
-	/**
-	 * Set an attribute local to a wikia. See createLocalOptionName for details regarding
-	 * the format. Note that the $sep param is provided in the rare case where
-	 * the option name is not normal. Should you have to use the separator, PLEASE MAKE
-	 * A PLAN TO NORMALIZE IT TO "-".
-	 *
-	 * @param string $attribute
-	 * @param string $value
-	 * @param int $cityId
-	 * @param string $sep
-	 * @return bool
-	 * @see getGlobalAttribute for more documentation about attributes
-	 */
-	public function setLocalAttribute($attribute, $value, $cityId = null, $sep = '-') {
-		$this->setGlobalAttribute(self::localToGlobalPropertyName($attribute, $cityId, $sep), $value);
 	}
 
 	/**
