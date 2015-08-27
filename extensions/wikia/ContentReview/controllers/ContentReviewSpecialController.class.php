@@ -3,7 +3,7 @@ use  Wikia\ContentReview\Models\ReviewModel;
 
 class ContentReviewSpecialController extends WikiaSpecialPageController {
 
-	public static $status = [
+	public static $statusMessageKeys = [
 		ReviewModel::CONTENT_REVIEW_STATUS_UNREVIEWED => 'content-review-status-unreviewed',
 		ReviewModel::CONTENT_REVIEW_STATUS_IN_REVIEW => 'content-review-status-in-review',
 		ReviewModel::CONTENT_REVIEW_STATUS_APPROVED => 'content-review-status-approved',
@@ -35,6 +35,8 @@ class ContentReviewSpecialController extends WikiaSpecialPageController {
 			$this->displayRestrictionError();
 			return false;
 		}
+
+		$this->wg->Out->setPageTitle( wfMessage( 'content-review-special-title' )->escaped() );
 
 		$model = new ReviewModel();
 		$reviews = $model->getContentToReviewFromDatabase();
@@ -74,5 +76,4 @@ class ContentReviewSpecialController extends WikiaSpecialPageController {
 
 		return $reviews;
 	}
-
 }
