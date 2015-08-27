@@ -1,11 +1,11 @@
 <?php
 class ArticleCommentsController extends WikiaController {
+	use Wikia\Logger\Loggable;
+
 	private $dataLoaded = false;
 	private static $content = null;
 
 	public function executeIndex() {
-		wfProfileIn(__METHOD__);
-
 		if (class_exists('ArticleCommentInit') && ArticleCommentInit::ArticleCommentCheck()) {
 			$isMobile = $this->app->checkSkin( 'wikiamobile' );
 
@@ -33,7 +33,7 @@ class ArticleCommentsController extends WikiaController {
 								if ( empty( $response[2]['error'] ) ) {
 									//wgOut redirect doesn't work when running fully under the
 									//Nirvana stack (WikiaMobile skin), also send back to the first page of comments
-									$this->response->redirect( $oTitle->getLocalURL( array( 'page' => 1 ) ) . '#article-comments' );
+									$this->response->redirect( $oTitle->getLocalURL( [ 'page' => 1 ] ) . '#article-comments' );
 								} else {
 									$this->response->setVal( 'error', $response[2]['msg'] );
 								}
@@ -63,8 +63,6 @@ class ArticleCommentsController extends WikiaController {
 				}
 			}
 		}
-
-		wfProfileOut(__METHOD__);
 	}
 
 	/**
@@ -74,8 +72,6 @@ class ArticleCommentsController extends WikiaController {
 	public function content() {
 		//this is coming via ajax we need to set correct wgTitle ourselves
 		global $wgTitle;
-
-		wfProfileIn( __METHOD__ );
 
 		$articleId = $this->request->getVal( 'articleId', null );
 		$page = $this->request->getVal( 'page', 1 );
@@ -93,7 +89,6 @@ class ArticleCommentsController extends WikiaController {
 		if ( $title === null ) {
 			$this->response->setCode( 404 );
 			$this->skipRendering();
-			wfProfileOut( __METHOD__ );
 			return;
 		}
 
@@ -112,8 +107,6 @@ class ArticleCommentsController extends WikiaController {
 		if ( F::app()->checkSkin( 'venus' ) ) {
 			$this->overrideTemplate( 'VenusContent' );
 		}
-
-		wfProfileOut( __METHOD__ );
 	}
 
 	/**
@@ -146,7 +139,6 @@ class ArticleCommentsController extends WikiaController {
 	 * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
 	 **/
 	public function executeWikiaMobileCommentsPage() {
-		wfProfileIn( __METHOD__ );
 		$articleID = $this->request->getInt( 'articleID' );
 		$title = null;
 
@@ -172,8 +164,6 @@ class ArticleCommentsController extends WikiaController {
 		if ( $this->page <  $this->pagesCount ) {
 			$this->response->setVal( 'nextPage', $this->page + 1 );
 		}
-
-		wfProfileOut( __METHOD__ );
 	}
 
 	/**
@@ -190,10 +180,8 @@ class ArticleCommentsController extends WikiaController {
 	 **/
 	public function executeVenusCommentList() {/** render Venus template**/}
 
-	private function getCommentsData(Title $title, $page, $perPage = null, $filterid = null) {
-		wfProfileIn(__METHOD__);
-
-		$key = implode( '_', array( $title->getArticleID(), $page, $perPage, $filterid ) );
+	private function getCommentsData( Title $title, $page, $perPage = null, $filterid = null ) {
+		$key = implode( '_', [ $title->getArticleID(), $page, $perPage, $filterid ] );
 		$data = null;
 
 		// avoid going through all this when calling the method from the same round trip for the same paramenters
@@ -218,14 +206,14 @@ class ArticleCommentsController extends WikiaController {
 
 		if ( empty( $data ) ) {
 			// Seems like we should always have data, let's leave a log somewhere if this happens
-			Wikia::log( __METHOD__, false, 'No data, this should not happen.' );
+			$this->debug( 'No data, this should not happen.', [
+				'method' => __METHOD__
+			] );
 		}
 
 		$this->ajaxicon = $this->wg->StylePath.'/common/images/ajax.gif';
 		$this->pagesCount = ( $data['commentsPerPage'] > 0 ) ? ceil( $data['countComments'] / $data['commentsPerPage'] ) : 0;
 		$this->response->setValues( $data );
-
-		wfProfileOut(__METHOD__);
 
 		return $data;
 	}
@@ -246,13 +234,13 @@ class ArticleCommentsController extends WikiaController {
 
 			// Load MiniEditor assets (oasis skin only)
 			if ( ArticleComment::isMiniEditorEnabled() ) {
-				$app->sendRequest( 'MiniEditor', 'loadAssets', array(
+				$app->sendRequest( 'MiniEditor', 'loadAssets', [
 					'loadStyles' => !ArticleComment::isLoadingOnDemand(),
 					'loadOnDemand' => true,
-					'loadOnDemandAssets' => array(
+					'loadOnDemandAssets' => [
 						'/extensions/wikia/MiniEditor/js/Wall/Wall.Animations.js'
-					)
-				));
+					]
+				] );
 			}
 		}
 		return true;

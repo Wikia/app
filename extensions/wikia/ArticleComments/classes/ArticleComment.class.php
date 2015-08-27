@@ -1,5 +1,6 @@
 <?php
 
+use Wikia\Logger\WikiaLogger;
 /**
  * ArticleComment is article, this class is used for manipulation on
  */
@@ -195,7 +196,6 @@ class ArticleComment {
 	 * @return bool
 	 */
 	public function load( $master = false ) {
-		wfProfileIn( __METHOD__ );
 		$result = true;
 
 		if ( $this->mTitle ) {
@@ -216,7 +216,6 @@ class ArticleComment {
 
 			if ( empty( $this->mLastRevId ) ) {
 				// assume article is bogus, treat as if it doesn't exist
-				wfProfileOut( __METHOD__ );
 				return false;
 			}
 
@@ -228,7 +227,6 @@ class ArticleComment {
 
 			if ( empty( $this->mFirstRevId ) ) {
 				// assume article is bogus, treat as if it doesn't exist
-				wfProfileOut( __METHOD__ );
 				return false;
 			}
 
@@ -261,7 +259,6 @@ class ArticleComment {
 			}
 
 			if ( empty( $this->mFirstRevision ) || empty( $this->mLastRevision ) ) {
-				wfProfileOut( __METHOD__ );
 				return false;
 			}
 
@@ -270,8 +267,6 @@ class ArticleComment {
 		} else { // null title
 			$result = false;
 		}
-
-		wfProfileOut( __METHOD__ );
 		return $result;
 	}
 
@@ -320,12 +315,9 @@ class ArticleComment {
 	 * @return int
 	 */
 	private function getFirstRevID( $db_conn ) {
-		wfProfileIn( __METHOD__ );
-
 		$id = false;
 
 		if ( $db_conn == DB_SLAVE && isset( $this->minRevIdFromSlave ) ) {
-			wfProfileOut( __METHOD__ );
 			return $this->minRevIdFromSlave;
 		}
 
@@ -338,9 +330,6 @@ class ArticleComment {
 				__METHOD__
 			);
 		}
-
-		wfProfileOut( __METHOD__ );
-
 		return $id;
 	}
 
@@ -360,9 +349,6 @@ class ArticleComment {
 
 	public function getData( $master = false ) {
 		global $wgUser, $wgBlankImgUrl, $wgMemc, $wgArticleCommentsEnableVoting;
-
-		wfProfileIn( __METHOD__ );
-
 		$comment = false;
 
 		$canDelete = $wgUser->isAllowed( 'commentdelete' );
@@ -389,8 +375,6 @@ class ArticleComment {
 
 		if ( !empty( $data ) ) {
 			$data['timestamp'] = "<a href='" . $title->getFullUrl( [ 'permalink' => $data['id'] ] ) . '#comm-' . $data['id'] . "' class='permalink'>" . wfTimeFormatAgo( $data['rawmwtimestamp'] ) . "</a>";
-
-			wfProfileOut( __METHOD__ );
 			return $data;
 		}
 
@@ -414,7 +398,7 @@ class ArticleComment {
 			$commentingAllowed = ArticleComment::canComment( $articleTitle );
 
 			if ( ( count( $parts['partsStripped'] ) == 1 ) && $commentingAllowed ) {
-				$replyButton = '<button type="button" class="article-comm-reply wikia-button secondary actionButton">' . wfMsg( 'article-comments-reply' ) . '</button>';
+				$replyButton = '<button type="button" class="article-comm-reply wikia-button secondary actionButton">' . wfMessage( 'article-comments-reply' )->escaped() . '</button>';
 			}
 			if ( defined( 'NS_QUESTION_TALK' ) && ( $title->getNamespace() == NS_QUESTION_TALK ) ) {
 				$replyButton = '';
@@ -422,7 +406,7 @@ class ArticleComment {
 
 			if ( $canDelete ) {
 				$img = '<img class="remove sprite" alt="" src="' . $wgBlankImgUrl . '" width="16" height="16" />';
-				$buttons[] = $img . '<a href="' . $title->getLocalUrl( 'redirect=no&action=delete' ) . '" class="article-comm-delete">' . wfMsg( 'article-comments-delete' ) . '</a>';
+				$buttons[] = $img . '<a href="' . $title->getLocalUrl( 'redirect=no&action=delete' ) . '" class="article-comm-delete">' . wfMessage( 'article-comments-delete' )->escaped() . '</a>';
 
 				$links['delete'] = $title->getLocalUrl( 'redirect=no&action=delete' );
 			}
@@ -431,13 +415,13 @@ class ArticleComment {
 			if ( $wgUser->isLoggedIn() && $commentingAllowed ) {
 				$display = $this->canEdit() ? 'test=' : ' style="display:none"';
 				$img = '<img class="edit-pencil sprite" alt="" src="' . $wgBlankImgUrl . '" width="16" height="16" />';
-				$buttons[] = "<span class='edit-link'$display>" . $img . '<a href="#comment' . $commentId . '" class="article-comm-edit actionButton" id="comment' . $commentId . '">' . wfMsg( 'article-comments-edit' ) . '</a></span>';
+				$buttons[] = "<span class='edit-link'$display>" . $img . '<a href="#comment' . $commentId . '" class="article-comm-edit actionButton" id="comment' . $commentId . '">' . wfMessage( 'article-comments-edit' )->escaped() . '</a></span>';
 
 				$links['edit'] = '#comment' . $commentId;
 			}
 
 			if ( !$this->mTitle->isNewPage( Title::GAID_FOR_UPDATE ) ) {
-				$buttons[] = RequestContext::getMain()->getSkin()->makeKnownLinkObj( $title, wfMsgHtml( 'article-comments-history' ), 'action=history', '', '', 'class="article-comm-history"' );
+				$buttons[] = Linker::linkKnown( $title, wfMessage( 'article-comments-history' )->escaped(), [ 'class' => 'article-comm-history' ], [ 'action' => 'history' ] );
 
 				$links['history'] = $title->getLocalUrl( 'action=history' );
 			}
@@ -478,9 +462,6 @@ class ArticleComment {
 				$comment['title'] = Title::newFromText( $comment['title'], NS_TALK );
 			}
 		}
-
-		wfProfileOut( __METHOD__ );
-
 		return $comment;
 	}
 
@@ -574,7 +555,7 @@ class ArticleComment {
 		} else {
 			// not a comment - fallback
 			$title = $titleText;
-			$partsOriginal = $partsStripped = array();
+			$partsOriginal = $partsStripped = [];
 		}
 
 		$result = [
@@ -676,7 +657,6 @@ class ArticleComment {
 	 */
 	public function editPage() {
 		global $wgStylePath;
-		wfProfileIn( __METHOD__ );
 
 		$text = '';
 		$this->load( true );
@@ -692,8 +672,6 @@ class ArticleComment {
 			];
 			$text = F::app()->getView( 'ArticleComments', 'Edit', $vars )->render();
 		}
-
-		wfProfileOut( __METHOD__ );
 
 		return $text;
 	}
@@ -715,7 +693,6 @@ class ArticleComment {
 	 */
 	public function doSaveComment( $text, $user, $title = null, $commentId = 0, $force = false, $summary = '', $preserveMetadata = false ) {
 		global $wgTitle;
-		wfProfileIn( __METHOD__ );
 		$metadata = $this->mMetadata;
 
 		$this->load( true );
@@ -723,17 +700,14 @@ class ArticleComment {
 		if ( $force || $this->canEdit() ) {
 
 			if ( wfReadOnly() ) {
-				wfProfileOut( __METHOD__ );
 				return false;
 			}
 
 			if ( !$text || !strlen( $text ) ) {
-				wfProfileOut( __METHOD__ );
 				return false;
 			}
 
 			if ( empty( $this->mTitle ) && !$commentId ) {
-				wfProfileOut( __METHOD__ );
 				return false;
 			}
 
@@ -769,9 +743,6 @@ class ArticleComment {
 
 		$this->mLastRevId = $this->mTitle->getLatestRevID( Title::GAID_FOR_UPDATE );
 		$this->mLastRevision = Revision::newFromId( $this->mLastRevId );
-
-		wfProfileOut( __METHOD__ );
-
 		return $res;
 	}
 
@@ -788,7 +759,7 @@ class ArticleComment {
 	 *
 	 * @return Status TODO: Document
 	 */
-	static protected function doSaveAsArticle( $text, $article, $user, $metadata = array(), $summary = '' ) {
+	static protected function doSaveAsArticle( $text, $article, $user, $metadata = [], $summary = '' ) {
 		$result = null;
 
 		$editPage = new EditPage( $article );
@@ -838,17 +809,14 @@ class ArticleComment {
 	 * @return Article -- newly created article
 	 * @throws MWException
 	 */
-	static public function doPost( $text, $user, $title, $parentId = false, $metadata = array() ) {
+	static public function doPost( $text, $user, $title, $parentId = false, $metadata = [] ) {
 		global $wgTitle;
-		wfProfileIn( __METHOD__ );
 
 		if ( !$text || !strlen( $text ) ) {
-			wfProfileOut( __METHOD__ );
 			return false;
 		}
 
 		if ( wfReadOnly() ) {
-			wfProfileOut( __METHOD__ );
 			return false;
 		}
 
@@ -876,8 +844,12 @@ class ArticleComment {
 			// FB#2875 (log data for further debugging)
 			if ( is_null( $parentArticle ) ) {
 				$debugTitle = !empty( $title ) ? $title->getText() : '--EMPTY--'; // BugId:2646
-				Wikia::log( __FUNCTION__, __LINE__, "Failed to create Article object, ID=$parentId, title={$debugTitle}, user={$user->getName()}", true );
-				wfProfileOut( __METHOD__ );
+				WikiaLogger::instance()->debug( 'Failed to create article object', [
+					'method' => __METHOD__,
+					'id' => $parentId,
+					'title' => $debugTitle,
+					'user' => $user->getName()
+				] );
 				return false;
 			}
 			$parentTitle = $parentArticle->getTitle();
@@ -894,10 +866,12 @@ class ArticleComment {
 
 		if ( !( $commentTitle instanceof Title ) ) {
 			if ( !empty( $parentId ) ) {
-				Wikia::log( __METHOD__, false, "ArticleComment::doPost (reply to " . $parentId .
-					") - failed to create commentTitle from " . $commentTitleText, true );
+				WikiaLogger::instance()->debug( 'Failed to create commentTitle', [
+					'method' => __METHOD__,
+					'replyParentId' => $parentId,
+					'commentTitleText' => $commentTitleText
+				] );
 			}
-			wfProfileOut( __METHOD__ );
 			return false;
 		}
 
@@ -914,18 +888,19 @@ class ArticleComment {
 		if ( $retval->value == EditPage::AS_SUCCESS_NEW_ARTICLE ) {
 			$commentsIndex = CommentsIndex::newFromId( $article->getID() );
 			if ( empty( $commentsIndex ) ) {
-				Wikia::log( __METHOD__, false, "ERROR ArticleComment::doPost (reply to " . $parentId .
-					") - empty commentsIndex for " . $commentTitleText, true );
+				WikiaLogger::instance()->debug( 'Empty CommentsIndex', [
+					'method' => __METHOD__,
+					'replyTo' => $parentId,
+					'commentTitleText' => $commentTitleText
+				] );
 			} else {
-				wfRunHooks( 'EditCommentsIndex', [ $article->getTitle(), $commentsIndex ] );
+				Hooks::run( 'EditCommentsIndex', [ $article->getTitle(), $commentsIndex ] );
 			}
 		}
 
 		$res = ArticleComment::doAfterPost( $retval, $article, $parentId );
 
 		ArticleComment::doPurge( $title, $commentTitle );
-
-		wfProfileOut( __METHOD__ );
 
 		return [ $retval, $article, $res ];
 	}
@@ -936,8 +911,6 @@ class ArticleComment {
 	 * @param $commentTitle Title
 	 */
 	static public function doPurge( $title, $commentTitle ) {
-		wfProfileIn( __METHOD__ );
-
 		global $wgArticleCommentsLoadOnDemand;
 
 		// make sure our comment list is refreshed from the master RT#141861
@@ -963,8 +936,6 @@ class ArticleComment {
 				$parentTitle->purgeSquid();
 			}
 		}
-
-		wfProfileOut( __METHOD__ );
 	}
 
 	/**
@@ -987,7 +958,7 @@ class ArticleComment {
 			]
 		);
 
-		wfRunHooks( 'ArticleCommentGetSquidURLs', [ $title, &$urls ] );
+		Hooks::run( 'ArticleCommentGetSquidURLs', [ $title, &$urls ] );
 
 		return $urls;
 	}
@@ -1002,7 +973,7 @@ class ArticleComment {
 	static public function doAfterPost( $status, $article, $parentId = 0 ) {
 		global $wgUser, $wgDBname;
 
-		wfRunHooks( 'ArticleCommentAfterPost', [ $status, &$article ] );
+		Hooks::run( 'ArticleCommentAfterPost', [ $status, &$article ] );
 		$commentId = $article->getId();
 		$error = false;
 		$id = 0;
@@ -1044,10 +1015,15 @@ class ArticleComment {
 				break;
 			default:
 				$userId = $wgUser->getId();
-				Wikia::log( __METHOD__, 'error', "No article created. Status: {$status->value}; DB: {$wgDBname}; User: {$userId}" );
+				WikiaLogger::instance()->debug( 'No article created', [
+					'method' => __METHOD__,
+					'status' => $status->value,
+					'db' => $wgDBname,
+					'user' => $userId
+				] );
 				$text  = false;
 				$error = true;
-				$message = wfMsg( 'article-comments-error' );
+				$message = wfMessage( 'article-comments-error' )->escaped();
 		}
 
 		$res = [
@@ -1070,7 +1046,7 @@ class ArticleComment {
 	static public function addArticlePageToWatchlist( $comment ) {
 		global $wgUser, $wgEnableArticleWatchlist, $wgBlogsEnableStaffAutoFollow;
 
-		if ( !wfRunHooks( 'ArticleCommentBeforeWatchlistAdd', [ $comment ] ) ) {
+		if ( !Hooks::run( 'ArticleCommentBeforeWatchlistAdd', [ $comment ] ) ) {
 			return true;
 		}
 
@@ -1115,9 +1091,8 @@ class ArticleComment {
 	 */
 	static public function watchlistNotify( RecentChange &$oRC ) {
 		global $wgEnableGroupedArticleCommentsRC;
-		wfProfileIn( __METHOD__ );
 
-		wfRunHooks( 'AC_RecentChange_Save', [ &$oRC ] );
+		Hooks::run( 'AC_RecentChange_Save', [ &$oRC ] );
 
 		if ( !empty( $wgEnableGroupedArticleCommentsRC ) && ( $oRC instanceof RecentChange ) ) {
 			$title = $oRC->getAttribute( 'rc_title' );
@@ -1142,8 +1117,6 @@ class ArticleComment {
 				}
 			}
 		}
-
-		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
@@ -1165,12 +1138,12 @@ class ArticleComment {
 
 		if ( MWNamespace::isTalk( $title->getNamespace() ) && ArticleComment::isTitleComment( $title ) ) {
 			if ( !is_array( $keys ) ) {
-				$keys = array();
+				$keys = [];
 			}
 
 			$name = $wgEnotifUseRealName ? $editor->getRealName() : $editor->getName();
 			if ( $editor->isIP( $name ) ) {
-				$utext = trim( wfMsgForContent( 'enotif_anon_editor', '' ) );
+				$utext = trim( wfMessage( 'enotif_anon_editor', '' )->inContentLanguage()->escaped() );
 				$message = str_replace( '$PAGEEDITOR', $utext, $message );
 				$keys['$PAGEEDITOR'] = $utext;
 			}
@@ -1192,10 +1165,7 @@ class ArticleComment {
 	 * @throws MWException
 	 */
 	static private function addMoveTask( $oCommentTitle, &$oNewTitle, $taskParams ) {
-		wfProfileIn( __METHOD__ );
-
 		if ( !is_object( $oCommentTitle ) ) {
-			wfProfileOut( __METHOD__ );
 			return false;
 		}
 
@@ -1213,9 +1183,11 @@ class ArticleComment {
 		$task->call( 'move', $taskParams );
 		$submit_id = $task->queue();
 
-		Wikia::log( __METHOD__, 'deletecomment', "Added move task ($submit_id) for {$taskParams['page']} page" );
-
-		wfProfileOut( __METHOD__ );
+		WikiaLogger::instance()->info( 'Added move task', [
+			'method' => __METHOD__,
+			'submitId' => $submit_id,
+			'page' => $taskParams['page']
+		] );
 		return true;
 	}
 
@@ -1235,10 +1207,7 @@ class ArticleComment {
 	static private function moveComment( $oCommentTitle, &$oNewTitle, $reason = '' ) {
 		global $wgUser;
 
-		wfProfileIn( __METHOD__ );
-
 		if ( !is_object( $oCommentTitle ) ) {
-			wfProfileOut( __METHOD__ );
 			return [ 'invalid title' ];
 		}
 
@@ -1255,8 +1224,6 @@ class ArticleComment {
 		$error = $oCommentTitle->moveTo( $newCommentTitle, false, $reason, false );
 
 		$wgUser = $currentUser;
-
-		wfProfileOut( __METHOD__ );
 		return $error;
 	}
 
@@ -1274,15 +1241,12 @@ class ArticleComment {
 	 */
 	static public function moveComments( MovePageForm &$form , Title &$oOldTitle , Title &$oNewTitle ) {
 		global $wgUser, $wgRC2UDPEnabled, $wgMaxCommentsToMove, $wgEnableMultiDeleteExt, $wgCityId;
-		wfProfileIn( __METHOD__ );
 
 		if ( !$wgUser->isAllowed( 'move' ) ) {
-			wfProfileOut( __METHOD__ );
 			return true;
 		}
 
 		if ( $wgUser->isBlocked() ) {
-			wfProfileOut( __METHOD__ );
 			return true;
 		}
 
@@ -1306,10 +1270,12 @@ class ArticleComment {
 				# move comment level #1
 				$error = self::moveComment( $oCommentTitle, $oNewTitle, $form->reason );
 				if ( $error !== true ) {
-					Wikia::log( __METHOD__, 'movepage',
-						'cannot move blog comments: old comment: ' . $oCommentTitle->getPrefixedText() . ', ' .
-						'new comment: ' . $oNewTitle->getPrefixedText() . ', error: ' . @implode( ', ', $error )
-					);
+					WikiaLogger::instance()->error( 'Cannot move blog comments', [
+						'method' => __METHOD__,
+						'oldComment' => $oCommentTitle->getPrefixedText(),
+						'newComent' => $oNewTitle->getPrefixedText(),
+						'error' => @implode( ', ', $error )
+					] );
 				} else {
 					$moved++;
 				}
@@ -1325,10 +1291,12 @@ class ArticleComment {
 						# move comment level #2
 						$error = self::moveComment( $oCommentTitle, $oNewTitle, $form->reason );
 						if ( $error !== true ) {
-							Wikia::log( __METHOD__, 'movepage',
-								'cannot move blog comments: old comment: ' . $oCommentTitle->getPrefixedText() . ', ' .
-								'new comment: ' . $oNewTitle->getPrefixedText() . ', error: ' . @implode( ', ', $error )
-							);
+							WikiaLogger::instance()->error( 'Cannot move blog comments', [
+								'method' => __METHOD__,
+								'oldComment' => $oCommentTitle->getPrefixedText(),
+								'newComent' => $oNewTitle->getPrefixedText(),
+								'error' => @implode( ', ', $error )
+							] );
 						} else {
 							$moved++;
 						}
@@ -1369,10 +1337,12 @@ class ArticleComment {
 			$listing = ArticleCommentList::newFromTitle( $oNewTitle );
 			$listing->purge();
 		} else {
-			Wikia::log( __METHOD__, 'movepage', 'cannot move article comments, because no comments: ' . $oOldTitle->getPrefixedText() );
+			WikiaLogger::instance()->info( 'Cannot move article comments, because no comments', [
+				'method' => __METHOD__,
+				'title' => $oOldTitle->getPrefixedText()
+			] );
 		}
 
-		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
@@ -1385,14 +1355,10 @@ class ArticleComment {
 	 * @param bool $update
 	 */
 	public function setProps( $props, $update = false ) {
-		wfProfileIn( __METHOD__ );
-
 		if ( $update && class_exists( 'BlogArticle' ) ) {
 			BlogArticle::setProps( $this->mTitle->getArticleID(), $props );
 		}
 		$this->mProps = $props;
-
-		wfProfileOut( __METHOD__ );
 	}
 
 	/**

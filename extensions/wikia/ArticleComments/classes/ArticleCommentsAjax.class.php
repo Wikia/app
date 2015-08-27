@@ -37,9 +37,9 @@ class ArticleCommentsAjax {
 		$commentId = $wgRequest->getVal( 'id', false );
 		$parentId = $wgRequest->getVal( 'parentId', 0 );
 
-		$result = array(
+		$result = [
 			'error' => 1
-		);
+		];
 
 		$title = Title::newFromID( $articleId );
 		if ( !$title ) {
@@ -83,12 +83,12 @@ class ArticleCommentsAjax {
 		$articleId = $wgRequest->getVal( 'article', false );
 		$commentId = $wgRequest->getVal( 'id', false );
 
-		$result = array(
+		$result = [
 			'error'	=> 1,
 			'id'	=> $commentId,
 			'show'	=> false,
 			'text'	=> ''
-		);
+		];
 
 		/**
 		 * check owner of article
@@ -113,7 +113,7 @@ class ArticleCommentsAjax {
 					$result['edgeCases'] = MiniEditorHelper::getEdgeCases();
 				}
 
-				$result['emptyMsg'] = wfMsg( 'article-comments-empty-comment', $comment->getTitle()->getLocalUrl( 'redirect=no&action=delete' ) );
+				$result['emptyMsg'] = wfMessage( 'article-comments-empty-comment', $comment->getTitle()->getLocalUrl( 'redirect=no&action=delete' ) )->plain();
 			}
 		}
 
@@ -133,7 +133,7 @@ class ArticleCommentsAjax {
 
 		$articleId = $wgRequest->getVal( 'article', false );
 		$commentId = $wgRequest->getVal( 'id', false );
-		$result = array( 'id' => $commentId );
+		$result = [ 'id' => $commentId ];
 
 		$title = Title::newFromID( $articleId );
 		if ( !$title ) {
@@ -144,13 +144,11 @@ class ArticleCommentsAjax {
 		$canComment = ArticleCommentInit::userCanComment( $result, $title );
 
 		if ( $canComment == true ) {
-			$articleId = $wgRequest->getVal( 'article', false );
-
-			$vars = array (
+			$vars = [
 				'commentId' => $commentId,
 				'isMiniEditorEnabled' => ArticleComment::isMiniEditorEnabled(),
 				'stylePath' => $wgStylePath
-			);
+			];
 
 			$result['html'] = F::app()->getView( 'ArticleComments', 'Reply', $vars )->render();
 		}
@@ -171,7 +169,7 @@ class ArticleCommentsAjax {
 
 		$articleId = $wgRequest->getVal( 'article', false );
 		$parentId = $wgRequest->getVal( 'parentId' );
-		$result = array( 'error' => 1 );
+		$result = [ 'error' => 1 ];
 		$title = Title::newFromID( $articleId );
 
 		if ( !$title ) {
@@ -207,7 +205,7 @@ class ArticleCommentsAjax {
 			$countAll = $wgLang->formatNum( $listing->getCountAllNested() );
 			$commentsHTML = $response[2]['text'];
 
-			$result = array( 'text' => $commentsHTML, 'counter' => $countAll );
+			$result = [ 'text' => $commentsHTML, 'counter' => $countAll ];
 
 			if ( F::app()->checkskin( 'wikiamobile' ) ) {
 				$result['counterMessage'] = wfMessage( 'wikiamobile-article-comments-counter' )
@@ -243,11 +241,12 @@ class ArticleCommentsAjax {
 		$error = 0;
 		$text = $pagination = '';
 		$method = 'CommentList';
-		$isMobile = F::app()->checkSkin( 'wikiamobile' );
+		$app = F::app();
+		$isMobile = $app->checkSkin( 'wikiamobile' );
 
 		if ( $isMobile ) {
 			$method = 'WikiaMobile' . $method;
-		} elseif ( F::app()->checkSkin( 'venus' ) ) {
+		} elseif ( $app->checkSkin( 'venus' ) ) {
 			$method = 'Venus' . $method;
 		}
 
@@ -257,11 +256,11 @@ class ArticleCommentsAjax {
 		} else {
 			$listing = ArticleCommentList::newFromTitle( $title );
 			$comments = $listing->getCommentPages( false, $page );
-			$text = F::app()->getView( 'ArticleComments', $method, array( 'commentListRaw' => $comments, 'page' => $page, 'useMaster' => false ) )->render();
+			$text = $app->getView( 'ArticleComments', $method, [ 'commentListRaw' => $comments, 'page' => $page, 'useMaster' => false ] )->render();
 			$pagination = ( !$isMobile ) ? $listing->doPagination( $listing->getCountAll(), count( $comments ), $page === false ? 1 : $page, $title ) : '';
 		}
 
-		$result = array( 'error' => $error, 'text' => $text, 'pagination' => $pagination );
+		$result = [ 'error' => $error, 'text' => $text, 'pagination' => $pagination ];
 
 		return $result;
 	}
