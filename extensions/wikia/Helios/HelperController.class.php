@@ -156,13 +156,13 @@ class HelperController extends \WikiaController
 	}
 
 	protected function getFieldFromRequest( $field, $failureMessage ) {
-		$username = $this->getVal( 'username', null );
-		if ( !isset( $username ) ) {
+		$fieldValue = $this->getVal( $field, null );
+		if ( !isset( $fieldValue ) ) {
 			$this->response->setVal( 'message', $failureMessage );
 			$this->response->setCode( \WikiaResponse::RESPONSE_CODE_BAD_REQUEST );
 		}
 
-		return $username;
+		return $fieldValue;
 	}
 
 	protected function authenticateViaTheSchwartz() {
