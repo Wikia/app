@@ -3166,7 +3166,7 @@ class User {
 		// for the current performer and fix it for future checks.
 		global $wgUser;
 		if ( !$this->mIsCurrent && $this->getName() === $wgUser->getName()
-			&& ( new Wikia\Util\Statistics\BernoulliTrial( 0.001 ) )->shouldSample() ) {
+			&& ( new Wikia\Util\Statistics\BernoulliTrial( 0.01 ) )->shouldSample() ) {
 			Wikia\Logger\WikiaLogger::instance()->error(
 				'wrong-mIsCurrent',
 				[ 'exception' => new Exception ]
