@@ -182,9 +182,9 @@ class HelperController extends \WikiaController
 		}
 	}
 
-  public function isBlocked() {
-    $this->response->setFormat( 'json' );
-    $this->response->setCacheValidity( \WikiaResponse::CACHE_DISABLED );
+	public function isBlocked() {
+		$this->response->setFormat( 'json' );
+		$this->response->setCacheValidity( \WikiaResponse::CACHE_DISABLED );
 
 		if ( !$this->authenticateViaTheSchwartz() ) {
 			return;
