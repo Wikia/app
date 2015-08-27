@@ -85,7 +85,8 @@ require(
 				format: 'json',
 				type: 'GET',
 				data: {
-					targetLanguage: targetLanguage
+					targetLanguage: targetLanguage,
+					articleTitle: w.wgTitle
 				},
 				callback: function (results) {
 					if (results.success === true) {

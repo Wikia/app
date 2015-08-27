@@ -13,6 +13,8 @@ class WikiaInYourLangController extends WikiaController {
 	 * Takes the currentUrl and targetLanguage parameters from the Request object.
 	 */
 	public function getNativeWikiaInfo() {
+		global $wgWikiaEnvironment;
+
 		wfProfileIn( __METHOD__ );
 		/**
 		 * Set a default success value to false
@@ -33,6 +35,7 @@ class WikiaInYourLangController extends WikiaController {
 		 * @var string
 		 */
 		$sTargetLanguage = $this->getLanguageCore( $this->request->getVal( 'targetLanguage' ) );
+		$sArticleTitle = $this->request->getVal( 'articleTitle', false );
 
 		/**
 		 * Steps to get the native wikia's ID:
@@ -65,6 +68,13 @@ class WikiaInYourLangController extends WikiaController {
 						$oNativeWiki->city_url,
 						$oNativeWiki->city_title,
 					];
+
+					if ($wgWikiaEnvironment != WIKIA_ENV_DEV) {
+						$articleURL = $this->getArticleURL($sArticleTitle, $oNativeWiki->city_id);
+						if ( $articleURL ) {
+							$aMessageParams[1] = $articleURL;
+						}
+					}
 
 					$sMessagesAry = $this->prepareMessage( $sTargetLanguage, $aMessageParams );
 					$this->response->setVal( 'success', true );
@@ -216,5 +226,17 @@ class WikiaInYourLangController extends WikiaController {
 			->parse();
 
 		return ['desktop' => $sMsg, 'mobile' => $sMsgMobile];
+	}
+
+	private function getArticleURL($sArticleTitle, $city_id) {
+		$articleURL = null;
+		if( $sArticleTitle !== false ) {
+			$title = GlobalTitle::newFromText($sArticleTitle, NS_MAIN, $city_id);
+
+			if( !is_null($title) ) {
+				$articleURL = $title->getFullURL();
+			}
+		}
+		return $articleURL;
 	}
 }
