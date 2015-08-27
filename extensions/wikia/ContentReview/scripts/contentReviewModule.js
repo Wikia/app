@@ -23,31 +23,18 @@ define(
 		function submitPageForReview(event) {
 			event.preventDefault();
 
-			var moduleType = $(this).data('type'),
-				notification,
+			var
 				data = {
-				pageId: mw.config.get('wgArticleId'),
-				editToken: mw.user.tokens.get('editToken')
-			};
+					pageId: mw.config.get('wgArticleId'),
+					editToken: mw.user.tokens.get('editToken')
+				};
 
 			nirvana.sendRequest({
 				controller: 'ContentReviewApiController',
 				method: 'submitPageForReview',
 				data: data,
 				callback: function () {
-					notification = new BannerNotification(
-						/**
-						 * The following message keys may be generated:
-						 * content-review-module-submit-success-insert
-						 * content-review-module-submit-success-update
-						 */
-						mw.message('content-review-module-submit-success-' + moduleType).escaped(),
-						'confirm'
-					);
-
-					$('.content-review-module').hide();
-
-					notification.show();
+					location.reload();
 				},
 				onErrorCallback: function(response) {
 					var e, errorMsg;
@@ -58,7 +45,7 @@ define(
 						} else {
 							errorMsg = e.exception.message;
 						}
-						notification = new BannerNotification(
+						var notification = new BannerNotification(
 							mw.message('content-review-module-submit-exception', errorMsg).escaped(),
 							'error'
 						);
