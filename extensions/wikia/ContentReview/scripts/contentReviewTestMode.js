@@ -19,8 +19,7 @@ define(
 
 	function bindEvents() {
 		$('#content-review-module-enable-test-mode').on('click', enableTestMode);
-		$('#WikiaPage').on('click', '#content-review-test-mode-disable', disableTestMode);
-		$('#content-review-module-disable-test-mode').on('click', disableTestMode);
+		$('#WikiaPage').on('click', '.content-review-test-mode-disable', disableTestMode);
 	}
 
 	function enableTestMode(event) {
