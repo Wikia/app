@@ -28,7 +28,7 @@ class UserRenameTask extends BaseTask {
 	public function renameUser( array $wikiCityIds, array $params ) {
 		global $IP;
 
-		$renameIP = !empty($params['rename_ip']);
+		$renameIP = !empty( $params['rename_ip'] );
 
 		$loadBalancerFactory = wfGetLBFactory();
 		$process = RenameUserProcess::newFromData( $params );
@@ -50,8 +50,8 @@ class UserRenameTask extends BaseTask {
 			)
 		);
 
-		try{
-			foreach ($wikiCityIds as $cityId) {
+		try {
+			foreach ( $wikiCityIds as $cityId ) {
 				/**
 				 * execute maintenance script
 				 */
@@ -72,8 +72,8 @@ class UserRenameTask extends BaseTask {
 					$opts['phalanx-block-id'] = $params['phalanx_block_id'];
 				}
 
-				foreach ($opts as $opt => $val) {
-					$cmd .= sprintf( ' --%s %s', $opt, escapeshellarg($val) );
+				foreach ( $opts as $opt => $val ) {
+					$cmd .= sprintf( ' --%s %s', $opt, escapeshellarg( $val ) );
 				}
 				if ( $renameIP ) {
 					$cmd .= ' --rename-ip-address';
@@ -82,17 +82,17 @@ class UserRenameTask extends BaseTask {
 				$exitCode = null;
 				$output = wfShellExec( $cmd, $exitCode );
 				$logMessage = sprintf( "Rename user %s to %s on city id %s",
-					$params['rename_old_name'], $params['rename_new_name'], $cityId);
+					$params['rename_old_name'], $params['rename_new_name'], $cityId );
 				$logContext = [
 					'command' => $cmd,
 					'exitStatus' => $exitCode,
 					'output' => $output,
 				];
 				if ( $exitCode > 0 ) {
-					$this->error($logMessage, $logContext);
+					$this->error( $logMessage, $logContext );
 					$noErrors = false;
 				} else {
-					$this->info($logMessage, $logContext);
+					$this->info( $logMessage, $logContext );
 				}
 				$this->staffLog(
 					'log',
@@ -107,15 +107,15 @@ class UserRenameTask extends BaseTask {
 					)
 				);
 
-				$loadBalancerFactory->forEachLBCallMethod('commitMasterChanges');
-				$loadBalancerFactory->forEachLBCallMethod('closeAll');
+				$loadBalancerFactory->forEachLBCallMethod( 'commitMasterChanges' );
+				$loadBalancerFactory->forEachLBCallMethod( 'closeAll' );
 			}
-		} catch (Exception $e) {
+		} catch ( Exception $e ) {
 			$noErrors = false;
-			$this->error("error while renaming user", [
+			$this->error( "error while renaming user", [
 				'message' => $e->getMessage(),
 				'stack' => $e->getTraceAsString(),
-			]);
+			] );
 		}
 
 		// clean up pre-process setup
@@ -128,13 +128,13 @@ class UserRenameTask extends BaseTask {
 		);
 
 		if ( !$renameIP ) {
-			//mark user as renamed
+			// mark user as renamed
 			$renamedUser = \User::newFromName( $params['rename_new_name'] );
-			$renamedUser->setGlobalFlag('wasRenamed', true);
+			$renamedUser->setGlobalFlag( 'wasRenamed', true );
 			$renamedUser->saveSettings();
 
 			if ( $params['notify_renamed'] ) {
-				//send e-mail to the user that rename process has finished
+				// send e-mail to the user that rename process has finished
 				$this->notifyUser( $renamedUser, $params['rename_old_name'], $params['rename_new_name'] );
 			}
 		}
@@ -210,16 +210,16 @@ class UserRenameTask extends BaseTask {
 				'oldUserName' => $oldUsername,
 				'newUserName' => $newUsername
 			] );
-			$this->info('rename user with email notification', [
+			$this->info( 'rename user with email notification', [
 				'old_name' => $oldUsername,
 				'new_name' => $newUsername,
 				'email' => $user->getEmail(),
-			]);
+			] );
 		} else {
-			$this->warning('no email address set for user', [
+			$this->warning( 'no email address set for user', [
 				'old_name' => $oldUsername,
 				'new_name' => $newUsername,
-			]);
+			] );
 		}
 	}
 }

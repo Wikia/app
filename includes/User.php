@@ -21,6 +21,7 @@
  */
 
 use Wikia\DependencyInjection\Injector;
+use Wikia\Domain\User\Attribute;
 use Wikia\Logger\Loggable;
 use Wikia\Service\User\Preferences\UserPreferences;
 use Wikia\Service\User\Attributes\UserAttributes;
@@ -36,7 +37,7 @@ define( 'USER_TOKEN_LENGTH', 32 );
  * Int Serialized record version.
  * @ingroup Constants
  */
-define( 'MW_USER_VERSION', 11 );
+define( 'MW_USER_VERSION', 16 );
 
 /**
  * String Some punctuation to prevent editing from broken text-mangling proxies.
@@ -83,6 +84,7 @@ class User {
 	const MW_USER_VERSION = MW_USER_VERSION;
 	const EDIT_TOKEN_SUFFIX = EDIT_TOKEN_SUFFIX;
 	const CACHE_PREFERENCES_KEY = "preferences";
+	const CACHE_ATTRIBUTES_KEY = "attributes";
 	const GET_SET_OPTION_SAMPLE_RATE = 0.1;
 
 	private static $PROPERTY_UPSERT_SET_BLOCK = [ "up_user = VALUES(up_user)", "up_property = VALUES(up_property)", "up_value = VALUES(up_value)" ];
@@ -241,6 +243,8 @@ class User {
 	 */
 	private $mBlockedFromCreateAccount = false;
 
+	var $mIsCurrent = false; # Wikia - indicates that the instance represents the current performer
+
 	static $idCacheByName = array();
 
 	/**
@@ -389,7 +393,10 @@ class User {
 			}
 
 			if (isset($data[self::CACHE_PREFERENCES_KEY])) {
-				 $this->userPreferences()->setPreferencesInCache($this->mId, $data[self::CACHE_PREFERENCES_KEY]);
+				$this->userPreferences()->setPreferencesInCache($this->mId, $data[self::CACHE_PREFERENCES_KEY]);
+			}
+			if (isset($data[self::CACHE_ATTRIBUTES_KEY])) {
+				$this->userAttributes()->setAttributesInCache($this->mId, $data[self::CACHE_ATTRIBUTES_KEY]);
 			}
 		}
 		return true;
@@ -1436,7 +1443,7 @@ class User {
 	 *                    done against master.
 	 */
 	private function getBlockedStatus( $bFromSlave = true ) {
-		global $wgProxyWhitelist, $wgUser;
+		global $wgProxyWhitelist;
 
 		if ( -1 != $this->mBlockedby ) {
 			return;
@@ -1455,7 +1462,7 @@ class User {
 		# We only need to worry about passing the IP address to the Block generator if the
 		# user is not immune to autoblocks/hardblocks, and they are the current user so we
 		# know which IP address they're actually coming from
-		if ( !$this->isAllowed( 'ipblock-exempt' ) && $this->getID() == $wgUser->getID() ) {
+		if ( !$this->isAllowed( 'ipblock-exempt' ) && $this->isCurrent() ) {
 			$ip = $this->getRequest()->getIP();
 		} else {
 			$ip = null;
@@ -1877,6 +1884,13 @@ class User {
 	public function setId( $v ) {
 		$this->mId = $v;
 		$this->clearInstanceCache( 'id' );
+	}
+
+	/**
+	 * Mark that the instance represents the current performer
+	 */
+	public function setCurrent() {
+		$this->mIsCurrent = true;
 	}
 
 	/**
@@ -2672,8 +2686,32 @@ class User {
 	 * @param mixed $default
 	 * @return string
 	 */
-	public function getGlobalAttribute($attribute, $default=null) {
-		return $this->getOptionHelper($attribute, $default);
+	public function getGlobalAttribute( $attribute, $default = null ) {
+		global $wgEnableReadsFromAttributeService;
+
+		$valueFromMW = $this->getOptionHelper( $attribute, $default );
+		if ( !empty( $wgEnableReadsFromAttributeService ) ) {
+			$this->compareAttributeValueFromService( $valueFromMW, $attribute, $default );
+		}
+
+		return $valueFromMW;
+	}
+
+	private function compareAttributeValueFromService( $valueFromMW, $attribute, $default ) {
+		$valueFromService = $this->userAttributes()->getAttribute( $this->getId(), $attribute, $default );
+		if ( $valueFromMW !== $valueFromService ) {
+			$this->logAttributeMismatch( $valueFromMW, $valueFromService, $attribute, $default );
+		}
+	}
+
+	private function logAttributeMismatch( $valueFromMW, $valueFromService, $attribute, $default ) {
+		$this->error( 'USER_ATTRIBUTES attribute_mismatch', [
+				'valueFromMW' => $valueFromMW,
+				'valueFromService' => $valueFromService,
+				'attribute' => $attribute,
+				'default' => $default,
+				'userId' => $this->getId()
+			] );
 	}
 
 	/**
@@ -2705,16 +2743,49 @@ class User {
 	}
 
 	/**
-	 * Get a user flag local to this wikia.
+	 * Sets an attribute into the User Attribute Service
+	 *
+	 * @param $attributeName
+	 * @param $attributeValue
+	 */
+	private function setAttributeInService($attributeName, $attributeValue) {
+		$attribute = new Attribute($attributeName, $this->sanitizeProperty($attributeValue));
+
+		if (is_null($attribute->getValue())) {
+			$this->userAttributes()->deleteAttribute($this->getId(), $attribute);
+		} else {
+			$this->userAttributes()->setAttribute($this->getId(), $attribute);
+		}
+
+		$this->clearSharedCache();
+	}
+
+	/**
+	 * Get a user flag local to a wikia.
 	 *
 	 * @param string $flag the flag name
 	 * @param int $cityId the city id
 	 * @param string $sep the separator between the name and the city id
-	 * @return string
+	 * @return bool
 	 * @see getGlobalFlag for more documentation about flags
 	 */
-	public function getLocalFlag($flag, $cityId = null, $sep = "-") {
-		return $this->getGlobalFlag(self::localToGlobalPropertyName($flag, $cityId, $sep));
+	public function getLocalFlag( $flag, $cityId = null, $sep = '-' ) {
+		$name = self::localToGlobalPropertyName( $flag, $cityId, $sep );
+		return $this->getGlobalFlag( $name );
+	}
+
+	/**
+	 * Set a user flag local to a wikia.
+	 *
+	 * @param string $flag the flag name
+	 * @param bool $value The value of the flag
+	 * @param int $cityId the city id
+	 * @param string $sep the separator between the name and the city id
+	 * @see getGlobalFlag for more documentation about flags
+	 */
+	public function setLocalFlag( $flag, $value, $cityId = null, $sep = '-' ) {
+		$name = self::localToGlobalPropertyName( $flag, $cityId, $sep );
+		$this->setGlobalFlag( $name, $value );
 	}
 
 	/**
@@ -3081,6 +3152,29 @@ class User {
 	 */
 	public function isAnon() {
 		return !$this->isLoggedIn();
+	}
+
+	/**
+	 * Get whether the instance represents the current performer
+	 *
+	 * @return Bool
+	 * @author Michał Roszka <michal@wikia-inc.com>
+	 */
+	public function isCurrent() {
+		// This is the first implementation. I still rely on $wgUser here
+		// and want to log all cases when mIsCurrent property is false
+		// for the current performer and fix it for future checks.
+		global $wgUser;
+		if ( !$this->mIsCurrent && $this->getName() === $wgUser->getName()
+			&& ( new Wikia\Util\Statistics\BernoulliTrial( 0.01 ) )->shouldSample() ) {
+			Wikia\Logger\WikiaLogger::instance()->error(
+				'wrong-mIsCurrent',
+				[ 'exception' => new Exception ]
+			);
+			// fix the wrong mIsCurrent
+			$this->setCurrent();
+		}
+		return $this->mIsCurrent;
 	}
 
 	/**
@@ -4767,12 +4861,12 @@ class User {
 	 * @return int|bool True if not $wgNewUserLog; otherwise ID of log item or 0 on failure
 	 */
 	public function addNewUserLogEntry( $byEmail = false, $reason = '' ) {
-		global $wgUser, $wgContLang, $wgNewUserLog;
+		global $wgContLang, $wgNewUserLog;
 		if( empty( $wgNewUserLog ) ) {
 			return true; // disabled
 		}
 
-		if( $this->getName() == $wgUser->getName() ) {
+		if( $this->isCurrent() ) {
 			$action = 'create';
 		} else {
 			$action = 'create2';
@@ -4868,7 +4962,7 @@ class User {
 
 		$this->loadOptions();
 		// wikia change
-		global $wgExternalSharedDB, $wgSharedDB, $wgGlobalUserProperties;
+		global $wgExternalSharedDB, $wgSharedDB;
 		if( isset( $wgSharedDB ) ) {
 			$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 		}

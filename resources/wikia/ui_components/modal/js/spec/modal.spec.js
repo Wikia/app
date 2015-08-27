@@ -20,7 +20,10 @@ describe('Modal module', function () {
 					};
 				},
 				on: function () {},
-				click: function () {}
+				click: function () {},
+				removeClass: function () {
+					return this;
+				}
 			};
 		},
 		browserDetect = {},

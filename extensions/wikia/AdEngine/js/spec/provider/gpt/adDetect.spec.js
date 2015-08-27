@@ -19,6 +19,12 @@ describe('Method ext.wikia.adEngine.provider.gpt.adDetect.onAdLoad', function ()
 							targeting: {}
 						};
 					}
+				},
+				messageListener: {},
+				adSlot: {
+					getShortSlotName: function (slotName) {
+						return slotName;
+					}
 				}
 			};
 
@@ -29,7 +35,13 @@ describe('Method ext.wikia.adEngine.provider.gpt.adDetect.onAdLoad', function ()
 				}
 			};
 
-			gptHop = modules['ext.wikia.adEngine.provider.gpt.adDetect'](mocks.log, mocks.window, mocks.adContext);
+			gptHop = modules['ext.wikia.adEngine.provider.gpt.adDetect'](
+				mocks.log,
+				mocks.window,
+				mocks.adContext,
+				mocks.messageListener,
+				mocks.adSlot
+			);
 
 			spyOn(mocks, 'success');
 			spyOn(mocks, 'hop');
@@ -43,8 +55,6 @@ describe('Method ext.wikia.adEngine.provider.gpt.adDetect.onAdLoad', function ()
 				expect(mocks.success.calls.count()).toBe(0, 'Success callback should not be called');
 				expect(mocks.hop.calls.count()).toBe(1, 'Hop callback should be called');
 			}
-
-			expect(gptHop.getShortSlotName('long/slot/name/'+slotName)).toBe(slotName, 'Last part of slot name');
 		});
 	}
 
@@ -65,6 +75,12 @@ describe('Method ext.wikia.adEngine.provider.gpt.adDetect.onAdLoad', function ()
 							}
 						};
 					}
+				},
+				messageListener: {},
+				adSlot: {
+					getShortSlotName: function (slotName) {
+						return slotName;
+					}
 				}
 			};
 
@@ -83,7 +99,13 @@ describe('Method ext.wikia.adEngine.provider.gpt.adDetect.onAdLoad', function ()
 			mocks.iframeDoc.querySelector = specialAd ? returnObj : noop;
 			mocks.iframeDoc.querySelectorAll = function () { return []; };
 
-			gptHop = modules['ext.wikia.adEngine.provider.gpt.adDetect'](mocks.log, mocks.window, mocks.adContext);
+			gptHop = modules['ext.wikia.adEngine.provider.gpt.adDetect'](
+				mocks.log,
+				mocks.window,
+				mocks.adContext,
+				mocks.messageListener,
+				mocks.adSlot
+			);
 
 			spyOn(mocks, 'success');
 			spyOn(mocks, 'hop');
