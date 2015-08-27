@@ -4,6 +4,7 @@
  * Class AdEngine2HooksIntegrationTest
  *
  * @group Integration
+ * @group AdEngIntegration
  */
 class AdEngine2HooksIntegrationTest extends WikiaBaseTest {
 	const SHOWCASE_ADTEST_PAGE_LINK = 'http://showcase.adtest.wikia.com/wiki/Wikia_Ad_Testing';
