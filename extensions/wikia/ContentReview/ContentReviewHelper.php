@@ -2,6 +2,7 @@
 
 namespace Wikia\ContentReview;
 
+use Wikia\ContentReview\Models\CurrentRevisionModel;
 use Wikia\ContentReview\Models\ReviewModel;
 
 class Helper {
@@ -110,5 +111,27 @@ class Helper {
 				ReviewModel::CONTENT_REVIEW_STATUS_IN_REVIEW,
 			]
 		);
+	}
+
+	public function isDiffPageInReviewProcess( $wikiId, $pageId, $diff ) {
+
+		$reviewModel = new ReviewModel();
+		$reviewData = $reviewModel->getReviewedContent( $wikiId, $pageId, ReviewModel::CONTENT_REVIEW_STATUS_IN_REVIEW );
+
+		if ( !empty( $reviewData ) && (int)$reviewData['revision_id'] === $diff ) {
+			return true;
+		}
+		return false;
+	}
+
+	public function hasPageApprovedId( $wikiId, $pageId, $oldid ) {
+
+		$currentModel = new CurrentRevisionModel();
+		$currentData = $currentModel->getLatestReviewedRevision( $wikiId, $pageId );
+
+		if ( !empty( $currentData ) && (int)$currentData['revision_id'] === $oldid ) {
+			return true;
+		}
+		return false;
 	}
 }

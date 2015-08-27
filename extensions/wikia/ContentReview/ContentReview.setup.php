@@ -54,6 +54,7 @@ $wgHooks['GetRailModuleList'][] = 'Wikia\ContentReview\Hooks::onGetRailModuleLis
 $wgHooks['MakeGlobalVariablesScript'][] = 'Wikia\ContentReview\Hooks::onMakeGlobalVariablesScript';
 $wgHooks['BeforePageDisplay'][] = 'Wikia\ContentReview\Hooks::onBeforePageDisplay';
 $wgHooks['ArticleContentOnDiff'][] = 'Wikia\ContentReview\Hooks::onArticleContentOnDiff';
+$wgHooks['RawPageViewBeforeOutput'][] = 'Wikia\ContentReview\Hooks::onRawPageViewBeforeOutput';
 
 /**
  * Right rail module

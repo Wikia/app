@@ -2,6 +2,7 @@
 
 use Wikia\ContentReview\Models\CurrentRevisionModel;
 use Wikia\ContentReview\Models\ReviewModel;
+use Wikia\ContentReview\Helper;
 
 class ContentReviewApiController extends WikiaApiController {
 
@@ -139,22 +140,34 @@ class ContentReviewApiController extends WikiaApiController {
 
 		$currentRevisionModel = new CurrentRevisionModel();
 		$reviewModel = new ReviewModel();
+		$helper = new Helper();
 
 		$reviewerId = $this->wg->User->getId();
 		$pageId = $this->request->getInt( 'pageId' );
 		$wikiId = $this->request->getInt( 'wikiId' );
 		$status = $this->request->getInt( 'status' );
+		$diff = $this->request->getInt( 'diff' );
+		$oldid = $this->request->getInt( 'oldid' );
 
-		$review = $reviewModel->getReviewedContent( $wikiId, $pageId, ReviewModel::CONTENT_REVIEW_STATUS_IN_REVIEW );
 
-		$reviewModel->backupCompletedReview( $review, $status, $reviewerId );
+		if ( $helper->hasPageApprovedId( $wikiId, $pageId, $oldid  ) && $helper->isDiffPageInReviewProcess( $wikiId, $pageId, $diff ) ) {
+			$review = $reviewModel->getReviewedContent( $wikiId, $pageId, ReviewModel::CONTENT_REVIEW_STATUS_IN_REVIEW );
 
-		if( $status === ReviewModel::CONTENT_REVIEW_STATUS_APPROVED ) {
-			$currentRevisionModel->approveRevision( $wikiId, $pageId, $review['revision_id'] );
-			$this->notification = wfMessage( 'content-review-diff-approve-confirmation' )->escaped();
+			if ( empty( $review ) ) {
+				throw new NotFoundApiException( 'Requested data not present in the database.' );
+			}
+			$reviewModel->backupCompletedReview( $review, $status, $reviewerId );
+
+			if ( $status === ReviewModel::CONTENT_REVIEW_STATUS_APPROVED ) {
+				$currentRevisionModel->approveRevision( $wikiId, $pageId, $review['revision_id'] );
+				$this->notification = wfMessage( 'content-review-diff-approve-confirmation' )->escaped();
+			} elseif ( $status === ReviewModel::CONTENT_REVIEW_STATUS_REJECTED ) {
+				$this->notification = wfMessage( 'content-review-diff-reject-confirmation' )->escaped();
+			}
+			$reviewModel->removeCompletedReview( $wikiId, $pageId );
 		}
-		elseif( $status === ReviewModel::CONTENT_REVIEW_STATUS_REJECTED )  {
-			$this->notification = wfMessage( 'content-review-diff-reject-confirmation' )->escaped();
+		else {
+			$this->notification = wfMessage( 'content-review-diff-already-done' )->escaped();
 		}
 
 		$reviewModel->updateCompletedReview( $wikiId, $pageId, $review['revision_id'], $status );
@@ -189,7 +202,7 @@ class ContentReviewApiController extends WikiaApiController {
 		$notification = wfMessage( 'content-review-test-mode-enabled' )->escaped();
 		$notification.= Xml::element(
 			'a',
-			[ 'id' => 'content-review-test-mode-disable', 'href' => '#' ],
+			[ 'class' => 'content-review-test-mode-disable', 'href' => '#' ],
 			wfMessage( 'content-review-test-mode-disable' )->plain()
 		);
 

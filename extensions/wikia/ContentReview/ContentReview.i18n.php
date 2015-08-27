@@ -59,6 +59,7 @@ $messages['en'] = [
 	'content-review-diff-approve-confirmation' => 'Reviewed code has been approved.',
 	'content-review-diff-reject-confirmation' => 'Reviewed code has been rejected.',
 	'content-review-diff-page-error' => 'Something went wrong. Please try again later.',
+	'content-review-diff-already-done' => 'You are trying to add an changes to the revision that isn\'t "In review" stage.',
 
 	'content-review-status-unreviewed' => 'Unreviewed',
 	'content-review-status-in-review' => 'In review',
