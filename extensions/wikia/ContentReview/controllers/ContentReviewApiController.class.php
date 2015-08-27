@@ -150,7 +150,9 @@ class ContentReviewApiController extends WikiaApiController {
 		$oldid = $this->request->getInt( 'oldid' );
 
 
-		if ( $helper->hasPageApprovedId( $wikiId, $pageId, $oldid  ) && $helper->isDiffPageInReviewProcess( $wikiId, $pageId, $diff ) ) {
+		if ( $helper->hasPageApprovedId( $wikiId, $pageId, $oldid  )
+			&& $helper->isDiffPageInReviewProcess( $wikiId, $pageId, $diff ) )
+		{
 			$review = $reviewModel->getReviewedContent( $wikiId, $pageId, ReviewModel::CONTENT_REVIEW_STATUS_IN_REVIEW );
 
 			if ( empty( $review ) ) {
@@ -164,13 +166,12 @@ class ContentReviewApiController extends WikiaApiController {
 			} elseif ( $status === ReviewModel::CONTENT_REVIEW_STATUS_REJECTED ) {
 				$this->notification = wfMessage( 'content-review-diff-reject-confirmation' )->escaped();
 			}
-			$reviewModel->removeCompletedReview( $wikiId, $pageId );
+
+			$reviewModel->updateCompletedReview( $wikiId, $pageId, $review['revision_id'], $status );
 		}
 		else {
 			$this->notification = wfMessage( 'content-review-diff-already-done' )->escaped();
 		}
-
-		$reviewModel->updateCompletedReview( $wikiId, $pageId, $review['revision_id'], $status );
 	}
 
 	public function getPageStatus() {
