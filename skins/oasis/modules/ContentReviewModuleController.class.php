@@ -116,9 +116,7 @@ class ContentReviewModuleController extends WikiaController {
 		return Linker::linkKnown(
 			$this->getContext()->getTitle(),
 			"#{$revisionId}",
-			[
-				'target' => '_blank'
-			],
+			[],
 			[
 				'diff' => $revisionId,
 			]
@@ -128,10 +126,7 @@ class ContentReviewModuleController extends WikiaController {
 	protected function createRevisionTalkpageLink( $revisionId ) {
 		return Linker::linkKnown(
 			$this->getContext()->getTitle()->getTalkPage(),
-			wfMessage( 'content-review-rejection-reason-link' )->escaped(),
-			[
-				'target' => '_blank'
-			]
+			wfMessage( 'content-review-rejection-reason-link' )->escaped()
 		);
 	}
 }
