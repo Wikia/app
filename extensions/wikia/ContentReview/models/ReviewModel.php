@@ -2,6 +2,8 @@
 
 namespace Wikia\ContentReview\Models;
 
+use Wikia\ContentReview\Helper;
+
 class ReviewModel extends ContentReviewBaseModel {
 
 	/**
@@ -20,12 +22,9 @@ class ReviewModel extends ContentReviewBaseModel {
 			->FROM( self::CONTENT_REVIEW_STATUS_TABLE )
 			->WHERE( 'wiki_id' )->EQUAL_TO( $wikiId )
 				->AND_( 'page_id' )->EQUAL_TO( $pageId )
-			->ORDER_BY( 'submit_time' )
+			->ORDER_BY( [ 'revision_id', 'ASC' ] )
 			->runLoop( $db, function ( &$pageStatus, $row ) {
-				if ( in_array( $row->status, [
-					self::CONTENT_REVIEW_STATUS_UNREVIEWED,
-					self::CONTENT_REVIEW_STATUS_IN_REVIEW,
-				] ) ) {
+				if ( Helper::isStatusAwaiting( $row->status ) ) {
 					$pageStatus['latestId'] = $row->revision_id;
 					$pageStatus['latestStatus'] = $row->status;
 				} else {
@@ -86,7 +85,7 @@ class ReviewModel extends ContentReviewBaseModel {
 
 		( new \WikiaSQL() )
 			->INSERT( self::CONTENT_REVIEW_STATUS_TABLE )
-			// wiki_id, page_id and revision_id are a unique key
+			// wiki_id, page_id and status are a unique key
 			->SET( 'wiki_id', $wikiId )
 			->SET( 'page_id', $pageId )
 			->SET( 'revision_id', $revisionId )
@@ -116,24 +115,37 @@ class ReviewModel extends ContentReviewBaseModel {
 	 *
 	 * @param int $wikiId
 	 * @param int $pageId
+	 * @param int $revisionId
+	 * @param int $status
 	 * @return bool
 	 * @throws \FluentSql\Exception\SqlException
 	 */
-	public function removeCompletedReview( $wikiId, $pageId ) {
+	public function updateCompletedReview( $wikiId, $pageId, $revisionId, $status ) {
 		$db = $this->getDatabaseForWrite();
 
 		( new \WikiaSQL() )
-			->DELETE( self::CONTENT_REVIEW_STATUS_TABLE )
-			->WHERE( 'wiki_id')->EQUAL_TO( $wikiId )
-			->AND_( 'page_id' )->EQUAL_TO( $pageId )
-			->AND_( 'status' )->EQUAL_TO( self::CONTENT_REVIEW_STATUS_IN_REVIEW )
-			->run( $db);
+			->DELETE()
+			->FROM( self::CONTENT_REVIEW_STATUS_TABLE )
+			->WHERE( 'wiki_id' )->EQUAL_TO( $wikiId )
+				->AND_( 'page_id' )->EQUAL_TO( $pageId )
+				->AND_( 'status' )->EQUAL_TO( $status )
+			->run( $db );
+
+		( new \WikiaSQL() )
+			->UPDATE( self::CONTENT_REVIEW_STATUS_TABLE )
+			->SET( 'status', $status )
+			->WHERE( 'wiki_id' )->EQUAL_TO( $wikiId )
+				->AND_( 'page_id' )->EQUAL_TO( $pageId )
+				->AND_( 'revision_id' )->EQUAL_TO( $revisionId )
+			->run( $db );
 
 		$affectedRows = $db->affectedRows();
 
 		if ( $affectedRows === 0 ) {
-			throw new \FluentSql\Exception\SqlException( 'The DELETE operation failed.' );
+			throw new \FluentSql\Exception\SqlException( 'The DELETE and UPDATE operation failed.' );
 		}
+
+		$db->commit();
 
 		return true;
 	}
@@ -197,11 +209,12 @@ class ReviewModel extends ContentReviewBaseModel {
 		$db = $this->getDatabaseForRead();
 
 		$content = ( new \WikiaSQL() )
-			->SELECT( self::CONTENT_REVIEW_STATUS_TABLE .'.*', self::CONTENT_REVIEW_CURRENT_REVISIONS_TABLE .'.revision_id AS reviewed_id' )
+			->SELECT( self::CONTENT_REVIEW_STATUS_TABLE . '.*', self::CONTENT_REVIEW_CURRENT_REVISIONS_TABLE . '.revision_id AS reviewed_id' )
 			->FROM( self::CONTENT_REVIEW_STATUS_TABLE )
 			->LEFT_JOIN( self::CONTENT_REVIEW_CURRENT_REVISIONS_TABLE )
-			->ON( self::CONTENT_REVIEW_STATUS_TABLE.'.wiki_id', self::CONTENT_REVIEW_CURRENT_REVISIONS_TABLE.'.wiki_id' )
-			->AND_( self::CONTENT_REVIEW_STATUS_TABLE.'.page_id', self::CONTENT_REVIEW_CURRENT_REVISIONS_TABLE.'.page_id' )
+			->ON( self::CONTENT_REVIEW_STATUS_TABLE . '.wiki_id', self::CONTENT_REVIEW_CURRENT_REVISIONS_TABLE . '.wiki_id' )
+				->AND_( self::CONTENT_REVIEW_STATUS_TABLE . '.page_id', self::CONTENT_REVIEW_CURRENT_REVISIONS_TABLE . '.page_id' )
+			->WHERE( 'status' )->IN( self::CONTENT_REVIEW_STATUS_UNREVIEWED, self::CONTENT_REVIEW_STATUS_IN_REVIEW )
 			->ORDER_BY( ['submit_time', 'asc'], ['status', 'desc'] )
 			->runLoop( $db, function ( &$content, $row ) {
 				$content[$row->page_id][$row->status] = get_object_vars( $row );

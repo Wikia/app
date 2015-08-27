@@ -156,7 +156,8 @@ class ContentReviewApiController extends WikiaApiController {
 		elseif( $status === ReviewModel::CONTENT_REVIEW_STATUS_REJECTED )  {
 			$this->notification = wfMessage( 'content-review-diff-reject-confirmation' )->escaped();
 		}
-		$reviewModel->removeCompletedReview( $wikiId, $pageId );
+
+		$reviewModel->updateCompletedReview( $wikiId, $pageId, $review['revision_id'], $status );
 	}
 
 	public function getPageStatus() {
