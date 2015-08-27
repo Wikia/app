@@ -69,8 +69,8 @@ class WikiaInYourLangController extends WikiaController {
 						$oNativeWiki->city_title,
 					];
 
-					if ($wgWikiaEnvironment != WIKIA_ENV_DEV) {
-						$articleURL = $this->getArticleURL($sArticleTitle, $oNativeWiki->city_id);
+					if ( $wgWikiaEnvironment !== WIKIA_ENV_DEV ) {
+						$articleURL = $this->getArticleURL( $sArticleTitle, $oNativeWiki->city_id );
 						if ( $articleURL ) {
 							$aMessageParams[1] = $articleURL;
 						}
@@ -228,12 +228,12 @@ class WikiaInYourLangController extends WikiaController {
 		return ['desktop' => $sMsg, 'mobile' => $sMsgMobile];
 	}
 
-	private function getArticleURL($sArticleTitle, $city_id) {
+	private function getArticleURL( $sArticleTitle, $cityId ) {
 		$articleURL = null;
-		if( $sArticleTitle !== false ) {
-			$title = GlobalTitle::newFromText($sArticleTitle, NS_MAIN, $city_id);
+		if ( $sArticleTitle !== false ) {
+			$title = GlobalTitle::newFromText( $sArticleTitle, NS_MAIN, $cityId );
 
-			if( !is_null($title) ) {
+			if ( !is_null( $title ) ) {
 				$articleURL = $title->getFullURL();
 			}
 		}
