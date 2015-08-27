@@ -96,7 +96,7 @@ class ContentReviewModuleController extends WikiaController {
 		return $liveStatus;
 	}
 
-	public function prepareTemplateData( $status, $revisionId = null, $withReason = false ) {
+	protected function prepareTemplateData( $status, $revisionId = null, $withReason = false ) {
 		$templateData = [
 			'statusKey' => $status,
 			'message' => wfMessage( "content-review-module-status-{$status}" )->escaped(),
@@ -112,7 +112,7 @@ class ContentReviewModuleController extends WikiaController {
 		return $templateData;
 	}
 
-	public function createRevisionLink( $revisionId ) {
+	protected function createRevisionLink( $revisionId ) {
 		return Linker::linkKnown(
 			$this->getContext()->getTitle(),
 			"#{$revisionId}",
@@ -125,7 +125,7 @@ class ContentReviewModuleController extends WikiaController {
 		);
 	}
 
-	public function createRevisionTalkpageLink( $revisionId ) {
+	protected function createRevisionTalkpageLink( $revisionId ) {
 		return Linker::linkKnown(
 			$this->getContext()->getTitle()->getTalkPage(),
 			wfMessage( 'content-review-rejection-reason-link' )->escaped(),
