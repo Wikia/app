@@ -132,7 +132,10 @@ class HelperController extends \WikiaController
 		$this->response->setVal( 'success', true );
 	}
 
-	public function isBlocked() {
+  public function isBlocked() {
+    $this->response->setFormat( 'json' );
+    $this->response->setCacheValidity( \WikiaResponse::CACHE_DISABLED );
+
 		if ( !$this->authenticateViaTheSchwartz() ) {
 			return;
 		}
