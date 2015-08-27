@@ -535,7 +535,7 @@
 				});
 			});
 
-		if (window.wgOasisResponsive) {
+		if (window.wgOasisResponsive || window.wgOasisBreakpoints) {
 			ThemeDesigner.slideByDefaultWidth = 500;
 			ThemeDesigner.slideByItems = 3;
 
