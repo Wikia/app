@@ -160,9 +160,17 @@ class ContentReviewApiController extends WikiaApiController {
 
 			if ( $status === ReviewModel::CONTENT_REVIEW_STATUS_APPROVED ) {
 				$currentRevisionModel->approveRevision( $wikiId, $pageId, $review['revision_id'] );
-				$this->notification = wfMessage( 'content-review-diff-approve-confirmation' )->escaped();
+				$this->notification = wfMessage( 'content-review-diff-approve-confirmation' )->parse();
 			} elseif ( $status === ReviewModel::CONTENT_REVIEW_STATUS_REJECTED ) {
-				$this->notification = wfMessage( 'content-review-diff-reject-confirmation' )->escaped();
+				$title = Title::newFromID( $pageId );
+				$params = [
+					'action' => 'edit',
+					'section' => 'new',
+					'useMessage' => 'content-review-rejection-explanation'
+				];
+				$talkPage = $title->getTalkPage();
+				$feedbackLink = $talkPage->getFullURL( $params );
+				$this->notification = wfMessage( 'content-review-diff-reject-confirmation', $feedbackLink )->parse();
 			}
 			$reviewModel->removeCompletedReview( $wikiId, $pageId );
 		}
