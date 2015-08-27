@@ -68,6 +68,7 @@ $wgHooks[ 'ParserAfterTidy' ][] = 'PortableInfoboxParserTagController::replaceIn
 $wgHooks[ 'ImageServing::buildAndGetIndex' ][] = 'PortableInfoboxHooks::onImageServingCollectImages';
 $wgHooks[ 'wgQueryPages' ][] = 'PortableInfoboxHooks::onWgQueryPages';
 $wgHooks[ 'EditPageLayoutExecute' ][] = 'PortableInfoboxHooks::onEditPageLayoutExecute';
+$wgHooks[ 'SkinAfterBottomScripts' ][] = 'PortableInfoboxHooks::onSkinAfterBottomScripts';
 
 // special pages
 $wgSpecialPages[ 'AllInfoboxes' ] = 'AllinfoboxesQueryPage';
@@ -80,3 +81,7 @@ $wgExtensionMessagesFiles[ 'PortableInfobox' ] = $dir . 'PortableInfobox.i18n.ph
 $wgAPIModules[ 'infobox' ] = 'ApiPortableInfobox';
 $wgAPIPropModules[ 'infobox' ] = 'ApiQueryPortableInfobox';
 $wgAPIListModules[ 'allinfoboxes' ] = 'ApiQueryAllinfoboxes';
+
+JSMessages::registerPackage( 'PortableInfoboxBuilder', [
+	'portable-infobox-builder-entry-point-modal-*'
+] );

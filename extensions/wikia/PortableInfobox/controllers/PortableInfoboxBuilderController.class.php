@@ -2,7 +2,7 @@
 
 class PortableInfoboxBuilderController extends WikiaController {
 
-	const INFOBOX_BUILDER_PARAM = 'infoboxBuilder';
+	const INFOBOX_BUILDER_PARAM = 'portableInfoboxBuilder';
 
 	public function getAssets() {
 		$dir = PortableInfoboxRenderService::getTemplatesDir();

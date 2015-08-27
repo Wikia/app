@@ -66,4 +66,27 @@ class PortableInfoboxHooks {
 
 		return true;
 	}
+
+	/**
+	 * @param Skin $skin
+	 * @param string $text
+	 *
+	 * @return bool
+	 */
+	public static function onSkinAfterBottomScripts( $skin, &$text ) {
+		$title = $skin->getTitle();
+		if ( $title->getNamespace() == NS_TEMPLATE &&
+			 !$title->exists() &&
+			 $skin->getRequest()->getVal( 'action' ) == 'edit' &&
+			 !$skin->getRequest()->getBool( PortableInfoboxBuilderController::INFOBOX_BUILDER_PARAM )
+		) {
+			$text .= JSMessages::printPackages( [ 'PortableInfoboxBuilder' ] );
+
+			$scripts = AssetsManager::getInstance()->getURL( 'portable_infobox_builder_js' );
+			foreach ( $scripts as $script ) {
+				$text .= Html::linkedScript( $script );
+			}
+		}
+		return true;
+	}
 }
