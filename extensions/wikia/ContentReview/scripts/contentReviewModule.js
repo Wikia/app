@@ -23,7 +23,7 @@ define(
 		function submitPageForReview(event) {
 			event.preventDefault();
 
-			var
+			var notification,
 				data = {
 					pageId: mw.config.get('wgArticleId'),
 					editToken: mw.user.tokens.get('editToken')
@@ -45,7 +45,7 @@ define(
 						} else {
 							errorMsg = e.exception.message;
 						}
-						var notification = new BannerNotification(
+						notification = new BannerNotification(
 							mw.message('content-review-module-submit-exception', errorMsg).escaped(),
 							'error'
 						);

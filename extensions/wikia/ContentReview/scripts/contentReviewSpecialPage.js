@@ -38,7 +38,7 @@ define(
                 method: 'updateReviewsStatus',
                 data: data,
                 callback: function() {
-                    var notification = new BannerNotification(
+                    notification = new BannerNotification(
                        mw.message('content-review-special-review-started').escaped(),
                         'confirm'
                     );
