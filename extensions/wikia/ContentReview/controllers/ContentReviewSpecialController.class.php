@@ -36,7 +36,7 @@ class ContentReviewSpecialController extends WikiaSpecialPageController {
 			return false;
 		}
 
-		$this->wg->Out->setPageTitle( wfMessage( 'content-review-special-title' )->escaped() );
+		$this->getOutput()->setPageTitle( wfMessage( 'content-review-special-title' )->plain() );
 
 		$model = new ReviewModel();
 		$reviews = $model->getContentToReviewFromDatabase();
