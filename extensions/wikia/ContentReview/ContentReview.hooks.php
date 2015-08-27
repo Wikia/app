@@ -92,6 +92,22 @@ class Hooks {
 			\Wikia::addAssetsToOutput( 'content_review_diff_page_js' );
 			\JSMessages::enqueuePackage( 'ContentReviewDiffPage', \JSMessages::EXTERNAL );
 
+			/* Link for adding new section on script talk page. Prefilled with standard explanation of rejection */
+			$params = [
+				'action' => 'edit',
+				'section' => 'new',
+				'useMessage' => 'content-review-rejection-explanation'
+			];
+			$talkPage = $wgTitle->getTalkPage($params);
+			$output->prependHTML(
+				\Xml::element( 'a',
+					[
+						'href' => $talkPage->getFullURL($params)
+					],
+					wfMessage( 'content-review-feedback-link-text' )->plain()
+				)
+			);
+
 			$output->prependHTML(
 				\Xml::element( 'button',
 					[

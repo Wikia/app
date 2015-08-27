@@ -59,6 +59,10 @@ $messages['en'] = [
 	'content-review-status-in-review' => 'In review',
 	'content-review-status-approved' => 'Approved',
 	'content-review-status-rejected' => 'Rejected,',
+
+	'content-review-feedback-link-text' => 'Provide feedback',
+	'content-review-rejection-explanation' => '==Submitted script change was rejected==
+Recently submitted change to this JS script was rejected in Wikia review process. Please make sure you meet [[Help:Custom JavaScript guidelines|Custom JavaScript guidelines]].'
 ];
 
 /**
@@ -109,5 +113,8 @@ $messages['qqq'] = [
 	'content-review-status-unreviewed' => 'Status Unreviewed',
 	'content-review-status-in-review' => 'Status In review',
 	'content-review-status-approved' => 'Status Approved',
-	'content-review-status-rejected' => 'Status Rejected,'
+	'content-review-status-rejected' => 'Status Rejected,',
+
+	'content-review-feedback-link-text' => 'Text on a link for providing feedback on script change being reviewed',
+	'content-review-rejection-explanation' => 'Standard explanation response when script changes were rejected. This text is a prefill to script talk page when reviewer is redirected there to provide feedback on rejection.'
 ];
