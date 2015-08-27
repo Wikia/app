@@ -63,7 +63,7 @@ class PortableInfoboxRenderService extends WikiaService {
 						continue;
 					}
 
-					if ( $helper->isTypeSupportedInTemplates( $type, $this->templates ) ) {
+					if ( $helper->isTypeSupportedInTemplates( $type, self::getTemplates() ) ) {
 						$infoboxHtmlContent .= $this->renderItem( $type, $data );
 					};
 			}
@@ -107,7 +107,7 @@ class PortableInfoboxRenderService extends WikiaService {
 			foreach ( $dataItems as $item ) {
 				$type = $item[ 'type' ];
 
-				if ( $helper->isTypeSupportedInTemplates( $type, $this->templates ) ) {
+				if ( $helper->isTypeSupportedInTemplates( $type, self::getTemplates() ) ) {
 					$groupHTMLContent .= $this->renderItem( $type, $item[ 'data' ] );
 				}
 			}
@@ -165,6 +165,6 @@ class PortableInfoboxRenderService extends WikiaService {
 
 		return $this->templateEngine->clearData()
 			->setData( $data )
-			->render( $this->templates[ $type ] );
+			->render( self::getTemplates()[ $type ] );
 	}
 }
