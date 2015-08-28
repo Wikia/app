@@ -8,6 +8,9 @@
  *
  * @author Adam Karmiński <adamk@wikia-inc.com>
  * @author Łukasz Konieczny <lukaszk@wikia-inc.com>
+ * @author Kamil Koterba
+ * @author Mariusz Czeszejko-Sochacki
+ * @author Daniel Grunwell
  * @copyright (c) 2015 Wikia, Inc.
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
