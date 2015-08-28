@@ -246,6 +246,7 @@
     function trackBlocking(value) {
         _gaWikiaPush(['set', 'dimension6', value]);
         window.ga('ads.set', 'dimension6', value);
+        guaTrackAdEvent('ad/sourcepoint/detection', value);
         guaTrackEvent('ads-sourcepoint-detection', 'impression', value);
     }
 

@@ -37,7 +37,7 @@ define( 'USER_TOKEN_LENGTH', 32 );
  * Int Serialized record version.
  * @ingroup Constants
  */
-define( 'MW_USER_VERSION', 15 );
+define( 'MW_USER_VERSION', 16 );
 
 /**
  * String Some punctuation to prevent editing from broken text-mangling proxies.
@@ -243,8 +243,6 @@ class User {
 	 */
 	private $mBlockedFromCreateAccount = false;
 
-	var $mIsCurrent = false; # Wikia - indicates that the instance represents the current performer
-
 	static $idCacheByName = array();
 
 	/**
@@ -428,7 +426,6 @@ class User {
 		}
 		$data['mVersion'] = MW_USER_VERSION;
 		$data[self::CACHE_PREFERENCES_KEY] = $this->userPreferences()->getPreferences($this->mId);
-		$data[self::CACHE_ATTRIBUTES_KEY] = $this->userAttributes()->getAttributes($this->mId);
 		$key = $this->getCacheKey();
 		global $wgMemc;
 		$wgMemc->set( $key, $data );
@@ -1444,7 +1441,7 @@ class User {
 	 *                    done against master.
 	 */
 	private function getBlockedStatus( $bFromSlave = true ) {
-		global $wgProxyWhitelist;
+		global $wgProxyWhitelist, $wgUser;
 
 		if ( -1 != $this->mBlockedby ) {
 			return;
@@ -1463,7 +1460,7 @@ class User {
 		# We only need to worry about passing the IP address to the Block generator if the
 		# user is not immune to autoblocks/hardblocks, and they are the current user so we
 		# know which IP address they're actually coming from
-		if ( !$this->isAllowed( 'ipblock-exempt' ) && $this->isCurrent() ) {
+		if ( !$this->isAllowed( 'ipblock-exempt' ) && $this->equals( $wgUser ) ) {
 			$ip = $this->getRequest()->getIP();
 		} else {
 			$ip = null;
@@ -1885,13 +1882,6 @@ class User {
 	public function setId( $v ) {
 		$this->mId = $v;
 		$this->clearInstanceCache( 'id' );
-	}
-
-	/**
-	 * Mark that the instance represents the current performer
-	 */
-	public function setCurrent() {
-		$this->mIsCurrent = true;
 	}
 
 	/**
@@ -2741,7 +2731,6 @@ class User {
 	 */
 	public function setGlobalAttribute($attribute, $value) {
 		$this->setOptionHelper($attribute, $value);
-		$this->setAttributeInService($attribute, $value);
 	}
 
 	/**
@@ -3157,25 +3146,16 @@ class User {
 	}
 
 	/**
-	 * Get whether the instance represents the current performer
+	 * Checks if two user objects point to the same user.
 	 *
-	 * @return Bool
-	 * @author Michał Roszka <michal@wikia-inc.com>
+	 * Ported from MW 1.25 by Michał Roszka
+	 *
+	 * @since 1.25
+	 * @param User $user
+	 * @return bool
 	 */
-	public function isCurrent() {
-		// This is the first implementation. I still rely on $wgUser here
-		// and want to log all cases when mIsCurrent property is false
-		// for the current performer and fix it for future checks.
-		global $wgUser;
-		if ( !$this->mIsCurrent && $this->getName() === $wgUser->getName() ) {
-			Wikia\Logger\WikiaLogger::instance()->error(
-				'wrong-mIsCurrent',
-				[ 'exception' => new Exception ]
-			);
-			// fix the wrong mIsCurrent
-			$this->setCurrent();
-		}
-		return $this->mIsCurrent;
+	public function equals( User $user ) {
+		return $this->getName() === $user->getName();
 	}
 
 	/**
@@ -4862,12 +4842,12 @@ class User {
 	 * @return int|bool True if not $wgNewUserLog; otherwise ID of log item or 0 on failure
 	 */
 	public function addNewUserLogEntry( $byEmail = false, $reason = '' ) {
-		global $wgContLang, $wgNewUserLog;
+		global $wgContLang, $wgNewUserLog, $wgUser;
 		if( empty( $wgNewUserLog ) ) {
 			return true; // disabled
 		}
 
-		if( $this->isCurrent() ) {
+		if( $this->equals( $wgUser ) ) {
 			$action = 'create';
 		} else {
 			$action = 'create2';
