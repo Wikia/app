@@ -17,17 +17,18 @@ define('ext.wikia.adEngine.provider.taboola', [
 		context = adContext.getContext(),
 		isMobile = context.targeting.skin === 'wikiamobile',
 		pageType = context.targeting.pageType,
+		// mapping wikiDbName => taboola JS URL part
 		recirculationWikis = {
-			'ageofempires': true,
-			'batman': true,
-			'deadrising': true,
-			'shadowhunters': true,
-			'transformers': true,
-			'dcanimateduniverse': true,
-			'bioshock': true,
-			'deadisland': true,
-			'angrybirds': true,
-			'hearthstone': true
+			'ageofempires': 'ageofempires',
+			'Batman': 'batman',
+			'deadrising': 'deadrising',
+			'mortalinstruments': 'shadowhunters',
+			'transformers': 'transformers',
+			'dcanimated': 'dcanimateduniverse',
+			'bioshock': 'bioshock',
+			'deadisland': 'deadisland',
+			'angrybirds': 'angrybirds',
+			'hearthstone': 'hearthstone'
 		},
 		wikiDbName = context.targeting.wikiDbName;
 
@@ -49,14 +50,10 @@ define('ext.wikia.adEngine.provider.taboola', [
 
 	function loadTaboola() {
 		var taboolaInit, s,
-			url = 'http://cdn.taboola.com/libtrc/wikia-network/loader.js';
+			url = getTaboolaUrl();
 
 		if (libraryLoaded) {
 			return;
-		}
-
-		if (!isMobile) {
-			url = 'http://cdn.taboola.com/libtrc/wikia-' + wikiDbName + '/loader.js';
 		}
 
 		taboolaInit = {};
@@ -102,6 +99,21 @@ define('ext.wikia.adEngine.provider.taboola', [
 
 		log(['getMode - no recirculation wiki found but taboola is enabled', wikiDbName], 'debug', logGroup);
 		return isMobile ? 'thumbnails-b' : 'thumbnails-a';
+	}
+
+	function getTaboolaUrl() {
+		var url = 'http://cdn.taboola.com/libtrc/wikia-network/loader.js';
+
+		if (!isMobile && recirculationWikis[wikiDbName]) {
+			log(['getTaboolaUrl - recirculation wiki URL', wikiDbName], 'debug', logGroup);
+			return 'http://cdn.taboola.com/libtrc/wikia-' + recirculationWikis[wikiDbName] + '/loader.js';
+		} else if (!isMobile && !recirculationWikis[wikiDbName]) {
+			log(['getTaboolaUrl - not recirculation wiki URL', wikiDbName], 'debug', logGroup);
+			return 'http://cdn.taboola.com/libtrc/wikia-' + wikiDbName + '/loader.js';
+		}
+
+		log(['getTaboolaUrl - mobile URL', wikiDbName], 'debug', logGroup);
+		return url;
 	}
 
 	return {
