@@ -139,7 +139,7 @@ class ArticleCommentList {
 		$this->mCountNested = 0;
 
 		// grab list of required article IDs
-		$commentsQueue = array();
+		$commentsQueue = [];
 		foreach ( $this->mComments as $id => &$levels ) {
 			if ( isset( $levels['level1'] ) ) {
 				$commentsQueue[] = $id;
@@ -151,7 +151,7 @@ class ArticleCommentList {
 
 		$titles = Title::newFromIds( $commentsQueue );
 
-		$comments = array();
+		$comments = [];
 		foreach ( $titles as $title ) {
 			$comments[$title->getArticleID()] = ArticleComment::newFromTitle( $title );
 		}
@@ -185,8 +185,6 @@ class ArticleCommentList {
 	public function getCommentList( $master = true ) {
 		global $wgRequest, $wgMemc, $wgArticleCommentsEnableVoting;
 
-		wfProfileIn( __METHOD__ );
-
 		$action = $wgRequest->getText( 'action', false );
         $title = $this->getTitle();
 		$memckey = self::getCacheKey( $title );
@@ -199,29 +197,29 @@ class ArticleCommentList {
 		}
 
 		if ( empty( $this->mCommentsAll ) ) {
-			$pages = array();
-			$subpages = array();
+			$pages = [];
+			$subpages = [];
 			$dbr = wfGetDB( $master ? DB_MASTER : DB_SLAVE );
 
-			$table = array( 'page' );
-			$vars = array( 'page_id', 'page_title' );
+			$table = [ 'page' ];
+			$vars = [ 'page_id', 'page_title' ];
 			$conds = $this->getQueryWhere( $dbr );
-			$options = array( 'ORDER BY' => 'page_id DESC' );
-			$join_conds = array();
+			$options = [ 'ORDER BY' => 'page_id DESC' ];
+			$join_conds = [];
 
 			if ( !empty( $wgArticleCommentsEnableVoting ) ) {
 				// add votes to the result set
 				$table[] = 'page_vote';
 				$vars[] = 'count(vote) as vote_cnt';
 				$options['GROUP BY'] = 'page_id, page_title';
-				$join_conds['page_vote'] = array( 'LEFT JOIN', 'page_id = article_id' );
+				$join_conds['page_vote'] = [ 'LEFT JOIN', 'page_id = article_id' ];
 
 				// a placeholder for 3 top voted answers
-				$top3 = array();
+				$top3 = [];
 			}
 			$res = $dbr->select( $table, $vars, $conds, __METHOD__, $options, $join_conds );
 
-			$helperArray = array();
+			$helperArray = [];
 			while ( $row = $dbr->fetchObject( $res ) ) {
 				$parts = ArticleComment::explode( $row->page_title );
 				$p0 = $parts['partsStripped'][0];
@@ -304,7 +302,6 @@ class ArticleCommentList {
 			}
 		}
 
-		wfProfileOut( __METHOD__ );
 		return $this->mCommentsAll;
 	}
 
@@ -316,36 +313,30 @@ class ArticleCommentList {
 	 * @return array
 	 */
 	public function getAllCommentPages() {
-		wfProfileIn( __METHOD__ );
-
 		$dbr = wfGetDB( DB_MASTER );
 
 		$res = $dbr->select(
-			array( 'page' ),
-			array( 'page_id', 'page_title' ),
+			[ 'page' ],
+			[ 'page_id', 'page_title' ],
 			$this->getQueryWhere( $dbr ),
 			__METHOD__
 		);
 
-		$pages = array();
+		$pages = [];
 		while ( $row = $dbr->fetchObject( $res ) ) {
 			$pages[$row->page_id] = ArticleComment::newFromId( $row->page_id );
 		}
 
 		$dbr->freeResult( $res );
-
-		wfProfileOut( __METHOD__ );
 		return $pages;
 	}
 
 	public function getQueryWhere( DatabaseBase $dbr ) {
-		wfProfileIn( __METHOD__ );
 		$like = "page_title" . $dbr->buildLike( sprintf( "%s/%s", $this->mText, ARTICLECOMMENT_PREFIX ), $dbr->anyString() );
 		$namspace = MWNamespace::getTalk( $this->getTitle()->getNamespace() );
 
 		if ( empty( $this->mCommentId ) ) {
-			wfProfileOut( __METHOD__ );
-			return array( $like, 'page_namespace' => $namspace );
+			return [ $like, 'page_namespace' => $namspace ];
 		}
 
 		$ac = ArticleComment::newFromId( $this->mCommentId );
@@ -355,38 +346,33 @@ class ArticleCommentList {
 			$parent = $title->getDBkey();
 		}
 		$like = "page_title" . $dbr->buildLike( $parent, $dbr->anyString() );
-		wfProfileOut( __METHOD__ );
-		return array( $like, 'page_namespace' => $namspace );
+
+		return [ $like, 'page_namespace' => $namspace ];
 	}
 
-	// TODO: review - CruiseControl says this is unused.
 	private function getRemovedCommentPages( $oTitle ) {
-		wfProfileIn( __METHOD__ );
-
-		$pages = array();
-
+		$pages = [];
 		if ( $oTitle instanceof Title ) {
 			$dbr = wfGetDB( DB_SLAVE );
 			$res = $dbr->select(
-				array( 'archive' ),
-				array( 'ar_page_id', 'ar_title' ),
-				array(
+				[ 'archive' ],
+				[ 'ar_page_id', 'ar_title' ],
+				[
 					'ar_namespace' => MWNamespace::getTalk( $this->getTitle()->getNamespace() ),
 					"ar_title" . $dbr->buildLike( sprintf( "%s/%s", $oTitle->getDBkey(), ARTICLECOMMENT_PREFIX ), $dbr->anyString() )
-				),
+				],
 				__METHOD__,
-				array( 'ORDER BY' => 'ar_page_id ASC' )
+				[ 'ORDER BY' => 'ar_page_id ASC' ]
 			);
 			while ( $row = $dbr->fetchObject( $res ) ) {
-				$pages[ $row->ar_page_id ] = array(
+				$pages[ $row->ar_page_id ] = [
 					'title' => $row->ar_title,
 					'nspace' => MWNamespace::getTalk( $this->getTitle()->getNamespace() )
-				);
+				];
 			}
 			$dbr->freeResult( $res );
 		}
 
-		wfProfileOut( __METHOD__ );
 		return $pages;
 	}
 
@@ -401,7 +387,7 @@ class ArticleCommentList {
 		global $wgUser, $wgStylePath;
 
 		// $isSysop = in_array('sysop', $groups) || in_array('staff', $groups);
-		$canEdit = $wgUser->isAllowed( 'edit' );
+		$canEdit = ArticleComment::userCanCommentOn( $this->mTitle, $wgUser );
 		$isBlocked = $wgUser->isBlocked();
 		$isReadOnly = wfReadOnly();
 		// $showall = $wgRequest->getText( 'showall', false );
@@ -421,7 +407,7 @@ class ArticleCommentList {
 		$this->preloadFirstRevId( $comments );
 		$pagination = $this->doPagination( $countComments, count( $comments ), $page );
 
-		return array(
+		return [
 			'avatar' => AvatarService::renderAvatar( $wgUser->getName(), 50 ),
 			'userurl' => AvatarService::getUrl( $wgUser->getName() ),
 			'canEdit' => $canEdit,
@@ -438,7 +424,7 @@ class ArticleCommentList {
 			'reason' => $isBlocked ? $this->blockedPage() : '',
 			'stylePath' => $wgStylePath,
 			'title' => $this->mTitle
-		);
+		];
 	} // end getData();
 
 	/**
@@ -479,7 +465,7 @@ class ArticleCommentList {
 
 			// add spacer when there is a gap between 1st and 2nd visible page
 			if ( $firstVisiblePage > 2 ) {
-				$pagination .= wfMsg( 'article-comments-page-spacer' );
+				$pagination .= wfMessage( 'article-comments-page-spacer' )->escaped();
 			}
 
 			// generate links
@@ -489,7 +475,7 @@ class ArticleCommentList {
 
 			// add spacer when there is a gap between 2 last links
 			if ( $numberOfPages - $lastVisiblePage > 1 ) {
-				$pagination .= wfMsg( 'article-comments-page-spacer' );
+				$pagination .= wfMessage( 'article-comments-page-spacer' )->escaped();
 			}
 
 			// add last page - always visible
@@ -519,16 +505,16 @@ class ArticleCommentList {
 			return '';
 		}
 
-		list( $blockerName, $reason, $ip, $blockid, $blockTimestamp, $blockExpiry, $intended, $isGlobal ) = array(
+		list( $blockerName, $reason, $ip, $blockid, $blockTimestamp, $blockExpiry, $intended, $isGlobal ) = [
 			User::whoIs( $wgUser->blockedBy() ),
-			$wgUser->blockedFor() ? $wgUser->blockedFor() : wfMsg( 'blockednoreason' ),
+			$wgUser->blockedFor() ? $wgUser->blockedFor() : wfMessage( 'blockednoreason' )->text(),
 			$wgRequest->getIP(),
 			$wgUser->getBlockId(),
 			$wgLang->timeanddate( wfTimestamp( TS_MW, $wgUser->mBlock->mTimestamp ), true ),
 			$wgUser->mBlock->mExpiry,
 			$wgUser->mBlock->mAddress,
 			$wgUser->mBlockedGlobally
-		);
+		];
 
 		// Hide username of blocker if this is a global block (see lines 2112-2129 of includes/Title.php)
 		if ( $isGlobal ) {
@@ -552,7 +538,7 @@ class ArticleCommentList {
 		}
 
 		if ( $blockExpiry == 'infinity' ) {
-			$scBlockExpiryOptions = wfMsg( 'ipboptions' );
+			$scBlockExpiryOptions = wfMessage( 'ipboptions' )->text();
 			foreach ( explode( ',', $scBlockExpiryOptions ) as $option ) {
 				if ( strpos( $option, ":" ) === false ) continue;
 				list( $show, $value ) = explode( ":", $option );
@@ -571,7 +557,7 @@ class ArticleCommentList {
 			$msg = 'blockedtext';
 		}
 
-		return wfMsgExt( $msg, array( 'parse' ), $blockerLink, $reason, $ip, $blockerName, $blockid, $blockExpiry, $intended, $blockTimestamp );
+		return wfMessage( $msg, $blockerLink, $reason, $ip, $blockerName, $blockid, $blockExpiry, $intended, $blockTimestamp )->parse();
 	}
 
 	/**
@@ -582,8 +568,7 @@ class ArticleCommentList {
 	}
 
 	protected function preloadFirstRevId( $comments ) {
-		wfProfileIn( __METHOD__ );
-		$articles = array();
+		$articles = [];
 		foreach ( $comments as $id => $levels ) {
 			if ( isset( $levels['level1'] ) ) {
 				if ( !empty( $levels['level1'] ) ) {
@@ -603,12 +588,12 @@ class ArticleCommentList {
 			$db = wfGetDB( DB_SLAVE );
 			$res = $db->select(
 				'revision',
-				array( 'rev_page', 'min(rev_id) AS min_rev_id' ),
-				array( 'rev_page' => array_keys( $articles ) ),
+				[ 'rev_page', 'min(rev_id) AS min_rev_id' ],
+				[ 'rev_page' => array_keys( $articles ) ],
 				__METHOD__,
-				array(
+				[
 					'GROUP BY' => 'rev_page',
-				)
+				]
 			);
 
 			/** @var stdClass $row */
@@ -619,11 +604,11 @@ class ArticleCommentList {
 				}
 			}
 
+			/** @var ArticleComment $comment */
 			foreach ( $articles as $id => $comment ) {
 				$comment->setFirstRevId( false, DB_SLAVE );
 			}
 		}
-		wfProfileOut( __METHOD__ );
 	}
 
 	/**
@@ -640,8 +625,6 @@ class ArticleCommentList {
 	 * @return true -- because it's a hook
 	 */
 	static public function articleDelete( WikiPage &$wikiPage, &$user, &$reason, &$error ) {
-		wfProfileIn( __METHOD__ );
-
 		$title = $wikiPage->getTitle();
 
 		if ( empty( self::$mArticlesToDelete ) ) {
@@ -649,7 +632,6 @@ class ArticleCommentList {
 			self::$mArticlesToDelete = $listing->getAllCommentPages();
 		}
 
-		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
@@ -671,14 +653,12 @@ class ArticleCommentList {
 	 */
 	static public function purgeCache( Title $title ) {
 		global $wgMemc;
-		wfProfileIn( __METHOD__ );
 
 		$wgMemc->delete( self::getCacheKey( $title ) );
 		$title->invalidateCache();
 		$title->purgeSquid();
 
-		wfRunHooks( 'ArticleCommentListPurgeComplete', array( $title ) );
-		wfProfileOut( __METHOD__ );
+		Hooks::run( 'ArticleCommentListPurgeComplete', [ $title ] );
 	}
 
 	/**
@@ -696,25 +676,20 @@ class ArticleCommentList {
 	 */
 	static public function articleDeleteComplete( WikiPage &$wikiPage, &$user, $reason, $id ) {
 		global $wgOut, $wgRC2UDPEnabled, $wgMaxCommentsToDelete, $wgCityId, $wgUser, $wgEnableMultiDeleteExt;
-		wfProfileIn( __METHOD__ );
-
 		$title = $wikiPage->getTitle();
 
 		if ( !MWNamespace::isTalk( $title->getNamespace() ) || !ArticleComment::isTitleComment( $title ) ) {
 			if ( empty( self::$mArticlesToDelete ) ) {
-				wfProfileOut( __METHOD__ );
 				return true;
 			}
 		}
 
 		if ( class_exists( 'WallHelper' ) && WallHelper::isWallNamespace( $title->getNamespace() ) ) {
-			wfProfileOut( __METHOD__ );
 			return true;
 		}
 
 		// watch out for recursion
 		if ( self::$mDeletionInProgress ) {
-			wfProfileOut( __METHOD__ );
 			return true;
 		}
 		self::$mDeletionInProgress = true;
@@ -726,7 +701,7 @@ class ArticleCommentList {
 
 		// do not use $reason as it contains content of parent article/comment - not current ones that we delete in a loop
 
-		$deleteReason = wfMsgForContent( 'article-comments-delete-reason' );
+		$deleteReason = wfMessage( 'article-comments-delete-reason' )->inContentLanguage()->escaped();
 
 		// we have comment 1st level - checked in articleDelete() (or 2nd - so do nothing)
 		if ( is_array( self::$mArticlesToDelete ) ) {
@@ -752,7 +727,7 @@ class ArticleCommentList {
 				$listing = ArticleCommentList::newFromTitle( $parentTitle );
 				$listing->purge();
 			} else {
-				$taskParams = array(
+				$taskParams = [
 					'mode' 		=> 'you',
 					'wikis'		=> '',
 					'range'		=> 'one',
@@ -763,9 +738,10 @@ class ArticleCommentList {
 					'edittoken' => $wgUser->getEditToken(),
 					'user'		=> $wgUser->getName(),
 					'admin'		=> $wgUser->getName()
-				);
+				];
 
 
+				/** @var ArticleComment $oComment */
 				foreach ( self::$mArticlesToDelete as $oComment ) {
 					$oCommentTitle = $oComment->getTitle();
 					if ( $oCommentTitle instanceof Title ) {
@@ -783,7 +759,6 @@ class ArticleCommentList {
 			}
 		}
 
-		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
@@ -799,9 +774,8 @@ class ArticleCommentList {
 	 *
 	 * @return boolean -- because it's a hook
 	 */
-	static public function undeleteComments( &$oTitle, $revision, $old_page_id ) {
+	static public function undeleteComments( Title &$oTitle, $revision, $old_page_id ) {
 		global $wgRC2UDPEnabled;
-		wfProfileIn( __METHOD__ );
 
 		if ( $oTitle instanceof Title ) {
 			$new_page_id = $oTitle->getArticleId();
@@ -814,7 +788,7 @@ class ArticleCommentList {
 					$oCommentTitle = Title::makeTitleSafe( $page_value['nspace'], $page_value['title'] );
 					if ( $oCommentTitle instanceof Title ) {
 						$archive = new PageArchive( $oCommentTitle );
-						$ok = $archive->undelete( '', wfMsg( 'article-comments-undeleted-comment', $new_page_id ) );
+						$ok = $archive->undelete( '', wfMessage( 'article-comments-undeleted-comment', $new_page_id )->escaped() );
 
 						if ( !is_array( $ok ) ) {
 							Wikia::log( __METHOD__, 'error', "cannot restore comment {$page_value['title']} (id: {$page_id})" );
@@ -825,7 +799,6 @@ class ArticleCommentList {
 			}
 		}
 
-		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
@@ -850,8 +823,6 @@ class ArticleCommentList {
 			return true;
 		}
 
-		wfProfileIn( __METHOD__ );
-
 		$oTitle = $oRCCacheEntry->getTitle();
 		$namespace = $oTitle->getNamespace();
 
@@ -862,7 +833,6 @@ class ArticleCommentList {
 			}
 		}
 
-		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
@@ -880,7 +850,7 @@ class ArticleCommentList {
 	 *
 	 * @throws MWException
 	 */
-	static public function setHeaderBlockGroup( $oChangeList, $header, array $oRCCacheEntryArray, &$changeRecentChangesHeader, Title $oTitle, &$headerTitle ) {
+	static public function setHeaderBlockGroup( ChangesList $oChangeList, $header, array $oRCCacheEntryArray, &$changeRecentChangesHeader, Title $oTitle, &$headerTitle ) {
 		global $wgEnableGroupedArticleCommentsRC;
 		$namespace = $oTitle->getNamespace();
 
@@ -913,7 +883,7 @@ class ArticleCommentList {
 							$messageKey = 'article-comments-rc-comments';
 						}
 
-						$headerTitle = wfMsgExt( $messageKey, array( 'parseinline' ), $title->getPrefixedText() );
+						$headerTitle = $oChangeList->msg( $messageKey, $title->getPrefixedText() )->parse();
 					} else {
 						Wikia::log( __METHOD__, '2', 'Title does not exist: ' . $text, true );
 					}
@@ -1092,7 +1062,7 @@ class ArticleCommentList {
 	/**
 	 * TODO: Document what the parameters are.
 	 *
-	 * @param $changeList
+	 * @param ChangesList $changeList
 	 * @param $articlelink
 	 * @param $s
 	 * @param RecentChange $rc
@@ -1102,7 +1072,7 @@ class ArticleCommentList {
 	 * @return bool
 	 * @throws MWException
 	 */
-	static function ChangesListInsertArticleLink( $changeList, &$articlelink, &$s, $rc, $unpatrolled, $watched ) {
+	static function ChangesListInsertArticleLink( ChangesList $changeList, &$articlelink, &$s, RecentChange $rc, $unpatrolled, $watched ) {
 		$rcTitle = $rc->getAttribute( 'rc_title' );
 		$rcNamespace = $rc->getAttribute( 'rc_namespace' );
 		$title = Title::newFromText( $rcTitle, $rcNamespace );
@@ -1121,7 +1091,11 @@ class ArticleCommentList {
 				}
 
 				$articleId = $title->getArticleId();
-				$articlelink = wfMsgExt( $messageKey, array( 'parseinline' ), $title->getFullURL( "permalink=$articleId#comm-$articleId" ),  $titleMainArticle->getText() );
+				$articlelink = $changeList->msg(
+					$messageKey,
+					$title->getFullURL( "permalink=$articleId#comm-$articleId" ),
+					$titleMainArticle->getText()
+				)->parse();
 			} else {
 				// it should never happened because $rcTitle is never empty,
 				// ArticleComment::explode() always returns an array with not-empty 'title' element,
@@ -1146,7 +1120,6 @@ class ArticleCommentList {
 	 * @return true -- because it's hook
 	 */
 	static public function undeleteComplete( $oTitle, $oUser, $reason ) {
-		wfProfileIn( __METHOD__ );
 		if ( $oTitle instanceof Title ) {
 			if ( in_array( $oTitle->getNamespace(), array( NS_BLOG_ARTICLE, NS_BLOG_ARTICLE_TALK ) ) ) {
 				$aProps = $oTitle->aProps;
@@ -1156,8 +1129,6 @@ class ArticleCommentList {
 				}
 			}
 		}
-
-		wfProfileOut( __METHOD__ );
 		return true;
 	}
 }

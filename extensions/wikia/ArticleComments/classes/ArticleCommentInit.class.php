@@ -234,11 +234,10 @@ class ArticleCommentInit {
 
 			$link = wfMessage(
 				'article-comments-file-page',
-				$title->getLocalURL(),
+				$title->getPrefixedText(),
 				self::getUserNameFromRevision( $title ),
-				Title::newFromText( $parentTitle )->getLocalURL(),
 				$parentTitle
-			)->text();
+			)->parse();
 
 		// format links to blog posts
 		} else if ( defined( 'NS_BLOG_ARTICLE_TALK' ) && $ns == NS_BLOG_ARTICLE_TALK ) {
@@ -248,13 +247,13 @@ class ArticleCommentInit {
 
 			$link = wfMessage(
 				'article-blog-comments-file-page',
-				$title->getLocalURL(),
+				$title->getPrefixedText(),
 				self::getUserNameFromRevision( $title ),
-				Title::newFromText( $baseText, NS_BLOG_ARTICLE )->getLocalURL(),
+				Title::newFromText( $baseText, NS_BLOG_ARTICLE )->getPrefixedText(),
 				$titleNames[1],
-				$userBlog->getLocalURL(),
+				$userBlog->getPrefixedText(),
 				$userBlog->getBaseText()
-			)->text();
+			)->parse();
 		}
 
 		return true;
