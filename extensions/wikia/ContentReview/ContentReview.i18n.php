@@ -29,8 +29,7 @@ $messages['en'] = [
 	'content-review-module-submit-exception' => 'Unfortunately, we could not submit the changes for a review due to the following error: $1.',
 	'content-review-module-submit-error' => 'Unfortunately, we could not submit the changes for a review.',
 
-	'content-review-module-enable-test-mode' => 'Enter test mode',
-
+	'content-review-test-mode-enable' => 'Enter test mode',
 	'content-review-test-mode-disable' => 'Exit test mode',
 	'content-review-test-mode-error' => 'Something went wrong. Please try again later.',
 	'content-review-test-mode-enabled' => 'You are currently using unreviewed versions of custom JavaScript files. ',
@@ -93,8 +92,7 @@ $messages['qqq'] = [
 	'content-review-module-submit-exception' => 'A message shown to a user in a Banner Notification if a known error happened. $1 is the error message.',
 	'content-review-module-submit-error' => 'A message shown to a user in a Banner Notification if an unknown error happened.',
 
-	'content-review-module-enable-test-mode' => 'A text of a button which clicked enables user to test unreviewed changes made in JavaScript articles.',
-
+	'content-review-test-mode-enable' => 'A text of a button which clicked enables user to test unreviewed changes made in JavaScript articles.',
 	'content-review-test-mode-disable' => 'A text of a link that disables serving unreviewed JavaScript to a user. Shown in a Banner Notification and right module.',
 	'content-review-test-mode-error' => 'A message shown if there was a problem with enabling the test mode to a user.',
 	'content-review-test-mode-enabled' => 'A message shown in Banner Notification with an information that a user is curently being served unreviewed JavaScript pages.',
