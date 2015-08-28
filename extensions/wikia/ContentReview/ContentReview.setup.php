@@ -15,7 +15,13 @@
 $wgExtensionCredits['other'][] = [
 	'name'				=> 'Content Review',
 	'version'			=> '1.0',
-	'author'			=> 'Adam Karmiński, Łukasz Konieczny, Kamil Koterba, Mariusz Czeszejko-Sochacki, Daniel Grunwell',
+	'author'			=> [
+		'Adam Karmiński',
+		'Łukasz Konieczny',
+		'Kamil Koterba',
+		'Mariusz Czeszejko-Sochacki',
+		'Daniel Grunwell'
+	],
 	'url'               => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/ContentReview',
 	'descriptionmsg'    => 'content-review-desc',
 ];
