@@ -1,7 +1,7 @@
 <div class="content-review-special-header">
 	<div class="content-review-special-header-content">
 		<h1 class="content-review-special-header-content-title">
-			<?= wfMessage( 'contentreview' )->escaped() ?>
+			<?= wfMessage( 'content-review-special-title' )->escaped() ?>
 		</h1>
 	</div>
 </div>
@@ -26,7 +26,7 @@
 				<td><?= htmlspecialchars( $review['wiki'] ) ?></td>
 				<td><a href="<?= Sanitizer::encodeAttribute( $review['url'] ) ?>"><?= htmlspecialchars( $review['title'] ) ?></a></td>
 				<td><?= $review['revision_id'] ?></td>
-				<td><?= wfMessage( ContentReviewSpecialController::$status[$review['status']] )->escaped() ?></td>
+				<td><?= wfMessage( ContentReviewSpecialController::$statusMessageKeys[$review['status']] )->escaped() ?></td>
 				<td><?= htmlspecialchars( $review['user'] ) ?></td>
 				<td><?= $review['submit_time'] ?></td>
 				<td><?= htmlspecialchars( $review['review_user_name'] ) ?></td>
@@ -36,7 +36,7 @@
 						<?= wfMessage( 'content-review-special-review-open' )->escaped() ?>
 					<? else: ?>
 						<a href="<?= Sanitizer::encodeAttribute( $review['diff'] ) ?>"
-						   class="<?= ContentReviewSpecialController::$status[$review['status']] ?><?= $review['class'] ?> wikia-button primary"
+						   class="<?= ContentReviewSpecialController::$statusMessageKeys[$review['status']] ?><?= $review['class'] ?> wikia-button primary"
 						   data-wiki-id="<?= $review['wiki_id'] ?>"
 						   data-page-id="<?= $review['page_id'] ?>"
 						   data-old-status="<?= $review['status'] ?>"

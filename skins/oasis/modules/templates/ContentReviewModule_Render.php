@@ -1,33 +1,36 @@
 <section class="content-review-module module">
-	<h2><?=
-		/**
-		 * Possible keys:
-		 * content-review-module-unreviewed-title
-		 * content-review-module-inreview-title
-		 * content-review-module-current-title
-		 */
-		wfMessage( "content-review-module-{$moduleType}-title" )->escaped() ?></h2>
-	<p><?=
-		/**
-		 * Possible keys:
-		 * content-review-module-unreviewed-description
-		 * content-review-module-inreview-description
-		 * content-review-module-current-description
-		 */
-		wfMessage( "content-review-module-{$moduleType}-description" )->escaped() ?></p>
-	<? if ( $moduleType !== ContentReviewModuleController::MODULE_TYPE_CURRENT ) : ?>
-		<a href="#" id="content-review-module-submit" title="<?= wfMessage( "content-review-module-{$moduleType}-submit" )->escaped() ?>" data-type="<?= $moduleType ?>">
-			<button class="content-review-module-button" type="button">
-				<?= wfMessage( "content-review-module-{$moduleType}-submit" )->escaped() ?>
-			</button>
-		</a>
+	<h2><?= wfMessage( 'content-review-module-title' )->escaped() ?></h2>
+
+	<h4 class="content-review-module-header"><?= wfMessage( 'content-review-module-header-latest' )->escaped() ?></h4>
+		<?= $latestStatus ?>
+	<h4 class="content-review-module-header"><?= wfMessage( 'content-review-module-header-last' )->escaped() ?></h4>
+		<?= $lastStatus ?>
+	<h4 class="content-review-module-header"><?= wfMessage( 'content-review-module-header-live' )->escaped() ?></h4>
+		<?= $liveStatus ?>
+
+	<? if ( $displaySubmit ) : ?>
+		<div class="content-review-module-submit-container">
+			<a href="#" id="content-review-module-submit" title="<?= wfMessage( "content-review-module-submit" )->escaped() ?>">
+				<button class="content-review-module-button primary" type="button">
+					<?= wfMessage( "content-review-module-submit" )->escaped() ?>
+				</button>
+			</a>
+		</div>
 	<? endif; ?>
-	<? if ( $isTestModeEnabled ) : ?>
-		<button id="content-review-module-disable-test-mode"><?= wfMessage('content-review-module-disable-test-mode')->escaped() ?></button>
-	<? else: ?>
-		<button id="content-review-module-enable-test-mode"><?= wfMessage('content-review-module-enable-test-mode')->escaped() ?></button>
-	<? endif ?>
 
+	<div class="content-review-module-test-mode">
+		<? if ( $isTestModeEnabled ) : ?>
+			<button class="content-review-test-mode-disable secondary">
+				<?= wfMessage('content-review-test-mode-disable')->escaped() ?>
+			</button>
+		<? else: ?>
+			<button class="content-review-test-mode-enable secondary">
+				<?= wfMessage('content-review-test-mode-enable')->escaped() ?>
+			</button>
+		<? endif ?>
+	</div>
 
-
+	<div class="content-review-module-help">
+		<?= wfMessage( 'content-review-module-help' )->parse() ?>
+	</div>
 </section>
