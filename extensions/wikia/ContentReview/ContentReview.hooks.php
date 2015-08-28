@@ -8,12 +8,9 @@ use Wikia\ContentReview\Models\ReviewModel;
 class Hooks {
 
 	public static function onGetRailModuleList( Array &$railModuleList ) {
-		global $wgCityId, $wgTitle, $wgUser;
+		global $wgCityId, $wgTitle;
 
-		if ( $wgTitle->inNamespace( NS_MEDIAWIKI )
-			&& $wgTitle->isJsPage()
-			&& $wgTitle->userCan( 'edit', $wgUser )
-		) {
+		if ( self::userCanEditJsPage() ) {
 			$pageStatus = \F::app()->sendRequest(
 				'ContentReviewApiController',
 				'getPageStatus',
@@ -41,7 +38,7 @@ class Hooks {
 	}
 
 	public static function onBeforePageDisplay( \OutputPage $out, \Skin $skin ) {
-		if ( Helper::isContentReviewTestModeEnabled() ) {
+		if ( Helper::isContentReviewTestModeEnabled() || self::userCanEditJsPage() ) {
 			\Wikia::addAssetsToOutput( 'content_review_test_mode_js' );
 			\JSMessages::enqueuePackage( 'ContentReviewTestMode', \JSMessages::EXTERNAL );
 		}
@@ -121,5 +118,11 @@ class Hooks {
 		}
 
 		return true;
+	}
+
+	private static function userCanEditJsPage() {
+		global $wgTitle, $wgUser;
+
+		return $wgTitle->inNamespace( NS_MEDIAWIKI ) && $wgTitle->isJsPage() && $wgTitle->userCan( 'edit', $wgUser );
 	}
 }
