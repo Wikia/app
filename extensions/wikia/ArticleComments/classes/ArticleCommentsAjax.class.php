@@ -46,14 +46,10 @@ class ArticleCommentsAjax {
 			return $result;
 		}
 
-		if ( !ArticleComment::canComment() ) {
-			return $result;
-		}
-
 		$comment = ArticleComment::newFromId( $commentId );
 		if ( $comment ) {
 			$comment->load( true );
-			if ( $comment->canEdit() ) {
+			if ( $comment->getTitle()->userCan( 'edit' ) ) {
 				$text = self::getConvertedContent( $wgRequest->getVal( 'wpArticleComment' ) );
 				$commentId = $wgRequest->getText( 'id', false );
 				$response = $comment->doSaveComment( $text, $wgUser, $title, $commentId );
@@ -104,17 +100,19 @@ class ArticleCommentsAjax {
 		$comment = ArticleComment::newFromId( $commentId );
 		if ( $comment ) {
 			$comment->load( true );
-			if ( $comment->canEdit() ) {
-				$result['error'] = 0;
-				$result['show'] = true;
-				$result['text'] = $comment->editPage();
-
-				if ( ArticleComment::isMiniEditorEnabled() ) {
-					$result['edgeCases'] = MiniEditorHelper::getEdgeCases();
-				}
-
-				$result['emptyMsg'] = wfMessage( 'article-comments-empty-comment', $comment->getTitle()->getLocalUrl( 'redirect=no&action=delete' ) )->plain();
+			if ( !$comment->getTitle()->userCan( 'edit' ) ) {
+				return $result;
 			}
+
+			$result['error'] = 0;
+			$result['show'] = true;
+			$result['text'] = $comment->editPage();
+
+			if ( ArticleComment::isMiniEditorEnabled() ) {
+				$result['edgeCases'] = MiniEditorHelper::getEdgeCases();
+			}
+
+			$result['emptyMsg'] = wfMessage( 'article-comments-empty-comment', $comment->getTitle()->getLocalUrl( 'redirect=no&action=delete' ) )->plain();
 		}
 
 		return $result;
@@ -141,7 +139,7 @@ class ArticleCommentsAjax {
 			return $result;
 		}
 
-		$canComment = ArticleCommentInit::userCanComment( $result, $title );
+		$canComment = ArticleComment::userCanCommentOn( $title );
 
 		if ( $canComment == true ) {
 			$vars = [
@@ -172,21 +170,16 @@ class ArticleCommentsAjax {
 		$result = [ 'error' => 1 ];
 		$title = Title::newFromID( $articleId );
 
-		if ( !$title ) {
+		if ( !$title || !ArticleComment::userCanCommentOn( $title, $wgUser ) ) {
 			return $result;
 		}
 
-		if ( !ArticleComment::canComment( $title ) ) {
-			return $result;
-		}
-
+		$response = ArticleComment::doPost( self::getConvertedContent( $wgRequest->getVal( 'wpArticleComment' ) ), $wgUser, $title, $parentId );
 		WikiaLogger::instance()->info( __METHOD__ . ' : Comment posted', [
 			'skin' => $wgRequest->getVal( 'useskin' ),
 			'articleId' => $articleId,
 			'parentId' => $parentId,
 		] );
-
-		$response = ArticleComment::doPost( self::getConvertedContent( $wgRequest->getVal( 'wpArticleComment' ) ), $wgUser, $title, $parentId );
 
 		if ( $response !== false ) {
 			if (

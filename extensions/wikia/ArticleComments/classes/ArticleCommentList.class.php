@@ -426,7 +426,7 @@ class ArticleCommentList {
 			'userurl' => AvatarService::getUrl( $wgUser->getName() ),
 			'canEdit' => $canEdit,
 			'commentListRaw' => $comments,
-			'commentingAllowed' => ArticleComment::canComment( $this->mTitle ),
+			'commentingAllowed' => ArticleComment::userCanCommentOn( $this->mTitle ),
 			'commentsPerPage' => $this->mMaxPerPage,
 			'countComments' => $countComments,
 			'countCommentsNested' => $countCommentsNested,

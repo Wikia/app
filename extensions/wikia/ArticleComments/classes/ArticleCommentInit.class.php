@@ -1,8 +1,5 @@
 <?php
 class ArticleCommentInit {
-	const ERROR_READONLY = 1;
-	const ERROR_USER_CANNOT_EDIT = 2;
-
 	public static $enable = null;
 	public static $commentByAnonMsg = null;
 
@@ -183,55 +180,6 @@ class ArticleCommentInit {
 	}
 
 	/**
-	 * Hook handler
-	 *
-	 * @static
-	 * @param Title $title
-	 * @param User $user
-	 * @param $action
-	 * @param $result
-	 * @return bool
-	 */
-	public static function userCan( $title, $user, $action, &$result ) {
-		$namespace = $title->getNamespace();
-
-		// we only care if this is a talk namespace
-		if ( MWNamespace::getSubject( $namespace ) == $namespace ) {
-			return true;
-		}
-
-		// for blog comments BlogLockdown is checking rights
-		if ( ArticleComment::isBlog() ) {
-			return true;
-		}
-
-		$parts = ArticleComment::explode( $title->getText() );
-		// not article comment
-		if ( count( $parts['partsStripped'] ) == 0 ) {
-			return true;
-		}
-
-		$firstRev = $title->getFirstRevision();
-		if ( $firstRev && $user->getName() == $firstRev->getUserText() ) {
-			return true;
-		}
-
-		switch ( $action ) {
-			case 'move':
-			case 'move-target':
-				return $user->isAllowed( 'commentmove' );
-				break;
-			case 'edit':
-				return $user->isAllowed( 'commentedit' );
-				break;
-			case 'delete':
-				return $user->isAllowed( 'commentdelete' );
-				break;
-		}
-		return true;
-	}
-
-	/**
 	 * HAWelcome
 	 *
 	 * @param Title $title
@@ -254,38 +202,6 @@ class ArticleCommentInit {
 			}
 		}
 		return true;
-	}
-
-	/**
-	 * Checks if a user can comment, producing an error code and a related message
-	 *
-	 * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
-	 *
-	 * @param array $info [Optional] If passed this will be filled in with an error code and related message in case of negative result
-	 * @param Title $title [Optional] Title to use to create login counter redirect
-	 * @param User $user [Optional] The user to check, if not passed it will use the global user
-	 *
-	 * @return bool
-	 */
-	static public function userCanComment( Array &$info = array(), Title $title = null, User $user = null ) {
-		$ret = true;
-
-		if ( !( $user instanceof User ) ) {
-			global $wgUser;
-			$user = $wgUser;
-		}
-
-		if ( wfReadOnly() ) {
-			$info['error'] = self::ERROR_READONLY;
-			$info['msg'] = wfMsg( 'readonlytext' );
-			$ret = false;
-		} elseif ( !$user->isAllowed( 'edit' ) ) {
-			$info['error'] = self::ERROR_USER_CANNOT_EDIT;
-			$info['msg'] = wfMessage( 'article-comments-login', SpecialPage::getTitleFor( 'UserLogin' )->getLocalUrl( ( $title instanceof Title ) ? 'returnto=' . $title->getPrefixedUrl() : null ) )->text();
-			$ret = false;
-		}
-
-		return $ret;
 	}
 
 	// when comments are enabled on the current namespace make the WikiaMobile skin enriched assets

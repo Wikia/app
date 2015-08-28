@@ -42,13 +42,18 @@ $wgAutoloadClasses['CommentsIndex'] = __DIR__ . '/classes/CommentsIndex.class.ph
 
 $wgExtensionMessagesFiles['ArticleComments'] = __DIR__ . '/ArticleComments.i18n.php';
 
+$wgAvailableRights[] = 'commentcreate';
 $wgAvailableRights[] = 'commentmove';
 $wgAvailableRights[] = 'commentedit';
 $wgAvailableRights[] = 'commentdelete';
 
+$wgGroupPermissions['*']['commentcreate'] = true;
 $wgGroupPermissions['sysop']['commentmove'] = true;
 $wgGroupPermissions['sysop']['commentedit'] = true;
 $wgGroupPermissions['sysop']['commentdelete'] = true;
+
+// VOLDEV-136: Allow moderators to delete comments
+$wgGroupPermissions['threadmoderator']['commentdelete'] = true;
 
 if ( !empty( $wgEnableWallEngine ) || !empty( $wgEnableArticleCommentsExt ) || !empty( $wgEnableBlogArticles ) ) {
 
@@ -77,7 +82,7 @@ if ( !empty( $wgEnableWallEngine ) || !empty( $wgEnableArticleCommentsExt ) || !
 	// blogs
 	$wgHooks['UndeleteComplete'][] = 'ArticleCommentList::undeleteComplete';
 	// prevent editing not own comments
-	$wgHooks['userCan'][] = 'ArticleCommentInit::userCan';
+	$wgHooks['userCan'][] = 'ArticleComment::userCan';
 	// HAWelcome
 	$wgHooks['HAWelcomeGetPrefixText'][] = 'ArticleCommentInit::HAWelcomeGetPrefixText';
 
@@ -101,7 +106,7 @@ if ( !empty( $wgEnableWallEngine ) || !empty( $wgEnableArticleCommentsExt ) || !
 	$wgHooks['FilePageImageUsageSingleLink'][] = 'ArticleCommentInit::onFilePageImageUsageSingleLink';
 }
 
-$wgHooks['BeforeDeletePermissionErrors'][] = 'ArticleComment::onBeforeDeletePermissionErrors';
+//$wgHooks['BeforeDeletePermissionErrors'][] = 'ArticleComment::onBeforeDeletePermissionErrors';
 
 //JSMEssages setup
 JSMessages::registerPackage( 'ArticleCommentsCounter', [

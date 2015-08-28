@@ -6,44 +6,8 @@ class ArticleCommentsController extends WikiaController {
 	private static $content = null;
 
 	public function executeIndex() {
-		if (class_exists('ArticleCommentInit') && ArticleCommentInit::ArticleCommentCheck()) {
+		if ( class_exists( 'ArticleCommentInit' ) && ArticleCommentInit::ArticleCommentCheck() ) {
 			$isMobile = $this->app->checkSkin( 'wikiamobile' );
-
-			// for non-JS version !!! (used also for Monobook and WikiaMobile)
-			if ($this->wg->Request->wasPosted()) {
-				$sComment = $this->wg->Request->getVal( 'wpArticleComment', false );
-				$iArticleId = $this->wg->Request->getVal( 'wpArticleId', false );
-				$sSubmit = $this->wg->Request->getVal( 'wpArticleSubmit', false );
-
-				if ( $sSubmit && $sComment && $iArticleId ) {
-					$oTitle = Title::newFromID( $iArticleId );
-
-					if ( $oTitle instanceof Title ) {
-						$response = ArticleComment::doPost( $this->wg->Request->getVal('wpArticleComment') , $this->wg->User, $oTitle );
-
-						if ( !$isMobile ) {
-							$this->wg->Out->redirect( $oTitle->getLocalURL() );
-						} else {
-							$result = array();
-							$canComment = ArticleCommentInit::userCanComment( $result, $oTitle );
-
-							//this check should be done for all the skins and before calling ArticleComment::doPost but that requires a good bit of refactoring
-							//and some design review as the OAsis/Monobook template doesn't handle error feedback from this code
-							if ( $canComment == true ) {
-								if ( empty( $response[2]['error'] ) ) {
-									//wgOut redirect doesn't work when running fully under the
-									//Nirvana stack (WikiaMobile skin), also send back to the first page of comments
-									$this->response->redirect( $oTitle->getLocalURL( [ 'page' => 1 ] ) . '#article-comments' );
-								} else {
-									$this->response->setVal( 'error', $response[2]['msg'] );
-								}
-							} else {
-								$this->response->setVal( 'error', $result['msg'] );
-							}
-						}
-					}
-				}
-			}
 
 			$this->page = $this->wg->request->getVal( 'page', 1 );
 			$this->isLoadingOnDemand = ArticleComment::isLoadingOnDemand();
