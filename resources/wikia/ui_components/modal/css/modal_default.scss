@@ -134,6 +134,10 @@ $large-modal-margin: 50px;
 	.buttons {
 		bottom: 15px;
 	}
+
+	&.no-scroll > section {
+		overflow-y: hidden;
+	}
 }
 
 .modal-blackout {
