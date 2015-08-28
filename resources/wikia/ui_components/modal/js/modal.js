@@ -2,9 +2,11 @@ define('wikia.ui.modal', [
 	'jquery',
 	'wikia.window',
 	'wikia.browserDetect'
-], function ($,
-			 w,
-			 browserDetect) {
+], function (
+	$,
+	w,
+	browserDetect
+) {
 	'use strict';
 
 	// constants for modal component
