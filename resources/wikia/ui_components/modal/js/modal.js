@@ -2,11 +2,9 @@ define('wikia.ui.modal', [
 	'jquery',
 	'wikia.window',
 	'wikia.browserDetect'
-], function (
-	$,
-	w,
-	browserDetect
-) {
+], function ($,
+			 w,
+			 browserDetect) {
 	'use strict';
 
 	// constants for modal component
@@ -18,23 +16,23 @@ define('wikia.ui.modal', [
 		CLOSE_CLASS = 'close',
 		INACTIVE_CLASS = 'inactive',
 
-		// vars required for disable scroll behind modal
+	// vars required for disable scroll behind modal
 		$wrapper = $('.WikiaSiteWrapper'),
 		$win = $(w),
 		wScrollTop,
 
 		$body = $(w.document.body),
 
-		// default modal rendering params
+	// default modal rendering params
 		modalDefaults = {
 			type: 'default',
 			vars: {
 				closeText: $.msg('close'),
 				escapeToClose: true
 			},
-            confirmCloseModal: undefined
+			confirmCloseModal: undefined
 		},
-		// default modal buttons rendering params
+	// default modal buttons rendering params
 		btnConfig = {
 			type: 'button',
 			vars: {
@@ -43,7 +41,7 @@ define('wikia.ui.modal', [
 			}
 		},
 
-		// reference to UI component instance
+	// reference to UI component instance
 		uiComponent;
 
 	/**
@@ -82,8 +80,8 @@ define('wikia.ui.modal', [
 			HEADER_AND_FOOTER_HEIGHT = 90, // modal header and footer have 45px fixed height
 			SECTION_PADDING = 40, // modal section has 20px top and bottom padding
 			winHeight = $(w).height(),
-			// IE has problem with 'max-height' together with 'border-box', so set to 'content-box' and padding need to
-			// be subtracted from 'max-height'.
+		// IE has problem with 'max-height' together with 'border-box', so set to 'content-box' and padding need to
+		// be subtracted from 'max-height'.
 			modalMaxHeight = (90 / 100) * winHeight - HEADER_AND_FOOTER_HEIGHT - SECTION_PADDING;
 
 		element.children('section').css('maxHeight', modalMaxHeight);
@@ -179,7 +177,7 @@ define('wikia.ui.modal', [
 
 		/** ATTACHING EVENT HANDLERS TO MODAL */
 
-		// trigger custom buttons events based on button 'data-event' attribute
+			// trigger custom buttons events based on button 'data-event' attribute
 		this.$element.on('click', 'button, a.modalEvent', $.proxy(function (event) {
 			var $target = $(event.currentTarget),
 				modalEventName = $target.data('event');

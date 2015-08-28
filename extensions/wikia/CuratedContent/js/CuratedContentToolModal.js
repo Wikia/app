@@ -16,7 +16,7 @@ define(
 						title: title,
 						content: content
 					},
-					confirmCloseModal: function() {
+					confirmCloseModal: function () {
 						return closeModal || confirm("Are you sure you want to close this modal?");
 					}
 				};
