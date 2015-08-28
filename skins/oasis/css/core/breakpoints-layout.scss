@@ -326,6 +326,7 @@ body.ve {
 	}
 
 	// do not show VE overlay
+	//TODO: XW-179 | Remove this overlay from VE code
 	.ve-ui-wikiaFocusWidget {
 		display: none !important;
 	}
