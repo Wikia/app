@@ -316,6 +316,8 @@
 }
 
 // Visual Editor changes for breakpoints
+$ve-overlay-color: rgba(0, 0, 0, .5);
+$vw-overlay-shadow-size: 100vw; // IE does not support vmax
 body.ve {
 	pointer-events: none;
 
@@ -333,10 +335,10 @@ body.ve {
 	}
 
 	.WikiaMainContent {
-		box-shadow: 0 0 100vw 100vw rgba(0,0,0,.5);
+		box-shadow: 0 0 $vw-overlay-shadow-size $vw-overlay-shadow-size $ve-overlay-color;
 		padding: 0;
 		pointer-events: all;
-		z-index: 100000;
+		z-index: $zTop;
 	}
 
 	.ve-init-mw-viewPageTarget-toolbar {
@@ -350,14 +352,14 @@ body.ve {
 
 	// cover some additional elements with an overlay
 	.WikiaArticleFooter, .CategorySelect.articlePage {
-		border-color: rgba(0, 0, 0, .5);
+		border-color: $ve-overlay-color;
 		margin: 0;
 		padding: 10px;
 		pointer-events: none;
 		position: relative;
 
 		&::after {
-			background: rgba(0,0,0,.5);
+			background: $ve-overlay-color;
 			bottom: 0;
 			content: ' ';
 			display: block;
