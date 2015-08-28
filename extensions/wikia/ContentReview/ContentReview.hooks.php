@@ -120,6 +120,19 @@ class Hooks {
 		return true;
 	}
 
+	public static function onUserLogoutComplete( \User $user, &$injected_html, $oldName) {
+		$request = $user->getRequest();
+
+		$key = \ContentReviewApiController::CONTENT_REVIEW_TEST_MODE_KEY;
+		$wikis = $request->getSessionData( $key );
+
+		if ( !empty( $wikis ) ) {
+			$request->setSessionData( $key, null );
+		}
+
+		return true;
+	}
+
 	private static function userCanEditJsPage() {
 		global $wgTitle, $wgUser;
 
