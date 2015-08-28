@@ -43,7 +43,7 @@ class ApiAddMediaTemporary extends ApiAddMedia {
 			// If wiki is Japanese content, then we check if anonymous edit is allowed. INT-158
 			// This condition will be changed as soon as Mercury has login for all wikis.
 			if ( $wgContLanguageCode === 'ja' ) {
-				if ( $wgDisableAnonymousEditing ) {
+				if ( $wgDisableAnonymousEditing && !$this->mUser->isLoggedIn()) {
 					$this->dieUsageMsg( 'noedit-anon' );
 				}
 			} else {
