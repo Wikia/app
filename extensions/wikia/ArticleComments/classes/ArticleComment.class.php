@@ -4,6 +4,8 @@
  * ArticleComment is article, this class is used for manipulation on
  */
 
+use Wikia\Logger\WikiaLogger;
+
 class ArticleComment {
 
 	const MOVE_USER = 'WikiaBot';
@@ -994,12 +996,12 @@ class ArticleComment {
 
 	/**
 	 * @static
-	 * @param $status
+	 * @param Status $status
 	 * @param $article WikiPage
 	 * @param int $parentId
 	 * @return array
 	 */
-	static public function doAfterPost( $status, $article, $parentId = 0 ) {
+	static public function doAfterPost( Status $status, $article, $parentId = 0 ) {
 		global $wgUser, $wgDBname;
 
 		wfRunHooks( 'ArticleCommentAfterPost', [ $status, &$article ] );
@@ -1048,6 +1050,14 @@ class ArticleComment {
 				$text  = false;
 				$error = true;
 				$message = wfMsg( 'article-comments-error' );
+
+				WikiaLogger::instance()->error( 'PLATFORM-1311', [
+					'reason' => 'article-comments-error',
+					'name' => $article->getTitle()->getPrefixedDBkey(),
+					'page_id' => $commentId,
+					'user_id' => $userId,
+					'exception' => new Exception( 'article-comments-error', $status->value )
+				] );
 		}
 
 		$res = [
