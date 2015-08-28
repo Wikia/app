@@ -250,10 +250,6 @@
 		margin-right: 0;
 	}
 
-	.ve-activated .WikiaMainContent {
-		position: static;
-	}
-
 	// 'special case' for 1024px tablets (think landscape iPad)
 	@media #{$breakpoint-small-plus} {
 		.WikiaPage {
@@ -315,6 +311,60 @@
 			img {
 				display: none;
 			}
+		}
+	}
+}
+
+// Visual Editor changes for breakpoints
+body.ve {
+	pointer-events: none;
+
+	.ve-ui-overlay {
+		pointer-events: all;
+	}
+
+	// do not show VE overlay
+	.ve-ui-wikiaFocusWidget {
+		display: none !important;
+	}
+
+	.WikiaPageHeader {
+		margin: 0 10px;
+	}
+
+	.WikiaMainContent {
+		box-shadow: 0 0 100vw 100vw rgba(0,0,0,.5);
+		padding: 0;
+		pointer-events: all;
+		z-index: 100000;
+	}
+
+	.ve-init-mw-viewPageTarget-toolbar {
+		margin: 0;
+	}
+
+	.WikiaArticle {
+		min-height: 0;
+		padding: 0 10px;
+	}
+
+	// cover some additional elements with an overlay
+	.WikiaArticleFooter, .CategorySelect.articlePage {
+		border-color: rgba(0, 0, 0, .5);
+		margin: 0;
+		padding: 10px;
+		pointer-events: none;
+		position: relative;
+
+		&::after {
+			background: rgba(0,0,0,.5);
+			bottom: 0;
+			content: ' ';
+			display: block;
+			left: 0;
+			position: absolute;
+			right: 0;
+			top: 0;
 		}
 	}
 }
