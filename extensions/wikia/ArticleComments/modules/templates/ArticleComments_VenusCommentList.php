@@ -7,7 +7,7 @@
 						'commentId' => $commentId,
 						'level' => 1,
 						'page' => $page,
-					])
+					] )->render()
 				?>
 			<? endif ?>
 			<? if ( isset( $commentArr[ 'level2' ] ) ): ?>
@@ -18,7 +18,7 @@
 									'comment' => $reply->getData( $useMaster ),
 									'commentId' => $commentId,
 									'level' => 2
-								])
+								] )->render()
 							?>
 						<? endif ?>
 					<? endforeach ?>

@@ -2,11 +2,11 @@
 /* @var Title $title */
 /* @var WikiaGlobalRegistry $wg */
 
-$commentsCounter = wfMessage( 'oasis-comments-header', $wg->Lang->FormatNum( $countCommentsNested ) )->text();
+$commentsCounter = wfMessage( 'oasis-comments-header', $wg->Lang->FormatNum( $countCommentsNested ) )->parse();
 ?>
 <h3>
-	<?= wfMessage('article-comments-toc-item')->text() ?>
-	<span><?= wfMessage( 'parentheses', $commentsCounter )->text() ?></span>
+	<?= wfMessage( 'article-comments-toc-item' )->escaped() ?>
+	<span><?= wfMessage( 'parentheses' )->rawParams( $commentsCounter )->escaped()  ?></span>
 </h3>
 <div id="article-comments" class="article-comments">
 	<? if ( !$isBlocked && $canEdit && $commentingAllowed ): ?>
@@ -21,7 +21,7 @@ $commentsCounter = wfMessage( 'oasis-comments-header', $wg->Lang->FormatNum( $co
 						'data-min-height' => 100,
 						'data-max-height' => 400
 					]
-				])->render()
+				] )->render()
 			?>
 		<? endif ?>
 		<div class="session">
@@ -40,7 +40,7 @@ $commentsCounter = wfMessage( 'oasis-comments-header', $wg->Lang->FormatNum( $co
 			<? if ( !$isReadOnly ): ?>
 				<div class="buttons" data-space-type="buttons">
 					<img src="<?= $ajaxicon ?>" class="throbber" />
-					<input type="submit" name="wpArticleSubmit" id="article-comm-submit" class="wikia-button actionButton secondary" value="<?= wfMessage( 'article-comments-post' )->plain() ?>" />
+					<input type="submit" name="wpArticleSubmit" id="article-comm-submit" class="wikia-button actionButton secondary" value="<?= wfMessage( 'article-comments-post' )->escaped() ?>" />
 				</div>
 			<? endif ?>
 		</form>
@@ -48,12 +48,12 @@ $commentsCounter = wfMessage( 'oasis-comments-header', $wg->Lang->FormatNum( $co
 			<?= $app->getView( 'MiniEditorController', 'Footer' )->render() ?>
 		<? endif ?>
 	<? elseif ( $isBlocked ): ?>
-		<p><?= wfMessage( 'article-comments-comment-cannot-add' )->plain() ?></p>
+		<p><?= wfMessage( 'article-comments-comment-cannot-add' )->escaped() ?></p>
 		<p><?= $reason ?></p>
-	<? elseif ( !$canEdit ): ?>
-		<p class="login"><?= wfMessage( 'article-comments-login', SpecialPage::getTitleFor( 'UserLogin' )->getLocalUrl() )->text() ?></p>
+	<? elseif ( !$canEdit && $wg->User->isAnon() ): ?>
+		<p class="login"><?= wfMessage( 'article-comments-login' )->parse() ?></p>
 	<? elseif ( !$commentingAllowed ): ?>
-		<p class="no-comments-allowed"><?= wfMessage( 'article-comments-comment-cannot-add' )->text() ?> </p>
+		<p class="no-comments-allowed"><?= wfMessage( 'article-comments-comment-cannot-add' )->escaped() ?> </p>
 	<? endif ?>
 	<? if ( $countComments ): ?>
 		<div class="article-comments-pagination upper-pagination"><?= $pagination ?></div>
@@ -62,9 +62,9 @@ $commentsCounter = wfMessage( 'oasis-comments-header', $wg->Lang->FormatNum( $co
 			'commentListRaw' => $commentListRaw,
 			'page' => $page,
 			'useMaster' => false
-		])->render()
+		] )->render()
 	?>
-		<button class="comments-show-more"><?= wfMessage('article-comments-show-more')->plain() ?></button>
+		<button class="comments-show-more"><?= wfMessage( 'article-comments-show-more' )->escaped() ?></button>
 	<? if ( $countComments ): ?>
 		<div class="article-comments-pagination"><?= $pagination ?></div>
 	<? endif ?>
