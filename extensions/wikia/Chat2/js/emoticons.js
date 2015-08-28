@@ -101,7 +101,7 @@ if(typeof EmoticonMapping === 'undefined'){
 					currentKey = url;
 					//$().log("  " + url + "...");
 				} else if (self._settings[currentKey]) {
-					var glyphMatch = emoticonArray[i].match(/^\*\*[ ]*([^*].*)/); // line starting with 2 "**"'s then optional spaces, then some non-empty content.
+					var glyphMatch = emoticonArray[i].match(/^\*\* *([^*"][^"]*)/); // line starting with 2 "**"'s then optional spaces, then some non-empty content.
 					if( glyphMatch && glyphMatch[1]){
 						var glyph = glyphMatch[1];
 						self._settings[currentKey].push(glyph);
