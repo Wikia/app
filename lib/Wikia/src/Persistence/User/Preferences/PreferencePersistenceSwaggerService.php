@@ -9,6 +9,7 @@ use Wikia\Service\NotFoundException;
 use Wikia\Service\PersistenceException;
 use Wikia\Service\Swagger\ApiProvider;
 use Wikia\Service\UnauthorizedException;
+use Wikia\Util\AssertionException;
 
 class PreferencePersistenceSwaggerService implements PreferencePersistence {
 	const SERVICE_NAME = "user-preference";
@@ -61,6 +62,8 @@ class PreferencePersistenceSwaggerService implements PreferencePersistence {
 			}
 		} catch (ApiException $e) {
 			$this->handleApiException($e);
+		} catch (AssertionException $e) {
+			throw new PersistenceException("unable to load preferences: ".$e->getMessage());
 		}
 
 		return $prefs;

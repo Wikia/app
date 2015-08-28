@@ -7,7 +7,7 @@
  *
  */
 class WikiaConfirmEmailSpecialController extends WikiaSpecialPageController {
-	const WELCOME_EMAIL_CONTROLLER = 'Email\Controller\Welcome';
+	const WELCOME_EMAIL_CONTROLLER = Email\Controller\WelcomeController::class;
 
 	public function __construct() {
 		parent::__construct( 'WikiaConfirmEmail', '', false );

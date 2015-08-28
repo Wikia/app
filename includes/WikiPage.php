@@ -1250,7 +1250,7 @@ class WikiPage extends Page {
 	 */
 	public function doEdit( $text, $summary, $flags = 0, $baseRevId = false, $user = null,
 							$forcePatrolled = false) {
-		global $wgUser, $wgDBtransactions, $wgUseAutomaticEditSummaries;
+		global $wgUser, $wgUseAutomaticEditSummaries;
 
 		# Low-level sanity check
 		if ( $this->mTitle->getText() === '' ) {
@@ -1322,11 +1322,6 @@ class WikiPage extends Page {
 				return $status;
 			}
 
-			# Make sure the revision is either completely inserted or not inserted at all
-			if ( !$wgDBtransactions ) {
-				$userAbort = ignore_user_abort( true );
-			}
-
 			$revision = new Revision( array(
 				'page'       => $this->getId(),
 				'comment'    => $summary,
@@ -1361,10 +1356,11 @@ class WikiPage extends Page {
 					/* Belated edit conflict! Run away!! */
 					$status->fatal( 'edit-conflict' );
 
-					# Delete the invalid revision if the DB is not transactional
-					if ( !$wgDBtransactions ) {
-						$dbw->delete( 'revision', array( 'rev_id' => $revisionId ), __METHOD__ );
-					}
+					\Wikia\Logger\WikiaLogger::instance()->error('PLATFORM-1311', [
+						'reason' => 'ArticleDoEdit rollback - updateRevisionOn failed',
+						'exception' => new Exception(),
+						'name' => $this->mTitle->getPrefixedDBkey(),
+					]);
 
 					$revisionId = 0;
 					$dbw->rollback(__METHOD__);
@@ -1396,10 +1392,6 @@ class WikiPage extends Page {
 				$revision->setId( $this->getLatest() );
 			}
 
-			if ( !$wgDBtransactions ) {
-				ignore_user_abort( $userAbort );
-			}
-
 			// Now that ignore_user_abort is restored, we can respond to fatal errors
 			if ( !$status->isOK() ) {
 				wfProfileOut( __METHOD__ );
@@ -1428,6 +1420,12 @@ class WikiPage extends Page {
 			$newid = $this->insertOn( $dbw );
 
 			if ( $newid === false ) {
+				\Wikia\Logger\WikiaLogger::instance()->error('PLATFORM-1311', [
+					'reason' => 'ArticleDoEdit rollback - insertOn failed',
+					'exception' => new Exception(),
+					'name' => $this->mTitle->getPrefixedDBkey(),
+				]);
+
 				$dbw->rollback();
 				$status->fatal( 'edit-already-exists' );
 

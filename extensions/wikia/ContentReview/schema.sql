@@ -13,6 +13,7 @@ CREATE TABLE content_review_status (
 ) ENGINE = INNODB CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 CREATE INDEX content_review_status_idx         ON content_review_status (status);
 CREATE UNIQUE INDEX content_review_unique_idx  ON content_review_status (wiki_id, page_id, status);
+CREATE UNIQUE INDEX content_review_unique_idx2 ON content_review_status (wiki_id, page_id, revision_id);
 
 -- Table reviewed_content_logs
 DROP TABLE IF EXISTS reviewed_content_logs;
