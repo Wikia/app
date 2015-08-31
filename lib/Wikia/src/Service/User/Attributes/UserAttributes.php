@@ -60,7 +60,6 @@ class UserAttributes {
 			return;
 		}
 
-		$this->loadAttributes( $userId );
 		$this->setAttributeInService( $userId, $attribute );
 		$this->setAttributeInCache( $userId, $attribute );
 	}
@@ -100,7 +99,6 @@ class UserAttributes {
 			return;
 		}
 
-		$this->loadAttributes( $userId );
 		$this->deleteAttributeFromService( $userId, $attribute );
 		$this->deleteAttributeFromCache( $userId, $attribute );
 	}

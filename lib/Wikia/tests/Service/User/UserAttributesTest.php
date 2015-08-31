@@ -64,7 +64,6 @@ class UserAttributeTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testSetAttribute() {
-		$this->setupServiceGetExpects();
 		$userAttributes = new UserAttributes( $this->service );
 		$userAttributes->setAttribute( $this->userId, new Attribute( "newAttr", "foo" ) );
 		$this->assertEquals( "foo", $userAttributes->getAttribute( $this->userId, "newAttr" ) );
