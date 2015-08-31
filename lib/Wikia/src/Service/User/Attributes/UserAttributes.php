@@ -60,20 +60,13 @@ class UserAttributes {
 			return;
 		}
 
-		if ( $this->attributeValueAlreadySet( $userId, $attribute ) ) {
-			return;
-		}
-
+		$this->loadAttributes( $userId );
 		$this->setAttributeInService( $userId, $attribute );
 		$this->setAttributeInCache( $userId, $attribute );
 	}
 
 	private function isAnonUser( $userId ) {
 		return $userId === 0;
-	}
-
-	private function attributeValueAlreadySet( $userId, Attribute $attribute ) {
-		return $this->getAttribute( $userId, $attribute->getName() ) === $attribute->getValue();
 	}
 
 	/**
@@ -107,17 +100,9 @@ class UserAttributes {
 			return;
 		}
 
-		if ( $this->attributeNotSetForUser( $userId, $attribute ) ) {
-			return;
-		}
-
+		$this->loadAttributes( $userId );
 		$this->deleteAttributeFromService( $userId, $attribute );
 		$this->deleteAttributeFromCache( $userId, $attribute );
-	}
-
-	private function attributeNotSetForUser( $userId, Attribute $attribute ) {
-		$this->loadAttributes( $userId );
-		return !array_key_exists( $attribute->getName(), $this->attributes[$userId] );
 	}
 
 	private function deleteAttributeFromCache( $userId, Attribute $attribute ) {

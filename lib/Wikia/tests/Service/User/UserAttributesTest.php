@@ -72,31 +72,12 @@ class UserAttributeTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals( null, $userAttributes->getAttribute( $this->userId, "anotherNewAttr" ) );
 	}
 
-	public function testSetAttributeAlreadySet() {
-		$this->setupServiceGetExpects();
-		$this->service->expects( $this->exactly( 0 ) )
-			->method( "set" );
-
-		$userAttributes = new UserAttributes( $this->service );
-		$userAttributes->setAttribute( $this->userId, $this->attribute1 );
-	}
-
 	public function testSetAttributeAsAnonUser() {
 		$this->service->expects( $this->exactly( 0 ) )
 			->method( "set" );
 
 		$userAttributes = new UserAttributes( $this->service );
 		$userAttributes->setAttribute( $this->anonUserId, new Attribute( "newAttr", "foo" ) );
-	}
-
-	public function testDeleteAttributeNotSetForUser() {
-		$this->setupServiceGetExpects();
-		$this->service->expects( $this->exactly( 0 ) )
-			->method( "delete" );
-
-
-		$userAttributes = new UserAttributes( $this->service );
-		$userAttributes->deleteAttribute( $this->userId, new Attribute( "NotSetForUser", "SomeValue" ) );
 	}
 
 	public function testDeleteAttributeSetForUser() {
