@@ -146,7 +146,6 @@ class Helper {
 			'section' => 'new',
 			'useMessage' => 'content-review-rejection-explanation'
 		];
-		$talkPage = $title->getTalkPage();
-		return $talkPage->getFullURL( $params );
+		return $title->getTalkPage()->getFullURL( $params );
 	}
 }
