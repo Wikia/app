@@ -164,38 +164,38 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 			],
 
 			$defaultParameters + ['expectedMappings' => [
-				'sourceVertical' => 'tv',
+				'newVertical' => 'tv',
 				'expectedMappedVertical' => 'ent'
 			]],
 
 			$defaultParameters + ['expectedMappings' => [
-				'sourceVertical' => 'games',
+				'newVertical' => 'games',
 				'expectedMappedVertical' => 'gaming'
 			]],
 
 			$defaultParameters + ['expectedMappings' => [
-				'sourceVertical' => 'books',
+				'newVertical' => 'books',
 				'expectedMappedVertical' => 'ent'
 			]],
 
 			$defaultParameters + ['expectedMappings' => [
-				'sourceVertical' => 'comics',
+				'newVertical' => 'comics',
 				'expectedMappedVertical' => 'ent'
 			]],
 
 			$defaultParameters + ['expectedMappings' => [
-				'sourceVertical' => 'lifestyle',
+				'newVertical' => 'lifestyle',
 				'expectedMappedVertical' => 'life'
 			]],
 
 			$defaultParameters + ['expectedMappings' => [
-				'sourceVertical' => 'not-existing',
+				'newVertical' => 'not-existing',
 				'expectedMappedVertical' => 'error'
 			]],
 
 			$defaultParameters + ['expectedMappings' => [
-				'verticalFromCategoryInfo' => 'Wikia',
-				'sourceVertical' => 'other',
+				'oldVertical' => 'Wikia',
+				'newVertical' => 'other',
 				'expectedMappedVertical' => 'wikia']
 			],
 		];
@@ -215,13 +215,13 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		$expectedProviders = [],
 		$expectedForcedProvider = null,
 		$expectedSlots = [],
-		$verticals = ['sourceVertical' => 'other', 'expectedMappedVertical' => 'life']
+		$verticals = ['newVertical' => 'other', 'expectedMappedVertical' => 'life']
 	) {
 		$langCode = 'xx';
 		$artId = 777;
 		$artDbKey = 'articledbkey';
 		$skinName = 'someskin';
-		$vertical = isset($verticals['verticalFromCategoryInfo']) ? $verticals['verticalFromCategoryInfo'] : 'Fakevertical';
+		$vertical = $verticals['newVertical'];
 		$dbName = 'mydbname';
 		$cityId = 666;
 		$customDartKvs = 'a=b;c=d';
@@ -269,10 +269,12 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		// Mock WikiFactoryHub
 		$this->mockStaticMethod( 'WikiFactoryHub', 'getCategoryId', $catId );
 		$this->mockStaticMethod( 'WikiFactoryHub', 'getCategoryShort', $shortCat );
-		$this->mockStaticMethod( 'WikiFactoryHub', 'getWikiVertical', ['short'=>$verticals['sourceVertical']] );
+		$this->mockStaticMethod( 'WikiFactoryHub', 'getWikiVertical', [ 'short' => $verticals['newVertical'] ] );
 
 		// Mock HubService
-		$this->mockStaticMethod( 'HubService', 'getCategoryInfoForCity', (object) ['cat_name' => $vertical] );
+		$this->mockStaticMethod( 'HubService', 'getCategoryInfoForCity', (object) [
+			'cat_name' => !empty($verticals['oldVertical']) ? $verticals['oldVertical'] : $vertical
+		] );
 
 		// Mock MonetizationModule
 		if ( in_array( 'wgAdDriverUseMonetizationService', $flags ) ) {
