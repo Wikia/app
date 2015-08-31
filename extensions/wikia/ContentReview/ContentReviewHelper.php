@@ -7,6 +7,10 @@ use Wikia\ContentReview\Models\ReviewModel;
 
 class Helper {
 
+	const CONTENT_REVIEW_TOOLBAR_CACHE_KEY = 'contentReviewToolbar';
+	const CONTENT_REVIEW_TOOLBAR_CACHE_VERSION = '1.0';
+	const CONTENT_REVIEW_TOOLBAR_TEMPLATE_PATH = 'extensions/wikia/ContentReview/templates/ContentReviewToolbar.mustache';
+
 	public function getSiteJsScriptsHash() {
 		global $wgCityId;
 
@@ -133,5 +137,35 @@ class Helper {
 			return true;
 		}
 		return false;
+	}
+
+	public function getToolbarTemplate() {
+		global $wgMemc, $wgCityId, $wgTitle;
+
+		$key = wfMemcKey( self::CONTENT_REVIEW_TOOLBAR_CACHE_KEY, self::CONTENT_REVIEW_TOOLBAR_CACHE_VERSION );
+		$template = $wgMemc->get( $key );
+
+		if ( !$template ) {
+			$template = \MustacheService::getInstance()->render(
+				self::CONTENT_REVIEW_TOOLBAR_TEMPLATE_PATH,
+				[
+					'toolbarTitle' => wfMessage( 'content-review-diff-toolbar-title' )->plain(),
+					'wikiId' => $wgCityId,
+					'pageId' => $wgTitle->getArticleID(),
+					'approveStatus' => ReviewModel::CONTENT_REVIEW_STATUS_APPROVED,
+					'buttonApproveText' => wfMessage( 'content-review-diff-approve' )->plain(),
+					'rejectStatus' => ReviewModel::CONTENT_REVIEW_STATUS_REJECTED,
+					'buttonRejectText' => wfMessage( 'content-review-diff-reject' )->plain(),
+					'talkpageUrl' => $wgTitle->getTalkPage()->getFullURL(),
+					'talkpageLinkText' => wfMessage( 'content-review-diff-toolbar-talkpage' )->plain(),
+					'guidelinesUrl' => wfMessage( 'content-review-diff-toolbar-guidelines-url' )->plain(),
+					'guidelinesLinkText' => wfMessage( 'content-review-diff-toolbar-guidelines' )->plain(),
+				]
+			);
+
+			$wgMemc->set( $key, $template, \WikiaResponse::CACHE_LONG );
+		}
+
+		return $template;
 	}
 }

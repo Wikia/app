@@ -2575,3 +2575,10 @@ $config['content_review_diff_page_js'] = [
 		'//extensions/wikia/ContentReview/scripts/contentReviewDiffPage.js',
 	]
 ];
+
+$config['content_review_diff_page_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'assets' => [
+		'//extensions/wikia/ContentReview/styles/ContentReviewDiffPage.scss',
+	]
+];
