@@ -997,6 +997,22 @@ class WikiPage extends Page {
 			$conditions['page_latest'] = $lastRevision;
 		}
 
+		// Wikia change - begin
+		/**
+		 * PLATFORM-1311: page_latest can be set to zero only during page creation
+		 *
+		 * https://www.mediawiki.org/wiki/Manual:Page_table#page_latest says the following:
+		 *
+		 * WikiPage::updateRevisionOn() should set it to a non-zero value.
+		 * It needs to link to a revision with a valid revision.rev_page.
+		 */
+		Wikia\Util\Assert::true( $revision->getId() > 0 , 'PLATFORM-1311', [
+			'reason' => __METHOD__ . ' tried to set page_latest to zero',
+			'page_id' => $this->getId(),
+			'name' => $this->getTitle()->getPrefixedDBkey(),
+		] );
+		// Wikia change - end
+
 		$now = wfTimestampNow();
 		$dbw->update( 'page',
 			array( /* SET */
