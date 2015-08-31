@@ -248,14 +248,6 @@ class User {
 	static $idCacheByName = array();
 
 	/**
-	 * The list of attributes set on the user via User::setGlobalAttribute. We
-	 * use this list to determine which user data we're going to store in the
-	 * user attribute service.
-	 * @var array
-	 */
-	private $attributesToSet = [];
-
-	/**
 	 * @var UserAttributes
 	 */
 	private $attributeService;
@@ -2730,11 +2722,6 @@ class User {
 	 */
 	public function setGlobalAttribute($attribute, $value) {
 		$this->setOptionHelper($attribute, $value);
-		$this->markAttributesToSetInService( $attribute );
-	}
-
-	private function markAttributesToSetInService( $attributeName ) {
-		$this->attributesToSet[$attributeName] = true;
 	}
 
 	/**
@@ -5075,28 +5062,29 @@ class User {
 	}
 
 	private function setAttributeInService( $attributeName, $attributeValue ) {
-		if ( $this->isAttribute( $attributeName ) ) {
+		if ( $this->isPublicAttribute( $attributeName ) ) {
 			$this->userAttributes()->setAttribute( $this->getId(), new Attribute( $attributeName, $attributeValue ) );
 		}
 	}
 
 	private function deleteAttributeInService( $attributeName ) {
-		if ( $this->isAttribute( $attributeName ) ) {
+		if ( $this->isPublicAttribute( $attributeName ) ) {
 			$this->userAttributes()->deleteAttribute( $this->getId(), new Attribute( $attributeName ) );
 		}
 	}
 
 	/**
-	 * Returns whether the user data was set via a call to User::setGlobalAttribute. If so,
-	 * we know it's an attribute. We use this to filter which user data we're going to store
-	 * in the attribute service. Things like "language" or "skin" are preferences and are
-	 * set via calls to User::setGlobalPreference and should not be stored in the service,
-	 * whereas things like "avatar" are set via calls to User::setGlobalAttribute and should be.
+	 * Returns whether the current option being set is a public attribute, ie, an
+	 * attribute that we want to be readable by anybody and set into the attribute
+	 * service. This includes things like bio, avatar, and nickName.
+	 *
 	 * @param $attributeName
 	 * @return bool
 	 */
-	private function isAttribute( $attributeName ) {
-		return !empty( $this->attributesToSet[$attributeName] );
+	private function isPublicAttribute( $attributeName ) {
+		global $wgPublicUserAttributes;
+
+		return in_array( $attributeName, $wgPublicUserAttributes );
 	}
 
 	/**
