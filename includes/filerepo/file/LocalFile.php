@@ -1129,6 +1129,13 @@ class LocalFile extends File {
 				wfRunHooks( 'NewRevisionFromEditComplete', array( $wikiPage, $nullRevision, $latest, $user ) );
 				$wikiPage->updateRevisionOn( $dbw, $nullRevision );
 			}
+			else {
+				\Wikia\Logger\WikiaLogger::instance()->warning('PLATFORM-1311', [
+					'reason' => 'LocalFile no nullRevision',
+					'page_id' => $descTitle->getArticleId(),
+					'exception' => new Exception()
+				]);
+			}
 			# Invalidate the cache for the description page
 			$descTitle->invalidateCache();
 			$descTitle->purgeSquid();
