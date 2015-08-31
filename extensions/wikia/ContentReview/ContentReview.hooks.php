@@ -3,7 +3,6 @@
 namespace Wikia\ContentReview;
 
 use Wikia\ContentReview\Models\CurrentRevisionModel;
-use Wikia\ContentReview\Models\ReviewModel;
 
 class Hooks {
 
@@ -53,51 +52,18 @@ class Hooks {
 	public static function onArticleContentOnDiff( $diffEngine, \OutputPage $output ) {
 		global $wgTitle, $wgCityId, $wgRequest;
 		$diff = $wgRequest->getInt( 'diff' );
-		$oldid = $wgRequest->getInt( 'oldid' );
 
 		$helper = new Helper();
 		if ( $wgTitle->inNamespace( NS_MEDIAWIKI )
 			&& $wgTitle->isJsPage()
 			&& $wgTitle->userCan( 'content-review' )
 			&& $helper->isDiffPageInReviewProcess( $wgCityId, $wgTitle->getArticleID(), $diff )
-			&& $helper->hasPageApprovedId( $wgCityId, $wgTitle->getArticleID(), $oldid )
 		) {
 			\Wikia::addAssetsToOutput( 'content_review_diff_page_js' );
+			\Wikia::addAssetsToOutput( 'content_review_diff_page_scss' );
 			\JSMessages::enqueuePackage( 'ContentReviewDiffPage', \JSMessages::EXTERNAL );
 
-			$feedbackLink = $helper->prepareProvideFeedbackLink( $wgTitle );
-			$output->prependHTML(
-				\Xml::element( 'a',
-					[
-						'href' => $feedbackLink
-					],
-					wfMessage( 'content-review-feedback-link-text' )->plain()
-				)
-			);
-
-			$output->prependHTML(
-				\Xml::element( 'button',
-					[
-						'class' => 'content-review-diff-button',
-						'data-wiki-id' => $wgCityId,
-						'data-page-id' => $wgTitle->getArticleID(),
-						'data-status' => ReviewModel::CONTENT_REVIEW_STATUS_REJECTED
-					],
-					wfMessage( 'content-review-diff-reject' )->plain()
-				)
-			);
-
-			$output->prependHTML(
-				\Xml::element( 'button',
-					[
-						'class' => 'content-review-diff-button',
-						'data-wiki-id' => $wgCityId,
-						'data-page-id' => $wgTitle->getArticleID(),
-						'data-status' => ReviewModel::CONTENT_REVIEW_STATUS_APPROVED
-					],
-					wfMessage( 'content-review-diff-approve' )->plain()
-				)
-			);
+			$output->prependHTML( $helper->getToolbarTemplate() );
 		}
 
 		return true;

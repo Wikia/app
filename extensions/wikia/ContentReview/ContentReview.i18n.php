@@ -59,6 +59,11 @@ $messages['en'] = [
 	'content-review-diff-page-error' => 'Something went wrong. Please try again later.',
 	'content-review-diff-already-done' => 'You are trying to add an changes to the revision that isn\'t "In review" stage.',
 
+	'content-review-diff-toolbar-title' => 'Revision review',
+	'content-review-diff-toolbar-talkpage' => 'Talk page',
+	'content-review-diff-toolbar-guidelines' => 'Reviewer guidelines',
+	'content-review-diff-toolbar-guidelines-url' => 'http://dev.wikia.com/Help:JavaScript_Guidelines',
+
 	'content-review-status-unreviewed' => 'Unreviewed',
 	'content-review-status-in-review' => 'In review',
 	'content-review-status-approved' => 'Approved',
@@ -126,12 +131,16 @@ $messages['qqq'] = [
 	'content-review-diff-reject-confirmation' => 'A message shown in a Banner Notification after click reject button if everything went well.',
 	'content-review-diff-page-error' => 'A message shown in a Banner Notification when something go wrong on diff page.',
 
+	'content-review-diff-toolbar-title' => 'A title of a toolbar that enables a reviewer to approve or reject a revision.',
+	'content-review-diff-toolbar-talkpage' => 'A text of a link to a talk page of a page that is being reviewed.',
+	'content-review-diff-toolbar-guidelines' => 'A text of a link to a page with guidelines for reviewers.',
+	'content-review-diff-toolbar-guidelines-url' => 'A URL of a page with guidelines for reviewers.',
+
 	'content-review-feedback-link-text' => 'Text on a link for providing feedback on script change being reviewed',
 	'content-review-rejection-explanation' => 'Standard explanation response when script changes were rejected. This text is a prefill to script talk page when reviewer is redirected there to provide feedback on rejection.',
 
 	'content-review-status-unreviewed' => 'A name of a status of a revision that has not yet been reviewed.',
 	'content-review-status-in-review' => 'A name of a status of a revision that is being reviewed.',
 	'content-review-status-approved' => 'A name of a status of a revision that has been approved.',
-	'content-review-status-rejected' => 'A name of a status of a revision that has been rejected.'
-
+	'content-review-status-rejected' => 'A name of a status of a revision that has been rejected.',
 ];
