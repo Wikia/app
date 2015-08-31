@@ -10,6 +10,7 @@ class Helper {
 	const CONTENT_REVIEW_TOOLBAR_CACHE_KEY = 'contentReviewToolbar';
 	const CONTENT_REVIEW_TOOLBAR_CACHE_VERSION = '1.0';
 	const CONTENT_REVIEW_TOOLBAR_TEMPLATE_PATH = 'extensions/wikia/ContentReview/templates/ContentReviewToolbar.mustache';
+	const CONTENT_REVIEW_URL_PARAM = 'contentreview';
 
 	public function getSiteJsScriptsHash() {
 		global $wgCityId;
@@ -118,6 +119,16 @@ class Helper {
 	}
 
 	public function isDiffPageInReviewProcess( $wikiId, $pageId, $diff ) {
+		global $wgRequest;
+
+		/**
+		 * Do not hit database if there is a URL parameter that indicates that a user
+		 * came directly from Special:ContentReview.
+		 */
+		if ( $wgRequest->getInt( self::CONTENT_REVIEW_URL_PARAM ) === 1 ) {
+			return true;
+		}
+
 		$reviewModel = new ReviewModel();
 		$reviewData = $reviewModel->getReviewedContent( $wikiId, $pageId, ReviewModel::CONTENT_REVIEW_STATUS_IN_REVIEW );
 
@@ -132,33 +143,24 @@ class Helper {
 	}
 
 	public function getToolbarTemplate() {
-		global $wgMemc, $wgCityId, $wgTitle;
+		global $wgCityId, $wgTitle;
 
-		$key = wfMemcKey( self::CONTENT_REVIEW_TOOLBAR_CACHE_KEY, self::CONTENT_REVIEW_TOOLBAR_CACHE_VERSION );
-		$template = $wgMemc->get( $key );
-
-		if ( !$template ) {
-			$template = \MustacheService::getInstance()->render(
-				self::CONTENT_REVIEW_TOOLBAR_TEMPLATE_PATH,
-				[
-					'toolbarTitle' => wfMessage( 'content-review-diff-toolbar-title' )->plain(),
-					'wikiId' => $wgCityId,
-					'pageId' => $wgTitle->getArticleID(),
-					'approveStatus' => ReviewModel::CONTENT_REVIEW_STATUS_APPROVED,
-					'buttonApproveText' => wfMessage( 'content-review-diff-approve' )->plain(),
-					'rejectStatus' => ReviewModel::CONTENT_REVIEW_STATUS_REJECTED,
-					'buttonRejectText' => wfMessage( 'content-review-diff-reject' )->plain(),
-					'talkpageUrl' => $this->prepareProvideFeedbackLink( $wgTitle ),
-					'talkpageLinkText' => wfMessage( 'content-review-diff-toolbar-talkpage' )->plain(),
-					'guidelinesUrl' => wfMessage( 'content-review-diff-toolbar-guidelines-url' )->plain(),
-					'guidelinesLinkText' => wfMessage( 'content-review-diff-toolbar-guidelines' )->plain(),
-				]
-			);
-
-			$wgMemc->set( $key, $template, \WikiaResponse::CACHE_LONG );
-		}
-
-		return $template;
+		return \MustacheService::getInstance()->render(
+			self::CONTENT_REVIEW_TOOLBAR_TEMPLATE_PATH,
+			[
+				'toolbarTitle' => wfMessage( 'content-review-diff-toolbar-title' )->plain(),
+				'wikiId' => $wgCityId,
+				'pageId' => $wgTitle->getArticleID(),
+				'approveStatus' => ReviewModel::CONTENT_REVIEW_STATUS_APPROVED,
+				'buttonApproveText' => wfMessage( 'content-review-diff-approve' )->plain(),
+				'rejectStatus' => ReviewModel::CONTENT_REVIEW_STATUS_REJECTED,
+				'buttonRejectText' => wfMessage( 'content-review-diff-reject' )->plain(),
+				'talkpageUrl' => $this->prepareProvideFeedbackLink( $wgTitle ),
+				'talkpageLinkText' => wfMessage( 'content-review-diff-toolbar-talkpage' )->plain(),
+				'guidelinesUrl' => wfMessage( 'content-review-diff-toolbar-guidelines-url' )->plain(),
+				'guidelinesLinkText' => wfMessage( 'content-review-diff-toolbar-guidelines' )->plain(),
+			]
+		);
 	}
 
 	/**

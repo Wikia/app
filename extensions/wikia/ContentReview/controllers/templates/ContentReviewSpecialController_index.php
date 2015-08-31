@@ -37,6 +37,7 @@
 					<? else: ?>
 						<a href="<?= Sanitizer::encodeAttribute( $review['diff'] ) ?>"
 						   class="<?= ContentReviewSpecialController::$statusMessageKeys[$review['status']] ?><?= $review['class'] ?> wikia-button primary"
+						   target="_blank"
 						   data-wiki-id="<?= $review['wiki_id'] ?>"
 						   data-page-id="<?= $review['page_id'] ?>"
 						   data-old-status="<?= $review['status'] ?>"
