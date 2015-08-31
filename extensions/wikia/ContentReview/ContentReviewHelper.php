@@ -7,8 +7,6 @@ use Wikia\ContentReview\Models\ReviewModel;
 
 class Helper {
 
-	const CONTENT_REVIEW_TOOLBAR_CACHE_KEY = 'contentReviewToolbar';
-	const CONTENT_REVIEW_TOOLBAR_CACHE_VERSION = '1.0';
 	const CONTENT_REVIEW_TOOLBAR_TEMPLATE_PATH = 'extensions/wikia/ContentReview/templates/ContentReviewToolbar.mustache';
 	const CONTENT_REVIEW_URL_PARAM = 'contentreview';
 
