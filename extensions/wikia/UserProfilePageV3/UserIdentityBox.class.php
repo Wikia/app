@@ -213,10 +213,10 @@ class UserIdentityBox {
 				if ( $key === 'hideEditsWikis' ) {
 					// hideEditsWikis is a preference, everything else is an attribute
 					$data[$key] = $this->user->getGlobalPreference($key);
-				} elseif (!in_array($key, array('gender', 'birthday'))) {
-					$data[$key] = $this->user->getGlobalAttribute($key);
-				} else {
+				} elseif ( $key === 'gender' || $key === 'birthday' ) {
 					$data[$key] = $this->user->getGlobalAttribute(self::USER_PROPERTIES_PREFIX . $key);
+				} else {
+					$data[$key] = $this->user->getGlobalAttribute($key);
 				}
 			}
 		} else {
