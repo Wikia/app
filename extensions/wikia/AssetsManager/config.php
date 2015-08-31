@@ -2557,7 +2557,6 @@ $config['content_review_module_monobook_scss'] = [
 	'skin' => [ 'monobook' ],
 	'assets' => [
 		'//extensions/wikia/ContentReview/styles/ContentReviewMonobookEntrypoint.scss',
-		'#group_content_review_module_scss',
 	],
 ];
 

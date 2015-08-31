@@ -53,7 +53,7 @@ require(
 				resources: {
 					mustache: '/extensions/wikia/ContentReview/controllers/templates/ContentReviewModule.mustache',
 					messages: 'ContentReviewModule',
-					styles: '/extensions/wikia/ContentReview/styles/ContentReview.scss'
+					styles: '/skins/oasis/css/modules/ContentReview.scss'
 				}
 			})
 		).done(renderModalContent);
