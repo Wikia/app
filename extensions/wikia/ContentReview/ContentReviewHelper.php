@@ -118,25 +118,17 @@ class Helper {
 	}
 
 	public function isDiffPageInReviewProcess( $wikiId, $pageId, $diff ) {
-
 		$reviewModel = new ReviewModel();
 		$reviewData = $reviewModel->getReviewedContent( $wikiId, $pageId, ReviewModel::CONTENT_REVIEW_STATUS_IN_REVIEW );
 
-		if ( !empty( $reviewData ) && (int)$reviewData['revision_id'] === $diff ) {
-			return true;
-		}
-		return false;
+		return ( !empty( $reviewData ) && (int) $reviewData['revision_id'] === $diff );
 	}
 
 	public function hasPageApprovedId( $wikiId, $pageId, $oldid ) {
-
 		$currentModel = new CurrentRevisionModel();
 		$currentData = $currentModel->getLatestReviewedRevision( $wikiId, $pageId );
 
-		if ( !empty( $currentData ) && (int)$currentData['revision_id'] === $oldid ) {
-			return true;
-		}
-		return false;
+		return ( !empty( $currentData ) && (int)$currentData['revision_id'] === $oldid );
 	}
 
 	public function getToolbarTemplate() {

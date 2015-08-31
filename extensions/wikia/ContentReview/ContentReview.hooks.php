@@ -48,15 +48,13 @@ class Hooks {
 	public static function onArticleContentOnDiff( $diffEngine, \OutputPage $output ) {
 		global $wgTitle, $wgCityId, $wgRequest;
 		$diff = $wgRequest->getInt( 'diff' );
-		$oldid = $wgRequest->getInt( 'oldid' );
 
 		$helper = new Helper();
 		if ( $wgTitle->inNamespace( NS_MEDIAWIKI )
 			&& $wgTitle->isJsPage()
 			&& $wgTitle->userCan( 'content-review' )
 			&& $helper->isDiffPageInReviewProcess( $wgCityId, $wgTitle->getArticleID(), $diff )
-			&& $helper->hasPageApprovedId( $wgCityId, $wgTitle->getArticleID(), $oldid ) )
-		{
+		) {
 			\Wikia::addAssetsToOutput( 'content_review_diff_page_js' );
 			\Wikia::addAssetsToOutput( 'content_review_diff_page_scss' );
 			\JSMessages::enqueuePackage( 'ContentReviewDiffPage', \JSMessages::EXTERNAL );
