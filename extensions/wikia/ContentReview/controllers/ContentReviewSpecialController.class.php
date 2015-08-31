@@ -74,7 +74,7 @@ class ContentReviewSpecialController extends WikiaSpecialPageController {
 				ReviewModel::CONTENT_REVIEW_STATUS_IN_REVIEW
 			] );
 			if ( $review['status'] == ReviewModel::CONTENT_REVIEW_STATUS_UNREVIEWED
-				&& isset($reviewsRaw[$reviewKey] )
+				&& isset( $reviewsRaw[$reviewKey] )
 			) {
 				$review['hide'] = true;
 			}
