@@ -2935,9 +2935,9 @@ $templates
 		if ( $wgUseSiteJs ) {
 			$extraQuery = [];
 			if ( $wgEnableContentReviewExt ) {
-				$isContentReviewTestMode = \Wikia\ContentReview\Helper::isContentReviewTestModeEnabled();
-				if ( !$isContentReviewTestMode ) {
-					$extraQuery['reviewed'] = ( new Wikia\ContentReview\Helper() )->getSiteJsScriptsHash();
+				$contentReviewHelper = new \Wikia\ContentReview\Helper;
+				if ( !$contentReviewHelper->isContentReviewTestModeEnabled() ) {
+					$extraQuery['reviewed'] = $contentReviewHelper->getSiteJsScriptsHash();
 				}
 			}
 			$scripts .= $this->makeResourceLoaderLink( 'site', ResourceLoaderModule::TYPE_SCRIPTS,
