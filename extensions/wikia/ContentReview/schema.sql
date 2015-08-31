@@ -22,9 +22,9 @@ CREATE TABLE reviewed_content_logs (
   revision_id     INT unsigned      NOT NULL,
   status          SMALLINT unsigned NOT NULL,
   submit_user_id  INT unsigned      NOT NULL,
-  submit_time     TIMESTAMP         NOT NULL,
+  submit_time     TIMESTAMP         NOT NULL DEFAULT 0,
   review_user_id  INT unsigned      NOT NULL,
-  review_start    TIMESTAMP         NOT NULL,
+  review_start    TIMESTAMP         NOT NULL DEFAULT 0,
   review_end      TIMESTAMP         NOT NULL  DEFAULT CURRENT_TIMESTAMP
 ) ENGINE = INNODB CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 
