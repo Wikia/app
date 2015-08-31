@@ -65,6 +65,16 @@ window.addOnloadHook = function( hookFunct ) {
 	}
 };
 
+window.forceReviewedContent = function( url ) {
+	if ( mw.config.get('contentReviewExtEnabled') && !mw.config.get('contentReviewTestModeEnabled') ) {
+		if (url.search(/mediawiki:/i) != -1) {
+			url += '&reviewed=' + mw.config.get('contentReviewScriptsHash');
+		}
+	}
+
+	return url;
+};
+
 window.importScript = function( page ) {
 	var uri = mw.config.get( 'wgScript' ) + '?title=' +
 		mw.util.wikiUrlencode( page ) +
@@ -74,6 +84,8 @@ window.importScript = function( page ) {
 
 window.loadedScripts = {}; // included-scripts tracker
 window.importScriptURI = function( url ) {
+	url = forceReviewedContent( url );
+
 	if ( loadedScripts[url] ) {
 		return null;
 	}

@@ -30,7 +30,11 @@ class Hooks {
 	}
 
 	public static function onMakeGlobalVariablesScript( &$vars ) {
-		$vars['contentReviewTestModeEnabled'] = Helper::isContentReviewTestModeEnabled();
+		$helper = new Helper();
+
+		$vars['contentReviewExtEnabled'] = true;
+		$vars['contentReviewTestModeEnabled'] = $helper::isContentReviewTestModeEnabled();
+		$vars['contentReviewScriptsHash'] = $helper->getSiteJsScriptsHash();
 
 		return true;
 
@@ -66,19 +70,20 @@ class Hooks {
 	}
 
 	public static function onRawPageViewBeforeOutput( \RawAction $rawAction, &$text ) {
-		global $wgCityId;
+		global $wgCityId, $wgJsMimeType;
 
 		$title = $rawAction->getTitle();
 
-		if ( $title->inNamespace( NS_MEDIAWIKI ) && $title->isJsPage() ) {
+		if ( $title->inNamespace( NS_MEDIAWIKI )
+			&& ( $title->isJsPage() || $rawAction->getContentType() == $wgJsMimeType )
+		) {
 			$pageId = $title->getArticleID();
 			$latestRevId = $title->getLatestRevID();
 
 			$latestReviewedRev = ( new CurrentRevisionModel() )->getLatestReviewedRevision( $wgCityId, $pageId );
 			$isContentReviewTestMode = Helper::isContentReviewTestModeEnabled();
 
-			if ( !empty( $latestReviewedRev['revision_id'] )
-				&& $latestReviewedRev['revision_id'] != $latestRevId
+			if ( $latestReviewedRev['revision_id'] != $latestRevId
 				&& !$isContentReviewTestMode
 			) {
 				$revision = \Revision::newFromId( $latestReviewedRev['revision_id'] );
