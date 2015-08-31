@@ -30,7 +30,7 @@ class Hooks {
 		return true;
 	}
 
-	public static function onMakeGlobalVariablesScript(&$vars) {
+	public static function onMakeGlobalVariablesScript( &$vars ) {
 		$helper = new Helper();
 
 		$vars['contentReviewExtEnabled'] = true;
