@@ -228,13 +228,11 @@ class GadgetHooks {
 
 		if ( $wgEnableContentReviewExt ) {
 			$contentReviewHelper = new Wikia\ContentReview\Helper();
-			$isContentReviewTestMode = $contentReviewHelper::isContentReviewTestModeEnabled();
 
-			if ( !$isContentReviewTestMode ) {
+			if ( !$contentReviewHelper->isContentReviewTestModeEnabled() ) {
 				$hash = $contentReviewHelper->getSiteJsScriptsHash();
 				$extraQuery = '&reviewed=' . $hash;
 			}
-
 		}
 
 		$u = $t->getLocalURL( 'action=raw&ctype=' . $wgJsMimeType . $extraQuery );
@@ -681,9 +679,8 @@ class GadgetResourceLoaderModule extends ResourceLoaderGlobalWikiModule {
 			foreach ( $pages as $page ) {
 				if ( $page['type'] === 'script' ) {
 					$contentReviewHelper = new Wikia\ContentReview\Helper();
-					$isContentReviewTestMode = $contentReviewHelper::isContentReviewTestModeEnabled();
 
-					if ( !$isContentReviewTestMode ) {
+					if ( !$contentReviewHelper->isContentReviewTestModeEnabled() ) {
 						return $contentReviewHelper->getSiteJsScriptsHash();
 					}
 				}

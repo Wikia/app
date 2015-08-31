@@ -109,9 +109,8 @@ abstract class ResourceLoaderGlobalWikiModule extends ResourceLoaderWikiModule {
 
 			if ( $wgEnableContentReviewExt ) {
 				$contentReviewHelper = new Wikia\ContentReview\Helper();
-				$isContentReviewTestMode = $contentReviewHelper::isContentReviewTestModeEnabled();
 
-				if ( $options['type'] === 'script' && !$isContentReviewTestMode ) {
+				if ( $options['type'] === 'script' && !$contentReviewHelper->isContentReviewTestModeEnabled() ) {
 					$revisionId = $contentReviewHelper->getReviewedRevisionIdFromText( $titleText );
 				}
 			}

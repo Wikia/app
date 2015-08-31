@@ -78,7 +78,8 @@ class ContentReviewApiController extends WikiaApiController {
 			throw new PermissionsException( 'edit' );
 		}
 
-		Helper::setContentReviewTestMode();
+		$helper = new Helper();
+		$helper->setContentReviewTestMode();
 		$this->makeSuccessResponse();
 	}
 
@@ -92,7 +93,8 @@ class ContentReviewApiController extends WikiaApiController {
 			throw new BadRequestApiException();
 		}
 
-		Helper::disableContentReviewTestMode();
+		$helper = new Helper();
+		$helper->disableContentReviewTestMode();
 		$this->makeSuccessResponse();
 	}
 

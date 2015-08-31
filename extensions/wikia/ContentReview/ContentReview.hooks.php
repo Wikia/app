@@ -33,7 +33,7 @@ class Hooks {
 		$helper = new Helper();
 
 		$vars['contentReviewExtEnabled'] = true;
-		$vars['contentReviewTestModeEnabled'] = $helper::isContentReviewTestModeEnabled();
+		$vars['contentReviewTestModeEnabled'] = $helper->isContentReviewTestModeEnabled();
 		$vars['contentReviewScriptsHash'] = $helper->getSiteJsScriptsHash();
 
 		return true;
@@ -41,7 +41,9 @@ class Hooks {
 	}
 
 	public static function onBeforePageDisplay( \OutputPage $out, \Skin $skin ) {
-		if ( Helper::isContentReviewTestModeEnabled() || self::userCanEditJsPage() ) {
+		$helper = new Helper();
+
+		if ( $helper->isContentReviewTestModeEnabled() || self::userCanEditJsPage() ) {
 			\Wikia::addAssetsToOutput( 'content_review_test_mode_js' );
 			\JSMessages::enqueuePackage( 'ContentReviewTestMode', \JSMessages::EXTERNAL );
 		}
@@ -81,10 +83,10 @@ class Hooks {
 			$latestRevId = $title->getLatestRevID();
 
 			$latestReviewedRev = ( new CurrentRevisionModel() )->getLatestReviewedRevision( $wgCityId, $pageId );
-			$isContentReviewTestMode = Helper::isContentReviewTestModeEnabled();
+			$helper = new Helper();
 
 			if ( $latestReviewedRev['revision_id'] != $latestRevId
-				&& !$isContentReviewTestMode
+				&& !$helper->isContentReviewTestModeEnabled()
 			) {
 				$revision = \Revision::newFromId( $latestReviewedRev['revision_id'] );
 

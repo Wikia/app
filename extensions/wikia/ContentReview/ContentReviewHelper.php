@@ -5,7 +5,7 @@ namespace Wikia\ContentReview;
 use Wikia\ContentReview\Models\CurrentRevisionModel;
 use Wikia\ContentReview\Models\ReviewModel;
 
-class Helper {
+class Helper extends \ContextSource {
 
 	const CONTENT_REVIEW_TOOLBAR_TEMPLATE_PATH = 'extensions/wikia/ContentReview/templates/ContentReviewToolbar.mustache';
 	const CONTENT_REVIEW_URL_PARAM = 'contentreview';
@@ -48,12 +48,9 @@ class Helper {
 		return $revision['revision_id'];
 	}
 
-	public static function getContentReviewTestModeWikis() {
-		global $wgRequest;
-
+	public function getContentReviewTestModeWikis() {
 		$key = \ContentReviewApiController::CONTENT_REVIEW_TEST_MODE_KEY;
-
-		$wikiIds = $wgRequest->getSessionData( $key );
+		$wikiIds = $this->getRequest()->getSessionData( $key );
 
 		if ( !empty( $wikiIds ) ) {
 			$wikiIds = unserialize( $wikiIds );
@@ -64,46 +61,38 @@ class Helper {
 		return $wikiIds;
 	}
 
-	public static function setContentReviewTestMode() {
-		global $wgCityId, $wgRequest;
+	public function setContentReviewTestMode() {
+		global $wgCityId;
 
 		$key = \ContentReviewApiController::CONTENT_REVIEW_TEST_MODE_KEY;
 
-		$wikiIds = self::getContentReviewTestModeWikis();
+		$wikiIds = $this->getContentReviewTestModeWikis();
 
 		if ( !in_array( $wgCityId, $wikiIds ) ) {
 			$wikiIds[] = $wgCityId;
-			$wgRequest->setSessionData( $key, serialize( $wikiIds ) );
+			$this->getRequest()->setSessionData( $key, serialize( $wikiIds ) );
 		}
 	}
 
-	public static function disableContentReviewTestMode() {
-		global $wgCityId, $wgRequest;
+	public function disableContentReviewTestMode() {
+		global $wgCityId;
 
 		$key = \ContentReviewApiController::CONTENT_REVIEW_TEST_MODE_KEY;
 
-		$wikiIds = self::getContentReviewTestModeWikis();
+		$wikiIds = $this->getContentReviewTestModeWikis();
 		$wikiKey = array_search( $wgCityId, $wikiIds );
 
 		if ( $wikiKey !== false ) {
-			unset( $wikiIds[$wikiKey]);
-			$wgRequest->setSessionData( $key, serialize( $wikiIds ) );
+			unset( $wikiIds[$wikiKey] );
+			$this->getRequest()->setSessionData( $key, serialize( $wikiIds ) );
 		}
-
 	}
 
-	public static function isContentReviewTestModeEnabled() {
+	public function isContentReviewTestModeEnabled() {
 		global $wgCityId;
 
-		$contentReviewTestModeEnabled = false;
-
-		$wikisIds = self::getContentReviewTestModeWikis();
-
-		if ( !empty( $wikisIds ) && in_array( $wgCityId, $wikisIds ) ) {
-			$contentReviewTestModeEnabled = true;
-		}
-
-		return $contentReviewTestModeEnabled;
+		$wikisIds = $this->getContentReviewTestModeWikis();
+		return ( !empty( $wikisIds ) && in_array( $wgCityId, $wikisIds ) );
 	}
 
 	public static function isStatusAwaiting( $status ) {
@@ -115,13 +104,11 @@ class Helper {
 	}
 
 	public function isDiffPageInReviewProcess( $wikiId, $pageId, $diff ) {
-		global $wgRequest;
-
 		/**
 		 * Do not hit database if there is a URL parameter that indicates that a user
 		 * came directly from Special:ContentReview.
 		 */
-		if ( $wgRequest->getInt( self::CONTENT_REVIEW_URL_PARAM ) === 1 ) {
+		if ( $this->getRequest()->getInt( self::CONTENT_REVIEW_URL_PARAM ) === 1 ) {
 			return true;
 		}
 
@@ -139,19 +126,19 @@ class Helper {
 	}
 
 	public function getToolbarTemplate() {
-		global $wgCityId, $wgTitle;
+		global $wgCityId;
 
 		return \MustacheService::getInstance()->render(
 			self::CONTENT_REVIEW_TOOLBAR_TEMPLATE_PATH,
 			[
 				'toolbarTitle' => wfMessage( 'content-review-diff-toolbar-title' )->plain(),
 				'wikiId' => $wgCityId,
-				'pageId' => $wgTitle->getArticleID(),
+				'pageId' => $this->getTitle()->getArticleID(),
 				'approveStatus' => ReviewModel::CONTENT_REVIEW_STATUS_APPROVED,
 				'buttonApproveText' => wfMessage( 'content-review-diff-approve' )->plain(),
 				'rejectStatus' => ReviewModel::CONTENT_REVIEW_STATUS_REJECTED,
 				'buttonRejectText' => wfMessage( 'content-review-diff-reject' )->plain(),
-				'talkpageUrl' => $this->prepareProvideFeedbackLink( $wgTitle ),
+				'talkpageUrl' => $this->prepareProvideFeedbackLink( $this->getTitle() ),
 				'talkpageLinkText' => wfMessage( 'content-review-diff-toolbar-talkpage' )->plain(),
 				'guidelinesUrl' => wfMessage( 'content-review-diff-toolbar-guidelines-url' )->useDatabase( false )->plain(),
 				'guidelinesLinkText' => wfMessage( 'content-review-diff-toolbar-guidelines' )->plain(),
