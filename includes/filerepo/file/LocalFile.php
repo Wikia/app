@@ -1009,6 +1009,8 @@ class LocalFile extends File {
 		# Fail now if the file isn't there
 		if ( !$this->fileExists ) {
 			wfDebug( __METHOD__ . ": File " . $this->getRel() . " went missing!\n" );
+			$dbw->rollback( __METHOD__ );
+
 			return false;
 		}
 
@@ -1128,6 +1130,13 @@ class LocalFile extends File {
 
 				wfRunHooks( 'NewRevisionFromEditComplete', array( $wikiPage, $nullRevision, $latest, $user ) );
 				$wikiPage->updateRevisionOn( $dbw, $nullRevision );
+			}
+			else {
+				\Wikia\Logger\WikiaLogger::instance()->warning('PLATFORM-1311', [
+					'reason' => 'LocalFile no nullRevision',
+					'page_id' => $descTitle->getArticleId(),
+					'exception' => new Exception()
+				]);
 			}
 			# Invalidate the cache for the description page
 			$descTitle->invalidateCache();
