@@ -53,7 +53,7 @@ function wfJSVariablesTopScripts(Array &$vars, &$scripts) {
 		/*
 		 * Remove when SOC-217 ABTest is finished
 		 */
-		$vars['wgNotConfirmedEmail'] = $user->getGlobalAttribute( UserLoginSpecialController::NOT_CONFIRMED_LOGIN_OPTION_NAME );
+		$vars['wgNotConfirmedEmail'] = $user->getGlobalPreference( UserLoginSpecialController::NOT_CONFIRMED_LOGIN_OPTION_NAME );
 		/*
 		 * End remove
 		 */
