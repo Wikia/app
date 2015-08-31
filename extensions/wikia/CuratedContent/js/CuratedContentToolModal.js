@@ -1,7 +1,7 @@
 define(
 	'curatedContentTool.modal',
-	['wikia.ui.factory', 'curatedContentTool.pontoBridge'],
-	function (uiFactory, pontoBridge) {
+	['wikia.ui.factory', 'curatedContentTool.pontoBridge', 'JSMessages'],
+	function (uiFactory, pontoBridge, msg) {
 		'use strict';
 		var modalInstance,
 			closeWithoutConfirmation;
@@ -17,7 +17,8 @@ define(
 						content: content
 					},
 					confirmCloseModal: function () {
-						return closeWithoutConfirmation || confirm("Are you sure you want to close this modal?");
+						return closeWithoutConfirmation ||
+						confirm( msg('wikiacuratedcontent-close-modal-prompt-message') );
 					}
 				};
 

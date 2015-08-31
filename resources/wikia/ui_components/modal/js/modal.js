@@ -32,7 +32,7 @@ define('wikia.ui.modal', [
 				closeText: $.msg('close'),
 				escapeToClose: true
 			},
-			confirmCloseModal: undefined
+			confirmCloseModal: false
 		},
 		// default modal buttons rendering params
 		btnConfig = {
