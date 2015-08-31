@@ -23,6 +23,8 @@ $messages['en'] = [
 	'content-review-rejection-reason-link' => 'Why?',
 
 	'content-review-module-help' => '[[Help:Custom Javascript|Help]]',
+	'content-review-module-help-article' => 'Help:Custom Javascript',
+	'content-review-module-help-text' => 'Help',
 
 	'content-review-module-submit' => 'Submit for review',
 	'content-review-module-submit-success' => 'The changes have been successfully submitted for a review.',
@@ -65,6 +67,8 @@ $messages['en'] = [
 	'content-review-status-in-review' => 'In review',
 	'content-review-status-approved' => 'Approved',
 	'content-review-status-rejected' => 'Rejected',
+
+	'content-review-status-link-text' => 'Review status',
 ];
 
 /**
@@ -88,6 +92,8 @@ $messages['qqq'] = [
 	'content-review-rejection-reason-link' => 'Text of a link that leads a users to a Talk page with an explanation on why their code was rejected.',
 
 	'content-review-module-help' => 'A link to a Help page explaining how the review system works.',
+	'content-review-module-help-article' => 'Article name to a Help page explaining how the review system works.',
+	'content-review-module-help-text' => 'Text shown on a link a Help page explaining how the review system works.',
 
 	'content-review-module-submit' => 'A text of a button that sends a given page for a review.',
 	'content-review-module-submit-success' => 'A message shown to a user in a Banner Notification if a page has been added to review.',
@@ -128,5 +134,7 @@ $messages['qqq'] = [
 	'content-review-status-unreviewed' => 'A name of a status of a revision that has not yet been reviewed.',
 	'content-review-status-in-review' => 'A name of a status of a revision that is being reviewed.',
 	'content-review-status-approved' => 'A name of a status of a revision that has been approved.',
-	'content-review-status-rejected' => 'A name of a status of a revision that has been rejected.'
+	'content-review-status-rejected' => 'A name of a status of a revision that has been rejected.',
+
+	'content-review-status-link-text' => 'Text on entrypoint link to show content review module with review status info and submit for review buttons',
 ];

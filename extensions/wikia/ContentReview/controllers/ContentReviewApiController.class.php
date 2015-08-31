@@ -209,6 +209,48 @@ class ContentReviewApiController extends WikiaApiController {
 		$this->notification = $notification;
 	}
 
+	/**
+	 * Prepares parts for rendering status module
+	 * Returns data required by ContentReviewModule.mustache
+	 * @throws MWException
+	 */
+	public function renderStatusModal() {
+		global $wgCityId;
+		$pageId = $this->request->getInt( 'pageId' );
+		$title = Title::newFromID( $pageId );
+
+		/* Get page status */
+		$pageStatus = \F::app()->sendRequest(
+			'ContentReviewApiController',
+			'getPageStatus',
+			[
+				'wikiId' => $wgCityId,
+				'pageId' => $pageId,
+			],
+			true
+		)->getData();
+
+		/* Render status module */
+		$res = \F::app()->sendRequest(
+			'ContentReviewModule',
+			'executeRender',
+			[
+				'pageStatus' => $pageStatus,
+				'latestRevisionId' => $title->getLatestRevID(),
+			],
+			true
+		)->getData();
+
+		/* Add link to help page to result */
+		$helpTitle = Title::newFromText( wfMessage( 'content-review-module-help-url' )->escaped() );
+		if ( $helpTitle ) {
+			$res['helpUrl'] = $helpTitle->getFullURL();
+			$res['helpTitle'] = wfMessage('content-review-module-help-text')->escaped();
+		}
+
+		$this->setResponseData( $res );
+	}
+
 	private function getLatestReviewedRevisionFromDB( $wikiId, $pageId ) {
 		return ( new CurrentRevisionModel() )->getLatestReviewedRevision( $wikiId, $pageId );
 	}

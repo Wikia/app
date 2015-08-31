@@ -55,6 +55,7 @@ $wgHooks['MakeGlobalVariablesScript'][] = 'Wikia\ContentReview\Hooks::onMakeGlob
 $wgHooks['BeforePageDisplay'][] = 'Wikia\ContentReview\Hooks::onBeforePageDisplay';
 $wgHooks['ArticleContentOnDiff'][] = 'Wikia\ContentReview\Hooks::onArticleContentOnDiff';
 $wgHooks['RawPageViewBeforeOutput'][] = 'Wikia\ContentReview\Hooks::onRawPageViewBeforeOutput';
+$wgHooks['SkinTemplateNavigation'][] = 'Wikia\ContentReview\Hooks::onSkinTemplateNavigation';
 
 /**
  * Right rail module

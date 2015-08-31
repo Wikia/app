@@ -25,6 +25,18 @@ class ContentReviewModuleController extends WikiaController {
 
 		$this->setVal( 'isTestModeEnabled', Helper::isContentReviewTestModeEnabled() );
 
+		/*
+		 * This part allows fetches required params if not set. This allows direct usage via API
+		 * (not needed in standard flow via $railModuleList loaded modules)
+		 * @TODO Probably this part should be moved to ContentReview Ext
+		 */
+		if ( empty( $params ) ) {
+			$params = [
+				'pageStatus' => $this->getVal( 'pageStatus' ),
+				'latestRevisionId' => $this->getVal( 'latestRevisionId' )
+			];
+		}
+
 		/**
 		 * Latest revision status
 		 */
