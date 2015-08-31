@@ -155,7 +155,7 @@ class Helper {
 				'buttonRejectText' => wfMessage( 'content-review-diff-reject' )->plain(),
 				'talkpageUrl' => $this->prepareProvideFeedbackLink( $wgTitle ),
 				'talkpageLinkText' => wfMessage( 'content-review-diff-toolbar-talkpage' )->plain(),
-				'guidelinesUrl' => wfMessage( 'content-review-diff-toolbar-guidelines-url' )->plain(),
+				'guidelinesUrl' => wfMessage( 'content-review-diff-toolbar-guidelines-url' )->useDatabase( false )->plain(),
 				'guidelinesLinkText' => wfMessage( 'content-review-diff-toolbar-guidelines' )->plain(),
 			]
 		);
