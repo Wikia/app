@@ -6,6 +6,7 @@ use DI\Container;
 use Wikia\DependencyInjection\InjectorBuilder;
 use Wikia\Service\Helios\ClientException;
 use Wikia\Service\Helios\HeliosClient;
+use Wikia\Service\Helios\HeliosHelper;
 
 class UserTest extends \WikiaBaseTest {
 
@@ -44,7 +45,7 @@ class UserTest extends \WikiaBaseTest {
 			->method( 'getCookie' )
 			->willReturn( $token );
 
-		$this->assertEquals( User::getAccessToken( $this->webRequestMock ), $token );
+		$this->assertEquals( HeliosHelper::getAccessToken( $this->webRequestMock ), $token );
 	}
 
 	public function testGetAccessTokenFromAuthorizationHeader() {
@@ -59,7 +60,7 @@ class UserTest extends \WikiaBaseTest {
 			->with( 'AUTHORIZATION' )
 			->willReturn( "Bearer $token" );
 
-		$this->assertEquals( User::getAccessToken( $this->webRequestMock ), $token );
+		$this->assertEquals( HeliosHelper::getAccessToken( $this->webRequestMock ), $token );
 	}
 
 	public function testGetAccessTokenFromCookieReturnsNull() {
@@ -74,19 +75,19 @@ class UserTest extends \WikiaBaseTest {
 			->method( 'getCookie' )
 			->willReturn( '' );
 
-		$this->assertNull( User::getAccessToken( $this->webRequestMock ) );
+		$this->assertNull( HeliosHelper::getAccessToken( $this->webRequestMock ) );
 
 		$this->webRequestMock->expects( $this->any() )
 			->method( 'getCookie' )
 			->willReturn( false );
 
-		$this->assertNull( User::getAccessToken( $this->webRequestMock ) );
+		$this->assertNull( HeliosHelper::getAccessToken( $this->webRequestMock ) );
 
 		$this->webRequestMock->expects( $this->any() )
 			->method( 'getCookie' )
 			->willReturn( null );
 
-		$this->assertNull( User::getAccessToken( $this->webRequestMock ) );
+		$this->assertNull( HeliosHelper::getAccessToken( $this->webRequestMock ) );
 	}
 
 	public function testGetAccessTokenFromHeaderReturnsNull() {
@@ -101,28 +102,28 @@ class UserTest extends \WikiaBaseTest {
 			->with( 'AUTHORIZATION' )
 			->willReturn( '' );
 
-		$this->assertNull( User::getAccessToken( $this->webRequestMock ) );
+		$this->assertNull( HeliosHelper::getAccessToken( $this->webRequestMock ) );
 
 		$this->webRequestMock->expects( $this->any() )
 			->method( 'getHeader' )
 			->with( 'AUTHORIZATION' )
 			->willReturn( false );
 
-		$this->assertNull( User::getAccessToken( $this->webRequestMock ) );
+		$this->assertNull( HeliosHelper::getAccessToken( $this->webRequestMock ) );
 
 		$this->webRequestMock->expects( $this->any() )
 			->method( 'getHeader' )
 			->with( 'AUTHORIZATION' )
 			->willReturn( null );
 
-		$this->assertNull( User::getAccessToken( $this->webRequestMock ) );
+		$this->assertNull( HeliosHelper::getAccessToken( $this->webRequestMock ) );
 
 		$this->webRequestMock->expects( $this->any() )
 			->method( 'getHeader' )
 			->with( 'AUTHORIZATION' )
 			->willReturn( 'Bearer ' );
 
-		$this->assertNull( User::getAccessToken( $this->webRequestMock ) );
+		$this->assertNull( HeliosHelper::getAccessToken( $this->webRequestMock ) );
 	}
 
 
@@ -139,7 +140,7 @@ class UserTest extends \WikiaBaseTest {
 			->with( 'AUTHORIZATION' )
 			->willReturn( "Bearer $tokenInHeader" );
 
-		$this->assertEquals( User::getAccessToken( $this->webRequestMock ), $tokenInCookie );
+		$this->assertEquals( HeliosHelper::getAccessToken( $this->webRequestMock ), $tokenInCookie );
 	}
 
 	public function testGetAccessTokenNoCookieNoAuthorizationHeader() {
@@ -152,7 +153,7 @@ class UserTest extends \WikiaBaseTest {
 			->with( 'AUTHORIZATION' )
 			->willReturn( false );
 
-		$this->assertNull( User::getAccessToken( $this->webRequestMock ) );
+		$this->assertNull( HeliosHelper::getAccessToken( $this->webRequestMock ) );
 	}
 
 	public function testGetAccessTokenNoCookieMalformedAuthorizationHeader() {
@@ -165,7 +166,7 @@ class UserTest extends \WikiaBaseTest {
 			->with( 'AUTHORIZATION' )
 			->willReturn( 'Malformed' );
 
-		$this->assertNull( User::getAccessToken( $this->webRequestMock ) );
+		$this->assertNull( HeliosHelper::getAccessToken( $this->webRequestMock ) );
 	}
 
 	public function testNewFromTokenAuthorizationGranted() {

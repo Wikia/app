@@ -2,25 +2,14 @@
 
 namespace Wikia\Service\User\Auth;
 
-class MediaWikiAuthService implements AuthService {
-
+class MediaWikiAuthService extends AuthServiceBase implements AuthService {
 
 	/**
-	 * @see AuthService
+	 * Perform logout action
+	 *
+	 * @return mixed
 	 */
-	public function isUsernameBlocked( $username ) {
-		$user = \User::newFromName( $username );
-
-		if ( !$user ) {
-			return null;
-		}
-
-		$user->load();
-		if ( $user->getId() == 0 ) {
-			return null;
-		}
-
-		return $user->isBlocked();
+	public function logout() {
+		// No more action for this moment
 	}
-
 }
