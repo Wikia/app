@@ -37,8 +37,9 @@ class ProtectSiteJS {
 		global $wgCityId;
 		$allowedJsSubpages = [
 			'common',
-			'wikia',
 			'monobook',
+			'wikia',
+			'uncyclopedia',
 		];
 
 		if ( $wgCityId == Wikia::COMMUNITY_WIKI_ID ) {
