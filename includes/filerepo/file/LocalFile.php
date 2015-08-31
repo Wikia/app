@@ -989,6 +989,7 @@ class LocalFile extends File {
 			$user = $wgUser;
 		}
 
+		/* @var DatabaseBase $dbw */
 		$dbw = $this->repo->getMasterDB();
 		$dbw->begin();
 
