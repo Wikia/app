@@ -28,6 +28,8 @@
 
 	function importAssetPage(server, page, type) {
 		var url = '/index.php?title=' + encodeURIComponent(page.replace(/ /g,'_')).replace('%2F','/').replace('%3A',':') + ((type == 'js') ? '&action=raw&ctype=text/javascript' : '&action=raw&ctype=text/css');
+		url = window.forceReviewedContent(url);
+
 		if( typeof server == "string" ) {
 			if( server.indexOf( '://' ) == -1 ) {url = 'http://' + server + '.wikia.com' + url;}
 			else {url = server + url;}

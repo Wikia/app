@@ -1,5 +1,6 @@
 <?php
-use  Wikia\ContentReview\Models\ReviewModel;
+use Wikia\ContentReview\Models\ReviewModel;
+use Wikia\ContentReview\Helper;
 
 class ContentReviewSpecialController extends WikiaSpecialPageController {
 
@@ -56,7 +57,8 @@ class ContentReviewSpecialController extends WikiaSpecialPageController {
 			$review['user'] = User::newFromId( $review['submit_user_id'] )->getName();
 			$review['diff'] = $title->getFullURL( [
 				'diff' => $review['revision_id'],
-				'oldid' => $review['reviewed_id']
+				'oldid' => $review['reviewed_id'],
+				Helper::CONTENT_REVIEW_URL_PARAM => 1,
 			] );
 			$review['diffText'] = $review['status'] == ReviewModel::CONTENT_REVIEW_STATUS_UNREVIEWED
 				? wfMessage( 'content-review-special-start-review' )->escaped()

@@ -31,7 +31,7 @@ class ContentReviewApiController extends WikiaApiController {
 
 		$title = Title::newFromID( $pageId );
 		if ( $title === null || !$title->isJsPage() ) {
-			throw new NotFoundApiException( "JS page with ID {$pageId} does not exist");
+			throw new NotFoundApiException( "JS page with ID {$pageId} does not exist" );
 		}
 
 		$submitUserId = $this->wg->User->getId();
@@ -78,7 +78,8 @@ class ContentReviewApiController extends WikiaApiController {
 			throw new PermissionsException( 'edit' );
 		}
 
-		Wikia\ContentReview\Helper::setContentReviewTestMode();
+		$helper = new Helper();
+		$helper->setContentReviewTestMode();
 		$this->makeSuccessResponse();
 	}
 
@@ -92,7 +93,8 @@ class ContentReviewApiController extends WikiaApiController {
 			throw new BadRequestApiException();
 		}
 
-		Wikia\ContentReview\Helper::disableContentReviewTestMode();
+		$helper = new Helper();
+		$helper->disableContentReviewTestMode();
 		$this->makeSuccessResponse();
 	}
 
@@ -162,9 +164,11 @@ class ContentReviewApiController extends WikiaApiController {
 
 			if ( $status === ReviewModel::CONTENT_REVIEW_STATUS_APPROVED ) {
 				$currentRevisionModel->approveRevision( $wikiId, $pageId, $review['revision_id'] );
-				$this->notification = wfMessage( 'content-review-diff-approve-confirmation' )->escaped();
+				$this->notification = wfMessage( 'content-review-diff-approve-confirmation' )->parse();
 			} elseif ( $status === ReviewModel::CONTENT_REVIEW_STATUS_REJECTED ) {
-				$this->notification = wfMessage( 'content-review-diff-reject-confirmation' )->escaped();
+				$title = Title::newFromID( $pageId );
+				$feedbackLink = $helper->prepareProvideFeedbackLink( $title );
+				$this->notification = wfMessage( 'content-review-diff-reject-confirmation', $feedbackLink )->parse();
 			}
 
 			$reviewModel->updateCompletedReview( $wikiId, $pageId, $review['revision_id'], $status );

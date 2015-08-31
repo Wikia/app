@@ -1,7 +1,7 @@
 define(
 	'ext.wikia.contentReview.module',
-	['jquery', 'mw', 'wikia.loader', 'wikia.nirvana', 'BannerNotification'],
-	function($, mw, loader, nirvana, BannerNotification) {
+	['jquery', 'mw', 'wikia.loader', 'wikia.nirvana', 'wikia.window', 'BannerNotification'],
+	function($, mw, loader, nirvana, win, BannerNotification) {
 		'use strict';
 
 		function init() {
@@ -34,7 +34,7 @@ define(
 				method: 'submitPageForReview',
 				data: data,
 				callback: function () {
-					location.reload();
+					win.location.reload(true);
 				},
 				onErrorCallback: function(response) {
 					var e, errorMsg;

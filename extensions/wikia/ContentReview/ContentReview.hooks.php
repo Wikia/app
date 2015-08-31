@@ -3,7 +3,6 @@
 namespace Wikia\ContentReview;
 
 use Wikia\ContentReview\Models\CurrentRevisionModel;
-use Wikia\ContentReview\Models\ReviewModel;
 
 class Hooks {
 
@@ -31,14 +30,20 @@ class Hooks {
 	}
 
 	public static function onMakeGlobalVariablesScript( &$vars ) {
-		$vars['contentReviewTestModeEnabled'] = Helper::isContentReviewTestModeEnabled();
+		$helper = new Helper();
+
+		$vars['contentReviewExtEnabled'] = true;
+		$vars['contentReviewTestModeEnabled'] = $helper->isContentReviewTestModeEnabled();
+		$vars['contentReviewScriptsHash'] = $helper->getSiteJsScriptsHash();
 
 		return true;
 
 	}
 
 	public static function onBeforePageDisplay( \OutputPage $out, \Skin $skin ) {
-		if ( Helper::isContentReviewTestModeEnabled() || self::userCanEditJsPage() ) {
+		$helper = new Helper();
+
+		if ( $helper->isContentReviewTestModeEnabled() || self::userCanEditJsPage() ) {
 			\Wikia::addAssetsToOutput( 'content_review_test_mode_js' );
 			\JSMessages::enqueuePackage( 'ContentReviewTestMode', \JSMessages::EXTERNAL );
 		}
@@ -49,63 +54,39 @@ class Hooks {
 	public static function onArticleContentOnDiff( $diffEngine, \OutputPage $output ) {
 		global $wgTitle, $wgCityId, $wgRequest;
 		$diff = $wgRequest->getInt( 'diff' );
-		$oldid = $wgRequest->getInt( 'oldid' );
 
 		$helper = new Helper();
 		if ( $wgTitle->inNamespace( NS_MEDIAWIKI )
 			&& $wgTitle->isJsPage()
 			&& $wgTitle->userCan( 'content-review' )
 			&& $helper->isDiffPageInReviewProcess( $wgCityId, $wgTitle->getArticleID(), $diff )
-			&& $helper->hasPageApprovedId( $wgCityId, $wgTitle->getArticleID(), $oldid )
-
 		) {
 			\Wikia::addAssetsToOutput( 'content_review_diff_page_js' );
+			\Wikia::addAssetsToOutput( 'content_review_diff_page_scss' );
 			\JSMessages::enqueuePackage( 'ContentReviewDiffPage', \JSMessages::EXTERNAL );
 
-			$output->prependHTML(
-				\Xml::element( 'button',
-					[
-						'class' => 'content-review-diff-button',
-						'data-wiki-id' => $wgCityId,
-						'data-page-id' => $wgTitle->getArticleID(),
-						'data-status' => ReviewModel::CONTENT_REVIEW_STATUS_REJECTED
-					],
-					wfMessage( 'content-review-diff-reject' )->plain()
-				)
-			);
-
-			$output->prependHTML(
-				\Xml::element( 'button',
-					[
-						'class' => 'content-review-diff-button',
-						'data-wiki-id' => $wgCityId,
-						'data-page-id' => $wgTitle->getArticleID(),
-						'data-status' => ReviewModel::CONTENT_REVIEW_STATUS_APPROVED
-					],
-					wfMessage( 'content-review-diff-approve' )->plain()
-				)
-			);
-
+			$output->prependHTML( $helper->getToolbarTemplate() );
 		}
 
 		return true;
 	}
 
 	public static function onRawPageViewBeforeOutput( \RawAction $rawAction, &$text ) {
-		global $wgCityId;
+		global $wgCityId, $wgJsMimeType;
 
 		$title = $rawAction->getTitle();
 
-		if ( $title->inNamespace( NS_MEDIAWIKI ) && $title->isJsPage() ) {
+		if ( $title->inNamespace( NS_MEDIAWIKI )
+			&& ( $title->isJsPage() || $rawAction->getContentType() == $wgJsMimeType )
+		) {
 			$pageId = $title->getArticleID();
 			$latestRevId = $title->getLatestRevID();
 
 			$latestReviewedRev = ( new CurrentRevisionModel() )->getLatestReviewedRevision( $wgCityId, $pageId );
-			$isContentReviewTestMode = Helper::isContentReviewTestModeEnabled();
+			$helper = new Helper();
 
-			if ( !empty( $latestReviewedRev['revision_id'] )
-				&& $latestReviewedRev['revision_id'] != $latestRevId
-				&& !$isContentReviewTestMode
+			if ( $latestReviewedRev['revision_id'] != $latestRevId
+				&& !$helper->isContentReviewTestModeEnabled()
 			) {
 				$revision = \Revision::newFromId( $latestReviewedRev['revision_id'] );
 

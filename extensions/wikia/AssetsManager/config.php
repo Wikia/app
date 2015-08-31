@@ -2583,6 +2583,13 @@ $config['content_review_diff_page_js'] = [
 	]
 ];
 
+$config['content_review_diff_page_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'assets' => [
+		'//extensions/wikia/ContentReview/styles/ContentReviewDiffPage.scss',
+	]
+];
+
 $config['auth_modal_scss'] = array(
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => [ 'oasis' ],
