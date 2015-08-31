@@ -4,7 +4,7 @@ define(
 	function (uiFactory, pontoBridge) {
 		'use strict';
 		var modalInstance,
-			closeModal;
+			closeWithoutConfirmation;
 
 		function open(title, content) {
 			uiFactory.init(['modal']).then(function (uiModal) {
@@ -17,12 +17,12 @@ define(
 						content: content
 					},
 					confirmCloseModal: function () {
-						return closeModal || confirm("Are you sure you want to close this modal?");
+						return closeWithoutConfirmation || confirm("Are you sure you want to close this modal?");
 					}
 				};
 
 				uiModal.createComponent(modalConfig, function (_modal) {
-					closeModal = false;
+					closeWithoutConfirmation = false;
 					modalInstance = _modal;
 					_modal.show();
 					pontoBridge.init(_modal.$content.find('#CuratedContentToolIframe')[0]);
@@ -31,7 +31,7 @@ define(
 		}
 
 		function close() {
-			closeModal = true;
+			closeWithoutConfirmation = true;
 			modalInstance.trigger('close');
 		}
 
