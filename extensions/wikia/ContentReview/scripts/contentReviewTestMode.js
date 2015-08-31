@@ -35,10 +35,10 @@ define(
 			controller: 'ContentReviewApiController',
 			method: 'enableTestMode',
 			data: data,
-			callback: function (response) {
-				win.location.reload();
+			callback: function () {
+				win.location.reload(true);
 			},
-			onErrorCallback: function(response) {
+			onErrorCallback: function() {
 				showErrorMessage();
 			}
 		});
@@ -48,10 +48,10 @@ define(
 		nirvana.sendRequest({
 			controller: 'ContentReviewApiController',
 			method: 'disableTestMode',
-			callback: function (response) {
-				win.location.reload();
+			callback: function () {
+				win.location.reload(true);
 			},
-			onErrorCallback: function(response) {
+			onErrorCallback: function() {
 				showErrorMessage();
 			}
 		});
