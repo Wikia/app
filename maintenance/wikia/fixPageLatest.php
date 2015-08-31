@@ -64,6 +64,7 @@ class FixPageLatest extends Maintenance {
 			[
 				'page_id',
 				'page_title',
+				'page_namespace',
 				'page_len',
 				'page_touched',
 				'rev_id'
@@ -92,7 +93,7 @@ class FixPageLatest extends Maintenance {
 			$revId = intval( $row->rev_id );
 
 			if ( $isDryRun ) {
-				$this->output( "* {$row->page_title} affected (#{$row->page_id})- would set page_latest to {$revId} (page was touched at {$row->page_touched})\n" );
+				$this->output( "* {$row->page_title} affected (#{$row->page_id} / ns #{$row->page_namespace})- would set page_latest to {$revId} (page was touched at {$row->page_touched})\n" );
 				continue;
 			}
 
