@@ -1,35 +1,17 @@
-/*global define, require*/
+/*global define*/
 define('ext.wikia.adEngine.template.modal', [
-	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adHelper',
+	'ext.wikia.adEngine.provider.gpt.adDetect',
+	'ext.wikia.adEngine.template.modalHandlerFactory',
 	'wikia.document',
 	'wikia.log',
 	'wikia.iframeWriter',
-	'wikia.window',
-	require.optional('wikia.ui.factory')
-], function (adContext, adHelper, doc, log, iframeWriter, win, uiFactory) {
+	'wikia.window'
+], function (adHelper, adDetect, modalHandlerFactory, doc, log, iframeWriter, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.template.modal',
-		modalId = 'ext-wikia-adEngine-template-modal',
-		lightBoxExpansionModel = {
-			mercury: {
-				availableHeightRatio: 1,
-				availableWidthRatio: 1,
-				heightSubtract: 80,
-				minWidth: 100,
-				minHeight: 100,
-				maximumRatio: 3
-			},
-			oasis: {
-				availableHeightRatio: 0.8,
-				availableWidthRatio: 0.9,
-				heightSubtract: 90,
-				minWidth: 200,
-				minHeight: 150,
-				maximumRatio: 2
-			}
-		};
+		modalHandler = modalHandlerFactory.create();
 
 	/**
 	 * Show the modal ad
@@ -39,6 +21,8 @@ define('ext.wikia.adEngine.template.modal', [
 	 * @param {number} params.width - desired width of the Lightbox
 	 * @param {number} params.height - desired height of the Lightbox
 	 * @param {boolean} params.scalable - extend iframe to maximum sensible size of the Lightbox
+	 * @param {boolean} [params.canHop] detect ad in the embedded iframe
+	 * @param {string}  [params.slotName] name of the original slot (required if params.canHop set to true)
 	 */
 	function show(params) {
 		log(['show', params], 'debug', logGroup);
@@ -50,8 +34,18 @@ define('ext.wikia.adEngine.template.modal', [
 				width: params.width,
 				classes: 'wikia-ad-iframe'
 			}),
-			skin = adContext.getContext().targeting.skin,
-			lightboxParams = lightBoxExpansionModel[skin];
+			async = params.canHop && params.slotName,
+			gptEventMock = {
+				size: {
+					width: params.width,
+					height: params.height
+				}
+			},
+			lightboxParams = modalHandler.getExpansionModel();
+
+		if (modalHandler === null) {
+			return;
+		}
 
 		function scaleAd() {
 			var availableWidth = Math.max(
@@ -78,27 +72,6 @@ define('ext.wikia.adEngine.template.modal', [
 			adContainer.style.height = Math.floor(params.height * ratio) + 'px';
 		}
 
-		function createAndShowDesktopModal() {
-			var modalConfig = {
-				vars: {
-					id: modalId,
-					size: 'medium',
-					content: '',
-					title: 'Advertisement',
-					closeText: 'Close',
-					buttons: []
-				}
-			};
-
-			uiFactory.init('modal').then(function (uiModal) {
-				uiModal.createComponent(modalConfig, function (modal) {
-					modal.$content.append(adContainer);
-					modal.$element.width('auto');
-					modal.show();
-				});
-			});
-		}
-
 		function scaleAdIfNeeded() {
 			if (params.scalable) {
 				scaleAd();
@@ -111,15 +84,21 @@ define('ext.wikia.adEngine.template.modal', [
 		adIframe.style.maxWidth = 'none';
 		adContainer.appendChild(adIframe);
 
-		if (skin === 'oasis') {
-			scaleAdIfNeeded();
-			createAndShowDesktopModal();
+		if (async) {
+			adIframe.addEventListener('load', function () {
+				adDetect.onAdLoad(params.slotName + ' (modal inner iframe)', gptEventMock, adIframe, function () {
+					log(['ad detect', params.slotName, 'success'], 'info', logGroup);
+					win.postMessage('{"AdEngine":{"slot_' + params.slotName + '":true,"status":"success"}}', '*');
+					modalHandler.show();
+				}, function () {
+					log(['ad detect', params.slotName, 'hop'], 'info', logGroup);
+					win.postMessage('{"AdEngine":{"slot_' + params.slotName + '":true,"status":"hop"}}', '*');
+				});
+			});
 		}
 
-		if (skin === 'mercury') {
-			scaleAdIfNeeded();
-			win.Mercury.Modules.Ads.getInstance().openLightbox(adContainer);
-		}
+		scaleAdIfNeeded();
+		modalHandler.create(adContainer, !async);
 	}
 
 	return {

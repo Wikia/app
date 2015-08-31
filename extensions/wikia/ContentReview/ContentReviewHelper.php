@@ -156,7 +156,7 @@ class Helper {
 					'buttonApproveText' => wfMessage( 'content-review-diff-approve' )->plain(),
 					'rejectStatus' => ReviewModel::CONTENT_REVIEW_STATUS_REJECTED,
 					'buttonRejectText' => wfMessage( 'content-review-diff-reject' )->plain(),
-					'talkpageUrl' => $wgTitle->getTalkPage()->getFullURL(),
+					'talkpageUrl' => $this->prepareProvideFeedbackLink( $wgTitle ),
 					'talkpageLinkText' => wfMessage( 'content-review-diff-toolbar-talkpage' )->plain(),
 					'guidelinesUrl' => wfMessage( 'content-review-diff-toolbar-guidelines-url' )->plain(),
 					'guidelinesLinkText' => wfMessage( 'content-review-diff-toolbar-guidelines' )->plain(),
@@ -167,5 +167,19 @@ class Helper {
 		}
 
 		return $template;
+	}
+
+	/**
+	 * Link for adding new section on script talk page. Prefilled with standard explanation of rejection.
+	 * @param \Title $title Title object of JS page
+	 * @return string full link to edit page
+	 */
+	public function prepareProvideFeedbackLink( \Title $title ) {
+		$params = [
+			'action' => 'edit',
+			'section' => 'new',
+			'useMessage' => 'content-review-rejection-explanation'
+		];
+		return $title->getTalkPage()->getFullURL( $params );
 	}
 }

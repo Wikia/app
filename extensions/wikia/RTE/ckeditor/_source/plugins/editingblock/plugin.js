@@ -102,13 +102,17 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 					// Wikia change - begin
 					// fix focus broken in Fx
 					if (editor.config.startupFocus) {
-						if (CKEDITOR.env.gecko) {
-							setTimeout(function() {
-								editor.focus();
-							}, 500);
-						}
-						else {
+						var focusEditor = function() {
 							editor.focus();
+							if ( editor.mode === 'source' ) {
+								editor.textarea.$.scrollTop = 0;
+								editor.textarea.$.setSelectionRange(0, 0);
+							}
+						};
+						if (CKEDITOR.env.gecko) {
+							setTimeout(focusEditor, 500);
+						} else {
+							focusEditor();
 						}
 					}
 					// Wikia change - end

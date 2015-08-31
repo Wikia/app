@@ -71,7 +71,10 @@ CKEDITOR.plugins.add('rte-modeswitch',
 					}
 
 					editor.setMode('source');
-					editor.setData(data.wikitext);
+					editor.setData(data.wikitext, function() {
+						editor.textarea.$.scrollTop = 0;
+						editor.textarea.$.setSelectionRange(0, 0);
+					});
 				});
 				break;
 

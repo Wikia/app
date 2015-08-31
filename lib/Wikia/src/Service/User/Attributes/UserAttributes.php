@@ -37,11 +37,11 @@ class UserAttributes {
 	public function getAttribute( $userId, $attributeName, $default = null ) {
 		$attributes = $this->loadAttributes( $userId );
 
-		if ( !empty( $attributes[$attributeName] ) ) {
+		if ( !is_null( $attributes[$attributeName] ) ) {
 			return $attributes[$attributeName];
 		}
 
-		if ( !empty( $this->defaultAttributes[$attributeName] ) ) {
+		if ( !is_null( $this->defaultAttributes[$attributeName] ) ) {
 			return  $this->defaultAttributes[$attributeName];
 		}
 
@@ -64,19 +64,43 @@ class UserAttributes {
 	 * @param string $userId
 	 * @param Attribute $attribute
 	 */
-	public function setAttribute( $userId, $attribute ) {
+	public function setAttribute( $userId, Attribute $attribute ) {
 		if ( $this->isAnonUser( $userId ) ) {
 			return;
 		}
 
-		$this->loadAttributes( $userId );
+		if ( $this->attributeValueAlreadySet( $userId, $attribute ) ) {
+			return;
+		}
+
 		$this->setAttributeInService( $userId, $attribute );
 		$this->setAttributeInCache( $userId, $attribute );
-
 	}
 
 	private function isAnonUser( $userId ) {
 		return $userId === 0;
+	}
+
+	private function attributeValueAlreadySet( $userId, Attribute $attribute ) {
+		return $this->getAttribute( $userId, $attribute->getName() ) === $attribute->getValue();
+	}
+
+	/**
+	 * @param $userId
+	 * @param array $attributes
+	 */
+	public function setAttributesInCache( $userId, array $attributes ) {
+		foreach ( $attributes as $attributeKey => $attributeValue ) {
+			$this->setAttributeInCache( $userId, new Attribute( $attributeKey, $attributeValue ) );
+		}
+	}
+
+	/**
+	 * @param $userId
+	 * @param Attribute $attribute
+	 */
+	private function setAttributeInCache( $userId, Attribute $attribute ) {
+		$this->attributes[$userId][$attribute->getName()] = $attribute->getValue();
 	}
 
 	/**
@@ -87,15 +111,29 @@ class UserAttributes {
 		$this->attributeService->set( $userId, $attribute );
 	}
 
-	/**
-	 * @param $userId
-	 * @param Attribute $attribute
-	 */
-	private function setAttributeInCache( $userId, $attribute ) {
-		$this->attributes[$userId][$attribute->getName()] = $attribute->getValue();
+	public function deleteAttribute( $userId, Attribute $attribute ) {
+		if ( $this->isAnonUser( $userId ) ) {
+			return;
+		}
+
+		if ( $this->attributeNotSetForUser( $userId, $attribute ) ) {
+			return;
+		}
+
+		$this->deleteAttributeFromService( $userId, $attribute );
+		$this->deleteAttributeFromCache( $userId, $attribute );
 	}
 
-	public function deleteAttribute( $userId, $attribute ) {
+	private function attributeNotSetForUser( $userId, Attribute $attribute ) {
+		$this->loadAttributes( $userId );
+		return empty( $this->attributes[$userId][$attribute->getName()] );
+	}
+
+	private function deleteAttributeFromCache( $userId, Attribute $attribute ) {
+		unset( $this->attributes[$userId][$attribute->getName()] );
+	}
+
+	private function deleteAttributeFromService( $userId, Attribute $attribute ) {
 		$this->attributeService->delete( $userId, $attribute );
 	}
 }

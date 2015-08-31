@@ -2,12 +2,16 @@
 
 namespace Wikia\Domain\User;
 
+use Wikia\Util\Assert;
+
 class Preference {
 
 	private $name;
 	private $value;
 
 	function __construct( $name, $value ) {
+		Assert::true(!empty($name), "invalid preference name");
+
 		$this->name = $name;
 		$this->value = $value;
 	}

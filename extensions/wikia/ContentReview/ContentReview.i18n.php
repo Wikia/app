@@ -29,9 +29,7 @@ $messages['en'] = [
 	'content-review-module-submit-exception' => 'Unfortunately, we could not submit the changes for a review due to the following error: $1.',
 	'content-review-module-submit-error' => 'Unfortunately, we could not submit the changes for a review.',
 
-	'content-review-module-enable-test-mode' => 'Enter test mode',
-	'content-review-module-disable-test-mode' => 'Exit test mode',
-
+	'content-review-test-mode-enable' => 'Enter test mode',
 	'content-review-test-mode-disable' => 'Exit test mode',
 	'content-review-test-mode-error' => 'Something went wrong. Please try again later.',
 	'content-review-test-mode-enabled' => 'You are currently using unreviewed versions of custom JavaScript files. ',
@@ -56,8 +54,8 @@ $messages['en'] = [
 
 	'content-review-diff-approve' => 'Approve',
 	'content-review-diff-reject' => 'Reject',
-	'content-review-diff-approve-confirmation' => 'Reviewed code has been approved.',
-	'content-review-diff-reject-confirmation' => 'Reviewed code has been rejected.',
+	'content-review-diff-approve-confirmation' => 'Reviewed code has been approved. Go back to [[w:c:dev:Special:ContentReview|Special:ContentReview]]',
+	'content-review-diff-reject-confirmation' => 'Reviewed code has been rejected. [$1 Provide feedback] or go back to [[w:c:dev:Special:ContentReview|Special:ContentReview]]',
 	'content-review-diff-page-error' => 'Something went wrong. Please try again later.',
 	'content-review-diff-already-done' => 'You are trying to add an changes to the revision that isn\'t "In review" stage.',
 
@@ -69,7 +67,12 @@ $messages['en'] = [
 	'content-review-status-unreviewed' => 'Unreviewed',
 	'content-review-status-in-review' => 'In review',
 	'content-review-status-approved' => 'Approved',
-	'content-review-status-rejected' => 'Rejected',
+	'content-review-status-rejected' => 'Rejected,',
+
+	'content-review-feedback-link-text' => 'Provide feedback',
+	'content-review-rejection-explanation' => '==Submitted script change rejected==
+The recently submitted change to this JS script was rejected by the Wikia review process. Please make sure you meet the [[Help:Custom JavaScript guidelines|Custom JavaScript guidelines]].'
+
 ];
 
 /**
@@ -99,10 +102,8 @@ $messages['qqq'] = [
 	'content-review-module-submit-exception' => 'A message shown to a user in a Banner Notification if a known error happened. $1 is the error message.',
 	'content-review-module-submit-error' => 'A message shown to a user in a Banner Notification if an unknown error happened.',
 
-	'content-review-module-enable-test-mode' => 'A text of a button which clicked enables user to test unreviewed changes made in JavaScript articles.',
-	'content-review-module-disable-test-mode' => 'A text of a button which clicked disables serving unreviewed JavaScript to a user.',
-
-	'content-review-test-mode-disable' => 'A text of a link that disables serving unreviewed JavaScript to a user. Shown in a Banner Notification.',
+	'content-review-test-mode-enable' => 'A text of a button which clicked enables user to test unreviewed changes made in JavaScript articles.',
+	'content-review-test-mode-disable' => 'A text of a link that disables serving unreviewed JavaScript to a user. Shown in a Banner Notification and right module.',
 	'content-review-test-mode-error' => 'A message shown if there was a problem with enabling the test mode to a user.',
 	'content-review-test-mode-enabled' => 'A message shown in Banner Notification with an information that a user is curently being served unreviewed JavaScript pages.',
 
@@ -135,8 +136,11 @@ $messages['qqq'] = [
 	'content-review-diff-toolbar-guidelines' => 'A text of a link to a page with guidelines for reviewers.',
 	'content-review-diff-toolbar-guidelines-url' => 'A URL of a page with guidelines for reviewers.',
 
+	'content-review-feedback-link-text' => 'Text on a link for providing feedback on script change being reviewed',
+	'content-review-rejection-explanation' => 'Standard explanation response when script changes were rejected. This text is a prefill to script talk page when reviewer is redirected there to provide feedback on rejection.',
+
 	'content-review-status-unreviewed' => 'A name of a status of a revision that has not yet been reviewed.',
 	'content-review-status-in-review' => 'A name of a status of a revision that is being reviewed.',
 	'content-review-status-approved' => 'A name of a status of a revision that has been approved.',
-	'content-review-status-rejected' => 'A name of a status of a revision that has been rejected.'
+	'content-review-status-rejected' => 'A name of a status of a revision that has been rejected.',
 ];

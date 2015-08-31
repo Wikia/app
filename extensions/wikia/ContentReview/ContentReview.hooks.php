@@ -7,12 +7,9 @@ use Wikia\ContentReview\Models\CurrentRevisionModel;
 class Hooks {
 
 	public static function onGetRailModuleList( Array &$railModuleList ) {
-		global $wgCityId, $wgTitle, $wgUser;
+		global $wgCityId, $wgTitle;
 
-		if ( $wgTitle->inNamespace( NS_MEDIAWIKI )
-			&& $wgTitle->isJsPage()
-			&& $wgTitle->userCan( 'edit', $wgUser )
-		) {
+		if ( self::userCanEditJsPage() ) {
 			$pageStatus = \F::app()->sendRequest(
 				'ContentReviewApiController',
 				'getPageStatus',
@@ -40,7 +37,7 @@ class Hooks {
 	}
 
 	public static function onBeforePageDisplay( \OutputPage $out, \Skin $skin ) {
-		if ( Helper::isContentReviewTestModeEnabled() ) {
+		if ( Helper::isContentReviewTestModeEnabled() || self::userCanEditJsPage() ) {
 			\Wikia::addAssetsToOutput( 'content_review_test_mode_js' );
 			\JSMessages::enqueuePackage( 'ContentReviewTestMode', \JSMessages::EXTERNAL );
 		}
@@ -97,5 +94,24 @@ class Hooks {
 		}
 
 		return true;
+	}
+
+	public static function onUserLogoutComplete( \User $user, &$injected_html, $oldName) {
+		$request = $user->getRequest();
+
+		$key = \ContentReviewApiController::CONTENT_REVIEW_TEST_MODE_KEY;
+		$wikis = $request->getSessionData( $key );
+
+		if ( !empty( $wikis ) ) {
+			$request->setSessionData( $key, null );
+		}
+
+		return true;
+	}
+
+	private static function userCanEditJsPage() {
+		global $wgTitle, $wgUser;
+
+		return $wgTitle->inNamespace( NS_MEDIAWIKI ) && $wgTitle->isJsPage() && $wgTitle->userCan( 'edit', $wgUser );
 	}
 }
