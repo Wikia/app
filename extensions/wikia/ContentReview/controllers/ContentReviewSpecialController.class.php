@@ -48,9 +48,11 @@ class ContentReviewSpecialController extends WikiaSpecialPageController {
 
 		foreach ( $reviewsRaw as $review ) {
 			$title = GlobalTitle::newFromID( $review['page_id'], $review['wiki_id'] );
+			$wiki = WikiFactory::getWikiByID( $review['wiki_id'] );
+
 			$review['url'] = $title->getFullURL();
 			$review['title'] = $title->getBaseText();
-			$review['wiki'] = $title->getDatabaseName();
+			$review['wiki'] = $wiki->city_title;
 			$review['user'] = User::newFromId( $review['submit_user_id'] )->getName();
 			$review['diff'] = $title->getFullURL( [
 				'diff' => $review['revision_id'],
