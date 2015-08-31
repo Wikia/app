@@ -189,7 +189,7 @@ class WikiaSendgridMailer {
 
 		// If for some reason we weren't called the way we expect, only cut off the call
 		// to this function and increase the amount of context we show
-		if ( !empty( $trace[4]['function'] ) && $trace[5]['function'] != 'wfRunHooks' ) {
+		if ( !empty( $trace[5]['function'] ) && $trace[5]['function'] != 'wfRunHooks' ) {
 			$removeCallsUpTo = 1;
 			$depth += 10;
 		}
