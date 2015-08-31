@@ -23,8 +23,6 @@ class CuratedContentHelper {
 	public static function shouldDisplayToolButton() {
 		global $wgEnableCuratedContentExt, $wgUser;
 
-		return true;
-
 		return self::$buttonEnabled && WikiaPageType::isMainPage() && self::isAllowedWikia()
 			&& !empty( $wgEnableCuratedContentExt ) && $wgUser->isAllowed( 'curatedcontent' );
 	}
