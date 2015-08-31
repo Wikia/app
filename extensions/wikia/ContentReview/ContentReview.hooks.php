@@ -62,6 +62,16 @@ class Hooks {
 			\Wikia::addAssetsToOutput( 'content_review_diff_page_js' );
 			\JSMessages::enqueuePackage( 'ContentReviewDiffPage', \JSMessages::EXTERNAL );
 
+			$feedbackLink = $helper->prepareProvideFeedbackLink( $wgTitle );
+			$output->prependHTML(
+				\Xml::element( 'a',
+					[
+						'href' => $feedbackLink
+					],
+					wfMessage( 'content-review-feedback-link-text' )->plain()
+				)
+			);
+
 			$output->prependHTML(
 				\Xml::element( 'button',
 					[
