@@ -74,11 +74,18 @@ WikiaEmoticons.doReplacements = function (text, emoticonMapping) {
 
 	$().log('Done processing emoticons.');
 	return text;
-}; // end doReplacements()
+};
 
 WikiaEmoticons.buildTagGenerator = function (imgSrc) {
 	return function (match, leading, tag, trailing) {
+		// Don't return any img tag if this is an external image
+		if (!imgSrc.match(/^http:\/\/[^\/]+wikia(?:-dev)?(.com|.nocookie.net)\//)) {
+			return '';
+		}
+
 		tag = mw.html.escape(tag);
+		imgSrc = mw.html.escape(imgSrc);
+
 		return (
 			leading +
 			' <img ' +
