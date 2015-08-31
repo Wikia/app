@@ -43,6 +43,8 @@ class AdEngine2ContextService {
 			// 1 of 7 verticals
 			$newWikiVertical = $wikiFactoryHub->getWikiVertical( $wg-CityId );
 			$newWikiVertical = !empty($newWikiVertical['short']) ? $newWikiVertical['short'] : 'error';
+
+			$newWikiCategories = $wikiFactoryHub->getWikiCategories( $wg->CityId );
 			return [
 				'opts' => $this->filterOutEmptyItems( [
 					'adsInContent' => $wg->EnableAdsInContent,
@@ -75,6 +77,7 @@ class AdEngine2ContextService {
 					'wikiIsTop1000' => $wg->AdDriverWikiIsTop1000,
 					'wikiLanguage' => $langCode,
 					'wikiVertical' => $newWikiVertical,
+					'newWikiCategories' => $this->stringifyCategories($newWikiCategories),
 				] ),
 				'providers' => $this->filterOutEmptyItems( [
 					'monetizationService' => $wg->AdDriverUseMonetizationService,
@@ -115,6 +118,17 @@ class AdEngine2ContextService {
 		}
 
 		return 'error';
+	}
+
+	private function stringifyCategories( $categories ) {
+		$out = '';
+
+		foreach($categories as $cat) {
+			$out .= $cat['cat_short'] . ',';
+		}
+		$out = rtrim($out, ',');
+
+		return $out;
 	}
 
 	private function filterOutEmptyItems( $input ) {
