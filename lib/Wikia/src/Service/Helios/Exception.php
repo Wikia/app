@@ -1,6 +1,6 @@
 <?php
 
-namespace Wikia\Helios;
+namespace Wikia\Service\Helios;
 
 /**
  * An exception class for the client.
@@ -37,12 +37,5 @@ class Exception extends \Exception
 
 	protected function logMe() {
 		// noop
-	}
-}
-
-class ClientException extends Exception
-{
-	protected function logMe() {
-		$this->error( 'HELIOS_CLIENT client_exception' );
 	}
 }

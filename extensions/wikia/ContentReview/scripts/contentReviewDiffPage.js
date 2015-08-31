@@ -27,9 +27,9 @@ define(
 			var	$button = $(this),
 				notification,
 				data = {
-					wikiId: $button.attr('data-wiki-id'),
-					pageId: $button.attr('data-page-id'),
-					status: $button.attr('data-status'),
+					wikiId: parseInt($button.attr('data-wiki-id')),
+					pageId: parseInt($button.attr('data-page-id')),
+					status: parseInt($button.attr('data-status')),
 					diff: diff,
 					oldid: oldid,
 					editToken: mw.user.tokens.get('editToken')

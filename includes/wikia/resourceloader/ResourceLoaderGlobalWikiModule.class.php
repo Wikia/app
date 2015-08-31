@@ -85,7 +85,7 @@ abstract class ResourceLoaderGlobalWikiModule extends ResourceLoaderWikiModule {
 	}
 
 	protected function getContent( $title, $titleText, $options = array() ) {
-		global $wgCityId;
+		global $wgCityId, $wgEnableContentReviewExt;
 		$content = null;
 
 		wfProfileIn(__METHOD__);
@@ -105,9 +105,19 @@ abstract class ResourceLoaderGlobalWikiModule extends ResourceLoaderWikiModule {
 		// Try to load the contents of an article before falling back to a message (BugId:45352)
 		// CE-1225 Load scripts from the MediaWiki namespace
 		} elseif ( WikiFactory::isWikiPrivate( $wgCityId ) == false || $title->getNamespace() == NS_MEDIAWIKI ) {
-			if ( isset( $options['revision'] ) ) {
-				$revision = Revision::newFromId( $options['revision'] );
-				if ( empty( $options['revision'] ) ) {
+			$revisionId = null;
+
+			if ( $wgEnableContentReviewExt ) {
+				$contentReviewHelper = new Wikia\ContentReview\Helper();
+
+				if ( $options['type'] === 'script' && !$contentReviewHelper->isContentReviewTestModeEnabled() ) {
+					$revisionId = $contentReviewHelper->getReviewedRevisionIdFromText( $titleText );
+				}
+			}
+
+			if ( !is_null( $revisionId ) ) {
+				$revision = Revision::newFromId( $revisionId );
+				if ( empty( $revisionId ) ) {
 					$content = '';
 				}
 			} else {
@@ -119,7 +129,7 @@ abstract class ResourceLoaderGlobalWikiModule extends ResourceLoaderWikiModule {
 			}
 
 			// Fall back to parent logic
-			if ( !$content && !isset( $options['revision'] ) ) {
+			if ( !is_string( $content ) && !isset( $options['revision'] ) ) {
 				$content = parent::getContent( $title, $options );
 			}
 		}

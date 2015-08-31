@@ -15,7 +15,13 @@
 $wgExtensionCredits['other'][] = [
 	'name'				=> 'Content Review',
 	'version'			=> '1.0',
-	'author'			=> 'Adam Karmiński',
+	'author'			=> [
+		'Adam Karmiński',
+		'Łukasz Konieczny',
+		'Kamil Koterba',
+		'Mariusz Czeszejko-Sochacki',
+		'Daniel Grunwell'
+	],
 	'url'               => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/ContentReview',
 	'descriptionmsg'    => 'content-review-desc',
 ];
@@ -32,7 +38,6 @@ $wgGroupPermissions['staff']['content-review'] = true;
  * Controllers
  */
 $wgAutoloadClasses['ContentReviewApiController'] = __DIR__ . '/controllers/ContentReviewApiController.class.php';
-$wgAutoloadClasses['ContentReviewSpecialController'] = __DIR__ . '/controllers/ContentReviewSpecialController.class.php';
 
 /**
  * Models
@@ -56,6 +61,7 @@ $wgHooks['BeforePageDisplay'][] = 'Wikia\ContentReview\Hooks::onBeforePageDispla
 $wgHooks['ArticleContentOnDiff'][] = 'Wikia\ContentReview\Hooks::onArticleContentOnDiff';
 $wgHooks['RawPageViewBeforeOutput'][] = 'Wikia\ContentReview\Hooks::onRawPageViewBeforeOutput';
 $wgHooks['SkinTemplateNavigation'][] = 'Wikia\ContentReview\Hooks::onSkinTemplateNavigation';
+$wgHooks['UserLogoutComplete'][] = 'Wikia\ContentReview\Hooks::onUserLogoutComplete';
 
 /**
  * Right rail module
@@ -67,21 +73,12 @@ $wgAutoloadClasses['ContentReviewModuleController'] = $IP . '/skins/oasis/module
  */
 $wgExtensionMessagesFiles['ContentReview'] = __DIR__ . '/ContentReview.i18n.php';
 
-/**
- * Special page
- */
-$wgSpecialPages['ContentReview'] = 'ContentReviewSpecialController';
-
 JSMessages::registerPackage( 'ContentReviewModule', [
 	'content-review-module-*'
 ] );
 
 JSMessages::registerPackage( 'ContentReviewTestMode', [
 	'content-review-test-mode-*'
-] );
-
-JSMessages::registerPackage( 'ContentReviewSpecialPage', [
-	'content-review-special-page-*'
 ] );
 
 JSMessages::registerPackage( 'ContentReviewDiffPage', [

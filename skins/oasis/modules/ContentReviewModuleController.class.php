@@ -23,7 +23,7 @@ class ContentReviewModuleController extends WikiaController {
 		Wikia::addAssetsToOutput( 'content_review_module_scss' );
 		JSMessages::enqueuePackage( 'ContentReviewModule', JSMessages::EXTERNAL );
 
-		$this->setVal( 'isTestModeEnabled', Helper::isContentReviewTestModeEnabled() );
+		$this->setVal( 'isTestModeEnabled', (new Helper)->isContentReviewTestModeEnabled() );
 
 		/*
 		 * This part allows fetches required params if not set. This allows direct usage via API
@@ -108,7 +108,7 @@ class ContentReviewModuleController extends WikiaController {
 		return $liveStatus;
 	}
 
-	public function prepareTemplateData( $status, $revisionId = null, $withReason = false ) {
+	protected function prepareTemplateData( $status, $revisionId = null, $withReason = false ) {
 		$templateData = [
 			'statusKey' => $status,
 			'message' => wfMessage( "content-review-module-status-{$status}" )->escaped(),
@@ -124,26 +124,21 @@ class ContentReviewModuleController extends WikiaController {
 		return $templateData;
 	}
 
-	public function createRevisionLink( $revisionId ) {
+	protected function createRevisionLink( $revisionId ) {
 		return Linker::linkKnown(
 			$this->getContext()->getTitle(),
 			"#{$revisionId}",
-			[
-				'target' => '_blank'
-			],
+			[],
 			[
 				'diff' => $revisionId,
 			]
 		);
 	}
 
-	public function createRevisionTalkpageLink( $revisionId ) {
+	protected function createRevisionTalkpageLink( $revisionId ) {
 		return Linker::linkKnown(
 			$this->getContext()->getTitle()->getTalkPage(),
-			wfMessage( 'content-review-rejection-reason-link' )->escaped(),
-			[
-				'target' => '_blank'
-			]
+			wfMessage( 'content-review-rejection-reason-link' )->escaped()
 		);
 	}
 }

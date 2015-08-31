@@ -390,6 +390,11 @@ describe('AdLogicPageParams', function () {
 		expect(params.pv).toBe('13');
 	});
 
+	it ('test showcase - s0 should be showcase', function () {
+		var params = getParams({}, {hostname:'showcase.gta.wikia.com'});
+		expect(params.s0).toBe('showcase');
+	});
+
 	it('getPageLevelParams ref param', function () {
 		var params;
 

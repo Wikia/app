@@ -6,9 +6,9 @@ CREATE TABLE content_review_status (
   revision_id     INT unsigned      NOT NULL,
   status          SMALLINT unsigned NOT NULL,
   submit_user_id  INT unsigned      NOT NULL,
-  submit_time     DATETIME          NOT NULL  DEFAULT CURRENT_TIMESTAMP,
+  submit_time     TIMESTAMP         NOT NULL  DEFAULT CURRENT_TIMESTAMP,
   review_user_id  INT unsigned      NULL,
-  review_start    DATETIME          NULL,
+  review_start    TIMESTAMP         NULL,
   UNIQUE KEY page_id (wiki_id, page_id, revision_id)
 ) ENGINE = INNODB CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 CREATE INDEX content_review_status_idx         ON content_review_status (status);
@@ -22,10 +22,10 @@ CREATE TABLE reviewed_content_logs (
   revision_id     INT unsigned      NOT NULL,
   status          SMALLINT unsigned NOT NULL,
   submit_user_id  INT unsigned      NOT NULL,
-  submit_time     DATETIME          NOT NULL,
+  submit_time     TIMESTAMP         NOT NULL DEFAULT 0,
   review_user_id  INT unsigned      NOT NULL,
-  review_start    DATETIME          NOT NULL,
-  review_end      DATETIME          NOT NULL  DEFAULT CURRENT_TIMESTAMP
+  review_start    TIMESTAMP         NOT NULL DEFAULT 0,
+  review_end      TIMESTAMP         NOT NULL  DEFAULT CURRENT_TIMESTAMP
 ) ENGINE = INNODB CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 
 -- Table current_reviewed_revisions
@@ -34,6 +34,6 @@ CREATE TABLE current_reviewed_revisions (
   wiki_id     INT unsigned NOT NULL,
   page_id     INT unsigned NOT NULL,
   revision_id INT unsigned NOT NULL,
-  touched     DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  touched     TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
   UNIQUE KEY page_id (wiki_id, page_id)
 ) ENGINE = INNODB CHARACTER SET utf8 COLLATE utf8_unicode_ci;

@@ -191,9 +191,9 @@ class ObjectSerializer
                 $values[] = $this->deserialize($value, $subClass);
             }
             $deserialized = $values;
-        } elseif ($class === 'DateTime') {
+        } elseif ($class === '\DateTime') {
             $deserialized = new \DateTime($data);
-        } elseif (in_array($class, array('string', 'int', 'float', 'double', 'bool', 'object'))) {
+        } elseif (in_array($class, array('void', 'bool', 'string', 'double', 'byte', 'mixed', 'integer', 'float', 'int', 'DateTime', 'number', 'boolean', 'object'))) {
             settype($data, $class);
             $deserialized = $data;
         } elseif ($class === '\SplFileObject') {

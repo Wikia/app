@@ -62,6 +62,8 @@ $wgHooks['TitleGetLangVariants'][] = 'Wikia::onTitleGetLangVariants';
 # don't purge all thumbs - PLATFORM-161
 $wgHooks['LocalFilePurgeThumbnailsUrls'][] = 'Wikia::onLocalFilePurgeThumbnailsUrls';
 
+$wgHooks['BeforePageDisplay'][] = 'Wikia::onBeforePageDisplay';
+
 /**
  * This class has only static methods so they can be used anywhere
  *
@@ -105,8 +107,12 @@ class Wikia {
 	public static function initAsyncRequest( $wikiId, $user = null ) {
 		$wg = F::app()->wg;
 		$wg->CityID = $wikiId;
-		$wg->DBname = WikiFactory::IDtoDB( $wikiId );
-		$wg->Server = trim( WikiFactory::DBtoUrl( $wg->DBname ), '/' );
+
+		// Do NOT set $wgDbname here.  The wfGetDB method will no longer do
+		// what you think it should since it pulls from a LoadBalance cache
+		// that likely already has cached DB handles for the previous value
+		$dbName = WikiFactory::IDtoDB( $wikiId );
+		$wg->Server = trim( WikiFactory::DBtoUrl( $dbName ), '/' );
 
 		if ( !empty( $wg->DevelEnvironment ) ) {
 			$wg->Server = WikiFactory::getLocalEnvURL( $wg->Server );
@@ -220,8 +226,7 @@ class Wikia {
      *
      * @return string composed HTML/XML code
      */
-    static public function errormsg($what)
-    {
+    static public function errormsg($what) {
         return Xml::element("span", array( "style"=> "color: #fe0000; font-weight: bold;"), $what);
     }
 
@@ -242,8 +247,7 @@ class Wikia {
      *
      * @return string composed HTML/XML code
      */
-    static public function linkTag($url, $title, $attribs = null )
-    {
+    static public function linkTag($url, $title, $attribs = null ) {
         return Xml::element("a", array( "href"=> $url), $title);
     }
 
@@ -260,8 +264,7 @@ class Wikia {
      *
      * @return string composed HTML/XML code
      */
-    static public function successmsg($what)
-    {
+    static public function successmsg($what) {
         return Xml::element("span", array( "style"=> "color: darkgreen; font-weight: bold;"), $what);
     }
 
@@ -1619,11 +1622,11 @@ class Wikia {
 			wfDebug("Wikia: using resource loader debug mode\n");
 		}
 
-		$wgUseSiteJs = $request->getBool( 'usesitejs', $wgUseSiteJs ) !== false;
-		$wgUseSiteCss = $request->getBool( 'usesitecss', $wgUseSiteCss ) !== false;
-		$wgAllowUserJs = $request->getBool( 'useuserjs',
+		$wgUseSiteJs = $wgUseSiteJs && $request->getBool( 'usesitejs', $wgUseSiteJs ) !== false;
+		$wgUseSiteCss = $wgUseSiteCss && $request->getBool( 'usesitecss', $wgUseSiteCss ) !== false;
+		$wgAllowUserJs = $wgAllowUserJs && $request->getBool( 'useuserjs',
 			$request->getBool( 'allowuserjs', $wgAllowUserJs ) ) !== false;
-		$wgAllowUserCss = $request->getBool( 'useusercss',
+		$wgAllowUserCss = $wgAllowUserCss && $request->getBool( 'useusercss',
 			$request->getBool( 'allowusercss', $wgAllowUserCss ) ) !== false;
 		$wgBuckySampling = $request->getInt( 'buckysampling', $wgBuckySampling );
 
@@ -2309,5 +2312,27 @@ class Wikia {
 		}
 
 		return $countryNames;
+	}
+
+	/**
+	 * Displays a warning when viewing site JS pages if JavaScript is disabled
+	 * on the wikia.
+	 *
+	 * @param  OutputPage $out  The OutputPage object
+	 * @param  Skin       $skin The Skin object that will be used to render the page.
+	 * @return boolean
+	 */
+	public static function onBeforePageDisplay( OutputPage $out, Skin $skin ) {
+		global $wgUseSiteJs;
+		$title = $out->getTitle();
+
+		if ( !$wgUseSiteJs && $title->isJsPage() ) {
+			\BannerNotificationsController::addConfirmation(
+				wfMessage( 'usesitejs-disabled-warning' )->escaped(),
+				\BannerNotificationsController::CONFIRMATION_NOTIFY
+			);
+		}
+
+		return true;
 	}
 }

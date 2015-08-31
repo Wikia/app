@@ -1144,6 +1144,11 @@ class LocalFile extends File {
 		try {
 			\VideoInfoHooksHelper::upsertVideoInfo( $this, $reupload );
 		} catch ( \Exception $e ) {
+			\Wikia\Logger\WikiaLogger::instance()->error('PLATFORM-1311', [
+				'reason' => 'LocalFile rollback',
+				'exception' => $e
+			]);
+
 			$dbw->rollback();
 			return false;
 		}
@@ -1536,6 +1541,12 @@ class LocalFile extends File {
 	 * Roll back the DB transaction and mark the image unlocked
 	 */
 	function unlockAndRollback() {
+		\Wikia\Logger\WikiaLogger::instance()->error('PLATFORM-1311', [
+			'reason' => 'LocalFile::unlockAndRollback',
+			'exception' => new Exception(),
+			'name' => $this->getName(),
+		]);
+
 		$this->locked = false;
 		$dbw = $this->repo->getMasterDB();
 		$dbw->rollback();

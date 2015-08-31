@@ -217,7 +217,8 @@ class ReviewModel extends ContentReviewBaseModel {
 			->WHERE( 'status' )->IN( self::CONTENT_REVIEW_STATUS_UNREVIEWED, self::CONTENT_REVIEW_STATUS_IN_REVIEW )
 			->ORDER_BY( ['submit_time', 'asc'], ['status', 'desc'] )
 			->runLoop( $db, function ( &$content, $row ) {
-				$content[$row->page_id][$row->status] = get_object_vars( $row );
+				$key = implode( ':', [ $row->wiki_id, $row->page_id, $row->status ] );
+				$content[$key] = get_object_vars( $row );
 			} );
 
 		return $content;

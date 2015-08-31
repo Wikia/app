@@ -30,6 +30,7 @@ $messages['en'] = array(
 	'wikiacuratedcontent-content-notsupportedtype-error' => 'This type is not supported',
 	'wikiacuratedcontent-content-nocategoryintag-error' => 'You can put only category here',
 	'wikiacuratedcontent-featured-section-name' => 'Featured Content',
+	'wikiacuratedcontent-edit-mobile-main-page' => 'Edit Mobile Main Page',
 );
 
 $messages['qqq'] = array(
@@ -61,6 +62,7 @@ $messages['qqq'] = array(
 	'wikiacuratedcontent-content-notsupportedtype-error' => 'Message shown to a user when he tries to save a item that have not supported type',
 	'wikiacuratedcontent-content-nocategoryintag-error' => 'Message shown to a user when he tries to save an item in simple tag that is not of type category',
 	'wikiacuratedcontent-featured-section-name' => 'Featured content section title',
+	'wikiacuratedcontent-edit-mobile-main-page' => 'Message on the button allowing to edit Mobile Main Page, visible on the main page',
 );
 
 $messages['ach'] = array(
