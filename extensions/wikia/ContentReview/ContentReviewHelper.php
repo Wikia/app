@@ -88,19 +88,6 @@ class Helper extends \ContextSource {
 		}
 	}
 
-	/**
-	 * Checks conditions required for showing review status panel to user
-	 * @param Title $title
-	 * @param User|null $user
-	 * @return bool
-	 */
-	public static function shouldShowReviewStatusPanel( \Title $title, $user = null ) {
-		return
-			$title->inNamespace( NS_MEDIAWIKI ) &&
-			$title->isJsPage() &&
-			$title->userCan( 'edit', $user );
-	}
-
 	public function isContentReviewTestModeEnabled() {
 		global $wgCityId;
 
