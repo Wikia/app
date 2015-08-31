@@ -1,9 +1,10 @@
 define(
 	'curatedContentTool.modal',
-	['wikia.ui.factory', 'curatedContentTool.pontoBridge'],
-	function (uiFactory, pontoBridge) {
+	['wikia.ui.factory', 'curatedContentTool.pontoBridge', 'JSMessages'],
+	function (uiFactory, pontoBridge, msg) {
 		'use strict';
-		var modalInstance;
+		var modalInstance,
+			closeWithoutConfirmation;
 
 		function open(title, content) {
 			uiFactory.init(['modal']).then(function (uiModal) {
@@ -14,12 +15,16 @@ define(
 						size: 'medium',
 						title: title,
 						content: content
+					},
+					confirmCloseModal: function () {
+						return closeWithoutConfirmation ||
+						confirm( msg('wikiacuratedcontent-close-modal-prompt-message') );
 					}
 				};
 
 				uiModal.createComponent(modalConfig, function (_modal) {
+					closeWithoutConfirmation = false;
 					modalInstance = _modal;
-
 					_modal.show();
 					pontoBridge.init(_modal.$content.find('#CuratedContentToolIframe')[0]);
 				});
@@ -27,6 +32,7 @@ define(
 		}
 
 		function close() {
+			closeWithoutConfirmation = true;
 			modalInstance.trigger('close');
 		}
 

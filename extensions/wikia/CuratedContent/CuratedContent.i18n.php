@@ -31,6 +31,7 @@ $messages['en'] = array(
 	'wikiacuratedcontent-content-nocategoryintag-error' => 'You can put only category here',
 	'wikiacuratedcontent-featured-section-name' => 'Featured Content',
 	'wikiacuratedcontent-edit-mobile-main-page' => 'Edit Mobile Main Page',
+	'wikiacuratedcontent-close-modal-prompt-message' => 'Are you sure you want to close this modal?'
 );
 
 $messages['qqq'] = array(
@@ -63,6 +64,7 @@ $messages['qqq'] = array(
 	'wikiacuratedcontent-content-nocategoryintag-error' => 'Message shown to a user when he tries to save an item in simple tag that is not of type category',
 	'wikiacuratedcontent-featured-section-name' => 'Featured content section title',
 	'wikiacuratedcontent-edit-mobile-main-page' => 'Message on the button allowing to edit Mobile Main Page, visible on the main page',
+	'wikiacuratedcontent-close-modal-prompt-message' => 'Message displayed in prompt when user hit X button and attempt to close modal'
 );
 
 $messages['ach'] = array(
