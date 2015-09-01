@@ -43,8 +43,6 @@ class AdEngine2ContextService {
 			// 1 of 7 verticals
 			$newWikiVertical = $wikiFactoryHub->getWikiVertical( $wg->CityId );
 			$newWikiVertical = !empty($newWikiVertical['short']) ? $newWikiVertical['short'] : 'error';
-
-			$newWikiCategories = $wikiFactoryHub->getWikiCategories( $wg->CityId );
 			return [
 				'opts' => $this->filterOutEmptyItems( [
 					'adsInContent' => $wg->EnableAdsInContent,
@@ -77,7 +75,7 @@ class AdEngine2ContextService {
 					'wikiIsTop1000' => $wg->AdDriverWikiIsTop1000,
 					'wikiLanguage' => $langCode,
 					'wikiVertical' => $newWikiVertical,
-					'newWikiCategories' => $this->stringifyCategories($newWikiCategories),
+					'newWikiCategories' => $this->getNewWikiCategories($wikiFactoryHub, $wg->CityId),
 				] ),
 				'providers' => $this->filterOutEmptyItems( [
 					'monetizationService' => $wg->AdDriverUseMonetizationService,
@@ -120,15 +118,21 @@ class AdEngine2ContextService {
 		return 'error';
 	}
 
-	private function stringifyCategories( $categories ) {
-		$out = '';
+	private function getNewWikiCategories(WikiFactoryHub $wikiFactoryHub, $cityId) {
+		$oldWikiCategories = $wikiFactoryHub->getWikiCategoryNames( $cityId, false );
+		$newWikiCategories = $wikiFactoryHub->getWikiCategoryNames( $cityId, true );
 
-		foreach($categories as $cat) {
-			$out .= $cat['cat_short'] . ',';
+		if( is_array($oldWikiCategories) && is_array($newWikiCategories) ) {
+			$wikiCategories = array_merge($oldWikiCategories, $newWikiCategories);
+		} else if ( is_array($oldWikiCategories) ) {
+			$wikiCategories = $oldWikiCategories;
+		} else if ( is_array($newWikiCategories) ) {
+			$wikiCategories = $newWikiCategories;
+		} else {
+			$wikiCategories = [];
 		}
-		$out = rtrim($out, ',');
 
-		return $out;
+		return $wikiCategories;
 	}
 
 	private function filterOutEmptyItems( $input ) {

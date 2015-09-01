@@ -238,6 +238,8 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 
 		params = {
 			s0: site,
+			s0v: targeting.wikiVertical,
+			s0c: targeting.newWikiCategories,
 			s1: zone1,
 			s2: zone2,
 			ab: getAb(),
