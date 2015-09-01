@@ -36,8 +36,7 @@ define(
 			method: 'enableTestMode',
 			data: data,
 			callback: function () {
-				var qs = new Querystring();
-				qs.addCb().goTo();
+				reloadPage();
 			},
 			onErrorCallback: function() {
 				showErrorMessage();
@@ -50,8 +49,7 @@ define(
 			controller: 'ContentReviewApiController',
 			method: 'disableTestMode',
 			callback: function () {
-				var qs = new Querystring();
-				qs.addCb().goTo();
+				reloadPage();
 			},
 			onErrorCallback: function() {
 				showErrorMessage();
@@ -86,6 +84,11 @@ define(
 		);
 
 		notification.show();
+	}
+
+	function reloadPage() {
+		var qs = new Querystring();
+		qs.addCb().goTo();
 	}
 
 	return {
