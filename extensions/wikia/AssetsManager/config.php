@@ -2549,6 +2549,7 @@ $config['content_review_module_monobook_js'] = [
 	'skin' => [ 'monobook' ],
 	'assets' => [
 		'//extensions/wikia/ContentReview/scripts/contentReviewModuleMonobook.run.js',
+		'//extensions/wikia/ContentReview/scripts/contentReviewModule.js',
 	]
 ];
 

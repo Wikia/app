@@ -103,6 +103,12 @@ require(
 		uiModal.createComponent(modalConfig, processInstance);
 	}
 
+	function initReviewSubmitButton() {
+		require(['ext.wikia.contentReview.module'], function (contentReviewModule) {
+			contentReviewModule.init();
+		});
+	}
+
 	/**
 	 * CreateComponent callback that finally shows modal
 	 * and binds submit action to Done button
@@ -137,6 +143,9 @@ require(
 
 		/* Show the modal */
 		modalInstance.show();
+
+		initReviewSubmitButton();
+
 		//track({
 		//	action: tracker.ACTIONS.IMPRESSION,
 		//	label: 'modal-shown'
