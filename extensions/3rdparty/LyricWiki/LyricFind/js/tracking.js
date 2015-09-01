@@ -10,7 +10,7 @@ require(['jquery','LyricFindTracker', 'wikia.log'], function($, tracker, log) {
 
 	// Track the view in GA/internal data warehouse.
 	Wikia.Tracker.track({
-		action: Wikia.Tracker.ACTIONS.VIEW,
+		action: Wikia.Tracker.ACTIONS.VIEW_LYRIC,
 		category: 'lyricView',
 		//label: 'lyricFindView',
 		trackingMethod: 'analytics'
