@@ -22,7 +22,7 @@ $messages['en'] = [
 
 	'content-review-rejection-reason-link' => 'Why?',
 
-	'content-review-module-help' => '[[Help:Custom Javascript|Help]]',
+	'content-review-module-help' => '[[Help:CSS and JS customization|Help]]',
 
 	'content-review-module-submit' => 'Submit for review',
 	'content-review-module-submit-success' => 'The changes have been successfully submitted for a review.',
@@ -57,7 +57,7 @@ $messages['en'] = [
 	'content-review-diff-approve-confirmation' => 'Reviewed code has been approved. Go back to [[w:c:dev:Special:ContentReview|Special:ContentReview]]',
 	'content-review-diff-reject-confirmation' => 'Reviewed code has been rejected. [$1 Provide feedback] or go back to [[w:c:dev:Special:ContentReview|Special:ContentReview]]',
 	'content-review-diff-page-error' => 'Something went wrong. Please try again later.',
-	'content-review-diff-already-done' => 'You are trying to add an changes to the revision that isn\'t "In review" stage.',
+	'content-review-diff-already-done' => 'You are trying to make changes to the revision that isn\'t in review anymore.',
 
 	'content-review-diff-toolbar-title' => 'Revision review',
 	'content-review-diff-toolbar-talkpage' => 'Talk page',
