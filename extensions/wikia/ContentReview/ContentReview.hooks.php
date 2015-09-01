@@ -20,7 +20,7 @@ class Hooks {
 				true
 			)->getData();
 
-			$railModuleList[1503] = [ 'ContentReviewModule', 'Render', [
+			$railModuleList[1403] = [ 'ContentReviewModule', 'Render', [
 				'pageStatus' => $pageStatus,
 				'latestRevisionId' => $wgTitle->getLatestRevID(),
 			] ];
