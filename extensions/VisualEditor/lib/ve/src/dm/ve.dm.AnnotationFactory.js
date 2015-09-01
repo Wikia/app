@@ -1,24 +1,24 @@
 /*!
  * VisualEditor DataModel AnnotationFactory class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 /**
  * DataModel annotation factory.
  *
  * @class
- * @extends OO.Factory
+ * @extends ve.dm.ModelFactory
  * @constructor
  */
 ve.dm.AnnotationFactory = function VeDmAnnotationFactory() {
 	// Parent constructor
-	OO.Factory.call( this );
+	ve.dm.AnnotationFactory.super.call( this );
 };
 
 /* Inheritance */
 
-OO.inheritClass( ve.dm.AnnotationFactory, OO.Factory );
+OO.inheritClass( ve.dm.AnnotationFactory, ve.dm.ModelFactory );
 
 /* Initialization */
 

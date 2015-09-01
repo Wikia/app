@@ -1,0 +1,23 @@
+{
+	"@metadata": {
+		"authors": [
+			"Basharh",
+			"Bishnu Saikia",
+			"Gitartha.bordoloi"
+		]
+	},
+	"visualeditor-annotationbutton-bold-tooltip": "গাঢ়",
+	"visualeditor-annotationbutton-italic-tooltip": "হেলনীয়া",
+	"visualeditor-annotationbutton-link-tooltip": "সংযোগ",
+	"visualeditor-formatdropdown-format-heading1": "শিৰোনাম ১",
+	"visualeditor-formatdropdown-format-heading2": "শিৰোনাম ২",
+	"visualeditor-formatdropdown-format-heading3": "শিৰোনাম ৩",
+	"visualeditor-formatdropdown-format-heading4": "শিৰোনাম ৪",
+	"visualeditor-formatdropdown-format-heading5": "শিৰোনাম ৫",
+	"visualeditor-formatdropdown-format-heading6": "শিৰোনাম ৬",
+	"visualeditor-formatdropdown-format-paragraph": "দফা",
+	"visualeditor-historybutton-undo-tooltip": "পূৰ্ববত কৰক",
+	"visualeditor-languageinspector-widget-changelang": "ভাষা সন্ধান কৰক",
+	"visualeditor-toolbar-format-tooltip": "পৰিচ্ছেদ সজাওক",
+	"visualeditor-toolbar-style-tooltip": "লিখাৰ শৈলী"
+}

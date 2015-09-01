@@ -1,7 +1,7 @@
 /*!
  * VisualEditor UserInterface LanguageInspector class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 /**
@@ -72,7 +72,9 @@ ve.ui.LanguageInspector.prototype.initialize = function () {
 	ve.ui.LanguageInspector.super.prototype.initialize.call( this );
 
 	// Properties
-	this.languageInput = new ve.ui.LanguageInputWidget( { $: this.$ } );
+	this.languageInput = new ve.ui.LanguageInputWidget( {
+		dialogManager: this.manager.getSurface().getDialogs()
+	} );
 
 	// Initialization
 	this.form.$element.append( this.languageInput.$element );

@@ -1,11 +1,12 @@
 /*!
  * VisualEditor tracking methods.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 ( function () {
-	var callbacks = $.Callbacks( 'memory' ), queue = [];
+	var callbacks = $.Callbacks( 'memory' ),
+		queue = [];
 
 	/**
 	 * Track an analytic event.
@@ -29,10 +30,8 @@
 	 * Register a handler for subset of analytic events, specified by topic
 	 *
 	 * Handlers will be called once for each tracked event, including any events that fired before the
-	 * handler was registered; 'this' is set to a plain object with a 'timeStamp' property indicating
-	 * the exact time at which the event fired, a string 'topic' property naming the event, and a
-	 * 'data' property which is an object of event-specific data. The event topic and event data are
-	 * also passed to the callback as the first and second arguments, respectively.
+	 * handler was registered, with the topic, event data payload, and event timestamp as the first,
+	 * second, and third arguments, respectively.
 	 *
 	 * @member ve
 	 * @param {string} topic Handle events whose name starts with this string prefix
@@ -46,7 +45,7 @@
 			for ( ; seen < queue.length; seen++ ) {
 				event = queue[ seen ];
 				if ( event.topic.indexOf( topic ) === 0 ) {
-					callback.call( event, event.topic, event.data );
+					callback( event.topic, event.data, event.timeStamp );
 				}
 			}
 		} );

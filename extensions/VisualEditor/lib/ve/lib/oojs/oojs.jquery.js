@@ -1,12 +1,12 @@
 /*!
- * OOjs v1.1.3 optimised for jQuery
+ * OOjs v1.1.9 optimised for jQuery
  * https://www.mediawiki.org/wiki/OOjs
  *
- * Copyright 2011-2014 OOjs Team and other contributors.
+ * Copyright 2011-2015 OOjs Team and other contributors.
  * Released under the MIT license
  * http://oojs.mit-license.org
  *
- * Date: 2014-11-17T19:17:29Z
+ * Date: 2015-08-25T21:35:29Z
  */
 ( function ( global ) {
 
@@ -22,7 +22,21 @@ var
 	oo = {},
 	// Optimisation: Local reference to Object.prototype.hasOwnProperty
 	hasOwn = oo.hasOwnProperty,
-	toString = oo.toString;
+	toString = oo.toString,
+	// Object.create() is impossible to fully polyfill, so don't require it
+	createObject = Object.create || ( function () {
+		// Reusable constructor function
+		function Empty() {}
+		return function ( prototype, properties ) {
+			var obj;
+			Empty.prototype = prototype;
+			obj = new Empty();
+			if ( properties && hasOwn.call( properties, 'constructor' ) ) {
+				obj.constructor = properties.constructor.value;
+			}
+			return obj;
+		};
+	} )();
 
 /* Class Methods */
 
@@ -88,7 +102,7 @@ oo.inheritClass = function ( targetFn, originFn ) {
 	// allows people to comply with their style guide.
 	targetFn['super'] = targetFn.parent = originFn;
 
-	targetFn.prototype = Object.create( originFn.prototype, {
+	targetFn.prototype = createObject( originFn.prototype, {
 		// Restore constructor property of targetFn
 		constructor: {
 			value: targetConstructor,
@@ -100,7 +114,7 @@ oo.inheritClass = function ( targetFn, originFn ) {
 
 	// Extend static properties - always initialize both sides
 	oo.initClass( originFn );
-	targetFn.static = Object.create( originFn.static );
+	targetFn.static = createObject( originFn.static );
 };
 
 /**
@@ -108,12 +122,12 @@ oo.inheritClass = function ( targetFn, originFn ) {
  *
  * The 'constructor' (whether implicit or explicit) is not copied over.
  *
- * This does not create inheritance to the origin. If inheritance is needed
- * use oo.inheritClass instead.
+ * This does not create inheritance to the origin. If you need inheritance,
+ * use OO.inheritClass instead.
  *
  * Beware: This can redefine a prototype property, call before setting your prototypes.
  *
- * Beware: Don't call before oo.inheritClass.
+ * Beware: Don't call before OO.inheritClass.
  *
  *     function Foo() {}
  *     function Context() {}
@@ -170,7 +184,7 @@ oo.mixinClass = function ( targetFn, originFn ) {
  *
  * @param {Object} obj
  * @param {Mixed...} [keys]
- * @returns obj[arguments[1]][arguments[2]].... or undefined
+ * @return obj[arguments[1]][arguments[2]].... or undefined
  */
 oo.getProp = function ( obj ) {
 	var i,
@@ -242,7 +256,7 @@ oo.setProp = function ( obj ) {
 oo.cloneObject = function ( origin ) {
 	var key, r;
 
-	r = Object.create( origin.constructor.prototype );
+	r = createObject( origin.constructor.prototype );
 
 	for ( key in origin ) {
 		if ( hasOwn.call( origin, key ) ) {
@@ -301,8 +315,12 @@ oo.compare = function ( a, b, asymmetrical ) {
 	a = a || {};
 	b = b || {};
 
+	if ( typeof a.nodeType === 'number' && typeof a.isEqualNode === 'function' ) {
+		return a.isEqualNode( b );
+	}
+
 	for ( k in a ) {
-		if ( !hasOwn.call( a, k ) || a[k] === undefined ) {
+		if ( !hasOwn.call( a, k ) || a[k] === undefined || a[k] === b[k] ) {
 			// Support es3-shim: Without the hasOwn filter, comparing [] to {} will be false in ES3
 			// because the shimmed "forEach" is enumerable and shows up in Array but not Object.
 			// Also ignore undefined values, because there is no conceptual difference between
@@ -319,7 +337,7 @@ oo.compare = function ( a, b, asymmetrical ) {
 				( aType === 'string' || aType === 'number' || aType === 'boolean' ) &&
 				aValue !== bValue
 			) ||
-			( aValue === Object( aValue ) && !oo.compare( aValue, bValue, asymmetrical ) ) ) {
+			( aValue === Object( aValue ) && !oo.compare( aValue, bValue, true ) ) ) {
 			return false;
 		}
 	}
@@ -429,6 +447,21 @@ oo.getHash.keySortReplacer = function ( key, val ) {
 	} else {
 		return val;
 	}
+};
+
+/**
+ * Get the unique values of an array, removing duplicates
+ *
+ * @param {Array} arr Array
+ * @return {Array} Unique values in array
+ */
+oo.unique = function ( arr ) {
+	return arr.reduce( function ( result, current ) {
+		if ( result.indexOf( current ) === -1 ) {
+			result.push( current );
+		}
+		return result;
+	}, [] );
 };
 
 /**
@@ -622,11 +655,11 @@ oo.isPlainObject = $.isPlainObject;
 	 */
 	oo.EventEmitter.prototype.once = function ( event, listener ) {
 		var eventEmitter = this,
-			listenerWrapper = function () {
-				eventEmitter.off( event, listenerWrapper );
-				listener.apply( eventEmitter, Array.prototype.slice.call( arguments, 0 ) );
+			wrapper = function () {
+				eventEmitter.off( event, wrapper );
+				return listener.apply( this, arguments );
 			};
-		return this.on( event, listenerWrapper );
+		return this.on( event, wrapper );
 	};
 
 	/**
@@ -679,20 +712,20 @@ oo.isPlainObject = $.isPlainObject;
 	/**
 	 * Emit an event.
 	 *
-	 * TODO: Should this be chainable? What is the usefulness of the boolean
-	 * return value here?
-	 *
 	 * @param {string} event Type of event
 	 * @param {Mixed} args First in a list of variadic arguments passed to event handler (optional)
-	 * @return {boolean} If event was handled by at least one listener
+	 * @return {boolean} Whether the event was handled by at least one listener
 	 */
 	oo.EventEmitter.prototype.emit = function ( event ) {
-		var i, len, binding, bindings, args, method;
+		var args = [],
+			i, len, binding, bindings, method;
 
 		if ( hasOwn.call( this.bindings, event ) ) {
 			// Slicing ensures that we don't get tripped up by event handlers that add/remove bindings
 			bindings = this.bindings[event].slice();
-			args = Array.prototype.slice.call( arguments, 1 );
+			for ( i = 1, len = arguments.length; i < len; i++ ) {
+				args.push( arguments[i] );
+			}
 			for ( i = 0, len = bindings.length; i < len; i++ ) {
 				binding = bindings[i];
 				if ( typeof binding.method === 'string' ) {
@@ -804,12 +837,18 @@ oo.mixinClass( oo.Registry, oo.EventEmitter );
  * @param {Mixed} data
  */
 
+/**
+ * @event unregister
+ * @param {string} name
+ * @param {Mixed} data Data removed from registry
+ */
+
 /* Methods */
 
 /**
  * Associate one or more symbolic names with some data.
  *
- * Only the base name will be registered, overriding any existing entry with the same base name.
+ * Any existing entry with the same name will be overridden.
  *
  * @param {string|string[]} name Symbolic name or list of symbolic names
  * @param {Mixed} data Data to associate with symbolic name
@@ -831,9 +870,31 @@ oo.Registry.prototype.register = function ( name, data ) {
 };
 
 /**
- * Get data for a given symbolic name.
+ * Remove one or more symbolic names from the registry
  *
- * Lookups are done using the base name.
+ * @param {string|string[]} name Symbolic name or list of symbolic names
+ * @fires unregister
+ * @throws {Error} Name argument must be a string or array
+ */
+oo.Registry.prototype.unregister = function ( name ) {
+	var i, len, data;
+	if ( typeof name === 'string' ) {
+		data = this.lookup( name );
+		if ( data !== undefined ) {
+			delete this.registry[name];
+			this.emit( 'unregister', name, data );
+		}
+	} else if ( Array.isArray( name ) ) {
+		for ( i = 0, len = name.length; i < len; i++ ) {
+			this.unregister( name[i] );
+		}
+	} else {
+		throw new Error( 'Name must be a string or array, cannot be a ' + typeof name );
+	}
+};
+
+/**
+ * Get data for a given symbolic name.
  *
  * @param {string} name Symbolic name
  * @return {Mixed|undefined} Data associated with symbolic name
@@ -844,6 +905,8 @@ oo.Registry.prototype.lookup = function ( name ) {
 	}
 };
 
+/*global createObject */
+
 /**
  * @class OO.Factory
  * @extends OO.Registry
@@ -851,10 +914,8 @@ oo.Registry.prototype.lookup = function ( name ) {
  * @constructor
  */
 oo.Factory = function OoFactory() {
+	// Parent constructor
 	oo.Factory.parent.call( this );
-
-	// Properties
-	this.entries = [];
 };
 
 /* Inheritance */
@@ -889,9 +950,31 @@ oo.Factory.prototype.register = function ( constructor ) {
 	if ( typeof name !== 'string' || name === '' ) {
 		throw new Error( 'Name must be a string and must not be empty' );
 	}
-	this.entries.push( name );
 
+	// Parent method
 	oo.Factory.parent.prototype.register.call( this, name, constructor );
+};
+
+/**
+ * Unregister a constructor from the factory.
+ *
+ * @param {Function} constructor Constructor to unregister
+ * @throws {Error} Name must be a string and must not be empty
+ * @throws {Error} Constructor must be a function
+ */
+oo.Factory.prototype.unregister = function ( constructor ) {
+	var name;
+
+	if ( typeof constructor !== 'function' ) {
+		throw new Error( 'constructor must be a function, cannot be a ' + typeof constructor );
+	}
+	name = constructor.static && constructor.static.name;
+	if ( typeof name !== 'string' || name === '' ) {
+		throw new Error( 'Name must be a string and must not be empty' );
+	}
+
+	// Parent method
+	oo.Factory.parent.prototype.unregister.call( this, name );
 };
 
 /**
@@ -906,7 +989,8 @@ oo.Factory.prototype.register = function ( constructor ) {
  * @throws {Error} Unknown object name
  */
 oo.Factory.prototype.create = function ( name ) {
-	var args, obj,
+	var obj, i,
+		args = [],
 		constructor = this.lookup( name );
 
 	if ( !constructor ) {
@@ -914,14 +998,16 @@ oo.Factory.prototype.create = function ( name ) {
 	}
 
 	// Convert arguments to array and shift the first argument (name) off
-	args = Array.prototype.slice.call( arguments, 1 );
+	for ( i = 1; i < arguments.length; i++ ) {
+		args.push( arguments[i] );
+	}
 
 	// We can't use the "new" operator with .apply directly because apply needs a
 	// context. So instead just do what "new" does: create an object that inherits from
 	// the constructor's prototype (which also makes it an "instanceof" the constructor),
 	// then invoke the constructor with the object as context, and return it (ignoring
 	// the constructor's return value).
-	obj = Object.create( constructor.prototype );
+	obj = createObject( constructor.prototype );
 	constructor.apply( obj, args );
 	return obj;
 };

@@ -1,7 +1,7 @@
 /*!
  * VisualEditor DataModel Node tests.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 QUnit.module( 've.dm.Node' );
@@ -106,10 +106,10 @@ QUnit.test( 'detach', 2, function ( assert ) {
 
 QUnit.test( 'canBeMergedWith', 4, function ( assert ) {
 	var node1 = new ve.dm.LeafNodeStub(),
-		node2 = new ve.dm.BranchNodeStub( {}, [node1] ),
-		node3 = new ve.dm.BranchNodeStub( {}, [node2] ),
+		node2 = new ve.dm.BranchNodeStub( {}, [ node1 ] ),
+		node3 = new ve.dm.BranchNodeStub( {}, [ node2 ] ),
 		node4 = new ve.dm.LeafNodeStub(),
-		node5 = new ve.dm.BranchNodeStub( {}, [node4] );
+		node5 = new ve.dm.BranchNodeStub( {}, [ node4 ] );
 
 	assert.strictEqual( node3.canBeMergedWith( node5 ), true, 'same level, same type' );
 	assert.strictEqual( node2.canBeMergedWith( node5 ), false, 'different level, same type' );
@@ -187,52 +187,12 @@ QUnit.test( 'getClonedElement', function ( assert ) {
 					type: 'foo'
 				},
 				msg: 'internal property is removed if it only contained .generated'
-			},
-			{
-				original: {
-					type: 'foo',
-					internal: {
-						generated: 'wrapper',
-						whitespace: [ undefined, ' ' ]
-					},
-					attributes: {
-						bar: 'baz'
-					},
-					htmlAttributes: [
-						{
-							keys: [ 'typeof', 'href' ],
-							values: {
-								typeof: 'Foo',
-								href: 'Bar'
-							}
-						}
-					]
-				},
-				clone: {
-					type: 'foo',
-					internal: {
-						whitespace: [ undefined, ' ' ]
-					},
-					attributes: {
-						bar: 'baz'
-					},
-					htmlAttributes: [
-						{
-							keys: [ 'typeof', 'href' ],
-							values: {
-								typeof: 'Foo',
-								href: 'Bar'
-							}
-						}
-					]
-				},
-				msg: 'internal.generated is removed but not htmlAttributes'
 			}
 		];
 	QUnit.expect( cases.length );
 
 	for ( i = 0; i < cases.length; i++ ) {
-		node = new ve.dm.NodeStub( cases[i].original );
-		assert.deepEqual( node.getClonedElement( cases[i].preserveGenerated ), cases[i].clone, cases[i].msg );
+		node = new ve.dm.NodeStub( cases[ i ].original );
+		assert.deepEqual( node.getClonedElement( cases[ i ].preserveGenerated ), cases[ i ].clone, cases[ i ].msg );
 	}
 } );

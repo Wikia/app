@@ -1,7 +1,7 @@
 /*!
  * VisualEditor UserInterface FormatTool classes.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 /**
@@ -28,6 +28,8 @@ OO.inheritClass( ve.ui.FormatTool, ve.ui.Tool );
 
 /* Static Properties */
 
+ve.ui.FormatTool.static.deactivateOnSelect = false;
+
 /**
  * Format the tool applies.
  *
@@ -45,15 +47,9 @@ ve.ui.FormatTool.static.format = null;
 /**
  * @inheritdoc
  */
-ve.ui.FormatTool.prototype.onSelect = function () {
-	ve.track( 'tool.format.select', { name: this.constructor.static.name } );
-	ve.ui.Tool.prototype.onSelect.apply( this, arguments );
-};
-
-/**
- * @inheritdoc
- */
 ve.ui.FormatTool.prototype.onUpdateState = function ( fragment ) {
+	var i, len, nodes, all, cells, selection, format;
+
 	// Parent method
 	ve.ui.FormatTool.super.prototype.onUpdateState.apply( this, arguments );
 
@@ -66,15 +62,14 @@ ve.ui.FormatTool.prototype.onUpdateState = function ( fragment ) {
 
 	this.toggle( true );
 
-	var i, len, nodes, all, cells,
-		selection = fragment.getSelection(),
-		format = this.constructor.static.format;
+	selection = fragment.getSelection();
+	format = this.constructor.static.format;
 
 	if ( selection instanceof ve.dm.LinearSelection ) {
 		nodes = fragment.getSelectedLeafNodes();
 		all = !!nodes.length;
 		for ( i = 0, len = nodes.length; i < len; i++ ) {
-			if ( !nodes[i].hasMatchingAncestor( format.type, format.attributes ) ) {
+			if ( !nodes[ i ].hasMatchingAncestor( format.type, format.attributes ) ) {
 				all = false;
 				break;
 			}
@@ -83,7 +78,7 @@ ve.ui.FormatTool.prototype.onUpdateState = function ( fragment ) {
 		cells = selection.getMatrixCells();
 		all = true;
 		for ( i = cells.length - 1; i >= 0; i-- ) {
-			if ( !cells[i].node.matches( format.type, format.attributes ) ) {
+			if ( !cells[ i ].node.matches( format.type, format.attributes ) ) {
 				all = false;
 				break;
 			}

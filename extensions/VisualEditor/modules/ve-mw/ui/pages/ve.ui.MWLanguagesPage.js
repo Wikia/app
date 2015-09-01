@@ -1,7 +1,7 @@
 /*!
  * VisualEditor user interface MWLanguagesPage class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2015 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -21,14 +21,13 @@ ve.ui.MWLanguagesPage = function VeUiMWLanguagesPage( name, config ) {
 
 	// Properties
 	this.languagesFieldset = new OO.ui.FieldsetLayout( {
-		$: this.$,
 		label: ve.msg( 'visualeditor-dialog-meta-languages-label' ),
-		icon: 'language'
+		icon: 'textLanguage'
 	} );
 
 	// Initialization
 	this.languagesFieldset.$element.append(
-		this.$( '<span>' )
+		$( '<span>' )
 			.text( ve.msg( 'visualeditor-dialog-meta-languages-readonlynote' ) )
 	);
 	this.$element.append( this.languagesFieldset.$element );
@@ -51,48 +50,50 @@ ve.ui.MWLanguagesPage.prototype.setOutlineItem = function ( outlineItem ) {
 
 	if ( this.outlineItem ) {
 		this.outlineItem
-			.setIcon( 'language' )
+			.setIcon( 'textLanguage' )
 			.setLabel( ve.msg( 'visualeditor-dialog-meta-languages-section' ) );
 	}
 };
 
 ve.ui.MWLanguagesPage.prototype.onLoadLanguageData = function ( languages ) {
-	var i, $languagesTable = this.$( '<table>' ), languageslength = languages.length;
+	var i,
+		$languagesTable = $( '<table>' ),
+		languageslength = languages.length;
 
 	$languagesTable
 		.addClass( 've-ui-mwLanguagesPage-languages-table' )
-		.append( this.$( '<tr>' )
+		.append( $( '<tr>' )
 			.append(
-				this.$( '<th>' )
+				$( '<th>' )
 					.append( ve.msg( 'visualeditor-dialog-meta-languages-code-label' ) )
 			)
 			.append(
-				this.$( '<th>' )
+				$( '<th>' )
 					.append( ve.msg( 'visualeditor-dialog-meta-languages-name-label' ) )
 			)
 			.append(
-				this.$( '<th>' )
+				$( '<th>' )
 					.append( ve.msg( 'visualeditor-dialog-meta-languages-link-label' ) )
 			)
 		);
 
 	for ( i = 0; i < languageslength; i++ ) {
-		languages[i].safelang = languages[i].lang;
-		languages[i].dir = 'auto';
+		languages[ i ].safelang = languages[ i ].lang;
+		languages[ i ].dir = 'auto';
 		if ( $.uls ) {
 			// site codes don't always represent official language codes
 			// using real language code instead of a dummy ('redirect' in ULS' terminology)
-			languages[i].safelang = $.uls.data.isRedirect( languages[i].lang ) || languages[i].lang;
-			languages[i].dir = ve.init.platform.getLanguageDirection( languages[i].safelang );
+			languages[ i ].safelang = $.uls.data.isRedirect( languages[ i ].lang ) || languages[ i ].lang;
+			languages[ i ].dir = ve.init.platform.getLanguageDirection( languages[ i ].safelang );
 		}
 		$languagesTable
-			.append( this.$( '<tr>' )
-				.append( this.$( '<td>' ).text( languages[i].lang ) )
-				.append( this.$( '<td>' ).text( languages[i].langname ).add(
-						this.$( '<td>' ).text( languages[i].title )
+			.append( $( '<tr>' )
+				.append( $( '<td>' ).text( languages[ i ].lang ) )
+				.append( $( '<td>' ).text( languages[ i ].langname ).add(
+						$( '<td>' ).text( languages[ i ].title )
 					)
-					.attr( 'lang', languages[i].safelang )
-					.attr( 'dir', languages[i].dir ) )
+					.attr( 'lang', languages[ i ].safelang )
+					.attr( 'dir', languages[ i ].dir ) )
 			);
 	}
 
@@ -108,9 +109,9 @@ ve.ui.MWLanguagesPage.prototype.onAllLanguageItemsSuccess = function ( deferred,
 	if ( langlinks ) {
 		for ( i = 0, iLen = langlinks.length; i < iLen; i++ ) {
 			languages.push( {
-				lang: langlinks[i].lang,
-				langname: langlinks[i].langname,
-				title: langlinks[i]['*'],
+				lang: langlinks[ i ].lang,
+				langname: langlinks[ i ].langname,
+				title: langlinks[ i ][ '*' ],
 				metaItem: null
 			} );
 		}
@@ -122,7 +123,7 @@ ve.ui.MWLanguagesPage.prototype.onAllLanguageItemsSuccess = function ( deferred,
  * Gets language item from meta list item
  *
  * @param {ve.dm.MWLanguageMetaItem} metaItem
- * @returns {Object} item
+ * @return {Object} item
  */
 ve.ui.MWLanguagesPage.prototype.getLanguageItemFromMetaListItem = function ( metaItem ) {
 	// TODO: get real values from metaItem once Parsoid actually provides them - bug 48970
@@ -137,7 +138,7 @@ ve.ui.MWLanguagesPage.prototype.getLanguageItemFromMetaListItem = function ( met
 /**
  * Get array of language items from meta list
  *
- * @returns {Object[]} items
+ * @return {Object[]} items
  */
 ve.ui.MWLanguagesPage.prototype.getLocalLanguageItems = function () {
 	var i,
@@ -148,7 +149,7 @@ ve.ui.MWLanguagesPage.prototype.getLocalLanguageItems = function () {
 	// Loop through MWLanguages and build out items
 
 	for ( i = 0; i < languageslength; i++ ) {
-		items.push( this.getLanguageItemFromMetaListItem( languages[i] ) );
+		items.push( this.getLanguageItemFromMetaListItem( languages[ i ] ) );
 	}
 	return items;
 };
@@ -156,12 +157,12 @@ ve.ui.MWLanguagesPage.prototype.getLocalLanguageItems = function () {
 /**
  * Get array of language items from meta list
  *
- * @returns {jQuery.Promise}
+ * @return {jQuery.Promise}
  */
 ve.ui.MWLanguagesPage.prototype.getAllLanguageItems = function () {
 	var deferred = $.Deferred();
 	// TODO: Detect paging token if results exceed limit
-	ve.init.target.constructor.static.apiRequest( {
+	new mw.Api().get( {
 		action: 'visualeditor',
 		paction: 'getlanglinks',
 		page: mw.config.get( 'wgPageName' )

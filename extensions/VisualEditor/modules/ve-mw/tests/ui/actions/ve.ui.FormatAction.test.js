@@ -1,11 +1,11 @@
 /*!
  * VisualEditor UserInterface Actions FormatAction tests.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2015 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
-QUnit.module( 've.ui.FormatAction' );
+QUnit.module( 've.ui.FormatAction (MW)', ve.test.utils.mwEnvironment );
 
 /* Tests */
 
@@ -67,6 +67,6 @@ QUnit.test( 'convert (MW-specific types)', function ( assert ) {
 
 	QUnit.expect( cases.length * 4 );
 	for ( i = 0; i < cases.length; i++ ) {
-		ve.test.utils.runFormatConverterTest( assert, cases[i].range, cases[i].type, cases[i].attributes, cases[i].expectedRange, cases[i].expectedData, cases[i].msg );
+		ve.test.utils.runFormatConverterTest( assert, cases[ i ].range, cases[ i ].type, cases[ i ].attributes, cases[ i ].expectedRange, cases[ i ].expectedData, cases[ i ].msg );
 	}
 } );

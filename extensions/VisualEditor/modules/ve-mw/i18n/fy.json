@@ -5,11 +5,18 @@
 			"Robin0van0der0vliet"
 		]
 	},
+	"tooltip-ca-ve-edit": "Dizze side mei fisuele tekstferwurker bewurkje",
+	"visualeditor-beta-appendix": "bêta",
+	"visualeditor-beta-label": "bêta",
+	"visualeditor-ca-createsource": "Boarnekoade oanmeitsje",
 	"visualeditor-ca-editsource": "Boarne bewurkje",
+	"visualeditor-ca-editsource-section": "boarne bewurkje",
 	"visualeditor-categories-tool": "Kategoryen",
+	"visualeditor-descriptionpagelink": "Project:Fisuele tekstferwurker",
 	"visualeditor-dialog-beta-welcome-action-continue": "Fierder",
 	"visualeditor-dialog-beta-welcome-content": "Hjir kinsto yn 'e kunde reitsje mei ús nije en simpele wize fan bewurkjen. Do sjochst no nei de beta-ferzje. Dêrom is it mooglik datsto net alle dielen fan dizze side bewurkje kinst. It is ek mooglik datsto earne fêstrinst en dat wy dêr earst noch nei sjen moatte. Wy soenen it tige wurdearje datsto dyn feroaringen goed neisjochst en melding makkest as de VisualEditor nuvere setten docht (foar it jaan fan feedback kliksto op \"{{int:visualeditor-help-tool}}\"). Do kinst de âlde tekstbewurker ek noch brûken asto op it tabblêd \"$1\" klikst.",
 	"visualeditor-dialog-beta-welcome-title": "{{GENDER:$1|Wolkom}} by de fisuele tekstbewurker",
+	"visualeditor-dialog-media-position-none": "Gjin",
 	"visualeditor-dialog-media-title": "Media ynstellingen",
 	"visualeditor-dialog-meta-categories-category": "Kategory",
 	"visualeditor-dialog-meta-categories-data-label": "Kategoryen",
@@ -24,7 +31,7 @@
 	"visualeditor-dialog-meta-languages-section": "Talen",
 	"visualeditor-dialog-meta-settings-index-disable": "Nee",
 	"visualeditor-dialog-meta-settings-index-force": "Ja",
-	"visualeditor-dialog-meta-settings-label": "Side-ynstellings",
+	"visualeditor-dialog-meta-settings-label": "Side-ynstellingen",
 	"visualeditor-dialog-meta-settings-newsectioneditlink-disable": "Nee",
 	"visualeditor-dialog-meta-settings-newsectioneditlink-force": "Ja",
 	"visualeditor-dialog-meta-title": "Opsjes",
@@ -41,11 +48,10 @@
 	"visualeditor-meta-tool": "Opsjes",
 	"visualeditor-mweditmodesource-warning-cancel": "Annulearje",
 	"visualeditor-savedialog-label-error": "Flater",
-	"visualeditor-savedialog-label-save": "Fêstlizze",
+	"visualeditor-savedialog-label-save": "Side bewarje",
 	"visualeditor-savedialog-label-warning": "Warskôging",
 	"visualeditor-savedialog-title-conflict": "Konflikt",
 	"visualeditor-savedialog-title-nochanges": "Gjin feroaringen sjen litte",
-	"visualeditor-toolbar-savedialog": "Fêstlizze",
-	"visualeditor-version-label": "Ferzje",
-	"visualeditor-dialog-media-insert-title": "Media ynfoegje"
+	"visualeditor-toolbar-savedialog": "Side bewarje",
+	"visualeditor-version-label": "Ferzje"
 }

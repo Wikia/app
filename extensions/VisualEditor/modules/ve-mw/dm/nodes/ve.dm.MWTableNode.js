@@ -1,7 +1,7 @@
 /*!
  * VisualEditor DataModel MWTable class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2015 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -35,18 +35,19 @@ OO.mixinClass( ve.dm.MWTableNode, ve.dm.ClassAttributeNode );
 ve.dm.MWTableNode.static.name = 'mwTable';
 
 ve.dm.MWTableNode.static.classAttributes = {
-	'article-table': { 'article-table': true },
+	wikitable: { wikitable: true },
 	sortable: { sortable: true }
 };
 
 // HACK: users of parentNodeTypes should be fixed to check for inherited classes.
 ve.dm.TableSectionNode.static.parentNodeTypes.push( 'mwTable' );
 ve.dm.TableCaptionNode.static.parentNodeTypes.push( 'mwTable' );
+ve.dm.TableRowNode.static.childNodeTypes.push( 'mwTransclusionTableCell' );
 
 ve.dm.MWTableNode.static.toDataElement = function ( domElements ) {
 	var attributes = {},
 		dataElement = { type: this.name },
-		classAttr = domElements[0].getAttribute( 'class' );
+		classAttr = domElements[ 0 ].getAttribute( 'class' );
 
 	this.setClassAttributes( attributes, classAttr );
 

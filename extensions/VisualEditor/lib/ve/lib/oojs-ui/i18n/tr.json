@@ -8,11 +8,20 @@
 			"Rapsar",
 			"Talha Samil Cakir",
 			"TurkishStyles",
-			"Sayginer"
+			"Sayginer",
+			"Meelo"
 		]
 	},
 	"ooui-outline-control-move-down": "Ögeyi aşağı taşı",
 	"ooui-outline-control-move-up": "Ögeyi yukarı taşı",
-	"ooui-toolbar-more": "Daha fazla",
-	"ooui-dialog-process-retry": "Tekrar dene"
+	"ooui-outline-control-remove": "Ögeyi kaldır",
+	"ooui-toolbar-more": "Dahası",
+	"ooui-toolgroup-expand": "Dahası",
+	"ooui-toolgroup-collapse": "Daha az",
+	"ooui-dialog-message-accept": "Tamam",
+	"ooui-dialog-message-reject": "İptal",
+	"ooui-dialog-process-error": "Bir şeyler yanlış gitti",
+	"ooui-dialog-process-dismiss": "Kapat",
+	"ooui-dialog-process-retry": "Tekrar dene",
+	"ooui-dialog-process-continue": "Devam et"
 }

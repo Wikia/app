@@ -1,7 +1,7 @@
 /*!
  * VisualEditor ModelRegistry class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 ( function ( ve ) {
 
@@ -51,34 +51,64 @@
 	 *
 	 * @private
 	 * @param {Object} obj Object the array resides in
-	 * @param {string...} keys
+	 * @param {...string} keys
 	 * @param {Mixed} value
 	 */
 	function addType( obj ) {
-		var i, len, o = obj;
-		for ( i = 1, len = arguments.length - 2; i < len; i++ ) {
-			if ( o[arguments[i]] === undefined ) {
-				o[arguments[i]] = {};
+		var i, len,
+			keys = Array.prototype.slice.call( arguments, 1, -1 ),
+			value = arguments[ arguments.length - 1 ],
+			o = obj;
+
+		for ( i = 0, len = keys.length - 1; i < len; i++ ) {
+			if ( o[ keys[ i ] ] === undefined ) {
+				o[ keys[ i ] ] = {};
 			}
-			o = o[arguments[i]];
+			o = o[ keys[ i ] ];
 		}
-		if ( o[arguments[i]] === undefined ) {
-			o[arguments[i]] = [];
+		o[ keys[ i ] ] = o[ keys[ i ] ] || [];
+		o[ keys[ i ] ].unshift( value );
+	}
+
+	/**
+	 * Helper function for unregister().
+	 *
+	 * Same arguments as addType, except removes the type from the list.
+	 *
+	 * @private
+	 * @param {Object} obj Object the array resides in
+	 * @param {...string} keys
+	 * @param {Mixed} value to remove
+	 */
+	function removeType( obj ) {
+		var index,
+			keys = Array.prototype.slice.call( arguments, 1, -1 ),
+			value = arguments[ arguments.length - 1 ],
+			arr = ve.getProp.apply( obj, [ obj ].concat( keys ) );
+
+		if ( arr ) {
+			index = arr.indexOf( value );
+			if ( index !== -1 ) {
+				arr.splice( index, 1 );
+			}
+			// TODO: Prune empty array and empty containing objects
 		}
-		o[arguments[i]].unshift( arguments[i + 1] );
 	}
 
 	/* Public methods */
 
 	/**
 	 * Register a model type.
-	 * @param {string} name Symbolic name for the model
+	 *
 	 * @param {ve.dm.Model} constructor Subclass of ve.dm.Model
+	 * @throws Model names must be strings and must not be empty
 	 * @throws Models must be subclasses of ve.dm.Model
 	 * @throws No factory associated with this ve.dm.Model subclass
 	 */
 	ve.dm.ModelRegistry.prototype.register = function ( constructor ) {
-		var i, j, tags, types, name = constructor.static && constructor.static.name;
+		var i, j, tags, types,
+			name = constructor.static && constructor.static.name;
+
 		if ( typeof name !== 'string' || name === '' ) {
 			throw new Error( 'Model names must be strings and must not be empty' );
 		}
@@ -96,8 +126,9 @@
 		} else {
 			throw new Error( 'No factory associated with this ve.dm.Model subclass' );
 		}
+
 		// Parent method
-		OO.Registry.prototype.register.call( this, name, constructor );
+		ve.dm.ModelRegistry.super.prototype.register.call( this, name, constructor );
 
 		tags = constructor.static.matchTagNames === null ?
 			[ '' ] :
@@ -109,54 +140,87 @@
 		for ( i = 0; i < tags.length; i++ ) {
 			// +!!foo is a shorter equivalent of Number( Boolean( foo ) ) or foo ? 1 : 0
 			addType( this.modelsByTag, +!!constructor.static.matchFunction,
-				tags[i], name
+				tags[ i ], name
 			);
 		}
 		for ( i = 0; i < types.length; i++ ) {
-			if ( types[i] instanceof RegExp ) {
+			if ( types[ i ] instanceof RegExp ) {
+				// TODO: Guard against running this again during subsequent
+				// iterations of the for loop
 				addType( this.modelsWithTypeRegExps, +!!constructor.static.matchFunction, name );
 			} else {
 				for ( j = 0; j < tags.length; j++ ) {
 					addType( this.modelsByTypeAndTag,
-						+!!constructor.static.matchFunction, types[i], tags[j], name
+						+!!constructor.static.matchFunction, types[ i ], tags[ j ], name
 					);
 				}
 			}
 		}
 
-		this.registrationOrder[name] = this.nextNumber++;
+		this.registrationOrder[ name ] = this.nextNumber++;
 	};
 
 	/**
-	 * Register an extension-specific RDFa type or set of types. Unrecognized extension-specific types
-	 * skip non-type matches and are alienated.
+	 * Unregister a model type.
 	 *
-	 * If a DOM node has RDFa types that are extension-specific, any matches that do not involve one of
-	 * those extension-specific types will be ignored. This means that if 'bar' is an
-	 * extension-specific type, and there are no models specifying 'bar' in their .matchRdfaTypes, then
-	 * `<foo typeof="bar baz">` will not match anything, not even a model with .matchTagNames=['foo']
-	 * or one with .matchRdfaTypes=['baz'] .
-	 *
-	 * @param {string|RegExp} type Type, or regex matching types, to designate as extension-specifics
+	 * @param {ve.dm.Model} constructor Subclass of ve.dm.Model
+	 * @throws Model names must be strings and must not be empty
+	 * @throws Models must be subclasses of ve.dm.Model
+	 * @throws No factory associated with this ve.dm.Model subclass
 	 */
-	ve.dm.ModelRegistry.prototype.registerExtensionSpecificType = function ( type ) {
-		this.extSpecificTypes.push( type );
-	};
+	ve.dm.ModelRegistry.prototype.unregister = function ( constructor ) {
+		var i, j, tags, types,
+			name = constructor.static && constructor.static.name;
 
-	/**
-	 * Checks whether a given type matches one of the registered extension-specific types.
-	 * @param {string} type Type to check
-	 * @returns {boolean} Whether type is extension-specific
-	 */
-	ve.dm.ModelRegistry.prototype.isExtensionSpecificType = function ( type ) {
-		var i, len, t;
-		for ( i = 0, len = this.extSpecificTypes.length; i < len; i++ ) {
-			t = this.extSpecificTypes[i];
-			if ( t === type || ( t instanceof RegExp && type.match( t ) ) ) {
-				return true;
+		if ( typeof name !== 'string' || name === '' ) {
+			throw new Error( 'Model names must be strings and must not be empty' );
+		}
+		if ( !( constructor.prototype instanceof ve.dm.Model ) ) {
+			throw new Error( 'Models must be subclasses of ve.dm.Model' );
+		}
+
+		// Unregister the model from the right factory
+		if ( constructor.prototype instanceof ve.dm.Annotation ) {
+			ve.dm.annotationFactory.unregister( constructor );
+		} else if ( constructor.prototype instanceof ve.dm.Node ) {
+			ve.dm.nodeFactory.unregister( constructor );
+		} else if ( constructor.prototype instanceof ve.dm.MetaItem ) {
+			ve.dm.metaItemFactory.unregister( constructor );
+		} else {
+			throw new Error( 'No factory associated with this ve.dm.Model subclass' );
+		}
+
+		// Parent method
+		ve.dm.ModelRegistry.super.prototype.unregister.call( this, name );
+
+		tags = constructor.static.matchTagNames === null ?
+			[ '' ] :
+			constructor.static.matchTagNames;
+		types = constructor.static.getMatchRdfaTypes() === null ?
+			[ '' ] :
+			constructor.static.getMatchRdfaTypes();
+
+		for ( i = 0; i < tags.length; i++ ) {
+			// +!!foo is a shorter equivalent of Number( Boolean( foo ) ) or foo ? 1 : 0
+			removeType( this.modelsByTag, +!!constructor.static.matchFunction,
+				tags[ i ], name
+			);
+		}
+		for ( i = 0; i < types.length; i++ ) {
+			if ( types[ i ] instanceof RegExp ) {
+				// TODO: Guard against running this again during subsequent
+				// iterations of the for loop
+				removeType( this.modelsWithTypeRegExps, +!!constructor.static.matchFunction, name );
+			} else {
+				for ( j = 0; j < tags.length; j++ ) {
+					removeType( this.modelsByTypeAndTag,
+						+!!constructor.static.matchFunction, types[ i ], tags[ j ], name
+					);
+				}
 			}
 		}
-		return false;
+
+		delete this.registrationOrder[ name ];
 	};
 
 	/**
@@ -184,16 +248,15 @@
 	 * @param {Node} node Node to match (usually an HTMLElement but can also be a Comment node)
 	 * @param {boolean} [forceAboutGrouping] If true, only match models with about grouping enabled
 	 * @param {string[]} [excludeTypes] Model names to exclude when matching
-	 * @returns {string|null} Model type, or null if none found
+	 * @return {string|null} Model type, or null if none found
 	 */
 	ve.dm.ModelRegistry.prototype.matchElement = function ( node, forceAboutGrouping, excludeTypes ) {
-		var i, name, model, matches, winner, types, elementExtSpecificTypes, matchTypes,
-			hasExtSpecificTypes,
+		var i, name, model, matches, winner, types,
 			tag = node.nodeName.toLowerCase(),
 			reg = this;
 
 		function byRegistrationOrderDesc( a, b ) {
-			return reg.registrationOrder[b] - reg.registrationOrder[a];
+			return reg.registrationOrder[ b ] - reg.registrationOrder[ a ];
 		}
 
 		function matchTypeRegExps( type, tag, withFunc ) {
@@ -201,76 +264,84 @@
 				matches = [],
 				models = reg.modelsWithTypeRegExps[ +withFunc ];
 			for ( i = 0; i < models.length; i++ ) {
-				if ( excludeTypes && ve.indexOf( models[i], excludeTypes ) !== -1 ) {
+				if ( excludeTypes && excludeTypes.indexOf( models[ i ] ) !== -1 ) {
 					continue;
 				}
-				types = reg.registry[models[i]].static.getMatchRdfaTypes();
+				types = reg.registry[ models[ i ] ].static.getMatchRdfaTypes();
 				for ( j = 0; j < types.length; j++ ) {
 					if (
-						types[j] instanceof RegExp &&
-						type.match( types[j] ) &&
+						types[ j ] instanceof RegExp &&
+						type.match( types[ j ] ) &&
 						(
-							( tag === '' && reg.registry[models[i]].static.matchTagNames === null ) ||
-							ve.indexOf( tag, reg.registry[models[i]].static.matchTagNames ) !== -1
+							( tag === '' && reg.registry[ models[ i ] ].static.matchTagNames === null ) ||
+							( reg.registry[ models[ i ] ].static.matchTagNames || [] ).indexOf( tag ) !== -1
 						)
 					) {
-						matches.push( models[i] );
+						matches.push( models[ i ] );
 					}
 				}
 			}
 			return matches;
 		}
 
-		function matchesAllTypes( types, name ) {
-			var i, j, haveMatch, matchTypes = reg.registry[name].static.getMatchRdfaTypes();
+		function allTypesAllowed( types, name ) {
+			var i, j, typeAllowed,
+				model = reg.lookup( name ),
+				allowedTypes = model.static.getAllowedRdfaTypes(),
+				matchTypes = model.static.getMatchRdfaTypes();
+
+			// All types allowed
+			if ( allowedTypes === null || matchTypes === null ) {
+				return true;
+			}
+
+			allowedTypes = allowedTypes.concat( matchTypes );
+
+			function checkType( rule, type ) {
+				return rule instanceof RegExp ? !!type.match( rule ) : rule === type;
+			}
+
 			for ( i = 0; i < types.length; i++ ) {
-				haveMatch = false;
-				for ( j = 0; j < matchTypes.length; j++ ) {
-					if ( matchTypes[j] instanceof RegExp ) {
-						if ( types[i].match( matchTypes[j] ) ) {
-							haveMatch = true;
-							break;
-						}
-					} else {
-						if ( types[i] === matchTypes[j] ) {
-							haveMatch = true;
-							break;
-						}
+				typeAllowed = false;
+				for ( j = 0; j < allowedTypes.length; j++ ) {
+					if ( checkType( allowedTypes[ j ], types[ i ] ) ) {
+						typeAllowed = true;
+						break;
 					}
 				}
-				if ( !haveMatch ) {
+				if ( !typeAllowed ) {
 					return false;
 				}
 			}
 			return true;
 		}
 
-		function matchWithFunc( types, tag, mustMatchAll ) {
-			var i, queue = [], queue2 = [];
+		function matchWithFunc( types, tag ) {
+			var i,
+				queue = [],
+				queue2 = [];
 			for ( i = 0; i < types.length; i++ ) {
 				// Queue string matches and regexp matches separately
-				queue = queue.concat( ve.getProp( reg.modelsByTypeAndTag, 1, types[i], tag ) || [] );
+				queue = queue.concat( ve.getProp( reg.modelsByTypeAndTag, 1, types[ i ], tag ) || [] );
 				if ( excludeTypes ) {
 					queue = OO.simpleArrayDifference( queue, excludeTypes );
 				}
-				queue2 = queue2.concat( matchTypeRegExps( types[i], tag, true ) );
+				queue2 = queue2.concat( matchTypeRegExps( types[ i ], tag, true ) );
 			}
-			if ( mustMatchAll ) {
-				// Filter out matches that don't match all types
-				queue = queue.filter( function ( name ) {
-					return matchesAllTypes( types, name );
-				} );
-				queue2 = queue2.filter( function ( name ) {
-					return matchesAllTypes( types, name );
-				} );
-			}
+			// Filter out matches which contain types which aren't allowed
+			queue = queue.filter( function ( name ) {
+				return allTypesAllowed( types, name );
+			} );
+			queue2 = queue2.filter( function ( name ) {
+				return allTypesAllowed( types, name );
+			} );
 			if ( forceAboutGrouping ) {
 				// Filter out matches that don't support about grouping
 				queue = queue.filter( function ( name ) {
-					return reg.registry[name].static.enableAboutGrouping;
+					return reg.registry[ name ].static.enableAboutGrouping;
 				} );
 				queue2 = queue2.filter( function ( name ) {
-					return reg.registry[name].static.enableAboutGrouping;
+					return reg.registry[ name ].static.enableAboutGrouping;
 				} );
 			}
 			// Try string matches first, then regexp matches
@@ -278,49 +349,51 @@
 			queue2.sort( byRegistrationOrderDesc );
 			queue = queue.concat( queue2 );
 			for ( i = 0; i < queue.length; i++ ) {
-				if ( reg.registry[queue[i]].static.matchFunction( node ) ) {
-					return queue[i];
+				if ( reg.registry[ queue[ i ] ].static.matchFunction( node ) ) {
+					return queue[ i ];
 				}
 			}
 			return null;
 		}
 
-		function matchWithoutFunc( types, tag, mustMatchAll ) {
-			var i, queue = [], queue2 = [], winningName = null;
+		function matchWithoutFunc( types, tag ) {
+			var i,
+				queue = [],
+				queue2 = [],
+				winningName = null;
 			for ( i = 0; i < types.length; i++ ) {
 				// Queue string and regexp matches separately
-				queue = queue.concat( ve.getProp( reg.modelsByTypeAndTag, 0, types[i], tag ) || [] );
+				queue = queue.concat( ve.getProp( reg.modelsByTypeAndTag, 0, types[ i ], tag ) || [] );
 				if ( excludeTypes ) {
 					queue = OO.simpleArrayDifference( queue, excludeTypes );
 				}
-				queue2 = queue2.concat( matchTypeRegExps( types[i], tag, false ) );
+				queue2 = queue2.concat( matchTypeRegExps( types[ i ], tag, false ) );
 			}
-			if ( mustMatchAll ) {
-				// Filter out matches that don't match all types
-				queue = queue.filter( function ( name ) {
-					return matchesAllTypes( types, name );
-				} );
-				queue2 = queue2.filter( function ( name ) {
-					return matchesAllTypes( types, name );
-				} );
-			}
+			// Filter out matches which contain types which aren't allowed
+			queue = queue.filter( function ( name ) {
+				return allTypesAllowed( types, name );
+			} );
+			queue2 = queue2.filter( function ( name ) {
+				return allTypesAllowed( types, name );
+			} );
 			if ( forceAboutGrouping ) {
 				// Filter out matches that don't support about grouping
 				queue = queue.filter( function ( name ) {
-					return reg.registry[name].static.enableAboutGrouping;
+					return reg.registry[ name ].static.enableAboutGrouping;
 				} );
 				queue2 = queue2.filter( function ( name ) {
-					return reg.registry[name].static.enableAboutGrouping;
+					return reg.registry[ name ].static.enableAboutGrouping;
 				} );
 			}
 			// Only try regexp matches if there are no string matches
 			queue = queue.length > 0 ? queue : queue2;
+			// Find most recently registered
 			for ( i = 0; i < queue.length; i++ ) {
 				if (
 					winningName === null ||
-					reg.registrationOrder[winningName] < reg.registrationOrder[queue[i]]
+					reg.registrationOrder[ winningName ] < reg.registrationOrder[ queue[ i ] ]
 				) {
-					winningName = queue[i];
+					winningName = queue[ i ];
 				}
 			}
 			return winningName;
@@ -338,14 +411,10 @@
 				types = types.concat( node.getAttribute( 'property' ).split( ' ' ) );
 			}
 		}
-		elementExtSpecificTypes = types.filter( this.isExtensionSpecificType.bind( this ) );
-		hasExtSpecificTypes = elementExtSpecificTypes.length !== 0;
-		// If the element has extension-specific types, only use those for matching and ignore its
-		// other types. If it has no extension-specific types, use all of its types.
-		matchTypes = hasExtSpecificTypes ? elementExtSpecificTypes : types;
+
 		if ( types.length ) {
 			// func+tag+type match
-			winner = matchWithFunc( matchTypes, tag, hasExtSpecificTypes );
+			winner = matchWithFunc( types, tag );
 			if ( winner !== null ) {
 				return winner;
 			}
@@ -353,45 +422,42 @@
 			// func+type match
 			// Only look at rules with no tag specified; if a rule does specify a tag, we've
 			// either already processed it above, or the tag doesn't match
-			winner = matchWithFunc( matchTypes, '', hasExtSpecificTypes );
+			winner = matchWithFunc( types, '' );
 			if ( winner !== null ) {
 				return winner;
 			}
 		}
 
-		// Do not check for type-less matches if the element has extension-specific types
-		if ( !hasExtSpecificTypes ) {
-			// func+tag match
-			matches = ve.getProp( this.modelsByTag, 1, tag ) || [];
-			// No need to sort because individual arrays in modelsByTag are already sorted
-			// correctly
-			for ( i = 0; i < matches.length; i++ ) {
-				name = matches[i];
-				model = this.registry[name];
-				// Only process this one if it doesn't specify types
-				// If it does specify types, then we've either already processed it in the
-				// func+tag+type step above, or its type rule doesn't match
-				if ( model.static.getMatchRdfaTypes() === null && model.static.matchFunction( node ) ) {
-					return matches[i];
-				}
+		// func+tag match
+		matches = ve.getProp( this.modelsByTag, 1, tag ) || [];
+		// No need to sort because individual arrays in modelsByTag are already sorted
+		// correctly
+		for ( i = 0; i < matches.length; i++ ) {
+			name = matches[ i ];
+			model = this.registry[ name ];
+			// Only process this one if it doesn't specify types
+			// If it does specify types, then we've either already processed it in the
+			// func+tag+type step above, or its type rule doesn't match
+			if ( model.static.getMatchRdfaTypes() === null && model.static.matchFunction( node ) ) {
+				return matches[ i ];
 			}
+		}
 
-			// func only
-			// We only need to get the [''][''] array because the other arrays were either
-			// already processed during the steps above, or have a type or tag rule that doesn't
-			// match this node.
-			// No need to sort because individual arrays in modelsByTypeAndTag are already sorted
-			// correctly
-			matches = ve.getProp( this.modelsByTypeAndTag, 1, '', '' ) || [];
-			for ( i = 0; i < matches.length; i++ ) {
-				if ( this.registry[matches[i]].static.matchFunction( node ) ) {
-					return matches[i];
-				}
+		// func only
+		// We only need to get the [''][''] array because the other arrays were either
+		// already processed during the steps above, or have a type or tag rule that doesn't
+		// match this node.
+		// No need to sort because individual arrays in modelsByTypeAndTag are already sorted
+		// correctly
+		matches = ve.getProp( this.modelsByTypeAndTag, 1, '', '' ) || [];
+		for ( i = 0; i < matches.length; i++ ) {
+			if ( this.registry[ matches[ i ] ].static.matchFunction( node ) ) {
+				return matches[ i ];
 			}
 		}
 
 		// tag+type
-		winner = matchWithoutFunc( matchTypes, tag, hasExtSpecificTypes );
+		winner = matchWithoutFunc( types, tag );
 		if ( winner !== null ) {
 			return winner;
 		}
@@ -399,15 +465,9 @@
 		// type only
 		// Only look at rules with no tag specified; if a rule does specify a tag, we've
 		// either already processed it above, or the tag doesn't match
-		winner = matchWithoutFunc( matchTypes, '', hasExtSpecificTypes );
+		winner = matchWithoutFunc( types, '' );
 		if ( winner !== null ) {
 			return winner;
-		}
-
-		if ( elementExtSpecificTypes.length > 0 ) {
-			// There are only type-less matches beyond this point, so if we have any
-			// extension-specific types, we give up now.
-			return null;
 		}
 
 		// tag only
@@ -415,13 +475,13 @@
 		// No need to track winningName because the individual arrays in modelsByTag are
 		// already sorted correctly
 		for ( i = 0; i < matches.length; i++ ) {
-			name = matches[i];
-			model = this.registry[name];
+			name = matches[ i ];
+			model = this.registry[ name ];
 			// Only process this one if it doesn't specify types
 			// If it does specify types, then we've either already processed it in the
 			// tag+type step above, or its type rule doesn't match
 			if ( model.static.getMatchRdfaTypes() === null ) {
-				return matches[i];
+				return matches[ i ];
 			}
 		}
 
@@ -430,11 +490,22 @@
 		// already processed or have a type or tag rule that disqualifies them
 		matches = ve.getProp( this.modelsByTypeAndTag, 0, '', '' ) || [];
 		if ( matches.length > 0 ) {
-			return matches[0];
+			return matches[ 0 ];
 		}
 
 		// We didn't find anything, give up
 		return null;
+	};
+
+	/**
+	 * Tests whether a node will be modelled as an annotation
+	 *
+	 * @param {Node} node The node
+	 * @return {boolean} Whether the element will be modelled as an annotation
+	 */
+	ve.dm.ModelRegistry.prototype.isAnnotation = function ( node ) {
+		var modelClass = this.lookup( this.matchElement( node ) );
+		return ( modelClass && modelClass.prototype ) instanceof ve.dm.Annotation;
 	};
 
 	/* Initialization */

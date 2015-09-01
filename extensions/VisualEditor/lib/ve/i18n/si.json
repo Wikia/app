@@ -5,7 +5,8 @@
 			"පසිඳු කාවින්ද",
 			"ශ්වෙත",
 			"Sahan.ssw",
-			"Indunil Chamara"
+			"Indunil Chamara",
+			"Thirsty"
 		]
 	},
 	"visualeditor": "දෘශ්‍යසංස්කාරක",
@@ -21,6 +22,7 @@
 	"visualeditor-dialog-action-goback": "ආපසු යන්න",
 	"visualeditor-dialog-action-insert": "ඇතුල් කරන්න",
 	"visualeditor-dialog-language-auto-direction": "ස්වයංක්‍රිය",
+	"visualeditor-find-and-replace-done": "සිදුකරන ලදී",
 	"visualeditor-formatdropdown-format-heading1": "මාතෘකාව 1",
 	"visualeditor-formatdropdown-format-heading2": "මාතෘකාව 2",
 	"visualeditor-formatdropdown-format-heading3": "මාතෘකාව 3",

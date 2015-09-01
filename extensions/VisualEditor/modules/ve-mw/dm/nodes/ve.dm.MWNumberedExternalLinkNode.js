@@ -1,7 +1,7 @@
 /*!
  * VisualEditor DataModel MWNumberedExternalLinkNode class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2015 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -50,7 +50,7 @@ ve.dm.MWNumberedExternalLinkNode.static.toDataElement = function ( domElements )
 	return {
 		type: this.name,
 		attributes: {
-			href: domElements[0].getAttribute( 'href' )
+			href: domElements[ 0 ].getAttribute( 'href' )
 		}
 	};
 };
@@ -60,6 +60,17 @@ ve.dm.MWNumberedExternalLinkNode.static.toDomElements = function ( dataElement, 
 	domElement.setAttribute( 'href', dataElement.attributes.href );
 	domElement.setAttribute( 'rel', 'mw:ExtLink' );
 	return [ domElement ];
+};
+
+/* Methods */
+
+/**
+ * Convenience wrapper for .getHref() on the current element.
+ *
+ * @return {string} Link href
+ */
+ve.dm.MWNumberedExternalLinkNode.prototype.getHref = function () {
+	return this.element.attributes.href;
 };
 
 /* Registration */

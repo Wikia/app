@@ -1,18 +1,19 @@
-<!-- before table -->
-<table><!-- after table -->
-<tr><!-- after tr -->
-<td><!-- after td1 -->Foo</td>
-<td><!-- after td2 -->Bar</td>
-<!-- before /tr --></tr>
+<!-- Before table -->
+<table><!-- After table -->
+<tr><!-- After tr -->
+<td><!-- After td1 -->Foo</td>
+<td><!-- After td2 -->Bar</td>
+<!-- Before /tr --></tr>
+<!-- Between trs -->
 <tr>
-<td><!-- after td3 -->Foo</td>
-<td><!-- after td4 -->Bar</td>
-<!-- before /tr --></tr>
-<!-- before /table -->
+<td><!-- After td3 -->Foo</td>
+<td><!-- After td4 -->Bar</td>
+<!-- Before /tr --></tr>
+<!-- Before /table -->
 </table>
-<!-- between tables -->
+<!-- Between tables -->
 <table><tr><td>Table 2</td></table>
-<!-- after table 2 -->
+<!-- After table 2 -->
 Baz
 <h2>Foo <!--
 
@@ -23,7 +24,26 @@ Block comment:
 * Lines
 
 --> Baz! Empty comment: <!----></h2>
-<p><!-- Bar2 --></p>
-<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever <!-- Bar3 --> since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but <!--And this comment goes on forever to demonstrate that users won't see the whole context, just the first few characters until they run out of room.-->also the leap into electronic typesetting, remaining essentially unchanged.</p>
-<p><b>Foo <!-- Bar4 --> Baz!</b></p>
-<p><i>Foo <!-- Bar5 --></i> Baz!</p>
+<p><!-- In empty paragraph --></p>
+<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever <!-- Inside paragraph --> since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but <!--And this comment goes on forever to demonstrate that users won't see the whole context, just the first few characters until they run out of room.-->also the leap into electronic typesetting, remaining essentially unchanged.</p>
+<p><!-- At the beginning of paragraph -->Paragraph text.</p>
+<p><b>Foo <!-- Inside annotation --> Baz!</b></p>
+<p><i>Foo <!-- At edge of annotation --></i> Baz!</p>
+
+<ol>
+<!-- After ol -->
+<li><!-- After li -->List item one.</li>
+<li>List item two.<!-- Before /li --></li>
+<!-- Between lis -->
+<li>List item three.</li>
+<!-- Before /ol -->
+</ol>
+
+<dl>
+<!-- After dl -->
+<dt><!-- After dt -->Definition term</dt>
+<dd>Definition one.<!-- Before /dd --></dd>
+<!-- Between dds -->
+<dd>Definition two.</dd>
+<!-- Before /dl -->
+</dl>

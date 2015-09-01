@@ -2,7 +2,8 @@
 	"@metadata": {
 		"authors": [
 			"Lloffiwr",
-			"Muddyb Blast Producer"
+			"Muddyb Blast Producer",
+			"Kipala"
 		]
 	},
 	"tooltip-ca-createsource": "Anzisha chanzo msimbo za ukurasa huu",
@@ -54,12 +55,14 @@
 	"visualeditor-dialog-meta-languages-section": "Lugha",
 	"visualeditor-dialog-meta-settings-index-disable": "Siyo",
 	"visualeditor-dialog-meta-settings-label": "Mpangilio wa ukurasa",
+	"visualeditor-dialog-meta-settings-toc-label": "Onyesha orodha ya yaliyomo",
 	"visualeditor-dialog-reference-options-group-label": "Tumia kundi hili",
 	"visualeditor-dialog-reference-options-name-label": "Tumia upya kwa jina hili",
 	"visualeditor-dialog-reference-options-section": "Chaguzi",
 	"visualeditor-dialog-reference-title": "Marejeo",
 	"visualeditor-dialog-reference-useexisting-label": "Tumia rejeo lililopo tayari",
 	"visualeditor-dialog-referenceslist-title": "Orodha ya marejeo",
+	"visualeditor-dialog-template-title": "Kigezo",
 	"visualeditor-dialog-transclusion-add-content": "Weka yaliyomo",
 	"visualeditor-dialog-transclusion-add-param": "Weka paramita",
 	"visualeditor-dialog-transclusion-add-template": "Weka kigezo",
@@ -88,9 +91,6 @@
 	"visualeditor-formatdropdown-format-mw-heading6": "Kichwa kidogo 4",
 	"visualeditor-languages-tool": "Lugha",
 	"visualeditor-linkinspector-illegal-title": "Jina la kurasa batili",
-	"visualeditor-linkinspector-suggest-external-link": "Kiungo cha nje",
-	"visualeditor-linkinspector-suggest-matching-page": "Kuoanisha ukurasa",
-	"visualeditor-linkinspector-suggest-new-page": "Ukurasa mpya",
 	"visualeditor-linknodeinspector-title": "Kiungo sahili",
 	"visualeditor-loadwarning": "Hitilafu ya kufungua taarifa kutoka katika seva: $1. Ungependa kujaribu tena?",
 	"visualeditor-loadwarning-token": "Hitilafu ya kufungua ya kufungua tokeni ya kuhariri kutoka katika seva: $1. Ungependa kujaribu tena?",
@@ -118,7 +118,8 @@
 	"visualeditor-savedialog-title-save": "Hifadhi mabadiliko yako",
 	"visualeditor-saveerror": "Hitilafu ya kuhifadhi data katika seva: $1.",
 	"visualeditor-serializeerror": "Hitilafu ya kupakua data kutoka katika seva: $1.",
+	"visualeditor-toolbar-cite-label": "Marejeo",
 	"visualeditor-toolbar-savedialog": "Hifadhi ukurasa",
 	"visualeditor-usernamespacepagelink": "Project:Eneo la wiki la mtumiaji",
-	"visualeditor-dialog-media-insert-title": "Ingiza faili"
+	"visualeditor-version-label": "Toleo"
 }

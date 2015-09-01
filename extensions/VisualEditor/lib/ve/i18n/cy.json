@@ -50,7 +50,7 @@
 	"visualeditor-languageinspector-widget-label-direction": "Cyfeiriad",
 	"visualeditor-languageinspector-widget-label-langcode": "Cod iaith",
 	"visualeditor-languageinspector-widget-label-language": "Iaith",
-	"visualeditor-linkinspector-title": "Hypergyswllt",
+	"visualeditor-linkinspector-title": "Cysylltu",
 	"visualeditor-listbutton-bullet-tooltip": "Rhestr bwledi",
 	"visualeditor-listbutton-number-tooltip": "Rhestr rhifo",
 	"visualeditor-mediasizewidget-button-originaldimensions": "Maint llawn",
@@ -65,10 +65,10 @@
 	"visualeditor-shortcuts-formatting": "Fformatio'r paragraff",
 	"visualeditor-shortcuts-history": "Hanes",
 	"visualeditor-shortcuts-other": "Arall",
-	"visualeditor-shortcuts-text-style": "Fformadu'r testun",
+	"visualeditor-shortcuts-text-style": "Arddull y testun",
 	"visualeditor-specialcharacter-button-tooltip": "Nodau arbennig",
 	"visualeditor-specialcharacterinspector-title": "Nodau arbennig",
-	"visualeditor-toolbar-format-tooltip": "Fformatio'r paragraff",
+	"visualeditor-toolbar-format-tooltip": "Fformatio paragraff",
 	"visualeditor-toolbar-insert": "Mewnosod",
 	"visualeditor-toolbar-style-tooltip": "Arddull testun"
 }

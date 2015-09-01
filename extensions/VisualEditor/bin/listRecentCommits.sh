@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash -eu
 
 # This script generates a structured git log of commits to the VisualEditor-MediaWiki repository,
 # and walks the submodule updates to the lib/ve submodule and the OOjs and OOjs UI pull-through
@@ -11,9 +11,9 @@
 cd $(cd $(dirname $0)/..; pwd)
 
 # Ensure input is correct
-if [ "x$1" = "x" ]
+if [ -z "${1:-}" ]
 then
-	echo >&2 "Usage: listRecentCommits.sh startBranch"
+	echo >&2 "Usage: listRecentCommits.sh <startBranch>"
 	exit 1
 fi
 STARTHASH=`git rev-parse $1`
@@ -38,7 +38,6 @@ do
 	then
 		CHANGEHASH=`cut -f1 -d' ' <<< $CHANGE`
 
-		# Sub-iterate over lines matching "Update OOjs" (which covers OOjs and OOjs UI)
 		SUBCHANGES=`git log --format=%B -n1 $CHANGEHASH -- |
 			sed -n -e '/New changes/,/^$/p' |
 			tail -n +2 |
@@ -47,26 +46,6 @@ do
 		while read -r SUBCHANGE
 		do
 			printf "\t$SUBCHANGE\n"
-
-			if [[ $SUBCHANGE == *"Update OOjs"* ]]
-			then
-				cd lib/ve
-
-				SUBCHANGEHASH=`cut -f1 -d' ' <<< $SUBCHANGE`
-
-				SUBSUBCHANGES=`git log --format=%B -n1 $SUBCHANGEHASH -- |
-					sed -n -e '/New changes/,/^$/p' |
-					tail -n +2 |
-					sed -e '$ d' |
-					grep --color=never -v 'translatewiki'`
-
-				while read -r SUBSUBCHANGE
-				do
-					printf "\t\t$SUBSUBCHANGE\n"
-				done <<< "$SUBSUBCHANGES"
-
-				cd ../..
-			fi
 		done <<< "$SUBCHANGES"
 
 		# Extra new-line between sub-module pulls for clarity

@@ -4,14 +4,18 @@
 			"Cedric31",
 			"Tumsaa",
 			"Muhammad Shuaib",
-			"Jdforrester"
+			"Jdforrester",
+			"Amire80",
+			"아라"
 		]
 	},
 	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]]",
 	"tag-visualeditor-description": "Jijjiirama [[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]] fayyadamuun uummame",
 	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor: Check]]",
+	"tag-visualeditor-switched-description": "Fayyadamaan gulaala Viizyuwaal'Ediiteriidhan jalqabee achii booda gara Wiikiitekesti'Ediiteriitti jijjiire.",
 	"visualeditor-feedback-link": "Project:Viizyuwaal'Ediiterii/Yaada",
-	"visualeditor-feedback-tool": "Yaada kenni",
+	"visualeditor-feedback-tool": "Waa'ee mosaajjii kanaa yaada kenni",
 	"visualeditor-help-label": "Qajeelfama fayyadamaa dubbisi",
+	"visualeditor-help-link": "mw:Special:MyLanguage/Help:VisualEditor/User guide",
 	"visualeditor-help-title": "Qajeelcha akkaataa fayyadama Viizyuwaal'ediiterii ibsu"
 }

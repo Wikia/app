@@ -1,11 +1,11 @@
 /*!
  * VisualEditor UserInterface Tool classes.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 /**
- * UserInterface annotation tool.
+ * UserInterface tool.
  *
  * @class
  * @abstract
@@ -18,6 +18,9 @@
 ve.ui.Tool = function VeUiTool( toolGroup, config ) {
 	// Parent constructor
 	OO.ui.Tool.call( this, toolGroup, config );
+
+	// Disable initially
+	this.setDisabled( true );
 };
 
 /* Inheritance */
@@ -94,5 +97,5 @@ ve.ui.Tool.prototype.getCommand = function () {
 	if ( this.constructor.static.commandName === null ) {
 		return null;
 	}
-	return ve.ui.commandRegistry.lookup( this.constructor.static.commandName );
+	return ve.init.target.commandRegistry.lookup( this.constructor.static.commandName );
 };

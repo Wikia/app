@@ -27,17 +27,22 @@
 			"Verdy p",
 			"Wyz",
 			"Momo50WM",
-			"Orlodrim"
+			"Orlodrim",
+			"Amire80",
+			"아라",
+			"Framafan",
+			"Wladek92"
 		]
 	},
 	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|ÉditeurVisuel]]",
 	"tag-visualeditor-description": "Modification effectuée au moyen de l'[[{{MediaWiki:visualeditor-descriptionpagelink}}|ÉditeurVisuel]]",
 	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|ÉditeurVisuel : à vérifier]]",
-	"tag-visualeditor-needcheck-description": "Modification faite en utilisant l'[[{{MediaWiki:visualeditor-descriptionpagelink}}|ÉditeurVisuel]], où le système a détecté que le wikitexte contient peut-être des modifications accidentelles.",
+	"tag-visualeditor-needcheck-description": "Modification faite en utilisant l’[[{{MediaWiki:visualeditor-descriptionpagelink}}|éditeur visuel]], dans laquelle le système a détecté que le wikicode contient peut-être des modifications non voulues.",
 	"tag-visualeditor-switched": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|ÉditeurVisuel : basculé]]",
-	"tag-visualeditor-switched-description": "L’utilisateur a commencé à modifier en utilisant VisualEditor puis est passé sur l’éditeur wikitexte.",
+	"tag-visualeditor-switched-description": "L’utilisateur a commencé à modifier en utilisant l’éditeur   visuel puis est passé sur l’éditeur de wikicode.",
 	"visualeditor-feedback-link": "Project:ÉditeurVisuel/Avis",
-	"visualeditor-feedback-tool": "Laisser un avis à propos de l’ÉditeurVisuel.",
+	"visualeditor-feedback-tool": "Laisser un avis sur l’Éditeur Visuel",
 	"visualeditor-help-label": "Lire le guide utilisateur",
+	"visualeditor-help-link": "mw:Special:MyLanguage/Help:VisualEditor/User guide",
 	"visualeditor-help-title": "Guide sur la manière d’utiliser l’éditeur"
 }

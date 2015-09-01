@@ -1,7 +1,7 @@
 /*!
  * VisualEditor UserInterface ClearAnnotationCommand class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 /**
@@ -16,7 +16,7 @@ ve.ui.ClearAnnotationCommand = function VeUiClearAnnotationCommand() {
 	// Parent constructor
 	ve.ui.ClearAnnotationCommand.super.call(
 		this, 'clear', 'annotation', 'clearAll',
-		{ supportedSelections: ['linear', 'table'] }
+		{ supportedSelections: [ 'linear', 'table' ] }
 	);
 };
 

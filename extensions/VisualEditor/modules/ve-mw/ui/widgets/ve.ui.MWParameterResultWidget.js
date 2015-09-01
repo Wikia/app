@@ -1,7 +1,7 @@
 /*!
  * VisualEditor UserInterface MWParameterResultWidget class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2015 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -35,27 +35,27 @@ OO.inheritClass( ve.ui.MWParameterResultWidget, OO.ui.DecoratedOptionWidget );
 /** */
 ve.ui.MWParameterResultWidget.prototype.buildLabel = function () {
 	var i, len,
-		$label = this.$( '<div>' )
+		$label = $( '<div>' )
 			.addClass( 've-ui-mwParameterResultWidget-label' )
 			.text( this.data.label ),
-		$names = this.$( '<div>' )
+		$names = $( '<div>' )
 			.addClass( 've-ui-mwParameterResultWidget-names' ),
-		$description = this.$( '<div>' )
+		$description = $( '<div>' )
 			.addClass( 've-ui-mwParameterResultWidget-description' )
 			.text( this.data.description || '' );
 
 	if ( this.data.name ) {
 		$names.append(
-			this.$( '<span>' )
+			$( '<span>' )
 				.addClass( 've-ui-mwParameterResultWidget-name' )
 				.text( this.data.name )
 		);
 	}
 	for ( i = 0, len = this.data.aliases.length; i < len; i++ ) {
 		$names.append(
-			this.$( '<span>' )
+			$( '<span>' )
 				.addClass( 've-ui-mwParameterResultWidget-name' )
-				.text( this.data.aliases[i] )
+				.text( this.data.aliases[ i ] )
 		);
 	}
 

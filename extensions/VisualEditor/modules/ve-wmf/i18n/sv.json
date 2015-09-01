@@ -11,17 +11,21 @@
 			"Sendelbach",
 			"Skalman",
 			"WikiPhoenix",
-			"Lokal Profil"
+			"Lokal Profil",
+			"Amire80",
+			"아라",
+			"Warrakkk"
 		]
 	},
 	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]]",
 	"tag-visualeditor-description": "Redigering gjord med hjälp av [[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]]",
 	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor: Kontrollera]]",
-	"tag-visualeditor-needcheck-description": "Redigering gjord med [[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]] där systemet upptäckte att wikitexten möjligen hade oavsiktliga ändringar.",
+	"tag-visualeditor-needcheck-description": "Redigering gjord med [[{{MediaWiki:visualeditor-descriptionpagelink}}|den visuella redigeraren]] där systemet upptäckte att wikitexten möjligen hade oavsiktliga ändringar.",
 	"tag-visualeditor-switched": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor: Bytte]]",
-	"tag-visualeditor-switched-description": "Användaren började redigera med VisualEditor men bytte sedan till wikitext-redigering.",
+	"tag-visualeditor-switched-description": "Användaren började redigera med den visuella redigeraren men bytte sedan till wikitext-läge.",
 	"visualeditor-feedback-link": "Project:VisualEditor/Återkoppling",
-	"visualeditor-feedback-tool": "Lämna feedback",
+	"visualeditor-feedback-tool": "Lämna återkoppling om denna programvara",
 	"visualeditor-help-label": "Läs användarguiden",
+	"visualeditor-help-link": "mw:Special:MyLanguage/Help:VisualEditor/User guide",
 	"visualeditor-help-title": "Användarguide för hur du använder redigeraren"
 }

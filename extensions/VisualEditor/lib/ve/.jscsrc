@@ -1,5 +1,20 @@
 {
 	"preset": "wikimedia",
 
-	"requireSpacesInsideArrayBrackets": null
+	"jsDoc": {
+		"checkAnnotations": {
+			"preset": "jsduck5",
+			"extra": {
+				"source": true,
+				"see": true
+			}
+		},
+		"checkParamNames": true,
+		"checkRedundantAccess": true,
+		"checkRedundantReturns": true,
+		"checkTypes": "strictNativeCase",
+		"requireNewlineAfterDescription": true,
+		"requireParamTypes": true,
+		"requireReturnTypes": true
+	}
 }

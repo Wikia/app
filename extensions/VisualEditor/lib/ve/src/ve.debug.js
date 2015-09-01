@@ -2,7 +2,7 @@
 /*!
  * VisualEditor debugging methods.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 /**
@@ -23,7 +23,7 @@ ve.debug = true;
  * Logs data to the console.
  *
  * @method
- * @param {Mixed...} [data] Data to log
+ * @param {...Mixed} [data] Data to log
  */
 ve.log = function () {
 	// In IE9 console methods are not real functions and as such do not inherit
@@ -36,7 +36,7 @@ ve.log = function () {
  * Logs error to the console.
  *
  * @method
- * @param {Mixed...} [data] Data to log
+ * @param {...Mixed} [data] Data to log
  */
 ve.error = function () {
 	// In IE9 console methods are not real functions and as such do not inherit
@@ -58,8 +58,9 @@ ve.dir = function () {
 /**
  * Like outerHTML serialization, but wraps each text node in a fake tag. This
  * makes it obvious whether there are split text nodes present.
+ *
  * @param {Node} domNode The node to serialize
- * @returns {string} Serialization of the node and its contents
+ * @return {string} Serialization of the node and its contents
  */
 ve.serializeNodeDebug = function ( domNode ) {
 	var html = [];
@@ -77,7 +78,7 @@ ve.serializeNodeDebug = function ( domNode ) {
 
 		html.push( '<', ve.escapeHtml( node.nodeName.toLowerCase() ) );
 		for ( i = 0, len = node.attributes.length; i < len; i++ ) {
-			attr = node.attributes[i];
+			attr = node.attributes[ i ];
 			html.push(
 				' ',
 				ve.escapeHtml( attr.name ),
@@ -89,7 +90,7 @@ ve.serializeNodeDebug = function ( domNode ) {
 		}
 		html.push( '>' );
 		for ( i = 0, len = node.childNodes.length; i < len; i++ ) {
-			add( node.childNodes[i] );
+			add( node.childNodes[ i ] );
 		}
 		html.push( '</', ve.escapeHtml( node.nodeName.toLowerCase() ), '>' );
 	}

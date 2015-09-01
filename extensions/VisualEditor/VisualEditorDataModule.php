@@ -4,7 +4,7 @@
  *
  * @file
  * @ingroup Extensions
- * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2015 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -19,7 +19,7 @@ class VisualEditorDataModule extends ResourceLoaderModule {
 
 	/* Methods */
 
-	public function __construct () {
+	public function __construct() {
 		$this->gitInfo = new GitInfo( __DIR__ );
 	}
 
@@ -77,7 +77,6 @@ class VisualEditorDataModule extends ResourceLoaderModule {
 			'watchthis' => array( 'watchthis' ),
 			'visualeditor-browserwarning' => array( 'visualeditor-browserwarning' ),
 			'visualeditor-wikitext-warning' => array( 'visualeditor-wikitext-warning' ),
-			'wikia-visualeditor-dialog-wikiamediainsert-policy-message' => array( 'wikia-visualeditor-dialog-wikiamediainsert-policy-message' ),
 		);
 
 		// Override message value
@@ -88,11 +87,11 @@ class VisualEditorDataModule extends ResourceLoaderModule {
 		);
 
 		// Copyright warning (based on EditPage::getCopyrightWarning)
-		global $wgRightsText;
-		if ( $wgRightsText ) {
+		$rightsText = $this->config->get( 'RightsText' );
+		if ( $rightsText ) {
 			$copywarnMsg = array( 'copyrightwarning',
 				'[[' . wfMessage( 'copyrightpage' )->inContentLanguage()->text() . ']]',
-				$wgRightsText );
+				$rightsText );
 		} else {
 			$copywarnMsg = array( 'copyrightwarning2',
 				'[[' . wfMessage( 'copyrightpage' )->inContentLanguage()->text() . ']]' );
@@ -100,7 +99,7 @@ class VisualEditorDataModule extends ResourceLoaderModule {
 		// EditPage supports customisation based on title, we can't support that here
 		// since these messages are cached on a site-level. $wgTitle is likely set to null.
 		$title = Title::newFromText( 'Dwimmerlaik' );
-		wfRunHooks( 'EditPageCopyrightWarning', array( $title, &$copywarnMsg ) );
+		Hooks::run( 'EditPageCopyrightWarning', array( $title, &$copywarnMsg ) );
 
 		// Keys used in copyright warning
 		$msgKeys[] = 'copyrightpage';
@@ -149,46 +148,19 @@ class VisualEditorDataModule extends ResourceLoaderModule {
 		return $citationTools;
 	}
 
-	public function getMessages() {
-		// We don't actually use the client-side message system for these messages.
-		// But we're registering them in this standardised method to make use of the
-		// getMsgBlobMtime utility to make cache invalidation work out-of-the-box.
-
-		$msgInfo = $this->getMessageInfo();
-		return $msgInfo['keys'];
-	}
-
-	public function getDependencies() {
-		return array( 'ext.visualEditor.base' );
-	}
-
-	public function getModifiedTime( ResourceLoaderContext $context ) {
-		return max(
-			$this->getGitHeadModifiedTime( $context ),
-			$this->getMsgBlobMtime( $context->getLanguage() ),
-			// Also invalidate this module if this file changes (i.e. when messages were
-			// added or removed, or when the Javascript invocation in getScript is changed).
-			// Use 1 because 0 = now, would invalidate continously
-			file_exists( __FILE__ ) ? filemtime( __FILE__ ) : 1
+	public function getDependencies( ResourceLoaderContext $context = null ) {
+		return array(
+			'ext.visualEditor.base',
+			'ext.visualEditor.mediawiki',
 		);
 	}
 
-	protected function getGitHeadModifiedTime( ResourceLoaderContext $context ) {
-		$cache = wfGetCache( CACHE_ANYTHING );
-		$key = wfMemcKey( 'resourceloader', 'vedatamodule', 'changeinfo' );
-
-		$hash = $this->getGitHeadHash();
-
-		$result = $cache->get( $key );
-		if ( is_array( $result ) && $result['hash'] === $hash ) {
-			return $result['timestamp'];
-		}
-		$timestamp = wfTimestamp();
-		$cache->set( $key, array(
-			'hash' => $hash,
-			'timestamp' => $timestamp,
-		) );
-		return $timestamp;
+	public function getDefinitionSummary( ResourceLoaderContext $context ) {
+		$summary = parent::getDefinitionSummary( $context );
+		$summary[] = array(
+			'script' => $this->getScript( $context ),
+		);
+		return $summary;
 	}
 
 	protected function getGitHeadHash() {

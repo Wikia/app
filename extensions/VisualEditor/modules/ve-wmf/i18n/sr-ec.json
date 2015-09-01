@@ -3,7 +3,8 @@
 		"authors": [
 			"Milicevic01",
 			"Nikola Smolenski",
-			"Милан Јелисавчић"
+			"Милан Јелисавчић",
+			"Srdjan m"
 		]
 	},
 	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|Визуелни уређивач]]",
@@ -13,7 +14,7 @@
 	"tag-visualeditor-switched": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|Визуелни уређивач: Искључен]]",
 	"tag-visualeditor-switched-description": "Уређивање почето Визуелним уређивачем па пређено на изворно уређивање",
 	"visualeditor-feedback-link": "Project:VisualEditor/Feedback",
-	"visualeditor-feedback-tool": "Оставите повратну информацију",
+	"visualeditor-feedback-tool": "Оставите повратну информацију о овом софтверу",
 	"visualeditor-help-label": "Прочитајте кориснички водич",
-	"visualeditor-help-title": "Кориснички водич са упутством за коришћење уређивача"
+	"visualeditor-help-title": "Водич за употребу уређивача"
 }

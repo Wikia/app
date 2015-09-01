@@ -4,13 +4,14 @@
 			"Mimarik",
 			"Teslaton",
 			"Muhammad Shuaib",
-			"Jdforrester"
+			"Jdforrester",
+			"Kusavica"
 		]
 	},
 	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]]",
 	"tag-visualeditor-description": "Úprava vykonaná pomocou [[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditoru]]",
 	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor: Skontrolovať]]",
-	"tag-visualeditor-needcheck-description": "Úprava vykonaná pomocou [[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditoru]], pri ktorej systém odhalil možné nezamýšľané zmeny wikitextu.",
+	"tag-visualeditor-needcheck-description": "Úprava vykonaná pomocou [[{{MediaWiki:visualeditor-descriptionpagelink}}|visual editoru]], pri ktorej systém odhalil možné nezamýšľané zmeny wikitextu.",
 	"visualeditor-feedback-link": "Project:VisualEditor/Názory",
 	"visualeditor-feedback-tool": "Zanechať spätnú väzbu",
 	"visualeditor-help-label": "Prečítajte si návod",

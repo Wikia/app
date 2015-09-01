@@ -1,11 +1,11 @@
 /*!
  * VisualEditor ContentEditable MediaWiki-specific ContentBranchNode tests.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2015 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
-QUnit.module( 've.ce.ContentBranchNode' );
+QUnit.module( 've.ce.ContentBranchNode (MW)', ve.test.utils.mwEnvironment );
 
 /* Tests */
 
@@ -17,32 +17,34 @@ QUnit.test( 'getRenderedContents', function ( assert ) {
 			data: [
 				{ type: 'paragraph' },
 				'a',
-				['b', [ { type: 'textStyle/bold' } ]],
+				[ 'b', [ { type: 'textStyle/bold' } ] ],
 				{
 					type: 'mwEntity',
 					attributes: { character: 'c' },
-					htmlAttributes: [ { keys: [ 'typeof' ], values: { typeof: 'mw:Entity' } } ],
 					annotations: [ { type: 'textStyle/bold' } ]
 				},
 				{ type: '/mwEntity' },
-				['d', [ { type: 'textStyle/bold' } ]],
+				[ 'd', [ { type: 'textStyle/bold' } ] ],
 				{
 					type: 'alienInline',
-					attributes: { domElements: $( '<tt>e</tt>' ).toArray() },
+					originalDomElements: $( '<span rel="ve:Alien">e</span>' ).toArray(),
 					annotations: [ { type: 'textStyle/bold' } ]
 				},
 				{ type: '/alienInline' },
 				{ type: '/paragraph' }
 			],
-			html: 'a<b>b<span typeof="mw:Entity" class="ve-ce-leafNode ' +
-				've-ce-mwEntityNode" contenteditable="false">c</span>d<tt>e</tt></b>'
+			html:
+				'a<b>b' +
+					'<span class="ve-ce-leafNode ve-ce-mwEntityNode" contenteditable="false">c</span>' +
+					'd<span rel="ve:Alien" class="ve-ce-focusableNode" contenteditable="false">e</span>' +
+				'</b>'
 		} ];
 	QUnit.expect( cases.length );
 	for ( i = 0, len = cases.length; i < len; i++ ) {
-		doc = new ve.dm.Document( ve.dm.example.preprocessAnnotations( cases[i].data ) );
-		$wrapper = $( new ve.ce.ParagraphNode( doc.getDocumentNode().getChildren()[0] ).getRenderedContents() );
+		doc = new ve.dm.Document( ve.dm.example.preprocessAnnotations( cases[ i ].data ) );
+		$wrapper = $( new ve.ce.ParagraphNode( doc.getDocumentNode().getChildren()[ 0 ] ).getRenderedContents() );
 		// HACK strip out all the class="ve-ce-textStyleAnnotation ve-ce-textStyleBoldAnnotation" crap
 		$wrapper.find( '.ve-ce-textStyleAnnotation' ).removeAttr( 'class' );
-		assert.equalDomElement( $wrapper[0], $( '<div>' ).html( cases[i].html )[0], cases[i].msg );
+		assert.equalDomElement( $wrapper[ 0 ], $( '<div>' ).html( cases[ i ].html )[ 0 ], cases[ i ].msg );
 	}
 } );

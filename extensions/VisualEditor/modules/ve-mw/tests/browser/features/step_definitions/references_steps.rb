@@ -4,7 +4,7 @@ Given(/^I go to a page that has references$/) do
 ==References==
 <references />"
 
-  on(APIPage).create 'Reference VisualEditor Test', wikitext
+  api.create_page 'Reference VisualEditor Test', wikitext
   step 'I am on the Reference VisualEditor Test page'
 end
 
@@ -18,21 +18,14 @@ end
 
 When(/^I click Reference$/) do
   on(VisualEditorPage) do |page|
-    page.insert_menu_element.when_present.click
+    page.insert_indicator_down_element.when_present.click
     page.ve_more_references_options_element.when_present.click
     page.ve_references_element.when_present.click
   end
 end
 
-When(/^I enter (.+) into Content box$/) do |content|
-  on(VisualEditorPage) do |page|
-    page.content_box_element.when_present
-    page.content_box_element.send_keys(content)
-  end
-end
-
 When(/^I click use an existing reference button in References User Interface$/) do
-  on(VisualEditorPage).existing_reference_element.when_present.click
+  on(VisualEditorPage).cite_reuse_existing_reference_element.when_present.click
 end
 
 When(/^I click on Extension:VisualEditor reference$/) do
@@ -40,7 +33,7 @@ When(/^I click on Extension:VisualEditor reference$/) do
 end
 
 When(/^I create a reference using existing reference$/) do
-  step('I click Reference')
+  step('I open the Cite menu')
   step('I click use an existing reference button in References User Interface')
   step('I click on Extension:VisualEditor reference')
 end
@@ -58,5 +51,5 @@ Then(/^I should see Insert reference button enabled$/) do
 end
 
 Then(/^link to Insert menu should be visible$/) do
-  expect(on(VisualEditorPage).insert_menu_element).to be_visible
+  expect(on(VisualEditorPage).insert_indicator_element).to be_visible
 end

@@ -1,7 +1,7 @@
 /*
  * VisualEditor user interface MWWikitextSwitchConfirmDialog class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2015 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -43,7 +43,7 @@ ve.ui.MWWikitextSwitchConfirmDialog.static.actions = [
 	{
 		action: 'cancel',
 		label: OO.ui.deferMsg( 'visualeditor-mweditmodesource-warning-cancel' ),
-		flags: 'safe'
+		flags: [ 'safe', 'back' ]
 	},
 	{
 		action: 'switch',
@@ -66,13 +66,13 @@ ve.ui.MWWikitextSwitchConfirmDialog.prototype.getActionProcess = function ( acti
 	if ( action === 'switch' ) {
 		return new OO.ui.Process( function () {
 			this.getActions().setAbilities( { cancel: false, discard: false } );
-			this.getActions().get()[1].pushPending();
+			this.getActions().get()[ 1 ].pushPending();
 			this.target.switchToWikitextEditor( false );
 		}, this );
 	} else if ( action === 'discard' ) {
 		return new OO.ui.Process( function () {
 			this.getActions().setAbilities( { cancel: false, switch: false } );
-			this.getActions().get()[2].pushPending();
+			this.getActions().get()[ 2 ].pushPending();
 			this.target.switchToWikitextEditor( true );
 		}, this );
 	} else if ( action === 'cancel' ) {

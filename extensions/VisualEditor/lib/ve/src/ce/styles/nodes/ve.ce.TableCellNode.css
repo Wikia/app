@@ -1,7 +1,7 @@
 /*!
  * VisualEditor ContentEditable TableCellNode styles.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 .ve-ce-tableCellNode {
@@ -23,6 +23,14 @@
 
 .ve-ce-tableCellNode-editing a {
 	pointer-events: auto;
+}
+
+.ve-ce-tableCellNode > .ve-ce-branchNode-blockSlug {
+	visibility: hidden;
+}
+
+.ve-ce-tableCellNode-editing > .ve-ce-branchNode-blockSlug {
+	visibility: visible;
 }
 
 /* Use child selectors to avoid making nested tables look active */

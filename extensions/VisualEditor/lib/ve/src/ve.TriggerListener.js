@@ -1,7 +1,7 @@
 /*!
  * VisualEditor UserInterface TriggerListener class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 /**
@@ -12,7 +12,7 @@
  * @constructor
  * @param {string[]} commands Commands to listen to triggers for
  */
-ve.TriggerListener = function VeUiTriggerListener( commands ) {
+ve.TriggerListener = function VeTriggerListener( commands ) {
 	// Properties
 	this.commands = [];
 	this.commandsByTrigger = {};
@@ -37,13 +37,13 @@ ve.TriggerListener.prototype.setupCommands = function ( commands ) {
 	this.commands = commands;
 	if ( commands.length ) {
 		for ( i = this.commands.length - 1; i >= 0; i-- ) {
-			command = this.commands[i];
+			command = this.commands[ i ];
 			triggers = ve.ui.triggerRegistry.lookup( command );
 			if ( triggers ) {
 				for ( j = triggers.length - 1; j >= 0; j-- ) {
-					this.commandsByTrigger[triggers[j].toString()] = ve.ui.commandRegistry.lookup( command );
+					this.commandsByTrigger[ triggers[ j ].toString() ] = ve.init.target.commandRegistry.lookup( command );
 				}
-				this.triggers[command] = triggers;
+				this.triggers[ command ] = triggers;
 			}
 		}
 	}
@@ -52,7 +52,7 @@ ve.TriggerListener.prototype.setupCommands = function ( commands ) {
 /**
  * Get list of commands.
  *
- * @returns {string[]} Commands
+ * @return {string[]} Commands
  */
 ve.TriggerListener.prototype.getCommands = function () {
 	return this.commands;
@@ -63,18 +63,18 @@ ve.TriggerListener.prototype.getCommands = function () {
  *
  * @method
  * @param {string} trigger Trigger string
- * @returns {ve.ui.Command|undefined} Command
+ * @return {ve.ui.Command|undefined} Command
  */
 ve.TriggerListener.prototype.getCommandByTrigger = function ( trigger ) {
-	return this.commandsByTrigger[trigger];
+	return this.commandsByTrigger[ trigger ];
 };
 
 /**
  * Get triggers for a specified name.
  *
  * @param {string} name Trigger name
- * @returns {ve.ui.Trigger[]|undefined} Triggers
+ * @return {ve.ui.Trigger[]|undefined} Triggers
  */
 ve.TriggerListener.prototype.getTriggers = function ( name ) {
-	return this.triggers[name];
+	return this.triggers[ name ];
 };

@@ -2,12 +2,13 @@
 	"@metadata": {
 		"authors": [
 			"Supasate",
-			"Taweetham"
+			"Taweetham",
+			"Horus"
 		]
 	},
 	"tooltip-ca-createsource": "สร้างรหัสต้นฉบับของหน้านี้",
 	"tooltip-ca-editsource": "แก้ไขรหัสต้นฉบับของหน้านี้",
-	"tooltip-ca-ve-edit": "แก้ไขหน้านี้ด้วย VisualEditor",
+	"tooltip-ca-ve-edit": "แก้ไขหน้านี้",
 	"visualeditor-beta-label": "Beta",
 	"visualeditor-beta-warning": "VisualEditor อยู่ในสถานะ \"เบต้า\" คุณอาจพบปัญหาของซอฟต์แวร์ และคุณอาจไม่สามารถแก้ไขบางส่วนของหน้า คลิก \"{{int:visualeditor-ca-editsource}}\" เพื่อสลับไปที่โหมด wikitext – การเปลี่ยนแปลงที่ยังไม่ได้บันทึกจะสูญหาย",
 	"visualeditor-browserwarning": "คุณจะใช้เบราว์เซอร์ที่ไม่สนับสนุน VisualEditor",
@@ -68,9 +69,6 @@
 	"visualeditor-formatdropdown-format-mw-heading4": "หัวเรื่องรอง 2",
 	"visualeditor-formatdropdown-format-mw-heading5": "หัวเรื่องรอง 3",
 	"visualeditor-formatdropdown-format-mw-heading6": "หัวเรื่องรอง 4",
-	"visualeditor-linkinspector-suggest-external-link": "ลิงก์ภายนอก",
-	"visualeditor-linkinspector-suggest-matching-page": "การจับคู่หน้า",
-	"visualeditor-linkinspector-suggest-new-page": "หน้าใหม่",
 	"visualeditor-loadwarning": "การโหลดข้อมูลจากเซิร์ฟเวอร์ข้อผิดพลาด:  $1  คุณต้องการลองอีกครั้งหรือไม่",
 	"visualeditor-loadwarning-token": "มีความผิดพลาดการโหลดโทเค็นแก้ไขจากเซิร์ฟเวอร์: $1  คุณต้องการลองอีกครั้งหรือไม่ ?",
 	"visualeditor-mainnamespacepagelink": "Project:Main namespace",
@@ -107,7 +105,5 @@
 	"visualeditor-usernamespacepagelink": "Project:User namespace",
 	"visualeditor-viewpage-savewarning": "คุณแน่ใจว่าต้องการกลับไป view mode โดยไม่บันทึกข้อมูลเอาไว้ก่อน ?",
 	"visualeditor-wikitext-warning": "คุณกำลังใช้ VisualEditor-[[{{MediaWiki:visualeditor-wikitext-warning-link}}|wikitext]] ทำงานไม่ได้ที่นี่ คลิก \"{{MediaWiki:visualeditor-ca-editsource}}\" เพื่อแก้ไขหน้านี้ในโหมด wikitext – การเปลี่ยนแปลงที่ยังไม่ได้บันทึกจะสูญหาย",
-	"visualeditor-wikitext-warning-link": "Help:Wiki markup",
-	"visualeditor-wikitext-warning-title": "ตรวจพบ Wikitext markup",
-	"visualeditor-dialog-media-insert-title": "แทรกสื่อ"
+	"visualeditor-wikitext-warning-title": "ตรวจพบ Wikitext markup"
 }

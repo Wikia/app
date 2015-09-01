@@ -1,15 +1,18 @@
 {
 	"@metadata": {
 		"authors": [
-			"Gitartha.bordoloi"
+			"Gitartha.bordoloi",
+			"Dibya Dutta"
 		]
 	},
 	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|ভিজুৱেলএডিটৰ]]",
 	"tag-visualeditor-description": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|ভিজুৱেলেডিটৰ]]ৰে কৰা সম্পাদনা",
 	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|ভিজুৱেলেডিটৰ: পৰীক্ষা কৰক]]",
-	"tag-visualeditor-needcheck-description": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|ভিজুৱেলেডিটৰ]]ৰে সম্পাদনা কৰা হৈছে য'ত প্ৰণালীয়ে সম্ভাব্য অনিচ্ছাকৃতভাৱে সালসলনি হোৱা ৱিকিপাঠ্য চিনাক্ত কৰিছে।",
+	"tag-visualeditor-needcheck-description": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|ভিজুৱেল এডিটৰ]]ৰে সম্পাদনা কৰা হৈছে য'ত প্ৰণালীয়ে অনিচ্ছাকৃতভাৱে সালসলনি হোৱা সম্ভাব্য ৱিকিপাঠ্য চিনাক্ত কৰিছে।",
+	"tag-visualeditor-switched": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|ভিজুৱেলএডিটৰ: পৰিবৰ্তন]]",
+	"tag-visualeditor-switched-description": "সদস্যই ভিজুৱেল এডিটৰ ব্যৱহাৰ কৰি সম্পাদনা আৰম্ভ কৰি, পাছত ৱিকিপাঠ সম্পাদকলৈ সলনি কৰিছিল।",
 	"visualeditor-feedback-link": "Project:ভিজুৱেলেডিটৰ/প্ৰতিক্ৰিয়া",
-	"visualeditor-feedback-tool": "আপোনাৰ মন্তব্য জনাওক",
+	"visualeditor-feedback-tool": "এই চফ্টৱেৰ সম্পৰ্কত আপোনাৰ মন্তব্য দিয়ক",
 	"visualeditor-help-label": "ব্যৱহাৰকাৰী নিৰ্দেশিকা পঢ়ক",
-	"visualeditor-help-title": "কিদৰে এডিটৰ ব্যৱহাৰ কৰিব তাৰ বাবে ব্যৱহাৰকাৰী নিৰ্দেশিকা"
+	"visualeditor-help-title": "কিদৰে এডিটৰ ব্যৱহাৰ কৰিব তাৰ নিৰ্দেশিকা"
 }

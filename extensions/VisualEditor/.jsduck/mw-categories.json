@@ -1,0 +1,39 @@
+[
+	{
+		"name": "VisualEditor (MediaWiki extension)",
+		"groups": [
+			{
+				"name": "Initialization",
+				"classes": [
+					"mw.libs.ve*",
+					"ve.init.mw*",
+					"ve.version"
+				]
+			},
+			{
+				"name": "User Interface",
+				"classes": [
+					"ve.ui.MW*Page"
+				]
+			},
+			{
+				"name": "Data Model",
+				"classes": [
+					"ve.dm.MWMediaResource*"
+				]
+			}
+		]
+	},
+	{
+		"name": "Upstream (MediaWiki)",
+		"groups": [
+			{
+				"name": "MediaWiki",
+				"classes": [
+					"mw.Title",
+					"mw.widgets.TitleInputWidget"
+				]
+			}
+		]
+	}
+]

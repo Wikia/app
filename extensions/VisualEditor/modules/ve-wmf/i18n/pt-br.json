@@ -10,15 +10,22 @@
 			"Luckas",
 			"OTAVIO1981",
 			555,
-			"He7d3r"
+			"He7d3r",
+			"Amire80",
+			"아라",
+			"TheEduGobi",
+			"TheGabrielZaum"
 		]
 	},
 	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|Editor Visual]]",
-	"tag-visualeditor-description": "Edição realizada utilizando o [[{{MediaWiki:visualeditor-descriptionpagelink}}|Editor Visual]]",
+	"tag-visualeditor-description": "Edição feita utilizando o [[{{MediaWiki:visualeditor-descriptionpagelink}}|Editor Visual]]",
 	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|Editor Visual: Verificar]]",
-	"tag-visualeditor-needcheck-description": "Edição realizada com o [[{{MediaWiki:visualeditor-descriptionpagelink}}|Editor Visual]] em que o sistema detectou que o wikitexto possivelmente possui mudanças não planejadas.",
+	"tag-visualeditor-needcheck-description": "Edição feita utilizando o [[{{MediaWiki:visualeditor-descriptionpagelink}}|editor visual]] em que o sistema detectou possíveis mudanças não-intencionais ao wikitexto.",
+	"tag-visualeditor-switched": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|Editor Visual: Alternado]]",
+	"tag-visualeditor-switched-description": "O usuário começou a editar usando o Editor Visual, e depois alternou para o editor de código-fonte.",
 	"visualeditor-feedback-link": "Project:Editor Visual/Comentários",
-	"visualeditor-feedback-tool": "Deixar um comentário",
+	"visualeditor-feedback-tool": "Deixar comentários sobre este software",
 	"visualeditor-help-label": "Ler o guia do usuário",
-	"visualeditor-help-title": "Guia do usuário para saber como usar o editor"
+	"visualeditor-help-link": "mw:Special:MyLanguage/Help:VisualEditor/User guide",
+	"visualeditor-help-title": "Guia para saber como usar o editor"
 }

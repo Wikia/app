@@ -1,7 +1,7 @@
 /*!
  * VisualEditor MediaWiki UserInterface MWMediaResultWidget styles.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2015 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -11,6 +11,16 @@
 	padding: 0;
 	margin: 2px;
 	overflow: hidden;
+	box-sizing: border-box;
+	text-align: center;
+}
+
+.ve-ui.mwMediaResultWidget-eol:after {
+	content: ".";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;
 }
 
 .ve-ui-mwMediaResultWidget-error {
@@ -18,8 +28,8 @@
 }
 
 .ve-ui-mwMediaResultWidget-thumbnail {
-	position: absolute;
 	opacity: 0;
+	display: inline-block;
 	-webkit-transition: opacity 400ms;
 	-moz-transition: opacity 400ms;
 	-o-transition: opacity 400ms;
@@ -58,7 +68,7 @@
 	background-repeat: no-repeat;
 }
 
-.ve-ui-mwMediaResultWidget .oo-ui-labelElement-label {
+.ve-ui-mwMediaResultWidget .ve-ui-mwMediaResultWidget-nameLabel {
 	position: absolute;
 	bottom: 0;
 	left: 0;
@@ -70,13 +80,14 @@
 	line-height: 1.125em;
 	background-color: rgba(0,0,0,0.5);
 	text-overflow: ellipsis;
+	text-align: left;
 }
 
-.ve-ui-mwMediaResultWidget.oo-ui-optionWidget-highlighted .oo-ui-labelElement-label {
+.ve-ui-mwMediaResultWidget.oo-ui-optionWidget-highlighted .ve-ui-mwMediaResultWidget-nameLabel {
 	background-color: rgba(0,0,0,0.75);
 }
 
-.ve-ui-mwMediaResultWidget.oo-ui-optionWidget-selected .oo-ui-labelElement-label {
+.ve-ui-mwMediaResultWidget.oo-ui-optionWidget-selected .ve-ui-mwMediaResultWidget-nameLabel {
 	background-color: #000;
 }
 

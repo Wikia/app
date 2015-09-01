@@ -1,7 +1,7 @@
 /*
  * VisualEditor user interface MWRequiredParamBlankConfirmDialog class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2015 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -42,7 +42,7 @@ ve.ui.MWRequiredParamBlankConfirmDialog.static.actions = [
 	{
 		action: 'cancel',
 		label: OO.ui.deferMsg( 'visualeditor-dialog-transclusion-required-parameter-dialog-cancel' ),
-		flags: 'safe'
+		flags: [ 'safe', 'back' ]
 	}
 ];
 

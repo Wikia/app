@@ -1,7 +1,7 @@
 /*!
  * VisualEditor ContentEditable ResizableNode styles.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 .ve-ce-resizableNode-handles {
@@ -21,6 +21,13 @@
 	width: 11px;
 	height: 11px;
 	background-repeat: no-repeat;
+}
+
+.ve-ce-resizableNode-hide-nw .ve-ce-resizableNode-nwHandle,
+.ve-ce-resizableNode-hide-ne .ve-ce-resizableNode-neHandle,
+.ve-ce-resizableNode-hide-sw .ve-ce-resizableNode-swHandle,
+.ve-ce-resizableNode-hide-se .ve-ce-resizableNode-seHandle {
+	display: none;
 }
 
 .ve-ce-resizableNode-nwHandle {
@@ -71,11 +78,10 @@
 }
 
 .ve-ce-resizableNode-sizeLabel-resizing {
-	opacity: 0.75;
+	opacity: 1;
 }
 
 .ve-ce-resizableNode-sizeText {
-	font-size: 0.8em;
 	padding: 0.25em 0.5em;
 	border: 1px solid #ccc;
 	background-color: white;

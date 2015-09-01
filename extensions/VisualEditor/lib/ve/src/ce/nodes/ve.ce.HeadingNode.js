@@ -1,14 +1,14 @@
 /*!
  * VisualEditor ContentEditable HeadingNode class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 /**
  * ContentEditable heading node.
  *
  * @class
- * @extends ve.ce.BranchNode
+ * @extends ve.ce.ContentBranchNode
  * @constructor
  * @param {ve.dm.HeadingNode} model Model to observe
  * @param {Object} [config] Configuration options
@@ -36,7 +36,7 @@ ve.ce.HeadingNode.static.name = 'heading';
  *
  * Tag name is selected based on the model's level attribute.
  *
- * @returns {string} HTML tag name
+ * @return {string} HTML tag name
  * @throws {Error} If level is invalid
  */
 ve.ce.HeadingNode.prototype.getTagName = function () {
@@ -46,7 +46,7 @@ ve.ce.HeadingNode.prototype.getTagName = function () {
 	if ( !Object.prototype.hasOwnProperty.call( types, level ) ) {
 		throw new Error( 'Invalid level' );
 	}
-	return types[level];
+	return types[ level ];
 };
 
 /**

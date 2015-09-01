@@ -1,51 +1,83 @@
 /*!
  * VisualEditor ContentEditable BranchNode styles.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
-.ve-ce-branchNode-blockSlugWrapper,
-.ve-ce-branchNode-blockSlugWrapper-former {
-	background-color: transparent;
-	outline: transparent dashed 1px;
-	outline-offset: 10px;
-	-webkit-transition: background-color 400ms ease-out, outline-color 400ms ease-out, outline-offset 400ms ease-out;
-	-moz-transition: background-color 400ms ease-out, outline-color 400ms ease-out, outline-offset 400ms ease-out;
-	-o-transition: background-color 400ms ease-out, outline-color 400ms ease-out, outline-offset 400ms ease-out;
-	transition: background-color 400ms ease-out, outline-color 400ms ease-out, outline-offset 400ms ease-out;
+.ve-ce-branchNode-blockSlug {
+	cursor: pointer;
+	opacity: 0;
+	-webkit-transition: opacity 200ms ease-out;
+	-moz-transition: opacity 200ms ease-out;
+	-o-transition: opacity 200ms ease-out;
+	transition: opacity 200ms ease-out;
 }
 
-.ve-ce-branchNode-blockSlugWrapper .ve-ce-branchNode-blockSlug,
-.ve-ce-branchNode-blockSlugWrapper-former p {
-	-webkit-transition: font-size 200ms ease-out, margin 200ms ease-out;
-	-moz-transition: font-size 200ms ease-out, margin 200ms ease-out;
-	-o-transition: font-size 200ms ease-out, margin 200ms ease-out;
-	transition: font-size 200ms ease-out, margin 200ms ease-out;
+.ve-ce-branchNode-blockSlug:hover,
+.ve-ce-branchNode-blockSlug.ve-ce-branchNode-blockSlug-focused {
+	opacity: 1;
 }
 
-.ve-ce-branchNode-blockSlugWrapper-unfocused,
-.ve-ce-branchNode-blockSlugWrapper-former-unfocused {
-	margin: 0 0 -0.2em 0;
-	outline-offset: 0;
-}
-
-.ve-ce-branchNode-blockSlugWrapper-unfocused:hover,
-.ve-ce-branchNode-blockSlugWrapper-former-unfocused {
-	outline-color: #ccc;
+.ve-ce-branchNode-blockSlug,
+.ve-ce-branchNode-newSlug {
+	margin: -0.3em 0 -0.1em 0;
+	outline: 1px dashed #ccc;
 	/* rgba(#f1f7fb, 0.5) */
 	background-color: rgba(241, 247, 251, 0.75);
 }
 
-.ve-ce-branchNode-blockSlugWrapper-unfocused .ve-ce-branchNode-blockSlug,
-.ve-ce-branchNode-blockSlugWrapper-former-unfocused p {
-	font-size: 0.8em;
-	margin: 0.2em 0;
+.ve-ce-branchNode-newSlug-open {
+	margin: 1em 0;
+	background-color: transparent;
+	outline-color: transparent;
+	outline-offset: 1em;
+	-webkit-transition: all 400ms ease-out;
+	-moz-transition: all 400ms ease-out;
+	-o-transition: all 400ms ease-out;
+	transition: all 400ms ease-out;
+}
+
+.ve-ce-branchNode-blockSlug > .oo-ui-buttonWidget {
+	margin-left: 0.25em;
+	opacity: 0.5;
+	display: block;
+}
+
+.ve-ce-branchNode-blockSlug > .oo-ui-buttonWidget > .oo-ui-buttonElement-button {
+	display: block;
+}
+
+.ve-ce-branchNode-blockSlug > .oo-ui-buttonWidget > .oo-ui-buttonElement-button > .oo-ui-labelElement-label {
+	vertical-align: baseline;
+}
+
+.ve-ce-branchNode-blockSlug > .oo-ui-buttonWidget > .oo-ui-buttonElement-button > .oo-ui-iconElement-icon {
+	width: 0.95em;
+	height: 0.95em;
+	background-size: auto;
+}
+
+.ve-ce-chimera {
+	width: 0;
+	height: 0;
+}
+
+.ve-ce-chimera-webkit {
+	/* Cursor positioning tweak */
+	width: 1px;
+	height: 1em;
+}
+
+.ve-ce-chimera-debug {
+	width: auto;
+	height: auto;
 }
 
 /* Pre-formatted node styling */
 
 pre.ve-ce-branchNode {
-	white-space: pre-wrap;
+	/* Prevent silly wrapping on Safari and Chrome (https://bugs.webkit.org/show_bug.cgi?id=35935) */
+	word-wrap: normal;
 }
 
 /* Hack for empty headings and paragraphs; can't use min-height because of IE */

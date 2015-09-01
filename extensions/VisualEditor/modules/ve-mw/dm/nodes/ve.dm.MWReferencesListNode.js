@@ -1,7 +1,7 @@
 /*!
  * VisualEditor DataModel MWReferencesListNode class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2015 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -36,15 +36,17 @@ ve.dm.MWReferencesListNode.static.name = 'mwReferencesList';
 
 ve.dm.MWReferencesListNode.static.handlesOwnChildren = true;
 
+ve.dm.MWReferencesListNode.static.ignoreChildren = true;
+
 ve.dm.MWReferencesListNode.static.matchTagNames = null;
 
 ve.dm.MWReferencesListNode.static.matchRdfaTypes = [ 'mw:Extension/references' ];
 
-ve.dm.MWReferencesListNode.static.storeHtmlAttributes = false;
+ve.dm.MWReferencesListNode.static.preserveHtmlAttributes = false;
 
 ve.dm.MWReferencesListNode.static.toDataElement = function ( domElements, converter ) {
-	var referencesListData, $contents, contentsData,
-		mwDataJSON = domElements[0].getAttribute( 'data-mw' ),
+	var referencesListData, contentsDiv, contentsData,
+		mwDataJSON = domElements[ 0 ].getAttribute( 'data-mw' ),
 		mwData = mwDataJSON ? JSON.parse( mwDataJSON ) : {},
 		refGroup = mwData.attrs && mwData.attrs.group || '',
 		listGroup = 'mwReference/' + refGroup;
@@ -54,33 +56,34 @@ ve.dm.MWReferencesListNode.static.toDataElement = function ( domElements, conver
 		attributes: {
 			mw: mwData,
 			originalMw: mwDataJSON,
-			domElements: ve.copy( domElements ),
 			refGroup: refGroup,
 			listGroup: listGroup
 		}
 	};
 	if ( mwData.body && mwData.body.html ) {
-		$contents = $( '<div>', domElements[0].ownerDocument ).append( mwData.body.html );
-		contentsData = converter.getDataFromDomClean( $contents[0] );
-		return [ referencesListData ].
-			concat( contentsData ).
-			concat( [ { type: '/' + this.name } ] );
-	} else {
-		return referencesListData;
+		// Process the nodes in .body.html as if they were this node's children
+		contentsDiv = domElements[ 0 ].ownerDocument.createElement( 'div' );
+		contentsDiv.innerHTML = mwData.body.html;
+		contentsData = converter.getDataFromDomClean( contentsDiv );
+		referencesListData = [ referencesListData ]
+			.concat( contentsData )
+			.concat( [ { type: '/' + this.name } ] );
 	}
-
+	return referencesListData;
 };
 
 ve.dm.MWReferencesListNode.static.toDomElements = function ( data, doc, converter ) {
-	var el, els, mwData, originalMw, wrapper, contentsHtml, originalHtml,
-		dataElement = data[0],
+	var el, els, mwData, originalMw, contentsHtml, originalHtml,
+		wrapper = doc.createElement( 'div' ),
+		originalHtmlWrapper = doc.createElement( 'div' ),
+		dataElement = data[ 0 ],
 		attribs = dataElement.attributes,
 		contentsData = data.slice( 1, -1 );
 
-	if ( attribs.domElements ) {
+	if ( dataElement.originalDomElements ) {
 		// If there's more than 1 element, preserve entire array, not just first element
-		els = ve.copyDomElements( attribs.domElements, doc );
-		el = els[0];
+		els = ve.copyDomElements( dataElement.originalDomElements, doc );
+		el = els[ 0 ];
 	} else {
 		el = doc.createElement( 'div' );
 		els = [ el ];
@@ -99,12 +102,12 @@ ve.dm.MWReferencesListNode.static.toDomElements = function ( data, doc, converte
 	el.setAttribute( 'typeof', 'mw:Extension/references' );
 
 	if ( contentsData.length > 2 ) {
-		wrapper = doc.createElement( 'div' );
 		converter.getDomSubtreeFromData( data.slice( 1, -1 ), wrapper );
-		contentsHtml = $( wrapper ).html(); // Returns '' if wrapper is empty
+		contentsHtml = wrapper.innerHTML; // Returns '' if wrapper is empty
 		originalHtml = ve.getProp( mwData, 'body', 'html' ) || '';
+		originalHtmlWrapper.innerHTML = originalHtml;
 		// Only set body.html if contentsHtml and originalHtml are actually different
-		if ( !$( '<div>' ).html( originalHtml ).get( 0 ).isEqualNode( wrapper ) ) {
+		if ( !originalHtmlWrapper.isEqualNode( wrapper ) ) {
 			ve.setProp( mwData, 'body', 'html', contentsHtml );
 		}
 	}

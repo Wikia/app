@@ -1,7 +1,7 @@
 /*!
  * VisualEditor ContentEditable MWImageNode class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2015 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -25,11 +25,14 @@ ve.ce.MWImageNode = function VeCeMWImageNode( $figure, $image, config ) {
 		minDimensions: { width: 1, height: 1 }
 	}, config );
 
-	// Parent constructor
-	ve.ce.GeneratedContentNode.call( this );
-
+	// Properties
 	this.$figure = $figure;
 	this.$image = $image;
+	// Parent constructor triggers render so this must preceed it
+	this.renderedDimensions = null;
+
+	// Parent constructor
+	ve.ce.GeneratedContentNode.call( this );
 
 	// Mixin constructors
 	ve.ce.FocusableNode.call( this, this.$figure, config );
@@ -79,14 +82,22 @@ ve.ce.MWImageNode.prototype.onAttributeChange = function () {};
 
 /** */
 ve.ce.MWImageNode.prototype.generateContents = function () {
-	var xhr, deferred = $.Deferred();
+	var xhr,
+		width = this.getModel().getAttribute( 'width' ),
+		height = this.getModel().getAttribute( 'height' ),
+		deferred = $.Deferred();
 
-	xhr = ve.init.target.constructor.static.apiRequest( {
+	// If the current rendering is larger don't fetch a new image, just let the browser resize
+	if ( this.renderedDimensions && this.renderedDimensions.width > width ) {
+		return deferred.reject().promise();
+	}
+
+	xhr = new mw.Api().get( {
 		action: 'query',
 		prop: 'imageinfo',
 		iiprop: 'url',
-		iiurlwidth: this.getModel().getAttribute( 'width' ),
-		iiurlheight: this.getModel().getAttribute( 'height' ),
+		iiurlwidth: width,
+		iiurlheight: height,
 		titles: this.getModel().getFilename()
 	} )
 		.done( this.onParseSuccess.bind( this, deferred ) )
@@ -104,8 +115,8 @@ ve.ce.MWImageNode.prototype.generateContents = function () {
 ve.ce.MWImageNode.prototype.onParseSuccess = function ( deferred, response ) {
 	var id, src, pages = ve.getProp( response, 'query', 'pages' );
 	for ( id in pages ) {
-		if ( pages[id].imageinfo ) {
-			src = pages[id].imageinfo[0].thumburl;
+		if ( pages[ id ].imageinfo ) {
+			src = pages[ id ].imageinfo[ 0 ].thumburl;
 		}
 	}
 	if ( src ) {
@@ -117,8 +128,10 @@ ve.ce.MWImageNode.prototype.onParseSuccess = function ( deferred, response ) {
 
 /** */
 ve.ce.MWImageNode.prototype.render = function ( generatedContents ) {
-	this.$image.attr( 'src', ve.resolveUrl( generatedContents, this.getModelHtmlDocument() ) );
-
+	this.$image.attr( 'src', generatedContents );
+	// As we only re-render when the image is larger than last renedered size
+	// this will always be the largest ever rendering
+	this.renderedDimensions = ve.copy( this.model.getScalable().getCurrentDimensions() );
 	if ( this.live ) {
 		this.afterRender();
 	}

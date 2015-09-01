@@ -1,0 +1,11 @@
+{
+	"@metadata": {
+		"authors": [
+			"Kghbln",
+			"Se4598"
+		]
+	},
+	"visualeditor-browserwarning": "Sie verwenden einen Browser, der vom VisualEditor nicht offiziell unterstützt wird.",
+	"visualeditor-editsummary": "Beschreiben Sie, was Sie geändert haben.",
+	"visualeditor-viewpage-savewarning": "Sind Sie sicher, dass Sie zum Ansichtsmodus wechseln möchten, ohne vorher zu speichern?"
+}

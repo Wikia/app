@@ -1,7 +1,7 @@
 /*!
  * VisualEditor UserInterface DesktopSurface class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 /**
@@ -17,7 +17,7 @@
  */
 ve.ui.DesktopSurface = function VeUiDesktopSurface() {
 	// Parent constructor
-	ve.ui.Surface.apply( this, arguments );
+	ve.ui.DesktopSurface.super.apply( this, arguments );
 };
 
 /* Inheritance */
@@ -30,12 +30,12 @@ OO.inheritClass( ve.ui.DesktopSurface, ve.ui.Surface );
  * @inheritdoc
  */
 ve.ui.DesktopSurface.prototype.createContext = function () {
-	return new ve.ui.DesktopContext( this, { $: this.$ } );
+	return new ve.ui.DesktopContext( this );
 };
 
 /**
  * @inheritdoc
  */
 ve.ui.DesktopSurface.prototype.createDialogWindowManager = function () {
-	return new ve.ui.WindowManager( { factory: ve.ui.windowFactory } );
+	return new ve.ui.SurfaceWindowManager( this, { factory: ve.ui.windowFactory } );
 };

@@ -1,7 +1,7 @@
 /*!
  * VisualEditor MediaWiki UserInterface citation dialog tool class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2015 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -28,8 +28,6 @@ OO.inheritClass( ve.ui.MWCitationDialogTool, ve.ui.MWReferenceDialogTool );
 
 ve.ui.MWCitationDialogTool.static.group = 'cite';
 
-ve.ui.MWCitationDialogTool.static.modelClasses = [ ve.dm.MWReferenceNode ];
-
 /**
  * Only display tool for single-template transclusions of these templates.
  *
@@ -39,7 +37,7 @@ ve.ui.MWCitationDialogTool.static.modelClasses = [ ve.dm.MWReferenceNode ];
  */
 ve.ui.MWCitationDialogTool.static.template = null;
 
-/* Methods */
+/* Static Methods */
 
 /**
  * @inheritdoc
@@ -53,10 +51,10 @@ ve.ui.MWCitationDialogTool.static.isCompatibleWith = function ( model ) {
 		// this.template
 		internalItem = model.getInternalItem();
 		branches = internalItem.getChildren();
-		if ( branches.length === 1 && branches[0].canContainContent() ) {
-			leaves = branches[0].getChildren();
-			if ( leaves.length === 1 && leaves[0] instanceof ve.dm.MWTransclusionNode ) {
-				return leaves[0].isSingleTemplate( this.template );
+		if ( branches.length === 1 && branches[ 0 ].canContainContent() ) {
+			leaves = branches[ 0 ].getChildren();
+			if ( leaves.length === 1 && leaves[ 0 ] instanceof ve.dm.MWTransclusionNode ) {
+				return leaves[ 0 ].isSingleTemplate( this.template );
 			}
 		}
 		return false;

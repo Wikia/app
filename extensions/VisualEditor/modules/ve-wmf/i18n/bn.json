@@ -6,16 +6,19 @@
 			"Jayantanth",
 			"Nasir8891",
 			"Runab",
-			"Sayak Sarkar"
+			"Sayak Sarkar",
+			"Aftabuzzaman"
 		]
 	},
 	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|ভিজ্যুয়ালএডিটর]]",
-	"tag-visualeditor-description": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|ভিজ্যুয়ালএডিটর]] দ্বারা সম্পাদিত",
+	"tag-visualeditor-description": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|ভিজ্যুয়ালএডিটর]] ব্যবহার করে সম্পাদিত",
 	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|ভিজ্যুয়ালএডিটর: যাচাই করুন]]",
-	"tag-visualeditor-needcheck-description": "এই সম্পাদনাটি [[{{MediaWiki:visualeditor-descriptionpagelink}}|ভিজ্যুয়ালএডিটর]] ব্যবহার করে সম্পাদনা করা হয়েছে যেখানে সিস্টেম সনাক্ত করেছে উইকিটেক্সটে সম্ভাব্য অনিচ্ছাকৃত পরিবর্তন ঘটেছে।",
-	"tag-visualeditor-switched": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|ভিজ্যুয়ালএডিটর: সুইচড]]",
+	"tag-visualeditor-needcheck-description": "এই সম্পাদনাটি [[{{MediaWiki:visualeditor-descriptionpagelink}}|ভিজ্যুয়াল এডিটর]] ব্যবহার করে সম্পাদনা করা হয়েছে যেখানে সিস্টেম সনাক্ত করেছে উইকিটেক্সটে সম্ভাব্য অনিচ্ছাকৃত পরিবর্তন ঘটেছে।",
+	"tag-visualeditor-switched": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|ভিজ্যুয়ালএডিটর: সুইচকৃত]]",
+	"tag-visualeditor-switched-description": "ব্যবহারকারী ভিজ্যুয়াল এডিটর ব্যবহার করে সম্পাদনা করতে শুরু করে, তারপর উইকিটেক্সট সম্পাদকে পরিবর্তন করে।",
 	"visualeditor-feedback-link": "Project:ভিজ্যুয়ালএডিটর/প্রতিক্রিয়া",
-	"visualeditor-feedback-tool": "আপনার প্রতিক্রিয়া জানান",
+	"visualeditor-feedback-tool": "এই সফটওয়্যার সম্পর্কে আপনার প্রতিক্রিয়া জানান",
 	"visualeditor-help-label": "ব্যবহারকারী নির্দেশিকা পড়ুন",
+	"visualeditor-help-link": "mw:Help:VisualEditor/User guide/bn",
 	"visualeditor-help-title": "কিভাবে এডিটর ব্যবহার করতে হবে তার জন্য নির্দেশিকা"
 }

@@ -1,7 +1,7 @@
 /*!
  * VisualEditor UserInterface ClearAnnotationTool class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 /**
@@ -31,22 +31,12 @@ ve.ui.ClearAnnotationTool.static.name = 'clear';
 
 ve.ui.ClearAnnotationTool.static.group = 'utility';
 
-ve.ui.ClearAnnotationTool.static.icon = 'clear';
+ve.ui.ClearAnnotationTool.static.icon = 'cancel';
 
 ve.ui.ClearAnnotationTool.static.title =
 	OO.ui.deferMsg( 'visualeditor-clearbutton-tooltip' );
 
 ve.ui.ClearAnnotationTool.static.commandName = 'clear';
-
-/* Methods */
-
-/**
- * @inheritdoc
- */
-ve.ui.ClearAnnotationTool.prototype.onSelect = function () {
-	ve.track( 'tool.annotation.select', { name: this.constructor.static.name } );
-	ve.ui.Tool.prototype.onSelect.apply( this, arguments );
-};
 
 /* Registration */
 

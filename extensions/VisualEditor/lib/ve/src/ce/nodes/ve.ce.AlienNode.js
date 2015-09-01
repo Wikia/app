@@ -1,7 +1,7 @@
 /*!
  * VisualEditor ContentEditable AlienNode, AlienBlockNode and AlienInlineNode classes.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 /**
@@ -11,7 +11,7 @@
  * @abstract
  * @extends ve.ce.LeafNode
  * @mixins ve.ce.FocusableNode
- * @mixins ve.ce.GeneratedContentNode
+ * @mixins ve.ce.TableCellableNode
  *
  * @constructor
  * @param {ve.dm.AlienNode} model
@@ -21,12 +21,14 @@ ve.ce.AlienNode = function VeCeAlienNode() {
 	// Parent constructor
 	ve.ce.AlienNode.super.apply( this, arguments );
 
-	// Mixin constructors
-	ve.ce.FocusableNode.call( this );
-	ve.ce.GeneratedContentNode.call( this );
-
 	// DOM changes
-	this.$highlights.addClass( 've-ce-alienNode-highlights' );
+	this.$element = $( ve.copyDomElements( this.model.getOriginalDomElements(), document ) );
+
+	// Mixin constructors
+	ve.ce.FocusableNode.call( this, this.$element, {
+		classes: [ 've-ce-alienNode-highlights' ]
+	} );
+	ve.ce.TableCellableNode.call( this );
 };
 
 /* Inheritance */
@@ -35,7 +37,7 @@ OO.inheritClass( ve.ce.AlienNode, ve.ce.LeafNode );
 
 OO.mixinClass( ve.ce.AlienNode, ve.ce.FocusableNode );
 
-OO.mixinClass( ve.ce.AlienNode, ve.ce.GeneratedContentNode );
+OO.mixinClass( ve.ce.AlienNode, ve.ce.TableCellableNode );
 
 /* Static Properties */
 
@@ -46,20 +48,8 @@ ve.ce.AlienNode.static.name = 'alien';
 /**
  * @inheritdoc
  */
-ve.ce.AlienNode.prototype.createHighlight = function () {
-	// Mixin method
-	return ve.ce.FocusableNode.prototype.createHighlight.call( this )
-		.addClass( 've-ce-alienNode-highlight' )
-		.attr( 'title', ve.msg( 'visualeditor-aliennode-tooltip' ) );
-};
-
-/**
- * @inheritdoc
- */
-ve.ce.AlienNode.prototype.generateContents = function ( config )  {
-	var deferred = $.Deferred();
-	deferred.resolve( ( config && config.domElements ) || this.model.getAttribute( 'domElements' ) || [] );
-	return deferred.promise();
+ve.ce.AlienNode.static.getDescription = function () {
+	return ve.msg( 'visualeditor-aliennode-tooltip' );
 };
 
 /* Concrete subclasses */
@@ -112,6 +102,5 @@ ve.ce.AlienInlineNode.static.name = 'alienInline';
 
 /* Registration */
 
-ve.ce.nodeFactory.register( ve.ce.AlienNode );
 ve.ce.nodeFactory.register( ve.ce.AlienBlockNode );
 ve.ce.nodeFactory.register( ve.ce.AlienInlineNode );

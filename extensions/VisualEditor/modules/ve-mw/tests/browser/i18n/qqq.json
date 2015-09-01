@@ -1,0 +1,11 @@
+{
+	"@metadata": {
+		"authors": [
+			"Amire80"
+		]
+	},
+	"visualeditor-languagescreenshot-desc": "{{desc|name=VisualEditor|url=https://www.mediawiki.org/wiki/Help:VisualEditor/User_guide}}",
+	"visualeditor-languagescreenshot-hello-world-text": "A text to show as content in VisualEditor.",
+	"visualeditor-languagescreenshot-world-text": "The word 'world' from {{msg-mw|languagescreenshot-hello-world-text}}.",
+	"visualeditor-languagescreenshot-category-earth-text": "A text used in wiki syntax to add the category Earth to an article."
+}

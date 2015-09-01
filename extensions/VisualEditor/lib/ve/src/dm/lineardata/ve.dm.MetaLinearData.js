@@ -3,7 +3,7 @@
  *
  * Class containing meta linear data and an index-value store.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 /**
@@ -47,14 +47,16 @@ OO.inheritClass( ve.dm.MetaLinearData, ve.dm.LinearData );
  *
  * @static
  * @param {Array} data Meta linear data arrays
- * @returns {Array} Merged data
+ * @return {Array} Merged data
  */
 ve.dm.MetaLinearData.static.merge = function ( data ) {
-	var i, merged = [], allUndefined = true;
+	var i,
+		merged = [],
+		allUndefined = true;
 	for ( i = 0; i < data.length; i++ ) {
-		if ( data[i] !== undefined ) {
+		if ( data[ i ] !== undefined ) {
 			allUndefined = false;
-			merged = merged.concat( data[i] );
+			merged = merged.concat( data[ i ] );
 		}
 	}
 	return allUndefined ? [ undefined ] : [ merged ];
@@ -70,15 +72,15 @@ ve.dm.MetaLinearData.static.merge = function ( data ) {
  * @method
  * @param {number} [offset] Offset to get data from
  * @param {number} [metadataOffset] Index to get data from
- * @returns {Object|Array} Data from index(es), or all data (by reference)
+ * @return {Object|Array} Data from index(es), or all data (by reference)
  */
 ve.dm.MetaLinearData.prototype.getData = function ( offset, metadataOffset ) {
 	if ( offset === undefined ) {
 		return this.data;
 	} else if ( metadataOffset === undefined ) {
-		return this.data[offset];
+		return this.data[ offset ];
 	} else {
-		return this.data[offset] === undefined ? undefined : this.data[offset][metadataOffset];
+		return this.data[ offset ] === undefined ? undefined : this.data[ offset ][ metadataOffset ];
 	}
 };
 
@@ -87,24 +89,46 @@ ve.dm.MetaLinearData.prototype.getData = function ( offset, metadataOffset ) {
  *
  * @method
  * @param {number} offset Offset to count metadata at
- * @returns {number} Number of metadata elements at specified offset
+ * @return {number} Number of metadata elements at specified offset
  */
 ve.dm.MetaLinearData.prototype.getDataLength = function ( offset ) {
-	return this.data[offset] === undefined ? 0 : this.data[offset].length;
+	return this.data[ offset ] === undefined ? 0 : this.data[ offset ].length;
 };
 
 /**
  * Gets number of metadata elements in the entire object.
  *
  * @method
- * @returns {number} Number of metadata elements in the entire object
+ * @return {number} Number of metadata elements in the entire object
  */
 ve.dm.MetaLinearData.prototype.getTotalDataLength = function () {
-	var n = 0, i = this.getLength();
+	var n = 0,
+		i = this.getLength();
 	while ( i-- ) {
 		n += this.getDataLength( i );
 	}
 	return n;
+};
+
+/**
+ * Splice into the metadata array at a specific offset.
+ *
+ * @method
+ * @see ve#batchSplice
+ * @param {number} offset Splice into the metadata array for this offset
+ * @param {number} index Index in the metadata array to insert/remove at
+ * @param {number} remove Number of items to remove
+ * @param {Array} insert Items to insert
+ * @return {Array} Removed items
+ */
+ve.dm.MetaLinearData.prototype.spliceMetadataAtOffset = function ( offset, index, remove, insert ) {
+	var items = this.getData( offset );
+	if ( !items ) {
+		items = [];
+		this.setData( offset, items );
+	}
+	insert = insert || [];
+	return ve.batchSplice( items, index, remove, insert );
 };
 
 /**
@@ -113,7 +137,7 @@ ve.dm.MetaLinearData.prototype.getTotalDataLength = function () {
  * @method
  * @param {number} offset Offset to get annotations for
  * @param {number} index Index to get annotations for
- * @returns {number[]} An array of annotation store indexes the offset is covered by
+ * @return {number[]} An array of annotation store indexes the offset is covered by
  */
 ve.dm.MetaLinearData.prototype.getAnnotationIndexesFromOffsetAndIndex = function ( offset, index ) {
 	var item = this.getData( offset, index );
@@ -128,7 +152,7 @@ ve.dm.MetaLinearData.prototype.getAnnotationIndexesFromOffsetAndIndex = function
  * @method
  * @param {number} offset Offset to get annotations for
  * @param {number} index Index to get annotations for
- * @returns {ve.dm.AnnotationSet} A set of all annotation objects offset is covered by
+ * @return {ve.dm.AnnotationSet} A set of all annotation objects offset is covered by
  */
 ve.dm.MetaLinearData.prototype.getAnnotationsFromOffsetAndIndex = function ( offset, index ) {
 	return new ve.dm.AnnotationSet( this.getStore(), this.getAnnotationIndexesFromOffsetAndIndex( offset, index ) );
@@ -141,11 +165,11 @@ ve.dm.MetaLinearData.prototype.getAnnotationsFromOffsetAndIndex = function ( off
  *
  * @method
  * @param {number} offset Offset to set annotations at
- * @param {number} metadataOffset Index to set annotations at
+ * @param {number} metadataIndex Index to set annotations at
  * @param {ve.dm.AnnotationSet} annotations Annotations to set
  */
-ve.dm.MetaLinearData.prototype.setAnnotationsAtOffsetAndIndex = function ( offset, index, annotations ) {
-	var item = this.getData( offset, index );
+ve.dm.MetaLinearData.prototype.setAnnotationsAtOffsetAndIndex = function ( offset, metadataIndex, annotations ) {
+	var item = this.getData( offset, metadataIndex );
 	if ( annotations.isEmpty() ) {
 		// Clean up
 		delete item.annotations;

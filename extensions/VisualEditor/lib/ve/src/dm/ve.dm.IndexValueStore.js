@@ -1,7 +1,7 @@
 /*!
  * VisualEditor IndexValueStore class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 /**
@@ -28,7 +28,7 @@ ve.dm.IndexValueStore = function VeDmIndexValueStore() {
  * @param {Object|string|Array} value Value to lookup or store
  * @param {string} [hash] Value hash. Uses OO.getHash( value ) if not provided.
  * @param {boolean} [overwrite=false] Overwrite the value in the store if the hash is already in use
- * @returns {number} The index of the value in the store
+ * @return {number} The index of the value in the store
  */
 ve.dm.IndexValueStore.prototype.index = function ( value, hash, overwrite ) {
 	var index;
@@ -41,13 +41,13 @@ ve.dm.IndexValueStore.prototype.index = function ( value, hash, overwrite ) {
 			index = this.valueStore.length;
 		}
 		if ( Array.isArray( value ) ) {
-			this.valueStore[index] = ve.copy( value );
+			this.valueStore[ index ] = ve.copy( value );
 		} else if ( typeof value === 'object' ) {
-			this.valueStore[index] = ve.cloneObject( value );
+			this.valueStore[ index ] = ve.cloneObject( value );
 		} else {
-			this.valueStore[index] = value;
+			this.valueStore[ index ] = value;
 		}
-		this.hashStore[hash] = index;
+		this.hashStore[ hash ] = index;
 	}
 	return index;
 };
@@ -59,10 +59,10 @@ ve.dm.IndexValueStore.prototype.index = function ( value, hash, overwrite ) {
  *
  * @method
  * @param {Object|string|Array} hash Value hash.
- * @returns {number|null} The index of the value in the store, or undefined if it is not found
+ * @return {number|null} The index of the value in the store, or undefined if it is not found
  */
 ve.dm.IndexValueStore.prototype.indexOfHash = function ( hash ) {
-	return hash in this.hashStore ? this.hashStore[hash] : null;
+	return hash in this.hashStore ? this.hashStore[ hash ] : null;
 };
 
 /**
@@ -72,12 +72,12 @@ ve.dm.IndexValueStore.prototype.indexOfHash = function ( hash ) {
  *
  * @method
  * @param {Object[]} values Values to lookup or store
- * @returns {Array} The indexes of the values in the store
+ * @return {Array} The indexes of the values in the store
  */
 ve.dm.IndexValueStore.prototype.indexes = function ( values ) {
 	var i, length, indexes = [];
 	for ( i = 0, length = values.length; i < length; i++ ) {
-		indexes.push( this.index( values[i] ) );
+		indexes.push( this.index( values[ i ] ) );
 	}
 	return indexes;
 };
@@ -87,10 +87,10 @@ ve.dm.IndexValueStore.prototype.indexes = function ( values ) {
  *
  * @method
  * @param {number} index Index to lookup
- * @returns {Object|undefined} Value at this index, or undefined if out of bounds
+ * @return {Object|undefined} Value at this index, or undefined if out of bounds
  */
 ve.dm.IndexValueStore.prototype.value = function ( index ) {
-	return this.valueStore[index];
+	return this.valueStore[ index ];
 };
 
 /**
@@ -99,13 +99,13 @@ ve.dm.IndexValueStore.prototype.value = function ( index ) {
  * Same as value but with arrays.
  *
  * @method
- * @param {number[]} index Index to lookup
- * @returns {Array} Values at these indexes, or undefined if out of bounds
+ * @param {number[]} indexes Indices to lookup
+ * @return {Array} Values at these indexes, or undefined if out of bounds
  */
 ve.dm.IndexValueStore.prototype.values = function ( indexes ) {
 	var i, length, values = [];
 	for ( i = 0, length = indexes.length; i < length; i++ ) {
-		values.push( this.value( indexes[i] ) );
+		values.push( this.value( indexes[ i ] ) );
 	}
 	return values;
 };
@@ -117,13 +117,13 @@ ve.dm.IndexValueStore.prototype.values = function ( indexes ) {
  * the values inside them are copied by reference. These values are supposed to be immutable,
  * though.
  *
- * @returns {ve.dm.IndexValueStore} New store with the same contents as this one
+ * @return {ve.dm.IndexValueStore} New store with the same contents as this one
  */
 ve.dm.IndexValueStore.prototype.clone = function () {
 	var key, clone = new this.constructor();
 	clone.valueStore = this.valueStore.slice();
 	for ( key in this.hashStore ) {
-		clone.hashStore[key] = this.hashStore[key];
+		clone.hashStore[ key ] = this.hashStore[ key ];
 	}
 	return clone;
 };
@@ -138,16 +138,16 @@ ve.dm.IndexValueStore.prototype.clone = function () {
  * Objects added to the store are added by reference, not cloned like in .index()
  *
  * @param {ve.dm.IndexValueStore} other Store to merge into this one
- * @returns {Object} Object in which the keys are indexes in other and the values are the corresponding keys in this
+ * @return {Object} Object in which the keys are indexes in other and the values are the corresponding keys in this
  */
 ve.dm.IndexValueStore.prototype.merge = function ( other ) {
 	var key, index, mapping = {};
 	for ( key in other.hashStore ) {
 		if ( !Object.prototype.hasOwnProperty.call( this.hashStore, key ) ) {
-			index = this.valueStore.push( other.valueStore[other.hashStore[key]] ) - 1;
-			this.hashStore[key] = index;
+			index = this.valueStore.push( other.valueStore[ other.hashStore[ key ] ] ) - 1;
+			this.hashStore[ key ] = index;
 		}
-		mapping[other.hashStore[key]] = this.hashStore[key];
+		mapping[ other.hashStore[ key ] ] = this.hashStore[ key ];
 	}
 	return mapping;
 };

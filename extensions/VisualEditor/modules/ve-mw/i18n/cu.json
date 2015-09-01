@@ -1,17 +1,27 @@
 {
 	"@metadata": {
 		"authors": [
-			"ОйЛ"
+			"ОйЛ",
+			"Илья Драконов"
 		]
 	},
 	"tooltip-ca-createsource": "си страницѧ источьна обраꙁа сътворѥниѥ",
 	"tooltip-ca-editsource": "си страницѧ источьна обраꙁа исправлѥниѥ",
+	"visualeditor-backbutton-tooltip": "Назъд",
 	"visualeditor-beta-appendix": "вита",
 	"visualeditor-beta-label": "вита",
+	"visualeditor-beta-warning": "Визуальный редактор находится в бета-версии, чтобы переключиться на исходный текст, не потеряв ваши изменения, откройте \"{{int:visualeditor-toolbar-savedialog}}\" и выберите {{int:visualeditor-mweditmodesource-tool}}\".",
 	"visualeditor-ca-editsource": "исправи источьнъ обраꙁъ",
 	"visualeditor-ca-editsource-section": "исправи источьнъ обраꙁъ",
 	"visualeditor-categories-tool": "катигорїѩ",
+	"visualeditor-cite-tool-name-book": "кънигꙑ",
+	"visualeditor-cite-tool-name-news": "вѣсти",
+	"visualeditor-cite-tool-name-web": "мєждоусѣтьно мѣсто",
+	"visualeditor-dialog-media-content-filename": "дѣла имѧ",
+	"visualeditor-dialog-media-info-created": "сътворѥнъ ѥстъ : $1",
+	"visualeditor-dialog-media-info-licenseshortname": "прощєниѥ",
 	"visualeditor-dialog-media-title": "срѣдьствъ строи",
+	"visualeditor-dialog-media-type-border": "граница",
 	"visualeditor-dialog-meta-categories-category": "катигорїꙗ",
 	"visualeditor-dialog-meta-categories-data-label": "катигорїѩ",
 	"visualeditor-dialog-meta-categories-input-hiddencategorieslabel": "съкрꙑтꙑ катигорїѩ",
@@ -35,17 +45,18 @@
 	"visualeditor-dialog-reference-options-section": "строи",
 	"visualeditor-dialog-template-title": "обраꙁьць",
 	"visualeditor-dialog-transclusion-options": "строи",
-	"visualeditor-dialog-transclusion-placeholder": "новъ обраꙁьць",
+	"visualeditor-dialog-transclusion-placeholder": "обраꙁьца доложєниѥ",
 	"visualeditor-dialogbutton-media-tooltip": "срѣдьства",
 	"visualeditor-dialogbutton-meta-tooltip": "страницѧ строи",
+	"visualeditor-dialogbutton-reference-title": "Источник",
 	"visualeditor-dialogbutton-template-tooltip": "обраꙁьць",
 	"visualeditor-editsummary": "чьто жє иꙁмѣнєно бѣ с҄ьдє напьши",
 	"visualeditor-formatdropdown-format-mw-heading1": "страницѧ имѧ",
 	"visualeditor-languages-tool": "ѩꙁꙑци",
-	"visualeditor-linkinspector-suggest-external-link": "вънѣщьнꙗ съвѧꙁь",
-	"visualeditor-linkinspector-suggest-new-page": "нова страница",
 	"visualeditor-mainnamespacepagelink": "Project:Главьнъ имєнъ просторъ",
 	"visualeditor-meta-tool": "строи",
+	"visualeditor-pagemenu-tooltip": "страницѧ строи",
+	"visualeditor-preference-core-label": "Вiзуальный редактор",
 	"visualeditor-savedialog-identify-user": "Твоѥ польꙃєватєльско имѧ [[User:$1|$1]] ѥстъ ⁙ Ащє мѣноу съхраниши · онажє въ твоꙗ польꙃєватєльскꙑ дѣꙗниꙗ вънєсєна бѫдєтъ",
 	"visualeditor-savedialog-label-create": "cъꙁижди страницѧ",
 	"visualeditor-savedialog-label-error": "блаꙁна",
@@ -55,5 +66,7 @@
 	"visualeditor-savedialog-title-save": "твоѩ мѣнъ съхранѥниѥ",
 	"visualeditor-settings-tool": "страницѧ строи",
 	"visualeditor-toolbar-savedialog": "съхранѥниѥ",
-	"visualeditor-usernamespacepagelink": "Project:Польꙃєватєльскъ имєнъ просторъ"
+	"visualeditor-toolbar-savedialog-short": "Съхранити",
+	"visualeditor-usernamespacepagelink": "Project:Польꙃєватєльскъ имєнъ просторъ",
+	"visualeditor-version-label": "обраꙁъ"
 }

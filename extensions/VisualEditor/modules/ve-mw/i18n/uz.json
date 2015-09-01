@@ -104,6 +104,5 @@
 	"visualeditor-viewpage-savewarning": "Siz haqiqatdan ham oʻzgarishlarni saqlamasdan koʻrish tartibiga oʻtishni xohlaysizmi?",
 	"visualeditor-wikitext-warning": "Siz VisualEditordan foydalanmoqdasiz — [[{{MediaWiki:visualeditor-wikitext-warning-link}}|viki-belgilar]] bu yerda ishlamaydi. Sahifani viki-matn tartibida tahrirlash uchun \"{{MediaWiki:visualeditor-ca-editsource}}\"ni bosing. Saqlanmagan oʻzgarishlar yoʻqoladi.",
 	"visualeditor-wikitext-warning-link": "Help:Viki-belgi",
-	"visualeditor-wikitext-warning-title": "Viki-belgi aniqlandi",
-	"visualeditor-dialog-media-insert-title": "Media-fayl qoʻyish"
+	"visualeditor-wikitext-warning-title": "Viki-belgi aniqlandi"
 }

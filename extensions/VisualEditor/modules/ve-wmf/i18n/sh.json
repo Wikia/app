@@ -8,8 +8,10 @@
 	"tag-visualeditor-description": "Izmjena načinjena korištenjem [[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditora]]",
 	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor: Check]]",
 	"tag-visualeditor-needcheck-description": "Izmjena načinjena korištenjem [[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditora]] gdje je sistem detektirao wikitekst s mogućim neželjenim izmjenama.",
+	"tag-visualeditor-switched": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|Vizualni uređivač: Prebačeno]]",
+	"tag-visualeditor-switched-description": "Korisnik je počeo uređivati koristeći se vizualnim uređivačem, te se onda prebacio u wikitext uređivač.",
 	"visualeditor-feedback-link": "Project:VisualEditor/Feedback",
-	"visualeditor-feedback-tool": "Napusti feedback",
+	"visualeditor-feedback-tool": "Ostavite povratnu informaciju (feedback) o ovom softveru",
 	"visualeditor-help-label": "Pročitajte korisnički vodič",
-	"visualeditor-help-title": "Korisnički vodič za upotrebu editora"
+	"visualeditor-help-title": "Vodič za upotrebu editora"
 }

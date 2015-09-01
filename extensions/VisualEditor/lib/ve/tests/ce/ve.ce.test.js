@@ -1,7 +1,7 @@
 /*!
  * VisualEditor ContentEditable tests.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 QUnit.module( 've.ce' );
@@ -9,14 +9,14 @@ QUnit.module( 've.ce' );
 /* Tests */
 
 QUnit.test( 'whitespacePattern', 4, function ( assert ) {
-	assert.deepEqual( 'a b'.match( ve.ce.whitespacePattern ), [' '], 'matches spaces' );
-	assert.deepEqual( 'a\u00A0b'.match( ve.ce.whitespacePattern ), ['\u00A0'], 'matches non-breaking spaces' );
+	assert.deepEqual( 'a b'.match( ve.ce.whitespacePattern ), [ ' ' ], 'matches spaces' );
+	assert.deepEqual( 'a\u00A0b'.match( ve.ce.whitespacePattern ), [ '\u00A0' ], 'matches non-breaking spaces' );
 	assert.strictEqual( 'a\tb'.match( ve.ce.whitespacePattern ), null, 'does not match tab' );
 	assert.strictEqual( 'ab'.match( ve.ce.whitespacePattern ), null, 'does not match non-whitespace' );
 } );
 
-QUnit.test( 'getDomHash/getDomText', function ( assert ) {
-	var i, surface, documentView,
+QUnit.test( 'getDomHash/getDomText (with ve.dm.Converter)', function ( assert ) {
+	var i, view, documentView,
 		cases = [
 			{
 				msg: 'Nested annotations',
@@ -40,9 +40,9 @@ QUnit.test( 'getDomHash/getDomText', function ( assert ) {
 				text: 'Foo ☃☃ bar'
 			},
 			{
-				msg: 'Branch slugs are ignored',
+				msg: 'Block slugs are ignored',
 				html: '<table><tr><td>Foo</td></tr></table>',
-				hash: '<DIV><DIV><P>#</P></DIV><TABLE><TBODY><TR><TD><P>#</P></TD></TR></TBODY></TABLE><DIV><P>#</P></DIV></DIV>',
+				hash: '<DIV><TABLE><TBODY><TR><TD><P>#</P></TD></TR></TBODY></TABLE></DIV>',
 				text: 'Foo'
 			}
 		];
@@ -50,15 +50,46 @@ QUnit.test( 'getDomHash/getDomText', function ( assert ) {
 	QUnit.expect( cases.length * 2 );
 
 	for ( i = 0; i < cases.length; i++ ) {
-		surface = ve.test.utils.createSurfaceFromHtml( cases[i].html );
-		documentView = surface.getView().getDocument();
-		assert.strictEqual( ve.ce.getDomHash( documentView.getDocumentNode().$element[0] ), cases[i].hash, 'getDomHash: ' + cases[i].msg );
-		assert.strictEqual( ve.ce.getDomText( documentView.getDocumentNode().$element[0] ), cases[i].text, 'getDomText: ' + cases[i].msg );
+		view = ve.test.utils.createSurfaceViewFromHtml( cases[ i ].html );
+		documentView = view.getDocument();
+		assert.strictEqual( ve.ce.getDomHash( documentView.getDocumentNode().$element[ 0 ] ), cases[ i ].hash, 'getDomHash: ' + cases[ i ].msg );
+		assert.strictEqual( ve.ce.getDomText( documentView.getDocumentNode().$element[ 0 ] ), cases[ i ].text, 'getDomText: ' + cases[ i ].msg );
+		view.destroy();
 	}
 } );
 
+QUnit.test( 'getDomHash/getDomText (without ve.dm.Converter)', function ( assert ) {
+	var i, view, element,
+		cases = [
+			{
+				msg: 'Block slugs are ignored',
+				html: '<div><p>foo</p><div class="ve-ce-branchNode-blockSlug">x</div><p>bar</p></div>',
+				hash: '<DIV><P>#</P><P>#</P></DIV>',
+				text: 'foobar'
+			},
+			{
+				msg: 'Cursor holders are ignored',
+				html: '<div><p>foo</p><div class="ve-ce-cursorHolder">x</div><p>bar</p></div>',
+				hash: '<DIV><P>#</P><P>#</P></DIV>',
+				text: 'foobar'
+			}
+		];
+
+	QUnit.expect( cases.length * 2 );
+	view = ve.test.utils.createSurfaceViewFromHtml( '' );
+	element = view.getDocument().getDocumentNode().$element[ 0 ];
+
+	for ( i = 0; i < cases.length; i++ ) {
+		element.innerHTML = cases[ i ].html;
+		assert.strictEqual( ve.ce.getDomHash( element.firstChild ), cases[ i ].hash, 'getDomHash: ' + cases[ i ].msg );
+		assert.strictEqual( ve.ce.getDomText( element.firstChild ), cases[ i ].text, 'getDomText: ' + cases[ i ].msg );
+	}
+
+	view.destroy();
+} );
+
 QUnit.test( 'getOffset', function ( assert ) {
-	var i, surface, documentModel, documentView,
+	var i, view, documentModel, documentView,
 		expected = 0,
 		testCases = [
 			{
@@ -153,15 +184,15 @@ QUnit.test( 'getOffset', function ( assert ) {
 				msg: 'Table with block slugs',
 				html: '<table><tr><td>Foo</td></tr></table>',
 				// CE HTML summary;
-				// <div [slugWrapper]><p [blockSlug]></p></div>
+				// <div [slug]>(ignored)</div>
 				// <table><tbody><tr><td>
 				//  <p>Foo</p>
 				// </td></tr></tbody></table>
-				// <div [slugWrapper]><p [blockSlug]></p></div>
+				// <div [slug]>(ignored)</div>
 				// Linmod:
 				// [<table>, <tbody>, <tr>, <td>, <p>, F, o, o, </p>, </td>, </tr>, </tbody>, </table>]
 				expected: [
-					0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0,
 					1,
 					2,
 					3,
@@ -174,7 +205,7 @@ QUnit.test( 'getOffset', function ( assert ) {
 					10,
 					11,
 					12,
-					13, 13, 13, 13, 13, 13, 13, 13
+					13, 13
 				]
 			},
 			{
@@ -199,7 +230,7 @@ QUnit.test( 'getOffset', function ( assert ) {
 		];
 
 	for ( i = 0; i < testCases.length; i++ ) {
-		expected += testCases[i].expected.length;
+		expected += testCases[ i ].expected.length;
 	}
 
 	QUnit.expect( expected );
@@ -212,11 +243,11 @@ QUnit.test( 'getOffset', function ( assert ) {
 					expectedIndex++;
 					assert.strictEqual(
 						ve.ce.getOffset( parent, i ),
-						testCase.expected[expectedIndex],
+						testCase.expected[ expectedIndex ],
 						testCase.msg + ': offset ' + i + ' in <' + parent.nodeName.toLowerCase() + '>'
 					);
-					if ( parent.childNodes[i] ) {
-						expectedIndex = testOffsets( parent.childNodes[i], testCase, expectedIndex );
+					if ( parent.childNodes[ i ] && !$( parent.childNodes[ i ] ).hasClass( 've-ce-branchNode-blockSlug' ) ) {
+						expectedIndex = testOffsets( parent.childNodes[ i ], testCase, expectedIndex );
 					}
 				}
 				break;
@@ -225,7 +256,7 @@ QUnit.test( 'getOffset', function ( assert ) {
 					expectedIndex++;
 					assert.strictEqual(
 						ve.ce.getOffset( parent, i ),
-						testCase.expected[expectedIndex],
+						testCase.expected[ expectedIndex ],
 						testCase.msg + ': offset ' + i + ' in "' + parent.data + '"'
 					);
 				}
@@ -235,12 +266,12 @@ QUnit.test( 'getOffset', function ( assert ) {
 	}
 
 	for ( i = 0; i < testCases.length; i++ ) {
-		surface = ve.test.utils.createSurfaceFromHtml( testCases[i].html );
-		documentModel = surface.getModel().getDocument();
-		documentView = surface.getView().getDocument();
+		view = ve.test.utils.createSurfaceViewFromHtml( testCases[ i ].html );
+		documentModel = view.getModel().getDocument();
+		documentView = view.getDocument();
 
-		testOffsets( documentView.getDocumentNode().$element[0], testCases[i], -1 );
-		surface.destroy();
+		testOffsets( documentView.getDocumentNode().$element[ 0 ], testCases[ i ], -1 );
+		view.destroy();
 	}
 } );
 
@@ -264,23 +295,23 @@ QUnit.test( 'nextCursorOffset', function ( assert ) {
 	}
 
 	tests = [
-		{ html: '<p>foo<img>bar</p>', expected: ['#bar', 0] },
-		{ html: '<p>foo<b><i><img></i></b></p>', expected: ['i', 1] },
-		{ html: '<p><b>foo</b><img>bar</p>', expected: ['#bar', 0] },
-		{ html: '<p>foo<b><i><img></i></b></p>', expected: ['i', 1] },
-		{ html: '<p><b>foo</b><img></p>', expected: ['p', 2] },
-		{ html: '<p><img><b>foo</b></p>', expected: ['p', 1] },
-		{ html: '<p><b>foo</b><img><b>bar</b></p>', expected: ['p', 2] }
+		{ html: '<p>foo<img>bar</p>', expected: [ '#bar', 0 ] },
+		{ html: '<p>foo<b><i><img></i></b></p>', expected: [ 'i', 1 ] },
+		{ html: '<p><b>foo</b><img>bar</p>', expected: [ '#bar', 0 ] },
+		{ html: '<p>foo<b><i><img></i></b></p>', expected: [ 'i', 1 ] },
+		{ html: '<p><b>foo</b><img></p>', expected: [ 'p', 2 ] },
+		{ html: '<p><img><b>foo</b></p>', expected: [ 'p', 1 ] },
+		{ html: '<p><b>foo</b><img><b>bar</b></p>', expected: [ 'p', 2 ] }
 	];
 	QUnit.expect( tests.length );
 	elt = ve.createDocumentFromHtml( '' ).createElement( 'div' );
 	for ( i = 0, len = tests.length; i < len; i++ ) {
-		test = tests[i];
+		test = tests[ i ];
 		elt.innerHTML = test.html;
-		img = elt.getElementsByTagName( 'img' )[0];
+		img = elt.getElementsByTagName( 'img' )[ 0 ];
 		nextOffset = ve.ce.nextCursorOffset( img );
 		assert.deepEqual(
-			[dumpnode( nextOffset.node ), nextOffset.offset],
+			[ dumpnode( nextOffset.node ), nextOffset.offset ],
 			test.expected,
 			test.html
 		);
@@ -290,21 +321,21 @@ QUnit.test( 'nextCursorOffset', function ( assert ) {
 QUnit.test( 'resolveTestOffset', function ( assert ) {
 	var i, ilen, j, jlen, tests, test, testOffset, elt, pre, post, count, dom;
 	tests = [
-		['o', 'k'],
+		[ 'o', 'k' ],
 		// TODO: doesn't handle tags correctly yet!
 		// ['w', '<b>', 'x', 'y', '</b>', 'z'],
 		// ['q', '<b>', 'r', '<b>', 's', 't', '</b>', 'u', '</b>', 'v']
-		['h', 'e', 'l', 'l', 'o']
+		[ 'h', 'e', 'l', 'l', 'o' ]
 	];
 	count = 0;
 	for ( i = 0, ilen = tests.length; i < ilen; i++ ) {
-		count += tests[i].length + 1;
+		count += tests[ i ].length + 1;
 	}
 	QUnit.expect( 2 * count );
 	dom = ve.createDocumentFromHtml( '' );
 	elt = dom.createElement( 'div' );
 	for ( i = 0, ilen = tests.length; i < ilen; i++ ) {
-		test = tests[i];
+		test = tests[ i ];
 		elt.innerHTML = test.join( '' );
 		for ( j = 0, jlen = test.length; j < jlen + 1; j++ ) {
 			testOffset = new ve.ce.TestOffset( 'forward', j );
@@ -326,7 +357,7 @@ QUnit.test( 'resolveTestOffset', function ( assert ) {
 } );
 
 QUnit.test( 'fakeImes', function ( assert ) {
-	var i, ilen, j, jlen, surface, testRunner, testName, testActions, seq, testInfo,
+	var i, ilen, j, jlen, view, testRunner, testName, testActions, seq, testInfo,
 		action, args, count, foundEndLoop, testsFailAt, failAt, died, fakePreventDefault;
 
 	if ( Function.prototype.bind === undefined ) {
@@ -339,12 +370,12 @@ QUnit.test( 'fakeImes', function ( assert ) {
 	// count tests
 	count = 0;
 	for ( i = 0, ilen = ve.ce.imetests.length; i < ilen; i++ ) {
-		testName = ve.ce.imetests[i][0];
-		testActions = ve.ce.imetests[i][1];
+		testName = ve.ce.imetests[ i ][ 0 ];
+		testActions = ve.ce.imetests[ i ][ 1 ];
 		// For the test that there is at least one endLoop
 		count++;
 		for ( j = 1, jlen = testActions.length; j < jlen; j++ ) {
-			action = testActions[j].action;
+			action = testActions[ j ].action;
 			if ( action === 'endLoop' ) {
 				// For the test that the model and CE surface are in sync
 				count++;
@@ -357,28 +388,28 @@ QUnit.test( 'fakeImes', function ( assert ) {
 	fakePreventDefault = function () {};
 
 	for ( i = 0, ilen = ve.ce.imetests.length; i < ilen; i++ ) {
-		testName = ve.ce.imetests[i][0];
-		failAt = testsFailAt[testName] || null;
-		testActions = ve.ce.imetests[i][1];
+		testName = ve.ce.imetests[ i ][ 0 ];
+		failAt = testsFailAt[ testName ] || null;
+		testActions = ve.ce.imetests[ i ][ 1 ];
 		foundEndLoop = false;
 		// First element is the testInfo
-		testInfo = testActions[0];
-		surface = ve.test.utils.createSurfaceFromHtml( testInfo.startDom || '' );
-		surface.getModel().setLinearSelection( new ve.Range( 1 ) );
-		testRunner = new ve.ce.TestRunner( surface );
+		testInfo = testActions[ 0 ];
+		view = ve.test.utils.createSurfaceViewFromHtml( testInfo.startDom || '' );
+		view.getModel().setLinearSelection( new ve.Range( 1 ) );
+		testRunner = new ve.ce.TestRunner( view );
 		// start at 1 to omit the testInfo
 		died = false;
 		for ( j = 1, jlen = testActions.length; j < jlen; j++ ) {
-			action = testActions[j].action;
-			args = testActions[j].args;
-			seq = testActions[j].seq;
+			action = testActions[ j ].action;
+			args = testActions[ j ].args;
+			seq = testActions[ j ].seq;
 			if ( !died ) {
 				if ( action === 'sendEvent' ) {
 					// TODO: make preventDefault work
-					args[1].preventDefault = fakePreventDefault;
+					args[ 1 ].preventDefault = fakePreventDefault;
 				}
 				try {
-					testRunner[action].apply( testRunner, args );
+					testRunner[ action ].apply( testRunner, args );
 				} catch ( ex ) {
 					died = ex;
 				}
@@ -409,6 +440,65 @@ QUnit.test( 'fakeImes', function ( assert ) {
 		}
 		// Test that there is at least one endLoop
 		assert.strictEqual( foundEndLoop, true, testName + ' found at least one endLoop' );
-		surface.destroy();
+		view.destroy();
+	}
+} );
+
+QUnit.test( 'isAfterAnnotationBoundaries', function ( assert ) {
+	var tests, i, iLen, test, node, j, jLen,
+		div = ve.createDocumentFromHtml( '' ).createElement( 'div' );
+
+	div.innerHTML = 'Q<b>R<i>S</i>T</b><s>U</s>V<u>W</u>';
+
+	// In the following tests, the 'path' properties are a list of descent offsets to find a
+	// particular descendant node from the top-level div. E.g. a path of [ 5, 7 ] refers to
+	// the node div.childNodes[ 5 ].childNodes[ 7 ] .
+	tests = [
+		{ path: [], offset: 0, expected: false },
+		{ path: [ 0 ], offset: 0, expected: false },
+		{ path: [ 0 ], offset: 1, expected: false },
+		{ path: [], offset: 1, expected: false },
+		{ path: [ 1 ], offset: 0, expected: true },
+		{ path: [ 1, 0 ], offset: 0, expected: true },
+		{ path: [ 1, 0 ], offset: 1, expected: false },
+		{ path: [ 1 ], offset: 1, expected: false },
+		{ path: [ 1, 1 ], offset: 0, expected: true },
+		{ path: [ 1, 1, 0 ], offset: 0, expected: true },
+		{ path: [ 1, 1, 0 ], offset: 1, expected: false },
+		{ path: [ 1, 1 ], offset: 1, expected: false },
+		{ path: [ 1 ], offset: 2, expected: true },
+		{ path: [ 1, 2 ], offset: 0, expected: true },
+		{ path: [ 1, 2 ], offset: 1, expected: false },
+		{ path: [ 1 ], offset: 3, expected: false },
+		// The next one has middle bias, which we don't currently detect
+		{ path: [], offset: 2, expected: false },
+		{ path: [ 2 ], offset: 0, expected: true },
+		{ path: [ 2, 0 ], offset: 0, expected: true },
+		{ path: [ 2, 0 ], offset: 1, expected: false },
+		{ path: [ 2 ], offset: 1, expected: false },
+		{ path: [], offset: 3, expected: true },
+		{ path: [ 3 ], offset: 0, expected: true },
+		{ path: [ 3 ], offset: 1, expected: false },
+		{ path: [], offset: 4, expected: false },
+		{ path: [ 4 ], offset: 0, expected: true },
+		{ path: [ 4, 0 ], offset: 0, expected: true },
+		{ path: [ 4, 0 ], offset: 1, expected: false },
+		{ path: [ 4 ], offset: 1, expected: false },
+		{ path: [], offset: 5, expected: true }
+	];
+
+	QUnit.expect( tests.length );
+
+	for ( i = 0, iLen = tests.length; i < iLen; i++ ) {
+		test = tests[ i ];
+		node = div;
+		for ( j = 0, jLen = test.path.length; j < jLen; j++ ) {
+			node = node.childNodes[ test.path[ j ] ];
+		}
+		assert.strictEqual(
+			ve.ce.isAfterAnnotationBoundaries( node, test.offset ),
+			test.expected,
+			'node=' + test.path.join( ',' ) + ' offset=' + test.offset
+		);
 	}
 } );

@@ -1,0 +1,11 @@
+{
+	"@metadata": {
+		"authors": [
+			"Liuxinyu970226"
+		]
+	},
+	"visualeditor-languagescreenshot-desc": "用于[[:mw:Help:VisualEditor/User_guide|可视化编辑器用户指导]]中截图的字符串。",
+	"visualeditor-languagescreenshot-hello-world-text": "您好世界！",
+	"visualeditor-languagescreenshot-world-text": "世界",
+	"visualeditor-languagescreenshot-category-earth-text": "Category:地球"
+}

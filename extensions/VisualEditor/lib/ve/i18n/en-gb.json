@@ -1,9 +1,11 @@
 {
 	"@metadata": {
 		"authors": [
-			"Jdforrester"
+			"Jdforrester",
+			"Ed Sanders"
 		]
 	},
+	"visualeditor-align-widget-center": "Centre",
 	"visualeditor-annotationbutton-strikethrough-tooltip": "Strike-through",
 	"visualeditor-formatdropdown-format-preformatted": "Pre-formatted",
 	"visualeditor-indentationbutton-indent-tooltip": "Increase indent",

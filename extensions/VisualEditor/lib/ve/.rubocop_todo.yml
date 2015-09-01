@@ -10,11 +10,6 @@
 Lint/UnusedMethodArgument:
   Enabled: false
 
-# Offense count: 1
-# Configuration parameters: AllowURI, URISchemes.
-Metrics/LineLength:
-  Max: 84
-
 # Offense count: 5
 Style/Documentation:
   Enabled: false
@@ -23,26 +18,9 @@ Style/Documentation:
 # Cop supports --auto-correct.
 # Configuration parameters: SupportedStyles.
 Style/HashSyntax:
-  EnforcedStyle: hash_rockets
+  Enabled: false
 
 # Offense count: 4
 # Cop supports --auto-correct.
 Style/PerlBackrefs:
-  Enabled: false
-
-# Offense count: 4
-# Cop supports --auto-correct.
-Style/SpaceAroundOperators:
-  Enabled: false
-
-# Offense count: 2
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles, EnforcedStyleForEmptyBraces, SpaceBeforeBlockParameters.
-Style/SpaceInsideBlockBraces:
-  Enabled: true
-
-# Offense count: 5
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-Style/StringLiterals:
   Enabled: false

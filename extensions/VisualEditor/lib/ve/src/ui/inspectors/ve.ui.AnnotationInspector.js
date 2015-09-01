@@ -1,7 +1,7 @@
 /*!
  * VisualEditor UserInterface AnnotationInspector class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 /**
@@ -19,7 +19,6 @@ ve.ui.AnnotationInspector = function VeUiAnnotationInspector( config ) {
 	ve.ui.FragmentInspector.call( this, config );
 
 	// Properties
-	this.previousSelection = null;
 	this.initialSelection = null;
 	this.initialAnnotation = null;
 	this.initialAnnotationIsCovering = false;
@@ -38,13 +37,36 @@ OO.inheritClass( ve.ui.AnnotationInspector, ve.ui.FragmentInspector );
  */
 ve.ui.AnnotationInspector.static.modelClasses = [];
 
+// Override the parent action array to only have a 'cancel' button
+// on insert, since the annotation inspectors immediately apply the
+// action and 'cancel' is meaningless. Instead, they use 'done' to
+// perform the same dismissal after applying action that clicking away
+// from the inspector performs.
 ve.ui.AnnotationInspector.static.actions = [
 	{
 		action: 'remove',
 		label: OO.ui.deferMsg( 'visualeditor-inspector-remove-tooltip' ),
-		flags: 'destructive'
+		flags: 'destructive',
+		modes: 'edit'
+	},
+	{
+		action: 'done',
+		label: OO.ui.deferMsg( 'visualeditor-dialog-action-done' ),
+		flags: [ 'progressive', 'primary' ],
+		modes: 'edit'
+	},
+	{
+		label: OO.ui.deferMsg( 'visualeditor-dialog-action-cancel' ),
+		flags: [ 'safe', 'back' ],
+		modes: [ 'edit', 'insert' ]
+	},
+	{
+		action: 'done',
+		label: OO.ui.deferMsg( 'visualeditor-dialog-action-insert' ),
+		flags: [ 'constructive', 'primary' ],
+		modes: 'insert'
 	}
-].concat( ve.ui.FragmentInspector.static.actions );
+];
 
 /* Methods */
 
@@ -54,7 +76,7 @@ ve.ui.AnnotationInspector.static.actions = [
  * Only override this if the form provides the user a way to blank out primary information, allowing
  * them to remove the annotation by clearing the form.
  *
- * @returns {boolean} Form is empty
+ * @return {boolean} Form is empty
  */
 ve.ui.AnnotationInspector.prototype.shouldRemoveAnnotation = function () {
 	return false;
@@ -65,7 +87,7 @@ ve.ui.AnnotationInspector.prototype.shouldRemoveAnnotation = function () {
  *
  * Defaults to using #getInsertionText.
  *
- * @returns {Array} Linear model content to insert
+ * @return {Array} Linear model content to insert
  */
 ve.ui.AnnotationInspector.prototype.getInsertionData = function () {
 	return this.getInsertionText().split( '' );
@@ -74,7 +96,7 @@ ve.ui.AnnotationInspector.prototype.getInsertionData = function () {
 /**
  * Get text to insert if nothing was selected when the inspector opened.
  *
- * @returns {string} Text to insert
+ * @return {string} Text to insert
  */
 ve.ui.AnnotationInspector.prototype.getInsertionText = function () {
 	return '';
@@ -88,28 +110,20 @@ ve.ui.AnnotationInspector.prototype.getInsertionText = function () {
  * but existing annotations won't be removed either.
  *
  * @abstract
- * @returns {ve.dm.Annotation} Annotation to apply
- * @throws {Error} If not overridden in subclass
+ * @method
+ * @return {ve.dm.Annotation} Annotation to apply
  */
-ve.ui.AnnotationInspector.prototype.getAnnotation = function () {
-	throw new Error(
-		've.ui.AnnotationInspector.getAnnotation not implemented in subclass'
-	);
-};
+ve.ui.AnnotationInspector.prototype.getAnnotation = null;
 
 /**
  * Get an annotation object from a fragment.
  *
  * @abstract
+ * @method
  * @param {ve.dm.SurfaceFragment} fragment Surface fragment
- * @returns {ve.dm.Annotation} Annotation
- * @throws {Error} If not overridden in a subclass
+ * @return {ve.dm.Annotation|null} Annotation
  */
-ve.ui.AnnotationInspector.prototype.getAnnotationFromFragment = function () {
-	throw new Error(
-		've.ui.AnnotationInspector.getAnnotationFromFragment not implemented in subclass'
-	);
-};
+ve.ui.AnnotationInspector.prototype.getAnnotationFromFragment = null;
 
 /**
  * Get matching annotations within a fragment.
@@ -117,7 +131,7 @@ ve.ui.AnnotationInspector.prototype.getAnnotationFromFragment = function () {
  * @method
  * @param {ve.dm.SurfaceFragment} fragment Fragment to get matching annotations within
  * @param {boolean} [all] Get annotations which only cover some of the fragment
- * @returns {ve.dm.AnnotationSet} Matching annotations
+ * @return {ve.dm.AnnotationSet} Matching annotations
  */
 ve.ui.AnnotationInspector.prototype.getMatchingAnnotations = function ( fragment, all ) {
 	var modelClasses = this.constructor.static.modelClasses;
@@ -125,6 +139,16 @@ ve.ui.AnnotationInspector.prototype.getMatchingAnnotations = function ( fragment
 	return fragment.getAnnotations( all ).filter( function ( annotation ) {
 		return ve.isInstanceOfAny( annotation, modelClasses );
 	} );
+};
+
+/**
+ * @inheritdoc
+ */
+ve.ui.AnnotationInspector.prototype.getMode = function () {
+	if ( this.initialSelection ) {
+		return this.initialSelection.isCollapsed() ? 'insert' : 'edit';
+	}
+	return '';
 };
 
 /**
@@ -156,11 +180,12 @@ ve.ui.AnnotationInspector.prototype.getSetupProcess = function ( data ) {
 	return ve.ui.AnnotationInspector.super.prototype.getSetupProcess.call( this, data )
 		.next( function () {
 			var expandedFragment, trimmedFragment, initialCoveringAnnotation,
+				inspector = this,
+				annotationSet, annotations,
 				fragment = this.getFragment(),
 				surfaceModel = fragment.getSurface(),
 				annotation = this.getMatchingAnnotations( fragment, true ).get( 0 );
 
-			this.previousSelection = fragment.getSelection();
 			surfaceModel.pushStaging();
 
 			// Initialize range
@@ -172,19 +197,36 @@ ve.ui.AnnotationInspector.prototype.getSetupProcess = function ( data ) {
 					// Expand to nearest word
 					expandedFragment = fragment.expandLinearSelection( 'word' );
 					fragment = expandedFragment;
+
+					// TODO: We should review how getMatchingAnnotation works in light of the fact
+					// that in the case of a collapsed range, the method falls back to retrieving
+					// insertion annotations.
+
+					// Check if we're inside a relevant annotation and if so, define it
+					annotationSet = fragment.document.data.getAnnotationsFromRange( fragment.selection.range );
+					annotations = annotationSet.filter( function ( existingAnnotation ) {
+						return ve.isInstanceOfAny( existingAnnotation, inspector.constructor.static.modelClasses );
+					} );
+					if ( annotations.getLength() > 0 ) {
+						// We're in the middle of an annotation, let's make sure we expand
+						// our selection to include the entire existing annotation
+						annotation = annotations.get( 0 );
+					}
 				} else {
 					// Trim whitespace
 					trimmedFragment = fragment.trimLinearSelection();
 					fragment = trimmedFragment;
 				}
-				if ( !fragment.getSelection().isCollapsed() ) {
+
+				if ( !fragment.getSelection().isCollapsed() && !annotation ) {
 					// Create annotation from selection
 					annotation = this.getAnnotationFromFragment( fragment );
 					if ( annotation ) {
 						fragment.annotateContent( 'set', annotation );
 					}
 				}
-			} else {
+			}
+			if ( annotation ) {
 				// Expand range to cover annotation
 				expandedFragment = fragment.expandLinearSelection( 'annotation', annotation );
 				fragment = expandedFragment;
@@ -208,6 +250,12 @@ ve.ui.AnnotationInspector.prototype.getSetupProcess = function ( data ) {
 				// to forcefully apply it to the rest of the fragment later
 				this.initialAnnotationIsCovering = true;
 			}
+
+			this.fragment = fragment;
+
+			// Set the mode - this was done already in FragmentInspector but now that we may have
+			// changed what the fragment is covering we need to run it again
+			this.actions.setMode( this.getMode() );
 		}, this );
 };
 
@@ -223,16 +271,26 @@ ve.ui.AnnotationInspector.prototype.getTeardownProcess = function ( data ) {
 				insertText = false,
 				replace = false,
 				annotation = this.getAnnotation(),
-				remove = this.shouldRemoveAnnotation() || data.action === 'remove',
-				surfaceModel = this.getFragment().getSurface(),
+				remove = data.action === 'remove' || ( data.action === 'done' && this.shouldRemoveAnnotation() ),
+				surfaceModel = this.fragment.getSurface(),
 				fragment = surfaceModel.getFragment( this.initialSelection, false ),
-				selection = this.getFragment().getSelection();
+				selection = this.fragment.getSelection();
 
-			if ( !( selection instanceof ve.dm.LinearSelection ) ) {
+			if (
+				!( selection instanceof ve.dm.LinearSelection ) ||
+				( remove && selection.getRange().isCollapsed() )
+			) {
+				// Since we pushStaging on SetupProcess we need to make sure
+				// all terminations pop
+				surfaceModel.popStaging();
 				return;
 			}
 
 			if ( !remove ) {
+				if ( data.action !== 'done' ) {
+					surfaceModel.popStaging();
+					return;
+				}
 				if ( this.initialSelection.isCollapsed() ) {
 					insertText = true;
 				}
@@ -270,7 +328,7 @@ ve.ui.AnnotationInspector.prototype.getTeardownProcess = function ( data ) {
 				// Clear all existing annotations
 				annotations = this.getMatchingAnnotations( fragment, true ).get();
 				for ( i = 0, len = annotations.length; i < len; i++ ) {
-					fragment.annotateContent( 'clear', annotations[i] );
+					fragment.annotateContent( 'clear', annotations[ i ] );
 				}
 			}
 			if ( replace ) {
@@ -295,7 +353,6 @@ ve.ui.AnnotationInspector.prototype.getTeardownProcess = function ( data ) {
 		}, this )
 		.next( function () {
 			// Reset state
-			this.previousSelection = null;
 			this.initialSelection = null;
 			this.initialAnnotation = null;
 			this.initialAnnotationIsCovering = false;

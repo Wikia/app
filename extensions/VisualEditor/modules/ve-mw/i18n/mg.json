@@ -4,17 +4,20 @@
 			"Jagwar"
 		]
 	},
+	"apihelp-visualeditoredit-param-minor": "Fimarihana ho fanovana madinika.",
 	"tooltip-ca-createsource": "Hamorona ny fangon'ity pejy ity",
 	"tooltip-ca-editsource": "Hanova ny fangon'ity pejy ty",
-	"tooltip-ca-ve-edit": "Hanova ity pejy ity amin'ny alalan'i VisualEditor",
+	"tooltip-ca-ve-edit": "Hanova ity pejy ity",
 	"visualeditor-advancedsettings-tool": "Safidy mandroso kokoa",
 	"visualeditor-beta-label": "beta",
+	"visualeditor-ca-createlocaldescriptionsource": "Hanampy loharanom-pamaritana an-toerana",
 	"visualeditor-ca-createsource": "Hamorona ny fango",
 	"visualeditor-ca-editsource": "Hanova ny fango",
 	"visualeditor-ca-editsource-section": "hanova ny fango",
 	"visualeditor-ca-ve-create": "VisualEditor",
 	"visualeditor-ca-ve-edit": "VisualEditor",
 	"visualeditor-ca-ve-edit-section": "VisualEditor",
+	"visualeditor-descriptionpagelink": "Project:VisualEditor",
 	"visualeditor-dialog-beta-welcome-action-continue": "Tohizina",
 	"visualeditor-dialog-beta-welcome-title": "Tonga soa eto amin'i VisualEditor{{GENDER:$1|}}",
 	"visualeditor-dialog-media-position-checkbox": "Fonosina manodidin'ity zavatra ity ny soratra",
@@ -75,9 +78,5 @@
 	"visualeditor-formatdropdown-format-mw-heading4": "Zana-dohateny 2",
 	"visualeditor-formatdropdown-format-mw-heading5": "Zana-dohateny 3",
 	"visualeditor-formatdropdown-format-mw-heading6": "Zana-dohateny 4",
-	"visualeditor-linkinspector-suggest-external-link": "Rohy ivelany",
-	"visualeditor-linkinspector-suggest-matching-page": "Pejy miady aminy{{PLURAL:$1|$1}}",
-	"visualeditor-linkinspector-suggest-new-page": "Pejy vaova",
-	"visualeditor-mwgalleryinspector-title": "Galeria",
-	"visualeditor-dialog-media-insert-title": "Hampiditra haino aman-jery"
+	"visualeditor-mwgalleryinspector-title": "Galeria"
 }

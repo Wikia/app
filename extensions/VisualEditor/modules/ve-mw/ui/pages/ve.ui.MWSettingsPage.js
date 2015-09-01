@@ -1,7 +1,7 @@
 /*!
  * VisualEditor user interface MWSettingsPage class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2015 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -30,7 +30,6 @@ ve.ui.MWSettingsPage = function VeUiMWSettingsPage( name, config ) {
 	this.label = ve.msg( 'visualeditor-dialog-meta-settings-section' );
 
 	this.settingsFieldset = new OO.ui.FieldsetLayout( {
-		$: this.$,
 		label: ve.msg( 'visualeditor-dialog-meta-settings-label' ),
 		icon: 'settings'
 	} );
@@ -39,27 +38,25 @@ ve.ui.MWSettingsPage = function VeUiMWSettingsPage( name, config ) {
 
 	// Table of Contents items
 	this.tableOfContents = new OO.ui.FieldLayout(
-		new OO.ui.ButtonSelectWidget( { $: this.$ } )
+		new OO.ui.ButtonSelectWidget( {
+			classes: [ 've-test-page-settings-table-of-contents' ]
+		} )
 			.addItems( [
 				new OO.ui.ButtonOptionWidget( {
 					data: 'mwTOCForce',
-					label: ve.msg( 'visualeditor-dialog-meta-settings-toc-force' ),
-					flags: ['secondary']
+					label: ve.msg( 'visualeditor-dialog-meta-settings-toc-force' )
 				} ),
 				new OO.ui.ButtonOptionWidget( {
 					data: 'default',
-					label: ve.msg( 'visualeditor-dialog-meta-settings-toc-default' ),
-					flags: ['secondary']
+					label: ve.msg( 'visualeditor-dialog-meta-settings-toc-default' )
 				} ),
 				new OO.ui.ButtonOptionWidget( {
 					data: 'mwTOCDisable',
-					label: ve.msg( 'visualeditor-dialog-meta-settings-toc-disable' ),
-					flags: ['secondary']
+					label: ve.msg( 'visualeditor-dialog-meta-settings-toc-disable' )
 				} )
 			] )
 			.connect( this, { select: 'onTableOfContentsFieldChange' } ),
 		{
-			$: this.$,
 			align: 'top',
 			label: ve.msg( 'visualeditor-dialog-meta-settings-toc-label' ),
 			help: ve.msg( 'visualeditor-dialog-meta-settings-toc-help' )
@@ -67,33 +64,29 @@ ve.ui.MWSettingsPage = function VeUiMWSettingsPage( name, config ) {
 	);
 
 	// Redirect items
-	this.enableRedirectInput = new OO.ui.CheckboxInputWidget( { $: this.$ } );
+	this.enableRedirectInput = new OO.ui.CheckboxInputWidget();
 	this.enableRedirectField = new OO.ui.FieldLayout(
 		this.enableRedirectInput,
 		{
-			$: this.$,
+			classes: [ 've-test-page-settings-enable-redirect' ],
 			align: 'inline',
 			label: ve.msg( 'visualeditor-dialog-meta-settings-redirect-label' ),
 			help: ve.msg( 'visualeditor-dialog-meta-settings-redirect-help' )
 		}
 	);
-	this.redirectTargetInput = new ve.ui.MWTitleInputWidget( {
-		$: this.$,
+	this.redirectTargetInput = new mw.widgets.TitleInputWidget( {
 		placeholder: ve.msg( 'visualeditor-dialog-meta-settings-redirect-placeholder' ),
 		$overlay: config.$overlay
 	} );
 	this.redirectTargetField = new OO.ui.FieldLayout(
 		this.redirectTargetInput,
-		{
-			$: this.$,
-			align: 'top'
-		}
+		{ align: 'top' }
 	);
-	this.enableStaticRedirectInput = new OO.ui.CheckboxInputWidget( { $: this.$ } );
+	this.enableStaticRedirectInput = new OO.ui.CheckboxInputWidget();
 	this.enableStaticRedirectField = new OO.ui.FieldLayout(
 		this.enableStaticRedirectInput,
 		{
-			$: this.$,
+			classes: [ 've-test-page-settings-prevent-redirect' ],
 			align: 'inline',
 			label: ve.msg( 'visualeditor-dialog-meta-settings-redirect-staticlabel' ),
 			help: ve.msg( 'visualeditor-dialog-meta-settings-redirect-statichelp' )
@@ -107,7 +100,8 @@ ve.ui.MWSettingsPage = function VeUiMWSettingsPage( name, config ) {
 		{
 			metaName: 'mwNoEditSection',
 			label: ve.msg( 'visualeditor-dialog-meta-settings-noeditsection-label' ),
-			help: ve.msg( 'visualeditor-dialog-meta-settings-noeditsection-help' )
+			help: ve.msg( 'visualeditor-dialog-meta-settings-noeditsection-help' ),
+			classes: [ 've-test-page-settings-noeditsection' ]
 		}
 	].concat( ve.ui.MWSettingsPage.static.extraMetaCheckboxes );
 
@@ -135,9 +129,9 @@ ve.ui.MWSettingsPage = function VeUiMWSettingsPage( name, config ) {
 
 	$.each( this.metaItemCheckboxes, function () {
 		this.fieldLayout = new OO.ui.FieldLayout(
-			new OO.ui.CheckboxInputWidget( { $: settingsPage.$ } ),
+			new OO.ui.CheckboxInputWidget(),
 			{
-				$: settingsPage.$,
+				classes: this.classes,
 				align: 'inline',
 				label: this.label,
 				help: this.help || ''
@@ -158,6 +152,7 @@ ve.ui.MWSettingsPage.static.extraMetaCheckboxes = [];
 
 /**
  * Add a checkbox to the list of changeable page settings
+ *
  * @param {string} metaName The name of the DM meta item
  * @param {string} label The label to show next to the checkbox
  */
@@ -202,9 +197,11 @@ ve.ui.MWSettingsPage.prototype.onTableOfContentsFieldChange = function () {
 ve.ui.MWSettingsPage.prototype.onEnableRedirectChange = function ( value ) {
 	this.redirectTargetInput.setDisabled( !value );
 	this.enableStaticRedirectInput.setDisabled( !value );
-	if ( !value ) {
+	if ( value ) {
+		this.redirectTargetInput.focus();
+	} else {
 		this.redirectTargetInput.setValue( '' );
-		this.enableStaticRedirectInput.setValue( false );
+		this.enableStaticRedirectInput.setSelected( false );
 	}
 	this.redirectOptionsTouched = true;
 };
@@ -227,10 +224,10 @@ ve.ui.MWSettingsPage.prototype.onEnableStaticRedirectChange = function () {
  * Get the first meta item of a given name
  *
  * @param {string} name Name of the meta item
- * @returns {Object|null} Meta item, if any
+ * @return {Object|null} Meta item, if any
  */
 ve.ui.MWSettingsPage.prototype.getMetaItem = function ( name ) {
-	return this.metaList.getItemsInGroup( name )[0] || null;
+	return this.metaList.getItemsInGroup( name )[ 0 ] || null;
 };
 
 /**
@@ -240,30 +237,28 @@ ve.ui.MWSettingsPage.prototype.getMetaItem = function ( name ) {
  * @param {Object} [data] Dialog setup data
  */
 ve.ui.MWSettingsPage.prototype.setup = function ( metaList ) {
-	this.metaList = metaList;
-
-	var // Table of Contents items
-		tableOfContentsMetaItem = this.getMetaItem( 'mwTOC' ),
-		tableOfContentsField = this.tableOfContents.getField(),
-		tableOfContentsMode = tableOfContentsMetaItem &&
-			tableOfContentsMetaItem.getType() || 'default',
-
-		// Redirect items
-		redirectTargetItem = this.getMetaItem( 'mwRedirect' ),
-		redirectTarget = redirectTargetItem && redirectTargetItem.getAttribute( 'title' ) || '',
-		redirectStatic = this.getMetaItem( 'mwStaticRedirect' ),
-
+	var tableOfContentsMetaItem, tableOfContentsField, tableOfContentsMode,
+		redirectTargetItem, redirectTarget, redirectStatic,
 		settingsPage = this;
 
+	this.metaList = metaList;
+
 	// Table of Contents items
-	tableOfContentsField.selectItem( tableOfContentsField.getItemFromData( tableOfContentsMode ) );
+	tableOfContentsMetaItem = this.getMetaItem( 'mwTOC' );
+	tableOfContentsField = this.tableOfContents.getField();
+	tableOfContentsMode = tableOfContentsMetaItem &&
+		tableOfContentsMetaItem.getType() || 'default';
+	tableOfContentsField.selectItemByData( tableOfContentsMode );
 	this.tableOfContentsTouched = false;
 
 	// Redirect items (disabled states set by change event)
-	this.enableRedirectInput.setValue( !!redirectTargetItem );
+	redirectTargetItem = this.getMetaItem( 'mwRedirect' );
+	redirectTarget = redirectTargetItem && redirectTargetItem.getAttribute( 'title' ) || '';
+	redirectStatic = this.getMetaItem( 'mwStaticRedirect' );
+	this.enableRedirectInput.setSelected( !!redirectTargetItem );
 	this.redirectTargetInput.setValue( redirectTarget );
 	this.redirectTargetInput.setDisabled( !redirectTargetItem );
-	this.enableStaticRedirectInput.setValue( !!redirectStatic );
+	this.enableStaticRedirectInput.setSelected( !!redirectStatic );
 	this.enableStaticRedirectInput.setDisabled( !redirectTargetItem );
 	this.redirectOptionsTouched = false;
 
@@ -280,23 +275,29 @@ ve.ui.MWSettingsPage.prototype.setup = function ( metaList ) {
  * @param {Object} [data] Dialog tear down data
  */
 ve.ui.MWSettingsPage.prototype.teardown = function ( data ) {
+	var tableOfContentsMetaItem, tableOfContentsSelectedItem, tableOfContentsValue,
+		currentRedirectTargetItem, newRedirectData, newRedirectItemData,
+		currentStaticRedirectItem, newStaticRedirectState,
+		settingsPage = this;
+
 	// Data initialisation
 	data = data || {};
+	if ( data.action !== 'apply' ) {
+		return;
+	}
 
-	var // Table of Contents items
-		tableOfContentsMetaItem = this.getMetaItem( 'mwTOC' ),
-		tableOfContentsSelectedItem = this.tableOfContents.getField().getSelectedItem(),
-		tableOfContentsValue = tableOfContentsSelectedItem && tableOfContentsSelectedItem.getData(),
+	// Table of Contents items
+	tableOfContentsMetaItem = this.getMetaItem( 'mwTOC' );
+	tableOfContentsSelectedItem = this.tableOfContents.getField().getSelectedItem();
+	tableOfContentsValue = tableOfContentsSelectedItem && tableOfContentsSelectedItem.getData();
 
-		// Redirect items
-		currentRedirectTargetItem = this.getMetaItem( 'mwRedirect' ),
-		newRedirectData = this.redirectTargetInput.getValue(),
-		newRedirectItemData = { type: 'mwRedirect', attributes: { title: newRedirectData } },
+	// Redirect items
+	currentRedirectTargetItem = this.getMetaItem( 'mwRedirect' );
+	newRedirectData = this.redirectTargetInput.getValue();
+	newRedirectItemData = { type: 'mwRedirect', attributes: { title: newRedirectData } };
 
-		currentStaticRedirectItem = this.getMetaItem( 'mwStaticRedirect' ),
-		newStaticRedirectState = this.enableStaticRedirectInput.getValue(),
-
-		settingsPage = this;
+	currentStaticRedirectItem = this.getMetaItem( 'mwStaticRedirect' );
+	newStaticRedirectState = this.enableStaticRedirectInput.isSelected();
 
 	// Alter the TOC option flag iff it's been touched & is actually different
 	if ( this.tableOfContentsTouched ) {

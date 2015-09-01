@@ -1,0 +1,23 @@
+/*!
+ * VisualEditor MediaWiki Initialization DesktopArticleTarget styles.
+ *
+ * @copyright 2011-2015 VisualEditor Team and others; see AUTHORS.txt
+ * @license The MIT License (MIT); see LICENSE.txt
+ */
+
+/* Toolbar */
+
+.ve-activating .ve-init-mw-desktopArticleTarget-toolbar,
+.ve-deactivating .ve-init-mw-desktopArticleTarget-toolbar {
+	overflow: hidden;
+	transition: height 0.4s ease;
+}
+
+.ve-ui-toolbar-floating .oo-ui-toolbar-bar {
+	transform: translateY(-100%);
+	transition: transform 0.4s ease;
+}
+
+.ve-active .ve-ui-toolbar-floating .oo-ui-toolbar-bar {
+	transform: translateY(0);
+}

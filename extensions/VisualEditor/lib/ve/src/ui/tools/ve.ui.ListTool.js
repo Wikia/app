@@ -1,7 +1,7 @@
 /*!
  * VisualEditor UserInterface ListTool classes.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 /**
@@ -45,25 +45,18 @@ ve.ui.ListTool.static.deactivateOnSelect = false;
 /**
  * @inheritdoc
  */
-ve.ui.ListTool.prototype.onSelect = function () {
-	ve.track( 'tool.list.select', { method: this.method, name: this.constructor.static.name } );
-	ve.ui.Tool.prototype.onSelect.apply( this, arguments );
-};
-
-/**
- * @inheritdoc
- */
 ve.ui.ListTool.prototype.onUpdateState = function ( fragment ) {
+	var i, len, nodes, style, all;
+
 	// Parent method
 	ve.ui.Tool.prototype.onUpdateState.apply( this, arguments );
 
-	var i, len,
-		nodes = fragment ? fragment.getSelectedLeafNodes() : [],
-		style = this.constructor.static.style,
-		all = !!nodes.length;
+	nodes = fragment ? fragment.getSelectedLeafNodes() : [];
+	style = this.constructor.static.style;
+	all = !!nodes.length;
 
 	for ( i = 0, len = nodes.length; i < len; i++ ) {
-		if ( !nodes[i].hasMatchingAncestor( 'list', { style: style } ) ) {
+		if ( !nodes[ i ].hasMatchingAncestor( 'list', { style: style } ) ) {
 			all = false;
 			break;
 		}
@@ -86,7 +79,7 @@ ve.ui.BulletListTool = function VeUiBulletListTool( toolGroup, config ) {
 OO.inheritClass( ve.ui.BulletListTool, ve.ui.ListTool );
 ve.ui.BulletListTool.static.name = 'bullet';
 ve.ui.BulletListTool.static.group = 'structure';
-ve.ui.BulletListTool.static.icon = 'bullet-list';
+ve.ui.BulletListTool.static.icon = 'listBullet';
 ve.ui.BulletListTool.static.title =
 	OO.ui.deferMsg( 'visualeditor-listbutton-bullet-tooltip' );
 ve.ui.BulletListTool.static.style = 'bullet';
@@ -108,7 +101,7 @@ ve.ui.NumberListTool = function VeUiNumberListTool( toolGroup, config ) {
 OO.inheritClass( ve.ui.NumberListTool, ve.ui.ListTool );
 ve.ui.NumberListTool.static.name = 'number';
 ve.ui.NumberListTool.static.group = 'structure';
-ve.ui.NumberListTool.static.icon = 'number-list';
+ve.ui.NumberListTool.static.icon = 'listNumbered';
 ve.ui.NumberListTool.static.title =
 	OO.ui.deferMsg( 'visualeditor-listbutton-number-tooltip' );
 ve.ui.NumberListTool.static.style = 'number';

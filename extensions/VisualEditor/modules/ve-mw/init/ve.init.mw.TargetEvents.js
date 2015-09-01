@@ -1,7 +1,7 @@
 /*!
  * VisualEditor MediaWiki Initialization class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2015 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -13,7 +13,7 @@
  * @constructor
  * @param {ve.init.mw.Target} target Target class to log events for
  */
-ve.init.mw.TargetEvents = function ( target ) {
+ve.init.mw.TargetEvents = function VeInitMwTargetEvents( target ) {
 	this.target = target;
 	this.timings = { saveRetries: 0 };
 	// Events
@@ -29,6 +29,7 @@ ve.init.mw.TargetEvents = function ( target ) {
 		saveErrorBadToken: [ 'trackSaveError', 'badtoken' ],
 		saveErrorNewUser: [ 'trackSaveError', 'newuser' ],
 		saveErrorPageDeleted: [ 'trackSaveError', 'pagedeleted' ],
+		saveErrorTitleBlacklist: [ 'trackSaveError', 'titleblacklist' ],
 		saveErrorCaptcha: [ 'trackSaveError', 'captcha' ],
 		saveErrorUnknown: [ 'trackSaveError', 'unknown' ],
 		editConflict: [ 'trackSaveError', 'editconflict' ],
@@ -90,6 +91,7 @@ ve.init.mw.TargetEvents.prototype.onSaveInitated = function () {
 
 /**
  * Track when the save is complete
+ *
  * @param {string} content
  * @param {string} categoriesHtml
  * @param {number} newRevId
@@ -110,7 +112,8 @@ ve.init.mw.TargetEvents.prototype.onSaveComplete = function ( content, categorie
  * @param {string} type Text for error type
  */
 ve.init.mw.TargetEvents.prototype.trackSaveError = function ( type ) {
-	var key,
+	var key, data,
+		failureArguments = [],
 		// Maps mwtiming types to mwedit types
 		typeMap = {
 			badtoken: 'userBadToken',
@@ -121,11 +124,16 @@ ve.init.mw.TargetEvents.prototype.trackSaveError = function ( type ) {
 			empty: 'responseEmpty',
 			unknown: 'responseUnknown',
 			pagedeleted: 'editPageDeleted',
+			titleblacklist: 'extensionTitleBlacklist',
 			editconflict: 'editConflict'
 		},
 		// Types that are logged as performance.user.saveError.{type}
 		// (for historical reasons; this sucks)
 		specialTypes = [ 'editconflict' ];
+
+	if ( arguments ) {
+		failureArguments = Array.prototype.slice.call( arguments, 1 );
+	}
 
 	key = 'performance.user.saveError';
 	if ( specialTypes.indexOf( type ) !== -1 ) {
@@ -137,10 +145,30 @@ ve.init.mw.TargetEvents.prototype.trackSaveError = function ( type ) {
 		type: type
 	} );
 
-	ve.track( 'mwedit.saveFailure', {
-		type: typeMap[type] || 'responseUnknown',
+	data = {
+		type: typeMap[ type ] || 'responseUnknown',
 		timing: ve.now() - this.timings.saveInitiated + ( this.timings.serializeForCache || 0 )
-	} );
+	};
+	if ( type === 'unknown' && failureArguments[ 1 ].error && failureArguments[ 1 ].error.code ) {
+		data.message = failureArguments[ 1 ].error.code;
+	}
+	ve.track( 'mwedit.saveFailure', data );
+};
+
+/**
+ * Record activation having started.
+ *
+ * @param {number} [startTime] Timestamp activation started. Defaults to current time
+ */
+ve.init.mw.TargetEvents.prototype.trackActivationStart = function ( startTime ) {
+	this.timings.activationStart = startTime || ve.now();
+};
+
+/**
+ * Record activation being complete.
+ */
+ve.init.mw.TargetEvents.prototype.trackActivationComplete = function () {
+	this.track( 'performance.system.activation', { duration: ve.now() - this.timings.activationStart } );
 };
 
 /**
@@ -161,7 +189,6 @@ ve.init.mw.TargetEvents.prototype.onSaveReview = function () {
 };
 
 ve.init.mw.TargetEvents.prototype.onSurfaceReady = function () {
-	this.track( 'performance.system.activation', { duration: ve.now() - this.timings.activationStart } );
 	this.target.surface.getModel().getDocument().connect( this, {
 		transact: 'recordLastTransactionTime'
 	} );

@@ -1,0 +1,11 @@
+{
+	"@metadata": {
+		"authors": [
+			"Vikas Yaligar"
+		]
+	},
+	"visualeditor-languagescreenshot-desc": "Strings for the screenshots in the [[:mw:Help:VisualEditor/User_guide|Visual Editor user guide]].",
+	"visualeditor-languagescreenshot-hello-world-text": "Hello, World!",
+	"visualeditor-languagescreenshot-world-text": "World",
+	"visualeditor-languagescreenshot-category-earth-text": "Category:Earth"
+}

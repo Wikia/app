@@ -1,7 +1,7 @@
 /*!
  * VisualEditor user interface MWAdvancedSettingsPage class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2015 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -27,7 +27,6 @@ ve.ui.MWAdvancedSettingsPage = function VeUiMWAdvancedSettingsPage( name, config
 	this.newSectionEditLinkOptionTouched = false;
 
 	this.advancedSettingsFieldset = new OO.ui.FieldsetLayout( {
-		$: this.$,
 		label: ve.msg( 'visualeditor-dialog-meta-advancedsettings-label' ),
 		icon: 'advanced'
 	} );
@@ -36,27 +35,23 @@ ve.ui.MWAdvancedSettingsPage = function VeUiMWAdvancedSettingsPage( name, config
 
 	// Indexing items
 	this.indexing = new OO.ui.FieldLayout(
-		new OO.ui.ButtonSelectWidget( { $: this.$ } )
+		new OO.ui.ButtonSelectWidget()
 			.addItems( [
 				new OO.ui.ButtonOptionWidget( {
 					data: 'mwIndexForce',
-					label: ve.msg( 'visualeditor-dialog-meta-settings-index-force' ),
-					flags: ['secondary']
+					label: ve.msg( 'visualeditor-dialog-meta-settings-index-force' )
 				} ),
 				new OO.ui.ButtonOptionWidget( {
 					data: 'default',
-					label: ve.msg( 'visualeditor-dialog-meta-settings-index-default' ),
-					flags: ['secondary']
+					label: ve.msg( 'visualeditor-dialog-meta-settings-index-default' )
 				} ),
 				new OO.ui.ButtonOptionWidget( {
 					data: 'mwIndexDisable',
-					label: ve.msg( 'visualeditor-dialog-meta-settings-index-disable' ),
-					flags: ['secondary']
+					label: ve.msg( 'visualeditor-dialog-meta-settings-index-disable' )
 				} )
 			] )
 			.connect( this, { select: 'onIndexingOptionChange' } ),
 		{
-			$: this.$,
 			align: 'top',
 			label: ve.msg( 'visualeditor-dialog-meta-settings-index-label' ),
 			help: ve.msg( 'visualeditor-dialog-meta-settings-index-help' )
@@ -65,27 +60,23 @@ ve.ui.MWAdvancedSettingsPage = function VeUiMWAdvancedSettingsPage( name, config
 
 	// New edit section link items
 	this.newEditSectionLink = new OO.ui.FieldLayout(
-		new OO.ui.ButtonSelectWidget( { $: this.$ } )
+		new OO.ui.ButtonSelectWidget()
 			.addItems( [
 				new OO.ui.ButtonOptionWidget( {
 					data: 'mwNewSectionEditForce',
-					label: ve.msg( 'visualeditor-dialog-meta-settings-newsectioneditlink-force' ),
-					flags: ['secondary']
+					label: ve.msg( 'visualeditor-dialog-meta-settings-newsectioneditlink-force' )
 				} ),
 				new OO.ui.ButtonOptionWidget( {
 					data: 'default',
-					label: ve.msg( 'visualeditor-dialog-meta-settings-newsectioneditlink-default' ),
-					flags: ['secondary']
+					label: ve.msg( 'visualeditor-dialog-meta-settings-newsectioneditlink-default' )
 				} ),
 				new OO.ui.ButtonOptionWidget( {
 					data: 'mwNewSectionEditDisable',
-					label: ve.msg( 'visualeditor-dialog-meta-settings-newsectioneditlink-disable' ),
-					flags: ['secondary']
+					label: ve.msg( 'visualeditor-dialog-meta-settings-newsectioneditlink-disable' )
 				} )
 			] )
 			.connect( this, { select: 'onNewSectionEditLinkOptionChange' } ),
 		{
-			$: this.$,
 			align: 'top',
 			label: ve.msg( 'visualeditor-dialog-meta-settings-newsectioneditlink-label' ),
 			help: ve.msg( 'visualeditor-dialog-meta-settings-newsectioneditlink-help', $( '#ca-edit' ).text() )
@@ -93,28 +84,23 @@ ve.ui.MWAdvancedSettingsPage = function VeUiMWAdvancedSettingsPage( name, config
 	);
 
 	this.displayTitleTouched = false;
-	this.enableDisplayTitleCheckbox = new OO.ui.CheckboxInputWidget( { $: this.$ } );
+	this.enableDisplayTitleCheckbox = new OO.ui.CheckboxInputWidget();
 	this.enableDisplayTitleCheckbox.connect( this, { change: 'onEnableDisplayTitleCheckboxChange' } );
 	this.enableDisplayTitleField = new OO.ui.FieldLayout(
 		this.enableDisplayTitleCheckbox,
 		{
-			$: this.$,
 			align: 'inline',
 			label: ve.msg( 'visualeditor-dialog-meta-settings-displaytitle-enable' ),
 			help: ve.msg( 'visualeditor-dialog-meta-settings-displaytitle-help' )
 		}
 	);
 	this.displayTitleInput = new OO.ui.TextInputWidget( {
-		$: this.$,
 		placeholder: ve.msg( 'visualeditor-dialog-meta-settings-displaytitle' )
 	} );
 	this.displayTitleInput.connect( this, { change: 'onDisplayTitleInputChange' } );
 	this.displayTitleField = new OO.ui.FieldLayout(
 		this.displayTitleInput,
-		{
-			$: this.$,
-			align: 'inline'
-		}
+		{ align: 'inline' }
 	);
 
 	this.advancedSettingsFieldset.addItems( [ this.indexing, this.newEditSectionLink, this.enableDisplayTitleField, this.displayTitleField ] );
@@ -137,9 +123,8 @@ ve.ui.MWAdvancedSettingsPage = function VeUiMWAdvancedSettingsPage( name, config
 
 	$.each( this.metaItemCheckboxes, function () {
 		this.fieldLayout = new OO.ui.FieldLayout(
-			new OO.ui.CheckboxInputWidget( { $: this.$ } ),
+			new OO.ui.CheckboxInputWidget(),
 			{
-				$: advancedSettingsPage.$,
 				align: 'inline',
 				label: this.label
 			}
@@ -206,10 +191,10 @@ ve.ui.MWAdvancedSettingsPage.prototype.onIndexingOptionChange = function () {
  * Get the first meta item of a given name
  *
  * @param {string} name Name of the meta item
- * @returns {Object|null} Meta item, if any
+ * @return {Object|null} Meta item, if any
  */
 ve.ui.MWAdvancedSettingsPage.prototype.getMetaItem = function ( name ) {
-	return this.metaList.getItemsInGroup( name )[0] || null;
+	return this.metaList.getItemsInGroup( name )[ 0 ] || null;
 };
 
 /* New edit section link option methods */
@@ -228,31 +213,30 @@ ve.ui.MWAdvancedSettingsPage.prototype.onNewSectionEditLinkOptionChange = functi
  * @param {Object} [data] Dialog setup data
  */
 ve.ui.MWAdvancedSettingsPage.prototype.setup = function ( metaList ) {
-	this.metaList = metaList;
-
-	var // Indexing items
-		indexingField = this.indexing.getField(),
-		indexingOption = this.getMetaItem( 'mwIndex' ),
-		indexingType = indexingOption && indexingOption.element.type || 'default',
-
-		// New section edit link items
-		newSectionEditField = this.newEditSectionLink.getField(),
-		newSectionEditLinkOption = this.getMetaItem( 'mwNewSectionEdit' ),
-		newSectionEditLinkType = newSectionEditLinkOption && newSectionEditLinkOption.element.type || 'default',
-
-		displayTitleItem = this.getMetaItem( 'mwDisplayTitle' ),
-		displayTitle = displayTitleItem && displayTitleItem.getAttribute( 'content' ) || '',
-
+	var indexingField, indexingOption, indexingType,
+		newSectionEditField, newSectionEditLinkOption, newSectionEditLinkType,
+		displayTitleItem, displayTitle,
 		advancedSettingsPage = this;
 
+	this.metaList = metaList;
+
 	// Indexing items
-	indexingField.selectItem( indexingField.getItemFromData( indexingType ) );
+	indexingField = this.indexing.getField();
+	indexingOption = this.getMetaItem( 'mwIndex' );
+	indexingType = indexingOption && indexingOption.element.type || 'default';
+	indexingField.selectItemByData( indexingType );
 	this.indexingOptionTouched = false;
 
 	// New section edit link items
-	newSectionEditField.selectItem( newSectionEditField.getItemFromData( newSectionEditLinkType ) );
+	newSectionEditField = this.newEditSectionLink.getField();
+	newSectionEditLinkOption = this.getMetaItem( 'mwNewSectionEdit' );
+	newSectionEditLinkType = newSectionEditLinkOption && newSectionEditLinkOption.element.type || 'default';
+	newSectionEditField.selectItemByData( newSectionEditLinkType );
 	this.newSectionEditLinkOptionTouched = false;
 
+	// Display title items
+	displayTitleItem = this.getMetaItem( 'mwDisplayTitle' );
+	displayTitle = displayTitleItem && displayTitleItem.getAttribute( 'content' ) || '';
 	this.enableDisplayTitleCheckbox.setSelected( !!displayTitleItem );
 	this.displayTitleInput.setValue( displayTitle );
 	this.displayTitleInput.setDisabled( !displayTitle );
@@ -271,22 +255,20 @@ ve.ui.MWAdvancedSettingsPage.prototype.setup = function ( metaList ) {
  * @param {Object} [data] Dialog tear down data
  */
 ve.ui.MWAdvancedSettingsPage.prototype.teardown = function ( data ) {
+	var currentIndexingItem, newIndexingData,
+		currentNewSectionEditLinkItem, newNewSectionEditLinkOptionData,
+		currentDisplayTitleItem, newDisplayTitle, newDisplayTitleItemData,
+		advancedSettingsPage = this;
+
 	// Data initialization
 	data = data || {};
+	if ( data.action !== 'apply' ) {
+		return;
+	}
 
-	var // Indexing items
-		currentIndexingItem = this.getMetaItem( 'mwIndex' ),
-		newIndexingData = this.indexing.getField().getSelectedItem(),
-
-		// New section edit link items
-		currentNewSectionEditLinkItem = this.getMetaItem( 'mwNewSectionEdit' ),
-		newNewSectionEditLinkOptionData = this.newEditSectionLink.getField().getSelectedItem(),
-
-		currentDisplayTitleItem = this.getMetaItem( 'mwDisplayTitle' ),
-		newDisplayTitle = this.displayTitleInput.getValue(),
-		newDisplayTitleItemData = { type: 'mwDisplayTitle', attributes: { content: newDisplayTitle } },
-
-		advancedSettingsPage = this;
+	// Indexing items
+	currentIndexingItem = this.getMetaItem( 'mwIndex' );
+	newIndexingData = this.indexing.getField().getSelectedItem();
 
 	// Alter the indexing option flag iff it's been touched & is actually different
 	if ( this.indexingOptionTouched ) {
@@ -308,6 +290,10 @@ ve.ui.MWAdvancedSettingsPage.prototype.teardown = function ( data ) {
 		}
 	}
 
+	// New section edit link items
+	currentNewSectionEditLinkItem = this.getMetaItem( 'mwNewSectionEdit' );
+	newNewSectionEditLinkOptionData = this.newEditSectionLink.getField().getSelectedItem();
+
 	// Alter the new section edit option flag iff it's been touched & is actually different
 	if ( this.newSectionEditLinkOptionTouched ) {
 		if ( newNewSectionEditLinkOptionData.data === 'default' ) {
@@ -328,6 +314,12 @@ ve.ui.MWAdvancedSettingsPage.prototype.teardown = function ( data ) {
 		}
 	}
 
+	// Display title items
+	currentDisplayTitleItem = this.getMetaItem( 'mwDisplayTitle' );
+	newDisplayTitle = this.displayTitleInput.getValue();
+	newDisplayTitleItemData = { type: 'mwDisplayTitle', attributes: { content: newDisplayTitle } };
+
+	// Alter the display title flag iff it's been touched & is actually different
 	if ( this.displayTitleTouched ) {
 		if ( currentDisplayTitleItem ) {
 			if ( newDisplayTitle ) {

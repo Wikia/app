@@ -1,7 +1,7 @@
 /*!
  * VisualEditor DataModel SubscriptAnnotation class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 /**
@@ -29,7 +29,7 @@ ve.dm.SubscriptAnnotation.static.name = 'textStyle/subscript';
 
 ve.dm.SubscriptAnnotation.static.matchTagNames = [ 'sub' ];
 
-ve.dm.SubscriptAnnotation.static.removes = ['textStyle/superscript'];
+ve.dm.SubscriptAnnotation.static.removes = [ 'textStyle/superscript' ];
 
 /* Registration */
 

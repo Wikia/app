@@ -1,7 +1,7 @@
 /*!
  * VisualEditor DataModel InternalItemNode class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 /**
@@ -29,7 +29,7 @@ ve.dm.InternalItemNode.static.name = 'internalItem';
 
 ve.dm.InternalItemNode.static.matchTagNames = [];
 
-ve.dm.InternalItemNode.static.handlesOwnChildren = true;
+ve.dm.InternalItemNode.static.ignoreChildren = true;
 
 ve.dm.InternalItemNode.static.isInternal = true;
 

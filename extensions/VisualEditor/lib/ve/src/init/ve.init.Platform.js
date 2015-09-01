@@ -1,7 +1,7 @@
 /*!
  * VisualEditor Initialization Platform class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 /**
@@ -15,11 +15,45 @@
 ve.init.Platform = function VeInitPlatform() {
 	// Mixin constructors
 	OO.EventEmitter.call( this );
+
+	// Register
+	ve.init.platform = this;
+
+	// Provide messages to OOUI
+	OO.ui.getUserLanguages = this.getUserLanguages.bind( this );
+	OO.ui.msg = this.getMessage.bind( this );
+
+	// Notify those waiting for a platform that they can finish initialization
+	setTimeout( function () {
+		ve.init.Platform.static.deferredPlatform.resolve( ve.init.platform );
+	} );
 };
 
 /* Inheritance */
 
 OO.mixinClass( ve.init.Platform, OO.EventEmitter );
+
+/* Static Properties */
+
+/**
+ * A jQuery.Deferred that tracks when the platform has been created.
+ * @private
+ */
+ve.init.Platform.static.deferredPlatform = $.Deferred();
+
+/**
+ * A promise that tracks when ve.init.platform is ready for use.  When
+ * this promise is resolved the platform will have been created and
+ * initialized.
+ *
+ * This promise is safe to access early in VE startup before
+ * `ve.init.platform` has been set.
+ *
+ * @property {jQuery.Promise}
+ */
+ve.init.Platform.static.initializedPromise = ve.init.Platform.static.deferredPlatform.promise().then( function ( platform ) {
+	return platform.getInitializedPromise();
+} );
 
 /* Static Methods */
 
@@ -29,43 +63,90 @@ OO.mixinClass( ve.init.Platform, OO.EventEmitter );
  * @static
  * @method
  * @inheritable
- * @returns {string} Client platform string
+ * @return {string} Client platform string
  */
 ve.init.Platform.static.getSystemPlatform = function () {
-	var platforms = ['win', 'mac', 'linux', 'sunos', 'solaris', 'iphone'],
-		match = new RegExp( '(' + platforms.join( '|' ) + ')' ).exec( window.navigator.platform.toLowerCase() );
-	if ( match ) {
-		return match[1];
-	}
+	return $.client.profile().platform;
 };
 
 /**
  * Check whether we are running in Internet Explorer.
  *
  * HACK: This should not be needed, and it should eventually be removed. If this hasn't died
- * in a fire by the end of September 2014, Roan has failed.
+ * in a fire by the end of September 2015, Roan has failed.
  *
  * @static
  * @method
  * @inheritable
- * @returns {boolean} Whether we are in IE
+ * @return {boolean} We are in IE
  */
 ve.init.Platform.static.isInternetExplorer = function () {
-	return navigator.userAgent.indexOf( 'Trident' ) !== -1 || navigator.userAgent.indexOf( 'Edge' ) !== -1;
+	return $.client.profile().name === 'msie';
+};
+
+/**
+ * Check whether we are running on iOS
+ *
+ * @static
+ * @method
+ * @inheritable
+ * @return {boolean} We are running on iOS
+ */
+ve.init.Platform.static.isIos = function () {
+	return /ipad|iphone|ipod/i.test( navigator.userAgent );
 };
 
 /* Methods */
 
 /**
- * Get a regular expression that matches allowed external link URLs.
+ * Get an anchored regular expression that matches allowed external link URLs
+ * starting at the beginning of an input string.
  *
  * @method
  * @abstract
- * @returns {RegExp} Regular expression object
+ * @return {RegExp} Regular expression object
  */
-ve.init.Platform.prototype.getExternalLinkUrlProtocolsRegExp = function () {
-	throw new Error( 've.init.Platform.getExternalLinkUrlProtocolsRegExp must be overridden in subclass' );
-};
+ve.init.Platform.prototype.getExternalLinkUrlProtocolsRegExp = null;
+
+/**
+ * Get an unanchored regular expression that matches allowed external link URLs
+ * anywhere in an input string.
+ *
+ * @method
+ * @abstract
+ * @return {RegExp} Regular expression object
+ */
+ve.init.Platform.prototype.getUnanchoredExternalLinkUrlProtocolsRegExp = null;
+
+/**
+ * Get a platform config value
+ *
+ * @method
+ * @abstract
+ * @param {string|string[]} key Config key, or list of keys
+ * @return {Mixed|Object} Config value, or keyed object of config values if list of keys provided
+ */
+ve.init.Platform.prototype.getConfig = null;
+
+/**
+ * Get a user config value
+ *
+ * @method
+ * @abstract
+ * @param {string|string[]} key Config key, or list of keys
+ * @return {Mixed|Object} Config value, or keyed object of config values if list of keys provided
+ */
+ve.init.Platform.prototype.getUserConfig = null;
+
+/**
+ * Set a user config value
+ *
+ * @method
+ * @abstract
+ * @param {string|Object} keyOrValueMap Key to set value for, or object mapping keys to values
+ * @param {Mixed} [value] Value to set (optional, only in use when key is a string)
+ */
+ve.init.Platform.prototype.setUserConfig = null;
 
 /**
  * Add multiple messages to the localization system.
@@ -74,9 +155,7 @@ ve.init.Platform.prototype.getExternalLinkUrlProtocolsRegExp = function () {
  * @abstract
  * @param {Object} messages Containing plain message values
  */
-ve.init.Platform.prototype.addMessages = function () {
-	throw new Error( 've.init.Platform.addMessages must be overridden in subclass' );
-};
+ve.init.Platform.prototype.addMessages = null;
 
 /**
  * Get a message from the localization system.
@@ -84,12 +163,10 @@ ve.init.Platform.prototype.addMessages = function () {
  * @method
  * @abstract
  * @param {string} key Message key
- * @param {Mixed...} [args] List of arguments which will be injected at $1, $2, etc. in the message
- * @returns {string} Localized message, or key or '<' + key + '>' if message not found
+ * @param {...Mixed} [args] List of arguments which will be injected at $1, $2, etc. in the message
+ * @return {string} Localized message, or key or '<' + key + '>' if message not found
  */
-ve.init.Platform.prototype.getMessage = function () {
-	throw new Error( 've.init.Platform.getMessage must be overridden in subclass' );
-};
+ve.init.Platform.prototype.getMessage = null;
 
 /**
  * Add multiple parsed messages to the localization system.
@@ -98,9 +175,7 @@ ve.init.Platform.prototype.getMessage = function () {
  * @abstract
  * @param {Object} messages Map of message-key/html pairs
  */
-ve.init.Platform.prototype.addParsedMessages = function () {
-	throw new Error( 've.init.Platform.addParsedMessages must be overridden in subclass' );
-};
+ve.init.Platform.prototype.addParsedMessages = null;
 
 /**
  * Get a parsed message as HTML string.
@@ -110,44 +185,36 @@ ve.init.Platform.prototype.addParsedMessages = function () {
  * @method
  * @abstract
  * @param {string} key Message key
- * @returns {string} Parsed localized message as HTML string
+ * @return {string} Parsed localized message as HTML string
  */
-ve.init.Platform.prototype.getParsedMessage = function () {
-	throw new Error( 've.init.Platform.getParsedMessage must be overridden in subclass' );
-};
+ve.init.Platform.prototype.getParsedMessage = null;
 
 /**
  * Get the user language and any fallback languages.
  *
  * @method
  * @abstract
- * @returns {string[]} User language strings
+ * @return {string[]} User language strings
  */
-ve.init.Platform.prototype.getUserLanguages = function () {
-	throw new Error( 've.init.Platform.getUserLanguages must be overridden in subclass' );
-};
+ve.init.Platform.prototype.getUserLanguages = null;
 
 /**
  * Get a list of URL entry points where media can be found.
  *
  * @method
  * @abstract
- * @returns {string[]} API URLs
+ * @return {string[]} API URLs
  */
-ve.init.Platform.prototype.getMediaSources = function () {
-	throw new Error( 've.init.Platform.getMediaSources must be overridden in subclass' );
-};
+ve.init.Platform.prototype.getMediaSources = null;
 
 /**
  * Get a list of all language codes.
  *
  * @method
  * @abstract
- * @returns {string[]} Language codes
+ * @return {string[]} Language codes
  */
-ve.init.Platform.prototype.getLanguageCodes = function () {
-	throw new Error( 've.init.Platform.getLanguageCodes must be overridden in subclass' );
-};
+ve.init.Platform.prototype.getLanguageCodes = null;
 
 /**
  * Get a language's name from its code, in the current user language if possible.
@@ -155,11 +222,9 @@ ve.init.Platform.prototype.getLanguageCodes = function () {
  * @method
  * @abstract
  * @param {string} code Language code
- * @returns {string} Language name
+ * @return {string} Language name
  */
-ve.init.Platform.prototype.getLanguageName = function () {
-	throw new Error( 've.init.Platform.getLanguageName must be overridden in subclass' );
-};
+ve.init.Platform.prototype.getLanguageName = null;
 
 /**
  * Get a language's autonym from its code.
@@ -167,11 +232,9 @@ ve.init.Platform.prototype.getLanguageName = function () {
  * @method
  * @abstract
  * @param {string} code Language code
- * @returns {string} Language autonym
+ * @return {string} Language autonym
  */
-ve.init.Platform.prototype.getLanguageAutonym = function () {
-	throw new Error( 've.init.Platform.getLanguageAutonym must be overridden in subclass' );
-};
+ve.init.Platform.prototype.getLanguageAutonym = null;
 
 /**
  * Get a language's direction from its code.
@@ -179,11 +242,9 @@ ve.init.Platform.prototype.getLanguageAutonym = function () {
  * @method
  * @abstract
  * @param {string} code Language code
- * @returns {string} Language direction
+ * @return {string} Language direction
  */
-ve.init.Platform.prototype.getLanguageDirection = function () {
-	throw new Error( 've.init.Platform.getLanguageDirection must be overridden in subclass' );
-};
+ve.init.Platform.prototype.getLanguageDirection = null;
 
 /**
  * Initialize the platform. The default implementation is to do nothing and return a resolved
@@ -192,7 +253,7 @@ ve.init.Platform.prototype.getLanguageDirection = function () {
  * External callers should not call this. Instead, call #getInitializedPromise.
  *
  * @private
- * @returns {jQuery.Promise} Promise that will be resolved once initialization is done
+ * @return {jQuery.Promise} Promise that will be resolved once initialization is done
  */
 ve.init.Platform.prototype.initialize = function () {
 	return $.Deferred().resolve().promise();
@@ -207,11 +268,36 @@ ve.init.Platform.prototype.initialize = function () {
  * (shared between different Target instances) it is important not to rely
  * on this promise being asynchronous.
  *
- * @returns {jQuery.Promise} Promise that will be resolved once the platform is ready
+ * @return {jQuery.Promise} Promise that will be resolved once the platform is ready
  */
 ve.init.Platform.prototype.getInitializedPromise = function () {
 	if ( !this.initialized ) {
 		this.initialized = this.initialize();
 	}
 	return this.initialized;
+};
+
+/**
+ * Fetch the special character list object
+ *
+ * Returns a promise which resolves with the character list
+ *
+ * @return {jQuery.Promise}
+ */
+ve.init.Platform.prototype.fetchSpecialCharList = function () {
+	var charsObj = {};
+
+	try {
+		charsObj = JSON.parse(
+			ve.msg( 'visualeditor-specialcharinspector-characterlist-insert' )
+		);
+	} catch ( err ) {
+		// There was no character list found, or the character list message is
+		// invalid json string. Force a fallback to the minimal character list
+		ve.log( 've.init.Platform: Could not parse the Special Character list.' );
+		ve.log( err.message );
+	}
+
+	// This implementation always resolves instantly
+	return $.Deferred().resolve( charsObj ).promise();
 };

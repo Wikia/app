@@ -1,24 +1,24 @@
 /*!
  * VisualEditor DataModel MetaItemFactory class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 /**
  * DataModel meta item factory.
  *
  * @class
- * @extends OO.Factory
+ * @extends ve.dm.ModelFactory
  * @constructor
  */
 ve.dm.MetaItemFactory = function VeDmMetaItemFactory() {
 	// Parent constructor
-	OO.Factory.call( this );
+	ve.dm.MetaItemFactory.super.call( this );
 };
 
 /* Inheritance */
 
-OO.inheritClass( ve.dm.MetaItemFactory, OO.Factory );
+OO.inheritClass( ve.dm.MetaItemFactory, ve.dm.ModelFactory );
 
 /* Methods */
 
@@ -27,27 +27,14 @@ OO.inheritClass( ve.dm.MetaItemFactory, OO.Factory );
  *
  * @method
  * @param {string} type Meta item type
- * @returns {string} Group
+ * @return {string} Group
  * @throws {Error} Unknown item type
  */
 ve.dm.MetaItemFactory.prototype.getGroup = function ( type ) {
 	if ( Object.prototype.hasOwnProperty.call( this.registry, type ) ) {
-		return this.registry[type].static.group;
+		return this.registry[ type ].static.group;
 	}
 	throw new Error( 'Unknown item type: ' + type );
-};
-
-/**
- * Create a new item from a metadata element
- * @param {Object} element Metadata element
- * @returns {ve.dm.MetaItem} MetaItem constructed from element
- * @throws {Error} Element must have a .type property
- */
-ve.dm.MetaItemFactory.prototype.createFromElement = function ( element ) {
-	if ( element && element.type ) {
-		return this.create( element.type, element );
-	}
-	throw new Error( 'Element must have a .type property' );
 };
 
 /* Initialization */

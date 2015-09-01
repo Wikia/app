@@ -13,17 +13,21 @@
 			"WTM",
 			"Woytecr",
 			"Wpedzich",
-			"Jacenty359"
+			"Jacenty359",
+			"Amire80",
+			"Krol111",
+			"아라"
 		]
 	},
 	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]]",
 	"tag-visualeditor-description": "Edycja z wykorzystaniem [[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditora]]",
 	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor: do sprawdzenia]]",
-	"tag-visualeditor-needcheck-description": "Edycja z wykorzystaniem [[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditora]], w której system wykrył prawdopodobnie niezamierzone uszkodzenie wikikodu.",
+	"tag-visualeditor-needcheck-description": "Edycja wykonana z wykorzystaniem [[{{MediaWiki:visualeditor-descriptionpagelink}}|edytora wizulanego]], w której system wykrył prawdopodobnie niezamierzone uszkodzenie kodu źródłowego.",
 	"tag-visualeditor-switched": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor: przełączono]]",
-	"tag-visualeditor-switched-description": "Użytkownik rozpoczął edycję używając VisualEditora, a w jej trakcie przełączył się na edytor wikitekstu.",
+	"tag-visualeditor-switched-description": "Użytkownik rozpoczął edycję używając edytora wizualnego, a w jej trakcie przełączył się na edytor kodu źródłowego.",
 	"visualeditor-feedback-link": "Project:VisualEditor/Opinie",
-	"visualeditor-feedback-tool": "Prześlij opinię",
+	"visualeditor-feedback-tool": "Prześlij opinię na temat tego oprogramowania",
 	"visualeditor-help-label": "Przeczytaj poradnik użytkownika",
+	"visualeditor-help-link": "mw:Special:MyLanguage/Help:VisualEditor/User guide",
 	"visualeditor-help-title": "Poradnik korzystania z edytora"
 }

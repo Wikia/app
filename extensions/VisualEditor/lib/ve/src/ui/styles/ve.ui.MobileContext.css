@@ -1,0 +1,38 @@
+/*!
+ * VisualEditor UserInterface MobileSurface styles.
+ *
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
+ */
+
+.ve-ui-mobileContext .ve-ui-linearContextItem-body {
+	display: none;
+}
+
+.ve-ui-mobileContext-menu {
+	border-top: 1px solid #ddd;
+}
+
+.ve-ui-mobileContext .ve-ui-linearContextItem-label {
+	min-width: auto;
+}
+
+.ve-ui-mobileContext .ve-ui-linearContextItem-title {
+	padding: 0.7em 1em 0.7em 0.5em;
+}
+
+.ve-ui-mobileContext .ve-ui-linearContextItem-description {
+	line-height: 3.164em;
+}
+
+.ve-ui-mobileContext .ve-ui-linearContextItem-actions {
+	line-height: 3.164em;
+	padding: 0;
+}
+
+.ve-ui-mobileContext .ve-ui-linearContextItem-actions .oo-ui-buttonWidget {
+	border-left: 1px solid #ddd;
+}
+
+.ve-ui-mobileContext .ve-ui-linearContextItem-actions .oo-ui-buttonElement-button {
+	padding: 0 0.5em
+}

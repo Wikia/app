@@ -3,9 +3,14 @@
 		"authors": [
 			"DCLXVI",
 			"Hristofor.mirchev",
-			"පසිඳු කාවින්ද"
+			"පසිඳු කාවින්ද",
+			"Aquilax"
 		]
 	},
+	"visualeditor-align-widget-center": "Центриране",
+	"visualeditor-align-widget-left": "Наляво",
+	"visualeditor-align-widget-right": "Надясно",
+	"visualeditor-alignablecontextitem-title": "Подравняване",
 	"visualeditor-annotationbutton-bold-tooltip": "Получер",
 	"visualeditor-annotationbutton-code-tooltip": "Програмен код",
 	"visualeditor-annotationbutton-italic-tooltip": "Курсив",

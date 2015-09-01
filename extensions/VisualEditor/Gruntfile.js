@@ -8,23 +8,24 @@
 module.exports = function ( grunt ) {
 	var modules = grunt.file.readJSON( 'lib/ve/build/modules.json' );
 
+	grunt.loadNpmTasks( 'grunt-contrib-copy' );
 	grunt.loadNpmTasks( 'grunt-contrib-csslint' );
 	grunt.loadNpmTasks( 'grunt-contrib-jshint' );
 	grunt.loadNpmTasks( 'grunt-contrib-watch' );
+	grunt.loadNpmTasks( 'grunt-jsonlint' );
 	grunt.loadNpmTasks( 'grunt-banana-checker' );
 	grunt.loadNpmTasks( 'grunt-jscs' );
 	grunt.loadTasks( 'lib/ve/build/tasks' );
 	grunt.loadTasks( 'build/tasks' );
 
 	grunt.initConfig( {
-		pkg: grunt.file.readJSON( 'package.json' ),
 		jsduckcatconfig: {
 			main: {
-				target: '.docs/categories.json',
+				target: '.jsduck/categories.json',
 				from: [
-					'.docs/mw-categories.json',
+					'.jsduck/mw-categories.json',
 					{
-						file: 'lib/ve/.docs/categories.json',
+						file: 'lib/ve/.jsduck/categories.json',
 						aggregate: {
 							'VisualEditor (core)': [
 								'General',
@@ -35,15 +36,15 @@ module.exports = function ( grunt ) {
 								'Tests'
 							]
 						},
-						include: [ 'UnicodeJS', 'OOJS UI', 'Upstream' ]
+						include: [ 'UnicodeJS', 'OOjs UI', 'Upstream' ]
 					}
 				]
 			}
 		},
 		buildloader: {
 			egiframe: {
-				targetFile: '.docs/eg-iframe.html',
-				template: '.docs/eg-iframe.html.template',
+				targetFile: '.jsduck/eg-iframe.html',
+				template: '.jsduck/eg-iframe.html.template',
 				modules: modules,
 				load: [ 'visualEditor.desktop.standalone' ],
 				pathPrefix: 'lib/ve/',
@@ -56,25 +57,46 @@ module.exports = function ( grunt ) {
 			},
 			all: [
 				'*.js',
-				'{.docs,build}/**/*.js',
-				'modules/**/*.js',
-				'wikia/**/*.js'
+				'{.jsduck,build}/**/*.js',
+				'modules/**/*.js'
 			]
 		},
 		jscs: {
-			src: '<%= jshint.all %>'
+			fix: {
+				options: {
+					fix: true
+				},
+				src: '<%= jshint.all %>'
+			},
+			main: {
+				src: '<%= jshint.all %>'
+			}
 		},
 		csslint: {
 			options: {
 				csslintrc: '.csslintrc'
 			},
-			all: [
-				'modules/**/*.css',
-				'wikia/**/*.css'
-			]
+			all: 'modules/**/*.css'
 		},
 		banana: {
-			all: 'modules/ve-{mw,wmf}/i18n/'
+			all: [
+				'modules/ve-{mw,wmf}/i18n/',
+				'modules/ve-mw/tests/browser/i18n'
+			]
+		},
+		jsonlint: {
+			all: [
+				'**/*.json',
+				'!node_modules/**',
+				'!lib/**'
+			]
+		},
+		copy: {
+			jsduck: {
+				src: 'lib/ve/**/*',
+				dest: 'docs/',
+				expand: true
+			}
 		},
 		watch: {
 			files: [
@@ -92,9 +114,13 @@ module.exports = function ( grunt ) {
 		require( 'child_process' ).exec( 'git ls-files --modified', function ( err, stdout, stderr ) {
 			var ret = err || stderr || stdout;
 			if ( ret ) {
-				grunt.log.write( ret );
-				grunt.log.error( 'Unstaged changes.' );
-				done( false );
+				grunt.log.error( 'Unstaged changes in these files:' );
+				grunt.log.error( ret );
+				// Show a condensed diff
+				require( 'child_process' ).exec( 'git diff -U1 | tail -n +3', function ( err, stdout, stderr ) {
+					grunt.log.write( err || stderr || stdout );
+					done( false );
+				} );
 			} else {
 				grunt.log.ok( 'No unstaged changes.' );
 				done();
@@ -103,7 +129,8 @@ module.exports = function ( grunt ) {
 	} );
 
 	grunt.registerTask( 'build', [ 'jsduckcatconfig', 'buildloader' ] );
-	grunt.registerTask( 'lint', [ 'jshint', 'jscs', 'csslint', 'banana' ] );
+	grunt.registerTask( 'lint', [ 'jshint', 'jscs:main', 'csslint', 'jsonlint', 'banana' ] );
+	grunt.registerTask( 'fix', [ 'jscs:fix' ] );
 	grunt.registerTask( 'test', [ 'build', 'lint' ] );
 	grunt.registerTask( 'test-ci', [ 'git-status' ] );
 	grunt.registerTask( 'default', 'test' );

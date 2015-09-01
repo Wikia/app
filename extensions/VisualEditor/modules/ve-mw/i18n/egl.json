@@ -157,6 +157,5 @@
 	"visualeditor-viewpage-savewarning": "Turnêr al môd a vésta sèinsa préma salvêr?",
 	"visualeditor-wikitext-warning": "T'é drē druvê al VisualEditor – al [[{{MediaWiki:visualeditor-wikitext-warning-link}}|wikitèst]] ché al funsiòuna mìa. Per pasêr a \"{{int:visualeditor-ca-editsource}}\" in ògni mumèint sèinsa pêrder al mudéfichi, arvîr l'elench a tendèina aşvèin a \"{{int:visualeditor-toolbar-savedialog}}\"  e  sernîr \"{{int:visualeditor-mweditmodesource-title}}\".",
 	"visualeditor-wikitext-warning-link": "Help:Marcadûra",
-	"visualeditor-wikitext-warning-title": "Nutê wikitèst",
-	"visualeditor-dialog-media-insert-title": "Mèt dèinter al file multimediêl"
+	"visualeditor-wikitext-warning-title": "Nutê wikitèst"
 }

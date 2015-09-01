@@ -1,7 +1,7 @@
 /*!
  * VisualEditor ContentEditable GeneratedContentNode class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 /**
@@ -24,6 +24,10 @@ ve.ce.GeneratedContentNode = function VeCeGeneratedContentNode() {
 	this.update();
 };
 
+/* Inheritance */
+
+OO.initClass( ve.ce.GeneratedContentNode );
+
 /* Events */
 
 /**
@@ -40,9 +44,7 @@ ve.ce.GeneratedContentNode = function VeCeGeneratedContentNode() {
 
 /* Static members */
 
-ve.ce.GeneratedContentNode.static = {};
-
-// this.$element is just a wrapper for the real content, so don't duplicate attributes on it
+// We handle rendering ourselves, no need to render attributes from originalDomElements
 ve.ce.GeneratedContentNode.static.renderHtmlAttributes = false;
 
 /* Abstract methods */
@@ -65,12 +67,11 @@ ve.ce.GeneratedContentNode.static.renderHtmlAttributes = false;
  * by forceUpdate().
  *
  * @abstract
+ * @method
  * @param {Object} [config] Optional additional data
- * @returns {jQuery.Promise} Promise object, may be abortable
+ * @return {jQuery.Promise} Promise object, may be abortable
  */
-ve.ce.GeneratedContentNode.prototype.generateContents = function () {
-	throw new Error( 've.ce.GeneratedContentNode subclass must implement generateContents' );
-};
+ve.ce.GeneratedContentNode.prototype.generateContents = null;
 
 /* Methods */
 
@@ -92,50 +93,41 @@ ve.ce.GeneratedContentNode.prototype.onGeneratedContentNodeUpdate = function () 
  * return value.
  *
  * @param {HTMLElement[]} domElements Clones of the DOM elements from the store
- * @returns {HTMLElement[]} Clones of the DOM elements in the right document, with modifications
+ * @return {HTMLElement[]} Clones of the DOM elements in the right document, with modifications
  */
 ve.ce.GeneratedContentNode.prototype.getRenderedDomElements = function ( domElements ) {
-	var i, len, attr, $rendering,
+	var i, len, $rendering,
 		doc = this.getElementDocument();
 
-	/**
-	 * Callback for jQuery.fn.each that resolves the value of attr to the computed
-	 * property value. Called in the context of an HTMLElement.
-	 * @private
-	 */
-	function resolveAttribute() {
-		this.setAttribute( attr, this[attr] );
-	}
+	// Clone the elements into the target document
+	$rendering = $( ve.copyDomElements( domElements, doc ) );
 
-	// Copy domElements so we can modify the elements
 	// Filter out link and style tags for bug 50043
 	// Previously filtered out meta tags, but restore these as they
 	// can be made visible.
-	$rendering = this.$( domElements ).not( 'link, style' );
+	$rendering = $rendering.not( 'link, style' );
 	// Also remove link and style tags nested inside other tags
 	$rendering.find( 'link, style' ).remove();
 
 	if ( $rendering.length ) {
 		// Span wrap root text nodes so they can be measured
 		for ( i = 0, len = $rendering.length; i < len; i++ ) {
-			if ( $rendering[i].nodeType === Node.TEXT_NODE ) {
-				$rendering[i] = this.$( '<span>' ).append( $rendering[i] )[0];
+			if ( $rendering[ i ].nodeType === Node.TEXT_NODE ) {
+				$rendering[ i ] = $( '<span>' ).append( $rendering[ i ] )[ 0 ];
 			}
 		}
 	} else {
-		$rendering = this.$( '<span>' );
+		$rendering = $( '<span>' );
 	}
 
 	// Render the computed values of some attributes
-	for ( i = 0, len = ve.dm.Converter.computedAttributes.length; i < len; i++ ) {
-		attr = ve.dm.Converter.computedAttributes[i];
-		$rendering.find( '[' + attr + ']' )
-			.add( $rendering.filter( '[' + attr + ']' ) )
-			.each( resolveAttribute );
-	}
+	ve.resolveAttributes(
+		$rendering,
+		domElements[ 0 ].ownerDocument,
+		ve.dm.Converter.computedAttributes
+	);
 
-	// Clone the elements into the target document
-	return ve.copyDomElements( $rendering.toArray(), doc );
+	return $rendering.toArray();
 };
 
 /**
@@ -146,11 +138,12 @@ ve.ce.GeneratedContentNode.prototype.getRenderedDomElements = function ( domElem
  * @fires teardown
  */
 ve.ce.GeneratedContentNode.prototype.render = function ( generatedContents ) {
+	var $newElements;
 	if ( this.live ) {
 		this.emit( 'teardown' );
 	}
-	var $newElements = this.$( this.getRenderedDomElements( ve.copyDomElements( generatedContents ) ) );
-	if ( !this.$element[0].parentNode ) {
+	$newElements = $( this.getRenderedDomElements( ve.copyDomElements( generatedContents ) ) );
+	if ( !this.$element[ 0 ].parentNode ) {
 		// this.$element hasn't been attached yet, so just overwrite it
 		this.$element = $newElements;
 	} else {
@@ -170,8 +163,9 @@ ve.ce.GeneratedContentNode.prototype.render = function ( generatedContents ) {
 
 	if ( this.live ) {
 		this.emit( 'setup' );
-		this.afterRender();
 	}
+
+	this.afterRender();
 };
 
 /**
@@ -289,13 +283,22 @@ ve.ce.GeneratedContentNode.prototype.doneGenerating = function ( generatedConten
 };
 
 /**
- * Called when the has failed to generate new content.
+ * Called when the GeneratedContentNode has failed to generate new content.
  *
  * @method
  */
 ve.ce.GeneratedContentNode.prototype.failGenerating = function () {
 	this.$element.removeClass( 've-ce-generatedContentNode-generating' );
 	this.generatingPromise = null;
+};
+
+/**
+ * Check whether this GeneratedContentNode is currently generating new content.
+ *
+ * @return {boolean} Whether we're generating
+ */
+ve.ce.GeneratedContentNode.prototype.isGenerating = function () {
+	return !!this.generatingPromise;
 };
 
 /**
@@ -314,4 +317,24 @@ ve.ce.GeneratedContentNode.prototype.getFocusableElement = function () {
  */
 ve.ce.GeneratedContentNode.prototype.getResizableElement = function () {
 	return this.$element;
+};
+
+/**
+ * Check if the rendering is visible
+ *
+ * @return {boolean} The rendering is visible
+ */
+ve.ce.GeneratedContentNode.prototype.isVisible = function () {
+	var visible = false;
+	if ( this.$element.text().trim() !== '' ) {
+		return true;
+	}
+	this.$element.each( function () {
+		var $this = $( this );
+		if ( $this.width() >= 8 && $this.height() >= 8 ) {
+			visible = true;
+			return false;
+		}
+	} );
+	return visible;
 };

@@ -1,7 +1,7 @@
 /*!
  * VisualEditor UserInterface MWLiveExtensionInspector class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2015 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -15,9 +15,9 @@
  * @constructor
  * @param {Object} [config] Configuration options
  */
-ve.ui.MWLiveExtensionInspector = function VeUiMWLiveExtensionInspector( config ) {
+ve.ui.MWLiveExtensionInspector = function VeUiMWLiveExtensionInspector() {
 	// Parent constructor
-	ve.ui.MWExtensionInspector.call( this, config );
+	ve.ui.MWLiveExtensionInspector.super.apply( this, arguments );
 
 	// Late bind onChangeHandler to a debounced updatePreview
 	this.onChangeHandler = ve.debounce( this.updatePreview.bind( this ), 250 );
@@ -27,32 +27,7 @@ ve.ui.MWLiveExtensionInspector = function VeUiMWLiveExtensionInspector( config )
 
 OO.inheritClass( ve.ui.MWLiveExtensionInspector, ve.ui.MWExtensionInspector );
 
-/* Static properties */
-
-/**
- * Name of extension in the mw data, if different from inspector name
- *
- * @static
- * @property {string}
- * @inheritable
- */
-ve.ui.MWLiveExtensionInspector.static.mwName = null;
-
 /* Methods */
-
-/**
- * Create an MW data object for a new node
- * @returns {Object} MW data
- */
-ve.ui.MWLiveExtensionInspector.prototype.getNewMwData = function () {
-	return {
-		name: this.constructor.static.mwName || this.constructor.static.name,
-		attrs: {},
-		body: {
-			extsrc: ''
-		}
-	};
-};
 
 /**
  * @inheritdoc
@@ -60,25 +35,23 @@ ve.ui.MWLiveExtensionInspector.prototype.getNewMwData = function () {
 ve.ui.MWLiveExtensionInspector.prototype.getSetupProcess = function ( data ) {
 	return ve.ui.MWLiveExtensionInspector.super.prototype.getSetupProcess.call( this, data )
 		.next( function () {
+			var element = this.getNewElement();
 			// Initialization
 			this.getFragment().getSurface().pushStaging();
 
-			if ( !this.node ) {
+			if ( !this.selectedNode ) {
 				// Create a new node
 				// collapseToEnd returns a new fragment
 				this.fragment = this.getFragment().collapseToEnd().insertContent( [
-					{
-						type: this.constructor.static.nodeModel.static.name,
-						attributes: { mw: this.getNewMwData() }
-					},
-					{ type: '/' + this.constructor.static.nodeModel.static.name }
+					element,
+					{ type: '/' + element.type }
 				] );
 				// Check if the node was inserted at a structural offset and wrapped in a paragraph
 				if ( this.getFragment().getSelection().getRange().getLength() === 4 ) {
 					this.fragment = this.getFragment().adjustLinearSelection( 1, -1 );
 				}
 				this.getFragment().select();
-				this.node = this.getFragment().getSelectedNode();
+				this.selectedNode = this.getFragment().getSelectedNode();
 			}
 			this.input.on( 'change', this.onChangeHandler );
 		}, this );
@@ -115,9 +88,9 @@ ve.ui.MWLiveExtensionInspector.prototype.removeNode = function () {
  * Update the node rendering to reflect the current content in the inspector.
  */
 ve.ui.MWLiveExtensionInspector.prototype.updatePreview = function () {
-	var mwData = ve.copy( this.node.getAttribute( 'mw' ) );
+	var mwData = ve.copy( this.selectedNode.getAttribute( 'mw' ) );
 
-	mwData.body.extsrc = this.input.getValue();
+	this.updateMwData( mwData );
 
 	if ( this.visible ) {
 		this.getFragment().changeAttributes( { mw: mwData } );

@@ -1,7 +1,7 @@
 /*!
  * VisualEditor MediaWiki media dialog tool classes.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2015 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -28,3 +28,10 @@ ve.ui.MWMediaDialogTool.static.commandName = 'media';
 ve.ui.MWMediaDialogTool.static.autoAddToCatchall = false;
 ve.ui.MWMediaDialogTool.static.autoAddToGroup = false;
 ve.ui.toolFactory.register( ve.ui.MWMediaDialogTool );
+
+ve.ui.commandRegistry.register(
+	new ve.ui.Command(
+		'media', 'window', 'open',
+		{ args: [ 'media' ], supportedSelections: [ 'linear' ] }
+	)
+);

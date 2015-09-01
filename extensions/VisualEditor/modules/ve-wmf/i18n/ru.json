@@ -15,7 +15,8 @@
 			"Putnik",
 			"Sunpriat",
 			"Yury Katkov",
-			"Умар"
+			"Умар",
+			"아라"
 		]
 	},
 	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|Визуальный редактор]]",
@@ -23,9 +24,10 @@
 	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|Визуальный редактор]]: проверить",
 	"tag-visualeditor-needcheck-description": "Правка с помощью [[{{MediaWiki:visualeditor-descriptionpagelink}}|визуального редактора]], в которой система обнаружила, возможно, непреднамеренно изменённую вики-разметку.",
 	"tag-visualeditor-switched": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|Визуальный редактор: переключён]]",
-	"tag-visualeditor-switched-description": "Участник начал редактировать с помощью VisualEditor, а затем переключился в редактор викитекста.",
+	"tag-visualeditor-switched-description": "Участник начал редактировать с помощью визуального редактора, а затем переключился в редактор викитекста.",
 	"visualeditor-feedback-link": "Project:Визуальный редактор/Отзывы",
-	"visualeditor-feedback-tool": "Оставить отзыв",
+	"visualeditor-feedback-tool": "Оставить отзыв об этом ПО",
 	"visualeditor-help-label": "Прочтите руководство пользователя",
+	"visualeditor-help-link": "mw:Special:MyLanguage/Help:VisualEditor/User guide",
 	"visualeditor-help-title": "Руководство по использованию редактора"
 }

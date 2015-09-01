@@ -1,7 +1,7 @@
 /*!
  * VisualEditor user interface MWTemplatePlaceholderPage class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2015 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -18,6 +18,7 @@
  * @cfg {jQuery} [$overlay] Overlay for dropdowns
  */
 ve.ui.MWTemplatePlaceholderPage = function VeUiMWTemplatePlaceholderPage( placeholder, name, config ) {
+	var addTemplateActionFieldLayout;
 	// Configuration initialization
 	config = ve.extendObject( {
 		scrollable: false
@@ -29,8 +30,9 @@ ve.ui.MWTemplatePlaceholderPage = function VeUiMWTemplatePlaceholderPage( placeh
 	// Properties
 	this.placeholder = placeholder;
 
-	this.addTemplateInput = new ve.ui.MWTitleInputWidget( {
-		$: this.$, $overlay: config.$overlay, namespace: 10
+	this.addTemplateInput = new ve.ui.MWTemplateTitleInputWidget( {
+		$overlay: config.$overlay,
+		showDescriptions: true
 	} )
 		.connect( this, {
 			change: 'onTemplateInputChange',
@@ -38,29 +40,32 @@ ve.ui.MWTemplatePlaceholderPage = function VeUiMWTemplatePlaceholderPage( placeh
 		} );
 
 	this.addTemplateButton = new OO.ui.ButtonWidget( {
-		$: this.$,
 		label: ve.msg( 'visualeditor-dialog-transclusion-add-template' ),
-		flags: ['constructive'],
+		flags: [ 'constructive' ],
+		classes: [ 've-ui-mwTransclusionDialog-addButton' ],
 		disabled: true
 	} )
 		.connect( this, { click: 'onAddTemplate' } );
 
 	this.removeButton = new OO.ui.ButtonWidget( {
-		$: this.$,
 		framed: false,
 		icon: 'remove',
 		title: ve.msg( 'visualeditor-dialog-transclusion-remove-template' ),
-		flags: ['destructive'],
+		flags: [ 'destructive' ],
 		classes: [ 've-ui-mwTransclusionDialog-removeButton' ]
 	} )
 		.connect( this, { click: 'onRemoveButtonClick' } );
 
+	addTemplateActionFieldLayout = new OO.ui.ActionFieldLayout(
+		this.addTemplateInput,
+		this.addTemplateButton
+	);
+
 	this.addTemplateFieldset = new OO.ui.FieldsetLayout( {
-		$: this.$,
 		label: ve.msg( 'visualeditor-dialog-transclusion-placeholder' ),
 		icon: 'template',
 		classes: [ 've-ui-mwTransclusionDialog-addTemplateFieldset' ],
-		$content: this.addTemplateInput.$element.add( this.addTemplateButton.$element )
+		items: [ addTemplateActionFieldLayout ]
 	} );
 
 	// Initialization

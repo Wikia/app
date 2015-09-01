@@ -1,7 +1,7 @@
 /*!
  * VisualEditor ContentEditable MWResizableNode class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2015 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -31,7 +31,7 @@ OO.inheritClass( ve.ce.MWResizableNode, ve.ce.ResizableNode );
  *
  * @param {number} width New image width
  * @param {number} height New image height
- * @returns {Object} Attribute changes
+ * @return {Object} Attribute changes
  */
 ve.ce.MWResizableNode.prototype.getAttributeChanges = function ( width, height ) {
 	var attrChanges = ve.ce.ResizableNode.prototype.getAttributeChanges.call( this, width, height );

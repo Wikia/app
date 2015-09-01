@@ -1,7 +1,7 @@
 /*!
  * VisualEditor UserInterface TriggerRegistry class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 /**
@@ -13,7 +13,7 @@
  */
 ve.ui.TriggerRegistry = function VeUiTriggerRegistry() {
 	// Parent constructor
-	OO.Registry.call( this );
+	ve.ui.TriggerRegistry.super.call( this );
 };
 
 /* Inheritance */
@@ -42,7 +42,7 @@ ve.ui.TriggerRegistry.prototype.register = function ( name, triggers ) {
 
 	if ( ve.isPlainObject( triggers ) ) {
 		if ( Object.prototype.hasOwnProperty.call( triggers, platformKey ) ) {
-			triggerList = Array.isArray( triggers[platformKey] ) ? triggers[platformKey] : [ triggers[platformKey] ];
+			triggerList = Array.isArray( triggers[ platformKey ] ) ? triggers[ platformKey ] : [ triggers[ platformKey ] ];
 		} else {
 			return;
 		}
@@ -52,15 +52,25 @@ ve.ui.TriggerRegistry.prototype.register = function ( name, triggers ) {
 
 	// Validate arguments
 	for ( i = 0, l = triggerList.length; i < l; i++ ) {
-		if ( !( triggerList[i] instanceof ve.ui.Trigger ) ) {
+		if ( !( triggerList[ i ] instanceof ve.ui.Trigger ) ) {
 			throw new Error( 'Trigger must be an instance of ve.ui.Trigger' );
 		}
-		if ( !triggerList[i].isComplete() ) {
+		if ( !triggerList[ i ].isComplete() ) {
 			throw new Error( 'Incomplete trigger' );
 		}
 	}
 
-	OO.Registry.prototype.register.call( this, name, triggerList );
+	ve.ui.TriggerRegistry.super.prototype.register.call( this, name, triggerList );
+};
+
+/**
+ * Get trigger messages for a trigger by name
+ *
+ * @param {string} name Symbolic name
+ * @return {string[]} List of trigger messages
+ */
+ve.ui.TriggerRegistry.prototype.getMessages = function ( name ) {
+	return ( this.lookup( name ) || [] ).map( function ( trigger ) { return trigger.getMessage(); } );
 };
 
 /* Initialization */
@@ -174,4 +184,22 @@ ve.ui.triggerRegistry.register(
 );
 ve.ui.triggerRegistry.register(
 	'findAndReplace', { mac: new ve.ui.Trigger( 'cmd+f' ), pc: new ve.ui.Trigger( 'ctrl+f' ) }
+);
+ve.ui.triggerRegistry.register(
+	'findNext', {
+		mac: new ve.ui.Trigger( 'cmd+g' ),
+		pc: [
+			new ve.ui.Trigger( 'ctrl+g' ),
+			new ve.ui.Trigger( 'f3' )
+		]
+	}
+);
+ve.ui.triggerRegistry.register(
+	'findPrevious', {
+		mac: new ve.ui.Trigger( 'cmd+shift+g' ),
+		pc: [
+			new ve.ui.Trigger( 'shift+ctrl+g' ),
+			new ve.ui.Trigger( 'shift+f3' )
+		]
+	}
 );

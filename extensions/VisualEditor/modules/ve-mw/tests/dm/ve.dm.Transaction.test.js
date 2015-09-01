@@ -1,17 +1,17 @@
 /*!
  * VisualEditor DataModel MediaWiki-specific Transaction tests.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2015 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
-QUnit.module( 've.dm.Transaction' );
+QUnit.module( 've.dm.Transaction (MW)', ve.test.utils.mwEnvironment );
 
 // FIXME: Duplicates test runner; should be using a data provider
 QUnit.test( 'newFromDocumentInsertion with references', function ( assert ) {
 	var i, j, doc2, tx, actualStoreItems, expectedStoreItems, removalOps, doc,
 		complexDoc = ve.dm.mwExample.createExampleDocument( 'complexInternalData' ),
-		comment = { type: 'alienMeta', attributes: { domElements: $( '<!-- hello -->' ).get() } },
+		comment = { type: 'alienMeta', originalDomElements: $( '<!-- hello -->' ).toArray() },
 		withReference = [
 			{ type: 'paragraph' },
 			'B', 'a', 'r',
@@ -64,7 +64,7 @@ QUnit.test( 'newFromDocumentInsertion with references', function ( assert ) {
 						insert: complexDoc.getData( new ve.Range( 0, 4 ) )
 							// Reference gets (unnecessarily) renumbered from auto/0 to auto/1
 							.concat( [
-								ve.extendObject( true, {}, complexDoc.data.data[4],
+								ve.extendObject( true, {}, complexDoc.data.data[ 4 ],
 									{ attributes: { listKey: 'auto/1' } }
 								)
 							] )
@@ -137,7 +137,7 @@ QUnit.test( 'newFromDocumentInsertion with references', function ( assert ) {
 							// Renumber listIndex from 0 to 2
 							// Renumber listKey from auto/0 to auto/1
 							.concat( [
-								ve.extendObject( true, {}, withReference[4],
+								ve.extendObject( true, {}, withReference[ 4 ],
 									{ attributes: { listIndex: 2, listKey: 'auto/1' } }
 								)
 							] )
@@ -159,30 +159,30 @@ QUnit.test( 'newFromDocumentInsertion with references', function ( assert ) {
 		];
 	QUnit.expect( 3 * cases.length );
 	for ( i = 0; i < cases.length; i++ ) {
-		doc = ve.dm.mwExample.createExampleDocument( cases[i].doc );
-		if ( cases[i].newDocData ) {
-			doc2 = new ve.dm.Document( cases[i].newDocData );
+		doc = ve.dm.mwExample.createExampleDocument( cases[ i ].doc );
+		if ( cases[ i ].newDocData ) {
+			doc2 = new ve.dm.Document( cases[ i ].newDocData );
 			removalOps = [];
-		} else if ( cases[i].range ) {
-			doc2 = doc.cloneFromRange( cases[i].range );
-			cases[i].modify( doc2 );
-			tx = ve.dm.Transaction.newFromRemoval( doc, cases[i].range, true );
+		} else if ( cases[ i ].range ) {
+			doc2 = doc.cloneFromRange( cases[ i ].range );
+			cases[ i ].modify( doc2 );
+			tx = ve.dm.Transaction.newFromRemoval( doc, cases[ i ].range, true );
 			doc.commit( tx );
 			removalOps = tx.getOperations();
 		}
 
-		assert.deepEqualWithDomElements( removalOps, cases[i].removalOps, cases[i].msg + ': removal' );
+		assert.deepEqualWithDomElements( removalOps, cases[ i ].removalOps, cases[ i ].msg + ': removal' );
 
-		tx = ve.dm.Transaction.newFromDocumentInsertion( doc, cases[i].offset, doc2 );
-		assert.deepEqualWithDomElements( tx.getOperations(), cases[i].expectedOps, cases[i].msg + ': transaction' );
+		tx = ve.dm.Transaction.newFromDocumentInsertion( doc, cases[ i ].offset, doc2 );
+		assert.deepEqualWithDomElements( tx.getOperations(), cases[ i ].expectedOps, cases[ i ].msg + ': transaction' );
 
 		actualStoreItems = [];
-		expectedStoreItems = cases[i].expectedStoreItems || [];
+		expectedStoreItems = cases[ i ].expectedStoreItems || [];
 		for ( j = 0; j < expectedStoreItems.length; j++ ) {
-			actualStoreItems[j] = doc.store.value( doc.store.indexOfHash(
-				OO.getHash( expectedStoreItems[j] )
+			actualStoreItems[ j ] = doc.store.value( doc.store.indexOfHash(
+				OO.getHash( expectedStoreItems[ j ] )
 			) );
 		}
-		assert.deepEqual( actualStoreItems, expectedStoreItems, cases[i].msg + ': store items' );
+		assert.deepEqual( actualStoreItems, expectedStoreItems, cases[ i ].msg + ': store items' );
 	}
 } );

@@ -1,7 +1,7 @@
 /*!
  * VisualEditor DataModel MWTransclusionPartModel class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2015 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -38,7 +38,7 @@ OO.mixinClass( ve.dm.MWTransclusionPartModel, OO.EventEmitter );
 /**
  * Get transclusion part is in.
  *
- * @returns {ve.dm.MWTransclusionModel} Transclusion
+ * @return {ve.dm.MWTransclusionModel} Transclusion
  */
 ve.dm.MWTransclusionPartModel.prototype.getTransclusion = function () {
 	return this.transclusion;
@@ -47,7 +47,7 @@ ve.dm.MWTransclusionPartModel.prototype.getTransclusion = function () {
 /**
  * Get a unique part ID within the transclusion.
  *
- * @returns {string} Unique ID
+ * @return {string} Unique ID
  */
 ve.dm.MWTransclusionPartModel.prototype.getId = function () {
 	return this.id;
@@ -63,7 +63,7 @@ ve.dm.MWTransclusionPartModel.prototype.remove = function () {
 /**
  * Get serialized representation of transclusion part.
  *
- * @returns {Mixed} Serialized representation, or undefined if empty
+ * @return {Mixed} Serialized representation, or undefined if empty
  */
 ve.dm.MWTransclusionPartModel.prototype.serialize = function () {
 	return undefined;
@@ -72,7 +72,7 @@ ve.dm.MWTransclusionPartModel.prototype.serialize = function () {
 /**
  * Get the wikitext for this part.
  *
- * @returns {string} Wikitext
+ * @return {string} Wikitext
  */
 ve.dm.MWTransclusionPartModel.prototype.getWikitext = function () {
 	return '';

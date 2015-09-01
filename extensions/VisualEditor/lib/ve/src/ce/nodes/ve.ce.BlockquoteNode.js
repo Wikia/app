@@ -1,7 +1,7 @@
 /*!
  * VisualEditor ContentEditable BlockquoteNode class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2015 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -9,7 +9,7 @@
  * ContentEditable Blockquote node.
  *
  * @class
- * @extends ve.ce.BranchNode
+ * @extends ve.ce.ContentBranchNode
  * @constructor
  * @param {ve.dm.BlockquoteNode} model Model to observe
  * @param {Object} [config] Configuration options

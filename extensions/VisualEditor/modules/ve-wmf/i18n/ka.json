@@ -7,15 +7,20 @@
 			"ITshnik",
 			"MIKHEIL",
 			"NoiX180",
-			"Pras"
+			"Pras",
+			"Amire80",
+			"아라"
 		]
 	},
 	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|ვიზუალური რედაქტორი]]",
 	"tag-visualeditor-description": "რედაქტირება შესრულებულია [[{{MediaWiki:visualeditor-descriptionpagelink}}|ვიზუალური რედაქტორის]] საშუალებით",
 	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|ვიზუალური რედაქტორი: შემოწმება]]",
 	"tag-visualeditor-needcheck-description": "რედაქტირება შესრულებულია [[{{MediaWiki:visualeditor-descriptionpagelink}}|ვიზუალური რედაქტორის]] საშუალებით, რომელშიც სისტემამ აღმოაჩინა, შესაძლოა უნებლიეთ შეცვლილი ვიკი-ტექსტი.",
+	"tag-visualeditor-switched": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|ვიზუალური რედაქტორი: გადართულია]]",
+	"tag-visualeditor-switched-description": "მომხმარებელმა დაიწყო ვიზუალური რედაქტორის გამოყენება, ხოლო შემდეგ ვიკიტექსტის რედაქტორით შეცვალა.",
 	"visualeditor-feedback-link": "Project:ვიზუალური რედაქტორი/შეფასება",
-	"visualeditor-feedback-tool": "გამოხმაურების დატოვება",
+	"visualeditor-feedback-tool": "გამოხმაურების დატოვება ამ პროგრამული უზრუნველყოფის შესახებ",
 	"visualeditor-help-label": "გაეცანით მომხმარებლის სახელმძღვანელოს",
-	"visualeditor-help-title": "მომხმარებლის სახელმძღვანელო რედაქტორის გამოყენებისათვის"
+	"visualeditor-help-link": "mw:Special:MyLanguage/Help:VisualEditor/User guide",
+	"visualeditor-help-title": "რედაქტორის გამოყენების სახელმძღვანელო"
 }

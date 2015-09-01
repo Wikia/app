@@ -1,7 +1,7 @@
 /*!
  * VisualEditor UserInterface MWNoParametersResultWidget class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2015 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -31,7 +31,7 @@ OO.inheritClass( ve.ui.MWNoParametersResultWidget, OO.ui.OptionWidget );
 
 /** */
 ve.ui.MWNoParametersResultWidget.prototype.buildLabel = function () {
-	return this.$( '<div>' )
+	return $( '<div>' )
 		.addClass( 've-ui-mwNoParametersResultWidget-label' )
 		.text( ve.msg( 'visualeditor-parameter-search-no-unused' ) );
 };

@@ -1,7 +1,7 @@
 /*!
  * VisualEditor Document tests.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 QUnit.module( 've.Document' );
@@ -17,8 +17,9 @@ OO.inheritClass( ve.DocumentStub, ve.Document );
 
 /* Tests */
 
-QUnit.test( 'getDocumentNode', 1, function ( assert ) {
+QUnit.test( 'getDocumentNode', 2, function ( assert ) {
 	var node = new ve.NodeStub(),
 		doc = new ve.DocumentStub( node );
-	assert.strictEqual( doc.getDocumentNode( node ), node );
+	assert.strictEqual( doc.getDocumentNode(), node );
+	assert.strictEqual( node.getDocument(), doc );
 } );

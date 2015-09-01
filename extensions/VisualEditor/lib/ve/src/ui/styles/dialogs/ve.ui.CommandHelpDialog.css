@@ -1,7 +1,7 @@
 /*!
  * VisualEditor UserInterface CommandHelpDialog styles.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 .ve-ui-commandHelpDialog-container {
@@ -14,7 +14,7 @@
 	 * Hack 1.1: The height isn't calculated correctly with the inline-block
 	 * hack so fix it to prevent unnecessary scroll bars.
 	 */
-	height: 39em;
+	height: 43em;
 }
 
 .ve-ui-commandHelpDialog-section {

@@ -1,0 +1,117 @@
+/*!
+ * VisualEditor MediaWiki Initialization MobileArticleTarget styles.
+ *
+ * @copyright 2011-2015 VisualEditor Team and others; see AUTHORS.txt
+ * @license The MIT License (MIT); see LICENSE.txt
+ */
+
+.oo-ui-panelLayout-scrollable {
+	-webkit-overflow-scrolling: touch;
+}
+
+.ve-init-mw-target-surface .ve-ce-documentNode,
+.ve-init-mw-target-surface .ve-ui-surface-placeholder {
+	padding: 0;
+}
+
+@media (max-width: 767px) {
+	.ve-init-mw-target-surface .ve-ui-surface-placeholder > * {
+		/* Fix margin overlap */
+		margin-top: 0;
+		/* Placeholder doesn't need a border as well */
+		border: 0;
+	}
+}
+
+.ve-ui-debugBar {
+	padding: 0.8em 16px;
+	border-top: 1px solid #ccc;
+	box-shadow: 0 10px 10px -10px rgba(0, 0, 0, 0.15) inset;
+}
+
+.ve-ui-debugBar-selectionLabel {
+	min-width: auto;
+	width: 100%;
+}
+
+/* Hide toolbar shortcuts, no use on mobile */
+.oo-ui-popupToolGroup .oo-ui-tool-link .oo-ui-tool-accel {
+	display: none;
+}
+
+.ve-init-mw-mobileArticleTarget-title-container {
+	width: 100%;
+	position: relative;
+	border-right: 1px solid #ddd;
+}
+
+.ve-init-mw-mobileArticleTarget-title {
+	padding: 0 0.5em;
+	line-height: 3.164em;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+
+.ve-init-mw-mobileArticleTarget-pageTools,
+.ve-init-mw-mobileArticleTarget-editTools {
+	display: table;
+}
+
+/* Edit tools has no 100% width cells */
+.ve-init-mw-mobileArticleTarget-editTools {
+	width: 100%;
+}
+
+.ve-init-mw-mobileArticleTarget-pageTools > .oo-ui-toolGroup,
+.ve-init-mw-mobileArticleTarget-pageTools > .ve-init-mw-mobileArticleTarget-title-container,
+.ve-init-mw-mobileArticleTarget-editTools > .oo-ui-toolGroup {
+	display: table-cell;
+}
+
+.ve-init-mw-mobileArticleTarget-editTools > .oo-ui-toolGroup {
+	text-align: center;
+}
+
+.ve-init-mw-mobileArticleTarget-editTools .oo-ui-popupToolGroup-handle .oo-ui-iconElement-icon {
+	left: 50%;
+	margin-left: -1.875em;
+}
+
+.ve-init-mw-mobileArticleTarget-editTools .oo-ui-popupToolGroup-handle .oo-ui-indicatorElement-indicator {
+	left: 50%;
+}
+
+.ve-init-mw-mobileArticleTarget-editTools .oo-ui-popupToolGroup .oo-ui-toolGroup-tools {
+	text-align: left;
+}
+
+.ve-init-mw-mobileArticleTarget-editTools > .oo-ui-toolGroup-empty {
+	display: none;
+}
+
+.ve-init-mw-mobileArticleTarget-editTools > .oo-ui-toolGroup:last-child {
+	border-right: 0;
+}
+
+.ve-init-mw-mobileArticleTarget-editTools > .oo-ui-toolGroup > .oo-ui-toolGroup-tools
+> .oo-ui-tool {
+	width: 100%;
+}
+
+.ve-init-mw-mobileArticleTarget-editTools-hidden,
+.ve-init-mw-mobileArticleTarget-pageToolbar-hidden {
+	display: none;
+}
+
+@media (max-width: 479px) {
+	.ve-init-mw-mobileArticleTarget-toolbar
+	.oo-ui-barToolGroup > .oo-ui-toolGroup-tools > .oo-ui-tool.oo-ui-iconElement.oo-ui-tool-with-label > .oo-ui-tool-link .oo-ui-tool-title {
+		display: none;
+	}
+}

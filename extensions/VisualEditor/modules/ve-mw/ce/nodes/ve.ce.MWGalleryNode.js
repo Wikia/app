@@ -1,7 +1,7 @@
 /*!
  * VisualEditor ContentEditable MWGalleryNode class.
  *
- * @copyright 2011–2014 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2015 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -33,29 +33,6 @@ ve.ce.MWGalleryNode.static.tagName = 'div';
 ve.ce.MWGalleryNode.static.primaryCommandName = 'gallery';
 
 /* Methods */
-
-/**
- * @inheritdoc
- */
-ve.ce.MWGalleryNode.prototype.onSetup = function () {
-	// Parent method
-	ve.ce.MWGalleryNode.super.prototype.onSetup.call( this );
-
-	// DOM changes
-	this.$element.addClass( 've-ce-mwGalleryNode' );
-};
-
-/**
- * @inheritdoc
- */
-ve.ce.MWGalleryNode.prototype.doneGenerating = function ( generatedContents ) {
-	var $generatedContents = this.$( generatedContents ),
-		alternativeRendering = $generatedContents.data( 'mw' ).alternativeRendering || null;
-	if ( alternativeRendering ) {
-		generatedContents = [ this.$( alternativeRendering )[0] ];
-	}
-	ve.ce.MWGalleryNode.super.prototype.doneGenerating.apply( this, arguments );
-};
 
 /**
  * @inheritdoc ve.ce.GeneratedContentNode

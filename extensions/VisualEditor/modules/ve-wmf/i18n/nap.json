@@ -3,13 +3,18 @@
 		"authors": [
 			"Chelin",
 			"Chrisportelli",
-			"PiRSquared17"
+			"PiRSquared17",
+			"C.R."
 		]
 	},
 	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]]",
 	"tag-visualeditor-description": "Càgnamiento fatto ausando [[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]]",
 	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor: cuntrolla]]",
+	"tag-visualeditor-needcheck-description": "Cagnamiento affettuato ausanno 'o [[{{MediaWiki:visualeditor-descriptionpagelink}}|visual editor]] addò 'o sistema se ne è accuorto 'e cagnamiente ca putessero nun essere vulute dint' 'o wikitesto.",
+	"tag-visualeditor-switched": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor: Scagnato]]",
+	"tag-visualeditor-switched-description": "L'utente accumminciaje a cagnà ausanno l'editore visuale, po' è passato a ll'editore 'e wikitesto",
 	"visualeditor-feedback-link": "Project:VisualEditor/Cummente",
-	"visualeditor-feedback-tool": "Lascia 'nu cummento",
+	"visualeditor-feedback-tool": "Lascia 'nu cummento ncopp'a stu software",
+	"visualeditor-help-label": "Liegge 'a guida utente",
 	"visualeditor-help-title": "Guida pe' l'autilizzo 'e ll'editor"
 }

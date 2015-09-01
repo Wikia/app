@@ -1,7 +1,7 @@
 /*!
  * VisualEditor DataModel BranchNode class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 /**
@@ -29,7 +29,7 @@ ve.dm.BranchNode = function VeDmBranchNode( element, children ) {
 
 	// TODO: children is only ever used in tests
 	if ( Array.isArray( children ) && children.length ) {
-		this.splice.apply( this, [0, 0].concat( children ) );
+		this.splice.apply( this, [ 0, 0 ].concat( children ) );
 	}
 };
 
@@ -58,7 +58,7 @@ OO.mixinClass( ve.dm.BranchNode, ve.BranchNode );
  *
  * @method
  * @param {ve.dm.BranchNode} childModel Item to add
- * @returns {number} New number of children
+ * @return {number} New number of children
  * @fires splice
  * @fires update
  */
@@ -71,13 +71,14 @@ ve.dm.BranchNode.prototype.push = function ( childModel ) {
  * Remove a child node from the end of the list.
  *
  * @method
- * @returns {ve.dm.BranchNode} Removed childModel
+ * @return {ve.dm.BranchNode} Removed childModel
  * @fires splice
  * @fires update
  */
 ve.dm.BranchNode.prototype.pop = function () {
+	var childModel;
 	if ( this.children.length ) {
-		var childModel = this.children[this.children.length - 1];
+		childModel = this.children[ this.children.length - 1 ];
 		this.splice( this.children.length - 1, 1 );
 		return childModel;
 	}
@@ -88,7 +89,7 @@ ve.dm.BranchNode.prototype.pop = function () {
  *
  * @method
  * @param {ve.dm.BranchNode} childModel Item to add
- * @returns {number} New number of children
+ * @return {number} New number of children
  * @fires splice
  * @fires update
  */
@@ -101,13 +102,14 @@ ve.dm.BranchNode.prototype.unshift = function ( childModel ) {
  * Remove a child node from the beginning of the list.
  *
  * @method
- * @returns {ve.dm.BranchNode} Removed childModel
+ * @return {ve.dm.BranchNode} Removed childModel
  * @fires splice
  * @fires update
  */
 ve.dm.BranchNode.prototype.shift = function () {
+	var childModel;
 	if ( this.children.length ) {
-		var childModel = this.children[0];
+		childModel = this.children[ 0 ];
 		this.splice( 0, 1 );
 		return childModel;
 	}
@@ -119,9 +121,9 @@ ve.dm.BranchNode.prototype.shift = function () {
  * @method
  * @param {number} index Index to remove and or insert nodes at
  * @param {number} howmany Number of nodes to remove
- * @param {ve.dm.BranchNode...} [nodes] Variadic list of nodes to insert
+ * @param {...ve.dm.BranchNode} [nodes] Variadic list of nodes to insert
  * @fires splice
- * @returns {ve.dm.BranchNode[]} Removed nodes
+ * @return {ve.dm.BranchNode[]} Removed nodes
  */
 ve.dm.BranchNode.prototype.splice = function () {
 	var i,
@@ -132,21 +134,21 @@ ve.dm.BranchNode.prototype.splice = function () {
 
 	removals = this.children.splice.apply( this.children, args );
 	for ( i = 0, length = removals.length; i < length; i++ ) {
-		removals[i].detach();
-		diff -= removals[i].getOuterLength();
+		removals[ i ].detach();
+		diff -= removals[ i ].getOuterLength();
 	}
 
 	if ( args.length >= 3 ) {
 		length = args.length;
 		for ( i = 2; i < length; i++ ) {
-			args[i].attach( this );
-			diff += args[i].getOuterLength();
+			args[ i ].attach( this );
+			diff += args[ i ].getOuterLength();
 		}
 	}
 
 	this.adjustLength( diff, true );
-	this.setupSlugs();
-	this.emit.apply( this, ['splice'].concat( args ) );
+	this.setupBlockSlugs();
+	this.emit.apply( this, [ 'splice' ].concat( args ) );
 
 	return removals;
 };
@@ -154,7 +156,7 @@ ve.dm.BranchNode.prototype.splice = function () {
 /**
  * Setup a sparse array of booleans indicating where to place slugs
  */
-ve.dm.BranchNode.prototype.setupSlugs = function () {
+ve.dm.BranchNode.prototype.setupBlockSlugs = function () {
 	var i, len,
 		isBlock = this.canHaveChildrenNotContent();
 
@@ -170,28 +172,28 @@ ve.dm.BranchNode.prototype.setupSlugs = function () {
 	// completely empty, so this ensures DocumentNode gets a slug.
 	if (
 		this.getLength() === 0 ||
-		( this.children.length === 1 && this.children[0].isInternal() )
+		( this.children.length === 1 && this.children[ 0 ].isInternal() )
 	) {
-		this.slugPositions[0] = true;
+		this.slugPositions[ 0 ] = true;
 	} else {
 		// Iterate over all children of this branch and add slugs in appropriate places
 		for ( i = 0, len = this.children.length; i < len; i++ ) {
 			// Don't put slugs after internal nodes
-			if ( this.children[i].isInternal() ) {
+			if ( this.children[ i ].isInternal() ) {
 				continue;
 			}
 			// First sluggable child (left side)
-			if ( i === 0 && this.children[i].canHaveSlugBefore() ) {
-				this.slugPositions[i] = true;
+			if ( i === 0 && this.children[ i ].canHaveSlugBefore() ) {
+				this.slugPositions[ i ] = true;
 			}
-			if ( this.children[i].canHaveSlugAfter() ) {
+			if ( this.children[ i ].canHaveSlugAfter() ) {
 				if (
 					// Last sluggable child (right side)
 					i === this.children.length - 1 ||
 					// Sluggable child followed by another sluggable child (in between)
-					( this.children[i + 1] && this.children[i + 1].canHaveSlugBefore() )
+					( this.children[ i + 1 ] && this.children[ i + 1 ].canHaveSlugBefore() )
 				) {
-					this.slugPositions[i + 1] = true;
+					this.slugPositions[ i + 1 ] = true;
 				}
 			}
 		}
@@ -203,19 +205,19 @@ ve.dm.BranchNode.prototype.setupSlugs = function () {
  *
  * @method
  * @param {number} offset Offset to check for a slug at
- * @returns {boolean} There is a slug at the offset
+ * @return {boolean} There is a slug at the offset
  */
 ve.dm.BranchNode.prototype.hasSlugAtOffset = function ( offset ) {
 	var i,
 		startOffset = this.getOffset() + ( this.isWrapped() ? 1 : 0 );
 
 	if ( offset === startOffset ) {
-		return !!this.slugPositions[0];
+		return !!this.slugPositions[ 0 ];
 	}
 	for ( i = 0; i < this.children.length; i++ ) {
-		startOffset += this.children[i].getOuterLength();
+		startOffset += this.children[ i ].getOuterLength();
 		if ( offset === startOffset ) {
-			return !!this.slugPositions[i + 1];
+			return !!this.slugPositions[ i + 1 ];
 		}
 	}
 	return false;

@@ -1,7 +1,7 @@
 /*!
  * VisualEditor ContentEditable TableNode styles.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 .ve-ce-tableNode {
@@ -48,6 +48,13 @@
 .ve-ce-tableNodeOverlay-selection-box-fullRow {
 	border-top-width: 2px;
 	border-bottom-width: 2px;
+}
+
+.ve-ce-tableNodeOverlay-selection-box-notEditable {
+	background-image: -ms-repeating-linear-gradient(-45deg, transparent 0px, transparent 5px, #95d14f 5px, #95d14f 10px );
+	background-image: -webkit-repeating-linear-gradient(-45deg, transparent 0px, transparent 5px, #95d14f 5px, #95d14f 10px );
+	background-image: -moz-repeating-linear-gradient(-45deg, transparent 0px, transparent 5px, #95d14f 5px, #95d14f 10px);
+	background-image: repeating-linear-gradient(-45deg, transparent 0px, transparent 5px, #95d14f 5px, #95d14f 10px );
 }
 
 .ve-ce-tableNodeOverlay-selection-box-anchor {

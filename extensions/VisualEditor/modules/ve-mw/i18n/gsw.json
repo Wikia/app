@@ -2,16 +2,18 @@
 	"@metadata": {
 		"authors": [
 			"Als-Holder",
-			80686
+			80686,
+			"J. 'mach' wust"
 		]
 	},
 	"tooltip-ca-createsource": "Dr Quälltäxt zue däre Syten aalege",
 	"tooltip-ca-editsource": "Am Quälltäxt vu däre Syte schaffe",
-	"tooltip-ca-ve-edit": "An däre Syte mit em VisualEditor schaffe",
+	"tooltip-ca-ve-edit": "Die Syte bearbeite",
 	"visualeditor-beta-appendix": "Beta",
 	"visualeditor-beta-label": "Beta",
 	"visualeditor-beta-warning": "VisualEditor isch in dr Beta-Version. S cha syy, ass Dir Softwarefähler uffallen un ass Du an Teil vu dr Syte nit chasch schaffe. Druck uf „{{int:visualeditor-ca-editsource}}“ go in dr Wikitäxtmodus chuu. Doderby gehn nit gspychereti Änderige verlore.",
 	"visualeditor-browserwarning": "Du bruchsch e Browser, wu vum VisualEditor nit offiziäll unterstitzt wird.",
+	"visualeditor-ca-createlocaldescriptionsource": "Lokale Bschrybigsquälltäxt zuefiege",
 	"visualeditor-ca-createsource": "Quälltäxt aalege",
 	"visualeditor-ca-editsource": "Quälltäxt bearbeite",
 	"visualeditor-ca-editsource-section": "Quälltäxt bearbeite",
@@ -56,5 +58,5 @@
 	"visualeditor-dialog-transclusion-options": "Optione",
 	"visualeditor-dialog-transclusion-placeholder": "Neui Vorlag",
 	"visualeditor-languages-tool": "Sproche",
-	"visualeditor-dialog-media-insert-title": "Medium yyfüege"
+	"visualeditor-version-label": "Version"
 }

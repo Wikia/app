@@ -1,7 +1,7 @@
 /*!
  * VisualEditor DataModel IndexValueStore tests.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 QUnit.module( 've.dm.IndexValueStore' );
@@ -56,7 +56,7 @@ QUnit.test( 'value(s)', 5, function ( assert ) {
 	assert.deepEqual( store.value( 0 ), object1, 'Value 0 is first stored object' );
 	assert.deepEqual( store.value( 1 ), object2, 'Value 1 is second stored object' );
 	assert.strictEqual( store.value( 2 ), undefined, 'Value 2 is undefined' );
-	assert.deepEqual( store.values( [1, 0] ), [ object2, object1 ], 'Values [1, 0] are second and first object' );
+	assert.deepEqual( store.values( [ 1, 0 ] ), [ object2, object1 ], 'Values [1, 0] are second and first object' );
 	object1.a = 3;
 	assert.deepEqual( store.value( 0 ), { a: 1, b: 2 }, 'Value 0 is still first stored object after original has been modified' );
 } );

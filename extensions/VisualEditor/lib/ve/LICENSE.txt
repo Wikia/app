@@ -1,4 +1,4 @@
-Copyright (c) 2011-2014 VisualEditor Team and others
+Copyright (c) 2011-2015 VisualEditor Team and others
 
 https://git.wikimedia.org/blob/VisualEditor%2FVisualEditor/master/AUTHORS.txt
 

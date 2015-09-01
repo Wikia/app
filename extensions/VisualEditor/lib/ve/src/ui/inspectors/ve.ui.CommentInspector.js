@@ -1,7 +1,7 @@
 /*!
  * VisualEditor UserInterface CommentInspector class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 /**
@@ -26,7 +26,7 @@ OO.inheritClass( ve.ui.CommentInspector, ve.ui.NodeInspector );
 
 ve.ui.CommentInspector.static.name = 'comment';
 
-ve.ui.CommentInspector.static.icon = 'comment';
+ve.ui.CommentInspector.static.icon = 'notice';
 
 ve.ui.CommentInspector.static.title =
 	OO.ui.deferMsg( 'visualeditor-commentinspector-title' );
@@ -37,24 +37,12 @@ ve.ui.CommentInspector.static.size = 'large';
 
 ve.ui.CommentInspector.static.actions = [
 	{
-		action: 'done',
-		label: OO.ui.deferMsg( 'visualeditor-dialog-action-done' ),
-		flags: [ 'progressive', 'primary' ],
-		modes: 'edit'
-	},
-	{
-		action: 'insert',
-		label: OO.ui.deferMsg( 'visualeditor-dialog-action-insert' ),
-		flags: [ 'constructive', 'primary' ],
-		modes: 'insert'
-	},
-	{
 		action: 'remove',
 		label: OO.ui.deferMsg( 'visualeditor-inspector-remove-tooltip' ),
 		flags: 'destructive',
 		modes: 'edit'
 	}
-];
+].concat( ve.ui.FragmentInspector.static.actions );
 
 /**
  * Handle frame ready events.
@@ -66,7 +54,6 @@ ve.ui.CommentInspector.prototype.initialize = function () {
 	ve.ui.CommentInspector.super.prototype.initialize.call( this );
 
 	this.textWidget = new ve.ui.WhitespacePreservingTextInputWidget( {
-		$: this.$,
 		multiline: true,
 		autosize: true
 	} );
@@ -84,7 +71,7 @@ ve.ui.CommentInspector.prototype.initialize = function () {
 ve.ui.CommentInspector.prototype.onTextInputWidgetChange = function () {
 	var height = this.textWidget.$element.height();
 	if ( height !== this.previousTextWidgetHeight ) {
-		this.getManager().updateWindowSize( this );
+		this.updateSize();
 		this.previousTextWidgetHeight = height;
 	}
 };
@@ -115,10 +102,8 @@ ve.ui.CommentInspector.prototype.getSetupProcess = function ( data ) {
 			this.commentNode = this.getSelectedNode();
 			if ( this.commentNode ) {
 				this.textWidget.setValueAndWhitespace( this.commentNode.getAttribute( 'text' ) || '' );
-				this.actions.setMode( 'edit' );
 			} else {
 				this.textWidget.setWhitespace( [ ' ', ' ' ] );
-				this.actions.setMode( 'insert' );
 				this.getFragment().insertContent( [
 					{
 						type: 'comment',

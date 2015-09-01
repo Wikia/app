@@ -1,0 +1,20 @@
+/*!
+ * VisualEditor UserInterface ContextItem styles.
+ *
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
+ */
+
+.ve-ui-contextItem {
+	/* Disable selection to avoid stealing focus from the surface */
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	-o-user-select: none;
+	user-select: none;
+	cursor: default;
+}
+
+
+.ve-ui-contextItem + .ve-ui-contextItem {
+	border-top: 1px solid #eee;
+}

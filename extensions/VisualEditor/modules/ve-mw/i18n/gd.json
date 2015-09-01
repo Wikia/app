@@ -7,7 +7,7 @@
 	},
 	"tooltip-ca-createsource": "Cruthaich bun-tùs na duilleige seo",
 	"tooltip-ca-editsource": "Deasaich bun-tùs na duilleige seo",
-	"tooltip-ca-ve-edit": "Deasaich an duilleag seo leis an deasaiche lèirsinneach",
+	"tooltip-ca-ve-edit": "Deasaich an duilleag seo",
 	"visualeditor-advancedsettings-tool": "Roghainnean adhartach",
 	"visualeditor-annotationbutton-linknode-tooltip": "Ceangal simplidh",
 	"visualeditor-beta-appendix": "beta",
@@ -149,15 +149,11 @@
 	"visualeditor-formatdropdown-format-mw-heading6": "Fo-cheann-sgrìobhadh 4",
 	"visualeditor-languages-tool": "Cànain",
 	"visualeditor-linkinspector-illegal-title": "Tiotal duilleige mì-dhligheach",
-	"visualeditor-linkinspector-suggest-disambig-page": "{{PLURAL:$1|Duilleag an ioma-fhillidh|Duilleagan an ioma-fhillidh}}",
-	"visualeditor-linkinspector-suggest-external-link": "Ceangal dhan taobh a-muigh",
-	"visualeditor-linkinspector-suggest-matching-page": "{{PLURAL:$1|Duilleag a cho-fhreagras|Duilleagan a cho-fhreagras}}",
-	"visualeditor-linkinspector-suggest-new-page": "Duilleag ùr",
-	"visualeditor-linkinspector-suggest-redirect-page": "{{PLURAL:$1|Duilleag ath-stiùiridh|Duilleagan ath-stiùiridh}}",
 	"visualeditor-linknodeinspector-add-label": "Cuir leubail ris",
 	"visualeditor-linknodeinspector-title": "Ceangal simplidh",
 	"visualeditor-loadwarning": "Mearachd le luchdadh an dàta on fhrithealaiche: $1. A bheil thu airson feuchainn ris a-rithist?",
 	"visualeditor-loadwarning-token": "Mearachd le luchdadh tòcan deasachaidh on fhrithealaiche: $1. A bheil thu airson feuchainn ris a-rithist?",
 	"visualeditor-mainnamespacepagelink": "Project:Prìomh ainm-spàs",
-	"visualeditor-usernamespacepagelink": "Project:Ainm-spàs cleachdaiche"
+	"visualeditor-usernamespacepagelink": "Project:Ainm-spàs cleachdaiche",
+	"visualeditor-version-label": "Tionndadh"
 }

@@ -1,7 +1,7 @@
 /*!
  * VisualEditor UserInterface Trigger class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 /**
@@ -14,6 +14,11 @@
  * @param {boolean} [allowInvalidPrimary] Allow invalid primary keys
  */
 ve.ui.Trigger = function VeUiTrigger( e, allowInvalidPrimary ) {
+	var i, len, key, parts,
+		keyAliases = ve.ui.Trigger.static.keyAliases,
+		primaryKeys = ve.ui.Trigger.static.primaryKeys,
+		primaryKeyMap = ve.ui.Trigger.static.primaryKeyMap;
+
 	// Properties
 	this.modifiers = {
 		meta: false,
@@ -24,29 +29,25 @@ ve.ui.Trigger = function VeUiTrigger( e, allowInvalidPrimary ) {
 	this.primary = false;
 
 	// Initialization
-	var i, len, key, parts,
-		keyAliases = ve.ui.Trigger.static.keyAliases,
-		primaryKeys = ve.ui.Trigger.static.primaryKeys,
-		primaryKeyMap = ve.ui.Trigger.static.primaryKeyMap;
 	if ( e instanceof jQuery.Event ) {
 		this.modifiers.meta = e.metaKey || false;
 		this.modifiers.ctrl = e.ctrlKey || false;
 		this.modifiers.alt = e.altKey || false;
 		this.modifiers.shift = e.shiftKey || false;
-		this.primary = primaryKeyMap[e.which] || false;
+		this.primary = primaryKeyMap[ e.which ] || false;
 	} else if ( typeof e === 'string' ) {
 		// Normalization: remove whitespace and force lowercase
 		parts = e.replace( /\s*/g, '' ).toLowerCase().split( '+' );
 		for ( i = 0, len = parts.length; i < len; i++ ) {
-			key = parts[i];
+			key = parts[ i ];
 			// Resolve key aliases
 			if ( Object.prototype.hasOwnProperty.call( keyAliases, key ) ) {
-				key = keyAliases[key];
+				key = keyAliases[ key ];
 			}
 			// Apply key to trigger
 			if ( Object.prototype.hasOwnProperty.call( this.modifiers, key ) ) {
 				// Modifier key
-				this.modifiers[key] = true;
+				this.modifiers[ key ] = true;
 			} else if ( primaryKeys.indexOf( key ) !== -1 || allowInvalidPrimary ) {
 				// WARNING: Only the last primary key will be used
 				this.primary = key;
@@ -55,9 +56,11 @@ ve.ui.Trigger = function VeUiTrigger( e, allowInvalidPrimary ) {
 	}
 };
 
-/* Static Properties */
+/* Inheritance */
 
-ve.ui.Trigger.static = {};
+OO.initClass( ve.ui.Trigger );
+
+/* Static Properties */
 
 /**
  * Symbolic modifier key names.
@@ -68,7 +71,7 @@ ve.ui.Trigger.static = {};
  * @property
  * @inheritable
  */
-ve.ui.Trigger.static.modifierKeys = ['meta', 'ctrl', 'alt', 'shift'];
+ve.ui.Trigger.static.modifierKeys = [ 'meta', 'ctrl', 'alt', 'shift' ];
 
 /**
  * Symbolic primary key names.
@@ -184,7 +187,7 @@ ve.ui.Trigger.static.platformFilters = {
 		return function ( keys ) {
 			var i, len;
 			for ( i = 0, len = keys.length; i < len; i++ ) {
-				keys[i] = names[keys[i]] || keys[i];
+				keys[ i ] = names[ keys[ i ] ] || keys[ i ];
 			}
 			return keys.join( '' ).toUpperCase();
 		};
@@ -336,7 +339,7 @@ ve.ui.Trigger.static.primaryKeyMap = {
  *
  * For a trigger to be complete, there must be a valid primary key.
  *
- * @returns {boolean} Trigger is complete
+ * @return {boolean} Trigger is complete
  */
 ve.ui.Trigger.prototype.isComplete = function () {
 	return this.primary !== false;
@@ -352,7 +355,7 @@ ve.ui.Trigger.prototype.isComplete = function () {
  *
  * An incomplete trigger will return an empty string.
  *
- * @returns {string} Canonical trigger string
+ * @return {string} Canonical trigger string
  */
 ve.ui.Trigger.prototype.toString = function () {
 	var i, len,
@@ -360,8 +363,8 @@ ve.ui.Trigger.prototype.toString = function () {
 		keys = [];
 	// Add modifier keywords in the correct order
 	for ( i = 0, len = modifierKeys.length; i < len; i++ ) {
-		if ( this.modifiers[modifierKeys[i]] ) {
-			keys.push( modifierKeys[i] );
+		if ( this.modifiers[ modifierKeys[ i ] ] ) {
+			keys.push( modifierKeys[ i ] );
 		}
 	}
 	// Check that there were modifiers and the primary key is whitelisted
@@ -380,7 +383,7 @@ ve.ui.Trigger.prototype.toString = function () {
  * This is similar to #toString but the resulting string will be formatted in a way that makes it
  * appear more native for the platform.
  *
- * @returns {string} Message for trigger
+ * @return {string} Message for trigger
  */
 ve.ui.Trigger.prototype.getMessage = function () {
 	var keys,
@@ -389,9 +392,9 @@ ve.ui.Trigger.prototype.getMessage = function () {
 
 	keys = this.toString().split( '+' );
 	if ( Object.prototype.hasOwnProperty.call( platformFilters, platform ) ) {
-		return platformFilters[platform]( keys );
+		return platformFilters[ platform ]( keys );
 	}
 	return keys.map( function ( key ) {
-		return key[0].toUpperCase() + key.slice( 1 ).toLowerCase();
+		return key[ 0 ].toUpperCase() + key.slice( 1 ).toLowerCase();
 	} ).join( '+' );
 };

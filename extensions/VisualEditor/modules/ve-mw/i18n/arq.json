@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"Bachounda"
+			"Bachounda",
+			"Oldstoneage"
 		]
 	},
 	"tooltip-ca-createsource": "اصنع الكود المصدري لهذه الباجة",
@@ -23,6 +24,7 @@
 	"visualeditor-cite-tool-name-journal": "جرنان",
 	"visualeditor-cite-tool-name-news": "الخبار",
 	"visualeditor-cite-tool-name-web": "موقع",
+	"visualeditor-descriptionpagelink": "Project:كاتبي منظور (VisualEditor)",
 	"visualeditor-dialog-beta-welcome-action-continue": "استمر",
 	"visualeditor-dialog-media-content-section": "تعليق",
 	"visualeditor-dialog-media-goback": "ارجع (ولّي)",
@@ -49,7 +51,7 @@
 	"visualeditor-dialog-meta-languages-label": "لوغات",
 	"visualeditor-dialog-meta-languages-link-label": "صفحة مرتبطة",
 	"visualeditor-dialog-meta-languages-name-label": "اللوغه",
-	"visualeditor-dialog-meta-languages-readonlynote": "هذه قائمة صفحات بلغات أخرى مرتبطة بهذه الصفحة، ما يمكنش نغيروها فالحين إلا إدا تعدل المصدر أو ويكي بيانات.",
+	"visualeditor-dialog-meta-languages-readonlynote": "هادي هنا ليستة تاع پاجات ب لوغات وحدخرة مربوطة ب هاد الپاجة، ما يمكنش نغيروها ف هاد الوقيتة غير يلا كان تعدّل المصدر ولا ويكي بايانات.",
 	"visualeditor-dialog-meta-languages-section": "لوغات",
 	"visualeditor-dialog-meta-settings-displaytitle": "عرض العنوان",
 	"visualeditor-dialog-meta-settings-displaytitle-enable": "تمكين عرض العنوان",
@@ -65,7 +67,6 @@
 	"visualeditor-dialog-meta-title": "خيارات",
 	"visualeditor-dialog-reference-options-section": "خيارات",
 	"visualeditor-dialog-template-title": "مودال",
-	"visualeditor-linkinspector-suggest-new-page": "باجه جديده",
 	"visualeditor-linknodeinspector-title": "وصلة بسيطة",
 	"visualeditor-meta-tool": "خيارات",
 	"visualeditor-mweditmodesource-warning-cancel": "فوتها",
@@ -88,6 +89,7 @@
 	"visualeditor-savedialog-warning-dirty": "بالك تحريرك صرالو عطب – مادا بيك راجع قبل الحفظ.",
 	"visualeditor-saveerror": "صرات غلطه وقت حفظ المعلومات للخادم: $1.",
 	"visualeditor-toolbar-savedialog": "سجل الباجة",
+	"visualeditor-version-label": "نسخة",
 	"visualeditor-viewpage-savewarning-keep": "واصل التعديل",
 	"visualeditor-viewpage-savewarning-title": "متأكد؟"
 }

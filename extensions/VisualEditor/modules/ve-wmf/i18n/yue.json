@@ -1,13 +1,14 @@
 {
 	"@metadata": {
 		"authors": [
-			"Deryck Chan"
+			"Deryck Chan",
+			"CRCHF"
 		]
 	},
 	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]]",
 	"tag-visualeditor-description": "用[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]]改嘅",
 	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor: 請檢查]]",
-	"tag-visualeditor-needcheck-description": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]] 處理呢個修改嗰陣可能郁咗啲意料之外嘅嘢。",
+	"tag-visualeditor-needcheck-description": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]] 處理呢次修改嗰陣，可能喐咗啲意料之外嘅嘢。",
 	"tag-visualeditor-switched": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor: 轉咗]]",
 	"tag-visualeditor-switched-description": "用家本來用緊 VisualEditor 嚟編輯，然後轉咗去改源碼。",
 	"visualeditor-feedback-link": "Project:VisualEditor/Feedback",

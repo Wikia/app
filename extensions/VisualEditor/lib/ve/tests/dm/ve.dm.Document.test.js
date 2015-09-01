@@ -1,14 +1,14 @@
 /*!
  * VisualEditor DataModel Document tests.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 QUnit.module( 've.dm.Document' );
 
 /* Tests */
 
-QUnit.test( 'constructor', 11, function ( assert ) {
+QUnit.test( 'constructor', 12, function ( assert ) {
 	var data, htmlDoc,
 		doc = ve.dm.example.createExampleDocument();
 	assert.equalNodeTree( doc.getDocumentNode(), ve.dm.example.tree, 'node tree matches example data' );
@@ -22,6 +22,18 @@ QUnit.test( 'constructor', 11, function ( assert ) {
 		},
 		Error,
 		'unbalanced input causes exception'
+	);
+	assert.throws(
+		function () {
+			doc = new ve.dm.Document( [
+				{ type: 'paragraph' },
+				{ type: 'inlineImage' },
+				{ type: '/paragraph' }
+			] );
+			doc.buildNodeTree();
+		},
+		Error,
+		'unclosed inline node causes exception'
 	);
 
 	doc = new ve.dm.Document( [ 'a', 'b', 'c', 'd' ] );
@@ -61,8 +73,8 @@ QUnit.test( 'constructor', 11, function ( assert ) {
 	assert.equalNodeTree(
 		doc.getDocumentNode(),
 		new ve.dm.DocumentNode( [
-			new ve.dm.ParagraphNode( ve.dm.example.withMetaPlainData[0], [ new ve.dm.TextNode( 9 ) ] ),
-			new ve.dm.InternalListNode( ve.dm.example.withMetaPlainData[11] )
+			new ve.dm.ParagraphNode( ve.dm.example.withMetaPlainData[ 0 ], [ new ve.dm.TextNode( 9 ) ] ),
+			new ve.dm.InternalListNode( ve.dm.example.withMetaPlainData[ 11 ] )
 		] ),
 		'node tree does not contain metadata'
 	);
@@ -109,16 +121,16 @@ QUnit.test( 'cloneFromRange', function ( assert ) {
 		];
 	QUnit.expect( 4 * cases.length );
 	for ( i = 0; i < cases.length; i++ ) {
-		doc = ve.dm.example.createExampleDocument( cases[i].doc );
-		doc2 = doc.cloneFromRange( cases[i].range );
-		assert.deepEqual( doc2.data.data, cases[i].expectedData,
-			cases[i].msg + ': sliced data' );
-		assert.notStrictEqual( doc2.data[0], cases[i].expectedData[0],
-			cases[i].msg + ': data is cloned, not the same' );
+		doc = ve.dm.example.createExampleDocument( cases[ i ].doc );
+		doc2 = doc.cloneFromRange( cases[ i ].range );
+		assert.deepEqual( doc2.data.data, cases[ i ].expectedData,
+			cases[ i ].msg + ': sliced data' );
+		assert.notStrictEqual( doc2.data[ 0 ], cases[ i ].expectedData[ 0 ],
+			cases[ i ].msg + ': data is cloned, not the same' );
 		assert.deepEqual( doc2.store, doc.store,
-			cases[i].msg + ': store is copied' );
+			cases[ i ].msg + ': store is copied' );
 		assert.notStrictEqual( doc2.store, doc.store,
-			cases[i].msg + ': store is a clone, not the same' );
+			cases[ i ].msg + ': store is a clone, not the same' );
 	}
 } );
 
@@ -181,18 +193,18 @@ QUnit.test( 'getRelativeOffset', function ( assert ) {
 			}
 		];
 	for ( i = 0; i < tests.length; i++ ) {
-		for ( j = 0; j < tests[i].cases.length; j++ ) {
+		for ( j = 0; j < tests[ i ].cases.length; j++ ) {
 			assert.strictEqual(
 				documentModel.getRelativeOffset(
-					tests[i].cases[j].input,
-					tests[i].direction,
-					tests[i].unit
+					tests[ i ].cases[ j ].input,
+					tests[ i ].direction,
+					tests[ i ].unit
 				),
-				tests[i].cases[j].output,
-				tests[i].cases[j].input + ', ' + tests[i].direction + ', ' + tests[i].unit
+				tests[ i ].cases[ j ].output,
+				tests[ i ].cases[ j ].input + ', ' + tests[ i ].direction + ', ' + tests[ i ].unit
 			);
 		}
-		expectCount += tests[i].cases.length;
+		expectCount += tests[ i ].cases.length;
 	}
 	QUnit.expect( expectCount );
 } );
@@ -203,12 +215,12 @@ QUnit.test( 'getRelativeRange', function ( assert ) {
 		tests = [
 			{
 				data: [
-					/* 0 */ { type: 'paragraph' },
-					/* 1 */ 'a',
-					/* 2 */ { type: 'alienInline' },
-					/* 3 */ { type: '/alienInline' },
-					/* 4 */ 'b',
-					/* 5 */ { type: '/paragraph' }
+					{ type: 'paragraph' }, // 0
+					'a', // 1
+					{ type: 'alienInline' }, // 2
+					{ type: '/alienInline' }, // 3
+					'b', // 4
+					{ type: '/paragraph' } // 5
 				],
 				cases: [
 					{
@@ -249,12 +261,12 @@ QUnit.test( 'getRelativeRange', function ( assert ) {
 			},
 			{
 				data: [
-					/* 0 */ { type: 'paragraph' },
-					/* 1 */ { type: 'alienInline' },
-					/* 2 */ { type: '/alienInline' },
-					/* 3 */ { type: 'alienInline' },
-					/* 4 */ { type: '/alienInline' },
-					/* 5 */ { type: '/paragraph' }
+					{ type: 'paragraph' }, // 0
+					{ type: 'alienInline' }, // 1
+					{ type: '/alienInline' }, // 2
+					{ type: 'alienInline' }, // 3
+					{ type: '/alienInline' }, // 4
+					{ type: '/paragraph' } // 5
 				],
 				cases: [
 					{
@@ -307,7 +319,7 @@ QUnit.test( 'getRelativeRange', function ( assert ) {
 					},
 					{
 						direction: 1,
-						given: new ve.Range( 4, 6),
+						given: new ve.Range( 4, 6 ),
 						expected: new ve.Range( 6 )
 					},
 					{
@@ -369,20 +381,20 @@ QUnit.test( 'getRelativeRange', function ( assert ) {
 			}
 		];
 	for ( i = 0; i < tests.length; i++ ) {
-		documentModel = new ve.dm.Document( tests[i].data );
-		for ( j = 0; j < tests[i].cases.length; j++ ) {
+		documentModel = new ve.dm.Document( tests[ i ].data );
+		for ( j = 0; j < tests[ i ].cases.length; j++ ) {
 			expectCount++;
 			assert.equalRange(
 				documentModel.getRelativeRange(
-					tests[i].cases[j].given,
-					tests[i].cases[j].direction,
+					tests[ i ].cases[ j ].given,
+					tests[ i ].cases[ j ].direction,
 					'character',
-					!!tests[i].cases[j].expand
+					!!tests[ i ].cases[ j ].expand
 				),
-				tests[i].cases[j].expected,
+				tests[ i ].cases[ j ].expected,
 				'Test document ' + i +
-				', range ' + tests[i].cases[j].given.toJSON() +
-				', direction ' + tests[i].cases[j].direction
+				', range ' + tests[ i ].cases[ j ].given.toJSON() +
+				', direction ' + tests[ i ].cases[ j ].direction
 			);
 		}
 	}
@@ -395,73 +407,73 @@ QUnit.test( 'getBranchNodeFromOffset', function ( assert ) {
 		root = doc.getDocumentNode().getRoot(),
 		expected = [
 			[], // 0 - document
-			[0], // 1 - heading
-			[0], // 2 - heading
-			[0], // 3 - heading
-			[0], // 4 - heading
+			[ 0 ], // 1 - heading
+			[ 0 ], // 2 - heading
+			[ 0 ], // 3 - heading
+			[ 0 ], // 4 - heading
 			[], // 5 - document
-			[1], // 6 - table
-			[1, 0], // 7 - tableSection
-			[1, 0, 0], // 7 - tableRow
-			[1, 0, 0, 0], // 8 - tableCell
-			[1, 0, 0, 0, 0], // 9 - paragraph
-			[1, 0, 0, 0, 0], // 10 - paragraph
-			[1, 0, 0, 0], // 11 - tableCell
-			[1, 0, 0, 0, 1], // 12 - list
-			[1, 0, 0, 0, 1, 0], // 13 - listItem
-			[1, 0, 0, 0, 1, 0, 0], // 14 - paragraph
-			[1, 0, 0, 0, 1, 0, 0], // 15 - paragraph
-			[1, 0, 0, 0, 1, 0], // 16 - listItem
-			[1, 0, 0, 0, 1, 0, 1], // 17 - list
-			[1, 0, 0, 0, 1, 0, 1, 0], // 18 - listItem
-			[1, 0, 0, 0, 1, 0, 1, 0, 0], // 19 - paragraph
-			[1, 0, 0, 0, 1, 0, 1, 0, 0], // 20 - paragraph
-			[1, 0, 0, 0, 1, 0, 1, 0], // 21 - listItem
-			[1, 0, 0, 0, 1, 0, 1], // 22 - list
-			[1, 0, 0, 0, 1, 0], // 23 - listItem
-			[1, 0, 0, 0, 1], // 24 - list
-			[1, 0, 0, 0], // 25 - tableCell
-			[1, 0, 0, 0, 2], // 26 - list
-			[1, 0, 0, 0, 2, 0], // 27 - listItem
-			[1, 0, 0, 0, 2, 0, 0], // 28 - paragraph
-			[1, 0, 0, 0, 2, 0, 0], // 29 - paragraph
-			[1, 0, 0, 0, 2, 0], // 30 - listItem
-			[1, 0, 0, 0, 2], // 31 - list
-			[1, 0, 0, 0], // 32 - tableCell
-			[1, 0, 0], // 33 - tableRow
-			[1, 0], // 33 - tableSection
-			[1], // 34 - table
+			[ 1 ], // 6 - table
+			[ 1, 0 ], // 7 - tableSection
+			[ 1, 0, 0 ], // 7 - tableRow
+			[ 1, 0, 0, 0 ], // 8 - tableCell
+			[ 1, 0, 0, 0, 0 ], // 9 - paragraph
+			[ 1, 0, 0, 0, 0 ], // 10 - paragraph
+			[ 1, 0, 0, 0 ], // 11 - tableCell
+			[ 1, 0, 0, 0, 1 ], // 12 - list
+			[ 1, 0, 0, 0, 1, 0 ], // 13 - listItem
+			[ 1, 0, 0, 0, 1, 0, 0 ], // 14 - paragraph
+			[ 1, 0, 0, 0, 1, 0, 0 ], // 15 - paragraph
+			[ 1, 0, 0, 0, 1, 0 ], // 16 - listItem
+			[ 1, 0, 0, 0, 1, 0, 1 ], // 17 - list
+			[ 1, 0, 0, 0, 1, 0, 1, 0 ], // 18 - listItem
+			[ 1, 0, 0, 0, 1, 0, 1, 0, 0 ], // 19 - paragraph
+			[ 1, 0, 0, 0, 1, 0, 1, 0, 0 ], // 20 - paragraph
+			[ 1, 0, 0, 0, 1, 0, 1, 0 ], // 21 - listItem
+			[ 1, 0, 0, 0, 1, 0, 1 ], // 22 - list
+			[ 1, 0, 0, 0, 1, 0 ], // 23 - listItem
+			[ 1, 0, 0, 0, 1 ], // 24 - list
+			[ 1, 0, 0, 0 ], // 25 - tableCell
+			[ 1, 0, 0, 0, 2 ], // 26 - list
+			[ 1, 0, 0, 0, 2, 0 ], // 27 - listItem
+			[ 1, 0, 0, 0, 2, 0, 0 ], // 28 - paragraph
+			[ 1, 0, 0, 0, 2, 0, 0 ], // 29 - paragraph
+			[ 1, 0, 0, 0, 2, 0 ], // 30 - listItem
+			[ 1, 0, 0, 0, 2 ], // 31 - list
+			[ 1, 0, 0, 0 ], // 32 - tableCell
+			[ 1, 0, 0 ], // 33 - tableRow
+			[ 1, 0 ], // 33 - tableSection
+			[ 1 ], // 34 - table
 			[], // 35- document
-			[2], // 36 - preformatted
-			[2], // 37 - preformatted
-			[2], // 38 - preformatted
-			[2], // 39 - preformatted
-			[2], // 40 - preformatted
+			[ 2 ], // 36 - preformatted
+			[ 2 ], // 37 - preformatted
+			[ 2 ], // 38 - preformatted
+			[ 2 ], // 39 - preformatted
+			[ 2 ], // 40 - preformatted
 			[], // 41 - document
-			[3], // 42 - definitionList
-			[3, 0], // 43 - definitionListItem
-			[3, 0, 0], // 44 - paragraph
-			[3, 0, 0], // 45 - paragraph
-			[3, 0], // 46 - definitionListItem
-			[3], // 47 - definitionList
-			[3, 1], // 48 - definitionListItem
-			[3, 1, 0], // 49 - paragraph
-			[3, 1, 0], // 50 - paragraph
-			[3, 1], // 51 - definitionListItem
-			[3], // 52 - definitionList
+			[ 3 ], // 42 - definitionList
+			[ 3, 0 ], // 43 - definitionListItem
+			[ 3, 0, 0 ], // 44 - paragraph
+			[ 3, 0, 0 ], // 45 - paragraph
+			[ 3, 0 ], // 46 - definitionListItem
+			[ 3 ], // 47 - definitionList
+			[ 3, 1 ], // 48 - definitionListItem
+			[ 3, 1, 0 ], // 49 - paragraph
+			[ 3, 1, 0 ], // 50 - paragraph
+			[ 3, 1 ], // 51 - definitionListItem
+			[ 3 ], // 52 - definitionList
 			[], // 53 - document
-			[4], // 54 - paragraph
-			[4], // 55 - paragraph
+			[ 4 ], // 54 - paragraph
+			[ 4 ], // 55 - paragraph
 			[], // 56 - document
-			[5], // 57 - paragraph
-			[5], // 58 - paragraph
+			[ 5 ], // 57 - paragraph
+			[ 5 ], // 58 - paragraph
 			[] // 59 - document
 		];
 	QUnit.expect( expected.length );
 	for ( i = 0; i < expected.length; i++ ) {
 		node = root;
-		for ( j = 0; j < expected[i].length; j++ ) {
-			node = node.children[expected[i][j]];
+		for ( j = 0; j < expected[ i ].length; j++ ) {
+			node = node.children[ expected[ i ][ j ] ];
 		}
 		assert.ok( node === doc.getBranchNodeFromOffset( i ), 'reference at offset ' + i );
 	}
@@ -478,7 +490,7 @@ QUnit.test( 'hasSlugAtOffset', function ( assert ) {
 	QUnit.expect( doc.data.getLength() + 1 );
 
 	for ( i = 0, l = doc.data.getLength(); i <= l; i++ ) {
-		assert.strictEqual( doc.hasSlugAtOffset( i ), !!expected[i], 'hasSlugAtOffset ' + i + ' = ' + !!expected[i] );
+		assert.strictEqual( doc.hasSlugAtOffset( i ), !!expected[ i ], 'hasSlugAtOffset ' + i + ' = ' + !!expected[ i ] );
 	}
 
 } );
@@ -487,17 +499,17 @@ QUnit.test( 'getDataFromNode', 3, function ( assert ) {
 	var doc = ve.dm.example.createExampleDocument(),
 		expectedData = ve.dm.example.preprocessAnnotations( ve.copy( ve.dm.example.data ) );
 	assert.deepEqual(
-		doc.getDataFromNode( doc.getDocumentNode().getChildren()[0] ),
+		doc.getDataFromNode( doc.getDocumentNode().getChildren()[ 0 ] ),
 		expectedData.slice( 1, 4 ),
 		'branch with leaf children'
 	);
 	assert.deepEqual(
-		doc.getDataFromNode( doc.getDocumentNode().getChildren()[1] ),
+		doc.getDataFromNode( doc.getDocumentNode().getChildren()[ 1 ] ),
 		expectedData.slice( 6, 36 ),
 		'branch with branch children'
 	);
 	assert.deepEqual(
-		doc.getDataFromNode( doc.getDocumentNode().getChildren()[2].getChildren()[1] ),
+		doc.getDataFromNode( doc.getDocumentNode().getChildren()[ 2 ].getChildren()[ 1 ] ),
 		[],
 		'leaf without children'
 	);
@@ -529,7 +541,7 @@ QUnit.test( 'rebuildNodes', 2, function ( assert ) {
 	// Replace table with paragraph
 	doc.data.batchSplice( 5, 32, [ { type: 'paragraph' }, 'a', 'b', 'c', { type: '/paragraph' } ] );
 	tree.splice( 1, 1, new ve.dm.ParagraphNode(
-		doc.data.getData( 5 ), [new ve.dm.TextNode( 3 )]
+		doc.data.getData( 5 ), [ new ve.dm.TextNode( 3 ) ]
 	) );
 	// Rebuild with changes
 	doc.rebuildNodes( documentNode, 1, 1, 5, 5 );
@@ -555,14 +567,66 @@ QUnit.test( 'selectNodes', function ( assert ) {
 
 	QUnit.expect( cases.length );
 	for ( i = 0; i < cases.length; i++ ) {
-		doc = cases[i].doc ? ve.dm.example.createExampleDocument( cases[i].doc ) : mainDoc;
-		expectedSelection = cases[i].expected.map( resolveNode );
+		doc = cases[ i ].doc ? ve.dm.example.createExampleDocument( cases[ i ].doc ) : mainDoc;
+		expectedSelection = cases[ i ].expected.map( resolveNode );
 		assert.equalNodeSelection(
-			doc.selectNodes( cases[i].range, cases[i].mode ), expectedSelection, cases[i].msg
+			doc.selectNodes( cases[ i ].range, cases[ i ].mode ), expectedSelection, cases[ i ].msg
 		);
 	}
 } );
 
+QUnit.test( 'rangeInsideOneLeafNode', function ( assert ) {
+	var i,
+		doc = ve.dm.example.createExampleDocument(),
+		cases = [
+			{
+				range: new ve.Range( 1, 4 ),
+				result: true
+			},
+			{
+				range: new ve.Range( 4, 1 ),
+				result: true
+			},
+			{
+				range: new ve.Range( 0, 5 ),
+				result: false
+			},
+			{
+				range: new ve.Range( 0, 4 ),
+				result: false
+			},
+			{
+				range: new ve.Range( 0 ),
+				result: false
+			},
+			{
+				range: new ve.Range( 5 ),
+				result: false
+			},
+			{
+				range: new ve.Range( 1 ),
+				result: true
+			},
+			{
+				range: new ve.Range( 5, 1 ),
+				result: false
+			},
+			{
+				range: new ve.Range( 4, 6 ),
+				result: false
+			}
+		];
+
+	QUnit.expect( cases.length );
+	for ( i = 0; i < cases.length; i++ ) {
+		assert.strictEqual(
+			doc.rangeInsideOneLeafNode( cases[ i ].range ),
+			cases[ i ].result,
+			'Range ' + cases[ i ].range.from + ', ' + cases[ i ].range.to + ' ' +
+			( cases[ i ].result ? 'is' : 'isn\'t' ) + ' inside one leaf node'
+		);
+	}
+} );
 QUnit.test( 'cloneSliceFromRange', function ( assert ) {
 	var i, expectedData, slice, range, doc,
 		cases = [
@@ -575,15 +639,15 @@ QUnit.test( 'cloneSliceFromRange', function ( assert ) {
 				msg: 'range with one character',
 				range: new ve.Range( 2, 3 ),
 				expected: [
-					['b', [ ve.dm.example.bold ]]
+					[ 'b', [ ve.dm.example.bold ] ]
 				]
 			},
 			{
 				msg: 'range with two characters',
 				range: new ve.Range( 2, 4 ),
 				expected: [
-					['b', [ ve.dm.example.bold ]],
-					['c', [ ve.dm.example.italic ]]
+					[ 'b', [ ve.dm.example.bold ] ],
+					[ 'c', [ ve.dm.example.italic ] ]
 				]
 			},
 			{
@@ -591,8 +655,8 @@ QUnit.test( 'cloneSliceFromRange', function ( assert ) {
 				range: new ve.Range( 2, 5 ),
 				expected: [
 					{ type: 'heading', attributes: { level: 1 } },
-					['b', [ ve.dm.example.bold ]],
-					['c', [ ve.dm.example.italic ]],
+					[ 'b', [ ve.dm.example.bold ] ],
+					[ 'c', [ ve.dm.example.italic ] ],
 					{ type: '/heading' }
 				],
 				originalRange: new ve.Range( 1, 4 )
@@ -602,7 +666,7 @@ QUnit.test( 'cloneSliceFromRange', function ( assert ) {
 				range: new ve.Range( 3, 6 ),
 				expected: [
 					{ type: 'heading', attributes: { level: 1 } },
-					['c', [ ve.dm.example.italic ]],
+					[ 'c', [ ve.dm.example.italic ] ],
 					{ type: '/heading' },
 					{ type: 'table' },
 					{ type: '/table' }
@@ -739,7 +803,7 @@ QUnit.test( 'cloneSliceFromRange', function ( assert ) {
 				msg: 'inline node at end',
 				range: new ve.Range( 6, 8 ),
 				expected: [
-					{ type: 'alienInline', attributes: { domElements: $( '<foobar />' ).toArray() } },
+					{ type: 'alienInline', originalDomElements: $( '<foobar />' ).toArray() },
 					{ type: '/alienInline' }
 				],
 				originalRange: new ve.Range( 0, 2 ),
@@ -763,7 +827,7 @@ QUnit.test( 'cloneSliceFromRange', function ( assert ) {
 				range: new ve.Range( 4, 8 ),
 				expected: [
 					'o', 'o',
-					{ type: 'alienInline', attributes: { domElements: $( '<foobar />' ).toArray() } },
+					{ type: 'alienInline', originalDomElements: $( '<foobar />' ).toArray() },
 					{ type: '/alienInline' }
 				],
 				originalRange: new ve.Range( 0, 4 ),
@@ -772,36 +836,37 @@ QUnit.test( 'cloneSliceFromRange', function ( assert ) {
 		];
 	QUnit.expect( 3 * cases.length );
 	for ( i = 0; i < cases.length; i++ ) {
-		doc = ve.dm.example.createExampleDocument( cases[i].doc );
-		expectedData = ve.dm.example.preprocessAnnotations( cases[i].expected.slice(), doc.getStore() ).getData();
-		range = new ve.Range( 0, cases[i].expected.length );
+		doc = ve.dm.example.createExampleDocument( cases[ i ].doc );
+		expectedData = ve.dm.example.preprocessAnnotations( cases[ i ].expected.slice(), doc.getStore() ).getData();
+		range = new ve.Range( 0, cases[ i ].expected.length );
 		expectedData = expectedData.concat( [
 			{ type: 'internalList' },
 			{ type: '/internalList' }
 		] );
-		slice = doc.cloneSliceFromRange( cases[i].range );
+		slice = doc.cloneSliceFromRange( cases[ i ].range );
 		assert.deepEqualWithDomElements(
 			slice.getData(),
 			expectedData,
-			cases[i].msg + ': data'
+			cases[ i ].msg + ': data'
 		);
 		assert.equalRange(
 			slice.originalRange,
-			cases[i].originalRange || range,
-			cases[i].msg + ': original range'
+			cases[ i ].originalRange || range,
+			cases[ i ].msg + ': original range'
 		);
 		assert.equalRange(
 			slice.balancedRange,
-			cases[i].balancedRange || range,
-			cases[i].msg + ': balanced range'
+			cases[ i ].balancedRange || range,
+			cases[ i ].msg + ': balanced range'
 		);
 	}
 } );
 
 QUnit.test( 'protection against double application of transactions', 1, function ( assert ) {
-	var tx = new ve.dm.Transaction(), testDocument = ve.dm.example.createExampleDocument();
+	var testDocument = ve.dm.example.createExampleDocument(),
+		tx = new ve.dm.Transaction( testDocument );
 	tx.pushRetain( 1 );
-	tx.pushReplace( testDocument, 1, 0, ['H', 'e', 'l', 'l', 'o' ] );
+	tx.pushReplace( testDocument, 1, 0, [ 'H', 'e', 'l', 'l', 'o' ] );
 	testDocument.commit( tx );
 	assert.throws(
 		function () {

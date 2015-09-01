@@ -49,6 +49,11 @@ jQuery i18n
  – MIT license (dual with GPL v2)
  – Wikimedia Language Engineering Team and other contributors
 
+jQuery Client
+ – https://github.com/wikimedia/jquery-client
+ – MIT license
+ – jquery-client maintainers and other contributors
+
 jQuery ULS
  – https://github.com/wikimedia/jquery.uls
  – MIT license (dual with GPL v2)

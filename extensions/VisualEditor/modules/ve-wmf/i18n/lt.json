@@ -2,12 +2,19 @@
 	"@metadata": {
 		"authors": [
 			"Audriusa",
-			"Eitvys200"
+			"Eitvys200",
+			"Hugo.arg",
+			"Albertas"
 		]
 	},
-	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}} |VisualEditor: Patikrinti]]",
-	"tag-visualeditor-needcheck-description": "Redaguota su [[{{MediaWiki:visualeditor-descriptionpagelink}} |VisualEditor]]. Sistema aptiko galimai nenorėtų keitimų.",
-	"visualeditor-feedback-tool": "Palikti atsiliepimą",
+	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]]",
+	"tag-visualeditor-description": "Redaguota su [[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]]",
+	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor: Tikrinti]]",
+	"tag-visualeditor-needcheck-description": "Redaguota su [[{{MediaWiki:visualeditor-descriptionpagelink}}|vizualiu redaktoriumi]], kai sistema aptiko galimai nenorėtų vikiteksto pakeitimų.",
+	"tag-visualeditor-switched": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor: Perjungtas]]",
+	"tag-visualeditor-switched-description": "Naudotojas pradėjo redaguoti su vizualiu redaktoriumi, po to persijungė į vikiteksto redaktorių.",
+	"visualeditor-feedback-link": "Project:VisualEditor/Atsiliepimai",
+	"visualeditor-feedback-tool": "Pateikti atsiliepimą apie šią programinę įrangą",
 	"visualeditor-help-label": "Skaityti vartotojo vadovą",
-	"visualeditor-help-title": "Vartotojo vadovas kaip naudotis redaktoriumi"
+	"visualeditor-help-title": "Instrukcijos kaip naudotis redaktoriumi"
 }

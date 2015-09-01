@@ -1,7 +1,7 @@
 /*!
  * VisualEditor UserInterface Sequence class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 /**
@@ -12,14 +12,18 @@
  * @constructor
  * @param {string} name Symbolic name
  * @param {string} commandName Command name this sequence executes
- * @param {string|Array} data Data to match
- * @param {number} [strip] Number of data elements to strip after execution (from the right)
+ * @param {string|Array|RegExp} data Data to match
+ * @param {number} [strip=0] Number of data elements to strip after execution
+ *        (from the right)
+ * @param {boolean} [setSelection=false] Whether to set the selection to the
+ *        range matching the sequence before executing the command.
  */
-ve.ui.Sequence = function VeUiSequence( name, commandName, data, strip ) {
+ve.ui.Sequence = function VeUiSequence( name, commandName, data, strip, setSelection ) {
 	this.name = name;
 	this.commandName = commandName;
 	this.data = data;
 	this.strip = strip;
+	this.setSelection = setSelection;
 };
 
 /* Inheritance */
@@ -31,23 +35,28 @@ OO.initClass( ve.ui.Sequence );
 /**
  * Check if the sequence matches a given offset in the data
  *
- * @param {string|Array} data String or linear data
+ * @param {ve.dm.ElementLinearData} data String or linear data
  * @param {number} offset Offset
- * @return {boolean} Sequence matches
+ * @return {ve.Range|null} Range corresponding to the match, or else null
  */
-ve.ui.Sequence.prototype.match = function ( data, offset ) {
+ve.ui.Sequence.prototype.match = function ( data, offset, plaintext ) {
 	var i, j = offset - 1;
 
+	if ( this.data instanceof RegExp ) {
+		i = plaintext.search( this.data );
+		return ( i < 0 ) ? null :
+			new ve.Range( offset - plaintext.length + i, offset );
+	}
 	for ( i = this.data.length - 1; i >= 0; i--, j-- ) {
-		if ( typeof this.data[i] === 'string' ) {
-			if ( this.data[i] !== data.getCharacterData( j ) ) {
-				return false;
+		if ( typeof this.data[ i ] === 'string' ) {
+			if ( this.data[ i ] !== data.getCharacterData( j ) ) {
+				return null;
 			}
-		} else if ( !ve.compare( this.data[i], data.getData( j ), true ) ) {
-			return false;
+		} else if ( !ve.compare( this.data[ i ], data.getData( j ), true ) ) {
+			return null;
 		}
 	}
-	return true;
+	return new ve.Range( offset - this.data.length, offset );
 };
 
 /**
@@ -57,26 +66,35 @@ ve.ui.Sequence.prototype.match = function ( data, offset ) {
  * @return {boolean} The command executed
  * @throws {Error} Command not found
  */
-ve.ui.Sequence.prototype.execute = function ( surface ) {
-	var range, executed, stripFragment,
+ve.ui.Sequence.prototype.execute = function ( surface, range ) {
+	var stripRange, executed, stripFragment, selection,
 		surfaceModel = surface.getModel(),
-		command = ve.ui.commandRegistry.lookup( this.getCommandName() );
+		command = ve.init.target.commandRegistry.lookup( this.getCommandName() );
 
 	if ( !command ) {
 		throw new Error( 'Command not found: ' + this.getCommandName() ) ;
 	}
 
 	if ( this.strip ) {
-		range = surfaceModel.getSelection().getRange();
-		stripFragment = surfaceModel.getLinearFragment( new ve.Range( range.end, range.end - this.strip ) );
+		stripRange = surfaceModel.getSelection().getRange();
+		stripFragment = surfaceModel.getLinearFragment( new ve.Range( stripRange.end, stripRange.end - this.strip ) );
 	}
 
 	surfaceModel.breakpoint();
+
+	if ( this.setSelection ) {
+		selection = surfaceModel.getSelection();
+		surfaceModel.setLinearSelection( range );
+	}
 
 	executed = command.execute( surface );
 
 	if ( executed && stripFragment ) {
 		stripFragment.removeContent();
+	}
+
+	if ( !executed && selection ) {
+		surfaceModel.setSelection( selection );
 	}
 
 	return executed;

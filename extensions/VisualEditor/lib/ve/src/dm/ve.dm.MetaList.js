@@ -1,7 +1,7 @@
 /*!
  * VisualEditor DataModel MetaList class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 /**
@@ -31,12 +31,12 @@ ve.dm.MetaList = function VeDmMetaList( surface ) {
 	// Populate from document
 	metadata = this.document.getMetadata();
 	for ( i in metadata ) {
-		if ( Object.prototype.hasOwnProperty.call( metadata, i ) && Array.isArray( metadata[i] ) ) {
-			for ( j = 0, jlen = metadata[i].length; j < jlen; j++ ) {
-				item = ve.dm.metaItemFactory.createFromElement( metadata[i][j] );
-				group = this.groups[item.getGroup()];
+		if ( Object.prototype.hasOwnProperty.call( metadata, i ) && Array.isArray( metadata[ i ] ) ) {
+			for ( j = 0, jlen = metadata[ i ].length; j < jlen; j++ ) {
+				item = ve.dm.metaItemFactory.createFromElement( metadata[ i ][ j ] );
+				group = this.groups[ item.getGroup() ];
 				if ( !group ) {
-					group = this.groups[item.getGroup()] = [];
+					group = this.groups[ item.getGroup() ] = [];
 				}
 				item.attach( this, Number( i ), j );
 				group.push( item );
@@ -73,6 +73,7 @@ OO.mixinClass( ve.dm.MetaList, OO.EventEmitter );
  * - insert items for new metadata that was inserted
  * - remove items for metadata that was removed
  * - translate offsets and recompute indices for metadata that has shifted
+ *
  * @param {ve.dm.Transaction} tx Transaction that was applied to the document
  * @fires insert
  * @fires remove
@@ -97,27 +98,27 @@ ve.dm.MetaList.prototype.onTransact = function ( tx ) {
 	// don't actually touch this.items yet, otherwise we 1) get it out of order which breaks
 	// findItem() and 2) lose information about what the pre-transaction state of this.items was.
 	for ( i = 0, ilen = ops.length; i < ilen; i++ ) {
-		switch ( ops[i].type ) {
+		switch ( ops[ i ].type ) {
 			case 'retain':
 				// Advance itemIndex through the retain and update items we encounter along the way
 				for ( ;
-					itemIndex < numItems && this.items[itemIndex].offset < offset + ops[i].length;
+					itemIndex < numItems && this.items[ itemIndex ].offset < offset + ops[ i ].length;
 					itemIndex++
 				) {
 					// Plan to move this item to the post-transaction offset and index
 					newItems.push( {
-						item: this.items[itemIndex],
-						offset: this.items[itemIndex].offset + newOffset - offset,
-						index: this.items[itemIndex].offset === offset ?
+						item: this.items[ itemIndex ],
+						offset: this.items[ itemIndex ].offset + newOffset - offset,
+						index: this.items[ itemIndex ].offset === offset ?
 							// Adjust index for insertions or removals that happened at this offset
-							newIndex - index + this.items[itemIndex].index :
+							newIndex - index + this.items[ itemIndex ].index :
 							// Offset is retained over completely, don't adjust index
-							this.items[itemIndex].index
+							this.items[ itemIndex ].index
 					} );
 				}
 
-				offset += ops[i].length;
-				newOffset += ops[i].length;
+				offset += ops[ i ].length;
+				newOffset += ops[ i ].length;
 				index = 0;
 				newIndex = 0;
 				break;
@@ -125,42 +126,42 @@ ve.dm.MetaList.prototype.onTransact = function ( tx ) {
 			case 'retainMetadata':
 				// Advance itemIndex through the retain and update items we encounter along the way
 				for ( ;
-					itemIndex < numItems && this.items[itemIndex].offset === offset &&
-						this.items[itemIndex].index < index + ops[i].length;
+					itemIndex < numItems && this.items[ itemIndex ].offset === offset &&
+						this.items[ itemIndex ].index < index + ops[ i ].length;
 					itemIndex++
 				) {
 					newItems.push( {
-						item: this.items[itemIndex],
+						item: this.items[ itemIndex ],
 						offset: newOffset,
-						index: this.items[itemIndex].index + newIndex - index
+						index: this.items[ itemIndex ].index + newIndex - index
 					} );
 				}
 
-				index += ops[i].length;
-				newIndex += ops[i].length;
+				index += ops[ i ].length;
+				newIndex += ops[ i ].length;
 				break;
 
 			case 'replace':
-				ins = ops[i].insert;
-				rm = ops[i].remove;
-				if ( ops[i].removeMetadata !== undefined ) {
-					insMeta = ops[i].insertMetadata;
-					rmMeta = ops[i].removeMetadata;
+				ins = ops[ i ].insert;
+				rm = ops[ i ].remove;
+				if ( ops[ i ].removeMetadata !== undefined ) {
+					insMeta = ops[ i ].insertMetadata;
+					rmMeta = ops[ i ].removeMetadata;
 
 					// Process removed metadata
 					for ( ;
 						itemIndex < numItems &&
-							this.items[itemIndex].offset < offset + rmMeta.length;
+							this.items[ itemIndex ].offset < offset + rmMeta.length;
 						itemIndex++
 					) {
-						removedItems.push( this.items[itemIndex] );
+						removedItems.push( this.items[ itemIndex ] );
 					}
 
 					// Process inserted metadata
 					for ( j = 0, jlen = insMeta.length; j < jlen; j++ ) {
-						if ( insMeta[j] ) {
-							for ( k = 0, klen = insMeta[j].length; k < klen; k++ ) {
-								item = ve.dm.metaItemFactory.createFromElement( insMeta[j][k] );
+						if ( insMeta[ j ] ) {
+							for ( k = 0, klen = insMeta[ j ].length; k < klen; k++ ) {
+								item = ve.dm.metaItemFactory.createFromElement( insMeta[ j ][ k ] );
 								newItems.push( {
 									item: item,
 									offset: newOffset + j,
@@ -174,13 +175,13 @@ ve.dm.MetaList.prototype.onTransact = function ( tx ) {
 					// adjustments, same as a retain
 					for ( ;
 							itemIndex < numItems &&
-								this.items[itemIndex].offset < offset + rm.length;
+								this.items[ itemIndex ].offset < offset + rm.length;
 							itemIndex++
 					) {
 						newItems.push( {
-							item: this.items[itemIndex],
-							offset: this.items[itemIndex].offset + newOffset - offset,
-							index: this.items[itemIndex].index
+							item: this.items[ itemIndex ],
+							offset: this.items[ itemIndex ].offset + newOffset - offset,
+							index: this.items[ itemIndex ].index
 						} );
 					}
 				}
@@ -190,21 +191,21 @@ ve.dm.MetaList.prototype.onTransact = function ( tx ) {
 				break;
 
 			case 'replaceMetadata':
-				insMeta = ops[i].insert;
-				rmMeta = ops[i].remove;
+				insMeta = ops[ i ].insert;
+				rmMeta = ops[ i ].remove;
 
 				// Process removed items
 				for ( ;
-					itemIndex < numItems && this.items[itemIndex].offset === offset &&
-						this.items[itemIndex].index < index + rmMeta.length;
+					itemIndex < numItems && this.items[ itemIndex ].offset === offset &&
+						this.items[ itemIndex ].index < index + rmMeta.length;
 					itemIndex++
 				) {
-					removedItems.push( this.items[itemIndex] );
+					removedItems.push( this.items[ itemIndex ] );
 				}
 
 				// Process inserted items
 				for ( j = 0, jlen = insMeta.length; j < jlen; j++ ) {
-					item = ve.dm.metaItemFactory.createFromElement( insMeta[j] );
+					item = ve.dm.metaItemFactory.createFromElement( insMeta[ j ] );
 					newItems.push( { item: item, offset: newOffset, index: newIndex + j } );
 				}
 
@@ -216,11 +217,11 @@ ve.dm.MetaList.prototype.onTransact = function ( tx ) {
 	// Update the remaining items that the transaction didn't touch or retain over
 	for ( ; itemIndex < numItems; itemIndex++ ) {
 		newItems.push( {
-			item: this.items[itemIndex],
-			offset: this.items[itemIndex].offset + newOffset - offset,
-			index: this.items[itemIndex].offset === offset ?
-				newIndex - index + this.items[itemIndex].index :
-				this.items[itemIndex].index
+			item: this.items[ itemIndex ],
+			offset: this.items[ itemIndex ].offset + newOffset - offset,
+			index: this.items[ itemIndex ].offset === offset ?
+				newIndex - index + this.items[ itemIndex ].index :
+				this.items[ itemIndex ].index
 		} );
 	}
 
@@ -229,35 +230,35 @@ ve.dm.MetaList.prototype.onTransact = function ( tx ) {
 
 	// Remove removed items
 	for ( i = 0, ilen = removedItems.length; i < ilen; i++ ) {
-		this.deleteRemovedItem( removedItems[i].offset, removedItems[i].index );
+		this.deleteRemovedItem( removedItems[ i ].offset, removedItems[ i ].index );
 		events.push( [
-			'remove', removedItems[i], removedItems[i].offset, removedItems[i].index
+			'remove', removedItems[ i ], removedItems[ i ].offset, removedItems[ i ].index
 		] );
 	}
 
 	// Move moved items (these appear as inserted items that are already attached)
 	for ( i = 0, ilen = newItems.length; i < ilen; i++ ) {
-		if ( newItems[i].item.isAttached() ) {
-			if ( newItems[i].offset !== newItems[i].item.offset || newItems[i].index !== newItems[i].item.index ) {
-				this.deleteRemovedItem( newItems[i].item.offset, newItems[i].item.index );
-				newItems[i].preExisting = true;
+		if ( newItems[ i ].item.isAttached() ) {
+			if ( newItems[ i ].offset !== newItems[ i ].item.offset || newItems[ i ].index !== newItems[ i ].item.index ) {
+				this.deleteRemovedItem( newItems[ i ].item.offset, newItems[ i ].item.index );
+				newItems[ i ].preExisting = true;
 			}
 		}
 	}
 
 	// Insert new items
 	for ( i = 0, ilen = newItems.length; i < ilen; i++ ) {
-		if ( !newItems[i].item.isAttached() ) {
-			this.addInsertedItem( newItems[i].offset, newItems[i].index, newItems[i].item );
-			if ( !newItems[i].preExisting ) {
-				events.push( [ 'insert', newItems[i].item ] );
+		if ( !newItems[ i ].item.isAttached() ) {
+			this.addInsertedItem( newItems[ i ].offset, newItems[ i ].index, newItems[ i ].item );
+			if ( !newItems[ i ].preExisting ) {
+				events.push( [ 'insert', newItems[ i ].item ] );
 			}
 		}
 	}
 
 	// Emit events
 	for ( i = 0, ilen = events.length; i < ilen; i++ ) {
-		this.emit.apply( this, events[i] );
+		this.emit.apply( this, events[ i ] );
 	}
 };
 
@@ -271,29 +272,17 @@ ve.dm.MetaList.prototype.onTransact = function ( tx ) {
  * @param {string} [group] Group to search in. If not set, search in all groups
  * @param {boolean} [forInsertion] If the item is not found, return the index where it should have
  *  been rather than null
- * @returns {number|null} Index into this.items or this.groups[group] where the item was found, or
+ * @return {number|null} Index into this.items or this.groups[group] where the item was found, or
  *  null if not found
  */
 ve.dm.MetaList.prototype.findItem = function ( offset, index, group, forInsertion ) {
-	// Binary search for the item
-	var mid, items = typeof group === 'string' ? ( this.groups[group] || [] ) : this.items,
-		left = 0, right = items.length;
-	while ( left < right ) {
-		// Equivalent to Math.floor( ( left + right ) / 2 ) but much faster in V8
-		/*jshint bitwise:false */
-		mid = ( left + right ) >> 1;
-		if ( items[mid].getOffset() === offset && items[mid].getIndex() === index ) {
-			return mid;
-		}
-		if ( items[mid].getOffset() < offset || (
-			items[mid].getOffset() === offset && items[mid].getIndex() < index
-		) ) {
-			left = mid + 1;
-		} else {
-			right = mid;
-		}
-	}
-	return forInsertion ? left : null;
+	var items = typeof group === 'string' ? ( this.groups[ group ] || [] ) : this.items;
+	return ve.binarySearch( items, function ( item ) {
+		return ve.compareTuples(
+			[ offset, index ],
+			[ item.getOffset(), item.getIndex() ]
+		);
+	}, forInsertion );
 };
 
 /**
@@ -301,11 +290,11 @@ ve.dm.MetaList.prototype.findItem = function ( offset, index, group, forInsertio
  *
  * @param {number} offset Offset in the linear model
  * @param {number} index Index in the metadata array
- * @returns {ve.dm.MetaItem|null} The item at (offset,index), or null if not found
+ * @return {ve.dm.MetaItem|null} The item at (offset,index), or null if not found
  */
 ve.dm.MetaList.prototype.getItemAt = function ( offset, index ) {
 	var at = this.findItem( offset, index );
-	return at === null ? null : this.items[at];
+	return at === null ? null : this.items[ at ];
 };
 
 /**
@@ -315,10 +304,10 @@ ve.dm.MetaList.prototype.getItemAt = function ( offset, index ) {
  * themselves are.
  *
  * @param {string} group Group
- * @returns {ve.dm.MetaItem[]} Array of items in the group (shallow copy)
+ * @return {ve.dm.MetaItem[]} Array of items in the group (shallow copy)
  */
 ve.dm.MetaList.prototype.getItemsInGroup = function ( group ) {
-	return ( this.groups[group] || [] ).slice( 0 );
+	return ( this.groups[ group ] || [] ).slice( 0 );
 };
 
 /**
@@ -327,7 +316,7 @@ ve.dm.MetaList.prototype.getItemsInGroup = function ( group ) {
  * This function returns a shallow copy, so the array isn't returned by reference but the items
  * themselves are.
  *
- * @returns {ve.dm.MetaItem[]} Array of items in the list
+ * @return {ve.dm.MetaItem[]} Array of items in the list
  */
 ve.dm.MetaList.prototype.getAllItems = function () {
 	return this.items.slice( 0 );
@@ -338,6 +327,7 @@ ve.dm.MetaList.prototype.getAllItems = function () {
  * metadata into the document.
  *
  * Pass a plain object rather than a MetaItem into this function unless you know what you're doing.
+ *
  * @param {Object|ve.dm.MetaItem} meta Metadata element (or MetaItem) to insert
  * @param {number} [offset] Offset to insert the new metadata, or undefined to add to the end
  * @param {number} [index] Index to insert the new metadata, or undefined to add to the end
@@ -360,6 +350,7 @@ ve.dm.MetaList.prototype.insertMeta = function ( meta, offset, index ) {
 /**
  * Remove a meta item from the document. This builds and processes a transaction that removes the
  * associated metadata from the document.
+ *
  * @param {ve.dm.MetaItem} item Item to remove
  */
 ve.dm.MetaList.prototype.removeMeta = function ( item ) {
@@ -384,13 +375,14 @@ ve.dm.MetaList.prototype.removeMeta = function ( item ) {
  * @fires insert
  */
 ve.dm.MetaList.prototype.addInsertedItem = function ( offset, index, item ) {
-	var group = item.getGroup(), at = this.findItem( offset, index, null, true );
+	var group = item.getGroup(),
+		at = this.findItem( offset, index, null, true );
 	this.items.splice( at, 0, item );
-	if ( this.groups[group] ) {
+	if ( this.groups[ group ] ) {
 		at = this.findItem( offset, index, group, true );
-		this.groups[group].splice( at, 0, item );
+		this.groups[ group ].splice( at, 0, item );
 	} else {
-		this.groups[group] = [ item ];
+		this.groups[ group ] = [ item ];
 	}
 	item.attach( this, offset, index );
 };
@@ -410,12 +402,12 @@ ve.dm.MetaList.prototype.deleteRemovedItem = function ( offset, index ) {
 	if ( at === null ) {
 		return;
 	}
-	item = this.items[at];
+	item = this.items[ at ];
 	group = item.getGroup();
 	this.items.splice( at, 1 );
 	at = this.findItem( offset, index, group );
 	if ( at !== null ) {
-		this.groups[group].splice( at, 1 );
+		this.groups[ group ].splice( at, 1 );
 	}
 	item.detach( this );
 	return item;

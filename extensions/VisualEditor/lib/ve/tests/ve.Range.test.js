@@ -1,14 +1,14 @@
 /*!
  * VisualEditor Range tests.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 QUnit.module( 've.Range' );
 
 /* Tests */
 
-QUnit.test( 'Basic usage (clone, isCollapsed, isBackwards, getLength, equals, equalsSelection, containsOffset, containsRange)', 26, function ( assert ) {
+QUnit.test( 'Basic usage (clone, isCollapsed, isBackwards, getLength, equals, equalsSelection, containsOffset, containsRange)', 28, function ( assert ) {
 	var range = new ve.Range( 100, 200 );
 
 	assert.strictEqual( range.isCollapsed(), false );
@@ -22,8 +22,9 @@ QUnit.test( 'Basic usage (clone, isCollapsed, isBackwards, getLength, equals, eq
 	assert.strictEqual( range.containsOffset( 199 ), true, 'contains 199' );
 	assert.strictEqual( range.containsOffset( 200 ), false, 'doesn\'t contain 200' );
 	assert.strictEqual( range.containsRange( new ve.Range( 99, 100 ) ), false, 'doesn\'t contain 99, 100' );
-	assert.strictEqual( range.containsRange( new ve.Range( 100, 199 ) ), true, 'contains 100, 199' );
-	assert.strictEqual( range.containsRange( new ve.Range( 100, 200 ) ), false, 'doesn\'t contain 100, 200' );
+	assert.strictEqual( range.containsRange( new ve.Range( 100, 199 ) ), true, 'contains 101, 199' );
+	assert.strictEqual( range.containsRange( range ), true, 'contains itself' );
+	assert.strictEqual( range.containsRange( new ve.Range( 100, 201 ) ), false, 'doesn\'t contain 100, 201' );
 
 	range = new ve.Range( 200, 100 );
 	assert.strictEqual( range.isCollapsed(), false );
@@ -34,8 +35,9 @@ QUnit.test( 'Basic usage (clone, isCollapsed, isBackwards, getLength, equals, eq
 	assert.strictEqual( range.containsOffset( 199 ), true, 'contains 199' );
 	assert.strictEqual( range.containsOffset( 200 ), false, 'doesn\'t contain 200' );
 	assert.strictEqual( range.containsRange( new ve.Range( 99, 100 ) ), false, 'doesn\'t contain 99, 100' );
-	assert.strictEqual( range.containsRange( new ve.Range( 100, 199 ) ), true, 'contains 100, 199' );
-	assert.strictEqual( range.containsRange( new ve.Range( 100, 200 ) ), false, 'doesn\'t contain 100, 200' );
+	assert.strictEqual( range.containsRange( new ve.Range( 100, 199 ) ), true, 'contains 101, 199' );
+	assert.strictEqual( range.containsRange( range ), true, 'contains itself' );
+	assert.strictEqual( range.containsRange( new ve.Range( 100, 201 ) ), false, 'doesn\'t contain 100, 201' );
 
 	range = new ve.Range( 100 );
 	assert.strictEqual( range.isCollapsed(), true );

@@ -1,7 +1,7 @@
 /*!
  * VisualEditor DataModel LeafNode tests.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 QUnit.module( 've.dm.LeafNode' );
@@ -38,6 +38,6 @@ QUnit.test( 'getAnnotations', 3, function ( assert ) {
 		node = new ve.dm.LeafNodeStub( element );
 	assert.deepEqual( node.getAnnotations(), [], 'undefined .annotations returns empty set' );
 	assert.strictEqual( element.annotations, undefined, 'no .annotations property added' );
-	element.annotations = [0];
-	assert.deepEqual( node.getAnnotations(), [0], 'annotations retrieve indexes when set' );
+	element.annotations = [ 0 ];
+	assert.deepEqual( node.getAnnotations(), [ 0 ], 'annotations retrieve indexes when set' );
 } );

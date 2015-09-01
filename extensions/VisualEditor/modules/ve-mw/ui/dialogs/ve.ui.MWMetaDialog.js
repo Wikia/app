@@ -1,7 +1,7 @@
 /*!
  * VisualEditor user interface MWMetaDialog class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2015 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -42,7 +42,7 @@ ve.ui.MWMetaDialog.static.actions = [
 	},
 	{
 		label: OO.ui.deferMsg( 'visualeditor-dialog-action-cancel' ),
-		flags: 'safe'
+		flags: [ 'safe', 'back' ]
 	}
 ];
 
@@ -63,31 +63,15 @@ ve.ui.MWMetaDialog.prototype.initialize = function () {
 	ve.ui.MWMetaDialog.super.prototype.initialize.call( this );
 
 	// Properties
-	this.panels = new OO.ui.StackLayout( { $: this.$ } );
-	this.bookletLayout = new OO.ui.BookletLayout( { $: this.$, outlined: true } );
+	this.panels = new OO.ui.StackLayout();
+	this.bookletLayout = new OO.ui.BookletLayout( { outlined: true } );
 	this.settingsPage = new ve.ui.MWSettingsPage(
 		'settings',
-		{
-			$: this.$,
-			$overlay: this.$overlay
-		}
+		{ $overlay: this.$overlay }
 	);
-	this.advancedSettingsPage = new ve.ui.MWAdvancedSettingsPage(
-		'advancedSettings',
-		{ $: this.$ }
-	);
-	this.categoriesPage = new ve.ui.MWCategoriesPage(
-		'categories',
-		{
-			$: this.$,
-			$overlay: this.$overlay,
-			$popupOverlay: this.$innerOverlay
-		}
-	);
-	this.languagesPage = new ve.ui.MWLanguagesPage(
-		'languages',
-		{ $: this.$ }
-	);
+	this.advancedSettingsPage = new ve.ui.MWAdvancedSettingsPage( 'advancedSettings' );
+	this.categoriesPage = new ve.ui.MWCategoriesPage( 'categories', { $overlay: this.$overlay } );
+	this.languagesPage = new ve.ui.MWLanguagesPage( 'languages' );
 
 	// Initialization
 	this.$body.append( this.panels.$element );

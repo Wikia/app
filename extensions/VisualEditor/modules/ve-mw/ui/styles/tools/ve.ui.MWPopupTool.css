@@ -1,13 +1,18 @@
 /*!
  * VisualEditor MediaWiki UserInterface popup tool styles.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2015 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
+
+.ve-ui-mwPopupTool .oo-ui-popupWidget-head {
+	font-weight: bold;
+}
 
 .ve-ui-mwNoticesPopupTool-items,
 .ve-ui-mwHelpPopupTool-items {
 	padding: 0.5em 1em;
+	line-height: 1.6em;
 }
 
 .ve-ui-mwNoticesPopupTool-items > div:not(:first-child),

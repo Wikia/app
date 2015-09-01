@@ -1,7 +1,7 @@
 /*!
  * VisualEditor UserInterface IndentationAction class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 /**
@@ -42,7 +42,7 @@ ve.ui.IndentationAction.static.methods = [ 'increase', 'decrease' ];
  * TODO: Refactor functionality into {ve.dm.SurfaceFragment}.
  *
  * @method
- * @returns {boolean} Indentation increase occurred
+ * @return {boolean} Indentation increase occurred
  */
 ve.ui.IndentationAction.prototype.increase = function () {
 	var i, group, groups,
@@ -60,7 +60,7 @@ ve.ui.IndentationAction.prototype.increase = function () {
 
 	// Build fragments from groups (we need their ranges since the nodes will be rebuilt on change)
 	for ( i = 0; i < groups.length; i++ ) {
-		group = groups[i];
+		group = groups[ i ];
 		if ( group.grandparent && group.grandparent.getType() === 'list' ) {
 			fragments.push( surfaceModel.getLinearFragment( group.parent.getRange(), true ) );
 			increased = true;
@@ -70,7 +70,7 @@ ve.ui.IndentationAction.prototype.increase = function () {
 	// Process each fragment (their ranges are automatically adjusted on change)
 	for ( i = 0; i < fragments.length; i++ ) {
 		this.indentListItem(
-			documentModel.getBranchNodeFromOffset( fragments[i].getSelection().getRange().start )
+			documentModel.getBranchNodeFromOffset( fragments[ i ].getSelection().getRange().start )
 		);
 	}
 
@@ -85,7 +85,7 @@ ve.ui.IndentationAction.prototype.increase = function () {
  * TODO: Refactor functionality into {ve.dm.SurfaceFragment}.
  *
  * @method
- * @returns {boolean} Indentation decrease occurred
+ * @return {boolean} Indentation decrease occurred
  */
 ve.ui.IndentationAction.prototype.decrease = function () {
 	var i, group, groups,
@@ -103,13 +103,13 @@ ve.ui.IndentationAction.prototype.decrease = function () {
 
 	// Build fragments from groups (we need their ranges since the nodes will be rebuilt on change)
 	for ( i = 0; i < groups.length; i++ ) {
-		group = groups[i];
+		group = groups[ i ];
 		if ( group.grandparent && group.grandparent.getType() === 'list' ) {
 			fragments.push( surfaceModel.getLinearFragment( group.parent.getRange(), true ) );
 			decreased = true;
 		} else if ( group.parent && group.parent.getType() === 'list' ) {
 			// In a slug, the node will be the listItem.
-			fragments.push( surfaceModel.getLinearFragment( group.nodes[0].getRange(), true ) );
+			fragments.push( surfaceModel.getLinearFragment( group.nodes[ 0 ].getRange(), true ) );
 			decreased = true;
 		}
 
@@ -118,7 +118,7 @@ ve.ui.IndentationAction.prototype.decrease = function () {
 	// Process each fragment (their ranges are automatically adjusted on change)
 	for ( i = 0; i < fragments.length; i++ ) {
 		this.unindentListItem(
-			documentModel.getBranchNodeFromOffset( fragments[i].getSelection().getRange().start )
+			documentModel.getBranchNodeFromOffset( fragments[ i ].getSelection().getRange().start )
 		);
 	}
 
@@ -137,6 +137,17 @@ ve.ui.IndentationAction.prototype.decrease = function () {
  * @throws {Error} listItem must be a ve.dm.ListItemNode
  */
 ve.ui.IndentationAction.prototype.indentListItem = function ( listItem ) {
+	var tx, range,
+		surfaceModel = this.surface.getModel(),
+		documentModel = surfaceModel.getDocument(),
+		selection = surfaceModel.getSelection(),
+		listType,
+		listItemRange,
+		innerListItemRange,
+		outerListItemRange,
+		mergeStart,
+		mergeEnd;
+
 	if ( !( listItem instanceof ve.dm.ListItemNode ) ) {
 		throw new Error( 'listItem must be a ve.dm.ListItemNode' );
 	}
@@ -149,21 +160,12 @@ ve.ui.IndentationAction.prototype.indentListItem = function ( listItem ) {
 	 * 3. If this results in the wrapped list being preceded by another list,
 	 *    merge those lists.
 	 */
-	var tx, range,
-		surfaceModel = this.surface.getModel(),
-		documentModel = surfaceModel.getDocument(),
-		selection = surfaceModel.getSelection(),
-		listType = listItem.getParent().getAttribute( 'style' ),
-		listItemRange = listItem.getOuterRange(),
-		innerListItemRange,
-		outerListItemRange,
-		mergeStart,
-		mergeEnd;
-
 	if ( !( selection instanceof ve.dm.LinearSelection ) ) {
 		return;
 	}
 
+	listType = listItem.getParent().getAttribute( 'style' );
+	listItemRange = listItem.getOuterRange();
 	range = selection.getRange();
 
 	// CAREFUL: after initializing the variables above, we cannot use the model tree!
@@ -222,9 +224,21 @@ ve.ui.IndentationAction.prototype.indentListItem = function ( listItem ) {
  * @throws {Error} listItem must be a ve.dm.ListItemNode
  */
 ve.ui.IndentationAction.prototype.unindentListItem = function ( listItem ) {
+	var tx, i, length, children, child, splitListRange,
+		fragment, list, listElement, grandParentType, listItemRange,
+		surfaceModel = this.surface.getModel(),
+		documentModel = surfaceModel.getDocument();
+
 	if ( !( listItem instanceof ve.dm.ListItemNode ) ) {
 		throw new Error( 'listItem must be a ve.dm.ListItemNode' );
 	}
+
+	fragment = surfaceModel.getLinearFragment( listItem.getOuterRange(), true );
+	list = listItem.getParent();
+	listElement = list.getClonedElement();
+	grandParentType = list.getParent().getType();
+	listItemRange = listItem.getOuterRange();
+
 	/*
 	 * Outdenting a list item is done as follows:
 	 * 1. Split the parent list to isolate the listItem in its own list
@@ -237,15 +251,6 @@ ve.ui.IndentationAction.prototype.unindentListItem = function ( listItem ) {
 	 * 4. Unwrap the now-isolated listItem and the isolated list
 	 */
 	// TODO: Child list handling, gotta figure that out.
-	var tx, i, length, children, child, splitListRange,
-		surfaceModel = this.surface.getModel(),
-		documentModel = surfaceModel.getDocument(),
-		fragment = surfaceModel.getLinearFragment( listItem.getOuterRange(), true ),
-		list = listItem.getParent(),
-		listElement = list.getClonedElement(),
-		grandParentType = list.getParent().getType(),
-		listItemRange = listItem.getOuterRange();
-
 	// CAREFUL: after initializing the variables above, we cannot use the model tree!
 	// The first transaction will cause rebuilds so the nodes we have references to now
 	// will be detached and useless after the first transaction. Instead, inspect
@@ -288,7 +293,7 @@ ve.ui.IndentationAction.prototype.unindentListItem = function ( listItem ) {
 		// that they are not in a list
 		children = fragment.getSiblingNodes();
 		for ( i = 0, length = children.length; i < length; i++ ) {
-			child = children[i].node;
+			child = children[ i ].node;
 			if (
 				child.type === 'paragraph' &&
 				child.element.internal &&

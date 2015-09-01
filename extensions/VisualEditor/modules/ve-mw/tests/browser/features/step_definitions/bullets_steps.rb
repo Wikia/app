@@ -46,7 +46,7 @@ Then(/^a \# is added in front of input string in the diff view$/) do
     page.wait_until(10) do
       page.diff_view.include? "# #{@wikitext}"
     end
-    expect(page.diff_view).to match /^\# #{@wikitext}/
+    expect(page.diff_view).to match(/^\# #{@wikitext}/)
   end
 end
 
@@ -55,7 +55,7 @@ Then(/^a \* is added in front of input string in the diff view$/) do
     page.wait_until(10) do
       page.diff_view.include? "* #{@wikitext}"
     end
-    expect(page.diff_view).to match /^\* #{@wikitext}/
+    expect(page.diff_view).to match(/^\* #{@wikitext}/)
   end
 end
 
@@ -64,7 +64,7 @@ Then(/^a \#\# is added in front of input string in the diff view$/) do
     page.wait_until(10) do
       page.diff_view.include? "## #{@wikitext}"
     end
-    expect(page.diff_view).to match /^\#\# #{@wikitext}/
+    expect(page.diff_view).to match(/^\#\# #{@wikitext}/)
   end
 end
 
@@ -73,12 +73,12 @@ Then(/^a \*\* is added in front of input string in the diff view$/) do
     page.wait_until(10) do
       page.diff_view.include? "** #{@wikitext}"
     end
-    expect(page.diff_view).to match /^\*\* #{@wikitext}/
+    expect(page.diff_view).to match(/^\*\* #{@wikitext}/)
   end
 end
 
 Then(/^Decrease indentation should be enabled$/) do
-  expect(on(VisualEditorPage).decrease_indentation_element.class_name).not_to match /disabled/
+  expect(on(VisualEditorPage).decrease_indentation_element.class_name).not_to match(/disabled/)
 end
 
 Then(/^Decrease indentation should be disabled$/) do
@@ -86,7 +86,7 @@ Then(/^Decrease indentation should be disabled$/) do
 end
 
 Then(/^Increase indentation should be enabled$/) do
-  expect(on(VisualEditorPage).increase_indentation_element.class_name).not_to match /disabled/
+  expect(on(VisualEditorPage).increase_indentation_element.class_name).not_to match(/disabled/)
 end
 
 Then(/^Increase indentation should be disabled$/) do

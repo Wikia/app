@@ -1,7 +1,7 @@
 /*!
  * VisualEditor DataModel MWTransclusionContentModel class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2015 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -38,7 +38,7 @@ OO.inheritClass( ve.dm.MWTransclusionContentModel, ve.dm.MWTransclusionPartModel
 /**
  * Get content value.
  *
- * @returns {string} Content value
+ * @return {string} Content value
  */
 ve.dm.MWTransclusionContentModel.prototype.getValue = function () {
 	return this.value;

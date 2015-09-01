@@ -1,7 +1,7 @@
 /*!
  * VisualEditor UserInterface FormatAction class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 /**
@@ -63,15 +63,15 @@ ve.ui.FormatAction.prototype.convert = function ( type, attributes ) {
 	// things that are in lists to a heading or a pre, split the list
 	selected = doc.selectNodes( selection.getRange(), 'leaves' );
 	for ( i = 0, length = selected.length; i < length; i++ ) {
-		contentBranch = selected[i].node.isContent() ?
-			selected[i].node.getParent() :
-			selected[i].node;
+		contentBranch = selected[ i ].node.isContent() ?
+			selected[ i ].node.getParent() :
+			selected[ i ].node;
 
 		fragments.push( surfaceModel.getLinearFragment( contentBranch.getOuterRange(), true ) );
 	}
 
 	for ( i = 0, length = fragments.length; i < length; i++ ) {
-		fragments[i].isolateAndUnwrap( type );
+		fragments[ i ].isolateAndUnwrap( type );
 	}
 	selection = fragmentForSelection.getSelection();
 

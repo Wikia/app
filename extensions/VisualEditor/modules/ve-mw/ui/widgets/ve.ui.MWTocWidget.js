@@ -1,7 +1,7 @@
 /*!
  * VisualEditor UserInterface MWTocWidget class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2015 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -16,6 +16,8 @@
  * @param {Object} [config] Configuration options
  */
 ve.ui.MWTocWidget = function VeUiMWTocWidget( surface, config ) {
+	var widget = this;
+
 	// Parent constructor
 	OO.ui.Widget.call( this, config );
 
@@ -26,7 +28,7 @@ ve.ui.MWTocWidget = function VeUiMWTocWidget( surface, config ) {
 	// Topic level 0 lives inside of a toc item
 	this.topics = new ve.ui.MWTocItemWidget();
 	// Place for a cloned previous toc to live while rebuilding.
-	this.$tempTopics = this.$( '<ul>' );
+	this.$tempTopics = $( '<ul>' );
 	// Section keyed item map
 	this.items = {};
 	this.initialized = false;
@@ -35,16 +37,16 @@ ve.ui.MWTocWidget = function VeUiMWTocWidget( surface, config ) {
 	this.mwTOCDisable = false;
 
 	// TODO: fix i18n
-	this.toggle = {
+	this.tocToggle = {
 		hideMsg: ve.msg( 'hidetoc' ),
 		showMsg: ve.msg( 'showtoc' ),
-		$link: this.$( '<a class="internal" id="togglelink"></a>' ).text( ve.msg( 'hidetoc' ) ),
+		$link: $( '<a class="internal" id="togglelink"></a>' ).text( ve.msg( 'hidetoc' ) ),
 		open: true
 	};
 	this.$element.addClass( 'toc ve-ui-mwTocWidget' ).append(
-		this.$( '<div>' ).attr( 'id', 'toctitle' ).append(
-			this.$( '<h2>' ).text( ve.msg( 'toc' ) ),
-			this.$( '<span>' ).addClass( 'toctoggle' ).append( this.toggle.$link )
+		$( '<div>' ).attr( 'id', 'toctitle' ).append(
+			$( '<h2>' ).text( ve.msg( 'toc' ) ),
+			$( '<span>' ).addClass( 'toctoggle' ).append( this.tocToggle.$link )
 		),
 		this.topics.$group, this.$tempTopics
 	);
@@ -52,16 +54,17 @@ ve.ui.MWTocWidget = function VeUiMWTocWidget( surface, config ) {
 	// Integration ignores hiding the TOC widget, though continues to hide the real page TOC
 	$( '#bodyContent' ).append( this.$element );
 
-	this.toggle.$link.on( 'click', function () {
-		if ( this.toggle.open ) {
-			this.toggle.$link.text( this.toggle.showMsg );
-			this.toggle.open = false;
+	this.tocToggle.$link.on( 'click', function () {
+		if ( widget.tocToggle.open ) {
+			widget.tocToggle.$link.text( widget.tocToggle.showMsg );
+			widget.tocToggle.open = false;
 		} else {
-			this.toggle.$link.text( this.toggle.hideMsg );
-			this.toggle.open = true;
+			widget.tocToggle.$link.text( widget.tocToggle.hideMsg );
+			widget.tocToggle.open = true;
 		}
-		this.topics.$group.add( this.$tempTopics ).slideToggle();
-	}.bind( this ) );
+		// FIXME: We should really use CSS here
+		widget.topics.$group.add( widget.$tempTopics ).slideToggle();
+	} );
 
 	this.metaList.connect( this, {
 		insert: 'onMetaListInsert',
@@ -116,11 +119,11 @@ ve.ui.MWTocWidget.prototype.initFromMetaList = function () {
 		len = items.length;
 	if ( len > 0 ) {
 		for ( ; i < len; i++ ) {
-			if ( items[i] instanceof ve.dm.MWTOCForceMetaItem ) {
+			if ( items[ i ] instanceof ve.dm.MWTOCForceMetaItem ) {
 				this.mwTOCForce = true;
 			}
 			// Needs testing
-			if ( items[i] instanceof ve.dm.MWTOCDisableMetaItem ) {
+			if ( items[ i ] instanceof ve.dm.MWTOCDisableMetaItem ) {
 				this.mwTOCDisable = true;
 			}
 		}
@@ -134,11 +137,7 @@ ve.ui.MWTocWidget.prototype.initFromMetaList = function () {
 ve.ui.MWTocWidget.prototype.hideOrShow = function () {
 	// In MediaWiki if __FORCETOC__ is anywhere TOC is always displayed
 	// ... Even if there is a __NOTOC__ in the article
-	if ( !this.mwTOCDisable && ( this.mwTOCForce || this.topics.items.length >= 3 ) ) {
-		this.$element.show();
-	} else {
-		this.$element.hide();
-	}
+	this.toggle( !this.mwTOCDisable && ( this.mwTOCForce || this.topics.items.length >= 3 ) );
 };
 
 /**
@@ -146,15 +145,16 @@ ve.ui.MWTocWidget.prototype.hideOrShow = function () {
  * Rebuilds on both teardown and setup of a node, so rebuild is debounced
  */
 ve.ui.MWTocWidget.prototype.rebuild = ve.debounce( function () {
+	var widget = this;
 	// Only rebuild when initialized
 	if ( this.surface.mwTocWidget.initialized ) {
 		this.$tempTopics.append( this.topics.$group.children().clone() );
 		this.teardownItems();
 		// Build after transactions
 		setTimeout( function () {
-			this.build();
-			this.$tempTopics.empty();
-		}.bind( this ), 0 );
+			widget.build();
+			widget.$tempTopics.empty();
+		}, 0 );
 	}
 }, 0 );
 
@@ -164,8 +164,8 @@ ve.ui.MWTocWidget.prototype.rebuild = ve.debounce( function () {
 ve.ui.MWTocWidget.prototype.teardownItems = function () {
 	var item;
 	for ( item in this.items ) {
-		this.items[item].remove();
-		delete this.items[item];
+		this.items[ item ].remove();
+		delete this.items[ item ];
 	}
 	this.items = {};
 };
@@ -201,13 +201,13 @@ ve.ui.MWTocWidget.prototype.build = function () {
 		headingOuterRange,
 		ceNode;
 	for ( ; i < nodes.length; i++ ) {
-		if ( nodes[i].node.parent === previousHeadingNode ) {
+		if ( nodes[ i ].node.parent === previousHeadingNode ) {
 			// Duplicate heading
 			continue;
 		}
-		if ( nodes[i].node.parent.getType() === 'mwHeading' ) {
+		if ( nodes[ i ].node.parent.getType() === 'mwHeading' ) {
 			tocIndex++;
-			headingLevel = nodes[i].node.parent.getAttribute( 'level' );
+			headingLevel = nodes[ i ].node.parent.getAttribute( 'level' );
 			// MW TOC Generation
 			// The first heading will always be be a zero level topic, even heading levels > 2
 			// If heading level is 1 then it is definitely a zero level topic
@@ -245,7 +245,7 @@ ve.ui.MWTocWidget.prototype.build = function () {
 					} else if ( headingLevel < previousHeadingLevel && tocLevel !== 1 ) {
 						tocLevel--;
 						sectionPrefix.pop();
-						tocNumber = sectionPrefix[sectionPrefix.length - 1] + 1;
+						tocNumber = sectionPrefix[ sectionPrefix.length - 1 ] + 1;
 						sectionPrefix.pop();
 						sectionPrefix.push( tocNumber );
 					}
@@ -256,14 +256,14 @@ ve.ui.MWTocWidget.prototype.build = function () {
 			parentSectionArray.pop();
 			if ( parentSectionArray.length > 0 ) {
 				key = parentSectionArray.join( '.' );
-				parent = this.items[key];
+				parent = this.items[ key ];
 			} else {
 				// Topic level is zero
 				parent = this.topics;
 			}
 			// TODO: Cleanup config generation, merge local vars into config object
 			// Get CE node for the heading
-			headingOuterRange = nodes[i].nodeOuterRange;
+			headingOuterRange = nodes[ i ].nodeOuterRange;
 			ceNode = this.surface.getView().getDocument().getBranchNodeFromOffset( headingOuterRange.end );
 			config = {
 				node: ceNode,
@@ -272,13 +272,13 @@ ve.ui.MWTocWidget.prototype.build = function () {
 				tocLevel: tocLevel,
 				tocSection: tocSection,
 				sectionPrefix: sectionPrefix.join( '.' ),
-				insertIndex: sectionPrefix[sectionPrefix.length - 1]
+				insertIndex: sectionPrefix[ sectionPrefix.length - 1 ]
 			};
 			// Add item
-			this.items[sectionPrefix.join( '.' )] = new ve.ui.MWTocItemWidget( config );
-			config.parent.addItems( [this.items[sectionPrefix.join( '.' )]], config.insertIndex );
+			this.items[ sectionPrefix.join( '.' ) ] = new ve.ui.MWTocItemWidget( config );
+			config.parent.addItems( [ this.items[ sectionPrefix.join( '.' ) ] ], config.insertIndex );
 			previousHeadingLevel = headingLevel;
-			previousHeadingNode = nodes[i].node.parent;
+			previousHeadingNode = nodes[ i ].node.parent;
 		}
 	}
 	this.initialized = true;

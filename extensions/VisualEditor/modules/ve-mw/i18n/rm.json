@@ -95,6 +95,5 @@
 	"visualeditor-linkinspector-suggest-matching-page": "{{PLURAL:$1|Pagina correspundenta|Paginas correspundentas}}",
 	"visualeditor-linkinspector-suggest-new-page": "Nova pagina",
 	"visualeditor-parameter-search-unknown": "Parameter nunenconuschent",
-	"visualeditor-preference-core-label": "VisualEditor",
-	"visualeditor-dialog-media-insert-title": "Inserir datoteca multimediala"
+	"visualeditor-preference-core-label": "VisualEditor"
 }

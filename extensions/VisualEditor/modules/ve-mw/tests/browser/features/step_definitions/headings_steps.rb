@@ -30,6 +30,6 @@ When(/^I click Subheading4$/) do
   on(VisualEditorPage).subheading4_element.when_present.click
 end
 
-When(/^I click the down arrow on Headings interface$/) do
-  on(VisualEditorPage).downarrow_element.when_present.click
+When(/^I click the down arrow on the Headings menu$/) do
+  on(VisualEditorPage).format_indicator_down_element.when_present.click
 end

@@ -1,22 +1,30 @@
 /*!
  * VisualEditor standalone demo
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 /* Demo */
 
-.ve-demo-menu {
-	margin: 0 2em;
+.ve-demo-logo {
+	padding-right: 2.1em;
+}
+
+.ve-demo-targetToolbar {
+	padding-left: 2.5em;
+	padding-right: 2.5em;
+}
+
+.ve-demo-surfaceToolbar-edit {
 	padding-left: 0;
 	padding-right: 0;
 }
 
 .ve-demo-editor {
-	margin: 0 2em 2em 2em;
+	margin: 0 2.5em 2.5em 2.5em;
 }
 
-.ve-demo-editor > div > div:last-child {
+.ve-init-sa-target-surfaceWrapper > :last-child {
 	border-radius: 0 0 0.25em 0.25em;
 }
 
@@ -27,7 +35,7 @@
 
 /* Editor */
 
-.ve-ui-surface {
+.ve-init-sa-target-surfaceWrapper > .ve-ui-surface {
 	/* surface is used for positioning so use an inset-shadow border */
 	box-shadow: 0 0.25em 1.5em 0 #ddd, inset 0 0 0 1px #ccc;
 }
@@ -44,7 +52,7 @@
 	border-bottom-width: 1px;
 }
 
-.ve-ui-debugBar {
+.ve-init-sa-target-surfaceWrapper > .ve-ui-debugBar {
 	border: 1px solid #ccc;
 	border-top: 0;
 	box-shadow: 0 0.25em 1.5em 0 #ddd;

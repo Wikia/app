@@ -1,7 +1,7 @@
 /*!
  * VisualEditor DataModel DefinitionListItemNode class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 /**
@@ -36,7 +36,7 @@ ve.dm.DefinitionListItemNode.static.defaultAttributes = {
 ve.dm.DefinitionListItemNode.static.matchTagNames = [ 'dt', 'dd' ];
 
 ve.dm.DefinitionListItemNode.static.toDataElement = function ( domElements ) {
-	var style = domElements[0].nodeName.toLowerCase() === 'dt' ? 'term' : 'definition';
+	var style = domElements[ 0 ].nodeName.toLowerCase() === 'dt' ? 'term' : 'definition';
 	return { type: this.name, attributes: { style: style } };
 };
 

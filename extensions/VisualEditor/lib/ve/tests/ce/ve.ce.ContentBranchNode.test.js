@@ -1,7 +1,7 @@
 /*!
  * VisualEditor ContentEditable ContentBranchNode tests.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 QUnit.module( 've.ce.ContentBranchNode' );
@@ -26,9 +26,9 @@ QUnit.test( 'getRenderedContents', function ( assert ) {
 				msg: 'Bold text',
 				data: [
 					{ type: 'paragraph' },
-					['a', [ { type: 'textStyle/bold' } ]],
-					['b', [ { type: 'textStyle/bold' } ]],
-					['c', [ { type: 'textStyle/bold' } ]],
+					[ 'a', [ { type: 'textStyle/bold' } ] ],
+					[ 'b', [ { type: 'textStyle/bold' } ] ],
+					[ 'c', [ { type: 'textStyle/bold' } ] ],
 					{ type: '/paragraph' }
 				],
 				html: '<b>abc</b>'
@@ -37,9 +37,9 @@ QUnit.test( 'getRenderedContents', function ( assert ) {
 				msg: 'Italic text',
 				data: [
 					{ type: 'paragraph' },
-					['a', [ { type: 'textStyle/italic' } ]],
-					['b', [ { type: 'textStyle/italic' } ]],
-					['c', [ { type: 'textStyle/italic' } ]],
+					[ 'a', [ { type: 'textStyle/italic' } ] ],
+					[ 'b', [ { type: 'textStyle/italic' } ] ],
+					[ 'c', [ { type: 'textStyle/italic' } ] ],
 					{ type: '/paragraph' }
 				],
 				html: '<i>abc</i>'
@@ -48,9 +48,9 @@ QUnit.test( 'getRenderedContents', function ( assert ) {
 				msg: 'Underline text',
 				data: [
 					{ type: 'paragraph' },
-					['a', [ { type: 'textStyle/underline' } ]],
-					['b', [ { type: 'textStyle/underline' } ]],
-					['c', [ { type: 'textStyle/underline' } ]],
+					[ 'a', [ { type: 'textStyle/underline' } ] ],
+					[ 'b', [ { type: 'textStyle/underline' } ] ],
+					[ 'c', [ { type: 'textStyle/underline' } ] ],
 					{ type: '/paragraph' }
 				],
 				html: '<u>abc</u>'
@@ -59,9 +59,9 @@ QUnit.test( 'getRenderedContents', function ( assert ) {
 				msg: 'Strikethrough text',
 				data: [
 					{ type: 'paragraph' },
-					['a', [ { type: 'textStyle/strikethrough' } ]],
-					['b', [ { type: 'textStyle/strikethrough' } ]],
-					['c', [ { type: 'textStyle/strikethrough' } ]],
+					[ 'a', [ { type: 'textStyle/strikethrough' } ] ],
+					[ 'b', [ { type: 'textStyle/strikethrough' } ] ],
+					[ 'c', [ { type: 'textStyle/strikethrough' } ] ],
 					{ type: '/paragraph' }
 				],
 				html: '<s>abc</s>'
@@ -70,9 +70,9 @@ QUnit.test( 'getRenderedContents', function ( assert ) {
 				msg: 'Small text',
 				data: [
 					{ type: 'paragraph' },
-					['a', [ { type: 'textStyle/small' } ]],
-					['b', [ { type: 'textStyle/small' } ]],
-					['c', [ { type: 'textStyle/small' } ]],
+					[ 'a', [ { type: 'textStyle/small' } ] ],
+					[ 'b', [ { type: 'textStyle/small' } ] ],
+					[ 'c', [ { type: 'textStyle/small' } ] ],
 					{ type: '/paragraph' }
 				],
 				html: '<small>abc</small>'
@@ -81,9 +81,9 @@ QUnit.test( 'getRenderedContents', function ( assert ) {
 				msg: 'Big text',
 				data: [
 					{ type: 'paragraph' },
-					['a', [ { type: 'textStyle/big' } ]],
-					['b', [ { type: 'textStyle/big' } ]],
-					['c', [ { type: 'textStyle/big' } ]],
+					[ 'a', [ { type: 'textStyle/big' } ] ],
+					[ 'b', [ { type: 'textStyle/big' } ] ],
+					[ 'c', [ { type: 'textStyle/big' } ] ],
 					{ type: '/paragraph' }
 				],
 				html: '<big>abc</big>'
@@ -92,9 +92,9 @@ QUnit.test( 'getRenderedContents', function ( assert ) {
 				msg: 'Strong text',
 				data: [
 					{ type: 'paragraph' },
-					['a', [ { type: 'textStyle/bold', attributes: { nodeName: 'strong' } } ]],
-					['b', [ { type: 'textStyle/bold', attributes: { nodeName: 'strong' } } ]],
-					['c', [ { type: 'textStyle/bold', attributes: { nodeName: 'strong' } } ]],
+					[ 'a', [ { type: 'textStyle/bold', attributes: { nodeName: 'strong' } } ] ],
+					[ 'b', [ { type: 'textStyle/bold', attributes: { nodeName: 'strong' } } ] ],
+					[ 'c', [ { type: 'textStyle/bold', attributes: { nodeName: 'strong' } } ] ],
 					{ type: '/paragraph' }
 				],
 				html: '<strong>abc</strong>'
@@ -103,9 +103,9 @@ QUnit.test( 'getRenderedContents', function ( assert ) {
 				msg: 'Emphasized text',
 				data: [
 					{ type: 'paragraph' },
-					['a', [ { type: 'textStyle/italic', attributes: { nodeName: 'em' } } ]],
-					['b', [ { type: 'textStyle/italic', attributes: { nodeName: 'em' } } ]],
-					['c', [ { type: 'textStyle/italic', attributes: { nodeName: 'em' } } ]],
+					[ 'a', [ { type: 'textStyle/italic', attributes: { nodeName: 'em' } } ] ],
+					[ 'b', [ { type: 'textStyle/italic', attributes: { nodeName: 'em' } } ] ],
+					[ 'c', [ { type: 'textStyle/italic', attributes: { nodeName: 'em' } } ] ],
 					{ type: '/paragraph' }
 				],
 				html: '<em>abc</em>'
@@ -114,9 +114,9 @@ QUnit.test( 'getRenderedContents', function ( assert ) {
 				msg: 'Superscript text',
 				data: [
 					{ type: 'paragraph' },
-					['a', [ { type: 'textStyle/superscript' } ]],
-					['b', [ { type: 'textStyle/superscript' } ]],
-					['c', [ { type: 'textStyle/superscript' } ]],
+					[ 'a', [ { type: 'textStyle/superscript' } ] ],
+					[ 'b', [ { type: 'textStyle/superscript' } ] ],
+					[ 'c', [ { type: 'textStyle/superscript' } ] ],
 					{ type: '/paragraph' }
 				],
 				html: '<sup>abc</sup>'
@@ -125,9 +125,9 @@ QUnit.test( 'getRenderedContents', function ( assert ) {
 				msg: 'Subscript text',
 				data: [
 					{ type: 'paragraph' },
-					['a', [ { type: 'textStyle/subscript' } ]],
-					['b', [ { type: 'textStyle/subscript' } ]],
-					['c', [ { type: 'textStyle/subscript' } ]],
+					[ 'a', [ { type: 'textStyle/subscript' } ] ],
+					[ 'b', [ { type: 'textStyle/subscript' } ] ],
+					[ 'c', [ { type: 'textStyle/subscript' } ] ],
 					{ type: '/paragraph' }
 				],
 				html: '<sub>abc</sub>'
@@ -136,9 +136,9 @@ QUnit.test( 'getRenderedContents', function ( assert ) {
 				msg: 'Code text',
 				data: [
 					{ type: 'paragraph' },
-					['a', [ { type: 'textStyle/code' } ]],
-					['b', [ { type: 'textStyle/code' } ]],
-					['c', [ { type: 'textStyle/code' } ]],
+					[ 'a', [ { type: 'textStyle/code' } ] ],
+					[ 'b', [ { type: 'textStyle/code' } ] ],
+					[ 'c', [ { type: 'textStyle/code' } ] ],
 					{ type: '/paragraph' }
 				],
 				html: '<code>abc</code>'
@@ -147,9 +147,9 @@ QUnit.test( 'getRenderedContents', function ( assert ) {
 				msg: 'Teletype text',
 				data: [
 					{ type: 'paragraph' },
-					['a', [ { type: 'textStyle/code', attributes: { nodeName: 'tt' } } ]],
-					['b', [ { type: 'textStyle/code', attributes: { nodeName: 'tt' } } ]],
-					['c', [ { type: 'textStyle/code', attributes: { nodeName: 'tt' } } ]],
+					[ 'a', [ { type: 'textStyle/code', attributes: { nodeName: 'tt' } } ] ],
+					[ 'b', [ { type: 'textStyle/code', attributes: { nodeName: 'tt' } } ] ],
+					[ 'c', [ { type: 'textStyle/code', attributes: { nodeName: 'tt' } } ] ],
 					{ type: '/paragraph' }
 				],
 				html: '<tt>abc</tt>'
@@ -158,9 +158,9 @@ QUnit.test( 'getRenderedContents', function ( assert ) {
 				msg: 'Bold character, plain character, italic character',
 				data: [
 					{ type: 'paragraph' },
-					['a', [ { type: 'textStyle/bold' } ]],
+					[ 'a', [ { type: 'textStyle/bold' } ] ],
 					'b',
-					['c', [ { type: 'textStyle/italic' } ]],
+					[ 'c', [ { type: 'textStyle/italic' } ] ],
 					{ type: '/paragraph' }
 				],
 				html: '<b>a</b>b<i>c</i>'
@@ -169,8 +169,8 @@ QUnit.test( 'getRenderedContents', function ( assert ) {
 				msg: 'Comparable annotations: strong, bold',
 				data: [
 					{ type: 'paragraph' },
-					['a', [ { type: 'textStyle/bold', attributes: { nodeName: 'strong' } } ]],
-					['b', [ { type: 'textStyle/bold' } ]],
+					[ 'a', [ { type: 'textStyle/bold', attributes: { nodeName: 'strong' } } ] ],
+					[ 'b', [ { type: 'textStyle/bold' } ] ],
 					{ type: '/paragraph' }
 				],
 				html: '<strong>ab</strong>'
@@ -179,21 +179,21 @@ QUnit.test( 'getRenderedContents', function ( assert ) {
 				msg: 'Bold, italic and underlined text (same order)',
 				data: [
 					{ type: 'paragraph' },
-					['a', [
+					[ 'a', [
 						{ type: 'textStyle/bold' },
 						{ type: 'textStyle/italic' },
 						{ type: 'textStyle/underline' }
-					]],
-					['b', [
+					] ],
+					[ 'b', [
 						{ type: 'textStyle/bold' },
 						{ type: 'textStyle/italic' },
 						{ type: 'textStyle/underline' }
-					]],
-					['c', [
+					] ],
+					[ 'c', [
 						{ type: 'textStyle/bold' },
 						{ type: 'textStyle/italic' },
 						{ type: 'textStyle/underline' }
-					]],
+					] ],
 					{ type: '/paragraph' }
 				],
 				html: '<b><i><u>abc</u></i></b>'
@@ -202,21 +202,21 @@ QUnit.test( 'getRenderedContents', function ( assert ) {
 				msg: 'Varying order in consecutive range doesn\'t affect rendering',
 				data: [
 					{ type: 'paragraph' },
-					['a', [
+					[ 'a', [
 						{ type: 'textStyle/bold' },
 						{ type: 'textStyle/italic' },
 						{ type: 'textStyle/underline' }
-					]],
-					['b', [
+					] ],
+					[ 'b', [
 						{ type: 'textStyle/italic' },
 						{ type: 'textStyle/underline' },
 						{ type: 'textStyle/bold' }
-					]],
-					['c', [
+					] ],
+					[ 'c', [
 						{ type: 'textStyle/underline' },
 						{ type: 'textStyle/bold' },
 						{ type: 'textStyle/italic' }
-					]],
+					] ],
 					{ type: '/paragraph' }
 				],
 				html: '<b><i><u>abc</u></i></b>'
@@ -225,17 +225,17 @@ QUnit.test( 'getRenderedContents', function ( assert ) {
 				msg: 'Varying order in non-consecutive range does affect rendering',
 				data: [
 					{ type: 'paragraph' },
-					['a', [
+					[ 'a', [
 						{ type: 'textStyle/bold' },
 						{ type: 'textStyle/italic' },
 						{ type: 'textStyle/underline' }
-					]],
+					] ],
 					'b',
-					['c', [
+					[ 'c', [
 						{ type: 'textStyle/underline' },
 						{ type: 'textStyle/bold' },
 						{ type: 'textStyle/italic' }
-					]],
+					] ],
 					{ type: '/paragraph' }
 				],
 				html: '<b><i><u>a</u></i></b>b<u><b><i>c</i></b></u>'
@@ -247,21 +247,21 @@ QUnit.test( 'getRenderedContents', function ( assert ) {
 					'a',
 					'b',
 					'c',
-					['d', [
+					[ 'd', [
 						{ type: 'textStyle/bold' },
 						{ type: 'textStyle/italic' },
 						{ type: 'textStyle/underline' }
-					]],
-					['e', [
+					] ],
+					[ 'e', [
 						{ type: 'textStyle/italic' },
 						{ type: 'textStyle/underline' },
 						{ type: 'textStyle/bold' }
-					]],
-					['f', [
+					] ],
+					[ 'f', [
 						{ type: 'textStyle/underline' },
 						{ type: 'textStyle/bold' },
 						{ type: 'textStyle/italic' }
-					]],
+					] ],
 					'g',
 					'h',
 					'i',
@@ -276,20 +276,20 @@ QUnit.test( 'getRenderedContents', function ( assert ) {
 					'a',
 					'b',
 					'c',
-					['d', [
+					[ 'd', [
 						{ type: 'textStyle/bold' },
 						{ type: 'textStyle/italic' },
 						{ type: 'textStyle/underline' }
-					]],
-					['e', [
+					] ],
+					[ 'e', [
 						{ type: 'textStyle/italic' },
 						{ type: 'textStyle/underline' }
-					]],
-					['f', [
+					] ],
+					[ 'f', [
 						{ type: 'textStyle/underline' },
 						{ type: 'textStyle/bold' },
 						{ type: 'textStyle/italic' }
-					]],
+					] ],
 					'g',
 					'h',
 					'i',
@@ -304,20 +304,20 @@ QUnit.test( 'getRenderedContents', function ( assert ) {
 					'a',
 					'b',
 					'c',
-					['d', [
+					[ 'd', [
 						{ type: 'textStyle/italic' },
 						{ type: 'textStyle/underline' },
 						{ type: 'textStyle/bold' }
-					]],
-					['e', [
+					] ],
+					[ 'e', [
 						{ type: 'textStyle/italic' },
 						{ type: 'textStyle/underline' }
-					]],
-					['f', [
+					] ],
+					[ 'f', [
 						{ type: 'textStyle/underline' },
 						{ type: 'textStyle/bold' },
 						{ type: 'textStyle/italic' }
-					]],
+					] ],
 					'g',
 					'h',
 					'i',
@@ -332,19 +332,19 @@ QUnit.test( 'getRenderedContents', function ( assert ) {
 					'a',
 					'b',
 					'c',
-					['d', [
+					[ 'd', [
 						{ type: 'textStyle/italic' },
 						{ type: 'textStyle/underline' },
 						{ type: 'textStyle/bold' }
-					]],
-					['e', [
+					] ],
+					[ 'e', [
 						{ type: 'textStyle/bold' },
 						{ type: 'textStyle/underline' }
-					]],
-					['f', [
+					] ],
+					[ 'f', [
 						{ type: 'textStyle/underline' },
 						{ type: 'textStyle/bold' }
-					]],
+					] ],
 					'g',
 					'h',
 					'i',
@@ -355,10 +355,10 @@ QUnit.test( 'getRenderedContents', function ( assert ) {
 		];
 	QUnit.expect( cases.length );
 	for ( i = 0, len = cases.length; i < len; i++ ) {
-		doc = new ve.dm.Document( ve.dm.example.preprocessAnnotations( cases[i].data ) );
-		$wrapper = $( new ve.ce.ParagraphNode( doc.getDocumentNode().getChildren()[0] ).getRenderedContents() );
+		doc = new ve.dm.Document( ve.dm.example.preprocessAnnotations( cases[ i ].data ) );
+		$wrapper = $( new ve.ce.ParagraphNode( doc.getDocumentNode().getChildren()[ 0 ] ).getRenderedContents() );
 		// HACK strip out all the class="ve-ce-textStyleAnnotation ve-ce-textStyleBoldAnnotation" crap
 		$wrapper.find( '.ve-ce-textStyleAnnotation' ).removeAttr( 'class' );
-		assert.equalDomElement( $wrapper[0], $( '<div>' ).html( cases[i].html )[0], cases[i].msg );
+		assert.equalDomElement( $wrapper[ 0 ], $( '<div>' ).html( cases[ i ].html )[ 0 ], cases[ i ].msg );
 	}
 } );

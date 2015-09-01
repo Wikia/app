@@ -1,7 +1,7 @@
 /*!
  * VisualEditor DataModel MWReferenceNode class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2015 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -25,7 +25,8 @@ ve.dm.MWReferenceNode = function VeDmMWReferenceNode() {
 	// Event handlers
 	this.connect( this, {
 		root: 'onRoot',
-		unroot: 'onUnroot'
+		unroot: 'onUnroot',
+		attributeChange: 'onAttributeChange'
 	} );
 };
 
@@ -43,6 +44,8 @@ ve.dm.MWReferenceNode.static.matchTagNames = null;
 
 ve.dm.MWReferenceNode.static.matchRdfaTypes = [ 'mw:Extension/ref' ];
 
+ve.dm.MWReferenceNode.static.allowedRdfaTypes = [ 'dc:references' ];
+
 ve.dm.MWReferenceNode.static.isContent = true;
 
 ve.dm.MWReferenceNode.static.blacklistedAnnotationTypes = [ 'link' ];
@@ -56,24 +59,34 @@ ve.dm.MWReferenceNode.static.blacklistedAnnotationTypes = [ 'link' ];
 ve.dm.MWReferenceNode.static.listKeyRegex = /^(auto|literal)\/(.*)$/;
 
 ve.dm.MWReferenceNode.static.toDataElement = function ( domElements, converter ) {
-	var dataElement,
-		mwDataJSON = domElements[0].getAttribute( 'data-mw' ),
-		mwData = mwDataJSON ? JSON.parse( mwDataJSON ) : {},
-		body = mwData.body ? mwData.body.html : '',
-		refGroup = mwData.attrs && mwData.attrs.group || '',
-		listGroup = this.name + '/' + refGroup,
-		autoKeyed = !mwData.attrs || mwData.attrs.name === undefined,
-		listKey = autoKeyed ? 'auto/' + converter.internalList.getNextUniqueNumber() : 'literal/' + mwData.attrs.name,
-		queueResult = converter.internalList.queueItemHtml( listGroup, listKey, body ),
-		listIndex = queueResult.index,
-		contentsUsed = ( body !== '' && queueResult.isNew );
+	var dataElement, mwDataJSON, mwData, reflistItemId, body, refGroup, listGroup, autoKeyed, listKey, queueResult, listIndex, contentsUsed;
+
+	function getReflistItemHtml( id ) {
+		var elem = converter.getHtmlDocument().getElementById( id );
+		return elem && elem.innerHTML || '';
+	}
+
+	mwDataJSON = domElements[ 0 ].getAttribute( 'data-mw' );
+	mwData = mwDataJSON ? JSON.parse( mwDataJSON ) : {};
+	reflistItemId = mwData.body && mwData.body.id;
+	body = ( mwData.body && mwData.body.html ) ||
+		( reflistItemId && getReflistItemHtml( reflistItemId ) ) ||
+		'';
+	refGroup = mwData.attrs && mwData.attrs.group || '';
+	listGroup = this.name + '/' + refGroup;
+	autoKeyed = !mwData.attrs || mwData.attrs.name === undefined;
+	listKey = autoKeyed ?
+		'auto/' + converter.internalList.getNextUniqueNumber() :
+		'literal/' + mwData.attrs.name;
+	queueResult = converter.internalList.queueItemHtml( listGroup, listKey, body );
+	listIndex = queueResult.index;
+	contentsUsed = ( body !== '' && queueResult.isNew );
 
 	dataElement = {
 		type: this.name,
 		attributes: {
 			mw: mwData,
 			originalMw: mwDataJSON,
-			childDomElements: ve.copy( Array.prototype.slice.apply( domElements[0].childNodes ) ),
 			listIndex: listIndex,
 			listGroup: listGroup,
 			listKey: listKey,
@@ -81,14 +94,19 @@ ve.dm.MWReferenceNode.static.toDataElement = function ( domElements, converter )
 			contentsUsed: contentsUsed
 		}
 	};
+	if ( reflistItemId ) {
+		dataElement.attributes.refListItemId = reflistItemId;
+	}
 	return dataElement;
 };
 
 ve.dm.MWReferenceNode.static.toDomElements = function ( dataElement, doc, converter ) {
 	var itemNodeHtml, originalHtml, mwData, i, iLen, keyedNodes, setContents, contentsAlreadySet,
-		originalMw, childDomElements, listKeyParts, name,
+		originalMw, listKeyParts, name,
+		isForClipboard = converter.isForClipboard(),
 		el = doc.createElement( 'span' ),
 		itemNodeWrapper = doc.createElement( 'div' ),
+		originalHtmlWrapper = doc.createElement( 'div' ),
 		itemNode = converter.internalList.getItemNode( dataElement.attributes.listIndex ),
 		itemNodeRange = itemNode.getRange();
 
@@ -101,7 +119,7 @@ ve.dm.MWReferenceNode.static.toDomElements = function ( dataElement, doc, conver
 
 	keyedNodes = converter.internalList
 		.getNodeGroup( dataElement.attributes.listGroup )
-		.keyedNodes[dataElement.attributes.listKey];
+		.keyedNodes[ dataElement.attributes.listKey ];
 
 	if ( setContents ) {
 		// Check if a previous node has already set the content. If so, we don't overwrite this
@@ -109,10 +127,10 @@ ve.dm.MWReferenceNode.static.toDomElements = function ( dataElement, doc, conver
 		contentsAlreadySet = false;
 		if ( keyedNodes ) {
 			for ( i = 0, iLen = keyedNodes.length; i < iLen; i++ ) {
-				if ( keyedNodes[i].element === dataElement ) {
+				if ( keyedNodes[ i ].element === dataElement ) {
 					break;
 				}
-				if ( keyedNodes[i].element.attributes.contentsUsed ) {
+				if ( keyedNodes[ i ].element.attributes.contentsUsed ) {
 					contentsAlreadySet = true;
 					break;
 				}
@@ -123,12 +141,12 @@ ve.dm.MWReferenceNode.static.toDomElements = function ( dataElement, doc, conver
 		// then we attach the contents to the first reference with this key
 
 		// Check that this is the first reference with its key
-		if ( keyedNodes && dataElement === keyedNodes[0].element ) {
+		if ( keyedNodes && dataElement === keyedNodes[ 0 ].element ) {
 			setContents = true;
 			// Check no other reference originally defined the contents
 			// As this is keyedNodes[0] we can start at 1
 			for ( i = 1, iLen = keyedNodes.length; i < iLen; i++ ) {
-				if ( keyedNodes[i].element.attributes.contentsUsed ) {
+				if ( keyedNodes[ i ].element.attributes.contentsUsed ) {
 					setContents = false;
 					break;
 				}
@@ -141,17 +159,27 @@ ve.dm.MWReferenceNode.static.toDomElements = function ( dataElement, doc, conver
 			itemNode.getDocument().getFullData( itemNodeRange, true ),
 			itemNodeWrapper
 		);
-		itemNodeHtml = $( itemNodeWrapper ).html(); // Returns '' if itemNodeWrapper is empty
-		originalHtml = ve.getProp( mwData, 'body', 'html' ) || '';
-		// Only set body.html if itemNodeHtml and originalHtml are actually different
-		if ( !$( '<div>' ).html( originalHtml ).get( 0 ).isEqualNode( itemNodeWrapper ) ) {
+		itemNodeHtml = itemNodeWrapper.innerHTML; // Returns '' if itemNodeWrapper is empty
+		originalHtml = ve.getProp( mwData, 'body', 'html' ) ||
+			( ve.getProp( mwData, 'body', 'id' ) !== undefined && itemNode.getAttribute( 'originalHtml' ) ) ||
+			'';
+		originalHtmlWrapper.innerHTML = originalHtml;
+		// Only set body.html if itemNodeHtml and originalHtml are actually different,
+		// or we are writing the clipboard for use in another VE instance
+		if ( isForClipboard || !originalHtmlWrapper.isEqualNode( itemNodeWrapper ) ) {
 			ve.setProp( mwData, 'body', 'html', itemNodeHtml );
 		}
 	}
 
+	// If we have no internal item data for this reference, don't let it get pasted into
+	// another VE document. T110479
+	if ( isForClipboard && itemNodeRange.isCollapsed() ) {
+		el.setAttribute( 'data-ve-ignore', 'true' );
+	}
+
 	// Generate name
 	listKeyParts = dataElement.attributes.listKey.match( this.listKeyRegex );
-	if ( listKeyParts[1] === 'auto' ) {
+	if ( listKeyParts[ 1 ] === 'auto' ) {
 		// Only render a name if this key was reused
 		if ( keyedNodes.length > 1 ) {
 			// Allocate a unique list key, then strip the 'literal/'' prefix
@@ -166,7 +194,7 @@ ve.dm.MWReferenceNode.static.toDomElements = function ( dataElement, doc, conver
 		}
 	} else {
 		// Use literal name
-		name = listKeyParts[2];
+		name = listKeyParts[ 2 ];
 	}
 	// Set name
 	if ( name !== undefined ) {
@@ -180,16 +208,16 @@ ve.dm.MWReferenceNode.static.toDomElements = function ( dataElement, doc, conver
 		delete mwData.attrs.refGroup;
 	}
 
-	// If mwAttr and originalMw are the same, use originalMw to prevent reserialization.
+	// If mwAttr and originalMw are the same, use originalMw to prevent reserialization,
+	// unless we are writing the clipboard for use in another VE instance
 	// Reserialization has the potential to reorder keys and so change the DOM unnecessarily
 	originalMw = dataElement.attributes.originalMw;
-	if ( originalMw && ve.compare( mwData, JSON.parse( originalMw ) ) ) {
+	if ( !isForClipboard && originalMw && ve.compare( mwData, JSON.parse( originalMw ) ) ) {
 		el.setAttribute( 'data-mw', originalMw );
 
-		// Restore the span's childNodes to prevent unnecessary DOM diffs
-		childDomElements = ve.copyDomElements( dataElement.attributes.childDomElements, doc );
-		for ( i = 0, iLen = childDomElements.length; i < iLen; i++ ) {
-			el.appendChild( childDomElements[i] );
+		// Return the original DOM elements if possible
+		if ( dataElement.originalDomElements ) {
+			return ve.copyDomElements( dataElement.originalDomElements, doc );
 		}
 	} else {
 		el.setAttribute( 'data-mw', JSON.stringify( mwData ) );
@@ -205,11 +233,11 @@ ve.dm.MWReferenceNode.static.toDomElements = function ( dataElement, doc, conver
 ve.dm.MWReferenceNode.static.remapInternalListIndexes = function ( dataElement, mapping, internalList ) {
 	var listKeyParts;
 	// Remap listIndex
-	dataElement.attributes.listIndex = mapping[dataElement.attributes.listIndex];
+	dataElement.attributes.listIndex = mapping[ dataElement.attributes.listIndex ];
 
 	// Remap listKey if it was automatically generated
 	listKeyParts = dataElement.attributes.listKey.match( this.listKeyRegex );
-	if ( listKeyParts[1] === 'auto' ) {
+	if ( listKeyParts[ 1 ] === 'auto' ) {
 		dataElement.attributes.listKey = 'auto/' + internalList.getNextUniqueNumber();
 	}
 };
@@ -217,7 +245,7 @@ ve.dm.MWReferenceNode.static.remapInternalListIndexes = function ( dataElement, 
 ve.dm.MWReferenceNode.static.remapInternalListKeys = function ( dataElement, internalList ) {
 	var suffix = '';
 	// Try name, name2, name3, ... until unique
-	while ( ve.indexOf( dataElement.attributes.listKey + suffix, internalList.keys ) !== -1 ) {
+	while ( internalList.keys.indexOf( dataElement.attributes.listKey + suffix ) !== -1 ) {
 		suffix = suffix ? suffix + 1 : 2;
 	}
 	if ( suffix ) {
@@ -226,46 +254,90 @@ ve.dm.MWReferenceNode.static.remapInternalListKeys = function ( dataElement, int
 };
 
 /**
- * Gets the index label for the reference
+ * Gets the index for the reference
+ *
  * @static
  * @param {Object} dataElement Element data
  * @param {ve.dm.InternalList} internalList Internal list
- * @returns {string} Reference label
+ * @return {number} Index
  */
-ve.dm.MWReferenceNode.static.getIndexLabel = function ( dataElement, internalList ) {
+ve.dm.MWReferenceNode.static.getIndex = function ( dataElement, internalList ) {
 	var listIndex = dataElement.attributes.listIndex,
 		listGroup = dataElement.attributes.listGroup,
-		refGroup = dataElement.attributes.refGroup,
 		position = internalList.getIndexPosition( listGroup, listIndex );
 
-	return '[' + ( refGroup ? refGroup + ' ' : '' ) + ( position + 1 ) + ']';
+	return position + 1;
+};
+
+/**
+ * Gets the group for the reference
+ *
+ * @static
+ * @param {Object} dataElement Element data
+ * @return {string} Group
+ */
+ve.dm.MWReferenceNode.static.getGroup = function ( dataElement ) {
+	return dataElement.attributes.refGroup;
+};
+
+/**
+ * Gets the index label for the reference
+ *
+ * @static
+ * @param {Object} dataElement Element data
+ * @param {ve.dm.InternalList} internalList Internal list
+ * @return {string} Reference label
+ */
+ve.dm.MWReferenceNode.static.getIndexLabel = function ( dataElement, internalList ) {
+	var refGroup = dataElement.attributes.refGroup,
+		index = ve.dm.MWReferenceNode.static.getIndex( dataElement, internalList );
+
+	return '[' + ( refGroup ? refGroup + ' ' : '' ) + index + ']';
 };
 
 /* Methods */
 
 /**
- * Don't allow reference nodes to be inspected if we can't find their contents.
+ * Don't allow reference nodes to be edited if we can't find their contents.
  *
  * @inheritdoc
  */
-ve.dm.MWReferenceNode.prototype.isInspectable = function () {
+ve.dm.MWReferenceNode.prototype.isEditable = function () {
 	var internalItem = this.getInternalItem();
 	return internalItem && internalItem.getLength() > 0;
 };
 
 /**
  * Gets the internal item node associated with this node
- * @method
- * @returns {ve.dm.InternalItemNode} Item node
+ *
+ * @return {ve.dm.InternalItemNode} Item node
  */
 ve.dm.MWReferenceNode.prototype.getInternalItem = function () {
 	return this.getDocument().getInternalList().getItemNode( this.getAttribute( 'listIndex' ) );
 };
 
 /**
+ * Gets the index for the reference
+ *
+ * @return {number} Index
+ */
+ve.dm.MWReferenceNode.prototype.getIndex = function () {
+	return this.constructor.static.getIndex( this.element, this.getDocument().getInternalList() );
+};
+
+/**
+ * Gets the group for the reference
+ *
+ * @return {string} Group
+ */
+ve.dm.MWReferenceNode.prototype.getGroup = function () {
+	return this.constructor.static.getGroup( this.element );
+};
+
+/**
  * Gets the index label for the reference
- * @method
- * @returns {string} Reference label
+ *
+ * @return {string} Reference label
  */
 ve.dm.MWReferenceNode.prototype.getIndexLabel = function () {
 	return this.constructor.static.getIndexLabel( this.element, this.getDocument().getInternalList() );
@@ -273,7 +345,6 @@ ve.dm.MWReferenceNode.prototype.getIndexLabel = function () {
 
 /**
  * Handle the node being attached to the root
- * @method
  */
 ve.dm.MWReferenceNode.prototype.onRoot = function () {
 	this.addToInternalList();
@@ -281,7 +352,6 @@ ve.dm.MWReferenceNode.prototype.onRoot = function () {
 
 /**
  * Handle the node being detatched from the root
- * @method
  */
 ve.dm.MWReferenceNode.prototype.onUnroot = function () {
 	this.removeFromInternalList();
@@ -289,14 +359,16 @@ ve.dm.MWReferenceNode.prototype.onUnroot = function () {
 
 /**
  * Register the node with the internal list
- * @method
  */
 ve.dm.MWReferenceNode.prototype.addToInternalList = function () {
 	if ( this.getRoot() === this.getDocument().getDocumentNode() ) {
+		this.registeredListGroup = this.element.attributes.listGroup;
+		this.registeredListKey = this.element.attributes.listKey;
+		this.registeredListIndex = this.element.attributes.listIndex;
 		this.getDocument().getInternalList().addNode(
-			this.element.attributes.listGroup,
-			this.element.attributes.listKey,
-			this.element.attributes.listIndex,
+			this.registeredListGroup,
+			this.registeredListKey,
+			this.registeredListIndex,
 			this
 		);
 	}
@@ -304,13 +376,12 @@ ve.dm.MWReferenceNode.prototype.addToInternalList = function () {
 
 /**
  * Unregister the node from the internal list
- * @method
  */
 ve.dm.MWReferenceNode.prototype.removeFromInternalList = function () {
 	this.getDocument().getInternalList().removeNode(
-		this.element.attributes.listGroup,
-		this.element.attributes.listKey,
-		this.element.attributes.listIndex,
+		this.registeredListGroup,
+		this.registeredListKey,
+		this.registeredListIndex,
 		this
 	);
 };
@@ -322,6 +393,21 @@ ve.dm.MWReferenceNode.prototype.getClonedElement = function () {
 	delete clone.attributes.mw;
 	delete clone.attributes.originalMw;
 	return clone;
+};
+
+ve.dm.MWReferenceNode.prototype.onAttributeChange = function ( key, from, to ) {
+	if (
+		( key !== 'listGroup' && key !== 'listKey' ) ||
+		( key === 'listGroup' && this.registeredListGroup === to ) ||
+		( key === 'listKey' && this.registeredListKey === to )
+	) {
+		return;
+	}
+
+	// Need the old list keys and indexes, so we register them in addToInternalList
+	// They've already been updated in this.element.attributes before this code runs
+	this.removeFromInternalList();
+	this.addToInternalList();
 };
 
 /* Registration */

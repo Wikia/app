@@ -8,7 +8,10 @@
 			"Mido",
 			"OsamaK",
 			"زكريا",
-			"مشعل الحربي"
+			"مشعل الحربي",
+			"Amire80",
+			"Abanima",
+			"아라"
 		]
 	},
 	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|المحرر المرئي]]",
@@ -16,8 +19,10 @@
 	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|المحرر المرئي: تحقق]]",
 	"tag-visualeditor-needcheck-description": "تعديل [[{{MediaWiki:visualeditor-descriptionpagelink}}|بالمحرر المرئي]] وخطأ محتمل في النص الويكي.",
 	"tag-visualeditor-switched": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|المحرر المرئي: تبديل]]",
+	"tag-visualeditor-switched-description": "بدأ المستخدم بالتحرير باستخدام المحرر المرئي ثم انتقل إلى محرر نص الويكي.",
 	"visualeditor-feedback-link": "Project:المحرر المرئي/تعليقات",
 	"visualeditor-feedback-tool": "ضع تعليقا",
 	"visualeditor-help-label": "اقرأ دليل المستخدم",
+	"visualeditor-help-link": "mw:Special:MyLanguage/Help:VisualEditor/User guide",
 	"visualeditor-help-title": "دليل المستخدم لكيفية استخدام المحرر"
 }

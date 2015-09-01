@@ -1,0 +1,103 @@
+/*!
+ * VisualEditor MediaWiki DesktopArticleTarget init styles.
+ *
+ * @copyright 2011-2015 VisualEditor Team and others; see AUTHORS.txt
+ * @license The MIT License (MIT); see LICENSE.txt
+ */
+
+/*csslint known-properties:false */
+/* Bug: https://github.com/stubbornella/csslint/issues/436 */
+
+/*!
+ * State                | <html> classes
+ * - mw.DesktopArticleTarget.init.css is loaded
+ * Reading              | ve-available
+ * Loading editor       | ve-available ve-activated ve-loading
+ * - mw.DesktopArticleTarget.css is loaded
+ * Activate editor      | ve-available ve-activated ve-activating
+ * Active               | ve-available ve-activated ve-active
+ * Deactivate editor    | ve-available ve-deactivating
+ * Deactivated          | ve-available
+ */
+
+.ve-activated #toc,
+.ve-activated #siteNotice,
+.ve-activated .mw-indicators,
+/* Most of bodyContent can be hidden as VE has an equivalent of most children
+   in ve-init-target (sibling of #bodyContent). However, we can't hide it
+   completely as subs should remain visible (for persistence with read mode),
+   and ve-ui-mwTocWidget is also part of #bodyContent. */
+.ve-active #bodyContent > :not(#siteSub):not(#contentSub):not(.ve-ui-mwTocWidget),
+.ve-activated #t-print,
+.ve-activated #t-permalink,
+.ve-activated #p-coll-print_export,
+.ve-activated #t-cite,
+.ve-activating .ve-ui-surface,
+.ve-deactivating .ve-ui-surface {
+	display: none;
+}
+
+.ve-activated #bodyContent,
+.ve-activated #firstHeading,
+.ve-activated #siteSub,
+.ve-activated #contentSub {
+	opacity: 0.6;
+	pointer-events: none;
+}
+
+.ve-activated #firstHeading {
+	cursor: default;
+}
+
+/* Progress bar mimicking OOUI */
+
+.ve-activated #content {
+	position: relative;
+}
+
+.ve-init-mw-desktopArticleTarget-loading-overlay {
+	position: absolute;
+	left: 0;
+	right: 0;
+	z-index: 1;
+	margin-top: -0.5em;
+}
+
+.ve-init-mw-desktopArticleTarget-progress {
+	border: 1px solid #347bff;
+	background: #fff;
+	height: 0.75em;
+	border-radius: 2px;
+	overflow: hidden;
+	margin: 0 25%;
+}
+
+.ve-init-mw-desktopArticleTarget-progress-bar {
+	width: 0;
+	height: 0.75em;
+	background: #347bff;
+}
+
+/* Section edit links */
+
+.mw-editsection {
+	white-space: nowrap;
+	/* bidi isolation: */
+	unicode-bidi: -moz-isolate;
+	unicode-bidi: -webkit-isolate;
+	unicode-bidi: isolate;
+}
+
+.mw-editsection-divider {
+	color: #555;
+}
+
+.ve-tabmessage-appendix {
+	font-size: 0.7em;
+	vertical-align: top;
+	line-height: 1.43em;
+	padding-left: 0.5em;
+	/* Use !important to override div.vectorTabs span */
+	background-image: none !important;
+	display: inline !important;
+}

@@ -4,7 +4,7 @@
 	/*!
 	 * VisualEditor keyboard event logger page
 	 *
-	 * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+	 * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
 	 */
 	-->
 	<head>
@@ -59,8 +59,10 @@
 
 		<script src="../../lib/jquery/jquery.js"></script>
 		<script src="../../lib/oojs/oojs.jquery.js"></script>
+		<script src="../../lib/oojs-ui/oojs-ui.js"></script>
 		<script src="../../lib/unicodejs/unicodejs.js"></script>
 		<script src="../../src/ve.js"></script>
+		<script src="../../src/ve.utils.js"></script>
 		<script src="../../src/ve.EventSequencer.js"></script>
 		<script>
 			( function () {
@@ -148,7 +150,7 @@
 					for ( i = 0, len = log.length; i < len; i++ ) {
 						jsons.push( JSON.stringify( log[i] ) );
 					}
-					$log.val( $log.val() + '[\n\t' + jsons.join(',\n\t') + '\n]' );
+					$log.val( '[\n\t' + jsons.join(',\n\t') + '\n]' );
 					$log[0].scrollTop = $log[0].scrollHeight;
 				}
 

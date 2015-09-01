@@ -1,7 +1,7 @@
 /*!
  * VisualEditor ContentEditable FocusableNode styles.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 .ve-ce-surface-highlights-focused .ve-ce-focusableNode-highlights {
@@ -26,17 +26,21 @@
 	cursor: default;
 }
 
-.ve-ce-focusableNode-dropMarker {
-	height: 1px;
-	background: #999;
-	pointer-events: none;
-	position: absolute;
+/* We have to use a * selector because user-select isn't inherited by absolutely positioned
+   children in Firefox. */
+/*csslint vendor-prefix: false, compatible-vendor-prefixes:false */
+.ve-ce-focusableNode * {
+	/* T70537: work around Firefox bug */
+	-moz-user-select: none;
 }
+/*csslint vendor-prefix: true, compatible-vendor-prefixes:true */
 
 .ve-ce-focusableNode-highlight {
 	background: #6da9f7;
 	box-shadow: inset 0 0 0 1px #4C76ac;
 	position: absolute;
+	/* Clip extra span added for selectability */
+	overflow: hidden;
 }
 
 .ve-ce-focusableNode-highlight-relocatable-marker {
@@ -47,4 +51,14 @@
 .ve-ce-focusableNode-highlights-relocating .ve-ce-focusableNode-highlight-relocatable-marker {
 	background: #000;
 	background: rgba(0, 0, 0, 1);
+}
+
+/* Prevent 'copy image' appearing in context menu */
+.ve-ce-focusableNode-highlights-contextOpen .ve-ce-focusableNode-highlight-relocatable-marker {
+	display: none;
+}
+
+.ve-ce-focusableNode-highlight-selectable {
+	position: absolute;
+	top: -1000px;
 }

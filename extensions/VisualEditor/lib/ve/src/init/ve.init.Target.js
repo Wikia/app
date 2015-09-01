@@ -1,7 +1,7 @@
 /*!
  * VisualEditor Initialization Target class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 /**
@@ -13,22 +13,36 @@
  * @mixins OO.EventEmitter
  *
  * @constructor
- * @param {Object} toolbarConfig Configuration options for the toolbar
+ * @param {Object} [config] Configuration options
+ * @cfg {Object} [toolbarConfig] Configuration options for the toolbar
+ * @cfg {ve.ui.CommandRegistry} [commandRegistry] Command registry to use
+ * @cfg {ve.ui.SequenceRegistry} [sequenceRegistry] Sequence registry to use
+ * @cfg {ve.ui.DataTransferHandlerFactory} [dataTransferHandlerFactory] Data transfer handler factory to use
  */
-ve.init.Target = function VeInitTarget( toolbarConfig ) {
+ve.init.Target = function VeInitTarget( config ) {
+	config = config || {};
+
 	// Parent constructor
-	OO.ui.Element.call( this );
+	ve.init.Target.super.call( this, config );
 
 	// Mixin constructors
 	OO.EventEmitter.call( this );
+
+	// Register
+	ve.init.target = this;
 
 	// Properties
 	this.surfaces = [];
 	this.surface = null;
 	this.toolbar = null;
-	this.toolbarConfig = toolbarConfig;
+	this.toolbarConfig = config.toolbarConfig;
+	this.commandRegistry = config.commandRegistry || ve.ui.commandRegistry;
+	this.sequenceRegistry = config.sequenceRegistry || ve.ui.sequenceRegistry;
+	this.dataTransferHandlerFactory = config.dataTransferHandlerFactory || ve.ui.dataTransferHandlerFactory;
 	this.documentTriggerListener = new ve.TriggerListener( this.constructor.static.documentCommands );
 	this.targetTriggerListener = new ve.TriggerListener( this.constructor.static.targetCommands );
+	this.$scrollContainer = this.getScrollContainer();
+	this.toolbarScrollOffset = 0;
 
 	// Initialization
 	this.$element.addClass( 've-init-target' );
@@ -40,10 +54,8 @@ ve.init.Target = function VeInitTarget( toolbarConfig ) {
 	// Events
 	this.onDocumentKeyDownHandler = this.onDocumentKeyDown.bind( this );
 	this.onTargetKeyDownHandler = this.onTargetKeyDown.bind( this );
+	this.onContainerScrollHandler = this.onContainerScroll.bind( this );
 	this.bindHandlers();
-
-	// Register
-	ve.init.target = this;
 };
 
 /* Inheritance */
@@ -70,21 +82,11 @@ ve.init.Target.static.toolbarGroups = [
 		promote: [ 'paragraph' ],
 		demote: [ 'preformatted', 'blockquote' ]
 	},
-	// Basic style
+	// Text style
 	{
 		header: OO.ui.deferMsg( 'visualeditor-toolbar-text-style' ),
 		title: OO.ui.deferMsg( 'visualeditor-toolbar-style-tooltip' ),
-		include: [ 'bold', 'italic' ]
-	},
-	// Style
-	{
-		header: OO.ui.deferMsg( 'visualeditor-toolbar-text-style' ),
-		type: 'list',
-		indicator: 'down',
-		icon: 'text-style',
-		title: OO.ui.deferMsg( 'visualeditor-toolbar-style-tooltip' ),
-		include: [ { group: 'textStyle' }, 'language', 'clear' ],
-		demote: [ 'strikethrough', 'code', 'underline', 'language', 'clear' ]
+		include: [ 'bold', 'italic', 'moreTextStyle' ]
 	},
 	// Link
 	{
@@ -95,7 +97,7 @@ ve.init.Target.static.toolbarGroups = [
 	{
 		header: OO.ui.deferMsg( 'visualeditor-toolbar-structure' ),
 		type: 'list',
-		icon: 'bullet-list',
+		icon: 'listBullet',
 		indicator: 'down',
 		include: [ { group: 'structure' } ],
 		demote: [ 'outdent', 'indent' ]
@@ -108,14 +110,18 @@ ve.init.Target.static.toolbarGroups = [
 		label: '',
 		title: OO.ui.deferMsg( 'visualeditor-toolbar-insert' ),
 		indicator: 'down',
-		include: '*',
-		demote: [ 'specialcharacter' ]
+		include: '*'
+	},
+	// Special character toolbar
+	{
+		header: OO.ui.deferMsg( 'visualeditor-toolbar-insert' ),
+		include: [ 'specialCharacter' ]
 	},
 	// Table
 	{
 		header: OO.ui.deferMsg( 'visualeditor-toolbar-table' ),
 		type: 'list',
-		icon: 'table-insert',
+		icon: 'table',
 		indicator: 'down',
 		include: [ { group: 'table' } ],
 		demote: [ 'deleteTable' ]
@@ -127,14 +133,23 @@ ve.init.Target.static.toolbarGroups = [
  *
  * @type {string[]} List of command names
  */
-ve.init.Target.static.documentCommands = ['commandHelp'];
+ve.init.Target.static.documentCommands = [ 'commandHelp' ];
 
 /**
  * List of commands which can be triggered from within the target element
  *
  * @type {string[]} List of command names
  */
-ve.init.Target.static.targetCommands = ['findAndReplace'];
+ve.init.Target.static.targetCommands = [ 'findAndReplace', 'findNext', 'findPrevious' ];
+
+/**
+ * List of commands to include in the target
+ *
+ * Null means all commands in the registry are used (excluding excludeCommands)
+ *
+ * @type {string[]|null} List of command names
+ */
+ve.init.Target.static.includeCommands = null;
 
 /**
  * List of commands to exclude from the target entirely
@@ -156,7 +171,7 @@ ve.init.Target.static.importRules = {
 		blacklist: [
 			// Annotations
 			// TODO: allow spans
-			'textStyle/span',
+			'textStyle/span', 'textStyle/font',
 			// Nodes
 			'alienInline', 'alienBlock', 'comment'
 		]
@@ -172,6 +187,7 @@ ve.init.Target.static.importRules = {
 ve.init.Target.prototype.bindHandlers = function () {
 	$( this.getElementDocument() ).on( 'keydown', this.onDocumentKeyDownHandler );
 	this.$element.on( 'keydown', this.onTargetKeyDownHandler );
+	this.$scrollContainer.on( 'scroll', this.onContainerScrollHandler );
 };
 
 /**
@@ -180,6 +196,7 @@ ve.init.Target.prototype.bindHandlers = function () {
 ve.init.Target.prototype.unbindHandlers = function () {
 	$( this.getElementDocument() ).off( 'keydown', this.onDocumentKeyDownHandler );
 	this.$element.off( 'keydown', this.onTargetKeyDownHandler );
+	this.$scrollContainer.off( 'scroll', this.onContainerScrollHandler );
 };
 
 /**
@@ -191,12 +208,36 @@ ve.init.Target.prototype.destroy = function () {
 		this.toolbar.destroy();
 		this.toolbar = null;
 	}
-	if ( this.$element ) {
-		this.$element.remove();
-		this.$element = null;
-	}
+	this.$element.remove();
 	this.unbindHandlers();
 	ve.init.target = null;
+};
+
+/**
+ * Get the target's scroll container
+ *
+ * @return {jQuery} The target's scroll container
+ */
+ve.init.Target.prototype.getScrollContainer = function () {
+	return $( this.getElementWindow() );
+};
+
+/**
+ * Handle scroll container scroll events
+ */
+ve.init.Target.prototype.onContainerScroll = function () {
+	var scrollTop,
+		toolbar = this.getToolbar();
+
+	if ( toolbar.isFloatable() ) {
+		scrollTop = this.$scrollContainer.scrollTop();
+
+		if ( scrollTop + this.toolbarScrollOffset > toolbar.getElementOffset().top ) {
+			toolbar.float();
+		} else {
+			toolbar.unfloat();
+		}
+	}
 };
 
 /**
@@ -230,15 +271,33 @@ ve.init.Target.prototype.onTargetKeyDown = function ( e ) {
 };
 
 /**
+ * Handle toolbar resize events
+ */
+ve.init.Target.prototype.onToolbarResize = function () {
+	this.getSurface().setToolbarHeight( this.getToolbar().getHeight() + this.toolbarScrollOffset );
+};
+
+/**
  * Create a surface.
  *
  * @method
  * @param {ve.dm.Document} dmDoc Document model
  * @param {Object} [config] Configuration options
- * @returns {ve.ui.Surface}
+ * @return {ve.ui.DesktopSurface}
  */
 ve.init.Target.prototype.createSurface = function ( dmDoc, config ) {
-	config = ve.extendObject( {
+	return new ve.ui.DesktopSurface( dmDoc, this.getSurfaceConfig( config ) );
+};
+
+/**
+ * Get surface configuration options
+ *
+ * @param {Object} config Configuration option overrides
+ * @return {Object} Surface configuration options
+ */
+ve.init.Target.prototype.getSurfaceConfig = function ( config ) {
+	return ve.extendObject( {
+		includeCommands: this.constructor.static.includeCommands,
 		excludeCommands: OO.simpleArrayUnion(
 			this.constructor.static.excludeCommands,
 			this.constructor.static.documentCommands,
@@ -246,7 +305,6 @@ ve.init.Target.prototype.createSurface = function ( dmDoc, config ) {
 		),
 		importRules: this.constructor.static.importRules
 	}, config );
-	return new ve.ui.DesktopSurface( dmDoc, config, this );
 };
 
 /**
@@ -254,12 +312,15 @@ ve.init.Target.prototype.createSurface = function ( dmDoc, config ) {
  *
  * @param {ve.dm.Document} dmDoc Document model
  * @param {Object} [config] Configuration options
- * @returns {ve.ui.Surface}
+ * @return {ve.ui.DesktopSurface}
  */
 ve.init.Target.prototype.addSurface = function ( dmDoc, config ) {
 	var surface = this.createSurface( dmDoc, config );
 	this.surfaces.push( surface );
-	surface.getView().connect( this, { focus: this.onSurfaceViewFocus.bind( this, surface ) } );
+	surface.getView().connect( this, {
+		focus: this.onSurfaceViewFocus.bind( this, surface ),
+		keyup: this.onSurfaceViewKeyUp.bind( this, surface )
+	} );
 	return surface;
 };
 
@@ -282,6 +343,64 @@ ve.init.Target.prototype.onSurfaceViewFocus = function ( surface ) {
 };
 
 /**
+ * Handle key up events from a surface's view
+ *
+ * @param {ve.ui.Surface} surface Surface firing the event
+ */
+ve.init.Target.prototype.onSurfaceViewKeyUp = function ( surface ) {
+	this.scrollCursorIntoView( surface );
+};
+
+/**
+ * Check if the toolbar is overlapping the surface
+ *
+ * @return {boolean} Toolbar is overlapping the surface
+ */
+ve.init.Target.prototype.isToolbarOverSurface = function () {
+	return this.getToolbar().isFloating();
+};
+
+/**
+ * Scroll the cursor into view.
+ *
+ * @param {ve.ui.Surface} surface Surface to scroll
+ */
+ve.init.Target.prototype.scrollCursorIntoView = function ( surface ) {
+	var nativeRange, clientRect, cursorTop, scrollTo, toolbarBottom;
+
+	if ( !this.isToolbarOverSurface() ) {
+		return;
+	}
+
+	nativeRange = surface.getView().getNativeRange();
+	if ( !nativeRange ) {
+		return;
+	}
+
+	clientRect = RangeFix.getBoundingClientRect( nativeRange );
+	if ( !clientRect ) {
+		return;
+	}
+
+	cursorTop = clientRect.top - 5;
+	toolbarBottom = this.getSurface().toolbarHeight;
+
+	if ( cursorTop < toolbarBottom ) {
+		scrollTo = this.$scrollContainer.scrollTop() + cursorTop - toolbarBottom;
+		this.scrollTo( scrollTo );
+	}
+};
+
+/**
+ * Scroll the scroll container to a specific offset
+ *
+ * @param {number} offset Scroll offset
+ */
+ve.init.Target.prototype.scrollTo = function ( offset ) {
+	this.$scrollContainer.scrollTop( offset );
+};
+
+/**
  * Set the target's active surface
  *
  * @param {ve.ui.Surface} surface Surface
@@ -294,9 +413,9 @@ ve.init.Target.prototype.setSurface = function ( surface ) {
 };
 
 /**
- * Get the target's active surface
+ * Get the target's active surface, if it exists
  *
- * @return {ve.ui.Surface} Surface
+ * @return {ve.ui.Surface|null} Surface
  */
 ve.init.Target.prototype.getSurface = function () {
 	return this.surface;
@@ -320,7 +439,20 @@ ve.init.Target.prototype.getToolbar = function () {
  * @param {ve.ui.Surface} surface Surface
  */
 ve.init.Target.prototype.setupToolbar = function ( surface ) {
-	this.getToolbar().setup( this.constructor.static.toolbarGroups, surface );
-	this.getToolbar().$element.insertBefore( surface.$element );
-	this.getToolbar().$bar.append( surface.toolbarDialogs.$element );
+	var toolbar = this.getToolbar();
+
+	toolbar.connect( this, { resize: 'onToolbarResize' } );
+
+	toolbar.setup( this.constructor.static.toolbarGroups, surface );
+	this.attachToolbar( surface );
+	toolbar.$bar.append( surface.getToolbarDialogs().$element );
+	this.onContainerScroll();
+};
+
+/**
+ * Attach the toolbar to the DOM
+ */
+ve.init.Target.prototype.attachToolbar = function () {
+	this.getToolbar().$element.insertBefore( this.getToolbar().getSurface().$element );
+	this.getToolbar().initialize();
 };

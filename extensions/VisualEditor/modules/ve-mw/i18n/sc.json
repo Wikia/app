@@ -3,11 +3,13 @@
 		"authors": [
 			"L2212",
 			"Via maxima",
-			"Taxandru"
+			"Taxandru",
+			"Purodha"
 		]
 	},
 	"tooltip-ca-ve-edit": "Càmbia custa pàgina cun VisualEditor",
 	"visualeditor-ca-editsource": "Càmbia wikitestu",
 	"visualeditor-cite-tool-name-news": "Novas",
-	"visualeditor-pagemenu-tooltip": "Preferèntzias de sa pàgina"
+	"visualeditor-pagemenu-tooltip": "Preferèntzias de sa pàgina",
+	"visualeditor-version-label": "Versione"
 }

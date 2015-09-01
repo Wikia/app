@@ -1,7 +1,7 @@
 /*!
  * VisualEditor DataModel MWNoTitleConvertMetaItem class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2015 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -36,7 +36,7 @@ ve.dm.MWNoTitleConvertMetaItem.static.toDataElement = function ( domElements ) {
 	// HACK: Don't rely on Parsoid always putting the RDFa type as a property
 	return {
 		type: this.name,
-		originalProperty: domElements[0].getAttribute( 'property' )
+		originalProperty: domElements[ 0 ].getAttribute( 'property' )
 	};
 };
 

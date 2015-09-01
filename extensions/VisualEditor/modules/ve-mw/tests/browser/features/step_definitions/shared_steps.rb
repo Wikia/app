@@ -4,22 +4,20 @@ Given(/^I am on the (.+) page$/) do |article|
 end
 
 Given(/^I click in the editable part$/) do
-  on(VisualEditorPage) do |page|
-    page.content_element.when_present.fire_event('onfocus')
-    page.content_element.send_keys('')
-  end
+  on(VisualEditorPage).content_element.when_present.send_keys('')
 end
 
 Given(/^I go to the browser specific edit page page$/) do
-  page_title = 'Edit page for ' + ENV['BROWSER']
-  page_content = 'Edit page for ' + ENV['BROWSER']
-  on(APIPage).create page_title, page_content
+  page_title = 'Edit page for ' + browser_name
+  page_content = 'Edit page for ' + browser_name
+
+  api.create_page page_title, page_content
   step "I am on the #{page_title} page"
 end
 
 Given(/^I go to the "(.+)" page with content "(.+)"$/) do |page_title, page_content|
   @wikitext = page_content
-  on(APIPage).create page_title, page_content
+  api.create_page page_title, page_content
   step "I am on the #{page_title} page"
 end
 
@@ -51,7 +49,6 @@ end
 
 When(/^I click Save page$/) do
   on(VisualEditorPage) do |page|
-    page.disabled_save_button_element.when_not_present(10)
     page.save_page_element.when_present.click
   end
 end
@@ -78,7 +75,7 @@ end
 When(/^I edit the page with (.+)$/) do |input_string|
   on(VisualEditorPage) do |page|
     page.page_text_element.when_not_visible
-    page.content_element.send_keys(input_string + " #{@random_string} ")
+    page.content_element.when_present(10).send_keys(input_string + " #{@random_string} ")
   end
 end
 

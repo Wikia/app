@@ -1,7 +1,7 @@
 /*!
  * VisualEditor Logger class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 /*global Set*/
 
@@ -44,8 +44,8 @@ ve.Filibuster = function VeFilibuster() {
 	// Path (index offsets) to current call frame
 	this.callPath = [];
 	// Index offset tree: {
-	//	changes: {enter: xxx, exit: xxx }
-	//	children: { index offset tree }
+	//   changes: {enter: xxx, exit: xxx }
+	//   children: { index offset tree }
 	// }
 	this.observationTree = { children: {} };
 	this.active = false;
@@ -260,11 +260,11 @@ ve.Filibuster.prototype.wrapClass = function ( klass, blacklist ) {
 	container = klass.prototype;
 	fnNames = Object.getOwnPropertyNames( container );
 	for ( i = 0, len = fnNames.length; i < len; i++ ) {
-		fnName = fnNames[i];
+		fnName = fnNames[ i ];
 		if ( fnName === 'prototype' || fnName === 'constructor' ) {
 			continue;
 		}
-		fn = container[fnName];
+		fn = container[ fnName ];
 		if ( typeof fn !== 'function' || fn.wrappedFunction ) {
 			continue;
 		}
@@ -288,8 +288,8 @@ ve.Filibuster.prototype.wrapNamespace = function ( ns, nsName, blacklist ) {
 	var i, len, propNames, propName, prop, isConstructor;
 	propNames = Object.getOwnPropertyNames( ns );
 	for ( i = 0, len = propNames.length; i < len; i++ ) {
-		propName = propNames[i];
-		prop = ns[propName];
+		propName = propNames[ i ];
+		prop = ns[ propName ];
 		if ( blacklist && blacklist.indexOf( prop ) !== -1 ) {
 			continue;
 		}
@@ -462,9 +462,9 @@ ve.Filibuster.prototype.getObservationsHtml = function ( branchPath ) {
  *
  * The resulting value is easily dumpable, and will not change if val changes.
  *
- * @param {Object|string|number|undefined} val Value to analyze
+ * @param {Object|string|number|undefined|null} val Value to analyze
  * @param {Set} [seen] Seen objects, for recursion detection
- * @return {Object|string|number|undefined} Plain old data object
+ * @return {Object|string|number|null} Plain old data object
  */
 ve.Filibuster.static.clonePlain = function ( val, seen ) {
 	var plainVal,

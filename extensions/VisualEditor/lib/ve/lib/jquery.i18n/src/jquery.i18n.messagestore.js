@@ -88,7 +88,7 @@
 		 * @param locale
 		 * @param messages
 		 */
-		set: function( locale, messages ) {
+		set: function ( locale, messages ) {
 			if ( !this.messages[locale] ) {
 				this.messages[locale] = messages;
 			} else {
@@ -100,7 +100,7 @@
 		 *
 		 * @param locale
 		 * @param messageKey
-		 * @returns {Boolean}
+		 * @return {Boolean}
 		 */
 		get: function ( locale, messageKey ) {
 			return this.messages[locale] && this.messages[locale][messageKey];
@@ -108,9 +108,17 @@
 	};
 
 	function jsonMessageLoader( url ) {
-		return $.getJSON( url ).fail( function ( jqxhr, settings, exception ) {
-			$.i18n.log( 'Error in loading messages from ' + url + ' Exception: ' + exception );
-		} );
+		var deferred = $.Deferred();
+
+		$.getJSON( url )
+			.done( deferred.resolve )
+			.fail( function ( jqxhr, settings, exception ) {
+				$.i18n.log( 'Error in loading messages from ' + url + ' Exception: ' + exception );
+				// Ignore 404 exception, because we are handling fallabacks explicitly
+				deferred.resolve();
+			} );
+
+		return deferred.promise();
 	}
 
 	$.extend( $.i18n.messageStore, new MessageStore() );

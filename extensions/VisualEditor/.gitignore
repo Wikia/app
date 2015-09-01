@@ -5,10 +5,15 @@
 sublime-*
 .project
 .settings
+\#*#
+.#*
 
 # Install and build artifacts
 /docs
 node_modules
+composer.lock
+vendor
+
 
 # OS
 .DS_Store

@@ -1,7 +1,7 @@
 /*!
  * VisualEditor DataModel namespace.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 /**
@@ -10,8 +10,8 @@
  * @singleton
  */
 ve.dm = {
-	//modelRegistry: Initialized in ve.dm.ModelRegistry.js
-	//nodeFactory: Initialized in ve.dm.NodeFactory.js
-	//annotationFactory: Initialized in ve.dm.AnnotationFactory.js
-	//converter: Initialized in ve.dm.Converter.js
+	// modelRegistry: Initialized in ve.dm.ModelRegistry.js
+	// nodeFactory: Initialized in ve.dm.NodeFactory.js
+	// annotationFactory: Initialized in ve.dm.AnnotationFactory.js
+	// converter: Initialized in ve.dm.Converter.js
 };

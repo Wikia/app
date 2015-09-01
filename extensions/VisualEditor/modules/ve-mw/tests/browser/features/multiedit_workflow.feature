@@ -1,5 +1,5 @@
 # encoding: UTF-8
-@chrome @edit_user_page_login @en.wikipedia.beta.wmflabs.org @firefox @internet_explorer_10 @login @safari @test2.wikipedia.org
+@edit_user_page_login @en.wikipedia.beta.wmflabs.org @firefox @internet_explorer_10 @login @safari @test2.wikipedia.org
 Feature: VisualEditor multi-edit workflow
 
   Goal of the test is to make sure the "Save" and "Review Changes"

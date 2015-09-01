@@ -1,11 +1,11 @@
 /*!
  * VisualEditor DataModel MediaWiki-specific SurfaceFragment tests.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2015 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
-QUnit.module( 've.dm.SurfaceFragment' );
+QUnit.module( 've.dm.SurfaceFragment (MW)', ve.test.utils.mwEnvironment );
 
 /* Tests */
 

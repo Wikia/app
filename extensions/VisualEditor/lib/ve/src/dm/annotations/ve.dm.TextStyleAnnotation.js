@@ -1,7 +1,7 @@
 /*!
  * VisualEditor DataModel TextStyleAnnotation class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 /**
@@ -28,11 +28,12 @@ ve.dm.TextStyleAnnotation.static.name = 'textStyle';
 
 ve.dm.TextStyleAnnotation.static.matchTagNames = [];
 
-ve.dm.TextStyleAnnotation.static.toDataElement = function ( domElements ) {
+ve.dm.TextStyleAnnotation.static.toDataElement = function ( domElements, converter ) {
+	var nodeName = converter.isFromClipboard() ? this.matchTagNames[ 0 ] : domElements[ 0 ].nodeName.toLowerCase();
 	return {
 		type: this.name,
 		attributes: {
-			nodeName: domElements[0].nodeName.toLowerCase()
+			nodeName: nodeName
 		}
 	};
 };
@@ -40,13 +41,13 @@ ve.dm.TextStyleAnnotation.static.toDataElement = function ( domElements ) {
 ve.dm.TextStyleAnnotation.static.toDomElements = function ( dataElement, doc ) {
 	var nodeName = ve.getProp( dataElement, 'attributes', 'nodeName' );
 
-	return [ doc.createElement( nodeName || this.matchTagNames[0] ) ];
+	return [ doc.createElement( nodeName || this.matchTagNames[ 0 ] ) ];
 };
 
 /* Methods */
 
 /**
- * @returns {Object}
+ * @return {Object}
  */
 ve.dm.TextStyleAnnotation.prototype.getComparableObject = function () {
 	return { type: this.getType() };

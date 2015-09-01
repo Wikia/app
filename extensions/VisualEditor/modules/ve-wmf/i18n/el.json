@@ -8,17 +8,21 @@
 			"Geraki",
 			"Glavkos",
 			"Nikosguard",
-			"Tifa93"
+			"Tifa93",
+			"Amire80",
+			"아라",
+			"Stam.nikos"
 		]
 	},
 	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]]",
 	"tag-visualeditor-description": "Επεξεργασία που έγινε με χρήση του [[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]]",
 	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor: Check]]",
-	"tag-visualeditor-needcheck-description": "Επεξεργασία που έγινε μέσω του [[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]], όπου το σύστημα ανίχνευσε πιθανές μη ηθελημένες αλλαγές στον πηγαίο κώδικα.",
+	"tag-visualeditor-needcheck-description": "Επεξεργασία που έγινε μέσω του [[{{MediaWiki:visualeditor-descriptionpagelink}}|οπτικού επεξεργαστή]], όπου το σύστημα ανίχνευσε πιθανές μη ηθελημένες αλλαγές στον κώδικα wiki.",
 	"tag-visualeditor-switched": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor: Άλλαξε]]",
-	"tag-visualeditor-switched-description": "Ο χρήστης άρχισε να επεξεργάζεται χρησιμοποιώντας το VisualEditor και στη συνέχεια άλλαξε σε επεξεργαστή wikitext.",
+	"tag-visualeditor-switched-description": "Ο χρήστης άρχισε να επεξεργάζεται χρησιμοποιώντας τον οπτικό επεξεργαστή και στη συνέχεια άλλαξε σε επεξεργαστή κώδικα wiki.",
 	"visualeditor-feedback-link": "Project:VisualEditor/Ανατροφοδότηση",
-	"visualeditor-feedback-tool": "Αφήστε σχόλια",
+	"visualeditor-feedback-tool": "Αφήστε σχόλια σχετικά με αυτό το λογισμικό",
 	"visualeditor-help-label": "Διαβάστε τον οδηγό χρήστη",
+	"visualeditor-help-link": "mw:Special:MyLanguage/Help:VisualEditor/User guide",
 	"visualeditor-help-title": "Οδηγός για το πως θα χρησιμοποιήσετε τον επεξεργαστή"
 }

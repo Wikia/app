@@ -1,7 +1,7 @@
 /*!
  * VisualEditor ContentEditable NodeFactory class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 /**
@@ -26,13 +26,13 @@ OO.inheritClass( ve.ce.NodeFactory, OO.Factory );
  * Get a plain text description of a node model.
  *
  * @param {ve.dm.Node} node Node to describe
- * @returns {string} Description of the node
+ * @return {string} Description of the node
  * @throws {Error} Unknown node type
  */
 ve.ce.NodeFactory.prototype.getDescription = function ( node ) {
 	var type = node.constructor.static.name;
 	if ( Object.prototype.hasOwnProperty.call( this.registry, type ) ) {
-		return this.registry[type].static.getDescription( node );
+		return this.registry[ type ].static.getDescription( node );
 	}
 	throw new Error( 'Unknown node type: ' + type );
 };
@@ -41,12 +41,12 @@ ve.ce.NodeFactory.prototype.getDescription = function ( node ) {
  * Check if a node type splits on Enter
  *
  * @param {string} type Node type
- * @returns {boolean} The node can have grandchildren
+ * @return {boolean} The node can have grandchildren
  * @throws {Error} Unknown node type
  */
 ve.ce.NodeFactory.prototype.splitNodeOnEnter = function ( type ) {
 	if ( Object.prototype.hasOwnProperty.call( this.registry, type ) ) {
-		return this.registry[type].static.splitOnEnter;
+		return this.registry[ type ].static.splitOnEnter;
 	}
 	throw new Error( 'Unknown node type: ' + type );
 };
@@ -56,12 +56,12 @@ ve.ce.NodeFactory.prototype.splitNodeOnEnter = function ( type ) {
  *
  * @method
  * @param {string} type Node type
- * @returns {string|null} Primary command name
+ * @return {string|null} Primary command name
  * @throws {Error} Unknown node type
  */
 ve.ce.NodeFactory.prototype.getNodePrimaryCommandName = function ( type ) {
 	if ( Object.prototype.hasOwnProperty.call( this.registry, type ) ) {
-		return this.registry[type].static.primaryCommandName;
+		return this.registry[ type ].static.primaryCommandName;
 	}
 	throw new Error( 'Unknown node type: ' + type );
 };

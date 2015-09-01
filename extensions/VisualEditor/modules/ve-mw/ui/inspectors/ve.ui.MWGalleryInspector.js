@@ -1,7 +1,7 @@
 /*!
  * VisualEditor UserInterface MWGalleryInspector class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2015 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -14,9 +14,9 @@
  * @constructor
  * @param {Object} [config] Configuration options
  */
-ve.ui.MWGalleryInspector = function VeUiMWGalleryInspector( config ) {
+ve.ui.MWGalleryInspector = function VeUiMWGalleryInspector() {
 	// Parent constructor
-	ve.ui.MWExtensionInspector.call( this, config );
+	ve.ui.MWGalleryInspector.super.apply( this, arguments );
 
 	this.$element.addClass( 've-ui-mwGalleryInspector' );
 };
@@ -36,14 +36,14 @@ ve.ui.MWGalleryInspector.static.size = 'large';
 ve.ui.MWGalleryInspector.static.title =
 	OO.ui.deferMsg( 'visualeditor-mwgalleryinspector-title' );
 
-ve.ui.MWGalleryInspector.static.nodeModel = ve.dm.MWGalleryNode;
+ve.ui.MWGalleryInspector.static.modelClasses = [ ve.dm.MWGalleryNode ];
 
 /* Methods */
 
 /** */
 ve.ui.MWGalleryInspector.prototype.getInputPlaceholder = function () {
 	// 'File:' is always in content language
-	return mw.config.get( 'wgFormattedNamespaces' )['6'] + ':' +
+	return mw.config.get( 'wgFormattedNamespaces' )[ '6' ] + ':' +
 		ve.msg( 'visualeditor-mwgalleryinspector-placeholder' );
 };
 

@@ -1,7 +1,7 @@
 /*!
  * VisualEditor ElementLinearData tests.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 QUnit.module( 've.dm.ElementLinearData' );
@@ -16,10 +16,10 @@ QUnit.test( 'getAnnotationsFromOffset', 1, function ( assert ) {
 		expectCount = 0,
 		cases = [
 			{
-				msg: ['bold #1', 'bold #2'],
+				msg: [ 'bold #1', 'bold #2' ],
 				data: [
-					['a', [ { type: 'textStyle/bold' } ]],
-					['b', [ { type: 'textStyle/bold' } ]]
+					[ 'a', [ { type: 'textStyle/bold' } ] ],
+					[ 'b', [ { type: 'textStyle/bold' } ] ]
 				],
 				expected: [
 					[ { type: 'textStyle/bold' } ],
@@ -27,10 +27,10 @@ QUnit.test( 'getAnnotationsFromOffset', 1, function ( assert ) {
 				]
 			},
 			{
-				msg: ['bold #3', 'italic #1'],
+				msg: [ 'bold #3', 'italic #1' ],
 				data: [
-					['a', [ { type: 'textStyle/bold' } ]],
-					['b', [ { type: 'textStyle/italic' } ]]
+					[ 'a', [ { type: 'textStyle/bold' } ] ],
+					[ 'b', [ { type: 'textStyle/italic' } ] ]
 				],
 				expected: [
 					[ { type: 'textStyle/bold' } ],
@@ -38,7 +38,7 @@ QUnit.test( 'getAnnotationsFromOffset', 1, function ( assert ) {
 				]
 			},
 			{
-				msg: ['bold, italic & underline'],
+				msg: [ 'bold, italic & underline' ],
 				data: [
 					[
 						'a',
@@ -58,7 +58,7 @@ QUnit.test( 'getAnnotationsFromOffset', 1, function ( assert ) {
 				]
 			},
 			{
-				msg: ['unannotated element', 'annotated element', 'annotated close element', 'unannotated element'],
+				msg: [ 'unannotated element', 'annotated element', 'annotated close element', 'unannotated element' ],
 				data: [
 					{ type: 'paragraph' },
 					{ type: 'break', annotations: [ { type: 'textStyle/bold' } ] },
@@ -77,7 +77,7 @@ QUnit.test( 'getAnnotationsFromOffset', 1, function ( assert ) {
 				]
 			},
 			{
-				msg: ['unannotated element', 'annotated element', 'annotated close element (ignored)', 'unannotated element'],
+				msg: [ 'unannotated element', 'annotated element', 'annotated close element (ignored)', 'unannotated element' ],
 				ignoreClose: true,
 				data: [
 					{ type: 'paragraph' },
@@ -98,26 +98,26 @@ QUnit.test( 'getAnnotationsFromOffset', 1, function ( assert ) {
 
 	// Calculate expected assertion count
 	for ( c = 0; c < cases.length; c++ ) {
-		expectCount += cases[c].data.length;
+		expectCount += cases[ c ].data.length;
 	}
 	QUnit.expect( expectCount + 1 );
 
 	// Run tests
 	for ( i = 0; i < cases.length; i++ ) {
-		data = ve.dm.example.preprocessAnnotations( cases[i].data );
+		data = ve.dm.example.preprocessAnnotations( cases[ i ].data );
 		doc = new ve.dm.Document( data );
 		if ( i === 0 ) {
 			assert.notStrictEqual(
-				doc.data.getAnnotationsFromOffset( 0, cases[i].ignoreClose ).getIndexes(),
-				doc.data.getAnnotationsFromOffset( 0, cases[i].ignoreClose ).getIndexes(),
+				doc.data.getAnnotationsFromOffset( 0, cases[ i ].ignoreClose ).getIndexes(),
+				doc.data.getAnnotationsFromOffset( 0, cases[ i ].ignoreClose ).getIndexes(),
 				'annotation set indexes are not equal by reference'
 			);
 		}
 		for ( j = 0; j < doc.getData().length; j++ ) {
-			annotations = doc.data.getAnnotationsFromOffset( j, cases[i].ignoreClose );
+			annotations = doc.data.getAnnotationsFromOffset( j, cases[ i ].ignoreClose );
 			assert.deepEqual( annotations,
-				ve.dm.example.createAnnotationSet( doc.getStore(), cases[i].expected[j] ),
-				cases[i].msg[j]
+				ve.dm.example.createAnnotationSet( doc.getStore(), cases[ i ].expected[ j ] ),
+				cases[ i ].msg[ j ]
 			);
 		}
 	}
@@ -129,8 +129,8 @@ QUnit.test( 'getAnnotationsFromRange', 1, function ( assert ) {
 			{
 				msg: 'single annotations',
 				data: [
-					['a', [ { type: 'textStyle/bold' } ] ],
-					['b', [ { type: 'textStyle/bold' } ] ]
+					[ 'a', [ { type: 'textStyle/bold' } ] ],
+					[ 'b', [ { type: 'textStyle/bold' } ] ]
 				],
 				expected: [ { type: 'textStyle/bold' } ]
 			},
@@ -138,8 +138,8 @@ QUnit.test( 'getAnnotationsFromRange', 1, function ( assert ) {
 				msg: 'single annotation with non-content data',
 				data: [
 					{ type: 'paragraph' },
-					['a', [ { type: 'textStyle/bold' } ] ],
-					['b', [ { type: 'textStyle/bold' } ] ],
+					[ 'a', [ { type: 'textStyle/bold' } ] ],
+					[ 'b', [ { type: 'textStyle/bold' } ] ],
 					{ type: '/paragraph' }
 				],
 				expected: [ { type: 'textStyle/bold' } ]
@@ -224,7 +224,7 @@ QUnit.test( 'getAnnotationsFromRange', 1, function ( assert ) {
 							{ type: 'textStyle/underline' }
 						]
 					],
-					['b'],
+					[ 'b' ],
 					[
 						'c',
 						[
@@ -253,22 +253,22 @@ QUnit.test( 'getAnnotationsFromRange', 1, function ( assert ) {
 							{ type: 'textStyle/underline' }
 						]
 					],
-					['c']
+					[ 'c' ]
 				],
 				expected: []
 			},
 			{
 				msg: 'no common coverage due to mismatched annotations',
 				data: [
-					['a', [ { type: 'textStyle/bold' } ] ],
-					['b', [ { type: 'textStyle/italic' } ] ]
+					[ 'a', [ { type: 'textStyle/bold' } ] ],
+					[ 'b', [ { type: 'textStyle/italic' } ] ]
 				],
 				expected: []
 			},
 			{
 				msg: 'no common coverage due to un-annotated content node',
 				data: [
-					['a', [ { type: 'textStyle/bold' } ] ],
+					[ 'a', [ { type: 'textStyle/bold' } ] ],
 					{ type: 'inlineImage' },
 					{ type: '/inlineImage' }
 				],
@@ -277,7 +277,7 @@ QUnit.test( 'getAnnotationsFromRange', 1, function ( assert ) {
 			{
 				msg: 'branch node is ignored',
 				data: [
-					['a', [ { type: 'textStyle/bold' } ] ],
+					[ 'a', [ { type: 'textStyle/bold' } ] ],
 					{ type: 'paragraph' },
 					{ type: '/paragraph' }
 				],
@@ -286,8 +286,8 @@ QUnit.test( 'getAnnotationsFromRange', 1, function ( assert ) {
 			{
 				msg: 'annotations are collected using all with mismatched annotations',
 				data: [
-					['a', [ { type: 'textStyle/bold' } ] ],
-					['b', [ { type: 'textStyle/italic' } ] ]
+					[ 'a', [ { type: 'textStyle/bold' } ] ],
+					[ 'b', [ { type: 'textStyle/italic' } ] ]
 				],
 				all: true,
 				expected: [
@@ -299,8 +299,8 @@ QUnit.test( 'getAnnotationsFromRange', 1, function ( assert ) {
 				msg: 'annotations are collected using all, even with a plain character at the start',
 				data: [
 					'a',
-					['b', [ { type: 'textStyle/bold' } ] ],
-					['c', [ { type: 'textStyle/italic' } ] ]
+					[ 'b', [ { type: 'textStyle/bold' } ] ],
+					[ 'c', [ { type: 'textStyle/italic' } ] ]
 				],
 				all: true,
 				expected: [
@@ -311,9 +311,9 @@ QUnit.test( 'getAnnotationsFromRange', 1, function ( assert ) {
 			{
 				msg: 'annotations are collected using all, even with a plain character in the middle',
 				data: [
-					['a', [ { type: 'textStyle/bold' } ] ],
+					[ 'a', [ { type: 'textStyle/bold' } ] ],
 					'b',
-					['c', [ { type: 'textStyle/italic' } ] ]
+					[ 'c', [ { type: 'textStyle/italic' } ] ]
 				],
 				all: true,
 				expected: [
@@ -324,8 +324,8 @@ QUnit.test( 'getAnnotationsFromRange', 1, function ( assert ) {
 			{
 				msg: 'annotations are collected using all, even with a plain character at the end',
 				data: [
-					['a', [ { type: 'textStyle/bold' } ] ],
-					['b', [ { type: 'textStyle/italic' } ] ],
+					[ 'a', [ { type: 'textStyle/bold' } ] ],
+					[ 'b', [ { type: 'textStyle/italic' } ] ],
 					'c'
 				],
 				all: true,
@@ -336,26 +336,47 @@ QUnit.test( 'getAnnotationsFromRange', 1, function ( assert ) {
 			},
 			{
 				msg: 'no common coverage from all plain characters',
-				data: ['a', 'b'],
-				expected: {}
+				data: [ 'a', 'b' ],
+				expected: []
 			},
 			{
 				msg: 'no common coverage using all from all plain characters',
-				data: ['a', 'b'],
+				data: [ 'a', 'b' ],
 				all: true,
-				expected: {}
+				expected: []
+			},
+			{
+				msg: 'contents of ignoreChildren nodes are skipped',
+				data: [
+					{ type: 'exampleIgnoreChildren' },
+					[ 'a', [ { type: 'textStyle/bold' } ] ],
+					[ 'b', [ { type: 'textStyle/bold' } ] ],
+					{ type: '/exampleIgnoreChildren' }
+				],
+				expected: []
+			},
+			{
+				msg: 'contents of ignoreChildren nodes are skipped in all mode too',
+				data: [
+					{ type: 'exampleIgnoreChildren' },
+					[ 'a', [ { type: 'textStyle/bold' } ] ],
+					[ 'b', [ { type: 'textStyle/italic' } ] ],
+					{ type: '/exampleIgnoreChildren' }
+				],
+				all: true,
+				expected: []
 			}
 		];
 
 	QUnit.expect( cases.length );
 
 	for ( i = 0; i < cases.length; i++ ) {
-		data = ve.dm.example.preprocessAnnotations( cases[i].data );
+		data = ve.dm.example.preprocessAnnotations( cases[ i ].data );
 		doc = new ve.dm.Document( data );
 		assert.deepEqual(
-			doc.data.getAnnotationsFromRange( new ve.Range( 0, cases[i].data.length ), cases[i].all ).getIndexes(),
-			ve.dm.example.createAnnotationSet( doc.getStore(), cases[i].expected ).getIndexes(),
-			cases[i].msg
+			doc.data.getAnnotationsFromRange( new ve.Range( 0, cases[ i ].data.length ), cases[ i ].all ).getIndexes(),
+			ve.dm.example.createAnnotationSet( doc.getStore(), cases[ i ].expected ).getIndexes(),
+			cases[ i ].msg
 		);
 	}
 } );
@@ -369,13 +390,13 @@ QUnit.test( 'getAnnotatedRangeFromOffset', 1, function ( assert ) {
 					// 0
 					'a',
 					// 1
-					['b', [ { type: 'textStyle/bold' } ]],
+					[ 'b', [ { type: 'textStyle/bold' } ] ],
 					// 2
-					['o', [ { type: 'textStyle/bold' } ]],
+					[ 'o', [ { type: 'textStyle/bold' } ] ],
 					// 3
-					['l', [ { type: 'textStyle/bold' } ]],
+					[ 'l', [ { type: 'textStyle/bold' } ] ],
 					// 4
-					['d', [ { type: 'textStyle/bold' } ]],
+					[ 'd', [ { type: 'textStyle/bold' } ] ],
 					// 5
 					'w',
 					// 6
@@ -399,13 +420,13 @@ QUnit.test( 'getAnnotatedRangeFromOffset', 1, function ( assert ) {
 					// 2
 					'x',
 					// 3
-					['l', [ { type: 'link' } ]],
+					[ 'l', [ { type: 'link' } ] ],
 					// 4
-					['i', [ { type: 'link' } ]],
+					[ 'i', [ { type: 'link' } ] ],
 					// 5
-					['n', [ { type: 'link' } ]],
+					[ 'n', [ { type: 'link' } ] ],
 					// 6
-					['k', [ { type: 'link' } ]],
+					[ 'k', [ { type: 'link' } ] ],
 					// 7
 					'x',
 					// 8
@@ -423,21 +444,21 @@ QUnit.test( 'getAnnotatedRangeFromOffset', 1, function ( assert ) {
 					// 0
 					'h',
 					// 1
-					['b', [ { type: 'textStyle/bold' } ]],
+					[ 'b', [ { type: 'textStyle/bold' } ] ],
 					// 2
-					['o', [ { type: 'textStyle/bold' } ]],
+					[ 'o', [ { type: 'textStyle/bold' } ] ],
 					// 3
 					{
 						type: 'inlineImage',
 						attributes: { src: ve.dm.example.imgSrc },
-						annotations: [ { type: 'textStyle/bold' }]
+						annotations: [ { type: 'textStyle/bold' } ]
 					},
 					// 4
 					{ type: '/inlineImage' },
 					// 5
-					['l', [ { type: 'textStyle/bold' } ]],
+					[ 'l', [ { type: 'textStyle/bold' } ] ],
 					// 6
-					['d', [ { type: 'textStyle/bold' } ]],
+					[ 'd', [ { type: 'textStyle/bold' } ] ],
 					// 7
 					'i'
 				],
@@ -450,13 +471,13 @@ QUnit.test( 'getAnnotatedRangeFromOffset', 1, function ( assert ) {
 	QUnit.expect( cases.length );
 
 	for ( i = 0; i < cases.length; i++ ) {
-		data = ve.dm.example.preprocessAnnotations( cases[i].data );
+		data = ve.dm.example.preprocessAnnotations( cases[ i ].data );
 		doc = new ve.dm.Document( data );
 		assert.equalRange(
-			doc.data.getAnnotatedRangeFromOffset( cases[i].offset,
-				ve.dm.example.createAnnotation( cases[i].annotation ) ),
-			cases[i].expected,
-			cases[i].msg
+			doc.data.getAnnotatedRangeFromOffset( cases[ i ].offset,
+				ve.dm.example.createAnnotation( cases[ i ].annotation ) ),
+			cases[ i ].expected,
+			cases[ i ].msg
 		);
 	}
 } );
@@ -557,9 +578,9 @@ QUnit.test( 'trimOuterSpaceFromRange', function ( assert ) {
 	elementData = new ve.dm.ElementLinearData( linearData.getStore(), linearData.getData() );
 	for ( i = 0; i < cases.length; i++ ) {
 		assert.deepEqual(
-			elementData.trimOuterSpaceFromRange( cases[i].range ),
-			cases[i].trimmed,
-			cases[i].msg
+			elementData.trimOuterSpaceFromRange( cases[ i ].range ),
+			cases[ i ].trimmed,
+			cases[ i ].msg
 		);
 	}
 } );
@@ -631,8 +652,8 @@ QUnit.test( 'isContentOffset', function ( assert ) {
 		right = data.getData( i ) ? ( data.getData( i ).type || data.getCharacterData( i ) ) : '[end]';
 		assert.strictEqual(
 			data.isContentOffset( i ),
-			cases[i].expected,
-			cases[i].msg + ' (' + left + '|' + right + ' @ ' + i + ')'
+			cases[ i ].expected,
+			cases[ i ].msg + ' (' + left + '|' + right + ' @ ' + i + ')'
 		);
 	}
 } );
@@ -669,34 +690,34 @@ QUnit.test( 'isStructuralOffset', function ( assert ) {
 			{ type: '/table' }
 		] ),
 		cases = [
-			{ msg: 'left of document', expected: [true, true] },
-			{ msg: 'begining of content branch', expected: [false, false] },
-			{ msg: 'left of non-text inline leaf', expected: [false, false] },
-			{ msg: 'inside non-text inline leaf', expected: [false, false] },
-			{ msg: 'right of non-text inline leaf', expected: [false, false] },
-			{ msg: 'between characters', expected: [false, false] },
-			{ msg: 'end of content branch', expected: [false, false] },
-			{ msg: 'between content branches', expected: [true, true] },
-			{ msg: 'inside emtpy content branch', expected: [false, false] },
-			{ msg: 'between content branches', expected: [true, true] },
-			{ msg: 'begining of content branch, left of inline leaf', expected: [false, false] },
-			{ msg: 'inside content branch with non-text inline leaf', expected: [false, false] },
-			{ msg: 'end of content branch, right of inline leaf', expected: [false, false] },
-			{ msg: 'between content, non-content branches', expected: [true, true] },
-			{ msg: 'between parent, child branches, descending', expected: [true, false] },
-			{ msg: 'inside empty non-content branch', expected: [true, true] },
-			{ msg: 'between parent, child branches, ascending', expected: [true, false] },
-			{ msg: 'between non-content branch, non-content leaf', expected: [true, true] },
-			{ msg: 'inside non-content leaf', expected: [false, false] },
-			{ msg: 'between non-content branches', expected: [true, true] },
-			{ msg: 'between non-content branches', expected: [true, false] },
-			{ msg: 'between non-content branches', expected: [true, false] },
-			{ msg: 'inside non-content branch before non-content leaf', expected: [true, true] },
-			{ msg: 'inside non-content leaf', expected: [false, false] },
-			{ msg: 'inside non-content branch after non-content leaf', expected: [true, true] },
-			{ msg: 'between non-content branches', expected: [true, false] },
-			{ msg: 'between non-content branches', expected: [true, false] },
-			{ msg: 'right of document', expected: [true, true] }
+			{ msg: 'left of document', expected: [ true, true ] },
+			{ msg: 'begining of content branch', expected: [ false, false ] },
+			{ msg: 'left of non-text inline leaf', expected: [ false, false ] },
+			{ msg: 'inside non-text inline leaf', expected: [ false, false ] },
+			{ msg: 'right of non-text inline leaf', expected: [ false, false ] },
+			{ msg: 'between characters', expected: [ false, false ] },
+			{ msg: 'end of content branch', expected: [ false, false ] },
+			{ msg: 'between content branches', expected: [ true, true ] },
+			{ msg: 'inside emtpy content branch', expected: [ false, false ] },
+			{ msg: 'between content branches', expected: [ true, true ] },
+			{ msg: 'begining of content branch, left of inline leaf', expected: [ false, false ] },
+			{ msg: 'inside content branch with non-text inline leaf', expected: [ false, false ] },
+			{ msg: 'end of content branch, right of inline leaf', expected: [ false, false ] },
+			{ msg: 'between content, non-content branches', expected: [ true, true ] },
+			{ msg: 'between parent, child branches, descending', expected: [ true, false ] },
+			{ msg: 'inside empty non-content branch', expected: [ true, true ] },
+			{ msg: 'between parent, child branches, ascending', expected: [ true, false ] },
+			{ msg: 'between non-content branch, non-content leaf', expected: [ true, true ] },
+			{ msg: 'inside non-content leaf', expected: [ false, false ] },
+			{ msg: 'between non-content branches', expected: [ true, true ] },
+			{ msg: 'between non-content branches', expected: [ true, false ] },
+			{ msg: 'between non-content branches', expected: [ true, false ] },
+			{ msg: 'inside non-content branch before non-content leaf', expected: [ true, true ] },
+			{ msg: 'inside non-content leaf', expected: [ false, false ] },
+			{ msg: 'inside non-content branch after non-content leaf', expected: [ true, true ] },
+			{ msg: 'between non-content branches', expected: [ true, false ] },
+			{ msg: 'between non-content branches', expected: [ true, false ] },
+			{ msg: 'right of document', expected: [ true, true ] }
 		];
 	QUnit.expect( ( data.getLength() + 1 ) * 2 );
 	for ( i = 0; i < cases.length; i++ ) {
@@ -704,27 +725,27 @@ QUnit.test( 'isStructuralOffset', function ( assert ) {
 		right = data.getData( i ) ? ( data.getData( i ).type || data.getCharacterData( i ) ) : '[end]';
 		assert.strictEqual(
 			data.isStructuralOffset( i ),
-			cases[i].expected[0],
-			cases[i].msg + ' (' + left + '|' + right + ' @ ' + i + ')'
+			cases[ i ].expected[ 0 ],
+			cases[ i ].msg + ' (' + left + '|' + right + ' @ ' + i + ')'
 		);
 		assert.strictEqual(
 			data.isStructuralOffset( i, true ),
-			cases[i].expected[1],
-			cases[i].msg + ', unrestricted (' + left + '|' + right + ' @ ' + i + ')'
+			cases[ i ].expected[ 1 ],
+			cases[ i ].msg + ', unrestricted (' + left + '|' + right + ' @ ' + i + ')'
 		);
 	}
 } );
 
 QUnit.test( 'getCharacterData', function ( assert ) {
 	var i,
-		data = [{ type: 'paragraph' }, 'a', ['b', [0]], { type: '/paragraph' }],
-		expected = ['', 'a', 'b', ''],
+		data = [ { type: 'paragraph' }, 'a', [ 'b', [ 0 ] ], { type: '/paragraph' } ],
+		expected = [ '', 'a', 'b', '' ],
 		linearData = new ve.dm.ElementLinearData( new ve.dm.IndexValueStore(), data );
 
 	QUnit.expect( data.length );
 	for ( i = 0; i < data.length; i++ ) {
 		assert.strictEqual(
-			linearData.getCharacterData( i ), expected[i]
+			linearData.getCharacterData( i ), expected[ i ]
 		);
 	}
 } );
@@ -746,30 +767,30 @@ QUnit.test( 'isContentData', 1, function ( assert ) {
 		cases = [
 			{
 				msg: 'simple paragraph',
-				data: [{ type: 'paragraph' }, 'a', { type: '/paragraph' }],
+				data: [ { type: 'paragraph' }, 'a', { type: '/paragraph' } ],
 				expected: false
 			},
 			{
 				msg: 'plain text',
-				data: ['a', 'b', 'c'],
+				data: [ 'a', 'b', 'c' ],
 				expected: true
 			},
 			{
 				msg: 'annotated text',
-				data: [['a', { '{"type:"bold"}': { type: 'bold' } } ]],
+				data: [ [ 'a', { '{"type:"bold"}': { type: 'bold' } } ] ],
 				expected: true
 			},
 			{
 				msg: 'non-text leaf',
-				data: ['a', { type: 'inlineImage' }, { type: '/inlineImage' }, 'c'],
+				data: [ 'a', { type: 'inlineImage' }, { type: '/inlineImage' }, 'c' ],
 				expected: true
 			}
 		];
 	QUnit.expect( cases.length );
 	for ( i = 0; i < cases.length; i++ ) {
-		data = new ve.dm.ElementLinearData( new ve.dm.IndexValueStore(), cases[i].data );
+		data = new ve.dm.ElementLinearData( new ve.dm.IndexValueStore(), cases[ i ].data );
 		assert.strictEqual(
-			data.isContentData(), cases[i].expected, cases[i].msg
+			data.isContentData(), cases[ i ].expected, cases[ i ].msg
 		);
 	}
 } );
@@ -790,7 +811,7 @@ QUnit.test( 'getRelativeOffset', function ( assert ) {
 			msg: 'document with all valid offsets returns offset + distance',
 			offset: 0,
 			distance: 2,
-			data: ['a', 'b'],
+			data: [ 'a', 'b' ],
 			callback: function () {
 				return true;
 			},
@@ -799,15 +820,15 @@ QUnit.test( 'getRelativeOffset', function ( assert ) {
 	];
 	QUnit.expect( cases.length );
 	for ( i = 0; i < cases.length; i++ ) {
-		data = new ve.dm.ElementLinearData( new ve.dm.IndexValueStore(), cases[i].data );
+		data = new ve.dm.ElementLinearData( new ve.dm.IndexValueStore(), cases[ i ].data );
 		assert.strictEqual(
 			data.getRelativeOffset(
-				cases[i].offset,
-				cases[i].distance,
-				cases[i].callback
+				cases[ i ].offset,
+				cases[ i ].distance,
+				cases[ i ].callback
 			),
-			cases[i].expected,
-			cases[i].msg
+			cases[ i ].expected,
+			cases[ i ].msg
 		);
 	}
 } );
@@ -920,14 +941,14 @@ QUnit.test( 'getRelativeContentOffset', function ( assert ) {
 				expected: 3
 			},
 			{
-				msg: 'Skips over nested handlesOwnChildren nodes',
+				msg: 'Skips over nested ignoreChildren nodes',
 				doc: annDoc,
 				offset: 10,
 				distance: 1,
 				expected: 24
 			},
 			{
-				msg: 'Skips over nested handlesOwnChildren nodes (reverse)',
+				msg: 'Skips over nested ignoreChildren nodes (reverse)',
 				doc: annDoc,
 				offset: 23,
 				distance: -1,
@@ -936,11 +957,11 @@ QUnit.test( 'getRelativeContentOffset', function ( assert ) {
 		];
 	QUnit.expect( cases.length );
 	for ( i = 0; i < cases.length; i++ ) {
-		doc = cases[i].doc || simpleDoc;
+		doc = cases[ i ].doc || simpleDoc;
 		assert.strictEqual(
-			doc.data.getRelativeContentOffset( cases[i].offset, cases[i].distance ),
-			cases[i].expected,
-			cases[i].msg
+			doc.data.getRelativeContentOffset( cases[ i ].offset, cases[ i ].distance ),
+			cases[ i ].expected,
+			cases[ i ].msg
 		);
 	}
 } );
@@ -994,9 +1015,9 @@ QUnit.test( 'getNearestContentOffset', function ( assert ) {
 	QUnit.expect( cases.length );
 	for ( i = 0; i < cases.length; i++ ) {
 		assert.strictEqual(
-			doc.data.getNearestContentOffset( cases[i].offset, cases[i].direction ),
-			cases[i].expected,
-			cases[i].msg
+			doc.data.getNearestContentOffset( cases[ i ].offset, cases[ i ].direction ),
+			cases[ i ].expected,
+			cases[ i ].msg
 		);
 	}
 } );
@@ -1104,10 +1125,10 @@ QUnit.test( 'getRelativeStructuralOffset', function ( assert ) {
 	for ( i = 0; i < cases.length; i++ ) {
 		assert.strictEqual(
 			doc.data.getRelativeStructuralOffset(
-				cases[i].offset, cases[i].distance, cases[i].unrestricted
+				cases[ i ].offset, cases[ i ].distance, cases[ i ].unrestricted
 			),
-			cases[i].expected,
-			cases[i].msg
+			cases[ i ].expected,
+			cases[ i ].msg
 		);
 	}
 } );
@@ -1222,16 +1243,16 @@ QUnit.test( 'getNearestStructuralOffset', function ( assert ) {
 	for ( i = 0; i < cases.length; i++ ) {
 		assert.strictEqual(
 			doc.data.getNearestStructuralOffset(
-				cases[i].offset, cases[i].direction, cases[i].unrestricted
+				cases[ i ].offset, cases[ i ].direction, cases[ i ].unrestricted
 			),
-			cases[i].expected,
-			cases[i].msg
+			cases[ i ].expected,
+			cases[ i ].msg
 		);
 	}
 } );
 
-QUnit.test( 'getNearestWordRange', function ( assert ) {
-	var i, data, range, word,
+QUnit.test( 'getWordRange', function ( assert ) {
+	var i, data, elementLinearData, range, word,
 		store = new ve.dm.IndexValueStore(),
 		cases = [
 			{
@@ -1340,12 +1361,48 @@ QUnit.test( 'getNearestWordRange', function ( assert ) {
 				phrase: '维基百科',
 				msg: 'Hanzi characters (cursor in middle)',
 				offset: 2,
-				expected: ''
+				expected: '基'
 			},
 			{
 				phrase: '维基百科',
 				msg: 'Hanzi characters (cursor at end)',
 				offset: 4,
+				expected: '科'
+			},
+			{
+				phrase: 'a b',
+				msg: 'Single-char word before cursor',
+				offset: 1,
+				expected: 'a'
+			},
+			{
+				phrase: 'a b',
+				msg: 'Single-char word after cursor',
+				offset: 2,
+				expected: 'b'
+			},
+			{
+				phrase: '佢地嘅𨋢壞咗',
+				msg: 'Surrogate-pair word character before cursor',
+				offset: 5,
+				expected: '𨋢'
+			},
+			{
+				phrase: '"𨋢"=lip1',
+				msg: 'Surrogate-pair word character after cursor',
+				offset: 1,
+				expected: '𨋢'
+			},
+			{
+				phrase: '"\uD83D\uDE00"=GRINNING_FACE',
+				msg: 'Surrogate-pair non-word character before cursor',
+				offset: 3,
+				expected: ''
+			},
+			{
+				phrase: '"\uD83D\uDE00"=GRINNING_FACE',
+				msg: 'Surrogate-pair non-word character after cursor',
+				offset: 1,
 				expected: ''
 			},
 			{
@@ -1363,42 +1420,41 @@ QUnit.test( 'getNearestWordRange', function ( assert ) {
 		];
 	QUnit.expect( cases.length );
 	for ( i = 0; i < cases.length; i++ ) {
-		data = new ve.dm.ElementLinearData( store, cases[i].phrase.split( '' ) );
-		range = data.getNearestWordRange( cases[i].offset );
-		word = cases[i].phrase.substring( range.start, range.end );
-		assert.strictEqual( word, cases[i].expected,
-			cases[i].msg + ': ' +
-			cases[i].phrase.substring( 0, cases[i].offset ) + '│' +
-			cases[i].phrase.substring( cases[i].offset, cases[i].phrase.length ) +
-			' → ' + cases[i].expected
+		// Construct the text (inside a paragraph, because getNearestContentOffset assumes
+		// text cannot be at the very start or end of the data).
+		data = cases[ i ].phrase.split( '' );
+		data.unshift( { type: 'paragraph' } );
+		data.push( { type: '/paragraph' } );
+		elementLinearData = new ve.dm.ElementLinearData( store, data );
+		// Adjust offsets to account for the paragraph tag
+		range = elementLinearData.getWordRange( cases[ i ].offset + 1 );
+		word = cases[ i ].phrase.substring( range.start - 1, range.end - 1 );
+		assert.strictEqual( word, cases[ i ].expected,
+			cases[ i ].msg + ': ' +
+			cases[ i ].phrase.substring( 0, cases[ i ].offset ) + '│' +
+			cases[ i ].phrase.substring( cases[ i ].offset, cases[ i ].phrase.length ) +
+			' → ' + cases[ i ].expected
 		);
 	}
 } );
 
 QUnit.test( 'sanitize', function ( assert ) {
-	var i, model, data,
+	var i, model, data, actualStore,
 		count = 0,
-		bold = new ve.dm.BoldAnnotation( { type: 'textStyle/bold', attributes: { nodeName: 'b' } } ),
-		boldWithClass = new ve.dm.BoldAnnotation( {
-			type: 'textStyle/bold',
-			attributes: { nodeName: 'b' },
-			htmlAttributes: [ {
-				values: { class: 'bar' }
-			} ]
-		} ),
+		bold = { type: 'textStyle/bold', attributes: { nodeName: 'b' } },
 		cases = [
 			{
 				html: '<p style="text-shadow: 0 0 1px #000;">F<b style="color:blue;">o</b>o</p>',
 				data: [
 					{ type: 'paragraph' },
-					'F', ['o', [0]], 'o',
+					'F', [ 'o', [ 0 ] ], 'o',
 					{ type: '/paragraph' },
 					{ type: 'internalList' },
 					{ type: '/internalList' }
 				],
 				store: [ bold ],
-				rules: { removeHtmlAttributes: true },
-				msg: 'HTML attributes removed'
+				rules: { removeOriginalDomElements: true },
+				msg: 'Original DOM elements removed'
 			},
 			{
 				html: '<p>B<span rel="ve:Alien">a</span>r<img src="//upload.wikimedia.org/wikipedia/commons/b/b3/Wikipedia-logo-v2-en.svg"/></p>',
@@ -1409,7 +1465,7 @@ QUnit.test( 'sanitize', function ( assert ) {
 					{ type: 'internalList' },
 					{ type: '/internalList' }
 				],
-				rules: { blacklist: ['alienInline', 'inlineImage'] },
+				rules: { blacklist: [ 'alienInline', 'inlineImage' ] },
 				msg: 'Blacklisted nodes removed'
 			},
 			{
@@ -1421,7 +1477,7 @@ QUnit.test( 'sanitize', function ( assert ) {
 					{ type: 'internalList' },
 					{ type: '/internalList' }
 				],
-				plainText: true,
+				rules: { plainText: true },
 				msg: 'Annotations removed in plainText mode'
 			},
 			{
@@ -1439,7 +1495,7 @@ QUnit.test( 'sanitize', function ( assert ) {
 					{ type: 'internalList' },
 					{ type: '/internalList' }
 				],
-				plainText: true,
+				rules: { plainText: true },
 				msg: 'Headings converted to paragraph is plainText mode'
 			},
 			{
@@ -1457,37 +1513,6 @@ QUnit.test( 'sanitize', function ( assert ) {
 				msg: 'Empty content nodes are stripped'
 			},
 			{
-				html: '<p style="font-size: 2em;"><b style="color:red;">Foo</b></p>',
-				data: [
-					{ type: 'paragraph' },
-					['F', [0]], ['o', [0]], ['o', [0]],
-					{ type: '/paragraph' },
-					{ type: 'internalList' },
-					{ type: '/internalList' }
-				],
-				store: [ bold ],
-				rules: { removeStyles: true },
-				msg: 'Style attribute removed and htmlAttributes unset'
-			},
-			{
-				html: '<p style="font-size: 2em;" class="foo"><b style="color:red;" class="bar">Foo</b></p>',
-				data: [
-					{
-						type: 'paragraph',
-						htmlAttributes: [ {
-							values: { class: 'foo' }
-						} ]
-					},
-					['F', [0]], ['o', [0]], ['o', [0]],
-					{ type: '/paragraph' },
-					{ type: 'internalList' },
-					{ type: '/internalList' }
-				],
-				store: [ boldWithClass ],
-				rules: { removeStyles: true },
-				msg: 'Style attribute removed and other attributes preserved'
-			},
-			{
 				html: '<p><span style="color:red;" class="red">Foo</span></p>',
 				data: [
 					{ type: 'paragraph' },
@@ -1496,49 +1521,41 @@ QUnit.test( 'sanitize', function ( assert ) {
 					{ type: 'internalList' },
 					{ type: '/internalList' }
 				],
-				rules: { removeHtmlAttributes: true },
-				msg: 'Span empty after HTML attributes removed is stripped'
-			},
-			{
-				html: '<p><span style="color:red;">Foo</span></p>',
-				data: [
-					{ type: 'paragraph' },
-					'F', 'o', 'o',
-					{ type: '/paragraph' },
-					{ type: 'internalList' },
-					{ type: '/internalList' }
-				],
-				rules: { removeStyles: true },
-				msg: 'Span empty after styles removed is stripped'
+				rules: { removeOriginalDomElements: true },
+				msg: 'Span stripped when removing original DOM elements'
 			}
 		];
 
 	for ( i = 0; i < cases.length; i++ ) {
 		count++;
-		if ( cases[i].store ) {
+		if ( cases[ i ].store ) {
 			count++;
 		}
 	}
 	QUnit.expect( count );
 
 	for ( i = 0; i < cases.length; i++ ) {
-		model = ve.dm.converter.getModelFromDom( ve.createDocumentFromHtml( cases[i].html ) );
+		model = ve.dm.converter.getModelFromDom( ve.createDocumentFromHtml( cases[ i ].html ) );
 		data = model.data;
-		data.sanitize( cases[i].rules || {}, cases[i].plainText );
-		assert.deepEqualWithDomElements( data.data, cases[i].data, cases[i].msg + ': data' );
-		if ( cases[i].store ) {
-			assert.deepEqualWithDomElements( data.getStore().valueStore, cases[i].store, cases[i].msg + ': store' );
+		data.sanitize( cases[ i ].rules || {} );
+		assert.equalLinearData( data.data, cases[ i ].data, cases[ i ].msg + ': data' );
+		if ( cases[ i ].store ) {
+			/*jshint loopfunc:true */
+			actualStore = data.getStore().valueStore.map( function ( ann ) {
+				return ann.element;
+			} );
+			assert.equalLinearData( actualStore, cases[ i ].store, cases[ i ].msg + ': store' );
 		}
 	}
 } );
 
 QUnit.test( 'countNonInternalElements', function ( assert ) {
-	var i, d,
+	var i, data,
 		cases = [
 			{
 				data: [
 					{ type: 'paragraph' },
-					'F', ['o', [0]], 'o',
+					'F', [ 'o', [ 0 ] ], 'o',
 					{ type: '/paragraph' },
 					{ type: 'internalList' },
 					{ type: '/internalList' }
@@ -1567,18 +1584,79 @@ QUnit.test( 'countNonInternalElements', function ( assert ) {
 	QUnit.expect( cases.length );
 
 	for ( i = 0; i < cases.length; i++ ) {
-		d = new ve.dm.ElementLinearData( new ve.dm.IndexValueStore(), cases[i].data );
-		assert.strictEqual( d.countNonInternalElements(), cases[i].expected, cases[i].msg );
+		data = new ve.dm.ElementLinearData( new ve.dm.IndexValueStore(), cases[ i ].data );
+		assert.strictEqual( data.countNonInternalElements(), cases[ i ].expected, cases[ i ].msg );
 	}
 } );
 
-QUnit.test( 'getUsedStoreValuesFromRange', function ( assert ) {
+QUnit.test( 'hasContent', function ( assert ) {
+	var i, data,
+		cases = [
+			{
+				data: [],
+				expected: false,
+				msg: 'Completely empty document has no content'
+			},
+			{
+				data: [
+					{ type: 'paragraph' },
+					{ type: '/paragraph' },
+					{ type: 'internalList' },
+					{ type: '/internalList' }
+				],
+				expected: false,
+				msg: 'Real world empty document has no content'
+			},
+			{
+				data: [
+					{ type: 'paragraph' },
+					'F', [ 'o', [ 0 ] ], 'o',
+					{ type: '/paragraph' },
+					{ type: 'internalList' },
+					{ type: '/internalList' }
+				],
+				expected: true,
+				msg: 'Document with text has content'
+			},
+			{
+				data: [
+					{ type: 'paragraph' },
+					{ type: '/paragraph' },
+					{ type: 'internalList' },
+					{ type: 'internalItem' },
+					{ type: 'paragraph' },
+					'a',
+					{ type: '/paragraph' },
+					{ type: '/internalItem' },
+					{ type: '/internalList' }
+				],
+				expected: false,
+				msg: 'Empty document with internal data has no content'
+			}
+		];
+
+	QUnit.expect( cases.length );
+
+	for ( i = 0; i < cases.length; i++ ) {
+		data = new ve.dm.ElementLinearData( new ve.dm.IndexValueStore(), cases[ i ].data );
+		assert.strictEqual( data.hasContent(), cases[ i ].expected, cases[ i ].msg );
+	}
+} );
+
+QUnit.test( 'getUsedStoreValues', function ( assert ) {
 	var i,
 		bold = new ve.dm.BoldAnnotation( { type: 'textStyle/bold', attributes: { nodeName: 'b' } } ),
 		italic = new ve.dm.ItalicAnnotation( { type: 'textStyle/italic', attributes: { nodeName: 'i' } } ),
 		linearData = ve.dm.example.preprocessAnnotations( ve.copy( ve.dm.example.data ) ),
 		elementData = new ve.dm.ElementLinearData( linearData.getStore(), linearData.getData() ),
 		cases = [
+			{
+				msg: 'no range (whole document) contains everything',
+				expected: {
+					0: bold,
+					1: italic
+				}
+			},
 			{
 				msg: '2-4 contains bold and italic',
 				range: new ve.Range( 2, 4 ),
@@ -1611,9 +1689,9 @@ QUnit.test( 'getUsedStoreValuesFromRange', function ( assert ) {
 	QUnit.expect( cases.length );
 	for ( i = 0; i < cases.length; i++ ) {
 		assert.deepEqual(
-			elementData.getUsedStoreValuesFromRange( cases[i].range ),
-			cases[i].expected,
-			cases[i].msg
+			elementData.getUsedStoreValues( cases[ i ].range ),
+			cases[ i ].expected,
+			cases[ i ].msg
 		);
 	}
 
@@ -1624,9 +1702,9 @@ QUnit.test( 'remapStoreIndexes', function ( assert ) {
 		cases = [
 			{
 				before: [
-					['F', [0]],
-					['o', [1]],
-					['o', [2]]
+					[ 'F', [ 0 ] ],
+					[ 'o', [ 1 ] ],
+					[ 'o', [ 2 ] ]
 				],
 				mapping: {
 					0: 1,
@@ -1634,17 +1712,17 @@ QUnit.test( 'remapStoreIndexes', function ( assert ) {
 					2: 3
 				},
 				after: [
-					['F', [1]],
-					['o', [2]],
-					['o', [3]]
+					[ 'F', [ 1 ] ],
+					[ 'o', [ 2 ] ],
+					[ 'o', [ 3 ] ]
 				],
 				msg: 'Annotated text: increment indexes'
 			},
 			{
 				before: [
-					['F', [0]],
-					['o', [1]],
-					['o', [2]]
+					[ 'F', [ 0 ] ],
+					[ 'o', [ 1 ] ],
+					[ 'o', [ 2 ] ]
 				],
 				mapping: {
 					0: 1,
@@ -1652,17 +1730,17 @@ QUnit.test( 'remapStoreIndexes', function ( assert ) {
 					2: 2
 				},
 				after: [
-					['F', [1]],
-					['o', [0]],
-					['o', [2]]
+					[ 'F', [ 1 ] ],
+					[ 'o', [ 0 ] ],
+					[ 'o', [ 2 ] ]
 				],
 				msg: 'Annotated text: swap 0 and 1'
 			},
 			{
 				before: [
-					['F', [0, 1]],
-					['o', [1, 2]],
-					['o', [2, 3]]
+					[ 'F', [ 0, 1 ] ],
+					[ 'o', [ 1, 2 ] ],
+					[ 'o', [ 2, 3 ] ]
 				],
 				mapping: {
 					0: 3,
@@ -1671,15 +1749,15 @@ QUnit.test( 'remapStoreIndexes', function ( assert ) {
 					3: 0
 				},
 				after: [
-					['F', [3, 2]],
-					['o', [2, 1]],
-					['o', [1, 0]]
+					[ 'F', [ 3, 2 ] ],
+					[ 'o', [ 2, 1 ] ],
+					[ 'o', [ 1, 0 ] ]
 				],
 				msg: 'Annotated text: multiple annotations mapped, order preserved'
 			},
 			{
 				before: [
-					{ type: 'alienInline', annotations: [0] },
+					{ type: 'alienInline', annotations: [ 0 ] },
 					{ type: '/alienInline' }
 				],
 				mapping: {
@@ -1687,7 +1765,7 @@ QUnit.test( 'remapStoreIndexes', function ( assert ) {
 					1: 0
 				},
 				after: [
-					{ type: 'alienInline', annotations: [1] },
+					{ type: 'alienInline', annotations: [ 1 ] },
 					{ type: '/alienInline' }
 				],
 				msg: 'Annotated node'
@@ -1696,14 +1774,14 @@ QUnit.test( 'remapStoreIndexes', function ( assert ) {
 				before: [
 					{ type: 'paragraph' },
 					'F',
-					['o', [2, 1, 3]],
-					['o', [4]],
-					{ type: 'alienInline', annotations: [5, 0] },
+					[ 'o', [ 2, 1, 3 ] ],
+					[ 'o', [ 4 ] ],
+					{ type: 'alienInline', annotations: [ 5, 0 ] },
 					{ type: '/alienInline' },
-					['B', [5, 0]],
-					['a', [7]],
+					[ 'B', [ 5, 0 ] ],
+					[ 'a', [ 7 ] ],
 					'r',
-					{ type: 'alienInline', annotations: [6] },
+					{ type: 'alienInline', annotations: [ 6 ] },
 					{ type: '/alienInline' },
 					{ type: '/paragraph' }
 				],
@@ -1721,14 +1799,14 @@ QUnit.test( 'remapStoreIndexes', function ( assert ) {
 				after: [
 					{ type: 'paragraph' },
 					'F',
-					['o', [2, 4, 8]],
-					['o', [5]],
-					{ type: 'alienInline', annotations: [7, 1] },
+					[ 'o', [ 2, 4, 8 ] ],
+					[ 'o', [ 5 ] ],
+					{ type: 'alienInline', annotations: [ 7, 1 ] },
 					{ type: '/alienInline' },
-					['B', [7, 1]],
-					['a', [6]],
+					[ 'B', [ 7, 1 ] ],
+					[ 'a', [ 6 ] ],
 					'r',
-					{ type: 'alienInline', annotations: [3] },
+					{ type: 'alienInline', annotations: [ 3 ] },
 					{ type: '/alienInline' },
 					{ type: '/paragraph' }
 				],
@@ -1738,13 +1816,13 @@ QUnit.test( 'remapStoreIndexes', function ( assert ) {
 
 	QUnit.expect( cases.length );
 	for ( i = 0; i < cases.length; i++ ) {
-		data = new ve.dm.ElementLinearData( new ve.dm.IndexValueStore(), cases[i].before );
-		data.remapStoreIndexes( cases[i].mapping );
-		assert.deepEqual( data.data, cases[i].after, cases[i].msg );
+		data = new ve.dm.ElementLinearData( new ve.dm.IndexValueStore(), cases[ i ].before );
+		data.remapStoreIndexes( cases[ i ].mapping );
+		assert.deepEqual( data.data, cases[ i ].after, cases[ i ].msg );
 	}
 } );
 
-// TODO: ve.dm.ElementLinearData.static.compareUnannotated
+// TODO: ve.dm.ElementLinearData.static.compareElements
 // TODO: ve.dm.ElementLinearData#getAnnotationIndexesFromOffset
 // TODO: ve.dm.ElementLinearData#setAnnotationsAtOffset
 // TODO: ve.dm.ElementLinearData#getCharacterData

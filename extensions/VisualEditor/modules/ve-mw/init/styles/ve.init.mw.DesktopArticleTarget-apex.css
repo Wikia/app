@@ -1,0 +1,28 @@
+/*!
+ * VisualEditor MediaWiki Initialization DesktopArticleTarget Apex skin styles.
+ *
+ * @copyright 2011-2015 VisualEditor Team and others; see AUTHORS.txt
+ * @license The MIT License (MIT); see LICENSE.txt
+ */
+
+.skin-apex .ve-ui-surface {
+	margin-top: 0.8em;
+}
+
+.ve-ui-overlay-global {
+	/* Match skin's font-size */
+	font-size: 0.8em;
+}
+
+.ve-init-mw-desktopArticleTarget-toolbar {
+	margin: -0.6em -3em 0.8em -3em;
+	position: relative;
+}
+
+.ve-init-mw-desktopArticleTarget-toolbar .oo-ui-toolbar-bar {
+	line-height: 1.5em;
+}
+
+.oo-ui-menuSelectWidget-item:hover {
+	background-color: #d5eaed;
+}

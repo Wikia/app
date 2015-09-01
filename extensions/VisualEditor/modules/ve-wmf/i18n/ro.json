@@ -4,17 +4,20 @@
 			"AlimanRuna",
 			"Firilacroco",
 			"Minisarm",
-			"Stelistcristi"
+			"Stelistcristi",
+			"Amire80",
+			"아라"
 		]
 	},
 	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|EditorVizual]]",
 	"tag-visualeditor-description": "Modificare efectuată cu [[{{MediaWiki:visualeditor-descriptionpagelink}}|EditorulVizual]]",
 	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|EditorVizual: Verificare]]",
-	"tag-visualeditor-needcheck-description": "Modificare efectuată cu [[{{MediaWiki:visualeditor-descriptionpagelink}}|EditorulVizual]], unde sistemul a detectat că textul wiki a suferit eventuale modificări nedorite.",
+	"tag-visualeditor-needcheck-description": "Modificare efectuată cu [[{{MediaWiki:visualeditor-descriptionpagelink}}|editorul vizual]], unde sistemul a detectat că textul wiki a suferit eventuale modificări nedorite.",
 	"tag-visualeditor-switched": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|EditorVizual: Comutat]]",
-	"tag-visualeditor-switched-description": "Utilizatorul a început modificarea cu EditorulVizual, după care a comutat la editorul de text wiki.",
+	"tag-visualeditor-switched-description": "Utilizatorul a început modificarea cu editorul vizual, după care a comutat la editorul de text wiki.",
 	"visualeditor-feedback-link": "Project:EditorVizual/Feedback",
-	"visualeditor-feedback-tool": "Lăsați o părere",
+	"visualeditor-feedback-tool": "Lăsați o părere despre acest software",
 	"visualeditor-help-label": "Citiți ghidul utilizatorului",
+	"visualeditor-help-link": "mw:Special:MyLanguage/Help:VisualEditor/User guide",
 	"visualeditor-help-title": "Ghid pentru folosirea editorului"
 }

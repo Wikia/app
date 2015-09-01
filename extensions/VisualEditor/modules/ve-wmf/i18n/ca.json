@@ -10,17 +10,20 @@
 			"Vriullop",
 			"Davidpar",
 			"Kippelboy",
-			"Unapersona"
+			"Unapersona",
+			"아라",
+			"F3RaN"
 		]
 	},
-	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|Editor visual]]",
+	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|editor visual]]",
 	"tag-visualeditor-description": "Modificació feta amb l'[[{{MediaWiki:visualeditor-descriptionpagelink}}|editor visual]]",
-	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|Editor visual: a comprovar]]",
+	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|editor visual: a comprovar]]",
 	"tag-visualeditor-needcheck-description": "Edició feta amb l'[[{{MediaWiki:visualeditor-descriptionpagelink}}|editor visual]], en la qual el sistema ha detectat que el text wiki pot contenir canvis no desitjats.",
-	"tag-visualeditor-switched": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|Editor Visual: Canviat]]",
-	"tag-visualeditor-switched-description": "L'usuari va començar a editar utilitzant VisualEditor i després va canviar a l'editor wikitext.",
+	"tag-visualeditor-switched": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|editor visual: canviat]]",
+	"tag-visualeditor-switched-description": "L'usuari ha començar a editar utilitzant l'editor visual i després ha canviat a l'editor wikitext.",
 	"visualeditor-feedback-link": "Project:Editor visual/Comentaris",
-	"visualeditor-feedback-tool": "Comentaris",
+	"visualeditor-feedback-tool": "Deixar comentaris sobre aquest programari",
 	"visualeditor-help-label": "Llegiu la guia d'usuari",
+	"visualeditor-help-link": "mw:Special:MyLanguage/Help:VisualEditor/User guide",
 	"visualeditor-help-title": "Guia sobre la utilització de l'editor"
 }

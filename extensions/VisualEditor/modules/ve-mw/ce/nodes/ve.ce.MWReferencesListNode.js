@@ -1,7 +1,7 @@
 /*!
  * VisualEditor ContentEditable MWReferencesListNode class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2015 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -28,9 +28,9 @@ ve.ce.MWReferencesListNode = function VeCeMWReferencesListNode( model, config ) 
 	this.listNode = null;
 
 	// DOM changes
-	this.$element.addClass( 've-ce-mwReferencesListNode references' );
-	this.$reflist = this.$( '<ol class="references"></ol>' );
-	this.$refmsg = this.$( '<p>' )
+	this.$element.addClass( 've-ce-mwReferencesListNode' );
+	this.$reflist = $( '<ol class="mw-references"></ol>' );
+	this.$refmsg = $( '<p>' )
 		.addClass( 've-ce-mwReferencesListNode-muted' );
 
 	// Events
@@ -107,7 +107,7 @@ ve.ce.MWReferencesListNode.prototype.onTeardown = function () {
  */
 ve.ce.MWReferencesListNode.prototype.onInternalListUpdate = function ( groupsChanged ) {
 	// Only update if this group has been changed
-	if ( ve.indexOf( this.model.getAttribute( 'listGroup' ), groupsChanged ) !== -1 ) {
+	if ( groupsChanged.indexOf( this.model.getAttribute( 'listGroup' ) ) !== -1 ) {
 		this.update();
 	}
 };
@@ -143,7 +143,8 @@ ve.ce.MWReferencesListNode.prototype.onListNodeUpdate = function () {
  * Update the references list.
  */
 ve.ce.MWReferencesListNode.prototype.update = function () {
-	var i, j, iLen, jLen, index, firstNode, key, keyedNodes, $li, modelNode, viewNode,
+	var i, j, n, iLen, jLen, index, firstNode, key, keyedNodes, modelNode, viewNode,
+		$li, $refSpan, $link,
 		internalList = this.model.getDocument().internalList,
 		refGroup = this.model.getAttribute( 'refGroup' ),
 		listGroup = this.model.getAttribute( 'listGroup' ),
@@ -151,6 +152,12 @@ ve.ce.MWReferencesListNode.prototype.update = function () {
 
 	this.$reflist.detach().empty();
 	this.$refmsg.detach();
+
+	if ( refGroup !== '' ) {
+		this.$reflist.attr( 'data-mw-group', refGroup );
+	} else {
+		this.$reflist.removeAttr( 'data-mw-group' );
+	}
 
 	if ( !nodes || !nodes.indexOrder.length ) {
 		if ( refGroup !== '' ) {
@@ -160,15 +167,20 @@ ve.ce.MWReferencesListNode.prototype.update = function () {
 		}
 		this.$element.append( this.$refmsg );
 	} else {
+		n = 0;
 		for ( i = 0, iLen = nodes.indexOrder.length; i < iLen; i++ ) {
-			index = nodes.indexOrder[i];
-			firstNode = nodes.firstNodes[index];
+			index = nodes.indexOrder[ i ];
+			firstNode = nodes.firstNodes[ index ];
 
-			key = internalList.keys[index];
-			keyedNodes = nodes.keyedNodes[key];
-			// Exclude references defined inside the references list node
+			key = internalList.keys[ index ];
+			keyedNodes = nodes.keyedNodes[ key ];
 			/*jshint loopfunc:true */
 			keyedNodes = keyedNodes.filter( function ( node ) {
+				// Exclude placeholder references
+				if ( node.getAttribute( 'placeholder' ) ) {
+					return false;
+				}
+				// Exclude references defined inside the references list node
 				while ( ( node = node.parent ) && node !== null ) {
 					if ( node instanceof ve.dm.MWReferencesListNode ) {
 						return false;
@@ -180,17 +192,32 @@ ve.ce.MWReferencesListNode.prototype.update = function () {
 			if ( !keyedNodes.length ) {
 				continue;
 			}
+			// Only increment counter for non-empty groups
+			n++;
 
-			$li = this.$( '<li>' );
+			$li = $( '<li>' );
 
 			if ( keyedNodes.length > 1 ) {
+				$refSpan = $( '<span rel="mw:referencedBy">' );
 				for ( j = 0, jLen = keyedNodes.length; j < jLen; j++ ) {
-					$li.append(
-						this.$( '<sup>' ).append(
-							this.$( '<a>' ).text( ( i + 1 ) + '.' + j )
-						)
-					).append( ' ' );
+					$link = $( '<a>' ).append(
+						$( '<span class="mw-linkback-text">' )
+							.text( ( j + 1 ) + ' ' )
+					);
+					if ( refGroup !== '' ) {
+						$link.attr( 'data-mw-group', refGroup );
+					}
+					$refSpan.append( $link );
 				}
+				$li.append( $refSpan );
+			} else {
+				$link = $( '<a rel="mw:referencedBy">' ).append(
+					$( '<span class="mw-linkback-text">' ).text( '↑ ' )
+				);
+				if ( refGroup !== '' ) {
+					$link.attr( 'data-mw-group', refGroup );
+				}
+				$li.append( $link );
 			}
 
 			// Generate reference HTML from first item in key
@@ -208,9 +235,9 @@ ve.ce.MWReferencesListNode.prototype.update = function () {
 					);
 				}
 				$li.append(
-					this.$( '<span>' )
+					$( '<span>' )
 						.addClass( 'reference-text' )
-						.append( viewNode.$element.show() )
+						.append( viewNode.$element )
 				);
 				// HACK: See bug 62682 - We happen to know that destroy doesn't abort async
 				// rendering for generated content nodes, but we really can't gaurantee that in the
@@ -219,7 +246,7 @@ ve.ce.MWReferencesListNode.prototype.update = function () {
 				viewNode.destroy();
 			} else {
 				$li.append(
-					this.$( '<span>' )
+					$( '<span>' )
 						.addClass( 've-ce-mwReferencesListNode-muted' )
 						.text( ve.msg( 'visualeditor-referenceslist-missingref' ) )
 				);

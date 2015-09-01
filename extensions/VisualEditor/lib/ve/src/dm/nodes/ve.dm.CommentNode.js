@@ -1,7 +1,7 @@
 /*!
  * VisualEditor DataModel CommentNode class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 /**
@@ -31,16 +31,19 @@ OO.mixinClass( ve.dm.CommentNode, ve.dm.FocusableNode );
 
 ve.dm.CommentNode.static.isContent = true;
 
-ve.dm.CommentNode.static.storeHtmlAttributes = false;
+ve.dm.CommentNode.static.preserveHtmlAttributes = false;
 
 ve.dm.CommentNode.static.toDataElement = function ( domElements, converter ) {
-	var text = domElements[0].nodeType === Node.COMMENT_NODE ?
-		domElements[0].data :
-		domElements[0].getAttribute( 'data-ve-comment' );
+	var text;
+	if ( domElements[ 0 ].nodeType === Node.COMMENT_NODE ) {
+		// Decode HTML entities, safely (no elements permitted inside textarea)
+		text = $( '<textarea/>' ).html( domElements[ 0 ].data ).text();
+	} else {
+		text = domElements[ 0 ].getAttribute( 'data-ve-comment' );
+	}
 	return {
-		// Only use CommentNode for comments in ContentBranchNodes; otherwise use
-		// CommentMetaItem
-		type: converter.isExpectingContent() && text !== '' ? 'comment' : 'commentMeta',
+		// Disallows comment nodes between table rows and such
+		type: converter.isValidChildNodeType( 'comment' ) && text !== '' ? 'comment' : 'commentMeta',
 		attributes: {
 			text: text
 		}
@@ -48,15 +51,22 @@ ve.dm.CommentNode.static.toDataElement = function ( domElements, converter ) {
 };
 
 ve.dm.CommentNode.static.toDomElements = function ( dataElement, doc, converter ) {
+	var span, data;
 	if ( converter.isForClipboard() ) {
 		// Fake comment node
-		var span = doc.createElement( 'span' );
+		span = doc.createElement( 'span' );
 		span.setAttribute( 'rel', 've:Comment' );
 		span.setAttribute( 'data-ve-comment', dataElement.attributes.text );
+		span.appendChild( doc.createTextNode( '\u00a0' ) );
 		return [ span ];
 	} else {
 		// Real comment node
-		return [ doc.createComment( dataElement.attributes.text ) ];
+		// Encode '&', and certain '-' and '>' characters (see T95040)
+		data = dataElement.attributes.text.replace( /^[->]|--|-$|&/g, function ( m ) {
+			return m.slice( 0, m.length - 1 ) +
+				'&#' + m.charCodeAt( m.length - 1 ) + ';';
+		} );
+		return [ doc.createComment( data ) ];
 	}
 };
 

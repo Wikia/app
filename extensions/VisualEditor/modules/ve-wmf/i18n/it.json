@@ -13,17 +13,22 @@
 			"Raoli",
 			"Una giornata uggiosa '94",
 			"Maria victoria",
-			"Lucas2"
+			"Lucas2",
+			"Amire80",
+			"아라",
+			"Mpiva",
+			"Fringio"
 		]
 	},
 	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]]",
 	"tag-visualeditor-description": "Modifica eseguita usando [[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]]",
 	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor: controllare]]",
-	"tag-visualeditor-needcheck-description": "Modifica eseguita utilizzando [[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]] dove il sistema ha rilevato possibili modifiche non volute nel wikitesto.",
+	"tag-visualeditor-needcheck-description": "Modifica eseguita utilizzando l'[[{{MediaWiki:visualeditor-descriptionpagelink}}|editor visuale]] dove il sistema ha rilevato possibili modifiche non volute nel wikitesto.",
 	"tag-visualeditor-switched": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor: commutato]]",
-	"tag-visualeditor-switched-description": "L'utente ha iniziato a modificare utilizzando VisualEditor, poi è passato all'editor di wikitesto.",
+	"tag-visualeditor-switched-description": "L'utente ha iniziato a modificare utilizzando l'editor visuale, poi è passato all'editor di wikitesto.",
 	"visualeditor-feedback-link": "Project:VisualEditor/Commenti",
-	"visualeditor-feedback-tool": "Commenta la nuova interfaccia",
+	"visualeditor-feedback-tool": "Lascia un feedback su questo software",
 	"visualeditor-help-label": "Leggi la guida utente",
+	"visualeditor-help-link": "mw:Special:MyLanguage/Help:VisualEditor/User guide",
 	"visualeditor-help-title": "Guida per l'utilizzo dell'editor"
 }

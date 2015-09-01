@@ -1,7 +1,7 @@
 /*!
  * VisualEditor UserInterface MWReferenceSearchWidget class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2015 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -36,13 +36,6 @@ ve.ui.MWReferenceSearchWidget = function VeUiMWReferenceSearchWidget( config ) {
 
 OO.inheritClass( ve.ui.MWReferenceSearchWidget, OO.ui.SearchWidget );
 
-/* Events */
-
-/**
- * @event select
- * @param {ve.dm.MWReferenceModel|null} data Reference model, null if no item is selected
- */
-
 /* Methods */
 
 /**
@@ -60,30 +53,8 @@ ve.ui.MWReferenceSearchWidget.prototype.onQueryChange = function () {
 };
 
 /**
- * Handle select widget select events.
- *
- * @method
- * @param {OO.ui.OptionWidget} item Selected item
- * @fires select
- */
-ve.ui.MWReferenceSearchWidget.prototype.onResultsSelect = function ( item ) {
-	var data;
-
-	if ( item ) {
-		data = item.getData();
-		// Resolve indexed values
-		if ( this.index[data] ) {
-			data = this.index[data].reference;
-		}
-	} else {
-		data = null;
-	}
-
-	this.emit( 'select', data );
-};
-
-/**
  * Set the internal list and check if it contains any references
+ *
  * @param {ve.dm.InternalList} internalList Internal list
  */
 ve.ui.MWReferenceSearchWidget.prototype.setInternalList = function ( internalList ) {
@@ -97,13 +68,13 @@ ve.ui.MWReferenceSearchWidget.prototype.setInternalList = function ( internalLis
 	this.internalList.connect( this, { update: 'onInternalListUpdate' } );
 	this.internalList.getListNode().connect( this, { update: 'onListNodeUpdate' } );
 
-	groupNames = ve.getObjectKeys( groups );
+	groupNames = Object.keys( groups );
 	for ( i = 0, iLen = groupNames.length; i < iLen; i++ ) {
-		groupName = groupNames[i];
+		groupName = groupNames[ i ];
 		if ( groupName.lastIndexOf( 'mwReference/' ) !== 0 ) {
 			continue;
 		}
-		if ( groups[groupName].indexOrder.length ) {
+		if ( groups[ groupName ].indexOrder.length ) {
 			this.indexEmpty = false;
 			return;
 		}
@@ -120,8 +91,9 @@ ve.ui.MWReferenceSearchWidget.prototype.setInternalList = function ( internalLis
  * @param {string[]} groupsChanged A list of groups which have changed in this transaction
  */
 ve.ui.MWReferenceSearchWidget.prototype.onInternalListUpdate = function ( groupsChanged ) {
-	for ( var i = 0, len = groupsChanged.length; i < len; i++ ) {
-		if ( groupsChanged[i].indexOf( 'mwReference/' ) === 0 ) {
+	var i, len;
+	for ( i = 0, len = groupsChanged.length; i < len; i++ ) {
+		if ( groupsChanged[ i ].indexOf( 'mwReference/' ) === 0 ) {
 			this.built = false;
 			break;
 		}
@@ -145,48 +117,59 @@ ve.ui.MWReferenceSearchWidget.prototype.onListNodeUpdate = function () {
  * @method
  */
 ve.ui.MWReferenceSearchWidget.prototype.buildIndex = function () {
+	var n, i, iLen, j, jLen, refModel, group, groupName, groupNames, view, text, firstNodes, indexOrder,
+		refGroup, refNode, matches, name, citation,
+		groups = this.internalList.getNodeGroups();
+
 	if ( this.built ) {
 		return;
 	}
-
-	var i, iLen, j, jLen, ref, group, groupName, groupNames, view, text, firstNodes, indexOrder,
-		refGroup, refNode, matches, name, citation,
-		groups = this.internalList.getNodeGroups();
 
 	function extractAttrs() {
 		text += ' ' + this.getAttribute( 'href' );
 	}
 
 	this.index = [];
-	groupNames = ve.getObjectKeys( groups ).sort();
+	groupNames = Object.keys( groups ).sort();
 
 	for ( i = 0, iLen = groupNames.length; i < iLen; i++ ) {
-		groupName = groupNames[i];
+		groupName = groupNames[ i ];
 		if ( groupName.lastIndexOf( 'mwReference/' ) !== 0 ) {
 			continue;
 		}
-		group = groups[groupName];
+		group = groups[ groupName ];
 		firstNodes = group.firstNodes;
 		indexOrder = group.indexOrder;
+
+		n = 0;
 		for ( j = 0, jLen = indexOrder.length; j < jLen; j++ ) {
-			refNode = firstNodes[indexOrder[j]];
-			ref = ve.dm.MWReferenceModel.static.newFromReferenceNode( refNode );
-			view = new ve.ce.InternalItemNode( this.internalList.getItemNode( ref.getListIndex() ) );
-
-			// HACK: PHP parser doesn't wrap single lines in a paragraph
-			if ( view.$element.children().length === 1 && view.$element.children( 'p' ).length === 1 ) {
-				// unwrap inner
-				view.$element.children().replaceWith( view.$element.children().contents() );
+			refNode = firstNodes[ indexOrder[ j ] ];
+			// Exclude placeholder references
+			if ( refNode.getAttribute( 'placeholder' ) ) {
+				continue;
 			}
+			// Only increment counter for real references
+			n++;
+			refModel = ve.dm.MWReferenceModel.static.newFromReferenceNode( refNode );
+			view = new ve.ui.PreviewWidget(
+				refModel.getDocument().getInternalList().getItemNode( refModel.getListIndex() )
+			);
 
-			refGroup = ref.getGroup();
-			citation = ( refGroup && refGroup.length ? refGroup + ' ' : '' ) + ( j + 1 );
-			matches = ref.getListKey().match( /^literal\/(.*)$/ );
-			name = matches && matches[1] || '';
+			refGroup = refModel.getGroup();
+			citation = ( refGroup && refGroup.length ? refGroup + ' ' : '' ) + n;
+			matches = refModel.getListKey().match( /^literal\/(.*)$/ );
+			name = matches && matches[ 1 ] || '';
 			// Hide previously auto-generated reference names
 			if ( name.match( /^:[0-9]+$/ ) ) {
 				name = '';
 			}
+
+			// TODO: At some point we need to make sure this text is updated in
+			// case the view node is still rendering. This shouldn't happen because
+			// all references are supposed to be in the store and therefore are
+			// immediately rendered, but we shouldn't trust that on principle to
+			// account for edge cases.
+
 			// Make visible text, citation and reference name searchable
 			text = [ view.$element.text().toLowerCase(), citation, name ].join( ' ' );
 			// Make URLs searchable
@@ -195,11 +178,10 @@ ve.ui.MWReferenceSearchWidget.prototype.buildIndex = function () {
 			this.index.push( {
 				$element: view.$element,
 				text: text,
-				reference: ref,
+				reference: refModel,
 				citation: citation,
 				name: name
 			} );
-			view.destroy();
 		}
 	}
 
@@ -212,7 +194,7 @@ ve.ui.MWReferenceSearchWidget.prototype.buildIndex = function () {
 /**
  * Check whether buildIndex will create an empty index based on the current internalList.
  *
- * @returns {boolean} Index is empty
+ * @return {boolean} Index is empty
  */
 ve.ui.MWReferenceSearchWidget.prototype.isIndexEmpty = function () {
 	return this.indexEmpty;
@@ -230,18 +212,17 @@ ve.ui.MWReferenceSearchWidget.prototype.addResults = function () {
 		items = [];
 
 	for ( i = 0, len = this.index.length; i < len; i++ ) {
-		item = this.index[i];
+		item = this.index[ i ];
 		if ( item.text.indexOf( query ) >= 0 ) {
-			$citation = this.$( '<div>' )
+			$citation = $( '<div>' )
 				.addClass( 've-ui-mwReferenceSearchWidget-citation' )
 				.text( '[' + item.citation + ']' );
-			$name = this.$( '<div>' )
+			$name = $( '<div>' )
 				.addClass( 've-ui-mwReferenceSearchWidget-name' )
 				.text( item.name );
 			items.push(
 				new ve.ui.MWReferenceResultWidget( {
-					$: this.$,
-					data: i,
+					data: item.reference,
 					label: $citation.add( $name ).add( item.$element )
 				} )
 			);

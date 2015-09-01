@@ -8,15 +8,19 @@
 			"Rapsar",
 			"Talha Samil Cakir",
 			"TurkishStyles",
-			"Sayginer"
+			"Sayginer",
+			"Arystanbek",
+			"Meelo"
 		]
 	},
 	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|Görsel Düzenleyici]]",
 	"tag-visualeditor-description": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|Görsel Düzenleyici]] kullanarak düzenleyin",
 	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|Görsel Düzenleyici: Doğrula]]",
 	"tag-visualeditor-needcheck-description": "Sistem [[{{MediaWiki:visualeditor-descriptionpagelink}}|görsel düzenleyici]] ile düzenleyemeyeceğiniz, ancak kaynağı değiştir bağlantısıyla editör ile yapabileceğiniz değişiklik yaptığınızı tespit etti.",
+	"tag-visualeditor-switched": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|Görsel Düzenleyici: Değiştirildi]]",
+	"tag-visualeditor-switched-description": "Kullanıcı düzenlemek için VisualEditor viki editöre sonra değişti kullanmaya başladı.",
 	"visualeditor-feedback-link": "Project:Görsel Düzenleyici/Geri bildirim",
-	"visualeditor-feedback-tool": "Geri bildirim bırak",
+	"visualeditor-feedback-tool": "Bu yazılım hakkında geri bildirim bırakın",
 	"visualeditor-help-label": "Kullanıcı kılavuzunu okuyun",
 	"visualeditor-help-title": "Editörü nasıl kullanacağınız hakkındaki kılavuz"
 }

@@ -1,0 +1,16 @@
+/*!
+ * VisualEditor UserInterface CommentContextItem styles.
+ *
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
+ */
+
+.ve-ui-commentContextItem .ve-ui-linearContextItem-body {
+	padding: 0.5em 0.5em 0 0.5em;
+	margin: 0 0.5em 1em 0.5em;
+	overflow: auto;
+	max-height: 10em;
+	font-family: 'Courier New', 'Courier', monospace;
+	white-space: pre-wrap;
+	line-height: 1.25em;
+	color: #555;
+}

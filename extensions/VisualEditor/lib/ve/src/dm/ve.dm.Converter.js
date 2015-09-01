@@ -1,7 +1,7 @@
 /*!
  * VisualEditor DataModel Converter class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 /**
@@ -26,13 +26,14 @@ ve.dm.Converter = function VeDmConverter( modelRegistry, nodeFactory, annotation
 	this.store = null;
 	this.internalList = null;
 	this.forClipboard = null;
+	this.fromClipboard = null;
 	this.contextStack = null;
 };
 
 /* Static Properties */
 
 /**
- * List of HTML attribute names that {#buildHtmlAttributeList} should store computed values for.
+ * List of HTML attribute names that {#renderHtmlAttributeList} should use computed values for.
  * @type {string[]}
  */
 ve.dm.Converter.computedAttributes = [ 'href', 'src' ];
@@ -45,7 +46,7 @@ ve.dm.Converter.computedAttributes = [ 'href', 'src' ];
  * @static
  * @param {string} text Plain text to convert
  * @param {ve.dm.AnnotationSet} [annotations] Annotations to apply
- * @returns {Array} Linear model data, one element per character
+ * @return {Array} Linear model data, one element per character
  */
 ve.dm.Converter.getDataContentFromText = function ( text, annotations ) {
 	var i, len,
@@ -57,7 +58,7 @@ ve.dm.Converter.getDataContentFromText = function ( text, annotations ) {
 	// Apply annotations to characters
 	for ( i = 0, len = characters.length; i < len; i++ ) {
 		// Just store the annotations' indexes from the index-value store
-		characters[i] = [characters[i], annotations.getIndexes().slice()];
+		characters[ i ] = [ characters[ i ], annotations.getIndexes().slice() ];
 	}
 	return characters;
 };
@@ -129,97 +130,60 @@ ve.dm.Converter.openAndCloseAnnotations = function ( currentSet, targetSet, open
 };
 
 /**
- * Build an HTML attribute list for attribute preservation.
- *
- * The attribute list is an array of objects, one for each DOM element. Each object contains a
- * map with attribute keys and values in .values, a map with a subset of the attribute keys and
- * their computed values in .computed (see {#computedAttributes}), and an array of attribute lists
- * for the child nodes in .children .
+ * Copy attributes from one set of DOM elements to another.
  *
  * @static
- * @param {HTMLElement[]} domElements Array of DOM elements to build attribute list for
- * @param {boolean|string|RegExp|Array|Object} spec Attribute specification, see ve.dm.Model
- * @param {boolean} [deep=false] If true, recurse into children. If false, .children will be empty
- * @param {Object[]} [attributeList] Existing attribute list to populate; used for recursion
- * @returns {Object[]|undefined} Attribute list, or undefined if empty
- */
-ve.dm.Converter.buildHtmlAttributeList = function ( domElements, spec, deep, attributeList ) {
-	var i, ilen, j, jlen, domAttributes, childList, attrName,
-		empty = true;
-	attributeList = attributeList || [];
-	for ( i = 0, ilen = domElements.length; i < ilen; i++ ) {
-		domAttributes = domElements[i].attributes || [];
-		attributeList[i] = { values: {} };
-		for ( j = 0, jlen = domAttributes.length; j < jlen; j++ ) {
-			attrName = domAttributes[j].name;
-			if ( ve.dm.Model.matchesAttributeSpec( attrName, spec ) ) {
-				attributeList[i].values[attrName] = domAttributes[j].value;
-				if ( ve.indexOf( attrName, this.computedAttributes ) !== -1 ) {
-					if ( !attributeList[i].computed ) {
-						attributeList[i].computed = {};
-					}
-					attributeList[i].computed[attrName] = domElements[i][attrName];
-				}
-				empty = false;
-			}
-		}
-		if ( deep ) {
-			attributeList[i].children = [];
-			childList = ve.dm.Converter.buildHtmlAttributeList(
-				// Use .children rather than .childNodes so we don't mess around with things that
-				// can't have attributes anyway. Unfortunately, non-element nodes have .children
-				// set to undefined so we have to coerce it to an array in that case.
-				domElements[i].children || [], spec, deep, attributeList[i].children
-			);
-			if ( childList ) {
-				empty = false;
-			} else {
-				delete attributeList[i].children;
-			}
-		}
-	}
-	return empty ? undefined : attributeList;
-};
-
-/**
- * Render an attribute list onto a set of DOM elements.
- *
- * Attributes set to undefined will be removed. The attribute specification restricts which
- * attributes are rendered.
- *
- * @static
- * @param {Object[]} attributeList Attribute list, see buildHtmlAttributeList()
- * @param {HTMLElement[]} domElements Array of DOM elements to render onto
- * @param {boolean|string|RegExp|Array|Object} [spec=true] Attribute specification, see ve.dm.Model
+ * @param {HTMLElement[]} originalDomElements Array of DOM elements to render from
+ * @param {HTMLElement[]} targetDomElements Array of DOM elements to render onto
+ * @param {boolean|Function} [filter=true] Attribute filter
  * @param {boolean} [computed=false] If true, use the computed values of attributes where available
- * @param {boolean} [overwrite=false] If true, overwrite attributes that are already set
+ * @param {boolean} [deep=false] Recurse into child nodes
  */
-ve.dm.Converter.renderHtmlAttributeList = function ( attributeList, domElements, spec, computed, overwrite ) {
-	var i, ilen, key, values, value;
-	if ( spec === undefined ) {
-		spec = true;
+ve.dm.Converter.renderHtmlAttributeList = function ( originalDomElements, targetDomElements, filter, computed, deep ) {
+	var i, ilen, j, jlen, attrs, value;
+	if ( filter === undefined ) {
+		filter = true;
 	}
-	if ( spec === false ) {
+	if ( filter === false ) {
 		return;
 	}
-	for ( i = 0, ilen = attributeList.length; i < ilen; i++ ) {
-		if ( !domElements[i] ) {
+
+	for ( i = 0, ilen = originalDomElements.length; i < ilen; i++ ) {
+		if ( !targetDomElements[ i ] ) {
 			continue;
 		}
-		values = attributeList[i].values;
-		for ( key in values ) {
-			if ( ve.dm.Model.matchesAttributeSpec( key, spec ) ) {
-				value = computed && attributeList[i].computed && attributeList[i].computed[key] || values[key];
-				if ( value === undefined ) {
-					domElements[i].removeAttribute( key );
-				} else if ( overwrite || !domElements[i].hasAttribute( key ) ) {
-					domElements[i].setAttribute( key, value );
+		attrs = originalDomElements[ i ].attributes;
+		if ( !attrs ) {
+			continue;
+		}
+		for ( j = 0, jlen = attrs.length; j < jlen; j++ ) {
+			if (
+				!targetDomElements[ i ].hasAttribute( attrs[ j ].name ) &&
+				( filter === true || filter( attrs[ j ].name ) )
+			) {
+				if ( computed && ve.dm.Converter.computedAttributes.indexOf( attrs[ j ].name ) !== -1 ) {
+					value = originalDomElements[ i ][ attrs[ j ].name ];
+				} else {
+					value = attrs[ j ].value;
 				}
+				targetDomElements[ i ].setAttribute( attrs[ j ].name, value );
+			}
+
+			if ( filter === true || filter( attrs[ j ].name ) ) {
+				value = computed && ve.dm.Converter.computedAttributes.indexOf( attrs[ j ].name ) !== -1 ?
+					originalDomElements[ i ][ attrs[ j ].name ] :
+					attrs[ j ].value;
 			}
 		}
-		if ( attributeList[i].children ) {
+
+		// Descend into element children only (skipping text nodes and comment nodes)
+		if ( deep && originalDomElements[ i ].children.length > 0 ) {
 			ve.dm.Converter.renderHtmlAttributeList(
-				attributeList[i].children, domElements[i].children, spec, computed, overwrite
+				originalDomElements[ i ].children,
+				targetDomElements[ i ].children,
+				filter,
+				computed,
+				true
 			);
 		}
 	}
@@ -231,7 +195,7 @@ ve.dm.Converter.renderHtmlAttributeList = function ( attributeList, domElements,
  * Check whether this converter instance is currently inside a getModelFromDom() conversion.
  *
  * @method
- * @returns {boolean} Whether we're converting
+ * @return {boolean} Whether we're converting
  */
 ve.dm.Converter.prototype.isConverting = function () {
 	return this.contextStack !== null;
@@ -241,7 +205,7 @@ ve.dm.Converter.prototype.isConverting = function () {
  * Get the IndexValueStore used for the current conversion.
  *
  * @method
- * @returns {ve.dm.IndexValueStore|null} Current store, or null if not converting
+ * @return {ve.dm.IndexValueStore|null} Current store, or null if not converting
  */
 ve.dm.Converter.prototype.getStore = function () {
 	return this.store;
@@ -251,7 +215,7 @@ ve.dm.Converter.prototype.getStore = function () {
  * Get the HTML document currently being converted
  *
  * @method
- * @returns {HTMLDocument|null} HTML document being converted, or null if not converting
+ * @return {HTMLDocument|null} HTML document being converted, or null if not converting
  */
 ve.dm.Converter.prototype.getHtmlDocument = function () {
 	return this.doc;
@@ -261,7 +225,7 @@ ve.dm.Converter.prototype.getHtmlDocument = function () {
  * Get the HTML document we are converting data for
  *
  * @method
- * @returns {HTMLDocument|null} HTML document being converted for, or null if not converting
+ * @return {HTMLDocument|null} HTML document being converted for, or null if not converting
  */
 ve.dm.Converter.prototype.getTargetHtmlDocument = function () {
 	return this.targetDoc;
@@ -271,20 +235,30 @@ ve.dm.Converter.prototype.getTargetHtmlDocument = function () {
  * Is the current conversion for the clipboard
  *
  * @method
- * @returns {boolean|null} The conversion is for the clipboard, or null if not converting
+ * @return {boolean|null} The conversion is for the clipboard, or null if not converting
  */
 ve.dm.Converter.prototype.isForClipboard = function () {
 	return this.forClipboard;
 };
 
 /**
+ * Is the current conversion from the clipboard
+ *
+ * @method
+ * @return {boolean|null} The conversion is from the clipboard, or null if not converting
+ */
+ve.dm.Converter.prototype.isFromClipboard = function () {
+	return this.fromClipboard;
+};
+
+/**
  * Get the current conversion context. This is the recursion state of getDataFromDomSubtree().
  *
  * @method
- * @returns {Object|null} Context object, or null if not converting
+ * @return {Object|null} Context object, or null if not converting
  */
 ve.dm.Converter.prototype.getCurrentContext = function () {
-	return this.contextStack === null ? null : this.contextStack[this.contextStack.length - 1];
+	return this.contextStack === null ? null : this.contextStack[ this.contextStack.length - 1 ];
 };
 
 /**
@@ -292,7 +266,7 @@ ve.dm.Converter.prototype.getCurrentContext = function () {
  * the current recursion level.
  *
  * @method
- * @returns {ve.dm.AnnotationSet|null} Annotation set, or null if not converting
+ * @return {ve.dm.AnnotationSet|null} Annotation set, or null if not converting
  */
 ve.dm.Converter.prototype.getActiveAnnotations = function () {
 	var context = this.getCurrentContext();
@@ -304,7 +278,7 @@ ve.dm.Converter.prototype.getActiveAnnotations = function () {
  * recursion level.
  *
  * @method
- * @returns {boolean|null} Boolean indicating whether content is expected, or null if not converting
+ * @return {boolean|null} Boolean indicating whether content is expected, or null if not converting
  */
 ve.dm.Converter.prototype.isExpectingContent = function () {
 	var context = this.getCurrentContext();
@@ -312,11 +286,28 @@ ve.dm.Converter.prototype.isExpectingContent = function () {
 };
 
 /**
+ * Whether the converter can currently accept a child node with the given type.
+ *
+ * @method
+ * @param {string} nodeType
+ * @return {boolean|null} Whether the node type is valid, or null if not converting
+ */
+ve.dm.Converter.prototype.isValidChildNodeType = function ( nodeType ) {
+	var childTypes,
+		context = this.getCurrentContext();
+	if ( !context ) {
+		return null;
+	}
+	childTypes = this.nodeFactory.getChildNodeTypes( context.branchType );
+	return ( childTypes === null || childTypes.indexOf( nodeType ) !== -1 );
+};
+
+/**
  * Whether the conversion is currently inside a wrapper paragraph generated by the converter.
  * Note that this is specific to the current recursion level.
  *
  * @method
- * @returns {boolean|null} Boolean indicating whether we're wrapping, or null if not converting
+ * @return {boolean|null} Boolean indicating whether we're wrapping, or null if not converting
  */
 ve.dm.Converter.prototype.isInWrapper = function () {
 	var context = this.getCurrentContext();
@@ -328,7 +319,7 @@ ve.dm.Converter.prototype.isInWrapper = function () {
  * level. If there is no active wrapper, this returns false.
  *
  * @method
- * @returns {boolean|null} Boolean indicating whether the wrapper can be closed, or null if not converting
+ * @return {boolean|null} Boolean indicating whether the wrapper can be closed, or null if not converting
  */
 ve.dm.Converter.prototype.canCloseWrapper = function () {
 	var context = this.getCurrentContext();
@@ -341,14 +332,14 @@ ve.dm.Converter.prototype.canCloseWrapper = function () {
  * This invokes the toDomElements function registered for the element type.
  *
  * @method
- * @param {Object|Array} dataElement Linear model element or data slice
+ * @param {Object|Array} dataElements Linear model element or data slice
  * @param {HTMLDocument} doc Document to create DOM elements in
  * @param {Node[]} [childDomElements] Array of child DOM elements to pass in (annotations only)
- * @returns {Node|boolean} DOM element, or false if the element cannot be converted
+ * @return {Node|boolean} DOM element, or false if the element cannot be converted
  */
 ve.dm.Converter.prototype.getDomElementsFromDataElement = function ( dataElements, doc, childDomElements ) {
 	var domElements,
-		dataElement = Array.isArray( dataElements ) ? dataElements[0] : dataElements,
+		dataElement = Array.isArray( dataElements ) ? dataElements[ 0 ] : dataElements,
 		nodeClass = this.modelRegistry.lookup( dataElement.type );
 
 	if ( !nodeClass ) {
@@ -361,17 +352,29 @@ ve.dm.Converter.prototype.getDomElementsFromDataElement = function ( dataElement
 	if ( !Array.isArray( domElements ) && !( nodeClass.prototype instanceof ve.dm.Annotation ) ) {
 		throw new Error( 'toDomElements() failed to return an array when converting element of type ' + dataElement.type );
 	}
-	if ( dataElement.htmlAttributes ) {
-		ve.dm.Converter.renderHtmlAttributeList( dataElement.htmlAttributes, domElements );
+	// Optimization: don't call renderHtmlAttributeList if returned domElements are equal to the originals
+	if ( dataElement.originalDomElements && !ve.isEqualDomElements( domElements, dataElement.originalDomElements ) ) {
+		ve.dm.Converter.renderHtmlAttributeList(
+			dataElement.originalDomElements,
+			domElements,
+			nodeClass.static.preserveHtmlAttributes,
+			// computed
+			false,
+			// deep
+			!( nodeClass instanceof ve.dm.Node ) ||
+				!this.nodeFactory.canNodeHaveChildren( dataElement.type ) ||
+				this.nodeFactory.doesNodeHandleOwnChildren( dataElement.type )
+		);
 	}
 	return domElements;
 };
 
 /**
  * Create a data element from a DOM element.
+ *
  * @param {ve.dm.Model} modelClass Model class to use for conversion
  * @param {Node[]} domElements DOM elements to convert
- * @returns {Object|Array|null} Data element or array of linear model data, or null to alienate
+ * @return {Object|Array|null} Data element or array of linear model data, or null to alienate
  */
 ve.dm.Converter.prototype.createDataElements = function ( modelClass, domElements ) {
 	var dataElements = modelClass.static.toDataElement( domElements, this );
@@ -382,6 +385,7 @@ ve.dm.Converter.prototype.createDataElements = function ( modelClass, domElement
 	if ( !Array.isArray( dataElements ) ) {
 		dataElements = [ dataElements ];
 	}
+	dataElements[ 0 ].originalDomElements = domElements;
 	return dataElements;
 };
 
@@ -390,7 +394,7 @@ ve.dm.Converter.prototype.createDataElements = function ( modelClass, domElement
  *
  * @method
  * @param {Object} dataAnnotation Annotation object
- * @returns {HTMLElement} HTML DOM node
+ * @return {HTMLElement} HTML DOM node
  */
 ve.dm.Converter.prototype.getDomElementFromDataAnnotation = function ( dataAnnotation, doc ) {
 	var htmlData = dataAnnotation.toHtml(),
@@ -402,22 +406,26 @@ ve.dm.Converter.prototype.getDomElementFromDataAnnotation = function ( dataAnnot
 
 /**
  * Convert an HTML document to a document model.
+ *
  * @param {HTMLDocument} doc HTML document to convert
- * @param {HTMLDocument} [targetDoc=doc] Target HTML document we are converting for, if different from doc
- * @param {string} [lang] Document language code
- * @param {string} [dir] Document directionality (ltr/rtl)
- * @returns {ve.dm.Document} Document model
+ * @param {Object} options Conversion options
+ * @param {HTMLDocument} [options.targetDoc=doc] Target HTML document we are converting for, if different from doc
+ * @param {boolean} [options.fromClipboard=false] Conversion is from clipboard
+ * @param {string} [options.lang] Document language code
+ * @param {string} [options.dir] Document directionality (ltr/rtl)
+ * @return {ve.dm.Document} Document model
  */
-ve.dm.Converter.prototype.getModelFromDom = function ( doc, targetDoc, lang, dir ) {
+ve.dm.Converter.prototype.getModelFromDom = function ( doc, options ) {
 	var linearData, refData, innerWhitespace,
 		store = new ve.dm.IndexValueStore(),
 		internalList = new ve.dm.InternalList();
 
-	targetDoc = targetDoc || doc;
+	options = options || {};
 
 	// Set up the converter state
 	this.doc = doc;
-	this.targetDoc = targetDoc;
+	this.targetDoc = options.targetDoc || doc;
+	this.fromClipboard = options.fromClipboard;
 	this.store = store;
 	this.internalList = internalList;
 	this.contextStack = [];
@@ -435,11 +443,12 @@ ve.dm.Converter.prototype.getModelFromDom = function ( doc, targetDoc, lang, dir
 	// Clear the state
 	this.doc = null;
 	this.targetDoc = null;
+	this.fromClipboard = null;
 	this.store = null;
 	this.internalList = null;
 	this.contextStack = null;
 
-	return new ve.dm.Document( linearData, doc, undefined, internalList, innerWhitespace, lang, dir );
+	return new ve.dm.Document( linearData, doc, undefined, internalList, innerWhitespace, options.lang, options.dir );
 };
 
 /**
@@ -452,7 +461,7 @@ ve.dm.Converter.prototype.getModelFromDom = function ( doc, targetDoc, lang, dir
  * @param {HTMLElement} domElement HTML element to convert
  * @param {Object} [wrapperElement] Data element to wrap the returned data in
  * @param {ve.dm.AnnotationSet} [annotationSet] Override the set of annotations to use
- * @returns {Array} Linear model data
+ * @return {Array} Linear model data
  */
 ve.dm.Converter.prototype.getDataFromDomClean = function ( domElement, wrapperElement, annotationSet ) {
 	var result, contextStack = this.contextStack;
@@ -470,9 +479,22 @@ ve.dm.Converter.prototype.getDataFromDomClean = function ( domElement, wrapperEl
  * @param {HTMLElement} domElement HTML element to convert
  * @param {Object} [wrapperElement] Data element to wrap the returned data in
  * @param {ve.dm.AnnotationSet} [annotationSet] Override the set of annotations to use
- * @returns {Array} Linear model data
+ * @return {Array} Linear model data
  */
 ve.dm.Converter.prototype.getDataFromDomSubtree = function ( domElement, wrapperElement, annotationSet ) {
+	var i, childNode, childNodes, childDataElements, text, matches,
+		wrappingParagraph, prevElement, childAnnotations, modelName, modelClass,
+		annotation, childIsContent, aboutGroup, emptyParagraph,
+		modelRegistry = this.modelRegistry,
+		data = [],
+		nextWhitespace = '',
+		wrappedWhitespace = '',
+		wrappedWhitespaceIndex,
+		wrappedMetaItems = [],
+		context = {},
+		prevContext = this.contextStack.length ?
+			this.contextStack[ this.contextStack.length - 1 ] : null;
+
 	/**
 	 * Add whitespace to an element at a specific offset.
 	 *
@@ -495,7 +517,7 @@ ve.dm.Converter.prototype.getDataFromDomSubtree = function ( domElement, wrapper
 		if ( !element.internal.whitespace ) {
 			element.internal.whitespace = [];
 		}
-		element.internal.whitespace[index] = whitespace;
+		element.internal.whitespace[ index ] = whitespace;
 	}
 	function processNextWhitespace( element ) {
 		// This function uses and changes nextWhitespace in the outer function's scope,
@@ -512,20 +534,20 @@ ve.dm.Converter.prototype.getDataFromDomSubtree = function ( domElement, wrapper
 			prev = wrappingParagraph;
 
 		for ( i = 0, len = wrappedMetaItems.length; i < len; i++ ) {
-			if ( wrappedMetaItems[i].type && wrappedMetaItems[i].type.charAt( 0 ) !== '/' ) {
-				if ( wrappedMetaItems[i].internal && wrappedMetaItems[i].internal.whitespace ) {
+			if ( wrappedMetaItems[ i ].type && wrappedMetaItems[ i ].type.charAt( 0 ) !== '/' ) {
+				if ( wrappedMetaItems[ i ].internal && wrappedMetaItems[ i ].internal.whitespace ) {
 					if ( whitespaceTreatment === 'restore' ) {
 						toInsert = toInsert.concat( ve.dm.Converter.getDataContentFromText(
-								wrappedMetaItems[i].internal.whitespace[0], context.annotations
+								wrappedMetaItems[ i ].internal.whitespace[ 0 ], context.annotations
 						) );
-						delete wrappedMetaItems[i].internal;
+						delete wrappedMetaItems[ i ].internal;
 					} else if ( whitespaceTreatment === 'fixup' ) {
-						addWhitespace( prev, 3, wrappedMetaItems[i].internal.whitespace[0] );
+						addWhitespace( prev, 3, wrappedMetaItems[ i ].internal.whitespace[ 0 ] );
 					}
 				}
-				prev = wrappedMetaItems[i];
+				prev = wrappedMetaItems[ i ];
 			}
-			toInsert.push( wrappedMetaItems[i] );
+			toInsert.push( wrappedMetaItems[ i ] );
 		}
 		if ( wrappedWhitespace !== '' && whitespaceTreatment === 'restore' ) {
 			// If we have wrapped whitespace, insert the wrapped meta items before it
@@ -554,7 +576,7 @@ ve.dm.Converter.prototype.getDataFromDomSubtree = function ( domElement, wrapper
 			// Remove wrappedWhitespace from data
 			data.splice( wrappedWhitespaceIndex, wrappedWhitespace.length );
 			// Add whitespace to the last sibling: either the last meta item or the wrapper paragraph
-			addWhitespace( wrappedMetaItems.length > 0 ? wrappedMetaItems[wrappedMetaItems.length - 2] : wrappingParagraph, 3, wrappedWhitespace );
+			addWhitespace( wrappedMetaItems.length > 0 ? wrappedMetaItems[ wrappedMetaItems.length - 2 ] : wrappingParagraph, 3, wrappedWhitespace );
 			nextWhitespace = wrappedWhitespace;
 		}
 		data.push( { type: '/paragraph' } );
@@ -593,7 +615,7 @@ ve.dm.Converter.prototype.getDataFromDomSubtree = function ( domElement, wrapper
 	function isAllInstanceOf( data, targetClass ) {
 		var i, type, itemClass;
 		for ( i = data.length - 1; i >= 0; i-- ) {
-			type = ve.dm.LinearData.static.getType( data[i] );
+			type = ve.dm.LinearData.static.getType( data[ i ] );
 			if ( type ) {
 				itemClass = modelRegistry.lookup( type ) || ve.dm.AlienNode;
 				if ( !( itemClass.prototype === targetClass.prototype || itemClass.prototype instanceof targetClass ) ) {
@@ -605,19 +627,6 @@ ve.dm.Converter.prototype.getDataFromDomSubtree = function ( domElement, wrapper
 		}
 		return true;
 	}
-
-	var i, childNode, childNodes, childDataElements, text, childTypes, matches,
-		wrappingParagraph, prevElement, childAnnotations, modelName, modelClass,
-		annotation, childIsContent, aboutGroup, htmlAttributes,
-		modelRegistry = this.modelRegistry,
-		data = [],
-		nextWhitespace = '',
-		wrappedWhitespace = '',
-		wrappedWhitespaceIndex,
-		wrappedMetaItems = [],
-		context = {},
-		prevContext = this.contextStack.length ?
-			this.contextStack[this.contextStack.length - 1] : null;
 
 	context.annotations = annotationSet || (
 		prevContext ? prevContext.annotations.clone() : new ve.dm.AnnotationSet( this.store )
@@ -638,7 +647,7 @@ ve.dm.Converter.prototype.getDataFromDomSubtree = function ( domElement, wrapper
 	}
 	// Add contents
 	for ( i = 0; i < domElement.childNodes.length; i++ ) {
-		childNode = domElement.childNodes[i];
+		childNode = domElement.childNodes[ i ];
 		switch ( childNode.nodeType ) {
 			case Node.ELEMENT_NODE:
 			case Node.COMMENT_NODE:
@@ -668,18 +677,12 @@ ve.dm.Converter.prototype.getDataFromDomSubtree = function ( domElement, wrapper
 					childDataElements = this.createDataElements( modelClass, childNodes );
 				} else {
 					// Update modelClass to reflect the type we got back
-					modelClass = this.modelRegistry.lookup( childDataElements[0].type );
+					modelClass = this.modelRegistry.lookup( childDataElements[ 0 ].type );
 				}
 
 				// Now take the appropriate action based on that
 				if ( modelClass.prototype instanceof ve.dm.Annotation ) {
-					htmlAttributes = ve.dm.Converter.buildHtmlAttributeList(
-						childNodes, modelClass.static.storeHtmlAttributes
-					);
-					if ( htmlAttributes ) {
-						childDataElements[0].htmlAttributes = htmlAttributes;
-					}
-					annotation = this.annotationFactory.create( modelName, childDataElements[0] );
+					annotation = this.annotationFactory.createFromElement( childDataElements[ 0 ] );
 					// Start wrapping if needed
 					if ( !context.inWrapper && !context.expectingContent ) {
 						startWrapping();
@@ -693,10 +696,10 @@ ve.dm.Converter.prototype.getDataFromDomSubtree = function ( domElement, wrapper
 					if ( !childDataElements.length || isAllInstanceOf( childDataElements, ve.dm.AlienMetaItem ) ) {
 						// Empty annotation, create a meta item
 						childDataElements = this.createDataElements( ve.dm.AlienMetaItem, childNodes );
-						childDataElements.push( { type: '/' + childDataElements[0].type } );
+						childDataElements.push( { type: '/' + childDataElements[ 0 ].type } );
 						// Annotate meta item
 						if ( !context.annotations.isEmpty() ) {
-							childDataElements[0].annotations = context.annotations.getIndexes().slice();
+							childDataElements[ 0 ].annotations = context.annotations.getIndexes().slice();
 						}
 					}
 					outputWrappedMetaItems( 'restore' );
@@ -706,20 +709,14 @@ ve.dm.Converter.prototype.getDataFromDomSubtree = function ( domElement, wrapper
 				} else {
 					// Node or meta item
 					if ( modelClass.prototype instanceof ve.dm.MetaItem ) {
-						htmlAttributes = ve.dm.Converter.buildHtmlAttributeList(
-							childNodes, modelClass.static.storeHtmlAttributes, true
-						);
-						if ( htmlAttributes ) {
-							childDataElements[0].htmlAttributes = htmlAttributes;
-						}
 						// No additional processing needed
 						// Write to data and continue
 						if ( childDataElements.length === 1 ) {
-							childDataElements.push( { type: '/' + childDataElements[0].type } );
+							childDataElements.push( { type: '/' + childDataElements[ 0 ].type } );
 						}
 						// Annotate meta item
 						if ( !context.annotations.isEmpty() ) {
-							childDataElements[0].annotations = context.annotations.getIndexes().slice();
+							childDataElements[ 0 ].annotations = context.annotations.getIndexes().slice();
 						}
 						// Queue wrapped meta items only if it's actually possible for us to move them out
 						// of the wrapper
@@ -727,22 +724,22 @@ ve.dm.Converter.prototype.getDataFromDomSubtree = function ( domElement, wrapper
 							wrappedMetaItems = wrappedMetaItems.concat( childDataElements );
 							if ( wrappedWhitespace !== '' ) {
 								data.splice( wrappedWhitespaceIndex, wrappedWhitespace.length );
-								addWhitespace( childDataElements[0], 0, wrappedWhitespace );
+								addWhitespace( childDataElements[ 0 ], 0, wrappedWhitespace );
 								nextWhitespace = wrappedWhitespace;
 								wrappedWhitespace = '';
 							}
 						} else {
 							outputWrappedMetaItems( 'restore' );
 							data = data.concat( childDataElements );
-							processNextWhitespace( childDataElements[0] );
-							prevElement = childDataElements[0];
+							processNextWhitespace( childDataElements[ 0 ] );
+							prevElement = childDataElements[ 0 ];
 						}
 						// In case we consumed multiple childNodes, adjust i accordingly
 						i += childNodes.length - 1;
 						break;
 					}
 
-					childIsContent = this.nodeFactory.isNodeContent( childDataElements[0].type );
+					childIsContent = this.nodeFactory.isNodeContent( childDataElements[ 0 ].type );
 
 					// If childIsContent isn't what we expect, adjust
 					if ( !context.expectingContent && childIsContent ) {
@@ -757,7 +754,7 @@ ve.dm.Converter.prototype.getDataFromDomSubtree = function ( domElement, wrapper
 							childNodes = modelClass.static.enableAboutGrouping ?
 								aboutGroup : [ childNode ];
 							childDataElements = this.createDataElements( modelClass, childNodes );
-							childIsContent = this.nodeFactory.isNodeContent( childDataElements[0].type );
+							childIsContent = this.nodeFactory.isNodeContent( childDataElements[ 0 ].type );
 						}
 					}
 
@@ -772,46 +769,34 @@ ve.dm.Converter.prototype.getDataFromDomSubtree = function ( domElement, wrapper
 
 					// Annotate child
 					if ( childIsContent && !context.annotations.isEmpty() ) {
-						childDataElements[0].annotations = context.annotations.getIndexes().slice();
+						childDataElements[ 0 ].annotations = context.annotations.getIndexes().slice();
 					}
 
 					// Output child and process children if needed
 					if (
 						childDataElements.length === 1 &&
 						childNodes.length === 1 &&
-						this.nodeFactory.canNodeHaveChildren( childDataElements[0].type ) &&
-						!this.nodeFactory.doesNodeHandleOwnChildren( childDataElements[0].type )
+						this.nodeFactory.canNodeHaveChildren( childDataElements[ 0 ].type ) &&
+						!this.nodeFactory.doesNodeHandleOwnChildren( childDataElements[ 0 ].type )
 					) {
-						htmlAttributes = ve.dm.Converter.buildHtmlAttributeList(
-							childNodes, modelClass.static.storeHtmlAttributes
-						);
-						if ( htmlAttributes ) {
-							childDataElements[0].htmlAttributes = htmlAttributes;
-						}
 						// Recursion
 						// Opening and closing elements are added by the recursion too
 						outputWrappedMetaItems( 'restore' );
 						data = data.concat(
-							this.getDataFromDomSubtree( childNode, childDataElements[0],
+							this.getDataFromDomSubtree( childNode, childDataElements[ 0 ],
 								new ve.dm.AnnotationSet( this.store )
 							)
 						);
 					} else {
 						if ( childDataElements.length === 1 ) {
-							childDataElements.push( { type: '/' + childDataElements[0].type } );
-						}
-						htmlAttributes = ve.dm.Converter.buildHtmlAttributeList(
-							childNodes, modelClass.static.storeHtmlAttributes, true
-						);
-						if ( htmlAttributes ) {
-							childDataElements[0].htmlAttributes = htmlAttributes;
+							childDataElements.push( { type: '/' + childDataElements[ 0 ].type } );
 						}
 						// Write childDataElements directly
 						outputWrappedMetaItems( 'restore' );
 						data = data.concat( childDataElements );
 					}
-					processNextWhitespace( childDataElements[0] );
-					prevElement = childDataElements[0];
+					processNextWhitespace( childDataElements[ 0 ] );
+					prevElement = childDataElements[ 0 ];
 
 					// In case we consumed multiple childNodes, adjust i accordingly
 					i += childNodes.length - 1;
@@ -868,32 +853,32 @@ ve.dm.Converter.prototype.getDataFromDomSubtree = function ( domElement, wrapper
 
 							// Only store leading whitespace if we just
 							// started wrapping
-							if ( matches[1] !== '' ) {
+							if ( matches[ 1 ] !== '' ) {
 								if ( !prevElement ) {
 									if ( wrapperElement ) {
 										// First child, store as inner
 										// whitespace in the parent
-										addWhitespace( wrapperElement, 1, matches[1] );
+										addWhitespace( wrapperElement, 1, matches[ 1 ] );
 									}
 									// Else, WTF?!? This is not supposed to
 									// happen, but it's not worth
 									// throwing an exception over.
 								} else {
-									addWhitespace( prevElement, 3, matches[1] );
+									addWhitespace( prevElement, 3, matches[ 1 ] );
 								}
-								addWhitespace( wrappingParagraph, 0, matches[1] );
+								addWhitespace( wrappingParagraph, 0, matches[ 1 ] );
 							}
 						} else {
 							outputWrappedMetaItems( 'restore' );
 							// We were already wrapping in a paragraph,
 							// so the leading whitespace must be output
 							data = data.concat(
-								ve.dm.Converter.getDataContentFromText( matches[1], context.annotations )
+								ve.dm.Converter.getDataContentFromText( matches[ 1 ], context.annotations )
 							);
 						}
 						// Output the text sans whitespace
 						data = data.concat(
-							ve.dm.Converter.getDataContentFromText( matches[2], context.annotations )
+							ve.dm.Converter.getDataContentFromText( matches[ 2 ], context.annotations )
 						);
 
 						// Don't store this in wrappingParagraph.internal.whitespace[3]
@@ -903,7 +888,7 @@ ve.dm.Converter.prototype.getDataFromDomSubtree = function ( domElement, wrapper
 						// for now and undo that if it turns out this was
 						// the last text node. We can't output it later
 						// because we have to apply the correct annotations.
-						wrappedWhitespace = matches[3];
+						wrappedWhitespace = matches[ 3 ];
 						wrappedWhitespaceIndex = data.length;
 						data = data.concat(
 							ve.dm.Converter.getDataContentFromText( wrappedWhitespace, context.annotations )
@@ -922,9 +907,9 @@ ve.dm.Converter.prototype.getDataFromDomSubtree = function ( domElement, wrapper
 				) {
 					// Strip leading whitespace from the first child
 					matches = text.match( /^\s+/ );
-					if ( matches && matches[0] !== '' ) {
-						addWhitespace( wrapperElement, 1, matches[0] );
-						text = text.slice( matches[0].length );
+					if ( matches && matches[ 0 ] !== '' ) {
+						addWhitespace( wrapperElement, 1, matches[ 0 ] );
+						text = text.slice( matches[ 0 ].length );
 					}
 				}
 				if (
@@ -935,9 +920,9 @@ ve.dm.Converter.prototype.getDataFromDomSubtree = function ( domElement, wrapper
 				) {
 					// Strip trailing whitespace from the last child
 					matches = text.match( /\s+$/ );
-					if ( matches && matches[0] !== '' ) {
-						addWhitespace( wrapperElement, 2, matches[0] );
-						text = text.slice( 0, text.length - matches[0].length );
+					if ( matches && matches[ 0 ] !== '' ) {
+						addWhitespace( wrapperElement, 2, matches[ 0 ] );
+						text = text.slice( 0, text.length - matches[ 0 ].length );
 					}
 				}
 
@@ -957,13 +942,14 @@ ve.dm.Converter.prototype.getDataFromDomSubtree = function ( domElement, wrapper
 
 	// If we're closing a node that doesn't have any children, but could contain a paragraph,
 	// add a paragraph. This prevents things like empty list items
-	childTypes = this.nodeFactory.getChildNodeTypes( context.branchType );
-	if ( context.branchType !== 'paragraph' && wrapperElement && data[data.length - 1] === wrapperElement &&
+	if ( context.branchType !== 'paragraph' && wrapperElement && data[ data.length - 1 ] === wrapperElement &&
 		!context.inWrapper && !this.nodeFactory.canNodeContainContent( context.branchType ) &&
 		!this.nodeFactory.isNodeContent( context.branchType ) &&
-		( childTypes === null || ve.indexOf( 'paragraph', childTypes ) !== -1 )
+		this.isValidChildNodeType( 'paragraph' )
 	) {
-		data.push( { type: 'paragraph', internal: { generated: 'empty' } } );
+		emptyParagraph = { type: 'paragraph', internal: { generated: 'empty' } };
+		processNextWhitespace( emptyParagraph );
+		data.push( emptyParagraph );
 		data.push( { type: '/paragraph' } );
 	}
 
@@ -972,7 +958,7 @@ ve.dm.Converter.prototype.getDataFromDomSubtree = function ( domElement, wrapper
 		// Add the whitespace after the last child to the parent as innerPost
 		// But don't do this if the parent is empty, because in that case we've already put that
 		// whitespace in innerPre
-		if ( nextWhitespace !== '' && data[data.length - 1] !== wrapperElement ) {
+		if ( nextWhitespace !== '' && data[ data.length - 1 ] !== wrapperElement ) {
 			addWhitespace( wrapperElement, 2, nextWhitespace );
 			nextWhitespace = '';
 		}
@@ -980,10 +966,10 @@ ve.dm.Converter.prototype.getDataFromDomSubtree = function ( domElement, wrapper
 	}
 	// Don't return an empty document
 	if ( context.branchType === 'document' && isAllInstanceOf( data, ve.dm.MetaItem ) && !annotationSet ) {
-		return data.concat( [
-			{ type: 'paragraph', internal: { generated: 'empty' } },
-			{ type: '/paragraph' }
-		] );
+		emptyParagraph = { type: 'paragraph', internal: { generated: 'empty' } };
+		processNextWhitespace( emptyParagraph );
+		data.push( emptyParagraph );
+		data.push( { type: '/paragraph' } );
 	}
 
 	this.contextStack.pop();
@@ -994,7 +980,7 @@ ve.dm.Converter.prototype.getDataFromDomSubtree = function ( domElement, wrapper
  * Get inner whitespace from linear data
  *
  * @param {ve.dm.FlatLinearData} data Linear model data
- * @returns {Array} innerWhitespace Inner whitespace
+ * @return {Array} innerWhitespace Inner whitespace
  */
 ve.dm.Converter.prototype.getInnerWhitespace = function ( data ) {
 	var whitespace,
@@ -1004,7 +990,7 @@ ve.dm.Converter.prototype.getInnerWhitespace = function ( data ) {
 
 	if ( data.isOpenElementData( 0 ) ) {
 		whitespace = ve.getProp( data.getData( 0 ), 'internal', 'whitespace' );
-		innerWhitespace[0] = whitespace ? whitespace[0] : undefined;
+		innerWhitespace[ 0 ] = whitespace ? whitespace[ 0 ] : undefined;
 	}
 	if ( data.isCloseElementData( last ) ) {
 		// Find matching opening tag of the last close tag
@@ -1020,55 +1006,9 @@ ve.dm.Converter.prototype.getInnerWhitespace = function ( data ) {
 			}
 		}
 		whitespace = ve.getProp( data.getData( last ), 'internal', 'whitespace' );
-		innerWhitespace[1] = whitespace ? whitespace[3] : undefined;
+		innerWhitespace[ 1 ] = whitespace ? whitespace[ 3 ] : undefined;
 	}
 	return innerWhitespace;
-};
-
-/**
- * Check if all the domElements provided are metadata or whitespace.
- *
- * A list of model names to exclude when matching can optionally be passed.
- *
- * @param {Node[]} domElements DOM elements to check
- * @param {string[]} [excludeTypes] Model names to exclude when matching DOM elements
- * @returns {boolean} All the elements are metadata or whitespace
- */
-ve.dm.Converter.prototype.isDomAllMetaOrWhitespace = function ( domElements, excludeTypes ) {
-	var i, childNode, modelName, modelClass;
-
-	for ( i = 0; i < domElements.length; i++ ) {
-		childNode = domElements[i];
-		switch ( childNode.nodeType ) {
-			case Node.ELEMENT_NODE:
-			case Node.COMMENT_NODE:
-				modelName = this.modelRegistry.matchElement( childNode, false, excludeTypes );
-				modelClass = this.modelRegistry.lookup( modelName ) || ve.dm.AlienNode;
-				if (
-					!( modelClass.prototype instanceof ve.dm.Annotation ) &&
-					!( modelClass.prototype instanceof ve.dm.MetaItem )
-				) {
-					// If the element not meta or an annotation, then we must have content
-					return false;
-				}
-				// Recursively check children
-				if (
-					childNode.childNodes.length &&
-					!this.isDomAllMetaOrWhitespace( childNode.childNodes, excludeTypes )
-				) {
-					return false;
-				}
-				continue;
-			case Node.TEXT_NODE:
-				// Check for whitespace-only
-				if ( !childNode.data.match( /\S/ ) ) {
-					continue;
-				}
-				break;
-		}
-		return false;
-	}
-	return true;
 };
 
 /**
@@ -1077,7 +1017,7 @@ ve.dm.Converter.prototype.isDomAllMetaOrWhitespace = function ( domElements, exc
  * @method
  * @param {ve.dm.Document} model Document model
  * @param {boolean} [forClipboard=false] Conversion is for clipboard
- * @returns {HTMLDocument} Document containing the resulting HTML
+ * @return {HTMLDocument} Document containing the resulting HTML
  */
 ve.dm.Converter.prototype.getDomFromModel = function ( model, forClipboard ) {
 	var doc = ve.createDocumentFromHtml( '' );
@@ -1120,7 +1060,7 @@ ve.dm.Converter.prototype.getDomSubtreeFromModel = function ( model, container, 
  * @throws Unbalanced data: looking for closing /type
  */
 ve.dm.Converter.prototype.getDomSubtreeFromData = function ( data, container, innerWhitespace ) {
-	var text, i, j, isStart, annotations, dataElement, dataElementOrSlice,
+	var text, i, j, isStart, annotations, dataElement, dataElementOrSlice, oldLastOuterPost,
 		childDomElements, pre, ours, theirs, parentDomElement, lastChild, isContentNode, sibling,
 		previousSiblings, doUnwrap, textNode, type, annotatedDomElementStack, annotatedDomElements,
 		dataLen = data.length,
@@ -1145,7 +1085,13 @@ ve.dm.Converter.prototype.getDomSubtreeFromData = function ( data, container, in
 	}
 
 	function closeAnnotation( annotation ) {
-		var i, len, annotationElement, annotatedChildDomElements;
+		var i, len, annotationElement, annotatedChildDomElements,
+			matches, first, last,
+			leading = '',
+			trailing = '',
+			origElementText = annotation.getOriginalDomElements()[ 0 ] &&
+				annotation.getOriginalDomElements()[ 0 ].textContent ||
+				'';
 
 		// Add text if needed
 		if ( text.length > 0 ) {
@@ -1154,27 +1100,74 @@ ve.dm.Converter.prototype.getDomSubtreeFromData = function ( data, container, in
 		}
 
 		annotatedChildDomElements = annotatedDomElementStack.pop();
-		annotatedDomElements = annotatedDomElementStack[annotatedDomElementStack.length - 1];
-		annotationElement = conv.getDomElementsFromDataElement(
-			annotation.getElement(), doc, annotatedChildDomElements
-		)[0];
+		annotatedDomElements = annotatedDomElementStack[ annotatedDomElementStack.length - 1 ];
+
+		// HACK: Move any leading and trailing whitespace out of the annotation, but only if the
+		// annotation didn't originally have leading/trailing whitespace
+		first = annotatedChildDomElements[ 0 ];
+		while (
+			first &&
+			first.nodeType === Node.TEXT_NODE &&
+			( matches = first.data.match( /^\s+/ ) ) &&
+			!origElementText.match( /^\s/ )
+		) {
+			leading += matches[ 0 ];
+			first.deleteData( 0, matches[ 0 ].length );
+			if ( first.data.length !== 0 ) {
+				break;
+			}
+			// Remove empty text node
+			annotatedChildDomElements.shift();
+			// Process next text node to see if it also has whitespace
+			first = annotatedChildDomElements[ 0 ];
+		}
+		last = annotatedChildDomElements[ annotatedChildDomElements.length - 1 ];
+		while (
+			last &&
+			last.nodeType === Node.TEXT_NODE &&
+			( matches = last.data.match( /\s+$/ ) ) &&
+			!origElementText.match( /\s$/ )
+		) {
+			trailing = matches[ 0 ] + trailing;
+			last.deleteData( last.data.length - matches[ 0 ].length, matches[ 0 ].length );
+			if ( last.data.length !== 0 ) {
+				break;
+			}
+			// Remove empty text node
+			annotatedChildDomElements.pop();
+			// Process next text node to see if it also has whitespace
+			last = annotatedChildDomElements[ annotatedChildDomElements.length - 1 ];
+		}
+
+		if ( annotatedChildDomElements.length ) {
+			annotationElement = conv.getDomElementsFromDataElement(
+				annotation.getElement(), doc, annotatedChildDomElements
+			)[ 0 ];
+		}
+
+		if ( leading ) {
+			annotatedDomElements.push( doc.createTextNode( leading ) );
+		}
 		if ( annotationElement ) {
 			for ( i = 0, len = annotatedChildDomElements.length; i < len; i++ ) {
-				annotationElement.appendChild( annotatedChildDomElements[i] );
+				annotationElement.appendChild( annotatedChildDomElements[ i ] );
 			}
 			annotatedDomElements.push( annotationElement );
 		} else {
 			for ( i = 0, len = annotatedChildDomElements.length; i < len; i++ ) {
-				annotatedDomElements.push( annotatedChildDomElements[i] );
+				annotatedDomElements.push( annotatedChildDomElements[ i ] );
 			}
+		}
+		if ( trailing ) {
+			annotatedDomElements.push( doc.createTextNode( trailing ) );
 		}
 	}
 
 	function findEndOfNode( i ) {
 		var j, depth;
 		for ( j = i + 1, depth = 1; j < dataLen && depth > 0; j++ ) {
-			if ( data[j].type ) {
-				depth += data[j].type.charAt( 0 ) === '/' ? -1 : 1;
+			if ( data[ j ].type ) {
+				depth += data[ j ].type.charAt( 0 ) === '/' ? -1 : 1;
 			}
 		}
 		if ( depth !== 0 ) {
@@ -1186,12 +1179,12 @@ ve.dm.Converter.prototype.getDomSubtreeFromData = function ( data, container, in
 	function getDataElementOrSlice() {
 		var dataSlice;
 		if (
-			ve.dm.nodeFactory.lookup( data[i].type ) &&
-			ve.dm.nodeFactory.doesNodeHandleOwnChildren( data[i].type )
+			ve.dm.nodeFactory.lookup( data[ i ].type ) &&
+			ve.dm.nodeFactory.doesNodeHandleOwnChildren( data[ i ].type )
 		) {
 			dataSlice = data.slice( i, findEndOfNode( i ) );
 		} else {
-			dataSlice = data[i];
+			dataSlice = data[ i ];
 		}
 		return dataSlice;
 	}
@@ -1202,9 +1195,9 @@ ve.dm.Converter.prototype.getDomSubtreeFromData = function ( data, container, in
 		// Removing it here prevents unwanted interactions with whitespace preservation
 		for ( i = 0; i < dataLen; i++ ) {
 			if (
-				data[i].type && data[i].type.charAt( 0 ) !== '/' &&
-				ve.dm.nodeFactory.lookup( data[i].type ) &&
-				ve.dm.nodeFactory.isNodeInternal( data[i].type )
+				data[ i ].type && data[ i ].type.charAt( 0 ) !== '/' &&
+				ve.dm.nodeFactory.lookup( data[ i ].type ) &&
+				ve.dm.nodeFactory.isNodeInternal( data[ i ].type )
 			) {
 				// Copy data if we haven't already done so
 				if ( !dataCopy ) {
@@ -1226,19 +1219,19 @@ ve.dm.Converter.prototype.getDomSubtreeFromData = function ( data, container, in
 	removeInternalNodes();
 
 	for ( i = 0; i < dataLen; i++ ) {
-		if ( typeof data[i] === 'string' ) {
+		if ( typeof data[ i ] === 'string' ) {
 			// Text
 			text = '';
 			isStart = i > 0 &&
-				ve.dm.LinearData.static.isOpenElementData( data[i - 1] ) &&
+				ve.dm.LinearData.static.isOpenElementData( data[ i - 1 ] ) &&
 				!ve.dm.nodeFactory.doesNodeHaveSignificantWhitespace(
-					ve.dm.LinearData.static.getType( data[i - 1] )
+					ve.dm.LinearData.static.getType( data[ i - 1 ] )
 				);
 			// Continue forward as far as the plain text goes
-			while ( typeof data[i] === 'string' ) {
+			while ( typeof data[ i ] === 'string' ) {
 				// HACK: Skip over leading whitespace (bug 51462) in non-whitespace-preserving tags
-				if ( !( isStart && data[i].match( /\s/ ) ) ) {
-					text += data[i];
+				if ( !( isStart && data[ i ].match( /\s/ ) ) ) {
+					text += data[ i ];
 					isStart = false;
 				}
 				i++;
@@ -1250,11 +1243,11 @@ ve.dm.Converter.prototype.getDomSubtreeFromData = function ( data, container, in
 				domElement.appendChild( doc.createTextNode( text ) );
 			}
 		} else if (
-			Array.isArray( data[i] ) ||
+			Array.isArray( data[ i ] ) ||
 			(
-				data[i].annotations !== undefined && (
-					this.metaItemFactory.lookup( data[i].type ) ||
-					this.nodeFactory.isNodeContent( data[i].type )
+				data[ i ].annotations !== undefined && (
+					this.metaItemFactory.lookup( data[ i ].type ) ||
+					this.nodeFactory.isNodeContent( data[ i ].type )
 				)
 			)
 		) {
@@ -1263,26 +1256,26 @@ ve.dm.Converter.prototype.getDomSubtreeFromData = function ( data, container, in
 			annotatedDomElements = [];
 			annotatedDomElementStack = [ annotatedDomElements ];
 			while (
-				data[i] !== undefined && (
-					Array.isArray( data[i] ) ||
+				data[ i ] !== undefined && (
+					Array.isArray( data[ i ] ) ||
 					(
-						data[i].annotations !== undefined && (
-							this.metaItemFactory.lookup( data[i].type ) ||
-							this.nodeFactory.isNodeContent( data[i].type )
+						data[ i ].annotations !== undefined && (
+							this.metaItemFactory.lookup( data[ i ].type ) ||
+							this.nodeFactory.isNodeContent( data[ i ].type )
 						)
 					)
 				)
 			) {
 				annotations = new ve.dm.AnnotationSet(
-					this.store, data[i].annotations || data[i][1]
+					this.store, data[ i ].annotations || data[ i ][ 1 ]
 				);
 				ve.dm.Converter.openAndCloseAnnotations( annotationStack, annotations,
 					openAnnotation, closeAnnotation
 				);
 
-				if ( data[i].annotations === undefined ) {
+				if ( data[ i ].annotations === undefined ) {
 					// Annotated text
-					text += data[i][0];
+					text += data[ i ][ 0 ];
 				} else {
 					// Annotated node
 					// Add text if needed
@@ -1294,7 +1287,7 @@ ve.dm.Converter.prototype.getDomSubtreeFromData = function ( data, container, in
 					dataElementOrSlice = getDataElementOrSlice();
 					childDomElements = this.getDomElementsFromDataElement( dataElementOrSlice, doc );
 					for ( j = 0; j < childDomElements.length; j++ ) {
-						annotatedDomElements.push( childDomElements[j] );
+						annotatedDomElements.push( childDomElements[ j ] );
 					}
 					if ( Array.isArray( dataElementOrSlice ) ) {
 						i += dataElementOrSlice.length - 1;
@@ -1318,23 +1311,24 @@ ve.dm.Converter.prototype.getDomSubtreeFromData = function ( data, container, in
 			);
 			// Put the annotated nodes in the DOM
 			for ( j = 0; j < annotatedDomElements.length; j++ ) {
-				domElement.appendChild( annotatedDomElements[j] );
+				domElement.appendChild( annotatedDomElements[ j ] );
 			}
-		} else if ( data[i].type !== undefined ) {
-			dataElement = data[i];
+		} else if ( data[ i ].type !== undefined ) {
+			dataElement = data[ i ];
 			// Element
 			if ( dataElement.type.charAt( 0 ) === '/' ) {
 				// Close element
 				parentDomElement = domElement.parentNode;
-				type = data[i].type.slice( 1 );
+				type = data[ i ].type.slice( 1 );
 				if ( this.metaItemFactory.lookup( type ) ) {
-					isContentNode = canContainContentStack[canContainContentStack.length - 1];
+					isContentNode = canContainContentStack[ canContainContentStack.length - 1 ];
 				} else {
 					isContentNode = this.nodeFactory.isNodeContent( type );
 					canContainContentStack.pop();
 				}
 				// Process whitespace
 				// whitespace = [ outerPre, innerPre, innerPost, outerPost ]
+				oldLastOuterPost = parentDomElement.lastOuterPost;
 				if (
 					!isContentNode &&
 					domElement.veInternal &&
@@ -1343,7 +1337,7 @@ ve.dm.Converter.prototype.getDomSubtreeFromData = function ( data, container, in
 					// Process inner whitespace. innerPre is for sure legitimate
 					// whitespace that should be inserted; if it was a duplicate
 					// of our child's outerPre, we would have cleared it.
-					pre = domElement.veInternal.whitespace[1];
+					pre = domElement.veInternal.whitespace[ 1 ];
 					if ( pre ) {
 						if (
 							domElement.firstChild &&
@@ -1363,10 +1357,10 @@ ve.dm.Converter.prototype.getDomSubtreeFromData = function ( data, container, in
 					}
 					lastChild = domElement.veInternal.childDomElements ?
 						domElement.veInternal
-							.childDomElements[domElement.veInternal.childDomElements.length - 1]
+							.childDomElements[ domElement.veInternal.childDomElements.length - 1 ]
 							.lastChild :
 						domElement.lastChild;
-					ours = domElement.veInternal.whitespace[2];
+					ours = domElement.veInternal.whitespace[ 2 ];
 					if ( domElement.lastOuterPost === undefined ) {
 						// This node didn't have any structural children
 						// (i.e. it's a content-containing node), so there's
@@ -1389,7 +1383,7 @@ ve.dm.Converter.prototype.getDomSubtreeFromData = function ( data, container, in
 						}
 					}
 					// Tell the parent about our outerPost
-					parentDomElement.lastOuterPost = domElement.veInternal.whitespace[3] || '';
+					parentDomElement.lastOuterPost = domElement.veInternal.whitespace[ 3 ] || '';
 				} else if ( !isContentNode ) {
 					// Use empty string, because undefined means there were no
 					// structural children
@@ -1416,7 +1410,7 @@ ve.dm.Converter.prototype.getDomSubtreeFromData = function ( data, container, in
 									// then check that we are the last child
 									// before unwrapping (and therefore destroying)
 									i === data.length - 1 ||
-									data[i + 1].type.charAt( 0 ) === '/'
+									data[ i + 1 ].type.charAt( 0 ) === '/'
 								)
 							) {
 								doUnwrap = true;
@@ -1431,7 +1425,7 @@ ve.dm.Converter.prototype.getDomSubtreeFromData = function ( data, container, in
 							// Note: previousSiblings includes the current element
 							// so we only go up to length - 2
 							for ( j = previousSiblings.length - 2; j >= 0; j-- ) {
-								sibling = previousSiblings[j];
+								sibling = previousSiblings[ j ];
 								if ( sibling.nodeType === Node.TEXT_NODE && !sibling.veIsWhitespace ) {
 									// we've found an unwrapped paragraph so don't unwrap
 									doUnwrap = false;
@@ -1447,11 +1441,19 @@ ve.dm.Converter.prototype.getDomSubtreeFromData = function ( data, container, in
 					}
 				}
 				if ( doUnwrap ) {
-					while ( domElement.firstChild ) {
-						parentDomElement.insertBefore(
-							domElement.firstChild,
-							domElement
-						);
+					if ( domElement.childNodes.length ) {
+						// If domElement has children, append them to parentDomElement
+						while ( domElement.firstChild ) {
+							parentDomElement.insertBefore(
+								domElement.firstChild,
+								domElement
+							);
+						}
+					} else {
+						// If domElement has no children, it's as if it was never there at all,
+						// so set lastOuterPost back to what it was, except that we need to
+						// change undefined to '' , since undefined means there were no children.
+						parentDomElement.lastOuterPost = oldLastOuterPost || '';
 					}
 					parentDomElement.removeChild( domElement );
 				}
@@ -1465,12 +1467,15 @@ ve.dm.Converter.prototype.getDomSubtreeFromData = function ( data, container, in
 				}
 			} else {
 				// Create node from data
-				if ( !this.metaItemFactory.lookup( data[i].type ) ) {
+				if ( this.metaItemFactory.lookup( data[ i ].type ) ) {
+					isContentNode = canContainContentStack[ canContainContentStack.length - 1 ];
+				} else {
 					canContainContentStack.push(
 						// if the last item was true then this item must inherit it
-						canContainContentStack[canContainContentStack.length - 1] ||
-						this.nodeFactory.canNodeContainContent( data[i].type )
+						canContainContentStack[ canContainContentStack.length - 1 ] ||
+						this.nodeFactory.canNodeContainContent( data[ i ].type )
 					);
+					isContentNode = this.nodeFactory.isNodeContent( data[ i ].type );
 				}
 
 				dataElementOrSlice = getDataElementOrSlice();
@@ -1482,17 +1487,17 @@ ve.dm.Converter.prototype.getDomSubtreeFromData = function ( data, container, in
 				} else if ( childDomElements ) {
 					// Add clone of internal data; we use a clone rather than a reference because
 					// we modify .veInternal.whitespace[1] in some cases
-					childDomElements[0].veInternal = ve.extendObject(
+					childDomElements[ 0 ].veInternal = ve.extendObject(
 						{ childDomElements: childDomElements },
 						dataElement.internal ? ve.copy( dataElement.internal ) : {}
 					);
 					// Add elements
 					for ( j = 0; j < childDomElements.length; j++ ) {
-						domElement.appendChild( childDomElements[j] );
+						domElement.appendChild( childDomElements[ j ] );
 					}
 					// Descend into the first child node
 					parentDomElement = domElement;
-					domElement = childDomElements[0];
+					domElement = childDomElements[ 0 ];
 
 					// Process outer whitespace
 					// Every piece of outer whitespace is duplicated somewhere:
@@ -1505,23 +1510,23 @@ ve.dm.Converter.prototype.getDomSubtreeFromData = function ( data, container, in
 					// whitespace.
 					if ( domElement.veInternal && domElement.veInternal.whitespace ) {
 						// Process this node's outerPre
-						ours = domElement.veInternal.whitespace[0];
+						ours = domElement.veInternal.whitespace[ 0 ];
 						theirs = undefined;
 						if ( domElement.previousSibling ) {
 							// Get previous sibling's outerPost
 							theirs = parentDomElement.lastOuterPost;
 						} else if ( parentDomElement === container ) {
 							// outerPre of the very first node in the document, check against body innerWhitespace
-							theirs = innerWhitespace ? innerWhitespace[0] : ours;
+							theirs = innerWhitespace ? innerWhitespace[ 0 ] : ours;
 						} else {
 							// First child, get parent's innerPre
 							if (
 								parentDomElement.veInternal &&
 								parentDomElement.veInternal.whitespace
 							) {
-								theirs = parentDomElement.veInternal.whitespace[1];
-								// Clear after use so it's not used twice
-								parentDomElement.veInternal.whitespace[1] = undefined;
+								theirs = parentDomElement.veInternal.whitespace[ 1 ];
+								// Clear parent's innerPre so it's not used again
+								parentDomElement.veInternal.whitespace[ 1 ] = undefined;
 							}
 							// else theirs=undefined
 						}
@@ -1534,6 +1539,17 @@ ve.dm.Converter.prototype.getDomSubtreeFromData = function ( data, container, in
 								domElement
 							);
 						}
+					} else if (
+						!isContentNode &&
+						!domElement.previousSibling &&
+						parentDomElement.veInternal &&
+						parentDomElement.veInternal.whitespace
+					) {
+						// The parent's innerPre should not be used, because it doesn't match
+						// outerPre (since we didn't have any whitespace set at all).
+						// Except if this is a content node, because content nodes
+						// don't have whitespace annotated on them *sigh*
+						parentDomElement.veInternal.whitespace[ 1 ] = undefined;
 					}
 				}
 
@@ -1546,7 +1562,7 @@ ve.dm.Converter.prototype.getDomSubtreeFromData = function ( data, container, in
 	// Check outerPost whitespace of the very last node against body innerWhitespace
 	if (
 		container.lastOuterPost !== undefined &&
-		( !innerWhitespace || container.lastOuterPost === innerWhitespace[1] )
+		( !innerWhitespace || container.lastOuterPost === innerWhitespace[ 1 ] )
 	) {
 		if ( container.lastChild && container.lastChild.nodeType === Node.TEXT_NODE ) {
 			// Last child is a TextNode, append to it

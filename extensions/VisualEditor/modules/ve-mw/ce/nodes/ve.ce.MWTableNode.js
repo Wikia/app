@@ -1,7 +1,7 @@
 /*!
  * VisualEditor ContentEditable MWTableNode class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2015 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -34,8 +34,8 @@ ve.ce.MWTableNode.static.name = 'mwTable';
 
 ve.ce.MWTableNode.prototype.onAttributeChange = function ( key, from, to ) {
 	switch ( key ) {
-		case 'article-table':
-			this.$element.toggleClass( 'article-table', !!to );
+		case 'wikitable':
+			this.$element.toggleClass( 'wikitable', !!to );
 			break;
 		case 'sortable':
 			this.$element.toggleClass( 'sortable', !!to );

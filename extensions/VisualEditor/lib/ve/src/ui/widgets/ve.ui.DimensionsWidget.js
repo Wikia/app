@@ -1,7 +1,7 @@
 /*!
  * VisualEditor UserInterface DimensionsWidget class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 /**
@@ -14,6 +14,7 @@
  * @constructor
  * @param {Object} [config] Configuration options
  * @cfg {Object} [defaults] Default dimensions
+ * @cfg {Object} [validate] Validation pattern passed to TextInputWidgets
  */
 ve.ui.DimensionsWidget = function VeUiDimensionsWidget( config ) {
 	var labelTimes, labelPx;
@@ -24,22 +25,16 @@ ve.ui.DimensionsWidget = function VeUiDimensionsWidget( config ) {
 	// Parent constructor
 	OO.ui.Widget.call( this, config );
 
-	this.widthInput = new OO.ui.TextInputWidget( {
-		$: this.$
-	} );
-	this.heightInput = new OO.ui.TextInputWidget( {
-		$: this.$
-	} );
+	this.widthInput = new OO.ui.TextInputWidget( { validate: config.validate } );
+	this.heightInput = new OO.ui.TextInputWidget( { validate: config.validate } );
 
 	this.defaults = config.defaults || { width: '', height: '' };
 	this.renderDefaults();
 
 	labelTimes = new OO.ui.LabelWidget( {
-		$: this.$,
 		label: ve.msg( 'visualeditor-dimensionswidget-times' )
 	} );
 	labelPx = new OO.ui.LabelWidget( {
-		$: this.$,
 		label: ve.msg( 'visualeditor-dimensionswidget-px' )
 	} );
 
@@ -80,6 +75,7 @@ OO.inheritClass( ve.ui.DimensionsWidget, OO.ui.Widget );
 
 /**
  * Respond to width change, propagate the input change event
+ *
  * @param {string} value The new changed value
  * @fires widthChange
  */
@@ -89,6 +85,7 @@ ve.ui.DimensionsWidget.prototype.onWidthChange = function ( value ) {
 
 /**
  * Respond to height change, propagate the input change event
+ *
  * @param {string} value The new changed value
  * @fires heightChange
  */
@@ -98,6 +95,7 @@ ve.ui.DimensionsWidget.prototype.onHeightChange = function ( value ) {
 
 /**
  * Set default dimensions
+ *
  * @param {Object} dimensions Default dimensions, width and height
  */
 ve.ui.DimensionsWidget.prototype.setDefaults = function ( dimensions ) {
@@ -111,13 +109,14 @@ ve.ui.DimensionsWidget.prototype.setDefaults = function ( dimensions ) {
  * Render the default dimensions as input placeholders
  */
 ve.ui.DimensionsWidget.prototype.renderDefaults = function () {
-	this.widthInput.$input.attr( 'placeholder', this.getDefaults().width );
-	this.heightInput.$input.attr( 'placeholder', this.getDefaults().height );
+	this.widthInput.$input.prop( 'placeholder', this.getDefaults().width );
+	this.heightInput.$input.prop( 'placeholder', this.getDefaults().height );
 };
 
 /**
  * Get the default dimensions
- * @returns {Object} Default dimensions
+ *
+ * @return {Object} Default dimensions
  */
 ve.ui.DimensionsWidget.prototype.getDefaults = function () {
 	return this.defaults;
@@ -133,7 +132,8 @@ ve.ui.DimensionsWidget.prototype.removeDefaults = function () {
 
 /**
  * Check whether the widget is empty.
- * @returns {boolean} Both values are empty
+ *
+ * @return {boolean} Both values are empty
  */
 ve.ui.DimensionsWidget.prototype.isEmpty = function () {
 	return (
@@ -160,6 +160,7 @@ ve.ui.DimensionsWidget.prototype.reset = function () {
 
 /**
  * Set the dimensions value of the inputs
+ *
  * @param {Object} dimensions The width and height values of the inputs
  * @param {number} dimensions.width The value of the width input
  * @param {number} dimensions.height The value of the height input
@@ -175,9 +176,10 @@ ve.ui.DimensionsWidget.prototype.setDimensions = function ( dimensions ) {
 
 /**
  * Return the current dimension values in the widget
- * @returns {Object} dimensions The width and height values of the inputs
- * @returns {number} dimensions.width The value of the width input
- * @returns {number} dimensions.height The value of the height input
+ *
+ * @return {Object} dimensions The width and height values of the inputs
+ * @return {number} dimensions.width The value of the width input
+ * @return {number} dimensions.height The value of the height input
  */
 ve.ui.DimensionsWidget.prototype.getDimensions = function () {
 	return {
@@ -188,6 +190,7 @@ ve.ui.DimensionsWidget.prototype.getDimensions = function () {
 
 /**
  * Disable or enable the inputs
+ *
  * @param {boolean} isDisabled Set disabled or enabled
  */
 ve.ui.DimensionsWidget.prototype.setDisabled = function ( isDisabled ) {
@@ -203,7 +206,8 @@ ve.ui.DimensionsWidget.prototype.setDisabled = function ( isDisabled ) {
 
 /**
  * Get the current value in the width input
- * @returns {string} Input value
+ *
+ * @return {string} Input value
  */
 ve.ui.DimensionsWidget.prototype.getWidth = function () {
 	return this.widthInput.getValue();
@@ -211,7 +215,8 @@ ve.ui.DimensionsWidget.prototype.getWidth = function () {
 
 /**
  * Get the current value in the height input
- * @returns {string} Input value
+ *
+ * @return {string} Input value
  */
 ve.ui.DimensionsWidget.prototype.getHeight = function () {
 	return this.heightInput.getValue();
@@ -219,6 +224,7 @@ ve.ui.DimensionsWidget.prototype.getHeight = function () {
 
 /**
  * Set a value for the width input
+ *
  * @param {string} value
  */
 ve.ui.DimensionsWidget.prototype.setWidth = function ( value ) {
@@ -227,8 +233,17 @@ ve.ui.DimensionsWidget.prototype.setWidth = function ( value ) {
 
 /**
  * Set a value for the height input
+ *
  * @param {string} value
  */
 ve.ui.DimensionsWidget.prototype.setHeight = function ( value ) {
 	this.heightInput.setValue( value );
+};
+
+/**
+ * Sets the 'invalid' flag appropriately on both text inputs.
+ */
+ve.ui.DimensionsWidget.prototype.setValidityFlag = function () {
+	this.widthInput.setValidityFlag();
+	this.heightInput.setValidityFlag();
 };

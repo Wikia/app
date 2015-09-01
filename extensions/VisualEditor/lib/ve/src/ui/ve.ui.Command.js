@@ -1,7 +1,7 @@
 /*!
  * VisualEditor UserInterface Command class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 /**
@@ -50,13 +50,13 @@ ve.ui.Command.prototype.execute = function ( surface ) {
  */
 ve.ui.Command.prototype.isExecutable = function ( fragment ) {
 	return !this.supportedSelections ||
-		ve.indexOf( fragment.getSelection().constructor.static.name, this.supportedSelections ) !== -1;
+		this.supportedSelections.indexOf( fragment.getSelection().constructor.static.name ) !== -1;
 };
 
 /**
  * Get command action.
  *
- * @returns {string} action Action to execute when command is triggered
+ * @return {string} action Action to execute when command is triggered
  */
 ve.ui.Command.prototype.getAction = function () {
 	return this.action;
@@ -65,7 +65,7 @@ ve.ui.Command.prototype.getAction = function () {
 /**
  * Get command method.
  *
- * @returns {string} method Method to call on action when executing
+ * @return {string} method Method to call on action when executing
  */
 ve.ui.Command.prototype.getMethod = function () {
 	return this.method;
@@ -74,7 +74,7 @@ ve.ui.Command.prototype.getMethod = function () {
 /**
  * Get command name.
  *
- * @returns {string} name The symbolic name of the command.
+ * @return {string} name The symbolic name of the command.
  */
 ve.ui.Command.prototype.getName = function () {
 	return this.name;
@@ -83,7 +83,7 @@ ve.ui.Command.prototype.getName = function () {
 /**
  * Get command arguments.
  *
- * @returns {Array} args Additional arguments to pass to the action when executing
+ * @return {Array} args Additional arguments to pass to the action when executing
  */
 ve.ui.Command.prototype.getArgs = function () {
 	return this.args;

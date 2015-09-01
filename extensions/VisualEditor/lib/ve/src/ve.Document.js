@@ -1,7 +1,7 @@
 /*!
  * VisualEditor Document class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 /**
@@ -19,6 +19,7 @@ ve.Document = function VeDocument( documentNode ) {
 
 	// Properties
 	this.documentNode = documentNode;
+	this.documentNode.setDocument( this );
 };
 
 /* Inheritance */
@@ -31,7 +32,7 @@ OO.mixinClass( ve.Document, OO.EventEmitter );
  * Get the root of the document's node tree.
  *
  * @method
- * @returns {ve.Node} Root of node tree
+ * @return {ve.Node} Root of node tree
  */
 ve.Document.prototype.getDocumentNode = function () {
 	return this.documentNode;
@@ -42,7 +43,7 @@ ve.Document.prototype.getDocumentNode = function () {
  *
  * @method
  * @param {number} offset Offset to get node at
- * @returns {ve.Node|null} Node at offset
+ * @return {ve.Node|null} Node at offset
  */
 ve.Document.prototype.getBranchNodeFromOffset = function ( offset ) {
 	var node = this.getDocumentNode().getNodeFromOffset( offset );
@@ -66,7 +67,7 @@ ve.Document.prototype.getBranchNodeFromOffset = function ( offset ) {
  *   children aren't returned separately.
  * - `siblings`: Return a set of adjacent siblings covered by the range (descends as long as the
  *   range is in a single node)
- * @returns {Array} List of objects describing nodes in the selection and the ranges therein:
+ * @return {Array} List of objects describing nodes in the selection and the ranges therein:
  *
  * - `node`: Reference to a ve.Node
  * - `range`: ve.Range, missing if the entire node is covered
@@ -104,7 +105,7 @@ ve.Document.prototype.selectNodes = function ( range, mode ) {
 			// First offset inside node
 			startOffset: 0
 		} ],
-		currentFrame = stack[0],
+		currentFrame = stack[ 0 ],
 		startFound = false;
 
 	mode = mode || 'leaves';
@@ -130,12 +131,12 @@ ve.Document.prototype.selectNodes = function ( range, mode ) {
 			nodeOuterRange: nodeRange
 		} ];
 	}
-	left = doc.children[0].isWrapped() ? 1 : 0;
+	left = doc.children[ 0 ].isWrapped() ? 1 : 0;
 
 	do {
-		node = currentFrame.node.children[currentFrame.index];
-		prevNode = currentFrame.node.children[currentFrame.index - 1];
-		nextNode = currentFrame.node.children[currentFrame.index + 1];
+		node = currentFrame.node.children[ currentFrame.index ];
+		prevNode = currentFrame.node.children[ currentFrame.index - 1 ];
+		nextNode = currentFrame.node.children[ currentFrame.index + 1 ];
 		right = left + node.getLength();
 		// Is the start inside node?
 		startInside = start >= left && start <= right;
@@ -148,7 +149,7 @@ ve.Document.prototype.selectNodes = function ( range, mode ) {
 		// Is there an unwrapped node right after this node?
 		isNextUnwrapped = nextNode ? !nextNode.isWrapped() : false;
 		// Is this node an empty non-content branch node?
-		isEmptyBranch = ( node.getLength() === 0 || node.handlesOwnChildren() ) &&
+		isEmptyBranch = ( node.getLength() === 0 || node.shouldIgnoreChildren() ) &&
 			!node.isContent() && !node.canContainContent();
 		// Is the start between prevNode's closing and node or between the parent's opening and node?
 		startBetween = ( isWrapped ? start === left - 1 : start === left ) && !isPrevUnwrapped;
@@ -172,9 +173,9 @@ ve.Document.prototype.selectNodes = function ( range, mode ) {
 					parentRange.start - isWrapped, parentRange.end + isWrapped
 				)
 			} );
-			parentFrame = stack[stack.length - 2];
+			parentFrame = stack[ stack.length - 2 ];
 			if ( parentFrame ) {
-				retval[retval.length - 1].index = parentFrame.index;
+				retval[ retval.length - 1 ].index = parentFrame.index;
 			}
 			return retval;
 		}
@@ -191,9 +192,9 @@ ve.Document.prototype.selectNodes = function ( range, mode ) {
 					parentRange.start - isWrapped, parentRange.end + isWrapped
 				)
 			} ];
-			parentFrame = stack[stack.length - 2];
+			parentFrame = stack[ stack.length - 2 ];
 			if ( parentFrame ) {
-				retval[0].index = parentFrame.index;
+				retval[ 0 ].index = parentFrame.index;
 			}
 			return retval;
 		} else if ( startBetween ) {
@@ -209,7 +210,7 @@ ve.Document.prototype.selectNodes = function ( range, mode ) {
 			if ( ( mode === 'leaves' ||
 					( mode === 'covered' && endInside ) ||
 					( mode === 'branches' && node.canHaveChildrenNotContent() ) ) &&
-				node.children && node.children.length && !node.handlesOwnChildren()
+				node.children && node.children.length && !node.shouldIgnoreChildren()
 			) {
 				// Descend into node
 				currentFrame = {
@@ -220,7 +221,7 @@ ve.Document.prototype.selectNodes = function ( range, mode ) {
 				stack.push( currentFrame );
 				startFound = true;
 				// If the first child of node has an opening, skip over it
-				if ( node.children[0].isWrapped() ) {
+				if ( node.children[ 0 ].isWrapped() ) {
 					left++;
 				}
 				continue;
@@ -263,7 +264,7 @@ ve.Document.prototype.selectNodes = function ( range, mode ) {
 				};
 				stack.push( currentFrame );
 				// If the first child of node has an opening, skip over it
-				if ( node.children[0].isWrapped() ) {
+				if ( node.children[ 0 ].isWrapped() ) {
 					left++;
 				}
 				continue;
@@ -281,7 +282,7 @@ ve.Document.prototype.selectNodes = function ( range, mode ) {
 					)
 				} ];
 				if ( isEmptyBranch ) {
-					retval[0].indexInNode = 0;
+					retval[ 0 ].indexInNode = 0;
 				}
 				return retval;
 			}
@@ -300,7 +301,7 @@ ve.Document.prototype.selectNodes = function ( range, mode ) {
 				};
 				stack.push( currentFrame );
 				// If the first child of node has an opening, skip over it
-				if ( node.children[0].isWrapped() ) {
+				if ( node.children[ 0 ].isWrapped() ) {
 					left++;
 				}
 				continue;
@@ -337,7 +338,7 @@ ve.Document.prototype.selectNodes = function ( range, mode ) {
 				};
 				stack.push( currentFrame );
 				// If the first child of node has an opening, skip over it
-				if ( node.children[0].isWrapped() ) {
+				if ( node.children[ 0 ].isWrapped() ) {
 					left++;
 				}
 				continue;
@@ -371,7 +372,7 @@ ve.Document.prototype.selectNodes = function ( range, mode ) {
 				};
 				stack.push( currentFrame );
 				// If the first child of node has an opening, skip over it
-				if ( node.children[0].isWrapped() ) {
+				if ( node.children[ 0 ].isWrapped() ) {
 					left++;
 				}
 				continue;
@@ -408,7 +409,7 @@ ve.Document.prototype.selectNodes = function ( range, mode ) {
 				};
 				stack.push( currentFrame );
 				// If the first child of node has an opening, skip over it
-				if ( node.children[0].isWrapped() ) {
+				if ( node.children[ 0 ].isWrapped() ) {
 					left++;
 				}
 				continue;
@@ -463,9 +464,9 @@ ve.Document.prototype.selectNodes = function ( range, mode ) {
 							parentRange.start - isWrapped, parentRange.end + isWrapped
 						)
 					} ];
-					parentFrame = stack[stack.length - 2];
+					parentFrame = stack[ stack.length - 2 ];
 					if ( parentFrame ) {
-						retval[0].index = parentFrame.index;
+						retval[ 0 ].index = parentFrame.index;
 					}
 				}
 
@@ -475,9 +476,9 @@ ve.Document.prototype.selectNodes = function ( range, mode ) {
 					// This shouldn't be possible
 					return retval;
 				}
-				currentFrame = stack[stack.length - 1];
+				currentFrame = stack[ stack.length - 1 ];
 				currentFrame.index++;
-				nextNode = currentFrame.node.children[currentFrame.index];
+				nextNode = currentFrame.node.children[ currentFrame.index ];
 				// Skip over the parent node's closing
 				// (this is present for sure, because the parent has children)
 				left++;
@@ -499,7 +500,7 @@ ve.Document.prototype.selectNodes = function ( range, mode ) {
  * Get groups of sibling nodes covered by the given range.
  *
  * @param {ve.Range} range Range
- * @returns {Array} Array of objects. Each object has the following keys:
+ * @return {Array} Array of objects. Each object has the following keys:
  *
  *  - nodes: Array of sibling nodes covered by a part of range
  *  - parent: Parent of all of these nodes
@@ -511,11 +512,11 @@ ve.Document.prototype.getCoveredSiblingGroups = function ( range ) {
 		groups = [],
 		lastEndOffset = 0;
 	for ( i = 0; i < leaves.length; i++ ) {
-		if ( leaves[i].nodeOuterRange.end <= lastEndOffset ) {
+		if ( leaves[ i ].nodeOuterRange.end <= lastEndOffset ) {
 			// This range is contained within a range we've already processed
 			continue;
 		}
-		node = leaves[i].node;
+		node = leaves[ i ].node;
 		// Traverse up to a content branch from content elements
 		if ( node.isContent() ) {
 			node = node.getParent();
@@ -535,14 +536,14 @@ ve.Document.prototype.getCoveredSiblingGroups = function ( range ) {
 		siblingNode = firstCoveredSibling;
 		do {
 			// Add this to its sibling's group
-			groups[groups.length - 1].nodes.push( siblingNode );
+			groups[ groups.length - 1 ].nodes.push( siblingNode );
 			lastCoveredSibling = siblingNode;
 			i++;
-			if ( leaves[i] === undefined ) {
+			if ( leaves[ i ] === undefined ) {
 				break;
 			}
 			// Traverse up to a content branch from content elements
-			siblingNode = leaves[i].node;
+			siblingNode = leaves[ i ].node;
 			if ( siblingNode.isContent() ) {
 				siblingNode = siblingNode.getParent();
 			}
@@ -551,4 +552,15 @@ ve.Document.prototype.getCoveredSiblingGroups = function ( range ) {
 		lastEndOffset = parentNode.getOuterRange().end;
 	}
 	return groups;
+};
+
+/**
+ * Test whether a range lies within a single leaf node.
+ *
+ * @param {ve.Range} range The range to test
+ * @return {boolean} Whether the range lies within a single node
+ */
+ve.Document.prototype.rangeInsideOneLeafNode = function ( range ) {
+	var selected = this.selectNodes( range, 'leaves' );
+	return selected.length === 1 && selected[ 0 ].nodeRange.containsRange( range ) && selected[ 0 ].indexInNode === undefined;
 };

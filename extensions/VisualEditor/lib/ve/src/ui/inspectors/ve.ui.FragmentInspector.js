@@ -1,7 +1,7 @@
 /*!
  * VisualEditor UserInterface FragmentInspector class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 /**
@@ -19,6 +19,7 @@ ve.ui.FragmentInspector = function VeUiFragmentInspector( config ) {
 
 	// Properties
 	this.fragment = null;
+	this.previousSelection = null;
 };
 
 /* Inheritance */
@@ -29,31 +30,62 @@ OO.inheritClass( ve.ui.FragmentInspector, OO.ui.ProcessDialog );
 
 ve.ui.FragmentInspector.static.actions = ve.ui.FragmentInspector.super.static.actions.concat( [
 	{
+		label: OO.ui.deferMsg( 'visualeditor-dialog-action-cancel' ),
+		flags: [ 'safe', 'back' ],
+		modes: [ 'edit', 'insert' ]
+	},
+	{
 		action: 'done',
 		label: OO.ui.deferMsg( 'visualeditor-dialog-action-done' ),
-		flags: [ 'progressive', 'primary' ]
+		flags: [ 'progressive', 'primary' ],
+		modes: 'edit'
+	},
+	{
+		action: 'done',
+		label: OO.ui.deferMsg( 'visualeditor-dialog-action-insert' ),
+		flags: [ 'constructive', 'primary' ],
+		modes: 'insert'
 	}
 ] );
+
+ve.ui.FragmentInspector.static.size = 'large';
 
 /* Methods */
 
 /**
  * Handle form submit events.
  *
+ * Executes the 'done' action when the user presses enter in the form.
+ *
  * @method
  */
 ve.ui.FragmentInspector.prototype.onFormSubmit = function () {
-	this.close( { action: 'done' } );
+	this.executeAction( 'done' );
 };
 
 /**
  * Get the surface fragment the inspector is for.
  *
- * @returns {ve.dm.SurfaceFragment|null} Surface fragment the inspector is for, null if the
+ * @return {ve.dm.SurfaceFragment|null} Surface fragment the inspector is for, null if the
  *   inspector is closed
  */
 ve.ui.FragmentInspector.prototype.getFragment = function () {
 	return this.fragment;
+};
+
+/**
+ * Get a symbolic mode name.
+ *
+ * @localdoc If the fragment being inspected selects at least one model the mode will be `edit`,
+ *   otherwise the mode will be `insert`
+ *
+ * @return {string} Symbolic mode name
+ */
+ve.ui.FragmentInspector.prototype.getMode = function () {
+	if ( this.fragment ) {
+		return this.fragment.getSelectedModels().length ? 'edit' : 'insert';
+	}
+	return '';
 };
 
 /**
@@ -65,10 +97,10 @@ ve.ui.FragmentInspector.prototype.initialize = function () {
 
 	// Properties
 	this.container = new OO.ui.PanelLayout( {
-		$: this.$, scrollable: true, classes: [ 've-ui-fragmentInspector-container' ]
+		scrollable: true, classes: [ 've-ui-fragmentInspector-container' ]
 	} );
 	this.form = new OO.ui.FormLayout( {
-		$: this.$, classes: [ 've-ui-fragmentInspector-form' ]
+		classes: [ 've-ui-fragmentInspector-form' ]
 	} );
 
 	// Events
@@ -104,6 +136,10 @@ ve.ui.FragmentInspector.prototype.getSetupProcess = function ( data ) {
 				throw new Error( 'Cannot open inspector: opening data must contain a fragment' );
 			}
 			this.fragment = data.fragment;
+			this.previousSelection = this.fragment.getSelection();
+		}, this )
+		.next( function () {
+			this.actions.setMode( this.getMode() );
 		}, this );
 };
 
@@ -114,6 +150,7 @@ ve.ui.FragmentInspector.prototype.getTeardownProcess = function ( data ) {
 	return ve.ui.FragmentDialog.super.prototype.getTeardownProcess.apply( this, data )
 		.next( function () {
 			this.fragment = null;
+			this.previousSelection = null;
 		}, this );
 };
 
@@ -132,5 +169,5 @@ ve.ui.FragmentInspector.prototype.getReadyProcess = function ( data ) {
 ve.ui.FragmentInspector.prototype.getBodyHeight = function () {
 	// HACK: Chrome gets the height wrong by 1px for elements with opacity < 1
 	// e.g. a disabled button.
-	return Math.ceil( this.container.$element[0].scrollHeight ) + 1;
+	return Math.ceil( this.container.$element[ 0 ].scrollHeight ) + 1;
 };

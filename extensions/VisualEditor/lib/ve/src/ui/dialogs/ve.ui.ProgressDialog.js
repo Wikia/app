@@ -1,7 +1,7 @@
 /*!
  * VisualEditor UserInterface ProgressDialog class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 /**
@@ -68,20 +68,18 @@ ve.ui.ProgressDialog.prototype.getSetupProcess = function ( data ) {
 
 			for ( i = 0, l = progresses.length; i < l; i++ ) {
 				cancelDeferred = $.Deferred();
-				$row = this.$( '<div>' ).addClass( 've-ui-progressDialog-row' );
-				progressBar = new OO.ui.ProgressBarWidget( { $: this.$ } );
+				$row = $( '<div>' ).addClass( 've-ui-progressDialog-row' );
+				progressBar = new OO.ui.ProgressBarWidget();
 				fieldLayout = new OO.ui.FieldLayout(
 					progressBar,
 					{
-						$: this.$,
-						label: progresses[i].label,
+						label: progresses[ i ].label,
 						align: 'top'
 					}
 				);
 				cancelButton = new OO.ui.ButtonWidget( {
-					$: this.$,
 					framed: false,
-					icon: 'clear',
+					icon: 'cancel',
 					iconTitle: OO.ui.deferMsg( 'visualeditor-dialog-action-cancel' )
 				} ).on( 'click', cancelDeferred.reject.bind( cancelDeferred ) );
 
@@ -90,9 +88,9 @@ ve.ui.ProgressDialog.prototype.getSetupProcess = function ( data ) {
 						fieldLayout.$element, cancelButton.$element
 					)
 				);
-				progresses[i].progressBarDeferred.resolve( progressBar, cancelDeferred.promise() );
+				progresses[ i ].progressBarDeferred.resolve( progressBar, cancelDeferred.promise() );
 				/*jshint loopfunc:true */
-				progresses[i].progressCompletePromise.then(
+				progresses[ i ].progressCompletePromise.then(
 					this.progressComplete.bind( this, $row, false ),
 					this.progressComplete.bind( this, $row, true )
 				);
@@ -109,7 +107,7 @@ ve.ui.ProgressDialog.prototype.getActionProcess = function ( action ) {
 		var i, l;
 		if ( action === 'cancel' ) {
 			for ( i = 0, l = this.cancelDeferreds.length; i < l; i++ ) {
-				this.cancelDeferreds[i].reject();
+				this.cancelDeferreds[ i ].reject();
 			}
 		}
 		this.close( { action: action } );
@@ -129,7 +127,7 @@ ve.ui.ProgressDialog.prototype.progressComplete = function ( $row, failed ) {
 	}
 	if ( failed ) {
 		$row.remove();
-		this.manager.updateWindowSize( this );
+		this.updateSize();
 	}
 };
 

@@ -1,7 +1,7 @@
 /*!
  * VisualEditor UserInterface CommandHelpDialog class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 /**
@@ -44,64 +44,64 @@ ve.ui.CommandHelpDialog.static.actions = [
  * @inheritdoc
  */
 ve.ui.CommandHelpDialog.prototype.getBodyHeight = function () {
-	return Math.round( this.contentLayout.$element[0].scrollHeight );
+	return Math.round( this.contentLayout.$element[ 0 ].scrollHeight );
 };
 
 /**
  * @inheritdoc
  */
 ve.ui.CommandHelpDialog.prototype.initialize = function () {
+	var i, j, jLen, k, kLen, triggerList, commands, shortcut, platform, platformKey,
+		$list, $shortcut, commandGroups;
+
 	// Parent method
 	ve.ui.CommandHelpDialog.super.prototype.initialize.call( this );
 
-	var i, j, jLen, k, kLen, triggerList, commands, shortcut,
-		platform = ve.getSystemPlatform(),
-		platformKey = platform === 'mac' ? 'mac' : 'pc',
-		$list, $shortcut,
-		commandGroups = this.constructor.static.getCommandGroups();
+	platform = ve.getSystemPlatform();
+	platformKey = platform === 'mac' ? 'mac' : 'pc';
+	commandGroups = this.constructor.static.getCommandGroups();
 
 	this.contentLayout = new OO.ui.PanelLayout( {
-		$: this.$,
 		scrollable: true,
 		padded: true,
 		expanded: false
 	} );
-	this.$container = this.$( '<div>' ).addClass( 've-ui-commandHelpDialog-container' );
+	this.$container = $( '<div>' ).addClass( 've-ui-commandHelpDialog-container' );
 
 	for ( i in commandGroups ) {
-		commands = commandGroups[i].commands;
-		$list = this.$( '<dl>' ).addClass( 've-ui-commandHelpDialog-list' );
+		commands = commandGroups[ i ].commands;
+		$list = $( '<dl>' ).addClass( 've-ui-commandHelpDialog-list' );
 		for ( j = 0, jLen = commands.length; j < jLen; j++ ) {
-			if ( commands[j].trigger ) {
-				triggerList = ve.ui.triggerRegistry.lookup( commands[j].trigger );
+			if ( commands[ j ].trigger ) {
+				triggerList = ve.ui.triggerRegistry.lookup( commands[ j ].trigger );
 			} else {
 				triggerList = [];
-				for ( k = 0, kLen = commands[j].shortcuts.length; k < kLen; k++ ) {
-					shortcut = commands[j].shortcuts[k];
+				for ( k = 0, kLen = commands[ j ].shortcuts.length; k < kLen; k++ ) {
+					shortcut = commands[ j ].shortcuts[ k ];
 					triggerList.push(
 						new ve.ui.Trigger(
-							ve.isPlainObject( shortcut ) ? shortcut[platformKey] : shortcut,
+							ve.isPlainObject( shortcut ) ? shortcut[ platformKey ] : shortcut,
 							true
 						)
 					);
 				}
 			}
-			$shortcut = this.$( '<dt>' );
+			$shortcut = $( '<dt>' );
 			for ( k = 0, kLen = triggerList.length; k < kLen; k++ ) {
-				$shortcut.append( this.$( '<kbd>' ).text(
-					triggerList[k].getMessage().replace( /\+/g, ' + ' )
+				$shortcut.append( $( '<kbd>' ).text(
+					triggerList[ k ].getMessage().replace( /\+/g, ' + ' )
 				) );
 			}
 			$list.append(
 				$shortcut,
-				this.$( '<dd>' ).text( ve.msg( commands[j].msg ) )
+				$( '<dd>' ).text( ve.msg( commands[ j ].msg ) )
 			);
 		}
 		this.$container.append(
-			this.$( '<div>' )
+			$( '<div>' )
 				.addClass( 've-ui-commandHelpDialog-section' )
 				.append(
-					this.$( '<h3>' ).text( ve.msg( commandGroups[i].title ) ),
+					$( '<h3>' ).text( ve.msg( commandGroups[ i ].title ) ),
 					$list
 				)
 		);
@@ -117,7 +117,7 @@ ve.ui.CommandHelpDialog.prototype.initialize = function () {
  * Get the list of commands, grouped by type
  *
  * @static
- * @returns {Object} Object containing command groups, consist of a title message and array of commands
+ * @return {Object} Object containing command groups, consist of a title message and array of commands
  */
 ve.ui.CommandHelpDialog.static.getCommandGroups = function () {
 	return {
@@ -133,24 +133,6 @@ ve.ui.CommandHelpDialog.static.getCommandGroups = function () {
 				{ trigger: 'code', msg: 'visualeditor-annotationbutton-code-tooltip' },
 				{ trigger: 'strikethrough', msg: 'visualeditor-annotationbutton-strikethrough-tooltip' },
 				{ trigger: 'clear', msg: 'visualeditor-clearbutton-tooltip' }
-			]
-		},
-		history: {
-			title: 'visualeditor-shortcuts-history',
-			commands: [
-				{ trigger: 'undo', msg: 'visualeditor-historybutton-undo-tooltip' },
-				{ trigger: 'redo', msg: 'visualeditor-historybutton-redo-tooltip' }
-			]
-		},
-		formatting: {
-			title: 'visualeditor-shortcuts-formatting',
-			commands: [
-				{ trigger: 'paragraph', msg: 'visualeditor-formatdropdown-format-paragraph' },
-				{ shortcuts: ['ctrl+(1-6)'], msg: 'visualeditor-formatdropdown-format-heading-label' },
-				{ trigger: 'preformatted', msg: 'visualeditor-formatdropdown-format-preformatted' },
-				{ trigger: 'blockquote', msg: 'visualeditor-formatdropdown-format-blockquote' },
-				{ trigger: 'indent', msg: 'visualeditor-indentationbutton-indent-tooltip' },
-				{ trigger: 'outdent', msg: 'visualeditor-indentationbutton-outdent-tooltip' }
 			]
 		},
 		clipboard: {
@@ -180,10 +162,30 @@ ve.ui.CommandHelpDialog.static.getCommandGroups = function () {
 				{ trigger: 'pasteSpecial', msg: 'visualeditor-clipboard-paste-special' }
 			]
 		},
+		formatting: {
+			title: 'visualeditor-shortcuts-formatting',
+			commands: [
+				{ trigger: 'paragraph', msg: 'visualeditor-formatdropdown-format-paragraph' },
+				{ shortcuts: [ 'ctrl+(1-6)' ], msg: 'visualeditor-formatdropdown-format-heading-label' },
+				{ trigger: 'preformatted', msg: 'visualeditor-formatdropdown-format-preformatted' },
+				{ trigger: 'blockquote', msg: 'visualeditor-formatdropdown-format-blockquote' },
+				{ trigger: 'indent', msg: 'visualeditor-indentationbutton-indent-tooltip' },
+				{ trigger: 'outdent', msg: 'visualeditor-indentationbutton-outdent-tooltip' }
+			]
+		},
+		history: {
+			title: 'visualeditor-shortcuts-history',
+			commands: [
+				{ trigger: 'undo', msg: 'visualeditor-historybutton-undo-tooltip' },
+				{ trigger: 'redo', msg: 'visualeditor-historybutton-redo-tooltip' }
+			]
+		},
 		other: {
 			title: 'visualeditor-shortcuts-other',
 			commands: [
 				{ trigger: 'findAndReplace', msg: 'visualeditor-find-and-replace-title' },
+				{ trigger: 'findNext', msg: 'visualeditor-find-and-replace-next-button' },
+				{ trigger: 'findPrevious', msg: 'visualeditor-find-and-replace-previous-button' },
 				{ trigger: 'selectAll', msg: 'visualeditor-content-select-all' },
 				{ trigger: 'commandHelp', msg: 'visualeditor-dialog-command-help-title' }
 			]

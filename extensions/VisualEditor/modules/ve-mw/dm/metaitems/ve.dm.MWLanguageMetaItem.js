@@ -1,7 +1,7 @@
 /*!
  * VisualEditor DataModel MWLanguageMetaItem class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2015 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -31,7 +31,7 @@ ve.dm.MWLanguageMetaItem.static.matchTagNames = [ 'link' ];
 ve.dm.MWLanguageMetaItem.static.matchRdfaTypes = [ 'mw:PageProp/Language' ];
 
 ve.dm.MWLanguageMetaItem.static.toDataElement = function ( domElements ) {
-	var href = domElements[0].getAttribute( 'href' );
+	var href = domElements[ 0 ].getAttribute( 'href' );
 	return {
 		type: this.name,
 		attributes: {

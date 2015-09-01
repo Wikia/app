@@ -7,11 +7,11 @@ sublime-*
 .settings
 
 # Install and build artifacts
-dist
-docs
+/coverage
+/dist
+/docs
 node_modules
 npm-debug.log
-test-coverage
 
 # OS
 .DS_Store

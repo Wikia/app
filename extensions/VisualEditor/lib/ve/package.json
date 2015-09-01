@@ -4,7 +4,8 @@
   "description": "Stand-alone contentEditable-based rich Web editor.",
   "scripts": {
     "test": "grunt test",
-    "prepublish": "grunt build"
+    "prepublish": "grunt build",
+    "doc": "jsduck"
   },
   "homepage": "https://www.mediawiki.org/wiki/VisualEditor",
   "repository": {
@@ -19,22 +20,25 @@
   ],
   "devDependencies": {
     "grunt": "0.4.5",
-    "grunt-banana-checker": "0.2.0",
+    "grunt-cli": "0.1.13",
+    "grunt-banana-checker": "0.2.2",
     "grunt-contrib-clean": "0.6.0",
-    "grunt-contrib-concat": "0.5.0",
-    "grunt-contrib-csslint": "0.3.1",
-    "grunt-contrib-jshint": "0.10.0",
+    "grunt-contrib-concat": "0.5.1",
+    "grunt-contrib-copy": "0.8.0",
+    "grunt-contrib-csslint": "0.5.0",
+    "grunt-contrib-jshint": "0.11.2",
+    "grunt-jsonlint": "1.0.4",
     "grunt-contrib-watch": "0.6.1",
-    "grunt-css-url-embed": "1.0.4",
-    "grunt-cssjanus": "0.2.2",
-    "grunt-jscs": "0.8.1",
-    "grunt-karma": "0.9.0",
-    "karma": "0.12.25",
-    "karma-chrome-launcher": "0.1.5",
-    "karma-coverage": "0.2.6",
-    "karma-firefox-launcher": "0.1.3",
-    "karma-qunit": "0.1.4",
-    "karma-sauce-launcher": "0.2.10",
-    "qunitjs": "1.15.0"
+    "grunt-css-url-embed": "1.6.1",
+    "grunt-cssjanus": "0.2.4",
+    "grunt-jscs": "2.1.0",
+    "grunt-karma": "0.12.0",
+    "karma": "0.13.9",
+    "karma-chrome-launcher": "0.2.0",
+    "karma-coverage": "0.5.0",
+    "karma-firefox-launcher": "0.1.6",
+    "karma-qunit": "0.1.5",
+    "karma-sauce-launcher": "0.2.14",
+    "qunitjs": "1.18.0"
   }
 }

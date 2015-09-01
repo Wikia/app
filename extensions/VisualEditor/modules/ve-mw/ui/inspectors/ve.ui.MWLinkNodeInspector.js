@@ -1,7 +1,7 @@
 /*!
  * VisualEditor UserInterface MWLinkNodeInspector class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2015 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -31,18 +31,13 @@ ve.ui.MWLinkNodeInspector.static.icon = 'link';
 
 ve.ui.MWLinkNodeInspector.static.title = OO.ui.deferMsg( 'visualeditor-linknodeinspector-title' );
 
-ve.ui.MWLinkNodeInspector.static.removable = false;
-
 ve.ui.MWLinkNodeInspector.static.modelClasses = [ ve.dm.MWNumberedExternalLinkNode ];
 
 ve.ui.MWLinkNodeInspector.static.actions = ve.ui.MWLinkNodeInspector.super.static.actions.concat( [
 	{
-		action: 'open',
-		label: OO.ui.deferMsg( 'visualeditor-linkinspector-open' )
-	},
-	{
 		action: 'convert',
-		label: OO.ui.deferMsg( 'visualeditor-linknodeinspector-add-label' )
+		label: OO.ui.deferMsg( 'visualeditor-linknodeinspector-add-label' ),
+		modes: [ 'edit' ]
 	}
 ] );
 
@@ -57,36 +52,11 @@ ve.ui.MWLinkNodeInspector.prototype.initialize = function () {
 
 	// Properties
 	this.targetInput = new OO.ui.TextInputWidget( {
-		$: this.$,
 		validate: ve.init.platform.getExternalLinkUrlProtocolsRegExp()
 	} );
 
-	// Events
-	this.targetInput.connect( this, { change: 'onTargetInputChange' } );
-
 	// Initialization
 	this.form.$element.append( this.targetInput.$element );
-};
-
-/**
- * Handle target input change events.
- *
- * Updates the open button's hyperlink location.
- *
- * @param {string} value New target input value
- */
-ve.ui.MWLinkNodeInspector.prototype.onTargetInputChange = function () {
-	var href = this.targetInput.getValue(),
-		inspector = this;
-	this.targetInput.isValid().done( function ( valid ) {
-		inspector.actions.forEach( { actions: 'open' }, function ( action ) {
-			action.setHref( href ).setTarget( '_blank' ).setDisabled( !valid );
-			// HACK: Chrome renders a dark outline around the action when it's a link, but causing it to
-			// re-render makes it magically go away; this is incredibly evil and needs further
-			// investigation
-			action.$element.hide().fadeIn( 0 );
-		} );
-	} );
 };
 
 /**

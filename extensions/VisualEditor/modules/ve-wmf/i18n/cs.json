@@ -12,17 +12,20 @@
 			"Tchoř",
 			"ශ්වෙත",
 			"Muhammad Shuaib",
-			"Jdforrester"
+			"Jdforrester",
+			"Amire80",
+			"아라"
 		]
 	},
 	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]]",
 	"tag-visualeditor-description": "Editace provedená za použití [[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditoru]]",
 	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor: Zkontrolovat]]",
-	"tag-visualeditor-needcheck-description": "Editace provedená za použití [[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditoru]], u které systém detekoval možné nezamýšlené změny wikitextu.",
+	"tag-visualeditor-needcheck-description": "Editace provedená za použití [[{{MediaWiki:visualeditor-descriptionpagelink}}|vizuálního editoru]], u které systém detekoval možné nezamýšlené změny wikitextu.",
 	"tag-visualeditor-switched": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor: Přepnuto]]",
-	"tag-visualeditor-switched-description": "Uživatel začal editovat pomocí VisualEditoru, načež se přepnul do editoru wikitextu.",
+	"tag-visualeditor-switched-description": "Uživatel začal editovat pomocí vizuálního editoru, načež se přepnul do editoru wikitextu.",
 	"visualeditor-feedback-link": "Project:VisualEditor/Názory",
-	"visualeditor-feedback-tool": "Zanechte zpětnou vazbu",
+	"visualeditor-feedback-tool": "Poslat názor na tento software",
 	"visualeditor-help-label": "Přečtěte si uživatelskou příručku",
+	"visualeditor-help-link": "mw:Special:MyLanguage/Help:VisualEditor/User guide",
 	"visualeditor-help-title": "Příručka k používání editoru"
 }

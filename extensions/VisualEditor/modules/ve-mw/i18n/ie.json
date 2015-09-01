@@ -125,6 +125,5 @@
 	"visualeditor-viewpage-savewarning": "Esque tu es cert, que tu vole commutar al vis-modo sin conservation?",
 	"visualeditor-wikitext-warning": "Tu usa VisualEditor. Ci [[{{MediaWiki:visualeditor-wikitext-warning-link}}|Wikitext]] ne functiona. Clicca a «{{int:visualeditor-ca-editsource}}» por redacter ti págine in modo de wikitextu. Tu va perdir ínconservat changes.",
 	"visualeditor-wikitext-warning-link": "Help:Wikitextu",
-	"visualeditor-wikitext-warning-title": "Trova de wikitextual marcage",
-	"visualeditor-dialog-media-insert-title": "Intrar un medie"
+	"visualeditor-wikitext-warning-title": "Trova de wikitextual marcage"
 }

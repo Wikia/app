@@ -7,6 +7,6 @@ Then(/^I should see the Visual Editor editing surface$/) do
     page.wait_until(10) do
       page.ve_editing_surface_element.exists?
     end
-    on(DummyPage).ve_editing_toolbar_element.should exist
+    expect(on(DummyPage).ve_editing_toolbar_element).to exist
   end
 end

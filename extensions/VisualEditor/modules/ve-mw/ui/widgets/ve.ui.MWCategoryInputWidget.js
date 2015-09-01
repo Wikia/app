@@ -1,7 +1,7 @@
 /*!
  * VisualEditor UserInterface MWCategoryInputWidget class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2015 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -10,7 +10,7 @@
  *
  * @class
  * @extends OO.ui.TextInputWidget
- * @mixins OO.ui.LookupInputWidget
+ * @mixins OO.ui.mixin.LookupElement
  *
  * @constructor
  * @param {ve.ui.MWCategoryWidget} categoryWidget
@@ -26,12 +26,10 @@ ve.ui.MWCategoryInputWidget = function VeUiMWCategoryInputWidget( categoryWidget
 	OO.ui.TextInputWidget.call( this, config );
 
 	// Mixin constructors
-	OO.ui.LookupInputWidget.call( this, this, config );
+	OO.ui.mixin.LookupElement.call( this, config );
 
 	// Properties
 	this.categoryWidget = categoryWidget;
-	this.forceCapitalization = mw.config.get( 'wgCaseSensitiveNamespaces' ).indexOf( 14 ) === -1;
-	this.categoryPrefix = mw.config.get( 'wgFormattedNamespaces' )['14'] + ':';
 
 	// Initialization
 	this.$element.addClass( 've-ui-mwCategoryInputWidget' );
@@ -42,7 +40,15 @@ ve.ui.MWCategoryInputWidget = function VeUiMWCategoryInputWidget( categoryWidget
 
 OO.inheritClass( ve.ui.MWCategoryInputWidget, OO.ui.TextInputWidget );
 
-OO.mixinClass( ve.ui.MWCategoryInputWidget, OO.ui.LookupInputWidget );
+OO.mixinClass( ve.ui.MWCategoryInputWidget, OO.ui.mixin.LookupElement );
+
+/* Events */
+
+/**
+ * @event choose
+ * A category was chosen
+ * @param {OO.ui.MenuOptionWidget} item Chosen item
+ */
 
 /* Methods */
 
@@ -50,11 +56,17 @@ OO.mixinClass( ve.ui.MWCategoryInputWidget, OO.ui.LookupInputWidget );
  * @inheritdoc
  */
 ve.ui.MWCategoryInputWidget.prototype.getLookupRequest = function () {
-	return ve.init.target.constructor.static.apiRequest( {
+	var title = mw.Title.newFromText( this.value );
+	if ( title && title.getNamespaceId() === mw.config.get( 'wgNamespaceIds' ).category ) {
+		title = title.getMainText();
+	} else {
+		title = this.value;
+	}
+	return new mw.Api().get( {
 		action: 'query',
 		generator: 'allcategories',
 		gacmin: 1,
-		gacprefix: this.value,
+		gacprefix: title,
 		prop: 'categoryinfo',
 		redirects: ''
 	} );
@@ -63,12 +75,14 @@ ve.ui.MWCategoryInputWidget.prototype.getLookupRequest = function () {
 /**
  * @inheritdoc
  */
-ve.ui.MWCategoryInputWidget.prototype.getLookupCacheItemFromData = function ( data ) {
-	var result = [], linkCacheUpdate = {}, query = data.query || {};
+ve.ui.MWCategoryInputWidget.prototype.getLookupCacheDataFromResponse = function ( data ) {
+	var result = [],
+		linkCacheUpdate = {},
+		query = data.query || {};
 
 	$.each( query.pages || [], function ( pageId, categoryPage ) {
 		result.push( mw.Title.newFromText( categoryPage.title ).getMainText() );
-		linkCacheUpdate[categoryPage.title] = {
+		linkCacheUpdate[ categoryPage.title ] = {
 			missing: categoryPage.hasOwnProperty( 'missing' ),
 			hidden: categoryPage.categoryinfo && categoryPage.categoryinfo.hasOwnProperty( 'hidden' )
 		};
@@ -76,16 +90,16 @@ ve.ui.MWCategoryInputWidget.prototype.getLookupCacheItemFromData = function ( da
 
 	$.each( query.redirects || [], function ( index, redirect ) {
 		if ( !linkCacheUpdate.hasOwnProperty( redirect.to ) ) {
-			linkCacheUpdate[redirect.to] = ve.init.platform.linkCache.getCached( redirect.to ) ||
-				{ missing: false, redirectFrom: [redirect.from] };
+			linkCacheUpdate[ redirect.to ] = ve.init.platform.linkCache.getCached( redirect.to ) ||
+				{ missing: false, redirectFrom: [ redirect.from ] };
 		}
 		if (
-			linkCacheUpdate[redirect.to].redirectFrom &&
-			linkCacheUpdate[redirect.to].redirectFrom.indexOf( redirect.from ) === -1
+			linkCacheUpdate[ redirect.to ].redirectFrom &&
+			linkCacheUpdate[ redirect.to ].redirectFrom.indexOf( redirect.from ) === -1
 		) {
-			linkCacheUpdate[redirect.to].redirectFrom.push( redirect.from );
+			linkCacheUpdate[ redirect.to ].redirectFrom.push( redirect.from );
 		} else {
-			linkCacheUpdate[redirect.to].redirectFrom = [redirect.from];
+			linkCacheUpdate[ redirect.to ].redirectFrom = [ redirect.from ];
 		}
 	} );
 
@@ -97,11 +111,14 @@ ve.ui.MWCategoryInputWidget.prototype.getLookupCacheItemFromData = function ( da
 /**
  * @inheritdoc
  */
-ve.ui.MWCategoryInputWidget.prototype.getLookupMenuItemsFromData = function ( data ) {
-	var exactMatch = false,
+ve.ui.MWCategoryInputWidget.prototype.getLookupMenuOptionsFromData = function ( data ) {
+	var widget = this,
+		exactMatch = false,
 		itemWidgets = [],
-		existingCategoryItems = [], matchingCategoryItems = [],
-		hiddenCategoryItems = [], newCategoryItems = [],
+		existingCategoryItems = [],
+		matchingCategoryItems = [],
+		hiddenCategoryItems = [],
+		newCategoryItems = [],
 		existingCategories = this.categoryWidget.getCategories(),
 		linkCacheUpdate = {},
 		canonicalQueryValue = mw.Title.newFromText( this.value ),
@@ -127,10 +144,10 @@ ve.ui.MWCategoryInputWidget.prototype.getLookupMenuItemsFromData = function ( da
 			exactMatch = true;
 		}
 		if ( !suggestedCacheEntry ) {
-			linkCacheUpdate[suggestedCategoryTitle] = { missing: false };
+			linkCacheUpdate[ suggestedCategoryTitle ] = { missing: false };
 		}
 		if (
-			ve.indexOf( suggestedCategory, existingCategories ) === -1
+			existingCategories.indexOf( suggestedCategory ) === -1
 		) {
 			if ( suggestedCacheEntry && suggestedCacheEntry.hidden ) {
 				hiddenCategoryItems.push( suggestedCategory );
@@ -138,7 +155,7 @@ ve.ui.MWCategoryInputWidget.prototype.getLookupMenuItemsFromData = function ( da
 				matchingCategoryItems.push( suggestedCategory );
 			}
 		}
-	}.bind( this ) );
+	} );
 
 	// Existing categories
 	$.each( existingCategories, function ( index, existingCategory ) {
@@ -154,7 +171,7 @@ ve.ui.MWCategoryInputWidget.prototype.getLookupMenuItemsFromData = function ( da
 	// New category
 	if ( !exactMatch && canonicalQueryValue ) {
 		newCategoryItems.push( canonicalQueryValue );
-		linkCacheUpdate[prefixedCanonicalQueryValue] = { missing: true };
+		linkCacheUpdate[ prefixedCanonicalQueryValue ] = { missing: true };
 	}
 
 	ve.init.platform.linkCache.set( linkCacheUpdate );
@@ -184,17 +201,26 @@ ve.ui.MWCategoryInputWidget.prototype.getLookupMenuItemsFromData = function ( da
 	], function ( index, sectionData ) {
 		if ( sectionData.items.length ) {
 			itemWidgets.push( new OO.ui.MenuSectionOptionWidget( {
-				$: this.lookupMenu.$,
 				data: sectionData.id,
 				label: sectionData.label
 			} ) );
 			$.each( sectionData.items, function ( index, categoryItem ) {
-				itemWidgets.push( this.getCategoryWidgetFromName( categoryItem ) );
-			}.bind( this ) );
+				itemWidgets.push( widget.getCategoryWidgetFromName( categoryItem ) );
+			} );
 		}
-	}.bind( this ) );
+	} );
 
 	return itemWidgets;
+};
+
+/**
+ * @inheritdoc
+ */
+ve.ui.MWCategoryInputWidget.prototype.onLookupMenuItemChoose = function ( item ) {
+	this.emit( 'choose', item );
+
+	// Reset input
+	this.setValue( '' );
 };
 
 /**
@@ -202,7 +228,7 @@ ve.ui.MWCategoryInputWidget.prototype.getLookupMenuItemsFromData = function ( da
  *
  * @method
  * @param {string} name Category name
- * @returns {OO.ui.MenuOptionWidget} Menu item widget to be shown
+ * @return {OO.ui.MenuOptionWidget} Menu item widget to be shown
  */
 ve.ui.MWCategoryInputWidget.prototype.getCategoryWidgetFromName = function ( name ) {
 	var cachedData = ve.init.platform.linkCache.getCached(
@@ -210,50 +236,17 @@ ve.ui.MWCategoryInputWidget.prototype.getCategoryWidgetFromName = function ( nam
 	);
 	if ( cachedData && cachedData.redirectFrom ) {
 		return new OO.ui.MenuOptionWidget( {
-			$: this.lookupMenu.$,
 			data: name,
 			autoFitLabel: false,
-			label: this.$( '<span>' )
-				.text( mw.Title.newFromText( cachedData.redirectFrom[0] ).getMainText() )
+			label: $( '<span>' )
+				.text( mw.Title.newFromText( cachedData.redirectFrom[ 0 ] ).getMainText() )
 				.append( '<br>↳ ' )
-				.append( this.$( '<span>' ).text( mw.Title.newFromText( name ).getMainText() ) )
+				.append( $( '<span>' ).text( mw.Title.newFromText( name ).getMainText() ) )
 		} );
 	} else {
 		return new OO.ui.MenuOptionWidget( {
-			$: this.lookupMenu.$,
 			data: name,
 			label: name
 		} );
 	}
-};
-
-/**
- * Get a category item.
- *
- * @method
- * @param {string} value Category name
- * @returns {Object} Category item with name, value and metaItem properties
- */
-ve.ui.MWCategoryInputWidget.prototype.getCategoryItemFromValue = function ( value ) {
-	var title;
-
-	// Normalize
-	title = mw.Title.newFromText( this.categoryPrefix + value );
-	if ( title ) {
-		return {
-			name: title.getPrefixedText(),
-			value: title.getMainText(),
-			metaItem: {}
-		};
-	}
-
-	if ( this.forceCapitalization ) {
-		value = value.slice( 0, 1 ).toUpperCase() + value.slice( 1 );
-	}
-
-	return {
-		name: this.categoryPrefix + value,
-		value: value,
-		metaItem: {}
-	};
 };

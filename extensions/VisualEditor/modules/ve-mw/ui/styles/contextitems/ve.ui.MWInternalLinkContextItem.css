@@ -1,0 +1,53 @@
+/*!
+ * VisualEditor MediaWiki UserInterface internal link context item styles.
+ *
+ * @copyright 2011-2015 VisualEditor Team and others; see AUTHORS.txt
+ * @license The MIT License (MIT); see LICENSE.txt
+ */
+
+.ve-ui-mwInternalLinkContextItem .ve-ui-linearContextItem-body {
+	overflow: auto;
+	white-space: normal;
+}
+
+.ve-ui-mwInternalLinkContextItem-withImage .oo-ui-iconElement-icon {
+	float: left;
+	width: 3.75em;
+	height: 3.75em;
+	left: -3.75em;
+	background-color: #ccc;
+	border: 0.5em solid #ccc;
+	opacity: 0.4;
+}
+
+.ve-ui-mwInternalLinkContextItem-withImage .ve-ui-mwInternalLinkContextItem-hasImage {
+	border: 0;
+	background-size: cover;
+	opacity: 1;
+	width: 4.75em;
+	height: 4.75em;
+}
+
+.ve-ui-mwInternalLinkContextItem-link,
+.ve-ui-mwInternalLinkContextItem-description {
+	display: block;
+}
+
+.ve-ui-mwInternalLinkContextItem-description {
+	color: #888;
+	margin-top: 0.5em;
+}
+
+.ve-ui-mwInternalLinkContextItem-withImage .ve-ui-mwInternalLinkContextItem-link,
+.ve-ui-mwInternalLinkContextItem-withImage .ve-ui-mwInternalLinkContextItem-description {
+	margin-left: 5.75em;
+}
+
+.ve-ui-mwInternalLinkContextItem-withDescription .ve-ui-mwInternalLinkContextItem-link {
+	font-weight: bold;
+}
+
+.ve-ui-mwInternalLinkContextItem-hasImage {
+	background-color: transparent;
+	background-size: cover;
+}

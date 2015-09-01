@@ -1,7 +1,7 @@
 /*!
  * VisualEditor UserInterface FindAndReplaceDialog styles.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 .ve-ui-findAndReplaceDialog-row {
@@ -15,29 +15,23 @@
 	padding-bottom: 1px;
 }
 
-.ve-ui-findAndReplaceDialog-row .ve-ui-findAndReplaceDialog-cell {
+.ve-ui-findAndReplaceDialog-cell {
 	display: table-cell;
 	vertical-align: middle;
 	white-space: nowrap;
 	padding-right: 1em;
 }
 
-.ve-ui-findAndReplaceDialog-row .ve-ui-findAndReplaceDialog-cell:last-child {
+.ve-ui-findAndReplaceDialog-cell:last-child {
 	padding-right: 0;
 }
 
-.ve-ui-findAndReplaceDialog-findText input {
-	padding-right: 6em;
+.ve-ui-findAndReplaceDialog-cell-input {
+	width: 100%;
 }
 
-.ve-ui-findAndReplaceDialog-findText-error input {
-	background-color: #edd;
-}
-
-.ve-ui-findAndReplaceDialog-focusedIndexLabel {
-	position: absolute;
-	right: 1.4em;
-	color: #888;
+.ve-ui-findAndReplaceDialog-cell-input .oo-ui-textInputWidget {
+	max-width: none;
 }
 
 /* @noflip */

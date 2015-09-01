@@ -19,6 +19,7 @@
 
 	"globals": {
 		"mw": false,
+		"moment": false,
 		"OO": false,
 		"QUnit": false,
 		"unicodeJS": false,

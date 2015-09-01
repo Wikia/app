@@ -1,14 +1,14 @@
 /*!
  * VisualEditor ContentEditable PreformattedNode class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 /**
  * ContentEditable preformatted node.
  *
  * @class
- * @extends ve.ce.BranchNode
+ * @extends ve.ce.ContentBranchNode
  * @constructor
  * @param {ve.dm.PreformattedNode} model Model to observe
  * @param {Object} [config] Configuration options

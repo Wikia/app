@@ -8,10 +8,8 @@ conventions we use in the project.
 
 ## Bug reports
 
-Please report bugs to [bugzilla.wikimedia.org](https://bugzilla.wikimedia.org/enter_bug.cgi?product=VisualEditor&component=General)
-using the `VisualEditor` product.  Feel free to use the `General`
-component if you don't know where else your bug might belong. Don't
-worry about specifying version, severity, hardware, or OS.
+Please report bugs to [phabricator.wikimedia.org](https://phabricator.wikimedia.org/maniphest/task/create/?projects=VisualEditor)
+using the `VisualEditor` project.
 
 ## Running tests
 
@@ -37,7 +35,7 @@ For other grunt tasks, see:
 $ grunt --help
 ```
 
-To run the tests in a web browser, open `src/tests/index.html`.
+To run the tests in a web browser, open `tests/index.html`.
 
 ## Building documentation
 
@@ -70,7 +68,7 @@ $ gem install --user-install jsduck
 Creating the documentation is easy:
 ```sh
 $ cd VisualEditor
-$ bin/generateDocs.sh
+$ npm run doc
 ```
 
 The generated documentation is in the `docs/` subdirectory.  View the
@@ -109,17 +107,13 @@ indicating their order between the standard tags.
 * @inheritable
 * @param
 * @fires name
-* @returns
+* @return
 
 ## Add a new javascript class
 
 When a new javascript class is added, the file must be referenced in a number of places
-before it can be used.
+before it can be used:
 
-Test files:
-* src/tests/index.html.template
-
-Regular files:
-* .docs/categories.json in General->Utilities (or somewhere more specific)
-* modules.json in visualEditor.core (or somewhere more specific)
+* .jsduck/categories.json in General->Utilities (or somewhere more specific)
+* build/modules.json in visualEditor.core.build (or somewhere more specific)
 * Run `grunt build`

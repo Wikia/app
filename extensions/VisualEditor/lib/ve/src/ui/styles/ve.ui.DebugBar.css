@@ -1,12 +1,8 @@
 /*!
  * VisualEditor Initialization Debug Bar styles.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
-
-.ve-ui-debugBar-commands {
-	font-size: 0.8em;
-}
 
 .ve-ui-debugBar-commands > .oo-ui-widget,
 .ve-ui-debugBar-commands-divider {
@@ -28,15 +24,21 @@
 }
 
 .ve-ui-debugBar-dump {
-	font-size: 0.7em;
 	margin-top: 2em;
-	display: none;
+}
+
+.ve-ui-debugBar-dump > table {
+	font-size: 0.85em;
 	background-color: #f3f3f3;
 	width: 100%;
 	border: 1px solid #ddd;
 	border-radius: 0;
 	border-top-right-radius: 0.25em;
 	border-top-left-radius: 0.25em;
+}
+
+.ve-ui-debugBar-dump > .oo-ui-buttonWidget {
+	margin-bottom: 0.25em;
 }
 
 .ve-ui-debugBar-dump td {
@@ -93,7 +95,7 @@
 }
 
 .ve-ui-debugBar-filibuster {
-	font-size: 0.7em;
+	font-size: 0.875em;
 	margin-top: 2em;
 	display: none;
 	background-color: #f3f3f3;

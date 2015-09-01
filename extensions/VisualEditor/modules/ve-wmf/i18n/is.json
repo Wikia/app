@@ -5,10 +5,14 @@
 			"Snævar"
 		]
 	},
-	"tag-visualeditor": "[[{{MediaWiki:Visualeditor-descriptionpagelink}}|VisualEditor]]",
-	"tag-visualeditor-description": "Breyting gerð með hjálp [[{{MediaWiki:Visualeditor-descriptionpagelink}}|VisualEditor]]",
+	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]]",
+	"tag-visualeditor-description": "Breyting gerð með [[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]]",
+	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor: Athuga]]",
+	"tag-visualeditor-needcheck-description": "Breyting gerð með [[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]] þar sem kerfið tók eftir því að wikitextanum hefur verið breytt óvænt.",
+	"tag-visualeditor-switched": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor: Skipti yfir]]",
+	"tag-visualeditor-switched-description": "Notandinn byrjaði að gera breytingar með VisualEditor en fór svo að breyta wikitextanum.",
 	"visualeditor-feedback-link": "Project:VisualEditor/Ábendingar",
 	"visualeditor-feedback-tool": "Skilja eftir ábendingu",
 	"visualeditor-help-label": "Lesa notkunarhandbókina",
-	"visualeditor-help-title": "Notkunarhandbók um hvernig á að nota ritilinn"
+	"visualeditor-help-title": "Leiðbeiningar um hvernig á að nota ritilinn"
 }

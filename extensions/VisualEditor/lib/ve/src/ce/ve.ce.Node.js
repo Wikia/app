@@ -1,7 +1,7 @@
 /*!
  * VisualEditor ContentEditable Node class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 /**
@@ -55,18 +55,6 @@ ve.ce.Node.static.splitOnEnter = false;
  */
 ve.ce.Node.static.primaryCommandName = null;
 
-/**
- * Whether this node handles its own rendering
- *
- * If false, ve.ce.Branchnode onSplice method will append this node's child elements to its element.
- * If true, this node must handle rendering its children.
- *
- * @static
- * @property {boolean}
- * @inheritable
- */
-ve.ce.Node.static.handlesOwnRendering = false;
-
 /* Static Methods */
 
 /**
@@ -75,7 +63,7 @@ ve.ce.Node.static.handlesOwnRendering = false;
  * @static
  * @inheritable
  * @param {ve.dm.Node} node Node model
- * @returns {string} Description of node
+ * @return {string} Description of node
  */
 ve.ce.Node.static.getDescription = function () {
 	return '';
@@ -152,12 +140,24 @@ ve.ce.Node.prototype.isFocusable = function () {
 };
 
 /**
- * Check if the node renders its own children
- *
- * @returns {boolean} Node renders its own children
+ * @inheritdoc ve.Node
  */
-ve.ce.Node.prototype.handlesOwnRendering = function () {
-	return this.constructor.static.handlesOwnRendering;
+ve.ce.Node.prototype.isAlignable = function () {
+	return this.model.isAlignable();
+};
+
+/**
+ * @inheritdoc ve.Node
+ */
+ve.ce.Node.prototype.isCellable = function () {
+	return this.model.isCellable();
+};
+
+/**
+ * @inheritdoc ve.Node
+ */
+ve.ce.Node.prototype.isCellEditable = function () {
+	return this.model.isCellEditable();
 };
 
 /**
@@ -172,6 +172,13 @@ ve.ce.Node.prototype.hasSignificantWhitespace = function () {
  */
 ve.ce.Node.prototype.handlesOwnChildren = function () {
 	return this.model.handlesOwnChildren();
+};
+
+/**
+ * @inheritdoc ve.Node
+ */
+ve.ce.Node.prototype.shouldIgnoreChildren = function () {
+	return this.model.shouldIgnoreChildren();
 };
 
 /**
@@ -198,7 +205,7 @@ ve.ce.Node.prototype.getOffset = function () {
 /**
  * Check if the node can be split.
  *
- * @returns {boolean} Node can be split
+ * @return {boolean} Node can be split
  */
 ve.ce.Node.prototype.splitOnEnter = function () {
 	return this.constructor.static.splitOnEnter;
@@ -209,7 +216,11 @@ ve.ce.Node.prototype.splitOnEnter = function () {
  */
 ve.ce.Node.prototype.destroy = function () {
 	this.parent = null;
-	this.model.disconnect( this );
+	this.root = null;
+	this.doc = null;
+
+	// Parent method
+	ve.ce.View.prototype.destroy.call( this );
 };
 
 /** */

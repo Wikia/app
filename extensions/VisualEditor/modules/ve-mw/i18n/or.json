@@ -3,7 +3,8 @@
 		"authors": [
 			"Odisha1",
 			"Psubhashish",
-			"ଶିତିକଣ୍ଠ ଦାଶ"
+			"ଶିତିକଣ୍ଠ ଦାଶ",
+			"Jnanaranjan Sahu"
 		]
 	},
 	"tooltip-ca-createsource": "ଏହି ପୃଷ୍ଠା ପାଇଁ ମୂଳ କୋଡ଼ (source code) ଲେଖନ୍ତୁ",
@@ -11,6 +12,7 @@
 	"tooltip-ca-ve-edit": "ଏହି ପୃଷ୍ଠାକୁ ଭିଜୁଆଲ୍-ଏଡ଼ିଟର ଦ୍ଵାରା ସମ୍ପାଦନ କରନ୍ତୁ",
 	"visualeditor-beta-appendix": "ବିଟା",
 	"visualeditor-beta-label": "ବିଟା",
+	"visualeditor-ca-createlocaldescriptionsource": "ନିଜର ସ୍ଥାନୀୟ ବିବରଣ ଯୋଡ଼ନ୍ତୁ",
 	"visualeditor-ca-createsource": "ଉତ୍ସ ଗଢନ୍ତୁ",
 	"visualeditor-ca-editsource": "ଉତ୍ସ ସମ୍ପାଦନା",
 	"visualeditor-ca-editsource-section": "ଉତ୍ସ ସମ୍ପାଦନା",
@@ -47,7 +49,6 @@
 	"visualeditor-dialogbutton-referenceslist-tooltip": "ଆଧାର ଗୁଡ଼ିକର ତାଲିକା",
 	"visualeditor-formatdropdown-format-mw-heading1": "ପୃଷ୍ଠା ଶିରୋନାମା",
 	"visualeditor-formatdropdown-format-mw-heading2": "ଶିରୋନାମ",
-	"visualeditor-linkinspector-suggest-new-page": "ନୂଆ ପୃଷ୍ଠା",
 	"visualeditor-savedialog-label-create": "ପୃଷ୍ଠାଟିଏ ତିଆରିବା",
 	"visualeditor-savedialog-label-error": "ଭୁଲ",
 	"visualeditor-savedialog-label-warning": "ସାବଧାନ",

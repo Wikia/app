@@ -1,13 +1,11 @@
 /*!
  * VisualEditor Overlay styles.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 .ve-ui-overlay {
 	font-family: sans-serif;
-	line-height: 1.5em;
-	font-size: 1em;
 	position: absolute;
 	top: 0;
 	right: 0;

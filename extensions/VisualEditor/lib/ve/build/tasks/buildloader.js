@@ -6,23 +6,22 @@
 module.exports = function ( grunt ) {
 
 	grunt.registerMultiTask( 'buildloader', function () {
-		var i, len,
-			module,
-			dependency,
-			dependencies,
-			moduleStyles,
-			moduleScripts,
-			i18nScript,
+		var configScript,
 			styles = [],
 			scripts = [],
+			loadedModules = [],
 			targetFile = this.data.targetFile,
 			pathPrefix = this.data.pathPrefix || '',
 			i18n = this.data.i18n || [],
+			demoPages = this.data.demoPages,
 			indent = this.data.indent || '',
 			modules = this.data.modules,
 			load = this.data.load,
+			run = this.data.run || [],
 			env = this.data.env || {},
 			placeholders = this.data.placeholders || {},
+			dir = this.data.dir,
+			langList = this.data.langList !== undefined ? this.data.langList : true,
 			text = grunt.file.read( this.data.template ),
 			done = this.async(),
 			moduleUtils = require( '../moduleUtils' );
@@ -31,14 +30,22 @@ module.exports = function ( grunt ) {
 			return indent + '<script src="' + pathPrefix + src.file + '"></script>';
 		}
 
-		function styleTag( src ) {
+		function styleTag( group, src ) {
 			var rtlFilepath = src.file.replace( /\.css$/, '.rtl.css' );
 
 			if ( grunt.file.exists( rtlFilepath ) ) {
-				return indent + '<link rel=stylesheet href="' + pathPrefix + src.file + '" class="stylesheet-ltr">\n' +
-					indent + '<link rel=stylesheet href="' + pathPrefix + rtlFilepath + '" class="stylesheet-rtl" disabled>';
+				if ( !dir ) {
+					return indent + '<link rel=stylesheet href="' + pathPrefix + src.file + '" class="stylesheet-ltr' +
+						( group ? ' stylesheet-' + group : '' ) + '">\n' +
+						indent + '<link rel=stylesheet href="' + pathPrefix + rtlFilepath + '" class="stylesheet-rtl' +
+						( group ? ' stylesheet-' + group : '' ) + '">';
+				} else if ( dir === 'rtl' ) {
+					return indent + '<link rel=stylesheet href="' + pathPrefix + rtlFilepath + '"' +
+						( group ? ' class="stylesheet-' + group + '"' : '' ) + '>';
+				}
 			}
-			return indent + '<link rel=stylesheet href="' + pathPrefix + src.file + '">';
+			return indent + '<link rel=stylesheet href="' + pathPrefix + src.file + '"' +
+				( group ? ' class="stylesheet-' + group + '"' : '' ) + '>';
 		}
 
 		function expand( src ) {
@@ -70,52 +77,75 @@ module.exports = function ( grunt ) {
 			}
 		}
 
-		dependencies = moduleUtils.buildDependencyList( modules, load );
-		for ( dependency in dependencies ) {
-			module = dependencies[dependency];
-			if ( modules[module].scripts ) {
-				moduleScripts = modules[module].scripts
-					.map( expand ).filter( filter.bind( this, 'scripts' ) ).map( scriptTag )
-					.join( '\n' );
-				if ( moduleScripts ) {
-					scripts.push( indent + '<!-- ' + module + ' -->\n' + moduleScripts );
+		function addModules( load ) {
+			var module, moduleStyles, moduleScripts, dependency, dependencies;
+			dependencies = moduleUtils.buildDependencyList( modules, load );
+			for ( dependency in dependencies ) {
+				module = dependencies[ dependency ];
+				if ( loadedModules.indexOf( module ) > -1 ) {
+					continue;
 				}
-			}
-			if ( modules[module].styles ) {
-				moduleStyles = modules[module].styles
-					.map( expand ).filter( filter.bind( this, 'styles' ) ).map( styleTag )
-					.join( '\n' );
-				if ( moduleStyles ) {
-					styles.push( indent + '<!-- ' + module + ' -->\n' + moduleStyles );
+				loadedModules.push( module );
+				if ( modules[ module ].scripts ) {
+					moduleScripts = modules[ module ].scripts
+						.map( expand ).filter( filter.bind( this, 'scripts' ) ).map( scriptTag )
+						.join( '\n' );
+					if ( moduleScripts ) {
+						scripts.push( indent + '<!-- ' + module + ' -->\n' + moduleScripts );
+					}
+				}
+				if ( modules[ module ].styles ) {
+					moduleStyles = modules[ module ].styles
+						.map( expand ).filter( filter.bind( this, 'styles' ) ).map( styleTag.bind( styleTag, modules[ module ].styleGroup ) )
+						.join( '\n' );
+					if ( moduleStyles ) {
+						styles.push( indent + '<!-- ' + module + ' -->\n' + moduleStyles );
+					}
 				}
 			}
 		}
 
-		if ( i18n.length ) {
-			i18nScript = indent + '<script>\n';
-			for ( i = 0, len = i18n.length; i < len; i++ ) {
-				i18nScript += indent + '\tve.init.platform.addMessagePath( \'' + pathPrefix + i18n[i] + '\' );\n';
+		addModules( load );
+
+		if ( i18n.length || demoPages ) {
+			configScript = indent + '<script>\n';
+
+			if ( i18n.length ) {
+				configScript += indent + '\tve.messagePaths = ' +
+					JSON.stringify(
+						i18n.map( function ( path ) { return pathPrefix + path; } )
+					) + ';\n';
+
+				if ( langList ) {
+					configScript += indent + '\tve.availableLanguages = ' +
+						JSON.stringify(
+							grunt.file.expand(
+								i18n.map( function ( path ) { return path + '*.json'; } )
+							).map( function ( file ) {
+								return file.split( '/' ).pop().slice( 0, -5 );
+							} )
+						) +
+						';\n';
+				}
 			}
-			i18nScript += indent + '\tve.availableLanguages = ' +
-				JSON.stringify(
-					grunt.file.expand(
-						i18n.map( function ( path ) { return path + '*.json'; } )
-					).map( function ( file ) {
-						return file.split( '/' ).pop().slice( 0, -5 );
-					} )
-				) +
-				';\n';
-			i18nScript += indent + '</script>';
-			scripts.push( i18nScript );
+			if ( demoPages ) {
+				configScript += indent + '\tve.demoPages = ' + JSON.stringify( demoPages ) + ';\n';
+			}
+
+			configScript += indent + '</script>';
+			scripts.push( configScript );
 		}
+
+		addModules( run );
 
 		placeholders.styles = styles.join( '\n\n' );
 		placeholders.scripts = scripts.join( '\n\n' );
+		placeholders.dir = dir;
 
 		grunt.util.async.forEachSeries(
 			Object.keys( placeholders ),
 			function ( id, next ) {
-				placeholder( text, id.toUpperCase(), placeholders[id], function ( newText ) {
+				placeholder( text, id.toUpperCase(), placeholders[ id ], function ( newText ) {
 					text = newText;
 					next();
 				} );

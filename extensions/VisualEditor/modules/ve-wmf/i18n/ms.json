@@ -2,7 +2,9 @@
 	"@metadata": {
 		"authors": [
 			"Anakmalaysia",
-			"Aurora"
+			"Aurora",
+			"Amire80",
+			"아라"
 		]
 	},
 	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]]",
@@ -12,7 +14,8 @@
 	"tag-visualeditor-switched": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor: Bertukar]]",
 	"tag-visualeditor-switched-description": "Pengguna mula-mula menyunting dengan VisualEditor, kemudian beralih kepada editor wikiteks.",
 	"visualeditor-feedback-link": "Project:VisualEditor/Maklum balas",
-	"visualeditor-feedback-tool": "Tinggalkan maklum balas",
+	"visualeditor-feedback-tool": "Berikan maklum balas mengenai perisian ini",
 	"visualeditor-help-label": "Baca panduan pengguna",
+	"visualeditor-help-link": "mw:Special:MyLanguage/Help:VisualEditor/User guide",
 	"visualeditor-help-title": "Panduan penggunaan VisualEditor"
 }

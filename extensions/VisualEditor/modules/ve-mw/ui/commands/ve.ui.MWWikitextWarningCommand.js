@@ -1,7 +1,7 @@
 /*!
  * VisualEditor UserInterface MediaWiki WikitextWarningCommand class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 /**
@@ -17,7 +17,7 @@ ve.ui.MWWikitextWarningCommand = function VeUiMWWikitextWarningCommand() {
 	ve.ui.MWWikitextWarningCommand.super.call(
 		this, 'mwWikitextWarning'
 	);
-	this.isOpen = false;
+	this.warning = null;
 };
 
 /* Inheritance */
@@ -30,24 +30,20 @@ OO.inheritClass( ve.ui.MWWikitextWarningCommand, ve.ui.Command );
  * @inheritdoc
  */
 ve.ui.MWWikitextWarningCommand.prototype.execute = function () {
-	if ( this.isOpen ) {
+	var command = this;
+	if ( this.warning && this.warning.isOpen ) {
 		return false;
 	}
-	$.showModal(
-		ve.msg( 'visualeditor-wikitext-warning-title' ),
-		$( $.parseHTML( ve.init.platform.getParsedMessage( 'wikia-visualeditor-wikitext-warning' ) ) )
-			.filter( 'a' ).attr( 'target', '_blank ' ).end(),
+	mw.notify(
+		$( $.parseHTML( ve.init.platform.getParsedMessage( 'visualeditor-wikitext-warning' ) ) )
+			.filter( 'a' ).attr( 'target', '_blank' ).end(),
 		{
-			onClose: function () {
-				this.isOpen = false;
-				ve.track( 'wikia', { action: ve.track.actions.CLOSE, label: 'modal-wikitext-warning' } );
-			}.bind( this ),
-			onCreate: function () {
-				this.isOpen = true;
-				ve.track( 'wikia', { action: ve.track.actions.OPEN, label: 'modal-wikitext-warning' } );
-			}.bind( this )
+			title: ve.msg( 'visualeditor-wikitext-warning-title' ),
+			tag: 'visualeditor-wikitext-warning'
 		}
-	);
+	).then( function ( message ) {
+		command.warning = message;
+	} );
 	return true;
 };
 

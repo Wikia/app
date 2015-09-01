@@ -1,7 +1,7 @@
 /*!
  * VisualEditor DataModel LinearData tests.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 QUnit.module( 've.dm.LinearData' );
@@ -14,11 +14,11 @@ QUnit.test( 'basic usage', 7, function ( assert ) {
 
 	assert.strictEqual( data.getData(), data.data, 'getData: with no arguments returns data by reference' );
 	assert.deepEqual( data.getData(), ve.dm.example.data, 'getData: full array matches source data' );
-	assert.strictEqual( data.getData( 10 ), data.data[10], 'getData: data at offset 10 is same as array[10]' );
+	assert.strictEqual( data.getData( 10 ), data.data[ 10 ], 'getData: data at offset 10 is same as array[10]' );
 	assert.strictEqual( data.getData( -1 ), data.data[ -1 ], 'getData: data at -1 is undefined' );
 
 	data.setData( 1, 'x' );
-	assert.strictEqual( data.data[1], 'x', 'setData: data set at offset 1 changed' );
+	assert.strictEqual( data.data[ 1 ], 'x', 'setData: data set at offset 1 changed' );
 	assert.strictEqual( data.getLength(), data.data.length, 'getLength: equal to array length' );
 	assert.strictEqual( data.getStore(), store, 'getStore: equal to original store by reference' );
 } );
@@ -73,8 +73,8 @@ QUnit.test( 'slice(Object)/splice(Object)/batchSplice', 12, function ( assert ) 
 	expectedData = ve.copy( ve.dm.example.data );
 
 	assert.deepEqual(
-		data.batchSplice( 1, 3, ['x', 'y', 'z'] ),
-		ve.batchSplice( expectedData, 1, 3, ['x', 'y', 'z'] ),
+		data.batchSplice( 1, 3, [ 'x', 'y', 'z' ] ),
+		ve.batchSplice( expectedData, 1, 3, [ 'x', 'y', 'z' ] ),
 		'batchSplice: result matches ve.batchSplice'
 	);
 	assert.deepEqual( data.getData(), expectedData, 'batchSplice: array matches after batch splice' );

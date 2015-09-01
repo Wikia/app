@@ -10,6 +10,8 @@
 	"visualeditor-annotationbutton-code-tooltip": "Kaodin-tsolosaina",
 	"visualeditor-annotationbutton-language-tooltip": "Fiteny",
 	"visualeditor-annotationbutton-link-tooltip": "Rohy",
+	"visualeditor-commentinspector-edit": "Resaky ny fiovana",
+	"visualeditor-contextitemwidget-label-secondary": "Hanova",
 	"visualeditor-dialog-action-apply": "Hampihatra ny fanovana",
 	"visualeditor-dialog-action-cancel": "Aoka ihany",
 	"visualeditor-dialog-action-goback": "Hiverina",
@@ -25,5 +27,6 @@
 	"visualeditor-inspector-remove-tooltip": "Esorina",
 	"visualeditor-languageinspector-title": "Fiteny",
 	"visualeditor-languageinspector-widget-changelang": "Hitady fiteny",
-	"visualeditor-languageinspector-widget-label-language": "Fiteny"
+	"visualeditor-languageinspector-widget-label-language": "Fiteny",
+	"visualeditor-tablecell-tooltip": "Tsindrio indroa mba hanova ny sela"
 }

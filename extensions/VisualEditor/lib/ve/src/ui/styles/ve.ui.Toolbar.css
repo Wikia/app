@@ -1,15 +1,11 @@
 /*!
  * VisualEditor Toolbar styles.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 .ve-ui-toolbar {
 	/* Used by mobile context position hack */
-	position: relative;
-}
-
-.ve-ui-toolbar .oo-ui-toolbar-bar {
 	position: relative;
 }
 
@@ -18,6 +14,10 @@
 	top: 0;
 	z-index: 2;
 	border-top: none;
+}
+
+.ve-ui-toolbar .oo-ui-toolbar-shadow {
+	opacity: 0;
 }
 
 .ve-ui-toolbar-floating .oo-ui-toolbar-shadow {

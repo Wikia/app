@@ -1,7 +1,7 @@
 /*!
  * VisualEditor MediaWiki SequenceRegistry registrations.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2015 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -9,7 +9,7 @@ ve.ui.sequenceRegistry.register(
 	new ve.ui.Sequence( 'wikitextLink', 'link', '[[', 2 )
 );
 ve.ui.sequenceRegistry.register(
-	new ve.ui.Sequence( 'wikitextTemplate', 'wikiaTemplateInsert', '{{', 2 )
+	new ve.ui.Sequence( 'wikitextTemplate', 'transclusion', '{{', 2 )
 );
 ve.ui.sequenceRegistry.register(
 	new ve.ui.Sequence( 'wikitextItalic', 'mwWikitextWarning', '\'\'' )
@@ -17,6 +17,7 @@ ve.ui.sequenceRegistry.register(
 ve.ui.sequenceRegistry.register(
 	new ve.ui.Sequence( 'wikitextNowiki', 'mwWikitextWarning', '<nowiki' )
 );
+/* If Citoid is installed this will be overridden */
 ve.ui.sequenceRegistry.register(
 	new ve.ui.Sequence( 'wikitextRef', 'mwWikitextWarning', '<ref' )
 );

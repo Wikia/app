@@ -6,7 +6,7 @@ Feature: VisualEditor Headings
       And I make the text "Headings VisualEditor Test" be selected
 
   Scenario Outline: Cycle through headings values
-    When I click the down arrow on Headings interface
+    When I click the down arrow on the Headings menu
       And I click <headings_interface_name>
       And I click Save page
       And I click Review your changes

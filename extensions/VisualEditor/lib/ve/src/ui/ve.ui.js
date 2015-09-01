@@ -1,7 +1,7 @@
 /*!
  * VisualEditor UserInterface namespace.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 /**
@@ -11,11 +11,12 @@
  * @singleton
  */
 ve.ui = {
-	//'actionFactory' instantiated in ve.ui.ActionFactory.js
-	//'commandRegistry' instantiated in ve.ui.CommandRegistry.js
-	//'triggerRegistry' instantiated in ve.ui.TriggerRegistry.js
-	//'toolFactory' instantiated in ve.ui.ToolFactory.js
-	//'fileDropHandlerFactory' instantiated in ve.ui.FileDropHandlerFactory.js
+	// 'actionFactory' instantiated in ve.ui.ActionFactory.js
+	// 'commandRegistry' instantiated in ve.ui.CommandRegistry.js
+	// 'triggerRegistry' instantiated in ve.ui.TriggerRegistry.js
+	// 'toolFactory' instantiated in ve.ui.ToolFactory.js
+	// 'contextItemFactory' instantiated in ve.ui.ContextItemFactory.js
+	// 'dataTransferHandlerFactory' instantiated in ve.ui.DataTransferHandlerFactory.js
 	windowFactory: new OO.Factory()
 };
 

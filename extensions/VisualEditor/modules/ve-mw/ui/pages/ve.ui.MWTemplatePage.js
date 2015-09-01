@@ -1,7 +1,7 @@
 /*!
  * VisualEditor user interface MWTemplatePage class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2015 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -12,7 +12,7 @@
  * @extends OO.ui.PageLayout
  *
  * @constructor
- * @param {ve.dm.MWTemplateModel} parameter Template
+ * @param {ve.dm.MWTemplateModel} template Template model
  * @param {string} name Unique symbolic name of page
  * @param {Object} [config] Configuration options
  */
@@ -30,24 +30,21 @@ ve.ui.MWTemplatePage = function VeUiMWTemplatePage( template, name, config ) {
 	// Properties
 	this.template = template;
 	this.spec = template.getSpec();
-	this.$more = this.$( '<div>' );
-	this.$description = this.$( '<div>' );
+	this.$more = $( '<div>' );
+	this.$description = $( '<div>' );
 	this.removeButton = new OO.ui.ButtonWidget( {
-		$: this.$,
 		framed: false,
 		icon: 'remove',
 		title: ve.msg( 'visualeditor-dialog-transclusion-remove-template' ),
-		flags: ['destructive'],
+		flags: [ 'destructive' ],
 		classes: [ 've-ui-mwTransclusionDialog-removeButton' ]
 	} )
 		.connect( this, { click: 'onRemoveButtonClick' } );
 	this.infoFieldset = new OO.ui.FieldsetLayout( {
-		$: this.$,
 		label: this.spec.getLabel(),
 		icon: 'template'
 	} );
 	this.addButton = new OO.ui.ButtonWidget( {
-		$: this.$,
 		framed: false,
 		icon: 'parameter',
 		label: ve.msg( 'visualeditor-dialog-transclusion-add-param' ),

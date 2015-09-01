@@ -7,7 +7,7 @@
 	},
 	"tooltip-ca-createsource": "Kay p'anqamanta pukyu qillqata kamariy",
 	"tooltip-ca-editsource": "Kay p'anqap pukyu qillqanta llamk'apuy",
-	"tooltip-ca-ve-edit": "Kay p'anqata VisualEditor nisqawan llamk'apuy",
+	"tooltip-ca-ve-edit": "Kay p'anqata llamk'apuy",
 	"visualeditor-advancedsettings-tool": "Ñawparikusqa allinkachinakuna",
 	"visualeditor-annotationbutton-linknode-tooltip": "Sikllalla t'inki",
 	"visualeditor-beta-appendix": "beta",
@@ -132,8 +132,6 @@
 	"visualeditor-formatdropdown-format-mw-heading6": "Urin uma siq'i 4",
 	"visualeditor-languages-tool": "Rimaykuna",
 	"visualeditor-linkinspector-illegal-title": "P'anqap sutinqa manam allinchu",
-	"visualeditor-linkinspector-suggest-external-link": "Hawa t'inki",
-	"visualeditor-linkinspector-suggest-new-page": "Musuq p'anqa",
 	"visualeditor-linknodeinspector-add-label": "Riqsichikuta yapay",
 	"visualeditor-linknodeinspector-title": "Sikllalla t'inki",
 	"visualeditor-media-input-placeholder": "Midyakunata maskay",
@@ -173,9 +171,9 @@
 	"visualeditor-toolbar-cite-label": "Qillqamanta willay",
 	"visualeditor-toolbar-savedialog": "P'anqata waqaychay",
 	"visualeditor-usernamespacepagelink": "Project:Ruraq sutisuyu",
+	"visualeditor-version-label": "Musuqchasqa",
 	"visualeditor-viewpage-savewarning-discard": "Llamk'apusqakunata qarquy",
 	"visualeditor-viewpage-savewarning-keep": "Llamk'apuywan ñawparikuy",
 	"visualeditor-viewpage-savewarning-title": "Chiqapta munankichu?",
-	"visualeditor-wikitext-warning-title": "Wikiqillqam tarisqa",
-	"visualeditor-dialog-media-insert-title": "Midyata sat'iy"
+	"visualeditor-wikitext-warning-title": "Wikiqillqam tarisqa"
 }

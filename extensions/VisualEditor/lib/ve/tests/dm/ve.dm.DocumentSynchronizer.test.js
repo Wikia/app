@@ -1,7 +1,7 @@
 /*!
  * VisualEditor DataModel DocumentSynchronizer tests.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 QUnit.module( 've.dm.DocumentSynchronizer' );
@@ -25,7 +25,7 @@ QUnit.test( 'synchronize', 6, function ( assert ) {
 		secondTextNodeLengthChanges = [];
 
 	// Annotate "a" with bold formatting
-	doc.data[1] = ['a', new ve.dm.AnnotationSet( doc.getStore(),
+	doc.data[ 1 ] = [ 'a', new ve.dm.AnnotationSet( doc.getStore(),
 		doc.getStore().index( new ve.dm.BoldAnnotation() ) )
 	];
 	ds.pushAnnotation( new ve.Range( 1, 2 ) );
@@ -33,29 +33,29 @@ QUnit.test( 'synchronize', 6, function ( assert ) {
 	doc.data.batchSplice( 2, 0, [ 'x', 'y', 'z' ] );
 	ds.pushResize( doc.getDocumentNode().getNodeFromOffset( 2 ), 3 );
 	// Annotate "d" with italic formatting (was at 10, now at 13)
-	doc.data[13] = ['d', new ve.dm.AnnotationSet( doc.getStore(),
+	doc.data[ 13 ] = [ 'd', new ve.dm.AnnotationSet( doc.getStore(),
 		doc.getStore().index( new ve.dm.ItalicAnnotation() ) )
 	];
 	ds.pushAnnotation( new ve.Range( 10, 11 ) );
 
-	doc.getDocumentNode().getChildren()[0].getChildren()[0].on( 'update', function () {
+	doc.getDocumentNode().getChildren()[ 0 ].getChildren()[ 0 ].on( 'update', function () {
 		firstTextNodeUpdates++;
 	} );
-	doc.getDocumentNode().getChildren()[0].getChildren()[0].on( 'annotation', function () {
+	doc.getDocumentNode().getChildren()[ 0 ].getChildren()[ 0 ].on( 'annotation', function () {
 		firstTextNodeAnnotations++;
 	} );
-	doc.getDocumentNode().getChildren()[0].getChildren()[0].on( 'lengthChange', function ( diff ) {
+	doc.getDocumentNode().getChildren()[ 0 ].getChildren()[ 0 ].on( 'lengthChange', function ( diff ) {
 		firstTextNodeLengthChanges.push( diff );
 	} );
-	doc.getDocumentNode().getChildren()[1].getChildren()[0].getChildren()[0].getChildren()[0].getChildren()[0].getChildren()[0]
+	doc.getDocumentNode().getChildren()[ 1 ].getChildren()[ 0 ].getChildren()[ 0 ].getChildren()[ 0 ].getChildren()[ 0 ].getChildren()[ 0 ]
 		.on( 'update', function () {
 			secondTextNodeUpdates++;
 		} );
-	doc.getDocumentNode().getChildren()[1].getChildren()[0].getChildren()[0].getChildren()[0].getChildren()[0].getChildren()[0]
+	doc.getDocumentNode().getChildren()[ 1 ].getChildren()[ 0 ].getChildren()[ 0 ].getChildren()[ 0 ].getChildren()[ 0 ].getChildren()[ 0 ]
 		.on( 'annotation', function () {
 			secondTextNodeAnnotations++;
 		} );
-	doc.getDocumentNode().getChildren()[1].getChildren()[0].getChildren()[0].getChildren()[0].getChildren()[0].getChildren()[0]
+	doc.getDocumentNode().getChildren()[ 1 ].getChildren()[ 0 ].getChildren()[ 0 ].getChildren()[ 0 ].getChildren()[ 0 ].getChildren()[ 0 ]
 		.on( 'lengthChange', function ( diff ) {
 			secondTextNodeLengthChanges.push( diff );
 		} );

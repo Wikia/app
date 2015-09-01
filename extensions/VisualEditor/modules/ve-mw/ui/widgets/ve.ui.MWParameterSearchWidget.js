@@ -1,7 +1,7 @@
 /*!
  * VisualEditor UserInterface MWParameterSearchWidget class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2015 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -29,11 +29,12 @@ ve.ui.MWParameterSearchWidget = function VeUiMWParameterSearchWidget( template, 
 	// Properties
 	this.template = template;
 	this.index = [];
-	this.showAll = false;
+	this.showAll = !!config.showAll;
 	this.limit = config.limit || null;
 
 	// Events
 	this.template.connect( this, { add: 'buildIndex', remove: 'buildIndex' } );
+	this.getResults().connect( this, { choose: 'onSearchResultsChoose' } );
 
 	// Initialization
 	this.$element.addClass( 've-ui-mwParameterSearchWidget' );
@@ -47,7 +48,7 @@ OO.inheritClass( ve.ui.MWParameterSearchWidget, OO.ui.SearchWidget );
 /* Events */
 
 /**
- * @event select
+ * @event choose
  * @param {string|null} name Parameter name or null if no item is selected
  */
 
@@ -68,18 +69,20 @@ ve.ui.MWParameterSearchWidget.prototype.onQueryChange = function () {
 };
 
 /**
- * Handle select widget select events.
+ * Handle SelectWidget choose events.
  *
  * @method
  * @param {OO.ui.OptionWidget} item Selected item
- * @fires select
+ * @fires choose
+ * @fires showAll
  */
-ve.ui.MWParameterSearchWidget.prototype.onResultsSelect = function ( item ) {
+ve.ui.MWParameterSearchWidget.prototype.onSearchResultsChoose = function ( item ) {
 	if ( item instanceof ve.ui.MWParameterResultWidget ) {
-		this.emit( 'select', item.getData().name );
+		this.emit( 'choose', item.getData().name );
 	} else if ( item instanceof ve.ui.MWMoreParametersResultWidget ) {
 		this.showAll = true;
 		this.addResults();
+		this.emit( 'showAll' );
 	}
 };
 
@@ -96,7 +99,7 @@ ve.ui.MWParameterSearchWidget.prototype.buildIndex = function () {
 
 	this.index.length = 0;
 	for ( i = 0, len = knownParams.length; i < len; i++ ) {
-		name = knownParams[i];
+		name = knownParams[ i ];
 		// Skip parameters already in use
 		if ( this.template.hasParameter( name ) ) {
 			continue;
@@ -137,13 +140,13 @@ ve.ui.MWParameterSearchWidget.prototype.addResults = function () {
 	this.results.clearItems();
 
 	for ( i = 0, len = this.index.length; i < len; i++ ) {
-		item = this.index[i];
+		item = this.index[ i ];
 		if ( hasQuery ) {
 			textMatch = item.text.indexOf( query ) >= 0;
 			nameMatch = item.names.indexOf( query ) >= 0;
 		}
 		if ( !hasQuery || textMatch || nameMatch ) {
-			items.push( new ve.ui.MWParameterResultWidget( { $: this.$, data: item } ) );
+			items.push( new ve.ui.MWParameterResultWidget( { data: item } ) );
 			if ( hasQuery && nameMatch ) {
 				exactMatch = true;
 			}
@@ -156,7 +159,6 @@ ve.ui.MWParameterSearchWidget.prototype.addResults = function () {
 
 	if ( hasQuery && !exactMatch && value.length && !this.template.hasParameter( value ) ) {
 		items.unshift( new ve.ui.MWParameterResultWidget( {
-			$: this.$,
 			data: {
 				name: value,
 				label: value,
@@ -168,13 +170,11 @@ ve.ui.MWParameterSearchWidget.prototype.addResults = function () {
 
 	if ( !items.length ) {
 		items.push( new ve.ui.MWNoParametersResultWidget( {
-			$: this.$,
 			data: {},
 			disabled: true
 		} ) );
 	} else if ( remainder ) {
 		items.push( new ve.ui.MWMoreParametersResultWidget( {
-			$: this.$,
 			data: { remainder: remainder }
 		} ) );
 	}

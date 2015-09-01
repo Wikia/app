@@ -15,17 +15,20 @@
 			"Tel'et",
 			"Tifinaghes",
 			"Ата",
-			"Piramidion"
+			"Piramidion",
+			"Amire80",
+			"아라"
 		]
 	},
 	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|Візуальний редактор]]",
 	"tag-visualeditor-description": "Редагування виконано з використанням [[{{MediaWiki:visualeditor-descriptionpagelink}}|Візуального редактора]]",
 	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|Візуальний редактор: Перевірити]]",
-	"tag-visualeditor-needcheck-description": "Редагування з допомогою [[{{MediaWiki:visualeditor-descriptionpagelink}}|Візуального редактора]], у якому система виявила, ймовірно, ненавмисно змінену вікірозмітку.",
-	"tag-visualeditor-switched": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|Візуальний редактор: Перемкнено]]",
-	"tag-visualeditor-switched-description": "Користувач почав редагувати за допомогою Візуального редактора, а потім перемкнувся на редактор вікірозмітки.",
+	"tag-visualeditor-needcheck-description": "Редагування з допомогою [[{{MediaWiki:visualeditor-descriptionpagelink}}|візуального редактора]], у якому система виявила, ймовірно, ненавмисно змінену вікірозмітку.",
+	"tag-visualeditor-switched": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|Візуальний редактор: перемкнуто ]]",
+	"tag-visualeditor-switched-description": "Користувач почав редагувати за допомогою візуального редактора, а потім перемкнувся на редактор вікірозмітки.",
 	"visualeditor-feedback-link": "Project:Візуальний редактор/Відгуки",
-	"visualeditor-feedback-tool": "Залишити відгук",
+	"visualeditor-feedback-tool": "Залишити відгук про це програмне забезпечення",
 	"visualeditor-help-label": "Прочитайте посібник користувача",
+	"visualeditor-help-link": "mw:Special:MyLanguage/Help:VisualEditor/User guide",
 	"visualeditor-help-title": "Посібник з використання редактора"
 }

@@ -10,7 +10,10 @@
 			"Reza1615",
 			"Taha",
 			"درفش کاویانی",
-			"Armin1392"
+			"Armin1392",
+			"Amire80",
+			"아라",
+			"Leyth"
 		]
 	},
 	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|ویرایش‌گر دیداری]]",
@@ -20,7 +23,8 @@
 	"tag-visualeditor-switched": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|ویرایشگر دیداریːتغییر جهت داده شده]]",
 	"tag-visualeditor-switched-description": "کاربر شروع به ویرایش با استفاده از ویرایشگر دیداری کرد سپس به ویرایشگر متن ویکی تغییر داده شد.",
 	"visualeditor-feedback-link": "Project:ویرایشگر دیداری/بازخورد",
-	"visualeditor-feedback-tool": "گذاشتن بازخورد",
+	"visualeditor-feedback-tool": "گذاشتن بازخورد در مورد این نرم‌افزار",
 	"visualeditor-help-label": "راهنمای کاربر را بخوانید.",
+	"visualeditor-help-link": "mw:Special:MyLanguage/Help:VisualEditor/User guide",
 	"visualeditor-help-title": "راهنما برای چگونگی استفاده از ویرایشگر"
 }

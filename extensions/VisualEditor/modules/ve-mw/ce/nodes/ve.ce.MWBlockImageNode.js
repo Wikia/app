@@ -1,7 +1,7 @@
 /*!
  * VisualEditor ContentEditable MWBlockImageNode class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2015 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -17,13 +17,14 @@
  * @param {Object} [config] Configuration options
  */
 ve.ce.MWBlockImageNode = function VeCeMWBlockImageNode( model, config ) {
-	var type, align;
+	var type, align, isError;
 
 	// Parent constructor
 	ve.ce.BranchNode.call( this, model, config );
 
 	type = this.model.getAttribute( 'type' );
 	align = this.model.getAttribute( 'align' );
+	isError = this.model.getAttribute( 'isError' );
 
 	// Properties
 	this.captionVisible = false;
@@ -36,13 +37,19 @@ ve.ce.MWBlockImageNode = function VeCeMWBlockImageNode( model, config ) {
 	//     <figcaption> this.caption.view.$element
 
 	// Build DOM:
-	this.$a = this.$( '<a>' )
-		.addClass( 'image' )
-		.attr( 'href', this.getResolvedAttribute( 'href' ) );
+	this.$image = $( '<img>' )
+		.attr( 'src', this.getResolvedAttribute( 'src' ) );
 
-	this.$image = this.$( '<img>' )
-		.attr( 'src', this.getResolvedAttribute( 'src' ) )
-		.appendTo( this.$a );
+	if ( isError ) {
+		this.$a = $( '<a>' )
+			.addClass( 'new' )
+			.text( this.model.getFilename() );
+	} else {
+		this.$a = $( '<a>' )
+			.addClass( 'image' )
+			.attr( 'href', this.getResolvedAttribute( 'href' ) )
+			.append( this.$image );
+	}
 
 	this.$element
 		.append( this.$a )
@@ -104,13 +111,14 @@ ve.ce.MWBlockImageNode.static.cssClasses = {
 /**
  * Set up an object that converts from the type to rdfa, based
  *  on the rdfaToType object in the model.
- * @returns {Object.<string,string>} A type to Rdfa conversion object
+ *
+ * @return {Object.<string,string>} A type to Rdfa conversion object
  */
 ve.ce.MWBlockImageNode.prototype.getTypeToRdfa = function () {
 	var rdfa, obj = {};
 
 	for ( rdfa in this.model.constructor.static.rdfaToType ) {
-		obj[ this.model.constructor.static.rdfaToType[rdfa] ] = rdfa;
+		obj[ this.model.constructor.static.rdfaToType[ rdfa ] ] = rdfa;
 	}
 	return obj;
 };
@@ -130,7 +138,7 @@ ve.ce.MWBlockImageNode.prototype.updateCaption = function () {
 	if ( this.captionVisible ) {
 		// Only create a caption if we need it
 		if ( !this.$caption ) {
-			model = this.model.children[0];
+			model = this.model.children[ 0 ];
 			view = ve.ce.nodeFactory.create( model.getType(), model );
 			model.connect( this, { update: 'onModelUpdate' } );
 			this.children.push( view );
@@ -143,8 +151,7 @@ ve.ce.MWBlockImageNode.prototype.updateCaption = function () {
 		}
 	}
 	if ( this.$caption ) {
-		// Don't use show() as it sets display to block, overriding the stylesheet.
-		this.$caption.css( 'display', this.captionVisible ? '' : 'none' );
+		this.$caption.toggleClass( 'oo-ui-element-hidden', !this.captionVisible );
 	}
 };
 
@@ -181,13 +188,13 @@ ve.ce.MWBlockImageNode.prototype.updateClasses = function ( oldAlign ) {
 
 	switch ( alignClass ) {
 		case 'mw-halign-right':
-			this.showHandles( ['sw'] );
+			this.showHandles( [ 'sw' ] );
 			break;
 		case 'mw-halign-left':
-			this.showHandles( ['se'] );
+			this.showHandles( [ 'se' ] );
 			break;
 		case 'mw-halign-center':
-			this.showHandles( ['sw', 'se'] );
+			this.showHandles( [ 'sw', 'se' ] );
 			break;
 		default:
 			this.showHandles();
@@ -237,7 +244,7 @@ ve.ce.MWBlockImageNode.prototype.getCssClass = function ( type, alignment ) {
 			return 'mw-halign-right';
 		}
 	} else {
-		return this.constructor.static.cssClasses[type][alignment];
+		return this.constructor.static.cssClasses[ type ][ alignment ];
 	}
 };
 

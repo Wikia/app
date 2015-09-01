@@ -1,7 +1,7 @@
 /*!
  * VisualEditor ContentEditable Annotation class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 /**
@@ -56,7 +56,7 @@ ve.ce.Annotation.static.forceContinuation = false;
  * @static
  * @inheritable
  * @param {ve.dm.Annotation} annotation Annotation model
- * @returns {string} Description of annotation
+ * @return {string} Description of annotation
  */
 ve.ce.Annotation.static.getDescription = function () {
 	return '';
@@ -66,7 +66,8 @@ ve.ce.Annotation.static.getDescription = function () {
 
 /**
  * Get the content branch node this annotation is rendered in, if any.
- * @returns {ve.ce.ContentBranchNode|null} Content branch node or null if none
+ *
+ * @return {ve.ce.ContentBranchNode|null} Content branch node or null if none
  */
 ve.ce.Annotation.prototype.getParentNode = function () {
 	return this.parentNode;
@@ -75,4 +76,14 @@ ve.ce.Annotation.prototype.getParentNode = function () {
 /** */
 ve.ce.Annotation.prototype.getModelHtmlDocument = function () {
 	return this.parentNode && this.parentNode.getModelHtmlDocument();
+};
+
+/**
+ * Release all memory.
+ */
+ve.ce.Annotation.prototype.destroy = function () {
+	this.parentNode = null;
+
+	// Parent method
+	ve.ce.View.prototype.destroy.call( this );
 };

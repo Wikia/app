@@ -5,7 +5,10 @@
 			"Audriusa",
 			"Eitvys200",
 			"Papuass",
-			"PeterisP"
+			"PeterisP",
+			"Amire80",
+			"아라",
+			"Nitalynx"
 		]
 	},
 	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|Vizuālais redaktors]]",
@@ -15,7 +18,8 @@
 	"tag-visualeditor-switched": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor: Pārslēdzās]]",
 	"tag-visualeditor-switched-description": "Lietotājs sāka labot Vizuālajā redaktorā un pārslēdzās uz vikiteksta redaktoru.",
 	"visualeditor-feedback-link": "VizuālaisRedaktors/Atsauksmes",
-	"visualeditor-feedback-tool": "Atstāt atsauksmi",
+	"visualeditor-feedback-tool": "Atstāt atsauksmi par šo programmatūru",
 	"visualeditor-help-label": "Izlasiet lietotāja pamācību",
+	"visualeditor-help-link": "mw:Special:MyLanguage/Help:VisualEditor/User guide",
 	"visualeditor-help-title": "Lietotāja pamācība redaktora lietošanai"
 }

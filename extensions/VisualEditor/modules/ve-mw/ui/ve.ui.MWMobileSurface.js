@@ -1,7 +1,7 @@
 /*!
  * VisualEditor UserInterface MediaWiki MobileSurface class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 /**
@@ -27,5 +27,5 @@ OO.inheritClass( ve.ui.MWMobileSurface, ve.ui.MobileSurface );
  * @inheritdoc
  */
 ve.ui.MWMobileSurface.prototype.createContext = function () {
-	return new ve.ui.MWMobileContext( this, { $: this.$ } );
+	return new ve.ui.MWMobileContext( this );
 };

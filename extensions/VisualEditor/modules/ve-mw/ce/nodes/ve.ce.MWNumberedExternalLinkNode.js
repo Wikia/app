@@ -1,7 +1,7 @@
 /*!
  * VisualEditor ContentEditable MWNumberedExternalLinkNode class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2015 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -23,13 +23,10 @@ ve.ce.MWNumberedExternalLinkNode = function VeCeMWNumberedExternalLinkNode( mode
 	ve.ce.FocusableNode.call( this );
 
 	// DOM changes
-	this.$element
-		.addClass( 've-ce-mwNumberedExternalLinkNode' )
-		// Need CE=false to prevent selection issues
-		.prop( 'contentEditable', 'false' );
+	this.$element.addClass( 've-ce-mwNumberedExternalLinkNode' );
 
 	// Add link
-	this.$link = this.$( '<a>' )
+	this.$link = $( '<a>' )
 		// CSS for numbering needs rel=mw:ExtLink
 		.attr( 'rel', 'mw:ExtLink' )
 		.addClass( 'external' )
@@ -69,8 +66,6 @@ ve.ce.MWNumberedExternalLinkNode.static.getDescription = function ( model ) {
 
 /**
  * Handle model update events.
- *
- * If the source changed since last update the image's src attribute will be updated accordingly.
  *
  * @method
  */

@@ -1,0 +1,9 @@
+/*!
+ * VisualEditor UserInterface MobileWindowManager styles.
+ *
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
+ */
+
+.ve-ui-mobileWindowManager > .oo-ui-dialog {
+	position: absolute;
+}

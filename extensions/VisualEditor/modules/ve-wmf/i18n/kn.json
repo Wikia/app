@@ -1,11 +1,18 @@
 {
 	"@metadata": {
 		"authors": [
-			"Vikassy"
+			"Vikassy",
+			"Omshivaprakash"
 		]
 	},
-	"visualeditor-feedback-link": "ದ್ರುಶ್ಯ ಸ೦ಪಾದಕ/ಪ್ರತಿಕ್ರಿಯೆ",
-	"visualeditor-feedback-tool": "ಪ್ರತಿಕ್ರಿಯೆ ಕೋಡಿ",
-	"visualeditor-help-label": "ಬಳಕೆದಾರ ಕೈಪಿಡಿ ಓದು",
-	"visualeditor-help-title": "ಈ ಎಡಿಟರನ್ನು ಹೆ೦ಗೆ ಉಪಯೊಗೀಸಲು ನೊಡೀ"
+	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|ದೃಶ್ಯ ಸಂಪಾದಕ]]",
+	"tag-visualeditor-description": "ಸಂಪಾದನೆಗೆ ಬಳಸಿದ್ದು [[{{MediaWiki:visualeditor-descriptionpagelink}}|ದೃಶ್ಯ ಸಂಪಾದಕ]]",
+	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|ದೃಶ್ಯ ಸಂಪಾದಕ: ಪರೀಕ್ಷಿಸು]]",
+	"tag-visualeditor-needcheck-description": "ಸಂಪಾದನೆಗೆ ಬಳಸಿದ್ದು [[{{MediaWiki:visualeditor-descriptionpagelink}}|ದೃಶ್ಯ ಸಂಪಾದಕ]] ಇಲ್ಲಿ ಸಾಧನವು ಬೇಡದ ಕೆಲವು ಬದಲಾವಣೆಗಳಾಗಿರುವುದನ್ನು ಗಮನಿಸಿದೆ.",
+	"tag-visualeditor-switched": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|ದೃಶ್ಯ ಸಂಪಾದಕ: ಬದಲಿಸಿದ್ದು]]",
+	"tag-visualeditor-switched-description": "ಬಳಕೆದಾರ ದೃಶ್ಯ ಸಂಪಾದಕವನ್ನು ಬಳಸಿ ಸಂಪಾದನೆಯನ್ನು ಪ್ರಾರಂಭಿಸಿದ ನಂತರ ವಿಕಿಪಠ್ಯ ಸಂಪಾದಕಕ್ಕೆ ಮರಳಿದ್ದಾನೆ.",
+	"visualeditor-feedback-link": "ಯೋಜನೆ:ದೃಶ್ಯ ಸಂಪಾದಕ /ಪ್ರತಿಕ್ರಿಯೆ",
+	"visualeditor-feedback-tool": "ಈ ತಂತ್ರಾಂಶದ ಬಗ್ಗೆ ನಿಮ್ಮ ಪ್ರತಿಕ್ರಿಯೆ ನೀಡಿ",
+	"visualeditor-help-label": "ಬಳಕೆದಾರ ಕೈಪಿಡಿ ಓದಿ",
+	"visualeditor-help-title": "ಎಡಿಟರ್ ಬಳಸುವುದು ಹೇಗೆಂದು ತಿಳಿಸುವ ಕೈಪಿಡಿ"
 }

@@ -1,7 +1,7 @@
 /*!
  * VisualEditor UserInterface FragmentDialog class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 /**
@@ -55,7 +55,7 @@ ve.ui.FragmentDialog.prototype.getTeardownProcess = function ( data ) {
 /**
  * Get the surface fragment the dialog is for
  *
- * @returns {ve.dm.SurfaceFragment|null} Surface fragment the dialog is for, null if the dialog is closed
+ * @return {ve.dm.SurfaceFragment|null} Surface fragment the dialog is for, null if the dialog is closed
  */
 ve.ui.FragmentDialog.prototype.getFragment = function () {
 	return this.fragment;

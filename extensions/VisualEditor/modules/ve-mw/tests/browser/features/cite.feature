@@ -4,8 +4,7 @@ Feature: VisualEditor Cite
   Background:
     Given I go to the "Cite VisualEditor Test" page with content "Cite VisualEditor Test"
       And I click in the editable part
-      And I click the Cite button
-      And I can see the Cite User Interface
+      And I open the Cite menu
 
   Scenario: Website
     When I click Website
@@ -67,6 +66,12 @@ Feature: VisualEditor Cite
     When I click Journal
       And I fill in the first textarea with "Journal title"
       And I fill in the second textarea with "Journal Source date"
+      And I fill in the third textarea with "Journal Last Name"
+      And I fill in the fourth textarea with "Journal First Name"
+      And I fill in the fifth textarea with "Journal Source Date"
+      And I fill in the sixth textarea with "Journal Journal"
+      And I fill in the seventh textarea with "Journal Access Date"
+      And I fill in the eighth textarea with "Journal DOI"
       And the Journal input field titles are in the correct order
       And I click Insert Citation
       And I click Save page
@@ -78,3 +83,19 @@ Feature: VisualEditor Cite
     Then I should see the VisualEditor interface
       And I should see the Options use this group text
       And I should see the General references
+      #And I fill in General references
+
+  Scenario: Error message for required field not present
+    When I click Journal
+      And I fill in the first textarea with "Journal title"
+      And I click Insert Citation
+    Then I should see a Required parameters missing error
+      And I should see a Go back button
+      And I should see a Continue anyway button
+
+  Scenario: Reusing an existing reference
+    Given I go to a page that has references
+    When I edit the page with Some content related to existing reference
+      And I create a reference using existing reference
+    Then first link to reference should be visible
+      And second link to reference should be visible

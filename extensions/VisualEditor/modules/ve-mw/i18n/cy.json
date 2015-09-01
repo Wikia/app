@@ -203,6 +203,5 @@
 	"visualeditor-viewpage-savewarning": "Ydych chi wir am gamu'n ôl i edrych ar y dudalen heb roi eich newidiadau ar gadw?",
 	"visualeditor-wikitext-warning": "Rydych yn defnyddio'r Golygydd Gweladwy; nid yw - [[{{MediaWiki:visualeditor-wikitext-warning-link}}|wikitext]] yn gweithio yma. Cliciwch \"{{int:visualeditor-ca-editsource}}\" i olygu'r gystrawen wici ar y dudalen - bydd gwaith heb ei gadw cyn clicio yn mynd ar gyfeiliorn.",
 	"visualeditor-wikitext-warning-link": "Help:Cystrawen wici",
-	"visualeditor-wikitext-warning-title": "Wedi darganfod cystrawen wici",
-	"visualeditor-dialog-media-insert-title": "Mewnosod ffeil gyfrwng"
+	"visualeditor-wikitext-warning-title": "Wedi darganfod cystrawen wici"
 }

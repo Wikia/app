@@ -1,7 +1,7 @@
 /*!
  * VisualEditor ContentEditable ListNode class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 /**
@@ -36,7 +36,7 @@ ve.ce.ListNode.static.name = 'list';
  *
  * Tag name is selected based on the model's style attribute.
  *
- * @returns {string} HTML tag name
+ * @return {string} HTML tag name
  * @throws {Error} If style is invalid
  */
 ve.ce.ListNode.prototype.getTagName = function () {
@@ -46,7 +46,7 @@ ve.ce.ListNode.prototype.getTagName = function () {
 	if ( !Object.prototype.hasOwnProperty.call( types, style ) ) {
 		throw new Error( 'Invalid style' );
 	}
-	return types[style];
+	return types[ style ];
 };
 
 /**

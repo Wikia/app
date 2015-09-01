@@ -6,7 +6,8 @@
 			"Jeblad",
 			"Laaknor",
 			"Njardarlogar",
-			"Jdforrester"
+			"Jdforrester",
+			"Apple farmer"
 		]
 	},
 	"ooui-outline-control-move-down": "Flytt ned",
@@ -14,11 +15,13 @@
 	"ooui-outline-control-remove": "Fjern element",
 	"ooui-toolbar-more": "Mer",
 	"ooui-toolgroup-expand": "Mer",
-	"ooui-toolgroup-collapse": "Mindre",
+	"ooui-toolgroup-collapse": "Færre",
 	"ooui-dialog-message-accept": "OK",
 	"ooui-dialog-message-reject": "Avbryt",
 	"ooui-dialog-process-error": "Noe gikk galt",
 	"ooui-dialog-process-dismiss": "Lukk",
 	"ooui-dialog-process-retry": "Prøv igjen",
-	"ooui-dialog-process-continue": "Fortsett"
+	"ooui-dialog-process-continue": "Fortsett",
+	"ooui-selectfile-not-supported": "Filvalg er ikke støttet",
+	"ooui-selectfile-placeholder": "Ingen fil er valgt"
 }

@@ -1,7 +1,7 @@
 /*!
  * VisualEditor UserInterface DialogTool class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 /**
@@ -14,9 +14,9 @@
  * @param {OO.ui.ToolGroup} toolGroup
  * @param {Object} [config] Configuration options
  */
-ve.ui.DialogTool = function VeUiDialogTool( toolGroup, config ) {
+ve.ui.DialogTool = function VeUiDialogTool() {
 	// Parent constructor
-	ve.ui.Tool.call( this, toolGroup, config );
+	ve.ui.DialogTool.super.apply( this, arguments );
 };
 
 /* Inheritance */
@@ -37,6 +37,16 @@ OO.inheritClass( ve.ui.DialogTool, ve.ui.Tool );
 ve.ui.DialogTool.static.modelClasses = [];
 
 /**
+ * Name of the associated windows, if there is more than one possible value, or if it can't be
+ * deduced from the tool's command.
+ *
+ * @static
+ * @property {string[]}
+ * @inheritable
+ */
+ve.ui.DialogTool.static.associatedWindows = null;
+
+/**
  * @inheritdoc
  */
 ve.ui.DialogTool.static.isCompatibleWith = function ( model ) {
@@ -48,40 +58,38 @@ ve.ui.DialogTool.static.isCompatibleWith = function ( model ) {
 /**
  * @inheritdoc
  */
-ve.ui.DialogTool.prototype.onSelect = function () {
-	ve.track( 'tool.dialog.select', {
-		name: this.constructor.static.name,
-		// HACK: which toolbar is this coming from?
-		// TODO: this should probably be passed into the config or something
-		toolbar: ( this.toolbar.constructor === ve.ui.Toolbar ? 'surface' : 'target' )
-	} );
-	ve.ui.Tool.prototype.onSelect.apply( this, arguments );
-};
+ve.ui.DialogTool.prototype.onUpdateState = function ( fragment, contextDirection, activeDialogs ) {
+	var myWindowNames = [];
 
-/**
- * @inheritdoc
- */
-ve.ui.DialogTool.prototype.onUpdateState = function () {
 	// Parent method
-	ve.ui.Tool.prototype.onUpdateState.apply( this, arguments );
-	// Never show the tool as active
-	this.setActive( false );
+	ve.ui.DialogTool.super.prototype.onUpdateState.apply( this, arguments );
+
+	if ( this.constructor.static.associatedWindows !== null ) {
+		myWindowNames = this.constructor.static.associatedWindows;
+	} else if ( this.getCommand().getAction() === 'window' ) {
+		myWindowNames = [ this.getCommand().getArgs()[ 0 ] ];
+	}
+
+	// Show the tool as active if any of its associated windows is open
+	this.setActive( $( activeDialogs ).filter( myWindowNames ).length !== 0 );
 };
 
 /**
+ * Command help tool.
+ *
  * @class
  * @extends ve.ui.DialogTool
  * @constructor
  * @param {OO.ui.ToolGroup} toolGroup
  * @param {Object} [config] Configuration options
  */
-ve.ui.CommandHelpDialogTool = function VeUiCommandHelpDialogTool( toolGroup, config ) {
-	ve.ui.DialogTool.call( this, toolGroup, config );
+ve.ui.CommandHelpDialogTool = function VeUiCommandHelpDialogTool() {
+	ve.ui.CommandHelpDialogTool.super.apply( this, arguments );
 };
 OO.inheritClass( ve.ui.CommandHelpDialogTool, ve.ui.DialogTool );
 ve.ui.CommandHelpDialogTool.static.name = 'commandHelp';
 ve.ui.CommandHelpDialogTool.static.group = 'dialog';
-ve.ui.CommandHelpDialogTool.static.icon = 'keyboard';
+ve.ui.CommandHelpDialogTool.static.icon = 'help';
 ve.ui.CommandHelpDialogTool.static.title =
 	OO.ui.deferMsg( 'visualeditor-dialog-command-help-title' );
 ve.ui.CommandHelpDialogTool.static.autoAddToCatchall = false;

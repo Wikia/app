@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-    <g id="source" style="opacity:0.75;">
+    <g id="source">
         <path id="opening-bracket" d="M6 18h3v-2h-1v-8h1v-2h-3v12z"/>
         <path id="closing-bracket" d="M18 18h-3v-2h1v-8h-1v-2h3v12z"/>
     </g>

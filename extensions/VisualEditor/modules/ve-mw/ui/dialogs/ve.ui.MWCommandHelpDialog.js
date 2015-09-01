@@ -1,7 +1,7 @@
 /*!
  * VisualEditor UserInterface MWCommandHelpDialog class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2015 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -38,12 +38,6 @@ ve.ui.MWCommandHelpDialog.static.getCommandGroups = function () {
 			{
 				shortcuts: [ accessKeyPrefix + save.toUpperCase() ],
 				msg: 'visualeditor-savedialog-label-save'
-			}
-		);
-		commandGroups.other.commands.push(
-			{
-				shortcuts: [ accessKeyPrefix + '[' ],
-				msg: 'wikia-visualeditor-dialog-wikiasourcemode-title'
 			}
 		);
 	}

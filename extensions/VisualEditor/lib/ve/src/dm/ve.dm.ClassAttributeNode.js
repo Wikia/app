@@ -1,8 +1,7 @@
 /*!
  * VisualEditor DataModel ClassAttribute class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
- * @license The MIT License (MIT); see LICENSE.txt
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 /**
@@ -51,9 +50,9 @@ ve.dm.ClassAttributeNode.static.setClassAttributes = function ( attributes, clas
 	}
 
 	for ( i = 0, l = classNames.length; i < l; i++ ) {
-		className = classNames[i];
+		className = classNames[ i ];
 		if ( Object.prototype.hasOwnProperty.call( this.classAttributes, className ) ) {
-			attributes = ve.extendObject( attributes, this.classAttributes[className] );
+			attributes = ve.extendObject( attributes, this.classAttributes[ className ] );
 		} else {
 			unrecognizedClasses.push( className );
 		}
@@ -66,7 +65,7 @@ ve.dm.ClassAttributeNode.static.setClassAttributes = function ( attributes, clas
 /**
  * Get class attribute from element attributes
  *
- * @param {Object} elementAttributes Element attributes
+ * @param {Object} attributes Element attributes
  * @return {string|null} Class name, or null if no classes to set
  */
 ve.dm.ClassAttributeNode.static.getClassAttrFromAttributes = function ( attributes ) {
@@ -74,10 +73,10 @@ ve.dm.ClassAttributeNode.static.getClassAttrFromAttributes = function ( attribut
 		classNames = [];
 
 	for ( className in this.classAttributes ) {
-		classAttributeSet = this.classAttributes[className];
+		classAttributeSet = this.classAttributes[ className ];
 		hasClass = true;
 		for ( key in classAttributeSet ) {
-			if ( attributes[key] !== classAttributeSet[key] ) {
+			if ( attributes[ key ] !== classAttributeSet[ key ] ) {
 				hasClass = false;
 				break;
 			}
@@ -94,7 +93,7 @@ ve.dm.ClassAttributeNode.static.getClassAttrFromAttributes = function ( attribut
 	// If no meaningful change in classes, preserve order
 	if (
 		attributes.originalClasses &&
-		ve.compare( attributes.originalClasses.trim().split( /\s+/ ).sort(), classNames.sort() )
+		ve.compareClassLists( attributes.originalClasses, classNames )
 	) {
 		return attributes.originalClasses;
 	} else if ( classNames.length > 0 ) {

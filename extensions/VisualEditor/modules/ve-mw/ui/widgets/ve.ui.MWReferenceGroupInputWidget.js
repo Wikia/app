@@ -1,7 +1,7 @@
 /*!
  * VisualEditor UserInterface MWReferenceGroupInput class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2015 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -15,7 +15,7 @@
  * @param {Object} [config] Configuration options
  * @cfg {string} emptyGroupName Label of the placeholder item
  */
-ve.ui.MWReferenceGroupInputWidget = function VeUiMWReferenceGroupInput( config ) {
+ve.ui.MWReferenceGroupInputWidget = function VeUiMWReferenceGroupInputWidget( config ) {
 	config = config || {};
 
 	this.emptyGroupName = config.emptyGroupName;
@@ -39,7 +39,6 @@ OO.inheritClass( ve.ui.MWReferenceGroupInputWidget, OO.ui.ComboBoxWidget );
  */
 ve.ui.MWReferenceGroupInputWidget.prototype.populateMenu = function ( internalList ) {
 	var placeholderGroupItem = new OO.ui.MenuOptionWidget( {
-		$: this.$,
 		data: '',
 		label: this.emptyGroupName,
 		flags: 'emptyGroupPlaceholder'
@@ -48,8 +47,9 @@ ve.ui.MWReferenceGroupInputWidget.prototype.populateMenu = function ( internalLi
 	this.menu.addItems( [ placeholderGroupItem ].concat( $.map(
 		Object.keys( internalList.getNodeGroups() ),
 		function ( groupInternalName ) {
+			var groupName;
 			if ( groupInternalName.indexOf( 'mwReference/' ) === 0 ) {
-				var groupName = groupInternalName.slice( 'mwReference/'.length );
+				groupName = groupInternalName.slice( 'mwReference/'.length );
 				if ( groupName ) {
 					return new OO.ui.MenuOptionWidget( { data: groupName, label: groupName } );
 				}

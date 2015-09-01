@@ -54,7 +54,7 @@ Then(/^I should be in Visual Editor editing mode$/) do
       page.text.include? 'Edit page for'
     end
   end
-  expect(@browser.url).to match /w\/index\.php\?title=Edit_page_for_#{ENV['BROWSER']}&veaction=edit/
+  expect(browser.url).to match(%r{w/index\.php\?title=Edit_page_for_#{browser_name}&veaction=edit})
 end
 
 Then(/^I should be in wikitext editing mode$/) do
@@ -63,5 +63,5 @@ Then(/^I should be in wikitext editing mode$/) do
       page.text.include? 'Editing Edit page for'
     end
   end
-  expect(@browser.url).to eql(ENV['MEDIAWIKI_URL'] + 'Edit page for ' + ENV['BROWSER'] + '?action=submit')
+  expect(browser.url).to eq(wiki_url("Edit page for #{browser_name}?action=submit"))
 end

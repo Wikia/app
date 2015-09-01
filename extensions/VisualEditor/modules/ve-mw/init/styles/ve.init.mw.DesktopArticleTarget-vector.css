@@ -1,0 +1,122 @@
+/*!
+ * VisualEditor MediaWiki Initialization DesktopArticleTarget Vector skin styles.
+ *
+ * @copyright 2011-2015 VisualEditor Team and others; see AUTHORS.txt
+ * @license The MIT License (MIT); see LICENSE.txt
+ */
+
+.ve-activated .vectorTabs .selected {
+	box-shadow: inset 0 -1px 0 #a7d7f9;
+}
+
+.ve-init-mw-target-surface {
+	/*
+	In order to allow placing the text cursor to the start or end of the text by
+	clicking in the margin area, we expand the outer boundary of the surface
+	outside the parent container using negative margin. Then we shrink the visible
+	rendering by applying inner padding. The end result is that the content is
+	the same width as in read mode, except with the padding around it now being
+	part of it instead of its parent, thus making it treat the area as part
+	of content editable.
+	*/
+	/* 0.8/0.8, 1/0.8 */
+	margin: 1em -1.25em 0 -1.25em;
+}
+
+.ve-init-mw-target-surface .ve-ce-documentNode,
+.ve-init-mw-target-surface .ve-ui-surface-placeholder {
+	padding: 0 1.143em; /* surface-margin-left (1em) / (mw-body-content font-size) 0.875em */
+}
+
+.mw-body .ve-init-mw-target-surface .ve-ui-surface-placeholder > * {
+	/* Fix margin overlap */
+	margin-top: 0;
+	/* Placeholder doesn't need a border as well */
+	border: 0;
+}
+
+.ve-init-target,
+.ve-ui-overlay-global {
+	/* Enforce different font-size for all UI elements of VisualEditor */
+	font-size: 0.8em;
+}
+
+.ve-init-target .mw-body-content,
+.ve-ui-overlay-global .mw-body-content {
+	/* Match skin's font-size for the surface content */
+	font-size: 1.09375em; /* 0.875/0.8 */
+}
+
+.ve-init-mw-desktopArticleTarget-toolbar {
+	/* 1/0.8 */
+	margin: -1.25em -1.25em 1.25em -1.25em;
+	position: relative;
+}
+
+.ve-init-target > .ve-ui-debugBar {
+	/* 1/0.8 */
+	padding: 1.25em;
+	margin: 1.25em -1.25em -1.25em -1.25em;
+}
+
+.ve-ui-debugBar {
+	border-top: 1px solid #ccc;
+	box-shadow: 0 10px 10px -10px rgba(0, 0, 0, 0.15) inset;
+}
+
+.ve-ui-debugBar ol {
+	margin-left: 0;
+}
+
+.ve-ui-overlay-global {
+	z-index: 101; /* #p-personal is z-index 100 in vector :( */
+}
+
+.oo-ui-actionWidget a:hover {
+	text-decoration: none;
+}
+
+/* ve.ce.TableCellnode.css's margin replaced by more specific rule in Vector (div#content p) */
+/*csslint ids:false */
+#content .ve-ce-tableCellNode .ve-ce-paragraphNode {
+	margin: 0;
+}
+/*csslint ids:true */
+
+/* Slug animation needs more specific rules and skin-specific target margins */
+.mw-body p.ve-ce-branchNode-newSlug {
+	margin: -0.3em 0 -0.1em 0;
+}
+
+.mw-body p.ve-ce-branchNode-newSlug-open {
+	margin: 0.5em 0;
+}
+
+/* High-definition-specific styles (because Vector adds 1em to the leftNav if width is 982px+ */
+@media screen and (min-width: 982px) {
+	.ve-init-mw-target-surface {
+		/* 0.8/0.8, 1.5/0.8 */
+		margin: 1em -1.875em 0 -1.875em;
+	}
+
+	.ve-init-mw-target-surface .ve-ce-documentNode,
+	.ve-init-mw-target-surface .ve-ui-surface-placeholder {
+		padding: 0 1.714em; /* surface-margin-left (1.5em) / (mw-body-content font-size) 0.875em */
+	}
+
+	.ve-init-mw-desktopArticleTarget-toolbar {
+		/* 1.25/0.8, 1.5/0.8 */
+		margin: -1.5625em -1.875em 1.875em -1.875em;
+	}
+
+	.ve-init-target > .ve-ui-debugBar {
+		/* 1/0.8, 1.5/0.8 */
+		padding: 1.875em;
+		margin: 1.25em -1.875em -1.875em -1.875em;
+	}
+}
+
+/* Prevent the progress bar from overlaying the welcome dialog */
+.ve-init-mw-desktopArticleTarget-windowManager-welcome .oo-ui-dialog {
+	z-index: 2;
+}

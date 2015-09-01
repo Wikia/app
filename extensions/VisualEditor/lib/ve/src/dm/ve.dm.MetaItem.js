@@ -1,7 +1,7 @@
 /*!
  * VisualEditor DataModel MetaItem class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 /**
@@ -49,6 +49,7 @@ ve.dm.MetaItem.static.group = 'misc';
 
 /**
  * Remove this item from the document. Only works if the item is attached to a MetaList.
+ *
  * @throws {Error} Cannot remove detached item
  */
 ve.dm.MetaItem.prototype.remove = function () {
@@ -76,8 +77,9 @@ ve.dm.MetaItem.prototype.replaceWith = function ( item ) {
 
 /**
  * Get the group this meta item belongs to.
+ *
  * @see #static-group
- * @returns {string} Group
+ * @return {string} Group
  */
 ve.dm.MetaItem.prototype.getGroup = function () {
 	return this.constructor.static.group;
@@ -85,7 +87,8 @@ ve.dm.MetaItem.prototype.getGroup = function () {
 
 /**
  * Get the MetaList this item is attached to.
- * @returns {ve.dm.MetaList|null} Reference to the parent list, or null if not attached
+ *
+ * @return {ve.dm.MetaList|null} Reference to the parent list, or null if not attached
  */
 ve.dm.MetaItem.prototype.getParentList = function () {
 	return this.list;
@@ -96,7 +99,7 @@ ve.dm.MetaItem.prototype.getParentList = function () {
  *
  * This is only known if the item is attached to a MetaList.
  *
- * @returns {number|null} Offset, or null if not attached
+ * @return {number|null} Offset, or null if not attached
  */
 ve.dm.MetaItem.prototype.getOffset = function () {
 	return this.offset;
@@ -107,7 +110,7 @@ ve.dm.MetaItem.prototype.getOffset = function () {
  *
  * This is only known if the item is attached to a MetaList.
  *
- * @returns {number|null} Index, or null if not attached
+ * @return {number|null} Index, or null if not attached
  */
 ve.dm.MetaItem.prototype.getIndex = function () {
 	return this.index;
@@ -115,6 +118,7 @@ ve.dm.MetaItem.prototype.getIndex = function () {
 
 /**
  * Set the offset. This is used by the parent list to synchronize the item with the document state.
+ *
  * @param {number} offset New offset
  */
 ve.dm.MetaItem.prototype.setOffset = function ( offset ) {
@@ -123,6 +127,7 @@ ve.dm.MetaItem.prototype.setOffset = function ( offset ) {
 
 /**
  * Set the index. This is used by the parent list to synchronize the item with the document state.
+ *
  * @param {number} index New index
  */
 ve.dm.MetaItem.prototype.setIndex = function ( index ) {
@@ -131,6 +136,7 @@ ve.dm.MetaItem.prototype.setIndex = function ( index ) {
 
 /**
  * Attach this item to a MetaList.
+ *
  * @param {ve.dm.MetaList} list Parent list to attach to
  * @param {number} offset Offset of this item in the parent list's document
  * @param {number} index Index of this item in the metadata array at the offset
@@ -158,7 +164,8 @@ ve.dm.MetaItem.prototype.detach = function ( list ) {
 
 /**
  * Check whether this item is attached to a MetaList.
- * @returns {boolean} Whether item is attached
+ *
+ * @return {boolean} Whether item is attached
  */
 ve.dm.MetaItem.prototype.isAttached = function () {
 	return this.list !== null;

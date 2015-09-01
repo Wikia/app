@@ -1,7 +1,7 @@
 /*!
  * VisualEditor UserInterface Toolbar class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 /**
@@ -11,8 +11,8 @@
  * @extends OO.ui.Toolbar
  *
  * @constructor
- * @param {Object} [options] Configuration options
- * @cfg {boolean} [floatable] Toolbar floats when scrolled off the page
+ * @param {Object} [config] Configuration options
+ * @cfg {boolean} [floatable] Toolbar can float when scrolled off the page
  */
 ve.ui.Toolbar = function VeUiToolbar( config ) {
 	config = config || {};
@@ -23,15 +23,8 @@ ve.ui.Toolbar = function VeUiToolbar( config ) {
 	// Properties
 	this.floating = false;
 	this.floatable = !!config.floatable;
-	this.$window = null;
+	this.$window = $( this.getElementWindow() );
 	this.elementOffset = null;
-	this.windowEvents = {
-		// Must use Function#bind (or a closure) instead of direct reference
-		// because we need a unique function references for each Toolbar instance
-		// to avoid $window.off() from unbinding other toolbars' event handlers.
-		resize: this.onWindowResize.bind( this ),
-		scroll: this.onWindowScroll.bind( this )
-	};
 	// Default directions
 	this.contextDirection = { inline: 'ltr', block: 'ltr' };
 	// The following classes can be used here:
@@ -55,12 +48,20 @@ OO.inheritClass( ve.ui.Toolbar, OO.ui.Toolbar );
  * @event updateState
  * @param {ve.dm.SurfaceFragment|null} fragment Surface fragment. Null if no surface is active.
  * @param {Object|null} direction Context direction with 'inline' & 'block' properties if a surface exists. Null if no surface is active.
+ * @param {string[]} activeDialogs List of names of currently open dialogs.
+ */
+
+/**
+ * @event resize
  */
 
 /* Methods */
 
 /**
- * inheritdoc
+ * Setup toolbar
+ *
+ * @param {Object} groups List of tool group configurations
+ * @param {ve.ui.Surface} [surface] Surface to attach to
  */
 ve.ui.Toolbar.prototype.setup = function ( groups, surface ) {
 	this.detach();
@@ -72,54 +73,49 @@ ve.ui.Toolbar.prototype.setup = function ( groups, surface ) {
 
 	// Events
 	this.getSurface().getModel().connect( this, { contextChange: 'onContextChange' } );
-	this.getSurface().toolbarDialogs.connect( this, {
-		opening: 'onToolbarWindowOpeningOrClosing',
-		closing: 'onToolbarWindowOpeningOrClosing'
+	this.getSurface().getToolbarDialogs().connect( this, {
+		opening: 'onToolbarDialogsOpeningOrClosing',
+		closing: 'onToolbarDialogsOpeningOrClosing'
+	} );
+	this.getSurface().getDialogs().connect( this, {
+		opening: 'onInspectorOrDialogOpeningOrClosing',
+		closing: 'onInspectorOrDialogOpeningOrClosing'
+	} );
+	this.getSurface().getContext().getInspectors().connect( this, {
+		opening: 'onInspectorOrDialogOpeningOrClosing',
+		closing: 'onInspectorOrDialogOpeningOrClosing'
 	} );
 };
 
 /**
- * inheritdoc
+ * @inheritdoc
  */
 ve.ui.Toolbar.prototype.isToolAvailable = function ( name ) {
+	var commandName, tool;
+
 	if ( !ve.ui.Toolbar.super.prototype.isToolAvailable.apply( this, arguments ) ) {
 		return false;
 	}
 	// Check the tool's command is available on the surface
-	var commandName,
-		tool = this.getToolFactory().lookup( name );
+	tool = this.getToolFactory().lookup( name );
 	if ( !tool ) {
 		return false;
 	}
 	// FIXME should use .static.getCommandName(), but we have tools that aren't ve.ui.Tool subclasses :(
 	commandName = tool.static.commandName;
-	return !commandName || ve.indexOf( commandName, this.getCommands() ) !== -1;
+	return !commandName || this.getCommands().indexOf( commandName ) !== -1;
 };
 
 /**
- * Handle window resize events while toolbar floating is enabled.
+ * @inheritdoc
  *
- * @param {jQuery.Event} e Window resize event
- */
-ve.ui.Toolbar.prototype.onWindowScroll = function () {
-	var scrollTop = this.$window.scrollTop();
-
-	if ( scrollTop > this.elementOffset.top ) {
-		this.float();
-	} else if ( this.floating ) {
-		this.unfloat();
-	}
-};
-
-/**
- * Handle window resize events while toolbar floating is enabled.
- *
- * Toolbar will stick to the top of the screen unless it would be over or under the last visible
+ * While toolbar floating is enabled,
+ * the toolbar will stick to the top of the screen unless it would be over or under the last visible
  * branch node in the root of the document being edited, at which point it will stop just above it.
- *
- * @param {jQuery.Event} e Window scroll event
  */
 ve.ui.Toolbar.prototype.onWindowResize = function () {
+	ve.ui.Toolbar.super.prototype.onWindowResize.call( this );
+
 	// Update offsets after resize (see #float)
 	this.calculateOffset();
 
@@ -138,9 +134,10 @@ ve.ui.Toolbar.prototype.onWindowResize = function () {
  * @param {jQuery.Promise} openingOrClosing
  * @param {Object} data
  */
-ve.ui.Toolbar.prototype.onToolbarWindowOpeningOrClosing = function ( win, openingOrClosing ) {
+ve.ui.Toolbar.prototype.onToolbarDialogsOpeningOrClosing = function ( win, openingOrClosing ) {
 	var toolbar = this;
 	openingOrClosing.then( function () {
+		toolbar.updateToolState();
 		// Wait for window transition
 		setTimeout( function () {
 			if ( toolbar.floating ) {
@@ -149,6 +146,20 @@ ve.ui.Toolbar.prototype.onToolbarWindowOpeningOrClosing = function ( win, openin
 				toolbar.float();
 			}
 		}, 250 );
+	} );
+};
+
+/**
+ * Handle windows opening or closing in the dialogs' or inspectors' window manager.
+ *
+ * @param {OO.ui.Window} win
+ * @param {jQuery.Promise} openingOrClosing
+ * @param {Object} data
+ */
+ve.ui.Toolbar.prototype.onInspectorOrDialogOpeningOrClosing = function ( win, openingOrClosing ) {
+	var toolbar = this;
+	openingOrClosing.then( function () {
+		toolbar.updateToolState();
 	} );
 };
 
@@ -165,13 +176,14 @@ ve.ui.Toolbar.prototype.onContextChange = function () {
  * Update the state of the tools
  */
 ve.ui.Toolbar.prototype.updateToolState = function () {
+	var dirInline, dirBlock, fragmentAnnotation, activeDialogs, fragment;
+
 	if ( !this.getSurface() ) {
 		this.emit( 'updateState', null, null );
 		return;
 	}
 
-	var dirInline, dirBlock, fragmentAnnotation,
-		fragment = this.getSurface().getModel().getFragment();
+	fragment = this.getSurface().getModel().getFragment();
 
 	// Update context direction for button icons UI.
 	// By default, inline and block directions are the same.
@@ -202,14 +214,29 @@ ve.ui.Toolbar.prototype.updateToolState = function () {
 		this.$element.addClass( 've-ui-dir-block-' + dirBlock );
 		this.contextDirection.block = dirBlock;
 	}
-	this.emit( 'updateState', fragment, this.contextDirection );
+
+	activeDialogs = $.map(
+		[
+			this.surface.getDialogs(),
+			this.surface.getContext().getInspectors(),
+			this.surface.getToolbarDialogs()
+		],
+		function ( windowManager ) {
+			if ( windowManager.getCurrentWindow() ) {
+				return windowManager.getCurrentWindow().constructor.static.name;
+			}
+			return null;
+		}
+	);
+
+	this.emit( 'updateState', fragment, this.contextDirection, activeDialogs );
 };
 
 /**
  * Get triggers for a specified name.
  *
  * @param {string} name Trigger name
- * @returns {ve.ui.Trigger[]|undefined} Triggers
+ * @return {ve.ui.Trigger[]|undefined} Triggers
  */
 ve.ui.Toolbar.prototype.getTriggers = function ( name ) {
 	return this.getSurface().triggerListener.getTriggers( name );
@@ -228,47 +255,18 @@ ve.ui.Toolbar.prototype.getCommands = function () {
  * @inheritdoc
  */
 ve.ui.Toolbar.prototype.getToolAccelerator = function ( name ) {
-	var i, l, triggers = this.getTriggers( name ), shortcuts = [];
+	var messages = ve.ui.triggerRegistry.getMessages( name );
 
-	if ( triggers ) {
-		for ( i = 0, l = triggers.length; i < l; i++ ) {
-			shortcuts.push( triggers[i].getMessage() );
-		}
-		return shortcuts.join( ', ' );
-	} else {
-		return undefined;
-	}
+	return messages ? messages.join( ', ' ) : undefined;
 };
 
 /**
  * Gets the surface which the toolbar controls.
  *
- * @returns {ve.ui.Surface} Surface being controlled
+ * @return {ve.ui.Surface} Surface being controlled
  */
 ve.ui.Toolbar.prototype.getSurface = function () {
 	return this.surface;
-};
-
-/**
- * Sets up handles and preloads required information for the toolbar to work.
- * This must be called immediately after it is attached to a visible document.
- */
-ve.ui.Toolbar.prototype.initialize = function () {
-	// Parent method
-	OO.ui.Toolbar.prototype.initialize.call( this );
-
-	// Properties
-	this.$window = this.$( this.getElementWindow() );
-	this.calculateOffset();
-
-	// Initial state
-	this.updateToolState();
-
-	if ( this.floatable ) {
-		this.$window.on( this.windowEvents );
-		// The page may start with a non-zero scroll position
-		this.onWindowScroll();
-	}
 };
 
 /**
@@ -286,13 +284,10 @@ ve.ui.Toolbar.prototype.detach = function () {
 	this.unfloat();
 
 	// Events
-	if ( this.$window ) {
-		this.$window.off( this.windowEvents );
-	}
 	if ( this.getSurface() ) {
 		this.getSurface().getModel().disconnect( this );
-		this.getSurface().toolbarDialogs.disconnect( this );
-		this.getSurface().toolbarDialogs.clearWindows();
+		this.getSurface().getToolbarDialogs().disconnect( this );
+		this.getSurface().getToolbarDialogs().clearWindows();
 		this.surface = null;
 	}
 };
@@ -311,22 +306,43 @@ ve.ui.Toolbar.prototype.destroy = function () {
 };
 
 /**
+ * Get height of the toolbar while floating
+ *
+ * @return {number} Height of the toolbar
+ */
+ve.ui.Toolbar.prototype.getHeight = function () {
+	return this.height;
+};
+
+/**
+ * Get toolbar element's offsets
+ *
+ * @return {Object} Toolbar element's offsets
+ */
+ve.ui.Toolbar.prototype.getElementOffset = function () {
+	if ( !this.elementOffset ) {
+		this.calculateOffset();
+	}
+	return this.elementOffset;
+};
+
+/**
  * Float the toolbar.
  */
 ve.ui.Toolbar.prototype.float = function () {
 	if ( !this.floating ) {
-		var height = this.$element.height();
+		this.height = this.$element.height();
 		// When switching into floating mode, set the height of the wrapper and
 		// move the bar to the same offset as the in-flow element
 		this.$element
-			.css( 'height', height )
+			.css( 'height', this.height )
 			.addClass( 've-ui-toolbar-floating' );
 		this.$bar.css( {
 			left: this.elementOffset.left,
 			right: this.elementOffset.right
 		} );
 		this.floating = true;
-		this.surface.setToolbarHeight( height );
+		this.emit( 'resize' );
 	}
 };
 
@@ -335,11 +351,30 @@ ve.ui.Toolbar.prototype.float = function () {
  */
 ve.ui.Toolbar.prototype.unfloat = function () {
 	if ( this.floating ) {
+		this.height = 0;
 		this.$element
 			.css( 'height', '' )
 			.removeClass( 've-ui-toolbar-floating' );
 		this.$bar.css( { left: '', right: '' } );
 		this.floating = false;
-		this.surface.setToolbarHeight( 0 );
+		this.emit( 'resize' );
 	}
+};
+
+/**
+ * Check if the toolbar is floating
+ *
+ * @return {boolean} The toolbar is floating
+ */
+ve.ui.Toolbar.prototype.isFloating = function () {
+	return this.floating;
+};
+
+/**
+ * Check if the toolbar can float
+ *
+ * @return {boolean} The toolbar can float
+ */
+ve.ui.Toolbar.prototype.isFloatable = function () {
+	return this.floatable;
 };

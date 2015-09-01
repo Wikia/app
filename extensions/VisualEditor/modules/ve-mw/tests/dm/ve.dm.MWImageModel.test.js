@@ -1,16 +1,16 @@
 /*!
  * VisualEditor DataModel MWImageModel tests.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2015 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
-QUnit.module( 've.dm.MWImageModel' );
+QUnit.module( 've.dm.MWImageModel', ve.test.utils.mwEnvironment );
 
 /* Tests */
 
 QUnit.test( 'Create and manipulate image nodes', function ( assert ) {
-	var i, imageType, imageModel, value, result, expected, expectedAlignment, method, dir,
+	var i, imageType, imageModel, value, result, expected, expectedAlignment, method, dir, dummyDoc,
 		expect = 0,
 		imageNode = {},
 		images = {
@@ -35,7 +35,7 @@ QUnit.test( 'Create and manipulate image nodes', function ( assert ) {
 						},
 						results: {
 							expect: {
-								getImageNodeType: 'wikiaBlockImage',
+								getImageNodeType: 'mwBlockImage',
 								isBorderable: false
 							},
 							position: 'oppositeToText'
@@ -93,7 +93,7 @@ QUnit.test( 'Create and manipulate image nodes', function ( assert ) {
 						},
 						results: {
 							expect: {
-								getImageNodeType: 'wikiaBlockImage',
+								getImageNodeType: 'mwBlockImage',
 								isBorderable: false,
 								isDefaultSize: true
 							},
@@ -107,7 +107,7 @@ QUnit.test( 'Create and manipulate image nodes', function ( assert ) {
 						},
 						results: {
 							expect: {
-								getImageNodeType: 'wikiaBlockImage'
+								getImageNodeType: 'mwBlockImage'
 							},
 							position: 'withText'
 						}
@@ -119,10 +119,10 @@ QUnit.test( 'Create and manipulate image nodes', function ( assert ) {
 	for ( imageType in images ) {
 		// Type test
 		expect++;
-		for ( i = 0; i < images[imageType].tests.length; i++ ) {
+		for ( i = 0; i < images[ imageType ].tests.length; i++ ) {
 			// Method tests
-			expect += Object.keys( images[imageType].tests[i].results.expect ).length;
-			if ( images[imageType].tests[i].results.position ) {
+			expect += Object.keys( images[ imageType ].tests[ i ].results.expect ).length;
+			if ( images[ imageType ].tests[ i ].results.position ) {
 				// Position test
 				expect++;
 			}
@@ -133,35 +133,36 @@ QUnit.test( 'Create and manipulate image nodes', function ( assert ) {
 
 	for ( imageType in images ) {
 		// Create the node
-		imageNode[imageType] = ve.dm.MWImageModel.static.createImageNode(
-			images[imageType].attrs,
+		imageNode[ imageType ] = ve.dm.MWImageModel.static.createImageNode(
+			images[ imageType ].attrs,
 			imageType
 		);
 
 		// Verify node type
 		assert.strictEqual(
-			imageNode[imageType].type,
+			imageNode[ imageType ].type,
 			imageType,
 			'createImageNode node type: ' + imageType
 		);
 
 		// Run tests
-		for ( i = 0; i < images[imageType].tests.length; i++ ) {
-			dir = images[imageType].dir;
+		for ( i = 0; i < images[ imageType ].tests.length; i++ ) {
+			dir = images[ imageType ].dir;
+			dummyDoc = new ve.dm.Document( [], null, null, null, null, 'en', images[ imageType ].dir );
 
 			// Start from original details
-			imageModel = ve.dm.MWImageModel.static.newFromImageAttributes( images[imageType].attrs, dir );
+			imageModel = ve.dm.MWImageModel.static.newFromImageAttributes( images[ imageType ].attrs, dummyDoc );
 
 			// Run attributes
-			for ( method in images[imageType].tests[i].methods ) {
-				value = images[imageType].tests[i].methods[method];
-				imageModel[method]( value );
+			for ( method in images[ imageType ].tests[ i ].methods ) {
+				value = images[ imageType ].tests[ i ].methods[ method ];
+				imageModel[ method ]( value );
 			}
 
 			// Check result
-			for ( method in images[imageType].tests[i].results.expect ) {
-				result = imageModel[method]();
-				expected = images[imageType].tests[i].results.expect[method];
+			for ( method in images[ imageType ].tests[ i ].results.expect ) {
+				result = imageModel[ method ]();
+				expected = images[ imageType ].tests[ i ].results.expect[ method ];
 				assert.deepEqual(
 					result,
 					expected,
@@ -170,12 +171,12 @@ QUnit.test( 'Create and manipulate image nodes', function ( assert ) {
 			}
 
 			// Run language-specific tests
-			if ( images[imageType].tests[i].results.position ) {
+			if ( images[ imageType ].tests[ i ].results.position ) {
 				// Definition:
 				// * withText (document direction; 'left' for ltr, 'right' for rtl)
 				// * oppositeToText (opposite the document direction; 'right' for ltr, 'left' for rtl)
 				// * none (no alignment set)
-				switch ( images[imageType].tests[i].results.position ) {
+				switch ( images[ imageType ].tests[ i ].results.position ) {
 					case 'withText':
 						expectedAlignment = dir === 'ltr' ? 'left' : 'right';
 						break;

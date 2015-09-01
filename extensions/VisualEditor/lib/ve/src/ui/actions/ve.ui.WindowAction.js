@@ -1,7 +1,7 @@
 /*!
  * VisualEditor UserInterface WindowAction class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 /**
@@ -36,16 +36,20 @@ ve.ui.WindowAction.static.methods = [ 'open', 'close', 'toggle' ];
 /* Methods */
 
 /**
- * Open or toggle a window.
+ * Open a window.
  *
  * @method
  * @param {string} name Symbolic name of window to open
  * @param {Object} [data] Window opening data
+ * @param {string} [action] Action to execute after opening, or immediately if the window is already open
  * @return {boolean} Action was executed
  */
-ve.ui.WindowAction.prototype.open = function ( name, data ) {
-	var windowType = this.getWindowType( name ),
+ve.ui.WindowAction.prototype.open = function ( name, data, action ) {
+	var currentInspector, inspectorWindowManager,
+		windowType = this.getWindowType( name ),
 		windowManager = windowType && this.getWindowManager( windowType ),
+		currentWindow = windowManager.getCurrentWindow(),
+		autoClosePromises = [],
 		surface = this.surface,
 		fragment = surface.getModel().getFragment( undefined, true ),
 		dir = surface.getView().getDocument().getDirectionFromSelection( fragment.getSelection() ) ||
@@ -56,21 +60,49 @@ ve.ui.WindowAction.prototype.open = function ( name, data ) {
 	}
 
 	data = ve.extendObject( { dir: dir }, data, { fragment: fragment } );
-
-	surface.getView().deactivate();
-
-	if ( windowType === 'toolbar' ||
-		name === ve.ui.WikiaSourceModeDialog.static.name ||
-		name === ve.ui.WikiaInfoboxInsertDialog.static.name ||
-		name === ve.ui.WikiaTemplateInsertDialog.static.name ||
-		name === ve.ui.MWTransclusionDialog.static.name
-	) {
+	if ( windowType === 'toolbar' || windowType === 'inspector' ) {
 		data = ve.extendObject( data, { surface: surface } );
+		// Auto-close the current window if it is different to the one we are
+		// trying to open.
+		// TODO: Make auto-close a window manager setting
+		if ( currentWindow && currentWindow.constructor.static.name !== name ) {
+			autoClosePromises.push( windowManager.closeWindow( currentWindow ) );
+		}
 	}
 
-	windowManager.openWindow( name, data ).then( function ( closing ) {
-		closing.then( function () {
-			surface.getView().activate();
+	// If we're opening a dialog, close all inspectors first
+	if ( windowType === 'dialog' ) {
+		inspectorWindowManager = this.getWindowManager( 'inspector' );
+		currentInspector = inspectorWindowManager.getCurrentWindow();
+		if ( currentInspector ) {
+			autoClosePromises.push( inspectorWindowManager.closeWindow( currentInspector ) );
+		}
+	}
+
+	$.when.apply( $, autoClosePromises ).always( function () {
+		windowManager.getWindow( name ).then( function ( win ) {
+			var opening = windowManager.openWindow( win, data );
+
+			surface.getView().emit( 'position' );
+
+			if ( !win.constructor.static.activeSurface ) {
+				surface.getView().deactivate();
+			}
+
+			opening.then( function ( closing ) {
+				closing.then( function ( closed ) {
+					if ( !win.constructor.static.activeSurface ) {
+						surface.getView().activate();
+					}
+					closed.then( function () {
+						surface.getView().emit( 'position' );
+					} );
+				} );
+			} ).always( function () {
+				if ( action ) {
+					win.executeAction( action );
+				}
+			} );
 		} );
 	} );
 
@@ -124,7 +156,7 @@ ve.ui.WindowAction.prototype.toggle = function ( name, data ) {
 };
 
 /**
- * Get the type of a window class
+ * Get the specified window type
  *
  * @param {string} name Window name
  * @return {string|null} Window type: 'inspector', 'toolbar' or 'dialog'
@@ -142,9 +174,9 @@ ve.ui.WindowAction.prototype.getWindowType = function ( name ) {
 };
 
 /**
- * Get the window manager for a specified window class
+ * Get the window manager for a specified window type
  *
- * @param {Function} windowClass Window class
+ * @param {Function} windowType Window type: 'inspector', 'toolbar', or 'dialog'
  * @return {ve.ui.WindowManager|null} Window manager
  */
 ve.ui.WindowAction.prototype.getWindowManager = function ( windowType ) {
@@ -152,7 +184,7 @@ ve.ui.WindowAction.prototype.getWindowManager = function ( windowType ) {
 		case 'inspector':
 			return this.surface.getContext().getInspectors();
 		case 'toolbar':
-			return this.surface.toolbarDialogs;
+			return this.surface.getToolbarDialogs();
 		case 'dialog':
 			return this.surface.getDialogs();
 	}

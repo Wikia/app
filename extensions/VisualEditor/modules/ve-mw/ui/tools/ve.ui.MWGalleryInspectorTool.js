@@ -1,7 +1,7 @@
 /*!
  * VisualEditor MediaWiki UserInterface gallery tool class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2015 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -26,3 +26,10 @@ ve.ui.MWGalleryInspectorTool.static.title =
 ve.ui.MWGalleryInspectorTool.static.modelClasses = [ ve.dm.MWGalleryNode ];
 ve.ui.MWGalleryInspectorTool.static.commandName = 'gallery';
 ve.ui.toolFactory.register( ve.ui.MWGalleryInspectorTool );
+
+ve.ui.commandRegistry.register(
+	new ve.ui.Command(
+		'gallery', 'window', 'open',
+		{ args: [ 'gallery' ], supportedSelections: [ 'linear' ] }
+	)
+);

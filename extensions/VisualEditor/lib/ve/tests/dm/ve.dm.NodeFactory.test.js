@@ -1,7 +1,7 @@
 /*!
  * VisualEditor DataModel NodeFactory tests.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 QUnit.module( 've.dm.NodeFactory' );
@@ -132,4 +132,5 @@ QUnit.test( 'initialization', 1, function ( assert ) {
 // TODO: isNodeContent
 // TODO: doesNodeHaveSignificantWhitespace
 // TODO: doesNodeHandleOwnChildren
+// TODO: shouldIgnoreChildren
 // TODO: isNodeInternal

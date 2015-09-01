@@ -1,7 +1,7 @@
 /*!
  * VisualEditor UserInterface HistoryTool classes.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 /**
@@ -29,14 +29,6 @@ ve.ui.HistoryTool = function VeUiHistoryTool( toolGroup, config ) {
 OO.inheritClass( ve.ui.HistoryTool, ve.ui.Tool );
 
 /* Methods */
-
-/**
- * @inheritdoc
- */
-ve.ui.HistoryTool.prototype.onSelect = function () {
-	ve.track( 'tool.history.select', { name: this.constructor.static.name } );
-	ve.ui.Tool.prototype.onSelect.apply( this, arguments );
-};
 
 /**
  * Handle history events on the surface model

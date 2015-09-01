@@ -1,7 +1,7 @@
 /*!
  * VisualEditor ContentEditable LinkAnnotation class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 /**
@@ -18,18 +18,12 @@ ve.ce.LinkAnnotation = function VeCeLinkAnnotation() {
 	// Parent constructor
 	ve.ce.LinkAnnotation.super.apply( this, arguments );
 
-	// DOM changes
+	// Initialization
 	this.$element
 		.addClass( 've-ce-linkAnnotation' )
-		.attr( 'href', ve.resolveUrl( this.model.getHref(), this.getModelHtmlDocument() ) )
-		.attr( 'title', this.constructor.static.getDescription( this.model ) )
-		// Some browsers will try to let links do their thing
-		// (e.g. iOS Safari when the keyboard is closed)
-		.on( 'click', function ( e ) {
-			// Don't prevent a modified click which in some browsers deliberately opens the link
-			if ( !e.altKey && !e.ctrlKey && !e.metaKey && !e.shiftKey ) {
-				e.preventDefault();
-			}
+		.prop( {
+			href: ve.resolveUrl( this.model.getHref(), this.getModelHtmlDocument() ),
+			title: this.constructor.static.getDescription( this.model )
 		} );
 };
 

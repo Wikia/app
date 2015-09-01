@@ -1,7 +1,7 @@
 /*!
  * VisualEditor DataModel MWParameterModel class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2015 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -44,7 +44,7 @@ OO.mixinClass( ve.dm.MWParameterModel, OO.EventEmitter );
  * Check if parameter is required.
  *
  * @method
- * @returns {boolean} Parameter is required
+ * @return {boolean} Parameter is required
  */
 ve.dm.MWParameterModel.prototype.isRequired = function () {
 	return this.template.getSpec().isParameterRequired( this.name );
@@ -55,7 +55,7 @@ ve.dm.MWParameterModel.prototype.isRequired = function () {
  *
  * @method
  * @param {string} name Parameter name
- * @returns {boolean} Parameter is suggested
+ * @return {boolean} Parameter is suggested
  */
 ve.dm.MWParameterModel.prototype.isSuggested = function () {
 	return this.template.getSpec().isParameterSuggested( this.name );
@@ -65,7 +65,7 @@ ve.dm.MWParameterModel.prototype.isSuggested = function () {
  * Check if parameter is deprecated.
  *
  * @method
- * @returns {boolean} Parameter is deprecated
+ * @return {boolean} Parameter is deprecated
  */
 ve.dm.MWParameterModel.prototype.isDeprecated = function () {
 	return this.template.getSpec().isParameterDeprecated( this.name );
@@ -74,7 +74,7 @@ ve.dm.MWParameterModel.prototype.isDeprecated = function () {
 /**
  * Get template of which this parameter is part.
  *
- * @returns {ve.dm.MWTemplateModel} Template
+ * @return {ve.dm.MWTemplateModel} Template
  */
 ve.dm.MWParameterModel.prototype.getTemplate = function () {
 	return this.template;
@@ -83,7 +83,7 @@ ve.dm.MWParameterModel.prototype.getTemplate = function () {
 /**
  * Get unique parameter ID within the transclusion.
  *
- * @returns {string} Unique ID
+ * @return {string} Unique ID
  */
 ve.dm.MWParameterModel.prototype.getId = function () {
 	return this.id;
@@ -92,7 +92,7 @@ ve.dm.MWParameterModel.prototype.getId = function () {
 /**
  * Get parameter name.
  *
- * @returns {string} Parameter name
+ * @return {string} Parameter name
  */
 ve.dm.MWParameterModel.prototype.getName = function () {
 	return this.name;
@@ -101,7 +101,7 @@ ve.dm.MWParameterModel.prototype.getName = function () {
 /**
  * Get parameter name.
  *
- * @returns {string} Parameter name
+ * @return {string} Parameter name
  */
 ve.dm.MWParameterModel.prototype.getOriginalName = function () {
 	return this.originalName;
@@ -110,7 +110,7 @@ ve.dm.MWParameterModel.prototype.getOriginalName = function () {
 /**
  * Get parameter value.
  *
- * @returns {string} Parameter value, or automatic value if there is none stored.
+ * @return {string} Parameter value, or automatic value if there is none stored.
  *  Otherwise an empty string.
  */
 ve.dm.MWParameterModel.prototype.getValue = function () {
@@ -120,16 +120,25 @@ ve.dm.MWParameterModel.prototype.getValue = function () {
 /**
  * Get default parameter value.
  *
- * @returns {string} Default parameter value
+ * @return {string} Default parameter value
  */
 ve.dm.MWParameterModel.prototype.getDefaultValue = function () {
 	return this.template.getSpec().getParameterDefaultValue( this.name );
 };
 
 /**
+ * Get default parameter value.
+ *
+ * @return {string} Default parameter value
+ */
+ve.dm.MWParameterModel.prototype.getExampleValue = function () {
+	return this.template.getSpec().getParameterExampleValue( this.name );
+};
+
+/**
  * Get automatic parameter value.
  *
- * @returns {string} Automatic parameter name.
+ * @return {string} Automatic parameter name.
  */
 ve.dm.MWParameterModel.prototype.getAutoValue = function () {
 	return this.template.getSpec().getParameterAutoValue( this.name );

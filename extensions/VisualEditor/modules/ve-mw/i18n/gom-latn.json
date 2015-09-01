@@ -4,5 +4,10 @@
 			"The Discoverer"
 		]
 	},
-	"visualeditor-ca-editsource": "Mull sudar"
+	"tooltip-ca-ve-edit": "Hem pan bodol",
+	"visualeditor-ca-createlocaldescriptionsource": "Thollavem vornonachem strot zod",
+	"visualeditor-ca-createsource": "Strot roch",
+	"visualeditor-ca-editsource": "Mull bodol",
+	"visualeditor-ca-editsource-section": "mull bodol",
+	"visualeditor-descriptionpagelink": "Project:DispiSompadok"
 }

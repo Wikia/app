@@ -1,7 +1,7 @@
 /*!
  * VisualEditor DataModel example data sets.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 /**
@@ -26,7 +26,7 @@ ve.dm.example = {};
  * @method
  * @param {Array} data Linear model data
  * @param {ve.dm.IndexValueStore} [store] Index-value store to use, creates one if undefined
- * @returns {ve.dm.FlatLinearData} Linear data store
+ * @return {ve.dm.FlatLinearData} Linear data store
  * @throws {Error} Example data passed to preprocessAnnotations by reference
  */
 ve.dm.example.preprocessAnnotations = function ( data, store ) {
@@ -35,30 +35,78 @@ ve.dm.example.preprocessAnnotations = function ( data, store ) {
 	// Sanity check to make sure ve.dm.example data has not been passed in
 	// by reference. Always use ve#copy.
 	for ( i in ve.dm.example ) {
-		if ( data === ve.dm.example[i] ) {
+		if ( data === ve.dm.example[ i ] ) {
 			throw new Error( 'Example data passed to preprocessAnnotations by reference' );
 		}
 	}
 
 	store = store || new ve.dm.IndexValueStore();
 	for ( i = 0; i < data.length; i++ ) {
-		key = data[i].annotations ? 'annotations' : 1;
+		key = data[ i ].annotations ? 'annotations' : 1;
 		// check for shorthand annotation objects in array
-		if ( Array.isArray( data[i][key] ) && data[i][key][0].type ) {
-			data[i][key] = ve.dm.example.createAnnotationSet( store, data[i][key] ).getIndexes();
+		if ( Array.isArray( data[ i ][ key ] ) && data[ i ][ key ][ 0 ].type ) {
+			data[ i ][ key ] = ve.dm.example.createAnnotationSet( store, data[ i ][ key ] ).getIndexes();
 		}
 	}
 	return new ve.dm.FlatLinearData( store, data );
 };
 
 /**
+ * Convert real data back to shorthand notation. See #preprocessAnnotations.
+ *
+ * Any annotation that has .originalDomElements will be shallow-cloned and have
+ * .originalDomElements removed.
+ *
+ * @param {Array} data Linear model data. Will be modified.
+ * @param {ve.dm.IndexValueStore} store Index-value store to resolve annotations in
+ * @return {Array} The given `data` parameter.
+ */
+ve.dm.example.postprocessAnnotations = function ( data, store ) {
+	var i, j, key;
+
+	for ( i = 0; i < data.length; i++ ) {
+		key = data[ i ].annotations ? 'annotations' : 1;
+		if ( Array.isArray( data[ i ][ key ] ) ) {
+			data[ i ] = $.extend( Array.isArray( data[ i ] ) ? [] : {}, data[ i ] );
+			data[ i ][ key ] = new ve.dm.AnnotationSet( store, data[ i ][ key ] ).get();
+			for ( j = 0; j < data[ i ][ key ].length; j++ ) {
+				data[ i ][ key ][ j ] = data[ i ][ key ][ j ].element;
+				if ( data[ i ][ key ][ j ].originalDomElements ) {
+					// Make a shallow clone and remove .originalDomElements from it
+					data[ i ][ key ][ j ] = $.extend( {}, data[ i ][ key ][ j ] );
+					delete data[ i ][ key ][ j ].originalDomElements;
+				}
+			}
+		}
+	}
+	return data;
+};
+
+/**
+ * Remove originalDomElements from linear model data.
+ *
+ * @param {Array} data Linear model data. Will be modified.
+ * @return {Array} data parameter
+ */
+ve.dm.example.removeOriginalDomElements = function ( data ) {
+	var i, len;
+	for ( i = 0, len = data.length; i < len; i++ ) {
+		if ( data[ i ].originalDomElements ) {
+			delete data[ i ].originalDomElements;
+		}
+	}
+	return data;
+};
+
+/**
  * Create an annotation object from shorthand notation.
+ *
  * @method
  * @param {Object} annotation Plain object with type and attributes properties
- * @returns {ve.dm.Annotation} Instance of the right ve.dm.Annotation subclass
+ * @return {ve.dm.Annotation} Instance of the right ve.dm.Annotation subclass
  */
 ve.dm.example.createAnnotation = function ( annotation ) {
-	return ve.dm.annotationFactory.create( annotation.type, annotation );
+	return ve.dm.annotationFactory.createFromElement( annotation );
 };
 
 /**
@@ -68,13 +116,14 @@ ve.dm.example.createAnnotation = function ( annotation ) {
  * AnnotationSet.
  *
  * @method
+ * @param {ve.dm.IndexValueStore} store Index-value store
  * @param {Array} annotations Array of annotations in shorthand format
- * @returns {ve.dm.AnnotationSet}
+ * @return {ve.dm.AnnotationSet}
  */
 ve.dm.example.createAnnotationSet = function ( store, annotations ) {
 	var i;
 	for ( i = 0; i < annotations.length; i++ ) {
-		annotations[i] = ve.dm.example.createAnnotation( annotations[i] );
+		annotations[ i ] = ve.dm.example.createAnnotation( annotations[ i ] );
 	}
 	return new ve.dm.AnnotationSet( store, store.indexes( annotations ) );
 };
@@ -87,6 +136,16 @@ ve.dm.example.span = { type: 'textStyle/span', attributes: { nodeName: 'span' } 
 ve.dm.example.big = { type: 'textStyle/big', attributes: { nodeName: 'big' } };
 ve.dm.example.code = { type: 'textStyle/code', attributes: { nodeName: 'code' } };
 ve.dm.example.tt = { type: 'textStyle/code', attributes: { nodeName: 'tt' } };
+ve.dm.example.strong = { type: 'textStyle/bold', attributes: { nodeName: 'strong' } };
+ve.dm.example.link = function ( href ) {
+	return { type: 'link', attributes: { href: href } };
+};
+ve.dm.example.language = function ( lang, dir ) {
+	return { type: 'meta/language', attributes: { lang: lang, dir: dir } };
+};
+
+ve.dm.example.inlineSlug = '<span class="ve-ce-branchNode-slug ve-ce-branchNode-inlineSlug"></span>';
+ve.dm.example.blockSlug = '<div class="ve-ce-branchNode-slug ve-ce-branchNode-blockSlug"></div>';
 
 /**
  * Creates a document from example data.
@@ -95,7 +154,7 @@ ve.dm.example.tt = { type: 'textStyle/code', attributes: { nodeName: 'tt' } };
  *
  * @param {string} [name='data'] Named element of ve.dm.example
  * @param {ve.dm.IndexValueStore} [store] A specific index-value store to use, optionally.
- * @returns {ve.dm.Document} Document
+ * @return {ve.dm.Document} Document
  * @throws {Error} Example data not found
  */
 ve.dm.example.createExampleDocument = function ( name, store ) {
@@ -107,32 +166,36 @@ ve.dm.example.createExampleDocument = function ( name, store ) {
  *
  * @param {string} [name='data'] Named element of ve.dm.example
  * @param {ve.dm.IndexValueStore} [store] A specific index-value store to use, optionally.
- * @param {Object} [object] Collection of test documents, keyed by name
- * @returns {ve.dm.Document} Document
+ * @param {Object} object Collection of test documents, keyed by name
+ * @return {ve.dm.Document} Document
  * @throws {Error} Example data not found
  */
 ve.dm.example.createExampleDocumentFromObject = function ( name, store, object ) {
-	var doc, i;
 	name = name || 'data';
-	store = store || new ve.dm.IndexValueStore();
-	if ( object[name] === undefined ) {
+	if ( object[ name ] === undefined ) {
 		throw new Error( 'Example data \'' + name + '\' not found' );
 	}
+	return ve.dm.example.createExampleDocumentFromData( object[ name ], store );
+};
+
+ve.dm.example.createExampleDocumentFromData = function ( data, store ) {
+	var doc, i;
+	store = store || new ve.dm.IndexValueStore();
 	doc = new ve.dm.Document(
-		ve.dm.example.preprocessAnnotations( ve.copy( object[name] ), store )
+		ve.dm.example.preprocessAnnotations( ve.copy( data ), store )
 	);
 	// HACK internalList isn't populated when creating a document from data
-	if ( object[name].internalItems ) {
-		for ( i = 0; i < object[name].internalItems.length; i++ ) {
+	if ( data.internalItems ) {
+		for ( i = 0; i < data.internalItems.length; i++ ) {
 			doc.internalList.queueItemHtml(
-				object[name].internalItems[i].group,
-				object[name].internalItems[i].key,
-				object[name].internalItems[i].body
+				data.internalItems[ i ].group,
+				data.internalItems[ i ].key,
+				data.internalItems[ i ].body
 			);
 		}
 	}
-	if ( object[name].internalListNextUniqueNumber ) {
-		doc.internalList.nextUniqueNumber = object[name].internalListNextUniqueNumber;
+	if ( data.internalListNextUniqueNumber ) {
+		doc.internalList.nextUniqueNumber = data.internalListNextUniqueNumber;
 	}
 	doc.buildNodeTree();
 	return doc;
@@ -143,14 +206,14 @@ ve.dm.example.createExampleDocumentFromObject = function ( name, store, object )
  *
  * @method
  * @param {ve.Node} root Root node to lookup from
- * @param {number...} [paths] Index path
- * @returns {ve.Node} Node at given path
+ * @param {...number} [paths] Index path
+ * @return {ve.Node} Node at given path
  */
 ve.dm.example.lookupNode = function ( root ) {
 	var i,
 		node = root;
 	for ( i = 1; i < arguments.length; i++ ) {
-		node = node.children[arguments[i]];
+		node = node.children[ arguments[ i ] ];
 	}
 	return node;
 };
@@ -159,7 +222,7 @@ ve.dm.example.createDomElement = function ( type, attributes ) {
 	var key,
 		element = document.createElement( type );
 	for ( key in attributes ) {
-		element.setAttribute( key, attributes[key] );
+		element.setAttribute( key, attributes[ key ] );
 	}
 	return element;
 };
@@ -168,7 +231,15 @@ ve.dm.example.testDir = window.VE_TESTDIR || '.';
 
 ve.dm.example.imgSrc = '//upload.wikimedia.org/wikipedia/commons/b/b3/Wikipedia-logo-v2-en.svg';
 
-ve.dm.example.base = 'http://example.org';
+ve.dm.example.baseUri = 'http://example.org';
+
+ve.dm.example.base = ( function () {
+	var doc = ve.createDocumentFromHtml( '' ),
+		node = doc.createElement( 'base' );
+	node.setAttribute( 'href', ve.dm.example.baseUri );
+	doc.head.appendChild( node );
+	return doc;
+}() );
 
 ve.dm.example.fullImgSrc = ve.resolveUrl( ve.dm.example.imgSrc, ve.dm.example.base );
 
@@ -181,23 +252,12 @@ ve.dm.example.image = {
 			alt: 'Example',
 			width: 100,
 			height: 50
-		},
-		htmlAttributes: [
-			{
-				values: {
-					src: ve.dm.example.imgSrc,
-					alt: 'Example',
-					width: '100',
-					height: '50'
-				},
-				computed: { src: ve.dm.example.fullImgSrc }
-			}
-		]
+		}
 	}
 };
 
 ve.dm.example.blockImage = {
-	html: '<figure><img src="' + ve.dm.example.imgSrc + '" alt="Example" width="100" height="50"><figcaption>caption</figcaption></figure>',
+	html: '<figure class="ve-align-right"><img src="' + ve.dm.example.imgSrc + '" alt="Example" width="100" height="50"><figcaption>caption</figcaption></figure>',
 	data: [
 		{
 			type: 'blockImage',
@@ -205,21 +265,11 @@ ve.dm.example.blockImage = {
 				src: ve.dm.example.imgSrc,
 				alt: 'Example',
 				width: 100,
-				height: 50
-			},
-			htmlAttributes: [
-				{
-					values: {},
-					children: [
-						{
-							values: {
-								alt: 'Example'
-							}
-						},
-						{ values: {} }
-					]
-				}
-			]
+				height: 50,
+				originalClasses: 've-align-right',
+				unrecognizedClasses: [],
+				align: 'right'
+			}
 		},
 		{ type: 'imageCaption' },
 		{ type: 'paragraph', internal: { generated: 'wrapper' } },
@@ -296,9 +346,9 @@ ve.dm.example.data = [
 	//  1 - Plain "a"
 	'a',
 	//  2 - Bold "b"
-	['b', [ ve.dm.example.bold ]],
+	[ 'b', [ ve.dm.example.bold ] ],
 	//  3 - Italic "c"
-	['c', [ ve.dm.example.italic ]],
+	[ 'c', [ ve.dm.example.italic ] ],
 	//  4 - End of heading
 	{ type: '/heading' },
 	//  5 - Beginning of table
@@ -421,31 +471,41 @@ ve.dm.example.data = [
 ];
 
 ve.dm.example.alienData = [
-	// 0 - Open alienBlock
-	{ type: 'alienBlock' },
-	// 1 - Close alienBlock
+	// 0
+	{ type: 'alienBlock', originalDomElements: $( '<foobar />' ).toArray() },
 	{ type: '/alienBlock' },
-	// 2 - Open paragraph
+	// 2
 	{ type: 'paragraph' },
-	// 3 - Plain character 'a'
 	'a',
-	// 4 - Open alienInline
-	{ type: 'alienInline' },
-	// 5 - Close alienInline
+	// 4
+	{ type: 'alienInline', originalDomElements: $( '<foobar />' ).toArray() },
 	{ type: '/alienInline' },
-	// 6 - Plain character 'b'
+	// 6
 	'b',
-	// 7 - Close paragraph
 	{ type: '/paragraph' },
-	// 8 - Open alienBlock
-	{ type: 'alienBlock' },
-	// 9 - Close alienBlock
+	// 8
+	{ type: 'alienBlock', originalDomElements: $( '<foobar />' ).toArray() },
 	{ type: '/alienBlock' },
-	// 10 - Beginning of internalList
+	// 10
 	{ type: 'internalList' },
-	// 11 - End of internalList
 	{ type: '/internalList' }
-	// 12 - End of document
+];
+
+ve.dm.example.alienWithEmptyData = [
+	// 0
+	{ type: 'paragraph' },
+	{ type: '/paragraph' },
+	// 2
+	{ type: 'paragraph' },
+	'a',
+	// 4
+	{ type: 'alienInline', originalDomElements: $( '<foobar />' ).toArray() },
+	{ type: '/alienInline' },
+	// 6
+	{ type: '/paragraph' },
+	// 7
+	{ type: 'internalList' },
+	{ type: '/internalList' }
 ];
 
 ve.dm.example.internalData = [
@@ -488,16 +548,12 @@ ve.dm.example.internalData.internalItems = [
 ve.dm.example.withMeta = [
 	{
 		type: 'alienMeta',
-		attributes: {
-			domElements: $( '<!-- No content conversion -->' ).toArray()
-		}
+		originalDomElements: $( '<!-- No content conversion -->' ).toArray()
 	},
 	{ type: '/alienMeta' },
 	{
 		type: 'alienMeta',
-		attributes: {
-			domElements: $( '<meta property="foo" />' ).toArray()
-		}
+		originalDomElements: $( '<meta property="foo" />' ).toArray()
 	},
 	{ type: '/alienMeta' },
 	{ type: 'paragraph' },
@@ -506,9 +562,7 @@ ve.dm.example.withMeta = [
 	'o',
 	{
 		type: 'alienMeta',
-		attributes: {
-			domElements: $( '<link rel="bar" href="baz" />' ).toArray()
-		}
+		originalDomElements: $( '<link rel="bar" href="baz" />' ).toArray()
 	},
 	{ type: '/alienMeta' },
 	'B',
@@ -516,48 +570,36 @@ ve.dm.example.withMeta = [
 	'r',
 	{
 		type: 'alienMeta',
-		attributes: {
-			domElements: $( '<meta property="foo" content="bar" />' ).toArray()
-		}
+		originalDomElements: $( '<meta property="foo" content="bar" />' ).toArray()
 	},
 	{ type: '/alienMeta' },
 	'B',
 	'a',
 	{
 		type: 'alienMeta',
-		attributes: {
-			domElements: $( '<!-- inline -->' ).toArray()
-		}
+		originalDomElements: $( '<!-- inline -->' ).toArray()
 	},
 	{ type: '/alienMeta' },
 	'z',
 	{ type: '/paragraph' },
 	{
 		type: 'alienMeta',
-		attributes: {
-			domElements: $( '<meta property="bar" content="baz" />' ).toArray()
-		}
+		originalDomElements: $( '<meta property="bar" content="baz" />' ).toArray()
 	},
 	{ type: '/alienMeta' },
 	{
 		type: 'alienMeta',
-		attributes: {
-			domElements: $( '<!--barbaz-->' ).toArray()
-		}
+		originalDomElements: $( '<!--barbaz-->' ).toArray()
 	},
 	{ type: '/alienMeta' },
 	{
 		type: 'alienMeta',
-		attributes: {
-			domElements: $( '<link rel="foofoo" href="barbar" />' ).toArray()
-		}
+		originalDomElements: $( '<link rel="foofoo" href="barbar" />' ).toArray()
 	},
 	{ type: '/alienMeta' },
 	{
 		type: 'alienMeta',
-		attributes: {
-			domElements: $( '<meta typeof=bazquux" data-foo="foobar" />' ).toArray()
-		}
+		originalDomElements: $( '<meta typeof=bazquux" data-foo="foobar" />' ).toArray()
 	},
 	{ type: '/alienMeta' },
 	{ type: 'internalList' },
@@ -584,15 +626,11 @@ ve.dm.example.withMetaMetaData = [
 	[
 		{
 			type: 'alienMeta',
-			attributes: {
-				domElements: $( '<!-- No content conversion -->' ).toArray()
-			}
+			originalDomElements: $( '<!-- No content conversion -->' ).toArray()
 		},
 		{
 			type: 'alienMeta',
-			attributes: {
-				domElements: $( '<meta property="foo" />' ).toArray()
-			}
+			originalDomElements: $( '<meta property="foo" />' ).toArray()
 		}
 	],
 	undefined,
@@ -601,9 +639,7 @@ ve.dm.example.withMetaMetaData = [
 	[
 		{
 			type: 'alienMeta',
-			attributes: {
-				domElements: $( '<link rel="bar" href="baz" />' ).toArray()
-			}
+			originalDomElements: $( '<link rel="bar" href="baz" />' ).toArray()
 		}
 	],
 	undefined,
@@ -611,45 +647,33 @@ ve.dm.example.withMetaMetaData = [
 	[
 		{
 			type: 'alienMeta',
-			attributes: {
-				domElements: $( '<meta property="foo" content="bar" />' ).toArray()
-			}
+			originalDomElements: $( '<meta property="foo" content="bar" />' ).toArray()
 		}
 	],
 	undefined,
 	[
 		{
 			type: 'alienMeta',
-			attributes: {
-				domElements: $( '<!-- inline -->' ).toArray()
-			}
+			originalDomElements: $( '<!-- inline -->' ).toArray()
 		}
 	],
 	undefined,
 	[
 		{
 			type: 'alienMeta',
-			attributes: {
-				domElements: $( '<meta property="bar" content="baz" />' ).toArray()
-			}
+			originalDomElements: $( '<meta property="bar" content="baz" />' ).toArray()
 		},
 		{
 			type: 'alienMeta',
-			attributes: {
-				domElements: $( '<!--barbaz-->' ).toArray()
-			}
+			originalDomElements: $( '<!--barbaz-->' ).toArray()
 		},
 		{
 			type: 'alienMeta',
-			attributes: {
-				domElements: $( '<link rel="foofoo" href="barbar" />' ).toArray()
-			}
+			originalDomElements: $( '<link rel="foofoo" href="barbar" />' ).toArray()
 		},
 		{
 			type: 'alienMeta',
-			attributes: {
-				domElements: $( '<meta typeof=bazquux" data-foo="foobar" />' ).toArray()
-			}
+			originalDomElements: $( '<meta typeof=bazquux" data-foo="foobar" />' ).toArray()
 		}
 	],
 	undefined,
@@ -660,119 +684,313 @@ ve.dm.example.listWithMeta = [
 	//  0 - Beginning of list
 	{
 		type: 'alienMeta',
-		attributes: {
-			domElements: $( '<meta property="one" />' ).toArray()
-		}
+		originalDomElements: $( '<meta property="one" />' ).toArray()
 	},
 	{ type: '/alienMeta' },
 	{ type: 'list' },
 	//  1 - Beginning of first list item
 	{
 		type: 'alienMeta',
-		attributes: {
-			domElements: $( '<meta property="two" />' ).toArray()
-		}
+		originalDomElements: $( '<meta property="two" />' ).toArray()
 	},
 	{ type: '/alienMeta' },
-	{ type: 'listItem', attributes: { styles: ['bullet'] } },
+	{ type: 'listItem', attributes: { styles: [ 'bullet' ] } },
 	//  2 - Beginning of paragraph
 	{
 		type: 'alienMeta',
-		attributes: {
-			domElements: $( '<meta property="three" />' ).toArray()
-		}
+		originalDomElements: $( '<meta property="three" />' ).toArray()
 	},
 	{ type: '/alienMeta' },
 	{ type: 'paragraph' },
 	//  3 - Plain "a"
 	{
 		type: 'alienMeta',
-		attributes: {
-			domElements: $( '<meta property="four" />' ).toArray()
-		}
+		originalDomElements: $( '<meta property="four" />' ).toArray()
 	},
 	{ type: '/alienMeta' },
 	'a',
 	//  4 - End of paragraph
 	{
 		type: 'alienMeta',
-		attributes: {
-			domElements: $( '<meta property="five" />' ).toArray()
-		}
+		originalDomElements: $( '<meta property="five" />' ).toArray()
 	},
 	{ type: '/alienMeta' },
 	{ type: '/paragraph' },
 	//  5 - End of first list item
 	{
 		type: 'alienMeta',
-		attributes: {
-			domElements: $( '<meta property="six" />' ).toArray()
-		}
+		originalDomElements: $( '<meta property="six" />' ).toArray()
 	},
 	{ type: '/alienMeta' },
 	{ type: '/listItem' },
 	//  6 - Beginning of second list item
 	{
 		type: 'alienMeta',
-		attributes: {
-			domElements: $( '<meta property="seven" />' ).toArray()
-		}
+		originalDomElements: $( '<meta property="seven" />' ).toArray()
 	},
 	{ type: '/alienMeta' },
-	{ type: 'listItem', attributes: { styles: ['bullet'] } },
+	{ type: 'listItem', attributes: { styles: [ 'bullet' ] } },
 	//  7 - Beginning of paragraph
 	{
 		type: 'alienMeta',
-		attributes: {
-			domElements: $( '<meta property="eight" />' ).toArray()
-		}
+		originalDomElements: $( '<meta property="eight" />' ).toArray()
 	},
 	{ type: '/alienMeta' },
 	{ type: 'paragraph' },
 	//  8 - Plain "b"
 	{
 		type: 'alienMeta',
-		attributes: {
-			domElements: $( '<meta property="nine" />' ).toArray()
-		}
+		originalDomElements: $( '<meta property="nine" />' ).toArray()
 	},
 	{ type: '/alienMeta' },
 	'b',
 	//  9 - End of paragraph
 	{
 		type: 'alienMeta',
-		attributes: {
-			domElements: $( '<meta property="ten" />' ).toArray()
-		}
+		originalDomElements: $( '<meta property="ten" />' ).toArray()
 	},
 	{ type: '/alienMeta' },
 	{ type: '/paragraph' },
 	// 10 - End of second list item
 	{
 		type: 'alienMeta',
-		attributes: {
-			domElements: $( '<meta property="eleven" />' ).toArray()
-		}
+		originalDomElements: $( '<meta property="eleven" />' ).toArray()
 	},
 	{ type: '/alienMeta' },
 	{ type: '/listItem' },
 	// 11 - End of list
 	{
 		type: 'alienMeta',
-		attributes: {
-			domElements: $( '<meta property="twelve" />' ).toArray()
-		}
+		originalDomElements: $( '<meta property="twelve" />' ).toArray()
 	},
 	{ type: '/alienMeta' },
 	{ type: '/list' },
 	// 12 - Trailing metadata
 	{
 		type: 'alienMeta',
-		attributes: {
-			domElements: $( '<meta property="thirteen" />' ).toArray()
-		}
+		originalDomElements: $( '<meta property="thirteen" />' ).toArray()
 	},
 	{ type: '/alienMeta' }
+];
+
+ve.dm.example.mergedCellsHtml =
+'<table>' +
+		'<tr>' +
+			'<td>1</td><td>2</td><td>3</td><td rowspan="3">4</td><td>5</td><td>6</td>' +
+		'</tr>' +
+		'<tr>' +
+			'<td>7</td><td colspan="2">8</td><td rowspan="4">9</td><td>10</td>' +
+		'</tr>' +
+		'<tr>' +
+			'<td>11</td><td>12</td><td>13</td><td>14</td>' +
+		'</tr>' +
+		'<tr>' +
+			'<td>15</td><td rowspan="3" colspan="3">16</td><td>17</td>' +
+		'</tr>' +
+		'<tr>' +
+			'<td>18</td><td>19</td>' +
+		'</tr>' +
+		'<tr>' +
+			'<td>20</td><td colspan="2">21</td>' +
+		'</tr>' +
+		'<tr>' +
+			'<td>22</td><td>23</td><td>24</td><td>25</td><td>26</td><td>27</td>' +
+		'</tr>' +
+	'</table>';
+
+ve.dm.example.mergedCells = [
+	{ type: 'table' },
+	{ type: 'tableSection', attributes: { style: 'body' } },
+	{ type: 'tableRow' },
+	{ type: 'tableCell', attributes: { style: 'data' } },
+	{ type: 'paragraph', internal: { generated: 'wrapper' } },
+	'1',
+	{ type: '/paragraph' },
+	{ type: '/tableCell' },
+	{ type: 'tableCell', attributes: { style: 'data' } },
+	{ type: 'paragraph', internal: { generated: 'wrapper' } },
+	'2',
+	{ type: '/paragraph' },
+	{ type: '/tableCell' },
+	{ type: 'tableCell', attributes: { style: 'data' } },
+	{ type: 'paragraph', internal: { generated: 'wrapper' } },
+	'3',
+	{ type: '/paragraph' },
+	{ type: '/tableCell' },
+	{
+		type: 'tableCell',
+		attributes: {
+			style: 'data',
+			originalRowspan: '3',
+			rowspan: 3
+		}
+	},
+	{ type: 'paragraph', internal: { generated: 'wrapper' } },
+	'4',
+	{ type: '/paragraph' },
+	{ type: '/tableCell' },
+	{ type: 'tableCell', attributes: { style: 'data' } },
+	{ type: 'paragraph', internal: { generated: 'wrapper' } },
+	'5',
+	{ type: '/paragraph' },
+	{ type: '/tableCell' },
+	{ type: 'tableCell', attributes: { style: 'data' } },
+	{ type: 'paragraph', internal: { generated: 'wrapper' } },
+	'6',
+	{ type: '/paragraph' },
+	{ type: '/tableCell' },
+	{ type: '/tableRow' },
+	{ type: 'tableRow' },
+	{ type: 'tableCell', attributes: { style: 'data' } },
+	{ type: 'paragraph', internal: { generated: 'wrapper' } },
+	'7',
+	{ type: '/paragraph' },
+	{ type: '/tableCell' },
+	{
+		type: 'tableCell',
+		attributes: {
+			style: 'data',
+			colspan: 2,
+			originalColspan: '2'
+		}
+	},
+	{ type: 'paragraph', internal: { generated: 'wrapper' } },
+	'8',
+	{ type: '/paragraph' },
+	{ type: '/tableCell' },
+	{
+		type: 'tableCell',
+		attributes: {
+			style: 'data',
+			originalRowspan: '4',
+			rowspan: 4
+		}
+	},
+	{ type: 'paragraph', internal: { generated: 'wrapper' } },
+	'9',
+	{ type: '/paragraph' },
+	{ type: '/tableCell' },
+	{ type: 'tableCell', attributes: { style: 'data' } },
+	{ type: 'paragraph', internal: { generated: 'wrapper' } },
+	'1', '0',
+	{ type: '/paragraph' },
+	{ type: '/tableCell' },
+	{ type: '/tableRow' },
+	{ type: 'tableRow' },
+	{ type: 'tableCell', attributes: { style: 'data' } },
+	{ type: 'paragraph', internal: { generated: 'wrapper' } },
+	'1', '1',
+	{ type: '/paragraph' },
+	{ type: '/tableCell' },
+	{ type: 'tableCell', attributes: { style: 'data' } },
+	{ type: 'paragraph', internal: { generated: 'wrapper' } },
+	'1', '2',
+	{ type: '/paragraph' },
+	{ type: '/tableCell' },
+	{ type: 'tableCell', attributes: { style: 'data' } },
+	{ type: 'paragraph', internal: { generated: 'wrapper' } },
+	'1', '3',
+	{ type: '/paragraph' },
+	{ type: '/tableCell' },
+	{ type: 'tableCell', attributes: { style: 'data' } },
+	{ type: 'paragraph', internal: { generated: 'wrapper' } },
+	'1', '4',
+	{ type: '/paragraph' },
+	{ type: '/tableCell' },
+	{ type: '/tableRow' },
+	{ type: 'tableRow' },
+	{ type: 'tableCell', attributes: { style: 'data' } },
+	{ type: 'paragraph', internal: { generated: 'wrapper' } },
+	'1', '5',
+	{ type: '/paragraph' },
+	{ type: '/tableCell' },
+	{
+		type: 'tableCell',
+		attributes: {
+			style: 'data',
+			colspan: 3,
+			originalColspan: '3',
+			originalRowspan: '3',
+			rowspan: 3
+		}
+	},
+	{ type: 'paragraph', internal: { generated: 'wrapper' } },
+	'1', '6',
+	{ type: '/paragraph' },
+	{ type: '/tableCell' },
+	{ type: 'tableCell', attributes: { style: 'data' } },
+	{ type: 'paragraph', internal: { generated: 'wrapper' } },
+	'1', '7',
+	{ type: '/paragraph' },
+	{ type: '/tableCell' },
+	{ type: '/tableRow' },
+	{ type: 'tableRow' },
+	{ type: 'tableCell', attributes: { style: 'data' } },
+	{ type: 'paragraph', internal: { generated: 'wrapper' } },
+	'1', '8',
+	{ type: '/paragraph' },
+	{ type: '/tableCell' },
+	{ type: 'tableCell', attributes: { style: 'data' } },
+	{ type: 'paragraph', internal: { generated: 'wrapper' } },
+	'1', '9',
+	{ type: '/paragraph' },
+	{ type: '/tableCell' },
+	{ type: '/tableRow' },
+	{ type: 'tableRow' },
+	{ type: 'tableCell', attributes: { style: 'data' } },
+	{ type: 'paragraph', internal: { generated: 'wrapper' } },
+	'2', '0',
+	{ type: '/paragraph' },
+	{ type: '/tableCell' },
+	{
+		type: 'tableCell',
+		attributes: {
+			style: 'data',
+			colspan: 2,
+			originalColspan: '2'
+		}
+	},
+	{ type: 'paragraph', internal: { generated: 'wrapper' } },
+	'2', '1',
+	{ type: '/paragraph' },
+	{ type: '/tableCell' },
+	{ type: '/tableRow' },
+	{ type: 'tableRow' },
+	{ type: 'tableCell', attributes: { style: 'data' } },
+	{ type: 'paragraph', internal: { generated: 'wrapper' } },
+	'2', '2',
+	{ type: '/paragraph' },
+	{ type: '/tableCell' },
+	{ type: 'tableCell', attributes: { style: 'data' } },
+	{ type: 'paragraph', internal: { generated: 'wrapper' } },
+	'2', '3',
+	{ type: '/paragraph' },
+	{ type: '/tableCell' },
+	{ type: 'tableCell', attributes: { style: 'data' } },
+	{ type: 'paragraph', internal: { generated: 'wrapper' } },
+	'2', '4',
+	{ type: '/paragraph' },
+	{ type: '/tableCell' },
+	{ type: 'tableCell', attributes: { style: 'data' } },
+	{ type: 'paragraph', internal: { generated: 'wrapper' } },
+	'2', '5',
+	{ type: '/paragraph' },
+	{ type: '/tableCell' },
+	{ type: 'tableCell', attributes: { style: 'data' } },
+	{ type: 'paragraph', internal: { generated: 'wrapper' } },
+	'2', '6',
+	{ type: '/paragraph' },
+	{ type: '/tableCell' },
+	{ type: 'tableCell', attributes: { style: 'data' } },
+	{ type: 'paragraph', internal: { generated: 'wrapper' } },
+	'2', '7',
+	{ type: '/paragraph' },
+	{ type: '/tableCell' },
+	{ type: '/tableRow' },
+	{ type: '/tableSection' },
+	{ type: '/table' },
+	{ type: 'internalList' },
+	{ type: '/internalList' }
 ];
 
 ve.dm.example.complexTableHtml = '<table><caption>Foo</caption><thead><tr><th rowspan="">Bar</th></tr></thead>' +
@@ -870,7 +1088,7 @@ ve.dm.example.inlineAtEdges = [
 	// 3
 	'F', 'o', 'o',
 	// 6
-	{ type: 'alienInline', attributes: { domElements: $( '<foobar />' ).toArray() } },
+	{ type: 'alienInline', originalDomElements: $( '<foobar />' ).toArray() },
 	// 7
 	{ type: '/alienInline' },
 	// 8
@@ -910,37 +1128,37 @@ ve.dm.example.emptyBranch = [
  */
 ve.dm.example.tree = new ve.dm.DocumentNode( [
 	// Heading with "abc"
-	new ve.dm.HeadingNode( ve.dm.example.data[0], [new ve.dm.TextNode( 3 )] ),
-	new ve.dm.TableNode( ve.dm.example.data[5], [
-		new ve.dm.TableSectionNode( ve.dm.example.data[6], [
-			new ve.dm.TableRowNode( ve.dm.example.data[7], [
-				new ve.dm.TableCellNode( ve.dm.example.data[8], [
+	new ve.dm.HeadingNode( ve.dm.example.data[ 0 ], [ new ve.dm.TextNode( 3 ) ] ),
+	new ve.dm.TableNode( ve.dm.example.data[ 5 ], [
+		new ve.dm.TableSectionNode( ve.dm.example.data[ 6 ], [
+			new ve.dm.TableRowNode( ve.dm.example.data[ 7 ], [
+				new ve.dm.TableCellNode( ve.dm.example.data[ 8 ], [
 					// Paragraph with "d"
-					new ve.dm.ParagraphNode( ve.dm.example.data[9], [new ve.dm.TextNode( 1 )] ),
-					new ve.dm.ListNode( ve.dm.example.data[12], [
+					new ve.dm.ParagraphNode( ve.dm.example.data[ 9 ], [ new ve.dm.TextNode( 1 ) ] ),
+					new ve.dm.ListNode( ve.dm.example.data[ 12 ], [
 						// 1st level bullet list item with "e"
-						new ve.dm.ListItemNode( ve.dm.example.data[13], [
+						new ve.dm.ListItemNode( ve.dm.example.data[ 13 ], [
 							new ve.dm.ParagraphNode(
-								ve.dm.example.data[14],
-								[new ve.dm.TextNode( 1 )]
+								ve.dm.example.data[ 14 ],
+								[ new ve.dm.TextNode( 1 ) ]
 							),
-							new ve.dm.ListNode( ve.dm.example.data[17], [
+							new ve.dm.ListNode( ve.dm.example.data[ 17 ], [
 								// 2nd level bullet list item with "f"
-								new ve.dm.ListItemNode( ve.dm.example.data[18], [
+								new ve.dm.ListItemNode( ve.dm.example.data[ 18 ], [
 									new ve.dm.ParagraphNode(
-										ve.dm.example.data[19],
-										[new ve.dm.TextNode( 1 )]
+										ve.dm.example.data[ 19 ],
+										[ new ve.dm.TextNode( 1 ) ]
 									)
 								] )
 							] )
 						] )
 					] ),
-					new ve.dm.ListNode( ve.dm.example.data[26], [
+					new ve.dm.ListNode( ve.dm.example.data[ 26 ], [
 						// Numbered list item with "g"
-						new ve.dm.ListItemNode( ve.dm.example.data[27], [
+						new ve.dm.ListItemNode( ve.dm.example.data[ 27 ], [
 							new ve.dm.ParagraphNode(
-								ve.dm.example.data[28],
-								[new ve.dm.TextNode( 1 )]
+								ve.dm.example.data[ 28 ],
+								[ new ve.dm.TextNode( 1 ) ]
 							)
 						] )
 					] )
@@ -949,114 +1167,25 @@ ve.dm.example.tree = new ve.dm.DocumentNode( [
 		] )
 	] ),
 	// Preformatted with "h[example.png]i"
-	new ve.dm.PreformattedNode( ve.dm.example.data[37], [
+	new ve.dm.PreformattedNode( ve.dm.example.data[ 37 ], [
 		new ve.dm.TextNode( 1 ),
-		new ve.dm.InlineImageNode( ve.dm.example.data[39] ),
+		new ve.dm.InlineImageNode( ve.dm.example.data[ 39 ] ),
 		new ve.dm.TextNode( 1 )
 	] ),
-	new ve.dm.DefinitionListNode( ve.dm.example.data[43], [
+	new ve.dm.DefinitionListNode( ve.dm.example.data[ 43 ], [
 		// Definition list term item with "j"
-		new ve.dm.DefinitionListItemNode( ve.dm.example.data[44], [
-			new ve.dm.ParagraphNode( ve.dm.example.data[45], [new ve.dm.TextNode( 1 )] )
+		new ve.dm.DefinitionListItemNode( ve.dm.example.data[ 44 ], [
+			new ve.dm.ParagraphNode( ve.dm.example.data[ 45 ], [ new ve.dm.TextNode( 1 ) ] )
 		] ),
 		// Definition list definition item with "k"
-		new ve.dm.DefinitionListItemNode( ve.dm.example.data[49], [
-			new ve.dm.ParagraphNode( ve.dm.example.data[50], [new ve.dm.TextNode( 1 )] )
+		new ve.dm.DefinitionListItemNode( ve.dm.example.data[ 49 ], [
+			new ve.dm.ParagraphNode( ve.dm.example.data[ 50 ], [ new ve.dm.TextNode( 1 ) ] )
 		] )
 	] ),
-	new ve.dm.ParagraphNode( ve.dm.example.data[55], [new ve.dm.TextNode( 1 )] ),
-	new ve.dm.ParagraphNode( ve.dm.example.data[58], [new ve.dm.TextNode( 1 )] ),
-	new ve.dm.InternalListNode( ve.dm.example.data[61] )
+	new ve.dm.ParagraphNode( ve.dm.example.data[ 55 ], [ new ve.dm.TextNode( 1 ) ] ),
+	new ve.dm.ParagraphNode( ve.dm.example.data[ 58 ], [ new ve.dm.TextNode( 1 ) ] ),
+	new ve.dm.InternalListNode( ve.dm.example.data[ 61 ] )
 ] );
-
-ve.dm.example.conversions = {
-	'definitionListItem term': {
-		domElement: ve.dm.example.createDomElement( 'dt' ),
-		dataElement: { type: 'definitionListItem', attributes: { style: 'term' } }
-	},
-	'definitionListItem definition': {
-		domElement: ve.dm.example.createDomElement( 'dd' ),
-		dataElement: { type: 'definitionListItem', attributes: { style: 'definition' } }
-	},
-	'definitionList definition': {
-		domElement: ve.dm.example.createDomElement( 'dl' ),
-		dataElement: { type: 'definitionList' }
-	},
-	'heading level 1': {
-		domElement: ve.dm.example.createDomElement( 'h1' ),
-		dataElement: { type: 'heading', attributes: { level: 1 } }
-	},
-	'heading level 2': {
-		domElement: ve.dm.example.createDomElement( 'h2' ),
-		dataElement: { type: 'heading', attributes: { level: 2 } }
-	},
-	'heading level 3': {
-		domElement: ve.dm.example.createDomElement( 'h3' ),
-		dataElement: { type: 'heading', attributes: { level: 3 } }
-	},
-	'heading level 4': {
-		domElement: ve.dm.example.createDomElement( 'h4' ),
-		dataElement: { type: 'heading', attributes: { level: 4 } }
-	},
-	'heading level 5': {
-		domElement: ve.dm.example.createDomElement( 'h5' ),
-		dataElement: { type: 'heading', attributes: { level: 5 } }
-	},
-	'heading level 6': {
-		domElement: ve.dm.example.createDomElement( 'h6' ),
-		dataElement: { type: 'heading', attributes: { level: 6 } }
-	},
-	image: {
-		domElement: ve.dm.example.createDomElement( 'img' ),
-		dataElement: { type: 'inlineImage' }
-	},
-	listItem: {
-		domElement: ve.dm.example.createDomElement( 'li' ),
-		dataElement: { type: 'listItem' }
-	},
-	'list bullet': {
-		domElement: ve.dm.example.createDomElement( 'ul' ),
-		dataElement: { type: 'list', attributes: { style: 'bullet' } }
-	},
-	'list number': {
-		domElement: ve.dm.example.createDomElement( 'ol' ),
-		dataElement: { type: 'list', attributes: { style: 'number' } }
-	},
-	paragraph: {
-		domElement: ve.dm.example.createDomElement( 'p' ),
-		dataElement: { type: 'paragraph' }
-	},
-	preformatted: {
-		domElement: ve.dm.example.createDomElement( 'pre' ),
-		dataElement: { type: 'preformatted' }
-	},
-	tableCell: {
-		domElement: ve.dm.example.createDomElement( 'td' ),
-		dataElement: { type: 'tableCell', attributes: { style: 'data' } }
-	},
-	table: {
-		domElement: ve.dm.example.createDomElement( 'table' ),
-		dataElement: { type: 'table' }
-	},
-	tableRow: {
-		domElement: ve.dm.example.createDomElement( 'tr' ),
-		dataElement: { type: 'tableRow' }
-	},
-	'paragraph with data-mw attribute': {
-		domElement: ve.dm.example.createDomElement( 'p', { 'data-mw': '{"test":1234}' } ),
-		dataElement: {
-			type: 'paragraph',
-			htmlAttributes: [ { values: { 'data-mw': '{"test":1234}' } } ]
-		}
-	},
-	'paragraph with style attribute': {
-		domElement: ve.dm.example.createDomElement( 'p', { style: 'color:blue' } ),
-		dataElement: {
-			type: 'paragraph',
-			htmlAttributes: [ { values: { style: 'color:blue' } } ]
-		}
-	}
-};
 
 ve.dm.example.domToDataCases = {
 	'paragraph with plain text': {
@@ -1075,58 +1204,168 @@ ve.dm.example.domToDataCases = {
 		body: '<p><b>a</b><i>b</i><u>c</u></p>',
 		data: [
 			{ type: 'paragraph' },
-			['a', [ ve.dm.example.bold ]],
-			['b', [ ve.dm.example.italic ]],
-			['c', [ ve.dm.example.underline ]],
-			{ type: '/paragraph' },
-			{ type: 'internalList' },
-			{ type: '/internalList' }
-		]
-	},
-	'equivalent annotations': {
-		body: '<p><code>a</code>b<tt>c</tt>d<code>e</code><tt>f</tt>',
-		data: [
-			{ type: 'paragraph' },
-			['a', [ ve.dm.example.code ]],
-			'b',
-			['c', [ ve.dm.example.tt ]],
-			'd',
-			['e', [ ve.dm.example.code ]],
-			['f', [ ve.dm.example.tt ]],
+			[ 'a', [ ve.dm.example.bold ] ],
+			[ 'b', [ ve.dm.example.italic ] ],
+			[ 'c', [ ve.dm.example.underline ] ],
 			{ type: '/paragraph' },
 			{ type: 'internalList' },
 			{ type: '/internalList' }
 		],
-		normalizedBody: '<p><code>a</code>b<tt>c</tt>d<code>ef</code>'
+		ceHtml: '<p class="ve-ce-branchNode ve-ce-paragraphNode">' +
+			'<b class="ve-ce-textStyleAnnotation ve-ce-boldAnnotation">a</b>' +
+			'<i class="ve-ce-textStyleAnnotation ve-ce-italicAnnotation">b</i>' +
+			'<u class="ve-ce-textStyleAnnotation ve-ce-underlineAnnotation">c</u>' +
+		'</p>'
+	},
+	'annotation from data': {
+		data: [
+			{ type: 'paragraph' },
+			// Annotation without nodeName
+			[ 'a', [ { type: 'textStyle/bold' } ] ],
+			{ type: '/paragraph' },
+			{ type: 'internalList' },
+			{ type: '/internalList' }
+		],
+		fromDataBody: '<p><b>a</b></p>'
+	},
+	'equivalent annotations': {
+		body: '<p><code>a</code>b<tt>c</tt>d<code>e</code><tt>f</tt></p>',
+		data: [
+			{ type: 'paragraph' },
+			[ 'a', [ ve.dm.example.code ] ],
+			'b',
+			[ 'c', [ ve.dm.example.tt ] ],
+			'd',
+			[ 'e', [ ve.dm.example.code ] ],
+			[ 'f', [ ve.dm.example.tt ] ],
+			{ type: '/paragraph' },
+			{ type: 'internalList' },
+			{ type: '/internalList' }
+		],
+		storeLength: 2,
+		fromDataBody: '<p><code>a</code>b<tt>c</tt>d<code>ef</code></p>'
 	},
 	'additive annotations': {
 		body: '<p><big>a<big>b</big>c</big><b>d<b>e</b>f</b></p>',
 		data: [
 			{ type: 'paragraph' },
-			['a', [ ve.dm.example.big ]],
-			['b', [ ve.dm.example.big, ve.dm.example.big ]],
-			['c', [ ve.dm.example.big ]],
-			['d', [ ve.dm.example.bold ]],
-			['e', [ ve.dm.example.bold, ve.dm.example.bold ]],
-			['f', [ ve.dm.example.bold ]],
+			[ 'a', [ ve.dm.example.big ] ],
+			[ 'b', [ ve.dm.example.big, ve.dm.example.big ] ],
+			[ 'c', [ ve.dm.example.big ] ],
+			[ 'd', [ ve.dm.example.bold ] ],
+			[ 'e', [ ve.dm.example.bold, ve.dm.example.bold ] ],
+			[ 'f', [ ve.dm.example.bold ] ],
 			{ type: '/paragraph' },
 			{ type: 'internalList' },
 			{ type: '/internalList' }
-		]
+		],
+		storeLength: 2
 	},
 	'additive annotations overlapping other annotations': {
 		body: '<p><i><big>a<big><b>b</b></big><b>c</b></big></i></p>',
 		data: [
 			{ type: 'paragraph' },
-			['a', [ ve.dm.example.italic, ve.dm.example.big ]],
-			['b', [ ve.dm.example.italic, ve.dm.example.big, ve.dm.example.big, ve.dm.example.bold ]],
-			['c', [ ve.dm.example.italic, ve.dm.example.big, ve.dm.example.bold ]],
+			[ 'a', [ ve.dm.example.italic, ve.dm.example.big ] ],
+			[ 'b', [ ve.dm.example.italic, ve.dm.example.big, ve.dm.example.big, ve.dm.example.bold ] ],
+			[ 'c', [ ve.dm.example.italic, ve.dm.example.big, ve.dm.example.bold ] ],
 			{ type: '/paragraph' },
 			{ type: 'internalList' },
 			{ type: '/internalList' }
-		]
+		],
+		storeLength: 3
 	},
-	'strip leading whitepsace in paragraphs': {
+	'annotations normalised on import': {
+		body: '<p><em>Foo</em><strong>bar</strong></p>',
+		fromClipboard: true,
+		data: [
+			{ type: 'paragraph' },
+			[ 'F', [ ve.dm.example.italic ] ],
+			[ 'o', [ ve.dm.example.italic ] ],
+			[ 'o', [ ve.dm.example.italic ] ],
+			[ 'b', [ ve.dm.example.bold ] ],
+			[ 'a', [ ve.dm.example.bold ] ],
+			[ 'r', [ ve.dm.example.bold ] ],
+			{ type: '/paragraph' },
+			{ type: 'internalList' },
+			{ type: '/internalList' }
+		],
+		normalizedBody: '<p><i>Foo</i><b>bar</b></p>'
+	},
+	'language annotation': {
+		body: '<p>' +
+			'<span lang="en">ten</span>' +
+			'<span lang="fr" dir="ltr">dix</span>' +
+			'<span lang="cy" dir="ltr">deg</span>' +
+			'<span dir="rtl">12</span>' +
+			'<span dir="RtL">34</span>' +
+		'</p>',
+		data: [
+			{ type: 'paragraph' },
+			[ 't', [ ve.dm.example.language( 'en', null ) ] ],
+			[ 'e', [ ve.dm.example.language( 'en', null ) ] ],
+			[ 'n', [ ve.dm.example.language( 'en', null ) ] ],
+			[ 'd', [ ve.dm.example.language( 'fr', 'ltr' ) ] ],
+			[ 'i', [ ve.dm.example.language( 'fr', 'ltr' ) ] ],
+			[ 'x', [ ve.dm.example.language( 'fr', 'ltr' ) ] ],
+			[ 'd', [ ve.dm.example.language( 'cy', 'ltr' ) ] ],
+			[ 'e', [ ve.dm.example.language( 'cy', 'ltr' ) ] ],
+			[ 'g', [ ve.dm.example.language( 'cy', 'ltr' ) ] ],
+			[ '1', [ ve.dm.example.language( null, 'rtl' ) ] ],
+			[ '2', [ ve.dm.example.language( null, 'rtl' ) ] ],
+			[ '3', [ ve.dm.example.language( null, 'RtL' ) ] ],
+			[ '4', [ ve.dm.example.language( null, 'RtL' ) ] ],
+			{ type: '/paragraph' },
+			{ type: 'internalList' },
+			{ type: '/internalList' }
+		],
+		ceHtml: '<p class="ve-ce-branchNode ve-ce-paragraphNode">' +
+			'<span class="ve-ce-languageAnnotation ve-ce-bidi-isolate" lang="en" title="visualeditor-languageannotation-description">ten</span>' +
+			'<span class="ve-ce-languageAnnotation ve-ce-bidi-isolate" lang="fr" dir="ltr" title="visualeditor-languageannotation-description">dix</span>' +
+			'<span class="ve-ce-languageAnnotation ve-ce-bidi-isolate" lang="cy" dir="ltr" title="visualeditor-languageannotation-description">deg</span>' +
+			'<span class="ve-ce-languageAnnotation ve-ce-bidi-isolate" dir="rtl" title="visualeditor-languageannotation-description-with-dir">12</span>' +
+			'<span class="ve-ce-languageAnnotation ve-ce-bidi-isolate" dir="RtL" title="visualeditor-languageannotation-description-with-dir">34</span>' +
+		'</p>'
+	},
+	'other textStyle annotations': {
+		body: '<p>' +
+			'<abbr>a</abbr>' +
+			'<var>b</var>' +
+			'<kbd>c</kbd>' +
+			'<q>d</q>' +
+			'<samp>e</samp>' +
+			'<time>f</time>' +
+			'<dfn>g</dfn>' +
+			'<mark>h</mark>' +
+			'<font>i</font>' +
+		'</p>',
+		data: [
+			{ type: 'paragraph' },
+			[ 'a', [ { type: 'textStyle/abbreviation', attributes: { nodeName: 'abbr' } } ] ],
+			[ 'b', [ { type: 'textStyle/variable', attributes: { nodeName: 'var' } } ] ],
+			[ 'c', [ { type: 'textStyle/userInput', attributes: { nodeName: 'kbd' } } ] ],
+			[ 'd', [ { type: 'textStyle/quotation', attributes: { nodeName: 'q' } } ] ],
+			[ 'e', [ { type: 'textStyle/codeSample', attributes: { nodeName: 'samp' } } ] ],
+			[ 'f', [ { type: 'textStyle/datetime', attributes: { nodeName: 'time' } } ] ],
+			[ 'g', [ { type: 'textStyle/definition', attributes: { nodeName: 'dfn' } } ] ],
+			[ 'h', [ { type: 'textStyle/highlight', attributes: { nodeName: 'mark' } } ] ],
+			[ 'i', [ { type: 'textStyle/font', attributes: { nodeName: 'font' } } ] ],
+			{ type: '/paragraph' },
+			{ type: 'internalList' },
+			{ type: '/internalList' }
+		],
+		ceHtml: '<p class="ve-ce-branchNode ve-ce-paragraphNode">' +
+			'<abbr class="ve-ce-textStyleAnnotation ve-ce-abbreviationAnnotation">a</abbr>' +
+			'<var class="ve-ce-textStyleAnnotation ve-ce-variableAnnotation">b</var>' +
+			'<kbd class="ve-ce-textStyleAnnotation ve-ce-userInputAnnotation">c</kbd>' +
+			'<q class="ve-ce-textStyleAnnotation ve-ce-quotationAnnotation">d</q>' +
+			'<samp class="ve-ce-textStyleAnnotation ve-ce-codeSampleAnnotation">e</samp>' +
+			'<time class="ve-ce-textStyleAnnotation ve-ce-datetimeAnnotation">f</time>' +
+			'<dfn class="ve-ce-textStyleAnnotation ve-ce-definitionAnnotation">g</dfn>' +
+			'<mark class="ve-ce-textStyleAnnotation ve-ce-highlightAnnotation">h</mark>' +
+			'<font class="ve-ce-textStyleAnnotation ve-ce-fontAnnotation">i</font>' +
+		'</p>'
+	},
+	'strip leading whitespace in paragraphs': {
 		data: [
 			{ type: 'paragraph' },
 			' ', 'f', 'o', 'o',
@@ -1154,14 +1393,28 @@ ve.dm.example.domToDataCases = {
 			{ type: '/paragraph' },
 			{ type: 'internalList' },
 			{ type: '/internalList' }
-		]
+		],
+		ceHtml: '<p class="ve-ce-branchNode ve-ce-paragraphNode ve-ce-generated-wrapper">' +
+			ve.dm.example.inlineSlug +
+			'<img class="ve-ce-leafNode ve-ce-focusableNode ve-ce-imageNode ve-ce-inlineImageNode" contenteditable="false" alt="Example"' +
+				' src="//upload.wikimedia.org/wikipedia/commons/b/b3/Wikipedia-logo-v2-en.svg" style="width: 100px; height: 50px;">' +
+			ve.dm.example.inlineSlug +
+			'</p>'
 	},
 	'block image': {
 		body: ve.dm.example.blockImage.html,
 		data: ve.dm.example.blockImage.data.concat( [
 			{ type: 'internalList' },
 			{ type: '/internalList' }
-		] )
+		] ),
+		ceHtml: ve.dm.example.blockSlug +
+			'<figure class="ve-ce-branchNode ve-ce-focusableNode ve-ce-imageNode ve-ce-blockImageNode" contenteditable="false">' +
+				'<img src="//upload.wikimedia.org/wikipedia/commons/b/b3/Wikipedia-logo-v2-en.svg" alt="Example" style="width: 100px; height: 50px;">' +
+				'<figcaption class="ve-ce-branchNode">' +
+					'<p class="ve-ce-branchNode ve-ce-paragraphNode ve-ce-generated-wrapper">caption</p>' +
+				'</figcaption>' +
+			'</figure>' +
+			ve.dm.example.blockSlug
 	},
 	'paragraph with alienInline inside': {
 		body: '<p>a<foobar class="foo">b</foobar>c</p>',
@@ -1170,7 +1423,7 @@ ve.dm.example.domToDataCases = {
 			'a',
 			{
 				type: 'alienInline',
-				attributes: { domElements: $( '<foobar class="foo">b</foobar>' ).toArray() }
+				originalDomElements: $( '<foobar class="foo">b</foobar>' ).toArray()
 			},
 			{ type: '/alienInline' },
 			'c',
@@ -1187,7 +1440,7 @@ ve.dm.example.domToDataCases = {
 			'b',
 			'c',
 			{ type: '/paragraph' },
-			{ type: 'alienBlock', attributes: { domElements: $( '<div rel="ve:Alien">abc</div>' ).toArray() } },
+			{ type: 'alienBlock', originalDomElements: $( '<div rel="ve:Alien">abc</div>' ).toArray() },
 			{ type: '/alienBlock' },
 			{ type: 'paragraph' },
 			'd',
@@ -1206,13 +1459,13 @@ ve.dm.example.domToDataCases = {
 			'a',
 			{
 				type: 'alienInline',
-				attributes: { domElements: $( '<foobar class="foo">b</foobar>' ).toArray() },
+				originalDomElements: $( '<foobar class="foo">b</foobar>' ).toArray(),
 				annotations: [ ve.dm.example.bold ]
 			},
 			{ type: '/alienInline' },
 			{
 				type: 'alienInline',
-				attributes: { domElements: $( '<foobar class="bar">c</foobar>' ).toArray() },
+				originalDomElements: $( '<foobar class="bar">c</foobar>' ).toArray(),
 				annotations: [ ve.dm.example.bold, ve.dm.example.italic ]
 			},
 			{ type: '/alienInline' },
@@ -1221,14 +1474,14 @@ ve.dm.example.domToDataCases = {
 				annotations: [ ve.dm.example.italic ]
 			},
 			{ type: '/break' },
-			['d', [ ve.dm.example.italic ]],
+			[ 'd', [ ve.dm.example.italic ] ],
 			'e',
 			{ type: '/paragraph' },
 			{ type: 'internalList' },
 			{ type: '/internalList' }
 		]
 	},
-	'annotated metadata': {
+	'annotated comments': {
 		body: '<p><b><!--foo-->bar<!--baz--></b></p>',
 		data: [
 			{ type: 'paragraph' },
@@ -1254,43 +1507,71 @@ ve.dm.example.domToDataCases = {
 			{ type: '/paragraph' },
 			{ type: 'internalList' },
 			{ type: '/internalList' }
-		]
+		],
+		clipboardBody: '<p><b><span rel="ve:Comment" data-ve-comment="foo">&nbsp;</span>bar<span rel="ve:Comment" data-ve-comment="baz">&nbsp;</span></b></p>',
+		ceHtml: '<p class="ve-ce-branchNode ve-ce-paragraphNode">' +
+			'<b class="ve-ce-textStyleAnnotation ve-ce-boldAnnotation">' +
+				ve.dm.example.inlineSlug +
+				'<span class="ve-ce-leafNode ve-ce-focusableNode oo-ui-iconElement oo-ui-iconElement-icon oo-ui-icon-notice ve-ce-commentNode" contenteditable="false"> </span>' +
+				'bar' +
+				'<span class="ve-ce-leafNode ve-ce-focusableNode oo-ui-iconElement oo-ui-iconElement-icon oo-ui-icon-notice ve-ce-commentNode" contenteditable="false"> </span>' +
+			'</b>' +
+			ve.dm.example.inlineSlug +
+		'</p>'
 	},
-	'annotated comment metadata in a wrapper': {
-		body: '<b><!--foo-->bar<!--baz-->quux<!--whee--></b>',
+	'annotated metadata': {
+		body: '<p><b><meta />bar<meta /></b></p>',
 		data: [
-			{ type: 'paragraph', internal: { generated: 'wrapper' } },
+			{ type: 'paragraph' },
 			{
-				type: 'comment',
+				type: 'alienMeta',
 				annotations: [ ve.dm.example.bold ],
-				attributes: {
-					text: 'foo'
-				}
+				originalDomElements: $( '<meta />' ).toArray()
 			},
-			{ type: '/comment' },
+			{ type: '/alienMeta' },
 			[ 'b', [ ve.dm.example.bold ] ],
 			[ 'a', [ ve.dm.example.bold ] ],
 			[ 'r', [ ve.dm.example.bold ] ],
 			{
-				type: 'comment',
+				type: 'alienMeta',
 				annotations: [ ve.dm.example.bold ],
-				attributes: {
-					text: 'baz'
-				}
+				originalDomElements: $( '<meta />' ).toArray()
 			},
-			{ type: '/comment' },
+			{ type: '/alienMeta' },
+			{ type: '/paragraph' },
+			{ type: 'internalList' },
+			{ type: '/internalList' }
+		]
+	},
+	'annotated metadata in a wrapper': {
+		body: '<b><meta />bar<meta />quux<meta /></b>',
+		data: [
+			{ type: 'paragraph', internal: { generated: 'wrapper' } },
+			{
+				type: 'alienMeta',
+				annotations: [ ve.dm.example.bold ],
+				originalDomElements: $( '<meta />' ).toArray()
+			},
+			{ type: '/alienMeta' },
+			[ 'b', [ ve.dm.example.bold ] ],
+			[ 'a', [ ve.dm.example.bold ] ],
+			[ 'r', [ ve.dm.example.bold ] ],
+			{
+				type: 'alienMeta',
+				annotations: [ ve.dm.example.bold ],
+				originalDomElements: $( '<meta />' ).toArray()
+			},
+			{ type: '/alienMeta' },
 			[ 'q', [ ve.dm.example.bold ] ],
 			[ 'u', [ ve.dm.example.bold ] ],
 			[ 'u', [ ve.dm.example.bold ] ],
 			[ 'x', [ ve.dm.example.bold ] ],
 			{
-				type: 'comment',
+				type: 'alienMeta',
 				annotations: [ ve.dm.example.bold ],
-				attributes: {
-					text: 'whee'
-				}
+				originalDomElements: $( '<meta />' ).toArray()
 			},
-			{ type: '/comment' },
+			{ type: '/alienMeta' },
 			{ type: '/paragraph' },
 			{ type: 'internalList' },
 			{ type: '/internalList' }
@@ -1303,9 +1584,7 @@ ve.dm.example.domToDataCases = {
 			{
 				type: 'alienMeta',
 				annotations: [ ve.dm.example.bold ],
-				attributes: {
-					domElements: $( '<link />' ).toArray()
-				}
+				originalDomElements: $( '<link />' ).toArray()
 			},
 			{ type: '/alienMeta' },
 			[ 'f', [ ve.dm.example.bold ] ],
@@ -1314,9 +1593,7 @@ ve.dm.example.domToDataCases = {
 			{
 				type: 'alienMeta',
 				annotations: [ ve.dm.example.bold ],
-				attributes: {
-					domElements: $( '<link />' ).toArray()
-				}
+				originalDomElements: $( '<link />' ).toArray()
 			},
 			{ type: '/alienMeta' },
 			{ type: '/paragraph' },
@@ -1324,20 +1601,18 @@ ve.dm.example.domToDataCases = {
 			{ type: '/internalList' }
 		]
 	},
-	'comment metadata in a wrapper followed by annotated text': {
-		body: 'Foo<!--bar--><b>Baz</b>',
+	'metadata in a wrapper followed by annotated text': {
+		body: 'Foo<meta /><b>Baz</b>',
 		data: [
 			{ type: 'paragraph', internal: { generated: 'wrapper' } },
 			'F',
 			'o',
 			'o',
 			{
-				type: 'comment',
-				attributes: {
-					text: 'bar'
-				}
+				type: 'alienMeta',
+				originalDomElements: $( '<meta />' ).toArray()
 			},
-			{ type: '/comment' },
+			{ type: '/alienMeta' },
 			[ 'B', [ ve.dm.example.bold ] ],
 			[ 'a', [ ve.dm.example.bold ] ],
 			[ 'z', [ ve.dm.example.bold ] ],
@@ -1391,7 +1666,7 @@ ve.dm.example.domToDataCases = {
 			'1',
 			{
 				type: 'alienInline',
-				attributes: { domElements: $( '<foobar class="bar">baz</foobar>' ).toArray() }
+				originalDomElements: $( '<foobar class="bar">baz</foobar>' ).toArray()
 			},
 			{ type: '/alienInline' },
 			'2',
@@ -1408,7 +1683,7 @@ ve.dm.example.domToDataCases = {
 			{ type: '/paragraph' },
 			{
 				type: 'alienBlock',
-				attributes: { domElements: $( '<div rel="ve:Alien" class="bar">baz</div>' ).toArray() }
+				originalDomElements: $( '<div rel="ve:Alien" class="bar">baz</div>' ).toArray()
 			},
 			{ type: '/alienBlock' },
 			{ type: 'paragraph', internal: { generated: 'wrapper' } },
@@ -1424,7 +1699,7 @@ ve.dm.example.domToDataCases = {
 			{ type: 'paragraph', internal: { generated: 'wrapper' } },
 			{
 				type: 'alienInline',
-				attributes: { domElements: $( '<foobar class="bar">Foo</foobar>' ).toArray() }
+				originalDomElements: $( '<foobar class="bar">Foo</foobar>' ).toArray()
 			},
 			{ type: '/alienInline' },
 			'B',
@@ -1444,7 +1719,7 @@ ve.dm.example.domToDataCases = {
 			'o',
 			{
 				type: 'alienInline',
-				attributes: { domElements: $( '<foobar class="bar">Bar</foobar>' ).toArray() }
+				originalDomElements: $( '<foobar class="bar">Bar</foobar>' ).toArray()
 			},
 			{ type: '/alienInline' },
 			{ type: '/paragraph' },
@@ -1453,13 +1728,13 @@ ve.dm.example.domToDataCases = {
 		]
 	},
 	'wrapping of bare content with about group': {
-		body: '1<foobar about="#mwt1">foo</foobar><foobar about="#mwt1">bar</foobar>2',
+		body: '1<foobar about="#vet1">foo</foobar><foobar about="#vet1">bar</foobar>2',
 		data: [
 			{ type: 'paragraph', internal: { generated: 'wrapper' } },
 			'1',
 			{
 				type: 'alienInline',
-				attributes: { domElements: $( '<foobar about="#mwt1">foo</foobar><foobar about="#mwt1">bar</foobar>' ).toArray() }
+				originalDomElements: $( '<foobar about="#vet1">foo</foobar><foobar about="#vet1">bar</foobar>' ).toArray()
 			},
 			{ type: '/alienInline' },
 			'2',
@@ -1526,20 +1801,35 @@ ve.dm.example.domToDataCases = {
 		]
 	},
 	'empty document with meta': {
-		body: '<!-- comment -->',
+		body: '<meta />',
 		data: [
 			{
-				type: 'commentMeta',
-				attributes: {
-					text: ' comment '
-				}
+				type: 'alienMeta',
+				originalDomElements: $( '<meta />' ).toArray()
 			},
-			{ type: '/commentMeta' },
+			{ type: '/alienMeta' },
 			{ type: 'paragraph', internal: { generated: 'empty' } },
 			{ type: '/paragraph' },
 			{ type: 'internalList' },
 			{ type: '/internalList' }
 		]
+	},
+	'empty document with comment': {
+		body: '<!-- comment -->',
+		data: [
+			{ type: 'paragraph', internal: { generated: 'wrapper' } },
+			{
+				type: 'comment',
+				attributes: {
+					text: ' comment '
+				}
+			},
+			{ type: '/comment' },
+			{ type: '/paragraph' },
+			{ type: 'internalList' },
+			{ type: '/internalList' }
+		],
+		clipboardBody: '<span rel="ve:Comment" data-ve-comment=" comment ">&nbsp;</span>'
 	},
 	'empty document with content added by the editor': {
 		data: [
@@ -1569,9 +1859,23 @@ ve.dm.example.domToDataCases = {
 		],
 		normalizedBody: '<ul><li><p>Foo</p></li></ul>'
 	},
+	'slug paragraph added between two nodes that had whitespace': {
+		data: [
+			{ type: 'table', internal: { whitespace: [ undefined, undefined, undefined, '\n' ] } },
+			{ type: '/table' },
+			{ type: 'paragraph', internal: { generated: 'slug' } },
+			{ type: '/paragraph' },
+			{ type: 'table', internal: { whitespace: [ '\n' ] } },
+			{ type: '/table' },
+			{ type: 'internalList' },
+			{ type: '/internalList' }
+		],
+		normalizedBody: '<table></table>\n<table></table>'
+	},
 	'example document': {
 		body: ve.dm.example.html,
-		data: ve.dm.example.data
+		data: ve.dm.example.data,
+		storeLength: 2
 	},
 	'empty annotation': {
 		body: '<p>Foo<span id="anchorTarget"></span>Bar</p>',
@@ -1580,9 +1884,7 @@ ve.dm.example.domToDataCases = {
 			'F', 'o', 'o',
 			{
 				type: 'alienMeta',
-				attributes: {
-					domElements: $( '<span id="anchorTarget"></span>' ).toArray()
-				}
+				originalDomElements: $( '<span id="anchorTarget"></span>' ).toArray()
 			},
 			{ type: '/alienMeta' },
 			'B', 'a', 'r',
@@ -1598,9 +1900,7 @@ ve.dm.example.domToDataCases = {
 			'F', 'o', 'o',
 			{
 				type: 'alienMeta',
-				attributes: {
-					domElements: $( '<span id="anchorTarget"></span>' ).toArray()
-				}
+				originalDomElements: $( '<span id="anchorTarget"></span>' ).toArray()
 			},
 			{ type: '/alienMeta' },
 			'B', 'a', 'r',
@@ -1616,9 +1916,7 @@ ve.dm.example.domToDataCases = {
 			'F', 'o', 'o',
 			{
 				type: 'alienMeta',
-				attributes: {
-					domElements: $( '<i><b><u></u></b></i>' ).toArray()
-				}
+				originalDomElements: $( '<i><b><u></u></b></i>' ).toArray()
 			},
 			{ type: '/alienMeta' },
 			'B', 'a', 'r',
@@ -1636,9 +1934,7 @@ ve.dm.example.domToDataCases = {
 			[ 'o', [ ve.dm.example.italic ] ],
 			{
 				type: 'alienMeta',
-				attributes: {
-					domElements: $( '<b></b>' ).toArray()
-				},
+				originalDomElements: $( '<b></b>' ).toArray(),
 				annotations: [ ve.dm.example.italic ]
 			},
 			{ type: '/alienMeta' },
@@ -1664,7 +1960,61 @@ ve.dm.example.domToDataCases = {
 			{ type: '/paragraph' },
 			{ type: 'internalList' },
 			{ type: '/internalList' }
+		],
+		clipboardBody: '<p>Foo<b><span rel="ve:Comment" data-ve-comment=" Bar ">&nbsp;</span></b>Baz</p>'
+	},
+	'empty annotation with metadata': {
+		body: '<p>Foo<b><meta /></b>Baz</p>',
+		data: [
+			{ type: 'paragraph' },
+			'F', 'o', 'o',
+			{
+				type: 'alienMeta',
+				originalDomElements: $( '<b><meta /></b>' ).toArray()
+			},
+			{ type: '/alienMeta' },
+			'B', 'a', 'z',
+			{ type: '/paragraph' },
+			{ type: 'internalList' },
+			{ type: '/internalList' }
 		]
+	},
+	'adjacent identical annotations': {
+		body:
+			'<p><b>Foo</b><b>bar</b><strong>baz</strong></p>' +
+			'<p><a href="quux">Foo</a><a href="quux">bar</a><a href="whee">baz</a></p>',
+		data: [
+			{ type: 'paragraph' },
+			[ 'F', [ ve.dm.example.bold ] ],
+			[ 'o', [ ve.dm.example.bold ] ],
+			[ 'o', [ ve.dm.example.bold ] ],
+			[ 'b', [ ve.dm.example.bold ] ],
+			[ 'a', [ ve.dm.example.bold ] ],
+			[ 'r', [ ve.dm.example.bold ] ],
+			[ 'b', [ ve.dm.example.strong ] ],
+			[ 'a', [ ve.dm.example.strong ] ],
+			[ 'z', [ ve.dm.example.strong ] ],
+			{ type: '/paragraph' },
+			{ type: 'paragraph' },
+			[ 'F', [ ve.dm.example.link( 'quux' ) ] ],
+			[ 'o', [ ve.dm.example.link( 'quux' ) ] ],
+			[ 'o', [ ve.dm.example.link( 'quux' ) ] ],
+			[ 'b', [ ve.dm.example.link( 'quux' ) ] ],
+			[ 'a', [ ve.dm.example.link( 'quux' ) ] ],
+			[ 'r', [ ve.dm.example.link( 'quux' ) ] ],
+			[ 'b', [ ve.dm.example.link( 'whee' ) ] ],
+			[ 'a', [ ve.dm.example.link( 'whee' ) ] ],
+			[ 'z', [ ve.dm.example.link( 'whee' ) ] ],
+			{ type: '/paragraph' },
+			{ type: 'internalList' },
+			{ type: '/internalList' }
+		],
+		normalizedBody:
+			'<p><b>Foobar</b><strong>baz</strong></p>' +
+			'<p><a href="quux">Foobar</a><a href="whee">baz</a></p>',
+		fromDataBody:
+			'<p><b>Foobarbaz</b></p>' +
+			'<p><a href="quux">Foobar</a><a href="whee">baz</a></p>'
 	},
 	'list item with space followed by link': {
 		body: '<ul><li><p> <a href="Foobar">bar</a></p></li></ul>',
@@ -1673,45 +2023,9 @@ ve.dm.example.domToDataCases = {
 			{ type: 'list', attributes: { style: 'bullet' } },
 			{ type: 'listItem' },
 			{ type: 'paragraph', internal: { whitespace: [ undefined, ' ' ] } },
-			[
-				'b',
-				[ {
-					type: 'link',
-					attributes: {
-						href: 'Foobar'
-					},
-					htmlAttributes: [ {
-						values: { href: 'Foobar' },
-						computed: { href: 'http://example.com/Foobar' }
-					} ]
-				} ]
-			],
-			[
-				'a',
-				[ {
-					type: 'link',
-					attributes: {
-						href: 'Foobar'
-					},
-					htmlAttributes: [ {
-						values: { href: 'Foobar' },
-						computed: { href: 'http://example.com/Foobar' }
-					} ]
-				} ]
-			],
-			[
-				'r',
-				[ {
-					type: 'link',
-					attributes: {
-						href: 'Foobar'
-					},
-					htmlAttributes: [ {
-						values: { href: 'Foobar' },
-						computed: { href: 'http://example.com/Foobar' }
-					} ]
-				} ]
-			],
+			[ 'b', [ ve.dm.example.link( 'Foobar' ) ] ],
+			[ 'a', [ ve.dm.example.link( 'Foobar' ) ] ],
+			[ 'r', [ ve.dm.example.link( 'Foobar' ) ] ],
 			{ type: '/paragraph' },
 			{ type: '/listItem' },
 			{ type: '/list' },
@@ -1730,25 +2044,19 @@ ve.dm.example.domToDataCases = {
 			},
 			{
 				type: 'alienInline',
-				attributes: {
-					domElements: $( '<foobar>c</foobar>' ).toArray()
-				}
+				originalDomElements: $( '<foobar>c</foobar>' ).toArray()
 			},
 			{ type: '/alienInline' },
 			' ',
 			{
 				type: 'alienInline',
-				attributes: {
-					domElements: $( '<foobar>d</foobar>' ).toArray()
-				}
+				originalDomElements: $( '<foobar>d</foobar>' ).toArray()
 			},
 			{ type: '/alienInline' },
 			'\n',
 			{
 				type: 'alienInline',
-				attributes: {
-					domElements: $( '<foobar>e</foobar>' ).toArray()
-				}
+				originalDomElements: $( '<foobar>e</foobar>' ).toArray()
 			},
 			{ type: '/alienInline' },
 			{ type: '/paragraph' },
@@ -1821,7 +2129,7 @@ ve.dm.example.domToDataCases = {
 			'z',
 			{ type: '/paragraph' },
 			{ type: '/listItem' },
-			{ type: 'listItem', internal: { whitespace: [ undefined, '  ', '   '] } },
+			{ type: 'listItem', internal: { whitespace: [ undefined, '  ', '   ' ] } },
 			{
 				type: 'paragraph',
 				internal: { whitespace: [ '  ', undefined, undefined, '   ' ], generated: 'wrapper' }
@@ -1855,7 +2163,8 @@ ve.dm.example.domToDataCases = {
 			{ type: '/paragraph' },
 			{ type: 'internalList' },
 			{ type: '/internalList' }
-		]
+		],
+		fromDataBody: '<p>   <i>Foo</i>       </p>'
 	},
 	'outer whitespace preservation in a list with bare text and a wrapper paragraph': {
 		body: '\n<ul>\n\n<li>\n\n\nBa re\n\n\n\n</li>\n\n\n\n\n<li>\t<p>\t\tP\t\t\t</p>\t\t\t\t</li>\t\n</ul>\t\n\t\n',
@@ -1895,7 +2204,7 @@ ve.dm.example.domToDataCases = {
 			{ type: '/paragraph' },
 			{ type: 'list', attributes: { style: 'bullet' }, internal: { whitespace: [ '\n\n\n', '\n\n\n\n', '\t', '\t\t' ] } },
 			{ type: 'listItem', internal: { whitespace: [ '\n\n\n\n', ' ', '    ', '\t' ] } },
-			{ type: 'paragraph', internal: { whitespace: [ ' ', '  ', '   ', '    '] } },
+			{ type: 'paragraph', internal: { whitespace: [ ' ', '  ', '   ', '    ' ] } },
 			'P',
 			{ type: '/paragraph' },
 			{ type: '/listItem' },
@@ -1948,7 +2257,8 @@ ve.dm.example.domToDataCases = {
 			{ type: 'internalList' },
 			{ type: '/internalList' }
 		],
-		innerWhitespace: [ undefined, '   ' ]
+		innerWhitespace: [ undefined, '   ' ],
+		fromDataBody: '<p> A  B       <b>C</b>\t\t\tD\t\t\t</p>\nE\n\nF\n\n\n\n\n\n\n<b>G</b>   H   '
 	},
 	'whitespace preservation with non-edge content whitespace with nested annotations': {
 		body: '<p> A  B   <b>    C\t<i>\t\tD\t\t\t</i>\t\t\t\tE\n</b>\n\nF\n\n\n</p>',
@@ -1985,7 +2295,8 @@ ve.dm.example.domToDataCases = {
 			{ type: '/paragraph' },
 			{ type: 'internalList' },
 			{ type: '/internalList' }
-		]
+		],
+		fromDataBody: '<p> A  B       <b>C\t\t\t<i>D</i>\t\t\t\t\t\t\tE</b>\n\n\nF\n\n\n</p>'
 	},
 	'whitespace preservation with tightly nested annotations': {
 		body: '<p> A  B   <b><i>\t\tC\t\t\t</i></b>\n\nD\n\n\n</p>',
@@ -2010,7 +2321,8 @@ ve.dm.example.domToDataCases = {
 			{ type: '/paragraph' },
 			{ type: 'internalList' },
 			{ type: '/internalList' }
-		]
+		],
+		fromDataBody: '<p> A  B   \t\t<b><i>C</i></b>\t\t\t\n\nD\n\n\n</p>'
 	},
 	'whitespace preservation with nested annotations with whitespace on the left side': {
 		body: '<p> A  B   <b>\n\t<i>\t\tC\t\t\t</i></b>\n\nD\n\n\n</p>',
@@ -2037,7 +2349,8 @@ ve.dm.example.domToDataCases = {
 			{ type: '/paragraph' },
 			{ type: 'internalList' },
 			{ type: '/internalList' }
-		]
+		],
+		fromDataBody: '<p> A  B   \n\t\t\t<b><i>C</i></b>\t\t\t\n\nD\n\n\n</p>'
 	},
 	'whitespace preservation with nested annotations with whitespace on the right side': {
 		body: '<p> A  B   <b><i>\t\tC\t\t\t</i>\n\t</b>\n\nD\n\n\n</p>',
@@ -2064,16 +2377,15 @@ ve.dm.example.domToDataCases = {
 			{ type: '/paragraph' },
 			{ type: 'internalList' },
 			{ type: '/internalList' }
-		]
+		],
+		fromDataBody: '<p> A  B   \t\t<b><i>C</i></b>\t\t\t\n\t\n\nD\n\n\n</p>'
 	},
 	'whitespace preservation with aliens': {
 		body: ' <div rel="ve:Alien">  <br>   </div>    <p>\tFoo\t\t<foobar>\t\t\tBar\t\t\t\t</foobar>\nBaz\n\n<foobar>\n\n\nQuux\n\n\n\n</foobar> \tWhee \n</p>\t\n<div rel="ve:Alien">\n\tYay \t </div> \n ',
 		data: [
 			{
 				type: 'alienBlock',
-				attributes: {
-					domElements: $( '<div rel="ve:Alien">  <br>   </div>' ).toArray()
-				},
+				originalDomElements: $( '<div rel="ve:Alien">  <br>   </div>' ).toArray(),
 				internal: {
 					whitespace: [ ' ', undefined, undefined, '    ' ]
 				}
@@ -2085,7 +2397,7 @@ ve.dm.example.domToDataCases = {
 			'o',
 			'\t',
 			'\t',
-			{ type: 'alienInline', attributes: { domElements: $( '<foobar>\t\t\tBar\t\t\t\t</foobar>' ).toArray() } },
+			{ type: 'alienInline', originalDomElements: $( '<foobar>\t\t\tBar\t\t\t\t</foobar>' ).toArray() },
 			{ type: '/alienInline' },
 			'\n',
 			'B',
@@ -2095,9 +2407,7 @@ ve.dm.example.domToDataCases = {
 			'\n',
 			{
 				type: 'alienInline',
-				attributes: {
-					domElements: $( '<foobar>\n\n\nQuux\n\n\n\n</foobar>' ).toArray()
-				}
+				originalDomElements: $( '<foobar>\n\n\nQuux\n\n\n\n</foobar>' ).toArray()
 			},
 			{ type: '/alienInline' },
 			' ',
@@ -2109,9 +2419,7 @@ ve.dm.example.domToDataCases = {
 			{ type: '/paragraph' },
 			{
 				type: 'alienBlock',
-				attributes: {
-					domElements: $( '<div rel="ve:Alien">\n\tYay \t </div>' ).toArray()
-				},
+				originalDomElements: $( '<div rel="ve:Alien">\n\tYay \t </div>' ).toArray(),
 				internal: {
 					whitespace: [ '\t\n', undefined, undefined, ' \n ' ]
 				}
@@ -2125,7 +2433,7 @@ ve.dm.example.domToDataCases = {
 	'whitespace preservation not triggered inside <pre>': {
 		body: '\n<pre>\n\n\nFoo\n\n\nBar\n\n\n\n</pre>\n\n\n\n\n',
 		data: [
-			{ type: 'preformatted', internal: { whitespace: ['\n', undefined, undefined, '\n\n\n\n\n' ] } },
+			{ type: 'preformatted', internal: { whitespace: [ '\n', undefined, undefined, '\n\n\n\n\n' ] } },
 			'\n',
 			'\n',
 			'F',
@@ -2171,11 +2479,11 @@ ve.dm.example.domToDataCases = {
 			{ type: '/internalList' }
 		]
 	},
-	'whitespace preservation with wrapped text and comments': {
-		body: '<!-- Foo --> <!-- Bar -->\nFoo',
+	'whitespace preservation with wrapped text and metas': {
+		body: '<meta /> <meta />\nFoo',
 		data: [
 			{
-				type: 'commentMeta',
+				type: 'alienMeta',
 				internal: {
 					whitespace: [
 						undefined,
@@ -2184,13 +2492,11 @@ ve.dm.example.domToDataCases = {
 						' '
 					]
 				},
-				attributes: {
-					text: ' Foo '
-				}
+				originalDomElements: $( '<meta />' ).toArray()
 			},
-			{ type: '/commentMeta' },
+			{ type: '/alienMeta' },
 			{
-				type: 'commentMeta',
+				type: 'alienMeta',
 				internal: {
 					whitespace: [
 						' ',
@@ -2199,11 +2505,9 @@ ve.dm.example.domToDataCases = {
 						'\n'
 					]
 				},
-				attributes: {
-					text: ' Bar '
-				}
+				originalDomElements: $( '<meta />' ).toArray()
 			},
-			{ type: '/commentMeta' },
+			{ type: '/alienMeta' },
 			{
 				type: 'paragraph',
 				internal: {
@@ -2220,6 +2524,40 @@ ve.dm.example.domToDataCases = {
 			{ type: 'internalList' },
 			{ type: '/internalList' }
 		]
+	},
+	'whitespace preservation with wrapped text and comments': {
+		body: '<!-- Foo --> <!-- Bar -->\nFoo',
+		data: [
+			{
+				type: 'paragraph',
+				internal: {
+					generated: 'wrapper'
+				}
+			},
+			{
+				type: 'comment',
+				attributes: {
+					text: ' Foo '
+				}
+			},
+			{ type: '/comment' },
+			' ',
+			{
+				type: 'comment',
+				attributes: {
+					text: ' Bar '
+				}
+			},
+			{ type: '/comment' },
+			'\n',
+			'F',
+			'o',
+			'o',
+			{ type: '/paragraph' },
+			{ type: 'internalList' },
+			{ type: '/internalList' }
+		],
+		clipboardBody: '<span rel="ve:Comment" data-ve-comment=" Foo ">&nbsp;</span> <span rel="ve:Comment" data-ve-comment=" Bar ">&nbsp;</span>\nFoo'
 	},
 	'whitespace preservation with comments at end of wrapper paragraph': {
 		body: '<ul><li> bar<!-- baz -->quux </li></ul>',
@@ -2261,6 +2599,47 @@ ve.dm.example.domToDataCases = {
 			{ type: '/list' },
 			{ type: 'internalList' },
 			{ type: '/internalList' }
+		],
+		clipboardBody: '<ul><li> bar<span rel="ve:Comment" data-ve-comment=" baz ">&nbsp;</span>quux </li></ul>'
+	},
+	'whitespace preservation with metadata and space at end of wrapper paragraph': {
+		body: '<ul><li> bar<meta />quux </li></ul>',
+		data: [
+			{ type: 'list', attributes: { style: 'bullet' } },
+			{
+				type: 'listItem',
+				internal: {
+					whitespace: [
+						undefined,
+						' ',
+						' '
+					]
+				}
+			},
+			{
+				type: 'paragraph',
+				internal: {
+					generated: 'wrapper',
+					whitespace: [
+						' ',
+						undefined,
+						undefined,
+						' '
+					]
+				}
+			},
+			'b', 'a', 'r',
+			{
+				type: 'alienMeta',
+				originalDomElements: $( '<meta />' ).toArray()
+			},
+			{ type: '/alienMeta' },
+			'q', 'u', 'u', 'x',
+			{ type: '/paragraph' },
+			{ type: '/listItem' },
+			{ type: '/list' },
+			{ type: 'internalList' },
+			{ type: '/internalList' }
 		]
 	},
 	'whitespace preservation with meta at end of wrapper paragraph': {
@@ -2290,9 +2669,7 @@ ve.dm.example.domToDataCases = {
 			{ type: '/paragraph' },
 			{
 				type: 'alienMeta',
-				attributes: {
-					domElements: $( '<meta />' ).toArray()
-				},
+				originalDomElements: $( '<meta />' ).toArray(),
 				internal: {
 					whitespace: [
 						undefined,
@@ -2339,9 +2716,7 @@ ve.dm.example.domToDataCases = {
 			{ type: '/paragraph' },
 			{
 				type: 'alienMeta',
-				attributes: {
-					domElements: $( '<meta />' ).toArray()
-				},
+				originalDomElements: $( '<meta />' ).toArray(),
 				internal: {
 					whitespace: [
 						' ',
@@ -2354,9 +2729,7 @@ ve.dm.example.domToDataCases = {
 			{ type: '/alienMeta' },
 			{
 				type: 'alienMeta',
-				attributes: {
-					domElements: $( '<meta />' ).toArray()
-				},
+				originalDomElements: $( '<meta />' ).toArray(),
 				internal: {
 					whitespace: [
 						' ',
@@ -2404,7 +2777,8 @@ ve.dm.example.domToDataCases = {
 			{ type: '/paragraph' },
 			{ type: 'internalList' },
 			{ type: '/internalList' }
-		]
+		],
+		clipboardBody: '<p> <span rel="ve:Comment" data-ve-comment=" foo ">&nbsp;</span>bar<span rel="ve:Comment" data-ve-comment=" baz ">&nbsp;</span> </p>'
 	},
 	'whitespace surrounding metadata in a wrapper': {
 		body: '<b>Foo</b> <meta />\n<i>Bar</i>',
@@ -2416,9 +2790,7 @@ ve.dm.example.domToDataCases = {
 			' ',
 			{
 				type: 'alienMeta',
-				attributes: {
-					domElements: $( '<meta />' ).toArray()
-				}
+				originalDomElements: $( '<meta />' ).toArray()
 			},
 			{ type: '/alienMeta' },
 			'\n',
@@ -2440,17 +2812,13 @@ ve.dm.example.domToDataCases = {
 			' ',
 			{
 				type: 'alienMeta',
-				attributes: {
-					domElements: $( '<meta />' ).toArray()
-				}
+				originalDomElements: $( '<meta />' ).toArray()
 			},
 			{ type: '/alienMeta' },
 			'\n',
 			{
 				type: 'alienInline',
-				attributes: {
-					domElements: $( '<span rel="ve:Alien"></span>' ).toArray()
-				}
+				originalDomElements: $( '<span rel="ve:Alien"></span>' ).toArray()
 			},
 			{ type: '/alienInline' },
 			{ type: '/paragraph' },
@@ -2467,6 +2835,40 @@ ve.dm.example.domToDataCases = {
 			{ type: '/internalList' }
 		]
 	},
+	'whitespace preservation in empty list item': {
+		body: '<ul><li>\n\t</li></ul>',
+		data: [
+			{ type: 'list', attributes: { style: 'bullet' } },
+			{ type: 'listItem', internal: { whitespace: [ undefined, '\n\t' ] } },
+			{ type: 'paragraph', internal: { generated: 'empty', whitespace: [ '\n\t' ] } },
+			{ type: '/paragraph' },
+			{ type: '/listItem' },
+			{ type: '/list' },
+			{ type: 'internalList' },
+			{ type: '/internalList' }
+		]
+	},
+	'whitespace preservation in body with only plain text': {
+		body: '  Hello\n\t',
+		data: [
+			{ type: 'paragraph', internal: { generated: 'wrapper', whitespace: [ '  ', undefined, undefined, '\n\t' ] } },
+			'H', 'e', 'l', 'l', 'o',
+			{ type: '/paragraph' },
+			{ type: 'internalList' },
+			{ type: '/internalList' }
+		],
+		innerWhitespace: [ '  ', '\n\t' ]
+	},
+	'whitespace preservation in empty body': {
+		body: '\n\t',
+		data: [
+			{ type: 'paragraph', internal: { generated: 'empty', whitespace: [ '\n\t' ] } },
+			{ type: '/paragraph' },
+			{ type: 'internalList' },
+			{ type: '/internalList' }
+		],
+		innerWhitespace: [ '\n\t', undefined ]
+	},
 	'mismatching whitespace data is ignored': {
 		data: [
 			{ type: 'list', attributes: { style: 'bullet' }, internal: { whitespace: [ ' ', '  ', '   ', '    ' ] } },
@@ -2478,12 +2880,52 @@ ve.dm.example.domToDataCases = {
 			'B',
 			{ type: '/paragraph' },
 			{ type: '/listItem' },
+			{ type: 'listItem', internal: { whitespace: [ undefined, ' ', '\n' ] } },
+			{ type: 'paragraph', internal: { generated: 'empty' } },
+			{ type: '/paragraph' },
+			{ type: '/listItem' },
 			{ type: '/list' },
 			{ type: 'internalList' },
 			{ type: '/internalList' }
 		],
 		innerWhitespace: [ '\t', '\n' ],
-		normalizedBody: '<ul><li><p>\tA\n</p>  <p>B</p></li></ul>'
+		normalizedBody: '<ul><li><p>\tA\n</p>  <p>B</p></li><li></li></ul>'
+	},
+	'whitespace is trimmed from the edges of annotations when serializing': {
+		body: '<p>A <b> B <i> C\t</i> </b><u>\nD\t</u></p>',
+		data: [
+			{ type: 'paragraph' },
+			'A',
+			' ',
+			[ ' ', [ ve.dm.example.bold ] ],
+			[ 'B', [ ve.dm.example.bold ] ],
+			[ ' ', [ ve.dm.example.bold ] ],
+			[ ' ', [ ve.dm.example.bold, ve.dm.example.italic ] ],
+			[ 'C', [ ve.dm.example.bold, ve.dm.example.italic ] ],
+			[ '\t', [ ve.dm.example.bold, ve.dm.example.italic ] ],
+			[ ' ', [ ve.dm.example.bold ] ],
+			[ '\n', [ ve.dm.example.underline ] ],
+			[ 'D', [ ve.dm.example.underline ] ],
+			[ '\t', [ ve.dm.example.underline ] ],
+			{ type: '/paragraph' },
+			{ type: 'internalList' },
+			{ type: '/internalList' }
+		],
+		fromDataBody: '<p>A  <b>B  <i>C</i></b>\t \n<u>D</u>\t</p>'
+	},
+	'annotation whitespace trimming does not create empty annotations': {
+		body: '<p>A<b> </b> <b>B</b></p>',
+		data: [
+			{ type: 'paragraph' },
+			'A',
+			[ ' ', [ ve.dm.example.bold ] ],
+			' ',
+			[ 'B', [ ve.dm.example.bold ] ],
+			{ type: '/paragraph' },
+			{ type: 'internalList' },
+			{ type: '/internalList' }
+		],
+		fromDataBody: '<p>A  <b>B</b></p>'
 	},
 	'order of nested annotations is preserved': {
 		body: '<p><b><u><i>Foo</i></u></b></p>',
@@ -2525,131 +2967,40 @@ ve.dm.example.domToDataCases = {
 		head: '<base href="http://example.com/Bar/Baz" />',
 		data: [
 			{ type: 'paragraph' },
-			[
-				'F',
-				[
-					{
-						type: 'link',
-						attributes: {
-							href: 'Foo'
-						},
-						htmlAttributes: [ {
-							values: { href: 'Foo' },
-							computed: { href: 'http://example.com/Bar/Foo' }
-						} ]
-					}
-				]
-			],
-			[
-				'o',
-				[
-					{
-						type: 'link',
-						attributes: {
-							href: 'Foo'
-						},
-						htmlAttributes: [ {
-							values: { href: 'Foo' },
-							computed: { href: 'http://example.com/Bar/Foo' }
-						} ]
-					},
-					ve.dm.example.bold
-				]
-			],
-			[
-				'o',
-				[
-					{
-						type: 'link',
-						attributes: {
-							href: 'Foo'
-						},
-						htmlAttributes: [ {
-							values: { href: 'Foo' },
-							computed: { href: 'http://example.com/Bar/Foo' }
-						} ]
-					},
-					ve.dm.example.bold,
-					ve.dm.example.italic
-				]
-			],
-			[
-				'b',
-				[
-					{
-						type: 'link',
-						attributes: {
-							href: 'Foo'
-						},
-						htmlAttributes: [ {
-							values: { href: 'Foo' },
-							computed: { href: 'http://example.com/Bar/Foo' }
-						} ]
-					},
-					ve.dm.example.italic
-				]
-			],
-			[
-				'a',
-				[
-					ve.dm.example.italic
-				]
-			],
-			[
-				'r',
-				[
-					ve.dm.example.italic,
-					ve.dm.example.bold
-				]
-			],
-			[
-				'b',
-				[
-					ve.dm.example.italic
-				]
-			],
-			[
-				'a',
-				[
-					ve.dm.example.italic,
-					ve.dm.example.underline
-				]
-			],
-			[
-				'z',
-				[
-					ve.dm.example.italic
-				]
-			],
+			[ 'F', [ ve.dm.example.link( 'Foo' ) ] ],
+			[ 'o', [ ve.dm.example.link( 'Foo' ), ve.dm.example.bold ] ],
+			[ 'o', [ ve.dm.example.link( 'Foo' ), ve.dm.example.bold, ve.dm.example.italic ] ],
+			[ 'b', [ ve.dm.example.link( 'Foo' ), ve.dm.example.italic ] ],
+			[ 'a', [ ve.dm.example.italic ] ],
+			[ 'r', [ ve.dm.example.italic, ve.dm.example.bold ] ],
+			[ 'b', [ ve.dm.example.italic ] ],
+			[ 'a', [ ve.dm.example.italic, ve.dm.example.underline ] ],
+			[ 'z', [ ve.dm.example.italic ] ],
 			{ type: '/paragraph' },
 			{ type: 'internalList' },
 			{ type: '/internalList' }
 		]
 	},
 	'about grouping': {
-		body: '<div rel="ve:Alien" about="#mwt1">Foo</div>' +
-			'<div rel="ve:Alien" about="#mwt1">Bar</div>' +
-			'<div rel="ve:Alien" about="#mwt2">Baz</div>' +
-			'<foobar about="#mwt2">Quux</foobar>' +
+		body: '<div rel="ve:Alien" about="#vet1">Foo</div>' +
+			'<div rel="ve:Alien" about="#vet1">Bar</div>' +
+			'<div rel="ve:Alien" about="#vet2">Baz</div>' +
+			'<foobar about="#vet2">Quux</foobar>' +
 			'<p>Whee</p>' +
-			'<foobar about="#mwt2">Yay</foobar>' +
-			'<div rel="ve:Alien" about="#mwt2">Blah</div>' +
-			'<foobar about="#mwt3">Meh</foobar>',
+			'<foobar about="#vet2">Yay</foobar>' +
+			'<div rel="ve:Alien" about="#vet2">Blah</div>' +
+			'<foobar about="#vet3">Meh</foobar>',
 		data: [
 			{
 				type: 'alienBlock',
-				attributes: {
-					domElements: $( '<div rel="ve:Alien" about="#mwt1">Foo</div>' +
-						'<div rel="ve:Alien" about="#mwt1">Bar</div>' ).toArray()
-				}
+				originalDomElements: $( '<div rel="ve:Alien" about="#vet1">Foo</div>' +
+						'<div rel="ve:Alien" about="#vet1">Bar</div>' ).toArray()
 			},
 			{ type: '/alienBlock' },
 			{
 				type: 'alienBlock',
-				attributes: {
-					domElements: $( '<div rel="ve:Alien" about="#mwt2">Baz</div>' +
-						'<foobar about="#mwt2">Quux</foobar>' ).toArray()
-				}
+				originalDomElements: $( '<div rel="ve:Alien" about="#vet2">Baz</div>' +
+						'<foobar about="#vet2">Quux</foobar>' ).toArray()
 			},
 			{ type: '/alienBlock' },
 			{ type: 'paragraph' },
@@ -2660,18 +3011,14 @@ ve.dm.example.domToDataCases = {
 			{ type: '/paragraph' },
 			{
 				type: 'alienBlock',
-				attributes: {
-					domElements: $( '<foobar about="#mwt2">Yay</foobar>' +
-						'<div rel="ve:Alien" about="#mwt2">Blah</div>' ).toArray()
-				}
+				originalDomElements: $( '<foobar about="#vet2">Yay</foobar>' +
+						'<div rel="ve:Alien" about="#vet2">Blah</div>' ).toArray()
 			},
 			{ type: '/alienBlock' },
 			{ type: 'paragraph', internal: { generated: 'wrapper' } },
 			{
 				type: 'alienInline',
-				attributes: {
-					domElements: $( '<foobar about="#mwt3">Meh</foobar>' ).toArray()
-				}
+				originalDomElements: $( '<foobar about="#vet3">Meh</foobar>' ).toArray()
 			},
 			{ type: '/alienInline' },
 			{ type: '/paragraph' },
@@ -2680,15 +3027,13 @@ ve.dm.example.domToDataCases = {
 		]
 	},
 	'whitespace preservation with an about group': {
-		body: ' <div rel="ve:Alien" about="#mwt1">\tFoo\t\t</div>\t\t\t' +
-			'<div rel="ve:Alien" about="#mwt1">  Bar   </div>    ',
+		body: ' <div rel="ve:Alien" about="#vet1">\tFoo\t\t</div>\t\t\t' +
+			'<div rel="ve:Alien" about="#vet1">  Bar   </div>    ',
 		data: [
 			{
 				type: 'alienBlock',
-				attributes: {
-					domElements: $( '<div rel="ve:Alien" about="#mwt1">\tFoo\t\t</div>\t\t\t' +
-						'<div rel="ve:Alien" about="#mwt1">  Bar   </div>' ).toArray()
-				},
+				originalDomElements: $( '<div rel="ve:Alien" about="#vet1">\tFoo\t\t</div>\t\t\t' +
+						'<div rel="ve:Alien" about="#vet1">  Bar   </div>' ).toArray(),
 				internal: {
 					whitespace: [ ' ', undefined, undefined, '    ' ]
 				}
@@ -2706,16 +3051,15 @@ ve.dm.example.domToDataCases = {
 			[ '\n', [ ve.dm.example.span ] ],
 			{
 				type: 'alienInline',
-				attributes: {
-					domElements: $( '<p>Bar</p>' ).toArray()
-				},
+				originalDomElements: $( '<p>Bar</p>' ).toArray(),
 				annotations: [ ve.dm.example.span ]
 			},
 			{ type: '/alienInline' },
 			{ type: '/paragraph' },
 			{ type: 'internalList' },
 			{ type: '/internalList' }
-		]
+		],
+		fromDataBody: '\n<span><p>Bar</p></span>'
 	},
 	'block node inside annotation node surrounded by tables': {
 		body: '<table></table><span>\n<p>Bar</p></span><table></table>',
@@ -2726,9 +3070,7 @@ ve.dm.example.domToDataCases = {
 			[ '\n', [ ve.dm.example.span ] ],
 			{
 				type: 'alienInline',
-				attributes: {
-					domElements: $( '<p>Bar</p>' ).toArray()
-				},
+				originalDomElements: $( '<p>Bar</p>' ).toArray(),
 				annotations: [ ve.dm.example.span ]
 			},
 			{ type: '/alienInline' },
@@ -2737,7 +3079,8 @@ ve.dm.example.domToDataCases = {
 			{ type: '/table' },
 			{ type: 'internalList' },
 			{ type: '/internalList' }
-		]
+		],
+		fromDataBody: '<table></table>\n<span><p>Bar</p></span><table></table>'
 	},
 	'block node inside annotation node is alienated and continues wrapping': {
 		body: 'Foo<span>\n<p>Bar</p></span>Baz',
@@ -2749,9 +3092,7 @@ ve.dm.example.domToDataCases = {
 			[ '\n', [ ve.dm.example.span ] ],
 			{
 				type: 'alienInline',
-				attributes: {
-					domElements: $( '<p>Bar</p>' ).toArray()
-				},
+				originalDomElements: $( '<p>Bar</p>' ).toArray(),
 				annotations: [ ve.dm.example.span ]
 			},
 			{ type: '/alienInline' },
@@ -2761,7 +3102,8 @@ ve.dm.example.domToDataCases = {
 			{ type: '/paragraph' },
 			{ type: 'internalList' },
 			{ type: '/internalList' }
-		]
+		],
+		fromDataBody: 'Foo\n<span><p>Bar</p></span>Baz'
 	},
 	'whitespace before meta node in wrapping mode': {
 		body: '<table><tbody><tr><td>Foo\n<meta content="bar" /></td></tr></tbody></table>',
@@ -2788,9 +3130,7 @@ ve.dm.example.domToDataCases = {
 			{
 				type: 'alienMeta',
 				internal: { whitespace: [ '\n' ] },
-				attributes: {
-					domElements: $( '<meta content="bar" />' ).toArray()
-				}
+				originalDomElements: $( '<meta content="bar" />' ).toArray()
 			},
 			{ type: '/alienMeta' },
 			{ type: '/tableCell' },
@@ -2801,25 +3141,67 @@ ve.dm.example.domToDataCases = {
 			{ type: '/internalList' }
 		]
 	},
+	'table with merged cells': {
+		body: ve.dm.example.mergedCellsHtml,
+		data: ve.dm.example.mergedCells
+	},
 	'table with caption, head, foot and body': {
 		body: ve.dm.example.complexTableHtml,
 		data: ve.dm.example.complexTable
 	},
 	'div set to RTL with paragraph inside': {
-		body: '<div style="direction: rtl;"><p>a<b>b</b>c<i>d</i>e</p>',
+		body: '<div style="direction: rtl;"><p>a<b>b</b>c<i>d</i>e</p></div>',
 		data: [
-			{
-				type: 'div',
-				htmlAttributes: [ { values: { style: 'direction: rtl;' } } ]
-			},
+			{ type: 'div' },
 			{ type: 'paragraph' },
 			'a',
-			['b', [ ve.dm.example.bold ]],
+			[ 'b', [ ve.dm.example.bold ] ],
 			'c',
-			['d', [ ve.dm.example.italic ]],
+			[ 'd', [ ve.dm.example.italic ] ],
 			'e',
 			{ type: '/paragraph' },
 			{ type: '/div' },
+			{ type: 'internalList' },
+			{ type: '/internalList' }
+		],
+		fromDataBody: '<div><p>a<b>b</b>c<i>d</i>e</p></div>'
+	},
+	'comment escaping': {
+		body: '<p><!--&#45;Foo-bar-&#45;>b&#38;r&#45;--></p>',
+		data: [
+			{ type: 'paragraph' },
+			{ type: 'comment', attributes: { text: '-Foo-bar-->b&r-' } },
+			{ type: '/comment' },
+			{ type: '/paragraph' },
+			{ type: 'internalList' },
+			{ type: '/internalList' }
+		],
+		clipboardBody: '<p><span rel="ve:Comment" data-ve-comment="-Foo-bar-->b&amp;r-">&nbsp;</span></p>'
+	},
+	'comment escaping is normalized': {
+		body: '<p><!--&gt;Foo-bar--&gt;b&amp;r---></p>',
+		data: [
+			{ type: 'paragraph' },
+			{ type: 'comment', attributes: { text: '>Foo-bar-->b&r-' } },
+			{ type: '/comment' },
+			{ type: '/paragraph' },
+			{ type: 'internalList' },
+			{ type: '/internalList' }
+		],
+		normalizedBody: '<p><!--&#62;Foo-bar-&#45;>b&#38;r&#45;--></p>',
+		clipboardBody: '<p><span rel="ve:Comment" data-ve-comment=">Foo-bar-->b&amp;r-">&nbsp;</span></p>'
+	},
+	'other branch nodes': {
+		body: '<center>Foo</center><blockquote>Bar</blockquote>',
+		data: [
+			{ type: 'center' },
+			{ type: 'paragraph', internal: { generated: 'wrapper' } },
+			'F', 'o', 'o',
+			{ type: '/paragraph' },
+			{ type: '/center' },
+			{ type: 'blockquote' },
+			'B', 'a', 'r',
+			{ type: '/blockquote' },
 			{ type: 'internalList' },
 			{ type: '/internalList' }
 		]
@@ -2993,29 +3375,12 @@ ve.dm.example.isolationData = [
 	// 246
 ];
 
-ve.dm.example.RDFa = [
-	{
-		type: 'paragraph',
-		htmlAttributes: [ {
-			values: {
-				about: 'a',
-				content: 'b',
-				datatype: 'c',
-				property: 'd',
-				rel: 'e',
-				resource: 'f',
-				rev: 'g',
-				typeof: 'h',
-				// Non-RDFa attribute
-				class: 'i'
-			}
-		} ]
-	},
-	'F', 'o', 'o',
-	{ type: '/paragraph' },
-	{ type: 'internalList' },
-	{ type: '/internalList' }
-];
+ve.dm.example.RDFaDoc = ve.dm.converter.getModelFromDom( ve.createDocumentFromHtml(
+	'<p about="a" content="b" datatype="c" property="d" rel="e" resource="f" rev="g" typeof="h" ' +
+	// Non-RDFa attribute
+	'class="i">' +
+	'Foo</p>'
+) );
 
 ve.dm.example.UnboldableNode = function () {
 	// Parent constructor
@@ -3028,15 +3393,15 @@ ve.dm.example.UnboldableNode.static.blacklistedAnnotationTypes = [ 'textStyle/bo
 ve.dm.example.UnboldableNode.static.matchTagNames = [];
 ve.dm.modelRegistry.register( ve.dm.example.UnboldableNode );
 
-ve.dm.example.HandlesOwnChildrenNode = function ( children, element ) {
+ve.dm.example.IgnoreChildrenNode = function ( children, element ) {
 	// Parent constructor
 	ve.dm.BranchNode.call( this, children, element );
 };
-OO.inheritClass( ve.dm.example.HandlesOwnChildrenNode, ve.dm.BranchNode );
-ve.dm.example.HandlesOwnChildrenNode.static.name = 'exampleHandlesOwnChildren';
-ve.dm.example.HandlesOwnChildrenNode.static.handlesOwnChildren = true;
-ve.dm.example.HandlesOwnChildrenNode.static.matchTagNames = [];
-ve.dm.modelRegistry.register( ve.dm.example.HandlesOwnChildrenNode );
+OO.inheritClass( ve.dm.example.IgnoreChildrenNode, ve.dm.BranchNode );
+ve.dm.example.IgnoreChildrenNode.static.name = 'exampleIgnoreChildren';
+ve.dm.example.IgnoreChildrenNode.static.ignoreChildren = true;
+ve.dm.example.IgnoreChildrenNode.static.matchTagNames = [];
+ve.dm.modelRegistry.register( ve.dm.example.IgnoreChildrenNode );
 
 ve.dm.example.annotationData = [
 	{ type: 'paragraph' },
@@ -3051,21 +3416,21 @@ ve.dm.example.annotationData = [
 	'r',
 	{ type: '/paragraph' },
 	// 10
-	{ type: 'exampleHandlesOwnChildren' },
+	{ type: 'exampleIgnoreChildren' },
 	{ type: 'paragraph' },
 	'B',
 	{ type: '/paragraph' },
-	{ type: 'exampleHandlesOwnChildren' },
+	{ type: 'exampleIgnoreChildren' },
 	// 15
 	{ type: 'paragraph' },
 	'a',
 	{ type: '/paragraph' },
-	{ type: '/exampleHandlesOwnChildren' },
+	{ type: '/exampleIgnoreChildren' },
 	{ type: 'paragraph' },
 	// 20
 	'r',
 	{ type: '/paragraph' },
-	{ type: '/exampleHandlesOwnChildren' },
+	{ type: '/exampleIgnoreChildren' },
 	{ type: 'paragraph' },
 	'B',
 	// 25
@@ -3587,6 +3952,6 @@ ve.dm.example.selectNodesCases = [
 				parentOuterRange: new ve.Range( 5, 21 )
 			}
 		],
-		msg: 'range covering handlesOwnChildren node doesn\'t descend'
+		msg: 'range covering ignoreChildren node doesn\'t descend'
 	}
 ];

@@ -1,13 +1,33 @@
 /*!
  * VisualEditor Standalone Initialization styles.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
-.ve-ce-documentNode {
-	font-size: 0.8em;
+figure {
+	display: table;
 }
 
-.oo-ui-menuSelectWidget {
-	font-size: 0.9em;
+figcaption {
+	display: table-caption;
+	caption-side: bottom;
+}
+
+/* @noflip */
+.ve-align-right {
+	float: right;
+	clear: right;
+	margin: 0.5em 0 1em 1em;
+}
+
+/* @noflip */
+.ve-align-left {
+	float: left;
+	clear: left;
+	margin: 0.5em 1em 1em 0;
+}
+
+.ve-align-center {
+	margin: 0.5em auto 1em auto;
+	display: table;
 }

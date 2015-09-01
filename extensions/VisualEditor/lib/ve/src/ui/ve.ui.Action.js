@@ -1,7 +1,7 @@
 /*!
  * VisualEditor UserInterface Action class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 /**
@@ -20,9 +20,11 @@ ve.ui.Action = function VeUiAction( surface ) {
 	this.surface = surface;
 };
 
-/* Static Properties */
+/* Inheritance */
 
-ve.ui.Action.static = {};
+OO.initClass( ve.ui.Action );
+
+/* Static Properties */
 
 /**
  * List of allowed methods for the action.

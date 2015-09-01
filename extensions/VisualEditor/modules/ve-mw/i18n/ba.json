@@ -15,6 +15,7 @@
 	"visualeditor-beta-label": "бета",
 	"visualeditor-beta-warning": "Күҙләгес мөхәррир 'beta' хәләндә. Һеҙ программаны тәьмин итеүҙә ҡыйынлыҡтар тояһығыҙ, һәм текстың айырым өлөштәрен мөхәррирләй алмайһығыҙ.Викитесҡа күсеү өсөн \"{{int:visualeditor-ca-editsource}}\" төймәһенә баҫығыҙ – һаҡланмаған үҙгәрештәр юғаласаҡ.",
 	"visualeditor-browserwarning": "Һеҙ Күҙләгес мөхәррирҙе рәсми танымаған браузерҙа ҡулланаһығыҙ.",
+	"visualeditor-ca-createlocaldescriptionsource": "Локалль тасурилама сығанағын өҫтәргә",
 	"visualeditor-ca-createsource": "Сығанаҡ код булдырырға",
 	"visualeditor-ca-editsource": "Сығанаҡ кодты үҙгәртергә",
 	"visualeditor-ca-editsource-section": "Cығанаҡ кодты үҙгәртергә",
@@ -72,9 +73,6 @@
 	"visualeditor-formatdropdown-format-mw-heading4": "2-се кимәл бүлек башлығы",
 	"visualeditor-formatdropdown-format-mw-heading5": "3-сө кимәл бүлек башлығы",
 	"visualeditor-formatdropdown-format-mw-heading6": "4-се кимәл бүлек башлығы",
-	"visualeditor-linkinspector-suggest-external-link": "Тышҡы һылтанма",
-	"visualeditor-linkinspector-suggest-matching-page": "Ярашлы биттәр",
-	"visualeditor-linkinspector-suggest-new-page": "Яңы бит",
 	"visualeditor-loadwarning": "Мәғлүмәт алыу ваҡытында хата: $1. Ҡабаттан ҡарарға теләйһегеҙме?",
 	"visualeditor-loadwarning-token": "Серверҙан токенды тейәү хатаһы: $1. Ҡабатлап ҡарарғамы?",
 	"visualeditor-mainnamespacepagelink": "Project:Төп исемдәр арауығы",
@@ -111,7 +109,5 @@
 	"visualeditor-usernamespacepagelink": "Project:Шәхси исемдәр арауығы",
 	"visualeditor-viewpage-savewarning": "Һеҙ ысынлап та үҙгәртеүҙәрҙе һаҡламайынса ҡарау режимына ҡайтырға теләйһегеҙме?",
 	"visualeditor-wikitext-warning": "Һеҙ ҡулланған Күҙләгес мөхәррир - [[{{MediaWiki:visualeditor-wikitext-warning-link}}|wikitext]] бында эшләмәй. Викитекст режимында мөхәррирләү өсөн \"{{MediaWiki:visualeditor-ca-editsource}}\" төймәһенә баҫығыҙ – һаҡланмаған үҙгәртеүҙәр юғаласаҡ.",
-	"visualeditor-wikitext-warning-link": "Help:Вики тамғалар",
-	"visualeditor-wikitext-warning-title": "Тамғаланған Викияҙма табылған",
-	"visualeditor-dialog-media-insert-title": "Медиа өҫтәү"
+	"visualeditor-wikitext-warning-title": "Тамғаланған Викияҙма табылған"
 }

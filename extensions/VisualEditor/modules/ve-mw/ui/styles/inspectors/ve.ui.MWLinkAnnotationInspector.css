@@ -1,0 +1,10 @@
+/*!
+ * VisualEditor MediaWiki UserInterface MWLinkAnnotationInspector styles.
+ *
+ * @copyright 2011-2015 VisualEditor Team and others; see AUTHORS.txt
+ * @license The MIT License (MIT); see LICENSE.txt
+ */
+
+.ve-ui-mwLinkAnnotationInspector-linkTypeSelect {
+	margin: -0.75em -0.75em 0.75em -0.75em;
+}

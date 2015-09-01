@@ -1,7 +1,7 @@
 /*!
  * VisualEditor DataModel MWTemplateModel class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2015 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -57,15 +57,15 @@ OO.inheritClass( ve.dm.MWTemplateModel, ve.dm.MWTransclusionPartModel );
  *
  * @param {ve.dm.MWTransclusionModel} transclusion Transclusion template is in
  * @param {Object} data Template data
- * @returns {ve.dm.MWTemplateModel} New template model
+ * @return {ve.dm.MWTemplateModel} New template model
  */
 ve.dm.MWTemplateModel.newFromData = function ( transclusion, data ) {
 	var key,
-		template = new ve.dm.WikiaTemplateModel( transclusion, data.target, 'data' );
+		template = new ve.dm.MWTemplateModel( transclusion, data.target );
 
 	for ( key in data.params ) {
 		template.addParameter(
-			new ve.dm.MWParameterModel( template, key, data.params[key].wt, 'data' )
+			new ve.dm.MWParameterModel( template, key, data.params[ key ].wt )
 		);
 	}
 
@@ -82,7 +82,7 @@ ve.dm.MWTemplateModel.newFromData = function ( transclusion, data ) {
  *
  * @param {ve.dm.MWTransclusionModel} transclusion Transclusion template is in
  * @param {string|mw.Title} name Template name
- * @returns {ve.dm.MWTemplateModel|null} New template model
+ * @return {ve.dm.MWTemplateModel|null} New template model
  */
 ve.dm.MWTemplateModel.newFromName = function ( transclusion, name ) {
 	var href, title,
@@ -95,7 +95,7 @@ ve.dm.MWTemplateModel.newFromName = function ( transclusion, name ) {
 	}
 	if ( title !== null ) {
 		href = title.getPrefixedText();
-		return new ve.dm.WikiaTemplateModel( transclusion, { href: href, wt: name }, 'user' );
+		return new ve.dm.MWTemplateModel( transclusion, { href: href, wt: name } );
 	}
 
 	return null;
@@ -106,7 +106,7 @@ ve.dm.MWTemplateModel.newFromName = function ( transclusion, name ) {
 /**
  * Get template target.
  *
- * @returns {Object} Template target
+ * @return {Object} Template target
  */
 ve.dm.MWTemplateModel.prototype.getTarget = function () {
 	return this.target;
@@ -115,7 +115,7 @@ ve.dm.MWTemplateModel.prototype.getTarget = function () {
 /**
  * Get template title.
  *
- * @returns {string|null} Template title, if available
+ * @return {string|null} Template title, if available
  */
 ve.dm.MWTemplateModel.prototype.getTitle = function () {
 	return this.title;
@@ -124,7 +124,7 @@ ve.dm.MWTemplateModel.prototype.getTitle = function () {
 /**
  * Get template specification.
  *
- * @returns {ve.dm.MWTemplateSpecModel} Template specification
+ * @return {ve.dm.MWTemplateSpecModel} Template specification
  */
 ve.dm.MWTemplateModel.prototype.getSpec = function () {
 	return this.spec;
@@ -133,7 +133,7 @@ ve.dm.MWTemplateModel.prototype.getSpec = function () {
 /**
  * Get all params.
  *
- * @returns {Object.<string,ve.dm.MWParameterModel>} Parameters keyed by name
+ * @return {Object.<string,ve.dm.MWParameterModel>} Parameters keyed by name
  */
 ve.dm.MWTemplateModel.prototype.getParameters = function () {
 	return this.params;
@@ -143,23 +143,23 @@ ve.dm.MWTemplateModel.prototype.getParameters = function () {
  * Get a parameter.
  *
  * @param {string} name Parameter name
- * @returns {ve.dm.MWParameterModel} Parameter
+ * @return {ve.dm.MWParameterModel} Parameter
  */
 ve.dm.MWTemplateModel.prototype.getParameter = function ( name ) {
-	return this.params[name];
+	return this.params[ name ];
 };
 
 /**
  * Check if a parameter exists.
  *
  * @param {string} name Parameter name
- * @returns {boolean} Parameter exists
+ * @return {boolean} Parameter exists
  */
 ve.dm.MWTemplateModel.prototype.hasParameter = function ( name ) {
 	var i, len, primaryName, names;
 
 	// Check if name (which may be an alias) is present in the template
-	if ( this.params[name] ) {
+	if ( this.params[ name ] ) {
 		return true;
 	}
 
@@ -167,13 +167,13 @@ ve.dm.MWTemplateModel.prototype.hasParameter = function ( name ) {
 	if ( this.spec.isParameterKnown( name ) ) {
 		primaryName = this.spec.getParameterName( name );
 		// Check for primary name (may be the same as name)
-		if ( this.params[primaryName] ) {
+		if ( this.params[ primaryName ] ) {
 			return true;
 		}
 		// Check for other aliases (may include name)
 		names = this.spec.getParameterAliases( primaryName );
 		for ( i = 0, len = names.length; i < len; i++ ) {
-			if ( this.params[names[i]] ) {
+			if ( this.params[ names[ i ] ] ) {
 				return true;
 			}
 		}
@@ -188,34 +188,35 @@ ve.dm.MWTemplateModel.prototype.hasParameter = function ( name ) {
  * Numeric names, whether strings or real numbers, are placed at the begining, followed by
  * alphabetically sorted names.
  *
- * @returns {string[]} List of parameter names
+ * @return {string[]} List of parameter names
  */
 ve.dm.MWTemplateModel.prototype.getParameterNames = function () {
 	var i, len, index, paramOrder, paramNames;
 
 	if ( !this.sequence ) {
 		paramOrder = this.spec.getParameterOrder();
-		paramNames = ve.getObjectKeys( this.params );
+		paramNames = Object.keys( this.params );
 
 		this.sequence = [];
 		// Known parameters first
 		for ( i = 0, len = paramOrder.length; i < len; i++ ) {
-			index = paramNames.indexOf( paramOrder[i] );
+			index = paramNames.indexOf( paramOrder[ i ] );
 			if ( index !== -1 ) {
-				this.sequence.push( paramOrder[i] );
+				this.sequence.push( paramOrder[ i ] );
 				paramNames.splice( index, 1 );
 			}
 		}
 		// Unknown parameters in alpha-numeric order second, empty string at the very end
 		paramNames.sort( function ( a, b ) {
+			var aIsNaN = isNaN( a ),
+				bIsNaN = isNaN( b );
+
 			if ( a === '' ) {
 				return 1;
 			}
 			if ( b === '' ) {
 				return -1;
 			}
-			var aIsNaN = isNaN( a ),
-				bIsNaN = isNaN( b );
 			if ( aIsNaN && bIsNaN ) {
 				// Two strings
 				return a < b ? -1 : a === b ? 0 : 1;
@@ -240,14 +241,14 @@ ve.dm.MWTemplateModel.prototype.getParameterNames = function () {
  * Get parameter from its ID.
  *
  * @param {string} id Parameter ID
- * @returns {ve.dm.MWParameterModel|null} Parameter with matching ID, null if no parameters match
+ * @return {ve.dm.MWParameterModel|null} Parameter with matching ID, null if no parameters match
  */
 ve.dm.MWTemplateModel.prototype.getParameterFromId = function ( id ) {
 	var name;
 
 	for ( name in this.params ) {
-		if ( this.params[name].getId() === id ) {
-			return this.params[name];
+		if ( this.params[ name ].getId() === id ) {
+			return this.params[ name ];
 		}
 	}
 
@@ -263,7 +264,7 @@ ve.dm.MWTemplateModel.prototype.getParameterFromId = function ( id ) {
 ve.dm.MWTemplateModel.prototype.addParameter = function ( param ) {
 	var name = param.getName();
 	this.sequence = null;
-	this.params[name] = param;
+	this.params[ name ] = param;
 	this.spec.fill();
 	param.connect( this, { change: [ 'emit', 'change' ] } );
 	this.emit( 'add', param );
@@ -279,7 +280,7 @@ ve.dm.MWTemplateModel.prototype.addParameter = function ( param ) {
 ve.dm.MWTemplateModel.prototype.removeParameter = function ( param ) {
 	if ( param ) {
 		this.sequence = null;
-		delete this.params[param.getName()];
+		delete this.params[ param.getName() ];
 		param.disconnect( this );
 		this.emit( 'remove', param );
 		this.emit( 'change' );
@@ -290,7 +291,7 @@ ve.dm.MWTemplateModel.prototype.removeParameter = function ( param ) {
  * Add all non-existing required and suggested parameters, if any.
  *
  * @method
- * @returns {number} Number of parameters added
+ * @return {number} Number of parameters added
  */
 ve.dm.MWTemplateModel.prototype.addPromptedParameters = function () {
 	var i, len, addedCount = 0,
@@ -299,13 +300,13 @@ ve.dm.MWTemplateModel.prototype.addPromptedParameters = function () {
 
 	for ( i = 0, len = names.length; i < len; i++ ) {
 		if (
-				!this.params[name] &&
+				!this.params[ name ] &&
 				(
-					spec.isParameterRequired( names[i] ) ||
-					spec.isParameterSuggested( names[i] )
+					spec.isParameterRequired( names[ i ] ) ||
+					spec.isParameterSuggested( names[ i ] )
 				)
 			) {
-			this.addParameter( new ve.dm.MWParameterModel( this, names[i] ) );
+			this.addParameter( new ve.dm.MWParameterModel( this, names[ i ] ) );
 			addedCount++;
 		}
 	}
@@ -315,8 +316,6 @@ ve.dm.MWTemplateModel.prototype.addPromptedParameters = function () {
 
 /**
  * Set original data, to be used as a base for serialization.
- *
- * @returns {Object} Template data
  */
 ve.dm.MWTemplateModel.prototype.setOriginalData = function ( data ) {
 	this.originalData = data;
@@ -336,11 +335,11 @@ ve.dm.MWTemplateModel.prototype.serialize = function () {
 		if ( name === '' ) {
 			continue;
 		}
-		origName = params[name].getOriginalName();
-		template.params[origName] = ve.extendObject(
+		origName = params[ name ].getOriginalName();
+		template.params[ origName ] = ve.extendObject(
 			{},
-			origParams[origName],
-			{ wt: params[name].getValue() }
+			origParams[ origName ],
+			{ wt: params[ name ].getValue() }
 		);
 
 	}
@@ -364,7 +363,7 @@ ve.dm.MWTemplateModel.prototype.getWikitext = function () {
 			continue;
 		}
 		wikitext += '|' + param + '=' +
-			ve.dm.MWTransclusionNode.static.escapeParameter( params[param].getValue() );
+			ve.dm.MWTransclusionNode.static.escapeParameter( params[ param ].getValue() );
 	}
 
 	return '{{' + wikitext + '}}';

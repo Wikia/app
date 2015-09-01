@@ -1,7 +1,7 @@
 /*!
  * VisualEditor DataModel MWBlockImageNode class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2015 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -48,23 +48,26 @@ ve.dm.MWBlockImageNode.static.rdfaToType = {
 
 ve.dm.MWBlockImageNode.static.name = 'mwBlockImage';
 
-ve.dm.MWBlockImageNode.static.storeHtmlAttributes = {
-	blacklist: [ 'typeof', 'class', 'src', 'resource', 'width', 'height', 'href', 'rel' ]
+ve.dm.MWBlockImageNode.static.preserveHtmlAttributes = function ( attribute ) {
+	var attributes = [ 'typeof', 'class', 'src', 'resource', 'width', 'height', 'href', 'rel' ];
+	return attributes.indexOf( attribute ) === -1;
 };
 
 ve.dm.MWBlockImageNode.static.handlesOwnChildren = true;
 
-ve.dm.MWBlockImageNode.static.childNodeTypes = [ 'mwImageCaption' ];
+ve.dm.MWBlockImageNode.static.ignoreChildren = true;
 
-ve.dm.MWBlockImageNode.static.captionNodeType = 'mwImageCaption';
+ve.dm.MWBlockImageNode.static.childNodeTypes = [ 'mwImageCaption' ];
 
 ve.dm.MWBlockImageNode.static.matchTagNames = [ 'figure' ];
 
 ve.dm.MWBlockImageNode.static.blacklistedAnnotationTypes = [ 'link' ];
 
 ve.dm.MWBlockImageNode.static.getMatchRdfaTypes = function () {
-	return ve.getObjectKeys( this.rdfaToType );
+	return Object.keys( this.rdfaToType );
 };
+
+ve.dm.MWBlockImageNode.static.allowedRdfaTypes = [ 'mw:Error' ];
 
 ve.dm.MWBlockImageNode.static.classAttributes = {
 	'mw-image-border': { borderImage: true },
@@ -76,34 +79,52 @@ ve.dm.MWBlockImageNode.static.classAttributes = {
 };
 
 ve.dm.MWBlockImageNode.static.toDataElement = function ( domElements, converter ) {
-	var dataElement, newDimensions,
-		$figure = $( domElements[0] ),
-		// images with link='' have a span wrapper instead
-		$imgWrapper = $figure.children( 'a, span' ).eq( 0 ),
-		$img = $imgWrapper.children( 'img' ).eq( 0 ),
-		$caption = $figure.children( 'figcaption' ).eq( 0 ),
-		classAttr = $figure.attr( 'class' ),
-		typeofAttr = $figure.attr( 'typeof' ),
-		attributes = {
-			type: this.rdfaToType[typeofAttr],
-			href: $imgWrapper.attr( 'href' ) || '',
-			src: $img.attr( 'src' ),
-			resource: $img.attr( 'resource' )
-		},
-		width = $img.attr( 'width' ),
-		height = $img.attr( 'height' ),
-		altText = $img.attr( 'alt' );
+	var dataElement, newDimensions, attributes,
+		figure, imgWrapper, img, caption,
+		classAttr, typeofAttrs, errorIndex, width, height, altText;
 
-	if ( altText !== undefined ) {
+	// Workaround for jQuery's .children() being expensive due to
+	// https://github.com/jquery/sizzle/issues/311
+	function findChildren( parent, nodeNames ) {
+		return Array.prototype.filter.call( parent.childNodes, function ( element ) {
+			return nodeNames.indexOf( element.nodeName.toLowerCase() ) !== -1;
+		} );
+	}
+
+	figure = domElements[ 0 ];
+	imgWrapper = findChildren( figure, [ 'a', 'span' ] )[ 0 ] || null;
+	img = imgWrapper && findChildren( imgWrapper, [ 'img' ] )[ 0 ] || null;
+	caption = findChildren( figure, [ 'figcaption' ] )[ 0 ] || null;
+	classAttr = figure.getAttribute( 'class' );
+	typeofAttrs = figure.getAttribute( 'typeof' ).split( ' ' );
+	errorIndex = typeofAttrs.indexOf( 'mw:Error' );
+	width = img && img.getAttribute( 'width' );
+	height = img && img.getAttribute( 'height' );
+	altText = img && img.getAttribute( 'alt' );
+
+	if ( errorIndex !== -1 ) {
+		typeofAttrs.splice( errorIndex, 1 );
+	}
+	attributes = {
+		type: this.rdfaToType[ typeofAttrs[ 0 ] ],
+		href: imgWrapper && imgWrapper.getAttribute( 'href' ) || '',
+		src: img && img.getAttribute( 'src' ),
+		resource: img && img.getAttribute( 'resource' )
+	};
+
+	if ( altText !== null ) {
 		attributes.alt = altText;
+	}
+	if ( errorIndex !== -1 ) {
+		attributes.isError = true;
 	}
 
 	this.setClassAttributes( attributes, classAttr );
 
 	attributes.align = attributes.align || 'default';
 
-	attributes.width = width !== undefined && width !== '' ? Number( width ) : null;
-	attributes.height = height !== undefined && height !== '' ? Number( height ) : null;
+	attributes.width = width !== null && width !== '' ? Number( width ) : null;
+	attributes.height = height !== null && height !== '' ? Number( height ) : null;
 
 	// Default-size
 	if ( attributes.defaultSize ) {
@@ -133,26 +154,25 @@ ve.dm.MWBlockImageNode.static.toDataElement = function ( domElements, converter 
 
 	this.storeGeneratedContents( dataElement, dataElement.attributes.src, converter.getStore() );
 
-	if ( $caption.length === 0 ) {
+	if ( caption ) {
+		return [ dataElement ]
+			.concat( converter.getDataFromDomClean( caption, { type: 'mwImageCaption' } ) )
+			.concat( [ { type: '/' + this.name } ] );
+	} else {
 		return [
 			dataElement,
-			{ type: this.captionNodeType },
-			{ type: '/' + this.captionNodeType },
+			{ type: 'mwImageCaption' },
+			{ type: '/mwImageCaption' },
 			{ type: '/' + this.name }
 		];
-	} else {
-		return [ dataElement ].
-			concat( converter.getDataFromDomClean( $caption[0], { type: this.captionNodeType } ) ).
-			concat( [ { type: '/' + this.name } ] );
 	}
 };
 
-// TODO: Consider using jQuery instead of pure JS.
 // TODO: At this moment node is not resizable but when it will be then adding defaultSize class
 // should be more conditional.
 ve.dm.MWBlockImageNode.static.toDomElements = function ( data, doc, converter ) {
 	var rdfa, width, height,
-		dataElement = data[0],
+		dataElement = data[ 0 ],
 		figure = doc.createElement( 'figure' ),
 		imgWrapper = doc.createElement( dataElement.attributes.href !== '' ? 'a' : 'span' ),
 		img = doc.createElement( 'img' ),
@@ -163,12 +183,12 @@ ve.dm.MWBlockImageNode.static.toDomElements = function ( data, doc, converter ) 
 	if ( !this.typeToRdfa ) {
 		this.typeToRdfa = {};
 		for ( rdfa in this.rdfaToType ) {
-			this.typeToRdfa[this.rdfaToType[rdfa]] = rdfa;
+			this.typeToRdfa[ this.rdfaToType[ rdfa ] ] = rdfa;
 		}
 	}
 
 	// Type
-	figure.setAttribute( 'typeof', this.typeToRdfa[dataElement.attributes.type] );
+	figure.setAttribute( 'typeof', this.typeToRdfa[ dataElement.attributes.type ] );
 
 	if ( classAttr ) {
 		figure.className = classAttr;
@@ -218,13 +238,14 @@ ve.dm.MWBlockImageNode.static.toDomElements = function ( data, doc, converter ) 
  * Get the caption node of the image.
  *
  * @method
- * @returns {ve.dm.MWImageCaptionNode|null} Caption node, if present
+ * @return {ve.dm.MWImageCaptionNode|null} Caption node, if present
  */
 ve.dm.MWBlockImageNode.prototype.getCaptionNode = function () {
-	var node = this.children[0];
+	var node = this.children[ 0 ];
 	return node instanceof ve.dm.MWImageCaptionNode ? node : null;
 };
 
 /* Registration */
 
+ve.dm.modelRegistry.unregister( ve.dm.BlockImageNode );
 ve.dm.modelRegistry.register( ve.dm.MWBlockImageNode );

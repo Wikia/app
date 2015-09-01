@@ -1,11 +1,11 @@
 /*!
  * VisualEditor DataModel Document tests.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2015 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
-QUnit.module( 've.dm.Document' );
+QUnit.module( 've.dm.Document (MW)', ve.test.utils.mwEnvironment );
 
 /* Tests */
 
@@ -21,8 +21,10 @@ QUnit.test( 'getRelativeRange (mwBlockImage / mwInlineImage)', function ( assert
 		tests = [
 			{
 				data: [
-					/* 0 */ ve.copy( ve.dm.mwExample.MWBlockImage.data[0] ),
-					/* 1 */ { type: '/mwBlockImage' }
+					// 0
+					ve.copy( ve.dm.mwExample.MWBlockImage.data[ 0 ] ),
+					// 1
+					{ type: '/mwBlockImage' }
 				],
 				cases: [
 					{
@@ -89,10 +91,14 @@ QUnit.test( 'getRelativeRange (mwBlockImage / mwInlineImage)', function ( assert
 			},
 			{
 				data: [
-					/* 0 */ ve.copy( ve.dm.mwExample.MWBlockImage.data[0] ),
-					/* 1 */ { type: '/mwBlockImage' },
-					/* 2 */ ve.copy( ve.dm.mwExample.MWBlockImage.data[0] ),
-					/* 3 */ { type: '/mwBlockImage' }
+					// 0
+					ve.copy( ve.dm.mwExample.MWBlockImage.data[ 0 ] ),
+					// 1
+					{ type: '/mwBlockImage' },
+					// 2
+					ve.copy( ve.dm.mwExample.MWBlockImage.data[ 0 ] ),
+					// 3
+					{ type: '/mwBlockImage' }
 				],
 				cases: [
 					{
@@ -129,12 +135,18 @@ QUnit.test( 'getRelativeRange (mwBlockImage / mwInlineImage)', function ( assert
 			},
 			{
 				data: [
-					/* 0 */ { type: 'alienBlock' },
-					/* 1 */ { type: '/alienBlock' },
-					/* 2 */ ve.copy( ve.dm.mwExample.MWBlockImage.data[0] ),
-					/* 3 */ { type: '/mwBlockImage' },
-					/* 4 */ { type: 'alienBlock' },
-					/* 5 */ { type: '/alienBlock' }
+					// 0
+					{ type: 'alienBlock' },
+					// 1
+					{ type: '/alienBlock' },
+					// 2
+					ve.copy( ve.dm.mwExample.MWBlockImage.data[ 0 ] ),
+					// 3
+					{ type: '/mwBlockImage' },
+					// 4
+					{ type: 'alienBlock' },
+					// 5
+					{ type: '/alienBlock' }
 				],
 				cases: [
 					{
@@ -183,14 +195,22 @@ QUnit.test( 'getRelativeRange (mwBlockImage / mwInlineImage)', function ( assert
 			},
 			{
 				data: [
-					/* 0 */ { type: 'paragraph' },
-					/* 1 */ { type: 'alienInline' },
-					/* 2 */ { type: '/alienInline' },
-					/* 3 */ ve.copy( ve.dm.mwExample.MWInlineImage.data ),
-					/* 4 */ { type: '/mwInlineImage' },
-					/* 5 */ { type: 'alienInline' },
-					/* 6 */ { type: '/alienInline' },
-					/* 7 */ { type: '/paragraph' }
+					// 0
+					{ type: 'paragraph' },
+					// 1
+					{ type: 'alienInline' },
+					// 2
+					{ type: '/alienInline' },
+					// 3
+					ve.copy( ve.dm.mwExample.MWInlineImage.data ),
+					// 4
+					{ type: '/mwInlineImage' },
+					// 5
+					{ type: 'alienInline' },
+					// 6
+					{ type: '/alienInline' },
+					// 7
+					{ type: '/paragraph' }
 				],
 				cases: [
 					{
@@ -210,25 +230,25 @@ QUnit.test( 'getRelativeRange (mwBlockImage / mwInlineImage)', function ( assert
 		];
 
 	for ( i = 0; i < storeItems.length; i++ ) {
-		for ( j = 0; j < storeItems[i].length; j++ ) {
-			store.index( storeItems[i][j].value, storeItems[i][j].hash );
+		for ( j = 0; j < storeItems[ i ].length; j++ ) {
+			store.index( storeItems[ i ][ j ].value, storeItems[ i ][ j ].hash );
 		}
 	}
 	for ( i = 0; i < tests.length; i++ ) {
-		documentModel = new ve.dm.Document( new ve.dm.ElementLinearData( store, tests[i].data ) );
-		for ( j = 0; j < tests[i].cases.length; j++ ) {
+		documentModel = new ve.dm.Document( new ve.dm.ElementLinearData( store, tests[ i ].data ) );
+		for ( j = 0; j < tests[ i ].cases.length; j++ ) {
 			expectCount++;
 			assert.equalRange(
 				documentModel.getRelativeRange(
-					tests[i].cases[j].given,
-					tests[i].cases[j].direction,
+					tests[ i ].cases[ j ].given,
+					tests[ i ].cases[ j ].direction,
 					'character',
-					tests[i].cases[j].expand
+					tests[ i ].cases[ j ].expand
 				),
-				tests[i].cases[j].expected,
+				tests[ i ].cases[ j ].expected,
 				'Test document ' + i +
-				', range ' + tests[i].cases[j].given.toJSON() +
-				', direction ' + tests[i].cases[j].direction
+				', range ' + tests[ i ].cases[ j ].given.toJSON() +
+				', direction ' + tests[ i ].cases[ j ].direction
 			);
 		}
 	}

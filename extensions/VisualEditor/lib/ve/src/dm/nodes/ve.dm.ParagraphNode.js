@@ -1,14 +1,14 @@
 /*!
  * VisualEditor DataModel ParagraphNode class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 /**
  * DataModel paragraph node.
  *
  * @class
- * @extends ve.dm.BranchNode
+ * @extends ve.dm.ContentBranchNode
  *
  * @constructor
  * @param {Object} [element] Reference to element in linear model
@@ -21,7 +21,7 @@ ve.dm.ParagraphNode = function VeDmParagraphNode() {
 
 /* Inheritance */
 
-OO.inheritClass( ve.dm.ParagraphNode, ve.dm.BranchNode );
+OO.inheritClass( ve.dm.ParagraphNode, ve.dm.ContentBranchNode );
 
 /* Static Properties */
 

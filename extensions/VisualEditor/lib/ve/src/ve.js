@@ -1,7 +1,7 @@
 /*!
  * VisualEditor namespace.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 /**
@@ -9,10 +9,7 @@
  * @class ve
  * @singleton
  */
-window.ve = {
-	// List of instances of ve.ui.Surface
-	instances: []
-};
+window.ve = {};
 
 /**
  * Get the current time, measured in milliseconds since January 1, 1970 (UTC).
@@ -21,7 +18,7 @@ window.ve = {
  * values with microsecond precision that are guaranteed to be monotonic. On all other browsers,
  * it will fall back to using `Date.now`.
  *
- * @returns {number} Current time
+ * @return {number} Current time
  */
 ve.now = ( function () {
 	var perf = window.performance,

@@ -11,9 +11,11 @@
 	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]]",
 	"tag-visualeditor-description": "A szerkesztés a [[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]]ral készült.",
 	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor: Ellenőrizendő]]",
-	"tag-visualeditor-needcheck-description": "A szerkesztés a [[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]]ral készült, és a rendszer észlelte, hogy a wikiszövegben nem kívánt módosítások történhettek.",
+	"tag-visualeditor-needcheck-description": "A szerkesztés a [[{{MediaWiki:visualeditor-descriptionpagelink}}|vizuális szerkesztővel]] készült, és a rendszer észlelte, hogy a wikiszövegben nem kívánt módosítások történhettek.",
+	"tag-visualeditor-switched": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor: Átváltott]]",
+	"tag-visualeditor-switched-description": "A felhasználó a vizuális szerkesztővel kezdett el szerkeszteni, majd átváltott a wikiszöveg-szerkesztőre.",
 	"visualeditor-feedback-link": "Project:VisualEditor/Visszajelzés",
-	"visualeditor-feedback-tool": "Visszajelzés",
+	"visualeditor-feedback-tool": "Visszajelzés erről a szoftverről",
 	"visualeditor-help-label": "Felhasználói útmutató elolvasása",
 	"visualeditor-help-title": "Útmutató a szerkesztő használatához"
 }

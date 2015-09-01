@@ -1,7 +1,7 @@
 /*!
  * VisualEditor UserInterface MobileSurface class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 /**
@@ -17,7 +17,7 @@
  */
 ve.ui.MobileSurface = function VeUiMobileSurface() {
 	// Parent constructor
-	ve.ui.Surface.apply( this, arguments );
+	ve.ui.MobileSurface.super.apply( this, arguments );
 
 	// Properties
 	this.scrollPosition = null;
@@ -36,6 +36,10 @@ ve.ui.MobileSurface = function VeUiMobileSurface() {
 /* Inheritance */
 
 OO.inheritClass( ve.ui.MobileSurface, ve.ui.Surface );
+
+/* Static Properties */
+
+ve.ui.MobileSurface.static.isMobile = true;
 
 /* Methods */
 
@@ -69,14 +73,14 @@ ve.ui.MobileSurface.prototype.onWindowOpening = function ( win, opening ) {
  * @inheritdoc
  */
 ve.ui.MobileSurface.prototype.createContext = function () {
-	return new ve.ui.MobileContext( this, { $: this.$ } );
+	return new ve.ui.MobileContext( this );
 };
 
 /**
  * @inheritdoc
  */
 ve.ui.MobileSurface.prototype.createDialogWindowManager = function () {
-	return new ve.ui.MobileWindowManager( {
+	return new ve.ui.MobileWindowManager( this, {
 		factory: ve.ui.windowFactory,
 		overlay: this.globalOverlay
 	} );
@@ -85,7 +89,7 @@ ve.ui.MobileSurface.prototype.createDialogWindowManager = function () {
 /**
  * Show or hide global overlay.
  *
- * @param {boolean} show If true, show global overlay, otherwise hide it.
+ * @param {boolean} show Show the global overlay.
  */
 ve.ui.MobileSurface.prototype.toggleGlobalOverlay = function ( show ) {
 	var $body = $( 'body' );
@@ -108,6 +112,10 @@ ve.ui.MobileSurface.prototype.toggleGlobalOverlay = function ( show ) {
  * @inheritdoc
  */
 ve.ui.MobileSurface.prototype.destroy = function () {
+	// Disconnect events
+	this.dialogs.disconnect( this );
+	this.context.getInspectors().disconnect( this );
+
 	// Parent method
 	ve.ui.MobileSurface.super.prototype.destroy.call( this );
 

@@ -3,7 +3,8 @@
 		"authors": [
 			"Gazeb",
 			"Gmelfi",
-			"HalanTul"
+			"HalanTul",
+			"Pippinu"
 		]
 	},
 	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]]",
@@ -13,5 +14,5 @@
 	"visualeditor-feedback-link": "Project:VisualEditor/Cummenta",
 	"visualeditor-feedback-tool": "Lassa nu cummentu",
 	"visualeditor-help-label": "Si liggissi la guida utenti",
-	"visualeditor-help-title": "Guida utenti pi l'utilizzu di l'editor"
+	"visualeditor-help-title": "Guida pi' comu s'adòpira l'editor"
 }

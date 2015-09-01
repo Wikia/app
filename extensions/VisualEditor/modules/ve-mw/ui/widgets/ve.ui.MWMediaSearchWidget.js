@@ -1,7 +1,7 @@
 /*!
  * VisualEditor UserInterface MWMediaSearchWidget class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2015 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -25,21 +25,46 @@ ve.ui.MWMediaSearchWidget = function VeUiMWMediaSearchWidget( config ) {
 	OO.ui.SearchWidget.call( this, config );
 
 	// Properties
-	this.sources = {};
-	this.size = config.size || 150;
-	this.queryTimeout = null;
-	this.titles = {};
-	this.queryMediaSourcesCallback = this.queryMediaSources.bind( this );
-	this.promises = [];
+	this.providers = {};
+	this.searchValue = '';
+	this.resourceQueue = new ve.dm.MWMediaResourceQueue( {
+		limit: 20,
+		threshold: 10
+	} );
 
-	this.$noItemsMessage = this.$( '<div>' )
-		.addClass( 've-ui-mwMediaSearchWidget-noresults' )
-		.text( ve.msg( 'visualeditor-dialog-media-noresults' ) )
-		.hide()
-		.appendTo( this.$query );
+	this.queryTimeout = null;
+	this.itemCache = {};
+	this.promises = [];
+	this.lang = config.lang || 'en';
+	this.$panels = config.$panels;
+
+	// Masonry fit properties
+	this.rows = [];
+	this.rowHeight = config.rowHeight || 200;
+	this.queryMediaQueueCallback = this.queryMediaQueue.bind( this );
+	this.layoutQueue = [];
+	this.numItems = 0;
+	this.currentItemCache = [];
+
+	this.resultsSize = {};
+
+	this.selected = null;
+
+	this.noItemsMessage = new OO.ui.LabelWidget( {
+		label: ve.msg( 'visualeditor-dialog-media-noresults' ),
+		classes: [ 've-ui-mwMediaSearchWidget-noresults' ]
+	} );
+	this.noItemsMessage.toggle( false );
 
 	// Events
 	this.$results.on( 'scroll', this.onResultsScroll.bind( this ) );
+	this.$query.append( this.noItemsMessage.$element );
+	this.results.connect( this, {
+		add: 'onResultsAdd',
+		remove: 'onResultsRemove'
+	} );
+
+	this.resizeHandler = ve.debounce( this.afterResultsResize.bind( this ), 500 );
 
 	// Initialization
 	this.$element.addClass( 've-ui-mwMediaSearchWidget' );
@@ -52,33 +77,147 @@ OO.inheritClass( ve.ui.MWMediaSearchWidget, OO.ui.SearchWidget );
 /* Methods */
 
 /**
- * Set the fileRepo sources for the media search
- * @param {Object} sources The sources object
+ * Respond to window resize and check if the result display should
+ * be updated.
  */
-ve.ui.MWMediaSearchWidget.prototype.setSources = function ( sources ) {
-	this.sources = sources;
+ve.ui.MWMediaSearchWidget.prototype.afterResultsResize = function () {
+	var items = this.currentItemCache,
+		value = this.query.getValue();
+
+	if (
+		items.length > 0 &&
+		(
+			this.resultsSize.width !== this.$results.width() ||
+			this.resultsSize.height !== this.$results.height()
+		)
+	) {
+		this.resetRows();
+		this.itemCache = {};
+		this.processQueueResults( items, value );
+		if ( this.results.getItems().length > 0 ) {
+			this.lazyLoadResults();
+		}
+
+		// Cache the size
+		this.resultsSize = {
+			width: this.$results.width(),
+			height: this.$results.height()
+		};
+	}
 };
 
 /**
- * Handle select widget select events.
+ * Teardown the widget; disconnect the window resize event.
+ */
+ve.ui.MWMediaSearchWidget.prototype.teardown = function () {
+	$( window ).off( 'resize', this.resizeHandler );
+};
+
+/**
+ * Setup the widget; activate the resize event.
+ */
+ve.ui.MWMediaSearchWidget.prototype.setup = function () {
+	$( window ).on( 'resize', this.resizeHandler );
+};
+/**
+ * Query all sources for media.
+ *
+ * @method
+ */
+ve.ui.MWMediaSearchWidget.prototype.queryMediaQueue = function () {
+	var search = this,
+		value = this.query.getValue();
+
+	if ( value === '' ) {
+		return;
+	}
+
+	this.query.pushPending();
+	search.noItemsMessage.toggle( false );
+
+	this.resourceQueue.setParams( { gsrsearch: value } );
+	this.resourceQueue.get( 20 )
+		.then( function ( items ) {
+			if ( items.length > 0 ) {
+				search.processQueueResults( items, value );
+				search.currentItemCache = search.currentItemCache.concat( items );
+			}
+
+			search.query.popPending();
+			search.noItemsMessage.toggle( search.results.getItems().length === 0 );
+			if ( search.results.getItems().length > 0 ) {
+				search.lazyLoadResults();
+			}
+
+		} );
+};
+
+/**
+ * Process the media queue giving more items
+ *
+ * @method
+ * @param {Object[]} items Given items by the media queue
+ */
+ve.ui.MWMediaSearchWidget.prototype.processQueueResults = function ( items ) {
+	var i, len, title,
+		resultWidgets = [],
+		inputSearchQuery = this.query.getValue(),
+		queueSearchQuery = this.resourceQueue.getSearchQuery();
+
+	if ( inputSearchQuery === '' || queueSearchQuery !== inputSearchQuery ) {
+		return;
+	}
+
+	for ( i = 0, len = items.length; i < len; i++ ) {
+		title = new mw.Title( items[ i ].title ).getMainText();
+		// Do not insert duplicates
+		if ( !Object.prototype.hasOwnProperty.call( this.itemCache, title ) ) {
+			this.itemCache[ title ] = true;
+			resultWidgets.push(
+				new ve.ui.MWMediaResultWidget( {
+					data: items[ i ],
+					rowHeight: this.rowHeight,
+					maxWidth: this.results.$element.width() / 3,
+					minWidth: 30,
+					rowWidth: this.results.$element.width()
+				} )
+			);
+		}
+	}
+	this.results.addItems( resultWidgets );
+
+};
+
+/**
+ * Handle search value change
  *
  * @param {string} value New value
  */
-ve.ui.MWMediaSearchWidget.prototype.onQueryChange = function () {
-	var i, len;
+ve.ui.MWMediaSearchWidget.prototype.onQueryChange = function ( value ) {
+	var trimmed = $.trim( value );
+
+	if ( trimmed === this.searchValue ) {
+		return;
+	}
+	this.searchValue = trimmed;
 
 	// Parent method
-	OO.ui.SearchWidget.prototype.onQueryChange.call( this );
+	OO.ui.SearchWidget.prototype.onQueryChange.apply( this, arguments );
 
 	// Reset
-	this.titles = {};
-	for ( i = 0, len = this.sources.length; i < len; i++ ) {
-		delete this.sources[i].gsroffset;
-	}
+	this.itemCache = {};
+	this.currentItemCache = [];
+	this.resetRows();
+
+	// Empty the results queue
+	this.layoutQueue = [];
+
+	// Change resource queue query
+	this.resourceQueue.setParams( { gsrsearch: this.searchValue } );
 
 	// Queue
 	clearTimeout( this.queryTimeout );
-	this.queryTimeout = setTimeout( this.queryMediaSourcesCallback, 100 );
+	this.queryTimeout = setTimeout( this.queryMediaQueueCallback, 350 );
 };
 
 /**
@@ -88,165 +227,209 @@ ve.ui.MWMediaSearchWidget.prototype.onQueryChange = function () {
  */
 ve.ui.MWMediaSearchWidget.prototype.onResultsScroll = function () {
 	var position = this.$results.scrollTop() + this.$results.outerHeight(),
-		threshold = this.results.$element.outerHeight() - this.size;
+		threshold = this.results.$element.outerHeight() - this.rowHeight * 3;
+
+	// Check if we need to ask for more results
 	if ( !this.query.isPending() && position > threshold ) {
-		this.queryMediaSources();
+		this.queryMediaQueue();
 	}
+
+	this.lazyLoadResults();
 };
 
 /**
- * Query all sources for media.
- *
- * @method
+ * Lazy-load the images that are visible.
  */
-ve.ui.MWMediaSearchWidget.prototype.queryMediaSources = function () {
-	var i, len, source, request,
-		ajaxOptions = {},
-		value = this.query.getValue();
+ve.ui.MWMediaSearchWidget.prototype.lazyLoadResults = function () {
+	var i, elementTop,
+		items = this.results.getItems(),
+		resultsScrollTop = this.$results.scrollTop(),
+		position = resultsScrollTop + this.$results.outerHeight();
 
-	if ( value === '' ) {
-		return;
-	}
-
-	// HACK: fit four images in the screen
-	// The -45 is here because the way the container is aligned, it
-	// is pushed behind the scrollbar. When we calculate the new size
-	// of the image results, we need to account for a bit thinner than
-	// the actual (partially hidden) width.
-	// Note: This will be fixed in an upcoming rewrite of the image
-	// search results.
-	this.size = ( this.results.$element.innerWidth() - 45 ) / 4;
-
-	// Reset message
-	this.$noItemsMessage.hide();
-
-	// Abort previous promises if they are pending
-	this.resetPromises();
-
-	for ( i = 0, len = this.sources.length; i < len; i++ ) {
-		source = this.sources[i];
-		// If we don't have either 'apiurl' or 'scriptDirUrl'
-		// the source is invalid, and we will skip it
-		if ( source.apiurl || source.scriptDirUrl !== undefined ) {
-			if ( !source.gsroffset ) {
-				source.gsroffset = 0;
-			}
-			if ( source.local ) {
-				ajaxOptions = {
-					url: mw.util.wikiScript( 'api' ),
-					// If the url is local use json
-					dataType: 'json'
-				};
-			} else {
-				ajaxOptions = {
-					// If 'apiurl' is set, use that. Otherwise, build the url
-					// from scriptDirUrl and /api.php suffix
-					url: source.apiurl || ( source.scriptDirUrl + '/api.php' ),
-					// If the url is not the same origin use jsonp
-					dataType: 'jsonp',
-					// JSON-P requests are not cached by default and get a &_=random trail.
-					// While setting cache=true will still bypass cache in most case due to the
-					// callback parameter, at least drop the &_=random trail which triggers
-					// an API warning (invalid parameter).
-					cache: true
-				};
-			}
-			this.query.pushPending();
-			request = ve.init.target.constructor.static.apiRequest( {
-				action: 'query',
-				generator: 'search',
-				gsrsearch: value,
-				gsrnamespace: 6,
-				gsrlimit: 20,
-				gsroffset: source.gsroffset,
-				prop: 'imageinfo',
-				iiprop: 'dimensions|url|mediatype',
-				iiurlheight: this.size
-			}, ajaxOptions )
-				.done( this.onMediaQueryDone.bind( this, source ) );
-			source.value = value;
-			this.promises.push( request );
+	// Lazy-load results
+	for ( i = 0; i < items.length; i++ ) {
+		elementTop = items[ i ].$element.position().top;
+		if ( elementTop <= position && !items[ i ].hasSrc() ) {
+			// Load the image
+			items[ i ].lazyLoad();
 		}
-
-		// When all sources are done, check to see if there are results
-		$.when.apply( $, this.promises ).done( this.onAllMediaQueriesDone.bind( this ) );
 	}
 };
 
 /**
- * Abort all api search query promises
+ * Reset all the rows; destroy the jQuery elements and reset
+ * the rows array.
  */
-ve.ui.MWMediaSearchWidget.prototype.resetPromises = function () {
-	var i;
+ve.ui.MWMediaSearchWidget.prototype.resetRows = function () {
+	var i, len;
 
-	for ( i = 0; i < this.promises.length; i++ ) {
-		this.promises[i].abort();
-		this.query.popPending();
+	for ( i = 0, len = this.rows.length; i < len; i++ ) {
+		this.rows[ i ].$element.remove();
 	}
 
-	// Empty the promise array
-	this.promises = [];
+	this.rows = [];
+	this.itemCache = {};
 };
 
 /**
- * Handle media query response events.
+ * Find an available row at the end. Either we will need to create a new
+ * row or use the last available row if it isn't full.
  *
- * @method
- * @param {Object} source Media query source
+ * @return {number} Row index
  */
-ve.ui.MWMediaSearchWidget.prototype.onAllMediaQueriesDone = function () {
-	this.query.popPending();
+ve.ui.MWMediaSearchWidget.prototype.getAvailableRow = function () {
+	var row;
 
-	if ( this.results.getItems().length === 0 ) {
-		this.$noItemsMessage.show();
+	if ( this.rows.length === 0 ) {
+		row = 0;
 	} else {
-		this.$noItemsMessage.hide();
+		row = this.rows.length - 1;
+	}
+
+	if ( !this.rows[ row ] ) {
+		// Create new row
+		this.rows[ row ] = {
+			isFull: false,
+			width: 0,
+			items: [],
+			$element: $( '<div>' )
+					.addClass( 've-ui-mwMediaResultWidget-row' )
+					.css( {
+						overflow: 'hidden'
+					} )
+					.data( 'row', row )
+					.attr( 'data-full', false )
+		};
+		// Append to results
+		this.results.$element.append( this.rows[ row ].$element );
+	} else if ( this.rows[ row ].isFull ) {
+		row++;
+		// Create new row
+		this.rows[ row ] = {
+			isFull: false,
+			width: 0,
+			items: [],
+			$element: $( '<div>' )
+				.addClass( 've-ui-mwMediaResultWidget-row' )
+				.css( {
+					overflow: 'hidden'
+				} )
+				.data( 'row', row )
+				.attr( 'data-full', false )
+		};
+		// Append to results
+		this.results.$element.append( this.rows[ row ].$element );
+	}
+
+	return row;
+};
+
+/**
+ * Respond to add results event in the results widget.
+ * Override the way SelectWidget and GroupElement append the items
+ * into the group so we can append them in groups of rows.
+ *
+ * @param {ve.ui.MWMediaResultWidget[]} items An array of item elements
+ */
+ve.ui.MWMediaSearchWidget.prototype.onResultsAdd = function ( items ) {
+	var search = this;
+
+	// Add method to a queue; this queue will only run when the widget
+	// is visible
+	this.layoutQueue.push( function () {
+		var i, j, ilen, jlen, itemWidth, row, effectiveWidth,
+			resizeFactor,
+			maxRowWidth = search.results.$element.width() - 15;
+
+		// Go over the added items
+		row = search.getAvailableRow();
+		for ( i = 0, ilen = items.length; i < ilen; i++ ) {
+			itemWidth = items[ i ].$element.outerWidth( true );
+
+			// Add items to row until it is full
+			if ( search.rows[ row ].width + itemWidth >= maxRowWidth ) {
+				// Mark this row as full
+				search.rows[ row ].isFull = true;
+				search.rows[ row ].$element.attr( 'data-full', true );
+
+				// Find the resize factor
+				effectiveWidth = search.rows[ row ].width;
+				resizeFactor = maxRowWidth / effectiveWidth;
+
+				search.rows[ row ].$element.attr( 'data-effectiveWidth', effectiveWidth );
+				search.rows[ row ].$element.attr( 'data-resizeFactor', resizeFactor );
+				search.rows[ row ].$element.attr( 'data-row', row );
+
+				// Resize all images in the row to fit the width
+				for ( j = 0, jlen = search.rows[ row ].items.length; j < jlen; j++ ) {
+					search.rows[ row ].items[ j ].resizeThumb( resizeFactor );
+				}
+
+				// find another row
+				row = search.getAvailableRow();
+			}
+
+			// Add the commulative
+			search.rows[ row ].width += itemWidth;
+
+			// Store reference to the item and to the row
+			search.rows[ row ].items.push( items[ i ] );
+			items[ i ].setRow( row );
+
+			// Append the item
+			search.rows[ row ].$element.append( items[ i ].$element );
+		}
+
+		// If we have less than 4 rows, call for more images
+		if ( search.rows.length < 4 ) {
+			search.queryMediaQueue();
+		}
+	} );
+	this.runLayoutQueue();
+};
+
+/**
+ * Run layout methods from the queue only if the element is visible.
+ */
+ve.ui.MWMediaSearchWidget.prototype.runLayoutQueue = function () {
+	var i, len;
+
+	if ( this.$element.is( ':visible' ) ) {
+		for ( i = 0, len = this.layoutQueue.length; i < len; i++ ) {
+			this.layoutQueue.pop()();
+		}
 	}
 };
 
 /**
- * Handle media query load events.
+ * Respond to removing results event in the results widget.
+ * Clear the relevant rows.
  *
- * @method
- * @param {Object} source Media query source
- * @param {Object} data Media query response
+ * @param {OO.ui.OptionWidget[]} items Removed items
  */
-ve.ui.MWMediaSearchWidget.prototype.onMediaQueryDone = function ( source, data ) {
-	if ( !data.query || !data.query.pages ) {
-		return;
+ve.ui.MWMediaSearchWidget.prototype.onResultsRemove = function ( items ) {
+	if ( items.length > 0 ) {
+		// In the case of the media search widget, if any items are removed
+		// all are removed (new search)
+		this.resetRows();
+		this.currentItemCache = [];
 	}
+};
 
-	var page, title,
-		items = [],
-		pages = data.query.pages,
-		value = this.query.getValue();
+/**
+ * Set language for the search results.
+ *
+ * @param {string} lang Language
+ */
+ve.ui.MWMediaSearchWidget.prototype.setLang = function ( lang ) {
+	this.lang = lang;
+};
 
-	if ( value === '' || value !== source.value ) {
-		return;
-	}
-
-	if ( data['query-continue'] && data['query-continue'].search ) {
-		source.gsroffset = data['query-continue'].search.gsroffset;
-	}
-
-	for ( page in pages ) {
-		// Verify that imageinfo exists
-		// In case it does not, skip the image to avoid errors in
-		// ve.ui.MWMediaResultWidget
-		if ( pages[page].imageinfo && pages[page].imageinfo.length > 0 ) {
-			title = new mw.Title( pages[page].title ).getMainText();
-			if ( !Object.prototype.hasOwnProperty.call( this.titles, title ) ) {
-				this.titles[title] = true;
-				items.push(
-					new ve.ui.MWMediaResultWidget( {
-						$: this.$,
-						data: pages[page],
-						size: this.size
-					} )
-				);
-			}
-		}
-	}
-
-	this.results.addItems( items );
+/**
+ * Get language for the search results.
+ *
+ * @return {string} lang Language
+ */
+ve.ui.MWMediaSearchWidget.prototype.getLang = function () {
+	return this.lang;
 };

@@ -1,7 +1,7 @@
 /*!
  * VisualEditor user interface MWCategoriesPage class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2015 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -15,7 +15,6 @@
  * @param {string} name Unique symbolic name of page
  * @param {Object} [config] Configuration options
  * @cfg {jQuery} [$overlay] Overlay to render dropdowns in
- * @cfg {jQuery} [$popupOverlay] Overlay to render popups in
  */
 ve.ui.MWCategoriesPage = function VeUiMWCategoriesPage( name, config ) {
 	// Configuration initialization
@@ -29,20 +28,18 @@ ve.ui.MWCategoriesPage = function VeUiMWCategoriesPage( name, config ) {
 	this.defaultSortKeyTouched = false;
 	this.fallbackDefaultSortKey = mw.config.get( 'wgTitle' );
 	this.categoriesFieldset = new OO.ui.FieldsetLayout( {
-		$: this.$,
 		label: ve.msg( 'visualeditor-dialog-meta-categories-data-label' ),
 		icon: 'tag'
 	} );
 	this.categoryOptionsFieldset = new OO.ui.FieldsetLayout( {
-		$: this.$,
 		label: ve.msg( 'visualeditor-dialog-meta-categories-options' ),
 		icon: 'settings'
 	} );
 	this.categoryWidget = new ve.ui.MWCategoryWidget( {
-		$: this.$, $overlay: config.$overlay, $popupOverlay: config.$popupOverlay
+		$overlay: config.$overlay
 	} );
 	this.defaultSortInput = new OO.ui.TextInputWidget( {
-		$: this.$, placeholder: this.fallbackDefaultSortKey
+		placeholder: this.fallbackDefaultSortKey
 	} );
 
 	this.defaultSortInput.$element.addClass( 've-ui-mwCategoriesPage-defaultsort' );
@@ -50,7 +47,6 @@ ve.ui.MWCategoriesPage = function VeUiMWCategoriesPage( name, config ) {
 	this.defaultSort = new OO.ui.FieldLayout(
 		this.defaultSortInput,
 		{
-			$: this.$,
 			align: 'top',
 			label: ve.msg( 'visualeditor-dialog-meta-categories-defaultsort-label' ),
 			help: ve.msg( 'visualeditor-dialog-meta-categories-defaultsort-help' )
@@ -106,10 +102,20 @@ ve.ui.MWCategoriesPage.prototype.onDefaultSortChange = function ( value ) {
  * Inserts new category into meta list
  *
  * @param {Object} item
+ * @param {ve.dm.MWCategoryMetaItem} [beforeMetaItem] Meta item to insert before,
+ *  or undefined to go at the end
  */
-ve.ui.MWCategoriesPage.prototype.onNewCategory = function ( item ) {
+ve.ui.MWCategoriesPage.prototype.onNewCategory = function ( item, beforeMetaItem ) {
 	// Insert new metaList item
-	this.insertMetaListItem( this.getCategoryItemForInsertion( item ) );
+	if ( beforeMetaItem ) {
+		this.insertMetaListItem(
+			this.getCategoryItemForInsertion( item ),
+			beforeMetaItem.getOffset(),
+			beforeMetaItem.getIndex()
+		);
+	} else {
+		this.insertMetaListItem( this.getCategoryItemForInsertion( item ) );
+	}
 };
 
 /**
@@ -146,24 +152,24 @@ ve.ui.MWCategoriesPage.prototype.onMetaListRemove = function ( metaItem ) {
 	var item;
 
 	if ( metaItem.element.type === 'mwCategory' ) {
-		item = this.getCategoryItemFromMetaListItem( metaItem );
-		this.categoryWidget.removeItems( [item.value] );
+		item = this.categoryWidget.categories[ this.getCategoryItemFromMetaListItem( metaItem ).value ];
+		this.categoryWidget.removeItems( [ item ] );
 	}
 };
 
 /**
  * Get default sort key item.
  *
- * @returns {string} Default sort key item
+ * @return {string} Default sort key item
  */
 ve.ui.MWCategoriesPage.prototype.getDefaultSortKeyItem = function () {
-	return this.metaList.getItemsInGroup( 'mwDefaultSort' )[0] || null;
+	return this.metaList.getItemsInGroup( 'mwDefaultSort' )[ 0 ] || null;
 };
 
 /**
  * Get array of category items from meta list
  *
- * @returns {Object[]} items
+ * @return {Object[]} items
  */
 ve.ui.MWCategoriesPage.prototype.getCategoryItems = function () {
 	var i,
@@ -172,7 +178,7 @@ ve.ui.MWCategoriesPage.prototype.getCategoryItems = function () {
 
 	// Loop through MwCategories and build out items
 	for ( i = 0; i < categories.length; i++ ) {
-		items.push( this.getCategoryItemFromMetaListItem( categories[i] ) );
+		items.push( this.getCategoryItemFromMetaListItem( categories[ i ] ) );
 	}
 	return items;
 };
@@ -181,7 +187,7 @@ ve.ui.MWCategoriesPage.prototype.getCategoryItems = function () {
  * Gets category item from meta list item
  *
  * @param {ve.dm.MWCategoryMetaItem} metaItem
- * @returns {Object} item
+ * @return {Object} item
  */
 ve.ui.MWCategoriesPage.prototype.getCategoryItemFromMetaListItem = function ( metaItem ) {
 	var title = mw.Title.newFromText( metaItem.element.attributes.category ),
@@ -201,7 +207,7 @@ ve.ui.MWCategoriesPage.prototype.getCategoryItemFromMetaListItem = function ( me
  *
  * @param {Object} item category widget item
  * @param {Object} [oldData] Metadata object that was previously associated with this item, if any
- * @returns {Object} metaBase
+ * @return {Object} metaBase
  */
 ve.ui.MWCategoriesPage.prototype.getCategoryItemForInsertion = function ( item, oldData ) {
 	var newData = {
@@ -218,9 +224,11 @@ ve.ui.MWCategoriesPage.prototype.getCategoryItemForInsertion = function ( item, 
  * Inserts a meta list item
  *
  * @param {Object} metaBase meta list insert object
+ * @param {number} [offset] Offset of the meta items within the document
+ * @param {number} [index] Index of the meta item within the group of meta items at this offset
  */
-ve.ui.MWCategoriesPage.prototype.insertMetaListItem = function ( metaBase ) {
-	this.metaList.insertMeta( metaBase );
+ve.ui.MWCategoriesPage.prototype.insertMetaListItem = function ( metaBase, offset, index ) {
+	this.metaList.insertMeta( metaBase, offset, index );
 };
 
 /**
@@ -230,13 +238,16 @@ ve.ui.MWCategoriesPage.prototype.insertMetaListItem = function ( metaBase ) {
  * @param {Object} [data] Dialog setup data
  */
 ve.ui.MWCategoriesPage.prototype.setup = function ( metaList ) {
+	var defaultSortKeyItem,
+		page = this;
+
 	this.metaList = metaList;
 	this.metaList.connect( this, {
 		insert: 'onMetaListInsert',
 		remove: 'onMetaListRemove'
 	} );
 
-	var defaultSortKeyItem = this.getDefaultSortKeyItem();
+	defaultSortKeyItem = this.getDefaultSortKeyItem();
 
 	this.categoryWidget.addItems( this.getCategoryItems() );
 
@@ -247,20 +258,27 @@ ve.ui.MWCategoriesPage.prototype.setup = function ( metaList ) {
 
 	// Update input position once visible
 	setTimeout( function () {
-		this.categoryWidget.fitInput();
-	}.bind( this ) );
+		page.categoryWidget.fitInput();
+	} );
 };
 
 /**
  * Tear down the page. This is called when the MWMetaDialog is torn down.
+ *
+ * @param {Object} [data] Dialog tear down data
  */
-ve.ui.MWCategoriesPage.prototype.teardown = function () {
+ve.ui.MWCategoriesPage.prototype.teardown = function ( data ) {
 	var currentDefaultSortKeyItem = this.getDefaultSortKeyItem(),
 		newDefaultSortKey = this.defaultSortInput.getValue(),
 		newDefaultSortKeyData = {
 			type: 'mwDefaultSort',
 			attributes: { content: newDefaultSortKey }
 		};
+
+	data = data || {};
+	if ( data.action !== 'apply' ) {
+		return;
+	}
 
 	// Alter the default sort key iff it's been touched & is actually different
 	if ( this.defaultSortKeyTouched ) {

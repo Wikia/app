@@ -1,7 +1,7 @@
 /*!
  * VisualEditor DataModel MWReferenceModel class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2015 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -12,8 +12,9 @@
  * @mixins OO.EventEmitter
  *
  * @constructor
+ * @param {ve.dm.Document} parentDoc Document that contains or will contain the reference
  */
-ve.dm.MWReferenceModel = function VeDmMWReferenceModel() {
+ve.dm.MWReferenceModel = function VeDmMWReferenceModel( parentDoc ) {
 	// Mixin constructors
 	OO.EventEmitter.call( this );
 
@@ -23,9 +24,8 @@ ve.dm.MWReferenceModel = function VeDmMWReferenceModel() {
 	this.listIndex = null;
 	this.group = '';
 	this.doc = null;
+	this.parentDoc = parentDoc;
 	this.deferDoc = null;
-	this.dir = null;
-	this.lang = null;
 };
 
 /* Inheritance */
@@ -44,14 +44,12 @@ ve.dm.MWReferenceModel.static.newFromReferenceNode = function ( node ) {
 	var doc = node.getDocument(),
 		internalList = doc.getInternalList(),
 		attr = node.getAttributes(),
-		ref = new ve.dm.MWReferenceModel();
+		ref = new ve.dm.MWReferenceModel( doc );
 
 	ref.setListKey( attr.listKey );
 	ref.setListGroup( attr.listGroup );
 	ref.setListIndex( attr.listIndex );
 	ref.setGroup( attr.refGroup );
-	ref.setDir( doc.getDir() );
-	ref.setLang( doc.getLang() );
 	ref.deferDoc = function () {
 		// cloneFromRange is very expensive, so lazy evaluate it
 		return doc.cloneFromRange( internalList.getItemNode( attr.listIndex ).getRange() );
@@ -66,7 +64,7 @@ ve.dm.MWReferenceModel.static.newFromReferenceNode = function ( node ) {
  * Find matching item in a surface.
  *
  * @param {ve.dm.Surface} surfaceModel Surface reference is in
- * @returns {ve.dm.InternalItemNode|null} Internal reference item, null if none exists
+ * @return {ve.dm.InternalItemNode|null} Internal reference item, null if none exists
  */
 ve.dm.MWReferenceModel.prototype.findInternalItem = function ( surfaceModel ) {
 	if ( this.listIndex !== null ) {
@@ -125,9 +123,9 @@ ve.dm.MWReferenceModel.prototype.updateInternalItem = function ( surfaceModel ) 
 	if ( this.listGroup !== listGroup ) {
 		// Get all reference nodes with the same group and key
 		group = internalList.getNodeGroup( this.listGroup );
-		refNodes = group.keyedNodes[this.listKey] ?
-			group.keyedNodes[this.listKey].slice() :
-			[ group.firstNodes[this.listIndex] ];
+		refNodes = group.keyedNodes[ this.listKey ] ?
+			group.keyedNodes[ this.listKey ].slice() :
+			[ group.firstNodes[ this.listIndex ] ];
 		// Check for name collision when moving items between groups
 		keyIndex = internalList.getKeyIndex( this.listGroup, this.listKey );
 		if ( keyIndex !== undefined ) {
@@ -137,20 +135,13 @@ ve.dm.MWReferenceModel.prototype.updateInternalItem = function ( surfaceModel ) 
 		// Update the group name of all references nodes with the same group and key
 		txs = [];
 		for ( i = 0, len = refNodes.length; i < len; i++ ) {
-			// HACK: Removing and re-inserting nodes to/from the internal list is done
-			// because internal list doesn't yet support attribute changes
-			refNodes[i].removeFromInternalList();
 			txs.push( ve.dm.Transaction.newFromAttributeChanges(
 				doc,
-				refNodes[i].getOuterRange().start,
+				refNodes[ i ].getOuterRange().start,
 				{ refGroup: this.group, listGroup: listGroup }
 			) );
 		}
 		surfaceModel.change( txs );
-		// HACK: Same as above, internal list issues
-		for ( i = 0, len = refNodes.length; i < len; i++ ) {
-			refNodes[i].addToInternalList();
-		}
 		this.listGroup = listGroup;
 	}
 	// Update internal node content
@@ -164,19 +155,24 @@ ve.dm.MWReferenceModel.prototype.updateInternalItem = function ( surfaceModel ) 
 /**
  * Insert reference at the end of a surface fragment.
  *
- * @param {ve.dm.SurfaceFragment} surfaceModel Surface fragment to insert at
+ * @param {ve.dm.SurfaceFragment} surfaceFragment Surface fragment to insert at
+ * @param {boolean} [placeholder] Reference is a placeholder for staging purposes
  */
-ve.dm.MWReferenceModel.prototype.insertReferenceNode = function ( surfaceFragment ) {
+ve.dm.MWReferenceModel.prototype.insertReferenceNode = function ( surfaceFragment, placeholder ) {
+	var attributes = {
+		listKey: this.listKey,
+		listGroup: this.listGroup,
+		listIndex: this.listIndex,
+		refGroup: this.group
+	};
+	if ( placeholder ) {
+		attributes.placeholder = true;
+	}
 	surfaceFragment
 		.insertContent( [
 			{
 				type: 'mwReference',
-				attributes: {
-					listKey: this.listKey,
-					listGroup: this.listGroup,
-					listIndex: this.listIndex,
-					refGroup: this.group
-				}
+				attributes: attributes
 			},
 			{ type: '/mwReference' }
 		] );
@@ -185,7 +181,7 @@ ve.dm.MWReferenceModel.prototype.insertReferenceNode = function ( surfaceFragmen
 /**
  * Get the key of a reference in the references list.
  *
- * @returns {string} Reference's list key
+ * @return {string} Reference's list key
  */
 ve.dm.MWReferenceModel.prototype.getListKey = function () {
 	return this.listKey;
@@ -194,7 +190,7 @@ ve.dm.MWReferenceModel.prototype.getListKey = function () {
 /**
  * Get the name of the group a references list is in.
  *
- * @returns {string} References list's group
+ * @return {string} References list's group
  */
 ve.dm.MWReferenceModel.prototype.getListGroup = function () {
 	return this.listGroup;
@@ -203,7 +199,7 @@ ve.dm.MWReferenceModel.prototype.getListGroup = function () {
 /**
  * Get the index of reference in the references list.
  *
- * @returns {string} Reference's index
+ * @return {string} Reference's index
  */
 ve.dm.MWReferenceModel.prototype.getListIndex = function () {
 	return this.listIndex;
@@ -212,7 +208,7 @@ ve.dm.MWReferenceModel.prototype.getListIndex = function () {
 /**
  * Get the name of the group a reference is in.
  *
- * @returns {string} Reference's group
+ * @return {string} Reference's group
  */
 ve.dm.MWReferenceModel.prototype.getGroup = function () {
 	return this.group;
@@ -223,66 +219,42 @@ ve.dm.MWReferenceModel.prototype.getGroup = function () {
  *
  * Auto-generates a blank document if no document exists.
  *
- * @returns {ve.dm.Document} Reference document
+ * @return {ve.dm.Document} Reference document
  */
 ve.dm.MWReferenceModel.prototype.getDocument = function () {
 	if ( !this.doc ) {
 		if ( this.deferDoc ) {
 			this.doc = this.deferDoc();
 		} else {
-			this.doc = new ve.dm.Document( [
-				{ type: 'paragraph', internal: { generated: 'wrapper' } },
-				{ type: '/paragraph' },
-				{ type: 'internalList' },
-				{ type: '/internalList' }
-			],
-			/* htmlDocument */ null,
-			/* parentDocument */ null,
-			/* internalList */ null,
-			/* innerWhitespace */ null,
-			/* lang */ this.getLang(),
-			/* dir */ this.getDir() );
+			this.doc = new ve.dm.Document(
+				[
+					{ type: 'paragraph', internal: { generated: 'wrapper' } },
+					{ type: '/paragraph' },
+					{ type: 'internalList' },
+					{ type: '/internalList' }
+				],
+				// htmlDocument
+				this.parentDoc.getHtmlDocument(),
+				// parentDocument
+				null,
+				// internalList
+				null,
+				// innerWhitespace
+				null,
+				// lang
+				this.parentDoc.getLang(),
+				// dir
+				this.parentDoc.getDir()
+			);
 		}
 	}
 	return this.doc;
 };
 
 /**
- * Set the directionality of the reference document
- * @param {string} dir Document directionality
- */
-ve.dm.MWReferenceModel.prototype.setDir = function ( dir ) {
-	this.dir = dir;
-};
-
-/**
- * Get the directionality of the reference document
- * @returns {string} Document directionality
- */
-ve.dm.MWReferenceModel.prototype.getDir = function () {
-	return this.dir;
-};
-
-/**
- * Set the language of the reference document
- * @param {string} lang Document language
- */
-ve.dm.MWReferenceModel.prototype.setLang = function ( lang ) {
-	this.lang = lang;
-};
-
-/**
- * Get the language of the reference document
- * @returns {string} Document language
- */
-ve.dm.MWReferenceModel.prototype.getLang = function () {
-	return this.lang;
-};
-
-/**
  * Set key of reference in list.
  *
- * @param {string} Reference's list key
+ * @param {string} listKey Reference's list key
  */
 ve.dm.MWReferenceModel.prototype.setListKey = function ( listKey ) {
 	this.listKey = listKey;
@@ -291,7 +263,7 @@ ve.dm.MWReferenceModel.prototype.setListKey = function ( listKey ) {
 /**
  * Set name of the group a references list is in.
  *
- * @param {string} References list's group
+ * @param {string} listGroup References list's group
  */
 ve.dm.MWReferenceModel.prototype.setListGroup = function ( listGroup ) {
 	this.listGroup = listGroup;
@@ -300,7 +272,7 @@ ve.dm.MWReferenceModel.prototype.setListGroup = function ( listGroup ) {
 /**
  * Set the index of reference in list.
  *
- * @param {string} Reference's list index
+ * @param {string} listIndex Reference's list index
  */
 ve.dm.MWReferenceModel.prototype.setListIndex = function ( listIndex ) {
 	this.listIndex = listIndex;
@@ -318,7 +290,7 @@ ve.dm.MWReferenceModel.prototype.setGroup = function ( group ) {
 /**
  * Set the reference document.
  *
- * @param {ve.dm.Document} Reference document
+ * @param {ve.dm.Document} doc Reference document
  */
 ve.dm.MWReferenceModel.prototype.setDocument = function ( doc ) {
 	this.doc = doc;

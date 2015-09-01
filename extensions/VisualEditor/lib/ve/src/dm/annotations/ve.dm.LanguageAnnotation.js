@@ -1,7 +1,7 @@
 /*!
  * VisualEditor DataModel LanguageAnnotation class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 /**
@@ -31,7 +31,7 @@ ve.dm.LanguageAnnotation.static.matchTagNames = [ 'span' ];
 
 ve.dm.LanguageAnnotation.static.matchFunction = function ( domElement ) {
 	var lang = domElement.getAttribute( 'lang' ),
-		dir = domElement.getAttribute( 'dir' );
+		dir = ( domElement.getAttribute( 'dir' ) || '' ).toLowerCase();
 	return lang || dir === 'ltr' || dir === 'rtl';
 };
 
@@ -41,8 +41,8 @@ ve.dm.LanguageAnnotation.static.toDataElement = function ( domElements ) {
 	return {
 		type: this.name,
 		attributes: {
-			lang: domElements[0].getAttribute( 'lang' ),
-			dir: domElements[0].getAttribute( 'dir' )
+			lang: domElements[ 0 ].getAttribute( 'lang' ),
+			dir: domElements[ 0 ].getAttribute( 'dir' )
 		}
 	};
 };
@@ -62,7 +62,7 @@ ve.dm.LanguageAnnotation.static.toDomElements = function ( dataElement, doc ) {
 /* Methods */
 
 /**
- * @returns {Object}
+ * @return {Object}
  */
 ve.dm.LanguageAnnotation.prototype.getComparableObject = function () {
 	return {

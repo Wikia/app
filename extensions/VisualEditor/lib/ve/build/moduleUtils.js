@@ -90,15 +90,13 @@ var self = module.exports = {
 				moduleName = buildlist[ build ];
 
 				for ( script in modules[ moduleName ].scripts ) {
-					if ( !modules[ moduleName ].scripts[ script ].debug )
-					{
+					if ( !modules[ moduleName ].scripts[ script ].debug ) {
 						filelist.scripts.push( modules[ moduleName ].scripts[ script ] );
 					}
 				}
 
 				for ( style in modules[ moduleName ].styles ) {
-					if ( !modules[ moduleName ].styles[ style ].debug )
-					{
+					if ( !modules[ moduleName ].styles[ style ].debug ) {
 						filelist.styles.push( modules[ moduleName ].styles[ style ] );
 					}
 				}
@@ -124,15 +122,15 @@ var self = module.exports = {
 		list = list || [];
 
 		for ( i = 0; i < load.length; i++ ) {
-			module = load[i];
+			module = load[ i ];
 
 			if ( !modules.hasOwnProperty( module ) ) {
 				throw new Error( 'Dependency ' + module + ' not found' );
 			}
 
 			// Add in any dependencies
-			if ( modules[module].hasOwnProperty( 'dependencies' ) ) {
-				self.buildDependencyList( modules, modules[module].dependencies, list );
+			if ( modules[ module ].hasOwnProperty( 'dependencies' ) ) {
+				self.buildDependencyList( modules, modules[ module ].dependencies, list );
 			}
 
 			// Append target load module to the end of the current list

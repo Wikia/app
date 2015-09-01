@@ -1,21 +1,12 @@
 /*!
  * VisualEditor MediaWiki UserInterface MWSaveDialog styles.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2015 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
-.ve-ui-mwSaveDialog-panel {
-	margin: 1.25em;
-}
-
 .ve-ui-mwSaveDialog-summaryLabel {
 	padding: 0.25em 0;
-}
-
-.ve-ui-mwSaveDialog-savePanel {
-	/* Make room for input box shadow */
-	padding: 0 0.5em;
 }
 
 .ve-ui-mwSaveDialog-summary {
@@ -24,17 +15,14 @@
 }
 
 .ve-ui-mwSaveDialog-summary textarea {
-	border-radius: 0.25em 0.25em 0 0;
-	vertical-align: top;
-	margin: 0;
-	padding: 0.5em;
+	display: block;
 	resize: none;
 	height: 4em;
 	background-color: transparent;
 }
 
 .ve-ui-mwSaveDialog-foot {
-	margin: 0.5em;
+	margin: 0.5em 0;
 }
 
 .ve-ui-mwSaveDialog-options {
@@ -42,23 +30,17 @@
 	background-color: #f7f7f7;
 	border: solid 1px #ccc;
 	border-top: none;
-	border-radius: 0 0 0.25em 0.25em;
 	min-height: 3em;
 }
 
 .ve-ui-mwSaveDialog-checkboxes {
 	margin-right: 3.25em; /* Hack to prevent overlap on edit summary count */
-	line-height: 3em;
-	padding: 0 0.75em;
+	padding: 0.2em 0.75em 0 0.75em;
 }
 
-.ve-ui-mwSaveDialog-checkboxes label {
-	padding-right: 0.75em;
-	vertical-align: middle;
-}
-
-.ve-ui-mwSaveDialog-checkboxes input {
-	vertical-align: middle;
+.ve-ui-mwSaveDialog-checkboxes .oo-ui-fieldLayout {
+	display: inline-block;
+	margin: 0 1.5em 0 0;
 }
 
 .ve-ui-mwSaveDialog-editSummary-count {
@@ -73,9 +55,9 @@
 }
 
 .ve-ui-mwSaveDialog-license {
-	font-size: 0.85em;
-	line-height: 1.25em;
+	font-size: 0.9em;
+	line-height: 1.4em;
 	padding: 0;
 	margin: 0;
-	color: #999;
+	color: #555;
 }

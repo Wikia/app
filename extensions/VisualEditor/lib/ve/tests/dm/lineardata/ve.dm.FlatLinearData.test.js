@@ -1,7 +1,7 @@
 /*!
  * VisualEditor FlatLinearData tests.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 QUnit.module( 've.dm.FlatLinearData' );
@@ -12,18 +12,18 @@ QUnit.test( 'getType/isOpenElementData/isCloseElementData', function ( assert ) 
 	var i,
 		data = new ve.dm.FlatLinearData( new ve.dm.IndexValueStore(), [
 			{ type: 'paragraph' },
-			'a', ['b', [0]],
+			'a', [ 'b', [ 0 ] ],
 			{ type: '/paragraph' }
 		] ),
-		types = ['paragraph', undefined, undefined, 'paragraph'],
-		isOpen = [0],
-		isClose = [3];
+		types = [ 'paragraph', undefined, undefined, 'paragraph' ],
+		isOpen = [ 0 ],
+		isClose = [ 3 ];
 
 	QUnit.expect( data.getLength() * 3 );
 	for ( i = 0; i < data.getLength(); i++ ) {
-		assert.strictEqual( data.getType( i ), types[i], 'Type at offset ' + i );
-		assert.strictEqual( data.isOpenElementData( i ), ve.indexOf( i, isOpen ) !== -1, 'isOpen ' + i );
-		assert.strictEqual( data.isCloseElementData( i ), ve.indexOf( i, isClose ) !== -1, 'isClose ' + i );
+		assert.strictEqual( data.getType( i ), types[ i ], 'Type at offset ' + i );
+		assert.strictEqual( data.isOpenElementData( i ), isOpen.indexOf( i ) !== -1, 'isOpen ' + i );
+		assert.strictEqual( data.isCloseElementData( i ), isClose.indexOf( i ) !== -1, 'isClose ' + i );
 	}
 } );
 
@@ -74,7 +74,7 @@ QUnit.test( 'isElementData', 1, function ( assert ) {
 		];
 	QUnit.expect( data.getLength() + 1 );
 	for ( i = 0; i < cases.length; i++ ) {
-		assert.strictEqual( data.isElementData( i ), cases[i].expected, cases[i].msg );
+		assert.strictEqual( data.isElementData( i ), cases[ i ].expected, cases[ i ].msg );
 	}
 } );
 
@@ -83,30 +83,30 @@ QUnit.test( 'containsElementData', 1, function ( assert ) {
 		cases = [
 			{
 				msg: 'simple paragraph',
-				data: [{ type: 'paragraph' }, 'a', { type: '/paragraph' }],
+				data: [ { type: 'paragraph' }, 'a', { type: '/paragraph' } ],
 				expected: true
 			},
 			{
 				msg: 'plain text',
-				data: ['a', 'b', 'c'],
+				data: [ 'a', 'b', 'c' ],
 				expected: false
 			},
 			{
 				msg: 'annotated text',
-				data: [['a', { '{"type:"bold"}': { type: 'bold' } } ]],
+				data: [ [ 'a', { '{"type:"bold"}': { type: 'bold' } } ] ],
 				expected: false
 			},
 			{
 				msg: 'non-text leaf',
-				data: ['a', { type: 'inlineImage' }, { type: '/inlineImage' }, 'c'],
+				data: [ 'a', { type: 'inlineImage' }, { type: '/inlineImage' }, 'c' ],
 				expected: true
 			}
 		];
 	QUnit.expect( cases.length );
 	for ( i = 0; i < cases.length; i++ ) {
-		data = new ve.dm.FlatLinearData( new ve.dm.IndexValueStore(), cases[i].data );
+		data = new ve.dm.FlatLinearData( new ve.dm.IndexValueStore(), cases[ i ].data );
 		assert.strictEqual(
-			data.containsElementData(), cases[i].expected, cases[i].msg
+			data.containsElementData(), cases[ i ].expected, cases[ i ].msg
 		);
 	}
 } );

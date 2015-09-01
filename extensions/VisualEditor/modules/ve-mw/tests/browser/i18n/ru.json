@@ -1,0 +1,12 @@
+{
+	"@metadata": {
+		"authors": [
+			"Okras",
+			"Sunpriat"
+		]
+	},
+	"visualeditor-languagescreenshot-desc": "Пояснения к скриншотам в [[:mw:Help:VisualEditor/User_guide/ru|руководстве пользователя для Визуального редактора]]",
+	"visualeditor-languagescreenshot-hello-world-text": "Привет, мир!",
+	"visualeditor-languagescreenshot-world-text": "мир",
+	"visualeditor-languagescreenshot-category-earth-text": "Категория:Земля"
+}

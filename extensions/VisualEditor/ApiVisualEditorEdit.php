@@ -4,13 +4,13 @@
  *
  * @file
  * @ingroup Extensions
- * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2015 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
 class ApiVisualEditorEdit extends ApiVisualEditor {
 
-	public function __construct( ApiMain $main, $name /*, Config $config */ ) {
+	public function __construct( ApiMain $main, $name, Config $config ) {
 		parent::__construct( $main, $name, $config );
 	}
 
@@ -34,8 +34,12 @@ class ApiVisualEditorEdit extends ApiVisualEditor {
 		// FIXME add some way that the user's preferences can be respected
 		$apiParams['watchlist'] = $params['watch'] ? 'watch' : 'unwatch';
 
-		if ( $params['g-recaptcha-response'] ) {
-			$apiParams['g-recaptcha-response'] = $params['g-recaptcha-response'];
+		if ( $params['captchaid'] ) {
+			$apiParams['captchaid'] = $params['captchaid'];
+		}
+
+		if ( $params['captchaword'] ) {
+			$apiParams['captchaword'] = $params['captchaword'];
 		}
 
 		$api = new ApiMain(
@@ -49,7 +53,70 @@ class ApiVisualEditorEdit extends ApiVisualEditor {
 
 		$api->execute();
 
-		return $api->getResultData();
+		if ( defined( 'ApiResult::META_CONTENT' ) ) {
+			return $api->getResult()->getResultData();
+		} else {
+			return $api->getResultData();
+		}
+	}
+
+	protected function parseWikitext( $title, $newRevId ) {
+		$apiParams = array(
+			'action' => 'parse',
+			'page' => $title->getPrefixedDBkey(),
+			'oldid' => $newRevId,
+			'prop' => 'text|revid|categorieshtml|displaytitle|modules|jsconfigvars',
+		);
+		$api = new ApiMain(
+			new DerivativeRequest(
+				$this->getRequest(),
+				$apiParams,
+				false // was posted?
+			),
+			true // enable write?
+		);
+
+		$api->execute();
+		if ( defined( 'ApiResult::META_CONTENT' ) ) {
+			$result = $api->getResult()->getResultData( null, array(
+				'BC' => array(), // Transform content nodes to '*'
+				'Types' => array(), // Add back-compat subelements
+				'Strip' => 'all', // Remove any metadata keys from the links array
+			) );
+		} else {
+			$result = $api->getResultData();
+		}
+		$content = isset( $result['parse']['text']['*'] ) ? $result['parse']['text']['*'] : false;
+		$categorieshtml = isset( $result['parse']['categorieshtml']['*'] ) ?
+			$result['parse']['categorieshtml']['*'] : false;
+		$links = isset( $result['parse']['links'] ) ? $result['parse']['links'] : array();
+		$revision = Revision::newFromId( $result['parse']['revid'] );
+		$timestamp = $revision ? $revision->getTimestamp() : wfTimestampNow();
+		$displaytitle = isset( $result['parse']['displaytitle'] ) ?
+			$result['parse']['displaytitle'] : false;
+		$modules = isset( $result['parse']['modules'] ) ? $result['parse']['modules'] : array();
+		$jsconfigvars = isset( $result['parse']['jsconfigvars'] ) ?
+			$result['parse']['jsconfigvars'] : array();
+
+		if ( $content === false || ( strlen( $content ) && $revision === null ) ) {
+			return false;
+		}
+
+		if ( $displaytitle !== false ) {
+			// Escape entities as in OutputPage::setPageTitle()
+			$displaytitle = Sanitizer::normalizeCharReferences(
+				Sanitizer::removeHTMLtags( $displaytitle ) );
+		}
+
+		return array(
+			'content' => $content,
+			'categorieshtml' => $categorieshtml,
+			'basetimestamp' => $timestamp,
+			'starttimestamp' => wfTimestampNow(),
+			'displayTitleHtml' => $displaytitle,
+			'modules' => $modules,
+			'jsconfigvars' => $jsconfigvars
+		);
 	}
 
 	public function execute() {
@@ -59,7 +126,9 @@ class ApiVisualEditorEdit extends ApiVisualEditor {
 		if ( !$page ) {
 			$this->dieUsageMsg( 'invalidtitle', $params['page'] );
 		}
-		if ( !in_array( $page->getNamespace(), $this->veConfig->get( 'VisualEditorNamespaces' ) ) ) {
+		$availableNamespaces = $this->veConfig->get( 'VisualEditorAvailableNamespaces' );
+		if ( !isset( $availableNamespaces[$page->getNamespace()] ) ||
+			!$availableNamespaces[$page->getNamespace()] ) {
 			$this->dieUsage( "VisualEditor is not enabled in namespace " .
 				$page->getNamespace(), 'novenamespace' );
 		}
@@ -96,26 +165,31 @@ class ApiVisualEditorEdit extends ApiVisualEditor {
 				'edit' => $saveresult['edit']
 			);
 
+			if ( isset( $saveresult['edit']['spamblacklist'] ) ) {
+				$matches = explode( '|', $saveresult['edit']['spamblacklist'] );
+				$matcheslist = $this->getLanguage()->listToText( $matches );
+				$result['edit']['sberrorparsed'] = $this->msg( 'spamprotectiontext' )->parse() . ' ' .
+					$this->msg( 'spamprotectionmatch', $matcheslist )->parse();
+			}
+
 		// Success
 		} else {
-			if ( isset( $saveresult['edit']['newrevid'] )
-				&& $this->veConfig->get( 'VisualEditorUseChangeTagging' )
-			) {
-				ChangeTags::addTags( 'visualeditor', null,
-					intval( $saveresult['edit']['newrevid'] ),
-					null
-				);
-				if ( $params['needcheck'] ) {
-					ChangeTags::addTags( 'visualeditor-needcheck', null,
-						intval( $saveresult['edit']['newrevid'] ),
-						null
-					);
+			if ( isset( $saveresult['edit']['newrevid'] ) ) {
+				$newRevId = intval( $saveresult['edit']['newrevid'] );
+				if ( $this->veConfig->get( 'VisualEditorUseChangeTagging' ) ) {
+					// Defer till after the RC row is inserted
+					// @TODO: doEditContent should let callers specify desired tags
+					DeferredUpdates::addCallableUpdate( function() use ( $newRevId ) {
+						ChangeTags::addTags( 'visualeditor', null, $newRevId, null );
+					} );
 				}
+			} else {
+				$newRevId = $page->getLatestRevId();
 			}
 
 			// Return result of parseWikitext instead of saveWikitext so that the
 			// frontend can update the page rendering without a refresh.
-			$result = $this->parseWikitext( $page );
+			$result = $this->parseWikitext( $page, $newRevId );
 			if ( $result === false ) {
 				$this->dieUsage( 'Error contacting the Parsoid server', 'parsoidserver' );
 			}
@@ -175,14 +249,13 @@ class ApiVisualEditorEdit extends ApiVisualEditor {
 			'wikitext' => null,
 			'basetimestamp' => null,
 			'starttimestamp' => null,
-			'needcheck' => array(
-				ApiBase::PARAM_TYPE => 'boolean'
-			),
 			'oldid' => null,
 			'minor' => null,
 			'watch' => null,
 			'html' => null,
 			'summary' => null,
+			'captchaid' => null,
+			'captchaword' => null,
 			'cachekey' => null,
 		);
 	}
@@ -218,8 +291,8 @@ class ApiVisualEditorEdit extends ApiVisualEditor {
 			'starttimestamp' => 'When saving, set this to the timestamp of when the page was loaded.'
 				. ' Used to detect edit conflicts.',
 			'token' => 'Edit token',
-			'needcheck' => 'When saving, set this parameter if the revision might have roundtrip'
-				. ' problems. This will result in the edit being tagged.',
+			'captchaid' => 'Captcha ID (when saving with a captcha response).',
+			'captchaword' => 'Answer to the captcha (when saving with a captcha response).',
 			'cachekey' => 'Use the result of a previous serializeforcache request with this key.'
 				. 'Overrides html.',
 		);

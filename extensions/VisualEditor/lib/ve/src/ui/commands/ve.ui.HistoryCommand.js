@@ -1,7 +1,7 @@
 /*!
  * VisualEditor UserInterface HistoryCommand class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 /**
@@ -21,7 +21,7 @@ ve.ui.HistoryCommand = function VeUiHistoryCommand( name, method ) {
 	this.check = {
 		undo: 'canUndo',
 		redo: 'canRedo'
-	}[method];
+	}[ method ];
 };
 
 /* Inheritance */
@@ -38,7 +38,7 @@ ve.ui.HistoryCommand.prototype.isExecutable = function ( fragment ) {
 
 	// Parent method
 	return ve.ui.HistoryCommand.super.prototype.isExecutable.apply( this, arguments ) &&
-		surface[this.check].call( surface );
+		surface[ this.check ].call( surface );
 };
 
 /* Registration */

@@ -1,7 +1,7 @@
 /*!
  * VisualEditor UserInterface MediaWiki MWReferenceDialog class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2015 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -20,6 +20,7 @@ ve.ui.MWReferenceDialog = function VeUiMWReferenceDialog( config ) {
 
 	// Properties
 	this.referenceModel = null;
+	this.useExisting = false;
 };
 
 /* Inheritance */
@@ -50,7 +51,7 @@ ve.ui.MWReferenceDialog.static.actions = [
 	},
 	{
 		label: OO.ui.deferMsg( 'visualeditor-dialog-action-cancel' ),
-		flags: 'safe',
+		flags: [ 'safe', 'back' ],
 		modes: [ 'insert', 'edit', 'insert-select' ]
 	},
 	{
@@ -67,6 +68,8 @@ ve.ui.MWReferenceDialog.static.actions = [
 ];
 
 ve.ui.MWReferenceDialog.static.modelClasses = [ ve.dm.MWReferenceNode ];
+
+ve.ui.MWReferenceDialog.static.includeCommands = null;
 
 ve.ui.MWReferenceDialog.static.excludeCommands = [
 	// No formatting
@@ -97,15 +100,8 @@ ve.ui.MWReferenceDialog.static.excludeCommands = [
 	'referencesList'
 ];
 
-// HACK: change group: 'cite' to group: 'cite-transclusion'
-ve.ui.MWReferenceDialog.static.toolbarGroups = ( function () {
-	var toolbarGroups = ve.copy( ve.init.mw.Target.static.toolbarGroups );
-	toolbarGroups[4].include[0].group = 'cite-transclusion';
-	return toolbarGroups;
-} () );
-
 /**
- * Get the import rules for the surface widget in the dialog
+ * Get the import rules for the surface widget in the dialog.
  *
  * @see ve.dm.ElementLinearData#sanitize
  * @return {Object} Import rules
@@ -139,27 +135,29 @@ ve.ui.MWReferenceDialog.static.getImportRules = function () {
 
 /**
  * Determine whether the reference document we're editing has any content.
+ *
  * @return {boolean} Document has content
  */
 ve.ui.MWReferenceDialog.prototype.documentHasContent = function () {
 	// TODO: Check for other types of empty, e.g. only whitespace?
-	return this.referenceModel.getDocument().data.countNonInternalElements() > 2;
+	return this.referenceModel.getDocument().data.hasContent();
 };
 
 /*
- * Determine whether any changes have been made (and haven't been undone)
+ * Determine whether any changes have been made (and haven't been undone).
+ *
  * @return {boolean} Dialog can be applied
  */
 ve.ui.MWReferenceDialog.prototype.canApply = function () {
 	return this.documentHasContent() &&
-		( this.referenceSurface.getSurface().getModel().hasBeenModified() ||
+		( this.referenceTarget.getSurface().getModel().hasBeenModified() ||
 		this.referenceGroupInput.input.getValue() !== this.originalGroup );
 };
 
 /**
  * Handle reference surface change events
  */
-ve.ui.MWReferenceDialog.prototype.onDocumentTransact = function () {
+ve.ui.MWReferenceDialog.prototype.onSurfaceHistory = function () {
 	var hasContent = this.documentHasContent();
 
 	this.actions.setAbilities( {
@@ -170,7 +168,7 @@ ve.ui.MWReferenceDialog.prototype.onDocumentTransact = function () {
 };
 
 /**
- * Handle reference group input change events
+ * Handle reference group input change events.
  */
 ve.ui.MWReferenceDialog.prototype.onReferenceGroupInputChange = function () {
 	this.actions.setAbilities( {
@@ -179,19 +177,19 @@ ve.ui.MWReferenceDialog.prototype.onReferenceGroupInputChange = function () {
 };
 
 /**
- * Handle search select events.
+ * Handle search results choose events.
  *
- * @param {ve.dm.MWReferenceModel|null} ref Reference model or null if no item is selected
+ * @param {ve.ui.MWReferenceResultWidget} item Chosen item
  */
-ve.ui.MWReferenceDialog.prototype.onSearchSelect = function ( ref ) {
-	if ( ref instanceof ve.dm.MWReferenceModel ) {
-		if ( this.selectedNode instanceof ve.dm.MWReferenceNode ) {
-			this.getFragment().removeContent();
-			this.selectedNode = null;
-		}
-		this.useReference( ref );
-		this.executeAction( 'insert' );
+ve.ui.MWReferenceDialog.prototype.onSearchResultsChoose = function ( item ) {
+	var ref = item.getData();
+
+	if ( this.selectedNode instanceof ve.dm.MWReferenceNode ) {
+		this.getFragment().removeContent();
+		this.selectedNode = null;
 	}
+	this.useReference( ref );
+	this.executeAction( 'insert' );
 };
 
 /**
@@ -200,7 +198,11 @@ ve.ui.MWReferenceDialog.prototype.onSearchSelect = function ( ref ) {
 ve.ui.MWReferenceDialog.prototype.getReadyProcess = function ( data ) {
 	return ve.ui.MWReferenceDialog.super.prototype.getReadyProcess.call( this, data )
 		.next( function () {
-			this.referenceSurface.focus();
+			if ( this.useExisting ) {
+				this.search.getQuery().focus().select();
+			} else {
+				this.referenceTarget.focus();
+			}
 		}, this );
 };
 
@@ -213,7 +215,7 @@ ve.ui.MWReferenceDialog.prototype.getBodyHeight = function () {
 		400,
 		Math.max(
 			300,
-			Math.ceil( this.panels.getCurrentItem().$element[0].scrollHeight )
+			Math.ceil( this.panels.getCurrentItem().$element[ 0 ].scrollHeight )
 		)
 	);
 };
@@ -225,67 +227,54 @@ ve.ui.MWReferenceDialog.prototype.getBodyHeight = function () {
  * @chainable
  */
 ve.ui.MWReferenceDialog.prototype.useReference = function ( ref ) {
-	var group,
-		toolbarGroups = [
-			// History
-			{ include: [ 'undo' ] },
-			// Style
-			{ include: [ 'bold', 'italic', 'link' ] },
-			{
-				type: 'list',
-				icon: 'text-style',
-				indicator: 'down',
-				title: OO.ui.deferMsg( 'visualeditor-toolbar-style-tooltip' ),
-				include: [ 'subscript', 'superscript', 'strikethrough', 'underline', 'indent', 'outdent', 'clear' ]
-			}
-		];
-
+	var group;
 	// Properties
 	if ( ref instanceof ve.dm.MWReferenceModel ) {
 		// Use an existing reference
 		this.referenceModel = ref;
 	} else {
 		// Create a new reference
-		this.referenceModel = new ve.dm.MWReferenceModel();
-		this.referenceModel.setDir( this.getFragment().getDocument().getDir() );
-		this.referenceModel.setLang( this.getFragment().getDocument().getLang() );
+		this.referenceModel = new ve.dm.MWReferenceModel( this.getFragment().getDocument() );
 	}
 
 	// Cleanup
-	if ( this.referenceSurface ) {
-		this.referenceSurface.destroy();
+	if ( this.referenceTarget ) {
+		this.referenceTarget.destroy();
 	}
 
 	// Properties
-	this.referenceSurface = new ve.ui.MWSurfaceWidget(
+	this.referenceTarget = new ve.ui.MWTargetWidget(
 		this.referenceModel.getDocument(),
 		{
-			$: this.$,
-			tools: toolbarGroups,
+			tools: ve.copy( ve.init.mw.Target.static.toolbarGroups ),
+			includeCommands: this.constructor.static.includeCommands,
 			excludeCommands: this.constructor.static.excludeCommands,
-			importRules: this.constructor.static.getImportRules()
+			importRules: this.constructor.static.getImportRules(),
+			inDialog: this.constructor.static.name
 		}
 	);
 
 	// Events
-	this.referenceModel.getDocument().connect( this, { transact: 'onDocumentTransact' } );
+	this.referenceTarget.getSurface().getModel().connect( this, {
+		history: this.onSurfaceHistory.bind( this )
+	} );
 
 	// Initialization
 	this.originalGroup = this.referenceModel.getGroup();
 	this.referenceGroupInput.input.setValue( this.originalGroup );
-	this.contentFieldset.$element.append( this.referenceSurface.$element );
-	this.referenceSurface.initialize();
+	this.contentFieldset.$element.append( this.referenceTarget.$element );
+	this.referenceTarget.initialize();
 
 	group = this.getFragment().getDocument().getInternalList()
 		.getNodeGroup( this.referenceModel.getListGroup() );
-	if ( group && group.keyedNodes[this.referenceModel.getListKey()].length > 1 ) {
-		this.$reuseWarning.show();
+	if ( group && group.keyedNodes[ this.referenceModel.getListKey() ].length > 1 ) {
+		this.$reuseWarning.removeClass( 'oo-ui-element-hidden' );
 		this.$reuseWarningText.text( mw.msg(
 			'visualeditor-dialog-reference-editing-reused',
-			group.keyedNodes[this.referenceModel.getListKey()].length
+			group.keyedNodes[ this.referenceModel.getListKey() ].length
 		) );
 	} else {
-		this.$reuseWarning.hide();
+		this.$reuseWarning.addClass( 'oo-ui-element-hidden' );
 	}
 
 	return this;
@@ -299,37 +288,34 @@ ve.ui.MWReferenceDialog.prototype.initialize = function () {
 	ve.ui.MWReferenceDialog.super.prototype.initialize.call( this );
 
 	// Properties
-	this.panels = new OO.ui.StackLayout( { $: this.$ } );
+	this.panels = new OO.ui.StackLayout();
 	this.editPanel = new OO.ui.PanelLayout( {
-		$: this.$, scrollable: true, padded: true
+		scrollable: true, padded: true
 	} );
-	this.searchPanel = new OO.ui.PanelLayout( { $: this.$ } );
+	this.searchPanel = new OO.ui.PanelLayout();
 
 	this.reuseWarningIcon = new OO.ui.IconWidget( { icon: 'alert' } );
-	this.$reuseWarningText = this.$( '<span>' );
-	this.$reuseWarning = this.$( '<span>' ).append( this.reuseWarningIcon.$element, this.$reuseWarningText );
+	this.$reuseWarningText = $( '<span>' );
+	this.$reuseWarning = $( '<span>' ).append( this.reuseWarningIcon.$element, this.$reuseWarningText );
 
-	this.contentFieldset = new OO.ui.FieldsetLayout( { $: this.$ } );
+	this.contentFieldset = new OO.ui.FieldsetLayout();
 	this.optionsFieldset = new OO.ui.FieldsetLayout( {
-		$: this.$,
 		label: ve.msg( 'visualeditor-dialog-reference-options-section' ),
 		icon: 'settings'
 	} );
 	this.referenceGroupInput = new ve.ui.MWReferenceGroupInputWidget( {
-		$: this.$,
 		$overlay: this.$overlay,
 		emptyGroupName: ve.msg( 'visualeditor-dialog-reference-options-group-placeholder' )
 	} );
 	this.referenceGroupInput.input.connect( this, { change: 'onReferenceGroupInputChange' } );
 	this.referenceGroupField = new OO.ui.FieldLayout( this.referenceGroupInput, {
-		$: this.$,
 		align: 'top',
 		label: ve.msg( 'visualeditor-dialog-reference-options-group-label' )
 	} );
-	this.search = new ve.ui.MWReferenceSearchWidget( { $: this.$ } );
+	this.search = new ve.ui.MWReferenceSearchWidget();
 
 	// Events
-	this.search.connect( this, { select: 'onSearchSelect' } );
+	this.search.getResults().connect( this, { choose: 'onSearchResultsChoose' } );
 
 	// Initialization
 	this.panels.addItems( [ this.editPanel, this.searchPanel ] );
@@ -340,7 +326,7 @@ ve.ui.MWReferenceDialog.prototype.initialize = function () {
 };
 
 /**
- * Switches dialog to use existing reference mode
+ * Switches dialog to use existing reference mode.
  *
  * @param {string} [action='select'] Symbolic name of action, either 'select' or 'insert-select'
  */
@@ -382,7 +368,7 @@ ve.ui.MWReferenceDialog.prototype.getActionProcess = function ( action ) {
 	} else if ( action === 'back' ) {
 		this.actions.setMode( this.selectedNode ? 'edit' : 'insert' );
 		this.panels.setItem( this.editPanel );
-		this.editPanel.$element.find( '.ve-ce-documentNode' )[0].focus();
+		this.editPanel.$element.find( '.ve-ce-documentNode' )[ 0 ].focus();
 	} else if ( action === 'select' || action === 'insert-select' ) {
 		this.useExistingReference( action );
 	}
@@ -414,7 +400,7 @@ ve.ui.MWReferenceDialog.prototype.getSetupProcess = function ( data ) {
 			if ( data.useExisting ) {
 				this.useExistingReference( 'insert-select' );
 			}
-
+			this.useExisting = !!data.useExisting;
 			// If we're using an existing reference, start off disabled
 			// If not, set disabled based on whether or not there are any existing ones.
 			this.actions.setAbilities( {
@@ -433,9 +419,10 @@ ve.ui.MWReferenceDialog.prototype.getSetupProcess = function ( data ) {
 ve.ui.MWReferenceDialog.prototype.getTeardownProcess = function ( data ) {
 	return ve.ui.MWReferenceDialog.super.prototype.getTeardownProcess.call( this, data )
 		.first( function () {
+			this.referenceTarget.getSurface().getModel().disconnect( this );
 			this.search.getQuery().setValue( '' );
-			this.referenceSurface.destroy();
-			this.referenceSurface = null;
+			this.referenceTarget.destroy();
+			this.referenceTarget = null;
 			this.referenceModel = null;
 		}, this );
 };

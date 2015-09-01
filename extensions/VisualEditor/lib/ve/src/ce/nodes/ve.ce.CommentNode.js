@@ -1,7 +1,7 @@
 /*!
  * VisualEditor ContentEditable CommentNode class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 /**
@@ -10,7 +10,7 @@
  * @class
  * @extends ve.ce.LeafNode
  * @mixins ve.ce.FocusableNode
- * @mixins OO.ui.IndicatorElement
+ * @mixins OO.ui.mixin.IconElement
  *
  * @constructor
  * @param {ve.dm.CommentNode} model Model to observe
@@ -22,8 +22,8 @@ ve.ce.CommentNode = function VeCeCommentNode( model, config ) {
 
 	// Mixin constructors
 	ve.ce.FocusableNode.call( this, this.$element, config );
-	OO.ui.IndicatorElement.call( this, $.extend( {}, config, {
-		$indicator: this.$element, indicator: 'alert'
+	OO.ui.mixin.IconElement.call( this, $.extend( {}, config, {
+		$icon: this.$element, icon: 'notice'
 	} ) );
 
 	// DOM changes
@@ -37,7 +37,7 @@ ve.ce.CommentNode = function VeCeCommentNode( model, config ) {
 
 OO.inheritClass( ve.ce.CommentNode, ve.ce.LeafNode );
 OO.mixinClass( ve.ce.CommentNode, ve.ce.FocusableNode );
-OO.mixinClass( ve.ce.CommentNode, OO.ui.IndicatorElement );
+OO.mixinClass( ve.ce.CommentNode, OO.ui.mixin.IconElement );
 
 /* Static Properties */
 

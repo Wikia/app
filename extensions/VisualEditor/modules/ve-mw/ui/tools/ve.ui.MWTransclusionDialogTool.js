@@ -1,7 +1,7 @@
 /*!
  * VisualEditor MediaWiki UserInterface transclusion tool classes.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2015 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -54,11 +54,6 @@ ve.ui.MWTransclusionDialogTool.static.template = null;
 ve.ui.MWTransclusionDialogTool.static.isCompatibleWith = function ( model ) {
 	var compatible;
 
-	//if wikiaInfoboxTransclusionBlock use ve.ui.WikiaInfoboxDialogTool instead
-	if ( model.type === ve.dm.WikiaInfoboxTransclusionBlockNode.static.name ) {
-		return false;
-	}
-
 	// Parent method
 	compatible = ve.ui.DialogTool.static.isCompatibleWith.call( this, model );
 
@@ -72,3 +67,10 @@ ve.ui.MWTransclusionDialogTool.static.isCompatibleWith = function ( model ) {
 /* Registration */
 
 ve.ui.toolFactory.register( ve.ui.MWTransclusionDialogTool );
+
+ve.ui.commandRegistry.register(
+	new ve.ui.Command(
+		'transclusion', 'window', 'open',
+		{ args: [ 'transclusion' ], supportedSelections: [ 'linear' ] }
+	)
+);

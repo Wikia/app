@@ -1,10 +1,18 @@
 /*!
  * VisualEditor mobile demo
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 /* Demo */
+
+.ve-demo-logo {
+	padding-right: 1.1em;
+}
+
+.ve-demo-surfaceToolbar-read {
+	padding-left: 1.5em;
+}
 
 .ve-demo-read {
 	border-top: 1px solid #ccc;

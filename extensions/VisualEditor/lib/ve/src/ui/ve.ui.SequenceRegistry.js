@@ -1,7 +1,7 @@
 /*!
  * VisualEditor UserInterface SequenceRegistry class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 /**
@@ -43,13 +43,34 @@ ve.ui.SequenceRegistry.prototype.register = function ( sequence ) {
  *
  * @param {ve.dm.ElementLinearData} data Linear data
  * @param {number} offset Offset
- * @return {ve.ui.Sequence[]} Sequences which match
+ * @return {{sequence:ve.ui.Sequence,range:ve.Range}[]}
+ *   Array of matching sequences, and the corresponding range of the match
+ *   for each.
  */
 ve.ui.SequenceRegistry.prototype.findMatching = function ( data, offset ) {
-	var name, sequences = [];
+	var textStart, plaintext, name, range, sequences = [];
+	// To avoid blowup when matching RegExp sequences, we're going to grab
+	// all the plaintext to the left (until the nearest node) *once* and pass
+	// it to each sequence matcher.  We're also going to hard-limit that
+	// plaintext to 256 characters to ensure we don't run into O(N^2)
+	// slowdown when inserting N characters of plain text.
+	for ( textStart = offset - 1; textStart >= 0 && ( offset - textStart ) <= 256; textStart-- ) {
+		// Ignore an element if it occurs in the last two context characters.
+		// Typing "foo\n" creates "foo</p><p>" in the data model, and we want
+		// to give the matcher a chance against it.
+		if ( data.isElementData( textStart ) && ( offset - textStart ) > 2 ) {
+			break;
+		}
+	}
+	plaintext = data.getText( true, new ve.Range( textStart + 1, offset ) );
+	// Now search through the registry.
 	for ( name in this.registry ) {
-		if ( this.registry[name].match( data, offset ) ) {
-			sequences.push( this.registry[name] );
+		range = this.registry[ name ].match( data, offset, plaintext );
+		if ( range !== null ) {
+			sequences.push( {
+				sequence: this.registry[ name ],
+				range: range
+			} );
 		}
 	}
 	return sequences;

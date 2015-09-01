@@ -1,7 +1,7 @@
 /*!
  * VisualEditor Selection class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 /**
@@ -28,12 +28,12 @@ ve.dm.Selection.static.type = null;
  * Create a new selection from a JSON serialization
  *
  * @param {ve.dm.Document} doc Document to create the selection on
- * @param {string} json JSON serialization
- * @returns {ve.dm.Selection} New selection
+ * @param {string|Object} json JSON serialization or hash object
+ * @return {ve.dm.Selection} New selection
  * @throws {Error} Unknown selection type
  */
 ve.dm.Selection.static.newFromJSON = function ( doc, json ) {
-	var hash = JSON.parse( json ),
+	var hash = typeof json === 'string' ? JSON.parse( json ) : json,
 		constructor = ve.dm.selectionFactory.lookup( hash.type );
 
 	if ( !constructor ) {
@@ -46,98 +46,98 @@ ve.dm.Selection.static.newFromJSON = function ( doc, json ) {
 /**
  * Create a new selection from a hash object
  *
+ * @abstract
+ * @method
  * @param {ve.dm.Document} doc Document to create the selection on
  * @param {Object} hash Hash object
- * @returns {ve.dm.Selection} New selection
+ * @return {ve.dm.Selection} New selection
  */
-ve.dm.Selection.static.newFromHash = function () {
-	throw new Error( 've.dm.Selection subclass must implement newFromHash' );
-};
+ve.dm.Selection.static.newFromHash = null;
 
 /* Methods */
 
 /**
  * Get a JSON serialization of this selection
  *
- * @returns {Object} Object for JSON serialization
+ * @abstract
+ * @method
+ * @return {Object} Object for JSON serialization
  */
-ve.dm.Selection.prototype.toJSON = function () {
-	throw new Error( 've.dm.Selection subclass must implement toJSON' );
-};
+ve.dm.Selection.prototype.toJSON = null;
 
 /**
  * Get a textual description of this selection, for debugging purposes
  *
- * @returns {string} Textual description
+ * @abstract
+ * @method
+ * @return {string} Textual description
  */
-ve.dm.Selection.prototype.getDescription = function () {
-	throw new Error( 've.dm.Selection subclass must implement getDescription' );
-};
+ve.dm.Selection.prototype.getDescription = null;
 
 /**
  * Create a copy of this selection
  *
- * @returns {ve.dm.Selection} Cloned selection
+ * @abstract
+ * @method
+ * @return {ve.dm.Selection} Cloned selection
  */
-ve.dm.Selection.prototype.clone = function () {
-	throw new Error( 've.dm.Selection subclass must implement clone' );
-};
+ve.dm.Selection.prototype.clone = null;
 
 /**
  * Get a new selection at the start point of this one
  *
- * @returns {ve.dm.Selection} Collapsed selection
+ * @abstract
+ * @method
+ * @return {ve.dm.Selection} Collapsed selection
  */
-ve.dm.Selection.prototype.collapseToStart = function () {
-	throw new Error( 've.dm.Selection subclass must implement collapseToStart' );
-};
+ve.dm.Selection.prototype.collapseToStart = null;
 
 /**
  * Get a new selection at the end point of this one
  *
- * @returns {ve.dm.Selection} Collapsed selection
+ * @abstract
+ * @method
+ * @return {ve.dm.Selection} Collapsed selection
  */
-ve.dm.Selection.prototype.collapseToEnd = function () {
-	throw new Error( 've.dm.Selection subclass must implement collapseToEnd' );
-};
+ve.dm.Selection.prototype.collapseToEnd = null;
 
 /**
  * Get a new selection at the 'from' point of this one
  *
- * @returns {ve.dm.Selection} Collapsed selection
+ * @abstract
+ * @method
+ * @return {ve.dm.Selection} Collapsed selection
  */
-ve.dm.Selection.prototype.collapseToFrom = function () {
-	throw new Error( 've.dm.Selection subclass must implement collapseToFrom' );
-};
+ve.dm.Selection.prototype.collapseToFrom = null;
 
 /**
  * Get a new selection at the 'to' point of this one
  *
- * @returns {ve.dm.Selection} Collapsed selection
+ * @abstract
+ * @method
+ * @return {ve.dm.Selection} Collapsed selection
  */
-ve.dm.Selection.prototype.collapseToTo = function () {
-	throw new Error( 've.dm.Selection subclass must implement collapseToTo' );
-};
+ve.dm.Selection.prototype.collapseToTo = null;
 
 /**
  * Check if a selection is collapsed
  *
- * @returns {boolean} Selection is collapsed
+ * @abstract
+ * @method
+ * @return {boolean} Selection is collapsed
  */
-ve.dm.Selection.prototype.isCollapsed = function () {
-	throw new Error( 've.dm.Selection subclass must implement isCollapsed' );
-};
+ve.dm.Selection.prototype.isCollapsed = null;
 
 /**
  * Apply translations from a transaction
  *
+ * @abstract
+ * @method
  * @param {ve.dm.Transaction} tx Transaction
  * @param {boolean} [excludeInsertion] Do not grow to cover insertions at boundaries
  * @return {ve.dm.Selection} A new translated selection
  */
-ve.dm.Selection.prototype.translateByTransaction = function () {
-	throw new Error( 've.dm.Selection subclass must implement translateByTransaction' );
-};
+ve.dm.Selection.prototype.translateByTransaction = null;
 
 /**
  * Apply translations from a set of transactions
@@ -149,7 +149,7 @@ ve.dm.Selection.prototype.translateByTransaction = function () {
 ve.dm.Selection.prototype.translateByTransactions = function ( txs, excludeInsertion ) {
 	var i, l, selection = this;
 	for ( i = 0, l = txs.length; i < l; i++ ) {
-		selection = selection.translateByTransaction( txs[i], excludeInsertion );
+		selection = selection.translateByTransaction( txs[ i ], excludeInsertion );
 	}
 	return selection;
 };
@@ -157,7 +157,7 @@ ve.dm.Selection.prototype.translateByTransactions = function ( txs, excludeInser
 /**
  * Check if this selection is null
  *
- * @returns {boolean} The selection is null
+ * @return {boolean} The selection is null
  */
 ve.dm.Selection.prototype.isNull = function () {
 	return false;
@@ -166,16 +166,16 @@ ve.dm.Selection.prototype.isNull = function () {
 /**
  * Get the content ranges for this selection
  *
- * @returns {ve.Range[]} Ranges
+ * @abstract
+ * @method
+ * @return {ve.Range[]} Ranges
  */
-ve.dm.Selection.prototype.getRanges = function () {
-	throw new Error( 've.dm.Selection subclass must implement getRanges' );
-};
+ve.dm.Selection.prototype.getRanges = null;
 
 /**
  * Get the document model this selection applies to
  *
- * @returns {ve.dm.Document} Document model
+ * @return {ve.dm.Document} Document model
  */
 ve.dm.Selection.prototype.getDocument = function () {
 	return this.documentModel;
@@ -184,12 +184,12 @@ ve.dm.Selection.prototype.getDocument = function () {
 /**
  * Check if two selections are equal
  *
+ * @abstract
+ * @method
  * @param {ve.dm.Selection} other Other selection
- * @returns {boolean} Selections are equal
+ * @return {boolean} Selections are equal
  */
-ve.dm.Selection.prototype.equals = function () {
-	throw new Error( 've.dm.Selection subclass must implement equals' );
-};
+ve.dm.Selection.prototype.equals = null;
 
 /* Factory */
 

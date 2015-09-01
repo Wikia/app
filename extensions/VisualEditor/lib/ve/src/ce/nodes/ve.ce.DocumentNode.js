@@ -1,7 +1,7 @@
 /*!
  * VisualEditor ContentEditable DocumentNode class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 /**
@@ -45,7 +45,7 @@ ve.ce.DocumentNode.static.name = 'document';
  * For a document node is the same as the inner length, which is why we override it here.
  *
  * @method
- * @returns {number} Length of the entire node
+ * @return {number} Length of the entire node
  */
 ve.ce.DocumentNode.prototype.getOuterLength = function () {
 	return this.length;
@@ -55,7 +55,7 @@ ve.ce.DocumentNode.prototype.getOuterLength = function () {
  * Get the surface the document is attached to.
  *
  * @method
- * @returns {ve.ce.Surface} Surface the document is attached to
+ * @return {ve.ce.Surface} Surface the document is attached to
  */
 ve.ce.DocumentNode.prototype.getSurface = function () {
 	return this.surface;

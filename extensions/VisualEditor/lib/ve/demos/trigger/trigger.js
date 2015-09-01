@@ -1,21 +1,8 @@
 /*!
  * VisualEditor trigger demo
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
-
-function setTrigger( trigger ) {
-	var i, len, key, parts;
-	trigger = trigger.toString();
-	parts = trigger.split( '+' );
-	$( '#trigger' ).text( trigger );
-	for ( i = 0, len = parts.length; i < len; i++ ) {
-		key = parts[i].replace( '\\', '\\\\' ).replace( '"', '\\"' );
-		$( '.key[rel="' + key + '"]' ).addClass( 'active' );
-	}
-}
-
-// Initialization
 
 var i, len, key,
 	$primary = $( '#primary' ),
@@ -25,12 +12,25 @@ var i, len, key,
 	modifierKeys = ve.ui.Trigger.static.modifierKeys,
 	keyAliases = ve.ui.Trigger.static.keyAliases;
 
+function setTrigger( trigger ) {
+	var i, len, key, parts;
+	trigger = trigger.toString();
+	parts = trigger.split( '+' );
+	$( '#trigger' ).text( trigger );
+	for ( i = 0, len = parts.length; i < len; i++ ) {
+		key = parts[ i ].replace( '\\', '\\\\' ).replace( '"', '\\"' );
+		$( '.key[rel="' + key + '"]' ).addClass( 'active' );
+	}
+}
+
+// Initialization
+
 for ( i = 0, len = modifierKeys.length; i < len; i++ ) {
 	$modifiers.append(
 		$( '<li>' ).append(
 			$( '<span class="key"></span>' )
-				.text( modifierKeys[i] )
-				.attr( 'rel', modifierKeys[i] )
+				.text( modifierKeys[ i ] )
+				.attr( 'rel', modifierKeys[ i ] )
 		)
 	);
 }
@@ -38,8 +38,8 @@ for ( i = 0, len = primaryKeys.length; i < len; i++ ) {
 	$primary.append(
 		$( '<li>' ).append(
 			$( '<span class="key"></span>' )
-				.text( primaryKeys[i] )
-				.attr( 'rel', primaryKeys[i] )
+				.text( primaryKeys[ i ] )
+				.attr( 'rel', primaryKeys[ i ] )
 		)
 	);
 }
@@ -48,7 +48,7 @@ for ( key in keyAliases ) {
 		$( '<li>' )
 			.append( $( '<span class="key alias"></span>' ).text( key ) )
 			.append( '⇢' )
-			.append( $( '<span class="key"></span>' ).text( keyAliases[key] ) )
+			.append( $( '<span class="key"></span>' ).text( keyAliases[ key ] ) )
 	);
 }
 
@@ -82,7 +82,7 @@ $( '#primary .key, #modifiers .key' ).on( {
 			}
 			$target.removeClass( 'activating' );
 			$( '.active' ).each( function () {
-				parts.push( $(this).attr( 'rel' ) );
+				parts.push( $( this ).attr( 'rel' ) );
 			} );
 			setTrigger( new ve.ui.Trigger( parts.join( '+' ) ) );
 		}

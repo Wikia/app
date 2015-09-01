@@ -1,0 +1,15 @@
+{
+	"@metadata": {
+		"authors": [
+			"HalanTul"
+		]
+	},
+	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|Визуал эрэдээктэр]]",
+	"tag-visualeditor-description": "Көннөрүү [[{{MediaWiki:visualeditor-descriptionpagelink}}|Көрөн уларытааччы эрэдээктэр]] көмөтүнэн оҥоһуллубут",
+	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|Көрөн уларытар эрэдээктэр]]: тургут",
+	"tag-visualeditor-switched-description": "Бастаан Көрөн уларытар эрэдээктэр көмөтүнэн саҕалаабыт, онтон төрүт тиэкиһи уларытар эрэдээктэргэ көспүт.",
+	"visualeditor-feedback-link": "Project:Көрөн уларытар эрэдээктэр/Дьон туох диирэ",
+	"visualeditor-feedback-tool": "Бу баайым туһунан санааҕын эт",
+	"visualeditor-help-label": "Ыйыыны-кэрдиини аах",
+	"visualeditor-help-title": "Эрэдээктэри туһаныы туһунан"
+}

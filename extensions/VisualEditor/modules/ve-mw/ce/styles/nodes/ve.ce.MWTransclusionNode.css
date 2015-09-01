@@ -1,0 +1,24 @@
+/*!
+ * VisualEditor ContentEditable MediaWiki MWTransclusionNode styles.
+ *
+ * @copyright 2011-2015 VisualEditor Team and others; see AUTHORS.txt
+ * @license The MIT License (MIT); see LICENSE.txt
+ */
+
+.ve-ce-mwTransclusionNode.oo-ui-iconElement {
+	display: inline-block;
+	vertical-align: middle;
+	padding: 0.2em;
+	margin: -0.25em 0.15em 0 0.15em;
+}
+
+.ve-ce-mwTransclusionNode.oo-ui-iconElement .oo-ui-iconElement-icon {
+	display: inline-block;
+	vertical-align: middle;
+	width: 1.25em;
+	height: 1.25em;
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: 24px 24px;
+	opacity: 0.5;
+}

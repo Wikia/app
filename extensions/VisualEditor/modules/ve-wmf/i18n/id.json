@@ -8,17 +8,20 @@
 			"Kenrick95",
 			"McDutchie",
 			"Rv77ax",
-			"William Surya Permana"
+			"William Surya Permana",
+			"Amire80",
+			"아라"
 		]
 	},
 	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]]",
 	"tag-visualeditor-description": "Disunting dengan [[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]]",
 	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor: Periksa]]",
-	"tag-visualeditor-needcheck-description": "Penyuntingan yang menggunakan [[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]] pada sistem yang mendeteksi adanya teks wiki mungkin mengalami perubahan yang tidak diinginkan.",
+	"tag-visualeditor-needcheck-description": "Penyuntingan yang menggunakan [[{{MediaWiki:visualeditor-descriptionpagelink}}|editor visual]] pada sistem yang mendeteksi adanya teks wiki mungkin mengalami perubahan yang tidak diinginkan.",
 	"tag-visualeditor-switched": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor: Beralih]]",
-	"tag-visualeditor-switched-description": "Pengguna mulai menyunting dengan VisualEditor lalu mengubahnya menjadi editor teks wiki.",
+	"tag-visualeditor-switched-description": "Pengguna mulai menyunting dengan editor visual lalu mengubahnya menjadi editor teks wiki.",
 	"visualeditor-feedback-link": "Project:VisualEditor/Umpan balik",
-	"visualeditor-feedback-tool": "Tinggalkan umpan balik",
+	"visualeditor-feedback-tool": "Tinggalkan umpan balik untuk peranti lunak ini",
 	"visualeditor-help-label": "Baca panduan pengguna",
+	"visualeditor-help-link": "mw:Special:MyLanguage/Help:VisualEditor/User guide",
 	"visualeditor-help-title": "Panduan menggunakan VisualEditor"
 }

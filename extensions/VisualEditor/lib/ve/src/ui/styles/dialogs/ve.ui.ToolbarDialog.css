@@ -1,18 +1,21 @@
 /*!
  * VisualEditor UserInterface ToolbarDialog styles.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 .ve-ui-toolbarDialog {
-	padding: 0.375em; /* 0.3em / 0.8 */
-	padding-top: 0;
 	overflow-y: hidden;
 	max-height: 0;
+	border-top: 1px solid #ddd;
 	-webkit-transition: max-height 250ms;
 	-moz-transition: max-height 250ms;
 	-o-transition: max-height 250ms;
 	transition: max-height 250ms;
+}
+
+.ve-ui-toolbarDialog-padded {
+	padding: 0.375em; /* 0.3em / 0.8 */
 }
 
 .ve-ui-toolbarDialog.oo-ui-window-ready {
@@ -20,12 +23,33 @@
 	max-height: 150px;
 }
 
+.ve-ui-toolbarDialog-shield {
+	display: none;
+}
+
+.ve-ui-toolbarDialog-disabled {
+	opacity: 0.2;
+}
+
+.ve-ui-toolbarDialog-disabled .ve-ui-toolbarDialog-shield {
+	display: block;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+
+/* Override ProcessDialog styles */
+.ve-ui-toolbarDialog .oo-ui-window-head {
+	height: 0;
+}
+
+.ve-ui-toolbarDialog .oo-ui-window-body {
+	top: 0;
+}
+
 /* TODO: fix this upstream */
 .ve-ui-toolbar .oo-ui-window-frame {
 	position: relative;
-}
-
-.ve-ui-toolbarDialog-content > .oo-ui-window-body {
-	bottom: auto;
-	box-shadow: none;
 }

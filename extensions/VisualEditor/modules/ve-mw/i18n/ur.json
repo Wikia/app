@@ -2,11 +2,17 @@
 	"@metadata": {
 		"authors": [
 			"Noor2020",
-			"පසිඳු කාවින්ද"
+			"පසිඳු කාවින්ද",
+			"عثمان خان شاہ",
+			"Syedalinaqinaqvi",
+			"عرفان ارشد"
 		]
 	},
-	"visualeditor-ca-editsource": "ذریعہ میں ترمیم کریں",
-	"visualeditor-linkinspector-suggest-external-link": "بیرونی ربط",
-	"visualeditor-linkinspector-suggest-matching-page": "صفحہ کے مشابہ",
+	"tooltip-ca-ve-edit": "ویژول ایڈیٹر کے ذریعے اس صفحے کو ترمیم کریں",
+	"visualeditor-ca-createlocaldescriptionsource": "ادخال ماخذ برائے مقامی وضاحت",
+	"visualeditor-ca-createsource": "مسودہ بنائے",
+	"visualeditor-ca-editsource": "مسودے میں ترمیم کریں",
+	"visualeditor-ca-editsource-section": "مسودے میں ترمیم کریں",
+	"visualeditor-descriptionpagelink": "Project:ویژوئل ایڈیٹر",
 	"visualeditor-serializeerror": "نقص ہے ڈیٹا اثقال کرنے میں :  $1 ۔"
 }

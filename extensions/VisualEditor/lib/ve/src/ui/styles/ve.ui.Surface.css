@@ -1,7 +1,7 @@
 /*!
  * VisualEditor Surface styles.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 .ve-ui-surface {
@@ -15,4 +15,11 @@
 	visibility: hidden;
 	line-height: 0;
 	height: 0;
+}
+
+.ve-ui-surface-placeholder {
+	opacity: 0.33;
+	position: absolute;
+	/* Match .ve-ce-documentNode */
+	padding: 0.9375em 1.875em;
 }

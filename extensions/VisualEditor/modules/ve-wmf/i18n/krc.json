@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"Iltever"
+			"Iltever",
+			"Ernác"
 		]
 	},
 	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|Визуал редактор]]",
@@ -9,9 +10,10 @@
 	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|Визуал редактор]]: тинт",
 	"tag-visualeditor-needcheck-description": "Система, иш этиб тюрлендирилмеген вики-текст табхан, [[{{MediaWiki:visualeditor-descriptionpagelink}}|визуал редакторну]] болушлугъу бла этилген тюрлендириу.",
 	"tag-visualeditor-switched": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|Визуал редактор]]: кёчгенди",
-	"tag-visualeditor-switched-description": "Редакторлукъ этиу VisualEditor бла башланнганды, сора уа викитекст редакторгъа кёчюлгенди.",
+	"tag-visualeditor-switched-description": "Редакторлукъ этиу визуал редактор бла башланнганды, сора уа викитекст редакторгъа кёчюлгенди.",
 	"visualeditor-feedback-link": "Project:VisualEditor/Оюмла",
-	"visualeditor-feedback-tool": "Оюм къой",
+	"visualeditor-feedback-tool": "Оюмунгу къой",
 	"visualeditor-help-label": "Хайырланыу гидни окъу",
-	"visualeditor-help-title": "Хайырланыу гид — редакторну къалай хайырландырыргъа керек болгъанына юретеди"
+	"visualeditor-help-link": "mw:Special:MyLanguage/Help:VisualEditor/User guide",
+	"visualeditor-help-title": "Редакторну къалай хайырландырыргъа керек болгъанына гид"
 }

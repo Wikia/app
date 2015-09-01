@@ -1,7 +1,7 @@
 /*!
  * VisualEditor ContentEditable Surface class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 /**
@@ -69,12 +69,6 @@ OO.mixinClass( ve.ce.SurfaceObserver, OO.EventEmitter );
  * @param {ve.Range|null} newRange New range
  */
 
-/**
- * When #poll observes that the cursor was moved into a block slug
- *
- * @event slugEnter
- */
-
 /* Methods */
 
 /**
@@ -109,6 +103,7 @@ ve.ce.SurfaceObserver.prototype.startTimerLoop = function () {
 
 /**
  * Loop once with `setTimeout`
+ *
  * @method
  * @param {boolean} firstTime Wait before polling
  */
@@ -162,9 +157,6 @@ ve.ce.SurfaceObserver.prototype.enable = function () {
  *
  * TODO: fixing selection in certain cases, handling selection across multiple nodes in Firefox
  *
- * FIXME: Does not work well (rangeChange is not emitted) when cursor is placed inside a block slug
- * with a mouse.
- *
  * @method
  * @fires contentChange
  * @fires rangeChange
@@ -198,20 +190,15 @@ ve.ce.SurfaceObserver.prototype.pollOnceSelection = function () {
  *
  * TODO: fixing selection in certain cases, handling selection across multiple nodes in Firefox
  *
- * FIXME: Does not work well (rangeChange is not emitted) when cursor is placed inside a block slug
- * with a mouse.
- *
  * @method
  * @private
  * @param {boolean} emitChanges Emit change events if selection changed
  * @param {boolean} selectionOnly Check for selection changes only
  * @fires contentChange
  * @fires rangeChange
- * @fires slugEnter
  */
 ve.ce.SurfaceObserver.prototype.pollOnceInternal = function ( emitChanges, selectionOnly ) {
-	var oldState, newState,
-		observer = this;
+	var oldState, newState;
 
 	if ( !this.domDocument || this.disabled ) {
 		return;
@@ -220,33 +207,11 @@ ve.ce.SurfaceObserver.prototype.pollOnceInternal = function ( emitChanges, selec
 	oldState = this.rangeState;
 	newState = new ve.ce.RangeState(
 		oldState,
-		this.surface.$element,
 		this.documentView.getDocumentNode(),
 		selectionOnly
 	);
 
-	if ( newState.leftBlockSlug ) {
-		oldState.$slugWrapper
-			.addClass( 've-ce-branchNode-blockSlugWrapper-unfocused' )
-			.removeClass( 've-ce-branceNode-blockSlugWrapper-focused' );
-	}
-
-	if ( newState.enteredBlockSlug ) {
-		newState.$slugWrapper
-			.addClass( 've-ce-branchNode-blockSlugWrapper-focused' )
-			.removeClass( 've-ce-branchNode-blockSlugWrapper-unfocused' );
-	}
-
 	this.rangeState = newState;
-
-	if ( newState.enteredBlockSlug || newState.leftBlockSlug ) {
-		// Emit 'position' on the surface view after the animation completes
-		this.setTimeout( function () {
-			if ( observer.surface ) {
-				observer.surface.emit( 'position' );
-			}
-		}, 200 );
-	}
 
 	if ( !selectionOnly && newState.node !== null && newState.contentChanged && emitChanges ) {
 		this.emit(
@@ -266,15 +231,14 @@ ve.ce.SurfaceObserver.prototype.pollOnceInternal = function ( emitChanges, selec
 	}
 
 	if ( newState.selectionChanged && emitChanges ) {
+		// Caution: selectionChanged is true if the CE selection is different, which can
+		// be the case even if the DM selection is unchanged. So the following line can
+		// emit a rangeChange event with identical oldState and newState.
 		this.emit(
 			'rangeChange',
 			( oldState ? oldState.veRange : null ),
 			newState.veRange
 		);
-	}
-
-	if ( newState.enteredBlockSlug && emitChanges ) {
-		this.emit( 'slugEnter' );
 	}
 };
 
@@ -293,7 +257,7 @@ ve.ce.SurfaceObserver.prototype.setTimeout = function ( callback, timeout ) {
  *
  * Used when you have just polled, but don't want to wait for a 'rangeChange' event.
  *
- * @return {ve.Range} Range
+ * @return {ve.Range|null} Range
  */
 ve.ce.SurfaceObserver.prototype.getRange = function () {
 	if ( !this.rangeState ) {

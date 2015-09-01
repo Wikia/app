@@ -2,10 +2,6 @@ Given(/^I can see the Transclusion User Interface$/) do
   on(VisualEditorPage).add_a_template_title_element.when_present
 end
 
-Given(/^I click Remove template$/) do
-  on(VisualEditorPage).remove_template_element.when_present.click
-end
-
 Given(/^I click the Add template button$/) do
   on(VisualEditorPage).add_template_element.when_present.click
 end
@@ -16,7 +12,7 @@ end
 
 Given(/^I click Transclusion$/) do
   on(VisualEditorPage) do |page|
-    page.insert_menu_element.when_present.click
+    page.insert_indicator_down_element.when_present.click
     page.transclusion_element.when_present.click
   end
 end
@@ -41,7 +37,7 @@ When(/^I enter (.+) in the parameter box$/) do |param_value|
 end
 
 When(/^I enter (.+) into transclusion Content box$/) do |content|
-  on(VisualEditorPage).transclusion_textfield_element.when_present.send_keys(content)
+  on(VisualEditorPage).transclusion_description_element.when_present.send_keys(content)
 end
 
 Then(/^I should see a list of template suggestions$/) do

@@ -4,5 +4,9 @@
 			"Purodha"
 		]
 	},
-	"visualeditor-feedback-tool": "Jivv_en Röckmäldong"
+	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|<i lang=\"en\" xml:lang=\"en\" dir=\"ltr\" title=\"„Projramm för ‚seeschbaa‘ aan Täxte jät ze änndere“\">VisualEditor</i>]]",
+	"tag-visualeditor-needcheck-description": "En Änderog, di mem {{int:Tag-visualeditor}} jemaat woode es, woh dä Wikkitäx velleijsch obb en onjewollte Aad verändert woode es.",
+	"tag-visualeditor-switched-description": "Dä Metmaacher feng sing Änderong mem {{inti:tag-visualeditor}} aan un jingk dann op der Wikkitäx.",
+	"visualeditor-feedback-tool": "Jivv_en Röckmäldong övver heh di ẞoffwäer",
+	"visualeditor-help-label": "Liss de Aanleijdong för der Jebruch"
 }

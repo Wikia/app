@@ -1,7 +1,7 @@
 /*!
  * VisualEditor DataModel InternalList tests.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 QUnit.module( 've.dm.InternalList' );
@@ -41,7 +41,7 @@ QUnit.test( 'queueItemHtml/getItemHtmlQueue', 5, function ( assert ) {
 		'Third queued item is new because existing data in queue was empty'
 	);
 
-	assert.deepEqual( internalList.getItemHtmlQueue(), ['Bar', 'Baz', 'Quux'], 'getItemHtmlQueue returns stored HTML items' );
+	assert.deepEqual( internalList.getItemHtmlQueue(), [ 'Bar', 'Baz', 'Quux' ], 'getItemHtmlQueue returns stored HTML items' );
 } );
 
 QUnit.test( 'convertToData', 2, function ( assert ) {
@@ -50,12 +50,12 @@ QUnit.test( 'convertToData', 2, function ( assert ) {
 		internalList = doc.getInternalList(),
 		expectedData = [
 			{ type: 'internalList' },
-			{ type: 'internalItem' },
+			{ type: 'internalItem', attributes: { originalHtml: 'Bar' } },
 			{ type: 'paragraph', internal: { generated: 'wrapper' } },
 			'B', 'a', 'r',
 			{ type: '/paragraph' },
 			{ type: '/internalItem' },
-			{ type: 'internalItem' },
+			{ type: 'internalItem', attributes: { originalHtml: 'Baz' } },
 			{ type: 'paragraph', internal: { generated: 'wrapper' } },
 			'B', 'a', 'z',
 			{ type: '/paragraph' },

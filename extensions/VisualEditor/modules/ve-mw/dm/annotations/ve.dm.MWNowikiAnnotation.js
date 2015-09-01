@@ -1,7 +1,7 @@
 /*!
  * VisualEditor DataModel MWNowikiAnnotation class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2015 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -31,19 +31,10 @@ ve.dm.MWNowikiAnnotation.static.name = 'mwNowiki';
 
 ve.dm.MWNowikiAnnotation.static.matchRdfaTypes = [ 'mw:Nowiki' ];
 
-ve.dm.MWNowikiAnnotation.static.toDataElement = function ( domElements ) {
-	return {
-		type: this.name,
-		attributes: {
-			originalDomElements: ve.copy( domElements )
-		}
-	};
-};
-
 ve.dm.MWNowikiAnnotation.static.toDomElements = function ( dataElement, doc, converter, childDomElements ) {
 	var i, len,
-		originalDomElements = dataElement.attributes.originalDomElements,
-		originalChildren = originalDomElements && originalDomElements[0] && originalDomElements[0].childNodes,
+		originalDomElements = dataElement.originalDomElements,
+		originalChildren = originalDomElements && originalDomElements[ 0 ] && originalDomElements[ 0 ].childNodes,
 		contentsChanged = false,
 		domElement = document.createElement( 'span' );
 
@@ -52,7 +43,7 @@ ve.dm.MWNowikiAnnotation.static.toDomElements = function ( dataElement, doc, con
 		contentsChanged = true;
 	} else {
 		for ( i = 0, len = originalChildren.length; i < len; i++ ) {
-			if ( !originalChildren[i].isEqualNode( childDomElements[i] ) ) {
+			if ( !originalChildren[ i ].isEqualNode( childDomElements[ i ] ) ) {
 				contentsChanged = true;
 				break;
 			}
@@ -65,18 +56,6 @@ ve.dm.MWNowikiAnnotation.static.toDomElements = function ( dataElement, doc, con
 	}
 	domElement.setAttribute( 'typeof', 'mw:Nowiki' );
 	return [ domElement ];
-};
-
-ve.dm.MWNowikiAnnotation.static.getHashObject = function ( dataElement ) {
-	var parentResult = ve.dm.Annotation.static.getHashObject( dataElement );
-	if ( parentResult.attributes.originalDomElements ) {
-		// If present, replace originalDomElements with a DOM summary
-		parentResult.attributes = ve.copy( parentResult.attributes );
-		parentResult.attributes.originalDomElements = ve.copy(
-			parentResult.attributes.originalDomElements, ve.convertDomElements
-		);
-	}
-	return parentResult;
 };
 
 /* Registration */

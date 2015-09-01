@@ -1,7 +1,7 @@
 /*!
  * VisualEditor ContentEditable ListItemNode class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2015 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -54,9 +54,9 @@ ve.ce.MWImageCaptionNode.prototype.onSplice = function () {
 
 /** */
 ve.ce.MWImageCaptionNode.prototype.buildMagnify = function () {
-	this.$magnify = this.$( '<div>' )
+	this.$magnify = $( '<div>' )
 		.addClass( 'magnify' );
-	this.$a = this.$( '<a>' )
+	this.$a = $( '<a>' )
 		.addClass( 'internal' )
 		.appendTo( this.$magnify );
 };

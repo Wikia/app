@@ -1,14 +1,14 @@
 /*!
  * VisualEditor DataModel HeadingNode class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 /**
  * DataModel heading node.
  *
  * @class
- * @extends ve.dm.BranchNode
+ * @extends ve.dm.ContentBranchNode
  *
  * @constructor
  * @param {Object} [element] Reference to element in linear model
@@ -21,7 +21,7 @@ ve.dm.HeadingNode = function VeDmHeadingNode() {
 
 /* Inheritance */
 
-OO.inheritClass( ve.dm.HeadingNode, ve.dm.BranchNode );
+OO.inheritClass( ve.dm.HeadingNode, ve.dm.ContentBranchNode );
 
 /* Static Properties */
 
@@ -44,7 +44,7 @@ ve.dm.HeadingNode.static.toDataElement = function ( domElements ) {
 			h5: 5,
 			h6: 6
 		},
-		level = levels[domElements[0].nodeName.toLowerCase()];
+		level = levels[ domElements[ 0 ].nodeName.toLowerCase() ];
 	return { type: this.name, attributes: { level: level } };
 };
 

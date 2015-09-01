@@ -35,8 +35,9 @@ module.exports = function ( grunt ) {
 					targetCat.forEach( function ( targetGroupName ) {
 						// ... find the category in the aggregate source
 						srcCategories.forEach( function ( aggrCat ) {
+							var targetGroup;
 							if ( aggrCat.name === targetGroupName ) {
-								var targetGroup = {
+								targetGroup = {
 									name: targetGroupName,
 									classes: []
 								};

@@ -1,7 +1,7 @@
 /*!
  * VisualEditor ContentEditable TableNode class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 /**
@@ -17,10 +17,16 @@ ve.ce.TableNode = function VeCeTableNode() {
 	// Parent constructor
 	ve.ce.TableNode.super.apply( this, arguments );
 
+	// Properties
 	this.surface = null;
 	this.active = false;
 	this.startCell = null;
 	this.editingFragment = null;
+
+	// DOM changes
+	this.$element
+		.addClass( 've-ce-tableNode' )
+		.prop( 'contentEditable', 'false' );
 };
 
 /* Inheritance */
@@ -42,28 +48,20 @@ ve.ce.TableNode.prototype.onSetup = function () {
 	}
 	this.surface = this.getRoot().getSurface();
 
-	// DOM changes
-	this.$element
-		.addClass( 've-ce-tableNode' )
-		.prop( 'contentEditable', 'false' );
-
 	// Overlay
-	this.$selectionBox = this.$( '<div>' ).addClass( 've-ce-tableNodeOverlay-selection-box' );
-	this.$selectionBoxAnchor = this.$( '<div>' ).addClass( 've-ce-tableNodeOverlay-selection-box-anchor' );
-	this.colContext = new ve.ui.TableContext( this, 'table-col', {
-		$: this.$,
-		classes: ['ve-ui-tableContext-colContext'],
+	this.$selectionBox = $( '<div>' ).addClass( 've-ce-tableNodeOverlay-selection-box' );
+	this.$selectionBoxAnchor = $( '<div>' ).addClass( 've-ce-tableNodeOverlay-selection-box-anchor' );
+	this.colContext = new ve.ui.TableContext( this, 'col', {
+		classes: [ 've-ui-tableContext-colContext' ],
 		indicator: 'down'
 	} );
-	this.rowContext = new ve.ui.TableContext( this, 'table-row', {
-		$: this.$,
-		classes: ['ve-ui-tableContext-rowContext'],
+	this.rowContext = new ve.ui.TableContext( this, 'row', {
+		classes: [ 've-ui-tableContext-rowContext' ],
 		indicator: 'next'
 	} );
 
-	this.$overlay = this.$( '<div>' )
-		.hide()
-		.addClass( 've-ce-tableNodeOverlay' )
+	this.$overlay = $( '<div>' )
+		.addClass( 've-ce-tableNodeOverlay oo-ui-element-hidden' )
 		.append( [
 			this.$selectionBox,
 			this.$selectionBoxAnchor,
@@ -198,7 +196,7 @@ ve.ce.TableNode.prototype.onTableMouseMove = function ( e ) {
 			// Ignore multi-touch
 			return;
 		}
-		touch = e.originalEvent.touches[0];
+		touch = e.originalEvent.touches[ 0 ];
 		target = this.surface.getElementDocument().elementFromPoint( touch.clientX, touch.clientY );
 	} else {
 		target = e.target;
@@ -243,27 +241,44 @@ ve.ce.TableNode.prototype.onTableMouseUp = function () {
  * @param {boolean} noSelect Don't change the selection
  */
 ve.ce.TableNode.prototype.setEditing = function ( isEditing, noSelect ) {
+	var cell, offset, cellRange, profile,
+		surfaceModel = this.surface.getModel(),
+		selection = surfaceModel.getSelection();
 	if ( isEditing ) {
-		var cell, selection = this.surface.getModel().getSelection();
 		if ( !selection.isSingleCell() ) {
 			selection = selection.collapseToFrom();
 			this.surface.getModel().setSelection( selection );
 		}
+		cell = this.getCellNodesFromSelection( selection )[ 0 ];
+		if ( !cell.isCellEditable() ) {
+			return;
+		}
 		this.editingFragment = this.surface.getModel().getFragment( selection );
-		cell = this.getCellNodesFromSelection( selection )[0];
 		cell.setEditing( true );
 		if ( !noSelect ) {
-		// TODO: Find content offset/slug offset within cell
-			this.surface.getModel().setLinearSelection( new ve.Range( cell.getModel().getRange().end - 1 ) );
+			cellRange = cell.getModel().getRange();
+			offset = surfaceModel.getDocument().data.getNearestContentOffset( cellRange.end, -1 );
+			if ( offset > cellRange.start ) {
+				surfaceModel.setLinearSelection( new ve.Range( offset ) );
+			}
 		}
 	} else if ( this.editingFragment ) {
-		this.getCellNodesFromSelection( this.editingFragment.getSelection() )[0].setEditing( false );
+		this.getCellNodesFromSelection( this.editingFragment.getSelection() )[ 0 ].setEditing( false );
 		if ( !noSelect ) {
-			this.surface.getModel().setSelection( this.editingFragment.getSelection() );
+			surfaceModel.setSelection( this.editingFragment.getSelection() );
 		}
 		this.editingFragment = null;
 	}
 	this.$element.toggleClass( 've-ce-tableNode-editing', isEditing );
+	// HACK T103035: Firefox 39 has a regression which clicking on a ce=false table
+	// always selects the entire table, even if you click in a ce=true child.
+	// Making the table ce=true does allow the user to make selections across cells
+	// and corrupt the table in some circumstance, so restrict this hack as much
+	// as possible.
+	profile = $.client.profile();
+	if ( profile.layout === 'gecko' && profile.versionBase === '39' ) {
+		this.$element.prop( 'contentEditable', isEditing.toString() );
+	}
 	this.$overlay.toggleClass( 've-ce-tableNodeOverlay-editing', isEditing );
 };
 
@@ -283,7 +298,7 @@ ve.ce.TableNode.prototype.getEditingFragment = function () {
  */
 ve.ce.TableNode.prototype.getEditingRange = function () {
 	var fragment = this.getEditingFragment();
-	return fragment ? fragment.getSelection().getRanges()[0] : null;
+	return fragment ? fragment.getSelection().getRanges()[ 0 ] : null;
 };
 
 /**
@@ -297,24 +312,24 @@ ve.ce.TableNode.prototype.onSurfaceModelSelect = function ( selection ) {
 	var active = (
 			this.editingFragment !== null &&
 			selection instanceof ve.dm.LinearSelection &&
-			this.editingFragment.getSelection().getRanges()[0].containsRange( selection.getRange() )
+			this.editingFragment.getSelection().getRanges()[ 0 ].containsRange( selection.getRange() )
 		) ||
 		(
 			selection instanceof ve.dm.TableSelection &&
-			selection.tableRange.equals( this.getModel().getOuterRange() )
+			selection.tableRange.equalsSelection( this.getModel().getOuterRange() )
 		);
 
 	if ( active ) {
 		if ( !this.active ) {
-			this.$overlay.show();
+			this.$overlay.removeClass( 'oo-ui-element-hidden' );
 			// Only register touchstart event after table has become active to prevent
 			// accidental focusing of the table while scrolling
 			this.$element.on( 'touchstart.ve-ce-tableNode', this.onTableMouseDown.bind( this ) );
 		}
 		this.surface.setActiveTableNode( this );
-		this.updateOverlayDebounced();
+		this.updateOverlayDebounced( true );
 	} else if ( !active && this.active ) {
-		this.$overlay.hide();
+		this.$overlay.addClass( 'oo-ui-element-hidden' );
 		if ( this.editingFragment ) {
 			this.setEditing( false, true );
 		}
@@ -329,47 +344,42 @@ ve.ce.TableNode.prototype.onSurfaceModelSelect = function ( selection ) {
 
 /**
  * Update the overlay positions
+ *
+ * @param {boolean} selectionChanged The update was triggered by a selection change
  */
-ve.ce.TableNode.prototype.updateOverlay = function () {
-	if ( !this.active ) {
+ve.ce.TableNode.prototype.updateOverlay = function ( selectionChanged ) {
+	var i, l, anchorNode, anchorOffset, selectionOffset, selection, tableOffset, surfaceOffset, cells,
+		editable = true;
+
+	if ( !this.active || !this.root ) {
 		return;
 	}
 
-	var i, l, nodes, cellOffset, anchorNode, anchorOffset, selectionOffset,
-		top, left, bottom, right,
-		selection = this.editingFragment ?
-			this.editingFragment.getSelection() :
-			this.surface.getModel().getSelection(),
-		// getBoundingClientRect is more accurate but must be used consistently
-		// due to the iOS7 bug where it is relative to the document.
-		tableOffset = this.getFirstSectionNode().$element[0].getBoundingClientRect(),
-		surfaceOffset = this.surface.getSurface().$element[0].getBoundingClientRect();
+	selection = this.editingFragment ?
+		this.editingFragment.getSelection() :
+		this.surface.getModel().getSelection();
+	// getBoundingClientRect is more accurate but must be used consistently
+	// due to the iOS7 bug where it is relative to the document.
+	tableOffset = this.getFirstSectionNode().$element[ 0 ].getBoundingClientRect();
+	surfaceOffset = this.surface.getSurface().$element[ 0 ].getBoundingClientRect();
 
 	if ( !tableOffset ) {
 		return;
 	}
 
-	nodes = this.getCellNodesFromSelection( selection );
-	anchorNode = this.getCellNodesFromSelection( selection.collapseToFrom() )[0];
-	anchorOffset = ve.translateRect( anchorNode.$element[0].getBoundingClientRect(), -tableOffset.left, -tableOffset.top );
-
-	top = Infinity;
-	bottom = -Infinity;
-	left = Infinity;
-	right = -Infinity;
+	cells = selection.getMatrixCells();
+	anchorNode = this.getCellNodesFromSelection( selection.collapseToFrom() )[ 0 ];
+	anchorOffset = ve.translateRect( anchorNode.$element[ 0 ].getBoundingClientRect(), -tableOffset.left, -tableOffset.top );
 
 	// Compute a bounding box for the given cell elements
-	for ( i = 0, l = nodes.length; i < l; i++) {
-		cellOffset = nodes[i].$element[0].getBoundingClientRect();
-
-		top = Math.min( top, cellOffset.top );
-		bottom = Math.max( bottom, cellOffset.bottom );
-		left = Math.min( left, cellOffset.left );
-		right = Math.max( right, cellOffset.right );
+	for ( i = 0, l = cells.length; i < l; i++ ) {
+		if ( editable && !cells[ i ].node.isCellEditable() ) {
+			editable = false;
+		}
 	}
 
 	selectionOffset = ve.translateRect(
-		{ top: top, bottom: bottom, left: left, right: right, width: right - left, height: bottom - top },
+		this.getSelectionBoundingRect( selection ),
 		-tableOffset.left, -tableOffset.top
 	);
 
@@ -415,7 +425,47 @@ ve.ce.TableNode.prototype.updateOverlay = function () {
 	// Classes
 	this.$selectionBox
 		.toggleClass( 've-ce-tableNodeOverlay-selection-box-fullRow', selection.isFullRow() )
-		.toggleClass( 've-ce-tableNodeOverlay-selection-box-fullCol', selection.isFullCol() );
+		.toggleClass( 've-ce-tableNodeOverlay-selection-box-fullCol', selection.isFullCol() )
+		.toggleClass( 've-ce-tableNodeOverlay-selection-box-notEditable', !editable );
+
+	if ( selectionChanged ) {
+		ve.scrollIntoView( this.$selectionBox.get( 0 ) );
+	}
+};
+
+/**
+ * Get the coordinates of the selection's bounding rectangle relative to the client.
+ *
+ * @param {ve.dm.Selection} selection Selection to get rectangles for
+ * @return {Object} Selection rectangle, with keys top, bottom, left, right, width, height
+ */
+ve.ce.TableNode.prototype.getSelectionBoundingRect = function ( selection ) {
+	var i, l, cellOffset, top, bottom, left, right,
+		nodes = this.getCellNodesFromSelection( selection );
+
+	top = Infinity;
+	bottom = -Infinity;
+	left = Infinity;
+	right = -Infinity;
+
+	// Compute a bounding box for the given cell elements
+	for ( i = 0, l = nodes.length; i < l; i++ ) {
+		cellOffset = nodes[ i ].$element[ 0 ].getBoundingClientRect();
+
+		top = Math.min( top, cellOffset.top );
+		bottom = Math.max( bottom, cellOffset.bottom );
+		left = Math.min( left, cellOffset.left );
+		right = Math.max( right, cellOffset.right );
+	}
+
+	return {
+		top: top,
+		bottom: bottom,
+		left: left,
+		right: right,
+		width: right - left,
+		height: bottom - top
+	};
 };
 
 /**
@@ -425,10 +475,10 @@ ve.ce.TableNode.prototype.updateOverlay = function () {
  */
 ve.ce.TableNode.prototype.getFirstSectionNode = function () {
 	var i = 0;
-	while ( !( this.children[i] instanceof ve.ce.TableSectionNode ) ) {
+	while ( !( this.children[ i ] instanceof ve.ce.TableSectionNode ) ) {
 		i++;
 	}
-	return this.children[i];
+	return this.children[ i ];
 };
 
 /**
@@ -443,7 +493,7 @@ ve.ce.TableNode.prototype.getCellNodesFromSelection = function ( selection ) {
 		nodes = [];
 
 	for ( i = 0, l = cells.length; i < l; i++ ) {
-		cellModel = cells[i].node;
+		cellModel = cells[ i ].node;
 		cellView = this.getNodeFromOffset( cellModel.getOffset() - this.model.getOffset() );
 		nodes.push( cellView );
 	}

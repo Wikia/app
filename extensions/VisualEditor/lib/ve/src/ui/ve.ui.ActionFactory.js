@@ -1,7 +1,7 @@
 /*!
  * VisualEditor UserInterface ActionFactory class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 /**
@@ -28,11 +28,11 @@ OO.inheritClass( ve.ui.ActionFactory, OO.Factory );
  * @method
  * @param {string} action Name of action
  * @param {string} method Name of method
- * @returns {boolean} The action supports the method
+ * @return {boolean} The action supports the method
  */
 ve.ui.ActionFactory.prototype.doesActionSupportMethod = function ( action, method ) {
 	if ( Object.prototype.hasOwnProperty.call( this.registry, action ) ) {
-		return this.registry[action].static.methods.indexOf( method ) !== -1;
+		return this.registry[ action ].static.methods.indexOf( method ) !== -1;
 	}
 	throw new Error( 'Unknown action: ' + action );
 };

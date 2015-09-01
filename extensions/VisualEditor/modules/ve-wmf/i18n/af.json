@@ -4,7 +4,7 @@
 			"Naudefj"
 		]
 	},
-	"tag-visualeditor": "[[{{MediaWiki:Visualeditor-descriptionpagelink}}|Visuele teksverwerker]]",
+	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|Visuele teksverwerker]]",
 	"tag-visualeditor-description": "Wysiging gemaak met die [[{{MediaWiki:Visualeditor-descriptionpagelink}}|visuele teksverwerker]]",
 	"tag-visualeditor-needcheck-description": "Wysiging gemaak met die [[{{MediaWiki:Visualeditor-descriptionpagelink}}|visuele teksverwerker]] waar die stelsel potensieel onbedoelde veranderings opgespoor het.",
 	"visualeditor-feedback-link": "Project:Visuele teksverwerker/Terugvoer",

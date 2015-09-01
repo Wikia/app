@@ -1,7 +1,7 @@
 /*!
  * VisualEditor DataModel TableRowNode class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 /**
@@ -47,10 +47,12 @@ ve.dm.TableRowNode.static.matchTagNames = [ 'tr' ];
  * @return {Array} Model data for a new table row
  */
 ve.dm.TableRowNode.static.createData = function ( options ) {
+	var i, cellCount,
+		data = [];
+
 	options = options || {};
 
-	var i, data = [],
-		cellCount = options.cellCount || 1;
+	cellCount = options.cellCount || 1;
 
 	data.push( { type: 'tableRow' } );
 	for ( i = 0; i < cellCount; i++ ) {

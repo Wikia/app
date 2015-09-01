@@ -10,8 +10,11 @@
 	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VidRedaktilo]]",
 	"tag-visualeditor-description": "Redakto farita per [[{{MediaWiki:visualeditor-descriptionpagelink}}|VidRedaktilo]]",
 	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VidRedaktilo:Kontroli]]",
+	"tag-visualeditor-needcheck-description": "Redakto farita per [[{{MediaWiki:visualeditor-descriptionpagelink}}|VidRedaktilo]] kie sistemo detektis eblajn neintencajn ŝanĝojn de vikiteksto.",
+	"tag-visualeditor-switched": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VidRedaktilo: Komutita]]",
+	"tag-visualeditor-switched-description": "Uzanto komenci redakti uzante VidRedaktilon kaj poste ŝanĝis al vikiteksta redaktilo.",
 	"visualeditor-feedback-link": "Project:VidRedaktilo/Rimarkoj",
-	"visualeditor-feedback-tool": "Lasi rimarkon",
+	"visualeditor-feedback-tool": "Provizu rimarkojn pri tiu ĉi programo",
 	"visualeditor-help-label": "Legu gvidilon por uzantoj",
 	"visualeditor-help-title": "Gvidilo pri uzado de la redaktilo"
 }

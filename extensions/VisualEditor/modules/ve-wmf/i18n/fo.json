@@ -1,7 +1,9 @@
 {
 	"@metadata": {
 		"authors": [
-			"EileenSanda"
+			"EileenSanda",
+			"Amire80",
+			"아라"
 		]
 	},
 	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]]",
@@ -11,5 +13,6 @@
 	"visualeditor-feedback-link": "Project:VisualEditor/Feedback",
 	"visualeditor-feedback-tool": "Gev afturmelding",
 	"visualeditor-help-label": "Les brúkara leiðbeiningina",
+	"visualeditor-help-link": "mw:Special:MyLanguage/Help:VisualEditor/User guide",
 	"visualeditor-help-title": "Brúkaravegleiðing til hvussu tú brúkar rættaran"
 }

@@ -1,7 +1,7 @@
 /*!
  * VisualEditor UserInterface MobileContext class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 /**
@@ -31,19 +31,26 @@ OO.inheritClass( ve.ui.MWMobileContext, ve.ui.MobileContext );
 /**
  * @inheritdoc
  */
-ve.ui.MWMobileContext.prototype.getAvailableTools = function () {
-	var tools = ve.ui.MobileContext.super.prototype.getAvailableTools.call( this );
+ve.ui.MWMobileContext.prototype.getRelatedSources = function () {
+	var sources;
 
-	// Filter out tools not supported in mobile mode
-	// FIXME: This is a temporary hack. Ideally, we don't want to load any code
-	// that is not supported on a given platform. However, present implementation
-	// of citation dialog forces us to load tools that we don't want on mobile.
-	this.availableTools = tools.filter( function ( tool ) {
-		return (
-			tool.model instanceof ve.dm.LinkAnnotation ||
-			( tool.model instanceof ve.dm.MWReferenceNode && tool.tool !== ve.ui.MWReferenceDialogTool )
-		);
-	} );
+	if ( !this.relatedSources ) {
+		sources = ve.ui.MobileContext.super.prototype.getRelatedSources.call( this );
 
-	return this.availableTools;
+		// Filter out sources not supported in mobile mode
+		// FIXME: This is a temporary hack. Ideally, we don't want to load any code
+		// that is not supported on a given platform. However, present implementation
+		// of citation dialog forces us to load sources that we don't want on mobile.
+		this.availableSources = sources.filter( function ( source ) {
+			return (
+				source.model instanceof ve.dm.LinkAnnotation ||
+				(
+					source.model instanceof ve.dm.MWReferenceNode &&
+					source.tool !== ve.ui.MWReferenceDialogTool
+				)
+			);
+		} );
+	}
+
+	return this.availableSources;
 };

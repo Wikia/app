@@ -1,7 +1,7 @@
 /*!
  * VisualEditor user interface NodeInspector class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 /**
@@ -45,7 +45,7 @@ ve.ui.NodeInspector.static.modelClasses = [];
  * If no node is selected or the selected node is incompatible, null will be returned.
  *
  * @param {Object} [data] Inspector opening data
- * @return {ve.dm.Node} Selected node
+ * @return {ve.dm.Node|null} Selected node
  */
 ve.ui.NodeInspector.prototype.getSelectedNode = function () {
 	var i, len,
@@ -53,7 +53,7 @@ ve.ui.NodeInspector.prototype.getSelectedNode = function () {
 		selectedNode = this.getFragment().getSelectedNode();
 
 	for ( i = 0, len = modelClasses.length; i < len; i++ ) {
-		if ( selectedNode instanceof modelClasses[i] ) {
+		if ( selectedNode instanceof modelClasses[ i ] ) {
 			return selectedNode;
 		}
 	}

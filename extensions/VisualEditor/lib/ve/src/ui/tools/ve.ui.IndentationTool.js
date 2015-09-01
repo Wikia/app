@@ -1,7 +1,7 @@
 /*!
  * VisualEditor UserInterface IndentationTool classes.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 /**
@@ -23,16 +23,6 @@ ve.ui.IndentationTool = function VeUiIndentationTool( toolGroup, config ) {
 
 OO.inheritClass( ve.ui.IndentationTool, ve.ui.Tool );
 
-/* Methods */
-
-/**
- * @inheritdoc
- */
-ve.ui.IndentationTool.prototype.onSelect = function () {
-	ve.track( 'tool.indentation.select', { name: this.constructor.static.name } );
-	ve.ui.Tool.prototype.onSelect.apply( this, arguments );
-};
-
 /**
  * UserInterface indent tool.
  *
@@ -48,7 +38,7 @@ ve.ui.IncreaseIndentationTool = function VeUiIncreaseIndentationTool( toolGroup,
 OO.inheritClass( ve.ui.IncreaseIndentationTool, ve.ui.IndentationTool );
 ve.ui.IncreaseIndentationTool.static.name = 'indent';
 ve.ui.IncreaseIndentationTool.static.group = 'structure';
-ve.ui.IncreaseIndentationTool.static.icon = 'indent-list';
+ve.ui.IncreaseIndentationTool.static.icon = 'indent';
 ve.ui.IncreaseIndentationTool.static.title =
 	OO.ui.deferMsg( 'visualeditor-indentationbutton-indent-tooltip' );
 ve.ui.IncreaseIndentationTool.static.commandName = 'indent';
@@ -71,7 +61,7 @@ ve.ui.DecreaseIndentationTool = function VeUiDecreaseIndentationTool( toolGroup,
 OO.inheritClass( ve.ui.DecreaseIndentationTool, ve.ui.IndentationTool );
 ve.ui.DecreaseIndentationTool.static.name = 'outdent';
 ve.ui.DecreaseIndentationTool.static.group = 'structure';
-ve.ui.DecreaseIndentationTool.static.icon = 'outdent-list';
+ve.ui.DecreaseIndentationTool.static.icon = 'outdent';
 ve.ui.DecreaseIndentationTool.static.title =
 	OO.ui.deferMsg( 'visualeditor-indentationbutton-outdent-tooltip' );
 ve.ui.DecreaseIndentationTool.static.commandName = 'outdent';

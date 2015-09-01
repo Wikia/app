@@ -1,7 +1,7 @@
 /*!
  * VisualEditor user interface MWTransclusionContentPage class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2015 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -28,7 +28,6 @@ ve.ui.MWTransclusionContentPage = function VeUiMWTransclusionContentPage( conten
 	// Properties
 	this.content = content;
 	this.textInput = new OO.ui.TextInputWidget( {
-		$: this.$,
 		multiline: true,
 		autosize: true,
 		classes: [ 've-ui-mwTransclusionDialog-input' ]
@@ -36,7 +35,6 @@ ve.ui.MWTransclusionContentPage = function VeUiMWTransclusionContentPage( conten
 		.setValue( this.content.getValue() )
 		.connect( this, { change: 'onTextInputChange' } );
 	this.removeButton = new OO.ui.ButtonWidget( {
-		$: this.$,
 		framed: false,
 		icon: 'remove',
 		title: ve.msg( 'visualeditor-dialog-transclusion-remove-content' ),
@@ -45,7 +43,6 @@ ve.ui.MWTransclusionContentPage = function VeUiMWTransclusionContentPage( conten
 	} )
 		.connect( this, { click: 'onRemoveButtonClick' } );
 	this.valueFieldset = new OO.ui.FieldsetLayout( {
-		$: this.$,
 		label: ve.msg( 'visualeditor-dialog-transclusion-content' ),
 		icon: 'source',
 		$content: this.textInput.$element

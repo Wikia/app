@@ -1,11 +1,11 @@
 /*!
  * VisualEditor DataModel MediaWiki-specific InternalList tests.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2015 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
-QUnit.module( 've.dm.InternalList' );
+QUnit.module( 've.dm.InternalList (MW)', ve.test.utils.mwEnvironment );
 
 /* Tests */
 
@@ -13,26 +13,26 @@ QUnit.test( 'addNode/removeNode', 6, function ( assert ) {
 	var doc = ve.dm.mwExample.createExampleDocument( 'references' ),
 		newInternalList = new ve.dm.InternalList( doc ),
 		referenceNodes = [
-			doc.getDocumentNode().children[0].children[0],
-			doc.getDocumentNode().children[1].children[1],
-			doc.getDocumentNode().children[1].children[3],
-			doc.getDocumentNode().children[1].children[5],
-			doc.getDocumentNode().children[2].children[0],
-			doc.getDocumentNode().children[2].children[1]
+			doc.getDocumentNode().children[ 0 ].children[ 0 ],
+			doc.getDocumentNode().children[ 1 ].children[ 1 ],
+			doc.getDocumentNode().children[ 1 ].children[ 3 ],
+			doc.getDocumentNode().children[ 1 ].children[ 5 ],
+			doc.getDocumentNode().children[ 2 ].children[ 0 ],
+			doc.getDocumentNode().children[ 2 ].children[ 1 ]
 		],
 		expectedNodes = {
 			'mwReference/': {
 				keyedNodes: {
-					'auto/0': [ referenceNodes[0] ],
-					'literal/bar': [ referenceNodes[1], referenceNodes[3] ],
-					'literal/:3': [ referenceNodes[2] ],
-					'auto/1': [ referenceNodes[4] ]
+					'auto/0': [ referenceNodes[ 0 ] ],
+					'literal/bar': [ referenceNodes[ 1 ], referenceNodes[ 3 ] ],
+					'literal/:3': [ referenceNodes[ 2 ] ],
+					'auto/1': [ referenceNodes[ 4 ] ]
 				},
 				firstNodes: [
-					referenceNodes[0],
-					referenceNodes[1],
-					referenceNodes[2],
-					referenceNodes[4]
+					referenceNodes[ 0 ],
+					referenceNodes[ 1 ],
+					referenceNodes[ 2 ],
+					referenceNodes[ 4 ]
 				],
 				indexOrder: [ 0, 1, 2, 3 ],
 				uniqueListKeys: {},
@@ -40,9 +40,9 @@ QUnit.test( 'addNode/removeNode', 6, function ( assert ) {
 			},
 			'mwReference/foo': {
 				keyedNodes: {
-					'auto/2': [ referenceNodes[5] ]
+					'auto/2': [ referenceNodes[ 5 ] ]
 				},
-				firstNodes: [ undefined, undefined, undefined, undefined, referenceNodes[5] ],
+				firstNodes: [ undefined, undefined, undefined, undefined, referenceNodes[ 5 ] ],
 				indexOrder: [ 4 ],
 				uniqueListKeys: {},
 				uniqueListKeysInUse: {}
@@ -55,12 +55,12 @@ QUnit.test( 'addNode/removeNode', 6, function ( assert ) {
 		'Document construction populates internal list correctly'
 	);
 
-	newInternalList.addNode( 'mwReference/', 'auto/0', 0, referenceNodes[0] );
-	newInternalList.addNode( 'mwReference/', 'literal/bar', 1, referenceNodes[1] );
-	newInternalList.addNode( 'mwReference/', 'literal/:3', 2, referenceNodes[2] );
-	newInternalList.addNode( 'mwReference/', 'literal/bar', 1, referenceNodes[3] );
-	newInternalList.addNode( 'mwReference/', 'auto/1', 3, referenceNodes[4] );
-	newInternalList.addNode( 'mwReference/foo', 'auto/2', 4, referenceNodes[5] );
+	newInternalList.addNode( 'mwReference/', 'auto/0', 0, referenceNodes[ 0 ] );
+	newInternalList.addNode( 'mwReference/', 'literal/bar', 1, referenceNodes[ 1 ] );
+	newInternalList.addNode( 'mwReference/', 'literal/:3', 2, referenceNodes[ 2 ] );
+	newInternalList.addNode( 'mwReference/', 'literal/bar', 1, referenceNodes[ 3 ] );
+	newInternalList.addNode( 'mwReference/', 'auto/1', 3, referenceNodes[ 4 ] );
+	newInternalList.addNode( 'mwReference/foo', 'auto/2', 4, referenceNodes[ 5 ] );
 	newInternalList.onTransact();
 
 	assert.deepEqualWithNodeTree(
@@ -71,12 +71,12 @@ QUnit.test( 'addNode/removeNode', 6, function ( assert ) {
 
 	newInternalList = new ve.dm.InternalList( doc );
 
-	newInternalList.addNode( 'mwReference/foo', 'auto/2', 4, referenceNodes[5] );
-	newInternalList.addNode( 'mwReference/', 'auto/1', 3, referenceNodes[4] );
-	newInternalList.addNode( 'mwReference/', 'literal/bar', 1, referenceNodes[3] );
-	newInternalList.addNode( 'mwReference/', 'literal/:3', 2, referenceNodes[2] );
-	newInternalList.addNode( 'mwReference/', 'literal/bar', 1, referenceNodes[1] );
-	newInternalList.addNode( 'mwReference/', 'auto/0', 0, referenceNodes[0] );
+	newInternalList.addNode( 'mwReference/foo', 'auto/2', 4, referenceNodes[ 5 ] );
+	newInternalList.addNode( 'mwReference/', 'auto/1', 3, referenceNodes[ 4 ] );
+	newInternalList.addNode( 'mwReference/', 'literal/bar', 1, referenceNodes[ 3 ] );
+	newInternalList.addNode( 'mwReference/', 'literal/:3', 2, referenceNodes[ 2 ] );
+	newInternalList.addNode( 'mwReference/', 'literal/bar', 1, referenceNodes[ 1 ] );
+	newInternalList.addNode( 'mwReference/', 'auto/0', 0, referenceNodes[ 0 ] );
 	newInternalList.onTransact();
 
 	assert.deepEqualWithNodeTree(
@@ -85,7 +85,7 @@ QUnit.test( 'addNode/removeNode', 6, function ( assert ) {
 		'Nodes added in reverse order'
 	);
 
-	newInternalList.removeNode( 'mwReference/', 'literal/bar', 1, referenceNodes[1] );
+	newInternalList.removeNode( 'mwReference/', 'literal/bar', 1, referenceNodes[ 1 ] );
 	newInternalList.onTransact();
 
 	assert.deepEqualWithNodeTree(
@@ -93,16 +93,16 @@ QUnit.test( 'addNode/removeNode', 6, function ( assert ) {
 		{
 			'mwReference/': {
 				keyedNodes: {
-					'auto/0': [ referenceNodes[0] ],
-					'literal/bar': [ referenceNodes[3] ],
-					'literal/:3': [ referenceNodes[2] ],
-					'auto/1': [ referenceNodes[4] ]
+					'auto/0': [ referenceNodes[ 0 ] ],
+					'literal/bar': [ referenceNodes[ 3 ] ],
+					'literal/:3': [ referenceNodes[ 2 ] ],
+					'auto/1': [ referenceNodes[ 4 ] ]
 				},
 				firstNodes: [
-					referenceNodes[0],
-					referenceNodes[3],
-					referenceNodes[2],
-					referenceNodes[4]
+					referenceNodes[ 0 ],
+					referenceNodes[ 3 ],
+					referenceNodes[ 2 ],
+					referenceNodes[ 4 ]
 				],
 				indexOrder: [ 0, 2, 1, 3 ],
 				uniqueListKeys: {},
@@ -110,9 +110,9 @@ QUnit.test( 'addNode/removeNode', 6, function ( assert ) {
 			},
 			'mwReference/foo': {
 				keyedNodes: {
-					'auto/2': [ referenceNodes[5] ]
+					'auto/2': [ referenceNodes[ 5 ] ]
 				},
-				firstNodes: [ undefined, undefined, undefined, undefined, referenceNodes[5] ],
+				firstNodes: [ undefined, undefined, undefined, undefined, referenceNodes[ 5 ] ],
 				indexOrder: [ 4 ],
 				uniqueListKeys: {},
 				uniqueListKeysInUse: {}
@@ -121,7 +121,7 @@ QUnit.test( 'addNode/removeNode', 6, function ( assert ) {
 		'Keys re-ordered after one item of key removed'
 	);
 
-	newInternalList.removeNode( 'mwReference/', 'literal/bar', 1, referenceNodes[3] );
+	newInternalList.removeNode( 'mwReference/', 'literal/bar', 1, referenceNodes[ 3 ] );
 	newInternalList.onTransact();
 
 	assert.deepEqualWithNodeTree(
@@ -129,15 +129,15 @@ QUnit.test( 'addNode/removeNode', 6, function ( assert ) {
 		{
 			'mwReference/': {
 				keyedNodes: {
-					'auto/0': [ referenceNodes[0] ],
-					'literal/:3': [ referenceNodes[2] ],
-					'auto/1': [ referenceNodes[4] ]
+					'auto/0': [ referenceNodes[ 0 ] ],
+					'literal/:3': [ referenceNodes[ 2 ] ],
+					'auto/1': [ referenceNodes[ 4 ] ]
 				},
 				firstNodes: [
-					referenceNodes[0],
+					referenceNodes[ 0 ],
 					undefined,
-					referenceNodes[2],
-					referenceNodes[4]
+					referenceNodes[ 2 ],
+					referenceNodes[ 4 ]
 				],
 				indexOrder: [ 0, 2, 3 ],
 				uniqueListKeys: {},
@@ -145,9 +145,9 @@ QUnit.test( 'addNode/removeNode', 6, function ( assert ) {
 			},
 			'mwReference/foo': {
 				keyedNodes: {
-					'auto/2': [ referenceNodes[5] ]
+					'auto/2': [ referenceNodes[ 5 ] ]
 				},
-				firstNodes: [ undefined, undefined, undefined, undefined, referenceNodes[5] ],
+				firstNodes: [ undefined, undefined, undefined, undefined, referenceNodes[ 5 ] ],
 				indexOrder: [ 4 ],
 				uniqueListKeys: {},
 				uniqueListKeysInUse: {}
@@ -156,10 +156,10 @@ QUnit.test( 'addNode/removeNode', 6, function ( assert ) {
 		'Keys truncated after last item of key removed'
 	);
 
-	newInternalList.removeNode( 'mwReference/', 'auto/0', 0, referenceNodes[0] );
-	newInternalList.removeNode( 'mwReference/foo', 'auto/2', 4, referenceNodes[5] );
-	newInternalList.removeNode( 'mwReference/', 'auto/1', 3, referenceNodes[4] );
-	newInternalList.removeNode( 'mwReference/', 'literal/:3', 2, referenceNodes[2] );
+	newInternalList.removeNode( 'mwReference/', 'auto/0', 0, referenceNodes[ 0 ] );
+	newInternalList.removeNode( 'mwReference/foo', 'auto/2', 4, referenceNodes[ 5 ] );
+	newInternalList.removeNode( 'mwReference/', 'auto/1', 3, referenceNodes[ 4 ] );
+	newInternalList.removeNode( 'mwReference/', 'literal/:3', 2, referenceNodes[ 2 ] );
 	newInternalList.onTransact();
 
 	assert.deepEqualWithNodeTree(

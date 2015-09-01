@@ -1,16 +1,20 @@
 /*!
  * VisualEditor UserInterface Context styles.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 .ve-ui-desktopContext {
 	position: absolute;
 }
 
+.ve-ui-desktopContext .ve-ui-contextItem-description {
+	display: none;
+}
+
 .ve-ui-desktopContext-menu {
 	position: absolute;
-	font-size: 0.8em;
+	width: 400px;
 }
 
 .ve-ui-desktopContext-menu .oo-ui-toolbar-bar {
@@ -50,9 +54,4 @@
 
 .ve-ui-desktopContext > .oo-ui-popupWidget:not(.oo-ui-popupWidget-anchored) .oo-ui-context-menu {
 	right: 0;
-}
-
-/* HACK: Compensate for oo-ui-window-content setting the font size to 0.8em */
-.oo-ui-window-content .ve-ui-desktopContext .oo-ui-popupWidget {
-	font-size: 1.25em;
 }

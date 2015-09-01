@@ -35,3 +35,16 @@ Feature: VisualEditor Options
       And I click Save page
       And I click Review your changes
     Then the options set in Advanced Settings panel should appear in diff view
+
+  Scenario: Setting the fields in Page Settings
+   When I click Page Settings
+     And I check the option for Redirect this page to
+     And I type "Linux" for redirect page
+     And I check the option for Prevent this redirect being updated when target page is moved
+     And I select the option Always for showing Table of Contents
+     And I check the option for Disable edit links next to each heading on this page
+     And I check the option for This is a Disambiguation page
+     And I click Apply Changes button
+     And I click Save page
+     And I click Review your changes
+   Then the options set in Page Settings panel should appear in diff view

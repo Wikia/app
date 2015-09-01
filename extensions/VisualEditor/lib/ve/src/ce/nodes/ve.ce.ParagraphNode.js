@@ -1,14 +1,14 @@
 /*!
  * VisualEditor ContentEditable ParagraphNode class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 /**
  * ContentEditable paragraph node.
  *
  * @class
- * @extends ve.ce.BranchNode
+ * @extends ve.ce.ContentBranchNode
  * @constructor
  * @param {ve.dm.ParagraphNode} model Model to observe
  * @param {Object} [config] Configuration options

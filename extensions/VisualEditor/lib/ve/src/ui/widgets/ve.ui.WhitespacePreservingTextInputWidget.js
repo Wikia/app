@@ -1,7 +1,7 @@
 /*!
  * VisualEditor UserInterface WhitespacePreservingTextInputWidget class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 /**
@@ -45,12 +45,12 @@ ve.ui.WhitespacePreservingTextInputWidget.prototype.setValueAndWhitespace = func
 	var leftValue, rightValue;
 
 	leftValue = this.limit ? value.slice( 0, this.limit ) : value;
-	this.whitespace[0] = leftValue.match( /^\s*/ )[0];
-	value = value.slice( this.whitespace[0].length );
+	this.whitespace[ 0 ] = leftValue.match( /^\s*/ )[ 0 ];
+	value = value.slice( this.whitespace[ 0 ].length );
 
 	rightValue = this.limit ? value.slice( -this.limit ) : value;
-	this.whitespace[1] = rightValue.match( /\s*$/ )[0];
-	value = value.slice( 0, value.length - this.whitespace[1].length );
+	this.whitespace[ 1 ] = rightValue.match( /\s*$/ )[ 0 ];
+	value = value.slice( 0, value.length - this.whitespace[ 1 ].length );
 
 	this.setValue( value );
 };
@@ -72,7 +72,7 @@ ve.ui.WhitespacePreservingTextInputWidget.prototype.getValue = function () {
 		// In case getValue() is called from a parent constructor
 		return this.value;
 	}
-	return this.whitespace[0] + this.value + this.whitespace[1];
+	return this.whitespace[ 0 ] + this.getInnerValue() + this.whitespace[ 1 ];
 };
 
 /**
@@ -81,5 +81,5 @@ ve.ui.WhitespacePreservingTextInputWidget.prototype.getValue = function () {
  * @return {string} Inner/displayed value
  */
 ve.ui.WhitespacePreservingTextInputWidget.prototype.getInnerValue = function () {
-	return this.value;
+	return $.trim( this.value );
 };

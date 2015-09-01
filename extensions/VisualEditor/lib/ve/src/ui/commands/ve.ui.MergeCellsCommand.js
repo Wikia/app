@@ -1,7 +1,7 @@
 /*!
  * VisualEditor UserInterface MergeCellsCommand class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 /**
@@ -16,7 +16,7 @@ ve.ui.MergeCellsCommand = function VeUiMergeCellsCommand() {
 	// Parent constructor
 	ve.ui.MergeCellsCommand.super.call(
 		this, 'mergeCells', 'table', 'mergeCells',
-		{ supportedSelections: ['table'] }
+		{ supportedSelections: [ 'table' ] }
 	);
 };
 

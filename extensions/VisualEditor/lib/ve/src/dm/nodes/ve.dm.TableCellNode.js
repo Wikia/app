@@ -1,7 +1,7 @@
 /*!
  * VisualEditor DataModel TableCellNode class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 /**
@@ -9,6 +9,7 @@
  *
  * @class
  * @extends ve.dm.BranchNode
+ * @mixins ve.dm.TableCellableNode
  *
  * @constructor
  * @param {Object} [element] Reference to element in linear model
@@ -17,6 +18,9 @@
 ve.dm.TableCellNode = function VeDmTableCellNode() {
 	// Parent constructor
 	ve.dm.TableCellNode.super.apply( this, arguments );
+
+	// Mixin constructor
+	ve.dm.TableCellableNode.call( this );
 
 	// Events
 	this.connect( this, {
@@ -28,6 +32,8 @@ ve.dm.TableCellNode = function VeDmTableCellNode() {
 
 OO.inheritClass( ve.dm.TableCellNode, ve.dm.BranchNode );
 
+OO.mixinClass( ve.dm.TableCellNode, ve.dm.TableCellableNode );
+
 /* Static Properties */
 
 ve.dm.TableCellNode.static.name = 'tableCell';
@@ -38,31 +44,19 @@ ve.dm.TableCellNode.static.defaultAttributes = { style: 'data' };
 
 ve.dm.TableCellNode.static.matchTagNames = [ 'td', 'th' ];
 
+ve.dm.TableCellNode.static.isCellEditable = true;
+
 // Blacklisting 'colspan' and 'rowspan' as they are managed explicitly
-ve.dm.TableCellNode.static.storeHtmlAttributes = {
-	blacklist: ['colspan', 'rowspan']
+ve.dm.TableCellNode.static.preserveHtmlAttributes = function ( attribute ) {
+	return attribute !== 'colspan' && attribute !== 'rowspan';
 };
 
 /* Static Methods */
 
 ve.dm.TableCellNode.static.toDataElement = function ( domElements ) {
-	var attributes = { style: domElements[0].nodeName.toLowerCase() === 'th' ? 'header' : 'data' },
-		colspan = domElements[0].getAttribute( 'colspan' ),
-		rowspan = domElements[0].getAttribute( 'rowspan' );
+	var attributes = {};
 
-	if ( colspan !== null ) {
-		attributes.originalColspan = colspan;
-		if ( colspan !== '' && !isNaN( Number( colspan ) ) ) {
-			attributes.colspan = Number( colspan );
-		}
-	}
-
-	if ( rowspan !== null ) {
-		attributes.originalRowspan = rowspan;
-		if ( rowspan !== '' && !isNaN( Number( rowspan ) ) ) {
-			attributes.rowspan = Number( rowspan );
-		}
-	}
+	ve.dm.TableCellableNode.static.setAttributes( attributes, domElements );
 
 	return {
 		type: this.name,
@@ -73,31 +67,9 @@ ve.dm.TableCellNode.static.toDataElement = function ( domElements ) {
 ve.dm.TableCellNode.static.toDomElements = function ( dataElement, doc ) {
 	var tag = dataElement.attributes && dataElement.attributes.style === 'header' ? 'th' : 'td',
 		domElement = doc.createElement( tag ),
-		attributes = dataElement.attributes,
-		spans = {
-			colspan: attributes.colspan,
-			rowspan: attributes.rowspan
-		};
+		attributes = dataElement.attributes;
 
-	// Ignore spans of 1 unless they were in the original HTML
-	if ( attributes.colspan === 1 && Number( attributes.originalColspan ) !== 1 ) {
-		spans.colspan = null;
-	}
-
-	if ( attributes.rowspan === 1 && Number( attributes.originalRowspan ) !== 1 ) {
-		spans.rowspan = null;
-	}
-
-	// Use original value if the numerical value didn't change, or if we didn't set one
-	if ( attributes.colspan === undefined || attributes.colspan === Number( attributes.originalColspan ) ) {
-		spans.colspan = attributes.originalColspan;
-	}
-
-	if ( attributes.rowspan === undefined || attributes.rowspan === Number( attributes.originalRowspan ) ) {
-		spans.rowspan = attributes.originalRowspan;
-	}
-
-	ve.setDomAttributes( domElement, spans );
+	ve.dm.TableCellableNode.static.applyAttributes( attributes, domElement );
 
 	return [ domElement ];
 };
@@ -131,45 +103,6 @@ ve.dm.TableCellNode.static.createData = function ( options ) {
 };
 
 /* Methods */
-
-/**
- * Get the number of rows the cell spans
- *
- * @return {number} Rows spanned
- */
-ve.dm.TableCellNode.prototype.getRowspan = function () {
-	return this.element.attributes.rowspan || 1;
-};
-
-/**
- * Get the number of columns the cell spans
- *
- * @return {number} Columns spanned
- */
-ve.dm.TableCellNode.prototype.getColspan = function () {
-	return this.element.attributes.colspan || 1;
-};
-
-/**
- * Get number of columns and rows the cell spans
- *
- * @return {Object} Object containing 'col' and 'row'
- */
-ve.dm.TableCellNode.prototype.getSpans = function () {
-	return {
-		col: this.getColspan(),
-		row: this.getRowspan()
-	};
-};
-
-/**
- * Get the style of the cell
- *
- * @return {string} Style, 'header' or 'data'
- */
-ve.dm.TableCellNode.prototype.getStyle = function () {
-	return this.element.attributes.style || 'data';
-};
 
 /**
  * Handle attributes changes

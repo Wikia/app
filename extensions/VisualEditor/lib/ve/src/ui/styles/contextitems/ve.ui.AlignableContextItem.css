@@ -1,0 +1,18 @@
+/*!
+ * VisualEditor UserInterface AlignableContextItem styles.
+ *
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
+ */
+
+.ve-ui-alignableContextItem .ve-ui-linearContextItem-body {
+	text-align: center;
+}
+
+.ve-ui-alignableContextItem .ve-ui-linearContextItem-info {
+	vertical-align: middle;
+}
+
+.ve-ui-mobileContext .ve-ui-alignableContextItem .ve-ui-linearContextItem-description {
+	line-height: 1em;
+	padding-top: 0.3em;
+}

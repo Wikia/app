@@ -1,7 +1,7 @@
 /*!
  * VisualEditor DataModel LeafNode class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 /**
@@ -43,7 +43,7 @@ ve.dm.LeafNode.static.childNodeTypes = [];
  * model element doesn't have a .annotations property, an empty array is returned.
  *
  * @method
- * @returns {number[]} Annotation set indexes in the index-value store
+ * @return {number[]} Annotation set indexes in the index-value store
  */
 ve.dm.LeafNode.prototype.getAnnotations = function () {
 	return this.element.annotations || [];

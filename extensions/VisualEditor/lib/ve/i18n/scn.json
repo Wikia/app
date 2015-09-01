@@ -4,7 +4,8 @@
 			"Gazeb",
 			"Gmelfi",
 			"HalanTul",
-			"Gloria sah"
+			"Gloria sah",
+			"Pippinu"
 		]
 	},
 	"visualeditor": "VisualEditor",
@@ -18,7 +19,7 @@
 	"visualeditor-annotationbutton-subscript-tooltip": "Pèdici",
 	"visualeditor-annotationbutton-superscript-tooltip": "Àpici",
 	"visualeditor-annotationbutton-underline-tooltip": "Suttalineatu",
-	"visualeditor-clearbutton-tooltip": "Pulizzìa la furmattazzioni",
+	"visualeditor-clearbutton-tooltip": "Pulizzìa lu stili",
 	"visualeditor-dialog-action-apply": "Applica li canciamenti",
 	"visualeditor-dialog-action-cancel": "Annulla",
 	"visualeditor-dialog-action-goback": "Narreri",
@@ -39,11 +40,11 @@
 	"visualeditor-inspector-close-tooltip": "Chiùi",
 	"visualeditor-inspector-remove-tooltip": "Lèva",
 	"visualeditor-languageinspector-title": "Lingua",
-	"visualeditor-languageinspector-widget-changelang": "Cancia la lingua",
+	"visualeditor-languageinspector-widget-changelang": "Trova la lingua",
 	"visualeditor-languageinspector-widget-label-direction": "Dirizzioni",
 	"visualeditor-languageinspector-widget-label-langcode": "Codici dâ lingua",
 	"visualeditor-languageinspector-widget-label-language": "Lingua",
-	"visualeditor-linkinspector-title": "Culligamentu ipertestuali",
+	"visualeditor-linkinspector-title": "Culligamentu",
 	"visualeditor-listbutton-bullet-tooltip": "Lista appuntata",
 	"visualeditor-listbutton-number-tooltip": "Lista nummurata"
 }

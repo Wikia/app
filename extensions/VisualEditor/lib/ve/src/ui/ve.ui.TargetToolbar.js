@@ -1,7 +1,7 @@
 /*!
  * VisualEditor UserInterface TargetToolbar class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 /**
@@ -18,6 +18,9 @@ ve.ui.TargetToolbar = function VeUiTargetToolbar( target, config ) {
 	// Parent constructor
 	ve.ui.TargetToolbar.super.call( this, config );
 
+	// Initialization
+	this.$element.addClass( 've-ui-targetToolbar' );
+
 	// Properties
 	this.target = target;
 };
@@ -31,7 +34,7 @@ OO.inheritClass( ve.ui.TargetToolbar, ve.ui.Toolbar );
 /**
  * Gets the target which the toolbar controls.
  *
- * @returns {ve.init.Target} Target being controlled
+ * @return {ve.init.Target} Target being controlled
  */
 ve.ui.TargetToolbar.prototype.getTarget = function () {
 	return this.target;

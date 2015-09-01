@@ -1,7 +1,7 @@
 /*!
  * VisualEditor Initialization namespace.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 /**
@@ -10,5 +10,5 @@
  * @singleton
  */
 ve.init = {
-	//platform: Initialized in a file containing a subclass of ve.init.Platform
+	// platform: Initialized in a file containing a subclass of ve.init.Platform
 };

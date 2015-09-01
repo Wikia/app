@@ -1,7 +1,7 @@
 /*!
  * VisualEditor UserInterface LanguageResultWidget class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 /**
@@ -19,8 +19,8 @@ ve.ui.LanguageResultWidget = function VeUiLanguageResultWidget( config ) {
 
 	// Initialization
 	this.$element.addClass( 've-ui-languageResultWidget' );
-	this.$name = this.$( '<div>' ).addClass( 've-ui-languageResultWidget-name' );
-	this.$otherMatch = this.$( '<div>' ).addClass( 've-ui-languageResultWidget-otherMatch' );
+	this.$name = $( '<div>' ).addClass( 've-ui-languageResultWidget-name' );
+	this.$otherMatch = $( '<div>' ).addClass( 've-ui-languageResultWidget-otherMatch' );
 	this.setLabel( this.$otherMatch.add( this.$name ) );
 };
 
@@ -46,7 +46,7 @@ ve.ui.LanguageResultWidget.prototype.updateLabel = function ( query, matchedProp
 
 	// Highlight where applicable
 	if ( matchedProperty ) {
-		$highlighted = this.highlightQuery( data[matchedProperty], query );
+		$highlighted = ve.highlightQuery( data[ matchedProperty ], query );
 		if ( matchedProperty === 'name' ) {
 			this.$name.empty().append( $highlighted );
 		} else {
@@ -55,28 +55,4 @@ ve.ui.LanguageResultWidget.prototype.updateLabel = function ( query, matchedProp
 	}
 
 	return this;
-};
-
-/**
- * Highlight text where a substring query matches
- *
- * @param {string} text Text
- * @param {string} query Query to find
- * @returns {jQuery} Text with query substring wrapped in highlighted span
- */
-ve.ui.LanguageResultWidget.prototype.highlightQuery = function ( text, query ) {
-	var $result = this.$( '<span>' ),
-		offset = text.toLowerCase().indexOf( query.toLowerCase() );
-
-	if ( !query.length || offset === -1 ) {
-		return $result.text( text );
-	}
-	$result.append(
-		document.createTextNode( text.slice( 0, offset ) ),
-		this.$( '<span>' )
-			.addClass( 've-ui-languageResultWidget-highlight' )
-			.text( text.slice( offset, offset + query.length ) ),
-		document.createTextNode( text.slice( offset + query.length ) )
-	);
-	return $result.contents();
 };

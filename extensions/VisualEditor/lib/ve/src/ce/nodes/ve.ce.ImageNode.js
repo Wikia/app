@@ -1,7 +1,7 @@
 /*!
  * VisualEditor ContentEditable ImageNode class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 /**
@@ -67,7 +67,7 @@ ve.ce.ImageNode.static.getDescription = function ( model ) {
 ve.ce.ImageNode.prototype.onAttributeChange = function ( key, from, to ) {
 	switch ( key ) {
 		case 'src':
-			this.$image.attr( 'src', this.getResolvedAttribute( 'src' ) );
+			this.$image.prop( 'src', this.getResolvedAttribute( 'src' ) );
 			break;
 
 		case 'width':

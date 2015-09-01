@@ -1,7 +1,7 @@
 /*!
  * VisualEditor Context Item widget class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 /**
@@ -67,5 +67,5 @@ ve.ui.ContextOptionWidget.prototype.getDescription = function () {
  * @return {ve.ui.Command} Command
  */
 ve.ui.ContextOptionWidget.prototype.getCommand = function () {
-	return ve.ui.commandRegistry.lookup( this.tool.static.commandName );
+	return ve.init.target.commandRegistry.lookup( this.tool.static.commandName );
 };

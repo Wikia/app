@@ -1,7 +1,7 @@
 /*!
  * VisualEditor MediaWiki Reference dialog tool classes.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2015 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -25,6 +25,7 @@ ve.ui.MWReferenceDialogTool.static.title =
 	OO.ui.deferMsg( 'visualeditor-dialogbutton-reference-tooltip' );
 ve.ui.MWReferenceDialogTool.static.modelClasses = [ ve.dm.MWReferenceNode ];
 ve.ui.MWReferenceDialogTool.static.commandName = 'reference';
+ve.ui.MWReferenceDialogTool.static.autoAddToCatchall = false;
 ve.ui.toolFactory.register( ve.ui.MWReferenceDialogTool );
 
 /**
@@ -50,6 +51,13 @@ ve.ui.MWUseExistingReferenceDialogTool.static.commandName = 'reference/existing'
 ve.ui.MWUseExistingReferenceDialogTool.static.autoAddToGroup = false;
 ve.ui.MWUseExistingReferenceDialogTool.static.autoAddToCatchall = false;
 ve.ui.toolFactory.register( ve.ui.MWUseExistingReferenceDialogTool );
+
+ve.ui.commandRegistry.register(
+	new ve.ui.Command(
+		'reference', 'window', 'open',
+		{ args: [ 'reference' ], supportedSelections: [ 'linear' ] }
+	)
+);
 
 /**
  * MediaWiki UserInterface references list tool.

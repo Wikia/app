@@ -1,12 +1,12 @@
 /*!
  * VisualEditor user interface MWReferencesListDialog class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2015 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
 /**
- * Dialog for inserting and editing MediaWiki references lists.
+ * Dialog for editing MediaWiki references lists.
  *
  * @class
  * @extends ve.ui.NodeDialog
@@ -44,15 +44,9 @@ ve.ui.MWReferencesListDialog.static.actions = [
 		modes: 'edit'
 	},
 	{
-		action: 'insert',
-		label: OO.ui.deferMsg( 'visualeditor-dialog-action-insert' ),
-		flags: [ 'primary', 'constructive' ],
-		modes: 'insert'
-	},
-	{
 		label: OO.ui.deferMsg( 'visualeditor-dialog-action-cancel' ),
-		flags: 'safe',
-		modes: [ 'insert', 'edit' ]
+		flags: [ 'safe', 'back' ],
+		modes: 'edit'
 	}
 ];
 
@@ -62,7 +56,7 @@ ve.ui.MWReferencesListDialog.static.actions = [
  * @inheritdoc
  */
 ve.ui.MWReferencesListDialog.prototype.getBodyHeight = function () {
-	return Math.max( 150, Math.ceil( this.editPanel.$element[0].scrollHeight ) );
+	return Math.max( 150, Math.ceil( this.editPanel.$element[ 0 ].scrollHeight ) );
 };
 
 /**
@@ -73,21 +67,17 @@ ve.ui.MWReferencesListDialog.prototype.initialize = function () {
 	ve.ui.MWReferencesListDialog.super.prototype.initialize.call( this );
 
 	// Properties
-	this.panels = new OO.ui.StackLayout( { $: this.$ } );
+	this.panels = new OO.ui.StackLayout();
 	this.editPanel = new OO.ui.PanelLayout( {
-		$: this.$, scrollable: true, padded: true
+		scrollable: true, padded: true
 	} );
-	this.optionsFieldset = new OO.ui.FieldsetLayout( {
-		$: this.$
-	} );
+	this.optionsFieldset = new OO.ui.FieldsetLayout();
 
 	this.groupInput = new ve.ui.MWReferenceGroupInputWidget( {
-		$: this.$,
 		$overlay: this.$overlay,
 		emptyGroupName: ve.msg( 'visualeditor-dialog-reference-options-group-placeholder' )
 	} );
 	this.groupField = new OO.ui.FieldLayout( this.groupInput, {
-		$: this.$,
 		align: 'top',
 		label: ve.msg( 'visualeditor-dialog-reference-options-group-label' )
 	} );
@@ -103,7 +93,7 @@ ve.ui.MWReferencesListDialog.prototype.initialize = function () {
  * @inheritdoc
  */
 ve.ui.MWReferencesListDialog.prototype.getActionProcess = function ( action ) {
-	if ( action === 'apply' || action === 'insert' ) {
+	if ( action === 'apply' ) {
 		return new OO.ui.Process( function () {
 			var refGroup, listGroup, oldListGroup, attrChanges, doc,
 				surfaceModel = this.getFragment().getSurface();
@@ -128,18 +118,6 @@ ve.ui.MWReferencesListDialog.prototype.getActionProcess = function ( action ) {
 						)
 					);
 				}
-			} else {
-				// Collapse returns a new fragment, so update this.fragment
-				this.fragment = this.getFragment().collapseToEnd().insertContent( [
-					{
-						type: 'mwReferencesList',
-						attributes: {
-							listGroup: listGroup,
-							refGroup: refGroup
-						}
-					},
-					{ type: '/mwReferencesList' }
-				] );
 			}
 
 			this.close( { action: action } );
@@ -155,20 +133,13 @@ ve.ui.MWReferencesListDialog.prototype.getActionProcess = function ( action ) {
 ve.ui.MWReferencesListDialog.prototype.getSetupProcess = function ( data ) {
 	return ve.ui.MWReferencesListDialog.super.prototype.getSetupProcess.call( this, data )
 		.next( function () {
-			var node, refGroup;
-
-			// Prepopulate from existing node if we're editing a node
-			// instead of inserting a new one
-			node = this.getFragment().getSelectedNode();
-			if ( this.selectedNode instanceof ve.dm.MWReferencesListNode ) {
-				refGroup = node.getAttribute( 'refGroup' );
-				this.actions.setMode( 'edit' );
-			} else {
-				refGroup = '';
-				this.actions.setMode( 'insert' );
+			if ( !( this.selectedNode instanceof ve.dm.MWReferencesListNode ) ) {
+				throw new Error( 'Cannot open dialog: references list must be selected' );
 			}
 
-			this.groupInput.input.setValue( refGroup );
+			this.actions.setMode( 'edit' );
+
+			this.groupInput.input.setValue( this.selectedNode.getAttribute( 'refGroup' ) );
 			this.groupInput.populateMenu( this.getFragment().getDocument().getInternalList() );
 		}, this );
 };

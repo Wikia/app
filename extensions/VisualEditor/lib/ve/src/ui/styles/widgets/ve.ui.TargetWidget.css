@@ -1,0 +1,16 @@
+/*!
+ * VisualEditor UserInterface targetWidget styles.
+ *
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
+ */
+
+.ve-ui-targetWidget .ve-ce-documentNode,
+.ve-ui-targetWidget .ve-ui-surface-placeholder {
+	/* target default padding is 0.75, 1.5. Use 0.5, 1 for the widget */
+	/* 0.5/0.8, 1/0.8 */
+	padding: 0.625em 1.25em;
+}
+
+.ve-ui-targetWidget .ve-ui-debugBar {
+	padding: 1em;
+}

@@ -1,7 +1,7 @@
 /*!
  * VisualEditor MediaWiki UserInterface MWReferenceResultWidget styles.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2015 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -11,7 +11,7 @@
 	border-bottom: solid 1px #eee;
 }
 
-.ve-ui-mwReferenceResultWidget .oo-ui-labelElement-label {
+.ve-ui-mwReferenceResultWidget.oo-ui-labelElement .oo-ui-labelElement-label {
 	white-space: normal;
 }
 
@@ -21,8 +21,4 @@
 	left: 0;
 	bottom: 0;
 	right: 0;
-}
-
-.ve-ui-mwReferenceResultWidget-divider {
-	font-weight: bold;
 }

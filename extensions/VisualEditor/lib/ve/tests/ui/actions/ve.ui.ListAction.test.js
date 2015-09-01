@@ -1,7 +1,7 @@
 /*!
  * VisualEditor UserInterface Actions ListAction tests.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 QUnit.module( 've.ui.ListAction' );
@@ -9,27 +9,26 @@ QUnit.module( 've.ui.ListAction' );
 /* Tests */
 
 function runListConverterTest( assert, html, method, style, range, expectedRange, expectedData, expectedOriginalData, msg ) {
-	var surface = ve.test.utils.createSurfaceFromHtml( html || ve.dm.example.html ),
+	var surface = ve.test.utils.createModelOnlySurfaceFromHtml( html || ve.dm.example.html ),
+		surfaceModel = surface.getModel(),
 		listAction = new ve.ui.ListAction( surface ),
-		data = ve.copy( surface.getModel().getDocument().getFullData() ),
+		data = ve.copy( surfaceModel.getDocument().getFullData() ),
 		originalData = ve.copy( data );
 
 	expectedData( data );
 	if ( expectedOriginalData ) {
 		expectedOriginalData( originalData );
 	}
-	surface.getModel().setLinearSelection( range );
-	listAction[method]( style );
+	surfaceModel.setLinearSelection( range );
+	listAction[ method ]( style );
 
-	assert.deepEqual( surface.getModel().getDocument().getFullData(), data, msg + ': data models match' );
-	assert.equalRange( surface.getModel().getSelection().getRange(), expectedRange, msg + ': ranges match' );
+	assert.equalLinearData( surfaceModel.getDocument().getFullData(), data, msg + ': data models match' );
+	assert.equalRange( surfaceModel.getSelection().getRange(), expectedRange, msg + ': ranges match' );
 
-	surface.getModel().undo();
+	surfaceModel.undo();
 
-	assert.deepEqual( surface.getModel().getDocument().getFullData(), originalData, msg + ' (undo): data models match' );
-	assert.equalRange( surface.getModel().getSelection().getRange(), range, msg + ' (undo): ranges match' );
-
-	surface.destroy();
+	assert.equalLinearData( surfaceModel.getDocument().getFullData(), originalData, msg + ' (undo): data models match' );
+	assert.equalRange( surfaceModel.getSelection().getRange(), range, msg + ' (undo): ranges match' );
 }
 
 QUnit.test( '(un)wrap', function ( assert ) {
@@ -54,8 +53,8 @@ QUnit.test( '(un)wrap', function ( assert ) {
 				style: 'bullet',
 				expectedRange: new ve.Range( 187, 205 ),
 				expectedData: function ( data ) {
-					delete data[190].internal;
-					delete data[202].internal;
+					delete data[ 190 ].internal;
+					delete data[ 202 ].internal;
 					data.splice( 186, 4 );
 					data.splice( 196, 2 );
 					data.splice( 206, 2,
@@ -67,8 +66,8 @@ QUnit.test( '(un)wrap', function ( assert ) {
 				},
 				expectedOriginalData: function ( data ) {
 					// generated: 'wrapper' is removed by the action and not restored by undo
-					delete data[190].internal;
-					delete data[202].internal;
+					delete data[ 190 ].internal;
+					delete data[ 202 ].internal;
 				},
 				msg: 'unwrapping two double listed paragraphs'
 			}
@@ -76,6 +75,6 @@ QUnit.test( '(un)wrap', function ( assert ) {
 
 	QUnit.expect( cases.length * 4 );
 	for ( i = 0; i < cases.length; i++ ) {
-		runListConverterTest( assert, cases[i].html, cases[i].method, cases[i].style, cases[i].range, cases[i].expectedRange, cases[i].expectedData, cases[i].expectedOriginalData, cases[i].msg );
+		runListConverterTest( assert, cases[ i ].html, cases[ i ].method, cases[ i ].style, cases[ i ].range, cases[ i ].expectedRange, cases[ i ].expectedData, cases[ i ].expectedOriginalData, cases[ i ].msg );
 	}
 } );

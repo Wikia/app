@@ -1,7 +1,7 @@
 /*!
  * VisualEditor UserInterface MediaWiki UseExistingReferenceCommand class.
  *
- * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ * @copyright 2011-2015 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 /**
@@ -16,7 +16,7 @@ ve.ui.MWUseExistingReferenceCommand = function VeUiMWUseExistingReferenceCommand
 	// Parent constructor
 	ve.ui.MWUseExistingReferenceCommand.super.call(
 		this, 'reference/existing', 'window', 'open',
-		{ args: [ 'reference', { useExisting: true } ], supportedSelections: ['linear'] }
+		{ args: [ 'reference', { useExisting: true } ], supportedSelections: [ 'linear' ] }
 	);
 };
 
@@ -30,16 +30,17 @@ OO.inheritClass( ve.ui.MWUseExistingReferenceCommand, ve.ui.Command );
  * @inheritdoc
  */
 ve.ui.MWUseExistingReferenceCommand.prototype.isExecutable = function ( fragment ) {
+	var groupName, groups;
+
 	// Parent method
 	if ( !ve.ui.MWUseExistingReferenceCommand.super.prototype.isExecutable.apply( this, arguments ) ) {
 		return false;
 	}
 
-	var groupName,
-		groups = fragment.getDocument().getInternalList().getNodeGroups();
+	groups = fragment.getDocument().getInternalList().getNodeGroups();
 
 	for ( groupName in groups ) {
-		if ( groupName.lastIndexOf( 'mwReference/' ) === 0 && groups[groupName].indexOrder.length ) {
+		if ( groupName.lastIndexOf( 'mwReference/' ) === 0 && groups[ groupName ].indexOrder.length ) {
 			return true;
 		}
 	}
