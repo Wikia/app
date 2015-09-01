@@ -1376,6 +1376,8 @@ class WikiPage extends Page {
 						'reason' => 'ArticleDoEdit rollback - updateRevisionOn failed',
 						'exception' => new Exception(),
 						'name' => $this->mTitle->getPrefixedDBkey(),
+						'rev_id' => $revisionId,
+						'page_id' => $this->getId(),
 					]);
 
 					$revisionId = 0;
