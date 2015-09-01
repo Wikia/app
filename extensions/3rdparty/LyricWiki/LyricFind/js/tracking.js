@@ -1,3 +1,5 @@
+Wikia.Tracker.ACTIONS.VIEW_LYRIC = 'view_lyric';
+
 require(['jquery','LyricFindTracker', 'wikia.log'], function($, tracker, log) {
 	var amgId = parseInt($('#lyric').data('amg-id'), 10) || 0,
         gracenoteId = parseInt($('#gracenoteid').text(), 10) || 0;
@@ -12,7 +14,6 @@ require(['jquery','LyricFindTracker', 'wikia.log'], function($, tracker, log) {
 	Wikia.Tracker.track({
 		action: Wikia.Tracker.ACTIONS.VIEW_LYRIC,
 		category: 'lyricView',
-		//label: 'lyricFindView',
 		trackingMethod: 'analytics'
 	});
 	

@@ -88,10 +88,7 @@
 				TAKE_SURVEY: 'take-survey',
 
 				// View
-				VIEW: 'view',
-				
-				// View song lyrics (for cross-referencing against LyricFind reports) AN-861
-				VIEW_LYRIC: 'view-lyric'
+				VIEW: 'view'
 			},
 			actionsReverse = (function() {
 				var obj = {},
