@@ -50,13 +50,14 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	 * @param {string}   extra.forcedAdType - ad type for callbacks info
 	 */
 	function pushAd(slotName, slotElement, slotPath, slotTargeting, extra) {
-		var element;
+		var count,
+			element;
 
 		extra = extra || {};
 		slotTargeting = JSON.parse(JSON.stringify(slotTargeting)); // copy value
 
 		if (scrollHandler) {
-			var count = scrollHandler.getReloadedViewCount(slotName);
+			count = scrollHandler.getReloadedViewCount(slotName);
 			if (count !== null) {
 				slotTargeting.rv = count;
 			}
