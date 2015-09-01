@@ -75,8 +75,8 @@ require(
 		contentReviewStatusData.headerLast = mw.message('content-review-module-header-last').plain();
 		contentReviewStatusData.headerLive = mw.message('content-review-module-header-live').plain();
 		contentReviewStatusData.submit = mw.message('content-review-module-submit').plain();
-		contentReviewStatusData.disableTestMode = mw.message('content-review-module-disable-test-mode').plain();
-		contentReviewStatusData.enableTestMode = mw.message('content-review-module-enable-test-mode').plain();
+		contentReviewStatusData.disableTestMode = mw.message('content-review-module-test-mode-disable').plain();
+		contentReviewStatusData.enableTestMode = mw.message('content-review-module-test-mode-enable').plain();
 
 		/* Render content */
 		modalConfig.vars.content = mustache.render(statusBoxTemplate, contentReviewStatusData);

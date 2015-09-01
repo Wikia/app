@@ -1,7 +1,8 @@
 define(
 	'ext.wikia.contentReview.testMode',
 	['jquery', 'mw', 'wikia.loader', 'wikia.nirvana', 'wikia.window', 'BannerNotification'],
-	function($, mw, loader, nirvana, win, BannerNotification) {
+	function ($, mw, loader, nirvana, win, BannerNotification) {
+		'use strict';
 
 	function init() {
 		$.when(loader({
@@ -18,8 +19,13 @@ define(
 	}
 
 	function bindEvents() {
-		$('.content-review-test-mode-enable').on('click', enableTestMode);
-		$('#WikiaPage').on('click', '.content-review-test-mode-disable', disableTestMode);
+		if (win.skin === 'monobook') {
+			$('body').on('click', '.content-review-module-test-mode-enable', enableTestMode);
+			$('body').on('click', '.content-review-module-test-mode-disable', disableTestMode);
+		} else {
+			$('#WikiaPage').on('click', '.content-review-module-test-mode-enable', enableTestMode);
+			$('#WikiaPage').on('click', '.content-review-module-test-mode-disable', disableTestMode);
+		}
 	}
 
 	function enableTestMode(event) {
@@ -58,13 +64,13 @@ define(
 	}
 
 	function showTestModeNotification() {
-		if ( win.contentReviewTestModeEnabled ) {
+		if (win.contentReviewTestModeEnabled) {
 			nirvana.sendRequest({
 				controller: 'ContentReviewApiController',
 				method: 'showTestModeNotification',
 				callback: function (response) {
 					var notification;
-					if ( response.notification ) {
+					if (response.notification) {
 						notification = new BannerNotification(
 							response.notification,
 							'notify'

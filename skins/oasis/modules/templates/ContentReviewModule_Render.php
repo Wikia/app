@@ -20,12 +20,12 @@
 
 	<div class="content-review-module-test-mode">
 		<? if ( $isTestModeEnabled ) : ?>
-			<button class="content-review-test-mode-disable secondary">
-				<?= wfMessage('content-review-test-mode-disable')->escaped() ?>
+			<button class="content-review-module-test-mode-disable secondary">
+				<?= wfMessage('content-review-module-test-mode-disable')->escaped() ?>
 			</button>
 		<? else: ?>
-			<button class="content-review-test-mode-enable secondary">
-				<?= wfMessage('content-review-test-mode-enable')->escaped() ?>
+			<button class="content-review-module-test-mode-enable secondary">
+				<?= wfMessage('content-review-module-test-mode-enable')->escaped() ?>
 			</button>
 		<? endif ?>
 	</div>
