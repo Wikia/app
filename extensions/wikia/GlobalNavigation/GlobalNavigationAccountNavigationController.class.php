@@ -15,6 +15,7 @@ class GlobalNavigationAccountNavigationController extends WikiaController {
 		global $wgUser;
 
 		$this->isAnon = $wgUser->isAnon();
+		$this->enableNewAuthModal = $this->app->wg->EnableNewAuthModal;
 		$this->username = $wgUser->getName();
 		$this->avatarContainerAdditionalClass = '';
 		$this->profileAvatar = '';
@@ -25,6 +26,8 @@ class GlobalNavigationAccountNavigationController extends WikiaController {
 			$this->navItemLinkOpeningTag = $this->renderPersonalUrl( 'login', true );
 			$this->avatarContainerAdditionalClass = ' anon-avatar-placeholder';
 			$this->loginDropdown = F::app()->renderView( 'UserLoginSpecial', 'dropdown', [ 'template' => 'globalNavigationDropdown', 'registerLink' => $this->renderPersonalUrl( 'register' ) ] );
+			$this->authOptions = $this->getAuthOptions();
+
 		} else {
 			$this->navItemLinkOpeningTag = $this->renderPersonalUrl( 'userpage', true );
 
@@ -129,6 +132,19 @@ class GlobalNavigationAccountNavigationController extends WikiaController {
 		return $markup;
 	}
 
+	public function getAuthOptions() {
+		$loginMarkupObj = $this->personalUrls['login'];
+		$registerMarkupObj = $this->personalUrls['register'];
+		return wfMessage( 'global-navigation-account-navigation-options', [
+			Xml::element( 'a', [
+				'class' => $loginMarkupObj['class'], 'href' => $loginMarkupObj['href']
+			], $loginMarkupObj['title'] ),
+			Xml::element( 'a',[
+				'class' => $registerMarkupObj['class'], 'href' => $registerMarkupObj['href']
+			], $registerMarkupObj['title'] )
+		] )->text();
+	}
+
 	/**
 	 * Modify personal URLs list.
 	 */
@@ -144,8 +160,22 @@ class GlobalNavigationAccountNavigationController extends WikiaController {
 			}
 			$returnto = wfGetReturntoParam( $returnto );
 
-			$this->personalUrls[ 'login' ] = [ 'title' => wfMessage( 'login' )->text(), 'href' => Skin::makeSpecialUrl( 'UserLogin', $returnto ), 'class' => 'ajaxLogin table-cell' ];
-			$this->personalUrls[ 'register' ] = [ 'text' => wfMessage( 'oasis-signup' )->text(), 'href' => Skin::makeSpecialUrl( 'UserSignup' ), 'class' => 'ajaxRegister' ];
+			if ($this->enableNewAuthModal) {
+				$userLoginHelper = new UserLoginHelper();
+				$this->personalUrls['login'] = [
+					'title' => wfMessage( 'global-navigation-sign-in' )->text(),
+					'href' => $userLoginHelper->getNewAuthUrl('/signin'),
+					'class' => 'auth-link sign-in'
+				];
+				$this->personalUrls['register'] = [
+					'title' => wfMessage( 'global-navigation-register' )->text(),
+					'href' => $userLoginHelper->getNewAuthUrl('/register'),
+					'class' => 'auth-link register'
+				];
+			} else {
+				$this->personalUrls['login'] = [ 'title' => wfMessage( 'login' )->text(), 'href' => Skin::makeSpecialUrl( 'UserLogin', $returnto ), 'class' => 'ajaxLogin table-cell' ];
+				$this->personalUrls['register'] = [ 'text' => wfMessage( 'global-navigation-register' )->text(), 'href' => Skin::makeSpecialUrl( 'UserSignup' ), 'class' => 'ajaxRegister' ];
+			}
 		} else {
 			$this->personalUrls[ 'userpage' ] = [ 'title' => $this->username . ' - ' . wfMessage( 'mypage' )->text(), 'href' => AvatarService::getUrl( $this->username ), 'class' => 'ajaxLogin table-cell' ];
 		}

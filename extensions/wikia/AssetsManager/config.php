@@ -2556,8 +2556,7 @@ $config['auth_modal_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis' ],
 	'assets' => [
-		'//extensions/wikia/AuthModal/js/AuthModal.js',
-		'//extensions/wikia/AuthModal/js/AuthComponent.js',
+		'//extensions/wikia/AuthModal/js/AuthModal.js'
 	]
 );
 
