@@ -229,8 +229,10 @@ class GadgetHooks {
 		if ( $wgEnableContentReviewExt ) {
 			$contentReviewHelper = new Wikia\ContentReview\Helper();
 
-			if ( !$contentReviewHelper->isContentReviewTestModeEnabled() ) {
-				$hash = $contentReviewHelper->getSiteJsScriptsHash();
+			$hash = $contentReviewHelper->getSiteJsScriptsHash();
+			if ( $contentReviewHelper->isContentReviewTestModeEnabled() ) {
+				$extraQuery = '&current=' . $hash;
+			} else {
 				$extraQuery = '&reviewed=' . $hash;
 			}
 		}
