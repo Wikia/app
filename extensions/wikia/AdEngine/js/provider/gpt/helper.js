@@ -59,7 +59,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 		if (scrollHandler) {
 			count = scrollHandler.getReloadedViewCount(slotName);
 			if (count !== null) {
-				slotTargeting.rv = count;
+				slotTargeting.rv = count.toString();
 			}
 		}
 
