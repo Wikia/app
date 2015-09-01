@@ -41,7 +41,7 @@ class AdEngine2ContextService {
 			$oldWikiVertical = $hubService->getCategoryInfoForCity( $wg->CityId )->cat_name;
 
 			// 1 of 7 verticals
-			$newWikiVertical = $wikiFactoryHub->getWikiVertical( $wg-CityId );
+			$newWikiVertical = $wikiFactoryHub->getWikiVertical( $wg->CityId );
 			$newWikiVertical = !empty($newWikiVertical['short']) ? $newWikiVertical['short'] : 'error';
 
 			$newWikiCategories = $wikiFactoryHub->getWikiCategories( $wg->CityId );
