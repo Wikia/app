@@ -1,7 +1,7 @@
 define(
 	'ext.wikia.contentReview.testMode',
-	['jquery', 'mw', 'wikia.loader', 'wikia.nirvana', 'wikia.window', 'BannerNotification'],
-	function ($, mw, loader, nirvana, win, BannerNotification) {
+	['jquery', 'mw', 'wikia.loader', 'wikia.nirvana', 'wikia.window', 'wikia.querystring', 'BannerNotification'],
+	function ($, mw, loader, nirvana, win, Querystring, BannerNotification) {
 		'use strict';
 
 	function init() {
@@ -42,7 +42,7 @@ define(
 			method: 'enableTestMode',
 			data: data,
 			callback: function () {
-				win.location.reload(true);
+				reloadPage();
 			},
 			onErrorCallback: function() {
 				showErrorMessage();
@@ -55,7 +55,7 @@ define(
 			controller: 'ContentReviewApiController',
 			method: 'disableTestMode',
 			callback: function () {
-				win.location.reload(true);
+				reloadPage();
 			},
 			onErrorCallback: function() {
 				showErrorMessage();
@@ -90,6 +90,11 @@ define(
 		);
 
 		notification.show();
+	}
+
+	function reloadPage() {
+		var qs = new Querystring();
+		qs.addCb().goTo();
 	}
 
 	return {

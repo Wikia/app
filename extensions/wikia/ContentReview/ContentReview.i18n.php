@@ -73,7 +73,7 @@ $messages['en'] = [
 
 	'content-review-feedback-link-text' => 'Provide feedback',
 	'content-review-rejection-explanation' => '==Submitted script change rejected==
-The recently submitted change to this JS script was rejected by the Wikia review process. Please make sure you meet the [[Help:Custom JavaScript guidelines|Custom JavaScript guidelines]].',
+The recently submitted change to this JS script was rejected by the Wikia review process. Please make sure you meet the [[Help:Custom JavaScript guidelines|Custom JavaScript guidelines]]. --~~~~ ',
 
 	'content-review-status-link-text' => 'Review status',
 ];

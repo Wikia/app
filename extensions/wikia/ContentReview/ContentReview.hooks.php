@@ -23,7 +23,7 @@ class Hooks {
 				true
 			)->getData();
 
-			$railModuleList[1503] = [ 'ContentReviewModule', 'Render', [
+			$railModuleList[1403] = [ 'ContentReviewModule', 'Render', [
 				'pageStatus' => $pageStatus,
 				'latestRevisionId' => $wgTitle->getLatestRevID(),
 			] ];
@@ -64,15 +64,9 @@ class Hooks {
 	}
 
 	public static function onArticleContentOnDiff( $diffEngine, \OutputPage $output ) {
-		global $wgTitle, $wgCityId, $wgRequest;
-		$diff = $wgRequest->getInt( 'diff' );
-
 		$helper = new Helper();
-		if ( $wgTitle->inNamespace( NS_MEDIAWIKI )
-			&& $wgTitle->isJsPage()
-			&& $wgTitle->userCan( 'content-review' )
-			&& $helper->isDiffPageInReviewProcess( $wgCityId, $wgTitle->getArticleID(), $diff )
-		) {
+
+		if ( $helper->shouldDisplayReviewerToolbar() ) {
 			\Wikia::addAssetsToOutput( 'content_review_diff_page_js' );
 			\Wikia::addAssetsToOutput( 'content_review_diff_page_scss' );
 			\JSMessages::enqueuePackage( 'ContentReviewDiffPage', \JSMessages::EXTERNAL );
