@@ -132,7 +132,7 @@ class AdEngine2ContextService {
 			$wikiCategories = [];
 		}
 
-		return $wikiCategories;
+		return array_unique($wikiCategories);
 	}
 
 	private function filterOutEmptyItems( $input ) {

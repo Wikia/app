@@ -47,7 +47,7 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 			'titleMockType' => 'article',
 			'flags' => [],
 			'expectedOpts' => [],
-			'expectedTargeting' => [ 'newWikiCategories' => [ 'test', 'test' ] ],
+			'expectedTargeting' => [ 'newWikiCategories' => [ 'test' ] ],
 			'expectedProviders' => [],
 			'expectedForceProviders' => null,
 			'expectedSlots' => [],
@@ -65,7 +65,7 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 				'titleMockType' => 'article',
 				'flags' => ['wgAdDriverEnableInvisibleHighImpactSlot'],
 				'expectedOpts' => [],
-				'expectedTargeting' => [ 'newWikiCategories' => [ 'test', 'test' ] ],
+				'expectedTargeting' => [ 'newWikiCategories' => [ 'test' ] ],
 				'expectedProviders' => [],
 				'expectedForceProviders' => null,
 				'expectedSlots' => ['invisibleHighImpact' => true]
@@ -74,7 +74,7 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 				'titleMockType' => 'article',
 				'flags' => ['wgAdDriverForceTurtleAd'],
 				'expectedOpts' => [],
-				'expectedTargeting' => [ 'newWikiCategories' => [ 'test', 'test' ] ],
+				'expectedTargeting' => [ 'newWikiCategories' => [ 'test' ] ],
 				'expectedProviders' => [],
 				'expectedForcedProvider' => 'turtle'
 			],
@@ -82,27 +82,27 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 				'titleMockType' => 'article',
 				'flags' => ['wgAdDriverTrackState'],
 				'expectedOpts' => ['trackSlotState' => true],
-				'expectedTargeting' => [ 'newWikiCategories' => [ 'test', 'test' ] ]
+				'expectedTargeting' => [ 'newWikiCategories' => [ 'test' ] ]
 			],
 			[
 				'titleMockType' => 'article',
 				'flags' => ['wgAdDriverUseMonetizationService', 'wgEnableMonetizationModuleExt'],
 				'expectedOpts' => [],
-				'expectedTargeting' => [ 'newWikiCategories' => [ 'test', 'test' ] ],
+				'expectedTargeting' => [ 'newWikiCategories' => [ 'test' ] ],
 				'expectedProviders' => ['monetizationService' => true]
 			],
 			[
 				'titleMockType' => 'article',
 				'flags' => ['wgAdDriverUseSevenOneMedia'],
 				'expectedOpts' => [],
-				'expectedTargeting' => [ 'newWikiCategories' => [ 'test', 'test' ] ],
+				'expectedTargeting' => [ 'newWikiCategories' => [ 'test' ] ],
 				'expectedProviders' => ['sevenOneMedia' => true]
 			],
 			[
 				'titleMockType' => 'article',
 				'flags' => ['wgAdDriverWikiIsTop1000'],
 				'expectedOpts' => [],
-				'expectedTargeting' => [ 'newWikiCategories' => [ 'test', 'test' ], 'wikiIsTop1000' => true ]
+				'expectedTargeting' => [ 'newWikiCategories' => [ 'test' ], 'wikiIsTop1000' => true ]
 			],
 			[
 				'titleMockType' => 'article',
@@ -113,7 +113,7 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 				'titleMockType' => 'article',
 				'flags' => ['wgEnableOutboundScreenExt'],
 				'expectedOpts' => [],
-				'expectedTargeting' => [ 'newWikiCategories' => [ 'test', 'test' ] ],
+				'expectedTargeting' => [ 'newWikiCategories' => [ 'test' ] ],
 				'expectedProviders' => [],
 				'expectedForceProviders' => null,
 				'expectedSlots' => ['exitstitial' => true]
@@ -122,7 +122,7 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 				'titleMockType' => 'article',
 				'flags' => ['wgOutboundScreenRedirectDelay'],
 				'expectedOpts' => [],
-				'expectedTargeting' => [ 'newWikiCategories' => [ 'test', 'test' ] ],
+				'expectedTargeting' => [ 'newWikiCategories' => [ 'test' ] ],
 				'expectedProviders' => [],
 				'expectedForceProviders' => null,
 				'expectedSlots' => ['exitstitialRedirectDelay' => true]
@@ -131,14 +131,14 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 				'titleMockType' => 'article',
 				'flags' => ['wgEnableWikiaHomePageExt'],
 				'expectedOpts' => ['pageType' => 'corporate'],
-				'expectedTargeting' => [ 'newWikiCategories' => [ 'test', 'test' ], 'wikiIsCorporate' => true ]
+				'expectedTargeting' => [ 'newWikiCategories' => [ 'test' ], 'wikiIsCorporate' => true ]
 			],
 			[
 				'titleMockType' => 'article',
 				'flags' => ['wgEnableWikiaHubsV3Ext'],
 				'expectedOpts' => ['pageType' => 'corporate'],
 				'expectedTargeting' => [
-					'newWikiCategories' => [ 'test', 'test' ],
+					'newWikiCategories' => [ 'test' ],
 					'pageIsHub' => true,
 					'wikiIsCorporate' => true
 				]
@@ -147,26 +147,26 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 				'titleMockType' => 'article',
 				'flags' => ['wgWikiDirectedAtChildrenByFounder'],
 				'expectedOpts' => [],
-				'expectedTargeting' => [ 'newWikiCategories' => [ 'test', 'test' ], 'wikiDirectedAtChildren' => true ]
+				'expectedTargeting' => [ 'newWikiCategories' => [ 'test' ], 'wikiDirectedAtChildren' => true ]
 			],
 			[
 				'titleMockType' => 'article',
 				'flags' => ['wgWikiDirectedAtChildrenByStaff'],
 				'expectedOpts' => [],
-				'expectedTargeting' => [ 'newWikiCategories' => [ 'test', 'test' ], 'wikiDirectedAtChildren' => true ]
+				'expectedTargeting' => [ 'newWikiCategories' => [ 'test' ], 'wikiDirectedAtChildren' => true ]
 			],
 			[
 				'titleMockType' => 'mainpage',
 				'flags' => [],
 				'expectedOpts' => [],
-				'expectedTargeting' => [ 'newWikiCategories' => [ 'test', 'test' ], 'pageType' => 'home' ]
+				'expectedTargeting' => [ 'newWikiCategories' => [ 'test' ], 'pageType' => 'home' ]
 			],
 			[
 				'titleMockType' => 'search',
 				'flags' => [],
 				'expectedOpts' => ['pageType' => 'search'],
 				'expectedTargeting' => [
-					'newWikiCategories' => [ 'test', 'test' ],
+					'newWikiCategories' => [ 'test' ],
 					'pageType' => 'search',
 					'pageName' => 'Special:Search'
 				]
@@ -214,8 +214,13 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 			]),
 
 			array_merge($defaultParameters, [
-				'expectedTargeting' => [ 'newWikiCategories' => [ 'test', 'test', 'test1' ] ],
+				'expectedTargeting' => [ 'newWikiCategories' => [ 0 => 'test', 2 => 'test1' ] ],
 				'categories' => [ 'old' => ['test'], 'new' => ['test', 'test1'] ]
+			]),
+
+			array_merge($defaultParameters, [
+				'expectedTargeting' => [ 'newWikiCategories' => [ 0 => 'test', 1 => 'test1', 4 => 'test2' ] ],
+				'categories' => [ 'old' => ['test', 'test1' ], 'new' => ['test', 'test1', 'test2'] ]
 			]),
 
 			array_merge($defaultParameters, [
@@ -240,7 +245,7 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		$titleMockType = 'article',
 		$flags = [],
 		$expectedOpts = [],
-		$expectedTargeting = [ 'newWikiCategories' => [ 'test', 'test' ] ],
+		$expectedTargeting = [ 'newWikiCategories' => [ 'test' ] ],
 		$expectedProviders = [],
 		$expectedForcedProvider = null,
 		$expectedSlots = [],
