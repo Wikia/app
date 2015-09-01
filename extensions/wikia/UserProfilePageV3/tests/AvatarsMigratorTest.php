@@ -29,6 +29,10 @@ class AvatarsMigratorTest extends WikiaBaseTest {
 				true
 			],
 			[
+				'Avatar6.jpg',
+				false
+			],
+			[
 				'http://images.wikia.com/common/avatars/f/fc/119245.png',
 				false
 			],
@@ -39,6 +43,50 @@ class AvatarsMigratorTest extends WikiaBaseTest {
 			[
 				'http://images3.wikia.nocookie.net/__cb2/messaging/images/thumb/1/19/Avatar.jpg/150px-Avatar.jpg',
 				true
+			],
+		];
+	}
+
+	/**
+	 * @dataProvider isPredefinedAvatarDataProvider
+	 */
+	function testIsPredefinedAvatar( $url, $expected ) {
+		$this->assertEquals( $expected, AvatarsMigrator::isPredefinedAvatar( $url ) );
+	}
+
+	function isPredefinedAvatarDataProvider() {
+		return [
+			[
+				'',
+				false
+			],
+			[
+				'http://images.wikia.com/messaging/images/1/19/Avatar.jpg',
+				false
+			],
+			[
+				'/f/fc/119245.png',
+				false
+			],
+			[
+				'http://images3.wikia.nocookie.net/__cb2/messaging/images/thumb/1/19/Avatar.jpg/150px-Avatar.jpg',
+				false
+			],
+			[
+				'Avatar6.jpg',
+				true
+			],
+			[
+				'Avatar.jpg',
+				true
+			],
+			[
+				'Avatar1.jpg',
+				true
+			],
+			[
+				'http://vignette.wikia-dev.com/4a00aa45-a780-45ef-a8d6-f4bb4fa677b8',
+				false
 			],
 		];
 	}

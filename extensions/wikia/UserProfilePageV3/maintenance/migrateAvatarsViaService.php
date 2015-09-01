@@ -98,7 +98,7 @@ class AvatarsMigrator extends Maintenance {
 			$this->setAvatarUrl( $user, '' );
 		}
 		// predefined avatar (Avatar*.jpg)
-		else if ( false ) {
+		else if ( self::isPredefinedAvatar( $avatar ) ) {
 			// store the full URL in user properties
 			$masthead = Masthead::newFromUser( $user );
 			$avatarUrl = $masthead->getPurgeUrl();           # e.g. http://images.wikia.com/messaging/images//1/19/Avatar.jpg
@@ -154,6 +154,21 @@ class AvatarsMigrator extends Maintenance {
 	 */
 	public static function isDefaultAvatar( $url ) {
 		return ( is_null( $url ) ) || ( $url === '' ) || ( strpos( $url, 'Avatar.jpg' ) !== false );
+	}
+
+	/**
+	 * Return true if a given URL is for the predefined avatar
+	 *
+	 * Avatar2.jpg
+	 * Avatar6.jpg
+	 *
+	 * See AvatarsMigratorTest for examples
+	 *
+	 * @param string $url
+	 * @returm boolean
+	 */
+	public static function isPredefinedAvatar( $url ) {
+		return startsWith( $url, 'Avatar' );
 	}
 
 	/**
