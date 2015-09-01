@@ -23,7 +23,7 @@ class ContentReviewModuleController extends WikiaController {
 		Wikia::addAssetsToOutput( 'content_review_module_scss' );
 		JSMessages::enqueuePackage( 'ContentReviewModule', JSMessages::EXTERNAL );
 
-		$this->setVal( 'isTestModeEnabled', (new Helper)->isContentReviewTestModeEnabled() );
+		$this->setVal( 'isTestModeEnabled', ( new Helper() )->isContentReviewTestModeEnabled() );
 
 		/**
 		 * Latest revision status
