@@ -7,7 +7,7 @@ class PortableInfoboxBuilderService extends WikiaService {
 		$infobox = json_decode( $builderData );
 
 		if ( $infobox ) {
-			$xml = new SimpleXMLElement( '<infobox/>' );
+			$xml = new SimpleXMLElement( '<' . PortableInfoboxParserTagController::PARSER_TAG_NAME . '/>' );
 			foreach ( $infobox as $key => $value ) {
 				if ( $key !== 'data' ) {
 					$xml->addAttribute( $key, $value );
