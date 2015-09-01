@@ -7,10 +7,9 @@ define('ext.wikia.adEngine.provider.gpt.sourcePointTag', [
 	'ext.wikia.adEngine.sourcePoint',
 	'ext.wikia.adEngine.utils.cssTweaker',
 	'wikia.document',
-	'wikia.lazyqueue',
 	'wikia.log',
 	'wikia.window'
-], function (adContext, GoogleTag, adSlot, sourcePoint, cssTweaker, doc, lazyQueue, log, window) {
+], function (adContext, GoogleTag, adSlot, sourcePoint, cssTweaker, doc, log, window) {
 	'use strict';
 
 	var blocking = false,
@@ -19,11 +18,6 @@ define('ext.wikia.adEngine.provider.gpt.sourcePointTag', [
 
 	function SourcePointTag() {
 		GoogleTag.call(this);
-
-		this.cmdQueue = [];
-		lazyQueue.makeQueue(this.cmdQueue, (function (cmd) {
-			GoogleTag.prototype.push.call(this, cmd);
-		}).bind(this));
 	}
 
 	SourcePointTag.prototype = new GoogleTag();
@@ -48,12 +42,10 @@ define('ext.wikia.adEngine.provider.gpt.sourcePointTag', [
 			log(['sp.blocking'], 'debug', logGroup);
 			doc.body.classList.add('source-point');
 			blocking = true;
-			this.cmdQueue.start();
 		}).bind(this));
 
 		doc.addEventListener('sp.not_blocking', (function () {
 			log(['sp.not_blocking'], 'debug', logGroup);
-			this.cmdQueue.start();
 		}).bind(this));
 
 		log('Appending GPT script to head', 'debug', logGroup);
@@ -64,16 +56,12 @@ define('ext.wikia.adEngine.provider.gpt.sourcePointTag', [
 		this.initialized = true;
 	};
 
-	SourcePointTag.prototype.push = function (callback) {
-		log(['push', 'cmdQueue', callback], 'debug', logGroup);
-		this.cmdQueue.push(callback);
-	};
-
 	SourcePointTag.prototype.addSlot = function (adElement) {
 		log(['adSlot', adElement], 'debug', logGroup);
-		var slot = GoogleTag.prototype.addSlot.call(this, adElement);
+		var slot = GoogleTag.prototype.addSlot.call(this, adElement),
+			spBlockValue = slot.getTargeting('sp.block');
 
-		if (blocking) {
+		if (spBlockValue && spBlockValue.length && spBlockValue[0] === '1') {
 			log(['addSlot', 'blocked', adElement.getId()], 'debug', logGroup);
 			slot.setCollapseEmptyDiv(true, true);
 		}
