@@ -910,7 +910,7 @@ class WikiPage extends Page {
 		if ( $wgUseSquid ) {
 			// Commit the transaction before the purge is sent
 			$dbw = wfGetDB( DB_MASTER );
-			$dbw->commit();
+			$dbw->commit( __METHOD__ );
 
 			// Send purge
 			$update = SquidUpdate::newSimplePurge( $this->mTitle );
