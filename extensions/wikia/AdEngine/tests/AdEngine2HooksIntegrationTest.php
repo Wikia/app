@@ -47,13 +47,15 @@ class AdEngine2HooksIntegrationTest extends WikiaBaseTest {
 			[ sprintf($urlPattern, 'Special:SpecialPages?cb=' . $cb), self::NO_INDEX_NO_FOLLOW ],
 			[ sprintf($urlPattern, 'Special:BrokenRedirects?cb=' . $cb), self::NO_INDEX_NO_FOLLOW ],
 			[ sprintf($urlPattern, 'Special:ProtectedPages?cb=' . $cb), self::NO_INDEX_NO_FOLLOW ],
-			[ sprintf($urlPattern, 'Special:AllPages?cb=' . $cb), self::NO_INDEX_NO_FOLLOW ],
+			[ sprintf($urlPattern, 'Special:AllPages?cb=' . $cb), self::NO_INDEX_FOLLOW ],
 			[ sprintf($urlPattern, 'Special:Contact?cb=' . $cb), self::NO_INDEX_NO_FOLLOW ],
 			[ 'http://www.wikia.com/Sitemap?cb=' . $cb, static::NO_INDEX_FOLLOW ]
 		];
 	}
 
 	public function testRobotsDeniedOnShowcasePage() {
+		$this->markTestSkipped( 'Wait for release of ADEN-2321' );
+
 		$response = $this->getHttpGerResponse( self::SHOWCASE_ADTEST_PAGE_LINK );
 		$this->assertEquals( self::HTTP_OK, $response->getStatus() );
 		$this->assertContains( self::NO_INDEX_NO_FOLLOW, $response->getContent() );
