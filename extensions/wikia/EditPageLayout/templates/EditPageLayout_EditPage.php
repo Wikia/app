@@ -35,7 +35,7 @@
 		</header>
 
 		<?php if ( $isPortableInfoboxBuilder ): ?>
-			<iframe/>
+			<iframe width="100%" height="600" src="http://muppet.rafal.wikia-dev.com/infoboxBuilder/AAAAA"/>
 		<?php else: ?>
 			<form id="editform" class="editform" name="editform" method="post"
 				  action="<?= htmlspecialchars( $editFormAction ) ?>" enctype="multipart/form-data">
