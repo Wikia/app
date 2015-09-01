@@ -2,7 +2,6 @@
 
 class PortableInfoboxHooks {
 	const PARSER_TAG_GALLERY = 'gallery';
-	const INFOBOX_BUILDER_MERCURY_ROUTE = 'infoboxBuilder';
 
 	public static function onBeforePageDisplay( OutputPage $out, Skin $skin ) {
 		if ( F::app()->checkSkin( 'monobook', $skin ) ) {
@@ -51,30 +50,6 @@ class PortableInfoboxHooks {
 		return true;
 	}
 
-	/**
-	 * @param EditPageLayoutController $editPage
-	 *
-	 * @return bool
-	 */
-	public static function onEditPageLayoutExecute( $editPage ) {
-		// run only on template
-		$requestContext = $editPage->getContext();
-		$title = $requestContext->getTitle();
-
-		if ( $title->getNamespace() == NS_TEMPLATE &&
-			!$title->exists() &&
-			$requestContext->getRequest()->getBool( PortableInfoboxBuilderController::INFOBOX_BUILDER_PARAM )
-		) {
-			$host = $requestContext->getRequest()->getAllHeaders()['HOST'];
-			$url = 'http://' . $host . '/' . self::INFOBOX_BUILDER_MERCURY_ROUTE . '/' . $title->getBaseText();
-
-			$editPage->getResponse()->setVal( 'isPortableInfoboxBuilder', true );
-			$editPage->getResponse()->setVal( 'portableInfoboxBuilderUrl', $url );
-		}
-
-		return true;
-	}
-
 	public static function onAddPortableInfoboxBuilderText( &$article, &$text, &$wgOut ) {
 		//check if extension is on and user has rights
 		$text = '';
@@ -95,16 +70,10 @@ class PortableInfoboxHooks {
 	 */
 	public static function onSkinAfterBottomScripts( $skin, &$text ) {
 		$title = $skin->getTitle();
-		$request = $skin->getRequest();
 
-		if ( $title->getNamespace() == NS_TEMPLATE &&
-			!$title->exists() &&
-			$request->getVal( 'action' ) == 'edit' &&
-			$request->getBool( PortableInfoboxBuilderController::INFOBOX_BUILDER_PARAM )
-		) {
-			//$text .= JSMessages::printPackages( [ 'PortableInfoboxBuilder' ] );
-
+		if ( $title->isSpecial( PortableInfoboxBuilderSpecialController::PAGE_NAME ) ) {
 			$scripts = AssetsManager::getInstance()->getURL( 'portable_infobox_builder_js' );
+
 			foreach ( $scripts as $script ) {
 				$text .= Html::linkedScript( $script );
 			}
