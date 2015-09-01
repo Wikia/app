@@ -6,11 +6,16 @@ define('ext.wikia.adEngine.slot.scrollHandler', [
     'wikia.document',
     'wikia.window'
 ], function (adContext, adHelper, log, doc, win) {
+    'use strict';
 
     var logGroup = 'ext.wikia.adEngine.slot.scrollHandler',
         isRefreshed = {
             PREFOOTER_LEFT_BOXAD: false,
             PREFOOTER_RIGHT_BOXAD: false
+        },
+        reloadedView = {
+            PREFOOTER_LEFT_BOXAD: 0,
+            PREFOOTER_RIGHT_BOXAD: 0
         };
 
     function init() {
@@ -29,8 +34,9 @@ define('ext.wikia.adEngine.slot.scrollHandler', [
     function refreshSlot(slotName) {
         var status = isReached(doc.getElementById(slotName));
         if (!isRefreshed[slotName] && status) {
-            win.adslots2.push(slotName);
             log(['refreshSlot', slotName + ' has been refreshed'], 'debug', logGroup);
+            reloadedView[slotName]++;
+            win.adslots2.push(slotName);
             isRefreshed[slotName] = true;
         } else if (!status) {
             isRefreshed[slotName] = false;
@@ -46,7 +52,16 @@ define('ext.wikia.adEngine.slot.scrollHandler', [
         return topPos;
     }
 
+    function getReloadedViewCount(slotName) {
+        if (reloadedView[slotName] !== undefined) {
+            return reloadedView[slotName];
+        }
+
+        return null;
+    }
+
     return {
-        init: init
+        init: init,
+        getReloadedViewCount: getReloadedViewCount
     };
 });
