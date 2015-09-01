@@ -13,20 +13,15 @@ class UserAttributes {
 	/** @var string[string][string] */
 	private $attributes;
 
-	/** @var string[string] */
-	private $defaultAttributes;
-
 	/**
 	 * @Inject({
 	 *    Wikia\Service\User\Attributes\AttributeService::class,
-	 *    Wikia\Service\User\Attributes\UserAttributes::DEFAULT_ATTRIBUTES
 	 * })
 	 * @param AttributeService $attributeService
 	 * @param string[string] $defaultAttributes
 	 */
-	public function __construct( AttributeService $attributeService, $defaultAttributes ) {
+	public function __construct( AttributeService $attributeService ) {
 		$this->attributeService = $attributeService;
-		$this->defaultAttributes = $defaultAttributes;
 		$this->attributes = [];
 	}
 
@@ -39,10 +34,6 @@ class UserAttributes {
 
 		if ( !is_null( $attributes[$attributeName] ) ) {
 			return $attributes[$attributeName];
-		}
-
-		if ( !is_null( $this->defaultAttributes[$attributeName] ) ) {
-			return  $this->defaultAttributes[$attributeName];
 		}
 
 		return $default;
@@ -69,20 +60,12 @@ class UserAttributes {
 			return;
 		}
 
-		if ( $this->attributeValueAlreadySet( $userId, $attribute ) ) {
-			return;
-		}
-
 		$this->setAttributeInService( $userId, $attribute );
 		$this->setAttributeInCache( $userId, $attribute );
 	}
 
 	private function isAnonUser( $userId ) {
 		return $userId === 0;
-	}
-
-	private function attributeValueAlreadySet( $userId, Attribute $attribute ) {
-		return $this->getAttribute( $userId, $attribute->getName() ) === $attribute->getValue();
 	}
 
 	/**
@@ -116,17 +99,8 @@ class UserAttributes {
 			return;
 		}
 
-		if ( $this->attributeNotSetForUser( $userId, $attribute ) ) {
-			return;
-		}
-
 		$this->deleteAttributeFromService( $userId, $attribute );
 		$this->deleteAttributeFromCache( $userId, $attribute );
-	}
-
-	private function attributeNotSetForUser( $userId, Attribute $attribute ) {
-		$this->loadAttributes( $userId );
-		return empty( $this->attributes[$userId][$attribute->getName()] );
 	}
 
 	private function deleteAttributeFromCache( $userId, Attribute $attribute ) {

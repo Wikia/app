@@ -80,18 +80,25 @@ body.skin-oasis {
 
 @if ($widthType == 0) {
 	body.background-dynamic.skin-oasis {
-		background: $color-body;
+		background: {
+			color: $color-body;
+			image: none;
+		}
 
 		&::after,
 		&::before {
-			background-image: url($background-image); /* $wgCdnStylePath */
-			background-repeat: no-repeat;
+			background: {
+				color: transparent;
+				image: url($background-image); /* $wgCdnStylePath */
+				repeat: no-repeat;
+			}
 			content: '';
 			height: $background-height;
 			position: absolute;
 			top: 0;
 			width: $background-width-half;
-			z-index: -1;
+			// (1) as Safari has problems with negative z-index, let this be base...
+			z-index: 0;
 		}
 
 		&.background-fixed::after,
@@ -118,6 +125,8 @@ body.skin-oasis {
 			background: $color-body-middle;
 			/* @noflip */
 			left: 50%;
+			// (2) ... this will lay on top of the base ...
+			z-index: 1;
 
 			&,
 			&::before,
@@ -147,6 +156,11 @@ body.skin-oasis {
 			&.no-gradients::after {
 				display: none;
 			}
+		}
+
+		.WikiaTopAds, .WikiaPage {
+			// (3) ... and both TopAds and WikiaPage will lay on top of them.
+			z-index: 2;
 		}
 	}
 

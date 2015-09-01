@@ -937,6 +937,18 @@ abstract class DatabaseBase implements DatabaseType {
 		if ( strpos( $sql, ' ' ) === false ) {
 			$commentedSql = "{$sql} /* {$fname} {$userName} */";
 		}
+
+		// PLATFORM-1311: log deletes on `revision` table
+		if ( startsWith( $sql, 'DELETE ' ) && strpos( $sql, '`revision`' ) !== false ) {
+			WikiaLogger::instance()->warning( 'PLATFORM-1311', [
+				'reason' => 'SQL DELETE',
+				'fname' => $fname,
+				'sql' => $sql,
+				'exception' => new Exception(),
+			] );
+		}
+		// Wikia change- end
+
 		# Wikia change - end
 
 		# If DBO_TRX is set, start a transaction

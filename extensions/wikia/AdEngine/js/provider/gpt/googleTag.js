@@ -41,8 +41,8 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 		googleTag = window.googletag = window.googletag || {};
 		window.googletag.cmd = window.googletag.cmd || [];
 
-		log(['init', 'googletag.cmd.push'], 'info', logGroup);
-		googleTag.cmd.push(function () {
+		log(['enableServices', 'push'], 'info', logGroup);
+		this.push(function () {
 			pubAds = googleTag.pubads();
 
 			pubAds.collapseEmptyDivs();
@@ -52,7 +52,7 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 
 			googleTag.enableServices();
 
-			log(['init', 'googletag.cmd.push', 'done'], 'debug', logGroup);
+			log(['enableServices', 'push', 'done'], 'debug', logGroup);
 		});
 	};
 
@@ -78,7 +78,7 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 	};
 
 	GoogleTag.prototype.setPageLevelParams = function (params) {
-		googleTag.cmd.push(function () {
+		this.push(function () {
 			var name,
 				value;
 
@@ -105,7 +105,7 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 			return;
 		}
 
-		googleTag.cmd.push(function () {
+		this.push(function () {
 			log(['flush', 'start'], 'info', logGroup);
 
 			log(['flush', 'refresh', slotQueue], 'debug', logGroup);
@@ -133,11 +133,20 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 
 		adElement.configureSlot(slot);
 		slotQueue.push(slot);
+
+		return slot;
 	};
 
 	GoogleTag.prototype.registerCallback = function (id, callback) {
 		log(['registerCallback', id], 'info', logGroup);
 		registeredCallbacks[id] = callback;
+	};
+
+	GoogleTag.prototype.onAdLoad = function (slotName, element, gptEvent, onAdLoadCallback) {
+		log(['onAdLoad', slotName], 'info', logGroup);
+		var iframe = element.getNode().querySelector('div[id*="_container_"] iframe');
+
+		onAdLoadCallback(element.getId(), gptEvent, iframe);
 	};
 
 	return GoogleTag;
