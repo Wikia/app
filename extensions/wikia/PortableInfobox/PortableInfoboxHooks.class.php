@@ -75,6 +75,18 @@ class PortableInfoboxHooks {
 		return true;
 	}
 
+	public static function onAddPortableInfoboxBuilderText( &$article, &$text, &$wgOut ) {
+		//check if extension is on and user has rights
+		$text = '';
+		$templateTitle = $article->getTitle()->getText();
+		$infoboxBuilderLink = "/Special:InfoboxBuilder/" . $templateTitle;
+		$editorLink = "/wiki/" . $templateTitle . "?action=edit";
+		$HTML = '<a href="'. $infoboxBuilderLink . '" class="wikia-button">CREATE INFOBOX TEMPLATE</a> or <a href="'. $editorLink . '" class="wikia-button">CREATE NORMAL TEMPLATE</a>';
+
+		$wgOut->addHTML($HTML);
+		return true;
+	}
+
 	/**
 	 * @param Skin $skin
 	 * @param string $text
