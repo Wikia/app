@@ -97,7 +97,7 @@ class AvatarsMigrator extends Maintenance {
 
 			if ($this->isDryRun) return;
 
-			$user->removeGlobalPreference( AVATAR_USER_OPTION_NAME );
+			$user->setGlobalAttribute( AVATAR_USER_OPTION_NAME, '' );
 			$user->saveSettings();
 
 			$this->getDB( DB_MASTER )->commit( __METHOD__ );
@@ -169,6 +169,8 @@ class AvatarsMigrator extends Maintenance {
 	}
 
 	/**
+	 * Return shared DB connector
+	 *
 	 * @param int $db DB_SLAVE|DB_MASTER
 	 * @return DatabaseBase
 	 */
