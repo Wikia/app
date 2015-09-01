@@ -1,6 +1,7 @@
 <?php
 
 class ResourceLoaderAdEngineSevenOneMediaModule extends ResourceLoaderAdEngineBase {
+	const CACHE_BUSTER = 13;    // increase this any time the local files change
 
 	/**
 	 * Configure scripts that should be loaded into one package
@@ -10,7 +11,7 @@ class ResourceLoaderAdEngineSevenOneMediaModule extends ResourceLoaderAdEngineBa
 		$scripts = [];
 
 		$cssForHubs = "#ads-outer { max-width: 1030px; width: 1030px; margin: 0 auto; }";
-		$myCss = file_get_contents(__DIR__ . '/SevenOneMedia/my_ad_integration.css');
+		$myCss = file_get_contents(__DIR__ . '/../SevenOneMedia/my_ad_integration.css');
 
 		$cssAsJSValue = 'var SEVENONEMEDIA_CSS = ' . json_encode($myCss) . ' + '
 							. PHP_EOL
@@ -22,7 +23,7 @@ class ResourceLoaderAdEngineSevenOneMediaModule extends ResourceLoaderAdEngineBa
 
 		$scripts[] = (new ResourceLoaderScript())
 						->setTypeLocal()
-						->setValue( __DIR__ . '/SevenOneMedia/my_ad_integration.js' );
+						->setValue( __DIR__ . '/../SevenOneMedia/my_ad_integration.js' );
 
 		$scripts[] = (new ResourceLoaderScript())
 						->setTypeInline()
@@ -30,11 +31,11 @@ class ResourceLoaderAdEngineSevenOneMediaModule extends ResourceLoaderAdEngineBa
 
 		$scripts[] = (new ResourceLoaderScript())
 						->setTypeRemote()
-						->setValue( 'http://ad.71i.de/global_js/globalV6.js' );
+						->setValue('http://ad.71i.de/global_js/Sites/wikia.js');
 
 		$scripts[] = (new ResourceLoaderScript())
 						->setTypeRemote()
-						->setValue('http://ad.71i.de/global_js/Sites/wikia.js');
+						->setValue( 'http://ad.71i.de/global_js/globalV6.js' );
 
 		return $scripts;
 	}

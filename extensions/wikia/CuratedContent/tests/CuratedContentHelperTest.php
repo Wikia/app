@@ -57,12 +57,7 @@ class CuratedContentHelperTest extends WikiaBaseTest {
 	}
 
 	public function testFindImageIdAndUrlWhenImageAndArticleEmpty() {
-		$this->getStaticMethodMock( 'CuratedContentHelper', 'findFirstImageTitleFromArticle' )
-			->expects( $this->any() )
-			->method( 'findFirstImageTitleFromArticle' )
-			->will( $this->returnValue( null ) );
-
-		$this->assertEquals( CuratedContentHelper::findImageIdAndUrl(0, 0), [ 0, null] );
+		$this->assertSame( CuratedContentHelper::findImageIdAndUrl(0, 0), [ null, null] );
 	}
 
 	public function testFindImageIdAndUrlWhenArticleExists() {
@@ -92,21 +87,34 @@ class CuratedContentHelperTest extends WikiaBaseTest {
 			->method( 'getUrlFromImageTitle' )
 			->will( $this->returnValue( $expectedImageUrl ) );
 
-		$this->assertEquals( CuratedContentHelper::findImageIdAndUrl(0, $articleId), [ $expectedImageId, $expectedImageUrl ] );
+		$this->assertSame( CuratedContentHelper::findImageIdAndUrl(0, $articleId), [ $expectedImageId, $expectedImageUrl ] );
 	}
 
-	public function testFindImageIdAndUrlWhenImageIdNotEmptyAndArticleIdNotEmpty() {
+	public function testFindImageIdAndUrlWhenImageIdNotEmptyAndImageTitleExists() {
 		$imageId = 13;
 		$articleId = 26;
 		$expectedImageId = 13;
 		$expectedImageUrl = 'foo';
 
-		$this->getStaticMethodMock( 'CuratedContentHelper', 'getImageUrl' )
+		$titleMock = $this->getMockBuilder( 'Title' )
+			->setMethods( [ 'exists' ] )
+			->getMock();
+
+		$titleMock->expects( $this->any() )
+			->method( 'exists' )
+			->willReturn( true );
+
+		$this->getStaticMethodMock( 'Title', 'newFromID' )
 			->expects( $this->any() )
-			->method( 'getImageUrl' )
+			->method( 'newFromID' )
+			->will( $this->returnValue( $titleMock ) );
+
+		$this->getStaticMethodMock( 'CuratedContentHelper', 'getUrlFromImageTitle' )
+			->expects( $this->any() )
+			->method( 'getUrlFromImageTitle' )
 			->will( $this->returnValue( $expectedImageUrl ) );
 
-		$this->assertEquals( CuratedContentHelper::findImageIdAndUrl($imageId, $articleId), [ $expectedImageId, $expectedImageUrl ] );
+		$this->assertSame( CuratedContentHelper::findImageIdAndUrl($imageId, $articleId), [ $expectedImageId, $expectedImageUrl ] );
 	}
 
 	public function testFindImageIdAndUrlWhenImageIdNotEmptyAndArticleIdIsEmpty() {
@@ -119,6 +127,6 @@ class CuratedContentHelperTest extends WikiaBaseTest {
 			->method( 'getImageUrl' )
 			->will( $this->returnValue( $expectedImageUrl ) );
 
-		$this->assertEquals( CuratedContentHelper::findImageIdAndUrl($imageId), [ $expectedImageId, $expectedImageUrl ] );
+		$this->assertSame( CuratedContentHelper::findImageIdAndUrl($imageId), [ $expectedImageId, $expectedImageUrl ] );
 	}
 }

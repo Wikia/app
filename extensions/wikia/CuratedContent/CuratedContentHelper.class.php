@@ -9,6 +9,25 @@ class CuratedContentHelper {
 	const STR_CATEGORY = 'category';
 	const STR_VIDEO = 'video';
 
+	//TODO: Temporary, remove with CONCF-1095
+	private static function isAllowedWikia() {
+		$host = RequestContext::getMain()->getRequest()->getHeader('HOST');
+
+		return (bool) preg_match(
+			'/creepypasta|glee|castle-clash|clashofclans|mobileregressiontesting|concf/i',
+			$host
+		);
+	}
+
+	public static function shouldDisplayToolButton() {
+		global $wgEnableCuratedContentExt, $wgUser;
+
+		return WikiaPageType::isMainPage() &&
+			self::isAllowedWikia() &&
+			!empty( $wgEnableCuratedContentExt ) &&
+			$wgUser->isAllowed( 'curatedcontent' );
+	}
+
 	public function processSections( $sections ) {
 		$processedSections = [ ];
 
@@ -132,8 +151,7 @@ class CuratedContentHelper {
 
 	public static function getImageUrl( $id, $imageSize = 50 ) {
 		$thumbnail = (new ImageServing( [ $id ], $imageSize, $imageSize ))->getImages( 1 );
-
-		return !empty( $thumbnail ) ? $thumbnail[$id][0]['url'] : '';
+		return !empty( $thumbnail ) ? $thumbnail[$id][0]['url'] : null;
 	}
 
 	private function getVideoInfo( $title ) {
@@ -166,11 +184,12 @@ class CuratedContentHelper {
 	 * @param int $articleId
 	 * @return array
 	 */
-	public static function findImageIdAndUrl( $imageId = 0, $articleId = 0 ) {
+	public static function findImageIdAndUrl( $imageId, $articleId = 0 ) {
 		$url = null;
 		$imageTitle = null;
 
 		if ( empty( $imageId ) ) {
+			$imageId = null;
 			if ( !empty( $articleId ) ) {
 				$imageTitle = self::findFirstImageTitleFromArticle( $articleId );
 				if ( $imageTitle instanceof Title && $imageTitle->exists() ) {
@@ -179,6 +198,13 @@ class CuratedContentHelper {
 				}
 			}
 		} else {
+			$imageTitle = Title::newFromID( $imageId );
+			if ( $imageTitle instanceof Title && $imageTitle->exists() ) {
+				$url = self::getUrlFromImageTitle( $imageTitle );
+			}
+		}
+
+		if ( empty( $url ) ) {
 			$url = self::getImageUrl( $imageId );
 		}
 

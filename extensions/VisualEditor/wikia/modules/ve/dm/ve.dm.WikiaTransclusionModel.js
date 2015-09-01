@@ -65,12 +65,18 @@ ve.dm.WikiaTransclusionModel.prototype.fetchRequestDone = function ( specs, data
 	}
 };
 
+/**
+ * @desc process the infobox params received from API. For all requested pages, if they contain infoboxes,
+ * extend their param array with received infobox params.
+ */
 ve.dm.WikiaTransclusionModel.prototype.fetchInfoboxParamsRequestDone = function ( specs, data ) {
-	var id, page, i, j;
+	var id, page, i, j, denormalizedData;
 
-	if ( data && data.query && data.query.pages ) {
-		for ( id in data.query.pages ) {
-			page = data.query.pages[id];
+	if ( data && Object.keys( data.query ).length && Object.keys( data.query.pages ).length ) {
+		denormalizedData = this.denormalizeInfoboxTemplateTitles( data );
+
+		for ( id in denormalizedData ) {
+			page = denormalizedData[id];
 
 			if ( !page.infoboxes ) {
 				return;
@@ -95,4 +101,45 @@ ve.dm.WikiaTransclusionModel.prototype.fetchInfoboxParamsRequestDone = function 
 
 		ve.extendObject( this.specCache, specs );
 	}
+};
+
+/**
+ * @desc The template names which contain _ are normalized in infobox API and the title from response contain spaces.
+ * It's inconsistent with the template API. However, the response from infobox API contains field 'normalized'
+ * where we can take the requested title from.
+ *
+ * @param data from infobox params API
+ */
+ve.dm.WikiaTransclusionModel.prototype.denormalizeInfoboxTemplateTitles = function ( data ) {
+	var i, id, title, pages = data.query.pages;
+
+	if ( data.query.normalized ) {
+		for ( i = 0; i < data.query.normalized.length; i++ ) {
+			title = data.query.normalized[i];
+
+			for ( id in pages ) {
+				if ( title.to === pages[id].title ) {
+					pages[id].title = title.from;
+					break;
+				}
+			}
+		}
+	}
+
+	return pages;
+};
+
+/**
+ * @desc set on this model that element it takes care about is an infobox
+ * @param isInfobox boolean
+ */
+ve.dm.WikiaTransclusionModel.prototype.setIsInfobox = function ( isInfobox ) {
+	this.isInfobox = isInfobox;
+};
+
+/**
+ * @desc get info if this transclusion model is responsible for an infobox
+ */
+ve.dm.WikiaTransclusionModel.prototype.getIsInfobox = function () {
+	return this.isInfobox;
 };

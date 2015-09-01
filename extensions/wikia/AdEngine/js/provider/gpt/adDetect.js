@@ -5,8 +5,9 @@ define('ext.wikia.adEngine.provider.gpt.adDetect', [
 	'wikia.log',
 	'wikia.window',
 	'ext.wikia.adEngine.adContext',
-	'ext.wikia.adEngine.messageListener'
-], function (log, window, adContext, messageListener) {
+	'ext.wikia.adEngine.messageListener',
+	'ext.wikia.adEngine.slot.adSlot'
+], function (log, window, adContext, messageListener, adSlot) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.gpt.adDetect',
@@ -149,10 +150,6 @@ define('ext.wikia.adEngine.provider.gpt.adDetect', [
 		return 'inspect_iframe';
 	}
 
-	function getShortSlotName(slotName) {
-		return slotName.replace(/^.*\/([^\/]*)$/, '$1');
-	}
-
 	function onAdLoad(slotName, gptEvent, iframe, adCallback, noAdCallback, forcedAdType) {
 
 		var adType = forcedAdType || getAdType(slotName, gptEvent, iframe),
@@ -162,7 +159,7 @@ define('ext.wikia.adEngine.provider.gpt.adDetect', [
 			expectAsyncSuccessWithSlotName = false,
 			expectAsyncSuccess = false,
 			successTimer,
-			shortSlotName = getShortSlotName(slotName);
+			shortSlotName = adSlot.getShortSlotName(slotName);
 
 		function noop() { return; }
 
@@ -277,8 +274,6 @@ define('ext.wikia.adEngine.provider.gpt.adDetect', [
 	}
 
 	return {
-		onAdLoad: onAdLoad,
-		//For tests purpose, if you want to use it, consider creating new class (AdSlot?)
-		getShortSlotName: getShortSlotName
+		onAdLoad: onAdLoad
 	};
 });
