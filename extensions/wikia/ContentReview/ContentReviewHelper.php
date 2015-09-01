@@ -96,7 +96,7 @@ class Helper extends \ContextSource {
 	}
 
 	public static function isStatusAwaiting( $status ) {
-		return in_array( (int) $status, [
+		return in_array( (int)$status, [
 				ReviewModel::CONTENT_REVIEW_STATUS_UNREVIEWED,
 				ReviewModel::CONTENT_REVIEW_STATUS_IN_REVIEW,
 			]
@@ -104,7 +104,7 @@ class Helper extends \ContextSource {
 	}
 
 	public static function isStatusCompleted( $status ) {
-		return in_array( (int) $status, [
+		return in_array( (int)$status, [
 				ReviewModel::CONTENT_REVIEW_STATUS_APPROVED,
 				ReviewModel::CONTENT_REVIEW_STATUS_REJECTED,
 			]
@@ -123,7 +123,7 @@ class Helper extends \ContextSource {
 		$reviewModel = new ReviewModel();
 		$reviewData = $reviewModel->getReviewedContent( $wikiId, $pageId, ReviewModel::CONTENT_REVIEW_STATUS_IN_REVIEW );
 
-		return ( !empty( $reviewData ) && (int) $reviewData['revision_id'] === $diff );
+		return ( !empty( $reviewData ) && (int)$reviewData['revision_id'] === $diff );
 	}
 
 	public function hasPageApprovedId( $wikiId, $pageId, $oldid ) {
@@ -154,6 +154,8 @@ class Helper extends \ContextSource {
 					|| self::isStatusAwaiting( $diffRevisionInfo['status'] ) )
 			);
 		}
+
+		return false;
 	}
 
 	public function getToolbarTemplate() {
