@@ -989,6 +989,7 @@ class LocalFile extends File {
 			$user = $wgUser;
 		}
 
+		/* @var DatabaseBase $dbw */
 		$dbw = $this->repo->getMasterDB();
 		$dbw->begin();
 
@@ -1097,14 +1098,14 @@ class LocalFile extends File {
 		} else {
 			# This is a new file
 			# Update the image count
-			$dbw->begin( __METHOD__ );
+			#$dbw->begin( __METHOD__ ); // macbre: see PLATFORM-1311 (Beginning a transaction causes any pending transaction to be committed)
 			$dbw->update(
 				'site_stats',
 				array( 'ss_images = ss_images+1' ),
 				'*',
 				__METHOD__
 			);
-			$dbw->commit( __METHOD__ );
+			#$dbw->commit( __METHOD__ ); // macbre: see PLATFORM-1311
 		}
 
 		$descTitle = $this->getTitle();
