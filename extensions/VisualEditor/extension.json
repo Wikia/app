@@ -247,6 +247,7 @@
 			"styles": "modules/ve-mw/init/styles/ve.init.mw.DesktopArticleTarget.init.css",
 			"dependencies": [
 				"jquery.client",
+				"jquery.byteLength",
 				"mediawiki.page.startup",
 				"mediawiki.Title",
 				"mediawiki.Uri",
@@ -1604,9 +1605,6 @@
 		"visualeditor-enable-language": 0,
 		"visualeditor-hidebetawelcome": 0
 	},
-	"ExtensionFunctions": [
-		"VisualEditorHooks::onSetup"
-	],
 	"AutoloadClasses": {
 		"ApiVisualEditor": "ApiVisualEditor.php",
 		"ApiVisualEditorEdit": "ApiVisualEditorEdit.php",

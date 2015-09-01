@@ -120,6 +120,7 @@ class VisualEditorHooks {
 		$availableNamespaces = $config->get( 'VisualEditorAvailableNamespaces' );
 		$title = $skin->getRelevantTitle();
 		$namespaceEnabled = $title->inNamespaces( array_keys( array_filter( $availableNamespaces ) ) );
+		/*
 		$pageContentModel = $title->getContentModel();
 		// Don't exit if this page isn't VE-enabled, since we should still
 		// change "Edit" to "Edit source".
@@ -127,6 +128,8 @@ class VisualEditorHooks {
 			$namespaceEnabled &&
 			$pageContentModel === CONTENT_MODEL_WIKITEXT
 		);
+		*/
+		$isAvailable = $namespaceEnabled;
 
 		// HACK: Exit if we're in the Education Program namespace (even though it's content)
 		if ( defined( 'EP_NS' ) && $title->inNamespace( EP_NS ) ) {
@@ -414,9 +417,7 @@ class VisualEditorHooks {
 	 * Adds extra variables to the global config
 	 */
 	public static function onResourceLoaderGetConfigVars( array &$vars ) {
-		$coreConfig = RequestContext::getMain()->getConfig();
-		$defaultUserOptions = $coreConfig->get( 'DefaultUserOptions' );
-		$thumbLimits = $coreConfig->get( 'ThumbLimits' );
+		global $wgDefaultUserOptions, $wgThumbLimits, $wgSVGMaxSize, $wgNamespacesWithSubpages, $wgVisualEditorRestbaseURL;
 		$veConfig = ConfigFactory::getDefaultInstance()->makeConfig( 'visualeditor' );
 		$availableNamespaces = $veConfig->get( 'VisualEditorAvailableNamespaces' );
 		$onNamespaces = array_keys( array_filter( $availableNamespaces ) );
@@ -430,7 +431,7 @@ class VisualEditorHooks {
 				$veConfig->get( 'VisualEditorPluginModules' ) // @todo deprecate the global setting
 			),
 			'defaultUserOptions' => array(
-				'defaultthumbsize' => $thumbLimits[ $defaultUserOptions['thumbsize'] ]
+				'defaultthumbsize' => $wgThumbLimits[ $wgDefaultUserOptions['thumbsize'] ]
 			),
 			'blacklist' => $veConfig->get( 'VisualEditorBrowserBlacklist' ),
 			'skins' => $veConfig->get( 'VisualEditorSupportedSkins' ),
@@ -438,10 +439,10 @@ class VisualEditorHooks {
 			'tabMessages' => $veConfig->get( 'VisualEditorTabMessages' ),
 			'showBetaWelcome' => $veConfig->get( 'VisualEditorShowBetaWelcome' ),
 			'enableTocWidget' => $veConfig->get( 'VisualEditorEnableTocWidget' ),
-			'svgMaxSize' => $coreConfig->get( 'SVGMaxSize' ),
-			'namespacesWithSubpages' => $coreConfig->get( 'NamespacesWithSubpages' ),
+			'svgMaxSize' => $wgSVGMaxSize,
+			'namespacesWithSubpages' => $wgNamespacesWithSubpages,
 			'specialBooksources' => urldecode( SpecialPage::getTitleFor( 'Booksources' )->getPrefixedURL() ),
-			'restbaseUrl' => $coreConfig->get( 'VisualEditorRestbaseURL' ),
+			'restbaseUrl' => $wgVisualEditorRestbaseURL,
 		);
 
 		return true;
@@ -455,7 +456,7 @@ class VisualEditorHooks {
 	 * @return boolean true
 	 */
 	public static function onResourceLoaderRegisterModules( ResourceLoader &$resourceLoader ) {
-		$resourceModules = $resourceLoader->getConfig()->get( 'ResourceModules' );
+		global $wgResourceModules;
 
 		$veResourceTemplate = array(
 			'localBasePath' => __DIR__,
@@ -465,7 +466,7 @@ class VisualEditorHooks {
 		// Only pull in VisualEditor core's local version of jquery.uls.data if it hasn't been
 		// installed locally already (presumably, by the UniversalLanguageSelector extension).
 		if (
-			!isset( $resourceModules[ 'jquery.uls.data' ] ) &&
+			!isset( $wgResourceModules[ 'jquery.uls.data' ] ) &&
 			!$resourceLoader->isModuleRegistered( 'jquery.uls.data' )
 		) {
 			$resourceLoader->register( array(

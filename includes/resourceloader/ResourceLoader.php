@@ -28,6 +28,10 @@
  */
 class ResourceLoader {
 
+	public function isModuleRegistered( $name ) {
+		return isset( $this->moduleInfos[$name] );
+	}
+
 	/* Protected Static Members */
 	protected static $filterCacheVersion = 7;
 	protected static $requiredSourceProperties = array( 'loadScript' );
