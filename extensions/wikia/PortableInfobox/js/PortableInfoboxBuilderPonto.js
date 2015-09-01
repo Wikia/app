@@ -1,6 +1,6 @@
 'use strict';
 
-define('wikia.infoboxbuilder.ponto', ['wikia.window', 'ponto'], function (window, ponto) {
+define('wikia.infoboxBuilder.ponto', ['wikia.window', 'ponto'], function (window, ponto) {
 	function InfoboxBuilderPonto() {
 		this.isWikiaContext = function () {
 			return {
