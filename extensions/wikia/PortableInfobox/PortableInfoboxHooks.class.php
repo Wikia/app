@@ -2,6 +2,7 @@
 
 class PortableInfoboxHooks {
 	const PARSER_TAG_GALLERY = 'gallery';
+	const INFOBOX_BUILDER_MERCURY_ROUTE = 'infoboxBuilder';
 
 	public static function onBeforePageDisplay( OutputPage $out, Skin $skin ) {
 		if ( F::app()->checkSkin( 'monobook', $skin ) ) {
@@ -58,10 +59,16 @@ class PortableInfoboxHooks {
 	public static function onEditPageLayoutExecute( $editPage ) {
 		// run only on template
 		$requestContext = $editPage->getContext();
-		if ( $requestContext->getTitle()->getNamespace() == NS_TEMPLATE &&
+		$title = $requestContext->getTitle();
+
+		if ( $title->getNamespace() == NS_TEMPLATE &&
 			 $requestContext->getRequest()->getBool( PortableInfoboxBuilderController::INFOBOX_BUILDER_PARAM )
 		) {
+			$host = $requestContext->getRequest()->getAllHeaders()['HOST'];
+			$url = 'http://' . $host . '/' . self::INFOBOX_BUILDER_MERCURY_ROUTE . '/' . $title->getBaseText();
+
 			$editPage->getResponse()->setVal( 'isPortableInfoboxBuilder', true );
+			$editPage->getResponse()->setVal( 'portableInfoboxBuilderUrl', $url );
 		}
 
 		return true;
