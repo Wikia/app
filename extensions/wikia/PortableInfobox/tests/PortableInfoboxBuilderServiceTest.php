@@ -10,7 +10,7 @@ class PortableInfoboxBuilderServiceTest extends WikiaBaseTest {
 	/**
 	 * @dataProvider translationsDataProvider
 	 */
-	public function testEmptyTranslation( $data, $expected ) {
+	public function testTranslation( $data, $expected ) {
 		$service = new PortableInfoboxBuilderService();
 
 		$this->assertEquals( $expected, $service->translate( $data ) );
