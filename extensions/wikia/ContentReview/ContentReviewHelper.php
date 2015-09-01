@@ -96,9 +96,17 @@ class Helper extends \ContextSource {
 	}
 
 	public static function isStatusAwaiting( $status ) {
-		return in_array( (int) $status, [
+		return in_array( (int)$status, [
 				ReviewModel::CONTENT_REVIEW_STATUS_UNREVIEWED,
 				ReviewModel::CONTENT_REVIEW_STATUS_IN_REVIEW,
+			]
+		);
+	}
+
+	public static function isStatusCompleted( $status ) {
+		return in_array( (int)$status, [
+				ReviewModel::CONTENT_REVIEW_STATUS_APPROVED,
+				ReviewModel::CONTENT_REVIEW_STATUS_REJECTED,
 			]
 		);
 	}
@@ -115,7 +123,7 @@ class Helper extends \ContextSource {
 		$reviewModel = new ReviewModel();
 		$reviewData = $reviewModel->getReviewedContent( $wikiId, $pageId, ReviewModel::CONTENT_REVIEW_STATUS_IN_REVIEW );
 
-		return ( !empty( $reviewData ) && (int) $reviewData['revision_id'] === $diff );
+		return ( !empty( $reviewData ) && (int)$reviewData['revision_id'] === $diff );
 	}
 
 	public function hasPageApprovedId( $wikiId, $pageId, $oldid ) {
@@ -123,6 +131,31 @@ class Helper extends \ContextSource {
 		$currentData = $currentModel->getLatestReviewedRevision( $wikiId, $pageId );
 
 		return ( !empty( $currentData ) && (int)$currentData['revision_id'] === $oldid );
+	}
+
+	public function shouldDisplayReviewerToolbar() {
+		global $wgCityId;
+
+		$title = $this->getTitle();
+
+		if ( $title->inNamespace( NS_MEDIAWIKI )
+			&& $title->isJsPage()
+			&& $title->userCan( 'content-review' )
+		) {
+			$diffRevisionId = $this->getRequest()->getInt( 'diff' );
+			$diffRevisionInfo = ( new ReviewModel() )->getRevisionInfo(
+				$wgCityId,
+				$title->getArticleID(),
+				$diffRevisionId
+			);
+
+			return ( !self::isStatusCompleted( $diffRevisionInfo['status'] )
+				&& ( $this->getRequest()->getInt( self::CONTENT_REVIEW_URL_PARAM ) === 1
+					|| self::isStatusAwaiting( $diffRevisionInfo['status'] ) )
+			);
+		}
+
+		return false;
 	}
 
 	public function getToolbarTemplate() {
