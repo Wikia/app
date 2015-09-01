@@ -233,11 +233,26 @@ class ReviewModel extends ContentReviewBaseModel {
 			->WHERE( 'wiki_id' )->EQUAL_TO( $wiki_id )
 			->AND_( 'page_id' )->EQUAL_TO( $page_id )
 			->AND_( 'status' )->EQUAL_TO( $status )
-			->LIMIT(1)
 			->runLoop( $db, function ( &$content, $row ) {
 				$content = get_object_vars( $row );
 			} );
 
 		return $content;
+	}
+
+	public function getRevisionInfo( $wikiId, $pageId, $revisionId ) {
+		$db = $this->getDatabaseForRead();
+
+		$revisionInfo = ( new \WikiaSQL() )
+			->SELECT_ALL()
+			->FROM( self::CONTENT_REVIEW_STATUS_TABLE )
+			->WHERE( 'wiki_id' )->EQUAL_TO( $wikiId )
+			->AND_( 'page_id' )->EQUAL_TO( $pageId )
+			->AND_( 'revision_id' )->EQUAL_TO( $revisionId )
+			->runLoop( $db, function ( &$revisionInfo, $row ) {
+				$revisionInfo = get_object_vars( $row );
+			} );
+
+		return $revisionInfo;
 	}
 }
