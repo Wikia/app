@@ -62,7 +62,8 @@ class PortableInfoboxHooks {
 		$title = $requestContext->getTitle();
 
 		if ( $title->getNamespace() == NS_TEMPLATE &&
-			 $requestContext->getRequest()->getBool( PortableInfoboxBuilderController::INFOBOX_BUILDER_PARAM )
+			!$title->exists() &&
+			$requestContext->getRequest()->getBool( PortableInfoboxBuilderController::INFOBOX_BUILDER_PARAM )
 		) {
 			$host = $requestContext->getRequest()->getAllHeaders()['HOST'];
 			$url = 'http://' . $host . '/' . self::INFOBOX_BUILDER_MERCURY_ROUTE . '/' . $title->getBaseText();
@@ -82,12 +83,14 @@ class PortableInfoboxHooks {
 	 */
 	public static function onSkinAfterBottomScripts( $skin, &$text ) {
 		$title = $skin->getTitle();
+		$request = $skin->getRequest();
+
 		if ( $title->getNamespace() == NS_TEMPLATE &&
-			 !$title->exists() &&
-			 $skin->getRequest()->getVal( 'action' ) == 'edit' &&
-			 !$skin->getRequest()->getBool( PortableInfoboxBuilderController::INFOBOX_BUILDER_PARAM )
+			!$title->exists() &&
+			$request->getVal( 'action' ) == 'edit' &&
+			$request->getBool( PortableInfoboxBuilderController::INFOBOX_BUILDER_PARAM )
 		) {
-			$text .= JSMessages::printPackages( [ 'PortableInfoboxBuilder' ] );
+			//$text .= JSMessages::printPackages( [ 'PortableInfoboxBuilder' ] );
 
 			$scripts = AssetsManager::getInstance()->getURL( 'portable_infobox_builder_js' );
 			foreach ( $scripts as $script ) {

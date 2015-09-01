@@ -35,7 +35,7 @@
 		</header>
 
 		<?php if ( $isPortableInfoboxBuilder ): ?>
-			<iframe width="100%" height="600" src="<?=  $portableInfoboxBuilderUrl ?>"/>
+			<iframe id="infoboxBuilderIframe" width="100%" height="600" src="<?=  $portableInfoboxBuilderUrl ?>"/>
 		<?php else: ?>
 			<form id="editform" class="editform" name="editform" method="post"
 				  action="<?= htmlspecialchars( $editFormAction ) ?>" enctype="multipart/form-data">
