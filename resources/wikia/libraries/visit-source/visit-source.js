@@ -12,7 +12,7 @@ var VisitSource = (function () {
 		this.isSession = isSession;
 	}
 	VisitSource.prototype.checkAndStore = function () {
-		if (this.getCookieValue(this.cookieName, this.getCookie()) === undefined) {
+		if (this.getCookieValue(this.cookieName, this.getCookie()) === null) {
 			this.store();
 		}
 	};
@@ -31,6 +31,7 @@ var VisitSource = (function () {
 		if (parts.length === 2) {
 			return parts.pop().split(";").shift();
 		}
+		return null;
 	};
 	VisitSource.prototype.getReferrer = function () {
 		return document.referrer;
