@@ -95,20 +95,18 @@ class AvatarsMigrator extends Maintenance {
 		else if ( self::isDefaultAvatar( $avatar ) ) {
 			$this->output( 'default avatar set - removing an attribute' );
 
-			if ($this->isDryRun) return;
-
-			$user->setGlobalAttribute( AVATAR_USER_OPTION_NAME, '' );
-			$user->saveSettings();
-
-			$this->getDB( DB_MASTER )->commit( __METHOD__ );
+			$this->setAvatarUrl( $user, '' );
 		}
-		// TODO: predefined avatar (Avatar*.jpg)
+		// predefined avatar (Avatar*.jpg)
 		else if ( false ) {
-			$this->output( 'predefined avatar set - setting a full URL' );
+			// store the full URL in user properties
+			$masthead = Masthead::newFromUser( $user );
+			$avatarUrl = $masthead->getPurgeUrl();           # e.g. http://images.wikia.com/messaging/images//1/19/Avatar.jpg
+			$avatarUrl = wfReplaceImageServer( $avatarUrl ); # e.g. http://img2.wikia.nocookie.net/__cb1441100734/messaging/images//1/19/Avatar.jpg
 
-			if ($this->isDryRun) return;
+			$this->output( "predefined avatar set <{$avatar}> - setting a full URL: <{$avatarUrl}>" );
 
-			// TODO: // set the full URL using user properties service
+			$this->setAvatarUrl( $user, $avatarUrl );
 		}
 		// custom, old avatar - upload via avatars service
 		else if ( !self::isNewAvatar( $avatar ) ) {
@@ -166,6 +164,22 @@ class AvatarsMigrator extends Maintenance {
 	 */
 	public static function isNewAvatar( $url ) {
 		return !self::isDefaultAvatar( $url ) && startsWith( $url, 'http://' );
+	}
+
+	/**
+	 * Save the avatar URL for a given user in user_properties and commit it to shared database
+	 *
+	 * @param User $user
+	 * @param string $avatarUrl
+	 */
+	protected function setAvatarUrl( User $user, $avatarUrl ) {
+		# skip when in dry-run mode
+		if ($this->isDryRun) return;
+
+		$user->setGlobalAttribute( AVATAR_USER_OPTION_NAME, $avatarUrl );
+
+		$user->saveSettings();
+		$this->getDB( DB_MASTER )->commit( __METHOD__ );
 	}
 
 	/**
