@@ -44,6 +44,9 @@ class PortableInfoboxBuilderSpecialController extends WikiaSpecialPageController
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 	}
 
+	/**
+	 * renders HTML for create new template page entry point
+	 */
 	public function renderCreateTemplateEntryPoint() {
 		$this->response->setVal( 'createInfobox', wfMessage(
 			'portable-infobox-builder-create-template-entry-point-create-infobox' )->plain() );
