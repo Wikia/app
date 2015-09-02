@@ -238,7 +238,8 @@ class FlagsController extends WikiaController {
 				wfMessage( 'flags-edit-modal-post-exception' )
 					->params( $exception->getText() )
 					->parse(),
-				BannerNotificationsController::CONFIRMATION_ERROR
+				BannerNotificationsController::CONFIRMATION_ERROR,
+				true
 			);
 
 			$pageUrl = $title->getFullURL();
