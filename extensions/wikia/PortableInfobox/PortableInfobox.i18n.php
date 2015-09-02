@@ -23,7 +23,7 @@ $messages['en'] = array(
 	'portable-infobox-builder-no-template-title-set' => 'No template title set. Please specify the title for new
 	infobox template.',
 	'portable-infobox-builder-create-template-entry-point-create-infobox' => 'Create Infobox',
-	'portable-infobox-builder-create-template-entry-point-create-infobox' => 'Create Regular Infobox',
+	'portable-infobox-builder-create-template-entry-point-create-regular-template' => 'Create Regular Template',
 
 	'portable-infobox-builder-entry-point-modal-title' => 'Do you want to create an infobox?',
 	'portable-infobox-builder-entry-point-modal-message' => 'Perhaps you are creating a new infobox template? Try out
@@ -58,7 +58,8 @@ $messages['qqq'] = array(
 	 template title in order to create new infobox',
 	'portable-infobox-builder-create-template-entry-point-create-infobox' => 'Button to create infobox with Infobox
 	builder tool displayed on new template page',
-	'portable-infobox-builder-create-template-entry-point-create-infobox' => 'Button to create regular template with
+	'portable-infobox-builder-create-template-entry-point-create-regular-template' => 'Button to create regular
+	template with
 	editor displayed on new template page',
 );
 
