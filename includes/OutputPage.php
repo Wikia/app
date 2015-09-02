@@ -2936,11 +2936,8 @@ $templates
 			$extraQuery = [];
 			if ( $wgEnableContentReviewExt ) {
 				$contentReviewHelper = new \Wikia\ContentReview\Helper;
-				$hash = $contentReviewHelper->getSiteJsScriptsHash();
-				if ( $contentReviewHelper->isContentReviewTestModeEnabled() ) {
-					$extraQuery['current'] = $hash;
-				} else {
-					$extraQuery['reviewed'] = $hash;
+				if ( !$contentReviewHelper->isContentReviewTestModeEnabled() ) {
+					$extraQuery['reviewed'] = $contentReviewHelper->getSiteJsScriptsHash();
 				}
 			}
 			$scripts .= $this->makeResourceLoaderLink( 'site', ResourceLoaderModule::TYPE_SCRIPTS,
