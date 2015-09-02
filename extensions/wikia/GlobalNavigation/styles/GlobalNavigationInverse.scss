@@ -1,6 +1,7 @@
 $global-nav-inverse-background: rgba(0,0,0,.65);
 $global-nav-inverse-text-color: rgb(255,255,255);
 $global-nav-inverse-background-hover: #656E78;
+$global-nav-inverse-link-hover-color: #C5CED9;
 
 .global-navigation {
 	&.inverse {
@@ -37,6 +38,7 @@ $global-nav-inverse-background-hover: #656E78;
 		}
 
 		.account-navigation-container {
+			color: $global-nav-inverse-text-color;
 
 			.AccountNavigation.active {
 				background-color: $global-nav-inverse-background-hover;
@@ -56,8 +58,12 @@ $global-nav-inverse-background-hover: #656E78;
 				border-radius: 50%;
 			}
 
-			.sign-in-label {
+			.auth-link {
 				color: $global-nav-inverse-text-color;
+
+				&:hover {
+					color: $global-nav-inverse-link-hover-color;
+				}
 			}
 
 			.chevron {
