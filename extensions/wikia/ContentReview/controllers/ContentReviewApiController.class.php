@@ -221,8 +221,9 @@ class ContentReviewApiController extends WikiaApiController {
 	 */
 	public function renderStatusModal() {
 		global $wgCityId;
+		$pageName = $this->request->getVal( 'pageName' );
 		$pageId = $this->request->getInt( 'pageId' );
-		$title = Title::newFromID( $pageId );
+		$title = Title::newFromText( $pageName );
 
 		/* Get page status */
 		$pageStatus = \F::app()->sendRequest(
@@ -250,7 +251,7 @@ class ContentReviewApiController extends WikiaApiController {
 		$helpTitle = Title::newFromText( wfMessage( 'content-review-module-help-url' )->escaped() );
 		if ( $helpTitle ) {
 			$res['helpUrl'] = $helpTitle->getFullURL();
-			$res['helpTitle'] = wfMessage('content-review-module-help-text')->escaped();
+			$res['helpTitle'] = wfMessage( 'content-review-module-help-text' )->escaped();
 		}
 
 		$this->setResponseData( $res );

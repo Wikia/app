@@ -44,7 +44,7 @@ require(
 				controller: 'ContentReviewApi',
 				method: 'renderStatusModal',
 				data: {
-					'pageId': window.wgArticleId
+					'pageName': window.wgPageName
 				},
 				type: 'get'
 			}),
