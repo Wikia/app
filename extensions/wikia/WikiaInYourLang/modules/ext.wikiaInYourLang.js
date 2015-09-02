@@ -35,10 +35,6 @@ require(
 				// Both have to be !== true to continue.
 				if (cache.get(getWIYLRequestSentKey()) !== true &&
 					cache.get(getWIYLNotificationShownKey()) !== true) {
-					// Update JS cache and set the notification shown indicator to true
-					// Cache for a day
-					cache.set(getWIYLRequestSentKey(), true, cache.CACHE_STANDARD);
-
 					getNativeWikiaInfo();
 				} else if (typeof cache.get(getWIYLMessageKey()) === 'string') {
 					displayNotification(cache.get(getWIYLMessageKey()));
@@ -93,6 +89,13 @@ require(
 					if (results.success === true) {
 						// Display notification
 						displayNotification(results.message);
+
+						// Save link address if it is different from this article title
+						saveLinkTitle(results.linkAddress);
+
+						// Update JS cache and set the notification shown indicator to true
+						// Cache for a day
+						cache.set(getWIYLRequestSentKey(), true, cache.CACHE_STANDARD);
 
 						// Save the message in cache to display until a user closes it
 						// Cache for a day
@@ -158,15 +161,40 @@ require(
 		}
 
 		function getWIYLRequestSentKey() {
-			return 'wikiaInYourLangRequestSent' + cacheVersion;
+			return 'wikiaInYourLangRequestSent' + retrieveLinkTitle() + cacheVersion;
 		}
 
 		function getWIYLNotificationShownKey() {
-			return 'wikiaInYourLangNotificationShown' + cacheVersion;
+			return 'wikiaInYourLangNotificationShown' + retrieveLinkTitle() + cacheVersion;
 		}
 
 		function getWIYLMessageKey() {
-			return targetLanguage + 'WikiaInYourLangMessage' + cacheVersion;
+			return targetLanguage + 'WikiaInYourLangMessage' + retrieveLinkTitle() + cacheVersion;
+		}
+
+		function getWIYLLinkTitlesKey() {
+			return targetLanguage + 'WikiaInYourLangLinkTitles' + cacheVersion;
+		}
+
+		function saveLinkTitle(linkAddress) {
+			var linkAddressAry = linkAddress.split('/'),
+				listOfCachedTitles = '',
+				linkTitle = linkAddressAry[linkAddressAry.length - 1].length === 0 ? 'main' : linkAddressAry[linkAddressAry.length - 1];
+
+			listOfCachedTitles = cache.get(getWIYLLinkTitlesKey());
+			if ( listOfCachedTitles ) {
+				listOfCachedTitles[articleTitle] = linkTitle;
+			} else {
+				listOfCachedTitles = {};
+				listOfCachedTitles[articleTitle] = linkTitle;
+			}
+
+			cache.set(getWIYLLinkTitlesKey(),listOfCachedTitles, cache.CACHE_LONG);
+		}
+
+		function retrieveLinkTitle() {
+			var listOfCachedTitles = cache.get(getWIYLLinkTitlesKey());
+			return (listOfCachedTitles && listOfCachedTitles[articleTitle]) || '';
 		}
 
 		if (!w.wikiaPageIsCorporate) {
