@@ -123,9 +123,9 @@ class ContentReviewModuleController extends WikiaController {
 		);
 	}
 
-	protected function createRevisionTalkpageLink( $revisionId ) {
+	protected function createRevisionTalkpageLink() {
 		return Linker::linkKnown(
-			$this->getContext()->getTitle()->getTalkPage(),
+			$this->wg->Title->getTalkPage(),
 			wfMessage( 'content-review-rejection-reason-link' )->escaped()
 		);
 	}
