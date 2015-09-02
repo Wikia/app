@@ -233,7 +233,7 @@ class WikiaInYourLangController extends WikiaController {
 		if ( $sArticleTitle !== false ) {
 			$title = GlobalTitle::newFromText( $sArticleTitle, NS_MAIN, $cityId );
 
-			if ( !is_null( $title ) ) {
+			if ( !is_null( $title ) && $title->exists()) {
 				$articleURL = $title->getFullURL();
 			}
 		}

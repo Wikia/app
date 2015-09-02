@@ -33,15 +33,15 @@ require(
 				// Check local browser cache to see if a request has been sent
 				// in the last month and if the notification has been shown to him.
 				// Both have to be !== true to continue.
-				if (cache.get('wikiaInYourLangRequestSent' + articleTitle + cacheVersion) !== true &&
-					cache.get('wikiaInYourLangNotificationShown' + articleTitle + cacheVersion) !== true) {
+				if (cache.get(getWIYLRequestSentKey()) !== true &&
+					cache.get(getWIYLNotificationShownKey()) !== true) {
 					// Update JS cache and set the notification shown indicator to true
 					// Cache for a day
-					cache.set('wikiaInYourLangRequestSent' + articleTitle + cacheVersion, true, cache.CACHE_STANDARD);
+					cache.set(getWIYLRequestSentKey(), true, cache.CACHE_STANDARD);
 
 					getNativeWikiaInfo();
-				} else if (typeof cache.get(targetLanguage + 'WikiaInYourLangMessage' + articleTitle + cacheVersion) === 'string') {
-					displayNotification(cache.get(targetLanguage + 'WikiaInYourLangMessage' + articleTitle + cacheVersion));
+				} else if (typeof cache.get(getWIYLMessageKey()) === 'string') {
+					displayNotification(cache.get(getWIYLMessageKey()));
 				}
 			}
 		}
@@ -97,7 +97,7 @@ require(
 						// Save the message in cache to display until a user closes it
 						// Cache for a day
 						cache.set(
-							targetLanguage + 'WikiaInYourLangMessage' + articleTitle + cacheVersion,
+							getWIYLMessageKey(),
 							results.message,
 							cache.CACHE_STANDARD
 						);
@@ -140,9 +140,9 @@ require(
 			};
 			tracker.track(trackingParams);
 
-			cache.set(targetLanguage + 'WikiaInYourLangMessage' + articleTitle + cacheVersion, null);
+			cache.set(getWIYLMessageKey(), null);
 			// Cache for a month
-			cache.set('wikiaInYourLangNotificationShown' + articleTitle + cacheVersion, true, cache.CACHE_LONG);
+			cache.set(getWIYLNotificationShownKey(), true, cache.CACHE_LONG);
 		}
 
 		function onLinkClick() {
@@ -155,6 +155,18 @@ require(
 			};
 
 			tracker.track(trackingParams);
+		}
+
+		function getWIYLRequestSentKey() {
+			return 'wikiaInYourLangRequestSent' + cacheVersion;
+		}
+
+		function getWIYLNotificationShownKey() {
+			return 'wikiaInYourLangNotificationShown' + cacheVersion;
+		}
+
+		function getWIYLMessageKey() {
+			return targetLanguage + 'WikiaInYourLangMessage' + cacheVersion;
 		}
 
 		if (!w.wikiaPageIsCorporate) {
