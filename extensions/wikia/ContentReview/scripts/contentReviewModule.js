@@ -1,7 +1,7 @@
 define(
 	'ext.wikia.contentReview.module',
 	['jquery', 'mw', 'wikia.loader', 'wikia.nirvana', 'wikia.window', 'BannerNotification'],
-	function($, mw, loader, nirvana, win, BannerNotification) {
+	function ($, mw, loader, nirvana, win, BannerNotification) {
 		'use strict';
 
 		function init() {
@@ -25,7 +25,7 @@ define(
 
 			var notification,
 				data = {
-					pageId: mw.config.get('wgArticleId'),
+					pageName: mw.config.get('wgPageName'),
 					editToken: mw.user.tokens.get('editToken')
 				};
 
@@ -36,7 +36,7 @@ define(
 				callback: function () {
 					win.location.reload(true);
 				},
-				onErrorCallback: function(response) {
+				onErrorCallback: function (response) {
 					var e, errorMsg;
 					if (response.responseText.length > 0) {
 						e = $.parseJSON(response.responseText);

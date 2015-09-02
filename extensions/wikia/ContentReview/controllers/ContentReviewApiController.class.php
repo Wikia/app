@@ -27,11 +27,12 @@ class ContentReviewApiController extends WikiaApiController {
 			throw new BadRequestApiException();
 		}
 
-		$pageId = $this->request->getInt( 'pageId' );
+		$pageName = $this->request->getVal( 'pageName' );
 
-		$title = Title::newFromID( $pageId );
-		if ( $title === null || !$title->isJsPage() ) {
-			throw new NotFoundApiException( "JS page with ID {$pageId} does not exist" );
+		$title = Title::newFromText( $pageName );
+		$pageId = $title->getArticleID();
+		if ( $title === null || $pageId === 0 || !$title->isJsPage() ) {
+			throw new NotFoundApiException( "JS page {$pageName} does not exist" );
 		}
 
 		$submitUserId = $this->wg->User->getId();
@@ -222,7 +223,6 @@ class ContentReviewApiController extends WikiaApiController {
 	public function renderStatusModal() {
 		global $wgCityId;
 		$pageName = $this->request->getVal( 'pageName' );
-		$pageId = $this->request->getInt( 'pageId' );
 		$title = Title::newFromText( $pageName );
 
 		/* Get page status */
@@ -231,7 +231,7 @@ class ContentReviewApiController extends WikiaApiController {
 			'getPageStatus',
 			[
 				'wikiId' => $wgCityId,
-				'pageId' => $pageId,
+				'pageId' => $title->getArticleID(),
 			],
 			true
 		)->getData();
