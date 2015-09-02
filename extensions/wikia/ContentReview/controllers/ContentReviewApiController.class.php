@@ -248,7 +248,7 @@ class ContentReviewApiController extends WikiaApiController {
 		)->getData();
 
 		/* Add link to help page to result */
-		$helpTitle = Title::newFromText( wfMessage( 'content-review-module-help-url' )->escaped() );
+		$helpTitle = Title::newFromText( wfMessage( 'content-review-module-help-article' )->escaped() );
 		if ( $helpTitle ) {
 			$res['helpUrl'] = $helpTitle->getFullURL();
 			$res['helpTitle'] = wfMessage( 'content-review-module-help-text' )->escaped();
