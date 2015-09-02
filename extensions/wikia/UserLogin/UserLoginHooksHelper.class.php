@@ -123,7 +123,7 @@ class UserLoginHooksHelper {
 	public static function onMakeGlobalVariablesScript( Array &$vars ) {
 		$app = F::app();
 
-		if ( $app->checkSkin( 'wikiamobile' )) {
+		if ( $app->checkSkin( 'wikiamobile' ) ) {
 			$vars['wgLoginToken'] = UserLoginHelper::readLoginToken();
 		}
 
