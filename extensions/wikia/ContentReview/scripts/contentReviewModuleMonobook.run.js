@@ -78,15 +78,19 @@ require(
 		contentReviewStatusData.disableTestMode = mw.message('content-review-module-test-mode-disable').plain();
 		contentReviewStatusData.enableTestMode = mw.message('content-review-module-test-mode-enable').plain();
 
-		/* Render content */
-		modalConfig.vars.content = mustache.render(statusBoxTemplate, contentReviewStatusData);
-
-		/* Render content */
+		/* Add help link */
 		altLink = {
 			href: contentReviewStatusData.helpUrl,
 			text: contentReviewStatusData.helpTitle
 		};
 		modalConfig.vars.altLink = altLink;
+
+		/* Prevent displaying title and help sections in default places */
+		contentReviewStatusData.title = null;
+		contentReviewStatusData.help = null;
+
+		/* Render content */
+		modalConfig.vars.content = mustache.render(statusBoxTemplate, contentReviewStatusData);
 
 		require(['wikia.ui.factory'], function (uiFactory) {
 			/* Initialize the modal component */

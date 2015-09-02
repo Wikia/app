@@ -13,6 +13,8 @@ class ContentReviewModuleController extends WikiaController {
 	const STATUS_UNSUBMITTED = 'unsubmitted';
 
 	const STATUS_TEMPLATE_PATH = 'extensions/wikia/ContentReview/templates/ContentReviewModuleStatus.mustache';
+	const STATUS_MODULE_TEMPLATE_PATH =
+		'extensions/wikia/ContentReview/controllers/templates/ContentReviewModule.mustache';
 
 	/**
 	 * Executed when a page has unreviewed changes.
@@ -28,7 +30,6 @@ class ContentReviewModuleController extends WikiaController {
 		/*
 		 * This part allows fetches required params if not set. This allows direct usage via API
 		 * (not needed in standard flow via $railModuleList loaded modules)
-		 * @TODO Probably this part should be moved to ContentReview Ext
 		 */
 		if ( empty( $params ) ) {
 			$params = [
@@ -44,6 +45,8 @@ class ContentReviewModuleController extends WikiaController {
 		$this->setVal( 'latestStatus', MustacheService::getInstance()->render(
 			self::STATUS_TEMPLATE_PATH, $latestStatus
 		) );
+
+		/* Set displaySubmit */
 		$this->setVal( 'displaySubmit', $latestStatus['statusKey'] === self::STATUS_UNSUBMITTED );
 
 		/**
@@ -61,6 +64,20 @@ class ContentReviewModuleController extends WikiaController {
 		$this->setVal( 'liveStatus', MustacheService::getInstance()->render(
 			self::STATUS_TEMPLATE_PATH, $liveStatus
 		) );
+
+		/* Use mustache status template from ContentReview extension  */
+		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
+		$this->response->getView()->setTemplatePath( self::STATUS_MODULE_TEMPLATE_PATH );
+
+		/* Set messages */
+		$this->setVal( 'headerLatest', wfMessage( 'content-review-module-header-latest' )->plain() );
+		$this->setVal( 'headerLast', wfMessage( 'content-review-module-header-last' )->plain() );
+		$this->setVal( 'headerLive', wfMessage( 'content-review-module-header-live' )->plain() );
+		$this->setVal( 'submit', wfMessage( 'content-review-module-submit' )->plain() );
+		$this->setVal( 'disableTestMode', wfMessage( 'content-review-module-test-mode-disable' )->plain() );
+		$this->setVal( 'enableTestMode', wfMessage( 'content-review-module-test-mode-enable' )->plain() );
+		$this->setVal( 'title', wfMessage( 'content-review-module-title' )->plain() );
+		$this->setVal( 'help', wfMessage( 'content-review-module-help' )->parse() );
 	}
 
 	public function isWithReason( $latestRevisionId, $pageStatus ) {
