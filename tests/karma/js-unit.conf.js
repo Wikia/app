@@ -192,11 +192,7 @@ module.exports = function (config) {
 
 			// PageShare
 			'extensions/wikia/PageShare/scripts/PageShare.js',
-			'extensions/wikia/PageShare/scripts/spec/PageShare.spec.js',
-
-			//AuthComponent tests
-			'extensions/wikia/AuthModal/js/AuthComponent.js',
-			'extensions/wikia/AuthModal/js/spec/AuthComponent.js'
+			'extensions/wikia/PageShare/scripts/spec/PageShare.spec.js'
 		]
 	});
 };

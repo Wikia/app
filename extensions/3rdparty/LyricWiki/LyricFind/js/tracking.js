@@ -1,3 +1,5 @@
+Wikia.Tracker.ACTIONS.VIEW_LYRIC = 'view_lyric';
+
 require(['jquery','LyricFindTracker', 'wikia.log'], function($, tracker, log) {
 	var amgId = parseInt($('#lyric').data('amg-id'), 10) || 0,
         gracenoteId = parseInt($('#gracenoteid').text(), 10) || 0;
@@ -8,6 +10,15 @@ require(['jquery','LyricFindTracker', 'wikia.log'], function($, tracker, log) {
         return;
     }
 
+	// Track the view in GA/internal data warehouse.
+	Wikia.Tracker.track({
+		action: Wikia.Tracker.ACTIONS.VIEW_LYRIC,
+		category: 'lyricView',
+		trackingMethod: 'analytics'
+	});
+	
+	// Track the view by calling the pixel which uses our LyricFindController to send the stats to LF.
     tracker(amgId, gracenoteId, window.wgPageName);
+
     log('tracking page view', log.levels.info, 'LyricFind');
 });
