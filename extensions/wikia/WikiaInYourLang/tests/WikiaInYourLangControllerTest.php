@@ -31,6 +31,8 @@ class WikiaInYourLangControllerTest extends WikiaBaseTest {
 			['http://zz.wikia.com', 'zz.wikia.com'],
 			['http://ja.zz.wikia.com', 'zz.wikia.com'],
 			['http://ru.rio.mari.wikia-dev.com', 'rio.wikia.com'],
+			['http://destiny.mari.wikia-dev.com', 'destiny.wikia.com'],
+			['http://ja.destiny.mari.wikia-dev.com', 'destiny.wikia.com'],
 			['http://sandbox-s3.rio.wikia.com', 'rio.wikia.com'],
 			['http://sandbox-s3.ru.rio.wikia.com', 'rio.wikia.com'],
 			['http://sandbox-s3.zz.wikia.com', 'zz.wikia.com'],
