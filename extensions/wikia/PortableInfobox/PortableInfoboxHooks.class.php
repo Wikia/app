@@ -59,17 +59,18 @@ class PortableInfoboxHooks {
 	 * @return bool
 	 */
 	public static function onAddPortableInfoboxBuilderText( &$article, &$text, &$wgOut, &$errors ) {
-		if ( !count( $errors ) ) {
+		$title = $article->getTitle();
+
+		if ( !count( $errors ) && !$title->exists() && $title->getNamespace() === NS_TEMPLATE ) {
 			$text = '';
-			$templateTitle = $article->getTitle()->getText();
 
 			$HTML = F::app()->renderView(
 				'PortableInfoboxBuilderSpecialController',
 				'renderCreateTemplateEntryPoint',
-				[ 'title' => $templateTitle ]
+				[ 'title' => $title->getText() ]
 			);
 
-			$wgOut->addHTML($HTML);
+			$wgOut->addHTML( $HTML );
 		}
 
 		return true;
