@@ -51,7 +51,7 @@ $messages['qqq'] = array(
 	edit page with a question: Do you want to create infobox?',
 	'portable-infobox-builder-entry-point-modal-message' => 'Message in portable infobox builder asking if user wants
 	 to create an infobox and if she / he would like to use new Infobox Builder UI tool.',
-	'portable-infobox-builder-entry-point-modal-ok-button' => 'Ok button',
+	'portable-infobox-builder-entry-point-modal-ok-button' => 'Ok button, meaning the user confirms using the new infobox builder',
 	'portable-infobox-builder-entry-point-modal-cancel-button' => 'Cancel button',
 	'portable-infobox-builder-tite' => 'Title for infobox builder special page',
 	'portable-infobox-builder-no-template-title-set' => 'Information that no template title was set. user need to set
