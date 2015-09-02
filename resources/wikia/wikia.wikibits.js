@@ -62,9 +62,13 @@ var importArticle = (function() {
 				module.articles = module.articles.join( '|' );
 			}
 
-			if ( mw.config.get('contentReviewExtEnabled') && !mw.config.get('contentReviewTestModeEnabled') ) {
-				if (module.articles.search(/mediawiki:/i) != -1) {
-					module.reviewed = mw.config.get('contentReviewScriptsHash');
+			if ( mw.config.get('contentReviewExtEnabled') ) {
+				if ( module.articles.search(/mediawiki:/i) != -1 ) {
+					if ( mw.config.get('contentReviewTestModeEnabled') ) {
+						module.debug = true;
+					} else {
+						module.reviewed = mw.config.get('contentReviewScriptsHash');
+					}
 				}
 			}
 

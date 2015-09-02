@@ -61,7 +61,6 @@ $wgHooks['BeforePageDisplay'][] = 'Wikia\ContentReview\Hooks::onBeforePageDispla
 $wgHooks['ArticleContentOnDiff'][] = 'Wikia\ContentReview\Hooks::onArticleContentOnDiff';
 $wgHooks['RawPageViewBeforeOutput'][] = 'Wikia\ContentReview\Hooks::onRawPageViewBeforeOutput';
 $wgHooks['UserLogoutComplete'][] = 'Wikia\ContentReview\Hooks::onUserLogoutComplete';
-$wgHooks['ResourceLoaderModifyMaxAge'][] = 'Wikia\ContentReview\Hooks::onResourceLoaderModifyMaxAge';
 
 /**
  * Right rail module

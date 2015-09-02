@@ -2726,6 +2726,7 @@ $templates
 				$this->getRequest()->getBool( 'handheld' ),
 				$extraQuery
 			);
+
 			$context = new ResourceLoaderContext( $resourceLoader, new FauxRequest( $query ) );
 			// Drop modules that know they're empty
 			foreach ( $modules as $key => $module ) {

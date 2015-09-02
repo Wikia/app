@@ -242,6 +242,12 @@ class ResourceLoaderHooks {
 				continue;
 			}
 
+			if ( $moduleName == 'site' ) {
+				if ( ( new \Wikia\ContentReview\Helper() )->isContentReviewTestModeEnabled() ) {
+					$query['debug'] = true;
+				}
+			}
+
 			$moduleSource = $module->getSource();
 
 			if ($source === false) {
