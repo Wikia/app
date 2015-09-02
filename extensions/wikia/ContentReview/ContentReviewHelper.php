@@ -149,9 +149,12 @@ class Helper extends \ContextSource {
 				$diffRevisionId
 			);
 
-			return ( !self::isStatusCompleted( $diffRevisionInfo['status'] )
-				&& ( $this->getRequest()->getInt( self::CONTENT_REVIEW_URL_PARAM ) === 1
-					|| self::isStatusAwaiting( $diffRevisionInfo['status'] ) )
+			$status = (int)$diffRevisionInfo['status'];
+			return ( $status === ReviewModel::CONTENT_REVIEW_STATUS_IN_REVIEW
+				/* Fallback to URL param if a master-slave replication has not finished */
+				|| ( $this->getRequest()->getInt( self::CONTENT_REVIEW_URL_PARAM ) === 1
+					&& $status === ReviewModel::CONTENT_REVIEW_STATUS_UNREVIEWED
+				)
 			);
 		}
 
