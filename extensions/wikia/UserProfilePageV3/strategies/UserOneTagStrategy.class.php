@@ -25,9 +25,9 @@ class UserOneTagStrategy extends UserTagsStrategyBase {
 		wfProfileIn(__METHOD__);
 
 		if( $this->isBlocked() ) {
-			$tag = wfMsg('user-identity-box-group-blocked');
+			$tag = wfMessage('user-identity-box-group-blocked')->escaped();
 		} elseif( $this->isFounder() ) {
-			$tag = wfMsg('user-identity-box-group-founder');
+			$tag = wfMessage('user-identity-box-group-founder')->escaped();
 		} else {
 			$tag = $this->getTagFromGroups();
 		}

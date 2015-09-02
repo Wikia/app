@@ -134,7 +134,7 @@ abstract class UserTagsStrategyBase {
 		$result = '';
 		$group = $this->getUsersHighestGroup($this->user);
 		if( $group ) {
-			$result = wfMsg('user-identity-box-group-' . $group);
+			$result = wfMessage('user-identity-box-group-' . $group)->escaped();
 		}
 
 		/* See if user is banned from chat */
