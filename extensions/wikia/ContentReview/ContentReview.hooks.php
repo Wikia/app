@@ -114,6 +114,30 @@ class Hooks {
 		return true;
 	}
 
+	public static function onResourceLoaderModifyMaxAge( \ResourceLoader $rl, \ResourceLoaderContext $context, $mtime, &$maxage, &$smaxage ) {
+		if ( ( new Helper() )->isContentReviewTestModeEnabled() ) {
+			foreach ( $context->getModules() as $moduleName ) {
+				$module = $rl->getModule( $moduleName );
+				if ( $module instanceof \ResourceLoaderSiteModule && $context->getOnly() == 'scripts' ) {
+					$maxage = 0;
+					$smaxage = 0;
+				} elseif ( $module instanceof \ResourceLoaderCustomWikiModule ) {
+					foreach ( $module->getPages( $context ) as $pageName => $page ) {
+						if ( $page['type'] == 'script' ) {
+							$title = \Title::newFromText( $pageName );
+							if ( $title->inNamespace( NS_MEDIAWIKI ) ) {
+								$maxage = 0;
+								$smaxage = 0;
+							}
+						}
+					}
+				}
+			}
+		}
+
+		return true;
+	}
+
 	private static function userCanEditJsPage() {
 		global $wgTitle, $wgUser;
 
