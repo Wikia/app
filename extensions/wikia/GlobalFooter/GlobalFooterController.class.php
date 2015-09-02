@@ -5,7 +5,7 @@ use Wikia\Logger\WikiaLogger;
 class GlobalFooterController extends WikiaController {
 
 	const MEMC_KEY_GLOBAL_FOOTER_LINKS = 'mGlobalFooterLinks';
-	const MEMC_KEY_GLOBAL_FOOTER_VERSION = 2;
+	const MEMC_KEY_GLOBAL_FOOTER_VERSION = 3;
 	const MESSAGE_KEY_GLOBAL_FOOTER_LINKS = 'shared-Oasis-footer-wikia-links';
 	const MEMC_EXPIRY = 3600;
 	const SITEMAP_GLOBAL = 'http://www.wikia.com/Sitemap';
@@ -39,9 +39,7 @@ class GlobalFooterController extends WikiaController {
 			return $globalFooterLinks;
 		}
 
-		$globalFooterLinks = getMessageAsArray( self::MESSAGE_KEY_GLOBAL_FOOTER_LINKS, [
-			$this->getSitemapLink()
-		] );
+		$globalFooterLinks = getMessageAsArray( self::MESSAGE_KEY_GLOBAL_FOOTER_LINKS );
 
 		if ( is_null( $globalFooterLinks ) ) {
 			wfProfileOut( __METHOD__ );
@@ -49,6 +47,7 @@ class GlobalFooterController extends WikiaController {
 				"Global Footer's links not found in messages",
 				[ 'exception' => new Exception() ]
 			);
+			wfProfileOut( __METHOD__ );
 			return [];
 		}
 
@@ -57,12 +56,19 @@ class GlobalFooterController extends WikiaController {
 			$link = trim( $link );
 			if ( strpos( $link, '*' ) === 0 ) {
 				$parsedLink = parseItem( $link );
-				if ( ( strpos( $parsedLink['text'], 'LICENSE' ) !== false ) || $parsedLink['text'] == 'GFDL' ) {
-					$parsedLink['isLicense'] = true;
+
+				if ( strpos( $parsedLink['text'], 'SITEMAP' ) !== false ) {
+
+					$parsedLinks = array_merge( $parsedLinks, $this->generateSitemapLinks() );
+
+				} elseif ( ( strpos( $parsedLink['text'], 'LICENSE' ) !== false ) || $parsedLink['text'] == 'GFDL' ) {
+
+					$parsedLinks[] = [ 'isLicense' => true ];
+
 				} else {
-					$parsedLink['isLicense'] = false;
+
+					$parsedLinks[] = $parsedLink;
 				}
-				$parsedLinks[] = $parsedLink;
 			}
 		}
 
@@ -102,14 +108,30 @@ class GlobalFooterController extends WikiaController {
 		return null;
 	}
 
-	private function getSitemapLink() {
-		if ( WikiaPageType::isMainPage()
-			|| WikiaPageType::isCorporatePage()
-			|| $this->wg->CityId === COMMUNITY_CENTRAL_CITY_ID
-		) {
-			return self::SITEMAP_GLOBAL;
+	private function generateSitemapLinks() {
+		$sitemapLinks = [];
+
+		if ( WikiaPageType::isCorporatePage() || $this->wg->CityId === COMMUNITY_CENTRAL_CITY_ID ) {
+			$useGlobalSitemap = true;
+		} elseif ( WikiaPageType::isMainPage() ) {
+			$useGlobalSitemap = true;
+			$useLocalSitemap = true;
+		} else {
+			$useLocalSitemap = true;
 		}
 
-		return self::SITEMAP_LOCAL;
+		if ( $useGlobalSitemap ) {
+			$sitemapLinks[] = parseItem(
+				'*' . self::SITEMAP_GLOBAL . '|' . wfMessage( 'global-footer-global-sitemap' )->escaped()
+			);
+		}
+
+		if ( $useLocalSitemap ) {
+			$sitemapLinks[] = parseItem(
+				'*' . self::SITEMAP_LOCAL . '|' . wfMessage( 'global-footer-local-sitemap' )->escaped()
+			);
+		}
+
+		return $sitemapLinks;
 	}
 }

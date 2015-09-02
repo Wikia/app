@@ -10,11 +10,11 @@
 		</div>
 		<ul>
 			<?php
-			foreach ($footerLinks as $link):
+			foreach ( $footerLinks as $link ):
 				?>
 				<li>
 					<?php
-					if ($link['isLicense']) {
+					if ( isset( $link['isLicense']) ) {
 						echo $copyright;
 					} else {?>
 						<a<?= ( !empty( $link[ 'id' ] ) ) ? " id=\"{$link[ 'id' ]}\"" : '' ;?> href="<?= $link["href"]; ?>"<?= ( !empty( $link[ 'nofollow' ] ) ) ? ' rel="nofollow"' : '' ;?>><?= $link["text"]; ?></a>
