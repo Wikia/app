@@ -10,7 +10,7 @@
  * @var $showVideoLink boolean
  */
 ?>
-<header class="wkPrfHead up"><?= wfMessage('wikiamobile-menu')->text() ?></header>
+<header class="wkPrfHead up"><?= wfMessage('wikiamobile-menu')->escaped() ?></header>
 <nav id=wkNavMenu<? if ( !empty( $parseErrors ) ) :?> data-error="<?= implode( '; ', $parseErrors ) ;?>"<? endif ;?>>
 	<header>
 		<button id=wkNavBack class=wkBtn><?= wfMessage( 'wikiamobile-back' )->text(); ?></button>
