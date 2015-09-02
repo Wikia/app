@@ -73,7 +73,7 @@ $wgHooks[ 'BeforePageDisplay' ][] = 'PortableInfoboxHooks::onBeforePageDisplay';
 $wgHooks[ 'ParserAfterTidy' ][] = 'PortableInfoboxParserTagController::replaceInfoboxMarkers';
 $wgHooks[ 'ImageServing::buildAndGetIndex' ][] = 'PortableInfoboxHooks::onImageServingCollectImages';
 $wgHooks[ 'wgQueryPages' ][] = 'PortableInfoboxHooks::onWgQueryPages';
-$wgHooks['AddPortableInfoboxBuilderText'][] = 'PortableInfoboxHooks::onAddPortableInfoboxBuilderText';
+$wgHooks[ 'AddPortableInfoboxBuilderText' ][] = 'PortableInfoboxHooks::onAddPortableInfoboxBuilderText';
 $wgHooks[ 'SkinAfterBottomScripts' ][] = 'PortableInfoboxHooks::onSkinAfterBottomScripts';
 
 // special pages
