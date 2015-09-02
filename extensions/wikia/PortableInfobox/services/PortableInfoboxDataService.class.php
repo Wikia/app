@@ -83,7 +83,11 @@ class PortableInfoboxDataService {
 
 				if ( $infoboxes ) {
 					foreach ( $infoboxes as $infobox ) {
-						PortableInfoboxParserTagController::getInstance()->render( $infobox, $parser, $frame );
+						try {
+							PortableInfoboxParserTagController::getInstance()->render( $infobox, $parser, $frame );
+						} catch (Exception $e) {
+							\Wikia\Logger\WikiaLogger::instance()->info( 'Invalid infobox syntax in includeonly tag' );
+						}
 					}
 					return $parser->getOutput()->getProperty( self::INFOBOXES_PROPERTY_NAME );
 				}

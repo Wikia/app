@@ -46,7 +46,7 @@ class CuratedContentHooks {
 	 * @return bool
 	 */
 	public static function onSkinAfterBottomScripts( $skin, &$text ) {
-		if ( self::shouldDisplayCuratedContentToolButton() ) {
+		if ( CuratedContentHelper::shouldDisplayToolButton() ) {
 			$assetsManager = AssetsManager::getInstance();
 			$scripts = $assetsManager->getURL( 'curated_content_tool_button_js' );
 
@@ -63,24 +63,10 @@ class CuratedContentHooks {
 		return true;
 	}
 
-	//TODO: Temporary, remove with CONCF-1095
-	private static $buttonEnabled = false;
-	private static function isAllowedWikia() {
-		$host = RequestContext::getMain()->getRequest()->getHeader('HOST');
-
-		return (bool) preg_match(
-			'/creepypasta|glee|castle-clash|clashofclans|mobileregressiontesting|concf/i',
-			$host
-		);
-	}
-
-	private static function shouldDisplayCuratedContentToolButton() {
-		global $wgEnableCuratedContentExt, $wgUser;
-
-		return self::$buttonEnabled &&
-			WikiaPageType::isMainPage() &&
-			self::isAllowedWikia() &&
-			!empty( $wgEnableCuratedContentExt ) &&
-			$wgUser->isAllowed( 'curatedcontent' );
+	public static function onOutputPageBeforeHTML() {
+		if ( CuratedContentHelper::shouldDisplayToolButton() ) {
+			JSMessages::enqueuePackage( 'CuratedContentModal', JSMessages::INLINE );
+		}
+		return true;
 	}
 }

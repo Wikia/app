@@ -2153,6 +2153,7 @@ class Title {
 				$groups = [
 					'staff',
 					'vstf',
+					'helper',
 				];
 				$blockerGroups = $blocker->getEffectiveGroups();
 

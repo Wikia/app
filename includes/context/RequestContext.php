@@ -218,11 +218,6 @@ class RequestContext implements IContextSource {
 			$this->user = User::newFromSession( $this->getRequest() );
 		}
 
-		// Wikia change - begin - $author: Michał Roszka
-		// Indicate that this particular User instance represents the current performer.
-		$this->user->setCurrent();
-		// Wikia change - end
-
 		// Replace the user object according to the context, e.g. Piggyback.
 		wfRunHooks( 'RequestContextOverrideUser', [ &$this->user, $this->getRequest() ] );
 		return $this->user;

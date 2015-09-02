@@ -910,7 +910,7 @@ class WikiPage extends Page {
 		if ( $wgUseSquid ) {
 			// Commit the transaction before the purge is sent
 			$dbw = wfGetDB( DB_MASTER );
-			$dbw->commit();
+			$dbw->commit( __METHOD__ );
 
 			// Send purge
 			$update = SquidUpdate::newSimplePurge( $this->mTitle );
@@ -996,6 +996,22 @@ class WikiPage extends Page {
 			# An extra check against threads stepping on each other
 			$conditions['page_latest'] = $lastRevision;
 		}
+
+		// Wikia change - begin
+		/**
+		 * PLATFORM-1311: page_latest can be set to zero only during page creation
+		 *
+		 * https://www.mediawiki.org/wiki/Manual:Page_table#page_latest says the following:
+		 *
+		 * WikiPage::updateRevisionOn() should set it to a non-zero value.
+		 * It needs to link to a revision with a valid revision.rev_page.
+		 */
+		Wikia\Util\Assert::true( $revision->getId() > 0 , 'PLATFORM-1311', [
+			'reason' => __METHOD__ . ' tried to set page_latest to zero',
+			'page_id' => $this->getId(),
+			'name' => $this->getTitle()->getPrefixedDBkey(),
+		] );
+		// Wikia change - end
 
 		$now = wfTimestampNow();
 		$dbw->update( 'page',
@@ -1250,7 +1266,7 @@ class WikiPage extends Page {
 	 */
 	public function doEdit( $text, $summary, $flags = 0, $baseRevId = false, $user = null,
 							$forcePatrolled = false) {
-		global $wgUser, $wgDBtransactions, $wgUseAutomaticEditSummaries;
+		global $wgUser, $wgUseAutomaticEditSummaries;
 
 		# Low-level sanity check
 		if ( $this->mTitle->getText() === '' ) {
@@ -1322,11 +1338,6 @@ class WikiPage extends Page {
 				return $status;
 			}
 
-			# Make sure the revision is either completely inserted or not inserted at all
-			if ( !$wgDBtransactions ) {
-				$userAbort = ignore_user_abort( true );
-			}
-
 			$revision = new Revision( array(
 				'page'       => $this->getId(),
 				'comment'    => $summary,
@@ -1361,10 +1372,13 @@ class WikiPage extends Page {
 					/* Belated edit conflict! Run away!! */
 					$status->fatal( 'edit-conflict' );
 
-					# Delete the invalid revision if the DB is not transactional
-					if ( !$wgDBtransactions ) {
-						$dbw->delete( 'revision', array( 'rev_id' => $revisionId ), __METHOD__ );
-					}
+					\Wikia\Logger\WikiaLogger::instance()->error('PLATFORM-1311', [
+						'reason' => 'ArticleDoEdit rollback - updateRevisionOn failed',
+						'exception' => new Exception(),
+						'name' => $this->mTitle->getPrefixedDBkey(),
+						'rev_id' => $revisionId,
+						'page_id' => $this->getId(),
+					]);
 
 					$revisionId = 0;
 					$dbw->rollback(__METHOD__);
@@ -1396,10 +1410,6 @@ class WikiPage extends Page {
 				$revision->setId( $this->getLatest() );
 			}
 
-			if ( !$wgDBtransactions ) {
-				ignore_user_abort( $userAbort );
-			}
-
 			// Now that ignore_user_abort is restored, we can respond to fatal errors
 			if ( !$status->isOK() ) {
 				wfProfileOut( __METHOD__ );
@@ -1428,6 +1438,12 @@ class WikiPage extends Page {
 			$newid = $this->insertOn( $dbw );
 
 			if ( $newid === false ) {
+				\Wikia\Logger\WikiaLogger::instance()->error('PLATFORM-1311', [
+					'reason' => 'ArticleDoEdit rollback - insertOn failed',
+					'exception' => new Exception(),
+					'name' => $this->mTitle->getPrefixedDBkey(),
+				]);
+
 				$dbw->rollback();
 				$status->fatal( 'edit-already-exists' );
 

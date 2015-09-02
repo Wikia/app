@@ -107,8 +107,7 @@ class ApprovedraftAction extends FormlessAction {
 		// Show a confirmation message to a user after redirect
 		BannerNotificationsController::addConfirmation(
 			wfMessage( 'templatedraft-approval-success-confirmation' )->escaped(),
-			BannerNotificationsController::CONFIRMATION_CONFIRM,
-			true
+			BannerNotificationsController::CONFIRMATION_CONFIRM
 		);
 	}
 
