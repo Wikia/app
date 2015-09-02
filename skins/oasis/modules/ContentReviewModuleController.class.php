@@ -131,7 +131,7 @@ class ContentReviewModuleController extends WikiaController {
 			'message' => wfMessage( "content-review-module-status-{$status}" )->escaped(),
 		];
 
-		if ( !is_null( $revisionId ) ) {
+		if ( !empty( $revisionId ) ) {
 			$templateData['diffLink'] = $this->createRevisionLink( $revisionId );
 			if ( $withReason ) {
 				$templateData['reasonLink'] = $this->createRevisionTalkpageLink( $revisionId );
