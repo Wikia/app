@@ -2,6 +2,7 @@
 
 class PortableInfoboxHooks {
 	const PARSER_TAG_GALLERY = 'gallery';
+	const INFOBOX_BUILDER_SPECIAL_PAGE = 'Special:PortableInfoboxBuilder';
 
 	public static function onBeforePageDisplay( OutputPage $out, Skin $skin ) {
 		if ( F::app()->checkSkin( 'monobook', $skin ) ) {
@@ -50,20 +51,27 @@ class PortableInfoboxHooks {
 		return true;
 	}
 
-	public static function onAddPortableInfoboxBuilderText( &$article, &$text, &$wgOut ) {
-		//check if extension is on and user has rights
-		global $wgArticlePath;
+	/**
+	 * @param $article
+	 * @param $text
+	 * @param $wgOut
+	 *
+	 * @return bool
+	 */
+	public static function onAddPortableInfoboxBuilderText( &$article, &$text, &$wgOut, &$errors ) {
+		if ( !count( $errors ) ) {
+			$text = '';
+			$templateTitle = $article->getTitle()->getText();
 
-		$text = '';
-		$newInfoboxTemplate = wfMessage( 'portable-infobox-builder-entry-point-new-template-infobox' )->escaped();
-		$newTemplate = wfMessage( 'portable-infobox-builder-entry-point-new-template-normal' )->escaped();
-		$templateTitle = $article->getTitle()->getText();
-		$templatePath = preg_replace('/(.+)/', $wgArticlePath, $templateTitle);
-		$infoboxBuilderLink = "/Special:PortableInfoboxBuilder/" . $templateTitle;
-		$editorLink = $templatePath . "?action=edit";
-		$HTML = '<a href="'. $infoboxBuilderLink . '" class="wikia-button">' . $newInfoboxTemplate . '</a> <a href="'. $editorLink . '" class="wikia-button">' . $newTemplate . '</a>';
+			$HTML = F::app()->renderView(
+				'PortableInfoboxBuilderSpecialController',
+				'renderCreateTemplateEntryPoint',
+				[ 'title' => $templateTitle ]
+			);
 
-		$wgOut->addHTML($HTML);
+			$wgOut->addHTML($HTML);
+		}
+
 		return true;
 	}
 
