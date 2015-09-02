@@ -436,7 +436,8 @@ class UserLoginHelper extends WikiaModel {
 	 * @return string loginToken|null
 	 */
 	public static function readLoginToken() {
-		return LoginForm::getLoginToken() ? LoginForm::getLoginToken() : null;
+		$loginToken = LoginForm::getLoginToken();
+		return !empty( $loginToken ) ? LoginForm::getLoginToken() : null;
 	}
 
 	/**
