@@ -40,7 +40,7 @@ class ContentReviewModuleController extends WikiaController {
 		/**
 		 * Latest revision status
 		 */
-		$latestStatus = $this->getLatestRevisionStatus( (int) $params['latestRevisionId'], $params['pageStatus'] );
+		$latestStatus = $this->getLatestRevisionStatusHtml( (int)$params['latestRevisionId'], $params['pageStatus'] );
 		$this->setVal( 'latestStatus', MustacheService::getInstance()->render(
 			self::STATUS_TEMPLATE_PATH, $latestStatus
 		) );
@@ -63,27 +63,44 @@ class ContentReviewModuleController extends WikiaController {
 		) );
 	}
 
+	public function isWithReason( $latestRevisionId, $pageStatus ) {
+		if( $latestRevisionId === (int)$pageStatus['lastReviewedId'] &&
+			(int)$pageStatus['lastReviewedStatus'] === ReviewModel::CONTENT_REVIEW_STATUS_REJECTED
+		) {
+			return true;
+		}
+		return false;
+	}
+
 	public function getLatestRevisionStatus( $latestRevisionId, array $pageStatus ) {
-		$latestRevisionId = (int) $latestRevisionId;
 		if ( $latestRevisionId === 0 ) {
-			$latestStatus = $this->prepareTemplateData( self::STATUS_NONE );
-		} elseif ( $latestRevisionId === (int) $pageStatus['liveId'] ) {
-			$latestStatus = $this->prepareTemplateData( self::STATUS_LIVE, $latestRevisionId );
-		} elseif ( $latestRevisionId === (int) $pageStatus['latestId']
-			&& Helper::isStatusAwaiting( $pageStatus['latestStatus'] ) )
-		{
-			$latestStatus = $this->prepareTemplateData( self::STATUS_AWAITING, $latestRevisionId );
-		} elseif ( $latestRevisionId === (int) $pageStatus['lastReviewedId']
-			&& (int) $pageStatus['lastReviewedStatus'] === ReviewModel::CONTENT_REVIEW_STATUS_REJECTED )
-		{
-			$latestStatus = $this->prepareTemplateData( self::STATUS_REJECTED, $latestRevisionId, true );
-		} elseif ( $latestRevisionId > (int) $pageStatus['liveId']
-			&& $latestRevisionId > (int) $pageStatus['latestId']
-			&& $latestRevisionId > (int) $pageStatus['lastReviewedId'] ) {
-			$latestStatus = $this->prepareTemplateData( self::STATUS_UNSUBMITTED, $latestRevisionId );
+			$latestStatus = \ContentReviewModuleController::STATUS_NONE;
+		} elseif ( $latestRevisionId === (int)$pageStatus['liveId'] ) {
+			$latestStatus = \ContentReviewModuleController::STATUS_LIVE;
+		} elseif ( $latestRevisionId === (int)$pageStatus['latestId'] &&
+			Helper::isStatusAwaiting( $pageStatus['latestStatus'] )
+		) {
+			$latestStatus = \ContentReviewModuleController::STATUS_AWAITING;
+		} elseif ( $latestRevisionId === (int)$pageStatus['lastReviewedId'] &&
+			(int)$pageStatus['lastReviewedStatus'] === ReviewModel::CONTENT_REVIEW_STATUS_REJECTED
+		) {
+			$latestStatus = \ContentReviewModuleController::STATUS_REJECTED;
+		} elseif ( $latestRevisionId > (int)$pageStatus['liveId'] &&
+			$latestRevisionId > (int)$pageStatus['latestId'] &&
+			$latestRevisionId > (int)$pageStatus['lastReviewedId']
+		) {
+			$latestStatus = \ContentReviewModuleController::STATUS_UNSUBMITTED;
 		}
 
 		return $latestStatus;
+	}
+
+	public function getLatestRevisionStatusHtml( $latestRevisionId, $pageStatus ) {
+		$latestStatus = $this->getLatestRevisionStatus( $latestRevisionId, $pageStatus );
+		$withReason = $this->isWithReason( $latestRevisionId, $pageStatus );
+
+		$latestStatusHtml = $this->prepareTemplateData( $latestStatus, $latestRevisionId, $withReason );
+		return $latestStatusHtml;
 	}
 
 	public function getLastRevisionStatus( array $pageStatus ) {

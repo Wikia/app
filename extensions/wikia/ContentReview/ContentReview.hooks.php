@@ -142,26 +142,9 @@ class Hooks {
 		)->getData();
 
 		/* Determine review status */
-		$latestRevisionId = $wgTitle->getLatestRevID();
-		$latestRevisionId = (int)$latestRevisionId;
-		if ( $latestRevisionId === 0 ) {
-			$latestStatus = \ContentReviewModuleController::STATUS_NONE;
-		} elseif ( $latestRevisionId === (int)$pageStatus['liveId'] ) {
-			$latestStatus = \ContentReviewModuleController::STATUS_LIVE;
-		} elseif ( $latestRevisionId === (int)$pageStatus['latestId'] &&
-			Helper::isStatusAwaiting( $pageStatus['latestStatus'] )
-		) {
-			$latestStatus = \ContentReviewModuleController::STATUS_AWAITING;
-		} elseif ( $latestRevisionId === (int)$pageStatus['lastReviewedId'] &&
-			(int)$pageStatus['lastReviewedStatus'] === ReviewModel::CONTENT_REVIEW_STATUS_REJECTED
-		) {
-			$latestStatus = \ContentReviewModuleController::STATUS_REJECTED;
-		} elseif ( $latestRevisionId > (int)$pageStatus['liveId'] &&
-			$latestRevisionId > (int)$pageStatus['latestId'] &&
-			$latestRevisionId > (int)$pageStatus['lastReviewedId']
-		) {
-			$latestStatus = \ContentReviewModuleController::STATUS_UNSUBMITTED;
-		}
+		$latestRevisionId = (int)$wgTitle->getLatestRevID();
+		$contentReviewModuleController = new \ContentReviewModuleController();
+		$latestStatus = $contentReviewModuleController->getLatestRevisionStatus( $latestRevisionId, $pageStatus );
 
 		/* Add link to nav tabs customized with status class name */
 		$links['views'][self::CONTENT_REVIEW_MONOBOOK_DROPDOWN_ACTION] = [
