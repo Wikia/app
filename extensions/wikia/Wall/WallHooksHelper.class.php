@@ -929,19 +929,20 @@ class WallHooksHelper {
 				$pageText = $wm->getMainPageText();
 
 				$attribs = [
-					'class' => '',
 					'href' => $link,
 					'title' => $title
 				];
 
-				$articleLink = ' ' . Html::element( 'a', $attribs, $title ) . ' '
-					. $list->msg( static::getMessagePrefix( $rc->getAttribute( 'rc_namespace' ) ) . '-new-message', $titleText, $pageText )->parse();
+				$articleLink = ' ' . Html::element( 'a', $attribs, $title ) . ' ' .
+					$list->msg( static::getMessagePrefix( $rc->getAttribute( 'rc_namespace' ) ) . '-new-message' )
+						->params( $titleText, $pageText )
+						->parse();
 
 				// VOLDEV-3: Bolden pages watched by this user
 				$user = $list->getUser();
 				$specialPageTitle = $list->getTitle();
-				if ( self::boldenFollowedLink( $user, $specialPageTitle, $wm ) ) {
-					$articleLink = '<strong class="mw-watched">' . $articleLink . '</strong>';
+				if ( self::shouldBoldenFollowedLink( $user, $specialPageTitle, $wm ) ) {
+					$articleLink = self::getBoldFollowedLink( $articleLink );
 				}
 			}
 
@@ -1317,15 +1318,13 @@ class WallHooksHelper {
 	 * @param string $r
 	 * @param array $oRCCacheEntryArray an array of RCCacheEntry instances
 	 * @param boolean $changeRecentChangesHeader a flag saying Wikia's hook if we want to change header or not
-	 * @param $oTitle
+	 * @param Title $oTitle
 	 * @param string $headerTitle string which will be put as a header for RecentChanges block
 	 *
 	 * @return bool
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
-	static public function onWikiaRecentChangesBlockHandlerChangeHeaderBlockGroup( $oChangeList, $r, $oRCCacheEntryArray, &$changeRecentChangesHeader, $oTitle, &$headerTitle ) {
-		wfProfileIn( __METHOD__ );
-
+	static public function onWikiaRecentChangesBlockHandlerChangeHeaderBlockGroup( ChangesList $oChangeList, $r, $oRCCacheEntryArray, &$changeRecentChangesHeader, Title $oTitle, &$headerTitle ) {
 		$namespace = MWNamespace::getSubject( $oTitle->getNamespace() );
 
 		if ( WallHelper::isWallNamespace( $namespace ) ) {
@@ -1337,7 +1336,7 @@ class WallHooksHelper {
 			$threadLink = Linker::link( $titleObj, htmlspecialchars( $titleData['articleTitleTxt'] ),
 				[ 'title' => $titleData['articleTitleTxt'] ] );
 
-			$headerTitle = wfMessage( static::getMessagePrefix( $namespace ) . '-thread-group' )
+			$headerTitle =$oChangeList->msg( static::getMessagePrefix( $namespace ) . '-thread-group' )
 				->rawParams( $threadLink )
 				->params( $titleData['wallTitleTxt'], $titleData['wallPageName'] )
 				->parse();
@@ -1345,14 +1344,13 @@ class WallHooksHelper {
 			// VOLDEV-3: Bolden pages watched by this user
 			$user = $oChangeList->getUser();
 			$specialPageTitle = $oChangeList->getTitle();
-			if ( self::boldenFollowedLink( $user, $specialPageTitle, WallMessage::newFromTitle( $oTitle ) ) ) {
-				$headerTitle = '<strong class="mw-watched">' . $headerTitle . '</strong>';
+			if ( self::shouldBoldenFollowedLink( $user, $specialPageTitle, WallMessage::newFromTitle( $oTitle ) ) ) {
+				$headerTitle = self::getBoldFollowedLink( $headerTitle );
 			}
 
 			$headerTitle .= $oChangeList->getLanguage()->getDirMark();
 		}
 
-		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
@@ -2258,7 +2256,7 @@ class WallHooksHelper {
 	}
 
 	/**
-	 * Determine whether a link pointing to a followed thread should be bold
+	 * SOC-1161: Determine whether a link pointing to a followed thread should be bold
 	 * A link should be bold if it's followed by the user, we are on Special:Watchlist
 	 * and the page was changed since the user's last visit
 	 * @param User $user
@@ -2266,13 +2264,22 @@ class WallHooksHelper {
 	 * @param WallMessage $wm
 	 * @return bool Whether to bolden the link
 	 */
-	private static function boldenFollowedLink( User $user, Title $title, WallMessage $wm ) {
+	private static function shouldBoldenFollowedLink( User $user, Title $title, WallMessage $wm ) {
 		$isWatchlist = $title->isSpecial( 'Watchlist' );
 		return ( F::app()->wg->ShowUpdatedMarker && !$user->isAnon()
 			&& ( $wm->isWatched( $user ) || $wm->isWallWatched( $user ) || $wm->isWallOwner( $user ) )
 			&& ( ( $isWatchlist && ( $wm->getTitle()->getNotificationTimestamp( $user ) || $wm->getArticleTitle()->getNotificationTimestamp( $user ) ) )
 				|| !$isWatchlist )
 		);
+	}
+
+	/**
+	 * SOC-1161: Bolden a link to an article followed by the current user
+	 * @param string $link Link HTML
+	 * @return string Link HTML wrapped in a <strong> tag
+	 */
+	private static function getBoldFollowedLink( $link ) {
+		return Html::rawElement( 'strong', [ 'class' => 'mw-watched' ], $link );
 	}
 
 	/**
