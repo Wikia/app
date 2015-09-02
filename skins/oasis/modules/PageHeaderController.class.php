@@ -584,7 +584,7 @@ class PageHeaderController extends WikiaController {
 	 */
 	public static function onArticleViewCustom( $text, $title, OutputPage $output ) {
 		// only affect oasis
-		if ( F::app()->checkSkin( ['oasis', 'wikia'], $output->getSkin() ) ) {
+		if ( !F::app()->checkSkin( ['oasis', 'wikia'], $output->getSkin() ) ) {
 			return true;
 		}
 
