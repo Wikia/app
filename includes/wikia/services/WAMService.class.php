@@ -319,6 +319,8 @@ class WAMService extends Service {
 			}
 		}
 
+		$conds[] = '(dw.url IS NOT NULL AND dw.title IS NOT NULL)';
+
 		return $conds;
 	}
 
