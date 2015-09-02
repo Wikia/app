@@ -70,7 +70,7 @@ define('ext.wikia.adEngine.template.skin', [
 			adSkinStyle.width = '100%';
 			adSkinStyle.left = 0;
 			adSkinStyle.top = 0;
-			adSkinStyle.zIndex = 0;
+			adSkinStyle.zIndex = 1;
 			adSkinStyle.cursor = 'pointer';
 
 			if (wikiaSkinStyle) {
