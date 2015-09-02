@@ -18,13 +18,18 @@ $messages['en'] = array(
 	'portable-infobox-xml-parse-error-tag-not-finished' => 'Premature end of tag',
 	'portable-infobox-xml-parse-error-infobox-tag-attribute-unsupported' => 'Attribute "$1" is not supported in
 	<infobox> tag',
+
+	'portable-infobox-builder-tite' => 'Portable Infobox Builder',
+	'portable-infobox-builder-no-template-title-set' => 'No template title set. Please specify the title for new
+	infobox template.',
+	'portable-infobox-builder-create-template-entry-point-create-infobox' => 'Create Infobox',
+	'portable-infobox-builder-create-template-entry-point-create-infobox' => 'Create Regular Infobox',
+
 	'portable-infobox-builder-entry-point-modal-title' => 'Do you want to create an infobox?',
 	'portable-infobox-builder-entry-point-modal-message' => 'Perhaps you are creating a new infobox template? Try out
 	our new Infobox builder UI tool.',
 	'portable-infobox-builder-entry-point-modal-ok-button' => 'Ok',
 	'portable-infobox-builder-entry-point-modal-cancel-button' => 'Cancel',
-	'portable-infobox-builder-entry-point-new-template-infobox' => 'Create an infobox',
-	'portable-infobox-builder-entry-point-new-template-normal' => 'Create template',
 );
 
 $messages['qqq'] = array(
@@ -48,8 +53,13 @@ $messages['qqq'] = array(
 	 to create an infobox and if she / he would like to use new Infobox Builder UI tool.',
 	'portable-infobox-builder-entry-point-modal-ok-button' => 'Ok button',
 	'portable-infobox-builder-entry-point-modal-cancel-button' => 'Cancel button',
-	'portable-infobox-builder-entry-point-new-template-infobox' => 'Create an infobox',
-	'portable-infobox-builder-entry-point-new-template-normal' => 'Create template',
+	'portable-infobox-builder-tite' => 'Title for infobox builder special page',
+	'portable-infobox-builder-no-template-title-set' => 'Information that no template title was set. user need to set
+	 template title in order to create new infobox',
+	'portable-infobox-builder-create-template-entry-point-create-infobox' => 'Button to create infobox with Infobox
+	builder tool displayed on new template page',
+	'portable-infobox-builder-create-template-entry-point-create-infobox' => 'Button to create regular template with
+	editor displayed on new template page',
 );
 
 $messages['de'] = array(
