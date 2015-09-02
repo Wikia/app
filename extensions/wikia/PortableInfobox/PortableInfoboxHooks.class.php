@@ -52,11 +52,16 @@ class PortableInfoboxHooks {
 
 	public static function onAddPortableInfoboxBuilderText( &$article, &$text, &$wgOut ) {
 		//check if extension is on and user has rights
+		global $wgArticlePath;
+
 		$text = '';
+		$newInfoboxTemplate = wfMessage( 'portable-infobox-builder-entry-point-new-template-infobox' )->escaped();
+		$newTemplate = wfMessage( 'portable-infobox-builder-entry-point-new-template-normal' )->escaped();
 		$templateTitle = $article->getTitle()->getText();
+		$templatePath = preg_replace('/(.+)/', $wgArticlePath, $templateTitle);
 		$infoboxBuilderLink = "/Special:PortableInfoboxBuilder/" . $templateTitle;
-		$editorLink = "/wiki/" . $templateTitle . "?action=edit";
-		$HTML = '<a href="'. $infoboxBuilderLink . '" class="wikia-button">CREATE INFOBOX TEMPLATE</a> or <a href="'. $editorLink . '" class="wikia-button">CREATE NORMAL TEMPLATE</a>';
+		$editorLink = $templatePath . "?action=edit";
+		$HTML = '<a href="'. $infoboxBuilderLink . '" class="wikia-button">' . $newInfoboxTemplate . '</a> <a href="'. $editorLink . '" class="wikia-button">' . $newTemplate . '</a>';
 
 		$wgOut->addHTML($HTML);
 		return true;

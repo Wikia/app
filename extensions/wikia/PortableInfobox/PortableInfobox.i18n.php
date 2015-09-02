@@ -23,6 +23,8 @@ $messages['en'] = array(
 	our new Infobox builder UI tool.',
 	'portable-infobox-builder-entry-point-modal-ok-button' => 'Ok',
 	'portable-infobox-builder-entry-point-modal-cancel-button' => 'Cancel',
+	'portable-infobox-builder-entry-point-new-template-infobox' => 'Create an infobox',
+	'portable-infobox-builder-entry-point-new-template-normal' => 'Create template',
 );
 
 $messages['qqq'] = array(
@@ -46,6 +48,8 @@ $messages['qqq'] = array(
 	 to create an infobox and if she / he would like to use new Infobox Builder UI tool.',
 	'portable-infobox-builder-entry-point-modal-ok-button' => 'Ok button',
 	'portable-infobox-builder-entry-point-modal-cancel-button' => 'Cancel button',
+	'portable-infobox-builder-entry-point-new-template-infobox' => 'Create an infobox',
+	'portable-infobox-builder-entry-point-new-template-normal' => 'Create template',
 );
 
 $messages['de'] = array(
