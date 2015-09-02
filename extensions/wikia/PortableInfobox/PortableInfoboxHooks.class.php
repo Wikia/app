@@ -54,7 +54,7 @@ class PortableInfoboxHooks {
 		//check if extension is on and user has rights
 		$text = '';
 		$templateTitle = $article->getTitle()->getText();
-		$infoboxBuilderLink = "/Special:InfoboxBuilder/" . $templateTitle;
+		$infoboxBuilderLink = "/Special:PortableInfoboxBuilder/" . $templateTitle;
 		$editorLink = "/wiki/" . $templateTitle . "?action=edit";
 		$HTML = '<a href="'. $infoboxBuilderLink . '" class="wikia-button">CREATE INFOBOX TEMPLATE</a> or <a href="'. $editorLink . '" class="wikia-button">CREATE NORMAL TEMPLATE</a>';
 
