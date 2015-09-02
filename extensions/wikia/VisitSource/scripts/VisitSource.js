@@ -1,4 +1,4 @@
-$(function() {
+$(function () {
 	'use strict';
 
 	var sessionVisitSource = new VisitSource('WikiaSessionSource', window.wgCookieDomain),
