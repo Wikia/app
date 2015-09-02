@@ -431,6 +431,16 @@ class UserLoginHelper extends WikiaModel {
 	}
 
 	/**
+	 * Read a login token, DO NOT init if it doesn't exist
+	 *
+	 * @return string loginToken|null
+	 */
+	public static function readLoginToken() {
+		$loginToken = LoginForm::getLoginToken();
+		return !empty( $loginToken ) ? $loginToken : null;
+	}
+
+	/**
 	 * Get a login token
 	 *
 	 * @return string loginToken
