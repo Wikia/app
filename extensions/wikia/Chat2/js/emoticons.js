@@ -79,7 +79,7 @@ WikiaEmoticons.doReplacements = function (text, emoticonMapping) {
 WikiaEmoticons.buildTagGenerator = function (imgSrc) {
 	return function (match, leading, tag, trailing) {
 		// Don't return any img tag if this is an external image
-		if (!imgSrc.match(/^(?:https?:\/\/)?(?:[^\/]+\.)*?wikia(?:-dev)?(?:\.com|\.nocookie\.net)\//)) {
+		if (!imgSrc.match(/^(?:https?:)?\/\/(?:[^\/]+\.)*?wikia(?:-dev)?(?:\.com|\.nocookie\.net)\//)) {
 			return '';
 		}
 
