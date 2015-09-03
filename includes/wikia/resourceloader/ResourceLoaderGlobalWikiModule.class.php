@@ -153,23 +153,28 @@ abstract class ResourceLoaderGlobalWikiModule extends ResourceLoaderWikiModule {
 	}
 
 	protected function reallyGetTitleMtimes( ResourceLoaderContext $context ) {
+		global $wgEnableContentReviewExt;
+
 		wfProfileIn(__METHOD__);
 		$dbr = $this->getDB();
 		if ( !$dbr ) {
 			// We're dealing with a subclass that doesn't have a DB
 			wfProfileOut(__METHOD__);
-			return array();
+			return [];
 		}
 
-		$mtimes = array();
-		$local = array();
-		$byWiki = array();
+		$mtimes = [];
+		$local = [];
+		$byWiki = [];
+		$reviewedScripts = [];
 
 		$pages = $this->getPages( $context );
 		foreach ( $pages as $titleText => $options ) {
 			$title = $this->createTitle($titleText,$options);
 			if ($title instanceof GlobalTitle) {
 				$byWiki[$title->getCityId()][] = array( $title, $titleText, $options );
+			} elseif( !empty( $wgEnableContentReviewExt ) && $options['type'] == 'script' && $title->inNamespace( NS_MEDIAWIKI ) ) {
+				$scripts[] = $title;
 			} else {
 				$local[] = array( $title, $titleText, $options );
 			}
@@ -192,6 +197,22 @@ abstract class ResourceLoaderGlobalWikiModule extends ResourceLoaderWikiModule {
 					$title = Title::makeTitle( $row->page_namespace, $row->page_title );
 					$mtimes[$title->getPrefixedDBkey()] =
 						wfTimestamp( TS_UNIX, $row->page_touched );
+				}
+			}
+		}
+
+		if ( !empty( $scripts ) ) {
+			$helper = new Wikia\ContentReview\Helper();
+			if ( $helper->isContentReviewTestModeEnabled() ) {
+				$jsPages = $helper->getJsPages();
+			} else {
+				$jsPages = $helper->getReviewedJsPages();
+			}
+
+			foreach ( $scripts as $title ) {
+				$articleId = $title->getArticleId();
+				if ( isset( $jsPages[$articleId] ) ) {
+					$mtimes[$title->getPrefixedDBkey()] = wfTimestamp( TS_UNIX, $jsPages[$articleId]['touched'] );
 				}
 			}
 		}

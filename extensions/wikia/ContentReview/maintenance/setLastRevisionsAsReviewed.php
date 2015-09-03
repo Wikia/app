@@ -7,8 +7,6 @@ use Wikia\ContentReview\Models;
 
 class ReviewedRevision extends Maintenance {
 
-	const JS_FILE_EXTENSION = '.js';
-
 	public $revisionModel;
 
 	/**
@@ -24,7 +22,7 @@ class ReviewedRevision extends Maintenance {
 
 		$this->output( "Processing wiki id: {$wgCityId}\n" );
 
-		$jsPages = $this->getJsPages();
+		$jsPages = ( new \Wikia\ContentReview\Helper() )->getJsPages();
 
 		foreach ( $jsPages as $jsPage ) {
 			if ( !empty( $jsPage['page_id'] ) && !empty( $jsPage['page_latest'] ) ) {
@@ -44,22 +42,6 @@ class ReviewedRevision extends Maintenance {
 		}
 
 		return $this->revisionModel;
-	}
-
-	private function getJsPages() {
-		$db = wfGetDB( DB_SLAVE );
-
-		$jsPages = ( new \WikiaSQL() )
-			->SELECT( 'page_id', 'page_title', 'page_latest' )
-			->FROM( 'page' )
-			->WHERE( 'page_namespace' )->EQUAL_TO( NS_MEDIAWIKI )
-			->AND_( 'LOWER (page_title)' )->LIKE( '%' . self::JS_FILE_EXTENSION )
-			->runLoop( $db, function ( &$jsPages, $row ) {
-				$jsPages[$row->page_id] = get_object_vars( $row );
-			} );
-
-		return $jsPages;
-
 	}
 }
 

@@ -9,14 +9,21 @@ class Helper extends \ContextSource {
 
 	const CONTENT_REVIEW_TOOLBAR_TEMPLATE_PATH = 'extensions/wikia/ContentReview/templates/ContentReviewToolbar.mustache';
 	const CONTENT_REVIEW_URL_PARAM = 'contentreview';
+	const JS_FILE_EXTENSION = '.js';
 
-	public function getSiteJsScriptsHash() {
+	public function getReviewedJsPages() {
 		global $wgCityId;
-
-		$maxTimestamp = 0;
 
 		$currentRevisionModel = new Models\CurrentRevisionModel();
 		$revisions = $currentRevisionModel->getLatestReviewedRevisionForWiki( $wgCityId );
+
+		return $revisions;
+	}
+
+	public function getSiteJsScriptsHash() {
+		$maxTimestamp = 0;
+
+		$revisions = $this->getReviewedJsPages();
 
 		foreach ( $revisions as $revision ) {
 			$maxTimestamp = max( $maxTimestamp, $revision['touched'] );
@@ -30,6 +37,22 @@ class Helper extends \ContextSource {
 		$timestamp = $datetime->getTimestamp();
 
 		return $timestamp;
+	}
+
+	public function getJsPages() {
+		$db = wfGetDB( DB_SLAVE );
+
+		$jsPages = ( new \WikiaSQL() )
+			->SELECT( 'page_id', 'page_title', 'page_touched AS touched', 'page_latest' )
+			->FROM( 'page' )
+			->WHERE( 'page_namespace' )->EQUAL_TO( NS_MEDIAWIKI )
+			->AND_( 'LOWER (page_title)' )->LIKE( '%' . self::JS_FILE_EXTENSION )
+			->runLoop( $db, function ( &$jsPages, $row ) {
+				$jsPages[$row->page_id] = get_object_vars( $row );
+			} );
+
+		return $jsPages;
+
 	}
 
 	public function getReviewedRevisionIdFromText( $pageName ) {
