@@ -1114,19 +1114,19 @@ class ArticleComment {
 	 * @return Bool true -- because it's a hook
 	 */
 	static public function watchlistNotify( RecentChange &$oRC ) {
-		global $wgEnableGroupedArticleCommentsRC;
-		wfProfileIn( __METHOD__ );
+		$app = F::app();
 
 		wfRunHooks( 'AC_RecentChange_Save', [ &$oRC ] );
 
-		if ( !empty( $wgEnableGroupedArticleCommentsRC ) && ( $oRC instanceof RecentChange ) ) {
-			$title = $oRC->getAttribute( 'rc_title' );
-			$namespace = $oRC->getAttribute( 'rc_namespace' );
-			$article_id = $oRC->getAttribute( 'rc_cur_id' );
-			$title = Title::newFromText( $title, $namespace );
+		if ( $app->wg->EnableGroupedArticleCommentsRC && ( $oRC instanceof RecentChange ) ) {
+			$title = $oRC->getAttribute('rc_title');
+			$namespace = $oRC->getAttribute('rc_namespace');
+			$article_id = $oRC->getAttribute('rc_cur_id');
+			$title = Title::newFromText($title, $namespace);
 
-			// TODO: review
-			if ( MWNamespace::isTalk( $namespace ) &&
+			//TODO: review
+			if (MWNamespace::isTalk( $namespace ) &&
+				!in_array( MWNamespace::getSubject( $oRC->getAttribute( 'rc_namespace' ) ), $app->wg->WallNS ) &&
 				ArticleComment::isTitleComment( $title ) &&
 				!empty( $article_id ) ) {
 
@@ -1143,7 +1143,6 @@ class ArticleComment {
 			}
 		}
 
-		wfProfileOut( __METHOD__ );
 		return true;
 	}
 

@@ -395,3 +395,4 @@ class UserMailer {
 		return sprintf( "=%02X", ord( $matches[1] ) );
 	}
 }
+

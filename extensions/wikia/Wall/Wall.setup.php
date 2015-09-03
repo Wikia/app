@@ -70,6 +70,7 @@ $wgHooks['GetPreferences'][] = 'WallHooksHelper::onGetPreferences';
 
 // recent changes adjusting
 
+$wgHooks['RecentChange_beforeSave'][] = 'WallHooksHelper::onRecentChangeBeforeSave';
 $wgHooks['AC_RecentChange_Save'][] = 'WallHooksHelper::onRecentChangeSave';
 $wgHooks['ChangesListInsertFlags'][] = 'WallHooksHelper::onChangesListInsertFlags';
 $wgHooks['ChangesListInsertArticleLink'][] = 'WallHooksHelper::onChangesListInsertArticleLink';
