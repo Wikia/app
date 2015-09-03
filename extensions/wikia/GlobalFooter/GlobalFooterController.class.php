@@ -47,7 +47,6 @@ class GlobalFooterController extends WikiaController {
 				"Global Footer's links not found in messages",
 				[ 'exception' => new Exception() ]
 			);
-			wfProfileOut( __METHOD__ );
 			return [];
 		}
 
