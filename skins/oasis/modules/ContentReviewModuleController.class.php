@@ -81,12 +81,9 @@ class ContentReviewModuleController extends WikiaController {
 	}
 
 	public function isWithReason( $latestRevisionId, $pageStatus ) {
-		if( $latestRevisionId === (int)$pageStatus['lastReviewedId'] &&
+		return ( $latestRevisionId === (int)$pageStatus['lastReviewedId'] &&
 			(int)$pageStatus['lastReviewedStatus'] === ReviewModel::CONTENT_REVIEW_STATUS_REJECTED
-		) {
-			return true;
-		}
-		return false;
+		);
 	}
 
 	public function getLatestRevisionStatus( $latestRevisionId, array $pageStatus ) {
