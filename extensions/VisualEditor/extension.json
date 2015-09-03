@@ -105,14 +105,8 @@
 		"VisualEditorParsoidTimeout": 100
 	},
 	"APIModules": {
-		"visualeditor": {
-			"class": "ApiVisualEditor",
-			"factory": "VisualEditorHooks::VisualEditorApiFactory"
-		},
-		"visualeditoredit": {
-			"class": "ApiVisualEditorEdit",
-			"factory": "VisualEditorHooks::VisualEditorApiFactory"
-		}
+		"visualeditor": "ApiVisualEditor",
+		"visualeditoredit": "ApiVisualEditorEdit"
 	},
 	"MessagesDirs": {
 		"VisualEditor": [
