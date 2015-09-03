@@ -233,7 +233,10 @@ class User {
 	private static function invalidateAccessTokenInHelios() {
 		$request = \RequestContext::getMain()->getRequest();
 		$heliosClient = self::getHeliosClient();
-		$heliosClient->invalidateToken( self::getAccessToken( $request ) );
+		$accessToken = self::getAccessToken( $request );
+		if ( !empty( $accessToken ) ) {
+			$heliosClient->invalidateToken( $accessToken );
+		}
 	}
 
 	/**
