@@ -581,6 +581,7 @@ $wgAutoloadLocalClasses = array(
 	'JavaScriptMinifier' => 'includes/libs/JavaScriptMinifier.php',
 	'JSMinPlus' => 'includes/libs/jsminplus.php',
 	'JSParser' => 'includes/libs/jsminplus.php',
+	'MultiHttpClient' => 'includes/libs/MultiHttpClient.php',
 	'ParsoidVirtualRESTService' => 'includes/libs/virtualrest/ParsoidVirtualRESTService.php',
 	'VirtualRESTService' => 'includes/libs/virtualrest/VirtualRESTService.php',
 	'VirtualRESTServiceClient' => 'includes/libs/virtualrest/VirtualRESTServiceClient.php',
