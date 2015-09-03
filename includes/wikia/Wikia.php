@@ -63,6 +63,7 @@ $wgHooks['TitleGetLangVariants'][] = 'Wikia::onTitleGetLangVariants';
 $wgHooks['LocalFilePurgeThumbnailsUrls'][] = 'Wikia::onLocalFilePurgeThumbnailsUrls';
 
 $wgHooks['BeforePageDisplay'][] = 'Wikia::onBeforePageDisplay';
+$wgHooks['GetPreferences'][] = 'Wikia::onGetPreferences';
 
 /**
  * This class has only static methods so they can be used anywhere
@@ -1640,8 +1641,15 @@ class Wikia {
 
 		$wgUseSiteJs = $wgUseSiteJs && $request->getBool( 'usesitejs', $wgUseSiteJs ) !== false;
 		$wgUseSiteCss = $wgUseSiteCss && $request->getBool( 'usesitecss', $wgUseSiteCss ) !== false;
-		$wgAllowUserJs = $wgAllowUserJs && $request->getBool( 'useuserjs',
-			$request->getBool( 'allowuserjs', $wgAllowUserJs ) ) !== false;
+
+		// Don't enable user JS unless explicitly enabled by the user (CE-2509)
+		if ( !$user->getGlobalPreference( 'enableuserjs', false ) ) {
+			$wgAllowUserJs = false;
+		} else {
+			$wgAllowUserJs = $wgAllowUserJs && $request->getBool( 'useuserjs',
+				$request->getBool( 'allowuserjs', $wgAllowUserJs ) ) !== false;
+		}
+
 		$wgAllowUserCss = $wgAllowUserCss && $request->getBool( 'useusercss',
 			$request->getBool( 'allowusercss', $wgAllowUserCss ) ) !== false;
 		$wgBuckySampling = $request->getInt( 'buckysampling', $wgBuckySampling );
@@ -2349,6 +2357,22 @@ class Wikia {
 			);
 		}
 
+		return true;
+	}
+
+	/**
+	 * Add a preference for enabling personal JavaScript.
+	 *
+	 * @param  User    $user        The current user.
+	 * @param  array   $preferences The preferences array.
+	 * @return boolean
+	 */
+	public static function onGetPreferences( User $user, array &$preferences ) {
+		$preferences['enableuserjs'] = array(
+			'type' => 'toggle',
+			'label-message' => 'tog-enableuserjs',
+			'section' => 'under-the-hood/advanced-displayv2',
+		);
 		return true;
 	}
 }

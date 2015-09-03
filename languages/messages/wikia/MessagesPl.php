@@ -256,4 +256,6 @@ Zmień [[Special:Preferences#prefsection-1|swoje preferencje]], aby używać wid
 ***w:c:pl.bionicle|Bionicle
 ***w:c:pl.vocaloid|Vocaloid
 ",
+
+'tog-enableuserjs' => 'Włącz osobisty kod JavaScript ([[Help:Personal_CSS_and_JS#JavaScript|Dowiedz się więcej]])',
 ) );
