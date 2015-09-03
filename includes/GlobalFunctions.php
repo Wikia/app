@@ -2969,9 +2969,10 @@ function wfShellExec( $cmd, &$retval = null, $environ = array() ) {
 	ob_end_clean();
 
 	// Wikia change - begin
-	if ( $retval > 0 ) {
+	if ( $retval !== 0 ) {
 		Wikia\Logger\WikiaLogger::instance()->error( 'wfShellExec failed', [
 			'exception' => new Exception( $cmd, $retval ),
+			'caller' => wfGetCaller(),
 			'output' => $output,
 			'load_avg' => implode( ', ', sys_getloadavg() ),
 		]);

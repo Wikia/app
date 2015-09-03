@@ -69,5 +69,6 @@ JSMessages::registerPackage( 'CuratedContent', [
 ] );
 
 JSMessages::registerPackage( 'CuratedContentModal', [
-	'wikiacuratedcontent-close-modal-prompt-message'
+	'wikiacuratedcontent-close-modal-prompt-message',
+	'wikiacuratedcontent-modal-title'
 ] );

@@ -161,8 +161,8 @@ class HeliosClientImpl implements HeliosClient
 	public function invalidateToken( $token )
 	{
 		return $this->request(
-			'token',
-			[ 'code' => $token ],
+			sprintf('token/%s', $token),
+			[],
 			[],
 			[ 'method' => 'DELETE' ]
 		);

@@ -124,7 +124,7 @@ class UserLoginHooksHelper {
 		$app = F::app();
 
 		if ( $app->checkSkin( 'wikiamobile' ) ) {
-			$vars['wgLoginToken'] = UserLoginHelper::getLoginToken();
+			$vars['wgLoginToken'] = UserLoginHelper::readLoginToken();
 		}
 
 		// Max and min password lengths for JS validation
