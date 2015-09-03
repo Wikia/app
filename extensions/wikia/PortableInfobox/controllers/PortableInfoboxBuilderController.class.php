@@ -19,15 +19,19 @@ class PortableInfoboxBuilderController extends WikiaController {
 
 		if ( $params[ 'title' ] ) {
 			$pageTitleObj = Title::newFromText( $params[ 'title' ] );
-			if ( $pageTitleObj->userCan( 'edit' ) ) {
-				$pageArticleObj = new Article( $pageTitleObj );
-				$editPage = new EditPage( $pageArticleObj );
-				$editPage->initialiseForm();
-				$editPage->edittime = $pageArticleObj->getTimestamp();
-				$editPage->textbox1 = ( new PortableInfoboxBuilderService() )->translate( $params[ 'data' ] );
-				$status = $editPage->internalAttemptSave( $result );
+			if ( $pageTitleObj ) {
+				if ( $pageTitleObj->userCan( 'edit' ) ) {
+					$pageArticleObj = new Article( $pageTitleObj );
+					$editPage = new EditPage( $pageArticleObj );
+					$editPage->initialiseForm();
+					$editPage->edittime = $pageArticleObj->getTimestamp();
+					$editPage->textbox1 = ( new PortableInfoboxBuilderService() )->translate( $params[ 'data' ] );
+					$status = $editPage->internalAttemptSave( $result );
+				} else {
+					$status->fatal( 'user-cant-edit' );
+				}
 			} else {
-				$status->fatal( 'user-cant-edit' );
+				$status->fatal( 'no-title-object' );
 			}
 		} else {
 			$status->fatal( 'no-title-provided' );
