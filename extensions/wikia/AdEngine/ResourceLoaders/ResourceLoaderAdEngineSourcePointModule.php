@@ -5,7 +5,7 @@ class ResourceLoaderAdEngineSourcePointModule extends ResourceLoaderAdEngineBase
 	const TTL_GRACE = 3600; // one hour for old scripts (served if we fail to fetch fresh scripts)
 	const CACHE_BUSTER = 13;     // increase this any time the local files change
 	const REQUEST_TIMEOUT = 30;
-	const SCRIPT_DELIVERY_URL = 'https://api.getsentinel.com/script/delivery?delivery=bundle';
+	const SCRIPT_DELIVERY_URL = 'https://api.sourcepoint.com/script/delivery?delivery=bundle';
 
 	/**
 	 * Configure scripts that should be loaded into one package
