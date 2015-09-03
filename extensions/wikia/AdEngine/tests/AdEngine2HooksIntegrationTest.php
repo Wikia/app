@@ -54,8 +54,6 @@ class AdEngine2HooksIntegrationTest extends WikiaBaseTest {
 	}
 
 	public function testRobotsDeniedOnShowcasePage() {
-		$this->markTestSkipped( 'Wait for release of ADEN-2321' );
-
 		$response = $this->getHttpGerResponse( self::SHOWCASE_ADTEST_PAGE_LINK );
 		$this->assertEquals( self::HTTP_OK, $response->getStatus() );
 		$this->assertContains( self::NO_INDEX_NO_FOLLOW, $response->getContent() );
