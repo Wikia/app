@@ -2,6 +2,12 @@
 
 class PortableInfoboxBuilderService extends WikiaService {
 
+	/**
+	 * @param $builderData
+	 * @return string
+	 *
+	 *  @see PortableInfoboxBuilderServiceTest:: translationsDataProvider
+	 */
 	public function translate( $builderData ) {
 		$out = "";
 		$infobox = json_decode( $builderData );
