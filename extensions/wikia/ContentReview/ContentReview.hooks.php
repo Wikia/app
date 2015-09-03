@@ -53,9 +53,7 @@ class Hooks {
 		}
 
 		/* Add Content Review Module assets for Monobook  */
-		if ( $skin->getSkinName() !== 'monobook' ||
-			self::userCanEditJsPage()
-		) {
+		if ( self::userCanEditJsPage() ) {
 			\Wikia::addAssetsToOutput('content_review_module_monobook_js');
 			\Wikia::addAssetsToOutput('content_review_module_monobook_scss');
 		}
@@ -142,7 +140,7 @@ class Hooks {
 		)->getData();
 
 		/* Determine review status */
-		$latestRevisionId = (int)$wgTitle->getLatestRevID();
+		$latestRevisionId = $wgTitle->getLatestRevID();
 		$contentReviewModuleController = new \ContentReviewModuleController();
 		$latestStatus = $contentReviewModuleController->getLatestRevisionStatus( $latestRevisionId, $pageStatus );
 
