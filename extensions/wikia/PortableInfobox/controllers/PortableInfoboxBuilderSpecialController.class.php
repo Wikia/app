@@ -27,7 +27,7 @@ class PortableInfoboxBuilderSpecialController extends WikiaSpecialPageController
 	 */
 	public function index() {
 		$this->wg->SuppressPageHeader = true;
-		$this->wg->out->setHTMLTitle( wfMessage( 'portable-infobox-builder-tite' )->plain() );
+		$this->wg->out->setHTMLTitle( wfMessage( 'portable-infobox-builder-tite' )->text() );
 
 		$title = $this->getTemplateTitle( $this->getPar() );
 		$noTemplateSet = empty( $title ) ? true : false;
@@ -35,7 +35,7 @@ class PortableInfoboxBuilderSpecialController extends WikiaSpecialPageController
 		if ( $noTemplateSet ) {
 			$this->response->setVal('noTemplateSet', true );
 			$this->response->setVal('setTemplateNameCallToAction', wfMessage(
-				'portable-infobox-builder-no-template-title-set' )->plain() );
+				'portable-infobox-builder-no-template-title-set' )->text() );
 		} else {
 			$url = $this->wg->server . '/' . self::INFOBOX_BUILDER_MERCURY_ROUTE . '/' . $title;
 			$this->response->setVal( 'iframeUrl', $url );
@@ -49,9 +49,9 @@ class PortableInfoboxBuilderSpecialController extends WikiaSpecialPageController
 	 */
 	public function renderCreateTemplateEntryPoint() {
 		$this->response->setVal( 'createInfobox', wfMessage(
-			'portable-infobox-builder-create-template-entry-point-create-infobox' )->plain() );
+			'portable-infobox-builder-create-template-entry-point-create-infobox' )->text() );
 		$this->response->setVal( 'createTemplate', wfMessage(
-			'portable-infobox-builder-create-template-entry-point-create-regular-template' )->plain() );
+			'portable-infobox-builder-create-template-entry-point-create-regular-template' )->text() );
 		$this->response->setVal( 'title', $this->request->getVal('title'), '' );
 
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
