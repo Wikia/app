@@ -25,11 +25,26 @@ class ApiVisualEditor extends ApiBase {
 	 */
 	protected $serviceClient;
 
-	public function __construct( ApiMain $main, $name, Config $config ) {
+	public function __construct( ApiMain $main, $name ) {
 		parent::__construct( $main, $name );
-		$this->veConfig = $config;
-		$this->serviceClient = new VirtualRESTServiceClient( new MultiHttpClient( array() ) );
-		$this->serviceClient->mount( '/parsoid/', $this->getVRSObject() );
+		// Wikia change begin, @author: Paul Oslund
+		$this->veConfig = ConfigFactory::getDefaultInstance()->makeConfig( 'visualeditor' );
+
+		// NOTE: These are temporarily commented out
+		// $this->serviceClient = new VirtualRESTServiceClient( new MultiHttpClient( array() ) );
+		// $this->serviceClient->mount( '/parsoid/', $this->getVRSObject() );
+		// Wikia change end
+	}
+
+	/**
+	 * Returns the version information of this file
+	 *
+	 * @return array
+	 */
+	public function getVersion() {
+		$vers = array();
+		$vers[] = __CLASS__ . ': $Id: ApiVisualEditor.php $';
+		return $vers;
 	}
 
 	/**
@@ -83,35 +98,96 @@ class ApiVisualEditor extends ApiBase {
 		return new $class( $params );
 	}
 
-	private function requestParsoid( $method, $path, $params ) {
-		$request = array(
-			'method' => $method,
-			'url' => '/parsoid/local/v1/' . $path
-		);
-		if ( $method === 'GET' ) {
-			$request['query'] = $params;
+	// Wikia change begin, @author: Paul Oslund
+	/**
+	 * These functions are legacy code brought in to make the legacy version of
+	 * requestParsoid work. The goal is to revert requestParsoid to be the
+	 * updated version, however it requires a large amount of extra work around
+	 * bringing in VirtualRestService
+	 */
+
+	/**
+	 * @protected
+	 * @description Simple helper to retrieve relevant api uri
+	 * @return String
+	 */
+	protected function getApiSource() {
+		return wfExpandUrl( wfScript( 'api' ) );
+	}
+
+	/**
+	 * Parsoid HTTP proxy configuration for MWHttpRequest
+	 */
+	protected function getProxyConf() {
+		global $wgDevelEnvironment;
+		$parsoidHTTPProxy = $this->veConfig->get( 'VisualEditorParsoidHTTPProxy' );
+		if ( $parsoidHTTPProxy ) {
+			return array( 'proxy' => $parsoidHTTPProxy );
 		} else {
-			$request['body'] = $params;
+			return array( 'noProxy' => !empty( $wgDevelEnvironment ) );
 		}
-		$response = $this->serviceClient->run( $request );
-		if ( $response['code'] === 200 && $response['error'] === "" ) {
-			// If response was served directly from Varnish, use the response
-			// (RP) header to declare the cache hit and pass the data to the client.
-			$headers = $response['headers'];
-			$rp = null;
-			if ( isset( $headers['x-cache'] ) && strpos( $headers['x-cache'], 'hit' ) !== false ) {
-				$rp = 'cached-response=true';
+	}
+	// Wikia change end
+
+	private function requestParsoid( $method, $path, $params ) {
+		// Wikia change begin, @author: Paul Oslund
+		// NOTE: This was temporarily reverted back to the old version of
+		//       requestParsoid to get the API response to work. The goal is to
+		//       update to the new version, however that requires VRS heavily
+		$url = $this->veConfig->get( 'VisualEditorParsoidURL' ) . '/' .
+			urlencode( $this->getApiSource() ) . '/' .
+			$path;
+		$data = array_merge(
+			$this->getProxyConf(),
+			array(
+				'method' => $method,
+				'timeout' => $this->veConfig->get( 'VisualEditorParsoidTimeout' ),
+			)
+		);
+
+		if ( $method === 'POST' ) {
+			$data['postData'] = $params;
+		} else {
+			$url = wfAppendQuery( $url, $params );
+		}
+
+		$req = MWHttpRequest::factory( $url, $data );
+		// Forward cookies, but only if configured to do so and if there are read restrictions
+		if ( $this->veConfig->get( 'VisualEditorParsoidForwardCookies' )
+			&& !User::isEveryoneAllowed( 'read' )
+		) {
+			$req->setHeader( 'Cookie', $this->getRequest()->getHeader( 'Cookie' ) );
+		}
+		$status = $req->execute();
+		if ( $status->isOK() ) {
+			// Pass thru performance data from Parsoid to the client, unless the response was
+			// served directly from Varnish, in  which case discard the value of the XPP header
+			// and use it to declare the cache hit instead.
+			$xCache = $req->getResponseHeader( 'X-Cache' );
+			if ( is_string( $xCache ) && strpos( $xCache, 'hit' ) !== false ) {
+				$xpp = 'cached-response=true';
+			} else {
+				$xpp = $req->getResponseHeader( 'X-Parsoid-Performance' );
 			}
-			if ( $rp !== null ) {
+			if ( $xpp !== null ) {
 				$resp = $this->getRequest()->response();
-				$resp->header( 'X-Cache: ' . $rp );
+				$resp->header( 'X-Parsoid-Performance: ' . $xpp );
 			}
-		} elseif ( $response['error'] !== '' ) {
-			$this->dieUsage( 'parsoidserver-http-error: ' . $response['error'], $response['error'] );
-		} else { // error null, code not 200
-			$this->dieUsage( 'parsoidserver-http: HTTP ' . $response['code'], $response['code'] );
+		} elseif ( $status->isGood() ) {
+			$this->dieUsage( $req->getContent(), 'parsoidserver-http-' . $req->getStatus() );
+		} elseif ( $errors = $status->getErrorsByType( 'error' ) ) {
+			$error = $errors[0];
+			$code = $error['message'];
+			if ( count( $error['params'] ) ) {
+				$message = $error['params'][0];
+			} else {
+				$message = 'MWHttpRequest error';
+			}
+			$this->dieUsage( "$message: " . $req->getContent(), 'parsoidserver-' . $code );
 		}
-		return $response['body'];
+		// TODO pass through X-Parsoid-Performance header, merge with getHTML above
+		return $req->getContent();
+		// Wikia change end
 	}
 
 	protected function storeInSerializationCache( $title, $oldid, $html ) {
@@ -354,7 +430,7 @@ class ApiVisualEditor extends ApiBase {
 				}
 
 				// Get edit notices
-				$notices = $title->getEditNotices();
+				// $notices = $title->getEditNotices();
 
 				// Anonymous user notice
 				if ( $user->isAnon() ) {
