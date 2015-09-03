@@ -4152,7 +4152,10 @@ class User {
 	function sendReConfirmationMail() {
 		$this->setGlobalFlag("mail_edited","1");
 		$this->saveSettings();
-		return $this->sendConfirmationMail( false, 'ReConfirmationMail' );
+		return $this->sendConfirmationMail(
+			false,
+			!empty( $this->getNewEmail() ) ? 'ReConfirmationMail' : 'ConfirmationMail'
+		);
 	}
 
 	/**
