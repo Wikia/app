@@ -1,0 +1,3105 @@
+diff --git a/ApiVisualEditor.php b/ApiVisualEditor.php
+index 4a0eb78..2bbb2e5 100644
+--- a/ApiVisualEditor.php
++++ b/ApiVisualEditor.php
+@@ -10,33 +10,45 @@
+
+ class ApiVisualEditor extends ApiBase {
+
++	// Wikia change
++	/**
++	 * @protected
++	 * @description Simple helper to retrieve relevant api uri
++	 * @return String
++	 */
++	protected function getApiSource() {
++		return wfExpandUrl( wfScript( 'api' ) );
++	}
++
+ 	/**
+ 	 * @var Config
+ 	 */
+ 	protected $veConfig;
+
+-	public function __construct( ApiMain $main, $name, Config $config ) {
++	public function __construct( ApiMain $main, $name /*, Config $config */ ) {
+ 		parent::__construct( $main, $name );
+-		$this->veConfig = $config;
++		// Wikia change
++		$this->veConfig = ConfigFactory::getDefaultInstance()->makeConfig( 'visualeditor' );
+ 	}
+
+ 	/**
+ 	 * Parsoid HTTP proxy configuration for MWHttpRequest
+ 	 */
+ 	protected function getProxyConf() {
++		global $wgDevelEnvironment;
+ 		$parsoidHTTPProxy = $this->veConfig->get( 'VisualEditorParsoidHTTPProxy' );
+ 		if ( $parsoidHTTPProxy ) {
+ 			return array( 'proxy' => $parsoidHTTPProxy );
+ 		} else {
+-			return array( 'noProxy' => true );
++			return array( 'noProxy' => !empty( $wgDevelEnvironment ) );
+ 		}
+ 	}
+
+ 	protected function requestParsoid( $method, $title, $params ) {
++		// Wikia change
+ 		$url = $this->veConfig->get( 'VisualEditorParsoidURL' ) . '/' .
+-			$this->veConfig->get( 'VisualEditorParsoidPrefix' ) . '/' .
++			urlencode( $this->getApiSource() ) . '/' .
+ 			urlencode( $title->getPrefixedDBkey() );
+-
+ 		$data = array_merge(
+ 			$this->getProxyConf(),
+ 			array(
+@@ -232,7 +244,8 @@ class ApiVisualEditor extends ApiBase {
+ 			'action' => 'query',
+ 			'prop' => 'revisions',
+ 			'titles' => $title->getPrefixedDBkey(),
+-			'rvdifftotext' => $this->pstWikitext( $title, $wikitext )
++			//'rvdifftotext' => $this->pstWikitext( $title, $wikitext )
++			'rvdifftotext' => $wikitext
+ 		);
+ 		$api = new ApiMain(
+ 			new DerivativeRequest(
+@@ -327,6 +340,15 @@ class ApiVisualEditor extends ApiBase {
+ 				global $wgTitle; // FIXME NOOOOOOOOES
+ 				$wgTitle = $page;
+ 				RequestContext::getMain()->setTitle( $page );
++				// Wikia change
++				$notices = array();
++				$anoneditwarning = false;
++				$anoneditwarningMessage = $this->msg( 'VisualEditor-anoneditwarning' );
++				if ( $user->isAnon() && $anoneditwarningMessage->exists() ) {
++					$notices[] = $anoneditwarningMessage->parseAsBlock();
++					$anoneditwarning = true;
++				}
++				/*
+ 				$notices = $page->getEditNotices();
+ 				if ( $user->isAnon() ) {
+ 					$notices[] = $this->msg(
+@@ -337,6 +359,7 @@ class ApiVisualEditor extends ApiBase {
+ 						'{{fullurl:Special:UserLogin/signup|returnto={{FULLPAGENAMEE}}}}'
+ 					)->parseAsBlock();
+ 				}
++				*/
+ 				if ( $parsed && $parsed['restoring'] ) {
+ 					$notices[] = $this->msg( 'editingold' )->parseAsBlock();
+ 				}
+@@ -371,8 +394,7 @@ class ApiVisualEditor extends ApiBase {
+ 							# Then it must be protected based on static groups (regular)
+ 							$noticeMsg = 'protectedpagewarning';
+ 						}
+-						$notices[] = $this->msg( $noticeMsg )->parseAsBlock() .
+-						$this->getLastLogEntry( $page, 'protect' );
++						$notices[] = $this->msg( $noticeMsg )->parseAsBlock();
+ 					}
+
+ 					// Deal with cascading edit protection
+@@ -412,19 +434,10 @@ class ApiVisualEditor extends ApiBase {
+ 						$notices[] = "<div class=\"mw-userpage-userdoesnotexist error\">\n" .
+ 							$this->msg( 'userpage-userdoesnotexist', wfEscapeWikiText( $targetUsername ) ) .
+ 							"\n</div>";
+-					} elseif ( $targetUser->isBlocked() ) { // Show log extract if the user is currently blocked
+-						$notices[] = $this->msg(
+-							'blocked-notice-logextract',
+-							$targetUser->getName() // Support GENDER in notice
+-						)->parseAsBlock() . $this->getLastLogEntry( $targetUser->getUserPage(), 'block' );
+ 					}
+-				}
+-
+-				if ( $user->isBlockedFrom( $page ) && $user->getBlock()->prevents( 'edit' ) !== false ) {
+-					$notices[] = call_user_func_array(
+-						array( $this, 'msg' ),
+-						$user->getBlock()->getPermissionsError( $this->getContext() )
+-					)->parseAsBlock();
++					// Some upstream code is deleted from here, more information:
++					// https://github.com/Wikia/app/commit/d54b481d3f6e5b092b212a2c98b2cb5452bee26c
++					// https://github.com/Wikia/app/commit/681e7437078206460f7c0cb1837095e656d8ba85
+ 				}
+
+ 				if ( class_exists( 'GlobalBlocking' ) ) {
+@@ -488,7 +501,7 @@ class ApiVisualEditor extends ApiBase {
+ 			case 'parsefragment':
+ 				$wikitext = $params['wikitext'];
+ 				if ( $params['pst'] ) {
+-					$wikitext = $this->pstWikitext( $page, $wikitext );
++					//$wikitext = $this->pstWikitext( $page, $wikitext );
+ 				}
+ 				$content = $this->parseWikitextFragment( $page, $wikitext );
+ 				if ( $content === false ) {
+@@ -657,4 +670,9 @@ class ApiVisualEditor extends ApiBase {
+ 	public function getDescription() {
+ 		return 'Returns HTML5 for a page from the parsoid service.';
+ 	}
++
++	// Wikia change
++	public function getVersion() {
++		return __CLASS__ . ': $Id$';
++	}
+ }
+diff --git a/ApiVisualEditorEdit.php b/ApiVisualEditorEdit.php
+index 9b5f57a..5569abf 100644
+--- a/ApiVisualEditorEdit.php
++++ b/ApiVisualEditorEdit.php
+@@ -10,7 +10,7 @@
+
+ class ApiVisualEditorEdit extends ApiVisualEditor {
+
+-	public function __construct( ApiMain $main, $name, Config $config ) {
++	public function __construct( ApiMain $main, $name /*, Config $config */ ) {
+ 		parent::__construct( $main, $name, $config );
+ 	}
+
+@@ -34,12 +34,8 @@ class ApiVisualEditorEdit extends ApiVisualEditor {
+ 		// FIXME add some way that the user's preferences can be respected
+ 		$apiParams['watchlist'] = $params['watch'] ? 'watch' : 'unwatch';
+
+-		if ( $params['captchaid'] ) {
+-			$apiParams['captchaid'] = $params['captchaid'];
+-		}
+-
+-		if ( $params['captchaword'] ) {
+-			$apiParams['captchaword'] = $params['captchaword'];
++		if ( $params['g-recaptcha-response'] ) {
++			$apiParams['g-recaptcha-response'] = $params['g-recaptcha-response'];
+ 		}
+
+ 		$api = new ApiMain(
+@@ -187,8 +183,6 @@ class ApiVisualEditorEdit extends ApiVisualEditor {
+ 			'watch' => null,
+ 			'html' => null,
+ 			'summary' => null,
+-			'captchaid' => null,
+-			'captchaword' => null,
+ 			'cachekey' => null,
+ 		);
+ 	}
+@@ -226,8 +220,6 @@ class ApiVisualEditorEdit extends ApiVisualEditor {
+ 			'token' => 'Edit token',
+ 			'needcheck' => 'When saving, set this parameter if the revision might have roundtrip'
+ 				. ' problems. This will result in the edit being tagged.',
+-			'captchaid' => 'Captcha ID (when saving with a captcha response).',
+-			'captchaword' => 'Answer to the captcha (when saving with a captcha response).',
+ 			'cachekey' => 'Use the result of a previous serializeforcache request with this key.'
+ 				. 'Overrides html.',
+ 		);
+diff --git a/Gruntfile.js b/Gruntfile.js
+index 04c6f76..6897783 100644
+--- a/Gruntfile.js
++++ b/Gruntfile.js
+@@ -57,7 +57,8 @@ module.exports = function ( grunt ) {
+ 			all: [
+ 				'*.js',
+ 				'{.docs,build}/**/*.js',
+-				'modules/**/*.js'
++				'modules/**/*.js',
++				'wikia/**/*.js'
+ 			]
+ 		},
+ 		jscs: {
+@@ -67,7 +68,10 @@ module.exports = function ( grunt ) {
+ 			options: {
+ 				csslintrc: '.csslintrc'
+ 			},
+-			all: 'modules/**/*.css'
++			all: [
++				'modules/**/*.css',
++				'wikia/**/*.css'
++			]
+ 		},
+ 		banana: {
+ 			all: 'modules/ve-{mw,wmf}/i18n/'
+diff --git a/VisualEditor.hooks.php b/VisualEditor.hooks.php
+index a7542cb..e6c6f69 100644
+--- a/VisualEditor.hooks.php
++++ b/VisualEditor.hooks.php
+@@ -9,6 +9,21 @@
+  */
+
+ class VisualEditorHooks {
++
++	public static function isAvailable( $skin ) {
++		global $wgVisualEditorSupportedSkins;
++		static $isAvailable = null;
++		if ( is_null( $isAvailable ) ) {
++			$isAvailable = in_array( $skin->getSkinName(), $wgVisualEditorSupportedSkins );
++		}
++		return $isAvailable;
++	}
++
++	public static function isVisible( $skin ) {
++		global $wgEnableVisualEditorUI;
++		return $wgEnableVisualEditorUI && self::isAvailable( $skin );
++	}
++
+ 	public static function onSetup() {
+ 		// This prevents VisualEditor from being run in environments that don't
+ 		// have the dependent code in core; this should be updated as a part of
+@@ -30,8 +45,12 @@ class VisualEditorHooks {
+ 	 * @return boolean
+ 	 */
+ 	public static function onBeforePageDisplay( OutputPage &$output, Skin &$skin ) {
+-		$output->addModules( array( 'ext.visualEditor.viewPageTarget.init' ) );
+-		$output->addModuleStyles( array( 'ext.visualEditor.viewPageTarget.noscript' ) );
++		// Wikia change
++		if ( self::isAvailable( $skin ) ) {
++			$output->addModules( array( 'ext.visualEditor.wikia.viewPageTarget.init' ) );
++		}
++		//$output->addModules( array( 'ext.visualEditor.viewPageTarget.init' ) );
++		//$output->addModuleStyles( array( 'ext.visualEditor.viewPageTarget.noscript' ) );
+ 		return true;
+ 	}
+
+@@ -68,10 +87,7 @@ class VisualEditorHooks {
+ 	 */
+ 	public static function onSkinTemplateNavigation( SkinTemplate &$skin, array &$links ) {
+ 		// Only do this if the user has VE enabled
+-		if (
+-			!$skin->getUser()->getOption( 'visualeditor-enable' ) ||
+-			$skin->getUser()->getOption( 'visualeditor-betatempdisable' )
+-		) {
++		if ( !self::isVisible( $skin ) ) {
+ 			return true;
+ 		}
+
+@@ -210,9 +226,10 @@ class VisualEditorHooks {
+ 		// (and we're not in parserTests)
+ 		// (and we're not on a foreign file description page)
+ 		if (
++			!self::isVisible( $skin ) ||
+ 			isset( $GLOBALS[ 'wgVisualEditorInParserTests' ] ) ||
+-			!$skin->getUser()->getOption( 'visualeditor-enable' ) ||
+-			$skin->getUser()->getOption( 'visualeditor-betatempdisable' ) ||
++			!$skin->getUser()->getGlobalPreference( 'visualeditor-enable' ) ||
++			$skin->getUser()->getGlobalPreference( 'visualeditor-betatempdisable' ) ||
+ 			(
+ 				$title->inNamespace( NS_FILE ) &&
+ 				WikiPage::factory( $title ) instanceof WikiFilePage &&
+@@ -378,14 +395,16 @@ class VisualEditorHooks {
+ 	 * Adds extra variables to the page config.
+ 	 */
+ 	public static function onMakeGlobalVariablesScript( array &$vars, OutputPage $out ) {
++		global $wgSVGMaxSize, $wgNamespacesWithSubpages;
++
+ 		$pageLanguage = $out->getTitle()->getPageLanguage();
+
+ 		$vars['wgVisualEditor'] = array(
+ 			'isPageWatched' => $out->getUser()->isWatched( $out->getTitle() ),
+ 			'pageLanguageCode' => $pageLanguage->getHtmlCode(),
+ 			'pageLanguageDir' => $pageLanguage->getDir(),
+-			'svgMaxSize' => $out->getConfig()->get( 'SVGMaxSize' ),
+-			'namespacesWithSubpages' => $out->getConfig()->get( 'NamespacesWithSubpages' )
++			'svgMaxSize' => $wgSVGMaxSize,
++			'namespacesWithSubpages' => $wgNamespacesWithSubpages
+ 		);
+
+ 		return true;
+@@ -395,9 +414,7 @@ class VisualEditorHooks {
+ 	 * Adds extra variables to the global config
+ 	 */
+ 	public static function onResourceLoaderGetConfigVars( array &$vars ) {
+-		$coreConfig = RequestContext::getMain()->getConfig();
+-		$defaultUserOptions = $coreConfig->get( 'DefaultUserOptions' );
+-		$thumbLimits = $coreConfig->get( 'ThumbLimits' );
++		global $wgDefaultUserOptions, $wgThumbLimits;
+ 		$veConfig = ConfigFactory::getDefaultInstance()->makeConfig( 'visualeditor' );
+
+ 		$vars['wgVisualEditorConfig'] = array(
+@@ -406,9 +423,9 @@ class VisualEditorHooks {
+ 			'namespaces' => $veConfig->get( 'VisualEditorNamespaces' ),
+ 			'pluginModules' => $veConfig->get( 'VisualEditorPluginModules' ),
+ 			'defaultUserOptions' => array(
+-				'betatempdisable' => $defaultUserOptions['visualeditor-betatempdisable'],
+-				'enable' => $defaultUserOptions['visualeditor-enable'],
+-				'defaultthumbsize' => $thumbLimits[ $defaultUserOptions['thumbsize'] ]
++				'betatempdisable' => $wgDefaultUserOptions['visualeditor-betatempdisable'],
++				'enable' => $wgDefaultUserOptions['visualeditor-enable'],
++				'defaultthumbsize' => $wgThumbLimits[ $wgDefaultUserOptions['thumbsize'] ]
+ 			),
+ 			'blacklist' => $veConfig->get( 'VisualEditorBrowserBlacklist' ),
+ 			'skins' => $veConfig->get( 'VisualEditorSupportedSkins' ),
+@@ -434,7 +451,8 @@ class VisualEditorHooks {
+ 	 * @return boolean true
+ 	 */
+ 	public static function onResourceLoaderRegisterModules( ResourceLoader &$resourceLoader ) {
+-		$resourceModules = $resourceLoader->getConfig()->get( 'ResourceModules' );
++		global $wgResourceModules;
++
+ 		$veResourceTemplate = ConfigFactory::getDefaultInstance()
+ 			->makeConfig( 'visualeditor')->get( 'VisualEditorResourceTemplate' );
+ 		$libModules = array(
+diff --git a/VisualEditor.php b/VisualEditor.php
+index 732a2c9..477b482 100644
+--- a/VisualEditor.php
++++ b/VisualEditor.php
+@@ -43,6 +43,7 @@ $wgAutoloadClasses['VisualEditorHooks'] = $dir . 'VisualEditor.hooks.php';
+ $wgAutoloadClasses['VisualEditorDataModule'] = $dir . 'VisualEditorDataModule.php';
+ $wgAutoloadClasses['VisualEditorViewPageTargetInitModule'] =
+ 	$dir . 'VisualEditorViewPageTargetInitModule.php';
++$wgExtensionMessagesFiles['VisualEditor'] = $dir . 'VisualEditor.i18n.php';
+ $wgMessagesDirs['VisualEditor'] = array(
+ 	__DIR__ . '/lib/ve/i18n',
+ 	__DIR__ . '/modules/ve-mw/i18n',
+@@ -51,6 +52,8 @@ $wgMessagesDirs['VisualEditor'] = array(
+ );
+
+ // Register API modules
++// Wikia change
++/*
+ $wgAPIModules['visualeditor'] = array(
+ 	'class' => 'ApiVisualEditor',
+ 	'factory' => 'wfVisualEditorApiFactory',
+@@ -59,6 +62,9 @@ $wgAPIModules['visualeditoredit'] = array(
+ 	'class' => 'ApiVisualEditorEdit',
+ 	'factory' => 'wfVisualEditorApiFactory',
+ );
++*/
++$wgAPIModules['visualeditor'] = 'ApiVisualEditor';
++$wgAPIModules['visualeditoredit'] = 'ApiVisualEditorEdit';
+
+ /**
+  * @param ApiMain $main
+@@ -78,8 +84,8 @@ $wgConfigRegistry['visualeditor'] = 'GlobalVarConfig::newInstance';
+ $wgHooks['BeforePageDisplay'][] = 'VisualEditorHooks::onBeforePageDisplay';
+ $wgHooks['ContentHandlerDefaultModelFor'][] = 'VisualEditorHooks::onContentHandlerDefaultModelFor';
+ $wgHooks['DoEditSectionLink'][] = 'VisualEditorHooks::onDoEditSectionLink';
+-$wgHooks['GetBetaFeaturePreferences'][] = 'VisualEditorHooks::onGetBetaPreferences';
+-$wgHooks['GetPreferences'][] = 'VisualEditorHooks::onGetPreferences';
++//$wgHooks['GetBetaFeaturePreferences'][] = 'VisualEditorHooks::onGetBetaPreferences';
++//$wgHooks['GetPreferences'][] = 'VisualEditorHooks::onGetPreferences';
+ $wgHooks['ListDefinedTags'][] = 'VisualEditorHooks::onListDefinedTags';
+ $wgHooks['MakeGlobalVariablesScript'][] = 'VisualEditorHooks::onMakeGlobalVariablesScript';
+ $wgHooks['RedirectSpecialArticleRedirectParams'][] =
+@@ -87,12 +93,12 @@ $wgHooks['RedirectSpecialArticleRedirectParams'][] =
+ $wgHooks['ResourceLoaderGetConfigVars'][] = 'VisualEditorHooks::onResourceLoaderGetConfigVars';
+ $wgHooks['ResourceLoaderRegisterModules'][] = 'VisualEditorHooks::onResourceLoaderRegisterModules';
+ $wgHooks['ResourceLoaderTestModules'][] = 'VisualEditorHooks::onResourceLoaderTestModules';
+-$wgHooks['SkinTemplateNavigation'][] = 'VisualEditorHooks::onSkinTemplateNavigation';
++//$wgHooks['SkinTemplateNavigation'][] = 'VisualEditorHooks::onSkinTemplateNavigation';
+ $wgHooks['ParserTestGlobals'][] = 'VisualEditorHooks::onParserTestGlobals';
+ $wgHooks['EditPage::showEditForm:fields'][] = 'VisualEditorHooks::onEditPageShowEditFormFields';
+ $wgHooks['PageContentSaveComplete'][] = 'VisualEditorHooks::onPageContentSaveComplete';
+ $wgHooks['BeforeInitialize'][] = 'VisualEditorHooks::onBeforeInitialize';
+-$wgExtensionFunctions[] = 'VisualEditorHooks::onSetup';
++//$wgExtensionFunctions[] = 'VisualEditorHooks::onSetup';
+
+ // Register resource modules
+
+@@ -102,6 +108,46 @@ $wgVisualEditorResourceTemplate = array(
+ );
+
+ $wgResourceModules += array(
++	'oojs' => $wgVisualEditorResourceTemplate + array(
++		'scripts' => array(
++			'../../resources/lib/oojs/oojs.jquery.js',
++		),
++		'targets' => array( 'desktop', 'mobile' ),
++	),
++	'oojs-ui' => $wgVisualEditorResourceTemplate + array(
++		'scripts' => array(
++			'../../resources/lib/oojs-ui/oojs-ui.js',
++		),
++		'skinScripts' => array(
++			'default' => '../../resources/lib/oojs-ui/oojs-ui-mediawiki.js',
++		),
++		'dependencies' => array(
++			'oojs',
++			'oojs-ui.styles',
++		),
++		'messages' => array(
++			'ooui-dialog-message-accept',
++			'ooui-dialog-message-reject',
++			'ooui-dialog-process-continue',
++			'ooui-dialog-process-dismiss',
++			'ooui-dialog-process-error',
++			'ooui-dialog-process-retry',
++			'ooui-outline-control-move-down',
++			'ooui-outline-control-move-up',
++			'ooui-outline-control-remove',
++			'ooui-toolbar-more',
++			'ooui-toolgroup-collapse',
++			'ooui-toolgroup-expand',
++		),
++		'targets' => array( 'desktop', 'mobile' ),
++	),
++	'oojs-ui.styles' => $wgVisualEditorResourceTemplate + array(
++		'position' => 'top',
++		'skinStyles' => array(
++			'default' => '../../resources/lib/oojs-ui/oojs-ui-apex.svg.css',
++		),
++		'targets' => array( 'desktop', 'mobile' ),
++	),
+ 	'jquery.visibleText' => $wgVisualEditorResourceTemplate + array(
+ 		'scripts' => array(
+ 			'lib/ve/lib/jquery/jquery.visibleText.js',
+@@ -850,7 +896,8 @@ $wgResourceModules += array(
+ 			'mediawiki.jqueryMsg',
+ 			'jquery.autoEllipsis',
+ 			'jquery.byteLimit',
+-			'mediawiki.skinning.content.parsoid',
++			// Wikia change
++			//'mediawiki.skinning.content.parsoid',
+ 		),
+ 		'messages' => array(
+ 			'visualeditor-beta-label',
+@@ -997,6 +1044,7 @@ $wgResourceModules += array(
+ 			'ext.visualEditor.mwimage.core',
+ 		),
+ 		'messages' => array(
++			'visualeditor-dialog-media-insert-title',
+ 			'visualeditor-dialog-media-alttext-section',
+ 			'visualeditor-dialog-media-change-image',
+ 			'visualeditor-dialog-media-content-section',
+@@ -1432,7 +1480,7 @@ $wgResourceModules += array(
+ 		),
+ 		'targets' => array( 'desktop', 'mobile' ),
+ 	),
+-
++	/*
+ 	'ext.visualEditor.icons' => $wgVisualEditorResourceTemplate + array(
+ 		'styles' => array(
+ 			'lib/ve/src/ui/styles/ve.ui.Icons.css',
+@@ -1440,6 +1488,7 @@ $wgResourceModules += array(
+ 		),
+ 		'targets' => array( 'desktop', 'mobile' ),
+ 	),
++	*/
+ );
+
+ /* Extend MediaWiki configuration */
+@@ -1505,14 +1554,14 @@ $wgVisualEditorNamespaces = array_merge( $wgContentNamespaces, array( NS_USER )
+ $wgVisualEditorEnableTocWidget = false;
+
+ // List of skins VisualEditor integration supports
+-$wgVisualEditorSupportedSkins = array( 'vector', 'apex', 'monobook', 'minerva' );
++//$wgVisualEditorSupportedSkins = array( 'vector', 'apex', 'monobook', 'minerva' );
+
+ // List of browsers VisualEditor is incompatibe with
+ // See jQuery.client for specification
+ $wgVisualEditorBrowserBlacklist = array(
+ 	// IE <= 8 has various incompatibilities in layout and feature support
+ 	// IE10 and 11 have problems but mostly work OK-ish so they're greylisted; IE9 to come
+-	'msie' => array ( array( '<=', 9 ) ),
++	'msie' => null,
+ 	// Android 2.x and below "support" CE but don't trigger keyboard input
+ 	'android' => array( array( '<', 3 ) ),
+ 	// Firefox issues in versions 12 and below (bug 50780)
+@@ -1548,14 +1597,16 @@ $wgVisualEditorTabMessages = array(
+ 	'edit' => null,
+ 	// i18n message key to use for the old edit tab
+ 	// If null, the tab's caption will not be changed
+-	'editsource' => 'visualeditor-ca-editsource',
++	//'editsource' => 'visualeditor-ca-editsource',
++	'editsource' => 'visualeditor-ca-classiceditor',
+ 	// i18n message key to use for the VisualEditor create tab
+ 	// If null, the default create tab caption will be used
+ 	// The 'visualeditor-ca-ve-create' message is available for this
+ 	'create' => null,
+ 	// i18n message key to use for the old create tab
+ 	// If null, the tab's caption will not be changed
+-	'createsource' => 'visualeditor-ca-createsource',
++	//'createsource' => 'visualeditor-ca-createsource',
++	'createsource' => 'visualeditor-ca-classiceditor',
+ 	// i18n message key to use for the old create tab on pages for files in foreign repos
+ 	// If null, the tab's caption will not be changed
+ 	'editlocaldescriptionsource' => 'visualeditor-ca-editlocaldescriptionsource',
+diff --git a/VisualEditorDataModule.php b/VisualEditorDataModule.php
+index a0239ea..f60939c 100644
+--- a/VisualEditorDataModule.php
++++ b/VisualEditorDataModule.php
+@@ -77,6 +77,7 @@ class VisualEditorDataModule extends ResourceLoaderModule {
+ 			'watchthis' => array( 'watchthis' ),
+ 			'visualeditor-browserwarning' => array( 'visualeditor-browserwarning' ),
+ 			'visualeditor-wikitext-warning' => array( 'visualeditor-wikitext-warning' ),
++			'wikia-visualeditor-dialog-wikiamediainsert-policy-message' => array( 'wikia-visualeditor-dialog-wikiamediainsert-policy-message' ),
+ 		);
+
+ 		// Override message value
+@@ -87,11 +88,11 @@ class VisualEditorDataModule extends ResourceLoaderModule {
+ 		);
+
+ 		// Copyright warning (based on EditPage::getCopyrightWarning)
+-		$rightsText = $this->config->get( 'RightsText' );
+-		if ( $rightsText ) {
++		global $wgRightsText;
++		if ( $wgRightsText ) {
+ 			$copywarnMsg = array( 'copyrightwarning',
+ 				'[[' . wfMessage( 'copyrightpage' )->inContentLanguage()->text() . ']]',
+-				$rightsText );
++				$wgRightsText );
+ 		} else {
+ 			$copywarnMsg = array( 'copyrightwarning2',
+ 				'[[' . wfMessage( 'copyrightpage' )->inContentLanguage()->text() . ']]' );
+diff --git a/bin/buildi18n-php.php b/bin/buildi18n-php.php
+index 7462e85..f5d5e9e 100644
+--- a/bin/buildi18n-php.php
++++ b/bin/buildi18n-php.php
+@@ -11,8 +11,8 @@ array_map( function ( $dir ) use ( &$messages ) {
+ 			$data;
+ 	}
+ }, array(
+-	'lib/oojs-ui/i18n',
+-	'modules/ve/i18n',
++	'../../resources/lib/oojs-ui/i18n',
++	'lib/ve/i18n',
+ 	'modules/ve-mw/i18n',
+ 	'modules/ve-wmf/i18n'
+ ) );
+diff --git a/crowdin.conf b/crowdin.conf
+new file mode 100644
+index 0000000..5125e0e
+--- /dev/null
++++ b/crowdin.conf
+@@ -0,0 +1,4 @@
++[crowdin.project]
++projectid="ext-visualeditor"
++format="mediawiki"
++source.file="VisualEditor.i18n.php"
+diff --git a/lib/Easy-Deflate/easydeflate.js b/lib/Easy-Deflate/easydeflate.js
+index 342229e..7b39d53 100644
+--- a/lib/Easy-Deflate/easydeflate.js
++++ b/lib/Easy-Deflate/easydeflate.js
+@@ -1,219 +1,219 @@
+-/**
+-Copyright (c) 2013, Specialisterne.
+-http://specialisterne.com/dk/
+-All rights reserved.
+-Authors:
+-Jacob Christian Munch-Andersen
+-
+-Redistribution and use in source and binary forms, with or without
+-modification, are permitted provided that the following conditions are met:
+-
+-1. Redistributions of source code must retain the above copyright notice, this
+-   list of conditions and the following disclaimer.
+-2. Redistributions in binary form must reproduce the above copyright notice,
+-   this list of conditions and the following disclaimer in the documentation
+-   and/or other materials provided with the distribution.
+-
+-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+-ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+-WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+-DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+-ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+-(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+-LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+-ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+-(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+-SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+-**/
+-// For information and latest version see: https://github.com/Jacob-Christian-Munch-Andersen/Easy-Deflate
+-(function(){
+-
+-var zip={};
+-function UTF8encode(str){
+-	var out=[];
+-	var a;
+-	var c,c2;
+-	for(a=0;a<str.length;a++){
+-		c=str.charCodeAt(a);
+-		if(c<128){
+-			out.push(c);
+-		}
+-		else if(c<2048){
+-			out.push((c >> 6)+192);
+-			out.push((c & 63)+128);
+-		}
+-		else if(c<65536){
+-			if(c>=0xD800 && c<0xDC00){
+-				a++;
+-				if(a>=str.length){
+-					return null;
+-				}
+-				c2=str.charCodeAt(a);
+-				if(c2>=0xDC00 && c2<0xE000){
+-					c=65536+(c-0xD800)*1024+c2-0xDC00;
+-					out.push((c >> 18)+240);
+-					out.push(((c >> 12) & 63)+128);
+-					out.push(((c >> 6) & 63)+128);
+-					out.push((c & 63)+128);
+-				}
+-				else{
+-					return null;
+-				}
+-			}
+-			else if(c>=0xDC00 && c<0xE000){
+-				return null;
+-			}
+-			else{
+-				out.push((c >> 12)+224);
+-				out.push(((c >> 6) & 63)+128);
+-				out.push((c & 63)+128);
+-			}
+-		}
+-		else{
+-			return null;
+-		}
+-	}
+-	return new Uint8Array(out);
+-}
+-function UTF8decodeA(arrarr){
+-	var result="";
+-	var intermediate;
+-	var minvalue;
+-	var missing=0;
+-	var a,b;
+-	var arr;
+-	var c;
+-	var lower,upper;
+-	for(a=0;a<arrarr.length;a++){
+-		arr=arrarr[a];
+-		for(b=0;b<arr.length;b++){
+-			c=arr[b];
+-			if(missing){
+-				if(c>127 && c<192){
+-					intermediate=intermediate*64+c-128;
+-					missing--;
+-					if(!missing){
+-						if(intermediate>=minvalue){
+-							if(intermediate>=65536){
+-								if(intermediate>0x10FFFF){
+-									return null;
+-								}
+-								upper=(intermediate-65536)>>10;
+-								lower=intermediate%1024;
+-								result+=String.fromCharCode(upper+0xD800,lower+0xDC00);
+-							}
+-							else{
+-								result+=String.fromCharCode(intermediate);
+-							}
+-						}
+-						else{
+-							return null;
+-						}
+-					}
+-				}
+-				else{
+-					return null;
+-				}
+-			}
+-			else if(c<128){
+-				result+=String.fromCharCode(c);
+-			}
+-			else if(c>191 && c<248){
+-				if(c<224){
+-					intermediate=c-192;
+-					minvalue=128;
+-					missing=1;
+-				}
+-				else if(c<240){
+-					intermediate=c-224;
+-					minvalue=2048;
+-					missing=2;
+-				}
+-				else{
+-					intermediate=c-240;
+-					minvalue=65536;
+-					missing=3;
+-				}
+-			}
+-			else{
+-				return null;
+-			}
+-		}
+-	}
+-	if(missing){
+-		return null;
+-	}
+-	return result;
+-}
+-function deflate(str){
+-	var a,c;
+-	var readlen=50000;
+-	var resulta=[];
+-	var results="";
+-	var b,d;
+-	var zipper=new zip.Deflater(9);
+-	for(a=0;a<str.length;a+=readlen){
+-		d=UTF8encode(str.substr(a,readlen));
+-		if(d===null){ //This error may be due to a 4 byte charachter being split, retry with a string that is 1 longer to fix it.
+-			d=UTF8encode(str.substr(a,readlen+1));
+-			a+=1;
+-			if(d===null){
+-				return null;
+-			}
+-		}
+-		b=zipper.append(d);
+-		if(b.length!==0){
+-			resulta.push(b);
+-		}
+-	}
+-	b=zipper.flush();
+-	if(b.length!==0){
+-		resulta.push(b);
+-	}
+-	for(a=0;a<resulta.length;a++){
+-		for(c=0;c<resulta[a].length;c++){
+-			results+=String.fromCharCode(resulta[a][c]);
+-		}
+-	}
+-	return "rawdeflate,"+btoa(results);
+-}
+-function inflate(dfl){
+-	var unzipper=new zip.Inflater();
+-	var resulta=[];
+-	var dfls;
+-	var a,c;
+-	var b,d;
+-	if(dfl.slice(0,11)!="rawdeflate,"){
+-		return null;
+-	}
+-	try{
+-		dfls=atob(dfl.slice(11));
+-	}
+-	catch(e){
+-		return null;
+-	}
+-	try{
+-		for(a=0;a<dfls.length;a+=50000){
+-			b=new Uint8Array(Math.min(50000,dfls.length-a));
+-			for(c=0;c<b.length;c++){
+-				b[c]=dfls.charCodeAt(c+a);
+-			}
+-			d=unzipper.append(b);
+-			if(d.length){
+-				resulta.push(d);
+-			}
+-		}
+-		return UTF8decodeA(resulta);
+-	}
+-	catch(e){
+-		return null;
+-	}
+-}
+-
+-window.EasyDeflate = {
+-	'zip': zip,
+-	'inflate': inflate,
+-	'deflate': deflate
+-};
+-
++/**
++Copyright (c) 2013, Specialisterne.
++http://specialisterne.com/dk/
++All rights reserved.
++Authors:
++Jacob Christian Munch-Andersen
++
++Redistribution and use in source and binary forms, with or without
++modification, are permitted provided that the following conditions are met:
++
++1. Redistributions of source code must retain the above copyright notice, this
++   list of conditions and the following disclaimer.
++2. Redistributions in binary form must reproduce the above copyright notice,
++   this list of conditions and the following disclaimer in the documentation
++   and/or other materials provided with the distribution.
++
++THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
++ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
++WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
++DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
++ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
++(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
++LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
++ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
++(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
++SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
++**/
++// For information and latest version see: https://github.com/Jacob-Christian-Munch-Andersen/Easy-Deflate
++(function(){
++
++var zip={};
++function UTF8encode(str){
++	var out=[];
++	var a;
++	var c,c2;
++	for(a=0;a<str.length;a++){
++		c=str.charCodeAt(a);
++		if(c<128){
++			out.push(c);
++		}
++		else if(c<2048){
++			out.push((c >> 6)+192);
++			out.push((c & 63)+128);
++		}
++		else if(c<65536){
++			if(c>=0xD800 && c<0xDC00){
++				a++;
++				if(a>=str.length){
++					return null;
++				}
++				c2=str.charCodeAt(a);
++				if(c2>=0xDC00 && c2<0xE000){
++					c=65536+(c-0xD800)*1024+c2-0xDC00;
++					out.push((c >> 18)+240);
++					out.push(((c >> 12) & 63)+128);
++					out.push(((c >> 6) & 63)+128);
++					out.push((c & 63)+128);
++				}
++				else{
++					return null;
++				}
++			}
++			else if(c>=0xDC00 && c<0xE000){
++				return null;
++			}
++			else{
++				out.push((c >> 12)+224);
++				out.push(((c >> 6) & 63)+128);
++				out.push((c & 63)+128);
++			}
++		}
++		else{
++			return null;
++		}
++	}
++	return new Uint8Array(out);
++}
++function UTF8decodeA(arrarr){
++	var result="";
++	var intermediate;
++	var minvalue;
++	var missing=0;
++	var a,b;
++	var arr;
++	var c;
++	var lower,upper;
++	for(a=0;a<arrarr.length;a++){
++		arr=arrarr[a];
++		for(b=0;b<arr.length;b++){
++			c=arr[b];
++			if(missing){
++				if(c>127 && c<192){
++					intermediate=intermediate*64+c-128;
++					missing--;
++					if(!missing){
++						if(intermediate>=minvalue){
++							if(intermediate>=65536){
++								if(intermediate>0x10FFFF){
++									return null;
++								}
++								upper=(intermediate-65536)>>10;
++								lower=intermediate%1024;
++								result+=String.fromCharCode(upper+0xD800,lower+0xDC00);
++							}
++							else{
++								result+=String.fromCharCode(intermediate);
++							}
++						}
++						else{
++							return null;
++						}
++					}
++				}
++				else{
++					return null;
++				}
++			}
++			else if(c<128){
++				result+=String.fromCharCode(c);
++			}
++			else if(c>191 && c<248){
++				if(c<224){
++					intermediate=c-192;
++					minvalue=128;
++					missing=1;
++				}
++				else if(c<240){
++					intermediate=c-224;
++					minvalue=2048;
++					missing=2;
++				}
++				else{
++					intermediate=c-240;
++					minvalue=65536;
++					missing=3;
++				}
++			}
++			else{
++				return null;
++			}
++		}
++	}
++	if(missing){
++		return null;
++	}
++	return result;
++}
++function deflate(str){
++	var a,c;
++	var readlen=50000;
++	var resulta=[];
++	var results="";
++	var b,d;
++	var zipper=new zip.Deflater(9);
++	for(a=0;a<str.length;a+=readlen){
++		d=UTF8encode(str.substr(a,readlen));
++		if(d===null){ //This error may be due to a 4 byte charachter being split, retry with a string that is 1 longer to fix it.
++			d=UTF8encode(str.substr(a,readlen+1));
++			a+=1;
++			if(d===null){
++				return null;
++			}
++		}
++		b=zipper.append(d);
++		if(b.length!==0){
++			resulta.push(b);
++		}
++	}
++	b=zipper.flush();
++	if(b.length!==0){
++		resulta.push(b);
++	}
++	for(a=0;a<resulta.length;a++){
++		for(c=0;c<resulta[a].length;c++){
++			results+=String.fromCharCode(resulta[a][c]);
++		}
++	}
++	return "rawdeflate,"+btoa(results);
++}
++function inflate(dfl){
++	var unzipper=new zip.Inflater();
++	var resulta=[];
++	var dfls;
++	var a,c;
++	var b,d;
++	if(dfl.slice(0,11)!="rawdeflate,"){
++		return null;
++	}
++	try{
++		dfls=atob(dfl.slice(11));
++	}
++	catch(e){
++		return null;
++	}
++	try{
++		for(a=0;a<dfls.length;a+=50000){
++			b=new Uint8Array(Math.min(50000,dfls.length-a));
++			for(c=0;c<b.length;c++){
++				b[c]=dfls.charCodeAt(c+a);
++			}
++			d=unzipper.append(b);
++			if(d.length){
++				resulta.push(d);
++			}
++		}
++		return UTF8decodeA(resulta);
++	}
++	catch(e){
++		return null;
++	}
++}
++
++window.EasyDeflate = {
++	'zip': zip,
++	'inflate': inflate,
++	'deflate': deflate
++};
++
+ })();
+\ No newline at end of file
+diff --git a/modules/ve-mw/ce/nodes/ve.ce.MWExtensionNode.js b/modules/ve-mw/ce/nodes/ve.ce.MWExtensionNode.js
+index 371d42a..2661d49 100644
+--- a/modules/ve-mw/ce/nodes/ve.ce.MWExtensionNode.js
++++ b/modules/ve-mw/ce/nodes/ve.ce.MWExtensionNode.js
+@@ -56,7 +56,7 @@ ve.ce.MWExtensionNode.prototype.generateContents = function ( config ) {
+ 		// XML-like tags in wikitext are not actually XML and don't expect their contents to be escaped.
+ 		wikitext = mw.html.element( tagName, attrs, new mw.html.Raw( extsrc ) );
+
+-	if ( !this.constructor.static.rendersEmpty && extsrc.trim() !== '' ) {
++	if ( !this.constructor.static.rendersEmpty && wikitext.trim() !== '' ) {
+ 		xhr = ve.init.target.constructor.static.apiRequest( {
+ 			action: 'visualeditor',
+ 			paction: 'parsefragment',
+diff --git a/modules/ve-mw/ce/nodes/ve.ce.MWGalleryNode.js b/modules/ve-mw/ce/nodes/ve.ce.MWGalleryNode.js
+index 910d235..3264190 100644
+--- a/modules/ve-mw/ce/nodes/ve.ce.MWGalleryNode.js
++++ b/modules/ve-mw/ce/nodes/ve.ce.MWGalleryNode.js
+@@ -46,6 +46,18 @@ ve.ce.MWGalleryNode.prototype.onSetup = function () {
+ };
+
+ /**
++ * @inheritdoc
++ */
++ve.ce.MWGalleryNode.prototype.doneGenerating = function ( generatedContents ) {
++	var $generatedContents = this.$( generatedContents ),
++		alternativeRendering = $generatedContents.data( 'mw' ).alternativeRendering || null;
++	if ( alternativeRendering ) {
++		generatedContents = [ this.$( alternativeRendering )[0] ];
++	}
++	ve.ce.MWGalleryNode.super.prototype.doneGenerating.apply( this, arguments );
++};
++
++/**
+  * @inheritdoc ve.ce.GeneratedContentNode
+  */
+ ve.ce.MWGalleryNode.prototype.getFocusableElement = function () {
+diff --git a/modules/ve-mw/ce/nodes/ve.ce.MWImageNode.js b/modules/ve-mw/ce/nodes/ve.ce.MWImageNode.js
+index c027019..a4ba38d 100644
+--- a/modules/ve-mw/ce/nodes/ve.ce.MWImageNode.js
++++ b/modules/ve-mw/ce/nodes/ve.ce.MWImageNode.js
+@@ -117,7 +117,8 @@ ve.ce.MWImageNode.prototype.onParseSuccess = function ( deferred, response ) {
+
+ /** */
+ ve.ce.MWImageNode.prototype.render = function ( generatedContents ) {
+-	this.$image.attr( 'src', generatedContents );
++	this.$image.attr( 'src', ve.resolveUrl( generatedContents, this.getModelHtmlDocument() ) );
++
+ 	if ( this.live ) {
+ 		this.afterRender();
+ 	}
+diff --git a/modules/ve-mw/ce/nodes/ve.ce.MWInlineImageNode.js b/modules/ve-mw/ce/nodes/ve.ce.MWInlineImageNode.js
+index ab91e56..fc5af5b 100644
+--- a/modules/ve-mw/ce/nodes/ve.ce.MWInlineImageNode.js
++++ b/modules/ve-mw/ce/nodes/ve.ce.MWInlineImageNode.js
+@@ -25,7 +25,11 @@ ve.ce.MWInlineImageNode = function VeCeMWInlineImageNode( model, config ) {
+ 		this.$element = this.$( '<a>' ).addClass( 'image' );
+ 		this.$image = this.$( '<img>' ).appendTo( this.$element );
+ 	} else {
+-		this.$element = this.$image = this.$( '<img>' ).appendTo( this.$element );
++		// For inline images that are not linked (empty linkto=) we intentionally don't match output
++		// of MW Parser, instead we wrap those images in span so selection and hover (based on
++		// shields) can work well. It might change in the future when we improve our selection.
++		this.$element = this.$( '<span>' );
++		this.$image = this.$( '<img>' ).appendTo( this.$element );
+ 	}
+
+ 	// Mixin constructors
+diff --git a/modules/ve-mw/ce/nodes/ve.ce.MWTableNode.js b/modules/ve-mw/ce/nodes/ve.ce.MWTableNode.js
+index f76656b..0c20a21 100644
+--- a/modules/ve-mw/ce/nodes/ve.ce.MWTableNode.js
++++ b/modules/ve-mw/ce/nodes/ve.ce.MWTableNode.js
+@@ -34,8 +34,8 @@ ve.ce.MWTableNode.static.name = 'mwTable';
+
+ ve.ce.MWTableNode.prototype.onAttributeChange = function ( key, from, to ) {
+ 	switch ( key ) {
+-		case 'wikitable':
+-			this.$element.toggleClass( 'wikitable', !!to );
++		case 'article-table':
++			this.$element.toggleClass( 'article-table', !!to );
+ 			break;
+ 		case 'sortable':
+ 			this.$element.toggleClass( 'sortable', !!to );
+diff --git a/modules/ve-mw/ce/nodes/ve.ce.MWTransclusionNode.js b/modules/ve-mw/ce/nodes/ve.ce.MWTransclusionNode.js
+index 0cece3a..dd8693a 100644
+--- a/modules/ve-mw/ce/nodes/ve.ce.MWTransclusionNode.js
++++ b/modules/ve-mw/ce/nodes/ve.ce.MWTransclusionNode.js
+@@ -102,7 +102,7 @@ ve.ce.MWTransclusionNode.prototype.onParseSuccess = function ( deferred, respons
+ 		return this.onParseError.call( this, deferred );
+ 	}
+
+-	contentNodes = $.parseHTML( response.visualeditor.content, this.getModelHtmlDocument() );
++	contentNodes = $.parseHTML( response.visualeditor.content ); //, this.getModelHtmlDocument() );
+ 	// HACK: if $content consists of a single paragraph, unwrap it.
+ 	// We have to do this because the PHP parser wraps everything in <p>s, and inline templates
+ 	// will render strangely when wrapped in <p>s.
+diff --git a/modules/ve-mw/dm/models/ve.dm.MWImageModel.js b/modules/ve-mw/dm/models/ve.dm.MWImageModel.js
+index f1d8c72..b741de9 100644
+--- a/modules/ve-mw/dm/models/ve.dm.MWImageModel.js
++++ b/modules/ve-mw/dm/models/ve.dm.MWImageModel.js
+@@ -159,7 +159,7 @@ ve.dm.MWImageModel.static.createImageNode = function ( attributes, imageType ) {
+  * @param {string} [lang] Document language
+  * @return {ve.dm.MWImageModel} Image model
+  */
+-ve.dm.MWImageModel.static.newFromImageAttributes = function ( attrs, dir, lang ) {
++ve.dm.MWImageModel.static.newFromImageAttributes = function ( attrs, dir, lang, isVideo ) {
+ 	var imgModel = new ve.dm.MWImageModel( {
+ 			resourceName: attrs.resource,
+ 			currentDimensions: {
+@@ -201,6 +201,11 @@ ve.dm.MWImageModel.static.newFromImageAttributes = function ( attrs, dir, lang )
+ 		'default' :
+ 		'custom'
+ 	);
++
++	if ( isVideo ) {
++		imgModel.setMediaType( 'VIDEO' );
++	}
++
+ 	return imgModel;
+ };
+
+@@ -333,9 +338,9 @@ ve.dm.MWImageModel.prototype.getImageNodeType = function ( imageType, align ) {
+ 		( this.getType() === 'frameless' || this.getType() === 'none' ) &&
+ 		( !this.isAligned( align ) || this.isDefaultAligned( imageType, align ) )
+ 	) {
+-		return 'mwInlineImage';
++		return this.getMediaType() === 'VIDEO' ? 'wikiaInlineVideo' : 'mwInlineImage';
+ 	} else {
+-		return 'mwBlockImage';
++		return this.getMediaType() === 'VIDEO' ? 'wikiaBlockVideo' : 'wikiaBlockImage';
+ 	}
+ };
+
+@@ -355,17 +360,23 @@ ve.dm.MWImageModel.prototype.getBoundingBox = function () {
+  */
+ ve.dm.MWImageModel.prototype.updateImageNode = function ( node, surfaceModel ) {
+ 	var captionRange, captionNode,
+-		doc = surfaceModel.getDocument();
++		doc = surfaceModel.getDocument(),
++		captionType;
+
+ 	// Update the caption
+-	if ( node.getType() === 'mwBlockImage' ) {
++	if ( node.getType() === 'wikiaBlockImage' || node.getType() === 'wikiaBlockVideo' ) {
+ 		captionNode = node.getCaptionNode();
+ 		if ( !captionNode ) {
++			if ( node.getType() === 'wikiaBlockImage' ) {
++				captionType = 'wikiaImageCaption';
++			} else {
++				captionType = 'wikiaVideoCaption';
++			}
+ 			// There was no caption before, so insert one now
+ 			surfaceModel.getFragment()
+ 				.adjustLinearSelection( 1 )
+ 				.collapseToStart()
+-				.insertContent( [ { type: 'mwImageCaption' }, { type: '/mwImageCaption' } ] );
++				.insertContent( [ { type: captionType }, { type: '/' + captionType } ] );
+ 			// Update the caption node
+ 			captionNode = node.getCaptionNode();
+ 		}
+@@ -438,6 +449,7 @@ ve.dm.MWImageModel.prototype.insertImageNode = function ( fragment ) {
+
+ 	switch ( nodeType ) {
+ 		case 'mwInlineImage':
++		case 'wikiaInlineVideo':
+ 			// Try to put the image inside the nearest content node
+ 			offset = fragment.getDocument().data.getNearestContentOffset( fragment.getSelection().getRange().start );
+ 			if ( offset > -1 ) {
+@@ -446,8 +458,13 @@ ve.dm.MWImageModel.prototype.insertImageNode = function ( fragment ) {
+ 			fragment.insertContent( contentToInsert );
+ 			return fragment;
+
+-		case 'mwBlockImage':
+-			contentToInsert.splice( 1, 0, { type: 'mwImageCaption' }, { type: '/mwImageCaption' } );
++		case 'wikiaBlockImage':
++		case 'wikiaBlockVideo':
++			if ( nodeType === 'wikiaBlockImage' ) {
++				contentToInsert.splice( 1, 0, { type: 'wikiaImageCaption' }, { type: '/wikiaImageCaption' } );
++			} else {
++				contentToInsert.splice( 1, 0, { type: 'wikiaVideoCaption' }, { type: '/wikiaVideoCaption' } );
++			}
+ 			// Try to put the image in front of the structural node
+ 			offset = fragment.getDocument().data.getNearestStructuralOffset( fragment.getSelection().getRange().start, -1 );
+ 			if ( offset > -1 ) {
+@@ -980,10 +997,10 @@ ve.dm.MWImageModel.prototype.getDefaultDir = function ( imageNodeType ) {
+
+ 	if ( this.getDir() === 'rtl' ) {
+ 		// Assume position is 'left'
+-		return ( imageNodeType === 'mwBlockImage' ) ? 'left' : 'none';
++		return ( imageNodeType === 'wikiaBlockImage' || imageNodeType === 'wikiaBlockVideo' ) ? 'left' : 'none';
+ 	} else {
+ 		// Assume position is 'right'
+-		return ( imageNodeType === 'mwBlockImage' ) ? 'right' : 'none';
++		return ( imageNodeType === 'wikiaBlockImage' || imageNodeType === 'wikiaBlockVideo' ) ? 'right' : 'none';
+ 	}
+ };
+
+diff --git a/modules/ve-mw/dm/models/ve.dm.MWTemplateModel.js b/modules/ve-mw/dm/models/ve.dm.MWTemplateModel.js
+index ec8a0da..b1afe99 100644
+--- a/modules/ve-mw/dm/models/ve.dm.MWTemplateModel.js
++++ b/modules/ve-mw/dm/models/ve.dm.MWTemplateModel.js
+@@ -61,7 +61,7 @@ OO.inheritClass( ve.dm.MWTemplateModel, ve.dm.MWTransclusionPartModel );
+  */
+ ve.dm.MWTemplateModel.newFromData = function ( transclusion, data ) {
+ 	var key,
+-		template = new ve.dm.MWTemplateModel( transclusion, data.target, 'data' );
++		template = new ve.dm.WikiaTemplateModel( transclusion, data.target, 'data' );
+
+ 	for ( key in data.params ) {
+ 		template.addParameter(
+@@ -95,7 +95,7 @@ ve.dm.MWTemplateModel.newFromName = function ( transclusion, name ) {
+ 	}
+ 	if ( title !== null ) {
+ 		href = title.getPrefixedText();
+-		return new ve.dm.MWTemplateModel( transclusion, { href: href, wt: name }, 'user' );
++		return new ve.dm.WikiaTemplateModel( transclusion, { href: href, wt: name }, 'user' );
+ 	}
+
+ 	return null;
+diff --git a/modules/ve-mw/dm/nodes/ve.dm.MWBlockImageNode.js b/modules/ve-mw/dm/nodes/ve.dm.MWBlockImageNode.js
+index 2687ca6..3cc03cc 100644
+--- a/modules/ve-mw/dm/nodes/ve.dm.MWBlockImageNode.js
++++ b/modules/ve-mw/dm/nodes/ve.dm.MWBlockImageNode.js
+@@ -56,6 +56,8 @@ ve.dm.MWBlockImageNode.static.handlesOwnChildren = true;
+
+ ve.dm.MWBlockImageNode.static.childNodeTypes = [ 'mwImageCaption' ];
+
++ve.dm.MWBlockImageNode.static.captionNodeType = 'mwImageCaption';
++
+ ve.dm.MWBlockImageNode.static.matchTagNames = [ 'figure' ];
+
+ ve.dm.MWBlockImageNode.static.blacklistedAnnotationTypes = [ 'link' ];
+@@ -134,13 +136,13 @@ ve.dm.MWBlockImageNode.static.toDataElement = function ( domElements, converter
+ 	if ( $caption.length === 0 ) {
+ 		return [
+ 			dataElement,
+-			{ type: 'mwImageCaption' },
+-			{ type: '/mwImageCaption' },
++			{ type: this.captionNodeType },
++			{ type: '/' + this.captionNodeType },
+ 			{ type: '/' + this.name }
+ 		];
+ 	} else {
+ 		return [ dataElement ].
+-			concat( converter.getDataFromDomClean( $caption[0], { type: 'mwImageCaption' } ) ).
++			concat( converter.getDataFromDomClean( $caption[0], { type: this.captionNodeType } ) ).
+ 			concat( [ { type: '/' + this.name } ] );
+ 	}
+ };
+diff --git a/modules/ve-mw/dm/nodes/ve.dm.MWGalleryNode.js b/modules/ve-mw/dm/nodes/ve.dm.MWGalleryNode.js
+index b1a4e9a..061613c 100644
+--- a/modules/ve-mw/dm/nodes/ve.dm.MWGalleryNode.js
++++ b/modules/ve-mw/dm/nodes/ve.dm.MWGalleryNode.js
+@@ -31,6 +31,38 @@ ve.dm.MWGalleryNode.static.extensionName = 'gallery';
+
+ ve.dm.MWGalleryNode.static.tagName = 'ul';
+
++ve.dm.MWGalleryNode.static.getMatchRdfaTypes = function () {
++	var types = [ 'mw:Extension/gallery' ];
++	if ( mw.config.get( 'wgEnableMediaGalleryExt' ) !== true ) {
++		types.push( 'mw:Extension/nativeGallery' );
++	}
++	return types;
++};
++
++ve.dm.MWGalleryNode.static.toDataElement = function ( domElements, converter ) {
++	var dataElement, index,
++		mwDataJSON = domElements[0].getAttribute( 'data-mw' ),
++		mwData = mwDataJSON ? JSON.parse( mwDataJSON ) : {};
++
++	dataElement = {
++		type: this.name,
++		attributes: {
++			mw: mwData,
++			originalDomElements: ve.copy( domElements ),
++			originalMw: mwDataJSON
++		}
++	};
++
++	if ( mwData.alternativeRendering ) {
++		domElements =  [ $( mwData.alternativeRendering )[0] ];
++	}
++
++	index = this.storeGeneratedContents( dataElement, domElements, converter.getStore() );
++	dataElement.attributes.originalIndex = index;
++
++	return dataElement;
++};
++
+ /* Registration */
+
+ ve.dm.modelRegistry.register( ve.dm.MWGalleryNode );
+diff --git a/modules/ve-mw/dm/nodes/ve.dm.MWInlineImageNode.js b/modules/ve-mw/dm/nodes/ve.dm.MWInlineImageNode.js
+index be1f666..43bc9b2 100644
+--- a/modules/ve-mw/dm/nodes/ve.dm.MWInlineImageNode.js
++++ b/modules/ve-mw/dm/nodes/ve.dm.MWInlineImageNode.js
+@@ -149,7 +149,8 @@ ve.dm.MWInlineImageNode.static.toDomElements = function ( data, doc ) {
+
+ 	ve.setDomAttributes( img, data.attributes, [ 'src', 'width', 'height', 'resource' ] );
+
+-	if ( !this.typeToRdfa ) {
++	// Checking hasOwnProperty because subclasses may implement their own rdfaToType (Wikia VE-1533).
++	if ( !this.hasOwnProperty( 'typeToRdfa' ) ) {
+ 		this.typeToRdfa = {};
+ 		for ( rdfa in this.rdfaToType ) {
+ 			this.typeToRdfa[this.rdfaToType[rdfa]] = rdfa;
+diff --git a/modules/ve-mw/dm/nodes/ve.dm.MWTableNode.js b/modules/ve-mw/dm/nodes/ve.dm.MWTableNode.js
+index c49c0d9..fe335e5 100644
+--- a/modules/ve-mw/dm/nodes/ve.dm.MWTableNode.js
++++ b/modules/ve-mw/dm/nodes/ve.dm.MWTableNode.js
+@@ -35,7 +35,7 @@ OO.mixinClass( ve.dm.MWTableNode, ve.dm.ClassAttributeNode );
+ ve.dm.MWTableNode.static.name = 'mwTable';
+
+ ve.dm.MWTableNode.static.classAttributes = {
+-	wikitable: { wikitable: true },
++	'article-table': { 'article-table': true },
+ 	sortable: { sortable: true }
+ };
+
+diff --git a/modules/ve-mw/dm/nodes/ve.dm.MWTransclusionNode.js b/modules/ve-mw/dm/nodes/ve.dm.MWTransclusionNode.js
+index c7470f4..e4697a5 100644
+--- a/modules/ve-mw/dm/nodes/ve.dm.MWTransclusionNode.js
++++ b/modules/ve-mw/dm/nodes/ve.dm.MWTransclusionNode.js
+@@ -69,6 +69,25 @@ ve.dm.MWTransclusionNode.static.getHashObject = function ( dataElement ) {
+ 	};
+ };
+
++/**
++ * return the type to be assigned to given data element. If this is a portable infobox, the proper
++ * node type was already defined and named.
++ *
++ * @param domElements array of clicked elements
++ * @param converter Converter object
++ * @returns {string} type of Node
++ */
++ve.dm.MWTransclusionNode.static.getDataElementType = function ( domElements, converter ) {
++	var isInline = this.isHybridInline( domElements, converter);
++
++	if ( isInline ) {
++		return ve.dm.MWTransclusionInlineNode.static.name;
++	}
++	return this.name === ve.dm.WikiaInfoboxTransclusionBlockNode.static.name ?
++		ve.dm.WikiaInfoboxTransclusionBlockNode.static.name :
++		ve.dm.MWTransclusionBlockNode.static.name;
++};
++
+ ve.dm.MWTransclusionNode.static.toDataElement = function ( domElements, converter ) {
+ 	if ( converter.isDomAllMetaOrWhitespace( domElements, ['mwTransclusion', 'mwTransclusionInline', 'mwTransclusionBlock'] ) ) {
+ 		return ve.dm.MWTransclusionMetaItem.static.toDataElement( domElements, converter );
+@@ -77,8 +96,7 @@ ve.dm.MWTransclusionNode.static.toDataElement = function ( domElements, converte
+ 	var dataElement, index,
+ 		mwDataJSON = domElements[0].getAttribute( 'data-mw' ),
+ 		mwData = mwDataJSON ? JSON.parse( mwDataJSON ) : {},
+-		isInline = this.isHybridInline( domElements, converter ),
+-		type = isInline ? 'mwTransclusionInline' : 'mwTransclusionBlock';
++		type = this.getDataElementType( domElements, converter );
+
+ 	dataElement = {
+ 		type: type,
+diff --git a/modules/ve-mw/init/targets/ve.init.mw.ViewPageTarget.js b/modules/ve-mw/init/targets/ve.init.mw.ViewPageTarget.js
+index 4854a82..93a42f7 100644
+--- a/modules/ve-mw/init/targets/ve.init.mw.ViewPageTarget.js
++++ b/modules/ve-mw/init/targets/ve.init.mw.ViewPageTarget.js
+@@ -5,7 +5,7 @@
+  * @license The MIT License (MIT); see LICENSE.txt
+  */
+
+-/*global confirm, alert */
++/*global confirm, alert, veTrack */
+
+ /**
+  * Initialization MediaWiki view page target.
+@@ -124,6 +124,16 @@ OO.inheritClass( ve.init.mw.ViewPageTarget, ve.init.mw.Target );
+
+ /* Static Properties */
+
++ve.init.mw.ViewPageTarget.static.actionsToolbarConfig = [
++	{ include: [ 'help', 'notices' ] },
++	{
++		type: 'list',
++		icon: 'menu',
++		title: ve.msg( 'visualeditor-pagemenu-tooltip' ),
++		include: [ 'meta', 'settings', 'advancedSettings', 'categories', 'languages', 'editModeSource', 'findAndReplace' ]
++	}
++];
++
+ /**
+  * Compatibility map used with jQuery.client to black-list incompatible browsers.
+  *
+@@ -197,10 +207,11 @@ ve.init.mw.ViewPageTarget.prototype.setupToolbar = function ( surface ) {
+ 	this.getToolbar().$element
+ 		.addClass( 've-init-mw-viewPageTarget-toolbar' );
+
++	// Wikia change - #WikiaPageHeader instead of #firstHeading and after instead of before
+ 	// Move the toolbar to before #firstHeading if it exists
+-	$firstHeading = $( '#firstHeading' );
++	$firstHeading = $( '#WikiaPageHeader' );
+ 	if ( $firstHeading.length ) {
+-		this.getToolbar().$element.insertBefore( $firstHeading );
++		this.getToolbar().$element.insertAfter( $firstHeading );
+ 	}
+
+ 	this.getToolbar().$bar.slideDown( 'fast', function () {
+@@ -331,6 +342,7 @@ ve.init.mw.ViewPageTarget.prototype.cancel = function ( trackMechanism ) {
+ 		this.elementsThatHadOurAccessKey.attr( 'accesskey', ve.msg( 'accesskey-save' ) );
+ 	}
+ 	this.restorePage();
++	this.hideSpinner();
+ 	this.showReadOnlyContent();
+
+ 	$( document ).off( 'keydown', this.onDocumentKeyDownHandler );
+@@ -406,7 +418,7 @@ ve.init.mw.ViewPageTarget.prototype.onLoadError = function ( jqXHR, status ) {
+ 		// Something weird happened? Deactivate
+ 		// TODO: how does this handle load errors triggered from
+ 		// calling this.loading.abort()?
+-		this.activating = false;
++		// this.activating = false;
+ 		// Not passing trackMechanism because we don't know what happened
+ 		// and this is not a user action
+ 		this.deactivate( true );
+@@ -435,24 +447,58 @@ ve.init.mw.ViewPageTarget.prototype.onSurfaceReady = function () {
+ 		this.getSurface().mwTocWidget = new ve.ui.MWTocWidget( this.getSurface() );
+ 	}
+
+-	// Track how long it takes for the first transaction to happen
+-	this.surface.getModel().getDocument().once( 'transact', function () {
+-		ve.track( 'mwtiming.behavior.firstTransaction', { duration: ve.now() - surfaceReadyTime } );
+-	} );
++	this.setupToolbarSaveButton();
++	this.attachToolbarSaveButton();
++
++	// Wikia change - add Cancel button
++	this.setupToolbarCancelButton();
++	this.attachToolbarCancelButton();
+
+ 	// Update UI
++	this.hideSpinner();
++	if ( this.timeout ) {
++		setTimeout( this.afterHideSpinner.bind( this, surfaceReadyTime ), this.timeout );
++	} else {
++		this.afterHideSpinner( surfaceReadyTime );
++	}
++};
++
++ve.init.mw.ViewPageTarget.prototype.afterHideSpinner = function ( surfaceReadyTime ) {
+ 	this.transformPageTitle();
+ 	this.changeDocumentTitle();
+ 	this.hidePageContent();
+
+-	this.getSurface().getView().focus();
++	this.toolbar.initialize();
++	this.surface.getFocusWidget().$element.show();
++
++	this.surface.getView().focus();
+
+-	this.setupToolbarSaveButton();
+-	this.attachToolbarSaveButton();
+ 	this.restoreScrollPosition();
+ 	this.restoreEditSection();
+ 	this.setupBeforeUnloadHandler();
+ 	this.maybeShowDialogs();
++
++	$( '.ve-spinner-fade' ).css( 'opacity', 0 );
++	if ( this.timeout ) {
++		setTimeout( this.afterSpinnerFadeOpacityOut.bind( this, surfaceReadyTime ), this.timeout );
++	} else {
++		this.afterSpinnerFadeOpacityOut( surfaceReadyTime );
++	}
++};
++
++ve.init.mw.ViewPageTarget.prototype.afterSpinnerFadeOpacityOut = function ( surfaceReadyTime ) {
++	this.toolbar.$element.removeClass( 'transition' );
++	$( '.ve-spinner-fade' ).hide();
++
++	if ( window.veTrack ) {
++		veTrack( { action: 've-edit-page-stop' } );
++	}
++
++	// Track how long it takes for the first transaction to happen
++	this.surface.getModel().getDocument().once( 'transact', function () {
++		ve.track( 'mwtiming.behavior.firstTransaction', { duration: ve.now() - surfaceReadyTime } );
++	} );
++
+ 	this.activatingDeferred.resolve();
+ 	mw.hook( 've.activationComplete' ).fire();
+ };
+@@ -830,7 +876,7 @@ ve.init.mw.ViewPageTarget.prototype.onToolbarMetaButtonClick = function () {
+ ve.init.mw.ViewPageTarget.prototype.updateToolbarSaveButtonState = function () {
+ 	var isDisabled;
+
+-	this.edited = this.getSurface().getModel().hasBeenModified();
++	this.edited = this.getSurface().getModel().hasBeenModified() || this.wikitext !== null;
+ 	// Disable the save button if we have no history or if the sanity check is not finished
+ 	isDisabled = ( !this.edited && !this.restoring ) || !this.sanityCheckFinished;
+ 	this.toolbarSaveButton.setDisabled( isDisabled );
+@@ -892,9 +938,8 @@ ve.init.mw.ViewPageTarget.prototype.saveDocument = function ( saveDeferred ) {
+ 	this.emit( 'saveInitiated' );
+
+ 	// Reset any old captcha data
+-	if ( this.captcha ) {
+-		this.saveDialog.clearMessage( 'captcha' );
+-		delete this.captcha;
++	if ( this.captchaResponse ) {
++		this.captchaResponse = null;
+ 	}
+
+ 	if (
+@@ -963,8 +1008,10 @@ ve.init.mw.ViewPageTarget.prototype.getSaveFields = function () {
+ 		} );
+ 	ve.extendObject( fields, {
+ 		wpSummary: this.saveDialog ? this.saveDialog.editSummaryInput.getValue() : this.initialEditSummary,
+-		wpCaptchaId: this.captcha && this.captcha.id,
+-		wpCaptchaWord: this.captcha && this.captcha.input.getValue()
++		wpCaptchaClass: this.saveDialog.$( '#wpCaptchaClass' ).val(),
++		wpCaptchaId: this.saveDialog.$( '#wpCaptchaId' ).val(),
++		wpCaptchaWord: this.saveDialog.$( '#wpCaptchaWord' ).val(),
++		'g-recaptcha-response': this.captchaResponse
+ 	} );
+ 	if ( this.recreating ) {
+ 		fields.wpRecreate = true;
+@@ -1014,13 +1061,14 @@ ve.init.mw.ViewPageTarget.prototype.getSaveOptions = function () {
+  * Switch to viewing mode.
+  *
+  * @method
++ * @param {boolean} [noAnimate] Don't animate toolbar teardown
+  * @return {jQuery.Promise} Promise resolved when surface is torn down
+  */
+-ve.init.mw.ViewPageTarget.prototype.tearDownSurface = function () {
++ve.init.mw.ViewPageTarget.prototype.tearDownSurface = function ( noAnimate ) {
+ 	var promises = [];
+
+ 	// Update UI
+-	this.tearDownToolbar();
++	this.tearDownToolbar( noAnimate );
+ 	this.tearDownDebugBar();
+ 	this.restoreDocumentTitle();
+ 	if ( this.getSurface().mwTocWidget ) {
+@@ -1116,15 +1164,7 @@ ve.init.mw.ViewPageTarget.prototype.attachToolbarSaveButton = function () {
+ 		$pushButtons = $( '<div>' ),
+ 		actions = new ve.ui.TargetToolbar( this );
+
+-	actions.setup( [
+-		{ include: [ 'help', 'notices' ] },
+-		{
+-			type: 'list',
+-			icon: 'menu',
+-			title: ve.msg( 'visualeditor-pagemenu-tooltip' ),
+-			include: [ 'meta', 'settings', 'advancedSettings', 'categories', 'languages', 'editModeSource', 'findAndReplace' ]
+-		}
+-	], this.getSurface() );
++	actions.setup( this.constructor.static.actionsToolbarConfig, this.getSurface() );
+
+ 	$actionTools
+ 		.addClass( 've-init-mw-viewPageTarget-toolbar-utilities' )
+@@ -1137,6 +1177,14 @@ ve.init.mw.ViewPageTarget.prototype.attachToolbarSaveButton = function () {
+ 	this.toolbar.$actions.append( $actionTools, $pushButtons );
+ };
+
++ve.init.mw.ViewPageTarget.prototype.setupToolbarCancelButton = function () {
++	// Must implement in subclass
++};
++
++ve.init.mw.ViewPageTarget.prototype.attachToolbarCancelButton = function () {
++	// Must implement in subclass
++};
++
+ /**
+  * Show the save dialog.
+  *
+@@ -1302,12 +1350,19 @@ ve.init.mw.ViewPageTarget.prototype.hideReadOnlyContent = function () {
+  * Hide the toolbar.
+  *
+  * @method
++ * @param {boolean} [noAnimate] Don't animate
+  */
+-ve.init.mw.ViewPageTarget.prototype.tearDownToolbar = function () {
+-	this.toolbar.$bar.slideUp( 'fast', function () {
++ve.init.mw.ViewPageTarget.prototype.tearDownToolbar = function ( noAnimate ) {
++	var tearDownToolbar = function () {
+ 		this.toolbar.destroy();
+ 		this.toolbar = null;
+-	}.bind( this ) );
++	}.bind( this );
++
++	if ( noAnimate ) {
++		tearDownToolbar();
++	} else {
++		this.toolbar.$bar.slideUp( 'fast', tearDownToolbar );
++	}
+ };
+
+ /**
+@@ -1611,7 +1666,7 @@ ve.init.mw.ViewPageTarget.prototype.maybeShowDialogs = function () {
+ 		// preference to influence anonymous users (use the config
+ 		// variable for that; besides the pref value would be stale if
+ 		// the wiki uses static html caching).
+-		usePrefs = !mw.user.isAnon();
++		usePrefs = !mw.user.anonymous();
+ 		prefSaysShow = usePrefs && !mw.user.options.get( 'visualeditor-hidebetawelcome' );
+ 		urlSaysHide = 'vehidebetadialog' in this.currentUri.query;
+
+diff --git a/modules/ve-mw/init/ve.init.mw.Platform.js b/modules/ve-mw/init/ve.init.mw.Platform.js
+index ca2939f..823d8f3 100644
+--- a/modules/ve-mw/init/ve.init.mw.Platform.js
++++ b/modules/ve-mw/init/ve.init.mw.Platform.js
+@@ -105,7 +105,9 @@ ve.init.mw.Platform.prototype.getLanguageDirection = $.uls.data.getDir;
+
+ /** @inheritdoc */
+ ve.init.mw.Platform.prototype.getUserLanguages = function () {
+-	return mw.language.getFallbackLanguageChain();
++	// Wikia change
++	return [ mw.config.get( 'wgUserLanguage' ), mw.config.get( 'wgContentLanguage' ) ];
++	//return mw.language.getFallbackLanguageChain();
+ };
+
+ /* Initialization */
+diff --git a/modules/ve-mw/init/ve.init.mw.Target.js b/modules/ve-mw/init/ve.init.mw.Target.js
+index 9b79b64..8616dc0 100644
+--- a/modules/ve-mw/init/ve.init.mw.Target.js
++++ b/modules/ve-mw/init/ve.init.mw.Target.js
+@@ -32,6 +32,7 @@ ve.init.mw.Target = function VeInitMwTarget( pageName, revisionId ) {
+ 	// if we do, PostEdit will give us a 'page restored' message
+ 	this.requestedRevId = revisionId;
+ 	this.revid = revisionId || mw.config.get( 'wgCurRevisionId' );
++	this.wikitext = null;
+
+ 	this.restoring = !!revisionId;
+ 	this.editToken = mw.user.tokens.get( 'editToken' );
+@@ -53,7 +54,7 @@ ve.init.mw.Target = function VeInitMwTarget( pageName, revisionId ) {
+ 		'ext.visualEditor.mwreference',
+ 		'ext.visualEditor.mwtransclusion'
+ 	]
+-		.concat( this.constructor.static.iconModuleStyles )
++		//.concat( this.constructor.static.iconModuleStyles )
+ 		.concat( conf.pluginModules || [] );
+
+ 	this.pluginCallbacks = [];
+@@ -649,7 +650,7 @@ ve.init.mw.Target.prototype.onSaveError = function ( doc, saveData, jqXHR, statu
+ 					pageInfo = data.query && data.query.pages && data.query.pageids &&
+ 						data.query.pageids[0] && data.query.pages[ data.query.pageids[0] ],
+ 					editToken = pageInfo && pageInfo.edittoken,
+-					isAnon = mw.user.isAnon();
++					isAnon = mw.user.anonymous();
+
+ 				if ( userInfo && editToken ) {
+ 					target.editToken = editToken;
+@@ -702,10 +703,8 @@ ve.init.mw.Target.prototype.onSaveError = function ( doc, saveData, jqXHR, statu
+ 	// API for different things in the UI. At this point we only support the SimpleCaptcha and FancyCaptcha
+ 	// which we very intuitively detect by the presence of a "url" property.
+ 	if ( editApi && editApi.captcha && (
+-		editApi.captcha.url ||
+-		editApi.captcha.type === 'simple' ||
+-		editApi.captcha.type === 'math' ||
+-		editApi.captcha.type === 'question'
++		editApi.captcha.type === 'recaptcha' ||
++		editApi.captcha.type === 'fancyCaptcha'
+ 	) ) {
+ 		this.emit( 'saveErrorCaptcha', editApi );
+ 		return;
+@@ -1366,7 +1365,7 @@ ve.init.mw.Target.prototype.setupSurface = function ( doc, callback ) {
+ 		);
+ 		setTimeout( function () {
+ 			// Create ui.Surface (also creates ce.Surface and dm.Surface and builds CE tree)
+-			var surface = target.addSurface( dmDoc );
++			var surface = target.addSurface( dmDoc, { focusMode: true } );
+ 			surface.$element
+ 				.addClass( 've-init-mw-viewPageTarget-surface' )
+ 				.addClass( target.protectedClasses )
+diff --git a/modules/ve-mw/init/ve.init.mw.trackSubscriber.js b/modules/ve-mw/init/ve.init.mw.trackSubscriber.js
+index 876be0b..70c404e 100644
+--- a/modules/ve-mw/init/ve.init.mw.trackSubscriber.js
++++ b/modules/ve-mw/init/ve.init.mw.trackSubscriber.js
+@@ -84,11 +84,11 @@
+ 				'page.revid': mw.config.get( 'wgRevisionId' ),
+ 				'page.length': -1, // FIXME
+ 				editingSessionId: editingSessionId,
+-				'user.id': mw.user.getId(),
++				'user.id': mw.user.id(),
+ 				'user.editCount': mw.config.get( 'wgUserEditCount', 0 )
+ 			}, data );
+
+-			if ( mw.user.isAnon() ) {
++			if ( mw.user.anonymous() ) {
+ 				newData['user.class'] = 'IP';
+ 			}
+
+@@ -106,7 +106,7 @@
+ 			lastEventWithAction[action] = now;
+ 		}
+
+-		mw.track( topic, data );
++		//mw.track( topic, data );
+ 	} );
+
+ } )();
+diff --git a/modules/ve-mw/tests/dm/ve.dm.Converter.test.js b/modules/ve-mw/tests/dm/ve.dm.Converter.test.js
+index ed70fd6..99b20be 100644
+--- a/modules/ve-mw/tests/dm/ve.dm.Converter.test.js
++++ b/modules/ve-mw/tests/dm/ve.dm.Converter.test.js
+@@ -11,6 +11,11 @@ QUnit.test( 'getModelFromDom', function ( assert ) {
+ 	var msg, caseItem,
+ 		cases = ve.dm.mwExample.domToDataCases;
+
++	// TODO: this is a hack similar to one in ve.test.utils.js
++	// to make MWBlockImageNode the most recently registered,
++	// instead of the Wikia version
++	ve.dm.modelRegistry.register( ve.dm.MWBlockImageNode );
++
+ 	QUnit.expect( ve.test.utils.countGetModelFromDomTests( cases ) );
+
+ 	for ( msg in cases ) {
+diff --git a/modules/ve-mw/tests/dm/ve.dm.MWImageModel.test.js b/modules/ve-mw/tests/dm/ve.dm.MWImageModel.test.js
+index 22a9326..f5424e2 100644
+--- a/modules/ve-mw/tests/dm/ve.dm.MWImageModel.test.js
++++ b/modules/ve-mw/tests/dm/ve.dm.MWImageModel.test.js
+@@ -35,7 +35,7 @@ QUnit.test( 'Create and manipulate image nodes', function ( assert ) {
+ 						},
+ 						results: {
+ 							expect: {
+-								getImageNodeType: 'mwBlockImage',
++								getImageNodeType: 'wikiaBlockImage',
+ 								isBorderable: false
+ 							},
+ 							position: 'oppositeToText'
+@@ -93,7 +93,7 @@ QUnit.test( 'Create and manipulate image nodes', function ( assert ) {
+ 						},
+ 						results: {
+ 							expect: {
+-								getImageNodeType: 'mwBlockImage',
++								getImageNodeType: 'wikiaBlockImage',
+ 								isBorderable: false,
+ 								isDefaultSize: true
+ 							},
+@@ -107,7 +107,7 @@ QUnit.test( 'Create and manipulate image nodes', function ( assert ) {
+ 						},
+ 						results: {
+ 							expect: {
+-								getImageNodeType: 'mwBlockImage'
++								getImageNodeType: 'wikiaBlockImage'
+ 							},
+ 							position: 'withText'
+ 						}
+diff --git a/modules/ve-mw/ui/commands/ve.ui.MWWikitextWarningCommand.js b/modules/ve-mw/ui/commands/ve.ui.MWWikitextWarningCommand.js
+index efb1f7d..fe59e53 100644
+--- a/modules/ve-mw/ui/commands/ve.ui.MWWikitextWarningCommand.js
++++ b/modules/ve-mw/ui/commands/ve.ui.MWWikitextWarningCommand.js
+@@ -17,7 +17,7 @@ ve.ui.MWWikitextWarningCommand = function VeUiMWWikitextWarningCommand() {
+ 	ve.ui.MWWikitextWarningCommand.super.call(
+ 		this, 'mwWikitextWarning'
+ 	);
+-	this.warning = null;
++	this.isOpen = false;
+ };
+
+ /* Inheritance */
+@@ -30,20 +30,24 @@ OO.inheritClass( ve.ui.MWWikitextWarningCommand, ve.ui.Command );
+  * @inheritdoc
+  */
+ ve.ui.MWWikitextWarningCommand.prototype.execute = function () {
+-	if ( this.warning && this.warning.isOpen ) {
++	if ( this.isOpen ) {
+ 		return false;
+ 	}
+-	var command = this;
+-	mw.notify(
+-		$( $.parseHTML( ve.init.platform.getParsedMessage( 'visualeditor-wikitext-warning' ) ) )
+-			.filter( 'a' ).attr( 'target', '_blank' ).end(),
++	$.showModal(
++		ve.msg( 'visualeditor-wikitext-warning-title' ),
++		$( $.parseHTML( ve.init.platform.getParsedMessage( 'wikia-visualeditor-wikitext-warning' ) ) )
++			.filter( 'a' ).attr( 'target', '_blank ' ).end(),
+ 		{
+-			title: ve.msg( 'visualeditor-wikitext-warning-title' ),
+-			tag: 'visualeditor-wikitext-warning'
++			onClose: function () {
++				this.isOpen = false;
++				ve.track( 'wikia', { action: ve.track.actions.CLOSE, label: 'modal-wikitext-warning' } );
++			}.bind( this ),
++			onCreate: function () {
++				this.isOpen = true;
++				ve.track( 'wikia', { action: ve.track.actions.OPEN, label: 'modal-wikitext-warning' } );
++			}.bind( this )
+ 		}
+-	).then( function ( message ) {
+-		command.warning = message;
+-	} );
++	);
+ 	return true;
+ };
+
+diff --git a/modules/ve-mw/ui/dialogs/ve.ui.MWCommandHelpDialog.js b/modules/ve-mw/ui/dialogs/ve.ui.MWCommandHelpDialog.js
+index 8b22dcd..c92f922 100644
+--- a/modules/ve-mw/ui/dialogs/ve.ui.MWCommandHelpDialog.js
++++ b/modules/ve-mw/ui/dialogs/ve.ui.MWCommandHelpDialog.js
+@@ -40,6 +40,12 @@ ve.ui.MWCommandHelpDialog.static.getCommandGroups = function () {
+ 				msg: 'visualeditor-savedialog-label-save'
+ 			}
+ 		);
++		commandGroups.other.commands.push(
++			{
++				shortcuts: [ accessKeyPrefix + '[' ],
++				msg: 'wikia-visualeditor-dialog-wikiasourcemode-title'
++			}
++		);
+ 	}
+
+ 	return commandGroups;
+diff --git a/modules/ve-mw/ui/dialogs/ve.ui.MWMediaDialog.js b/modules/ve-mw/ui/dialogs/ve.ui.MWMediaDialog.js
+index 84ed6c1..e21b742 100644
+--- a/modules/ve-mw/ui/dialogs/ve.ui.MWMediaDialog.js
++++ b/modules/ve-mw/ui/dialogs/ve.ui.MWMediaDialog.js
+@@ -58,11 +58,6 @@ ve.ui.MWMediaDialog.static.actions = [
+ 		modes: 'insert'
+ 	},
+ 	{
+-		action: 'change',
+-		label: OO.ui.deferMsg( 'visualeditor-dialog-media-change-image' ),
+-		modes: [ 'edit', 'insert' ]
+-	},
+-	{
+ 		label: OO.ui.deferMsg( 'visualeditor-dialog-action-cancel' ),
+ 		flags: 'safe',
+ 		modes: [ 'edit', 'insert', 'select' ]
+@@ -140,7 +135,7 @@ ve.ui.MWMediaDialog.prototype.getBodyHeight = function () {
+  * @inheritdoc
+  */
+ ve.ui.MWMediaDialog.prototype.initialize = function () {
+-	var altTextFieldset, positionFieldset, borderField, positionField,
++	var positionFieldset, positionField,
+ 		alignLeftButton, alignCenterButton, alignRightButton, alignButtons;
+
+ 	// Parent method
+@@ -187,23 +182,6 @@ ve.ui.MWMediaDialog.prototype.initialize = function () {
+ 		icon: 'parameter'
+ 	} );
+
+-	// Alt text
+-	altTextFieldset = new OO.ui.FieldsetLayout( {
+-		$: this.$,
+-		label: ve.msg( 'visualeditor-dialog-media-alttext-section' ),
+-		icon: 'parameter'
+-	} );
+-
+-	this.altTextInput = new OO.ui.TextInputWidget( {
+-		$: this.$
+-	} );
+-
+-	this.altTextInput.$element.addClass( 've-ui-mwMediaDialog-altText' );
+-
+-	// Build alt text fieldset
+-	altTextFieldset.$element
+-		.append( this.altTextInput.$element );
+-
+ 	// Position
+ 	this.positionSelect = new OO.ui.ButtonSelectWidget( {
+ 		$: this.$
+@@ -255,58 +233,6 @@ ve.ui.MWMediaDialog.prototype.initialize = function () {
+ 		this.positionSelect.$element
+ 	);
+
+-	// Type
+-	this.typeFieldset = new OO.ui.FieldsetLayout( {
+-		$: this.$,
+-		label: ve.msg( 'visualeditor-dialog-media-type-section' ),
+-		icon: 'parameter'
+-	} );
+-
+-	this.typeSelect = new OO.ui.ButtonSelectWidget( {
+-		$: this.$
+-	} );
+-	this.typeSelect.addItems( [
+-		// TODO: Inline images require a bit of further work, will be coming soon
+-		new OO.ui.ButtonOptionWidget( {
+-			$: this.$,
+-			data: 'thumb',
+-			icon: 'image-thumbnail',
+-			label: ve.msg( 'visualeditor-dialog-media-type-thumb' )
+-		} ),
+-		new OO.ui.ButtonOptionWidget( {
+-			$: this.$,
+-			data: 'frameless',
+-			icon: 'image-frameless',
+-			label: ve.msg( 'visualeditor-dialog-media-type-frameless' )
+-		} ),
+-		new OO.ui.ButtonOptionWidget( {
+-			$: this.$,
+-			data: 'frame',
+-			icon: 'image-frame',
+-			label: ve.msg( 'visualeditor-dialog-media-type-frame' )
+-		} ),
+-		new OO.ui.ButtonOptionWidget( {
+-			$: this.$,
+-			data: 'none',
+-			icon: 'image-none',
+-			label: ve.msg( 'visualeditor-dialog-media-type-none' )
+-		} )
+-	] );
+-	this.borderCheckbox = new OO.ui.CheckboxInputWidget( {
+-		$: this.$
+-	} );
+-	borderField = new OO.ui.FieldLayout( this.borderCheckbox, {
+-		$: this.$,
+-		align: 'inline',
+-		label: ve.msg( 'visualeditor-dialog-media-type-border' )
+-	} );
+-
+-	// Build type fieldset
+-	this.typeFieldset.$element.append(
+-		this.typeSelect.$element,
+-		borderField.$element
+-	);
+-
+ 	// Size
+ 	this.sizeFieldset = new OO.ui.FieldsetLayout( {
+ 		$: this.$,
+@@ -334,11 +260,8 @@ ve.ui.MWMediaDialog.prototype.initialize = function () {
+
+ 	// Events
+ 	this.positionCheckbox.connect( this, { change: 'onPositionCheckboxChange' } );
+-	this.borderCheckbox.connect( this, { change: 'onBorderCheckboxChange' } );
+ 	this.positionSelect.connect( this, { choose: 'onPositionSelectChoose' } );
+-	this.typeSelect.connect( this, { choose: 'onTypeSelectChoose' } );
+ 	this.search.connect( this, { select: 'onSearchSelect' } );
+-	this.altTextInput.connect( this, { change: 'onAlternateTextChange' } );
+ 	// Panel classes
+ 	this.mediaSearchPanel.$element.addClass( 've-ui-mwMediaDialog-panel-search' );
+ 	this.bookletLayout.$element.addClass( 've-ui-mwMediaDialog-panel-settings' );
+@@ -347,13 +270,11 @@ ve.ui.MWMediaDialog.prototype.initialize = function () {
+ 	// Initialization
+ 	this.mediaSearchPanel.$element.append( this.search.$element );
+ 	this.generalSettingsPage.$element.append(
+-		this.captionFieldset.$element,
+-		altTextFieldset.$element
++		this.captionFieldset.$element
+ 	);
+
+ 	this.advancedSettingsPage.$element.append(
+ 		positionFieldset.$element,
+-		this.typeFieldset.$element,
+ 		this.sizeFieldset.$element
+ 	);
+
+@@ -426,26 +347,6 @@ ve.ui.MWMediaDialog.prototype.onImageModelAlignmentChange = function ( alignment
+ };
+
+ /**
+- * Handle image model type change
+- * @param {string} alignment Image alignment
+- */
+-
+-ve.ui.MWMediaDialog.prototype.onImageModelTypeChange = function ( type ) {
+-	var item = type ? this.typeSelect.getItemFromData( type ) : null;
+-
+-	this.typeSelect.selectItem( item );
+-
+-	this.borderCheckbox.setDisabled(
+-		!this.imageModel.isBorderable()
+-	);
+-
+-	this.borderCheckbox.setSelected(
+-		this.imageModel.isBorderable() && this.imageModel.hasBorder()
+-	);
+-	this.checkChanged();
+-};
+-
+-/**
+  * Handle change event on the positionCheckbox element.
+  *
+  * @param {boolean} isSelected Checkbox status
+@@ -478,20 +379,6 @@ ve.ui.MWMediaDialog.prototype.onPositionCheckboxChange = function ( isSelected )
+ };
+
+ /**
+- * Handle change event on the positionCheckbox element.
+- *
+- * @param {boolean} isSelected Checkbox status
+- */
+-ve.ui.MWMediaDialog.prototype.onBorderCheckboxChange = function ( isSelected ) {
+-	// Only update if the value is different than the model
+-	if ( this.imageModel.hasBorder() !== isSelected ) {
+-		// Update the image model
+-		this.imageModel.toggleBorder( isSelected );
+-		this.checkChanged();
+-	}
+-};
+-
+-/**
+  * Handle change event on the positionSelect element.
+  *
+  * @param {OO.ui.ButtonOptionWidget} item Selected item
+@@ -507,24 +394,6 @@ ve.ui.MWMediaDialog.prototype.onPositionSelectChoose = function ( item ) {
+ };
+
+ /**
+- * Handle change event on the typeSelect element.
+- *
+- * @param {OO.ui.ButtonOptionWidget} item Selected item
+- */
+-ve.ui.MWMediaDialog.prototype.onTypeSelectChoose = function ( item ) {
+-	var type = item ? item.getData() : 'default';
+-
+-	// Only update if the value is different than the model
+-	if ( this.imageModel.getType() !== type ) {
+-		this.imageModel.setType( type );
+-		this.checkChanged();
+-	}
+-
+-	// If type is 'frame', disable the size input widget completely
+-	this.sizeWidget.setDisabled( type === 'frame' );
+-};
+-
+-/**
+  * Respond to change in alternate text
+  * @param {string} text New alternate text
+  */
+@@ -616,7 +485,8 @@ ve.ui.MWMediaDialog.prototype.getSetupProcess = function ( data ) {
+ 				this.imageModel = ve.dm.MWImageModel.static.newFromImageAttributes(
+ 					this.selectedNode.getAttributes(),
+ 					this.selectedNode.getDocument().getDir(),
+-					this.selectedNode.getDocument().getLang()
++					this.selectedNode.getDocument().getLang(),
++					this.selectedNode.getType() === 'wikiaInlineVideo' || this.selectedNode.getType() === 'wikiaBlockVideo'
+ 				);
+ 				this.attachImageModel();
+
+@@ -638,6 +508,7 @@ ve.ui.MWMediaDialog.prototype.getSetupProcess = function ( data ) {
+
+ 			// Initialization
+ 			this.captionFieldset.$element.append( this.captionSurface.$element );
++			this.captionSurface.$element.addClass( 'WikiaArticle' );
+ 			this.captionSurface.initialize();
+
+ 			this.switchPanels( this.selectedNode ? 'edit' : 'search' );
+@@ -719,7 +590,6 @@ ve.ui.MWMediaDialog.prototype.attachImageModel = function () {
+ 	// Events
+ 	this.imageModel.connect( this, {
+ 		alignmentChange: 'onImageModelAlignmentChange',
+-		typeChange: 'onImageModelTypeChange',
+ 		sizeDefaultChange: 'checkChanged'
+ 	} );
+
+@@ -748,11 +618,6 @@ ve.ui.MWMediaDialog.prototype.attachImageModel = function () {
+ 	// Update default dimensions
+ 	this.sizeWidget.updateDefaultDimensions();
+
+-	// Set initial alt text
+-	this.altTextInput.setValue(
+-		this.imageModel.getAltText()
+-	);
+-
+ 	// Set initial alignment
+ 	this.positionSelect.setDisabled(
+ 		!this.imageModel.isAligned()
+@@ -768,21 +633,6 @@ ve.ui.MWMediaDialog.prototype.attachImageModel = function () {
+ 		this.imageModel.isAligned()
+ 	);
+
+-	// Border flag
+-	this.borderCheckbox.setDisabled(
+-		!this.imageModel.isBorderable()
+-	);
+-	this.borderCheckbox.setSelected(
+-		this.imageModel.isBorderable() && this.imageModel.hasBorder()
+-	);
+-
+-	// Type select
+-	this.typeSelect.selectItem(
+-		this.typeSelect.getItemFromData(
+-			this.imageModel.getType() || 'none'
+-		)
+-	);
+-
+ 	this.isSettingUpModel = false;
+ };
+
+@@ -791,7 +641,20 @@ ve.ui.MWMediaDialog.prototype.attachImageModel = function () {
+  */
+ ve.ui.MWMediaDialog.prototype.resetCaption = function () {
+ 	var captionDocument,
+-		doc = this.getFragment().getDocument();
++		doc = this.getFragment().getDocument(),
++		toolbarGroups = [
++			// History
++			{ include: [ 'undo' ] },
++			// Style
++			{ include: [ 'bold', 'italic', 'link' ] },
++			{
++				type: 'list',
++				icon: 'text-style',
++				indicator: 'down',
++				title: OO.ui.deferMsg( 'visualeditor-toolbar-style-tooltip' ),
++				include: [ 'subscript', 'superscript', 'strikethrough', 'underline', 'indent', 'outdent', 'clear' ]
++			}
++		];
+
+ 	if ( this.captionSurface ) {
+ 		// Reset the caption surface if it already exists
+@@ -841,7 +704,7 @@ ve.ui.MWMediaDialog.prototype.resetCaption = function () {
+ 		captionDocument,
+ 		{
+ 			$: this.$,
+-			tools: ve.init.target.constructor.static.toolbarGroups,
++			tools: toolbarGroups,
+ 			excludeCommands: this.constructor.static.excludeCommands,
+ 			importRules: this.constructor.static.getImportRules()
+ 		}
+@@ -905,7 +768,6 @@ ve.ui.MWMediaDialog.prototype.getActionProcess = function ( action ) {
+ 			var surfaceModel = this.getFragment().getSurface();
+
+ 			// Update from the form
+-			this.imageModel.setAltText( this.altTextInput.getValue() );
+ 			this.imageModel.setCaptionDocument(
+ 				this.captionSurface.getSurface().getModel().getDocument()
+ 			);
+diff --git a/modules/ve-mw/ui/dialogs/ve.ui.MWReferenceDialog.js b/modules/ve-mw/ui/dialogs/ve.ui.MWReferenceDialog.js
+index c6d85d7..c5f0392 100644
+--- a/modules/ve-mw/ui/dialogs/ve.ui.MWReferenceDialog.js
++++ b/modules/ve-mw/ui/dialogs/ve.ui.MWReferenceDialog.js
+@@ -225,7 +225,21 @@ ve.ui.MWReferenceDialog.prototype.getBodyHeight = function () {
+  * @chainable
+  */
+ ve.ui.MWReferenceDialog.prototype.useReference = function ( ref ) {
+-	var group;
++	var group,
++		toolbarGroups = [
++			// History
++			{ include: [ 'undo' ] },
++			// Style
++			{ include: [ 'bold', 'italic', 'link' ] },
++			{
++				type: 'list',
++				icon: 'text-style',
++				indicator: 'down',
++				title: OO.ui.deferMsg( 'visualeditor-toolbar-style-tooltip' ),
++				include: [ 'subscript', 'superscript', 'strikethrough', 'underline', 'indent', 'outdent', 'clear' ]
++			}
++		];
++
+ 	// Properties
+ 	if ( ref instanceof ve.dm.MWReferenceModel ) {
+ 		// Use an existing reference
+@@ -247,7 +261,7 @@ ve.ui.MWReferenceDialog.prototype.useReference = function ( ref ) {
+ 		this.referenceModel.getDocument(),
+ 		{
+ 			$: this.$,
+-			tools: this.constructor.static.toolbarGroups,
++			tools: toolbarGroups,
+ 			excludeCommands: this.constructor.static.excludeCommands,
+ 			importRules: this.constructor.static.getImportRules()
+ 		}
+diff --git a/modules/ve-mw/ui/dialogs/ve.ui.MWSaveDialog.js b/modules/ve-mw/ui/dialogs/ve.ui.MWSaveDialog.js
+index 0a32cf2..e4a3730 100644
+--- a/modules/ve-mw/ui/dialogs/ve.ui.MWSaveDialog.js
++++ b/modules/ve-mw/ui/dialogs/ve.ui.MWSaveDialog.js
+@@ -45,7 +45,8 @@ ve.ui.MWSaveDialog.static.actions = [
+ 		action: 'save',
+ 		label: OO.ui.deferMsg( 'visualeditor-dialog-action-apply' ),
+ 		flags: [ 'primary', 'constructive' ],
+-		modes: 'save'
++		modes: 'save',
++		accessKey: 's'
+ 	},
+ 	{
+ 		label: OO.ui.deferMsg( 'visualeditor-savedialog-label-resume-editing' ),
+diff --git a/modules/ve-mw/ui/dialogs/ve.ui.MWTemplateDialog.js b/modules/ve-mw/ui/dialogs/ve.ui.MWTemplateDialog.js
+index 7dec781..561dd3a 100644
+--- a/modules/ve-mw/ui/dialogs/ve.ui.MWTemplateDialog.js
++++ b/modules/ve-mw/ui/dialogs/ve.ui.MWTemplateDialog.js
+@@ -71,7 +71,8 @@ ve.ui.MWTemplateDialog.static.actions = [
+  */
+ ve.ui.MWTemplateDialog.static.bookletLayoutConfig = {
+ 	continuous: true,
+-	outlined: false
++	outlined: false,
++	autoFocus: false
+ };
+
+ /* Methods */
+@@ -140,7 +141,8 @@ ve.ui.MWTemplateDialog.prototype.onReplacePart = function ( removed, added ) {
+ 			if ( added instanceof ve.dm.MWTemplateModel && this.loaded ) {
+ 				// Prevent selection changes
+ 				this.preventReselection = true;
+-				addedCount = added.addPromptedParameters();
++				//addedCount = added.addPromptedParameters();
++				addedCount = added.addUnusedParameters();
+ 				this.preventReselection = false;
+ 				names = added.getParameterNames();
+ 				params = added.getParameters();
+@@ -169,7 +171,7 @@ ve.ui.MWTemplateDialog.prototype.onAddParameter = function ( param ) {
+ 	var page;
+
+ 	if ( param.getName() ) {
+-		page = new ve.ui.MWParameterPage( param, param.getId(), { $: this.$ } );
++		page = new ve.ui.WikiaParameterPage( param, param.getId(), { $: this.$ } );
+ 	} else {
+ 		page = new ve.ui.MWParameterPlaceholderPage( param, param.getId(), { $: this.$ } );
+ 	}
+@@ -184,16 +186,16 @@ ve.ui.MWTemplateDialog.prototype.onAddParameter = function ( param ) {
+ 	this.$body.find( '.ve-ui-mwParameterPage' ).each( function ( index ) {
+ 		$( this )
+ 			.find( '.ve-ui-mwParameterPage-field > .oo-ui-textInputWidget > textarea' )
+-				.attr( 'tabindex', index * 3 + 1 )
++				.attr( 'tabindex', index * 3 + 2 )
+ 			.end()
+ 			.find( '.ve-ui-mwParameterPage-infoButton' )
+-				.attr( 'tabindex', index * 3 + 2 )
++				.attr( 'tabindex', index * 3 + 3 )
+ 			.end()
+ 			.find( '.ve-ui-mwParameterPage-removeButton' )
+-				.attr( 'tabindex', index * 3 + 3 )
++				.attr( 'tabindex', index * 3 + 4 )
+ 			.end()
+ 			.find( '.ve-ui-mwParameterPage-more' )
+-				.attr( 'tabindex', index * 3 + 4 );
++				.attr( 'tabindex', index * 3 + 5 );
+ 	} );
+ };
+
+@@ -433,7 +435,7 @@ ve.ui.MWTemplateDialog.prototype.getSetupProcess = function ( data ) {
+
+ 			// Properties
+ 			this.loaded = false;
+-			this.transclusionModel = new ve.dm.MWTransclusionModel();
++			this.transclusionModel = new ve.dm.WikiaTransclusionModel();
+
+ 			// Events
+ 			this.transclusionModel.connect( this, { replace: 'onReplacePart' } );
+diff --git a/modules/ve-mw/ui/dialogs/ve.ui.MWTransclusionDialog.js b/modules/ve-mw/ui/dialogs/ve.ui.MWTransclusionDialog.js
+index 2c32198..8125c4f 100644
+--- a/modules/ve-mw/ui/dialogs/ve.ui.MWTransclusionDialog.js
++++ b/modules/ve-mw/ui/dialogs/ve.ui.MWTransclusionDialog.js
+@@ -31,7 +31,7 @@ OO.inheritClass( ve.ui.MWTransclusionDialog, ve.ui.MWTemplateDialog );
+ ve.ui.MWTransclusionDialog.static.name = 'transclusion';
+
+ ve.ui.MWTransclusionDialog.static.title =
+-	OO.ui.deferMsg( 'visualeditor-dialog-transclusion-title' );
++	OO.ui.deferMsg( 'wikia-visualeditor-dialog-transclusion-title' );
+
+ ve.ui.MWTransclusionDialog.static.actions = ve.ui.MWTemplateDialog.static.actions.concat( [
+ 	{
+diff --git a/modules/ve-mw/ui/pages/ve.ui.MWAdvancedSettingsPage.js b/modules/ve-mw/ui/pages/ve.ui.MWAdvancedSettingsPage.js
+index f787201..c94d182 100644
+--- a/modules/ve-mw/ui/pages/ve.ui.MWAdvancedSettingsPage.js
++++ b/modules/ve-mw/ui/pages/ve.ui.MWAdvancedSettingsPage.js
+@@ -40,15 +40,18 @@ ve.ui.MWAdvancedSettingsPage = function VeUiMWAdvancedSettingsPage( name, config
+ 			.addItems( [
+ 				new OO.ui.ButtonOptionWidget( {
+ 					data: 'mwIndexForce',
+-					label: ve.msg( 'visualeditor-dialog-meta-settings-index-force' )
++					label: ve.msg( 'visualeditor-dialog-meta-settings-index-force' ),
++					flags: ['secondary']
+ 				} ),
+ 				new OO.ui.ButtonOptionWidget( {
+ 					data: 'default',
+-					label: ve.msg( 'visualeditor-dialog-meta-settings-index-default' )
++					label: ve.msg( 'visualeditor-dialog-meta-settings-index-default' ),
++					flags: ['secondary']
+ 				} ),
+ 				new OO.ui.ButtonOptionWidget( {
+ 					data: 'mwIndexDisable',
+-					label: ve.msg( 'visualeditor-dialog-meta-settings-index-disable' )
++					label: ve.msg( 'visualeditor-dialog-meta-settings-index-disable' ),
++					flags: ['secondary']
+ 				} )
+ 			] )
+ 			.connect( this, { select: 'onIndexingOptionChange' } ),
+@@ -66,15 +69,18 @@ ve.ui.MWAdvancedSettingsPage = function VeUiMWAdvancedSettingsPage( name, config
+ 			.addItems( [
+ 				new OO.ui.ButtonOptionWidget( {
+ 					data: 'mwNewSectionEditForce',
+-					label: ve.msg( 'visualeditor-dialog-meta-settings-newsectioneditlink-force' )
++					label: ve.msg( 'visualeditor-dialog-meta-settings-newsectioneditlink-force' ),
++					flags: ['secondary']
+ 				} ),
+ 				new OO.ui.ButtonOptionWidget( {
+ 					data: 'default',
+-					label: ve.msg( 'visualeditor-dialog-meta-settings-newsectioneditlink-default' )
++					label: ve.msg( 'visualeditor-dialog-meta-settings-newsectioneditlink-default' ),
++					flags: ['secondary']
+ 				} ),
+ 				new OO.ui.ButtonOptionWidget( {
+ 					data: 'mwNewSectionEditDisable',
+-					label: ve.msg( 'visualeditor-dialog-meta-settings-newsectioneditlink-disable' )
++					label: ve.msg( 'visualeditor-dialog-meta-settings-newsectioneditlink-disable' ),
++					flags: ['secondary']
+ 				} )
+ 			] )
+ 			.connect( this, { select: 'onNewSectionEditLinkOptionChange' } ),
+diff --git a/modules/ve-mw/ui/pages/ve.ui.MWSettingsPage.js b/modules/ve-mw/ui/pages/ve.ui.MWSettingsPage.js
+index 17c0114..d0262fb 100644
+--- a/modules/ve-mw/ui/pages/ve.ui.MWSettingsPage.js
++++ b/modules/ve-mw/ui/pages/ve.ui.MWSettingsPage.js
+@@ -43,15 +43,18 @@ ve.ui.MWSettingsPage = function VeUiMWSettingsPage( name, config ) {
+ 			.addItems( [
+ 				new OO.ui.ButtonOptionWidget( {
+ 					data: 'mwTOCForce',
+-					label: ve.msg( 'visualeditor-dialog-meta-settings-toc-force' )
++					label: ve.msg( 'visualeditor-dialog-meta-settings-toc-force' ),
++					flags: ['secondary']
+ 				} ),
+ 				new OO.ui.ButtonOptionWidget( {
+ 					data: 'default',
+-					label: ve.msg( 'visualeditor-dialog-meta-settings-toc-default' )
++					label: ve.msg( 'visualeditor-dialog-meta-settings-toc-default' ),
++					flags: ['secondary']
+ 				} ),
+ 				new OO.ui.ButtonOptionWidget( {
+ 					data: 'mwTOCDisable',
+-					label: ve.msg( 'visualeditor-dialog-meta-settings-toc-disable' )
++					label: ve.msg( 'visualeditor-dialog-meta-settings-toc-disable' ),
++					flags: ['secondary']
+ 				} )
+ 			] )
+ 			.connect( this, { select: 'onTableOfContentsFieldChange' } ),
+diff --git a/modules/ve-mw/ui/styles/dialogs/ve.ui.MWCommandHelpDialog.css b/modules/ve-mw/ui/styles/dialogs/ve.ui.MWCommandHelpDialog.css
+index e629d9c..562e9f8 100644
+--- a/modules/ve-mw/ui/styles/dialogs/ve.ui.MWCommandHelpDialog.css
++++ b/modules/ve-mw/ui/styles/dialogs/ve.ui.MWCommandHelpDialog.css
+@@ -8,5 +8,5 @@
+ 	/*
+ 	 * See ve.ui.CommandHelpDialog.css
+ 	 */
+-	height: 41em;
++	height: 43em;
+ }
+diff --git a/modules/ve-mw/ui/styles/images/icons/alienextension-white.svg b/modules/ve-mw/ui/styles/images/icons/alienextension-white.svg
+new file mode 100644
+index 0000000..e1fd540
+--- /dev/null
++++ b/modules/ve-mw/ui/styles/images/icons/alienextension-white.svg
+@@ -0,0 +1,7 @@
++<?xml version="1.0" encoding="utf-8"?>
++<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" viewBox="0 0 24 24">
++    <g id="code" style="opacity:0.75;fill:white;">
++        <path id="left-bracket" d="M9.665 6.32l-4.259 4.274-1.406 1.406 1.406 1.406 4.259 4.274 1.406-1.438-4.259-4.243 4.259-4.243z"/>
++        <use transform="matrix(-1 0 0 1 24 0)" id="right-bracket" xlink:href="#left-bracket"/>
++    </g>
++</svg>
+diff --git a/modules/ve-mw/ui/styles/images/icons/alienextension.svg b/modules/ve-mw/ui/styles/images/icons/alienextension.svg
+index 8188e4f..ff21360 100644
+--- a/modules/ve-mw/ui/styles/images/icons/alienextension.svg
++++ b/modules/ve-mw/ui/styles/images/icons/alienextension.svg
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" viewBox="0 0 24 24">
+-    <g id="code">
++    <g id="code" style="opacity:0.75;">
+         <path id="left-bracket" d="M9.665 6.32l-4.259 4.274-1.406 1.406 1.406 1.406 4.259 4.274 1.406-1.438-4.259-4.243 4.259-4.243z"/>
+         <use transform="matrix(-1 0 0 1 24 0)" id="right-bracket" xlink:href="#left-bracket"/>
+     </g>
+diff --git a/modules/ve-mw/ui/styles/images/icons/gallery-ltr-white.svg b/modules/ve-mw/ui/styles/images/icons/gallery-ltr-white.svg
+new file mode 100644
+index 0000000..57e531b
+--- /dev/null
++++ b/modules/ve-mw/ui/styles/images/icons/gallery-ltr-white.svg
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="utf-8"?>
++<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
++    <g id="gallery" style="opacity:0.75;fill:white;">
++        <path d="M 20,8 10,8 C 8,7.993 7,9 7,11 l 0,7 c -0.014,2 1,2.988 3,3 l 10,0 c 2,-0.012 2.994,-0.994 3,-3 l 0,-7 C 22.994,9 22,7.993 20,8 z m 1,11 -12,0 0,-9 12,0 z m -11,-3.055 2.917,-2.723 1.94,1.799 -1.094,0.851 0.73,1.024 L 17.917,14 20,15.556 20,18 10,18 z m 0,-1.167 2.93,-3.232 2.538,2.467 2.449,-1.568 L 20,14 20,11 10,11 z M 7,5 17,5 c 1.01,0.009 2.134,0.372 2.721,1.276 C 19.881,6.522 19.907,6.722 20,7 L 6,7 6,18 C 4.441,17.627 4.102,16.47 4.014,15 L 4,8 C 4,6 5,4.993 7,5 z M 4,2 14,2 c 1.01,0.009 2.134,0.261 2.721,1.165 C 16.881,3.411 16.907,3.722 17,4 L 3,4 3,15 C 1.441,14.627 1.088,13.469 1,12 L 1,5 C 1,3 2,1.993 4,2 z"/>
++    </g>
++</svg>
+diff --git a/modules/ve-mw/ui/styles/images/icons/gallery-ltr.svg b/modules/ve-mw/ui/styles/images/icons/gallery-ltr.svg
+index aa2e687..ace9649 100644
+--- a/modules/ve-mw/ui/styles/images/icons/gallery-ltr.svg
++++ b/modules/ve-mw/ui/styles/images/icons/gallery-ltr.svg
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+-    <g id="gallery">
++    <g id="gallery" style="opacity:0.75;">
+         <path d="M 20,8 10,8 C 8,7.993 7,9 7,11 l 0,7 c -0.014,2 1,2.988 3,3 l 10,0 c 2,-0.012 2.994,-0.994 3,-3 l 0,-7 C 22.994,9 22,7.993 20,8 z m 1,11 -12,0 0,-9 12,0 z m -11,-3.055 2.917,-2.723 1.94,1.799 -1.094,0.851 0.73,1.024 L 17.917,14 20,15.556 20,18 10,18 z m 0,-1.167 2.93,-3.232 2.538,2.467 2.449,-1.568 L 20,14 20,11 10,11 z M 7,5 17,5 c 1.01,0.009 2.134,0.372 2.721,1.276 C 19.881,6.522 19.907,6.722 20,7 L 6,7 6,18 C 4.441,17.627 4.102,16.47 4.014,15 L 4,8 C 4,6 5,4.993 7,5 z M 4,2 14,2 c 1.01,0.009 2.134,0.261 2.721,1.165 C 16.881,3.411 16.907,3.722 17,4 L 3,4 3,15 C 1.441,14.627 1.088,13.469 1,12 L 1,5 C 1,3 2,1.993 4,2 z"/>
+     </g>
+ </svg>
+diff --git a/modules/ve-mw/ui/styles/images/icons/gallery-rtl-white.svg b/modules/ve-mw/ui/styles/images/icons/gallery-rtl-white.svg
+new file mode 100644
+index 0000000..6260593
+--- /dev/null
++++ b/modules/ve-mw/ui/styles/images/icons/gallery-rtl-white.svg
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="utf-8"?>
++<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
++    <g id="gallery" style="opacity:0.75;fill:white;">
++        <path d="m 4,8 10,0 c 2,-0.007 3,1 3,3 l 0,7 c 0.014,2 -1,2.988 -3,3 L 4,21 C 2,20.988 1.006,20.006 1,18 L 1,11 C 1.006,9 2,7.993 4,8 z m -1,11 12,0 0,-9 -12,0 z m 11,-3.055 -2.917,-2.723 -1.94,1.799 1.094,0.851 -0.73,1.024 L 6.083,14 4,15.556 4,18 14,18 z M 14,14.778 11.07,11.546 8.532,14.013 6.083,12.445 4,14 4,11 14,11 z M 17,5 7,5 C 5.99,5.009 4.866,5.372 4.279,6.276 4.119,6.522 4.093,6.722 4,7 l 14,0 0,11 c 1.559,-0.373 1.898,-1.53 1.986,-3 L 20,8 C 20,6 19,4.993 17,5 z M 20,2 10,2 C 8.99,2.009 7.866,2.261 7.279,3.165 7.119,3.411 7.093,3.722 7,4 l 14,0 0,11 c 1.559,-0.373 1.912,-1.531 2,-3 L 23,5 C 23,3 22,1.993 20,2 z"/>
++    </g>
++</svg>
+diff --git a/modules/ve-mw/ui/styles/images/icons/gallery-rtl.svg b/modules/ve-mw/ui/styles/images/icons/gallery-rtl.svg
+index 4c8d0ff..f61b3ad 100644
+--- a/modules/ve-mw/ui/styles/images/icons/gallery-rtl.svg
++++ b/modules/ve-mw/ui/styles/images/icons/gallery-rtl.svg
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+-    <g id="gallery">
++    <g id="gallery" style="opacity:0.75;">
+         <path d="m 4,8 10,0 c 2,-0.007 3,1 3,3 l 0,7 c 0.014,2 -1,2.988 -3,3 L 4,21 C 2,20.988 1.006,20.006 1,18 L 1,11 C 1.006,9 2,7.993 4,8 z m -1,11 12,0 0,-9 -12,0 z m 11,-3.055 -2.917,-2.723 -1.94,1.799 1.094,0.851 -0.73,1.024 L 6.083,14 4,15.556 4,18 14,18 z M 14,14.778 11.07,11.546 8.532,14.013 6.083,12.445 4,14 4,11 14,11 z M 17,5 7,5 C 5.99,5.009 4.866,5.372 4.279,6.276 4.119,6.522 4.093,6.722 4,7 l 14,0 0,11 c 1.559,-0.373 1.898,-1.53 1.986,-3 L 20,8 C 20,6 19,4.993 17,5 z M 20,2 10,2 C 8.99,2.009 7.866,2.261 7.279,3.165 7.119,3.411 7.093,3.722 7,4 l 14,0 0,11 c 1.559,-0.373 1.912,-1.531 2,-3 L 23,5 C 23,3 22,1.993 20,2 z"/>
+     </g>
+ </svg>
+diff --git a/modules/ve-mw/ui/styles/images/icons/image-frame-white.svg b/modules/ve-mw/ui/styles/images/icons/image-frame-white.svg
+new file mode 100644
+index 0000000..2b4e8b1
+--- /dev/null
++++ b/modules/ve-mw/ui/styles/images/icons/image-frame-white.svg
+@@ -0,0 +1,8 @@
++<?xml version="1.0" encoding="utf-8"?>
++<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
++    <g id="image-frame" style="opacity:0.75;fill:white;">
++        <path id="frame" d="M4 5v13h16v-13zm15 12h-14v-11h14z"/>
++        <path id="mountains" d="M9.5 10l2.328 2.312-1.312 1.094.875 1.032 4.109-3.438 2.5 2v3h-12v-2.5z"/>
++        <path id="sky" d="M9.516 7.844l3.046 3.172 2.938-2.016 2.5 2v-4h-12v5z"/>
++    </g>
++</svg>
+diff --git a/modules/ve-mw/ui/styles/images/icons/image-frame.svg b/modules/ve-mw/ui/styles/images/icons/image-frame.svg
+index bec0e3e..9301d91 100644
+--- a/modules/ve-mw/ui/styles/images/icons/image-frame.svg
++++ b/modules/ve-mw/ui/styles/images/icons/image-frame.svg
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+-    <g id="image-frame">
++    <g id="image-frame" style="opacity:0.75;">
+         <path id="frame" d="M4 5v13h16v-13zm15 12h-14v-11h14z"/>
+         <path id="mountains" d="M9.5 10l2.328 2.312-1.312 1.094.875 1.032 4.109-3.438 2.5 2v3h-12v-2.5z"/>
+         <path id="sky" d="M9.516 7.844l3.046 3.172 2.938-2.016 2.5 2v-4h-12v5z"/>
+diff --git a/modules/ve-mw/ui/styles/images/icons/image-frameless-white.svg b/modules/ve-mw/ui/styles/images/icons/image-frameless-white.svg
+new file mode 100644
+index 0000000..0781270
+--- /dev/null
++++ b/modules/ve-mw/ui/styles/images/icons/image-frameless-white.svg
+@@ -0,0 +1,7 @@
++<?xml version="1.0" encoding="utf-8"?>
++<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
++    <g id="image-frameless" style="opacity:0.75;fill:white;">
++        <path id="mountains" d="M11.828 12.312l-1.312 1.094.875 1.032 4.109-3.438 2.5 2v3h-12v-2.5l3.5-3.5z"/>
++        <path id="sky" d="M12.562 11.016l2.938-2.016 2.5 2v-4h-12v5l3.516-4.156z"/>
++    </g>
++</svg>
+diff --git a/modules/ve-mw/ui/styles/images/icons/image-frameless.svg b/modules/ve-mw/ui/styles/images/icons/image-frameless.svg
+index 0feaa9d..6d77c37 100644
+--- a/modules/ve-mw/ui/styles/images/icons/image-frameless.svg
++++ b/modules/ve-mw/ui/styles/images/icons/image-frameless.svg
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+-    <g id="image-frameless">
++    <g id="image-frameless" style="opacity:0.75;">
+         <path id="mountains" d="M11.828 12.312l-1.312 1.094.875 1.032 4.109-3.438 2.5 2v3h-12v-2.5l3.5-3.5z"/>
+         <path id="sky" d="M12.562 11.016l2.938-2.016 2.5 2v-4h-12v5l3.516-4.156z"/>
+     </g>
+diff --git a/modules/ve-mw/ui/styles/images/icons/image-none-white.svg b/modules/ve-mw/ui/styles/images/icons/image-none-white.svg
+new file mode 100644
+index 0000000..3972084
+--- /dev/null
++++ b/modules/ve-mw/ui/styles/images/icons/image-none-white.svg
+@@ -0,0 +1,7 @@
++<?xml version="1.0" encoding="utf-8"?>
++<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
++    <g id="image-border" style="opacity:0.75;fill:white;">
++        <path id="mountains" d="M9.531 8.844l-3.531 4.156v1.5l3.5-3.5 2.313 2.313-1.281 1.094.875 1.031 4.094-3.438 2.5 2v-2l-2.5-2-2.938 2.031-3.031-3.188z"/>
++        <path id="frame" d="M5 7v11h14v-11zm13 10h-12v-9h12z"/>
++    </g>
++</svg>
+diff --git a/modules/ve-mw/ui/styles/images/icons/image-none.svg b/modules/ve-mw/ui/styles/images/icons/image-none.svg
+index 3c6d979..4237498 100644
+--- a/modules/ve-mw/ui/styles/images/icons/image-none.svg
++++ b/modules/ve-mw/ui/styles/images/icons/image-none.svg
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+-    <g id="image-border">
++    <g id="image-border" style="opacity:0.75;">
+         <path id="mountains" d="M9.531 8.844l-3.531 4.156v1.5l3.5-3.5 2.313 2.313-1.281 1.094.875 1.031 4.094-3.438 2.5 2v-2l-2.5-2-2.938 2.031-3.031-3.188z"/>
+         <path id="frame" d="M5 7v11h14v-11zm13 10h-12v-9h12z"/>
+     </g>
+diff --git a/modules/ve-mw/ui/styles/images/icons/image-thumbnail-white.svg b/modules/ve-mw/ui/styles/images/icons/image-thumbnail-white.svg
+new file mode 100644
+index 0000000..37b38d7
+--- /dev/null
++++ b/modules/ve-mw/ui/styles/images/icons/image-thumbnail-white.svg
+@@ -0,0 +1,10 @@
++<?xml version="1.0" encoding="utf-8"?>
++<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
++    <g id="image-thumbnail" style="opacity:0.75;fill:white;">
++        <path id="frame" d="M4 4v15h16v-15zm15 14h-14v-13h14z"/>
++        <path id="mountains" d="M6 15v-2.5l3.5-3.5 2.328 2.312-1.312 1.094.875 1.032 4.109-3.438 2.5 2v3z"/>
++        <path id="sky" d="M9.516 6.844l3.046 3.172 2.938-2.016 2.5 2v-4h-12v5z"/>
++        <path id="text" d="M6 16h10v1h-10z"/>
++        <path id="zoom" d="M17 16h1v1h-1z"/>
++    </g>
++</svg>
+diff --git a/modules/ve-mw/ui/styles/images/icons/image-thumbnail.svg b/modules/ve-mw/ui/styles/images/icons/image-thumbnail.svg
+index 142768c..276686b 100644
+--- a/modules/ve-mw/ui/styles/images/icons/image-thumbnail.svg
++++ b/modules/ve-mw/ui/styles/images/icons/image-thumbnail.svg
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+-    <g id="image-thumbnail">
++    <g id="image-thumbnail" style="opacity:0.75;">
+         <path id="frame" d="M4 4v15h16v-15zm15 14h-14v-13h14z"/>
+         <path id="mountains" d="M6 15v-2.5l3.5-3.5 2.328 2.312-1.312 1.094.875 1.032 4.109-3.438 2.5 2v3z"/>
+         <path id="sky" d="M9.516 6.844l3.046 3.172 2.938-2.016 2.5 2v-4h-12v5z"/>
+diff --git a/modules/ve-mw/ui/styles/images/icons/infobox-white.svg b/modules/ve-mw/ui/styles/images/icons/infobox-white.svg
+new file mode 100644
+index 0000000..157850e
+--- /dev/null
++++ b/modules/ve-mw/ui/styles/images/icons/infobox-white.svg
+@@ -0,0 +1,11 @@
++<svg xmlns="http://www.w3.org/2000/svg" height="24" width="24" viewBox="0 0 39 48">
++	<g style="opacity:0.75;fill:white;">
++		<path d="M0,3 L0,3 L3,0 L3,48 L0,45 L39,45 L36,48 L36,0 L39,3 L0,3 Z M0,0 L39,0 L39,48 L0,48 L0,0 L0,0 Z"></path>
++		<path d="M34.0975188,22 L37,22 L38,22 L38,24 L37,24 L3,24 L2,24 L2,22 L3,22 L5.74176569,22 L12.9356869,12.3322798 L18.2261449,17.6645595 L26.1618318,7 L34.0975189,17.6645594 L34.0975188,22 Z"></path>
++		<path d="M7,30 L32,30 L33,30 L33,28 L32,28 L7,28 L6,28 L6,30 L7,30 L7,30 Z"></path>
++		<path d="M7,35 L32,35 L33,35 L33,33 L32,33 L7,33 L6,33 L6,35 L7,35 L7,35 Z"></path>
++		<ellipse cx="8.95516219" cy="7.97061802" rx="2.94731905" ry="2.97061802"></ellipse>
++		<path d="M7,40 L17,40 L18,40 L18,38 L17,38 L7,38 L6,38 L6,40 L7,40 L7,40 Z"></path>
++		<path d="M23,40 L32.0498753,40 L33.0498753,40 L33.0498753,38 L32.0498753,38 L23,38 L22,38 L22,40 L23,40 L23,40 Z"></path>
++	</g>
++</svg>
+diff --git a/modules/ve-mw/ui/styles/images/icons/infobox.svg b/modules/ve-mw/ui/styles/images/icons/infobox.svg
+new file mode 100644
+index 0000000..7f58ffe
+--- /dev/null
++++ b/modules/ve-mw/ui/styles/images/icons/infobox.svg
+@@ -0,0 +1,11 @@
++<svg xmlns="http://www.w3.org/2000/svg" height="24" width="24" viewBox="0 0 39 48">
++	<g style="opacity:0.75;">
++		<path d="M0,3 L0,3 L3,0 L3,48 L0,45 L39,45 L36,48 L36,0 L39,3 L0,3 Z M0,0 L39,0 L39,48 L0,48 L0,0 L0,0 Z"></path>
++		<path d="M34.0975188,22 L37,22 L38,22 L38,24 L37,24 L3,24 L2,24 L2,22 L3,22 L5.74176569,22 L12.9356869,12.3322798 L18.2261449,17.6645595 L26.1618318,7 L34.0975189,17.6645594 L34.0975188,22 Z"></path>
++		<path d="M7,30 L32,30 L33,30 L33,28 L32,28 L7,28 L6,28 L6,30 L7,30 L7,30 Z"></path>
++		<path d="M7,35 L32,35 L33,35 L33,33 L32,33 L7,33 L6,33 L6,35 L7,35 L7,35 Z"></path>
++		<ellipse cx="8.95516219" cy="7.97061802" rx="2.94731905" ry="2.97061802"></ellipse>
++		<path d="M7,40 L17,40 L18,40 L18,38 L17,38 L7,38 L6,38 L6,40 L7,40 L7,40 Z"></path>
++		<path d="M23,40 L32.0498753,40 L33.0498753,40 L33.0498753,38 L32.0498753,38 L23,38 L22,38 L22,40 L23,40 L23,40 Z"></path>
++	</g>
++</svg>
+diff --git a/modules/ve-mw/ui/styles/images/icons/parameter-ltr-white.svg b/modules/ve-mw/ui/styles/images/icons/parameter-ltr-white.svg
+new file mode 100644
+index 0000000..a21321c
+--- /dev/null
++++ b/modules/ve-mw/ui/styles/images/icons/parameter-ltr-white.svg
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="utf-8"?>
++<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
++    <g id="parameter" style="opacity:0.75;fill:white;">
++        <path id="offset-box" d="M16 6h-8c-2 0-3 1-3 3v6c0 2 1 3 3 3h8c2 0 3-1 3-3v-6c0-2-1-3-3-3zm1 9c0 .469-.521 1-1 1h-6v-8h6c.479 0 1 .531 1 1v6z"/>
++    </g>
++</svg>
+diff --git a/modules/ve-mw/ui/styles/images/icons/parameter-ltr.svg b/modules/ve-mw/ui/styles/images/icons/parameter-ltr.svg
+index 813c540..79c4112 100644
+--- a/modules/ve-mw/ui/styles/images/icons/parameter-ltr.svg
++++ b/modules/ve-mw/ui/styles/images/icons/parameter-ltr.svg
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+-    <g id="parameter">
++    <g id="parameter" style="opacity:0.75;">
+         <path id="offset-box" d="M16 6h-8c-2 0-3 1-3 3v6c0 2 1 3 3 3h8c2 0 3-1 3-3v-6c0-2-1-3-3-3zm1 9c0 .469-.521 1-1 1h-6v-8h6c.479 0 1 .531 1 1v6z"/>
+     </g>
+ </svg>
+diff --git a/modules/ve-mw/ui/styles/images/icons/parameter-rtl-white.svg b/modules/ve-mw/ui/styles/images/icons/parameter-rtl-white.svg
+new file mode 100644
+index 0000000..b9b738e
+--- /dev/null
++++ b/modules/ve-mw/ui/styles/images/icons/parameter-rtl-white.svg
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="utf-8"?>
++<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
++    <g id="parameter" style="opacity:0.75;fill:white;">
++        <path id="offset-box" d="M8 6h8c2 0 3 1 3 3v6c0 2-1 3-3 3h-8c-2 0-3-1-3-3v-6c0-2 1-3 3-3zm-1 9c0 .469.521 1 1 1h6v-8h-6c-.479 0-1 .531-1 1v6z"/>
++    </g>
++</svg>
+diff --git a/modules/ve-mw/ui/styles/images/icons/parameter-rtl.svg b/modules/ve-mw/ui/styles/images/icons/parameter-rtl.svg
+index d66fc97..ad78a56 100644
+--- a/modules/ve-mw/ui/styles/images/icons/parameter-rtl.svg
++++ b/modules/ve-mw/ui/styles/images/icons/parameter-rtl.svg
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+-    <g id="parameter">
++    <g id="parameter" style="opacity:0.75;">
+         <path id="offset-box" d="M8 6h8c2 0 3 1 3 3v6c0 2-1 3-3 3h-8c-2 0-3-1-3-3v-6c0-2 1-3 3-3zm-1 9c0 .469.521 1 1 1h6v-8h-6c-.479 0-1 .531-1 1v6z"/>
+     </g>
+ </svg>
+diff --git a/modules/ve-mw/ui/styles/images/icons/parameter-set-ltr-white.svg b/modules/ve-mw/ui/styles/images/icons/parameter-set-ltr-white.svg
+new file mode 100644
+index 0000000..963346e
+--- /dev/null
++++ b/modules/ve-mw/ui/styles/images/icons/parameter-set-ltr-white.svg
+@@ -0,0 +1,8 @@
++<?xml version="1.0" encoding="utf-8"?>
++<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
++    <g id="parameter-set" style="opacity:0.75;fill:white;">
++        <path id="offset-front" d="M16.504 11.019h-3.987c-.998 0-1.496.498-1.496 1.494v2.991c0 .998.498 1.496 1.496 1.496h3.987c.998 0 1.496-.498 1.496-1.496v-2.991c0-.996-.498-1.494-1.496-1.494zm.498 4.485c0 .234-.259.498-.498.498h-2.991v-4.002h2.991c.239 0 .498.279.498.513v2.991z"/>
++        <path id="box-middle" d="M9.516 11.513c0-.996.504-1.513 1.502-1.513h3.912c-.153-.655-.616-1-1.426-1h-3.987c-.998 0-1.496.498-1.496 1.494v2.991c0 .998.498 1.496 1.496 1.496l-.001-3.468z"/>
++        <path id="box-back" d="M6.516 9.513c0-.996.504-1.513 1.502-1.513h3.912c-.153-.655-.616-1-1.426-1h-3.987c-.998 0-1.496.498-1.496 1.494v2.991c0 .998.498 1.496 1.496 1.496l-.001-3.468z"/>
++    </g>
++</svg>
+diff --git a/modules/ve-mw/ui/styles/images/icons/parameter-set-ltr.svg b/modules/ve-mw/ui/styles/images/icons/parameter-set-ltr.svg
+index 5e4a76b..8d4e004 100644
+--- a/modules/ve-mw/ui/styles/images/icons/parameter-set-ltr.svg
++++ b/modules/ve-mw/ui/styles/images/icons/parameter-set-ltr.svg
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+-    <g id="parameter-set">
++    <g id="parameter-set" style="opacity:0.75;">
+         <path id="offset-front" d="M16.504 11.019h-3.987c-.998 0-1.496.498-1.496 1.494v2.991c0 .998.498 1.496 1.496 1.496h3.987c.998 0 1.496-.498 1.496-1.496v-2.991c0-.996-.498-1.494-1.496-1.494zm.498 4.485c0 .234-.259.498-.498.498h-2.991v-4.002h2.991c.239 0 .498.279.498.513v2.991z"/>
+         <path id="box-middle" d="M9.516 11.513c0-.996.504-1.513 1.502-1.513h3.912c-.153-.655-.616-1-1.426-1h-3.987c-.998 0-1.496.498-1.496 1.494v2.991c0 .998.498 1.496 1.496 1.496l-.001-3.468z"/>
+         <path id="box-back" d="M6.516 9.513c0-.996.504-1.513 1.502-1.513h3.912c-.153-.655-.616-1-1.426-1h-3.987c-.998 0-1.496.498-1.496 1.494v2.991c0 .998.498 1.496 1.496 1.496l-.001-3.468z"/>
+diff --git a/modules/ve-mw/ui/styles/images/icons/parameter-set-rtl-white.svg b/modules/ve-mw/ui/styles/images/icons/parameter-set-rtl-white.svg
+new file mode 100644
+index 0000000..c9c2a32
+--- /dev/null
++++ b/modules/ve-mw/ui/styles/images/icons/parameter-set-rtl-white.svg
+@@ -0,0 +1,8 @@
++<?xml version="1.0" encoding="utf-8"?>
++<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
++    <g id="parameter-set" style="opacity:0.75;fill:white;">
++        <path id="offset-front" d="M6.517 11.019h3.987c.998 0 1.496.498 1.496 1.494v2.991c0 .998-.498 1.496-1.496 1.496h-3.987c-.998 0-1.496-.498-1.496-1.496v-2.991c0-.996.498-1.494 1.496-1.494zm-.498 4.485c0 .234.259.498.498.498h2.991v-4.002h-2.991c-.239 0-.498.279-.498.513v2.991z"/>
++        <path id="box-middle" d="M13.505 11.513c0-.996-.504-1.513-1.502-1.513h-3.912c.153-.655.616-1 1.426-1h3.987c.998 0 1.496.498 1.496 1.494v2.991c0 .998-.498 1.496-1.496 1.496l.001-3.468z"/>
++        <path id="box-back" d="M16.505 9.513c0-.996-.504-1.513-1.502-1.513h-3.912c.153-.655.616-1 1.426-1h3.987c.998 0 1.496.498 1.496 1.494v2.991c0 .998-.498 1.496-1.496 1.496l.001-3.468z"/>
++    </g>
++</svg>
+diff --git a/modules/ve-mw/ui/styles/images/icons/parameter-set-rtl.svg b/modules/ve-mw/ui/styles/images/icons/parameter-set-rtl.svg
+index 4221d47..5806d3a 100644
+--- a/modules/ve-mw/ui/styles/images/icons/parameter-set-rtl.svg
++++ b/modules/ve-mw/ui/styles/images/icons/parameter-set-rtl.svg
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+-    <g id="parameter-set">
++    <g id="parameter-set" style="opacity:0.75;">
+         <path id="offset-front" d="M6.517 11.019h3.987c.998 0 1.496.498 1.496 1.494v2.991c0 .998-.498 1.496-1.496 1.496h-3.987c-.998 0-1.496-.498-1.496-1.496v-2.991c0-.996.498-1.494 1.496-1.494zm-.498 4.485c0 .234.259.498.498.498h2.991v-4.002h-2.991c-.239 0-.498.279-.498.513v2.991z"/>
+         <path id="box-middle" d="M13.505 11.513c0-.996-.504-1.513-1.502-1.513h-3.912c.153-.655.616-1 1.426-1h3.987c.998 0 1.496.498 1.496 1.494v2.991c0 .998-.498 1.496-1.496 1.496l.001-3.468z"/>
+         <path id="box-back" d="M16.505 9.513c0-.996-.504-1.513-1.502-1.513h-3.912c.153-.655.616-1 1.426-1h3.987c.998 0 1.496.498 1.496 1.494v2.991c0 .998-.498 1.496-1.496 1.496l.001-3.468z"/>
+diff --git a/modules/ve-mw/ui/styles/images/icons/ref-cite-book-white.svg b/modules/ve-mw/ui/styles/images/icons/ref-cite-book-white.svg
+new file mode 100644
+index 0000000..2a96604
+--- /dev/null
++++ b/modules/ve-mw/ui/styles/images/icons/ref-cite-book-white.svg
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="utf-8"?>
++<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
++    <g id="cite-book" style="opacity:0.75;fill:white;">
++        <path id="book" d="M14.25 4c-1.033 0-1.875 1.109-2.261 1.822-.411-.713-1.241-1.822-2.26-1.822h-7.729v15h7c.938 0 1.844 1.422 2 2h2c.203-.609.938-2 2-2h7v-15h-7.75zm-3.25 14c-.25-.469-1.203-1-2-1l-4.016.016.008-11.024 4.43-.008c.94 0 1.578 1.178 1.578 2.016v10zm8.016-.984l-4.016-.016c-.734 0-1.719.445-2 1v-10c0-.839.63-2.031 1.594-2.031l4.422.016v11.031z"/>
++    </g>
++</svg>
+diff --git a/modules/ve-mw/ui/styles/images/icons/ref-cite-book.svg b/modules/ve-mw/ui/styles/images/icons/ref-cite-book.svg
+index 9838aa6..078bc3f 100644
+--- a/modules/ve-mw/ui/styles/images/icons/ref-cite-book.svg
++++ b/modules/ve-mw/ui/styles/images/icons/ref-cite-book.svg
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+-    <g id="cite-book">
++    <g id="cite-book" style="opacity:0.75;">
+         <path id="book" d="M14.25 4c-1.033 0-1.875 1.109-2.261 1.822-.411-.713-1.241-1.822-2.26-1.822h-7.729v15h7c.938 0 1.844 1.422 2 2h2c.203-.609.938-2 2-2h7v-15h-7.75zm-3.25 14c-.25-.469-1.203-1-2-1l-4.016.016.008-11.024 4.43-.008c.94 0 1.578 1.178 1.578 2.016v10zm8.016-.984l-4.016-.016c-.734 0-1.719.445-2 1v-10c0-.839.63-2.031 1.594-2.031l4.422.016v11.031z"/>
+     </g>
+ </svg>
+diff --git a/modules/ve-mw/ui/styles/images/icons/ref-cite-journal-ltr-white.svg b/modules/ve-mw/ui/styles/images/icons/ref-cite-journal-ltr-white.svg
+new file mode 100644
+index 0000000..c6f7669
+--- /dev/null
++++ b/modules/ve-mw/ui/styles/images/icons/ref-cite-journal-ltr-white.svg
+@@ -0,0 +1,8 @@
++<?xml version="1.0" encoding="utf-8"?>
++<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
++    <g id="cite-journal" style="opacity:0.75;fill:white;">
++        <path id="journal" d="M5 4v17h12c1 0 2-1 2-2v-15h-14zm12 14c0 1-1 1-1 1h-8v-13h9v12z"/>
++        <path id="text1" d="M10 9h5v2h-5z"/>
++        <path id="text2" d="M10 12h5v2h-5z"/>
++    </g>
++</svg>
+diff --git a/modules/ve-mw/ui/styles/images/icons/ref-cite-journal-ltr.svg b/modules/ve-mw/ui/styles/images/icons/ref-cite-journal-ltr.svg
+index b3ed712..fce74be 100644
+--- a/modules/ve-mw/ui/styles/images/icons/ref-cite-journal-ltr.svg
++++ b/modules/ve-mw/ui/styles/images/icons/ref-cite-journal-ltr.svg
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+-    <g id="cite-journal">
++    <g id="cite-journal" style="opacity:0.75;">
+         <path id="journal" d="M5 4v17h12c1 0 2-1 2-2v-15h-14zm12 14c0 1-1 1-1 1h-8v-13h9v12z"/>
+         <path id="text1" d="M10 9h5v2h-5z"/>
+         <path id="text2" d="M10 12h5v2h-5z"/>
+diff --git a/modules/ve-mw/ui/styles/images/icons/ref-cite-journal-rtl-white.svg b/modules/ve-mw/ui/styles/images/icons/ref-cite-journal-rtl-white.svg
+new file mode 100644
+index 0000000..e26ddee
+--- /dev/null
++++ b/modules/ve-mw/ui/styles/images/icons/ref-cite-journal-rtl-white.svg
+@@ -0,0 +1,8 @@
++<?xml version="1.0" encoding="utf-8"?>
++<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
++    <g id="cite-journal" style="opacity:0.75;fill:white;">
++        <path d="M19 4v17h-12c-1 0-2-1-2-2v-15h14zm-12 14c0 1 1 1 1 1h8v-13h-9v12z" id="journal"/>
++        <path id="text1" d="M14 9h-5v2h5z"/>
++        <path id="text2" d="M14 12h-5v2h5z"/>
++    </g>
++</svg>
+diff --git a/modules/ve-mw/ui/styles/images/icons/ref-cite-journal-rtl.svg b/modules/ve-mw/ui/styles/images/icons/ref-cite-journal-rtl.svg
+index 3ffbb3f..24e6d03 100644
+--- a/modules/ve-mw/ui/styles/images/icons/ref-cite-journal-rtl.svg
++++ b/modules/ve-mw/ui/styles/images/icons/ref-cite-journal-rtl.svg
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+-    <g id="cite-journal">
++    <g id="cite-journal" style="opacity:0.75;">
+         <path d="M19 4v17h-12c-1 0-2-1-2-2v-15h14zm-12 14c0 1 1 1 1 1h8v-13h-9v12z" id="journal"/>
+         <path id="text1" d="M14 9h-5v2h5z"/>
+         <path id="text2" d="M14 12h-5v2h5z"/>
+diff --git a/modules/ve-mw/ui/styles/images/icons/ref-cite-news-ltr-white.svg b/modules/ve-mw/ui/styles/images/icons/ref-cite-news-ltr-white.svg
+new file mode 100644
+index 0000000..ff7dcd6
+--- /dev/null
++++ b/modules/ve-mw/ui/styles/images/icons/ref-cite-news-ltr-white.svg
+@@ -0,0 +1,11 @@
++<?xml version="1.0" encoding="utf-8"?>
++<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
++    <g id="cite-news" style="opacity:0.75;fill:white;">
++        <path id="paper" d="M21 21h-17c-1 0-2-1-2-2v-15h19v17zm-17-15v12.278c0 .397.325.722.722.722h14.28l-.002-13h-15z"/>
++        <path id="banner" d="M6 8h11v3h-11z"/>
++        <path id="text1" d="M12 12h5v2h-5z"/>
++        <path id="text2" d="M6 12h5v2h-5z"/>
++        <path id="text3" d="M12 15h5v2h-5z"/>
++        <path id="text4" d="M6 15h5v2h-5z"/>
++    </g>
++</svg>
+diff --git a/modules/ve-mw/ui/styles/images/icons/ref-cite-news-ltr.svg b/modules/ve-mw/ui/styles/images/icons/ref-cite-news-ltr.svg
+index 24748b1..6a6e50b 100644
+--- a/modules/ve-mw/ui/styles/images/icons/ref-cite-news-ltr.svg
++++ b/modules/ve-mw/ui/styles/images/icons/ref-cite-news-ltr.svg
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+-    <g id="cite-news">
++    <g id="cite-news" style="opacity:0.75;">
+         <path id="paper" d="M21 21h-17c-1 0-2-1-2-2v-15h19v17zm-17-15v12.278c0 .397.325.722.722.722h14.28l-.002-13h-15z"/>
+         <path id="banner" d="M6 8h11v3h-11z"/>
+         <path id="text1" d="M12 12h5v2h-5z"/>
+diff --git a/modules/ve-mw/ui/styles/images/icons/ref-cite-news-rtl-white.svg b/modules/ve-mw/ui/styles/images/icons/ref-cite-news-rtl-white.svg
+new file mode 100644
+index 0000000..26a3202
+--- /dev/null
++++ b/modules/ve-mw/ui/styles/images/icons/ref-cite-news-rtl-white.svg
+@@ -0,0 +1,11 @@
++<?xml version="1.0" encoding="utf-8"?>
++<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
++    <g id="cite-news" style="opacity:0.75;fill:white;">
++        <path d="M2 21h17c1 0 2-1 2-2v-15h-19v17zm17-15v12.278c0 .397-.325.722-.722.722h-14.28l.002-13h15z" id="paper"/>
++        <path id="banner" d="M17 8h-11v3h11z"/>
++        <path id="text1" d="M11 12h-5v2h5z"/>
++        <path id="text2" d="M17 12h-5v2h5z"/>
++        <path id="text3" d="M11 15h-5v2h5z"/>
++        <path id="text4" d="M17 15h-5v2h5z"/>
++    </g>
++</svg>
+diff --git a/modules/ve-mw/ui/styles/images/icons/ref-cite-news-rtl.svg b/modules/ve-mw/ui/styles/images/icons/ref-cite-news-rtl.svg
+index 8224a18..0c84819 100644
+--- a/modules/ve-mw/ui/styles/images/icons/ref-cite-news-rtl.svg
++++ b/modules/ve-mw/ui/styles/images/icons/ref-cite-news-rtl.svg
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+-    <g id="cite-news">
++    <g id="cite-news" style="opacity:0.75;">
+         <path d="M2 21h17c1 0 2-1 2-2v-15h-19v17zm17-15v12.278c0 .397-.325.722-.722.722h-14.28l.002-13h15z" id="paper"/>
+         <path id="banner" d="M17 8h-11v3h11z"/>
+         <path id="text1" d="M11 12h-5v2h5z"/>
+diff --git a/modules/ve-mw/ui/styles/images/icons/ref-cite-web-white.svg b/modules/ve-mw/ui/styles/images/icons/ref-cite-web-white.svg
+new file mode 100644
+index 0000000..3f8b997
+--- /dev/null
++++ b/modules/ve-mw/ui/styles/images/icons/ref-cite-web-white.svg
+@@ -0,0 +1,7 @@
++<?xml version="1.0" encoding="utf-8"?>
++<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
++    <g id="cite-web" style="opacity:0.75;fill:white;">
++        <path id="laptop" d="M22.78 19.46l-1.78-2.46v-12h-18v12l-1.757 2.463c-.252.286-.314.695-.157 1.043.157.347.533.494.914.494h20c.382 0 .783-.148.94-.496.156-.348.093-.758-.16-1.044zm-18.78-.46l1-2v-10h14v10l1 2h-16z"/>
++        <path id="window" d="M7 17h10v-8h-10v8zm2-2v-3h6v3h-6z"/>
++    </g>
++</svg>
+diff --git a/modules/ve-mw/ui/styles/images/icons/ref-cite-web.svg b/modules/ve-mw/ui/styles/images/icons/ref-cite-web.svg
+index b74dfc3..063eb2b 100644
+--- a/modules/ve-mw/ui/styles/images/icons/ref-cite-web.svg
++++ b/modules/ve-mw/ui/styles/images/icons/ref-cite-web.svg
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+-    <g id="cite-web">
++    <g id="cite-web" style="opacity:0.75;">
+         <path id="laptop" d="M22.78 19.46l-1.78-2.46v-12h-18v12l-1.757 2.463c-.252.286-.314.695-.157 1.043.157.347.533.494.914.494h20c.382 0 .783-.148.94-.496.156-.348.093-.758-.16-1.044zm-18.78-.46l1-2v-10h14v10l1 2h-16z"/>
+         <path id="window" d="M7 17h10v-8h-10v8zm2-2v-3h6v3h-6z"/>
+     </g>
+diff --git a/modules/ve-mw/ui/styles/images/icons/reference-existing-ltr-white.svg b/modules/ve-mw/ui/styles/images/icons/reference-existing-ltr-white.svg
+new file mode 100644
+index 0000000..368cfae
+--- /dev/null
++++ b/modules/ve-mw/ui/styles/images/icons/reference-existing-ltr-white.svg
+@@ -0,0 +1,7 @@
++<?xml version="1.0" encoding="utf-8"?>
++<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
++    <g id="reference-existing" style="opacity:0.75;fill:white;">
++        <path id="fore-reference" d="M7 5v17h12c1 0 2-1 2-2v-15h-14zm12 14c0 1-1 1-1 1h-8v-13h2v6l2-2 2 2v-6h3v12z"/>
++        <path id="back-reference" d="M5 18h-.3c-1.5 0-2.7-1.2-2.7-2.7v-13.5h3v16.2zM2 1h16v2h-16z"/>
++    </g>
++</svg>
+diff --git a/modules/ve-mw/ui/styles/images/icons/reference-existing-ltr.svg b/modules/ve-mw/ui/styles/images/icons/reference-existing-ltr.svg
+index 5986f03..0a15098 100644
+--- a/modules/ve-mw/ui/styles/images/icons/reference-existing-ltr.svg
++++ b/modules/ve-mw/ui/styles/images/icons/reference-existing-ltr.svg
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+-    <g id="reference-existing">
++    <g id="reference-existing" style="opacity:0.75;">
+         <path id="fore-reference" d="M7 5v17h12c1 0 2-1 2-2v-15h-14zm12 14c0 1-1 1-1 1h-8v-13h2v6l2-2 2 2v-6h3v12z"/>
+         <path id="back-reference" d="M5 18h-.3c-1.5 0-2.7-1.2-2.7-2.7v-13.5h3v16.2zM2 1h16v2h-16z"/>
+     </g>
+diff --git a/modules/ve-mw/ui/styles/images/icons/reference-existing-rtl-white.svg b/modules/ve-mw/ui/styles/images/icons/reference-existing-rtl-white.svg
+new file mode 100644
+index 0000000..c8767cf
+--- /dev/null
++++ b/modules/ve-mw/ui/styles/images/icons/reference-existing-rtl-white.svg
+@@ -0,0 +1,7 @@
++<?xml version="1.0" encoding="utf-8"?>
++<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
++    <g id="reference-existing" style="opacity:0.75;fill:white;">
++        <path id="fore-reference" d="M17 5v17h-12c-1 0-2-1-2-2v-15h14zm-12 14c0 1 1 1 1 1h8v-13h-2v6l-2-2-2 2v-6h-3v12z"/>
++        <path id="back-reference" d="M19 18h.3c1.5 0 2.7-1.2 2.7-2.7v-13.5h-3v16.2zm3-17h-16v2h16z"/>
++    </g>
++</svg>
+diff --git a/modules/ve-mw/ui/styles/images/icons/reference-existing-rtl.svg b/modules/ve-mw/ui/styles/images/icons/reference-existing-rtl.svg
+index 869a220..9dd7a50 100644
+--- a/modules/ve-mw/ui/styles/images/icons/reference-existing-rtl.svg
++++ b/modules/ve-mw/ui/styles/images/icons/reference-existing-rtl.svg
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+-    <g id="reference-existing">
++    <g id="reference-existing" style="opacity:0.75;">
+         <path id="fore-reference" d="M17 5v17h-12c-1 0-2-1-2-2v-15h14zm-12 14c0 1 1 1 1 1h8v-13h-2v6l-2-2-2 2v-6h-3v12z"/>
+         <path id="back-reference" d="M19 18h.3c1.5 0 2.7-1.2 2.7-2.7v-13.5h-3v16.2zm3-17h-16v2h16z"/>
+     </g>
+diff --git a/modules/ve-mw/ui/styles/images/icons/reference-ltr-white.svg b/modules/ve-mw/ui/styles/images/icons/reference-ltr-white.svg
+new file mode 100644
+index 0000000..60bb9e7
+--- /dev/null
++++ b/modules/ve-mw/ui/styles/images/icons/reference-ltr-white.svg
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="utf-8"?>
++<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
++    <g id="reference" style="opacity:0.75;fill:white;">
++        <path id="bookmark" d="M5 4v17h12c1 0 2-1 2-2v-15h-14zm12 14c0 1-1 1-1 1h-8v-13h2v6l2-2 2 2v-6h3v12z"/>
++    </g>
++</svg>
+diff --git a/modules/ve-mw/ui/styles/images/icons/reference-ltr.svg b/modules/ve-mw/ui/styles/images/icons/reference-ltr.svg
+index 11e1c75..a65392f 100644
+--- a/modules/ve-mw/ui/styles/images/icons/reference-ltr.svg
++++ b/modules/ve-mw/ui/styles/images/icons/reference-ltr.svg
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+-    <g id="reference">
++    <g id="reference" style="opacity:0.75;">
+         <path id="bookmark" d="M5 4v17h12c1 0 2-1 2-2v-15h-14zm12 14c0 1-1 1-1 1h-8v-13h2v6l2-2 2 2v-6h3v12z"/>
+     </g>
+ </svg>
+diff --git a/modules/ve-mw/ui/styles/images/icons/reference-rtl-white.svg b/modules/ve-mw/ui/styles/images/icons/reference-rtl-white.svg
+new file mode 100644
+index 0000000..85246a4
+--- /dev/null
++++ b/modules/ve-mw/ui/styles/images/icons/reference-rtl-white.svg
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="utf-8"?>
++<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
++    <g id="reference" style="opacity:0.75;fill:white;">
++        <path id="bookmark" d="M19 4v17h-12c-1 0-2-1-2-2v-15h14zm-12 14c0 1 1 1 1 1h8v-13h-2v6l-2-2-2 2v-6h-3v12z"/>
++    </g>
++</svg>
+diff --git a/modules/ve-mw/ui/styles/images/icons/reference-rtl.svg b/modules/ve-mw/ui/styles/images/icons/reference-rtl.svg
+index b31bbac..2889ca8 100644
+--- a/modules/ve-mw/ui/styles/images/icons/reference-rtl.svg
++++ b/modules/ve-mw/ui/styles/images/icons/reference-rtl.svg
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+-    <g id="reference">
++    <g id="reference" style="opacity:0.75;">
+         <path id="bookmark" d="M19 4v17h-12c-1 0-2-1-2-2v-15h14zm-12 14c0 1 1 1 1 1h8v-13h-2v6l-2-2-2 2v-6h-3v12z"/>
+     </g>
+ </svg>
+diff --git a/modules/ve-mw/ui/styles/images/icons/references-ltr-white.svg b/modules/ve-mw/ui/styles/images/icons/references-ltr-white.svg
+new file mode 100644
+index 0000000..442098a
+--- /dev/null
++++ b/modules/ve-mw/ui/styles/images/icons/references-ltr-white.svg
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="utf-8"?>
++<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
++    <g id="reference" style="opacity:0.75;fill:white;">
++        <path id="books" d="M3 6v12h4v-12h-4zm3 10h-2v-1h2v1zm0-3h-2v-1h2v1zm2-7v12h4v-12h-4zm3 10h-2v-1h2v1zm0-3h-2v-1h2v1zm.934-5.353l6.066 10.353 3.449-2.021-6.065-10.354-3.45 2.022zm7.643 7.111l-1.726 1.012-.506-.862 1.725-1.012.507.862zm-1.517-2.588l-1.725 1.011-.506-.862 1.726-1.012.505.863z"/>
++    </g>
++</svg>
+diff --git a/modules/ve-mw/ui/styles/images/icons/references-ltr.svg b/modules/ve-mw/ui/styles/images/icons/references-ltr.svg
+index 3e0e9a1..da8a4fa 100644
+--- a/modules/ve-mw/ui/styles/images/icons/references-ltr.svg
++++ b/modules/ve-mw/ui/styles/images/icons/references-ltr.svg
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+-    <g id="reference">
++    <g id="reference" style="opacity:0.75;">
+         <path id="books" d="M3 6v12h4v-12h-4zm3 10h-2v-1h2v1zm0-3h-2v-1h2v1zm2-7v12h4v-12h-4zm3 10h-2v-1h2v1zm0-3h-2v-1h2v1zm.934-5.353l6.066 10.353 3.449-2.021-6.065-10.354-3.45 2.022zm7.643 7.111l-1.726 1.012-.506-.862 1.725-1.012.507.862zm-1.517-2.588l-1.725 1.011-.506-.862 1.726-1.012.505.863z"/>
+     </g>
+ </svg>
+diff --git a/modules/ve-mw/ui/styles/images/icons/references-rtl-white.svg b/modules/ve-mw/ui/styles/images/icons/references-rtl-white.svg
+new file mode 100644
+index 0000000..555a7ba
+--- /dev/null
++++ b/modules/ve-mw/ui/styles/images/icons/references-rtl-white.svg
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="utf-8"?>
++<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
++    <g id="reference" style="opacity:0.75;fill:white;">
++        <path id="books" d="M21.449 6v12h-4v-12h4zm-3 10h2v-1h-2v1zm0-3h2v-1h-2v1zm-2-7v12h-4v-12h4zm-3 10h2v-1h-2v1zm0-3h2v-1h-2v1zm-.934-5.353l-6.066 10.353-3.449-2.021 6.065-10.354 3.45 2.022zm-7.643 7.111l1.726 1.012.506-.862-1.725-1.012-.507.862zm1.517-2.588l1.725 1.011.506-.862-1.726-1.012-.505.863z"/>
++    </g>
++</svg>
+diff --git a/modules/ve-mw/ui/styles/images/icons/references-rtl.svg b/modules/ve-mw/ui/styles/images/icons/references-rtl.svg
+index b631359..8dc8661 100644
+--- a/modules/ve-mw/ui/styles/images/icons/references-rtl.svg
++++ b/modules/ve-mw/ui/styles/images/icons/references-rtl.svg
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+-    <g id="reference">
++    <g id="reference" style="opacity:0.75;">
+         <path id="books" d="M21.449 6v12h-4v-12h4zm-3 10h2v-1h-2v1zm0-3h2v-1h-2v1zm-2-7v12h-4v-12h4zm-3 10h2v-1h-2v1zm0-3h2v-1h-2v1zm-.934-5.353l-6.066 10.353-3.449-2.021 6.065-10.354 3.45 2.022zm-7.643 7.111l1.726 1.012.506-.862-1.725-1.012-.507.862zm1.517-2.588l1.725 1.011.506-.862-1.726-1.012-.505.863z"/>
+     </g>
+ </svg>
+diff --git a/modules/ve-mw/ui/styles/images/icons/source-white.svg b/modules/ve-mw/ui/styles/images/icons/source-white.svg
+new file mode 100644
+index 0000000..b3c4b05
+--- /dev/null
++++ b/modules/ve-mw/ui/styles/images/icons/source-white.svg
+@@ -0,0 +1,7 @@
++<?xml version="1.0" encoding="utf-8"?>
++<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
++    <g id="source" style="opacity:0.75;fill:white;">
++        <path id="opening-bracket" d="M6 18h3v-2h-1v-8h1v-2h-3v12z"/>
++        <path id="closing-bracket" d="M18 18h-3v-2h1v-8h-1v-2h3v12z"/>
++    </g>
++</svg>
+diff --git a/modules/ve-mw/ui/styles/images/icons/source.svg b/modules/ve-mw/ui/styles/images/icons/source.svg
+index a3f8366..cebc266 100644
+--- a/modules/ve-mw/ui/styles/images/icons/source.svg
++++ b/modules/ve-mw/ui/styles/images/icons/source.svg
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+-    <g id="source">
++    <g id="source" style="opacity:0.75;">
+         <path id="opening-bracket" d="M6 18h3v-2h-1v-8h1v-2h-3v12z"/>
+         <path id="closing-bracket" d="M18 18h-3v-2h1v-8h-1v-2h3v12z"/>
+     </g>
+diff --git a/modules/ve-mw/ui/styles/images/icons/template-white.svg b/modules/ve-mw/ui/styles/images/icons/template-white.svg
+new file mode 100644
+index 0000000..775260c
+--- /dev/null
++++ b/modules/ve-mw/ui/styles/images/icons/template-white.svg
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="utf-8"?>
++<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
++    <g id="template" style="opacity:0.75;fill:white;">
++        <path id="puzzle-piece" d="M19.46 10.417c-.351-.404-1.641-.501-1.983-.162-.769.758-1.926 1.308-1.952.162.088-2.081.818-3.743.818-3.743 0-.252-.207-.456-.463-.456 0 0-1.586-.111-3.59-.164l-1.25-.001c-.127.406.274 1.09.782 1.604.339.344.242 1.633-.162 1.984-.393.34-1.197.539-1.662.539-.445 0-1.222-.158-1.612-.479-.438-.356-.332-1.686.02-2.044.47-.476.838-1.185.721-1.606h-.483c-2.074.05-3.514.167-3.514.167-.255 0-.463.204-.463.456 0 0-.558 2.58-.558 5.348 0 2.762.558 5.331.558 5.331 0 .253.208.457.463.457 0 0 2.615.19 5.493.19 2.723 0 5.258-.19 5.258-.19.256 0 .463-.204.463-.457 0 0-.739-1.73-.824-3.869.031-1.004 1.255-.506 1.958.188.356.353 1.688.458 2.045.021.318-.392.477-1.169.477-1.614 0-.465-.199-1.269-.54-1.662z"/>
++    </g>
++</svg>
+diff --git a/modules/ve-mw/ui/styles/images/icons/template.svg b/modules/ve-mw/ui/styles/images/icons/template.svg
+index af872de..3b10c4f 100644
+--- a/modules/ve-mw/ui/styles/images/icons/template.svg
++++ b/modules/ve-mw/ui/styles/images/icons/template.svg
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+-    <g id="template">
++    <g id="template" style="opacity:0.75;">
+         <path id="puzzle-piece" d="M19.46 10.417c-.351-.404-1.641-.501-1.983-.162-.769.758-1.926 1.308-1.952.162.088-2.081.818-3.743.818-3.743 0-.252-.207-.456-.463-.456 0 0-1.586-.111-3.59-.164l-1.25-.001c-.127.406.274 1.09.782 1.604.339.344.242 1.633-.162 1.984-.393.34-1.197.539-1.662.539-.445 0-1.222-.158-1.612-.479-.438-.356-.332-1.686.02-2.044.47-.476.838-1.185.721-1.606h-.483c-2.074.05-3.514.167-3.514.167-.255 0-.463.204-.463.456 0 0-.558 2.58-.558 5.348 0 2.762.558 5.331.558 5.331 0 .253.208.457.463.457 0 0 2.615.19 5.493.19 2.723 0 5.258-.19 5.258-.19.256 0 .463-.204.463-.457 0 0-.739-1.73-.824-3.869.031-1.004 1.255-.506 1.958.188.356.353 1.688.458 2.045.021.318-.392.477-1.169.477-1.614 0-.465-.199-1.269-.54-1.662z"/>
+     </g>
+ </svg>
+diff --git a/modules/ve-mw/ui/styles/ve.ui.Icons.css b/modules/ve-mw/ui/styles/ve.ui.Icons.css
+index 0457e25..5f77db9 100644
+--- a/modules/ve-mw/ui/styles/ve.ui.Icons.css
++++ b/modules/ve-mw/ui/styles/ve.ui.Icons.css
+@@ -156,3 +156,8 @@
+ 	/* @embed */
+ 	background-image: url(images/icons/template.svg);
+ }
++
++.oo-ui-icon-infobox {
++    /* @embed */
++    background-image: url(images/icons/infobox.svg);
++}
+diff --git a/modules/ve-mw/ui/themes/apex/ve.ui.MWLinkTargetInputWidget.css b/modules/ve-mw/ui/themes/apex/ve.ui.MWLinkTargetInputWidget.css
+index bd8b47c..533fd20 100644
+--- a/modules/ve-mw/ui/themes/apex/ve.ui.MWLinkTargetInputWidget.css
++++ b/modules/ve-mw/ui/themes/apex/ve.ui.MWLinkTargetInputWidget.css
+@@ -7,7 +7,7 @@
+
+ .ve-ui-mwLinkTargetInputWidget-menu {
+ 	width: 20em;
+-	margin-top: -7px;
++	/*margin-top: -7px;*/
+ }
+
+ .ve-ui-mwLinkTargetInputWidget-menu .oo-ui-menuSelectWidget-item {
+diff --git a/modules/ve-mw/ui/tools/ve.ui.MWTransclusionDialogTool.js b/modules/ve-mw/ui/tools/ve.ui.MWTransclusionDialogTool.js
+index 576be5f..2559b11 100644
+--- a/modules/ve-mw/ui/tools/ve.ui.MWTransclusionDialogTool.js
++++ b/modules/ve-mw/ui/tools/ve.ui.MWTransclusionDialogTool.js
+@@ -54,6 +54,11 @@ ve.ui.MWTransclusionDialogTool.static.template = null;
+ ve.ui.MWTransclusionDialogTool.static.isCompatibleWith = function ( model ) {
+ 	var compatible;
+
++	//if wikiaInfoboxTransclusionBlock use ve.ui.WikiaInfoboxDialogTool instead
++	if ( model.type === ve.dm.WikiaInfoboxTransclusionBlockNode.static.name ) {
++		return false;
++	}
++
+ 	// Parent method
+ 	compatible = ve.ui.DialogTool.static.isCompatibleWith.call( this, model );
+
+diff --git a/modules/ve-mw/ui/ve.ui.MWCommandRegistry.js b/modules/ve-mw/ui/ve.ui.MWCommandRegistry.js
+index 404ae1f..6554fcb 100644
+--- a/modules/ve-mw/ui/ve.ui.MWCommandRegistry.js
++++ b/modules/ve-mw/ui/ve.ui.MWCommandRegistry.js
+@@ -128,7 +128,7 @@ ve.ui.commandRegistry.register(
+ 				rows: 3,
+ 				cols: 4,
+ 				type: 'mwTable',
+-				attributes: { wikitable: true }
++				attributes: { 'article-table': true }
+ 			} ],
+ 			supportedSelections: ['linear']
+ 		}
+diff --git a/modules/ve-mw/ui/ve.ui.MWSequenceRegistry.js b/modules/ve-mw/ui/ve.ui.MWSequenceRegistry.js
+index 388dc60..6f87f3c 100644
+--- a/modules/ve-mw/ui/ve.ui.MWSequenceRegistry.js
++++ b/modules/ve-mw/ui/ve.ui.MWSequenceRegistry.js
+@@ -9,7 +9,7 @@ ve.ui.sequenceRegistry.register(
+ 	new ve.ui.Sequence( 'wikitextLink', 'link', '[[', 2 )
+ );
+ ve.ui.sequenceRegistry.register(
+-	new ve.ui.Sequence( 'wikitextTemplate', 'transclusion', '{{', 2 )
++	new ve.ui.Sequence( 'wikitextTemplate', 'wikiaTemplateInsert', '{{', 2 )
+ );
+ ve.ui.sequenceRegistry.register(
+ 	new ve.ui.Sequence( 'wikitextItalic', 'mwWikitextWarning', '\'\'' )
+diff --git a/modules/ve-mw/ui/widgets/ve.ui.MWLinkTargetInputWidget.js b/modules/ve-mw/ui/widgets/ve.ui.MWLinkTargetInputWidget.js
+index f91d890..4446335 100644
+--- a/modules/ve-mw/ui/widgets/ve.ui.MWLinkTargetInputWidget.js
++++ b/modules/ve-mw/ui/widgets/ve.ui.MWLinkTargetInputWidget.js
+@@ -103,6 +103,33 @@ ve.ui.MWLinkTargetInputWidget.prototype.isValid = function () {
+  */
+ ve.ui.MWLinkTargetInputWidget.prototype.getLookupRequest = function () {
+ 	if ( mw.Title.newFromText( this.value ) ) {
++		var propsJqXhr,
++			searchJqXhr = ve.init.mw.Target.static.apiRequest( {
++				action: 'opensearch',
++				search: this.value,
++				namespace: 0,
++				suggest: ''
++			} );
++		return searchJqXhr.then( function ( data ) {
++			propsJqXhr = ve.init.mw.Target.static.apiRequest( {
++				action: 'query',
++				prop: 'info|pageprops',
++				titles: ( data[1] || [] ).join( '|' ),
++				ppprop: 'disambiguation'
++			} );
++			return propsJqXhr;
++		} ).promise( { abort: function () {
++			searchJqXhr.abort();
++			if ( propsJqXhr ) {
++				propsJqXhr.abort();
++			}
++		} } );
++	} else {
++		return $.Deferred().resolve( {} ).promise( { abort: function () {
++		} } );
++	}
++	/*
++	if ( mw.Title.newFromText( this.value ) ) {
+ 		return ve.init.target.constructor.static.apiRequest( {
+ 			action: 'query',
+ 			generator: 'prefixsearch',
+@@ -118,6 +145,7 @@ ve.ui.MWLinkTargetInputWidget.prototype.getLookupRequest = function () {
+ 			// Do nothing. This is just so OOUI doesn't break due to abort being undefined.
+ 		} } );
+ 	}
++	*/
+ };
+
+ /**
