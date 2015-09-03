@@ -160,7 +160,7 @@ class ContentReviewModuleController extends WikiaController {
 
 	protected function createRevisionLink( $revisionId ) {
 		return Linker::linkKnown(
-			$this->getContext()->getTitle(),
+			$this->wg->Title,
 			"#{$revisionId}",
 			[],
 			[

@@ -19,8 +19,6 @@ class ContentReviewApiController extends WikiaApiController {
 	 * @throws \FluentSql\Exception\SqlException
 	 */
 	public function submitPageForReview() {
-		global $wgCityId;
-
 		if ( !$this->request->wasPosted()
 			|| !$this->wg->User->matchEditToken( $this->request->getVal( 'editToken' ) )
 		) {
@@ -41,13 +39,13 @@ class ContentReviewApiController extends WikiaApiController {
 		}
 
 		$revisionId = $title->getLatestRevID();
-		$revisionData = $this->getLatestReviewedRevisionFromDB( $wgCityId, $pageId );
+		$revisionData = $this->getLatestReviewedRevisionFromDB( $this->wg->CityId, $pageId );
 
 		if ( $revisionId == $revisionData['revision_id'] ) {
 			throw new BadRequestApiException( 'Current revision is already reviewed');
 		}
 
-		( new ReviewModel() )->submitPageForReview( $wgCityId, $pageId,
+		( new ReviewModel() )->submitPageForReview( $this->wg->CityId, $pageId,
 			$revisionId, $submitUserId );
 
 		$this->makeSuccessResponse();
@@ -221,17 +219,17 @@ class ContentReviewApiController extends WikiaApiController {
 	 * @throws MWException
 	 */
 	public function renderStatusModal() {
-		global $wgCityId;
 		$pageName = $this->request->getVal( 'pageName' );
-		$title = Title::newFromText( $pageName );
+		/* Override global title to provide context */
+		$this->wg->Title = Title::newFromText( $pageName );
 
 		/* Get page status */
 		$pageStatus = \F::app()->sendRequest(
 			'ContentReviewApiController',
 			'getPageStatus',
 			[
-				'wikiId' => $wgCityId,
-				'pageId' => $title->getArticleID(),
+				'wikiId' => $this->wg->CityId,
+				'pageId' => $this->wg->Title->getArticleID(),
 			],
 			true
 		)->getData();
@@ -242,7 +240,7 @@ class ContentReviewApiController extends WikiaApiController {
 			'executeRender',
 			[
 				'pageStatus' => $pageStatus,
-				'latestRevisionId' => $title->getLatestRevID(),
+				'latestRevisionId' => $this->wg->Title->getLatestRevID(),
 			],
 			true
 		)->getData();
