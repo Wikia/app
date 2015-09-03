@@ -48,8 +48,28 @@ $content-review-color-unsubmitted: #ffad00;
 
 .content-review-status-unsubmitted {
 	border-color: $content-review-color-unsubmitted;
+	animation: submitReminder 3s infinite;
 }
 
 .content-review-status-awaiting {
 	border-color: $content-review-color-awaiting;
+}
+
+/* Animation */
+@keyframes submitReminder {
+	0% {
+		margin-left: 0;
+	}
+
+	25% {
+		margin-left: 10px;
+	}
+
+	50% {
+		margin-left: 0;
+	}
+
+	100% {
+		margin-left: 0;
+	}
 }
