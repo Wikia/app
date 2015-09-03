@@ -58,7 +58,7 @@ class PortableInfoboxHooks {
 	 *
 	 * @return bool
 	 */
-	public static function onAddPortableInfoboxBuilderText( &$article, &$text, &$wgOut, &$errors ) {
+	public static function onShowMissingArticleBeforeTextAppend( &$article, &$text, &$wgOut, &$errors ) {
 		$title = $article->getTitle();
 
 		if (
@@ -90,7 +90,7 @@ class PortableInfoboxHooks {
 	public static function onSkinAfterBottomScripts( $skin, &$text ) {
 		$title = $skin->getTitle();
 
-		if ( $title->isSpecial( PortableInfoboxBuilderSpecialController::PAGE_NAME ) ) {
+		if ( $title && $title->isSpecial( PortableInfoboxBuilderSpecialController::PAGE_NAME ) ) {
 			$scripts = AssetsManager::getInstance()->getURL( 'portable_infobox_builder_js' );
 
 			foreach ( $scripts as $script ) {

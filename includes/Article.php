@@ -1105,7 +1105,8 @@ class Article extends Page {
 		}
 
 		$text = "<div class='noarticletext'>$text</div>";
-		wfRunHooks( 'AddPortableInfoboxBuilderText', array( &$this, &$text, &$wgOut, &$errors ) );
+
+		wfRunHooks( 'ShowMissingArticle::BeforeTextAppend', array( &$this, &$text, &$wgOut, &$errors ) );
 
 		$wgOut->addWikiText( $text );
 	}
