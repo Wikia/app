@@ -2684,8 +2684,10 @@ $templates
 		// Create keyed-by-group list of module objects from modules list
 		$groups = array();
 		$resourceLoader = $this->getResourceLoader();
+
 		foreach ( (array) $modules as $name ) {
 			$module = $resourceLoader->getModule( $name );
+
 			# Check that we're allowed to include this module on this page
 			if ( !$module
 				|| ( $module->getOrigin() > $this->getAllowedModules( ResourceLoaderModule::TYPE_SCRIPTS )
@@ -2771,7 +2773,7 @@ $templates
 			// This should NOT be done for the site group (bug 27564) because anons get that too
 			// and we shouldn't be putting timestamps in Squid-cached HTML
 			$version = null;
-			if ( $group === 'user' ) {
+			if ( $group === 'user' || ( $group === 'site' && $only === ResourceLoaderModule::TYPE_SCRIPTS ) ) {
 				// Get the maximum timestamp
 				$timestamp = 1;
 				foreach ( $modules as $module ) {
@@ -2793,6 +2795,7 @@ $templates
 				$this->getRequest()->getBool( 'handheld' ),
 				$extraQuery
 			);
+
 			if ( $useESI && $wgResourceLoaderUseESI ) {
 				$esi = Xml::element( 'esi:include', array( 'src' => $url ) );
 				if ( $only == ResourceLoaderModule::TYPE_STYLES ) {

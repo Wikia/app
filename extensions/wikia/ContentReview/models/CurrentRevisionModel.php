@@ -74,7 +74,7 @@ class CurrentRevisionModel extends ContentReviewBaseModel {
 				$revisionData[$row->page_id] = [
 					'page_id' => $row->page_id,
 					'revision_id' => $row->revision_id,
-					'touched' => $row->touched,
+					'touched' => $row->touched
 				];
 			} );
 
