@@ -24,6 +24,8 @@ class PortableInfoboxBuilderService extends WikiaService {
 			// save to xml, import to dom, to remove xml header
 			$dom = dom_import_simplexml( $xml );
 			$out = $dom->ownerDocument->saveXML( $dom->ownerDocument->documentElement );
+			// ignore errors, we only load it to remove header
+			libxml_clear_errors();
 		}
 
 		return $out;
