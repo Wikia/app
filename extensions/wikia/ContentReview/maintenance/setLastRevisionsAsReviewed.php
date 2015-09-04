@@ -1,13 +1,13 @@
 <?php
 
-$dir = dirname( __FILE__ ) . "/../../../../";
+$dir = __DIR__ . "/../../../../";
 require_once( $dir . 'maintenance/Maintenance.php' );
-
-use Wikia\ContentReview\Models;
 
 class ReviewedRevision extends Maintenance {
 
-	public $revisionModel;
+	const JS_FILE_EXTENSION = '.js';
+
+	private $revisionModel;
 
 	/**
 	 * Set script options
@@ -38,7 +38,7 @@ class ReviewedRevision extends Maintenance {
 
 	private function getRevisionModel() {
 		if ( empty( $this->revisionModel ) ) {
-			$this->revisionModel = new Models\CurrentRevisionModel();
+			$this->revisionModel = new Wikia\ContentReview\Models\CurrentRevisionModel();
 		}
 
 		return $this->revisionModel;
