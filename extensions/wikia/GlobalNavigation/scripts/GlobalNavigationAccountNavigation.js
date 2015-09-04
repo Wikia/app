@@ -70,7 +70,7 @@ require([
 			event.stopPropagation();
 		}
 
-		authModalOpen(event.target.href);
+		authModalOpen(event.currentTarget.href);
 	}
 
 	function oldAccountNav ($entryPoint) {
