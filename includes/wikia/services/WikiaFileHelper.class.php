@@ -596,11 +596,9 @@ class WikiaFileHelper extends Service {
 			$repo = $file->getRepo();
 			// When repo is an instance of ForeignAPIRepo
 			// file comes from MediaWiki and isn't stored on any wikia.
-			if (
-				$repo instanceof ForeignAPIRepo ||
+			if ( $repo instanceof ForeignAPIRepo ||
 				F::app()->wg->WikiaVideoRepoDBName == $repo->getWiki() &&
-				empty( VideoInfo::newFromTitle( $file->getTitle()->getDBkey() ) )
-			) {
+				empty( VideoInfo::newFromTitle( $file->getTitle()->getDBkey() ) ) ) {
 				return false;
 			}
 		}
