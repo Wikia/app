@@ -43,7 +43,7 @@ class Helper extends \ContextSource {
 	public function getReviewedJsPagesTimestamp() {
 		$timestamp = \WikiaDataAccess::cache(
 			$this->getMemcKey( self::CONTENT_REVIEW_REVIEWED_KEY ),
-			86400, // 60 * 60 * 24
+			\WikiaResponse::CACHE_STANDARD, // 60 * 60 * 24
 			function() {
 				$pages = $this->getReviewedJsPages();
 
@@ -57,7 +57,7 @@ class Helper extends \ContextSource {
 	public function getJsPagesTimestamp() {
 		$timestamp = \WikiaDataAccess::cache(
 			$this->getMemcKey( self::CONTENT_REVIEW_CURRENT_KEY ),
-			86400, // 60 * 60 * 24
+			\WikiaResponse::CACHE_STANDARD, // 60 * 60 * 24
 			function() {
 				$pages = $this->getJsPages();
 
