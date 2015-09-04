@@ -81,8 +81,8 @@ class ContentReviewModuleController extends WikiaController {
 	}
 
 	public function isWithReason( $latestRevisionId, $pageStatus ) {
-		return ( $latestRevisionId === (int)$pageStatus['lastReviewedId'] &&
-			(int)$pageStatus['lastReviewedStatus'] === ReviewModel::CONTENT_REVIEW_STATUS_REJECTED
+		return ( $latestRevisionId === (int)$pageStatus['lastReviewedId']
+			&& (int)$pageStatus['lastReviewedStatus'] === ReviewModel::CONTENT_REVIEW_STATUS_REJECTED
 		);
 	}
 
@@ -91,17 +91,17 @@ class ContentReviewModuleController extends WikiaController {
 			$latestStatus = \ContentReviewModuleController::STATUS_NONE;
 		} elseif ( $latestRevisionId === (int)$pageStatus['liveId'] ) {
 			$latestStatus = \ContentReviewModuleController::STATUS_LIVE;
-		} elseif ( $latestRevisionId === (int)$pageStatus['latestId'] &&
-			Helper::isStatusAwaiting( $pageStatus['latestStatus'] )
+		} elseif ( $latestRevisionId === (int)$pageStatus['latestId']
+			&& Helper::isStatusAwaiting( $pageStatus['latestStatus'] )
 		) {
 			$latestStatus = \ContentReviewModuleController::STATUS_AWAITING;
-		} elseif ( $latestRevisionId === (int)$pageStatus['lastReviewedId'] &&
-			(int)$pageStatus['lastReviewedStatus'] === ReviewModel::CONTENT_REVIEW_STATUS_REJECTED
+		} elseif ( $latestRevisionId === (int)$pageStatus['lastReviewedId']
+			&& (int)$pageStatus['lastReviewedStatus'] === ReviewModel::CONTENT_REVIEW_STATUS_REJECTED
 		) {
 			$latestStatus = \ContentReviewModuleController::STATUS_REJECTED;
-		} elseif ( $latestRevisionId > (int)$pageStatus['liveId'] &&
-			$latestRevisionId > (int)$pageStatus['latestId'] &&
-			$latestRevisionId > (int)$pageStatus['lastReviewedId']
+		} elseif ( $latestRevisionId > (int)$pageStatus['liveId']
+			&& $latestRevisionId > (int)$pageStatus['latestId']
+			&& $latestRevisionId > (int)$pageStatus['lastReviewedId']
 		) {
 			$latestStatus = \ContentReviewModuleController::STATUS_UNSUBMITTED;
 		}
