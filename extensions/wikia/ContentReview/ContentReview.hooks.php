@@ -166,6 +166,8 @@ class Hooks {
 		) {
 			( new Helper() )->purgeCurrentJsPagesTimestamp();
 		}
+
+		return true;
 	}
 
 	private static function userCanEditJsPage() {
