@@ -32,6 +32,7 @@ $messages['en'] = array(
 	'wikiacuratedcontent-featured-section-name' => 'Featured Content',
 	'wikiacuratedcontent-edit-mobile-main-page' => 'Edit Mobile Main Page',
 	'wikiacuratedcontent-close-modal-prompt-message' => 'Are you sure you want to close this modal?',
+	'wikiacuratedcontent-modal-title' => 'Mobile Main Page'
 );
 
 $messages['qqq'] = array(
@@ -65,6 +66,7 @@ $messages['qqq'] = array(
 	'wikiacuratedcontent-featured-section-name' => 'Featured content section title',
 	'wikiacuratedcontent-edit-mobile-main-page' => 'Message on the button allowing to edit Mobile Main Page, visible on the main page',
 	'wikiacuratedcontent-close-modal-prompt-message' => 'Message displayed in prompt when user hit X button and attempt to close modal',
+	'wikiacuratedcontent-modal-title' => 'Modal title in which user can edit mobile main page on desktop'
 );
 
 $messages['ach'] = array(
