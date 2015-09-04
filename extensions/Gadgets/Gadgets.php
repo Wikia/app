@@ -34,6 +34,7 @@ $wgHooks['UserGetDefaultOptions'][]         = 'GadgetHooks::userGetDefaultOption
 $wgHooks['GetPreferences'][]                = 'GadgetHooks::getPreferences';
 $wgHooks['ResourceLoaderRegisterModules'][] = 'GadgetHooks::registerModules';
 $wgHooks['UnitTestsList'][]                 = 'GadgetHooks::unitTestsList';
+$wgHooks['ResourceLoaderMakeQuery'][]       = 'GadgetHooks::onResourceLoaderMakeQuery';
 
 $dir = dirname( __FILE__ ) . '/';
 $wgExtensionMessagesFiles['Gadgets'] = $dir . 'Gadgets.i18n.php';
