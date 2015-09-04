@@ -13,6 +13,8 @@ class HeliosClientImpl implements HeliosClient
 	const CLIENT_ID = "client_id";
 	const CLIENT_SECRET = "client_secret";
 
+	const HELIOS_AUTH_HEADER = "X-Wikia-UserId";
+
 	protected $baseUri;
 	protected $clientId;
 	protected $clientSecret;
@@ -155,16 +157,18 @@ class HeliosClientImpl implements HeliosClient
 	 * A shortcut method for token invalidation requests.
 	 *
 	 * @param $token string - a token to be invalidated
+	 * @param $userId integer - the current user id
 	 *
 	 * @return string - json encoded response
 	 */
-	public function invalidateToken( $token )
+	public function invalidateToken( $token, $userId )
 	{
 		return $this->request(
 			sprintf('token/%s', $token),
 			[],
 			[],
-			[ 'method' => 'DELETE' ]
+			[ 'method' => 'DELETE',
+				'headers' => array( self::HELIOS_AUTH_HEADER => $userId ) ]
 		);
 	}
 
