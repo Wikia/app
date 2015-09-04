@@ -13,10 +13,13 @@ class AttributeServiceMWApiController extends WikiaController {
         $signature = $this->request->getVal( 'signature' );
 
        if ( !$this->assertValidParameters( $userId, $signature ) ) {
+           $this->setErrorResponse( 'invalid parameters: (userId) and (signature) must not be empty',
+               \WikiaResponse::RESPONSE_CODE_BAD_REQUEST );
            return;
        }
 
         if ( !$this->assertValidSignature( $userId, $signature ) ) {
+            $this->setErrorResponse( 'invalid signature', \WikiaResponse::RESPONSE_CODE_FORBIDDEN );
             return;
         }
 
@@ -35,8 +38,6 @@ class AttributeServiceMWApiController extends WikiaController {
      */
     private function assertValidParameters( $userId, $signature ) {
         if ( empty( $userId )  || empty( $signature ) ) {
-            $this->setErrorResponse( 'invalid parameters: (userId) and (signature) must not be empty',
-                \WikiaResponse::RESPONSE_CODE_BAD_REQUEST );
             return false;
         }
 
@@ -53,7 +54,6 @@ class AttributeServiceMWApiController extends WikiaController {
     private function assertValidSignature( $userId, $signature ) {
 
         if ( $signature != $this->getComputedSignature( $userId ) ) {
-            $this->setErrorResponse( 'invalid signature', \WikiaResponse::RESPONSE_CODE_FORBIDDEN );
             return false;
         }
 
