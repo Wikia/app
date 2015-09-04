@@ -19,19 +19,18 @@ class ContentReviewApiController extends WikiaApiController {
 	 * @throws \FluentSql\Exception\SqlException
 	 */
 	public function submitPageForReview() {
-		global $wgCityId;
-
 		if ( !$this->request->wasPosted()
 			|| !$this->wg->User->matchEditToken( $this->request->getVal( 'editToken' ) )
 		) {
 			throw new BadRequestApiException();
 		}
 
-		$pageId = $this->request->getInt( 'pageId' );
+		$pageName = $this->request->getVal( 'pageName' );
 
-		$title = Title::newFromID( $pageId );
-		if ( $title === null || !$title->isJsPage() ) {
-			throw new NotFoundApiException( "JS page with ID {$pageId} does not exist" );
+		$title = Title::newFromText( $pageName );
+		$pageId = $title->getArticleID();
+		if ( $title === null || $pageId === 0 || !$title->isJsPage() ) {
+			throw new NotFoundApiException( "JS page {$pageName} does not exist" );
 		}
 
 		$submitUserId = $this->wg->User->getId();
@@ -40,13 +39,13 @@ class ContentReviewApiController extends WikiaApiController {
 		}
 
 		$revisionId = $title->getLatestRevID();
-		$revisionData = $this->getLatestReviewedRevisionFromDB( $wgCityId, $pageId );
+		$revisionData = $this->getLatestReviewedRevisionFromDB( $this->wg->CityId, $pageId );
 
 		if ( $revisionId == $revisionData['revision_id'] ) {
 			throw new BadRequestApiException( 'Current revision is already reviewed');
 		}
 
-		( new ReviewModel() )->submitPageForReview( $wgCityId, $pageId,
+		( new ReviewModel() )->submitPageForReview( $this->wg->CityId, $pageId,
 			$revisionId, $submitUserId );
 
 		$this->makeSuccessResponse();
@@ -207,11 +206,53 @@ class ContentReviewApiController extends WikiaApiController {
 		$notification = wfMessage( 'content-review-test-mode-enabled' )->escaped();
 		$notification.= Xml::element(
 			'a',
-			[ 'class' => 'content-review-test-mode-disable', 'href' => '#' ],
-			wfMessage( 'content-review-test-mode-disable' )->plain()
+			[ 'class' => 'content-review-module-test-mode-disable', 'href' => '#' ],
+			wfMessage( 'content-review-module-test-mode-disable' )->plain()
 		);
 
 		$this->notification = $notification;
+	}
+
+	/**
+	 * Prepares parts for rendering status module
+	 * Returns data required by ContentReviewModule.mustache
+	 * @throws MWException
+	 */
+	public function renderStatusModal() {
+		$pageName = $this->request->getVal( 'pageName' );
+		/* Override global title to provide context */
+		$this->wg->Title = Title::newFromText( $pageName );
+
+		/* Get page status */
+		$pageStatus = \F::app()->sendRequest(
+			'ContentReviewApiController',
+			'getPageStatus',
+			[
+				'wikiId' => $this->wg->CityId,
+				'pageId' => $this->wg->Title->getArticleID(),
+			],
+			true
+		)->getData();
+
+		/* Render status module */
+		$res = \F::app()->sendRequest(
+			'ContentReviewModule',
+			'executeRender',
+			[
+				'pageStatus' => $pageStatus,
+				'latestRevisionId' => $this->wg->Title->getLatestRevID(),
+			],
+			true
+		)->getData();
+
+		/* Add link to help page to result */
+		$helpTitle = Title::newFromText( wfMessage( 'content-review-module-help-article' )->escaped() );
+		if ( $helpTitle ) {
+			$res['helpUrl'] = $helpTitle->getFullURL();
+			$res['helpTitle'] = wfMessage( 'content-review-module-help-text' )->escaped();
+		}
+
+		$this->setResponseData( $res );
 	}
 
 	private function getLatestReviewedRevisionFromDB( $wikiId, $pageId ) {

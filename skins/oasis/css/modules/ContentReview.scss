@@ -1,11 +1,4 @@
-/* Variables */
-$content-review-status-border: 14px solid;
-$content-review-color-none: #aaa;
-$content-review-color-live: #76bf06;
-$content-review-color-approved: #76bf06;
-$content-review-color-rejected: #e1390b;
-$content-review-color-awaiting: #008cce;
-$content-review-color-unsubmitted: #ffad00;
+@import 'extensions/wikia/ContentReview/styles/ContentReviewVariables';
 
 .content-review-module-help {
 	text-align: right;
@@ -48,8 +41,24 @@ $content-review-color-unsubmitted: #ffad00;
 
 .content-review-status-unsubmitted {
 	border-color: $content-review-color-unsubmitted;
+	animation: submitReminder 3s infinite;
 }
 
 .content-review-status-awaiting {
 	border-color: $content-review-color-awaiting;
+}
+
+/* Animation */
+@keyframes submitReminder {
+	0% {
+		margin-left: 0;
+	}
+
+	25% {
+		margin-left: 10px;
+	}
+
+	50% {
+		margin-left: 0;
+	}
 }

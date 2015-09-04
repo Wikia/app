@@ -23,14 +23,16 @@ $messages['en'] = [
 	'content-review-rejection-reason-link' => 'Why?',
 
 	'content-review-module-help' => '[[Help:CSS and JS customization|Help]]',
+	'content-review-module-help-article' => 'Help:CSS and JS customization',
+	'content-review-module-help-text' => 'Help',
 
 	'content-review-module-submit' => 'Submit for review',
 	'content-review-module-submit-success' => 'The changes have been successfully submitted for a review.',
 	'content-review-module-submit-exception' => 'Unfortunately, we could not submit the changes for a review due to the following error: $1.',
 	'content-review-module-submit-error' => 'Unfortunately, we could not submit the changes for a review.',
 
-	'content-review-test-mode-enable' => 'Enter test mode',
-	'content-review-test-mode-disable' => 'Exit test mode',
+	'content-review-module-test-mode-enable' => 'Enter test mode',
+	'content-review-module-test-mode-disable' => 'Exit test mode',
 	'content-review-test-mode-error' => 'Something went wrong. Please try again later.',
 	'content-review-test-mode-enabled' => 'You are currently using unreviewed versions of custom JavaScript files. ',
 
@@ -71,8 +73,9 @@ $messages['en'] = [
 
 	'content-review-feedback-link-text' => 'Provide feedback',
 	'content-review-rejection-explanation' => '==Submitted script change rejected==
-The recently submitted change to this JS script was rejected by the Wikia review process. Please make sure you meet the [[Help:Custom JavaScript guidelines|Custom JavaScript guidelines]]. --~~~~ '
+The recently submitted change to this JS script was rejected by the Wikia review process. Please make sure you meet the [[Help:Custom JavaScript guidelines|Custom JavaScript guidelines]]. --~~~~ ',
 
+	'content-review-status-link-text' => 'Review status',
 ];
 
 /**
@@ -96,14 +99,16 @@ $messages['qqq'] = [
 	'content-review-rejection-reason-link' => 'Text of a link that leads a users to a Talk page with an explanation on why their code was rejected.',
 
 	'content-review-module-help' => 'A link to a Help page explaining how the review system works.',
+	'content-review-module-help-article' => 'Article name to a Help page explaining how the review system works.',
+	'content-review-module-help-text' => 'Text shown on a link a Help page explaining how the review system works.',
 
 	'content-review-module-submit' => 'A text of a button that sends a given page for a review.',
 	'content-review-module-submit-success' => 'A message shown to a user in a Banner Notification if a page has been added to review.',
 	'content-review-module-submit-exception' => 'A message shown to a user in a Banner Notification if a known error happened. $1 is the error message.',
 	'content-review-module-submit-error' => 'A message shown to a user in a Banner Notification if an unknown error happened.',
 
-	'content-review-test-mode-enable' => 'A text of a button which clicked enables user to test unreviewed changes made in JavaScript articles.',
-	'content-review-test-mode-disable' => 'A text of a link that disables serving unreviewed JavaScript to a user. Shown in a Banner Notification and right module.',
+	'content-review-module-test-mode-enable' => 'A text of a button which clicked enables user to test unreviewed changes made in JavaScript articles.',
+	'content-review-module-test-mode-disable' => 'A text of a link that disables serving unreviewed JavaScript to a user. Shown in a Banner Notification and right module.',
 	'content-review-test-mode-error' => 'A message shown if there was a problem with enabling the test mode to a user.',
 	'content-review-test-mode-enabled' => 'A message shown in Banner Notification with an information that a user is curently being served unreviewed JavaScript pages.',
 
@@ -143,4 +148,6 @@ $messages['qqq'] = [
 	'content-review-status-in-review' => 'A name of a status of a revision that is being reviewed.',
 	'content-review-status-approved' => 'A name of a status of a revision that has been approved.',
 	'content-review-status-rejected' => 'A name of a status of a revision that has been rejected.',
+
+	'content-review-status-link-text' => 'Text on entrypoint link to show content review module with review status info and submit for review buttons',
 ];
