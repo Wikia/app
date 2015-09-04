@@ -30,7 +30,7 @@ class Helper extends \ContextSource {
 			->AND_( 'LOWER (page_title)' )->LIKE( '%' . self::JS_FILE_EXTENSION )
 			->runLoop( $db, function ( &$jsPages, $row ) {
 				$jsPages[$row->page_id] = get_object_vars( $row );
-				$jsPages['ts'] = wfTimestamp( TS_UNIX, $row->page_touched );
+				$jsPages[$row->page_id]['ts'] = wfTimestamp( TS_UNIX, $row->page_touched );
 			} );
 
 		return $jsPages;
