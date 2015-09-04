@@ -200,7 +200,7 @@ var NodeRoomController = $.createClass(Observable,{
 	},
 
 	onReConnectFail: function(message) {
-		var chatEntry = new models.InlineAlert({text: $.msg( 'chat-user-permanently-disconnected' ) });
+		var chatEntry = new models.InlineAlert({text: mw.html.escape($.msg( 'chat-user-permanently-disconnected' )) });
 		this.model.chats.add(chatEntry);
 	},
 
@@ -423,7 +423,7 @@ var NodeRoomController = $.createClass(Observable,{
 		if ( kickEvent.get('kickedUserName') != wgUserName  ) {
 			var undoLink = "";
 			if(this.userMain.get('isModerator') && mode == 'banned' ) {
-				undoLink = ' (<a href="#" data-type="ban-undo" data-user="' + mw.html.escape(kickEvent.get('kickedUserName')) + '" >' + $.msg('chat-ban-undolink') + '</a>)';
+				undoLink = ' (<a href="#" data-type="ban-undo" data-user="' + mw.html.escape(kickEvent.get('kickedUserName')) + '" >' + mw.html.escape($.msg('chat-ban-undolink')) + '</a>)';
 			}
 
 			this.onPartBase(kickEvent.get('kickedUserName'), true);
@@ -431,7 +431,7 @@ var NodeRoomController = $.createClass(Observable,{
 
 			this.model.chats.add(newChatEntry);
 		} else {
-			var newChatEntry = new models.InlineAlert({ text: $.msg('chat-you-were-' + mode, [mw.html.escape(kickEvent.get('moderatorName'))] )});
+			var newChatEntry = new models.InlineAlert({ text: mw.html.escape($.msg('chat-you-were-' + mode, [mw.html.escape(kickEvent.get('moderatorName'))] ))});
 			this.model.chats.add(newChatEntry);
 			this.model.room.set({
 				'blockedMessageInput': true
@@ -499,7 +499,7 @@ var NodeRoomController = $.createClass(Observable,{
 	clickAnchor: function(event) {
 		var target = $(event.target);
 		if(target.attr('data-type') == 'ban-undo') {
-			this.undoBan(target.attr('data-user'), 0, $.msg('chat-log-reason-undo') );
+			this.undoBan(target.attr('data-user'), 0, mw.html.escape($.msg('chat-log-reason-undo')) );
 			return true;
 		}
 		window.open(target.closest('a').attr("href"));
@@ -804,7 +804,7 @@ var NodeChatController = $.createClass(NodeRoomController,{
 		var self = this;
 
 		self.viewUsers.hideMenu();
-		var title = $.msg('chat-ban-modal-heading'),
+		var title = mw.html.escape($.msg('chat-ban-modal-heading')),
 			okCallback = function(expires, reason) {
                 banCommand = new models.BanCommand({
 					userToBan: userToBan.name,
@@ -829,7 +829,7 @@ var NodeChatController = $.createClass(NodeRoomController,{
 
         	this.socket.send(banCommand.xport());
         } else {
-			var newChatEntry = new models.InlineAlert({text: $.msg('chat-ban-cannt-undo') });
+			var newChatEntry = new models.InlineAlert({text: mw.html.escape($.msg('chat-ban-cannt-undo')) });
 			this.model.chats.add(newChatEntry);
         }
 	},
@@ -909,7 +909,7 @@ var NodeChatController = $.createClass(NodeRoomController,{
 
 	init: function() {
 		if($.browser.msie && parseFloat(jQuery.browser.version) < 8 ) {
-			var newChatEntry = new models.InlineAlert({text: $.msg( 'chat-browser-is-notsupported' ) });
+			var newChatEntry = new models.InlineAlert({text: mw.html.escape($.msg( 'chat-browser-is-notsupported' )) });
 			this.model.chats.add(newChatEntry);
 			return true;
 		}
