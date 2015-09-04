@@ -118,10 +118,6 @@ class UserAvatarsApi
         $queryParams = array();
         $headerParams = array();
         $formParams = array();
-        $_header_accept = ApiClient::selectHeaderAccept( array( 'application/hal+json' ) );
-        if ( !is_null( $_header_accept ) ) {
-            $headerParams['Accept'] = $_header_accept;
-        }
         $headerParams['Content-Type'] = ApiClient::selectHeaderContentType( array() );
 
 
@@ -191,10 +187,6 @@ class UserAvatarsApi
         $queryParams = array();
         $headerParams = array();
         $formParams = array();
-        $_header_accept = ApiClient::selectHeaderAccept( array( 'application/hal+json' ) );
-        if ( !is_null( $_header_accept ) ) {
-            $headerParams['Accept'] = $_header_accept;
-        }
         $headerParams['Content-Type'] = ApiClient::selectHeaderContentType( array( 'multipart/form-data' ) );
 		$headerParams[ApiProvider::AUTH_KEY] = $user_id;
 
@@ -263,10 +255,6 @@ class UserAvatarsApi
         $queryParams = array();
         $headerParams = array();
         $formParams = array();
-        $_header_accept = ApiClient::selectHeaderAccept( array( 'application/hal+json' ) );
-        if ( !is_null( $_header_accept ) ) {
-            $headerParams['Accept'] = $_header_accept;
-        }
         $headerParams['Content-Type'] = ApiClient::selectHeaderContentType( array( 'multipart/form-data' ) );
 		$headerParams[ApiProvider::AUTH_KEY] = $user_id;
 
@@ -334,10 +322,6 @@ class UserAvatarsApi
         $queryParams = array();
         $headerParams = array();
         $formParams = array();
-        $_header_accept = ApiClient::selectHeaderAccept( array( 'application/hal+json' ) );
-        if ( !is_null( $_header_accept ) ) {
-            $headerParams['Accept'] = $_header_accept;
-        }
         $headerParams['Content-Type'] = ApiClient::selectHeaderContentType( array( 'multipart/form-data' ) );
 		$headerParams[ApiProvider::AUTH_KEY] = $user_id;
 
