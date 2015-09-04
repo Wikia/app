@@ -45,9 +45,10 @@ class UserAvatarsService {
 		try {
 			$response = $this->getApiClient()->updateOrCreateUserAvatar( $this->mUserId, $postData );
 			wfDebug( __METHOD__ . ': resp - ' . json_encode( $response ) . "\n" );
+			wfDebug( __METHOD__ . ": <{$response->imageUrl}>\n" );
 
 			$this->info( 'Avatar uploaded', [
-				'guid' => $response->imageId
+				'guid' => $response->imageUrl
 			] );
 		}
 		catch ( ApiException $e ) {
