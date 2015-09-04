@@ -12,8 +12,6 @@
  */
 
 class GadgetHooks {
-	static private $resourceLoaderInstance;
-
 	/**
 	 * ArticleSaveComplete hook handler.
 	 *
@@ -253,39 +251,6 @@ class GadgetHooks {
 
 		return true;
 	}
-
-	// Wikia change begin; author: lukaszk
-	public static function onResourceLoaderMakeQuery( $modules, &$query ) {
-		global $wgEnableContentReviewExt;
-
-		if ( !empty( $wgEnableContentReviewExt ) ) {
-			$rl = self::getResourceLoaderInstance();
-
-			foreach ( $modules as $moduleName ) {
-				$module = $rl->getModule( $moduleName );
-
-				if ( $module instanceof GadgetResourceLoaderModule ) {
-					$contentReviewHelper = new \Wikia\ContentReview\Helper();
-					if ( $contentReviewHelper->isContentReviewTestModeEnabled() ) {
-						$query['current'] = $contentReviewHelper->getJsPagesTimestamp();
-					} else {
-						$query['reviewed'] = $contentReviewHelper->getReviewedJsPagesTimestamp();
-					}
-				}
-			}
-		}
-
-		return true;
-	}
-
-	static protected function getResourceLoaderInstance() {
-		if ( empty( self::$resourceLoaderInstance ) ) {
-			self::$resourceLoaderInstance = new ResourceLoader();
-		}
-		return self::$resourceLoaderInstance;
-	}
-
-	// Wikia change end
 }
 
 /**
@@ -704,4 +669,28 @@ class GadgetResourceLoaderModule extends ResourceLoaderGlobalWikiModule {
 	public function getDependencies() {
 		return $this->dependencies;
 	}
+
+	// Wikia change begin; author: lukaszk
+	public function getModifiedTime( ResourceLoaderContext $context ) {
+		global $wgEnableContentReviewExt;
+
+		if ( $wgEnableContentReviewExt ) {
+			$pages = $this->getPages( $context );
+
+			foreach ( $pages as $page ) {
+				if ( $page['type'] === 'script' ) {
+					$contentReviewHelper = new Wikia\ContentReview\Helper();
+
+					if ( $contentReviewHelper->isContentReviewTestModeEnabled() ) {
+						return $contentReviewHelper->getJsPagesTimestamp();
+					} else {
+						return $contentReviewHelper->getReviewedJsPagesTimestamp();
+					}
+				}
+			}
+		}
+
+		return parent::getModifiedTime( $context );
+	}
+	// Wikia change end
 }
