@@ -19,13 +19,8 @@ define(
 	}
 
 	function bindEvents() {
-		if (win.skin === 'monobook') {
-			$('body').on('click', '.content-review-module-test-mode-enable', enableTestMode);
-			$('body').on('click', '.content-review-module-test-mode-disable', disableTestMode);
-		} else {
-			$('#WikiaPage').on('click', '.content-review-module-test-mode-enable', enableTestMode);
-			$('#WikiaPage').on('click', '.content-review-module-test-mode-disable', disableTestMode);
-		}
+		$('body').on('click', '.content-review-module-test-mode-enable', enableTestMode);
+		$('body').on('click', '.content-review-module-test-mode-disable', disableTestMode);
 	}
 
 	function enableTestMode(event) {
