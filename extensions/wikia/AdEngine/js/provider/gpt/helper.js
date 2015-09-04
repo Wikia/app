@@ -9,7 +9,8 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	'ext.wikia.adEngine.provider.gpt.googleTag',
 	'ext.wikia.adEngine.slotTweaker',
 	require.optional('ext.wikia.adEngine.provider.gpt.sourcePointTag'),
-	require.optional('ext.wikia.adEngine.provider.gpt.sraHelper')
+	require.optional('ext.wikia.adEngine.provider.gpt.sraHelper'),
+	require.optional('ext.wikia.adEngine.slot.scrollHandler')
 ], function (
 	log,
 	adContext,
@@ -19,7 +20,8 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	GoogleTag,
 	slotTweaker,
 	SourcePointTag,
-	sraHelper
+	sraHelper,
+	scrollHandler
 ) {
 	'use strict';
 
@@ -48,10 +50,19 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	 * @param {string}   extra.forcedAdType - ad type for callbacks info
 	 */
 	function pushAd(slotName, slotElement, slotPath, slotTargeting, extra) {
-		var element;
+		var count,
+			element;
 
 		extra = extra || {};
 		slotTargeting = JSON.parse(JSON.stringify(slotTargeting)); // copy value
+
+		if (scrollHandler) {
+			count = scrollHandler.getReloadedViewCount(slotName);
+			if (count !== null) {
+				slotTargeting.rv = count.toString();
+			}
+		}
+
 		element = new AdElement(slotName, slotPath, slotTargeting);
 
 		function callSuccess(adInfo) {
