@@ -33,7 +33,7 @@ class CurrentRevisionModel extends ContentReviewBaseModel {
 			throw new \FluentSql\Exception\SqlException( 'The INSERT operation failed.' );
 		}
 
-		$db->commit();
+		$db->commit( __METHOD__ );
 
 		return true;
 	}
