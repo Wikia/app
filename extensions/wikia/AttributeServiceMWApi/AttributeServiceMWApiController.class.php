@@ -23,8 +23,13 @@ class AttributeServiceMWApiController extends WikiaController {
 			return;
 		}
 
-		User::clearUserCache( $userId );
-		$userIdentityBox = new UserIdentityBox( User::newFromId( $userId ) );
+		// Clear user cache
+		$user = User::newFromId( $userId );
+		User::clearUserCache( $user->getId() );
+		$user->invalidateCache();
+
+		// Clear User Profile cache
+		$userIdentityBox = new UserIdentityBox( $user );
 		$userIdentityBox->clearCache();
 	}
 
