@@ -1,6 +1,6 @@
 <?php
 
-class AttributeServiceHelperController extends WikiaController {
+class AttributeServiceMWApiController extends WikiaController {
 
     /**
      * Helper function for the attribute service to clear user MediaWiki.
@@ -9,17 +9,21 @@ class AttributeServiceHelperController extends WikiaController {
      */
     public function purgeUserCache() {
 
+        jmark();
         $userId = $this->request->getVal( 'userId' );
         $signature = $this->request->getVal( 'signature' );
 
        if ( !$this->assertValidParameters( $userId, $signature ) ) {
+           jmark();
            return;
        }
 
         if ( !$this->assertValidSignature( $userId, $signature ) ) {
+            jmark();
             return;
         }
 
+        jmark();
         User::clearUserCache( $userId );
         $userIdentityBox = new UserIdentityBox( User::newFromId( $userId ) );
         $userIdentityBox->clearCache();
