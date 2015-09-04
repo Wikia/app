@@ -66,12 +66,12 @@ window.addOnloadHook = function( hookFunct ) {
 };
 
 window.forceReviewedContent = function( url ) {
-	if ( mw.config.get('contentReviewExtEnabled') ) {
+	if ( mw.config.get('wgContentReviewExtEnabled') ) {
 		if (url.search(/mediawiki:/i) != -1) {
-			if ( mw.config.get('contentReviewTestModeEnabled') ) {
-				url += '&current=' + mw.config.get('scriptsTimestamp');
+			if ( mw.config.get('wgContentReviewTestModeEnabled') ) {
+				url += '&current=' + mw.config.get('wgScriptsTimestamp');
 			} else {
-				url += '&reviewed=' + mw.config.get('reviewedScriptsTimestamp');
+				url += '&reviewed=' + mw.config.get('wgReviewedScriptsTimestamp');
 			}
 		}
 	}

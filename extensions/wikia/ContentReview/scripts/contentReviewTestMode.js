@@ -60,7 +60,7 @@ define(
 	}
 
 	function showTestModeNotification() {
-		if (win.contentReviewTestModeEnabled) {
+		if (win.wgContentReviewTestModeEnabled) {
 			nirvana.sendRequest({
 				controller: 'ContentReviewApiController',
 				method: 'showTestModeNotification',

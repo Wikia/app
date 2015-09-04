@@ -35,10 +35,10 @@ class Hooks {
 	public static function onMakeGlobalVariablesScript( &$vars ) {
 		$helper = new Helper();
 
-		$vars['contentReviewExtEnabled'] = true;
-		$vars['contentReviewTestModeEnabled'] = $helper->isContentReviewTestModeEnabled();
-		$vars['reviewedScriptsTimestamp'] = $helper->getReviewedJsPagesTimestamp();
-		$vars['scriptsTimestamp'] = $helper->getJsPagesTimestamp();
+		$vars['wgContentReviewExtEnabled'] = true;
+		$vars['wgContentReviewTestModeEnabled'] = $helper->isContentReviewTestModeEnabled();
+		$vars['wgReviewedScriptsTimestamp'] = $helper->getReviewedJsPagesTimestamp();
+		$vars['wgScriptsTimestamp'] = $helper->getJsPagesTimestamp();
 
 		return true;
 
