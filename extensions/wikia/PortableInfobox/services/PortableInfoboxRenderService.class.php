@@ -98,7 +98,7 @@ class PortableInfoboxRenderService extends WikiaService {
 		$dataItems = $groupData[ 'value' ];
 		$layout = $groupData[ 'layout' ];
 
-		if ( $layout === 'horizontal' ) {
+		if ( $layout === 'horizontal' && !$helper->isWikiaMobile() ) {
 			$groupHTMLContent .= $this->renderItem(
 				'horizontal-group-content',
 				$helper->createHorizontalGroupData( $dataItems )
