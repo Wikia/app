@@ -57,15 +57,10 @@ class GlobalFooterController extends WikiaController {
 				$parsedLink = parseItem( $link );
 
 				if ( strpos( $parsedLink['text'], 'SITEMAP' ) !== false ) {
-
 					$parsedLinks = array_merge( $parsedLinks, $this->generateSitemapLinks() );
-
 				} elseif ( ( strpos( $parsedLink['text'], 'LICENSE' ) !== false ) || $parsedLink['text'] == 'GFDL' ) {
-
 					$parsedLinks[] = [ 'isLicense' => true ];
-
 				} else {
-
 					$parsedLinks[] = $parsedLink;
 				}
 			}

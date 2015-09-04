@@ -14,7 +14,7 @@
 				?>
 				<li>
 					<?php
-					if ( isset( $link['isLicense']) ) {
+					if ( isset( $link['isLicense'] ) ) {
 						echo $copyright;
 					} else {?>
 						<a<?= ( !empty( $link[ 'id' ] ) ) ? " id=\"{$link[ 'id' ]}\"" : '' ;?> href="<?= $link["href"]; ?>"<?= ( !empty( $link[ 'nofollow' ] ) ) ? ' rel="nofollow"' : '' ;?>><?= $link["text"]; ?></a>
