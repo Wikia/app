@@ -13,6 +13,10 @@ define(
 				require(['curatedContentTool.modal'], function (modal) {
 					modal.close();
 				});
+			};
+
+			this.setFocus = function () {
+				document.getElementById("CuratedContentToolIframe").contentWindow.focus();
 			}
 		}
 

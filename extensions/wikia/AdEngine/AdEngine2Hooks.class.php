@@ -256,4 +256,5 @@ class AdEngine2Hooks {
 		}
 		return true;
 	}
+
 }

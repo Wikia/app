@@ -56,8 +56,8 @@ class UserTest extends \WikiaBaseTest {
 
 		$this->webRequestMock->expects( $this->once() )
 			->method( 'getHeader' )
-			->with( 'AUTHORIZATION' )
-			->willReturn( "Bearer $token" );
+			->with( User::ACCESS_TOKEN_HEADER_NAME )
+			->willReturn( $token );
 
 		$this->assertEquals( User::getAccessToken( $this->webRequestMock ), $token );
 	}
@@ -66,7 +66,7 @@ class UserTest extends \WikiaBaseTest {
 		// No HTTP header
 		$this->webRequestMock->expects( $this->any() )
 			->method( 'getHeader' )
-			->with( 'AUTHORIZATION' )
+			->with( User::ACCESS_TOKEN_HEADER_NAME )
 			->willReturn( '' );
 
 		// Cookie with no value
@@ -98,29 +98,22 @@ class UserTest extends \WikiaBaseTest {
 		// Header with no value
 		$this->webRequestMock->expects( $this->any() )
 			->method( 'getHeader' )
-			->with( 'AUTHORIZATION' )
+			->with( User::ACCESS_TOKEN_HEADER_NAME )
 			->willReturn( '' );
 
 		$this->assertNull( User::getAccessToken( $this->webRequestMock ) );
 
 		$this->webRequestMock->expects( $this->any() )
 			->method( 'getHeader' )
-			->with( 'AUTHORIZATION' )
+			->with( User::ACCESS_TOKEN_HEADER_NAME )
 			->willReturn( false );
 
 		$this->assertNull( User::getAccessToken( $this->webRequestMock ) );
 
 		$this->webRequestMock->expects( $this->any() )
 			->method( 'getHeader' )
-			->with( 'AUTHORIZATION' )
+			->with( User::ACCESS_TOKEN_HEADER_NAME )
 			->willReturn( null );
-
-		$this->assertNull( User::getAccessToken( $this->webRequestMock ) );
-
-		$this->webRequestMock->expects( $this->any() )
-			->method( 'getHeader' )
-			->with( 'AUTHORIZATION' )
-			->willReturn( 'Bearer ' );
 
 		$this->assertNull( User::getAccessToken( $this->webRequestMock ) );
 	}
@@ -136,8 +129,8 @@ class UserTest extends \WikiaBaseTest {
 
 		$this->webRequestMock->expects( $this->any() )
 			->method( 'getHeader' )
-			->with( 'AUTHORIZATION' )
-			->willReturn( "Bearer $tokenInHeader" );
+			->with( User::ACCESS_TOKEN_HEADER_NAME )
+			->willReturn( $tokenInHeader );
 
 		$this->assertEquals( User::getAccessToken( $this->webRequestMock ), $tokenInCookie );
 	}
@@ -149,7 +142,7 @@ class UserTest extends \WikiaBaseTest {
 
 		$this->webRequestMock->expects( $this->once() )
 			->method( 'getHeader' )
-			->with( 'AUTHORIZATION' )
+			->with( User::ACCESS_TOKEN_HEADER_NAME )
 			->willReturn( false );
 
 		$this->assertNull( User::getAccessToken( $this->webRequestMock ) );
@@ -162,8 +155,8 @@ class UserTest extends \WikiaBaseTest {
 
 		$this->webRequestMock->expects( $this->once() )
 			->method( 'getHeader' )
-			->with( 'AUTHORIZATION' )
-			->willReturn( 'Malformed' );
+			->with( User::ACCESS_TOKEN_HEADER_NAME )
+			->willReturn( false );
 
 		$this->assertNull( User::getAccessToken( $this->webRequestMock ) );
 	}

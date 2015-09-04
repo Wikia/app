@@ -14,6 +14,7 @@ use Wikia\Service\Helios\HeliosClient;
 class User {
 
 	const ACCESS_TOKEN_COOKIE_NAME = 'access_token';
+	const ACCESS_TOKEN_HEADER_NAME = 'X-Wikia-AccessToken';
 	const AUTH_METHOD_NAME = 'auth_method';
 	const MERCURY_ACCESS_TOKEN_COOKIE_NAME = 'sid';
 	const AUTH_TYPE_FAILED = 0;
@@ -57,14 +58,7 @@ class User {
 
 		// No access token in the cookie, try the HTTP header.
 		if ( ! $token ) {
-			$header = $request->getHeader( 'AUTHORIZATION' );
-
-			$matches = [];
-			preg_match( '/^Bearer\s*(\S*)$/', $header, $matches );
-
-			if ( ! empty( $matches[1] ) ) {
-				$token = $matches[1];
-			}
+			$token = $request->getHeader( self::ACCESS_TOKEN_HEADER_NAME );
 		}
 
 		// Normalize the value so the method returns a non-empty string or null.
@@ -239,7 +233,10 @@ class User {
 	private static function invalidateAccessTokenInHelios() {
 		$request = \RequestContext::getMain()->getRequest();
 		$heliosClient = self::getHeliosClient();
-		$heliosClient->invalidateToken( self::getAccessToken( $request ) );
+		$accessToken = self::getAccessToken( $request );
+		if ( !empty( $accessToken ) ) {
+			$heliosClient->invalidateToken( $accessToken );
+		}
 	}
 
 	/**
