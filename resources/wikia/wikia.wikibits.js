@@ -62,6 +62,16 @@ var importArticle = (function() {
 				module.articles = module.articles.join( '|' );
 			}
 
+			if ( mw.config.get('contentReviewExtEnabled') ) {
+				if ( module.articles.search(/mediawiki:/i) != -1 ) {
+					if ( mw.config.get('contentReviewTestModeEnabled') ) {
+						module.current = mw.config.get('scriptsTimestamp');
+					} else {
+						module.reviewed = mw.config.get('reviewedScriptsTimestamp');
+					}
+				}
+			}
+
 			// These import methods are in /skins/common/wikibits.js
 			var importMethod;
 			if ( module.type == 'script' ) {

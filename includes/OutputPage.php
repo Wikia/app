@@ -2938,12 +2938,7 @@ $templates
 		// Add site JS if enabled
 		if ( $wgUseSiteJs ) {
 			$extraQuery = [];
-			if ( $wgEnableContentReviewExt ) {
-				$contentReviewHelper = new \Wikia\ContentReview\Helper;
-				if ( !$contentReviewHelper->isContentReviewTestModeEnabled() ) {
-					$extraQuery['reviewed'] = $contentReviewHelper->getSiteJsScriptsHash();
-				}
-			}
+
 			$scripts .= $this->makeResourceLoaderLink( 'site', ResourceLoaderModule::TYPE_SCRIPTS,
 				/* $useESI = */ false, /* $extraQuery = */ $extraQuery, /* $loadCall = */ $inHead
 			);

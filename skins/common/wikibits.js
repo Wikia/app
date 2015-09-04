@@ -66,9 +66,13 @@ window.addOnloadHook = function( hookFunct ) {
 };
 
 window.forceReviewedContent = function( url ) {
-	if ( mw.config.get('contentReviewExtEnabled') && !mw.config.get('contentReviewTestModeEnabled') ) {
+	if ( mw.config.get('contentReviewExtEnabled') ) {
 		if (url.search(/mediawiki:/i) != -1) {
-			url += '&reviewed=' + mw.config.get('contentReviewScriptsHash');
+			if ( mw.config.get('contentReviewTestModeEnabled') ) {
+				url += '&current=' + mw.config.get('scriptsTimestamp');
+			} else {
+				url += '&reviewed=' + mw.config.get('reviewedScriptsTimestamp');
+			}
 		}
 	}
 

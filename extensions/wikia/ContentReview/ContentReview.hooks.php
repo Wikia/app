@@ -34,7 +34,8 @@ class Hooks {
 
 		$vars['contentReviewExtEnabled'] = true;
 		$vars['contentReviewTestModeEnabled'] = $helper->isContentReviewTestModeEnabled();
-		$vars['contentReviewScriptsHash'] = $helper->getSiteJsScriptsHash();
+		$vars['reviewedScriptsTimestamp'] = $helper->getReviewedJsPagesTimestamp();
+		$vars['scriptsTimestamp'] = $helper->getJsPagesTimestamp();
 
 		return true;
 

@@ -20,39 +20,47 @@ class Helper extends \ContextSource {
 		return $revisions;
 	}
 
-	public function getSiteJsScriptsHash() {
+	public function getJsPages() {
+		$db = wfGetDB( DB_SLAVE );
+
+		$jsPages = ( new \WikiaSQL() )
+			->SELECT( 'page_id', 'page_title', 'page_touched', 'page_latest' )
+			->FROM( 'page' )
+			->WHERE( 'page_namespace' )->EQUAL_TO( NS_MEDIAWIKI )
+			->AND_( 'LOWER (page_title)' )->LIKE( '%' . self::JS_FILE_EXTENSION )
+			->runLoop( $db, function ( &$jsPages, $row ) {
+				$jsPages[$row->page_id] = get_object_vars( $row );
+				$jsPages['ts'] = wfTimestamp( TS_UNIX, $row->page_touched );
+			} );
+
+		return $jsPages;
+
+	}
+
+	public function getReviewedJsPagesTimestamp() {
+		$pages = $this->getReviewedJsPages();
+
+		return $this->getMaxTimestamp( $pages );
+	}
+
+	public function getJsPagesTimestamp() {
+		$pages = $this->getJsPages();
+
+		return $this->getMaxTimestamp( $pages );
+	}
+
+	public function getMaxTimestamp( $pages ) {
 		$maxTimestamp = 0;
 
-		$revisions = $this->getReviewedJsPages();
-
-		foreach ( $revisions as $revision ) {
-			$maxTimestamp = max( $maxTimestamp, $revision['touched'] );
+		foreach ( $pages as $page ) {
+			$maxTimestamp = max( $maxTimestamp, $page['ts'] );
 		}
 
 		if ( empty( $maxTimestamp ) ) {
 			return 0;
 		}
 
-		$datetime = new \DateTime( $maxTimestamp );
-		$timestamp = $datetime->getTimestamp();
-
-		return $timestamp;
-	}
-
-	public function getJsPages() {
-		$db = wfGetDB( DB_SLAVE );
-
-		$jsPages = ( new \WikiaSQL() )
-			->SELECT( 'page_id', 'page_title', 'page_touched AS touched', 'page_latest' )
-			->FROM( 'page' )
-			->WHERE( 'page_namespace' )->EQUAL_TO( NS_MEDIAWIKI )
-			->AND_( 'LOWER (page_title)' )->LIKE( '%' . self::JS_FILE_EXTENSION )
-			->runLoop( $db, function ( &$jsPages, $row ) {
-				$jsPages[$row->page_id] = get_object_vars( $row );
-			} );
-
-		return $jsPages;
-
+		return $maxTimestamp;
 	}
 
 	public function getReviewedRevisionIdFromText( $pageName ) {
