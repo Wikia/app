@@ -21,9 +21,9 @@ class CurrentRevisionModel extends ContentReviewBaseModel {
 			->SET( 'wiki_id', $wikiId )
 			->SET( 'page_id', $pageId )
 			->SET( 'revision_id', $revisionId )
-			// submit_time has a default value set to CURRENT_TIMESTAMP
+			// touched has a default value set to CURRENT_TIMESTAMP
 			->ON_DUPLICATE_KEY_UPDATE(
-				[ 'revision_id' => $revisionId ]
+				[ 'revision_id' => $revisionId, 'touched' => wfTimestamp( TS_DB ) ]
 			)
 			->run( $db );;
 
@@ -75,6 +75,7 @@ class CurrentRevisionModel extends ContentReviewBaseModel {
 					'page_id' => $row->page_id,
 					'revision_id' => $row->revision_id,
 					'touched' => $row->touched,
+					'ts' => wfTimestamp( TS_UNIX, $row->touched )
 				];
 			} );
 

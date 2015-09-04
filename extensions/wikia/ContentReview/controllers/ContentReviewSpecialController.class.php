@@ -58,7 +58,7 @@ class ContentReviewSpecialController extends WikiaSpecialPageController {
 			$review['diff'] = $title->getFullURL( [
 				'diff' => $review['revision_id'],
 				'oldid' => $review['reviewed_id'],
-				Helper::CONTENT_REVIEW_URL_PARAM => 1,
+				Helper::CONTENT_REVIEW_PARAM => 1,
 			] );
 			$review['diffText'] = $review['status'] == ReviewModel::CONTENT_REVIEW_STATUS_UNREVIEWED
 				? wfMessage( 'content-review-special-start-review' )->escaped()

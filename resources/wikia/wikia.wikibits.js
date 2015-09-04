@@ -62,9 +62,13 @@ var importArticle = (function() {
 				module.articles = module.articles.join( '|' );
 			}
 
-			if ( mw.config.get('contentReviewExtEnabled') && !mw.config.get('contentReviewTestModeEnabled') ) {
-				if (module.articles.search(/mediawiki:/i) != -1) {
-					module.reviewed = mw.config.get('contentReviewScriptsHash');
+			if ( mw.config.get('wgContentReviewExtEnabled') ) {
+				if ( module.articles.search(/mediawiki:/i) != -1 ) {
+					if ( mw.config.get('wgContentReviewTestModeEnabled') ) {
+						module.current = mw.config.get('wgScriptsTimestamp');
+					} else {
+						module.reviewed = mw.config.get('wgReviewedScriptsTimestamp');
+					}
 				}
 			}
 
@@ -87,7 +91,7 @@ var importArticle = (function() {
 			delete module.type;
 
 			// Make sure we don't load the same URI again
-			uri = baseUri + $.param( module )
+			uri = baseUri + $.param( module );
 			if ( loaded[ uri ] ) {
 				continue;
 			}

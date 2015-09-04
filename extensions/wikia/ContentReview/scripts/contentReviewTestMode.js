@@ -19,8 +19,9 @@ define(
 	}
 
 	function bindEvents() {
-		$('body').on('click', '.content-review-module-test-mode-enable', enableTestMode);
-		$('body').on('click', '.content-review-module-test-mode-disable', disableTestMode);
+		$('body')
+			.on('click', '.content-review-module-test-mode-enable', enableTestMode)
+			.on('click', '.content-review-module-test-mode-disable', disableTestMode);
 	}
 
 	function enableTestMode(event) {
@@ -59,7 +60,7 @@ define(
 	}
 
 	function showTestModeNotification() {
-		if (win.contentReviewTestModeEnabled) {
+		if (win.wgContentReviewTestModeEnabled) {
 			nirvana.sendRequest({
 				controller: 'ContentReviewApiController',
 				method: 'showTestModeNotification',

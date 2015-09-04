@@ -62,6 +62,7 @@ $wgHooks['ArticleContentOnDiff'][] = 'Wikia\ContentReview\Hooks::onArticleConten
 $wgHooks['RawPageViewBeforeOutput'][] = 'Wikia\ContentReview\Hooks::onRawPageViewBeforeOutput';
 $wgHooks['SkinTemplateNavigation'][] = 'Wikia\ContentReview\Hooks::onSkinTemplateNavigation';
 $wgHooks['UserLogoutComplete'][] = 'Wikia\ContentReview\Hooks::onUserLogoutComplete';
+$wgHooks['ArticleSaveComplete'][] = 'Wikia\ContentReview\Hooks::onArticleSaveComplete';
 
 /**
  * Right rail module

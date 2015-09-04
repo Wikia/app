@@ -2792,6 +2792,7 @@ $templates
 				$this->getRequest()->getBool( 'handheld' ),
 				$extraQuery
 			);
+
 			if ( $useESI && $wgResourceLoaderUseESI ) {
 				$esi = Xml::element( 'esi:include', array( 'src' => $url ) );
 				if ( $only == ResourceLoaderModule::TYPE_STYLES ) {
@@ -2934,12 +2935,16 @@ $templates
 		// Add site JS if enabled
 		if ( $wgUseSiteJs ) {
 			$extraQuery = [];
+
 			if ( $wgEnableContentReviewExt ) {
-				$contentReviewHelper = new \Wikia\ContentReview\Helper;
-				if ( !$contentReviewHelper->isContentReviewTestModeEnabled() ) {
-					$extraQuery['reviewed'] = $contentReviewHelper->getSiteJsScriptsHash();
+				$contentReviewHelper = new \Wikia\ContentReview\Helper();
+				if ( $contentReviewHelper->isContentReviewTestModeEnabled() ) {
+					$extraQuery['current'] = $contentReviewHelper->getJsPagesTimestamp();
+				} else {
+					$extraQuery['reviewed'] = $contentReviewHelper->getReviewedJsPagesTimestamp();
 				}
 			}
+
 			$scripts .= $this->makeResourceLoaderLink( 'site', ResourceLoaderModule::TYPE_SCRIPTS,
 				/* $useESI = */ false, /* $extraQuery = */ $extraQuery, /* $loadCall = */ $inHead
 			);

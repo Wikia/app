@@ -35,9 +35,10 @@ class Hooks {
 	public static function onMakeGlobalVariablesScript( &$vars ) {
 		$helper = new Helper();
 
-		$vars['contentReviewExtEnabled'] = true;
-		$vars['contentReviewTestModeEnabled'] = $helper->isContentReviewTestModeEnabled();
-		$vars['contentReviewScriptsHash'] = $helper->getSiteJsScriptsHash();
+		$vars['wgContentReviewExtEnabled'] = true;
+		$vars['wgContentReviewTestModeEnabled'] = $helper->isContentReviewTestModeEnabled();
+		$vars['wgReviewedScriptsTimestamp'] = $helper->getReviewedJsPagesTimestamp();
+		$vars['wgScriptsTimestamp'] = $helper->getJsPagesTimestamp();
 
 		return true;
 
@@ -149,6 +150,21 @@ class Hooks {
 
 		if ( !empty( $wikis ) ) {
 			$request->setSessionData( $key, null );
+		}
+
+		return true;
+	}
+
+	public static function onArticleSaveComplete( \WikiPage &$article, &$user, $text, $summary,
+			$minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId
+	) {
+		$title = $article->getTitle();
+
+		if ( !is_null( $title )
+			&& $title->inNamespace( NS_MEDIAWIKI )
+			&& ( $title->isJsPage() || $title->isJsSubpage() )
+		) {
+			( new Helper() )->purgeCurrentJsPagesTimestamp();
 		}
 
 		return true;
