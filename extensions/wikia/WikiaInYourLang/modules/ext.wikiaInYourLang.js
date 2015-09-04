@@ -194,7 +194,7 @@ require(
 
 		function retrieveLinkTitle() {
 			var listOfCachedTitles = cache.get(getWIYLLinkTitlesKey());
-			return (listOfCachedTitles && listOfCachedTitles[articleTitle]) || '';
+			return (listOfCachedTitles && listOfCachedTitles[articleTitle]) ? listOfCachedTitles[articleTitle] : '';
 		}
 
 		if (!w.wikiaPageIsCorporate) {
