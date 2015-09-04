@@ -64,7 +64,10 @@ class RenameUserHelper {
 	 * Gets wikis an IP address might have edits on
 	 *
 	 * @author Daniel Grunwell (Grunny)
+	 *
 	 * @param String $ipAddress The IP address to lookup
+	 *
+	 * @return array
 	 */
 	public static function lookupIPActivity( $ipAddress ) {
 		global $wgDevelEnvironment, $wgSpecialsDB;
