@@ -122,33 +122,20 @@ class Hooks {
 	public static function onSkinTemplateNavigation( $skin, &$links ) {
 		global $wgCityId, $wgTitle;
 
-		if ( $skin->getSkinName() !== 'monobook' ||
-			!self::userCanEditJsPage()
-		) {
+		if ( $skin->getSkinName() !== 'monobook' || !self::userCanEditJsPage() ) {
 			return true;
 		}
 
-		/* Get page status */
-		$pageStatus = \F::app()->sendRequest(
-			'ContentReviewApiController',
-			'getPageStatus',
-			[
-				'wikiId' => $wgCityId,
-				'pageId' => $wgTitle->getArticleID(),
-			],
-			true
-		)->getData();
-
-		/* Determine review status */
 		$latestRevisionId = $wgTitle->getLatestRevID();
-		$contentReviewModuleController = new \ContentReviewModuleController();
-		$latestStatus = $contentReviewModuleController->getLatestRevisionStatus( $latestRevisionId, $pageStatus );
+		$revisionModel = new ReviewModel();
+		$revisionInfo = $revisionModel->getRevisionInfo( $wgCityId, $wgTitle->getArticleID(), $latestRevisionId );
+		$latestStatusName = $revisionModel->getStatusName( $revisionInfo['status'], $latestRevisionId );
 
 		/* Add link to nav tabs customized with status class name */
 		$links['views'][self::CONTENT_REVIEW_MONOBOOK_DROPDOWN_ACTION] = [
 			'href' => '#',
 			'text' => wfMessage( 'content-review-status-link-text' )->escaped(),
-			'class' => 'content-review-status ' . 'content-review-cactions-status-' . $latestStatus,
+			'class' => 'content-review-status ' . 'content-review-cactions-status-' . $latestStatusName,
 		];
 
 		return true;
