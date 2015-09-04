@@ -116,11 +116,11 @@ class Hooks {
 	 * Adds review status item to top nav tabs in Monobook skin.
 	 * This is an entrypoint for checking review status and submitting changes for review/
 	 * This is attached to the MediaWiki 'SkinTemplateNavigation' hook.
-	 * @param SkinTemplate $skin
+	 * @param SkinTemplate $skin Object of specific skin class that extends SkinTemplate
 	 * @param array $links Navigation links
 	 * @return bool true
 	 */
-	public static function onSkinTemplateNavigation( $skin, &$links ) {
+	public static function onSkinTemplateNavigation( \SkinTemplate $skin, &$links ) {
 		global $wgCityId;
 		if ( !in_array( $skin->getSkinName(), [ 'monobook', 'uncyclopedia' ] )  || !self::userCanEditJsPage() ) {
 			return true;
