@@ -62,6 +62,9 @@ $wgHooks['TitleGetLangVariants'][] = 'Wikia::onTitleGetLangVariants';
 # don't purge all thumbs - PLATFORM-161
 $wgHooks['LocalFilePurgeThumbnailsUrls'][] = 'Wikia::onLocalFilePurgeThumbnailsUrls';
 
+$wgHooks['BeforePageDisplay'][] = 'Wikia::onBeforePageDisplay';
+$wgHooks['GetPreferences'][] = 'Wikia::onGetPreferences';
+
 /**
  * This class has only static methods so they can be used anywhere
  *
@@ -105,8 +108,12 @@ class Wikia {
 	public static function initAsyncRequest( $wikiId, $user = null ) {
 		$wg = F::app()->wg;
 		$wg->CityID = $wikiId;
-		$wg->DBname = WikiFactory::IDtoDB( $wikiId );
-		$wg->Server = trim( WikiFactory::DBtoUrl( $wg->DBname ), '/' );
+
+		// Do NOT set $wgDbname here.  The wfGetDB method will no longer do
+		// what you think it should since it pulls from a LoadBalance cache
+		// that likely already has cached DB handles for the previous value
+		$dbName = WikiFactory::IDtoDB( $wikiId );
+		$wg->Server = trim( WikiFactory::DBtoUrl( $dbName ), '/' );
 
 		if ( !empty( $wg->DevelEnvironment ) ) {
 			$wg->Server = WikiFactory::getLocalEnvURL( $wg->Server );
@@ -220,8 +227,7 @@ class Wikia {
      *
      * @return string composed HTML/XML code
      */
-    static public function errormsg($what)
-    {
+    static public function errormsg($what) {
         return Xml::element("span", array( "style"=> "color: #fe0000; font-weight: bold;"), $what);
     }
 
@@ -242,8 +248,7 @@ class Wikia {
      *
      * @return string composed HTML/XML code
      */
-    static public function linkTag($url, $title, $attribs = null )
-    {
+    static public function linkTag($url, $title, $attribs = null ) {
         return Xml::element("a", array( "href"=> $url), $title);
     }
 
@@ -260,8 +265,7 @@ class Wikia {
      *
      * @return string composed HTML/XML code
      */
-    static public function successmsg($what)
-    {
+    static public function successmsg($what) {
         return Xml::element("span", array( "style"=> "color: darkgreen; font-weight: bold;"), $what);
     }
 
@@ -1584,10 +1588,12 @@ class Wikia {
 	 * Add variables to SkinTemplate
 	 */
 	static public function onSkinTemplateOutputPageBeforeExec(SkinTemplate $skinTemplate, QuickTemplate $tpl) {
+		global $wgDevelEnvironment, $wgStagingEnvironment, $wgDefaultRobotPolicy;
 		wfProfileIn(__METHOD__);
 
 		$out = $skinTemplate->getOutput();
 		$title = $skinTemplate->getTitle();
+		$stagingHeader = $skinTemplate->getRequest()->getHeader('X-Staging');
 
 		# quick hack for rt#15730; if you ever feel temptation to add 'elseif' ***CREATE A PROPER HOOK***
 		if (($title instanceof Title) && NS_CATEGORY == $title->getNamespace()) { // FIXME
@@ -1597,6 +1603,20 @@ class Wikia {
 		// Pass parameters to skin, see: Login friction project (Marooned)
 		$tpl->set( 'thisurl', $title->getPrefixedURL() );
 		$tpl->set( 'thisquery', $skinTemplate->thisquery );
+
+		if( !empty( $wgDevelEnvironment ) || !empty( $wgStagingEnvironment ) ) {
+			$out->setRobotPolicy( $wgDefaultRobotPolicy );
+		}
+
+		if( !empty($stagingHeader) ) {
+		// we've got special cases like externaltest.* and showcase.* aliases:
+		// https://github.com/Wikia/wikia-vcl/blob/master/wikia.com/control-stage.vcl#L15
+		// those cases for backend look like production,
+		// therefore we don't want to base only on environment variables
+		// but on HTML headers as well, see:
+		// https://github.com/Wikia/app/blob/dev/redirect-robots.php#L285
+			$out->setRobotPolicy( 'noindex,nofollow' );
+		}
 
 		wfProfileOut(__METHOD__);
 		return true;
@@ -1619,11 +1639,18 @@ class Wikia {
 			wfDebug("Wikia: using resource loader debug mode\n");
 		}
 
-		$wgUseSiteJs = $request->getBool( 'usesitejs', $wgUseSiteJs ) !== false;
-		$wgUseSiteCss = $request->getBool( 'usesitecss', $wgUseSiteCss ) !== false;
-		$wgAllowUserJs = $request->getBool( 'useuserjs',
-			$request->getBool( 'allowuserjs', $wgAllowUserJs ) ) !== false;
-		$wgAllowUserCss = $request->getBool( 'useusercss',
+		$wgUseSiteJs = $wgUseSiteJs && $request->getBool( 'usesitejs', $wgUseSiteJs ) !== false;
+		$wgUseSiteCss = $wgUseSiteCss && $request->getBool( 'usesitecss', $wgUseSiteCss ) !== false;
+
+		// Don't enable user JS unless explicitly enabled by the user (CE-2509)
+		if ( !$user->getGlobalPreference( 'enableuserjs', false ) ) {
+			$wgAllowUserJs = false;
+		} else {
+			$wgAllowUserJs = $wgAllowUserJs && $request->getBool( 'useuserjs',
+				$request->getBool( 'allowuserjs', $wgAllowUserJs ) ) !== false;
+		}
+
+		$wgAllowUserCss = $wgAllowUserCss && $request->getBool( 'useusercss',
 			$request->getBool( 'allowusercss', $wgAllowUserCss ) ) !== false;
 		$wgBuckySampling = $request->getInt( 'buckysampling', $wgBuckySampling );
 
@@ -2309,5 +2336,43 @@ class Wikia {
 		}
 
 		return $countryNames;
+	}
+
+	/**
+	 * Displays a warning when viewing site JS pages if JavaScript is disabled
+	 * on the wikia.
+	 *
+	 * @param  OutputPage $out  The OutputPage object
+	 * @param  Skin       $skin The Skin object that will be used to render the page.
+	 * @return boolean
+	 */
+	public static function onBeforePageDisplay( OutputPage $out, Skin $skin ) {
+		global $wgUseSiteJs;
+		$title = $out->getTitle();
+
+		if ( !$wgUseSiteJs && $title->isJsPage() ) {
+			\BannerNotificationsController::addConfirmation(
+				wfMessage( 'usesitejs-disabled-warning' )->escaped(),
+				\BannerNotificationsController::CONFIRMATION_NOTIFY
+			);
+		}
+
+		return true;
+	}
+
+	/**
+	 * Add a preference for enabling personal JavaScript.
+	 *
+	 * @param  User    $user        The current user.
+	 * @param  array   $preferences The preferences array.
+	 * @return boolean
+	 */
+	public static function onGetPreferences( User $user, array &$preferences ) {
+		$preferences['enableuserjs'] = array(
+			'type' => 'toggle',
+			'label-message' => 'tog-enableuserjs',
+			'section' => 'under-the-hood/advanced-displayv2',
+		);
+		return true;
 	}
 }

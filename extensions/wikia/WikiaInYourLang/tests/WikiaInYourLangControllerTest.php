@@ -26,6 +26,17 @@ class WikiaInYourLangControllerTest extends WikiaBaseTest {
 
 	public function getDomainsList() {
 		return [
+			['http://rio.wikia.com', 'rio.wikia.com'],
+			['http://ru.rio.wikia.com', 'rio.wikia.com'],
+			['http://zz.wikia.com', 'zz.wikia.com'],
+			['http://ja.zz.wikia.com', 'zz.wikia.com'],
+			['http://ru.rio.mari.wikia-dev.com', 'rio.wikia.com'],
+			['http://destiny.mari.wikia-dev.com', 'destiny.wikia.com'],
+			['http://ja.destiny.mari.wikia-dev.com', 'destiny.wikia.com'],
+			['http://sandbox-s3.rio.wikia.com', 'rio.wikia.com'],
+			['http://sandbox-s3.ru.rio.wikia.com', 'rio.wikia.com'],
+			['http://sandbox-s3.zz.wikia.com', 'zz.wikia.com'],
+			['http://verify.pt-br.123.wikia.com', '123.wikia.com'],
 			['http://naruto.wikia.com', 'naruto.wikia.com'],
 			['http://zh.naruto.wikia.com', 'naruto.wikia.com'],
 			['http://pt-br.naruto.wikia.com', 'naruto.wikia.com'],
@@ -39,6 +50,7 @@ class WikiaInYourLangControllerTest extends WikiaBaseTest {
 			['http://verify.zh.naruto.wikia.com', 'naruto.wikia.com'],
 			['http://verify.pt-br.naruto.wikia.com', 'naruto.wikia.com'],
 			['Just a random string', false],
+			['', false]
 		];
 	}
 

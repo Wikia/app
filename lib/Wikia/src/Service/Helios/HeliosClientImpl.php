@@ -1,6 +1,5 @@
 <?php
-namespace Wikia\Helios;
-use Wikia\Util\RequestId;
+namespace Wikia\Service\Helios;
 use Wikia\Util\GlobalStateWrapper;
 
 /**
@@ -8,15 +7,26 @@ use Wikia\Util\GlobalStateWrapper;
  *
  * This is a naive implementation.
  */
-class Client
+class HeliosClientImpl implements HeliosClient
 {
+	const BASE_URI = "helios_base_uri";
+	const CLIENT_ID = "client_id";
+	const CLIENT_SECRET = "client_secret";
+
 	protected $baseUri;
 	protected $clientId;
 	protected $clientSecret;
 	protected $status;
-	
+
 	/**
+	 * @Inject({
+	 *   Wikia\Service\Helios\HeliosClientImpl::BASE_URI,
+	 *   Wikia\Service\Helios\HeliosClientImpl::CLIENT_ID,
+	 *   Wikia\Service\Helios\HeliosClientImpl::CLIENT_SECRET})
 	 * The constructor.
+	 * @param string $baseUri
+	 * @param string $clientId
+	 * @param string $clientSecret
 	 */
 	public function __construct( $baseUri, $clientId, $clientSecret )
 	{
@@ -84,7 +94,7 @@ class Client
 		$output = json_decode( $request->getContent() );
 
 		if ( !$output ) {
-			throw new ClientException( 'Invalid response.' );
+			throw new ClientException ( 'Invalid response.' );
 		}
 
 		return $output;
@@ -141,11 +151,28 @@ class Client
 		);
 	}
 
-    /**
-     * A shortcut method for register requests.
-     */
-    public function register( $username, $password, $email, $birthdate, $langCode )
-    {
+	/**
+	 * A shortcut method for token invalidation requests.
+	 *
+	 * @param $token string - a token to be invalidated
+	 *
+	 * @return string - json encoded response
+	 */
+	public function invalidateToken( $token )
+	{
+		return $this->request(
+			sprintf('token/%s', $token),
+			[],
+			[],
+			[ 'method' => 'DELETE' ]
+		);
+	}
+
+	/**
+	* A shortcut method for register requests.
+	*/
+	public function register( $username, $password, $email, $birthdate, $langCode )
+	{
 			// Convert the array to URL-encoded query string, so the Content-Type
 			// for the POST request is application/x-www-form-urlencoded.
 			// It would be multipart/form-data which is not supported
@@ -164,6 +191,6 @@ class Client
 				$postData,
 				[ 'method'	=> 'POST' ]
 			);
-    }
+	}
 
 }

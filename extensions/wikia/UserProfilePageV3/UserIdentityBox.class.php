@@ -210,10 +210,13 @@ class UserIdentityBox {
 
 		if (empty($memcData)) {
 			foreach (array('location', 'occupation', 'gender', 'birthday', 'website', 'twitter', 'fbPage', 'hideEditsWikis') as $key) {
-				if (!in_array($key, array('gender', 'birthday'))) {
-					$data[$key] = $this->user->getGlobalAttribute($key);
-				} else {
+				if ( $key === 'hideEditsWikis' ) {
+					// hideEditsWikis is a preference, everything else is an attribute
+					$data[$key] = $this->user->getGlobalPreference($key);
+				} elseif ( $key === 'gender' || $key === 'birthday' ) {
 					$data[$key] = $this->user->getGlobalAttribute(self::USER_PROPERTIES_PREFIX . $key);
+				} else {
+					$data[$key] = $this->user->getGlobalAttribute($key);
 				}
 			}
 		} else {
@@ -314,7 +317,10 @@ class UserIdentityBox {
 						}
 					}
 
-					if ($option === 'gender') {
+					if ($option === 'hideEditsWikis') {
+						// hideEditsWikis is a preference, everything else is an attribute
+						$this->user->setGlobalPreference($option, $data->$option);
+					} elseif ($option === 'gender') {
 						$this->user->setGlobalAttribute(self::USER_PROPERTIES_PREFIX . $option, $data->$option);
 					} else {
 						$this->user->setGlobalAttribute($option, $data->$option);
@@ -350,15 +356,15 @@ class UserIdentityBox {
 		}
 
 		if( !$this->hasUserEditedMastheadBefore($wgCityId) ) {
-			$this->user->setGlobalAttribute(self::USER_EDITED_MASTHEAD_PROPERTY . $wgCityId, true);
-			$this->user->setGlobalAttribute(self::USER_FIRST_MASTHEAD_EDIT_DATE_PROPERTY . $wgCityId, date('YmdHis'));
+			$this->user->setGlobalFlag(self::USER_EDITED_MASTHEAD_PROPERTY . $wgCityId, true);
+			$this->user->setGlobalFlag(self::USER_FIRST_MASTHEAD_EDIT_DATE_PROPERTY . $wgCityId, date('YmdHis'));
 
 			$this->addTopWiki($wgCityId);
 			$changed = true;
 		}
 
 		if (true === $changed) {
-			$this->user->setGlobalAttribute(self::USER_EVER_EDITED_MASTHEAD, true);
+			$this->user->setGlobalFlag(self::USER_EVER_EDITED_MASTHEAD, true);
 
 			$this->user->saveSettings();
 			$this->saveMemcUserIdentityData($data);

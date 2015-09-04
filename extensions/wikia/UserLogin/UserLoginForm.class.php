@@ -262,7 +262,7 @@ class UserLoginForm extends LoginForm {
 			/*
 			 * Remove when SOC-217 ABTest is finished
 			 */
-			$u->setGlobalAttribute(
+			$u->setGlobalPreference(
 				UserLoginSpecialController::NOT_CONFIRMED_LOGIN_OPTION_NAME,
 				$isAllowRegisterUnconfirmed
 					? UserLoginSpecialController::NOT_CONFIRMED_LOGIN_ALLOWED

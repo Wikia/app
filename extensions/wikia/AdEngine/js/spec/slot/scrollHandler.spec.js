@@ -59,17 +59,31 @@ describe('ext.wikia.adEngine.slot.scrollHandler', function () {
     }
 
     it('Prefooters should be refreshed', function () {
+        var scrollHandler = getModule();
         spyOn(mocks.win.adslots2, 'push');
         mocks.win.scrollY = 2000;
-        getModule().init();
+
+        scrollHandler.init();
+
         expect(mocks.win.adslots2.push).toHaveBeenCalled();
+        expect(scrollHandler.getReloadedViewCount('PREFOOTER_LEFT_BOXAD')).toEqual(1);
     });
 
     it('Prefooters should not be refreshed', function () {
-        spyOn(mocks.win.adslots2, 'push')
+        var scrollHandler = getModule();
+        spyOn(mocks.win.adslots2, 'push');
         mocks.win.scrollY = 1000;
-        getModule().init();
+
+        scrollHandler.init();
+
         expect(mocks.win.adslots2.push).not.toHaveBeenCalled();
+        expect(scrollHandler.getReloadedViewCount('PREFOOTER_LEFT_BOXAD')).toEqual(0);
+    });
+
+    it('RV count of unsupported slot equals null', function () {
+        var scrollHandler = getModule();
+
+        expect(scrollHandler.getReloadedViewCount('TOP_LEADERBOARD')).toBe(null);
     });
 
 });

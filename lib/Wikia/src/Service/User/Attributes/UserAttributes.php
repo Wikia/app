@@ -13,20 +13,15 @@ class UserAttributes {
 	/** @var string[string][string] */
 	private $attributes;
 
-	/** @var string[string] */
-	private $defaultAttributes;
-
 	/**
 	 * @Inject({
 	 *    Wikia\Service\User\Attributes\AttributeService::class,
-	 *    Wikia\Service\User\Attributes\UserAttributes::DEFAULT_ATTRIBUTES
 	 * })
 	 * @param AttributeService $attributeService
 	 * @param string[string] $defaultAttributes
 	 */
-	public function __construct( AttributeService $attributeService, $defaultAttributes ) {
+	public function __construct( AttributeService $attributeService ) {
 		$this->attributeService = $attributeService;
-		$this->defaultAttributes = $defaultAttributes;
 		$this->attributes = [];
 	}
 
@@ -37,12 +32,8 @@ class UserAttributes {
 	public function getAttribute( $userId, $attributeName, $default = null ) {
 		$attributes = $this->loadAttributes( $userId );
 
-		if ( !empty( $attributes[$attributeName] ) ) {
+		if ( !is_null( $attributes[$attributeName] ) ) {
 			return $attributes[$attributeName];
-		}
-
-		if ( !empty( $this->defaultAttributes[$attributeName] ) ) {
-			return  $this->defaultAttributes[$attributeName];
 		}
 
 		return $default;
@@ -64,19 +55,35 @@ class UserAttributes {
 	 * @param string $userId
 	 * @param Attribute $attribute
 	 */
-	public function setAttribute( $userId, $attribute ) {
+	public function setAttribute( $userId, Attribute $attribute ) {
 		if ( $this->isAnonUser( $userId ) ) {
 			return;
 		}
 
-		$this->loadAttributes( $userId );
 		$this->setAttributeInService( $userId, $attribute );
 		$this->setAttributeInCache( $userId, $attribute );
-
 	}
 
 	private function isAnonUser( $userId ) {
 		return $userId === 0;
+	}
+
+	/**
+	 * @param $userId
+	 * @param array $attributes
+	 */
+	public function setAttributesInCache( $userId, array $attributes ) {
+		foreach ( $attributes as $attributeKey => $attributeValue ) {
+			$this->setAttributeInCache( $userId, new Attribute( $attributeKey, $attributeValue ) );
+		}
+	}
+
+	/**
+	 * @param $userId
+	 * @param Attribute $attribute
+	 */
+	private function setAttributeInCache( $userId, Attribute $attribute ) {
+		$this->attributes[$userId][$attribute->getName()] = $attribute->getValue();
 	}
 
 	/**
@@ -87,15 +94,20 @@ class UserAttributes {
 		$this->attributeService->set( $userId, $attribute );
 	}
 
-	/**
-	 * @param $userId
-	 * @param Attribute $attribute
-	 */
-	private function setAttributeInCache( $userId, $attribute ) {
-		$this->attributes[$userId][$attribute->getName()] = $attribute->getValue();
+	public function deleteAttribute( $userId, Attribute $attribute ) {
+		if ( $this->isAnonUser( $userId ) ) {
+			return;
+		}
+
+		$this->deleteAttributeFromService( $userId, $attribute );
+		$this->deleteAttributeFromCache( $userId, $attribute );
 	}
 
-	public function deleteAttribute( $userId, $attribute ) {
+	private function deleteAttributeFromCache( $userId, Attribute $attribute ) {
+		unset( $this->attributes[$userId][$attribute->getName()] );
+	}
+
+	private function deleteAttributeFromService( $userId, Attribute $attribute ) {
 		$this->attributeService->delete( $userId, $attribute );
 	}
 }

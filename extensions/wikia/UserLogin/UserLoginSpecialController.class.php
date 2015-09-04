@@ -427,7 +427,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 					/*
 					 * Remove when SOC-217 ABTest is finished
 					 */
-					$this->wg->User->getGlobalAttribute( self::NOT_CONFIRMED_LOGIN_OPTION_NAME ) !== self::NOT_CONFIRMED_LOGIN_ALLOWED
+					$this->wg->User->getGlobalPreference( self::NOT_CONFIRMED_LOGIN_OPTION_NAME ) !== self::NOT_CONFIRMED_LOGIN_ALLOWED
 					/*
 					 * end remove
 					 */

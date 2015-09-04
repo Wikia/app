@@ -139,8 +139,9 @@ class Node {
 		foreach ( $this->getChildNodes() as $item ) {
 			$result = array_merge( $result, $item->getSource() );
 		}
+		$uniqueParams = array_unique( $result );
 
-		return array_unique( $result );
+		return array_values( $uniqueParams );
 	}
 
 	protected function getValueWithDefault( \SimpleXMLElement $xmlNode ) {

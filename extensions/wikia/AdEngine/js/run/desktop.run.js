@@ -12,6 +12,7 @@ require([
 	'ext.wikia.adEngine.slot.scrollHandler',
 	'ext.wikia.adEngine.slotTracker',
 	'ext.wikia.adEngine.slotTweaker',
+	'ext.wikia.adEngine.sourcePoint',
 	'wikia.krux',
 	'wikia.window'
 ], function (
@@ -26,6 +27,7 @@ require([
 	scrollHandler,
 	slotTracker,
 	slotTweaker,
+	sourcePoint,
 	krux,
 	win
 ) {
@@ -76,6 +78,7 @@ require([
 		adEngine.run(adConfigDesktop, win.adslots2, 'queue.desktop');
 
 		scrollHandler.init();
+		sourcePoint.initDetection();
 
 		// Krux
 		krux.load(kruxSiteId);

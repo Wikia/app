@@ -21,7 +21,7 @@ class ApiAddMediaTemporary extends ApiAddMedia {
 	}
 
 	private function executeImage() {
-		global $wgContLanguageCode, $wgEnableCuratedContentUnauthorizedSave;
+		global $wgContLanguageCode, $wgDisableAnonymousEditing;
 		$duplicate = $this->getFileDuplicate( $this->mRequest->getFileTempName( 'file' ) );
 		if ( $duplicate ) {
 			return [
@@ -40,11 +40,9 @@ class ApiAddMediaTemporary extends ApiAddMedia {
 				$this->mRequest->getUpload( 'file' )
 			);
 
-			// If wiki is Japanese content, then we do not check permissions. INT-102
-			// Enable unauthorized save for Curated Main Page Editor
-			// if $wgEnableCuratedContentUnauthorizedSave not empty (CONCF-741)
-			// Ticket for removal wg check: CONCF-900
-			if ( $wgContLanguageCode !== 'ja' && empty( $wgEnableCuratedContentUnauthorizedSave ) ) {
+			// If wiki is Japanese content, then we check if anonymous edit is allowed. INT-158
+			// This condition will be changed as soon as Mercury has login for all wikis.
+			if ( $wgContLanguageCode != 'ja' || $wgDisableAnonymousEditing ) {
 				$this->checkPermissions();
 			}
 

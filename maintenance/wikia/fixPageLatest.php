@@ -8,6 +8,7 @@
  *
  * @see BAC-278
  * @see PLATFORM-1206
+ * @see PLATFORM-1311
  */
 
 require_once( dirname( __FILE__ ) . '/../Maintenance.php' );
@@ -57,14 +58,15 @@ class FixPageLatest extends Maintenance {
 		$dbr = $this->getDB( DB_SLAVE );
 
 		# select page_id, page_title, page_touched, rev_id from page left join revision on rev_page = page_id where page_latest = 0
-		$this->output( 'Looking for pages with broken page_latest entry...' );
+		$this->output( 'Looking for pages with broken page_latest entry (set to 0)...' );
 		$res = $dbr->select(
 			['page', 'revision'],
 			[
 				'page_id',
 				'page_title',
+				'page_namespace',
 				'page_len',
-				# 'page_touched',
+				'page_touched',
 				'rev_id'
 			],
 			['page_latest' => 0],
@@ -91,7 +93,7 @@ class FixPageLatest extends Maintenance {
 			$revId = intval( $row->rev_id );
 
 			if ( $isDryRun ) {
-				$this->output( "* {$row->page_title} affected - would set page_latest to {$revId}\n" );
+				$this->output( "* {$row->page_title} affected (#{$row->page_id} / ns #{$row->page_namespace})- would set page_latest to {$revId} (page was touched at {$row->page_touched})\n" );
 				continue;
 			}
 

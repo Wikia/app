@@ -768,9 +768,14 @@ class CurlHttpRequest extends MWHttpRequest {
 
 		// Wikia change PLATFORM-1298 michal@wikia-inc.com
 		if ( $this->parsedUrl['scheme'] == 'https' ) {
-			$this->curlOptions[CURLOPT_PROXY] = null;
-		} else {
+			$this->proxy = null;
+		}
+
+		// PLATFORM-1317: only set when the proxy is not an empty value [macbre]
+		if ( $this->proxy && !$this->noProxy ) {
 			$this->curlOptions[CURLOPT_PROXY] = $this->proxy;
+
+			wfDebug( sprintf( "%s: setting a proxy to '%s'\n", __METHOD__, $this->proxy ) );
 		}
 		// End of Wikia change
 

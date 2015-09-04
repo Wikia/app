@@ -19,5 +19,7 @@ $messages = array_merge( $messages, array(
 'vertical-music' => 'Music vertical name',
 'vertical-movies' => 'Movies vertical name',
 
+'usesitejs-disabled-warning' => 'Warning message displayed on site JS pages when JavaScript customisations are disabled.',
+'tog-enableuserjs' => 'Label for the checkbox on Special:Preferences to enable personal JavaScript.',
 ) );
 

@@ -9,26 +9,54 @@ class CuratedContentHelper {
 	const STR_CATEGORY = 'category';
 	const STR_VIDEO = 'video';
 
+	//TODO: Temporary, remove with CONCF-1095
+	private static function isAllowedWikia() {
+		$host = RequestContext::getMain()->getRequest()->getHeader('HOST');
+
+		return (bool) preg_match(
+			'/community\.wikia|spolecznosc|yhteiso|communaute|comunidade|comunidad|glee|castle-clash|clashofclans|mobileregressiontesting|concf/i',
+			$host
+		);
+	}
+
+	public static function shouldDisplayToolButton() {
+		global $wgEnableCuratedContentExt, $wgUser;
+
+		return WikiaPageType::isMainPage() &&
+			self::isAllowedWikia() &&
+			!empty( $wgEnableCuratedContentExt ) &&
+			$wgUser->isAllowed( 'curatedcontent' );
+	}
+
 	public function processSections( $sections ) {
 		$processedSections = [ ];
-		if ( !empty( $sections ) && is_array( $sections ) ) {
+
+		if ( is_array( $sections ) ) {
 			foreach ( $sections as $section ) {
-				$processedSections[ ] = $this->processLogicForSection( $section );
+				$processedSections[] = $this->processLogicForSection( $section );
 			}
 		}
-		return $processedSections;
+
+		// remove null elements from array
+		return $this->removeEmptySections( $processedSections );
+	}
+
+	public function removeEmptySections( $sections ) {
+		return array_values( array_filter( $sections, function( $section ) { return !is_null( $section ); } ) );
 	}
 
 	public function processLogicForSection( $section ) {
-		$section['image_id'] = (int)$section['image_id']; // fallback to 0 if it's not set in request
+		if ( empty ( $section['items'] ) || !is_array( $section['items'] ) ) {
+			// return null if we don't have any items inside section
+			return null;
+		}
 
+		$section['image_id'] = (int)$section['image_id']; // fallback to 0 if it's not set in request
 		$this->processCrop( $section );
 
-		if ( !empty( $section['items'] ) && is_array( $section['items'] ) ) {
-			foreach ( $section['items'] as &$item ) {
-				$this->fillItemInfo( $item );
-				$this->processCrop( $item );
-			}
+		foreach ( $section['items'] as &$item ) {
+			$this->fillItemInfo( $item );
+			$this->processCrop( $item );
 		}
 
 		return $section;
@@ -123,8 +151,7 @@ class CuratedContentHelper {
 
 	public static function getImageUrl( $id, $imageSize = 50 ) {
 		$thumbnail = (new ImageServing( [ $id ], $imageSize, $imageSize ))->getImages( 1 );
-
-		return !empty( $thumbnail ) ? $thumbnail[$id][0]['url'] : '';
+		return !empty( $thumbnail ) ? $thumbnail[$id][0]['url'] : null;
 	}
 
 	private function getVideoInfo( $title ) {
@@ -148,21 +175,37 @@ class CuratedContentHelper {
 		return $imageUrl;
 	}
 
+	/**
+	 * Get image ID and URL for an image base on passed data.
+	 * When imageId is null and articleId is an id of existing page ask image serving for first image's title.
+	 * Base on this title generate thumb URL.
+	 * When imageId isn't empty ask image serving for thumb URL.
+	 * @param int $imageId
+	 * @param int $articleId
+	 * @return array
+	 */
 	public static function findImageIdAndUrl( $imageId, $articleId = 0 ) {
 		$url = null;
 		$imageTitle = null;
 
 		if ( empty( $imageId ) ) {
 			$imageId = null;
-			$imageTitle = self::findFirstImageTitleFromArticle($articleId);
-		} else if ($imageId === $articleId) {
-			$url = self::getImageUrl($imageId);
+			if ( !empty( $articleId ) ) {
+				$imageTitle = self::findFirstImageTitleFromArticle( $articleId );
+				if ( $imageTitle instanceof Title && $imageTitle->exists() ) {
+					$imageId = $imageTitle->getArticleID();
+					$url = self::getUrlFromImageTitle( $imageTitle );
+				}
+			}
 		} else {
 			$imageTitle = Title::newFromID( $imageId );
+			if ( $imageTitle instanceof Title && $imageTitle->exists() ) {
+				$url = self::getUrlFromImageTitle( $imageTitle );
+			}
 		}
-		if ( $imageTitle instanceof Title && $imageTitle->exists() ) {
-			$url = self::getUrlFromImageTitle( $imageTitle );
-			$imageId = $imageTitle->getArticleId();
+
+		if ( empty( $url ) ) {
+			$url = self::getImageUrl( $imageId );
 		}
 
 		return [ $imageId, $url ];
