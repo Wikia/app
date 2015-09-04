@@ -2939,6 +2939,15 @@ $templates
 		if ( $wgUseSiteJs ) {
 			$extraQuery = [];
 
+			if ( $wgEnableContentReviewExt ) {
+				$contentReviewHelper = new \Wikia\ContentReview\Helper();
+				if ( $contentReviewHelper->isContentReviewTestModeEnabled() ) {
+					$extraQuery['current'] = $contentReviewHelper->getJsPagesTimestamp();
+				} else {
+					$extraQuery['reviewed'] = $contentReviewHelper->getReviewedJsPagesTimestamp();
+				}
+			}
+
 			$scripts .= $this->makeResourceLoaderLink( 'site', ResourceLoaderModule::TYPE_SCRIPTS,
 				/* $useESI = */ false, /* $extraQuery = */ $extraQuery, /* $loadCall = */ $inHead
 			);
