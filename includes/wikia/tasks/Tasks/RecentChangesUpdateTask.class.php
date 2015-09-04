@@ -34,7 +34,9 @@ class RecentChangesUpdateTask extends BaseTask {
 		global $wgRCMaxAge;
 
 		$dbw = wfGetDB( DB_MASTER );
+
 		$rows = 0;
+		$rowsBefore = $dbw->estimateRowCount( 'recentchanges', '*', '', __METHOD__ );
 
 		$cutoff = $dbw->timestamp( time() - $wgRCMaxAge );
 		do {
@@ -53,7 +55,8 @@ class RecentChangesUpdateTask extends BaseTask {
 		} while ( $rcIds );
 
 		$this->info( __METHOD__, [
-			'rows' => $rows
+			'rows' => $rows,
+			'rows_before' => $rowsBefore,
 		] );
 
 		return true;
