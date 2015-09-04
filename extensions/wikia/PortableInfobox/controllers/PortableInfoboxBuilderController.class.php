@@ -18,7 +18,7 @@ class PortableInfoboxBuilderController extends WikiaController {
 		$params = $this->getRequest()->getParams();
 
 		if ( $params[ 'title' ] ) {
-			$pageTitleObj = Title::newFromText( $params[ 'title' ] );
+			$pageTitleObj = Title::newFromText( $params[ 'title' ], NS_TEMPLATE );
 			if ( $pageTitleObj ) {
 				if ( $pageTitleObj->userCan( 'edit' ) ) {
 					$pageArticleObj = new Article( $pageTitleObj );

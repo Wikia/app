@@ -4,9 +4,10 @@ class PortableInfoboxBuilderService extends WikiaService {
 
 	/**
 	 * @param $builderData
+	 *
 	 * @return string
 	 *
-	 *  @see PortableInfoboxBuilderServiceTest:: translationsDataProvider
+	 * @see PortableInfoboxBuilderServiceTest:: translationsDataProvider
 	 */
 	public function translate( $builderData ) {
 		$out = "";
@@ -47,6 +48,8 @@ class PortableInfoboxBuilderService extends WikiaService {
 			$xml->addAttribute( 'source', $node->source );
 		}
 		foreach ( $node->data as $key => $value ) {
+			// map defaultValue to default, as its js reserved key word
+			$key = strcasecmp( $key, 'defaultValue' ) == 0 ? 'default' : $key;
 			if ( is_object( $value ) ) {
 				$this->addNode( $value, $xml->addChild( $key ) );
 			} else {

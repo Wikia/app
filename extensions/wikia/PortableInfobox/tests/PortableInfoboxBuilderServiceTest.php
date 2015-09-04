@@ -23,7 +23,7 @@ class PortableInfoboxBuilderServiceTest extends WikiaBaseTest {
 			[ '{"data":[{"type":"data", "source":"asdf"}]}', '<infobox><data source="asdf"/></infobox>' ],
 			[ '{"data":[{"type":"data", "source":"asdf", "data": {"label": "asdfsda"}}]}',
 			  '<infobox><data source="asdf"><label>asdfsda</label></data></infobox>' ],
-			[ '{"data":[{"type":"title", "source":"title", "data": {"default": "{{PAGENAME}}"}}]}',
+			[ '{"data":[{"type":"title", "source":"title", "data": {"defaultValue": "{{PAGENAME}}"}}]}',
 			  '<infobox><title source="title"><default>{{PAGENAME}}</default></title></infobox>' ],
 			[ '{"data":[{"type":"group", "data": [{"type": "data", "source": "asdf"}]}]}',
 			  '<infobox><group><data source="asdf"/></group></infobox>' ],
