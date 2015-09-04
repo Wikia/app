@@ -7,6 +7,11 @@ define('ext.wikia.adEngine.adTracker', ['wikia.tracker', 'wikia.window'], functi
 
 	function encodeAsQueryString(extraParams) {
 		var out = [], key, keys = [], i, len;
+
+		if (window.ads.context.opts.sp) {
+			extraParams.sp = window.ads.context.opts.sp;
+		}
+
 		for (key in extraParams) {
 			if (extraParams.hasOwnProperty(key)) {
 				keys.push(key);
