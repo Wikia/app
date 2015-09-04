@@ -35,7 +35,7 @@ define('ext.wikia.adEngine.adContext', [
 	}
 
 	function isProperCountry(countryList) {
-		return (countryList && countryList.indexOf && countryList.indexOf(geo.getCountryCode()) > -1);
+		return !!(countryList && countryList.indexOf && countryList.indexOf(geo.getCountryCode()) > -1);
 	}
 
 	function isUrlParamSet(param) {
@@ -63,8 +63,19 @@ define('ext.wikia.adEngine.adContext', [
 
 		// SourcePoint integration
 		if (context.opts.sourcePointUrl) {
-			context.opts.sourcePoint = (isUrlParamSet('sourcepoint') ||
-				isProperCountry(instantGlobals.wgAdDriverSourcePointCountries));
+			context.opts.sourcePoint = isUrlParamSet('sourcepoint') ||
+				isProperCountry(instantGlobals.wgAdDriverSourcePointCountries);
+		}
+
+		// SourcePoint detection integration
+		if (context.opts.sourcePointDetectionUrl) {
+			context.opts.sourcePointDetection = isUrlParamSet('sourcepointdetection') ||
+				isProperCountry(instantGlobals.wgAdDriverSourcePointDetectionCountries);
+		}
+
+		// Showcase.*
+		if (isUrlParamSet('showcase')) {
+			context.opts.showcase = true;
 		}
 
 		// Targeting by page categories

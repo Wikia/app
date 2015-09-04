@@ -194,7 +194,7 @@
 			$('#fix-background').attr('checked', ThemeDesigner.settings['background-fixed'] === 'true');
 
 			// TODO: Remove IF statement after fluid layout global release
-			if (window.wgOasisResponsive) {
+			if (window.wgOasisResponsive || window.wgOasisBreakpoints) {
 				$('#not-split-background').change(function () {
 					ThemeDesigner.set('background-dynamic', $(this).attr('checked') ? 'false' : 'true');
 					if ($(this).attr('checked')) {
@@ -461,7 +461,7 @@
 			var noSplitOption = $('#CustomizeTab').find('.not-split-option');
 
 			// TODO: Remove IF statement after fluid layout global release
-			if (window.wgOasisResponsive) {
+			if (window.wgOasisResponsive || window.wgOasisBreakpoints) {
 				if (width < ThemeDesigner.minWidthForDynamicBackground) {
 					noSplitOption.css('display', 'none');
 					ThemeDesigner.backgroundType = 1;

@@ -18,11 +18,16 @@ function wfVerbatimExtension( $parser ) {
 
 // The callback function for converting the input text to HTML output
 function renderVerbatim( $input ) {
-	global $wgEditInterfaceWhitelist;
+	global $wgEditInterfaceWhitelist, $wgVerbatimBlacklist;
 
 	// Begin wikia change
-	if (!empty($wgEditInterfaceWhitelist) and in_array(ucfirst(trim($input)), $wgEditInterfaceWhitelist)) {
-		// Do not allow CSS transclusion into Verbatim tags
+	if (
+		( !empty( $wgEditInterfaceWhitelist )
+			&& in_array( ucfirst( trim( $input ) ), $wgEditInterfaceWhitelist ) )
+		|| ( !empty( $wgVerbatimBlacklist )
+			&& in_array( ucfirst( trim( $input ) ), $wgVerbatimBlacklist ) )
+	) {
+		// Do not allow transclusion into Verbatim tags
 		return "";
 	}
 	// End wikia change

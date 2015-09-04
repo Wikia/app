@@ -49,6 +49,7 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverKruxCountries';
 		$vars[] = 'wgAdDriverOpenXCountries';
 		$vars[] = 'wgAdDriverSourcePointCountries';
+		$vars[] = 'wgAdDriverSourcePointDetectionCountries';
 		$vars[] = 'wgAdDriverScrollHandlerCountries';
 		$vars[] = 'wgAdDriverTurtleCountries';
 		$vars[] = 'wgAmazonMatchCountries';
@@ -255,4 +256,5 @@ class AdEngine2Hooks {
 		}
 		return true;
 	}
+
 }

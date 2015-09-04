@@ -5,20 +5,15 @@ describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 	function noop() { return undefined; }
 
 	var googleApi,
-		adContextOpts = {},
 		mocks = {
-			adContext: {
-				getContext: function () {
-					return {
-						opts: adContextOpts
-					};
-				}
-			},
-			adTracker: {
-				track: noop
-			},
+			callback: noop,
 			element: {
 				getId: noop,
+				getNode: function () {
+					return {
+						querySelector: noop
+					};
+				},
 				setSizes: noop,
 				getSizes: noop,
 				getSlotPath: noop,
@@ -56,7 +51,6 @@ describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 		};
 
 	beforeEach(function () {
-		adContextOpts = {};
 		var GoogleTag = modules['ext.wikia.adEngine.provider.gpt.googleTag'](
 			document,
 			mocks.log,
@@ -138,5 +132,12 @@ describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 		});
 
 		expect(mocks.pubads.setTargeting.calls.count()).toEqual(2);
+	});
+
+	it('onAdCallback call given callback', function () {
+		spyOn(mocks, 'callback');
+		googleApi.onAdLoad('TOP_LEADERBOARD', mocks.element, {}, mocks.callback);
+
+		expect(mocks.callback).toHaveBeenCalled();
 	});
 });

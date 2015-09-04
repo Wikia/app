@@ -9,9 +9,6 @@ use Wikia\Logger\WikiaLogger;
  */
 class FacebookMapModel {
 
-	// Provide a way to clear all cached values when/if changing the caching logic
-	const cacheKeyVersion = 2;
-
 	const tableName = 'user_fbconnect';
 	const columnWikiaUserId = 'user_id';
 	const columnFacebookUserId = 'user_fbid';
@@ -102,7 +99,7 @@ class FacebookMapModel {
 	 * @return FacebookMapModel|null The mapping found
 	 */
 	public static function lookupFromWikiaID( $wikiaUserId ) {
-		$map = self::loadWithCache( [ self::paramWikiaUserId => $wikiaUserId ] );
+		$map = self::loadFromDB( [ self::paramWikiaUserId => $wikiaUserId ] );
 
 		return $map;
 	}
@@ -117,7 +114,7 @@ class FacebookMapModel {
 	 * @return FacebookMapModel|null
 	 */
 	public static function lookupFromFacebookID( $facebookId ) {
-		$map = self::loadWithCache( [ self::paramFacebookUserId => $facebookId ] );
+		$map = self::loadFromDB( [ self::paramFacebookUserId => $facebookId ] );
 
 		return $map;
 	}
@@ -143,47 +140,6 @@ class FacebookMapModel {
 		}
 
 		return $map;
-	}
-
-	protected static function loadWithCache( array $params = [] ) {
-		$wg = F::app()->wg;
-
-		$memkey = self::generateMemKey( $params );
-		$map = $wg->Memc->get( $memkey );
-
-		// If we got nothing back, try loading from the DB
-		if ( empty( $map ) ) {
-			$mapData = self::loadFromDB( $params );
-
-			if ( empty( $mapData ) ) {
-				return null;
-			}
-
-			$map = new FacebookMapModel( $mapData );
-
-			$wg->Memc->set( $memkey, $map );
-		}
-
-		return $map;
-	}
-
-	/**
-	 * Generate Memcache key for the wikia/FB user mapping
-	 *
-	 * @param array $params
-	 * @return string
-	 * @throws FacebookMapModelInvalidParamException
-	 */
-	protected static function generateMemKey( array $params = [] ) {
-		if ( !empty( $params[ self::paramWikiaUserId ] ) ) {
-			$memkey = wfSharedMemcKey( self::cacheKeyVersion, 'wikiaUserId', $params[ self::paramWikiaUserId ] );
-		} elseif ( !empty( $params[ self::paramFacebookUserId ] ) ) {
-			$memkey = wfSharedMemcKey( self::cacheKeyVersion, 'facebookUserId', $params[ self::paramFacebookUserId ] );
-		} else {
-			throw new FacebookMapModelInvalidParamException();
-		}
-
-		return $memkey;
 	}
 
 	protected static function loadFromDB( array $params = [] ) {
@@ -216,7 +172,10 @@ class FacebookMapModel {
 				];
 			} );
 
-		return $data;
+		if ( !empty($data) ) {
+			return new FacebookMapModel( $data );
+		}
+		return null;
 	}
 
 	protected static function getColumnAndValue( array $params = [] ) {
@@ -374,7 +333,6 @@ class FacebookMapModel {
 		$this->assertValidMapping();
 
 		$this->saveToDatabase();
-		$this->saveToCache();
 	}
 
 	/**
@@ -409,8 +367,6 @@ class FacebookMapModel {
 				'errorMessage' => $e->getMessage(),
 			] );
 		}
-
-		$this->saveToCache();
 	}
 
 	protected function saveToDatabase() {
@@ -436,37 +392,10 @@ class FacebookMapModel {
 		}
 	}
 
-	protected function saveToCache() {
-		$memkey = self::generateMemKey( [
-			self::paramFacebookUserId => $this->getFacebookUserId()
-		] );
-		F::app()->wg->Memc->set( $memkey, $this );
-
-		$memkey = self::generateMemKey( [
-			self::paramWikiaUserId => $this->getWikiaUserId()
-		] );
-		F::app()->wg->Memc->set( $memkey, $this );
-	}
-
 	/**
 	 * Delete this Wikia user ID <=> Facebook user ID mapping
 	 */
 	public function delete() {
-		$this->deleteMemcachedKeys();
-		$this->deleteFromDatabase();
-	}
-
-	protected function deleteMemcachedKeys() {
-		// Delete the Wikia user ID based key
-		$memkey = self::generateMemKey( [ self::paramWikiaUserId => $this->getWikiaUserId() ] );
-		F::app()->wg->Memc->delete( $memkey );
-
-		// Delete this Facebook user ID based key
-		$memkey = self::generateMemKey( [ self::paramFacebookUserId => $this->getFacebookUserId() ] );
-		F::app()->wg->Memc->delete( $memkey );
-	}
-
-	protected function deleteFromDatabase() {
 		$dbw = wfGetDB( DB_MASTER, null, F::app()->wg->ExternalSharedDB );
 		( new WikiaSQL() )
 			->DELETE( self::tableName )

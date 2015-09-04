@@ -243,6 +243,13 @@
         return kruxSegment;
     }
 
+    function trackBlocking(value) {
+        _gaWikiaPush(['set', 'dimension6', value]);
+        window.ga('ads.set', 'dimension6', value);
+        guaTrackAdEvent('ad/sourcepoint/detection', value);
+        guaTrackEvent('ads-sourcepoint-detection', 'impression', value);
+    }
+
     /**** High-Priority Custom Dimensions ****/
     _gaWikiaPush(
         ['set', 'dimension1', window.wgDBname],                        // DBname
@@ -346,6 +353,15 @@
 
     // Unleash
     _gaWikiaPush(['send', 'pageview']);
+
+    if (window.ads && window.ads.context.opts.showAds) {
+        document.addEventListener('sp.blocking', function () {
+            trackBlocking('Yes');
+        });
+        document.addEventListener('sp.not_blocking', function () {
+            trackBlocking('No');
+        });
+    }
 
     /**
      * Advertisement Tracker, pushed separatedly.

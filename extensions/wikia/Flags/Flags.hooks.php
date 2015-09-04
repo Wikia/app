@@ -170,7 +170,8 @@ class Hooks {
 						wfMessage( 'flags-notification-templates-extraction' )
 							->params( implode( ', ', array_keys( $flagTypesToExtract ) ) )
 							->parse(),
-						\BannerNotificationsController::CONFIRMATION_WARN
+						\BannerNotificationsController::CONFIRMATION_WARN,
+						true
 					);
 				}
 			}

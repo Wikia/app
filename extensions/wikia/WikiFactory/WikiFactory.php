@@ -189,7 +189,12 @@ class WikiFactory {
 	static public function getDomains( $city_id, $master = false ) {
 
 		if ( ! self::isUsed() ) {
-			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
+			WikiaLogger::instance()->error(
+				"WikiFactory is not used.",
+				[
+					"exception" => new Exception()
+				]
+			);
 			return false;
 		}
 

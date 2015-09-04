@@ -9,7 +9,8 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	'ext.wikia.adEngine.provider.gpt.googleTag',
 	'ext.wikia.adEngine.slotTweaker',
 	require.optional('ext.wikia.adEngine.provider.gpt.sourcePointTag'),
-	require.optional('ext.wikia.adEngine.provider.gpt.sraHelper')
+	require.optional('ext.wikia.adEngine.provider.gpt.sraHelper'),
+	require.optional('ext.wikia.adEngine.slot.scrollHandler')
 ], function (
 	log,
 	adContext,
@@ -19,7 +20,8 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	GoogleTag,
 	slotTweaker,
 	SourcePointTag,
-	sraHelper
+	sraHelper,
+	scrollHandler
 ) {
 	'use strict';
 
@@ -48,10 +50,19 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	 * @param {string}   extra.forcedAdType - ad type for callbacks info
 	 */
 	function pushAd(slotName, slotElement, slotPath, slotTargeting, extra) {
-		var element;
+		var count,
+			element;
 
 		extra = extra || {};
 		slotTargeting = JSON.parse(JSON.stringify(slotTargeting)); // copy value
+
+		if (scrollHandler) {
+			count = scrollHandler.getReloadedViewCount(slotName);
+			if (count !== null) {
+				slotTargeting.rv = count.toString();
+			}
+		}
+
 		element = new AdElement(slotName, slotPath, slotTargeting);
 
 		function callSuccess(adInfo) {
@@ -79,17 +90,19 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 			googleApi.addSlot(element);
 		}
 
-		function gptCallback(gptEvent) {
-			log(['gptCallback', element.getId(), gptEvent], 'info', logGroup);
-			element.updateDataParams(gptEvent);
-
-			var iframe = element.getNode().querySelector('div[id*="_container_"] iframe');
-
+		function onAdLoadCallback(slotElementId, gptEvent, iframe) {
 			// IE doesn't allow us to inspect GPT iframe at this point.
 			// Let's launch our callback in a setTimeout instead.
 			setTimeout(function () {
-				adDetect.onAdLoad(element.getId(), gptEvent, iframe, callSuccess, callError, extra.forcedAdType);
+				log(['onAdLoadCallback', slotElementId], 'info', logGroup);
+				adDetect.onAdLoad(slotElementId, gptEvent, iframe, callSuccess, callError, extra.forcedAdType);
 			}, 0);
+		}
+
+		function gptCallback(gptEvent) {
+			log(['gptCallback', element.getId(), gptEvent], 'info', logGroup);
+			element.updateDataParams(gptEvent);
+			googleApi.onAdLoad(slotName, element, gptEvent, onAdLoadCallback);
 		}
 
 		if (!googleApi.isInitialized()) {

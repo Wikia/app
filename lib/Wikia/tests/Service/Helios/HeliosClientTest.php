@@ -2,11 +2,14 @@
 
 namespace Wikia\Helios;
 
-class ClientTest extends \WikiaBaseTest {
+use Wikia\Service\Helios\HeliosClientImpl;
+
+
+class HeliosClientTest extends \WikiaBaseTest {
 
 	public function setUp()
 	{
-		$this->setupFile =  __DIR__ . '/../Helios.setup.php';
+
 		parent::setUp();
 	}
 
@@ -16,13 +19,13 @@ class ClientTest extends \WikiaBaseTest {
 
 		$this->mockStaticMethod( '\MWHttpRequest', 'canMakeRequests', false );
 
-		$client = new Client( 'http://example.com', 'id', 'secret' );
+		$client = new HeliosClientImpl( 'http://example.com', 'id', 'secret' );
 		$client->request( 'resource', [], [], [] );
 	}
 
 	public function testInvalidResponse()
 	{
-		$this->setExpectedException('Wikia\Helios\ClientException','Invalid response.');
+		$this->setExpectedException('Wikia\Service\Helios\ClientException','Invalid response.');
 
 		$this->mockStaticMethod( '\MWHttpRequest', 'canMakeRequests', true );
 
@@ -33,7 +36,7 @@ class ClientTest extends \WikiaBaseTest {
 
 		$this->mockStaticMethod( '\Http', 'request', $requestMock );
 
-		$client = new Client( 'http://example.com', 'id', 'secret' );
+		$client = new HeliosClientImpl( 'http://example.com', 'id', 'secret' );
 		$client->request( 'resource', [], [], [] );
 	}
 
@@ -48,7 +51,7 @@ class ClientTest extends \WikiaBaseTest {
 
 		$this->mockStaticMethod( '\Http', 'request', $requestMock );
 
-		$client = new Client( 'http://example.com', 'id', 'secret' );
+		$client = new HeliosClientImpl( 'http://example.com', 'id', 'secret' );
 		$this->assertInternalType( 'object', $client->request( 'resource', [], [], [] ) );
 	}
 

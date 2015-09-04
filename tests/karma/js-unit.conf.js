@@ -88,6 +88,7 @@ module.exports = function (config) {
 			'extensions/wikia/AdEngine/js/provider/gpt/*.js',
 			'extensions/wikia/AdEngine/js/slot/*.js',
 			'extensions/wikia/AdEngine/js/template/*.js',
+			'extensions/wikia/AdEngine/js/utils/*.js',
 
 			'extensions/wikia/AdEngine/js/spec/**/*.spec.js',
 
@@ -191,11 +192,7 @@ module.exports = function (config) {
 
 			// PageShare
 			'extensions/wikia/PageShare/scripts/PageShare.js',
-			'extensions/wikia/PageShare/scripts/spec/PageShare.spec.js',
-
-			//AuthComponent tests
-			'extensions/wikia/AuthModal/js/AuthComponent.js',
-			'extensions/wikia/AuthModal/js/spec/AuthComponent.js'
+			'extensions/wikia/PageShare/scripts/spec/PageShare.spec.js'
 		]
 	});
 };

@@ -4,10 +4,8 @@ $messages = array();
 $messages['en'] = array(
 	'insights' => 'Insights',
 	'insights-desc' => 'Insights description',
-
 	'insights-landing-title' => 'Welcome to Insights',
 	'insights-landing-lead' => 'Spend your time efficiently and make informed decisions about which articles you should edit with these insights. This feature is currently in beta. Love it? Hate it? Have ideas? Please submit your thoughts via [[Special:Contact/feedback]].',
-
 	'insights-list-no-items' => 'Great work! There are no articles in this queue that need attention.',
 	'insights-list-no-flag-types' => 'There are no articles using the selected flag type!',
 	'insights-list-header-page' => 'Page',
@@ -21,51 +19,40 @@ $messages['en'] = array(
 	'insights-notification-message-inprogress-uncategorizedpages' => 'This page needs categories added. ',
 	'insights-notification-message-fixed-uncategorizedpages' => 'Awesome, this page is now categorized.',
 	'insights-notification-next-item-uncategorizedpages' => 'Go to the next uncategorized article.',
-
 	'insights-list-subtitle-withoutimages' => 'Pages without images',
 	'insights-list-description-withoutimages' => 'Articles with images are read more often, shared more often, and perform better in search engines than those without images. Even adding a loosely related image can help.',
 	'insights-notification-message-inprogress-withoutimages' => 'This page needs an image. ',
 	'insights-notification-message-fixed-withoutimages' => 'Great, the page looks much better!',
 	'insights-notification-next-item-withoutimages' => ' Go to the next article that could use one.',
-
 	'insights-list-subtitle-deadendpages' => 'Pages without links',
 	'insights-list-description-deadendpages' => 'These pages should link to other articles on your wikia. Well-linked articles help readers discover more information about your topic and improve search engine rankings.',
 	'insights-notification-message-inprogress-deadendpages' => 'This page needs links to other pages. ',
 	'insights-notification-message-fixed-deadendpages' => 'Yay, this page is now linked!',
 	'insights-notification-next-item-deadendpages' => 'Go to the next article that needs links.',
-
 	'insights-list-subtitle-wantedpages' => 'Wanted pages',
 	'insights-list-description-wantedpages' => "There are redlinks pointing to these pages, but the pages don't exist! Create the article or make it a redirect to the correct article to help readers navigate your community.",
 	'insights-notification-message-inprogress-wantedpages' => 'This page needs to be created. ',
 	'insights-notification-message-fixed-wantedpages' => 'Thanks for making this page!',
 	'insights-notification-next-item-wantedpages' => 'Create another article.',
-
 	'insights-list-subtitle-nonportableinfoboxes' => 'Non-portable infoboxes',
 	'insights-list-description-nonportableinfoboxes' => "The following infoboxes are built with tables or divs, and should be converted to use the new [[Help:PortableInfoboxes|infobox markup]] so they render appropriately to all visitors. If you're stuck you can also [[w:c:community:Thread:841717|visit our forum thread and ask questions there]].",
 	'insights-notification-message-inprogress-nonportableinfoboxes' => 'This infobox needs to be updated with the new infobox markup.',
 	'insights-notification-message-fixed-nonportableinfoboxes' => 'Awesome! The infobox on this page has been converted.',
 	'insights-notification-next-item-nonportableinfoboxes' => 'Convert the next infobox.',
-
 	'insights-sort-label' => 'Sort by',
 	'insights-sort-pv7' => 'Page views, last week',
 	'insights-sort-pv28' => 'Page views, last 4 weeks',
 	'insights-sort-pvDiff' => 'Recent increase in page views',
 	'insights-sort-title' => 'Alphabetical',
-
 	'insights-notification-message-alldone' => 'Congratulations! There are no more items in this queue.',
 	'insights-notification-message-fixit' => "Let's fix it.",
 	'insights-notification-list-button' => 'Go back to the list.',
 	'insights-notification-see-more' => 'See more insights.',
-
 	'insights-wanted-by' => '$1 referral links',
 	'insights-used-on' => 'Used on $1 articles',
-
 	'insights-module-see-more' => 'See more insights',
-
 	'insights-altaction-convert' => 'Convert!',
 	'insights-altaction-seedraft' => 'View the draft',
-
-	/* Flags Insights */
 	'insights-flags-filter-label' => 'Filter pages by flag type',
 	'insights-notification-message-inprogress-flags' => 'This page is flagged.',
 	'insights-notification-message-set-flags' => 'Set flags for this page',
@@ -74,10 +61,8 @@ $messages['en'] = array(
 $messages['qqq'] = array(
 	'insights' => 'Name of the insights page',
 	'insights-desc' => 'Insights description',
-
 	'insights-landing-title' => 'A title of the Insights landing page appearing as an h1 element.',
 	'insights-landing-lead' => 'A lead for the Insights special page with a general description, appearing below the title.',
-
 	'insights-list-no-items' => 'A message that is shown when there are no items to work on left on a list',
 	'insights-list-no-flag-types' => 'A message that is shown when there are no articles using the selected flag type',
 	'insights-list-header-page' => 'A header of an Insights list table for a column with a title and last revision data',
@@ -91,50 +76,39 @@ $messages['qqq'] = array(
 	'insights-notification-message-inprogress-uncategorizedpages' => 'Message displayed on notification banner informing user that category should be added to the page',
 	'insights-notification-message-fixed-uncategorizedpages' => 'Message displayed on notification banner informing user that category was added to the page',
 	'insights-notification-next-item-uncategorizedpages' => 'Link text to redirect to next uncategorized page',
-
 	'insights-list-subtitle-withoutimages' => 'A title of a subpage with a list of pages without images',
 	'insights-list-description-withoutimages' => 'A description for a subpage with a list of pages without images',
 	'insights-notification-message-inprogress-withoutimages' => 'Message displayed on notification banner informing user that image should be added to the page',
 	'insights-notification-message-fixed-withoutimages' => 'Message displayed on notification banner informing user that image was added to the page',
 	'insights-notification-next-item-withoutimages' => ' Link text to redirect to next page without image',
-
 	'insights-list-subtitle-deadendpages' => 'A title of a subpage with a list of pages with no links',
 	'insights-list-description-deadendpages' => 'A description for a subpage with a list of pages with no links',
 	'insights-notification-message-inprogress-deadendpages' => 'Message displayed on notification banner informing user that the page needs links',
 	'insights-notification-message-fixed-deadendpages' => 'Message displayed on notification banner informing user that links were added to the page',
 	'insights-notification-next-item-deadendpages' => 'Link text to redirect to next page without links',
-
 	'insights-list-subtitle-wantedpages' => 'A title of a subpage with a list of wanted pages',
 	'insights-list-description-wantedpages' => 'A description for a subpage with a list of wanted pages',
 	'insights-notification-message-inprogress-wantedpages' => 'Message displayed on notification banner informing user that page should be created',
 	'insights-notification-message-fixed-wantedpages' => 'Message displayed on notification banner informing user that page was created',
 	'insights-notification-next-item-wantedpages' => 'Link text to redirect to next not existing page',
-
 	'insights-list-subtitle-unconvertedinfoboxes' => 'A title of list of pages with old (unconverted, non-portable) infoboxes',
 	'insights-list-description-unconvertedinfoboxes' => 'The description of what the list of old infoboxes is.',
 	'insights-notification-message-inprogress-unconvertedinfoboxes' => 'A hint that is displayed if a currently visited page needs conversion of an infobox.',
 	'insights-notification-message-fixed-unconvertedinfoboxes' => 'A message shown if an old infobox has been converted to the new syntax.',
 	'insights-notification-next-item-unconvertedinfoboxes' => 'A text of a link that leads to the next article that need infobox conversion.',
-
 	'insights-sort-pv7' => 'Sorting option by page views in last week',
 	'insights-sort-pv28' => 'Sorting option by page views in last 4 weeks',
 	'insights-sort-pvDiff' => 'Sorting option by recent increase in page views',
 	'insights-sort-title' => 'Alphabetical sorting option',
-
 	'insights-notification-message-alldone' => 'Message displayed on notification banner informing user that there is no more articles to fix in current Insight type',
 	'insights-notification-message-fixit' => 'Text encouraging user to fix an issue',
 	'insights-notification-list-button' => 'Text on button that redirects to list of insights',
 	'insights-notification-see-more' => 'Link text to redirect to Insights main page to see more Insight types',
-
 	'insights-wanted-by' => 'An information on how many other articles links to the one displayed above. $1 is a number of articles.',
 	'insights-used-on' => 'An information on how many articles uses the given template. $1 is the number',
-
 	'insights-module-see-more' => 'A text for a link to see more Insights lists',
-
 	'insights-altaction-convert' => 'A label for a link that takes you to edit mode and presents you an automatically converted infobox markup for your template.',
 	'insights-altaction-seedraft' => 'A label for a link that takes you to a view of an existing draft of a template.',
-
-	/* Flags Insights */
 	'insights-flags-filter-label' => 'Label for select dropdown on flags insights page explaining purpose of it',
 	'insights-notification-message-inprogress-flags' => 'Message displayed on notification banner informing user that this page is flagged.',
 	'insights-notification-message-set-flags' => 'Text of a button that opens a modal window with a form for editing flags.',
@@ -188,7 +162,7 @@ $messages['de'] = array(
 	'insights-list-description-flags' => 'Verwende Markierungen, um Artikelseiten zu organisieren und zu beschriften. Diese Insight-Liste ermöglicht es dir, benutzerdefinierte Berichte zu markierten Artikeln anzusehen, um so die Artikel zu finden, bei denen es am dringendsten ist, dass Verbesserungen vorgenommen werden. [[Hilfe:Flags|Mehr über Markierungen erfahren]]',
 	'insights-notification-message-inprogress-flags' => 'Diese Seite hat eine Markierung.',
 	'insights-list-subtitle-nonportableinfoboxes' => 'Nicht-portable Infoboxen',
-	'insights-list-description-nonportableinfoboxes' => 'Die folgenden Infoboxen werden mit Tabellen oder Divs erstellt und sollten umgewandelt werden, damit sie das neue [[Hilfe:PortableInfoboxes|Infobox-Markup]] verwenden und so für alle Besucher korrekt gerendert werden. Wenn du nicht mehr weiter kommst, kannst du auch [[w:c:de.community:Diskussionsforum:Support-Anfragen:_Technisches|unser technisches Forum besuchen und dort Fragen stellen]].',
+	'insights-list-description-nonportableinfoboxes' => 'Die folgenden Infoboxen werden mit Tabellen oder Divs erstellt und sollten umgewandelt werden, damit sie das neue [[Hilfe:PortableInfoboxes|Infobox-Format]] verwenden und so für alle Besucher korrekt angezeigt werden. Wenn du nicht mehr weiter kommst, kannst du auch [[w:c:de.community:Diskussionsforum:Support-Anfragen:_Technisches|unser technisches Forum besuchen und dort Fragen stellen]].',
 	'insights-notification-message-inprogress-nonportableinfoboxes' => 'Diese Infobox muss mit dem neuen Infobox-Markup aktualisiert werden.',
 	'insights-notification-message-fixed-nonportableinfoboxes' => 'Prima! Die Infobox auf dieser Seite wurde umgewandelt.',
 	'insights-notification-next-item-nonportableinfoboxes' => 'Neue Infobox umwandeln.',
@@ -197,7 +171,7 @@ $messages['de'] = array(
 	'insights-sort-pvDiff' => 'Anstieg der Seitenaufrufe in letzter Zeit',
 	'insights-sort-title' => 'Alphabetisch',
 	'insights-notification-message-fixit' => 'Dieses Problem sollte behoben werden.',
-	'insights-notification-message-set-flags' => 'Markierungen dieser Seite ansehen',
+	'insights-notification-message-set-flags' => 'Markierungen für diese Seite einstellen',
 	'insights-used-on' => 'Wird in $1 Artikel(n) verwendet',
 	'insights-altaction-convert' => 'Konvertieren!',
 	'insights-altaction-seedraft' => 'Entwurf ansehen',
@@ -392,7 +366,7 @@ $messages['it'] = array(
 	'insights-sort-pvDiff' => 'Aumento recente nelle visualizzazioni pagina',
 	'insights-sort-title' => 'Ordine alfabetico',
 	'insights-notification-message-fixit' => 'Risolviamo la cosa.',
-	'insights-notification-message-set-flags' => 'Imposta i contrassegni per questa pagina',
+	'insights-notification-message-set-flags' => 'Imposta contrassegni per questa pagina',
 	'insights-used-on' => 'Usato in $1 articoli',
 	'insights-altaction-convert' => 'Fai la conversione!',
 	'insights-altaction-seedraft' => 'Visualizza la bozza',
@@ -592,7 +566,7 @@ $messages['pl'] = array(
 	'insights-altaction-convert' => 'Przekształć!',
 	'insights-altaction-seedraft' => 'Zobacz wersję roboczą',
 	'insights-flags-filter-label' => 'Fitltruj strony według rodzaju flag',
-	'insights-list-no-flag-types' => 'There are no articles using the selected flag type!',
+	'insights-list-no-flag-types' => 'W żadnym artykule nie wykorzystano wybranego rodzaju flag!',
 );
 
 $messages['pt'] = array(
@@ -655,12 +629,12 @@ Context | Edit Context
 	'insights-sort-pvDiff' => 'Recente aumento nas visualizações de página',
 	'insights-sort-title' => 'Em ordem alfabética',
 	'insights-notification-message-fixit' => 'Vamos consertar isso.',
-	'insights-notification-message-set-flags' => 'Configure bandeiras para esta página',
+	'insights-notification-message-set-flags' => 'Configurar bandeiras para esta página',
 	'insights-used-on' => 'Usado em $1 artigos',
 	'insights-altaction-convert' => 'Converter!',
 	'insights-altaction-seedraft' => 'Visualizar o rascunho',
 	'insights-flags-filter-label' => 'Selecione páginas pelo tipo de bandeira',
-	'insights-list-no-flag-types' => 'There are no articles using the selected flag type!',
+	'insights-list-no-flag-types' => 'Não existem artigos usando o tipo de bandeira selecionado!',
 );
 
 $messages['ru'] = array(
@@ -787,7 +761,7 @@ $messages['zh-hans'] = array(
 	'insights-sort-pvDiff' => '最近的页面浏览量增长',
 	'insights-sort-title' => '按英文字母顺序',
 	'insights-notification-message-fixit' => '让我们来解决这个问题吧。',
-	'insights-notification-message-set-flags' => '设置本页面标识。',
+	'insights-notification-message-set-flags' => '为此页设置标识',
 	'insights-used-on' => '用于$1篇文章',
 	'insights-altaction-convert' => '转换',
 	'insights-altaction-seedraft' => '查看草稿',
@@ -841,7 +815,7 @@ $messages['zh-hant'] = array(
 	'insights-notification-message-alldone' => '恭喜你！沒有需要修復的文章了。',
 	'insights-notification-message-fixit' => '讓我們來解決這個問題吧。',
 	'insights-notification-list-button' => '返回到列表。',
-	'insights-notification-message-set-flags' => '設置本頁面標識。',
+	'insights-notification-message-set-flags' => '為此頁設置標誌',
 	'insights-notification-see-more' => '查看更多問題頁面列表。',
 	'insights-wanted-by' => '$1個推薦連結',
 	'insights-used-on' => '用于$1篇文章',
