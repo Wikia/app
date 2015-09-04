@@ -593,10 +593,19 @@ class WikiaFileHelper extends Service {
 	 */
 	public static function isAdded( $file ) {
 		$isAdded = true;
-		if ( $file instanceof File && !$file->isLocal()
-			&& F::app()->wg->WikiaVideoRepoDBName == $file->getRepo()->getWiki() ) {
-			$info = VideoInfo::newFromTitle( $file->getTitle()->getDBkey() );
-			if ( empty( $info ) ) {
+		if ( $file instanceof File && !$file->isLocal() ) {
+			$repo = $file->getRepo();
+			/**
+			 * GetWiki method doesn't exist when repo is an instance of ForeignAPIRepo.
+			 * When such case occurs most probably file comes from mediawiki and isn't store in any of wikias
+			 * - that's why method should return false
+			 */
+			if (method_exists($repo, 'getWiki') && F::app()->wg->WikiaVideoRepoDBName == $repo->getWiki()) {
+				$info = VideoInfo::newFromTitle( $file->getTitle()->getDBkey() );
+				if ( empty( $info ) ) {
+					$isAdded = false;
+				}
+			} else {
 				$isAdded = false;
 			}
 		}
