@@ -8,7 +8,10 @@ use Wikia\ContentReview\Models\ReviewModel;
 class Helper extends \ContextSource {
 
 	const CONTENT_REVIEW_TOOLBAR_TEMPLATE_PATH = 'extensions/wikia/ContentReview/templates/ContentReviewToolbar.mustache';
-	const CONTENT_REVIEW_URL_PARAM = 'contentreview';
+	const CONTENT_REVIEW_PARAM = 'contentreview';
+	const CONTENT_REVIEW_MEMC_VER = '1.0';
+	const CONTENT_REVIEW_REVIEWED_KEY = 'reviewed-js-pages';
+	const CONTENT_REVIEW_CURRENT_KEY = 'current-js-pages';
 	const JS_FILE_EXTENSION = '.js';
 
 	public function getReviewedJsPages() {
@@ -38,15 +41,31 @@ class Helper extends \ContextSource {
 	}
 
 	public function getReviewedJsPagesTimestamp() {
-		$pages = $this->getReviewedJsPages();
+		$timestamp = \WikiaDataAccess::cache(
+			$this->getMemcKey( self::CONTENT_REVIEW_REVIEWED_KEY ),
+			86400, // 60 * 60 * 24
+			function() {
+				$pages = $this->getReviewedJsPages();
 
-		return $this->getMaxTimestamp( $pages );
+				return $this->getMaxTimestamp( $pages );
+			}
+		);
+
+		return $timestamp;
 	}
 
 	public function getJsPagesTimestamp() {
-		$pages = $this->getJsPages();
+		$timestamp = \WikiaDataAccess::cache(
+			$this->getMemcKey( self::CONTENT_REVIEW_CURRENT_KEY ),
+			86400, // 60 * 60 * 24
+			function() {
+				$pages = $this->getJsPages();
 
-		return $this->getMaxTimestamp( $pages );
+				return $this->getMaxTimestamp( $pages );
+			}
+		);
+
+		return $timestamp;
 	}
 
 	public function getMaxTimestamp( $pages ) {
@@ -147,7 +166,7 @@ class Helper extends \ContextSource {
 		 * Do not hit database if there is a URL parameter that indicates that a user
 		 * came directly from Special:ContentReview.
 		 */
-		if ( $this->getRequest()->getInt( self::CONTENT_REVIEW_URL_PARAM ) === 1 ) {
+		if ( $this->getRequest()->getInt( self::CONTENT_REVIEW_PARAM ) === 1 ) {
 			return true;
 		}
 
@@ -183,7 +202,7 @@ class Helper extends \ContextSource {
 			$status = (int)$diffRevisionInfo['status'];
 			return ( $status === ReviewModel::CONTENT_REVIEW_STATUS_IN_REVIEW
 				/* Fallback to URL param if a master-slave replication has not finished */
-				|| ( $this->getRequest()->getInt( self::CONTENT_REVIEW_URL_PARAM ) === 1
+				|| ( $this->getRequest()->getInt( self::CONTENT_REVIEW_PARAM ) === 1
 					&& $status === ReviewModel::CONTENT_REVIEW_STATUS_UNREVIEWED
 				)
 			);
@@ -225,5 +244,17 @@ class Helper extends \ContextSource {
 			'useMessage' => 'content-review-rejection-explanation'
 		];
 		return $title->getTalkPage()->getFullURL( $params );
+	}
+
+	public function purgeReviewedJsPagesTimestamp() {
+		\WikiaDataAccess::cachePurge( $this->getMemcKey( self::CONTENT_REVIEW_REVIEWED_KEY ) );
+	}
+
+	public function purgeCurrentJsPagesTimestamp() {
+		\WikiaDataAccess::cachePurge( $this->getMemcKey( self::CONTENT_REVIEW_CURRENT_KEY ) );
+	}
+
+	public function getMemcKey( $params ) {
+		return wfMemcKey( self::CONTENT_REVIEW_PARAM, self::CONTENT_REVIEW_MEMC_VER, $params );
 	}
 }

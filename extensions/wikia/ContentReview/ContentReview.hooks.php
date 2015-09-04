@@ -155,6 +155,19 @@ class Hooks {
 		return true;
 	}
 
+	public static function onArticleSaveComplete( \WikiPage &$article, &$user, $text, $summary,
+			$minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId
+	) {
+		$title = $article->getTitle();
+
+		if ( !is_null( $title )
+			&& $title->inNamespace( NS_MEDIAWIKI )
+			&& ( $title->isJsPage() || $title->isJsSubpage() )
+		) {
+			( new Helper() )->purgeCurrentJsPagesTimestamp();
+		}
+	}
+
 	private static function userCanEditJsPage() {
 		global $wgTitle, $wgUser;
 
