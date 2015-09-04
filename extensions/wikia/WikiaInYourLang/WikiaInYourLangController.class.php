@@ -69,16 +69,17 @@ class WikiaInYourLangController extends WikiaController {
 						$oNativeWiki->city_url,
 						$oNativeWiki->city_title,
 					];
-
+					$isMainPageLink = true;
 					if ( $wgWikiaEnvironment !== WIKIA_ENV_DEV ) {
 						$articleURL = $this->getArticleURL( $sArticleTitle, $oNativeWiki->city_id );
 						if ( $articleURL ) {
 							$aMessageParams[1] = $articleURL;
 							$this->response->setVal( 'linkAddress', $articleURL );
+							$isMainPageLink = false;
 						}
 					}
 
-					$sMessagesAry = $this->prepareMessage( $sTargetLanguage, $aMessageParams );
+					$sMessagesAry = $this->prepareMessage( $sTargetLanguage, $aMessageParams, $isMainPageLink );
 					$this->response->setVal( 'success', true );
 					$this->response->setVal( 'message', $sMessagesAry['desktop'] );
 					$this->response->setVal( 'messageMobile', $sMessagesAry['mobile'] );
@@ -217,11 +218,18 @@ class WikiaInYourLangController extends WikiaController {
 		return true;
 	}
 
-	private function prepareMessage( $sTargetLanguage, $aMessageParams ) {
-		$sMsg = wfMessage( 'wikia-in-your-lang-available' )
-			->params( $aMessageParams )
-			->inLanguage( $sTargetLanguage )
-			->parse();
+	private function prepareMessage( $sTargetLanguage, $aMessageParams, $isMainPageLink ) {
+		if ( $isMainPageLink ) {
+			$sMsg = wfMessage( 'wikia-in-your-lang-available' )
+				->params( $aMessageParams )
+				->inLanguage( $sTargetLanguage )
+				->parse();
+		} else {
+			$sMsg = wfMessage( 'wikia-in-your-lang-article-available' )
+				->params( $aMessageParams )
+				->inLanguage( $sTargetLanguage )
+				->parse();
+		}
 
 		$sMsgMobile = wfMessage( 'wikia-in-your-lang-available-for-mobile' )
 			->params( $aMessageParams )
@@ -235,7 +243,6 @@ class WikiaInYourLangController extends WikiaController {
 		$articleURL = null;
 		if ( $sArticleTitle !== false ) {
 			$title = GlobalTitle::newFromText( $sArticleTitle, NS_MAIN, $cityId );
-
 			if ( !is_null( $title ) && $title->exists()) {
 				$articleURL = $title->getFullURL();
 			}
