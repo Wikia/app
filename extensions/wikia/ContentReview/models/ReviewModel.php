@@ -255,4 +255,29 @@ class ReviewModel extends ContentReviewBaseModel {
 
 		return $revisionInfo;
 	}
+
+	public function getStatusName( $status, $revisionId ) {
+		switch( $status ) {
+			case self::CONTENT_REVIEW_STATUS_UNREVIEWED:
+				$statusName = \ContentReviewModuleController::STATUS_AWAITING;
+				break;
+			case self::CONTENT_REVIEW_STATUS_IN_REVIEW:
+				$statusName = \ContentReviewModuleController::STATUS_AWAITING;
+				break;
+			case self::CONTENT_REVIEW_STATUS_APPROVED:
+				$statusName = \ContentReviewModuleController::STATUS_APPROVED;
+				break;
+			case self::CONTENT_REVIEW_STATUS_REJECTED:
+				$statusName = \ContentReviewModuleController::STATUS_REJECTED;
+				break;
+			default: $statusName = \ContentReviewModuleController::STATUS_NONE;
+		}
+
+		// Distinguish none from unsubmitted
+		if ( $statusName == \ContentReviewModuleController::STATUS_NONE && !empty( $revisionId ) ) {
+			$statusName = \ContentReviewModuleController::STATUS_UNSUBMITTED;
+		}
+
+		return $statusName;
+	}
 }

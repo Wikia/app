@@ -2544,6 +2544,23 @@ $config['template_draft'] = [
 	]
 ];
 
+$config['content_review_module_monobook_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'monobook' ],
+	'assets' => [
+		'//extensions/wikia/ContentReview/scripts/contentReviewModuleMonobook.run.js',
+		'//extensions/wikia/ContentReview/scripts/contentReviewModule.js',
+	]
+];
+
+$config['content_review_module_monobook_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => [ 'monobook' ],
+	'assets' => [
+		'//extensions/wikia/ContentReview/styles/ContentReviewMonobookEntrypoint.scss',
+	],
+];
+
 $config['content_review_module_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
@@ -2554,6 +2571,7 @@ $config['content_review_module_js'] = [
 
 $config['content_review_module_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => [ 'oasis', 'monobook' ],
 	'assets' => [
 		'//skins/oasis/css/modules/ContentReview.scss',
 	],
