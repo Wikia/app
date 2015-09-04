@@ -121,15 +121,15 @@ class Hooks {
 	 * @return bool true
 	 */
 	public static function onSkinTemplateNavigation( $skin, &$links ) {
-		global $wgCityId, $wgTitle;
-
-		if ( $skin->getSkinName() !== 'monobook' || !self::userCanEditJsPage() ) {
+		global $wgCityId;
+		if ( !in_array( $skin->getSkinName(), [ 'monobook', 'uncyclopedia' ] )  || !self::userCanEditJsPage() ) {
 			return true;
 		}
 
-		$latestRevisionId = $wgTitle->getLatestRevID();
+		$title = $skin->getTitle();
+		$latestRevisionId = $title->getLatestRevID();
 		$revisionModel = new ReviewModel();
-		$revisionInfo = $revisionModel->getRevisionInfo( $wgCityId, $wgTitle->getArticleID(), $latestRevisionId );
+		$revisionInfo = $revisionModel->getRevisionInfo( $wgCityId, $title->getArticleID(), $latestRevisionId );
 		$latestStatusName = $revisionModel->getStatusName( $revisionInfo['status'], $latestRevisionId );
 
 		/* Add link to nav tabs customized with status class name */
