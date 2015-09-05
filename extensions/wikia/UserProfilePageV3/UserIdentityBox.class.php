@@ -629,4 +629,9 @@ class UserIdentityBox {
 		return $this->favWikisModel;
 	}
 
+	public function clearCache() {
+		global $wgMemc;
+
+		$wgMemc->delete( $this->getMemcUserIdentityDataKey() );
+	}
 }
