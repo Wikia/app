@@ -9,7 +9,7 @@ class ProtectSiteJSTest extends WikiaBaseTest {
 	/**
 	 * @dataProvider handlerProvider
 	 */
-	public function testHandler( $testData, $expectedResult ) {
+	public function testHandler( $testData, $expectedResult, $message ) {
 		$outputMock = $this->getMock( 'OutputPage', [ 'addHTML', 'addWikiMsg' ] );
 		$this->mockGlobalVariable( 'wgOut', $outputMock );
 
@@ -17,6 +17,8 @@ class ProtectSiteJSTest extends WikiaBaseTest {
 		$this->mockGlobalVariable( 'wgTitle', $title );
 
 		$this->mockGlobalVariable( 'wgCityId', $testData['wikiId'] );
+		$this->mockGlobalVariable( 'wgEnableContentReviewExt', $testData['wgEnableContentReviewExt'] );
+		$this->mockGlobalVariable( 'wgUseSiteJs', $testData['wgUseSiteJs'] );
 
 		$userMock = $this->getMock( 'User', [ 'getName', 'getEffectiveGroups', 'isAllowed' ] );
 
@@ -37,7 +39,7 @@ class ProtectSiteJSTest extends WikiaBaseTest {
 
 		$result = ProtectSiteJS::handler();
 
-		$this->assertSame( $result, $expectedResult );
+		$this->assertSame( $result, $expectedResult, $message );
 	}
 
 	public function handlerProvider() {
@@ -50,8 +52,11 @@ class ProtectSiteJSTest extends WikiaBaseTest {
 					'groups' => [ 'sysop' ],
 					'editinterfacetrusted' => false,
 					'wikiId' => 147,
+					'wgEnableContentReviewExt' => false,
+					'wgUseSiteJs' => true,
 				],
-				false
+				false,
+				'Admins cannot edit MediaWiki JS pages',
 			],
 			[
 				[
@@ -61,8 +66,11 @@ class ProtectSiteJSTest extends WikiaBaseTest {
 					'groups' => [ 'sysop' ],
 					'editinterfacetrusted' => false,
 					'wikiId' => 147,
+					'wgEnableContentReviewExt' => false,
+					'wgUseSiteJs' => true,
 				],
-				false
+				false,
+				'Admins cannot edit User JS pages',
 			],
 			[
 				[
@@ -72,8 +80,11 @@ class ProtectSiteJSTest extends WikiaBaseTest {
 					'groups' => [ 'sysop' ],
 					'editinterfacetrusted' => false,
 					'wikiId' => 147,
+					'wgEnableContentReviewExt' => false,
+					'wgUseSiteJs' => true,
 				],
-				false
+				false,
+				'Admins cannot edit other namespace JS pages',
 			],
 			[
 				[
@@ -83,8 +94,11 @@ class ProtectSiteJSTest extends WikiaBaseTest {
 					'groups' => [ 'staff' ],
 					'editinterfacetrusted' => false,
 					'wikiId' => 147,
+					'wgEnableContentReviewExt' => false,
+					'wgUseSiteJs' => true,
 				],
-				true
+				true,
+				'Staff can edit MediaWiki JS pages',
 			],
 			[
 				[
@@ -94,8 +108,11 @@ class ProtectSiteJSTest extends WikiaBaseTest {
 					'groups' => [ 'sysop' ],
 					'editinterfacetrusted' => true,
 					'wikiId' => 147,
+					'wgEnableContentReviewExt' => false,
+					'wgUseSiteJs' => true,
 				],
-				true
+				true,
+				'Admins with editinterfacetrusted can edit MediaWiki JS pages',
 			],
 			[
 				[
@@ -105,8 +122,11 @@ class ProtectSiteJSTest extends WikiaBaseTest {
 					'groups' => [],
 					'editinterfacetrusted' => false,
 					'wikiId' => 147,
+					'wgEnableContentReviewExt' => false,
+					'wgUseSiteJs' => true,
 				],
-				false
+				false,
+				'Valid user JS subpage names cannot be edited in other namespaces',
 			],
 			[
 				[
@@ -116,8 +136,11 @@ class ProtectSiteJSTest extends WikiaBaseTest {
 					'groups' => [],
 					'editinterfacetrusted' => false,
 					'wikiId' => 147,
+					'wgEnableContentReviewExt' => false,
+					'wgUseSiteJs' => true,
 				],
-				true
+				true,
+				'Valid user JS subpages can be edited by the user',
 			],
 			[
 				[
@@ -127,8 +150,11 @@ class ProtectSiteJSTest extends WikiaBaseTest {
 					'groups' => [],
 					'editinterfacetrusted' => false,
 					'wikiId' => 147,
+					'wgEnableContentReviewExt' => false,
+					'wgUseSiteJs' => true,
 				],
-				true
+				true,
+				'Valid user JS subpages can be edited by the user',
 			],
 			[
 				[
@@ -138,8 +164,11 @@ class ProtectSiteJSTest extends WikiaBaseTest {
 					'groups' => [],
 					'editinterfacetrusted' => false,
 					'wikiId' => 147,
+					'wgEnableContentReviewExt' => false,
+					'wgUseSiteJs' => true,
 				],
-				true
+				true,
+				'Valid user JS subpages can be edited by the user',
 			],
 			[
 				[
@@ -149,8 +178,11 @@ class ProtectSiteJSTest extends WikiaBaseTest {
 					'groups' => [],
 					'editinterfacetrusted' => false,
 					'wikiId' => Wikia::COMMUNITY_WIKI_ID,
+					'wgEnableContentReviewExt' => false,
+					'wgUseSiteJs' => true,
 				],
-				true
+				true,
+				'User global JS subpage can be edited by the user on central wikia',
 			],
 			[
 				[
@@ -160,8 +192,11 @@ class ProtectSiteJSTest extends WikiaBaseTest {
 					'groups' => [],
 					'editinterfacetrusted' => false,
 					'wikiId' => 147,
+					'wgEnableContentReviewExt' => false,
+					'wgUseSiteJs' => true,
 				],
-				false
+				false,
+				'User global JS subpage cannot be edited on wikias other than central',
 			],
 			[
 				[
@@ -171,8 +206,81 @@ class ProtectSiteJSTest extends WikiaBaseTest {
 					'groups' => [],
 					'editinterfacetrusted' => false,
 					'wikiId' => 147,
+					'wgEnableContentReviewExt' => false,
+					'wgUseSiteJs' => true,
 				],
-				false
+				false,
+				'Invalid user JS subpages cannot be edited',
+			],
+			[
+				[
+					'title' => 'Foo.js',
+					'namespace' => NS_MEDIAWIKI,
+					'username' => 'SomeUser',
+					'groups' => [ 'sysop' ],
+					'editinterfacetrusted' => false,
+					'wikiId' => 147,
+					'wgEnableContentReviewExt' => true,
+					'wgUseSiteJs' => true,
+				],
+				true,
+				'Admins can edit MediaWiki JS pages if content review is enabled',
+			],
+			[
+				[
+					'title' => 'Foo.js',
+					'namespace' => NS_MAIN,
+					'username' => 'SomeUser',
+					'groups' => [ 'sysop' ],
+					'editinterfacetrusted' => false,
+					'wikiId' => 147,
+					'wgEnableContentReviewExt' => true,
+					'wgUseSiteJs' => true,
+				],
+				false,
+				'Admins cannot edit non-MediaWiki JS pages if content review is enabled',
+			],
+			[
+				[
+					'title' => 'SomeOtherUser/foo.js',
+					'namespace' => NS_USER,
+					'username' => 'SomeUser',
+					'groups' => [ 'sysop' ],
+					'editinterfacetrusted' => false,
+					'wikiId' => 147,
+					'wgEnableContentReviewExt' => true,
+					'wgUseSiteJs' => true,
+				],
+				false,
+				"Admins cannot edit other user's JS pages even if content review is enabled",
+			],
+			[
+				[
+					'title' => 'SomeUser/foo.js',
+					'namespace' => NS_USER,
+					'username' => 'SomeUser',
+					'groups' => [],
+					'editinterfacetrusted' => false,
+					'wikiId' => 147,
+					'wgEnableContentReviewExt' => true,
+					'wgUseSiteJs' => true,
+				],
+				false,
+				'Invalid user JS subpages cannot be edited even if content review is enabled',
+			],
+			[
+				[
+					'title' => 'Foo.js',
+					'namespace' => NS_MEDIAWIKI,
+					'username' => 'SomeUser',
+					'groups' => [ 'sysop' ],
+					'editinterfacetrusted' => false,
+					'wikiId' => 147,
+					'wgEnableContentReviewExt' => true,
+					'wgUseSiteJs' => false,
+				],
+				false,
+				'Admins cannot edit MediaWiki JS pages if content review is enabled but site JS is disabled',
 			],
 		];
 	}
