@@ -12,8 +12,8 @@ describe('ext.wikia.adEngine.adTracker', function () {
 		windowMock = {
 			wgNow: new Date(new Date().getTime() - 888),
 			ads: {
-				context: {
-					opts: {}
+				runtime: {
+					sp: {}
 				}
 			}
 		};
@@ -50,7 +50,7 @@ describe('ext.wikia.adEngine.adTracker', function () {
 	it('track: event with sp data', function () {
 		var adTracker = modules['ext.wikia.adEngine.adTracker'](trackerMock, windowMock);
 
-		windowMock.ads.context.opts.sp = 'yes';
+		windowMock.ads.runtime.sp.blocking = true;
 
 		spyOn(trackerMock, 'track');
 		adTracker.track('test/event', {data1: 'one'});

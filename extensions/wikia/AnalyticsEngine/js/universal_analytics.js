@@ -356,11 +356,11 @@
 
     if (window.ads && window.ads.context.opts.showAds) {
         document.addEventListener('sp.blocking', function () {
-            window.ads.context.opts.sp = 'yes';
+            window.ads.runtime.sp.blocking = true;
             trackBlocking('Yes');
         });
         document.addEventListener('sp.not_blocking', function () {
-            window.ads.context.opts.sp = 'no';
+            window.ads.runtime.sp.blocking = false;
             trackBlocking('No');
         });
     }
