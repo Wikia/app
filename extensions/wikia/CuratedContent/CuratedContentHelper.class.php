@@ -14,7 +14,7 @@ class CuratedContentHelper {
 		$host = RequestContext::getMain()->getRequest()->getHeader('HOST');
 
 		return (bool) preg_match(
-			'/glee|castle-clash|clashofclans|mobileregressiontesting|concf/i',
+			'/community\.wikia|spolecznosc|yhteiso|communaute|comunidade|comunidad|glee|castle-clash|clashofclans|mobileregressiontesting|concf/i',
 			$host
 		);
 	}

@@ -2,6 +2,8 @@
 
 namespace Wikia\Persistence\User\Attributes;
 
+use Swagger\Client\ApiClient;
+use Swagger\Client\Configuration;
 use Swagger\Client\ApiException;
 use Swagger\Client\User\Attributes\Api\UsersAttributesApi;
 use Swagger\Client\User\Attributes\Models\AllUserAttributesHalResponse;
@@ -29,12 +31,15 @@ class AttributePersistenceSwaggerTest extends \PHPUnit_Framework_TestCase {
 	protected $attribute;
 
 	public function setUp() {
-		$this->apiProvider = $this->getMockBuilder( ApiProvider::class )
-			->setMethods( [ 'getAuthenticatedApi' ] )
+		$this->userAttributesApi = $this->getMockBuilder( UsersAttributesApi::class )
+			->setMethods( [ 'saveAttributeForUser', 'getAllAttributesForUser', 'deleteAttributeForUser', 'getApiClient' ] )
 			->disableOriginalConstructor()
 			->getMock();
-		$this->userAttributesApi = $this->getMockBuilder( UsersAttributesApi::class )
-			->setMethods( [ 'saveAttributeForUser', 'getAllAttributesForUser', 'deleteAttributeForUser' ] )
+		$this->userAttributesApi->expects( $this->any() )
+			->method( 'getApiClient' )
+			->willReturn( $this->getMockApiClient() );
+		$this->apiProvider = $this->getMockBuilder( ApiProvider::class )
+			->setMethods( [ 'getAuthenticatedApi' ] )
 			->disableOriginalConstructor()
 			->getMock();
 		$this->apiProvider->expects( $this->any() )
@@ -158,5 +163,22 @@ class AttributePersistenceSwaggerTest extends \PHPUnit_Framework_TestCase {
 		$userAttributes->setProperties( [ $userAttribute_1, $userAttribute_2 ] );
 
 		return $userAttributes;
+	}
+
+	private function getMockApiClient() {
+		$mockApiClient = $this->getMockBuilder( ApiClient::class )
+			->setMethods( [ 'getConfig' ] )
+			->getMock();
+		$mockApiClient->expects( $this->any() )
+			->method( 'getConfig' )
+			->willReturn( $this->getMockConfig() );
+
+		return $mockApiClient;
+	}
+
+	private function getMockConfig() {
+		return $this->getMockBuilder( Configuration::class )
+			->setMethods( [ 'addDefaultHeader' ] )
+			->getMock();
 	}
 }
