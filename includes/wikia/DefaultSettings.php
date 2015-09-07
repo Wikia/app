@@ -1803,3 +1803,10 @@ $wgPreferencesUseService = false;
  * Parser Tag
  */
 require_once "$IP/extensions/wikia/SoundCloudTag/SoundCloudTag.setup.php" ;
+
+/*
+ * @name $wgEnableFliteTagExt
+ *
+ * Enables FliteTag extension which makes it possible to use <flite> tag within an article content
+ */
+$wgEnableFliteTagExt = false;
