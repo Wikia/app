@@ -110,7 +110,7 @@ require([
 
 		$entryPoint = $('#AccountNavigation');
 
-		if (!win.wgUserName && $entryPoint.hasClass('newAuth')) {
+		if (!win.wgUserName && window.wgEnableNewAuthModal) {
 			$authEntryPoints = $entryPoint.find('.auth-link.register, .auth-link.sign-in, a.sign-in');
 
 			$authEntryPoints.click(globalNavAuthButtonsClick);
