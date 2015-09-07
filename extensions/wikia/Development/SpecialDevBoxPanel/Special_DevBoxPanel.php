@@ -47,7 +47,6 @@ if (!empty($wgRunningUnitTests) && $wgNoDBUnits) {
 }
 
 $wgHooks['WikiFactory::executeBeforeTransferToGlobals'][] = "wfDevBoxDisableWikiFactory";
-$wgHooks['PageRenderingHash'][] = 'wfDevBoxSeparateParserCache';
 $wgHooks['ResourceLoaderGetConfigVars'][] = 'wfDevBoxResourceLoaderGetConfigVars';
 $wgExceptionHooks['MWExceptionRaw'][] = "wfDevBoxLogExceptions";
 
@@ -251,21 +250,6 @@ function wfDevBoxResourceLoaderGetConfigVars( &$vars ) {
 
 	return true;
 }
-
-/**
- * Modify parser cache key to be different on each devbox (BugId:24647)
- *
- * @param string $hash part of parser cache key to be modified
- * @param User $user current user instance
- * @return boolean true
- */
-function wfDevBoxSeparateParserCache(&$hash) {
-	global $wgDevelEnvironmentName;
-
-	$hash .= "!dev-{$wgDevelEnvironmentName}";
-	return true;
-}
-
 
 function wfDevBoxLogExceptions( $errorText ) {
 	Wikia::logBacktrace("wfDevBoxLogExceptions");

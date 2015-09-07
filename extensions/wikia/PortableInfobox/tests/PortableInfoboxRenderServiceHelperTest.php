@@ -72,7 +72,8 @@ class PortableInfoboxRenderServiceHelperTest extends WikiaBaseTest {
 				'output' => [
 					'header' => 'test header',
 					'labels' => [ 'test label 1', 'test label 2' ],
-					'values' => [ 'test value 1', 'test value 2' ]
+					'values' => [ 'test value 1', 'test value 2' ],
+					'renderLabels' => true
 				],
 				'description' => 'Horizontal group data with header and two data tags'
 			],
@@ -95,7 +96,8 @@ class PortableInfoboxRenderServiceHelperTest extends WikiaBaseTest {
 				],
 				'output' => [
 					'labels' => [ 'test label 1', 'test label 2' ],
-					'values' => [ 'test value 1', 'test value 2' ]
+					'values' => [ 'test value 1', 'test value 2' ],
+					'renderLabels' => true
 				],
 				'description' => 'Horizontal group data without header'
 			],
@@ -125,9 +127,34 @@ class PortableInfoboxRenderServiceHelperTest extends WikiaBaseTest {
 				'output' => [
 					'header' => 'test header',
 					'labels' => [ '', 'test label 2' ],
-					'values' => [ 'test value 1', 'test value 2' ]
+					'values' => [ 'test value 1', 'test value 2' ],
+					'renderLabels' => true
 				],
 				'description' => 'Horizontal group data with empty label'
+			],
+			[
+				'input' => [
+					[
+						'type' => 'data',
+						'data' => [
+							'label' => '',
+							'value' => 'test value 1'
+						]
+					],
+					[
+						'type' => 'data',
+						'data' => [
+							'label' => '',
+							'value' => 'test value 2'
+						]
+					]
+				],
+				'output' => [
+					'labels' => [ '', '' ],
+					'values' => [ 'test value 1', 'test value 2' ],
+					'renderLabels' => false
+				],
+				'description' => 'Horizontal group data without labels'
 			],
 		];
 	}

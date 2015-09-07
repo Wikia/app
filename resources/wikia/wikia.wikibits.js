@@ -62,6 +62,16 @@ var importArticle = (function() {
 				module.articles = module.articles.join( '|' );
 			}
 
+			if ( mw.config.get('wgContentReviewExtEnabled') ) {
+				if ( module.articles.search(/mediawiki:/i) != -1 ) {
+					if ( mw.config.get('wgContentReviewTestModeEnabled') ) {
+						module.current = mw.config.get('wgScriptsTimestamp');
+					} else {
+						module.reviewed = mw.config.get('wgReviewedScriptsTimestamp');
+					}
+				}
+			}
+
 			// These import methods are in /skins/common/wikibits.js
 			var importMethod;
 			if ( module.type == 'script' ) {
@@ -81,7 +91,7 @@ var importArticle = (function() {
 			delete module.type;
 
 			// Make sure we don't load the same URI again
-			uri = baseUri + $.param( module )
+			uri = baseUri + $.param( module );
 			if ( loaded[ uri ] ) {
 				continue;
 			}

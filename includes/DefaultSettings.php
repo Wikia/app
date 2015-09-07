@@ -4533,6 +4533,13 @@ $wgUpgradeKey = false;
 $wgRCMaxAge = 13 * 7 * 24 * 3600;
 
 /**
+ * Wikia change: Recentchanges items are periodically purged; keep the number of rows at the stable level
+ *
+ * @see PLATFORM-1393
+ */
+$wgRCMaxRows = 5000;
+
+/**
  * Filter $wgRCLinkDays by $wgRCMaxAge to avoid showing links for numbers
  * higher than what will be stored. Note that this is disabled by default
  * because we sometimes do have RC data which is beyond the limit for some

@@ -4897,9 +4897,8 @@ class User {
 			foreach ( $attributes as $attributeName => $attributeValue ) {
 				$this->compareAttributeValueFromService( $attributeName, $attributeValue );
 
-				// Once shadow mode verifies these are correct, we can uncomment this
-				// $this->mOptionOverrides[$attributeName] = $attributeValue;
-				// $this->mOptions[$attributeName] = $attributeValue;
+				 $this->mOptionOverrides[$attributeName] = $attributeValue;
+				 $this->mOptions[$attributeName] = $attributeValue;
 			}
 		}
 	}
