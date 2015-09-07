@@ -8,15 +8,18 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.gpt.googleTag',
+		cmd = [],
 		registeredCallbacks = {},
 		slots = {},
 		slotQueue = [],
 		pageLevelParams,
-		googleTag,
 		pubAds;
 
-	function GoogleTag() {
+	function GoogleTag(storeCommands) {
 		this.initialized = false;
+		this.storeCommands = storeCommands;
+		slots = {};
+		slotQueue = [];
 	}
 
 	function dispatchEvent(event) {
@@ -38,19 +41,16 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 	}
 
 	GoogleTag.prototype.enableServices = function () {
-		googleTag = window.googletag = window.googletag || {};
-		window.googletag.cmd = window.googletag.cmd || [];
-
 		log(['enableServices', 'push'], 'info', logGroup);
 		this.push(function () {
-			pubAds = googleTag.pubads();
+			pubAds = window.googletag.pubads();
 
 			pubAds.collapseEmptyDivs();
 			pubAds.enableSingleRequest();
 			pubAds.disableInitialLoad(); // manually request ads using refresh
 			pubAds.addEventListener('slotRenderEnded', dispatchEvent);
 
-			googleTag.enableServices();
+			window.googletag.enableServices();
 
 			log(['enableServices', 'push', 'done'], 'debug', logGroup);
 		});
@@ -69,8 +69,11 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 		log('Appending GPT script to head', 'debug', logGroup);
 		node.parentNode.insertBefore(gads, node);
 
-		this.enableServices();
+		window.googletag = window.googletag || {};
+		window.googletag.cmd = window.googletag.cmd || [];
+
 		this.initialized = true;
+		this.enableServices();
 	};
 
 	GoogleTag.prototype.isInitialized = function () {
@@ -96,7 +99,14 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 	};
 
 	GoogleTag.prototype.push = function (callback) {
-		googleTag.cmd.push(callback);
+		if (this.storeCommands) {
+			cmd.push(callback);
+		}
+		window.googletag.cmd.push(callback);
+	};
+
+	GoogleTag.prototype.getCmd = function () {
+		return cmd;
 	};
 
 	GoogleTag.prototype.flush = function () {
@@ -125,9 +135,9 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 
 		adElement.setPageLevelParams(pageLevelParams);
 		if (!slot) {
-			slot = googleTag.defineSlot(adElement.getSlotPath(), adElement.getSizes(), adElement.getId());
+			slot = window.googletag.defineSlot(adElement.getSlotPath(), adElement.getSizes(), adElement.getId());
 			slot.addService(pubAds);
-			googleTag.display(adElement.getId());
+			window.googletag.display(adElement.getId());
 			slots[adElement.getId()] = slot;
 		}
 

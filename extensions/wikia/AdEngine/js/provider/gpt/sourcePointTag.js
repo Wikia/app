@@ -12,12 +12,12 @@ define('ext.wikia.adEngine.provider.gpt.sourcePointTag', [
 ], function (adContext, GoogleTag, adSlot, sourcePoint, cssTweaker, doc, log, window) {
 	'use strict';
 
-	var blocking = false,
-		context = adContext.getContext(),
+	var context = adContext.getContext(),
 		logGroup = 'ext.wikia.adEngine.provider.gpt.sourcePointTag';
 
 	function SourcePointTag() {
 		GoogleTag.call(this);
+		this.storeCommands = false;
 	}
 
 	SourcePointTag.prototype = new GoogleTag();
@@ -38,44 +38,27 @@ define('ext.wikia.adEngine.provider.gpt.sourcePointTag', [
 			window.dispatchEvent(spReadyEvent);
 		});
 
-		doc.addEventListener('sp.blocking', (function () {
-			log(['sp.blocking'], 'debug', logGroup);
-			doc.body.classList.add('source-point');
-			blocking = true;
-		}).bind(this));
+		doc.body.classList.add('source-point');
 
-		doc.addEventListener('sp.not_blocking', (function () {
-			log(['sp.not_blocking'], 'debug', logGroup);
-		}).bind(this));
+		delete window.googletag;
+		window.googletag = {
+			cmd: this.getCmd()
+		};
 
 		log('Appending GPT script to head', 'debug', logGroup);
 		node.parentNode.insertBefore(gads, node);
 
-		this.enableServices();
-
 		this.initialized = true;
-	};
-
-	SourcePointTag.prototype.addSlot = function (adElement) {
-		log(['adSlot', adElement], 'debug', logGroup);
-		var slot = GoogleTag.prototype.addSlot.call(this, adElement),
-			spBlockValue = slot.getTargeting('sp.block');
-
-		if (spBlockValue && spBlockValue.length && spBlockValue[0] === '1') {
-			log(['addSlot', 'blocked', adElement.getId()], 'debug', logGroup);
-			slot.setCollapseEmptyDiv(true, true);
-		}
-
-		return slot;
 	};
 
 	SourcePointTag.prototype.onAdLoad = function (slotName, element, gptEvent, onAdLoadCallback) {
 		log(['onAdLoad', slotName], 'debug', logGroup);
 		var iframe,
+			iframeDoc,
 			newSlotName,
 			slotElementId;
 
-		if (blocking && gptEvent.slot && gptEvent.slot.getSlotElementId) {
+		if (gptEvent.slot && gptEvent.slot.getSlotElementId) {
 			slotElementId = gptEvent.slot.getSlotElementId() || element.getId();
 			newSlotName = adSlot.getShortSlotName(slotElementId);
 
@@ -83,9 +66,15 @@ define('ext.wikia.adEngine.provider.gpt.sourcePointTag', [
 				cssTweaker.copyStyles(slotName, newSlotName);
 
 				iframe = doc.getElementById(slotElementId).querySelector('div[id*="_container_"] iframe');
-				iframe.addEventListener('load', function () {
+				iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+
+				if (iframeDoc.readyState !== 'complete') {
+					iframe.addEventListener('load', function () {
+						onAdLoadCallback(slotElementId, gptEvent, iframe);
+					});
+				} else {
 					onAdLoadCallback(slotElementId, gptEvent, iframe);
-				});
+				}
 				return;
 			}
 		}
