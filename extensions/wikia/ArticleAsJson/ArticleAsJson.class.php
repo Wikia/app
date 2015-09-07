@@ -228,7 +228,6 @@ class ArticleAsJson extends WikiaService {
 				self::linkifyMediaCaption( $parser, $media );
 			}
 
-
 			$text = json_encode( [
 				'content' => $text,
 				'media' => self::$media,
