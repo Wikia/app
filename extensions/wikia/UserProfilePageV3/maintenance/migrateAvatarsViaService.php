@@ -34,6 +34,8 @@ class AvatarsMigrator extends Maintenance {
 	}
 
 	public function execute() {
+		$this->output( date('r') . "\n" );
+
 		// read options
 		$this->isDryRun = $this->hasOption( 'dry-run' ) || !$this->hasOption( 'force' );
 
@@ -73,6 +75,9 @@ class AvatarsMigrator extends Maintenance {
 				$this->output( sprintf( "\n\t%s", $e->getMessage() ) );
 			}
 		}
+
+		$this->output( "Dome!\n" );
+		$this->output( date('r') . "\n" );
 	}
 
 	/**
