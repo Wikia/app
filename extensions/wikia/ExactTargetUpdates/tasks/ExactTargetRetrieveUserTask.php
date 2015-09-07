@@ -103,8 +103,8 @@ class ExactTargetRetrieveUserTask extends ExactTargetTask {
 			throw new \Exception( $oUserPropertiesResult->OverallStatus );
 		}
 
+		$aExactTargetUserPropertiesData = [];
 		if ( !empty( $oUserPropertiesResult->Results ) ) {
-			$aExactTargetUserPropertiesData = [];
 			foreach ( $oUserPropertiesResult->Results as $oResult ) {
 				$sPropertyName = null;
 				$sPropertyValue = null;
@@ -120,7 +120,7 @@ class ExactTargetRetrieveUserTask extends ExactTargetTask {
 			return $aExactTargetUserPropertiesData;
 		}
 
-		return [];
+		return $aExactTargetUserPropertiesData;
 	}
 
 	/**
