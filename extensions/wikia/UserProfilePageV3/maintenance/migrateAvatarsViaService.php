@@ -54,6 +54,9 @@ class AvatarsMigrator extends Maintenance {
 		$rows = $res->numRows();
 		$this->output( "Processing {$rows} users...\n" );
 
+		$this->output( "Will start in 5 seconds...\n" );
+		sleep(5);
+
 		// process users
 		foreach ( $res as $n => $row ) {
 			try {
