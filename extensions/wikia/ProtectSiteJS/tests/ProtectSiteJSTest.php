@@ -282,6 +282,34 @@ class ProtectSiteJSTest extends WikiaBaseTest {
 				false,
 				'Admins cannot edit MediaWiki JS pages if content review is enabled but site JS is disabled',
 			],
+			[
+				[
+					'title' => 'Foo.js',
+					'namespace' => NS_MEDIAWIKI_TALK,
+					'username' => 'SomeUser',
+					'groups' => [ 'sysop' ],
+					'editinterfacetrusted' => false,
+					'wikiId' => 147,
+					'wgEnableContentReviewExt' => false,
+					'wgUseSiteJs' => false,
+				],
+				true,
+				'Edits to *.js talk pages are allowed',
+			],
+			[
+				[
+					'title' => 'SomeOtherUser/foo.js',
+					'namespace' => NS_USER_TALK,
+					'username' => 'SomeUser',
+					'groups' => [],
+					'editinterfacetrusted' => false,
+					'wikiId' => 147,
+					'wgEnableContentReviewExt' => false,
+					'wgUseSiteJs' => true,
+				],
+				true,
+				'Edits to *.js talk pages are allowed',
+			],
 		];
 	}
 }
