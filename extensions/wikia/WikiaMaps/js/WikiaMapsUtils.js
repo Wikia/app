@@ -280,13 +280,27 @@ define(
 		 * @param {function} cb - callback function to be called after login
 		 */
 		function showForceLoginModal(origin, cb) {
-			w.UserLoginModal.show({
-				origin: origin,
-				callback: function () {
-					w.UserLogin.forceLoggedIn = true;
-					cb();
-				}
-			});
+			if (window.wgEnableNewAuthModal) {
+
+				require(['AuthModal'], function (authModal) {
+					authModal.load('/signin?', function () {
+						authModal.close();
+						w.UserLogin.forceLoggedIn = true;
+						cb();
+					});
+				});
+
+			} else {
+
+				w.UserLoginModal.show({
+					origin: origin,
+					callback: function () {
+						w.UserLogin.forceLoggedIn = true;
+						cb();
+					}
+				});
+
+			}
 		}
 
 		/**
