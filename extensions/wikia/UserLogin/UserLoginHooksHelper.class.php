@@ -52,9 +52,9 @@ class UserLoginHooksHelper {
 
 	// get email authentication for Preferences::profilePreferences
 	public static function onGetEmailAuthentication( User &$user, IContextSource $context, &$disableEmailPrefs, &$emailauthenticated ) {
-		if ( $user->getEmail() ) {
+		$optionNewEmail = $user->getNewEmail();
+		if ( $user->getEmail() || $optionNewEmail ) {
 			$emailTimestamp = $user->getEmailAuthenticationTimestamp();
-			$optionNewEmail = $user->getNewEmail();
 			$msgKeyPrefixEmail = ( empty( $optionNewEmail ) && !$emailTimestamp ) ? 'usersignup-user-pref-unconfirmed-' : 'usersignup-user-pref-';
 			if ( empty( $optionNewEmail ) && $emailTimestamp ) {
 				$lang = $context->getLanguage();
