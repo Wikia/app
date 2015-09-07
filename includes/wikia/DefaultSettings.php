@@ -1810,3 +1810,11 @@ require_once "$IP/extensions/wikia/SoundCloudTag/SoundCloudTag.setup.php" ;
  * Enables extension that generates robots.txt
  */
 $wgEnableRobotsTxtExt = false;
+
+/**
+ * @name $wgEnableFliteTagExt
+ *
+ * Enables FliteTag extension which makes it possible to use <flite> tag within an article content
+ */
+$wgEnableFliteTagExt = false;
+
