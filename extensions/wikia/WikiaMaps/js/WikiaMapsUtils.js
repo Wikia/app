@@ -283,7 +283,7 @@ define(
 			require(['AuthModal'], function (authModal) {
 				authModal.load({
 					origin: origin,
-					url: '/signin?',
+					url: '/signin',
 					successAuthCallback: function () {
 						w.UserLogin.forceLoggedIn = true;
 						cb();
