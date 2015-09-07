@@ -91,6 +91,7 @@ define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 
 			open(successAuthCallback);
 			loadPage(url, onPageLoaded);
-		}
+		},
+		close: close
 	};
 });
