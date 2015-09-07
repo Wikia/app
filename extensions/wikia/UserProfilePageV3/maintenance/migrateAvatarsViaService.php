@@ -28,7 +28,7 @@ class AvatarsMigrator extends Maintenance {
 	public function __construct() {
 		parent::__construct();
 
-		$this->addOption('dry-run', 'Don\'t perform any operations [default]');
+		$this->addOption( 'dry-run', 'Don\'t perform any operations [default]' );
 
 		$this->mDescription = 'This script migrates the user avatars from DFS to user avatars service';
 	}
@@ -37,7 +37,7 @@ class AvatarsMigrator extends Maintenance {
 		// read options
 		$this->isDryRun = $this->hasOption( 'dry-run' ) || !$this->hasOption( 'force' );
 
-		if ($this->isDryRun) $this->output( "Running in dry-run mode!\n\n" );
+		if ( $this->isDryRun ) $this->output( "Running in dry-run mode!\n\n" );
 
 		$this->output( "Getting the list of all accounts...\n" );
 
@@ -55,13 +55,13 @@ class AvatarsMigrator extends Maintenance {
 		$this->output( "Processing {$rows} users...\n" );
 
 		$this->output( "Will start in 5 seconds...\n" );
-		sleep(5);
+		sleep( 5 );
 
 		// process users
 		foreach ( $res as $n => $row ) {
 			try {
 				$user = User::newFromId( $row->id );
-				$this->output( sprintf( "\n%d (%.2f%%) [User #%d / %s]: ", ($n+1), (($n+1) / $rows * 100), $user->getId(), $user->getName() ) );
+				$this->output( sprintf( "\n%d (%.2f%%) [User #%d / %s]: ", ( $n + 1 ), ( ( $n + 1 ) / $rows * 100 ), $user->getId(), $user->getName() ) );
 				$this->processUser( $user );
 			}
 			catch ( AvatarsMigratorException $e ) {
@@ -117,7 +117,7 @@ class AvatarsMigrator extends Maintenance {
 
 			$this->output( sprintf( 'uploading <%s>', $avatarUrl ) );
 
-			if ($this->isDryRun) return;
+			if ( $this->isDryRun ) return;
 
 			$avatarContent = Http::get( $avatarUrl );
 			if ( empty( $avatarContent ) ) {
@@ -195,7 +195,7 @@ class AvatarsMigrator extends Maintenance {
 		] );
 
 		# skip when in dry-run mode
-		if ($this->isDryRun) return;
+		if ( $this->isDryRun ) return;
 
 		$user->setGlobalAttribute( AVATAR_USER_OPTION_NAME, $avatarUrl );
 
@@ -209,7 +209,7 @@ class AvatarsMigrator extends Maintenance {
 	 * @param int $db DB_SLAVE|DB_MASTER
 	 * @return DatabaseBase
 	 */
-	protected function getDB($db = DB_SLAVE) {
+	protected function getDB( $db = DB_SLAVE ) {
 		global $wgExternalSharedDB;
 		return wfGetDB( $db, [], $wgExternalSharedDB );
 	}
