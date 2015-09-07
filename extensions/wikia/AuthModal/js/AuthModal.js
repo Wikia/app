@@ -84,14 +84,31 @@ define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 	};
 
 	return {
-		load: function (url, successAuthCallback) {
-
-			if (typeof successAuthCallback !== 'function') {
-				successAuthCallback = Function.pototype;
+		/**
+		 * @desc launches the new auth modal if wgEnableNewAuthModal is set to true. If not, then the old UserLoginModal
+		 * is loaded.
+		 * @param {object} params:
+		 * @param {string} url - used for tracking the source of force login modal
+		 * @param {string} origin - used for tracking the source of force login modal
+		 * @param {function} successAuthCallback - callback function to be called after login
+		 */
+		load: function (params) {
+			if (typeof params.successAuthCallback !== 'function') {
+				params.successAuthCallback = Function.pototype;
 			}
 
-			open(successAuthCallback);
-			loadPage(url, onPageLoaded);
+			if (window.wgEnableNewAuthModal) {
+				open(params.successAuthCallback);
+				loadPage(params.url, onPageLoaded);
+
+			} else {
+
+				window.UserLoginModal.show({
+					origin: params.origin,
+					callback: params.successAuthCallback
+				});
+
+			}
 		},
 		close: close
 	};

@@ -56,7 +56,10 @@ require([
 
 	function authModalOpen(url) {
 		require(['AuthModal'], function (authModal) {
-			authModal.load(url, successAuthCallback.bind({url: url}));
+			authModal.load({
+				url: url,
+				successAuthCallback: successAuthCallback.bind({url: url})
+			});
 		});
 	}
 
