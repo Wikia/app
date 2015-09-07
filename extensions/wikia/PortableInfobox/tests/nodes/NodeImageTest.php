@@ -94,10 +94,12 @@ class NodeImageTest extends WikiaBaseTest {
 		$wgHooks['PortableInfoboxNodeImage::getData'] = [];
 
 		$fileMock = new FileMock();
+		$titleMock = new TitleMock();
 		$xmlObj = Wikia\PortableInfobox\Parser\XmlParser::parseXmlString( $markup );
 
 
 		$this->mockStaticMethod( 'WikiaFileHelper', 'getFileFromTitle', $fileMock );
+		$this->mockStaticMethod( '\Title', 'makeTitleSafe', $titleMock );
 		$nodeImage = new Wikia\PortableInfobox\Parser\Nodes\NodeImage( $xmlObj, $params );
 
 		$this->assertEquals( $expected, $nodeImage->getData() );
@@ -112,12 +114,12 @@ class NodeImageTest extends WikiaBaseTest {
 				'<image source="img" />',
 				[ 'img' => 'test.jpg' ],
 				[
-					'url' => '',
-					'name' => 'Test.jpg',
-					'key' => 'Test.jpg',
+					'url' => 'http://test.url',
+					'name' => '',
+					'key' => '',
 					'alt' => null,
 					'caption' => null,
-					'ref' => 0,
+					'ref' => null,
 					'isVideo' => true,
 					'duration' => '00:10'
 				]
@@ -136,6 +138,20 @@ class FileMock {
 	}
 
 	public function getUrl() {
+		return '';
+	}
+}
+
+class TitleMock {
+	public function getFullURL() {
+		return 'http://test.url';
+	}
+
+	public function getText() {
+		return '';
+	}
+
+	public function getDBKey() {
 		return '';
 	}
 }
