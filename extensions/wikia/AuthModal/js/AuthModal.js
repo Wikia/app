@@ -6,7 +6,7 @@ define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 		isOpen,
 		track;
 
-	function open () {
+	function open (successAuthCallback) {
 		if (isOpen) {
 			close();
 		}
@@ -26,6 +26,11 @@ define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 		});
 
 		$(window.document).keyup(onKeyUp);
+		window.addEventListener("message", function (event) {
+			if (event.data.isUserAuthorized && typeof successAuthCallback === 'function') {
+				successAuthCallback();
+			}
+		}, false);
 	}
 
 	function getTrackingFunction () {
@@ -65,12 +70,12 @@ define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 		}
 	}
 
-	function loadPage (url, callback) {
+	function loadPage (url, onPageLoadedCallback) {
 		var authIframe = window.document.createElement('iframe');
 		authIframe.src = url + '&modal=1';
 		authIframe.onload = function () {
-			if (typeof callback === 'function') {
-				callback();
+			if (typeof onPageLoadedCallback === 'function') {
+				onPageLoadedCallback();
 			}
 		};
 		modal.appendChild(authIframe);
@@ -78,8 +83,13 @@ define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 	};
 
 	return {
-		load: function (url) {
-			open();
+		load: function (url, successAuthCallback) {
+
+			if (typeof successAuthCallback !== 'function') {
+				successAuthCallback = Function.pototype;
+			}
+
+			open(successAuthCallback);
 			loadPage(url, onPageLoaded);
 		}
 	};
