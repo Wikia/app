@@ -119,7 +119,7 @@ class RawAction extends FormlessAction {
 	 * @return String|Bool
 	 */
 	public function getRawText() {
-		global $wgParser;
+		global $wgParser, $wgEnableContentReviewExt;
 
 		# No longer used
 		if( $this->mGen ) {
@@ -152,9 +152,15 @@ class RawAction extends FormlessAction {
 			}
 		}
 
-		if ( $text !== false && $text !== '' && $request->getVal( 'templates' ) === 'expand' ) {
+		// Wikia change begin: author: lukaszk
+		$ignoreScriptsExpand = !empty( $wgEnableContentReviewExt )
+				&& $title->inNamespace( NS_MEDIAWIKI )
+				&& ( $title->isJsPage() || $title->isJsSubpage() );
+
+		if ( $text !== false && $text !== '' && $request->getVal( 'templates' ) === 'expand' && !$ignoreScriptsExpand ) {
 			$text = $wgParser->preprocess( $text, $title, ParserOptions::newFromContext( $this->getContext() ) );
 		}
+		// Wikia change end;
 
 		return $text;
 	}
