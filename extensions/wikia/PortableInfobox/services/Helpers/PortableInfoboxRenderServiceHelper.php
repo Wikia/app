@@ -23,7 +23,8 @@ class PortableInfoboxRenderServiceHelper {
 	public function createHorizontalGroupData( $groupData ) {
 		$horizontalGroupData =[
 			'labels' => [],
-			'values' => []
+			'values' => [],
+			'renderLabels' => false
 		];
 
 		foreach ( $groupData as $item ) {
@@ -32,6 +33,10 @@ class PortableInfoboxRenderServiceHelper {
 			if ( $item[ 'type' ] === 'data' ) {
 				array_push( $horizontalGroupData[ 'labels' ], $data[ 'label' ] );
 				array_push( $horizontalGroupData[ 'values' ], $data[ 'value' ] );
+
+				if ( !empty( $data[ 'label' ] ) ) {
+					$horizontalGroupData[ 'renderLabels' ] = true;
+				}
 			} else if ( $item[ 'type' ] === 'header' ) {
 				$horizontalGroupData[ 'header' ] = $data[ 'value' ];
 			}
