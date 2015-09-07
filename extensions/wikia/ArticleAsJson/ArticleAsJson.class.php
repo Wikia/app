@@ -134,13 +134,13 @@ class ArticleAsJson extends WikiaService {
 		return true;
 	}
 
-	public static function onPortableInfoboxNodeImageGetData( $title, &$ref, $alt ) {
+	public static function onPortableInfoboxNodeImageGetData( $title, &$ref, $caption ) {
 
 		wfProfileIn( __METHOD__ );
 		if ( $title ) {
 			$details = WikiaFileHelper::getMediaDetail( $title, self::$mediaDetailConfig );
 			$details['context'] = self::MEDIA_CONTEXT_INFOBOX;
-			self::$media[] = self::createMediaObject( $details, $title->getText(), $alt );
+			self::$media[] = self::createMediaObject( $details, $title->getText(), $caption );
 			$ref = count( self::$media ) - 1;
 		}
 
@@ -227,6 +227,7 @@ class ArticleAsJson extends WikiaService {
 			foreach ( self::$media as &$media ) {
 				self::linkifyMediaCaption( $parser, $media );
 			}
+
 
 			$text = json_encode( [
 				'content' => $text,
