@@ -11,6 +11,7 @@ $messages['en'] = array(
 	'bannernotifications-desc' => 'Displays system notifications for events such as AJAX failures',
 	'bannernotifications-general-ajax-failure' => 'The browser could not connect to the Wikia.  Try again later.',
 	'bannernotifications-not-confirmed-email' => "Oh no! Your email address has not yet been confirmed. You should have a confirmation message in your inbox. Didn't get it? [[Special:ConfirmEmail|Click here and we'll send a new one.]] If you need to change your address, head to your [[Special:Preferences#mw-prefsection-emailv2|Preferences page]].",
+	'bannernotifications-no-email' => "Oh no! Looks like we don't have an email address for you. To set your email, head to your [[Special:Preferences#mw-prefsection-emailv2|Preferences page]].",
 );
 
 /** Message documentation (Message documentation)
@@ -19,6 +20,7 @@ $messages['qqq'] = array(
 	'bannernotifications-desc' => 'Description of this extension',
 	'bannernotifications-general-ajax-failure' => 'General message for AJAX failure to be put on banner notification',
 	'bannernotifications-not-confirmed-email' => 'Banner Notification text - informs user that account has not confirmed email address. In order to confirm email address user has to follow instructions from email that was sent by Wikia. User can resend that email by going to [[Special:ConfirmEmail]] or change email address on preferences page - [[Special:Preferences#mw-prefsection-emailv2]]',
+	'bannernotifications-no-email' => 'Banner Notification text - informs user that account has no email address. In order to set email address user needs to go to preferences page - [[Special:Preferences#mw-prefsection-emailv2]]',
 );
 
 /** Arabic (العربية)
