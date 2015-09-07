@@ -14,7 +14,7 @@ abstract class WikiaParserTagController extends WikiaController {
 		$isValid = false;
 
 		$validator = $this->buildParamValidator( $paramName );
-		if( !is_null($validator) ) {
+		if( !is_null($validator) && $validator instanceof WikiaValidator ) {
 			$isValid = $validator->isValid( $paramValue );
 
 			if( !$isValid ) {
