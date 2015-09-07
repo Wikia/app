@@ -1,6 +1,8 @@
 <?php
 namespace Wikia\Service\Helios;
+
 use Wikia\Util\GlobalStateWrapper;
+use Wikia\Service\Constants;
 
 /**
  * A client for Wikia authentication service.
@@ -12,8 +14,6 @@ class HeliosClientImpl implements HeliosClient
 	const BASE_URI = "helios_base_uri";
 	const CLIENT_ID = "client_id";
 	const CLIENT_SECRET = "client_secret";
-
-	const HELIOS_AUTH_HEADER = "X-Wikia-UserId";
 
 	protected $baseUri;
 	protected $clientId;
@@ -168,7 +168,7 @@ class HeliosClientImpl implements HeliosClient
 			[],
 			[],
 			[ 'method' => 'DELETE',
-				'headers' => array( self::HELIOS_AUTH_HEADER => $userId ) ]
+				'headers' => array( Constants::HELIOS_AUTH_HEADER => $userId ) ]
 		);
 	}
 
