@@ -105,8 +105,8 @@ class AvatarsMigrator extends Maintenance {
 		else if ( self::isPredefinedAvatar( $avatar ) ) {
 			// store the full URL in user properties
 			$masthead = Masthead::newFromUser( $user );
-			$avatarUrl = $masthead->getPurgeUrl();           # e.g. http://images.wikia.com/messaging/images//1/19/Avatar.jpg
-			$avatarUrl = wfReplaceImageServer( $avatarUrl ); # e.g. http://img2.wikia.nocookie.net/__cb1441100734/messaging/images//1/19/Avatar.jpg
+			$avatarUrl = $masthead->getPurgeUrl();                                   # e.g. http://images.wikia.com/messaging/images//1/19/Avatar.jpg
+			$avatarUrl = wfReplaceImageServer( $avatarUrl, 1 /* force cb value */ ); # e.g. http://img1.wikia.nocookie.net/__cb1/messaging/images//c/cf/Avatar6.jpg
 
 			$this->output( "predefined avatar set <{$avatar}> - setting a full URL: <{$avatarUrl}>" );
 
