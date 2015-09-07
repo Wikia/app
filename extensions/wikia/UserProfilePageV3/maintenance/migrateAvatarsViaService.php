@@ -42,16 +42,13 @@ class AvatarsMigrator extends Maintenance {
 
 		$this->output( "Getting the list of all accounts...\n" );
 
-		// get all accounts with "avatar" user preference set
+		// get all accounts
 		$db = $this->getDB( DB_SLAVE );
 
-		// select * from user_properties where up_property = 'avatar';
 		$res = $db->select(
-			'`user_properties`',
-			'up_user AS id',
-			[
-				'up_property' => AVATAR_USER_OPTION_NAME
-			],
+			'`user`',
+			'user_id AS id',
+			[],
 			__METHOD__
 		);
 
