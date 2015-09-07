@@ -7,7 +7,7 @@ class PortableInfoboxBuilderController extends WikiaController {
 	public function getAssets() {
 		$response = $this->getResponse();
 		$response->setFormat( WikiaResponse::FORMAT_JSON );
-		$response->setVal( "css", AssetsManager::getInstance()->getURL( "portable_infobox_scss" ) );
+		$response->setVal( 'css', AssetsManager::getInstance()->getURL( 'portable_infobox_scss' ) );
 	}
 
 	public function publish() {
@@ -37,8 +37,8 @@ class PortableInfoboxBuilderController extends WikiaController {
 			$status->fatal( 'no-title-provided' );
 		}
 
-		$response->setVal( "success", $status->isOK() );
-		$response->setVal( "errors", $status->getErrorsArray() );
-		$response->setVal( "warnings", $status->getWarningsArray() );
+		$response->setVal( 'success', $status->isOK() );
+		$response->setVal( 'errors', $status->getErrorsArray() );
+		$response->setVal( 'warnings', $status->getWarningsArray() );
 	}
 }
