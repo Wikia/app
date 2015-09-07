@@ -27,7 +27,7 @@ class PortableInfoboxBuilderSpecialController extends WikiaSpecialPageController
 	 */
 	public function index() {
 		$this->wg->SuppressPageHeader = true;
-		$this->wg->out->setHTMLTitle( wfMessage( 'portable-infobox-builder-tite' )->text() );
+		$this->wg->out->setHTMLTitle( wfMessage( 'portable-infobox-builder-title' )->text() );
 
 		$title = $this->getTemplateTitle( $this->getPar() );
 		$noTemplateSet = empty( $title ) ? true : false;
