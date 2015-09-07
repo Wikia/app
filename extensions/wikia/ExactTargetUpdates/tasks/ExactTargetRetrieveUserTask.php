@@ -117,7 +117,6 @@ class ExactTargetRetrieveUserTask extends ExactTargetTask {
 				}
 				$aExactTargetUserPropertiesData[$sPropertyName] = $sPropertyValue;
 			}
-			return $aExactTargetUserPropertiesData;
 		}
 
 		return $aExactTargetUserPropertiesData;
