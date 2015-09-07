@@ -82,6 +82,11 @@ class ExactTargetRetrieveUserTask extends ExactTargetTask {
 		return $aExactTargetUsersData;
 	}
 
+	/**
+	 * @param int $iUserId
+	 * @return array
+	 * @throws \Exception
+	 */
 	public function retrieveUserPropertiesByUserId( $iUserId ) {
 		$aFieldsList = [
 			'up_property',
@@ -99,6 +104,7 @@ class ExactTargetRetrieveUserTask extends ExactTargetTask {
 		}
 
 		if ( !empty( $oUserPropertiesResult->Results ) ) {
+			$aExactTargetUserPropertiesData = [];
 			foreach ( $oUserPropertiesResult->Results as $oResult ) {
 				$sPropertyName = null;
 				$sPropertyValue = null;
@@ -109,12 +115,12 @@ class ExactTargetRetrieveUserTask extends ExactTargetTask {
 						$sPropertyValue = $oPropertyEntry->Value;
 					}
 				}
-				$oExactTargetUserPropertiesData[$sPropertyName] = $sPropertyValue;
+				$aExactTargetUserPropertiesData[$sPropertyName] = $sPropertyValue;
 			}
-			return $oExactTargetUserPropertiesData;
+			return $aExactTargetUserPropertiesData;
 		}
 
-		return null;
+		return [];
 	}
 
 	/**
