@@ -284,7 +284,7 @@ define(
 
 				require(['AuthModal'], function (authModal) {
 					authModal.load('/signin?', function () {
-						authModal.close();
+
 						w.UserLogin.forceLoggedIn = true;
 						cb();
 					});

@@ -56,8 +56,13 @@ require([
 
 	function authModalOpen(url) {
 		require(['AuthModal'], function (authModal) {
-			authModal.load(url);
+			authModal.load(url, successAuthCallback.bind({url: url}));
 		});
+	}
+
+	function successAuthCallback () {
+		var redirect = this.url.replace(/.*?redirect=([^&]+)/, '$1');
+		window.location.href = decodeURIComponent(redirect);
 	}
 
 	function globalNavAuthButtonsClick(event) {
