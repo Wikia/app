@@ -47,6 +47,9 @@ class Hooks {
 	public static function onBeforePageDisplay( \OutputPage $out, \Skin $skin ) {
 		$helper = new Helper();
 
+		/* Add method for importing local scripts */
+		\Wikia::addAssetsToOutput('content_review_add_import_script');
+
 		/* Add assets for custom JS test mode */
 		if ( $helper->isContentReviewTestModeEnabled() || self::userCanEditJsPage() ) {
 			\Wikia::addAssetsToOutput( 'content_review_test_mode_js' );
