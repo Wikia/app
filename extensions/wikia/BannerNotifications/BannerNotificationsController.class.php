@@ -291,7 +291,7 @@ class BannerNotificationsController extends WikiaController {
 		if ( $wgUser->isLoggedIn() ) {
 			$message = null;
 
-			if ( empty ($wgUser->getEmail() ) && empty( $wgUser->getNewEmail() ) ) {
+			if ( empty($wgUser->getEmail() ) && empty( $wgUser->getNewEmail() ) ) {
 				$message = wfMessage('bannernotifications-no-email')->parse();
 			} elseif ( !$wgUser->isEmailConfirmed() ) {
 				$message = wfMessage('bannernotifications-not-confirmed-email')->parse();
