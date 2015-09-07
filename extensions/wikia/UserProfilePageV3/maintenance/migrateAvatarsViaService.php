@@ -29,7 +29,6 @@ class AvatarsMigrator extends Maintenance {
 		parent::__construct();
 
 		$this->addOption('dry-run', 'Don\'t perform any operations [default]');
-		$this->addOption( 'force', 'Apply the changes made by the script' );
 
 		$this->mDescription = 'This script migrates the user avatars from DFS to user avatars service';
 	}
@@ -185,6 +184,13 @@ class AvatarsMigrator extends Maintenance {
 	 * @param string $avatarUrl
 	 */
 	protected function setAvatarUrl( User $user, $avatarUrl ) {
+		Wikia\Logger\WikiaLogger::instance()->info( __METHOD__, [
+			'old_attr'  => $user->getGlobalAttribute( AVATAR_USER_OPTION_NAME ),
+			'new_attr'  => $avatarUrl,
+			'user_id'   => $user->getId(),
+			'user_name' => $user->getName(),
+		] );
+
 		# skip when in dry-run mode
 		if ($this->isDryRun) return;
 
