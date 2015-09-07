@@ -254,7 +254,7 @@ class AvatarService extends Service {
 	 * @param Masthead $masthead
 	 * @param int $width
 	 * @param $timestamp
-	 * @return string
+	 * @return \Wikia\Vignette\UrlGenerator
 	 */
 	public static function getVignetteUrl( Masthead $masthead, $width, $timestamp ) {
 		$relativePath = $masthead->mUser->getGlobalAttribute( AVATAR_USER_OPTION_NAME );
@@ -275,15 +275,9 @@ class AvatarService extends Service {
 			$url = self::buildVignetteUrl( $width, $bucket, $relativePath, $timestamp, false );
 		}
 
-		return (string) $url;
+		return $url;
 	}
 
-	/**
-	 * @param int $width
-	 * @param string $relativePath
-	 * @param $timestamp
-	 * @return string
-	 */
 	private static function vignetteCustomUrl( $width, $relativePath, $timestamp ) {
 		global $wgBlogAvatarPath;
 
@@ -298,25 +292,22 @@ class AvatarService extends Service {
 			$parsedUrl = parse_url( $relativePath );
 
 			$bucket = VignetteRequest::parseBucket($relativePath);
+			$relativePath = join('/', array_filter([
+				VignetteRequest::parsePathPrefix($relativePath),
+				VignetteRequest::parseRelativePath($relativePath)
+			]));
 
-
-			// custom avatars (uploaded via service)
-			// e.g. http://vignette.wikia-dev.com/3feccb7c-d544-4998-b127-3eba49eb59af
+			// custom avatars
+			// e.g. http://vignette.wikia-dev.com/3feccb7c-d544-4998-b127-3eba49eb59af/scale-to-width-down/16
 			if ( is_null( $bucket ) ) {
-				$bucket = '';
+				$bucket = '/';
 				$relativePath = $parsedUrl['path'];
 			}
-			else {
-				$relativePath = join('/', array_filter([
-					VignetteRequest::parsePathPrefix($relativePath),
-					VignetteRequest::parseRelativePath($relativePath)
-				]));
-			}
 
-			$url = self::buildVignetteUrl($width, $bucket, $relativePath, null, false);
+			$url = self::buildVignetteUrl( $width, $bucket, $relativePath, false, false );
 		}
 
-		return (string) $url;
+		return $url;
 	}
 
 	private static function buildVignetteUrl( $width, $bucket, $relativePath, $timestamp, $avatarImageType = true ) {
@@ -336,6 +327,6 @@ class AvatarService extends Service {
 			$avatar->avatar();
 		}
 
-		return $avatar;
+		return $avatar->url();
 	}
 }
