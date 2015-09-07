@@ -102,12 +102,10 @@ define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 				loadPage(params.url, onPageLoaded);
 
 			} else {
-
 				window.UserLoginModal.show({
 					origin: params.origin,
 					callback: params.successAuthCallback
 				});
-
 			}
 		},
 		close: close
