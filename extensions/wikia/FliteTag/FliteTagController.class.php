@@ -7,8 +7,24 @@ class FliteTagController extends WikiaController {
 		return true;
 	}
 
-	public function renderFliteAdUnit() {
-		return 'FLITE AD UNIT PLACEHOLDER';
+	public function renderFliteAdUnit( $input, array $args, Parser $parser, PPFrame $frame ) {
+		return $this->sendRequest(
+			'FliteTagController',
+			'fliteAdUnit',
+			[
+				'guid' => $args['guid'],
+				'width' => $args['width'],
+				'height' => $args['height'],
+			]
+		);
+	}
+
+	public function fliteAdUnit() {
+		$this->setVal('guid', $this->getVal('guid'));
+		$this->setVal('width', $this->getVal('width'));
+		$this->setVal('height', $this->getVal('height'));
+
+		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 	}
 
 }
