@@ -37,7 +37,7 @@ use \Swagger\Client\Configuration;
 use \Swagger\Client\ApiClient;
 use \Swagger\Client\ApiException;
 use \Swagger\Client\ObjectSerializer;
-use Wikia\Service\Swagger\ApiProvider;
+use Wikia\Service\Constants;
 
 /**
  * UserAvatarsApi Class Doc Comment
@@ -196,7 +196,7 @@ class UserAvatarsApi
             $headerParams['Accept'] = $_header_accept;
         }
         $headerParams['Content-Type'] = ApiClient::selectHeaderContentType( array( 'multipart/form-data' ) );
-		$headerParams[ApiProvider::AUTH_KEY] = $user_id;
+		$headerParams[Constants::HELIOS_AUTH_HEADER] = $user_id;
 
 
 
@@ -268,7 +268,7 @@ class UserAvatarsApi
             $headerParams['Accept'] = $_header_accept;
         }
         $headerParams['Content-Type'] = ApiClient::selectHeaderContentType( array( 'multipart/form-data' ) );
-		$headerParams[ApiProvider::AUTH_KEY] = $user_id;
+		$headerParams[Constants::HELIOS_AUTH_HEADER] = $user_id;
 
 
 
@@ -339,7 +339,7 @@ class UserAvatarsApi
             $headerParams['Accept'] = $_header_accept;
         }
         $headerParams['Content-Type'] = ApiClient::selectHeaderContentType( array( 'multipart/form-data' ) );
-		$headerParams[ApiProvider::AUTH_KEY] = $user_id;
+		$headerParams[Constants::HELIOS_AUTH_HEADER] = $user_id;
 
 
 
