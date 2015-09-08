@@ -90,8 +90,18 @@ var importArticle = (function() {
 			module.only = module.type + 's';
 			delete module.type;
 
-			// Make sure we don't load the same URI again
 			uri = baseUri + $.param( module );
+
+			// Fetch from external server
+			if (module.server) {
+				if (module.server.indexOf('://') === -1) {
+					uri = 'http://' + module.server + '.wikia.com' + uri;
+				} else {
+					uri = module.server + uri;
+				}
+			}
+
+			// Make sure we don't load the same URI again
 			if ( loaded[ uri ] ) {
 				continue;
 			}
