@@ -237,7 +237,7 @@
 		},
 		"ext.visualEditor.desktopArticleTarget.init": {
 			"class": "VisualEditorDesktopArticleTargetInitModule",
-			"scripts": "modules/ve-mw/init/targets/ve.init.mw.DesktopArticleTarget.init.js",
+			"scripts": "modules/ve-mw/init/targets/ve.init.wikia.DesktopArticleTarget.init.js",
 			"styles": "modules/ve-mw/init/styles/ve.init.mw.DesktopArticleTarget.init.css",
 			"dependencies": [
 				"jquery.client",
@@ -402,7 +402,6 @@
 				"jquery.byteLength",
 				"jquery.client",
 				"mediawiki.api",
-				"mediawiki.api.options",
 				"mediawiki.language",
 				"mediawiki.Title",
 				"mediawiki.Uri",
@@ -410,7 +409,6 @@
 				"mediawiki.util",
 				"user.options",
 				"user.tokens",
-				"moment",
 				"ext.visualEditor.base",
 				"ext.visualEditor.track",
 				"ext.visualEditor.targetLoader",
@@ -977,10 +975,7 @@
 				"mediawiki.user",
 				"mediawiki.util",
 				"mediawiki.jqueryMsg",
-				"jquery.byteLimit",
-				"mediawiki.skinning.content.parsoid",
-				"mediawiki.language.specialCharacters",
-				"mediawiki.widgets"
+				"jquery.byteLimit"
 			],
 			"messages": [
 				"visualeditor-beta-label",

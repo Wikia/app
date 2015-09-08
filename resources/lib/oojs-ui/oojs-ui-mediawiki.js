@@ -1,12 +1,12 @@
 /*!
- * OOjs UI v0.6.0
+ * OOjs UI v0.12.7
  * https://www.mediawiki.org/wiki/OOjs_UI
  *
- * Copyright 2011–2014 OOjs Team and other contributors.
+ * Copyright 2011–2015 OOjs UI Team and other contributors.
  * Released under the MIT license
  * http://oojs.mit-license.org
  *
- * Date: 2014-12-16T21:00:55Z
+ * Date: 2015-09-01T23:25:30Z
  */
 /**
  * @class
@@ -16,7 +16,7 @@
  */
 OO.ui.MediaWikiTheme = function OoUiMediaWikiTheme() {
 	// Parent constructor
-	OO.ui.MediaWikiTheme.super.call( this );
+	OO.ui.MediaWikiTheme.parent.call( this );
 };
 
 /* Setup */
@@ -32,26 +32,33 @@ OO.ui.MediaWikiTheme.prototype.getElementClasses = function ( element ) {
 	// Parent method
 	var variant,
 		variants = {
+			warning: false,
 			invert: false,
 			progressive: false,
 			constructive: false,
 			destructive: false
 		},
 		// Parent method
-		classes = OO.ui.MediaWikiTheme.super.prototype.getElementClasses.call( this, element );
+		classes = OO.ui.MediaWikiTheme.parent.prototype.getElementClasses.call( this, element ),
+		isFramed;
 
-	if ( element.supports( [ 'isFramed', 'isDisabled', 'hasFlag' ] ) ) {
-		if ( !element.isDisabled() && element.isFramed() && element.hasFlag( 'primary' ) ) {
+	if ( element.supports( [ 'hasFlag' ] ) ) {
+		isFramed = element.supports( [ 'isFramed' ] ) && element.isFramed();
+		if (
+			( isFramed && ( element.isDisabled() || element.hasFlag( 'primary' ) ) ) ||
+			( !isFramed && element.hasFlag( 'primary' ) )
+		) {
 			variants.invert = true;
 		} else {
 			variants.progressive = element.hasFlag( 'progressive' );
 			variants.constructive = element.hasFlag( 'constructive' );
 			variants.destructive = element.hasFlag( 'destructive' );
+			variants.warning = element.hasFlag( 'warning' );
 		}
 	}
 
 	for ( variant in variants ) {
-		classes[variants[variant] ? 'on' : 'off'].push( 'oo-ui-image-' + variant );
+		classes[ variants[ variant ] ? 'on' : 'off' ].push( 'oo-ui-image-' + variant );
 	}
 
 	return classes;

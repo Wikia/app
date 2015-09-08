@@ -975,4 +975,10 @@ return array(
 		'remoteBasePath' => $GLOBALS['wgStylePath'],
 		'localBasePath' => $GLOBALS['wgStyleDirectory'],
 	),
+	'oojs' => array(
+		'scripts' => array(
+			'resources/lib/oojs/oojs.jquery.js',
+		),
+		'targets' => array( 'desktop', 'mobile' ),
+	),
 );

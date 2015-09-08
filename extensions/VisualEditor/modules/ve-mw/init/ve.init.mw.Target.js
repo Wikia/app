@@ -296,8 +296,8 @@ ve.init.mw.Target.prototype.loadSuccess = function ( response ) {
 
 		// Fix relative or missing base URL if needed
 		this.constructor.static.fixBase( this.doc );
-
-		this.remoteNotices = ve.getObjectValues( data.notices );
+		// ve-upstream-sync - review - @author: Inez Korczyński
+		//this.remoteNotices = ve.getObjectValues( data.notices );
 		this.protectedClasses = data.protectedClasses;
 
 		this.baseTimeStamp = data.basetimestamp;
