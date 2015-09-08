@@ -15,11 +15,15 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 		pageLevelParams,
 		pubAds;
 
+	function resetSlotsForRecovery() {
+		slots = {};
+		slotQueue = [];
+	}
+
 	function GoogleTag(storeCommands) {
 		this.initialized = false;
 		this.storeCommands = storeCommands;
-		slots = {};
-		slotQueue = [];
+		resetSlotsForRecovery();
 	}
 
 	function dispatchEvent(event) {
