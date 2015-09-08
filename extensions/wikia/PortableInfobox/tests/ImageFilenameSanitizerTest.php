@@ -175,7 +175,13 @@ class ImageFilenameSanitizerTest extends WikiaBaseTest {
 				'en',
 				'文件名óśłżźćńę?.jpg',
 				'Content of gallery with diacritics and UTF characters'
-			]
+			],
+			[
+				'Image:filename.jpg',
+				'en',
+				'filename.jpg',
+				'Filename with alias to namespace'
+			],
 		];
 	}
 }
