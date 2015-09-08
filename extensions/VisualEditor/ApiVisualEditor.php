@@ -46,6 +46,17 @@ class ApiVisualEditor extends ApiBase {
 		return $vers;
 	}
 
+	// Wikia change
+	/**
+	 * @protected
+	 * @description Simple helper to retrieve relevant host
+	 * @return String
+	 */
+	protected function getApiSource() {
+		$url = parse_url( wfExpandUrl( wfScript( 'api' ) ) );
+		return $url['host'];
+	}
+
 	/**
 	 * Creates the virtual REST service object to be used in VE's API calls. The
 	 * method determines whether to instantiate a ParsoidVirtualRESTService or a
@@ -63,9 +74,9 @@ class ApiVisualEditor extends ApiBase {
 		$class = 'ParsoidVirtualRESTService';
 		$config = $this->veConfig;
 
-		// no global modules defined, fall back to old defaults
 		$params = array(
 			'URL' => $config->get( 'VisualEditorParsoidURL' ),
+			'domain' => $this->getApiSource(),
 			'prefix' => $config->get( 'VisualEditorParsoidPrefix' ),
 			'timeout' => $config->get( 'VisualEditorParsoidTimeout' ),
 			'HTTPProxy' => $config->get( 'VisualEditorParsoidHTTPProxy' ),
