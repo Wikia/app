@@ -153,9 +153,7 @@ class RawAction extends FormlessAction {
 		}
 
 		// Wikia change begin: author: lukaszk
-		$ignoreScriptsExpand = $title->inNamespace( NS_MEDIAWIKI ) && ( $title->isJsPage() || $title->isJsSubpage() );
-
-		if ( $text !== false && $text !== '' && $request->getVal( 'templates' ) === 'expand' && !$ignoreScriptsExpand ) {
+		if ( $text !== false && $text !== '' && $request->getVal( 'templates' ) === 'expand' && !$title->isJsPage() ) {
 			$text = $wgParser->preprocess( $text, $title, ParserOptions::newFromContext( $this->getContext() ) );
 		}
 		// Wikia change end;
