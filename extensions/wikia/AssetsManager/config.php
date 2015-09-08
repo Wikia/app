@@ -2544,13 +2544,6 @@ $config['template_draft'] = [
 	]
 ];
 
-$config['content_review_add_import_script'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => [
-		'//extensions/wikia/ContentReview/scripts/contentReviewAddImportWikiaScriptPagesScript.js',
-	]
-];
-
 $config['content_review_module_monobook_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'monobook' ],

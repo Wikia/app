@@ -161,8 +161,40 @@ var importArticleMissing = (function() {
 	}
 }());
 
+/**
+* Imports script from provided JS page in MediaWiki namespace
+* @param {array} articles Name of page without namespace prefix
+* @param {string} server Name of page without namespace prefix
+*/
+var importWikiaScriptPages = (function () {
+
+	function importWikiaScriptPages(articles, server) {
+		var articlesToImport = [];
+		for (var i = 0; i < articles.length; i++) {
+			if (!isJsPage(articles[i])) {
+				console.log('Cannot import MediaWiki:' + articles[i] + ' - provided text is not valid JS page name.');
+				continue;
+			}
+			articlesToImport.push('MediaWiki:' + articles[i]);
+		}
+
+		window.importArticles({
+			type: 'script',
+			articles: articlesToImport,
+			server: server
+		});
+	}
+
+	function isJsPage (scriptName) {
+		return scriptName.substr(scriptName.length - 3).toLowerCase() === '.js';
+	}
+
+	return importWikiaScriptPages;
+}());
+
 // Exports
 window.importArticle = window.importArticles = importArticle;
 window.importArticleMissing = importArticleMissing;
+window.importWikiaScriptPages = importWikiaScriptPages;
 
 })( this, jQuery );
