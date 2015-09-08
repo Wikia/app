@@ -956,13 +956,19 @@ return array(
 		),
 	),
 	'mediawiki.legacy.wikibits' => array(
-		// Wikia - change begin - @author: wladek
+		// Wikia - change begin - @author: wladek, kamil
 //		'scripts' => 'common/wikibits.js',
 //		'remoteBasePath' => $GLOBALS['wgStylePath'],
 //		'localBasePath' => $GLOBALS['wgStyleDirectory'],
 		'scripts' => array(
 			'skins/common/wikibits.js',
 			'resources/wikia/wikia.wikibits.js',
+		),
+		'messages' => array(
+			'import-article-missing-single',
+			'import-article-missing-multiple',
+			'import-article-missing-more-single',
+			'import-article-missing-more-multiple',
 		),
 		// Wikia - change end
 		'dependencies' => array(

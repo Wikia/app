@@ -123,15 +123,13 @@ var importArticleMissing = (function() {
 			&& ( $.inArray( 'staff', window.wgUserGroups ) > -1
 			|| $.inArray( 'sysop', window.wgUserGroups ) > -1
 			|| $.inArray( 'bureaucrat', window.wgUserGroups ) > -1 ) ),
-		// TODO: i18n
 		missingText = {
-			single: '%1s was not found (requested by user-supplied javascript)',
-			multiple: '%1s %2s were not found (requested by user-supplied javascript)'
+			single:  'import-article-missing-single',
+			multiple: 'import-article-missing-multiple'
 		},
-		// TODO: i18n
 		moreText = {
-			single: '(and one more article)',
-			multiple: '(and %d more articles)'
+			single: 'import-article-missing-more-single',
+			multiple: 'import-article-missing-more-multiple'
 		};
 
 	return function( missing ) {
@@ -149,16 +147,18 @@ var importArticleMissing = (function() {
 		// Use BannerNotification to show the error to the user
 		if (window.BannerNotification && (missingLength = missing.length)) {
 			var moreLength = missingLength - 1,
-				message = missingText[ missingLength < 2 ? 'single' : 'multiple' ],
-				more = moreText[ moreLength < 2 ? 'single' : 'multiple' ];
+				baseMessageName = missingText[ missingLength < 2 ? 'single' : 'multiple' ],
+				moreMessageName = moreText[ moreLength < 2 ? 'single' : 'multiple'],
+				message;
 
-			message = message
-				.replace( '%1s', '"' + missing[ 0 ] + '"' )
-				.replace( '%2s', more.replace( '%d', moreLength ) );
+			message = mw.message(baseMessageName).params([
+				'"' + missing[ 0 ] + '"',
+				mw.message(moreMessageName).params([moreLength]).escaped()
+			]).escaped();
 
 			new window.BannerNotification(message, 'error').show();
 		}
-	}
+	};
 }());
 
 /**

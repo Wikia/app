@@ -1039,4 +1039,10 @@ hu',
 
 'usesitejs-disabled-warning' => 'Custom JavaScript is disabled on this wikia.',
 'tog-enableuserjs' => 'Enable personal JavaScript ([[Help:Personal_CSS_and_JS#JavaScript|Learn more]])',
-));
+
+# wikia.wikibits.js mesages for import scripts notifications
+'import-article-missing-single' => '$1 was not found (requested by user-supplied javascript)',
+'import-article-missing-multiple' => '$1 $2 were not found (requested by user-supplied javascript)',
+'import-article-missing-more-single' => '(and one more article)',
+'import-article-missing-more-multiple' => '(and $1 more articles)',
+) );
