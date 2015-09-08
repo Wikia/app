@@ -60,7 +60,7 @@ class PortableInfoboxHooks {
 	 */
 	public static function onArticleNonExistentPage( Article $article, OutputPage $wgOut, $text ) {
 		$title = $article->getTitle();
-		if ( $title && !$title->exists() && $title->inNamespace( NS_TEMPLATE ) ) {
+		if ( $title && !$title->exists() && $title->inNamespace( NS_TEMPLATE ) && $title->userCan( 'edit' ) ) {
 			$HTML = F::app()->renderView(
 				'PortableInfoboxBuilderSpecialController',
 				'renderCreateTemplateEntryPoint',
