@@ -301,13 +301,16 @@
 		vote: function (e) {
 			e.preventDefault();
 			if (!window.wgUserName) {
-				window.UserLoginModal.show({
-					origin: 'wall-and-forum',
-					callback: this.proxy(function () {
-						this.voteBase(e, function () {
-							window.location.reload();
-						});
-					})
+				require(['AuthModal'], function (authModal) {
+					authModal.load({
+						url: '/signin',
+						origin: 'wall-and-forum',
+						successAuthCallback: this.proxy(function () {
+							this.voteBase(e, function () {
+								window.location.reload();
+							});
+						})
+					});
 				});
 			} else {
 				this.voteBase(e, this.proxy(function (target, data, dir) {
@@ -729,11 +732,14 @@
 			e.preventDefault();
 			var rootMessageId = $(e.target).closest('.message').data('id');
 			if (window.wgDisableAnonymousEditing && !window.wgUserName) {
-				window.UserLoginModal.show({
-					origin: 'wall-and-forum',
-					callback: this.proxy(function () {
-						this.editTopics(rootMessageId);
-					})
+				require(['AuthModal'], function (authModal) {
+					authModal.load({
+						url: '/signin',
+						origin: 'wall-and-forum',
+						successAuthCallback: this.proxy(function () {
+							this.editTopics(rootMessageId);
+						})
+					});
 				});
 			} else {
 				this.editTopics(rootMessageId);

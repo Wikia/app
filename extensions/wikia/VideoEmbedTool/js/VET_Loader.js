@@ -84,12 +84,15 @@
 			return;
 		} else if (window.wgUserName === null) {
 			// handle login on article page
-			window.UserLoginModal.show({
-				origin: 'vet',
-				callback: function () {
-					window.UserLogin.forceLoggedIn = true;
-					vetLoader.load(options);
-				}
+			require(['AuthModal'], function (authModal) {
+				authModal.load({
+					url: '/signin',
+					origin: 'vet',
+					successAuthCallback: function () {
+						window.UserLogin.forceLoggedIn = true;
+						vetLoader.load(options);
+					}
+				});
 			});
 			$elem.stopThrobbing();
 			return;

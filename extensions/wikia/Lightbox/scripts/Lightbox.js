@@ -1116,13 +1116,16 @@
 				if (window.wgUserName) {
 					doShareEmail(addresses);
 				} else {
-					UserLoginModal.show({
-						origin: 'image-lightbox',
-						callback: function () {
-							doShareEmail(addresses);
-							// see VID-473 - Reload page on lightbox close
-							LightboxLoader.reloadOnClose = true;
-						}
+					require(['AuthModal'], function (authModal) {
+						authModal.load({
+							url: '/signin',
+							origin: 'image-lightbox',
+							successAuthCallback: function () {
+								doShareEmail(addresses);
+								// see VID-473 - Reload page on lightbox close
+								LightboxLoader.reloadOnClose = true;
+							}
+						});
 					});
 				}
 			});

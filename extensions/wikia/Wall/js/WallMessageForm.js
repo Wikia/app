@@ -87,12 +87,15 @@
 
 		loginBeforeSubmit: function (action) {
 			if (window.wgDisableAnonymousEditing && !window.wgUserName) {
-				UserLoginModal.show({
-					origin: 'wall-and-forum',
-					callback: this.proxy(function () {
-						action(false);
-						return true;
-					})
+				require(['AuthModal'], function (authModal) {
+					authModal.load({
+						url: '/signin',
+						origin: 'wall-and-forum',
+						successAuthCallback: this.proxy(function () {
+							action(false);
+							return true;
+						})
+					});
 				});
 			} else {
 				action(true);

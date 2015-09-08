@@ -155,11 +155,14 @@ require([
 	 * @param {Object} target - href which was clicked
 	 */
 	function callUserLoginModalShow(target) {
-		win.UserLoginModal.show({
-			origin: 'venus-article-edit',
-			callback: function() {
-				win.location = target.href;
-			}
+		require(['AuthModal'], function (authModal) {
+			authModal.load({
+				url: '/signin',
+				origin: 'venus-article-edit',
+				successAuthCallback: function() {
+					win.location = target.href;
+				}
+			});
 		});
 	}
 
