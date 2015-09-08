@@ -295,11 +295,11 @@ class AvatarService extends Service {
 			// handle full URLs introduced by PLATFORM-1334
 			$parsedUrl = parse_url( $relativePath );
 
-			$bucket = VignetteRequest::parseBucket($relativePath);
-			$relativePath = join('/', array_filter([
-				VignetteRequest::parsePathPrefix($relativePath),
-				VignetteRequest::parseRelativePath($relativePath)
-			]));
+			$bucket = VignetteRequest::parseBucket( $relativePath );
+			$relativePath = join( '/', array_filter( [
+				VignetteRequest::parsePathPrefix( $relativePath ),
+				VignetteRequest::parseRelativePath( $relativePath )
+			] ) );
 
 			// custom avatars
 			// e.g. http://vignette.wikia-dev.com/3feccb7c-d544-4998-b127-3eba49eb59af/scale-to-width-down/16
