@@ -91,7 +91,7 @@ define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 		 * @desc launches the new auth modal if wgEnableNewAuthModal is set to true. If not, then the old UserLoginModal
 		 * is loaded.
 		 * @param {object} params:
-		 * @param {string} url - used for tracking the source of force login modal
+		 * @param {string} url - url for the page we want to load in the modal
 		 * @param {string} origin - used for tracking the source of force login modal
 		 * @param {function} successAuthCallback - callback function to be called after login
 		 */
