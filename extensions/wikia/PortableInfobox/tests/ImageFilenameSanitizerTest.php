@@ -177,10 +177,10 @@ class ImageFilenameSanitizerTest extends WikiaBaseTest {
 				'Content of gallery with diacritics and UTF characters'
 			],
 			[
-				'[[Image:image.jpg|300px|lorem ipsum]]',
-				'es',
-				'image.jpg',
-				'Link to filename with canonical namespace, width and caption on a non-EN wiki '
+				'Image:filename.jpg',
+				'en',
+				'filename.jpg',
+				'Filename with alias to namespace'
 			],
 		];
 	}
