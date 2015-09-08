@@ -88,7 +88,7 @@ class Hooks {
 		$title = $rawAction->getTitle();
 
 		if ( $title->inNamespace( NS_MEDIAWIKI )
-			&& ( $title->isJsPage() || $rawAction->getContentType() == $wgJsMimeType )
+			&& ( $title->isJsPage() || $title->isJsSubpage() || $rawAction->getContentType() == $wgJsMimeType )
 		) {
 			$pageId = $title->getArticleID();
 			$latestRevId = $title->getLatestRevID();
