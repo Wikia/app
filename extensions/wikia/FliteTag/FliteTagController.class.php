@@ -13,7 +13,7 @@ class FliteTagController extends WikiaParserTagController {
 
 	public function renderFliteAdUnit( $input, array $args, Parser $parser, PPFrame $frame ) {
 		$errorMessage = '';
-		if( !$this->areTagParamsValid($args, $errorMessage) ) {
+		if( !$this->areTagParamsValid( $args, $errorMessage ) ) {
 			return $this->sendRequest(
 				'FliteTagController',
 				'fliteTagError',
@@ -32,7 +32,7 @@ class FliteTagController extends WikiaParserTagController {
 		);
 	}
 
-	private function areTagParamsValid($params, &$errorMessage) {
+	private function areTagParamsValid( $params, &$errorMessage ) {
 		if( empty($params) ) {
 			$errorMessage = wfMessage( 'flite-tag-error-no-required-parameters' )->plain();
 			return false;
