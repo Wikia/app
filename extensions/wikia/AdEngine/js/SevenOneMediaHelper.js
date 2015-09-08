@@ -265,14 +265,14 @@ define('ext.wikia.adEngine.sevenOneMediaHelper', [
 	function initialize(firstSlotname) {
 		var subsite, sub2site, sub3site, targeting = adContext.getContext().targeting;
 
-		subsite = targeting.wikiVertical && targeting.wikiVertical.toLowerCase();
+		subsite = targeting.mappedVerticalName;
 
 		if (targeting.sevenOneMediaSub2Site) {
 			sub2site = targeting.sevenOneMediaSub2Site;
 			sub3site = pageLevelParams.s1.replace('_', '');
 		} else {
 			sub2site = pageLevelParams.s1.replace('_', '');
-			sub3site = subsite === 'lifestyle' ? targeting.mappedVerticalName : '';
+			sub3site = subsite === 'life' ? targeting.wikiCategory : '';
 		}
 
 		initialized = true;
