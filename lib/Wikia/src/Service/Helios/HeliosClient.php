@@ -16,11 +16,10 @@ interface HeliosClient {
 	 * A shortcut method for token invalidation requests.
 	 *
 	 * @param $token string - a token to be invalidated
-	 * @param $userId integer - the current user id
 	 *
 	 * @return string - json encoded response
 	 */
-	public function invalidateToken( $token, $userId );
+	public function invalidateToken( $token );
 
 	/**
 	 * A shortcut method for register requests.
