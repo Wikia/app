@@ -33,6 +33,8 @@ function efDefaultMessagesSetup() {
 }
 
 function efGetDefaultMessage( $lckey, $lang, &$message, $useDB ) {
+	// Please note: the following code has been inlined in MessageCache::get
+	// to improve performance, any changes here will not have any effect
 	wfProfileIn(__FUNCTION__);
 	if( $message === false ) {
 		global $wgDefaultMessagesCache, $wgContLang;
