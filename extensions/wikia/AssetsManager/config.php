@@ -2642,3 +2642,12 @@ $config['curated_content_tool_button_scss'] = [
 		'//extensions/wikia/CuratedContent/css/CuratedContentTool.scss'
 	]
 ];
+
+$config['visit_source_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//resources/wikia/libraries/visit-source/visit-source.js',
+		'//extensions/wikia/VisitSource/scripts/VisitSource.js',
+	]
+];
