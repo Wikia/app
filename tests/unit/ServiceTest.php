@@ -15,6 +15,8 @@ class ServiceTest extends WikiaBaseTest {
 	 * @group UsingDB
 	 */
 	function testAvatarService() {
+		$this->markTestSkipped();
+
 		$anonName = '10.10.10.10';
 		$userName = 'WikiaBot';
 
