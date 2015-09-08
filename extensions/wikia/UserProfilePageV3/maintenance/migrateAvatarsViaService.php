@@ -124,7 +124,7 @@ class AvatarsMigrator extends Maintenance {
 
 			if ( $this->isDryRun ) return;
 
-			$avatarContent = Http::get( $avatarUrl );
+			$avatarContent = Http::get( $avatarUrl, 'default', [ 'noProxy' => true ] );
 			if ( empty( $avatarContent ) ) {
 				throw new AvatarsMigratorException( 'Avatar fetch failed' );
 			}
