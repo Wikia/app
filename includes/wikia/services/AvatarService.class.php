@@ -1,4 +1,8 @@
 <?php
+
+use Wikia\Vignette\StaticAssetsUrlGenerator;
+use Wikia\Vignette\UrlConfig;
+
 class AvatarService extends Service {
 
 	const AVATAR_SIZE_SMALL = 20;
@@ -300,11 +304,17 @@ class AvatarService extends Service {
 			// custom avatars
 			// e.g. http://vignette.wikia-dev.com/3feccb7c-d544-4998-b127-3eba49eb59af/scale-to-width-down/16
 			if ( is_null( $bucket ) ) {
-				$bucket = '/';
-				$relativePath = $parsedUrl['path'];
-			}
+				$config = ( new UrlConfig() )
+					->setRelativePath( $parsedUrl['path'] )
+					->setBaseUrl( sprintf( '%s://%s', $parsedUrl['scheme'], $parsedUrl['host'] ) );
 
-			$url = self::buildVignetteUrl( $width, $bucket, $relativePath, false, false );
+				$url = ( new StaticAssetsUrlGenerator( $config ) )
+					->scaleToWidth( $width )
+					->url();
+			}
+			else {
+				$url = self::buildVignetteUrl( $width, $bucket, $relativePath, false, false );
+			}
 		}
 
 		return $url;
