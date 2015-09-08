@@ -1,8 +1,6 @@
 <?php
 namespace Wikia\Service\Helios;
-
 use Wikia\Util\GlobalStateWrapper;
-use Wikia\Service\Constants;
 
 /**
  * A client for Wikia authentication service.
@@ -157,18 +155,16 @@ class HeliosClientImpl implements HeliosClient
 	 * A shortcut method for token invalidation requests.
 	 *
 	 * @param $token string - a token to be invalidated
-	 * @param $userId integer - the current user id
 	 *
 	 * @return string - json encoded response
 	 */
-	public function invalidateToken( $token, $userId )
+	public function invalidateToken( $token )
 	{
 		return $this->request(
 			sprintf('token/%s', $token),
 			[],
 			[],
-			[ 'method' => 'DELETE',
-				'headers' => array( Constants::HELIOS_AUTH_HEADER => $userId ) ]
+			[ 'method' => 'DELETE' ]
 		);
 	}
 
