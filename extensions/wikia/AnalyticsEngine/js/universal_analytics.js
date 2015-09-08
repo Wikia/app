@@ -45,7 +45,7 @@
         window.ga = function () {};
     }
 
-    var cookieExists, isProductionEnv;
+    var cookieExists, isProductionEnv, blockingTracked = false;
     /**
      * Main Tracker
      *
@@ -244,6 +244,10 @@
     }
 
     function trackBlocking(value) {
+        if (blockingTracked) {
+            return;
+        }
+        blockingTracked = true;
         _gaWikiaPush(['set', 'dimension6', value]);
         window.ga('ads.set', 'dimension6', value);
         guaTrackAdEvent('ad/sourcepoint/detection', value);

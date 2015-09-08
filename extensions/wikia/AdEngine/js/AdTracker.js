@@ -8,7 +8,7 @@ define('ext.wikia.adEngine.adTracker', ['wikia.tracker', 'wikia.window'], functi
 	function encodeAsQueryString(extraParams) {
 		var out = [], key, keys = [], i, len;
 
-		if (window.ads.runtime.sp.blocking !== undefined) {
+		if (window.ads && window.ads.runtime.sp.blocking !== undefined) {
 			extraParams.sp = window.ads.runtime.sp.blocking ? 'yes' : 'no';
 		}
 
