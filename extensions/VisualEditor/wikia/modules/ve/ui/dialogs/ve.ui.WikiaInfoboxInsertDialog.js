@@ -164,8 +164,7 @@ ve.ui.WikiaInfoboxInsertDialog.prototype.createInfoboxSelectWidget = function ( 
 };
 
 /**
- * Add the infobox template names to the dialog's SelectWidget
- *
+ * @desc creates dialog content
  * @param {Object} data Response data from API
  * @returns {Promise}
  */
