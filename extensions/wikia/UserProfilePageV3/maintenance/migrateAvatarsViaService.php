@@ -29,6 +29,7 @@ class AvatarsMigrator extends Maintenance {
 		parent::__construct();
 
 		$this->addOption( 'dry-run', 'Don\'t perform any operations [default]' );
+		$this->addOption( 'force', 'Perform the migration' );
 
 		$this->mDescription = 'This script migrates the user avatars from DFS to user avatars service';
 	}
