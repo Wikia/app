@@ -7,7 +7,7 @@ require(['wikia.window'], function (window) {
 	 * Imports script from provided JS page in MediaWiki namespace
 	 * @param {string} scriptName Name of page without namespace prefix
 	 */
-	window.importWikiaScriptPage = function (articles, server) {
+	window.importWikiaScriptPages = function (articles, server) {
 
 		for (var i = 0; i < articles.length; i++) {
 			if (!isJsPage(articles[i])) {

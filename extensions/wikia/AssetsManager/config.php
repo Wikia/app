@@ -2547,7 +2547,7 @@ $config['template_draft'] = [
 $config['content_review_add_import_script'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
-		'//extensions/wikia/ContentReview/scripts/contentReviewAddImportLocalWikiaScript.js',
+		'//extensions/wikia/ContentReview/scripts/contentReviewAddImportWikiaScriptPagesScript.js',
 	]
 ];
 
