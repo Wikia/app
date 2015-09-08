@@ -989,6 +989,7 @@ class LocalFile extends File {
 			$user = $wgUser;
 		}
 
+		/* @var DatabaseBase $dbw */
 		$dbw = $this->repo->getMasterDB();
 		$dbw->begin();
 
@@ -1009,6 +1010,8 @@ class LocalFile extends File {
 		# Fail now if the file isn't there
 		if ( !$this->fileExists ) {
 			wfDebug( __METHOD__ . ": File " . $this->getRel() . " went missing!\n" );
+			$dbw->rollback( __METHOD__ );
+
 			return false;
 		}
 
@@ -1095,14 +1098,14 @@ class LocalFile extends File {
 		} else {
 			# This is a new file
 			# Update the image count
-			$dbw->begin( __METHOD__ );
+			#$dbw->begin( __METHOD__ ); // macbre: see PLATFORM-1311 (Beginning a transaction causes any pending transaction to be committed)
 			$dbw->update(
 				'site_stats',
 				array( 'ss_images = ss_images+1' ),
 				'*',
 				__METHOD__
 			);
-			$dbw->commit( __METHOD__ );
+			#$dbw->commit( __METHOD__ ); // macbre: see PLATFORM-1311
 		}
 
 		$descTitle = $this->getTitle();
@@ -1128,6 +1131,13 @@ class LocalFile extends File {
 
 				wfRunHooks( 'NewRevisionFromEditComplete', array( $wikiPage, $nullRevision, $latest, $user ) );
 				$wikiPage->updateRevisionOn( $dbw, $nullRevision );
+			}
+			else {
+				\Wikia\Logger\WikiaLogger::instance()->warning('PLATFORM-1311', [
+					'reason' => 'LocalFile no nullRevision',
+					'page_id' => $descTitle->getArticleId(),
+					'exception' => new Exception()
+				]);
 			}
 			# Invalidate the cache for the description page
 			$descTitle->invalidateCache();

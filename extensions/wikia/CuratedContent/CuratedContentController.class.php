@@ -512,12 +512,12 @@ class CuratedContentController extends WikiaController {
 
 					if ( !empty( $section['label'] ) && empty( $section['featured'] ) ) {
 						// load image for curated content sections (not optional, not featured)
-						$section['image_url'] = CuratedContentHelper::getImageUrl( $section['image_id'] );
+						$section['image_url'] = CuratedContentHelper::findImageUrl( $section['image_id'] );
 					}
 
 					foreach ( $section['items'] as $i => $item ) {
 						// load image for all items
-						$section['items'][$i]['image_url'] = CuratedContentHelper::getImageUrl( $item['image_id'] );
+						$section['items'][$i]['image_url'] = CuratedContentHelper::findImageUrl( $item['image_id'] );
 
 						// update information about node type
 						$section['items'][$i]['node_type'] = 'item';

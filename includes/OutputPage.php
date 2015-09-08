@@ -2792,6 +2792,7 @@ $templates
 				$this->getRequest()->getBool( 'handheld' ),
 				$extraQuery
 			);
+
 			if ( $useESI && $wgResourceLoaderUseESI ) {
 				$esi = Xml::element( 'esi:include', array( 'src' => $url ) );
 				if ( $only == ResourceLoaderModule::TYPE_STYLES ) {
@@ -2894,7 +2895,7 @@ $templates
 	 * @return string
 	 */
 	function getScriptsForBottomQueue( $inHead ) {
-		global $wgUseSiteJs, $wgAllowUserJs;
+		global $wgUseSiteJs, $wgAllowUserJs, $wgEnableContentReviewExt;
 
 		$asyncMWload = true;
 
@@ -2933,8 +2934,19 @@ $templates
 
 		// Add site JS if enabled
 		if ( $wgUseSiteJs ) {
+			$extraQuery = [];
+
+			if ( $wgEnableContentReviewExt ) {
+				$contentReviewHelper = new \Wikia\ContentReview\Helper();
+				if ( $contentReviewHelper->isContentReviewTestModeEnabled() ) {
+					$extraQuery['current'] = $contentReviewHelper->getJsPagesTimestamp();
+				} else {
+					$extraQuery['reviewed'] = $contentReviewHelper->getReviewedJsPagesTimestamp();
+				}
+			}
+
 			$scripts .= $this->makeResourceLoaderLink( 'site', ResourceLoaderModule::TYPE_SCRIPTS,
-				/* $useESI = */ false, /* $extraQuery = */ array(), /* $loadCall = */ $inHead
+				/* $useESI = */ false, /* $extraQuery = */ $extraQuery, /* $loadCall = */ $inHead
 			);
 			if( $this->getUser()->isLoggedIn() ){
 				$userScripts[] = 'user.groups';
@@ -3133,7 +3145,7 @@ $templates
 			$wgSitename, $wgVersion, $wgHtml5, $wgMimeType,
 			$wgFeed, $wgOverrideSiteFeed, $wgAdvertisedFeedTypes,
 			$wgDisableLangConversion, $wgCanonicalLanguageLinks,
-			$wgRightsPage, $wgRightsUrl, $wgDevelEnvironment, $wgStagingEnvironment;
+			$wgRightsPage, $wgRightsUrl;
 
 		$tags = array();
 
@@ -3160,12 +3172,6 @@ $templates
 		) );
 
 		$p = "{$this->mIndexPolicy},{$this->mFollowPolicy}";
-		// Wikia change - begin
-		if ( !empty( $wgDevelEnvironment ) || !empty( $wgStagingEnvironment ) ) {
-			$p = "noindex,nofollow";
-		}
-		// Wikia change - end
-
 		if( $p !== 'index,follow' ) {
 			// http://www.robotstxt.org/wc/meta-user.html
 			// Only show if it's different from the default robots policy

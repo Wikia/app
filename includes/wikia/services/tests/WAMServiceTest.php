@@ -52,7 +52,8 @@ class WAMServiceTest extends WikiaBaseTest {
 				array(
 					'fw1.time_id = FROM_UNIXTIME(100000)',
 					'fw1.vertical_id' => [0,1,2,3,4,5,6,7],
-					'fw1.wiki_id NOT IN (100, 200, 300)'
+					'fw1.wiki_id NOT IN (100, 200, 300)',
+					'(dw.url IS NOT NULL AND dw.title IS NOT NULL)',
 				),
 				'100, 200, 300'
 			),
@@ -68,6 +69,7 @@ class WAMServiceTest extends WikiaBaseTest {
 				array(
 					'fw1.time_id = FROM_UNIXTIME(1000000)',
 					'fw1.vertical_id' => [0,1,2,3,4,5,6,7],
+					'(dw.url IS NOT NULL AND dw.title IS NOT NULL)',
 				)
 			),
 			array(
@@ -83,6 +85,7 @@ class WAMServiceTest extends WikiaBaseTest {
 					'fw1.time_id = FROM_UNIXTIME(1000000)',
 					'fw1.wiki_id' => 2233,
 					'fw1.vertical_id' => [0,1,2,3,4,5,6,7],
+					'(dw.url IS NOT NULL AND dw.title IS NOT NULL)',
 				)
 			),
 			array(
@@ -99,7 +102,8 @@ class WAMServiceTest extends WikiaBaseTest {
 					'fw1.time_id = FROM_UNIXTIME(1000000)',
 					'fw1.wiki_id' => 2233,
 					'fw1.vertical_id' => 1,
-					'fw1.wiki_id NOT IN (1, 999, 3745, 8811)'
+					'fw1.wiki_id NOT IN (1, 999, 3745, 8811)',
+					'(dw.url IS NOT NULL AND dw.title IS NOT NULL)',
 				),
 				'1, 999, 3745, 8811'
 			),
@@ -116,6 +120,7 @@ class WAMServiceTest extends WikiaBaseTest {
 					'fw1.time_id = FROM_UNIXTIME(1000000)',
 					"dw.url like '%testWord%' OR dw.title like '%testWord%'",
 					'fw1.vertical_id' => [0,1,2,3,4,5,6,7],
+					'(dw.url IS NOT NULL AND dw.title IS NOT NULL)',
 				)
 			),
 			array(
@@ -130,7 +135,8 @@ class WAMServiceTest extends WikiaBaseTest {
 				array(
 					'fw1.time_id = FROM_UNIXTIME(100000)',
 					'fw1.vertical_id' => [0,1,2,3,4,5,6,7],
-					'dw.lang' => 'testLang'
+					'dw.lang' => 'testLang',
+					'(dw.url IS NOT NULL AND dw.title IS NOT NULL)',
 				)
 			),
 			array(
@@ -147,7 +153,8 @@ class WAMServiceTest extends WikiaBaseTest {
 					'fw1.wiki_id' => 666,
 					"dw.url like '%testWord2%' OR dw.title like '%testWord2%'",
 					'fw1.vertical_id' => 5,
-					'dw.lang' => 'testLang'
+					'dw.lang' => 'testLang',
+					'(dw.url IS NOT NULL AND dw.title IS NOT NULL)',
 				)
 			),
 		);
