@@ -652,8 +652,6 @@ class MessageCache {
 		# wikia change start
 		// Inline DefaultMessages check, it's getting called hundreds of times during a single request
 		// and uses time-consuming Hooks mechanism
-		// The hook below was only used by the DefaultMessages extension
-//		wfRunHooks( 'MsgGetFromNamespaceAfter', array( $lckey, $langcode, &$message, $useDB ) );
 		if ( $message === false ) {
 			global $wgDefaultMessagesCache;
 			if ( is_object( $wgDefaultMessagesCache ) ) {
