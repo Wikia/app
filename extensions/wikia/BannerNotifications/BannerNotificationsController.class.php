@@ -292,9 +292,9 @@ class BannerNotificationsController extends WikiaController {
 			$message = null;
 
 			if ( empty($wgUser->getEmail() ) && empty( $wgUser->getNewEmail() ) ) {
-				$message = wfMessage('bannernotifications-no-email')->parse();
+				$message = wfMessage( 'bannernotifications-no-email' )->parse();
 			} elseif ( !$wgUser->isEmailConfirmed() ) {
-				$message = wfMessage('bannernotifications-not-confirmed-email')->parse();
+				$message = wfMessage( 'bannernotifications-not-confirmed-email' )->parse();
 			}
 
 			if ( !empty( $message ) ) {
