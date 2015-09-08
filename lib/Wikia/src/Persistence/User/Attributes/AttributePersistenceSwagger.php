@@ -107,7 +107,11 @@ class AttributePersistenceSwagger implements AttributePersistence {
 	 * @return UsersAttributesApi
 	 */
 	private function getApi( $userId ) {
-		return $this->apiProvider->getAuthenticatedApi( self::SERVICE_NAME, $userId, UsersAttributesApi::class );
+		/** @var UsersAttributesApi $userAttributesApi */
+		$userAttributesApi = $this->apiProvider->getAuthenticatedApi( self::SERVICE_NAME, $userId, UsersAttributesApi::class );
+		$userAttributesApi->getApiClient()->getConfig()->addDefaultHeader( "X-From-MW", "true" );
+
+		return $userAttributesApi;
 	}
 
 	/**
