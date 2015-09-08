@@ -92,13 +92,9 @@ var importArticle = (function() {
 
 			uri = baseUri + $.param( module );
 
-			// Fetch from external server
-			if (module.server) {
-				if (module.server.indexOf('://') === -1) {
-					uri = 'http://' + module.server + '.wikia.com' + uri;
-				} else {
-					uri = module.server + uri;
-				}
+			// Fetch from external wikia
+			if (module.server && typeof module.server === 'string') {
+				uri = 'http://' + module.server + '.wikia.com' + uri;
 			}
 
 			// Make sure we don't load the same URI again
