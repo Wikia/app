@@ -3,7 +3,7 @@ use Wikia\PortableInfobox\Helpers\PortableInfoboxClassification;
 
 class UnconvertedInfoboxesPage extends PageQueryPage {
 	const LIMIT = 1000;
-	const UNCONVERTED_INFOBOXES_TYPE = 'AllInfoboxes';
+	const UNCONVERTED_INFOBOXES_TYPE = 'Nonportableinfoboxes';
 
 	function __construct( $name = self::UNCONVERTED_INFOBOXES_TYPE ) {
 		parent::__construct( $name );
