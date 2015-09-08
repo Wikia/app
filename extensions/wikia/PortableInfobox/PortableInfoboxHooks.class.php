@@ -58,24 +58,19 @@ class PortableInfoboxHooks {
 	 *
 	 * @return bool
 	 */
-	public static function onShowMissingArticleBeforeTextAppend( &$article, &$text, &$wgOut, &$errors ) {
+	public static function onArticleNonExistentPage( Article $article, OutputPage $wgOut, $text ) {
 		$title = $article->getTitle();
-
-		if (
-			$title &&
-			!$title->exists() &&
-			$title->getNamespace() === NS_TEMPLATE &&
-			!count( $errors )
-		) {
-			$text = '';
-
+		if ( $title && !$title->exists() && $title->inNamespace( NS_TEMPLATE ) ) {
 			$HTML = F::app()->renderView(
 				'PortableInfoboxBuilderSpecialController',
 				'renderCreateTemplateEntryPoint',
 				[ 'title' => $title->getText() ]
 			);
-
+			$wgOut->clearHTML();
 			$wgOut->addHTML( $HTML );
+			// we don't want to add anything else, it also stops parser
+			// (see Article.php:wfRunHook(ArticleNonExistentPage))
+			return false;
 		}
 
 		return true;
@@ -97,6 +92,7 @@ class PortableInfoboxHooks {
 				$text .= Html::linkedScript( $script );
 			}
 		}
+
 		return true;
 	}
 }

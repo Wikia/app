@@ -1103,10 +1103,7 @@ class Article extends Page {
 				$text = wfMsgNoTrans( 'noarticletext-nopermission' );
 			}
 		}
-
 		$text = "<div class='noarticletext'>$text</div>";
-
-		wfRunHooks( 'ShowMissingArticle::BeforeTextAppend', array( &$this, &$text, &$wgOut, &$errors ) );
 
 		$wgOut->addWikiText( $text );
 	}
