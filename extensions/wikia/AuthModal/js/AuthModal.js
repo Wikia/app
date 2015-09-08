@@ -27,9 +27,11 @@ define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 
 		$(window.document).keyup(onKeyUp);
 		window.addEventListener('message', function (event) {
-			if (event.data.isUserAuthorized && typeof successAuthCallback === 'function') {
+			if (event.data.isUserAuthorized) {
 				close();
-				successAuthCallback();
+				if (typeof successAuthCallback === 'function') {
+					successAuthCallback();
+				}
 			}
 		}, false);
 	}
