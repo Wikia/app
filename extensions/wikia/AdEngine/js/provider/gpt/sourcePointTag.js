@@ -40,9 +40,9 @@ define('ext.wikia.adEngine.provider.gpt.sourcePointTag', [
 
 		doc.body.classList.add('source-point');
 
-		delete window.googletag;
+		// Override previously created googletag object to prevent running stored cmd queue with regular gpt
 		window.googletag = {
-			cmd: this.getCmd()
+			cmd: this.getStoredCmdQueue()
 		};
 
 		log('Appending GPT script to head', 'debug', logGroup);

@@ -8,10 +8,10 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.gpt.googleTag',
-		cmd = [],
 		registeredCallbacks = {},
 		slots = {},
 		slotQueue = [],
+		storedCmdQueue = [],
 		pageLevelParams,
 		pubAds;
 
@@ -100,13 +100,13 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 
 	GoogleTag.prototype.push = function (callback) {
 		if (this.storeCommands) {
-			cmd.push(callback);
+			storedCmdQueue.push(callback);
 		}
 		window.googletag.cmd.push(callback);
 	};
 
-	GoogleTag.prototype.getCmd = function () {
-		return cmd;
+	GoogleTag.prototype.getStoredCmdQueue = function () {
+		return storedCmdQueue;
 	};
 
 	GoogleTag.prototype.flush = function () {
