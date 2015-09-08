@@ -7,16 +7,20 @@ require(['wikia.window'], function (window) {
 	 * Imports script from provided JS page in MediaWiki namespace
 	 * @param {string} scriptName Name of page without namespace prefix
 	 */
-	window.importLocalWikiaScript = function (scriptName) {
-		if (!isJsPage(scriptName)) {
-			console.log('Cannot import MediaWiki:' + scriptName + '. Provided text is not valid JS page name.');
-			return;
+	window.importWikiaScriptPage = function (articles, server) {
+
+		for (var i = 0; i < articles.length; i++) {
+			if (!isJsPage(articles[i])) {
+				console.log('Cannot import MediaWiki:' + articles[i] + '. Provided text is not valid JS page name.');
+				return;
+			}
+			articles[i] = 'MediaWiki:' + articles[i];
 		}
+
 		window.importArticles({
 			type: 'script',
-			articles: [
-				'MediaWiki:' + scriptName,
-			]
+			articles: articles,
+			server: server
 		});
 	};
 
