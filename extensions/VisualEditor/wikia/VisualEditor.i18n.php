@@ -39,8 +39,7 @@ $messages['en'] = array(
 	'wikia-visualeditor-dialogbutton-infobox-tooltip' => 'Infobox',
 	'wikia-visualeditor-dialog-infobox-insert-title' => 'Select infobox to insert',
 	'wikia-visualeditor-dialog-infobox-insert-empty-state' => 'Sorry. No infoboxes found.',
-	'wikia-visualeditor-dialog-infobox-insert-empty-state-has-unconverted-infoboxes' => 'Convert some old infoboxes
-	into new format',
+	'wikia-visualeditor-dialog-infobox-insert-empty-state-has-unconverted-infoboxes' => 'Convert some old infoboxes into new format',
 	'wikia-visualeditor-savedialog-label-save' => 'Publish',
 	'wikia-visualeditor-savedialog-label-restore' => 'Restore page',
 	'wikia-visualeditor-toolbar-savedialog' => 'Publish',
