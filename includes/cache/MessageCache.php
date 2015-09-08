@@ -650,7 +650,20 @@ class MessageCache {
 		}
 
 		# wikia change start
-		wfRunHooks( 'MsgGetFromNamespaceAfter', array( $lckey, $langcode, &$message, $useDB ) );
+		// Inline DefaultMessages check, it's getting called hundreds of times during a single request
+		// and uses time-consuming Hooks mechanism
+		// The hook below was only used by the DefaultMessages extension
+//		wfRunHooks( 'MsgGetFromNamespaceAfter', array( $lckey, $langcode, &$message, $useDB ) );
+		if ( $message === false ) {
+			global $wgDefaultMessagesCache;
+			if ( is_object( $wgDefaultMessagesCache ) ) {
+				$dmcKey = $uckey;
+				if ( $langcode !== 'en' && strpos( $dmcKey, '/' ) === false ) {
+					$dmcKey .= '/' . $langcode;
+				}
+				$message = $wgDefaultMessagesCache->get( $dmcKey, $langcode, $useDB );
+			}
+		}
 
 		# Try the extension array
 		if ( $message === false && isset( $this->mExtensionMessages[$langcode][$lckey] ) ) {
