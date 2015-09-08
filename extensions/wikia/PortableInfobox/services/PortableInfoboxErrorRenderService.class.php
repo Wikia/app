@@ -35,7 +35,7 @@ class PortableInfoboxErrorRenderService extends WikiaService {
 
 			$templateData = [];
 			$templateData['code'] = $this->getLinesWithErrors( $sourceCode );
-			$templateData['info'] = wfMessage( 'portable-infobox-xml-parse-error-info' )->escaped();
+			$templateData['info'] = wfMessage( 'portable-infobox-xml-parse-error-info' )->text();
 			return $this->templateEngine->clearData()->setData( $templateData )->render( self::XML_DEBUG_TEMPLATE );
 		}
 		return false;
