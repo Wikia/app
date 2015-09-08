@@ -96,6 +96,7 @@ class WikiaGlobalRegistry extends WikiaRegistry {
 	}
 
 	public function __get($propertyName) {
+		// @author: wladek
 		// inlines WikiaGlobalRegistry::get() and WikiaRegistry::validatePropertyName()
 		// make sure the changes are made in both places
 		$propertyName = 'wg' . ucfirst($propertyName);
