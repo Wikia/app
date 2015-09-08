@@ -245,8 +245,6 @@ ve.ui.WikiaInfoboxInsertDialog.prototype.createEmptyState = function ( unconvert
  * @param {HTMLElement} $content
  */
 ve.ui.WikiaInfoboxInsertDialog.prototype.setDialogContent = function ( $content ) {
-	console.log( $content );
-
 	this.$body.append( $content );
 };
 
