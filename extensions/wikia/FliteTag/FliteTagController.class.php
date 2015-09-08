@@ -7,29 +7,43 @@ class FliteTagController extends WikiaParserTagController {
 	private $requiredParams = [ 'guid', 'width', 'height' ];
 
 	public static function onParserFirstCallInit( Parser $parser ) {
-		$parser->setHook( self::PARSER_TAG_NAME, [ new static(), 'renderFliteAdUnit' ] );
+		global $wgHooks;
+
+		$fliteTag = new static();
+		$parser->setHook( self::PARSER_TAG_NAME, [ $fliteTag, 'renderFliteAdUnit' ] );
+		$wgHooks['ParserAfterTidy'][] = [ $fliteTag, 'onParserAfterTidy' ];
+
 		return true;
 	}
 
 	public function renderFliteAdUnit( $input, array $args, Parser $parser, PPFrame $frame ) {
 		$errorMessage = '';
+		$markerId = $this->generateMarkerId( $parser );
+
 		if( !$this->areTagParamsValid( $args, $errorMessage ) ) {
-			return $this->sendRequest(
+			$this->addMarkerOutput( $markerId, $this->sendRequest(
 				'FliteTagController',
 				'fliteTagError',
 				[ 'errorMessage' => $errorMessage ]
-			);
+			) );
+		} else {
+			$this->addMarkerOutput( $markerId, $this->sendRequest(
+				'FliteTagController',
+				'fliteAdUnit',
+				[
+					'guid' => $args[ 'guid' ],
+					'width' => $args[ 'width' ],
+					'height' => $args[ 'height' ],
+				]
+			) );
 		}
 
-		return $this->sendRequest(
-			'FliteTagController',
-			'fliteAdUnit',
-			[
-				'guid' => $args[ 'guid' ],
-				'width' => $args[ 'width' ],
-				'height' => $args[ 'height' ],
-			]
-		);
+		return $markerId;
+	}
+
+	public function onParserAfterTidy( &$parser, &$text ) {
+		$text = strtr( $text, $this->getMarkers() );
+		return true;
 	}
 
 	private function areTagParamsValid( $params, &$errorMessage ) {

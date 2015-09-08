@@ -1,5 +1,5 @@
 <?php
-$wgExtensionCredits['other'][] = [
+$wgExtensionCredits['parserhook'][] = [
 	'name' => 'Flite Tag Extension',
 	'author' => 'Ad Engineering @Wikia',
 	'descriptionmsg' => 'flitetag-desc',
