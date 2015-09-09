@@ -30,19 +30,19 @@ class PortableInfoboxRenderServiceHelper {
 		];
 
 		foreach ( $groupData as $item ) {
-			$data = $item['data'];
+			$data = $item[ 'data' ];
 
-			if ( $item['type'] === 'data' ) {
-				array_push( $horizontalGroupData['labels'], $data['label'] );
-				array_push( $horizontalGroupData['values'], $data['value'] );
+			if ( $item[ 'type' ] === 'data' ) {
+				array_push( $horizontalGroupData[ 'labels' ], $data[ 'label' ] );
+				array_push( $horizontalGroupData[ 'values' ], $data[ 'value' ] );
 
-				if (!empty($data['label'])) {
-					$horizontalGroupData['renderLabels'] = true;
+				if ( !empty( $data[ 'label' ] ) ) {
+					$horizontalGroupData[ 'renderLabels' ] = true;
 				}
 			}
 			else {
-				if ( $item['type'] === 'header' ) {
-					$horizontalGroupData['header'] = $data['value'];
+				if ( $item[ 'type' ] === 'header' ) {
+					$horizontalGroupData[ 'header' ] = $data[ 'value' ];
 				}
 			}
 		}
@@ -59,12 +59,14 @@ class PortableInfoboxRenderServiceHelper {
 	 * @return array infobox $data with sanitized title param if needed
 	 */
 	public function sanitizeInfoboxTitle( $type, $data ) {
-		if ( $type === 'title' && !empty( $data['value']) ) {
-			$data['value'] = trim( strip_tags( $data['value']) );
+		if ( $type === 'title' && !empty( $data[ 'value' ] ) ) {
+			$data[ 'value' ] = trim( strip_tags( $data[ 'value' ] ) );
+
 			return $data;
 		}
-		if ( $type === 'hero-mobile' && !empty( $data['title']['value'] ) ) {
-			$data['title']['value'] = trim( strip_tags( $data['title']['value'] ) );
+		if ( $type === 'hero-mobile' && !empty( $data[ 'title' ][ 'value' ] ) ) {
+			$data[ 'title' ][ 'value' ] = trim( strip_tags( $data[ 'title' ][ 'value' ] ) );
+
 			return $data;
 		}
 
@@ -79,17 +81,17 @@ class PortableInfoboxRenderServiceHelper {
 	 * @return bool|array
 	 */
 	public function extendImageData( $data ) {
-		$thumbnail = $this->getThumbnail( $data['name'] );
+		$thumbnail = $this->getThumbnail( $data[ 'name' ] );
 
 		if ( !$thumbnail ) {
 			return false;
 		}
 
-		$data['height'] = $thumbnail->getHeight();
-		$data['width'] = $thumbnail->getWidth();
-		$data['thumbnail'] = $thumbnail->getUrl();
-		$data['key'] = urlencode($data['key']);
-		$data['media-type'] = $data['isVideo'] ? 'video' : 'image';
+		$data[ 'height' ] = $thumbnail->getHeight();
+		$data[ 'width' ] = $thumbnail->getWidth();
+		$data[ 'thumbnail' ] = $thumbnail->getUrl();
+		$data[ 'key' ] = urlencode( $data[ 'key' ] );
+		$data[ 'media-type' ] = $data[ 'isVideo' ] ? 'video' : 'image';
 
 		return $data;
 	}
@@ -104,14 +106,14 @@ class PortableInfoboxRenderServiceHelper {
 	 * @return bool
 	 */
 	public function isValidHeroDataItem( $item, $heroData ) {
-		$type = $item['type'];
+		$type = $item[ 'type' ];
 
 		if ( $type === 'title' && !array_key_exists( 'title', $heroData ) ) {
 			return true;
 		}
 
 		if ( $type === 'image' && !array_key_exists( 'image', $heroData ) ) {
-			$imageWidth = $this->getFileWidth( $item['data']['name'] );
+			$imageWidth = $this->getFileWidth( $item[ 'data' ][ 'name' ] );
 
 			if ( $imageWidth >= self::MINIMAL_HERO_IMG_WIDTH ) {
 				return true;
@@ -140,7 +142,7 @@ class PortableInfoboxRenderServiceHelper {
 	public function isTypeSupportedInTemplates( $type, $templates ) {
 		$isValid = true;
 
-		if ( !isset( $templates[$type] ) ) {
+		if ( !isset( $templates[ $type ] ) ) {
 			WikiaLogger::instance()->info( self::LOGGER_LABEL, [
 				'type' => $type
 			] );
@@ -159,7 +161,7 @@ class PortableInfoboxRenderServiceHelper {
 	private function getFileWidth( $title ) {
 		$file = \WikiaFileHelper::getFileFromTitle( $title );
 
-		if ($file) {
+		if ( $file ) {
 			return $file->getWidth();
 		}
 	}
@@ -180,12 +182,13 @@ class PortableInfoboxRenderServiceHelper {
 				self::MOBILE_THUMBNAIL_WIDTH :
 				self::DESKTOP_THUMBNAIL_WIDTH;
 
-			$thumb = $file->transform( ['width' => $width, 'height' => $height] );
+			$thumb = $file->transform( [ 'width' => $width, 'height' => $height ] );
 
 			if ( !is_null( $thumb ) && !$thumb->isError() ) {
 				return $thumb;
 			}
 		}
+
 		return false;
 	}
 }
