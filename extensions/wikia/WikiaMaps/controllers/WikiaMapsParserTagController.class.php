@@ -29,8 +29,12 @@ class WikiaMapsParserTagController extends WikiaParserTagController {
 	 * @param Parser $parser
 	 * @return bool
 	 */
-	public static function parserTagInit( Parser $parser ) {
+	public static function onParserFirstCallInit( Parser $parser ) {
 		$parser->setHook( self::PARSER_TAG_NAME, [ new static(), 'renderPlaceholder' ] );
+		return true;
+	}
+
+	public function onParserAfterTidy( Parser &$parser, &$text ) {
 		return true;
 	}
 
