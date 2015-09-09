@@ -11,37 +11,42 @@ class FliteTagControllerTest extends WikiaBaseTest {
 	/**
 	 * @dataProvider getIsTagParamValidData
 	 */
-	public function testIsTagParamValid( $desc, $mockedIsValid, $mockedErrorMsg, $expected ) {
-		$controller = new FliteTagController();
-
-		$mockError = $this->getMockBuilder( 'stdObject' )
+	public function testValidateAttributes( $desc, $mockedIsValid, $mockedAttributes, $expectedErrors ) {
+		$mockedError = $this->getMockBuilder( 'stdObject' )
 			->disableOriginalConstructor()
 			->setMethods( [ 'getMsg' ] )
 			->getMock();
 
-		$mockError->expects( $this->any() )
+		$mockedError->expects( $this->any() )
 			->method( 'getMsg' )
-			->willReturn( $mockedErrorMsg );
+			->willReturn( 'error' );
 
-		$mockWikiaValidator = $this->getMockBuilder( 'WikiaValidator' )
+		$mockedWikiaValidator = $this->getMockBuilder( 'WikiaValidator' )
 			->setMockClassName( 'WikiaValidatorNumeric' )
 			->disableOriginalConstructor()
 			->setMethods( [ 'isValid', 'getError' ] )
 			->getMock();
 
-		$mockWikiaValidator->expects( $this->once() )
+		$mockedWikiaValidator->expects( $this->any() )
 			->method( 'isValid' )
 			->willReturn( $mockedIsValid );
 
-		$mockWikiaValidator->expects( $this->any() )
+		$mockedWikiaValidator->expects( $this->any() )
 			->method( 'getError' )
-			->willReturn( $mockError );
+			->willReturn( $mockedError );
 
-		$errorMsg = '';
-		$actual = $controller->isTagParamValid( 'param', $mockWikiaValidator, $errorMsg );
+		$mockedController = $this->getMockBuilder( 'FliteTagController' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'buildParamValidator' ] )
+			->getMock();
 
-		$this->assertEquals( $expected, $actual, $desc );
-		$this->assertEquals( $mockedErrorMsg, $errorMsg );
+		$mockedController->expects( $this->any() )
+			->method( 'buildParamValidator' )
+			->willReturn( $mockedWikiaValidator );
+
+		/** @var FliteTagController $mockedController */
+		$actual = $mockedController->validateAttributes( $mockedAttributes );
+		$this->assertEquals( $expectedErrors, $actual, $desc );
 	}
 
 	public function getIsTagParamValidData() {
@@ -49,15 +54,37 @@ class FliteTagControllerTest extends WikiaBaseTest {
 			[
 				'validator returns true',
 				true,
-				'', //No validator error.
-				true
+				[
+					'guid' => 'valid',
+					'height' => 'valid',
+					'width' => 'valid'
+				],
+				[],
 			],
 			[
 				'validator returns false',
 				false,
-				'An validator error occurred.',
-				false
-			]
+				[
+					'guid' => 'invalid',
+					'height' => 'invalid',
+					'width' => 'invalid'
+				],
+				[
+					(object) [ 'message' => 'error' ],
+					(object) [ 'message' => 'error' ],
+					(object) [ 'message' => 'error' ]
+				]
+			],
+			[
+				'no attributes but we still check the whitelisted',
+				false,
+				[],
+				[
+					(object) [ 'message' => 'error' ],
+					(object) [ 'message' => 'error' ],
+					(object) [ 'message' => 'error' ]
+				]
+			],
 		];
 	}
 }
