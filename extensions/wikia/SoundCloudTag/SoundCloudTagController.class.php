@@ -15,45 +15,45 @@ class SoundCloudTagController extends WikiaParserTagController {
 		// We only show an error message if we couldn't make a connection to SoundCloud at all.
 		// The SoundCloud widget API will take care of other errors.
 		return Html::element( 'iframe',  [
-			'class' => '',
-			'src' => $url,
-			'sandbox' => 'allow-scripts allow-same-origin',
-			'seamless' => 'seamless',
 			'allowtransparency' => 'true',
-			'scrolling' => 'no',
-			'frameborder' => 'no',
+			'class' => '',
 			'data-tag' => 'soundcloud',
+			'frameborder' => 'no',
+			'sandbox' => 'allow-scripts allow-same-origin',
+			'scrolling' => 'no',
+			'seamless' => 'seamless',
+			'src' => $url,
 			'style' => ( isset( $args['style'] ) ? Sanitizer::checkCss( $args['style'] ) : '' )
 		], wfMessage( 'soundcloud-tag-could-not-render' )->text() );
 	}
 
 	/**
 	 * Generate the URL for the current widget
-	 * Converts tag attributes into URL parameters
 	 *
 	 * @see https://developers.soundcloud.com/docs/api/html5-widget#params
-	 * @param array $args Tag attribute soup
-	 * @return string Widget URL
+	 *
+	 * @param array $args
+	 * @return string
 	 */
 	private static function buildUrl( array $args ) {
+		// basically white-list of attributes
 		$currentParams = [
-			'color' => '',
-			'url' => '',
 			'auto_play' => '',
 			'buying' => '',
-			'liking' => '',
+			'color' => '',
 			'download' => '',
+			'liking' => '',
 			'sharing' => '',
 			'show_artwork' => 'false',
 			'show_comments' => '',
 			'show_playcount' => '',
 			'show_user' => '',
-			'start_track' => ''
+			'start_track' => '',
+			'url' => '',
 		];
 
 		foreach ( array_keys( $currentParams ) as $name ) {
 			if ( isset( $args[$name] ) ) {
-				// Add user-defined parameter to URL
 				$currentParams[$name] = $args[$name];
 			}
 		}
