@@ -98,7 +98,7 @@ abstract class WikiaParserTagController extends WikiaController {
 			 */
 			$this->markers[$markerId] = trim( json_encode( $output->toString() ), "\"" );
 		} else {
-			$this->markers[$markerId] = $output->toString();
+			$this->markers[$markerId] = $output;
 		}
 	}
 
