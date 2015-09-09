@@ -92,11 +92,6 @@ var importArticle = (function() {
 
 			uri = baseUri + $.param( module );
 
-			// Fetch from external wikia
-			if (module.server && typeof module.server === 'string') {
-				uri = 'http://' + module.server + '.wikia.com' + uri;
-			}
-
 			// Make sure we don't load the same URI again
 			if ( loaded[ uri ] ) {
 				continue;
@@ -182,36 +177,70 @@ var importNotifications = (function() {
 }());
 
 /**
-* Imports script from provided JS page name
+ * Imports script from provided JS page name
  * Page has to be in MediaWiki namespace and has .js extension
-* @param {array} articles Names of pages to import without namespace prefix
-* @param {string} server Name of wikia subdomain where to import from (optional)
-*/
+ *
+ * Article name can point a page on other wikia (e.g. 'external:otherwikiasubdomain:Pagename.js')
+ *
+ * @param {array} articles Names of pages to import without namespace prefix
+ */
 var importWikiaScriptPages = (function () {
+	var namespacePrefix = 'MediaWiki:',
+		externalPrefix = 'external:',
+		externalPrefixLength = externalPrefix.length;
 
-	function importWikiaScriptPages(articles, server) {
+	function importWikiaScriptPages(articles) {
 		var articlesToImport = [],
-			articlesFailed = [],
-			namespacePrefix = 'MediaWiki:';
+			articlesFailed = [];
+
 		for (var i = 0; i < articles.length; i++) {
 			if (!isJsPage(articles[i])) {
 				articlesFailed.push(namespacePrefix + articles[i]);
-			} else {
-				articlesToImport.push('MediaWiki:' + articles[i]);
+				continue;
 			}
+			if (isExternal(articles[i])) {
+				var articlePreparedName = prepareExternalArticleName(articles[i]);
+				if (articlePreparedName.length === 0) {
+					articlesFailed.push(articles[i]);
+					continue;
+				}
+				articlesToImport.push(articlePreparedName);
+				continue;
+			}
+			articlesToImport.push(namespacePrefix + articles[i]);
 		}
 
 		window.importNotifications.importNotJsFailed(articlesFailed);
 
 		window.importArticles({
 			type: 'script',
-			articles: articlesToImport,
-			server: server
+			articles: articlesToImport
 		});
 	}
 
-	function isJsPage (scriptName) {
+	function isJsPage(scriptName) {
 		return scriptName.substr(scriptName.length - 3) === '.js';
+	}
+
+	function isExternal(scriptName) {
+		return scriptName.substr(0, externalPrefixLength) === externalPrefix;
+	}
+
+	function prepareExternalArticleName(articleName) {
+		var indexOfSubdomain = articleName.indexOf(':', externalPrefixLength) + 1,
+			articlePreparedName = '';
+
+		if (indexOfSubdomain === 0) {
+			// Subdomain not provided
+			return articlePreparedName;
+		}
+
+		// Inject namespace after subdomain
+		articlePreparedName = articleName.slice(0,indexOfSubdomain) +
+			namespacePrefix +
+			articleName.slice(indexOfSubdomain);
+
+		return articlePreparedName;
 	}
 
 	return importWikiaScriptPages;
