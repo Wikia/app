@@ -63,7 +63,7 @@ require([
 		});
 	}
 
-	function successAuthCallback () {
+	function successAuthCallback() {
 		var redirect = this.url.replace(/.*?redirect=([^&]+)/, '$1');
 		window.location.href = decodeURIComponent(redirect);
 	}
