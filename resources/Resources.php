@@ -969,6 +969,8 @@ return array(
 			'import-article-missing-multiple',
 			'import-article-missing-more-single',
 			'import-article-missing-more-multiple',
+			'import-article-not-js-single',
+			'import-article-not-js-multiple',
 		),
 		// Wikia - change end
 		'dependencies' => array(

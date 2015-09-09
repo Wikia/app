@@ -31,7 +31,7 @@ var importArticle = (function() {
 			lang: mw.config.get( 'wgUserLanguage' ),
 			mode: 'articles',
 			skin: mw.config.get( 'skin' ),
-			missingCallback: 'importArticleMissing'
+			missingCallback: 'importNotifications.importArticleMissing'
 		},
 		loaded = {},
 		slice = [].slice;
@@ -115,10 +115,11 @@ var importArticle = (function() {
 /**
  * Notify users about missing user-supplied assets.
  * @author Wladyslaw Bodzek
+ * @author Kamil Koterba
  *
  * @param {Array} The names of the missing assets
  */
-var importArticleMissing = (function() {
+var importNotifications = (function() {
 	var reportMissing = ( $.isArray( window.wgUserGroups )
 			&& ( $.inArray( 'staff', window.wgUserGroups ) > -1
 			|| $.inArray( 'sysop', window.wgUserGroups ) > -1
@@ -130,53 +131,77 @@ var importArticleMissing = (function() {
 		moreText = {
 			single: 'import-article-missing-more-single',
 			multiple: 'import-article-missing-more-multiple'
+		},
+		notJsText = {
+			single:  'import-article-not-js-single',
+			multiple: 'import-article-not-js-multiple'
 		};
 
-	return function( missing ) {
+	function showBannerNotification(articles, baseText) {
 		var missingLength;
 
 		// Don't show notificaton for regular users
-		if ( !reportMissing ) {
+		if (!reportMissing) {
 			return;
 		}
 
-		if ( !$.isArray( missing ) ) {
-			missing = [ missing ];
+		if (!$.isArray(articles)) {
+			articles = [articles];
 		}
 
 		// Use BannerNotification to show the error to the user
-		if (window.BannerNotification && (missingLength = missing.length)) {
+		if (window.BannerNotification && (missingLength = articles.length)) {
 			var moreLength = missingLength - 1,
-				baseMessageName = missingText[ missingLength < 2 ? 'single' : 'multiple' ],
+				baseMessageName = baseText[ missingLength < 2 ? 'single' : 'multiple' ],
 				moreMessageName = moreText[ moreLength < 2 ? 'single' : 'multiple'],
 				message;
 
 			message = mw.message(baseMessageName).params([
-				'"' + missing[ 0 ] + '"',
+				'"' + articles[0] + '"',
 				mw.message(moreMessageName).params([moreLength]).escaped()
 			]).escaped();
 
-			new window.BannerNotification(message, 'error').show();
+			$(function () {
+				new window.BannerNotification(message, 'error').show();
+			});
 		}
+	}
+
+	function importArticleMissing(missing) {
+		showBannerNotification(missing, missingText);
+	}
+
+	function importNotJsFailed(missing) {
+		showBannerNotification(missing, notJsText);
+	}
+
+	return {
+		importArticleMissing: importArticleMissing,
+		importNotJsFailed: importNotJsFailed
 	};
 }());
 
 /**
-* Imports script from provided JS page in MediaWiki namespace
-* @param {array} articles Name of page without namespace prefix
-* @param {string} server Name of page without namespace prefix
+* Imports script from provided JS page name
+ * Page has to be in MediaWiki namespace and has .js extension
+* @param {array} articles Names of pages to import without namespace prefix
+* @param {string} server Name of wikia subdomain where to import from (optional)
 */
 var importWikiaScriptPages = (function () {
 
 	function importWikiaScriptPages(articles, server) {
-		var articlesToImport = [];
+		var articlesToImport = [],
+			articlesFailed = [],
+			namespacePrefix = 'MediaWiki:';
 		for (var i = 0; i < articles.length; i++) {
 			if (!isJsPage(articles[i])) {
-				console.log('Cannot import MediaWiki:' + articles[i] + ' - provided text is not valid JS page name.');
-				continue;
+				articlesFailed.push(namespacePrefix + articles[i]);
+			} else {
+				articlesToImport.push('MediaWiki:' + articles[i]);
 			}
-			articlesToImport.push('MediaWiki:' + articles[i]);
 		}
+
+		window.importNotifications.importNotJsFailed(articlesFailed);
 
 		window.importArticles({
 			type: 'script',
@@ -186,7 +211,7 @@ var importWikiaScriptPages = (function () {
 	}
 
 	function isJsPage (scriptName) {
-		return scriptName.substr(scriptName.length - 3).toLowerCase() === '.js';
+		return scriptName.substr(scriptName.length - 3) === '.js';
 	}
 
 	return importWikiaScriptPages;
@@ -194,7 +219,7 @@ var importWikiaScriptPages = (function () {
 
 // Exports
 window.importArticle = window.importArticles = importArticle;
-window.importArticleMissing = importArticleMissing;
+window.importNotifications = importNotifications;
 window.importWikiaScriptPages = importWikiaScriptPages;
 
 })( this, jQuery );
