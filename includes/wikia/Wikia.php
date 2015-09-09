@@ -2298,8 +2298,7 @@ class Wikia {
 
 		// In this NS, editinterface applies only to white listed pages
 		if ( in_array( $title->getDBKey(), $wgEditInterfaceWhitelist )
-			|| ( !empty( $wgEnableContentReviewExt )
-				&& preg_match( '!\.(js)$!u', $title->getDBKey() ) )
+			|| ( !empty( $wgEnableContentReviewExt ) && $title->isJsPage() )
 		) {
 			return $wgUser->isAllowed('editinterface');
 		}
