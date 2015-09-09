@@ -63,10 +63,20 @@ abstract class WikiaParserTagController extends WikiaController {
 			$validator = $this->buildParamValidator( $attrName );
 
 			if( !$validator->isValid( $attributes[$attrName] ) ) {
-				$errorMessages[] = (object) [
-					'attribute' => $attrName,
-					'message' => $validator->getError()->getMsg()
-				];
+				$error = $validator->getError();
+
+				if ( !is_null($error) ) {
+					$errorMessage = $error->getMsg();
+					$errorMessages[] = (object) [
+						'attribute' => $attrName,
+						'message' => $errorMessage
+					];
+				} else {
+					$errorMessages[] = (object) [
+						'attribute' => $attrName,
+						'message' => 'undefined'
+					];
+				}
 			}
 		}
 
