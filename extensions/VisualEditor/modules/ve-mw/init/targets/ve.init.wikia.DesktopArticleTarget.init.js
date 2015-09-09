@@ -1,5 +1,7 @@
 ( function () {
-	var uri = new mw.Uri(), targetPromise, plugins = [];
+	var uri = new mw.Uri(),
+    targetPromise,
+    plugins = [];
 
 	function getTarget() {
 		if ( !targetPromise ) {
@@ -37,12 +39,12 @@
 					var target;
 
 					// Transfer methods
-					//ve.init.mw.DesktopArticleTarget.prototype.setupSectionEditLinks = init.setupSectionLinks;
+					// ve.init.mw.DesktopArticleTarget.prototype.setupSectionEditLinks = init.setupSectionLinks;
 
 					target = new ve.init.mw.DesktopArticleTarget();
-					//$( '#content' ).append( target.$element );
+					// $( '#content' ).append( target.$element );
 					$( '#WikiaArticle' ).append( target.$element );
-					//target.$element.insertAfter( '#mw-content-text' );
+					// target.$element.insertAfter( '#mw-content-text' );
 					return target;
 				}, function ( e ) {
 					mw.log.warn( 'VisualEditor failed to load: ' + e );
