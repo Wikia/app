@@ -104,9 +104,14 @@ class AllinfoboxesQueryPage extends PageQueryPage {
 			} );
 
 		return array_filter( $result, function ( $tmpl ) {
-			$data = PortableInfoboxDataService::newFromPageID( $tmpl[ 'pageid' ] )->getData();
+			$title = Title::newFromID( $tmpl[ 'pageid' ] );
+			if ( $title && $title->exists() && !$title->isSubpage() ) {
+				$data = PortableInfoboxDataService::newFromTitle( $title )->getData();
 
-			return !empty( $data );
+				return !empty( $data );
+			}
+
+			return false;
 		} );
 	}
 }
