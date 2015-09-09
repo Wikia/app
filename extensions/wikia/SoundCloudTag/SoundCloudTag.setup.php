@@ -1,0 +1,14 @@
+<?php
+$wgExtensionCredits['parserhook'][] = [
+	'name' => 'SoundCloud Tag Extension',
+	'author' => ['Bartosz V. Bentkowski <v@wikia-inc.com>', 'TK-999'],
+	'descriptionmsg' => 'soundcloud-tag-desc',
+	'version' => '0.1',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/SoundCloudTag',
+];
+// Autoload
+$wgAutoloadClasses['SoundCloudTagController'] =  __DIR__ . '/SoundCloudTagController.class.php';
+// Hooks
+$wgHooks['ParserFirstCallInit'][] = 'SoundCloudTagController::onParserFirstCallInit';
+// i18n
+$wgExtensionMessagesFiles['SoundCloudTag'] = __DIR__ . '/SoundCloudTag.i18n.php';

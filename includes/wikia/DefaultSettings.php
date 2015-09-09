@@ -1796,3 +1796,8 @@ $wgAdDriverIncontentPlayerSlotCountries = null;
  * flag for using (possibly external) service for managing a user's preferences
  */
 $wgPreferencesUseService = false;
+
+/**
+ * parser Tag
+ */
+require "$IP/extensions/wikia/SoundCloudTag/SoundCloudTag.setup.php" ;
