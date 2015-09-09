@@ -316,7 +316,7 @@ class Wall extends WikiaModel {
 				LIMIT $offset, {$this->mMaxPerPage}
 			";
 
-			$res = $db->query( $query );
+			$res = $db->query( $query, __METHOD__ );
 
 
 
