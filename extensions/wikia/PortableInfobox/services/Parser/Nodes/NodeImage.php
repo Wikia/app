@@ -39,7 +39,7 @@ class NodeImage extends Node {
 			];
 
 			if ( $this->isVideo( $file ) ) {
-				$this->data = $this->videoDataDecorator( $this->data, $file, $title );
+				$this->data = $this->videoDataDecorator( $this->data, $file );
 			}
 		}
 
@@ -107,13 +107,17 @@ class NodeImage extends Node {
 	 * @desc add addtional data required for video media type
 	 * @param array $data
 	 * @param File $file
-	 * @param Title $title
 	 * @return array
 	 */
-	private function videoDataDecorator( $data, $file, $title ) {
+	private function videoDataDecorator( $data, $file ) {
+		$title = $file->getTitle();
+
+		if ( $title ) {
+			$data[ 'url' ] = $title->getFullURL();
+		}
+
 		$data[ 'isVideo' ] = true;
 		$data[ 'duration' ] = WikiaFileHelper::formatDuration( $file->getMetadataDuration());
-		$data[ 'url' ] = $title->getFullURL();
 
 		return $data;
 	}
