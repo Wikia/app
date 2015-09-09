@@ -1800,4 +1800,4 @@ $wgPreferencesUseService = false;
 /**
  * Parser Tag
  */
-require "$IP/extensions/wikia/SoundCloudTag/SoundCloudTag.setup.php" ;
+require_once "$IP/extensions/wikia/SoundCloudTag/SoundCloudTag.setup.php" ;
