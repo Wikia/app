@@ -14,7 +14,7 @@ abstract class WikiaParserTagController extends WikiaController {
 		$isValid = false;
 
 		$validator = $this->buildParamValidator( $paramName );
-		if( !is_null($validator) && $validator instanceof WikiaValidator ) {
+		if( !empty( $validator ) && $validator instanceof WikiaValidator ) {
 			$isValid = $validator->isValid( $paramValue );
 
 			if( !$isValid ) {
@@ -26,10 +26,10 @@ abstract class WikiaParserTagController extends WikiaController {
 	}
 
 	/**
-	 * @desc Factory method to create validators for params; returns null if validator can't be created
+	 * @desc Factory method to create validators for params; if should returns fasle if validator can't be created
 	 *
 	 * @param String $paramName
-	 * @return null|WikiaValidator
+	 * @return false|WikiaValidator
 	 */
 	abstract protected function buildParamValidator( $paramName );
 }
