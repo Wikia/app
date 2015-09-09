@@ -3857,7 +3857,8 @@ ve.ce.Surface.prototype.showSelectionState = function ( selection ) {
 		$focusTarget,
 		extendedBackwards = false,
 		sel = this.nativeSelection,
-		newSel = selection;
+		newSel = selection,
+		el;
 
 	if ( newSel.equalsSelection( sel ) ) {
 		return false;
@@ -3899,10 +3900,11 @@ ve.ce.Surface.prototype.showSelectionState = function ( selection ) {
 	if ( !OO.ui.contains( $focusTarget.get( 0 ), this.getElementDocument().activeElement, true ) ) {
 		$focusTarget.focus();
 	} else {
-		// Scroll the node into view
-		ve.scrollIntoView(
-			$( newSel.focusNode ).closest( '*' ).get( 0 )
-		);
+		el = $( newSel.focusNode ).closest( '*' ).get( 0 );
+		if ( el.nodeType === Node.TEXT_NODE ) {
+			el = el.parentNode;
+		}
+		ve.scrollIntoView( el );
 	}
 	return true;
 };

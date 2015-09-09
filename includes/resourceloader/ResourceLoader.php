@@ -27,7 +27,12 @@
  *    http://www.mediawiki.org/wiki/ResourceLoader
  */
 class ResourceLoader {
-
+        public function getLoadScript( $source ) {
+                if ( !isset( $this->sources[$source] ) ) {
+                        throw new MWException( "The $source source was never registered in ResourceLoader." );
+                }
+                return $this->sources[$source];
+        }
 	public function isModuleRegistered( $name ) {
 		return isset( $this->moduleInfos[$name] );
 	}
@@ -230,6 +235,9 @@ class ResourceLoader {
 
 		// Register core modules
 		$this->register( include( "$IP/resources/Resources.php" ) );
+		// Wikia change begin - @author: Inez Korczyński
+		$this->register( include( "$IP/resources/ResourcesOOUI.php" ) );
+		// Wikia change end
 		// Wikia - change begin - @author: wladek
 		// add Wikia-specific global modules
 		$this->register( include( "$IP/resources/wikia/Resources.php" ) );
