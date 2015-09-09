@@ -45,7 +45,7 @@
         window.ga = function () {};
     }
 
-    var cookieExists, isProductionEnv;
+    var cookieExists, isProductionEnv, blockingTracked = false;
     /**
      * Main Tracker
      *
@@ -244,6 +244,10 @@
     }
 
     function trackBlocking(value) {
+        if (blockingTracked) {
+            return;
+        }
+        blockingTracked = true;
         _gaWikiaPush(['set', 'dimension6', value]);
         window.ga('ads.set', 'dimension6', value);
         guaTrackAdEvent('ad/sourcepoint/detection', value);
@@ -356,9 +360,11 @@
 
     if (window.ads && window.ads.context.opts.showAds) {
         document.addEventListener('sp.blocking', function () {
+            window.ads.runtime.sp.blocking = true;
             trackBlocking('Yes');
         });
         document.addEventListener('sp.not_blocking', function () {
+            window.ads.runtime.sp.blocking = false;
             trackBlocking('No');
         });
     }
