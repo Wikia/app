@@ -492,16 +492,17 @@ class Masthead {
 	 * @return bool
 	 */
 	private function fileExists() {
+		global $wgAvatarsUseService;
 		wfProfileIn( __METHOD__ );
 
-		global $wgAvatarsUseSwiftStorage, $wgAvatarsUseService;
-		if ( !empty( $wgAvatarsUseSwiftStorage ) ) {
+		if ( empty( $wgAvatarsUseService ) ) {
+			// TODO: remove when the avatars service is enabled sitewide
 			$swift = $this->getSwiftStorage();
 
 			$avatarRemotePath = $this->getLocalPath();
 			$res = $swift->exists( $avatarRemotePath );
 		}
-		else if ( !empty( $wgAvatarsUseService ) ) {
+		else {
 			// default avatar set means that there's no custom one uploaded
 			// so there's nothing to delete
 			$res = !$this->isDefault();
