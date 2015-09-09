@@ -1,5 +1,6 @@
 <?php
 use Wikia\ContentReview\Models\ReviewModel;
+use Wikia\ContentReview\Models\ReviewLogModel;
 use Wikia\ContentReview\Helper;
 
 class ContentReviewSpecialController extends WikiaSpecialPageController {
@@ -39,9 +40,18 @@ class ContentReviewSpecialController extends WikiaSpecialPageController {
 
 		$this->getOutput()->setPageTitle( wfMessage( 'content-review-special-title' )->plain() );
 
-		$model = new ReviewModel();
-		$reviews = $model->getContentToReviewFromDatabase();
-		$this->reviews = $this->prepareReviewData( $reviews );
+		$wikiId = $this->getPar();
+
+		if ( !empty( $wikiId ) ) {
+			$model = new ReviewLogModel();
+			$reviews = $model->getArchivedReviewForWiki( $wikiId );
+			$this->reviews = $this->prepareReviewData( $reviews );
+			$this->overrideTemplate('archive');
+		} else {
+			$model = new ReviewModel();
+			$reviews = $model->getContentToReviewFromDatabase();
+			$this->reviews = $this->prepareReviewData( $reviews );
+		}
 	}
 
 	private function prepareReviewData( $reviewsRaw ) {

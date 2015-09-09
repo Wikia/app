@@ -12,10 +12,9 @@
 		<th><?= wfMessage( 'content-review-special-list-header-page-name' )->escaped() ?></th>
 		<th><?= wfMessage( 'content-review-special-list-header-revision-id' )->escaped() ?></th>
 		<th><?= wfMessage( 'content-review-special-list-header-status' )->escaped() ?></th>
-		<th><?= wfMessage( 'content-review-special-list-header-submit-user' )->escaped() ?></th>
-		<th><?= wfMessage( 'content-review-special-list-header-submit-time' )->escaped() ?></th>
 		<th><?= wfMessage( 'content-review-special-list-header-reviewer' )->escaped() ?></th>
 		<th><?= wfMessage( 'content-review-special-list-header-review-start' )->escaped() ?></th>
+		<th>Review end</th>
 		<th><?= wfMessage( 'content-review-special-list-header-actions' )->escaped() ?></th>
 	</tr>
 	</thead>
@@ -28,8 +27,6 @@
 					<td><a href="<?= Sanitizer::encodeAttribute( $review['url'] ) ?>" target="_blank"><?= htmlspecialchars( $review['title'] ) ?></a></td>
 					<td><?= $review['revision_id'] ?></td>
 					<td><?= wfMessage( ContentReviewSpecialController::$statusMessageKeys[$review['status']] )->escaped() ?></td>
-					<td><?= htmlspecialchars( $review['user'] ) ?></td>
-					<td><?= $review['submit_time'] ?></td>
 					<td><?= htmlspecialchars( $review['review_user_name'] ) ?></td>
 					<td><?= $review['review_start'] ?></td>
 					<td><?php if ( !empty($review['review_end'] ) ) { echo $review['review_end']; } ?></td>
