@@ -6,17 +6,11 @@ class FliteTagController extends WikiaParserTagController {
 
 	protected $tagAttributes = [ 'guid', 'width', 'height' ];
 
-	public static function onParserFirstCallInit( Parser $parser ) {
-		global $wgHooks;
-
-		$fliteTag = new static();
-		$parser->setHook( self::PARSER_TAG_NAME, [ $fliteTag, 'renderFliteAdUnit' ] );
-		$wgHooks['ParserAfterTidy'][] = [ $fliteTag, 'onParserAfterTidy' ];
-
-		return true;
+	public function getTagName() {
+		return self::PARSER_TAG_NAME;
 	}
 
-	public function renderFliteAdUnit( $input, array $args, Parser $parser, PPFrame $frame ) {
+	public function renderTag( $input, array $args, Parser $parser, PPFrame $frame ) {
 		$markerId = $this->generateMarkerId( $parser );
 		$errorMessages = $this->validateAttributes( $args );
 

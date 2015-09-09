@@ -18,20 +18,20 @@ class WikiaMapsParserTagController extends WikiaParserTagController {
 
 	private $mapsModel;
 
+	private $tagAttributes = [
+		'map-id' => 'id',
+		'lat' => 'lat',
+		'lon' => 'lon',
+		'zoom' => 'zoom',
+	];
+
 	public function __construct() {
 		parent::__construct();
 		$this->mapsModel = new WikiaMaps( $this->wg->IntMapConfig );
 	}
 
-	/**
-	 * @desc Parser hook: used to register parser tag in MW
-	 *
-	 * @param Parser $parser
-	 * @return bool
-	 */
-	public static function onParserFirstCallInit( Parser $parser ) {
-		$parser->setHook( self::PARSER_TAG_NAME, [ new static(), 'renderPlaceholder' ] );
-		return true;
+	public function getTagName() {
+		return self::PARSER_TAG_NAME;
 	}
 
 	public function onParserAfterTidy( Parser &$parser, &$text ) {
@@ -48,7 +48,7 @@ class WikiaMapsParserTagController extends WikiaParserTagController {
 	 *
 	 * @return String
 	 */
-	public function renderPlaceholder( $input, Array $args, Parser $parser, PPFrame $frame ) {
+	public function renderTag( $input, Array $args, Parser $parser, PPFrame $frame ) {
 		// register resource loader module dependencies for map parser tag
 		// done separately for CSS and JS, so CSS will go to top of the page
 		$parser->getOutput()->addModuleStyles( 'ext.wikia.WikiaMaps.ParserTag' );
@@ -174,14 +174,8 @@ class WikiaMapsParserTagController extends WikiaParserTagController {
 	 */
 	public function sanitizeParserTagArguments( $data ) {
 		$result = [];
-		$validParams = [
-			'map-id' => 'id',
-			'lat' => 'lat',
-			'lon' => 'lon',
-			'zoom' => 'zoom',
-		];
 
-		foreach( $validParams as $key => $mapTo ) {
+		foreach( $this->tagAttributes as $key => $mapTo ) {
 			if ( !empty( $data[ $key ] ) ) {
 				$result[ $mapTo ] = $data[ $key ];
 			}
@@ -206,12 +200,12 @@ class WikiaMapsParserTagController extends WikiaParserTagController {
 			return $isValid;
 		}
 
-		foreach( $params as $param => $value ) {
-			$isValid = $this->isTagParamValid( $param, $value, $errorMessage );
+		$errorMessages = $this->validateAttributes( $params );
 
-			if( !$isValid ) {
-				return $isValid;
-			}
+		if( !empty( $errorMessages ) ) {
+			$errorMessage = $errorMessages[0];
+		} else {
+			$isValid = true;
 		}
 
 		return $isValid;
@@ -224,7 +218,7 @@ class WikiaMapsParserTagController extends WikiaParserTagController {
 	 * @return bool|WikiaValidator
 	 */
 	protected function buildParamValidator( $paramName ) {
-		$validator = false;
+		$validator = new WikiaValidatorAlwaysTrue();
 
 		switch( $paramName ) {
 			case 'id':

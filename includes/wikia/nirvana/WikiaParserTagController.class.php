@@ -26,7 +26,19 @@ abstract class WikiaParserTagController extends WikiaController {
 	 * @param Parser $parser
 	 * @return Boolean true
 	 */
-	abstract public static function onParserFirstCallInit( Parser $parser );
+	public static function onParserFirstCallInit( Parser $parser ) {
+		global $wgHooks;
+
+		$tag = new static();
+		$parser->setHook( $tag->getTagName(), [ $tag, 'renderTag' ] );
+		$wgHooks['ParserAfterTidy'][] = [ $tag, 'onParserAfterTidy' ];
+
+		return true;
+	}
+
+	abstract public function getTagName();
+
+	abstract public function renderTag( $input, array $args, Parser $parser, PPFrame $frame );
 
 	/**
 	 * @desc Hook function registered in $wgHooks['ParserAfterTidy'][] which should always return true
@@ -51,7 +63,10 @@ abstract class WikiaParserTagController extends WikiaController {
 			$validator = $this->buildParamValidator( $attrName );
 
 			if( !$validator->isValid( $attributes[$attrName] ) ) {
-				$errorMessages[] = (object) [ 'message' => $validator->getError()->getMsg() ];
+				$errorMessages[] = (object) [
+					'attribute' => $attrName,
+					'message' => $validator->getError()->getMsg()
+				];
 			}
 		}
 
