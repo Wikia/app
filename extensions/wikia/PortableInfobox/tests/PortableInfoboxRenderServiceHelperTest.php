@@ -303,6 +303,10 @@ class PortableInfoboxRenderServiceHelperTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @desc test getAdjustedImageSize function. It should return the sizes we pass to transform function,
+	 * not the sizes we want image to have. transform adjusts the correct sizes,
+	 * that is creates thumbnail with sizes not bigger than passed, keeping the original aspect ratio.
+	 * 
 	 * @param $mockParams
 	 * @param $isWikiaMobile
 	 * @param $result
