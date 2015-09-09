@@ -18,7 +18,7 @@ class WikiaMapsParserTagController extends WikiaParserTagController {
 
 	private $mapsModel;
 
-	private $tagAttributes = [
+	protected $tagAttributes = [
 		'map-id' => 'id',
 		'lat' => 'lat',
 		'lon' => 'lon',
