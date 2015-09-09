@@ -3,11 +3,11 @@
 $insights-module-gray: #ccc;
 
 .insights-light {
-	@include insigths-icons-light();
+	@include insights-icons-light();
 }
 
 .insights-dark {
-	@include insigths-icons-dark();
+	@include insights-icons-dark();
 }
 
 .insights-module-list {
