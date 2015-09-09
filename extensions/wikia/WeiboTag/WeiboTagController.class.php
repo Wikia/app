@@ -13,9 +13,9 @@ class WeiboTagController extends WikiaParserTagController {
 		$url = self::buildIFrameSrc( $args );
 
 		return Html::element( 'iframe',  [
-			'class' => 'share_self',
+			'class' => self::PARSER_TAG_NAME,
 			'src' => $url,
-			'scrolling' => 'no',
+			'scrolling' => 'yes',
 			'frameborder' => 'no',
 			'sandbox' => 'allow-scripts allow-same-origin',
 			'seamless' => 'seamless',
