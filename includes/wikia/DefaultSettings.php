@@ -1798,6 +1798,6 @@ $wgAdDriverIncontentPlayerSlotCountries = null;
 $wgPreferencesUseService = false;
 
 /**
- * parser Tag
+ * Parser Tag
  */
 require "$IP/extensions/wikia/SoundCloudTag/SoundCloudTag.setup.php" ;
