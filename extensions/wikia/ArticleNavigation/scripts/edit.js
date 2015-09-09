@@ -1,6 +1,6 @@
 require([
-	'wikia.nirvana', 'wikia.tracker', 'wikia.window', 'wikia.dropdownNavigation', 'jquery'
-], function (nirvana, tracker, win, dropdownNavigation, $) {
+	'wikia.nirvana', 'wikia.tracker', 'wikia.window', 'wikia.dropdownNavigation', 'jquery', 'AuthModal'
+], function (nirvana, tracker, win, dropdownNavigation, $, authModal) {
 	'use strict';
 
 	var dropdownId = 'editActionsDropdown',
@@ -155,14 +155,12 @@ require([
 	 * @param {Object} target - href which was clicked
 	 */
 	function callUserLoginModalShow(target) {
-		require(['AuthModal'], function (authModal) {
-			authModal.load({
-				url: '/signin',
-				origin: 'venus-article-edit',
-				successAuthCallback: function() {
-					win.location = target.href;
-				}
-			});
+		authModal.load({
+			url: '/signin',
+			origin: 'venus-article-edit',
+			successAuthCallback: function() {
+				win.location = target.href;
+			}
 		});
 	}
 
