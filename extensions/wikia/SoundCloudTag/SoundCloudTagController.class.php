@@ -15,12 +15,8 @@ class SoundCloudTagController extends WikiaParserTagController {
 		// We only show an error message if we couldn't make a connection to SoundCloud at all.
 		// The SoundCloud widget API will take care of other errors.
 		return Html::element( 'iframe',  [
-			'allowtransparency' => 'true',
-			'class' => '',
 			'data-tag' => 'soundcloud',
-			'frameborder' => 'no',
 			'sandbox' => 'allow-scripts allow-same-origin',
-			'scrolling' => 'no',
 			'seamless' => 'seamless',
 			'src' => $url,
 			'style' => ( isset( $args['style'] ) ? Sanitizer::checkCss( $args['style'] ) : '' )
