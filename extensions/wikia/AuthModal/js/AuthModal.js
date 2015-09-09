@@ -75,15 +75,14 @@ define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 		}
 	}
 
-	function loadPage (url, onPageLoadedCallback) {
+	function loadPage (url, onPageLoaded) {
 		var authIframe = window.document.createElement('iframe'),
 			modalParam = 'modal=1';
 
-
 		authIframe.src = url + (url.indexOf('?') === -1 ? '?' : '&')  + modalParam;
 		authIframe.onload = function () {
-			if (typeof onPageLoadedCallback === 'function') {
-				onPageLoadedCallback();
+			if (typeof onPageLoaded === 'function') {
+				onPageLoaded();
 			}
 		};
 		modal.appendChild(authIframe);
