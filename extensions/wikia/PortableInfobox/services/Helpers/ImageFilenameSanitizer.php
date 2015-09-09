@@ -96,7 +96,7 @@ class ImageFilenameSanitizer {
 		$unprefixedFilename = mb_ereg_replace( $filePrefixRegex, "", $trimmedFilename );
 		$filenameParts = explode( '|', $unprefixedFilename );
 		if ( !empty( $filenameParts[ 0 ] ) ) {
-			return $filenameParts[ 0 ];
+			return urldecode( $filenameParts[0] );
 		}
 
 		return null;
