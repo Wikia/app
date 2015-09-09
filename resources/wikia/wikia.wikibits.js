@@ -193,6 +193,10 @@ var importWikiaScriptPages = (function () {
 		var articlesToImport = [],
 			articlesFailed = [];
 
+		if (!$.isArray(articles)) {
+			articles = [articles];
+		}
+
 		for (var i = 0; i < articles.length; i++) {
 			if (!isJsPage(articles[i])) {
 				articlesFailed.push(namespacePrefix + articles[i]);
