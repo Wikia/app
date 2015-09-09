@@ -11,7 +11,7 @@ class PortableInfoboxRenderServiceHelper {
 	const DESKTOP_THUMBNAIL_WIDTH = 270;
 	const MOBILE_THUMBNAIL_WIDTH = 360;
 	const MINIMAL_HERO_IMG_WIDTH = 300;
-	const MAX_DESKTOP_INFOBOX_IMAGE_HEIGHT = 500;
+	const MAX_DESKTOP_THUMBNAIL_HEIGHT = 500;
 
 	function __construct() {
 	}
@@ -168,8 +168,6 @@ class PortableInfoboxRenderServiceHelper {
 
 	/**
 	 * @desc create a thumb of the image from file title.
-	 * Height cannot be bigger than 500px
-	 * Width have to be adjusted to const for mobile or desktop infobox
 	 * @param Title $title
 	 * @return bool|MediaTransformOutput
 	 */
@@ -177,12 +175,8 @@ class PortableInfoboxRenderServiceHelper {
 		$file = \WikiaFileHelper::getFileFromTitle( $title );
 
 		if ( $file ) {
-			$height = min( self::MAX_DESKTOP_INFOBOX_IMAGE_HEIGHT, $file->getHeight() );
-			$width = $this->isWikiaMobile() ?
-				self::MOBILE_THUMBNAIL_WIDTH :
-				self::DESKTOP_THUMBNAIL_WIDTH;
-
-			$thumb = $file->transform( [ 'width' => $width, 'height' => $height ] );
+			$size = $this->getAdjustedImageSize( $file );
+			$thumb = $file->transform( $size );
 
 			if ( !is_null( $thumb ) && !$thumb->isError() ) {
 				return $thumb;
@@ -190,5 +184,24 @@ class PortableInfoboxRenderServiceHelper {
 		}
 
 		return false;
+	}
+
+	/**
+	 * @desc get image size according to the width and height limitations:
+	 * Height on desktop cannot be bigger than 500px
+	 * Width have to be adjusted to const for mobile or desktop infobox
+	 * @param $image
+	 * @return array width and height
+	 */
+	private function getAdjustedImageSize( $image ) {
+		if ( $this->isWikiaMobile() ) {
+			$width = self::MOBILE_THUMBNAIL_WIDTH;
+			$height = null;
+		} else {
+			$height = min( self::MAX_DESKTOP_THUMBNAIL_HEIGHT, $image->getHeight() );
+			$width = self::DESKTOP_THUMBNAIL_WIDTH;
+		}
+
+		return [ 'height' => $height, 'width' => $width ];
 	}
 }
