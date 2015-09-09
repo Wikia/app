@@ -91,7 +91,7 @@
 					authModal.load({
 						url: '/signin',
 						origin: 'wall-and-forum',
-						successAuthCallback: this.proxy(function () {
+						onAuthSuccess: this.proxy(function () {
 							action(false);
 							return true;
 						})

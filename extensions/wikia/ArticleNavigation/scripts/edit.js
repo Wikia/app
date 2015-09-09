@@ -158,7 +158,7 @@ require([
 		authModal.load({
 			url: '/signin',
 			origin: 'venus-article-edit',
-			successAuthCallback: function() {
+			onAuthSuccess: function() {
 				win.location = target.href;
 			}
 		});

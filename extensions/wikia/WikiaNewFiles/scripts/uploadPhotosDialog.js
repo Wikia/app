@@ -15,7 +15,7 @@ var UploadPhotos = {
 				authModal.load({
 					url: '/signin',
 					origin: 'latest-photos',
-					successAuthCallback: $.proxy(function() {
+					onAuthSuccess: $.proxy(function() {
 						UserLogin.forceLoggedIn = true;
 						this.showDialog(evt);
 					}, this)

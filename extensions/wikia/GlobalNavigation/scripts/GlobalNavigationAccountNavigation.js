@@ -58,12 +58,12 @@ require([
 		require(['AuthModal'], function (authModal) {
 			authModal.load({
 				url: url,
-				successAuthCallback: successAuthCallback.bind({url: url})
+				onAuthSuccess: onAuthSuccess.bind({url: url})
 			});
 		});
 	}
 
-	function successAuthCallback() {
+	function onAuthSuccess() {
 		var redirect = this.url.replace(/.*?redirect=([^&]+)/, '$1');
 		window.location.href = decodeURIComponent(redirect);
 	}

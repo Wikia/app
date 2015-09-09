@@ -88,7 +88,7 @@
 				authModal.load({
 					url: '/signin',
 					origin: 'vet',
-					successAuthCallback: function () {
+					onAuthSuccess: function () {
 						window.UserLogin.forceLoggedIn = true;
 						vetLoader.load(options);
 					}

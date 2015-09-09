@@ -13,7 +13,7 @@
 						authModal.load({
 							url: '/signin',
 							origin: 'wikia-hubs',
-							successAuthCallback: function () {
+							onAuthSuccess: function () {
 								window.UserLogin.forceLoggedIn = true;
 								SuggestModalWikiaHubsV3.suggestArticle();
 							}

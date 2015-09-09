@@ -1120,7 +1120,7 @@
 						authModal.load({
 							url: '/signin',
 							origin: 'image-lightbox',
-							successAuthCallback: function () {
+							onAuthSuccess: function () {
 								doShareEmail(addresses);
 								// see VID-473 - Reload page on lightbox close
 								LightboxLoader.reloadOnClose = true;

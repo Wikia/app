@@ -305,7 +305,7 @@
 					authModal.load({
 						url: '/signin',
 						origin: 'wall-and-forum',
-						successAuthCallback: this.proxy(function () {
+						onAuthSuccess: this.proxy(function () {
 							this.voteBase(e, function () {
 								window.location.reload();
 							});
@@ -736,7 +736,7 @@
 					authModal.load({
 						url: '/signin',
 						origin: 'wall-and-forum',
-						successAuthCallback: this.proxy(function () {
+						onAuthSuccess: this.proxy(function () {
 							this.editTopics(rootMessageId);
 						})
 					});

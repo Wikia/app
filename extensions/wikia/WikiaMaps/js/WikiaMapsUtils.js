@@ -284,7 +284,7 @@ define(
 				authModal.load({
 					origin: origin,
 					url: '/signin',
-					successAuthCallback: function () {
+					onAuthSuccess: function () {
 						w.UserLogin.forceLoggedIn = true;
 						cb();
 					}

@@ -6,7 +6,7 @@ define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 		isOpen,
 		track;
 
-	function open (successAuthCallback) {
+	function open (onAuthSuccess) {
 		if (isOpen) {
 			close();
 		}
@@ -29,8 +29,8 @@ define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 		window.addEventListener('message', function (event) {
 			if (event.data.isUserAuthorized) {
 				close();
-				if (typeof successAuthCallback === 'function') {
-					successAuthCallback();
+				if (typeof onAuthSuccess === 'function') {
+					onAuthSuccess();
 				}
 			}
 		});
@@ -96,23 +96,23 @@ define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 		 * @param {object} params:
 		 * @param {string} url - url for the page we want to load in the modal
 		 * @param {string} origin - used for tracking the source of force login modal
-		 * @param {function} successAuthCallback - callback function to be called after login
+		 * @param {function} onAuthSuccess - callback function to be called after login
 		 */
 		load: function (params) {
-			if (typeof params.successAuthCallback !== 'function') {
-				params.successAuthCallback = function () {
+			if (typeof params.onAuthSuccess !== 'function') {
+				params.onAuthSuccess = function () {
 					window.location.reload();
 				};
 			}
 
 			if (window.wgEnableNewAuthModal) {
-				open(params.successAuthCallback);
+				open(params.onAuthSuccess);
 				loadPage(params.url, onPageLoaded);
 
 			} else {
 				window.UserLoginModal.show({
 					origin: params.origin,
-					callback: params.successAuthCallback
+					callback: params.onAuthSuccess
 				});
 			}
 		},

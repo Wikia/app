@@ -169,7 +169,7 @@ var ChatEntryPoint = {
 				authModal.load({
 					url: '/signin',
 					origin: 'chat',
-					successAuthCallback: ChatEntryPoint.onSuccessfulLogin
+					onAuthSuccess: ChatEntryPoint.onSuccessfulLogin
 				});
 			});
 		}

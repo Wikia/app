@@ -18,7 +18,7 @@
 				authModal.load({
 					origin: 'editor',
 					url: '/signin',
-					successAuthCallback: function () {
+					onAuthSuccess: function () {
 						if (window.WikiaEditor) {
 							WikiaEditor.reloadEditor();
 						}
