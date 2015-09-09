@@ -107,10 +107,10 @@ abstract class ResourceLoaderGlobalWikiModule extends ResourceLoaderWikiModule {
 		} elseif ( WikiFactory::isWikiPrivate( $wgCityId ) == false || $title->getNamespace() == NS_MEDIAWIKI ) {
 			$revisionId = null;
 
-			if ( $wgEnableContentReviewExt ) {
+			if ( $wgEnableContentReviewExt && $options['type'] === 'script' && $title->inNamespace( NS_MEDIAWIKI ) ) {
 				$contentReviewHelper = new Wikia\ContentReview\Helper();
 
-				if ( $options['type'] === 'script' && !$contentReviewHelper->isContentReviewTestModeEnabled() ) {
+				if ( !$contentReviewHelper->isContentReviewTestModeEnabled() ) {
 					$revisionId = $contentReviewHelper->getReviewedRevisionIdFromText( $titleText );
 				}
 			}
