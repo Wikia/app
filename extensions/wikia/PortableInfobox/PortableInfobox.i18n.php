@@ -18,6 +18,11 @@ $messages['en'] = array(
 	'portable-infobox-xml-parse-error-tag-not-finished' => 'Premature end of tag',
 	'portable-infobox-xml-parse-error-infobox-tag-attribute-unsupported' => 'Attribute "$1" is not supported in
 	<infobox> tag',
+	'portable-infobox-builder-entry-point-modal-title' => 'Do you want to create an infobox?',
+	'portable-infobox-builder-entry-point-modal-message' => 'Perhaps you are creating a new infobox template? Try out
+	our new Infobox builder UI tool.',
+	'portable-infobox-builder-entry-point-modal-ok-button' => 'Ok',
+	'portable-infobox-builder-entry-point-modal-cancel-button' => 'Cancel',
 );
 
 $messages['qqq'] = array(
@@ -35,6 +40,12 @@ $messages['qqq'] = array(
 	'portable-infobox-xml-parse-error-tag-name-mismatch' => 'XML Error: Opening and ending tag mismatch (for example: <data></label>)',
 	'portable-infobox-xml-parse-error-tag-not-finished' => 'XML Error: premature end of tag',
 	'portable-infobox-xml-parse-error-infobox-tag-attribute-unsupported' => 'Unsupported attribute used inside <infobox> tag. $1 param contains attribute name.',
+	'portable-infobox-builder-entry-point-modal-title' => 'Title for portable infobox builder entry point modal on
+	edit page with a question: Do you want to create infobox?',
+	'portable-infobox-builder-entry-point-modal-message' => 'Message in portable infobox builder asking if user wants
+	 to create an infobox and if she / he would like to use new Infobox Builder UI tool.',
+	'portable-infobox-builder-entry-point-modal-ok-button' => 'Ok button',
+	'portable-infobox-builder-entry-point-modal-cancel-button' => 'Cancel button',
 );
 
 $messages['de'] = array(

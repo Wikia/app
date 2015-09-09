@@ -3,7 +3,7 @@
 class PortableInfoboxHooks {
 	const PARSER_TAG_GALLERY = 'gallery';
 
-	static public function onBeforePageDisplay( OutputPage $out, Skin $skin ) {
+	public static function onBeforePageDisplay( OutputPage $out, Skin $skin ) {
 		if ( F::app()->checkSkin( 'monobook', $skin ) ) {
 			Wikia::addAssetsToOutput( 'portable_infobox_monobook_scss' );
 		} else {
@@ -13,7 +13,7 @@ class PortableInfoboxHooks {
 		return true;
 	}
 
-	static public function onImageServingCollectImages( &$imageNamesArray, $articleTitle ) {
+	public static function onImageServingCollectImages( &$imageNamesArray, $articleTitle ) {
 		if ( $articleTitle ) {
 			$infoboxImages = PortableInfoboxDataService::newFromTitle( $articleTitle )->getImages();
 			if ( !empty( $infoboxImages ) ) {
@@ -36,7 +36,7 @@ class PortableInfoboxHooks {
 	 *
 	 * @return bool
 	 */
-	static public function onParserTagHooksBeforeInvoke( $name, $marker, $content, $attributes, $parser, $frame ) {
+	public static function onParserTagHooksBeforeInvoke( $name, $marker, $content, $attributes, $parser, $frame ) {
 		if ( $name === self::PARSER_TAG_GALLERY ) {
 			\Wikia\PortableInfobox\Helpers\PortableInfoboxDataBag::getInstance()->setGallery( $marker, $content );
 		}
@@ -44,9 +44,49 @@ class PortableInfoboxHooks {
 		return true;
 	}
 
-	static public function onWgQueryPages( &$queryPages = [ ] ) {
+	public static function onWgQueryPages( &$queryPages = [ ] ) {
 		$queryPages[] = [ 'AllinfoboxesQueryPage', 'AllInfoboxes' ];
 
+		return true;
+	}
+
+	/**
+	 * @param EditPageLayoutController $editPage
+	 *
+	 * @return bool
+	 */
+	public static function onEditPageLayoutExecute( $editPage ) {
+		// run only on template
+		$requestContext = $editPage->getContext();
+		if ( $requestContext->getTitle()->getNamespace() == NS_TEMPLATE &&
+			 $requestContext->getRequest()->getBool( PortableInfoboxBuilderController::INFOBOX_BUILDER_PARAM )
+		) {
+			$editPage->getResponse()->setVal( 'isPortableInfoboxBuilder', true );
+		}
+
+		return true;
+	}
+
+	/**
+	 * @param Skin $skin
+	 * @param string $text
+	 *
+	 * @return bool
+	 */
+	public static function onSkinAfterBottomScripts( $skin, &$text ) {
+		$title = $skin->getTitle();
+		if ( $title->getNamespace() == NS_TEMPLATE &&
+			 !$title->exists() &&
+			 $skin->getRequest()->getVal( 'action' ) == 'edit' &&
+			 !$skin->getRequest()->getBool( PortableInfoboxBuilderController::INFOBOX_BUILDER_PARAM )
+		) {
+			$text .= JSMessages::printPackages( [ 'PortableInfoboxBuilder' ] );
+
+			$scripts = AssetsManager::getInstance()->getURL( 'portable_infobox_builder_js' );
+			foreach ( $scripts as $script ) {
+				$text .= Html::linkedScript( $script );
+			}
+		}
 		return true;
 	}
 }
