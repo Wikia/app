@@ -1796,3 +1796,5 @@ $wgAdDriverIncontentPlayerSlotCountries = null;
  * flag for using (possibly external) service for managing a user's preferences
  */
 $wgPreferencesUseService = false;
+
+require_once ( $IP."/extensions/wikia/WeiboTag/WeiboTag.setup.php" );
