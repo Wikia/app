@@ -37,27 +37,15 @@ class SoundCloudTagController extends WikiaParserTagController {
 	 */
 	private static function buildUrl( array $args ) {
 		// basically white-list of attributes
-		$allowedParams = [
-			'auto_play' => '',
-			'buying' => '',
-			'color' => '',
-			'download' => '',
-			'liking' => '',
-			'sharing' => '',
-			'show_artwork' => 'false',
-			'show_comments' => '',
-			'show_playcount' => '',
-			'show_user' => '',
-			'start_track' => '',
-			'url' => '',
-		];
+		$allowedParams = [ 'auto_play', 'buying', 'color', 'download', 'liking', 'sharing', 'show_artwork','show_comments', 'show_playcount', 'show_user', 'start_track', 'url' ];
+		$data = [];
 
-		foreach ( array_keys( $allowedParams ) as $name ) {
+		foreach ( $allowedParams as $name ) {
 			if ( isset( $args[$name] ) ) {
-				$allowedParams[$name] = $args[$name];
+				$data[$name] = $args[$name];
 			}
 		}
-		return self::API_ENDPOINT . http_build_query( $allowedParams );
+		return self::API_ENDPOINT . http_build_query( $data );
 	}
 
 	protected function buildParamValidator( $paramName ) {
