@@ -1,9 +1,12 @@
 <?php
 $wgExtensionCredits['parserhook'][] = [
 	'name' => 'SoundCloud Tag Extension',
-	'author' => ['X-Wing Team @Wikia', 'TK-999'],
+	'author' => [
+		'X-Wing Team @Wikia',
+		'TK-999'
+	],
 	'descriptionmsg' => 'soundcloud-tag-desc',
-	'version' => '0.1',
+	'version' => '1',
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/SoundCloudTag',
 ];
 

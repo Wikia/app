@@ -37,7 +37,7 @@ class SoundCloudTagController extends WikiaParserTagController {
 	 */
 	private static function buildUrl( array $args ) {
 		// basically white-list of attributes
-		$currentParams = [
+		$allowedParams = [
 			'auto_play' => '',
 			'buying' => '',
 			'color' => '',
@@ -52,12 +52,12 @@ class SoundCloudTagController extends WikiaParserTagController {
 			'url' => '',
 		];
 
-		foreach ( array_keys( $currentParams ) as $name ) {
+		foreach ( array_keys( $allowedParams ) as $name ) {
 			if ( isset( $args[$name] ) ) {
-				$currentParams[$name] = $args[$name];
+				$allowedParams[$name] = $args[$name];
 			}
 		}
-		return self::API_ENDPOINT . http_build_query( $currentParams );
+		return self::API_ENDPOINT . http_build_query( $allowedParams );
 	}
 
 	protected function buildParamValidator( $paramName ) {
