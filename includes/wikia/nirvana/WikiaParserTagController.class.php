@@ -26,12 +26,10 @@ abstract class WikiaParserTagController extends WikiaController {
 	}
 
 	/**
-	 * @desc Factory method to create validators for params; returns false if validator can't be created
+	 * @desc Factory method to create validators for params; returns null if validator can't be created
 	 *
 	 * @param String $paramName
 	 * @return null|WikiaValidator
 	 */
-	protected function buildParamValidator( $paramName ) {
-		return null;
-	}
+	abstract protected function buildParamValidator( $paramName );
 }
