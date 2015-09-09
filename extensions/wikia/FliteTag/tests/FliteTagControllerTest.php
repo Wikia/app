@@ -70,9 +70,9 @@ class FliteTagControllerTest extends WikiaBaseTest {
 					'width' => 'invalid'
 				],
 				[
-					(object) [ 'message' => 'error' ],
-					(object) [ 'message' => 'error' ],
-					(object) [ 'message' => 'error' ]
+					(object) [ 'message' => 'error', 'attribute' => 'guid' ],
+					(object) [ 'message' => 'error', 'attribute' => 'width' ],
+					(object) [ 'message' => 'error', 'attribute' => 'height' ]
 				]
 			],
 			[
@@ -80,9 +80,9 @@ class FliteTagControllerTest extends WikiaBaseTest {
 				false,
 				[],
 				[
-					(object) [ 'message' => 'error' ],
-					(object) [ 'message' => 'error' ],
-					(object) [ 'message' => 'error' ]
+					(object) [ 'message' => 'error', 'attribute' => 'guid' ],
+					(object) [ 'message' => 'error', 'attribute' => 'width' ],
+					(object) [ 'message' => 'error', 'attribute' => 'height' ]
 				]
 			],
 		];
