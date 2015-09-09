@@ -33,7 +33,7 @@ define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 					successAuthCallback();
 				}
 			}
-		}, false);
+		});
 	}
 
 	function getTrackingFunction () {
