@@ -53,8 +53,8 @@ class ApiVisualEditor extends ApiBase {
 	 * @return String
 	 */
 	protected function getApiSource() {
-		$url = parse_url( wfExpandUrl( wfScript( 'api' ) ) );
-		return $url['host'];
+		global $wgCanonicalServer;
+		return parse_url($wgCanonicalServer)['host'];
 	}
 
 	/**
@@ -74,14 +74,35 @@ class ApiVisualEditor extends ApiBase {
 		$class = 'ParsoidVirtualRESTService';
 		$config = $this->veConfig;
 
-		$params = array(
-			'URL' => $config->get( 'VisualEditorParsoidURL' ),
-			'domain' => $this->getApiSource(),
-			'prefix' => $config->get( 'VisualEditorParsoidPrefix' ),
-			'timeout' => $config->get( 'VisualEditorParsoidTimeout' ),
-			'HTTPProxy' => $config->get( 'VisualEditorParsoidHTTPProxy' ),
-			'forwardCookies' => $config->get( 'VisualEditorParsoidForwardCookies' )
-		);
+		// the global virtual rest service config object, if any
+		// ve-upstream-sync - review - @author: Paul Oslund
+		// $this->getConfig() is from a newer version of MediaWiki
+		// $vrs = $this->getConfig()->get( 'VirtualRestConfig' );
+		$vrs = [];
+		if ( isset( $vrs['modules'] ) && isset( $vrs['modules']['restbase'] ) ) {
+			// if restbase is available, use it
+			$params = $vrs['modules']['restbase'];
+			$class = 'RestbaseVirtualRESTService';
+			// remove once VE generates restbase paths
+			$params['parsoidCompat'] = true;
+		} elseif ( isset( $vrs['modules'] ) && isset( $vrs['modules']['parsoid'] ) ) {
+			// there's a global parsoid config, use it next
+			$params = $vrs['modules']['parsoid'];
+		} else {
+			// no global modules defined, fall back to old defaults
+			$params = array(
+				'URL' => $config->get( 'VisualEditorParsoidURL' ),
+				'domain' => $this->getApiSource(),
+				'prefix' => $config->get( 'VisualEditorParsoidPrefix' ),
+				'timeout' => $config->get( 'VisualEditorParsoidTimeout' ),
+				'HTTPProxy' => $config->get( 'VisualEditorParsoidHTTPProxy' ),
+				'forwardCookies' => $config->get( 'VisualEditorParsoidForwardCookies' )
+			);
+		}
+		// merge the global and service-specific params
+		if ( isset( $vrs['global'] ) ) {
+			$params = array_merge( $vrs['global'], $params );
+		}
 
 		// set up cookie forwarding
 		if ( $params['forwardCookies'] && !User::isEveryoneAllowed( 'read' ) ) {
