@@ -41,7 +41,7 @@ class FliteTagController extends WikiaParserTagController {
 		return $markerId;
 	}
 
-	public function onParserAfterTidy( &$parser, &$text ) {
+	public function onParserAfterTidy( Parser &$parser, &$text ) {
 		$text = strtr( $text, $this->getMarkers() );
 		return true;
 	}
@@ -53,7 +53,8 @@ class FliteTagController extends WikiaParserTagController {
 		}
 
 		foreach( $this->requiredParams as $paramName ) {
-			if( !$this->isTagParamValid( $paramName, $params[$paramName], $errorMessage ) ) {
+			$validator = $this->buildParamValidator( $paramName );
+			if( !is_null($validator) && !$this->isTagParamValid( $params[$paramName], $validator, $errorMessage ) ) {
 				return false;
 			}
 		}
