@@ -168,4 +168,6 @@ Auf dieser Spezialseite kannst Du die '''letzten Änderungen''' in diesem Wiki n
 ***w:c:de.community:Spezial:Forum|Community-Forum
 ***w:c:de|Mehr...
 ",
+
+	'tog-enableuserjs' => 'Personal JavaScript aktivieren ([[Help:Personal_CSS_and_JS#JavaScript|Erfahre mehr]])',
 ));

@@ -84,13 +84,13 @@ class ImageFilenameSanitizerTest extends WikiaBaseTest {
 				'[[File:image.jpg|300px|lorem ipsum]]',
 				'es',
 				'image.jpg',
-				'Link to filename with canonical namespace, width and caption on a non-EN wiki '
+				'Link to filename with canonical namespace, width and caption on a non-EN wiki'
 			],
 			[
 				'[[File:image.jpg|lorem ipsum]]',
 				'es',
 				'image.jpg',
-				'Link to filename with canonical namespace and caption on a non-EN wiki '
+				'Link to filename with canonical namespace and caption on a non-EN wiki'
 			],
 			[
 				'<gallery>' . PHP_EOL .
@@ -175,7 +175,19 @@ class ImageFilenameSanitizerTest extends WikiaBaseTest {
 				'en',
 				'文件名óśłżźćńę?.jpg',
 				'Content of gallery with diacritics and UTF characters'
-			]
+			],
+			[
+				'Image:filename.jpg',
+				'en',
+				'filename.jpg',
+				'Filename with alias to namespace'
+			],
+			[
+				'[[File:Su-47_-iDOLM%40STER_Miki-EX-.jpg|300px]]',
+				'en',
+				'Su-47_-iDOLM@STER_Miki-EX-.jpg',
+				'Link to filename with canonical namespace, width urlencoded character in the middle'
+			],
 		];
 	}
 }

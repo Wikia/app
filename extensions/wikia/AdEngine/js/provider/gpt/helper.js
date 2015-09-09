@@ -1,6 +1,7 @@
 /*global define, setTimeout, require*/
 /*jshint maxlen:125, camelcase:false, maxdepth:7*/
 define('ext.wikia.adEngine.provider.gpt.helper', [
+	'wikia.document',
 	'wikia.log',
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adLogicPageParams',
@@ -9,8 +10,10 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	'ext.wikia.adEngine.provider.gpt.googleTag',
 	'ext.wikia.adEngine.slotTweaker',
 	require.optional('ext.wikia.adEngine.provider.gpt.sourcePointTag'),
-	require.optional('ext.wikia.adEngine.provider.gpt.sraHelper')
+	require.optional('ext.wikia.adEngine.provider.gpt.sraHelper'),
+	require.optional('ext.wikia.adEngine.slot.scrollHandler')
 ], function (
+	doc,
 	log,
 	adContext,
 	adLogicPageParams,
@@ -19,19 +22,25 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	GoogleTag,
 	slotTweaker,
 	SourcePointTag,
-	sraHelper
+	sraHelper,
+	scrollHandler
 ) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.gpt.helper',
 		context = adContext.getContext(),
-		googleApi;
+		googleApi = new GoogleTag(!!context.opts.sourcePoint),
+		sourcePointInitialized = false;
 
-	if (context.opts.sourcePoint) {
-		log('SourcePoint enabled', 'debug', logGroup);
-		googleApi = new SourcePointTag();
-	} else {
-		googleApi = new GoogleTag();
+	if (context.opts.sourcePoint && SourcePointTag) {
+		doc.addEventListener('sp.blocking', function () {
+			if (!sourcePointInitialized) {
+				log('SourcePoint recovery enabled', 'debug', logGroup);
+				sourcePointInitialized = true;
+				googleApi = new SourcePointTag();
+				googleApi.init();
+			}
+		});
 	}
 
 	/**
@@ -48,10 +57,19 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	 * @param {string}   extra.forcedAdType - ad type for callbacks info
 	 */
 	function pushAd(slotName, slotElement, slotPath, slotTargeting, extra) {
-		var element;
+		var count,
+			element;
 
 		extra = extra || {};
 		slotTargeting = JSON.parse(JSON.stringify(slotTargeting)); // copy value
+
+		if (scrollHandler) {
+			count = scrollHandler.getReloadedViewCount(slotName);
+			if (count !== null) {
+				slotTargeting.rv = count.toString();
+			}
+		}
+
 		element = new AdElement(slotName, slotPath, slotTargeting);
 
 		function callSuccess(adInfo) {

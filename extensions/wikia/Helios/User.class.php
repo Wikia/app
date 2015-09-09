@@ -231,9 +231,13 @@ class User {
 	 * Call helios invalidate token.
 	 */
 	private static function invalidateAccessTokenInHelios() {
+		global $wgUser;
 		$request = \RequestContext::getMain()->getRequest();
 		$heliosClient = self::getHeliosClient();
-		$heliosClient->invalidateToken( self::getAccessToken( $request ) );
+		$accessToken = self::getAccessToken( $request );
+		if ( !empty( $accessToken ) ) {
+			$heliosClient->invalidateToken( $accessToken, $wgUser->getId() );
+		}
 	}
 
 	/**

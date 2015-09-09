@@ -108,7 +108,6 @@ class ResourceLoaderAdEngineTest extends WikiaBaseTest {
 		$script = $mock->getScript( $this->resourceLoaderContext );
 
 		$sourcePointScripts = [
-			self::REMOTE_SCRIPT_MOCK_CONTENT,
 			self::REMOTE_SCRIPT_MOCK_CONTENT
 		];
 

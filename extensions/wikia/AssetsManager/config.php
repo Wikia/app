@@ -2544,6 +2544,70 @@ $config['template_draft'] = [
 	]
 ];
 
+$config['content_review_module_monobook_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'monobook' ],
+	'assets' => [
+		'//extensions/wikia/ContentReview/scripts/contentReviewModuleMonobook.run.js',
+		'//extensions/wikia/ContentReview/scripts/contentReviewModule.js',
+	]
+];
+
+$config['content_review_module_monobook_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => [ 'monobook' ],
+	'assets' => [
+		'//extensions/wikia/ContentReview/styles/ContentReviewMonobookEntrypoint.scss',
+	],
+];
+
+$config['content_review_module_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//extensions/wikia/ContentReview/scripts/contentReviewModule.run.js',
+		'//extensions/wikia/ContentReview/scripts/contentReviewModule.js',
+	]
+];
+
+$config['content_review_module_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => [ 'oasis', 'monobook' ],
+	'assets' => [
+		'//skins/oasis/css/modules/ContentReview.scss',
+	],
+];
+
+$config['content_review_test_mode_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//extensions/wikia/ContentReview/scripts/contentReviewTestMode.run.js',
+		'//extensions/wikia/ContentReview/scripts/contentReviewTestMode.js',
+	]
+];
+
+$config['content_review_special_page_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//extensions/wikia/ContentReview/scripts/contentReviewSpecialPage.run.js',
+		'//extensions/wikia/ContentReview/scripts/contentReviewSpecialPage.js',
+	]
+];
+
+$config['content_review_diff_page_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//extensions/wikia/ContentReview/scripts/contentReviewDiffPage.run.js',
+		'//extensions/wikia/ContentReview/scripts/contentReviewDiffPage.js',
+	]
+];
+
+$config['content_review_diff_page_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'assets' => [
+		'//extensions/wikia/ContentReview/styles/ContentReviewDiffPage.scss',
+	]
+];
+
 $config['auth_modal_scss'] = array(
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => [ 'oasis' ],
@@ -2556,8 +2620,7 @@ $config['auth_modal_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis' ],
 	'assets' => [
-		'//extensions/wikia/AuthModal/js/AuthModal.js',
-		'//extensions/wikia/AuthModal/js/AuthComponent.js',
+		'//extensions/wikia/AuthModal/js/AuthModal.js'
 	]
 );
 
@@ -2577,5 +2640,14 @@ $config['curated_content_tool_button_scss'] = [
 	'skin' => ['oasis'],
 	'assets' => [
 		'//extensions/wikia/CuratedContent/css/CuratedContentTool.scss'
+	]
+];
+
+$config['visit_source_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//resources/wikia/libraries/visit-source/visit-source.js',
+		'//extensions/wikia/VisitSource/scripts/VisitSource.js',
 	]
 ];

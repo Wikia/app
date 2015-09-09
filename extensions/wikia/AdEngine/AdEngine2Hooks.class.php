@@ -88,7 +88,9 @@ class AdEngine2Hooks {
 
 		$vars['ads'] = [
 			'context' => $adContext,
-			'runtime' => [],
+			'runtime' => [
+				'sp' => []
+			],
 		];
 
 		// Legacy vars:

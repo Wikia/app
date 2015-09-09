@@ -1,10 +1,12 @@
-<?php if (!empty( $notifications )): ?>
+<?php
+	if ($confirmation != '') {
+?>
 <div class="banner-notifications-wrapper">
-	<? foreach( $notifications as $notification ): ?>
-		<div class="banner-notification <?= $notification['class'] ?>">
-			<button class="close wikia-chiclet-button"><img src=" <?= $wg->StylePath ?>/oasis/images/icon_close.png"></button>
-			<div class="msg"><?= $notification['message'] ?></div>
-		</div>
-	<? endforeach ?>
+	<div class="banner-notification <?= $confirmationClass ?>">
+		<button class="close wikia-chiclet-button"><img src=" <?= $wg->StylePath ?>/oasis/images/icon_close.png"></button>
+		<div class="msg"><?= $confirmation ?></div>
+	</div>
 </div>
-<?php endif ?>
+<?php
+	}
+?>

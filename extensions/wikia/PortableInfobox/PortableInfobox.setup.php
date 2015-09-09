@@ -43,7 +43,6 @@ foreach ( $wgInfoboxParserNodes as $parserNode ) {
 
 // helpers
 $wgAutoloadClasses[ 'Wikia\PortableInfobox\Helpers\ImageFilenameSanitizer' ] = $dir . 'services/Helpers/ImageFilenameSanitizer.php';
-$wgAutoloadClasses[ 'Wikia\PortableInfobox\Helpers\SimpleXmlUtil' ] = $dir . 'services/Helpers/SimpleXmlUtil.php';
 $wgAutoloadClasses[ 'Wikia\PortableInfobox\Helpers\InfoboParamsValidator' ] = $dir . 'services/Helpers/InfoboParamsValidator.php';
 $wgAutoloadClasses[ 'Wikia\PortableInfobox\Helpers\PortableInfoboxDataBag' ] = $dir . 'services/Helpers/PortableInfoboxDataBag.php';
 $wgAutoloadClasses[ 'Wikia\PortableInfobox\Helpers\PortableInfoboxRenderServiceHelper' ] = $dir . 'services/Helpers/PortableInfoboxRenderServiceHelper.php';
@@ -67,6 +66,7 @@ $wgHooks[ 'BeforePageDisplay' ][] = 'PortableInfoboxHooks::onBeforePageDisplay';
 $wgHooks[ 'ParserAfterTidy' ][] = 'PortableInfoboxParserTagController::replaceInfoboxMarkers';
 $wgHooks[ 'ImageServing::buildAndGetIndex' ][] = 'PortableInfoboxHooks::onImageServingCollectImages';
 $wgHooks[ 'wgQueryPages' ][] = 'PortableInfoboxHooks::onWgQueryPages';
+$wgHooks[ 'AllInfoboxesQueryRecached' ][] = 'PortableInfoboxHooks::onAllInfoboxesQueryRecached';
 
 // special pages
 $wgSpecialPages[ 'AllInfoboxes' ] = 'AllinfoboxesQueryPage';

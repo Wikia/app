@@ -440,7 +440,11 @@ class User {
 	}
 
 	private function getCacheKey() {
-		return wfMemcKey('user', 'id', $this->mId);
+		return self::getCacheKeyById( $this->mId );
+	}
+
+	private static function getCacheKeyById( $id ) {
+		return wfMemcKey( 'user', 'id', $id );
 	}
 
 	/** @name newFrom*() static factory methods */
@@ -2187,6 +2191,19 @@ class User {
 	public function getTouched() {
 		$this->load();
 		return $this->mTouched;
+	}
+
+	/**
+	 * A function to clear cache with no side effects.  Functions such as clearSharedCache
+	 * or invalidateCache both have side effects like loading things from cache before clearing
+	 * it and writing back to cache after finishing.
+	 *
+	 * @param int $userId
+	 */
+	public static function clearUserCache( $userId ) {
+		global $wgMemc;
+		$memKey = self::getCacheKeyById( $userId );
+		$wgMemc->delete( $memKey );
 	}
 
 	/**
@@ -4877,9 +4894,8 @@ class User {
 			foreach ( $attributes as $attributeName => $attributeValue ) {
 				$this->compareAttributeValueFromService( $attributeName, $attributeValue );
 
-				// Once shadow mode verifies these are correct, we can uncomment this
-				// $this->mOptionOverrides[$attributeName] = $attributeValue;
-				// $this->mOptions[$attributeName] = $attributeValue;
+				 $this->mOptionOverrides[$attributeName] = $attributeValue;
+				 $this->mOptions[$attributeName] = $attributeValue;
 			}
 		}
 	}

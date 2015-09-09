@@ -15,8 +15,6 @@ class BannerNotificationsController extends WikiaController {
 	const CONFIRMATION_ERROR = 'error'; // Red
 	const CONFIRMATION_WARN = 'warn'; // Yellow
 
-	const OPTION_NON_DISMISSIBLE = 'nonDismissible';
-
 
 	public function init() {
 		$this->confirmation = null;
@@ -28,21 +26,16 @@ class BannerNotificationsController extends WikiaController {
 	 *
 	 * @param String $message - message text
 	 * @param String $type - notification type, one of CONFIRMATION_ constants
-	 * @param Array $options
-	 * 	self::OPTION_NON_DISMISSIBLE - removes close button from notification
+	 * @param Bool $force - flag that enforces to override existing notification
 	 */
-	public static function addConfirmation( $message, $type = self::CONFIRMATION_CONFIRM, $options = [] ) {
+	public static function addConfirmation( $message, $type = self::CONFIRMATION_CONFIRM, $force = false ) {
 		//Add confirmation if there was none set yet or if it's forced
-		if ( !empty( $message ) ) {
-			if ( !isset( $_SESSION[self::SESSION_KEY] ) ) {
-				$_SESSION[self::SESSION_KEY] = [];
-			}
-
-			$_SESSION[self::SESSION_KEY][] = [
+		if ( !empty( $message ) &&
+			( empty( $_SESSION[self::SESSION_KEY] ) || $force === true ) ) {
+			$_SESSION[self::SESSION_KEY] = array(
 				'message' => $message,
 				'type' => $type,
-				'options' => $options
-			];
+			);
 
 			wfDebug( __METHOD__ . " - {$message}\n" );
 		}
@@ -61,25 +54,15 @@ class BannerNotificationsController extends WikiaController {
 	 */
 	public function executeConfirmation() {
 		if ( !empty( $_SESSION[self::SESSION_KEY] ) ) {
-			$notifications = [];
+			$entry = $_SESSION[self::SESSION_KEY];
 
-			foreach( $_SESSION[self::SESSION_KEY] as $sessionEntities ) {
-				$notification = [
-					'message' => $sessionEntities['message'],
-					'class' => $sessionEntities['type']
-				];
-
-				if ( !empty( $sessionEntities['options'][self::OPTION_NON_DISMISSIBLE] ) ) {
-					$notification['class'] .= ' non-dismissible';
-				}
-
-				$notifications[] = $notification;
-			}
-
-			$this->notifications = $notifications;
+			$this->confirmation = $entry['message'];
+			$this->confirmationClass = $entry['type'];
 
 			// clear confirmation stack
 			self::clearConfirmation();
+
+			wfDebug( __METHOD__ . " - {$this->confirmation}\n" );
 		}
 
 	}
@@ -178,7 +161,7 @@ class BannerNotificationsController extends WikiaController {
 
 			wfRunHooks( 'OasisAddPageDeletedConfirmationMessage', array( &$title, &$message ) );
 
-			self::addConfirmation( $message, self::CONFIRMATION_CONFIRM );
+			self::addConfirmation( $message, self::CONFIRMATION_CONFIRM, true );
 
 			// redirect to main page
 			$wgOut->redirect( Title::newMainPage()->getFullUrl( array( 'cb' => rand( 1, 1000 ) ) ) );
@@ -286,16 +269,6 @@ class BannerNotificationsController extends WikiaController {
 	 * @return bool
 	 */
 	public static function onBeforePageDisplay( \OutputPage $out ) {
-		global $wgUser;
-
-		if ( $wgUser->isLoggedIn() && !$wgUser->isEmailConfirmed() ) {
-			self::addConfirmation(
-				wfMessage('bannernotifications-not-confirmed-email')->parse(),
-				self::CONFIRMATION_WARN,
-				[ self::OPTION_NON_DISMISSIBLE => true ]
-			);
-		}
-
 		$out->addModules( 'ext.bannerNotifications' );
 		return true;
 	}
