@@ -77,7 +77,7 @@ class AvatarsMigrator extends Maintenance {
 			}
 		}
 
-		$this->output( "Dome!\n" );
+		$this->output( "Done!\n" );
 		$this->output( date('r') . "\n" );
 	}
 
