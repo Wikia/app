@@ -39,7 +39,7 @@ class PortableInfoboxRenderServiceHelper {
 					$horizontalGroupData[ 'renderLabels' ] = true;
 				}
 			} else if ( $item[ 'type' ] === 'header' ) {
--				$horizontalGroupData[ 'header' ] = $data[ 'value' ];
+				$horizontalGroupData[ 'header' ] = $data[ 'value' ];
 			}
 		}
 
