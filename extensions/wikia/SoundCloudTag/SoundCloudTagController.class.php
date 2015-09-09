@@ -22,7 +22,7 @@ class SoundCloudTagController extends WikiaParserTagController {
 			'allowtransparency' => 'true',
 			'scrolling' => 'no',
 			'frameborder' => 'no',
-			'data' => [ 'tag' => 'soundcloud' ],
+			'data-tag' => 'soundcloud',
 			'style' => ( isset( $args['style'] ) ? Sanitizer::checkCss( $args['style'] ) : '' )
 		], wfMessage( 'soundcloud-tag-could-not-render' )->text() );
 	}
