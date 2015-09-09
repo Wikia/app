@@ -99,7 +99,9 @@ define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 		 */
 		load: function (params) {
 			if (typeof params.successAuthCallback !== 'function') {
-				params.successAuthCallback = Function.pototype;
+				params.successAuthCallback = function () {
+					window.location.reload();
+				};
 			}
 
 			if (window.wgEnableNewAuthModal) {
