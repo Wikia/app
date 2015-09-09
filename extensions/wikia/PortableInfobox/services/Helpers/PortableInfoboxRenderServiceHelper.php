@@ -192,7 +192,7 @@ class PortableInfoboxRenderServiceHelper {
 	 * @param $image
 	 * @return array width and height
 	 */
-	private function getAdjustedImageSize( $image ) {
+	public function getAdjustedImageSize( $image ) {
 		if ( $this->isWikiaMobile() ) {
 			$width = self::MOBILE_THUMBNAIL_WIDTH;
 			$height = null;
