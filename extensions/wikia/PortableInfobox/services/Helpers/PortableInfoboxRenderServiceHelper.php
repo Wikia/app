@@ -13,8 +13,7 @@ class PortableInfoboxRenderServiceHelper {
 	const MINIMAL_HERO_IMG_WIDTH = 300;
 	const MAX_DESKTOP_THUMBNAIL_HEIGHT = 500;
 
-	function __construct() {
-	}
+	function __construct() {}
 
 	/**
 	 * creates special data structure for horizontal group from group data
