@@ -4,7 +4,7 @@ class FliteTagController extends WikiaParserTagController {
 	const PARSER_TAG_NAME = 'flite';
 	const GUID_PATTERN = '/[a-z0-9]{8,8}\-[a-z0-9]{4,4}\-[a-z0-9]{4,4}\-[a-z0-9]{4,4}\-[a-z0-9]{12,12}/';
 
-	private $requiredParams = [ 'guid', 'width', 'height' ];
+	protected $tagAttributes = [ 'guid', 'width', 'height' ];
 
 	public static function onParserFirstCallInit( Parser $parser ) {
 		global $wgHooks;
@@ -17,23 +17,23 @@ class FliteTagController extends WikiaParserTagController {
 	}
 
 	public function renderFliteAdUnit( $input, array $args, Parser $parser, PPFrame $frame ) {
-		$errorMessage = '';
 		$markerId = $this->generateMarkerId( $parser );
+		$errorMessages = $this->validateAttributes( $args );
 
-		if( !$this->areTagParamsValid( $args, $errorMessage ) ) {
+		if( !empty( $errorMessages ) ) {
 			$this->addMarkerOutput( $markerId, $this->sendRequest(
 				'FliteTagController',
 				'fliteTagError',
-				[ 'errorMessage' => $errorMessage ]
+				[ 'errorMessages' => $errorMessages ]
 			) );
 		} else {
 			$this->addMarkerOutput( $markerId, $this->sendRequest(
 				'FliteTagController',
 				'fliteAdUnit',
 				[
-					'guid' => $args[ 'guid' ],
-					'width' => $args[ 'width' ],
-					'height' => $args[ 'height' ],
+					'guid' => $args['guid'],
+					'width' => $args['width'],
+					'height' => $args['height'],
 				]
 			) );
 		}
@@ -46,24 +46,8 @@ class FliteTagController extends WikiaParserTagController {
 		return true;
 	}
 
-	private function areTagParamsValid( $params, &$errorMessage ) {
-		if( empty($params) ) {
-			$errorMessage = wfMessage( 'flite-tag-error-no-required-parameters' )->plain();
-			return false;
-		}
-
-		foreach( $this->requiredParams as $paramName ) {
-			$validator = $this->buildParamValidator( $paramName );
-			if( !is_null($validator) && !$this->isTagParamValid( $params[$paramName], $validator, $errorMessage ) ) {
-				return false;
-			}
-		}
-
-		return true;
-	}
-
 	protected function buildParamValidator( $paramName ) {
-		$validator = null;
+		$validator = new WikiaValidatorAlwaysTrue();
 
 		switch( $paramName ) {
 			case 'guid':
@@ -75,18 +59,28 @@ class FliteTagController extends WikiaParserTagController {
 				]);
 				break;
 			case 'width':
+				$validator = $this->buildSizeValidator('width');
+				break;
 			case 'height':
-				$validator = new WikiaValidatorNumeric( [
-					'required' => true,
-					'min' => self::MIN_SIZE
-				], [
-					'not_numeric' => 'flite-tag-error-invalid-size',
-					'too_small' => 'flite-tag-error-min-size'
-				] );
+				$validator = $this->buildSizeValidator('width');
 				break;
 		}
 
 		return $validator;
+	}
+
+	private function buildSizeValidator( $dimension ) {
+		return new WikiaValidatorNumeric( [
+			'required' => true,
+			'min' => self::MIN_SIZE
+		], [
+			// flite-tag-error-invalid-size-width
+			// flite-tag-error-invalid-size-height
+			// flite-tag-error-min-size-width
+			// flite-tag-error-min-size-height
+			'not_numeric' => 'flite-tag-error-invalid-size-' . $dimension,
+			'too_small' => 'flite-tag-error-min-size-' . $dimension,
+		] );
 	}
 
 	public function fliteAdUnit() {
@@ -98,7 +92,7 @@ class FliteTagController extends WikiaParserTagController {
 	}
 
 	public function fliteTagError() {
-		$this->setVal( 'errorMessage', $this->getVal( 'errorMessage', wfMessage( 'flite-tag-error-unknown' )->plain() ) );
+		$this->setVal( 'errorMessages', $this->getVal( 'errorMessages', wfMessage( 'flite-tag-error-unknown' )->plain() ) );
 
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 	}
