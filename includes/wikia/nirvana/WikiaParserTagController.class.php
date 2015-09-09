@@ -14,6 +14,13 @@ abstract class WikiaParserTagController extends WikiaController {
 	protected $markers = [];
 
 	/**
+	 * White list of attributes to be checked and validated
+	 *
+	 * @var array
+	 */
+	protected $tagAttributes = [];
+
+	/**
 	 * @desc Hook function registered in $wgHooks['ParserFirstCallInit'][] which should always return true
 	 *
 	 * @param Parser $parser
@@ -31,22 +38,24 @@ abstract class WikiaParserTagController extends WikiaController {
 	abstract public function onParserAfterTidy( Parser &$parser, &$text );
 
 	/**
-	 * @desc Checks if parameter from parameters array is valid
+	 * @desc Checks if all parameters from tag are valid
 	 *
-	 * @param String|Mixed $paramValue value of the parameter
-	 * @param WikiaValidator $validator
-	 * @param String $errorMessage reference to a string variable which will get error message if one occurs
+	 * @param Array $attributes attributes passed in tag
 	 *
-	 * @return bool
+	 * @return Array $errorMessages
 	 */
-	public function isTagParamValid( $paramValue, WikiaValidator $validator, &$errorMessage ) {
-		$isValid = $validator->isValid( $paramValue );
+	public function validateAttributes( $attributes ) {
+		$errorMessages = [];
 
-		if( !$isValid ) {
-			$errorMessage = $validator->getError()->getMsg();
+		foreach( $this->tagAttributes as $attrName ) {
+			$validator = $this->buildParamValidator( $attrName );
+
+			if( !$validator->isValid( $attributes[$attrName] ) ) {
+				$errorMessages[] = (object) [ 'message' => $validator->getError()->getMsg() ];
+			}
 		}
 
-		return $isValid;
+		return $errorMessages;
 	}
 
 	/**
@@ -78,6 +87,15 @@ abstract class WikiaParserTagController extends WikiaController {
 	 */
 	protected function addMarkerOutput( $markerId, $output ) {
 		if( !empty( $this->wg->ArticleAsJson ) && $output instanceof WikiaResponse ) {
+			/**
+			 * This is tricky and I could not think about anything better than:
+			 * a) encode just double-quotes, so json_decode() won't fail but then if anything else should be encoded
+			 * we're doomed
+			 * b) use json_encode() so we'll encode everything which should be encoded and trim the added double-quotes
+			 * at the beginning since it's only a part of article content which will be wrapped with double-quotes
+			 *
+			 * I've chosen b) and if you think about anything which is better don't hesitate to let me know, please :)
+			 */
 			$this->markers[$markerId] = trim( json_encode( $output->toString() ), "\"" );
 		} else {
 			$this->markers[$markerId] = $output->toString();
