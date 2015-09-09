@@ -534,7 +534,7 @@ class Masthead {
 
 			// user avatars service updates user preferences on its own
 			if ( empty( $wgAvatarsUseService ) ) {
-				$this->mUser->setGlobalAttribute(AVATAR_USER_OPTION_NAME, "");
+				$this->mUser->setGlobalAttribute( AVATAR_USER_OPTION_NAME, "" );
 				$this->mUser->saveSettings();
 			}
 
@@ -746,10 +746,10 @@ class Masthead {
 		// render the pre-processed avatar to a PNG file
 		$sFilePath = $this->getTempFile();
 		if ( !imagepng( $oImg, $sFilePath ) ) {
-			wfDebugLog("avatar", __METHOD__ . ": Cannot save png Avatar: $sFilePath", true);
+			wfDebugLog( "avatar", __METHOD__ . ": Cannot save png Avatar: $sFilePath", true );
 			$errorNo = UPLOAD_ERR_CANT_WRITE;
 
-			wfProfileOut(__METHOD__);
+			wfProfileOut( __METHOD__ );
 			return $errorNo;
 		}
 
