@@ -401,7 +401,6 @@ class GlobalTitle extends Title {
 				__METHOD__ );
 		}
 
-
 		if( !$row && wfGetLB()->getServerCount() > 1 ) {
 			// Possible slave lag!
 			$dbw = $this->getConnection( DB_MASTER );
