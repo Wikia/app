@@ -151,7 +151,7 @@ ve.ui.WikiaInfoboxInsertDialog.prototype.createInfoboxItemOptionWidget = functio
 };
 
 /**
- * @desc creates select widget with indobox option widgets
+ * @desc creates select widget with infobox option widgets
  * @param {OO.ui.DecoratedOptionWidget[]} items
  * @returns {OO.ui.OoUiSelectWidget}
  */
