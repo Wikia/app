@@ -113,15 +113,17 @@ define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 				};
 			}
 
+			if (!params.origin) {
+				params.origin = 'no-origin-provided';
+			}
+
 			if (window.wgEnableNewAuthModal) {
 				open(params.onAuthSuccess);
 
-				if (params.origin) {
-					track({
-						action: Wikia.Tracker.ACTIONS.CLICK,
-						label: params.origin
-					});
-				}
+				track({
+					action: Wikia.Tracker.ACTIONS.CLICK,
+					label: params.origin
+				});
 
 				loadPage(params.url, onPageLoaded);
 
