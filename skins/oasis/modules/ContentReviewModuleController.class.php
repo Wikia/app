@@ -88,22 +88,22 @@ class ContentReviewModuleController extends WikiaController {
 
 	public function getLatestRevisionStatus( $latestRevisionId, array $pageStatus ) {
 		if ( $latestRevisionId === 0 ) {
-			$latestStatus = \ContentReviewModuleController::STATUS_NONE;
+			$latestStatus = self::STATUS_NONE;
 		} elseif ( $latestRevisionId === $pageStatus['liveId'] ) {
-			$latestStatus = \ContentReviewModuleController::STATUS_LIVE;
+			$latestStatus = self::STATUS_LIVE;
 		} elseif ( $latestRevisionId === $pageStatus['latestId']
 			&& Helper::isStatusAwaiting( $pageStatus['latestStatus'] )
 		) {
-			$latestStatus = \ContentReviewModuleController::STATUS_AWAITING;
+			$latestStatus = self::STATUS_AWAITING;
 		} elseif ( $latestRevisionId === $pageStatus['lastReviewedId']
 			&& $pageStatus['lastReviewedStatus'] === ReviewModel::CONTENT_REVIEW_STATUS_REJECTED
 		) {
-			$latestStatus = \ContentReviewModuleController::STATUS_REJECTED;
+			$latestStatus = self::STATUS_REJECTED;
 		} elseif ( $latestRevisionId > $pageStatus['liveId']
 			&& $latestRevisionId > $pageStatus['latestId']
 			&& $latestRevisionId > $pageStatus['lastReviewedId']
 		) {
-			$latestStatus = \ContentReviewModuleController::STATUS_UNSUBMITTED;
+			$latestStatus = self::STATUS_UNSUBMITTED;
 		}
 
 		return $latestStatus;
