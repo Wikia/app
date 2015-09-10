@@ -25,7 +25,10 @@ class UserLoginHooksHelper {
 	// show request form for Special:ConfirmEmail
 	public static function onConfirmEmailShowRequestForm( EmailConfirmation &$pageObj, &$show ) {
 		$show = false;
-		if ( Sanitizer::validateEmail( $pageObj->getUser()->getEmail() ) ) {
+		if (
+			Sanitizer::validateEmail( $pageObj->getUser()->getEmail() )
+			|| !empty( $pageObj->getUser()->getNewEmail() )
+		) {
 			$userLoginHelper = new UserLoginHelper();
 			$userLoginHelper->showRequestFormConfirmEmail( $pageObj );
 		} else {
