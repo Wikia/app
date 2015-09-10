@@ -2,10 +2,10 @@
 /**
  * Aliases for special pages of CreateNewWiki extension.
  */
-$specialPageAliases = array();
+$specialPageAliases = [];
 
 /** English
  */
-$specialPageAliases['en'] = array(
-	'CreateNewWiki' => array( 'CreateNewWiki', 'CreateWiki' ),
-);
+$specialPageAliases['en'] = [
+	'CreateNewWiki' => [ 'CreateNewWiki', 'CreateWiki' ],
+];
