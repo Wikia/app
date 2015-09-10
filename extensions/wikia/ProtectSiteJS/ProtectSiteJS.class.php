@@ -13,6 +13,8 @@ class ProtectSiteJS {
 			if (
 				!in_array( 'staff', $groups )
 				&& !$wgUser->isAllowed( 'editinterfacetrusted' )
+				// Talk pages have always been editable by all, and are not script pages
+				&& !$wgTitle->isTalkPage()
 				&& !self::isUserSkinJS( $wgTitle, $wgUser )
 				&& !self::isAllowedForContentReview( $wgTitle )
 			) {

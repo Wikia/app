@@ -1,6 +1,8 @@
 <?php
 namespace Wikia\Service\Helios;
+
 use Wikia\Util\GlobalStateWrapper;
+use Wikia\Service\Constants;
 
 /**
  * A client for Wikia authentication service.
@@ -54,10 +56,10 @@ class HeliosClientImpl implements HeliosClient
 		// Add client_id and client_secret to the GET data.
 		$getParams['client_id'] = $this->clientId;
 		$getParams['client_secret'] = $this->clientSecret;
-		
+
 		// Request URI pre-processing.
 		$uri = "{$this->baseUri}{$resourceName}?" . http_build_query($getParams);
-		
+
 		// Request options pre-processing.
 		$options = [
 			'method'          => 'GET',
@@ -90,6 +92,13 @@ class HeliosClientImpl implements HeliosClient
 		} );
 
 		$this->status = $request->status;
+		return $this->processResponseOutput( $request );
+	}
+
+	protected function processResponseOutput( \MWHttpRequest $request ) {
+		if ( $request->getStatus() == Constants::HTTP_STATUS_NO_CONTENT ) {
+			return null;
+		}
 
 		$output = json_decode( $request->getContent() );
 
@@ -155,16 +164,18 @@ class HeliosClientImpl implements HeliosClient
 	 * A shortcut method for token invalidation requests.
 	 *
 	 * @param $token string - a token to be invalidated
+	 * @param $userId integer - the current user id
 	 *
 	 * @return string - json encoded response
 	 */
-	public function invalidateToken( $token )
+	public function invalidateToken( $token, $userId )
 	{
 		return $this->request(
 			sprintf('token/%s', $token),
 			[],
 			[],
-			[ 'method' => 'DELETE' ]
+			[ 'method' => 'DELETE',
+				'headers' => array( Constants::HELIOS_AUTH_HEADER => $userId ) ]
 		);
 	}
 
