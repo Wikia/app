@@ -31,18 +31,19 @@
 					<td><?= $review['review_start'] ?></td>
 					<td><?php if ( !empty($review['review_end'] ) ) { echo $review['review_end']; } ?></td>
 					<td class="content-review-special-list-item-actions clearfix">
-						<? if ( !empty( $review['hide'] ) ): ?>
-							<?= wfMessage( 'content-review-special-review-open' )->escaped() ?>
-						<? else: ?>
-							<a href="<?= Sanitizer::encodeAttribute( $review['diff'] ) ?>" target="_blank"
-							   class="<?= ContentReviewSpecialController::$statusMessageKeys[$review['status']] ?><?= $review['class'] ?> wikia-button primary"
+						<a href="<?= Sanitizer::encodeAttribute( $review['diff'] ) ?>" target="_blank"
+						   class="wikia-button primary">
+							<?= wfMessage( 'content-review-special-show-revision' )->escaped() ?>
+						</a>
+						<?php if ( !empty( $review['revert'] ) ): ?>
+							<a href="#"
+							   class="content-review-revert-revision wikia-button primary"
 							   data-wiki-id="<?= $review['wiki_id'] ?>"
 							   data-page-id="<?= $review['page_id'] ?>"
-							   data-old-status="<?= $review['status'] ?>"
-							   data-status="<?= Wikia\ContentReview\Models\ReviewModel::CONTENT_REVIEW_STATUS_IN_REVIEW ?>">
-								<?= $review['diffText'] ?>
+							   data-revision-id="<?= $review['revision_id'] ?>">
+								Revert
 							</a>
-						<? endif ?>
+						<?php endif ?>
 					</td>
 				</tr>
 			<?php endforeach; ?>

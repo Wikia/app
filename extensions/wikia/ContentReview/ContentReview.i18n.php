@@ -53,6 +53,7 @@ $messages['en'] = [
 	'content-review-special-review-started' => 'You have started a review process.',
 	'content-review-special-review-open' => 'Please complete a review process for a previous revision first.',
 	'content-review-special-error' => 'Unfortunately, an error happened.',
+	'content-review-special-show-revision' => 'Show revision',
 
 	'content-review-diff-approve' => 'Approve',
 	'content-review-diff-reject' => 'Reject',
@@ -69,7 +70,7 @@ $messages['en'] = [
 	'content-review-status-unreviewed' => 'Unreviewed',
 	'content-review-status-in-review' => 'In review',
 	'content-review-status-approved' => 'Approved',
-	'content-review-status-rejected' => 'Rejected,',
+	'content-review-status-rejected' => 'Rejected',
 
 	'content-review-feedback-link-text' => 'Provide feedback',
 	'content-review-rejection-explanation' => '==Submitted script change rejected==
@@ -129,6 +130,7 @@ $messages['qqq'] = [
 	'content-review-special-review-started' => 'A message shown when user starts new review process.',
 	'content-review-special-review-open' => 'A message shown when another review for the page is in progress and ask user to complete that first.',
 	'content-review-special-error' => 'Information that some error occurs.',
+	'content-review-special-show-revision' => 'Text on button to show revision',
 
 	'content-review-diff-approve' => 'A text of a button which clicked approves a given revision.',
 	'content-review-diff-reject' => 'A text of a button which clicked rejects a given revision.',

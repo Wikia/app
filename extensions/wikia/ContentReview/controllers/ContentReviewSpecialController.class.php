@@ -45,7 +45,7 @@ class ContentReviewSpecialController extends WikiaSpecialPageController {
 		if ( !empty( $wikiId ) ) {
 			$model = new ReviewLogModel();
 			$reviews = $model->getArchivedReviewForWiki( $wikiId );
-			$this->reviews = $this->prepareReviewData( $reviews );
+			$this->reviews = $this->prepareArchivedReviewData( $reviews );
 			$this->overrideTemplate('archive');
 		} else {
 			$model = new ReviewModel();
@@ -88,6 +88,37 @@ class ContentReviewSpecialController extends WikiaSpecialPageController {
 			) {
 				$review['hide'] = true;
 			}
+
+			$reviews[$review['wiki_id']][] = $review;
+		}
+
+		return $reviews;
+	}
+
+	private function prepareArchivedReviewData( $reviewsRaw ) {
+		$reviews = [];
+
+		foreach ( $reviewsRaw as $review ) {
+			$title = GlobalTitle::newFromID( $review['page_id'], $review['wiki_id'] );
+			$wiki = WikiFactory::getWikiByID( $review['wiki_id'] );
+
+			$review['url'] = $title->getFullURL();
+			$review['title'] = $title->getBaseText();
+			$review['wiki'] = $wiki->city_title;
+
+			$review['diff'] = $title->getFullURL( [
+				'oldid' => $review['revision_id']
+			] );
+
+			if ( !empty( $review['review_user_id'] ) ) {
+				$review['review_user_name'] = User::newFromId( $review['review_user_id'] )->getName();
+			}
+
+			if ( $review['status'] == ReviewModel::CONTENT_REVIEW_STATUS_APPROVED ) {
+				$review['revert'] = true;
+			}
+
+
 
 			$reviews[$review['wiki_id']][] = $review;
 		}
