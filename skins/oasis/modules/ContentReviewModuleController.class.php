@@ -158,11 +158,15 @@ class ContentReviewModuleController extends WikiaController {
 	}
 
 	protected function createRevisionLink( $oldId, $revisionId ) {
-		$params = [
-			'oldid' => $oldId,
-		];
+		$params = [];
 
-		if ( !empty( $revisionId ) && $revisionId !== $oldId ) {
+		if ( !empty( $oldId ) ) {
+			$params['oldid'] = $oldId;
+		} else {
+			$params['oldid'] = $revisionId;
+		}
+
+		if ( !empty( $oldId ) && !empty( $revisionId ) && $revisionId !== $oldId ) {
 			$params['diff'] = $revisionId;
 		} elseif ( empty( $revisionId ) ) {
 			$revisionId = $oldId;
