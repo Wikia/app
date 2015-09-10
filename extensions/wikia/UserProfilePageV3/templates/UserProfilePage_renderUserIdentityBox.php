@@ -13,7 +13,7 @@
 			<?php if ( $canRemoveAvatar ): ?>
 				<span>
 					<img src="<?= $wgBlankImgUrl ?>" class="sprite trash">
-					<a id="UserAvatarRemove" data-name="<?= $user['name']; ?>" href="#" data-confirm="<?= wfMessage( 'user-identity-remove-confirmation' )->escaped(); ?>">
+					<a id="UserAvatarRemove" data-name="<?= Sanitizer::encodeAttribute( $user['name'] ); ?>" href="#" data-confirm="<?= wfMessage( 'user-identity-remove-confirmation' )->escaped(); ?>">
 						<?= wfMessage( 'user-identity-box-delete-avatar' )->escaped(); ?>
 					</a>
 				</span>
