@@ -10,39 +10,37 @@ class SoundCloudTagController extends WikiaParserTagController {
 	}
 
 	public function renderTag( $input, array $args, Parser $parser, PPFrame $frame ) {
-		$url = self::buildUrl( $args );
 
-		// We only show an error message if we couldn't make a connection to SoundCloud at all.
-		// The SoundCloud widget API will take care of other errors.
-		return Html::element( 'iframe',  [
-			'data-tag' => 'soundcloud',
-			'sandbox' => 'allow-scripts allow-same-origin',
-			'seamless' => 'seamless',
-			'src' => $url,
-			'style' => ( isset( $args['style'] ) ? Sanitizer::checkCss( $args['style'] ) : '' )
-		], wfMessage( 'soundcloud-tag-could-not-render' )->text() );
+		return Html::element(
+			'iframe',
+			$this->prepareAttributes( $args ),
+			wfMessage( 'soundcloud-tag-could-not-render' )->text()
+		);
 	}
 
-	/**
-	 * Generate the URL for the current widget
-	 *
-	 * @see https://developers.soundcloud.com/docs/api/html5-widget#params
-	 *
-	 * @param array $args
-	 * @return string
-	 */
-	private static function buildUrl( array $args ) {
-		// basically white-list of attributes
-		$allowedParams = [ 'auto_play', 'buying', 'color', 'download', 'liking', 'sharing',
-			'show_artwork','show_comments', 'show_playcount', 'show_user', 'start_track', 'url' ];
-		$data = [];
+	private function prepareAttributes( array $args ) {
+		$allowedArgs = ['width', 'height', 'scrolling', 'frameborder'];
+		$attributes = [];
 
-		foreach ( $allowedParams as $name ) {
+		if ( array_key_exists('style', $args) ) {
+			$attributes['style'] = Sanitizer::checkCss( $args['style'] );
+		}
+
+		if ( array_key_exists('src', $args) ) {
+			$attributes['src'] = $args['src'];
+		}
+
+		foreach ( $allowedArgs as $name ) {
 			if ( isset( $args[$name] ) ) {
-				$data[$name] = $args[$name];
+				$attributes[$name] = $args[$name];
 			}
 		}
-		return self::API_ENDPOINT . http_build_query( $data );
+
+		$attributes['data-tag'] = 'soundcloud';
+		$attributes['sandbox'] = 'allow-scripts allow-same-origin';
+		$attributes['seamless'] = 'seamless';
+
+		return $attributes;
 	}
 
 	protected function buildParamValidator( $paramName ) {
