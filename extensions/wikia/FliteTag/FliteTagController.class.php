@@ -2,7 +2,7 @@
 class FliteTagController extends WikiaParserTagController {
 	const MIN_SIZE = 1;
 	const PARSER_TAG_NAME = 'flite';
-	const GUID_PATTERN = '/[a-z0-9]{8,8}\-[a-z0-9]{4,4}\-[a-z0-9]{4,4}\-[a-z0-9]{4,4}\-[a-z0-9]{12,12}/';
+	const GUID_PATTERN = '/^[a-z0-9]{8}\-[a-z0-9]{4}\-[a-z0-9]{4}\-[a-z0-9]{4}\-[a-z0-9]{12}$/';
 
 	protected $tagAttributes = [ 'guid', 'width', 'height' ];
 
