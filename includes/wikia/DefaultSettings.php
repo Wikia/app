@@ -1796,3 +1796,8 @@ $wgAdDriverIncontentPlayerSlotCountries = null;
  * flag for using (possibly external) service for managing a user's preferences
  */
 $wgPreferencesUseService = false;
+
+/**
+ * Twitter widget parser tag
+ */
+require_once "$IP/extensions/wikia/TwitterTag/TwitterTag.setup.php";

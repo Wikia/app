@@ -1,33 +1,19 @@
 <?php
 
-/**
- * TwitterTag
- *
- * Creates the <twitter> tag
- *
- * @author TyA <tyler@faceyspacies.com>
- * @date 2015-08-20
- *
- */
- 
-$wgExtensionCredits['other'][] = [
-	'name' => 'TwitterTag',
-	'version' => '1.0',
+$wgExtensionCredits['parserTag'][] = [
+	'name' => 'Twitter Tag',
+	'version' => '1',
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/TwitterTag',
-	'author' => '[http://community.wikia.com/wiki/User:TyA TyA]',
+	'author' => [
+		'[http://community.wikia.com/wiki/User:TyA TyA]',
+		'X-Wing Team @ Wikia',
+	],
 	'descriptionmsg' => 'twittertag-desc',
 ];
 
-$dir = __DIR__ . '/';
- 
-$wgAutoloadClasses['TwitterTagHooks'] = $dir . "TwitterTagHooks.class.php";
+$wgAutoloadClasses['TwitterTagController'] = __DIR__ . '/TwitterTagController.class.php';
 
-$wgExtensionMessagesFiles['TwitterTag'] = $dir . 'TwitterTag.i18n.php';
+$wgExtensionMessagesFiles['TwitterTag'] = __DIR__ . '/TwitterTag.i18n.php';
 
-$wgHooks['ParserFirstCallInit'][] = 'TwitterTagHooks::onParserFirstCallInit';
+$wgHooks['ParserFirstCallInit'][] = 'TwitterTagController::onParserFirstCallInit';
 
-$wgResourceModules['ext.TwitterTag'] = [
-	'scripts' => 'js/ext.twittertag.js',
-	'localBasePath' => __DIR__,
-	'remoteExtPath' => 'wikia/TwitterTag'
-];
