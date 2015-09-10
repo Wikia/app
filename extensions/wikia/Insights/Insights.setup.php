@@ -62,22 +62,6 @@ $wgAutoloadClasses['InsightsWithoutimagesModel'] = $dir . 'models/InsightsWithou
 $wgAutoloadClasses['InsightsModuleController'] = $IP.'/skins/oasis/modules/InsightsModuleController.class.php';
 
 /**
- * Api Querys
- */
-$wgAutoloadClasses[ 'ApiQueryUnconvertedInfoboxes' ] = $dir . 'ApiQueryUnconvertedInfoboxes.class.php';
-
-/**
- * Query Pages
- */
-$wgAutoloadClasses[ 'UnconvertedInfoboxesPage' ] = $dir . 'specials/UnconvertedInfoboxesPage.class.php';
-
-/**
- * MW API
- */
-$wgAPIListModules[ 'unconvertedinfoboxes' ] = 'ApiQueryUnconvertedInfoboxes';
-
-
-/**
  * Hooks
  */
 $wgAutoloadClasses['InsightsHooks'] = $dir . 'InsightsHooks.class.php';

@@ -2,7 +2,7 @@
 
 class ApiQueryUnconvertedInfoboxes extends ApiQueryBase {
 
-	const CACHE_TTL = 86400;
+	const CACHE_TTL = WikiaResponse::CACHE_STANDARD;
 	const MCACHE_KEY = 'unconvertedinfoboxes-list';
 
 	public function execute() {
@@ -16,9 +16,11 @@ class ApiQueryUnconvertedInfoboxes extends ApiQueryBase {
 				->run( $dbr, function ( ResultWrapper $result ) {
 					$out = [ ];
 					while ( $row = $result->fetchRow() ) {
-						$out[] = [ 'pageid' => $row[ 'qc_value' ],
+						$out[] = [
+							'pageid' => $row[ 'qc_value' ],
 							'title' => $row[ 'qc_title' ],
-							'ns' => $row[ 'qc_namespace' ] ];
+							'ns' => $row[ 'qc_namespace' ]
+						];
 					}
 
 					return $out;
@@ -28,7 +30,11 @@ class ApiQueryUnconvertedInfoboxes extends ApiQueryBase {
 		foreach ( $data as $id => $infobox ) {
 			$this->getResult()->addValue( [ 'query', 'unconvertedinfoboxes' ], null, $infobox );
 		}
-		$this->getResult()->setIndexedTagName_internal( [ 'query', 'unconvertedinfoboxes' ], 'i' );
+
+		// tag name used in XML format API response
+		$xmlTagName = 'infobox';
+
+		$this->getResult()->setIndexedTagName_internal( [ 'query', 'unconvertedinfoboxes' ], $xmlTagName );
 	}
 
 	public function getVersion() {
