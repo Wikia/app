@@ -80,6 +80,7 @@ $wgAutoloadClasses['WikiaLocalRegistry'] = $IP . '/includes/wikia/nirvana/WikiaL
 $wgAutoloadClasses['WikiaDispatcher'] = $IP . '/includes/wikia/nirvana/WikiaDispatcher.class.php';
 $wgAutoloadClasses['WikiaDispatchableObject'] = $IP . '/includes/wikia/nirvana/WikiaDispatchableObject.class.php';
 $wgAutoloadClasses['WikiaController'] = $IP . '/includes/wikia/nirvana/WikiaController.class.php';
+$wgAutoloadClasses['WikiaParserTagController'] = $IP . '/includes/wikia/nirvana/WikiaParserTagController.class.php';
 $wgAutoloadClasses['WikiaService'] = $IP . '/includes/wikia/nirvana/WikiaService.class.php';
 $wgAutoloadClasses['WikiaModel'] = $IP . '/includes/wikia/nirvana/WikiaModel.class.php';
 $wgAutoloadClasses['WikiaSpecialPageController'] = $IP . '/includes/wikia/nirvana/WikiaSpecialPageController.class.php';
@@ -773,6 +774,7 @@ $wgWikiFactoryTags = array();
  * external databases
  */
 $wgFlagsDB = 'portable_flags';
+$wgContentReviewDB = 'content_review';
 $wgExternalDatawareDB = 'dataware';
 $wgExternalArchiveDB = 'archive';
 $wgStatsDB = 'stats';
