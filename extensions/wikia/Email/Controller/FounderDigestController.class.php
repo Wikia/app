@@ -53,8 +53,8 @@ abstract class FounderDigestController extends EmailController {
 	 * @throws \Email\Check
 	 */
 	protected function assertPageViewsSet() {
-		if ( empty( $this->pageViews ) && $this->pageViews !== '0' ) {
-			throw new Check( 'Invalid value passed for `pageViews`' );
+		if ( empty( $this->pageViews ) ) {
+			throw new Check( 'Value for `pageViews` must be set and non-zero' );
 		}
 	}
 
@@ -126,7 +126,12 @@ class FounderActivityDigestController extends FounderDigestController {
 	 * @throws \Email\Check
 	 */
 	protected function assertSubscribedToCompleteDigest() {
-		if ( !$this->targetUser->getBoolOption( 'founderemails-complete-digest-' . $this->wikiId ) ) {
+		$wantsCompleteDigest = $this->targetUser->getLocalPreference(
+			'founderemails-complete-digest',
+			$this->wikiId
+		);
+
+		if ( !$wantsCompleteDigest ) {
 			throw new Check( 'Founder is not subscribed to complete digest.' );
 		}
 	}
@@ -251,7 +256,12 @@ class FounderPageViewsDigestController extends FounderDigestController {
 	 * @throws \Email\Check
 	 */
 	protected function assertNotSubscribedToCompleteDigest() {
-		if ( $this->targetUser->getBoolOption( 'founderemails-complete-digest-' . $this->wikiId ) ) {
+		$wantsCompleteDigest = $this->targetUser->getLocalPreference(
+			'founderemails-complete-digest',
+			$this->wikiId
+		);
+
+		if ( $wantsCompleteDigest ) {
 			throw new Check( 'Founder is subscribed to complete digest and should not receive page views digest.' );
 		}
 	}
@@ -262,7 +272,12 @@ class FounderPageViewsDigestController extends FounderDigestController {
 	 * @throws \Email\Check
 	 */
 	public function assertSubscribedToPageViewsDigest() {
-		if ( !$this->targetUser->getBoolOption( 'founderemails-views-digest-' . $this->wikiId ) ) {
+		$wantsViewsDigest = $this->targetUser->getLocalPreference(
+			'founderemails-views-digest',
+			$this->wikiId
+		);
+
+		if ( !$wantsViewsDigest ) {
 			throw new Check( 'Founder is not subscribed to page views digest.' );
 		}
 	}
