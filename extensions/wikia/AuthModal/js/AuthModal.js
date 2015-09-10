@@ -25,12 +25,16 @@ define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 			label: 'username-login-modal'
 		});
 
-		$(window.document).keyup(onKeyUp);
-		window.addEventListener('message', function (event) {
-			if (event.data.isUserAuthorized) {
-				close();
-				if (typeof onAuthSuccess === 'function') {
-					onAuthSuccess();
+		$(window).on({
+			'keyup.authModal' : onKeyUp,
+			'message.authModal': function (event) {
+				var e = event.originalEvent;
+
+				if (typeof e.data !== 'undefined' && e.data.isUserAuthorized) {
+					close();
+					if (typeof onAuthSuccess === 'function') {
+						onAuthSuccess();
+					}
 				}
 			}
 		});
@@ -67,6 +71,8 @@ define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 			$blackout.remove();
 			isOpen = false;
 		}
+
+		$(window).off('.authModal');
 	}
 
 	function onPageLoaded () {
@@ -105,8 +111,18 @@ define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 				};
 			}
 
+			if (!params.origin) {
+				params.origin = 'no-origin-provided';
+			}
+
 			if (window.wgEnableNewAuthModal) {
 				open(params.onAuthSuccess);
+
+				track({
+					action: Wikia.Tracker.ACTIONS.CLICK,
+					label: params.origin
+				});
+
 				loadPage(params.url, onPageLoaded);
 
 			} else {
