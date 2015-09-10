@@ -4,7 +4,7 @@ namespace Wikia\Domain\User;
 
 use Wikia\Util\Assert;
 
-class Preference {
+class GlobalPreference {
 
 	private $name;
 	private $value;
