@@ -395,8 +395,8 @@ class AsyncTaskList {
 		global $wgTaskBroker;
 
 		$logError = function( \Exception $e ) {
-			WikiaLogger::instance()->critical( 'Failed to queue task group', [
-				'error' => $e->getMessage(),
+			WikiaLogger::instance()->critical( 'AsyncTaskList::batch', [
+				'exception' => $e
 			] );
 
 			return null;
