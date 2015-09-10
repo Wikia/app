@@ -38,7 +38,12 @@ class TwitterTagController extends WikiaParserTagController {
 			return "<strong class='error'>$html</strong>";
 		}
 
-		$attributes['class'] = 'twitter-timeline';
+		if ( $this->app->checkSkin( [ 'wikiamobile', 'mercury' ] ) ) {
+			$attributes['data-wikia-widget'] = 'twitter';
+		} else {
+			$attributes['class'] = 'twitter-timeline';
+		}
+
 		$attributes['href'] = 'https://twitter.com/' . urlencode( $args['screen-name'] );
 		$attributes['data-widget-id'] = $args['widget-id'];
 		$attributes['data-screen-name'] = $args['screen-name'];
