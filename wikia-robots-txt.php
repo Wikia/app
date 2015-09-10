@@ -3,16 +3,15 @@
 if ( !defined( 'MW_NO_SETUP' ) ) {
 	define( 'MW_NO_SETUP', 1 );
 }
+
 require_once( __DIR__ . '/includes/WebStart.php' );
 require_once( __DIR__ . '/includes/Setup.php' );
 
-if ( empty( $wgEnableRobotsTxtExt ) ) {
-	exit;
-}
+$allowRobots = ( $wgWikiaEnvironment === WIKIA_ENV_PROD || $wgRequest->getBool( 'forcerobots' ) );
 
 $robots = new RobotsTxt();
 
-if ( !empty( $_SERVER['HTTP_X_STAGING'] ) ) {
+if ( !$allowRobots ) {
 	// No crawling preview, verify, sandboxes, showcase, etc
 	$robots->disallowPath( '/' );
 } else {

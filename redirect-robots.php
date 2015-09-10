@@ -10,7 +10,7 @@ require_once( dirname(__FILE__) . '/includes/WebStart.php' );
 require_once( dirname(__FILE__) . '/includes/Setup.php' );
 
 if ( !empty( $wgEnableRobotsTxtExt ) ) {
-	require(__DIR__ . '/wikia-robots-txt.php');
+	require( __DIR__ . '/wikia-robots-txt.php' );
 	exit;
 }
 
