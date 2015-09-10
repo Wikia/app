@@ -6,7 +6,7 @@ $messages = [];
  * English (en)
  */
 $messages['en'] = [
-	'content-review-desc' => 'After a major exploit of customizable JavaScript we can no longer allow for unreviewed code to be executed on wikia\'s pages. This extension is the control room for code reviewing.',
+	'content-review-desc' => 'This extension creates a process by which community JavaScript is manually reviewed before it goes live for visitors.',
 	'content-review-module-title' => 'Custom JavaScript status',
 
 	'content-review-module-header-latest' => 'Latest revision:',
@@ -64,7 +64,7 @@ $messages['en'] = [
 	'content-review-diff-toolbar-title' => 'Revision review',
 	'content-review-diff-toolbar-talkpage' => 'Talk page',
 	'content-review-diff-toolbar-guidelines' => 'Reviewer guidelines',
-	'content-review-diff-toolbar-guidelines-url' => 'http://dev.wikia.com/Help:JavaScript_Guidelines',
+	'content-review-diff-toolbar-guidelines-url' => 'http://dev.wikia.com/wiki/Help:JavaScript_review_guidelines',
 
 	'content-review-status-unreviewed' => 'Unreviewed',
 	'content-review-status-in-review' => 'In review',
@@ -73,7 +73,7 @@ $messages['en'] = [
 
 	'content-review-feedback-link-text' => 'Provide feedback',
 	'content-review-rejection-explanation' => '==Submitted script change rejected==
-The recently submitted change to this JS script was rejected by the Wikia review process. Please make sure you meet the [[Help:Custom JavaScript guidelines|Custom JavaScript guidelines]]. --~~~~ ',
+The recently submitted change to this JS script was rejected by the Wikia review process. Please make sure you meet the [[Help:JavaScript review process|Custom JavaScript guidelines]].',
 
 	'content-review-status-link-text' => 'Review status',
 ];
