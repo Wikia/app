@@ -1,18 +1,19 @@
 <?php
 class WeiboTagController extends WikiaParserTagController {
 	const PARSER_TAG_NAME = 'weibo';
-	const IFRAME_SRC = 'http://widget.weibo.com/relationship/bulkfollow.php?';
-	private $IFRAME_SOURCE_ALLOWED_PARAMS;
-	private $IFRAME_ALLOWED_ATTRIBUTES;
-	private $IFRAME_DEFAULT_ATTRIBUTES;
+	const TAG_SRC = 'http://widget.weibo.com/relationship/bulkfollow.php?';
+
+	private $tagSourceAllowedParams;
+	private $tagAllowedAttributes;
+	private $tagDefaultAttributes;
 	private $iFrameSource;
-	private $iFrameBuilderHelper;
+	private $tagBuilderHelper;
 
 
 	public function __construct() {
 		parent::__construct();
 
-		$this->IFRAME_SOURCE_ALLOWED_PARAMS = [
+		$this->tagSourceAllowedParams = [
 			'color' => '',
 			'count' => '',
 			'dpc' => '',
@@ -25,7 +26,7 @@ class WeiboTagController extends WikiaParserTagController {
 			'wide' => '',
 		];
 
-		$this->IFRAME_ALLOWED_ATTRIBUTES = [
+		$this->tagAllowedAttributes = [
 			'width',
 			'height',
 			'scrolling',
@@ -33,13 +34,13 @@ class WeiboTagController extends WikiaParserTagController {
 			'style'
 		];
 
-		$this->IFRAME_DEFAULT_ATTRIBUTES = [
+		$this->tagDefaultAttributes = [
 			'data-tag' => self::PARSER_TAG_NAME,
 			'sandbox' => 'allow-scripts allow-same-origin',
 			'seamless' => 'seamless'
 		];
 
-		$this->iFrameBuilderHelper = new IFrameBuilderHelper();
+		$this->tagBuilderHelper = new TagBuilderHelper();
 	}
 
 	public static function onParserFirstCallInit( Parser $parser ) {
@@ -48,14 +49,19 @@ class WeiboTagController extends WikiaParserTagController {
 	}
 
 	public function renderTag( $input, array $args, Parser $parser, PPFrame $frame ) {
-		$this->iFrameSource = self::IFRAME_SRC . $this->iFrameBuilderHelper->buildIFrameSourceQueryParams( $this->IFRAME_SOURCE_ALLOWED_PARAMS, $args );
-		return Html::element( 'iframe',  $this->buildIFrameAttributes($args), wfMessage( 'weibotag-could-not-render' )->text() );
+		$this->iFrameSource = self::TAG_SRC . $this->tagBuilderHelper->buildTagSourceQueryParams( $this->tagSourceAllowedParams, $args );
+		if ( $this->app->checkSkin( [ 'wikiamobile', 'mercury' ] ) ) {
+			$this->tagDefaultAttributes['data-wikia-widget'] = self::PARSER_TAG_NAME;
+			return Html::element( 'a',  $this->buildTagAttributes($args), wfMessage( 'weibotag-could-not-render' )->text() );
+		} else {
+			return Html::element( 'iframe',  $this->buildTagAttributes($args), wfMessage( 'weibotag-could-not-render' )->text() );
+		}
 	}
 
-	private function buildIFrameAttributes($args) {
-		$attributes = $this->iFrameBuilderHelper->buildIFrameAttributes($this->IFRAME_ALLOWED_ATTRIBUTES, $args);
+	private function buildTagAttributes($args) {
+		$attributes = $this->tagBuilderHelper->buildTagAttributes($this->tagAllowedAttributes, $args);
 		$attributes['src'] = $this->iFrameSource;
-		return array_merge($attributes, $this->IFRAME_DEFAULT_ATTRIBUTES);
+		return array_merge($attributes, $this->tagDefaultAttributes);
 	}
 
 

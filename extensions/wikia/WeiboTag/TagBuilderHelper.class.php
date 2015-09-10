@@ -1,7 +1,7 @@
 <?php
-class IFrameBuilderHelper {
+class TagBuilderHelper {
 
-	public function buildIFrameSourceQueryParams( array $allowedParams, array $userParams ) {
+	public function buildTagSourceQueryParams( array $allowedParams, array $userParams ) {
 		foreach ( array_keys( $allowedParams ) as $name ) {
 			if ( isset( $userParams[$name] ) ) {
 				$allowedParams[$name] = $userParams[$name];
@@ -10,7 +10,7 @@ class IFrameBuilderHelper {
 		return http_build_query( $allowedParams );
 	}
 
-	public function buildIFrameAttributes(array $allowedAttrs, array $userAttrs) {
+	public function buildTagAttributes(array $allowedAttrs, array $userAttrs) {
 		$attributes = [];
 
 		foreach ( $allowedAttrs as $attributeName ) {
