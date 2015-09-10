@@ -331,7 +331,9 @@ class AsyncTaskList {
 			}
 
 			if ( $exception !== null ) {
-				WikiaLogger::instance()->critical( "Failed to queue task", [ 'error' => $exception->getMessage() ] );
+				WikiaLogger::instance()->critical( 'AsyncTaskList::queue', [
+					'exception' => $exception
+				] );
 				return null;
 			}
 		} else {
