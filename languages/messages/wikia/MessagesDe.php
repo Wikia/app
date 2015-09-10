@@ -169,5 +169,5 @@ Auf dieser Spezialseite kannst Du die '''letzten Änderungen''' in diesem Wiki n
 ***w:c:de|Mehr...
 ",
 
-	'tog-enableuserjs' => 'Personal JavaScript aktivieren ([[Help:Personal_CSS_and_JS#JavaScript|Erfahre mehr]])',
+	'tog-enableuserjs' => 'Persönliches JavaScript aktivieren. ([[Hilfe:Persönliches_CSS_und_JS|Mehr dazu hier]])',
 ));
