@@ -240,11 +240,11 @@ ve.ui.WikiaInfoboxInsertDialog.prototype.createEmptyStateContent = function ( un
 };
 
 /**
- * @desc adds html content to dialog
+ * @desc sets HTML content for insert infobox dialog
  * @param {HTMLElement} $content
  */
 ve.ui.WikiaInfoboxInsertDialog.prototype.setDialogContent = function ( $content ) {
-	this.$body.append( $content );
+	this.$body.html( $content );
 };
 
 
