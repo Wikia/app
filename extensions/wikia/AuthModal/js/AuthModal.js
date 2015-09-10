@@ -115,6 +115,10 @@ define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 
 			if (window.wgEnableNewAuthModal) {
 				open(params.onAuthSuccess);
+				track({
+					action: Wikia.Tracker.ACTIONS.CLICK,
+					label: params.origin
+				});
 				loadPage(params.url, onPageLoaded);
 
 			} else {
