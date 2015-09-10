@@ -12,6 +12,7 @@ class WikiaMapsParserTagControllerTest extends WikiaBaseTest {
 
 	/**
 	 * @dataProvider validateParseTagParamsDataProvider
+	 * @group WikiaParserTagController
 	 */
 	public function testValidateParseTagParams( $message, $params, $expected ) {
 		$errorMessage = '';

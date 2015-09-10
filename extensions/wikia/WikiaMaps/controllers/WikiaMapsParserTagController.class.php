@@ -55,8 +55,8 @@ class WikiaMapsParserTagController extends WikiaParserTagController {
 		$parser->getOutput()->addModuleScripts( 'ext.wikia.WikiaMaps.ParserTag' );
 
 		$errorMessage = '';
+		$isValid = $this->validateParseTagParams( $args, $errorMessage );
 		$params = $this->sanitizeParserTagArguments( $args );
-		$isValid = $this->validateParseTagParams( $params, $errorMessage );
 
 		if ( $isValid ) {
 			$params[ 'map' ] = $this->getMapObj( $params[ 'id' ] );
@@ -175,9 +175,9 @@ class WikiaMapsParserTagController extends WikiaParserTagController {
 	public function sanitizeParserTagArguments( $data ) {
 		$result = [];
 
-		foreach( $this->tagAttributes as $key => $mapTo ) {
-			if ( !empty( $data[ $key ] ) ) {
-				$result[ $mapTo ] = $data[ $key ];
+		foreach( $this->tagAttributes as $mapTo => $tagAttr) {
+			if ( !empty( $data[ $tagAttr ] ) ) {
+				$result[ $mapTo ] = $data[ $tagAttr ];
 			}
 		}
 
@@ -232,7 +232,6 @@ class WikiaMapsParserTagController extends WikiaParserTagController {
 					[
 						'min' => self::MIN_LATITUDE,
 						'max' => self::MAX_LATITUDE
-
 					],
 					[
 						'not_numeric' => 'wikia-interactive-maps-parser-tag-error-invalid-latitude',
@@ -246,7 +245,6 @@ class WikiaMapsParserTagController extends WikiaParserTagController {
 					[
 						'min' => self::MIN_LONGITUDE,
 						'max' => self::MAX_LONGITUDE
-
 					],
 					[
 						'not_numeric' => 'wikia-interactive-maps-parser-tag-error-invalid-longitude',
@@ -260,7 +258,6 @@ class WikiaMapsParserTagController extends WikiaParserTagController {
 					[
 						'min' => self::MIN_ZOOM,
 						'max' => self::MAX_ZOOM
-
 					],
 					[
 						'not_int' => 'wikia-interactive-maps-parser-tag-error-invalid-zoom',

@@ -10,6 +10,7 @@ class FliteTagControllerTest extends WikiaBaseTest {
 
 	/**
 	 * @dataProvider getIsTagParamValidData
+	 * @group WikiaParserTagController
 	 */
 	public function testValidateAttributes( $desc, $mockedIsValid, $mockedAttributes, $expectedErrors ) {
 		$mockedError = $this->getMockBuilder( 'stdObject' )
@@ -22,7 +23,6 @@ class FliteTagControllerTest extends WikiaBaseTest {
 			->willReturn( 'error' );
 
 		$mockedWikiaValidator = $this->getMockBuilder( 'WikiaValidator' )
-			->setMockClassName( 'WikiaValidatorNumeric' )
 			->disableOriginalConstructor()
 			->setMethods( [ 'isValid', 'getError' ] )
 			->getMock();
