@@ -7,7 +7,7 @@ class Attribute {
 	private $name;
 	private $value;
 
-	function __construct( $name, $value ) {
+	function __construct( $name, $value = null ) {
 		$this->name = $name;
 		$this->value = $value;
 	}

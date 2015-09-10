@@ -15,9 +15,12 @@ $wgExtensionCredits[ 'specialpage' ][ ] = array(
  */
 $wgAutoloadClasses['CuratedContentHelper'] = __DIR__ . '/CuratedContentHelper.class.php';
 $wgAutoloadClasses['CuratedContentValidator'] = __DIR__ . '/CuratedContentValidator.class.php';
+$wgAutoloadClasses['CuratedContentValidatorController'] = __DIR__ . '/CuratedContentValidatorController.class.php';
 $wgAutoloadClasses['CuratedContentController'] = __DIR__ . '/CuratedContentController.class.php';
 $wgAutoloadClasses['CuratedContentWrongAPIVersionException'] = __DIR__ . '/CuratedContentController.class.php';
 $wgAutoloadClasses['CuratedContentModel'] =  __DIR__ . '/CuratedContentModel.class.php' ;
+$wgAutoloadClasses['CuratedContentHooks'] =  __DIR__ . '/CuratedContentHooks.class.php' ;
+
 /**
  * message files
  */
@@ -48,11 +51,13 @@ JSMessages::registerPackage( 'CuratedContentMsg', [
 	'wikiacuratedcontent-content-videonotsupported-error',
 	'wikiacuratedcontent-content-notsupportedtype-error',
 	'wikiacuratedcontent-content-nocategoryintag-error',
-	'wikiacuratedcontent-content-imagemissing-error',
+	'wikiacuratedcontent-content-imagemissing-error'
 ] );
 
 //hooks
-$wgHooks['CuratedContentSave'][] = 'CuratedContentController::onCuratedContentSave';
+$wgHooks['CuratedContentSave'][] = 'CuratedContentHooks::onCuratedContentSave';
+$wgHooks['SkinAfterBottomScripts'][] = 'CuratedContentHooks::onSkinAfterBottomScripts';
+$wgHooks['OutputPageBeforeHTML'][] = 'CuratedContentHooks::onOutputPageBeforeHTML';
 
 //minimal package of messages in CuratedContent
 JSMessages::registerPackage( 'CuratedContent', [
@@ -60,4 +65,10 @@ JSMessages::registerPackage( 'CuratedContent', [
 	'wikiamobile-image-not-loaded',
 	'wikiamobile-video-not-friendly',
 	'wikiamobile-video-not-friendly-header'
+
+] );
+
+JSMessages::registerPackage( 'CuratedContentModal', [
+	'wikiacuratedcontent-close-modal-prompt-message',
+	'wikiacuratedcontent-modal-title'
 ] );

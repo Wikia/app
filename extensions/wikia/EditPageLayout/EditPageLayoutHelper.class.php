@@ -194,21 +194,22 @@ class EditPageLayoutHelper {
 
 	static public function isInfoboxTemplate( Title $title ) {
 		$namespace = $title->getNamespace();
+		$portableInfobox = PortableInfoboxDataService::newFromTitle( $title )->getData();
 
 		if ( $namespace === NS_TEMPLATE ) {
 			$tc = new TemplateClassification( $title );
-			return $tc->isType( $tc::TEMPLATE_INFOBOX ) || self::isTemplateDraft( $title );
+			return $tc->isType( $tc::TEMPLATE_INFOBOX )
+					|| self::isTemplateDraft( $title )
+					|| !empty( $portableInfobox );
 		}
 
 		return false;
 	}
 
 	static function isTemplateDraft( $title ) {
-		global $wgEnableTemplateDraftExt, $wgEnableInsightsInfoboxes;
+		global $wgEnableTemplateDraftExt;
 
-		return !empty( $wgEnableTemplateDraftExt )
-				&& !empty( $wgEnableInsightsInfoboxes )
-				&& TemplateDraftHelper::isTitleDraft( $title );
+		return !empty( $wgEnableTemplateDraftExt ) && TemplateDraftHelper::isTitleDraft( $title );
 	}
 
 	/**
@@ -264,7 +265,7 @@ class EditPageLayoutHelper {
 		$namespace = $title->getNamespace();
 		$type = '';
 
-		$aceUrl = AssetsManager::getInstance()->getOneCommonURL( '/resources/Ace' );
+		$aceUrl = AssetsManager::getInstance()->getOneCommonURL( 'resources/Ace' );
 		$aceUrlParts = parse_url( $aceUrl );
 		$this->addJsVariable( 'aceScriptsPath', $aceUrlParts['path'] );
 

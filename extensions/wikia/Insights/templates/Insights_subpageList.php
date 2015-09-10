@@ -17,17 +17,21 @@
 			<p class="insights-header-description"><?= wfMessage( InsightsHelper::INSIGHT_DESCRIPTION_MSG_PREFIX . $subpage )->parse() ?></p>
 		</div>
 		<?php if ( !empty( $dropdown ) ): ?>
-			<div class="insights-header-sorting">
-				<form class="insights-sorting-form" method="GET">
+			<form class="insights-sorting-form" method="GET">
+				<div class="insights-header-sorting">
 					<label for="sort"><?= wfMessage( 'insights-sort-label' )->escaped() ?></label>
 					<select class="insights-sorting" name="sort">
 						<?php foreach( $dropdown as $sortType => $sortLabel ): ?>
-							<option value="<?= $sortType ?>" <?php if ( $sortType == $current ): ?>selected<?php endif ?>><?= $sortLabel ?></option>
+							<option value="<?= Sanitizer::encodeAttribute( $sortType ) ?>" <?php if ( $sortType == $current ): ?>selected<?php endif ?>><?= htmlspecialchars( $sortLabel ) ?></option>
 						<?php endforeach ?>
 					</select>
-				</form>
-			</div>
+				</div>
+				<?php if ( !empty( $flagTypes ) ): // Flags filter dropdown ?>
+					<?= $app->renderView( 'Insights', 'flagsFiltering', [ 'selectedFlagTypeId' => $selectedFlagTypeId, 'flagTypes' => $flagTypes ] ); ?>
+				<?php endif ?>
+			</form>
 		<?php endif ?>
+
 		<div class="insights-content">
 			<?php if ( !empty( $content ) ) : ?>
 				<table class="insights-list" data-type="<?= Sanitizer::encodeAttribute( $subpage ) ?>">
@@ -82,11 +86,16 @@
 				<?php if ( $paginatorBar ) : ?>
 					<?= $paginatorBar ?>
 				<?php endif ?>
+			<?php elseif (!empty( $flagTypes ) ) : ?>
+				<p>
+					<?= wfMessage( 'insights-list-no-flag-types' )->escaped(); ?>
+				</p>
 			<?php else: ?>
 				<p>
 					<?= wfMessage( 'insights-list-no-items' )->escaped(); ?>
 				</p>
 			<?php endif; ?>
+
 		</div>
 	</div>
 </div>

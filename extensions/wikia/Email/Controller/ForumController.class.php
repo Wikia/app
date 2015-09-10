@@ -4,11 +4,8 @@ namespace Email\Controller;
 
 use Email\Check;
 use Email\EmailController;
-use Email\Tracking\TrackingCategories;
 
 class ForumController extends EmailController {
-
-	const TRACKING_CATEGORY = TrackingCategories::WALL_NOTIFICATION;
 
 	protected $titleText;
 	protected $titleUrl;

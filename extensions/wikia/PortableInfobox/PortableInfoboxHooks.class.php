@@ -33,12 +33,25 @@ class PortableInfoboxHooks {
 	 * @param $attributes
 	 * @param $parser
 	 * @param $frame
+	 *
+	 * @return bool
 	 */
 	static public function onParserTagHooksBeforeInvoke( $name, $marker, $content, $attributes, $parser, $frame ) {
 		if ( $name === self::PARSER_TAG_GALLERY ) {
 			\Wikia\PortableInfobox\Helpers\PortableInfoboxDataBag::getInstance()->setGallery( $marker, $content );
 		}
 
+		return true;
+	}
+
+	static public function onWgQueryPages( &$queryPages = [ ] ) {
+		$queryPages[] = [ 'AllinfoboxesQueryPage', 'AllInfoboxes' ];
+
+		return true;
+	}
+
+	static public function onAllInfoboxesQueryRecached() {
+		F::app()->wg->Memc->delete( wfMemcKey( ApiQueryAllinfoboxes::MCACHE_KEY ) );
 		return true;
 	}
 }

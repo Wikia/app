@@ -519,8 +519,9 @@ Pikeun alihbasa, mangga sumping ka [//translatewiki.net/wiki/Main_Page?setlang=e
 # Login and logout pages
 'logouttext'                 => "'''Anjeun ayeuna geus kaluar log.'''
 
-Anjeun bisa tetep migunakeun {{SITENAME}} bari anonim, atawa bisa [[Special:UserLogin|asup log deui]] salaku pamaké nu sarua atawa nu séjén deui.
+Anjeun bisa tetep migunakeun {{SITENAME}} bari anonim, atawa bisa $1 salaku pamaké nu sarua atawa nu séjén deui.
 Mangkahadé, sababaraha kaca bakal tetep némbongkeun saolah-olah anjeun asup log kénéh nepi ka anjeun ngosongkeun ''cache'' panyungsi anjeun.",
+'logouttext-link-text'       => 'asup log deui',
 'welcomecreation'            => '==Wilujeng sumping, $1!==
 Rekening anjeun geus dijieun.
 Tong hilap ngarobih [[Special:Preferences|{{SITENAME}} préferénsi]] anjeun.',
@@ -652,7 +653,7 @@ $2
 
 {{PLURAL:$3|Sandi saheulaanan|Sandi saheulaanan}} ieu bakal kadaluwarsa dina témpo {{PLURAL:$5|sapoé|$5 poé}}.
 Anjeun kudu asup sarta milih sandi anyar ayeuna. Lamun jalma séjén nyieun
-ieu pamundut atawa lamun Anjeun inget sandi asli sarta moal 
+ieu pamundut atawa lamun Anjeun inget sandi asli sarta moal
 ngarobah deui, Anjeun bisa teu maliré ieu talatah sarta terus ngagunakeun sandi heubeul.',
 'passwordreset-emailelement'   => 'Sandiasma: $1
 Sandi saheulaanan: $2',
@@ -1586,7 +1587,7 @@ Pariksa heula jujutan hapusanana saméméh neruskeun ngamuat deui éta berkas.',
 'linkstoimage'              => 'Kaca ieu  {{PLURAL:$1|numbu|$1 numbu}} ka gambar ieu :',
 'nolinkstoimage'            => 'Teu aya kaca nu numbu ka gambar ieu.',
 'sharedupload'              => 'Ieu koropak téh ti $1 nu bisa jadi dipaké ku proyék-proyék lianna.',
-'sharedupload-desc-here'    => 'Ieu berkas asalna ti $1 anu bisa jadi dipaké ku proyék séjén. 
+'sharedupload-desc-here'    => 'Ieu berkas asalna ti $1 anu bisa jadi dipaké ku proyék séjén.
 Pedaran ti [$2 kaca pedaranana] dipidangkeun di handap.',
 'uploadnewversion-linktext' => 'ngamuatkeun vérsi anyar koropak ieu',
 'shared-repo-from'          => 'ti $1',
@@ -2543,8 +2544,8 @@ $1',
 # Bad image list
 'bad_image_list' => 'Formatna kieu:
 
-Ngan daptar butiran (baris anu dimimitian ku tanda *) anu diitung. 
-Tutumbu kahiji dina hiji baris dianggap numbu ka berkas anu goréng. 
+Ngan daptar butiran (baris anu dimimitian ku tanda *) anu diitung.
+Tutumbu kahiji dina hiji baris dianggap numbu ka berkas anu goréng.
 Tutumbu sanggeusna dina baris anu sarua dianggap bener, nyaéta artikel anu midangkeun éta berkas.',
 
 # Metadata

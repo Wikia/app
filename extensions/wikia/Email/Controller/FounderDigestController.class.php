@@ -4,13 +4,9 @@ namespace Email\Controller;
 
 use Email\EmailController;
 use Email\Check;
-use Email\Tracking\TrackingCategories;
 use Email\ImageHelper;
 
 abstract class FounderDigestController extends EmailController {
-	// Defaults; will be overridden in subclasses
-	const TRACKING_CATEGORY_EN = TrackingCategories::DEFAULT_CATEGORY;
-	const TRACKING_CATEGORY_INT = TrackingCategories::DEFAULT_CATEGORY;
 
 	const LAYOUT_CSS = "digestLayout.css";
 
@@ -57,21 +53,9 @@ abstract class FounderDigestController extends EmailController {
 	 * @throws \Email\Check
 	 */
 	protected function assertPageViewsSet() {
-		if ( empty( $this->pageViews ) && $this->pageViews !== '0' ) {
-			throw new Check( 'Invalid value passed for `pageViews`' );
+		if ( empty( $this->pageViews ) ) {
+			throw new Check( 'Value for `pageViews` must be set and non-zero' );
 		}
-	}
-
-	/**
-	 * Determine which sendgrid category to send based on target language and specific
-	 * founder email being sent. See dependent classes for overridden values
-	 *
-	 * @return string
-	 */
-	public function getSendGridCategory() {
-		return strtolower( $this->targetLang ) == 'en'
-			? static::TRACKING_CATEGORY_EN
-			: static::TRACKING_CATEGORY_INT;
 	}
 
 	protected static function getEmailSpecificFormFields() {
@@ -97,8 +81,6 @@ abstract class FounderDigestController extends EmailController {
 }
 
 class FounderActivityDigestController extends FounderDigestController {
-	const TRACKING_CATEGORY_EN = TrackingCategories::FOUNDER_ACTIVITY_DIGEST_EN;
-	const TRACKING_CATEGORY_INT = TrackingCategories::FOUNDER_ACTIVITY_DIGEST_INT;
 
 	protected $pageEdits;
 	protected $newUsers;
@@ -144,7 +126,12 @@ class FounderActivityDigestController extends FounderDigestController {
 	 * @throws \Email\Check
 	 */
 	protected function assertSubscribedToCompleteDigest() {
-		if ( !$this->targetUser->getBoolOption( 'founderemails-complete-digest-' . $this->wikiId ) ) {
+		$wantsCompleteDigest = $this->targetUser->getLocalPreference(
+			'founderemails-complete-digest',
+			$this->wikiId
+		);
+
+		if ( !$wantsCompleteDigest ) {
 			throw new Check( 'Founder is not subscribed to complete digest.' );
 		}
 	}
@@ -237,8 +224,6 @@ class FounderActivityDigestController extends FounderDigestController {
 }
 
 class FounderPageViewsDigestController extends FounderDigestController {
-	const TRACKING_CATEGORY_EN = TrackingCategories::FOUNDER_VIEWS_DIGEST_EN;
-	const TRACKING_CATEGORY_INT = TrackingCategories::FOUNDER_VIEWS_DIGEST_INT;
 
 	protected function getSubject() {
 		return $this->getMessage( 'emailext-founder-views-digest-subject', $this->wikiName )->parse();
@@ -271,7 +256,12 @@ class FounderPageViewsDigestController extends FounderDigestController {
 	 * @throws \Email\Check
 	 */
 	protected function assertNotSubscribedToCompleteDigest() {
-		if ( $this->targetUser->getBoolOption( 'founderemails-complete-digest-' . $this->wikiId ) ) {
+		$wantsCompleteDigest = $this->targetUser->getLocalPreference(
+			'founderemails-complete-digest',
+			$this->wikiId
+		);
+
+		if ( $wantsCompleteDigest ) {
 			throw new Check( 'Founder is subscribed to complete digest and should not receive page views digest.' );
 		}
 	}
@@ -282,7 +272,12 @@ class FounderPageViewsDigestController extends FounderDigestController {
 	 * @throws \Email\Check
 	 */
 	public function assertSubscribedToPageViewsDigest() {
-		if ( !$this->targetUser->getBoolOption( 'founderemails-views-digest-' . $this->wikiId ) ) {
+		$wantsViewsDigest = $this->targetUser->getLocalPreference(
+			'founderemails-views-digest',
+			$this->wikiId
+		);
+
+		if ( !$wantsViewsDigest ) {
 			throw new Check( 'Founder is not subscribed to page views digest.' );
 		}
 	}

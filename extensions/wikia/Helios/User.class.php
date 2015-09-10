@@ -3,7 +3,10 @@
 namespace Wikia\Helios;
 
 use LoginForm;
+use Wikia\DependencyInjection\Injector;
 use Wikia\Logger\WikiaLogger;
+use Wikia\Service\Helios\ClientException;
+use Wikia\Service\Helios\HeliosClient;
 
 /**
  * A helper class for dealing with user-related objects.
@@ -11,6 +14,7 @@ use Wikia\Logger\WikiaLogger;
 class User {
 
 	const ACCESS_TOKEN_COOKIE_NAME = 'access_token';
+	const ACCESS_TOKEN_HEADER_NAME = 'X-Wikia-AccessToken';
 	const AUTH_METHOD_NAME = 'auth_method';
 	const MERCURY_ACCESS_TOKEN_COOKIE_NAME = 'sid';
 	const AUTH_TYPE_FAILED = 0;
@@ -54,14 +58,7 @@ class User {
 
 		// No access token in the cookie, try the HTTP header.
 		if ( ! $token ) {
-			$header = $request->getHeader( 'AUTHORIZATION' );
-
-			$matches = [];
-			preg_match( '/^Bearer\s*(\S*)$/', $header, $matches );
-
-			if ( ! empty( $matches[1] ) ) {
-				$token = $matches[1];
-			}
+			$token = $request->getHeader( self::ACCESS_TOKEN_HEADER_NAME );
 		}
 
 		// Normalize the value so the method returns a non-empty string or null.
@@ -85,8 +82,7 @@ class User {
 
 		// Authenticate with the token, if present.
 		if ( $token ) {
-			global $wgHeliosBaseUri, $wgHeliosClientId, $wgHeliosClientSecret;
-			$heliosClient = new Client( $wgHeliosBaseUri, $wgHeliosClientId, $wgHeliosClientSecret );
+			$heliosClient = self::getHeliosClient();
 
 			// start the session if there's none so far
 			// the code is borrowed from SpecialUserlogin
@@ -100,7 +96,7 @@ class User {
 				$tokenInfo = $heliosClient->info( $token );
 				if ( !empty( $tokenInfo->user_id ) ) {
 					$user = \User::newFromId( $tokenInfo->user_id );
-					
+
 					// dont return the user object if it's disabled
 					// @see SERVICES-459
 					if ( (bool)$user->getGlobalFlag( 'disabled' ) ) {
@@ -145,8 +141,7 @@ class User {
 
 		self::debugLogin( $password, __METHOD__ );
 
-		global $wgHeliosBaseUri, $wgHeliosClientId, $wgHeliosClientSecret;
-		$heliosClient = new Client( $wgHeliosBaseUri, $wgHeliosClientId, $wgHeliosClientSecret );
+		$heliosClient = self::getHeliosClient();
 
 		$result = false;
 		$authMethod = self::AUTH_TYPE_FAILED;
@@ -226,6 +221,25 @@ class User {
 		);
 	}
 
+	public static function onUserLogout() {
+		self::invalidateAccessTokenInHelios();
+		self::clearAccessTokenCookie();
+		return true; // So that wfRunHooks evaluates to true.
+	}
+
+	/**
+	 * Call helios invalidate token.
+	 */
+	private static function invalidateAccessTokenInHelios() {
+		global $wgUser;
+		$request = \RequestContext::getMain()->getRequest();
+		$heliosClient = self::getHeliosClient();
+		$accessToken = self::getAccessToken( $request );
+		if ( !empty( $accessToken ) ) {
+			$heliosClient->invalidateToken( $accessToken, $wgUser->getId() );
+		}
+	}
+
 	/**
 	 * Clear the access token cookie by setting a time in the past
 	 */
@@ -238,8 +252,6 @@ class User {
 		 * This is a temporary change which will be deleted while implementing SOC-798
 		 */
 		self::clearCookie( self::MERCURY_ACCESS_TOKEN_COOKIE_NAME );
-
-		return true; // So that wfRunHooks evaluates to true.
 	}
 
 	/**
@@ -338,8 +350,7 @@ class User {
 		$logger = WikiaLogger::instance();
 		$logger->info( 'HELIOS_REGISTRATION START', [ 'method' => __METHOD__ ] );
 
-		global $wgHeliosBaseUri, $wgHeliosClientId, $wgHeliosClientSecret;
-		$helios = new Client( $wgHeliosBaseUri, $wgHeliosClientId, $wgHeliosClientSecret );
+		$helios = self::getHeliosClient();
 
 		try {
 			$registration = $helios->register( $username, $password, $email, $birthDate, $langCode );
@@ -449,5 +460,13 @@ class User {
 			time() - self::ACCESS_TOKEN_COOKIE_TTL,
 			\WebResponse::NO_COOKIE_PREFIX
 		);
+	}
+
+	/**
+	 * wrapper function added for strong typing and testing
+	 * @return \Wikia\Service\Helios\HeliosClient
+	 */
+	public static function getHeliosClient() {
+		return Injector::getInjector()->get(HeliosClient::class);
 	}
 }

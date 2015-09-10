@@ -22,7 +22,6 @@ class AttributeKeyValueTest extends \PHPUnit_Framework_TestCase {
 		$this->persistenceMock = $this->getMockBuilder( AttributePersistence::class )
 			->setMethods( [ 'saveAttribute', 'getAttributes', 'deleteAttribute' ] )
 			->disableOriginalConstructor()
-			->disableAutoload()
 			->getMock();
 	}
 
@@ -41,28 +40,14 @@ class AttributeKeyValueTest extends \PHPUnit_Framework_TestCase {
 	/**
 	 * @expectedException \Exception
 	 */
-	public function testSetWithEmptyAttribute() {
-		$this->persistenceMock->expects( $this->exactly( 0 ) )
-			->method( 'saveAttribute' );
-
-		$service = new AttributeKeyValueService( $this->persistenceMock );
-		$ret = $service->set( $this->userId, null );
-	}
-
-	/**
-	 * @expectedException \Exception
-	 */
 	public function testSetWithAnonUserId() {
 		$this->persistenceMock->expects( $this->exactly( 0 ) )
 			->method( 'saveAttribute' );
 
 		$service = new AttributeKeyValueService( $this->persistenceMock );
-		$ret = $service->set( $this->anonUserId, null );
+		$service->set( $this->anonUserId, $this->testAttribute_1 );
 	}
 
-	/**
-	 * @expectedException \Wikia\Service\PersistenceException
-	 */
 	public function testSetWithError() {
 		$this->persistenceMock->expects( $this->once() )
 			->method( 'saveAttribute' )
@@ -70,19 +55,25 @@ class AttributeKeyValueTest extends \PHPUnit_Framework_TestCase {
 			->will( $this->throwException( new PersistenceException() ) );
 
 		$service = new AttributeKeyValueService( $this->persistenceMock );
-		$service->set( $this->userId, $this->testAttribute_1 );
+		try {
+			$service->set( $this->userId, $this->testAttribute_1 );
+		} catch ( PersistenceException $e ) {
+			$this->fail( "Excepction should be caught and logged, not thrown" );
+		}
 	}
 
-	/**
-	 * @expectedException \Wikia\Service\PersistenceException
-	 */
 	public function testGetWithError() {
 		$this->persistenceMock->expects( $this->once() )
 			->method( 'getAttributes' )
 			->with( $this->userId )
 			->will( $this->throwException( new PersistenceException() ) );
 		$service = new AttributeKeyValueService( $this->persistenceMock );
-		$service->get( $this->userId );
+
+		try {
+			$service->get( $this->userId );
+		} catch ( PersistenceException $e ) {
+			$this->fail( "Excepction should be caught and logged, not thrown" );
+		}
 	}
 
 	public function testGetSuccess() {
@@ -110,19 +101,14 @@ class AttributeKeyValueTest extends \PHPUnit_Framework_TestCase {
 		$this->assertTrue( $service->delete( $this->userId, $this->testAttribute_1 ) );
 	}
 
-	public function testDeleteWithEmptyAttribute() {
-		$this->persistenceMock->expects( $this->exactly( 0 ) )
-			->method( 'deleteAttribute' );
-
-		$service = new AttributeKeyValueService( $this->persistenceMock );
-		$this->assertFalse( $service->delete( $this->userId, null ) );
-	}
-
+	/**
+	 * @expectedException \Exception
+	 */
 	public function testDeleteWithAnonUserId() {
 		$this->persistenceMock->expects( $this->exactly( 0 ) )
 			->method( 'deleteAttribute' );
 
 		$service = new AttributeKeyValueService( $this->persistenceMock );
-		$this->assertFalse( $service->delete( $this->anonUserId, $this->testAttribute_1 ) );
+		$service->delete( $this->anonUserId, $this->testAttribute_1 );
 	}
 }

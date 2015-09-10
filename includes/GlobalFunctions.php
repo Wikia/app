@@ -2322,13 +2322,6 @@ function wfSuppressWarnings( $end = false ) {
 		}
 	} else {
 		if ( !$suppressCount ) {
-			// E_DEPRECATED and E_USER_DEPRECATED are undefined in PHP 5.2
-			if( !defined( 'E_DEPRECATED' ) ) {
-				define( 'E_DEPRECATED', 8192 );
-			}
-			if( !defined( 'E_USER_DEPRECATED' ) ) {
-				define( 'E_USER_DEPRECATED', 16384 );
-			}
 			$originalLevel = error_reporting( E_ALL & ~( E_WARNING | E_NOTICE | E_USER_WARNING | E_USER_NOTICE | E_DEPRECATED | E_USER_DEPRECATED | E_STRICT ) );
 		}
 		++$suppressCount;
@@ -2969,9 +2962,10 @@ function wfShellExec( $cmd, &$retval = null, $environ = array() ) {
 	ob_end_clean();
 
 	// Wikia change - begin
-	if ( $retval > 0 ) {
+	if ( $retval !== 0 ) {
 		Wikia\Logger\WikiaLogger::instance()->error( 'wfShellExec failed', [
 			'exception' => new Exception( $cmd, $retval ),
+			'caller' => wfGetCaller(),
 			'output' => $output,
 			'load_avg' => implode( ', ', sys_getloadavg() ),
 		]);

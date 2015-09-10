@@ -26,12 +26,10 @@ class PreferencePersistenceSwaggerServiceTest extends \PHPUnit_Framework_TestCas
 		$this->apiProvider = $this->getMockBuilder(ApiProvider::class)
 			->setMethods(['getAuthenticatedApi'])
 			->disableOriginalConstructor()
-			->disableAutoload()
 			->getMock();
 		$this->userPreferencesApi = $this->getMockBuilder(UserPreferencesApi::class)
 			->setMethods(['updateUserPreferences', 'getUserPreferences'])
 			->disableOriginalConstructor()
-			->disableAutoload()
 			->getMock();
 		$this->apiProvider->expects($this->any())
 			->method('getAuthenticatedApi')

@@ -419,6 +419,20 @@ class GlobalTitle extends Title {
 	}
 
 	/**
+	 * Returns text from revision id
+	 *
+	 * @param int $revisionId
+	 * @return false|String
+	 */
+	public function getRevisionText( $revisionId ) {
+		$db = wfGetDB( DB_SLAVE, [], $this->getDatabaseName() );
+		$revision = Revision::loadFromId( $db, $revisionId );
+		$text = $this->getContentByTextId( $revision->getTextId() );
+
+		return $text;
+	}
+
+	/**
 	 * Get the most recent content of the given title
 	 * Returns false on any failure (incl. when title doesn't exist)
 	 *

@@ -13,8 +13,7 @@ use Wikia\Logger\WikiaLogger;
 class WikiaMailer extends UserMailer {
 
 	static $drivers = array(
-		'wgEnablePostfixEmail' => 'smtp',
-		'wgEnableWikiaDBEmail' => 'wikiadb'
+		'wgEnablePostfixEmail' => 'smtp'
 	);
 
 	static private function getDriver() {
@@ -53,7 +52,7 @@ class WikiaMailer extends UserMailer {
 class WikiaSendgridMailer {
 
     // Default mail backend
-	static public $factory = "wikiadb";
+	static public $factory = "smtp";
 
 	static public function send ( $headers, $to, $from, $subject, $body, $priority = 0, $attachments = null, $sourceType = 'mediawiki' ) {
 		global $wgEnotifMaxRecips, $wgSMTP;
@@ -69,6 +68,10 @@ class WikiaSendgridMailer {
 			'subject' => $subject,
 			'sourceType' => $sourceType,
 		] );
+		if ( $sourceType == 'mediawiki' ) {
+			$logContext['backtrace'] = self::backtrace();
+		}
+
 		WikiaLogger::instance()->info( 'Queuing email for SendGrid', $logContext );
 
 		wfSuppressWarnings();
@@ -79,6 +82,7 @@ class WikiaSendgridMailer {
 		}
 
 		try {
+			/** @var Mail2 $mail_object */
 			$mail_object =& Mail2::factory(WikiaSendgridMailer::$factory, $wgSMTP);
 		} catch (Exception $e) {
 
@@ -153,6 +157,8 @@ class WikiaSendgridMailer {
 
 		$body = $mime->get( $params );
 
+		$headers['X-SMTPAPI'] = self::createSmtpApiHeader( $headers );
+
 		$headers = $mime->headers( $headers );
 		wfDebug( "Sending mail via WikiaSendgridMailer::send\n" );
 
@@ -174,13 +180,67 @@ class WikiaSendgridMailer {
 		return false;
 	}
 
-	static public function sendWithPear( $mailer, $dest, $headers, $body ) {
+	static public function backtrace( $depth = 8 ) {
+		$trace = debug_backtrace();
+
+		// Get rid the same 6 calls that always precede this
+		$removeCallsUpTo = 6;
+
+		// If for some reason we weren't called the way we expect, only cut off the call
+		// to this function and increase the amount of context we show
+		if ( !empty( $trace[5]['function'] ) && $trace[5]['function'] != 'wfRunHooks' ) {
+			$removeCallsUpTo = 1;
+			$depth += 10;
+		}
+		$trace = array_slice( $trace, $removeCallsUpTo );
+
+		$formattedTrace = [];
+		$count = $depth;
+		foreach ( $trace as $frame ) {
+			if ( $count == 0 ) {
+				break;
+			}
+			$count--;
+
+			$file = empty( $frame['file'] ) ? '(no file)' : $frame['file'];
+			$line = empty( $frame['line'] ) ? '(no line)' : $frame['line'];
+			$func = empty( $frame['function'] ) ? '(anonymous)' : $frame['function'];
+			$formattedTrace[] = "$file @ $line : $func";
+		}
+
+		return $formattedTrace;
+	}
+
+	static public function sendWithPear( Mail2 $mailer, $dest, $headers, $body ) {
 		try {
-			$mailResult = $mailer->send( $dest, $headers, $body );
+			$mailer->send( $dest, $headers, $body );
 		} catch (Exception $e) {
-			wfDebug( "PEAR::Mail failed: " . $e->getMessage() . "\n" );
+			WikiaLogger::instance()->error( 'Mail2::send failed', [
+				'msg' => $e->getMessage(),
+			] );
 			return Status::newFatal( 'pear-mail-error', $e->getMessage());
 		}
 		return Status::newGood();
+	}
+
+	static public function createSmtpApiHeader( $headers ) {
+		if ( empty( $headers['X-Msg-Category'] ) ) {
+			$category = 'Unknown';
+		} else {
+			$category = $headers['X-Msg-Category'];
+		}
+
+		$wikiaId = F::app()->wg->CityId;
+		$dbName = WikiFactory::IDtoDB( F::app()->wg->CityId );
+
+		$content = [
+			'category' => $category,
+			'unique_args' => [
+				'wikia-db' => $dbName,
+				'wikia-email-city-id' => $wikiaId,
+			],
+		];
+
+		return json_encode( $content );
 	}
 }

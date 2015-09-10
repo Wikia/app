@@ -488,49 +488,6 @@ class WikiFactoryLoader {
 		}
 
 		/**
-		 * for yellowikis.wikia check geolocation and for GB -> redirect to owikis
-		 * @author Przemek Piotrowski (Nef)
-		 */
-		if( 0 === strpos($this->mServerName, 'yellowikis.') ) {
-			header( "X-Redirected-By-WF: Geo" );
-			global $wgLocationOfGeoIPDatabase;
-			if( !empty($wgLocationOfGeoIPDatabase) && file_exists($wgLocationOfGeoIPDatabase) ) {
-				/**
-				 * ProxyTools methods cannot be used because PT is not loaded at this point.
-				 * PT cannot be just included as it requires a lot to be initialized first )-:
-				 *
-				 * Order is *important* here! Proxy are added "from the right side"
-				 * to the combined HTTP_X_FORWARDED_FOR + REMOTE_ADDR.
-				 */
-				$ips = array();
-				if( !empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-					$ips = preg_split('/\s*,\s*/', $_SERVER['HTTP_X_FORWARDED_FOR']);
-				}
-				if (!empty($_SERVER['REMOTE_ADDR'])) {
-					$ips[] = $_SERVER['REMOTE_ADDR'];
-				}
-
-				if( !empty($ips[0]) ) {
-					require_once 'Net/GeoIP.php';
-					try {
-						$geoip = Net_GeoIP::getInstance($wgLocationOfGeoIPDatabase);
-						if( 'GB' == $geoip->lookupCountryCode($ips[0]) ) {
-							header( "X-Redirected-By-WF: Geo" );
-							/**
-							 * just exit, no redirect at all
-							 */
-							wfProfileOut( __METHOD__ );
-							exit( 0 );
-						}
-					}
-					catch (Exception $e) {
-						#--- ignore exception, redirect is an option, not a necessity
-					}
-				}
-			}
-		}
-
-		/**
 		 * get info about city variables from memcached and then check,
 		 * maybe memcached is down and returned only error code
 		 */

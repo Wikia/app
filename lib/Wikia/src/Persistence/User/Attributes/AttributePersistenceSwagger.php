@@ -29,7 +29,7 @@ class AttributePersistenceSwagger implements AttributePersistence {
 	 * @throws PersistenceException
 	 * @throws UnauthorizedException
 	 */
-	public function saveAttribute( $userId, $attribute ) {
+	public function saveAttribute( $userId, Attribute $attribute ) {
 		try {
 			$this->getApi( $userId )->saveAttributeForUser( $userId, $attribute->getName(), $attribute->getValue() );
 			return true;
@@ -93,7 +93,7 @@ class AttributePersistenceSwagger implements AttributePersistence {
 	 * @throws PersistenceException
 	 * @throws UnauthorizedException
 	 */
-	public function deleteAttribute( $userId, $attribute ) {
+	public function deleteAttribute( $userId, Attribute $attribute ) {
 		try {
 			$this->getApi( $userId )->deleteAttributeForUser( $userId, $attribute->getName() );
 			return true;
@@ -107,7 +107,11 @@ class AttributePersistenceSwagger implements AttributePersistence {
 	 * @return UsersAttributesApi
 	 */
 	private function getApi( $userId ) {
-		return $this->apiProvider->getAuthenticatedApi( self::SERVICE_NAME, $userId, UsersAttributesApi::class );
+		/** @var UsersAttributesApi $userAttributesApi */
+		$userAttributesApi = $this->apiProvider->getAuthenticatedApi( self::SERVICE_NAME, $userId, UsersAttributesApi::class );
+		$userAttributesApi->getApiClient()->getConfig()->addDefaultHeader( "X-From-MW", "true" );
+
+		return $userAttributesApi;
 	}
 
 	/**
@@ -120,16 +124,16 @@ class AttributePersistenceSwagger implements AttributePersistence {
 	private function handleApiException( ApiException $e ) {
 		switch ( $e->getCode() ) {
 			case UnauthorizedException::CODE:
-				throw new UnauthorizedException();
+				throw new UnauthorizedException( $e->getResponseBody() );
 				break;
 			case NotFoundException::CODE:
-				throw new NotFoundException();
+				throw new NotFoundException( $e->getResponseBody() );
 				break;
 			case ForbiddenException::CODE:
-				throw new ForbiddenException( $e->getMessage() );
+				throw new ForbiddenException( $e->getResponseBody() );
 				break;
 			default:
-				throw new PersistenceException( $e->getMessage() );
+				throw new PersistenceException( $e->getResponseBody() );
 				break;
 		}
 	}

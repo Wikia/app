@@ -68,7 +68,11 @@ define('ext.wikia.Insights.LoopNotificationTracking',
 		}
 
 		function init() {
-			$('#WikiaPage').on('mousedown keydown', '.banner-notification a, .banner-notification .close', linkTrack);
+			$('#WikiaPage').on(
+				'mousedown keydown',
+				'.banner-notification a, .banner-notification button, .banner-notification .close',
+				linkTrack
+			);
 		}
 
 		function setParams(edit, fixed, type) {

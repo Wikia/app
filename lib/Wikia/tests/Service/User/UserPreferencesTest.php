@@ -21,7 +21,6 @@ class UserPreferencesTest extends PHPUnit_Framework_TestCase {
 		$this->service = $this->getMockBuilder(PreferenceService::class)
 			->setMethods(['setPreferences', 'getPreferences'])
 			->disableOriginalConstructor()
-			->disableAutoload()
 			->getMock();
 	}
 

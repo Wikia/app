@@ -66,9 +66,10 @@ class WikiaInYourLangController extends WikiaController {
 						$oNativeWiki->city_title,
 					];
 
-					$sMessage = $this->prepareMessage( $sTargetLanguage, $aMessageParams );
+					$sMessagesAry = $this->prepareMessage( $sTargetLanguage, $aMessageParams );
 					$this->response->setVal( 'success', true );
-					$this->response->setVal( 'message', $sMessage );
+					$this->response->setVal( 'message', $sMessagesAry['desktop'] );
+					$this->response->setVal( 'messageMobile', $sMessagesAry['mobile'] );
 				}
 			}
 		}
@@ -95,16 +96,17 @@ class WikiaInYourLangController extends WikiaController {
 
 		if ( isset( $aParsed['host'] ) ) {
 			$sHost = $aParsed['host'];
-			$regExp = "/(sandbox.{3}\.|preview\.|verify\.)?(([a-z]{2,3}|[a-z]{2}\-[a-z]{2})\.)?([^\.]+\.)(.*)/i";
+			$regExp = "/(sandbox.{3}\.|preview\.|verify\.)?(([a-z]{2,3}|[a-z]{2}\-[a-z]{2})\.)?([^\.]+\.)([^\.]+\.)(.*)/i";
 			/**
 			 * preg_match returns similar array as a third parameter:
 			 * [
-			 * 	0 => sandbox-s3.zh.example.wikia.com,
-			 * 	1 => (sandbox-s3. | preview. | verify. | empty)
-			 * 	2 => (zh. | empty),
-			 * 	3 => (zh | empty),
-			 * 	4 => example.
-			 * 	5 => ( wikia.com | adamk.wikia-dev.com )
+			 *  0 => sandbox-s3.zh.example.wikia.com,
+			 *  1 => (sandbox-s3. | preview. | verify. | empty)
+			 *  2 => (zh. | empty),
+			 *  3 => (zh | empty),
+			 *  4 => example.
+			 *  5 => ( wikia | adamk)
+			 *  6 => (com | wikia-dev.com)
 			 * ]
 			 * [4] is a domain without the language prefix
 			 * @var Array
@@ -209,6 +211,11 @@ class WikiaInYourLangController extends WikiaController {
 			->inLanguage( $sTargetLanguage )
 			->parse();
 
-		return $sMsg;
+		$sMsgMobile = wfMessage( 'wikia-in-your-lang-available-for-mobile' )
+			->params( $aMessageParams )
+			->inLanguage( $sTargetLanguage )
+			->parse();
+
+		return ['desktop' => $sMsg, 'mobile' => $sMsgMobile];
 	}
 }

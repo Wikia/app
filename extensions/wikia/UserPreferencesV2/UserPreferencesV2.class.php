@@ -211,9 +211,6 @@ class UserPreferencesV2 {
 		unset( $defaultPreferences['nocache'] );
 		unset( $defaultPreferences['showjumplinks'] );
 		unset( $defaultPreferences['numberheadings'] );
-		if ( isset( $defaultPreferences['enablerichtext'] ) ) {
-			$defaultPreferences['enablerichtext']['section'] = 'editing/editing-experience';
-		}
 		if ( isset( $defaultPreferences['disablelinksuggest'] ) ) {
 			$defaultPreferences['disablelinksuggest']['section'] = 'editing/editing-experience';
 			$defaultPreferences = self::moveToEndOfArray( $defaultPreferences, 'disablelinksuggest' );

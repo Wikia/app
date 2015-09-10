@@ -7,32 +7,99 @@ class CuratedContentHelper {
 	const STR_BLOG = 'blog';
 	const STR_FILE = 'file';
 	const STR_CATEGORY = 'category';
-	const STR_EMPTY_CATEGORY = 'emptyCategory';
 	const STR_VIDEO = 'video';
+
+	public static function shouldDisplayToolButton() {
+		global $wgEnableCuratedContentExt, $wgUser;
+
+		return WikiaPageType::isMainPage() &&
+			!empty( $wgEnableCuratedContentExt ) &&
+			$wgUser->isAllowed( 'curatedcontent' );
+	}
 
 	public function processSections( $sections ) {
 		$processedSections = [ ];
-		if ( !empty( $sections ) && is_array( $sections ) ) {
+
+		if ( is_array( $sections ) ) {
 			foreach ( $sections as $section ) {
-				$processedSections[ ] = $this->processLogicForSection( $section );
+				$processedSections[] = $this->processLogicForSection( $section );
 			}
 		}
-		return $processedSections;
+
+		// remove null elements from array
+		return $this->removeEmptySections( $processedSections );
 	}
 
-	private function processLogicForSection( $section ) {
-		$section['image_id'] = (int)$section['image_id']; // fallback to 0 if it's not set in request
+	public function removeEmptySections( $sections ) {
+		return array_values( array_filter( $sections, function( $section ) { return !is_null( $section ); } ) );
+	}
 
-		if ( !empty( $section['items'] ) && is_array( $section['items'] ) ) {
-			foreach ( $section['items'] as &$item ) {
-				$this->fillItemInfo( $item );
-			}
+	public function processLogicForSection( $section ) {
+		if ( empty ( $section['items'] ) || !is_array( $section['items'] ) ) {
+			// return null if we don't have any items inside section
+			return null;
+		}
+
+		$section['image_id'] = (int)$section['image_id']; // fallback to 0 if it's not set in request
+		$this->processCrop( $section );
+
+		foreach ( $section['items'] as &$item ) {
+			$this->fillItemInfo( $item );
+			$this->processCrop( $item );
 		}
 
 		return $section;
 	}
 
-	private function fillItemInfo( &$item ) {
+	public function decodeCrop( $string = null ) {
+		return empty( $string ) ? null : json_decode( html_entity_decode( $string ), true );
+	}
+
+	public function encodeCrop( Array $cropData = null ) {
+		return empty( $cropData ) ? '' : htmlentities( json_encode( $cropData ), ENT_QUOTES );
+	}
+
+	private function processCrop( &$itemOrSection ) {
+		if ( array_key_exists( 'image_crop', $itemOrSection ) ) {
+			if ( is_string( $itemOrSection['image_crop'] ) ) {
+				$itemOrSection['image_crop'] = $this->decodeCrop( $itemOrSection['image_crop'] );
+			}
+
+			$itemOrSection['image_crop'] = $this->sanitizeCrop( $itemOrSection['image_crop'] );
+
+			// do not keep empty or unknown data
+			if ( empty( $itemOrSection['image_crop'] ) ) {
+				unset( $itemOrSection['image_crop'] );
+			}
+		}
+	}
+
+	private function sanitizeCrop( $cropData ) {
+		if ( is_array( $cropData ) ) {
+			$sanitizedCropData = [ ];
+			$coordNames = [ 'x', 'y', 'width', 'height' ];
+
+			// iterate through all the coord arrays
+			foreach ( $cropData as $type => $originalCoords ) {
+				$coords = [ ];
+
+				// iterate through all the coords
+				foreach ( $coordNames as $coordName ) {
+					$coords[$coordName] = intval( $originalCoords[$coordName], 10 );
+				}
+
+				// only save when coords we've got are valid
+				if ( $coords['x'] >= 0 && $coords['y'] >= 0 && $coords['width'] > 0 && $coords['height'] > 0 ) {
+					$sanitizedCropData[$type] = $coords;
+				}
+			}
+
+			return $sanitizedCropData;
+		}
+		return null;
+	}
+
+	public function fillItemInfo( &$item ) {
 		$title = Title::newFromText( $item['title'] );
 		// We cannot check for $title->isEmpty() because it's empty for non-exisitng Articles.
 		// Categories without content are non-existing Articles (their article_id is 0)
@@ -54,12 +121,7 @@ class CuratedContentHelper {
 
 				case self::STR_CATEGORY:
 					$category = Category::newFromTitle( $title );
-					if ( $category instanceof Category && $category->getID() ) {
-						$count = $category->getPageCount();
-						if ( empty( $count ) ) {
-							$item['type'] = self::STR_EMPTY_CATEGORY;
-						}
-					} else {
+					if ( !( $category instanceof Category && $category->getID() ) ) {
 						$item['type'] = null;
 					}
 					break;
@@ -78,8 +140,7 @@ class CuratedContentHelper {
 
 	public static function getImageUrl( $id, $imageSize = 50 ) {
 		$thumbnail = (new ImageServing( [ $id ], $imageSize, $imageSize ))->getImages( 1 );
-
-		return !empty( $thumbnail ) ? $thumbnail[$id][0]['url'] : '';
+		return !empty( $thumbnail ) ? $thumbnail[$id][0]['url'] : null;
 	}
 
 	private function getVideoInfo( $title ) {
@@ -103,19 +164,37 @@ class CuratedContentHelper {
 		return $imageUrl;
 	}
 
+	/**
+	 * Get image ID and URL for an image base on passed data.
+	 * When imageId is null and articleId is an id of existing page ask image serving for first image's title.
+	 * Base on this title generate thumb URL.
+	 * When imageId isn't empty ask image serving for thumb URL.
+	 * @param int $imageId
+	 * @param int $articleId
+	 * @return array
+	 */
 	public static function findImageIdAndUrl( $imageId, $articleId = 0 ) {
 		$url = null;
 		$imageTitle = null;
 
 		if ( empty( $imageId ) ) {
 			$imageId = null;
-			$imageTitle = self::findFirstImageTitleFromArticle( $articleId );
+			if ( !empty( $articleId ) ) {
+				$imageTitle = self::findFirstImageTitleFromArticle( $articleId );
+				if ( $imageTitle instanceof Title && $imageTitle->exists() ) {
+					$imageId = $imageTitle->getArticleID();
+					$url = self::getUrlFromImageTitle( $imageTitle );
+				}
+			}
 		} else {
 			$imageTitle = Title::newFromID( $imageId );
+			if ( $imageTitle instanceof Title && $imageTitle->exists() ) {
+				$url = self::getUrlFromImageTitle( $imageTitle );
+			}
 		}
-		if ( $imageTitle instanceof Title && $imageTitle->exists() ) {
-			$url = self::getUrlFromImageTitle( $imageTitle );
-			$imageId = $imageTitle->getArticleId();
+
+		if ( empty( $url ) ) {
+			$url = self::getImageUrl( $imageId );
 		}
 
 		return [ $imageId, $url ];

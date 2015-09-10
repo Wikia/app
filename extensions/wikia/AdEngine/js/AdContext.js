@@ -35,7 +35,11 @@ define('ext.wikia.adEngine.adContext', [
 	}
 
 	function isProperCountry(countryList) {
-		return (countryList && countryList.indexOf && countryList.indexOf(geo.getCountryCode()) > -1);
+		return !!(countryList && countryList.indexOf && countryList.indexOf(geo.getCountryCode()) > -1);
+	}
+
+	function isUrlParamSet(param) {
+		return !!parseInt(qs.getVal(param, '0'));
 	}
 
 	function setContext(newContext) {
@@ -57,6 +61,23 @@ define('ext.wikia.adEngine.adContext', [
 			context.opts.showAds = false;
 		}
 
+		// SourcePoint integration
+		if (context.opts.sourcePointUrl) {
+			context.opts.sourcePoint = isUrlParamSet('sourcepoint') ||
+				isProperCountry(instantGlobals.wgAdDriverSourcePointCountries);
+		}
+
+		// SourcePoint detection integration
+		if (context.opts.sourcePointDetectionUrl) {
+			context.opts.sourcePointDetection = isUrlParamSet('sourcepointdetection') ||
+				isProperCountry(instantGlobals.wgAdDriverSourcePointDetectionCountries);
+		}
+
+		// Showcase.*
+		if (isUrlParamSet('showcase')) {
+			context.opts.showcase = true;
+		}
+
 		// Targeting by page categories
 		if (context.targeting.enablePageCategories) {
 			context.targeting.pageCategories = w.wgCategories || getMercuryCategories();
@@ -76,10 +97,18 @@ define('ext.wikia.adEngine.adContext', [
 			context.providers.openX = true;
 		}
 
+		// INVISIBLE_HIGH_IMPACT slot
 		context.slots.invisibleHighImpact = (
 			context.slots.invisibleHighImpact &&
 			isProperCountry(instantGlobals.wgAdDriverHighImpactSlotCountries)
-		) ||  parseInt(qs.getVal('highimpactslot', '0'));
+		) || isUrlParamSet('highimpactslot');
+
+		// INCONTENT_PLAYER slot
+		context.slots.incontentPlayer = isProperCountry(instantGlobals.wgAdDriverIncontentPlayerSlotCountries) ||
+			isUrlParamSet('incontentplayer');
+
+		context.opts.enableScrollHandler = isProperCountry(instantGlobals.wgAdDriverScrollHandlerCountries) ||
+			isUrlParamSet('scrollhandler');
 
 		// Krux integration
 		context.targeting.enableKruxTargeting = !!(

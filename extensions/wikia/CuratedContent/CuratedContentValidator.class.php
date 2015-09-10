@@ -15,33 +15,58 @@ class CuratedContentValidator {
 	const ERR_NO_CATEGORY_IN_TAG = 'noCategoryInTag';
 
 	private $errors;
-	private $titles;
+	private $existingSectionLabels;
+	private $existingItemLabels;
+	private $existingFeaturedItemLabels;
 	private $hasOptionalSection;
 
-	public function __construct( $data ) {
+	public function __construct() {
+		$this->reset();
+	}
+
+	public function reset() {
 		$this->errors = [ ];
-		$this->titles = [ ];
+		$this->existingSectionLabels = [ ];
+		$this->existingItemLabels = [ ];
+		$this->existingFeaturedItemLabels = [ ];
 		$this->hasOptionalSection = false;
+	}
+
+	public function validateData( $data ) {
+		$this->reset();
 
 		// validate sections
 		foreach ( $data as $section ) {
 			if ( !empty( $section['featured'] ) ) {
-				$this->validateFeaturedSection( $section );
+				$this->validateItems( $section, true );
 			} else {
 				$this->validateSection( $section );
+				$this->validateItemsExist( $section );
+				$this->validateItems( $section );
+				$this->validateItemsTypes( $section );
 			}
 		}
-		// also check section for duplicate title
-		foreach ( array_count_values( $this->titles ) as $title => $count ) {
-			if ( $count > 1 ) {
-				$this->error( [ 'title' => $title ], self::ERR_DUPLICATED_LABEL );
-			}
-		}
+		// also check for duplicate labels
+		$this->validateDuplicatedLabels();
+
+		return $this->errors;
 	}
 
-	private function error( $itemWithTitle, $errorString ) {
-		if ( array_key_exists( 'title', $itemWithTitle ) && !empty( $errorString ) ) {
-			$this->errors[] = [ 'title' => $itemWithTitle['title'], 'reason' => $errorString ];
+	public function validateDuplicatedLabels() {
+		foreach ( array_count_values( $this->existingFeaturedItemLabels ) as $label => $count ) {
+			if ( $count > 1 ) {
+				$this->error( $label, 'featured', self::ERR_DUPLICATED_LABEL );
+			}
+		}
+		foreach ( array_count_values( $this->existingSectionLabels ) as $label => $count ) {
+			if ( $count > 1 ) {
+				$this->error( $label, 'section', self::ERR_DUPLICATED_LABEL );
+			}
+		}
+		foreach ( array_count_values( $this->existingItemLabels ) as $label => $count ) {
+			if ( $count > 1 ) {
+				$this->error( $label, 'item', self::ERR_DUPLICATED_LABEL );
+			}
 		}
 	}
 
@@ -49,99 +74,128 @@ class CuratedContentValidator {
 		return $this->errors;
 	}
 
-	private function validateFeaturedSection( $section ) {
+	private function error( $labelOrTitle, $type, $errorString ) {
+		if ( !empty( $errorString ) ) {
+			$this->errors[] = [ 'target' => $labelOrTitle, 'type' => $type, 'reason' => $errorString ];
+		}
+	}
+
+	public function validateFeaturedSectionItems( $section ) {
 		if ( !empty( $section['items'] ) && is_array( $section['items'] ) ) {
 			foreach ($section['items'] as $item) {
-				$this->validateItem($item);
+				$this->validateItem( $item );
 			}
 		}
 	}
 
-	private function validateImage( $sectionOrItem ) {
+	private function validateImage( $sectionOrItem, $isFeatured = false ) {
 		if ( empty( $sectionOrItem['image_id'] ) ) {
-			$this->error( $sectionOrItem, self::ERR_IMAGE_MISSING );
+			if ( $isFeatured ) {
+				// featured item has missing image
+				$this->error( $sectionOrItem['label'], 'featured', self::ERR_IMAGE_MISSING );
+			} elseif ( array_key_exists( 'label', $sectionOrItem ) ) {
+				// item has missing image
+				$this->error( $sectionOrItem['label'], 'item', self::ERR_IMAGE_MISSING );
+			} else {
+				// section has missing image
+				$this->error( $sectionOrItem['title'], 'section', self::ERR_IMAGE_MISSING );
+			}
 		}
 	}
 
-	private function validateSection( $section ) {
+	public function validateItemsExist( $section ) {
+		// only non-optional, non-featured section has mandatory items
+		if ( ( empty( $section['featured'] ) && !empty( $section['title'] ) ) &&
+			( empty( $section['items'] ) || !is_array( $section['items'] ) ) )
+			{
+			$this->error( $section['title'], 'section', self::ERR_ITEMS_MISSING );
+		}
+	}
+
+	public function validateItems( $section, $isFeatured = false ) {
+		if ( !empty($section['items'] ) && is_array( $section['items'] ) ) {
+			foreach ($section['items'] as $item) {
+				$this->validateItem( $item, $isFeatured );
+			}
+		}
+	}
+
+	public function validateSection( $section ) {
 		// check for "optional" section - it has empty label, but there can be only ONE
 		if ( empty( $section['title'] ) ) {
 			if ( $this->hasOptionalSection ) {
-				$this->error( $section, self::ERR_DUPLICATED_LABEL );
+				$this->error( $section['title'], 'section', self::ERR_DUPLICATED_LABEL );
 			} else {
 				$this->hasOptionalSection = true;
 			}
 		}
 
 		if ( strlen( $section['title'] ) > self::LABEL_MAX_LENGTH ) {
-			$this->error( $section, self::ERR_TOO_LONG_LABEL );
+			$this->error( $section['title'], 'section', self::ERR_TOO_LONG_LABEL );
 		}
 
 		if ( empty( $section['featured'] ) && !empty( $section['title'] ) ) {
 			$this->validateImage( $section );
-		}
-
-		if ( !empty( $section['items'] ) && is_array( $section['items'] ) ) {
-			// if section has items - validate them
-			foreach ($section['items'] as $item) {
-				$this->validateCategoryItem($item);
-				$this->validateImage($item);
-			}
-		} else {
-			// if section doesn't have any items and it's not Featured Section, it's an error
-			if ( empty( $section['featured'] ) ) {
-				$this->error( $section, self::ERR_ITEMS_MISSING );
-			}
-		}
-
-		if ( strlen( $section['title'] ) ) {
-			$this->titles[] = $section['title'];
+			// label for section is the same as it's title
+			$this->existingSectionLabels[] = $section['title'];
 		}
 	}
 
-	private function validateCategoryItem( $item ) {
-		$this->validateItem( $item );
-
+	public function validateItemType( $item ) {
 		if ( $item['type'] !== CuratedContentHelper::STR_CATEGORY ) {
-			$this->error( $item, self::ERR_NO_CATEGORY_IN_TAG );
+			$this->error( $item['label'], 'item', self::ERR_NO_CATEGORY_IN_TAG );
 		}
 	}
 
-	private function validateItem( $item ) {
-		$this->validateImage( $item );
+	public function validateItemsTypes( $section ) {
+		if ( !empty( $section['items'] ) && is_array( $section['items'] ) ) {
+			foreach ( $section['items'] as $item ) {
+				$this->validateItemType( $item );
+			}
+		}
+	}
+
+	public function validateItem( $item, $isFeatured = false ) {
+		$this->validateImage( $item, $isFeatured );
+		$type = $isFeatured ? 'featured' : 'item';
 
 		if ( empty( $item['label'] ) ) {
-			$this->error( $item, self::ERR_EMPTY_LABEL );
+			$this->error( '', $type, self::ERR_EMPTY_LABEL );
 		}
 
 		if ( strlen( $item['label'] ) > self::LABEL_MAX_LENGTH ) {
-			$this->error( $item, self::ERR_TOO_LONG_LABEL );
+			$this->error( $item['label'], $type, self::ERR_TOO_LONG_LABEL );
 		}
 
 		if ( empty( $item['type'] ) ) {
-			$this->error( $item, self::ERR_NOT_SUPPORTED_TYPE );
-		}
-
-		if ( $item['type'] === CuratedContentHelper::STR_VIDEO ) {
-			if ( empty( $item['video_info'] ) ) {
-				$this->error( $item, self::ERR_VIDEO_WITHOUT_INFO );
-			} elseif ( !self::isSupportedProvider( $item['video_info']['provider'] ) ) {
-				$this->error( $item, self::ERR_VIDEO_NOT_SUPPORTED );
-			}
+			$this->error( $item['label'], $type, self::ERR_NOT_SUPPORTED_TYPE );
 		}
 
 		if ( self::needsArticleId( $item['type'] ) && empty( $item['article_id'] ) ) {
-			$this->error( $item, self::ERR_ARTICLE_NOT_FOUND );
+			$this->error( $item['label'], $type, self::ERR_ARTICLE_NOT_FOUND );
 		}
 
-		$this->titles[] = $item['title'];
+		if ( $isFeatured ) {
+			if ( $item['type'] === CuratedContentHelper::STR_VIDEO ) {
+				if ( empty( $item['video_info'] ) ) {
+					$this->error( $item['label'], 'featured', self::ERR_VIDEO_WITHOUT_INFO );
+				} elseif ( !self::isSupportedProvider( $item['video_info']['provider'] ) ) {
+					$this->error( $item['label'], 'featured', self::ERR_VIDEO_NOT_SUPPORTED );
+				}
+			}
+
+			$this->existingFeaturedItemLabels[] = $item['label'];
+		} else {
+			$this->existingItemLabels[] = $item['label'];
+		}
+
 	}
 
 	private static function needsArticleId( $type ) {
-		return $type !== CuratedContentHelper::STR_CATEGORY;
+		return !in_array( $type, [CuratedContentHelper::STR_CATEGORY ] );
 	}
 
 	private static function isSupportedProvider( $provider ) {
-		return ($provider === 'youtube') || (startsWith( $provider, 'ooyala' ));
+		return ( $provider === 'youtube' ) || ( startsWith( $provider, 'ooyala' ) );
 	}
 }

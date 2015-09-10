@@ -431,6 +431,16 @@ class UserLoginHelper extends WikiaModel {
 	}
 
 	/**
+	 * Read a login token, DO NOT init if it doesn't exist
+	 *
+	 * @return string loginToken|null
+	 */
+	public static function readLoginToken() {
+		$loginToken = LoginForm::getLoginToken();
+		return !empty( $loginToken ) ? $loginToken : null;
+	}
+
+	/**
 	 * Get a login token
 	 *
 	 * @return string loginToken
@@ -601,5 +611,27 @@ class UserLoginHelper extends WikiaModel {
 		$wgCaptchaTriggers = $oldValue;
 
 		return $result;
+	}
+
+	public function getNewAuthUrl($page = '/join') {
+		if ( $this->app->wg->title->isSpecial( 'Userlogout' ) ) {
+			$requestUrl = Title::newMainPage()->getLocalURL();
+		}
+		else {
+			$requestUrl = $this->app->wg->request->getRequestURL();
+		}
+
+		return $page . '?redirect='
+			. urlencode ( wfExpandUrl ( $requestUrl ) )
+			. $this->getUselangParam();
+	}
+
+	/**
+	 * Returns string with uselang param to append to login url if Wikia language is different than default
+	 * @return string
+	 */
+	private function getUselangParam() {
+		$lang = $this->wg->ContLang->mCode;
+		return $lang == 'en' ? '' : '&uselang=' . $lang;
 	}
 }

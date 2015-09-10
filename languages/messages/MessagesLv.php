@@ -428,8 +428,9 @@ Norādītais iemesls bija ''$2''.",
 # Login and logout pages
 'logouttext'                 => "'''Tu esi izgājis no {{grammar:ģenitīvs|{{SITENAME}}}}.'''
 
-Vari turpināt to izmantot anonīmi, vari [[Special:UserLogin|atgriezties]] kā cits lietotājs vai varbūt tas pats.
+Vari turpināt to izmantot anonīmi, vari $1 kā cits lietotājs vai varbūt tas pats.
 Ņem vērā, ka arī pēc iziešanas, dažas lapas var tikt parādītas tā, it kā tu vēl būtu iekšā, līdz tiks iztīrīta pārlūka kešatmiņa.",
+'logouttext-link-text'       => 'atgriezties',
 'welcomecreation'            => '== Laipni lūdzam, $1! ==
 
 Tavs lietotāja konts ir izveidots. Neaizmirsti, ka ir iespējams mainīt [[Special:Preferences|{{grammar:ģenitīvs|{{SITENAME}}}} izmantošanas izvēles]].',
@@ -2313,7 +2314,7 @@ Pirmajā gadījumā var arī lietot šādu metodi, piem., [[{{#Special:Export}}/
 'importsuccess'              => 'Importēšana pabeigta!',
 'importnosources'            => "Tiešā hronoloģijas augšuplāde ir atslēgta. Nav definēts neviens ''Transwiki'' importa avots (''source'').",
 'importnofile'               => 'Neviens importējamais fails netika augšupielādēts.',
-'importuploaderrorsize'      => 'Augšupielādēt importējamo failu neizdevās. 
+'importuploaderrorsize'      => 'Augšupielādēt importējamo failu neizdevās.
 Šis fails ir lielāks par atļauto augšupielādes lielumu.',
 'importuploaderrorpartial'   => 'Importējamā faila augšupielāde neizdevās.
 Fails tika tikai daļēji importēts.',
@@ -3035,7 +3036,7 @@ Var arī lietot [[Special:EditWatchlist|standarta izmainīšanas lapu]].',
 
 # Database error messages
 'dberr-header'      => 'Šim viki ir problēma',
-'dberr-problems'    => 'Atvainojiet! 
+'dberr-problems'    => 'Atvainojiet!
 Šai vietnei ir radušās tehniskas problēmas.',
 'dberr-again'       => 'Uzgaidiet dažas minūtes un pārlādējiet šo lapu.',
 'dberr-info'        => '(Nevar sazināties ar datubāzes serveri: $1)',

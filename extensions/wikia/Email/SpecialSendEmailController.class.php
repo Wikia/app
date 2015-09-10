@@ -61,7 +61,6 @@ class SpecialSendEmailController extends \WikiaSpecialPageController {
 	 * @template specialSendEmail
 	 */
 	public function index() {
-
 		if ( $this->wg->request->wasPosted() ) {
 			if ( $this->editTokenValidates() ) {
 				$result = $this->processForm();

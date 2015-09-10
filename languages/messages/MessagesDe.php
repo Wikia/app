@@ -773,8 +773,9 @@ Die Sperre wurde durch [[User:$1|$1]] mit der Begründung ''„$2“'' eingerich
 # Login and logout pages
 'logouttext'                 => "'''Du bist nun abgemeldet.'''
 
-Du kannst {{SITENAME}} jetzt anonym weiternutzen, oder dich erneut unter demselben oder einem anderen Benutzernamen [[Special:UserLogin|anmelden]].
+Du kannst {{SITENAME}} jetzt anonym weiternutzen, oder dich erneut unter demselben oder einem anderen Benutzernamen $1.
 Beachte, dass einige Seiten noch anzeigen können, dass du angemeldet bist, solange du nicht deinen Browsercache geleert hast.",
+'logouttext-link-text'       => 'anmelden',
 'welcomecreation'            => '== Willkommen, $1! ==
 
 Dein Benutzerkonto wurde eingerichtet.
@@ -1949,7 +1950,7 @@ Aus Sicherheitsgründen ist img_auth.php deaktiviert.',
 'upload_source_file' => ' (eine Datei auf deinem Computer)',
 
 # Special:ListFiles
-'listfiles-summary'     => 'Diese Spezialseite listet alle hochgeladenen Dateien auf. 
+'listfiles-summary'     => 'Diese Spezialseite listet alle hochgeladenen Dateien auf.
 Sofern nach einem bestimmten Benutzer gefiltert wird, werden nur die Dateien gezeigt, bei denen er die letzte Version hochgeladen hat.',
 'listfiles_search_for'  => 'Suche nach Datei:',
 'imgfile'               => 'Datei',

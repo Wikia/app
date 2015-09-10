@@ -413,8 +413,9 @@ Seo am mìneachadh: "\'\'$2\'\'".',
 
 # Login and logout pages
 'logouttext'                 => "'''Chaidh do logadh a-mach.'''
-'S urrainn dhut leantainn air adhart a' cleachdadh {{SITENAME}} a chleachdadh gun urra no 's urrainn dhut [[Special:UserLogin|logadh a-steach a-rithist]] mar an dearbh-chleachdaiche no mar chleachdaiche eile.
+'S urrainn dhut leantainn air adhart a' cleachdadh {{SITENAME}} a chleachdadh gun urra no 's urrainn dhut $1 mar an dearbh-chleachdaiche no mar chleachdaiche eile.
 Thoir an aire gum bi coltas air cuide dhe na duilleagan mar gum biodh tu air logadh a-steach gus am falamhaich thu tasgadan a' bhrabhsair agad.",
+'logouttext-link-text'       => 'logadh a-steach a-rithist',
 'welcomecreation'            => '== Fàilte ort, $1! ==
 Chaidh an cunntas agad a chruthachadh.
 Na dìochuimhnich na [[Special:Preferences|roghainnean agad air {{SITENAME}}]] a ghleusadh dhut fhèin.',
@@ -474,7 +475,7 @@ Feuch ris a-rithist.',
 'password-login-forbidden'   => "Tha an t-ainm-cleachdaiche 's am facal-faire seo toirmisgte.",
 'mailmypassword'             => "Cuir facal-faire ùr thugam air a' phost-dealain",
 'passwordremindertitle'      => 'Facal-faire sealach ùr airson {{SITENAME}}',
-'passwordremindertext'       => 'Dh\'iarr cuideigin (\'s mathaid gun do dh\'iarr thusa seo on t-seòladh IP $1) facal-fair ùr airson 
+'passwordremindertext'       => 'Dh\'iarr cuideigin (\'s mathaid gun do dh\'iarr thusa seo on t-seòladh IP $1) facal-fair ùr airson
 {{SITENAME}} ($4). Chaidh facal-faire sealach a chruthachadh airson "$2" a tha \'na "$3".
 Ma bha sin fa-near dhut, bidh agad ri clàradh a-steach agus facal-faire ùr a thaghadh
 an-dràsta fhèin. Falbhaidh an ùine air an fhacal-fhaire sealach agad ann an {{PLURAL:$5|$5 latha|$5 latha|$5 làithean|$5 latha|$5 latha|$5 làithean|$5 latha}}.

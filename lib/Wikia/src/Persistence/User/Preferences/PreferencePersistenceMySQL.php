@@ -5,6 +5,9 @@ namespace Wikia\Persistence\User\Preferences;
 use Iterator;
 use Wikia\Domain\User\Preference;
 
+/**
+ * @Injectable(lazy=true)
+ */
 class PreferencePersistenceMySQL implements PreferencePersistence {
 	const USER_PREFERENCE_TABLE = 'user_properties';
 	const UP_USER = 'up_user';

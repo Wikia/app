@@ -2690,8 +2690,8 @@ $messages['mg'] = array(
 	'userrenametool' => 'Hanova anaram-pikambana',
 	'renameuser' => "Hanova ny anaran'ny mpikambana",
 	'userrenametool-warning' => "<strong>Vakio azafady ny fampahalalana manaraka</strong>:<p>Alohan'ny manova ny anaram-pikambana, marino tsara raha <strong>marina ireo fampahalalana nomena</strong> ary <strong>mila fotoana izy ity vao tanteraka</strong>.<br />
-Fantaro ihany koa fa nohon'ny antony ivelany, dia <strong>mety ho pejy fotsy no valiny</strong>, izay <b>tsy midika</b> fa tsy tanteraka ilay izy</p><p>Afaka manaraka ny firosony ianao amin'ny alalan'ny 
-[[Special:Stafflog|Laogin'ny mpiasa]], ary <strong>handefa mailaka anao ny rafitra rehefa vita tanteraka ilay asa</strong>.</p<",
+Fantaro ihany koa fa nohon'ny antony ivelany, dia <strong>mety ho pejy fotsy no valiny</strong>, izay <b>tsy midika</b> fa tsy tanteraka ilay izy</p><p>Afaka manaraka ny firosony ianao amin'ny alalan'ny
+[[Special:Stafflog|Laogin'ny mpiasa]], ary <strong>handefa mailaka anao ny rafitra rehefa vita tanteraka ilay asa</strong>.</p>",
 	'userrenametool-old' => 'Anaram-pikambana ankehitriny:',
 	'userrenametool-new' => 'Anaram-pikambana vaovao:',
 	'userrenametool-encoded' => 'URL voakaody:',
@@ -5004,7 +5004,7 @@ $messages['zh-hant'] = array(
 原因：" $5 "。',
 	'userrenametool-info-wiki-finished' => '$1 在 $4重命名 $2 為 $3。
 原因：" $5 "。',
-	'userrenametool-info-wiki-finished-problems' => '$1在$4 重命名$2 為 $3 時發生錯誤。  
+	'userrenametool-info-wiki-finished-problems' => '$1在$4 重命名$2 為 $3 時發生錯誤。
 原因：" $5 "。',
 	'userrenametool-info-in-progress' => '重命名過程正在進行。
 其餘部分將在後台完成。

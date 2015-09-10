@@ -1,24 +1,32 @@
-<ul id="AccountNavigation" class="AccountNavigation table-cell">
-	<li class="account-navigation-first-item">
+<ul id="AccountNavigation" class="AccountNavigation table-cell <?= $enableNewAuthModal ? 'newAuth' : '' ?> ">
+	<li class="account-navigation-item">
 		<div class="links-container<?php if ($isAnon): ?> anon <?php endif; ?>">
 			<?= $navItemLinkOpeningTag ?>
-				<div class="avatar-container<?= $avatarContainerAdditionalClass ?>">
-					<?= $profileAvatar ?>
-				</div>
-			</a>
-			<?php if ($isAnon) : ?>
-				<span class="sign-in-label"><?= wfMessage( 'global-navigation-sign-in' )->escaped(); ?></span>
-			<? endif; ?>
+			<div class="avatar-container<?= $avatarContainerAdditionalClass ?>">
+				<?= $profileAvatar ?>
+			</div>
+		</a>
+		<?php if ($isAnon):
+			if ($enableNewAuthModal): ?>
+				<span class="auth-label">
+					<?= $authOptions ?>
+				</span>
+			<?php else: ?>
+				<span class="auth-label auth-link sign-in"><?= wfMessage( 'global-navigation-sign-in' )->escaped(); ?></span>
+			<?php endif;
+		endif;
+		if ( !($isAnon && $enableNewAuthModal) ) : ?>
 			<img class="chevron" src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D"/>
-		</div>
-		<?php if ( !$isAnon ): ?>
+		<? endif; ?>
+	</div>
+	<?php if ( !$isAnon ): ?>
 		<ul class="user-menu subnav global-nav-dropdown">
 			<?php foreach( $userDropdown as $link ): ?>
 				<li><?= $link ?></li>
 			<?php endforeach; ?>
 		</ul>
-		<?php else:
-			echo $loginDropdown;
-		endif; ?>
+	<?php else:
+		echo $loginDropdown;
+	endif; ?>
 	</li>
 </ul>

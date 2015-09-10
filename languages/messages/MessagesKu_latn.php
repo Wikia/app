@@ -438,8 +438,9 @@ $2
 # Login and logout pages
 'logouttext'                 => "'''Tu niha derketî (logged out).'''
 
-Tu dikarî {{SITENAME}} niha weke bikarhênerekî nediyarkirî bikarbînî, yan jî tu dikarî dîsa bi vî navê xwe yan navekî din wek bikarhêner [[Special:UserLogin|dîsa têkevî]].
+Tu dikarî {{SITENAME}} niha weke bikarhênerekî nediyarkirî bikarbînî, yan jî tu dikarî dîsa bi vî navê xwe yan navekî din wek bikarhêner $1.
 Bila di bîra te de be ku gengaz e hin rûpel mîna ku tu hîn bi navê xwe qeyd kiriyî werin nîşandan, heta ku tu nîşanên çavlêgerandina (browser) xwe jênebî.",
+'logouttext-link-text'       => 'dîsa têkevî',
 'welcomecreation'            => '== Tu bi xêr hatî, $1! ==
 
 Hesabê te hate afirandin. Tu dikarî niha [[Special:Preferences|tercîhên xwe di {{SITENAME}}]] de biguherînî.',

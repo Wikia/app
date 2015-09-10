@@ -40,9 +40,12 @@
             a.src = g;
             m.parentNode.insertBefore(a, m);
         })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+    } else {
+        // prevent errors when wgNoExternals is set
+        window.ga = function () {};
     }
 
-    var cookieExists, isProductionEnv;
+    var cookieExists, isProductionEnv, blockingTracked = false;
     /**
      * Main Tracker
      *
@@ -240,6 +243,17 @@
         return kruxSegment;
     }
 
+    function trackBlocking(value) {
+        if (blockingTracked) {
+            return;
+        }
+        blockingTracked = true;
+        _gaWikiaPush(['set', 'dimension6', value]);
+        window.ga('ads.set', 'dimension6', value);
+        guaTrackAdEvent('ad/sourcepoint/detection', value);
+        guaTrackEvent('ads-sourcepoint-detection', 'impression', value);
+    }
+
     /**** High-Priority Custom Dimensions ****/
     _gaWikiaPush(
         ['set', 'dimension1', window.wgDBname],                        // DBname
@@ -343,6 +357,17 @@
 
     // Unleash
     _gaWikiaPush(['send', 'pageview']);
+
+    if (window.ads && window.ads.context.opts.showAds) {
+        document.addEventListener('sp.blocking', function () {
+            window.ads.runtime.sp.blocking = true;
+            trackBlocking('Yes');
+        });
+        document.addEventListener('sp.not_blocking', function () {
+            window.ads.runtime.sp.blocking = false;
+            trackBlocking('No');
+        });
+    }
 
     /**
      * Advertisement Tracker, pushed separatedly.

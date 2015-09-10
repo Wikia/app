@@ -10,7 +10,6 @@ use Wikia\Sass\Filter\InlineImageFilter;
 use Wikia\Sass\Filter\JanusFilter;
 use Wikia\Sass\Filter\MinifyFilter;
 use Wikia\Sass\Compiler\Compiler;
-use Wikia\Sass\Compiler\ExternalRubyCompiler;
 use Wikia\Sass\Compiler\LibSassCompiler;
 
 /**
@@ -209,7 +208,7 @@ class SassService {
 		$afterCompilation = 0;
 		$end = 0;
 		try {
-			/** @var $compiler ExternalRubyCompiler */
+			/** @var $compiler LibSassCompiler */
 			$compiler = self::getDefaultCompiler()->withOptions(array(
 				'sassVariables' => $this->getSassVariables(),
 				'useSourceMaps' => $this->useSourceMaps
@@ -356,11 +355,9 @@ class SassService {
 	public static function getDefaultCompiler() {
 		if ( self::$defaultCompiler === null ) {
 			$app = F::app();
-			self::$defaultCompiler = new LibSassCompiler(array(
+			self::$defaultCompiler = new LibSassCompiler( [
 				'rootDir' => $app->getGlobal('IP'),
-				'sassExecutable' => $app->wg->SassExecutable,
-//				'outputStyle' => 'expanded',
-			));
+			] );
 		}
 
 		return self::$defaultCompiler;
