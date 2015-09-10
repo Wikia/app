@@ -85,10 +85,13 @@ abstract class ResourceLoaderGlobalWikiModule extends ResourceLoaderWikiModule {
 	}
 
 	protected function getContent( $title, $titleText, $options = array() ) {
-		global $wgCityId, $wgEnableContentReviewExt;
+		global $wgCityId;
 		$content = null;
 
 		wfProfileIn(__METHOD__);
+
+		$revisionId = $this->getRevisionId( $title, $options );
+
 		if ( $title instanceof GlobalTitle ) {
 			// todo: think of pages like NS_MAIN:Test/code.js that are pulled
 			// from dev.wikia.com
@@ -99,22 +102,22 @@ abstract class ResourceLoaderGlobalWikiModule extends ResourceLoaderWikiModule {
 			*/
 
 			if ( WikiFactory::isWikiPrivate( $title->getCityId() ) == false ) {
-				$content = $title->getContent();
+				if ( !is_null( $revisionId ) ) {
+					if ( empty( $revisionId ) ) {
+						$content = '';
+					} else {
+						$content = $title->getRevisionText( $revisionId );
+					}
+				}
+
+				if ( is_null( $content ) ) {
+					$content = $title->getContent();
+				}
 			}
 
 		// Try to load the contents of an article before falling back to a message (BugId:45352)
 		// CE-1225 Load scripts from the MediaWiki namespace
 		} elseif ( WikiFactory::isWikiPrivate( $wgCityId ) == false || $title->getNamespace() == NS_MEDIAWIKI ) {
-			$revisionId = null;
-
-			if ( $wgEnableContentReviewExt && $options['type'] === 'script' && $title->inNamespace( NS_MEDIAWIKI ) ) {
-				$contentReviewHelper = new Wikia\ContentReview\Helper();
-
-				if ( !$contentReviewHelper->isContentReviewTestModeEnabled() ) {
-					$revisionId = $contentReviewHelper->getReviewedRevisionIdFromText( $titleText );
-				}
-			}
-
 			if ( !is_null( $revisionId ) ) {
 				$revision = Revision::newFromId( $revisionId );
 				if ( empty( $revisionId ) ) {
@@ -235,5 +238,26 @@ abstract class ResourceLoaderGlobalWikiModule extends ResourceLoaderWikiModule {
 		} else {
 			return parent::getResourceName($title,$titleText,$options);
 		}
+	}
+
+	private function getRevisionId( Title $title, $options ) {
+		global $wgEnableContentReviewExt;
+
+		$revisionId = null;
+		$wikiId = 0;
+
+		if ( $wgEnableContentReviewExt && $options['type'] === 'script' && $title->inNamespace( NS_MEDIAWIKI ) ) {
+			$contentReviewHelper = new Wikia\ContentReview\Helper();
+
+			if ( $title instanceof GlobalTitle ) {
+				$wikiId = $title->getCityId();
+			}
+
+			if ( !$contentReviewHelper->isContentReviewTestModeEnabled( $wikiId ) ) {
+				$revisionId = $contentReviewHelper->getReviewedRevisionId( $title->getArticleID(), $wikiId );
+			}
+		}
+
+		return $revisionId;
 	}
 }

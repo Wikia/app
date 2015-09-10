@@ -82,14 +82,15 @@ class Helper extends \ContextSource {
 		return $maxTimestamp;
 	}
 
-	public function getReviewedRevisionIdFromText( $pageName ) {
+	public function getReviewedRevisionId( $pageId, $wikiId = 0 ) {
 		global $wgCityId;
 
-		$title = \Title::newFromText( $pageName );
-		$pageId = $title->getArticleID();
+		if ( empty( $wikiId ) ) {
+			$wikiId = $wgCityId;
+		}
 
 		$currentRevisionModel = new Models\CurrentRevisionModel();
-		$revision = $currentRevisionModel->getLatestReviewedRevision( $wgCityId, $pageId );
+		$revision = $currentRevisionModel->getLatestReviewedRevision( $wikiId, $pageId );
 
 		if ( is_null( $revision['revision_id'] ) ) {
 			return 0;
@@ -138,11 +139,15 @@ class Helper extends \ContextSource {
 		}
 	}
 
-	public function isContentReviewTestModeEnabled() {
+	public function isContentReviewTestModeEnabled( $wikiId = 0 ) {
 		global $wgCityId;
 
+		if ( empty( $wikiId ) ) {
+			$wikiId = $wgCityId;
+		}
+
 		$wikisIds = $this->getContentReviewTestModeWikis();
-		return ( !empty( $wikisIds ) && in_array( $wgCityId, $wikisIds ) );
+		return ( !empty( $wikisIds ) && in_array( $wikiId, $wikisIds ) );
 	}
 
 	public static function isStatusAwaiting( $status ) {

@@ -401,6 +401,7 @@ class GlobalTitle extends Title {
 				__METHOD__ );
 		}
 
+
 		if( !$row && wfGetLB()->getServerCount() > 1 ) {
 			// Possible slave lag!
 			$dbw = $this->getConnection( DB_MASTER );
@@ -415,6 +416,20 @@ class GlobalTitle extends Title {
 		if ( !is_string($text) ) {
 			$text = false;
 		}
+		return $text;
+	}
+
+	/**
+	 * Returns text from revision id
+	 *
+	 * @param int $revisionId
+	 * @return false|String
+	 */
+	public function getRevisionText( $revisionId ) {
+		$db = wfGetDB( DB_SLAVE, [], $this->getDatabaseName() );
+		$revision = Revision::loadFromId( $db, $revisionId );
+		$text = $this->getContentByTextId( $revision->getTextId() );
+
 		return $text;
 	}
 
