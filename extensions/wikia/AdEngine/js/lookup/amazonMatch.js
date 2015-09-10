@@ -27,14 +27,16 @@ define('ext.wikia.adEngine.lookup.amazonMatch', [
 			],
 			'3x5': ['MOBILE_TOP_LEADERBOARD'],
 			'3x6': ['TOP_RIGHT_BOXAD', 'HOME_TOP_RIGHT_BOXAD', 'HUB_TOP_RIGHT_BOXAD'],
-			'7x9': ['TOP_LEADERBOARD', 'HOME_TOP_LEADERBOARD', 'HUB_TOP_LEADERBOARD']
+			'7x9': ['TOP_LEADERBOARD', 'HOME_TOP_LEADERBOARD', 'HUB_TOP_LEADERBOARD'],
+			'9x2': ['TOP_LEADERBOARD', 'HOME_TOP_LEADERBOARD', 'HUB_TOP_LEADERBOARD']
 		},
 		bestPricePointForSize = {
 			'1x6': null,
 			'3x2': null,
 			'3x5': null,
 			'3x6': null,
-			'7x9': null
+			'7x9': null,
+			'9x2': null
 		},
 		module;
 
