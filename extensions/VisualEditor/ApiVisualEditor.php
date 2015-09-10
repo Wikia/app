@@ -46,17 +46,6 @@ class ApiVisualEditor extends ApiBase {
 		return $vers;
 	}
 
-	// Wikia change
-	/**
-	 * @protected
-	 * @description Simple helper to retrieve relevant host
-	 * @return String
-	 */
-	protected function getApiSource() {
-		global $wgCanonicalServer;
-		return parse_url($wgCanonicalServer)['host'];
-	}
-
 	/**
 	 * Creates the virtual REST service object to be used in VE's API calls. The
 	 * method determines whether to instantiate a ParsoidVirtualRESTService or a
@@ -68,6 +57,7 @@ class ApiVisualEditor extends ApiBase {
 	 * @return VirtualRESTService the VirtualRESTService object to use
 	 */
 	private function getVRSObject() {
+		global $wgVirtualRestConfig;
 		// the params array to create the service object with
 		$params = array();
 		// the VRS class to use, defaults to Parsoid
@@ -75,10 +65,7 @@ class ApiVisualEditor extends ApiBase {
 		$config = $this->veConfig;
 
 		// the global virtual rest service config object, if any
-		// ve-upstream-sync - review - @author: Paul Oslund
-		// $this->getConfig() is from a newer version of MediaWiki
-		// $vrs = $this->getConfig()->get( 'VirtualRestConfig' );
-		$vrs = [];
+		$vrs = $wgVirtualRestConfig;
 		if ( isset( $vrs['modules'] ) && isset( $vrs['modules']['restbase'] ) ) {
 			// if restbase is available, use it
 			$params = $vrs['modules']['restbase'];
@@ -92,7 +79,6 @@ class ApiVisualEditor extends ApiBase {
 			// no global modules defined, fall back to old defaults
 			$params = array(
 				'URL' => $config->get( 'VisualEditorParsoidURL' ),
-				'domain' => $this->getApiSource(),
 				'prefix' => $config->get( 'VisualEditorParsoidPrefix' ),
 				'timeout' => $config->get( 'VisualEditorParsoidTimeout' ),
 				'HTTPProxy' => $config->get( 'VisualEditorParsoidHTTPProxy' ),

@@ -394,6 +394,9 @@ if ( $wgCanonicalServer === false ) {
 	$wgCanonicalServer = wfExpandUrl( $wgServer, PROTO_HTTP );
 }
 
+// Setup default domain for VirtualRest
+$wgVirtualRestConfig['global']['domain'] = $wgCanonicalServer;
+
 wfProfileIn( $fname . '-misc1' );
 
 # Raise the memory limit if it's too low
