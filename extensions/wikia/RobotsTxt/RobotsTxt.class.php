@@ -2,8 +2,8 @@
 
 class RobotsTxt {
 
-	//// Caching for 1 hour in case this does a lot of damage and we need to revert quickly
-	//// In the long run, we can for longer, much longer
+	// Caching for 1 hour in case this does a lot of damage and we need to revert quickly
+	// In the long run, we can for longer, much longer
 	const CACHE_PERIOD = 3600;
 
 	private $allowed = [];
