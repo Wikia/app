@@ -154,6 +154,7 @@ $wgResourceModules += array(
 			've/ui/widgets/ve.ui.WikiaTemplateSearchWidget.js',
 			've/ui/widgets/ve.ui.WikiaTemplateOptionWidget.js',
 			've/ui/widgets/ve.ui.WikiaTemplateGetInfoWidget.js',
+			've/ui/widgets/ve.ui.WikiaInsertInfoboxEmptyStateWidget.js',
 			've/ui/pages/ve.ui.WikiaParameterPage.js',
 
 		),

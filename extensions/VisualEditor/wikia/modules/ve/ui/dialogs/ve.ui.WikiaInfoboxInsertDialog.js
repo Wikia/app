@@ -139,7 +139,7 @@ ve.ui.WikiaInfoboxInsertDialog.prototype.insertInfoboxTemplate = function () {
 };
 
 /**
- * @desc creates infobox item option wiget
+ * @desc creates infobox item option widget
  * @param {Object} data
  * @returns {OO.ui.DecoratedOptionWidget}
  */
@@ -181,9 +181,10 @@ ve.ui.WikiaInfoboxInsertDialog.prototype.createDialogContent = function ( data )
 		} );
 		deferred.resolve( this.select.$element );
 	} else {
+		// creates empty state content
 		this.getUnconvertedInfoboxes()
-			.then(this.createEmptyState)
-			.then(deferred.resolve)
+			.then( this.createEmptyStateContent.bind( this ) )
+			.then( deferred.resolve )
 	}
 
 	return deferred.promise();
@@ -194,7 +195,8 @@ ve.ui.WikiaInfoboxInsertDialog.prototype.createDialogContent = function ( data )
  * @returns {Promise}
  */
 ve.ui.WikiaInfoboxInsertDialog.prototype.getUnconvertedInfoboxes = function () {
-	var deferred = $.Deferred();
+	var deferred = $.Deferred(),
+		self = this;
 
 	ve.init.target.constructor.static.apiRequest( {
 		action: 'query',
@@ -202,11 +204,7 @@ ve.ui.WikiaInfoboxInsertDialog.prototype.getUnconvertedInfoboxes = function () {
 	} )
 		.done( function ( data ) {
 			deferred.resolve(
-				data.query &&
-				data.query.unconvertedinfoboxes &&
-				data.query.unconvertedinfoboxes.length > 0 ?
-					data.query.unconvertedinfoboxes :
-					[]
+				self.validateGetUnconvertedInfoboxesResponseData( data ) ? data.query.unconvertedinfoboxes : []
 			);
 		} )
 		.fail( function () {
@@ -217,25 +215,26 @@ ve.ui.WikiaInfoboxInsertDialog.prototype.getUnconvertedInfoboxes = function () {
 };
 
 /**
- * @desc returns empty stage message
+ * @desc validates get unconverted infoboxes response data
+ * @param {Object} data
+ * @returns {Boolean}
+ */
+ve.ui.WikiaInfoboxInsertDialog.prototype.validateGetUnconvertedInfoboxesResponseData = function ( data ) {
+	return data.query && data.query.unconvertedinfoboxes && data.query.unconvertedinfoboxes.length > 0;
+};
+
+/**
+ * @desc creates empty state dialog content
  * @param {Array} unconvertedInfoboxes
  * @returns {Promise}
  */
-ve.ui.WikiaInfoboxInsertDialog.prototype.createEmptyState = function ( unconvertedInfoboxes ) {
+ve.ui.WikiaInfoboxInsertDialog.prototype.createEmptyStateContent = function ( unconvertedInfoboxes ) {
 	var deferred = $.Deferred(),
-		noInfoboxesHTML = '<span class="insert-infobox-empty-state">' +
-			ve.msg( 'wikia-visualeditor-dialog-infobox-insert-empty-state' ) +
-			'</span>',
-		convertOldInfoboxesHTML = '<a href="' + window.location.origin +
-			'/wiki/Special:Insights/nonportableinfoboxes" class="insert-infobox-empty-state">' +
-			ve.msg( 'wikia-visualeditor-dialog-infobox-insert-empty-state-has-unconverted-infoboxes' ) +
-			'</a>';
+		emptyStateWidget = new ve.ui.WikiaInsertInfoboxEmptyState( {
+			showInsigthsLink: unconvertedInfoboxes.length > 0
+		} );
 
-	deferred.resolve(
-		unconvertedInfoboxes.length === 0 ?
-			noInfoboxesHTML :
-		noInfoboxesHTML + convertOldInfoboxesHTML
-	);
+	deferred.resolve( emptyStateWidget.$element );
 
 	return deferred.promise();
 };
