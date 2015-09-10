@@ -29,11 +29,7 @@ define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 		$(window).on('message.authModal', function (event) {
 			var e = event.originalEvent;
 
-			if (typeof e.data === 'undefined' || typeof e.data.isUserAuthorized === 'undefined') {
-				return;
-			}
-
-			if (e.data.isUserAuthorized) {
+			if (typeof e.data !== 'undefined' && e.data.isUserAuthorized) {
 				close();
 				if (typeof onAuthSuccess === 'function') {
 					onAuthSuccess();
