@@ -170,11 +170,11 @@ ve.ui.WikiaInfoboxInsertDialog.prototype.createInfoboxSelectWidget = function ( 
  */
 ve.ui.WikiaInfoboxInsertDialog.prototype.createDialogContent = function ( data ) {
 	var deferred = $.Deferred(),
-		infoboxes = data.query ? data.query.allinfoboxes : [],
-		items = infoboxes.map( this.createInfoboxItemOptionWidget );
+		infoboxTemplatesData = data.query ? data.query.allinfoboxes : [],
+		infoboxTemplateOptionWidgets = infoboxTemplatesData.map( this.createInfoboxItemOptionWidget );
 
-	if ( items.length > 0 ) {
-		this.select = this.createInfoboxSelectWidget( items );
+	if ( infoboxTemplateOptionWidgets.length > 0 ) {
+		this.select = this.createInfoboxSelectWidget( infoboxTemplateOptionWidgets );
 
 		this.select.connect( this, {
 			select: 'onInfoboxTemplateSelect'
