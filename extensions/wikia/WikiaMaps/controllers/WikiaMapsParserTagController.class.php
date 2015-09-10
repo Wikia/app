@@ -19,7 +19,7 @@ class WikiaMapsParserTagController extends WikiaParserTagController {
 	private $mapsModel;
 
 	protected $tagAttributes = [
-		'map-id' => 'id',
+		'id' => 'map-id',
 		'lat' => 'lat',
 		'lon' => 'lon',
 		'zoom' => 'zoom',
@@ -215,13 +215,13 @@ class WikiaMapsParserTagController extends WikiaParserTagController {
 	 * @desc Small factory method to create validators for params; returns false if validator can't be created
 	 *
 	 * @param String $paramName
-	 * @return bool|WikiaValidator
+	 * @return WikiaValidator
 	 */
 	protected function buildParamValidator( $paramName ) {
 		$validator = new WikiaValidatorAlwaysTrue();
 
 		switch( $paramName ) {
-			case 'id':
+			case 'map-id':
 				$validator = new WikiaValidatorInteger(
 					[ 'required' => true ],
 					[ 'not_int' => 'wikia-interactive-maps-parser-tag-error-invalid-map-id' ]
