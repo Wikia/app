@@ -10,7 +10,6 @@ class SoundCloudTagController extends WikiaParserTagController {
 	}
 
 	public function renderTag( $input, array $args, Parser $parser, PPFrame $frame ) {
-
 		return Html::element(
 			'iframe',
 			$this->prepareAttributes( $args ),
@@ -19,15 +18,11 @@ class SoundCloudTagController extends WikiaParserTagController {
 	}
 
 	private function prepareAttributes( array $args ) {
-		$allowedArgs = ['width', 'height', 'scrolling', 'frameborder'];
+		$allowedArgs = ['width', 'height', 'scrolling', 'frameborder', 'src'];
 		$attributes = [];
 
 		if ( array_key_exists('style', $args) ) {
 			$attributes['style'] = Sanitizer::checkCss( $args['style'] );
-		}
-
-		if ( array_key_exists('src', $args) ) {
-			$attributes['src'] = $args['src'];
 		}
 
 		foreach ( $allowedArgs as $name ) {
