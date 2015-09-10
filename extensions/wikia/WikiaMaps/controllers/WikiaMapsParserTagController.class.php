@@ -193,22 +193,18 @@ class WikiaMapsParserTagController extends WikiaParserTagController {
 	 * @return String
 	 */
 	public function validateParseTagParams( Array $params, &$errorMessage ) {
-		$isValid = false;
-
 		if( empty( $params ) ) {
 			$errorMessage = wfMessage( 'wikia-interactive-maps-parser-tag-error-no-require-parameters' )->plain();
-			return $isValid;
+			return false;
 		}
 
 		$errorMessages = $this->validateAttributes( $params );
-
 		if( !empty( $errorMessages ) ) {
 			$errorMessage = $errorMessages[0];
-		} else {
-			$isValid = true;
+			return false;
 		}
 
-		return $isValid;
+		return true;
 	}
 
 	/**
