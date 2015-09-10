@@ -10,34 +10,24 @@ class FliteTagController extends WikiaParserTagController {
 		return self::PARSER_TAG_NAME;
 	}
 
-	public function renderTag( $input, array $args, Parser $parser, PPFrame $frame ) {
-		$markerId = $this->generateMarkerId( $parser );
-		$errorMessages = $this->validateAttributes( $args );
-
-		if( !empty( $errorMessages ) ) {
-			$this->addMarkerOutput( $markerId, $this->sendRequest(
-				'FliteTagController',
-				'fliteTagError',
-				[ 'errorMessages' => $errorMessages ]
-			) );
-		} else {
-			$this->addMarkerOutput( $markerId, $this->sendRequest(
-				'FliteTagController',
-				'fliteAdUnit',
-				[
-					'guid' => $args['guid'],
-					'width' => $args['width'],
-					'height' => $args['height'],
-				]
-			) );
-		}
-
-		return $markerId;
+	protected function getErrorOutput( $errorMessages ) {
+		return $this->sendRequest(
+			'FliteTagController',
+			'fliteTagError',
+			[ 'errorMessages' => $errorMessages ]
+		);
 	}
 
-	public function onParserAfterTidy( Parser &$parser, &$text ) {
-		$text = strtr( $text, $this->getMarkers() );
-		return true;
+	protected function getSuccessOutput( $args ) {
+		return $this->sendRequest(
+			'FliteTagController',
+			'fliteAdUnit',
+			[
+				'guid' => $args['guid'],
+				'width' => $args['width'],
+				'height' => $args['height'],
+			]
+		);
 	}
 
 	protected function buildParamValidator( $paramName ) {

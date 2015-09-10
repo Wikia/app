@@ -38,16 +38,40 @@ abstract class WikiaParserTagController extends WikiaController {
 
 	abstract public function getTagName();
 
-	abstract public function renderTag( $input, array $args, Parser $parser, PPFrame $frame );
+	abstract protected function getErrorOutput( $errorMessages );
+
+	abstract protected function getSuccessOutput( $args );
 
 	/**
-	 * @desc Hook function registered in $wgHooks['ParserAfterTidy'][] which should always return true
+	 * @desc Factory method to create validators for params
+	 * if should return WikiaValidatorAlwaysTrue if validator can't be created or won't be used
 	 *
-	 * @param Parser $parser
-	 * @param String $text
-	 * @return Boolean true
+	 * @param String $paramName
+	 * @return WikiaValidator
 	 */
-	abstract public function onParserAfterTidy( Parser &$parser, &$text );
+	abstract protected function buildParamValidator( $paramName );
+
+	protected function registerResourceLoaderModules( Parser $parser ) {
+	}
+
+	public final function renderTag( $input, array $args, Parser $parser, PPFrame $frame ) {
+		$this->registerResourceLoaderModules( $parser );
+		$markerId = $this->generateMarkerId( $parser );
+		$errorMessages = $this->validateAttributes( $args );
+
+		if( !empty( $errorMessages ) ) {
+			$this->addMarkerOutput( $markerId, $this->getErrorOutput( $errorMessages ));
+		} else {
+			$this->addMarkerOutput( $markerId, $this->getSuccessOutput( $args ) );
+		}
+
+		return $markerId;
+	}
+
+	public final function onParserAfterTidy( Parser &$parser, &$text ) {
+		$text = strtr( $text, $this->getMarkers() );
+		return true;
+	}
 
 	/**
 	 * @desc Checks if all parameters from tag are valid
@@ -82,15 +106,6 @@ abstract class WikiaParserTagController extends WikiaController {
 
 		return $errorMessages;
 	}
-
-	/**
-	 * @desc Factory method to create validators for params
-	 * if should return WikiaValidatorAlwaysTrue if validator can't be created or won't be used
-	 *
-	 * @param String $paramName
-	 * @return WikiaValidator
-	 */
-	abstract protected function buildParamValidator( $paramName );
 
 	/**
 	 * @desc Generates unique strings which will be placed instead of tags
