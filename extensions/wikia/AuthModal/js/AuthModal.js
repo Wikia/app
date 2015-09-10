@@ -25,9 +25,15 @@ define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 			label: 'username-login-modal'
 		});
 
-		$(window.document).keyup(onKeyUp);
-		window.addEventListener('message', function (event) {
-			if (event.data.isUserAuthorized) {
+		$(window).on('keyup.authModal', document, onKeyUp);
+		$(window).on('message.authModal', function (event) {
+			var e = event.originalEvent;
+
+			if (typeof e.data === 'undefined' || typeof e.data.isUserAuthorized === 'undefined') {
+				return;
+			}
+
+			if (e.data.isUserAuthorized) {
 				close();
 				if (typeof onAuthSuccess === 'function') {
 					onAuthSuccess();
@@ -67,6 +73,8 @@ define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 			$blackout.remove();
 			isOpen = false;
 		}
+
+		$(window.document).add(window).off('.authModal');
 	}
 
 	function onPageLoaded () {
