@@ -5,7 +5,7 @@ namespace Wikia\Persistence\User\Preferences;
 use Swagger\Client\ApiException;
 use Swagger\Client\User\Preferences\Api\UserPreferencesApi;
 use Swagger\Client\User\Preferences\Models\Preference as SwaggerPreference;
-use Wikia\Domain\User\Preference;
+use Wikia\Domain\User\GlobalPreference;
 use Wikia\Service\Swagger\ApiProvider;
 use Wikia\Service\UnauthorizedException;
 
@@ -51,8 +51,8 @@ class PreferencePersistenceSwaggerServiceTest extends \PHPUnit_Framework_TestCas
 		$prefs = $this->persistence->get($this->userId);
 
 		$this->assertEquals(2, count($prefs));
-		$this->assertEquals($prefs[0], new Preference('pref1', 'val1'));
-		$this->assertEquals($prefs[1], new Preference('pref2', 'val2'));
+		$this->assertEquals($prefs[0], new GlobalPreference('pref1', 'val1'));
+		$this->assertEquals($prefs[1], new GlobalPreference('pref2', 'val2'));
 	}
 
 	public function testGetEmpty() {
@@ -73,7 +73,7 @@ class PreferencePersistenceSwaggerServiceTest extends \PHPUnit_Framework_TestCas
 			->with($this->userId, [(new SwaggerPreference())->setName("pref1")->setValue("val1")])
 			->willReturn(true);
 
-		$this->assertTrue($this->persistence->save($this->userId, [new Preference("pref1", "val1")]));
+		$this->assertTrue($this->persistence->save($this->userId, [new GlobalPreference("pref1", "val1")]));
 	}
 
 	/**
@@ -85,7 +85,7 @@ class PreferencePersistenceSwaggerServiceTest extends \PHPUnit_Framework_TestCas
 			->with($this->userId, [(new SwaggerPreference())->setName("pref1")->setValue("val1")])
 			->willThrowException(new ApiException("", UnauthorizedException::CODE));
 
-		$this->persistence->save($this->userId, [new Preference("pref1", "val1")]);
+		$this->persistence->save($this->userId, [new GlobalPreference("pref1", "val1")]);
 	}
 
 	/**
@@ -97,7 +97,7 @@ class PreferencePersistenceSwaggerServiceTest extends \PHPUnit_Framework_TestCas
 			->with($this->userId, [(new SwaggerPreference())->setName("pref1")->setValue("val1")])
 			->willThrowException(new ApiException("", 500));
 
-		$this->persistence->save($this->userId, [new Preference("pref1", "val1")]);
+		$this->persistence->save($this->userId, [new GlobalPreference("pref1", "val1")]);
 	}
 
 	/**
