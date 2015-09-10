@@ -34,49 +34,37 @@ class WikiaMapsParserTagController extends WikiaParserTagController {
 		return self::PARSER_TAG_NAME;
 	}
 
-	public function onParserAfterTidy( Parser &$parser, &$text ) {
-		return true;
-	}
-
-	/**
-	 * @desc Based on parser tag arguments validation parsers an error or placeholder
-	 *
-	 * @param String $input
-	 * @param Array $args
-	 * @param Parser $parser
-	 * @param PPFrame $frame
-	 *
-	 * @return String
-	 */
-	public function renderTag( $input, Array $args, Parser $parser, PPFrame $frame ) {
+	protected function registerResourceLoaderModules( Parser $parser ) {
 		// register resource loader module dependencies for map parser tag
 		// done separately for CSS and JS, so CSS will go to top of the page
 		$parser->getOutput()->addModuleStyles( 'ext.wikia.WikiaMaps.ParserTag' );
 		$parser->getOutput()->addModuleScripts( 'ext.wikia.WikiaMaps.ParserTag' );
+	}
 
-		$errorMessage = '';
-		$isValid = $this->validateParseTagParams( $args, $errorMessage );
-		$params = $this->sanitizeParserTagArguments( $args );
-
-		if ( $isValid ) {
-			$params[ 'map' ] = $this->getMapObj( $params[ 'id' ] );
-
-			if ( !empty( $params [ 'map' ]->id ) ) {
-				return $this->sendRequest(
-					'WikiaMapsParserTagController',
-					'mapThumbnail',
-					$params
-				);
-			} else {
-				$errorMessage = wfMessage( 'wikia-interactive-maps-parser-tag-error-no-map-found' )->plain();
-			}
-		}
+	protected function getErrorOutput( $errorMessages ) {
+		$errorMessage = $errorMessages[0];
 
 		return $this->sendRequest(
 			'WikiaMapsParserTagController',
 			'parserTagError',
 			[ 'errorMessage' => $errorMessage ]
 		);
+	}
+
+	protected function getSuccessOutput( $args ) {
+		$params = $this->sanitizeParserTagArguments( $args );
+		$params[ 'map' ] = $this->getMapObj( $params[ 'id' ] );
+
+		if ( !empty( $params [ 'map' ]->id ) ) {
+			return $this->sendRequest(
+				'WikiaMapsParserTagController',
+				'mapThumbnail',
+				$params
+			);
+		} else {
+			$errorMessage = wfMessage( 'wikia-interactive-maps-parser-tag-error-no-map-found' )->plain();
+			return $this->getErrorOutput( [ $errorMessage ] );
+		}
 	}
 
 	/**
