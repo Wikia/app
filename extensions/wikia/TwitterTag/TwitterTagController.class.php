@@ -5,10 +5,10 @@ class TwitterTagController extends WikiaParserTagController {
 	/**
 	 * onParserFirstCallInit
 	 *
-	 * Registers the <twitter> tag with the parser and sets its callback
+	 * Registers the <twitter> tag with the parser and sets its callback.
 	 *
-	 * @param $parser - The parser
-	 * @return true
+	 * @param Parser $parser
+	 * @return bool - hooks aways have to return true
 	 */
 	static public function onParserFirstCallInit( Parser $parser ) {
 		$parser->setHook( 'twitter', [ new static(), 'parseTag' ] );
@@ -19,13 +19,13 @@ class TwitterTagController extends WikiaParserTagController {
 	 * parseTag
 	 *
 	 * Parses the twitter tag. Checks to ensure the required attributes are there.
-	 *   Then constructs the HTML after seeing which attributes are in use.
+	 * Then constructs the HTML after seeing which attributes are in use.
 	 *
-	 * @param $input - not used
-	 * @param $args - The attributes to the tag in an assoc array
-	 * @param $parser - not used
-	 * @param $frame - not used
-	 * @return $html - The HTML for the twitter tag
+	 * @param string $input - not used
+	 * @param array $args - attributes to the tag in an assoc array
+	 * @param Parser $parser - not used
+	 * @param PPFrame $frame - not used
+	 * @return string $html - HTML output for the twitter tag
 	 */
 	public function parseTag( $input, array $args, Parser $parser, PPFrame $frame ) {
 		global $wgSkinName;
