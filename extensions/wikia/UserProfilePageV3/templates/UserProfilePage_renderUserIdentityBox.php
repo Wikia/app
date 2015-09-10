@@ -13,7 +13,7 @@
 			<?php if ( $canRemoveAvatar ): ?>
 				<span>
 					<img src="<?= $wgBlankImgUrl ?>" class="sprite trash">
-					<a id="UserAvatarRemove" data-name="<?= Sanitizer::encodeAttribute( $user['name'] ); ?>" href="#" data-confirm="<?= wfMessage( 'user-identity-remove-confirmation' )->escaped(); ?>">
+					<a id="UserAvatarRemove" data-name="<?= $user['name']; ?>" href="#" data-confirm="<?= wfMessage( 'user-identity-remove-confirmation' )->escaped(); ?>">
 						<?= wfMessage( 'user-identity-box-delete-avatar' )->escaped(); ?>
 					</a>
 				</span>
@@ -23,7 +23,7 @@
 
 	<div class="masthead-info">
 		<hgroup>
-			<h1 itemprop="name"><?= htmlspecialchars( $user['name'] ); ?></h1>
+			<h1 itemprop="name"><?= $user['name']; ?></h1>
 			<? if ( !empty( $user['realName'] ) ): ?>
 				<h2><?= wfMessage( 'user-identity-box-aka-label', $user['realName'] )->plain(); ?></h2>
 			<? endif; ?>
