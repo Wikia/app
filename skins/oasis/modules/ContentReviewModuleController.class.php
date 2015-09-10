@@ -157,7 +157,7 @@ class ContentReviewModuleController extends WikiaController {
 		return $templateData;
 	}
 
-	protected function createRevisionLink( $oldId, $revisionId ) {
+	protected function createRevisionLink( $oldId, $revisionId = 0 ) {
 		$params = [];
 
 		if ( !empty( $oldId ) ) {
