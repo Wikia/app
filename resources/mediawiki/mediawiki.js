@@ -1265,10 +1265,17 @@ var mw = ( function ( $, undefined ) {
 				 * @param error {Function} callback to execute when if dependencies have a errors (optional)
 				 */
 				using: function ( dependencies, ready, error ) {
+					var deferred = $.Deferred();
 					var tod = typeof dependencies;
 					// Validate input
 					if ( tod !== 'object' && tod !== 'string' ) {
 						throw new Error( 'dependencies must be a string or an array, not a ' + tod );
+					}
+					if ( ready ) {
+						deferred.done( ready );
+					}
+					if ( error ) {
+						deferred.fail( error );
 					}
 					// Allow calling with a single dependency as a string
 					if ( tod === 'string' ) {
@@ -1278,21 +1285,20 @@ var mw = ( function ( $, undefined ) {
 					dependencies = resolve( dependencies );
 					// If all dependencies are met, execute ready immediately
 					if ( compare( filter( ['ready'], dependencies ), dependencies ) ) {
-						if ( $.isFunction( ready ) ) {
-							ready();
-						}
+						deferred.resolve();
 					}
 					// If any dependencies have errors execute error immediately
 					else if ( filter( ['error'], dependencies ).length ) {
-						if ( $.isFunction( error ) ) {
-							error( new Error( 'one or more dependencies have state "error"' ),
-								dependencies );
-						}
+						deferred.reject(
+							new Error( 'One or more dependencies failed to load' ),
+							dependencies
+						);
 					}
 					// Since some dependencies are not yet ready, queue up a request
 					else {
-						request( dependencies, ready, error );
+						request( dependencies, deferred.resolve, deferred.reject );
 					}
+					return deferred.promise();
 				},
 		
 				/**

@@ -36,8 +36,8 @@ ve.ui.MWTemplateTitleInputWidget = function VeUiMWTemplateTitleInputWidget( conf
 };
 
 /* Inheritance */
-
-OO.inheritClass( ve.ui.MWTemplateTitleInputWidget, mw.widgets.TitleInputWidget );
+// ve-upstream-sync - review - @author: Inez Korczyński
+OO.inheritClass( ve.ui.MWTemplateTitleInputWidget, OO.ui.TextInputWidget );
 
 /* Methods */
 

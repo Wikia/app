@@ -87,11 +87,11 @@ class VisualEditorDataModule extends ResourceLoaderModule {
 		);
 
 		// Copyright warning (based on EditPage::getCopyrightWarning)
-		$rightsText = $this->config->get( 'RightsText' );
-		if ( $rightsText ) {
+		global $wgRightsText;
+		if ( $wgRightsText ) {
 			$copywarnMsg = array( 'copyrightwarning',
 				'[[' . wfMessage( 'copyrightpage' )->inContentLanguage()->text() . ']]',
-				$rightsText );
+				$wgRightsText );
 		} else {
 			$copywarnMsg = array( 'copyrightwarning2',
 				'[[' . wfMessage( 'copyrightpage' )->inContentLanguage()->text() . ']]' );

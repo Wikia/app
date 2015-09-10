@@ -111,7 +111,7 @@
 			ve.track( 'trace.apiLoad.enter' );
 
 			apiXhr = new mw.Api().get( data );
-			apiPromise = apiXhr.then( function ( data, jqxhr ) {
+			apiPromise = apiXhr.then( function ( data, status, jqxhr ) {
 				ve.track( 'trace.apiLoad.exit' );
 				ve.track( 'mwtiming.performance.system.apiLoad', {
 					bytes: $.byteLength( jqxhr.responseText ),
