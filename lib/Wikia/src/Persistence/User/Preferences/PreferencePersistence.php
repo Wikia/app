@@ -2,7 +2,7 @@
 
 namespace Wikia\Persistence\User\Preferences;
 
-use Wikia\Domain\User\Preference;
+use Wikia\Domain\User\GlobalPreference;
 use Wikia\Service\PersistenceException;
 use Wikia\Service\UnauthorizedException;
 
@@ -12,7 +12,7 @@ interface PreferencePersistence {
 	 * Save the users preferences.
 	 *
 	 * @param int $userId
-	 * @param Preference[] $preferences
+	 * @param GlobalPreference[] $preferences
 	 * @return true success, false or exception otherwise
 	 * @throws PersistenceException
 	 * @throws UnauthorizedException
