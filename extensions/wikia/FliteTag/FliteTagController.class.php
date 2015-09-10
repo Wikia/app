@@ -56,7 +56,7 @@ class FliteTagController extends WikiaParserTagController {
 				$validator = $this->buildSizeValidator('width');
 				break;
 			case 'height':
-				$validator = $this->buildSizeValidator('width');
+				$validator = $this->buildSizeValidator('height');
 				break;
 		}
 
