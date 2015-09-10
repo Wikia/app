@@ -247,7 +247,6 @@ ve.ui.WikiaInfoboxInsertDialog.prototype.setDialogContent = function ( $content 
 	this.$body.html( $content );
 };
 
-
 /**
  * Insert prepared linear model to surface.
  */
