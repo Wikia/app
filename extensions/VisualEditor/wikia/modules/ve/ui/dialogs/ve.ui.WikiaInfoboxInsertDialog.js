@@ -127,7 +127,7 @@ ve.ui.WikiaInfoboxInsertDialog.prototype.getInfoboxTemplates = function () {
 					action: ve.track.actions.ERROR,
 					label: 'infobox-templates-api'
 				} );
-				deferred.resolve( [] );
+				deferred.resolve( {} );
 			} );
 		this.gettingTemplateNames = deferred.promise();
 	}
@@ -165,16 +165,38 @@ ve.ui.WikiaInfoboxInsertDialog.prototype.showResults = function ( data ) {
 		infoboxes = data.query ? data.query.allinfoboxes : [];
 
 	if ( infoboxes.length > 0 ) {
+		this.sortTemplateTitles.apply( this, [infoboxes] );
 		for ( i = 0; i < infoboxes.length; i++ ) {
 			items.push(
 				new OO.ui.DecoratedOptionWidget({
 					data: infoboxes[i].title,
-					label:  infoboxes[i].title
+					label:  infoboxes[i].label
 				})
 			);
 		}
 		this.select.addItems( items );
 	}
+};
+
+/**
+ * Sort template titles alphabetically
+ *
+ * @param array of infoboxes
+ */
+ve.ui.WikiaInfoboxInsertDialog.prototype.sortTemplateTitles = function ( infoboxes ) {
+	var title1, title2;
+
+	return infoboxes.sort( function ( template1, template2 ) {
+		title1 = template1.title;
+		title2 = template2.title;
+
+		if ( title1 < title2 ) {
+			return -1;
+		} else if ( title1 > title2 ) {
+			return 1;
+		}
+		return 0;
+	});
 };
 
 /**
