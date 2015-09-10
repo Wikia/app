@@ -25,14 +25,16 @@ define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 			label: 'username-login-modal'
 		});
 
-		$(window).on('keyup.authModal', document, onKeyUp);
-		$(window).on('message.authModal', function (event) {
-			var e = event.originalEvent;
+		$(window).on({
+			'keyup.authModal' : onKeyUp,
+			'message.authModal': function (event) {
+				var e = event.originalEvent;
 
-			if (typeof e.data !== 'undefined' && e.data.isUserAuthorized) {
-				close();
-				if (typeof onAuthSuccess === 'function') {
-					onAuthSuccess();
+				if (typeof e.data !== 'undefined' && e.data.isUserAuthorized) {
+					close();
+					if (typeof onAuthSuccess === 'function') {
+						onAuthSuccess();
+					}
 				}
 			}
 		});
@@ -70,7 +72,7 @@ define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 			isOpen = false;
 		}
 
-		$(window.document).add(window).off('.authModal');
+		$(window).off('.authModal');
 	}
 
 	function onPageLoaded () {
