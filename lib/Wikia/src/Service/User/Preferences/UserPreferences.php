@@ -55,6 +55,22 @@ class UserPreferences {
 		}
 	}
 
+	public function getLocalPreference($userId, $wikiId, $default = null, $ignoreHidden = false) {
+
+	}
+
+	public function setLocalPreference($userId, $wikiId, $name, $value) {
+
+	}
+
+	public function getGlobalPreference($userId, $name, $default = null, $ignoreHidden = false) {
+
+	}
+
+	public function setGlobalPreference($userId, $name, $value) {
+
+	}
+
 	public function get($userId, $pref, $default = null, $ignoreHidden = false) {
 		$preferences = $this->load($userId);
 

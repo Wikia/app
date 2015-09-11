@@ -2,12 +2,11 @@
 
 namespace Wikia\Domain\User;
 
-use Wikia\Util\Assert;
-
 class Preferences {
 
     /** @var GlobalPreference[] */
     private $globalPreferences;
+
     /** @var LocalPreference[] */
     private $localPreferences;
 
