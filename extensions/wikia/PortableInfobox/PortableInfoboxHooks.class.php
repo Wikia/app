@@ -2,8 +2,9 @@
 
 class PortableInfoboxHooks {
 	const PARSER_TAG_GALLERY = 'gallery';
+	const INFOBOX_BUILDER_SPECIAL_PAGE = 'Special:PortableInfoboxBuilder';
 
-	static public function onBeforePageDisplay( OutputPage $out, Skin $skin ) {
+	public static function onBeforePageDisplay( OutputPage $out, Skin $skin ) {
 		if ( F::app()->checkSkin( 'monobook', $skin ) ) {
 			Wikia::addAssetsToOutput( 'portable_infobox_monobook_scss' );
 		} else {
@@ -13,7 +14,7 @@ class PortableInfoboxHooks {
 		return true;
 	}
 
-	static public function onImageServingCollectImages( &$imageNamesArray, $articleTitle ) {
+	public static function onImageServingCollectImages( &$imageNamesArray, $articleTitle ) {
 		if ( $articleTitle ) {
 			$infoboxImages = PortableInfoboxDataService::newFromTitle( $articleTitle )->getImages();
 			if ( !empty( $infoboxImages ) ) {
@@ -36,7 +37,7 @@ class PortableInfoboxHooks {
 	 *
 	 * @return bool
 	 */
-	static public function onParserTagHooksBeforeInvoke( $name, $marker, $content, $attributes, $parser, $frame ) {
+	public static function onParserTagHooksBeforeInvoke( $name, $marker, $content, $attributes, $parser, $frame ) {
 		if ( $name === self::PARSER_TAG_GALLERY ) {
 			\Wikia\PortableInfobox\Helpers\PortableInfoboxDataBag::getInstance()->setGallery( $marker, $content );
 		}
@@ -44,7 +45,7 @@ class PortableInfoboxHooks {
 		return true;
 	}
 
-	static public function onWgQueryPages( &$queryPages = [ ] ) {
+	public static function onWgQueryPages( &$queryPages = [ ] ) {
 		$queryPages[] = [ 'AllinfoboxesQueryPage', 'AllInfoboxes' ];
 
 		return true;
@@ -52,6 +53,51 @@ class PortableInfoboxHooks {
 
 	static public function onAllInfoboxesQueryRecached() {
 		F::app()->wg->Memc->delete( wfMemcKey( ApiQueryAllinfoboxes::MCACHE_KEY ) );
+		return true;
+	}
+
+	/**
+	 * @param $article
+	 * @param $text
+	 * @param $wgOut
+	 *
+	 * @return bool
+	 */
+	public static function onArticleNonExistentPage( Article $article, OutputPage $wgOut, $text ) {
+		$title = $article->getTitle();
+		if ( $title && !$title->exists() && $title->inNamespace( NS_TEMPLATE ) && $title->userCan( 'edit' ) ) {
+			$HTML = F::app()->renderView(
+				'PortableInfoboxBuilderSpecialController',
+				'renderCreateTemplateEntryPoint',
+				[ 'title' => $title->getText() ]
+			);
+			$wgOut->clearHTML();
+			$wgOut->addHTML( $HTML );
+			// we don't want to add anything else, it also stops parser
+			// (see Article.php:wfRunHook(ArticleNonExistentPage))
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
+	 * @param Skin $skin
+	 * @param string $text
+	 *
+	 * @return bool
+	 */
+	public static function onSkinAfterBottomScripts( $skin, &$text ) {
+		$title = $skin->getTitle();
+
+		if ( $title && $title->isSpecial( PortableInfoboxBuilderSpecialController::PAGE_NAME ) ) {
+			$scripts = AssetsManager::getInstance()->getURL( 'portable_infobox_builder_js' );
+
+			foreach ( $scripts as $script ) {
+				$text .= Html::linkedScript( $script );
+			}
+		}
+
 		return true;
 	}
 }

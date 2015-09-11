@@ -84,6 +84,7 @@ class AdminDashboardLogic {
 				"PhalanxStats",
 				"Places",
 				"Play",
+				"PortableInfoboxBuilder",
 				"Preferences",
 				"PromoteImageReview",
 				"ScavengerHunt",

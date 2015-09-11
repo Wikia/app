@@ -2455,6 +2455,15 @@ $config['poweruser'] = [
 	]
 ];
 
+$config[ 'portable_infobox_builder_js' ] = [
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//resources/wikia/libraries/Ponto/ponto.js',
+		'//extensions/wikia/PortableInfobox/js/PortableInfoboxBuilderPonto.js',
+		'//extensions/wikia/PortableInfobox/js/PortableInfoboxBuilder.js'
+	]
+];
+
 $config['portable_infobox_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => ['oasis'],
