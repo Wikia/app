@@ -27,6 +27,14 @@ class Preferences {
 		$this->localPreferences[$preference->getName()] = $preference;
 	}
 
+	public function getGlobalPreference($name) {
+		if (isset($this->globalPreferences[$name])) {
+			return $this->globalPreferences[$name];
+		}
+
+		return null;
+	}
+
 	/**
 	 * @return GlobalPreference[]
 	 */

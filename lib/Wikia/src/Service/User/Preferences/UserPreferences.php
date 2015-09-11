@@ -75,10 +75,15 @@ class UserPreferences {
 
 		if (!$preferences) {
 			$preferences = new Preferences();
-			foreach ($this->defaultPreferences as $name => $val) {
+		}
+
+		foreach ($this->defaultPreferences as $name => $val) {
+			if ($preferences->getGlobalPreference($name) == null) {
 				$preferences->setGlobalPreference(new GlobalPreference($name, $val));
 			}
 		}
+
+		$this->preferences[$userId] = $preferences;
 	}
 
 	public function saveToCache($userId) {
