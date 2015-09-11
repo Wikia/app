@@ -10,7 +10,7 @@ $messages['en'] = array(
 	'global-footer-vertical-games-link' => 'http://gameshub.wikia.com/wiki/Games_Hub',
 	'global-footer-vertical-lifestyle-link' => 'http://lifestylehub.wikia.com/wiki/Lifestyle_Hub',
 	'global-footer-desc' => 'GlobalFooter',
-	'global-footer-global-sitemap' => 'Global Sitemap',
+	'global-footer-global-sitemap' => '{{int:sitemap-page-header}}',
 	'global-footer-local-sitemap' => 'Local Sitemap',
 	'shared-Oasis-footer-wikia-links' => '*http://www.wikia.com/About|<span>About</span>
 		*http://community.wikia.com/wiki/Help:Contents|Help
@@ -88,7 +88,6 @@ $messages['de'] = array(
 * [[Special:Contact|Kontakt]]
 * [http://www.wikia.com/wiki/Wikia:Advertising_on_Wikia Auf Wikia werben]',
 	'global-footer-desc' => 'GlobalFooter',
-	'global-footer-global-sitemap' => 'Globale Sitemap',
 	'global-footer-local-sitemap' => 'Lokale Sitemap',
 );
 
@@ -117,7 +116,6 @@ $messages['es'] = array(
 		* [[Special:Contact|Contactar]]
 		* [http://mediakit.wikia.com/wiki/Contact Publicidad]',
 	'global-footer-desc' => 'Footer Global',
-	'global-footer-global-sitemap' => 'Mapa del sitio global',
 	'global-footer-local-sitemap' => 'Mapa del sitio local',
 );
 
@@ -169,7 +167,6 @@ $messages['fr'] = array(
 	'global-footer-vertical-comics-link' => 'http://comicshub.wikia.com/wiki/Comics_Hub',
 	'global-footer-vertical-music-link' => 'http://musichub.wikia.com/wiki/Music_Hub',
 	'global-footer-desc' => 'GlobalFooter',
-	'global-footer-global-sitemap' => 'Plan du site - Global',
 	'global-footer-local-sitemap' => 'Plan du site - Local',
 );
 
@@ -201,7 +198,6 @@ $messages['it'] = array(
 	'global-footer-vertical-games-link' => 'http://gameshub.wikia.com/wiki/Games_Hub',
 	'global-footer-vertical-lifestyle-link' => 'http://lifestylehub.wikia.com/wiki/Lifestyle_Hub',
 	'global-footer-desc' => 'GlobalFooter',
-	'global-footer-global-sitemap' => 'Mappa del sito globale',
 	'global-footer-local-sitemap' => 'Mappa del sito locale',
 );
 
@@ -230,7 +226,6 @@ $messages['ja'] = array(
 		* [http://www.wikia.com/wiki/Wikia:Terms_of_use Terms of use]
 		* [[Special:Contact|Contact]]
 		* [http://www.wikia.com/wiki/Wikia:Advertising_on_Wikia Advertise]',
-	'global-footer-global-sitemap' => 'グローバル・サイトマップ',
 	'global-footer-local-sitemap' => 'ローカル・サイトマップ',
 );
 
@@ -272,7 +267,6 @@ $messages['nl'] = array(
 		* [http://www.wikia.com/wiki/Wikia:Terms_of_use Terms of use]
 		* [[Special:Contact|Contact]]
 		* [http://www.wikia.com/wiki/Wikia:Advertising_on_Wikia Advertise]',
-	'global-footer-global-sitemap' => 'Global Sitemap',
 	'global-footer-local-sitemap' => 'Local Sitemap',
 );
 
@@ -301,7 +295,6 @@ $messages['pl'] = array(
 		* [[Special:Contact|Kontakt]]
 		* [http://www.wikia.com/Advertising Reklama]',
 	'global-footer-desc' => 'GlobalFooter',
-	'global-footer-global-sitemap' => 'Globalna Mapa Strony',
 	'global-footer-local-sitemap' => 'Lokalna Mapa Strony',
 );
 
@@ -330,7 +323,6 @@ $messages['pt'] = array(
 		* [http://www.wikia.com/wiki/Wikia:Termos_de_uso Termos de uso]
 		* [[Special:Contact|Contato]]
 		* [http://www.wikia.com/wiki/Wikia:Publicidade_na_Wikia Publicidade]',
-	'global-footer-global-sitemap' => 'Mapa do site global',
 	'global-footer-local-sitemap' => 'Mapa do site local',
 );
 
@@ -359,7 +351,6 @@ $messages['ru'] = array(
 	'global-footer-vertical-games-link' => 'http://ru.gameshub.wikia.com/wiki/%D0%9F%D0%BE%D1%80%D1%82%D0%B0%D0%BB_%D0%92%D0%B8%D0%B4%D0%B5%D0%BE%D0%B8%D0%B3%D1%80%D1%8B',
 	'global-footer-vertical-lifestyle-link' => 'http://ru.lifestylehub.wikia.com/wiki/%D0%9F%D0%BE%D1%80%D1%82%D0%B0%D0%BB_%D0%A3%D0%B2%D0%BB%D0%B5%D1%87%D0%B5%D0%BD%D0%B8%D1%8F',
 	'global-footer-desc' => 'GlobalFooter',
-	'global-footer-global-sitemap' => 'Глобальная карта сайта',
 	'global-footer-local-sitemap' => 'Локальная карта сайта',
 );
 
@@ -399,7 +390,6 @@ $messages['zh-hans'] = array(
 		* [http://www.wikia.com/wiki/Wikia:Terms_of_use Terms of use]
 		* [[Special:Contact|Contact]]
 		* [http://www.wikia.com/wiki/Wikia:Advertising_on_Wikia Advertise]',
-	'global-footer-global-sitemap' => '全球网站地图',
 	'global-footer-local-sitemap' => '本地网站地图',
 );
 
@@ -427,7 +417,6 @@ $messages['zh-hant'] = array(
 		* [http://www.wikia.com/wiki/Wikia:Terms_of_use Terms of use]
 		* [[Special:Contact|Contact]]
 		* [http://www.wikia.com/wiki/Wikia:Advertising_on_Wikia Advertise]',
-	'global-footer-global-sitemap' => '全球網站地圖',
 	'global-footer-local-sitemap' => '本地網站地圖',
 );
 
