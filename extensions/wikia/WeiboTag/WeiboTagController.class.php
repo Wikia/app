@@ -32,7 +32,7 @@ class WeiboTagController extends WikiaParserTagController {
 
 	public function __construct() {
 		parent::__construct();
-		$this->tagBuilderHelper = new TagBuilderHelper();
+		$this->tagBuilderHelper = new WikiaTagBuilderHelper();
 	}
 
 	public static function onParserFirstCallInit( Parser $parser ) {
@@ -45,7 +45,7 @@ class WeiboTagController extends WikiaParserTagController {
 			self::TAG_SOURCE_ALLOWED_PARAMS_WITH_DEFAULTS, $args
 		);
 		$iframe = Html::element(
-			'iframe',  $this->buildTagAttributes($args), wfMessage( 'weibotag-could-not-render' )->text()
+			'iframe',  $this->buildTagAttributes( $args ), wfMessage( 'weibotag-could-not-render' )->text()
 		);
 		if ( $this->app->checkSkin( [ 'wikiamobile', 'mercury' ] ) ) {
 			return Html::rawElement( 'script',  ['type' => 'x-wikia-widget'], $iframe );
@@ -54,10 +54,10 @@ class WeiboTagController extends WikiaParserTagController {
 		}
 	}
 
-	private function buildTagAttributes($args) {
-		$attributes = $this->tagBuilderHelper->buildTagAttributes(self::TAG_SOURCE_ALLOWED_PARAMS_WITH_DEFAULTS, $args);
+	private function buildTagAttributes( $args ) {
+		$attributes = $this->tagBuilderHelper->buildTagAttributes( self::TAG_SOURCE_ALLOWED_PARAMS_WITH_DEFAULTS, $args );
 		$attributes['src'] = $this->tagBuildSource;
-		return array_merge($attributes, self::TAG_DEFAULT_ATTRIBUTES);
+		return array_merge( $attributes, self::TAG_DEFAULT_ATTRIBUTES );
 	}
 
 
