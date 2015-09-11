@@ -4,6 +4,7 @@ namespace Wikia\Service\User\Preferences;
 
 use Wikia\Cache\Memcache\Memcache;
 use Wikia\Domain\User\GlobalPreference;
+use Wikia\Domain\User\LocalPreference;
 use Wikia\Domain\User\Preferences;
 use Wikia\Logger\Loggable;
 use Wikia\Persistence\User\Preferences\PreferencePersistence;
@@ -77,13 +78,7 @@ class UserPreferences {
 			$preferences = new Preferences();
 		}
 
-		foreach ($this->defaultPreferences as $name => $val) {
-			if ($preferences->getGlobalPreference($name) == null) {
-				$preferences->setGlobalPreference(new GlobalPreference($name, $val));
-			}
-		}
-
-		$this->preferences[$userId] = $preferences;
+		$this->preferences[$userId] = $this->applyDefaults($preferences);
 	}
 
 	public function saveToCache($userId) {
@@ -107,65 +102,65 @@ class UserPreferences {
 		}
 	}
 
-	public function getLocalPreference($userId, $wikiId, $default = null, $ignoreHidden = false) {
-
-	}
-
-	public function setLocalPreference($userId, $wikiId, $name, $value) {
-
-	}
-
 	public function getGlobalPreference($userId, $name, $default = null, $ignoreHidden = false) {
+		if (in_array($name, $this->hiddenPrefs) && !$ignoreHidden) {
+			return $this->getFromDefault($name);
+		}
 
+		$preferences = $this->load($userId);
+		if ($preferences->hasGlobalPreference($name)) {
+			return $preferences->getGlobalPreference($name);
+		}
+
+		return $default;
 	}
 
 	public function setGlobalPreference($userId, $name, $value) {
-
+		$this->load($userId)->setGlobalPreference($name, $value);
 	}
 
-	public function get($userId, $pref, $default = null, $ignoreHidden = false) {
+	public function getLocalPreference($userId, $wikiId, $name, $default = null, $ignoreHidden = false) {
+		if (in_array($name, $this->hiddenPrefs) && !$ignoreHidden) {
+			return $this->getFromDefault($name);
+		}
+
 		$preferences = $this->load($userId);
-
-		if (in_array($pref, $this->hiddenPrefs) && !$ignoreHidden) {
-			return $this->getFromDefault($pref);
-		} elseif (!array_key_exists($pref, $preferences)) {
-			return $default;
+		if ($preferences->hasLocalPreference($name, $wikiId)) {
+			return $preferences->getLocalPreference($name, $wikiId);
 		}
 
-		return $preferences[$pref];
+		return $default;
+	}
+
+	public function setLocalPreference($userId, $wikiId, $name, $value) {
+		$this->load($userId)->setLocalPreference($name, $wikiId, $value);
 	}
 
 	/**
-	 * @param int $userId
-	 * @param string $pref
-	 * @param string $val
+	 * @param string $userId
 	 */
-	public function set( $userId, $pref, $val ) {
-		$this->setMultiple( $userId, [ $pref => $val ] );
-	}
+	public function save($userId) {
+		$prefs = $this->load($userId);
+		$prefsToSave = new Preferences();
 
-	/**
-	 * @param int $userId
-	 * @param array $prefs
-	 */
-	public function setMultiple( $userId, $prefs ) {
-		$currentPreferences = $this->load( $userId );
-		$prefToSave = [ ];
-
-		foreach ( $prefs as $pref => $val ) {
-			if ($currentPreferences[$pref] == $val) {
-				continue;
+		foreach ($prefs->getGlobalPreferences() as $pref) {
+			if ($this->prefIsSaveable($pref->getName(), $pref->getValue())) {
+				$prefsToSave->setGlobalPreference($pref->getName(), $pref->getValue());
 			}
-
-			$default = $this->getFromDefault( $pref );
-			if ( $val === null && isset( $default ) ) {
-				$val = $default;
-			}
-			$this->preferences[ $userId ][ $pref ] = $val;
-			$prefToSave[ ] = new GlobalPreference( $pref, $val );
 		}
 
-		$this->save( $userId, $prefToSave );
+		foreach ($prefs->getLocalPreferences() as $wikiId => $wikiPreferences) {
+			foreach ($wikiPreferences as $pref) {
+				/** @var $pref LocalPreference */
+				if ($this->prefIsSaveable($pref->getName(), $pref->getValue())) {
+					$prefsToSave->setLocalPreference($pref->getName(), $pref->getWikiId(), $pref->getValue());
+				}
+			}
+		}
+
+		if (!$prefsToSave->isEmpty()) {
+			$this->persistence->save($userId, $prefsToSave);
+		}
 	}
 
 	public function getFromDefault($pref) {
@@ -176,37 +171,26 @@ class UserPreferences {
 		return null;
 	}
 
+	/**
+	 * @param $userId
+	 * @return Preferences
+	 */
 	private function load($userId) {
 		if (!isset($this->preferences[$userId])) {
-			$this->preferences[$userId] = $this->defaultPreferences;
-			foreach ($this->persistence->getPreferences($userId) as $pref) {
-				$this->preferences[$userId][$pref->getName()] = $pref->getValue();
-			};
+			$this->preferences[$userId] = $this->applyDefaults($this->persistence->get($userId));
 		}
 
 		return $this->preferences[$userId];
 	}
 
-	/**
-	 * @param string $userId
-	 * @param GlobalPreference[] $prefs
-	 */
-	private function save($userId, $prefs) {
-		if ($userId == 0) {
-			return;
-		}
-
-		$prefsToSave = [];
-
-		foreach ($prefs as $p) {
-			if ($this->prefIsSaveable($p->getName(), $p->getValue())) {
-				$prefsToSave[] = $p;
+	private function applyDefaults(Preferences $preferences) {
+		foreach ($this->defaultPreferences as $name => $val) {
+			if ($preferences->getGlobalPreference($name) == null) {
+				$preferences->setGlobalPreference($name, $val);
 			}
 		}
 
-		if (!empty($prefsToSave)) {
-			$this->persistence->setPreferences($userId, $prefsToSave);
-		}
+		return $preferences;
 	}
 
 	private function prefIsSaveable($pref, $value) {

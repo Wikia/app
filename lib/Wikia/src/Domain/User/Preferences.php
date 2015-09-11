@@ -7,32 +7,48 @@ class Preferences {
 	/** @var GlobalPreference[] */
 	private $globalPreferences;
 
-	/** @var LocalPreference[] */
+	/** @var array[wikiId => [name => LocalPreference]] */
 	private $localPreferences;
 
-	/**
-	 * @param GlobalPreference[] $globalPreferences
-	 * @param LocalPreference[] $localPreferences
-	 */
-	function __construct( $globalPreferences = [], $localPreferences = [] ) {
-		$this->globalPreferences = $globalPreferences;
-		$this->localPreferences = $localPreferences;
+	function __construct() {
+		$this->globalPreferences = [];
+		$this->localPreferences = [];
 	}
 
-	public function setGlobalPreference(GlobalPreference $preference) {
-		$this->globalPreferences[$preference->getName()] = $preference;
+	public function setGlobalPreference($pref, $value) {
+		$this->globalPreferences[$pref] = new GlobalPreference($pref, $value);
 	}
 
-	public function setLocalPreference(LocalPreference $preference) {
-		$this->localPreferences[$preference->getName()] = $preference;
+	public function setLocalPreference($pref, $wikiId, $value) {
+		$this->localPreferences[$wikiId][$pref] = new LocalPreference($pref, $value, $wikiId);
 	}
 
 	public function getGlobalPreference($name) {
-		if (isset($this->globalPreferences[$name])) {
-			return $this->globalPreferences[$name];
+		if ($this->hasGlobalPreference($name)) {
+			return $this->globalPreferences[$name]->getValue();
 		}
 
 		return null;
+	}
+
+	public function getLocalPreference($name, $wikiId) {
+		if ($this->hasLocalPreference($name, $wikiId)) {
+			return $this->localPreferences[$wikiId][$name]->getValue();
+		}
+
+		return null;
+	}
+
+	public function hasGlobalPreference($name) {
+		return isset($this->globalPreferences[$name]);
+	}
+
+	public function hasLocalPreference($name, $wikiId) {
+		return isset($this->localPreferences[$wikiId][$name]);
+	}
+
+	public function isEmpty() {
+		return count($this->globalPreferences) == 0 && count($this->localPreferences) == 0;
 	}
 
 	/**
@@ -43,7 +59,7 @@ class Preferences {
 	}
 
 	/**
-	 * @return LocalPreference[]
+	 * @return array[wikiId => [name => LocalPreference]]
 	 */
 	public function getLocalPreferences() {
 		return $this->localPreferences;

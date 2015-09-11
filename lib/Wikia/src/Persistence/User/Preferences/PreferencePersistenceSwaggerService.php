@@ -4,7 +4,12 @@ namespace Wikia\Persistence\User\Preferences;
 
 use Swagger\Client\ApiException;
 use Swagger\Client\User\Preferences\Api\UserPreferencesApi;
+use Swagger\Client\User\Preferences\Models\UserPreferences as SwaggerUserPreferences;
+use Swagger\Client\User\Preferences\Models\GlobalPreference as SwaggerGlobalPref;
+use Swagger\Client\User\Preferences\Models\LocalPreference as SwaggerLocalPref;
 use Wikia\Domain\User\GlobalPreference;
+use Wikia\Domain\User\LocalPreference;
+use Wikia\Domain\User\Preferences;
 use Wikia\Service\NotFoundException;
 use Wikia\Service\PersistenceException;
 use Wikia\Service\Swagger\ApiProvider;
@@ -23,21 +28,36 @@ class PreferencePersistenceSwaggerService implements PreferencePersistence {
 
 	/**
 	 * @param int $userId
-	 * @param GlobalPreference[] $preferences
+	 * @param Preferences $preferences
 	 * @return true success, false or exception otherwise
 	 * @throws PersistenceException
 	 * @throws UnauthorizedException
 	 */
-	public function save($userId, array $preferences) {
-		$prefs = [];
-		foreach ($preferences as $p) {
-			$prefs[] = (new \Swagger\Client\User\Preferences\Models\Preference())
-				->setName($p->getName())
-				->setValue($p->getValue());
+	public function save( $userId, Preferences $preferences ) {
+		$globalPrefs = $localPrefs = [];
+
+		foreach ($preferences->getGlobalPreferences() as $globalPref) {
+			$globalPrefs[] = (new SwaggerGlobalPref())
+				->setName($globalPref->getName())
+				->setValue($globalPref->getValue());
 		}
 
+		foreach ($preferences->getLocalPreferences() as $wikiPreferences) {
+			foreach ($wikiPreferences as $wikiPreference) {
+				/** @var $wikiPreference LocalPreference */
+				$localPrefs[] = (new SwaggerLocalPref())
+					->setWikiId($wikiPreference->getWikiId())
+					->setName($wikiPreference->getName())
+					->setValue($wikiPreference->getValue());
+			}
+		}
+
+		$userPreferences = (new SwaggerUserPreferences())
+			->setLocalPreferences($localPrefs)
+			->setGlobalPreferences($globalPrefs);
+
 		try {
-			$this->getApi($userId)->updateUserPreferences($userId, $prefs);
+			$this->getApi($userId)->setUserPreferences($userId, $userPreferences);
 			return true;
 		} catch (ApiException $e) {
 			$this->handleApiException($e);
@@ -49,16 +69,21 @@ class PreferencePersistenceSwaggerService implements PreferencePersistence {
 	 * Get the users preferences.
 	 *
 	 * @param int $userId
-	 * @return array of GlobalPreference objects
+	 * @return Preferences
 	 * @throws UnauthorizedException
 	 * @throws PersistenceException
 	 */
 	public function get($userId) {
-		$prefs = [];
+		$prefs = new Preferences();
 
 		try {
-			foreach ($this->getApi($userId)->getUserPreferences($userId) as $p) {
-				$prefs[] = new GlobalPreference($p->getName(), $p->getValue());
+			$storedPreferences = $this->getApi($userId)->getUserPreferences($userId);
+			foreach ($storedPreferences->getGlobalPreferences() as $p) {
+				$prefs->setGlobalPreference($p->getName(), $p->getValue());
+			}
+
+			foreach ($storedPreferences->getLocalPreferences() as $p) {
+				$prefs->setLocalPreference($p->getName(), $p->getWikiId(), $p->getWikiId());
 			}
 		} catch (ApiException $e) {
 			$this->handleApiException($e);
