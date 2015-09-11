@@ -3,6 +3,7 @@
 class ContentReviewApiControllerTest extends WikiaBaseTest {
 	public function setUp() {
 		$this->setupFile = __DIR__ . '/../ContentReview.setup.php';
+		$this->contentReviewApiController = new ContentReviewApiController();
 		parent::setUp();
 	}
 
@@ -11,36 +12,51 @@ class ContentReviewApiControllerTest extends WikiaBaseTest {
 	 */
 	public function testSubmitPageForReview( $params, $textExpected, $message ) {
 
-		/* @var \WikiaRequest $requestMock */
-		$requestMock = $this->getMockBuilder( '\WikiaRequest' )
-			->disableOriginalConstructor()
-			->setMethods( [ 'wasPosted' ] )
-			->getMock();
-		$requestMock->method( 'wasPosted' )
-			->will( $this->returnValue( $params['wasPosted'] ) );
-
-		/* @var \User $userMock */
-		$userMock = $this->getMockBuilder( '\User' )
-			->disableOriginalConstructor()
-			->setMethods( [ 'matchEditToken' ] )
-			->getMock();
-		$userMock->method( 'matchEditToken' )
-			->will( $this->returnValue( false ) );
-
-		$app = new WikiaApp();
-		$app->setGlobal( 'wgUser', $userMock );
-
-		$contentReviewApiController = new ContentReviewApiController();
-		/* Set dependencies */
-		$contentReviewApiController->setApp( $app );
-		$contentReviewApiController->setRequest( $requestMock );
+		$this->prepareControllerPropertiesMocks( $params );
 
 		if ( $params['expectedException'] ) {
 			$this->setExpectedException( $params['expectedException'] );
 		}
 
 		/* Run tested function */
-		$contentReviewApiController->submitPageForReview();
+		$this->contentReviewApiController->submitPageForReview();
+	}
+
+	private function prepareControllerPropertiesMocks( $params ) {
+		/* @var \WikiaRequest $requestMock */
+		$requestMock = $this->getMockBuilder( '\WikiaRequest' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'wasPosted' ] )
+			->getMock();
+
+		if ( $params['wasPosted'] ) {
+			$requestMock->method('wasPosted')
+				->will($this->returnValue($params['wasPosted']));
+		}
+
+		if ( isset( $params['User'] ) ) {
+			/* @var \User $userMock */
+			$userMock = $this->getMockBuilder( '\User' )
+				->disableOriginalConstructor()
+				->setMethods( [ 'matchEditToken' ] )
+				->getMock();
+			if ( isset( $params['User']['matchEditToken'] ) ) {
+				$userMock->method( 'matchEditToken' )
+					->will( $this->returnValue( false ) );
+			}
+		}
+
+		if ( isset( $params['User'] ) ) {
+			$app = new WikiaApp();
+			$app->setGlobal( 'wgUser', $userMock );
+		}
+
+		/* Set dependencies */
+		if ( isset( $app ) ) {
+			$this->contentReviewApiController->setApp( $app );
+		}
+		$this->contentReviewApiController->setRequest( $requestMock );
+
 	}
 
 	public function submitPageForReviewProvider() {
