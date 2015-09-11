@@ -1,5 +1,5 @@
 <?php
-class WikiaTagBuilderHelperTests extends WikiaBaseTest {
+class WikiaTagBuilderHelperTest extends WikiaBaseTest {
 
 	public function setUp() {
 		parent::setUp();

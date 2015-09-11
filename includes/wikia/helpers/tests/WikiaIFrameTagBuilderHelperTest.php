@@ -1,5 +1,5 @@
 <?php
-class WikiaIFrameTagBuilderHelperTests extends WikiaBaseTest {
+class WikiaIFrameTagBuilderHelperTest extends WikiaBaseTest {
 
 	public function setUp() {
 		parent::setUp();

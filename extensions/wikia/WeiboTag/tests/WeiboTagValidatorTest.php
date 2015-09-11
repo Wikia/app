@@ -1,5 +1,5 @@
 <?php
-class WeiboTagValidatorTests extends WikiaBaseTest {
+class WeiboTagValidatorTest extends WikiaBaseTest {
 
 	public function setUp() {
 		$this->setupFile = __DIR__ . '/../WeiboTag.setup.php';
