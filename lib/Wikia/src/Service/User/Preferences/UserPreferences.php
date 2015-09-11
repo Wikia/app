@@ -2,23 +2,37 @@
 
 namespace Wikia\Service\User\Preferences;
 
+use Wikia\Cache\Memcache\Memcache;
 use Wikia\Domain\User\GlobalPreference;
+use Wikia\Domain\User\Preferences;
+use Wikia\Logger\Loggable;
+use Wikia\Persistence\User\Preferences\PreferencePersistence;
+use Wikia\Util\WikiaProfiler;
 
 class UserPreferences {
+
+	use WikiaProfiler;
+	use Loggable;
+
 	const HIDDEN_PREFS = "user_preferences_hidden_prefs";
 	const DEFAULT_PREFERENCES = "user_preferences_default_prefs";
 	const FORCE_SAVE_PREFERENCES = "user_preferences_force_save_prefs";
+	const PROFILE_EVENT = \Transaction::EVENT_USER_PREFERENCES;
+	const CACHE_VERSION = 1;
 
-	/** @var PreferenceService */
-	private $service;
+	/** @var Memcache */
+	private $cache;
 
-	/** @var string[string][string] */
+	/** @var PreferencePersistence */
+	private $persistence;
+
+	/** @var Preferences[string] */
 	private $preferences;
 
 	/** @var string[] */
 	private $hiddenPrefs;
 
-	/** @var string[string] */
+	/** @var string[] */
 	private $defaultPreferences;
 
 	/** @var string[] */
@@ -26,17 +40,26 @@ class UserPreferences {
 
 	/**
 	 * @Inject({
-	 *    Wikia\Service\User\Preferences\PreferenceService::class,
+	 *    Wikia\Cache\Memcache\Memcache::class,
+	 *    Wikia\Service\User\Preferences\PreferencePersistence::class,
 	 *    Wikia\Service\User\Preferences\UserPreferences::HIDDEN_PREFS,
 	 *    Wikia\Service\User\Preferences\UserPreferences::DEFAULT_PREFERENCES,
 	 *    Wikia\Service\User\Preferences\UserPreferences::FORCE_SAVE_PREFERENCES})
-	 * @param PreferenceService $preferenceService
+	 * @param Memcache $cache,
+	 * @param PreferencePersistence $persistence
 	 * @param string[] $hiddenPrefs
 	 * @param string[string] $defaultPrefs
 	 * @param string[] $forceSavePrefs
 	 */
-	public function __construct(PreferenceService $preferenceService, $hiddenPrefs, $defaultPrefs, $forceSavePrefs) {
-		$this->service = $preferenceService;
+	public function __construct(
+		Memcache $cache,
+		PreferencePersistence $persistence,
+		$hiddenPrefs,
+		$defaultPrefs,
+		$forceSavePrefs) {
+
+		$this->cache = $cache;
+		$this->persistence = $persistence;
 		$this->hiddenPrefs = $hiddenPrefs;
 		$this->defaultPreferences = $defaultPrefs;
 		$this->forceSavePrefs = $forceSavePrefs;
@@ -45,6 +68,30 @@ class UserPreferences {
 
 	public function getPreferences($userId) {
 		return $this->load($userId);
+	}
+
+	public function loadFromCache($userId) {
+		$preferences = $this->cache->get($this->getCacheKey($userId));
+
+		if (!$preferences) {
+			$preferences = new Preferences();
+			foreach ($this->defaultPreferences as $name => $val) {
+				$preferences->setGlobalPreference(new GlobalPreference($name, $val));
+			}
+		}
+	}
+
+	public function saveToCache($userId) {
+		$cacheKey = $this->getCacheKey($userId);
+		return $this->cache->set($cacheKey, $this->preferences[$userId]);
+	}
+
+	public function deleteFromCache($userId) {
+		return $this->cache->delete($this->getCacheKey($userId));
+	}
+
+	public function getCacheKey($userId) {
+		return get_class($this).":$userId:".self::CACHE_VERSION;
 	}
 
 	public function setPreferencesInCache($userId, $preferences) {
@@ -127,7 +174,7 @@ class UserPreferences {
 	private function load($userId) {
 		if (!isset($this->preferences[$userId])) {
 			$this->preferences[$userId] = $this->defaultPreferences;
-			foreach ($this->service->getPreferences($userId) as $pref) {
+			foreach ($this->persistence->getPreferences($userId) as $pref) {
 				$this->preferences[$userId][$pref->getName()] = $pref->getValue();
 			};
 		}
@@ -153,7 +200,7 @@ class UserPreferences {
 		}
 
 		if (!empty($prefsToSave)) {
-			$this->service->setPreferences($userId, $prefsToSave);
+			$this->persistence->setPreferences($userId, $prefsToSave);
 		}
 	}
 
