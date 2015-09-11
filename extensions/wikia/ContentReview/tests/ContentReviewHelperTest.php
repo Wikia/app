@@ -65,6 +65,32 @@ class ContentReviewHelperTest extends WikiaBaseTest {
 		$this->assertEquals( $textExpected, $params['text'], $message );
 	}
 
+	/**
+	 * @dataProvider userCanEditJsPageProvider
+	 * @param bool $inNamespace
+	 * @param bool $isJsPage
+	 * @param bool $userCan
+	 * @param bool $expected
+	 */
+	public function testUserCanEditJsPage( $inNamespace, $isJsPage, $userCan, $expected ) {
+		$titleMock = $this->getMock( 'Title', [ 'inNamespace', 'isJsPage', 'userCan' ] );
+
+		$titleMock->expects( $this->any() )
+			->method( 'inNamespace' )
+			->willReturn( $inNamespace );
+		$titleMock->expects( $this->any() )
+			->method( 'isJsPage' )
+			->willReturn( $isJsPage );
+		$titleMock->expects( $this->any() )
+			->method( 'userCan' )
+			->willReturn( $userCan );
+
+		$userMock = $this->getMock( 'User' );
+		$helper = new \Wikia\ContentReview\Helper();
+
+		$this->assertEquals( $expected, $helper->userCanEditJsPage( $titleMock, $userMock ) );
+	}
+
 	public function replaceWithLastApprovedRevisionProvider() {
 		return [
 			[
@@ -82,6 +108,19 @@ class ContentReviewHelperTest extends WikiaBaseTest {
 				'revision text',
 				'Text replaced',
 			],
+		];
+	}
+
+	public function userCanEditJsPageProvider() {
+		return [
+			[ true, true, true, true ],
+			[ true, true, false, false ],
+			[ true, false, true, false ],
+			[ true, false, false, false ],
+			[ false, false, false, false ],
+			[ false, false, true, false ],
+			[ false, true, false, false ],
+			[ false, true, true, false ],
 		];
 	}
 }
