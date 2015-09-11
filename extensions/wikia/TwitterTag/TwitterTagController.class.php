@@ -58,14 +58,17 @@ class TwitterTagController extends WikiaParserTagController {
 
 		$attributes = $this->prepareAttributes( $args, self::TAG_PERMITTED_ATTRIBUTES );
 		$attributes['href'] = self::TWITTER_BASE_URL;
+		// data-wikia-widget attribute is searched for by Mercury
+		$attributes['data-wikia-widget'] = self::PARSER_TAG_NAME;
 
 		if ( ( new WikiaIFrameTagBuilderHelper() )->isMobileSkin() ) {
 			$html = Html::element( 'a', $attributes, self::TWITTER_NAME );
 		} else {
+			// Twitter script is searching for twitter-timeline class
 			$attributes['class'] = 'twitter-timeline';
 			$html = Html::element( 'a', $attributes, self::TWITTER_NAME  );
 			// Wrapper used for easily selecting the widget in Selenium tests
-			$html = Html::rawElement( 'span', [ 'data-wikia-widget' => 'twitter' ], $html );
+			$html = Html::rawElement( 'span', [ 'class' => 'widget-twitter' ], $html );
 			$html .= $this->getInitializationScript();
 		}
 
