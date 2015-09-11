@@ -134,7 +134,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 			return;
 		}
 
-		if (!isBlocking() && isRecoverable(slotName, recoverableSlots)) {
+		if (!isBlocking()) {
 			slotsToRecover.push(slotName);
 		}
 
