@@ -113,12 +113,6 @@ class PhalanxHooks extends WikiaObject {
 			}
 		}
 
-		// VSTF should not be allowed to block emails in Phalanx
-		if ( ($typemask & Phalanx::TYPE_EMAIL ) && !F::app()->wg->User->isAllowed( 'phalanxemailblock' ) ) {
-			wfProfileOut( __METHOD__ );
-			return false;
-		}
-
 		$multitext = '';
 		if ( isset( $phalanx['multitext'] ) && !empty( $phalanx['multitext'] ) ) {
 			$multitext = $phalanx['multitext'];
