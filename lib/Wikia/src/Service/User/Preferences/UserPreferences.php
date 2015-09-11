@@ -2,7 +2,7 @@
 
 namespace Wikia\Service\User\Preferences;
 
-use Wikia\Domain\User\Preference;
+use Wikia\Domain\User\GlobalPreference;
 
 class UserPreferences {
 	const HIDDEN_PREFS = "user_preferences_hidden_prefs";
@@ -94,7 +94,7 @@ class UserPreferences {
 				$val = $default;
 			}
 			$this->preferences[ $userId ][ $pref ] = $val;
-			$prefToSave[ ] = new Preference( $pref, $val );
+			$prefToSave[ ] = new GlobalPreference( $pref, $val );
 		}
 
 		$this->save( $userId, $prefToSave );
@@ -121,7 +121,7 @@ class UserPreferences {
 
 	/**
 	 * @param string $userId
-	 * @param Preference[] $prefs
+	 * @param GlobalPreference[] $prefs
 	 */
 	private function save($userId, $prefs) {
 		if ($userId == 0) {

@@ -2,7 +2,7 @@
 
 namespace Wikia\Persistence\User\Preferences;
 
-use Wikia\Domain\User\Preference;
+use Wikia\Domain\User\GlobalPreference;
 
 class PreferencePersistenceMySQLTest extends \PHPUnit_Framework_TestCase {
 
@@ -14,8 +14,8 @@ class PreferencePersistenceMySQLTest extends \PHPUnit_Framework_TestCase {
 	protected $whiteListMock;
 
 	protected function setUp() {
-		$this->testPreference = new Preference( "pref-name", "pref-value" );
-		$this->testSuperfluousPreference = new Preference( "extra-pref-name", "extra-pref-value" );
+		$this->testPreference = new GlobalPreference( "pref-name", "pref-value" );
+		$this->testSuperfluousPreference = new GlobalPreference( "extra-pref-name", "extra-pref-value" );
 		$this->mysqliMockSlave = $this->getMockBuilder( '\DatabaseMysqli' )
 			->setMethods( [ 'select', 'mysqlRealEscapeString' ] )
 			->disableOriginalConstructor()
@@ -90,7 +90,7 @@ class PreferencePersistenceMySQLTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testCreateTuples() {
-		$input = [ new Preference( 'name-a', 'value-a' ), new Preference( 'name-b', 'value-b' ) ];
+		$input = [ new GlobalPreference( 'name-a', 'value-a' ), new GlobalPreference( 'name-b', 'value-b' ) ];
 
 		$output = PreferencePersistenceMySQL::createTuplesFromPreferences( $this->userId, $input );
 

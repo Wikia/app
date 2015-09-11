@@ -3,7 +3,7 @@
 namespace Wikia\Persistence\User\Preferences;
 
 use Iterator;
-use Wikia\Domain\User\Preference;
+use Wikia\Domain\User\GlobalPreference;
 
 /**
  * @Injectable(lazy=true)
@@ -55,8 +55,8 @@ class PreferencePersistenceMySQL implements PreferencePersistence {
 	}
 
 	/**
-	 * @param Preference[] $preferences
-	 * @return Preference[]
+	 * @param GlobalPreference[] $preferences
+	 * @return GlobalPreference[]
 	 */
 	private function applyWhitelist( array $preferences ) {
 		$whiteList = $this->whiteList;
@@ -97,7 +97,7 @@ class PreferencePersistenceMySQL implements PreferencePersistence {
 
 	public static function createTuplesFromPreferences( $userId, array $preferences ) {
 		$userId = intval( $userId );
-		return array_map( function ( Preference $e ) use ( $userId ) {
+		return array_map( function ( GlobalPreference $e ) use ( $userId ) {
 			return [
 				self::UP_USER => $userId,
 				self::UP_PROPERTY => $e->getName(),
@@ -127,13 +127,13 @@ class PreferencePersistenceMySQL implements PreferencePersistence {
 	 * Convert a user_properties row into a Preference object.
 	 *
 	 * @param Iterator|array $result
-	 * @return Preference[]
+	 * @return GlobalPreference[]
 	 */
 	public function userPropertiesResultToPreferenceArray( $result ) {
 		$preferences = [];
 		foreach ( $result as $index => $row ) {
 			if ( isset( $row->up_property ) && isset( $row->up_value ) ) {
-				$preferences[] = new Preference( $row->up_property, $row->up_value );
+				$preferences[] = new GlobalPreference( $row->up_property, $row->up_value );
 			}
 		}
 
