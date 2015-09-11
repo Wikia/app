@@ -1118,7 +1118,7 @@
 				} else {
 					require(['AuthModal'], function (authModal) {
 						authModal.load({
-							url: '/signin',
+							url: '/signin?redirect=' + encodeURIComponent(window.location.href),
 							origin: 'image-lightbox',
 							onAuthSuccess: function () {
 								doShareEmail(addresses);

@@ -17,7 +17,7 @@
 			require(['AuthModal'], function (authModal) {
 				authModal.load({
 					origin: 'editor',
-					url: '/signin',
+					url: '/signin?redirect=' + encodeURIComponent(window.location.href),
 					onAuthSuccess: function () {
 						if (window.WikiaEditor) {
 							WikiaEditor.reloadEditor();
@@ -34,7 +34,7 @@
 				require(['AuthModal'], function (authModal) {
 					authModal.load({
 						origin: 'editor',
-						url: '/signin'
+						url: '/signin?redirect=' + encodeURIComponent(window.location.href),
 					});
 				});
 				return true;

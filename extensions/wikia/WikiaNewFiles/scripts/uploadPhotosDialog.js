@@ -13,7 +13,7 @@ var UploadPhotos = {
 		if (( wgUserName == null ) && ( !UserLogin.forceLoggedIn )) {
 			require(['AuthModal'], function (authModal) {
 				authModal.load({
-					url: '/signin',
+					url: '/signin?redirect=' + encodeURIComponent(window.location.href),
 					origin: 'latest-photos',
 					onAuthSuccess: $.proxy(function() {
 						UserLogin.forceLoggedIn = true;
