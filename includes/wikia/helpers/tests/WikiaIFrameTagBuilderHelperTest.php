@@ -2,6 +2,7 @@
 class WikiaIFrameTagBuilderHelperTest extends WikiaBaseTest {
 
 	public function setUp() {
+		require_once( __DIR__ . '/../WikiaIFrameTagBuilderHelper.class.php' );
 		parent::setUp();
 	}
 

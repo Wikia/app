@@ -2,6 +2,7 @@
 class WikiaTagBuilderHelperTest extends WikiaBaseTest {
 
 	public function setUp() {
+		require_once( __DIR__ . '/../WikiaTagBuilderHelper.class.php' );
 		parent::setUp();
 	}
 
