@@ -41,11 +41,17 @@ class SoundCloudTagController extends WikiaParserTagController {
 	public function renderTag( $input, array $args, Parser $parser, PPFrame $frame ) {
 		$sourceUrlParams = $this->buildTagSourceQueryParams( $args );
 
-		return Html::element(
+		$iframeCode = Html::element(
 			'iframe',
 			$this->buildTagAttributes( $sourceUrlParams, $args ),
 			wfMessage( 'soundcloud-tag-could-not-render' )->text()
 		);
+
+		return $this->isMobile() ? $this->wrapForMobile($iframeCode) : $iframeCode;
+	}
+
+	private function wrapForMobile( $iframe ) {
+		return Html::rawElement( 'script',  ['type' => 'x-wikia-widget'], $iframe );
 	}
 
 
@@ -76,6 +82,10 @@ class SoundCloudTagController extends WikiaParserTagController {
 
 		$attributes['src'] = self::TAG_SRC . $sourceUrlParams;
 		return array_merge( self::TAG_DEFAULT_ATTRIBUTES, $attributes );
+	}
+
+	private function isMobile() {
+		return $this->app->checkSkin( [ 'wikiamobile', 'mercury' ] );
 	}
 
 	protected function buildParamValidator( $paramName ) {
