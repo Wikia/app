@@ -37,8 +37,6 @@ define('ext.wikia.adEngine.provider.gpt.sourcePointTag', [
 			window.dispatchEvent(spReadyEvent);
 		});
 
-		doc.body.classList.add('source-point');
-
 		// Override previously created googletag object to prevent running stored cmd queue with regular gpt
 		window.googletag = {
 			cmd: []
