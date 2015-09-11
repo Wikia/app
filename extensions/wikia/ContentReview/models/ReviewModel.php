@@ -9,10 +9,12 @@ class ReviewModel extends ContentReviewBaseModel {
 	/**
 	 * Possible states a review can be in
 	 */
-	const CONTENT_REVIEW_STATUS_UNREVIEWED = 1;
-	const CONTENT_REVIEW_STATUS_IN_REVIEW = 2;
-	const CONTENT_REVIEW_STATUS_APPROVED = 3;
-	const CONTENT_REVIEW_STATUS_REJECTED = 4;
+	const 	CONTENT_REVIEW_STATUS_UNREVIEWED = 1,
+			CONTENT_REVIEW_STATUS_IN_REVIEW = 2,
+			CONTENT_REVIEW_STATUS_APPROVED = 3,
+			CONTENT_REVIEW_STATUS_REJECTED = 4,
+			CONTENT_REVIEW_STATUS_LIVE = 5,
+			CONTENT_REVIEW_STATUS_REVERTED = 6;
 
 	public function getPageStatus( $wikiId, $pageId ) {
 		$db = $this->getDatabaseForRead();

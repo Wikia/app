@@ -46,6 +46,7 @@ $messages['en'] = [
 	'content-review-special-list-header-submit-time' => 'Submit time',
 	'content-review-special-list-header-reviewer' => 'Reviewer',
 	'content-review-special-list-header-review-start' => 'Review start',
+	'content-review-special-list-header-review-end' => 'Review end',
 	'content-review-special-list-header-actions' => 'Actions',
 
 	'content-review-special-start-review' => 'Start review',
@@ -54,6 +55,7 @@ $messages['en'] = [
 	'content-review-special-review-open' => 'Please complete a review process for a previous revision first.',
 	'content-review-special-error' => 'Unfortunately, an error happened.',
 	'content-review-special-show-revision' => 'Show revision',
+	'content-review-special-restore' => 'Restore',
 
 	'content-review-diff-approve' => 'Approve',
 	'content-review-diff-reject' => 'Reject',
@@ -71,6 +73,8 @@ $messages['en'] = [
 	'content-review-status-in-review' => 'In review',
 	'content-review-status-approved' => 'Approved',
 	'content-review-status-rejected' => 'Rejected',
+	'content-review-status-live' => 'Live',
+	'content-review-status-reverted' => 'Reverted',
 
 	'content-review-feedback-link-text' => 'Provide feedback',
 	'content-review-rejection-explanation' => '==Submitted script change rejected==
@@ -123,6 +127,7 @@ $messages['qqq'] = [
 	'content-review-special-list-header-submit-time' => 'A column name for a Submit time',
 	'content-review-special-list-header-reviewer' => 'A column name for a Reviewer name',
 	'content-review-special-list-header-review-start' => 'A column name for a Review start',
+	'content-review-special-list-header-review-end' => 'A column name for a Review end',
 	'content-review-special-list-header-actions' => 'A column name for Actions',
 
 	'content-review-special-start-review' => 'Text on button to start review',
@@ -131,6 +136,7 @@ $messages['qqq'] = [
 	'content-review-special-review-open' => 'A message shown when another review for the page is in progress and ask user to complete that first.',
 	'content-review-special-error' => 'Information that some error occurs.',
 	'content-review-special-show-revision' => 'Text on button to show revision',
+	'content-review-special-restore' => 'Text on button to restore revision',
 
 	'content-review-diff-approve' => 'A text of a button which clicked approves a given revision.',
 	'content-review-diff-reject' => 'A text of a button which clicked rejects a given revision.',
@@ -150,6 +156,8 @@ $messages['qqq'] = [
 	'content-review-status-in-review' => 'A name of a status of a revision that is being reviewed.',
 	'content-review-status-approved' => 'A name of a status of a revision that has been approved.',
 	'content-review-status-rejected' => 'A name of a status of a revision that has been rejected.',
+	'content-review-status-live' => 'A name of a status of a revision that is currently live',
+	'content-review-status-reverted' => 'A name of a status of a revision that has been reverted',
 
 	'content-review-status-link-text' => 'Text on entrypoint link to show content review module with review status info and submit for review buttons',
 ];

@@ -158,13 +158,24 @@ class Hooks {
 	public static function onArticleSaveComplete( \WikiPage &$article, &$user, $text, $summary,
 			$minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId
 	) {
+		global $wgRequest;
+
 		$title = $article->getTitle();
 
-		if ( !is_null( $title )
-			&& $title->inNamespace( NS_MEDIAWIKI )
-			&& ( $title->isJsPage() || $title->isJsSubpage() )
-		) {
+		if ( !is_null( $title )	&&  $title->isJsPage() ) {
 			( new Helper() )->purgeCurrentJsPagesTimestamp();
+
+			if ( $user->isAllowed( 'content-review' ) && $wgRequest->getBool( 'wpApproved' ) ) {
+				//TODO: Add data
+				$data = [];
+
+				\F::app()->sendRequest(
+					'ContentReviewApiController',
+					'getPageStatus',
+					$data,
+					true
+				);
+			}
 		}
 
 		return true;

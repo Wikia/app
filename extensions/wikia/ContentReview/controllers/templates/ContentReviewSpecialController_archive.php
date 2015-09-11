@@ -8,13 +8,12 @@
 <table class="article-table sortable content-review-special-list">
 	<thead>
 	<tr class="content-review-special-list-headers">
-		<th><?= wfMessage( 'content-review-special-list-header-wiki-name' )->escaped() ?></th>
 		<th><?= wfMessage( 'content-review-special-list-header-page-name' )->escaped() ?></th>
 		<th><?= wfMessage( 'content-review-special-list-header-revision-id' )->escaped() ?></th>
 		<th><?= wfMessage( 'content-review-special-list-header-status' )->escaped() ?></th>
 		<th><?= wfMessage( 'content-review-special-list-header-reviewer' )->escaped() ?></th>
 		<th><?= wfMessage( 'content-review-special-list-header-review-start' )->escaped() ?></th>
-		<th>Review end</th>
+		<th><?= wfMessage( 'content-review-special-list-header-review-end' )->escaped() ?></th>
 		<th><?= wfMessage( 'content-review-special-list-header-actions' )->escaped() ?></th>
 	</tr>
 	</thead>
@@ -23,7 +22,6 @@
 		<?php foreach ( $reviews as $wikiReview ): ?>
 			<?php foreach( $wikiReview as $review ): ?>
 				<tr class="content-review-special-list-item">
-					<td><?= htmlspecialchars( $review['wiki'] ) ?></td>
 					<td><a href="<?= Sanitizer::encodeAttribute( $review['url'] ) ?>" target="_blank"><?= htmlspecialchars( $review['title'] ) ?></a></td>
 					<td><?= $review['revision_id'] ?></td>
 					<td><?= wfMessage( ContentReviewSpecialController::$statusMessageKeys[$review['status']] )->escaped() ?></td>
@@ -35,13 +33,13 @@
 						   class="wikia-button primary">
 							<?= wfMessage( 'content-review-special-show-revision' )->escaped() ?>
 						</a>
-						<?php if ( !empty( $review['revert'] ) ): ?>
-							<a href="#"
-							   class="content-review-revert-revision wikia-button primary"
+						<?php if ( !empty( $review['restore'] ) ): ?>
+							<a href="<?= $review['restoreUrl'] ?>" target="_blank"
+							   class="content-review-restore-revision wikia-button primary"
 							   data-wiki-id="<?= $review['wiki_id'] ?>"
 							   data-page-id="<?= $review['page_id'] ?>"
 							   data-revision-id="<?= $review['revision_id'] ?>">
-								Revert
+								<?= wfMessage( 'content-review-special-restore' )->escaped() ?>
 							</a>
 						<?php endif ?>
 					</td>

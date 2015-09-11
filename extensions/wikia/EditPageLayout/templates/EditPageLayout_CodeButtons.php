@@ -1,20 +1,10 @@
-<?php
-$dropdown = array(array(
-	"id" => "wpDiff",
-	"accesskey" => wfMessage('accesskey-diff')->escaped(),
-	"text" => wfMessage('showdiff')->escaped()
-));
-?>
+<?php if ( !empty( $approveCheckbox ) ): ?>
+	<label>
+		<input id='wpApprove' name='wpApprove' type='checkbox' value='1' />
+		Set this script revision as approved
+	</label>
+<?php endif ?>
 <?= F::app()->renderView('MenuButton',
 	'Index',
-	array(
-		'action' => array(
-			'text' => wfMessage('savearticle')->escaped(),
-			'class' => 'codepage-publish-button',
-			'id' => 'wpSave',
-		),
-		'name' => 'submit',
-		'class' => 'primary',
-		'dropdown' => $dropdown
-	)
+	$button
 ) ?>

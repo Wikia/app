@@ -38,7 +38,6 @@ class ReviewLogModel extends ContentReviewBaseModel {
 		return true;
 	}
 
-
 	public function getArchivedReviewForWiki( $wikiId ) {
 		$db = $this->getDatabaseForRead();
 
