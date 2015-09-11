@@ -79,10 +79,10 @@ class WikiaInYourLangController extends WikiaController {
 						}
 					}
 
-					$sMessagesAry = $this->prepareMessage( $sTargetLanguage, $aMessageParams, $isMainPageLink );
+					$aMessages = $this->prepareMessage( $sTargetLanguage, $aMessageParams, $isMainPageLink );
 					$this->response->setVal( 'success', true );
-					$this->response->setVal( 'message', $sMessagesAry['desktop'] );
-					$this->response->setVal( 'messageMobile', $sMessagesAry['mobile'] );
+					$this->response->setVal( 'message', $aMessages['desktop'] );
+					$this->response->setVal( 'messageMobile', $aMessages['mobile'] );
 				}
 			}
 		}
@@ -243,7 +243,7 @@ class WikiaInYourLangController extends WikiaController {
 		$articleURL = null;
 		if ( $sArticleTitle !== false ) {
 			$title = GlobalTitle::newFromText( $sArticleTitle, NS_MAIN, $cityId );
-			if ( !is_null( $title ) && $title->exists()) {
+			if ( !is_null( $title ) && $title->exists() ) {
 				$articleURL = $title->getFullURL();
 			}
 		}

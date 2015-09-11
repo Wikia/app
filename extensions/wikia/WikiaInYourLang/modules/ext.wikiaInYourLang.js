@@ -22,6 +22,7 @@ require(
 		// Get user's geographic data and a country code
 		var targetLanguage = getTargetLanguage(),
 			articleTitle = w.wgTitle,
+			linkTitle = retrieveLinkTitle(),
 			// Per request we should unify dialects like pt and pt-br
 			// @see CE-1220
 			contentLanguage = w.wgContentLanguage.split('-')[0],
@@ -92,6 +93,8 @@ require(
 
 						// Save link address if it is different from this article title
 						saveLinkTitle(results.linkAddress);
+						// Re-initialize linkTitle with linkAddress
+						linkTitle = retrieveLinkTitle();
 
 						// Update JS cache and set the notification shown indicator to true
 						// Cache for a day
@@ -161,15 +164,15 @@ require(
 		}
 
 		function getWIYLRequestSentKey() {
-			return 'wikiaInYourLangRequestSent' + retrieveLinkTitle() + cacheVersion;
+			return 'wikiaInYourLangRequestSent' + linkTitle + cacheVersion;
 		}
 
 		function getWIYLNotificationShownKey() {
-			return 'wikiaInYourLangNotificationShown' + retrieveLinkTitle() + cacheVersion;
+			return 'wikiaInYourLangNotificationShown' + linkTitle + cacheVersion;
 		}
 
 		function getWIYLMessageKey() {
-			return targetLanguage + 'WikiaInYourLangMessage' + retrieveLinkTitle() + cacheVersion;
+			return targetLanguage + 'WikiaInYourLangMessage' + linkTitle + cacheVersion;
 		}
 
 		function getWIYLLinkTitlesKey() {
@@ -178,16 +181,14 @@ require(
 
 		function saveLinkTitle(linkAddress) {
 			var linkAddressAry = linkAddress.split('/'),
-				listOfCachedTitles = '',
+				listOfCachedTitles = {},
 				linkTitle = linkAddressAry[linkAddressAry.length - 1].length === 0 ? 'main' : linkAddressAry[linkAddressAry.length - 1];
 
 			listOfCachedTitles = cache.get(getWIYLLinkTitlesKey());
-			if ( listOfCachedTitles ) {
-				listOfCachedTitles[articleTitle] = linkTitle;
-			} else {
+			if ( !listOfCachedTitles ) {
 				listOfCachedTitles = {};
-				listOfCachedTitles[articleTitle] = linkTitle;
 			}
+			listOfCachedTitles[articleTitle] = linkTitle;
 
 			cache.set(getWIYLLinkTitlesKey(),listOfCachedTitles, cache.CACHE_LONG);
 		}
