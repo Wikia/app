@@ -14,7 +14,6 @@ class PreferenceModule implements Module {
 
 	public function configure(InjectorBuilder $builder) {
 		$builder
-			->bind(PreferenceService::class)->toClass(PreferenceKeyValueService::class)
 			->bind(UserPreferences::HIDDEN_PREFS)->to(function() {
 				global $wgHiddenPrefs;
 				return $wgHiddenPrefs;

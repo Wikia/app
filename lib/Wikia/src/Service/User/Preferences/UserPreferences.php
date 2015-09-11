@@ -3,7 +3,6 @@
 namespace Wikia\Service\User\Preferences;
 
 use Wikia\Cache\Memcache\Memcache;
-use Wikia\Domain\User\GlobalPreference;
 use Wikia\Domain\User\LocalPreference;
 use Wikia\Domain\User\Preferences;
 use Wikia\Logger\Loggable;
@@ -138,6 +137,8 @@ class UserPreferences {
 
 	/**
 	 * @param string $userId
+	 * @return bool
+	 * @throws \Exception
 	 */
 	public function save($userId) {
 		$prefs = $this->load($userId);
@@ -159,8 +160,23 @@ class UserPreferences {
 		}
 
 		if (!$prefsToSave->isEmpty()) {
-			$this->persistence->save($userId, $prefsToSave);
+			try {
+				$profilerStart = $this->startProfile();
+				$result = $this->persistence->save($userId, $prefsToSave);
+				$this->endProfile(
+					self::PROFILE_EVENT,
+					$profilerStart,
+					[
+						'user_id' => $userId,
+						'method' => 'setPreferences',]);
+				return $result;
+			} catch (\Exception $e) {
+				$this->error($e->getMessage(), ['user' => $userId]);
+				throw $e;
+			}
 		}
+
+		return true;
 	}
 
 	public function getFromDefault($pref) {
@@ -174,10 +190,27 @@ class UserPreferences {
 	/**
 	 * @param $userId
 	 * @return Preferences
+	 * @throws \Exception
 	 */
 	private function load($userId) {
-		if (!isset($this->preferences[$userId])) {
-			$this->preferences[$userId] = $this->applyDefaults($this->persistence->get($userId));
+		if ($userId == 0) {
+			return [];
+		} elseif (!isset($this->preferences[$userId])) {
+			try {
+				$profilerStart = $this->startProfile();
+				$preferences = $this->persistence->get($userId);
+				$this->endProfile(
+					self::PROFILE_EVENT,
+					$profilerStart,
+					[
+						'user_id' => $userId,
+						'method' => 'getPreferences',]);
+			} catch (\Exception $e) {
+				$this->error($e->getMessage(), ['user' => $userId]);
+				throw $e;
+			}
+
+			$this->preferences[$userId] = $this->applyDefaults($preferences);
 		}
 
 		return $this->preferences[$userId];
@@ -185,7 +218,7 @@ class UserPreferences {
 
 	private function applyDefaults(Preferences $preferences) {
 		foreach ($this->defaultPreferences as $name => $val) {
-			if ($preferences->getGlobalPreference($name) == null) {
+			if (!$preferences->hasGlobalPreference($name)) {
 				$preferences->setGlobalPreference($name, $val);
 			}
 		}
