@@ -202,6 +202,12 @@ class PhalanxHooks extends WikiaObject {
 
 		$phalanx = Phalanx::newFromId($id);
 
+		// VSTF should not be allowed to delete email blocks in Phalanx
+		if ( ($phalanx->offsetGet( 'type' ) & Phalanx::TYPE_EMAIL ) && !F::app()->wg->User->isAllowed( 'phalanxemailblock' ) ) {
+			wfProfileOut( __METHOD__ );
+			return false;
+		}
+
 		$id = $phalanx->delete();
 		if ( $id ) {
 			$service = new PhalanxService();
