@@ -3,7 +3,6 @@
 class TwitterTagController extends WikiaParserTagController {
 
 	const PARSER_TAG_NAME = 'twitter';
-	const TWITTER_BASE_URL = 'https://twitter.com/';
 
 	const REGEX_DIGITS = '/^[0-9]*$/';
 	const REGEX_HEX_COLOR = '/^#[0-9a-f]{3,6}$/i';
@@ -47,6 +46,8 @@ class TwitterTagController extends WikiaParserTagController {
 	/**
 	 * Parses the twitter tag. Checks to ensure the required attributes are there.
 	 * Then constructs the HTML after seeing which attributes are in use.
+	 *
+	 * @return string
 	 */
 	public function parseTag( $input, array $args, Parser $parser, PPFrame $frame ) {
 		if ( empty( $args['widget-id'] ) ) {
@@ -84,7 +85,7 @@ class TwitterTagController extends WikiaParserTagController {
 			if ( array_key_exists( $attributeName, $permittedAttributes ) &&
 				preg_match( $permittedAttributes[$attributeName], $attributeValue )
 			) {
-				$validatedAttributes["data-$attributeName"] = strip_tags( $attributeValue );
+				$validatedAttributes['data-' . $attributeName] = $attributeValue;
 			}
 		}
 
