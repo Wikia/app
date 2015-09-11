@@ -13,7 +13,6 @@ describe('ext.wikia.adEngine.utils.cssTweaker', function () {
 
 	beforeEach(function () {
 		mocks.destination = document.createElement('div');
-		mocks.destination.style = {};
 		mocks.source = document.createElement('div');
 		mocks.source.style.cssText = 'background-color: rgb(255, 255, 255); display: inline; ';
 
@@ -33,6 +32,6 @@ describe('ext.wikia.adEngine.utils.cssTweaker', function () {
 	it('Initialization should prepare googletag object and configure pubads', function () {
 		cssTweaker.copyStyles('source', 'destination');
 
-		expect(mocks.destination.style.cssText).toBe('background-color: rgb(255, 255, 255); display: inline; ');
+		expect(mocks.destination.style.cssText).toBe('background-color: rgb(255, 255, 255); display: inline;');
 	});
 });
