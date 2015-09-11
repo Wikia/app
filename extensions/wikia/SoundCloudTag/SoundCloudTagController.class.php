@@ -4,7 +4,7 @@ class SoundCloudTagController extends WikiaParserTagController {
 
 	const TAG_SRC = 'https://w.soundcloud.com/player/?';
 
-	const PARAMS_WITH_DEFAULTS = [
+	const TAG_SOURCE_ALLOWED_PARAMS_WITH_DEFAULTS = [
 		'url' => '',
 		'color' => '',
 		'auto_play' => '',
@@ -33,59 +33,39 @@ class SoundCloudTagController extends WikiaParserTagController {
 		'seamless' => 'seamless',
 	];
 
+	private $helper;
+
+	public function __construct() {
+		parent::__construct();
+
+		$this->helper = new WikiaIframeTagBuilderHelper();
+	}
+
 	public static function onParserFirstCallInit( Parser $parser ) {
 		$parser->setHook( self::TAG_NAME, [ new static(), 'renderTag' ] );
 		return true;
 	}
 
 	public function renderTag( $input, array $args, Parser $parser, PPFrame $frame ) {
-		$sourceUrlParams = $this->buildTagSourceQueryParams( $args );
+
+		$sourceUrl = self::TAG_SRC . $this->helper->buildTagSourceQueryParams(
+			self::TAG_SOURCE_ALLOWED_PARAMS_WITH_DEFAULTS, $args
+		);
 
 		$iframeCode = Html::element(
 			'iframe',
-			$this->buildTagAttributes( $sourceUrlParams, $args ),
+			$this->buildTagAttributes( $sourceUrl, $args ),
 			wfMessage( 'soundcloud-tag-could-not-render' )->text()
 		);
 
-		return $this->isMobile() ? $this->wrapForMobile($iframeCode) : $iframeCode;
-	}
-
-	private function wrapForMobile( $iframe ) {
-		return Html::rawElement( 'script',  ['type' => 'x-wikia-widget'], $iframe );
-	}
-
-
-	private function buildTagSourceQueryParams( array $userParams ) {
-		$allowedParams = self::PARAMS_WITH_DEFAULTS;
-
-		foreach ( array_keys( $allowedParams ) as $name ) {
-			if ( isset( $userParams[$name] ) ) {
-				$allowedParams[$name] = $userParams[$name];
-			}
-		}
-
-		return http_build_query( $allowedParams );
+		return $this->helper->wrapForMobile( $iframeCode );
 	}
 
 	private function buildTagAttributes( $sourceUrlParams, array $userAttributes ) {
-		$attributes = [];
-
-		foreach ( self::TAG_ALLOWED_ATTRIBUTES as $name ) {
-			if ( isset( $userAttributes[$name] ) ) {
-				if ($name === 'style') {
-					$attributes['style'] = Sanitizer::checkCss( $userAttributes['style'] );
-				} else {
-					$attributes[$name] = $userAttributes[$name];
-				}
-			}
-		}
+		$attributes = $this->helper->buildTagAttributes( self::TAG_ALLOWED_ATTRIBUTES, $userAttributes );
 
 		$attributes['src'] = self::TAG_SRC . $sourceUrlParams;
 		return array_merge( self::TAG_DEFAULT_ATTRIBUTES, $attributes );
-	}
-
-	private function isMobile() {
-		return $this->app->checkSkin( [ 'wikiamobile', 'mercury' ] );
 	}
 
 	protected function buildParamValidator( $paramName ) {
