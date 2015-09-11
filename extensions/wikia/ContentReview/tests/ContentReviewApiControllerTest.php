@@ -40,6 +40,8 @@ class ContentReviewApiControllerTest extends WikiaBaseTest {
 			->setMethods( [ 'wasPosted' ] )
 			->getMock();
 
+		$app = new WikiaApp();
+
 		if ( $params['wasPosted'] ) {
 			$requestMock->method( 'wasPosted' )
 				->will( $this->returnValue( $params['wasPosted'] ) );
@@ -59,7 +61,6 @@ class ContentReviewApiControllerTest extends WikiaBaseTest {
 				$userMock->method( 'getId' )
 					->will( $this->returnValue( $params['user']['id'] ) );
 			}
-			$app = new WikiaApp();
 			$app->setGlobal( 'wgUser', $userMock );
 		}
 
@@ -69,9 +70,7 @@ class ContentReviewApiControllerTest extends WikiaBaseTest {
 		}
 
 		/* Set dependencies */
-		if ( isset( $app ) ) {
-			$this->contentReviewApiControllerMock->setApp( $app );
-		}
+		$this->contentReviewApiControllerMock->setApp( $app );
 		$this->contentReviewApiControllerMock->setRequest( $requestMock );
 
 	}
