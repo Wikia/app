@@ -12,19 +12,21 @@ class ContentReviewHooksTest extends WikiaBaseTest {
 	 * because there are no IDs of wikias stored in a session under the test mode key.
 	 */
 	public function testDisableTestModeNoSessionData() {
-		$requestMock = $this->getMockBuilder( 'WebRequest' )
-			->disableOriginalConstructor()
-			->setMethods( [ 'getSessionData', 'setSessionData' ] )
-			->getMock();
-
+		$requestMock = $this->getMock( 'WebRequest', [ 'getSessionData', 'setSessionData' ] );
 		$requestMock->expects( $this->once() )
 			->method( 'getSessionData' )
 			->willReturn( [] );
-
 		$requestMock->expects( $this->never() )
 			->method( 'setSessionData' );
 
-		( new Wikia\ContentReview\Hooks() )->disableTestMode( $requestMock );
+		$userMock = $this->getMock( 'User', [ 'getRequest' ] );
+		$userMock->expects( $this->once() )
+			->method( 'getRequest' )
+			->willReturn( $requestMock );
+
+		$injectHtml = '';
+
+		( new Wikia\ContentReview\Hooks() )->onUserLogoutComplete( $userMock, $injectHtml, '' );
 	}
 
 	/**
@@ -32,18 +34,20 @@ class ContentReviewHooksTest extends WikiaBaseTest {
 	 * because there are IDs of wikia under the test mode key.
 	 */
 	public function testDisableTestModeWithSessionData() {
-		$requestMock = $this->getMockBuilder( 'WebRequest' )
-			->disableOriginalConstructor()
-			->setMethods( [ 'getSessionData', 'setSessionData' ] )
-			->getMock();
-
+		$requestMock = $this->getMock( 'WebRequest', [ 'getSessionData', 'setSessionData' ] );
 		$requestMock->expects( $this->once() )
 			->method( 'getSessionData' )
 			->willReturn( [ 177 ] );
-
 		$requestMock->expects( $this->once() )
 			->method( 'setSessionData' );
 
-		( new Wikia\ContentReview\Hooks() )->disableTestMode( $requestMock );
+		$userMock = $this->getMock( 'User', [ 'getRequest' ] );
+		$userMock->expects( $this->once() )
+			->method( 'getRequest' )
+			->willReturn( $requestMock );
+
+		$injectHtml = '';
+
+		( new Wikia\ContentReview\Hooks() )->onUserLogoutComplete( $userMock, $injectHtml );
 	}
 }
