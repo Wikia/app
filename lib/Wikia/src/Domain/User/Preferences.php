@@ -15,12 +15,12 @@ class Preferences {
 		$this->localPreferences = [];
 	}
 
-	public function setGlobalPreference($pref, $value) {
-		$this->globalPreferences[$pref] = new GlobalPreference($pref, $value);
+	public function setGlobalPreference($name, $value) {
+		$this->globalPreferences[$name] = new GlobalPreference($name, $value);
 	}
 
-	public function setLocalPreference($pref, $wikiId, $value) {
-		$this->localPreferences[$wikiId][$pref] = new LocalPreference($pref, $value, $wikiId);
+	public function setLocalPreference($name, $wikiId, $value) {
+		$this->localPreferences[$wikiId][$name] = new LocalPreference($name, $value, $wikiId);
 	}
 
 	public function getGlobalPreference($name) {
