@@ -9,18 +9,20 @@ class WikiaTagBuilderHelperTests extends WikiaBaseTest {
 		$tagBuilder = new WikiaTagBuilderHelper();
 		$allowedParams = [
 			'foo' => 'before',
+			'allowedParam' => 'value',
 			'bar' => '',
+			'allowedParam2' => 'valueSet',
 		];
 
 		$passedParams = [
 			'fizz' => 'value',
 			'buzz' => 'value2',
 			'foo' => 'after',
+			'allowedParam2' => '',
 		];
 
-		$expectedResult = 'foo=after&bar=';
-
-		$this->assertEquals( $tagBuilder->buildTagSourceQueryParams($allowedParams, $passedParams), $expectedResult );
+		$expectedResult = 'foo=after&allowedParam=value&allowedParam2=valueSet';
+		$this->assertEquals( $tagBuilder->buildTagSourceQueryParams( $allowedParams, $passedParams ), $expectedResult );
 	}
 
 	public function testBuildTagAttributes() {
@@ -47,6 +49,6 @@ class WikiaTagBuilderHelperTests extends WikiaBaseTest {
 			'style' => 'sanitized',
 		];
 
-		$this->assertSame( $tagBuilder->buildTagAttributes($allowedAttrs, $passedAttrs), $expectedResult );
+		$this->assertSame( $tagBuilder->buildTagAttributes( $allowedAttrs, $passedAttrs ), $expectedResult );
 	}
 }
