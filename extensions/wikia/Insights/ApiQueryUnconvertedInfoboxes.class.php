@@ -4,6 +4,7 @@ class ApiQueryUnconvertedInfoboxes extends ApiQueryBase {
 
 	const CACHE_TTL = WikiaResponse::CACHE_STANDARD;
 	const MCACHE_KEY = 'unconvertedinfoboxes-list';
+	const XML_TAG_NAME = 'infobox';
 
 	public function execute() {
 		$data = WikiaDataAccess::cache( wfMemcKey( self::MCACHE_KEY ), self::CACHE_TTL, function () {
@@ -31,10 +32,7 @@ class ApiQueryUnconvertedInfoboxes extends ApiQueryBase {
 			$this->getResult()->addValue( [ 'query', 'unconvertedinfoboxes' ], null, $infobox );
 		}
 
-		// tag name used in XML format API response
-		$xmlTagName = 'infobox';
-
-		$this->getResult()->setIndexedTagName_internal( [ 'query', 'unconvertedinfoboxes' ], $xmlTagName );
+		$this->getResult()->setIndexedTagName_internal( [ 'query', 'unconvertedinfoboxes' ], self::XML_TAG_NAME );
 	}
 
 	public function getVersion() {
