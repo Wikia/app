@@ -1802,5 +1802,12 @@ $wgPreferencesUseService = false;
 /**
  * Parser Tag
  */
-require_once "$IP/extensions/wikia/SoundCloudTag/SoundCloudTag.setup.php";
+require_once "$IP/extensions/wikia/SoundCloudTag/SoundCloudTag.setup.php" ;
 require_once "$IP/extensions/wikia/VKTag/VKTag.setup.php";
+
+/**
+ * @name $wgEnableRobotsTxtExt
+ *
+ * Enables extension that generates robots.txt
+ */
+$wgEnableRobotsTxtExt = false;
