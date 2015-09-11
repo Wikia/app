@@ -61,8 +61,6 @@ define('ext.wikia.adEngine.provider.gpt.sourcePointTag', [
 			newSlotName = adSlot.getShortSlotName(slotElementId);
 
 			if (slotName !== newSlotName) {
-				cssTweaker.copyStyles(slotName, newSlotName);
-
 				iframe = doc.getElementById(slotElementId).querySelector('div[id*="_container_"] iframe');
 				iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
 
