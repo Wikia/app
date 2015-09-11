@@ -18,7 +18,7 @@ class ResourceLoaderCustomWikiModule extends ResourceLoaderGlobalWikiModule {
 
 		if ( $this->type ) {
 			foreach ($this->articles as $article) {
-				$pageKey = $article['title'];
+				$pageKey = isset( $article['originalName'] ) ? $article['originalName'] : $article['title'];
 				$type = isset($article['type']) ? $article['type'] : $this->type;
 				$pageInfo = array(
 					'type' => $type,
