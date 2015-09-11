@@ -3,8 +3,8 @@
 class ContentReviewApiControllerTest extends WikiaBaseTest {
 	public function setUp() {
 		$this->setupFile = __DIR__ . '/../ContentReview.setup.php';
-		$this->contentReviewApiController = new ContentReviewApiController();
 		parent::setUp();
+		$this->contentReviewApiController = new ContentReviewApiController();
 	}
 
 	/**
