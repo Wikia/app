@@ -121,13 +121,7 @@ class Hooks {
 
 	public static function onUserLogoutComplete( \User $user, &$injected_html, $oldName) {
 		$request = $user->getRequest();
-
-		$key = \ContentReviewApiController::CONTENT_REVIEW_TEST_MODE_KEY;
-		$wikis = $request->getSessionData( $key );
-
-		if ( !empty( $wikis ) ) {
-			$request->setSessionData( $key, null );
-		}
+		( new self() )->disableTestMode( $request );
 
 		return true;
 	}
@@ -145,6 +139,15 @@ class Hooks {
 		}
 
 		return true;
+	}
+
+	public function disableTestMode( \WebRequest $request ) {
+		$key = \ContentReviewApiController::CONTENT_REVIEW_TEST_MODE_KEY;
+
+		$wikis = $request->getSessionData( $key );
+		if ( !empty( $wikis ) ) {
+			$request->setSessionData( $key, null );
+		}
 	}
 
 	private static function userCanEditJsPage() {
