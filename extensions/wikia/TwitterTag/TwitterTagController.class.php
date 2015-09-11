@@ -58,7 +58,7 @@ class TwitterTagController extends WikiaParserTagController {
 
 		$html = Html::element( 'a', $attributes );
 
-		if ( !(new WikiaIFrameTagBuilderHelper())->isMobileSkin() ) {
+		if ( !( new WikiaIFrameTagBuilderHelper() )->isMobileSkin() ) {
 			$attributes['class'] = 'twitter-timeline';
 			// Wrapper used for easily selecting the widget in Selenium tests
 			$html = Html::rawElement( 'span', [ 'class' => 'widget-twitter' ], $html );
