@@ -5,8 +5,8 @@ class SoundCloudTagController extends WikiaParserTagController {
 	const TAG_SRC = 'https://w.soundcloud.com/player/?';
 
 	const PARAMS_WITH_DEFAULTS = [
-		'color' => '',
 		'url' => '',
+		'color' => '',
 		'auto_play' => '',
 		'buying' => '',
 		'liking' => '',
@@ -39,11 +39,11 @@ class SoundCloudTagController extends WikiaParserTagController {
 	}
 
 	public function renderTag( $input, array $args, Parser $parser, PPFrame $frame ) {
-		$sourceUrl = $this->buildTagSourceQueryParams( $args );
+		$sourceUrlParams = $this->buildTagSourceQueryParams( $args );
 
 		return Html::element(
 			'iframe',
-			$this->buildTagAttributes( $sourceUrl, $args ),
+			$this->buildTagAttributes( $sourceUrlParams, $args ),
 			wfMessage( 'soundcloud-tag-could-not-render' )->text()
 		);
 	}
@@ -51,7 +51,8 @@ class SoundCloudTagController extends WikiaParserTagController {
 
 	private function buildTagSourceQueryParams( array $userParams ) {
 		$allowedParams = self::PARAMS_WITH_DEFAULTS;
-			foreach ( array_keys( $allowedParams ) as $name ) {
+
+		foreach ( array_keys( $allowedParams ) as $name ) {
 			if ( isset( $userParams[$name] ) ) {
 				$allowedParams[$name] = $userParams[$name];
 			}
@@ -60,23 +61,21 @@ class SoundCloudTagController extends WikiaParserTagController {
 		return http_build_query( $allowedParams );
 	}
 
-	private function buildTagAttributes( $sourceUrl, array $userAttributes ) {
+	private function buildTagAttributes( $sourceUrlParams, array $userAttributes ) {
 		$attributes = [];
 
-		foreach ( self::TAG_ALLOWED_ATTRIBUTES as $attributeName ) {
-			if ( isset( $userAttributes[$attributeName] ) ) {
-				if ($attributeName === 'style') {
+		foreach ( self::TAG_ALLOWED_ATTRIBUTES as $name ) {
+			if ( isset( $userAttributes[$name] ) ) {
+				if ($name === 'style') {
 					$attributes['style'] = Sanitizer::checkCss( $userAttributes['style'] );
 				} else {
-					$attributes[$attributeName] = $userAttributes[$attributeName];
+					$attributes[$name] = $userAttributes[$name];
 				}
 			}
 		}
 
-		$attributes['src'] = $sourceUrl;
-		array_merge($attributes, self::TAG_ALLOWED_ATTRIBUTES);
-
-		return $attributes;
+		$attributes['src'] = self::TAG_SRC . $sourceUrlParams;
+		return array_merge( self::TAG_DEFAULT_ATTRIBUTES, $attributes );
 	}
 
 	protected function buildParamValidator( $paramName ) {
