@@ -166,9 +166,7 @@ class TwitterTagController extends WikiaParserTagController {
 	 * @return string
 	 */
 	private function getInitializationScript() {
-		return <<<EOT
-<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-EOT;
+		return '<script>' . file_get_contents( __DIR__ . '/scripts/twitter.min.js' ) . '</script>';
 	}
 
 	protected function buildParamValidator( $paramName ) {
