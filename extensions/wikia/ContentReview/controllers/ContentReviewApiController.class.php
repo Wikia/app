@@ -22,8 +22,8 @@ class ContentReviewApiController extends WikiaApiController {
 		$this->isValidPostRequest( $this->request, $this->wg->User );
 
 		$pageName = $this->request->getVal( 'pageName' );
+		$title = $this->getTitle( $pageName );
 
-		$title = Title::newFromText( $pageName );
 		if ( $title === null ) {
 			throw new NotFoundApiException( "JS page {$pageName} does not exist" );
 		}
@@ -242,6 +242,10 @@ class ContentReviewApiController extends WikiaApiController {
 		}
 
 		$this->setResponseData( $res );
+	}
+
+	protected function getTitle( $pageName ) {
+		return Title::newFromText( $pageName );
 	}
 
 	private function isValidPostRequest( WikiaRequest $request, User $user ) {

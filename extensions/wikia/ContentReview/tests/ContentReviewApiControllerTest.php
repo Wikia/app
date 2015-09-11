@@ -1,10 +1,17 @@
 <?php
 
 class ContentReviewApiControllerTest extends WikiaBaseTest {
+
+	/* @var \ContentReviewApiController $contentReviewApiControllerMock */
+	private $contentReviewApiControllerMock;
+
 	public function setUp() {
 		$this->setupFile = __DIR__ . '/../ContentReview.setup.php';
 		parent::setUp();
-		$this->contentReviewApiController = new ContentReviewApiController();
+
+		$this->contentReviewApiControllerMock = $this->getMockBuilder( 'ContentReviewApiController' )
+			->setMethods( [ 'getTitle' ] )
+			->getMock();
 	}
 
 	/**
@@ -14,12 +21,16 @@ class ContentReviewApiControllerTest extends WikiaBaseTest {
 
 		$this->prepareControllerPropertiesMocks( $params );
 
+		if ( $params['title'] ) {
+			$this->prepareTitleMock( $params['title'] );
+		}
+
 		if ( $params['expectedException'] ) {
 			$this->setExpectedException( $params['expectedException'] );
 		}
 
 		/* Run tested function */
-		$this->contentReviewApiController->submitPageForReview();
+		$this->contentReviewApiControllerMock->submitPageForReview();
 	}
 
 	private function prepareControllerPropertiesMocks( $params ) {
@@ -53,10 +64,28 @@ class ContentReviewApiControllerTest extends WikiaBaseTest {
 
 		/* Set dependencies */
 		if ( isset( $app ) ) {
-			$this->contentReviewApiController->setApp( $app );
+			$this->contentReviewApiControllerMock->setApp( $app );
 		}
-		$this->contentReviewApiController->setRequest( $requestMock );
+		$this->contentReviewApiControllerMock->setRequest( $requestMock );
 
+	}
+
+	private function prepareTitleMock( $params ) {
+		$titleMock = $this->getMockBuilder( '\Title' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'getArticleID', 'isJsPage' ] )
+			->getMock();
+		if ( isset( $params['articleID'] ) ) {
+			$titleMock->method( 'getArticleID' )
+				->will( $this->returnValue( $params['articleID'] ) );
+		}
+		if ( isset( $params['isJsPage'] ) ) {
+			$titleMock->method( 'isJsPage' )
+				->will( $this->returnValue( $params['isJsPage'] ) );
+		}
+
+		$this->contentReviewApiControllerMock->method( 'getTitle' )
+			->will( $this->returnValue( $titleMock ) );
 	}
 
 	public function submitPageForReviewProvider() {
@@ -89,10 +118,29 @@ class ContentReviewApiControllerTest extends WikiaBaseTest {
 					'user' => [
 						'matchEditToken' => true,
 					],
-					'expectedException' => 'NotFoundApiException'
+					'expectedException' => 'NotFoundApiException',
+					'title' => [
+						'articleID' => 0,
+						'isJsPage' => false,
+					],
 				],
 				null,
-				'PageName parameter missing throw NotFoundApiException',
+				'Non existent page',
+			],
+			[
+				[
+					'wasPosted' => true,
+					'user' => [
+						'matchEditToken' => true,
+					],
+					'expectedException' => 'NotFoundApiException',
+					'title' => [
+						'articleID' => 123,
+						'isJsPage' => false,
+					],
+				],
+				null,
+				'Not JS page',
 			],
 		];
 	}
