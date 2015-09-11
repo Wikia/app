@@ -2,7 +2,7 @@
 class WikiaIFrameTagBuilderHelper extends WikiaTagBuilderHelper {
 
 	public function isMobileSkin( ) {
-		return F::app()->checkSkin( [ 'wikiamobile', 'mercury' ] );
+		return F::app()->checkSkin( 'wikiamobile' );
 	}
 
 	public function wrapForMobile( $iframe ) {
