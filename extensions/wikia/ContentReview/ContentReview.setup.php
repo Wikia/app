@@ -55,14 +55,7 @@ $wgAutoloadClasses['Wikia\ContentReview\Helper'] = __DIR__ . '/ContentReviewHelp
  * Hooks
  */
 $wgAutoloadClasses['Wikia\ContentReview\Hooks'] = __DIR__ . '/ContentReview.hooks.php';
-$wgHooks['GetRailModuleList'][] = 'Wikia\ContentReview\Hooks::onGetRailModuleList';
-$wgHooks['MakeGlobalVariablesScript'][] = 'Wikia\ContentReview\Hooks::onMakeGlobalVariablesScript';
-$wgHooks['BeforePageDisplay'][] = 'Wikia\ContentReview\Hooks::onBeforePageDisplay';
-$wgHooks['ArticleContentOnDiff'][] = 'Wikia\ContentReview\Hooks::onArticleContentOnDiff';
-$wgHooks['RawPageViewBeforeOutput'][] = 'Wikia\ContentReview\Hooks::onRawPageViewBeforeOutput';
-$wgHooks['SkinTemplateNavigation'][] = 'Wikia\ContentReview\Hooks::onSkinTemplateNavigation';
-$wgHooks['UserLogoutComplete'][] = 'Wikia\ContentReview\Hooks::onUserLogoutComplete';
-$wgHooks['ArticleSaveComplete'][] = 'Wikia\ContentReview\Hooks::onArticleSaveComplete';
+$wgExtensionFunctions[] = 'Wikia\ContentReview\Hooks::register';
 
 /**
  * Right rail module
