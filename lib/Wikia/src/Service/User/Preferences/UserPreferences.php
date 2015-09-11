@@ -55,7 +55,7 @@ class UserPreferences {
 		}
 	}
 
-	public function getLocalPreference($userId, $wikiId, $default = null, $ignoreHidden = false) {
+	public function getLocalPreference($userId, $wikiId, $name, $default = null, $ignoreHidden = false) {
 
 	}
 
