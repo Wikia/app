@@ -21,6 +21,7 @@ class WeiboTagController extends WikiaParserTagController {
 		'data-wikia-widget' => self::PARSER_TAG_NAME,
 		'scrolling' => 'no',
 		'frameborder' => '0',
+		//Default for height comes from default value added by Weibo when creating an iFrame via their website
 		'height' => '500',
 	];
 

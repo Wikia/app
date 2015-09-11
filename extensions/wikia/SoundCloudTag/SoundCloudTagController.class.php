@@ -28,6 +28,7 @@ class SoundCloudTagController extends WikiaParserTagController {
 		'data-wikia-widget' => self::TAG_NAME,
 		'scrolling' => 'no',
 		'frameborder' => 'no',
+		//Default for height comes from default value added by SoundCloud when creating an iFrame via their website
 		'height' => '465',
 	];
 
