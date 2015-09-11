@@ -56,24 +56,22 @@ class EditPageLayoutController extends WikiaController {
 
 		$dropdown = [
 			[
-				"id" => "wpDiff",
-				"accesskey" => wfMessage('accesskey-diff')->escaped(),
-				"text" => wfMessage('showdiff')->escaped()
+				'id' => 'wpDiff',
+				'accesskey' => wfMessage( 'accesskey-diff' )->escaped(),
+				'text' => wfMessage( 'showdiff' )->escaped()
 			]
 		];
 
-		$this->button = array(
-			'action' => array(
-				'text' => wfMessage('savearticle')->escaped(),
+		$this->button = [
+			'action' => [
+				'text' => wfMessage( 'savearticle' )->escaped(),
 				'class' => 'codepage-publish-button',
 				'id' => 'wpSave',
-			),
+			],
 			'name' => 'submit',
 			'class' => 'primary',
 			'dropdown' => $dropdown
-		);
-
-
+		];
 
 		if ( !empty( $wgEnableContentReviewExt ) ) {
 			$helper = EditPageLayoutHelper::getInstance();

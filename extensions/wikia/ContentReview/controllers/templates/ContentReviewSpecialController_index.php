@@ -32,7 +32,6 @@
 					<td><?= $review['submit_time'] ?></td>
 					<td><?= htmlspecialchars( $review['review_user_name'] ) ?></td>
 					<td><?= $review['review_start'] ?></td>
-					<td><?php if ( !empty($review['review_end'] ) ) { echo $review['review_end']; } ?></td>
 					<td class="content-review-special-list-item-actions clearfix">
 						<? if ( !empty( $review['hide'] ) ): ?>
 							<?= wfMessage( 'content-review-special-review-open' )->escaped() ?>
