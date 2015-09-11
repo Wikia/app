@@ -7,7 +7,7 @@ class TwitterTagController extends WikiaParserTagController {
 	const TWITTER_BASE_URL = 'https://twitter.com/';
 
 	const REGEX_DIGITS = '/^[0-9]*$/';
-	const REGEX_HEX_COLOR = '/^#[0-9a-f]{3,6}$/i';
+	const REGEX_HEX_COLOR = '/#[0-9a-f]{3}(?:[0-9a-f]{3})?$/i';
 	const REGEX_TWITTER_SCREEN_NAME = '/^[a-z0-9_]{1,15}$/i';
 
 	const TAG_PERMITTED_ATTRIBUTES = [
