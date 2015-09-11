@@ -246,12 +246,13 @@ abstract class ResourceLoaderGlobalWikiModule extends ResourceLoaderWikiModule {
 	/**
 	 * Returns reviewed script revision id.
 	 * If script is not reviewed returns 0.
+	 * If we are in test mode, returns null to fetch most recent revision
 	 *
 	 * @param Title $title
-	 * @return int
+	 * @return int|null
 	 */
 	private function getScriptReviewedRevisionId( Title $title ) {
-		$revisionId = 0;
+		$revisionId = null;
 		$wikiId = 0;
 
 		$contentReviewHelper = new Wikia\ContentReview\Helper();
