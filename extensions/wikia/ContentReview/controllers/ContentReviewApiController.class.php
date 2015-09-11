@@ -259,7 +259,7 @@ class ContentReviewApiController extends WikiaApiController {
 		return ( new CurrentRevisionModel() )->getLatestReviewedRevision( $wikiId, $pageId );
 	}
 
-	private function canUserSubmit( Title $title ) {
+	protected function canUserSubmit( Title $title ) {
 		return $title->userCan( 'edit' );
 	}
 

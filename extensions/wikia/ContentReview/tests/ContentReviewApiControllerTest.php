@@ -10,7 +10,7 @@ class ContentReviewApiControllerTest extends WikiaBaseTest {
 		parent::setUp();
 
 		$this->contentReviewApiControllerMock = $this->getMockBuilder( 'ContentReviewApiController' )
-			->setMethods( [ 'getTitle' ] )
+			->setMethods( [ 'getTitle', 'canUserSubmit' ] )
 			->getMock();
 	}
 
@@ -41,25 +41,31 @@ class ContentReviewApiControllerTest extends WikiaBaseTest {
 			->getMock();
 
 		if ( $params['wasPosted'] ) {
-			$requestMock->method('wasPosted')
-				->will($this->returnValue($params['wasPosted']));
+			$requestMock->method( 'wasPosted' )
+				->will( $this->returnValue( $params['wasPosted'] ) );
 		}
 
 		if ( isset( $params['user'] ) ) {
 			/* @var \User $userMock */
 			$userMock = $this->getMockBuilder( '\User' )
 				->disableOriginalConstructor()
-				->setMethods( [ 'matchEditToken' ] )
+				->setMethods( [ 'matchEditToken', 'getId' ] )
 				->getMock();
 			if ( isset( $params['user']['matchEditToken'] ) ) {
 				$userMock->method( 'matchEditToken' )
 					->will( $this->returnValue( $params['user']['matchEditToken'] ) );
 			}
-		}
-
-		if ( isset( $params['user'] ) ) {
+			if ( isset( $params['user']['id'] ) ) {
+				$userMock->method( 'getId' )
+					->will( $this->returnValue( $params['user']['id'] ) );
+			}
 			$app = new WikiaApp();
 			$app->setGlobal( 'wgUser', $userMock );
+		}
+
+		if ( isset( $params['canUserSubmit'] ) ) {
+			$this->contentReviewApiControllerMock->method( 'canUserSubmit' )
+				->will( $this->returnValue( $params['canUserSubmit'] ) );
 		}
 
 		/* Set dependencies */
@@ -141,6 +147,39 @@ class ContentReviewApiControllerTest extends WikiaBaseTest {
 				],
 				null,
 				'Not JS page',
+			],
+			[
+				[
+					'wasPosted' => true,
+					'user' => [
+						'matchEditToken' => true,
+						'id' => 0,
+					],
+					'expectedException' => 'PermissionsException',
+					'title' => [
+						'articleID' => 123,
+						'isJsPage' => true,
+					],
+				],
+				null,
+				'Non existent user',
+			],
+			[
+				[
+					'wasPosted' => true,
+					'user' => [
+						'matchEditToken' => true,
+						'id' => 888,
+					],
+					'expectedException' => 'PermissionsException',
+					'title' => [
+						'articleID' => 123,
+						'isJsPage' => true,
+					],
+					'canUserSubmit' => false
+				],
+				null,
+				'Non existent user',
 			],
 		];
 	}
