@@ -2555,7 +2555,6 @@ class User {
 		return intval( $val );
 	}
 
-
 	/**
 	 * Get a preference local to this wikia.
 	 *
@@ -2591,7 +2590,7 @@ class User {
 
 		if ($wgPreferencesUseService) {
 			$this->load();
-			$value = $this->userPreferences()->get($this->mId, $preference, $default, $ignoreHidden);
+			$value = $this->userPreferences()->getGlobalPreference($this->mId, $preference, $default, $ignoreHidden);
 			wfRunHooks(
 				'UserGetPreference',
 				[
