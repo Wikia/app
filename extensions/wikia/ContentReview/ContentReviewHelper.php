@@ -155,33 +155,31 @@ class Helper extends \ContextSource {
 	/**
 	 * Enable test mode on current wiki
 	 */
-	public function setContentReviewTestMode() {
-		global $wgCityId;
-
-		$key = \ContentReviewApiController::CONTENT_REVIEW_TEST_MODE_KEY;
-
+	public function setContentReviewTestMode( $wikiId ) {
 		$wikiIds = $this->getContentReviewTestModeWikis();
 
-		if ( !in_array( $wgCityId, $wikiIds ) ) {
-			$wikiIds[] = $wgCityId;
-			$this->getRequest()->setSessionData( $key, serialize( $wikiIds ) );
+		if ( !in_array( $wikiId, $wikiIds ) ) {
+			$wikiIds[] = $wikiId;
+			$this->getRequest()->setSessionData(
+				\ContentReviewApiController::CONTENT_REVIEW_TEST_MODE_KEY,
+				serialize( $wikiIds )
+			);
 		}
 	}
 
 	/**
 	 * Disable test mode on current wiki
 	 */
-	public function disableContentReviewTestMode() {
-		global $wgCityId;
-
-		$key = \ContentReviewApiController::CONTENT_REVIEW_TEST_MODE_KEY;
-
+	public function disableContentReviewTestMode( $wikiId ) {;
 		$wikiIds = $this->getContentReviewTestModeWikis();
-		$wikiKey = array_search( $wgCityId, $wikiIds );
+		$wikiKey = array_search( $wikiId, $wikiIds );
 
 		if ( $wikiKey !== false ) {
 			unset( $wikiIds[$wikiKey] );
-			$this->getRequest()->setSessionData( $key, serialize( $wikiIds ) );
+			$this->getRequest()->setSessionData(
+				\ContentReviewApiController::CONTENT_REVIEW_TEST_MODE_KEY,
+				serialize( $wikiIds )
+			);
 		}
 	}
 

@@ -70,7 +70,7 @@ class ContentReviewApiController extends WikiaApiController {
 		}
 
 		$helper = new Helper();
-		$helper->setContentReviewTestMode();
+		$helper->setContentReviewTestMode( $this->wg->CityId );
 		$this->makeSuccessResponse();
 	}
 
@@ -85,7 +85,7 @@ class ContentReviewApiController extends WikiaApiController {
 		}
 
 		$helper = new Helper();
-		$helper->disableContentReviewTestMode();
+		$helper->disableContentReviewTestMode( $this->wg->CityId );
 		$this->makeSuccessResponse();
 	}
 
