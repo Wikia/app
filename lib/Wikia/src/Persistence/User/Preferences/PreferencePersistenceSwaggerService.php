@@ -4,10 +4,9 @@ namespace Wikia\Persistence\User\Preferences;
 
 use Swagger\Client\ApiException;
 use Swagger\Client\User\Preferences\Api\UserPreferencesApi;
-use Swagger\Client\User\Preferences\Models\UserPreferences as SwaggerUserPreferences;
 use Swagger\Client\User\Preferences\Models\GlobalPreference as SwaggerGlobalPref;
 use Swagger\Client\User\Preferences\Models\LocalPreference as SwaggerLocalPref;
-use Wikia\Domain\User\GlobalPreference;
+use Swagger\Client\User\Preferences\Models\UserPreferences as SwaggerUserPreferences;
 use Wikia\Domain\User\LocalPreference;
 use Wikia\Domain\User\Preferences;
 use Wikia\Service\NotFoundException;
