@@ -2284,7 +2284,7 @@ class Wikia {
 	 * return false stops permissions processing and we are totally decided (nothing later can override)
 	 */
 	static function canEditInterfaceWhitelist (&$title, &$wgUser, $action, &$result) {
-		global $wgEditInterfaceWhitelist;
+		global $wgEditInterfaceWhitelist, $wgEnableContentReviewExt;
 
 		// List the conditions we don't care about for early exit
 		if ( $action == "read" || $title->getNamespace() != NS_MEDIAWIKI || empty( $wgEditInterfaceWhitelist )) {
@@ -2297,7 +2297,9 @@ class Wikia {
 		}
 
 		// In this NS, editinterface applies only to white listed pages
-		if (in_array($title->getDBKey(), $wgEditInterfaceWhitelist)) {
+		if ( in_array( $title->getDBKey(), $wgEditInterfaceWhitelist )
+			|| ( !empty( $wgEnableContentReviewExt ) && $title->isJsPage() )
+		) {
 			return $wgUser->isAllowed('editinterface');
 		}
 

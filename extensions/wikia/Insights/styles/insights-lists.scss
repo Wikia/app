@@ -2,9 +2,9 @@
 @import './insights-icons-mixin';
 
 @if $is-dark-wiki {
-	@include insigths-icons-dark();
+	@include insights-icons-dark();
 } @else {
-	@include insigths-icons-light();
+	@include insights-icons-light();
 }
 
 /** The landing page **/

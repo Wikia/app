@@ -31,7 +31,7 @@ var importArticle = (function() {
 			lang: mw.config.get( 'wgUserLanguage' ),
 			mode: 'articles',
 			skin: mw.config.get( 'skin' ),
-			missingCallback: 'importArticleMissing'
+			missingCallback: 'importNotifications.importArticleMissing'
 		},
 		loaded = {},
 		slice = [].slice;
@@ -90,8 +90,9 @@ var importArticle = (function() {
 			module.only = module.type + 's';
 			delete module.type;
 
-			// Make sure we don't load the same URI again
 			uri = baseUri + $.param( module );
+
+			// Make sure we don't load the same URI again
 			if ( loaded[ uri ] ) {
 				continue;
 			}
@@ -109,54 +110,149 @@ var importArticle = (function() {
 /**
  * Notify users about missing user-supplied assets.
  * @author Wladyslaw Bodzek
+ * @author Kamil Koterba
  *
  * @param {Array} The names of the missing assets
  */
-var importArticleMissing = (function() {
+var importNotifications = (function() {
 	var reportMissing = ( $.isArray( window.wgUserGroups )
 			&& ( $.inArray( 'staff', window.wgUserGroups ) > -1
 			|| $.inArray( 'sysop', window.wgUserGroups ) > -1
 			|| $.inArray( 'bureaucrat', window.wgUserGroups ) > -1 ) ),
-		// TODO: i18n
 		missingText = {
-			single: '%1s was not found (requested by user-supplied javascript)',
-			multiple: '%1s %2s were not found (requested by user-supplied javascript)'
+			single:  'import-article-missing-single',
+			multiple: 'import-article-missing-multiple'
 		},
-		// TODO: i18n
 		moreText = {
-			single: '(and one more article)',
-			multiple: '(and %d more articles)'
+			single: 'import-article-missing-more-single',
+			multiple: 'import-article-missing-more-multiple'
+		},
+		notJsText = {
+			single:  'import-article-not-js-single',
+			multiple: 'import-article-not-js-multiple'
 		};
 
-	return function( missing ) {
+	function showBannerNotification(articles, baseText) {
 		var missingLength;
 
 		// Don't show notificaton for regular users
-		if ( !reportMissing ) {
+		if (!reportMissing) {
 			return;
 		}
 
-		if ( !$.isArray( missing ) ) {
-			missing = [ missing ];
+		if (!$.isArray(articles)) {
+			articles = [articles];
 		}
 
 		// Use BannerNotification to show the error to the user
-		if (window.BannerNotification && (missingLength = missing.length)) {
+		if (window.BannerNotification && (missingLength = articles.length)) {
 			var moreLength = missingLength - 1,
-				message = missingText[ missingLength < 2 ? 'single' : 'multiple' ],
-				more = moreText[ moreLength < 2 ? 'single' : 'multiple' ];
+				baseMessageName = baseText[ missingLength < 2 ? 'single' : 'multiple' ],
+				moreMessageName = moreText[ moreLength < 2 ? 'single' : 'multiple'],
+				message;
 
-			message = message
-				.replace( '%1s', '"' + missing[ 0 ] + '"' )
-				.replace( '%2s', more.replace( '%d', moreLength ) );
+			message = mw.message(baseMessageName).params([
+				'"' + articles[0] + '"',
+				mw.message(moreMessageName).params([moreLength]).escaped()
+			]).escaped();
 
-			new window.BannerNotification(message, 'error').show();
+			$(function () {
+				new window.BannerNotification(message, 'error').show();
+			});
 		}
 	}
+
+	function importArticleMissing(missing) {
+		showBannerNotification(missing, missingText);
+	}
+
+	function importNotJsFailed(missing) {
+		showBannerNotification(missing, notJsText);
+	}
+
+	return {
+		importArticleMissing: importArticleMissing,
+		importNotJsFailed: importNotJsFailed
+	};
+}());
+
+/**
+ * Imports script from provided JS page name
+ * Page has to be in MediaWiki namespace and has .js extension
+ *
+ * Article name can point a page on other wikia (e.g. 'external:otherwikiasubdomain:Pagename.js')
+ *
+ * @param {array} articles Names of pages to import without namespace prefix
+ */
+var importWikiaScriptPages = (function () {
+	var namespacePrefix = 'MediaWiki:',
+		externalPrefix = 'external:',
+		externalPrefixLength = externalPrefix.length;
+
+	function importWikiaScriptPages(articles) {
+		var articlesToImport = [],
+			articlesFailed = [];
+
+		if (!$.isArray(articles)) {
+			articles = [articles];
+		}
+
+		for (var i = 0; i < articles.length; i++) {
+			if (!isJsPage(articles[i])) {
+				articlesFailed.push(namespacePrefix + articles[i]);
+				continue;
+			}
+			if (isExternal(articles[i])) {
+				var articlePreparedName = prepareExternalArticleName(articles[i]);
+				if (articlePreparedName.length === 0) {
+					articlesFailed.push(articles[i]);
+					continue;
+				}
+				articlesToImport.push(articlePreparedName);
+				continue;
+			}
+			articlesToImport.push(namespacePrefix + articles[i]);
+		}
+
+		window.importNotifications.importNotJsFailed(articlesFailed);
+
+		window.importArticles({
+			type: 'script',
+			articles: articlesToImport
+		});
+	}
+
+	function isJsPage(scriptName) {
+		return scriptName.substr(scriptName.length - 3) === '.js';
+	}
+
+	function isExternal(scriptName) {
+		return scriptName.substr(0, externalPrefixLength) === externalPrefix;
+	}
+
+	function prepareExternalArticleName(articleName) {
+		var indexOfSubdomain = articleName.indexOf(':', externalPrefixLength) + 1,
+			articlePreparedName = '';
+
+		if (indexOfSubdomain === 0) {
+			// Subdomain not provided
+			return articlePreparedName;
+		}
+
+		// Inject namespace after subdomain
+		articlePreparedName = articleName.slice(0,indexOfSubdomain) +
+			namespacePrefix +
+			articleName.slice(indexOfSubdomain);
+
+		return articlePreparedName;
+	}
+
+	return importWikiaScriptPages;
 }());
 
 // Exports
 window.importArticle = window.importArticles = importArticle;
-window.importArticleMissing = importArticleMissing;
+window.importNotifications = importNotifications;
+window.importWikiaScriptPages = importWikiaScriptPages;
 
 })( this, jQuery );

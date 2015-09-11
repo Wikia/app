@@ -51,6 +51,7 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 
 	function getModule() {
 		return modules['ext.wikia.adEngine.provider.gpt.helper'](
+			document,
 			mocks.log,
 			mocks.adContext,
 			mocks.adLogicPageParams,

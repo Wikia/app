@@ -20,11 +20,7 @@ class ContentReviewApiController extends WikiaApiController {
 	 * @throws \FluentSql\Exception\SqlException
 	 */
 	public function submitPageForReview() {
-		if ( !$this->request->wasPosted()
-			|| !$this->wg->User->matchEditToken( $this->request->getVal( 'editToken' ) )
-		) {
-			throw new BadRequestApiException();
-		}
+		$this->isValidPostRequest( $this->request, $this->wg->User );
 
 		$pageName = $this->request->getVal( 'pageName' );
 
@@ -35,7 +31,7 @@ class ContentReviewApiController extends WikiaApiController {
 		}
 
 		$submitUserId = $this->wg->User->getId();
-		if ( !$submitUserId > 0 || !$this->canUserSubmit( $pageId ) ) {
+		if ( !$submitUserId > 0 || !$this->canUserSubmit( $title ) ) {
 			throw new PermissionsException( 'edit' );
 		}
 
@@ -60,11 +56,7 @@ class ContentReviewApiController extends WikiaApiController {
 	 * @throws PermissionsException
 	 */
 	public function enableTestMode() {
-		if ( !$this->request->wasPosted()
-			|| !$this->wg->User->matchEditToken( $this->request->getVal( 'editToken' ) )
-		) {
-			throw new BadRequestApiException();
-		}
+		$this->isValidPostRequest( $this->request, $this->wg->User );
 
 		$pageId = $this->request->getInt( 'pageId' );
 
@@ -74,7 +66,7 @@ class ContentReviewApiController extends WikiaApiController {
 		}
 
 		$submitUserId = $this->wg->User->getId();
-		if ( !$submitUserId > 0 || !$this->canUserSubmit( $pageId )	) {
+		if ( !$submitUserId > 0 || !$this->canUserSubmit( $title )	) {
 			throw new PermissionsException( 'edit' );
 		}
 
@@ -105,11 +97,7 @@ class ContentReviewApiController extends WikiaApiController {
 	 * @throws PermissionsException
 	 */
 	public function updateReviewsStatus() {
-		if ( !$this->request->wasPosted()
-			|| !$this->wg->User->matchEditToken( $this->request->getVal( 'editToken' ) )
-		) {
-			throw new BadRequestApiException();
-		}
+		$this->isValidPostRequest( $this->request, $this->wg->User );
 
 		if ( !$this->wg->User->isAllowed( 'content-review' ) ) {
 			throw new PermissionsException( 'content-review' );
@@ -130,11 +118,7 @@ class ContentReviewApiController extends WikiaApiController {
 	 * @throws PermissionsException
 	 */
 	public function removeCompletedAndUpdateLogs() {
-		if ( !$this->request->wasPosted()
-			|| !$this->wg->User->matchEditToken( $this->request->getVal( 'editToken' ) )
-		) {
-			throw new BadRequestApiException();
-		}
+		$this->isValidPostRequest( $this->request, $this->wg->User );
 
 		if ( !$this->wg->User->isAllowed( 'content-review' ) ) {
 			throw new PermissionsException( 'content-review' );
@@ -268,12 +252,18 @@ class ContentReviewApiController extends WikiaApiController {
 		$this->setResponseData( $res );
 	}
 
+	private function isValidPostRequest( WebRequest $request, User $user ) {
+		if ( !$request->wasPosted()	|| !$user->matchEditToken( $request->getVal( 'editToken' ) ) ) {
+			throw new BadRequestApiException();
+		}
+		return true;
+	}
+
 	private function getLatestReviewedRevisionFromDB( $wikiId, $pageId ) {
 		return ( new CurrentRevisionModel() )->getLatestReviewedRevision( $wikiId, $pageId );
 	}
 
-	private function canUserSubmit( $pageId ) {
-		$title = Title::newFromID( $pageId );
+	private function canUserSubmit( Title $title ) {
 		return $title->userCan( 'edit' );
 	}
 

@@ -27,11 +27,11 @@ class ReviewModel extends ContentReviewBaseModel {
 			->ORDER_BY( [ 'revision_id', 'ASC' ] )
 			->runLoop( $db, function ( &$pageStatus, $row ) {
 				if ( Helper::isStatusAwaiting( $row->status ) ) {
-					$pageStatus['latestId'] = $row->revision_id;
-					$pageStatus['latestStatus'] = $row->status;
+					$pageStatus['latestId'] = (int)$row->revision_id;
+					$pageStatus['latestStatus'] = (int)$row->status;
 				} else {
-					$pageStatus['lastReviewedId'] = $row->revision_id;
-					$pageStatus['lastReviewedStatus'] = $row->status;
+					$pageStatus['lastReviewedId'] = (int)$row->revision_id;
+					$pageStatus['lastReviewedStatus'] = (int)$row->status;
 				}
 			} );
 
@@ -58,8 +58,8 @@ class ReviewModel extends ContentReviewBaseModel {
 			->ORDER_BY( 'submit_time' )->DESC()
 			->LIMIT( 1 )
 			->runLoop( $db, function ( &$reviewId, $row ) {
-				if ( intval( $row->status ) === self::CONTENT_REVIEW_STATUS_UNREVIEWED ) {
-					$reviewId = $row->review_id;
+				if ( (int)$row->status === self::CONTENT_REVIEW_STATUS_UNREVIEWED ) {
+					$reviewId = (int)$row->review_id;
 				} else {
 					$reviewId = null;
 				}
@@ -219,7 +219,11 @@ class ReviewModel extends ContentReviewBaseModel {
 			->AND_( 'page_id' )->EQUAL_TO( $pageId )
 			->AND_( 'revision_id' )->EQUAL_TO( $revisionId )
 			->runLoop( $db, function ( &$revisionInfo, $row ) {
-				$revisionInfo = get_object_vars( $row );
+				$revisionInfo = [
+					'wikiId' => (int)$row->wiki_id,
+					'pageId' => (int)$row->page_id,
+					'status' => (int)$row->status,
+				];
 			} );
 
 		return $revisionInfo;
