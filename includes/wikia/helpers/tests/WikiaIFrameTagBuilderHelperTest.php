@@ -9,7 +9,7 @@ class WikiaIFrameTagBuilderHelperTest extends WikiaBaseTest {
 	public function testWrapForMobileOnMobile() {
 		$helper = new WikiaIFrameTagBuilderHelper();
 
-		$this->getMethodMock( $helper, 'isMobileSkin' )
+		$this->getMethodMock( 'WikiaIFrameTagBuilderHelper', 'isMobileSkin' )
 			->expects( $this->any() )
 			->method( 'isMobileSkin' )
 			->will( $this->returnValue( true ) );
@@ -23,7 +23,7 @@ class WikiaIFrameTagBuilderHelperTest extends WikiaBaseTest {
 	public function testWrapForMobileOnDesktop() {
 		$helper = new WikiaIFrameTagBuilderHelper();
 
-		$this->getMethodMock( $helper, 'isMobileSkin' )
+		$this->getMethodMock( 'WikiaIFrameTagBuilderHelper', 'isMobileSkin' )
 			->expects( $this->any() )
 			->method( 'isMobileSkin' )
 			->will( $this->returnValue( false ) );
