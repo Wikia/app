@@ -41,7 +41,7 @@ class UserPreferences {
 	/**
 	 * @Inject({
 	 *    Wikia\Cache\Memcache\Memcache::class,
-	 *    Wikia\Service\User\Preferences\PreferencePersistence::class,
+	 *    Wikia\Persistence\User\Preferences\PreferencePersistence::class,
 	 *    Wikia\Service\User\Preferences\UserPreferences::HIDDEN_PREFS,
 	 *    Wikia\Service\User\Preferences\UserPreferences::DEFAULT_PREFERENCES,
 	 *    Wikia\Service\User\Preferences\UserPreferences::FORCE_SAVE_PREFERENCES})
@@ -228,6 +228,10 @@ class UserPreferences {
 
 	private function prefIsSaveable($pref, $value) {
 		$default = $this->getFromDefault($pref);
+
+		if ($value == $default) {
+			return false;
+		}
 
 		return in_array($pref, $this->forceSavePrefs) || $value != $default ||
 			($default != null && $value !== false && $value !== null);
