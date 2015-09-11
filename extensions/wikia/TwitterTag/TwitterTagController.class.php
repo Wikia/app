@@ -69,7 +69,8 @@ class TwitterTagController extends WikiaParserTagController {
 			$html = Html::element( 'a', $attributes, self::TWITTER_NAME  );
 			// Wrapper used for easily selecting the widget in Selenium tests
 			$html = Html::rawElement( 'span', [ 'class' => 'widget-twitter' ], $html );
-			$html .= $this->getInitializationScript();
+
+			$parser->getOutput()->addModules( 'ext.TwitterTag' );
 		}
 
 		return $html;
@@ -96,15 +97,6 @@ class TwitterTagController extends WikiaParserTagController {
 		}
 
 		return $validatedAttributes;
-	}
-
-	/**
-	 * Returns a script tag which gets full Twitter script. That second script swaps <a> Twitter tags into widgets.
-	 *
-	 * @return string
-	 */
-	private function getInitializationScript() {
-		return '<script>' . file_get_contents( __DIR__ . '/scripts/twitter.min.js' ) . '</script>';
 	}
 
 	protected function buildParamValidator( $paramName ) {

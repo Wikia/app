@@ -17,3 +17,9 @@ $wgExtensionMessagesFiles['TwitterTag'] = __DIR__ . '/TwitterTag.i18n.php';
 
 $wgHooks['ParserFirstCallInit'][] = 'TwitterTagController::onParserFirstCallInit';
 
+$wgResourceModules['ext.TwitterTag'] = [
+	'scripts' => 'scripts/twitter.min.js',
+	'localBasePath' => __DIR__,
+	'remoteExtPath' => 'wikia/TwitterTag'
+];
+
