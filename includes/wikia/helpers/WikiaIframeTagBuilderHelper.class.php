@@ -1,5 +1,5 @@
 <?php
-class WikiaIframeTagBuilderHelper extends WikiaTagBuilderHelper {
+class WikiaIFrameTagBuilderHelper extends WikiaTagBuilderHelper {
 
 	public function isMobileSkin( ) {
 		return F::app()->checkSkin( [ 'wikiamobile', 'mercury' ] );

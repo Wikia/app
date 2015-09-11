@@ -1,20 +1,35 @@
 <?php
-class WikiaIframeTagBuilderHelperTests extends WikiaBaseTest {
+class WikiaIFrameTagBuilderHelperTests extends WikiaBaseTest {
 
 	public function setUp() {
 		parent::setUp();
 	}
 
-	public function testWrapForMobile() {
-		$helper = new WikiaIframeTagBuilderHelper();
+	public function testWrapForMobileOnMobile() {
+		$helper = new WikiaIFrameTagBuilderHelper();
+
 		$this->getMethodMock( $helper, 'isMobileSkin' )
 			->expects( $this->any() )
 			->method( 'isMobileSkin' )
 			->will( $this->returnValue( true ) );
 
-		$html = '<iframe />';
-		$expectedResult = '<script type="x-wikia-widget"><iframe /></script>';
+		$html = '<iframe src="http://example.com" />';
+		$expectedResult = '<script type="x-wikia-widget">' . $html . '</script>';
 
-		$this->assertSame( $helper->wrapForMobile($html), $expectedResult );
+		$this->assertSame( $helper->wrapForMobile( $html ), $expectedResult );
+	}
+
+	public function testWrapForMobileOnDesktop() {
+		$helper = new WikiaIFrameTagBuilderHelper();
+
+		$this->getMethodMock( $helper, 'isMobileSkin' )
+			->expects( $this->any() )
+			->method( 'isMobileSkin' )
+			->will( $this->returnValue( false ) );
+
+		$html = '<iframe src="http://example.com" />';
+		$expectedResult = $html;
+
+		$this->assertSame( $helper->wrapForMobile( $html ), $expectedResult );
 	}
 }

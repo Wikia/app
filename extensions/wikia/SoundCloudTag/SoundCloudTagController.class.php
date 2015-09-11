@@ -38,7 +38,7 @@ class SoundCloudTagController extends WikiaParserTagController {
 	public function __construct() {
 		parent::__construct();
 
-		$this->helper = new WikiaIframeTagBuilderHelper();
+		$this->helper = new WikiaIFrameTagBuilderHelper();
 	}
 
 	public static function onParserFirstCallInit( Parser $parser ) {
