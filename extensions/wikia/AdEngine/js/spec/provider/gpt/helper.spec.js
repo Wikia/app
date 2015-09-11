@@ -1,4 +1,4 @@
-/*global document, describe, it, expect, modules, spyOn, beforeEach*/
+/*global document, describe, it, expect, modules, spyOn, beforeEach, window*/
 describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 	'use strict';
 
@@ -53,6 +53,7 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 		return modules['ext.wikia.adEngine.provider.gpt.helper'](
 			document,
 			mocks.log,
+			window,
 			mocks.adContext,
 			mocks.adLogicPageParams,
 			mocks.adDetect,

@@ -11,19 +11,18 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 		registeredCallbacks = {},
 		slots = {},
 		slotQueue = [],
-		storedCmdQueue = [],
 		pageLevelParams,
 		pubAds;
 
-	function resetSlotsForRecovery() {
+	function resetForRecovery() {
+		registeredCallbacks = {};
 		slots = {};
 		slotQueue = [];
 	}
 
-	function GoogleTag(storeCommands) {
+	function GoogleTag() {
 		this.initialized = false;
-		this.storeCommands = storeCommands;
-		resetSlotsForRecovery();
+		resetForRecovery();
 	}
 
 	function dispatchEvent(event) {
@@ -103,14 +102,7 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 	};
 
 	GoogleTag.prototype.push = function (callback) {
-		if (this.storeCommands) {
-			storedCmdQueue.push(callback);
-		}
 		window.googletag.cmd.push(callback);
-	};
-
-	GoogleTag.prototype.getStoredCmdQueue = function () {
-		return storedCmdQueue;
 	};
 
 	GoogleTag.prototype.flush = function () {

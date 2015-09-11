@@ -17,7 +17,6 @@ define('ext.wikia.adEngine.provider.gpt.sourcePointTag', [
 
 	function SourcePointTag() {
 		GoogleTag.call(this);
-		this.storeCommands = false;
 	}
 
 	SourcePointTag.prototype = new GoogleTag();
@@ -42,13 +41,14 @@ define('ext.wikia.adEngine.provider.gpt.sourcePointTag', [
 
 		// Override previously created googletag object to prevent running stored cmd queue with regular gpt
 		window.googletag = {
-			cmd: this.getStoredCmdQueue()
+			cmd: []
 		};
 
 		log('Appending GPT script to head', 'debug', logGroup);
 		node.parentNode.insertBefore(gads, node);
 
 		this.initialized = true;
+		this.enableServices();
 	};
 
 	SourcePointTag.prototype.onAdLoad = function (slotName, element, gptEvent, onAdLoadCallback) {

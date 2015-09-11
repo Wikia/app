@@ -3,6 +3,7 @@
 define('ext.wikia.adEngine.provider.gpt.helper', [
 	'wikia.document',
 	'wikia.log',
+	'wikia.window',
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adLogicPageParams',
 	'ext.wikia.adEngine.provider.gpt.adDetect',
@@ -15,6 +16,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 ], function (
 	doc,
 	log,
+	window,
 	adContext,
 	adLogicPageParams,
 	adDetect,
@@ -29,18 +31,26 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 
 	var logGroup = 'ext.wikia.adEngine.provider.gpt.helper',
 		context = adContext.getContext(),
-		googleApi = new GoogleTag(!!context.opts.sourcePoint),
+		googleApi = new GoogleTag(),
+		slotsToRecover = [],
 		sourcePointInitialized = false;
 
-	if (context.opts.sourcePoint && SourcePointTag) {
-		doc.addEventListener('sp.blocking', function () {
-			if (!sourcePointInitialized) {
-				log('SourcePoint recovery enabled', 'debug', logGroup);
-				sourcePointInitialized = true;
-				googleApi = new SourcePointTag();
-				googleApi.init();
-			}
-		});
+	function isBlocking() {
+		return !!(context.opts.sourcePoint && window.ads && window.ads.runtime.sp.blocking);
+	}
+
+	function isRecoverable(slotName, recoverableSlots) {
+		return context.opts.sourcePoint && recoverableSlots.indexOf(slotName) !== -1;
+	}
+
+	function recoverSlots() {
+		if (!isBlocking()) {
+			return;
+		}
+		log(['Starting recovery', slotsToRecover], 'debug', logGroup);
+		while (slotsToRecover.length){
+			window.adslots2.push([slotsToRecover.shift()]);
+		}
 	}
 
 	/**
@@ -58,7 +68,9 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	 */
 	function pushAd(slotName, slotElement, slotPath, slotTargeting, extra) {
 		var count,
-			element;
+			element,
+			recoverableSlots = extra.recoverableSlots || [],
+			shouldPush = !isBlocking() || isRecoverable(slotName, recoverableSlots);
 
 		extra = extra || {};
 		slotTargeting = JSON.parse(JSON.stringify(slotTargeting)); // copy value
@@ -117,6 +129,15 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 			googleApi.setPageLevelParams(adLogicPageParams.getPageLevelParams());
 		}
 
+		if (!shouldPush) {
+			log(['Push blocked', slotName], 'debug', logGroup);
+			return;
+		}
+
+		if (!isBlocking() && isRecoverable(slotName, recoverableSlots)) {
+			slotsToRecover.push(slotName);
+		}
+
 		log(['pushAd', slotName], 'info', logGroup);
 		if (!slotTargeting.flushOnly) {
 			googleApi.registerCallback(element.getId(), gptCallback);
@@ -131,6 +152,17 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 		if (slotTargeting.flushOnly) {
 			callSuccess();
 		}
+	}
+
+	if (context.opts.sourcePoint && SourcePointTag) {
+		doc.addEventListener('sp.blocking', function () {
+			if (!sourcePointInitialized) {
+				log('SourcePoint recovery enabled', 'debug', logGroup);
+				sourcePointInitialized = true;
+				googleApi = new SourcePointTag();
+				recoverSlots();
+			}
+		});
 	}
 
 	adContext.addCallback(function () {
