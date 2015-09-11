@@ -32,7 +32,7 @@ $messages['en'] = array(
 	'wikiacuratedcontent-featured-section-name' => 'Featured Content',
 	'wikiacuratedcontent-edit-mobile-main-page' => 'Edit Mobile Main Page',
 	'wikiacuratedcontent-close-modal-prompt-message' => 'Are you sure you want to close this modal?',
-	'wikiacuratedcontent-modal-title' => 'Mobile Main Page'
+	'wikiacuratedcontent-modal-title' => 'Mobile Main Page',
 );
 
 $messages['qqq'] = array(
@@ -66,7 +66,7 @@ $messages['qqq'] = array(
 	'wikiacuratedcontent-featured-section-name' => 'Featured content section title',
 	'wikiacuratedcontent-edit-mobile-main-page' => 'Message on the button allowing to edit Mobile Main Page, visible on the main page',
 	'wikiacuratedcontent-close-modal-prompt-message' => 'Message displayed in prompt when user hit X button and attempt to close modal',
-	'wikiacuratedcontent-modal-title' => 'Modal title in which user can edit mobile main page on desktop'
+	'wikiacuratedcontent-modal-title' => 'Modal title in which user can edit mobile main page on desktop',
 );
 
 $messages['ach'] = array(
@@ -136,7 +136,7 @@ $messages['de'] = array(
 	'wikiacuratedcontent-content-required-entry' => 'Dieses Feld darf nicht leer sein.',
 	'wikiacuratedcontent-content-empty-section' => 'Dieser Ordner braucht noch ein paar Einträge.',
 	'wikiacuratedcontent-content-description-items' => 'Füge Einträge aus deinem Wikia hinzu und gib einen Namen an, unter dem sie angezeigt werden sollen.',
-	'wikiacuratedcontent-content-description-supported-items-for-sections' => 'Kategorien werden in allen Bereichen unterstützt. Zusätzlich können im Abschnitt „Empfohlene Inhalte“ auch Artikel, Blog-Beiträge und Videos (Youtube und Wikia Video-Bibliothek) eingebunden werden.',
+	'wikiacuratedcontent-content-description-supported-items-for-sections' => 'Kategorien werden in allen Bereichen unterstützt. Zusätzlich können im Abschnitt „Empfohlene Inhalte“ auch Artikel, Blog-Beiträge und Videos (YouTube und Wikia Video-Bibliothek) eingebunden werden.',
 	'wikiacuratedcontent-content-description-tag-needs-image' => 'Ordner müssen ein Bild haben.',
 	'wikiacuratedcontent-content-description-section' => 'Macht es vielleicht Sinn, einige Einträge unter einer bestimmten Überschrift zu gruppieren? Füge einen Ordner hinzu, und ordne die entsprechenden Einträge darunter ein.
 ',
@@ -152,38 +152,38 @@ $messages['de'] = array(
 	'wikiacuratedcontent-content-toolonglabel-error' => 'Der Anzeigename darf nicht länger als 48 Zeichen sein.',
 	'wikiacuratedcontent-content-imagemissing-error' => 'Bild fehlt',
 	'wikiacuratedcontent-edit-mobile-main-page' => 'Mobile Hauptseite bearbeiten',
-	'wikiacuratedcontent-close-modal-prompt-message' => 'Bist du sicher, dass du dieses modale Fenster schließen möchtest?',
+	'wikiacuratedcontent-close-modal-prompt-message' => 'Bist du sicher, dass du dieses Fenster schließen möchtest?',
 	'wikiacuratedcontent-modal-title' => 'Mobile Hauptseite',
 );
 
 $messages['es'] = array(
-	'wikiacuratedcontent-desc' => 'Módulos de la app para móviles de contenido a cargo de Wikia',
-	'wikiacuratedcontent-preview-description' => 'Esta es solo una previsualización de cómo se verían las páginas en la aplicación del contenido a cargo de Wikia.',
-	'wikiacuratedcontent-content-title' => 'Herramienta para la gestión del contenido a cargo de Wikia',
+	'wikiacuratedcontent-desc' => 'Módulos de Mantenimiento de contendido de la app para móviles de Wikia',
+	'wikiacuratedcontent-preview-description' => 'Esta es solo una previsualización de cómo se verían las páginas en la aplicación de Mantenimiento de contenido de Wikia.',
+	'wikiacuratedcontent-content-title' => 'Herramienta para la gestión del Mantenimiento de contenido de Wikia',
 	'wikiacuratedcontent-content-save' => 'Guardar',
 	'wikiacuratedcontent-content-duplicate-entry' => 'Este valor está duplicado',
-	'wikiacuratedcontent-content-item' => 'Ítem',
-	'wikiacuratedcontent-content-section' => 'Sección del ítem (opcional)',
-	'wikiacuratedcontent-content-name' => 'Nombre del contenido a cargo',
+	'wikiacuratedcontent-content-item' => 'Elemento',
+	'wikiacuratedcontent-content-section' => 'Sección del elemento (opcional)',
+	'wikiacuratedcontent-content-name' => 'Nombre del Mantenimiento de contenido',
 	'wikiacuratedcontent-content-add-section' => 'Añadir sección',
-	'wikiacuratedcontent-content-add-item' => 'Añadir ítem',
-	'wikiacuratedcontent-content-orphaned-error' => 'El ítem debe pertenecer a una sección',
-	'wikiacuratedcontent-content-required-entry' => 'Es necesario un ítem',
-	'wikiacuratedcontent-content-empty-section' => 'Esta sección necesita algunos ítems',
-	'wikiacuratedcontent-content-description-items' => 'Añade "ítems" del wiki y renómbralos para que aparezcan como quieras que aparezcan en el contenido proporcionado en "Nombre del contenido a cargo".',
+	'wikiacuratedcontent-content-add-item' => 'Añadir elemento',
+	'wikiacuratedcontent-content-orphaned-error' => 'El elemento debe pertenecer a una sección',
+	'wikiacuratedcontent-content-required-entry' => 'Es necesario un elemento',
+	'wikiacuratedcontent-content-empty-section' => 'Esta sección necesita algunos elementos',
+	'wikiacuratedcontent-content-description-items' => 'Añade "elementos" de la wikia y renómbralos para que aparezcan como quieras que aparezcan en el Mantenimiento de contenido con "Nombre del Mantenimiento de contenido".',
 	'wikiacuratedcontent-content-description-supported-items-for-sections' => 'Las categorías se pueden añadir en todas las secciones. Además de eso, la sección de "Contenido destacado" soporta: artículos, blogs, videos (YouTube y Ooyala)',
 	'wikiacuratedcontent-content-description-tag-needs-image' => 'Las secciones deben tener una imagen',
-	'wikiacuratedcontent-content-description-section' => '¿Tiene sentido agrupar ítems relacionados bajo una misma sección? Añade una "sección" y arrastra los ítems bajo ella.',
+	'wikiacuratedcontent-content-description-section' => '¿Tiene sentido agrupar elementos relacionados bajo una misma sección? Añade una "sección" y arrastra los elementos bajo ella.',
 	'wikiacuratedcontent-content-description-organize' => 'Siéntete libre de borrar o añadir más líneas, y reordenarlas tocando sobre ellas y arrastrándolas hacia otra posición.',
-	'wikiacuratedcontent-content-description-no-section' => 'Los ítems sin sección o con una sección vacía aparecerán al final del contenido a cargo.',
-	'wikiacuratedcontent-content-description-items-input' => 'Se deben añadir los ítems etiquetados (campo de la derecha) junto con el tipo de ítem (campo de la izquierda) con el siguiente formato: nombre_del_artículo, {{ns:Category}}:nombre_de_la_categoría, {{ns:500}}:nombre_de_usuario/publicación, {{ns:File}}:nombre_del_video',
+	'wikiacuratedcontent-content-description-no-section' => 'Los elementos sin sección o con una sección vacía aparecerán al final del Mantenimiento de contenido.',
+	'wikiacuratedcontent-content-description-items-input' => 'Se deben añadir los elementos etiquetados (campo de la derecha) junto con el tipo de elemento (campo de la izquierda) con el siguiente formato: nombre_del_artículo, {{ns:Category}}:nombre_de_la_categoría, {{ns:500}}:nombre_de_usuario/publicación, {{ns:File}}:nombre_del_video',
 	'wikiacuratedcontent-content-articlenotfound-error' => 'Artículo no encontrado',
-	'wikiacuratedcontent-content-emptylabel-error' => 'Es necesario introducir el nombre del contenido mantenido para este item',
+	'wikiacuratedcontent-content-emptylabel-error' => 'Es necesario introducir el nombre del Mantenimiento de contenido para este elemento',
 	'wikiacuratedcontent-content-videonotsupported-error' => 'Este proveedor de videos no es compatible',
 	'wikiacuratedcontent-content-notsupportedtype-error' => 'Este tipo no es compatible',
 	'wikiacuratedcontent-content-nocategoryintag-error' => 'Solo puedes poner una categoría aquí',
 	'wikiacuratedcontent-featured-section-name' => 'Contenido destacado',
-	'wikiacuratedcontent-content-toolonglabel-error' => 'Nombre del contenido a cargo debe ser no mayor a 48 caracteres',
+	'wikiacuratedcontent-content-toolonglabel-error' => 'Nombre del Mantenimiento de contenido no puede ser mayor a 48 caracteres',
 	'wikiacuratedcontent-content-imagemissing-error' => 'Falta imagen',
 	'wikiacuratedcontent-edit-mobile-main-page' => 'Editar portada para móviles',
 	'wikiacuratedcontent-close-modal-prompt-message' => '¿Seguro que quieres cerrar este módulo?',
@@ -255,11 +255,11 @@ $messages['fr'] = array(
 	'wikiacuratedcontent-content-notsupportedtype-error' => "Ce type n'est pas pris en charge",
 	'wikiacuratedcontent-content-nocategoryintag-error' => 'Vous ne pouvez mettre que des catégories ici',
 	'wikiacuratedcontent-featured-section-name' => 'Contenu à la une',
-	'wikiacuratedcontent-content-toolonglabel-error' => "Le nom de l'application communautaire mobile ne doit pas dépasser les 48 caractères",
+	'wikiacuratedcontent-content-toolonglabel-error' => "Le nom de l'application communautaire ne doit pas dépasser les 48 caractères",
 	'wikiacuratedcontent-content-imagemissing-error' => 'Image manquante',
-	'wikiacuratedcontent-edit-mobile-main-page' => 'Modifier la page principale (mobile)',
+	'wikiacuratedcontent-edit-mobile-main-page' => "Modifier la page d'accueil (mobile)",
 	'wikiacuratedcontent-close-modal-prompt-message' => 'Voulez-vous vraiment supprimer ce module ?',
-	'wikiacuratedcontent-modal-title' => 'Page principale - Mobile',
+	'wikiacuratedcontent-modal-title' => "Page d'accueil - Mobile",
 );
 
 $messages['gl'] = array(
@@ -340,9 +340,9 @@ $messages['ja'] = array(
 	'wikiacuratedcontent-content-nocategoryintag-error' => 'ここに入力できるのはカテゴリのみです',
 	'wikiacuratedcontent-featured-section-name' => '注目のコンテンツ',
 	'wikiacuratedcontent-content-toolonglabel-error' => 'キュレーションコンテンツ名は半角48文字以下にしてください',
-	'wikiacuratedcontent-content-imagemissing-error' => '画像が指定されていません',
+	'wikiacuratedcontent-content-imagemissing-error' => '画像を指定してください',
 	'wikiacuratedcontent-edit-mobile-main-page' => 'モバイルのメインページを編集',
-	'wikiacuratedcontent-close-modal-prompt-message' => 'このモーダルを閉じてもよろしいですか？',
+	'wikiacuratedcontent-close-modal-prompt-message' => 'このポップアップを閉じてよろしいですか？',
 	'wikiacuratedcontent-modal-title' => 'モバイルのメインページ',
 );
 
@@ -535,8 +535,8 @@ $messages['roa-tara'] = array(
 );
 
 $messages['ru'] = array(
-	'wikiacuratedcontent-desc' => 'Инструмент Wikia Curated Content для мобильного приложения',
-	'wikiacuratedcontent-preview-description' => 'Это просто макет того, как страницы будут выглядеть в приложении Wikia Curated Content.',
+	'wikiacuratedcontent-desc' => 'Инструмент Wikia Curated Content для мобильных приложений',
+	'wikiacuratedcontent-preview-description' => 'Это только макет того, как страницы будут выглядеть в приложении Wikia Curated Content.',
 	'wikiacuratedcontent-content-title' => 'Инструмент управления Wikia Curated Content',
 	'wikiacuratedcontent-content-save' => 'Сохранить',
 	'wikiacuratedcontent-content-duplicate-entry' => 'Эта переменная уже используется',
@@ -551,19 +551,19 @@ $messages['ru'] = array(
 	'wikiacuratedcontent-content-description-items' => 'Добавьте «Пункты» из вашей вики и дайте им новые имена, если вы хотите видеть другие названия заголовков в мобильном приложении.',
 	'wikiacuratedcontent-content-description-supported-items-for-sections' => 'Категории поддерживается во всех секциях. Секция "Избранное" поддерживает: статьи, блоги и видео (YouTube и Ooyala)',
 	'wikiacuratedcontent-content-description-tag-needs-image' => 'У секций должно быть изображение',
-	'wikiacuratedcontent-content-description-section' => 'Если важно сгруппировать пункты, например, по разным видеоиграм, добавьте «Секцию» и перетащите пункты в него.',
-	'wikiacuratedcontent-content-description-organize' => 'Вы можете удалить или добавить дополнительные строки и изменить их порядок.',
-	'wikiacuratedcontent-content-description-no-section' => 'Пункты, не объединённые в секции или в секции без названия, будут показаны в конце списка в мобильном приложении.',
+	'wikiacuratedcontent-content-description-section' => 'Если важно сгруппировать пункты, например, по разным видеоиграм, добавьте «Секцию» и перетащите пункты в неё.',
+	'wikiacuratedcontent-content-description-organize' => 'Вы можете удалить или добавить дополнительные строки или изменить их порядок.',
+	'wikiacuratedcontent-content-description-no-section' => 'Пункты, не объединённые в секции или находящиеся в секциях без названия, в мобильном приложении будут показаны в конце списка.',
 	'wikiacuratedcontent-content-description-items-input' => 'При добавлении пунктов указывайте их название на вики и добавляйте название пространства имён (слева) следующим образом: название_статьи, {{ns:Category}}:название_категории, {{ns:500}}:ИмяУчастника/название_блога, {{ns:File}}:название_видео',
 	'wikiacuratedcontent-content-articlenotfound-error' => 'Статья не найдена',
 	'wikiacuratedcontent-content-emptylabel-error' => 'Вам нужно указать название для этого пункта',
-	'wikiacuratedcontent-content-videonotsupported-error' => 'Этот сайт с видео не поддерживается',
+	'wikiacuratedcontent-content-videonotsupported-error' => 'Этот видеохостинг не поддерживается',
 	'wikiacuratedcontent-content-notsupportedtype-error' => 'Этот тип не поддерживается',
 	'wikiacuratedcontent-content-nocategoryintag-error' => 'Вы можете поместить сюда только категории',
 	'wikiacuratedcontent-featured-section-name' => 'Избранный контент',
 	'wikiacuratedcontent-content-toolonglabel-error' => 'Название курируемого контента не должно превышать 48 символов',
 	'wikiacuratedcontent-content-imagemissing-error' => 'Изображение отсутствует',
-	'wikiacuratedcontent-edit-mobile-main-page' => 'Править версию для мобильных',
+	'wikiacuratedcontent-edit-mobile-main-page' => 'Править мобильную версию',
 	'wikiacuratedcontent-close-modal-prompt-message' => 'Вы уверены, что хотите закрыть этот диалог?',
 	'wikiacuratedcontent-modal-title' => 'Заглавная страница для мобильных устройств',
 );

@@ -96,7 +96,7 @@ class HeliosClientImpl implements HeliosClient
 	}
 
 	protected function processResponseOutput( \MWHttpRequest $request ) {
-		if ( $request->status == Constants::HTTP_STATUS_NO_CONTENT ) {
+		if ( $request->getStatus() == Constants::HTTP_STATUS_NO_CONTENT ) {
 			return null;
 		}
 

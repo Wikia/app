@@ -49,4 +49,9 @@ class PortableInfoboxHooks {
 
 		return true;
 	}
+
+	static public function onAllInfoboxesQueryRecached() {
+		F::app()->wg->Memc->delete( wfMemcKey( ApiQueryAllinfoboxes::MCACHE_KEY ) );
+		return true;
+	}
 }
