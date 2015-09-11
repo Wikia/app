@@ -16,14 +16,11 @@ class WeiboTagController extends WikiaParserTagController {
 	const TAG_ALLOWED_ATTRIBUTES = [
 		'width',
 		'height',
-		'scrolling',
-		'frameborder',
-		'style',
 	];
 	const TAG_DEFAULT_ATTRIBUTES = [
 		'data-wikia-widget' => self::PARSER_TAG_NAME,
-		'sandbox' => 'allow-scripts allow-same-origin',
-		'seamless' => 'seamless'
+		'scrolling' => 'no',
+		'frameborder' => '0',
 	];
 
 	private $tagBuildSource;
@@ -63,7 +60,7 @@ class WeiboTagController extends WikiaParserTagController {
 	}
 
 	private function buildTagAttributes( $args ) {
-		$attributes = $this->tagBuilderHelper->buildTagAttributes( self::TAG_SOURCE_ALLOWED_PARAMS_WITH_DEFAULTS, $args );
+		$attributes = $this->tagBuilderHelper->buildTagAttributes( self::TAG_ALLOWED_ATTRIBUTES, $args );
 		$attributes['src'] = $this->tagBuildSource;
 		return array_merge( $attributes, self::TAG_DEFAULT_ATTRIBUTES );
 	}
