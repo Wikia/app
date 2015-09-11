@@ -4536,8 +4536,9 @@ $wgRCMaxAge = 13 * 7 * 24 * 3600;
  * Wikia change: Recentchanges items are periodically purged; keep the number of rows at the stable level
  *
  * @see PLATFORM-1393
+ * @see PLATFORM-1460
  */
-$wgRCMaxRows = 5000;
+$wgRCMaxRows = 20000;
 
 /**
  * Filter $wgRCLinkDays by $wgRCMaxAge to avoid showing links for numbers

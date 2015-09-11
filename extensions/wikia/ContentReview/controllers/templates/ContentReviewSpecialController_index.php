@@ -1,10 +1,9 @@
-<div class="content-review-special-header">
-	<div class="content-review-special-header-content">
-		<h1 class="content-review-special-header-content-title">
-			<?= wfMessage( 'content-review-special-title' )->escaped() ?>
-		</h1>
-	</div>
-</div>
+<h1 class="content-review-special-header-content-title">
+	<?= wfMessage( 'content-review-special-title' )->escaped() ?>
+</h1>
+<p>
+	<?= wfMessage( 'content-review-special-guidelines' )->parse() ?>
+</p>
 <table class="article-table sortable content-review-special-list">
 	<thead>
 	<tr class="content-review-special-list-headers">

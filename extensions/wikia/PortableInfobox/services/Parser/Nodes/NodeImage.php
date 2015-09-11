@@ -110,8 +110,14 @@ class NodeImage extends Node {
 	 * @return array
 	 */
 	private function videoDataDecorator( $data, $file ) {
-		$data['isVideo'] = true;
-		$data['duration'] = WikiaFileHelper::formatDuration( $file->getMetadataDuration());
+		$title = $file->getTitle();
+
+		if ( $title ) {
+			$data[ 'url' ] = $title->getFullURL();
+		}
+
+		$data[ 'isVideo' ] = true;
+		$data[ 'duration' ] = WikiaFileHelper::formatDuration( $file->getMetadataDuration());
 
 		return $data;
 	}
