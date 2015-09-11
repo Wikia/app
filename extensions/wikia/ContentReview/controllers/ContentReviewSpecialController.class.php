@@ -1,5 +1,7 @@
 <?php
 use Wikia\ContentReview\Models\ReviewModel;
+use Wikia\ContentReview\Models\ReviewLogModel;
+use Wikia\ContentReview\Models\CurrentRevisionModel;
 use Wikia\ContentReview\Helper;
 
 class ContentReviewSpecialController extends WikiaSpecialPageController {
@@ -8,7 +10,9 @@ class ContentReviewSpecialController extends WikiaSpecialPageController {
 		ReviewModel::CONTENT_REVIEW_STATUS_UNREVIEWED => 'content-review-status-unreviewed',
 		ReviewModel::CONTENT_REVIEW_STATUS_IN_REVIEW => 'content-review-status-in-review',
 		ReviewModel::CONTENT_REVIEW_STATUS_APPROVED => 'content-review-status-approved',
-		ReviewModel::CONTENT_REVIEW_STATUS_REJECTED => 'content-review-status-rejected'
+		ReviewModel::CONTENT_REVIEW_STATUS_REJECTED => 'content-review-status-rejected',
+		ReviewModel::CONTENT_REVIEW_STATUS_LIVE => 'content-review-status-live',
+		ReviewModel::CONTENT_REVIEW_STATUS_REVERTED => 'content-review-status-reverted'
 	];
 
 	function __construct() {
@@ -39,9 +43,22 @@ class ContentReviewSpecialController extends WikiaSpecialPageController {
 
 		$this->getOutput()->setPageTitle( wfMessage( 'content-review-special-title' )->plain() );
 
-		$model = new ReviewModel();
-		$reviews = $model->getContentToReviewFromDatabase();
-		$this->reviews = $this->prepareReviewData( $reviews );
+		$wikiId = $this->getPar();
+
+		if ( !empty( $wikiId ) ) {
+			$logModel = new ReviewLogModel();
+			$revisionModel = new CurrentRevisionModel();
+
+			$reviews = $logModel->getArchivedReviewForWiki( $wikiId );
+			$reviewed = $revisionModel->getLatestReviewedRevisionForWiki( $wikiId );
+
+			$this->reviews = $this->prepareArchivedReviewData( $reviews, $reviewed );
+			$this->overrideTemplate( 'archive' );
+		} else {
+			$reviewModel = new ReviewModel();
+			$reviews = $reviewModel->getContentToReviewFromDatabase();
+			$this->reviews = $this->prepareReviewData( $reviews );
+		}
 	}
 
 	private function prepareReviewData( $reviewsRaw ) {
@@ -80,6 +97,41 @@ class ContentReviewSpecialController extends WikiaSpecialPageController {
 			}
 
 			$reviews[$review['wiki_id']][] = $review;
+		}
+
+		return $reviews;
+	}
+
+	private function prepareArchivedReviewData( $reviewsRaw, $reviewed ) {
+		$reviews = [];
+
+		foreach ( $reviewsRaw as &$review ) {
+			$title = GlobalTitle::newFromID( $review['page_id'], $review['wiki_id'] );
+
+			$review['url'] = $title->getFullURL();
+			$review['title'] = $title->getBaseText();
+
+			$review['diff'] = $title->getFullURL( [
+				'oldid' => $review['revision_id']
+			] );
+
+			if ( !empty( $review['review_user_id'] ) ) {
+				$review['review_user_name'] = User::newFromId( $review['review_user_id'] )->getName();
+			}
+
+			if ( $review['revision_id'] == $reviewed[$review['page_id']]['revision_id'] ) {
+				$review['status'] = ReviewModel::CONTENT_REVIEW_STATUS_LIVE;
+			}
+
+			if ( $review['status'] == ReviewModel::CONTENT_REVIEW_STATUS_APPROVED ) {
+				$review['restore'] = true;
+				$review['restoreUrl'] = $title->getFullURL( [
+					'oldid' => $review['revision_id'],
+					'action' => 'edit'
+				] );
+			}
+
+			$reviews[$review['page_id']][] = $review;
 		}
 
 		return $reviews;

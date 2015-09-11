@@ -2,6 +2,7 @@
 
 use Wikia\ContentReview\Models\CurrentRevisionModel;
 use Wikia\ContentReview\Models\ReviewModel;
+use Wikia\ContentReview\Models\ReviewLogModel;
 use Wikia\ContentReview\Helper;
 
 class ContentReviewApiController extends WikiaApiController {
@@ -143,7 +144,8 @@ class ContentReviewApiController extends WikiaApiController {
 			if ( empty( $review ) ) {
 				throw new NotFoundApiException( 'Requested data not present in the database.' );
 			}
-			$reviewModel->backupCompletedReview( $review, $status, $reviewerId );
+			$reviewLogModel = new ReviewLogModel();
+			$reviewLogModel->backupCompletedReview( $review, $status, $reviewerId );
 
 			if ( $status === ReviewModel::CONTENT_REVIEW_STATUS_APPROVED ) {
 				$currentRevisionModel->approveRevision( $wikiId, $pageId, $review['revision_id'] );
@@ -160,6 +162,17 @@ class ContentReviewApiController extends WikiaApiController {
 		else {
 			$this->notification = wfMessage( 'content-review-diff-already-done' )->escaped();
 		}
+	}
+
+	public function restoreRevision() {
+		$wikiId = $this->request->getInt( 'wikiId' );
+		$pageId = $this->request->getInt( 'pageId' );
+		$revisionId = $this->request->getInt( 'revisionId' );
+
+		//TODO: Check permissions
+		//TODO: Add previous revision to log tables
+		//TODO: Approve revision
+		//TODO: Set live revision as reverted??
 	}
 
 	public function getPageStatus() {
