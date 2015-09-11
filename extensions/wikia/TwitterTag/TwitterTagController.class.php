@@ -136,20 +136,29 @@ class TwitterTagController extends WikiaParserTagController {
 		if ( !empty( $attributes['href'] ) && !empty( $attributes['label'] ) ) {
 			$linkPathname = urlencode( substr( $attributes['href'], strlen( self::TWITTER_BASE_URL ) ) );
 			$linkLabel = $attributes['label'];
-		} elseif ( !empty( $attributes['data-screen-name'] ) ) {
+		}
+		elseif ( !empty( $attributes['data-screen-name'] ) ) {
 			$linkPathname = urlencode( $attributes['data-screen-name'] );
 			$linkLabel = wfMessage( 'twittertag-screen-name-label' )
-				->params( $attributes['data-screen-name'] )->plain();
-		} elseif ( !empty( $attributes['data-user-id'] ) ) {
-			$linkPathname = 'intent/user?user_id=' . urlencode( $attributes['data-user-id'] );
+				->params( $attributes['data-screen-name'] )
+				->plain();
+		}
+		elseif ( !empty( $attributes['data-user-id'] ) ) {
+			$linkPathname = 'intent/user?user_id='
+				. urlencode( $attributes['data-user-id'] );
 			$linkLabel = wfMessage( 'twittertag-user-id-label' )
-				->params( $attributes['data-user-id'] )->plain();
-		} elseif ( !empty( $attributes['data-list-owner-screen-name'] ) && !empty( $attributes['data-list-slug'] ) ) {
-			$linkPathname = urlencode( $attributes['data-list-owner-screen-name'] ) .
-				'/lists/' . urlencode( $attributes['data-list-slug'] );
+				->params( $attributes['data-user-id'] )
+				->plain();
+		}
+		elseif ( !empty( $attributes['data-list-owner-screen-name'] ) && !empty( $attributes['data-list-slug'] ) ) {
+			$linkPathname = urlencode( $attributes['data-list-owner-screen-name'] )
+				. '/lists/'
+				. urlencode( $attributes['data-list-slug'] );
 			$linkLabel = wfMessage( 'twittertag-list-label' )
-				->params( $attributes['data-list-owner-screen-name'], $attributes['data-list-slug'] )->plain();
-		} else {
+				->params( $attributes['data-list-owner-screen-name'], $attributes['data-list-slug'] )
+				->plain();
+		}
+		else {
 			$linkPathname = '';
 			$linkLabel = 'Twitter';
 		}
