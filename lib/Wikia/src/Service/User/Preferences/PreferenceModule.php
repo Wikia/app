@@ -14,6 +14,7 @@ class PreferenceModule implements Module {
 
 	public function configure(InjectorBuilder $builder) {
 		$builder
+			->bind(PreferencePersistence::class)->toClass(PreferencePersistenceSwaggerService::class)
 			->bind(UserPreferences::HIDDEN_PREFS)->to(function() {
 				global $wgHiddenPrefs;
 				return $wgHiddenPrefs;
@@ -25,52 +26,5 @@ class PreferenceModule implements Module {
 				global $wgGlobalUserProperties;
 				return $wgGlobalUserProperties;
 			});
-
-		self::bindService($builder);
-	}
-
-	private static function bindService(InjectorBuilder $builder) {
-		global $wgCityId;
-
-		if (isset($wgCityId) && $wgCityId % 100 < self::SWAGGER_SERVICE_RAMP_USAGE) {
-			self::bindSwaggerService($builder);
-		} else {
-			self::bindMysqlService($builder);
-		}
-	}
-
-	private static function bindMysqlService(InjectorBuilder $builder) {
-		$masterProvider = function() {
-			global $wgExternalSharedDB, $wgSharedDB;
-
-			if (isset($wgSharedDB)) {
-				$db = wfGetDB(DB_MASTER, [], $wgExternalSharedDB);
-			} else {
-				$db = wfGetDB(DB_MASTER);
-			}
-
-			return $db;
-		};
-		$slaveProvider = function() {
-			global $wgExternalSharedDB, $wgSharedDB;
-
-			if (isset($wgSharedDB)) {
-				$db = wfGetDB(DB_SLAVE, [], $wgExternalSharedDB);
-			} else {
-				$db = wfGetDB(DB_SLAVE);
-			}
-
-			return $db;
-		};
-		$whiteListProvider = function() {
-			global $wgUserPreferenceWhiteList;
-			return $wgUserPreferenceWhiteList;
-		};
-
-		$builder->addModule(new PreferencePersistenceModuleMySQL($masterProvider, $slaveProvider, $whiteListProvider));
-	}
-
-	private static function bindSwaggerService(InjectorBuilder $builder) {
-		$builder->bind(PreferencePersistence::class)->toClass(PreferencePersistenceSwaggerService::class);
 	}
 }
