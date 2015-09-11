@@ -1,3 +1,11 @@
 .ve-ui-toolbar {
 	font-size: 12.8px;
 }
+
+.oo-ui-listToolGroup .oo-ui-toolGroup-tools {
+	padding: 0.5em;
+}
+
+.oo-ui-popupToolGroup .oo-ui-tool-link .oo-ui-tool-title {
+	padding-left: 0.75em;
+}

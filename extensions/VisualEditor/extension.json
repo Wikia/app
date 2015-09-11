@@ -386,6 +386,10 @@
 		"ext.visualEditor.wikia": {
 			"styles": [
 				"modules/ve-wikia/ui/styles/ve.ui.Toolbar.css"
+			],
+			"dependencies": [
+				"oojs",
+				"oojs-ui"
 			]
 		},
 		"ext.visualEditor.mediawiki": {
