@@ -28,6 +28,7 @@ class SoundCloudTagController extends WikiaParserTagController {
 		'data-wikia-widget' => self::TAG_NAME,
 		'scrolling' => 'no',
 		'frameborder' => 'no',
+		'height' => '465',
 	];
 
 	private $helper;

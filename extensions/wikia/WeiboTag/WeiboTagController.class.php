@@ -21,6 +21,7 @@ class WeiboTagController extends WikiaParserTagController {
 		'data-wikia-widget' => self::PARSER_TAG_NAME,
 		'scrolling' => 'no',
 		'frameborder' => '0',
+		'height' => '500',
 	];
 
 	private $tagBuildSource;
@@ -37,6 +38,7 @@ class WeiboTagController extends WikiaParserTagController {
 
 	public static function onParserFirstCallInit( Parser $parser ) {
 		$parser->setHook( self::PARSER_TAG_NAME, [ new static(), 'renderTag' ] );
+
 		return true;
 	}
 
@@ -62,6 +64,7 @@ class WeiboTagController extends WikiaParserTagController {
 	private function buildTagAttributes( $args ) {
 		$attributes = $this->tagBuilderHelper->buildTagAttributes( self::TAG_ALLOWED_ATTRIBUTES, $args );
 		$attributes['src'] = $this->tagBuildSource;
+
 		return array_merge( $attributes, self::TAG_DEFAULT_ATTRIBUTES );
 	}
 
