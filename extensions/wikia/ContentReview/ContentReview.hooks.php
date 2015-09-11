@@ -9,10 +9,22 @@ use Wikia\ContentReview\Models\ReviewModel;
 class Hooks {
 	const CONTENT_REVIEW_MONOBOOK_DROPDOWN_ACTION = 'content-review';
 
-	public static function onGetRailModuleList( Array &$railModuleList ) {
+	public static function register() {
+		$hooks = new self();
+		\Hooks::register( 'GetRailModuleList', [ $hooks, 'onGetRailModuleList' ] );
+		\Hooks::register( 'MakeGlobalVariablesScript', [ $hooks, 'onMakeGlobalVariablesScript' ] );
+		\Hooks::register( 'BeforePageDisplay', [ $hooks, 'onBeforePageDisplay' ] );
+		\Hooks::register( 'ArticleContentOnDiff', [ $hooks, 'onArticleContentOnDiff' ] );
+		\Hooks::register( 'RawPageViewBeforeOutput', [ $hooks, 'onRawPageViewBeforeOutput' ] );
+		\Hooks::register( 'SkinTemplateNavigation', [ $hooks, 'onSkinTemplateNavigation' ] );
+		\Hooks::register( 'UserLogoutComplete', [ $hooks, 'onUserLogoutComplete' ] );
+		\Hooks::register( 'ArticleSaveComplete', [ $hooks, 'onArticleSaveComplete' ] );
+	}
+
+	public function onGetRailModuleList( Array &$railModuleList ) {
 		global $wgCityId, $wgTitle;
 
-		if ( self::userCanEditJsPage() ) {
+		if ( $this->userCanEditJsPage() ) {
 			$pageStatus = \F::app()->sendRequest(
 				'ContentReviewApiController',
 				'getPageStatus',
@@ -32,7 +44,7 @@ class Hooks {
 		return true;
 	}
 
-	public static function onMakeGlobalVariablesScript( &$vars ) {
+	public function onMakeGlobalVariablesScript( &$vars ) {
 		$helper = new Helper();
 
 		$vars['wgContentReviewExtEnabled'] = true;
@@ -44,17 +56,17 @@ class Hooks {
 
 	}
 
-	public static function onBeforePageDisplay( \OutputPage $out, \Skin $skin ) {
+	public function onBeforePageDisplay( \OutputPage $out, \Skin $skin ) {
 		$helper = new Helper();
 
 		/* Add assets for custom JS test mode */
-		if ( $helper->isContentReviewTestModeEnabled() || self::userCanEditJsPage() ) {
+		if ( $helper->isContentReviewTestModeEnabled() || $this->userCanEditJsPage() ) {
 			\Wikia::addAssetsToOutput( 'content_review_test_mode_js' );
 			\JSMessages::enqueuePackage( 'ContentReviewTestMode', \JSMessages::EXTERNAL );
 		}
 
 		/* Add Content Review Module assets for Monobook  */
-		if ( self::userCanEditJsPage() ) {
+		if ( $this->userCanEditJsPage() ) {
 			\Wikia::addAssetsToOutput('content_review_module_monobook_js');
 			\Wikia::addAssetsToOutput('content_review_module_monobook_scss');
 		}
@@ -62,7 +74,7 @@ class Hooks {
 		return true;
 	}
 
-	public static function onArticleContentOnDiff( $diffEngine, \OutputPage $output ) {
+	public function onArticleContentOnDiff( $diffEngine, \OutputPage $output ) {
 		$helper = new Helper();
 
 		if ( $helper->shouldDisplayReviewerToolbar() ) {
@@ -82,7 +94,7 @@ class Hooks {
 	 * @param $text
 	 * @return bool
 	 */
-	public static function onRawPageViewBeforeOutput( \RawAction $rawAction, &$text ) {
+	public function onRawPageViewBeforeOutput( \RawAction $rawAction, &$text ) {
 		$title = $rawAction->getTitle();
 		$helper = new Helper();
 		$helper->replaceWithLastApproved( $title, $rawAction->getContentType(), $text );
@@ -97,9 +109,9 @@ class Hooks {
 	 * @param array $links Navigation links
 	 * @return bool true
 	 */
-	public static function onSkinTemplateNavigation( \SkinTemplate $skin, &$links ) {
+	public function onSkinTemplateNavigation( \SkinTemplate $skin, &$links ) {
 		global $wgCityId;
-		if ( !in_array( $skin->getSkinName(), [ 'monobook', 'uncyclopedia' ] )  || !self::userCanEditJsPage() ) {
+		if ( !in_array( $skin->getSkinName(), [ 'monobook', 'uncyclopedia' ] )  || !$this->userCanEditJsPage() ) {
 			return true;
 		}
 
@@ -119,20 +131,14 @@ class Hooks {
 		return true;
 	}
 
-	public static function onUserLogoutComplete( \User $user, &$injected_html, $oldName) {
+	public function onUserLogoutComplete( \User $user, &$injected_html, $oldName) {
 		$request = $user->getRequest();
-
-		$key = \ContentReviewApiController::CONTENT_REVIEW_TEST_MODE_KEY;
-		$wikis = $request->getSessionData( $key );
-
-		if ( !empty( $wikis ) ) {
-			$request->setSessionData( $key, null );
-		}
+		$this->disableTestMode( $request );
 
 		return true;
 	}
 
-	public static function onArticleSaveComplete( \WikiPage &$article, &$user, $text, $summary,
+	public function onArticleSaveComplete( \WikiPage &$article, &$user, $text, $summary,
 			$minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId
 	) {
 		$title = $article->getTitle();
@@ -147,7 +153,16 @@ class Hooks {
 		return true;
 	}
 
-	private static function userCanEditJsPage() {
+	private function disableTestMode( \WebRequest $request ) {
+		$key = \ContentReviewApiController::CONTENT_REVIEW_TEST_MODE_KEY;
+
+		$wikis = $request->getSessionData( $key );
+		if ( !empty( $wikis ) ) {
+			$request->setSessionData( $key, null );
+		}
+	}
+
+	private function userCanEditJsPage() {
 		global $wgTitle, $wgUser;
 
 		return $wgTitle->inNamespace( NS_MEDIAWIKI ) && $wgTitle->isJsPage() && $wgTitle->userCan( 'edit', $wgUser );
