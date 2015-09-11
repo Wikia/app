@@ -11,15 +11,6 @@ class ContentReviewApiControllerTest extends WikiaBaseTest {
 	 */
 	public function testSubmitPageForReview( $params, $textExpected, $message ) {
 
-		/**
-		 * Mock tested controller
-		 * @var \ContentReviewApiController $contentReviewApiControllerMock
-		 */
-		$contentReviewApiControllerMock = $this->getMockBuilder( '\ContentReviewApiController' )
-			->disableOriginalConstructor()
-			->setMethods( null )
-			->getMock();
-
 		/* @var \WikiaRequest $requestMock */
 		$requestMock = $this->getMockBuilder( '\WikiaRequest' )
 			->disableOriginalConstructor()
@@ -36,22 +27,20 @@ class ContentReviewApiControllerTest extends WikiaBaseTest {
 		$userMock->method( 'matchEditToken' )
 			->will( $this->returnValue( false ) );
 
-		/* @var \WikiaApp $appMock */
-		$appMock = $this->getMockBuilder( '\WikiaApp' )
-			->setMethods( null )
-			->getMock();
-		$appMock->setGlobal( 'wgUser', $userMock);
+		$app = new WikiaApp();
+		$app->setGlobal( 'wgUser', $userMock );
 
+		$contentReviewApiController = new ContentReviewApiController();
 		/* Set dependencies */
-		$contentReviewApiControllerMock->setApp($appMock);
-		$contentReviewApiControllerMock->setRequest($requestMock);
+		$contentReviewApiController->setApp( $app );
+		$contentReviewApiController->setRequest( $requestMock );
 
 		if ( $params['expectedException'] ) {
 			$this->setExpectedException( $params['expectedException'] );
 		}
 
 		/* Run tested function */
-		$contentReviewApiControllerMock->submitPageForReview();
+		$contentReviewApiController->submitPageForReview();
 	}
 
 	public function submitPageForReviewProvider() {
@@ -59,10 +48,20 @@ class ContentReviewApiControllerTest extends WikiaBaseTest {
 			[
 				[
 					'wasPosted' => true,
+					'matchEditToken' => false,
 					'expectedException' => 'BadRequestApiException'
 				],
 				null,
 				'User token don\'t match. Throw BadRequestApiException.',
+			],
+			[
+				[
+					'wasPosted' => false,
+					'matchEditToken' => true,
+					'expectedException' => 'BadRequestApiException'
+				],
+				null,
+				'Not post request. Throw BadRequestApiException.',
 			],
 		];
 	}
