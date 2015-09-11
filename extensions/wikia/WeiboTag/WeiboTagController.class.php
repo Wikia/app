@@ -25,12 +25,14 @@ class WeiboTagController extends WikiaParserTagController {
 
 	private $tagBuildSource;
 	private $tagBuilderHelper;
+	private $iFrameHelper;
 	private $validator;
 
 	public function __construct() {
 		parent::__construct();
 		$this->tagBuilderHelper = new WikiaTagBuilderHelper();
 		$this->validator = new WeiboTagValidator();
+		$this->iFrameHelper = new WikiaIFrameTagBuilderHelper();
 	}
 
 	public static function onParserFirstCallInit( Parser $parser ) {
@@ -48,15 +50,13 @@ class WeiboTagController extends WikiaParserTagController {
 			self::TAG_SOURCE_ALLOWED_PARAMS_WITH_DEFAULTS, $args
 		);
 
-		$iframe = Html::element(
-			'iframe',  $this->buildTagAttributes( $args ), wfMessage( 'weibotag-could-not-render' )->text()
+		$iFrameHTML = Html::element(
+			'iframe',
+			$this->buildTagAttributes( $args ),
+			wfMessage( 'weibotag-could-not-render' )->text()
 		);
 
-		if ( $this->app->checkSkin( [ 'wikiamobile', 'mercury' ] ) ) {
-			return Html::rawElement( 'script',  ['type' => 'x-wikia-widget'], $iframe );
-		} else {
-			return $iframe;
-		}
+		return $this->iFrameHelper->wrapForMobile( $iFrameHTML );
 	}
 
 	private function buildTagAttributes( $args ) {
