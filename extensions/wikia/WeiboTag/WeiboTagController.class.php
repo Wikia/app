@@ -5,7 +5,6 @@ class WeiboTagController extends WikiaParserTagController {
 	const TAG_SOURCE_ALLOWED_PARAMS_WITH_DEFAULTS = [
 		'color' => '',
 		'count' => '',
-		'dpc' => '',
 		'language' => '',
 		'sense' => '',
 		'showinfo' => '1',
@@ -19,7 +18,7 @@ class WeiboTagController extends WikiaParserTagController {
 		'height',
 		'scrolling',
 		'frameborder',
-		'style'
+		'style',
 	];
 	const TAG_DEFAULT_ATTRIBUTES = [
 		'data-wikia-widget' => self::PARSER_TAG_NAME,
