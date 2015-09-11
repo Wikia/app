@@ -24,8 +24,12 @@ class ContentReviewApiController extends WikiaApiController {
 		$pageName = $this->request->getVal( 'pageName' );
 
 		$title = Title::newFromText( $pageName );
+		if ( $title === null ) {
+			throw new NotFoundApiException( "JS page {$pageName} does not exist" );
+		}
+
 		$pageId = $title->getArticleID();
-		if ( $title === null || $pageId === 0 || !$title->isJsPage() ) {
+		if ( $pageId === 0 || !$title->isJsPage() ) {
 			throw new NotFoundApiException( "JS page {$pageName} does not exist" );
 		}
 

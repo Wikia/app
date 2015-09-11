@@ -34,19 +34,19 @@ class ContentReviewApiControllerTest extends WikiaBaseTest {
 				->will($this->returnValue($params['wasPosted']));
 		}
 
-		if ( isset( $params['User'] ) ) {
+		if ( isset( $params['user'] ) ) {
 			/* @var \User $userMock */
 			$userMock = $this->getMockBuilder( '\User' )
 				->disableOriginalConstructor()
 				->setMethods( [ 'matchEditToken' ] )
 				->getMock();
-			if ( isset( $params['User']['matchEditToken'] ) ) {
+			if ( isset( $params['user']['matchEditToken'] ) ) {
 				$userMock->method( 'matchEditToken' )
-					->will( $this->returnValue( false ) );
+					->will( $this->returnValue( $params['user']['matchEditToken'] ) );
 			}
 		}
 
-		if ( isset( $params['User'] ) ) {
+		if ( isset( $params['user'] ) ) {
 			$app = new WikiaApp();
 			$app->setGlobal( 'wgUser', $userMock );
 		}
@@ -64,7 +64,9 @@ class ContentReviewApiControllerTest extends WikiaBaseTest {
 			[
 				[
 					'wasPosted' => true,
-					'matchEditToken' => false,
+					'user' => [
+						'matchEditToken' => false,
+					],
 					'expectedException' => 'BadRequestApiException'
 				],
 				null,
@@ -73,11 +75,24 @@ class ContentReviewApiControllerTest extends WikiaBaseTest {
 			[
 				[
 					'wasPosted' => false,
-					'matchEditToken' => true,
+					'user' => [
+						'matchEditToken' => false,
+					],
 					'expectedException' => 'BadRequestApiException'
 				],
 				null,
 				'Not post request. Throw BadRequestApiException.',
+			],
+			[
+				[
+					'wasPosted' => true,
+					'user' => [
+						'matchEditToken' => true,
+					],
+					'expectedException' => 'NotFoundApiException'
+				],
+				null,
+				'PageName parameter missing throw NotFoundApiException',
 			],
 		];
 	}
