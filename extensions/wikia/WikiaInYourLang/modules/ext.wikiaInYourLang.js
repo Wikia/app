@@ -22,12 +22,13 @@ require(
 		// Get user's geographic data and a country code
 		var targetLanguage = getTargetLanguage(),
 			articleTitle = w.wgTitle,
-			linkTitle = retrieveLinkTitle(),
 			// Per request we should unify dialects like pt and pt-br
 			// @see CE-1220
 			contentLanguage = w.wgContentLanguage.split('-')[0],
 			// Cache version
-			cacheVersion = '1.01';
+			cacheVersion = '1.01',
+			// LinkTitle from Cache
+			linkTitle = retrieveLinkTitle();
 
 		function init() {
 			if (targetLanguage !== false && targetLanguage !== contentLanguage) {
