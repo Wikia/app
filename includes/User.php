@@ -2560,7 +2560,7 @@ class User {
 	 *
 	 * Refere to getGlobalPreference for more detailed documentation.
 	 *
-	 * @param string $pref the preference name
+	 * @param string $preference the preference name
 	 * @param int $cityId the city id
 	 * @param string $sep the separator between the name and the city id
 	 * @param mixed $default
@@ -2568,9 +2568,26 @@ class User {
 	 * @return string
 	 * @see getGlobalPreference
 	 */
-	public function getLocalPreference($pref, $cityId = null, $sep = "-", $default = null, $ignoreHidden = false) {
-		$globalPref = self::localToGlobalPropertyName($pref, $cityId, $sep);
-		return $this->getGlobalPreference($globalPref, $default, $ignoreHidden);
+	public function getLocalPreference($preference, $cityId = null, $sep = "-", $default = null, $ignoreHidden = false) {
+		global $wgPreferencesUseService;
+
+		if ($wgPreferencesUseService) {
+			$this->load();
+			$value = $this->userPreferences()->getLocalPreference($this->mId, $preference, $default, $ignoreHidden);
+			wfRunHooks(
+				'UserGetPreference',
+				[
+					$this->userPreferences()->getPreferences($this->mId),
+					$preference,
+					&$value
+				]
+			);
+		} else {
+			$preferenceGlobalName = self::localToGlobalPropertyName($preference, $cityId, $sep);
+			$value = $this->getOptionHelper($preferenceGlobalName, $default, $ignoreHidden);
+		}
+
+		return $value;
 	}
 
 	/**
