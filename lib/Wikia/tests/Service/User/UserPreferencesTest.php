@@ -4,7 +4,7 @@ namespace Wikia\Service\User\Preferences;
 
 use PHPUnit_Framework_MockObject_MockObject;
 use PHPUnit_Framework_TestCase;
-use Wikia\Domain\User\Preference;
+use Wikia\Domain\User\GlobalPreference;
 
 class UserPreferencesTest extends PHPUnit_Framework_TestCase {
 	/** @var int */
@@ -84,7 +84,7 @@ class UserPreferencesTest extends PHPUnit_Framework_TestCase {
 			->method("getPreferences")
 			->with($this->userId)
 			->willReturn(array_map(function($k, $v) {
-				return new Preference($k, $v);
+				return new GlobalPreference($k, $v);
 			}, array_keys($this->savedPreferences), $this->savedPreferences));
 	}
 }
