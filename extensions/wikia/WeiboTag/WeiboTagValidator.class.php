@@ -2,20 +2,7 @@
 
 class WeiboTagValidator {
 
-	public static function validateParams($params) {
-		foreach ($params as $paramName => $paramValue) {
-			switch ($paramName) {
-				case 'uids': {
-					$validator = new WikiaValidatorString([
-						'required' => true
-					]);
-					return $validator->isValid($paramValue);
-					break;
-				}
-				default: {
-					return true;
-				}
-			}
-		}
+	public static function validateAttributes( $params ) {
+		return array_key_exists( 'uids', $params ) && !empty( $params['uids'] );
 	}
 }

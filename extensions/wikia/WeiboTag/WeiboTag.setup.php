@@ -9,7 +9,7 @@ $wgExtensionCredits['parserhook'][] = [
 
 // Autoload
 $wgAutoloadClasses['WeiboTagController'] =  __DIR__ . '/WeiboTagController.class.php';
-$wgAutoloadClasses['TagBuilderHelper'] =  __DIR__ . '/TagBuilderHelper.class.php';
+$wgAutoloadClasses['WeiboTagValidator'] =  __DIR__ . '/WeiboTagValidator.class.php';
 
 // Hooks
 $wgHooks['ParserFirstCallInit'][] = 'WeiboTagController::onParserFirstCallInit';

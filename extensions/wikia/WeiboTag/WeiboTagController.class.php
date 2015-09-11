@@ -29,10 +29,12 @@ class WeiboTagController extends WikiaParserTagController {
 
 	private $tagBuildSource;
 	private $tagBuilderHelper;
+	private $validator;
 
 	public function __construct() {
 		parent::__construct();
 		$this->tagBuilderHelper = new WikiaTagBuilderHelper();
+		$this->validator = new WeiboTagValidator();
 	}
 
 	public static function onParserFirstCallInit( Parser $parser ) {
@@ -41,12 +43,19 @@ class WeiboTagController extends WikiaParserTagController {
 	}
 
 	public function renderTag( $input, array $args, Parser $parser, PPFrame $frame ) {
+		$isValid = $this->validator->validateAttributes( $args );
+		if ( !$isValid ) {
+			return '<strong class="error">' . wfMessage( 'weibotag-could-not-render' )->parse() . '</strong>';
+		}
+
 		$this->tagBuildSource = self::TAG_SRC . $this->tagBuilderHelper->buildTagSourceQueryParams(
 			self::TAG_SOURCE_ALLOWED_PARAMS_WITH_DEFAULTS, $args
 		);
+
 		$iframe = Html::element(
 			'iframe',  $this->buildTagAttributes( $args ), wfMessage( 'weibotag-could-not-render' )->text()
 		);
+
 		if ( $this->app->checkSkin( [ 'wikiamobile', 'mercury' ] ) ) {
 			return Html::rawElement( 'script',  ['type' => 'x-wikia-widget'], $iframe );
 		} else {
