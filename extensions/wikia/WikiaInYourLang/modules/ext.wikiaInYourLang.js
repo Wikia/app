@@ -21,7 +21,6 @@ require(
 
 		// Get user's geographic data and a country code
 		var targetLanguage = getTargetLanguage(),
-			articleTitle = w.wgTitle,
 			// Per request we should unify dialects like pt and pt-br
 			// @see CE-1220
 			contentLanguage = w.wgContentLanguage.split('-')[0],
@@ -85,7 +84,7 @@ require(
 				type: 'GET',
 				data: {
 					targetLanguage: targetLanguage,
-					articleTitle: articleTitle
+					articleTitle: w.wgTitle
 				},
 				callback: function (results) {
 					if (results.success === true) {
@@ -181,7 +180,8 @@ require(
 		}
 
 		function saveLinkTitle(linkAddress) {
-			var linkAddressAry = linkAddress.split('/'),
+			var articleTitle = w.wgTitle,
+				linkAddressAry = linkAddress.split('/'),
 				listOfCachedTitles = {},
 				linkTitle = linkAddressAry[linkAddressAry.length - 1].length === 0 ? 'main' : linkAddressAry[linkAddressAry.length - 1];
 
@@ -194,8 +194,18 @@ require(
 			cache.set(getWIYLLinkTitlesKey(),listOfCachedTitles, cache.CACHE_LONG);
 		}
 
+		/**
+		 * Retrieve linkTitle for this articleTitle from cache.
+		 * articleTitle is a current article title of this wiki.
+		 * linkTitle is wikia-in-your-lang link's article title, which may or may not be the same as the articleTitle.
+		 * listOfCachedTitles is a map of articleTitle => linkTitle
+		 * @returns {
+		 *   linkTitle string: wikia-in-your-lang link's article title
+		 * }
+		 */
 		function retrieveLinkTitle() {
-			var listOfCachedTitles = cache.get(getWIYLLinkTitlesKey());
+			var articleTitle = w.wgTitle,
+				listOfCachedTitles = cache.get(getWIYLLinkTitlesKey());
 			return (listOfCachedTitles && listOfCachedTitles[articleTitle]) ? listOfCachedTitles[articleTitle] : '';
 		}
 

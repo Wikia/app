@@ -70,13 +70,11 @@ class WikiaInYourLangController extends WikiaController {
 						$oNativeWiki->city_title,
 					];
 					$isMainPageLink = true;
-					if ( $wgWikiaEnvironment !== WIKIA_ENV_DEV ) {
-						$articleURL = $this->getArticleURL( $sArticleTitle, $oNativeWiki->city_id );
-						if ( $articleURL ) {
-							$aMessageParams[1] = $articleURL;
-							$this->response->setVal( 'linkAddress', $articleURL );
-							$isMainPageLink = false;
-						}
+					$articleURL = $this->getArticleURL( $sArticleTitle, $oNativeWiki->city_id );
+					if ( $articleURL ) {
+						$aMessageParams[1] = $articleURL;
+						$this->response->setVal( 'linkAddress', $articleURL );
+						$isMainPageLink = false;
 					}
 
 					$aMessages = $this->prepareMessage( $sTargetLanguage, $aMessageParams, $isMainPageLink );
