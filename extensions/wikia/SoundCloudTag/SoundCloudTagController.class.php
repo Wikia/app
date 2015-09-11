@@ -22,15 +22,14 @@ class SoundCloudTagController extends WikiaParserTagController {
 	const TAG_ALLOWED_ATTRIBUTES = [
 		'width',
 		'height',
-		'scrolling',
-		'frameborder',
-		'style',
 	];
 
 	const TAG_DEFAULT_ATTRIBUTES = [
 		'data-wikia-widget' => self::TAG_NAME,
 		'sandbox' => 'allow-scripts allow-same-origin',
 		'seamless' => 'seamless',
+		'scrolling' => 'no',
+		'frameborder' => 'no',
 	];
 
 	private $helper;
