@@ -169,7 +169,8 @@ class ContentReviewApiController extends WikiaApiController {
 		$pageId = $this->request->getInt( 'pageId' );
 		$revisionId = $this->request->getInt( 'revisionId' );
 
-		//TODO: Add action to log
+		//TODO: Check permissions
+		//TODO: Add previous revision to log tables
 		//TODO: Approve revision
 		//TODO: Set live revision as reverted??
 	}
