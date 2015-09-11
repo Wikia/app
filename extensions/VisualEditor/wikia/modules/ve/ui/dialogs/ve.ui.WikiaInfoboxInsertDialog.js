@@ -184,7 +184,7 @@ ve.ui.WikiaInfoboxInsertDialog.prototype.createDialogContent = function ( data )
 		// creates empty state content
 		this.getUnconvertedInfoboxes()
 			.then( this.createEmptyStateContent.bind( this ) )
-			.then( deferred.resolve )
+			.then( deferred.resolve );
 	}
 
 	return deferred.promise();
