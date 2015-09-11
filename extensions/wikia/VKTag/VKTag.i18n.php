@@ -3,7 +3,7 @@ $messages = [];
 
 $messages['en'] = [
 	'vktag-desc' => 'VK widget integration for the Wikia platform',
-	'vktag-could-not-render' => 'Failed to render the VK widget.',
+	'vktag-could-not-render' => 'Failed to render the VK widget. Please check if all required parameters are in place.',
 ];
 
 $messages['qqq'] = [
