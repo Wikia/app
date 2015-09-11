@@ -353,4 +353,10 @@ class Helper extends \ContextSource {
 			}
 		}
 	}
+
+	public function userCanEditJsPage( \Title $title, \User $user ) {
+		return $title->inNamespace( NS_MEDIAWIKI )
+			&& $title->isJsPage()
+			&& $title->userCan( 'edit', $user );
+	}
 }
