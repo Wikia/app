@@ -114,7 +114,7 @@ abstract class WikiaParserTagController extends WikiaController {
 	 * @return string
 	 */
 	protected function generateMarkerId( Parser $parser ) {
-		$wikiaParserMarkerSufix = '-WIKIA-PARSER-MARKER-' . $this->count;
+		$wikiaParserMarkerSufix = '-WIKIA-PARSER-MARKER-' . $this->getTagName() . ' - '. $this->count;
 		$this->count++;
 		return $parser->uniqPrefix() . $wikiaParserMarkerSufix . "-\x7f";
 	}
