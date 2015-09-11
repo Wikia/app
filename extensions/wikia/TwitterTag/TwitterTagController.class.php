@@ -3,6 +3,8 @@
 class TwitterTagController extends WikiaParserTagController {
 
 	const PARSER_TAG_NAME = 'twitter';
+	const TWITTER_NAME = 'Twitter';
+	const TWITTER_BASE_URL = 'https://twitter.com/';
 
 	const REGEX_DIGITS = '/^[0-9]*$/';
 	const REGEX_HEX_COLOR = '/^#[0-9a-f]{3,6}$/i';
@@ -55,12 +57,13 @@ class TwitterTagController extends WikiaParserTagController {
 		}
 
 		$attributes = $this->prepareAttributes( $args, self::TAG_PERMITTED_ATTRIBUTES );
+		$attributes['href'] = self::TWITTER_BASE_URL;
 
 		if ( ( new WikiaIFrameTagBuilderHelper() )->isMobileSkin() ) {
-			$html = Html::element( 'a', $attributes );
+			$html = Html::element( 'a', $attributes, self::TWITTER_NAME );
 		} else {
 			$attributes['class'] = 'twitter-timeline';
-			$html = Html::element( 'a', $attributes );
+			$html = Html::element( 'a', $attributes, self::TWITTER_NAME  );
 			// Wrapper used for easily selecting the widget in Selenium tests
 			$html = Html::rawElement( 'span', [ 'data-wikia-widget' => 'twitter' ], $html );
 			$html .= $this->getInitializationScript();
