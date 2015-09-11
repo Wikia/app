@@ -83,30 +83,9 @@ class Hooks {
 	 * @return bool
 	 */
 	public static function onRawPageViewBeforeOutput( \RawAction $rawAction, &$text ) {
-		global $wgCityId, $wgJsMimeType;
-
 		$title = $rawAction->getTitle();
-
-		if ( $title->isJsPage() || $rawAction->getContentType() == $wgJsMimeType ) {
-			$pageId = $title->getArticleID();
-			$latestRevId = $title->getLatestRevID();
-
-			$latestReviewedRev = ( new CurrentRevisionModel() )->getLatestReviewedRevision( $wgCityId, $pageId );
-			$helper = new Helper();
-
-			if ( $latestReviewedRev['revision_id'] != $latestRevId
-				&& !$helper->isContentReviewTestModeEnabled()
-			) {
-				$revision = \Revision::newFromId( $latestReviewedRev['revision_id'] );
-
-				if ( $revision ) {
-					$text = $revision->getRawText();
-				} else {
-					$text = '';
-				}
-			}
-		}
-
+		$helper = new Helper();
+		$helper->replaceWithLastApproved( $title, $rawAction->getContentType(), $text );
 		return true;
 	}
 

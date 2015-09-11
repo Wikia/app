@@ -314,4 +314,43 @@ class Helper extends \ContextSource {
 	public function getMemcKey( $params ) {
 		return wfMemcKey( self::CONTENT_REVIEW_PARAM, self::CONTENT_REVIEW_MEMC_VER, $params );
 	}
+
+	protected function getRevisionById( $revId ) {
+		return \Revision::newFromId( $revId );
+	}
+
+	protected function getCurrentRevisionModel() {
+		return new CurrentRevisionModel();
+	}
+
+	/**
+	 * Replaces $text with text from last approved revision
+	 * Change is done only for JS pages.
+	 * If there's no approved revision replaces with empty string
+	 * @param \Title $title
+	 * @param string $contentType
+	 * @param string $text
+	 */
+	public function replaceWithLastApproved( \Title $title, $contentType, &$text ) {
+		global $wgCityId, $wgJsMimeType;
+
+		if ( $title->isJsPage() || $contentType == $wgJsMimeType ) {
+			$pageId = $title->getArticleID();
+			$latestRevId = $title->getLatestRevID();
+
+			$latestReviewedRevData = $this->getCurrentRevisionModel()->getLatestReviewedRevision( $wgCityId, $pageId );
+
+			if ( $latestReviewedRevData['revision_id'] != $latestRevId
+				&& !$this->isContentReviewTestModeEnabled()
+			) {
+				$revision = $this->getRevisionById( $latestReviewedRevData['revision_id'] );
+
+				if ( $revision ) {
+					$text = $revision->getRawText();
+				} else {
+					$text = '';
+				}
+			}
+		}
+	}
 }
