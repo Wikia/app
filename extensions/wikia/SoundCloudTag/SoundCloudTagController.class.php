@@ -1,39 +1,80 @@
 <?php
 class SoundCloudTagController extends WikiaParserTagController {
-	const PARSER_TAG_NAME = 'soundcloud';
-	const API_ENDPOINT = 'https://w.soundcloud.com/player/?';
+	const TAG_NAME = 'soundcloud';
 
+	const TAG_SRC = 'https://w.soundcloud.com/player/?';
+
+	const PARAMS_WITH_DEFAULTS = [
+		'color' => '',
+		'url' => '',
+		'auto_play' => '',
+		'buying' => '',
+		'liking' => '',
+		'download' => '',
+		'sharing' => '',
+		'show_artwork' => 'false',
+		'show_comments' => '',
+		'show_playcount' => '',
+		'show_user' => '',
+		'start_track' => '',
+	];
+
+	const TAG_ALLOWED_ATTRIBUTES = [
+		'width',
+		'height',
+		'scrolling',
+		'frameborder',
+		'style',
+	];
+
+	const TAG_DEFAULT_ATTRIBUTES = [
+		'data-wikia-widget' => self::TAG_NAME,
+		'sandbox' => 'allow-scripts allow-same-origin',
+		'seamless' => 'seamless',
+	];
 
 	public static function onParserFirstCallInit( Parser $parser ) {
-		$parser->setHook( self::PARSER_TAG_NAME, [ new static(), 'renderTag' ] );
+		$parser->setHook( self::TAG_NAME, [ new static(), 'renderTag' ] );
 		return true;
 	}
 
 	public function renderTag( $input, array $args, Parser $parser, PPFrame $frame ) {
+		$sourceUrl = $this->buildTagSourceQueryParams( $args );
+
 		return Html::element(
 			'iframe',
-			$this->prepareAttributes( $args ),
+			$this->buildTagAttributes( $sourceUrl, $args ),
 			wfMessage( 'soundcloud-tag-could-not-render' )->text()
 		);
 	}
 
-	private function prepareAttributes( array $args ) {
-		$allowedArgs = ['width', 'height', 'scrolling', 'frameborder', 'src'];
-		$attributes = [];
 
-		if ( array_key_exists('style', $args) ) {
-			$attributes['style'] = Sanitizer::checkCss( $args['style'] );
-		}
-
-		foreach ( $allowedArgs as $name ) {
-			if ( isset( $args[$name] ) ) {
-				$attributes[$name] = $args[$name];
+	private function buildTagSourceQueryParams( array $userParams ) {
+		$allowedParams = self::PARAMS_WITH_DEFAULTS;
+			foreach ( array_keys( $allowedParams ) as $name ) {
+			if ( isset( $userParams[$name] ) ) {
+				$allowedParams[$name] = $userParams[$name];
 			}
 		}
 
-		$attributes['data-tag'] = 'soundcloud';
-		$attributes['sandbox'] = 'allow-scripts allow-same-origin';
-		$attributes['seamless'] = 'seamless';
+		return http_build_query( $allowedParams );
+	}
+
+	private function buildTagAttributes( $sourceUrl, array $userAttributes ) {
+		$attributes = [];
+
+		foreach ( self::TAG_ALLOWED_ATTRIBUTES as $attributeName ) {
+			if ( isset( $userAttributes[$attributeName] ) ) {
+				if ($attributeName === 'style') {
+					$attributes['style'] = Sanitizer::checkCss( $userAttributes['style'] );
+				} else {
+					$attributes[$attributeName] = $userAttributes[$attributeName];
+				}
+			}
+		}
+
+		$attributes['src'] = $sourceUrl;
+		array_merge($attributes, self::TAG_ALLOWED_ATTRIBUTES);
 
 		return $attributes;
 	}
