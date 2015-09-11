@@ -22,9 +22,9 @@ class Hooks {
 	}
 
 	public function onGetRailModuleList( Array &$railModuleList ) {
-		global $wgCityId, $wgTitle;
+		global $wgCityId, $wgTitle, $wgUser;
 
-		if ( $this->userCanEditJsPage() ) {
+		if ( ( new Helper() )->userCanEditJsPage( $wgTitle, $wgUser ) ) {
 			$pageStatus = \F::app()->sendRequest(
 				'ContentReviewApiController',
 				'getPageStatus',
@@ -58,15 +58,17 @@ class Hooks {
 
 	public function onBeforePageDisplay( \OutputPage $out, \Skin $skin ) {
 		$helper = new Helper();
+		$title = $out->getTitle();
+		$user = $out->getContext()->getUser();
 
 		/* Add assets for custom JS test mode */
-		if ( $helper->isContentReviewTestModeEnabled() || $this->userCanEditJsPage() ) {
+		if ( $helper->isContentReviewTestModeEnabled() || $helper->userCanEditJsPage( $title, $user ) ) {
 			\Wikia::addAssetsToOutput( 'content_review_test_mode_js' );
 			\JSMessages::enqueuePackage( 'ContentReviewTestMode', \JSMessages::EXTERNAL );
 		}
 
 		/* Add Content Review Module assets for Monobook  */
-		if ( $this->userCanEditJsPage() ) {
+		if ( $helper->userCanEditJsPage( $title, $user ) ) {
 			\Wikia::addAssetsToOutput('content_review_module_monobook_js');
 			\Wikia::addAssetsToOutput('content_review_module_monobook_scss');
 		}
@@ -111,11 +113,16 @@ class Hooks {
 	 */
 	public function onSkinTemplateNavigation( \SkinTemplate $skin, &$links ) {
 		global $wgCityId;
-		if ( !in_array( $skin->getSkinName(), [ 'monobook', 'uncyclopedia' ] )  || !$this->userCanEditJsPage() ) {
+
+		$title = $skin->getTitle();
+		$user = $skin->getContext()->getUser();
+
+		if ( !in_array( $skin->getSkinName(), [ 'monobook', 'uncyclopedia' ] )
+			|| !( new Helper() )->userCanEditJsPage( $title, $user ) )
+		{
 			return true;
 		}
 
-		$title = $skin->getTitle();
 		$latestRevisionId = $title->getLatestRevID();
 		$revisionModel = new ReviewModel();
 		$revisionInfo = $revisionModel->getRevisionInfo( $wgCityId, $title->getArticleID(), $latestRevisionId );
@@ -160,11 +167,5 @@ class Hooks {
 		if ( !empty( $wikis ) ) {
 			$request->setSessionData( $key, null );
 		}
-	}
-
-	private function userCanEditJsPage() {
-		global $wgTitle, $wgUser;
-
-		return $wgTitle->inNamespace( NS_MEDIAWIKI ) && $wgTitle->isJsPage() && $wgTitle->userCan( 'edit', $wgUser );
 	}
 }
