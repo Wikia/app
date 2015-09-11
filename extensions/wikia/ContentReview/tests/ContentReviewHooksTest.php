@@ -48,6 +48,6 @@ class ContentReviewHooksTest extends WikiaBaseTest {
 
 		$injectHtml = '';
 
-		( new Wikia\ContentReview\Hooks() )->onUserLogoutComplete( $userMock, $injectHtml );
+		( new Wikia\ContentReview\Hooks() )->onUserLogoutComplete( $userMock, $injectHtml, '' );
 	}
 }
