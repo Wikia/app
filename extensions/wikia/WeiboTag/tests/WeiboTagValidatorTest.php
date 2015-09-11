@@ -7,7 +7,7 @@ class WeiboTagValidatorTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @dataProvider testValidateAttributesDataProvider
+	 * @dataProvider validateAttributesDataProvider
 	 * @param array $passedAttributes
 	 * @param boolean $expectedResult
 	 */
@@ -16,7 +16,7 @@ class WeiboTagValidatorTest extends WikiaBaseTest {
 		$this->assertEquals( $validator->validateAttributes( $passedAttributes ), $expectedResult );
 	}
 
-	public function testValidateAttributesDataProvider() {
+	public function validateAttributesDataProvider() {
 		return [
 			[ [ ], false ],
 			[ [ 'foo' ], false ],
