@@ -86,7 +86,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 
 		function callSuccess(adInfo) {
 			if (adInfo && adInfo.adType === 'collapse') {
-				slotTweaker.hide(slotName);
+				slotTweaker.hide(element.getSlotName());
 			}
 			if (typeof extra.success === 'function') {
 				extra.success(adInfo);
