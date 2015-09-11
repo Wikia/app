@@ -47,7 +47,6 @@ class SoundCloudTagController extends WikiaParserTagController {
 	}
 
 	public function renderTag( $input, array $args, Parser $parser, PPFrame $frame ) {
-
 		$sourceUrl = self::TAG_SRC . $this->helper->buildTagSourceQueryParams(
 			self::TAG_SOURCE_ALLOWED_PARAMS_WITH_DEFAULTS, $args
 		);
