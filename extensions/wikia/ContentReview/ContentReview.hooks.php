@@ -168,10 +168,4 @@ class Hooks {
 			$request->setSessionData( $key, null );
 		}
 	}
-
-	private function userCanEditJsPage() {
-		global $wgTitle, $wgUser;
-
-		return $wgTitle->inNamespace( NS_MEDIAWIKI ) && $wgTitle->isJsPage() && $wgTitle->userCan( 'edit', $wgUser );
-	}
 }
