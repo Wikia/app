@@ -383,6 +383,15 @@
 				"mobile"
 			]
 		},
+		"ext.visualEditor.wikia": {
+			"styles": [
+				"modules/ve-wikia/ui/styles/ve.ui.Toolbar.css"
+			],
+			"dependencies": [
+				"oojs",
+				"oojs-ui"
+			]
+		},
 		"ext.visualEditor.mediawiki": {
 			"scripts": [
 				"modules/ve-mw/init/ve.init.mw.js",

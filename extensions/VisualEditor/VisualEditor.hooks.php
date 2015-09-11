@@ -54,7 +54,8 @@ class VisualEditorHooks {
 	public static function onBeforePageDisplay( OutputPage &$output, Skin &$skin ) {
 		$output->addModules( array(
 			'ext.visualEditor.desktopArticleTarget.init',
-			'ext.visualEditor.targetLoader'
+			'ext.visualEditor.targetLoader',
+			'ext.visualEditor.wikia'
 		) );
 		$output->addModuleStyles( array( 'ext.visualEditor.desktopArticleTarget.noscript' ) );
 		// add scroll offset js variable to output
