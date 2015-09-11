@@ -21,7 +21,7 @@ if ( !$allowRobots ) {
 	// Special pages
 	$robots->disallowSpecialPages();
 
-	$robots->allowSpecialPage( 'Allpages' );
+	//$robots->allowSpecialPage( 'Allpages' ); // TODO: SEO-64
 	$robots->allowSpecialPage( 'CreateNewWiki' );
 	$robots->allowSpecialPage( 'Forum' );
 	$robots->allowSpecialPage( 'Sitemap' );
