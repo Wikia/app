@@ -2647,7 +2647,21 @@ class User {
 	 * @see getGlobalPreference for documentation about preferences
 	 */
 	public function setGlobalPreference( $preference, $value ) {
-		$this->setGlobalPreferences( [ $preference => $value ] );
+		global $wgPreferencesUseService;
+
+		if ( $wgPreferencesUseService ) {
+			$this->load();
+			$value = $this->sanitizeProperty( $value );
+			$this->userPreferences()->setGlobalPreference( $this->mId, $preference, $value );
+			if ( $preference == 'skin' ) {
+				unset( $this->mSkin );
+			}
+			if ( $preference == 'theme' ) {
+				unset( $this->mTheme );
+			}
+		} else {
+			$this->setOptionHelper( $preference, $value );
+		}
 	}
 
 	/**
