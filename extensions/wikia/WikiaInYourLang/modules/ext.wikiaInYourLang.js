@@ -199,9 +199,7 @@ require(
 		 * articleTitle is a current article title of this wiki.
 		 * linkTitle is wikia-in-your-lang link's article title, which may or may not be the same as the articleTitle.
 		 * listOfCachedTitles is a map of articleTitle => linkTitle
-		 * @returns {
-		 *   linkTitle string: wikia-in-your-lang link's article title
-		 * }
+		 * @returns {string} wikia-in-your-lang link's article title
 		 */
 		function retrieveLinkTitle() {
 			var articleTitle = w.wgTitle,
