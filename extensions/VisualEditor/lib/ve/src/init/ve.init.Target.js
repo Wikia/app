@@ -286,7 +286,7 @@ ve.init.Target.prototype.onToolbarResize = function () {
  * @return {ve.ui.DesktopSurface}
  */
 ve.init.Target.prototype.createSurface = function ( dmDoc, config ) {
-	return new ve.ui.DesktopSurface( dmDoc, this.getSurfaceConfig( config ) );
+	return new ve.ui.DesktopSurface( dmDoc, this.getSurfaceConfig( config ), this );
 };
 
 /**

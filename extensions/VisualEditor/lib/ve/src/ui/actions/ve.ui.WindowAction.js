@@ -60,7 +60,7 @@ ve.ui.WindowAction.prototype.open = function ( name, data, action ) {
 	}
 
 	data = ve.extendObject( { dir: dir }, data, { fragment: fragment } );
-	if ( windowType === 'toolbar' || windowType === 'inspector' ) {
+	if ( windowType === 'toolbar' || windowType === 'inspector' || name === ve.ui.WikiaSourceModeDialog.static.name ) {
 		data = ve.extendObject( data, { surface: surface } );
 		// Auto-close the current window if it is different to the one we are
 		// trying to open.

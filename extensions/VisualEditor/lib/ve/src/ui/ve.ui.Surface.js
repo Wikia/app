@@ -21,7 +21,7 @@
  * @cfg {string} [placeholder] Placeholder text to display when the surface is empty
  * @cfg {string} [inDialog] The name of the dialog this surface is in
  */
-ve.ui.Surface = function VeUiSurface( dataOrDoc, config ) {
+ve.ui.Surface = function VeUiSurface( dataOrDoc, config, target ) {
 	var documentModel;
 
 	config = config || {};
@@ -31,6 +31,8 @@ ve.ui.Surface = function VeUiSurface( dataOrDoc, config ) {
 
 	// Mixin constructor
 	OO.EventEmitter.call( this, config );
+
+	this.target = target;
 
 	// Properties
 	this.inDialog = config.inDialog || '';
@@ -562,3 +564,8 @@ ve.ui.Surface.prototype.stopFilibuster = function () {
 ve.ui.Surface.prototype.getInDialog = function () {
 	return this.inDialog;
 };
+
+
+ve.ui.Surface.prototype.getTarget = function () {
+	return this.target;
+}

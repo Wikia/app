@@ -167,6 +167,8 @@ ve.init.mw.Target.static.toolbarGroups = [
 		promote: [ 'paragraph' ],
 		demote: [ 'preformatted', 'blockquote', 'heading1' ]
 	},
+
+	{ include: [ 'wikiaSourceMode' ] },
 	// Style
 	{
 		classes: [ 've-test-toolbar-style' ],
@@ -1321,6 +1323,7 @@ ve.init.mw.Target.prototype.clearPreparedCacheKey = function () {
  *  depending on whether or not a cache key was used.
  * @return {jQuery.Promise}
  */
+
 ve.init.mw.Target.prototype.tryWithPreparedCacheKey = function ( doc, options, eventName ) {
 	var data,
 		preparedCacheKey = this.getPreparedCacheKey( doc ),
@@ -1348,10 +1351,11 @@ ve.init.mw.Target.prototype.tryWithPreparedCacheKey = function ( doc, options, e
 		}
 		return deflatePromise
 			.then( function () {
-				return new mw.Api().post( data, { contentType: 'multipart/form-data' } );
+				// return new mw.Api().post( data, { contentType: 'multipart/form-data' } );
+				return target.constructor.static.apiRequest( data, { type: 'POST' } )
 			} )
 			.then(
-				function ( response, jqxhr ) {
+				function ( response, status, jqxhr ) {
 					var eventData = {
 						bytes: $.byteLength( jqxhr.responseText ),
 						duration: ve.now() - start
@@ -1399,6 +1403,59 @@ ve.init.mw.Target.prototype.tryWithPreparedCacheKey = function ( doc, options, e
 	// If we successfully get prepared wikitext, then invoke ajaxRequest() with the cache key,
 	// otherwise invoke it without.
 	return preparedCacheKey.then( ajaxRequest, ajaxRequest );
+};
+
+/**
+ * Send an AJAX request to the MediaWiki API.
+ *
+ * This method has special behavior for certain options. If the request type is POST, then
+ * contentType will default to multipart/form-data. If the content type is multipart/form-data,
+ * then the necessary emulation will be performed to make this content type actually work.
+ *
+ * @param {Object} data Query string parameters (for GET requests) or POST data (for POST requests)
+ * @param {Object} [settings] Additional AJAX settings, or overrides of default settings
+ * @returns {jqXHR} Return value of $.ajax()
+ */
+ve.init.mw.Target.static.apiRequest = function ( data, settings ) {
+	var key, formData;
+	data = ve.extendObject( {
+		format: 'json',
+		uselang: mw.config.get( 'wgUserLanguage' )
+	}, data );
+	settings = ve.extendObject( {
+		url: mw.util.wikiScript( 'api' ),
+		dataType: 'json',
+		type: 'GET',
+		// Wait up to 100 seconds
+		timeout: 100000
+	}, settings );
+
+	// If multipart/form-data has been requested and emulation is possible, emulate it
+	if (
+		settings.type === 'POST' && window.FormData && (
+			settings.contentType === undefined ||
+			settings.contentType === 'multipart/form-data'
+		)
+	) {
+		formData = new FormData();
+		for ( key in data ) {
+			formData.append( key, data[key] );
+		}
+		settings.data = formData;
+		// Prevent jQuery from mangling our FormData object
+		settings.processData = false;
+		// Prevent jQuery from overriding the Content-Type header
+		settings.contentType = false;
+	} else {
+		settings.data = data;
+		if ( settings.contentType === 'multipart/form-data' ) {
+			// We were asked to emulate but can't, so drop the Content-Type header, otherwise
+			// it'll be wrong and the server will fail to decode the POST body
+			delete settings.contentType;
+		}
+	}
+
+	return $.ajax( settings );
 };
 
 /**

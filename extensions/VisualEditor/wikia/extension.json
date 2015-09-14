@@ -28,6 +28,25 @@
 				"postedit-confirmation-saved"
 			],
 			"position": "top"
+		},
+		"ext.visualEditor.wikia.ui": {
+			"scripts": [
+				"ve/ui/ve.ui.WikiaCommandRegistry.js",
+				"ve/ui/tools/ve.ui.WikiaDialogTool.js",
+				"ve/ui/dialogs/ve.ui.WikiaSourceModeDialog.js"
+			],
+			"styles": [
+				"ve/ui/styles/ve.ui.Toolbar.css",
+				"ve/ui/styles/ve.ui.WikiaSourceModeDialog.css"
+			],
+			"dependencies": [
+				"oojs",
+				"oojs-ui",
+				"ext.visualEditor.base",
+				"ext.visualEditor.track",
+				"ext.visualEditor.targetLoader",
+				"ext.visualEditor.core"
+			]
 		}
 	},
 	"ResourceFileModulePaths": {
