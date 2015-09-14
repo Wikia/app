@@ -23,7 +23,7 @@
 
 	<div class="masthead-info">
 		<hgroup>
-			<h1 itemprop="name"><?= htmlspecialchars( $user['name'] ); ?></h1>
+			<h1 itemprop="name"><?= $user['name']; ?></h1>
 			<? if ( !empty( $user['realName'] ) ): ?>
 				<h2><?= wfMessage( 'user-identity-box-aka-label', $user['realName'] )->plain(); ?></h2>
 			<? endif; ?>

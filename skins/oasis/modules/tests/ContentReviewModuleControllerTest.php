@@ -17,7 +17,7 @@ class ContentReviewModuleControllerTest extends WikiaBaseTest {
 	 */
 	public function testGetLatestRevisionStatus( $latestRevisionId, $pageStatus, $expectedStatus ) {
 		$controllerMock = $this->getControllerMock( $expectedStatus );
-		$latestRevisionStatus = $controllerMock->getLatestRevisionStatus( $latestRevisionId, $pageStatus );
+		$latestRevisionStatus = $controllerMock->getLatestRevisionStatusTemplateData( $latestRevisionId, $pageStatus );
 
 		$this->assertEquals(
 			$expectedStatus,
@@ -87,57 +87,57 @@ class ContentReviewModuleControllerTest extends WikiaBaseTest {
 	public function latestRevisionStatusDataProvider() {
 		return [
 			[
-				'0',
+				0,
 				[],
 				ContentReviewModuleController::STATUS_NONE
 			],
 			[
-				'1491141',
+				1491141,
 				[
-					'liveId' => '1491141',
-					'lastReviewedId' => '1491141',
-					'lastReviewedStatus' => '3',
+					'liveId' => 1491141,
+					'lastReviewedId' => 1491141,
+					'lastReviewedStatus' => 3,
 				],
 				ContentReviewModuleController::STATUS_LIVE
 			],
 			[
-				'1491141',
+				1491141,
 				[
-					'liveId' => '1491120',
-					'latestId' => '1491141',
-					'latestStatus' => '1',
-					'lastReviewedId' => '1491130',
-					'lastReviewedStatus' => '4',
+					'liveId' => 1491120,
+					'latestId' => 1491141,
+					'latestStatus' => 1,
+					'lastReviewedId' => 1491130,
+					'lastReviewedStatus' => 4,
 				],
 				ContentReviewModuleController::STATUS_AWAITING
 			],
 			[
-				'1491141',
+				1491141,
 				[
-					'liveId' => '1491120',
-					'latestId' => '1491141',
-					'latestStatus' => '2',
-					'lastReviewedId' => '1491130',
-					'lastReviewedStatus' => '4',
+					'liveId' => 1491120,
+					'latestId' => 1491141,
+					'latestStatus' => 2,
+					'lastReviewedId' => 1491130,
+					'lastReviewedStatus' => 4,
 				],
 				ContentReviewModuleController::STATUS_AWAITING
 			],
 			[
-				'1491141',
+				1491141,
 				[
-					'liveId' => '1491120',
-					'lastReviewedId' => '1491141',
-					'lastReviewedStatus' => '4',
+					'liveId' => 1491120,
+					'lastReviewedId' => 1491141,
+					'lastReviewedStatus' => 4,
 				],
 				ContentReviewModuleController::STATUS_REJECTED
 			],
 
 			[
-				'1491141',
+				1491141,
 				[
-					'liveId' => '1491120',
-					'lastReviewedId' => '1491131',
-					'lastReviewedStatus' => '4',
+					'liveId' => 1491120,
+					'lastReviewedId' => 1491131,
+					'lastReviewedStatus' => 4,
 				],
 				ContentReviewModuleController::STATUS_UNSUBMITTED
 			],
@@ -152,15 +152,15 @@ class ContentReviewModuleControllerTest extends WikiaBaseTest {
 			],
 			[
 				[
-					'lastReviewedId' => '1491131',
-					'lastReviewedStatus' => '3',
+					'lastReviewedId' => 1491131,
+					'lastReviewedStatus' => 3,
 				],
 				ContentReviewModuleController::STATUS_APPROVED
 			],
 			[
 				[
-					'lastReviewedId' => '1491131',
-					'lastReviewedStatus' => '4',
+					'lastReviewedId' => 1491131,
+					'lastReviewedStatus' => 4,
 				],
 				ContentReviewModuleController::STATUS_REJECTED
 			],
@@ -175,7 +175,7 @@ class ContentReviewModuleControllerTest extends WikiaBaseTest {
 			],
 			[
 				[
-					'liveId' => '1491131',
+					'liveId' => 1491131,
 				],
 				ContentReviewModuleController::STATUS_LIVE
 			],

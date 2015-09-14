@@ -48,7 +48,7 @@ class CurrentRevisionModel extends ContentReviewBaseModel {
 				->AND_( 'page_id' )->EQUAL_TO( $pageId )
 			->runLoop( $db, function( &$revisionData, $row ) {
 				$revisionData = [
-					'revision_id' => $row->revision_id,
+					'revision_id' => (int)$row->revision_id,
 					'touched' => $row->touched,
 				];
 			} );
@@ -72,8 +72,8 @@ class CurrentRevisionModel extends ContentReviewBaseModel {
 			->WHERE( 'wiki_id' )->EQUAL_TO( $wikiId )
 			->runLoop( $db, function( &$revisionData, $row ) {
 				$revisionData[$row->page_id] = [
-					'page_id' => $row->page_id,
-					'revision_id' => $row->revision_id,
+					'page_id' => (int)$row->page_id,
+					'revision_id' => (int)$row->revision_id,
 					'touched' => $row->touched,
 					'ts' => wfTimestamp( TS_UNIX, $row->touched )
 				];
