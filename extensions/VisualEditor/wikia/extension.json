@@ -1,0 +1,38 @@
+{
+	"ResourceModules": {
+		"ext.visualEditor.wikia.desktopArticleTarget.init": {
+			"class": "VisualEditorDesktopArticleTargetInitModule",
+			"scripts": "ve/init/targets/ve.init.wikia.DesktopArticleTarget.init.js",
+			"styles": "ve/init/styles/ve.init.wikia.DesktopArticleTarget.init.css",
+			"dependencies": [
+				"jquery.client",
+				"jquery.byteLength",
+				"mediawiki.page.startup",
+				"mediawiki.Title",
+				"mediawiki.Uri",
+				"mediawiki.util",
+				"user.options",
+				"ext.visualEditor.track"
+			],
+			"messages": [
+				"accesskey-ca-editsource",
+				"accesskey-ca-ve-edit",
+				"accesskey-save",
+				"pipe-separator",
+				"tooltip-ca-createsource",
+				"tooltip-ca-editsource",
+				"tooltip-ca-edit",
+				"tooltip-ca-ve-edit",
+				"visualeditor-ca-editsource-section",
+				"postedit-confirmation-created",
+				"postedit-confirmation-restored",
+				"postedit-confirmation-saved"
+			],
+			"position": "top"
+		}
+	},
+	"ResourceFileModulePaths": {
+		"localBasePath": "/wikia/modules",
+		"remoteExtPath": "VisualEditor/wikia/modules"
+	}
+}

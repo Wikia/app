@@ -53,7 +53,8 @@ class VisualEditorHooks {
 	 */
 	public static function onBeforePageDisplay( OutputPage &$output, Skin &$skin ) {
 		$output->addModules( array(
-			'ext.visualEditor.desktopArticleTarget.init',
+			//'ext.visualEditor.desktopArticleTarget.init',
+			'ext.visualEditor.wikia.desktopArticleTarget.init',
 			'ext.visualEditor.targetLoader',
 			'ext.visualEditor.wikia'
 		) );
