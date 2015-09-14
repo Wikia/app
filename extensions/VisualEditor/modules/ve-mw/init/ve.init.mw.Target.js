@@ -39,6 +39,7 @@ ve.init.mw.Target = function VeInitMwTarget( pageName, revisionId, config ) {
 	this.pageName = pageName;
 	this.pageExists = mw.config.get( 'wgArticleId', 0 ) !== 0;
 	this.toolbarScrollOffset = mw.config.get( 'wgVisualEditorToolbarScrollOffset', 0 );
+	this.wikitext = null;
 
 	// Sometimes we actually don't want to send a useful oldid
 	// if we do, PostEdit will give us a 'page restored' message
@@ -1812,7 +1813,7 @@ ve.init.mw.Target.prototype.attachToolbarSaveButton = function () {
 ve.init.mw.Target.prototype.updateToolbarSaveButtonState = function () {
 	var isDisabled;
 
-	this.edited = this.getSurface().getModel().hasBeenModified();
+	this.edited = this.getSurface().getModel().hasBeenModified() || this.wikitext !== null;
 	// Disable the save button if we have no history
 	isDisabled = !this.edited && !this.restoring;
 	this.toolbarSaveButton.setDisabled( isDisabled );
@@ -1949,4 +1950,63 @@ ve.init.mw.Target.prototype.scrollToHeading = function ( headingNode ) {
 	var $window = $( OO.ui.Element.static.getWindow( this.$element ) );
 
 	$window.scrollTop( headingNode.$element.offset().top - this.getToolbar().$element.height() );
+};
+
+/**
+ * Fire off the sanity check. Must be called before the surface is activated.
+ *
+ * To access the result, check whether #sanityCheckPromise has been resolved or rejected
+ * (it's asynchronous, so it may still be pending when you check).
+ *
+ * @method
+ * @fires sanityCheckComplete
+ */
+ve.init.mw.Target.prototype.startSanityCheck = function () {
+	// We have to get a copy of the data now, before we unlock the surface and let the user edit,
+	// but we can defer the actual conversion and comparison
+	var target = this,
+		doc = this.getSurface().getModel().getDocument(),
+		data = new ve.dm.FlatLinearData( doc.getStore().clone(), ve.copy( doc.getFullData() ) ),
+		oldDom = this.doc,
+		d = $.Deferred();
+
+	// Reset
+	this.sanityCheckFinished = false;
+	this.sanityCheckVerified = false;
+
+	setTimeout( function () {
+		// We can't compare oldDom.body and newDom.body directly, because the attributes on the
+		// <body> were ignored in the conversion. So compare each child separately.
+		var i,
+			len = oldDom.body.childNodes.length,
+			newDoc = new ve.dm.Document( data, oldDom, undefined, doc.getInternalList(), doc.getInnerWhitespace(), doc.getLang(), doc.getDir() ),
+			newDom = ve.dm.converter.getDomFromModel( newDoc );
+
+		// Explicitly unlink our full copy of the original version of the document data
+		data = undefined;
+
+		if ( len !== newDom.body.childNodes.length ) {
+			// Different number of children, so they're definitely different
+			d.reject();
+			return;
+		}
+		for ( i = 0; i < len; i++ ) {
+			if ( !oldDom.body.childNodes[i].isEqualNode( newDom.body.childNodes[i] ) ) {
+				d.reject();
+				return;
+			}
+		}
+		d.resolve();
+	} );
+
+	this.sanityCheckPromise = d.promise()
+		.done( function () {
+			// If we detect no roundtrip errors,
+			// don't emphasize "review changes" to the user.
+			target.sanityCheckVerified = true;
+		})
+		.always( function () {
+			target.sanityCheckFinished = true;
+			target.emit( 'sanityCheckComplete' );
+		} );
 };

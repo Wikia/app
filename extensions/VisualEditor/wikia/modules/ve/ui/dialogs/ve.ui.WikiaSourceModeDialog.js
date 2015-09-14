@@ -29,6 +29,7 @@ OO.inheritClass( ve.ui.WikiaSourceModeDialog, ve.ui.FragmentDialog );
 
 ve.ui.WikiaSourceModeDialog.static.name = 'wikiaSourceMode';
 
+// ve-upstream-sync - review - @author: Paul Oslund
 ve.ui.WikiaSourceModeDialog.static.title = 'Source Mode';
 //OO.ui.deferMsg( 'wikia-visualeditor-dialog-wikiasourcemode-title' );
 
@@ -37,6 +38,7 @@ ve.ui.WikiaSourceModeDialog.static.size = 'large';
 
 ve.ui.WikiaSourceModeDialog.static.icon = 'source';
 
+// ve-upstream-sync - review - @author: Paul Oslund
 ve.ui.WikiaSourceModeDialog.static.actions = [
 	{
 		action: 'apply',
@@ -44,7 +46,7 @@ ve.ui.WikiaSourceModeDialog.static.actions = [
 		flags: [ 'progressive', 'primary' ]
 	},
 	{
-		label: 'Cance', //OO.ui.deferMsg( 'visualeditor-dialog-action-cancel' ),
+		label: 'Cancel', //OO.ui.deferMsg( 'visualeditor-dialog-action-cancel' ),
 		flags: 'safe'
 	}
 ];
@@ -183,7 +185,7 @@ ve.ui.WikiaSourceModeDialog.prototype.onParseDone = function ( response ) {
 		target.toolbarSaveButton.disconnect( target );
 		target.toolbarSaveButton.$element.detach();
 		target.getToolbar().$actions.empty();
-		target.tearDownSurface( true ).done( function () {
+		target.teardownSurface( true ).done( function () {
 			target.deactivating = false;
 			target.wikitext = this.sourceModeTextarea.getValue();
 			target.activating = true;
