@@ -14,8 +14,8 @@ define('ext.wikia.adEngine.slot.scrollHandler', [
         context = adContext.getContext(),
         config = context.opts.scrollHandlerConfig ||
             {
-                PREFOOTER_LEFT_BOXAD: { rv_max: 1 },
-                PREFOOTER_RIGHT_BOXAD: { rv_max: 3 }
+                PREFOOTER_LEFT_BOXAD: { reloadedViewMax: 1 },
+                PREFOOTER_RIGHT_BOXAD: { reloadedViewMax: 3 }
             };
 
     function init() {
@@ -30,9 +30,9 @@ define('ext.wikia.adEngine.slot.scrollHandler', [
                 log('Scroll event listener has been added', 'debug', logGroup);
                 for (var slotName in config) {
                     if (config.hasOwnProperty(slotName)) {
-                        if (config[slotName].hasOwnProperty('rv_max') &&
-                            config[slotName].rv_max >= 0 &&
-                            config[slotName].rv_max <= reloadedView[slotName]) {
+                        if (config[slotName].hasOwnProperty('reloadedViewMax') &&
+                            config[slotName].reloadedViewMax >= 0 &&
+                            config[slotName].reloadedViewMax <= reloadedView[slotName]) {
                             continue;
                         }
                         refreshSlot(slotName);
@@ -59,7 +59,7 @@ define('ext.wikia.adEngine.slot.scrollHandler', [
     }
 
     function getTopPos(el) {
-        for (var topPos = 0; el != null; topPos += el.offsetTop, el = el.offsetParent);
+        for (var topPos = 0; el !== null; topPos += el.offsetTop, el = el.offsetParent);
         return topPos;
     }
 

@@ -20,7 +20,7 @@ describe('ext.wikia.adEngine.slot.scrollHandler', function () {
             },
             addEventListener: function (event, callback) {
                 if (event === 'scroll') {
-                    callback()
+                    callback();
                 }
             }
         },
@@ -36,7 +36,7 @@ describe('ext.wikia.adEngine.slot.scrollHandler', function () {
 
     beforeEach(function () {
         mocks.win.scrollY = 0;
-        setContext(mocks, {rv_max: -1});
+        setContext(mocks, {reloadedViewMax: -1});
     });
 
     function getModule() {
@@ -53,16 +53,16 @@ describe('ext.wikia.adEngine.slot.scrollHandler', function () {
         shouldNotBeRefreshed({scrollY: 1000});
     });
 
-    it('Prefooter should not be refreshed when rv_max is 0', function () {
-        shouldNotBeRefreshed({scrollY: 2000, rv_max: 0});
+    it('Prefooter should not be refreshed when reloadedViewMax is 0', function () {
+        shouldNotBeRefreshed({scrollY: 2000, reloadedViewMax: 0});
     });
 
-    it('Prefooter should be refreshed when rv_max is 1', function () {
-        shouldBeRefreshed({scrollY: 2000, rv_max: 1});
+    it('Prefooter should be refreshed when reloadedViewMax is 1', function () {
+        shouldBeRefreshed({scrollY: 2000, reloadedViewMax: 1});
     });
 
-    it('Prefooter should be refreshed when rv_max is -1', function () {
-        shouldBeRefreshed({scrollY: 2000, rv_max: -1});
+    it('Prefooter should be refreshed when reloadedViewMax is -1', function () {
+        shouldBeRefreshed({scrollY: 2000, reloadedViewMax: -1});
     });
 
     it('RV count of unsupported slot equals null', function () {
@@ -99,9 +99,9 @@ describe('ext.wikia.adEngine.slot.scrollHandler', function () {
                 return {
                     opts: {
                         enableScrollHandler: true,
-                        scrollHandlerConfig: {PREFOOTER_LEFT_BOXAD: {rv_max: params.rv_max}}
+                        scrollHandlerConfig: {PREFOOTER_LEFT_BOXAD: {reloadedViewMax: params.reloadedViewMax}}
                     }
-                }
+                };
             }
         };
     }
