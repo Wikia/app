@@ -1,6 +1,7 @@
 /*global define, setTimeout, require*/
 /*jshint maxlen:125, camelcase:false, maxdepth:7*/
 define('ext.wikia.adEngine.provider.gpt.helper', [
+	'wikia.document',
 	'wikia.log',
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adLogicPageParams',
@@ -12,6 +13,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	require.optional('ext.wikia.adEngine.provider.gpt.sraHelper'),
 	require.optional('ext.wikia.adEngine.slot.scrollHandler')
 ], function (
+	doc,
 	log,
 	adContext,
 	adLogicPageParams,
@@ -27,13 +29,18 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 
 	var logGroup = 'ext.wikia.adEngine.provider.gpt.helper',
 		context = adContext.getContext(),
-		googleApi;
+		googleApi = new GoogleTag(!!context.opts.sourcePoint),
+		sourcePointInitialized = false;
 
-	if (context.opts.sourcePoint) {
-		log('SourcePoint enabled', 'debug', logGroup);
-		googleApi = new SourcePointTag();
-	} else {
-		googleApi = new GoogleTag();
+	if (context.opts.sourcePoint && SourcePointTag) {
+		doc.addEventListener('sp.blocking', function () {
+			if (!sourcePointInitialized) {
+				log('SourcePoint recovery enabled', 'debug', logGroup);
+				sourcePointInitialized = true;
+				googleApi = new SourcePointTag();
+				googleApi.init();
+			}
+		});
 	}
 
 	/**

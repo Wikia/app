@@ -148,7 +148,7 @@ class Node {
 		if ( !$value && $xmlNode->{self::DEFAULT_TAG_NAME} ) {
 			return $this->getInnerValue( $xmlNode->{self::DEFAULT_TAG_NAME} );
 		}
-		if ( $value && $xmlNode->{self::FORMAT_TAG_NAME} ) {
+		if ( ( $value || $value == '0' ) && $xmlNode->{self::FORMAT_TAG_NAME} ) {
 			return $this->getInnerValue( $xmlNode->{self::FORMAT_TAG_NAME} );
 		}
 

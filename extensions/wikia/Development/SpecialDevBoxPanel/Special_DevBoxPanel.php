@@ -405,3 +405,25 @@ function getHtmlForInfo(){
 	return $html;
 } // end getHtmlForInfo()
 
+/**
+ * Vary memcache by devbox
+ *
+ * We append wfWikiID() here as wfMemcKey() uses
+ * $wgCachePrefix or wfWikiID() if the first one is not set
+ *
+ * Sessions are shared between devboxes
+ *
+ * E.g. memcached: get(dev-macbre-plpoznan:revisiontext:textid:96888)
+ *
+ * @author macbre
+ * @see PLATFORM-1401
+ * @see https://github.com/Wikia/app/pull/5842
+ */
+$wgHooks['WikiFactory::onExecuteComplete'][] = function() {
+	global $wgCachePrefix, $wgSharedKeyPrefix, $wgDevelEnvironmentName;
+
+	$wgCachePrefix = 'dev-' . $wgDevelEnvironmentName . '-' . wfWikiID(); // e.g. dev-macbre-muppet / dev-macbre-glee / ...
+	$wgSharedKeyPrefix = 'dev-' . $wgDevelEnvironmentName . '-' . $wgSharedKeyPrefix; // e.g. dev-macbre-wikicities
+
+	return true;
+};

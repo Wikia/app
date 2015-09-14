@@ -257,5 +257,5 @@ Zmień [[Special:Preferences#prefsection-1|swoje preferencje]], aby używać wid
 ***w:c:pl.vocaloid|Vocaloid
 ",
 
-'tog-enableuserjs' => 'Włącz osobisty kod JavaScript ([[Help:Personal_CSS_and_JS#JavaScript|Dowiedz się więcej]])',
+'tog-enableuserjs' => 'Włącz osobisty kod JavaScript ([[Pomoc:Osobiste_CSS_i_JS|Dowiedz się więcej]])',
 ) );

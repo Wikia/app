@@ -1,4 +1,8 @@
 <?php
+
+use Wikia\Vignette\StaticAssetsUrlGenerator;
+use Wikia\Vignette\UrlConfig;
+
 class AvatarService extends Service {
 
 	const AVATAR_SIZE_SMALL = 20;
@@ -286,6 +290,31 @@ class AvatarService extends Service {
 			$bucket = VignetteRequest::parseBucket( $wgBlogAvatarPath );
 			$relativePath = ltrim( $relativePath, '/' );
 			$url = self::buildVignetteUrl( $width, $bucket, $relativePath, $timestamp );
+		}
+		else {
+			// handle full URLs introduced by PLATFORM-1334
+			$parsedUrl = parse_url( $relativePath );
+
+			$bucket = VignetteRequest::parseBucket( $relativePath );
+			$relativePath = join( '/', array_filter( [
+				VignetteRequest::parsePathPrefix( $relativePath ),
+				VignetteRequest::parseRelativePath( $relativePath )
+			] ) );
+
+			// custom avatars
+			// e.g. http://vignette.wikia-dev.com/3feccb7c-d544-4998-b127-3eba49eb59af/scale-to-width-down/16
+			if ( is_null( $bucket ) ) {
+				$config = ( new UrlConfig() )
+					->setRelativePath( $parsedUrl['path'] )
+					->setBaseUrl( sprintf( '%s://%s', $parsedUrl['scheme'], $parsedUrl['host'] ) );
+
+				$url = ( new StaticAssetsUrlGenerator( $config ) )
+					->scaleToWidth( $width )
+					->url();
+			}
+			else {
+				$url = self::buildVignetteUrl( $width, $bucket, $relativePath, false, false );
+			}
 		}
 
 		return $url;

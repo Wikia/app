@@ -68,6 +68,11 @@ class WikiaSendgridMailer {
 			'subject' => $subject,
 			'sourceType' => $sourceType,
 		] );
+		if ( $sourceType == 'mediawiki' ) {
+			// Note, previously called this 'backtrace' but that seemed to mess up logging
+			$logContext['btrace'] = self::backtrace();
+		}
+
 		WikiaLogger::instance()->info( 'Queuing email for SendGrid', $logContext );
 
 		wfSuppressWarnings();
@@ -174,6 +179,37 @@ class WikiaSendgridMailer {
 		wfProfileOut( __METHOD__ );
 		# return false to return Status::newGood() in UserMailer::send method
 		return false;
+	}
+
+	static public function backtrace( $depth = 8 ) {
+		$trace = debug_backtrace();
+
+		// Get rid the same 6 calls that always precede this
+		$removeCallsUpTo = 6;
+
+		// If for some reason we weren't called the way we expect, only cut off the call
+		// to this function and increase the amount of context we show
+		if ( !empty( $trace[5]['function'] ) && $trace[5]['function'] != 'wfRunHooks' ) {
+			$removeCallsUpTo = 1;
+			$depth += 10;
+		}
+		$trace = array_slice( $trace, $removeCallsUpTo );
+
+		$formattedTrace = [];
+		$count = $depth;
+		foreach ( $trace as $frame ) {
+			if ( $count == 0 ) {
+				break;
+			}
+			$count--;
+
+			$file = empty( $frame['file'] ) ? '(no file)' : $frame['file'];
+			$line = empty( $frame['line'] ) ? '(no line)' : $frame['line'];
+			$func = empty( $frame['function'] ) ? '(anonymous)' : $frame['function'];
+			$formattedTrace[] = "$file @ $line : $func";
+		}
+
+		return $formattedTrace;
 	}
 
 	static public function sendWithPear( Mail2 $mailer, $dest, $headers, $body ) {
