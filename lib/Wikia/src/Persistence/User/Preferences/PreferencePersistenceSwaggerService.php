@@ -15,6 +15,9 @@ use Wikia\Service\Swagger\ApiProvider;
 use Wikia\Service\UnauthorizedException;
 use Wikia\Util\AssertionException;
 
+/**
+ * @Injectable(lazy=true)
+ */
 class PreferencePersistenceSwaggerService implements PreferencePersistence {
 	const SERVICE_NAME = "user-preference";
 
