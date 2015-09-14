@@ -53,7 +53,7 @@ class TwitterTagController extends WikiaParserTagController {
 	 */
 	public function parseTag( $input, array $args, Parser $parser, PPFrame $frame ) {
 		if ( empty( $args['widget-id'] ) ) {
-			return '<strong class="error">' . wfMessage( 'twittertag-widget-id' )->parse() . '</strong>';
+			return '<strong class="error">' . wfMessage( 'twitter-tag-widget-id' )->parse() . '</strong>';
 		}
 
 		$attributes = $this->prepareAttributes( $args, self::TAG_PERMITTED_ATTRIBUTES );
