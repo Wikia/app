@@ -8,5 +8,5 @@ $messages['en'] = [
 
 $messages['qqq'] = [
 	'spotify-tag-desc' => '{{desc}}',
-	'spotify-tag-could-not-render' => 'Error message shown when the Spotify widget could not be loaded. Only happens if Spotify has a problem, or the user disallowed 3rd-party resources.',
+	'spotify-tag-could-not-render' => 'Error message shown when the Spotify tag validation failed.',
 ];
