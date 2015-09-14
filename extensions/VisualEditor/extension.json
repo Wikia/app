@@ -237,7 +237,7 @@
 		},
 		"ext.visualEditor.desktopArticleTarget.init": {
 			"class": "VisualEditorDesktopArticleTargetInitModule",
-			"scripts": "modules/ve-mw/init/targets/ve.init.wikia.DesktopArticleTarget.init.js",
+			"scripts": "modules/ve-mw/init/targets/ve.init.mw.DesktopArticleTarget.init.js",
 			"styles": "modules/ve-mw/init/styles/ve.init.mw.DesktopArticleTarget.init.css",
 			"dependencies": [
 				"jquery.client",
