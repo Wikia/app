@@ -193,6 +193,7 @@ var mw = ( function ( $, undefined ) {
 		 * after message escaping happen. This param is flag which decided which params should be inserted normal vs raw
 		 */
 		parser: function ( messageContent, insertRaw ) {
+			messageContent = typeof messageContent !== 'undefined' ? messageContent : this.map.get( this.key );
 			insertRaw = typeof insertRaw !== 'undefined' ? insertRaw: false;
 
 			var parameters = this.parameters;
