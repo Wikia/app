@@ -1,5 +1,5 @@
 <?php
-class SpotifyTagController extends WikiaParserTagController {
+class SpotifyTagController extends WikiaController {
 	const TAG_NAME = 'spotify';
 
 	const TAG_SRC = 'https://embed.spotify.com/?';
@@ -59,9 +59,5 @@ class SpotifyTagController extends WikiaParserTagController {
 
 		$attributes['src'] = $sourceUrl;
 		return array_merge( self::TAG_DEFAULT_ATTRIBUTES, $attributes );
-	}
-
-	protected function buildParamValidator( $paramName ) {
-		return true;
 	}
 }
