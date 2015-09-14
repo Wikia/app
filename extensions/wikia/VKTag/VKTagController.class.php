@@ -37,13 +37,12 @@ class VKTagController extends WikiaParserTagController {
 		$isValid = $this->validator->validateAttributes( $args );
 
 		if ( !$isValid ) {
-			return '<strong class="error">' . wfMessage( 'vktag-could-not-render' )->parse() . '</strong>';
+			return '<strong class="error">' . wfMessage( 'vk-tag-could-not-render' )->parse() . '</strong>';
 		}
 
 		$html = Html::element(
 			'div',
-			$this->buildTagAttributes( $args ),
-			wfMessage( 'vktag-could-not-render' )->text()
+			$this->buildTagAttributes( $args )
 		);
 
 		if ( !$this->tagBuilderHelper->isMobileSkin() ) {
