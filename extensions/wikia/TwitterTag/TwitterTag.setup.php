@@ -8,7 +8,7 @@ $wgExtensionCredits['parserTag'][] = [
 		'[http://community.wikia.com/wiki/User:TyA TyA]',
 		'X-Wing Team @ Wikia',
 	],
-	'descriptionmsg' => 'twittertag-desc',
+	'descriptionmsg' => 'twitter-tag-desc',
 ];
 
 $wgAutoloadClasses['TwitterTagController'] = __DIR__ . '/TwitterTagController.class.php';
