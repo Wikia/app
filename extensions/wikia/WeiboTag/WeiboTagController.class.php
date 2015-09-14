@@ -55,8 +55,7 @@ class WeiboTagController extends WikiaParserTagController {
 
 		$iFrameHTML = Html::element(
 			'iframe',
-			$this->buildTagAttributes( $args ),
-			wfMessage( 'weibotag-could-not-render' )->text()
+			$this->buildTagAttributes( $args )
 		);
 
 		return $this->iFrameHelper->wrapForMobile( $iFrameHTML );

@@ -1799,13 +1799,6 @@ $wgAdDriverIncontentPlayerSlotCountries = null;
  */
 $wgPreferencesUseService = false;
 
-
-/**
- * Parser Tag
- */
-require_once "$IP/extensions/wikia/SoundCloudTag/SoundCloudTag.setup.php" ;
-require_once "$IP/extensions/wikia/WeiboTag/WeiboTag.setup.php";
-
 /**
  * @name $wgEnableRobotsTxtExt
  *

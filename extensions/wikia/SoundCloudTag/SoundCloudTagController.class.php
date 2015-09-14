@@ -52,8 +52,7 @@ class SoundCloudTagController extends WikiaParserTagController {
 
 		$iframeCode = Html::element(
 			'iframe',
-			$this->buildTagAttributes( $sourceUrl, $args ),
-			wfMessage( 'soundcloud-tag-could-not-render' )->text()
+			$this->buildTagAttributes( $sourceUrl, $args )
 		);
 
 		return $this->helper->wrapForMobile( $iframeCode );
