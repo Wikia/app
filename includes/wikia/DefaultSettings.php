@@ -1801,11 +1801,6 @@ $wgAdDriverIncontentPlayerSlotCountries = null;
 $wgPreferencesUseService = false;
 
 /**
- * widget parser tags
- */
-require_once "$IP/extensions/wikia/SoundCloudTag/SoundCloudTag.setup.php" ;
-
-/**
  * @name $wgEnableRobotsTxtExt
  *
  * Enables extension that generates robots.txt
