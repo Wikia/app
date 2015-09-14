@@ -52,8 +52,7 @@ class SoundCloudTagController extends WikiaController {
 
 		$iframeCode = Html::element(
 			'iframe',
-			$this->buildTagAttributes( $sourceUrl, $args ),
-			wfMessage( 'soundcloud-tag-could-not-render' )->text()
+			$this->buildTagAttributes( $sourceUrl, $args )
 		);
 
 		return $this->helper->wrapForMobile( $iframeCode );
@@ -62,7 +61,7 @@ class SoundCloudTagController extends WikiaController {
 	private function buildTagAttributes( $sourceUrlParams, array $userAttributes ) {
 		$attributes = $this->helper->buildTagAttributes( self::TAG_ALLOWED_ATTRIBUTES, $userAttributes );
 
-		$attributes['src'] = self::TAG_SRC . $sourceUrlParams;
+		$attributes['src'] = $sourceUrlParams;
 		return array_merge( self::TAG_DEFAULT_ATTRIBUTES, $attributes );
 	}
 }
