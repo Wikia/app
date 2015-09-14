@@ -152,9 +152,11 @@ class RawAction extends FormlessAction {
 			}
 		}
 
-		if ( $text !== false && $text !== '' && $request->getVal( 'templates' ) === 'expand' ) {
+		// Wikia change begin: author: lukaszk
+		if ( $text !== false && $text !== '' && $request->getVal( 'templates' ) === 'expand' && !$title->isJsPage() ) {
 			$text = $wgParser->preprocess( $text, $title, ParserOptions::newFromContext( $this->getContext() ) );
 		}
+		// Wikia change end;
 
 		return $text;
 	}

@@ -14,6 +14,12 @@ class Helper extends \ContextSource {
 	const CONTENT_REVIEW_CURRENT_KEY = 'current-js-pages';
 	const JS_FILE_EXTENSION = '.js';
 
+
+	/**
+	 * Returns data about all approved revisions (of JS pages) for current wiki
+	 *
+	 * @return bool|array
+	 */
 	public function getReviewedJsPages() {
 		global $wgCityId;
 
@@ -23,6 +29,11 @@ class Helper extends \ContextSource {
 		return $revisions;
 	}
 
+	/**
+	 * Return data about all JS pages on current wiki
+	 *
+	 * @return bool|mixed
+	 */
 	public function getJsPages() {
 		$db = wfGetDB( DB_SLAVE );
 
@@ -40,6 +51,11 @@ class Helper extends \ContextSource {
 
 	}
 
+	/**
+	 * Returns timestamp of last approved revision
+	 *
+	 * @return int
+	 */
 	public function getReviewedJsPagesTimestamp() {
 		$timestamp = \WikiaDataAccess::cache(
 			$this->getMemcKey( self::CONTENT_REVIEW_REVIEWED_KEY ),
@@ -54,6 +70,11 @@ class Helper extends \ContextSource {
 		return $timestamp;
 	}
 
+	/**
+	 * Returns timestamp of last edited JS page
+	 *
+	 * @return int
+	 */
 	public function getJsPagesTimestamp() {
 		$timestamp = \WikiaDataAccess::cache(
 			$this->getMemcKey( self::CONTENT_REVIEW_CURRENT_KEY ),
@@ -68,6 +89,12 @@ class Helper extends \ContextSource {
 		return $timestamp;
 	}
 
+	/**
+	 * Returns max timestamp
+	 *
+	 * @param $pages
+	 * @return int
+	 */
 	public function getMaxTimestamp( $pages ) {
 		$maxTimestamp = 0;
 
@@ -82,14 +109,23 @@ class Helper extends \ContextSource {
 		return $maxTimestamp;
 	}
 
-	public function getReviewedRevisionIdFromText( $pageName ) {
+	/**
+	 * Returns approved revision id for given page.
+	 * If there is no reviewed revision it returns 0.
+	 *
+	 * @param int $pageId
+	 * @param int $wikiId
+	 * @return int
+	 */
+	public function getReviewedRevisionId( $pageId, $wikiId = 0 ) {
 		global $wgCityId;
 
-		$title = \Title::newFromText( $pageName );
-		$pageId = $title->getArticleID();
+		if ( empty( $wikiId ) ) {
+			$wikiId = $wgCityId;
+		}
 
 		$currentRevisionModel = new Models\CurrentRevisionModel();
-		$revision = $currentRevisionModel->getLatestReviewedRevision( $wgCityId, $pageId );
+		$revision = $currentRevisionModel->getLatestReviewedRevision( $wikiId, $pageId );
 
 		if ( is_null( $revision['revision_id'] ) ) {
 			return 0;
@@ -98,6 +134,11 @@ class Helper extends \ContextSource {
 		return $revision['revision_id'];
 	}
 
+	/**
+	 * Returns wiki ids on which user is in test mode
+	 *
+	 * @return array|mixed
+	 */
 	public function getContentReviewTestModeWikis() {
 		$key = \ContentReviewApiController::CONTENT_REVIEW_TEST_MODE_KEY;
 		$wikiIds = $this->getRequest()->getSessionData( $key );
@@ -111,38 +152,54 @@ class Helper extends \ContextSource {
 		return $wikiIds;
 	}
 
-	public function setContentReviewTestMode() {
-		global $wgCityId;
-
-		$key = \ContentReviewApiController::CONTENT_REVIEW_TEST_MODE_KEY;
-
+	/**
+	 * Enable test mode on provided wiki
+	 * @param int $wikiId
+	 */
+	public function setContentReviewTestMode( $wikiId ) {
 		$wikiIds = $this->getContentReviewTestModeWikis();
 
-		if ( !in_array( $wgCityId, $wikiIds ) ) {
-			$wikiIds[] = $wgCityId;
-			$this->getRequest()->setSessionData( $key, serialize( $wikiIds ) );
+		if ( !in_array( $wikiId, $wikiIds ) ) {
+			$wikiIds[] = $wikiId;
+			$this->getRequest()->setSessionData(
+				\ContentReviewApiController::CONTENT_REVIEW_TEST_MODE_KEY,
+				serialize( $wikiIds )
+			);
 		}
 	}
 
-	public function disableContentReviewTestMode() {
-		global $wgCityId;
-
-		$key = \ContentReviewApiController::CONTENT_REVIEW_TEST_MODE_KEY;
-
+	/**
+	 * Disable test mode on provided wiki
+	 * @param int $wikiId
+	 */
+	public function disableContentReviewTestMode( $wikiId ) {;
 		$wikiIds = $this->getContentReviewTestModeWikis();
-		$wikiKey = array_search( $wgCityId, $wikiIds );
+		$wikiKey = array_search( $wikiId, $wikiIds );
 
 		if ( $wikiKey !== false ) {
 			unset( $wikiIds[$wikiKey] );
-			$this->getRequest()->setSessionData( $key, serialize( $wikiIds ) );
+			$this->getRequest()->setSessionData(
+				\ContentReviewApiController::CONTENT_REVIEW_TEST_MODE_KEY,
+				serialize( $wikiIds )
+			);
 		}
 	}
 
-	public function isContentReviewTestModeEnabled() {
+	/**
+	 * Checks if test mode is enabled on current or given wiki
+	 *
+	 * @param int $wikiId
+	 * @return bool
+	 */
+	public function isContentReviewTestModeEnabled( $wikiId = 0 ) {
 		global $wgCityId;
 
+		if ( empty( $wikiId ) ) {
+			$wikiId = $wgCityId;
+		}
+
 		$wikisIds = $this->getContentReviewTestModeWikis();
-		return ( !empty( $wikisIds ) && in_array( $wgCityId, $wikisIds ) );
+		return ( !empty( $wikisIds ) && in_array( $wikiId, $wikisIds ) );
 	}
 
 	public static function isStatusAwaiting( $status ) {
@@ -161,25 +218,21 @@ class Helper extends \ContextSource {
 		);
 	}
 
-	public function isDiffPageInReviewProcess( $wikiId, $pageId, $diff ) {
+	public function isDiffPageInReviewProcess( \WikiaRequest $request, ReviewModel $reviewModel, $wikiId, $pageId, $diff ) {
 		/**
 		 * Do not hit database if there is a URL parameter that indicates that a user
 		 * came directly from Special:ContentReview.
 		 */
-		if ( $this->getRequest()->getInt( self::CONTENT_REVIEW_PARAM ) === 1 ) {
+		if ( $request->getInt( self::CONTENT_REVIEW_PARAM ) === 1 ) {
 			return true;
 		}
 
-		$reviewModel = new ReviewModel();
 		$reviewData = $reviewModel->getReviewedContent( $wikiId, $pageId, ReviewModel::CONTENT_REVIEW_STATUS_IN_REVIEW );
-
 		return ( !empty( $reviewData ) && (int)$reviewData['revision_id'] === $diff );
 	}
 
-	public function hasPageApprovedId( $wikiId, $pageId, $oldid ) {
-		$currentModel = new CurrentRevisionModel();
-		$currentData = $currentModel->getLatestReviewedRevision( $wikiId, $pageId );
-
+	public function hasPageApprovedId( CurrentRevisionModel $model, $wikiId, $pageId, $oldid ) {
+		$currentData = $model->getLatestReviewedRevision( $wikiId, $pageId );
 		return ( !empty( $currentData ) && (int)$currentData['revision_id'] === $oldid );
 	}
 
@@ -256,5 +309,50 @@ class Helper extends \ContextSource {
 
 	public function getMemcKey( $params ) {
 		return wfMemcKey( self::CONTENT_REVIEW_PARAM, self::CONTENT_REVIEW_MEMC_VER, $params );
+	}
+
+	protected function getRevisionById( $revId ) {
+		return \Revision::newFromId( $revId );
+	}
+
+	protected function getCurrentRevisionModel() {
+		return new CurrentRevisionModel();
+	}
+
+	/**
+	 * Replaces $text with text from last approved revision
+	 * Change is done only for JS pages.
+	 * If there's no approved revision replaces with empty string
+	 * @param \Title $title
+	 * @param string $contentType
+	 * @param string $text
+	 */
+	public function replaceWithLastApproved( \Title $title, $contentType, &$text ) {
+		global $wgCityId, $wgJsMimeType;
+
+		if ( $title->isJsPage() || $contentType == $wgJsMimeType ) {
+			$pageId = $title->getArticleID();
+			$latestRevId = $title->getLatestRevID();
+
+			$latestReviewedRevData = $this->getCurrentRevisionModel()->getLatestReviewedRevision( $wgCityId, $pageId );
+
+			if ( $latestReviewedRevData['revision_id'] != $latestRevId
+				&& !$this->isContentReviewTestModeEnabled()
+			) {
+				$revision = $this->getRevisionById( $latestReviewedRevData['revision_id'] );
+
+				if ( $revision ) {
+					$text = $revision->getRawText();
+				} else {
+					$text = '';
+				}
+			}
+		}
+	}
+
+	public function userCanEditJsPage( \Title $title, \User $user ) {
+		return $title->inNamespace( NS_MEDIAWIKI )
+			&& $title->isJsPage()
+			&& $title->userCan( 'edit', $user );
 	}
 }

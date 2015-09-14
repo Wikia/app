@@ -70,6 +70,8 @@ define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 	function loadPage (url, callback) {
 		var authIframe = window.document.createElement('iframe');
 		authIframe.src = url + '&modal=1';
+		//for the selenium tests:
+		authIframe.id = 'auth-modal-iframe';
 		authIframe.onload = function () {
 			if (typeof callback === 'function') {
 				callback();

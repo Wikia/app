@@ -144,7 +144,7 @@ class AvatarsMigrator extends Maintenance {
 			unlink( $tmpFile );
 		}
 		else {
-			$this->output( sprintf( 'avatar set to <%s> - looks like a new URL - skipping', $avatarUrl ) );
+			$this->output( sprintf( 'avatar set to <%s> - looks like a new URL - skipping', $avatar ) );
 		}
 	}
 

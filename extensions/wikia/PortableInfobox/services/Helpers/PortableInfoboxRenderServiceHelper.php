@@ -11,6 +11,7 @@ class PortableInfoboxRenderServiceHelper {
 	const DESKTOP_THUMBNAIL_WIDTH = 270;
 	const MOBILE_THUMBNAIL_WIDTH = 360;
 	const MINIMAL_HERO_IMG_WIDTH = 300;
+	const MAX_DESKTOP_THUMBNAIL_HEIGHT = 500;
 
 	function __construct() {}
 
@@ -21,7 +22,7 @@ class PortableInfoboxRenderServiceHelper {
 	 * @return array
 	 */
 	public function createHorizontalGroupData( $groupData ) {
-		$horizontalGroupData =[
+		$horizontalGroupData = [
 			'labels' => [],
 			'values' => [],
 			'renderLabels' => false
@@ -56,10 +57,12 @@ class PortableInfoboxRenderServiceHelper {
 	public function sanitizeInfoboxTitle( $type, $data ) {
 		if ( $type === 'title' && !empty( $data[ 'value' ] ) ) {
 			$data[ 'value' ] = trim( strip_tags( $data[ 'value' ] ) );
+
 			return $data;
 		}
 		if ( $type === 'hero-mobile' && !empty( $data[ 'title' ][ 'value' ] ) ) {
 			$data[ 'title' ][ 'value' ] = trim( strip_tags( $data[ 'title' ][ 'value' ] ) );
+
 			return $data;
 		}
 
@@ -76,14 +79,12 @@ class PortableInfoboxRenderServiceHelper {
 	public function extendImageData( $data ) {
 		$thumbnail = $this->getThumbnail( $data[ 'name' ] );
 
-		if (!$thumbnail) {
+		if ( !$thumbnail ) {
 			return false;
 		}
 
-		// TODO: the min() function will be redundant when https://wikia-inc.atlassian.net/browse/PLATFORM-1359
-		// will hit the production
-		$data[ 'height' ] = min( $thumbnail->getHeight(), $thumbnail->file->getHeight() );
-		$data[ 'width' ] = min( $thumbnail->getWidth(), $thumbnail->file->getWidth() );
+		$data[ 'height' ] = $thumbnail->getHeight();
+		$data[ 'width' ] = $thumbnail->getWidth();
 		$data[ 'thumbnail' ] = $thumbnail->getUrl();
 		$data[ 'key' ] = urlencode( $data[ 'key' ] );
 		$data[ 'media-type' ] = $data[ 'isVideo' ] ? 'video' : 'image';
@@ -162,7 +163,7 @@ class PortableInfoboxRenderServiceHelper {
 	}
 
 	/**
-	 * @desc create a thumb of the image from file title
+	 * @desc create a thumb of the image from file title.
 	 * @param Title $title
 	 * @return bool|MediaTransformOutput
 	 */
@@ -170,16 +171,33 @@ class PortableInfoboxRenderServiceHelper {
 		$file = \WikiaFileHelper::getFileFromTitle( $title );
 
 		if ( $file ) {
-			$width = $this->isWikiaMobile() ?
-				self::MOBILE_THUMBNAIL_WIDTH :
-				self::DESKTOP_THUMBNAIL_WIDTH;
-			$thumb = $file->transform( ['width' => $width] );
+			$size = $this->getAdjustedImageSize( $file );
+			$thumb = $file->transform( $size );
 
-			if (!is_null($thumb) && !$thumb->isError()) {
+			if ( !is_null( $thumb ) && !$thumb->isError() ) {
 				return $thumb;
 			}
 		}
+
 		return false;
 	}
 
+	/**
+	 * @desc get image size according to the width and height limitations:
+	 * Height on desktop cannot be bigger than 500px
+	 * Width have to be adjusted to const for mobile or desktop infobox
+	 * @param $image
+	 * @return array width and height
+	 */
+	public function getAdjustedImageSize( $image ) {
+		if ( $this->isWikiaMobile() ) {
+			$width = self::MOBILE_THUMBNAIL_WIDTH;
+			$height = null;
+		} else {
+			$height = min( self::MAX_DESKTOP_THUMBNAIL_HEIGHT, $image->getHeight() );
+			$width = self::DESKTOP_THUMBNAIL_WIDTH;
+		}
+
+		return [ 'height' => $height, 'width' => $width ];
+	}
 }
