@@ -19,27 +19,35 @@ define('ext.wikia.adEngine.slot.scrollHandler', [
 			};
 
 	function init() {
-		if (context.opts.enableScrollHandler) {
+		if (context.opts.enableScrollHandler)  {
+			prepareSettings(config);
+			registerSlotEvents(config);
+		}
+	}
+
+	function prepareSettings(config) {
+		for (var slotName in config) {
+			if (config.hasOwnProperty(slotName)) {
+				isRefreshed[slotName] = false;
+				reloadedView[slotName] = 0;
+			}
+		}
+	}
+
+	function registerSlotEvents(config) {
+		win.addEventListener('scroll', adHelper.throttle(function () {
+			log('Scroll event listener has been added', 'debug', logGroup);
 			for (var slotName in config) {
 				if (config.hasOwnProperty(slotName)) {
-					isRefreshed[slotName] = false;
-					reloadedView[slotName] = 0;
+					if (config[slotName].hasOwnProperty('reloadedViewMax') &&
+						config[slotName].reloadedViewMax >= 0 &&
+						config[slotName].reloadedViewMax <= reloadedView[slotName]) {
+						continue;
+					}
+					refreshSlot(slotName);
 				}
 			}
-			win.addEventListener('scroll', adHelper.throttle(function () {
-				log('Scroll event listener has been added', 'debug', logGroup);
-				for (var slotName in config) {
-					if (config.hasOwnProperty(slotName)) {
-						if (config[slotName].hasOwnProperty('reloadedViewMax') &&
-							config[slotName].reloadedViewMax >= 0 &&
-							config[slotName].reloadedViewMax <= reloadedView[slotName]) {
-							continue;
-						}
-						refreshSlot(slotName);
-					}
-				}
-			}));
-		}
+		}));
 	}
 
 	function refreshSlot(slotName) {
