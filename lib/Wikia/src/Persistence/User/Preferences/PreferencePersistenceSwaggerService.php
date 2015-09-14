@@ -7,8 +7,8 @@ use Swagger\Client\User\Preferences\Api\UserPreferencesApi;
 use Swagger\Client\User\Preferences\Models\GlobalPreference as SwaggerGlobalPref;
 use Swagger\Client\User\Preferences\Models\LocalPreference as SwaggerLocalPref;
 use Swagger\Client\User\Preferences\Models\UserPreferences as SwaggerUserPreferences;
-use Wikia\Domain\User\LocalPreference;
-use Wikia\Domain\User\Preferences;
+use Wikia\Domain\User\Preferences\LocalPreference;
+use Wikia\Domain\User\Preferences\UserPreferences;
 use Wikia\Service\NotFoundException;
 use Wikia\Service\PersistenceException;
 use Wikia\Service\Swagger\ApiProvider;
@@ -30,12 +30,12 @@ class PreferencePersistenceSwaggerService implements PreferencePersistence {
 
 	/**
 	 * @param int $userId
-	 * @param Preferences $preferences
+	 * @param UserPreferences $preferences
 	 * @return true success, false or exception otherwise
 	 * @throws PersistenceException
 	 * @throws UnauthorizedException
 	 */
-	public function save( $userId, Preferences $preferences ) {
+	public function save( $userId, UserPreferences $preferences ) {
 		$globalPrefs = $localPrefs = [];
 
 		foreach ($preferences->getGlobalPreferences() as $globalPref) {
@@ -71,12 +71,12 @@ class PreferencePersistenceSwaggerService implements PreferencePersistence {
 	 * Get the users preferences.
 	 *
 	 * @param int $userId
-	 * @return Preferences
+	 * @return UserPreferences
 	 * @throws UnauthorizedException
 	 * @throws PersistenceException
 	 */
 	public function get($userId) {
-		$prefs = new Preferences();
+		$prefs = new UserPreferences();
 
 		try {
 			$storedPreferences = $this->getApi($userId)->getUserPreferences($userId);

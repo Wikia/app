@@ -1,19 +1,22 @@
 <?php
 
-namespace Wikia\Domain\User;
+namespace Wikia\Domain\User\Preferences;
 
 use Wikia\Util\Assert;
 
-class GlobalPreference {
+class LocalPreference {
 
 	private $name;
 	private $value;
+	private $wikiId;
 
-	function __construct( $name, $value ) {
+	function __construct( $name, $value, $wikiId ) {
 		Assert::true(!empty($name), "invalid preference name");
+		Assert::true(!empty($wikiId), "invalid wiki id");
 
 		$this->name = $name;
 		$this->value = $value;
+		$this->wikiId = $wikiId;
 	}
 
 	public function getName() {
@@ -22,6 +25,10 @@ class GlobalPreference {
 
 	public function getValue() {
 		return $this->value;
+	}
+
+	public function getWikiId() {
+		return $this->wikiId;
 	}
 
 	public function setValue($value) {

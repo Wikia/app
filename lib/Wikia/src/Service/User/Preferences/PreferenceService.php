@@ -3,8 +3,8 @@
 namespace Wikia\Service\User\Preferences;
 
 use Wikia\Cache\Memcache\Memcache;
-use Wikia\Domain\User\LocalPreference;
-use Wikia\Domain\User\Preferences;
+use Wikia\Domain\User\Preferences\LocalPreference;
+use Wikia\Domain\User\Preferences\UserPreferences;
 use Wikia\Logger\Loggable;
 use Wikia\Persistence\User\Preferences\PreferencePersistence;
 use Wikia\Util\WikiaProfiler;
@@ -26,7 +26,7 @@ class PreferenceService {
 	/** @var PreferencePersistence */
 	private $persistence;
 
-	/** @var Preferences[string] */
+	/** @var UserPreferences[string] */
 	private $preferences;
 
 	/** @var string[] */
@@ -74,7 +74,7 @@ class PreferenceService {
 		$preferences = $this->cache->get($this->getCacheKey($userId));
 
 		if (!$preferences) {
-			$preferences = new Preferences();
+			$preferences = new UserPreferences();
 		}
 
 		$this->preferences[$userId] = $this->applyDefaults($preferences);
@@ -142,7 +142,7 @@ class PreferenceService {
 	 */
 	public function save($userId) {
 		$prefs = $this->load($userId);
-		$prefsToSave = new Preferences();
+		$prefsToSave = new UserPreferences();
 
 		foreach ($prefs->getGlobalPreferences() as $pref) {
 			if ($this->prefIsSaveable($pref->getName(), $pref->getValue())) {
@@ -189,7 +189,7 @@ class PreferenceService {
 
 	/**
 	 * @param $userId
-	 * @return Preferences
+	 * @return UserPreferences
 	 * @throws \Exception
 	 */
 	private function load($userId) {
@@ -216,7 +216,7 @@ class PreferenceService {
 		return $this->preferences[$userId];
 	}
 
-	private function applyDefaults(Preferences $preferences) {
+	private function applyDefaults(UserPreferences $preferences) {
 		foreach ($this->defaultPreferences as $name => $val) {
 			if (!$preferences->hasGlobalPreference($name)) {
 				$preferences->setGlobalPreference($name, $val);

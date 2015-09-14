@@ -1,8 +1,8 @@
 <?php
 
-namespace Wikia\Domain\User;
+namespace Wikia\Domain\User\Preferences;
 
-class Preferences {
+class UserPreferences {
 
 	/** @var GlobalPreference[] */
 	private $globalPreferences;
