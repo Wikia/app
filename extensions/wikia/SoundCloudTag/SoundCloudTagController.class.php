@@ -40,15 +40,12 @@ class SoundCloudTagController extends WikiaController {
 		$this->helper = new WikiaIFrameTagBuilderHelper();
 	}
 
-	public function getTagName() {
-		return self::TAG_NAME;
+	public static function onParserFirstCallInit( Parser $parser ) {
+		$parser->setHook( self::TAG_NAME, [ new static(), 'renderTag' ] );
+		return true;
 	}
 
-	protected function getErrorOutput( $errorMessages ) {
-		return wfMessage( 'soundcloud-tag-could-not-render' )->text();
-	}
-
-	protected function getSuccessOutput( $args ) {
+	public function renderTag( $input, array $args, Parser $parser, PPFrame $frame ) {
 		$sourceUrl = self::TAG_SRC . $this->helper->buildTagSourceQueryParams(
 				self::TAG_SOURCE_ALLOWED_PARAMS_WITH_DEFAULTS, $args
 			);
@@ -66,9 +63,5 @@ class SoundCloudTagController extends WikiaController {
 
 		$attributes['src'] = $sourceUrlParams;
 		return array_merge( self::TAG_DEFAULT_ATTRIBUTES, $attributes );
-	}
-
-	protected function buildParamValidator( $paramName ) {
-		return true;
 	}
 }
