@@ -54,15 +54,15 @@ describe('ext.wikia.adEngine.slot.scrollHandler', function () {
     });
 
     it('Prefooter should not be refreshed when reloadedViewMax is 0', function () {
-        shouldNotBeRefreshed({scrollY: 2000, reloadedViewMax: 0});
+        shouldNotBeRefreshed({reloadedViewMax: 0});
     });
 
     it('Prefooter should be refreshed when reloadedViewMax is 1', function () {
-        shouldBeRefreshed({scrollY: 2000, reloadedViewMax: 1});
+        shouldBeRefreshed({reloadedViewMax: 1});
     });
 
     it('Prefooter should be refreshed when reloadedViewMax is -1', function () {
-        shouldBeRefreshed({scrollY: 2000, reloadedViewMax: -1});
+        shouldBeRefreshed({reloadedViewMax: -1});
     });
 
     it('RV count of unsupported slot equals null', function () {
@@ -71,7 +71,7 @@ describe('ext.wikia.adEngine.slot.scrollHandler', function () {
 
     function shouldBeRefreshed(params) {
         spyOn(mocks.win.adslots2, 'push');
-        mocks.win.scrollY = params.scrollY;
+        mocks.win.scrollY = params.scrollY || 2000;
         setContext(mocks, params);
 
         var scrollHandler = getModule();
@@ -83,7 +83,7 @@ describe('ext.wikia.adEngine.slot.scrollHandler', function () {
 
     function shouldNotBeRefreshed(params) {
         spyOn(mocks.win.adslots2, 'push');
-        mocks.win.scrollY = params.scrollY;
+        mocks.win.scrollY = params.scrollY || 2000;
         setContext(mocks, params);
 
         var scrollHandler = getModule();
