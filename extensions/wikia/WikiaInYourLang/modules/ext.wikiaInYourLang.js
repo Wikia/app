@@ -181,9 +181,15 @@ require(
 
 		function saveLinkTitle(linkAddress) {
 			var articleTitle = w.wgTitle,
-				linkAddressAry = linkAddress.split('/'),
+				linkAddressAry = linkAddress.match(/.+\.com\/wiki\/(.*)/),
 				listOfCachedTitles = {},
-				linkTitle = linkAddressAry[linkAddressAry.length - 1].length === 0 ? 'main' : linkAddressAry[linkAddressAry.length - 1];
+				linkTitle = '';
+
+			if ( linkAddressAry && linkAddressAry.length > 1 ) {
+				linkTitle = linkAddressAry[1];
+			} else {
+				linkTitle = 'main';
+			}
 
 			listOfCachedTitles = cache.get(getWIYLLinkTitlesKey());
 			if ( !listOfCachedTitles ) {
