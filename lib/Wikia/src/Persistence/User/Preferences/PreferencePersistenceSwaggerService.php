@@ -80,12 +80,19 @@ class PreferencePersistenceSwaggerService implements PreferencePersistence {
 
 		try {
 			$storedPreferences = $this->getApi($userId)->getUserPreferences($userId);
-			foreach ($storedPreferences->getGlobalPreferences() as $p) {
-				$prefs->setGlobalPreference($p->getName(), $p->getValue());
+			$globalPreferences = $storedPreferences->getGlobalPreferences();
+			$localPreferences = $storedPreferences->getLocalPreferences();
+
+			if ($globalPreferences != null) {
+				foreach ($globalPreferences as $p) {
+					$prefs->setGlobalPreference($p->getName(), $p->getValue());
+				}
 			}
 
-			foreach ($storedPreferences->getLocalPreferences() as $p) {
-				$prefs->setLocalPreference($p->getName(), $p->getWikiId(), $p->getValue());
+			if ($localPreferences != null) {
+				foreach ($localPreferences as $p) {
+					$prefs->setLocalPreference($p->getName(), $p->getWikiId(), $p->getValue());
+				}
 			}
 		} catch (ApiException $e) {
 			$this->handleApiException($e);
