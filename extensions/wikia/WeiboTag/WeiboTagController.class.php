@@ -65,7 +65,7 @@ class WeiboTagController extends WikiaParserTagController {
 		$attributes = $this->tagBuilderHelper->buildTagAttributes( self::TAG_ALLOWED_ATTRIBUTES, $args );
 		$attributes['src'] = $this->tagBuildSource;
 
-		return array_merge( $attributes, self::TAG_DEFAULT_ATTRIBUTES );
+		return array_merge( self::TAG_DEFAULT_ATTRIBUTES, $attributes );
 	}
 
 
