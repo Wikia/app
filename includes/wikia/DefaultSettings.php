@@ -1800,7 +1800,11 @@ $wgAdDriverIncontentPlayerSlotCountries = null;
 $wgPreferencesUseService = false;
 
 /**
+ * Twitter parser tag extension
+ */
+$wgEnableTwitterTagExt = true;
+
+/**
  * widget parser tags
  */
 require_once "$IP/extensions/wikia/SoundCloudTag/SoundCloudTag.setup.php" ;
-require_once "$IP/extensions/wikia/TwitterTag/TwitterTag.setup.php";
