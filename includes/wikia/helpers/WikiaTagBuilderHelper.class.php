@@ -13,19 +13,27 @@ class WikiaTagBuilderHelper {
 		return http_build_query( $params );
 	}
 
-	public function buildTagAttributes( array $allowedAttrs, array $userAttrs ) {
+	public function buildTagAttributes( array $allowedAttrs, array $userAttrs, $prefix = '' ) {
 		$attributes = [];
+
+		if ( !empty( $prefix ) ) {
+			$prefix .= '-';
+		}
 
 		foreach ( $allowedAttrs as $attributeName ) {
 			if ( isset( $userAttrs[$attributeName] ) ) {
 				if ( $attributeName === 'style' ) {
 					$attributes['style'] = Sanitizer::checkCss( $userAttrs['style'] );
 				} else {
-					$attributes[$attributeName] = $userAttrs[$attributeName];
+					$attributes[$prefix . $attributeName] = $userAttrs[$attributeName];
 				}
 			}
 		}
 
 		return $attributes;
+	}
+
+	public function isMobileSkin( ) {
+		return F::app()->checkSkin( 'wikiamobile' );
 	}
 }

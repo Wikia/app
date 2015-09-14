@@ -26,7 +26,13 @@ class WikiaTagBuilderHelperTest extends WikiaBaseTest {
 		$this->assertEquals( $tagBuilder->buildTagSourceQueryParams( $allowedParams, $passedParams ), $expectedResult );
 	}
 
-	public function testBuildTagAttributes() {
+	/**
+	 * @dataProvider buildTagAttributesDataProvider
+	 * @param array $passedAttrs
+	 * @param string $prefix
+	 * @param array $expectedResult
+	 */
+	public function testBuildTagAttributes($passedAttrs, $prefix = '' ,$expectedResult) {
 		$tagBuilder = new WikiaTagBuilderHelper();
 		$this->getStaticMethodMock( 'Sanitizer', 'checkCss' )
 			->expects( $this->any() )
@@ -39,17 +45,34 @@ class WikiaTagBuilderHelperTest extends WikiaBaseTest {
 			'style',
 		];
 
-		$passedAttrs = [
-			'foo' => 'someValue1',
-			'buzz' => 'someValue2',
-			'style' => 'beforeSanitize',
-		];
+		$this->assertSame( $tagBuilder->buildTagAttributes( $allowedAttrs, $passedAttrs, $prefix ), $expectedResult );
+	}
 
-		$expectedResult = [
-			'foo' => 'someValue1',
-			'style' => 'sanitized',
+	public function buildTagAttributesDataProvider() {
+		return [
+			[
+				[
+					'foo' => 'someValue1',
+					'buzz' => 'someValue2',
+					'style' => 'beforeSanitize',
+				],
+				null,
+				[
+					'foo' => 'someValue1',
+					'style' => 'sanitized',
+				]
+			], [
+				[
+					'foo' => 'someValue1',
+					'buzz' => 'someValue2',
+					'style' => 'beforeSanitize',
+				],
+				'wikia',
+				[
+					'wikia-foo' => 'someValue1',
+					'style' => 'sanitized',
+				]
+			]
 		];
-
-		$this->assertSame( $tagBuilder->buildTagAttributes( $allowedAttrs, $passedAttrs ), $expectedResult );
 	}
 }
