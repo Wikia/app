@@ -61,7 +61,7 @@ class VKTagController extends WikiaParserTagController {
 		// VK needs element id to be passed to the API, so let's give it one
 		$attributes['id'] = 'vk-wrapper-' . wfRandomString( 6 );
 
-		return array_merge( $attributes, self::TAG_DEFAULT_ATTRIBUTES );
+		return array_merge( self::TAG_DEFAULT_ATTRIBUTES, $attributes );
 	}
 
 	protected function buildParamValidator( $paramName ) {
