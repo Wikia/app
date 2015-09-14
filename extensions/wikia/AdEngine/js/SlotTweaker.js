@@ -30,12 +30,11 @@ define('ext.wikia.adEngine.slotTweaker', [
 
 		var slot = document.getElementById(slotname);
 
-		if (slot) {
+		if (slot && useInline) {
+			slot.style.display = 'none';
+		} else if (slot) {
 			removeClass(slot, 'hidden');
 			slot.className += ' hidden';
-			if (useInline) {
-				slot.style.display = 'none';
-			}
 		}
 	}
 
