@@ -1,7 +1,7 @@
 <?php
 
 namespace Wikia\Service\User\Preferences;
-use Wikia\Domain\User\Preference;
+use Wikia\Domain\User\GlobalPreference;
 use Wikia\Persistence\User\Preferences\PreferencePersistence;
 use Wikia\Service\PersistenceException;
 
@@ -12,7 +12,7 @@ class PreferenceKeyValueTest extends \PHPUnit_Framework_TestCase {
 	protected $persistenceMock;
 
 	protected function setUp() {
-		$this->testPreference = new Preference( "pref-name", "pref-value" );
+		$this->testPreference = new GlobalPreference( "pref-name", "pref-value" );
 		$this->persistenceMock = $this->getMockBuilder( PreferencePersistence::class )
 			->setMethods( ['save', 'get'] )
 			->disableOriginalConstructor()

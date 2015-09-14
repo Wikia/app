@@ -4,7 +4,7 @@ namespace Wikia\Persistence\User\Preferences;
 
 use Swagger\Client\ApiException;
 use Swagger\Client\User\Preferences\Api\UserPreferencesApi;
-use Wikia\Domain\User\Preference;
+use Wikia\Domain\User\GlobalPreference;
 use Wikia\Service\NotFoundException;
 use Wikia\Service\PersistenceException;
 use Wikia\Service\Swagger\ApiProvider;
@@ -23,7 +23,7 @@ class PreferencePersistenceSwaggerService implements PreferencePersistence {
 
 	/**
 	 * @param int $userId
-	 * @param Preference[] $preferences
+	 * @param GlobalPreference[] $preferences
 	 * @return true success, false or exception otherwise
 	 * @throws PersistenceException
 	 * @throws UnauthorizedException
@@ -49,7 +49,7 @@ class PreferencePersistenceSwaggerService implements PreferencePersistence {
 	 * Get the users preferences.
 	 *
 	 * @param int $userId
-	 * @return array of Preference objects
+	 * @return array of GlobalPreference objects
 	 * @throws UnauthorizedException
 	 * @throws PersistenceException
 	 */
@@ -58,7 +58,7 @@ class PreferencePersistenceSwaggerService implements PreferencePersistence {
 
 		try {
 			foreach ($this->getApi($userId)->getUserPreferences($userId) as $p) {
-				$prefs[] = new Preference($p->getName(), $p->getValue());
+				$prefs[] = new GlobalPreference($p->getName(), $p->getValue());
 			}
 		} catch (ApiException $e) {
 			$this->handleApiException($e);

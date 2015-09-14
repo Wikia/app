@@ -20,7 +20,7 @@
  */
 namespace Wikia\Service\User\Preferences;
 
-use Wikia\Domain\User\Preference;
+use Wikia\Domain\User\GlobalPreference;
 use Wikia\Logger\Loggable;
 use Wikia\Persistence\User\Preferences\PreferencePersistence;
 use Wikia\Util\WikiaProfiler;
@@ -82,7 +82,7 @@ class PreferenceKeyValueService implements PreferenceService {
 		}
 
 		$filtered = array_filter( $preferences, function ( $v, $k ) {
-			return ( $v instanceof Preference );
+			return ( $v instanceof GlobalPreference );
 		}, ARRAY_FILTER_USE_BOTH );
 
 		if ( count( $filtered ) != count( $preferences ) ) {

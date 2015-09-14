@@ -2,7 +2,7 @@
 
 namespace Wikia\Service\User\Preferences;
 
-use Wikia\Domain\User\Preference;
+use Wikia\Domain\User\GlobalPreference;
 
 class UserPreferences {
 	const HIDDEN_PREFS = "user_preferences_hidden_prefs";
@@ -55,6 +55,22 @@ class UserPreferences {
 		}
 	}
 
+	public function getLocalPreference($userId, $wikiId, $name, $default = null, $ignoreHidden = false) {
+
+	}
+
+	public function setLocalPreference($userId, $wikiId, $name, $value) {
+
+	}
+
+	public function getGlobalPreference($userId, $name, $default = null, $ignoreHidden = false) {
+
+	}
+
+	public function setGlobalPreference($userId, $name, $value) {
+
+	}
+
 	public function get($userId, $pref, $default = null, $ignoreHidden = false) {
 		$preferences = $this->load($userId);
 
@@ -94,7 +110,7 @@ class UserPreferences {
 				$val = $default;
 			}
 			$this->preferences[ $userId ][ $pref ] = $val;
-			$prefToSave[ ] = new Preference( $pref, $val );
+			$prefToSave[ ] = new GlobalPreference( $pref, $val );
 		}
 
 		$this->save( $userId, $prefToSave );
@@ -121,7 +137,7 @@ class UserPreferences {
 
 	/**
 	 * @param string $userId
-	 * @param Preference[] $prefs
+	 * @param GlobalPreference[] $prefs
 	 */
 	private function save($userId, $prefs) {
 		if ($userId == 0) {
