@@ -1,6 +1,6 @@
 <?php
 
-class VKTagController extends WikiaParserTagController {
+class VKTagController extends WikiaController {
 
 	const PARSER_TAG_NAME = 'vk';
 

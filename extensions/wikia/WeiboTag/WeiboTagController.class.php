@@ -1,5 +1,5 @@
 <?php
-class WeiboTagController extends WikiaParserTagController {
+class WeiboTagController extends WikiaController {
 	const PARSER_TAG_NAME = 'weibo';
 	const TAG_SRC = 'http://widget.weibo.com/relationship/bulkfollow.php?';
 	const TAG_SOURCE_ALLOWED_PARAMS_WITH_DEFAULTS = [
