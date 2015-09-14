@@ -82,6 +82,7 @@ $messages['en'] = [
 The recently submitted change to this JS script was rejected by the Wikia review process. Please make sure you meet the [[Help:JavaScript review process|Custom JavaScript guidelines]].',
 
 	'content-review-status-link-text' => 'Review status',
+	'content-review-edit-page-checkbox-label' => 'Automatically approve the changes',
 ];
 
 /**
@@ -162,4 +163,5 @@ $messages['qqq'] = [
 	'content-review-status-reverted' => 'A name of a status of a revision that has been reverted',
 
 	'content-review-status-link-text' => 'Text on entrypoint link to show content review module with review status info and submit for review buttons',
+	'content-review-edit-page-checkbox-label' => 'A label for a checkbox that if checked causes changes made by an authorized user to be automatically approved.',
 ];
