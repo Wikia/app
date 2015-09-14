@@ -18,22 +18,27 @@ class ReviewedRevision extends Maintenance {
 	}
 
 	public function execute() {
-		global $wgCityId;
+		global $wgCityId, $wgUseSiteJs;
 
-		$this->output( "Processing wiki id: {$wgCityId}\n" );
+		if ( !empty( $wgUseSiteJs ) ) {
+			$this->output( "Processing wiki id: {$wgCityId}\n" );
 
-		$jsPages = ( new \Wikia\ContentReview\Helper() )->getJsPages();
+			$jsPages = ( new \Wikia\ContentReview\Helper() )->getJsPages();
 
-		foreach ( $jsPages as $jsPage ) {
-			if ( !empty( $jsPage['page_id'] ) && !empty( $jsPage['page_latest'] ) ) {
-				try {
-					$this->getRevisionModel()->approveRevision( $wgCityId, $jsPage['page_id'], $jsPage['page_latest'] );
-					$this->output( "Added revision id for page {$jsPage['page_title']} (ID: {$jsPage['page_id']})\n" );
-				} catch( FluentSql\Exception\SqlException $e ) {
-					$this->output( $e->getMessage() . "\n" );
+			foreach ( $jsPages as $jsPage ) {
+				if ( !empty( $jsPage['page_id'] ) && !empty( $jsPage['page_latest'] ) ) {
+					try {
+						$this->getRevisionModel()->approveRevision( $wgCityId, $jsPage['page_id'], $jsPage['page_latest'] );
+						$this->output( "Added revision id for page {$jsPage['page_title']} (ID: {$jsPage['page_id']})\n" );
+					} catch( FluentSql\Exception\SqlException $e ) {
+						$this->output( $e->getMessage() . "\n" );
+					}
 				}
 			}
+		} else {
+			$this->output( "Wiki (Id: {$wgCityId}) has disabled custom scripts.\n" );
 		}
+
 	}
 
 	private function getRevisionModel() {
