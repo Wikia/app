@@ -3,7 +3,7 @@
 class TwitterTagTest extends WikiaBaseTest {
 
 	public function setUp() {
-		$this->setupFile = __DIR__ . '/../TwitterTagController.class.php';
+		$this->setupFile = __DIR__ . '/../TwitterTag.setup.php';
 		parent::setUp();
 	}
 
