@@ -1,5 +1,5 @@
 <?php
-class SoundCloudTagController extends WikiaParserTagController {
+class SoundCloudTagController extends WikiaController {
 	const TAG_NAME = 'soundcloud';
 
 	const TAG_SRC = 'https://w.soundcloud.com/player/?';
