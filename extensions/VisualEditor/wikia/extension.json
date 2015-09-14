@@ -3,7 +3,6 @@
 		"ext.visualEditor.wikia.desktopArticleTarget.init": {
 			"class": "VisualEditorDesktopArticleTargetInitModule",
 			"scripts": "ve/init/targets/ve.init.wikia.DesktopArticleTarget.init.js",
-			"styles": "ve/init/styles/ve.init.wikia.DesktopArticleTarget.init.css",
 			"dependencies": [
 				"jquery.client",
 				"jquery.byteLength",
