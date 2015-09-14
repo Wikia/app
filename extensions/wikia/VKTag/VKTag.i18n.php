@@ -8,5 +8,5 @@ $messages['en'] = [
 
 $messages['qqq'] = [
 	'vk-tag-desc' => '{{desc}}',
-	'vk-tag-could-not-render' => 'Error message shown when the VK widget could not be loaded. Only happens if VK has a problem, or the user disallowed 3rd-party resources.',
+	'vk-tag-could-not-render' => 'Error message shown when the VK tag validation failed.',
 ];
