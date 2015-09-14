@@ -2705,6 +2705,7 @@ class User {
 	public function removeGlobalPreference($preference){
 		unset( $this->mOptions[ $preference ] );
 	}
+
 	/**
 	 * Get the default global preference.
 	 *
