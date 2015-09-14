@@ -47,6 +47,12 @@ class UserPreferences {
 
 	public function deleteLocalPreference($name, $wikiId) {
 		unset($this->localPreferences[$wikiId][$name]);
+
+		if (isset($this->localPreferences[$wikiId]) &&
+			count($this->localPreferences[$wikiId]) == 0) {
+
+			unset($this->localPreferences[$wikiId]);
+		}
 	}
 
 	public function hasGlobalPreference($name) {
