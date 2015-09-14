@@ -40,22 +40,20 @@ class SoundCloudTagController extends WikiaController {
 		$this->helper = new WikiaIFrameTagBuilderHelper();
 	}
 
-	public function getTagName() {
-		return self::TAG_NAME;
+	public static function onParserFirstCallInit( Parser $parser ) {
+		$parser->setHook( self::TAG_NAME, [ new static(), 'renderTag' ] );
+		return true;
 	}
 
-	protected function getErrorOutput( $errorMessages ) {
-		return wfMessage( 'soundcloud-tag-could-not-render' )->text();
-	}
-
-	protected function getSuccessOutput( $args ) {
+	public function renderTag( $input, array $args, Parser $parser, PPFrame $frame ) {
 		$sourceUrl = self::TAG_SRC . $this->helper->buildTagSourceQueryParams(
 				self::TAG_SOURCE_ALLOWED_PARAMS_WITH_DEFAULTS, $args
 			);
 
 		$iframeCode = Html::element(
 			'iframe',
-			$this->buildTagAttributes( $sourceUrl, $args )
+			$this->buildTagAttributes( $sourceUrl, $args ),
+			wfMessage( 'soundcloud-tag-could-not-render' )->text()
 		);
 
 		return $this->helper->wrapForMobile( $iframeCode );
@@ -64,11 +62,7 @@ class SoundCloudTagController extends WikiaController {
 	private function buildTagAttributes( $sourceUrlParams, array $userAttributes ) {
 		$attributes = $this->helper->buildTagAttributes( self::TAG_ALLOWED_ATTRIBUTES, $userAttributes );
 
-		$attributes['src'] = $sourceUrlParams;
+		$attributes['src'] = self::TAG_SRC . $sourceUrlParams;
 		return array_merge( self::TAG_DEFAULT_ATTRIBUTES, $attributes );
-	}
-
-	protected function buildParamValidator( $paramName ) {
-		return true;
 	}
 }
