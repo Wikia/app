@@ -61,15 +61,14 @@ class PollSnackTagController extends WikiaController {
 			 *   - if yes then loads <embed> element
 			 *   - if no then loads another iframe (HTML5) and passes parameters from the original URL
 			 *
-			 * Issue with the last item is that if we don't put `width` or `height` in URL
-			 * then the second iframe gets `&width=undefined&height=undefined` and doesn't load at all.
+			 * Issue with the last item is that if we don't put `width` in the URL
+			 * then the second iframe gets `width=undefined` and doesn't load at all.
 			 *
 			 * Trying to load the HTML5 iframe directly results in AccessDenied error
 			 * so this is the only working solution I found.
 			 */
 			$queryParamsOverride = [
-				'width' => '',
-				'height' => ''
+				'width' => ''
 			];
 		}
 
