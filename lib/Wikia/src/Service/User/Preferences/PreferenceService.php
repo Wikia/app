@@ -115,6 +115,10 @@ class PreferenceService {
 	}
 
 	public function setGlobalPreference($userId, $name, $value) {
+		if ($value == null) {
+			$value = $this->getFromDefault($name);
+		}
+
 		$this->load($userId)->setGlobalPreference($name, $value);
 	}
 
@@ -132,6 +136,10 @@ class PreferenceService {
 	}
 
 	public function setLocalPreference($userId, $wikiId, $name, $value) {
+		if ($value == null) {
+			$value = $this->getFromDefault($name);
+		}
+
 		$this->load($userId)->setLocalPreference($name, $wikiId, $value);
 	}
 
