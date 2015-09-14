@@ -52,7 +52,7 @@ class PollSnackTagController extends WikiaController {
 			return '<strong class="error">' . wfMessage( 'pollsnack-tag-could-not-render' )->parse() . '</strong>';
 		}
 
-		$queryParamsOverride = null;
+		$queryParamsOverride = [];
 		if ( $this->helper->isMobileSkin() ) {
 			/**
 			 * This is needed because for mobile devices:

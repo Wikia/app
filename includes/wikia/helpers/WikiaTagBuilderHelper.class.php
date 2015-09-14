@@ -1,7 +1,7 @@
 <?php
 class WikiaTagBuilderHelper {
 
-	public function buildTagSourceQueryParams( array $allowedParams, array $userParams, $overrideParams = null ) {
+	public function buildTagSourceQueryParams( array $allowedParams, array $userParams, $overrideParams = [] ) {
 		$params = [];
 		foreach ( array_keys( $allowedParams ) as $name ) {
 			if ( array_key_exists( $name, $userParams ) && !empty( $userParams[$name] ) ) {
@@ -11,7 +11,7 @@ class WikiaTagBuilderHelper {
 			}
 		}
 
-		if ( is_array( $overrideParams ) ) {
+		if ( is_array( $overrideParams ) && !empty( $overrideParams ) ) {
 			$params = array_merge( $params, $overrideParams );
 		}
 
