@@ -1,14 +1,15 @@
 <?php
-class WikiaIFrameTagBuilderHelperTests extends WikiaBaseTest {
+class WikiaIFrameTagBuilderHelperTest extends WikiaBaseTest {
 
 	public function setUp() {
+		require_once( __DIR__ . '/../WikiaIFrameTagBuilderHelper.class.php' );
 		parent::setUp();
 	}
 
 	public function testWrapForMobileOnMobile() {
 		$helper = new WikiaIFrameTagBuilderHelper();
 
-		$this->getMethodMock( $helper, 'isMobileSkin' )
+		$this->getMethodMock( 'WikiaIFrameTagBuilderHelper', 'isMobileSkin' )
 			->expects( $this->any() )
 			->method( 'isMobileSkin' )
 			->will( $this->returnValue( true ) );
@@ -22,7 +23,7 @@ class WikiaIFrameTagBuilderHelperTests extends WikiaBaseTest {
 	public function testWrapForMobileOnDesktop() {
 		$helper = new WikiaIFrameTagBuilderHelper();
 
-		$this->getMethodMock( $helper, 'isMobileSkin' )
+		$this->getMethodMock( 'WikiaIFrameTagBuilderHelper', 'isMobileSkin' )
 			->expects( $this->any() )
 			->method( 'isMobileSkin' )
 			->will( $this->returnValue( false ) );
