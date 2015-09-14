@@ -38,15 +38,18 @@ class SoundCloudTagController extends WikiaParserTagController {
 		$this->helper = new WikiaIFrameTagBuilderHelper();
 	}
 
-	public static function onParserFirstCallInit( Parser $parser ) {
-		$parser->setHook( self::TAG_NAME, [ new static(), 'renderTag' ] );
-		return true;
+	public function getTagName() {
+		return self::TAG_NAME;
 	}
 
-	public function renderTag( $input, array $args, Parser $parser, PPFrame $frame ) {
+	protected function getErrorOutput( $errorMessages ) {
+		return wfMessage( 'soundcloud-tag-could-not-render' )->text();
+	}
+
+	protected function getSuccessOutput( $args ) {
 		$sourceUrl = self::TAG_SRC . $this->helper->buildTagSourceQueryParams(
-			self::TAG_SOURCE_ALLOWED_PARAMS_WITH_DEFAULTS, $args
-		);
+				self::TAG_SOURCE_ALLOWED_PARAMS_WITH_DEFAULTS, $args
+			);
 
 		$iframeCode = Html::element(
 			'iframe',
