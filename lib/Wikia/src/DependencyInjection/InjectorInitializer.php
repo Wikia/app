@@ -3,7 +3,6 @@
 namespace Wikia\DependencyInjection;
 
 use Doctrine\Common\Cache\CacheProvider;
-use Wikia\Cache\Memcache\MemcacheModule;
 use Wikia\Service\Gateway\ConsulUrlProviderModule;
 use Wikia\Service\User\Preferences\PreferenceModule;
 use Wikia\Service\User\Attributes\AttributesModule;
