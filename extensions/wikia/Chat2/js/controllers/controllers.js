@@ -200,7 +200,7 @@ var NodeRoomController = $.createClass(Observable,{
 	},
 
 	onReConnectFail: function(message) {
-		var chatEntry = new models.InlineAlert({text: mw.html.escape($.msg( 'chat-user-permanently-disconnected' )) });
+		var chatEntry = new models.InlineAlert({text: mw.message('chat-user-permanently-disconnected').escaped() });
 		this.model.chats.add(chatEntry);
 	},
 
@@ -218,7 +218,7 @@ var NodeRoomController = $.createClass(Observable,{
 			this.isInitialized = true;
 			$().log(this.isInitialized, "isInitialized");
 			if(this.isMain()) {
-				var newChatEntry = new models.InlineAlert({text: mw.html.escape($.msg('chat-welcome-message', wgSiteName)) });
+				var newChatEntry = new models.InlineAlert({text: mw.message('chat-welcome-message', wgSiteName).escaped() });
 				this.model.chats.add(newChatEntry);
 			}
 
@@ -362,7 +362,7 @@ var NodeRoomController = $.createClass(Observable,{
 			if(this.isMain()) {
 				if(joinedUser.get('name') != wgUserName) {
 					// Create the inline-alert (on client side so that we only display it if the user actually IS new to the room and not just disconnecting/reconnecting).
-					var newChatEntry = new models.InlineAlert({text: mw.html.escape($.msg('chat-user-joined', [joinedUser.get('name')] )) });
+					var newChatEntry = new models.InlineAlert({text: mw.message('chat-user-joined', joinedUser.get('name')).escaped() });
 					this.model.chats.add(newChatEntry);
 				}
 			}
@@ -423,15 +423,23 @@ var NodeRoomController = $.createClass(Observable,{
 		if ( kickEvent.get('kickedUserName') != wgUserName  ) {
 			var undoLink = "";
 			if(this.userMain.get('isModerator') && mode == 'banned' ) {
-				undoLink = ' (<a href="#" data-type="ban-undo" data-user="' + mw.html.escape(kickEvent.get('kickedUserName')) + '" >' + mw.html.escape($.msg('chat-ban-undolink')) + '</a>)';
+				undoLink = ' (<a href="#" data-type="ban-undo" data-user="' + mw.html.escape(kickEvent.get('kickedUserName')) + '" >' + mw.message('chat-ban-undolink').escaped() + '</a>)';
 			}
 
 			this.onPartBase(kickEvent.get('kickedUserName'), true);
-			var newChatEntry = new models.InlineAlert({text: $.msg('chat-user-was-' + mode, kickEvent.get('kickedUserName'), kickEvent.get('moderatorName'), undoLink ) });
+
+
+			var newChatEntry = new models.InlineAlert({
+				text: mw.message(
+					'chat-user-was-' + mode,
+					kickEvent.get('kickedUserName'),
+					kickEvent.get('moderatorName')
+				).rawParams(undoLink).escaped()
+			});
 
 			this.model.chats.add(newChatEntry);
 		} else {
-			var newChatEntry = new models.InlineAlert({ text: mw.html.escape($.msg('chat-you-were-' + mode, [mw.html.escape(kickEvent.get('moderatorName'))] ))});
+			var newChatEntry = new models.InlineAlert({ text: mw.message('chat-you-were-' + mode, kickEvent.get('moderatorName')).escaped()});
 			this.model.chats.add(newChatEntry);
 			this.model.room.set({
 				'blockedMessageInput': true
@@ -465,7 +473,7 @@ var NodeRoomController = $.createClass(Observable,{
 
 			//TODO: move it to other class
 			if(this.isMain() && (connectedUser.get('name') != wgUserName) && (!skipAlert)) {
-				var newChatEntry = new models.InlineAlert({text: mw.html.escape($.msg('chat-user-parted', [connectedUser.get('name')])) });
+				var newChatEntry = new models.InlineAlert({text: mw.message('chat-user-parted', connectedUser.get('name')).escaped() });
 				this.model.chats.add(newChatEntry);
 			}
 
@@ -499,7 +507,7 @@ var NodeRoomController = $.createClass(Observable,{
 	clickAnchor: function(event) {
 		var target = $(event.target);
 		if(target.attr('data-type') == 'ban-undo') {
-			this.undoBan(target.attr('data-user'), 0, mw.html.escape($.msg('chat-log-reason-undo')) );
+			this.undoBan(target.attr('data-user'), 0, mw.message('chat-log-reason-undo').escaped() );
 			return true;
 		}
 		window.open(target.closest('a').attr("href"));
@@ -717,7 +725,7 @@ var NodeChatController = $.createClass(NodeRoomController,{
 					'hidden':  true
 				});
 
-				var newChatEntry = new models.InlineAlert({wfMsg: 'chat-user-blocked', msgParams: [wgUserName, mw.html.escape(userClear.get('name')) ] });
+				var newChatEntry = new models.InlineAlert({text: mw.message('chat-user-blocked', wgUserName, userClear.get('name')).escaped()});
 				this.chats.privates[ user.get('roomId') ].socket.send(newChatEntry.xport());
 
 				if(this.chats.privates[ user.get('roomId') ].active) {
@@ -745,7 +753,7 @@ var NodeChatController = $.createClass(NodeRoomController,{
 					'hidden':  false
 				});
 
-				var newChatEntry = new models.InlineAlert({wfMsg: 'chat-user-allow', msgParams: [wgUserName, mw.html.escape(privateUser.get('name')) ] });
+				var newChatEntry = new models.InlineAlert({text: mw.message('chat-user-allow', wgUserName, privateUser.get('name')).escaped() });
 				this.chats.privates[ privateUser.get('roomId') ].socket.send(newChatEntry.xport());
 			}
 		}, this));
@@ -804,7 +812,7 @@ var NodeChatController = $.createClass(NodeRoomController,{
 		var self = this;
 
 		self.viewUsers.hideMenu();
-		var title = mw.html.escape($.msg('chat-ban-modal-heading')),
+		var title = mw.message('chat-ban-modal-heading').escaped(),
 			okCallback = function(expires, reason) {
                 banCommand = new models.BanCommand({
 					userToBan: userToBan.name,
@@ -829,7 +837,7 @@ var NodeChatController = $.createClass(NodeRoomController,{
 
         	this.socket.send(banCommand.xport());
         } else {
-			var newChatEntry = new models.InlineAlert({text: mw.html.escape($.msg('chat-ban-cannt-undo')) });
+			var newChatEntry = new models.InlineAlert({text: mw.message('chat-ban-cannt-undo').escaped() });
 			this.model.chats.add(newChatEntry);
         }
 	},
@@ -909,7 +917,7 @@ var NodeChatController = $.createClass(NodeRoomController,{
 
 	init: function() {
 		if($.browser.msie && parseFloat(jQuery.browser.version) < 8 ) {
-			var newChatEntry = new models.InlineAlert({text: mw.html.escape($.msg( 'chat-browser-is-notsupported' )) });
+			var newChatEntry = new models.InlineAlert({text: mw.message( 'chat-browser-is-notsupported').escaped() });
 			this.model.chats.add(newChatEntry);
 			return true;
 		}
