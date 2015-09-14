@@ -153,7 +153,8 @@ class Helper extends \ContextSource {
 	}
 
 	/**
-	 * Enable test mode on current wiki
+	 * Enable test mode on provided wiki
+	 * @param int $wikiId
 	 */
 	public function setContentReviewTestMode( $wikiId ) {
 		$wikiIds = $this->getContentReviewTestModeWikis();
@@ -168,7 +169,8 @@ class Helper extends \ContextSource {
 	}
 
 	/**
-	 * Disable test mode on current wiki
+	 * Disable test mode on provided wiki
+	 * @param int $wikiId
 	 */
 	public function disableContentReviewTestMode( $wikiId ) {;
 		$wikiIds = $this->getContentReviewTestModeWikis();
