@@ -11,19 +11,21 @@ define('ext.wikia.adEngine.slot.scrollHandler', [
     var logGroup = 'ext.wikia.adEngine.slot.scrollHandler',
         isRefreshed = {},
         reloadedView = {},
-        config = {
-            PREFOOTER_LEFT_BOXAD: { rv_max: 1 },
-            PREFOOTER_RIGHT_BOXAD: { rv_max: 3 }
-        };
+        context = adContext.getContext(),
+        config = context.opts.scrollHandlerConfig ||
+            {
+                PREFOOTER_LEFT_BOXAD: { rv_max: 1 },
+                PREFOOTER_RIGHT_BOXAD: { rv_max: 3 }
+            };
 
     function init() {
-        for (var slotName in config) {
-            if (config.hasOwnProperty(slotName)) {
-                isRefreshed[slotName] = false;
-                reloadedView[slotName] = 0;
+        if (context.opts.enableScrollHandler) {
+            for (var slotName in config) {
+                if (config.hasOwnProperty(slotName)) {
+                    isRefreshed[slotName] = false;
+                    reloadedView[slotName] = 0;
+                }
             }
-        }
-        if (adContext.getContext().opts.enableScrollHandler) {
             win.addEventListener('scroll', adHelper.throttle(function () {
                 log('Scroll event listener has been added', 'debug', logGroup);
                 for (var slotName in config) {

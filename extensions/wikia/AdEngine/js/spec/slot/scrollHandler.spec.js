@@ -3,7 +3,6 @@ describe('ext.wikia.adEngine.slot.scrollHandler', function () {
     'use strict';
 
     function noop() {
-        return;
     }
 
     var mocks = {
@@ -13,18 +12,9 @@ describe('ext.wikia.adEngine.slot.scrollHandler', function () {
             }
         },
         log: noop,
-        context: {
-            getContext: function () {
-                return {
-                    opts: {
-                        enableScrollHandler: true
-                    }
-                }
-            }
-        },
+
         win: {
             innerHeight: 1000,
-            scrollY: 0,
             adslots2: {
                 push: noop
             },
@@ -35,7 +25,7 @@ describe('ext.wikia.adEngine.slot.scrollHandler', function () {
             }
         },
         doc: {
-            getElementById: function (slotName) {
+            getElementById: function () {
                 return {
                     offsetTop: 3000,
                     offsetParent: null
@@ -46,6 +36,7 @@ describe('ext.wikia.adEngine.slot.scrollHandler', function () {
 
     beforeEach(function () {
         mocks.win.scrollY = 0;
+        setContext(mocks, {rv_max: -1});
     });
 
     function getModule() {
@@ -58,32 +49,61 @@ describe('ext.wikia.adEngine.slot.scrollHandler', function () {
         );
     }
 
-    it('Prefooters should be refreshed', function () {
-        var scrollHandler = getModule();
-        spyOn(mocks.win.adslots2, 'push');
-        mocks.win.scrollY = 2000;
+    it('Prefooters should not be refreshed', function () {
+        shouldNotBeRefreshed({scrollY: 1000});
+    });
 
+    it('Prefooter should not be refreshed when rv_max is 0', function () {
+        shouldNotBeRefreshed({scrollY: 2000, rv_max: 0});
+    });
+
+    it('Prefooter should be refreshed when rv_max is 1', function () {
+        shouldBeRefreshed({scrollY: 2000, rv_max: 1});
+    });
+
+    it('Prefooter should be refreshed when rv_max is -1', function () {
+        shouldBeRefreshed({scrollY: 2000, rv_max: -1});
+    });
+
+    it('RV count of unsupported slot equals null', function () {
+        expect(getModule().getReloadedViewCount('TOP_LEADERBOARD')).toBe(null);
+    });
+
+    function shouldBeRefreshed(params) {
+        spyOn(mocks.win.adslots2, 'push');
+        mocks.win.scrollY = params.scrollY;
+        setContext(mocks, params);
+
+        var scrollHandler = getModule();
         scrollHandler.init();
 
         expect(mocks.win.adslots2.push).toHaveBeenCalled();
         expect(scrollHandler.getReloadedViewCount('PREFOOTER_LEFT_BOXAD')).toEqual(1);
-    });
+    }
 
-    it('Prefooters should not be refreshed', function () {
-        var scrollHandler = getModule();
+    function shouldNotBeRefreshed(params) {
         spyOn(mocks.win.adslots2, 'push');
-        mocks.win.scrollY = 1000;
+        mocks.win.scrollY = params.scrollY;
+        setContext(mocks, params);
 
+        var scrollHandler = getModule();
         scrollHandler.init();
 
         expect(mocks.win.adslots2.push).not.toHaveBeenCalled();
         expect(scrollHandler.getReloadedViewCount('PREFOOTER_LEFT_BOXAD')).toEqual(0);
-    });
+    }
 
-    it('RV count of unsupported slot equals null', function () {
-        var scrollHandler = getModule();
-
-        expect(scrollHandler.getReloadedViewCount('TOP_LEADERBOARD')).toBe(null);
-    });
+    function setContext(mocks, params) {
+        mocks.context = {
+            getContext: function () {
+                return {
+                    opts: {
+                        enableScrollHandler: true,
+                        scrollHandlerConfig: {PREFOOTER_LEFT_BOXAD: {rv_max: params.rv_max}}
+                    }
+                }
+            }
+        };
+    }
 
 });
