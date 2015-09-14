@@ -398,10 +398,6 @@ class User {
 					$this->$name = $data[$name];
 				}
 			}
-
-			if (isset($data[self::CACHE_PREFERENCES_KEY])) {
-				$this->userPreferences()->setPreferencesInCache($this->mId, $data[self::CACHE_PREFERENCES_KEY]);
-			}
 		}
 		return true;
 	}
@@ -431,7 +427,6 @@ class User {
 			$data[$name] = $this->$name;
 		}
 		$data['mVersion'] = MW_USER_VERSION;
-		$data[self::CACHE_PREFERENCES_KEY] = $this->userPreferences()->getPreferences($this->mId);
 		$key = $this->getCacheKey();
 		global $wgMemc;
 		$wgMemc->set( $key, $data );

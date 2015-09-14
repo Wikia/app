@@ -77,12 +77,12 @@ class PreferenceService {
 			$preferences = new UserPreferences();
 		}
 
-		$this->preferences[$userId] = $this->applyDefaults($preferences);
+		return $this->applyDefaults($preferences);
 	}
 
-	public function saveToCache($userId) {
+	public function saveToCache($userId, UserPreferences $preferences) {
 		$cacheKey = $this->getCacheKey($userId);
-		return $this->cache->set($cacheKey, $this->preferences[$userId]);
+		return $this->cache->set($cacheKey, $preferences);
 	}
 
 	public function deleteFromCache($userId) {
@@ -185,6 +185,8 @@ class PreferenceService {
 					[
 						'user_id' => $userId,
 						'method' => 'setPreferences',]);
+				$this->saveToCache($userId, $prefsToSave);
+
 				return $result;
 			} catch (\Exception $e) {
 				$this->error($e->getMessage(), ['user' => $userId]);
@@ -211,19 +213,25 @@ class PreferenceService {
 	private function load($userId) {
 		if ($userId == 0) {
 			return [];
-		} elseif (!isset($this->preferences[$userId])) {
-			try {
-				$profilerStart = $this->startProfile();
-				$preferences = $this->persistence->get($userId);
-				$this->endProfile(
-					self::PROFILE_EVENT,
-					$profilerStart,
-					[
-						'user_id' => $userId,
-						'method' => 'getPreferences',]);
-			} catch (\Exception $e) {
-				$this->error($e->getMessage(), ['user' => $userId]);
-				throw $e;
+		}
+
+		if (!isset($this->preferences[$userId])) {
+			$preferences = $this->loadFromCache($userId);
+
+			if (!$preferences) {
+				try {
+					$profilerStart = $this->startProfile();
+					$preferences = $this->persistence->get($userId);
+					$this->endProfile(
+						self::PROFILE_EVENT,
+						$profilerStart,
+						[
+							'user_id' => $userId,
+							'method' => 'getPreferences',]);
+				} catch (\Exception $e) {
+					$this->error($e->getMessage(), ['user' => $userId]);
+					throw $e;
+				}
 			}
 
 			$this->preferences[$userId] = $this->applyDefaults($preferences);
