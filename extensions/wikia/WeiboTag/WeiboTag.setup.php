@@ -2,7 +2,7 @@
 $wgExtensionCredits['parserhook'][] = [
 	'name' => 'Weibo Tag Extension',
 	'author' => 'X-Wing @Wikia',
-	'descriptionmsg' => 'weibotag-desc',
+	'descriptionmsg' => 'weibo-tag-desc',
 	'version' => '0.1',
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/WeiboTag',
 ];

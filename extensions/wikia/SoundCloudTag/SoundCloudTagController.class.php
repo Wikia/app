@@ -61,7 +61,7 @@ class SoundCloudTagController extends WikiaParserTagController {
 	private function buildTagAttributes( $sourceUrlParams, array $userAttributes ) {
 		$attributes = $this->helper->buildTagAttributes( self::TAG_ALLOWED_ATTRIBUTES, $userAttributes );
 
-		$attributes['src'] = self::TAG_SRC . $sourceUrlParams;
+		$attributes['src'] = $sourceUrlParams;
 		return array_merge( self::TAG_DEFAULT_ATTRIBUTES, $attributes );
 	}
 

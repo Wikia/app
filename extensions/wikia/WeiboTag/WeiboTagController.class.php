@@ -46,7 +46,7 @@ class WeiboTagController extends WikiaParserTagController {
 	public function renderTag( $input, array $args, Parser $parser, PPFrame $frame ) {
 		$isValid = $this->validator->validateAttributes( $args );
 		if ( !$isValid ) {
-			return '<strong class="error">' . wfMessage( 'weibotag-could-not-render' )->parse() . '</strong>';
+			return '<strong class="error">' . wfMessage( 'weibo-tag-could-not-render' )->parse() . '</strong>';
 		}
 
 		$this->tagBuildSource = self::TAG_SRC . $this->tagBuilderHelper->buildTagSourceQueryParams(
