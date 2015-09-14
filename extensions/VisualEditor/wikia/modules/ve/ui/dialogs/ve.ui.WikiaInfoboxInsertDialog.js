@@ -115,7 +115,7 @@ ve.ui.WikiaInfoboxInsertDialog.prototype.getInfoboxTemplates = function () {
 			} );
 		this.gettingTemplateNames = deferred.promise();
 	}
-	return deferred.promise();
+	return this.gettingTemplateNames;
 };
 
 /**
