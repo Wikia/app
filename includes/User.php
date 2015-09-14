@@ -2573,7 +2573,7 @@ class User {
 
 		if ($wgPreferencesUseService) {
 			$this->load();
-			$value = $this->userPreferences()->getLocalPreference($this->mId, $preference, $default, $ignoreHidden);
+			$value = $this->userPreferences()->getLocalPreference($this->mId, $cityId, $preference, $default, $ignoreHidden);
 			wfRunHooks(
 				'UserGetPreference',
 				[
