@@ -23,6 +23,14 @@ class UserPreferencesTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals('1', $prefs->getGlobalPreference('foo'));
 		$this->assertEquals(2, $prefs->getGlobalPreference('bar'));
 		$this->assertEquals(2, count($prefs->getGlobalPreferences()));
+
+		$prefs->deleteGlobalPreference('foo');
+		$this->assertFalse($prefs->hasGlobalPreference('foo'));
+
+		$prefs->deleteGlobalPreference('bar');
+		$this->assertFalse($prefs->hasGlobalPreference('bar'));
+
+		$this->assertTrue($prefs->isEmpty());
 	}
 	
 	public function testLocalPreference() {
@@ -37,5 +45,13 @@ class UserPreferencesTest extends \PHPUnit_Framework_TestCase {
 		$this->assertFalse($prefs->hasLocalPreference('bar', 123));
 		$this->assertEquals('1', $prefs->getLocalPreference('foo', 123));
 		$this->assertEquals(2, $prefs->getLocalPreference('bar', 456));
+
+		$prefs->deleteLocalPreference('foo', 123);
+		$this->assertFalse($prefs->hasLocalPreference('foo', 123));
+
+		$prefs->deleteLocalPreference('bar', 456);
+		$this->assertFalse($prefs->hasLocalPreference('bar', 456));
+
+		$this->assertTrue($prefs->isEmpty());
 	}
 }

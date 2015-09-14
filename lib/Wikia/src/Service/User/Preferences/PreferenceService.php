@@ -122,6 +122,10 @@ class PreferenceService {
 		$this->load($userId)->setGlobalPreference($name, $value);
 	}
 
+	public function deleteGlobalPreference($userId, $name) {
+		$this->load($userId)->deleteGlobalPreference($name);
+	}
+
 	public function getLocalPreference($userId, $wikiId, $name, $default = null, $ignoreHidden = false) {
 		if (in_array($name, $this->hiddenPrefs) && !$ignoreHidden) {
 			return $this->getFromDefault($name);
@@ -141,6 +145,10 @@ class PreferenceService {
 		}
 
 		$this->load($userId)->setLocalPreference($name, $wikiId, $value);
+	}
+
+	public function deleteLocalPreference($userId, $name, $wikiId) {
+		$this->load($userId)->deleteLocalPreference($name, $wikiId);
 	}
 
 	/**
