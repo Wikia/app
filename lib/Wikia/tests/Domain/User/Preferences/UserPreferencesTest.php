@@ -27,8 +27,8 @@ class UserPreferencesTest extends \PHPUnit_Framework_TestCase {
 	
 	public function testLocalPreference() {
 		$prefs = (new UserPreferences())
-			->setLocalPreference('foo', '1', 123)
-			->setLocalPreference('bar', 2, 456);
+			->setLocalPreference('foo', 123, '1')
+			->setLocalPreference('bar', 456, 2);
 
 		$this->assertFalse($prefs->isEmpty());
 		$this->assertTrue($prefs->hasLocalPreference('foo', 123));
