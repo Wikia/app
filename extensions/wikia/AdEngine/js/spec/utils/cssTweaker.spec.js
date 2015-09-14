@@ -32,6 +32,6 @@ describe('ext.wikia.adEngine.utils.cssTweaker', function () {
 	it('Initialization should prepare googletag object and configure pubads', function () {
 		cssTweaker.copyStyles('source', 'destination');
 
-		expect(mocks.destination.style.cssText).toBe('background-color: rgb(255, 255, 255); display: inline;');
+		expect(mocks.destination.style.cssText).toBe('background-color: rgb(255, 255, 255); display: inline; ');
 	});
 });
