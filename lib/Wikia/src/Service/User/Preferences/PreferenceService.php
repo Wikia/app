@@ -70,37 +70,6 @@ class PreferenceService {
 		return $this->load($userId);
 	}
 
-	public function loadFromCache($userId) {
-		$preferences = $this->cache->get($this->getCacheKey($userId));
-
-		if (!$preferences) {
-			$preferences = new UserPreferences();
-		}
-
-		return $this->applyDefaults($preferences);
-	}
-
-	public function saveToCache($userId, UserPreferences $preferences) {
-		$cacheKey = $this->getCacheKey($userId);
-		return $this->cache->set($cacheKey, $preferences);
-	}
-
-	public function deleteFromCache($userId) {
-		return $this->cache->delete($this->getCacheKey($userId));
-	}
-
-	public function getCacheKey($userId) {
-		return get_class($this).":$userId:".self::CACHE_VERSION;
-	}
-
-	public function setPreferencesInCache($userId, $preferences) {
-		$this->preferences[$userId] = $this->defaultPreferences;
-
-		foreach ($preferences as $key => $val) {
-			$this->preferences[$userId][$key] = $val;
-		}
-	}
-
 	public function getGlobalPreference($userId, $name, $default = null, $ignoreHidden = false) {
 		if (in_array($name, $this->hiddenPrefs) && !$ignoreHidden) {
 			return $this->getFromDefault($name);
@@ -238,6 +207,23 @@ class PreferenceService {
 		}
 
 		return $this->preferences[$userId];
+	}
+
+	private function loadFromCache($userId) {
+		return $this->cache->get($this->getCacheKey($userId));
+	}
+
+	private function saveToCache($userId, UserPreferences $preferences) {
+		$cacheKey = $this->getCacheKey($userId);
+		return $this->cache->set($cacheKey, $preferences);
+	}
+
+	private function deleteFromCache($userId) {
+		return $this->cache->delete($this->getCacheKey($userId));
+	}
+
+	private function getCacheKey($userId) {
+		return get_class($this).":$userId:".self::CACHE_VERSION;
 	}
 
 	private function applyDefaults(UserPreferences $preferences) {

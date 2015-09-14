@@ -38,6 +38,11 @@ class PreferenceServiceTest extends PHPUnit_Framework_TestCase {
 			->setMethods(['save', 'get'])
 			->disableOriginalConstructor()
 			->getMock();
+
+		$this->cache->expects($this->any())
+			->method('get')
+			->with($this->anything())
+			->willReturn(false);
 	}
 
 	public function testGetFromDefault() {
