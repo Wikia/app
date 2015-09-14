@@ -15,14 +15,14 @@ class PreferenceModule implements Module {
 	public function configure(InjectorBuilder $builder) {
 		$builder
 			->bind(PreferencePersistence::class)->toClass(PreferencePersistenceSwaggerService::class)
-			->bind(UserPreferences::HIDDEN_PREFS)->to(function() {
+			->bind(PreferenceService::HIDDEN_PREFS)->to(function() {
 				global $wgHiddenPrefs;
 				return $wgHiddenPrefs;
 			})
-			->bind(UserPreferences::DEFAULT_PREFERENCES)->to(function() {
+			->bind(PreferenceService::DEFAULT_PREFERENCES)->to(function() {
 				return User::getDefaultPreferences();
 			})
-			->bind(UserPreferences::FORCE_SAVE_PREFERENCES)->to(function() {
+			->bind(PreferenceService::FORCE_SAVE_PREFERENCES)->to(function() {
 				global $wgGlobalUserProperties;
 				return $wgGlobalUserProperties;
 			});

@@ -26,7 +26,7 @@ class UserPreferencesTest extends PHPUnit_Framework_TestCase {
 
 	public function testGetFromDefault() {
 		$defaultPrefs = ["pref1" => "val1"];
-		$preferences = new UserPreferences($this->service, [], $defaultPrefs, []);
+		$preferences = new PreferenceService($this->service, [], $defaultPrefs, []);
 
 		$this->assertEquals("val1", $preferences->getFromDefault("pref1"));
 		$this->assertNull($preferences->getFromDefault("pref2"));
@@ -34,7 +34,7 @@ class UserPreferencesTest extends PHPUnit_Framework_TestCase {
 
 	public function testGet() {
 		$this->setupServiceExpects();
-		$preferences = new UserPreferences($this->service, [], [], []);
+		$preferences = new PreferenceService($this->service, [], [], []);
 
 		$this->assertEquals("en", $preferences->get($this->userId, "language"));
 		$this->assertEquals("1", $preferences->get($this->userId, "marketingallowed"));
@@ -45,14 +45,14 @@ class UserPreferencesTest extends PHPUnit_Framework_TestCase {
 
 	public function testGetWithHiddenNoDefaults() {
 		$this->setupServiceExpects();
-		$preferences = new UserPreferences($this->service, ["marketingallowed"], [], []);
+		$preferences = new PreferenceService($this->service, ["marketingallowed"], [], []);
 		$this->assertEquals("1", $preferences->get($this->userId, "marketingallowed", null, true));
 		$this->assertNull($preferences->get($this->userId, "marketingallowed"));
 	}
 
 	public function testGetWithHiddenAndDefaults() {
 		$this->setupServiceExpects();
-		$preferences = new UserPreferences($this->service, ["marketingallowed"], ["marketingallowed" => "0"], []);
+		$preferences = new PreferenceService($this->service, ["marketingallowed"], ["marketingallowed" => "0"], []);
 		$this->assertEquals("1", $preferences->get($this->userId, "marketingallowed", null, true));
 		$this->assertEquals("0", $preferences->get($this->userId, "marketingallowed"));
 		$this->assertNull($preferences->get($this->userId, "unsetpreference"));
@@ -60,21 +60,21 @@ class UserPreferencesTest extends PHPUnit_Framework_TestCase {
 	
 	public function testSet() {
 		$this->setupServiceExpects();
-		$preferences = new UserPreferences($this->service, [], [], []);
+		$preferences = new PreferenceService($this->service, [], [], []);
 		$preferences->set($this->userId, "newpreference", "foo");
 		$this->assertEquals("foo", $preferences->get($this->userId, "newpreference"));
 	}
 
 	public function testSetNullWithDefault() {
 		$this->setupServiceExpects();
-		$preferences = new UserPreferences($this->service, [], ["newpreference" => "foo"], []);
+		$preferences = new PreferenceService($this->service, [], ["newpreference" => "foo"], []);
 		$preferences->set($this->userId, "newpreference", null);
 		$this->assertEquals("foo", $preferences->getPreferences($this->userId)["newpreference"]);
 	}
 
 	public function testSetNullWithoutDefault() {
 		$this->setupServiceExpects();
-		$preferences = new UserPreferences($this->service, [], [], []);
+		$preferences = new PreferenceService($this->service, [], [], []);
 		$preferences->set($this->userId, "newpreference", null);
 		$this->assertNull($preferences->getPreferences($this->userId)["newpreference"]);
 	}

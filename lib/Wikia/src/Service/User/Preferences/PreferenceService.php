@@ -9,7 +9,7 @@ use Wikia\Logger\Loggable;
 use Wikia\Persistence\User\Preferences\PreferencePersistence;
 use Wikia\Util\WikiaProfiler;
 
-class UserPreferences {
+class PreferenceService {
 
 	use WikiaProfiler;
 	use Loggable;
@@ -42,9 +42,9 @@ class UserPreferences {
 	 * @Inject({
 	 *    Wikia\Cache\Memcache\Memcache::class,
 	 *    Wikia\Persistence\User\Preferences\PreferencePersistence::class,
-	 *    Wikia\Service\User\Preferences\UserPreferences::HIDDEN_PREFS,
-	 *    Wikia\Service\User\Preferences\UserPreferences::DEFAULT_PREFERENCES,
-	 *    Wikia\Service\User\Preferences\UserPreferences::FORCE_SAVE_PREFERENCES})
+	 *    Wikia\Service\User\Preferences\PreferenceService::HIDDEN_PREFS,
+	 *    Wikia\Service\User\Preferences\PreferenceService::DEFAULT_PREFERENCES,
+	 *    Wikia\Service\User\Preferences\PreferenceService::FORCE_SAVE_PREFERENCES})
 	 * @param Memcache $cache,
 	 * @param PreferencePersistence $persistence
 	 * @param string[] $hiddenPrefs
