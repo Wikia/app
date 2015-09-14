@@ -14,15 +14,6 @@ class ContentReviewApiControllerTest extends WikiaBaseTest {
 			->getMock();
 	}
 
-	protected function tearDown() {
-		/* Restore global user var */
-		if ( isset( $this->wgUserBackup ) ) {
-			$app = $this->contentReviewApiControllerMock->getApp();
-			$app->setGlobal( 'wgUser', $this->wgUserBackup );
-		}
-		parent::tearDown();
-	}
-
 	/**
 	 * @dataProvider submitPageForReviewProvider
 	 */
@@ -49,8 +40,6 @@ class ContentReviewApiControllerTest extends WikiaBaseTest {
 			->setMethods( [ 'wasPosted' ] )
 			->getMock();
 
-		$app = new WikiaApp();
-
 		if ( $params['wasPosted'] ) {
 			$requestMock->method( 'wasPosted' )
 				->will( $this->returnValue( $params['wasPosted'] ) );
@@ -70,8 +59,7 @@ class ContentReviewApiControllerTest extends WikiaBaseTest {
 				$userMock->method( 'getId' )
 					->will( $this->returnValue( $params['user']['id'] ) );
 			}
-			$this->wgUserBackup = $app->getGlobal( 'wgUser', $userMock );
-			$app->setGlobal( 'wgUser', $userMock );
+			$this->mockGlobalVariable( 'wgUser', $userMock );
 		}
 
 		if ( isset( $params['canUserSubmit'] ) ) {
@@ -80,7 +68,6 @@ class ContentReviewApiControllerTest extends WikiaBaseTest {
 		}
 
 		/* Set dependencies */
-		$this->contentReviewApiControllerMock->setApp( $app );
 		$this->contentReviewApiControllerMock->setRequest( $requestMock );
 
 	}
