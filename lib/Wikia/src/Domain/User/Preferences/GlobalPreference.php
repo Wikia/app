@@ -23,8 +23,4 @@ class GlobalPreference {
 	public function getValue() {
 		return $this->value;
 	}
-
-	public function setValue($value) {
-		$this->value = $value;
-	}
 }

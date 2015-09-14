@@ -30,8 +30,4 @@ class LocalPreference {
 	public function getWikiId() {
 		return $this->wikiId;
 	}
-
-	public function setValue($value) {
-		$this->value = $value;
-	}
 }
