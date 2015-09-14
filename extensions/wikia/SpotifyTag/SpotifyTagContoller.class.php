@@ -42,7 +42,7 @@ class SpotifyTagController extends WikiaParserTagController {
 		$isValid = $this->validator->validateAttributes( $args );
 
 		if ( !$isValid ) {
-			return '<strong class="error">' . wfMessage( 'spotify-could-not-render' )->parse() . '</strong>';
+			return '<strong class="error">' . wfMessage( 'spotify-tag-could-not-render' )->parse() . '</strong>';
 		}
 
 		$sourceUrl = self::TAG_SRC . $this->helper->buildTagSourceQueryParams(
