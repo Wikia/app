@@ -1,6 +1,7 @@
 /*global require*/
 /*jshint camelcase:false*/
 require([
+	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adEngine',
 	'ext.wikia.adEngine.adLogicHighValueCountry',
 	'ext.wikia.adEngine.adTracker',
@@ -16,6 +17,7 @@ require([
 	'wikia.krux',
 	'wikia.window'
 ], function (
+	adContext,
 	adEngine,
 	adLogicHighValueCountry,
 	adTracker,
@@ -33,7 +35,8 @@ require([
 ) {
 	'use strict';
 
-	var kruxSiteId = 'JU3_GW1b';
+	var kruxSiteId = 'JU3_GW1b',
+		context = adContext.getContext();
 
 	win.AdEngine_getTrackerStats = slotTracker.getStats;
 
@@ -76,6 +79,14 @@ require([
 		adTracker.measureTime('adengine.init', 'queue.desktop').track();
 		win.adslots2 = win.adslots2 || [];
 		adEngine.run(adConfigDesktop, win.adslots2, 'queue.desktop');
+
+		if (context.opts.sourcePoint && win.ads) {
+			win.ads.runtime.sp.slots = win.ads.runtime.sp.slots || [];
+			win.addEventListener('sp.blocking', function () {
+				adTracker.measureTime('adengine.init', 'queue.desktop').track();
+				adEngine.run(adConfigDesktop, win.ads.runtime.sp.slots, 'queue.sp');
+			});
+		}
 
 		scrollHandler.init();
 		sourcePoint.initDetection();

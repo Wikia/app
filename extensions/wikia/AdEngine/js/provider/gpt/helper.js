@@ -49,7 +49,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 		}
 		log(['Starting recovery', slotsToRecover], 'debug', logGroup);
 		while (slotsToRecover.length){
-			window.adslots2.push([slotsToRecover.shift()]);
+			window.ads.runtime.sp.slots.push([slotsToRecover.shift()]);
 		}
 	}
 
