@@ -2,9 +2,9 @@
 
 namespace Wikia\Service\User\Preferences;
 
+use Doctrine\Common\Cache\CacheProvider;
 use PHPUnit_Framework_MockObject_MockObject;
 use PHPUnit_Framework_TestCase;
-use Wikia\Cache\Memcache\Memcache;
 use Wikia\Domain\User\Preferences\UserPreferences;
 use Wikia\Persistence\User\Preferences\PreferencePersistence;
 
@@ -30,8 +30,8 @@ class PreferenceServiceTest extends PHPUnit_Framework_TestCase {
 			->setGlobalPreference('language', 'en')
 			->setGlobalPreference('marketingallowed', '1')
 			->setLocalPreference('wiki-pref', self::TEST_WIKI_ID, '0');
-		$this->cache = $this->getMockBuilder(Memcache::class)
-			->setMethods(['get', 'set', 'delete'])
+		$this->cache = $this->getMockBuilder(CacheProvider::class)
+			->setMethods(['doFetch', 'doContains', 'doSave', 'doFlush', 'doDelete', 'doGetStats'])
 			->disableOriginalConstructor()
 			->getMock();
 		$this->persistence = $this->getMockBuilder(PreferencePersistence::class)
@@ -40,7 +40,7 @@ class PreferenceServiceTest extends PHPUnit_Framework_TestCase {
 			->getMock();
 
 		$this->cache->expects($this->any())
-			->method('get')
+			->method('doFetch')
 			->with($this->anything())
 			->willReturn(false);
 	}

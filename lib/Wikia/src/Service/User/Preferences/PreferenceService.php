@@ -2,7 +2,7 @@
 
 namespace Wikia\Service\User\Preferences;
 
-use Wikia\Cache\Memcache\Memcache;
+use Doctrine\Common\Cache\CacheProvider;
 use Wikia\Domain\User\Preferences\LocalPreference;
 use Wikia\Domain\User\Preferences\UserPreferences;
 use Wikia\Logger\Loggable;
@@ -14,13 +14,13 @@ class PreferenceService {
 	use WikiaProfiler;
 	use Loggable;
 
+	const CACHE_PROVIDER = "user_preferences_cache_provider";
 	const HIDDEN_PREFS = "user_preferences_hidden_prefs";
 	const DEFAULT_PREFERENCES = "user_preferences_default_prefs";
 	const FORCE_SAVE_PREFERENCES = "user_preferences_force_save_prefs";
 	const PROFILE_EVENT = \Transaction::EVENT_USER_PREFERENCES;
-	const CACHE_VERSION = 1;
 
-	/** @var Memcache */
+	/** @var CacheProvider */
 	private $cache;
 
 	/** @var PreferencePersistence */
@@ -40,19 +40,19 @@ class PreferenceService {
 
 	/**
 	 * @Inject({
-	 *    Wikia\Cache\Memcache\Memcache::class,
+	 *    Wikia\Service\User\Preferences\PreferenceService::CACHE_PROVIDER,
 	 *    Wikia\Persistence\User\Preferences\PreferencePersistence::class,
 	 *    Wikia\Service\User\Preferences\PreferenceService::HIDDEN_PREFS,
 	 *    Wikia\Service\User\Preferences\PreferenceService::DEFAULT_PREFERENCES,
 	 *    Wikia\Service\User\Preferences\PreferenceService::FORCE_SAVE_PREFERENCES})
-	 * @param Memcache $cache,
+	 * @param CacheProvider $cache,
 	 * @param PreferencePersistence $persistence
 	 * @param string[] $hiddenPrefs
 	 * @param string[string] $defaultPrefs
 	 * @param string[] $forceSavePrefs
 	 */
 	public function __construct(
-		Memcache $cache,
+		CacheProvider $cache,
 		PreferencePersistence $persistence,
 		$hiddenPrefs,
 		$defaultPrefs,
@@ -210,20 +210,15 @@ class PreferenceService {
 	}
 
 	private function loadFromCache($userId) {
-		return $this->cache->get($this->getCacheKey($userId));
+		return $this->cache->fetch($userId);
 	}
 
 	private function saveToCache($userId, UserPreferences $preferences) {
-		$cacheKey = $this->getCacheKey($userId);
-		return $this->cache->set($cacheKey, $preferences);
+		return $this->cache->save($userId, $preferences);
 	}
 
 	private function deleteFromCache($userId) {
-		return $this->cache->delete($this->getCacheKey($userId));
-	}
-
-	private function getCacheKey($userId) {
-		return get_class($this).":$userId:".self::CACHE_VERSION;
+		return $this->cache->delete($userId);
 	}
 
 	private function applyDefaults(UserPreferences $preferences) {

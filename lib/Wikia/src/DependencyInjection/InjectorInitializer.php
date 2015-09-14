@@ -17,7 +17,6 @@ class InjectorInitializer {
 				->addModule(new PreferenceModule())
 				->addModule(new AttributesModule())
 				->addModule(new AuthModule())
-				->addModule(new MemcacheModule())
 				->addModule(new ConsulUrlProviderModule())
 				->build());
 	}
