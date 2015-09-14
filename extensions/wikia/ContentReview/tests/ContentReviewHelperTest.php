@@ -89,15 +89,16 @@ class ContentReviewHelperTest extends WikiaBaseTest {
 	 * @param int $latestReviewedId
 	 * @param int $oldId
 	 * @param bool $expected
+	 * @param string $message
 	 * @dataProvider hasPageApprovedIdProvider
 	 */
-	public function testHasPageApprovedId( $latestReviewedId, $oldId, $expected ) {
+	public function testHasPageApprovedId( $latestReviewedId, $oldId, $expected, $message ) {
 		$modelMock = $this->getMock( 'Wikia\ContentReview\Models\CurrentRevisionModel', [ 'getLatestReviewedRevision' ] );
 		$modelMock->expects( $this->once() )
 			->method( 'getLatestReviewedRevision' )
 			->willReturn( $latestReviewedId );
 
-		$this->assertEquals( $expected, $this->getHelper()->hasPageApprovedId( $modelMock, 0, 0, $oldId ) );
+		$this->assertEquals( $expected, $this->getHelper()->hasPageApprovedId( $modelMock, 0, 0, $oldId ), $message );
 	}
 
 	public function replaceWithLastApprovedRevisionProvider() {
