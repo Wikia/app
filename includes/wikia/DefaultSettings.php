@@ -1814,3 +1814,9 @@ $wgEnableRobotsTxtExt = false;
  */
 $wgEnableFliteTagExt = false;
 
+/**
+ * @name $wgEnableSeoLinkHreflangExt
+ *
+ * Enables SEO Link Hreflang extension
+ */
+$wgEnableSeoLinkHreflangExt = false;
