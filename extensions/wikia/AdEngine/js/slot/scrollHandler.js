@@ -9,28 +9,28 @@ define('ext.wikia.adEngine.slot.scrollHandler', [
     'use strict';
 
     var logGroup = 'ext.wikia.adEngine.slot.scrollHandler',
-        isRefreshed = {
-            PREFOOTER_LEFT_BOXAD: false,
-            PREFOOTER_RIGHT_BOXAD: false
-        },
-        reloadedView = {
-            PREFOOTER_LEFT_BOXAD: 0,
-            PREFOOTER_RIGHT_BOXAD: 0
-        },
-        reloadedViewMax = {
-            PREFOOTER_LEFT_BOXAD: 1,
-            PREFOOTER_RIGHT_BOXAD: 3
+        isRefreshed = {},
+        reloadedView = {},
+        config = {
+            PREFOOTER_LEFT_BOXAD: { rv_max: 1 },
+            PREFOOTER_RIGHT_BOXAD: { rv_max: 3 }
         };
 
     function init() {
+        for (var slotName in config) {
+            if (config.hasOwnProperty(slotName)) {
+                isRefreshed[slotName] = false;
+                reloadedView[slotName] = 0;
+            }
+        }
         if (adContext.getContext().opts.enableScrollHandler) {
             win.addEventListener('scroll', adHelper.throttle(function () {
                 log('Scroll event listener has been added', 'debug', logGroup);
-                for (var slotName in isRefreshed) {
-                    if (isRefreshed.hasOwnProperty(slotName)) {
-                        if (reloadedViewMax.hasOwnProperty(slotName) &&
-                            reloadedViewMax[slotName] >= 0 &&
-                            reloadedViewMax[slotName] <= reloadedView[slotName]) {
+                for (var slotName in config) {
+                    if (config.hasOwnProperty(slotName)) {
+                        if (config[slotName].hasOwnProperty('rv_max') &&
+                            config[slotName].rv_max >= 0 &&
+                            config[slotName].rv_max <= reloadedView[slotName]) {
                             continue;
                         }
                         refreshSlot(slotName);
