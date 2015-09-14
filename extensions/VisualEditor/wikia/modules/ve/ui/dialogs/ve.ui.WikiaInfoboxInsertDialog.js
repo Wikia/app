@@ -183,11 +183,9 @@ ve.ui.WikiaInfoboxInsertDialog.prototype.createDialogContent = function ( data )
 		deferred.resolve( this.select.$element );
 	} else {
 		// creates empty state content
-		this.getUnconvertedInfoboxes().then(
-			( function ( data ) {
-				deferred.resolve( this.createEmptyStateContent( data ).bind( this ) );
-			} ).bind( this )
-		);
+		this.getUnconvertedInfoboxes()
+			.then(this.createEmptyStateContent.bind( this ) )
+			.then(deferred.resolve);
 	}
 
 	return deferred.promise();
@@ -198,8 +196,7 @@ ve.ui.WikiaInfoboxInsertDialog.prototype.createDialogContent = function ( data )
  * @returns {Promise}
  */
 ve.ui.WikiaInfoboxInsertDialog.prototype.getUnconvertedInfoboxes = function () {
-	var deferred = $.Deferred(),
-		self = this;
+	var deferred = $.Deferred();
 
 	ve.init.target.constructor.static.apiRequest( {
 		action: 'query',
@@ -207,9 +204,9 @@ ve.ui.WikiaInfoboxInsertDialog.prototype.getUnconvertedInfoboxes = function () {
 	} )
 		.done( function ( data ) {
 			deferred.resolve(
-				self.validateGetUnconvertedInfoboxesResponseData( data ) ? data.query.unconvertedinfoboxes : []
+				this.validateGetUnconvertedInfoboxesResponseData( data ) ? data.query.unconvertedinfoboxes : []
 			);
-		} )
+		}.bind(this) )
 		.fail( function () {
 			deferred.resolve( [] );
 		} );
