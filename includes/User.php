@@ -2636,7 +2636,16 @@ class User {
 	 * @see getGlobalPreference
 	 */
 	public function setLocalPreference($preference, $value, $cityId = null, $sep = '-') {
-		$this->setGlobalPreference(self::localToGlobalPropertyName($preference, $cityId, $sep), $value);
+		global $wgPreferencesUseService;
+
+		if ( $wgPreferencesUseService ) {
+			$this->load();
+			$value = $this->sanitizeProperty( $value );
+			$this->userPreferences()->setLocalPreference( $this->mId, $cityId, $preference, $value );
+		} else {
+			$preferenceGlobalName = self::localToGlobalPropertyName($preference, $cityId, $sep);
+			$this->setOptionHelper( $preferenceGlobalName, $value );
+		}
 	}
 
 	/**
