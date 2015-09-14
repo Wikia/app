@@ -311,7 +311,7 @@
 							});
 						})
 					});
-				});
+				}.bind(this));
 			} else {
 				this.voteBase(e, this.proxy(function (target, data, dir) {
 					var votes = target.closest('li.message').find('.votes:first'),
@@ -740,7 +740,7 @@
 							this.editTopics(rootMessageId);
 						})
 					});
-				});
+				}.bind(this));
 			} else {
 				this.editTopics(rootMessageId);
 			}

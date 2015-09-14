@@ -96,7 +96,7 @@
 							return true;
 						})
 					});
-				});
+				}.bind(this));
 			} else {
 				action(true);
 				return true;
