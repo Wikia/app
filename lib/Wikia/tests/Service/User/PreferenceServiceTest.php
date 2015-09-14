@@ -8,8 +8,9 @@ use Wikia\Cache\Memcache\Memcache;
 use Wikia\Domain\User\Preferences\UserPreferences;
 use Wikia\Persistence\User\Preferences\PreferencePersistence;
 
-class UserPreferencesTest extends PHPUnit_Framework_TestCase {
+class PreferenceServiceTest extends PHPUnit_Framework_TestCase {
 	const TEST_WIKI_ID = 123;
+
 	/** @var int */
 	protected $userId = 1;
 
