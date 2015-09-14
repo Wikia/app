@@ -5,11 +5,10 @@ define('ext.wikia.adEngine.provider.gpt.sourcePointTag', [
 	'ext.wikia.adEngine.provider.gpt.googleTag',
 	'ext.wikia.adEngine.slot.adSlot',
 	'ext.wikia.adEngine.sourcePoint',
-	'ext.wikia.adEngine.utils.cssTweaker',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window'
-], function (adContext, GoogleTag, adSlot, sourcePoint, cssTweaker, doc, log, window) {
+], function (adContext, GoogleTag, adSlot, sourcePoint, doc, log, window) {
 	'use strict';
 
 	var context = adContext.getContext(),
