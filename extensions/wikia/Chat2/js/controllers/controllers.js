@@ -428,13 +428,12 @@ var NodeRoomController = $.createClass(Observable,{
 
 			this.onPartBase(kickEvent.get('kickedUserName'), true);
 
-
 			var newChatEntry = new models.InlineAlert({
 				text: mw.message(
 					'chat-user-was-' + mode,
 					kickEvent.get('kickedUserName'),
 					kickEvent.get('moderatorName')
-				).rawParams(undoLink).escaped()
+				).rawParams([undoLink]).escaped()
 			});
 
 			this.model.chats.add(newChatEntry);

@@ -188,14 +188,15 @@ var mw = ( function ( $, undefined ) {
 		 *
 		 * This function will not be called for nonexistent messages.
 		 *
+		 * @param {string} messageContent - message content
 		 * @param {boolean} insertRaw (default: false) - Raw params are stored separately and should be put in place
 		 * after message escaping happen. This param is flag which decided which params should be inserted normal vs raw
 		 */
-		parser: function ( insertRaw ) {
-			insertRaw = typeof insertRaw !== 'undefined';
+		parser: function ( messageContent, insertRaw ) {
+			insertRaw = typeof insertRaw !== 'undefined' ? insertRaw: false;
 
 			var parameters = this.parameters;
-			return this.map.get( this.key ).replace( /\$(\d+)/g, function ( str, match ) {
+			return messageContent.replace( /\$(\d+)/g, function ( str, match ) {
 				var index = parseInt( match, 10 ) - 1,
 					defaultOut = '$' + match;
 
@@ -258,13 +259,13 @@ var mw = ( function ( $, undefined ) {
 				return '<' + this.key + '>';
 			}
 
-			text = this.parser();
+			text = this.parser( this.map.get( this.key ), false );
 
 			if ( this.format === 'escaped' ) {
 				text = mw.html.escape( text );
 			}
 
-			text = this.parser( true );
+			text = this.parser( text, true );
 
 			return text;
 		},
