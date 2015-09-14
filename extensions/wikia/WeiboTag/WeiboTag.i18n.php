@@ -8,5 +8,5 @@ $messages['en'] = [
 
 $messages['qqq'] = [
 	'weibo-tag-desc' => '{{desc}}',
-	'weibo-tag-could-not-render' => 'Error message shown when the Weibo widget could not be loaded. Only happens if Weibo has a problem, or the user disallowed 3rd-party resources.',
+	'weibo-tag-could-not-render' => 'Error message shown when the Weibo tag validation failed.',
 ];
