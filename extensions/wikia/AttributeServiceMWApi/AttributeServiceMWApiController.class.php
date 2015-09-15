@@ -25,7 +25,6 @@ class AttributeServiceMWApiController extends WikiaController {
 
 		// Clear user cache
 		$user = User::newFromId( $userId );
-		User::clearUserCache( $user->getId() );
 		$user->invalidateCache();
 
 		// Clear User Profile cache
