@@ -27,138 +27,138 @@ class PreferencePersistenceSwaggerServiceTest extends \PHPUnit_Framework_TestCas
 	protected $userPreferencesApi;
 
 	public function setUp() {
-		$this->apiProvider = $this->getMockBuilder(ApiProvider::class)
-			->setMethods(['getAuthenticatedApi'])
+		$this->apiProvider = $this->getMockBuilder( ApiProvider::class )
+			->setMethods( ['getAuthenticatedApi'] )
 			->disableOriginalConstructor()
 			->getMock();
-		$this->userPreferencesApi = $this->getMockBuilder(UserPreferencesApi::class)
-			->setMethods(['setUserPreferences', 'getUserPreferences'])
+		$this->userPreferencesApi = $this->getMockBuilder( UserPreferencesApi::class )
+			->setMethods( ['setUserPreferences', 'getUserPreferences'] )
 			->disableOriginalConstructor()
 			->getMock();
-		$this->apiProvider->expects($this->any())
-			->method('getAuthenticatedApi')
-			->with(PreferencePersistenceSwaggerService::SERVICE_NAME, $this->userId, UserPreferencesApi::class)
-			->willReturn($this->userPreferencesApi);
+		$this->apiProvider->expects( $this->any() )
+			->method( 'getAuthenticatedApi' )
+			->with( PreferencePersistenceSwaggerService::SERVICE_NAME, $this->userId, UserPreferencesApi::class )
+			->willReturn( $this->userPreferencesApi );
 
-		$this->persistence = new PreferencePersistenceSwaggerService($this->apiProvider);
+		$this->persistence = new PreferencePersistenceSwaggerService( $this->apiProvider );
 	}
 
 	public function testGetSuccess() {
-		$preferences = (new SwaggerUserPreferences())
-			->setLocalPreferences([
-				(new SwaggerLocalPref())->setName('localpref')->setWikiId(123)->setValue('val1'),
-			])
-			->setGlobalPreferences([
-				(new SwaggerGlobalPref())->setName('pref1')->setValue('val1'),
-				(new SwaggerGlobalPref())->setName('pref2')->setValue('val2'),
-			]);
+		$preferences = ( new SwaggerUserPreferences() )
+			->setLocalPreferences( [
+				( new SwaggerLocalPref() )->setName( 'localpref' )->setWikiId( 123 )->setValue( 'val1' ),
+			] )
+			->setGlobalPreferences( [
+				( new SwaggerGlobalPref() )->setName( 'pref1' )->setValue( 'val1' ),
+				( new SwaggerGlobalPref() )->setName( 'pref2' )->setValue( 'val2' ),
+			] );
 
-		$this->userPreferencesApi->expects($this->once())
-			->method('getUserPreferences')
-			->with($this->userId)
-			->willReturn($preferences);
+		$this->userPreferencesApi->expects( $this->once() )
+			->method( 'getUserPreferences' )
+			->with( $this->userId )
+			->willReturn( $preferences );
 
-		$prefs = $this->persistence->get($this->userId);
+		$prefs = $this->persistence->get( $this->userId );
 
-		$this->assertFalse($prefs->isEmpty());
+		$this->assertFalse( $prefs->isEmpty() );
 		$this->assertEquals(
-			$prefs->getGlobalPreference('pref1'),
-			(new GlobalPreference('pref1', 'val1'))->getValue());
+			$prefs->getGlobalPreference( 'pref1' ),
+			( new GlobalPreference( 'pref1', 'val1' ) )->getValue() );
 		$this->assertEquals(
-			$prefs->getGlobalPreference('pref2'),
-			(new GlobalPreference('pref2', 'val2'))->getValue());
+			$prefs->getGlobalPreference( 'pref2' ),
+			( new GlobalPreference( 'pref2', 'val2' ) )->getValue() );
 		$this->assertEquals(
-			$prefs->getLocalPreference('localpref', 123),
-			(new LocalPreference('localpref', 'val1', 123))->getValue());
+			$prefs->getLocalPreference( 'localpref', 123 ),
+			( new LocalPreference( 'localpref', 'val1', 123 ) )->getValue() );
 	}
 
 	public function testGetEmpty() {
-		$this->userPreferencesApi->expects($this->once())
-			->method('getUserPreferences')
-			->with($this->userId)
-			->willReturn(new SwaggerUserPreferences());
+		$this->userPreferencesApi->expects( $this->once() )
+			->method( 'getUserPreferences' )
+			->with( $this->userId )
+			->willReturn( new SwaggerUserPreferences() );
 
-		$prefs = $this->persistence->get($this->userId);
+		$prefs = $this->persistence->get( $this->userId );
 
-		$this->assertTrue($prefs->isEmpty());
+		$this->assertTrue( $prefs->isEmpty() );
 	}
 
 	public function testSave() {
-		$swaggerPrefs = (new SwaggerUserPreferences())
-			->setGlobalPreferences([
-				(new SwaggerGlobalPref())->setName('pref1')->setValue('val1')
-			])
-			->setLocalPreferences([]);
-		$domainPrefs = (new UserPreferences())
-			->setGlobalPreference('pref1', 'val1');
+		$swaggerPrefs = ( new SwaggerUserPreferences() )
+			->setGlobalPreferences( [
+				( new SwaggerGlobalPref() )->setName( 'pref1' )->setValue( 'val1' )
+			] )
+			->setLocalPreferences( [] );
+		$domainPrefs = ( new UserPreferences() )
+			->setGlobalPreference( 'pref1', 'val1' );
 
-		$this->userPreferencesApi->expects($this->once())
-			->method('setUserPreferences')
-			->with($this->userId, $swaggerPrefs)
-			->willReturn(true);
+		$this->userPreferencesApi->expects( $this->once() )
+			->method( 'setUserPreferences' )
+			->with( $this->userId, $swaggerPrefs )
+			->willReturn( true );
 
-		$this->assertTrue($this->persistence->save($this->userId, $domainPrefs));
+		$this->assertTrue( $this->persistence->save( $this->userId, $domainPrefs ) );
 	}
 
 	/**
 	 * @expectedException \Wikia\Service\UnauthorizedException
 	 */
 	public function testUnauthorizedSave() {
-		$swaggerPrefs = (new SwaggerUserPreferences())
-			->setGlobalPreferences([
-				(new SwaggerGlobalPref())->setName('pref1')->setValue('val1')
-			])
-			->setLocalPreferences([]);
-		$domainPrefs = (new UserPreferences())
-			->setGlobalPreference('pref1', 'val1');
+		$swaggerPrefs = ( new SwaggerUserPreferences() )
+			->setGlobalPreferences( [
+				( new SwaggerGlobalPref() )->setName( 'pref1' )->setValue( 'val1' )
+			] )
+			->setLocalPreferences( [] );
+		$domainPrefs = ( new UserPreferences() )
+			->setGlobalPreference( 'pref1', 'val1' );
 
-		$this->userPreferencesApi->expects($this->once())
-			->method('setUserPreferences')
-			->with($this->userId, $swaggerPrefs)
-			->willThrowException(new ApiException("", UnauthorizedException::CODE));
+		$this->userPreferencesApi->expects( $this->once() )
+			->method( 'setUserPreferences' )
+			->with( $this->userId, $swaggerPrefs )
+			->willThrowException( new ApiException( "", UnauthorizedException::CODE ) );
 
-		$this->persistence->save($this->userId, $domainPrefs);
+		$this->persistence->save( $this->userId, $domainPrefs );
 	}
 
 	/**
 	 * @expectedException \Wikia\Service\PersistenceException
 	 */
 	public function testSaveError() {
-		$swaggerPrefs = (new SwaggerUserPreferences())
-			->setGlobalPreferences([
-				(new SwaggerGlobalPref())->setName('pref1')->setValue('val1')
-			])
-			->setLocalPreferences([]);
-		$domainPrefs = (new UserPreferences())
-			->setGlobalPreference('pref1', 'val1');
+		$swaggerPrefs = ( new SwaggerUserPreferences() )
+			->setGlobalPreferences( [
+				( new SwaggerGlobalPref() )->setName( 'pref1' )->setValue( 'val1' )
+			] )
+			->setLocalPreferences( [] );
+		$domainPrefs = ( new UserPreferences() )
+			->setGlobalPreference( 'pref1', 'val1' );
 
-		$this->userPreferencesApi->expects($this->once())
-			->method('setUserPreferences')
-			->with($this->userId, $swaggerPrefs)
-			->willThrowException(new ApiException("", 500));
+		$this->userPreferencesApi->expects( $this->once() )
+			->method( 'setUserPreferences' )
+			->with( $this->userId, $swaggerPrefs )
+			->willThrowException( new ApiException( "", 500 ) );
 
-		$this->persistence->save($this->userId, $domainPrefs);
+		$this->persistence->save( $this->userId, $domainPrefs );
 	}
 
 	/**
 	 * @expectedException \Wikia\Service\UnauthorizedException
 	 */
 	public function testUnauthorizedGet() {
-		$this->userPreferencesApi->expects($this->once())
-			->method('getUserPreferences')
-			->with($this->userId)
-			->willThrowException(new ApiException("", UnauthorizedException::CODE));
-		$this->persistence->get($this->userId);
+		$this->userPreferencesApi->expects( $this->once() )
+			->method( 'getUserPreferences' )
+			->with( $this->userId )
+			->willThrowException( new ApiException( "", UnauthorizedException::CODE ) );
+		$this->persistence->get( $this->userId );
 	}
 
 	/**
 	 * @expectedException \Wikia\Service\PersistenceException
 	 */
 	public function testGetError() {
-		$this->userPreferencesApi->expects($this->once())
-			->method('getUserPreferences')
-			->with($this->userId)
-			->willThrowException(new ApiException("", 500));
-		$this->persistence->get($this->userId);
+		$this->userPreferencesApi->expects( $this->once() )
+			->method( 'getUserPreferences' )
+			->with( $this->userId )
+			->willThrowException( new ApiException( "", 500 ) );
+		$this->persistence->get( $this->userId );
 	}
 }

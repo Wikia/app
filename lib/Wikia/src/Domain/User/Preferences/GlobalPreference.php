@@ -10,7 +10,7 @@ class GlobalPreference {
 	private $value;
 
 	function __construct( $name, $value ) {
-		Assert::true(!empty($name), "invalid preference name");
+		Assert::true( !empty( $name ), "invalid preference name" );
 
 		$this->name = $name;
 		$this->value = $value;

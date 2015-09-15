@@ -13,26 +13,27 @@ use Wikia\Persistence\User\Preferences\PreferencePersistenceSwaggerService;
 class PreferenceModule implements Module {
 	const PREFERENCE_CACHE_VERSION = 1;
 
-	public function configure(InjectorBuilder $builder) {
+	public function configure( InjectorBuilder $builder ) {
 		$builder
-			->bind(PreferencePersistence::class)->toClass(PreferencePersistenceSwaggerService::class)
-			->bind(PreferenceService::CACHE_PROVIDER)->to(function() {
+			->bind( PreferenceService::class )->toClass( PreferenceServiceImpl::class )
+			->bind( PreferencePersistence::class )->toClass( PreferencePersistenceSwaggerService::class )
+			->bind( PreferenceServiceImpl::CACHE_PROVIDER )->to( function() {
 				global $wgMemc;
-				$provider = new BagOStuffCacheProvider($wgMemc);
-				$provider->setNamespace(PreferenceService::class.":".self::PREFERENCE_CACHE_VERSION);
+				$provider = new BagOStuffCacheProvider( $wgMemc );
+				$provider->setNamespace( PreferenceService::class . ":" . self::PREFERENCE_CACHE_VERSION );
 
 				return $provider;
-			})
-			->bind(PreferenceService::HIDDEN_PREFS)->to(function() {
+			} )
+			->bind( PreferenceServiceImpl::HIDDEN_PREFS )->to( function() {
 				global $wgHiddenPrefs;
 				return $wgHiddenPrefs;
-			})
-			->bind(PreferenceService::DEFAULT_PREFERENCES)->to(function() {
+			} )
+			->bind( PreferenceServiceImpl::DEFAULT_PREFERENCES )->to( function() {
 				return User::getDefaultPreferences();
-			})
-			->bind(PreferenceService::FORCE_SAVE_PREFERENCES)->to(function() {
+			} )
+			->bind( PreferenceServiceImpl::FORCE_SAVE_PREFERENCES )->to( function() {
 				global $wgGlobalUserProperties;
 				return $wgGlobalUserProperties;
-			});
+			} );
 	}
 }
