@@ -157,7 +157,7 @@ require([
 	function callUserLoginModalShow(target) {
 		authModal.load({
 			url: '/signin?redirect=' + encodeURIComponent(win.location.href),
-			origin: 'from-venus-article-edit',
+			origin: 'venus-article-edit',
 			onAuthSuccess: function() {
 				win.location = target.href;
 			}

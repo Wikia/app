@@ -16,7 +16,7 @@
 			window.onbeforeunload = function () {};
 			require(['AuthModal'], function (authModal) {
 				authModal.load({
-					origin: 'from-editor',
+					origin: 'editor',
 					url: '/signin?redirect=' + encodeURIComponent(window.location.href),
 					onAuthSuccess: function () {
 						if (window.WikiaEditor) {
@@ -33,7 +33,7 @@
 				window.onbeforeunload = function () {};
 				require(['AuthModal'], function (authModal) {
 					authModal.load({
-						origin: 'from-editor',
+						origin: 'editor',
 						url: '/signin?redirect=' + encodeURIComponent(window.location.href),
 					});
 				});

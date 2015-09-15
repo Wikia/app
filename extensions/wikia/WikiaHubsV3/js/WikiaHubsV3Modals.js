@@ -12,7 +12,7 @@
 					require(['AuthModal'], function (authModal) {
 						authModal.load({
 							url: '/signin?redirect=' + encodeURIComponent(window.location.href),
-							origin: 'from-wikia-hubs',
+							origin: 'wikia-hubs',
 							onAuthSuccess: function () {
 								window.UserLogin.forceLoggedIn = true;
 								SuggestModalWikiaHubsV3.suggestArticle();

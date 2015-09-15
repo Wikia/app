@@ -1119,7 +1119,7 @@
 					require(['AuthModal'], function (authModal) {
 						authModal.load({
 							url: '/signin?redirect=' + encodeURIComponent(window.location.href),
-							origin: 'from-image-lightbox',
+							origin: 'image-lightbox',
 							onAuthSuccess: function () {
 								doShareEmail(addresses);
 								// see VID-473 - Reload page on lightbox close

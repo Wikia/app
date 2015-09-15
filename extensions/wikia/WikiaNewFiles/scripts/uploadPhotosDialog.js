@@ -14,7 +14,7 @@ var UploadPhotos = {
 			require(['AuthModal'], function (authModal) {
 				authModal.load({
 					url: '/signin?redirect=' + encodeURIComponent(window.location.href),
-					origin: 'from-latest-photos',
+					origin: 'latest-photos',
 					onAuthSuccess: $.proxy(function() {
 						UserLogin.forceLoggedIn = true;
 						this.showDialog(evt);

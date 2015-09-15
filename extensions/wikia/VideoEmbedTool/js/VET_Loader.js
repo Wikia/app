@@ -87,7 +87,7 @@
 			require(['AuthModal'], function (authModal) {
 				authModal.load({
 					url: '/signin?redirect=' + encodeURIComponent(window.location.href),
-					origin: 'from-vet',
+					origin: 'vet',
 					onAuthSuccess: function () {
 						window.UserLogin.forceLoggedIn = true;
 						vetLoader.load(options);

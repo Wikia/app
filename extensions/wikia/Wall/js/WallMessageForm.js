@@ -90,7 +90,7 @@
 				require(['AuthModal'], function (authModal) {
 					authModal.load({
 						url: '/signin?redirect=' + encodeURIComponent(window.location.href),
-						origin: 'from-wall-and-forum',
+						origin: 'wall-and-forum',
 						onAuthSuccess: this.proxy(function () {
 							action(false);
 							return true;

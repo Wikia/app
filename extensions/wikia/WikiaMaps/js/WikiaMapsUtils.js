@@ -282,7 +282,7 @@ define(
 		function showForceLoginModal(origin, onLoggedIn) {
 			require(['AuthModal'], function (authModal) {
 				authModal.load({
-					origin: 'from-' + origin,
+					origin: origin,
 					url: '/signin?redirect=' + encodeURIComponent(w.location.href),
 					onAuthSuccess: function () {
 						w.UserLogin.forceLoggedIn = true;
