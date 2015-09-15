@@ -1,6 +1,6 @@
 <?php
 
-class TwitterTagController extends WikiaParserTagController {
+class TwitterTagController extends WikiaController {
 
 	const PARSER_TAG_NAME = 'twitter';
 	const TWITTER_NAME = 'Twitter';

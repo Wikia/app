@@ -6,27 +6,60 @@ class WikiaTagBuilderHelperTest extends WikiaBaseTest {
 		parent::setUp();
 	}
 
-	public function testBuildTagSourceQueryParams() {
+	/**
+	 * @dataProvider buildTagSourceQueryParamsDataProvider
+	 */
+	public function testBuildTagSourceQueryParams( $allowedParams, $passedParams, $overrideParams, $expectedResult ) {
 		$tagBuilder = new WikiaTagBuilderHelper();
-		$allowedParams = [
-			'foo' => 'before',
-			'allowedParam' => 'value',
-			'bar' => '',
-			'allowedParam2' => 'valueSet',
-		];
 
-		$passedParams = [
-			'fizz' => 'value',
-			'buzz' => 'value2',
-			'foo' => 'after',
-			'allowedParam2' => '',
-		];
-
-		$expectedResult = 'foo=after&allowedParam=value&allowedParam2=valueSet';
-		$this->assertEquals( $tagBuilder->buildTagSourceQueryParams( $allowedParams, $passedParams ), $expectedResult );
+		$this->assertEquals(
+			$tagBuilder->buildTagSourceQueryParams( $allowedParams, $passedParams, $overrideParams ),
+			$expectedResult
+		);
 	}
 
-	public function testBuildTagAttributes() {
+	public function buildTagSourceQueryParamsDataProvider() {
+		return [
+			[
+				[
+					'foo' => 'before',
+					'allowedParam' => 'value',
+					'bar' => '',
+					'allowedParam2' => 'valueSet',
+				],
+				[
+					'fizz' => 'value',
+					'buzz' => 'value2',
+					'foo' => 'after',
+					'allowedParam2' => '',
+				],
+				[],
+				'foo=after&allowedParam=value&allowedParam2=valueSet'
+			],
+			[
+				[
+					'foo' => 'default',
+					'bar' => 'default'
+				],
+				[
+					'foo' => 'new',
+					'bar' => 'new'
+				],
+				[
+					'bar' => 'override'
+				],
+				'foo=new&bar=override'
+			]
+		];
+	}
+
+	/**
+	 * @dataProvider buildTagAttributesDataProvider
+	 * @param array $passedAttrs
+	 * @param string $prefix
+	 * @param array $expectedResult
+	 */
+	public function testBuildTagAttributes($passedAttrs, $prefix = '' ,$expectedResult) {
 		$tagBuilder = new WikiaTagBuilderHelper();
 		$this->getStaticMethodMock( 'Sanitizer', 'checkCss' )
 			->expects( $this->any() )
@@ -39,17 +72,34 @@ class WikiaTagBuilderHelperTest extends WikiaBaseTest {
 			'style',
 		];
 
-		$passedAttrs = [
-			'foo' => 'someValue1',
-			'buzz' => 'someValue2',
-			'style' => 'beforeSanitize',
-		];
+		$this->assertSame( $tagBuilder->buildTagAttributes( $allowedAttrs, $passedAttrs, $prefix ), $expectedResult );
+	}
 
-		$expectedResult = [
-			'foo' => 'someValue1',
-			'style' => 'sanitized',
+	public function buildTagAttributesDataProvider() {
+		return [
+			[
+				[
+					'foo' => 'someValue1',
+					'buzz' => 'someValue2',
+					'style' => 'beforeSanitize',
+				],
+				null,
+				[
+					'foo' => 'someValue1',
+					'style' => 'sanitized',
+				]
+			], [
+				[
+					'foo' => 'someValue1',
+					'buzz' => 'someValue2',
+					'style' => 'beforeSanitize',
+				],
+				'wikia',
+				[
+					'wikia-foo' => 'someValue1',
+					'style' => 'sanitized',
+				]
+			]
 		];
-
-		$this->assertSame( $tagBuilder->buildTagAttributes( $allowedAttrs, $passedAttrs ), $expectedResult );
 	}
 }
