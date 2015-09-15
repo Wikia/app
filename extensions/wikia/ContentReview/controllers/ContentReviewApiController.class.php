@@ -74,7 +74,7 @@ class ContentReviewApiController extends WikiaApiController {
 		}
 
 		$helper = new Helper();
-		$helper->setContentReviewTestMode();
+		$helper->setContentReviewTestMode( $this->wg->CityId );
 		$this->makeSuccessResponse();
 	}
 
@@ -89,7 +89,7 @@ class ContentReviewApiController extends WikiaApiController {
 		}
 
 		$helper = new Helper();
-		$helper->disableContentReviewTestMode();
+		$helper->disableContentReviewTestMode( $this->wg->CityId );
 		$this->makeSuccessResponse();
 	}
 
@@ -139,8 +139,8 @@ class ContentReviewApiController extends WikiaApiController {
 		$oldid = $this->request->getInt( 'oldid' );
 
 
-		if ( $helper->hasPageApprovedId( $wikiId, $pageId, $oldid  )
-			&& $helper->isDiffPageInReviewProcess( $wikiId, $pageId, $diff ) )
+		if ( $helper->hasPageApprovedId( $currentRevisionModel, $wikiId, $pageId, $oldid  )
+			&& $helper->isDiffPageInReviewProcess( $this->request, $reviewModel, $wikiId, $pageId, $diff ) )
 		{
 			$review = $reviewModel->getReviewedContent( $wikiId, $pageId, ReviewModel::CONTENT_REVIEW_STATUS_IN_REVIEW );
 
