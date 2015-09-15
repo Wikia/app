@@ -565,7 +565,6 @@ ve.ui.Surface.prototype.getInDialog = function () {
 	return this.inDialog;
 };
 
-
 ve.ui.Surface.prototype.getTarget = function () {
 	return this.target;
-}
+};

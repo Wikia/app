@@ -1352,8 +1352,7 @@ ve.init.mw.Target.prototype.tryWithPreparedCacheKey = function ( doc, options, e
 		}
 		return deflatePromise
 			.then( function () {
-				// return new mw.Api().post( data, { contentType: 'multipart/form-data' } );
-				return target.constructor.static.apiRequest( data, { type: 'POST' } )
+				return target.constructor.static.apiRequest( data, { type: 'POST' } );
 			} )
 			.then(
 				function ( response, status, jqxhr ) {
@@ -1415,7 +1414,7 @@ ve.init.mw.Target.prototype.tryWithPreparedCacheKey = function ( doc, options, e
  *
  * @param {Object} data Query string parameters (for GET requests) or POST data (for POST requests)
  * @param {Object} [settings] Additional AJAX settings, or overrides of default settings
- * @returns {jqXHR} Return value of $.ajax()
+ * @return {jqXHR} Return value of $.ajax()
  */
 ve.init.mw.Target.static.apiRequest = function ( data, settings ) {
 	var key, formData;
@@ -1440,7 +1439,7 @@ ve.init.mw.Target.static.apiRequest = function ( data, settings ) {
 	) {
 		formData = new FormData();
 		for ( key in data ) {
-			formData.append( key, data[key] );
+			formData.append( key, data[ key ] );
 		}
 		settings.data = formData;
 		// Prevent jQuery from mangling our FormData object
@@ -1991,7 +1990,7 @@ ve.init.mw.Target.prototype.startSanityCheck = function () {
 			return;
 		}
 		for ( i = 0; i < len; i++ ) {
-			if ( !oldDom.body.childNodes[i].isEqualNode( newDom.body.childNodes[i] ) ) {
+			if ( !oldDom.body.childNodes[ i ].isEqualNode( newDom.body.childNodes[ i ] ) ) {
 				d.reject();
 				return;
 			}
@@ -2004,7 +2003,7 @@ ve.init.mw.Target.prototype.startSanityCheck = function () {
 			// If we detect no roundtrip errors,
 			// don't emphasize "review changes" to the user.
 			target.sanityCheckVerified = true;
-		})
+		} )
 		.always( function () {
 			target.sanityCheckFinished = true;
 			target.emit( 'sanityCheckComplete' );
