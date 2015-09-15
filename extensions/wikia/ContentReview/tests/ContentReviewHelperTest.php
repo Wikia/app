@@ -66,12 +66,9 @@ class ContentReviewHelperTest extends WikiaBaseTest {
 	 * @param bool $userCan
 	 * @param bool $expected
 	 */
-	public function testUserCanEditJsPage( $inNamespace, $isJsPage, $userCan, $expected ) {
-		$titleMock = $this->getMock( 'Title', [ 'inNamespace', 'isJsPage', 'userCan' ] );
+	public function testUserCanEditJsPage( $isJsPage, $userCan, $expected ) {
+		$titleMock = $this->getMock( 'Title', [ 'isJsPage', 'userCan' ] );
 
-		$titleMock->expects( $this->any() )
-			->method( 'inNamespace' )
-			->willReturn( $inNamespace );
 		$titleMock->expects( $this->any() )
 			->method( 'isJsPage' )
 			->willReturn( $isJsPage );
@@ -181,14 +178,10 @@ class ContentReviewHelperTest extends WikiaBaseTest {
 
 	public function userCanEditJsPageProvider() {
 		return [
-			[ true, true, true, true ],
-			[ true, true, false, false ],
-			[ true, false, true, false ],
-			[ true, false, false, false ],
-			[ false, false, false, false ],
-			[ false, false, true, false ],
-			[ false, true, false, false ],
-			[ false, true, true, false ],
+			[ true, true, true ],
+			[ true, false, false ],
+			[ false, true, false ],
+			[ false, false, false ],
 		];
 	}
 }
