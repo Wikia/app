@@ -52,8 +52,6 @@ class EditPageLayoutController extends WikiaController {
 	 * Extra buttons are not needed
 	 */
 	public function executeCodeButtons() {
-		global $wgEnableContentReviewExt;
-
 		$dropdown = [
 			[
 				'id' => 'wpDiff',
@@ -73,7 +71,7 @@ class EditPageLayoutController extends WikiaController {
 			'dropdown' => $dropdown
 		];
 
-		if ( !empty( $wgEnableContentReviewExt ) ) {
+		if ( $this->wg->EnableContentReviewExt ) {
 			$helper = EditPageLayoutHelper::getInstance();
 			$title = $helper->getEditPage()->getTitle();
 
