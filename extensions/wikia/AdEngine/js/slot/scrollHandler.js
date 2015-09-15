@@ -26,6 +26,7 @@ define('ext.wikia.adEngine.slot.scrollHandler', [
 				}
 			}
 		},
+		// 'mercury' value is not set in context.targeting.skin yet
 		skin = context.targeting.skin === 'oasis' ? 'oasis' : 'mercury';
 
 	function init() {
