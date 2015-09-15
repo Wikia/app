@@ -49,6 +49,8 @@ class ContentReviewSpecialController extends WikiaSpecialPageController {
 		$wikiId = $this->getPar();
 
 		if ( !empty( $wikiId ) ) {
+			$this->setVal( 'baseSpecialPageUrl', $this->specialPage->getTitle()->getFullURL() );
+
 			$logModel = new ReviewLogModel();
 			$revisionModel = new CurrentRevisionModel();
 
