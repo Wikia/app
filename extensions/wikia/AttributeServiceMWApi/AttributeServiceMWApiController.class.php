@@ -1,5 +1,7 @@
 <?php
 
+use \Wikia\Util\GlobalStateWrapper;
+
 class AttributeServiceMWApiController extends WikiaController {
 
 	/**
@@ -23,13 +25,10 @@ class AttributeServiceMWApiController extends WikiaController {
 			return;
 		}
 
-		// Clear user cache
-		$user = User::newFromId( $userId );
-		$user->invalidateCache();
-
-		// Clear User Profile cache
-		$userIdentityBox = new UserIdentityBox( $user );
-		$userIdentityBox->clearCache();
+        $this->clearUserCache( $userId );
+        if ( !$this->inDevEnvironment() ) {
+            $this->clearCacheInStagingEnvs( $userId );
+        }
 	}
 
 	/**
@@ -80,6 +79,51 @@ class AttributeServiceMWApiController extends WikiaController {
 	private function setErrorResponse( $message, $responseCode ) {
 		$this->response->setVal( 'message', $message );
 		$this->response->setCode( $responseCode );
+	}
+
+	private function clearUserCache( $userId ) {
+
+        // Clear user cache
+        $user = User::newFromId( $userId );
+        $user->invalidateCache();
+
+        // Clear User Profile cache
+        $userIdentityBox = new UserIdentityBox( $user );
+        $userIdentityBox->clearCache();
+    }
+
+    private function inDevEnvironment() {
+        global $wgDevelEnvironment;
+
+        return $wgDevelEnvironment === true;
+    }
+
+    /**
+     * If we're not in a development environment, clear the cache for staging environments as well (preview and
+     * verify).
+     * @param $userId
+     */
+    private function clearCacheInStagingEnvs( $userId ) {
+        $this->clearCacheInPreview( $userId );
+        $this->clearCacheInVerify( $userId );
+    }
+
+	private function clearCacheInPreview( $userId ) {
+		global $wgPreviewHostname;
+
+        $wrapper = new GlobalStateWrapper( [ 'wgSharedKeyPrefix' => Wikia::getSharedKeyPrefix( $wgPreviewHostname ) ] );
+        $wrapper->wrap(function() use ($userId) {
+            $this->clearUserCache( $userId );
+        } );
+	}
+
+	private function clearCacheInVerify( $userId ) {
+        global $wgVerifyHostname;
+
+        $wrapper = new GlobalStateWrapper( [ 'wgSharedKeyPrefix' => Wikia::getSharedKeyPrefix( $wgVerifyHostname ) ] );
+        $wrapper->wrap(function() use ($userId) {
+            $this->clearUserCache( $userId );
+        } );
 	}
 }
 
