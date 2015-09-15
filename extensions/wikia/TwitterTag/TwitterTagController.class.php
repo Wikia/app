@@ -1,6 +1,6 @@
 <?php
 
-class TwitterTagController extends WikiaController {
+class TwitterTagController extends WikiaParserTagController {
 
 	const PARSER_TAG_NAME = 'twitter';
 	const TWITTER_NAME = 'Twitter';
@@ -40,28 +40,30 @@ class TwitterTagController extends WikiaController {
 		// Favourites Timeline, but there's no (documented) parameter to force any of them.
 	];
 
-	static public function onParserFirstCallInit( Parser $parser ) {
-		$parser->setHook( self::PARSER_TAG_NAME, [ new static(), 'parseTag' ] );
-		return true;
+	public function getTagName() {
+		return self::PARSER_TAG_NAME;
 	}
 
-	/**
-	 * Parses the twitter tag. Checks to ensure the required attributes are there.
-	 * Then constructs the HTML after seeing which attributes are in use.
-	 *
-	 * @return string
-	 */
-	public function parseTag( $input, array $args, Parser $parser, PPFrame $frame ) {
-		if ( empty( $args['widget-id'] ) ) {
-			return '<strong class="error">' . wfMessage( 'twitter-tag-widget-id' )->parse() . '</strong>';
-		}
+	protected function getAttributesAllowed() {
+		return array_keys( self::TAG_PERMITTED_ATTRIBUTES );
+	}
 
-		$attributes = $this->prepareAttributes( $args, self::TAG_PERMITTED_ATTRIBUTES );
+	protected function getErrorOutput( $errorMessages ) {
+		return $this->sendRequest(
+			'TwitterTagController',
+			'twitterTagError',
+			[ 'errorMessages' => $errorMessages ]
+		);
+	}
+
+	protected function getSuccessOutput( $args ) {
+		$attributes = $this->buildTagAttributes( self::TAG_PERMITTED_ATTRIBUTES, $args, 'data' );
 		$attributes['href'] = self::TWITTER_BASE_URL;
+
 		// data-wikia-widget attribute is searched for by Mercury
 		$attributes['data-wikia-widget'] = self::PARSER_TAG_NAME;
 
-		if ( ( new WikiaIFrameTagBuilderHelper() )->isMobileSkin() ) {
+		if ( $this->isMobileSkin() ) {
 			$html = Html::element( 'a', $attributes, self::TWITTER_NAME );
 		} else {
 			// Twitter script is searching for twitter-timeline class
@@ -69,37 +71,42 @@ class TwitterTagController extends WikiaController {
 			$html = Html::element( 'a', $attributes, self::TWITTER_NAME  );
 			// Wrapper used for easily selecting the widget in Selenium tests
 			$html = Html::rawElement( 'span', [ 'class' => 'widget-twitter' ], $html );
-
-			$parser->getOutput()->addModules( 'ext.TwitterTag' );
 		}
 
 		return $html;
 	}
 
-	/**
-	 * Validates, prefixes and sanitizes the provided attributes.
-	 *
-	 * @param array $attributes - attributes to validate
-	 * @param array $permittedAttributes - key-value pairs of permitted parameters and regexes which these parameters'
-	 *     values have to match.
-	 *
-	 * @return array
-	 */
-	private function prepareAttributes( array $attributes, array $permittedAttributes ) {
-		$validatedAttributes = [ ];
-
-		foreach ( $attributes as $attributeName => $attributeValue ) {
-			if ( array_key_exists( $attributeName, $permittedAttributes ) &&
-				preg_match( $permittedAttributes[$attributeName], $attributeValue )
-			) {
-				$validatedAttributes['data-' . $attributeName] = $attributeValue;
-			}
+	protected function registerResourceLoaderModules( Parser $parser ) {
+		if ( !$this->isMobileSkin() ) {
+			$parser->getOutput()->addModules( 'ext.TwitterTag' );
 		}
-
-		return $validatedAttributes;
 	}
 
 	protected function buildParamValidator( $paramName ) {
-		return true;
+		$validator = new WikiaValidatorAlwaysTrue();
+		$attributesRegexPatterns = self::TAG_PERMITTED_ATTRIBUTES;
+
+		switch ( $paramName ) {
+			case 'widget-id':
+				$validator = new WikiaValidatorRegex([
+					'required' => true,
+					'pattern' => $attributesRegexPatterns['widget-id']
+				], [
+					'empty' => 'twitter-tag-empty-widget-id',
+					'wrong' => 'twitter-tag-invalid-widget-id'
+				]);
+				break;
+		}
+
+		return $validator;
+	}
+
+	public function twitterTagError() {
+		$this->setVal(
+			'errorMessages',
+			$this->getVal( 'errorMessages', wfMessage( 'twitter-tag-error-unknown' )->plain() )
+		);
+
+		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 	}
 }
