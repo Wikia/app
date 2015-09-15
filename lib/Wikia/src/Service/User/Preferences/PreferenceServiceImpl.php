@@ -47,7 +47,7 @@ class PreferenceServiceImpl implements PreferenceService {
 	 *    Wikia\Service\User\Preferences\PreferenceServiceImpl::FORCE_SAVE_PREFERENCES})
 	 * @param CacheProvider $cache,
 	 * @param PreferencePersistence $persistence
-	 * @param string[] $hiddenPrefs
+	 * @param string[] $hiddenPrefs preferences that fall back to the defaults, whether or not a user has them set
 	 * @param string[string] $defaultPrefs
 	 * @param string[] $forceSavePrefs
 	 */
@@ -126,6 +126,10 @@ class PreferenceServiceImpl implements PreferenceService {
 	 * @throws \Exception
 	 */
 	public function save($userId) {
+		if ($userId == 0) {
+			return false;
+		}
+
 		$prefs = $this->load($userId);
 		$prefsToSave = new UserPreferences();
 
@@ -181,7 +185,7 @@ class PreferenceServiceImpl implements PreferenceService {
 	 */
 	private function load($userId) {
 		if ($userId == 0) {
-			return [];
+			return new UserPreferences();
 		}
 
 		if (!isset($this->preferences[$userId])) {
