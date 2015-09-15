@@ -2,6 +2,7 @@
 
 namespace Wikia\Service\User\Preferences\Migration;
 
+use Wikia\Domain\User\Preferences\LocalPreference;
 use Wikia\Domain\User\Preferences\UserPreferences;
 use Wikia\Logger\Loggable;
 use Wikia\Service\User\Preferences\PreferenceService;
@@ -38,25 +39,23 @@ class PreferenceCorrectionService {
 
 	public function compareAndCorrect( $userId, $userOptions ) {
 		if ( !$this->correctionEnabled ) {
-			return true;
+			return 0;
 		}
 
 		$actual = $this->preferenceService->getPreferences( $userId );
 		list( $differences, $expected ) = $this->compare( $actual, $userId, $userOptions );
 
-		if ( $differences == 0 ) {
-			return true;
+		if ( $differences != 0 ) {
+			$this->info(
+				'correcting preferences',
+				[
+					'num_differences' => $differences,
+					'user_id' => $userId] );
+			$this->preferenceService->setPreferences( $userId, $expected );
+			$this->preferenceService->save( $userId );
 		}
 
-		$this->info(
-			'correcting preferences',
-			[
-				'num_differences' => $differences,
-				'user_id' => $userId] );
-		$this->preferenceService->setPreferences( $userId, $expected );
-		$this->preferenceService->save( $userId );
-
-		return false;
+		return $differences;
 	}
 
 	private function compare( UserPreferences $actualPreferences, $userId, $options ) {
@@ -70,7 +69,7 @@ class PreferenceCorrectionService {
 				if ( !$actualPreferences->hasGlobalPreference( $name ) ||
 					$actualPreferences->getGlobalPreference( $name ) !== $value ) {
 
-					$this->logDifference( $userId, $name, $value, $actualPreferences->getGlobalPreference( $name ) );
+					$this->logMissingPreference( $userId, $name, $value, $actualPreferences->getGlobalPreference( $name ) );
 					++$differences;
 				}
 			} elseif ( $this->scopeService->isLocalPreference( $name ) ) {
@@ -86,7 +85,25 @@ class PreferenceCorrectionService {
 				if ( !$actualPreferences->hasLocalPreference( $prefName, $wikiId ) ||
 					$actualPreferences->getLocalPreference( $prefName, $wikiId ) !== $value ) {
 
-					$this->logDifference( $userId, $name, $value, $actualPreferences->getLocalPreference( $prefName, $wikiId ) );
+					$this->logMissingPreference( $userId, $name, $value, $actualPreferences->getLocalPreference( $prefName, $wikiId ) );
+					++$differences;
+				}
+			}
+		}
+
+		foreach ($actualPreferences->getGlobalPreferences() as $globalPreference) {
+			if (!isset($options[$globalPreference->getName()])) {
+				$this->logExtraPreference($userId, $globalPreference->getName(), $globalPreference->getValue());
+				++$differences;
+			}
+		}
+
+		foreach ($actualPreferences->getLocalPreferences() as $wikiId => $localPreferences) {
+			foreach ($localPreferences as $localPreference) {
+				/** @var LocalPreference $localPreference */
+				$optionName = $localPreference->getName().'-'.$wikiId;
+				if (!isset($options[$optionName])) {
+					$this->logExtraPreference($userId, $optionName, $localPreference->getValue());
 					++$differences;
 				}
 			}
@@ -99,11 +116,21 @@ class PreferenceCorrectionService {
 		return ['class' => 'PreferenceCorrectionService'];
 	}
 
-	private function logDifference( $userId, $name, $expected, $actual ) {
+	private function logMissingPreference( $userId, $name, $expected, $actual ) {
 		$this->warning( 'preference mismatch', [
 			'userId' => $userId,
 			'preference' => $name,
+			'type' => 'missing_preference',
 			'expected' => $expected,
 			'actual' => $actual, ] );
+	}
+
+	private function logExtraPreference($userId, $name, $value) {
+		$this->warning('preference mismatch', [
+			'userId' => $userId,
+			'preference' => $name,
+			'type' => 'extra_preference',
+			'expected' => '<missing>',
+			'actual' => $value,]);
 	}
 }
