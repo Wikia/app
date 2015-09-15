@@ -5,24 +5,51 @@ class WikiaTagBuilderHelperTests extends WikiaBaseTest {
 		parent::setUp();
 	}
 
-	public function testBuildTagSourceQueryParams() {
+	/**
+	 * @dataProvider buildTagSourceQueryParamsDataProvider
+	 */
+	public function testBuildTagSourceQueryParams( $allowedParams, $passedParams, $overrideParams, $expectedResult ) {
 		$tagBuilder = new WikiaTagBuilderHelper();
-		$allowedParams = [
-			'foo' => 'before',
-			'allowedParam' => 'value',
-			'bar' => '',
-			'allowedParam2' => 'valueSet',
-		];
 
-		$passedParams = [
-			'fizz' => 'value',
-			'buzz' => 'value2',
-			'foo' => 'after',
-			'allowedParam2' => '',
-		];
+		$this->assertEquals(
+			$tagBuilder->buildTagSourceQueryParams( $allowedParams, $passedParams, $overrideParams ),
+			$expectedResult
+		);
+	}
 
-		$expectedResult = 'foo=after&allowedParam=value&allowedParam2=valueSet';
-		$this->assertEquals( $tagBuilder->buildTagSourceQueryParams( $allowedParams, $passedParams ), $expectedResult );
+	public function buildTagSourceQueryParamsDataProvider() {
+		return [
+			[
+				[
+					'foo' => 'before',
+					'allowedParam' => 'value',
+					'bar' => '',
+					'allowedParam2' => 'valueSet',
+				],
+				[
+					'fizz' => 'value',
+					'buzz' => 'value2',
+					'foo' => 'after',
+					'allowedParam2' => '',
+				],
+				[],
+				'foo=after&allowedParam=value&allowedParam2=valueSet'
+			],
+			[
+				[
+					'foo' => 'default',
+					'bar' => 'default'
+				],
+				[
+					'foo' => 'new',
+					'bar' => 'new'
+				],
+				[
+					'bar' => 'override'
+				],
+				'foo=new&bar=override'
+			]
+		];
 	}
 
 	public function testBuildTagAttributes() {
