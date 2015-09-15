@@ -49,6 +49,7 @@
 			],
 			"messages": [
 				"wikia-visualeditor-dialog-wikiasourcemode-title",
+				"wikia-visualeditor-dialogbutton-wikiasourcemode-tooltip",
 				"visualeditor-dialog-action-apply",
 				"visualeditor-dialog-action-cancel"
 			]
