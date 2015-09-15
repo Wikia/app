@@ -46,6 +46,11 @@
 				"ext.visualEditor.track",
 				"ext.visualEditor.targetLoader",
 				"ext.visualEditor.core"
+			],
+			"messages": [
+				"wikia-visualeditor-dialog-wikiasourcemode-title",
+				"visualeditor-dialog-action-apply",
+				"visualeditor-dialog-action-cancel"
 			]
 		}
 	},

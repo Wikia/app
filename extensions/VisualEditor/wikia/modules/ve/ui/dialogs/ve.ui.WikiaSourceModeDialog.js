@@ -29,24 +29,21 @@ OO.inheritClass( ve.ui.WikiaSourceModeDialog, ve.ui.FragmentDialog );
 
 ve.ui.WikiaSourceModeDialog.static.name = 'wikiaSourceMode';
 
-// ve-upstream-sync - review - @author: Paul Oslund
-ve.ui.WikiaSourceModeDialog.static.title = 'Source Mode';
-//OO.ui.deferMsg( 'wikia-visualeditor-dialog-wikiasourcemode-title' );
+ve.ui.WikiaSourceModeDialog.static.title = OO.ui.deferMsg( 'wikia-visualeditor-dialog-wikiasourcemode-title' );
 
 // as in OO.ui.WindowManager.static.sizes
 ve.ui.WikiaSourceModeDialog.static.size = 'large';
 
 ve.ui.WikiaSourceModeDialog.static.icon = 'source';
 
-// ve-upstream-sync - review - @author: Paul Oslund
 ve.ui.WikiaSourceModeDialog.static.actions = [
 	{
 		action: 'apply',
-		label: 'Apply', //OO.ui.deferMsg( 'visualeditor-dialog-action-apply' ),
+		label: OO.ui.deferMsg( 'visualeditor-dialog-action-apply' ),
 		flags: [ 'progressive', 'primary' ]
 	},
 	{
-		label: 'Cancel', //OO.ui.deferMsg( 'visualeditor-dialog-action-cancel' ),
+		label: OO.ui.deferMsg( 'visualeditor-dialog-action-cancel' ),
 		flags: 'safe'
 	}
 ];
