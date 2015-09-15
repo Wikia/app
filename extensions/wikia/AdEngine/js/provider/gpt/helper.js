@@ -35,12 +35,16 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 		slotsToRecover = [],
 		sourcePointInitialized = false;
 
+	function isRecoveryEnabled() {
+		return !!(context.opts.sourcePoint && SourcePointTag);
+	}
+
 	function isBlocking() {
-		return !!(context.opts.sourcePoint && window.ads && window.ads.runtime.sp.blocking);
+		return !!(isRecoveryEnabled() && window.ads && window.ads.runtime.sp.blocking);
 	}
 
 	function isRecoverable(slotName, recoverableSlots) {
-		return context.opts.sourcePoint && recoverableSlots.indexOf(slotName) !== -1;
+		return isRecoveryEnabled() && recoverableSlots.indexOf(slotName) !== -1;
 	}
 
 	function recoverSlots() {
@@ -53,7 +57,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 		}
 	}
 
-	function attachRecovery() {
+	function loadRecovery() {
 		if (sourcePointInitialized) {
 			return;
 		}
@@ -64,14 +68,12 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	}
 
 	function loadSourcePoint() {
-		if (context.opts.sourcePoint && SourcePointTag) {
-			if (isBlocking()) {
-				attachRecovery();
-			} else {
-				doc.addEventListener('sp.blocking', function () {
-					attachRecovery();
-				});
-			}
+		if (isBlocking()) {
+			loadRecovery();
+		} else {
+			doc.addEventListener('sp.blocking', function () {
+				loadRecovery();
+			});
 		}
 	}
 
@@ -147,9 +149,11 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 		}
 
 		if (!googleApi.isInitialized()) {
-			googleApi.init(function () {
-				loadSourcePoint();
-			});
+			if (isRecoveryEnabled()) {
+				googleApi.init(loadSourcePoint);
+			} else {
+				googleApi.init();
+			}
 			googleApi.setPageLevelParams(adLogicPageParams.getPageLevelParams());
 		}
 
