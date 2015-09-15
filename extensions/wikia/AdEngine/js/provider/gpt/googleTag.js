@@ -59,7 +59,7 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 		});
 	};
 
-	GoogleTag.prototype.init = function () {
+	GoogleTag.prototype.init = function (onLoadCallback) {
 		log('init', 'debug', logGroup);
 
 		var gads = doc.createElement('script'),
@@ -68,6 +68,12 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 		gads.async = true;
 		gads.type = 'text/javascript';
 		gads.src = '//www.googletagservices.com/tag/js/gpt.js';
+		gads.addEventListener('load', function () {
+			log('GPT loaded', 'debug', logGroup);
+			if (typeof onLoadCallback === 'function') {
+				onLoadCallback();
+			}
+		});
 
 		log('Appending GPT script to head', 'debug', logGroup);
 		node.parentNode.insertBefore(gads, node);

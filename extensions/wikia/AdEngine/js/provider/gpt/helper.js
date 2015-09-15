@@ -53,6 +53,28 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 		}
 	}
 
+	function attachRecovery() {
+		if (sourcePointInitialized) {
+			return;
+		}
+		log('SourcePoint recovery enabled', 'debug', logGroup);
+		sourcePointInitialized = true;
+		googleApi = new SourcePointTag();
+		recoverSlots();
+	}
+
+	function loadSourcePoint() {
+		if (context.opts.sourcePoint && SourcePointTag) {
+			if (isBlocking()) {
+				attachRecovery();
+			} else {
+				doc.addEventListener('sp.blocking', function () {
+					attachRecovery();
+				});
+			}
+		}
+	}
+
 	/**
 	 * Push ad to queue and flush if it should be
 	 *
@@ -125,7 +147,9 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 		}
 
 		if (!googleApi.isInitialized()) {
-			googleApi.init();
+			googleApi.init(function () {
+				loadSourcePoint();
+			});
 			googleApi.setPageLevelParams(adLogicPageParams.getPageLevelParams());
 		}
 
@@ -152,17 +176,6 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 		if (slotTargeting.flushOnly) {
 			callSuccess();
 		}
-	}
-
-	if (context.opts.sourcePoint && SourcePointTag) {
-		doc.addEventListener('sp.blocking', function () {
-			if (!sourcePointInitialized) {
-				log('SourcePoint recovery enabled', 'debug', logGroup);
-				sourcePointInitialized = true;
-				googleApi = new SourcePointTag();
-				recoverSlots();
-			}
-		});
 	}
 
 	adContext.addCallback(function () {
