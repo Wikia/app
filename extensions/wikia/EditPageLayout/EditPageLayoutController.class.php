@@ -51,7 +51,35 @@ class EditPageLayoutController extends WikiaController {
 	 * Render basic edit buttons for code pages (js, css, lua)
 	 * Extra buttons are not needed
 	 */
-	public function executeCodeButtons() {}
+	public function executeCodeButtons() {
+		$dropdown = [
+			[
+				'id' => 'wpDiff',
+				'accesskey' => wfMessage( 'accesskey-diff' )->escaped(),
+				'text' => wfMessage( 'showdiff' )->escaped()
+			]
+		];
+
+		$this->button = [
+			'action' => [
+				'text' => wfMessage( 'savearticle' )->escaped(),
+				'class' => 'codepage-publish-button',
+				'id' => 'wpSave',
+			],
+			'name' => 'submit',
+			'class' => 'primary',
+			'dropdown' => $dropdown
+		];
+
+		if ( $this->wg->EnableContentReviewExt ) {
+			$helper = EditPageLayoutHelper::getInstance();
+			$title = $helper->getEditPage()->getTitle();
+
+			if ( $title->isJsPage() && $this->wg->User->isAllowed( 'content-review' ) ) {
+				$this->approveCheckbox = true;
+			}
+		}
+	}
 
 	/**
 	 * Render template for <body> tag content
