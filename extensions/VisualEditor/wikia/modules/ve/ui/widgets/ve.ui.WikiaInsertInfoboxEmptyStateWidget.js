@@ -13,7 +13,9 @@ ve.ui.WikiaInsertInfoboxEmptyState = function VeUiWikiaInsertInfoboxEmptyState( 
 	var noInfoboxFoundMsg = ve.msg( 'wikia-visualeditor-dialog-infobox-insert-empty-state'),
 		convertInfoboxesMsg = ve.msg( 'wikia-visualeditor-dialog-infobox-insert-empty-state-has-unconverted-infoboxes'),
 
-		insigthsURL = window.location.origin + '/wiki/Special:Insights/nonportableinfoboxes',
+		insigthsURL = new mw.Uri(
+			new mw.Title( 'Insights/nonportableinfoboxes', -1 ).getUrl()
+		).toString(),
 
 		noInfoboxesFoundLabel = new OO.ui.LabelWidget( {
 			label: noInfoboxFoundMsg
