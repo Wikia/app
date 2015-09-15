@@ -70,6 +70,15 @@ class PreferenceServiceImpl implements PreferenceService {
 		return $this->load( $userId );
 	}
 
+	/**
+	 * forcefully overwrite preferences. this should only be used when correcting errors during migration!
+	 * @param $userId
+	 * @param UserPreferences $preferences
+	 */
+	public function setPreferences( $userId, UserPreferences $preferences ) {
+		$this->preferences[$userId] = $preferences;
+	}
+
 	public function getGlobalPreference( $userId, $name, $default = null, $ignoreHidden = false ) {
 		if ( in_array( $name, $this->hiddenPrefs ) && !$ignoreHidden ) {
 			return $this->getFromDefault( $name );

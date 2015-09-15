@@ -2,8 +2,11 @@
 
 namespace Wikia\Service\User\Preferences;
 
+use Wikia\Domain\User\Preferences\UserPreferences;
+
 interface PreferenceService {
 	public function getPreferences( $userId );
+	public function setPreferences( $userId, UserPreferences $preferences );
 	public function getGlobalPreference( $userId, $name, $default = null, $ignoreHidden = false );
 	public function setGlobalPreference( $userId, $name, $value );
 	public function deleteGlobalPreference( $userId, $name );
