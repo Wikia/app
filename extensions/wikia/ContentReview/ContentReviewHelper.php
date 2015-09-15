@@ -153,35 +153,35 @@ class Helper extends \ContextSource {
 	}
 
 	/**
-	 * Enable test mode on current wiki
+	 * Enable test mode on provided wiki
+	 * @param int $wikiId
 	 */
-	public function setContentReviewTestMode() {
-		global $wgCityId;
-
-		$key = \ContentReviewApiController::CONTENT_REVIEW_TEST_MODE_KEY;
-
+	public function setContentReviewTestMode( $wikiId ) {
 		$wikiIds = $this->getContentReviewTestModeWikis();
 
-		if ( !in_array( $wgCityId, $wikiIds ) ) {
-			$wikiIds[] = $wgCityId;
-			$this->getRequest()->setSessionData( $key, serialize( $wikiIds ) );
+		if ( !in_array( $wikiId, $wikiIds ) ) {
+			$wikiIds[] = $wikiId;
+			$this->getRequest()->setSessionData(
+				\ContentReviewApiController::CONTENT_REVIEW_TEST_MODE_KEY,
+				serialize( $wikiIds )
+			);
 		}
 	}
 
 	/**
-	 * Disable test mode on current wiki
+	 * Disable test mode on provided wiki
+	 * @param int $wikiId
 	 */
-	public function disableContentReviewTestMode() {
-		global $wgCityId;
-
-		$key = \ContentReviewApiController::CONTENT_REVIEW_TEST_MODE_KEY;
-
+	public function disableContentReviewTestMode( $wikiId ) {;
 		$wikiIds = $this->getContentReviewTestModeWikis();
-		$wikiKey = array_search( $wgCityId, $wikiIds );
+		$wikiKey = array_search( $wikiId, $wikiIds );
 
 		if ( $wikiKey !== false ) {
 			unset( $wikiIds[$wikiKey] );
-			$this->getRequest()->setSessionData( $key, serialize( $wikiIds ) );
+			$this->getRequest()->setSessionData(
+				\ContentReviewApiController::CONTENT_REVIEW_TEST_MODE_KEY,
+				serialize( $wikiIds )
+			);
 		}
 	}
 
@@ -218,25 +218,21 @@ class Helper extends \ContextSource {
 		);
 	}
 
-	public function isDiffPageInReviewProcess( $wikiId, $pageId, $diff ) {
+	public function isDiffPageInReviewProcess( \WikiaRequest $request, ReviewModel $reviewModel, $wikiId, $pageId, $diff ) {
 		/**
 		 * Do not hit database if there is a URL parameter that indicates that a user
 		 * came directly from Special:ContentReview.
 		 */
-		if ( $this->getRequest()->getInt( self::CONTENT_REVIEW_PARAM ) === 1 ) {
+		if ( $request->getInt( self::CONTENT_REVIEW_PARAM ) === 1 ) {
 			return true;
 		}
 
-		$reviewModel = new ReviewModel();
 		$reviewData = $reviewModel->getReviewedContent( $wikiId, $pageId, ReviewModel::CONTENT_REVIEW_STATUS_IN_REVIEW );
-
 		return ( !empty( $reviewData ) && (int)$reviewData['revision_id'] === $diff );
 	}
 
-	public function hasPageApprovedId( $wikiId, $pageId, $oldid ) {
-		$currentModel = new CurrentRevisionModel();
-		$currentData = $currentModel->getLatestReviewedRevision( $wikiId, $pageId );
-
+	public function hasPageApprovedId( CurrentRevisionModel $model, $wikiId, $pageId, $oldid ) {
+		$currentData = $model->getLatestReviewedRevision( $wikiId, $pageId );
 		return ( !empty( $currentData ) && (int)$currentData['revision_id'] === $oldid );
 	}
 
@@ -313,5 +309,50 @@ class Helper extends \ContextSource {
 
 	public function getMemcKey( $params ) {
 		return wfMemcKey( self::CONTENT_REVIEW_PARAM, self::CONTENT_REVIEW_MEMC_VER, $params );
+	}
+
+	protected function getRevisionById( $revId ) {
+		return \Revision::newFromId( $revId );
+	}
+
+	protected function getCurrentRevisionModel() {
+		return new CurrentRevisionModel();
+	}
+
+	/**
+	 * Replaces $text with text from last approved revision
+	 * Change is done only for JS pages.
+	 * If there's no approved revision replaces with empty string
+	 * @param \Title $title
+	 * @param string $contentType
+	 * @param string $text
+	 */
+	public function replaceWithLastApproved( \Title $title, $contentType, &$text ) {
+		global $wgCityId, $wgJsMimeType;
+
+		if ( $title->isJsPage() || $contentType == $wgJsMimeType ) {
+			$pageId = $title->getArticleID();
+			$latestRevId = $title->getLatestRevID();
+
+			$latestReviewedRevData = $this->getCurrentRevisionModel()->getLatestReviewedRevision( $wgCityId, $pageId );
+
+			if ( $latestReviewedRevData['revision_id'] != $latestRevId
+				&& !$this->isContentReviewTestModeEnabled()
+			) {
+				$revision = $this->getRevisionById( $latestReviewedRevData['revision_id'] );
+
+				if ( $revision ) {
+					$text = $revision->getRawText();
+				} else {
+					$text = '';
+				}
+			}
+		}
+	}
+
+	public function userCanEditJsPage( \Title $title, \User $user ) {
+		return $title->inNamespace( NS_MEDIAWIKI )
+			&& $title->isJsPage()
+			&& $title->userCan( 'edit', $user );
 	}
 }
