@@ -23,8 +23,8 @@ class PreferenceCorrectionServiceTest extends PHPUnit_Framework_TestCase {
 	private $savedPreferences;
 
 	protected function setUp() {
-		$this->preferenceService = $this->getMockBuilder(PreferenceService::class)
-			->setMethods([
+		$this->preferenceService = $this->getMockBuilder( PreferenceService::class )
+			->setMethods( [
 				'getPreferences',
 				'setPreferences',
 				'save',
@@ -35,12 +35,12 @@ class PreferenceCorrectionServiceTest extends PHPUnit_Framework_TestCase {
 				'setLocalPreference',
 				'deleteLocalPreference',
 				'getFromDefault',
-			])
+			] )
 			->getMock();
-		$this->savedPreferences = (new UserPreferences())
-			->setGlobalPreference('language', 'en')
-			->setGlobalPreference('marketingallowed', '1')
-			->setLocalPreference('adoptionmails', self::WIKI_ID, '1');
+		$this->savedPreferences = ( new UserPreferences() )
+			->setGlobalPreference( 'language', 'en' )
+			->setGlobalPreference( 'marketingallowed', '1' )
+			->setLocalPreference( 'adoptionmails', self::WIKI_ID, '1' );
 		$scopeService = new PreferenceScopeService(
 			[
 				'literals' => [
@@ -53,57 +53,57 @@ class PreferenceCorrectionServiceTest extends PHPUnit_Framework_TestCase {
 				'regexes' => [
 					'^adoptionmails-([0-9]+)',
 				]
-			]);
+			] );
 
-		$this->correctionService = new PreferenceCorrectionService($this->preferenceService, $scopeService, true);
+		$this->correctionService = new PreferenceCorrectionService( $this->preferenceService, $scopeService, true );
 	}
 
 	public function testNoDifferences() {
 		$this->setupPreferenceServiceExpects();
-		$options = $this->userPreferencesToOptions($this->savedPreferences);
+		$options = $this->userPreferencesToOptions( $this->savedPreferences );
 
-		$differences = $this->correctionService->compareAndCorrect(self::USER_ID, $options);
-		$this->assertEquals(0, $differences);
+		$differences = $this->correctionService->compareAndCorrect( self::USER_ID, $options );
+		$this->assertEquals( 0, $differences );
 	}
 
 	public function testMissingPreferences() {
-		$options = $this->userPreferencesToOptions($this->savedPreferences);
-		$this->savedPreferences->deleteLocalPreference('adoptionmails', self::WIKI_ID);
-		$this->savedPreferences->deleteGlobalPreference('language');
+		$options = $this->userPreferencesToOptions( $this->savedPreferences );
+		$this->savedPreferences->deleteLocalPreference( 'adoptionmails', self::WIKI_ID );
+		$this->savedPreferences->deleteGlobalPreference( 'language' );
 
 		$this->setupPreferenceServiceExpects();
-		$differences = $this->correctionService->compareAndCorrect(self::USER_ID, $options);
-		$this->assertEquals(2, $differences);
+		$differences = $this->correctionService->compareAndCorrect( self::USER_ID, $options );
+		$this->assertEquals( 2, $differences );
 	}
 
 	public function testExtraPreferences() {
-		$options = $this->userPreferencesToOptions($this->savedPreferences);
-		$this->savedPreferences->setGlobalPreference('newpref', '1');
-		$this->savedPreferences->setLocalPreference('newlocalpref', self::WIKI_ID, '2');
+		$options = $this->userPreferencesToOptions( $this->savedPreferences );
+		$this->savedPreferences->setGlobalPreference( 'newpref', '1' );
+		$this->savedPreferences->setLocalPreference( 'newlocalpref', self::WIKI_ID, '2' );
 
 		$this->setupPreferenceServiceExpects();
-		$differences = $this->correctionService->compareAndCorrect(self::USER_ID, $options);
-		$this->assertEquals(2, $differences);
+		$differences = $this->correctionService->compareAndCorrect( self::USER_ID, $options );
+		$this->assertEquals( 2, $differences );
 	}
 
 	private function setupPreferenceServiceExpects() {
-		$this->preferenceService->expects($this->once())
-			->method('getPreferences')
-			->with(self::USER_ID)
-			->willReturn($this->savedPreferences);
+		$this->preferenceService->expects( $this->once() )
+			->method( 'getPreferences' )
+			->with( self::USER_ID )
+			->willReturn( $this->savedPreferences );
 	}
 
-	private function userPreferencesToOptions(UserPreferences $preferences) {
+	private function userPreferencesToOptions( UserPreferences $preferences ) {
 		$options = [];
 
-		foreach ($preferences->getGlobalPreferences() as $globalPreference) {
+		foreach ( $preferences->getGlobalPreferences() as $globalPreference ) {
 			$options[$globalPreference->getName()] = $globalPreference->getValue();
 		}
 
-		foreach ($preferences->getLocalPreferences() as $wikiId => $localPreferences) {
-			foreach ($localPreferences as $localPreference) {
+		foreach ( $preferences->getLocalPreferences() as $wikiId => $localPreferences ) {
+			foreach ( $localPreferences as $localPreference ) {
 				/** @var LocalPreference $localPreference */
-				$options[$localPreference->getName()."-".$localPreference->getWikiId()] = $localPreference->getValue();
+				$options[$localPreference->getName() . "-" . $localPreference->getWikiId()] = $localPreference->getValue();
 			}
 		}
 

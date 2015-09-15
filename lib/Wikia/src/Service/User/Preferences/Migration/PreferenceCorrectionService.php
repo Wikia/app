@@ -91,19 +91,19 @@ class PreferenceCorrectionService {
 			}
 		}
 
-		foreach ($actualPreferences->getGlobalPreferences() as $globalPreference) {
-			if (!isset($options[$globalPreference->getName()])) {
-				$this->logExtraPreference($userId, $globalPreference->getName(), $globalPreference->getValue());
+		foreach ( $actualPreferences->getGlobalPreferences() as $globalPreference ) {
+			if ( !isset( $options[$globalPreference->getName()] ) ) {
+				$this->logExtraPreference( $userId, $globalPreference->getName(), $globalPreference->getValue() );
 				++$differences;
 			}
 		}
 
-		foreach ($actualPreferences->getLocalPreferences() as $wikiId => $localPreferences) {
-			foreach ($localPreferences as $localPreference) {
+		foreach ( $actualPreferences->getLocalPreferences() as $wikiId => $localPreferences ) {
+			foreach ( $localPreferences as $localPreference ) {
 				/** @var LocalPreference $localPreference */
-				$optionName = $localPreference->getName().'-'.$wikiId;
-				if (!isset($options[$optionName])) {
-					$this->logExtraPreference($userId, $optionName, $localPreference->getValue());
+				$optionName = $localPreference->getName() . '-' . $wikiId;
+				if ( !isset( $options[$optionName] ) ) {
+					$this->logExtraPreference( $userId, $optionName, $localPreference->getValue() );
 					++$differences;
 				}
 			}
@@ -125,12 +125,12 @@ class PreferenceCorrectionService {
 			'actual' => $actual, ] );
 	}
 
-	private function logExtraPreference($userId, $name, $value) {
-		$this->warning('preference mismatch', [
+	private function logExtraPreference( $userId, $name, $value ) {
+		$this->warning( 'preference mismatch', [
 			'userId' => $userId,
 			'preference' => $name,
 			'type' => 'extra_preference',
 			'expected' => '<missing>',
-			'actual' => $value,]);
+			'actual' => $value, ] );
 	}
 }
