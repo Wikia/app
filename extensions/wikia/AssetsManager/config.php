@@ -769,11 +769,11 @@ $config['mercury_ads_js'] = array(
 		'//extensions/wikia/AbTesting/js/AbTest.js',
 		'//resources/wikia/modules/abTest.js',
 		'//extensions/wikia/AdEngine/js/CustomAdsLoader.js',
+		'//extensions/wikia/AdEngine/js/slot/scrollHandler.js',
 		'//extensions/wikia/AdEngine/js/template/floor.js',
 		'//extensions/wikia/AdEngine/js/template/modal.js',
 		'//extensions/wikia/AdEngine/js/template/modalHandlerFactory.js',
 		'//extensions/wikia/AdEngine/js/template/modalMercuryHandler.js',
-		'//extensions/wikia/AdEngine/js/slot/scrollHandler.js',
 		'//resources/wikia/modules/krux.js',
 
 		'//extensions/wikia/AdEngine/js/run/mercury.run.js',
