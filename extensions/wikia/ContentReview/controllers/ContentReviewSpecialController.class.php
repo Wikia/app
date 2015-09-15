@@ -11,8 +11,11 @@ class ContentReviewSpecialController extends WikiaSpecialPageController {
 		ReviewModel::CONTENT_REVIEW_STATUS_IN_REVIEW => 'content-review-status-in-review',
 		ReviewModel::CONTENT_REVIEW_STATUS_APPROVED => 'content-review-status-approved',
 		ReviewModel::CONTENT_REVIEW_STATUS_REJECTED => 'content-review-status-rejected',
-		ReviewModel::CONTENT_REVIEW_STATUS_LIVE => 'content-review-status-live',
-		ReviewModel::CONTENT_REVIEW_STATUS_REVERTED => 'content-review-status-reverted'
+		/**
+		 * The `live` index is introduced this way deliberately since it is not an actual status
+		 * of a review, it is used only for presentational purposes.
+		 */
+		'live' => 'content-review-status-live',
 	];
 
 	function __construct() {
@@ -49,7 +52,7 @@ class ContentReviewSpecialController extends WikiaSpecialPageController {
 			$logModel = new ReviewLogModel();
 			$revisionModel = new CurrentRevisionModel();
 
-			$reviews = $logModel->getArchivedReviewForWiki( $wikiId );
+			$reviews = $logModel->getArchivedReviewsForWiki( $wikiId );
 			$reviewed = $revisionModel->getLatestReviewedRevisionForWiki( $wikiId );
 
 			$this->reviews = $this->prepareArchivedReviewData( $reviews, $reviewed );
@@ -105,7 +108,7 @@ class ContentReviewSpecialController extends WikiaSpecialPageController {
 	private function prepareArchivedReviewData( $reviewsRaw, $reviewed ) {
 		$reviews = [];
 
-		foreach ( $reviewsRaw as &$review ) {
+		foreach ( $reviewsRaw as $review ) {
 			$title = GlobalTitle::newFromID( $review['page_id'], $review['wiki_id'] );
 
 			$review['url'] = $title->getFullURL();
@@ -120,7 +123,7 @@ class ContentReviewSpecialController extends WikiaSpecialPageController {
 			}
 
 			if ( $review['revision_id'] == $reviewed[$review['page_id']]['revision_id'] ) {
-				$review['status'] = ReviewModel::CONTENT_REVIEW_STATUS_LIVE;
+				$review['status'] = 'live';
 			}
 
 			if ( $review['status'] == ReviewModel::CONTENT_REVIEW_STATUS_APPROVED ) {

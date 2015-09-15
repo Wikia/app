@@ -48,6 +48,11 @@ $wgAutoloadClasses['Wikia\ContentReview\Models\ReviewModel'] = __DIR__ . '/model
 $wgAutoloadClasses['Wikia\ContentReview\Models\ReviewLogModel'] = __DIR__ . '/models/ReviewLogModel.php';
 
 /**
+ * Services
+ */
+$wgAutoloadClasses['Wikia\ContentReview\ContentReviewService'] = __DIR__ . '/services/ContentReviewService.class.php';
+
+/**
  * Helpers
  */
 $wgAutoloadClasses['Wikia\ContentReview\Helper'] = __DIR__ . '/ContentReviewHelper.php';

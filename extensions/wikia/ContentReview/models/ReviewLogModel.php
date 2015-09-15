@@ -2,7 +2,6 @@
 
 namespace Wikia\ContentReview\Models;
 
-
 class ReviewLogModel extends ContentReviewBaseModel {
 
 	/**
@@ -38,7 +37,7 @@ class ReviewLogModel extends ContentReviewBaseModel {
 		return true;
 	}
 
-	public function getArchivedReviewForWiki( $wikiId ) {
+	public function getArchivedReviewsForWiki( $wikiId ) {
 		$db = $this->getDatabaseForRead();
 
 		$reviews = ( new \WikiaSQL() )

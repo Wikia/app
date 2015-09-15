@@ -22,12 +22,12 @@
 		<?php foreach ( $reviews as $wikiReview ): ?>
 			<?php foreach( $wikiReview as $review ): ?>
 				<tr class="content-review-special-list-item">
-					<td><a href="<?= Sanitizer::encodeAttribute( $review['url'] ) ?>" target="_blank"><?= htmlspecialchars( $review['title'] ) ?></a></td>
+					<td><a href="<?= Sanitizer::cleanUrl( $review['url'] ) ?>" target="_blank"><?= htmlspecialchars( $review['title'] ) ?></a></td>
 					<td><?= $review['revision_id'] ?></td>
 					<td><?= wfMessage( ContentReviewSpecialController::$statusMessageKeys[$review['status']] )->escaped() ?></td>
 					<td><?= htmlspecialchars( $review['review_user_name'] ) ?></td>
 					<td><?= $review['review_start'] ?></td>
-					<td><?php if ( !empty($review['review_end'] ) ) { echo $review['review_end']; } ?></td>
+					<td><?php if ( !empty($review['review_end'] ) ) echo $review['review_end']; ?></td>
 					<td class="content-review-special-list-item-actions clearfix">
 						<a href="<?= Sanitizer::encodeAttribute( $review['diff'] ) ?>" target="_blank"
 						   class="wikia-button primary">

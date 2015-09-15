@@ -13,8 +13,7 @@ class ReviewModel extends ContentReviewBaseModel {
 			CONTENT_REVIEW_STATUS_IN_REVIEW = 2,
 			CONTENT_REVIEW_STATUS_APPROVED = 3,
 			CONTENT_REVIEW_STATUS_REJECTED = 4,
-			CONTENT_REVIEW_STATUS_LIVE = 5,
-			CONTENT_REVIEW_STATUS_REVERTED = 6;
+			CONTENT_REVIEW_STATUS_AUTOAPPROVED = 5;
 
 	public function getPageStatus( $wikiId, $pageId ) {
 		$db = $this->getDatabaseForRead();

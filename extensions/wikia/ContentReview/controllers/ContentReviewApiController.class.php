@@ -164,17 +164,6 @@ class ContentReviewApiController extends WikiaApiController {
 		}
 	}
 
-	public function restoreRevision() {
-		$wikiId = $this->request->getInt( 'wikiId' );
-		$pageId = $this->request->getInt( 'pageId' );
-		$revisionId = $this->request->getInt( 'revisionId' );
-
-		//TODO: Check permissions
-		//TODO: Add previous revision to log tables
-		//TODO: Approve revision
-		//TODO: Set live revision as reverted??
-	}
-
 	public function getPageStatus() {
 		$wikiId = $this->request->getInt( 'wikiId' );
 		$pageId = $this->request->getInt( 'pageId' );
