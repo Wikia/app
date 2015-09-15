@@ -36,7 +36,7 @@ describe('ext.wikia.adEngine.slot.scrollHandler', function () {
 
 	beforeEach(function () {
 		mocks.win.scrollY = 0;
-		setContext(mocks, {reloadedViewMax: -1});
+		setContext(mocks, {});
 	});
 
 	function getModule() {
@@ -65,13 +65,28 @@ describe('ext.wikia.adEngine.slot.scrollHandler', function () {
 		shouldBeRefreshed({reloadedViewMax: -1});
 	});
 
+	it('RV count equals null when scrollHandler is disabled', function () {
+		setContext(mocks, {enableScrollHandler: false});
+
+		var scrollHandler = getModule();
+		scrollHandler.init();
+
+		expect(scrollHandler.getReloadedViewCount('PREFOOTER_LEFT_BOXAD')).toBe(null);
+	});
+
 	it('RV count of unsupported slot equals null', function () {
-		expect(getModule().getReloadedViewCount('TOP_LEADERBOARD')).toBe(null);
+		setContext(mocks, {enableScrollHandler: true});
+
+		var scrollHandler = getModule();
+		scrollHandler.init();
+
+		expect(scrollHandler.getReloadedViewCount('TOP_LEADERBOARD')).toBe(null);
 	});
 
 	function shouldBeRefreshed(params) {
 		spyOn(mocks.win.adslots2, 'push');
 		mocks.win.scrollY = params.scrollY || 2000;
+		params.enableScrollHandler = true;
 		setContext(mocks, params);
 
 		var scrollHandler = getModule();
@@ -84,6 +99,7 @@ describe('ext.wikia.adEngine.slot.scrollHandler', function () {
 	function shouldNotBeRefreshed(params) {
 		spyOn(mocks.win.adslots2, 'push');
 		mocks.win.scrollY = params.scrollY || 2000;
+		params.enableScrollHandler = true;
 		setContext(mocks, params);
 
 		var scrollHandler = getModule();
@@ -98,7 +114,7 @@ describe('ext.wikia.adEngine.slot.scrollHandler', function () {
 			getContext: function () {
 				return {
 					opts: {
-						enableScrollHandler: true,
+						enableScrollHandler: params.enableScrollHandler,
 						scrollHandlerConfig: {PREFOOTER_LEFT_BOXAD: {reloadedViewMax: params.reloadedViewMax}}
 					}
 				};

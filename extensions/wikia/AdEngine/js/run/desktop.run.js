@@ -78,7 +78,6 @@ require([
 		scrollHandler.init();
 		adEngine.run(adConfigDesktop, win.adslots2, 'queue.desktop');
 		sourcePoint.initDetection();
-
 		// Krux
 		krux.load(kruxSiteId);
 	});
