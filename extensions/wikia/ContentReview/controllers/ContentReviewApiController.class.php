@@ -240,7 +240,7 @@ class ContentReviewApiController extends WikiaApiController {
 		$this->setResponseData( $res );
 	}
 
-	private function isValidPostRequest( WebRequest $request, User $user ) {
+	private function isValidPostRequest( WikiaRequest $request, User $user ) {
 		if ( !$request->wasPosted()	|| !$user->matchEditToken( $request->getVal( 'editToken' ) ) ) {
 			throw new BadRequestApiException();
 		}
