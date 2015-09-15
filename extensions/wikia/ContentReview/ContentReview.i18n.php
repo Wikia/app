@@ -75,7 +75,6 @@ $messages['en'] = [
 	'content-review-status-approved' => 'Approved',
 	'content-review-status-rejected' => 'Rejected',
 	'content-review-status-live' => 'Live',
-	'content-review-status-reverted' => 'Reverted',
 
 	'content-review-feedback-link-text' => 'Provide feedback',
 	'content-review-rejection-explanation' => '==Submitted script change rejected==
@@ -160,7 +159,6 @@ $messages['qqq'] = [
 	'content-review-status-approved' => 'A name of a status of a revision that has been approved.',
 	'content-review-status-rejected' => 'A name of a status of a revision that has been rejected.',
 	'content-review-status-live' => 'A name of a status of a revision that is currently live',
-	'content-review-status-reverted' => 'A name of a status of a revision that has been reverted',
 
 	'content-review-status-link-text' => 'Text on entrypoint link to show content review module with review status info and submit for review buttons',
 	'content-review-edit-page-checkbox-label' => 'A label for a checkbox that if checked causes changes made by an authorized user to be automatically approved.',
