@@ -42,7 +42,7 @@ class MemcachedPhpBagOStuff extends BagOStuff {
 			$params['timeout'] = $GLOBALS['wgMemCachedTimeout'];
 		}
 		if ( !isset( $params['connect_timeout'] ) ) {
-			$params['connect_timeout'] = 0.1;
+			$params['connect_timeout'] = 0.5;
 		}
 
 		if (empty($wgMemCachedClass) || !class_exists($wgMemCachedClass)) {
