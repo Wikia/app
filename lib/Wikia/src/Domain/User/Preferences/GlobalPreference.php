@@ -1,6 +1,6 @@
 <?php
 
-namespace Wikia\Domain\User;
+namespace Wikia\Domain\User\Preferences;
 
 use Wikia\Util\Assert;
 
@@ -10,7 +10,7 @@ class GlobalPreference {
 	private $value;
 
 	function __construct( $name, $value ) {
-		Assert::true(!empty($name), "invalid preference name");
+		Assert::true( !empty( $name ), "invalid preference name" );
 
 		$this->name = $name;
 		$this->value = $value;
@@ -23,5 +23,4 @@ class GlobalPreference {
 	public function getValue() {
 		return $this->value;
 	}
-
 }
