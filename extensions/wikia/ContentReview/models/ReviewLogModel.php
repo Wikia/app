@@ -4,6 +4,8 @@ namespace Wikia\ContentReview\Models;
 
 class ReviewLogModel extends ContentReviewBaseModel {
 
+	const CONTENT_REVIEW_ARCHIVE_LIMIT = 25;
+
 	/**
 	 * Backup completed review in log table
 	 *
@@ -34,9 +36,17 @@ class ReviewLogModel extends ContentReviewBaseModel {
 			throw new \FluentSql\Exception\SqlException( 'The INSERT operation failed.' );
 		}
 
+		$db->commit( __METHOD__ );
+
 		return true;
 	}
 
+	/**
+	 * Gets last 20 entries from the ContentReview logs table for a given wikia.
+	 *
+	 * @param int $wikiId
+	 * @return array
+	 */
 	public function getArchivedReviewsForWiki( $wikiId ) {
 		$db = $this->getDatabaseForRead();
 
@@ -45,6 +55,7 @@ class ReviewLogModel extends ContentReviewBaseModel {
 			->FROM( self::CONTENT_REVIEW_LOG_TABLE )
 			->WHERE( 'wiki_id' )->EQUAL_TO( $wikiId )
 			->ORDER_BY( ['review_end', 'desc'] )
+			->LIMIT( self::CONTENT_REVIEW_ARCHIVE_LIMIT )
 			->runLoop( $db, function ( &$reviews, $row ) {
 				$reviews[] = get_object_vars( $row );
 			} );
