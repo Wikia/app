@@ -28,7 +28,7 @@ class ApiQueryUnconvertedInfoboxes extends ApiQueryBase {
 				} );
 		} );
 
-		foreach ( $data as $id => $infobox ) {
+		foreach ( $data as $infobox ) {
 			$this->getResult()->addValue( [ 'query', 'unconvertedinfoboxes' ], null, $infobox );
 		}
 
