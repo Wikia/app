@@ -10,18 +10,37 @@ class PreferenceCorrectionService {
 
 	use Loggable;
 
+	const PREFERENCE_CORRECTION_ENABLED = "preference_correction_enabled";
+
+	/** @var bool */
+	private $correctionEnabled;
+
 	/** @var PreferenceScopeService */
 	private $scopeService;
 
 	/** @var PreferenceService */
 	private $preferenceService;
 
-	public function __construct( PreferenceService $preferenceService, PreferenceScopeService $scopeService ) {
+	/**
+	 * @Inject({
+	 *    Wikia\Service\User\Preferences\PreferenceService::class,
+	 *    Wikia\Service\User\Preferences\Migration\PreferenceScopeService::class,
+	 *    Wikia\Service\User\Preferences\Migration\PreferenceCorrectionService::PREFERENCE_CORRECTION_ENABLED})
+	 * @param PreferenceService $preferenceService
+	 * @param PreferenceScopeService $scopeService
+	 * @param bool $correctionEnabled
+	 */
+	public function __construct( PreferenceService $preferenceService, PreferenceScopeService $scopeService, $correctionEnabled ) {
 		$this->scopeService = $scopeService;
 		$this->preferenceService = $preferenceService;
+		$this->correctionEnabled = $correctionEnabled;
 	}
 
 	public function compareAndCorrect( $userId, $userOptions ) {
+		if ( !$this->correctionEnabled ) {
+			return;
+		}
+
 		$actual = $this->preferenceService->getPreferences( $userId );
 		list( $differences, $expected ) = $this->compare( $actual, $userId, $userOptions );
 
@@ -38,7 +57,7 @@ class PreferenceCorrectionService {
 		$this->preferenceService->save( $userId );
 	}
 
-	public function compare( UserPreferences $actualPreferences, $userId, $options ) {
+	private function compare( UserPreferences $actualPreferences, $userId, $options ) {
 		$expectedPreferences = new UserPreferences();
 		$differences = 0;
 

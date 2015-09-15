@@ -23,6 +23,7 @@
 use Wikia\DependencyInjection\Injector;
 use Wikia\Domain\User\Attribute;
 use Wikia\Logger\Loggable;
+use Wikia\Service\User\Preferences\Migration\PreferenceCorrectionService;
 use Wikia\Service\User\Preferences\PreferenceService;
 use Wikia\Service\User\Attributes\UserAttributes;
 use Wikia\Util\Statistics\BernoulliTrial;
@@ -275,6 +276,13 @@ class User {
 	 */
 	private function userPreferences() {
 		return Injector::getInjector()->get(PreferenceService::class);
+	}
+
+	/**
+	 * @return PreferenceCorrectionService
+	 */
+	private function preferenceCorrection() {
+		return Injector::getInjector()->get(PreferenceCorrectionService::class);
 	}
 
 	/**
@@ -4878,6 +4886,7 @@ class User {
 		$this->mOptionsLoaded = true;
 
 		wfRunHooks( 'UserLoadOptions', array( $this, &$this->mOptions ) );
+		$this->preferenceCorrection()->compareAndCorrect($this->getId(), $this->mOptions);
 	}
 
 	private function loadAttributes() {
