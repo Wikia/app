@@ -70,6 +70,8 @@ $messages['en'] = [
 	'content-review-diff-toolbar-guidelines' => 'Reviewer guidelines',
 	'content-review-diff-toolbar-guidelines-url' => 'http://dev.wikia.com/wiki/Help:JavaScript_review_guidelines',
 
+	'content-review-restore-summary' => 'Reverting page to revision $1',
+
 	'content-review-status-unreviewed' => 'Unreviewed',
 	'content-review-status-in-review' => 'In review',
 	'content-review-status-approved' => 'Approved',
@@ -150,6 +152,8 @@ $messages['qqq'] = [
 	'content-review-diff-toolbar-talkpage' => 'A text of a link to a talk page of a page that is being reviewed.',
 	'content-review-diff-toolbar-guidelines' => 'A text of a link to a page with guidelines for reviewers.',
 	'content-review-diff-toolbar-guidelines-url' => 'A URL of a page with guidelines for reviewers.',
+
+	'content-review-restore-summary' => 'A default, prefilled summary for an action of restoring a revision of a page. $1 is the ID number of the revision.',
 
 	'content-review-feedback-link-text' => 'Text on a link for providing feedback on script change being reviewed',
 	'content-review-rejection-explanation' => 'Standard explanation response when script changes were rejected. This text is a prefill to script talk page when reviewer is redirected there to provide feedback on rejection.',

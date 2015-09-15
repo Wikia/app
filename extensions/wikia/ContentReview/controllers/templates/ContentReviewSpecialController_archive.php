@@ -29,11 +29,11 @@
 					<td><?= $review['review_start'] ?></td>
 					<td><?php if ( !empty($review['review_end'] ) ) echo $review['review_end']; ?></td>
 					<td class="content-review-special-list-item-actions clearfix">
-						<a href="<?= Sanitizer::encodeAttribute( $review['diff'] ) ?>" class="wikia-button secondary">
+						<a href="<?= Sanitizer::encodeAttribute( $review['diff'] ) ?>" class="wikia-button primary">
 							<?= wfMessage( 'content-review-special-show-revision' )->escaped() ?>
 						</a>
 						<?php if ( !empty( $review['restore'] ) ): ?>
-							<a href="<?= $review['restoreUrl'] ?>" class="content-review-restore-revision wikia-button primary">
+							<a href="<?= $review['restoreUrl'] ?>" class="content-review-restore-revision wikia-button secondary">
 								<?= wfMessage( 'content-review-special-restore' )->escaped() ?>
 							</a>
 						<?php endif ?>

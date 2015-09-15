@@ -130,7 +130,11 @@ class ContentReviewSpecialController extends WikiaSpecialPageController {
 				$review['restore'] = true;
 				$review['restoreUrl'] = $title->getFullURL( [
 					'oldid' => $review['revision_id'],
-					'action' => 'edit'
+					'action' => 'edit',
+					'summary' => wfMessage( 'content-review-restore-summary' )
+						->inLanguage( $title->getPageLanguage() )
+						->params( $review['revision_id'] )
+						->escaped(),
 				] );
 			}
 
