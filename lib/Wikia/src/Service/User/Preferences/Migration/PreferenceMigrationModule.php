@@ -16,8 +16,7 @@ class PreferenceMigrationModule implements Module {
 
 		$builder
 			->bind( PreferenceCorrectionService::PREFERENCE_CORRECTION_ENABLED )->to($preferenceCorrectionEnabled)
-			->bind( PreferenceScopeService::class )->toClass( PreferenceScopeServiceImpl::class )
-			->bind( PreferenceScopeServiceImpl::GLOBAL_SCOPE_PREFS )->to( $wgGlobalUserPreferenceWhiteList )
-			->bind( PreferenceScopeServiceImpl::LOCAL_SCOPE_PREFS )->to( $wgLocalUserPreferenceWhiteList );
+			->bind( PreferenceScopeService::GLOBAL_SCOPE_PREFS )->to( $wgGlobalUserPreferenceWhiteList )
+			->bind( PreferenceScopeService::LOCAL_SCOPE_PREFS )->to( $wgLocalUserPreferenceWhiteList );
 	}
 }
