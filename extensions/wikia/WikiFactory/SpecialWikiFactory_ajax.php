@@ -54,7 +54,7 @@ function axWFactoryValidateRequest( WebRequest $request, User $user, $method ) {
 		throw new WikiFactoryInvalidRequestException( $method );
 	}
 
-	if ( $user->matchEditToken( $request->getVal( 'token' ) ) ) {
+	if ( !$user->matchEditToken( $request->getVal( 'token' ) ) ) {
 		throw new WikiFactoryInvalidTokenException( $method );
 	}
 }
