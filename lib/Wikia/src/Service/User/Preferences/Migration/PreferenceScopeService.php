@@ -23,29 +23,29 @@ class PreferenceScopeService {
 	 * @param array $globalPreferences
 	 * @param array $localPreferences
 	 */
-	public function __construct(array $globalPreferences, array $localPreferences) {
+	public function __construct( array $globalPreferences, array $localPreferences ) {
 		$this->globalPreferenceLiterals = $globalPreferences['literals'];
-		$this->globalPreferenceRegex = '/'.implode('|', $globalPreferences['regexes']).'/';
-		$this->localPreferenceRegex = '/'.implode('|', $localPreferences['regexes']).'/';
+		$this->globalPreferenceRegex = '/' . implode( '|', $globalPreferences['regexes'] ) . '/';
+		$this->localPreferenceRegex = '/' . implode( '|', $localPreferences['regexes'] ) . '/';
 	}
 
-	public function splitLocalPreference($option) {
-		if (preg_match('/(.*?)-([0-9]+)$/', $option, $matches) && count($matches) == 3) {
+	public function splitLocalPreference( $option ) {
+		if ( preg_match( '/(.*?)-([0-9]+)$/', $option, $matches ) && count( $matches ) == 3 ) {
 			return [$matches[1], $matches[2]];
 		}
 
 		return [null, null];
 	}
 
-	public function isLocalPreference($option) {
-		return preg_match($this->localPreferenceRegex, $option) > 0;
+	public function isLocalPreference( $option ) {
+		return preg_match( $this->localPreferenceRegex, $option ) > 0;
 	}
 
-	public function isGlobalPreference($option) {
-		if (in_array($option, $this->globalPreferenceLiterals)) {
+	public function isGlobalPreference( $option ) {
+		if ( in_array( $option, $this->globalPreferenceLiterals ) ) {
 			return true;
 		}
 
-		return preg_match($this->globalPreferenceRegex, $option) > 0;
+		return preg_match( $this->globalPreferenceRegex, $option ) > 0;
 	}
 }

@@ -7,11 +7,11 @@ use Wikia\DependencyInjection\Module;
 
 class PreferenceMigrationModule implements Module {
 
-	public function configure(InjectorBuilder $builder) {
+	public function configure( InjectorBuilder $builder ) {
 		global $wgGlobalUserPreferenceWhiteList, $wgLocalUserPreferenceWhiteList;
 
 		$builder
-			->bind(PreferenceScopeService::GLOBAL_SCOPE_PREFS)->to($wgGlobalUserPreferenceWhiteList)
-			->bind(PreferenceScopeService::LOCAL_SCOPE_PREFS)->to($wgLocalUserPreferenceWhiteList);
+			->bind( PreferenceScopeService::GLOBAL_SCOPE_PREFS )->to( $wgGlobalUserPreferenceWhiteList )
+			->bind( PreferenceScopeService::LOCAL_SCOPE_PREFS )->to( $wgLocalUserPreferenceWhiteList );
 	}
 }

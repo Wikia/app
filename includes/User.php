@@ -23,7 +23,7 @@
 use Wikia\DependencyInjection\Injector;
 use Wikia\Domain\User\Attribute;
 use Wikia\Logger\Loggable;
-use Wikia\Service\User\Preferences\UserPreferences;
+use Wikia\Service\User\Preferences\PreferenceService;
 use Wikia\Service\User\Attributes\UserAttributes;
 use Wikia\Util\Statistics\BernoulliTrial;
 
@@ -83,7 +83,6 @@ class User {
 	const USER_TOKEN_LENGTH = USER_TOKEN_LENGTH;
 	const MW_USER_VERSION = MW_USER_VERSION;
 	const EDIT_TOKEN_SUFFIX = EDIT_TOKEN_SUFFIX;
-	const CACHE_PREFERENCES_KEY = "preferences";
 	const CACHE_ATTRIBUTES_KEY = "attributes";
 	const GET_SET_OPTION_SAMPLE_RATE = 0.1;
 
@@ -272,10 +271,10 @@ class User {
 	}
 
 	/**
-	 * @return UserPreferences
+	 * @return PreferenceService
 	 */
 	private function userPreferences() {
-		return Injector::getInjector()->get(UserPreferences::class);
+		return Injector::getInjector()->get(PreferenceService::class);
 	}
 
 	/**
@@ -398,10 +397,6 @@ class User {
 					$this->$name = $data[$name];
 				}
 			}
-
-			if (isset($data[self::CACHE_PREFERENCES_KEY])) {
-				$this->userPreferences()->setPreferencesInCache($this->mId, $data[self::CACHE_PREFERENCES_KEY]);
-			}
 		}
 		return true;
 	}
@@ -431,7 +426,6 @@ class User {
 			$data[$name] = $this->$name;
 		}
 		$data['mVersion'] = MW_USER_VERSION;
-		$data[self::CACHE_PREFERENCES_KEY] = $this->userPreferences()->getPreferences($this->mId);
 		$key = $this->getCacheKey();
 		global $wgMemc;
 		$wgMemc->set( $key, $data );
