@@ -2674,30 +2674,6 @@ class User {
 	}
 
 	/**
-	 * @param array $preferences preferenceName->Value
-	 */
-	public function setGlobalPreferences( $preferences ) {
-		global $wgPreferencesUseService;
-		if ( $wgPreferencesUseService ) {
-			$this->load();
-			$preferences = $this->sanitizePropertyArray( $preferences );
-			$this->userPreferences()->setMultiple( $this->mId, $preferences );
-			if ( array_key_exists( 'skin', $preferences ) ) {
-				unset( $this->mSkin );
-			}
-			if ( array_key_exists( 'theme', $preferences ) ) {
-				unset( $this->mTheme );
-			}
-			wfRunHooks( "UserSetPreferences", [ $this, $this->userPreferences()->getPreferences( $this->mId ) ] );
-			$this->clearSharedCache();
-		} else {
-			foreach ( $preferences as $key => $value ) {
-				$this->setOptionHelper( $key, $value );
-			}
-		}
-	}
-
-	/**
 	 * @param String $preference set to default
 	 * for now its support only old aproach to handle preferences (get/set Option)
 	 * It will be handled with https://wikia-inc.atlassian.net/browse/SERVICES-483
