@@ -14,6 +14,50 @@ if ( !defined( 'MEDIAWIKI' ) ) {
     exit( 1 ) ;
 }
 
+/**
+ * Exceptions to be thrown by AJAX request handlers
+ *
+ * @see PLATFORM-1476
+ *
+ * - WikiFactoryInvalidRequestException for requests that should be sent as POST
+ * - WikiFactoryInvalidTokenException for requests with invalid token
+ */
+abstract class WikiFactoryRequestException extends WikiaException {}
+
+class WikiFactoryInvalidRequestException extends WikiFactoryRequestException {
+	function __construct( $message ) {
+		parent::__construct( 'POST request should be made to ' . $message );
+	}
+}
+
+class WikiFactoryInvalidTokenException extends WikiFactoryRequestException {
+	function __construct( $message ) {
+		parent::__construct( 'Token check failed for ' . $message );
+	}
+}
+
+/**
+ * Check given request and make sure that:
+ *
+ *  - it's a POST request (throws WikiFactoryInvalidRequestException otherwise)
+ *  - it has a valid token (throws WikiFactoryInvalidTokenException otherwise)
+ *
+ * @see PLATFORM-1476
+ *
+ * @param WebRequest $request
+ * @param User $user
+ * @param string $method
+ * @throws WikiFactoryRequestException
+ */
+function axWFactoryValidateRequest( WebRequest $request, User $user, $method ) {
+	if ( !$request->wasPosted() ) {
+		throw new WikiFactoryInvalidRequestException( $method );
+	}
+
+	if ( $user->matchEditToken( $request->getVal( 'token' ) ) ) {
+		throw new WikiFactoryInvalidTokenException( $method );
+	}
+}
 
 ############################## Ajax methods ##################################
 
@@ -29,6 +73,9 @@ if ( !defined( 'MEDIAWIKI' ) ) {
  */
 function axWFactoryTagCheck() {
 	global $wgRequest, $wgUser;
+
+	// this request needs to be a POST and has a valid token passed (PLATFORM-1476)
+	axWFactoryValidateRequest( $wgRequest, $wgUser, __METHOD__ );
 
 	if ( !$wgUser->isAllowed( 'wikifactory' ) ) {
 		return;
@@ -182,6 +229,9 @@ function axWFactoryChangeVariable() {
  */
 function axWFactorySubmitChangeVariable() {
 	global $wgRequest, $wgUser, $wgOut;
+
+	// this request needs to be a POST and has a valid token passed (PLATFORM-1476)
+	axWFactoryValidateRequest( $wgRequest, $wgUser, __METHOD__ );
 
 	if ( !$wgUser->isAllowed( 'wikifactory' ) ) {
 		$wgOut->readOnlyPage(); #--- FIXME: later change to something reasonable
@@ -465,6 +515,9 @@ function axWFactorySaveVariable() {
 	$error     = 0;
 	$return    = "";
 
+	// this request needs to be a POST and has a valid token passed (PLATFORM-1476)
+	axWFactoryValidateRequest( $wgRequest, $wgUser, __METHOD__ );
+
 	if ( ! $wgUser->isAllowed('wikifactory') ) {
 		$error++;
 		$return = Wikia::errormsg( "You are not allowed to change variable value" );
@@ -712,6 +765,9 @@ function axWFactoryRemoveVariable( ) {
 
 	$error     = 0;
 	$return    = "";
+
+	// this request needs to be a POST and has a valid token passed (PLATFORM-1476)
+	axWFactoryValidateRequest( $wgRequest, $wgUser, __METHOD__ );
 
 	if ( ! $wgUser->isAllowed('wikifactory') ) {
 		$error++;
