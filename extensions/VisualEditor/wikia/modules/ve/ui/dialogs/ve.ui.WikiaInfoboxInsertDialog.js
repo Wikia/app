@@ -179,7 +179,8 @@ ve.ui.WikiaInfoboxInsertDialog.prototype.showResults = function ( data ) {
 };
 
 /**
- * Sort template titles alphabetically
+ * Sort template titles alphabetically. We don't need to use toLowerCase() or toUpperCase()
+ * to unify titles for sorting because title in response from API always will be UpperCased
  *
  * @param array of infoboxes
  */
