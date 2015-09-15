@@ -75,9 +75,8 @@ require([
 		// Ads
 		adTracker.measureTime('adengine.init', 'queue.desktop').track();
 		win.adslots2 = win.adslots2 || [];
-		adEngine.run(adConfigDesktop, win.adslots2, 'queue.desktop');
-
 		scrollHandler.init();
+		adEngine.run(adConfigDesktop, win.adslots2, 'queue.desktop');
 		sourcePoint.initDetection();
 
 		// Krux
