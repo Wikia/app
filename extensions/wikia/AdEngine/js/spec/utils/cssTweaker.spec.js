@@ -13,7 +13,6 @@ describe('ext.wikia.adEngine.utils.cssTweaker', function () {
 
 	beforeEach(function () {
 		mocks.destination = document.createElement('div');
-		mocks.destination.style = {};
 		mocks.source = document.createElement('div');
 		mocks.source.style.cssText = 'background-color: rgb(255, 255, 255); display: inline; ';
 

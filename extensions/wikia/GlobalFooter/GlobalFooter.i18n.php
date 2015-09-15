@@ -226,7 +226,7 @@ $messages['ja'] = array(
 		* [http://www.wikia.com/wiki/Wikia:Terms_of_use Terms of use]
 		* [[Special:Contact|Contact]]
 		* [http://www.wikia.com/wiki/Wikia:Advertising_on_Wikia Advertise]',
-	'global-footer-local-sitemap' => 'ローカル・サイトマップ',
+	'global-footer-local-sitemap' => 'コミュニティ・サイトマップ',
 );
 
 $messages['ko'] = array(
