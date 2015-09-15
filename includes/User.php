@@ -2574,14 +2574,6 @@ class User {
 		if ($wgPreferencesUseService) {
 			$this->load();
 			$value = $this->userPreferences()->getLocalPreference($this->mId, $cityId, $preference, $default, $ignoreHidden);
-			wfRunHooks(
-				'UserGetPreference',
-				[
-					$this->userPreferences()->getPreferences($this->mId),
-					$preference,
-					&$value
-				]
-			);
 		} else {
 			$preferenceGlobalName = self::localToGlobalPropertyName($preference, $cityId, $sep);
 			$value = $this->getOptionHelper($preferenceGlobalName, $default, $ignoreHidden);
