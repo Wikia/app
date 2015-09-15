@@ -7,6 +7,7 @@
  */
 class GamestarApiWrapperTest extends WikiaBaseTest {
 	const TEST_CITY_ID = 79860;
+	const PROTOCOL_PREFIX = 'http:';
 
 	public function setUp() {
 		$this->setupFile = dirname(__FILE__) . '/../VideoHandlers.setup.php';
@@ -100,11 +101,17 @@ class GamestarApiWrapperTest extends WikiaBaseTest {
 
 
 		// Thumbnail Url
-		$response_data = $apiWrapper->getThumbnailUrl();
-
+		$act_data = $apiWrapper->getThumbnailUrl();
 		$exp_data = $apiWrapper->getThumbnail();
-		$this->assertNotEmpty( $response_data );
-		$this->assertEquals( $exp_data, $response_data );
+		$this->assertNotEmpty( $exp_data );
+
+		$exp_url = $this->generateAbsoluteUrl( $exp_data );
+		$act_url = $this->generateAbsoluteUrl( $act_data );
+		$exp_file_contents = file_get_contents( $exp_url );
+		$act_file_contents = file_get_contents( $act_url );
+
+		$this->assertEquals( $exp_file_contents, $act_file_contents,
+			'Image URL is retrieved properly and points to a valid image' );
 
 		// Mime Type
 		$response_data = $apiWrapper->getMimeType();
@@ -117,5 +124,13 @@ class GamestarApiWrapperTest extends WikiaBaseTest {
 
 		$exp_data = 'gamestar';
 		$this->assertEquals( $exp_data, $response_data );
+	}
+
+	/**
+	 * @param $relative_url
+	 * @return string
+	 */
+	private function generateAbsoluteUrl( $relative_url ) {
+		return self::PROTOCOL_PREFIX . $relative_url;
 	}
 }
