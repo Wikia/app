@@ -325,6 +325,9 @@ function axWFactoryDomainCRUD($type="add") {
     $city_id = $wgRequest->getVal("cityid");
     $reason  = $wgRequest->getVal("reason");
 
+	// this request needs to be a POST and has a valid token passed (PLATFORM-1476)
+	axWFactoryValidateRequest( $wgRequest, $wgUser, __METHOD__ );
+
     if ( !$wgUser->isAllowed( 'wikifactory' ) ) {
         $wgOut->readOnlyPage(); #--- later change to something reasonable
         return;
@@ -467,6 +470,9 @@ function axWFactoryClearCache()
     $city_id = $wgRequest->getVal("cityid");
     $iError = 0;
     $sError = "";
+
+	// this request needs to be a POST and has a valid token passed (PLATFORM-1476)
+	axWFactoryValidateRequest( $wgRequest, $wgUser, __METHOD__ );
 
     if ( !$wgUser->isAllowed( 'wikifactory' ) ) {
         #--- no permission, do nothing
@@ -727,6 +733,9 @@ function axWFactoryDomainQuery() {
  */
 function axWFactoryFilterVariables() {
 	global $wgRequest, $wgUser;
+
+	// this request needs to be a POST and has a valid token passed (PLATFORM-1476)
+	axWFactoryValidateRequest( $wgRequest, $wgUser, __METHOD__ );
 
 	if ( !$wgUser->isAllowed('wikifactory') ) {
 		return '';
