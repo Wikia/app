@@ -834,14 +834,15 @@ ve.init.mw.DesktopArticleTarget.prototype.getSaveFields = function () {
 /**
  * Switch to viewing mode.
  *
+ * @param {boolean} [noAnimate] Don't animate toolbar teardown
  * @return {jQuery.Promise} Promise resolved when surface is torn down
  */
-ve.init.mw.DesktopArticleTarget.prototype.teardownSurface = function () {
+ve.init.mw.DesktopArticleTarget.prototype.teardownSurface = function ( noAnimate ) {
 	var target = this,
 		promises = [];
 
 	// Update UI
-	promises.push( this.teardownToolbar(), this.teardownDebugBar() );
+	promises.push( this.teardownToolbar( noAnimate ), this.teardownDebugBar() );
 	this.restoreDocumentTitle();
 	if ( this.getSurface().mwTocWidget ) {
 		this.getSurface().mwTocWidget.teardown();
@@ -961,20 +962,28 @@ ve.init.mw.DesktopArticleTarget.prototype.restoreScrollPosition = function () {
 /**
  * Hide the toolbar.
  *
+ * @param {boolean} [noAnimate] Don't animate toolbar teardown
  * @return {jQuery.Promise} Promise which resolves when toolbar is hidden
  */
-ve.init.mw.DesktopArticleTarget.prototype.teardownToolbar = function () {
+ve.init.mw.DesktopArticleTarget.prototype.teardownToolbar = function ( noAnimate ) {
 	var target = this,
-		deferred = $.Deferred();
-	this.toolbar.$element.css( 'height', this.toolbar.$bar.outerHeight() );
-	setTimeout( function () {
-		target.toolbar.$element.css( 'height', '0' );
-		target.toolbar.$element.one( 'transitionend', function () {
-			target.toolbar.destroy();
-			target.toolbar = null;
-			deferred.resolve();
+		deferred = $.Deferred(),
+		tearDownToolbar = function () {
+		target.toolbar.destroy();
+		target.toolbar = null;
+		deferred.resolve();
+	};
+
+	if ( noAnimate ) {
+		tearDownToolbar();
+	} else {
+		this.toolbar.$element.css( 'height', this.toolbar.$bar.outerHeight() );
+		setTimeout( function () {
+			target.toolbar.$element.css( 'height', '0' );
+			target.toolbar.$element.one( 'transitionend', tearDownToolbar );
 		} );
-	} );
+	}
+
 	return deferred.promise();
 };
 
