@@ -24,7 +24,7 @@ class PreferencePersistenceSwaggerService implements PreferencePersistence {
 	/** @var ApiProvider */
 	private $apiProvider;
 
-	public function __construct(ApiProvider $apiProvider) {
+	public function __construct( ApiProvider $apiProvider ) {
 		$this->apiProvider = $apiProvider;
 	}
 
@@ -38,31 +38,31 @@ class PreferencePersistenceSwaggerService implements PreferencePersistence {
 	public function save( $userId, UserPreferences $preferences ) {
 		$globalPrefs = $localPrefs = [];
 
-		foreach ($preferences->getGlobalPreferences() as $globalPref) {
-			$globalPrefs[] = (new SwaggerGlobalPref())
-				->setName($globalPref->getName())
-				->setValue($globalPref->getValue());
+		foreach ( $preferences->getGlobalPreferences() as $globalPref ) {
+			$globalPrefs[] = ( new SwaggerGlobalPref() )
+				->setName( $globalPref->getName() )
+				->setValue( $globalPref->getValue() );
 		}
 
-		foreach ($preferences->getLocalPreferences() as $wikiPreferences) {
-			foreach ($wikiPreferences as $wikiPreference) {
+		foreach ( $preferences->getLocalPreferences() as $wikiPreferences ) {
+			foreach ( $wikiPreferences as $wikiPreference ) {
 				/** @var $wikiPreference LocalPreference */
-				$localPrefs[] = (new SwaggerLocalPref())
-					->setWikiId($wikiPreference->getWikiId())
-					->setName($wikiPreference->getName())
-					->setValue($wikiPreference->getValue());
+				$localPrefs[] = ( new SwaggerLocalPref() )
+					->setWikiId( $wikiPreference->getWikiId() )
+					->setName( $wikiPreference->getName() )
+					->setValue( $wikiPreference->getValue() );
 			}
 		}
 
-		$userPreferences = (new SwaggerUserPreferences())
-			->setLocalPreferences($localPrefs)
-			->setGlobalPreferences($globalPrefs);
+		$userPreferences = ( new SwaggerUserPreferences() )
+			->setLocalPreferences( $localPrefs )
+			->setGlobalPreferences( $globalPrefs );
 
 		try {
-			$this->getApi($userId)->setUserPreferences($userId, $userPreferences);
+			$this->getApi( $userId )->setUserPreferences( $userId, $userPreferences );
 			return true;
-		} catch (ApiException $e) {
-			$this->handleApiException($e);
+		} catch ( ApiException $e ) {
+			$this->handleApiException( $e );
 			return false;
 		}
 	}
@@ -75,29 +75,29 @@ class PreferencePersistenceSwaggerService implements PreferencePersistence {
 	 * @throws UnauthorizedException
 	 * @throws PersistenceException
 	 */
-	public function get($userId) {
+	public function get( $userId ) {
 		$prefs = new UserPreferences();
 
 		try {
-			$storedPreferences = $this->getApi($userId)->getUserPreferences($userId);
+			$storedPreferences = $this->getApi( $userId )->getUserPreferences( $userId );
 			$globalPreferences = $storedPreferences->getGlobalPreferences();
 			$localPreferences = $storedPreferences->getLocalPreferences();
 
-			if ($globalPreferences != null) {
-				foreach ($globalPreferences as $p) {
-					$prefs->setGlobalPreference($p->getName(), $p->getValue());
+			if ( $globalPreferences != null ) {
+				foreach ( $globalPreferences as $p ) {
+					$prefs->setGlobalPreference( $p->getName(), $p->getValue() );
 				}
 			}
 
-			if ($localPreferences != null) {
-				foreach ($localPreferences as $p) {
-					$prefs->setLocalPreference($p->getName(), $p->getWikiId(), $p->getValue());
+			if ( $localPreferences != null ) {
+				foreach ( $localPreferences as $p ) {
+					$prefs->setLocalPreference( $p->getName(), $p->getWikiId(), $p->getValue() );
 				}
 			}
-		} catch (ApiException $e) {
-			$this->handleApiException($e);
-		} catch (AssertionException $e) {
-			throw new PersistenceException("unable to load preferences: ".$e->getMessage());
+		} catch ( ApiException $e ) {
+			$this->handleApiException( $e );
+		} catch ( AssertionException $e ) {
+			throw new PersistenceException( "unable to load preferences: " . $e->getMessage() );
 		}
 
 		return $prefs;
@@ -107,8 +107,8 @@ class PreferencePersistenceSwaggerService implements PreferencePersistence {
 	 * @param $userId
 	 * @return UserPreferencesApi
 	 */
-	private function getApi($userId) {
-		return $this->apiProvider->getAuthenticatedApi(self::SERVICE_NAME, $userId, UserPreferencesApi::class);
+	private function getApi( $userId ) {
+		return $this->apiProvider->getAuthenticatedApi( self::SERVICE_NAME, $userId, UserPreferencesApi::class );
 	}
 
 	/**
@@ -117,15 +117,15 @@ class PreferencePersistenceSwaggerService implements PreferencePersistence {
 	 * @throws NotFoundException
 	 * @throws PersistenceException
 	 */
-	private function handleApiException(ApiException $e) {
-		switch ($e->getCode()) {
+	private function handleApiException( ApiException $e ) {
+		switch ( $e->getCode() ) {
 			case UnauthorizedException::CODE:
 				throw new UnauthorizedException();
 				break;
 			case NotFoundException::CODE:
 				break;
 			default:
-				throw new PersistenceException($e->getMessage());
+				throw new PersistenceException( $e->getMessage() );
 				break;
 		}
 	}

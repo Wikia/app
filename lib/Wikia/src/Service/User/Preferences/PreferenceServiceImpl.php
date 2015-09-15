@@ -56,7 +56,7 @@ class PreferenceServiceImpl implements PreferenceService {
 		PreferencePersistence $persistence,
 		$hiddenPrefs,
 		$defaultPrefs,
-		$forceSavePrefs) {
+		$forceSavePrefs ) {
 
 		$this->cache = $cache;
 		$this->persistence = $persistence;
@@ -66,58 +66,58 @@ class PreferenceServiceImpl implements PreferenceService {
 		$this->preferences = [];
 	}
 
-	public function getPreferences($userId) {
-		return $this->load($userId);
+	public function getPreferences( $userId ) {
+		return $this->load( $userId );
 	}
 
-	public function getGlobalPreference($userId, $name, $default = null, $ignoreHidden = false) {
-		if (in_array($name, $this->hiddenPrefs) && !$ignoreHidden) {
-			return $this->getFromDefault($name);
+	public function getGlobalPreference( $userId, $name, $default = null, $ignoreHidden = false ) {
+		if ( in_array( $name, $this->hiddenPrefs ) && !$ignoreHidden ) {
+			return $this->getFromDefault( $name );
 		}
 
-		$preferences = $this->load($userId);
-		if ($preferences->hasGlobalPreference($name)) {
-			return $preferences->getGlobalPreference($name);
-		}
-
-		return $default;
-	}
-
-	public function setGlobalPreference($userId, $name, $value) {
-		if ($value == null) {
-			$value = $this->getFromDefault($name);
-		}
-
-		$this->load($userId)->setGlobalPreference($name, $value);
-	}
-
-	public function deleteGlobalPreference($userId, $name) {
-		$this->load($userId)->deleteGlobalPreference($name);
-	}
-
-	public function getLocalPreference($userId, $wikiId, $name, $default = null, $ignoreHidden = false) {
-		if (in_array($name, $this->hiddenPrefs) && !$ignoreHidden) {
-			return $this->getFromDefault($name);
-		}
-
-		$preferences = $this->load($userId);
-		if ($preferences->hasLocalPreference($name, $wikiId)) {
-			return $preferences->getLocalPreference($name, $wikiId);
+		$preferences = $this->load( $userId );
+		if ( $preferences->hasGlobalPreference( $name ) ) {
+			return $preferences->getGlobalPreference( $name );
 		}
 
 		return $default;
 	}
 
-	public function setLocalPreference($userId, $wikiId, $name, $value) {
-		if ($value == null) {
-			$value = $this->getFromDefault($name);
+	public function setGlobalPreference( $userId, $name, $value ) {
+		if ( $value == null ) {
+			$value = $this->getFromDefault( $name );
 		}
 
-		$this->load($userId)->setLocalPreference($name, $wikiId, $value);
+		$this->load( $userId )->setGlobalPreference( $name, $value );
 	}
 
-	public function deleteLocalPreference($userId, $name, $wikiId) {
-		$this->load($userId)->deleteLocalPreference($name, $wikiId);
+	public function deleteGlobalPreference( $userId, $name ) {
+		$this->load( $userId )->deleteGlobalPreference( $name );
+	}
+
+	public function getLocalPreference( $userId, $wikiId, $name, $default = null, $ignoreHidden = false ) {
+		if ( in_array( $name, $this->hiddenPrefs ) && !$ignoreHidden ) {
+			return $this->getFromDefault( $name );
+		}
+
+		$preferences = $this->load( $userId );
+		if ( $preferences->hasLocalPreference( $name, $wikiId ) ) {
+			return $preferences->getLocalPreference( $name, $wikiId );
+		}
+
+		return $default;
+	}
+
+	public function setLocalPreference( $userId, $wikiId, $name, $value ) {
+		if ( $value == null ) {
+			$value = $this->getFromDefault( $name );
+		}
+
+		$this->load( $userId )->setLocalPreference( $name, $wikiId, $value );
+	}
+
+	public function deleteLocalPreference( $userId, $name, $wikiId ) {
+		$this->load( $userId )->deleteLocalPreference( $name, $wikiId );
 	}
 
 	/**
@@ -125,44 +125,44 @@ class PreferenceServiceImpl implements PreferenceService {
 	 * @return bool
 	 * @throws \Exception
 	 */
-	public function save($userId) {
-		if ($userId == 0) {
+	public function save( $userId ) {
+		if ( $userId == 0 ) {
 			return false;
 		}
 
-		$prefs = $this->load($userId);
+		$prefs = $this->load( $userId );
 		$prefsToSave = new UserPreferences();
 
-		foreach ($prefs->getGlobalPreferences() as $pref) {
-			if ($this->prefIsSaveable($pref->getName(), $pref->getValue())) {
-				$prefsToSave->setGlobalPreference($pref->getName(), $pref->getValue());
+		foreach ( $prefs->getGlobalPreferences() as $pref ) {
+			if ( $this->prefIsSaveable( $pref->getName(), $pref->getValue() ) ) {
+				$prefsToSave->setGlobalPreference( $pref->getName(), $pref->getValue() );
 			}
 		}
 
-		foreach ($prefs->getLocalPreferences() as $wikiId => $wikiPreferences) {
-			foreach ($wikiPreferences as $pref) {
+		foreach ( $prefs->getLocalPreferences() as $wikiId => $wikiPreferences ) {
+			foreach ( $wikiPreferences as $pref ) {
 				/** @var $pref LocalPreference */
-				if ($this->prefIsSaveable($pref->getName(), $pref->getValue())) {
-					$prefsToSave->setLocalPreference($pref->getName(), $pref->getWikiId(), $pref->getValue());
+				if ( $this->prefIsSaveable( $pref->getName(), $pref->getValue() ) ) {
+					$prefsToSave->setLocalPreference( $pref->getName(), $pref->getWikiId(), $pref->getValue() );
 				}
 			}
 		}
 
-		if (!$prefsToSave->isEmpty()) {
+		if ( !$prefsToSave->isEmpty() ) {
 			try {
 				$profilerStart = $this->startProfile();
-				$result = $this->persistence->save($userId, $prefsToSave);
+				$result = $this->persistence->save( $userId, $prefsToSave );
 				$this->endProfile(
 					self::PROFILE_EVENT,
 					$profilerStart,
 					[
 						'user_id' => $userId,
-						'method' => 'setPreferences',]);
-				$this->saveToCache($userId, $prefsToSave);
+						'method' => 'setPreferences', ] );
+				$this->saveToCache( $userId, $prefsToSave );
 
 				return $result;
-			} catch (\Exception $e) {
-				$this->error($e->getMessage(), ['user' => $userId]);
+			} catch ( \Exception $e ) {
+				$this->error( $e->getMessage(), ['user' => $userId] );
 				throw $e;
 			}
 		}
@@ -170,8 +170,8 @@ class PreferenceServiceImpl implements PreferenceService {
 		return true;
 	}
 
-	public function getFromDefault($pref) {
-		if (isset($this->defaultPreferences[$pref])) {
+	public function getFromDefault( $pref ) {
+		if ( isset( $this->defaultPreferences[$pref] ) ) {
 			return $this->defaultPreferences[$pref];
 		}
 
@@ -183,66 +183,66 @@ class PreferenceServiceImpl implements PreferenceService {
 	 * @return UserPreferences
 	 * @throws \Exception
 	 */
-	private function load($userId) {
-		if ($userId == 0) {
+	private function load( $userId ) {
+		if ( $userId == 0 ) {
 			return new UserPreferences();
 		}
 
-		if (!isset($this->preferences[$userId])) {
-			$preferences = $this->loadFromCache($userId);
+		if ( !isset( $this->preferences[$userId] ) ) {
+			$preferences = $this->loadFromCache( $userId );
 
-			if (!$preferences) {
+			if ( !$preferences ) {
 				try {
 					$profilerStart = $this->startProfile();
-					$preferences = $this->persistence->get($userId);
+					$preferences = $this->persistence->get( $userId );
 					$this->endProfile(
 						self::PROFILE_EVENT,
 						$profilerStart,
 						[
 							'user_id' => $userId,
-							'method' => 'getPreferences',]);
-				} catch (\Exception $e) {
-					$this->error($e->getMessage(), ['user' => $userId]);
+							'method' => 'getPreferences', ] );
+				} catch ( \Exception $e ) {
+					$this->error( $e->getMessage(), ['user' => $userId] );
 					throw $e;
 				}
 			}
 
-			$this->preferences[$userId] = $this->applyDefaults($preferences);
+			$this->preferences[$userId] = $this->applyDefaults( $preferences );
 		}
 
 		return $this->preferences[$userId];
 	}
 
-	private function loadFromCache($userId) {
-		return $this->cache->fetch($userId);
+	private function loadFromCache( $userId ) {
+		return $this->cache->fetch( $userId );
 	}
 
-	private function saveToCache($userId, UserPreferences $preferences) {
-		return $this->cache->save($userId, $preferences);
+	private function saveToCache( $userId, UserPreferences $preferences ) {
+		return $this->cache->save( $userId, $preferences );
 	}
 
-	private function deleteFromCache($userId) {
-		return $this->cache->delete($userId);
+	private function deleteFromCache( $userId ) {
+		return $this->cache->delete( $userId );
 	}
 
-	private function applyDefaults(UserPreferences $preferences) {
-		foreach ($this->defaultPreferences as $name => $val) {
-			if (!$preferences->hasGlobalPreference($name)) {
-				$preferences->setGlobalPreference($name, $val);
+	private function applyDefaults( UserPreferences $preferences ) {
+		foreach ( $this->defaultPreferences as $name => $val ) {
+			if ( !$preferences->hasGlobalPreference( $name ) ) {
+				$preferences->setGlobalPreference( $name, $val );
 			}
 		}
 
 		return $preferences;
 	}
 
-	private function prefIsSaveable($pref, $value) {
-		$default = $this->getFromDefault($pref);
+	private function prefIsSaveable( $pref, $value ) {
+		$default = $this->getFromDefault( $pref );
 
-		if ($value == $default) {
+		if ( $value == $default ) {
 			return false;
 		}
 
-		return in_array($pref, $this->forceSavePrefs) || $value != $default ||
-			($default != null && $value !== false && $value !== null);
+		return in_array( $pref, $this->forceSavePrefs ) || $value != $default ||
+			( $default != null && $value !== false && $value !== null );
 	}
 }

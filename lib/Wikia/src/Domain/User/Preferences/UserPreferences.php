@@ -15,56 +15,56 @@ class UserPreferences {
 		$this->localPreferences = [];
 	}
 
-	public function setGlobalPreference($name, $value) {
-		$this->globalPreferences[$name] = new GlobalPreference($name, $value);
+	public function setGlobalPreference( $name, $value ) {
+		$this->globalPreferences[$name] = new GlobalPreference( $name, $value );
 		return $this;
 	}
 
-	public function setLocalPreference($name, $wikiId, $value) {
-		$this->localPreferences[$wikiId][$name] = new LocalPreference($name, $value, $wikiId);
+	public function setLocalPreference( $name, $wikiId, $value ) {
+		$this->localPreferences[$wikiId][$name] = new LocalPreference( $name, $value, $wikiId );
 		return $this;
 	}
 
-	public function getGlobalPreference($name) {
-		if ($this->hasGlobalPreference($name)) {
+	public function getGlobalPreference( $name ) {
+		if ( $this->hasGlobalPreference( $name ) ) {
 			return $this->globalPreferences[$name]->getValue();
 		}
 
 		return null;
 	}
 
-	public function getLocalPreference($name, $wikiId) {
-		if ($this->hasLocalPreference($name, $wikiId)) {
+	public function getLocalPreference( $name, $wikiId ) {
+		if ( $this->hasLocalPreference( $name, $wikiId ) ) {
 			return $this->localPreferences[$wikiId][$name]->getValue();
 		}
 
 		return null;
 	}
 
-	public function deleteGlobalPreference($name) {
-		unset($this->globalPreferences[$name]);
+	public function deleteGlobalPreference( $name ) {
+		unset( $this->globalPreferences[$name] );
 	}
 
-	public function deleteLocalPreference($name, $wikiId) {
-		unset($this->localPreferences[$wikiId][$name]);
+	public function deleteLocalPreference( $name, $wikiId ) {
+		unset( $this->localPreferences[$wikiId][$name] );
 
-		if (isset($this->localPreferences[$wikiId]) &&
-			count($this->localPreferences[$wikiId]) == 0) {
+		if ( isset( $this->localPreferences[$wikiId] ) &&
+			count( $this->localPreferences[$wikiId] ) == 0 ) {
 
-			unset($this->localPreferences[$wikiId]);
+			unset( $this->localPreferences[$wikiId] );
 		}
 	}
 
-	public function hasGlobalPreference($name) {
-		return isset($this->globalPreferences[$name]);
+	public function hasGlobalPreference( $name ) {
+		return isset( $this->globalPreferences[$name] );
 	}
 
-	public function hasLocalPreference($name, $wikiId) {
-		return isset($this->localPreferences[$wikiId][$name]);
+	public function hasLocalPreference( $name, $wikiId ) {
+		return isset( $this->localPreferences[$wikiId][$name] );
 	}
 
 	public function isEmpty() {
-		return count($this->globalPreferences) == 0 && count($this->localPreferences) == 0;
+		return count( $this->globalPreferences ) == 0 && count( $this->localPreferences ) == 0;
 	}
 
 	/**

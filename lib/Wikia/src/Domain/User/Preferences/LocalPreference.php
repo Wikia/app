@@ -11,8 +11,8 @@ class LocalPreference {
 	private $wikiId;
 
 	function __construct( $name, $value, $wikiId ) {
-		Assert::true(!empty($name), "invalid preference name");
-		Assert::true(!empty($wikiId), "invalid wiki id");
+		Assert::true( !empty( $name ), "invalid preference name" );
+		Assert::true( !empty( $wikiId ), "invalid wiki id" );
 
 		$this->name = $name;
 		$this->value = $value;
