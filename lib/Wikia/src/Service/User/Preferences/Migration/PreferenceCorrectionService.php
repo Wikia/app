@@ -38,14 +38,14 @@ class PreferenceCorrectionService {
 
 	public function compareAndCorrect( $userId, $userOptions ) {
 		if ( !$this->correctionEnabled ) {
-			return;
+			return true;
 		}
 
 		$actual = $this->preferenceService->getPreferences( $userId );
 		list( $differences, $expected ) = $this->compare( $actual, $userId, $userOptions );
 
 		if ( $differences == 0 ) {
-			return;
+			return true;
 		}
 
 		$this->info(
@@ -55,6 +55,8 @@ class PreferenceCorrectionService {
 				'user_id' => $userId] );
 		$this->preferenceService->setPreferences( $userId, $expected );
 		$this->preferenceService->save( $userId );
+
+		return false;
 	}
 
 	private function compare( UserPreferences $actualPreferences, $userId, $options ) {
