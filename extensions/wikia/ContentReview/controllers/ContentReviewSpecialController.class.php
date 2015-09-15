@@ -112,7 +112,7 @@ class ContentReviewSpecialController extends WikiaSpecialPageController {
 			$title = GlobalTitle::newFromID( $review['page_id'], $review['wiki_id'] );
 
 			$review['url'] = $title->getFullURL();
-			$review['title'] = $title->getBaseText();
+			$review['title'] = $title->getText();
 
 			$review['diff'] = $title->getFullURL( [
 				'oldid' => $review['revision_id']
