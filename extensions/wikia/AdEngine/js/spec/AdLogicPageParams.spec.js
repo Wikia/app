@@ -284,13 +284,14 @@ describe('AdLogicPageParams', function () {
 
 // Very specific tests for hubs:
 
-	it('getPageLevelParams Hub page: video games', function () {
+	it('getPageLevelParams Hub page: games', function () {
 		var params = getParams({
 			pageIsHub: true,
 			wikiCategory: 'wikia',
 			wikiDbName: 'wikiaglobal',
 			wikiLanguage: 'en',
-			wikiVertical: 'Gaming'
+			wikiVertical: 'games',
+			mappedVerticalName: 'gaming'
 		}, {
 			hostname: 'www.wikia.com'
 		});
@@ -303,13 +304,14 @@ describe('AdLogicPageParams', function () {
 		expect(params.lang).toBe('en');
 	});
 
-	it('getUrl Hub page: entertainment', function () {
+	it('getUrl Hub page: TV', function () {
 		var params = getParams({
 			pageIsHub: true,
 			wikiCategory: 'wikia',
 			wikiDbName: 'wikiaglobal',
 			wikiLanguage: 'en',
-			wikiVertical: 'Entertainment'
+			wikiVertical: 'tv',
+			mappedVerticalName: 'ent'
 		}, {
 			hostname: 'www.wikia.com'
 		});
@@ -328,7 +330,8 @@ describe('AdLogicPageParams', function () {
 			wikiCategory: 'wikia',
 			wikiDbName: 'wikiaglobal',
 			wikiLanguage: 'en',
-			wikiVertical: 'Lifestyle'
+			wikiVertical: 'lifestyle',
+			mappedVerticalName: 'life'
 		}, {
 			hostname: 'www.wikia.com'
 		});

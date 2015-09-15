@@ -1,6 +1,7 @@
 <?php
 
 class ContentReviewHelperTest extends WikiaBaseTest {
+
 	public function setUp() {
 		$this->setupFile = __DIR__ . '/../ContentReview.setup.php';
 		parent::setUp();
@@ -80,9 +81,24 @@ class ContentReviewHelperTest extends WikiaBaseTest {
 			->willReturn( $userCan );
 
 		$userMock = $this->getMock( 'User' );
-		$helper = new \Wikia\ContentReview\Helper();
 
-		$this->assertEquals( $expected, $helper->userCanEditJsPage( $titleMock, $userMock ) );
+		$this->assertEquals( $expected, $this->getHelper()->userCanEditJsPage( $titleMock, $userMock ) );
+	}
+
+	/**
+	 * @param int $latestReviewedId
+	 * @param int $oldId
+	 * @param bool $expected
+	 * @param string $message
+	 * @dataProvider hasPageApprovedIdProvider
+	 */
+	public function testHasPageApprovedId( $latestReviewedId, $oldId, $expected, $message ) {
+		$modelMock = $this->getMock( 'Wikia\ContentReview\Models\CurrentRevisionModel', [ 'getLatestReviewedRevision' ] );
+		$modelMock->expects( $this->once() )
+			->method( 'getLatestReviewedRevision' )
+			->willReturn( $latestReviewedId );
+
+		$this->assertEquals( $expected, $this->getHelper()->hasPageApprovedId( $modelMock, 0, 0, $oldId ), $message );
 	}
 
 	public function replaceWithLastApprovedRevisionProvider() {
@@ -190,5 +206,39 @@ class ContentReviewHelperTest extends WikiaBaseTest {
 			[ false, true, false, false ],
 			[ false, true, true, false ],
 		];
+	}
+
+	public function hasPageApprovedIdProvider() {
+		return [
+			[
+				[
+					'revision_id' => '100',
+				],
+				100,
+				true,
+				'Latest approved ID exists and matches the provided oldid',
+			],
+			[
+				[
+					'revision_id' => '100',
+				],
+				101,
+				false,
+				'Latest approved ID exists and does not match the provided oldid',
+			],
+			[
+				[],
+				101,
+				false,
+				'Latest approved ID does not exist',
+			],
+		];
+	}
+
+	/**
+	 * @return \Wikia\ContentReview\Helper
+	 */
+	private function getHelper() {
+		return new \Wikia\ContentReview\Helper();
 	}
 }

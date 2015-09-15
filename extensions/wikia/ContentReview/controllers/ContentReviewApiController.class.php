@@ -22,10 +22,14 @@ class ContentReviewApiController extends WikiaApiController {
 		$this->isValidPostRequest( $this->request, $this->wg->User );
 
 		$pageName = $this->request->getVal( 'pageName' );
+		$title = $this->getTitle( $pageName );
 
-		$title = Title::newFromText( $pageName );
+		if ( $title === null ) {
+			throw new NotFoundApiException( "JS page {$pageName} does not exist" );
+		}
+
 		$pageId = $title->getArticleID();
-		if ( $title === null || $pageId === 0 || !$title->isJsPage() ) {
+		if ( $pageId === 0 || !$title->isJsPage() ) {
 			throw new NotFoundApiException( "JS page {$pageName} does not exist" );
 		}
 
@@ -70,7 +74,7 @@ class ContentReviewApiController extends WikiaApiController {
 		}
 
 		$helper = new Helper();
-		$helper->setContentReviewTestMode();
+		$helper->setContentReviewTestMode( $this->wg->CityId );
 		$this->makeSuccessResponse();
 	}
 
@@ -85,7 +89,7 @@ class ContentReviewApiController extends WikiaApiController {
 		}
 
 		$helper = new Helper();
-		$helper->disableContentReviewTestMode();
+		$helper->disableContentReviewTestMode( $this->wg->CityId );
 		$this->makeSuccessResponse();
 	}
 
@@ -135,8 +139,8 @@ class ContentReviewApiController extends WikiaApiController {
 		$oldid = $this->request->getInt( 'oldid' );
 
 
-		if ( $helper->hasPageApprovedId( $wikiId, $pageId, $oldid  )
-			&& $helper->isDiffPageInReviewProcess( $wikiId, $pageId, $diff ) )
+		if ( $helper->hasPageApprovedId( $currentRevisionModel, $wikiId, $pageId, $oldid  )
+			&& $helper->isDiffPageInReviewProcess( $this->request, $reviewModel, $wikiId, $pageId, $diff ) )
 		{
 			$review = $reviewModel->getReviewedContent( $wikiId, $pageId, ReviewModel::CONTENT_REVIEW_STATUS_IN_REVIEW );
 
@@ -240,8 +244,12 @@ class ContentReviewApiController extends WikiaApiController {
 		$this->setResponseData( $res );
 	}
 
-	private function isValidPostRequest( WebRequest $request, User $user ) {
-		if ( !$request->wasPosted()	|| !$user->matchEditToken( $request->getVal( 'editToken' ) ) ) {
+	protected function getTitle( $pageName ) {
+		return Title::newFromText( $pageName );
+	}
+
+	private function isValidPostRequest( WikiaRequest $request, User $user ) {
+		if ( !$request->wasPosted() || !$user->matchEditToken( $request->getVal( 'editToken' ) ) ) {
 			throw new BadRequestApiException();
 		}
 		return true;
@@ -251,7 +259,7 @@ class ContentReviewApiController extends WikiaApiController {
 		return ( new CurrentRevisionModel() )->getLatestReviewedRevision( $wikiId, $pageId );
 	}
 
-	private function canUserSubmit( Title $title ) {
+	protected function canUserSubmit( Title $title ) {
 		return $title->userCan( 'edit' );
 	}
 
