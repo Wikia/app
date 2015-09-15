@@ -99,31 +99,22 @@ class AttributeServiceMWApiController extends WikiaController {
     }
 
     /**
-     * If we're not in a development environment, clear the cache for staging environments as well (preview and
-     * verify).
+     * If we're not in a development environment, clear the cache for all staging environments as well
      * @param $userId
      */
     private function clearCacheInStagingEnvs( $userId ) {
-        $this->clearCacheInPreview( $userId );
-        $this->clearCacheInVerify( $userId );
+        global $wgStagingList;
+
+        foreach ( $wgStagingList as $stagingEnv ) {
+            $this->clearCacheInEnv( $userId, $stagingEnv );
+        }
     }
 
-	private function clearCacheInPreview( $userId ) {
-		global $wgPreviewHostname;
-
-        $wrapper = new GlobalStateWrapper( [ 'wgSharedKeyPrefix' => Wikia::getSharedKeyPrefix( $wgPreviewHostname ) ] );
+    private function clearCacheInEnv( $userId, $stagingEnv ) {
+        $wrapper = new GlobalStateWrapper( [ 'wgSharedKeyPrefix' => Wikia::getSharedKeyPrefix( $stagingEnv ) ] );
         $wrapper->wrap(function() use ($userId) {
             $this->clearUserCache( $userId );
         } );
-	}
-
-	private function clearCacheInVerify( $userId ) {
-        global $wgVerifyHostname;
-
-        $wrapper = new GlobalStateWrapper( [ 'wgSharedKeyPrefix' => Wikia::getSharedKeyPrefix( $wgVerifyHostname ) ] );
-        $wrapper->wrap(function() use ($userId) {
-            $this->clearUserCache( $userId );
-        } );
-	}
+    }
 }
 
