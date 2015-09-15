@@ -2549,13 +2549,12 @@ class User {
 		return intval( $val );
 	}
 
-
 	/**
 	 * Get a preference local to this wikia.
 	 *
 	 * Refere to getGlobalPreference for more detailed documentation.
 	 *
-	 * @param string $pref the preference name
+	 * @param string $preference the preference name
 	 * @param int $cityId the city id
 	 * @param string $sep the separator between the name and the city id
 	 * @param mixed $default
@@ -2563,9 +2562,18 @@ class User {
 	 * @return string
 	 * @see getGlobalPreference
 	 */
-	public function getLocalPreference($pref, $cityId = null, $sep = "-", $default = null, $ignoreHidden = false) {
-		$globalPref = self::localToGlobalPropertyName($pref, $cityId, $sep);
-		return $this->getGlobalPreference($globalPref, $default, $ignoreHidden);
+	public function getLocalPreference($preference, $cityId = null, $sep = "-", $default = null, $ignoreHidden = false) {
+		global $wgPreferencesUseService;
+
+		if ($wgPreferencesUseService) {
+			$this->load();
+			$value = $this->userPreferences()->getLocalPreference($this->mId, $cityId, $preference, $default, $ignoreHidden);
+		} else {
+			$preferenceGlobalName = self::localToGlobalPropertyName($preference, $cityId, $sep);
+			$value = $this->getOptionHelper($preferenceGlobalName, $default, $ignoreHidden);
+		}
+
+		return $value;
 	}
 
 	/**
@@ -2585,11 +2593,11 @@ class User {
 
 		if ($wgPreferencesUseService) {
 			$this->load();
-			$value = $this->userPreferences()->get($this->mId, $preference, $default, $ignoreHidden);
+			$value = $this->userPreferences()->getGlobalPreference($this->mId, $preference, $default, $ignoreHidden);
 			wfRunHooks(
 				'UserGetPreference',
 				[
-					$this->userPreferences()->getPreferences($this->mId),
+					$this->userPreferences()->getPreferences($this->mId)->getGlobalPreferences(),
 					$preference,
 					&$value
 				]
@@ -2614,7 +2622,16 @@ class User {
 	 * @see getGlobalPreference
 	 */
 	public function setLocalPreference($preference, $value, $cityId = null, $sep = '-') {
-		$this->setGlobalPreference(self::localToGlobalPropertyName($preference, $cityId, $sep), $value);
+		global $wgPreferencesUseService;
+
+		if ( $wgPreferencesUseService ) {
+			$this->load();
+			$value = $this->sanitizeProperty( $value );
+			$this->userPreferences()->setLocalPreference( $this->mId, $cityId, $preference, $value );
+		} else {
+			$preferenceGlobalName = self::localToGlobalPropertyName($preference, $cityId, $sep);
+			$this->setOptionHelper( $preferenceGlobalName, $value );
+		}
 	}
 
 	/**
@@ -2625,30 +2642,20 @@ class User {
 	 * @see getGlobalPreference for documentation about preferences
 	 */
 	public function setGlobalPreference( $preference, $value ) {
-		$this->setGlobalPreferences( [ $preference => $value ] );
-	}
-
-	/**
-	 * @param array $preferences preferenceName->Value
-	 */
-	public function setGlobalPreferences( $preferences ) {
 		global $wgPreferencesUseService;
+
 		if ( $wgPreferencesUseService ) {
 			$this->load();
-			$preferences = $this->sanitizePropertyArray( $preferences );
-			$this->userPreferences()->setMultiple( $this->mId, $preferences );
-			if ( array_key_exists( 'skin', $preferences ) ) {
+			$value = $this->sanitizeProperty( $value );
+			$this->userPreferences()->setGlobalPreference( $this->mId, $preference, $value );
+			if ( $preference == 'skin' ) {
 				unset( $this->mSkin );
 			}
-			if ( array_key_exists( 'theme', $preferences ) ) {
+			if ( $preference == 'theme' ) {
 				unset( $this->mTheme );
 			}
-			wfRunHooks( "UserSetPreferences", [ $this, $this->userPreferences()->getPreferences( $this->mId ) ] );
-			$this->clearSharedCache();
 		} else {
-			foreach ( $preferences as $key => $value ) {
-				$this->setOptionHelper( $key, $value );
-			}
+			$this->setOptionHelper( $preference, $value );
 		}
 	}
 
@@ -2660,6 +2667,7 @@ class User {
 	public function removeGlobalPreference($preference){
 		unset( $this->mOptions[ $preference ] );
 	}
+
 	/**
 	 * Get the default global preference.
 	 *

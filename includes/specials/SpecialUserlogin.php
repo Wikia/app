@@ -587,11 +587,10 @@ class LoginForm extends SpecialPage {
 		}
 
 		$u->setGlobalAttribute( 'registrationCountry', $this->mRegistrationCountry );
-		$u->setGlobalPreferences([
-			'skinoverwrite' => 1,
-			'rememberpassword' => $this->mRemember ? 1 : 0,
-			'marketingallowed' => $this->mMarketingOptIn ? 1 : 0,
-		]);
+		$u->setGlobalPreference( 'skinoverwrite', 1 );
+		$u->setGlobalPreference( 'rememberpassword', $this->mRemember ? 1 : 0 );
+		$u->setGlobalPreference( 'marketingallowed', $this->mMarketingOptIn ? 1 : 0 );
+
 		$u->saveSettings();
 
 		# Update user count
