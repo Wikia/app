@@ -35,6 +35,9 @@ class MonetizationModuleHelper extends WikiaModel {
 
 	const PAGE_SPECIFIC = 'page_specific';
 
+	const COUNTRY_CODE_ALL = 'ALL';
+	const COUNTRY_CODE_REST_OF_THE_WORLD = 'ROW';
+
 	protected static $mapThemeSettings = [
 		'data-color-bg'     => 'color-page',
 		'data-color-border' => 'color-page',
@@ -57,27 +60,23 @@ class MonetizationModuleHelper extends WikiaModel {
 
 	/**
 	 * Show the Module only on File pages, Article pages, and Main pages
+	 * @param Title $title
 	 * @return boolean
 	 */
-	public static function canShowModule() {
-		wfProfileIn( __METHOD__ );
-
+	public static function canShowModule( Title $title ) {
 		$app = F::app();
 		$status = false;
 		$showableNameSpaces = array_merge( $app->wg->ContentNamespaces, [ NS_FILE ] );
 		if ( !WikiaPageType::isCorporatePage()
-			&& $app->wg->Title->exists()
-			&& !$app->wg->Title->isMainPage()
-			&& in_array( $app->wg->Title->getNamespace(), $showableNameSpaces )
-			&& in_array( $app->wg->request->getVal( 'action' ), [ 'view', null ] )
-			&& $app->wg->request->getVal( 'diff' ) === null
+			&& $title->exists()
+			&& !$title->isMainPage()
+			&& in_array( $title->getNamespace(), $showableNameSpaces )
+			&& !WikiaPageType::isActionPage()
 			&& $app->wg->User->isAnon()
 			&& $app->checkSkin( 'oasis' )
 		) {
 			$status = true;
 		}
-
-		wfProfileOut( __METHOD__ );
 
 		return $status;
 	}
@@ -87,8 +86,6 @@ class MonetizationModuleHelper extends WikiaModel {
 	 * @return string - wiki vertical
 	 */
 	public function getWikiVertical() {
-		wfProfileIn( __METHOD__ );
-
 		$verticalId = WikiFactoryHub::getInstance()->getVerticalId( $this->wg->CityId );
 		if ( empty( self::$verticals[$verticalId] ) ) {
 			$verticalId = WikiFactoryHub::VERTICAL_ID_OTHER;
@@ -96,19 +93,16 @@ class MonetizationModuleHelper extends WikiaModel {
 
 		$name = self::$verticals[$verticalId];
 
-		wfProfileOut( __METHOD__ );
-
 		return $name;
 	}
 
 	/**
 	 * Get monetization units
+	 * @param Title $title
 	 * @param array $params
 	 * @return array|false $result
 	 */
-	public function getMonetizationUnits( $params ) {
-		wfProfileIn( __METHOD__ );
-
+	public function getMonetizationUnits( Title $title, $params ) {
 		$log = WikiaLogger::instance();
 		$loggingParams = [ 'method' => __METHOD__, 'params' => $params ];
 
@@ -120,8 +114,7 @@ class MonetizationModuleHelper extends WikiaModel {
 			$json_results = $this->wg->Memc->get( $cacheKey );
 			if ( !empty( $json_results ) ) {
 				$log->info( "MonetizationModule: memcache hit.", $loggingParams );
-				wfProfileOut( __METHOD__ );
-				return $this->processData( $json_results, $params, false );
+				return $this->processData( $title, $json_results, $params, false );
 			}
 
 			$log->info( "MonetizationModule: memcache miss.", $loggingParams );
@@ -152,22 +145,21 @@ class MonetizationModuleHelper extends WikiaModel {
 			];
 			$log->debug( "MonetizationModule: cannot get monetization units.", $loggingParams );
 		} else if ( !empty( $result ) ) {
-			$result = $this->processData( $result, $params );
+			$result = $this->processData( $title, $result, $params );
 		}
-
-		wfProfileOut( __METHOD__ );
 
 		return $result;
 	}
 
 	/**
 	 * Process data for the ad units (include logic to handle the data)
+	 * @param Title $title
 	 * @param string $data - data from API (json format)
 	 * @param array $params - API parameters
 	 * @param boolean $setMemc - set to true to set to memcache
 	 * @return mixed
 	 */
-	public function processData( $data, $params, $setMemc = true ) {
+	public function processData( Title $title, $data, $params, $setMemc = true ) {
 		$found = strpos( $data, self::KEYWORD_PREFIX );
 		$data = json_decode( $data, true );
 		if ( !is_array( $data ) ) {
@@ -182,8 +174,8 @@ class MonetizationModuleHelper extends WikiaModel {
 				$this->setMemcache( $memcKey, $data, ['method' => __METHOD__] );
 			}
 
-			$params['page_id'] = $this->wg->Title->getArticleID();
-			return $this->getMonetizationUnits( $params );
+			$params['page_id'] = $title->getArticleID();
+			return $this->getMonetizationUnits( $title, $params );
 		}
 
 		// check for placeholder
@@ -206,8 +198,6 @@ class MonetizationModuleHelper extends WikiaModel {
 	 * @return array
 	 */
 	public function setThemeSettings( $adUnits, $memcKey, $setMemc = true ) {
-		wfProfileIn( __METHOD__ );
-
 		$adTitle = $this->wf->Message( 'monetization-module-ad-title' )->escaped();
 		$adUnits = str_replace( self::KEYWORD_AD_TITLE, $adTitle, $adUnits );
 
@@ -235,8 +225,6 @@ class MonetizationModuleHelper extends WikiaModel {
 			$this->setMemcache( $memcKey, $adUnits, [ 'method' => __METHOD__ ] );
 		}
 
-		wfProfileOut( __METHOD__ );
-
 		return $adUnits;
 	}
 
@@ -261,8 +249,10 @@ class MonetizationModuleHelper extends WikiaModel {
 	 * @return string
 	 */
 	public function getMemcKey( $params ) {
-		$geo = empty( $params['geo'] ) ? 'ALL' : $params['geo'];
-		$memcKey = wfMemcKey( 'monetization_module', $params['cache'], $geo, $params['max'] );
+		$geo = empty( $params['geo'] ) ? self::COUNTRY_CODE_ALL : $params['geo'];
+		$fromSearch = empty( $params['from_search'] ) ? 'direct' : 'search';
+		$adEngine = empty( $params['ad_engine'] ) ? 'mon' : 'ad';
+		$memcKey = wfMemcKey( 'monetization_module', $params['cache'], $geo, $params['max'], $fromSearch, $adEngine );
 		return $memcKey;
 	}
 
@@ -328,11 +318,8 @@ class MonetizationModuleHelper extends WikiaModel {
 	 * @return string
 	 */
 	public static function insertIncontentUnit( $body, &$monetizationUnits ) {
-		wfProfileIn( __METHOD__ );
-
 		// Check for in_content ad
 		if ( empty( $monetizationUnits[self::SLOT_TYPE_IN_CONTENT] ) ) {
-			wfProfileOut( __METHOD__ );
 			return $body;
 		}
 
@@ -347,7 +334,6 @@ class MonetizationModuleHelper extends WikiaModel {
 			if ( $posTOC === false ) {
 				// TOC not exist. Insert the ad above the 2nd <H2> tag.
 				$body = substr_replace( $body, $monetizationUnits[self::SLOT_TYPE_IN_CONTENT], $pos2, 0 );
-				wfProfileOut( __METHOD__ );
 				return $body;
 			} else {
 				// TOC exists. Check for the 3rd <H2> tag.
@@ -355,7 +341,6 @@ class MonetizationModuleHelper extends WikiaModel {
 				if ( $pos3 !== false ) {
 					// The 3rd <H2> tag exists. Insert the ad above the 3rd <H2> tag.
 					$body = substr_replace( $body, $monetizationUnits[self::SLOT_TYPE_IN_CONTENT], $pos3, 0 );
-					wfProfileOut( __METHOD__ );
 					return $body;
 				}
 			}
@@ -374,8 +359,6 @@ class MonetizationModuleHelper extends WikiaModel {
 			unset( $monetizationUnits[self::SLOT_TYPE_BELOW_CATEGORY] );
 			WikiaLogger::instance()->info( "MonetizationModule: remove below_category ad", $loggingParams );
 		}
-
-		wfProfileOut( __METHOD__ );
 
 		return $body;
 	}

@@ -23,9 +23,9 @@ class AdEngine2ContextService {
 				$sevenOneMediaCombinedUrl = ResourceLoader::makeCustomURL( $wg->Out, ['wikia.ext.adengine.sevenonemedia'], 'scripts' );
 			}
 
-			$monetizationServiceAds = null;
-			if ( !empty( $wg->AdDriverUseMonetizationService ) && !empty( $wg->EnableMonetizationModuleExt ) ) {
-				$monetizationServiceAds = F::app()->sendRequest( 'MonetizationModule', 'index' )->getData()['data'];
+			$monetizationService = !empty( $wg->AdDriverUseMonetizationService ) && !empty( $wg->EnableMonetizationModuleExt );
+			if ( $monetizationService && MonetizationModuleHelper::canShowModule( $wg->Title ) ) {
+				F::app()->sendRequest( 'MonetizationModule', 'addStyleAssets' );
 			}
 
 			$sourcePointUrl = null;
@@ -78,8 +78,7 @@ class AdEngine2ContextService {
 					'newWikiCategories' => $this->getNewWikiCategories($wikiFactoryHub, $wg->CityId),
 				] ),
 				'providers' => $this->filterOutEmptyItems( [
-					'monetizationService' => $wg->AdDriverUseMonetizationService,
-					'monetizationServiceAds' => $monetizationServiceAds,
+					'monetizationService' => $monetizationService,
 					'sevenOneMedia' => $wg->AdDriverUseSevenOneMedia,
 					'sevenOneMediaCombinedUrl' => $sevenOneMediaCombinedUrl,
 					'taboola' => $wg->AdDriverUseTaboola,

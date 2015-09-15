@@ -1,9 +1,10 @@
+/*global define*/
 define('ext.wikia.adEngine.provider.monetizationService', [
-	'ext.wikia.adEngine.adContext',
-	'wikia.loader',
+	'ext.wikia.adEngine.provider.monetizationService.helper',
 	'wikia.log',
-	'wikia.scriptwriter',
-], function (adContext, loader, log, scriptWriter) {
+	'wikia.nirvana',
+	'wikia.window'
+], function (monetizationServiceHelper, log, nirvana, window) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.monetizationService',
@@ -14,7 +15,8 @@ define('ext.wikia.adEngine.provider.monetizationService', [
 			MON_BELOW_CATEGORY: 'below_category',
 			MON_ABOVE_FOOTER: 'above_footer',
 			MON_FOOTER: 'footer'
-		};
+		},
+		modules;
 
 	function canHandleSlot(slotName) {
 		log(['canHandleSlot', slotName], 'debug', logGroup);
@@ -28,26 +30,42 @@ define('ext.wikia.adEngine.provider.monetizationService', [
 		return false;
 	}
 
-	function fillInSlot(slot, slotElement, success, hop) {
-		log(['fillInSlot', slot, slotElement], 'debug', logGroup);
+	function initialize(success) {
+		log(['initialize', 'send request'], 'debug', logGroup);
+		nirvana.getJson(
+			'MonetizationModule',
+			'getModules',
+			{
+				adEngine: true,
+				articleId: window.wgArticleId, // TODO: use ad context
+				fromSearch: window.fromsearch, // TODO: convert window.fromsearch to a module
+				max: monetizationServiceHelper.getMaxAds(),
+				geo: monetizationServiceHelper.getCountryCode()
+			}
+		).done(function (json) {
+			modules = json.data;
+			success();
+		});
+	}
 
-		var slotName = slotMap[slot],
-			context = adContext.getContext();
+	function fillInSlot(slotName, slotElement, success, hop) {
+		log(['fillInSlot', slotName, slotElement], 'debug', logGroup);
 
-		if (context.providers.monetizationServiceAds && context.providers.monetizationServiceAds[slotName]) {
-			log(['fillInSlot', slot, 'injectScript'], 'debug', logGroup);
+		var moduleContent = modules[slotMap[slotName]];
 
-			scriptWriter.injectHtml(slotElement, context.providers.monetizationServiceAds[slotName], function () {
-				success();
-			});
+		if (moduleContent) {
+			log(['fillInSlot', slotName, 'injectContent'], 'debug', logGroup);
+			monetizationServiceHelper.injectContent(slotElement, moduleContent, success);
 		} else {
+			log(['fillInSlot', slotName, 'empty data'], 'debug', logGroup);
 			hop();
 		}
 	}
 
 	return {
-		name: 'MonetizationService',
+		canHandleSlot: canHandleSlot,
 		fillInSlot: fillInSlot,
-		canHandleSlot: canHandleSlot
+		initialize: initialize,
+		name: 'MonetizationService'
 	};
 });
