@@ -2597,7 +2597,7 @@ class User {
 			wfRunHooks(
 				'UserGetPreference',
 				[
-					$this->userPreferences()->getPreferences($this->mId),
+					$this->userPreferences()->getPreferences($this->mId)->getGlobalPreferences(),
 					$preference,
 					&$value
 				]
