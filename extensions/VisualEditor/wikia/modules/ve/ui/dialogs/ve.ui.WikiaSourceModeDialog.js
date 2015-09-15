@@ -191,7 +191,6 @@ ve.ui.WikiaSourceModeDialog.prototype.onParseDone = function ( response ) {
 			target.docToSave = null;
 			target.clearPreparedCacheKey();
 			target.setupSurface( target.doc, function () {
-				target.startSanityCheck();
 				target.emit( 'surfaceReady' );
 			} );
 		}.bind( this ) );
