@@ -56,7 +56,9 @@ $messages['en'] = [
 	'content-review-special-error' => 'Unfortunately, an error happened.',
 	'content-review-special-show-revision' => 'Show revision',
 	'content-review-special-restore' => 'Restore',
-	'content-review-special-guidelines' => 'Before reviewing a piece of a code, please ensure that you are familiar with the [[w:c:dev:Help:JavaScript review guidelines|Help:JavaScript review guidelines]].',
+	'content-review-special-guidelines' => 'Before reviewing a piece of a code, please ensure that you are familiar with the [[w:c:dev:Help:JavaScript review guidelines|Help:JavaScript review guidelines]].
+
+	To view an archive of completed reviews for a single wikia click on its name in the Wiki Name column.',
 
 	'content-review-diff-approve' => 'Approve',
 	'content-review-diff-reject' => 'Reject',
@@ -99,8 +101,8 @@ $messages['qqq'] = [
 	'content-review-module-status-unsubmitted' => 'Message shown as a revision\'s status when the latest made revision has not yet been sent for a review.',
 	'content-review-module-status-live' => 'Message shown as a revision\'s status when it is currently live and served to users.',
 	'content-review-module-status-awaiting' => 'Message shown as a revision\'s status when a revision is waiting for a review.',
-	'content-review-module-status-approved' => 'Message shown as a revision\'s status if ',
-	'content-review-module-status-rejected' => 'was rejected',
+	'content-review-module-status-approved' => 'Message shown as a revision\'s status if a revision was approved.',
+	'content-review-module-status-rejected' => 'Message shown as a revision\'s status if a revision was rejected',
 
 	'content-review-rejection-reason-link' => 'Text of a link that leads a users to a Talk page with an explanation on why their code was rejected.',
 
