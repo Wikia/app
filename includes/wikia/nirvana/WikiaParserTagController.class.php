@@ -3,12 +3,14 @@ abstract class WikiaParserTagController extends WikiaController {
 
 	/**
 	 * Simple counter used in generating markers' ids
+	 *
 	 * @var int
 	 */
 	private $count = 1;
 
 	/**
 	 * An array with markers ids and real output for our tags
+	 *
 	 * @var array
 	 */
 	protected $markers = [];
@@ -24,6 +26,7 @@ abstract class WikiaParserTagController extends WikiaController {
 	 * @desc Hook function registered in $wgHooks['ParserFirstCallInit'][] which should always return true
 	 *
 	 * @param Parser $parser
+	 *
 	 * @return Boolean true
 	 */
 	public static function onParserFirstCallInit( Parser $parser ) {
@@ -47,9 +50,19 @@ abstract class WikiaParserTagController extends WikiaController {
 	 * if should return WikiaValidatorAlwaysTrue if validator can't be created or won't be used
 	 *
 	 * @param String $paramName
+	 *
 	 * @return WikiaValidator
 	 */
 	abstract protected function buildParamValidator( $paramName );
+
+	/**
+	 * Should return white list of attributes to be checked and validated
+	 *
+	 * @return array
+	 */
+	protected function getAttributesAllowed() {
+		return $this->tagAttributes;
+	}
 
 	protected function registerResourceLoaderModules( Parser $parser ) {
 	}
@@ -59,8 +72,8 @@ abstract class WikiaParserTagController extends WikiaController {
 		$markerId = $this->generateMarkerId( $parser );
 		$errorMessages = $this->validateAttributes( $args );
 
-		if( !empty( $errorMessages ) ) {
-			$this->addMarkerOutput( $markerId, $this->getErrorOutput( $errorMessages ));
+		if ( !empty( $errorMessages ) ) {
+			$this->addMarkerOutput( $markerId, $this->getErrorOutput( $errorMessages ) );
 		} else {
 			$this->addMarkerOutput( $markerId, $this->getSuccessOutput( $args ) );
 		}
@@ -70,6 +83,7 @@ abstract class WikiaParserTagController extends WikiaController {
 
 	public final function onParserAfterTidy( Parser &$parser, &$text ) {
 		$text = strtr( $text, $this->getMarkers() );
+
 		return true;
 	}
 
@@ -83,13 +97,13 @@ abstract class WikiaParserTagController extends WikiaController {
 	public function validateAttributes( $attributes ) {
 		$errorMessages = [];
 
-		foreach( $this->tagAttributes as $attrName ) {
+		foreach ( $this->getAttributesAllowed() as $attrName ) {
 			$validator = $this->buildParamValidator( $attrName );
 
-			if( !$validator->isValid( $attributes[$attrName] ) ) {
+			if ( !$validator->isValid( $attributes[$attrName] ) ) {
 				$error = $validator->getError();
 
-				if ( !is_null($error) ) {
+				if ( !is_null( $error ) ) {
 					$errorMessage = $error->getMsg();
 					$errorMessages[] = (object) [
 						'attribute' => $attrName,
@@ -107,15 +121,64 @@ abstract class WikiaParserTagController extends WikiaController {
 		return $errorMessages;
 	}
 
+	protected function buildTagSourceQueryParams( array $allowedParams, array $userParams, $overrideParams = [] ) {
+		$params = [];
+		foreach ( array_keys( $allowedParams ) as $name ) {
+			if ( array_key_exists( $name, $userParams ) && !empty( $userParams[$name] ) ) {
+				$params[$name] = $userParams[$name];
+			} else if ( array_key_exists( $name, $allowedParams ) && !empty( $allowedParams[$name] ) ) {
+				$params[$name] = $allowedParams[$name];
+			}
+		}
+
+		if ( is_array( $overrideParams ) && !empty( $overrideParams ) ) {
+			$params = array_merge( $params, $overrideParams );
+		}
+
+		return http_build_query( $params );
+	}
+
+	protected function buildTagAttributes( array $allowedAttrs, array $userAttrs, $prefix = '' ) {
+		$attributes = [];
+
+		if ( !empty( $prefix ) ) {
+			$prefix .= '-';
+		}
+
+		foreach ( $allowedAttrs as $attributeName ) {
+			if ( isset( $userAttrs[$attributeName] ) ) {
+				if ( $attributeName === 'style' ) {
+					$attributes['style'] = Sanitizer::checkCss( $userAttrs['style'] );
+				} else {
+					$attributes[$prefix . $attributeName] = $userAttrs[$attributeName];
+				}
+			}
+		}
+
+		return $attributes;
+	}
+
+	public function isMobileSkin( ) {
+		return F::app()->checkSkin( 'wikiamobile' );
+	}
+
+	public function wrapIframeForMobile( $iframe ) {
+		return $this->isMobileSkin() ?
+			Html::rawElement( 'script',  ['type' => 'x-wikia-widget'], $iframe ) :
+			$iframe;
+	}
+
 	/**
 	 * @desc Generates unique strings which will be placed instead of tags
 	 *
 	 * @param Parser $parser
+	 *
 	 * @return string
 	 */
 	protected function generateMarkerId( Parser $parser ) {
-		$wikiaParserMarkerSufix = '-WIKIA-PARSER-MARKER-' . $this->getTagName() . ' - '. $this->count;
+		$wikiaParserMarkerSufix = '-WIKIA-PARSER-MARKER-' . $this->getTagName() . ' - ' . $this->count;
 		$this->count++;
+
 		return $parser->uniqPrefix() . $wikiaParserMarkerSufix . "-\x7f";
 	}
 
@@ -126,7 +189,7 @@ abstract class WikiaParserTagController extends WikiaController {
 	 * @param $output
 	 */
 	protected function addMarkerOutput( $markerId, $output ) {
-		if( !empty( $this->wg->ArticleAsJson ) && $output instanceof WikiaResponse ) {
+		if ( !empty( $this->wg->ArticleAsJson ) && $output instanceof WikiaResponse ) {
 			/**
 			 * This is tricky and I could not think about anything better than:
 			 * a) encode just double-quotes, so json_decode() won't fail but then if anything else should be encoded
