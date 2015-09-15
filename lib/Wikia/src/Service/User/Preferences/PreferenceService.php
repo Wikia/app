@@ -70,6 +70,16 @@ class PreferenceService {
 		return $this->load($userId);
 	}
 
+	/**
+	 * forcefully set a user's preferences, this function should only be used
+	 * when correcting preferences during migration!
+	 * @param $userId
+	 * @param UserPreferences $preferences
+	 */
+	public function setPreferences($userId, UserPreferences $preferences) {
+		$this->preferences[$userId] = $preferences;
+	}
+
 	public function getGlobalPreference($userId, $name, $default = null, $ignoreHidden = false) {
 		if (in_array($name, $this->hiddenPrefs) && !$ignoreHidden) {
 			return $this->getFromDefault($name);
