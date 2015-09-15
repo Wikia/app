@@ -119,7 +119,7 @@ define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 				open(params.onAuthSuccess);
 
 				track({
-					action: Wikia.Tracker.ACTIONS.CLICK,
+					action: Wikia.Tracker.ACTIONS.OPEN,
 					label: params.origin
 				});
 
