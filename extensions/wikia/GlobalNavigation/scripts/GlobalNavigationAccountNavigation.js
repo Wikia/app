@@ -58,7 +58,7 @@ require([
 		require(['AuthModal'], function (authModal) {
 			authModal.load({
 				url: url,
-				origin: 'global-nav',
+				origin: 'from-global-nav',
 				onAuthSuccess: onAuthSuccess.bind({url: url})
 			});
 		});

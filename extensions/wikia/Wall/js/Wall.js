@@ -304,7 +304,7 @@
 				require(['AuthModal'], function (authModal) {
 					authModal.load({
 						url: '/signin?redirect=' + encodeURIComponent(window.location.href),
-						origin: 'wall-and-forum',
+						origin: 'from-wall-and-forum',
 						onAuthSuccess: this.proxy(function () {
 							this.voteBase(e, function () {
 								window.location.reload();
@@ -735,7 +735,7 @@
 				require(['AuthModal'], function (authModal) {
 					authModal.load({
 						url: '/signin?redirect=' + encodeURIComponent(window.location.href),
-						origin: 'wall-and-forum',
+						origin: 'from-wall-and-forum',
 						onAuthSuccess: this.proxy(function () {
 							this.editTopics(rootMessageId);
 						})

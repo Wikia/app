@@ -168,7 +168,7 @@ var ChatEntryPoint = {
 			require(['AuthModal'], function (authModal) {
 				authModal.load({
 					url: '/signin?redirect=' + encodeURIComponent(window.location.href),
-					origin: 'chat',
+					origin: 'from-chat',
 					onAuthSuccess: ChatEntryPoint.onSuccessfulLogin
 				});
 			});
