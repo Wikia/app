@@ -2167,6 +2167,8 @@ class User {
 					__METHOD__ );
 			}
 
+			$dbw->commit();
+
 			$this->clearSharedCache();
 		}
 	}
