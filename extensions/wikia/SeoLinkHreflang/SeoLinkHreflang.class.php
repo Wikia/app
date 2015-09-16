@@ -42,14 +42,23 @@ class SeoLinkHreflang {
 	 * @return array (key: lang, value: url)
 	 */
 	private static function getMainPageLinks( $domain ) {
-		$matching = preg_match( '/([a-z]+\.)?([a-z]+)\.([a-z]+\.wikia-dev|wikia)\.com$/', $domain, $m );
+		// Get the language and the wiki name from the domain in the following formats:
+		// <wiki>.wikia.com -- muppet.wikia.com
+		// <prefix>.<wiki>.wikia.com -- fr.muppet.wikia.com or preview.muppet.wikia.com
+		// <prefix1>.<prefix2>.<wiki>.wikia.com -- preview.fr.muppet.wikia.com
+		// <wiki>.<devbox>.wikia-dev.com -- muppet.rychu.wikia-dev.com
+		// <prefix>.<devbox>.wikia-dev.com -- fr.muppet.rychu.wikia-dev.com
+		$matching = preg_match( '/(?:([a-z]+)\.)?([a-z]+)\.(?:[a-z]+\.wikia-dev|wikia)\.com$/', $domain, $m );
 
 		if ( !$matching ) {
 			return [];
 		}
 
 		$wiki = $m[2];
-		$lang = $m[1] ? $m[1] : 'en';
+		$lang = $m[1];
+		if ( !$lang || strlen( $lang ) > 3 ) {
+			$lang = 'en';
+		}
 
 		$mapping = require __DIR__ . '/mainpages_mapping.php';
 
