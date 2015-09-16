@@ -112,8 +112,9 @@ class PreferencePersistenceMySQL implements PreferencePersistence {
 
 		if ( is_array( $this->whiteList ) ) {
 			$orConds = [ ];
-			if ( is_array( $this->whiteList[ 'literals' ] ) ) {
-				$orConds[ ] = '`' . self::UP_PROPERTY . '` IN (' . $this->slave->makeList( $this->whiteList[ 'literals' ] ) . ')';
+			$literals = $this->whiteList[ 'literals' ];
+			if ( is_array( $literals ) && !empty( $literals ) ) {
+				$orConds[ ] = '`' . self::UP_PROPERTY . '` IN (' . $this->slave->makeList( $literals ) . ')';
 			}
 			//white list regex is combined regexes into one string
 			if ( !empty( $this->whiteList[ 'regex' ] ) ) {
