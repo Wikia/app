@@ -14,15 +14,18 @@ define('ext.wikia.adEngine.slot.scrollHandler', [
 		config = context.opts.scrollHandlerConfig || {
 			oasis: {
 				PREFOOTER_LEFT_BOXAD: {
-					reloadedViewMax: 1
+					reloadedViewMax: 1,
+					trigger: 'scroll.top'
 				},
 				PREFOOTER_RIGHT_BOXAD: {
-					reloadedViewMax: 1
+					reloadedViewMax: 1,
+					trigger: 'scroll.top'
 				}
 			},
 			mercury: {
 				MOBILE_PREFOOTER: {
-					reloadedViewMax: 1
+					reloadedViewMax: 1,
+					trigger: 'scroll.top'
 				}
 			}
 		},
@@ -67,13 +70,14 @@ define('ext.wikia.adEngine.slot.scrollHandler', [
 	}
 
 	function onScroll(slotName) {
-		if (config[slotName].hasOwnProperty('reloadedViewMax') &&
+		if (config[slotName].trigger.match(/^scroll\.(top|bottom)$/) === null || (
+			config[slotName].hasOwnProperty('reloadedViewMax') &&
 			config[slotName].reloadedViewMax >= 0 &&
-			config[slotName].reloadedViewMax <= reloadedView[slotName]) {
+			config[slotName].reloadedViewMax <= reloadedView[slotName])) {
 			return;
 		}
 
-		var status = isReached(doc.getElementById(slotName));
+		var status = isReached(slotName);
 		if (!isRefreshed[slotName] && status) {
 			log(['refreshSlot', slotName + ' has been refreshed'], 'debug', logGroup);
 			refreshSlot(slotName);
@@ -83,8 +87,15 @@ define('ext.wikia.adEngine.slot.scrollHandler', [
 		}
 	}
 
-	function isReached(el) {
-		return win.innerHeight + win.scrollY >= getTopPos(el);
+	function isReached(slotName) {
+		var el = doc.getElementById(slotName),
+			offset = 0;
+
+		if (config[slotName].trigger === 'scroll.bottom') {
+			offset = el.offsetHeight;
+		}
+
+		return win.innerHeight + win.scrollY >= getTopPos(el) + offset;
 	}
 
 	function getTopPos(el) {
