@@ -106,7 +106,7 @@ class PreferenceServiceImpl implements PreferenceService {
 
 	public function getLocalPreference( $userId, $wikiId, $name, $default = null, $ignoreHidden = false ) {
 		if ( in_array( $name, $this->hiddenPrefs ) && !$ignoreHidden ) {
-			return $this->getGlobalDefault( $name );
+			return $this->getLocalDefault($name, $wikiId );
 		}
 
 		$preferences = $this->load( $userId );
@@ -119,7 +119,7 @@ class PreferenceServiceImpl implements PreferenceService {
 
 	public function setLocalPreference( $userId, $wikiId, $name, $value ) {
 		if ( $value == null ) {
-			$value = $this->getGlobalDefault( $name );
+			$value = $this->getLocalDefault($name, $wikiId );
 		}
 
 		$this->load( $userId )->setLocalPreference( $name, $wikiId, $value );
