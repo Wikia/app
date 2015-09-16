@@ -4954,7 +4954,6 @@ class User {
 	 */
 	protected function savePreferences() {
 		$this->userPreferences()->save($this->getId());
-		wfRunHooks( "UserSetPreferences", array( $this ) );
 	}
 
 	/**
