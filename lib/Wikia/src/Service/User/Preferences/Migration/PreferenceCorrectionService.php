@@ -66,10 +66,11 @@ class PreferenceCorrectionService {
 			if ( $this->scopeService->isGlobalPreference( $name ) ) {
 				$expectedPreferences->setGlobalPreference( $name, $value );
 
-				if ( !$actualPreferences->hasGlobalPreference( $name ) ||
-					$actualPreferences->getGlobalPreference( $name ) !== $value ) {
-
-					$this->logMissingPreference( $userId, $name, $value, $actualPreferences->getGlobalPreference( $name ) );
+				if ( !$actualPreferences->hasGlobalPreference( $name ) ) {
+					$this->logMissingPreference( $userId, $name );
+					++$differences;
+				} elseif ( $actualPreferences->getGlobalPreference( $name ) !== $value ) {
+					$this->logPreferenceValueDifference( $userId, $name, $value, $actualPreferences->getGlobalPreference( $name ) );
 					++$differences;
 				}
 			} elseif ( $this->scopeService->isLocalPreference( $name ) ) {
@@ -82,10 +83,11 @@ class PreferenceCorrectionService {
 
 				$expectedPreferences->setLocalPreference( $prefName, $wikiId, $value );
 
-				if ( !$actualPreferences->hasLocalPreference( $prefName, $wikiId ) ||
-					$actualPreferences->getLocalPreference( $prefName, $wikiId ) !== $value ) {
-
-					$this->logMissingPreference( $userId, $name, $value, $actualPreferences->getLocalPreference( $prefName, $wikiId ) );
+				if ( !$actualPreferences->hasLocalPreference( $prefName, $wikiId ) ) {
+					$this->logMissingPreference( $userId, $name );
+					++$differences;
+				} elseif ( $actualPreferences->getLocalPreference( $prefName, $wikiId ) !== $value ) {
+					$this->logPreferenceValueDifference( $userId, $name, $value, $actualPreferences->getLocalPreference( $prefName, $wikiId ) );
 					++$differences;
 				}
 			}
@@ -116,11 +118,18 @@ class PreferenceCorrectionService {
 		return ['class' => 'PreferenceCorrectionService'];
 	}
 
-	private function logMissingPreference( $userId, $name, $expected, $actual ) {
+	private function logMissingPreference( $userId, $name ) {
 		$this->warning( 'preference mismatch', [
 			'userId' => $userId,
 			'preference' => $name,
-			'type' => 'missing_preference',
+			'type' => 'missing_preference', ] );
+	}
+
+	private function logPreferenceValueDifference( $userId, $name, $expected, $actual ) {
+		$this->warning( 'preference mismatch', [
+			'userId' => $userId,
+			'preference' => $name,
+			'type' => 'value_difference',
 			'expected' => $expected,
 			'actual' => $actual, ] );
 	}
@@ -130,7 +139,6 @@ class PreferenceCorrectionService {
 			'userId' => $userId,
 			'preference' => $name,
 			'type' => 'extra_preference',
-			'expected' => '<missing>',
 			'actual' => $value, ] );
 	}
 }
