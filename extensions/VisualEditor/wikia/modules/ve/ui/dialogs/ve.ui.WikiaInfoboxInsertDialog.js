@@ -146,7 +146,7 @@ ve.ui.WikiaInfoboxInsertDialog.prototype.insertInfoboxTemplate = function () {
 ve.ui.WikiaInfoboxInsertDialog.prototype.createInfoboxItemOptionWidget = function ( data ) {
 	return new OO.ui.DecoratedOptionWidget( {
 		data: data.title,
-		label:  data.label
+		label: data.label || data.title
 	} );
 };
 
