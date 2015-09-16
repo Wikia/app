@@ -78,7 +78,6 @@ require([
 		// Ads
 		adTracker.measureTime('adengine.init', 'queue.desktop').track();
 		scrollHandler.init();
-		sourcePoint.initDetection();
 		win.adslots2 = win.adslots2 || [];
 		adEngine.run(adConfigDesktop, win.adslots2, 'queue.desktop');
 
@@ -90,6 +89,7 @@ require([
 				adEngine.run(adConfigDesktop, win.ads.runtime.sp.slots, 'queue.sp');
 			});
 		}
+		sourcePoint.initDetection();
 		// Krux
 		krux.load(kruxSiteId);
 	});
