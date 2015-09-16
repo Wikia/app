@@ -43,8 +43,8 @@ class UserPreferences {
 		$this->preferences = [];
 	}
 
-	public function getPreferences($userId) {
-		return $this->load($userId);
+	public function getPreferences($userId, $ignoreCache = false) {
+		return $this->load($userId, $ignoreCache);
 	}
 
 	public function setPreferencesInCache($userId, $preferences) {
@@ -55,8 +55,8 @@ class UserPreferences {
 		}
 	}
 
-	public function get($userId, $pref, $default = null, $ignoreHidden = false) {
-		$preferences = $this->load($userId);
+	public function get($userId, $pref, $default = null, $ignoreHidden = false, $ignoreCache = false) {
+		$preferences = $this->load($userId, $ignoreCache);
 
 		if (in_array($pref, $this->hiddenPrefs) && !$ignoreHidden) {
 			return $this->getFromDefault($pref);
@@ -71,17 +71,19 @@ class UserPreferences {
 	 * @param int $userId
 	 * @param string $pref
 	 * @param string $val
+	 * @param bool $ignoreCache
 	 */
-	public function set( $userId, $pref, $val ) {
-		$this->setMultiple( $userId, [ $pref => $val ] );
+	public function set( $userId, $pref, $val, $ignoreCache = false ) {
+		$this->setMultiple( $userId, [ $pref => $val ], $ignoreCache );
 	}
 
 	/**
 	 * @param int $userId
 	 * @param array $prefs
+	 * @param bool $ignoreCache
 	 */
-	public function setMultiple( $userId, $prefs ) {
-		$currentPreferences = $this->load( $userId );
+	public function setMultiple( $userId, $prefs, $ignoreCache = false ) {
+		$currentPreferences = $this->load( $userId, $ignoreCache );
 		$prefToSave = [ ];
 
 		foreach ( $prefs as $pref => $val ) {
@@ -93,7 +95,10 @@ class UserPreferences {
 			if ( $val === null && isset( $default ) ) {
 				$val = $default;
 			}
-			$this->preferences[ $userId ][ $pref ] = $val;
+
+			if ( !$ignoreCache ) {
+				$this->preferences[$userId][$pref] = $val;
+			}
 			$prefToSave[ ] = new Preference( $pref, $val );
 		}
 
@@ -108,8 +113,8 @@ class UserPreferences {
 		return null;
 	}
 
-	private function load($userId) {
-		if (!isset($this->preferences[$userId])) {
+	private function load($userId, $ignoreCache = false) {
+		if ($ignoreCache || !isset($this->preferences[$userId])) {
 			$this->preferences[$userId] = $this->defaultPreferences;
 			foreach ($this->service->getPreferences($userId) as $pref) {
 				$this->preferences[$userId][$pref->getName()] = $pref->getValue();
