@@ -23,16 +23,6 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 		context = adContext.getContext();
 	}
 
-	function getDartHubName() {
-		if (context.targeting.wikiVertical === 'Entertainment') {
-			return 'ent';
-		}
-		if (context.targeting.wikiVertical === 'Gaming') {
-			return 'gaming';
-		}
-		return 'life';
-	}
-
 	function getDomain() {
 		var lhost, pieces, sld = '', np;
 		lhost = hostname.toLowerCase();
@@ -220,6 +210,7 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 			zone2,
 			params,
 			targeting = context.targeting,
+			mappedVertical = getVerticalName(targeting),
 			pvs = pvCounter.get();
 
 		options = options || {};
@@ -228,10 +219,10 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 
 		if (targeting.pageIsHub) {
 			site = 'hub';
-			zone1 = '_' + getDartHubName() + '_hub';
+			zone1 = '_' + mappedVertical + '_hub';
 			zone2 = 'hub';
 		} else {
-			site = getVerticalName(targeting);
+			site = mappedVertical;
 			zone1 = dbName;
 			zone2 = targeting.pageType || 'article';
 		}
