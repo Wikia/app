@@ -51,7 +51,7 @@ define('ext.wikia.adEngine.adContext', [
 	}
 
 	function isUrlParamSet(param) {
-		return !!parseInt(qs.getVal(param, '0'));
+		return !!parseInt(qs.getVal(param, '0'), 10);
 	}
 
 	function setContext(newContext) {
