@@ -77,12 +77,12 @@
 
 		$elem = $elem || $();
 
-		if (window.wgUserName === null && window.wgAction === 'edit') {
+		if (window.wgUserName === null && !window.UserLogin.forceLoggedIn && window.wgAction === 'edit') {
 			// handle login on edit page
 			window.UserLogin.rteForceLogin();
 			$elem.stopThrobbing();
 			return;
-		} else if (window.wgUserName === null) {
+		} else if (window.wgUserName === null && !window.UserLogin.forceLoggedIn) {
 			// handle login on article page
 			require(['AuthModal'], function (authModal) {
 				authModal.load({
