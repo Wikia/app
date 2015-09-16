@@ -20,7 +20,7 @@ var UploadPhotos = {
 						this.showDialog(evt);
 					}, this)
 				});
-			});
+			}.bind(this));
 		}
 		else {
 			this.showDialog(evt);
