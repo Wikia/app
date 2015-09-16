@@ -1419,7 +1419,8 @@ class User {
 		return array_reduce(
 			$defaultOptionNames,
 			function($preferences, $option) use ($wgUserPreferenceWhiteList, $defaultOptions) {
-				if (in_array($option, $wgUserPreferenceWhiteList['literals'])) {
+				$literals = $wgUserPreferenceWhiteList[ 'literals' ];
+				if (is_array( $literals ) && in_array($option, $literals )) {
 					$preferences[$option] = $defaultOptions[$option];
 				}
 
