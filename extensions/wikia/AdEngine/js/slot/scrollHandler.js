@@ -54,6 +54,9 @@ define('ext.wikia.adEngine.slot.scrollHandler', [
 			log('Scroll event listener has been added', 'debug', logGroup);
 			for (var slotName in config) {
 				if (config.hasOwnProperty(slotName)) {
+					if (config[slotName].trigger.match(/^scroll\.(top|bottom)$/) === null) {
+						continue;
+					}
 					onScroll(slotName);
 				}
 			}
@@ -70,10 +73,9 @@ define('ext.wikia.adEngine.slot.scrollHandler', [
 	}
 
 	function onScroll(slotName) {
-		if (config[slotName].trigger.match(/^scroll\.(top|bottom)$/) === null || (
-			config[slotName].hasOwnProperty('reloadedViewMax') &&
+		if (config[slotName].hasOwnProperty('reloadedViewMax') &&
 			config[slotName].reloadedViewMax >= 0 &&
-			config[slotName].reloadedViewMax <= reloadedView[slotName])) {
+			config[slotName].reloadedViewMax <= reloadedView[slotName]) {
 			return;
 		}
 

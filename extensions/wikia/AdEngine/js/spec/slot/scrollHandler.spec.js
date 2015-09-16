@@ -69,7 +69,7 @@ describe('ext.wikia.adEngine.slot.scrollHandler', function () {
 	});
 
 	it('Prefooter should not be refreshed when trigger is not scroll', function () {
-		shouldNotBeRefreshed({reloadedViewMax: 0, trigger: 'delay.5s'});
+		shouldNotBeRefreshed({trigger: 'delay.5s'});
 	});
 
 	it('Prefooter should be refreshed when reloadedViewMax is 1', function () {
