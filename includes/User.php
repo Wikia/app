@@ -1424,7 +1424,7 @@ class User {
 		return array_reduce(
 			$defaultOptionNames,
 			function ( $preferences, $option ) use ( $whiteListLiterals, $defaultOptions ) {
-				if ( is_array( $whiteListLiterals ) && in_array( $option, $whiteListLiterals ) ) {
+				if ( in_array( $option, $whiteListLiterals ) ) {
 					$preferences[ $option ] = $defaultOptions[ $option ];
 				}
 

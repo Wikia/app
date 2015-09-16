@@ -120,7 +120,9 @@ class PreferencePersistenceMySQL implements PreferencePersistence {
 				$orConds[ ] = '`' . self::UP_PROPERTY . "` REGEXP " . $this->slave->addQuotes( $this->whiteList[ 'regex' ] );
 			}
 
-			$cond[ ] = implode( ' OR ', $orConds );
+			if ( !empty( $orConds ) ) {
+				$cond[ ] = implode( ' OR ', $orConds );
+			}
 		}
 		$result = $this->slave->select(
 			self::USER_PREFERENCE_TABLE,

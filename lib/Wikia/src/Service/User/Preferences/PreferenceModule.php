@@ -2,7 +2,6 @@
 
 namespace Wikia\Service\User\Preferences;
 
-use SebastianBergmann\Exporter\Exception;
 use User;
 use Wikia\DependencyInjection\InjectorBuilder;
 use Wikia\DependencyInjection\Module;
