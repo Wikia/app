@@ -1412,19 +1412,24 @@ class User {
 	}
 
 	public static function getDefaultPreferences() {
-		global $wgUserPreferenceWhiteList;
+
+		global $wgLocalUserPreferenceWhiteList;
+		global $wgGlobalUserPreferenceWhiteList;
+		$whiteListLiterals = array_merge( (array)$wgLocalUserPreferenceWhiteList[ 'literals' ],
+			(array)$wgGlobalUserPreferenceWhiteList[ 'literals' ] );
+
 		$defaultOptions = User::getDefaultOptions();
-		$defaultOptionNames = array_keys($defaultOptions);
+		$defaultOptionNames = array_keys( $defaultOptions );
 
 		return array_reduce(
 			$defaultOptionNames,
-			function($preferences, $option) use ($wgUserPreferenceWhiteList, $defaultOptions) {
-				if (in_array($option, $wgUserPreferenceWhiteList['literals'])) {
-					$preferences[$option] = $defaultOptions[$option];
+			function ( $preferences, $option ) use ( $whiteListLiterals, $defaultOptions ) {
+				if ( in_array( $option, $whiteListLiterals ) ) {
+					$preferences[ $option ] = $defaultOptions[ $option ];
 				}
 
 				return $preferences;
-			}, []);
+			}, [ ] );
 	}
 
 	/**
@@ -4126,7 +4131,10 @@ class User {
 	function sendReConfirmationMail() {
 		$this->setGlobalFlag("mail_edited","1");
 		$this->saveSettings();
-		return $this->sendConfirmationMail( false, 'ReConfirmationMail' );
+		return $this->sendConfirmationMail(
+			false,
+			!empty( $this->getNewEmail() ) ? 'ReConfirmationMail' : 'ConfirmationMail'
+		);
 	}
 
 	/**

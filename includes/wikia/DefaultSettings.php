@@ -543,6 +543,7 @@ $wgAutoloadClasses[ "WikiaValidatorImageSize"       ] = "$IP/includes/wikia/vali
 $wgAutoloadClasses[ "WikiaValidatorDependent"       ] = "$IP/includes/wikia/validators/WikiaValidatorDependent.class.php";
 $wgAutoloadClasses[ 'WikiaValidatorRestrictiveUrl'  ] = "$IP/includes/wikia/validators/WikiaValidatorRestrictiveUrl.class.php";
 $wgAutoloadClasses[ 'WikiaValidatorUsersUrl'        ] = "$IP/includes/wikia/validators/WikiaValidatorUsersUrl.class.php";
+$wgAutoloadClasses[ 'WikiaValidatorAlwaysTrue'      ] = "$IP/includes/wikia/validators/WikiaValidatorAlwaysTrue.class.php";
 include_once("$IP/includes/wikia/validators/WikiaValidatorsExceptions.php");
 
 /**
@@ -583,7 +584,7 @@ global $wgAPIPropModules;
 $wgAPIPropModules[ "info"         ] = "WikiaApiQueryPageinfo";
 $wgAPIPropModules[ "wklasteditors"] = "WikiaApiQueryLastEditors";
 
-/*
+/**
  * reqistered API modules
  */
 global $wgAPIModules;
@@ -738,7 +739,7 @@ include_once( "$IP/extensions/wikia/CreateNewWiki/CreateWikiLocalJob.php" );
 require_once( "{$IP}/extensions/wikia/Tasks/Tasks.setup.php");
 require_once( "{$IP}/includes/wikia/tasks/autoload.php");
 
-/*
+/**
  * @name wgWikiaStaffLanguages
  * array of language codes supported by ComTeam
  */
@@ -811,14 +812,14 @@ $wgEnableGroupedArticleCommentsRC = true;
  */
 $wgUseWikiaSearchUI = false;
 
-/*
+/**
  * @name: $wgSpecialPagesRequiredLogin
  * list of restricted special pages (dbkey) displayed on Special:SpecialPages which required login
  * @see Login friction project
  */
 $wgSpecialPagesRequiredLogin = array('Resetpass', 'MyHome', 'Preferences', 'Watchlist', 'Upload', 'CreateBlogPage', 'CreateBlogListingPage', 'MultipleUpload');
 
-/*
+/**
  * @name: $wgArticleCommentsMaxPerPage
  * max comments per page under article
  * @see Article comments
@@ -827,7 +828,7 @@ $wgArticleCommentsMaxPerPage = 5;
 
 $wgMaxThumbnailArea = 0.9e7;
 
-/*
+/**
  * @name $wgWikiaMaxNameChars
  * soft enforced limit of length for new username
  * @see rt#39263
@@ -891,7 +892,7 @@ $wgSessionsInLibmemcached = false;
 $wgSolidCacheType = CACHE_MEMCACHED;
 $wgWikiFactoryCacheType = CACHE_MEMCACHED;
 
-/*
+/**
  * @name $wgWikiaHideImportsFromIrc
  * hides Special:Import imports from IRC feed.
  * @see rt#43025
@@ -1651,38 +1652,38 @@ $wgNirvanaAccessRules = [
 	],
 ];
 
-/*
+/**
  * @name $wgEnableLyricsApi
  * Enables Lyrics API extension (new Lyrics Wikia API)
  */
 $wgEnableLyricsApi = false;
 
-/*
+/**
  * @name $wgLyricsItunesAffiliateToken
  * iTunes affiliate token needed in new Lyrics API
  */
 $wgLyricsItunesAffiliateToken = '';
 
-/*
+/**
  * @name wgEnableSpecialSearchCaching
  * Enables caching of search results on CDN
  */
 $wgEnableSpecialSearchCaching = true;
 
-/*
+/**
  * @name wgEnableBuckyExt
  * Enables real user performance reporting via Bucky
  */
 $wgEnableBuckyExt = true;
 
-/*
+/**
  * @name wgBuckySampling
  * Sets the sampling rate for Bucky reporting, sampling applied at each page view.
  * Unit: percent (100 = all, 1 = 1%, 0.1 = 0.1%)
  */
 $wgBuckySampling = 10;
 
-/*
+/**
  * @name wgBuckyEnabledSkins
  * List of skins where Bucky reporting should be enabled
  */
@@ -1702,25 +1703,25 @@ $wgBuckyEnabledSkins = [
  */
 $wgMemcacheStatsSampling = 1;
 
-/*
+/**
  * @name wgXhprofUDPHost
  * Host that xhprof data should be reported to (if set to null will use $wgUDPProfilerHost)
  */
 $wgXhprofUDPHost = null;
 
-/*
+/**
  * @name wgXhprofUDPPort
  * Port that xhprof data should be reported to
  */
 $wgXhprofUDPPort = '3911';
 
-/*
+/**
  * @name wgXhprofMinimumTime
  * Threshold for total time spent in function to be reported (set to 0 to report all entries)
  */
 $wgXhprofMinimumTime = 0.001;
 
-/*
+/**
  * @name wgProfilerSendViaScribe
  * Enables sending profiler reports via Scribe
  */
@@ -1800,6 +1801,16 @@ $wgAdDriverIncontentPlayerSlotCountries = null;
 $wgPreferencesUseService = false;
 
 /**
- * Parser Tag
+ * @name $wgEnableRobotsTxtExt
+ *
+ * Enables extension that generates robots.txt
  */
-require_once "$IP/extensions/wikia/SoundCloudTag/SoundCloudTag.setup.php" ;
+$wgEnableRobotsTxtExt = false;
+
+/**
+ * @name $wgEnableFliteTagExt
+ *
+ * Enables FliteTag extension which makes it possible to use <flite> tag within an article content
+ */
+$wgEnableFliteTagExt = false;
+
