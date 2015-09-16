@@ -3547,6 +3547,7 @@ class User {
 		);
 
 		$this->saveOptions();
+		$this->savePreferences();
 
 		wfRunHooks( 'UserSaveSettings', array( $this ) );
 		$this->clearSharedCache();
@@ -3670,6 +3671,7 @@ class User {
 		$this->clearInstanceCache();
 
 		$this->saveOptions();
+		$this->savePreferences();
 	}
 
 	/**
@@ -4945,6 +4947,11 @@ class User {
 		] );
 	}
 
+	protected function savePreferences() {
+		$this->userPreferences()->save($this->getId());
+		wfRunHooks( "UserSetPreferences", array( $this ) );
+	}
+
 	/**
 	 * @todo document
 	 */
@@ -5006,8 +5013,6 @@ class User {
 		}
 
 		$dbw->upsert('user_properties', $insertRows, [], self::$PROPERTY_UPSERT_SET_BLOCK);
-
-		$this->userPreferences()->save($this->getId());
 
 		if ( $extuser ) {
 			$extuser->updateUser();
