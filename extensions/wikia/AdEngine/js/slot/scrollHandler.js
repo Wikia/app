@@ -15,7 +15,7 @@ define('ext.wikia.adEngine.slot.scrollHandler', [
 		config = context.opts.scrollHandlerConfig ||
 			{
 				PREFOOTER_LEFT_BOXAD: {reloadedViewMax: 1},
-				PREFOOTER_RIGHT_BOXAD: {reloadedViewMax: 3}
+				PREFOOTER_RIGHT_BOXAD: {reloadedViewMax: 1}
 			};
 
 	function init() {
