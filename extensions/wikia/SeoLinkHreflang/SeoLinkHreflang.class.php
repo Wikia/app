@@ -48,7 +48,7 @@ class SeoLinkHreflang {
 		// <prefix1>.<prefix2>.<wiki>.wikia.com -- preview.fr.muppet.wikia.com
 		// <wiki>.<devbox>.wikia-dev.com -- muppet.rychu.wikia-dev.com
 		// <prefix>.<devbox>.wikia-dev.com -- fr.muppet.rychu.wikia-dev.com
-		$matching = preg_match( '/(?:([a-z]+)\.)?([a-z]+)\.(?:[a-z]+\.wikia-dev|wikia)\.com$/', $domain, $m );
+		$matching = preg_match( '/(?:([a-z-]+)\.)?([a-z]+)\.(?:[a-z]+\.wikia-dev|wikia)\.com$/', $domain, $m );
 
 		if ( !$matching ) {
 			return [];
@@ -56,7 +56,8 @@ class SeoLinkHreflang {
 
 		$wiki = $m[2];
 		$lang = $m[1];
-		if ( !$lang || strlen( $lang ) > 3 ) {
+		$validLang = !empty( $lang ) && ( $lang === 'pt-br' || strlen( $lang ) <= 3 );
+		if ( !$validLang ) {
 			$lang = 'en';
 		}
 
