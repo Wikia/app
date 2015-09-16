@@ -2630,9 +2630,9 @@ class User {
 	 * @see getGlobalPreference
 	 */
 	public function setLocalPreference($preference, $value, $cityId = null, $sep = '-') {
-		global $wgPreferenceServiceWrite;
+		global $wgPreferenceServiceShadowWrite;
 
-		if ( $wgPreferenceServiceWrite ) {
+		if ( $wgPreferenceServiceShadowWrite ) {
 			$value = $this->sanitizeProperty( $value );
 			$this->userPreferences()->setLocalPreference( $this->mId, $cityId, $preference, $value );
 		}
@@ -2649,9 +2649,9 @@ class User {
 	 * @see getGlobalPreference for documentation about preferences
 	 */
 	public function setGlobalPreference( $preference, $value ) {
-		global $wgPreferenceServiceWrite;
+		global $wgPreferenceServiceShadowWrite;
 
-		if ( $wgPreferenceServiceWrite ) {
+		if ( $wgPreferenceServiceShadowWrite ) {
 			$value = $this->sanitizeProperty( $value );
 			$this->userPreferences()->setGlobalPreference( $this->mId, $preference, $value );
 			if ( $preference == 'skin' ) {
