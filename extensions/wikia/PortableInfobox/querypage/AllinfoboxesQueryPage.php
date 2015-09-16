@@ -74,6 +74,8 @@ class AllinfoboxesQueryPage extends PageQueryPage {
 			$dbw->commit();
 		}
 
+		wfRunHooks( 'AllInfoboxesQueryRecached' );
+
 		return $inserted;
 	}
 
