@@ -12,6 +12,9 @@ describe('AdContext', function () {
 			geo: {
 				getCountryCode: function () {
 					return 'XX';
+				},
+				getRegionCode: function () {
+					return 'RR';
 				}
 			},
 			instantGlobals: {},
@@ -351,12 +354,36 @@ describe('AdContext', function () {
 		expect(getModule().getContext().opts.sourcePoint).toBe(undefined);
 	});
 
-	it('enables SourcePoint when country in instantGlobals.wgAdDriverSourcePointCountries', function () {
+	it('enables SourcePoint when country in instant var', function () {
 		mocks.win = {ads: {context: {opts: {sourcePointUrl: '//foo.bar'}}}};
 		mocks.instantGlobals = {wgAdDriverSourcePointCountries: ['XX', 'ZZ']};
 
 		expect(getModule().getContext().opts.sourcePoint).toBeTruthy();
 	});
+
+	it('enables SourcePoint when region in instant var', function () {
+		mocks.win = {ads: {context: {opts: {sourcePointUrl: '//foo.bar'}}}};
+		mocks.instantGlobals = {wgAdDriverSourcePointCountries: ['XX-RR']};
+
+		expect(getModule().getContext().opts.sourcePoint).toBeTruthy();
+	});
+
+	it('enables SourcePoint when country and region in instant var (country overwrites region)', function () {
+		mocks.win = {ads: {context: {opts: {sourcePointUrl: '//foo.bar'}}}};
+		mocks.instantGlobals = {wgAdDriverSourcePointCountries: ['XX-EE', 'XX']};
+
+		expect(getModule().getContext().opts.sourcePoint).toBeTruthy();
+	});
+
+	it(
+		'disables SourcePoint when country and region in instant var and both are invalid',
+		function () {
+			mocks.win = {ads: {context: {opts: {sourcePointUrl: '//foo.bar'}}}};
+			mocks.instantGlobals = {wgAdDriverSourcePointCountries: ['XX-EE', 'YY']};
+
+			expect(getModule().getContext().opts.sourcePoint).toBeFalsy();
+		}
+	);
 
 	it('enables SourcePoint when url param sourcepoint is set', function () {
 		mocks.win = {ads: {context: {opts: {sourcePointUrl: '//foo.bar'}}}};
