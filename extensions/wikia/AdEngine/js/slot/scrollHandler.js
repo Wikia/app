@@ -17,7 +17,7 @@ define('ext.wikia.adEngine.slot.scrollHandler', [
 					reloadedViewMax: 1
 				},
 				PREFOOTER_RIGHT_BOXAD: {
-					reloadedViewMax: 3
+					reloadedViewMax: 1
 				}
 			},
 			mercury: {
