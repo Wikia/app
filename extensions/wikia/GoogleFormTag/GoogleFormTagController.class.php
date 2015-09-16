@@ -1,6 +1,6 @@
 <?php
 class GoogleFormTagController extends WikiaController {
-	const TAG_NAME = 'google-form';
+	const TAG_NAME = 'googleform';
 
 	const TAG_ALLOWED_ATTRIBUTES = [
 		'width',
@@ -31,10 +31,10 @@ class GoogleFormTagController extends WikiaController {
 	}
 
 	public function renderTag( $input, array $args, Parser $parser, PPFrame $frame ) {
-		$sourceUrl = $this->cleanupUrl( $args['src'] );
+		$sourceUrl = $this->cleanupUrl( $args['url'] );
 
 		if ( empty( $sourceUrl ) ) {
-			return '<strong class="error">' . wfMessage( 'google-form-tag-malformed-src' )->parse() . '</strong>';
+			return '<strong class="error">' . wfMessage( 'google-form-tag-malformed-url' )->parse() . '</strong>';
 		}
 
 		$iframeCode = Html::element(
@@ -48,7 +48,7 @@ class GoogleFormTagController extends WikiaController {
 	private function buildTagAttributes( $sourceUrl,  array $userAttributes ) {
 		$attributes = $this->helper->buildTagAttributes( self::TAG_ALLOWED_ATTRIBUTES, $userAttributes );
 
-		$attributes['src'] = $sourceUrl
+		$attributes['src'] = $sourceUrl;
 
 		return array_merge( self::TAG_DEFAULT_ATTRIBUTES, $attributes );
 	}
