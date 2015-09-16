@@ -54,6 +54,6 @@ class GoogleFormTagController extends WikiaController {
 	}
 
 	private function cleanupUrl( $url ) {
-		return filter_var( $url, FILTER_SANITIZE_URL | FILTER_VALIDATE_URL | FILTER_FLAG_PATH_REQUIRED );
+		return filter_var( $url, FILTER_VALIDATE_URL, FILTER_SANITIZE_URL | FILTER_FLAG_PATH_REQUIRED );
 	}
 }
