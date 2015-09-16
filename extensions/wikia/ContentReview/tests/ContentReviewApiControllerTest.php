@@ -45,10 +45,7 @@ class ContentReviewApiControllerTest extends WikiaBaseTest {
 	 */
 	public function testUpdateReviewsStatus( $wasPosted, $matchEditToken, $isAllowed, $exception ) {
 		/* @var \WikiaRequest $requestMock */
-		$requestMock = $this->getMockBuilder( '\WikiaRequest' )
-			->disableOriginalConstructor()
-			->setMethods( [ 'wasPosted' ] )
-			->getMock();
+		$requestMock = $this->getMock( '\WikiaRequest', [ 'wasPosted' ], [ [] ] );
 		$requestMock->expects( $this->once() )
 			->method( 'wasPosted' )
 			->willReturn( $wasPosted );
