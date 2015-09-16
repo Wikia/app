@@ -35,8 +35,8 @@ class UserPreferencesIntegrationTest extends PHPUnit_Framework_TestCase {
 	}
 
 	function testGetSingleUserPreference() {
-		$testPref = $this->getUserPreferences()->get($this->testUserId, 'editor');
-		$this->assertInternalType('int', $testPref, "Preference 'editor' is missing");
+		$testPref = $this->getUserPreferences()->get($this->testUserId, "marketingallowed");
+		$this->assertNotEmpty($testPref, "Preference 'marketingallowed' is missing");
 		$this->assertGreaterThanOrEqual(0, $testPref, "Invalid preference value - expected integer >= 0");
 	}
 
