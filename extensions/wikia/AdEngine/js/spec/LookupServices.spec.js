@@ -12,10 +12,14 @@ describe('Method ext.wikia.adEngine.lookup.services', function () {
 		amazon: {
 			trackState: noop,
 			wasCalled: noop,
-			getPageParams: noop,
 			getSlotParams: noop
 		},
 		log: noop,
+		oxBidder: {
+			trackState: noop,
+			wasCalled: noop,
+			getSlotParams: noop
+		},
 		rtp: {
 			trackState: noop,
 			wasCalled: noop,
@@ -28,6 +32,7 @@ describe('Method ext.wikia.adEngine.lookup.services', function () {
 	it('extends slot targeting for Rubicon', function () {
 		var lookup = modules['ext.wikia.adEngine.lookup.services'](
 				mocks.log,
+				undefined,
 				undefined,
 				mocks.rtp
 			),
@@ -55,6 +60,25 @@ describe('Method ext.wikia.adEngine.lookup.services', function () {
 
 		spyOn(mocks.amazon, 'wasCalled').and.returnValue(true);
 		spyOn(mocks.amazon, 'getSlotParams').and.returnValue({amznslots: ['a1x6p5', 'a3x2p9', 'a7x9p5']});
+
+		lookup.extendSlotTargeting('TOP_LEADERBOARD', slotTargetingMock);
+		expect(slotTargetingMock).toEqual(expectedSlotTargeting);
+	});
+
+	it('extends slot targeting for OpenX', function () {
+		var lookup = modules['ext.wikia.adEngine.lookup.services'](
+		mocks.log,
+			undefined,
+			mocks.oxBidder
+		),
+		slotTargetingMock = {a: 'b'},
+			expectedSlotTargeting = {
+				a: 'b',
+				oxslots: ['ox1x6p5', 'ox3x2p9', 'ox7x9p5']
+			};
+
+		spyOn(mocks.oxBidder, 'wasCalled').and.returnValue(true);
+		spyOn(mocks.oxBidder, 'getSlotParams').and.returnValue({oxslots: ['ox1x6p5', 'ox3x2p9', 'ox7x9p5']});
 
 		lookup.extendSlotTargeting('TOP_LEADERBOARD', slotTargetingMock);
 		expect(slotTargetingMock).toEqual(expectedSlotTargeting);

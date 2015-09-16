@@ -1255,6 +1255,19 @@ $wgAmazonMatchCountries = null;
 $wgAmazonMatchCountriesMobile = null;
 
 /**
+ * @name $wgEnableOpenXBidder
+ * Enables OpenX bidder
+ */
+$wgAdDriverEnableOpenXBidder = false;
+
+/**
+ * @name $wgAdDriverOpenXBidderCountries
+ * Enables OpenX bidder in these countries (given wgAdDriverEnableOpenXBidder is also true).
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverOpenXBidderCountries = null;
+
+/**
  * @name $wgAdPageLevelCategoryLangs
  * Enables DART category page param for these content languages
  * "Utility" var, don't change it here.

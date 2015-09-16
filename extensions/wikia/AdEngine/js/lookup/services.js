@@ -14,8 +14,9 @@
 define('ext.wikia.adEngine.lookup.services', [
 	'wikia.log',
 	require.optional('ext.wikia.adEngine.lookup.amazonMatch'),
+	require.optional('ext.wikia.adEngine.lookup.openXBidder'),
 	require.optional('ext.wikia.adEngine.lookup.rubiconRtp')
-], function (log, amazonMatch, rtp) {
+], function (log, amazonMatch, oxBidder, rtp) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.lookup.services',
@@ -31,7 +32,7 @@ define('ext.wikia.adEngine.lookup.services', [
 	function extendSlotTargeting(slotName, slotTargeting) {
 		log(['extendSlotTargeting', slotName, slotTargeting], 'debug', logGroup);
 
-		var rtpSlots, rtpTier, amazonParams;
+		var rtpSlots, rtpTier, amazonParams, oxParams;
 
 		if (!rtpLookupTracked) {
 			rtpLookupTracked = true;
@@ -58,6 +59,14 @@ define('ext.wikia.adEngine.lookup.services', [
 
 			Object.keys(amazonParams).forEach(function (key) {
 				slotTargeting[key] = amazonParams[key];
+			});
+		}
+
+		if (oxBidder && oxBidder.wasCalled() && Object.keys) {
+			oxParams = oxBidder.getSlotParams(slotName);
+
+			Object.keys(oxParams).forEach(function (key) {
+				slotTargeting[key] = oxParams[key];
 			});
 		}
 	}

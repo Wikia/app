@@ -185,6 +185,14 @@ $config['adengine2_amazon_match_js'] = array(
 	),
 );
 
+$config['adengine2_ox_bidder_js'] = array(
+	'skin' => ['oasis'],
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//extensions/wikia/AdEngine/js/lookup/openXBidder.js',
+	),
+);
+
 $config['oasis_noads_extensions_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
