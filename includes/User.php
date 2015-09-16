@@ -3547,6 +3547,7 @@ class User {
 		);
 
 		$this->saveOptions();
+		$this->savePreferences();
 
 		wfRunHooks( 'UserSaveSettings', array( $this ) );
 		$this->clearSharedCache();
@@ -3670,6 +3671,7 @@ class User {
 		$this->clearInstanceCache();
 
 		$this->saveOptions();
+		$this->savePreferences();
 	}
 
 	/**
@@ -4943,6 +4945,15 @@ class User {
 			'valueFromService' => $attributeValue,
 			'userId' => $this->getId()
 		] );
+	}
+
+	/**
+	 * Save this user's preferences into the database.
+	 *
+	 * @see getGlobalPreference for documentation about preferences
+	 */
+	protected function savePreferences() {
+		$this->userPreferences()->save($this->getId());
 	}
 
 	/**
