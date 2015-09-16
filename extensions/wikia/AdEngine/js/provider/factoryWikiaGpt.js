@@ -36,7 +36,8 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 			log(['fillInSlot', slotName, slotElement, success, hop], 'debug', logGroup);
 
 			var extraParams = {
-					sraEnabled: extra.sraEnabled
+					sraEnabled: extra.sraEnabled,
+					recoverableSlots: extra.recoverableSlots
 				},
 				pageParams = adLogicPageParams.getPageLevelParams(),
 				slotTargeting = JSON.parse(JSON.stringify(slotMap[slotName])), // copy value

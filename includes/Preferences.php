@@ -25,6 +25,10 @@
  * over to the tryUISubmit static method of this class.
  */
 
+use Wikia\Logger\WikiaLogger;
+use Wikia\DependencyInjection\Injector;
+use Wikia\Service\User\Preferences\Migration\PreferenceScopeService;
+
 class Preferences {
 	static $defaultPreferences = null;
 	static $saveFilters = array(
@@ -35,6 +39,13 @@ class Preferences {
 		'wllimit' => array( 'Preferences', 'filterIntval' ),
 		'searchlimit' => array( 'Preferences', 'filterIntval' ),
 	);
+
+	/**
+	 * @return UserPreferences
+	 */
+	static function preferenceScope() {
+		return Injector::getInjector()->get(PreferenceScopeService::class);
+	}
 
 	/**
 	 * @throws MWException
@@ -1469,7 +1480,24 @@ class Preferences {
 			}
 		}
 
-		$user->setGlobalPreferences($preferences);
+		foreach ($preferences as $key => $val) {
+			if ( self::preferenceScope()->isGlobalPreference($key) ) {
+				$user->setGlobalPreference($key, $val);
+				continue;
+			}
+
+			if ( self::preferenceScope()->isLocalPreference($key) ) {
+				$splitedKey = self::preferenceScope()->splitLocalPreference($key);
+				if ( isset( $splitedKey[0] ) && isset( $splitedKey[1] ) ) {
+					$user->setLocalPreference($splitedKey[0], $val , $splitedKey[1]);
+				} else {
+					WikiaLogger::instance()->error(
+						__METHOD__ . '::localPreferenceNotSplitted',
+						[ 'preference'  => $key ]
+					);
+				}
+			}
+		}
 		$user->saveSettings();
 
 		return $result;

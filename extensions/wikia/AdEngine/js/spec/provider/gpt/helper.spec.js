@@ -1,4 +1,4 @@
-/*global document, describe, it, expect, modules, spyOn, beforeEach*/
+/*global document, describe, it, expect, modules, spyOn, beforeEach, window*/
 describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 	'use strict';
 
@@ -9,10 +9,11 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 		mocks = {
 			log: noop,
 			googleTag: function () {},
+			context: { opts: {} },
 			adContext: {
 				addCallback: noop,
 				getContext: function () {
-					return { opts: {} };
+					return mocks.context;
 				}
 			},
 			adDetect: {},
@@ -53,6 +54,7 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 		return modules['ext.wikia.adEngine.provider.gpt.helper'](
 			document,
 			mocks.log,
+			window,
 			mocks.adContext,
 			mocks.adLogicPageParams,
 			mocks.adDetect,
@@ -82,6 +84,10 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 		});
 
 		callbacks = [];
+
+		mocks.context = { opts: {} };
+
+		window.ads = {};
 	});
 
 	it('Initialize googletag when module is not initialized yet', function () {
@@ -146,5 +152,100 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 		getModule().pushAd('TOP_RIGHT_BOXAD', mocks.slotElement, '/foo/slot/path', {}, {});
 
 		expect(callbacks.length).toEqual(1);
+	});
+
+	it('Should push/flush when sourcepoint is enabled but pageview is not blocked', function () {
+		mocks.context = {
+			opts: {
+				sourcePoint: true
+			}
+		};
+		window.ads = {
+			runtime: {
+				sp: {
+					blocking: false
+				}
+			}
+		};
+
+		spyOn(mocks.googleTag.prototype, 'push');
+		spyOn(mocks.googleTag.prototype, 'flush');
+
+		getModule().pushAd('TOP_RIGHT_BOXAD', mocks.slotElement, '/foo/slot/path', {}, { sraEnabled: true });
+
+		expect(mocks.googleTag.prototype.push).toHaveBeenCalled();
+		expect(mocks.googleTag.prototype.flush).toHaveBeenCalled();
+	});
+
+	it('Should push/flush when pageview is blocked but sourcepoint is disabled', function () {
+		mocks.context = {
+			opts: {
+				sourcePoint: false
+			}
+		};
+		window.ads = {
+			runtime: {
+				sp: {
+					blocking: true
+				}
+			}
+		};
+
+		spyOn(mocks.googleTag.prototype, 'push');
+		spyOn(mocks.googleTag.prototype, 'flush');
+
+		getModule().pushAd('TOP_RIGHT_BOXAD', mocks.slotElement, '/foo/slot/path', {}, { sraEnabled: true });
+
+		expect(mocks.googleTag.prototype.push).toHaveBeenCalled();
+		expect(mocks.googleTag.prototype.flush).toHaveBeenCalled();
+	});
+
+	it('Prevent push/flush when slot is not recoverable and pageview is blocked and recovery is enabled', function () {
+		mocks.context = {
+			opts: {
+				sourcePoint: true
+			}
+		};
+		window.ads = {
+			runtime: {
+				sp: {
+					blocking: true
+				}
+			}
+		};
+
+		spyOn(mocks.googleTag.prototype, 'push');
+		spyOn(mocks.googleTag.prototype, 'flush');
+
+		getModule().pushAd('TOP_RIGHT_BOXAD', mocks.slotElement, '/foo/slot/path', {}, { sraEnabled: true });
+
+		expect(mocks.googleTag.prototype.push).not.toHaveBeenCalled();
+		expect(mocks.googleTag.prototype.flush).not.toHaveBeenCalled();
+	});
+
+	it('Should push/flush when slot is recoverable', function () {
+		mocks.context = {
+			opts: {
+				sourcePoint: true
+			}
+		};
+		window.ads = {
+			runtime: {
+				sp: {
+					blocking: true
+				}
+			}
+		};
+
+		spyOn(mocks.googleTag.prototype, 'push');
+		spyOn(mocks.googleTag.prototype, 'flush');
+
+		getModule().pushAd('TOP_RIGHT_BOXAD', mocks.slotElement, '/foo/slot/path', {}, {
+			sraEnabled: true,
+			recoverableSlots: ['TOP_RIGHT_BOXAD']
+		});
+
+		expect(mocks.googleTag.prototype.push).toHaveBeenCalled();
+		expect(mocks.googleTag.prototype.flush).toHaveBeenCalled();
 	});
 });

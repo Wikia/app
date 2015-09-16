@@ -7,7 +7,6 @@ use Wikia\Cache\BagOStuffCacheProvider;
 use Wikia\DependencyInjection\InjectorBuilder;
 use Wikia\DependencyInjection\Module;
 use Wikia\Persistence\User\Preferences\PreferencePersistence;
-use Wikia\Persistence\User\Preferences\PreferencePersistenceModuleMySQL;
 use Wikia\Persistence\User\Preferences\PreferencePersistenceSwaggerService;
 
 class PreferenceModule implements Module {

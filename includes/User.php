@@ -23,9 +23,9 @@
 use Wikia\DependencyInjection\Injector;
 use Wikia\Domain\User\Attribute;
 use Wikia\Logger\Loggable;
+use Wikia\Service\User\Attributes\UserAttributes;
 use Wikia\Service\User\Preferences\Migration\PreferenceCorrectionService;
 use Wikia\Service\User\Preferences\PreferenceService;
-use Wikia\Service\User\Attributes\UserAttributes;
 use Wikia\Util\Statistics\BernoulliTrial;
 
 /**
@@ -1414,19 +1414,24 @@ class User {
 	}
 
 	public static function getDefaultPreferences() {
-		global $wgUserPreferenceWhiteList;
+
+		global $wgLocalUserPreferenceWhiteList;
+		global $wgGlobalUserPreferenceWhiteList;
+		$whiteListLiterals = array_merge( (array)$wgLocalUserPreferenceWhiteList[ 'literals' ],
+			(array)$wgGlobalUserPreferenceWhiteList[ 'literals' ] );
+
 		$defaultOptions = User::getDefaultOptions();
-		$defaultOptionNames = array_keys($defaultOptions);
+		$defaultOptionNames = array_keys( $defaultOptions );
 
 		return array_reduce(
 			$defaultOptionNames,
-			function($preferences, $option) use ($wgUserPreferenceWhiteList, $defaultOptions) {
-				if (in_array($option, $wgUserPreferenceWhiteList['literals'])) {
-					$preferences[$option] = $defaultOptions[$option];
+			function ( $preferences, $option ) use ( $whiteListLiterals, $defaultOptions ) {
+				if ( in_array( $option, $whiteListLiterals ) ) {
+					$preferences[ $option ] = $defaultOptions[ $option ];
 				}
 
 				return $preferences;
-			}, []);
+			}, [ ] );
 	}
 
 	/**
@@ -2557,13 +2562,12 @@ class User {
 		return intval( $val );
 	}
 
-
 	/**
 	 * Get a preference local to this wikia.
 	 *
 	 * Refere to getGlobalPreference for more detailed documentation.
 	 *
-	 * @param string $pref the preference name
+	 * @param string $preference the preference name
 	 * @param int $cityId the city id
 	 * @param string $sep the separator between the name and the city id
 	 * @param mixed $default
@@ -2571,9 +2575,17 @@ class User {
 	 * @return string
 	 * @see getGlobalPreference
 	 */
-	public function getLocalPreference($pref, $cityId = null, $sep = "-", $default = null, $ignoreHidden = false) {
-		$globalPref = self::localToGlobalPropertyName($pref, $cityId, $sep);
-		return $this->getGlobalPreference($globalPref, $default, $ignoreHidden);
+	public function getLocalPreference($preference, $cityId = null, $sep = "-", $default = null, $ignoreHidden = false) {
+		global $wgPreferenceServiceRead;
+
+		if ($wgPreferenceServiceRead) {
+			$value = $this->userPreferences()->getLocalPreference($this->mId, $cityId, $preference, $default, $ignoreHidden);
+		} else {
+			$preferenceGlobalName = self::localToGlobalPropertyName($preference, $cityId, $sep);
+			$value = $this->getOptionHelper($preferenceGlobalName, $default, $ignoreHidden);
+		}
+
+		return $value;
 	}
 
 	/**
@@ -2589,15 +2601,19 @@ class User {
 	 * @return string
 	 */
 	public function getGlobalPreference($preference, $default = null, $ignoreHidden = false) {
-		global $wgPreferencesUseService;
+		global $wgPreferenceServiceRead;
 
-		if ($wgPreferencesUseService) {
-			$this->load();
-			$value = $this->userPreferences()->get($this->mId, $preference, $default, $ignoreHidden);
+		if ($wgPreferenceServiceRead) {
+			$preferences = [];
+			$value = $this->userPreferences()->getGlobalPreference($this->mId, $preference, $default, $ignoreHidden);
+			foreach ($this->userPreferences()->getPreferences($this->getId())->getGlobalPreferences() as $globalPreference) {
+				$preferences[$globalPreference->getName()] = $globalPreference->getValue();
+			}
+
 			wfRunHooks(
 				'UserGetPreference',
 				[
-					$this->userPreferences()->getPreferences($this->mId),
+					$preferences,
 					$preference,
 					&$value
 				]
@@ -2622,7 +2638,15 @@ class User {
 	 * @see getGlobalPreference
 	 */
 	public function setLocalPreference($preference, $value, $cityId = null, $sep = '-') {
-		$this->setGlobalPreference(self::localToGlobalPropertyName($preference, $cityId, $sep), $value);
+		global $wgPreferenceServiceShadowWrite;
+
+		if ( $wgPreferenceServiceShadowWrite ) {
+			$value = $this->sanitizeProperty( $value );
+			$this->userPreferences()->setLocalPreference( $this->mId, $cityId, $preference, $value );
+		}
+
+		$preferenceGlobalName = self::localToGlobalPropertyName($preference, $cityId, $sep);
+		$this->setOptionHelper( $preferenceGlobalName, $value );
 	}
 
 	/**
@@ -2633,31 +2657,20 @@ class User {
 	 * @see getGlobalPreference for documentation about preferences
 	 */
 	public function setGlobalPreference( $preference, $value ) {
-		$this->setGlobalPreferences( [ $preference => $value ] );
-	}
+		global $wgPreferenceServiceShadowWrite;
 
-	/**
-	 * @param array $preferences preferenceName->Value
-	 */
-	public function setGlobalPreferences( $preferences ) {
-		global $wgPreferencesUseService;
-		if ( $wgPreferencesUseService ) {
-			$this->load();
-			$preferences = $this->sanitizePropertyArray( $preferences );
-			$this->userPreferences()->setMultiple( $this->mId, $preferences );
-			if ( array_key_exists( 'skin', $preferences ) ) {
+		if ( $wgPreferenceServiceShadowWrite ) {
+			$value = $this->sanitizeProperty( $value );
+			$this->userPreferences()->setGlobalPreference( $this->mId, $preference, $value );
+			if ( $preference == 'skin' ) {
 				unset( $this->mSkin );
 			}
-			if ( array_key_exists( 'theme', $preferences ) ) {
+			if ( $preference == 'theme' ) {
 				unset( $this->mTheme );
 			}
-			wfRunHooks( "UserSetPreferences", [ $this, $this->userPreferences()->getPreferences( $this->mId ) ] );
-			$this->clearSharedCache();
-		} else {
-			foreach ( $preferences as $key => $value ) {
-				$this->setOptionHelper( $key, $value );
-			}
 		}
+
+		$this->setOptionHelper( $preference, $value );
 	}
 
 	/**
@@ -2668,6 +2681,7 @@ class User {
 	public function removeGlobalPreference($preference){
 		unset( $this->mOptions[ $preference ] );
 	}
+
 	/**
 	 * Get the default global preference.
 	 *
@@ -4128,7 +4142,10 @@ class User {
 	function sendReConfirmationMail() {
 		$this->setGlobalFlag("mail_edited","1");
 		$this->saveSettings();
-		return $this->sendConfirmationMail( false, 'ReConfirmationMail' );
+		return $this->sendConfirmationMail(
+			false,
+			!empty( $this->getNewEmail() ) ? 'ReConfirmationMail' : 'ConfirmationMail'
+		);
 	}
 
 	/**
@@ -4932,7 +4949,7 @@ class User {
 	 * @todo document
 	 */
 	protected function saveOptions() {
-		global $wgAllowPrefChange, $wgPreferencesUseService;
+		global $wgAllowPrefChange;
 
 		$extuser = ExternalUser::newFromUser( $this );
 
@@ -4978,20 +4995,6 @@ class User {
 				}
 			}
 		}
-
-		$preferencesFromService = [];
-		if ($wgPreferencesUseService) {
-			$preferencesFromService = array_keys($this->userPreferences()->getPreferences($this->getId()));
-			$insertRows = array_reduce($insertRows, function($rows, $current) use ($preferencesFromService) {
-				if (!in_array($current['up_property'], $preferencesFromService)) {
-					$rows[] = $current;
-				}
-
-				return $rows;
-			}, []);
-		}
-
-		$deletePrefs = array_diff($deletePrefs, $preferencesFromService);
 
 		// user has default set, so clear any other entries from db
 		if (!empty($deletePrefs)) {
