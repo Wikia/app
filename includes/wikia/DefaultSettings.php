@@ -1796,9 +1796,10 @@ $wgPaidAssetDropConfig = false;
 $wgAdDriverIncontentPlayerSlotCountries = null;
 
 /**
- * flag for using (possibly external) service for managing a user's preferences
+ * manage a user's preferences externally
  */
-$wgPreferencesUseService = false;
+$wgPreferenceServiceRead = false;
+$wgPreferenceServiceShadowWrite = true;
 
 /**
  * @name $wgEnableRobotsTxtExt

@@ -23,8 +23,8 @@
 use Wikia\DependencyInjection\Injector;
 use Wikia\Domain\User\Attribute;
 use Wikia\Logger\Loggable;
-use Wikia\Service\User\Preferences\PreferenceService;
 use Wikia\Service\User\Attributes\UserAttributes;
+use Wikia\Service\User\Preferences\PreferenceService;
 use Wikia\Util\Statistics\BernoulliTrial;
 
 /**
@@ -2568,10 +2568,9 @@ class User {
 	 * @see getGlobalPreference
 	 */
 	public function getLocalPreference($preference, $cityId = null, $sep = "-", $default = null, $ignoreHidden = false) {
-		global $wgPreferencesUseService;
+		global $wgPreferenceServiceRead;
 
-		if ($wgPreferencesUseService) {
-			$this->load();
+		if ($wgPreferenceServiceRead) {
 			$value = $this->userPreferences()->getLocalPreference($this->mId, $cityId, $preference, $default, $ignoreHidden);
 		} else {
 			$preferenceGlobalName = self::localToGlobalPropertyName($preference, $cityId, $sep);
@@ -2594,15 +2593,19 @@ class User {
 	 * @return string
 	 */
 	public function getGlobalPreference($preference, $default = null, $ignoreHidden = false) {
-		global $wgPreferencesUseService;
+		global $wgPreferenceServiceRead;
 
-		if ($wgPreferencesUseService) {
-			$this->load();
+		if ($wgPreferenceServiceRead) {
+			$preferences = [];
 			$value = $this->userPreferences()->getGlobalPreference($this->mId, $preference, $default, $ignoreHidden);
+			foreach ($this->userPreferences()->getPreferences($this->getId())->getGlobalPreferences() as $globalPreference) {
+				$preferences[$globalPreference->getName()] = $globalPreference->getValue();
+			}
+
 			wfRunHooks(
 				'UserGetPreference',
 				[
-					$this->userPreferences()->getPreferences($this->mId)->getGlobalPreferences(),
+					$preferences,
 					$preference,
 					&$value
 				]
@@ -2627,16 +2630,15 @@ class User {
 	 * @see getGlobalPreference
 	 */
 	public function setLocalPreference($preference, $value, $cityId = null, $sep = '-') {
-		global $wgPreferencesUseService;
+		global $wgPreferenceServiceShadowWrite;
 
-		if ( $wgPreferencesUseService ) {
-			$this->load();
+		if ( $wgPreferenceServiceShadowWrite ) {
 			$value = $this->sanitizeProperty( $value );
 			$this->userPreferences()->setLocalPreference( $this->mId, $cityId, $preference, $value );
-		} else {
-			$preferenceGlobalName = self::localToGlobalPropertyName($preference, $cityId, $sep);
-			$this->setOptionHelper( $preferenceGlobalName, $value );
 		}
+
+		$preferenceGlobalName = self::localToGlobalPropertyName($preference, $cityId, $sep);
+		$this->setOptionHelper( $preferenceGlobalName, $value );
 	}
 
 	/**
@@ -2647,10 +2649,9 @@ class User {
 	 * @see getGlobalPreference for documentation about preferences
 	 */
 	public function setGlobalPreference( $preference, $value ) {
-		global $wgPreferencesUseService;
+		global $wgPreferenceServiceShadowWrite;
 
-		if ( $wgPreferencesUseService ) {
-			$this->load();
+		if ( $wgPreferenceServiceShadowWrite ) {
 			$value = $this->sanitizeProperty( $value );
 			$this->userPreferences()->setGlobalPreference( $this->mId, $preference, $value );
 			if ( $preference == 'skin' ) {
@@ -2659,9 +2660,9 @@ class User {
 			if ( $preference == 'theme' ) {
 				unset( $this->mTheme );
 			}
-		} else {
-			$this->setOptionHelper( $preference, $value );
 		}
+
+		$this->setOptionHelper( $preference, $value );
 	}
 
 	/**
@@ -4939,7 +4940,7 @@ class User {
 	 * @todo document
 	 */
 	protected function saveOptions() {
-		global $wgAllowPrefChange, $wgPreferencesUseService;
+		global $wgAllowPrefChange;
 
 		$extuser = ExternalUser::newFromUser( $this );
 
@@ -4985,20 +4986,6 @@ class User {
 				}
 			}
 		}
-
-		$preferencesFromService = [];
-		if ($wgPreferencesUseService) {
-			$preferencesFromService = array_keys($this->userPreferences()->getPreferences($this->getId()));
-			$insertRows = array_reduce($insertRows, function($rows, $current) use ($preferencesFromService) {
-				if (!in_array($current['up_property'], $preferencesFromService)) {
-					$rows[] = $current;
-				}
-
-				return $rows;
-			}, []);
-		}
-
-		$deletePrefs = array_diff($deletePrefs, $preferencesFromService);
 
 		// user has default set, so clear any other entries from db
 		if (!empty($deletePrefs)) {
