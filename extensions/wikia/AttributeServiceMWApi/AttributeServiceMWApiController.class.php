@@ -105,8 +105,8 @@ class AttributeServiceMWApiController extends WikiaController {
     private function clearCacheInStagingEnvs( $userId ) {
         global $wgStagingList, $wgPreviewHostname, $wgVerifyHostname;
 
-        // $wgStagingList uses the domain name "preview" and "verify" rather than the hostnames "staging-s2"
-        // and "staging-s3" for those 2 envs, so we have to manually add the hostnames for those here.
+        // $wgStagingList uses the domain names "preview" and "verify" rather than the hostnames "staging-s2" and
+        // "staging-s3", so we have to manually add the those hostnames here.
         $stagingEnvs = array_merge( $wgStagingList, [ $wgPreviewHostname, $wgVerifyHostname ] );
         foreach ( $stagingEnvs as $stagingEnv ) {
             $this->clearCacheInEnv( $userId, $stagingEnv );
