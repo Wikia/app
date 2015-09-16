@@ -143,7 +143,7 @@ class PreferenceServiceImpl implements PreferenceService {
 		$prefsToSave = new UserPreferences();
 
 		foreach ( $prefs->getGlobalPreferences() as $pref ) {
-			if ( $this->prefIsSaveable( $pref->getName(), $pref->getValue() ) ) {
+			if ( $this->prefIsSaveable( $pref->getName(), $pref->getValue(), $this->getGlobalDefault( $pref->getName() ) ) ) {
 				$prefsToSave->setGlobalPreference( $pref->getName(), $pref->getValue() );
 			}
 		}
@@ -151,7 +151,7 @@ class PreferenceServiceImpl implements PreferenceService {
 		foreach ( $prefs->getLocalPreferences() as $wikiId => $wikiPreferences ) {
 			foreach ( $wikiPreferences as $pref ) {
 				/** @var $pref LocalPreference */
-				if ( $this->prefIsSaveable( $pref->getName(), $pref->getValue() ) ) {
+				if ( $this->prefIsSaveable( $pref->getName(), $pref->getValue(), $this->getLocalDefault( $pref->getName() ) ) ) {
 					$prefsToSave->setLocalPreference( $pref->getName(), $pref->getWikiId(), $pref->getValue() );
 				}
 			}
@@ -181,6 +181,10 @@ class PreferenceServiceImpl implements PreferenceService {
 
 	public function getGlobalDefault( $pref ) {
 		return $this->defaultPreferences->getGlobalPreference( $pref );
+	}
+
+	public function getLocalDefault( $pref, $wikiId ) {
+		return $this->defaultPreferences->getLocalPreference( $pref, $wikiId );
 	}
 
 	/**
@@ -249,14 +253,12 @@ class PreferenceServiceImpl implements PreferenceService {
 		return $preferences;
 	}
 
-	private function prefIsSaveable( $pref, $value ) {
-		$default = $this->getGlobalDefault( $pref );
-
-		if ( $value == $default ) {
+	private function prefIsSaveable( $pref, $value, $valueFromDefaults ) {
+		if ( $value == $valueFromDefaults ) {
 			return false;
 		}
 
-		return in_array( $pref, $this->forceSavePrefs ) || $value != $default ||
-			( $default != null && $value !== false && $value !== null );
+		return in_array( $pref, $this->forceSavePrefs ) || $value != $valueFromDefaults ||
+			( $valueFromDefaults != null && $value !== false && $value !== null );
 	}
 }
