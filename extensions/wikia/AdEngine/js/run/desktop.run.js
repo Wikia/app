@@ -77,9 +77,12 @@ require([
 	win.wgAfterContentAndJS.push(function () {
 		// Ads
 		adTracker.measureTime('adengine.init', 'queue.desktop').track();
+		scrollHandler.init();
+		sourcePoint.initDetection();
 		win.adslots2 = win.adslots2 || [];
 		adEngine.run(adConfigDesktop, win.adslots2, 'queue.desktop');
 
+		// Recovery
 		if (context.opts.sourcePoint && win.ads) {
 			win.ads.runtime.sp.slots = win.ads.runtime.sp.slots || [];
 			win.addEventListener('sp.blocking', function () {
@@ -87,10 +90,6 @@ require([
 				adEngine.run(adConfigDesktop, win.ads.runtime.sp.slots, 'queue.sp');
 			});
 		}
-
-		scrollHandler.init();
-		sourcePoint.initDetection();
-
 		// Krux
 		krux.load(kruxSiteId);
 	});
