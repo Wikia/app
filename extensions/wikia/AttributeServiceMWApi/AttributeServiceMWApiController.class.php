@@ -5,9 +5,9 @@ use \Wikia\Util\GlobalStateWrapper;
 class AttributeServiceMWApiController extends WikiaController {
 
 	/**
-	 * Helper function for the attribute service to clear user MediaWiki.
-	 * This is called when a client other than MW updates an attribute
-	 * using the attribute service to clear the User cache.
+	 * Helper function for the attribute service to clear user cache in MediaWiki.
+	 * This is called by the attribute service when a client other than MW updates
+     * an attribute in the service.
 	 */
 	public function purgeUserCache() {
 
