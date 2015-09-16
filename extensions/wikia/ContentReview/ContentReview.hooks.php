@@ -172,7 +172,11 @@ class Hooks {
 			&& $diff->getRequest()->getBool( Helper::CONTENT_REVIEW_PARAM )
 			&& !$diff->getRequest()->getBool( 'oldid' )
 		) {
-			$notice = wfMessage( 'content-review-diff-hidden' )->escaped();
+			$notice = \HTML::rawElement(
+				'div',
+				[ 'class' => 'content-review-diff-hidden-notice' ],
+				wfMessage( 'content-review-diff-hidden' )->escaped()
+			);
 			return false;
 		}
 		return true;
