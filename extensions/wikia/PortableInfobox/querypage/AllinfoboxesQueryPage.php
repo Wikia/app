@@ -4,6 +4,7 @@ class AllinfoboxesQueryPage extends PageQueryPage {
 
 	const LIMIT = 1000;
 	const ALL_INFOBOXES_TYPE = 'AllInfoboxes';
+	private static $subpagesBlacklist = [ 'doc', 'draft', 'test' ];
 
 	function __construct() {
 		parent::__construct( self::ALL_INFOBOXES_TYPE );
@@ -105,7 +106,13 @@ class AllinfoboxesQueryPage extends PageQueryPage {
 
 		return array_filter( $result, function ( $tmpl ) {
 			$title = Title::newFromID( $tmpl[ 'pageid' ] );
-			if ( $title && $title->exists() && !$title->isSubpage() ) {
+
+			if ( $title && $title->exists() &&
+				 !(
+					 $title->isSubpage() &&
+					 in_array( mb_strtolower( $title->getSubpageText() ), self::$subpagesBlacklist )
+				 )
+			) {
 				$data = PortableInfoboxDataService::newFromTitle( $title )->getData();
 
 				return !empty( $data );
