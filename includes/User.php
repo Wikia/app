@@ -1413,27 +1413,6 @@ class User {
 		return $defOpt;
 	}
 
-	public static function getDefaultPreferences() {
-
-		global $wgLocalUserPreferenceWhiteList;
-		global $wgGlobalUserPreferenceWhiteList;
-		$whiteListLiterals = array_merge( (array)$wgLocalUserPreferenceWhiteList[ 'literals' ],
-			(array)$wgGlobalUserPreferenceWhiteList[ 'literals' ] );
-
-		$defaultOptions = User::getDefaultOptions();
-		$defaultOptionNames = array_keys( $defaultOptions );
-
-		return array_reduce(
-			$defaultOptionNames,
-			function ( $preferences, $option ) use ( $whiteListLiterals, $defaultOptions ) {
-				if ( in_array( $option, $whiteListLiterals ) ) {
-					$preferences[ $option ] = $defaultOptions[ $option ];
-				}
-
-				return $preferences;
-			}, [ ] );
-	}
-
 	/**
 	 * Get a given default option value.
 	 *
@@ -2689,8 +2668,8 @@ class User {
 	 * @return string
 	 * @see getGlobalPreference for documentation about preferences
 	 */
-	public function getDefaultGlobalPreference($preference) {
-		return $this->userPreferences()->getFromDefault($preference);
+	public function getDefaultGlobalPreference( $preference ) {
+		return $this->userPreferences()->getGlobalDefault( $preference );
 	}
 
 	/**

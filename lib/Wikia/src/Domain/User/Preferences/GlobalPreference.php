@@ -13,6 +13,13 @@ class GlobalPreference {
 		Assert::true( !empty( $name ), "invalid preference name" );
 
 		$this->name = $name;
+
+		if ( $value === "true" ) {
+			$value = true;
+		} elseif ( $value === "false" ) {
+			$value = false;
+		}
+
 		$this->value = $value;
 	}
 

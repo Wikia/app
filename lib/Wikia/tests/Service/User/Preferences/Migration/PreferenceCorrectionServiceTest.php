@@ -34,7 +34,7 @@ class PreferenceCorrectionServiceTest extends PHPUnit_Framework_TestCase {
 				'getLocalPreference',
 				'setLocalPreference',
 				'deleteLocalPreference',
-				'getFromDefault',
+				'getGlobalDefault',
 			] )
 			->getMock();
 		$this->savedPreferences = ( new UserPreferences() )

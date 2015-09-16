@@ -17,5 +17,5 @@ interface PreferenceService {
 	public function setLocalPreference( $userId, $wikiId, $name, $value );
 	public function deleteLocalPreference( $userId, $name, $wikiId );
 	public function save( $userId );
-	public function getFromDefault( $pref );
+	public function getGlobalDefault( $pref );
 }

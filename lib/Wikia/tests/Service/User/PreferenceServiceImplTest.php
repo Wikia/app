@@ -46,16 +46,17 @@ class PreferenceServiceImplTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testGetFromDefault() {
-		$defaultPrefs = ["pref1" => "val1"];
-		$preferences = new PreferenceServiceImpl( $this->cache, $this->persistence, [], $defaultPrefs, [] );
+		$defaultPreferences = (new UserPreferences())
+			->setGlobalPreference('pref1', 'val1');
+		$preferences = new PreferenceServiceImpl( $this->cache, $this->persistence, $defaultPreferences, [], [] );
 
-		$this->assertEquals( "val1", $preferences->getFromDefault( "pref1" ) );
-		$this->assertNull( $preferences->getFromDefault( "pref2" ) );
+		$this->assertEquals( "val1", $preferences->getGlobalDefault( "pref1" ) );
+		$this->assertNull( $preferences->getGlobalDefault( "pref2" ) );
 	}
 
 	public function testGet() {
 		$this->setupServiceExpects();
-		$preferences = new PreferenceServiceImpl( $this->cache, $this->persistence, [], [], [] );
+		$preferences = new PreferenceServiceImpl( $this->cache, $this->persistence, new UserPreferences(), [], [] );
 
 		$this->assertEquals( "en", $preferences->getGlobalPreference( $this->userId, "language" ) );
 		$this->assertEquals( "1", $preferences->getGlobalPreference( $this->userId, "marketingallowed" ) );
@@ -69,14 +70,16 @@ class PreferenceServiceImplTest extends PHPUnit_Framework_TestCase {
 
 	public function testGetWithHiddenNoDefaults() {
 		$this->setupServiceExpects();
-		$preferences = new PreferenceServiceImpl( $this->cache, $this->persistence, ["marketingallowed"], [], [] );
+		$preferences = new PreferenceServiceImpl( $this->cache, $this->persistence, new UserPreferences(), ['marketingallowed'], [] );
 		$this->assertEquals( "1", $preferences->getGlobalPreference( $this->userId, "marketingallowed", null, true ) );
 		$this->assertNull( $preferences->getGlobalPreference( $this->userId, "marketingallowed" ) );
 	}
 
 	public function testGetWithHiddenAndDefaults() {
 		$this->setupServiceExpects();
-		$preferences = new PreferenceServiceImpl( $this->cache, $this->persistence, ["marketingallowed"], ["marketingallowed" => "0"], [] );
+		$defaultPreferences = (new UserPreferences())
+			->setGlobalPreference('marketingallowed', '0');
+		$preferences = new PreferenceServiceImpl( $this->cache, $this->persistence, $defaultPreferences, ["marketingallowed"], [] );
 		$this->assertEquals( "1", $preferences->getGlobalPreference( $this->userId, "marketingallowed", null, true ) );
 		$this->assertEquals( "0", $preferences->getGlobalPreference( $this->userId, "marketingallowed" ) );
 		$this->assertNull( $preferences->getGlobalPreference( $this->userId, "unsetpreference" ) );
@@ -84,21 +87,23 @@ class PreferenceServiceImplTest extends PHPUnit_Framework_TestCase {
 
 	public function testSet() {
 		$this->setupServiceExpects();
-		$preferences = new PreferenceServiceImpl( $this->cache, $this->persistence, [], [], [] );
+		$preferences = new PreferenceServiceImpl( $this->cache, $this->persistence, new UserPreferences(), [], [] );
 		$preferences->setGlobalPreference( $this->userId, "newpreference", "foo" );
 		$this->assertEquals( "foo", $preferences->getGlobalPreference( $this->userId, "newpreference" ) );
 	}
 
 	public function testSetNullWithDefault() {
 		$this->setupServiceExpects();
-		$preferences = new PreferenceServiceImpl( $this->cache, $this->persistence, [], ["newpreference" => "foo"], [] );
+		$defaultPreferences = (new UserPreferences())
+			->setGlobalPreference('newpreference', 'foo');
+		$preferences = new PreferenceServiceImpl( $this->cache, $this->persistence, $defaultPreferences, [], [] );
 		$preferences->setGlobalPreference( $this->userId, "newpreference", null );
 		$this->assertEquals( "foo", $preferences->getPreferences( $this->userId )->getGlobalPreference( "newpreference" ) );
 	}
 
 	public function testSetNullWithoutDefault() {
 		$this->setupServiceExpects();
-		$preferences = new PreferenceServiceImpl( $this->cache, $this->persistence, [], [], [] );
+		$preferences = new PreferenceServiceImpl( $this->cache, $this->persistence, new UserPreferences(), [], [] );
 		$preferences->setGlobalPreference( $this->userId, "newpreference", null );
 		$this->assertNull( $preferences->getPreferences( $this->userId )->getGlobalPreference( "newpreference" ) );
 	}
