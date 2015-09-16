@@ -2,6 +2,7 @@
 
 namespace Wikia\Service\User\Preferences;
 
+use SebastianBergmann\Exporter\Exception;
 use User;
 use Wikia\DependencyInjection\InjectorBuilder;
 use Wikia\DependencyInjection\Module;
@@ -63,8 +64,15 @@ class PreferenceModule implements Module {
 
 			return $db;
 		};
-		$whiteListProvider = function() {
-			global $wgUserPreferenceWhiteList;
+		$whiteListProvider = function () {
+			global $wgLocalUserPreferenceWhiteList;
+			global $wgGlobalUserPreferenceWhiteList;
+			$wgUserPreferenceWhiteList = [
+				'literals' => array_merge( (array)$wgLocalUserPreferenceWhiteList[ 'literals' ],
+					(array)$wgGlobalUserPreferenceWhiteList[ 'literals' ] ),
+				'regexes' => array_merge( (array)$wgLocalUserPreferenceWhiteList[ 'regexes' ],
+					(array)$wgGlobalUserPreferenceWhiteList[ 'regexes' ] ),
+			];
 			return $wgUserPreferenceWhiteList;
 		};
 
