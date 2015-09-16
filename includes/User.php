@@ -5007,6 +5007,8 @@ class User {
 
 		$dbw->upsert('user_properties', $insertRows, [], self::$PROPERTY_UPSERT_SET_BLOCK);
 
+		$this->userPreferences()->save($this->getId());
+
 		if ( $extuser ) {
 			$extuser->updateUser();
 		}
