@@ -4947,6 +4947,11 @@ class User {
 		] );
 	}
 
+	/**
+	 * Save this user's preferences into the database.
+	 *
+	 * @see getGlobalPreference for documentation about preferences
+	 */
 	protected function savePreferences() {
 		$this->userPreferences()->save($this->getId());
 		wfRunHooks( "UserSetPreferences", array( $this ) );
