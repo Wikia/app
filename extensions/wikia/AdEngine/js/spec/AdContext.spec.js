@@ -180,8 +180,7 @@ describe('AdContext', function () {
 		expect(adContext.getContext().targeting.pageCategories).toEqual(['Category1', 'Category2']);
 	});
 
-	it(
-		'makes targeting.enableKruxTargeting false when disaster recovery instant global variable is set to true',
+	it('makes targeting.enableKruxTargeting false when disaster recovery instant global variable is set to true',
 		function () {
 			var adContext;
 			mocks.win = {ads: {context: {targeting: {enableKruxTargeting: true}}}};
