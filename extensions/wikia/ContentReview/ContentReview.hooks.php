@@ -144,10 +144,34 @@ class Hooks {
 		return true;
 	}
 
+	/**
+	 * This method hooks into the Publish process of an article and purges the cached timestamp
+	 * of the latest revision made to JS pages. It also handles the auto-approval mechanism for reviewers.
+	 * @param \WikiPage $article
+	 * @param \User $user
+	 * @param $text
+	 * @param $summary
+	 * @param $minoredit
+	 * @param $watchthis
+	 * @param $sectionanchor
+	 * @param $flags
+	 * @param $revision
+	 * @param $status
+	 * @param $baseRevId
+	 * @return bool
+	 * @throws PermissionsException
+	 */
 	public function onArticleSaveComplete( \WikiPage &$article, \User &$user, $text, $summary,
-			$minoredit, $watchthis, $sectionanchor, &$flags, \Revision $revision, &$status, $baseRevId
+			$minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId
 	) {
 		global $wgCityId;
+
+		/**
+		 * If no new revision has been created we can quit early.
+		 */
+		if ( $revision === null ) {
+			return true;
+		}
 
 		$title = $article->getTitle();
 
