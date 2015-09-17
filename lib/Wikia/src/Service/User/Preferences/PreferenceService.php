@@ -2,26 +2,14 @@
 
 namespace Wikia\Service\User\Preferences;
 
-use Wikia\Domain\User\Preference;
-
 interface PreferenceService {
-
-	/**
-	 * Set preferences for the given user id.
-	 *
-	 * @param int $userId
-	 * @param Preference[] $preferences
-	 * @return bool true when saved false otherwise
-	 */
-	public function setPreferences( $userId, array $preferences );
-
-
-	/**
-	 * Get preferences for a given user id.
-	 *
-	 * @param int $userId
-	 * @return Preference[]
-	 */
 	public function getPreferences( $userId );
-
+	public function getGlobalPreference( $userId, $name, $default = null, $ignoreHidden = false );
+	public function setGlobalPreference( $userId, $name, $value );
+	public function deleteGlobalPreference( $userId, $name );
+	public function getLocalPreference( $userId, $wikiId, $name, $default = null, $ignoreHidden = false );
+	public function setLocalPreference( $userId, $wikiId, $name, $value );
+	public function deleteLocalPreference( $userId, $name, $wikiId );
+	public function save( $userId );
+	public function getFromDefault( $pref );
 }
