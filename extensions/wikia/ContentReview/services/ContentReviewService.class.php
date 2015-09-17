@@ -10,7 +10,8 @@ namespace Wikia\ContentReview;
 
 use Wikia\ContentReview\Models\ReviewModel,
 	Wikia\ContentReview\Models\ReviewLogModel,
-	Wikia\ContentReview\Models\CurrentRevisionModel;
+	Wikia\ContentReview\Models\CurrentRevisionModel,
+	Wikia\ContentReview\Helper;
 
 class ContentReviewService extends \WikiaService {
 
@@ -38,6 +39,8 @@ class ContentReviewService extends \WikiaService {
 
 		$currentRevisionModel = new CurrentRevisionModel();
 		$currentRevisionModel->approveRevision( $wikiId, $pageId, $revisionId );
+
+		( new Helper() )->purgeReviewedJsPagesTimestamp();
 
 		$reviewLogModel = new ReviewLogModel();
 		$now = ( new \DateTime() )->format( 'Y-m-d H:i:s' );
