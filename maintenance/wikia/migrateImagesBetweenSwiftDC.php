@@ -150,7 +150,7 @@ class MigrateImagesBetweenSwiftDC extends Maintenance {
 				'dest_dc'    => $this->mDC_dst,
 				'limit'      => $this->mLimit,
 				'batch_size' => $imageSyncList->count(),
-				'took'       => round( microtime( true ) - then, 4 ),
+				'took'       => round( microtime( true ) - $then, 4 ),
 			] );
 		}
 	}
