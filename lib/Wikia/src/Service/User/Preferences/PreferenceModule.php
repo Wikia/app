@@ -2,13 +2,15 @@
 
 namespace Wikia\Service\User\Preferences;
 
+use Interop\Container\ContainerInterface;
 use User;
 use Wikia\Cache\BagOStuffCacheProvider;
 use Wikia\DependencyInjection\InjectorBuilder;
 use Wikia\DependencyInjection\Module;
+use Wikia\Domain\User\Preferences\UserPreferences;
 use Wikia\Persistence\User\Preferences\PreferencePersistence;
-use Wikia\Persistence\User\Preferences\PreferencePersistenceModuleMySQL;
 use Wikia\Persistence\User\Preferences\PreferencePersistenceSwaggerService;
+use Wikia\Service\User\Preferences\Migration\PreferenceScopeService;
 
 class PreferenceModule implements Module {
 	const PREFERENCE_CACHE_VERSION = 1;
@@ -28,8 +30,22 @@ class PreferenceModule implements Module {
 				global $wgHiddenPrefs;
 				return $wgHiddenPrefs;
 			} )
-			->bind( PreferenceServiceImpl::DEFAULT_PREFERENCES )->to( function() {
-				return User::getDefaultPreferences();
+			->bind( PreferenceServiceImpl::DEFAULT_PREFERENCES )->to( function( ContainerInterface $c ) {
+				/** @var PreferenceScopeService $scopeService */
+				$scopeService = $c->get( PreferenceScopeService::class );
+				$defaultOptions = User::getDefaultOptions();
+				$defaultPreferences = new UserPreferences();
+
+				foreach ( $defaultOptions as $name => $val ) {
+					if ( $scopeService->isGlobalPreference( $name ) ) {
+						$defaultPreferences->setGlobalPreference( $name, $val );
+					} elseif ( $scopeService->isLocalPreference( $name ) ) {
+						list( $prefName, $wikiId ) = $scopeService->splitLocalPreference( $name );
+						$defaultPreferences->setLocalPreference( $prefName, $wikiId, $val );
+					}
+				}
+
+				return $defaultPreferences;
 			} )
 			->bind( PreferenceServiceImpl::FORCE_SAVE_PREFERENCES )->to( function() {
 				global $wgGlobalUserProperties;

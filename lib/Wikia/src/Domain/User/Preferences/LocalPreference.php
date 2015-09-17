@@ -14,6 +14,12 @@ class LocalPreference {
 		Assert::true( !empty( $name ), "invalid preference name" );
 		Assert::true( !empty( $wikiId ), "invalid wiki id" );
 
+		if ( $value === "true" ) {
+			$value = true;
+		} elseif ( $value === "false" ) {
+			$value = false;
+		}
+
 		$this->name = $name;
 		$this->value = $value;
 		$this->wikiId = $wikiId;
