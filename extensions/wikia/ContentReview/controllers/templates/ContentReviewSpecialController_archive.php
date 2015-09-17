@@ -25,7 +25,18 @@
 				<tr class="content-review-special-list-item">
 					<td><a href="<?= Sanitizer::cleanUrl( $review['url'] ) ?>" target="_blank"><?= htmlspecialchars( $review['title'] ) ?></a></td>
 					<td><?= $review['revision_id'] ?></td>
-					<td><?= wfMessage( ContentReviewSpecialController::$statusMessageKeys[$review['status']] )->escaped() ?></td>
+					<td><?=
+						/**
+						 * Possible message keys:
+						 * content-review-status-unreviewed
+						 * content-review-status-in
+						 * content-review-status-approved
+						 * content-review-status-rejected
+						 * content-review-status-live
+						 * content-review-status-autoapproved
+						 */
+						wfMessage( ContentReviewSpecialController::$statusMessageKeys[$review['status']] )->escaped()
+						?></td>
 					<td><?= htmlspecialchars( $review['review_user_name'] ) ?></td>
 					<td><?= $review['review_start'] ?></td>
 					<td><?php if ( !empty($review['review_end'] ) ) echo $review['review_end']; ?></td>
