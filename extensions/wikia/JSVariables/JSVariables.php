@@ -101,7 +101,7 @@ function wfMakeGlobalVariablesScript(Array &$vars, OutputPage $out) {
 	wfProfileIn(__METHOD__);
 	global $wgMemc, $wgPrivateTracker, $wgExtensionsPath,
 		$wgArticle, $wgSitename, $wgDisableAnonymousEditing, $wgCityId,
-		$wgGroupPermissions, $wgBlankImgUrl, $wgCookieDomain, $wgCookiePath, $wgResourceBasePath;
+		$wgGroupPermissions, $wgBlankImgUrl, $wgCookieDomain, $wgCookiePath, $wgEnableNewAuthModal, $wgResourceBasePath;
 
 	$skin = $out->getSkin();
 	$title = $out->getTitle();
@@ -155,6 +155,8 @@ function wfMakeGlobalVariablesScript(Array &$vars, OutputPage $out) {
 	// moved from Interstitial.php
 	$vars['wgCookieDomain'] = $wgCookieDomain;
 	$vars['wgCookiePath'] = $wgCookiePath;
+
+	$vars['wgEnableNewAuthModal'] = $wgEnableNewAuthModal;
 
 	wfProfileOut(__METHOD__);
 	return true;
