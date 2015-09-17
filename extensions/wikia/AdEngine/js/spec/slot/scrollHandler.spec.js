@@ -68,6 +68,10 @@ describe('ext.wikia.adEngine.slot.scrollHandler', function () {
 		shouldNotBeRefreshed({reloadedViewMax: 0});
 	});
 
+	it('Prefooter should not be refreshed when trigger is not scroll', function () {
+		shouldNotBeRefreshed({trigger: 'delay.5s'});
+	});
+
 	it('Prefooter should be refreshed when reloadedViewMax is 1', function () {
 		shouldBeRefreshed({reloadedViewMax: 1});
 	});
@@ -137,15 +141,21 @@ describe('ext.wikia.adEngine.slot.scrollHandler', function () {
 						enableScrollHandler: params.enableScrollHandler,
 						scrollHandlerConfig: {
 							oasis: {
-								PREFOOTER_LEFT_BOXAD: {reloadedViewMax: params.reloadedViewMax}
+								PREFOOTER_LEFT_BOXAD: {
+									reloadedViewMax: params.reloadedViewMax,
+										trigger: params.trigger || 'scroll.top'
+								}
 							},
 							mercury: {
-								PREFOOTER_LEFT_BOXAD: {reloadedViewMax: params.reloadedViewMax}
+								PREFOOTER_LEFT_BOXAD: {
+									reloadedViewMax: params.reloadedViewMax,
+										trigger: params.trigger || 'scroll.top'
+								}
 							}
 						}
 					},
 					targeting: {
-						skin: params.skin || 'oasis'
+						skin: params.skin || 'oasis',
 					}
 				};
 			},
