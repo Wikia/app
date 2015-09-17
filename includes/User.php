@@ -4889,15 +4889,17 @@ class User {
 	}
 
 	private function loadAttributes() {
-		global $wgEnableReadsFromAttributeService;
+		global $wgEnableReadsFromAttributeService, $wgPublicUserAttributes;
 
 		if ( !empty( $wgEnableReadsFromAttributeService ) ) {
-			$attributes = $this->userAttributes()->getAttributes($this->getId());
-			foreach ( $attributes as $attributeName => $attributeValue ) {
-				$this->compareAttributeValueFromService( $attributeName, $attributeValue );
+			$attributesFromService = $this->userAttributes()->getAttributes( $this->getId() );
 
-				 $this->mOptionOverrides[$attributeName] = $attributeValue;
-				 $this->mOptions[$attributeName] = $attributeValue;
+			// Currently the attribute service only stores public attributes. Once it stores private as well
+			// this can be updated to $wgUserAttributeWhitelist which contains all attributes
+			foreach ( $wgPublicUserAttributes as $attributeName ) {
+				$this->compareAttributeValueFromService( $attributeName, $attributesFromService[$attributeName] );
+				$this->mOptionOverrides[$attributeName] = $attributesFromService[$attributeName];
+				$this->mOptions[$attributeName] = $attributesFromService[$attributeName];
 			}
 		}
 	}
