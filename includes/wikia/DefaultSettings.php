@@ -1004,10 +1004,11 @@ $wgABTests = array();
 $wgApiRunJobsPerRequest = 20;
 
 /**
- * sets memcached timeout back to what it was in mw1.15
+ * Memcached client timeouts
  */
+$wgMemCachedTimeout = 500000; // stream timeout in microseconds
+$wgMemCachedConnectionTimeout = 0.5; // connection timeout in seconds
 
-$wgMemCachedTimeout = 500000; //Data timeout in microseconds
 
 $wgAssetsManagerQuery = '/__am/%4$d/%1$s/%3$s/%2$s';
 //$wgAssetsManagerQuery = '/index.php?action=ajax&rs=AssetsManagerEntryPoint&__am&type=%1$s&cb=%4$d&params=%3$s&oid=%2$s';
