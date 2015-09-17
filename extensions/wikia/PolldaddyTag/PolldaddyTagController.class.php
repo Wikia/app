@@ -31,8 +31,15 @@ class PolldaddyTagController extends WikiaController {
 		}
 
 		return $this->helper->isMobileSkin() ?
-			Html::rawElement( 'a', array_merge( self::DATA_WIKI_WIDGET_ATTRIBUTE, [ 'data-id' => $args['id'] ] ) ) :
-			Html::rawElement( 'span', self::DATA_WIKI_WIDGET_ATTRIBUTE, trim( $this->sendRequest('PolldaddyTagController', 'showDesktop', $args) ) );
+			Html::rawElement(
+				'a',
+				array_merge( self::DATA_WIKI_WIDGET_ATTRIBUTE, [ 'data-id' => $args['id'] ] )
+			) :
+			Html::rawElement(
+				'span',
+				self::DATA_WIKI_WIDGET_ATTRIBUTE,
+				trim( $this->sendRequest('PolldaddyTagController', 'showDesktop', $args) )
+			);
 	}
 
 	public function showDesktop() {
