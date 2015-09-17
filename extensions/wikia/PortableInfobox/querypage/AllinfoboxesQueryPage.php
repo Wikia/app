@@ -106,21 +106,24 @@ class AllinfoboxesQueryPage extends PageQueryPage {
 				return $out;
 			} );
 
-		return array_filter( $result, function ( $tmpl ) {
-			$title = Title::newFromID( $tmpl[ 'pageid' ] );
+		return array_filter( $result, [ $this, 'hasInfobox' ] );
+	}
 
-			if ( $title && $title->exists() &&
-				 !(
-					 $title->isSubpage() &&
-					 in_array( mb_strtolower( $title->getSubpageText() ), self::$subpagesBlacklist )
-				 )
-			) {
-				$data = PortableInfoboxDataService::newFromTitle( $title )->getData();
+	protected function hasInfobox( $tmpl ) {
+		$title = Title::newFromID( $tmpl[ 'pageid' ] );
 
-				return !empty( $data );
-			}
+		if ( $title && $title->exists() &&
+			 // omit subages from blacklist
+			 !(
+				 $title->isSubpage() &&
+				 in_array( mb_strtolower( $title->getSubpageText() ), self::$subpagesBlacklist )
+			 )
+		) {
+			$data = PortableInfoboxDataService::newFromTitle( $title )->getData();
 
-			return false;
-		} );
+			return !empty( $data );
+		}
+
+		return false;
 	}
 }
