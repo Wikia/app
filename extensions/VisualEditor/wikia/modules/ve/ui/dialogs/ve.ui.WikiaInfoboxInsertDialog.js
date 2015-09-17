@@ -111,7 +111,7 @@ ve.ui.WikiaInfoboxInsertDialog.prototype.getInfoboxTemplates = function () {
 					action: ve.track.actions.ERROR,
 					label: 'infobox-templates-api'
 				} );
-				deferred.resolve( [] );
+				deferred.resolve( {} );
 			} );
 		this.gettingTemplateNames = deferred.promise();
 	}
@@ -146,7 +146,7 @@ ve.ui.WikiaInfoboxInsertDialog.prototype.insertInfoboxTemplate = function () {
 ve.ui.WikiaInfoboxInsertDialog.prototype.createInfoboxItemOptionWidget = function ( data ) {
 	return new OO.ui.DecoratedOptionWidget( {
 		data: data.title,
-		label:  data.title
+		label: data.label || data.title
 	} );
 };
 
@@ -171,9 +171,12 @@ ve.ui.WikiaInfoboxInsertDialog.prototype.createInfoboxSelectWidget = function ( 
 ve.ui.WikiaInfoboxInsertDialog.prototype.createDialogContent = function ( data ) {
 	var deferred = $.Deferred(),
 		infoboxTemplatesData = data.query ? data.query.allinfoboxes : [],
+		infoboxTemplateOptionWidgets;
+
+	if ( infoboxTemplatesData.length > 0 ) {
+		this.sortTemplateTitles.apply( this, [infoboxTemplatesData] );
 		infoboxTemplateOptionWidgets = infoboxTemplatesData.map( this.createInfoboxItemOptionWidget );
 
-	if ( infoboxTemplateOptionWidgets.length > 0 ) {
 		this.select = this.createInfoboxSelectWidget( infoboxTemplateOptionWidgets );
 
 		this.select.connect( this, {
@@ -230,7 +233,7 @@ ve.ui.WikiaInfoboxInsertDialog.prototype.validateGetUnconvertedInfoboxesResponse
  */
 ve.ui.WikiaInfoboxInsertDialog.prototype.createEmptyStateContent = function ( unconvertedInfoboxes ) {
 	var emptyStateWidget = new ve.ui.WikiaInsertInfoboxEmptyState( {
-		showInsigthsLink: unconvertedInfoboxes.length > 0
+		showInsightsLink: unconvertedInfoboxes.length > 0
 	} );
 
 	return emptyStateWidget.$element;
@@ -242,6 +245,28 @@ ve.ui.WikiaInfoboxInsertDialog.prototype.createEmptyStateContent = function ( un
  */
 ve.ui.WikiaInfoboxInsertDialog.prototype.setDialogContent = function ( $content ) {
 	this.$body.html( $content );
+};
+
+/**
+ * Sort template titles alphabetically. We don't need to use toLowerCase() or toUpperCase()
+ * to unify titles for sorting because title in response from API always will be UpperCased
+ *
+ * @param {Array} infoboxes
+ */
+ve.ui.WikiaInfoboxInsertDialog.prototype.sortTemplateTitles = function ( infoboxes ) {
+	var title1, title2;
+
+	return infoboxes.sort( function ( template1, template2 ) {
+		title1 = template1.title;
+		title2 = template2.title;
+
+		if ( title1 < title2 ) {
+			return -1;
+		} else if ( title1 > title2 ) {
+			return 1;
+		}
+		return 0;
+	});
 };
 
 /**

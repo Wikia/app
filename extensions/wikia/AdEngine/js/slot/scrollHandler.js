@@ -1,67 +1,124 @@
 /*global define*/
 define('ext.wikia.adEngine.slot.scrollHandler', [
-    'ext.wikia.adEngine.adContext',
-    'ext.wikia.adEngine.adHelper',
-    'wikia.log',
-    'wikia.document',
-    'wikia.window'
+	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.adHelper',
+	'wikia.log',
+	'wikia.document',
+	'wikia.window'
 ], function (adContext, adHelper, log, doc, win) {
-    'use strict';
+	'use strict';
+	var logGroup = 'ext.wikia.adEngine.slot.scrollHandler',
+		isRefreshed = {},
+		reloadedView = {},
+		context = adContext.getContext(),
+		config = context.opts.scrollHandlerConfig || {
+			oasis: {
+				PREFOOTER_LEFT_BOXAD: {
+					reloadedViewMax: 1,
+					trigger: 'scroll.top'
+				},
+				PREFOOTER_RIGHT_BOXAD: {
+					reloadedViewMax: 1,
+					trigger: 'scroll.top'
+				}
+			},
+			mercury: {
+				MOBILE_PREFOOTER: {
+					reloadedViewMax: 1,
+					trigger: 'scroll.top'
+				}
+			}
+		},
+		// 'mercury' value is not set in context.targeting.skin yet
+		skin = context.targeting.skin === 'oasis' ? 'oasis' : 'mercury';
 
-    var logGroup = 'ext.wikia.adEngine.slot.scrollHandler',
-        isRefreshed = {
-            PREFOOTER_LEFT_BOXAD: false,
-            PREFOOTER_RIGHT_BOXAD: false
-        },
-        reloadedView = {
-            PREFOOTER_LEFT_BOXAD: 0,
-            PREFOOTER_RIGHT_BOXAD: 0
-        };
+	function init() {
+		if (context.opts.enableScrollHandler)  {
+			config = config[skin];
+			prepareSettings();
+			registerSlotEvents();
+		}
+	}
 
-    function init() {
-        if (adContext.getContext().opts.enableScrollHandler) {
-            win.addEventListener('scroll', adHelper.throttle(function () {
-                log('Scroll event listener has been added', 'debug', logGroup);
-                for (var slotName in isRefreshed) {
-                    if (isRefreshed.hasOwnProperty(slotName)) {
-                        refreshSlot(slotName);
-                    }
-                }
-            }));
-        }
-    }
+	function prepareSettings() {
+		for (var slotName in config) {
+			if (config.hasOwnProperty(slotName)) {
+				isRefreshed[slotName] = false;
+				reloadedView[slotName] = 0;
+			}
+		}
+	}
 
-    function refreshSlot(slotName) {
-        var status = isReached(doc.getElementById(slotName));
-        if (!isRefreshed[slotName] && status) {
-            log(['refreshSlot', slotName + ' has been refreshed'], 'debug', logGroup);
-            reloadedView[slotName]++;
-            win.adslots2.push(slotName);
-            isRefreshed[slotName] = true;
-        } else if (!status) {
-            isRefreshed[slotName] = false;
-        }
-    }
+	function registerSlotEvents() {
+		win.addEventListener('scroll', adHelper.throttle(function () {
+			log('Scroll event listener has been added', 'debug', logGroup);
+			for (var slotName in config) {
+				if (config.hasOwnProperty(slotName)) {
+					if (config[slotName].trigger.match(/^scroll\.(top|bottom)$/) === null) {
+						continue;
+					}
+					onScroll(slotName);
+				}
+			}
+		}));
+	}
 
-    function isReached(el) {
-        return win.innerHeight + win.scrollY >= getTopPos(el);
-    }
+	function refreshSlot(slotName) {
+		reloadedView[slotName] += 1;
+		if (skin === 'oasis') {
+			win.adslots2.push([slotName]);
+		} else {
+			win.Mercury.Modules.Ads.getInstance().pushSlotToQueue(slotName);
+		}
+	}
 
-    function getTopPos(el) {
-        for (var topPos = 0; el != null; topPos += el.offsetTop, el = el.offsetParent);
-        return topPos;
-    }
+	function onScroll(slotName) {
+		if (config[slotName].hasOwnProperty('reloadedViewMax') &&
+			config[slotName].reloadedViewMax >= 0 &&
+			config[slotName].reloadedViewMax <= reloadedView[slotName]) {
+			return;
+		}
 
-    function getReloadedViewCount(slotName) {
-        if (reloadedView[slotName] !== undefined) {
-            return reloadedView[slotName];
-        }
+		var status = isReached(slotName);
+		if (!isRefreshed[slotName] && status) {
+			log(['refreshSlot', slotName + ' has been refreshed'], 'debug', logGroup);
+			refreshSlot(slotName);
+			isRefreshed[slotName] = true;
+		} else if (!status) {
+			isRefreshed[slotName] = false;
+		}
+	}
 
-        return null;
-    }
+	function isReached(slotName) {
+		var el = doc.getElementById(slotName),
+			offset = 0;
 
-    return {
-        init: init,
-        getReloadedViewCount: getReloadedViewCount
-    };
+		if (config[slotName].trigger === 'scroll.bottom') {
+			offset = el.offsetHeight;
+		}
+
+		return win.innerHeight + win.scrollY >= getTopPos(el) + offset;
+	}
+
+	function getTopPos(el) {
+		for (var topPos = 0; el !== null; topPos += el.offsetTop, el = el.offsetParent);
+		return topPos;
+	}
+
+	function getReloadedViewCount(slotName) {
+		if (reloadedView.hasOwnProperty(slotName)) {
+			return reloadedView[slotName];
+		}
+
+		return null;
+	}
+
+	adContext.addCallback(function () {
+		prepareSettings();
+	});
+
+	return {
+		init: init,
+		getReloadedViewCount: getReloadedViewCount
+	};
 });
