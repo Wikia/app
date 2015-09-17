@@ -56,7 +56,10 @@ $messages['en'] = [
 	'content-review-special-error' => 'Unfortunately, an error happened.',
 	'content-review-special-show-revision' => 'Show revision',
 	'content-review-special-restore' => 'Restore',
-	'content-review-special-guidelines' => 'Before reviewing a piece of a code, please ensure that you are familiar with the [[w:c:dev:Help:JavaScript review guidelines|Help:JavaScript review guidelines]].',
+	'content-review-special-guidelines' => 'Before reviewing a piece of a code, please ensure that you are familiar with the [[w:c:dev:Help:JavaScript review guidelines|Help:JavaScript review guidelines]].
+
+	To view an archive of completed reviews for a single wikia click on its name in the Wiki Name column.',
+	'content-review-special-archive-back-link' => '< Back to Special:ContentReview',
 
 	'content-review-diff-approve' => 'Approve',
 	'content-review-diff-reject' => 'Reject',
@@ -100,8 +103,8 @@ $messages['qqq'] = [
 	'content-review-module-status-unsubmitted' => 'Message shown as a revision\'s status when the latest made revision has not yet been sent for a review.',
 	'content-review-module-status-live' => 'Message shown as a revision\'s status when it is currently live and served to users.',
 	'content-review-module-status-awaiting' => 'Message shown as a revision\'s status when a revision is waiting for a review.',
-	'content-review-module-status-approved' => 'Message shown as a revision\'s status if ',
-	'content-review-module-status-rejected' => 'was rejected',
+	'content-review-module-status-approved' => 'Message shown as a revision\'s status if a revision was approved.',
+	'content-review-module-status-rejected' => 'Message shown as a revision\'s status if a revision was rejected',
 
 	'content-review-rejection-reason-link' => 'Text of a link that leads a users to a Talk page with an explanation on why their code was rejected.',
 
@@ -140,6 +143,7 @@ $messages['qqq'] = [
 	'content-review-special-show-revision' => 'Text on button to show revision',
 	'content-review-special-restore' => 'Text on button to restore revision',
 	'content-review-special-guidelines' => 'A message shown on the ContentReview special page with an information about the reviewing guidelines being available and required to aware of when performing a review.',
+	'content-review-special-archive-back-link' => 'A text of a link back to Special:ContentReview that is displayed on an archive subpage.',
 
 	'content-review-diff-approve' => 'A text of a button which clicked approves a given revision.',
 	'content-review-diff-reject' => 'A text of a button which clicked rejects a given revision.',
