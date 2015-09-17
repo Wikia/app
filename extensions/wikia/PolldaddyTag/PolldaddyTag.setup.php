@@ -9,8 +9,8 @@ $wgExtensionCredits['parserhook'][] = [
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/PolldaddyTag',
 ];
 
-$wgAutoloadClasses['PolldaddyTagController'] =  __DIR__ . '/PolldaddyTagController.class.php';
-$wgAutoloadClasses['PolldaddyTagValidator'] =  __DIR__ . '/PolldaddyTagValidator.class.php';
+$wgAutoloadClasses['PolldaddyTagController'] = __DIR__ . '/PolldaddyTagController.class.php';
+$wgAutoloadClasses['PolldaddyTagValidator'] = __DIR__ . '/PolldaddyTagValidator.class.php';
 
 // Hooks
 $wgHooks['ParserFirstCallInit'][] = 'PolldaddyTagController::onParserFirstCallInit';
