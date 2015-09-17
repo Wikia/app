@@ -20,6 +20,7 @@ define('ext.wikia.adEngine.lookup.openXBidder', [
 			'7x9': null
 		},
 		called = false,
+		priceTimeout = 't',
 		slots = {
 			HOME_TOP_LEADERBOARD: '728x90',
 			HOME_TOP_RIGHT_BOXAD: '300x250',
@@ -51,6 +52,7 @@ define('ext.wikia.adEngine.lookup.openXBidder', [
 		for (slotName in slots) {
 			if (slots.hasOwnProperty(slotName)) {
 				size = slots[slotName];
+				// @TODO - ADEN-2447 - Remove hardcoded wiki details
 				slotPath = [
 					'/5441', 'wka.life', '_prowrestling', 'article', src, slotName
 				].join('/');
@@ -105,7 +107,7 @@ define('ext.wikia.adEngine.lookup.openXBidder', [
 			slotName;
 
 		for (slotName in prices) {
-			if (prices.hasOwnProperty(slotName) && prices[slotName].price !== 't') {
+			if (prices.hasOwnProperty(slotName) && prices[slotName].price !== priceTimeout) {
 				setPrice(prices[slotName].size, prices[slotName].price);
 			}
 		}

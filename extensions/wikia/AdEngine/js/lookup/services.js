@@ -29,10 +29,25 @@ define('ext.wikia.adEngine.lookup.services', [
 		}
 	}
 
+	function addParameters(slotName, slotTargeting, modules) {
+		var params;
+		if (!Object.keys) {
+			return;
+		}
+		modules.forEach(function (module) {
+			if (module && module.wasCalled) {
+				params = module.getSlotParams(slotName);
+				Object.keys(params).forEach(function (key) {
+					slotTargeting[key] = params[key];
+				});
+			}
+		});
+	}
+
 	function extendSlotTargeting(slotName, slotTargeting) {
 		log(['extendSlotTargeting', slotName, slotTargeting], 'debug', logGroup);
 
-		var rtpSlots, rtpTier, amazonParams, oxParams;
+		var rtpSlots, rtpTier;
 
 		if (!rtpLookupTracked) {
 			rtpLookupTracked = true;
@@ -54,21 +69,7 @@ define('ext.wikia.adEngine.lookup.services', [
 			}
 		}
 
-		if (amazonMatch && amazonMatch.wasCalled() && Object.keys) {
-			amazonParams = amazonMatch.getSlotParams(slotName);
-
-			Object.keys(amazonParams).forEach(function (key) {
-				slotTargeting[key] = amazonParams[key];
-			});
-		}
-
-		if (oxBidder && oxBidder.wasCalled() && Object.keys) {
-			oxParams = oxBidder.getSlotParams(slotName);
-
-			Object.keys(oxParams).forEach(function (key) {
-				slotTargeting[key] = oxParams[key];
-			});
-		}
+		addParameters(slotName, slotTargeting, [amazonMatch, oxBidder]);
 	}
 
 	return {

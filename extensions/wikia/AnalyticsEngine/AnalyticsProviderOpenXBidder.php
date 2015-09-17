@@ -49,13 +49,13 @@ CODE;
 		}
 
 		if ( $wgAdDriverEnableOpenXBidder ) {
-			$newScript = self::getIntegrationScript( 'openXBidder', 'wgAdDriverOpenXBidderCountries' );
+			$oxScript = self::getIntegrationScript( 'openXBidder', 'wgAdDriverOpenXBidderCountries' );
 		} else {
-			$newScript = '/* new integration disabled */';
+			$oxScript = '/* OpenX Bidder integration disabled */';
 		}
 
 		return '<script id="analytics-provider-openx-bidder">' . PHP_EOL .
-			$newScript . PHP_EOL .
+			$oxScript . PHP_EOL .
 			'</script>' . PHP_EOL;
 	}
 
