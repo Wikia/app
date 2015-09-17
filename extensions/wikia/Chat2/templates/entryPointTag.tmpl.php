@@ -49,6 +49,9 @@
 			</div>
 		</div>
 	</div>
+	<? if ( wfMessage( 'chat-entry-point-guidelines' )->exists() ): ?>
+		<span class="more"><?= wfMessage( 'chat-entry-point-guidelines' )->parse() ?></span>
+	<? endif ?>
 </section>
 <?php if ($isEntryPoint): ?>
 	<script language="javascript" type="text/javascript">if ( typeof ChatEntryPoint!=="undefined" ) ChatEntryPoint.init();</script>
