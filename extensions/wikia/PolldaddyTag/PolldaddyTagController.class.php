@@ -4,10 +4,6 @@ class PolldaddyTagController extends WikiaController {
 	const PARSER_TAG_NAME = 'polldaddy';
 	const NAME = 'Polldaddy';
 
-	const TAG_ALLOWED_ATTRIBUTES = [
-		'id',
-	];
-
 	const DATA_WIKI_WIDGET_ATTRIBUTE = [
 		'data-wikia-widget' => self::PARSER_TAG_NAME,
 	];
@@ -34,16 +30,9 @@ class PolldaddyTagController extends WikiaController {
 			return '<strong class="error">' . wfMessage( 'polldaddy-tag-could-not-render' )->parse() . '</strong>';
 		}
 
-		if ( $this->helper->isMobileSkin() ) {
-			$attributes = $this->helper->buildTagAttributes( self::TAG_ALLOWED_ATTRIBUTES, $args, 'data' );
-			return Html::element( 'a', array_merge( $attributes, self::DATA_WIKI_WIDGET_ATTRIBUTE ), self::NAME );
-		} else {
-			$attributes = $this->helper->buildTagAttributes( self::TAG_ALLOWED_ATTRIBUTES, $args );
-			return Html::rawElement(
-				'span', self::DATA_WIKI_WIDGET_ATTRIBUTE,
-				trim( $this->sendRequest('PolldaddyTagController', 'showDesktop', $attributes) )
-			);
-		}
+		return $this->helper->isMobileSkin() ?
+			Html::rawElement( 'a', array_merge( self::DATA_WIKI_WIDGET_ATTRIBUTE, [ 'data-id' => $args['id'] ] ) ) :
+			Html::rawElement( 'span', self::DATA_WIKI_WIDGET_ATTRIBUTE, trim( $this->sendRequest('PolldaddyTagController', 'showDesktop', $args) ) );
 	}
 
 	public function showDesktop() {
