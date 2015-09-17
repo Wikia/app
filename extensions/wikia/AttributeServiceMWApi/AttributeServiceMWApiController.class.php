@@ -7,7 +7,7 @@ class AttributeServiceMWApiController extends WikiaController {
 	/**
 	 * Helper function for the attribute service to clear user cache in MediaWiki.
 	 * This is called by the attribute service when a client other than MW updates
-     * an attribute in the service.
+	 * an attribute in the service.
 	 */
 	public function purgeUserCache() {
 
@@ -25,10 +25,10 @@ class AttributeServiceMWApiController extends WikiaController {
 			return;
 		}
 
-        $this->clearUserCache( $userId );
-        if ( !$this->inDevEnvironment() ) {
-            $this->clearCacheInStagingEnvs( $userId );
-        }
+		$this->clearUserCache( $userId );
+		if ( !$this->inDevEnvironment() ) {
+			$this->clearCacheInStagingEnvs( $userId );
+		}
 	}
 
 	/**
@@ -83,41 +83,41 @@ class AttributeServiceMWApiController extends WikiaController {
 
 	private function clearUserCache( $userId ) {
 
-        // Clear user cache
-        $user = User::newFromId( $userId );
-        $user->invalidateCache();
+		// Clear user cache
+		$user = User::newFromId( $userId );
+		$user->invalidateCache();
 
-        // Clear User Profile cache
-        $userIdentityBox = new UserIdentityBox( $user );
-        $userIdentityBox->clearCache();
-    }
+		// Clear User Profile cache
+		$userIdentityBox = new UserIdentityBox( $user );
+		$userIdentityBox->clearCache();
+	}
 
-    private function inDevEnvironment() {
-        global $wgDevelEnvironment;
+	private function inDevEnvironment() {
+		global $wgDevelEnvironment;
 
-        return $wgDevelEnvironment === true;
-    }
+		return $wgDevelEnvironment === true;
+	}
 
-    /**
-     * If we're not in a development environment, clear the cache for all staging environments as well
-     * @param $userId
-     */
-    private function clearCacheInStagingEnvs( $userId ) {
-        global $wgStagingList, $wgPreviewHostname, $wgVerifyHostname;
+	/**
+	 * If we're not in a development environment, clear the cache for all staging environments as well
+	 * @param $userId
+	 */
+	private function clearCacheInStagingEnvs( $userId ) {
+		global $wgStagingList, $wgPreviewHostname, $wgVerifyHostname;
 
-        // $wgStagingList uses the domain names "preview" and "verify" rather than the hostnames "staging-s2" and
-        // "staging-s3", so we have to manually add the those hostnames here.
-        $stagingEnvs = array_merge( $wgStagingList, [ $wgPreviewHostname, $wgVerifyHostname ] );
-        foreach ( $stagingEnvs as $stagingEnv ) {
-            $this->clearCacheInEnv( $userId, $stagingEnv );
-        }
-    }
+		// $wgStagingList uses the domain names "preview" and "verify" rather than the hostnames "staging-s2" and
+		// "staging-s3", so we have to manually add the those hostnames here.
+		$stagingEnvs = array_merge( $wgStagingList, [ $wgPreviewHostname, $wgVerifyHostname ] );
+		foreach ( $stagingEnvs as $stagingEnv ) {
+			$this->clearCacheInEnv( $userId, $stagingEnv );
+		}
+	}
 
-    private function clearCacheInEnv( $userId, $stagingEnv ) {
-        $wrapper = new GlobalStateWrapper( [ 'wgSharedKeyPrefix' => Wikia::getSharedKeyPrefix( $stagingEnv ) ] );
-        $wrapper->wrap( function() use ( $userId ) {
-            $this->clearUserCache( $userId );
-        } );
-    }
+	private function clearCacheInEnv( $userId, $stagingEnv ) {
+		$wrapper = new GlobalStateWrapper( [ 'wgSharedKeyPrefix' => Wikia::getSharedKeyPrefix( $stagingEnv ) ] );
+		$wrapper->wrap( function() use ( $userId ) {
+			$this->clearUserCache( $userId );
+		} );
+	}
 }
 
