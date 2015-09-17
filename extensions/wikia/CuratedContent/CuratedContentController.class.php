@@ -593,7 +593,7 @@ class CuratedContentController extends WikiaController {
 
 	public function getWikisWithCuratedContent() {
 		$wikisList = WikiFactory::getListOfWikisWithVar(
-			self::CURATED_CONTENT_WG_VAR_ID_PROD, "full", "LIKE", null, "true"
+			self::CURATED_CONTENT_WG_VAR_ID_PROD, 'array', '!=', []
 		);
 
 		$this->response->setVal( 'ids_list', $wikisList );

@@ -109,9 +109,21 @@ class PreferencePersistenceMySQL implements PreferencePersistence {
 	public function get( $userId ) {
 		$userId = intval( $userId );
 		$cond = [ self::UP_USER => $userId ];
-		if ( !empty( $this->whiteList ) ) {
-			$cond[] = '`' . self::UP_PROPERTY . '` IN (' . $this->slave->makeList($this->whiteList['literals']) . ') ' .
-				'OR `' . self::UP_PROPERTY . "` REGEXP " . $this->slave->addQuotes($this->whiteList['regex']);
+
+		if ( is_array( $this->whiteList ) ) {
+			$orConds = [ ];
+			$literals = $this->whiteList[ 'literals' ];
+			if ( is_array( $literals ) && !empty( $literals ) ) {
+				$orConds[ ] = '`' . self::UP_PROPERTY . '` IN (' . $this->slave->makeList( $literals ) . ')';
+			}
+			//white list regex is combined regexes into one string
+			if ( !empty( $this->whiteList[ 'regex' ] ) ) {
+				$orConds[ ] = '`' . self::UP_PROPERTY . "` REGEXP " . $this->slave->addQuotes( $this->whiteList[ 'regex' ] );
+			}
+
+			if ( !empty( $orConds ) ) {
+				$cond[ ] = implode( ' OR ', $orConds );
+			}
 		}
 		$result = $this->slave->select(
 			self::USER_PREFERENCE_TABLE,

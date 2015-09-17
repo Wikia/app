@@ -60,16 +60,9 @@ ve.ui.WikiaInfoboxInsertDialog.prototype.initialize = function () {
 	// Initialization
 	this.$content.addClass( 've-ui-wikiaInfoboxInsertDialog' );
 
-	// Load select widget
-	this.loadInfoboxTemplates();
-	this.select = new OO.ui.SelectWidget();
-
-	// Events
-	this.select.connect( this, {
-		select: 'onInfoboxTemplateSelect'
-	} );
-
-	this.$body.append( this.select.$element );
+	this.getInfoboxTemplates()
+		.then( this.createDialogContent.bind( this ) )
+		.then( this.setDialogContent.bind( this ) );
 };
 
 /**
@@ -99,15 +92,6 @@ ve.ui.WikiaInfoboxInsertDialog.prototype.onInfoboxTemplateSelect = function ( it
 };
 
 /**
- * Prepare infobox template names
- */
-ve.ui.WikiaInfoboxInsertDialog.prototype.loadInfoboxTemplates = function () {
-	this.getInfoboxTemplates().done(
-		this.showResults.bind( this )
-	);
-};
-
-/**
  * Fetch infobox template names from API
  */
 ve.ui.WikiaInfoboxInsertDialog.prototype.getInfoboxTemplates = function () {
@@ -127,7 +111,7 @@ ve.ui.WikiaInfoboxInsertDialog.prototype.getInfoboxTemplates = function () {
 					action: ve.track.actions.ERROR,
 					label: 'infobox-templates-api'
 				} );
-				deferred.resolve( [] );
+				deferred.resolve( {} );
 			} );
 		this.gettingTemplateNames = deferred.promise();
 	}
@@ -155,26 +139,134 @@ ve.ui.WikiaInfoboxInsertDialog.prototype.insertInfoboxTemplate = function () {
 };
 
 /**
- * Add the infobox template names to the dialog's SelectWidget
- *
- * @param {Object} data Response data from API
+ * @desc creates infobox item option widget
+ * @param {Object} data
+ * @returns {OO.ui.DecoratedOptionWidget}
  */
-ve.ui.WikiaInfoboxInsertDialog.prototype.showResults = function ( data ) {
-	var i,
-		items = [],
-		infoboxes = data.query ? data.query.allinfoboxes : [];
+ve.ui.WikiaInfoboxInsertDialog.prototype.createInfoboxItemOptionWidget = function ( data ) {
+	return new OO.ui.DecoratedOptionWidget( {
+		data: data.title,
+		label: data.label || data.title
+	} );
+};
 
-	if ( infoboxes.length > 0 ) {
-		for ( i = 0; i < infoboxes.length; i++ ) {
-			items.push(
-				new OO.ui.DecoratedOptionWidget({
-					data: infoboxes[i].title,
-					label:  infoboxes[i].title
-				})
-			);
-		}
-		this.select.addItems( items );
+/**
+ * @desc creates select widget with infobox option widgets
+ * @param {OO.ui.DecoratedOptionWidget[]} items
+ * @returns {OO.ui.OoUiSelectWidget}
+ */
+ve.ui.WikiaInfoboxInsertDialog.prototype.createInfoboxSelectWidget = function ( items ) {
+	var select = new OO.ui.SelectWidget();
+
+	select.addItems( items );
+
+	return select;
+};
+
+/**
+ * @desc creates dialog content
+ * @param {Object} data Response data from API
+ * @returns {Promise}
+ */
+ve.ui.WikiaInfoboxInsertDialog.prototype.createDialogContent = function ( data ) {
+	var deferred = $.Deferred(),
+		infoboxTemplatesData = data.query ? data.query.allinfoboxes : [],
+		infoboxTemplateOptionWidgets;
+
+	if ( infoboxTemplatesData.length > 0 ) {
+		this.sortTemplateTitles.apply( this, [infoboxTemplatesData] );
+		infoboxTemplateOptionWidgets = infoboxTemplatesData.map( this.createInfoboxItemOptionWidget );
+
+		this.select = this.createInfoboxSelectWidget( infoboxTemplateOptionWidgets );
+
+		this.select.connect( this, {
+			select: 'onInfoboxTemplateSelect'
+		} );
+
+		deferred.resolve( this.select.$element );
+	} else {
+		// creates empty state content
+		this.getUnconvertedInfoboxes()
+			.then(this.createEmptyStateContent.bind( this ) )
+			.then(deferred.resolve);
 	}
+
+	return deferred.promise();
+};
+
+/**
+ * @desc gets list of unconverted infoboxes
+ * @returns {Promise}
+ */
+ve.ui.WikiaInfoboxInsertDialog.prototype.getUnconvertedInfoboxes = function () {
+	var deferred = $.Deferred();
+
+	ve.init.target.constructor.static.apiRequest( {
+		action: 'query',
+		list: 'unconvertedinfoboxes'
+	} )
+		.done( function ( data ) {
+			deferred.resolve(
+				this.validateGetUnconvertedInfoboxesResponseData( data ) ? data.query.unconvertedinfoboxes : []
+			);
+		}.bind(this) )
+		.fail( function () {
+			deferred.resolve( [] );
+		} );
+
+	return deferred.promise();
+};
+
+/**
+ * @desc validates get unconverted infoboxes response data
+ * @param {Object} data
+ * @returns {Boolean}
+ */
+ve.ui.WikiaInfoboxInsertDialog.prototype.validateGetUnconvertedInfoboxesResponseData = function ( data ) {
+	return data.query && data.query.unconvertedinfoboxes && data.query.unconvertedinfoboxes.length > 0;
+};
+
+/**
+ * @desc creates empty state dialog content
+ * @param {Array} unconvertedInfoboxes
+ * @returns {HTMLElement}
+ */
+ve.ui.WikiaInfoboxInsertDialog.prototype.createEmptyStateContent = function ( unconvertedInfoboxes ) {
+	var emptyStateWidget = new ve.ui.WikiaInsertInfoboxEmptyState( {
+		showInsightsLink: unconvertedInfoboxes.length > 0
+	} );
+
+	return emptyStateWidget.$element;
+};
+
+/**
+ * @desc sets HTML content for insert infobox dialog
+ * @param {HTMLElement} $content
+ */
+ve.ui.WikiaInfoboxInsertDialog.prototype.setDialogContent = function ( $content ) {
+	this.$body.html( $content );
+};
+
+/**
+ * Sort template titles alphabetically. We don't need to use toLowerCase() or toUpperCase()
+ * to unify titles for sorting because title in response from API always will be UpperCased
+ *
+ * @param {Array} infoboxes
+ */
+ve.ui.WikiaInfoboxInsertDialog.prototype.sortTemplateTitles = function ( infoboxes ) {
+	var title1, title2;
+
+	return infoboxes.sort( function ( template1, template2 ) {
+		title1 = template1.title;
+		title2 = template2.title;
+
+		if ( title1 < title2 ) {
+			return -1;
+		} else if ( title1 > title2 ) {
+			return 1;
+		}
+		return 0;
+	});
 };
 
 /**
@@ -226,7 +318,9 @@ ve.ui.WikiaInfoboxInsertDialog.prototype.onTransact = function () {
 ve.ui.WikiaInfoboxInsertDialog.prototype.getTeardownProcess = function ( data ) {
 	return ve.ui.WikiaInfoboxInsertDialog.super.prototype.getTeardownProcess.call( this, data )
 		.next( function () {
-			this.select.selectItem();
+			if ( this.select ) {
+				this.select.selectItem();
+			}
 		}, this );
 };
 

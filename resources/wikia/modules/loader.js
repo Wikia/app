@@ -171,6 +171,12 @@ define('wikia.loader', ['wikia.window', require.optional('mw'), 'wikia.nirvana',
 					callbacks.success = null;
 					return callbacks;
 				}
+			},
+			vk: {
+				file: '//vk.com/js/api/openapi.js',
+				check: function () {
+					return typeof (window.VK && window.VK.Widgets);
+				}
 			}
 		},
 

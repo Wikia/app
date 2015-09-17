@@ -113,6 +113,12 @@ class PhalanxHooks extends WikiaObject {
 			}
 		}
 
+		// VSTF should not be allowed to block emails in Phalanx
+		if ( ($typemask & Phalanx::TYPE_EMAIL ) && !F::app()->wg->User->isAllowed( 'phalanxemailblock' ) ) {
+			wfProfileOut( __METHOD__ );
+			return false;
+		}
+
 		$multitext = '';
 		if ( isset( $phalanx['multitext'] ) && !empty( $phalanx['multitext'] ) ) {
 			$multitext = $phalanx['multitext'];
@@ -195,6 +201,12 @@ class PhalanxHooks extends WikiaObject {
 		wfProfileIn( __METHOD__ );
 
 		$phalanx = Phalanx::newFromId($id);
+
+		// VSTF should not be allowed to delete email blocks in Phalanx
+		if ( ($phalanx->offsetGet( 'type' ) & Phalanx::TYPE_EMAIL ) && !F::app()->wg->User->isAllowed( 'phalanxemailblock' ) ) {
+			wfProfileOut( __METHOD__ );
+			return false;
+		}
 
 		$id = $phalanx->delete();
 		if ( $id ) {

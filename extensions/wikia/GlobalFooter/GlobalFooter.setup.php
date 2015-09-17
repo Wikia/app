@@ -14,3 +14,5 @@ $wgAutoloadClasses['GlobalFooterHooks'] =  __DIR__ . '/hooks/GlobalFooterHooks.c
 $wgHooks['SkinCopyrightFooter'][] = 'GlobalFooterHooks::onSkinCopyrightFooter';
 
 $wgExtensionMessagesFiles['GlobalFooter'] = __DIR__ . '/GlobalFooter.i18n.php';
+// for "Global Sitemap" label:
+$wgExtensionMessagesFiles['SitemapPage'] = __DIR__ . '/../SitemapPage/SitemapPage.i18n.php';

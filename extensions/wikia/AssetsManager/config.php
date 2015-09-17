@@ -105,7 +105,6 @@ $config['adengine2_desktop_js'] = array(
 		'//extensions/wikia/AdEngine/js/template/modalHandlerFactory.js',
 		'//extensions/wikia/AdEngine/js/template/modalOasisHandler.js',
 		'//extensions/wikia/AdEngine/js/template/skin.js',
-		'//extensions/wikia/AdEngine/js/utils/cssTweaker.js',
 		'//resources/wikia/modules/krux.js',
 
 		// was: late queue
@@ -769,6 +768,7 @@ $config['mercury_ads_js'] = array(
 		'//extensions/wikia/AbTesting/js/AbTest.js',
 		'//resources/wikia/modules/abTest.js',
 		'//extensions/wikia/AdEngine/js/CustomAdsLoader.js',
+		'//extensions/wikia/AdEngine/js/slot/scrollHandler.js',
 		'//extensions/wikia/AdEngine/js/template/floor.js',
 		'//extensions/wikia/AdEngine/js/template/modal.js',
 		'//extensions/wikia/AdEngine/js/template/modalHandlerFactory.js',
@@ -1654,16 +1654,6 @@ $config['wikia_photo_gallery_mosaic_scss'] = [
 	]
 ];
 
-// ImageDrop
-$config['imagedrop_js'] = array(
-	'skin' => array( 'monobook', 'oasis' ),
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => array(
-		'//extensions/wikia/hacks/ImageDrop/js/ImageDrop.js',
-		'//resources/wikia/libraries/jquery/filedrop/jquery.filedrop.js'
-	)
-);
-
 $config['imagedrop_scss'] = array(
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => array( 'monobook', 'oasis' ),
@@ -1690,16 +1680,6 @@ $config['analytics_bluekai_js'] = array(
 		'//extensions/wikia/AdEngine/js/AdLogicPageParams.js',
 		'//extensions/wikia/AdEngine/js/AdLogicPageViewCounter.js',
 	]
-);
-
-/** WikiMap Extension **/
-$config['wiki_map_js'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => array(
-		'//extensions/wikia/hacks/WikiMap/js/d3.v2.js',
-		'//extensions/wikia/hacks/WikiMap/js/jquery.xcolor.js',
-		'//extensions/wikia/hacks/WikiMap/js/WikiMapIndexContent.js'
-	)
 );
 
 /* Special:Leaderboard in AchievementsII extensions */
