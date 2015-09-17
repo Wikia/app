@@ -12,7 +12,9 @@ describe('ext.wikia.adEngine.slot.scrollHandler', function () {
 			}
 		},
 		log: noop,
-
+		mercuryAdsModule: {
+			pushSlotToQueue: noop
+		},
 		win: {
 			innerHeight: 1000,
 			adslots2: {
@@ -21,6 +23,15 @@ describe('ext.wikia.adEngine.slot.scrollHandler', function () {
 			addEventListener: function (event, callback) {
 				if (event === 'scroll') {
 					callback();
+				}
+			},
+			Mercury: {
+				Modules: {
+					Ads: {
+						getInstance: function () {
+							return mocks.mercuryAdsModule;
+						}
+					}
 				}
 			}
 		},
@@ -74,6 +85,10 @@ describe('ext.wikia.adEngine.slot.scrollHandler', function () {
 		expect(scrollHandler.getReloadedViewCount('PREFOOTER_LEFT_BOXAD')).toBe(null);
 	});
 
+	it('Prefooter should be refreshed by mercury module on mercury skin', function () {
+		shouldBeRefreshed({reloadedViewMax: -1, skin: 'mercury'});
+	});
+
 	it('RV count of unsupported slot equals null', function () {
 		setContext(mocks, {enableScrollHandler: true});
 
@@ -84,25 +99,30 @@ describe('ext.wikia.adEngine.slot.scrollHandler', function () {
 	});
 
 	function shouldBeRefreshed(params) {
+		var scrollHandler,
+			pushMethod;
 		spyOn(mocks.win.adslots2, 'push');
+		spyOn(mocks.mercuryAdsModule, 'pushSlotToQueue');
 		mocks.win.scrollY = params.scrollY || 2000;
 		params.enableScrollHandler = true;
 		setContext(mocks, params);
 
-		var scrollHandler = getModule();
+		pushMethod = params.skin === 'mercury' ? mocks.mercuryAdsModule.pushSlotToQueue : mocks.win.adslots2.push;
+		scrollHandler = getModule();
 		scrollHandler.init();
 
-		expect(mocks.win.adslots2.push).toHaveBeenCalled();
+		expect(pushMethod).toHaveBeenCalled();
 		expect(scrollHandler.getReloadedViewCount('PREFOOTER_LEFT_BOXAD')).toEqual(1);
 	}
 
 	function shouldNotBeRefreshed(params) {
+		var scrollHandler;
 		spyOn(mocks.win.adslots2, 'push');
 		mocks.win.scrollY = params.scrollY || 2000;
 		params.enableScrollHandler = true;
 		setContext(mocks, params);
 
-		var scrollHandler = getModule();
+		scrollHandler = getModule();
 		scrollHandler.init();
 
 		expect(mocks.win.adslots2.push).not.toHaveBeenCalled();
@@ -115,10 +135,21 @@ describe('ext.wikia.adEngine.slot.scrollHandler', function () {
 				return {
 					opts: {
 						enableScrollHandler: params.enableScrollHandler,
-						scrollHandlerConfig: {PREFOOTER_LEFT_BOXAD: {reloadedViewMax: params.reloadedViewMax}}
+						scrollHandlerConfig: {
+							oasis: {
+								PREFOOTER_LEFT_BOXAD: {reloadedViewMax: params.reloadedViewMax}
+							},
+							mercury: {
+								PREFOOTER_LEFT_BOXAD: {reloadedViewMax: params.reloadedViewMax}
+							}
+						}
+					},
+					targeting: {
+						skin: params.skin || 'oasis'
 					}
 				};
-			}
+			},
+			addCallback: noop
 		};
 	}
 
