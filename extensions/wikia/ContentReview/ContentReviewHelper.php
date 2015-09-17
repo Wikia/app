@@ -352,9 +352,29 @@ class Helper extends \ContextSource {
 		}
 	}
 
+	/**
+	 * Checks if a user can edit a JS page in the MediaWiki namespace.
+	 * @param \Title $title
+	 * @param \User $user
+	 * @return bool
+	 */
 	public function userCanEditJsPage( \Title $title, \User $user ) {
-		return $title->inNamespace( NS_MEDIAWIKI )
-			&& $title->isJsPage()
+		return $title->isJsPage()
 			&& $title->userCan( 'edit', $user );
+	}
+
+	/**
+	 * Checks if a user is a reviewer entitled to an automatic approval and if he requested it.
+	 *
+	 * The wpApprove request param that appears here is a value of a checkbox which is part of
+	 * the EditPageLayout for reviewers. It is displayed above the Publish button and allows a reviewer
+	 * to make a decision of skipping the review process.
+	 *
+	 * @param \User $user
+	 * @return bool
+	 */
+	public function userCanAutomaticallyApprove( \User $user ) {
+		return $user->isAllowed( 'content-review' )
+			&& $user->getRequest()->getBool( 'wpApprove' );
 	}
 }

@@ -2,8 +2,6 @@
 
 namespace Wikia\ContentReview;
 
-use Wikia\ContentReview\Helper;
-use Wikia\ContentReview\Models\CurrentRevisionModel;
 use Wikia\ContentReview\Models\ReviewModel;
 
 class Hooks {
@@ -146,16 +144,21 @@ class Hooks {
 		return true;
 	}
 
-	public function onArticleSaveComplete( \WikiPage &$article, &$user, $text, $summary,
-			$minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId
+	public function onArticleSaveComplete( \WikiPage &$article, \User &$user, $text, $summary,
+			$minoredit, $watchthis, $sectionanchor, &$flags, \Revision $revision, &$status, $baseRevId
 	) {
+		global $wgCityId;
+
 		$title = $article->getTitle();
 
-		if ( !is_null( $title )
-			&& $title->inNamespace( NS_MEDIAWIKI )
-			&& ( $title->isJsPage() || $title->isJsSubpage() )
-		) {
-			( new Helper() )->purgeCurrentJsPagesTimestamp();
+		if ( !is_null( $title )	&&  $title->isJsPage() ) {
+			$helper = new Helper();
+			$helper->purgeCurrentJsPagesTimestamp();
+
+			if ( $helper->userCanAutomaticallyApprove( $user ) ) {
+				( new ContentReviewService() )
+					->automaticallyApproveRevision( $user, $wgCityId, $title->getArticleID(), $revision->getId() );
+			}
 		}
 
 		return true;

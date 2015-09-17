@@ -45,6 +45,12 @@ $wgAutoloadClasses['ContentReviewApiController'] = __DIR__ . '/controllers/Conte
 $wgAutoloadClasses['Wikia\ContentReview\Models\ContentReviewBaseModel'] = __DIR__ . '/models/ContentReviewBaseModel.php';
 $wgAutoloadClasses['Wikia\ContentReview\Models\CurrentRevisionModel'] = __DIR__ . '/models/CurrentRevisionModel.php';
 $wgAutoloadClasses['Wikia\ContentReview\Models\ReviewModel'] = __DIR__ . '/models/ReviewModel.php';
+$wgAutoloadClasses['Wikia\ContentReview\Models\ReviewLogModel'] = __DIR__ . '/models/ReviewLogModel.php';
+
+/**
+ * Services
+ */
+$wgAutoloadClasses['Wikia\ContentReview\ContentReviewService'] = __DIR__ . '/services/ContentReviewService.class.php';
 
 /**
  * Helpers
