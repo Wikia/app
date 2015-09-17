@@ -22,7 +22,7 @@ define('ext.wikia.adEngine.slot.scrollHandler', [
 			},
 			mercury: {
 				MOBILE_PREFOOTER: {
-					reloadedViewMax: 1
+					reloadedViewMax: 2
 				}
 			}
 		},
