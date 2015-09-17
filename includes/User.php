@@ -2165,9 +2165,8 @@ class User {
 				$dbw->update( '`user`',
 					array( 'user_touched' => $touched ), array( 'user_id' => $this->mId ),
 					__METHOD__ );
+				$dbw->commit();
 			}
-
-			$dbw->commit();
 
 			$this->clearSharedCache();
 		}
