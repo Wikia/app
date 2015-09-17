@@ -39,6 +39,8 @@ class ContentReviewService extends \WikiaService {
 		$currentRevisionModel = new CurrentRevisionModel();
 		$currentRevisionModel->approveRevision( $wikiId, $pageId, $revisionId );
 
+		( new Helper() )->purgeReviewedJsPagesTimestamp();
+
 		$reviewLogModel = new ReviewLogModel();
 		$now = ( new \DateTime() )->format( 'Y-m-d H:i:s' );
 		$logData = [
