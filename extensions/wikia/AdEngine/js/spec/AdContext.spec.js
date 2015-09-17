@@ -374,8 +374,7 @@ describe('AdContext', function () {
 		expect(getModule().getContext().opts.sourcePoint).toBeTruthy();
 	});
 
-	it(
-		'disables SourcePoint when country and region in instant var and both are invalid',
+	it('disables SourcePoint when country and region in instant var and both are invalid',
 		function () {
 			mocks.win = {ads: {context: {opts: {sourcePointUrl: '//foo.bar'}}}};
 			mocks.instantGlobals = {wgAdDriverSourcePointCountries: ['XX-EE', 'YY']};
