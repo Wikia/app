@@ -180,7 +180,7 @@ require(
 		}
 
 		function saveLinkTitle(linkAddress) {
-			var articleTitle = w.wgTitle,
+			var articleTitle = w.wgPageName,
 				linkAddressAry = linkAddress.match(/.+\.com\/wiki\/(.*)/),
 				listOfCachedTitles = {},
 				linkTitle = '';
@@ -208,7 +208,7 @@ require(
 		 * @returns {string} wikia-in-your-lang link's article title
 		 */
 		function retrieveLinkTitle() {
-			var articleTitle = w.wgTitle,
+			var articleTitle = w.wgPageName,
 				listOfCachedTitles = cache.get(getWIYLLinkTitlesKey());
 			return (listOfCachedTitles && listOfCachedTitles[articleTitle]) ? listOfCachedTitles[articleTitle] : '';
 		}
