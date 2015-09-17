@@ -2398,6 +2398,6 @@ class Wikia {
     public static function getSharedKeyPrefix( $hostname ) {
         global $wgBaseShareKeyPrefix;
 
-        return $hostname . '-' . $wgBaseShareKeyPrefix; // e.g. staging-s3-wikicities
+        return $hostname . '-' . $wgBaseShareKeyPrefix;
     }
 }

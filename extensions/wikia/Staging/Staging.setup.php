@@ -31,4 +31,4 @@ $wgHooks['BeforePageRedirect'][] = 'StagingHooks::onBeforePageRedirect';
  */
 $wgBaseShareKeyPrefix = $wgSharedKeyPrefix;
 $wgCachePrefix = gethostname() . '-' . wfWikiID(); // e.g. staging-s3-muppet / sandbox-qa02-glee / ...
-$wgSharedKeyPrefix = Wikia::getCurrentServerSharedKeyPrefix();
+$wgSharedKeyPrefix = Wikia::getCurrentServerSharedKeyPrefix(); // e.g. staging-s3-wikicities
