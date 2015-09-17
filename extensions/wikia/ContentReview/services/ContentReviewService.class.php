@@ -10,8 +10,7 @@ namespace Wikia\ContentReview;
 
 use Wikia\ContentReview\Models\ReviewModel,
 	Wikia\ContentReview\Models\ReviewLogModel,
-	Wikia\ContentReview\Models\CurrentRevisionModel,
-	Wikia\ContentReview\Helper;
+	Wikia\ContentReview\Models\CurrentRevisionModel;
 
 class ContentReviewService extends \WikiaService {
 
