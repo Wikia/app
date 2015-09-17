@@ -23,7 +23,7 @@
 		<?php foreach ( $reviews as $wikiReview ): ?>
 			<?php foreach( $wikiReview as $review ): ?>
 				<tr class="content-review-special-list-item">
-					<td><a href="<?= Sanitizer::cleanUrl( $review['url'] ) ?>" target="_blank"><?= htmlspecialchars( $review['title'] ) ?></a></td>
+					<td><a href="<?= Sanitizer::cleanUrl( $review['diff'] ) ?>" target="_blank"><?= htmlspecialchars( $review['title'] ) ?></a></td>
 					<td><?= $review['revision_id'] ?></td>
 					<td><?= wfMessage( ContentReviewSpecialController::$statusMessageKeys[$review['status']] )->escaped() ?></td>
 					<td><?= htmlspecialchars( $review['review_user_name'] ) ?></td>
