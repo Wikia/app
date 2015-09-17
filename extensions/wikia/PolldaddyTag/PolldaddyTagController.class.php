@@ -34,11 +34,11 @@ class PolldaddyTagController extends WikiaController {
 			return '<strong class="error">' . wfMessage( 'polldaddy-tag-could-not-render' )->parse() . '</strong>';
 		}
 
-		$attributes = $this->helper->buildTagAttributes( self::TAG_ALLOWED_ATTRIBUTES, $args );
-
 		if ( $this->helper->isMobileSkin() ) {
+			$attributes = $this->helper->buildTagAttributes( self::TAG_ALLOWED_ATTRIBUTES, $args, 'data' );
 			return Html::element( 'a', array_merge( $attributes, self::DATA_WIKI_WIDGET_ATTRIBUTE ), self::NAME );
 		} else {
+			$attributes = $this->helper->buildTagAttributes( self::TAG_ALLOWED_ATTRIBUTES, $args );
 			return Html::rawElement(
 				'span', self::DATA_WIKI_WIDGET_ATTRIBUTE,
 				trim( $this->sendRequest('PolldaddyTagController', 'showDesktop', $attributes) )
