@@ -25,12 +25,14 @@ define('ext.wikia.adEngine.slotTweaker', [
 		element.className = newClasses;
 	}
 
-	function hide(slotname) {
+	function hide(slotname, useInline) {
 		log('hide ' + slotname + ' using class hidden', 6, logGroup);
 
 		var slot = document.getElementById(slotname);
 
-		if (slot) {
+		if (slot && useInline) {
+			slot.style.display = 'none';
+		} else if (slot) {
 			removeClass(slot, 'hidden');
 			slot.className += ' hidden';
 		}

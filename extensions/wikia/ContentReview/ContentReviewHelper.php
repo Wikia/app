@@ -330,7 +330,9 @@ class Helper extends \ContextSource {
 	public function replaceWithLastApproved( \Title $title, $contentType, &$text ) {
 		global $wgCityId, $wgJsMimeType;
 
-		if ( $title->isJsPage() || $contentType == $wgJsMimeType ) {
+		if ( $title->isJsPage()
+			|| ( $title->inNamespace( NS_MEDIAWIKI ) && $contentType == $wgJsMimeType )
+		) {
 			$pageId = $title->getArticleID();
 			$latestRevId = $title->getLatestRevID();
 

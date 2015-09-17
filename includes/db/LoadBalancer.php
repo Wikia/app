@@ -250,10 +250,13 @@ class LoadBalancer {
 						$laggedSlaveMode = true;
 
 						// Wikia change - begin
+						global $wgDBname, $wgDBcluster;
+
 						Wikia\Logger\WikiaLogger::instance()->error( 'All slaves lagged', [
 							'exception' => new Exception(),
 							'group'     => $group,
-							'wiki'      => $wiki
+							'wiki'      => $wiki ?: $wgDBname, # $wiki = false means a local DB
+							'cluster'   => $wgDBcluster,
 						] );
 						// Wikia change - end
 					}

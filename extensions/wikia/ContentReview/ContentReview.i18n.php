@@ -66,6 +66,7 @@ $messages['en'] = [
 	'content-review-diff-toolbar-talkpage' => 'Talk page',
 	'content-review-diff-toolbar-guidelines' => 'Reviewer guidelines',
 	'content-review-diff-toolbar-guidelines-url' => 'http://dev.wikia.com/wiki/Help:JavaScript_review_guidelines',
+	'content-review-diff-hidden' => 'Since no revision of this page has been approved yet, the diff is hidden. Please review the changes based on the latest revision state below.',
 
 	'content-review-status-unreviewed' => 'Unreviewed',
 	'content-review-status-in-review' => 'In review',
@@ -142,6 +143,7 @@ $messages['qqq'] = [
 	'content-review-diff-toolbar-talkpage' => 'A text of a link to a talk page of a page that is being reviewed.',
 	'content-review-diff-toolbar-guidelines' => 'A text of a link to a page with guidelines for reviewers.',
 	'content-review-diff-toolbar-guidelines-url' => 'A URL of a page with guidelines for reviewers.',
+	'content-review-diff-hidden' => 'A message shown to a reviewer if he is reviewing a page that does not have an initial revision. In this case the regular diff view is hidden and replaced by this message to focus them on an actual content that they review.',
 
 	'content-review-feedback-link-text' => 'Text on a link for providing feedback on script change being reviewed',
 	'content-review-rejection-explanation' => 'Standard explanation response when script changes were rejected. This text is a prefill to script talk page when reviewer is redirected there to provide feedback on rejection.',

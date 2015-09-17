@@ -88,7 +88,6 @@ module.exports = function (config) {
 			'extensions/wikia/AdEngine/js/provider/gpt/*.js',
 			'extensions/wikia/AdEngine/js/slot/*.js',
 			'extensions/wikia/AdEngine/js/template/*.js',
-			'extensions/wikia/AdEngine/js/utils/*.js',
 
 			'extensions/wikia/AdEngine/js/spec/**/*.spec.js',
 
