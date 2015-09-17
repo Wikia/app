@@ -17,6 +17,7 @@ class Hooks {
 		\Hooks::register( 'SkinTemplateNavigation', [ $hooks, 'onSkinTemplateNavigation' ] );
 		\Hooks::register( 'UserLogoutComplete', [ $hooks, 'onUserLogoutComplete' ] );
 		\Hooks::register( 'ArticleSaveComplete', [ $hooks, 'onArticleSaveComplete' ] );
+		\Hooks::register( 'ShowDiff', [ $hooks, 'onShowDiff' ] );
 	}
 
 	public function onGetRailModuleList( Array &$railModuleList ) {
@@ -160,6 +161,27 @@ class Hooks {
 			}
 		}
 
+		return true;
+	}
+
+	/**
+	 * Overwrites a message key used instead of a diff view when no `oldid` for comparison is provided.
+	 * @param \DifferenceEngine $diff
+	 * @param string $notice
+	 * @return bool
+	 */
+	public function onShowDiff( \DifferenceEngine $diff, &$notice ) {
+		if ( $diff->getTitle()->inNamespace( NS_MEDIAWIKI )
+			&& $diff->getRequest()->getBool( Helper::CONTENT_REVIEW_PARAM )
+			&& !$diff->getRequest()->getBool( 'oldid' )
+		) {
+			$notice = \HTML::rawElement(
+				'div',
+				[ 'class' => 'content-review-diff-hidden-notice' ],
+				wfMessage( 'content-review-diff-hidden' )->escaped()
+			);
+			return false;
+		}
 		return true;
 	}
 

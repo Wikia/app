@@ -49,6 +49,8 @@ class ContentReviewSpecialController extends WikiaSpecialPageController {
 		$wikiId = $this->getPar();
 
 		if ( !empty( $wikiId ) ) {
+			$this->setVal( 'baseSpecialPageUrl', $this->specialPage->getTitle()->getFullURL() );
+
 			$logModel = new ReviewLogModel();
 			$revisionModel = new CurrentRevisionModel();
 
@@ -74,6 +76,10 @@ class ContentReviewSpecialController extends WikiaSpecialPageController {
 			$review['url'] = $title->getFullURL();
 			$review['title'] = $title->getText();
 			$review['wiki'] = $wiki->city_title;
+			$review['wikiArchiveUrl'] = $this->getContext()->getTitle()->getFullURL( [
+				self::PAR => $review['wiki_id'],
+			] );
+
 			$review['user'] = User::newFromId( $review['submit_user_id'] )->getName();
 			$review['diff'] = $title->getFullURL( [
 				'diff' => $review['revision_id'],

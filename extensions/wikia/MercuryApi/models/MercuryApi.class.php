@@ -114,6 +114,7 @@ class MercuryApi {
 			'disableAnonymousEditing' => $wgDisableAnonymousEditing,
 			'disableAnonymousUploadForMercury' => $wgDisableAnonymousUploadForMercury,
 			'enableNewAuth' => $wgEnableNewAuth,
+			'homepage' => $this->getHomepageUrl(),
 			'id' => (int) $wgCityId,
 			'language' => [
 				'user' => $wgLang->getCode(),
@@ -240,6 +241,20 @@ class MercuryApi {
 	private function clearUsers() {
 		$this->users = [];
 	}
+
+	/**
+	 * Get homepage URL for given language.
+	 *
+	 * @return string homepage URL. Default is US homepage.
+	 */
+	private function getHomepageUrl() {
+		global $wgLang;
+		if ( class_exists('WikiaLogoHelper') ) {
+			return ( new WikiaLogoHelper() )->getCentralUrlForLang( $wgLang->getCode() );
+		}
+		return 'http://www.wikia.com'; //default homepage url
+	}
+
 
 	/**
 	 * Get ads context for Title. Return null if Ad Engine extension is not enabled
