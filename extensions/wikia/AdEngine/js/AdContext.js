@@ -85,6 +85,11 @@ define('ext.wikia.adEngine.adContext', [
 				isProperCountry(instantGlobals.wgAdDriverSourcePointDetectionCountries);
 		}
 
+		// Recoverable ads message
+		if (context.opts.sourcePointDetection) {
+			context.opts.recoveredAdsMessage = isProperGeo(instantGlobals.wgAdDriverAdRecoveredMessageCountries);
+		}
+
 		// Showcase.*
 		if (isUrlParamSet('showcase')) {
 			context.opts.showcase = true;
