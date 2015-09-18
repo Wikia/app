@@ -443,4 +443,58 @@ describe('AdContext', function () {
 
 		expect(getModule().getContext().opts.scrollHandlerConfig).toBe(config);
 	});
+
+	it('enables recoveredAdsMessage when country in instant var and SourcePoint detection is on', function () {
+		mocks.win = {ads: {context: {opts: {sourcePointUrl: '//foo.bar'}}}};
+		mocks.instantGlobals = {
+			wgAdDriverSourcePointCountries: ['XX', 'ZZ'],
+			wgAdDriverAdRecoveredMessageCountries: ['XX']
+		};
+
+		expect(getModule().getContext().opts.recoveredAdsMessage).toBeTruthy();
+	});
+
+	it('enables recoveredAdsMessage when region in instant var and SourcePoint detection is on', function () {
+		mocks.win = {ads: {context: {opts: {sourcePointUrl: '//foo.bar'}}}};
+		mocks.instantGlobals = {
+			wgAdDriverSourcePointCountries: ['XX'],
+			wgAdDriverAdRecoveredMessageCountries: ['XX-RR']
+		};
+
+		expect(getModule().getContext().opts.recoveredAdsMessage).toBeTruthy();
+	});
+
+	it('enables recoveredAdsMessage when country and region in instant var (country overwrites region)', function () {
+		mocks.win = {ads: {context: {opts: {sourcePointUrl: '//foo.bar'}}}};
+		mocks.instantGlobals = {
+			wgAdDriverSourcePointCountries: ['XX'],
+			wgAdDriverAdRecoveredMessageCountries: ['XX-EE', 'XX']
+		};
+
+		expect(getModule().getContext().opts.recoveredAdsMessage).toBeTruthy();
+	});
+
+	it('disables recoveredAdsMessage when country and region in instant var and both are invalid',
+		function () {
+			mocks.win = {ads: {context: {opts: {sourcePointUrl: '//foo.bar'}}}};
+			mocks.instantGlobals = {
+				wgAdDriverSourcePointCountries: ['XX'],
+				wgAdDriverAdRecoveredMessageCountries: ['XX-EE', 'YY']
+			};
+
+			expect(getModule().getContext().opts.recoveredAdsMessage).toBeFalsy();
+		}
+	);
+
+	it('disables recoveredAdsMessage when SourcePoint detection is off',
+		function () {
+			mocks.win = {ads: {context: {opts: {sourcePointUrl: '//foo.bar'}}}};
+			mocks.instantGlobals = {
+				wgAdDriverSourcePointCountries: ['YY'],
+				wgAdDriverAdRecoveredMessageCountries: ['XX']
+			};
+
+			expect(getModule().getContext().opts.recoveredAdsMessage).toBeFalsy();
+		}
+	);
 });
