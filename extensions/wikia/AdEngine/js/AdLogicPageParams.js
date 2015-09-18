@@ -264,9 +264,6 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 		}
 
 		extend(params, decodeLegacyDartParams(targeting.wikiCustomKeyValues));
-		if (lookups) {
-			lookups.extendPageTargeting(params);
-		}
 
 		if (!params.esrb) {
 			params.esrb = targeting.wikiDirectedAtChildren ? 'ec' : 'teen';
