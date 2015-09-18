@@ -2,6 +2,8 @@
 class GoogleFormTagController extends WikiaController {
 	const TAG_NAME = 'googleform';
 
+	const GOOGLE_FORM_BASE_URL = 'https://docs.google.com';
+
 	const TAG_ALLOWED_ATTRIBUTES = [
 		'width',
 		'height',
@@ -33,7 +35,10 @@ class GoogleFormTagController extends WikiaController {
 	public function renderTag( $input, array $args, Parser $parser, PPFrame $frame ) {
 		$sourceUrl = $this->cleanupUrl( $args['url'] );
 
-		if ( empty( $sourceUrl ) ) {
+		if (
+			empty( $sourceUrl ) ||
+			substr( $sourceUrl, 0, strlen( self::GOOGLE_FORM_BASE_URL ) ) !== self::GOOGLE_FORM_BASE_URL
+		) {
 			return '<strong class="error">' . wfMessage( 'google-form-tag-malformed-url' )->parse() . '</strong>';
 		}
 
