@@ -62,11 +62,11 @@ describe('AdLogicPageParams', function () {
 			getVertical: function () {
 				return 'zone_vertical';
 			},
-			getCategories: function () {
-				return ['zone_category'];
+			getPageCategories: function () {
+				return ['zone_page_category'];
 			},
-			getNewCategories: function () {
-				return ['zone_new_category'];
+			getWikiCategories: function () {
+				return ['zone_wiki_category'];
 			},
 			getLanguage: function () {
 				return 'zl';
@@ -124,10 +124,10 @@ describe('AdLogicPageParams', function () {
 
 		expect(params.s0).toBe('zone_site');
 		expect(params.s0v).toBe('zone_vertical');
-		expect(params.s0c).toEqual(['zone_new_category']);
+		expect(params.s0c).toEqual(['zone_wiki_category']);
 		expect(params.s1).toBe('zone_mapped_vertical');
 		expect(params.s2).toBe('zone_page_type');
-		expect(params.cat).toEqual(['zone_category']);
+		expect(params.cat).toEqual(['zone_page_category']);
 		expect(params.dmn).toBe('zone_domain');
 		expect(params.hostpre).toBe('zone_hostname_prefix');
 		expect(params.lang).toBe('zl');

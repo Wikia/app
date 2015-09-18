@@ -134,40 +134,40 @@ describe('ext.wikia.adEngine.utils.adLogicZoneParams', function () {
 		expect(zoneParams.getPageType()).toBe('pagetype', 's2=pagetype');
 	});
 
-	it('getCategories - Empty page categories', function () {
+	it('getPageCategories - Empty page categories', function () {
 		setUpContext({
 			pageCategories: []
 		});
 		var zoneParams = getModule();
 
-		expect(zoneParams.getCategories()).toBeFalsy('No categories');
+		expect(zoneParams.getPageCategories()).toBeFalsy('No categories');
 	});
 
-	it('getCategories - Two categories', function () {
+	it('getPageCategories - Two categories', function () {
 		setUpContext({
 			pageCategories: ['Category', 'Another Category']
 		});
 		var zoneParams = getModule();
 
-		expect(zoneParams.getCategories()).toEqual(['category', 'another_category']);
+		expect(zoneParams.getPageCategories()).toEqual(['category', 'another_category']);
 	});
 
-	it('getCategories - 4 categories stripped down to first 3', function () {
+	it('getPageCategories - 4 categories stripped down to first 3', function () {
 		setUpContext({
 			pageCategories: ['A Category', 'Another Category', 'Yet Another Category', 'Aaaand One More']
 		});
 		var zoneParams = getModule();
 
-		expect(zoneParams.getCategories()).toEqual(['a_category', 'another_category', 'yet_another_category']);
+		expect(zoneParams.getPageCategories()).toEqual(['a_category', 'another_category', 'yet_another_category']);
 	});
 
-	it('getNewCategories - from context targeting', function () {
+	it('getWikiCategories - from context targeting', function () {
 		setUpContext({
 			newWikiCategories: ['foo', 'bar']
 		});
 		var zoneParams = getModule();
 
-		expect(zoneParams.getNewCategories()).toEqual(['foo', 'bar']);
+		expect(zoneParams.getWikiCategories()).toEqual(['foo', 'bar']);
 	});
 
 	it('getVertical - from context targeting', function () {

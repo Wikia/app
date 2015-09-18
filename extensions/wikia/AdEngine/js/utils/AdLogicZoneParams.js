@@ -103,7 +103,7 @@ define('ext.wikia.adEngine.utils.adLogicZoneParams', [
 		return context.targeting.wikiVertical;
 	}
 
-	function getCategories() {
+	function getPageCategories() {
 		var categories = context.targeting.pageCategories,
 			outCategories;
 
@@ -117,7 +117,7 @@ define('ext.wikia.adEngine.utils.adLogicZoneParams', [
 		return context.targeting.wikiLanguage || 'unknown';
 	}
 
-	function getNewCategories() {
+	function getWikiCategories() {
 		return context.targeting.newWikiCategories;
 	}
 
@@ -131,8 +131,8 @@ define('ext.wikia.adEngine.utils.adLogicZoneParams', [
 		getMappedVertical: getMappedVertical,
 		getPageType: getPageType,
 		getVertical: getVertical,
-		getCategories: getCategories,
-		getNewCategories: getNewCategories,
+		getPageCategories: getPageCategories,
+		getWikiCategories: getWikiCategories,
 		getLanguage: getLanguage,
 		getRawDbName: getRawDbName
 	};
