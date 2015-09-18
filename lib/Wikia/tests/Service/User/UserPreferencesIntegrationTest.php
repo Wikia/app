@@ -50,7 +50,7 @@ class UserPreferencesIntegrationTest extends PHPUnit_Framework_TestCase {
 		$this->testUser = $wgWikiaBotUsers["bot"];
 		$this->testUserId = \User::idFromName( $this->testUser );
 		$this->preferenceServiceCached = Injector::getInjector()->get( PreferenceService::class );
-		$defaultProperties = Injector::getInjector( PreferenceServiceImpl::DEFAULT_PREFERENCES );
+		$defaultPreferences = Injector::getInjector()->get( PreferenceServiceImpl::DEFAULT_PREFERENCES );
 		$cache = $this->getMockBuilder( CacheProvider::class )
 			->setMethods( ['doFetch', 'doContains', 'doSave', 'doFlush', 'doDelete', 'doGetStats'] )
 			->disableOriginalConstructor()
@@ -61,7 +61,7 @@ class UserPreferencesIntegrationTest extends PHPUnit_Framework_TestCase {
 			->willReturn( false );
 
 		$persistence = Injector::getInjector()->get( PreferencePersistence::class );
-		$this->preferenceServiceUnCached = new PreferenceServiceImpl( $cache, $persistence, [], (array)$defaultProperties, [] );
+		$this->preferenceServiceUnCached = new PreferenceServiceImpl( $cache, $persistence, $defaultPreferences, [], [] );
 	}
 
 	function testGetSingleUserPreference() {
