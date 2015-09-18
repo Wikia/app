@@ -205,6 +205,20 @@ class Masthead {
 	}
 
 	/**
+	 * Return a full avatar for a given default avatar
+	 *
+	 * @param string $avatar (e.g. Avatar3.jpg)
+	 * @return string full URL (e.g. http://images.wikia.com/messaging/images/4/46/Avatar3.jpg)
+	 */
+	public static function getDefaultAvatarUrl( $avatar ) {
+		/**
+		 * default avatar, path from messaging.wikia.com
+		 */
+		$hash = FileRepo::getHashPathForLevel( $avatar, 2 );
+		return self::DEFAULT_PATH . $hash . $avatar;
+	}
+
+	/**
 	 * getPurgeUrl -- the basic URL (without image server rewriting, cachebuster,
 	 * etc.) of the avatar.  This can be sent to squid to purge it.
 	 *
@@ -238,8 +252,7 @@ class Masthead {
 				/**
 				 * default avatar, path from messaging.wikia.com
 				 */
-				$hash = FileRepo::getHashPathForLevel( $url, 2 );
-				$url = self::DEFAULT_PATH . trim( $thumb, '/' ) . '/' . $hash . $url;
+				$url = self::getDefaultAvatarUrl( $url );
 			}
 		} else {
 			$defaults = $this->getDefaultAvatars( trim( $thumb, "/" ) . "/" );
