@@ -31,11 +31,11 @@ class PolldaddyTagController extends WikiaController {
 		}
 
 		return $this->helper->isMobileSkin() ?
-			Html::rawElement(
+			Html::element(
 				'a',
 				array_merge( self::DATA_WIKI_WIDGET_ATTRIBUTE, [ 'data-id' => $args['id'] ] )
 			) :
-			Html::rawElement(
+			Html::element(
 				'span',
 				self::DATA_WIKI_WIDGET_ATTRIBUTE,
 				trim( $this->sendRequest('PolldaddyTagController', 'showDesktop', $args) )
