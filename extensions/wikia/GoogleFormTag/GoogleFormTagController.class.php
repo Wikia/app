@@ -38,7 +38,7 @@ class GoogleFormTagController extends WikiaController {
 		if (
 			empty( $sourceUrl ) ||
 			substr( $sourceUrl, 0, strlen( self::GOOGLE_FORM_BASE_URL ) ) !== self::GOOGLE_FORM_BASE_URL
-			) {
+		) {
 			return '<strong class="error">' . wfMessage( 'google-form-tag-malformed-url' )->parse() . '</strong>';
 		}
 
