@@ -3,6 +3,6 @@
 class PolldaddyTagValidator {
 
 	public static function validateAttributes( $params ) {
-		return array_key_exists( 'id', $params ) && !empty( $params['id'] );
+		return array_key_exists( 'id', $params ) && ctype_digit( $params['id'] );
 	}
 }
