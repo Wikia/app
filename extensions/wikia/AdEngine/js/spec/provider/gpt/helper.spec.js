@@ -22,6 +22,14 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 					return [];
 				}
 			},
+			recoveryHelper: {
+				addSlotToRecover: noop,
+				createSourcePointTag: noop,
+				recoverSlots: noop,
+				isBlocking: noop,
+				isRecoverable: noop,
+				isRecoveryEnabled: noop
+			},
 			slotTweaker: {
 				show: noop,
 				hide: noop
@@ -60,8 +68,8 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 			mocks.adDetect,
 			AdElement,
 			mocks.googleTag,
+			mocks.recoveryHelper,
 			mocks.slotTweaker,
-			mocks.sourcePointTag,
 			mocks.sraHelper
 		);
 	}
@@ -201,17 +209,12 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 	});
 
 	it('Prevent push/flush when slot is not recoverable and pageview is blocked and recovery is enabled', function () {
-		mocks.context = {
-			opts: {
-				sourcePoint: true
-			}
+		mocks.recoveryHelper.isBlocking = function () {
+			return true;
 		};
-		window.ads = {
-			runtime: {
-				sp: {
-					blocking: true
-				}
-			}
+
+		mocks.recoveryHelper.isRecoverable = function () {
+			return false;
 		};
 
 		spyOn(mocks.googleTag.prototype, 'push');
@@ -224,17 +227,12 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 	});
 
 	it('Should push/flush when slot is recoverable', function () {
-		mocks.context = {
-			opts: {
-				sourcePoint: true
-			}
+		mocks.recoveryHelper.isBlocking = function () {
+			return true;
 		};
-		window.ads = {
-			runtime: {
-				sp: {
-					blocking: true
-				}
-			}
+
+		mocks.recoveryHelper.isRecoverable = function () {
+			return true;
 		};
 
 		spyOn(mocks.googleTag.prototype, 'push');
