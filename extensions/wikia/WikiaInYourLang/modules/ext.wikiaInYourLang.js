@@ -88,13 +88,13 @@ require(
 				},
 				callback: function (results) {
 					if (results.success === true) {
-						// Display notification
-						displayNotification(results.message);
-
 						// Save link address if it is different from this article title
 						saveLinkTitle(results.linkAddress);
 						// Re-initialize linkTitle with linkAddress
 						linkTitle = retrieveLinkTitle();
+
+						// Display notification
+						displayNotification(results.message);
 
 						// Update JS cache and set the notification shown indicator to true
 						// Cache for a day
@@ -114,12 +114,13 @@ require(
 
 		function displayNotification(message) {
 			var bannerNotification = new BannerNotification(message, 'notify').show(),
+				label = getTrackingLabel('notification-view'),
 				// Track a view of the notification
 				trackingParams = {
 					trackingMethod: 'analytics',
 					category: 'wikia-in-your-lang',
 					action: tracker.ACTIONS.VIEW,
-					label: targetLanguage + '-notification-view'
+					label: label
 				};
 
 			tracker.track(trackingParams);
@@ -138,11 +139,12 @@ require(
 
 		function onNotificationClosed() {
 			// Track closing of a notification
-			var trackingParams = {
+			var label = getTrackingLabel('notification-close'),
+			    trackingParams = {
 				trackingMethod: 'analytics',
 				category: 'wikia-in-your-lang',
 				action: tracker.ACTIONS.CLOSE,
-				label: targetLanguage + '-notification-close',
+				label: label,
 			};
 			tracker.track(trackingParams);
 
@@ -153,13 +155,13 @@ require(
 
 		function onLinkClick() {
 			// Track a click on a notification link
-			var trackingParams = {
+			var label = getTrackingLabel('notification-link-click'),
+			    trackingParams = {
 				trackingMethod: 'analytics',
 				category: 'wikia-in-your-lang',
 				action: tracker.ACTIONS.CLICK_LINK_TEXT,
-				label: targetLanguage + '-notification-link-click',
+				label: label,
 			};
-
 			tracker.track(trackingParams);
 		}
 
@@ -211,6 +213,15 @@ require(
 			var articleTitle = w.wgPageName,
 				listOfCachedTitles = cache.get(getWIYLLinkTitlesKey());
 			return (listOfCachedTitles && listOfCachedTitles[articleTitle]) ? listOfCachedTitles[articleTitle] : '';
+		}
+
+		function getTrackingLabel(postfix) {
+			var label = targetLanguage;
+			if ( linkTitle.length > 0 && linkTitle != 'main' ) {
+				label += '-article';
+			}
+			label += '-' + postfix;
+			return label;
 		}
 
 		if (!w.wikiaPageIsCorporate) {
