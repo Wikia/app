@@ -1831,8 +1831,8 @@ $wgEnableFliteTagExt = false;
 $wgEnableSeoLinkHreflangExt = false;
 
 /**
- * @name $wgAdDriverAdRecoveredMessageCountries
+ * @name $wgAdDriverAdsRecoveryMessageCountries
  * Enables module which displays a simple message to users with ad blockers
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
-$wgAdDriverAdRecoveredMessageCountries = null;
+$wgAdDriverAdsRecoveryMessageCountries = null;

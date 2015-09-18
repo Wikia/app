@@ -448,7 +448,7 @@ describe('AdContext', function () {
 		mocks.win = {ads: {context: {opts: {sourcePointDetectionUrl: '//foo.bar'}}}};
 		mocks.instantGlobals = {
 			wgAdDriverSourcePointDetectionCountries: ['XX'],
-			wgAdDriverAdRecoveredMessageCountries: ['XX', 'ZZ']
+			wgAdDriverAdsRecoveryMessageCountries: ['XX', 'ZZ']
 		};
 
 		expect(getModule().getContext().opts.recoveredAdsMessage).toBeTruthy();
@@ -458,7 +458,7 @@ describe('AdContext', function () {
 		mocks.win = {ads: {context: {opts: {sourcePointDetectionUrl: '//foo.bar'}}}};
 		mocks.instantGlobals = {
 			wgAdDriverSourcePointDetectionCountries: ['XX'],
-			wgAdDriverAdRecoveredMessageCountries: ['XX-RR']
+			wgAdDriverAdsRecoveryMessageCountries: ['XX-RR']
 		};
 
 		expect(getModule().getContext().opts.recoveredAdsMessage).toBeTruthy();
@@ -468,7 +468,7 @@ describe('AdContext', function () {
 		mocks.win = {ads: {context: {opts: {sourcePointDetectionUrl: '//foo.bar'}}}};
 		mocks.instantGlobals = {
 			wgAdDriverSourcePointDetectionCountries: ['XX'],
-			wgAdDriverAdRecoveredMessageCountries: ['XX-EE', 'XX']
+			wgAdDriverAdsRecoveryMessageCountries: ['XX-EE', 'XX']
 		};
 
 		expect(getModule().getContext().opts.recoveredAdsMessage).toBeTruthy();
@@ -479,7 +479,7 @@ describe('AdContext', function () {
 			mocks.win = {ads: {context: {opts: {sourcePointDetectionUrl: '//foo.bar'}}}};
 			mocks.instantGlobals = {
 				wgAdDriverSourcePointDetectionCountries: ['XX'],
-				wgAdDriverAdRecoveredMessageCountries: ['XX-EE', 'YY']
+				wgAdDriverAdsRecoveryMessageCountries: ['XX-EE', 'YY']
 			};
 
 			expect(getModule().getContext().opts.recoveredAdsMessage).toBeFalsy();
@@ -491,7 +491,7 @@ describe('AdContext', function () {
 			mocks.win = {ads: {context: {opts: {sourcePointDetectionUrl: '//foo.bar'}}}};
 			mocks.instantGlobals = {
 				wgAdDriverSourcePointDetectionCountries: ['YY'],
-				wgAdDriverAdRecoveredMessageCountries: ['XX']
+				wgAdDriverAdsRecoveryMessageCountries: ['XX']
 			};
 
 			expect(getModule().getContext().opts.recoveredAdsMessage).toBeFalsy();

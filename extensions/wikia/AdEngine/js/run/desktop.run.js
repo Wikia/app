@@ -10,12 +10,13 @@ require([
 	'ext.wikia.adEngine.dartHelper',
 	'ext.wikia.adEngine.messageListener',
 	'ext.wikia.adEngine.provider.evolve',
+	'ext.wikia.adEngine.recovery.message',
 	'ext.wikia.adEngine.slot.scrollHandler',
 	'ext.wikia.adEngine.slotTracker',
 	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.sourcePoint',
 	'wikia.krux',
-	'wikia.window'
+	'wikia.window',
 ], function (
 	adContext,
 	adEngine,
@@ -26,6 +27,7 @@ require([
 	dartHelper,
 	messageListener,
 	providerEvolve,
+	recoveredAdMessage,
 	scrollHandler,
 	slotTracker,
 	slotTweaker,
@@ -89,7 +91,13 @@ require([
 				adEngine.run(adConfigDesktop, win.ads.runtime.sp.slots, 'queue.sp');
 			});
 		}
+
 		sourcePoint.initDetection();
+
+		if (context.opts.recoveredAdsMessage) {
+			recoveredAdMessage.init();
+		}
+
 		// Krux
 		krux.load(kruxSiteId);
 	});
