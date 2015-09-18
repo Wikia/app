@@ -313,7 +313,24 @@
 	 * end remove
 	 */
 
-	if (window.optimizely && window.optimizely.activeExperiments) {
+	/**
+	 * Checks if Optimizely object and its crucial data attributes are available
+	 *
+	 * @returns {boolean}
+	 */
+	function isOptmizelyLoaded() {
+		var optimizely = window.optimizely;
+
+		return optimizely &&
+			optimizely.activeExperiments &&
+			optimizely.activeExperiments.length > 0 &&
+			typeof optimizely.allExperiments === 'object' &&
+			Object.keys(optimizely.allExperiments).length > 0 &&
+			typeof optimizely.variationNamesMap === 'object' &&
+			Object.keys(optimizely.variationNamesMap).length > 0;
+	}
+
+	if (isOptmizelyLoaded()) {
 		window.optimizely.activeExperiments.forEach(function (experimentId) {
 			if (
 				window.optimizely.allExperiments.hasOwnProperty(experimentId) &&
