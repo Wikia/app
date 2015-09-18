@@ -93,7 +93,7 @@ class PreferenceServiceImpl implements PreferenceService {
 	}
 
 	public function setGlobalPreference( $userId, $name, $value ) {
-		if ( $value == null ) {
+		if ( $value === null ) {
 			$value = $this->getGlobalDefault( $name );
 		}
 
@@ -118,7 +118,7 @@ class PreferenceServiceImpl implements PreferenceService {
 	}
 
 	public function setLocalPreference( $userId, $wikiId, $name, $value ) {
-		if ( $value == null ) {
+		if ( $value === null ) {
 			$value = $this->getLocalDefault($name, $wikiId );
 		}
 

@@ -165,10 +165,13 @@ var ChatEntryPoint = {
 		if ( window.wgUserName ) {
 			window.open( linkToSpecialChat, 'wikiachat', window.wgWikiaChatWindowFeatures );
 		} else {
-			UserLoginModal.show( {
-				origin: 'chat',
-				callback: ChatEntryPoint.onSuccessfulLogin
-			} );
+			require(['AuthModal'], function (authModal) {
+				authModal.load({
+					url: '/signin?redirect=' + encodeURIComponent(window.location.href),
+					origin: 'chat',
+					onAuthSuccess: ChatEntryPoint.onSuccessfulLogin
+				});
+			});
 		}
 	},
 

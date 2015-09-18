@@ -69,7 +69,7 @@ class PreferenceCorrectionService {
 				if ( !$actualPreferences->hasGlobalPreference( $name ) ) {
 					$this->logMissingPreference( $userId, $name );
 					++$differences;
-				} elseif ( $actualPreferences->getGlobalPreference( $name ) !== $value ) {
+				} elseif ( $actualPreferences->getGlobalPreference( $name ) != $value ) {
 					$this->logPreferenceValueDifference( $userId, $name, $value, $actualPreferences->getGlobalPreference( $name ) );
 					++$differences;
 				}

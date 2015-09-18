@@ -15,9 +15,10 @@ class ContentReviewApiControllerTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @param array $params An array as defined in the dataProvider
 	 * @dataProvider submitPageForReviewProvider
 	 */
-	public function testSubmitPageForReview( $params, $textExpected, $message ) {
+	public function testSubmitPageForReview( $params ) {
 
 		$this->prepareControllerPropertiesMocks( $params );
 
@@ -31,6 +32,42 @@ class ContentReviewApiControllerTest extends WikiaBaseTest {
 
 		/* Run tested function */
 		$this->contentReviewApiControllerMock->submitPageForReview();
+	}
+
+	/**
+	 * Tests if the updateReviewsStatus method performs all necessary checks to validate
+	 * a request and check a user's permissions to perform the action.
+	 * @param bool $wasPosted
+	 * @param bool $matchEditToken
+	 * @param bool $isAllowed
+	 * @param string $exception A name of a class of an expected exception
+	 * @dataProvider updateReviewsStatusDataProvider
+	 */
+	public function testUpdateReviewsStatus( $wasPosted, $matchEditToken, $isAllowed, $exception ) {
+		/* @var \WikiaRequest $requestMock */
+		$requestMock = $this->getMock( '\WikiaRequest', [ 'wasPosted' ], [ [] ] );
+		$requestMock->expects( $this->once() )
+			->method( 'wasPosted' )
+			->willReturn( $wasPosted );
+
+		$userMock = $this->getMock( '\User', [ 'matchEditToken', 'isAllowed' ] );
+		if ( $wasPosted ) {
+			$userMock->expects( $this->once() )
+				->method( 'matchEditToken' )
+				->willReturn( $matchEditToken );
+		}
+		if ( $wasPosted && $matchEditToken ) {
+			$userMock->expects( $this->once() )
+				->method( 'isAllowed' )
+				->willReturn( $isAllowed );
+		}
+
+		$this->setExpectedException( $exception );
+
+		$this->mockGlobalVariable( 'wgUser', $userMock );
+		$this->contentReviewApiControllerMock->setRequest( $requestMock );
+
+		$this->contentReviewApiControllerMock->updateReviewsStatus();
 	}
 
 	private function prepareControllerPropertiesMocks( $params ) {
@@ -177,6 +214,14 @@ class ContentReviewApiControllerTest extends WikiaBaseTest {
 				null,
 				'Non existent user',
 			],
+		];
+	}
+
+	public function updateReviewsStatusDataProvider() {
+		return [
+			[ false, false, false, 'BadRequestApiException' ],
+			[ true, false, false, 'BadRequestApiException' ],
+			[ true, true, false, 'PermissionsException' ],
 		];
 	}
 }

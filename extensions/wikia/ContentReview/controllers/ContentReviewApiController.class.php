@@ -2,6 +2,7 @@
 
 use Wikia\ContentReview\Models\CurrentRevisionModel;
 use Wikia\ContentReview\Models\ReviewModel;
+use Wikia\ContentReview\Models\ReviewLogModel;
 use Wikia\ContentReview\Helper;
 
 class ContentReviewApiController extends WikiaApiController {
@@ -147,7 +148,8 @@ class ContentReviewApiController extends WikiaApiController {
 			if ( empty( $review ) ) {
 				throw new NotFoundApiException( 'Requested data not present in the database.' );
 			}
-			$reviewModel->backupCompletedReview( $review, $status, $reviewerId );
+			$reviewLogModel = new ReviewLogModel();
+			$reviewLogModel->backupCompletedReview( $review, $status, $reviewerId );
 
 			if ( $status === ReviewModel::CONTENT_REVIEW_STATUS_APPROVED ) {
 				$currentRevisionModel->approveRevision( $wikiId, $pageId, $review['revision_id'] );
