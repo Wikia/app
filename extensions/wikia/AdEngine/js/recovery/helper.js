@@ -28,7 +28,7 @@ define('ext.wikia.adEngine.recovery.helper', [
 	}
 
 	function isBlocking() {
-		return !!(isRecoveryEnabled() && window.ads && window.ads.runtime.sp.blocking);
+		return !!(window.ads && window.ads.runtime.sp.blocking);
 	}
 
 	function isRecoverable(slotName, recoverableSlots) {
@@ -40,7 +40,7 @@ define('ext.wikia.adEngine.recovery.helper', [
 			return;
 		}
 		log(['Starting recovery', slotsToRecover], 'debug', logGroup);
-		while (slotsToRecover.length){
+		while (slotsToRecover.length) {
 			window.ads.runtime.sp.slots.push([slotsToRecover.shift()]);
 		}
 	}
