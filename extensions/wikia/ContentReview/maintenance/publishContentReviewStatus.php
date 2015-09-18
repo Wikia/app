@@ -26,11 +26,13 @@ class ContentReviewStatus extends Maintenance {
 
 		$uncompleted = $this->getCountOfUncompletedReviews();
 		$data = $this->prepareData( $uncompleted );
-		$result = $this->sendDataAsJson( $data );
+		$response = $this->sendPostRequest( $data );
 
-		if ( $result !== 'ok' ) {
+		if ( $response->getStatus() !== 200 ) {
 			$logger = Wikia\Logger\WikiaLogger::instance();
-			$logger->error( 'Updating JavaScript reviews status failed' );
+			$logger->error( 'Updating JavaScript reviews status failed', [
+				'rspnsHdrs' => $response->getResponseHeaders(),
+			] );
 		}
 	}
 
@@ -96,20 +98,23 @@ class ContentReviewStatus extends Maintenance {
 		return $data;
 	}
 
-	private function sendDataAsJson( array $data ) {
+	/**
+	 * @param array $data
+	 * @return MWHttpRequest
+	 */
+	private function sendPostRequest( array $data ) {
 		$options = [
-			'http' => [
-				'method' => 'POST',
-				'content' => json_encode( $data ),
-				'header' => 'Content-Type: application/json\r\n' .
-							'Accept: application/json\r\n',
+			'postData' => json_encode( $data ),
+			'headers' => [
+				'Content-Type' => 'application/json',
+				'Accept' => 'application/json',
 			],
+			'returnInstance' => true,
 		];
 
-		$context = stream_context_create( $options );
-		$result = file_get_contents( $this->webhook, false, $context );
+		$response = Http::post( $this->webhook, $options );
 
-		return $result;
+		return $response;
 	}
 }
 
