@@ -10,13 +10,13 @@ require([
 	'ext.wikia.adEngine.dartHelper',
 	'ext.wikia.adEngine.messageListener',
 	'ext.wikia.adEngine.provider.evolve',
-	'ext.wikia.adEngine.recovery.message',
 	'ext.wikia.adEngine.slot.scrollHandler',
 	'ext.wikia.adEngine.slotTracker',
 	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.sourcePoint',
 	'wikia.krux',
 	'wikia.window',
+	'wikia.loader'
 ], function (
 	adContext,
 	adEngine,
@@ -27,13 +27,13 @@ require([
 	dartHelper,
 	messageListener,
 	providerEvolve,
-	recoveredAdMessage,
 	scrollHandler,
 	slotTracker,
 	slotTweaker,
 	sourcePoint,
 	krux,
-	win
+	win,
+	loader
 ) {
 	'use strict';
 
@@ -95,7 +95,14 @@ require([
 		sourcePoint.initDetection();
 
 		if (context.opts.recoveredAdsMessage) {
-			recoveredAdMessage.init();
+			loader({
+				type: loader.AM_GROUPS,
+				resources: ['adengine2_ads_recovery_message_js']
+			}).done(function () {
+				require(['ext.wikia.adEngine.recovery.message'], function (recoveredAdMessage) {
+					recoveredAdMessage.init();
+				});
+			});
 		}
 
 		// Krux

@@ -58,9 +58,6 @@ $config['adengine2_desktop_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => ['oasis', 'wikiamobile'],
 	'assets' => array(
-		// TODO: think about loading it on demand only when recoveredAdsMessage is turned on
-		'#group_adengine2_ads_recovery_message_js',
-
 		// was: early queue
 		'//resources/wikia/modules/iframeWriter.js',
 		'//resources/wikia/modules/scriptwriter.js',
