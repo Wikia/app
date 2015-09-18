@@ -504,6 +504,10 @@ class UserProfilePageController extends WikiaController {
 					if ( empty( $wgAvatarsUseService ) ) {
 						$user->setGlobalAttribute( AVATAR_USER_OPTION_NAME, $data->file );
 					}
+					else {
+						// store the full URL of the predefined avatar and skip an upload via service (PLATFORM-1494)
+						$user->setGlobalAttribute( AVATAR_USER_OPTION_NAME, Masthead::getDefaultAvatarUrl( $data->file ) );
+					}
 					break;
 				case 'uploaded':
 					$errorMsg = wfMessage( 'userprofilepage-interview-save-internal-error' )->escaped();
@@ -522,8 +526,9 @@ class UserProfilePageController extends WikiaController {
 			if ( empty( $wgAvatarsUseService ) ) {
 				// TODO: $user->getTouched() get be used to invalidate avatar URLs instead
 				$user->setGlobalAttribute( 'avatar_rev', date( 'U' ) );
-				$user->saveSettings();
 			}
+
+			$user->saveSettings();
 		}
 
 		wfProfileOut( __METHOD__ );
