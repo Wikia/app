@@ -3,10 +3,9 @@
 class AnalyticsProviderAmazonMatch implements iAnalyticsProvider {
 
 	public static function isEnabled() {
-		global $wgEnableAmazonMatch, $wgEnableAmazonMatchOld,
-			$wgEnableAdEngineExt, $wgShowAds, $wgAdDriverUseSevenOneMedia;
+		global $wgEnableAmazonMatch, $wgEnableAdEngineExt, $wgShowAds, $wgAdDriverUseSevenOneMedia;
 
-		return ( $wgEnableAmazonMatch || $wgEnableAmazonMatchOld )
+		return ( $wgEnableAmazonMatch )
 			&& $wgEnableAdEngineExt
 			&& $wgShowAds
 			&& AdEngine2Service::areAdsShowableOnPage()
@@ -38,7 +37,7 @@ CODE;
 	}
 
 	public function getSetupHtml( $params = array() ) {
-		global $wgEnableAmazonMatch, $wgEnableAmazonMatchOld;
+		global $wgEnableAmazonMatch;
 
 		static $called = false;
 
@@ -52,12 +51,6 @@ CODE;
 			return '';
 		}
 
-		if ( $wgEnableAmazonMatchOld ) {
-			$oldScript = self::getIntegrationScript( 'amazonMatchOld', 'wgAmazonMatchOldCountries' );
-		} else {
-			$oldScript = '/* old integration disabled */';
-		}
-
 		if ( $wgEnableAmazonMatch ) {
 			$newScript = self::getIntegrationScript( 'amazonMatch', 'wgAmazonMatchCountries' );
 		} else {
@@ -65,7 +58,6 @@ CODE;
 		}
 
 		return '<script id="analytics-provider-amazon-match">' . PHP_EOL .
-			$oldScript . PHP_EOL .
 			$newScript . PHP_EOL .
 			'</script>' . PHP_EOL;
 	}

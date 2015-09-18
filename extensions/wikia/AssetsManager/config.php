@@ -183,7 +183,14 @@ $config['adengine2_amazon_match_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'//extensions/wikia/AdEngine/js/lookup/amazonMatch.js',
-		'//extensions/wikia/AdEngine/js/lookup/amazonMatchOld.js',
+	),
+);
+
+$config['adengine2_ox_bidder_js'] = array(
+	'skin' => ['oasis'],
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//extensions/wikia/AdEngine/js/lookup/openXBidder.js',
 	),
 );
 

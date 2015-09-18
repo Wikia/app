@@ -43,6 +43,8 @@ class AnalyticsEngine {
 				return new AnalyticsProviderGoogleUA();
 			case 'AmazonMatch':
 				return new AnalyticsProviderAmazonMatch();
+			case 'OpenXBidder':
+				return new AnalyticsProviderOpenXBidder();
 			case 'DynamicYield':
 				return new AnalyticsProviderDynamicYield();
 			case 'IVW2':

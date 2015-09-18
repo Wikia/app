@@ -9,7 +9,7 @@ $wgExtensionCredits['parserhook'][] = [
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/GoogleFormTag',
 ];
 
-$wgAutoloadClasses['GoogleFormTagController'] =  __DIR__ . '/GoogleFormTagController.class.php';
+$wgAutoloadClasses['GoogleFormTagController'] = __DIR__ . '/GoogleFormTagController.class.php';
 
 // Hooks
 $wgHooks['ParserFirstCallInit'][] = 'GoogleFormTagController::onParserFirstCallInit';

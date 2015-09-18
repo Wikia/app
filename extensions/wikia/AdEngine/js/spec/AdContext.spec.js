@@ -55,14 +55,14 @@ describe('AdContext', function () {
 		function () {
 			var adContext = getModule();
 
-			expect(adContext.getContext().opts).toEqual({enableScrollHandler: false});
+			expect(adContext.getContext().opts.enableScrollHandler).toBeFalsy();
 			expect(adContext.getContext().targeting).toEqual({enableKruxTargeting: false});
 			expect(adContext.getContext().providers).toEqual({});
 			expect(adContext.getContext().forcedProvider).toEqual(null);
 
 			mocks.win = {ads: {context: {}}};
 			adContext = getModule();
-			expect(adContext.getContext().opts).toEqual({enableScrollHandler: false});
+			expect(adContext.getContext().opts.enableScrollHandler).toBeFalsy();
 			expect(adContext.getContext().targeting).toEqual({enableKruxTargeting: false});
 			expect(adContext.getContext().providers).toEqual({});
 			expect(adContext.getContext().forcedProvider).toEqual(null);
@@ -432,5 +432,15 @@ describe('AdContext', function () {
 		});
 
 		expect(getModule().getContext().slots.incontentPlayer).toBeTruthy();
+	});
+
+	it('context.opts.scrollHandlerConfig equals instatnGlobals.wgAdDriverScrollHandlerConfig', function () {
+		var config = {
+			foo: 'bar'
+		};
+
+		mocks.instantGlobals = { wgAdDriverScrollHandlerConfig: config };
+
+		expect(getModule().getContext().opts.scrollHandlerConfig).toBe(config);
 	});
 });

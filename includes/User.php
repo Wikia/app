@@ -23,8 +23,9 @@
 use Wikia\DependencyInjection\Injector;
 use Wikia\Domain\User\Attribute;
 use Wikia\Logger\Loggable;
-use Wikia\Service\User\Preferences\UserPreferences;
 use Wikia\Service\User\Attributes\UserAttributes;
+use Wikia\Service\User\Preferences\Migration\PreferenceCorrectionService;
+use Wikia\Service\User\Preferences\PreferenceService;
 use Wikia\Util\Statistics\BernoulliTrial;
 
 /**
@@ -83,7 +84,6 @@ class User {
 	const USER_TOKEN_LENGTH = USER_TOKEN_LENGTH;
 	const MW_USER_VERSION = MW_USER_VERSION;
 	const EDIT_TOKEN_SUFFIX = EDIT_TOKEN_SUFFIX;
-	const CACHE_PREFERENCES_KEY = "preferences";
 	const CACHE_ATTRIBUTES_KEY = "attributes";
 	const GET_SET_OPTION_SAMPLE_RATE = 0.1;
 
@@ -272,10 +272,17 @@ class User {
 	}
 
 	/**
-	 * @return UserPreferences
+	 * @return PreferenceService
 	 */
 	private function userPreferences() {
-		return Injector::getInjector()->get(UserPreferences::class);
+		return Injector::getInjector()->get(PreferenceService::class);
+	}
+
+	/**
+	 * @return PreferenceCorrectionService
+	 */
+	private function preferenceCorrection() {
+		return Injector::getInjector()->get(PreferenceCorrectionService::class);
 	}
 
 	/**
@@ -398,10 +405,6 @@ class User {
 					$this->$name = $data[$name];
 				}
 			}
-
-			if (isset($data[self::CACHE_PREFERENCES_KEY])) {
-				$this->userPreferences()->setPreferencesInCache($this->mId, $data[self::CACHE_PREFERENCES_KEY]);
-			}
 		}
 		return true;
 	}
@@ -431,7 +434,6 @@ class User {
 			$data[$name] = $this->$name;
 		}
 		$data['mVersion'] = MW_USER_VERSION;
-		$data[self::CACHE_PREFERENCES_KEY] = $this->userPreferences()->getPreferences($this->mId);
 		$key = $this->getCacheKey();
 		global $wgMemc;
 		$wgMemc->set( $key, $data );
@@ -1411,27 +1413,6 @@ class User {
 		return $defOpt;
 	}
 
-	public static function getDefaultPreferences() {
-
-		global $wgLocalUserPreferenceWhiteList;
-		global $wgGlobalUserPreferenceWhiteList;
-		$whiteListLiterals = array_merge( (array)$wgLocalUserPreferenceWhiteList[ 'literals' ],
-			(array)$wgGlobalUserPreferenceWhiteList[ 'literals' ] );
-
-		$defaultOptions = User::getDefaultOptions();
-		$defaultOptionNames = array_keys( $defaultOptions );
-
-		return array_reduce(
-			$defaultOptionNames,
-			function ( $preferences, $option ) use ( $whiteListLiterals, $defaultOptions ) {
-				if ( in_array( $option, $whiteListLiterals ) ) {
-					$preferences[ $option ] = $defaultOptions[ $option ];
-				}
-
-				return $preferences;
-			}, [ ] );
-	}
-
 	/**
 	 * Get a given default option value.
 	 *
@@ -2128,8 +2109,6 @@ class User {
 		if( $this->mId ) {
 			global $wgMemc, $wgSharedDB; # Wikia
 			$wgMemc->delete( $this->getCacheKey() );
-			// Wikia: and save updated user data in the cache to avoid memcache miss and DB query
-			$this->saveToCache();
 			if( !empty( $wgSharedDB ) ) {
 				$memckey = self::getUserTouchedKey( $this->mId );
 				$wgMemc->set( $memckey, $this->mTouched );
@@ -2172,6 +2151,7 @@ class User {
 				$dbw->update( '`user`',
 					array( 'user_touched' => $touched ), array( 'user_id' => $this->mId ),
 					__METHOD__ );
+				$dbw->commit();
 			}
 
 			$this->clearSharedCache();
@@ -2560,13 +2540,12 @@ class User {
 		return intval( $val );
 	}
 
-
 	/**
 	 * Get a preference local to this wikia.
 	 *
 	 * Refere to getGlobalPreference for more detailed documentation.
 	 *
-	 * @param string $pref the preference name
+	 * @param string $preference the preference name
 	 * @param int $cityId the city id
 	 * @param string $sep the separator between the name and the city id
 	 * @param mixed $default
@@ -2574,9 +2553,17 @@ class User {
 	 * @return string
 	 * @see getGlobalPreference
 	 */
-	public function getLocalPreference($pref, $cityId = null, $sep = "-", $default = null, $ignoreHidden = false) {
-		$globalPref = self::localToGlobalPropertyName($pref, $cityId, $sep);
-		return $this->getGlobalPreference($globalPref, $default, $ignoreHidden);
+	public function getLocalPreference($preference, $cityId = null, $sep = "-", $default = null, $ignoreHidden = false) {
+		global $wgPreferenceServiceRead;
+
+		if ($wgPreferenceServiceRead) {
+			$value = $this->userPreferences()->getLocalPreference($this->mId, $cityId, $preference, $default, $ignoreHidden);
+		} else {
+			$preferenceGlobalName = self::localToGlobalPropertyName($preference, $cityId, $sep);
+			$value = $this->getOptionHelper($preferenceGlobalName, $default, $ignoreHidden);
+		}
+
+		return $value;
 	}
 
 	/**
@@ -2592,15 +2579,19 @@ class User {
 	 * @return string
 	 */
 	public function getGlobalPreference($preference, $default = null, $ignoreHidden = false) {
-		global $wgPreferencesUseService;
+		global $wgPreferenceServiceRead;
 
-		if ($wgPreferencesUseService) {
-			$this->load();
-			$value = $this->userPreferences()->get($this->mId, $preference, $default, $ignoreHidden);
+		if ($wgPreferenceServiceRead) {
+			$preferences = [];
+			$value = $this->userPreferences()->getGlobalPreference($this->mId, $preference, $default, $ignoreHidden);
+			foreach ($this->userPreferences()->getPreferences($this->getId())->getGlobalPreferences() as $globalPreference) {
+				$preferences[$globalPreference->getName()] = $globalPreference->getValue();
+			}
+
 			wfRunHooks(
 				'UserGetPreference',
 				[
-					$this->userPreferences()->getPreferences($this->mId),
+					$preferences,
 					$preference,
 					&$value
 				]
@@ -2625,7 +2616,15 @@ class User {
 	 * @see getGlobalPreference
 	 */
 	public function setLocalPreference($preference, $value, $cityId = null, $sep = '-') {
-		$this->setGlobalPreference(self::localToGlobalPropertyName($preference, $cityId, $sep), $value);
+		global $wgPreferenceServiceShadowWrite;
+
+		if ( $wgPreferenceServiceShadowWrite ) {
+			$value = $this->sanitizeProperty( $value );
+			$this->userPreferences()->setLocalPreference( $this->mId, $cityId, $preference, $value );
+		}
+
+		$preferenceGlobalName = self::localToGlobalPropertyName($preference, $cityId, $sep);
+		$this->setOptionHelper( $preferenceGlobalName, $value );
 	}
 
 	/**
@@ -2636,31 +2635,20 @@ class User {
 	 * @see getGlobalPreference for documentation about preferences
 	 */
 	public function setGlobalPreference( $preference, $value ) {
-		$this->setGlobalPreferences( [ $preference => $value ] );
-	}
+		global $wgPreferenceServiceShadowWrite;
 
-	/**
-	 * @param array $preferences preferenceName->Value
-	 */
-	public function setGlobalPreferences( $preferences ) {
-		global $wgPreferencesUseService;
-		if ( $wgPreferencesUseService ) {
-			$this->load();
-			$preferences = $this->sanitizePropertyArray( $preferences );
-			$this->userPreferences()->setMultiple( $this->mId, $preferences );
-			if ( array_key_exists( 'skin', $preferences ) ) {
+		if ( $wgPreferenceServiceShadowWrite ) {
+			$value = $this->sanitizeProperty( $value );
+			$this->userPreferences()->setGlobalPreference( $this->mId, $preference, $value );
+			if ( $preference == 'skin' ) {
 				unset( $this->mSkin );
 			}
-			if ( array_key_exists( 'theme', $preferences ) ) {
+			if ( $preference == 'theme' ) {
 				unset( $this->mTheme );
 			}
-			wfRunHooks( "UserSetPreferences", [ $this, $this->userPreferences()->getPreferences( $this->mId ) ] );
-			$this->clearSharedCache();
-		} else {
-			foreach ( $preferences as $key => $value ) {
-				$this->setOptionHelper( $key, $value );
-			}
 		}
+
+		$this->setOptionHelper( $preference, $value );
 	}
 
 	/**
@@ -2671,6 +2659,7 @@ class User {
 	public function removeGlobalPreference($preference){
 		unset( $this->mOptions[ $preference ] );
 	}
+
 	/**
 	 * Get the default global preference.
 	 *
@@ -2678,8 +2667,8 @@ class User {
 	 * @return string
 	 * @see getGlobalPreference for documentation about preferences
 	 */
-	public function getDefaultGlobalPreference($preference) {
-		return $this->userPreferences()->getFromDefault($preference);
+	public function getDefaultGlobalPreference( $preference ) {
+		return $this->userPreferences()->getGlobalDefault( $preference );
 	}
 
 	/**
@@ -3536,6 +3525,7 @@ class User {
 		);
 
 		$this->saveOptions();
+		$this->savePreferences();
 
 		wfRunHooks( 'UserSaveSettings', array( $this ) );
 		$this->clearSharedCache();
@@ -3659,6 +3649,7 @@ class User {
 		$this->clearInstanceCache();
 
 		$this->saveOptions();
+		$this->savePreferences();
 	}
 
 	/**
@@ -4892,18 +4883,21 @@ class User {
 		$this->mOptionsLoaded = true;
 
 		wfRunHooks( 'UserLoadOptions', array( $this, &$this->mOptions ) );
+		$this->preferenceCorrection()->compareAndCorrect($this->getId(), $this->mOptions);
 	}
 
 	private function loadAttributes() {
-		global $wgEnableReadsFromAttributeService;
+		global $wgEnableReadsFromAttributeService, $wgPublicUserAttributes;
 
 		if ( !empty( $wgEnableReadsFromAttributeService ) ) {
-			$attributes = $this->userAttributes()->getAttributes($this->getId());
-			foreach ( $attributes as $attributeName => $attributeValue ) {
-				$this->compareAttributeValueFromService( $attributeName, $attributeValue );
+			$attributesFromService = $this->userAttributes()->getAttributes( $this->getId() );
 
-				 $this->mOptionOverrides[$attributeName] = $attributeValue;
-				 $this->mOptions[$attributeName] = $attributeValue;
+			// Currently the attribute service only stores public attributes. Once it stores private as well
+			// this can be updated to $wgUserAttributeWhitelist which contains all attributes
+			foreach ( $wgPublicUserAttributes as $attributeName ) {
+				$this->compareAttributeValueFromService( $attributeName, $attributesFromService[$attributeName] );
+				$this->mOptionOverrides[$attributeName] = $attributesFromService[$attributeName];
+				$this->mOptions[$attributeName] = $attributesFromService[$attributeName];
 			}
 		}
 	}
@@ -4934,10 +4928,19 @@ class User {
 	}
 
 	/**
+	 * Save this user's preferences into the database.
+	 *
+	 * @see getGlobalPreference for documentation about preferences
+	 */
+	protected function savePreferences() {
+		$this->userPreferences()->save($this->getId());
+	}
+
+	/**
 	 * @todo document
 	 */
 	protected function saveOptions() {
-		global $wgAllowPrefChange, $wgPreferencesUseService;
+		global $wgAllowPrefChange;
 
 		$extuser = ExternalUser::newFromUser( $this );
 
@@ -4983,20 +4986,6 @@ class User {
 				}
 			}
 		}
-
-		$preferencesFromService = [];
-		if ($wgPreferencesUseService) {
-			$preferencesFromService = array_keys($this->userPreferences()->getPreferences($this->getId()));
-			$insertRows = array_reduce($insertRows, function($rows, $current) use ($preferencesFromService) {
-				if (!in_array($current['up_property'], $preferencesFromService)) {
-					$rows[] = $current;
-				}
-
-				return $rows;
-			}, []);
-		}
-
-		$deletePrefs = array_diff($deletePrefs, $preferencesFromService);
 
 		// user has default set, so clear any other entries from db
 		if (!empty($deletePrefs)) {
