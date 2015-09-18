@@ -28,8 +28,8 @@ describe('ext.wikia.adEngine.utils.adLogicZoneParams', function () {
 
 	function setUpContext(targeting, opts) {
 		mocks.context = {
-			opts: opts || {},
-			targeting: targeting || {}
+			targeting: targeting || {},
+			opts: opts || {}
 		};
 	}
 
@@ -177,6 +177,30 @@ describe('ext.wikia.adEngine.utils.adLogicZoneParams', function () {
 		var zoneParams = getModule();
 
 		expect(zoneParams.getVertical()).toEqual('foo_vertical');
+	});
+
+	it('getRawDbName', function () {
+		setUpContext({
+			wikiDbName: 'xyz'
+		});
+		var zoneParams = getModule();
+
+		expect(zoneParams.getRawDbName()).toBe('_xyz');
+	});
+
+	it('getLanguage', function () {
+		var zoneParams = getModule();
+
+		expect(zoneParams.getLanguage()).toBe('unknown', 'lang=unknown');
+	});
+
+	it('getLanguage', function () {
+		setUpContext({
+			wikiLanguage: 'xyz'
+		});
+		var zoneParams = getModule();
+
+		expect(zoneParams.getLanguage()).toBe('xyz', 'lang=xyz');
 	});
 
 	// Very specific tests for hubs:

@@ -54,10 +54,13 @@ define('ext.wikia.adEngine.utils.adLogicZoneParams', [
 		return targeting.mappedVerticalName;
 	}
 
+	function getRawDbName() {
+		return '_' + (context.targeting.wikiDbName || 'wikia').replace('/[^0-9A-Z_a-z]/', '_');
+	}
+
 	function calculateParams() {
 		log('calculateParams', 'info', logGroup);
-		var dbName = '_' + (context.targeting.wikiDbName || 'wikia').replace('/[^0-9A-Z_a-z]/', '_'),
-			mappedVertical = getVerticalName(context.targeting);
+		var mappedVertical = getVerticalName(context.targeting);
 
 		if (context.targeting.pageIsHub) {
 			site = 'hub';
@@ -65,7 +68,7 @@ define('ext.wikia.adEngine.utils.adLogicZoneParams', [
 			zone2 = 'hub';
 		} else {
 			site = mappedVertical;
-			zone1 = dbName;
+			zone1 = getRawDbName();
 			zone2 = context.targeting.pageType || 'article';
 		}
 		calculated = true;
@@ -130,6 +133,7 @@ define('ext.wikia.adEngine.utils.adLogicZoneParams', [
 		getVertical: getVertical,
 		getCategories: getCategories,
 		getNewCategories: getNewCategories,
-		getLanguage: getLanguage
+		getLanguage: getLanguage,
+		getRawDbName: getRawDbName
 	};
 });
