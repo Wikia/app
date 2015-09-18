@@ -9,12 +9,10 @@ define('ext.wikia.adEngine.recovery.message', [
 		wikiaRailId = 'WikiaRail';
 
 	function init() {
-		if (win.ads.runtime.sp.blocking) {
+		doc.addEventListener('sp.blocking', function () {
 			log('recoveredAdsMessage - ad blockers found', 'debug', logGroup);
 			recover();
-		} else {
-			log('recoveredAdsMessage - no ad blockers found', 'debug', logGroup);
-		}
+		});
 	}
 
 	function injectRightRailRecoveredAd() {
