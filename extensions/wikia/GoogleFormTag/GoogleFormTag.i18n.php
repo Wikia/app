@@ -3,7 +3,7 @@ $messages = [];
 
 $messages['en'] = [
 	'google-form-tag-desc' => 'Google Form widget integration for the Wikia platform',
-	'google-form-tag-malformed-url' => 'Failed to render the Google Form widget. Please check if "url" param is properly coped from Embed dialog in Google.',
+	'google-form-tag-malformed-url' => 'Failed to render the Google Form widget. Please check if "url" param is properly copied from Embed dialog in Google.',
 ];
 
 $messages['qqq'] = [
