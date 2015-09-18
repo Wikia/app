@@ -41,7 +41,7 @@ class PolldaddyTagController extends WikiaController {
 				'a',
 				array_merge( self::DATA_WIKI_WIDGET_ATTRIBUTE, [ 'data-id' => $args['id'] ] )
 			) :
-			Html::element(
+			Html::rawElement(
 				'span',
 				self::DATA_WIKI_WIDGET_ATTRIBUTE,
 				trim( $this->sendRequest('PolldaddyTagController', 'showDesktop', $args) )
