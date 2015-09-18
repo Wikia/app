@@ -35,7 +35,7 @@ define('ext.wikia.adEngine.lookup.services', [
 			return;
 		}
 		modules.forEach(function (module) {
-			if (module && module.wasCalled) {
+			if (module && module.wasCalled()) {
 				params = module.getSlotParams(slotName);
 				Object.keys(params).forEach(function (key) {
 					slotTargeting[key] = params[key];
