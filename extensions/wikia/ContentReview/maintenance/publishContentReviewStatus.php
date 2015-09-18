@@ -7,8 +7,9 @@ use Wikia\ContentReview\Models\ReviewModel;
 
 class ContentReviewStatus extends Maintenance {
 
-	private $webhook,
-			$sla = 24000;
+	private
+		$webhook,
+		$sla = 24;
 
 	public function __construct() {
 		parent::__construct();
