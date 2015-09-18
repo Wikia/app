@@ -11,6 +11,12 @@
 $wgHooks['ParserFirstCallInit'][] = 'efHideTagsSetup';
 
 function efHideTagsSetup(Parser $parser) {
+	global $wgEnableVerbatimExt;
+
+	if ( empty( $wgEnableVerbatimExt ) ) {
+		$parser->setHook( 'verbatim', 'efHideTags' );
+	}
+
 	$parser->setHook( 'vote', 'efHideTags' );
 	$parser->setHook( 'comments', 'efHideTags' );
 	$parser->setHook( 'rhtml', 'efHideTags' );
