@@ -187,6 +187,10 @@ class PreferenceServiceImpl implements PreferenceService {
 		return $this->defaultPreferences->getLocalPreference( $pref, $wikiId );
 	}
 
+	protected function getLoggerContext() {
+		return ['class' => 'PreferenceService'];
+	}
+
 	/**
 	 * @param $userId
 	 * @return UserPreferences
