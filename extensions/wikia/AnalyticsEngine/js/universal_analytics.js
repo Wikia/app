@@ -318,7 +318,7 @@
 	 *
 	 * @returns {boolean}
 	 */
-	function isOptmizelyLoaded() {
+	function isOptimizelyLoadedAndActive() {
 		var optimizely = window.optimizely;
 
 		return optimizely &&
@@ -330,7 +330,7 @@
 			Object.keys(optimizely.variationNamesMap).length > 0;
 	}
 
-	if (isOptmizelyLoaded()) {
+	if (isOptimizelyLoadedAndActive()) {
 		window.optimizely.activeExperiments.forEach(function (experimentId) {
 			if (
 				window.optimizely.allExperiments.hasOwnProperty(experimentId) &&
