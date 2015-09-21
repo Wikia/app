@@ -40,12 +40,15 @@ class Catalog {
 		global $wgWikiaDatacenter;
 		$resp = $this->catalog->service( $service, [ 'tag' => $tag, 'dc' => $wgWikiaDatacenter ] )->json();
 
-		return array_map(
+		$nodes = array_map(
 			function( $item ) {
 				return $item[ 'Address' ];
 			},
 			$resp
 		);
+
+		wfDebug( __METHOD__ . sprintf( ": got nodes for '%s' service ('%s' tag): %s\n", $service, $tag, join(', ', $nodes) ) );
+		return $nodes;
 	}
 
 	/**
