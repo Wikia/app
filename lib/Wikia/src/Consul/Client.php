@@ -12,7 +12,7 @@ namespace Wikia\Consul;
 use SensioLabs\Consul\ServiceFactory;
 use Wikia\Logger\WikiaLogger;
 
-class Catalog {
+class Client {
 
 	use \Wikia\Logger\Loggable;
 
