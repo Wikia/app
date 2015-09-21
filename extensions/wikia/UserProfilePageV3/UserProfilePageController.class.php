@@ -526,9 +526,8 @@ class UserProfilePageController extends WikiaController {
 			if ( empty( $wgAvatarsUseService ) ) {
 				// TODO: $user->getTouched() get be used to invalidate avatar URLs instead
 				$user->setGlobalAttribute( 'avatar_rev', date( 'U' ) );
+				$user->saveSettings();
 			}
-
-			$user->saveSettings();
 		}
 
 		wfProfileOut( __METHOD__ );
