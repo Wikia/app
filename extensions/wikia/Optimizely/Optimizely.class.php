@@ -64,6 +64,6 @@ class Optimizely {
 
 	protected static function loadOriginal() {
 		global $wgDevelEnvironment, $wgOptimizelyUrl, $wgOptimizelyDevUrl;
-		return '<script src="' . ($wgDevelEnvironment ? $wgOptimizelyDevUrl : $wgOptimizelyUrl) . '" async></script>';
+		return '<script src="' . ($wgDevelEnvironment ? $wgOptimizelyDevUrl : $wgOptimizelyUrl) . '"></script>';
 	}
 }
