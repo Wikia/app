@@ -323,6 +323,7 @@
 
 		return optimizely &&
 			optimizely.activeExperiments &&
+			Array.isArray(optimizely.activeExperiments) &&
 			optimizely.activeExperiments.length > 0 &&
 			typeof optimizely.allExperiments === 'object' &&
 			Object.keys(optimizely.allExperiments).length > 0 &&
