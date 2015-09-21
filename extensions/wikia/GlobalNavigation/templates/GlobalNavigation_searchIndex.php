@@ -1,4 +1,3 @@
-<gcse:search></gcse:search>
 <div class="search-form-wrapper">
 	<form action="<?= $defaultSearchUrl; ?>" class="search-form" id="searchForm" method="get">
 		<div class="global-nav-search-input-wrapper">
@@ -21,11 +20,4 @@
 		</div>
 	</form>
 </div>
-<style>
-	.gsc-control-cse {
-		padding: 0;
-		height: 0;
-		visibility: hidden;
-	}
 
-</style>

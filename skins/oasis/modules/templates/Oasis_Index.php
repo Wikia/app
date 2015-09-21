@@ -74,6 +74,7 @@
 <?= $dynamicYield ?>
 <?= $ivw2 ?>
 <?= $rubiconRtp ?>
+<gcse:search></gcse:search>
 <div class="WikiaSiteWrapper">
 	<?= $body ?>
 
