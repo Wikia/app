@@ -331,14 +331,14 @@
 	}
 
 	if (isOptimizelyLoadedAndActive()) {
-		window.optimizely.activeExperiments.forEach(function (experimentId) {
+		optimizely.activeExperiments.forEach(function (experimentId) {
 			if (
-				window.optimizely.allExperiments.hasOwnProperty(experimentId) &&
-				typeof window.optimizely.allExperiments[experimentId].universal_analytics === 'object'
+				optimizely.allExperiments.hasOwnProperty(experimentId) &&
+				typeof optimizely.allExperiments[experimentId].universal_analytics === 'object'
 			) {
-				var dimension = window.optimizely.allExperiments[experimentId].universal_analytics.slot,
-					experimentName = window.optimizely.allExperiments[experimentId].name,
-					variationName = window.optimizely.variationNamesMap[experimentId];
+				var dimension = optimizely.allExperiments[experimentId].universal_analytics.slot,
+					experimentName = optimizely.allExperiments[experimentId].name,
+					variationName = optimizely.variationNamesMap[experimentId];
 
 				_gaWikiaPush([
 					'set',
