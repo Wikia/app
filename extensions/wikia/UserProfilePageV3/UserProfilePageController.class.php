@@ -507,6 +507,7 @@ class UserProfilePageController extends WikiaController {
 					else {
 						// store the full URL of the predefined avatar and skip an upload via service (PLATFORM-1494)
 						$user->setGlobalAttribute( AVATAR_USER_OPTION_NAME, Masthead::getDefaultAvatarUrl( $data->file ) );
+						$user->saveSettings();
 					}
 					break;
 				case 'uploaded':
