@@ -44,7 +44,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	}
 
 	function loadSourcePoint() {
-		if (recoveryHelper.isBlocking() && recoveryHelper.isRecoveryEnabled()) {
+		if (recoveryHelper.isBlocking()) {
 			loadRecovery();
 		} else {
 			doc.addEventListener('sp.blocking', function () {
@@ -70,7 +70,8 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 		var count,
 			element,
 			recoverableSlots = extra.recoverableSlots || [],
-			shouldPush = !recoveryHelper.isBlocking() || recoveryHelper.isRecoverable(slotName, recoverableSlots);
+			shouldPush = !recoveryHelper.isBlocking() ||
+				(recoveryHelper.isBlocking() && recoveryHelper.isRecoverable(slotName, recoverableSlots));
 
 		extra = extra || {};
 		slotTargeting = JSON.parse(JSON.stringify(slotTargeting)); // copy value
@@ -86,8 +87,12 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 
 		function callSuccess(adInfo) {
 			if (adInfo && adInfo.adType === 'collapse') {
-				slotTweaker.hide(element.getSlotName(), recoveryHelper.isBlocking());
+				slotTweaker.hide(
+					element.getSlotName(),
+					recoveryHelper.isBlocking() && recoveryHelper.isRecoveryEnabled()
+				);
 			}
+
 			if (typeof extra.success === 'function') {
 				extra.success(adInfo);
 			}
@@ -138,7 +143,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 			return;
 		}
 
-		if (!recoveryHelper.isBlocking()) {
+		if (!recoveryHelper.isBlocking() && recoveryHelper.isRecoveryEnabled()) {
 			recoveryHelper.addSlotToRecover(slotName);
 		}
 
