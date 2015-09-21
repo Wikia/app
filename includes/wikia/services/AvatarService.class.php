@@ -268,7 +268,7 @@ class AvatarService extends Service {
 				$url = self::vignetteCustomUrl( $width, $relativePath, $timestamp );
 			} else { // wikia-provided avatars
 				$hash = FileRepo::getHashPathForLevel( $relativePath, 2 );
-				$bucket = VignetteRequest::parseBucket( $masthead->mDefaultPath );
+				$bucket = VignetteRequest::parseBucket( Masthead::DEFAULT_PATH );
 				$relativePath = $hash . $relativePath;
 				$url = self::buildVignetteUrl( $width, $bucket, $relativePath, $timestamp, false );
 			}
