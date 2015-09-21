@@ -30,11 +30,12 @@ class WantedPagesPageWikia extends WantedPagesPage {
 
 		// oryginal query modyfied by hook WantedPages::getQueryInfo
 		$query = parent::getQueryInfo();
+		$dbr = wfGetDB( DB_SLAVE );
 
 		// extend the query with "exclude titles" option
 		$excludes = array();
 		foreach ( $this->excludetitles as $title ) {
-			$excludes[] = " pl_title NOT LIKE '%".trim($title)."%' ";
+			$excludes[] = ' pl_title NOT ' . $dbr->buildLike( $dbr->anyString(), trim( $title ), $dbr->anyString() );
 		}
 
 		if ( is_array( $excludes ) && count( $excludes ) > 0 ) {
