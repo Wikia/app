@@ -334,6 +334,8 @@
 	// UA integration code is also used in Mercury SPA - if you change it here, change it there too:
 	// https://github.com/Wikia/mercury/blob/XW-6/front/scripts/mercury/utils/variantTesting.ts#L75
 	if (isOptimizelyLoadedAndActive()) {
+		var optimizely = window.optimizely;
+
 		optimizely.activeExperiments.forEach(function (experimentId) {
 			if (
 				optimizely.allExperiments.hasOwnProperty(experimentId) &&
