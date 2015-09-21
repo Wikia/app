@@ -56,10 +56,27 @@ class UserPreferencesIntegrationTest extends PHPUnit_Framework_TestCase {
 		$this->preferenceServiceUnCached = new PreferenceServiceImpl( $cache, $persistence, $defaultPreferences, [], [] );
 	}
 
-	function testGetSingleUserPreference() {
+	function testGetSingleUserPreferenceCached() {
 		$testPref = $this->getUserPreferences()->getGlobalPreference( $this->testUserId, "marketingallowed" );
 		$this->assertNotEmpty( $testPref, "Preference 'marketingallowed' is missing for user id: '$this->testUserId'" );
 		$this->assertGreaterThanOrEqual( 0, $testPref, "Invalid preference value - expected integer >= 0" );
+	}
+
+	function testGetSingleUserPreferenceNotCached() {
+		$testPref = $this->getUserPreferences( true )->getGlobalPreference( $this->testUserId, "marketingallowed" );
+		$this->assertNotEmpty( $testPref, "Preference 'marketingallowed' is missing for user id: '$this->testUserId'" );
+		$this->assertGreaterThanOrEqual( 0, $testPref, "Invalid preference value - expected integer >= 0" );
+	}
+
+	function testGetNotExistingUserPreference() {
+		$testPref = $this->getUserPreferences()->getGlobalPreference( $this->testUserId, "somestrangepreference" );
+		$this->assertEmpty( $testPref, "Preference 'somestrangepreference' is present but shouldn't for user id: '$this->testUserId'" );
+	}
+
+	function testGetAllUserPreferencesMixed() {
+		$cachedPrefs = $this->getUserPreferences()->getPreferences( $this->testUserId );
+		$uncachedPrefs = $this->getUserPreferences( true )->getPreferences( $this->testUserId );
+		$this->assertEquals($cachedPrefs, $uncachedPrefs, "Cached and uncached preferences differ for user ud: '$this->testUserId'");
 	}
 
 	function testSetSingleUserPreferenceCached() {
@@ -77,7 +94,7 @@ class UserPreferencesIntegrationTest extends PHPUnit_Framework_TestCase {
 	}
 
 	function testSetSingleUserPreferenceNotCached() {
-		$prefService = $this->getUserPreferences(true);
+		$prefService = $this->getUserPreferences( true );
 		// first set the preference to a value different then default
 		$prefService->setGlobalPreference( $this->testUserId, self::TEST_PREFERENCE_NAME, 1 );
 		// now let's verify it's value
