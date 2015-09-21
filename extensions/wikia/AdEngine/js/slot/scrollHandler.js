@@ -11,24 +11,7 @@ define('ext.wikia.adEngine.slot.scrollHandler', [
 		isRefreshed = {},
 		reloadedView = {},
 		context = adContext.getContext(),
-		config = context.opts.scrollHandlerConfig || {
-			oasis: {
-				PREFOOTER_LEFT_BOXAD: {
-					reloadedViewMax: 1,
-					trigger: 'scroll.top'
-				},
-				PREFOOTER_RIGHT_BOXAD: {
-					reloadedViewMax: 1,
-					trigger: 'scroll.top'
-				}
-			},
-			mercury: {
-				MOBILE_PREFOOTER: {
-					reloadedViewMax: 1,
-					trigger: 'scroll.top'
-				}
-			}
-		},
+		config = context.opts.scrollHandlerConfig || {},
 		// 'mercury' value is not set in context.targeting.skin yet
 		skin = context.targeting.skin === 'oasis' ? 'oasis' : 'mercury';
 
