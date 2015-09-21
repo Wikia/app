@@ -6,12 +6,14 @@ class NodeGroup extends Node {
 	const SHOW_ATTR_NAME = 'show';
 	const LAYOUT_DEFAULT_OPTION = 'default';
 	const LAYOUT_HORIZONTAL_OPTION = 'horizontal';
+	const LAYOUT_SLIDER_OPTION = 'slider';
 	const SHOW_DEFAULT_OPTION = 'default';
 	const SHOW_INCOMPLETE_OPTION = 'incomplete';
 
 	private $supportedGroupLayouts = [
 		self::LAYOUT_DEFAULT_OPTION,
-		self::LAYOUT_HORIZONTAL_OPTION
+		self::LAYOUT_HORIZONTAL_OPTION,
+		self::LAYOUT_SLIDER_OPTION
 	];
 
 	private $supportedGroupDisplays = [

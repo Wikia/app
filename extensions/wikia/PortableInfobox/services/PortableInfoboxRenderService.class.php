@@ -14,6 +14,7 @@ class PortableInfoboxRenderService extends WikiaService {
 		'data' => 'PortableInfoboxItemData.mustache',
 		'group' => 'PortableInfoboxItemGroup.mustache',
 		'horizontal-group-content' => 'PortableInfoboxHorizontalGroupContent.mustache',
+		'slider-group-content' => 'PortableInfoboxSliderGroupContent.mustache',
 		'navigation' => 'PortableInfoboxItemNavigation.mustache',
 		'hero-mobile' => 'PortableInfoboxItemHeroMobile.mustache'
 	];
@@ -102,6 +103,11 @@ class PortableInfoboxRenderService extends WikiaService {
 			$groupHTMLContent .= $this->renderItem(
 				'horizontal-group-content',
 				$helper->createHorizontalGroupData( $dataItems )
+			);
+		} else if ( $layout === 'slider' ) {
+			$groupHTMLContent .= $this->renderItem(
+				'slider-group-content',
+				$helper->createSliderGroupData( $dataItems )
 			);
 		} else {
 			foreach ( $dataItems as $item ) {

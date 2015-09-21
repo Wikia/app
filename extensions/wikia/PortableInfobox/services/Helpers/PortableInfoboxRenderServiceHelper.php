@@ -46,6 +46,19 @@ class PortableInfoboxRenderServiceHelper {
 		return $horizontalGroupData;
 	}
 
+	public function createSliderGroupData( $groupData ) {
+		$sliderGroupData = [];
+
+		foreach ( $groupData as $item ) {
+			//do we want to support other tags in slider as well?
+			if ( $item[ 'type' ] === 'image' ) {
+
+			}
+		}
+		return $sliderGroupData;
+	}
+
+
 	/**
 	 * checks if infobox item is the title or title inside the hero module
 	 * and if so, removes from it all HTML tags.
