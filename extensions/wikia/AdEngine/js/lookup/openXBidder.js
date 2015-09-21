@@ -61,7 +61,7 @@ define('ext.wikia.adEngine.lookup.openXBidder', [
 				ads.push([
 					slotPath,
 					[size],
-					slotName
+					'wikia_gpt' + slotPath + '/gpt/' + slotName
 				]);
 			}
 		}
