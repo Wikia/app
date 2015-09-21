@@ -40,8 +40,7 @@ class Client {
 	 * @return array list of IP addresses
 	 */
 	function getNodes( $service, $tag ) {
-		global $wgWikiaDatacenter;
-		$resp = $this->api->service( $service, [ 'tag' => $tag, 'dc' => $wgWikiaDatacenter, 'passing' => true ] )->json();
+		$resp = $this->api->service( $service, [ 'tag' => $tag, 'passing' => true ] )->json();
 
 		$nodes = array_map(
 			function( $item ) {
