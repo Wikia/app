@@ -5,7 +5,7 @@ class Masthead {
 	/**
 	 * default avatar path
 	 */
-	public $mDefaultPath = 'http://images.wikia.com/messaging/images/';
+	const DEFAULT_PATH = 'http://images.wikia.com/messaging/images/';
 
 	/**
 	 * path to file, relative
@@ -127,7 +127,7 @@ class Masthead {
 		if ( is_array( $images ) ) {
 			foreach ( $images as $image ) {
 				$hash = FileRepo::getHashPathForLevel( $image, 2 );
-				$this->mDefaultAvatars[] = $this->mDefaultPath . $thumb . $hash . $image;
+				$this->mDefaultAvatars[] = self::DEFAULT_PATH . $thumb . $hash . $image;
 			}
 		}
 
@@ -205,6 +205,20 @@ class Masthead {
 	}
 
 	/**
+	 * Return a full avatar for a given default avatar
+	 *
+	 * @param string $avatar (e.g. Avatar3.jpg)
+	 * @return string full URL (e.g. http://images.wikia.com/messaging/images/4/46/Avatar3.jpg)
+	 */
+	public static function getDefaultAvatarUrl( $avatar ) {
+		/**
+		 * default avatar, path from messaging.wikia.com
+		 */
+		$hash = FileRepo::getHashPathForLevel( $avatar, 2 );
+		return self::DEFAULT_PATH . $hash . $avatar;
+	}
+
+	/**
 	 * getPurgeUrl -- the basic URL (without image server rewriting, cachebuster,
 	 * etc.) of the avatar.  This can be sent to squid to purge it.
 	 *
@@ -238,8 +252,7 @@ class Masthead {
 				/**
 				 * default avatar, path from messaging.wikia.com
 				 */
-				$hash = FileRepo::getHashPathForLevel( $url, 2 );
-				$url = $this->mDefaultPath . trim( $thumb, '/' ) . '/' . $hash . $url;
+				$url = self::getDefaultAvatarUrl( $url );
 			}
 		} else {
 			$defaults = $this->getDefaultAvatars( trim( $thumb, "/" ) . "/" );

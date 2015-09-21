@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * @group Avatar
+ */
 class MastheadTest extends WikiaBaseTest {
 
 	/**
@@ -48,7 +51,7 @@ class MastheadTest extends WikiaBaseTest {
 			// one of the default avatars
 			[
 				'avatarOption' => 'Avatar2.jpg',
-				'expectedUrl'  => 'http://images.wikia.com/messaging/images//e/e8/Avatar2.jpg',
+				'expectedUrl'  => 'http://images.wikia.com/messaging/images/e/e8/Avatar2.jpg',
 			],
 		];
 	}
