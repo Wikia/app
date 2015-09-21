@@ -4,6 +4,7 @@
  * A helper class that uses sensiolabs/consul-php-sdk for getting the list of service nodes
  *
  * @see PLATFORM-1489
+ * @see https://www.consul.io/docs/agent/http/health.html#health_service
  */
 
 namespace Wikia\Consul;
@@ -17,18 +18,18 @@ class Catalog {
 
 	protected $logger;
 
-	/* @var \SensioLabs\Consul\Services\Catalog $catalog */
-	protected $catalog;
+	/* @var \SensioLabs\Consul\Services\Health $api */
+	protected $api;
 
 	function __construct() {
 		$this->logger = WikiaLogger::instance();
 
 		$consulService = new ServiceFactory( [], $this->logger );
-		$this->catalog = $consulService->get( 'catalog' );
+		$this->api = $consulService->get( 'health' );
 	}
 
 	/**
-	 * Returns IP addresses of given service nodes
+	 * Returns IP addresses of given service healthy nodes
 	 *
 	 * $catalog->getNodes( 'db-a', 'slave' )
 	 *
@@ -38,7 +39,7 @@ class Catalog {
 	 */
 	function getNodes( $service, $tag ) {
 		global $wgWikiaDatacenter;
-		$resp = $this->catalog->service( $service, [ 'tag' => $tag, 'dc' => $wgWikiaDatacenter ] )->json();
+		$resp = $this->api->service( $service, [ 'tag' => $tag, 'dc' => $wgWikiaDatacenter ] )->json();
 
 		$nodes = array_map(
 			function( $item ) {
