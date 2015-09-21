@@ -2,7 +2,7 @@
 
 namespace Wikia\Service\User\Preferences;
 
-use Doctrine\Common\Cache\CacheProvider;
+use Doctrine\Common\Cache\VoidCache;
 use Wikia\DependencyInjection\Injector;
 use Wikia\Persistence\User\Preferences\PreferencePersistence;
 use PHPUnit_Framework_TestCase;
@@ -51,15 +51,7 @@ class UserPreferencesIntegrationTest extends PHPUnit_Framework_TestCase {
 		$this->testUserId = \User::idFromName( $this->testUserName );
 		$this->preferenceServiceCached = Injector::getInjector()->get( PreferenceService::class );
 		$defaultPreferences = Injector::getInjector()->get( PreferenceServiceImpl::DEFAULT_PREFERENCES );
-		$cache = $this->getMockBuilder( CacheProvider::class )
-			->setMethods( ['doFetch', 'doContains', 'doSave', 'doFlush', 'doDelete', 'doGetStats'] )
-			->disableOriginalConstructor()
-			->getMock();
-		$cache->expects( $this->any() )
-			->method( 'doFetch' )
-			->with( $this->anything() )
-			->willReturn( false );
-
+		$cache = new VoidCache();
 		$persistence = Injector::getInjector()->get( PreferencePersistence::class );
 		$this->preferenceServiceUnCached = new PreferenceServiceImpl( $cache, $persistence, $defaultPreferences, [], [] );
 	}
