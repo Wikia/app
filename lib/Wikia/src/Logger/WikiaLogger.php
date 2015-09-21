@@ -8,8 +8,9 @@
 namespace Wikia\Logger;
 
 use Monolog\Logger;
+use Psr\Log\LoggerInterface;
 
-class WikiaLogger {
+class WikiaLogger implements LoggerInterface {
 	/** @var \Psr\Log\LoggerInterface */
 	private $logger;
 
@@ -105,37 +106,39 @@ class WikiaLogger {
 		}
 	}
 
-	public function debug($message, $context=[]) {
+	public function debug($message, Array $context=[]) {
 		return $this->getLogger()->debug($message, $context);
 	}
 
-	public function info($message, $context=[]) {
+	public function info($message, Array $context=[]) {
 		return $this->getLogger()->info($message, $context);
 	}
 
-	public function notice($message, $context=[]) {
+	public function notice($message, Array $context=[]) {
 		return $this->getLogger()->notice($message, $context);
 	}
 
-	public function warning($message, $context=[]) {
+	public function warning($message, Array $context=[]) {
 		return $this->getLogger()->warning($message, $context);
 	}
 
-	public function error($message, $context=[]) {
+	public function error($message, Array $context=[]) {
 		return $this->getLogger()->error($message, $context);
 	}
 
-	public function critical($message, $context=[]) {
+	public function critical($message, Array $context=[]) {
 		return $this->getLogger()->critical($message, $context);
 	}
 
-	public function alert($message, $context=[]) {
+	public function alert($message, Array $context=[]) {
 		return $this->getLogger()->alert($message, $context);
 	}
 
-	public function emergency($message, $context=[]) {
+	public function emergency($message, Array $context=[]) {
 		return $this->getLogger()->emergency($message, $context);
 	}
+
+	public function log($level, $message, Array $context=[]) {} // NOOP
 
 	public function setLogger(Logger $logger) {
 		$this->logger = $logger;
