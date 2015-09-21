@@ -33,17 +33,19 @@ class Client {
 	 *
 	 * $catalog->getNodes( 'db-a', 'slave' )
 	 *
+	 * $ curl "http://127.0.0.1:8500/v1/health/service/db-g?tag=slave&passing"
+	 *
 	 * @param string $service
 	 * @param string $tag
 	 * @return array list of IP addresses
 	 */
 	function getNodes( $service, $tag ) {
 		global $wgWikiaDatacenter;
-		$resp = $this->api->service( $service, [ 'tag' => $tag, 'dc' => $wgWikiaDatacenter ] )->json();
+		$resp = $this->api->service( $service, [ 'tag' => $tag, 'dc' => $wgWikiaDatacenter, 'passing' => true ] )->json();
 
 		$nodes = array_map(
 			function( $item ) {
-				return $item[ 'Address' ];
+				return $item[ 'Node' ][ 'Address' ];
 			},
 			$resp
 		);
