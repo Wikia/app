@@ -332,7 +332,8 @@
 	}
 
 	// UA integration code is also used in Mercury SPA - if you change it here, change it there too:
-	// https://github.com/Wikia/mercury/blob/XW-6/front/scripts/mercury/utils/variantTesting.ts#L75
+	// function integrateOptimizelyWithUA and above in
+	// https://github.com/Wikia/mercury/blob/dev/front/scripts/mercury/utils/variantTesting.ts
 	if (isOptimizelyLoadedAndActive()) {
 		var optimizely = window.optimizely;
 
