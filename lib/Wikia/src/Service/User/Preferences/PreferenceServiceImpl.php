@@ -151,7 +151,7 @@ class PreferenceServiceImpl implements PreferenceService {
 		foreach ( $prefs->getLocalPreferences() as $wikiId => $wikiPreferences ) {
 			foreach ( $wikiPreferences as $pref ) {
 				/** @var $pref LocalPreference */
-				if ( $this->prefIsSaveable( $pref->getName(), $pref->getValue(), $this->getLocalDefault( $pref->getName() ) ) ) {
+				if ( $this->prefIsSaveable( $pref->getName(), $pref->getValue(), $this->getLocalDefault( $pref->getName(), $wikiId ) ) ) {
 					$prefsToSave->setLocalPreference( $pref->getName(), $pref->getWikiId(), $pref->getValue() );
 				}
 			}
