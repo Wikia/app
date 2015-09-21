@@ -52,10 +52,11 @@ class PortableInfoboxRenderServiceHelper {
 		foreach ( $groupData as $item ) {
 			//do we want to support other tags in slider as well?
 			if ( $item[ 'type' ] === 'image' ) {
-
+				$sliderGroupData[] = $item[ 'data' ];
 			}
 		}
-		return $sliderGroupData;
+
+		return ['images' => $sliderGroupData];
 	}
 
 

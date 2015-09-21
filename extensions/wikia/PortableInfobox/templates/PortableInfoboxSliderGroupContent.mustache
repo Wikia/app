@@ -1,1 +1,27 @@
-<h2>DIANA <3 </h2>
+<div class="pi-item pi-slider-group">
+	<div class="slider_wrapper">
+		<div class="image_slider">
+			{{#images}}
+				<figure class="pi-item pi-image image-tabber">
+					<a href="{{url}}" class="image image-thumbnail{{#isVideo}} video video-thumbnail small{{/isVideo}}"
+					   title="{{alt}}">
+						<!--change url: thumbnail width: {{{width}}} height: {{{height}}}-->
+						<img src="{{url}}" class="pi-image-thumbnail" alt="{{alt}}" width="270" height="200"
+							 data-{{media-type}}-key="{{name}}" data-{{media-type}}-name="{{name}}"/>
+						{{#isVideo}}
+							{{#duration}}
+								<span class="duration" itemprop="duration">{{duration}}</span>
+							{{/duration}}
+							<span class="play-circle"></span>
+						{{/isVideo}}
+						{{#caption}}<figcaption class="pi-item-spacing pi-caption">{{{caption}}}</figcaption>{{/caption}}
+					</a>
+				</figure>
+			{{/images}}
+		</div>
+		<span class="arrow prev"></span>
+		<span class="arrow next"></span>
+	</div>
+	<ul class="pi-pager">
+	</ul>
+</div>

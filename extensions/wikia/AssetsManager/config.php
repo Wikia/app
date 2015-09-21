@@ -2447,6 +2447,14 @@ $config['poweruser'] = [
 	]
 ];
 
+$config['portable_infobox_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis'],
+	'assets' => [
+			'//extensions/wikia/PortableInfobox/js/portableInfobox.js'
+	]
+];
+
 $config['portable_infobox_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => ['oasis'],
