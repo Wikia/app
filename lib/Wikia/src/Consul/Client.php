@@ -76,4 +76,15 @@ class Client {
 	static function isConsulAddress( $address ) {
 		return endsWith( $address, 'service.consul' );
 	}
+
+	/**
+	 * Make it easier to "grep" through the logs
+	 *
+	 * @return array
+	 */
+	protected function getLoggerContext() {
+		return [
+			'class' => __CLASS__
+		];
+	}
 }
