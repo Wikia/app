@@ -2,17 +2,28 @@
 
 namespace Wikia\ContentReview;
 
-use Wikia\ContentReview\Helper;
-use Wikia\ContentReview\Models\CurrentRevisionModel;
 use Wikia\ContentReview\Models\ReviewModel;
 
 class Hooks {
 	const CONTENT_REVIEW_MONOBOOK_DROPDOWN_ACTION = 'content-review';
 
-	public static function onGetRailModuleList( Array &$railModuleList ) {
-		global $wgCityId, $wgTitle;
+	public static function register() {
+		$hooks = new self();
+		\Hooks::register( 'GetRailModuleList', [ $hooks, 'onGetRailModuleList' ] );
+		\Hooks::register( 'MakeGlobalVariablesScript', [ $hooks, 'onMakeGlobalVariablesScript' ] );
+		\Hooks::register( 'BeforePageDisplay', [ $hooks, 'onBeforePageDisplay' ] );
+		\Hooks::register( 'ArticleContentOnDiff', [ $hooks, 'onArticleContentOnDiff' ] );
+		\Hooks::register( 'RawPageViewBeforeOutput', [ $hooks, 'onRawPageViewBeforeOutput' ] );
+		\Hooks::register( 'SkinTemplateNavigation', [ $hooks, 'onSkinTemplateNavigation' ] );
+		\Hooks::register( 'UserLogoutComplete', [ $hooks, 'onUserLogoutComplete' ] );
+		\Hooks::register( 'ArticleSaveComplete', [ $hooks, 'onArticleSaveComplete' ] );
+		\Hooks::register( 'ShowDiff', [ $hooks, 'onShowDiff' ] );
+	}
 
-		if ( self::userCanEditJsPage() ) {
+	public function onGetRailModuleList( Array &$railModuleList ) {
+		global $wgCityId, $wgTitle, $wgUser;
+
+		if ( ( new Helper() )->userCanEditJsPage( $wgTitle, $wgUser ) ) {
 			$pageStatus = \F::app()->sendRequest(
 				'ContentReviewApiController',
 				'getPageStatus',
@@ -32,7 +43,7 @@ class Hooks {
 		return true;
 	}
 
-	public static function onMakeGlobalVariablesScript( &$vars ) {
+	public function onMakeGlobalVariablesScript( &$vars ) {
 		$helper = new Helper();
 
 		$vars['wgContentReviewExtEnabled'] = true;
@@ -44,17 +55,19 @@ class Hooks {
 
 	}
 
-	public static function onBeforePageDisplay( \OutputPage $out, \Skin $skin ) {
+	public function onBeforePageDisplay( \OutputPage $out, \Skin $skin ) {
 		$helper = new Helper();
+		$title = $out->getTitle();
+		$user = $out->getContext()->getUser();
 
 		/* Add assets for custom JS test mode */
-		if ( $helper->isContentReviewTestModeEnabled() || self::userCanEditJsPage() ) {
+		if ( $helper->isContentReviewTestModeEnabled() || $helper->userCanEditJsPage( $title, $user ) ) {
 			\Wikia::addAssetsToOutput( 'content_review_test_mode_js' );
 			\JSMessages::enqueuePackage( 'ContentReviewTestMode', \JSMessages::EXTERNAL );
 		}
 
 		/* Add Content Review Module assets for Monobook  */
-		if ( self::userCanEditJsPage() ) {
+		if ( $helper->userCanEditJsPage( $title, $user ) ) {
 			\Wikia::addAssetsToOutput('content_review_module_monobook_js');
 			\Wikia::addAssetsToOutput('content_review_module_monobook_scss');
 		}
@@ -62,7 +75,7 @@ class Hooks {
 		return true;
 	}
 
-	public static function onArticleContentOnDiff( $diffEngine, \OutputPage $output ) {
+	public function onArticleContentOnDiff( $diffEngine, \OutputPage $output ) {
 		$helper = new Helper();
 
 		if ( $helper->shouldDisplayReviewerToolbar() ) {
@@ -82,33 +95,10 @@ class Hooks {
 	 * @param $text
 	 * @return bool
 	 */
-	public static function onRawPageViewBeforeOutput( \RawAction $rawAction, &$text ) {
-		global $wgCityId, $wgJsMimeType;
-
+	public function onRawPageViewBeforeOutput( \RawAction $rawAction, &$text ) {
 		$title = $rawAction->getTitle();
-
-		if ( $title->inNamespace( NS_MEDIAWIKI )
-			&& ( $title->isJsPage() || $rawAction->getContentType() == $wgJsMimeType )
-		) {
-			$pageId = $title->getArticleID();
-			$latestRevId = $title->getLatestRevID();
-
-			$latestReviewedRev = ( new CurrentRevisionModel() )->getLatestReviewedRevision( $wgCityId, $pageId );
-			$helper = new Helper();
-
-			if ( $latestReviewedRev['revision_id'] != $latestRevId
-				&& !$helper->isContentReviewTestModeEnabled()
-			) {
-				$revision = \Revision::newFromId( $latestReviewedRev['revision_id'] );
-
-				if ( $revision ) {
-					$text = $revision->getRawText();
-				} else {
-					$text = '';
-				}
-			}
-		}
-
+		$helper = new Helper();
+		$helper->replaceWithLastApproved( $title, $rawAction->getContentType(), $text );
 		return true;
 	}
 
@@ -120,13 +110,18 @@ class Hooks {
 	 * @param array $links Navigation links
 	 * @return bool true
 	 */
-	public static function onSkinTemplateNavigation( \SkinTemplate $skin, &$links ) {
+	public function onSkinTemplateNavigation( \SkinTemplate $skin, &$links ) {
 		global $wgCityId;
-		if ( !in_array( $skin->getSkinName(), [ 'monobook', 'uncyclopedia' ] )  || !self::userCanEditJsPage() ) {
+
+		$title = $skin->getTitle();
+		$user = $skin->getContext()->getUser();
+
+		if ( !in_array( $skin->getSkinName(), [ 'monobook', 'uncyclopedia' ] )
+			|| !( new Helper() )->userCanEditJsPage( $title, $user ) )
+		{
 			return true;
 		}
 
-		$title = $skin->getTitle();
 		$latestRevisionId = $title->getLatestRevID();
 		$revisionModel = new ReviewModel();
 		$revisionInfo = $revisionModel->getRevisionInfo( $wgCityId, $title->getArticleID(), $latestRevisionId );
@@ -142,37 +137,84 @@ class Hooks {
 		return true;
 	}
 
-	public static function onUserLogoutComplete( \User $user, &$injected_html, $oldName) {
+	public function onUserLogoutComplete( \User $user, &$injected_html, $oldName) {
 		$request = $user->getRequest();
+		$this->disableTestMode( $request );
 
+		return true;
+	}
+
+	/**
+	 * This method hooks into the Publish process of an article and purges the cached timestamp
+	 * of the latest revision made to JS pages. It also handles the auto-approval mechanism for reviewers.
+	 * @param \WikiPage $article
+	 * @param \User $user
+	 * @param $text
+	 * @param $summary
+	 * @param $minoredit
+	 * @param $watchthis
+	 * @param $sectionanchor
+	 * @param $flags
+	 * @param $revision
+	 * @param $status
+	 * @param $baseRevId
+	 * @return bool
+	 * @throws PermissionsException
+	 */
+	public function onArticleSaveComplete( \WikiPage &$article, \User &$user, $text, $summary,
+			$minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId
+	) {
+		global $wgCityId;
+
+		/**
+		 * If no new revision has been created we can quit early.
+		 */
+		if ( $revision === null ) {
+			return true;
+		}
+
+		$title = $article->getTitle();
+
+		if ( !is_null( $title )	&&  $title->isJsPage() ) {
+			$helper = new Helper();
+			$helper->purgeCurrentJsPagesTimestamp();
+
+			if ( $helper->userCanAutomaticallyApprove( $user ) ) {
+				( new ContentReviewService() )
+					->automaticallyApproveRevision( $user, $wgCityId, $title->getArticleID(), $revision->getId() );
+			}
+		}
+
+		return true;
+	}
+
+	/**
+	 * Overwrites a message key used instead of a diff view when no `oldid` for comparison is provided.
+	 * @param \DifferenceEngine $diff
+	 * @param string $notice
+	 * @return bool
+	 */
+	public function onShowDiff( \DifferenceEngine $diff, &$notice ) {
+		if ( $diff->getTitle()->inNamespace( NS_MEDIAWIKI )
+			&& $diff->getRequest()->getBool( Helper::CONTENT_REVIEW_PARAM )
+			&& !$diff->getRequest()->getBool( 'oldid' )
+		) {
+			$notice = \HTML::rawElement(
+				'div',
+				[ 'class' => 'content-review-diff-hidden-notice' ],
+				wfMessage( 'content-review-diff-hidden' )->escaped()
+			);
+			return false;
+		}
+		return true;
+	}
+
+	private function disableTestMode( \WebRequest $request ) {
 		$key = \ContentReviewApiController::CONTENT_REVIEW_TEST_MODE_KEY;
-		$wikis = $request->getSessionData( $key );
 
+		$wikis = $request->getSessionData( $key );
 		if ( !empty( $wikis ) ) {
 			$request->setSessionData( $key, null );
 		}
-
-		return true;
-	}
-
-	public static function onArticleSaveComplete( \WikiPage &$article, &$user, $text, $summary,
-			$minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId
-	) {
-		$title = $article->getTitle();
-
-		if ( !is_null( $title )
-			&& $title->inNamespace( NS_MEDIAWIKI )
-			&& ( $title->isJsPage() || $title->isJsSubpage() )
-		) {
-			( new Helper() )->purgeCurrentJsPagesTimestamp();
-		}
-
-		return true;
-	}
-
-	private static function userCanEditJsPage() {
-		global $wgTitle, $wgUser;
-
-		return $wgTitle->inNamespace( NS_MEDIAWIKI ) && $wgTitle->isJsPage() && $wgTitle->userCan( 'edit', $wgUser );
 	}
 }

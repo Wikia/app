@@ -1,10 +1,9 @@
-<div class="content-review-special-header">
-	<div class="content-review-special-header-content">
-		<h1 class="content-review-special-header-content-title">
-			<?= wfMessage( 'content-review-special-title' )->escaped() ?>
-		</h1>
-	</div>
-</div>
+<h1 class="content-review-special-header-content-title">
+	<?= wfMessage( 'content-review-special-title' )->escaped() ?>
+</h1>
+<p>
+	<?= wfMessage( 'content-review-special-guidelines' )->parse() ?>
+</p>
 <table class="article-table sortable content-review-special-list">
 	<thead>
 	<tr class="content-review-special-list-headers">
@@ -24,7 +23,11 @@
 		<?php foreach ( $reviews as $wikiReview ): ?>
 			<?php foreach( $wikiReview as $review ): ?>
 				<tr class="content-review-special-list-item">
-					<td><?= htmlspecialchars( $review['wiki'] ) ?></td>
+					<td>
+						<a href="<?= Sanitizer::cleanUrl( $review['wikiArchiveUrl'] ) ?>">
+							<?= htmlspecialchars( $review['wiki'] ) ?>
+						</a>
+					</td>
 					<td><a href="<?= Sanitizer::encodeAttribute( $review['url'] ) ?>" target="_blank"><?= htmlspecialchars( $review['title'] ) ?></a></td>
 					<td><?= $review['revision_id'] ?></td>
 					<td><?= wfMessage( ContentReviewSpecialController::$statusMessageKeys[$review['status']] )->escaped() ?></td>

@@ -27,7 +27,7 @@ function renderVerbatim( $input ) {
 			&& in_array( $formattedInput, $wgEditInterfaceWhitelist ) )
 		|| ( !empty( $wgVerbatimBlacklist )
 			&& in_array( $formattedInput, $wgVerbatimBlacklist ) )
-		|| preg_match( '!\.(js)$!u', $formattedInput )
+		|| preg_match( '!\.(?:css|js)$!u', $formattedInput )
 	) {
 		// Do not allow transclusion into Verbatim tags
 		return '';

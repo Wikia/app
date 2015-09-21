@@ -112,12 +112,12 @@ class NodeImageTest extends WikiaBaseTest {
 				'<image source="img" />',
 				[ 'img' => 'test.jpg' ],
 				[
-					'url' => '',
+					'url' => 'http://test.url',
 					'name' => 'Test.jpg',
 					'key' => 'Test.jpg',
 					'alt' => null,
 					'caption' => null,
-					'ref' => 0,
+					'ref' => null,
 					'isVideo' => true,
 					'duration' => '00:10'
 				]
@@ -137,5 +137,15 @@ class FileMock {
 
 	public function getUrl() {
 		return '';
+	}
+
+	public function getTitle() {
+		return new TitleMock();
+	}
+}
+
+class TitleMock {
+	public function getFullURL() {
+		return 'http://test.url';
 	}
 }

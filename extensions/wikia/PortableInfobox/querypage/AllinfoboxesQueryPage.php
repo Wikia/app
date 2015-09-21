@@ -4,6 +4,7 @@ class AllinfoboxesQueryPage extends PageQueryPage {
 
 	const LIMIT = 1000;
 	const ALL_INFOBOXES_TYPE = 'AllInfoboxes';
+	private static $subpagesBlacklist = [ 'doc', 'draft', 'test' ];
 
 	function __construct() {
 		parent::__construct( self::ALL_INFOBOXES_TYPE );
@@ -73,6 +74,8 @@ class AllinfoboxesQueryPage extends PageQueryPage {
 			$dbw->commit();
 		}
 
+		wfRunHooks( 'AllInfoboxesQueryRecached' );
+
 		return $inserted;
 	}
 
@@ -103,10 +106,24 @@ class AllinfoboxesQueryPage extends PageQueryPage {
 				return $out;
 			} );
 
-		return array_filter( $result, function ( $tmpl ) {
-			$data = PortableInfoboxDataService::newFromPageID( $tmpl[ 'pageid' ] )->getData();
+		return array_filter( $result, [ $this, 'hasInfobox' ] );
+	}
+
+	protected function hasInfobox( $tmpl ) {
+		$title = Title::newFromID( $tmpl[ 'pageid' ] );
+
+		if ( $title && $title->exists() &&
+			 // omit subages from blacklist
+			 !(
+				 $title->isSubpage() &&
+				 in_array( mb_strtolower( $title->getSubpageText() ), self::$subpagesBlacklist )
+			 )
+		) {
+			$data = PortableInfoboxDataService::newFromTitle( $title )->getData();
 
 			return !empty( $data );
-		} );
+		}
+
+		return false;
 	}
 }

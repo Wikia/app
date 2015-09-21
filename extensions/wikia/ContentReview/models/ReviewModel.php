@@ -9,10 +9,11 @@ class ReviewModel extends ContentReviewBaseModel {
 	/**
 	 * Possible states a review can be in
 	 */
-	const CONTENT_REVIEW_STATUS_UNREVIEWED = 1;
-	const CONTENT_REVIEW_STATUS_IN_REVIEW = 2;
-	const CONTENT_REVIEW_STATUS_APPROVED = 3;
-	const CONTENT_REVIEW_STATUS_REJECTED = 4;
+	const 	CONTENT_REVIEW_STATUS_UNREVIEWED = 1,
+			CONTENT_REVIEW_STATUS_IN_REVIEW = 2,
+			CONTENT_REVIEW_STATUS_APPROVED = 3,
+			CONTENT_REVIEW_STATUS_REJECTED = 4,
+			CONTENT_REVIEW_STATUS_AUTOAPPROVED = 5;
 
 	public function getPageStatus( $wikiId, $pageId ) {
 		$db = $this->getDatabaseForRead();
@@ -25,11 +26,11 @@ class ReviewModel extends ContentReviewBaseModel {
 			->ORDER_BY( [ 'revision_id', 'ASC' ] )
 			->runLoop( $db, function ( &$pageStatus, $row ) {
 				if ( Helper::isStatusAwaiting( $row->status ) ) {
-					$pageStatus['latestId'] = $row->revision_id;
-					$pageStatus['latestStatus'] = $row->status;
+					$pageStatus['latestId'] = (int)$row->revision_id;
+					$pageStatus['latestStatus'] = (int)$row->status;
 				} else {
-					$pageStatus['lastReviewedId'] = $row->revision_id;
-					$pageStatus['lastReviewedStatus'] = $row->status;
+					$pageStatus['lastReviewedId'] = (int)$row->revision_id;
+					$pageStatus['lastReviewedStatus'] = (int)$row->status;
 				}
 			} );
 
@@ -56,8 +57,8 @@ class ReviewModel extends ContentReviewBaseModel {
 			->ORDER_BY( 'submit_time' )->DESC()
 			->LIMIT( 1 )
 			->runLoop( $db, function ( &$reviewId, $row ) {
-				if ( intval( $row->status ) === self::CONTENT_REVIEW_STATUS_UNREVIEWED ) {
-					$reviewId = $row->review_id;
+				if ( (int)$row->status === self::CONTENT_REVIEW_STATUS_UNREVIEWED ) {
+					$reviewId = (int)$row->review_id;
 				} else {
 					$reviewId = null;
 				}
@@ -150,39 +151,6 @@ class ReviewModel extends ContentReviewBaseModel {
 		return true;
 	}
 
-	/**
-	 * Backup completed review in log table
-	 *
-	 * @param Array $review
-	 * @param int $status
-	 * @return bool
-	 * @throws \FluentSql\Exception\SqlException
-	 */
-	public function backupCompletedReview( $review, $status, $reviewUserId ) {
-		$db = $this->getDatabaseForWrite();
-
-		( new \WikiaSQL() )
-			->INSERT( self::CONTENT_REVIEW_LOG_TABLE )
-			->SET( 'wiki_id', $review['wiki_id'] )
-			->SET( 'page_id', $review['page_id'] )
-			->SET( 'revision_id', $review['revision_id'] )
-			->SET( 'status', $status )
-			->SET( 'submit_user_id', $review['submit_user_id'] )
-			->SET( 'submit_time', $review['submit_time'] )
-			->SET( 'review_user_id', $reviewUserId )
-			->SET( 'review_start', $review['review_start'] )
-			// review_end has a default value set to CURRENT_TIMESTAMP
-			->run( $db );
-
-		$affectedRows = $db->affectedRows();
-
-		if ( $affectedRows === 0 ) {
-			throw new \FluentSql\Exception\SqlException( 'The INSERT operation failed.' );
-		}
-
-		return true;
-	}
-
 	public function updateRevisionStatus( $wiki_id, $page_id, $oldStatus, $status, $reviewerId  ) {
 		$db = $this->getDatabaseForWrite();
 
@@ -250,7 +218,11 @@ class ReviewModel extends ContentReviewBaseModel {
 			->AND_( 'page_id' )->EQUAL_TO( $pageId )
 			->AND_( 'revision_id' )->EQUAL_TO( $revisionId )
 			->runLoop( $db, function ( &$revisionInfo, $row ) {
-				$revisionInfo = get_object_vars( $row );
+				$revisionInfo = [
+					'wikiId' => (int)$row->wiki_id,
+					'pageId' => (int)$row->page_id,
+					'status' => (int)$row->status,
+				];
 			} );
 
 		return $revisionInfo;

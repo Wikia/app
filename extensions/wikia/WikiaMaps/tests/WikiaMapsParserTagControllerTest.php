@@ -12,6 +12,7 @@ class WikiaMapsParserTagControllerTest extends WikiaBaseTest {
 
 	/**
 	 * @dataProvider validateParseTagParamsDataProvider
+	 * @group WikiaParserTagController
 	 */
 	public function testValidateParseTagParams( $message, $params, $expected ) {
 		$errorMessage = '';
@@ -27,12 +28,12 @@ class WikiaMapsParserTagControllerTest extends WikiaBaseTest {
 		return [
 			[
 				'Valid map id parameter',
-				[ 'id' => 1 ],
+				[ 'map-id' => 1 ],
 				true
 			],
 			[
-				'Invalid map id parameter (map-id instead of id)',
-				[ 'map-id' => 1 ],
+				'Invalid map id parameter (id instead of map-id)',
+				[ 'id' => 1 ],
 				false
 			],
 			[
@@ -42,63 +43,95 @@ class WikiaMapsParserTagControllerTest extends WikiaBaseTest {
 			],
 			[
 				'Valid latitude parameter',
-				[ 'id' => 1, 'lat' => 50.123 ],
+				[ 'map-id' => 1, 'lat' => 50.123 ],
 				true
 			],
 			[
 				'Valid latitude parameter',
-				[ 'id' => 1, 'lat' => "50.123" ],
+				[ 'map-id' => 1, 'lat' => "50.123" ],
 				true
 			],
 			[
 				'Valid latitude parameter',
-				[ 'id' => 1, 'lat' => "-12.345" ],
+				[ 'map-id' => 1, 'lat' => "-12.345" ],
 				true
 			],
 			[
 				'Valid latitude parameter',
-				[ 'id' => 1, 'lat' => 0x32 ],
+				[ 'map-id' => 1, 'lat' => 0x32 ],
 				true
 			],
 			[
 				'Invalid latitude parameter',
-				[ 'id' => 1, 'lat' => '0x32' ],
+				[ 'map-id' => 1, 'lat' => '0x32' ],
 				true
 			],
 			[
 				'Invalid latitude parameter',
-				[ 'id' => 1, 'lat' => 'abc' ],
+				[ 'map-id' => 1, 'lat' => 'abc' ],
 				false
 			],
 			[
 				'Valid zoom parameter',
-				[ 'id' => 1, 'zoom' => 0 ],
+				[ 'map-id' => 1, 'zoom' => 0 ],
 				true
 			],
 			[
 				'Valid zoom parameter',
-				[ 'id' => 1, 'zoom' => '0' ],
+				[ 'map-id' => 1, 'zoom' => '0' ],
 				true
 			],
 			[
 				'Invalid zoom parameter',
-				[ 'id' => 1, 'zoom' => 'abc' ],
+				[ 'map-id' => 1, 'zoom' => 'abc' ],
 				false
 			],
 			[
 				'Invalid zoom parameter',
-				[ 'id' => 1, 'zoom' => -1 ],
+				[ 'map-id' => 1, 'zoom' => -1 ],
 				false
 			],
 			[
 				'Invalid zoom parameter',
-				[ 'id' => 1, 'zoom' => '-2' ],
+				[ 'map-id' => 1, 'zoom' => '-2' ],
 				false
 			],
 			[
 				'Invalid first parameter but valid second one',
-				[ 'id' => 'abc', 'lat' => '100' ],
+				[ 'map-id' => 'abc', 'lat' => '100' ],
 				false
+			],
+			[
+				'No required parameter (map-id) but valid second one',
+				[ 'lat' => '100' ],
+				false
+			],
+		];
+	}
+
+	/**
+	 * @dataProvider sanitizeParserTagArgumentsDataProvider
+	 */
+	public function testSanitizeParserTagArguments( $message, $tagArgs, $expected ) {
+		$parserTagController = new WikiaMapsParserTagController();
+		$this->assertEquals(
+			$expected,
+			$parserTagController->sanitizeParserTagArguments( $tagArgs ),
+			$message
+		);
+	}
+
+	public function sanitizeParserTagArgumentsDataProvider() {
+		return [
+			[
+				'Invalid tag attribute get mapped to an empty array',
+				[ 'id' => 1 ],
+				[],
+			],
+			[
+				'Valid map-id tag attribute gets mapped to an id',
+				[ 'map-id' => 1 ],
+				[ 'id' => 1 ],
 			],
 		];
 	}

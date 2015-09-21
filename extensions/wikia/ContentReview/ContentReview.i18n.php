@@ -6,7 +6,7 @@ $messages = [];
  * English (en)
  */
 $messages['en'] = [
-	'content-review-desc' => 'After a major exploit of customizable JavaScript we can no longer allow for unreviewed code to be executed on wikia\'s pages. This extension is the control room for code reviewing.',
+	'content-review-desc' => 'This extension creates a process by which community JavaScript is manually reviewed before it goes live for visitors.',
 	'content-review-module-title' => 'Custom JavaScript status',
 
 	'content-review-module-header-latest' => 'Latest revision:',
@@ -36,44 +36,19 @@ $messages['en'] = [
 	'content-review-test-mode-error' => 'Something went wrong. Please try again later.',
 	'content-review-test-mode-enabled' => 'You are currently using unreviewed versions of custom JavaScript files. ',
 
-	'content-review-special-title' => 'Content Review',
 	'action-content-review' => 'Content Review',
-	'content-review-special-list-header-wiki-name' => 'Wiki name',
-	'content-review-special-list-header-page-name' => 'Page name',
-	'content-review-special-list-header-revision-id' => 'Revision id',
-	'content-review-special-list-header-submit-user' => 'Submit user',
-	'content-review-special-list-header-status' => 'Status',
-	'content-review-special-list-header-submit-time' => 'Submit time',
-	'content-review-special-list-header-reviewer' => 'Reviewer',
-	'content-review-special-list-header-review-start' => 'Review start',
-	'content-review-special-list-header-actions' => 'Actions',
 
-	'content-review-special-start-review' => 'Start review',
-	'content-review-special-continue-review' => 'Continue review',
-	'content-review-special-review-started' => 'You have started a review process.',
-	'content-review-special-review-open' => 'Please complete a review process for a previous revision first.',
-	'content-review-special-error' => 'Unfortunately, an error happened.',
-
-	'content-review-diff-approve' => 'Approve',
-	'content-review-diff-reject' => 'Reject',
-	'content-review-diff-approve-confirmation' => 'Reviewed code has been approved. Go back to [[w:c:dev:Special:ContentReview|Special:ContentReview]]',
-	'content-review-diff-reject-confirmation' => 'Reviewed code has been rejected. [$1 Provide feedback] or go back to [[w:c:dev:Special:ContentReview|Special:ContentReview]]',
-	'content-review-diff-page-error' => 'Something went wrong. Please try again later.',
-	'content-review-diff-already-done' => 'You are trying to make changes to the revision that isn\'t in review anymore.',
-
-	'content-review-diff-toolbar-title' => 'Revision review',
-	'content-review-diff-toolbar-talkpage' => 'Talk page',
-	'content-review-diff-toolbar-guidelines' => 'Reviewer guidelines',
-	'content-review-diff-toolbar-guidelines-url' => 'http://dev.wikia.com/Help:JavaScript_Guidelines',
+	'content-review-restore-summary' => 'Reverting page to revision $1',
 
 	'content-review-status-unreviewed' => 'Unreviewed',
 	'content-review-status-in-review' => 'In review',
 	'content-review-status-approved' => 'Approved',
-	'content-review-status-rejected' => 'Rejected,',
+	'content-review-status-rejected' => 'Rejected',
+	'content-review-status-live' => 'Live',
+	'content-review-status-autoapproved' => 'Auto-approved',
 
-	'content-review-feedback-link-text' => 'Provide feedback',
 	'content-review-rejection-explanation' => '==Submitted script change rejected==
-The recently submitted change to this JS script was rejected by the Wikia review process. Please make sure you meet the [[Help:Custom JavaScript guidelines|Custom JavaScript guidelines]]. --~~~~ ',
+The recently submitted change to this JS script was rejected by the Wikia review process. Please make sure you meet the [[Help:JavaScript review process|Custom JavaScript guidelines]].',
 
 	'content-review-status-link-text' => 'Review status',
 ];
@@ -93,8 +68,8 @@ $messages['qqq'] = [
 	'content-review-module-status-unsubmitted' => 'Message shown as a revision\'s status when the latest made revision has not yet been sent for a review.',
 	'content-review-module-status-live' => 'Message shown as a revision\'s status when it is currently live and served to users.',
 	'content-review-module-status-awaiting' => 'Message shown as a revision\'s status when a revision is waiting for a review.',
-	'content-review-module-status-approved' => 'Message shown as a revision\'s status if ',
-	'content-review-module-status-rejected' => 'was rejected',
+	'content-review-module-status-approved' => 'Message shown as a revision\'s status if a revision was approved.',
+	'content-review-module-status-rejected' => 'Message shown as a revision\'s status if a revision was rejected',
 
 	'content-review-rejection-reason-link' => 'Text of a link that leads a users to a Talk page with an explanation on why their code was rejected.',
 
@@ -112,42 +87,18 @@ $messages['qqq'] = [
 	'content-review-test-mode-error' => 'A message shown if there was a problem with enabling the test mode to a user.',
 	'content-review-test-mode-enabled' => 'A message shown in Banner Notification with an information that a user is curently being served unreviewed JavaScript pages.',
 
-	'content-review-special-title' => 'Title for special page',
 	'action-content-review' => 'Title for permissions',
-	'content-review-special-list-header-wiki-name' => 'A column name for a Wiki name',
-	'content-review-special-list-header-page-name' => 'A column name for a Page name',
-	'content-review-special-list-header-revision-id' => 'A column name for a Revision id',
-	'content-review-special-list-header-submit-user' => 'A column name for a Submit user',
-	'content-review-special-list-header-status' => 'A column name for a Status',
-	'content-review-special-list-header-submit-time' => 'A column name for a Submit time',
-	'content-review-special-list-header-reviewer' => 'A column name for a Reviewer name',
-	'content-review-special-list-header-review-start' => 'A column name for a Review start',
-	'content-review-special-list-header-actions' => 'A column name for Actions',
 
-	'content-review-special-start-review' => 'Text on button to start review',
-	'content-review-special-continue-review' => 'Text on button to continue review',
-	'content-review-special-review-started' => 'A message shown when user starts new review process.',
-	'content-review-special-review-open' => 'A message shown when another review for the page is in progress and ask user to complete that first.',
-	'content-review-special-error' => 'Information that some error occurs.',
-
-	'content-review-diff-approve' => 'A text of a button which clicked approves a given revision.',
-	'content-review-diff-reject' => 'A text of a button which clicked rejects a given revision.',
-	'content-review-diff-approve-confirmation' => 'A message shown in a Banner Notification after a click on the approve button if everything went well.',
-	'content-review-diff-reject-confirmation' => 'A message shown in a Banner Notification after click reject button if everything went well.',
-	'content-review-diff-page-error' => 'A message shown in a Banner Notification when something go wrong on diff page.',
-
-	'content-review-diff-toolbar-title' => 'A title of a toolbar that enables a reviewer to approve or reject a revision.',
-	'content-review-diff-toolbar-talkpage' => 'A text of a link to a talk page of a page that is being reviewed.',
-	'content-review-diff-toolbar-guidelines' => 'A text of a link to a page with guidelines for reviewers.',
-	'content-review-diff-toolbar-guidelines-url' => 'A URL of a page with guidelines for reviewers.',
-
-	'content-review-feedback-link-text' => 'Text on a link for providing feedback on script change being reviewed',
-	'content-review-rejection-explanation' => 'Standard explanation response when script changes were rejected. This text is a prefill to script talk page when reviewer is redirected there to provide feedback on rejection.',
+	'content-review-restore-summary' => 'A default, prefilled summary for an action of restoring a revision of a page. $1 is the ID number of the revision.',
 
 	'content-review-status-unreviewed' => 'A name of a status of a revision that has not yet been reviewed.',
 	'content-review-status-in-review' => 'A name of a status of a revision that is being reviewed.',
 	'content-review-status-approved' => 'A name of a status of a revision that has been approved.',
 	'content-review-status-rejected' => 'A name of a status of a revision that has been rejected.',
+	'content-review-status-autoapproved' => 'A name of a status of a revision that was auto-approved',
+	'content-review-status-live' => 'A name of a status of a revision that is currently live',
+
+	'content-review-rejection-explanation' => 'Standard explanation response when script changes were rejected. This text is a prefill to script talk page when reviewer is redirected there to provide feedback on rejection.',
 
 	'content-review-status-link-text' => 'Text on entrypoint link to show content review module with review status info and submit for review buttons',
 ];

@@ -123,14 +123,17 @@ class VignetteUrlToUrlGenerator {
 		}
 	}
 
-	private function reportError($message, $context=[]) {
+	private function reportError($message, Array $context=[]) {
 		$exception = new InvalidArgumentException($message);
+		$context['exception'] = $exception;
+
 		$this->error($message, $context);
 		throw $exception;
 	}
 
 	protected function getLoggerContext() {
 		return [
+			'class' => __CLASS__,
 			'url' => $this->url,
 		];
 	}

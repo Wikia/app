@@ -105,7 +105,7 @@ $config['adengine2_desktop_js'] = array(
 		'//extensions/wikia/AdEngine/js/template/modalHandlerFactory.js',
 		'//extensions/wikia/AdEngine/js/template/modalOasisHandler.js',
 		'//extensions/wikia/AdEngine/js/template/skin.js',
-		'//extensions/wikia/AdEngine/js/utils/cssTweaker.js',
+		'//extensions/wikia/AdEngine/js/utils/AdLogicZoneParams.js',
 		'//resources/wikia/modules/krux.js',
 
 		// was: late queue
@@ -168,6 +168,8 @@ $config['adengine2_tracking_js'] = array(
 	'skin' => ['oasis', 'venus', 'wikiamobile'],
 	'assets' => array(
 		'//extensions/wikia/AdEngine/js/AdTracker.js',
+		'//extensions/wikia/AdEngine/js/AdContext.js',
+		'//extensions/wikia/AdEngine/js/utils/AdLogicZoneParams.js',
 	),
 );
 
@@ -184,7 +186,14 @@ $config['adengine2_amazon_match_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'//extensions/wikia/AdEngine/js/lookup/amazonMatch.js',
-		'//extensions/wikia/AdEngine/js/lookup/amazonMatchOld.js',
+	),
+);
+
+$config['adengine2_ox_bidder_js'] = array(
+	'skin' => ['oasis'],
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//extensions/wikia/AdEngine/js/lookup/openXBidder.js',
 	),
 );
 
@@ -735,6 +744,7 @@ $config['mobile_base_ads_js'] = array(
 		'//extensions/wikia/AdEngine/js/provider/paidAssetDrop.js',
 		'//extensions/wikia/AdEngine/js/provider/remnantGptMobile.js',
 		'//extensions/wikia/AdEngine/js/slot/adSlot.js',
+		'//extensions/wikia/AdEngine/js/utils/AdLogicZoneParams.js',
 
 		// Video ads
 		'//extensions/wikia/AdEngine/js/WikiaDartVideoHelper.js',
@@ -769,6 +779,7 @@ $config['mercury_ads_js'] = array(
 		'//extensions/wikia/AbTesting/js/AbTest.js',
 		'//resources/wikia/modules/abTest.js',
 		'//extensions/wikia/AdEngine/js/CustomAdsLoader.js',
+		'//extensions/wikia/AdEngine/js/slot/scrollHandler.js',
 		'//extensions/wikia/AdEngine/js/template/floor.js',
 		'//extensions/wikia/AdEngine/js/template/modal.js',
 		'//extensions/wikia/AdEngine/js/template/modalHandlerFactory.js',
@@ -1654,16 +1665,6 @@ $config['wikia_photo_gallery_mosaic_scss'] = [
 	]
 ];
 
-// ImageDrop
-$config['imagedrop_js'] = array(
-	'skin' => array( 'monobook', 'oasis' ),
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => array(
-		'//extensions/wikia/hacks/ImageDrop/js/ImageDrop.js',
-		'//resources/wikia/libraries/jquery/filedrop/jquery.filedrop.js'
-	)
-);
-
 $config['imagedrop_scss'] = array(
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => array( 'monobook', 'oasis' ),
@@ -1689,17 +1690,8 @@ $config['analytics_bluekai_js'] = array(
 		'//extensions/wikia/AdEngine/js/AdContext.js',
 		'//extensions/wikia/AdEngine/js/AdLogicPageParams.js',
 		'//extensions/wikia/AdEngine/js/AdLogicPageViewCounter.js',
+		'//extensions/wikia/AdEngine/js/utils/AdLogicZoneParams.js',
 	]
-);
-
-/** WikiMap Extension **/
-$config['wiki_map_js'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => array(
-		'//extensions/wikia/hacks/WikiMap/js/d3.v2.js',
-		'//extensions/wikia/hacks/WikiMap/js/jquery.xcolor.js',
-		'//extensions/wikia/hacks/WikiMap/js/WikiMapIndexContent.js'
-	)
 );
 
 /* Special:Leaderboard in AchievementsII extensions */

@@ -134,5 +134,5 @@ $messages = array_merge( $messages, array(
 ***w:c:fr.encyclopedie|Encyclopédie
 ",
 
-'tog-enableuserjs' => 'Activer le code javascript personnalisé ([[Help:Personal_CSS_and_JS#JavaScript|En savoir plus]])',
+'tog-enableuserjs' => 'Activer le code javascript personnel ([[Aide:CSS_et_JS_avancés|En savoir plus]])',
 ) );

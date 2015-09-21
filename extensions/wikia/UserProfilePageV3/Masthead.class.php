@@ -5,7 +5,7 @@ class Masthead {
 	/**
 	 * default avatar path
 	 */
-	public $mDefaultPath = 'http://images.wikia.com/messaging/images/';
+	const DEFAULT_PATH = 'http://images.wikia.com/messaging/images/';
 
 	/**
 	 * path to file, relative
@@ -127,7 +127,7 @@ class Masthead {
 		if ( is_array( $images ) ) {
 			foreach ( $images as $image ) {
 				$hash = FileRepo::getHashPathForLevel( $image, 2 );
-				$this->mDefaultAvatars[] = $this->mDefaultPath . $thumb . $hash . $image;
+				$this->mDefaultAvatars[] = self::DEFAULT_PATH . $thumb . $hash . $image;
 			}
 		}
 
@@ -205,6 +205,20 @@ class Masthead {
 	}
 
 	/**
+	 * Return a full avatar for a given default avatar
+	 *
+	 * @param string $avatar (e.g. Avatar3.jpg)
+	 * @return string full URL (e.g. http://images.wikia.com/messaging/images/4/46/Avatar3.jpg)
+	 */
+	public static function getDefaultAvatarUrl( $avatar ) {
+		/**
+		 * default avatar, path from messaging.wikia.com
+		 */
+		$hash = FileRepo::getHashPathForLevel( $avatar, 2 );
+		return self::DEFAULT_PATH . $hash . $avatar;
+	}
+
+	/**
 	 * getPurgeUrl -- the basic URL (without image server rewriting, cachebuster,
 	 * etc.) of the avatar.  This can be sent to squid to purge it.
 	 *
@@ -228,7 +242,9 @@ class Masthead {
 				/**
 				 * uploaded file, we are adding common/avatars path
 				 */
-				// avatars selected from "samples" are stored as full URLs (BAC-1195)
+				// avatars selected from "samples" are stored as full URLs (BAC-1105)
+				// e.g http://vignette4.wikia.nocookie.net/messaging/images/1/19/Avatar.jpg/revision/latest/scale-to-width/150?format=jpg
+				// e.g http://images3.wikia.nocookie.net/__cb2/messaging/images/thumb/1/19/Avatar.jpg/150px-Avatar.jpg
 				if ( strpos( $url, 'http://' ) === false ) {
 					$url = $wgBlogAvatarPath . rtrim( $thumb, '/' ) . $url;
 				}
@@ -236,8 +252,7 @@ class Masthead {
 				/**
 				 * default avatar, path from messaging.wikia.com
 				 */
-				$hash = FileRepo::getHashPathForLevel( $url, 2 );
-				$url = $this->mDefaultPath . trim( $thumb, '/' ) . '/' . $hash . $url;
+				$url = self::getDefaultAvatarUrl( $url );
 			}
 		} else {
 			$defaults = $this->getDefaultAvatars( trim( $thumb, "/" ) . "/" );
@@ -427,7 +442,7 @@ class Masthead {
 	/**
 	 * @return string temporary file to be used for upload from URL
 	 */
-	public function getTempFile() {
+	private function getTempFile() {
 		return tempnam( wfTempDir(), 'avatar' );
 	}
 
@@ -454,13 +469,13 @@ class Masthead {
 	 * @return bool result
 	 */
 	private function doRemoveFile() {
-		wfProfileIn( __METHOD__ );
-
 		if ( !$this->fileExists() ) {
 			return true;
 		}
 
-		global $wgAvatarsUseSwiftStorage;
+		wfProfileIn( __METHOD__ );
+
+		global $wgAvatarsUseSwiftStorage, $wgAvatarsUseService;
 		if ( !empty( $wgAvatarsUseSwiftStorage ) ) {
 			$swift = $this->getSwiftStorage();
 
@@ -468,14 +483,15 @@ class Masthead {
 			$status = $swift->remove( $avatarRemotePath );
 
 			$res = $status->isOk();
-		} else {
-			$sImageFull = $this->getFullPath();
-			$res = unlink( $sImageFull );
-		}
 
-		if ( $res ) {
-			// remove thumbnails
-			$this->purgeThumbnails();
+			if ( $res ) {
+				// remove thumbnails
+				$this->purgeThumbnails();
+			}
+		}
+		else if ( !empty( $wgAvatarsUseService ) ) {
+			$service = new UserAvatarsService( $this->mUser->getId() );
+			$res = $service->remove();
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -488,18 +504,21 @@ class Masthead {
 	 *
 	 * @return bool
 	 */
-	public function fileExists() {
+	private function fileExists() {
+		global $wgAvatarsUseService;
 		wfProfileIn( __METHOD__ );
 
-		global $wgAvatarsUseSwiftStorage;
-		if ( !empty( $wgAvatarsUseSwiftStorage ) ) {
+		if ( empty( $wgAvatarsUseService ) ) {
+			// TODO: remove when the avatars service is enabled sitewide
 			$swift = $this->getSwiftStorage();
 
 			$avatarRemotePath = $this->getLocalPath();
 			$res = $swift->exists( $avatarRemotePath );
-		} else {
-			$sImageFull = $this->getFullPath();
-			$res = file_exists( $sImageFull );
+		}
+		else {
+			// default avatar set means that there's no custom one uploaded
+			// so there's nothing to delete
+			$res = !$this->isDefault();
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -524,8 +543,13 @@ class Masthead {
 		if ( $result === false ) {
 			Wikia::log( __METHOD__, false, 'cannot remove avatar - ' . $this->getLocalPath() );
 		} else {
-			$this->mUser->setGlobalAttribute( AVATAR_USER_OPTION_NAME, "" );
-			$this->mUser->saveSettings();
+			global $wgAvatarsUseService;
+
+			// user avatars service updates user preferences on its own
+			if ( empty( $wgAvatarsUseService ) ) {
+				$this->mUser->setGlobalAttribute( AVATAR_USER_OPTION_NAME, "" );
+				$this->mUser->saveSettings();
+			}
 
 			/* add log */
 			if ( !empty( $addLog ) ) {
@@ -681,13 +705,13 @@ class Masthead {
 	 * Returns an error code if there is an error or UPLOAD_ERR_OK if there were no errors.
 	 *
 	 * @param String $sTmpFile -- the full path to the temporary image file (will be deleted after processing).
-	 * @param $errorNo -- optional initial error-code state.
-	 * @param $errorMsg -- optional string containing details on what went wrong if there is an UPLOAD_ERR_EXTENSION.
+	 * @param int $errorNo -- optional initial error-code state.
+	 * @param string $errorMsg -- optional string containing details on what went wrong if there is an UPLOAD_ERR_EXTENSION.
 	 *
-	 * @return integer
+	 * @return integer UPLOAD_* error code
 	 */
 	private function postProcessImageInternal( $sTmpFile, &$errorNo = UPLOAD_ERR_OK, &$errorMsg = '' ) {
-		global $wgAvatarsUseSwiftStorage, $wgBlogAvatarSwiftContainer, $wgBlogAvatarSwiftPathPrefix;
+		global $wgAvatarsUseSwiftStorage, $wgBlogAvatarSwiftContainer, $wgBlogAvatarSwiftPathPrefix, $wgAvatarsUseService;
 
 		wfProfileIn( __METHOD__ );
 		$aImgInfo = getimagesize( $sTmpFile );
@@ -710,6 +734,9 @@ class Masthead {
 			return $errorNo;
 		}
 
+		/**
+		 * avatar pre-prcoessing
+		 */
 		switch ( $aImgInfo['mime'] ) {
 			case 'image/gif':
 				$oImgOrig = @imagecreatefromgif( $sTmpFile );
@@ -726,67 +753,65 @@ class Masthead {
 		}
 		$aOrigSize = array( 'width' => $aImgInfo[0], 'height' => $aImgInfo[1] );
 
-		/**
-		 * generate new image to png format
-		 */
-		$sFilePath = empty( $wgAvatarsUseSwiftStorage ) ? $this->getFullPath() : $this->getTempFile(); // either NFS or temp file
-
 		$ioh = new ImageOperationsHelper();
 		$oImg = $ioh->postProcess( $oImgOrig, $aOrigSize );
 
-		/**
-		 * save to new file ... but create folder for it first
-		 */
-		if ( !is_dir( dirname( $sFilePath ) ) && !wfMkdirParents( dirname( $sFilePath ) ) ) {
-			wfDebugLog( "avatar", __METHOD__ . sprintf( ": Cannot create directory %s", dirname( $sFilePath ) ), true );
-			wfProfileOut( __METHOD__ );
-
-			return UPLOAD_ERR_CANT_WRITE;
-		}
-
+		// render the pre-processed avatar to a PNG file
+		$sFilePath = $this->getTempFile();
 		if ( !imagepng( $oImg, $sFilePath ) ) {
 			wfDebugLog( "avatar", __METHOD__ . ": Cannot save png Avatar: $sFilePath", true );
 			$errorNo = UPLOAD_ERR_CANT_WRITE;
-		} else {
-			$errorNo = UPLOAD_ERR_OK;
 
-			/* remove tmp image */
-			imagedestroy( $oImg );
+			wfProfileOut( __METHOD__ );
+			return $errorNo;
+		}
 
-			// store the avatar on Swift
-			if ( !empty( $wgAvatarsUseSwiftStorage ) ) {
-				$swift = $this->getSwiftStorage();
-				$res = $swift->store( $sFilePath, $this->getLocalPath(), [ ], 'image/png' );
+		$errorNo = UPLOAD_ERR_OK;
 
-				// errors handling
-				$errorNo = $res->isOK() ? UPLOAD_ERR_OK : UPLOAD_ERR_CANT_WRITE;
+		/* remove tmp image handler */
+		imagedestroy( $oImg );
 
-				// synchronize between DC
-				if ( $res->isOK() ) {
-					$mwStorePath = sprintf( 'mwstore://swift-backend/%s%s%s',
-						$wgBlogAvatarSwiftContainer, $wgBlogAvatarSwiftPathPrefix, $this->getLocalPath() );
+		/**
+		 * store the pre-processed avatar
+		 */
+		// store the avatar on Swift
+		if ( !empty( $wgAvatarsUseSwiftStorage ) ) {
+			$swift = $this->getSwiftStorage();
+			$res = $swift->store( $sFilePath, $this->getLocalPath(), [ ], 'image/png' );
 
-					wfRunHooks( "Masthead::AvatarSavedToSwift", array( $sFilePath, $mwStorePath ) );
-				}
-			}
+			// errors handling
+			$errorNo = $res->isOK() ? UPLOAD_ERR_OK : UPLOAD_ERR_CANT_WRITE;
 
-			$sUserText = $this->mUser->getName();
-			$mUserPage = Title::newFromText( $sUserText, NS_USER );
-			$oLogPage = new LogPage( AVATAR_LOG_NAME );
-			$oLogPage->addEntry( 'avatar_chn', $mUserPage, '' );
-			unlink( $sTmpFile );
+			// synchronize between DC
+			if ( $res->isOK() ) {
+				$mwStorePath = sprintf( 'mwstore://swift-backend/%s%s%s',
+					$wgBlogAvatarSwiftContainer, $wgBlogAvatarSwiftPathPrefix, $this->getLocalPath() );
 
-			/**
-			 * notify image replication system
-			 */
-			global $wgEnableUploadInfoExt;
-			if ( $wgEnableUploadInfoExt ) {
-				UploadInfo::log( $mUserPage, $sFilePath, $this->getLocalPath() );
+				wfRunHooks( "Masthead::AvatarSavedToSwift", array( $sFilePath, $mwStorePath ) );
 			}
 
 			// remove generated thumbnails
 			$this->purgeThumbnails();
 		}
+		else if ( !empty( $wgAvatarsUseService ) ) {
+			$service = new UserAvatarsService( $this->mUser->getId() );
+			$errorNo = $service->upload( $sFilePath );
+		}
+
+		$sUserText = $this->mUser->getName();
+		$mUserPage = Title::newFromText( $sUserText, NS_USER );
+		$oLogPage = new LogPage( AVATAR_LOG_NAME );
+		$oLogPage->addEntry( 'avatar_chn', $mUserPage, '' );
+		unlink( $sTmpFile );
+
+		/**
+		 * notify image replication system
+		 */
+		global $wgEnableUploadInfoExt;
+		if ( $wgEnableUploadInfoExt ) {
+			UploadInfo::log( $mUserPage, $sFilePath, $this->getLocalPath() );
+		}
+
 		wfProfileOut( __METHOD__ );
 
 		return $errorNo;
@@ -832,7 +857,6 @@ class Masthead {
 		// get path to thumbnail folder
 		wfProfileIn( __METHOD__ );
 
-		// dirty hack, should work in this case
 		if ( !empty( $wgAvatarsUseSwiftStorage ) ) {
 			$swift = $this->getSwiftStorage();
 
@@ -862,35 +886,6 @@ class Masthead {
 				}
 			}
 
-			wfDebugLog( "avatar", __METHOD__ . ": all thumbs removed.\n", true );
-		} else {
-			$dir = $this->getFullPath();
-			$dir = $this->getThumbPath( $dir );
-			if ( is_dir( $dir ) ) {
-				$urls = [ ];
-				$files = [ ];
-				// copied from LocalFile->getThumbnails
-				$handle = opendir( $dir );
-
-				if ( $handle ) {
-					while ( false !== ( $file = readdir( $handle ) ) ) {
-						if ( $file{0} != '.' ) {
-							$files[] = $file;
-						}
-					}
-					closedir( $handle );
-				}
-
-				// partialy copied from LocalFile->purgeThumbnails()
-				foreach ( $files as $file ) {
-					// deleting files on file system
-					@unlink( "$dir/$file" );
-					$urls[] = $this->getPurgeUrl( '/thumb/' ) . "/$file";
-					wfDebugLog( "avatar", __METHOD__ . ": removing $dir/$file\n", true );
-				}
-			} else {
-				wfDebugLog( "avatar", __METHOD__ . ": $dir exists but is not directory so not removed.\n", true );
-			}
 			wfDebugLog( "avatar", __METHOD__ . ": all thumbs removed.\n", true );
 		}
 
