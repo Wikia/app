@@ -73,7 +73,7 @@ class Client {
 	 * @preturn bool true if the given address is a consul one
 	 */
 	static function isConsulAddress( $address ) {
-		return endsWith( $address, 'service.consul' );
+		return endsWith( $address, '.service.consul' );
 	}
 
 	/**
