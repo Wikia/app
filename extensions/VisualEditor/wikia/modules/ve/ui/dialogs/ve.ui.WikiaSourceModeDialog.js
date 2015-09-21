@@ -128,7 +128,7 @@ ve.ui.WikiaSourceModeDialog.prototype.onSerialize = function ( wikitext ) {
 	this.sourceModeTextarea.$input[0].setSelectionRange( 0, 0 );
 	this.$content.stopThrobbing();
 
-  // ve-upstream-sync - review - @author: Paul Oslund
+	// ve-upstream-sync - review - @author: Paul Oslund
 	// ve.track( 'wikia', {
 	// 	action: ve.track.actions.SUCCESS,
 	// 	label: 'dialog-source-serialize',

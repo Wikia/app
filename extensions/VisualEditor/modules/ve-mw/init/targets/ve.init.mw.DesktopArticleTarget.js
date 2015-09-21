@@ -969,10 +969,10 @@ ve.init.mw.DesktopArticleTarget.prototype.teardownToolbar = function ( noAnimate
 	var target = this,
 		deferred = $.Deferred(),
 		tearDownToolbar = function () {
-		target.toolbar.destroy();
-		target.toolbar = null;
-		deferred.resolve();
-	};
+			target.toolbar.destroy();
+			target.toolbar = null;
+			deferred.resolve();
+		};
 
 	if ( noAnimate ) {
 		tearDownToolbar();
