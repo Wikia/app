@@ -828,7 +828,7 @@ class LoadBalancer {
 	/**
 	 * Return the server info structure for a given index, or false if the index is invalid.
 	 * @param $i
-	 * @return bool
+	 * @return array|bool
 	 */
 	function getServerInfo( $i ) {
 		if ( isset( $this->mServers[$i] ) ) {
@@ -1105,5 +1105,16 @@ class LoadBalancer {
 	 */
 	function clearLagTimeCache() {
 		$this->mLagTimes = null;
+	}
+
+	/**
+	 * Wikia change: return true if this load balancer has slave nodes config powered by Consul
+	 *
+	 * @see PLATFORM-1489
+	 * @return bool
+	 */
+	function hasConsulConfig() {
+		$firstSlaveInfo = $this->getServerInfo( 1 ); // e.g. slave.db-g.service.consul
+		return is_array( $firstSlaveInfo ) && Wikia\Consul\Client::isConsulAddress( $firstSlaveInfo['hostName'] );
 	}
 }
