@@ -152,6 +152,35 @@ class Revision {
 	}
 
 	/**
+	 * Wikia change begin
+	 *
+	 * Loads Revision with raw data from its ID which is an equivalent of a row in the `revision` table.
+	 *
+	 * @param $revisionId
+	 * @param DatabaseMysqli $db Optional parameter to overwrite usage of the local db.
+	 * @return bool|Revision
+	 */
+	public static function loadRawRevision( $revisionId, DatabaseMysqli $db = null ) {
+		if ( $db === null ) {
+			$db = wfGetDB( DB_SLAVE );
+		}
+
+		$revision = ( new WikiaSQL() )
+			->SELECT_ALL()
+			->FROM( 'revision' )
+			->WHERE( 'rev_id' )->EQUAL_TO( $revisionId )
+			->LIMIT( 1 )
+			->runLoop( $db, function( &$revision, $row ) {
+				$revision = self::newFromRow( $row );
+			} );
+
+		return $revision;
+	}
+	/**
+	 * Wikia change end
+	 */
+
+	/**
 	 * Load a page revision from a given revision ID number.
 	 * Returns null if no such revision can be found.
 	 *
