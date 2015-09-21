@@ -3808,6 +3808,28 @@ function wfWaitForSlaves( $wiki = false ) {
 	// bug 27975 - Don't try to wait for slaves if there are none
 	// Prevents permission error when getting master position
 	if ( $lb->getServerCount() > 1 ) {
+		// Wikia change - begin
+		// PLATFORM-1489: check if we're using consul configuration for DB slave
+		$slaveInfo = $lb->getServerInfo( 1 ); // e.g. slave.db-g.service.consul
+
+		if ( Wikia\Consul\Catalog::isConsulAddress( $slaveInfo['hostName'] ) ) {
+			// get the list of IP addresses of all slave nodes from consul
+			// so that we can check all of them explicitly
+			$consul = new Wikia\Consul\Catalog();
+			$slaves = $consul->getDatabaseNodes( $slaveInfo['hostName'] );
+
+			// clone the loadbalancer and add all slaves that we've got from Consul
+			$lb = clone $lb;
+
+			for ( $i=0; $i < count( $slaves ); $i++ ) {
+				$entry = $slaveInfo;
+				$entry['host'] = $slaves[ $i ];
+
+				$lb->setServerInfo( $i+1, $entry );
+			}
+		}
+		// Wikia change - end
+
 		/* Wikia change - added array() and $wiki parameters to getConnection to be able to wait for various DBs */
 		$dbw = $lb->getConnection( DB_MASTER, array(), $wiki );
 		$pos = $dbw->getMasterPos();
