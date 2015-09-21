@@ -11,7 +11,7 @@ class UserPreferencesIntegrationTest extends PHPUnit_Framework_TestCase {
 	/**
 	 * @var string
 	 */
-	protected $testUser;
+	protected $testUserName;
 
 	/**
 	 * @var int
@@ -47,8 +47,8 @@ class UserPreferencesIntegrationTest extends PHPUnit_Framework_TestCase {
 
 	function setUp() {
 		global $wgWikiaBotUsers;
-		$this->testUser = $wgWikiaBotUsers["bot"];
-		$this->testUserId = \User::idFromName( $this->testUser );
+		$this->testUserName = $wgWikiaBotUsers["bot"];
+		$this->testUserId = \User::idFromName( $this->testUserName );
 		$this->preferenceServiceCached = Injector::getInjector()->get( PreferenceService::class );
 		$defaultPreferences = Injector::getInjector()->get( PreferenceServiceImpl::DEFAULT_PREFERENCES );
 		$cache = $this->getMockBuilder( CacheProvider::class )
