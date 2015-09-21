@@ -2553,7 +2553,7 @@ class User {
 	 * @return string
 	 * @see getGlobalPreference
 	 */
-	public function getLocalPreference($preference, $cityId = null, $sep = "-", $default = null, $ignoreHidden = false) {
+	public function getLocalPreference($preference, $cityId, $sep = "-", $default = null, $ignoreHidden = false) {
 		global $wgPreferenceServiceRead;
 
 		if ($wgPreferenceServiceRead) {
@@ -2615,7 +2615,7 @@ class User {
 	 * @param string $sep [optional, defaults to '-']
 	 * @see getGlobalPreference
 	 */
-	public function setLocalPreference($preference, $value, $cityId = null, $sep = '-') {
+	public function setLocalPreference($preference, $value, $cityId, $sep = '-') {
 		global $wgPreferenceServiceShadowWrite;
 
 		if ( $wgPreferenceServiceShadowWrite ) {
