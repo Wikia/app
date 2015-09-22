@@ -19,12 +19,13 @@ define('ext.wikia.adEngine.recovery.helper', [
 		onBlockingEventsQueue = [];
 
 	function initEventQueue() {
-		lazyQueue.makeQueue(onBlockingEventsQueue, function (eventHandler) {
-			doc.addEventListener('sp.blocking', function () {
-				eventHandler();
-			});
+		lazyQueue.makeQueue(onBlockingEventsQueue, function (callback) {
+			callback();
 		});
-		onBlockingEventsQueue.start();
+
+		doc.addEventListener('sp.blocking', function () {
+			onBlockingEventsQueue.start();
+		});
 	}
 
 	function addSlotToRecover(slotName) {
