@@ -2557,7 +2557,7 @@ class User {
 		global $wgPreferenceServiceRead;
 
 		if ($wgPreferenceServiceRead) {
-			$value = $this->userPreferences()->getLocalPreference($this->mId, $cityId, $preference, $default, $ignoreHidden);
+			$value = $this->userPreferences()->getLocalPreference($this->getId(), $cityId, $preference, $default, $ignoreHidden);
 		} else {
 			$preferenceGlobalName = self::localToGlobalPropertyName($preference, $cityId, $sep);
 			$value = $this->getOptionHelper($preferenceGlobalName, $default, $ignoreHidden);
@@ -2583,7 +2583,7 @@ class User {
 
 		if ($wgPreferenceServiceRead) {
 			$preferences = [];
-			$value = $this->userPreferences()->getGlobalPreference($this->mId, $preference, $default, $ignoreHidden);
+			$value = $this->userPreferences()->getGlobalPreference($this->getId(), $preference, $default, $ignoreHidden);
 			foreach ($this->userPreferences()->getPreferences($this->getId())->getGlobalPreferences() as $globalPreference) {
 				$preferences[$globalPreference->getName()] = $globalPreference->getValue();
 			}
@@ -2620,7 +2620,7 @@ class User {
 
 		if ( $wgPreferenceServiceShadowWrite ) {
 			$value = $this->replaceNewlineAndCRWithSpace( $value );
-			$this->userPreferences()->setLocalPreference( $this->mId, $cityId, $preference, $value );
+			$this->userPreferences()->setLocalPreference( $this->getId(), $cityId, $preference, $value );
 		}
 
 		$preferenceGlobalName = self::localToGlobalPropertyName($preference, $cityId, $sep);
@@ -2639,7 +2639,7 @@ class User {
 
 		if ( $wgPreferenceServiceShadowWrite ) {
 			$value = $this->replaceNewlineAndCRWithSpace( $value );
-			$this->userPreferences()->setGlobalPreference( $this->mId, $preference, $value );
+			$this->userPreferences()->setGlobalPreference( $this->getId(), $preference, $value );
 			if ( $preference == 'skin' ) {
 				unset( $this->mSkin );
 			}
