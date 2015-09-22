@@ -21,18 +21,19 @@ class UserTest extends WikiaBaseTest {
 
 	public function setUp() {
 		parent::setUp();
-		$this->setupAndInstallUserPreferenceServiceMock();
+		$this->setupAndInjectUserPreferenceServiceMock();
 
 		$this->testUser = User::newFromId( self::TEST_USER_ID );
 	}
 
-	private function setupAndInstallUserPreferenceServiceMock() {
+	private function setupAndInjectUserPreferenceServiceMock() {
 		global $wgGlobalUserPreferenceWhiteList, $wgLocalUserPreferenceWhiteList;
+
 		$this->userPreferenceServiceMock = $this->getMock( 'Wikia\Service\User\Preferences\PreferenceService',
 			['getGlobalPreference', 'getPreferences', 'setPreferences', 'setGlobalPreference', 'deleteGlobalPreference',
 			'getLocalPreference', 'setLocalPreference', 'deleteLocalPreference', 'save', 'getGlobalDefault'] );
-		$this->userAttributeServiceMock = $this->getMock( 'Wikia\Service\User\Attributes\AttributeService' );
 
+		$this->userAttributeServiceMock = $this->getMock( 'Wikia\Service\User\Attributes\AttributeService' );
 
 		$container = ( new InjectorBuilder() )
 			->bind( PreferenceService::class )->to( $this->userPreferenceServiceMock )
@@ -67,6 +68,8 @@ class UserTest extends WikiaBaseTest {
 	}
 
 	public function testGetGlobalPreferenceWithMockedUserPreferenceService() {
+		$this->mockGlobalVariable('wgPreferenceServiceRead', true);
+
 		$preference = 'somepref';
 		$value = 'somevalue';
 
@@ -84,7 +87,21 @@ class UserTest extends WikiaBaseTest {
 			->with( $this->testUser->getId() )
 			->willReturn( $preferences );
 
-		$this->mockGlobalVariable('wgPreferenceServiceRead', true);
 		$this->assertEquals($value, $this->testUser->getGlobalPreference($preference));
+	}
+
+	public function testGetLocalPreferenceWithMockedUserPreferenceService() {
+		$this->mockGlobalVariable('wgPreferenceServiceRead', true);
+
+		$cityId = 12345;
+		$preference = 'somepref';
+		$value = 'somevalue';
+
+		$this->userPreferenceServiceMock->expects( $this->once() )
+			->method( 'getLocalPreference' )
+			->with( $this->testUser->getId(), $cityId, $preference, null, false )
+			->willReturn( $value );
+
+		$this->assertEquals($value, $this->testUser->getLocalPreference($preference, $cityId));
 	}
 }
