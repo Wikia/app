@@ -5,8 +5,7 @@
 				<figure class="pi-item pi-image image-tabber">
 					<a href="{{url}}" class="image image-thumbnail{{#isVideo}} video video-thumbnail small{{/isVideo}}"
 					   title="{{alt}}">
-						<!--change url: thumbnail width: {{{width}}} height: {{{height}}}-->
-						<img src="{{url}}" class="pi-image-thumbnail" alt="{{alt}}" width="270" height="200"
+						<img src="{{thumbnail}}" class="pi-image-thumbnail" alt="{{alt}}" width="{{{width}}}" height="{{{height}}}"
 							 data-{{media-type}}-key="{{name}}" data-{{media-type}}-name="{{name}}"/>
 						{{#isVideo}}
 							{{#duration}}

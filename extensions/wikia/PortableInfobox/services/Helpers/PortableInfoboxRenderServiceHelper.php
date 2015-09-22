@@ -52,7 +52,13 @@ class PortableInfoboxRenderServiceHelper {
 		foreach ( $groupData as $item ) {
 			//do we want to support other tags in slider as well?
 			if ( $item[ 'type' ] === 'image' ) {
-				$sliderGroupData[] = $item[ 'data' ];
+
+				$data = $this->extendImageData( $item[ 'data' ] );
+				if ( !$data ) {
+					continue;
+				}
+
+				$sliderGroupData[] = $data;
 			}
 		}
 

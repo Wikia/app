@@ -1,6 +1,6 @@
 require([
-	'wikia.window', 'wikia.document', 'wikia.tracker'
-], function(win, doc, tracker) {
+	'wikia.window', 'wikia.document', 'jquery'
+], function(win, doc, $) {
 	var slider,
 		pagerDiv,
 		imageNumber,
@@ -18,15 +18,15 @@ require([
 		imageNumber = slider.children.length;
 		slider.style.width = parseInt(imageWidth * imageNumber) + 'px';
 
-		doc.getElementsByClassName('prev')[0].onclick = function(){ onClickPrev(); };
-		doc.getElementsByClassName('next')[0].onclick = function(){ onClickNext(); };
+		doc.getElementsByClassName('prev')[0].onclick = onClickPrev;
+		doc.getElementsByClassName('next')[0].onclick = onClickNext;
 
 		generatePager(imageNumber);
 	}
 
 	function slideTo(imageToGo) {
 		var numOfImageToGo = imageToGo - currentImage;
-		currentPostion = -1 * currentImage * imageWidth;
+			currentPostion = -1 * currentImage * imageWidth;
 
 		pagerDiv.children[currentImage].style.backgroundColor = 'transparent';
 		pagerDiv.children[imageToGo].style.backgroundColor = 'black';
