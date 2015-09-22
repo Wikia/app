@@ -119,8 +119,8 @@ class UserTest extends WikiaBaseTest {
 		$this->assertEquals( $value, $this->testUser->getLocalPreference( $preference, $cityId ) );
 	}
 
+	// this has side effects in the database as long as we are in migration mode
 	public function testSetLocalPreferenceWithMockedUserPreferenceService() {
-		// this has side effects in the database as long as we are in migration mode
 		$this->mockGlobalVariable( 'wgPreferenceServiceShadowWrite', true );
 
 		$cityId = 12345;
