@@ -258,11 +258,7 @@ class PreferenceServiceImpl implements PreferenceService {
 	}
 
 	private function prefIsSaveable( $pref, $value, $valueFromDefaults ) {
-		if ( $value == $valueFromDefaults ) {
-			return false;
-		}
-
 		return in_array( $pref, $this->forceSavePrefs ) || $value != $valueFromDefaults ||
-			( $valueFromDefaults != null && $value !== false && $value !== null );
+			( $valueFromDefaults === null && $value !== false && $value !== null );
 	}
 }
