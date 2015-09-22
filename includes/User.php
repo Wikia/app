@@ -4903,15 +4903,19 @@ class User {
 	}
 
 	private function compareAttributeValueFromService( $attributeName, $attributeValue ) {
-
-		// bio and coverPhoto are not used in MW
-		if ( $attributeName == "bio" || $attributeName == "coverPhoto" ) {
-			return;
-		}
-
-		if ( $this->mOptions[$attributeName] !== $attributeValue  ) {
+		if ( !array_key_exists( $attributeName, $this->mOptions ) ) {
+			$this->logAttributeMissing( $attributeName, $attributeValue );
+		} elseif ( $this->mOptions[$attributeName] !== $attributeValue  ) {
 			$this->logAttributeMismatch( $attributeName, $attributeValue );
 		}
+	}
+
+	private function logAttributeMissing( $attributeName, $attributeValue ) {
+		$this->error( 'USER_ATTRIBUTES attribute_missing', [
+			'attribute' => $attributeName,
+			'valueFromService' => $attributeValue,
+			'userId' => $this->getId()
+		] );
 	}
 
 	private function logAttributeMismatch( $attributeName, $attributeValue ) {
