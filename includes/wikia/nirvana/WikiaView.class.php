@@ -340,6 +340,8 @@ class WikiaView {
 	}
 
 	protected function renderJson() {
+		global $wgShowSQLErrors;
+
 		if( $this->response->hasException() ) {
 			$exception = $this->response->getException();
 			$output = [
@@ -357,8 +359,8 @@ class WikiaView {
 				$output[ 'exception' ][ 'details' ] = $exception->getDetails();
 			}
 
-			// PLATFORM-1503: do not expose DB errors
-			if ( $exception instanceof DBError ) {
+			// PLATFORM-1503: do not expose DB errors when $wgShowSQLErrors is set to false
+			if ( $wgShowSQLErrors === false && $exception instanceof DBError ) {
 				$output['exception']['message'] = '';
 			}
 		}
