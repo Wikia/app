@@ -47,33 +47,33 @@ class UserTest extends WikiaBaseTest {
 
 
 	/** @dataProvider localOptionNameProvider */
-	public function testCreateLocalOptionName($input, $expected) {
-		$result = call_user_func_array('User::localToGlobalPropertyName', $input);
-		$this->assertEquals($expected, $result, sprintf("failed with input: [%s]", implode(", ", $input)));
+	public function testCreateLocalOptionName( $input, $expected ) {
+		$result = call_user_func_array( 'User::localToGlobalPropertyName', $input );
+		$this->assertEquals( $expected, $result, sprintf( "failed with input: [%s]", implode( ", ", $input ) ) );
 	}
 
 	function localOptionNameProvider() {
 		global $wgCityId;
 		return array(
 			array(
-				array("foo"), "foo-{$wgCityId}",
+				array( "foo" ), "foo-{$wgCityId}",
 			),
 			array(
-				array("foo", 1), "foo-1",
+				array( "foo", 1 ), "foo-1",
 			),
 			array(
-				array("foo", 1, "_"), "foo_1",
+				array( "foo", 1, "_" ), "foo_1",
 			)
 		);
 	}
 
 	public function testGetGlobalPreferenceWithMockedUserPreferenceService() {
-		$this->mockGlobalVariable('wgPreferenceServiceRead', true);
+		$this->mockGlobalVariable( 'wgPreferenceServiceRead', true );
 
 		$preference = 'somepref';
 		$value = 'somevalue';
 
-		$preferences = (new UserPreferences())
+		$preferences = ( new UserPreferences() )
 			->setGlobalPreference( $preference, $value );
 
 		$this->userPreferenceServiceMock->expects( $this->once() )
@@ -87,12 +87,12 @@ class UserTest extends WikiaBaseTest {
 			->with( $this->testUser->getId() )
 			->willReturn( $preferences );
 
-		$this->assertEquals($value, $this->testUser->getGlobalPreference($preference));
+		$this->assertEquals( $value, $this->testUser->getGlobalPreference( $preference ) );
 	}
 
 	public function testSetGlobalPreferenceWithMockedUserPreferenceService() {
 		// this has side effects in the database as long as we are in migration mode
-		$this->mockGlobalVariable('wgPreferenceServiceShadowWrite', true);
+		$this->mockGlobalVariable( 'wgPreferenceServiceShadowWrite', true );
 
 		$preference = 'somepref';
 		$value = 'somevalue';
@@ -101,11 +101,11 @@ class UserTest extends WikiaBaseTest {
 			->method( 'setGlobalPreference' )
 			->with( $this->testUser->getId(), $preference, $value );
 
-		$this->testUser->setGlobalPreference($preference, $value);
+		$this->testUser->setGlobalPreference( $preference, $value );
 	}
 
 	public function testGetLocalPreferenceWithMockedUserPreferenceService() {
-		$this->mockGlobalVariable('wgPreferenceServiceRead', true);
+		$this->mockGlobalVariable( 'wgPreferenceServiceRead', true );
 
 		$cityId = 12345;
 		$preference = 'somepref';
@@ -116,12 +116,12 @@ class UserTest extends WikiaBaseTest {
 			->with( $this->testUser->getId(), $cityId, $preference, null, false )
 			->willReturn( $value );
 
-		$this->assertEquals($value, $this->testUser->getLocalPreference($preference, $cityId));
+		$this->assertEquals( $value, $this->testUser->getLocalPreference( $preference, $cityId ) );
 	}
 
 	public function testSetLocalPreferenceWithMockedUserPreferenceService() {
 		// this has side effects in the database as long as we are in migration mode
-		$this->mockGlobalVariable('wgPreferenceServiceShadowWrite', true);
+		$this->mockGlobalVariable( 'wgPreferenceServiceShadowWrite', true );
 
 		$cityId = 12345;
 		$preference = 'somepref';
@@ -131,7 +131,7 @@ class UserTest extends WikiaBaseTest {
 			->method( 'setLocalPreference' )
 			->with( $this->testUser->getId(), $cityId, $preference, $value );
 
-		$this->testUser->setLocalPreference($preference, $value, $cityId);
+		$this->testUser->setLocalPreference( $preference, $value, $cityId );
 	}
 
 	public function testSavePreferencesWithMockedUserPreferenceService() {
