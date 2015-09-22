@@ -137,16 +137,19 @@ class LoadBalancer {
 	 * @return bool|int|string
 	 */
 	function getRandomNonLagged( $loads, $wiki = false ) {
-		# Unset excessively lagged servers
-		$lags = $this->getLagTimes( $wiki );
-		foreach ( $lags as $i => $lag ) {
-			if ( $i != 0 ) {
-				if ( $lag === false ) {
-					wfDebugLog( 'replication', "Server #$i ({$this->mServers[$i]['host']}) is not replicating\n" );
-					unset( $loads[$i] );
-				} elseif ( isset( $this->mServers[$i]['max lag'] ) && $lag > $this->mServers[$i]['max lag'] ) {
-					wfDebugLog( 'replication', "Server #$i ({$this->mServers[$i]['host']}) is excessively lagged ($lag seconds)\n" );
-					unset( $loads[$i] );
+		// PLATFORM-1489: only check slave lags when we're not using consul (it performs its own healtchecks)
+		if ( !$this->hasConsulConfig() ) {
+			# Unset excessively lagged servers
+			$lags = $this->getLagTimes($wiki);
+			foreach ($lags as $i => $lag) {
+				if ($i != 0) {
+					if ($lag === false) {
+						wfDebugLog('replication', "Server #$i ({$this->mServers[$i]['host']}) is not replicating\n");
+						unset($loads[$i]);
+					} elseif (isset($this->mServers[$i]['max lag']) && $lag > $this->mServers[$i]['max lag']) {
+						wfDebugLog('replication', "Server #$i ({$this->mServers[$i]['host']}) is excessively lagged ($lag seconds)\n");
+						unset($loads[$i]);
+					}
 				}
 			}
 		}
@@ -433,7 +436,7 @@ class LoadBalancer {
 
 		$then = microtime( true ); // Wikia change
 
-		wfDebug( __METHOD__.": Waiting for slave #$index to catch up...\n" );
+		wfDebug( __METHOD__.": Waiting for slave #$index ({$conn->getServer()}) to catch up...\n" );
 		$result = $conn->masterPosWait( $this->mWaitForPos, $this->mWaitTimeout );
 
 		if ( $result == -1 || is_null( $result ) ) {
@@ -828,7 +831,7 @@ class LoadBalancer {
 	/**
 	 * Return the server info structure for a given index, or false if the index is invalid.
 	 * @param $i
-	 * @return bool
+	 * @return array|bool
 	 */
 	function getServerInfo( $i ) {
 		if ( isset( $this->mServers[$i] ) ) {
@@ -1105,5 +1108,16 @@ class LoadBalancer {
 	 */
 	function clearLagTimeCache() {
 		$this->mLagTimes = null;
+	}
+
+	/**
+	 * Wikia change: return true if this load balancer has slave nodes config powered by Consul
+	 *
+	 * @see PLATFORM-1489
+	 * @return bool
+	 */
+	function hasConsulConfig() {
+		$firstSlaveInfo = $this->getServerInfo( 1 ); // e.g. slave.db-g.service.consul
+		return is_array( $firstSlaveInfo ) && Wikia\Consul\Client::isConsulAddress( $firstSlaveInfo['hostName'] );
 	}
 }
