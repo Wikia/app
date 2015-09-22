@@ -12,7 +12,7 @@ class ContentReviewHelperTest extends WikiaBaseTest {
 	 * @param bool $inNamespace
 	 * @param string $contentType
 	 * @param bool $expected
-	 * @dataProvider shouldPageContentBeReplacedData
+	 * @dataProvider isPageForReviewTestData
 	 */
 	public function testIsPageForReview( $isJsPage, $inNamespace, $contentType, $expected ) {
 		$titleMock = $this->getMock( '\Title', [ 'isJsPage', 'inNamespace' ] );
@@ -156,7 +156,7 @@ class ContentReviewHelperTest extends WikiaBaseTest {
 		$this->assertEquals( $expected, $this->getHelper()->hasPageApprovedId( $modelMock, 0, 0, $oldId ), $message );
 	}
 
-	public function shouldPageContentBeReplacedData() {
+	public function isPageForReviewTestData() {
 		$goodMimeType = 'text/javascript';
 		$badMimeType = 'text/css';
 		return [
