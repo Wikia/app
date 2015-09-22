@@ -133,4 +133,12 @@ class UserTest extends WikiaBaseTest {
 
 		$this->testUser->setLocalPreference($preference, $value, $cityId);
 	}
+
+	public function testSavePreferencesWithMockedUserPreferenceService() {
+		$this->userPreferenceServiceMock->expects( $this->once() )
+			->method( 'save' )
+			->with( $this->testUser->getId() );
+
+		$this->testUser->saveSettings();
+	}
 }
