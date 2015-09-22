@@ -2109,6 +2109,9 @@ class User {
 		if( $this->mId ) {
 			global $wgMemc, $wgSharedDB; # Wikia
 			$wgMemc->delete( $this->getCacheKey() );
+			$this->userPreferences()->deleteFromCache( $this->getId() );
+			// Wikia: and save updated user data in the cache to avoid memcache miss and DB query
+			$this->saveToCache();
 			if( !empty( $wgSharedDB ) ) {
 				$memckey = self::getUserTouchedKey( $this->mId );
 				$wgMemc->set( $memckey, $this->mTouched );
@@ -2151,7 +2154,6 @@ class User {
 				$dbw->update( '`user`',
 					array( 'user_touched' => $touched ), array( 'user_id' => $this->mId ),
 					__METHOD__ );
-				$dbw->commit();
 			}
 
 			$this->clearSharedCache();
@@ -2557,7 +2559,7 @@ class User {
 		global $wgPreferenceServiceRead;
 
 		if ($wgPreferenceServiceRead) {
-			$value = $this->userPreferences()->getLocalPreference($this->mId, $cityId, $preference, $default, $ignoreHidden);
+			$value = $this->userPreferences()->getLocalPreference($this->getId(), $cityId, $preference, $default, $ignoreHidden);
 		} else {
 			$preferenceGlobalName = self::localToGlobalPropertyName($preference, $cityId, $sep);
 			$value = $this->getOptionHelper($preferenceGlobalName, $default, $ignoreHidden);
@@ -2583,7 +2585,7 @@ class User {
 
 		if ($wgPreferenceServiceRead) {
 			$preferences = [];
-			$value = $this->userPreferences()->getGlobalPreference($this->mId, $preference, $default, $ignoreHidden);
+			$value = $this->userPreferences()->getGlobalPreference($this->getId(), $preference, $default, $ignoreHidden);
 			foreach ($this->userPreferences()->getPreferences($this->getId())->getGlobalPreferences() as $globalPreference) {
 				$preferences[$globalPreference->getName()] = $globalPreference->getValue();
 			}
@@ -2619,8 +2621,8 @@ class User {
 		global $wgPreferenceServiceShadowWrite;
 
 		if ( $wgPreferenceServiceShadowWrite ) {
-			$value = $this->sanitizeProperty( $value );
-			$this->userPreferences()->setLocalPreference( $this->mId, $cityId, $preference, $value );
+			$value = $this->replaceNewlineAndCRWithSpace( $value );
+			$this->userPreferences()->setLocalPreference( $this->getId(), $cityId, $preference, $value );
 		}
 
 		$preferenceGlobalName = self::localToGlobalPropertyName($preference, $cityId, $sep);
@@ -2638,8 +2640,8 @@ class User {
 		global $wgPreferenceServiceShadowWrite;
 
 		if ( $wgPreferenceServiceShadowWrite ) {
-			$value = $this->sanitizeProperty( $value );
-			$this->userPreferences()->setGlobalPreference( $this->mId, $preference, $value );
+			$value = $this->replaceNewlineAndCRWithSpace( $value );
+			$this->userPreferences()->setGlobalPreference( $this->getId(), $preference, $value );
 			if ( $preference == 'skin' ) {
 				unset( $this->mSkin );
 			}
@@ -2682,7 +2684,32 @@ class User {
 	 * @return string
 	 */
 	public function getGlobalAttribute( $attribute, $default = null ) {
+		if ( $this->shouldLogAttribute( $attribute ) ) {
+			$this->logAttribute( $attribute );
+		}
+
 		return $this->getOptionHelper($attribute, $default);
+	}
+
+	/**
+	 * Returns true if 1.) User is logged in and 2.) The attribute is one used by clients other
+	 * than MW (eg, the avatar service or discussion app).
+	 * @param $attributeName
+	 * @return bool
+	 */
+	private function shouldLogAttribute( $attributeName ) {
+		return $this->isLoggedIn() && in_array( $attributeName, UserAttributes::$ATTRIBUTES_USED_BY_OUTSIDE_CLIENTS );
+	}
+
+	/**
+	 * See SOC-1315 for more details
+	 * @param $attributeName
+	 */
+	private function logAttribute( $attributeName ) {
+		$this->info( 'USER_ATTRIBUTES get_attribute_call', [
+			'attributeName' => $attributeName,
+			'userId' => $this->getId()
+		] );
 	}
 
 	/**
@@ -2775,13 +2802,13 @@ class User {
 		}
 
 		foreach ( $array_map as $key => $value ) {
-			$array_map[ $key ] = $this->sanitizeProperty( $value );
+			$array_map[ $key ] = $this->replaceNewlineAndCRWithSpace( $value );
 		}
 
 		return $array_map;
 	}
 
-	private function sanitizeProperty($value) {
+	private function replaceNewlineAndCRWithSpace($value) {
 		if ($value) {
 			$value = str_replace("\r\n", "\n", $value);
 			$value = str_replace("\r", "\n", $value);
@@ -2829,7 +2856,7 @@ class User {
 		}
 		// Filter out any newlines that may have passed through input validation.
 		// Newlines are used to separate items in the options blob.
-		$val = $this->sanitizeProperty($val);
+		$val = $this->replaceNewlineAndCRWithSpace($val);
 		// Explicitly NULL values should refer to defaults
 		global $wgDefaultUserOptions;
 		if( is_null( $val ) && isset( $wgDefaultUserOptions[$oname] ) ) {
@@ -4887,31 +4914,33 @@ class User {
 	}
 
 	private function loadAttributes() {
-		global $wgEnableReadsFromAttributeService, $wgPublicUserAttributes;
+		global $wgEnableReadsFromAttributeService;
 
 		if ( !empty( $wgEnableReadsFromAttributeService ) ) {
-			$attributesFromService = $this->userAttributes()->getAttributes( $this->getId() );
+			$attributes = $this->userAttributes()->getAttributes($this->getId());
+			foreach ( $attributes as $attributeName => $attributeValue ) {
+				$this->compareAttributeValueFromService( $attributeName, $attributeValue );
 
-			// Currently the attribute service only stores public attributes. Once it stores private as well
-			// this can be updated to $wgUserAttributeWhitelist which contains all attributes
-			foreach ( $wgPublicUserAttributes as $attributeName ) {
-				$this->compareAttributeValueFromService( $attributeName, $attributesFromService[$attributeName] );
-				$this->mOptionOverrides[$attributeName] = $attributesFromService[$attributeName];
-				$this->mOptions[$attributeName] = $attributesFromService[$attributeName];
+				 $this->mOptionOverrides[$attributeName] = $attributeValue;
+				 $this->mOptions[$attributeName] = $attributeValue;
 			}
 		}
 	}
 
 	private function compareAttributeValueFromService( $attributeName, $attributeValue ) {
-
-		// bio and coverPhoto are not used in MW
-		if ( $attributeName == "bio" || $attributeName == "coverPhoto" ) {
-			return;
-		}
-
-		if ( $this->mOptions[$attributeName] !== $attributeValue  ) {
+		if ( !array_key_exists( $attributeName, $this->mOptions ) ) {
+			$this->logAttributeMissing( $attributeName, $attributeValue );
+		} elseif ( $this->mOptions[$attributeName] !== $attributeValue  ) {
 			$this->logAttributeMismatch( $attributeName, $attributeValue );
 		}
+	}
+
+	private function logAttributeMissing( $attributeName, $attributeValue ) {
+		$this->error( 'USER_ATTRIBUTES attribute_missing', [
+			'attribute' => $attributeName,
+			'valueFromService' => $attributeValue,
+			'userId' => $this->getId()
+		] );
 	}
 
 	private function logAttributeMismatch( $attributeName, $attributeValue ) {

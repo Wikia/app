@@ -50,7 +50,7 @@ class PreferenceCorrectionService {
 				'correcting preferences',
 				[
 					'num_differences' => $differences,
-					'user_id' => $userId] );
+					'userId' => $userId] );
 			$this->preferenceService->setPreferences( $userId, $expected );
 			$this->preferenceService->save( $userId );
 		}
@@ -86,7 +86,7 @@ class PreferenceCorrectionService {
 				if ( !$actualPreferences->hasLocalPreference( $prefName, $wikiId ) ) {
 					$this->logMissingPreference( $userId, $name );
 					++$differences;
-				} elseif ( $actualPreferences->getLocalPreference( $prefName, $wikiId ) !== $value ) {
+				} elseif ( $actualPreferences->getLocalPreference( $prefName, $wikiId ) != $value ) {
 					$this->logPreferenceValueDifference( $userId, $name, $value, $actualPreferences->getLocalPreference( $prefName, $wikiId ) );
 					++$differences;
 				}
@@ -115,7 +115,9 @@ class PreferenceCorrectionService {
 	}
 
 	protected function getLoggerContext() {
-		return ['class' => 'PreferenceCorrectionService'];
+		return [
+			'class' => 'PreferenceCorrectionService',
+			'source' => wfBacktrace(true),];
 	}
 
 	private function logMissingPreference( $userId, $name ) {
