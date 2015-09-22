@@ -156,7 +156,7 @@ class Revision {
 	 *
 	 * Loads Revision with raw data from its ID which is an equivalent of a row in the `revision` table.
 	 *
-	 * @param $revisionId
+	 * @param int $revisionId
 	 * @param DatabaseBase $db Optional parameter to overwrite usage of the local db.
 	 * @return bool|Revision
 	 */
@@ -174,9 +174,9 @@ class Revision {
 		}
 
 		/**
-		 * If no records were found - return false which $db->selectRow returned.
+		 * If no records were found - return false.
 		 */
-		return $row;
+		return false;
 	}
 	/**
 	 * Wikia change end
