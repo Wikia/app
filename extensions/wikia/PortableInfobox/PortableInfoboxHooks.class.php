@@ -3,7 +3,7 @@
 class PortableInfoboxHooks {
 	const PARSER_TAG_GALLERY = 'gallery';
 
-	static public function onBeforePageDisplay( OutputPage $out, Skin $skin ) {
+	public static function onBeforePageDisplay( OutputPage $out, Skin $skin ) {
 		if ( F::app()->checkSkin( 'monobook', $skin ) ) {
 			Wikia::addAssetsToOutput( 'portable_infobox_monobook_scss' );
 		} else {
@@ -13,7 +13,7 @@ class PortableInfoboxHooks {
 		return true;
 	}
 
-	static public function onImageServingCollectImages( &$imageNamesArray, $articleTitle ) {
+	public static function onImageServingCollectImages( &$imageNamesArray, $articleTitle ) {
 		if ( $articleTitle ) {
 			$infoboxImages = PortableInfoboxDataService::newFromTitle( $articleTitle )->getImages();
 			if ( !empty( $infoboxImages ) ) {
@@ -36,7 +36,7 @@ class PortableInfoboxHooks {
 	 *
 	 * @return bool
 	 */
-	static public function onParserTagHooksBeforeInvoke( $name, $marker, $content, $attributes, $parser, $frame ) {
+	public static function onParserTagHooksBeforeInvoke( $name, $marker, $content, $attributes, $parser, $frame ) {
 		if ( $name === self::PARSER_TAG_GALLERY ) {
 			\Wikia\PortableInfobox\Helpers\PortableInfoboxDataBag::getInstance()->setGallery( $marker, $content );
 		}
@@ -44,14 +44,58 @@ class PortableInfoboxHooks {
 		return true;
 	}
 
-	static public function onWgQueryPages( &$queryPages = [ ] ) {
+	public static function onWgQueryPages( &$queryPages = [ ] ) {
 		$queryPages[] = [ 'AllinfoboxesQueryPage', 'AllInfoboxes' ];
 
 		return true;
 	}
 
-	static public function onAllInfoboxesQueryRecached() {
+	public static function onAllInfoboxesQueryRecached() {
 		F::app()->wg->Memc->delete( wfMemcKey( ApiQueryAllinfoboxes::MCACHE_KEY ) );
+
+		return true;
+	}
+
+	/**
+	 * Purge memcache before edit
+	 *
+	 * @param $article WikiPage
+	 * @param $user
+	 * @param $text
+	 * @param $summary
+	 * @param $minor
+	 * @param $watchthis
+	 * @param $sectionanchor
+	 * @param $flags
+	 * @param $status
+	 *
+	 * @return bool
+	 */
+	public static function onArticleSave( &$article, &$user, &$text, &$summary, $minor, $watchthis, $sectionanchor,
+		&$flags, &$status ) {
+		PortableInfoboxDataService::newFromTitle( $article->getTitle() )->purge();
+
+		return true;
+	}
+
+	/**
+	 * Purge memcache before purge
+	 *
+	 * @param $article WikiPage
+	 *
+	 * @return bool
+	 */
+	public static function onArticlePurge( &$article ) {
+		PortableInfoboxDataService::newFromTitle( $article->getTitle() )->purge();
+
+		return true;
+	}
+
+	public static function onBacklinksPurge( $articles ) {
+		foreach ( $articles as $title ) {
+			PortableInfoboxDataService::newFromTitle( $title )->purge();
+		}
+
 		return true;
 	}
 }
