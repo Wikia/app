@@ -331,7 +331,7 @@ class Helper extends \ContextSource {
 	public function replaceWithLastApproved( \Title $title, $contentType, $text ) {
 		global $wgCityId;
 
-		if ( $this->shouldPageContentBeReplaced( $title, $contentType ) ) {
+		if ( $this->isPageReviewed( $title, $contentType ) ) {
 			$pageId = $title->getArticleID();
 			$latestRevId = $title->getLatestRevID();
 			$latestReviewedRevData = $this->getCurrentRevisionModel()->getLatestReviewedRevision( $wgCityId, $pageId );
@@ -384,7 +384,7 @@ class Helper extends \ContextSource {
 	 * @param $contentType
 	 * @return bool
 	 */
-	public function shouldPageContentBeReplaced( \Title $title, $contentType ) {
+	public function isPageReviewed( \Title $title, $contentType ) {
 		global $wgJsMimeType;
 
 		return $title->isJsPage()

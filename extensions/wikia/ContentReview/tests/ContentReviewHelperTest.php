@@ -24,61 +24,99 @@ class ContentReviewHelperTest extends WikiaBaseTest {
 			->method( 'inNamespace' )
 			->willReturn( $inNamespace );
 
-		$value = ( new Wikia\ContentReview\Helper() )->shouldPageContentBeReplaced( $titleMock, $contentType );
+		$value = ( new Wikia\ContentReview\Helper() )->isPageReviewed( $titleMock, $contentType );
 		$this->assertEquals( $expected, $value );
 	}
 
 	/**
-	 * @dataProvider replaceWithLastApprovedRevisionProvider
 	 * Test for \Wikia\ContentReview\Hooks::onRawPageViewBeforeOutput hook
+	 *
+	 * To review different cases - check the documentation of the dataProvider.
+	 *
+	 * @dataProvider replaceWithLastApprovedRevisionProvider
+	 * @param $isPageReviewed
+	 * @param $latestRevID
+	 * @param array $latestReviewedRevision
+	 * @param $isTestModeEnabled
+	 * @param $revisionExists
+	 * @param $originalText
+	 * @param $lastReviewedText
+	 * @param $expectedText
 	 */
-	public function testReplaceWithLastApprovedRevision( $params, $textExpected, $message ) {
+	public function testReplaceWithLastApprovedRevision( $isPageReviewed, $latestRevID,
+		array $latestReviewedRevision, $isTestModeEnabled, $revisionExists, $originalText, $lastReviewedText, $expectedText
+	) {
+		/**
+		 * Case 1 - if a page does not qualify to be reviewed just return the original text.
+		 */
+		if ( !$isPageReviewed ) {
+			$mockTitle = $this->getMock( '\Title' );
 
-		/* @var \Title $titleMock */
-		$titleMock = $this->getMockBuilder( '\Title' )
-			->disableOriginalConstructor()
-			->setMethods( [ 'getArticleID', 'getLatestRevID', 'isJsPage' ] )
-			->getMock();
-		$titleMock->method( 'getArticleID' )
-			->will( $this->returnValue( $params['pageId'] ) );
-		$titleMock->method( 'getLatestRevID' )
-			->will( $this->returnValue( $params['latestRevId'] ) );
-		$titleMock->method( 'isJsPage' )
-			->will( $this->returnValue( $params['isJsPage'] ) );
+			$mockHelper = $this->getMock( '\Wikia\ContentReview\Helper', [ 'isPageReviewed' ] );
+			$mockHelper->expects( $this->once() )
+				->method( 'isPageReviewed' )
+				->willReturn( $isPageReviewed );
 
-		/* @var \Wikia\ContentReview\Models\CurrentRevisionModel $currentRevisionModelMock */
-		$currentRevisionModelMock = $this->getMockBuilder( '\Wikia\ContentReview\Models\CurrentRevisionModel' )
-			->disableOriginalConstructor()
-			->setMethods( [ 'getLatestReviewedRevision' ] )
-			->getMock();
-		$currentRevisionModelMock->method( 'getLatestReviewedRevision' )
-			->will( $this->returnValue( $params['latestApprovedRevData'] ) );
+			$textReturn = $mockHelper->replaceWithLastApproved( $mockTitle, 'text/css', $originalText );
+		} else {
+			$mockContentType = 'text/javascript';
 
-		/* @var \Revision $revisionMock */
-		$revisionMock = $this->getMockBuilder( '\Revision' )
-			->disableOriginalConstructor()
-			->setMethods( [ 'getRawText' ] )
-			->getMock();
-		$revisionMock->method( 'getRawText' )
-			->will( $this->returnValue( $params['latestApprovedRevText'] ) );
+			/* @var \Title $titleMock */
+			$titleMock = $this->getMock( '\Title', [ 'getArticleID', 'getLatestRevID' ] );
+			$titleMock->expects( $this->once() )
+				->method( 'getLatestRevID' )
+				->willReturn( $latestRevID );
 
-		$this->mockGlobalVariable( 'wgJsMimeType', $params['wgJsMimeType'] );
+			/* @var \Wikia\ContentReview\Models\CurrentRevisionModel $currentRevisionModelMock */
+			$currentRevisionModelMock = $this->getMock( 'Wikia\ContentReview\Models\CurrentRevisionModel', [
+				'getLatestReviewedRevision'
+			] );
+			$currentRevisionModelMock->expects( $this->once() )
+				->method( 'getLatestReviewedRevision' )
+				->willReturn( $latestReviewedRevision );
 
-		/* @var \Wikia\ContentReview\Helper $helperMock */
-		$helperMock = $this->getMockBuilder( '\Wikia\ContentReview\Helper' )
-			->disableOriginalConstructor()
-			->setMethods( [ 'getCurrentRevisionModel', 'getRevisionById', 'isContentReviewTestModeEnabled' ] )
-			->getMock();
-		$helperMock->method( 'getCurrentRevisionModel' )
-			->will( $this->returnValue( $currentRevisionModelMock ) );
-		$helperMock->method( 'isContentReviewTestModeEnabled' )
-			->will( $this->returnValue( $params['isContentReviewTestModeEnabled'] ) );
-		$helperMock->method( 'getRevisionById' )
-			->will( $this->returnValue( $revisionMock ) );
+			/* @var \Wikia\ContentReview\Helper $helperMock */
+			$helperMock = $this->getMock( '\Wikia\ContentReview\Helper', [
+				'isPageReviewed',
+				'getCurrentRevisionModel',
+				'isContentReviewTestModeEnabled',
+				'getRevisionById',
+			] );
+			$helperMock->expects( $this->once() )
+				->method( 'isPageReviewed' )
+				->willReturn( $isPageReviewed );
+			$helperMock->expects( $this->once() )
+				->method( 'getCurrentRevisionModel' )
+				->willReturn( $currentRevisionModelMock );
+			$helperMock->expects( $this->any() )
+				->method( 'isContentReviewTestModeEnabled' )
+				->willReturn( $isTestModeEnabled );
 
-		$helperMock->replaceWithLastApproved( $titleMock, $params['contentType'], $params['text'] );
+			/**
+			 * Handle Case 4 and Case 5 - if the Revision does not exist the value returned
+			 * by getRevisionById is `false` to match the values returned by the original method.
+			 */
+			if ( $revisionExists ) {
+				/* @var \Revision $revisionMock */
+				$revisionMock = $this->getMockBuilder( '\Revision' )
+					->disableOriginalConstructor()
+					->setMethods( [ 'getRawText' ] )
+					->getMock();
+				$revisionMock->expects( $this->any() )
+					->method( 'getRawText' )
+					->willReturn( $lastReviewedText );
+			} else {
+				$revisionMock = false;
+			}
 
-		$this->assertEquals( $textExpected, $params['text'], $message );
+			$helperMock->expects( $this->any() )
+				->method( 'getRevisionById' )
+				->willReturn( $revisionMock );
+
+			$textReturn = $helperMock->replaceWithLastApproved( $titleMock, $mockContentType, $originalText );
+		}
+
+		$this->assertEquals( $expectedText, $textReturn );
 	}
 
 	/**
@@ -156,95 +194,75 @@ class ContentReviewHelperTest extends WikiaBaseTest {
 	}
 
 	public function replaceWithLastApprovedRevisionProvider() {
-		$pageId = 123;
-		$revId1 = 566;
-		$revId2 = 567;
-		$revIdNull = null;
-		$textEmpty = '';
-		$text1 = '';
-		$text2 = '';
-		$jsType = 'jstype';
+		$originalText = 'This is the original text.';
+		$lastReviewedText = 'This is the last reviewed text.';
+		$emptyText = '';
+
 		return [
+			/**
+			 * Case 1 - a page does not qualify to be reviewed (isPageReviewed === false).
+			 */
 			[
-				[
-					'pageId' => $pageId,
-					'latestRevId' => $revId1,
-					'isJsPage' => true,
-					'contentType' => 'no impact in this test, random 6519846169498',
-					'latestApprovedRevData' => [
-						'revision_id' => $revId1
-					],
-					'latestApprovedRevText' => 'revision text',
-					'isContentReviewTestModeEnabled' => false,
-					'text' => $text1,
-				],
-				$text1,
-				'Latest revision id same as latest approved revision',
+				false, // isPageReviewed()
+				0, // getLatestRevID()
+				[], // getLatestReviewedRevision()
+				false, // isContentReviewTestModeEnabled()
+				false, // $revisionExists
+				$originalText,
+				$lastReviewedText,
+				$originalText, // $expectedText
 			],
+			/**
+			 * Case 2 - Latest rev_id matches the last reviewed rev_id
+			 */
 			[
-				[
-					'pageId' => $pageId,
-					'latestRevId' => $revId2,
-					'isJsPage' => true,
-					'contentType' => 'no impact in this test, random 4563786783453',
-					'latestApprovedRevData' => [
-						'revision_id' => $revId1
-					],
-					'latestApprovedRevText' => $text1,
-					'isContentReviewTestModeEnabled' => false,
-					'text' => $text2,
-				],
-				$text1,
-				'Current text replaced with last approved revision',
+				true, // isPageReviewed()
+				100, // getLatestRevID()
+				[ 'revision_id' => 100 ], // getLatestReviewedRevision()
+				false, // isContentReviewTestModeEnabled()
+				false, // $revisionExists
+				$originalText,
+				$lastReviewedText,
+				$originalText, // $expectedText
 			],
+			/**
+			 * Case 3 - Test mode is enabled
+			 */
 			[
-				[
-					'pageId' => $pageId,
-					'latestRevId' => $revId2,
-					'isJsPage' => true,
-					'contentType' => 'no impact in this test',
-					'latestApprovedRevData' => [
-						'revision_id' => $revIdNull
-					],
-					'latestApprovedRevText' => $text1,
-					'isContentReviewTestModeEnabled' => false,
-					'text' => $text2,
-				],
-				$textEmpty,
-				'No approved revision. Text empty.',
+				true, // isPageReviewed()
+				100, // getLatestRevID()
+				[ 'revision_id' => 99 ], // getLatestReviewedRevision()
+				true, // isContentReviewTestModeEnabled()
+				false, // $revisionExists
+				$originalText,
+				$lastReviewedText,
+				$originalText, // $expectedText
 			],
+			/**
+			 * Case 4 - You want to get a reviewed revision but it does not exist (e.g. for new, unreviewed pages)
+			 */
 			[
-				[
-					'pageId' => $pageId,
-					'latestRevId' => $revId2,
-					'isJsPage' => false,
-					'contentType' => $jsType,
-					'wgJsMimeType' => $jsType,
-					'latestApprovedRevData' => [
-						'revision_id' => $revIdNull
-					],
-					'latestApprovedRevText' => $text1,
-					'isContentReviewTestModeEnabled' => false,
-					'text' => $text2,
-				],
-				$text1,
-				'Is not isJsPage but is wgJsMimeType. Text replaced with last approved revision',
+				true, // isPageReviewed()
+				99, // getLatestRevID()
+				[ 'revision_id' => 100 ], // getLatestReviewedRevision()
+				false, // isContentReviewTestModeEnabled()
+				false, // $revisionExists
+				$originalText,
+				$lastReviewedText,
+				$emptyText, // $expectedText
 			],
+			/**
+			 * Case 5 - You get the latest approved revision.
+			 */
 			[
-				[
-					'pageId' => $pageId,
-					'latestRevId' => $revId2,
-					'isJsPage' => true,
-					'contentType' => 'no impact in this test, random 1519849198824',
-					'latestApprovedRevData' => [
-						'revision_id' => $revId1
-					],
-					'latestApprovedRevText' => $text1,
-					'isContentReviewTestModeEnabled' => true,
-					'text' => $text2,
-				],
-				$text2,
-				'Test mode enabled. Text unchanged',
+				true, // isPageReviewed()
+				99, // getLatestRevID()
+				[ 'revision_id' => 100 ], // getLatestReviewedRevision()
+				false, // isContentReviewTestModeEnabled()
+				true, // $revisionExists
+				$originalText,
+				$lastReviewedText,
+				$lastReviewedText, // $expectedText
 			],
 		];
 	}
