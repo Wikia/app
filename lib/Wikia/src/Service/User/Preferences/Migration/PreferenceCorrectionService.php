@@ -67,8 +67,13 @@ class PreferenceCorrectionService {
 				$expectedPreferences->setGlobalPreference( $name, $value );
 
 				if ( !$actualPreferences->hasGlobalPreference( $name ) ) {
-					$this->logMissingPreference( $userId, $name );
-					++$differences;
+					$default = $this->preferenceService->getGlobalDefault($name);
+
+					if ($this->preferenceService->prefIsSaveable($name, $value, $default)) {
+						$this->logMissingPreference( $userId, $name );
+						++$differences;
+					}
+
 				} elseif ( $actualPreferences->getGlobalPreference( $name ) != $value ) {
 					$this->logPreferenceValueDifference( $userId, $name, $value, $actualPreferences->getGlobalPreference( $name ) );
 					++$differences;
@@ -84,9 +89,13 @@ class PreferenceCorrectionService {
 				$expectedPreferences->setLocalPreference( $prefName, $wikiId, $value );
 
 				if ( !$actualPreferences->hasLocalPreference( $prefName, $wikiId ) ) {
-					$this->logMissingPreference( $userId, $name );
-					++$differences;
-				} elseif ( $actualPreferences->getLocalPreference( $prefName, $wikiId ) !== $value ) {
+					$default = $this->preferenceService->getLocalDefault($prefName, $wikiId);
+
+					if ($this->preferenceService->prefIsSaveable($prefName, $value, $default)) {
+						$this->logMissingPreference( $userId, $name );
+						++$differences;
+					}
+				} elseif ( $actualPreferences->getLocalPreference( $prefName, $wikiId ) != $value ) {
 					$this->logPreferenceValueDifference( $userId, $name, $value, $actualPreferences->getLocalPreference( $prefName, $wikiId ) );
 					++$differences;
 				}
