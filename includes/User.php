@@ -2700,6 +2700,10 @@ class User {
 		return $this->isLoggedIn() && in_array( $attributeName, UserAttributes::$ATTRIBUTES_USED_BY_OUTSIDE_CLIENTS );
 	}
 
+	/**
+	 * See SOC-1315 for more details
+	 * @param $attributeName
+	 */
 	private function logAttribute( $attributeName ) {
 		$this->info( 'USER_ATTRIBUTES get_attribute_call', [
 			'attributeName' => $attributeName,
