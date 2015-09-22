@@ -7,7 +7,7 @@ use Wikia\DependencyInjection\Module;
 
 class PreferenceMigrationModule implements Module {
 
-	const PREFERENCE_CORRECTION_RAMP = 0;
+	const PREFERENCE_CORRECTION_RAMP = 5;
 
 	public function configure( InjectorBuilder $builder ) {
 		global $wgGlobalUserPreferenceWhiteList, $wgLocalUserPreferenceWhiteList, $wgCityId;
