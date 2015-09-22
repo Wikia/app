@@ -22,7 +22,12 @@ class ImageSync implements \Iterator {
 		$this->setCurrent( $this->res->current() );
 	}
 
-	/* load top X image to sync */
+	/**
+	 * Load top X image to sync
+	 *
+	 * @param int $limit
+	 * @return \Wikia\SwiftSync\ImageSync
+	 */
 	public static function newFromQueue( $limit = 50 ) {
 		wfProfileIn( __METHOD__ );
 		
@@ -40,6 +45,10 @@ class ImageSync implements \Iterator {
 		return self::parseResult( $res );
 	}
 
+	/**
+	 * @param \ResultWrapper $result
+	 * @return \Wikia\SwiftSync\ImageSync
+	 */
 	protected static function parseResult( $result ) {
 		wfProfileIn( __METHOD__ );
 

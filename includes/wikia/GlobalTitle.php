@@ -426,7 +426,15 @@ class GlobalTitle extends Title {
 	 */
 	public function getRevisionText( $revisionId ) {
 		$db = wfGetDB( DB_SLAVE, [], $this->getDatabaseName() );
-		$revision = Revision::loadFromId( $db, $revisionId );
+		$revision = Revision::loadRawRevision( $revisionId, $db );
+
+		/**
+		 * If no records were found - return an empty string.
+		 */
+		if ( !$revision ) {
+			return '';
+		}
+
 		$text = $this->getContentByTextId( $revision->getTextId() );
 
 		return $text;

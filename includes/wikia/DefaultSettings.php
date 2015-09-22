@@ -1241,19 +1241,6 @@ $wgWikiaHubsFileRepoPath = 'http://corp.wikia.com/';
 $wgWikiaHubsFileRepoDirectory = '/images/c/corp/images';
 
 /**
- * @name $wgEnableAmazonMatchOld
- * Enables AmazonMatch old integration (id=3006)
- */
-$wgEnableAmazonMatchOld = true;
-
-/**
- * @name $wgAmazonMatchOldCountries
- * Enables AmazonMatch old integration (id=3006) in these countries (given wgEnableAmazonMatchOld is also true).
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAmazonMatchOldCountries = null;
-
-/**
  * @name $wgEnableAmazonMatch
  * Enables AmazonMatch new integration (id=3115)
  */
@@ -1272,6 +1259,19 @@ $wgAmazonMatchCountries = null;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAmazonMatchCountriesMobile = null;
+
+/**
+ * @name $wgEnableOpenXBidder
+ * Enables OpenX bidder
+ */
+$wgAdDriverEnableOpenXBidder = false;
+
+/**
+ * @name $wgAdDriverOpenXBidderCountries
+ * Enables OpenX bidder in these countries (given wgAdDriverEnableOpenXBidder is also true).
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverOpenXBidderCountries = null;
 
 /**
  * @name $wgAdPageLevelCategoryLangs
@@ -1485,6 +1485,13 @@ $wgAdDriverRubiconRTPCountries = null;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverKruxCountries = null;
+
+/**
+ * @name $wgAdDriverScrollHandlerConfig
+ * Scroll handler configuration (enabled with $wgAdDriverScrollHandlerCountries)
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverScrollHandlerConfig = null;
 
 /**
  * @name $wgAdDriverScrollHandlerCountries
@@ -1797,9 +1804,10 @@ $wgPaidAssetDropConfig = false;
 $wgAdDriverIncontentPlayerSlotCountries = null;
 
 /**
- * flag for using (possibly external) service for managing a user's preferences
+ * manage a user's preferences externally
  */
-$wgPreferencesUseService = false;
+$wgPreferenceServiceRead = false;
+$wgPreferenceServiceShadowWrite = true;
 
 /**
  * @name $wgEnableRobotsTxtExt
