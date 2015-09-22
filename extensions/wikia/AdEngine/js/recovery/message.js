@@ -14,8 +14,8 @@ define('ext.wikia.adEngine.recovery.message', [
 	var logGroup = 'ext.wikia.adEngine.recovery.message',
 		wikiaRailId = 'WikiaRail';
 
-	function addRecoveryEvent() {
-		recoveryHelper.addOnBlockingEvent(function () {
+	function addRecoveryCallback() {
+		recoveryHelper.addOnBlockingCallback(function () {
 			recover();
 		});
 	}
@@ -42,6 +42,6 @@ define('ext.wikia.adEngine.recovery.message', [
 	}
 
 	return {
-		addRecoveryEvent: addRecoveryEvent
+		addRecoveryCallback: addRecoveryCallback
 	};
 });

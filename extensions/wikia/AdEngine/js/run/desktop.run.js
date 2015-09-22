@@ -91,7 +91,7 @@ require([
 
 		if (context.opts.sourcePoint && win.ads) {
 			win.ads.runtime.sp.slots = win.ads.runtime.sp.slots || [];
-			recoveryHelper.addOnBlockingEvent(function () {
+			recoveryHelper.addOnBlockingCallback(function () {
 				adTracker.measureTime('adengine.init', 'queue.desktop').track();
 				adEngine.run(adConfigDesktop, win.ads.runtime.sp.slots, 'queue.sp');
 			});
@@ -103,7 +103,7 @@ require([
 				resources: ['adengine2_ads_recovery_message_js']
 			}).done(function () {
 				require(['ext.wikia.adEngine.recovery.message'], function (recoveredAdMessage) {
-					recoveredAdMessage.addRecoveryEvent();
+					recoveredAdMessage.addRecoveryCallback();
 				});
 			});
 		}

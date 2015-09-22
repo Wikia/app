@@ -47,7 +47,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 		if (recoveryHelper.isBlocking()) {
 			loadRecovery();
 		} else {
-			recoveryHelper.addOnBlockingEvent(function () {
+			recoveryHelper.addOnBlockingCallback(function () {
 				loadRecovery();
 			});
 		}

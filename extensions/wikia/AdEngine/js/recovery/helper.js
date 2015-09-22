@@ -31,8 +31,8 @@ define('ext.wikia.adEngine.recovery.helper', [
 		slotsToRecover.push(slotName);
 	}
 
-	function addOnBlockingEvent(eventHandler) {
-		onBlockingEventsQueue.push(eventHandler);
+	function addOnBlockingCallback(callback) {
+		onBlockingEventsQueue.push(callback);
 	}
 
 	function createSourcePointTag() {
@@ -64,7 +64,7 @@ define('ext.wikia.adEngine.recovery.helper', [
 
 	return {
 		addSlotToRecover: addSlotToRecover,
-		addOnBlockingEvent: addOnBlockingEvent,
+		addOnBlockingCallback: addOnBlockingCallback,
 		createSourcePointTag: createSourcePointTag,
 		initEventQueue: initEventQueue,
 		isRecoveryEnabled: isRecoveryEnabled,
