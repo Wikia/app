@@ -13,6 +13,7 @@ define('wikia.krux', [
 
 	var maxNumberOfKruxSegments = 27,
 		kruxScriptId = 'krux-control-tag',
+		kruxLoaded = false,
 		segmentsCountTracked = false;
 
 	function exportPageParams(adLogicPageParams) {
@@ -62,6 +63,7 @@ define('wikia.krux', [
 
 				// Add Krux pixel
 				addConfigScript(confid);
+				kruxLoaded = true;
 			}
 		});
 	}
@@ -107,7 +109,11 @@ define('wikia.krux', [
 	}
 
 	function sendEvent(eventId, data) {
+		if (!kruxLoaded) {
+			return false;
+		}
 		Krux('admEvent', eventId, data || {});
+		return true;
 	}
 
 	// Mercury solution to track number of segments on each page view

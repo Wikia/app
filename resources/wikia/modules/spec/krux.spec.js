@@ -74,13 +74,9 @@ describe('Krux module', function () {
 			.toHaveBeenCalledWith(kruxTrackerEventName, {}, 76, '0076');
 	});
 
-	it('Send event', function () {
-		spyOn(window, 'Krux');
+	it('Dont send event when krux is not loaded', function () {
 		var data = { foo: 'bar' };
 
-		getModule().sendEvent('eventId', data);
-
-		expect(window.Krux)
-			.toHaveBeenCalledWith('admEvent', 'eventId', data);
+		expect(getModule().sendEvent('eventId', data)).toBeFalsy();
 	});
 });

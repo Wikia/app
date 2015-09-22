@@ -24,11 +24,10 @@ define('ext.wikia.adEngine.sourcePoint', [
 			return;
 		}
 
-		log(['sendKruxEvent', eventId, value], 'debug', logGroup);
-		krux.sendEvent(eventId, {
-			blocking: value
-		});
-		kruxEventSent = true;
+		if (krux.sendEvent(eventId, {blocking: value})) {
+			log(['sendKruxEvent', eventId, value], 'debug', logGroup);
+			kruxEventSent = true;
+		}
 	}
 
 	function initDetection() {
