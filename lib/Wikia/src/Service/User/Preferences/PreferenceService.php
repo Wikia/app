@@ -18,11 +18,4 @@ interface PreferenceService {
 	public function deleteLocalPreference( $userId, $name, $wikiId );
 	public function save( $userId );
 	public function getGlobalDefault( $pref );
-	public function getLocalDefault( $pref, $wikiId );
-
-	/**
-	 * TODO: this should be a private method in PreferenceServiceImpl
-	 * but need it to be public while we do migrations for false-positive detection
-	 */
-	public function prefIsSaveable( $pref, $value, $valueFromDefaults );
 }
