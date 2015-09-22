@@ -187,6 +187,10 @@ class PreferenceServiceImpl implements PreferenceService {
 		return $this->defaultPreferences->getLocalPreference( $pref, $wikiId );
 	}
 
+	public function deleteFromCache( $userId ) {
+		return $this->cache->delete( $userId );
+	}
+
 	protected function getLoggerContext() {
 		return ['class' => 'PreferenceService'];
 	}
@@ -232,10 +236,6 @@ class PreferenceServiceImpl implements PreferenceService {
 
 	private function saveToCache( $userId, UserPreferences $preferences ) {
 		return $this->cache->save( $userId, $preferences );
-	}
-
-	private function deleteFromCache( $userId ) {
-		return $this->cache->delete( $userId );
 	}
 
 	private function applyDefaults( UserPreferences $preferences ) {

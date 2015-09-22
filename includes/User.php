@@ -2109,6 +2109,7 @@ class User {
 		if( $this->mId ) {
 			global $wgMemc, $wgSharedDB; # Wikia
 			$wgMemc->delete( $this->getCacheKey() );
+			$this->userPreferences()->deleteFromCache( $this->getId() );
 			// Wikia: and save updated user data in the cache to avoid memcache miss and DB query
 			$this->saveToCache();
 			if( !empty( $wgSharedDB ) ) {
