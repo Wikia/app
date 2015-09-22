@@ -1,4 +1,4 @@
-/*global describe, it, modules, expect*/
+/*global describe, it, modules, expect, window, spyOn*/
 describe('Krux module', function () {
 	'use strict';
 
@@ -72,5 +72,15 @@ describe('Krux module', function () {
 
 		expect(mocks.adTracker.track)
 			.toHaveBeenCalledWith(kruxTrackerEventName, {}, 76, '0076');
+	});
+
+	it('Send event', function () {
+		spyOn(window, 'Krux');
+		var data = { foo: 'bar' };
+
+		getModule().sendEvent('eventId', data);
+
+		expect(window.Krux)
+			.toHaveBeenCalledWith('admEvent', 'eventId', data);
 	});
 });
