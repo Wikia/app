@@ -31,7 +31,7 @@ class UserTest extends WikiaBaseTest {
 
 		$this->userPreferenceServiceMock = $this->getMock( PreferenceService::class,
 			['getGlobalPreference', 'getPreferences', 'setPreferences', 'setGlobalPreference', 'deleteGlobalPreference',
-			'getLocalPreference', 'setLocalPreference', 'deleteLocalPreference', 'save', 'getGlobalDefault'] );
+			'getLocalPreference', 'setLocalPreference', 'deleteLocalPreference', 'save', 'getGlobalDefault', 'deleteFromCache'] );
 
 		$this->userAttributeServiceMock = $this->getMock( AttributeService::class );
 
