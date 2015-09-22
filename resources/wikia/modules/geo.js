@@ -67,12 +67,25 @@
 			return data.continent;
 		}
 
+		/**
+		 * Returns the code for the region
+		 *
+		 * @public
+		 *
+		 * @return {String} The region code
+		 */
+		function getRegionCode() {
+			var data = getGeoData();
+			return data.region;
+		}
+
 		/** @public **/
 
 		return {
 			getGeoData: getGeoData,
 			getCountryCode: getCountryCode,
 			getContinentCode: getContinentCode,
+			getRegionCode: getRegionCode,
 			setCountryCode: setCountryCode
 		};
 	}

@@ -1004,10 +1004,11 @@ $wgABTests = array();
 $wgApiRunJobsPerRequest = 20;
 
 /**
- * sets memcached timeout back to what it was in mw1.15
+ * Memcached client timeouts
  */
+$wgMemCachedTimeout = 500000; // stream timeout in microseconds
+$wgMemCachedConnectionTimeout = 0.5; // connection timeout in seconds
 
-$wgMemCachedTimeout = 500000; //Data timeout in microseconds
 
 $wgAssetsManagerQuery = '/__am/%4$d/%1$s/%3$s/%2$s';
 //$wgAssetsManagerQuery = '/index.php?action=ajax&rs=AssetsManagerEntryPoint&__am&type=%1$s&cb=%4$d&params=%3$s&oid=%2$s';
@@ -1240,19 +1241,6 @@ $wgWikiaHubsFileRepoPath = 'http://corp.wikia.com/';
 $wgWikiaHubsFileRepoDirectory = '/images/c/corp/images';
 
 /**
- * @name $wgEnableAmazonMatchOld
- * Enables AmazonMatch old integration (id=3006)
- */
-$wgEnableAmazonMatchOld = true;
-
-/**
- * @name $wgAmazonMatchOldCountries
- * Enables AmazonMatch old integration (id=3006) in these countries (given wgEnableAmazonMatchOld is also true).
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAmazonMatchOldCountries = null;
-
-/**
  * @name $wgEnableAmazonMatch
  * Enables AmazonMatch new integration (id=3115)
  */
@@ -1271,6 +1259,19 @@ $wgAmazonMatchCountries = null;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAmazonMatchCountriesMobile = null;
+
+/**
+ * @name $wgEnableOpenXBidder
+ * Enables OpenX bidder
+ */
+$wgAdDriverEnableOpenXBidder = false;
+
+/**
+ * @name $wgAdDriverOpenXBidderCountries
+ * Enables OpenX bidder in these countries (given wgAdDriverEnableOpenXBidder is also true).
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverOpenXBidderCountries = null;
 
 /**
  * @name $wgAdPageLevelCategoryLangs
@@ -1484,6 +1485,13 @@ $wgAdDriverRubiconRTPCountries = null;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverKruxCountries = null;
+
+/**
+ * @name $wgAdDriverScrollHandlerConfig
+ * Scroll handler configuration (enabled with $wgAdDriverScrollHandlerCountries)
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverScrollHandlerConfig = null;
 
 /**
  * @name $wgAdDriverScrollHandlerCountries
@@ -1796,9 +1804,10 @@ $wgPaidAssetDropConfig = false;
 $wgAdDriverIncontentPlayerSlotCountries = null;
 
 /**
- * flag for using (possibly external) service for managing a user's preferences
+ * manage a user's preferences externally
  */
-$wgPreferencesUseService = false;
+$wgPreferenceServiceRead = false;
+$wgPreferenceServiceShadowWrite = true;
 
 /**
  * @name $wgEnableRobotsTxtExt
@@ -1814,3 +1823,9 @@ $wgEnableRobotsTxtExt = false;
  */
 $wgEnableFliteTagExt = false;
 
+/**
+ * @name $wgEnableSeoLinkHreflangExt
+ *
+ * Enables SEO Link Hreflang extension
+ */
+$wgEnableSeoLinkHreflangExt = false;

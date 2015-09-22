@@ -24,13 +24,13 @@ ve.ui.WikiaInsertInfoboxEmptyState = function VeUiWikiaInsertInfoboxEmptyState( 
 			label: $( '<a href="' + insigthsURL + '">' + convertInfoboxesMsg + '</a>' )
 		}),
 
-		showInsigthsLink = config.showInsigthsLink || false;
+		showInsightsLink = config.showInsightsLink || false;
 
 	// Parent constructor
 	ve.ui.WikiaInsertInfoboxEmptyState.super.call( this, config );
 
 	this.$element.addClass( 've-ui-insert-infobox-empty-state' );
-	this.$element.append( noInfoboxesFoundLabel.$element, showInsigthsLink ? convertInfoboxesLabel.$element : '' );
+	this.$element.append( noInfoboxesFoundLabel.$element, showInsightsLink ? convertInfoboxesLabel.$element : '' );
 };
 
 /* Inheritance */

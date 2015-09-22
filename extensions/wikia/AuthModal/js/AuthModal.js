@@ -6,7 +6,7 @@ define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 		isOpen,
 		track;
 
-	function open () {
+	function open (onAuthSuccess) {
 		if (isOpen) {
 			close();
 		}
@@ -25,7 +25,19 @@ define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 			label: 'username-login-modal'
 		});
 
-		$(window.document).keyup(onKeyUp);
+		$(window).on({
+			'keyup.authModal' : onKeyUp,
+			'message.authModal': function (event) {
+				var e = event.originalEvent;
+
+				if (typeof e.data !== 'undefined' && e.data.isUserAuthorized) {
+					close();
+					if (typeof onAuthSuccess === 'function') {
+						onAuthSuccess();
+					}
+				}
+			}
+		});
 	}
 
 	function getTrackingFunction () {
@@ -59,6 +71,8 @@ define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 			$blackout.remove();
 			isOpen = false;
 		}
+
+		$(window).off('.authModal');
 	}
 
 	function onPageLoaded () {
@@ -67,14 +81,16 @@ define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 		}
 	}
 
-	function loadPage (url, callback) {
-		var authIframe = window.document.createElement('iframe');
-		authIframe.src = url + '&modal=1';
+	function loadPage (url, onPageLoaded) {
+		var authIframe = window.document.createElement('iframe'),
+			modalParam = 'modal=1';
+
+		authIframe.src = url + (url.indexOf('?') === -1 ? '?' : '&')  + modalParam;
 		//for the selenium tests:
 		authIframe.id = 'auth-modal-iframe';
 		authIframe.onload = function () {
-			if (typeof callback === 'function') {
-				callback();
+			if (typeof onPageLoaded === 'function') {
+				onPageLoaded();
 			}
 		};
 		modal.appendChild(authIframe);
@@ -82,9 +98,42 @@ define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 	}
 
 	return {
-		load: function (url) {
-			open();
-			loadPage(url, onPageLoaded);
-		}
+		/**
+		 * @desc launches the new auth modal if wgEnableNewAuthModal is set to true. If not, then the old UserLoginModal
+		 * is loaded.
+		 * @param {object} params:
+		 * @param {string} url - url for the page we want to load in the modal
+		 * @param {string} origin - used for tracking the source of force login modal
+		 * @param {function} onAuthSuccess - callback function to be called after login
+		 */
+		load: function (params) {
+			if (typeof params.onAuthSuccess !== 'function') {
+				params.onAuthSuccess = function () {
+					window.location.reload();
+				};
+			}
+
+			if (!params.origin) {
+				params.origin = 'no-origin-provided';
+			}
+
+			if (window.wgEnableNewAuthModal) {
+				open(params.onAuthSuccess);
+
+				track({
+					action: Wikia.Tracker.ACTIONS.OPEN,
+					label: 'from-' + params.origin
+				});
+
+				loadPage(params.url, onPageLoaded);
+
+			} else {
+				window.UserLoginModal.show({
+					origin: params.origin,
+					callback: params.onAuthSuccess
+				});
+			}
+		},
+		close: close
 	};
 });

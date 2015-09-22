@@ -734,9 +734,6 @@ function axWFactoryDomainQuery() {
 function axWFactoryFilterVariables() {
 	global $wgRequest, $wgUser;
 
-	// this request needs to be a POST and has a valid token passed (PLATFORM-1476)
-	axWFactoryValidateRequest( $wgRequest, $wgUser, __METHOD__ );
-
 	if ( !$wgUser->isAllowed('wikifactory') ) {
 		return '';
 	}
@@ -754,9 +751,9 @@ function axWFactoryFilterVariables() {
 		$selector .= Xml::element( 'option', [ 'value' => $Var->cv_id ], $Var->cv_name );
 	}
 
-	return json_encode(array(
-	    "selector" => $selector,
-	));
+	$resp = new AjaxResponse( json_encode( [ "selector" => $selector ] ) );
+	$resp->setContentType( 'application/json; charset=utf-8' );
+	return $resp;
 }
 
 /**

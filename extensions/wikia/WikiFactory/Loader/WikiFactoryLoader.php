@@ -429,7 +429,7 @@ class WikiFactoryLoader {
 				$url[ "path" ] = "/{$path}" . $url[ "path" ];
 			}
 
-			$target = $url[ "scheme" ] . "://" . $host . $url[ "path" ];
+			$target = WikiFactory::getLocalEnvURL( $url[ "scheme" ] . "://" . $host . $url[ "path" ] );
 			$target = isset( $url[ "query" ] ) ? $target . "?" . $url[ "query" ] : $target;
 
 			$this->debug( "redirected from {$url[ "url" ]} to {$target}" );
