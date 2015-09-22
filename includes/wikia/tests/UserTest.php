@@ -90,6 +90,20 @@ class UserTest extends WikiaBaseTest {
 		$this->assertEquals($value, $this->testUser->getGlobalPreference($preference));
 	}
 
+	public function testSetGlobalPreferenceWithMockedUserPreferenceService() {
+		// this has side effects in the database as long as we are in migration mode
+		$this->mockGlobalVariable('wgPreferenceServiceShadowWrite', true);
+
+		$preference = 'somepref';
+		$value = 'somevalue';
+
+		$this->userPreferenceServiceMock->expects( $this->once() )
+			->method( 'setGlobalPreference' )
+			->with( $this->testUser->getId(), $preference, $value );
+
+		$this->testUser->setGlobalPreference($preference, $value);
+	}
+
 	public function testGetLocalPreferenceWithMockedUserPreferenceService() {
 		$this->mockGlobalVariable('wgPreferenceServiceRead', true);
 
@@ -103,5 +117,20 @@ class UserTest extends WikiaBaseTest {
 			->willReturn( $value );
 
 		$this->assertEquals($value, $this->testUser->getLocalPreference($preference, $cityId));
+	}
+
+	public function testSetLocalPreferenceWithMockedUserPreferenceService() {
+		// this has side effects in the database as long as we are in migration mode
+		$this->mockGlobalVariable('wgPreferenceServiceShadowWrite', true);
+
+		$cityId = 12345;
+		$preference = 'somepref';
+		$value = 'somevalue';
+
+		$this->userPreferenceServiceMock->expects( $this->once() )
+			->method( 'setLocalPreference' )
+			->with( $this->testUser->getId(), $cityId, $preference, $value );
+
+		$this->testUser->setLocalPreference($preference, $value, $cityId);
 	}
 }
