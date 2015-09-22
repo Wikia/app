@@ -8,6 +8,27 @@ class ContentReviewHelperTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @param $isJsPage
+	 * @param $inNamespace
+	 * @param $contentType
+	 * @param $expected
+	 * @dataProvider shouldPageContentBeReplacedData
+	 */
+	public function testShouldPageContentBeReplaced( $isJsPage, $inNamespace, $contentType, $expected ) {
+		$titleMock = $this->getMock( '\Title', [ 'isJsPage', 'inNamespace' ] );
+		$titleMock->expects( $this->once() )
+			->method( 'isJsPage' )
+			->willReturn( $isJsPage );
+
+		$titleMock->expects( $this->any() )
+			->method( 'inNamespace' )
+			->willReturn( $inNamespace );
+
+		$value = ( new Wikia\ContentReview\Helper() )->shouldPageContentBeReplaced( $titleMock, $contentType );
+		$this->assertEquals( $expected, $value );
+	}
+
+	/**
 	 * @dataProvider replaceWithLastApprovedRevisionProvider
 	 * Test for \Wikia\ContentReview\Hooks::onRawPageViewBeforeOutput hook
 	 */
@@ -62,7 +83,6 @@ class ContentReviewHelperTest extends WikiaBaseTest {
 
 	/**
 	 * @dataProvider userCanEditJsPageProvider
-	 * @param bool $inNamespace
 	 * @param bool $isJsPage
 	 * @param bool $userCan
 	 * @param bool $expected
@@ -96,6 +116,43 @@ class ContentReviewHelperTest extends WikiaBaseTest {
 			->willReturn( $latestReviewedId );
 
 		$this->assertEquals( $expected, $this->getHelper()->hasPageApprovedId( $modelMock, 0, 0, $oldId ), $message );
+	}
+
+	public function shouldPageContentBeReplacedData() {
+		$goodMimeType = 'text/javascript';
+		$badMimeType = 'text/css';
+		return [
+			[
+				false, // isJsPage()
+				false, // inNamespace()
+				$badMimeType,
+				false, // expected
+			],
+			[
+				false, // isJsPage()
+				true, // inNamespace()
+				$badMimeType,
+				false, // expected
+			],
+			[
+				false, // isJsPage()
+				false, // inNamespace()
+				$goodMimeType,
+				false, // expected
+			],
+			[
+				false, // isJsPage()
+				true, // inNamespace()
+				$goodMimeType,
+				true, // expected
+			],
+			[
+				true, // isJsPage()
+				false, // inNamespace()
+				$badMimeType,
+				true, // expected
+			],
+		];
 	}
 
 	public function replaceWithLastApprovedRevisionProvider() {

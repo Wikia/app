@@ -326,30 +326,30 @@ class Helper extends \ContextSource {
 	 * @param \Title $title
 	 * @param string $contentType
 	 * @param string $text
+	 * @return String
 	 */
-	public function replaceWithLastApproved( \Title $title, $contentType, &$text ) {
-		global $wgCityId, $wgJsMimeType;
+	public function replaceWithLastApproved( \Title $title, $contentType, $text ) {
+		global $wgCityId;
 
-		if ( $title->isJsPage()
-			|| ( $title->inNamespace( NS_MEDIAWIKI ) && $contentType == $wgJsMimeType )
-		) {
+		if ( $this->shouldPageContentBeReplaced( $title, $contentType ) ) {
 			$pageId = $title->getArticleID();
 			$latestRevId = $title->getLatestRevID();
-
 			$latestReviewedRevData = $this->getCurrentRevisionModel()->getLatestReviewedRevision( $wgCityId, $pageId );
 
-			if ( $latestReviewedRevData['revision_id'] != $latestRevId
+			if ( $latestReviewedRevData['revision_id'] !== $latestRevId
 				&& !$this->isContentReviewTestModeEnabled()
 			) {
 				$revision = $this->getRevisionById( $latestReviewedRevData['revision_id'] );
 
-				if ( $revision ) {
-					$text = $revision->getRawText();
-				} else {
-					$text = '';
+				if ( $revision instanceof \Revision ) {
+					return $revision->getRawText();
 				}
+
+				return '';
 			}
 		}
+
+		return $text;
 	}
 
 	/**
@@ -376,5 +376,18 @@ class Helper extends \ContextSource {
 	public function userCanAutomaticallyApprove( \User $user ) {
 		return $user->isAllowed( 'content-review' )
 			&& $user->getRequest()->getBool( 'wpApprove' );
+	}
+
+	/**
+	 * Checks if a page should be even consider for content replacement with an approved revision.
+	 * @param \Title $title
+	 * @param $contentType
+	 * @return bool
+	 */
+	public function shouldPageContentBeReplaced( \Title $title, $contentType ) {
+		global $wgJsMimeType;
+
+		return $title->isJsPage()
+			|| $title->inNamespace( NS_MEDIAWIKI ) && $contentType === $wgJsMimeType;
 	}
 }
