@@ -1,4 +1,15 @@
 {
+	"APIModules": {
+		"apimediasearch": "ApiMediaSearch",
+		"addmediapermanent": "ApiAddMediaPermanent",
+		"addmediatemporary": "ApiAddMediaTemporary"
+	},
+	"AutoloadClasses": {
+		"ApiAddMedia": "ApiAddMedia.php",
+		"ApiMediaSearch": "ApiMediaSearch.php",
+		"ApiAddMediaPermanent": "ApiAddMediaPermanent.php",
+		"ApiAddMediaTemporary": "ApiAddMediaTemporary.php"
+	},
 	"ResourceModules": {
 		"ext.visualEditor.wikia.desktopArticleTarget.init": {
 			"class": "VisualEditorDesktopArticleTargetInitModule",

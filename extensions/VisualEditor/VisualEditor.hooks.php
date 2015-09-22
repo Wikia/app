@@ -56,7 +56,7 @@ class VisualEditorHooks {
 			//'ext.visualEditor.desktopArticleTarget.init',
 			'ext.visualEditor.wikia.desktopArticleTarget.init',
 			'ext.visualEditor.targetLoader',
-			'ext.visualEditor.wikia.ui'
+			'ext.visualEditor.wikia.core'
 		) );
 		$output->addModuleStyles( array( 'ext.visualEditor.desktopArticleTarget.noscript' ) );
 		// add scroll offset js variable to output
@@ -403,6 +403,7 @@ class VisualEditorHooks {
 	 * Adds extra variables to the page config.
 	 */
 	public static function onMakeGlobalVariablesScript( array &$vars, OutputPage $out ) {
+		global $wgMaxUploadSize, $wgUploadPath;
 		$pageLanguage = $out->getTitle()->getPageLanguage();
 
 		$vars['wgVisualEditor'] = array(
@@ -411,6 +412,9 @@ class VisualEditorHooks {
 			'usePageImages' => defined( 'PAGE_IMAGES_INSTALLED' ),
 			'usePageDescriptions' => defined( 'WBC_VERSION' ),
 		);
+
+		$vars[ 'wgMaxUploadSize' ] = $wgMaxUploadSize;
+		$vars[ 'VignettePathPrefix' ] = VignetteRequest::parsePathPrefix( $wgUploadPath );
 
 		return true;
 	}
