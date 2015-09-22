@@ -2683,7 +2683,28 @@ class User {
 	 * @return string
 	 */
 	public function getGlobalAttribute( $attribute, $default = null ) {
+		if ( $this->shouldLogAttribute( $attribute ) ) {
+			$this->logAttribute( $attribute );
+		}
+
 		return $this->getOptionHelper($attribute, $default);
+	}
+
+	/**
+	 * Returns true if 1.) User is logged in and 2.) The attribute is one used by clients other
+	 * than MW (eg, the avatar service or discussion app).
+	 * @param $attributeName
+	 * @return bool
+	 */
+	private function shouldLogAttribute( $attributeName ) {
+		return $this->isLoggedIn() && in_array( $attributeName, UserAttributes::$ATTRIBUTES_USED_BY_OUTSIDE_CLIENTS );
+	}
+
+	private function logAttribute( $attributeName ) {
+		$this->info( 'USER_ATTRIBUTES get_attribute_call', [
+			'attributeName' => $attributeName,
+			'userId' => $this->getId()
+		] );
 	}
 
 	/**

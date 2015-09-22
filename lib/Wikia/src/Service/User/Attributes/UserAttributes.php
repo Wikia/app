@@ -13,6 +13,11 @@ class UserAttributes {
 	/** @var string[string][string] */
 	private $attributes;
 
+	// These are attributes which are updated by clients other than MW. We want to grab these
+	// values from the service, rather than MW's user cache, since they may have been updated
+	// outside of MW.
+	public static $ATTRIBUTES_USED_BY_OUTSIDE_CLIENTS = [ AVATAR_USER_OPTION_NAME, "location" ];
+
 	/**
 	 * @Inject({
 	 *    Wikia\Service\User\Attributes\AttributeService::class,
