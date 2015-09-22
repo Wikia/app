@@ -47,7 +47,6 @@ class WikiaTest extends WikiaBaseTest {
 	public function testOnSkinTemplateOutputPageBeforeExec_doesNotSetNoIndexNoFollow() {
 		$this->mockGlobalVariable('wgDevelEnvironment', false);
 		$this->mockGlobalVariable('wgStagingEnvironment', false);
-
 		$requestMock = $this->getRequestMock( '' );
 		$outMock = $this->getOutputpageMock( 'never' );
 		$skinMock = $this->getSkinTemplateMock( $requestMock, $outMock );
@@ -84,7 +83,7 @@ class WikiaTest extends WikiaBaseTest {
 	}
 
 	private function getRequestMock( $headerValue ) {
-		$requestMock = $this->getMockBuilder( 'Request' )
+		$requestMock = $this->getMockBuilder( 'WebRequest' )
 			->disableOriginalConstructor()
 			->setMethods( [ 'getHeader' ] )
 			->getMock();
