@@ -86,7 +86,7 @@ define('ext.wikia.adEngine.adContext', [
 		}
 
 		// Recoverable ads message
-		if (context.opts.sourcePointDetection) {
+		if (context.opts.sourcePointDetection && !context.opts.sourcePoint) {
 			context.opts.recoveredAdsMessage = isProperGeo(instantGlobals.wgAdDriverAdsRecoveryMessageCountries);
 		}
 
