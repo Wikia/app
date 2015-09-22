@@ -210,6 +210,12 @@ ve.dm.MWImageModel.static.newFromImageAttributes = function ( attrs, parentDoc )
 		'custom'
 	);
 
+	// ve-upstream-sync - review - @author: Paul Oslund
+	var isVideo = false;
+	if ( isVideo ) {
+		imgModel.setMediaType( 'VIDEO' );
+	}
+
 	return imgModel;
 };
 
@@ -362,9 +368,9 @@ ve.dm.MWImageModel.prototype.getImageNodeType = function ( imageType, align ) {
 		( this.getType() === 'frameless' || this.getType() === 'none' ) &&
 		( !this.isAligned( align ) || this.isDefaultAligned( imageType, align ) )
 	) {
-		return 'mwInlineImage';
+		return this.getMediaType() === 'VIDEO' ? 'wikiaInlineVideo' : 'mwInlineImage';
 	} else {
-		return 'mwBlockImage';
+		return this.getMediaType() === 'VIDEO' ? 'wikiaBlockVideo' : 'wikiaBlockImage';
 	}
 };
 
@@ -385,17 +391,23 @@ ve.dm.MWImageModel.prototype.getBoundingBox = function () {
  */
 ve.dm.MWImageModel.prototype.updateImageNode = function ( node, surfaceModel ) {
 	var captionRange, captionNode,
-		doc = surfaceModel.getDocument();
+		doc = surfaceModel.getDocument(),
+		captionType;
 
 	// Update the caption
-	if ( node.getType() === 'mwBlockImage' ) {
+	if ( node.getType() === 'wikiaBlockImage' || node.getType() === 'wikiaBlockVideo' ) {
 		captionNode = node.getCaptionNode();
 		if ( !captionNode ) {
+			if ( node.getType() === 'wikiaBlockImage' ) {
+				captionType = 'wikiaImageCaption';
+			} else {
+				captionType = 'wikiaVideoCaption';
+			}
 			// There was no caption before, so insert one now
 			surfaceModel.getFragment()
 				.adjustLinearSelection( 1 )
 				.collapseToStart()
-				.insertContent( [ { type: 'mwImageCaption' }, { type: '/mwImageCaption' } ] );
+				.insertContent( [ { type: captionType }, { type: '/' + captionType } ] );
 			// Update the caption node
 			captionNode = node.getCaptionNode();
 		}
@@ -453,6 +465,7 @@ ve.dm.MWImageModel.prototype.insertImageNode = function ( fragment ) {
 
 	switch ( nodeType ) {
 		case 'mwInlineImage':
+		case 'wikiaInlineVideo':
 			// Try to put the image inside the nearest content node
 			offset = fragment.getDocument().data.getNearestContentOffset( fragment.getSelection().getRange().start );
 			if ( offset > -1 ) {
@@ -461,7 +474,13 @@ ve.dm.MWImageModel.prototype.insertImageNode = function ( fragment ) {
 			fragment.insertContent( contentToInsert );
 			return fragment;
 
-		case 'mwBlockImage':
+		case 'wikiaBlockImage':
+		case 'wikiaBlockVideo':
+			if ( nodeType === 'wikiaBlockImage' ) {
+				contentToInsert.splice( 1, 0, { type: 'wikiaImageCaption' }, { type: '/wikiaImageCaption' } );
+			} else {
+				contentToInsert.splice( 1, 0, { type: 'wikiaVideoCaption' }, { type: '/wikiaVideoCaption' } );
+			}
 			// Try to put the image in front of the structural node
 			offset = fragment.getDocument().data.getNearestStructuralOffset( fragment.getSelection().getRange().start, -1 );
 			if ( offset > -1 ) {
@@ -1068,10 +1087,10 @@ ve.dm.MWImageModel.prototype.getDefaultDir = function ( imageNodeType ) {
 
 	if ( this.parentDoc.getDir() === 'rtl' ) {
 		// Assume position is 'left'
-		return ( imageNodeType === 'mwBlockImage' ) ? 'left' : 'none';
+		return ( imageNodeType === 'wikiaBlockImage' || imageNodeType === 'wikiaBlockVideo' ) ? 'left' : 'none';
 	} else {
 		// Assume position is 'right'
-		return ( imageNodeType === 'mwBlockImage' ) ? 'right' : 'none';
+		return ( imageNodeType === 'wikiaBlockImage' || imageNodeType === 'wikiaBlockVideo' ) ? 'right' : 'none';
 	}
 };
 
