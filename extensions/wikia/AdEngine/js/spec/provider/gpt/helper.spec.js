@@ -162,52 +162,6 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 		expect(callbacks.length).toEqual(1);
 	});
 
-	it('Should push/flush when sourcepoint is enabled but pageview is not blocked', function () {
-		mocks.context = {
-			opts: {
-				sourcePoint: true
-			}
-		};
-		window.ads = {
-			runtime: {
-				sp: {
-					blocking: false
-				}
-			}
-		};
-
-		spyOn(mocks.googleTag.prototype, 'push');
-		spyOn(mocks.googleTag.prototype, 'flush');
-
-		getModule().pushAd('TOP_RIGHT_BOXAD', mocks.slotElement, '/foo/slot/path', {}, { sraEnabled: true });
-
-		expect(mocks.googleTag.prototype.push).toHaveBeenCalled();
-		expect(mocks.googleTag.prototype.flush).toHaveBeenCalled();
-	});
-
-	it('Should push/flush when pageview is blocked but sourcepoint is disabled', function () {
-		mocks.context = {
-			opts: {
-				sourcePoint: false
-			}
-		};
-		window.ads = {
-			runtime: {
-				sp: {
-					blocking: true
-				}
-			}
-		};
-
-		spyOn(mocks.googleTag.prototype, 'push');
-		spyOn(mocks.googleTag.prototype, 'flush');
-
-		getModule().pushAd('TOP_RIGHT_BOXAD', mocks.slotElement, '/foo/slot/path', {}, { sraEnabled: true });
-
-		expect(mocks.googleTag.prototype.push).toHaveBeenCalled();
-		expect(mocks.googleTag.prototype.flush).toHaveBeenCalled();
-	});
-
 	it('Prevent push/flush when slot is not recoverable and pageview is blocked and recovery is enabled', function () {
 		mocks.recoveryHelper.isBlocking = function () {
 			return true;
