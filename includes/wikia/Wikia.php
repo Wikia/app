@@ -2396,8 +2396,8 @@ class Wikia {
      * @return string
      */
     public static function getSharedKeyPrefix( $hostname ) {
-        global $wgBaseSharedKeyPrefix;
+        global $wgBaseShareKeyPrefix;
 
-        return $hostname . '-' . $wgBaseSharedKeyPrefix;
+        return $hostname . '-' . $wgBaseShareKeyPrefix;
     }
 }
