@@ -29,11 +29,11 @@ class UserTest extends WikiaBaseTest {
 	private function setupAndInjectUserPreferenceServiceMock() {
 		global $wgGlobalUserPreferenceWhiteList, $wgLocalUserPreferenceWhiteList;
 
-		$this->userPreferenceServiceMock = $this->getMock( 'Wikia\Service\User\Preferences\PreferenceService',
+		$this->userPreferenceServiceMock = $this->getMock( PreferenceService::class,
 			['getGlobalPreference', 'getPreferences', 'setPreferences', 'setGlobalPreference', 'deleteGlobalPreference',
 			'getLocalPreference', 'setLocalPreference', 'deleteLocalPreference', 'save', 'getGlobalDefault'] );
 
-		$this->userAttributeServiceMock = $this->getMock( 'Wikia\Service\User\Attributes\AttributeService' );
+		$this->userAttributeServiceMock = $this->getMock( AttributeService::class );
 
 		$container = ( new InjectorBuilder() )
 			->bind( PreferenceService::class )->to( $this->userPreferenceServiceMock )
