@@ -14,7 +14,7 @@ class ContentReviewHelperTest extends WikiaBaseTest {
 	 * @param bool $expected
 	 * @dataProvider shouldPageContentBeReplacedData
 	 */
-	public function testShouldPageContentBeReplaced( $isJsPage, $inNamespace, $contentType, $expected ) {
+	public function testIsPageForReview( $isJsPage, $inNamespace, $contentType, $expected ) {
 		$titleMock = $this->getMock( '\Title', [ 'isJsPage', 'inNamespace' ] );
 		$titleMock->expects( $this->once() )
 			->method( 'isJsPage' )
