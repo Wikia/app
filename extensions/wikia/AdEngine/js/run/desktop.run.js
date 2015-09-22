@@ -10,6 +10,7 @@ require([
 	'ext.wikia.adEngine.dartHelper',
 	'ext.wikia.adEngine.messageListener',
 	'ext.wikia.adEngine.provider.evolve',
+	'ext.wikia.adEngine.recovery.helper',
 	'ext.wikia.adEngine.slot.scrollHandler',
 	'ext.wikia.adEngine.slotTracker',
 	'ext.wikia.adEngine.slotTweaker',
@@ -27,6 +28,7 @@ require([
 	dartHelper,
 	messageListener,
 	providerEvolve,
+	recoveryHelper,
 	scrollHandler,
 	slotTracker,
 	slotTweaker,
@@ -84,15 +86,16 @@ require([
 		adEngine.run(adConfigDesktop, win.adslots2, 'queue.desktop');
 
 		// Recovery
+		recoveryHelper.initEventQueue();
+		sourcePoint.initDetection();
+
 		if (context.opts.sourcePoint && win.ads) {
 			win.ads.runtime.sp.slots = win.ads.runtime.sp.slots || [];
-			win.addEventListener('sp.blocking', function () {
+			recoveryHelper.addOnBlockingEvent(function () {
 				adTracker.measureTime('adengine.init', 'queue.desktop').track();
 				adEngine.run(adConfigDesktop, win.ads.runtime.sp.slots, 'queue.sp');
 			});
 		}
-
-		sourcePoint.initDetection();
 
 		if (context.opts.recoveredAdsMessage) {
 			loader({
@@ -100,7 +103,7 @@ require([
 				resources: ['adengine2_ads_recovery_message_js']
 			}).done(function () {
 				require(['ext.wikia.adEngine.recovery.message'], function (recoveredAdMessage) {
-					recoveredAdMessage.init();
+					recoveredAdMessage.addRecoveryEvent();
 				});
 			});
 		}

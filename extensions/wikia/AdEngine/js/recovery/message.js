@@ -1,16 +1,21 @@
 define('ext.wikia.adEngine.recovery.message', [
+	'ext.wikia.adEngine.recovery.helper',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window'
-], function (doc, log, win) {
+], function (
+	recoveryHelper,
+	doc,
+	log,
+	win
+) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.recovery.message',
 		wikiaRailId = 'WikiaRail';
 
-	function init() {
-		doc.addEventListener('sp.blocking', function () {
-			log('recoveredAdsMessage - ad blockers found', 'debug', logGroup);
+	function addRecoveryEvent() {
+		recoveryHelper.addOnBlockingEvent(function () {
 			recover();
 		});
 	}
@@ -25,6 +30,8 @@ define('ext.wikia.adEngine.recovery.message', [
 	}
 
 	function recover() {
+		log('recoveredAdsMessage - ad blockers found', 'debug', logGroup);
+
 		if (doc.readyState === 'complete') {
 			log('recoveredAdsMessage.recover - executing inject functions', 'debug', logGroup);
 			injectRightRailRecoveredAd();
@@ -35,6 +42,6 @@ define('ext.wikia.adEngine.recovery.message', [
 	}
 
 	return {
-		init: init
+		addRecoveryEvent: addRecoveryEvent
 	};
 });

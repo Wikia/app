@@ -1,11 +1,13 @@
 define('ext.wikia.adEngine.recovery.helper', [
 	'ext.wikia.adEngine.adContext',
 	'wikia.document',
+	'wikia.lazyqueue',
 	'wikia.log',
 	require.optional('ext.wikia.adEngine.provider.gpt.sourcePointTag')
 ], function (
 	adContext,
 	doc,
+	lazyQueue,
 	log,
 	SourcePointTag
 ) {
@@ -13,10 +15,24 @@ define('ext.wikia.adEngine.recovery.helper', [
 
 	var logGroup = 'ext.wikia.adEngine.recovery.helper',
 		context = adContext.getContext(),
-		slotsToRecover = [];
+		slotsToRecover = [],
+		onBlockingEventsQueue = [];
+
+	function initEventQueue() {
+		lazyQueue.makeQueue(onBlockingEventsQueue, function (eventHandler) {
+			doc.addEventListener('sp.blocking', function () {
+				eventHandler();
+			});
+		});
+		onBlockingEventsQueue.start();
+	}
 
 	function addSlotToRecover(slotName) {
 		slotsToRecover.push(slotName);
+	}
+
+	function addOnBlockingEvent(eventHandler) {
+		onBlockingEventsQueue.push(eventHandler);
 	}
 
 	function createSourcePointTag() {
@@ -48,7 +64,9 @@ define('ext.wikia.adEngine.recovery.helper', [
 
 	return {
 		addSlotToRecover: addSlotToRecover,
+		addOnBlockingEvent: addOnBlockingEvent,
 		createSourcePointTag: createSourcePointTag,
+		initEventQueue: initEventQueue,
 		isRecoveryEnabled: isRecoveryEnabled,
 		isBlocking: isBlocking,
 		isRecoverable: isRecoverable,
