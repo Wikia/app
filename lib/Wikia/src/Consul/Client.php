@@ -11,6 +11,7 @@ namespace Wikia\Consul;
 
 use SensioLabs\Consul\ServiceFactory;
 use Wikia\Logger\WikiaLogger;
+use Wikia\Util\Assert;
 
 class Client {
 
@@ -54,15 +55,17 @@ class Client {
 	}
 
 	/**
-	 * Helper method for getting database nodes hidden behind consul
+	 * Helper method for getting IP addresses of all nodes hidden behind consul
 	 *
-	 * $catalog->getDatabaseNodes( 'slave.db-smw.service.consul' )
+	 * $catalog->getNodesFromHostname( 'slave.db-smw.service.consul' )
 	 *
-	 * @param $db
+	 * @param string $hostname
 	 * @return array list of IP addresses
 	 */
-	function getDatabaseNodes( $db ) {
-		list( $tag, $service ) = explode( '.', $db );
+	function getNodesFromHostname( $hostname ) {
+		Assert::true( self::isConsulAddress( $hostname ), __METHOD__ . ' should get a Consul address', $this->getLoggerContext() );
+
+		list( $tag, $service ) = explode( '.', $hostname );
 		return $this->getNodes( $service, $tag );
 	}
 

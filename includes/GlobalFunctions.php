@@ -3816,7 +3816,7 @@ function wfWaitForSlaves( $wiki = false ) {
 			$consul = new Wikia\Consul\Client();
 
 			$slaveInfo = $lb->getServerInfo( 1 ); // e.g. slave.db-g.service.consul
-			$slaves = $consul->getDatabaseNodes( $slaveInfo['hostName'] );
+			$slaves = $consul->getNodesFromHostname( $slaveInfo['hostName'] );
 
 			// clone the loadbalancer and add all slaves that we've got from Consul
 			$lb = clone $lb;
