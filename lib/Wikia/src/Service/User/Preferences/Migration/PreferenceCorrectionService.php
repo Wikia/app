@@ -115,7 +115,9 @@ class PreferenceCorrectionService {
 	}
 
 	protected function getLoggerContext() {
-		return ['class' => 'PreferenceCorrectionService'];
+		return [
+			'class' => 'PreferenceCorrectionService',
+			'source' => wfBacktrace(true),];
 	}
 
 	private function logMissingPreference( $userId, $name ) {
