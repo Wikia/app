@@ -218,25 +218,21 @@ class Helper extends \ContextSource {
 		);
 	}
 
-	public function isDiffPageInReviewProcess( $wikiId, $pageId, $diff ) {
+	public function isDiffPageInReviewProcess( \WikiaRequest $request, ReviewModel $reviewModel, $wikiId, $pageId, $diff ) {
 		/**
 		 * Do not hit database if there is a URL parameter that indicates that a user
 		 * came directly from Special:ContentReview.
 		 */
-		if ( $this->getRequest()->getInt( self::CONTENT_REVIEW_PARAM ) === 1 ) {
+		if ( $request->getInt( self::CONTENT_REVIEW_PARAM ) === 1 ) {
 			return true;
 		}
 
-		$reviewModel = new ReviewModel();
 		$reviewData = $reviewModel->getReviewedContent( $wikiId, $pageId, ReviewModel::CONTENT_REVIEW_STATUS_IN_REVIEW );
-
 		return ( !empty( $reviewData ) && (int)$reviewData['revision_id'] === $diff );
 	}
 
-	public function hasPageApprovedId( $wikiId, $pageId, $oldid ) {
-		$currentModel = new CurrentRevisionModel();
-		$currentData = $currentModel->getLatestReviewedRevision( $wikiId, $pageId );
-
+	public function hasPageApprovedId( CurrentRevisionModel $model, $wikiId, $pageId, $oldid ) {
+		$currentData = $model->getLatestReviewedRevision( $wikiId, $pageId );
 		return ( !empty( $currentData ) && (int)$currentData['revision_id'] === $oldid );
 	}
 
@@ -334,7 +330,9 @@ class Helper extends \ContextSource {
 	public function replaceWithLastApproved( \Title $title, $contentType, &$text ) {
 		global $wgCityId, $wgJsMimeType;
 
-		if ( $title->isJsPage() || $contentType == $wgJsMimeType ) {
+		if ( $title->isJsPage()
+			|| ( $title->inNamespace( NS_MEDIAWIKI ) && $contentType == $wgJsMimeType )
+		) {
 			$pageId = $title->getArticleID();
 			$latestRevId = $title->getLatestRevID();
 
@@ -354,9 +352,29 @@ class Helper extends \ContextSource {
 		}
 	}
 
+	/**
+	 * Checks if a user can edit a JS page in the MediaWiki namespace.
+	 * @param \Title $title
+	 * @param \User $user
+	 * @return bool
+	 */
 	public function userCanEditJsPage( \Title $title, \User $user ) {
-		return $title->inNamespace( NS_MEDIAWIKI )
-			&& $title->isJsPage()
+		return $title->isJsPage()
 			&& $title->userCan( 'edit', $user );
+	}
+
+	/**
+	 * Checks if a user is a reviewer entitled to an automatic approval and if he requested it.
+	 *
+	 * The wpApprove request param that appears here is a value of a checkbox which is part of
+	 * the EditPageLayout for reviewers. It is displayed above the Publish button and allows a reviewer
+	 * to make a decision of skipping the review process.
+	 *
+	 * @param \User $user
+	 * @return bool
+	 */
+	public function userCanAutomaticallyApprove( \User $user ) {
+		return $user->isAllowed( 'content-review' )
+			&& $user->getRequest()->getBool( 'wpApprove' );
 	}
 }

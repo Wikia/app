@@ -11,13 +11,16 @@ var UploadPhotos = {
 	loginBeforeShowDialog: function(evt) {
 		var UserLoginModal = window.UserLoginModal;
 		if (( wgUserName == null ) && ( !UserLogin.forceLoggedIn )) {
-			UserLoginModal.show( {
-				origin: 'latest-photos',
-				callback: $.proxy(function() {
-					UserLogin.forceLoggedIn = true;
-					this.showDialog(evt);
-				}, this)
-			});
+			require(['AuthModal'], function (authModal) {
+				authModal.load({
+					url: '/signin?redirect=' + encodeURIComponent(window.location.href),
+					origin: 'latest-photos',
+					onAuthSuccess: $.proxy(function() {
+						UserLogin.forceLoggedIn = true;
+						this.showDialog(evt);
+					}, this)
+				});
+			}.bind(this));
 		}
 		else {
 			this.showDialog(evt);

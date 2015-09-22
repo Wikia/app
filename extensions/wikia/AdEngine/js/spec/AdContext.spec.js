@@ -12,6 +12,9 @@ describe('AdContext', function () {
 			geo: {
 				getCountryCode: function () {
 					return 'XX';
+				},
+				getRegionCode: function () {
+					return 'RR';
 				}
 			},
 			instantGlobals: {},
@@ -52,14 +55,14 @@ describe('AdContext', function () {
 		function () {
 			var adContext = getModule();
 
-			expect(adContext.getContext().opts).toEqual({enableScrollHandler: false});
+			expect(adContext.getContext().opts.enableScrollHandler).toBeFalsy();
 			expect(adContext.getContext().targeting).toEqual({enableKruxTargeting: false});
 			expect(adContext.getContext().providers).toEqual({});
 			expect(adContext.getContext().forcedProvider).toEqual(null);
 
 			mocks.win = {ads: {context: {}}};
 			adContext = getModule();
-			expect(adContext.getContext().opts).toEqual({enableScrollHandler: false});
+			expect(adContext.getContext().opts.enableScrollHandler).toBeFalsy();
 			expect(adContext.getContext().targeting).toEqual({enableKruxTargeting: false});
 			expect(adContext.getContext().providers).toEqual({});
 			expect(adContext.getContext().forcedProvider).toEqual(null);
@@ -177,8 +180,7 @@ describe('AdContext', function () {
 		expect(adContext.getContext().targeting.pageCategories).toEqual(['Category1', 'Category2']);
 	});
 
-	it(
-		'makes targeting.enableKruxTargeting false when disaster recovery instant global variable is set to true',
+	it('makes targeting.enableKruxTargeting false when disaster recovery instant global variable is set to true',
 		function () {
 			var adContext;
 			mocks.win = {ads: {context: {targeting: {enableKruxTargeting: true}}}};
@@ -351,12 +353,35 @@ describe('AdContext', function () {
 		expect(getModule().getContext().opts.sourcePoint).toBe(undefined);
 	});
 
-	it('enables SourcePoint when country in instantGlobals.wgAdDriverSourcePointCountries', function () {
+	it('enables SourcePoint when country in instant var', function () {
 		mocks.win = {ads: {context: {opts: {sourcePointUrl: '//foo.bar'}}}};
 		mocks.instantGlobals = {wgAdDriverSourcePointCountries: ['XX', 'ZZ']};
 
 		expect(getModule().getContext().opts.sourcePoint).toBeTruthy();
 	});
+
+	it('enables SourcePoint when region in instant var', function () {
+		mocks.win = {ads: {context: {opts: {sourcePointUrl: '//foo.bar'}}}};
+		mocks.instantGlobals = {wgAdDriverSourcePointCountries: ['XX-RR']};
+
+		expect(getModule().getContext().opts.sourcePoint).toBeTruthy();
+	});
+
+	it('enables SourcePoint when country and region in instant var (country overwrites region)', function () {
+		mocks.win = {ads: {context: {opts: {sourcePointUrl: '//foo.bar'}}}};
+		mocks.instantGlobals = {wgAdDriverSourcePointCountries: ['XX-EE', 'XX']};
+
+		expect(getModule().getContext().opts.sourcePoint).toBeTruthy();
+	});
+
+	it('disables SourcePoint when country and region in instant var and both are invalid',
+		function () {
+			mocks.win = {ads: {context: {opts: {sourcePointUrl: '//foo.bar'}}}};
+			mocks.instantGlobals = {wgAdDriverSourcePointCountries: ['XX-EE', 'YY']};
+
+			expect(getModule().getContext().opts.sourcePoint).toBeFalsy();
+		}
+	);
 
 	it('enables SourcePoint when url param sourcepoint is set', function () {
 		mocks.win = {ads: {context: {opts: {sourcePointUrl: '//foo.bar'}}}};
@@ -407,5 +432,15 @@ describe('AdContext', function () {
 		});
 
 		expect(getModule().getContext().slots.incontentPlayer).toBeTruthy();
+	});
+
+	it('context.opts.scrollHandlerConfig equals instatnGlobals.wgAdDriverScrollHandlerConfig', function () {
+		var config = {
+			foo: 'bar'
+		};
+
+		mocks.instantGlobals = { wgAdDriverScrollHandlerConfig: config };
+
+		expect(getModule().getContext().opts.scrollHandlerConfig).toBe(config);
 	});
 });

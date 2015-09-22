@@ -31,3 +31,23 @@ $wgSpecialPageGroups['Nonportableinfoboxes'] = 'wikia';
  * Models
  */
 $wgAutoloadClasses['InsightsUnconvertedInfoboxesModel'] = $dir . 'models/InsightsUnconvertedInfoboxesModel.php';
+
+/**
+ * Api Querys
+ */
+$wgAutoloadClasses[ 'ApiQueryUnconvertedInfoboxes' ] = $dir . 'ApiQueryUnconvertedInfoboxes.class.php';
+
+/**
+ * MW API
+ */
+$wgAPIListModules[ 'unconvertedinfoboxes' ] = 'ApiQueryUnconvertedInfoboxes';
+
+/**
+ * Controllers
+ */
+$wgAutoloadClasses[ 'InsightsUnconvertedInfoboxesHooks' ] = $dir . 'InsightsUnconvertedInfoboxesHooks.class.php';
+
+/**
+ * Hooks
+ */
+$wgHooks[ 'UnconvertedInfoboxesQueryRecached' ][] = 'InsightsUnconvertedInfoboxesHooks::onUnconvertedInfoboxesQueryRecached';

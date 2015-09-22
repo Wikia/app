@@ -1,5 +1,5 @@
 <?php
-class SoundCloudTagController extends WikiaParserTagController {
+class SoundCloudTagController extends WikiaController {
 	const TAG_NAME = 'soundcloud';
 
 	const TAG_SRC = 'https://w.soundcloud.com/player/?';
@@ -28,6 +28,8 @@ class SoundCloudTagController extends WikiaParserTagController {
 		'data-wikia-widget' => self::TAG_NAME,
 		'scrolling' => 'no',
 		'frameborder' => 'no',
+		//Default for height comes from default value added by SoundCloud when creating an iFrame via their website
+		'height' => '465',
 	];
 
 	private $helper;
@@ -45,13 +47,12 @@ class SoundCloudTagController extends WikiaParserTagController {
 
 	public function renderTag( $input, array $args, Parser $parser, PPFrame $frame ) {
 		$sourceUrl = self::TAG_SRC . $this->helper->buildTagSourceQueryParams(
-			self::TAG_SOURCE_ALLOWED_PARAMS_WITH_DEFAULTS, $args
-		);
+				self::TAG_SOURCE_ALLOWED_PARAMS_WITH_DEFAULTS, $args
+			);
 
 		$iframeCode = Html::element(
 			'iframe',
-			$this->buildTagAttributes( $sourceUrl, $args ),
-			wfMessage( 'soundcloud-tag-could-not-render' )->text()
+			$this->buildTagAttributes( $sourceUrl, $args )
 		);
 
 		return $this->helper->wrapForMobile( $iframeCode );
@@ -60,11 +61,7 @@ class SoundCloudTagController extends WikiaParserTagController {
 	private function buildTagAttributes( $sourceUrlParams, array $userAttributes ) {
 		$attributes = $this->helper->buildTagAttributes( self::TAG_ALLOWED_ATTRIBUTES, $userAttributes );
 
-		$attributes['src'] = self::TAG_SRC . $sourceUrlParams;
+		$attributes['src'] = $sourceUrlParams;
 		return array_merge( self::TAG_DEFAULT_ATTRIBUTES, $attributes );
-	}
-
-	protected function buildParamValidator( $paramName ) {
-		return true;
 	}
 }

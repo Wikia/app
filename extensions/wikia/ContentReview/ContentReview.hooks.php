@@ -2,8 +2,6 @@
 
 namespace Wikia\ContentReview;
 
-use Wikia\ContentReview\Helper;
-use Wikia\ContentReview\Models\CurrentRevisionModel;
 use Wikia\ContentReview\Models\ReviewModel;
 
 class Hooks {
@@ -19,6 +17,7 @@ class Hooks {
 		\Hooks::register( 'SkinTemplateNavigation', [ $hooks, 'onSkinTemplateNavigation' ] );
 		\Hooks::register( 'UserLogoutComplete', [ $hooks, 'onUserLogoutComplete' ] );
 		\Hooks::register( 'ArticleSaveComplete', [ $hooks, 'onArticleSaveComplete' ] );
+		\Hooks::register( 'ShowDiff', [ $hooks, 'onShowDiff' ] );
 	}
 
 	public function onGetRailModuleList( Array &$railModuleList ) {
@@ -145,18 +144,68 @@ class Hooks {
 		return true;
 	}
 
-	public function onArticleSaveComplete( \WikiPage &$article, &$user, $text, $summary,
+	/**
+	 * This method hooks into the Publish process of an article and purges the cached timestamp
+	 * of the latest revision made to JS pages. It also handles the auto-approval mechanism for reviewers.
+	 * @param \WikiPage $article
+	 * @param \User $user
+	 * @param $text
+	 * @param $summary
+	 * @param $minoredit
+	 * @param $watchthis
+	 * @param $sectionanchor
+	 * @param $flags
+	 * @param $revision
+	 * @param $status
+	 * @param $baseRevId
+	 * @return bool
+	 * @throws PermissionsException
+	 */
+	public function onArticleSaveComplete( \WikiPage &$article, \User &$user, $text, $summary,
 			$minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId
 	) {
-		$title = $article->getTitle();
+		global $wgCityId;
 
-		if ( !is_null( $title )
-			&& $title->inNamespace( NS_MEDIAWIKI )
-			&& ( $title->isJsPage() || $title->isJsSubpage() )
-		) {
-			( new Helper() )->purgeCurrentJsPagesTimestamp();
+		/**
+		 * If no new revision has been created we can quit early.
+		 */
+		if ( $revision === null ) {
+			return true;
 		}
 
+		$title = $article->getTitle();
+
+		if ( !is_null( $title )	&&  $title->isJsPage() ) {
+			$helper = new Helper();
+			$helper->purgeCurrentJsPagesTimestamp();
+
+			if ( $helper->userCanAutomaticallyApprove( $user ) ) {
+				( new ContentReviewService() )
+					->automaticallyApproveRevision( $user, $wgCityId, $title->getArticleID(), $revision->getId() );
+			}
+		}
+
+		return true;
+	}
+
+	/**
+	 * Overwrites a message key used instead of a diff view when no `oldid` for comparison is provided.
+	 * @param \DifferenceEngine $diff
+	 * @param string $notice
+	 * @return bool
+	 */
+	public function onShowDiff( \DifferenceEngine $diff, &$notice ) {
+		if ( $diff->getTitle()->inNamespace( NS_MEDIAWIKI )
+			&& $diff->getRequest()->getBool( Helper::CONTENT_REVIEW_PARAM )
+			&& !$diff->getRequest()->getBool( 'oldid' )
+		) {
+			$notice = \HTML::rawElement(
+				'div',
+				[ 'class' => 'content-review-diff-hidden-notice' ],
+				wfMessage( 'content-review-diff-hidden' )->escaped()
+			);
+			return false;
+		}
 		return true;
 	}
 

@@ -70,6 +70,7 @@
 <?= $quantServe ?>
 <?= $googleAnalytics ?>
 <?= $amazonMatch ?>
+<?= $openXBidder ?>
 <?= $dynamicYield ?>
 <?= $ivw2 ?>
 <?= $rubiconRtp ?>

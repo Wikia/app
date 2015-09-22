@@ -18,61 +18,53 @@ class WikiaMapsParserTagController extends WikiaParserTagController {
 
 	private $mapsModel;
 
+	protected $tagAttributes = [
+		'id' => 'map-id',
+		'lat' => 'lat',
+		'lon' => 'lon',
+		'zoom' => 'zoom',
+	];
+
 	public function __construct() {
 		parent::__construct();
 		$this->mapsModel = new WikiaMaps( $this->wg->IntMapConfig );
 	}
 
-	/**
-	 * @desc Parser hook: used to register parser tag in MW
-	 *
-	 * @param Parser $parser
-	 * @return bool
-	 */
-	public static function parserTagInit( Parser $parser ) {
-		$parser->setHook( self::PARSER_TAG_NAME, [ new static(), 'renderPlaceholder' ] );
-		return true;
+	public function getTagName() {
+		return self::PARSER_TAG_NAME;
 	}
 
-	/**
-	 * @desc Based on parser tag arguments validation parsers an error or placeholder
-	 *
-	 * @param String $input
-	 * @param Array $args
-	 * @param Parser $parser
-	 * @param PPFrame $frame
-	 *
-	 * @return String
-	 */
-	public function renderPlaceholder( $input, Array $args, Parser $parser, PPFrame $frame ) {
+	protected function registerResourceLoaderModules( Parser $parser ) {
 		// register resource loader module dependencies for map parser tag
 		// done separately for CSS and JS, so CSS will go to top of the page
 		$parser->getOutput()->addModuleStyles( 'ext.wikia.WikiaMaps.ParserTag' );
 		$parser->getOutput()->addModuleScripts( 'ext.wikia.WikiaMaps.ParserTag' );
+	}
 
-		$errorMessage = '';
-		$params = $this->sanitizeParserTagArguments( $args );
-		$isValid = $this->validateParseTagParams( $params, $errorMessage );
-
-		if ( $isValid ) {
-			$params[ 'map' ] = $this->getMapObj( $params[ 'id' ] );
-
-			if ( !empty( $params [ 'map' ]->id ) ) {
-				return $this->sendRequest(
-					'WikiaMapsParserTagController',
-					'mapThumbnail',
-					$params
-				);
-			} else {
-				$errorMessage = wfMessage( 'wikia-interactive-maps-parser-tag-error-no-map-found' )->plain();
-			}
-		}
+	protected function getErrorOutput( $errorMessages ) {
+		$errorMessage = $errorMessages[0];
 
 		return $this->sendRequest(
 			'WikiaMapsParserTagController',
 			'parserTagError',
 			[ 'errorMessage' => $errorMessage ]
 		);
+	}
+
+	protected function getSuccessOutput( $args ) {
+		$params = $this->sanitizeParserTagArguments( $args );
+		$params[ 'map' ] = $this->getMapObj( $params[ 'id' ] );
+
+		if ( !empty( $params [ 'map' ]->id ) ) {
+			return $this->sendRequest(
+				'WikiaMapsParserTagController',
+				'mapThumbnail',
+				$params
+			);
+		} else {
+			$errorMessage = wfMessage( 'wikia-interactive-maps-parser-tag-error-no-map-found' )->plain();
+			return $this->getErrorOutput( [ $errorMessage ] );
+		}
 	}
 
 	/**
@@ -170,16 +162,10 @@ class WikiaMapsParserTagController extends WikiaParserTagController {
 	 */
 	public function sanitizeParserTagArguments( $data ) {
 		$result = [];
-		$validParams = [
-			'map-id' => 'id',
-			'lat' => 'lat',
-			'lon' => 'lon',
-			'zoom' => 'zoom',
-		];
 
-		foreach( $validParams as $key => $mapTo ) {
-			if ( !empty( $data[ $key ] ) ) {
-				$result[ $mapTo ] = $data[ $key ];
+		foreach( $this->tagAttributes as $mapTo => $tagAttr) {
+			if ( !empty( $data[ $tagAttr ] ) ) {
+				$result[ $mapTo ] = $data[ $tagAttr ];
 			}
 		}
 
@@ -195,35 +181,31 @@ class WikiaMapsParserTagController extends WikiaParserTagController {
 	 * @return String
 	 */
 	public function validateParseTagParams( Array $params, &$errorMessage ) {
-		$isValid = false;
-
 		if( empty( $params ) ) {
 			$errorMessage = wfMessage( 'wikia-interactive-maps-parser-tag-error-no-require-parameters' )->plain();
-			return $isValid;
+			return false;
 		}
 
-		foreach( $params as $param => $value ) {
-			$isValid = $this->isTagParamValid( $param, $value, $errorMessage );
-
-			if( !$isValid ) {
-				return $isValid;
-			}
+		$errorMessages = $this->validateAttributes( $params );
+		if( !empty( $errorMessages ) ) {
+			$errorMessage = $errorMessages[0];
+			return false;
 		}
 
-		return $isValid;
+		return true;
 	}
 
 	/**
 	 * @desc Small factory method to create validators for params; returns false if validator can't be created
 	 *
 	 * @param String $paramName
-	 * @return bool|WikiaValidator
+	 * @return WikiaValidator
 	 */
 	protected function buildParamValidator( $paramName ) {
-		$validator = false;
+		$validator = new WikiaValidatorAlwaysTrue();
 
 		switch( $paramName ) {
-			case 'id':
+			case 'map-id':
 				$validator = new WikiaValidatorInteger(
 					[ 'required' => true ],
 					[ 'not_int' => 'wikia-interactive-maps-parser-tag-error-invalid-map-id' ]
@@ -234,7 +216,6 @@ class WikiaMapsParserTagController extends WikiaParserTagController {
 					[
 						'min' => self::MIN_LATITUDE,
 						'max' => self::MAX_LATITUDE
-
 					],
 					[
 						'not_numeric' => 'wikia-interactive-maps-parser-tag-error-invalid-latitude',
@@ -248,7 +229,6 @@ class WikiaMapsParserTagController extends WikiaParserTagController {
 					[
 						'min' => self::MIN_LONGITUDE,
 						'max' => self::MAX_LONGITUDE
-
 					],
 					[
 						'not_numeric' => 'wikia-interactive-maps-parser-tag-error-invalid-longitude',
@@ -262,7 +242,6 @@ class WikiaMapsParserTagController extends WikiaParserTagController {
 					[
 						'min' => self::MIN_ZOOM,
 						'max' => self::MAX_ZOOM
-
 					],
 					[
 						'not_int' => 'wikia-interactive-maps-parser-tag-error-invalid-zoom',
