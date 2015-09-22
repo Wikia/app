@@ -8,10 +8,10 @@ class ContentReviewHelperTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @param $isJsPage
-	 * @param $inNamespace
-	 * @param $contentType
-	 * @param $expected
+	 * @param bool $isJsPage
+	 * @param bool $inNamespace
+	 * @param string $contentType
+	 * @param bool $expected
 	 * @dataProvider shouldPageContentBeReplacedData
 	 */
 	public function testShouldPageContentBeReplaced( $isJsPage, $inNamespace, $contentType, $expected ) {
@@ -34,14 +34,14 @@ class ContentReviewHelperTest extends WikiaBaseTest {
 	 * To review different cases - check the documentation of the dataProvider.
 	 *
 	 * @dataProvider replaceWithLastApprovedRevisionProvider
-	 * @param $isPageReviewed
-	 * @param $latestRevID
+	 * @param bool $isPageReviewed
+	 * @param int $latestRevID
 	 * @param array $latestReviewedRevision
-	 * @param $isTestModeEnabled
-	 * @param $revisionExists
-	 * @param $originalText
-	 * @param $lastReviewedText
-	 * @param $expectedText
+	 * @param bool $isTestModeEnabled
+	 * @param bool $revisionExists
+	 * @param string $originalText
+	 * @param string $lastReviewedText
+	 * @param string $expectedText
 	 */
 	public function testReplaceWithLastApprovedRevision( $isPageReviewed, $latestRevID,
 		array $latestReviewedRevision, $isTestModeEnabled, $revisionExists, $originalText, $lastReviewedText, $expectedText
