@@ -119,7 +119,7 @@ class UserLoginHooksHelper {
 		// this validation match Helios email validation
 		// [see: https://github.com/Wikia/helios/blob/ce490394ae10eb248afd2a063dc465d8eb4efb01/domain/user_validator_funs.go#L29]
 		return preg_match(
-			'^[\w!#$%&\'*+\/=?^_`{|}~-]+(?:\.[\w!#$%&\'*+\/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[a-zA-Z0-9](?:[\w-]*[\w])?$/i',
+			'/^[\w!#$%&\'*+\/=?^_`{|}~-]+(?:\.[\w!#$%&\'*+\/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[a-zA-Z0-9](?:[\w-]*[\w])?$/i',
 			$addr
 		) !== 0;
 	}
