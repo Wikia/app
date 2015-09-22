@@ -2109,6 +2109,8 @@ class User {
 		if( $this->mId ) {
 			global $wgMemc, $wgSharedDB; # Wikia
 			$wgMemc->delete( $this->getCacheKey() );
+			// Wikia: and save updated user data in the cache to avoid memcache miss and DB query
+			$this->saveToCache();
 			if( !empty( $wgSharedDB ) ) {
 				$memckey = self::getUserTouchedKey( $this->mId );
 				$wgMemc->set( $memckey, $this->mTouched );
@@ -2151,7 +2153,6 @@ class User {
 				$dbw->update( '`user`',
 					array( 'user_touched' => $touched ), array( 'user_id' => $this->mId ),
 					__METHOD__ );
-				$dbw->commit();
 			}
 
 			$this->clearSharedCache();
@@ -4887,17 +4888,15 @@ class User {
 	}
 
 	private function loadAttributes() {
-		global $wgEnableReadsFromAttributeService, $wgPublicUserAttributes;
+		global $wgEnableReadsFromAttributeService;
 
 		if ( !empty( $wgEnableReadsFromAttributeService ) ) {
-			$attributesFromService = $this->userAttributes()->getAttributes( $this->getId() );
+			$attributes = $this->userAttributes()->getAttributes($this->getId());
+			foreach ( $attributes as $attributeName => $attributeValue ) {
+				$this->compareAttributeValueFromService( $attributeName, $attributeValue );
 
-			// Currently the attribute service only stores public attributes. Once it stores private as well
-			// this can be updated to $wgUserAttributeWhitelist which contains all attributes
-			foreach ( $wgPublicUserAttributes as $attributeName ) {
-				$this->compareAttributeValueFromService( $attributeName, $attributesFromService[$attributeName] );
-				$this->mOptionOverrides[$attributeName] = $attributesFromService[$attributeName];
-				$this->mOptions[$attributeName] = $attributesFromService[$attributeName];
+				 $this->mOptionOverrides[$attributeName] = $attributeValue;
+				 $this->mOptions[$attributeName] = $attributeValue;
 			}
 		}
 	}
