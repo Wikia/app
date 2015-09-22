@@ -43,8 +43,8 @@ class ContentReviewHelperTest extends WikiaBaseTest {
 	 * @param string $lastReviewedText
 	 * @param string $expectedText
 	 */
-	public function testReplaceWithLastApprovedRevision( $isPageReviewed, $latestRevID,
-		array $latestReviewedRevision, $isTestModeEnabled, $revisionExists, $originalText, $lastReviewedText, $expectedText
+	public function testReplaceWithLastApprovedRevision( $isPageReviewed, $latestRevID, array $latestReviewedRevision,
+		$isTestModeEnabled, $revisionExists, $originalText, $lastReviewedText, $expectedText, $message
 	) {
 		/**
 		 * Case 1 - if a page does not qualify to be reviewed just return the original text.
@@ -116,7 +116,7 @@ class ContentReviewHelperTest extends WikiaBaseTest {
 			$textReturn = $helperMock->replaceWithLastApproved( $titleMock, $mockContentType, $originalText );
 		}
 
-		$this->assertEquals( $expectedText, $textReturn );
+		$this->assertEquals( $expectedText, $textReturn, $message );
 	}
 
 	/**
@@ -199,9 +199,6 @@ class ContentReviewHelperTest extends WikiaBaseTest {
 		$emptyText = '';
 
 		return [
-			/**
-			 * Case 1 - a page does not qualify to be reviewed (isPageReviewed === false).
-			 */
 			[
 				false, // isPageReviewed()
 				0, // getLatestRevID()
@@ -211,10 +208,8 @@ class ContentReviewHelperTest extends WikiaBaseTest {
 				$originalText,
 				$lastReviewedText,
 				$originalText, // $expectedText
+				$message = 'Case 1 - a page does not qualify to be reviewed (isPageReviewed === false).',
 			],
-			/**
-			 * Case 2 - Latest rev_id matches the last reviewed rev_id
-			 */
 			[
 				true, // isPageReviewed()
 				100, // getLatestRevID()
@@ -224,10 +219,8 @@ class ContentReviewHelperTest extends WikiaBaseTest {
 				$originalText,
 				$lastReviewedText,
 				$originalText, // $expectedText
+				$message = 'Case 2 - Latest rev_id matches the last reviewed rev_id',
 			],
-			/**
-			 * Case 3 - Test mode is enabled
-			 */
 			[
 				true, // isPageReviewed()
 				100, // getLatestRevID()
@@ -237,10 +230,8 @@ class ContentReviewHelperTest extends WikiaBaseTest {
 				$originalText,
 				$lastReviewedText,
 				$originalText, // $expectedText
+				$message = 'Case 3 - Test mode is enabled',
 			],
-			/**
-			 * Case 4 - You want to get a reviewed revision but it does not exist (e.g. for new, unreviewed pages)
-			 */
 			[
 				true, // isPageReviewed()
 				99, // getLatestRevID()
@@ -250,10 +241,8 @@ class ContentReviewHelperTest extends WikiaBaseTest {
 				$originalText,
 				$lastReviewedText,
 				$emptyText, // $expectedText
+				$message = 'Case 4 - You want to get a reviewed revision but it does not exist (e.g. for new, unreviewed pages)',
 			],
-			/**
-			 * Case 5 - You get the latest approved revision.
-			 */
 			[
 				true, // isPageReviewed()
 				99, // getLatestRevID()
@@ -263,6 +252,7 @@ class ContentReviewHelperTest extends WikiaBaseTest {
 				$originalText,
 				$lastReviewedText,
 				$lastReviewedText, // $expectedText
+				$message = 'Case 5 - You get the latest approved revision.',
 			],
 		];
 	}
