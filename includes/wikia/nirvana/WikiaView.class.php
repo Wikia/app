@@ -344,6 +344,11 @@ class WikiaView {
 			if ( is_callable( [ $exception, 'getDetails' ] ) ) {
 				$output[ 'exception' ][ 'details' ] = $exception->getDetails();
 			}
+
+			// PLATFORM-1503: do not expose DB errors
+			if ( $exception instanceof DBError ) {
+				$output['exception']['message'] = get_class( $exception );
+			}
 		}
 		else {
 			$output = $this->response->getData();
