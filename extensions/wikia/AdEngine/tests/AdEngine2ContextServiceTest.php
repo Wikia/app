@@ -265,6 +265,7 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		$sevenOneMediaSub2Site = 'customsub2site';
 		$expectedSevenOneMediaUrlFormat = 'http://%s/__load/-/cb%3D%d%26debug%3Dfalse%26lang%3D%s%26only%3Dscripts%26skin%3Doasis/wikia.ext.adengine.sevenonemedia';
 		$expectedSourcePointUrlFormat = 'http://%s/__load/-/cb%3D%d%26debug%3Dfalse%26lang%3D%s%26only%3Dscripts%26skin%3Doasis/wikia.ext.adengine.sourcepoint';
+		$expectedSourcePointDetectionUrlFormat = 'http://%s/__load/-/cb%3D%d%26debug%3Dfalse%26lang%3D%s%26only%3Dscripts%26skin%3Doasis/wikia.ext.adengine.sourcepoint.detection';
 
 		if ( $titleMockType === 'article' || $titleMockType === 'mainpage' ) {
 			$expectedTargeting['pageArticleId'] = $artId;
@@ -389,6 +390,8 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 			$this->assertStringMatchesFormat( $expectedSourcePointUrlFormat, $result['opts']['sourcePointUrl'] );
 			unset( $result['opts']['sourcePointUrl'] );
 		}
+		$this->assertStringMatchesFormat( $expectedSourcePointDetectionUrlFormat, $result['opts']['sourcePointDetectionUrl'] );
+		unset( $result['opts']['sourcePointDetectionUrl'] );
 
 		// Extra check for SevenOne Media URL
 		if ( isset( $expectedProviders['sevenOneMedia'] ) ) {
