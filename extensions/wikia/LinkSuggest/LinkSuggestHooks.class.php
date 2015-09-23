@@ -34,10 +34,10 @@ class LinkSuggestHooks {
 	}
 
 	/**
-	* Hook: UploadForm:Initial
-	* VOLDEV-121: Add LinkSuggest to Special:Upload and MultipleUpload
-	* @author TK-999
-	* @param SpecialUpload $specialUpload
+	 * Hook: UploadForm:Initial
+	 * VOLDEV-121: Add LinkSuggest to Special:Upload and MultipleUpload
+	 * @author TK-999
+	 * @param SpecialUpload $specialUpload
 	 * @return bool true because it's a hook
 	*/
 	public static function onUploadFormInitial( SpecialUpload $specialUpload ) {
