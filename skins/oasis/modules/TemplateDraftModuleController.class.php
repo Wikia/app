@@ -32,7 +32,6 @@ class TemplateDraftModuleController extends WikiaController {
 		$draftTitle = $this->wg->Title;
 		$parentTitle = TemplateDraftHelper::getParentTitle( $draftTitle );
 
-
 		if ( $draftTitle->userCan( 'edit' ) && $draftTitle->userCan( 'move' )
 			&& $parentTitle->userCan( 'edit' ) && $parentTitle->userCan( 'move' )
 		) {
