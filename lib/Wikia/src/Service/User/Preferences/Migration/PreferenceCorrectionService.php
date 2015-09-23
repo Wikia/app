@@ -31,7 +31,7 @@ class PreferenceCorrectionService {
 	 * @Inject({
 	 *    Wikia\Service\User\Preferences\PreferenceService::class,
 	 *    Wikia\Service\User\Preferences\Migration\PreferenceScopeService::class,
-	 *    Wikia\Service\User\Preferences\Migration\PreferenceCorrectionService::PREFERENCE_CORRECTION_SAMPLER
+	 *    Wikia\Service\User\Preferences\Migration\PreferenceCorrectionService::PREFERENCE_CORRECTION_SAMPLER,
 	 *    Wikia\Service\User\Preferences\Migration\PreferenceCorrectionService::PREFERENCE_CORRECTION_ENABLED})
 	 * @param PreferenceService $preferenceService
 	 * @param PreferenceScopeService $scopeService
