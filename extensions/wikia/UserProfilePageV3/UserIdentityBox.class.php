@@ -20,6 +20,8 @@ class UserIdentityBox {
 	const USER_OCCUPATION_CHAR_LIMIT = 200;
 	const USER_GENDER_CHAR_LIMIT = 200;
 
+	const CACHE_TTL = 60 * 60 * 24; // 24 hours
+
 	private $user = null;
 	private $title = null;
 	private $favWikisModel = null;
@@ -465,7 +467,7 @@ class UserIdentityBox {
 			}
 		}
 
-		$wgMemc->set( $this->getMemcUserIdentityDataKey(), $memcData );
+		$wgMemc->set( $this->getMemcUserIdentityDataKey(), $memcData, self::CACHE_TTL );
 
 		return $memcData;
 	}
