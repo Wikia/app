@@ -51,7 +51,7 @@ define('ext.wikia.adEngine.lookup.openXBidder', [
 			pageType = context.targeting.pageType,
 			slots = config[skin];
 
-		if (pageType === 'home') {
+		if (skin === 'oasis' && pageType === 'home') {
 			for (var slotName in slots) {
 				if (slots.hasOwnProperty(slotName) && slotName.indexOf('TOP') > -1) {
 					slots['HOME_' + slotName] = slots[slotName];
