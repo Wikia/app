@@ -7,6 +7,7 @@ use PHPUnit_Framework_TestCase;
 use Wikia\Domain\User\Preferences\LocalPreference;
 use Wikia\Domain\User\Preferences\UserPreferences;
 use Wikia\Service\User\Preferences\PreferenceService;
+use Wikia\Util\Statistics\BernoulliTrial;
 
 class PreferenceCorrectionServiceTest extends PHPUnit_Framework_TestCase {
 
@@ -56,7 +57,7 @@ class PreferenceCorrectionServiceTest extends PHPUnit_Framework_TestCase {
 				]
 			] );
 
-		$this->correctionService = new PreferenceCorrectionService( $this->preferenceService, $scopeService, true );
+		$this->correctionService = new PreferenceCorrectionService( $this->preferenceService, $scopeService, new BernoulliTrial(0), true );
 	}
 
 	public function testNoDifferences() {
