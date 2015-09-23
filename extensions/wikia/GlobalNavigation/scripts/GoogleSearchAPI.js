@@ -1,41 +1,40 @@
 (function () {
-	console.log('qqq if condition', (window.mytest === 'mari'));
-	if ( window.mytest === 'mari' ) {
+	if ( window.wgGoogleSearchTest ) {
 		var searchForm = document.getElementById('searchForm'),
-			searchContainer = document.getElementsByClassName('search-form-wrapper'),
-            cx = '005745855109319432328:coaj7jf_wgs',//TODO: Hide it
-			gcse = document.createElement('script'),
-			s = document.getElementsByTagName('script')[0],
-			contentLang = window.wgContentLanguage || 'en';
+			searchId = window.wgGoogleSearchParam,
+			scriptElem1 = document.createElement('script'),
+			scriptElem2 = document.getElementsByTagName('script')[0];
 
-		gcse.type = 'text/javascript';
-		gcse.async = true;
-		gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
-				   '//cse.google.com/cse.js?cx=' + cx;
-		s.parentNode.insertBefore(gcse, s);
-		console.log('qqq gcse', gcse);
+		scriptElem1.type = 'text/javascript';
+		scriptElem1.async = true;
+		scriptElem1.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+				   '//cse.google.com/cse.js?cx=' + searchId;
+		scriptElem2.parentNode.insertBefore(scriptElem1, scriptElem2);
+
 		searchForm.addEventListener('submit', function (evt) {
+			var contentLang = window.wgContentLanguage || 'en',
+				searchQuery = $('#searchInput').val(),
+				$googleInput = $('.gsc-input'),
+				$googleButton = $('.gsc-search-button'),
+				$selectElement = $('#searchSelect'),
+				$selectedOption = $selectElement.find('option:selected');
+
 			evt.preventDefault();
-			this.searchQuery = $('#searchInput').val();
 
 			//get info of local or global and modify query scope
-			$selectElement = $('#searchSelect');
-			$selectedOption = $selectElement.find('option:selected');
 			if ($selectedOption.val() === 'local') {
-				this.searchQuery += ' site:' + window.location.hostname;
+				searchQuery += ' site:' + window.location.hostname;
 			} else {
 				if ( contentLang === 'en') {
-					this.searchQuery += ' site:*.wikia.com';
+					searchQuery += ' site:*.wikia.com';
 				} else {
-					this.searchQuery += ' site:' + contentLang + '.*.wikia.com';
+					searchQuery += ' site:' + contentLang + '.*.wikia.com';
 				}
 			}
 
 			//Invoke google search
-			this.googleInput = $('.gsc-input');
-			this.googleInput.val(this.searchQuery);
-			this.googleButton = $('.gsc-search-button');
-			this.googleButton.trigger('click');
+			$googleInput.val(searchQuery);
+			$googleButton.trigger('click');
 		});
 	}
 })();
