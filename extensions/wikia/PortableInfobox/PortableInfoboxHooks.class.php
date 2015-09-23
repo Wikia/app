@@ -91,6 +91,13 @@ class PortableInfoboxHooks {
 		return true;
 	}
 
+	/**
+	 * Purge articles memcache when template is edited
+	 *
+	 * @param $articles
+	 *
+	 * @return bool
+	 */
 	public static function onBacklinksPurge( $articles ) {
 		foreach ( $articles as $title ) {
 			PortableInfoboxDataService::newFromTitle( $title )->purge();
