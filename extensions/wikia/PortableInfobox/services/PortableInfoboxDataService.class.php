@@ -1,5 +1,6 @@
 <?php
 
+use Wikia\PortableInfobox\Helpers\PagePropsProxy;
 use Wikia\PortableInfobox\Helpers\PortableInfoboxTemplatesHelper;
 use Wikia\PortableInfobox\Parser\Nodes\NodeInfobox;
 
@@ -8,34 +9,47 @@ class PortableInfoboxDataService {
 	const IMAGE_FIELD_TYPE = 'image';
 	const INFOBOXES_PROPERTY_NAME = 'infoboxes';
 
-	/**
-	 * @var Title $title
-	 */
 	protected $title;
 	protected $templateHelper;
+	protected $propsProxy;
 	protected $cache;
 	protected $cachekey;
 
 	/**
 	 * @param $title Title
-	 * @param $helper
+	 *
+	 * @internal param $helper
 	 */
-	protected function __construct( $title, $helper ) {
-		$this->title = $title;
-		$this->templateHelper = $helper ? $helper : new PortableInfoboxTemplatesHelper();
-		$this->cachekey = wfMemcKey( $title->getArticleID(), self::INFOBOXES_PROPERTY_NAME );
+	protected function __construct( $title ) {
+		$this->title = $title !== null ? $title : new Title();
+		$this->templateHelper = new PortableInfoboxTemplatesHelper();
+		$this->propsProxy = new PagePropsProxy();
+		$this->cachekey = wfMemcKey( $this->title->getArticleID(), self::INFOBOXES_PROPERTY_NAME );
 	}
 
-	public static function newFromTitle( $title, $helper = null ) {
-		return new PortableInfoboxDataService( $title, $helper );
+	public static function newFromTitle( $title ) {
+		return new PortableInfoboxDataService( $title );
 	}
 
-	public static function newFromPageID( $pageid, $helper = null ) {
-		return new PortableInfoboxDataService( Title::newFromID( $pageid ), $helper );
+	public static function newFromPageID( $pageid ) {
+		return new PortableInfoboxDataService( Title::newFromID( $pageid ) );
+	}
+
+	// set internal helpers methods
+	public function setTemplatesHelper( $helper ) {
+		$this->templateHelper = $helper;
+
+		return $this;
+	}
+
+	public function setPagePropsProxy( $proxy ) {
+		$this->propsProxy = $proxy;
+
+		return $this;
 	}
 
 	/**
-	 * Returns infobox data
+	 * Returns infobox data, terminal method
 	 *
 	 * @return array in format [ 'data' => [], 'sources' => [] ] or [] will be returned
 	 */
@@ -44,15 +58,16 @@ class PortableInfoboxDataService {
 			$hidden = $this->templateHelper->parseInfoboxes( $this->title );
 			if ( $hidden ) {
 				$this->delete();
-				$this->set( json_decode( $hidden, true ) );
+				$this->set( $hidden );
 			};
 		}
+		$result = $this->get();
 
-		return $this->get();
+		return $result !== null ? $result : [ ];
 	}
 
 	/**
-	 * Get image list from infobox data
+	 * Get image list from infobox data, terminal method
 	 *
 	 * @return array
 	 */
@@ -79,6 +94,8 @@ class PortableInfoboxDataService {
 	 * Save infobox data, permanently
 	 *
 	 * @param NodeInfobox $raw infobox parser output
+	 *
+	 * @return $this
 	 */
 	public function save( NodeInfobox $raw ) {
 		if ( $raw ) {
@@ -86,6 +103,8 @@ class PortableInfoboxDataService {
 			$stored[] = [ 'data' => $raw->getRenderData(), 'sources' => $raw->getSource() ];
 			$this->set( $stored );
 		}
+
+		return $this;
 	}
 
 	/**
@@ -94,6 +113,8 @@ class PortableInfoboxDataService {
 	public function delete() {
 		$this->clear();
 		unset( $this->cache );
+
+		return $this;
 	}
 
 	/**
@@ -104,6 +125,8 @@ class PortableInfoboxDataService {
 		global $wgMemc;
 		$wgMemc->delete( $this->cachekey );
 		unset( $this->cache );
+
+		return $this;
 	}
 
 	// soft cache handlers
@@ -128,7 +151,7 @@ class PortableInfoboxDataService {
 			// first try memcache, then go to props
 			$data = $wgMemc->get( $this->cachekey );
 			if ( $data === false ) {
-				$data = json_decode( Wikia::getProps( $id, self::INFOBOXES_PROPERTY_NAME ), true );
+				$data = json_decode( $this->propsProxy->get( $id, self::INFOBOXES_PROPERTY_NAME ), true );
 				$wgMemc->set( $this->cachekey, $data, WikiaResponse::CACHE_STANDARD );
 			}
 
@@ -143,7 +166,7 @@ class PortableInfoboxDataService {
 		if ( $id ) {
 			global $wgMemc;
 			$wgMemc->set( $this->cachekey, $data, WikiaResponse::CACHE_STANDARD );
-			Wikia::setProps( $id, [ self::INFOBOXES_PROPERTY_NAME => json_encode( $data ) ] );
+			$this->propsProxy->set( $id, [ self::INFOBOXES_PROPERTY_NAME => json_encode( $data ) ] );
 		}
 	}
 
@@ -152,7 +175,7 @@ class PortableInfoboxDataService {
 		if ( $id ) {
 			global $wgMemc;
 			$wgMemc->set( $this->cachekey, '', WikiaResponse::CACHE_STANDARD );
-			Wikia::setProps( $id, [ self::INFOBOXES_PROPERTY_NAME => '' ] );
+			$this->propsProxy->set( $id, [ self::INFOBOXES_PROPERTY_NAME => '' ] );
 		}
 	}
 }

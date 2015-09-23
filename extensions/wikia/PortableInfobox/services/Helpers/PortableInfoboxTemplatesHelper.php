@@ -16,7 +16,7 @@ class PortableInfoboxTemplatesHelper {
 	 *
 	 * @param $title \Title
 	 *
-	 * @return mixed
+	 * @return mixed false when no infoboxes found, Array with infoboxes on success
 	 */
 	public function parseInfoboxes( $title ) {
 		// for templates we need to check for include tags
@@ -42,7 +42,8 @@ class PortableInfoboxTemplatesHelper {
 					}
 				}
 
-				return $parser->getOutput()->getProperty( \PortableInfoboxDataService::INFOBOXES_PROPERTY_NAME );
+				return json_decode( $parser->getOutput()
+					->getProperty( \PortableInfoboxDataService::INFOBOXES_PROPERTY_NAME ), true );
 			}
 		}
 
