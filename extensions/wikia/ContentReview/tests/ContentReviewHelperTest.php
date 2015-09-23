@@ -8,13 +8,13 @@ class ContentReviewHelperTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @param $titleData
+	 * @param array $titleData Has to include `titleNamespace` and `titleText` keys
 	 * @param string $contentType
 	 * @param bool $expected
 	 * @param $message
 	 * @dataProvider isPageForReviewTestData
 	 */
-	public function testIsPageForReview( $titleData, $contentType, $expected, $message ) {
+	public function testIsPageForReview( array $titleData, $contentType, $expected, $message ) {
 		$title = Title::makeTitle( $titleData['titleNamespace'], $titleData['titleText'] );
 		$value = ( new Wikia\ContentReview\Helper() )->isPageReviewed( $title, $contentType );
 		$this->assertEquals( $expected, $value, $message );
@@ -26,30 +26,30 @@ class ContentReviewHelperTest extends WikiaBaseTest {
 	 * To review different cases - check the documentation of the dataProvider.
 	 *
 	 * @dataProvider replaceWithLastApprovedRevisionProvider
-	 * @param bool $isPageReviewed
-	 * @param int $latestRevID
-	 * @param array $latestReviewedRevision
-	 * @param bool $isTestModeEnabled
-	 * @param bool $revisionExists
-	 * @param string $originalText
-	 * @param string $lastReviewedText
+	 * @param array $inputData Has to contain the following keys:
+	 * 		'isPageReviewed' =>
+	 * 		'latestRevID' =>
+	 * 		'latestReviewedRevision' =>
+	 * 		'isTestModeEnabled' =>
+	 * 		'revisionExists' =>
+	 * 		'originalText' =>
+	 * 		'lastReviewedText' =>
 	 * @param string $expectedText
+	 * @param string $message
 	 */
-	public function testReplaceWithLastApprovedRevision( $isPageReviewed, $latestRevID, array $latestReviewedRevision,
-		$isTestModeEnabled, $revisionExists, $originalText, $lastReviewedText, $expectedText, $message
-	) {
+	public function testReplaceWithLastApprovedRevision( array $inputData, $expectedText, $message ) {
 		/**
 		 * Case 1 - if a page does not qualify to be reviewed just return the original text.
 		 */
-		if ( !$isPageReviewed ) {
+		if ( !$inputData['isPageReviewed'] ) {
 			$mockTitle = $this->getMock( '\Title' );
 
 			$mockHelper = $this->getMock( '\Wikia\ContentReview\Helper', [ 'isPageReviewed' ] );
 			$mockHelper->expects( $this->once() )
 				->method( 'isPageReviewed' )
-				->willReturn( $isPageReviewed );
+				->willReturn( $inputData['isPageReviewed'] );
 
-			$textReturn = $mockHelper->replaceWithLastApproved( $mockTitle, 'text/css', $originalText );
+			$textReturn = $mockHelper->replaceWithLastApproved( $mockTitle, 'text/css', $inputData['originalText'] );
 		} else {
 			$mockContentType = 'text/javascript';
 
@@ -57,7 +57,7 @@ class ContentReviewHelperTest extends WikiaBaseTest {
 			$titleMock = $this->getMock( '\Title', [ 'getArticleID', 'getLatestRevID' ] );
 			$titleMock->expects( $this->once() )
 				->method( 'getLatestRevID' )
-				->willReturn( $latestRevID );
+				->willReturn( $inputData['latestRevID'] );
 
 			/* @var \Wikia\ContentReview\Models\CurrentRevisionModel $currentRevisionModelMock */
 			$currentRevisionModelMock = $this->getMock( 'Wikia\ContentReview\Models\CurrentRevisionModel', [
@@ -65,7 +65,7 @@ class ContentReviewHelperTest extends WikiaBaseTest {
 			] );
 			$currentRevisionModelMock->expects( $this->once() )
 				->method( 'getLatestReviewedRevision' )
-				->willReturn( $latestReviewedRevision );
+				->willReturn( $inputData['latestReviewedRevision'] );
 
 			/* @var \Wikia\ContentReview\Helper $helperMock */
 			$helperMock = $this->getMock( '\Wikia\ContentReview\Helper', [
@@ -76,19 +76,19 @@ class ContentReviewHelperTest extends WikiaBaseTest {
 			] );
 			$helperMock->expects( $this->once() )
 				->method( 'isPageReviewed' )
-				->willReturn( $isPageReviewed );
+				->willReturn( $inputData['isPageReviewed'] );
 			$helperMock->expects( $this->once() )
 				->method( 'getCurrentRevisionModel' )
 				->willReturn( $currentRevisionModelMock );
 			$helperMock->expects( $this->any() )
 				->method( 'isContentReviewTestModeEnabled' )
-				->willReturn( $isTestModeEnabled );
+				->willReturn( $inputData['isTestModeEnabled'] );
 
 			/**
 			 * Handle Case 4 and Case 5 - if the Revision does not exist the value returned
 			 * by getRevisionById is `false` to match the values returned by the original method.
 			 */
-			if ( $revisionExists ) {
+			if ( $inputData['revisionExists'] ) {
 				/* @var \Revision $revisionMock */
 				$revisionMock = $this->getMockBuilder( '\Revision' )
 					->disableOriginalConstructor()
@@ -96,7 +96,7 @@ class ContentReviewHelperTest extends WikiaBaseTest {
 					->getMock();
 				$revisionMock->expects( $this->any() )
 					->method( 'getRawText' )
-					->willReturn( $lastReviewedText );
+					->willReturn( $inputData['lastReviewedText'] );
 			} else {
 				$revisionMock = null;
 			}
@@ -105,7 +105,7 @@ class ContentReviewHelperTest extends WikiaBaseTest {
 				->method( 'getRevisionById' )
 				->willReturn( $revisionMock );
 
-			$textReturn = $helperMock->replaceWithLastApproved( $titleMock, $mockContentType, $originalText );
+			$textReturn = $helperMock->replaceWithLastApproved( $titleMock, $mockContentType, $inputData['originalText'] );
 		}
 
 		$this->assertEquals( $expectedText, $textReturn, $message );
@@ -209,6 +209,22 @@ class ContentReviewHelperTest extends WikiaBaseTest {
 		];
 	}
 
+	/**
+	 * @return array Structure:
+	 * [
+	 * 	[
+	 * 		'isPageReviewed' =>
+	 * 		'latestRevID' =>
+	 * 		'latestReviewedRevision' =>
+	 * 		'isTestModeEnabled' =>
+	 * 		'revisionExists' =>
+	 * 		'originalText' =>
+	 * 		'lastReviewedText' =>
+	 * 	],
+	 * 	$expectedText,
+	 * 	$message,
+	 * ]
+	 */
 	public function replaceWithLastApprovedRevisionProvider() {
 		$originalText = 'This is the original text.';
 		$lastReviewedText = 'This is the last reviewed text.';
@@ -216,57 +232,67 @@ class ContentReviewHelperTest extends WikiaBaseTest {
 
 		return [
 			[
-				false, // isPageReviewed()
-				0, // getLatestRevID()
-				[], // getLatestReviewedRevision()
-				false, // isContentReviewTestModeEnabled()
-				false, // $revisionExists
-				$originalText,
-				$lastReviewedText,
+				[
+					'isPageReviewed' => false,
+					'latestRevID' => 0,
+					'latestReviewedRevision' => [],
+					'isTestModeEnabled' => false,
+					'revisionExists' => false,
+					'originalText' => $originalText,
+					'lastReviewedText' => $lastReviewedText,
+				],
 				$originalText, // $expectedText
 				$message = 'Case 1 - a page does not qualify to be reviewed (isPageReviewed === false).',
 			],
 			[
-				true, // isPageReviewed()
-				100, // getLatestRevID()
-				[ 'revision_id' => 100 ], // getLatestReviewedRevision()
-				false, // isContentReviewTestModeEnabled()
-				true, // $revisionExists
-				$originalText,
-				$lastReviewedText,
+				[
+					'isPageReviewed' => true,
+					'latestRevID' => 100,
+					'latestReviewedRevision' => [ 'revision_id' => 100 ],
+					'isTestModeEnabled' => false,
+					'revisionExists' => true,
+					'originalText' => $originalText,
+					'lastReviewedText' => $lastReviewedText,
+				],
 				$originalText, // $expectedText
 				$message = 'Case 2 - Latest rev_id matches the last reviewed rev_id',
 			],
 			[
-				true, // isPageReviewed()
-				100, // getLatestRevID()
-				[ 'revision_id' => 99 ], // getLatestReviewedRevision()
-				true, // isContentReviewTestModeEnabled()
-				true, // $revisionExists
-				$originalText,
-				$lastReviewedText,
+				[
+					'isPageReviewed' => true,
+					'latestRevID' => 100,
+					'latestReviewedRevision' => [ 'revision_id' => 99 ],
+					'isTestModeEnabled' => true,
+					'revisionExists' => true,
+					'originalText' => $originalText,
+					'lastReviewedText' => $lastReviewedText,
+				],
 				$originalText, // $expectedText
 				$message = 'Case 3 - Test mode is enabled',
 			],
 			[
-				true, // isPageReviewed()
-				99, // getLatestRevID()
-				[ 'revision_id' => 100 ], // getLatestReviewedRevision()
-				false, // isContentReviewTestModeEnabled()
-				false, // $revisionExists
-				$originalText,
-				$lastReviewedText,
+				[
+					'isPageReviewed' => true,
+					'latestRevID' => 99,
+					'latestReviewedRevision' => [ 'revision_id' => 100 ],
+					'isTestModeEnabled' => false,
+					'revisionExists' => false,
+					'originalText' => $originalText,
+					'lastReviewedText' => $lastReviewedText,
+				],
 				$emptyText, // $expectedText
 				$message = 'Case 4 - You want to get a reviewed revision but it does not exist (e.g. for new, unreviewed pages)',
 			],
 			[
-				true, // isPageReviewed()
-				99, // getLatestRevID()
-				[ 'revision_id' => 100 ], // getLatestReviewedRevision()
-				false, // isContentReviewTestModeEnabled()
-				true, // $revisionExists
-				$originalText,
-				$lastReviewedText,
+				[
+					'isPageReviewed' => true,
+					'latestRevID' => 99,
+					'latestReviewedRevision' => [ 'revision_id' => 100 ],
+					'isTestModeEnabled' => false,
+					'revisionExists' => true,
+					'originalText' => $originalText,
+					'lastReviewedText' => $lastReviewedText,
+				],
 				$lastReviewedText, // $expectedText
 				$message = 'Case 5 - You get the latest approved revision.',
 			],
