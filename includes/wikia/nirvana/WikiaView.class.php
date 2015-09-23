@@ -10,6 +10,8 @@
  * @author Wojciech Szela <wojtek(at)wikia-inc.com>
  * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
  */
+use Wikia\Util\RequestId;
+
 class WikiaView {
 	/**
 	 * Response object
@@ -338,11 +340,28 @@ class WikiaView {
 	}
 
 	protected function renderJson() {
+		global $wgShowSQLErrors;
+
 		if( $this->response->hasException() ) {
 			$exception = $this->response->getException();
-			$output = array( 'exception' => array( 'message' => $exception->getMessage(), 'code' => $exception->getCode(), 'details' => '' ) );
+			$output = [
+				'exception' => [
+					'type' => get_class( $exception ),
+					'message' => $exception->getMessage(),
+					'code' => $exception->getCode(),
+					'details' => ''
+				],
+				// return RequestID for easier errors reporting
+				'request_id' => RequestId::instance()->getRequestId(),
+			];
+
 			if ( is_callable( [ $exception, 'getDetails' ] ) ) {
 				$output[ 'exception' ][ 'details' ] = $exception->getDetails();
+			}
+
+			// PLATFORM-1503: do not expose DB errors when $wgShowSQLErrors is set to false
+			if ( $wgShowSQLErrors === false && $exception instanceof DBError ) {
+				$output['exception']['message'] = '';
 			}
 		}
 		else {

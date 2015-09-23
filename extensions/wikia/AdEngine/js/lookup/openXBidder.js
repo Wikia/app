@@ -3,10 +3,11 @@
 /*jshint maxdepth:5*/
 define('ext.wikia.adEngine.lookup.openXBidder', [
 	'ext.wikia.adEngine.adTracker',
+	'ext.wikia.adEngine.utils.adLogicZoneParams',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window'
-], function (adTracker, doc, log, win) {
+], function (adTracker, adLogicZoneParams, doc, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.lookup.openXBidder',
@@ -46,20 +47,21 @@ define('ext.wikia.adEngine.lookup.openXBidder', [
 		var ads = [],
 			size,
 			slotName,
-			slotPath,
-			src = 'gpt';
+			slotPath = [
+				'/5441',
+				'wka.' + adLogicZoneParams.getSite(),
+				adLogicZoneParams.getMappedVertical(),
+				'',
+				adLogicZoneParams.getPageType()
+			].join('/');
 
 		for (slotName in slots) {
 			if (slots.hasOwnProperty(slotName)) {
 				size = slots[slotName];
-				// @TODO - ADEN-2447 - Remove hardcoded wiki details
-				slotPath = [
-					'/5441', 'wka.life', '_prowrestling', 'article', src, slotName
-				].join('/');
 				ads.push([
 					slotPath,
 					[size],
-					slotName
+					'wikia_gpt' + slotPath + '/gpt/' + slotName
 				]);
 			}
 		}
@@ -121,6 +123,11 @@ define('ext.wikia.adEngine.lookup.openXBidder', [
 		log('call', 'debug', logGroup);
 		var openx = doc.createElement('script'),
 			node = doc.getElementsByTagName('script')[0];
+
+		if (adLogicZoneParams.getSite() !== 'life') {
+			log(['call', 'Not wka.life vertical'], 'debug', logGroup);
+			return;
+		}
 
 		oxTiming = adTracker.measureTime('ox_bidder', {}, 'start');
 		oxTiming.track();
