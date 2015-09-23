@@ -1587,7 +1587,7 @@ class Wikia {
 	static public function getEnvironmentRobotPolicy(WebRequest $request) {
 		global $wgDevelEnvironment, $wgStagingEnvironment, $wgDefaultRobotPolicy;
 
-		$policy = null;
+		$policy = '';
 
 		if( !empty( $wgDevelEnvironment ) || !empty( $wgStagingEnvironment ) ) {
 			$policy = $wgDefaultRobotPolicy;
@@ -1626,7 +1626,7 @@ class Wikia {
 		$tpl->set( 'thisquery', $skinTemplate->thisquery );
 
 		$robotPolicy = Wikia::getEnvironmentRobotPolicy( $skinTemplate->getRequest() );
-		if ( $robotPolicy ) {
+		if ( !empty( $robotPolicy ) ) {
 			$out->setRobotPolicy( $robotPolicy );
 		}
 
