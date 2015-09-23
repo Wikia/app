@@ -2692,7 +2692,7 @@ class User {
 	}
 
 	/**
-	 * Returns true if 1.) User is logged in, 2.) The attribute is one used by clients other
+	 * Returns true if 0.) Options are not loaded yet - we should , 1.) User is logged in, 2.) The attribute is one used by clients other
 	 * than MW (eg, the avatar service or discussion app), and 3.) the cache for that user is
 	 * expired. This is to test how many requests per minutes we could expect the attribute
 	 * service to receive if we had MW call out to it whenever it needed a value for "avatar"
@@ -2702,6 +2702,10 @@ class User {
 	 */
 	private function shouldLogAttribute( $attributeName ) {
 		global $wgMemc;
+
+		if ( $this->mOptionsLoaded ) {
+			return false;
+		}
 
 		if ( !$this->isLoggedIn() ) {
 			return false;
