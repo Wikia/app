@@ -19,6 +19,7 @@ $messages['en'] = array(
 	'templatedraft-module-title-approve' => 'Move this draft template',
 	'templatedraft-module-content-approve' => 'Happy with this draft and want to promote it to the live template?',
 	'templatedraft-module-button-approve' => 'Approve this draft',
+	'templatedraft-module-approve-protected' => 'This template is protected. Please ask an [[Special:ListAdmins|Admin]] to approve this draft.',
 	'templatedraft-preview-n-docs' => '== Usage & preview ==
 Type in this:
 
@@ -55,6 +56,7 @@ $messages['qqq'] = array(
 	'templatedraft-module-title-approve' => 'A title of the TemplateDraft module for approving draft that appears in the right rail on Template pages.',
 	'templatedraft-module-content-approve' => 'A content of the TemplateDraft module for approving draft that appears in the right rail on Template pages.',
 	'templatedraft-module-button-approve' => 'A button shown in a right rail module for approving draft that moves draft text to parent template and gets user to this parent template',
+	'templatedraft-module-approve-protected' => 'Message informing user that template is protected and to approve it should contact one of the admins.',
 	'templatedraft-preview-n-docs' => 'Used when generating documentation for a converted draft of a template',
 	'templatedraft-module-editintro-please-convert' => 'Information for user that a draft version of infobox with new markup can be generated automatically by clicking button ($1).',
 	'templatedraft-module-view-parent' => 'Link label to view parent page of this draft',
