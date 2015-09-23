@@ -2694,8 +2694,9 @@ class User {
 	/**
 	 * Returns true if 1.) User is logged in, 2.) The attribute is one used by clients other
 	 * than MW (eg, the avatar service or discussion app), and 3.) the cache for that user is
-	 * expired. We're testing to see how many requests would make it to the attribute service
-	 * if we cached the attributes used by outside clients for 1 minute. See SOC-1315.
+	 * expired. This is to test how many requests per minutes we could expect the attribute
+	 * service to receive if we had MW call out to it whenever it needed a value for "avatar"
+	 * or "location", with a one minute cache after each request.
 	 * @param $attributeName
 	 * @return bool
 	 */
