@@ -119,6 +119,6 @@ class UserAttributes {
 	}
 
 	public static function getCacheKey( $userId ) {
-		return wfMemcKey( $userId, __CLASS__ );
+		return wfSharedMemcKey($userId, __CLASS__);
 	}
 }
