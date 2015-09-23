@@ -234,10 +234,10 @@ class ContentReviewHelperTest extends WikiaBaseTest {
 			[
 				[
 					'isPageReviewed' => false,
-					'latestRevID' => 0,
+					'latestRevID' => 100,
 					'latestReviewedRevision' => [],
 					'isTestModeEnabled' => false,
-					'revisionExists' => false,
+					'revisionExists' => true,
 					'originalText' => $originalText,
 					'lastReviewedText' => $lastReviewedText,
 				],
