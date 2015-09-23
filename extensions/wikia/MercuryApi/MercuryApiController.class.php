@@ -311,7 +311,7 @@ class MercuryApiController extends WikiaController {
 
 		$wikiVariables['specialRobotPolicy'] = null;
 		$robotPolicy = Wikia::getEnvironmentRobotPolicy( $this->getContext()->getRequest() );
-		if ( $robotPolicy ) {
+		if ( !empty( $robotPolicy ) ) {
 			$wikiVariables['specialRobotPolicy'] = $robotPolicy;
 		}
 
