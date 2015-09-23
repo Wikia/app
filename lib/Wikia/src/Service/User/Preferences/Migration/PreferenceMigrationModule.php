@@ -8,7 +8,7 @@ use Wikia\Util\Statistics\BernoulliTrial;
 
 class PreferenceMigrationModule implements Module {
 
-	const PREFERENCE_CORRECTION_RAMP = 5;
+	const PREFERENCE_CORRECTION_RAMP = 50;
 	const PREFERENCE_CORRECTION_SAMPLE_RATE = 0.2;
 
 	public function configure( InjectorBuilder $builder ) {
