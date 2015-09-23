@@ -8,24 +8,16 @@ class ContentReviewHelperTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @param bool $isJsPage
-	 * @param bool $inNamespace
+	 * @param $titleData
 	 * @param string $contentType
 	 * @param bool $expected
+	 * @param $message
 	 * @dataProvider isPageForReviewTestData
 	 */
-	public function testIsPageForReview( $isJsPage, $inNamespace, $contentType, $expected ) {
-		$titleMock = $this->getMock( '\Title', [ 'isJsPage', 'inNamespace' ] );
-		$titleMock->expects( $this->once() )
-			->method( 'isJsPage' )
-			->willReturn( $isJsPage );
-
-		$titleMock->expects( $this->any() )
-			->method( 'inNamespace' )
-			->willReturn( $inNamespace );
-
-		$value = ( new Wikia\ContentReview\Helper() )->isPageReviewed( $titleMock, $contentType );
-		$this->assertEquals( $expected, $value );
+	public function testIsPageForReview( $titleData, $contentType, $expected, $message ) {
+		$title = Title::makeTitle( $titleData['titleNamespace'], $titleData['titleText'] );
+		$value = ( new Wikia\ContentReview\Helper() )->isPageReviewed( $title, $contentType );
+		$this->assertEquals( $expected, $value, $message );
 	}
 
 	/**
@@ -106,7 +98,7 @@ class ContentReviewHelperTest extends WikiaBaseTest {
 					->method( 'getRawText' )
 					->willReturn( $lastReviewedText );
 			} else {
-				$revisionMock = false;
+				$revisionMock = null;
 			}
 
 			$helperMock->expects( $this->any() )
@@ -161,34 +153,58 @@ class ContentReviewHelperTest extends WikiaBaseTest {
 		$badMimeType = 'text/css';
 		return [
 			[
-				false, // isJsPage()
-				false, // inNamespace()
+				[
+					'titleText' => 'TestArticle',
+					'titleNamespace' => NS_MAIN,
+				],
 				$badMimeType,
 				false, // expected
+				'A regular article from the Main namespace should not be reviewed.',
 			],
 			[
-				false, // isJsPage()
-				true, // inNamespace()
+				[
+					'titleText' => 'TestArticle',
+					'titleNamespace' => NS_MEDIAWIKI,
+				],
 				$badMimeType,
 				false, // expected
+				'A non-JS article from MediaWiki namespace should not be reviewed.',
 			],
 			[
-				false, // isJsPage()
-				false, // inNamespace()
+				[
+					'titleText' => 'TestArticle',
+					'titleNamespace' => NS_MAIN,
+				],
 				$goodMimeType,
 				false, // expected
+				'An article from the Main namespace should not be reviewed, even if its mimetype is JS. This one is for the sake of scripts from dev.wikia.com.',
 			],
 			[
-				false, // isJsPage()
-				true, // inNamespace()
+				[
+					'titleText' => 'TestArticle',
+					'titleNamespace' => NS_MEDIAWIKI,
+				],
 				$goodMimeType,
 				true, // expected
+				'An article from the MediaWiki namespace with a JS mimetype should be reviewed, even if its name does not end with .js.',
 			],
 			[
-				true, // isJsPage()
-				false, // inNamespace()
+				[
+					'titleText' => 'TestArticle.js',
+					'titleNamespace' => NS_MEDIAWIKI,
+				],
 				$badMimeType,
 				true, // expected
+				'An article from the MediaWiki namespace with a name ending with .js should be reviewed, even if the mimetype is not JS.',
+			],
+			[
+				[
+					'titleText' => 'TestArticle.js',
+					'titleNamespace' => NS_MEDIAWIKI,
+				],
+				$goodMimeType,
+				true, // expected
+				'A JS article from the MediaWiki namespace should be reviewed.',
 			],
 		];
 	}
@@ -215,7 +231,7 @@ class ContentReviewHelperTest extends WikiaBaseTest {
 				100, // getLatestRevID()
 				[ 'revision_id' => 100 ], // getLatestReviewedRevision()
 				false, // isContentReviewTestModeEnabled()
-				false, // $revisionExists
+				true, // $revisionExists
 				$originalText,
 				$lastReviewedText,
 				$originalText, // $expectedText
@@ -226,7 +242,7 @@ class ContentReviewHelperTest extends WikiaBaseTest {
 				100, // getLatestRevID()
 				[ 'revision_id' => 99 ], // getLatestReviewedRevision()
 				true, // isContentReviewTestModeEnabled()
-				false, // $revisionExists
+				true, // $revisionExists
 				$originalText,
 				$lastReviewedText,
 				$originalText, // $expectedText
