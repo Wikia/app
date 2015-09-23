@@ -66,7 +66,8 @@ class AdEngine2ContextService {
 					'pageName' => $title->getPrefixedDBKey(),
 					'pageType' => $wikiaPageType->getPageType(),
 					'sevenOneMediaSub2Site' => $wg->AdDriverSevenOneMediaOverrideSub2Site,
-					'skin' => $skinName,
+					// TODO: determine mercury skin in the right way
+					'skin' => $skinName === 'oasis' ? 'oasis' : 'mercury',
 					'wikiCategory' => $wikiFactoryHub->getCategoryShort( $wg->CityId ),
 					'wikiCustomKeyValues' => $wg->DartCustomKeyValues,
 					'wikiDbName' => $wg->DBname,

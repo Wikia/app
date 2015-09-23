@@ -12,8 +12,7 @@ define('ext.wikia.adEngine.slot.scrollHandler', [
 		reloadedView = {},
 		context = adContext.getContext(),
 		config = context.opts.scrollHandlerConfig || {},
-		// 'mercury' value is not set in context.targeting.skin yet
-		skin = context.targeting.skin === 'oasis' ? 'oasis' : 'mercury';
+		skin = context.targeting.skin;
 
 	function init() {
 		if (context.opts.enableScrollHandler)  {
