@@ -70,6 +70,7 @@ class PreferenceCorrectionService {
 
 		if ( $this->sampler->shouldSample() ) {
 			\Transaction::addRawEvent( \Transaction::EVENT_USER_PREFERENCES_COUNTERS, [
+				'type' => 'comparison',
 				'differences' => $differences,
 			] );
 		}
