@@ -1,4 +1,5 @@
 (function () {
+	console.log('qqq if condition', (window.mytest === 'mari'));
 	if ( window.mytest === 'mari' ) {
 		var searchForm = document.getElementById('searchForm'),
 			searchContainer = document.getElementsByClassName('search-form-wrapper'),
@@ -12,7 +13,7 @@
 		gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
 				   '//cse.google.com/cse.js?cx=' + cx;
 		s.parentNode.insertBefore(gcse, s);
-
+		console.log('qqq gcse', gcse);
 		searchForm.addEventListener('submit', function (evt) {
 			evt.preventDefault();
 			this.searchQuery = $('#searchInput').val();
