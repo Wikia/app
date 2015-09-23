@@ -121,7 +121,6 @@ class PortableInfoboxDataService {
 	 * Purge mem cache and local cache
 	 */
 	public function purge() {
-		wfDebug( __CLASS__ . ": PURGE" );
 		global $wgMemc;
 		$wgMemc->delete( $this->cachekey );
 		unset( $this->cache );
