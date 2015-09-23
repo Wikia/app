@@ -18,6 +18,8 @@ class UserAttributes {
 	// outside of MW.
 	public static $ATTRIBUTES_USED_BY_OUTSIDE_CLIENTS = [ AVATAR_USER_OPTION_NAME, "location" ];
 
+	const CACHE_TTL = 60; // 1 minute
+
 	/**
 	 * @Inject({
 	 *    Wikia\Service\User\Attributes\AttributeService::class,
@@ -114,5 +116,9 @@ class UserAttributes {
 
 	private function deleteAttributeFromService( $userId, Attribute $attribute ) {
 		$this->attributeService->delete( $userId, $attribute );
+	}
+
+	public static function getCacheKey( $userId ) {
+		return wfMemcKey( $userId, __CLASS__ );
 	}
 }

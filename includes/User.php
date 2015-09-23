@@ -2692,13 +2692,31 @@ class User {
 	}
 
 	/**
-	 * Returns true if 1.) User is logged in and 2.) The attribute is one used by clients other
-	 * than MW (eg, the avatar service or discussion app).
+	 * Returns true if 1.) User is logged in, 2.) The attribute is one used by clients other
+	 * than MW (eg, the avatar service or discussion app), and 3.) the cache for that user is
+	 * not expired. We're testing to see how many requests would make it to the attribute service
+	 * if we cached the attributes used by outside clients for 1 minute.
 	 * @param $attributeName
 	 * @return bool
 	 */
 	private function shouldLogAttribute( $attributeName ) {
-		return $this->isLoggedIn() && in_array( $attributeName, UserAttributes::$ATTRIBUTES_USED_BY_OUTSIDE_CLIENTS );
+		global $wgMemc;
+
+		if ( !$this->isLoggedIn() ) {
+			return false;
+		}
+
+		if ( !in_array( $attributeName, UserAttributes::$ATTRIBUTES_USED_BY_OUTSIDE_CLIENTS ) ) {
+			return false;
+		}
+
+		$userAttributeCache = $wgMemc->get( UserAttributes::getCacheKey( $this->getId() ) );
+		if ( !empty( $userAttributeCache ) ) {
+			return false;
+		}
+
+		$wgMemc->set( UserAttributes::getCacheKey( $this->getId() ), 1, UserAttributes::CACHE_TTL );
+		return true;
 	}
 
 	/**
@@ -2706,7 +2724,7 @@ class User {
 	 * @param $attributeName
 	 */
 	private function logAttribute( $attributeName ) {
-		$this->info( 'USER_ATTRIBUTES get_attribute_call', [
+		$this->info( 'USER_ATTRIBUTES get_attribute_call_with_cache', [
 			'attributeName' => $attributeName,
 			'userId' => $this->getId()
 		] );
