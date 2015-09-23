@@ -73,8 +73,12 @@ class ApprovedraftAction extends FormlessAction {
 		$parentTitle = TemplateDraftHelper::getParentTitle( $draftTitle );
 
 		// Check edit rights
-		if ( !$parentTitle->userCan( 'templatedraft' ) ) {
-			throw new PermissionsException( 'edit' );
+		if ( !$parentTitle->userCan( 'templatedraft' ) || !$parentTitle->userCan( 'edit' ) ) {
+			throw new ErrorPageError( 'badaccess', 'templatedraft-protect-edit' );
+		}
+
+		if ( !$parentTitle->userCan( 'move' ) ) {
+			throw new ErrorPageError( 'badaccess', 'templatedraft-protect-move' );
 		}
 
 		// Get contents of draft page
