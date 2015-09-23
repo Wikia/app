@@ -8,61 +8,111 @@ class ContentReviewHelperTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @dataProvider replaceWithLastApprovedRevisionProvider
-	 * Test for \Wikia\ContentReview\Hooks::onRawPageViewBeforeOutput hook
+	 * @param array $titleData Has to include `titleNamespace` and `titleText` keys
+	 * @param string $contentType
+	 * @param bool $expected
+	 * @param $message
+	 * @dataProvider isPageForReviewTestData
 	 */
-	public function testReplaceWithLastApprovedRevision( $params, $textExpected, $message ) {
+	public function testIsPageForReview( array $titleData, $contentType, $expected, $message ) {
+		$title = Title::makeTitle( $titleData['titleNamespace'], $titleData['titleText'] );
+		$value = ( new Wikia\ContentReview\Helper() )->isPageReviewed( $title, $contentType );
+		$this->assertEquals( $expected, $value, $message );
+	}
 
-		/* @var \Title $titleMock */
-		$titleMock = $this->getMockBuilder( '\Title' )
-			->disableOriginalConstructor()
-			->setMethods( [ 'getArticleID', 'getLatestRevID', 'isJsPage' ] )
-			->getMock();
-		$titleMock->method( 'getArticleID' )
-			->will( $this->returnValue( $params['pageId'] ) );
-		$titleMock->method( 'getLatestRevID' )
-			->will( $this->returnValue( $params['latestRevId'] ) );
-		$titleMock->method( 'isJsPage' )
-			->will( $this->returnValue( $params['isJsPage'] ) );
+	/**
+	 * Test for \Wikia\ContentReview\Hooks::onRawPageViewBeforeOutput hook
+	 *
+	 * To review different cases - check the documentation of the dataProvider.
+	 *
+	 * @dataProvider replaceWithLastApprovedRevisionProvider
+	 * @param array $inputData Has to contain the following keys:
+	 * 		'isPageReviewed' =>
+	 * 		'latestRevID' =>
+	 * 		'latestReviewedRevision' =>
+	 * 		'isTestModeEnabled' =>
+	 * 		'revisionExists' =>
+	 * 		'originalText' =>
+	 * 		'lastReviewedText' =>
+	 * @param string $expectedText
+	 * @param string $message
+	 */
+	public function testReplaceWithLastApprovedRevision( array $inputData, $expectedText, $message ) {
+		/**
+		 * Case 1 - if a page does not qualify to be reviewed just return the original text.
+		 */
+		if ( !$inputData['isPageReviewed'] ) {
+			$mockTitle = $this->getMock( '\Title' );
 
-		/* @var \Wikia\ContentReview\Models\CurrentRevisionModel $currentRevisionModelMock */
-		$currentRevisionModelMock = $this->getMockBuilder( '\Wikia\ContentReview\Models\CurrentRevisionModel' )
-			->disableOriginalConstructor()
-			->setMethods( [ 'getLatestReviewedRevision' ] )
-			->getMock();
-		$currentRevisionModelMock->method( 'getLatestReviewedRevision' )
-			->will( $this->returnValue( $params['latestApprovedRevData'] ) );
+			$mockHelper = $this->getMock( '\Wikia\ContentReview\Helper', [ 'isPageReviewed' ] );
+			$mockHelper->expects( $this->once() )
+				->method( 'isPageReviewed' )
+				->willReturn( $inputData['isPageReviewed'] );
 
-		/* @var \Revision $revisionMock */
-		$revisionMock = $this->getMockBuilder( '\Revision' )
-			->disableOriginalConstructor()
-			->setMethods( [ 'getRawText' ] )
-			->getMock();
-		$revisionMock->method( 'getRawText' )
-			->will( $this->returnValue( $params['latestApprovedRevText'] ) );
+			$textReturn = $mockHelper->replaceWithLastApproved( $mockTitle, 'text/css', $inputData['originalText'] );
+		} else {
+			$mockContentType = 'text/javascript';
 
-		$this->mockGlobalVariable( 'wgJsMimeType', $params['wgJsMimeType'] );
+			/* @var \Title $titleMock */
+			$titleMock = $this->getMock( '\Title', [ 'getArticleID', 'getLatestRevID' ] );
+			$titleMock->expects( $this->once() )
+				->method( 'getLatestRevID' )
+				->willReturn( $inputData['latestRevID'] );
 
-		/* @var \Wikia\ContentReview\Helper $helperMock */
-		$helperMock = $this->getMockBuilder( '\Wikia\ContentReview\Helper' )
-			->disableOriginalConstructor()
-			->setMethods( [ 'getCurrentRevisionModel', 'getRevisionById', 'isContentReviewTestModeEnabled' ] )
-			->getMock();
-		$helperMock->method( 'getCurrentRevisionModel' )
-			->will( $this->returnValue( $currentRevisionModelMock ) );
-		$helperMock->method( 'isContentReviewTestModeEnabled' )
-			->will( $this->returnValue( $params['isContentReviewTestModeEnabled'] ) );
-		$helperMock->method( 'getRevisionById' )
-			->will( $this->returnValue( $revisionMock ) );
+			/* @var \Wikia\ContentReview\Models\CurrentRevisionModel $currentRevisionModelMock */
+			$currentRevisionModelMock = $this->getMock( 'Wikia\ContentReview\Models\CurrentRevisionModel', [
+				'getLatestReviewedRevision'
+			] );
+			$currentRevisionModelMock->expects( $this->once() )
+				->method( 'getLatestReviewedRevision' )
+				->willReturn( $inputData['latestReviewedRevision'] );
 
-		$helperMock->replaceWithLastApproved( $titleMock, $params['contentType'], $params['text'] );
+			/* @var \Wikia\ContentReview\Helper $helperMock */
+			$helperMock = $this->getMock( '\Wikia\ContentReview\Helper', [
+				'isPageReviewed',
+				'getCurrentRevisionModel',
+				'isContentReviewTestModeEnabled',
+				'getRevisionById',
+			] );
+			$helperMock->expects( $this->once() )
+				->method( 'isPageReviewed' )
+				->willReturn( $inputData['isPageReviewed'] );
+			$helperMock->expects( $this->once() )
+				->method( 'getCurrentRevisionModel' )
+				->willReturn( $currentRevisionModelMock );
+			$helperMock->expects( $this->any() )
+				->method( 'isContentReviewTestModeEnabled' )
+				->willReturn( $inputData['isTestModeEnabled'] );
 
-		$this->assertEquals( $textExpected, $params['text'], $message );
+			/**
+			 * Handle Case 4 and Case 5 - if the Revision does not exist the value returned
+			 * by getRevisionById is `false` to match the values returned by the original method.
+			 */
+			if ( $inputData['revisionExists'] ) {
+				/* @var \Revision $revisionMock */
+				$revisionMock = $this->getMockBuilder( '\Revision' )
+					->disableOriginalConstructor()
+					->setMethods( [ 'getRawText' ] )
+					->getMock();
+				$revisionMock->expects( $this->any() )
+					->method( 'getRawText' )
+					->willReturn( $inputData['lastReviewedText'] );
+			} else {
+				$revisionMock = null;
+			}
+
+			$helperMock->expects( $this->any() )
+				->method( 'getRevisionById' )
+				->willReturn( $revisionMock );
+
+			$textReturn = $helperMock->replaceWithLastApproved( $titleMock, $mockContentType, $inputData['originalText'] );
+		}
+
+		$this->assertEquals( $expectedText, $textReturn, $message );
 	}
 
 	/**
 	 * @dataProvider userCanEditJsPageProvider
-	 * @param bool $inNamespace
 	 * @param bool $isJsPage
 	 * @param bool $userCan
 	 * @param bool $expected
@@ -98,96 +148,153 @@ class ContentReviewHelperTest extends WikiaBaseTest {
 		$this->assertEquals( $expected, $this->getHelper()->hasPageApprovedId( $modelMock, 0, 0, $oldId ), $message );
 	}
 
-	public function replaceWithLastApprovedRevisionProvider() {
-		$pageId = 123;
-		$revId1 = 566;
-		$revId2 = 567;
-		$revIdNull = null;
-		$textEmpty = '';
-		$text1 = '';
-		$text2 = '';
-		$jsType = 'jstype';
+	public function isPageForReviewTestData() {
+		$goodMimeType = 'text/javascript';
+		$badMimeType = 'text/css';
 		return [
 			[
 				[
-					'pageId' => $pageId,
-					'latestRevId' => $revId1,
-					'isJsPage' => true,
-					'contentType' => 'no impact in this test, random 6519846169498',
-					'latestApprovedRevData' => [
-						'revision_id' => $revId1
-					],
-					'latestApprovedRevText' => 'revision text',
-					'isContentReviewTestModeEnabled' => false,
-					'text' => $text1,
+					'titleText' => 'TestArticle',
+					'titleNamespace' => NS_MAIN,
 				],
-				$text1,
-				'Latest revision id same as latest approved revision',
+				$badMimeType,
+				false, // expected
+				'A regular article from the Main namespace should not be reviewed.',
 			],
 			[
 				[
-					'pageId' => $pageId,
-					'latestRevId' => $revId2,
-					'isJsPage' => true,
-					'contentType' => 'no impact in this test, random 4563786783453',
-					'latestApprovedRevData' => [
-						'revision_id' => $revId1
-					],
-					'latestApprovedRevText' => $text1,
-					'isContentReviewTestModeEnabled' => false,
-					'text' => $text2,
+					'titleText' => 'TestArticle',
+					'titleNamespace' => NS_MEDIAWIKI,
 				],
-				$text1,
-				'Current text replaced with last approved revision',
+				$badMimeType,
+				false, // expected
+				'A non-JS article from MediaWiki namespace should not be reviewed.',
 			],
 			[
 				[
-					'pageId' => $pageId,
-					'latestRevId' => $revId2,
-					'isJsPage' => true,
-					'contentType' => 'no impact in this test',
-					'latestApprovedRevData' => [
-						'revision_id' => $revIdNull
-					],
-					'latestApprovedRevText' => $text1,
-					'isContentReviewTestModeEnabled' => false,
-					'text' => $text2,
+					'titleText' => 'TestArticle',
+					'titleNamespace' => NS_MAIN,
 				],
-				$textEmpty,
-				'No approved revision. Text empty.',
+				$goodMimeType,
+				false, // expected
+				'An article from the Main namespace should not be reviewed, even if its mimetype is JS. This one is for the sake of scripts from dev.wikia.com.',
 			],
 			[
 				[
-					'pageId' => $pageId,
-					'latestRevId' => $revId2,
-					'isJsPage' => false,
-					'contentType' => $jsType,
-					'wgJsMimeType' => $jsType,
-					'latestApprovedRevData' => [
-						'revision_id' => $revIdNull
-					],
-					'latestApprovedRevText' => $text1,
-					'isContentReviewTestModeEnabled' => false,
-					'text' => $text2,
+					'titleText' => 'TestArticle',
+					'titleNamespace' => NS_MEDIAWIKI,
 				],
-				$text1,
-				'Is not isJsPage but is wgJsMimeType. Text replaced with last approved revision',
+				$goodMimeType,
+				true, // expected
+				'An article from the MediaWiki namespace with a JS mimetype should be reviewed, even if its name does not end with .js.',
 			],
 			[
 				[
-					'pageId' => $pageId,
-					'latestRevId' => $revId2,
-					'isJsPage' => true,
-					'contentType' => 'no impact in this test, random 1519849198824',
-					'latestApprovedRevData' => [
-						'revision_id' => $revId1
-					],
-					'latestApprovedRevText' => $text1,
-					'isContentReviewTestModeEnabled' => true,
-					'text' => $text2,
+					'titleText' => 'TestArticle.js',
+					'titleNamespace' => NS_MEDIAWIKI,
 				],
-				$text2,
-				'Test mode enabled. Text unchanged',
+				$badMimeType,
+				true, // expected
+				'An article from the MediaWiki namespace with a name ending with .js should be reviewed, even if the mimetype is not JS.',
+			],
+			[
+				[
+					'titleText' => 'TestArticle.js',
+					'titleNamespace' => NS_MEDIAWIKI,
+				],
+				$goodMimeType,
+				true, // expected
+				'A JS article from the MediaWiki namespace should be reviewed.',
+			],
+		];
+	}
+
+	/**
+	 * @return array Structure:
+	 * [
+	 * 	[
+	 * 		'isPageReviewed' =>
+	 * 		'latestRevID' =>
+	 * 		'latestReviewedRevision' =>
+	 * 		'isTestModeEnabled' =>
+	 * 		'revisionExists' =>
+	 * 		'originalText' =>
+	 * 		'lastReviewedText' =>
+	 * 	],
+	 * 	$expectedText,
+	 * 	$message,
+	 * ]
+	 */
+	public function replaceWithLastApprovedRevisionProvider() {
+		$originalText = 'This is the original text.';
+		$lastReviewedText = 'This is the last reviewed text.';
+		$emptyText = '';
+
+		return [
+			[
+				[
+					'isPageReviewed' => false,
+					'latestRevID' => 100,
+					'latestReviewedRevision' => [],
+					'isTestModeEnabled' => false,
+					'revisionExists' => true,
+					'originalText' => $originalText,
+					'lastReviewedText' => $lastReviewedText,
+				],
+				$originalText, // $expectedText
+				$message = 'Case 1 - a page does not qualify to be reviewed (isPageReviewed === false).',
+			],
+			[
+				[
+					'isPageReviewed' => true,
+					'latestRevID' => 100,
+					'latestReviewedRevision' => [ 'revision_id' => 100 ],
+					'isTestModeEnabled' => false,
+					'revisionExists' => true,
+					'originalText' => $originalText,
+					'lastReviewedText' => $lastReviewedText,
+				],
+				$originalText, // $expectedText
+				$message = 'Case 2 - Latest rev_id matches the last reviewed rev_id',
+			],
+			[
+				[
+					'isPageReviewed' => true,
+					'latestRevID' => 100,
+					'latestReviewedRevision' => [ 'revision_id' => 99 ],
+					'isTestModeEnabled' => true,
+					'revisionExists' => true,
+					'originalText' => $originalText,
+					'lastReviewedText' => $lastReviewedText,
+				],
+				$originalText, // $expectedText
+				$message = 'Case 3 - Test mode is enabled',
+			],
+			[
+				[
+					'isPageReviewed' => true,
+					'latestRevID' => 99,
+					'latestReviewedRevision' => [ 'revision_id' => 100 ],
+					'isTestModeEnabled' => false,
+					'revisionExists' => false,
+					'originalText' => $originalText,
+					'lastReviewedText' => $lastReviewedText,
+				],
+				$emptyText, // $expectedText
+				$message = 'Case 4 - You want to get a reviewed revision but it does not exist (e.g. for new, unreviewed pages)',
+			],
+			[
+				[
+					'isPageReviewed' => true,
+					'latestRevID' => 99,
+					'latestReviewedRevision' => [ 'revision_id' => 100 ],
+					'isTestModeEnabled' => false,
+					'revisionExists' => true,
+					'originalText' => $originalText,
+					'lastReviewedText' => $lastReviewedText,
+				],
+				$lastReviewedText, // $expectedText
+				$message = 'Case 5 - You get the latest approved revision.',
 			],
 		];
 	}
