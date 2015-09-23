@@ -2,12 +2,13 @@
 /*jshint camelcase:false*/
 /*jshint maxdepth:5*/
 define('ext.wikia.adEngine.lookup.openXBidder', [
+	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adTracker',
 	'ext.wikia.adEngine.utils.adLogicZoneParams',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window'
-], function (adTracker, adLogicZoneParams, doc, log, win) {
+], function (adContext, adTracker, adLogicZoneParams, doc, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.lookup.openXBidder',
@@ -22,26 +23,45 @@ define('ext.wikia.adEngine.lookup.openXBidder', [
 		},
 		called = false,
 		priceTimeout = 't',
-		slots = {
-			HOME_TOP_LEADERBOARD: '728x90',
-			HOME_TOP_RIGHT_BOXAD: '300x250',
-			INCONTENT_BOXAD_1: '300x250',
-			LEFT_SKYSCRAPER_2: '160x600',
-			LEFT_SKYSCRAPER_3: '160x600',
-			PREFOOTER_LEFT_BOXAD: '300x250',
-			PREFOOTER_RIGHT_BOXAD: '300x250',
-			TOP_LEADERBOARD: '728x90',
-			TOP_RIGHT_BOXAD: '300x250',
-			MOBILE_IN_CONTENT: '300x250',
-			MOBILE_PREFOOTER: '300x250',
-			MOBILE_TOP_LEADERBOARD: '320x50'
+		config = {
+			oasis: {
+				TOP_LEADERBOARD: '728x90',
+				TOP_RIGHT_BOXAD: '300x250',
+				LEFT_SKYSCRAPER_2: '160x600',
+				PREFOOTER_LEFT_BOXAD: '300x250',
+				PREFOOTER_RIGHT_BOXAD: '300x250'
+			},
+			mercury: {
+				MOBILE_IN_CONTENT: '300x250',
+				MOBILE_PREFOOTER: '300x250',
+				MOBILE_TOP_LEADERBOARD: '320x50'
+			}
 		},
 		sizeMapping = {
 			'728x90': '7x9',
 			'300x250': '3x2',
 			'160x600': '1x6',
 			'320x50': '3x5'
-		};
+		},
+		slots = getSlots(config);
+
+	function getSlots(config) {
+		var context = adContext.getContext(),
+			skin = context.targeting.skin,
+			pageType = context.targeting.pageType,
+			slots = config[skin];
+
+		if (pageType === 'home') {
+			for (var slotName in slots) {
+				if (slots.hasOwnProperty(slotName) && slotName.indexOf('TOP') > -1) {
+					slots['HOME_' + slotName] = slots[slotName];
+					delete slots[slotName];
+				}
+			}
+		}
+
+		return slots;
+	}
 
 	function getAds() {
 		var ads = [],
