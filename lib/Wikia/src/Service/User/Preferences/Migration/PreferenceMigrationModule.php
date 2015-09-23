@@ -17,8 +17,8 @@ class PreferenceMigrationModule implements Module {
 		$preferenceCorrectionEnabled = isset( $wgCityId ) && $wgCityId % 100 < self::PREFERENCE_CORRECTION_RAMP;
 
 		$builder
-			->bind( PreferenceCorrectionService::PREFERENCE_CORRECTION_ENABLED )->to($preferenceCorrectionEnabled)
-			->bind( PreferenceCorrectionService::PREFERENCE_CORRECTION_SAMPLER )->to(new BernoulliTrial(self::PREFERENCE_CORRECTION_SAMPLE_RATE))
+			->bind( PreferenceCorrectionService::PREFERENCE_CORRECTION_ENABLED )->to( $preferenceCorrectionEnabled )
+			->bind( PreferenceCorrectionService::PREFERENCE_CORRECTION_SAMPLER )->to( new BernoulliTrial( self::PREFERENCE_CORRECTION_SAMPLE_RATE ) )
 			->bind( PreferenceScopeService::GLOBAL_SCOPE_PREFS )->to( $wgGlobalUserPreferenceWhiteList )
 			->bind( PreferenceScopeService::LOCAL_SCOPE_PREFS )->to( $wgLocalUserPreferenceWhiteList );
 	}

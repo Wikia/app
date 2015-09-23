@@ -41,7 +41,7 @@ class UserTest extends WikiaBaseTest {
 			->bind( PreferenceScopeService::GLOBAL_SCOPE_PREFS )->to( $wgGlobalUserPreferenceWhiteList )
 			->bind( PreferenceScopeService::LOCAL_SCOPE_PREFS )->to( $wgLocalUserPreferenceWhiteList )
 			->bind( PreferenceCorrectionService::PREFERENCE_CORRECTION_ENABLED )->to( false )
-			->bind( PreferenceCorrectionService::PREFERENCE_CORRECTION_SAMPLER )->to( new BernoulliTrial(0))
+			->bind( PreferenceCorrectionService::PREFERENCE_CORRECTION_SAMPLER )->to( new BernoulliTrial( 0 ) )
 			->build();
 		Injector::setInjector( $container );
 	}
