@@ -6,6 +6,14 @@
  *
  */
 class Optimizely {
+
+	/**
+	 * Which environments are considered a developemnt/testing environments for Optimizely experiments?
+	 * Optimizely Wikia Dev project script should be served also on sandboxes, to prevent poluting Wikia Prod project
+	 * script with experiments that are still under developement.
+	 */
+	const OPTIMIZELY_DEV_ENVIRONMENTS = [ WIKIA_ENV_DEV, WIKIA_ENV_SANDBOX ];
+
 	static public function onOasisSkinAssetGroupsBlocking( &$jsAssetGroups ) {
 		global $wgNoExternals;
 
@@ -35,7 +43,7 @@ class Optimizely {
 	}
 
 	public static function onWikiaSkinTopScripts( &$vars, &$scripts, $skin ) {
-		global $wgOptimizelyLoadFromOurCDN, $wgNoExternals, $wgWikiaEnvironment;
+		global $wgOptimizelyLoadFromOurCDN, $wgNoExternals;
 
 		if ( !$wgNoExternals ) {
 			// load optimizely_blocking_js on wikiamobile
@@ -45,9 +53,8 @@ class Optimizely {
 				}
 			}
 
-			if ( $wgOptimizelyLoadFromOurCDN &&
-				!in_array( $wgWikiaEnvironment, [ WIKIA_ENV_DEV, WIKIA_ENV_SANDBOX ] )
-			) {
+			// On dev envs Optimizely script should be laoded from original CDN for the ease of testing the experiments.
+			if ( $wgOptimizelyLoadFromOurCDN && !static::isOptimizelyDevEnv() ) {
 				$scripts .= static::loadFromOurCDN();
 			} else {
 				$scripts .= static::loadOriginal();
@@ -66,8 +73,19 @@ class Optimizely {
 	}
 
 	protected static function loadOriginal() {
-		global $wgDevelEnvironment, $wgOptimizelyUrl, $wgOptimizelyDevUrl;
+		global $wgOptimizelyUrl, $wgOptimizelyDevUrl;
 		// do not asyc - we need it for UA tracking
-		return '<script src="' . ($wgDevelEnvironment ? $wgOptimizelyDevUrl : $wgOptimizelyUrl) . '"></script>';
+		return '<script src="' . ( static::isOptimizelyDevEnv() ? $wgOptimizelyDevUrl : $wgOptimizelyUrl ) . '"></script>';
+	}
+
+	/**
+	 * Is current environment considered a developemnt/testing environment for Optimizely experiments?
+	 *
+	 * @return bool
+	 */
+	protected static function isOptimizelyDevEnv() {
+		global $wgWikiaEnvironment;
+
+		return in_array( $wgWikiaEnvironment, static::OPTIMIZELY_DEV_ENVIRONMENTS );
 	}
 }
