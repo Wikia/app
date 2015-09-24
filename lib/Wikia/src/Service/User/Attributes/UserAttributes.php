@@ -59,7 +59,7 @@ class UserAttributes {
 		}
 
 		$attributes = $this->loadFromMemcache( $userId );
-		if ( empty( $attributes ) ) {
+		if ( ( $attributes == false ) ) {
 			$attributes = [];
 			/** @var Attribute $attribute */
 			foreach ( $this->attributeService->get( $userId ) as $attribute ) {
