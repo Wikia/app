@@ -74,8 +74,7 @@ class ContentReviewApiController extends WikiaApiController {
 			throw new PermissionsException( 'edit' );
 		}
 
-		$helper = new Helper();
-		$helper->setContentReviewTestMode( $this->wg->CityId );
+		$this->getHelper()->setContentReviewTestMode( $this->wg->CityId );
 		$this->makeSuccessResponse();
 	}
 
@@ -248,6 +247,13 @@ class ContentReviewApiController extends WikiaApiController {
 
 	protected function getTitle( $pageName ) {
 		return Title::newFromText( $pageName );
+	}
+
+	/**
+	 * @return Wikia\ContentReview\Helper
+	 */
+	protected function getHelper() {
+		return new Helper();
 	}
 
 	private function isValidPostRequest( WikiaRequest $request, User $user ) {
