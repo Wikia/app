@@ -4,8 +4,12 @@ namespace Wikia\Service\User\Attributes;
 
 use Doctrine\Common\Cache\CacheProvider;
 use Wikia\Domain\User\Attribute;
+use Wikia\Logger\Loggable;
 
 class UserAttributes {
+
+	use Loggable;
+
 	const CACHE_PROVIDER = "user_attributes_cache_provider";
 
 	/** @var CacheProvider */
@@ -65,6 +69,7 @@ class UserAttributes {
 			foreach ( $this->attributeService->get( $userId ) as $attribute ) {
 				$attributes[$attribute->getName()] = $attribute->getValue();
 			};
+			$this->logAttributeServiceRequest( $userId );
 			$this->setInMemcache( $userId, $attributes );
 		}
 
@@ -127,7 +132,9 @@ class UserAttributes {
 		unset( $this->attributes[$userId] );
 	}
 
-	public static function getCacheKey( $userId ) {
-		return wfSharedMemcKey( __CLASS__, $userId );
+	private function logAttributeServiceRequest( $userId ) {
+		$this->info( 'USER_ATTRIBUTES request_from_service', [
+			'userId' => $userId
+		] );
 	}
 }
