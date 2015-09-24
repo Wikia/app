@@ -68,13 +68,13 @@ class Optimizely {
 		$scriptDomain = WikiFactory::getLocalEnvURL(
 			WikiFactory::getVarValueByName( 'wgServer', Wikia::COMMUNITY_WIKI_ID )
 		);
-		// do not asyc - we need it for UA tracking
+		// do not async - we need it for UA tracking
 		return '<script src="' . $scriptDomain . '/wikia.php?controller=Optimizely&method=getCode"></script>';
 	}
 
 	protected static function loadOriginal() {
 		global $wgOptimizelyUrl, $wgOptimizelyDevUrl;
-		// do not asyc - we need it for UA tracking
+		// do not async - we need it for UA tracking
 		return '<script src="' . ( static::isOptimizelyDevEnv() ? $wgOptimizelyDevUrl : $wgOptimizelyUrl ) . '"></script>';
 	}
 
