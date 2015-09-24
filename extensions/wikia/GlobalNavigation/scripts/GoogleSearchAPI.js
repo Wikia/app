@@ -1,3 +1,7 @@
+/**
+ * We AB test for wikia search (both within and all wikias) in Oasis with Google custom search result.
+ * window.wgGoogleSearchTest global variable is set to true for 50% of users who visit ja wikia.
+ */
 $(function () {
 	if ( window.wgGoogleSearchTest ) {
 		var searchForm = document.getElementById('searchForm'),
