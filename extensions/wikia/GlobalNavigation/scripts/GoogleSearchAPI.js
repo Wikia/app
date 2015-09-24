@@ -1,4 +1,4 @@
-(function () {
+$(function () {
 	if ( window.wgGoogleSearchTest ) {
 		var searchForm = document.getElementById('searchForm'),
 			searchId = window.wgGoogleSearchParam,
@@ -37,4 +37,4 @@
 			$googleButton.trigger('click');
 		});
 	}
-})();
+});
