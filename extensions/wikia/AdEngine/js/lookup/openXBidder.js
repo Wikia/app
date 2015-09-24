@@ -43,11 +43,11 @@ define('ext.wikia.adEngine.lookup.openXBidder', [
 			'160x600': '1x6',
 			'320x50': '3x5'
 		},
+		skin,
 		slots = getSlots(config);
 
 	function getSlots(config) {
 		var context = adContext.getContext(),
-			skin = context.targeting.skin,
 			pageType = context.targeting.pageType,
 			slots = config[skin];
 
@@ -139,8 +139,10 @@ define('ext.wikia.adEngine.lookup.openXBidder', [
 		trackState(true);
 	}
 
-	function call() {
+	function call(currentSkin) {
 		log('call', 'debug', logGroup);
+		skin = currentSkin;
+
 		var openx = doc.createElement('script'),
 			node = doc.getElementsByTagName('script')[0];
 

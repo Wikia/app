@@ -36,7 +36,8 @@ require([
 	'use strict';
 
 	var kruxSiteId = 'JU3_GW1b',
-		context = adContext.getContext();
+		context = adContext.getContext(),
+		skin = 'oasis';
 
 	win.AdEngine_getTrackerStats = slotTracker.getStats;
 
@@ -77,7 +78,7 @@ require([
 	win.wgAfterContentAndJS.push(function () {
 		// Ads
 		adTracker.measureTime('adengine.init', 'queue.desktop').track();
-		scrollHandler.init();
+		scrollHandler.init(skin);
 		win.adslots2 = win.adslots2 || [];
 		adEngine.run(adConfigDesktop, win.adslots2, 'queue.desktop');
 

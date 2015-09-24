@@ -12,9 +12,10 @@ define('ext.wikia.adEngine.slot.scrollHandler', [
 		reloadedView = {},
 		context = adContext.getContext(),
 		config = context.opts.scrollHandlerConfig || {},
-		skin = context.targeting.skin;
+		skin;
 
-	function init() {
+	function init(currentSkin) {
+		skin = currentSkin;
 		if (context.opts.enableScrollHandler)  {
 			config = config[skin];
 			prepareSettings();

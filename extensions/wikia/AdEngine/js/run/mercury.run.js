@@ -17,8 +17,10 @@ require([
 	win
 ) {
 	'use strict';
+	var skin = 'mercury';
+
 	messageListener.init();
-	scrollHandler.init();
+	scrollHandler.init(skin);
 
 	// Custom ads (skins, footer, etc)
 	win.loadCustomAd = customAdsLoader.loadCustomAd;

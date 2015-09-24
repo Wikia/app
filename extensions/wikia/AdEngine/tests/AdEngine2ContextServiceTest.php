@@ -255,7 +255,7 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		$langCode = 'xx';
 		$artId = 777;
 		$artDbKey = 'articledbkey';
-		$skinName = 'mercury';
+		$skinName = 'someskin';
 		$vertical = $verticals['newVertical'];
 		$dbName = 'mydbname';
 		$cityId = 666;
