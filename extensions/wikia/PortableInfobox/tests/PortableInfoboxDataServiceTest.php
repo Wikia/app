@@ -2,7 +2,7 @@
 
 use Wikia\PortableInfobox\Parser\Nodes\NodeFactory;
 
-class PortableInfoboxDataServiceTest extends PHPUnit_Framework_TestCase {
+class PortableInfoboxDataServiceTest extends WikiaBaseTest {
 
 	protected function setUp() {
 		$this->setupFile = dirname( __FILE__ ) . '/../PortableInfobox.setup.php';
