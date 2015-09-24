@@ -1829,3 +1829,10 @@ $wgEnableFliteTagExt = false;
  * Enables SEO Link Hreflang extension
  */
 $wgEnableSeoLinkHreflangExt = false;
+
+/**
+ * @name $wgAdDriverAdsRecoveryMessageCountries
+ * Enables module which displays a simple message to users with ad blockers
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverAdsRecoveryMessageCountries = null;
