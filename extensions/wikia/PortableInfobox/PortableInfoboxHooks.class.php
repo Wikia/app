@@ -71,7 +71,7 @@ class PortableInfoboxHooks {
 	 *
 	 * @return bool
 	 */
-	public static function onArticleSave( &$article, &$user, &$text, &$summary, $minor, $watchthis, $sectionanchor,
+	public static function onArticleSave( WikiPage &$article, &$user, &$text, &$summary, $minor, $watchthis, $sectionanchor,
 		&$flags, &$status ) {
 		PortableInfoboxDataService::newFromTitle( $article->getTitle() )->purge();
 
@@ -85,7 +85,7 @@ class PortableInfoboxHooks {
 	 *
 	 * @return bool
 	 */
-	public static function onArticlePurge( &$article ) {
+	public static function onArticlePurge( WikiPage &$article ) {
 		PortableInfoboxDataService::newFromTitle( $article->getTitle() )->purge();
 
 		return true;
@@ -94,11 +94,11 @@ class PortableInfoboxHooks {
 	/**
 	 * Purge articles memcache when template is edited
 	 *
-	 * @param $articles
+	 * @param $articles Array
 	 *
 	 * @return bool
 	 */
-	public static function onBacklinksPurge( $articles ) {
+	public static function onBacklinksPurge( Array $articles ) {
 		foreach ( $articles as $title ) {
 			PortableInfoboxDataService::newFromTitle( $title )->purge();
 		}

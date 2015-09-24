@@ -24,7 +24,7 @@ class PortableInfoboxDataService {
 		$this->title = $title !== null ? $title : new Title();
 		$this->templateHelper = new PortableInfoboxTemplatesHelper();
 		$this->propsProxy = new PagePropsProxy();
-		$this->cachekey = wfMemcKey( $this->title->getArticleID(), self::INFOBOXES_PROPERTY_NAME );
+		$this->cachekey = wfMemcKey( __CLASS__, $this->title->getArticleID(), self::INFOBOXES_PROPERTY_NAME );
 	}
 
 	public static function newFromTitle( $title ) {
