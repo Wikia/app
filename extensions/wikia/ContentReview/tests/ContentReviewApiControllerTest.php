@@ -74,14 +74,14 @@ class ContentReviewApiControllerTest extends WikiaBaseTest {
 	 * A test for the API method that enable JS test mode.
 	 * @dataProvider enableTestModeDataProvider
 	 * @param array $inputData
-	 * [
+	 *	[
 	 * 		'wasPosted' => bool,
 	 * 		'requestToken' => string,
 	 * 		'userEditToken' => string,
 	 * 		'isJsPage' => bool,
 	 * 		'userId' => int,
 	 * 		'userCanEdit' => bool,
-		],
+	 *	],
 	 * @param string $expected 'success' or a class name of an expected exception
 	 * @param $message
 	 */
