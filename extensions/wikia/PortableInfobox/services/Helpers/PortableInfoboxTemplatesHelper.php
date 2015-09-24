@@ -20,8 +20,7 @@ class PortableInfoboxTemplatesHelper {
 	 */
 	public function parseInfoboxes( $title ) {
 		// for templates we need to check for include tags
-		$article = \Article::newFromTitle( $title, \RequestContext::getMain() );
-		$templateText = $article->fetchContent();
+		$templateText = $this->fetchContent( $title );
 		$includeonlyText = $this->getIncludeonlyText( $templateText );
 
 		if ( $includeonlyText ) {
@@ -29,7 +28,7 @@ class PortableInfoboxTemplatesHelper {
 			$parserOptions = new \ParserOptions();
 			$frame = $parser->getPreprocessor()->newFrame();
 
-			$templateTextWithoutIncludeonly = $parser->getPreloadText( $includeonlyText, $article->getTitle(), $parserOptions );
+			$templateTextWithoutIncludeonly = $parser->getPreloadText( $includeonlyText, $title, $parserOptions );
 			$infoboxes = $this->getInfoboxes( $templateTextWithoutIncludeonly );
 
 			if ( $infoboxes ) {
@@ -51,37 +50,19 @@ class PortableInfoboxTemplatesHelper {
 	}
 
 	/**
-	 * @desc From the template without <includeonly> tags, creates an array of
-	 * strings containing only infoboxes. All template content which is not an infobox is removed.
-	 *
-	 * @param $text string Content of template which uses the <includeonly> tags
-	 *
-	 * @return array of striped infoboxes ready to parse
-	 */
-	protected function getInfoboxes( $text ) {
-		preg_match_all( "/<infobox.+<\/infobox>/sU", $text, $result );
-
-		return $result[ 0 ];
-	}
-
-	/**
-	 * @desc returns the text from inside of the first <includeonly> tag and
-	 * without the nowiki and pre tags.
-	 *
-	 * @param $text string template text
+	 * @param $title \Title
 	 *
 	 * @return string
 	 */
-	protected function getIncludeonlyText( $text ) {
-		preg_match_all( "/<includeonly>(.+)<\/includeonly>/sU", $text, $result );
-		if ( !isset( $result[ 1 ][ 0 ] ) ) {
-			return null;
+	protected function fetchContent( $title ) {
+		if ( $title && $title->exists() ) {
+			$article = \Article::newFromTitle( $title, \RequestContext::getMain() );
+			if ( $article && $article->exists() ) {
+				$content = $article->fetchContent();
+			}
 		}
 
-		$result = $this->removeNowikiPre( $result[ 1 ][ 0 ] );
-
-		return $result;
-
+		return isset( $content ) && $content ? $content : '';
 	}
 
 	/**
@@ -96,5 +77,38 @@ class PortableInfoboxTemplatesHelper {
 		$text = preg_replace( "/<pre>.+<\/pre>/sU", '', $text );
 
 		return $text;
+	}
+
+	/**
+	 * @desc returns the text from inside of the first <includeonly> tag and
+	 * without the nowiki and pre tags.
+	 *
+	 * @param $text string template text
+	 *
+	 * @return string
+	 */
+	protected function getIncludeonlyText( $text ) {
+		$clean = $this->removeNowikiPre( $text );
+
+		preg_match_all( "/<includeonly>(.+)<\/includeonly>/sU", $clean, $result );
+		if ( !isset( $result[ 1 ][ 0 ] ) ) {
+			return null;
+		}
+
+		return $result[ 1 ][ 0 ];
+	}
+
+	/**
+	 * @desc From the template without <includeonly> tags, creates an array of
+	 * strings containing only infoboxes. All template content which is not an infobox is removed.
+	 *
+	 * @param $text string Content of template which uses the <includeonly> tags
+	 *
+	 * @return array of striped infoboxes ready to parse
+	 */
+	protected function getInfoboxes( $text ) {
+		preg_match_all( "/<infobox.+<\/infobox>/sU", $text, $result );
+
+		return $result[ 0 ];
 	}
 }
