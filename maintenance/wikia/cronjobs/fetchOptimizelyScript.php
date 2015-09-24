@@ -9,9 +9,7 @@
 
 require_once( dirname( __FILE__ ) . '/../../commandLine.inc' );
 
-global $wgOptimizelyUrl, $wgOptimizelyDevUrl;
-
-$url = Optimizely::isOptimizelyDevEnv() ? $wgOptimizelyDevUrl : $wgOptimizelyUrl;
+$url = Optimizely::getOptimizelyUrl();
 $data = trim( Http::get( $url ) );
 
 if ( !empty( $data ) ) {
