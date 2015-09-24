@@ -1,6 +1,6 @@
 /*global define*/
 /*jshint maxlen:125, camelcase:false, maxdepth:7*/
-define('ext.wikia.adEngine.sourcePoint', [
+define('ext.wikia.adEngine.sourcePointDetection', [
 	'ext.wikia.adEngine.adContext',
 	'wikia.document',
 	'wikia.krux',
@@ -8,7 +8,7 @@ define('ext.wikia.adEngine.sourcePoint', [
 ], function (adContext, doc, krux, log) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.adEngine.sourcePoint',
+	var logGroup = 'ext.wikia.adEngine.sourcePointDetection',
 		kruxEventSent = false,
 		detectionInitialized = false;
 
