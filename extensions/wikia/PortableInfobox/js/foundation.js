@@ -9,31 +9,7 @@
 (function ($, window, document, undefined) {
   'use strict';
 
-  var header_helpers = function (class_array) {
-    var i = class_array.length;
-    var head = $('head');
-
-    while (i--) {
-      if (head.has('.' + class_array[i]).length === 0) {
-        head.append('<meta class="' + class_array[i] + '" />');
-      }
-    }
-  };
-
-  header_helpers([
-    'foundation-mq-small',
-    'foundation-mq-small-only',
-    'foundation-mq-medium',
-    'foundation-mq-medium-only',
-    'foundation-mq-large',
-    'foundation-mq-large-only',
-    'foundation-mq-xlarge',
-    'foundation-mq-xlarge-only',
-    'foundation-mq-xxlarge',
-    'foundation-data-attribute-namespace']);
-
   // Enable FastClick if present
-
   $(function () {
     if (typeof FastClick !== 'undefined') {
       // Don't attach to body if undefined
@@ -69,16 +45,7 @@
 
   // Namespace functions.
 
-  var attr_name = function (init) {
-    //var arr = [];
-    //if (!init) {
-    //  arr.push('data');
-    //}
-    //if (this.namespace.length > 0) {
-    //  arr.push(this.namespace);
-    //}
-    //arr.push(this.name);
-
+  var attr_name = function () {
     return 'data-orbit';
   };
 
@@ -130,37 +97,6 @@
 
   };
 
-  var single_image_loaded = function (image, callback) {
-    function loaded () {
-      callback(image[0]);
-    }
-
-    function bindLoad () {
-      this.one('load', loaded);
-
-      if (/MSIE (\d+\.\d+);/.test(navigator.userAgent)) {
-        var src = this.attr( 'src' ),
-            param = src.match( /\?/ ) ? '&' : '?';
-
-        param += 'random=' + (new Date()).getTime();
-        this.attr('src', src + param);
-      }
-    }
-
-    if (!image.attr('src')) {
-      loaded();
-      return;
-    }
-
-    if (image[0].complete || image[0].readyState === 4) {
-      loaded();
-    } else {
-      bindLoad.call(image);
-    }
-  };
-
-  /*! matchMedia() polyfill - Test a CSS media type/query in JS. Authors & copyright (c) 2012: Scott Jehl, Paul Irish, Nicholas Zakas, David Knight. Dual MIT/BSD license */
-
   window.matchMedia || (window.matchMedia = function() {
       "use strict";
 
@@ -206,23 +142,7 @@
       };
   }());
 
-  /*
-   * jquery.requestAnimationFrame
-   * https://github.com/gnarf37/jquery-requestAnimationFrame
-   * Requires jQuery 1.8+
-   *
-   * Copyright (c) 2012 Corey Frang
-   * Licensed under the MIT license.
-   */
-
   (function(jQuery) {
-
-
-  // requestAnimationFrame polyfill adapted from Erik Möller
-  // fixes from Paul Irish and Tino Zijdel
-  // http://paulirish.com/2011/requestanimationframe-for-smart-animating/
-  // http://my.opera.com/emoller/blog/2011/12/20/requestanimationframe-for-smart-er-animating
-
   var animating,
       lastTime = 0,
       vendors = ['webkit', 'moz'],
@@ -284,32 +204,10 @@
 
   }( $ ));
 
-  function removeQuotes (string) {
-    if (typeof string === 'string' || string instanceof String) {
-      string = string.replace(/^['\\/"]+|(;\s?})+|['\\/"]+$/g, '');
-    }
-
-    return string;
-  }
-
   window.Foundation = {
     name : 'Foundation',
 
     version : '5.5.2',
-
-    media_queries : {
-      'small'       : S('.foundation-mq-small').css('font-family').replace(/^[\/\\'"]+|(;\s?})+|[\/\\'"]+$/g, ''),
-      'small-only'  : S('.foundation-mq-small-only').css('font-family').replace(/^[\/\\'"]+|(;\s?})+|[\/\\'"]+$/g, ''),
-      'medium'      : S('.foundation-mq-medium').css('font-family').replace(/^[\/\\'"]+|(;\s?})+|[\/\\'"]+$/g, ''),
-      'medium-only' : S('.foundation-mq-medium-only').css('font-family').replace(/^[\/\\'"]+|(;\s?})+|[\/\\'"]+$/g, ''),
-      'large'       : S('.foundation-mq-large').css('font-family').replace(/^[\/\\'"]+|(;\s?})+|[\/\\'"]+$/g, ''),
-      'large-only'  : S('.foundation-mq-large-only').css('font-family').replace(/^[\/\\'"]+|(;\s?})+|[\/\\'"]+$/g, ''),
-      'xlarge'      : S('.foundation-mq-xlarge').css('font-family').replace(/^[\/\\'"]+|(;\s?})+|[\/\\'"]+$/g, ''),
-      'xlarge-only' : S('.foundation-mq-xlarge-only').css('font-family').replace(/^[\/\\'"]+|(;\s?})+|[\/\\'"]+$/g, ''),
-      'xxlarge'     : S('.foundation-mq-xxlarge').css('font-family').replace(/^[\/\\'"]+|(;\s?})+|[\/\\'"]+$/g, '')
-    },
-
-    stylesheet : $('<style></style>').appendTo('head')[0].sheet,
 
     global : {
       namespace : undefined
@@ -336,18 +234,6 @@
           responses.push(this.init_lib(lib, libraries));
         }
       }
-
-      S(window).load(function () {
-        S(window)
-          .trigger('resize.fndtn.clearing')
-          .trigger('resize.fndtn.dropdown')
-          .trigger('resize.fndtn.equalizer')
-          .trigger('resize.fndtn.interchange')
-          .trigger('resize.fndtn.joyride')
-          .trigger('resize.fndtn.magellan')
-          .trigger('resize.fndtn.topbar')
-          .trigger('resize.fndtn.slider');
-      });
 
       return scope;
     },
@@ -436,31 +322,6 @@
       //    Element (jQuery Object): jQuery object containing elements matching the
       //    selector within the scope.
       S : S,
-
-      // Description:
-      //    Executes a function a max of once every n milliseconds
-      //
-      // Arguments:
-      //    Func (Function): Function to be throttled.
-      //
-      //    Delay (Integer): Function execution threshold in milliseconds.
-      //
-      // Returns:
-      //    Lazy_function (Function): Function with throttling applied.
-      throttle : function (func, delay) {
-        var timer = null;
-
-        return function () {
-          var context = this, args = arguments;
-
-          if (timer == null) {
-            timer = setTimeout(function () {
-              func.apply(context, args);
-              timer = null;
-            }, delay);
-          }
-        };
-      },
 
       // Description:
       //    Executes a function when it stops being invoked for n seconds
@@ -565,42 +426,6 @@
       },
 
       // Description:
-      //    Adds JS-recognizable media queries
-      //
-      // Arguments:
-      //    Media (String): Key string for the media query to be stored as in
-      //    Foundation.media_queries
-      //
-      //    Class (String): Class name for the generated <meta> tag
-      register_media : function (media, media_class) {
-        if (Foundation.media_queries[media] === undefined) {
-          $('head').append('<meta class="' + media_class + '"/>');
-          Foundation.media_queries[media] = removeQuotes($('.' + media_class).css('font-family'));
-        }
-      },
-
-      // Description:
-      //    Add custom CSS within a JS-defined media query
-      //
-      // Arguments:
-      //    Rule (String): CSS rule to be appended to the document.
-      //
-      //    Media (String): Optional media query string for the CSS rule to be
-      //    nested under.
-      add_custom_rule : function (rule, media) {
-        if (media === undefined && Foundation.stylesheet) {
-          Foundation.stylesheet.insertRule(rule, Foundation.stylesheet.cssRules.length);
-        } else {
-          var query = Foundation.media_queries[media];
-
-          if (query !== undefined) {
-            Foundation.stylesheet.insertRule('@media ' +
-              Foundation.media_queries[media] + '{ ' + rule + ' }', Foundation.stylesheet.cssRules.length);
-          }
-        }
-      },
-
-      // Description:
       //    Performs a callback function when an image is fully loaded
       //
       // Arguments:
@@ -638,24 +463,6 @@
       },
 
       // Description:
-      //    Returns a random, alphanumeric string
-      //
-      // Arguments:
-      //    Length (Integer): Length of string to be generated. Defaults to random
-      //    integer.
-      //
-      // Returns:
-      //    Rand (String): Pseudo-random, alphanumeric string.
-      random_str : function () {
-        if (!this.fidx) {
-          this.fidx = 0;
-        }
-        this.prefix = this.prefix || [(this.name || 'F'), (+new Date).toString(36)].join('-');
-
-        return this.prefix + (this.fidx++).toString(36);
-      },
-
-      // Description:
       //    Helper for window.matchMedia
       //
       // Arguments:
@@ -665,52 +472,6 @@
       //    (Boolean): Whether the media query passes or not
       match : function (mq) {
         return window.matchMedia(mq).matches;
-      },
-
-      // Description:
-      //    Helpers for checking Foundation default media queries with JS
-      //
-      // Returns:
-      //    (Boolean): Whether the media query passes or not
-
-      is_small_up : function () {
-        return this.match(Foundation.media_queries.small);
-      },
-
-      is_medium_up : function () {
-        return this.match(Foundation.media_queries.medium);
-      },
-
-      is_large_up : function () {
-        return this.match(Foundation.media_queries.large);
-      },
-
-      is_xlarge_up : function () {
-        return this.match(Foundation.media_queries.xlarge);
-      },
-
-      is_xxlarge_up : function () {
-        return this.match(Foundation.media_queries.xxlarge);
-      },
-
-      is_small_only : function () {
-        return !this.is_medium_up() && !this.is_large_up() && !this.is_xlarge_up() && !this.is_xxlarge_up();
-      },
-
-      is_medium_only : function () {
-        return this.is_medium_up() && !this.is_large_up() && !this.is_xlarge_up() && !this.is_xxlarge_up();
-      },
-
-      is_large_only : function () {
-        return this.is_medium_up() && this.is_large_up() && !this.is_xlarge_up() && !this.is_xxlarge_up();
-      },
-
-      is_xlarge_only : function () {
-        return this.is_medium_up() && this.is_large_up() && this.is_xlarge_up() && !this.is_xxlarge_up();
-      },
-
-      is_xxlarge_only : function () {
-        return this.is_medium_up() && this.is_large_up() && this.is_xlarge_up() && this.is_xxlarge_up();
       }
     }
   };

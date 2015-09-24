@@ -193,50 +193,6 @@
         container.on('click', '.' + settings.slides_container_class + ' [data-orbit-slide]', self.link_bullet);
       }
 
-      if (settings.swipe) {
-        container.on('touchstart.fndtn.orbit', function (e) {
-          if (!e.touches) {e = e.originalEvent;}
-          var data = {
-            start_page_x : e.touches[0].pageX,
-            start_page_y : e.touches[0].pageY,
-            start_time : (new Date()).getTime(),
-            delta_x : 0,
-            is_scrolling : undefined
-          };
-          container.data('swipe-transition', data);
-          e.stopPropagation();
-        })
-        .on('touchmove.fndtn.orbit', function (e) {
-          if (!e.touches) {
-            e = e.originalEvent;
-          }
-          // Ignore pinch/zoom events
-          if (e.touches.length > 1 || e.scale && e.scale !== 1) {
-            return;
-          }
-
-          var data = container.data('swipe-transition');
-          if (typeof data === 'undefined') {data = {};}
-
-          data.delta_x = e.touches[0].pageX - data.start_page_x;
-
-          if ( typeof data.is_scrolling === 'undefined') {
-            data.is_scrolling = !!( data.is_scrolling || Math.abs(data.delta_x) < Math.abs(e.touches[0].pageY - data.start_page_y) );
-          }
-
-          if (!data.is_scrolling && !data.active) {
-            e.preventDefault();
-            var direction = (data.delta_x < 0) ? (idx + 1) : (idx - 1);
-            data.active = true;
-            self._goto(direction);
-          }
-        })
-        .on('touchend.fndtn.orbit', function (e) {
-          container.data('swipe-transition', {});
-          e.stopPropagation();
-        })
-      }
-
       $(document).on('click', '[data-orbit-link]', self.link_custom);
       $(window).on('load resize', self.compute_dimensions);
       Foundation.utils.image_loaded(this.slides().children('img'), self.compute_dimensions);
@@ -307,8 +263,6 @@
 
     settings : {
       animation : 'slide',
-      pause_on_hover : true,
-      resume_on_mouseout : false,
       next_on_click : true,
       animation_speed : 500,
       stack_on_small : false,
@@ -330,9 +284,7 @@
       orbit_transition_class : 'orbit-transitioning',
       bullets : true,
       circular : true,
-      timer : false,
       variable_height : true,
-      swipe : true,
       before_slide_change : noop,
       after_slide_change : noop
     },
@@ -356,7 +308,6 @@
       } else {
         self.S('[data-orbit]', self.scope).each(function (idx, el) {
           var $el = self.S(el);
-          var opts = self.data_options($el);
           var instance = $el.data(self.name + '-instance');
           instance.compute_dimensions();
         });
