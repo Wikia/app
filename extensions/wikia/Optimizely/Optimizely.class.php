@@ -35,7 +35,7 @@ class Optimizely {
 	}
 
 	public static function onWikiaSkinTopScripts( &$vars, &$scripts, $skin ) {
-		global $wgOptimizelyLoadFromOurCDN, $wgNoExternals;
+		global $wgOptimizelyLoadFromOurCDN, $wgNoExternals, $wgDevelEnvironment;
 
 		if ( !$wgNoExternals ) {
 			// load optimizely_blocking_js on wikiamobile
@@ -45,7 +45,7 @@ class Optimizely {
 				}
 			}
 
-			if ( $wgOptimizelyLoadFromOurCDN ) {
+			if ( $wgOptimizelyLoadFromOurCDN && !$wgDevelEnvironment ) {
 				$scripts .= static::loadFromOurCDN();
 			} else {
 				$scripts .= static::loadOriginal();
