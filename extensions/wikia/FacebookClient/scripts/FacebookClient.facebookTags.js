@@ -12,7 +12,9 @@ mw.hook('wikipage.content').add(function ($content) {
 
 	// Checks for XFBML tags or Facebook Page Plugin tags
 	function facebookTagsOnPage() {
-		var numOfFacebookTags = $content.find('[data-type="xfbml-tag"], .fb-page').length;
+		var numOfFacebookTags = $content.find(
+            '[data-type="xfbml-tag"], .fb-page, .fb-like, .fb-share-button, .fb-follow'
+        ).length;
 		return numOfFacebookTags > 0;
 	}
 
