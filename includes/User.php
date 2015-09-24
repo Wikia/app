@@ -2709,7 +2709,8 @@ class User {
 			return false;
 		}
 
-		if ( !$this->isLoggedIn() ) {
+		// User is anonymous or nonexistant
+		if ( $this->getId() == 0 ) {
 			return false;
 		}
 
