@@ -35,7 +35,7 @@ class Optimizely {
 	}
 
 	public static function onWikiaSkinTopScripts( &$vars, &$scripts, $skin ) {
-		global $wgOptimizelyLoadFromOurCDN, $wgNoExternals, $wgDevelEnvironment;
+		global $wgOptimizelyLoadFromOurCDN, $wgNoExternals, $wgWikiaEnvironment;
 
 		if ( !$wgNoExternals ) {
 			// load optimizely_blocking_js on wikiamobile
@@ -45,7 +45,9 @@ class Optimizely {
 				}
 			}
 
-			if ( $wgOptimizelyLoadFromOurCDN && !$wgDevelEnvironment ) {
+			if ( $wgOptimizelyLoadFromOurCDN &&
+				!in_array( $wgWikiaEnvironment, [ WIKIA_ENV_DEV, WIKIA_ENV_SANDBOX ] )
+			) {
 				$scripts .= static::loadFromOurCDN();
 			} else {
 				$scripts .= static::loadOriginal();
