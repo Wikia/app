@@ -20,7 +20,7 @@ class UserIdentityBox {
 	const USER_OCCUPATION_CHAR_LIMIT = 200;
 	const USER_GENDER_CHAR_LIMIT = 200;
 
-	const CACHE_TTL = 60 * 60 * 24; // 24 hours
+	const CACHE_TTL = 60 * 60; // 1 hour
 
 	private $user = null;
 	private $title = null;
