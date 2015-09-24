@@ -2451,7 +2451,8 @@ $config['portable_infobox_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => ['oasis'],
 	'assets' => [
-			'//extensions/wikia/PortableInfobox/js/portableInfobox.js'
+			'//extensions/wikia/PortableInfobox/js/foundation.js',
+			'//extensions/wikia/PortableInfobox/js/foundation.orbit.js'
 	]
 ];
 
@@ -2463,6 +2464,14 @@ $config['portable_infobox_scss'] = [
 		/* @TODO DAT-3079 Remove PortableInfobox_beforeSimplification.scss
 		 * once all articles will be purged after release; @see DAT-3009 purging ticket */
 		'//extensions/wikia/PortableInfobox/styles/PortableInfobox_beforeSimplification.scss'
+	]
+];
+
+$config['portable_infobox_css'] = [
+	'type' => AssetsManager::TYPE_CSS,
+	'skin' => ['oasis'],
+	'assets' => [
+		'//extensions/wikia/PortableInfobox/styles/foundation.css',
 	]
 ];
 

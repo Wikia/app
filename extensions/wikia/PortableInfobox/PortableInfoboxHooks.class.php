@@ -9,6 +9,7 @@ class PortableInfoboxHooks {
 		} else {
 			Wikia::addAssetsToOutput( 'portable_infobox_js' );
 			Wikia::addAssetsToOutput( 'portable_infobox_scss' );
+			Wikia::addAssetsToOutput( 'portable_infobox_css' );
 		}
 
 		return true;
