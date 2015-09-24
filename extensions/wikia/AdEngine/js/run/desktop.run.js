@@ -13,7 +13,7 @@ require([
 	'ext.wikia.adEngine.slot.scrollHandler',
 	'ext.wikia.adEngine.slotTracker',
 	'ext.wikia.adEngine.slotTweaker',
-	'ext.wikia.adEngine.sourcePoint',
+	'ext.wikia.adEngine.sourcePointDetection',
 	'wikia.krux',
 	'wikia.window'
 ], function (
