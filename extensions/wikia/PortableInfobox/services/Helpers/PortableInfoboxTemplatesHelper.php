@@ -10,9 +10,7 @@ namespace Wikia\PortableInfobox\Helpers;
 class PortableInfoboxTemplatesHelper {
 
 	/**
-	 * @desc For given Title, get property 'infoboxes' from parser output. If property is empty, this may mean that
-	 * template is inside the <noinclude> tag. In this case, we want to skip the <includeonly> tags, get from this only
-	 * infoboxes and parse them again to check their presence and get params.
+	 * @desc Try to find out if infobox got "hidden" inside includeonly tag. Parse it if that's the case.
 	 *
 	 * @param $title \Title
 	 *

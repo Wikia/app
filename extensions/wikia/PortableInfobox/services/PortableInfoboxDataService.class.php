@@ -49,16 +49,16 @@ class PortableInfoboxDataService {
 	}
 
 	/**
-	 * Returns infobox data, terminal method
+	 * Returns infobox data, chain terminator method
 	 *
 	 * @return array in format [ 'data' => [], 'sources' => [] ] or [] will be returned
 	 */
 	public function getData() {
 		if ( $this->title && $this->title->exists() && $this->title->inNamespace( NS_TEMPLATE ) ) {
-			$hidden = $this->templateHelper->parseInfoboxes( $this->title );
-			if ( $hidden ) {
+			$incOnlyTemplates = $this->templateHelper->parseInfoboxes( $this->title );
+			if ( $incOnlyTemplates ) {
 				$this->delete();
-				$this->set( $hidden );
+				$this->set( $incOnlyTemplates );
 			};
 		}
 		$result = $this->get();
@@ -67,7 +67,7 @@ class PortableInfoboxDataService {
 	}
 
 	/**
-	 * Get image list from infobox data, terminal method
+	 * Get image list from infobox data, chain terminator method
 	 *
 	 * @return array
 	 */
@@ -121,8 +121,7 @@ class PortableInfoboxDataService {
 	 * Purge mem cache and local cache
 	 */
 	public function purge() {
-		global $wgMemc;
-		$wgMemc->delete( $this->cachekey );
+		WikiaDataAccess::cachePurge( $this->cachekey );
 		unset( $this->cache );
 
 		return $this;
@@ -146,15 +145,9 @@ class PortableInfoboxDataService {
 	protected function load() {
 		$id = $this->title->getArticleID();
 		if ( $id ) {
-			global $wgMemc;
-			// first try memcache, then go to props
-			$data = $wgMemc->get( $this->cachekey );
-			if ( $data === false ) {
-				$data = json_decode( $this->propsProxy->get( $id, self::INFOBOXES_PROPERTY_NAME ), true );
-				$wgMemc->set( $this->cachekey, $data, WikiaResponse::CACHE_STANDARD );
-			}
-
-			return $data;
+			return WikiaDataAccess::cache( $this->cachekey, WikiaResponse::CACHE_STANDARD, function () use ( $id ) {
+				return json_decode( $this->propsProxy->get( $id, self::INFOBOXES_PROPERTY_NAME ), true );
+			} );
 		}
 
 		return [ ];
@@ -163,8 +156,9 @@ class PortableInfoboxDataService {
 	protected function store( $data ) {
 		$id = $this->title->getArticleID();
 		if ( $id ) {
-			global $wgMemc;
-			$wgMemc->set( $this->cachekey, $data, WikiaResponse::CACHE_STANDARD );
+			WikiaDataAccess::cacheWithOptions( $this->cachekey, function () use ( $data ) {
+				return $data;
+			}, [ 'command' => WikiaDataAccess::REFRESH_CACHE, 'cacheTTL' => WikiaResponse::CACHE_STANDARD ] );
 			$this->propsProxy->set( $id, [ self::INFOBOXES_PROPERTY_NAME => json_encode( $data ) ] );
 		}
 	}
@@ -172,8 +166,9 @@ class PortableInfoboxDataService {
 	protected function clear() {
 		$id = $this->title->getArticleID();
 		if ( $id ) {
-			global $wgMemc;
-			$wgMemc->set( $this->cachekey, '', WikiaResponse::CACHE_STANDARD );
+			WikiaDataAccess::cacheWithOptions( $this->cachekey, function () {
+				return '';
+			}, [ 'command' => WikiaDataAccess::REFRESH_CACHE, 'cacheTTL' => WikiaResponse::CACHE_STANDARD ] );
 			$this->propsProxy->set( $id, [ self::INFOBOXES_PROPERTY_NAME => '' ] );
 		}
 	}
