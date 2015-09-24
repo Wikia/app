@@ -171,7 +171,7 @@ class SwiftStorage {
 		$status = $req->execute();
 
 		if (!$status->isOK()) {
-			$this->error( 'SwiftStorage: unable to set ACL', [
+			$this->warning( 'SwiftStorage: unable to set ACL', [
 				'exception' => new \Exception( $status->getMessage(), $req->getStatus() ),
 				'url'       => $url,
 				'errors'    => $status->getErrorsArray(),

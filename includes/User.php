@@ -2109,6 +2109,7 @@ class User {
 		if( $this->mId ) {
 			global $wgMemc, $wgSharedDB; # Wikia
 			$wgMemc->delete( $this->getCacheKey() );
+			$this->userPreferences()->deleteFromCache( $this->getId() );
 			// Wikia: and save updated user data in the cache to avoid memcache miss and DB query
 			$this->saveToCache();
 			if( !empty( $wgSharedDB ) ) {
@@ -2558,7 +2559,7 @@ class User {
 		global $wgPreferenceServiceRead;
 
 		if ($wgPreferenceServiceRead) {
-			$value = $this->userPreferences()->getLocalPreference($this->mId, $cityId, $preference, $default, $ignoreHidden);
+			$value = $this->userPreferences()->getLocalPreference($this->getId(), $cityId, $preference, $default, $ignoreHidden);
 		} else {
 			$preferenceGlobalName = self::localToGlobalPropertyName($preference, $cityId, $sep);
 			$value = $this->getOptionHelper($preferenceGlobalName, $default, $ignoreHidden);
@@ -2584,7 +2585,7 @@ class User {
 
 		if ($wgPreferenceServiceRead) {
 			$preferences = [];
-			$value = $this->userPreferences()->getGlobalPreference($this->mId, $preference, $default, $ignoreHidden);
+			$value = $this->userPreferences()->getGlobalPreference($this->getId(), $preference, $default, $ignoreHidden);
 			foreach ($this->userPreferences()->getPreferences($this->getId())->getGlobalPreferences() as $globalPreference) {
 				$preferences[$globalPreference->getName()] = $globalPreference->getValue();
 			}
@@ -2620,8 +2621,8 @@ class User {
 		global $wgPreferenceServiceShadowWrite;
 
 		if ( $wgPreferenceServiceShadowWrite ) {
-			$value = $this->sanitizeProperty( $value );
-			$this->userPreferences()->setLocalPreference( $this->mId, $cityId, $preference, $value );
+			$value = $this->replaceNewlineAndCRWithSpace( $value );
+			$this->userPreferences()->setLocalPreference( $this->getId(), $cityId, $preference, $value );
 		}
 
 		$preferenceGlobalName = self::localToGlobalPropertyName($preference, $cityId, $sep);
@@ -2639,8 +2640,8 @@ class User {
 		global $wgPreferenceServiceShadowWrite;
 
 		if ( $wgPreferenceServiceShadowWrite ) {
-			$value = $this->sanitizeProperty( $value );
-			$this->userPreferences()->setGlobalPreference( $this->mId, $preference, $value );
+			$value = $this->replaceNewlineAndCRWithSpace( $value );
+			$this->userPreferences()->setGlobalPreference( $this->getId(), $preference, $value );
 			if ( $preference == 'skin' ) {
 				unset( $this->mSkin );
 			}
@@ -2809,13 +2810,13 @@ class User {
 		}
 
 		foreach ( $array_map as $key => $value ) {
-			$array_map[ $key ] = $this->sanitizeProperty( $value );
+			$array_map[ $key ] = $this->replaceNewlineAndCRWithSpace( $value );
 		}
 
 		return $array_map;
 	}
 
-	private function sanitizeProperty($value) {
+	private function replaceNewlineAndCRWithSpace($value) {
 		if ($value) {
 			$value = str_replace("\r\n", "\n", $value);
 			$value = str_replace("\r", "\n", $value);
@@ -2863,7 +2864,7 @@ class User {
 		}
 		// Filter out any newlines that may have passed through input validation.
 		// Newlines are used to separate items in the options blob.
-		$val = $this->sanitizeProperty($val);
+		$val = $this->replaceNewlineAndCRWithSpace($val);
 		// Explicitly NULL values should refer to defaults
 		global $wgDefaultUserOptions;
 		if( is_null( $val ) && isset( $wgDefaultUserOptions[$oname] ) ) {
@@ -4912,12 +4913,12 @@ class User {
 			}
 
 			$this->loadAttributes();
+			$this->preferenceCorrection()->compareAndCorrect($this->getId(), $this->mOptions);
 		}
 
 		$this->mOptionsLoaded = true;
 
 		wfRunHooks( 'UserLoadOptions', array( $this, &$this->mOptions ) );
-		$this->preferenceCorrection()->compareAndCorrect($this->getId(), $this->mOptions);
 	}
 
 	private function loadAttributes() {

@@ -22,7 +22,7 @@ class UserAttributes {
 	// outside of MW.
 	public static $ATTRIBUTES_USED_BY_OUTSIDE_CLIENTS = [ AVATAR_USER_OPTION_NAME, "location" ];
 
-	const CACHE_TTL = 300; // 5 minutes
+	const CACHE_TTL = 60; // 5 minutes
 
 	/**
 	 * @Inject({
@@ -137,5 +137,9 @@ class UserAttributes {
 	public function clearCache( $userId ) {
 		$this->cache->delete( $userId );
 		unset( $this->attributes[$userId] );
+	}
+
+	public static function getCacheKey( $userId ) {
+		return wfSharedMemcKey($userId, __CLASS__);
 	}
 }
