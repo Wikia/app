@@ -86,10 +86,6 @@ class UserAttributes {
 	 * @param Attribute $attribute
 	 */
 	public function setAttribute( $userId, Attribute $attribute ) {
-		if ( $this->isAnonUser( $userId ) ) {
-			return;
-		}
-
 		$this->setInService( $userId, $attribute );
 		$this->setInInstanceCache( $userId, $attribute );
 		$this->setInMemcache( $userId, $this->attributes[$userId] );
@@ -113,10 +109,6 @@ class UserAttributes {
 
 
 	public function deleteAttribute( $userId, Attribute $attribute ) {
-		if ( $this->isAnonUser( $userId ) ) {
-			return;
-		}
-
 		$this->deleteFromService( $userId, $attribute );
 		$this->deleteFromInstanceCache( $userId, $attribute );
 		$this->setInMemcache( $userId, $this->attributes[$userId] );
@@ -128,10 +120,6 @@ class UserAttributes {
 
 	private function deleteFromInstanceCache( $userId, Attribute $attribute ) {
 		unset( $this->attributes[$userId][$attribute->getName()] );
-	}
-
-	private function isAnonUser( $userId ) {
-		return $userId === 0;
 	}
 
 	public function clearCache( $userId ) {
