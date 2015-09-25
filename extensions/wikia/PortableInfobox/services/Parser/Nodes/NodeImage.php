@@ -10,46 +10,79 @@ class NodeImage extends Node {
 	const CAPTION_TAG_NAME = 'caption';
 	const MEDIA_TYPE_VIDEO = 'VIDEO';
 
+	private function getImage($key, $caption, $alt) {
+		$title = $this->getImageAsTitleObject( $key );
+		$file = $this->getFilefromTitle( $title );
+		if ( $title instanceof \Title ) {
+			$this->getExternalParser()->addImage( $title->getDBkey() );
+		}
+		$ref = null;
+		wfRunHooks( 'PortableInfoboxNodeImage::getData', [ $title, &$ref, $caption ] );
+		$item = [
+			'url' => $this->resolveImageUrl( $file ),
+			'name' => ( $title ) ? $title->getText() : '',
+			'key' => ( $title ) ? $title->getDBKey() : '',
+			'alt' => $alt,
+			'caption' => $caption,
+			'ref' => $ref
+		];
+		if ( $this->isVideo( $file ) ) {
+			$item = $this->videoDataDecorator( $item, $file );
+		}
+		return $item;
+	}
+
 	public function getData() {
 		if ( !isset( $this->data ) ) {
 			$imageData = $this->getRawValueWithDefault( $this->xmlNode );
+			$imageDataLower = strtolower($imageData);
 
-			if( is_string($imageData) && PortableInfoboxDataBag::getInstance()->getGallery($imageData)) {
-				$imageData = PortableInfoboxDataBag::getInstance()->getGallery($imageData);
-			}
+			if ( strpos( $imageDataLower, '-tabber-' ) !== false || strpos( $imageDataLower, '-gallery-' ) !== false ) {
+				$parsed = $this->getExternalParser()->parseRecursive( $imageData );
 
-			$title = $this->getImageAsTitleObject( $imageData );
-			$file = $this->getFilefromTitle( $title );
-			if ( $title instanceof \Title ) {
-				$this->getExternalParser()->addImage( $title->getDBkey() );
-			}
-			$ref = null;
-			$alt = $this->getValueWithDefault( $this->xmlNode->{self::ALT_TAG_NAME} );
-			$caption = $this->getValueWithDefault( $this->xmlNode->{self::CAPTION_TAG_NAME} );
+				// TODO: Move to separated function + error handling
+				$galleryImages = array();
+				if ( preg_match('#\sdata-model="([^"]+)"#', $parsed, $galleryOut) ) {
+					$galleryImages = array_map(function($gallery) {
+						return array('key' => $gallery['dbKey'], 'caption' => $gallery['caption']);
+					}, json_decode(htmlspecialchars_decode($galleryOut[1]), true));
+				}
 
-			wfRunHooks( 'PortableInfoboxNodeImage::getData', [ $title, &$ref, $caption ] );
-
-			$this->data = [
-				'url' => $this->resolveImageUrl( $file ),
-				'name' => ( $title ) ? $title->getText() : '',
-				'key' => ( $title ) ? $title->getDBKey() : '',
-				'alt' => $alt,
-				'caption' => $caption,
-				'ref' => $ref
-			];
-
-			if ( $this->isVideo( $file ) ) {
-				$this->data = $this->videoDataDecorator( $this->data, $file );
+				// TODO: Move to separated function + error handling
+				$tabberImages = array();
+				if ( preg_match_all('/class="tabbertab" title="([^"]+)".*?\sdata-image-key="([^"]+)"/is', $parsed, $tabberOut) ) {
+					for( $i = 0; $i < count( $tabberOut[0] ); $i++ ) {
+						$tabberImages[] = array('key' => $tabberOut[2][$i], 'caption' => $tabberOut[1][$i]);
+					}
+				}
+				$this->data = [];
+				$images = $galleryImages + $tabberImages;
+				for( $i = 0; $i < count( $images ); $i++ ) {
+					$this->data[] = $this->getImage(
+						$images[$i]['key'],
+						$images[$i]['caption'],
+						$images[$i]['caption']
+					);
+				}
+			} else {
+				$this->data = array( $this->getImage(
+					$imageData,
+					$this->getValueWithDefault( $this->xmlNode->{self::CAPTION_TAG_NAME} ),
+					$this->getValueWithDefault( $this->xmlNode->{self::ALT_TAG_NAME} )
+				) );
 			}
 		}
-
 		return $this->data;
 	}
 
 	public function isEmpty() {
 		$data = $this->getData();
-
-		return empty( $data[ 'url' ] );
+		for($i = 0; $i < count($data); $i++) {
+			if(!empty( $data[$i]['url'])) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	public function getSource() {

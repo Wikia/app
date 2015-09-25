@@ -154,6 +154,15 @@ class PortableInfoboxRenderService extends WikiaService {
 	private function renderItem( $type, array $data ) {
 		$helper = new PortableInfoboxRenderServiceHelper();
 
+		if($type === 'image' && count($data) === 1) {
+			$data = $data[0];
+		} else if($type === 'image' && count($data) > 1) {
+			return $this->renderItem(
+				'slider-group-content',
+				$helper->createSliderGroupData( array(array('type'=>'image', 'data'=>$data)) )
+			);
+		}
+
 		if ( $type === 'image' ) {
 			$data = $helper->extendImageData( $data );
 			if ( !$data ) {
