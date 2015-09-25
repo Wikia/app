@@ -2684,32 +2684,41 @@ class User {
 	 * @return string
 	 */
 	public function getGlobalAttribute( $attribute, $default = null ) {
-		if ( $this->shouldLogAttribute( $attribute ) ) {
-			$this->logAttribute( $attribute );
+
+		// There are currently 2 attributes we want to get from the attribute
+		// service directly every time. "avatar" and "location". These are attributes
+		// which can be updated by clients other than MW. By talking to the service
+		// we make sure to skip MW's user cache which may have a stale value for
+		// that attribute. Check to see if we should be using the service here before
+		// falling back to the getOptionHelper which uses the user cache.
+		if ( $this->shouldGetAttributeFromService( $attribute ) ) {
+			return $this->userAttributes()->getAttribute( $this->getId(), $attribute, $default );
 		}
 
 		return $this->getOptionHelper($attribute, $default);
 	}
 
 	/**
-	 * Returns true if 1.) User is logged in and 2.) The attribute is one used by clients other
-	 * than MW (eg, the avatar service or discussion app).
 	 * @param $attributeName
 	 * @return bool
 	 */
-	private function shouldLogAttribute( $attributeName ) {
-		return $this->isLoggedIn() && in_array( $attributeName, UserAttributes::$ATTRIBUTES_USED_BY_OUTSIDE_CLIENTS );
-	}
+	private function shouldGetAttributeFromService( $attributeName ) {
+		global $wgEnableReadsFromAttributeService;
 
-	/**
-	 * See SOC-1315 for more details
-	 * @param $attributeName
-	 */
-	private function logAttribute( $attributeName ) {
-		$this->info( 'USER_ATTRIBUTES get_attribute_call', [
-			'attributeName' => $attributeName,
-			'userId' => $this->getId()
-		] );
+		if ( empty( $wgEnableReadsFromAttributeService ) ) {
+			return false;
+		}
+
+		// User is anonymous or nonexistant
+		if ( $this->getId() == 0 ) {
+			return false;
+		}
+
+		if ( !in_array( $attributeName, UserAttributes::$ATTRIBUTES_USED_BY_OUTSIDE_CLIENTS ) ) {
+			return false;
+		}
+
+		return true;
 	}
 
 	/**

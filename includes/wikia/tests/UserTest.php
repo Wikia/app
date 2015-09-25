@@ -3,6 +3,7 @@
 use Wikia\DependencyInjection\Injector;
 use Wikia\DependencyInjection\InjectorBuilder;
 use Wikia\Service\User\Preferences\PreferenceService;
+use Wikia\Service\User\Attributes\UserAttributes;
 use Wikia\Service\User\Attributes\AttributeService;
 use Wikia\Domain\User\Preferences\UserPreferences;
 use Wikia\Service\User\Preferences\Migration\PreferenceScopeService;
@@ -16,14 +17,25 @@ class UserTest extends WikiaBaseTest {
 	protected $injector;
 	protected $userPreferenceServiceMock;
 	protected $userAttributeServiceMock;
+	protected $userAttributesMock;
 
 	protected $testUser;
+
+	protected static $currentInjector;
+
+	public static function setUpBeforeClass() {
+		self::$currentInjector = Injector::getInjector();
+	}
 
 	public function setUp() {
 		parent::setUp();
 		$this->setupAndInjectUserPreferenceServiceMock();
 
 		$this->testUser = User::newFromId( self::TEST_USER_ID );
+	}
+
+	public static function tearDownAfterClass() {
+		Injector::setInjector( self::$currentInjector );
 	}
 
 	private function setupAndInjectUserPreferenceServiceMock() {
@@ -34,6 +46,9 @@ class UserTest extends WikiaBaseTest {
 			'getLocalPreference', 'setLocalPreference', 'deleteLocalPreference', 'save', 'getGlobalDefault', 'deleteFromCache'] );
 
 		$this->userAttributeServiceMock = $this->getMock( AttributeService::class );
+		$this->userAttributesMock = $this->getMockBuilder( UserAttributes::class )
+			->disableOriginalConstructor()
+			->getMock();
 
 		$container = ( new InjectorBuilder() )
 			->bind( PreferenceService::class )->to( $this->userPreferenceServiceMock )
@@ -42,6 +57,7 @@ class UserTest extends WikiaBaseTest {
 			->bind( PreferenceScopeService::LOCAL_SCOPE_PREFS )->to( $wgLocalUserPreferenceWhiteList )
 			->bind( PreferenceCorrectionService::PREFERENCE_CORRECTION_ENABLED )->to( false )
 			->bind( PreferenceCorrectionService::PREFERENCE_CORRECTION_SAMPLER )->to( new BernoulliTrial(0))
+			->bind( UserAttributes::class )->to( $this->userAttributesMock )
 			->build();
 		Injector::setInjector( $container );
 	}
