@@ -7,7 +7,12 @@ define('wikia.importScript', ['wikia.importScriptHelper', 'wikia.window'], funct
 	 * Imports script from provided JS page name
 	 * Page has to be in MediaWiki namespace and has .js extension
 	 *
-	 * Article name can point a page on other wikia (e.g. 'external:otherwikiadatabasename:Pagename.js')
+	 * Article name can point a page on other wikia by db name
+	 * (e.g. 'external:otherwikiadatabasename:Pagename.js')
+	 *
+	 * or by subdomain or host
+	 * (e.g. 'url:otherwikiasubdomain:Pagename.js')
+	 * (e.g. 'url:otherwikiasubdomain.wikia.com:Pagename.js')
 	 *
 	 * @param {array} articles Names of pages to import without namespace prefix
 	 */
