@@ -2684,30 +2684,33 @@ class User {
 	 * @return string
 	 */
 	public function getGlobalAttribute( $attribute, $default = null ) {
-		if ( $this->shouldLogAttribute( $attribute ) ) {
-			$this->logAttribute( $attribute );
+
+		// There are currently 2 attributes we want to get from the attribute
+		// service directly every time. "avatar" and "location". These are attributes
+		// which can be updated by clients other than MW. By talking to the service
+		// we make sure to skip MW's user cache which may have a stale value for
+		// that attribute. Check to see if we should be using the service here before
+		// falling back to the getOptionHelper which uses the user cache.
+		if ( $this->shouldGetAttributeFromService( $attribute ) ) {
+			return $this->userAttributes()->getAttribute( $this->getId(), $attribute, $default );
 		}
 
 		return $this->getOptionHelper($attribute, $default);
 	}
 
 	/**
-	 * Returns true if 0.) Options are not loaded yet - we should , 1.) User is logged in, 2.) The attribute is one used by clients other
-	 * than MW (eg, the avatar service or discussion app), and 3.) the cache for that user is
-	 * expired. This is to test how many requests per minutes we could expect the attribute
-	 * service to receive if we had MW call out to it whenever it needed a value for "avatar"
-	 * or "location", with a one minute cache after each request.
 	 * @param $attributeName
 	 * @return bool
 	 */
-	private function shouldLogAttribute( $attributeName ) {
-		global $wgMemc;
+	private function shouldGetAttributeFromService( $attributeName ) {
+		global $wgEnableReadsFromAttributeService;
 
-		if ( $this->mOptionsLoaded ) {
+		if ( empty( $wgEnableReadsFromAttributeService ) ) {
 			return false;
 		}
 
-		if ( !$this->isLoggedIn() ) {
+		// User is anonymous or nonexistant
+		if ( $this->getId() == 0 ) {
 			return false;
 		}
 
@@ -2715,24 +2718,7 @@ class User {
 			return false;
 		}
 
-		$userAttributeCache = $wgMemc->get( UserAttributes::getCacheKey( $this->getId() ) );
-		if ( !empty( $userAttributeCache ) ) {
-			return false;
-		}
-
-		$wgMemc->set( UserAttributes::getCacheKey( $this->getId() ), 1, UserAttributes::CACHE_TTL );
 		return true;
-	}
-
-	/**
-	 * See SOC-1315 for more details
-	 * @param $attributeName
-	 */
-	private function logAttribute( $attributeName ) {
-		$this->info( 'USER_ATTRIBUTES get_attribute_call_with_cache', [
-			'attributeName' => $attributeName,
-			'userId' => $this->getId()
-		] );
 	}
 
 	/**
