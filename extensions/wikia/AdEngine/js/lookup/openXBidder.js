@@ -43,16 +43,16 @@ define('ext.wikia.adEngine.lookup.openXBidder', [
 			'160x600': '1x6',
 			'320x50': '3x5'
 		},
-		skin,
-		slots = getSlots(config);
+		slots = [];
 
-	function getSlots(config) {
+	function getSlots(skin) {
 		var context = adContext.getContext(),
 			pageType = context.targeting.pageType,
-			slots = config[skin];
+			slotName;
 
+		slots = config[skin];
 		if (skin === 'oasis' && pageType === 'home') {
-			for (var slotName in slots) {
+			for (slotName in slots) {
 				if (slots.hasOwnProperty(slotName) && slotName.indexOf('TOP') > -1) {
 					slots['HOME_' + slotName] = slots[slotName];
 					delete slots[slotName];
@@ -63,7 +63,7 @@ define('ext.wikia.adEngine.lookup.openXBidder', [
 		return slots;
 	}
 
-	function getAds() {
+	function getAds(skin) {
 		var ads = [],
 			size,
 			slotName,
@@ -75,6 +75,7 @@ define('ext.wikia.adEngine.lookup.openXBidder', [
 				adLogicZoneParams.getPageType()
 			].join('/');
 
+		slots = getSlots(skin);
 		for (slotName in slots) {
 			if (slots.hasOwnProperty(slotName)) {
 				size = slots[slotName];
@@ -139,9 +140,8 @@ define('ext.wikia.adEngine.lookup.openXBidder', [
 		trackState(true);
 	}
 
-	function call(currentSkin) {
+	function call(skin) {
 		log('call', 'debug', logGroup);
-		skin = currentSkin;
 
 		var openx = doc.createElement('script'),
 			node = doc.getElementsByTagName('script')[0];
@@ -153,7 +153,7 @@ define('ext.wikia.adEngine.lookup.openXBidder', [
 
 		oxTiming = adTracker.measureTime('ox_bidder', {}, 'start');
 		oxTiming.track();
-		win.OX_dfp_ads = getAds();
+		win.OX_dfp_ads = getAds(skin);
 
 		win.OX_dfp_options = {
 			callback: onResponse
