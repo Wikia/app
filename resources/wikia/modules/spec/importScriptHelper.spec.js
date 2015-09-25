@@ -18,6 +18,15 @@ describe('ImportScriptHelper', function(){
 
 	});
 
+	it('check if given resource is local', function() {
+		// only page name is expected
+		expect(importScriptHelper.isLocal('MediaWiki:MyScript.js')).toBe(false);
+		// this is external resource
+		expect(importScriptHelper.isLocal('external:muppet:MyScript.js')).toBe(false);
+
+		expect(importScriptHelper.isLocal('MyScript.js')).toBe(true);
+	});
+
 	it('check if given resource is external', function(){
 		// "u" prefix is not supported
 		expect(importScriptHelper.isExternal('u:muppet:MyScript.js')).toBe(false);
@@ -37,6 +46,15 @@ describe('ImportScriptHelper', function(){
 		expect(importScriptHelper.isExternal('url:muppet:MyScript.js')).toBe(true);
 		expect(importScriptHelper.isExternal('url:muppet.wikia.com:MyScript.js')).toBe(true);
 		expect(importScriptHelper.isExternal('external:muppetdb:MyScript.js')).toBe(true);
+	});
+
+	it('add mediawiki namespace prefix', function() {
+		expect(importScriptHelper.prepareExternalScript('url:muppet:Script.js'))
+			.toBe('url:muppet:MediaWiki:Script.js');
+		expect(importScriptHelper.prepareExternalScript('url:muppet.wikia.com:Script.js'))
+			.toBe('url:muppet.wikia.com:MediaWiki:Script.js');
+		expect(importScriptHelper.prepareExternalScript('external:muppetdb:Script.js'))
+			.toBe('external:muppetdb:MediaWiki:Script.js');
 	});
 
 });
