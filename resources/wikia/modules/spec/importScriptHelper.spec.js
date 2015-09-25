@@ -36,6 +36,8 @@ describe('ImportScriptHelper', function(){
 		expect(importScriptHelper.isExternal('url:hack.wikia.co:MyScript.js')).toBe(false);
 		// url should ends with wikia.com
 		expect(importScriptHelper.isExternal('url:muppet.wikia.com/:MyScript.js')).toBe(false);
+		// ...and should be preceded by dot
+		expect(importScriptHelper.isExternal('url:notreallywikia.com:MyScript.js')).toBe(false);
 		// just prefix, url or subdomain ane page name is expected
 		expect(importScriptHelper.isExternal('url:muppet:MediaWiki:MyScript.js')).toBe(false);
 		// page name is expected
