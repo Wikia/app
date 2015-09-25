@@ -166,11 +166,9 @@ class PortableInfoboxDataService {
 	protected function clear() {
 		$id = $this->title->getArticleID();
 		if ( $id ) {
-			// don't cache clear state
-			WikiaDataAccess::cacheWithOptions( $this->cachekey, function () {
-				return '';
-			}, [ 'command' => WikiaDataAccess::REFRESH_CACHE, 'cacheTTL' => 0 ] );
 			$this->propsProxy->set( $id, [ self::INFOBOXES_PROPERTY_NAME => '' ] );
+			// don't cache clear state
+			$this->purge();
 		}
 	}
 }
