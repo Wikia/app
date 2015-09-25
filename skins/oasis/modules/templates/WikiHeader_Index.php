@@ -2,7 +2,11 @@
 	<?= $app->renderView( 'WikiHeader', 'Wordmark' ) ?>
 	<nav class="WikiNav">
 		<? if ( $displayHeader ): ?>
-			<h1><?= wfMsg( 'oasis-wiki-navigation', $wordmarkText ) ?></h1>
+			<? if ( $seoTestOneH1 ): ?>
+				<h2><?= wfMsg( 'oasis-wiki-navigation', $wordmarkText ) ?></h2>
+			<? else: ?>
+				<h1><?= wfMsg( 'oasis-wiki-navigation', $wordmarkText ) ?></h1>
+			<? endif; ?>
 		<? endif; ?>
 		<?= $app->renderView( 'WikiNavigation', 'Index' ) ?>
 	</nav>
