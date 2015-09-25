@@ -1816,12 +1816,23 @@ $wgEnableRobotsTxtExt = false;
  */
 $wgEnableFliteTagExt = false;
 
+// SEO-related variables start (keep them sorted)
+
 /**
  * @name $wgEnableSeoLinkHreflangExt
  *
  * Enables SEO Link Hreflang extension
  */
 $wgEnableSeoLinkHreflangExt = false;
+
+/**
+ * @name $wgEnableSeoTestingExt
+ *
+ * Enables SEO Testing extension
+ */
+$wgEnableSeoTestingExt = true;
+
+// SEO-related variables end
 
 /**
  * @name $wgAdDriverAdsRecoveryMessageCountries
