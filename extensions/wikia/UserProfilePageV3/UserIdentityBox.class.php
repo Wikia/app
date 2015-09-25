@@ -221,6 +221,7 @@ class UserIdentityBox {
 					$data[$key] = $this->user->getGlobalAttribute( $key );
 				}
 			}
+			$this->saveMemcUserIdentityData( $data );
 		} else {
 			$data = array_merge_recursive( $data, $memcData );
 		}
