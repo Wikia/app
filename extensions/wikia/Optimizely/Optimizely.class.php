@@ -45,6 +45,9 @@ class Optimizely {
 				}
 			}
 
+			// On devboxes and sandboxes Optimizely script should be laoded from original CDN for the ease of testing
+			// the experiments, by mitigating the need to run the fetchOptimizelyScript.php (or waiting for it to be run
+			// by cron for sandbox).
 			if ( $wgOptimizelyLoadFromOurCDN &&
 				!in_array( $wgWikiaEnvironment, [ WIKIA_ENV_DEV, WIKIA_ENV_SANDBOX ] )
 			) {
