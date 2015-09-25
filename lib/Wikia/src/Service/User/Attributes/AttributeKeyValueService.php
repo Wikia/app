@@ -64,10 +64,7 @@ class AttributeKeyValueService implements AttributeService {
 		}
 
 		try {
-			$profilerStart = $this->startProfile();
 			$attributeArray = $this->persistenceAdapter->getAttributes( $userId );
-			$this->endProfile( AttributeKeyValueService::PROFILE_EVENT, $profilerStart,
-				[ 'user_id' => $userId, 'method' => 'getAttributes' ] );
 		} catch ( \Exception $e ) {
 			$this->logError( $userId, $e );
 		}
@@ -87,10 +84,7 @@ class AttributeKeyValueService implements AttributeService {
 		}
 
 		try {
-			$profilerStart = $this->startProfile();
 			$ret = $this->persistenceAdapter->deleteAttribute( $userId, $attribute );
-			$this->endProfile( AttributeKeyValueService::PROFILE_EVENT, $profilerStart,
-				[ 'user_id' => $userId, 'method' => 'deleteAttribute' ] );
 			return $ret;
 		} catch ( \Exception $e ) {
 			$this->logError( $userId, $e );
