@@ -1,8 +1,6 @@
 define('wikia.importScript', ['wikia.importScriptHelper', 'wikia.window'], function(importScriptHelper, window) {
 	'use strict';
 
-	var importWikiaScriptPages;
-
 	/**
 	 * Imports script from provided JS page name
 	 * Page has to be in MediaWiki namespace and has .js extension
@@ -16,7 +14,7 @@ define('wikia.importScript', ['wikia.importScriptHelper', 'wikia.window'], funct
 	 *
 	 * @param {array} articles Names of pages to import without namespace prefix
 	 */
-	importWikiaScriptPages = function(articles) {
+	function importWikiaScriptPages(articles) {
 		var articlesToImport = [],
 			articlesFailed = [],
 			scriptName;
@@ -46,7 +44,7 @@ define('wikia.importScript', ['wikia.importScriptHelper', 'wikia.window'], funct
 			type: 'script',
 			articles: articlesToImport
 		});
-	};
+	}
 
 	return {
 		importWikiaScriptPages: importWikiaScriptPages

@@ -6,53 +6,49 @@ define('wikia.importScriptHelper', function() {
 		externals = {
 			'db': 'external',
 			'domain': 'url'
-		},
-		// Functions
-		isJsPage, isLocal, isExternal, isExternalDb, isExternalDomain,
-		prepareExternalScript, hasWikiaDomain,
-		getNamespacePrefix;
+		};
 
-	getNamespacePrefix = function() {
+	function getNamespacePrefix() {
 		return namespacePrefix;
-	};
+	}
 
-	isJsPage = function(scriptName) {
+	function isJsPage(scriptName) {
 		return scriptName.substr(scriptName.length - 3) === '.js';
-	};
+	}
 
-	isLocal = function(scriptName) {
+	function isLocal(scriptName) {
 		return scriptName.indexOf(':') === -1;
-	};
+	}
 
-	isExternal = function(scriptName) {
+	function isExternal(scriptName) {
 		var externalParts = scriptName.split(':');
 
 		return scriptName.indexOf(':') !== -1 && externalParts.length === 3
 			&& ( isExternalDb(externalParts[0]) || isExternalDomain(externalParts[0], externalParts[1]) );
-	};
+	}
 
-	isExternalDb = function(prefix) {
+	function isExternalDb(prefix) {
 		return prefix === externals.db;
-	};
+	}
 
-	isExternalDomain = function(prefix, domain) {
+	function isExternalDomain(prefix, domain) {
 		return prefix === externals.domain && hasWikiaDomain(domain);
-	};
+	}
 
-	hasWikiaDomain = function(scriptName) {
+	function hasWikiaDomain(scriptName) {
 		if (scriptName.indexOf('.') !== -1) {
 			return scriptName.substr(scriptName.length - wikiaDomain.length) === wikiaDomain;
 		}
 		return true;
-	};
+	}
 
-	prepareExternalScript = function(scriptName) {
+	function prepareExternalScript(scriptName) {
 		var externalParts = scriptName.split(':');
 
 		externalParts.splice(2, 0, namespacePrefix);
 
 		return externalParts.join(':');
-	};
+	}
 
 	return {
 		getNamespacePrefix: getNamespacePrefix,
