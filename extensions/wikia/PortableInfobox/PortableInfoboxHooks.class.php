@@ -73,13 +73,13 @@ class PortableInfoboxHooks {
 	 */
 	public static function onArticleSave( Page &$article, &$user, &$text, &$summary, $minor, $watchthis, $sectionanchor,
 		&$flags, &$status ) {
-		PortableInfoboxDataService::newFromTitle( $article->getTitle() )->purge();
+		PortableInfoboxDataService::newFromTitle( $article->getTitle() )->delete();
 
 		return true;
 	}
 
 	/**
-	 * Purge memcache before purge
+	 * Purge memcache, this will not rebuild infobox data
 	 *
 	 * @param Page|WikiPage $article
 	 *
