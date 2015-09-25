@@ -12,6 +12,8 @@ class UserAttributes {
 
 	const CACHE_PROVIDER = "user_attributes_cache_provider";
 
+	const CACHE_TTL = 60; /* 1 minute */
+
 	/** @var CacheProvider */
 	private $cache;
 
