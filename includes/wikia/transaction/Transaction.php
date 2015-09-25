@@ -39,6 +39,7 @@ class Transaction {
 	const PARAM_WIKI = 'wiki';
 	const PARAM_DPL = 'dpl';
 	const PARAM_AB_PERFORMANCE_TEST = 'perf_test';
+	const PARAM_USER_ATTRIBUTES = 'user_attributes';
 
 	const PSEUDO_PARAM_TYPE = 'type';
 
@@ -52,6 +53,7 @@ class Transaction {
 	const EVENT_MEMCACHE_STATS_COUNTERS = 'memcache_stats_counters';
 	const EVENT_MEMCACHE_STATS_KEYS = 'memcache_stats_keys';
 	const EVENT_USER_PREFERENCES = 'user_preferences';
+	const EVENT_USER_PREFERENCES_COUNTERS = "user_preferences_counters";
 	const EVENT_USER_ATTRIBUTES = 'user_attributes';
 
 	/**
@@ -62,7 +64,7 @@ class Transaction {
 	public static function getInstance() {
 		static $instance;
 		if ( $instance === null ) {
-			global $wgWikiaEnvironment;
+			global $wgWikiaEnvironment, $wgEnableReadsFromAttributeService;
 			$instance = new TransactionTrace( array(
 				// plugins
 				new TransactionTraceNewrelic(),
@@ -71,6 +73,9 @@ class Transaction {
 			$instance->set( self::PARAM_ENVIRONMENT, $wgWikiaEnvironment );
 			$instance->set( self::PARAM_HOSTNAME, wfHostname() );
 			$instance->set( self::PARAM_PHP_VERSION, explode( '-', phpversion() )[0] ); // report "5.4.17-1~precise+1" as "5.4.17"
+
+			// TODO clean up User Attributes classification when service is fully rolled out - SOC-1350
+			$instance->set( self::PARAM_USER_ATTRIBUTES, $wgEnableReadsFromAttributeService );
 		}
 		return $instance;
 	}

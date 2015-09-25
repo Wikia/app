@@ -1766,13 +1766,6 @@ $wgOasisTypography = true;
 $wgOasisBreakpoints = true;
 
 /**
- * Force new breakpoints $wgOasisBreakpoints for German wikis
- * see CONCF-433
- * todo remove when 71M adjusts their styles
- */
-$wgOasisBreakpointsDE = true;
-
-/**
  * Add poweruser to implicit groups
  */
 $wgImplicitGroups[] = 'poweruser';
@@ -1829,3 +1822,10 @@ $wgEnableFliteTagExt = false;
  * Enables SEO Link Hreflang extension
  */
 $wgEnableSeoLinkHreflangExt = false;
+
+/**
+ * @name $wgAdDriverAdsRecoveryMessageCountries
+ * Enables module which displays a simple message to users with ad blockers
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverAdsRecoveryMessageCountries = null;

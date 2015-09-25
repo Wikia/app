@@ -74,6 +74,8 @@ class SeoLinkHreflang {
 	private static function generateHreflangLinks( OutputPage $out ) {
 		global $wgDBname;
 
+		$links = [];
+
 		if ( $wgDBname === 'starwars' ) {
 			$links = self::getStarWarsLinks( $out );
 		} else if ( $out->getTitle()->isMainPage() ) {
