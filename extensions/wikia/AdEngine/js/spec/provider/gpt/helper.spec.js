@@ -1,4 +1,4 @@
-/*global document, describe, it, expect, modules, spyOn, beforeEach, window*/
+/*global describe, it, expect, modules, spyOn, beforeEach*/
 describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 	'use strict';
 
@@ -60,9 +60,7 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 
 	function getModule() {
 		return modules['ext.wikia.adEngine.provider.gpt.helper'](
-			document,
 			mocks.log,
-			window,
 			mocks.adContext,
 			mocks.adLogicPageParams,
 			mocks.adDetect,
@@ -87,15 +85,9 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 
 		AdElement.prototype.updateDataParams = noop;
 
-		spyOn(document, 'getElementById').and.returnValue({
-			appendChild: noop
-		});
-
 		callbacks = [];
 
 		mocks.context = { opts: {} };
-
-		window.ads = {};
 	});
 
 	it('Initialize googletag when module is not initialized yet', function () {
