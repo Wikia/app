@@ -37,7 +37,6 @@ $2
 	'templatedraft-module-help' => 'view the help page on Infobox markup',
 	'templatedraft-invalid-template' => 'Invalid template name provided.',
 	'templatedraft-protect-edit' => 'You do not have permission to edit parent page.',
-	'templatedraft-protect-move' => 'You do not have permission to move parent page',
 );
 
 $messages['qqq'] = array(
@@ -65,7 +64,6 @@ $messages['qqq'] = array(
 	'templatedraft-module-help' => 'Link label to view the help page on Infobox markup',
 	'templatedraft-invalid-template' => 'Error message returned by an API method when an invalid or non-existent title was provided.',
 	'templatedraft-protect-edit' => 'Error message informing user does not have permissions to edit parent page.',
-	'templatedraft-protect-move' => 'Error message informing user does not have permissions to move parent page.',
 );
 
 $messages['de'] = array(

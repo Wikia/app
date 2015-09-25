@@ -77,10 +77,6 @@ class ApprovedraftAction extends FormlessAction {
 			throw new ErrorPageError( 'badaccess', 'templatedraft-protect-edit' );
 		}
 
-		if ( !$parentTitle->userCan( 'move' ) ) {
-			throw new ErrorPageError( 'badaccess', 'templatedraft-protect-move' );
-		}
-
 		// Get contents of draft page
 		$article = Article::newFromId( $draftTitle->getArticleID() );
 		$draftContent = $article->getContent();
