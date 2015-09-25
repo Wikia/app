@@ -157,7 +157,7 @@ ve.ui.MWMediaDialog.prototype.getBodyHeight = function () {
  * @inheritdoc
  */
 ve.ui.MWMediaDialog.prototype.initialize = function () {
-	var altTextFieldset, positionFieldset, borderField, positionField;
+	var positionFieldset, positionField;
 
 	// Parent method
 	ve.ui.MWMediaDialog.super.prototype.initialize.call( this );
@@ -213,21 +213,6 @@ ve.ui.MWMediaDialog.prototype.initialize = function () {
 		classes: [ 've-ui-mwMediaDialog-caption-fielset' ]
 	} );
 
-	// Alt text
-	altTextFieldset = new OO.ui.FieldsetLayout( {
-		label: ve.msg( 'visualeditor-dialog-media-alttext-section' ),
-		help: ve.msg( 'visualeditor-dialog-media-alttext-section-help' ),
-		icon: 'parameter'
-	} );
-
-	this.altTextInput = new OO.ui.TextInputWidget();
-
-	this.altTextInput.$element.addClass( 've-ui-mwMediaDialog-altText' );
-
-	// Build alt text fieldset
-	altTextFieldset.$element
-		.append( this.altTextInput.$element );
-
 	// Position
 	this.positionSelect = new ve.ui.AlignWidget( {
 		dir: this.getDir()
@@ -250,49 +235,6 @@ ve.ui.MWMediaDialog.prototype.initialize = function () {
 	positionFieldset.$element.append(
 		positionField.$element,
 		this.positionSelect.$element
-	);
-
-	// Type
-	this.typeFieldset = new OO.ui.FieldsetLayout( {
-		label: ve.msg( 'visualeditor-dialog-media-type-section' ),
-		help: ve.msg( 'visualeditor-dialog-media-type-section-help' ),
-		icon: 'parameter'
-	} );
-
-	this.typeSelect = new OO.ui.ButtonSelectWidget();
-	this.typeSelect.addItems( [
-		// TODO: Inline images require a bit of further work, will be coming soon
-		new OO.ui.ButtonOptionWidget( {
-			data: 'thumb',
-			icon: 'image-thumbnail',
-			label: ve.msg( 'visualeditor-dialog-media-type-thumb' )
-		} ),
-		new OO.ui.ButtonOptionWidget( {
-			data: 'frameless',
-			icon: 'image-frameless',
-			label: ve.msg( 'visualeditor-dialog-media-type-frameless' )
-		} ),
-		new OO.ui.ButtonOptionWidget( {
-			data: 'frame',
-			icon: 'image-frame',
-			label: ve.msg( 'visualeditor-dialog-media-type-frame' )
-		} ),
-		new OO.ui.ButtonOptionWidget( {
-			data: 'none',
-			icon: 'image-none',
-			label: ve.msg( 'visualeditor-dialog-media-type-none' )
-		} )
-	] );
-	this.borderCheckbox = new OO.ui.CheckboxInputWidget();
-	borderField = new OO.ui.FieldLayout( this.borderCheckbox, {
-		align: 'inline',
-		label: ve.msg( 'visualeditor-dialog-media-type-border' )
-	} );
-
-	// Build type fieldset
-	this.typeFieldset.$element.append(
-		this.typeSelect.$element,
-		borderField.$element
 	);
 
 	// Size
@@ -318,23 +260,18 @@ ve.ui.MWMediaDialog.prototype.initialize = function () {
 
 	// Events
 	this.positionCheckbox.connect( this, { change: 'onPositionCheckboxChange' } );
-	this.borderCheckbox.connect( this, { change: 'onBorderCheckboxChange' } );
 	this.positionSelect.connect( this, { choose: 'onPositionSelectChoose' } );
-	this.typeSelect.connect( this, { choose: 'onTypeSelectChoose' } );
 	this.search.getResults().connect( this, { choose: 'onSearchResultsChoose' } );
-	this.altTextInput.connect( this, { change: 'onAlternateTextChange' } );
 
 	// Initialization
 	this.mediaSearchPanel.$element.append( this.search.$element );
 	this.generalSettingsPage.$element.append(
 		this.filenameFieldset.$element,
-		this.captionFieldset.$element,
-		altTextFieldset.$element
+		this.captionFieldset.$element
 	);
 
 	this.advancedSettingsPage.$element.append(
 		positionFieldset.$element,
-		this.typeFieldset.$element,
 		this.sizeFieldset.$element
 	);
 
@@ -792,24 +729,6 @@ ve.ui.MWMediaDialog.prototype.onImageModelAlignmentChange = function ( alignment
 };
 
 /**
- * Handle image model type change
- *
- * @param {string} type Image type
- */
-ve.ui.MWMediaDialog.prototype.onImageModelTypeChange = function ( type ) {
-	this.typeSelect.selectItemByData( type );
-
-	this.borderCheckbox.setDisabled(
-		!this.imageModel.isBorderable()
-	);
-
-	this.borderCheckbox.setSelected(
-		this.imageModel.isBorderable() && this.imageModel.hasBorder()
-	);
-	this.checkChanged();
-};
-
-/**
  * Handle change event on the positionCheckbox element.
  *
  * @param {boolean} isSelected Checkbox status
@@ -817,6 +736,9 @@ ve.ui.MWMediaDialog.prototype.onImageModelTypeChange = function ( type ) {
 ve.ui.MWMediaDialog.prototype.onPositionCheckboxChange = function ( isSelected ) {
 	var newPositionValue,
 		currentModelAlignment = this.imageModel.getAlignment();
+
+	console.log('change');
+	debugger;
 
 	this.positionSelect.setDisabled( !isSelected );
 	this.checkChanged();
@@ -832,26 +754,12 @@ ve.ui.MWMediaDialog.prototype.onPositionCheckboxChange = function ( isSelected )
 			// the default alignment of a block to set as our initial alignment
 			// in case the checkbox is clicked but there was no alignment set
 			// previously.
-			newPositionValue = this.imageModel.getDefaultDir( 'mwBlockImage' );
+			newPositionValue = this.imageModel.getDefaultDir( 'wikiaBlockImage' );
 			this.imageModel.setAlignment( newPositionValue );
 		} else {
 			// If we're unchecking the box, always set alignment to none and unselect the position widget
 			this.imageModel.setAlignment( 'none' );
 		}
-	}
-};
-
-/**
- * Handle change event on the positionCheckbox element.
- *
- * @param {boolean} isSelected Checkbox status
- */
-ve.ui.MWMediaDialog.prototype.onBorderCheckboxChange = function ( isSelected ) {
-	// Only update if the value is different than the model
-	if ( this.imageModel.hasBorder() !== isSelected ) {
-		// Update the image model
-		this.imageModel.toggleBorder( isSelected );
-		this.checkChanged();
 	}
 };
 
@@ -868,34 +776,6 @@ ve.ui.MWMediaDialog.prototype.onPositionSelectChoose = function ( item ) {
 		this.imageModel.setAlignment( position );
 		this.checkChanged();
 	}
-};
-
-/**
- * Handle change event on the typeSelect element.
- *
- * @param {OO.ui.ButtonOptionWidget} item Selected item
- */
-ve.ui.MWMediaDialog.prototype.onTypeSelectChoose = function ( item ) {
-	var type = item.getData();
-
-	// Only update if the value is different than the model
-	if ( this.imageModel.getType() !== type ) {
-		this.imageModel.setType( type );
-		this.checkChanged();
-	}
-
-	// If type is 'frame', disable the size input widget completely
-	this.sizeWidget.setDisabled( type === 'frame' );
-};
-
-/**
- * Respond to change in alternate text
- *
- * @param {string} text New alternate text
- */
-ve.ui.MWMediaDialog.prototype.onAlternateTextChange = function ( text ) {
-	this.imageModel.setAltText( text );
-	this.checkChanged();
 };
 
 /**
@@ -1035,7 +915,6 @@ ve.ui.MWMediaDialog.prototype.attachImageModel = function () {
 	// Events
 	this.imageModel.connect( this, {
 		alignmentChange: 'onImageModelAlignmentChange',
-		typeChange: 'onImageModelTypeChange',
 		sizeDefaultChange: 'checkChanged'
 	} );
 
@@ -1069,20 +948,10 @@ ve.ui.MWMediaDialog.prototype.attachImageModel = function () {
 	// Update default dimensions
 	this.sizeWidget.updateDefaultDimensions();
 
-	// Set initial alt text
-	this.altTextInput.setValue( this.imageModel.getAltText() );
-
 	// Set initial alignment
 	this.positionSelect.setDisabled( !this.imageModel.isAligned() );
 	this.positionSelect.selectItemByData( this.imageModel.isAligned() && this.imageModel.getAlignment() );
 	this.positionCheckbox.setSelected( this.imageModel.isAligned() );
-
-	// Border flag
-	this.borderCheckbox.setDisabled( !this.imageModel.isBorderable() );
-	this.borderCheckbox.setSelected( this.imageModel.isBorderable() && this.imageModel.hasBorder() );
-
-	// Type select
-	this.typeSelect.selectItemByData( this.imageModel.getType() || 'none' );
 
 	this.isSettingUpModel = false;
 };
@@ -1231,7 +1100,6 @@ ve.ui.MWMediaDialog.prototype.getActionProcess = function ( action ) {
 				var surfaceModel = this.getFragment().getSurface();
 
 				// Update from the form
-				this.imageModel.setAltText( this.altTextInput.getValue() );
 				this.imageModel.setCaptionDocument(
 					this.captionTarget.getSurface().getModel().getDocument()
 				);

@@ -59,6 +59,8 @@ ve.dm.MWBlockImageNode.static.ignoreChildren = true;
 
 ve.dm.MWBlockImageNode.static.childNodeTypes = [ 'mwImageCaption' ];
 
+ve.dm.MWBlockImageNode.static.captionNodeType = 'mwImageCaption';
+
 ve.dm.MWBlockImageNode.static.matchTagNames = [ 'figure' ];
 
 ve.dm.MWBlockImageNode.static.blacklistedAnnotationTypes = [ 'link' ];
@@ -156,13 +158,13 @@ ve.dm.MWBlockImageNode.static.toDataElement = function ( domElements, converter 
 
 	if ( caption ) {
 		return [ dataElement ]
-			.concat( converter.getDataFromDomClean( caption, { type: 'mwImageCaption' } ) )
+			.concat( converter.getDataFromDomClean( caption, { type: this.captionNodeType } ) )
 			.concat( [ { type: '/' + this.name } ] );
 	} else {
 		return [
 			dataElement,
-			{ type: 'mwImageCaption' },
-			{ type: '/mwImageCaption' },
+			{ type: this.captionNodeType },
+			{ type: '/' + this.captionNodeType },
 			{ type: '/' + this.name }
 		];
 	}
