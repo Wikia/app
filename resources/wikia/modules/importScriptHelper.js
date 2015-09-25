@@ -2,7 +2,7 @@ define('wikia.importScriptHelper', function() {
 	'use strict';
 
 	var wikiaDomain = 'wikia.com',
-		namespacePrefix = 'MediaWiki:',
+		namespacePrefix = 'MediaWiki',
 		externals = {
 			'db': 'external',
 			'domain': 'url'
