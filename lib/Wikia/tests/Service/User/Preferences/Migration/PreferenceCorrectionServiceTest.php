@@ -57,7 +57,7 @@ class PreferenceCorrectionServiceTest extends PHPUnit_Framework_TestCase {
 				]
 			] );
 
-		$this->correctionService = new PreferenceCorrectionService( $this->preferenceService, $scopeService, new BernoulliTrial(0), true );
+		$this->correctionService = new PreferenceCorrectionService( $this->preferenceService, $scopeService, new BernoulliTrial( 0 ), true );
 	}
 
 	public function testNoDifferences() {
