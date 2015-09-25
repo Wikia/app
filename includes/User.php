@@ -2426,6 +2426,7 @@ class User {
 			$this->warning("calling getOption", [
 				"class" => "user",
 				"type" => "getoption",
+				"option" => $oname,
 				"source" => wfBacktrace(true),
 			]);
 		}
