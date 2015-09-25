@@ -41,6 +41,7 @@ class UserAttributeTest extends PHPUnit_Framework_TestCase {
 			->setMethods( ['doFetch', 'doContains', 'doSave', 'doFlush', 'doDelete', 'doGetStats'] )
 			->disableOriginalConstructor()
 			->getMock();
+		$this->cache->method('doFetch')->willReturn(false);
 		$this->attribute1 = new Attribute( "nickName", "Lebowski" );
 		$this->attribute2 = new Attribute( "gender", "female" );
 		$this->defaultAttribute = new Attribute( "defaultName", "defaultValue" );
