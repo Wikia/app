@@ -64,17 +64,6 @@ class Optimizely {
 		return true;
 	}
 
-	/**
-	 * Is current environment considered a developemnt/testing environment for Optimizely experiments?
-	 *
-	 * @return bool
-	 */
-	public static function isOptimizelyDevEnv() {
-		global $wgWikiaEnvironment;
-
-		return in_array( $wgWikiaEnvironment, static::OPTIMIZELY_DEV_ENVIRONMENTS );
-	}
-
 	protected static function loadFromOurCDN() {
 		$scriptDomain = WikiFactory::getLocalEnvURL(
 			WikiFactory::getVarValueByName( 'wgServer', Wikia::COMMUNITY_WIKI_ID )
@@ -87,5 +76,16 @@ class Optimizely {
 		global $wgOptimizelyUrl, $wgOptimizelyDevUrl;
 		// do not async - we need it for UA tracking
 		return '<script src="' . ( static::isOptimizelyDevEnv() ? $wgOptimizelyDevUrl : $wgOptimizelyUrl ) . '"></script>';
+	}
+
+	/**
+	 * Is current environment considered a developemnt/testing environment for Optimizely experiments?
+	 *
+	 * @return bool
+	 */
+	protected static function isOptimizelyDevEnv() {
+		global $wgWikiaEnvironment;
+
+		return in_array( $wgWikiaEnvironment, static::OPTIMIZELY_DEV_ENVIRONMENTS );
 	}
 }
