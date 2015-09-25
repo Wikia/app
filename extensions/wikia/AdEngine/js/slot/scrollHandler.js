@@ -50,7 +50,7 @@ define('ext.wikia.adEngine.slot.scrollHandler', [
 		reloadedView[slotName] += 1;
 		if (skin === 'oasis') {
 			win.adslots2.push([slotName]);
-		} else {
+		} else if (skin === 'mercury') {
 			win.Mercury.Modules.Ads.getInstance().pushSlotToQueue(slotName);
 		}
 	}
