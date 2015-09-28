@@ -46,8 +46,19 @@ define('ext.wikia.adEngine.adContext', [
 		);
 	}
 
+	function isProperContinent(countryList) {
+		if (countryList && countryList.indexOf) {
+			return !!(
+				countryList.indexOf('XX') > -1 ||
+				countryList.indexOf('XX-XX') > -1 ||
+				countryList.indexOf('XX-'+geo.getContinentCode())  > -1
+			);
+		}
+		return false;
+	}
+
 	function isProperGeo(countryList) {
-		return isProperCountry(countryList) || isProperRegion(countryList);
+		return isProperContinent(countryList) || isProperCountry(countryList) || isProperRegion(countryList);
 	}
 
 	function isUrlParamSet(param) {
@@ -82,7 +93,7 @@ define('ext.wikia.adEngine.adContext', [
 		// SourcePoint detection integration
 		if (context.opts.sourcePointDetectionUrl) {
 			context.opts.sourcePointDetection = isUrlParamSet('sourcepointdetection') ||
-				isProperCountry(instantGlobals.wgAdDriverSourcePointDetectionCountries);
+				isProperGeo(instantGlobals.wgAdDriverSourcePointDetectionCountries);
 		}
 
 		// Recoverable ads message
@@ -106,32 +117,32 @@ define('ext.wikia.adEngine.adContext', [
 				(context.targeting.pageType === 'article' || context.targeting.pageType === 'home');
 		}
 
-		if (isProperCountry(instantGlobals.wgAdDriverTurtleCountries)) {
+		if (isProperGeo(instantGlobals.wgAdDriverTurtleCountries)) {
 			context.providers.turtle = true;
 		}
 
-		if (isProperCountry(instantGlobals.wgAdDriverOpenXCountries)) {
+		if (isProperGeo(instantGlobals.wgAdDriverOpenXCountries)) {
 			context.providers.openX = true;
 		}
 
 		// INVISIBLE_HIGH_IMPACT slot
 		context.slots.invisibleHighImpact = (
 			context.slots.invisibleHighImpact &&
-			isProperCountry(instantGlobals.wgAdDriverHighImpactSlotCountries)
+			isProperGeo(instantGlobals.wgAdDriverHighImpactSlotCountries)
 		) || isUrlParamSet('highimpactslot');
 
 		// INCONTENT_PLAYER slot
-		context.slots.incontentPlayer = isProperCountry(instantGlobals.wgAdDriverIncontentPlayerSlotCountries) ||
+		context.slots.incontentPlayer = isProperGeo(instantGlobals.wgAdDriverIncontentPlayerSlotCountries) ||
 			isUrlParamSet('incontentplayer');
 
 		context.opts.scrollHandlerConfig = instantGlobals.wgAdDriverScrollHandlerConfig;
-		context.opts.enableScrollHandler = isProperCountry(instantGlobals.wgAdDriverScrollHandlerCountries) ||
+		context.opts.enableScrollHandler = isProperGeo(instantGlobals.wgAdDriverScrollHandlerCountries) ||
 			isUrlParamSet('scrollhandler');
 
 		// Krux integration
 		context.targeting.enableKruxTargeting = !!(
 			context.targeting.enableKruxTargeting &&
-			isProperCountry(instantGlobals.wgAdDriverKruxCountries) &&
+			isProperGeo(instantGlobals.wgAdDriverKruxCountries) &&
 			!instantGlobals.wgSitewideDisableKrux &&
 			!context.targeting.wikiDirectedAtChildren
 		);
