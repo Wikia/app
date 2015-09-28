@@ -128,8 +128,8 @@ class PortableInfoboxRenderService extends WikiaService {
 		$helper = new PortableInfoboxRenderServiceHelper();
 
 		if ( array_key_exists( 'image', $data ) ) {
-			$data[ 'image' ] = $helper->extendImageData( $data[ 'image' ] );
 			$data[ 'image' ][ 'context' ] = self::MEDIA_CONTEXT_INFOBOX_HERO_IMAGE;
+			$data[ 'image' ] = $helper->extendImageData( $data[ 'image' ] );
 			$markup = $this->renderItem( 'hero-mobile', $data );
 		} else {
 			$markup = $this->renderItem( 'title', $data[ 'title' ] );
