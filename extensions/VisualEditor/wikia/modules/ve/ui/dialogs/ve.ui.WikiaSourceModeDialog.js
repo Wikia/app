@@ -87,7 +87,7 @@ ve.ui.WikiaSourceModeDialog.prototype.initLinkSuggest = function () {
 		// jquery.ui.autocomplete.js
 		this.sourceModeTextarea.$input.css( {
 			'z-index': 9999999,
-			position: 'relative'
+			'position': 'relative'
 		} );
 		mw.loader.using(
 			'ext.wikia.LinkSuggest',
