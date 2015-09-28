@@ -440,6 +440,34 @@ describe('AdContext', function () {
 		expect(getModule().getContext().opts.sourcePointDetection).toBeTruthy();
 	});
 
+	it('enables SourcePoint detection when instantGlobals.wgAdDriverSourcePointDetectionCountries is enabled global (XX)', function () {
+		mocks.win = {ads: {context: {opts: {sourcePointDetectionUrl: '//foo.bar'}}}};
+		mocks.instantGlobals = {wgAdDriverSourcePointDetectionCountries: ['XX']};
+
+		expect(getModule().getContext().opts.sourcePointDetection).toBeTruthy();
+	});
+
+	it('enables SourcePoint detection when instantGlobals.wgAdDriverSourcePointDetectionCountries is enabled global (XX-XX)', function () {
+		mocks.win = {ads: {context: {opts: {sourcePointDetectionUrl: '//foo.bar'}}}};
+		mocks.instantGlobals = {wgAdDriverSourcePointDetectionCountries: ['XX']};
+
+		expect(getModule().getContext().opts.sourcePointDetection).toBeTruthy();
+	});
+
+	it('enables SourcePoint detection when instantGlobals.wgAdDriverSourcePointDetectionCountries is enabled for continent', function () {
+		mocks.win = {ads: {context: {opts: {sourcePointDetectionUrl: '//foo.bar'}}}};
+		mocks.instantGlobals = {wgAdDriverSourcePointDetectionCountries: ['XX-CC']};
+
+		expect(getModule().getContext().opts.sourcePointDetection).toBeTruthy();
+	});
+
+	it('disables SourcePoint detection when instantGlobals.wgAdDriverSourcePointDetectionCountries is disabled for continent', function () {
+		mocks.win = {ads: {context: {opts: {sourcePointDetectionUrl: '//foo.bar'}}}};
+		mocks.instantGlobals = {wgAdDriverSourcePointDetectionCountries: ['XX-DD']};
+
+		expect(getModule().getContext().opts.sourcePointDetection).toBeFalsy();
+	});
+
 	it('disables SourcePoint detection when url param noexternals=1 is set', function () {
 		mocks.win = {ads: {context: {opts: {sourcePointDetectionUrl: '//foo.bar'}}}};
 		mocks.instantGlobals = {wgAdDriverSourcePointDetectionCountries: ['CY', 'ZZ']};
