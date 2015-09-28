@@ -159,7 +159,7 @@ class ContentReviewApiController extends WikiaApiController {
 			}
 		}
 		else {
-			$this->notification = $this->wfMessage( 'content-review-diff-already-done' )->escaped();
+			$this->notification = wfMessage( 'content-review-diff-already-done' )->escaped();
 		}
 	}
 
