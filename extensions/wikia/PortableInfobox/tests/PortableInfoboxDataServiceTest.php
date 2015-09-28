@@ -77,7 +77,7 @@ class PortableInfoboxDataServiceTest extends WikiaBaseTest {
 			->delete()
 			->getData();
 
-		$this->assertEquals( '', $result );
+		$this->assertEquals( [ ], $result );
 	}
 
 	public function testPurge() {
