@@ -1,6 +1,6 @@
 <?php
 
-class RobotsTest extends WikiaBaseTest {
+class RobotsTxtTest extends WikiaBaseTest {
 
 	public function setUp() {
 		global $IP;
