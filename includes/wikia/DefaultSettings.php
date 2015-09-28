@@ -1832,6 +1832,31 @@ $wgEnableSeoLinkHreflangExt = false;
  */
 $wgEnableSeoTestingExt = true;
 
+/**
+ * @name $wgSeoTestingExperiments
+ *
+ * The configuration of SEO experiments.
+ *
+ * Format:
+ *
+ * [
+ *   'Name_of_test' => [
+ *     'dbNames' => ['list', 'of', 'dbnames'],
+ *     'startDay' => '2015-10-01',
+ *     'endDay' => '2015-12-31',
+ *   ],
+ *   'Another_test' => [
+ *     'dbNames' => ['other', 'wikis'],
+ *     'startDay' => '2015-11-01',
+ *     'endDay' => '2015-11-30',
+ *   ],
+ * ]
+ *
+ * Only set this on community wiki (177).
+ * The wikis affected are listed under dbNames key for each experiment.
+ */
+$wgSeoTestingExperiments = [];
+
 // SEO-related variables end
 
 /**

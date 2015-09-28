@@ -25,17 +25,17 @@ class SeoTesting {
 	public static function getGroup( $experimentName ) {
 		global $wgDBname;
 
-		static $wgSeoTestingConfiguration = null;
+		static $wgSeoTestingExperiments = null;
 
-		if ( is_null( $wgSeoTestingConfiguration ) ) {
-			$wgSeoTestingConfiguration = WikiFactory::getVarValueByName( 'wgSeoTestingConfiguration', COMMUNITY_CENTRAL_CITY_ID );
+		if ( is_null( $wgSeoTestingExperiments ) ) {
+			$wgSeoTestingExperiments = WikiFactory::getVarValueByName( 'wgSeoTestingExperiments', COMMUNITY_CENTRAL_CITY_ID );
 		}
 
-		if ( empty( $wgSeoTestingConfiguration[ $experimentName ] ) ) {
+		if ( empty( $wgSeoTestingExperiments[ $experimentName ] ) ) {
 			return self::NO_SUCH_TEST;
 		}
 
-		$experimentConfig = $wgSeoTestingConfiguration[ $experimentName ];
+		$experimentConfig = $wgSeoTestingExperiments[ $experimentName ];
 		if ( !in_array( $wgDBname, $experimentConfig[ 'dbNames' ] ) ) {
 			return self::TEST_NOT_ENABLED_HERE;
 		}
