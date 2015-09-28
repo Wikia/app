@@ -20,6 +20,8 @@ if ( !$allowRobots ) {
 
 	// Special pages
 	$robots->disallowNamespace( NS_SPECIAL );
+	$robots->disallowNamespace( NS_TEMPLATE );
+	$robots->disallowNamespace( NS_TEMPLATE_TALK );
 
 	//$robots->allowSpecialPage( 'Allpages' ); // TODO: SEO-64
 	$robots->allowSpecialPage( 'CreateNewWiki' );
