@@ -151,8 +151,6 @@ class ContentReviewApiControllerTest extends WikiaBaseTest {
 		}
 
 		$requestMock = $this->preparePostRequestValidatingMock( $inputData['wasPosted'], $inputData['requestToken'], [ 'getInt' ] );
-		$requestMock->expects( $this->any() )
-			->method( 'getInt' );
 
 		$userMock = $this->prepareUserMockWithEditToken( $inputData['userEditToken'], [ 'getRights' ] );
 		$userMock->expects( $this->any() )
