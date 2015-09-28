@@ -6,6 +6,9 @@ class SeoTesting {
 	const TEST_NOT_ENABLED_TODAY = -3;
 	const NOT_AN_ARTICLE = -4;
 
+	// For reading wgSeoTestingExperiments from community.wikia.com:
+	const COMMUNITY_CENTRAL_CITY_ID = 177;
+
 	/**
 	 * Returns group for SEO testing
 	 *
@@ -28,7 +31,10 @@ class SeoTesting {
 		static $wgSeoTestingExperiments = null;
 
 		if ( is_null( $wgSeoTestingExperiments ) ) {
-			$wgSeoTestingExperiments = WikiFactory::getVarValueByName( 'wgSeoTestingExperiments', COMMUNITY_CENTRAL_CITY_ID );
+			$wgSeoTestingExperiments = WikiFactory::getVarValueByName(
+				'wgSeoTestingExperiments',
+				self::COMMUNITY_CENTRAL_CITY_ID
+			);
 		}
 
 		if ( empty( $wgSeoTestingExperiments[ $experimentName ] ) ) {
