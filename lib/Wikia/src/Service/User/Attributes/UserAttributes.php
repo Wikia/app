@@ -26,7 +26,7 @@ class UserAttributes {
 	// outside of MW.
 	public static $ATTRIBUTES_USED_BY_OUTSIDE_CLIENTS = [ AVATAR_USER_OPTION_NAME, "location" ];
 
-	const CACHE_TTL = 60; // 1 minute
+	const CACHE_TTL = 300; // 5 minute
 
 	/**
 	 * @Inject({
