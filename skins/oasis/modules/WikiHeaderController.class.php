@@ -38,7 +38,7 @@ class WikiHeaderController extends WikiaController {
 		$this->setVal( 'displayHeader', !$this->wg->HideNavigationHeaders );
 		$this->displayHeaderButtons = !WikiaPageType::isWikiaHubMain();
 
-		if ( class_exists( 'SeoTesting' ) ) {
+		if ( $this->wg->EnableSeoTestingExt ) {
 			$this->setVal( 'seoTestOneH1', SeoTesting::getGroup('One_H1') === 2 );
 		}
 	}
@@ -74,7 +74,7 @@ class WikiHeaderController extends WikiaController {
 
 		$this->mainPageURL = Title::newMainPage()->getLocalURL();
 
-		if ( class_exists( 'SeoTesting' ) ) {
+		if ( $this->wg->EnableSeoTestingExt ) {
 			$this->setVal( 'seoTestOneH1', SeoTesting::getGroup('One_H1') === 2 );
 		}
 	}

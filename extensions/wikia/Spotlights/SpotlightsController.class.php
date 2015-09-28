@@ -1,7 +1,7 @@
 <?php
 class SpotlightsController extends WikiaController {
 	public function index() {
-		if ( class_exists( 'SeoTesting' ) ) {
+		if ( $this->wg->EnableSeoTestingExt ) {
 			$this->setVal( 'seoTestOneH1', SeoTesting::getGroup('One_H1') === 2 );
 		}
 	}
