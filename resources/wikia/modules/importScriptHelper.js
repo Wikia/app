@@ -12,38 +12,66 @@ define('wikia.importScriptHelper', function() {
 		return namespacePrefix;
 	}
 
-	function isJsPage(scriptName) {
-		return scriptName.substr(scriptName.length - 3) === '.js';
+	function isJsPage(resource) {
+		return resource.substr(resource.length - 3) === '.js';
 	}
 
-	function isLocal(scriptName) {
-		return scriptName.indexOf(':') === -1;
+	function isLocal(resource) {
+		return resource.indexOf(':') === -1;
 	}
 
-	function isExternal(scriptName) {
-		var externalParts = scriptName.split(':');
+	function isExternal(resource) {
+		var externalParts = resource.split(':');
 
-		return scriptName.indexOf(':') !== -1 && externalParts.length === 3
-			&& ( isExternalDb(externalParts[0]) || isExternalDomain(externalParts[0], externalParts[1]) );
+		return resource.indexOf(':') !== -1 && externalParts.length === 3
+			&& (isExternalDb(externalParts[0])
+			|| (isExternalDomain(externalParts[0]) && isProperSubdomain(externalParts[1])));
 	}
 
 	function isExternalDb(prefix) {
 		return prefix === externals.db;
 	}
 
-	function isExternalDomain(prefix, domain) {
-		return prefix === externals.domain && hasWikiaDomain(domain);
+	function isExternalDomain(prefix) {
+		return prefix === externals.domain;
 	}
 
-	function hasWikiaDomain(scriptName) {
-		if (scriptName.indexOf('.') !== -1) {
-			return scriptName.substr(scriptName.length - wikiaDomain.length) === wikiaDomain;
+	function isProperSubdomain(subdomain) {
+		var subdomainParts;
+
+		if (subdomain.indexOf('.') !== -1) {
+			if (hasWikiaDomain(subdomain)) {
+				return true;
+			} else {
+				subdomainParts = subdomain.split('.');
+				return subdomainParts.length <= 2;
+			}
 		}
+
 		return true;
 	}
 
-	function prepareExternalScript(scriptName) {
-		var externalParts = scriptName.split(':');
+	function hasWikiaDomain(subdomain) {
+		if (subdomain.indexOf('.') !== -1) {
+			return subdomain.substr(subdomain.length - wikiaDomain.length) === wikiaDomain;
+		}
+		return false;
+	}
+
+	function prepareExternalDomain(subdomain) {
+		if (hasWikiaDomain(subdomain)) {
+			return subdomain
+		} else {
+			return subdomain + wikiaDomain;
+		}
+	}
+
+	function prepareExternalScript(resource) {
+		var externalParts = resource.split(':');
+
+		if (isExternalDomain(externalParts[0])) {
+			externalParts[1] = prepareExternalDomain(externalParts[1]);
+		}
 
 		externalParts.splice(2, 0, namespacePrefix);
 

@@ -36,8 +36,6 @@ describe('ImportScriptHelper', function(){
 		expect(importScriptHelper.isExternal('url:hack.wikia.co:MyScript.js')).toBe(false);
 		// url should ends with wikia.com
 		expect(importScriptHelper.isExternal('url:muppet.wikia.com/:MyScript.js')).toBe(false);
-		// ...and should be preceded by dot
-		expect(importScriptHelper.isExternal('url:notreallywikia.com:MyScript.js')).toBe(false);
 		// just prefix, url or subdomain ane page name is expected
 		expect(importScriptHelper.isExternal('url:muppet:MediaWiki:MyScript.js')).toBe(false);
 		// page name is expected
@@ -47,16 +45,26 @@ describe('ImportScriptHelper', function(){
 
 		expect(importScriptHelper.isExternal('url:muppet:MyScript.js')).toBe(true);
 		expect(importScriptHelper.isExternal('url:muppet.wikia.com:MyScript.js')).toBe(true);
+		expect(importScriptHelper.isExternal('url:de.gta:MyScript.js')).toBe(true);
 		expect(importScriptHelper.isExternal('external:muppetdb:MyScript.js')).toBe(true);
 	});
 
-	it('add mediawiki namespace prefix', function() {
-		expect(importScriptHelper.prepareExternalScript('url:muppet:Script.js'))
-			.toBe('url:muppet:MediaWiki:Script.js');
+	it('prepare proper external resource name', function() {
+		// MediaWiki namespace is added
 		expect(importScriptHelper.prepareExternalScript('url:muppet.wikia.com:Script.js'))
 			.toBe('url:muppet.wikia.com:MediaWiki:Script.js');
+		// if just wiki name is passed, also wikia.com domain is added
+		expect(importScriptHelper.prepareExternalScript('url:muppet:Script.js'))
+			.toBe('url:muppet.wikia.com:MediaWiki:Script.js');
+		// MediaWiki namespace is added
 		expect(importScriptHelper.prepareExternalScript('external:muppetdb:Script.js'))
 			.toBe('external:muppetdb:MediaWiki:Script.js');
+		// if wiki name is prepended by language code we also adding wikia domain
+		expect(importScriptHelper.prepareExternalScript('url:de.gta:MyScript.js'))
+			.toBe('url:de.gta.wikia.com:MediaWiki:MyScript.js');
+		// so we are excluding such hacky tries like this ;)
+		expect(importScriptHelper.prepareExternalScript('url:notreallywikia.com:MyScript.js'))
+			.toBe('url:notreallywikia.com.wikia.com:MediaWiki:MyScript.js');
 	});
 
 });
