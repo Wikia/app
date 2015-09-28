@@ -88,18 +88,18 @@ class RobotsTxtTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * Test disallowSpecialPages
+	 * Test disallowNamespace
 	 *
-	 * @covers RobotsTxt::testDisallowSpecialPages
+	 * @covers RobotsTxt::disallowNamespace
 	 */
-	public function testDisallowSpecialPages() {
+	public function testDisallowNamespace() {
 		$robots = new RobotsTxt();
-		$robots->disallowSpecialPages();
+		$robots->disallowNamespace( NS_FILE );
 		$this->assertEquals( [
 			'User-agent: *',
-			'Disallow: /wiki/Special:',
-			'Disallow: /*?*title=Special:',
-			'Disallow: /index.php/Special:',
+			'Disallow: /wiki/File:',
+			'Disallow: /*?*title=File:',
+			'Disallow: /index.php/File:',
 			'',
 		], $robots->getContents() );
 	}
