@@ -73,16 +73,16 @@ define('ext.wikia.adEngine.adContext', [
 			context.opts.showAds = false;
 		}
 
-		// SourcePoint integration
-		if (context.opts.sourcePointUrl) {
-			context.opts.sourcePoint = isUrlParamSet('sourcepoint') ||
-				isProperGeo(instantGlobals.wgAdDriverSourcePointCountries);
-		}
-
 		// SourcePoint detection integration
-		if (context.opts.sourcePointDetectionUrl) {
+		if (!isUrlParamSet('noexternals') && context.opts.sourcePointDetectionUrl) {
 			context.opts.sourcePointDetection = isUrlParamSet('sourcepointdetection') ||
 				isProperCountry(instantGlobals.wgAdDriverSourcePointDetectionCountries);
+		}
+
+		// SourcePoint integration
+		if (context.opts.sourcePointDetection && context.opts.sourcePointUrl) {
+			context.opts.sourcePoint = isUrlParamSet('sourcepoint') ||
+				isProperGeo(instantGlobals.wgAdDriverSourcePointCountries);
 		}
 
 		// Recoverable ads message
@@ -133,7 +133,8 @@ define('ext.wikia.adEngine.adContext', [
 			context.targeting.enableKruxTargeting &&
 			isProperCountry(instantGlobals.wgAdDriverKruxCountries) &&
 			!instantGlobals.wgSitewideDisableKrux &&
-			!context.targeting.wikiDirectedAtChildren
+			!context.targeting.wikiDirectedAtChildren &&
+			!isUrlParamSet('noexternals')
 		);
 
 		// Export the context back to ads.context
