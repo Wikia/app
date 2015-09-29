@@ -12,9 +12,9 @@ mw.hook('wikipage.content').add(function ($content) {
 
 	// Checks for XFBML tags or Facebook Page Plugin tags
 	function facebookTagsOnPage() {
-        // All fb social plugins have a class which starts with 'fb-'
-        // eg, fb-like, fb-share-button, etc
-		var numOfFacebookTags = $content.find('[data-type="xfbml-tag"], [class^=fb-]').length;
+		// All fb social plugins have a class which starts with 'fb-'
+		// eg, fb-like, fb-share-button, etc
+		var numOfFacebookTags = $content.find('[data-type="xfbml-tag"], [class^="fb-"]').length;
 		return numOfFacebookTags > 0;
 	}
 
