@@ -1485,7 +1485,6 @@ class CF_Http
 
 			# PLATFORM-1059 - retry all HTTP 50x responses
 			if ( $res !== false && $res < 500 ) {
-				// request was successful (i.e. DFS backend did not fail), return
 				break;
 			}
 
