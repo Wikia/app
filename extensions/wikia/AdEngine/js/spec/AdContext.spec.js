@@ -132,14 +132,17 @@ describe('AdContext', function () {
 		).toBeFalsy();
 
 		mocks.win = {
-			ads: {context: {}},
-			wgCategories: ['Category1', 'Category2'],
-			Wikia: {article: {article: {
-				categories: [
-					{title: 'Category1', url: '/wiki/Category:Category1'},
-					{title: 'Category2', url: '/wiki/Category:Category2'}
-				]
-			}}}
+			ads: {
+				context: {
+					targeting: {
+						mercuryPageCategories: [
+							{title: 'Category1', url: '/wiki/Category:Category1'},
+							{title: 'Category2', url: '/wiki/Category:Category2'}
+						]
+					}
+				}
+			},
+			wgCategories: ['Category1', 'Category2']
 		};
 		adContext = getModule();
 		expect(
@@ -164,11 +167,11 @@ describe('AdContext', function () {
 		expect(adContext.getContext().targeting.pageCategories).toEqual(['Category1', 'Category2']);
 
 		mocks.win = {
-			ads: {context: {targeting: {enablePageCategories: true}}},
-			Wikia: {
-				article: {
-					article: {
-						categories: [
+			ads: {
+				context: {
+					targeting: {
+						enablePageCategories: true,
+						mercuryPageCategories: [
 							{title: 'Category1', url: '/wiki/Category:Category1'},
 							{title: 'Category2', url: '/wiki/Category:Category2'}
 						]
