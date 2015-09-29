@@ -132,7 +132,7 @@
 		function getSdkUrl(langCode) {
 			var lowerLangCode = langCode.toLowerCase(),
 				countryCode = codes[langCode];
-			if (langCode.length !== 2 || countryCode === undefined) {
+			if (langCode.length !== 2 || !countryCode) {
 				lowerLangCode = 'en';
 				countryCode = 'US';
 			}

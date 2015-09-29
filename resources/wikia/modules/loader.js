@@ -7,8 +7,9 @@
  * @author Jakub Olek <jolek@wikia-inc.com>
  *
  */
-define('wikia.loader', ['wikia.window', require.optional('mw'), 'wikia.nirvana', 'jquery', 'wikia.log'],
-	function loader (window, mw, nirvana, $, log) {
+define('wikia.loader', ['wikia.window', require.optional('mw'), 'wikia.nirvana', 'jquery', 'wikia.log', 'wikia.fbLocale'
+	],
+	function loader (window, mw, nirvana, $, log, fbLocale) {
 	'use strict';
 
 	var loader,
@@ -136,7 +137,7 @@ define('wikia.loader', ['wikia.window', require.optional('mw'), 'wikia.nirvana',
 				}
 			},
 			facebook: {
-				file: window.fbScript || window.Wikia.fbLocale.getSdkUrl(window.wgContentLanguage),
+				file: window.fbScript || fbLocale.getSdkUrl(window.wgContentLanguage),
 				check: function () {
 					return typeof window.FB;
 				},

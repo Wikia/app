@@ -10,11 +10,13 @@ describe('Loader Module', function () {
 		},
 		mwMock,
 		nirvanaMock = {},
-		logMock = function () {};
+		logMock = function () {},
+		fbLocaleMock = {getSdkUrl: function () {
+			return '//connect.facebook.net/ja_JP/sdk.js';}};
 
 	logMock.levels = {};
 
-	var loader = modules['wikia.loader'](windowMock, mwMock, nirvanaMock, jQuery, logMock);
+	var loader = modules['wikia.loader'](windowMock, mwMock, nirvanaMock, jQuery, logMock, fbLocaleMock);
 
 	it('registers itself', function () {
 		expect(typeof loader).toBe('function');
@@ -108,7 +110,7 @@ describe('Loader Module', function () {
 					}
 				}
 			},
-			loader = modules['wikia.loader'](windowMock, mwMock, nirvanaMock, jQuery, logMock);
+			loader = modules['wikia.loader'](windowMock, mwMock, nirvanaMock, jQuery, logMock, fbLocaleMock);
 
 		// check calls to this function
 		spyOn(mwMock.loader, 'use').and.callThrough();
@@ -128,7 +130,7 @@ describe('Loader Module', function () {
 				document: window.document,
 				onFBloaded: function () {}
 			},
-			loader = modules['wikia.loader'](windowMock, mwMock, nirvanaMock, jQuery, logMock);
+			loader = modules['wikia.loader'](windowMock, mwMock, nirvanaMock, jQuery, logMock, fbLocaleMock);
 
 		document.head.appendChild = function (script) {
 			script.onload();
