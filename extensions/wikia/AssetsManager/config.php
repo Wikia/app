@@ -234,8 +234,6 @@ $config['oasis_noads_extensions_js'] = array(
 		// handlebars - uncomment this when introducing first client-side rendered handlebars template
 		// '//resources/wikia/libraries/handlebars/handlebars.js',
 		'//extensions/wikia/JSSnippets/js/JSSnippets.js',
-		// facebook
-		'//resources/wikia/modules/facebookLocale.js',
 	)
 );
 
