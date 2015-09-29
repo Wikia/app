@@ -22,12 +22,6 @@ $(function () {
 			//get info of local or global and modify query scope
 			if ($selectedOption.val() === 'local') {
 				searchQuery += ' site:' + window.location.hostname;
-			} else {
-				if ( contentLang === 'en') {
-					searchQuery += ' site:*.wikia.com';
-				} else {
-					searchQuery += ' site:' + contentLang + '.*.wikia.com';
-				}
 			}
 
 			//Invoke google search
