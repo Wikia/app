@@ -18,15 +18,12 @@ class ContentReviewStatusesService extends \WikiaService {
 		$reviewModel = new Models\ReviewModel();
 		$statuses = $reviewModel->getPagesStatuses( $wikiId );
 
-		$currentRevision = new Models\CurrentRevisionModel();
-		$lastReviewed = $currentRevision->getLatestReviewedRevisionForWiki( $wikiId );
-
-		$jsPages = $this->prepareData( $jsPages, $statuses, $lastReviewed );
+		$jsPages = $this->prepareData( $jsPages, $statuses );
 
 		return $jsPages;
 	}
 
-	private function prepareData( $jsPages, $statuses, $lastReviewed ) {
+	private function prepareData( $jsPages, $statuses ) {
 		if ( !empty( $statuses ) || !empty( $lastReviewed ) ) {
 			foreach ( $jsPages as $pageId => &$page ) {
 				$page += $this->initPageData();
@@ -46,30 +43,17 @@ class ContentReviewStatusesService extends \WikiaService {
 								$page['latestReviewed'] = $this->prepareRevisionData( $title, $revId, $statusCode );
 							}
 
+							if ( $statusCode === self::STATUS_APPROVED ) {
+								$statusCode = self::STATUS_LIVE;
+
+								$page['liveRevision'] = $this->prepareRevisionData(	$title,	$revId,	$statusCode	);
+							}
+
 							if ( empty( $page['latestRevision'] ) ) {
-								if ( $statusCode === self::STATUS_APPROVED ) {
-									$statusCode = self::STATUS_LIVE;
-								}
 								$page['latestRevision'] =  $this->prepareRevisionData( $title, $revId, $statusCode );
 							}
 						}
 					}
-				}
-
-				if ( isset( $lastReviewed[$pageId]['revision_id'] ) ) {
-					if ( empty( $page['latestReviewed'] ) ) {
-						$page['latestReviewed'] = $this->prepareRevisionData(
-							$title,
-							$lastReviewed[$pageId]['revision_id'],
-							self::STATUS_LIVE
-						);
-					}
-
-					$page['liveRevision'] = $this->prepareRevisionData(
-						$title,
-						$lastReviewed[$pageId]['revision_id'],
-						self::STATUS_LIVE
-					);
 				}
 
 				if ( $page['page_latest'] != $page['latestRevision']['revId'] ) {
