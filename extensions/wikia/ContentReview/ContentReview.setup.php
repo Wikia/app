@@ -58,6 +58,7 @@ $wgAutoloadClasses['Wikia\ContentReview\Models\ReviewLogModel'] = __DIR__ . '/mo
  * Services
  */
 $wgAutoloadClasses['Wikia\ContentReview\ContentReviewService'] = __DIR__ . '/services/ContentReviewService.class.php';
+$wgAutoloadClasses['Wikia\ContentReview\ContentReviewStatusesService'] = __DIR__ . '/services/ContentReviewStatusesService.class.php';
 
 /**
  * Helpers

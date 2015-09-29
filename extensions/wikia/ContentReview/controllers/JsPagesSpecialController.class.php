@@ -1,7 +1,6 @@
 <?php
 
-use Wikia\ContentReview\Helper;
-use Wikia\ContentReview\Models;
+use Wikia\ContentReview\ContentReviewStatusesService;
 
 class JsPagesSpecialController extends WikiaSpecialPageController {
 
@@ -32,66 +31,9 @@ class JsPagesSpecialController extends WikiaSpecialPageController {
 
 		$this->getOutput()->setPageTitle( wfMessage( 'content-review-special-js-pages-title' )->plain() );
 
-		$helper = new Helper();
-		$jsPages = $helper->getJsPages();
-
-		$reviewModel = new Models\ReviewModel();
-		$statuses = $reviewModel->getPagesStatuses($this->wg->CityId);
-
-		$currentRevision = new Models\CurrentRevisionModel();
-		$lastReviewed = $currentRevision->getLatestReviewedRevisionForWiki($this->wg->CityId);
-
-		$this->jsPages = $this->prepareData( $jsPages, $statuses, $lastReviewed );
+		$contentReviewStatusesService = new ContentReviewStatusesService();
+		$this->jsPages = $contentReviewStatusesService->getJsPagesStatuses( $this->wg->CityId );
 	}
 
-	private function prepareData( $jsPages, $statuses, $lastReviewed ) {
-		if ( !empty( $statuses ) || !empty( $lastReviewed ) ) {
-			foreach ( $jsPages as $pageId => &$page ) {
-				$page += $this->initPageData();
 
-				if ( isset( $statuses[$pageId] ) ) {
-					foreach( $statuses[$pageId] as $status => $revId ) {
-						if ( Helper::isStatusAwaiting( $status ) && empty( $page['latestRevision'] ) ) {
-							$page['latestRevision']['revId'] = $revId;
-							$page['latestRevision']['status'] = $status;
-						} elseif ( Helper::isStatusCompleted( $status ) ) {
-							if ( empty( $page['latestRevision'] ) ) {
-								$page['latestRevision']['revId'] = $revId;
-								$page['latestRevision']['status'] = $status;
-							}
-
-							if ( empty( $page['latestReviewed'] ) ) {
-								$page['latestReviewed']['revId'] = $revId;
-								$page['latestReviewed']['status'] = $status;
-							}
-						}
-					}
-				}
-
-				if ( isset( $lastReviewed[$pageId]['revision_id'] ) ) {
-					if ( empty( $page['latestReviewed'] ) ) {
-						$page['latestReviewed']['revId'] = $lastReviewed[$pageId]['revision_id'];
-						$page['latestReviewed']['status'] = Models\ReviewModel::CONTENT_REVIEW_STATUS_APPROVED;
-					}
-
-					$page['liveRevision'] = $lastReviewed[$pageId]['revision_id'];
-				}
-
-				if ( $page['page_latest'] != $page['latestRevision']['revId'] ) {
-					$page['latestRevision']['revId'] = $page['page_latest'];
-					$page['latestRevision']['status'] = 0;
-				}
-			}
-		}
-
-		return $jsPages;
-	}
-
-	private function initPageData() {
-		return [
-			'latestRevision' => [],
-			'latestReviewed' => [],
-			'liveRevision' => null
-		];
-	}
 }

@@ -14,10 +14,10 @@
 	<tbody>
 		<?php foreach( $jsPages as $page ): ?>
 			<tr>
-				<td><?= $page['page_title'] ?></td>
-				<td><?= $page['latestRevision']['revId'] ?></td>
-				<td><?= $page['latestReviewed']['revId'] ?></td>
-				<td><?= $page['liveRevision'] ?></td>
+				<td><?= $page['pageLink'] ?></td>
+				<td><?= $page['latestRevision']['diffLink'] . $page['latestRevision']['statusMsg'] . $page['latestRevision']['reasonLink'] ?></td>
+				<td><?= $page['latestReviewed']['diffLink'] . $page['latestReviewed']['statusMsg'] . $page['latestReviewed']['reasonLink'] ?></td>
+				<td><?= $page['liveRevision']['diffLink'] . $page['liveRevision']['statusMsg'] ?></td>
 				<td><?= $page['submit'] ?></td>
 			</tr>
 		<?php endforeach; ?>
