@@ -1483,7 +1483,8 @@ class CF_Http
 		while( $retriesLeft >= 0 ) {
 			$res = $this->_do_send_request( $conn_type, $url_path, $hdrs, $method, $force_new );
 
-			if ( !in_array( $res, [ 500, 503, false ] ) ) {
+			# PLATFORM-1059 - retry all HTTP 50x responses
+			if ( $res !== false && $res < 500 ) {
 				// request was successful, return
 				break;
 			}
