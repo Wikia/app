@@ -10,8 +10,8 @@
 
 class ApiVisualEditorEdit extends ApiVisualEditor {
 
-	public function __construct( ApiMain $main, $name, Config $config ) {
-		parent::__construct( $main, $name, $config );
+	public function __construct( ApiMain $main, $name ) {
+		parent::__construct( $main, $name );
 	}
 
 	protected function saveWikitext( $title, $wikitext, $params ) {

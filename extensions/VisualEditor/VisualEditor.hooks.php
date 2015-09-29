@@ -56,7 +56,7 @@ class VisualEditorHooks {
 			//'ext.visualEditor.desktopArticleTarget.init',
 			'ext.visualEditor.wikia.desktopArticleTarget.init',
 			'ext.visualEditor.targetLoader',
-			'ext.visualEditor.wikia'
+			'ext.visualEditor.wikia.ui'
 		) );
 		$output->addModuleStyles( array( 'ext.visualEditor.desktopArticleTarget.noscript' ) );
 		// add scroll offset js variable to output

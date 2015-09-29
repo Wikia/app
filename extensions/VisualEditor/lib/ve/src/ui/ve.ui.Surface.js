@@ -15,13 +15,14 @@
  * @constructor
  * @param {HTMLDocument|Array|ve.dm.LinearData|ve.dm.Document} dataOrDoc Document data to edit
  * @param {Object} [config] Configuration options
+ * @param {ve.init.mw.Target} [target] Target instance (optional)
  * @cfg {string[]|null} [includeCommands] List of commands to include, null for all registered commands
  * @cfg {string[]} [excludeCommands] List of commands to exclude
  * @cfg {Object} [importRules] Import rules
  * @cfg {string} [placeholder] Placeholder text to display when the surface is empty
  * @cfg {string} [inDialog] The name of the dialog this surface is in
  */
-ve.ui.Surface = function VeUiSurface( dataOrDoc, config ) {
+ve.ui.Surface = function VeUiSurface( dataOrDoc, config, target ) {
 	var documentModel;
 
 	config = config || {};
@@ -71,6 +72,7 @@ ve.ui.Surface = function VeUiSurface( dataOrDoc, config ) {
 		factory: ve.ui.windowFactory,
 		modal: false
 	} );
+	this.target = target;
 
 	// Events
 	this.getModel().getDocument().connect( this, { transact: 'onDocumentTransact' } );
@@ -561,4 +563,8 @@ ve.ui.Surface.prototype.stopFilibuster = function () {
  */
 ve.ui.Surface.prototype.getInDialog = function () {
 	return this.inDialog;
+};
+
+ve.ui.Surface.prototype.getTarget = function () {
+	return this.target;
 };
