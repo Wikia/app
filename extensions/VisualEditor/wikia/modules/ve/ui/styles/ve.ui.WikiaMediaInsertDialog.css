@@ -1,3 +1,8 @@
+.oo-ui-processDialog-actions-primary {
+  position: static;
+  float: right;
+}
+
 /*
  * $name - name of the icon (bold, media, etc)
  * $vendor - who is providing the icon? (ve, mw, wikia)

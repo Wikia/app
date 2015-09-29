@@ -2941,6 +2941,26 @@ OO.ui.Dialog.prototype.initialize = function () {
 	this.$content.addClass( 'oo-ui-dialog-content' );
 	this.$element.attr( 'aria-labelledby', titleId );
 	this.setPendingElement( this.$head );
+
+	if ( this instanceof OO.ui.ProcessDialog ) {
+		this.closeButton = new OO.ui.ButtonWidget( {
+			'$': this.$,
+			'framed': false,
+			'icon': 'close',
+			'title': OO.ui.msg( 'ooui-dialog-action-close' )
+		} );
+		this.closeButton.connect( this, { 'click': 'onCloseButtonClick' } );
+		this.closeButton.$element
+			.addClass( 'oo-ui-window-closeButton' )
+			.appendTo( this.$head );
+	}
+};
+
+/**
+ * Handle close button click events.
+ */
+OO.ui.Dialog.prototype.onCloseButtonClick = function () {
+	this.close( { 'action': 'cancel' } );
 };
 
 /**
@@ -3149,6 +3169,18 @@ OO.ui.WindowManager.static.sizes = {
 		// These can be non-numeric because they are never used in calculations
 		width: '100%',
 		height: '100%'
+	},
+	'840px': {
+		width: 840
+	},
+	'712px': {
+		width: 712
+	},
+	'717px': {
+		width: 717
+	},
+	'800px': {
+		width: 800
 	}
 };
 
@@ -8546,9 +8578,11 @@ OO.ui.ProcessDialog.prototype.initialize = function () {
 		.append( this.$errors );
 	this.$navigation
 		.addClass( 'oo-ui-processDialog-navigation' )
-		.append( this.$safeActions, this.$location, this.$primaryActions );
+		.append( this.$location );
+		// .append( this.$safeActions, this.$location, this.$primaryActions );
 	this.$head.append( this.$navigation );
-	this.$foot.append( this.$otherActions );
+	// this.$foot.append( this.$otherActions );
+	this.$foot.append( this.$primaryActions, this.$safeActions, this.$otherActions );
 };
 
 /**

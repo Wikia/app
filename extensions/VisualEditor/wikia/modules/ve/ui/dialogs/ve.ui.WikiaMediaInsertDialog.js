@@ -24,7 +24,7 @@ OO.inheritClass( ve.ui.WikiaMediaInsertDialog, ve.ui.FragmentDialog );
 
 ve.ui.WikiaMediaInsertDialog.static.name = 'wikiaMediaInsert';
 
-ve.ui.WikiaMediaInsertDialog.static.title = OO.ui.deferMsg( 'visualeditor-dialog-media-insert-title' );
+ve.ui.WikiaMediaInsertDialog.static.title = OO.ui.deferMsg( 'visualeditor-dialog-media-title' );
 
 // as in OO.ui.WindowManager.static.sizes
 ve.ui.WikiaMediaInsertDialog.static.size = '840px';
@@ -452,8 +452,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.getSetupProcess = function ( data ) {
 ve.ui.WikiaMediaInsertDialog.prototype.getReadyProcess = function ( data ) {
 	return ve.ui.WikiaMediaInsertDialog.super.prototype.getReadyProcess.call( this, data )
 		.next( function () {
-			// ve-upstream-sync - review - @author: Paul Oslund
-			// this.queryInput.$input.focus();
+			this.queryInput.$input.focus();
 		}, this );
 };
 
@@ -489,7 +488,6 @@ ve.ui.WikiaMediaInsertDialog.prototype.getLicense = function () {
 ve.ui.WikiaMediaInsertDialog.prototype.getActionProcess = function ( action ) {
 	if ( action === 'apply' ) {
 		return new OO.ui.Process( function () {
-			// ve-upstream-sync - review - @author: Paul Oslund
 			this.insertMedia( ve.copy( this.cartModel.getItems() ), this.fragment );
 			this.close( { action: action } );
 		}, this );
