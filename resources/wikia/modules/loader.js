@@ -1,3 +1,4 @@
+/*global define, require*/
 /**
  * Single place to call when you want to load something from server
  *
@@ -135,7 +136,7 @@ define('wikia.loader', ['wikia.window', require.optional('mw'), 'wikia.nirvana',
 				}
 			},
 			facebook: {
-				file: window.fbScript || '//connect.facebook.net/en_US/sdk.js',
+				file: window.fbScript || window.Wikia.fbLocale.getSdkUrl(window.wgContentLanguage),
 				check: function () {
 					return typeof window.FB;
 				},
