@@ -34,33 +34,6 @@ define('ext.wikia.adEngine.adContext', [
 		return categoryDict.map(function (item) { return item.title; });
 	}
 
-	function isProperCountry(countryList) {
-		return !!(countryList && countryList.indexOf && countryList.indexOf(geo.getCountryCode()) > -1);
-	}
-
-	function isProperRegion(countryList) {
-		return !!(
-			countryList &&
-			countryList.indexOf &&
-			countryList.indexOf(geo.getCountryCode() + '-' + geo.getRegionCode()) > -1
-		);
-	}
-
-	function isProperContinent(countryList) {
-		if (countryList && countryList.indexOf) {
-			return !!(
-				countryList.indexOf('XX') > -1 ||
-				countryList.indexOf('XX-XX') > -1 ||
-				countryList.indexOf('XX-'+geo.getContinentCode())  > -1
-			);
-		}
-		return false;
-	}
-
-	function isProperGeo(countryList) {
-		return isProperContinent(countryList) || isProperCountry(countryList) || isProperRegion(countryList);
-	}
-
 	function isUrlParamSet(param) {
 		return !!parseInt(qs.getVal(param, '0'), 10);
 	}
@@ -87,18 +60,18 @@ define('ext.wikia.adEngine.adContext', [
 		// SourcePoint integration
 		if (context.opts.sourcePointUrl) {
 			context.opts.sourcePoint = isUrlParamSet('sourcepoint') ||
-				isProperGeo(instantGlobals.wgAdDriverSourcePointCountries);
+				geo.isProperGeo(instantGlobals.wgAdDriverSourcePointCountries);
 		}
 
 		// SourcePoint detection integration
 		if (context.opts.sourcePointDetectionUrl) {
 			context.opts.sourcePointDetection = isUrlParamSet('sourcepointdetection') ||
-				isProperGeo(instantGlobals.wgAdDriverSourcePointDetectionCountries);
+				geo.isProperGeo(instantGlobals.wgAdDriverSourcePointDetectionCountries);
 		}
 
 		// Recoverable ads message
 		if (context.opts.sourcePointDetection && !context.opts.sourcePoint) {
-			context.opts.recoveredAdsMessage = isProperGeo(instantGlobals.wgAdDriverAdsRecoveryMessageCountries);
+			context.opts.recoveredAdsMessage = geo.isProperGeo(instantGlobals.wgAdDriverAdsRecoveryMessageCountries);
 		}
 
 		// Showcase.*
@@ -117,32 +90,32 @@ define('ext.wikia.adEngine.adContext', [
 				(context.targeting.pageType === 'article' || context.targeting.pageType === 'home');
 		}
 
-		if (isProperGeo(instantGlobals.wgAdDriverTurtleCountries)) {
+		if (geo.isProperGeo(instantGlobals.wgAdDriverTurtleCountries)) {
 			context.providers.turtle = true;
 		}
 
-		if (isProperGeo(instantGlobals.wgAdDriverOpenXCountries)) {
+		if (geo.isProperGeo(instantGlobals.wgAdDriverOpenXCountries)) {
 			context.providers.openX = true;
 		}
 
 		// INVISIBLE_HIGH_IMPACT slot
 		context.slots.invisibleHighImpact = (
 			context.slots.invisibleHighImpact &&
-			isProperGeo(instantGlobals.wgAdDriverHighImpactSlotCountries)
+			geo.isProperGeo(instantGlobals.wgAdDriverHighImpactSlotCountries)
 		) || isUrlParamSet('highimpactslot');
 
 		// INCONTENT_PLAYER slot
-		context.slots.incontentPlayer = isProperGeo(instantGlobals.wgAdDriverIncontentPlayerSlotCountries) ||
+		context.slots.incontentPlayer = geo.isProperGeo(instantGlobals.wgAdDriverIncontentPlayerSlotCountries) ||
 			isUrlParamSet('incontentplayer');
 
 		context.opts.scrollHandlerConfig = instantGlobals.wgAdDriverScrollHandlerConfig;
-		context.opts.enableScrollHandler = isProperGeo(instantGlobals.wgAdDriverScrollHandlerCountries) ||
+		context.opts.enableScrollHandler = geo.isProperGeo(instantGlobals.wgAdDriverScrollHandlerCountries) ||
 			isUrlParamSet('scrollhandler');
 
 		// Krux integration
 		context.targeting.enableKruxTargeting = !!(
 			context.targeting.enableKruxTargeting &&
-			isProperGeo(instantGlobals.wgAdDriverKruxCountries) &&
+			geo.isProperGeo(instantGlobals.wgAdDriverKruxCountries) &&
 			!instantGlobals.wgSitewideDisableKrux &&
 			!context.targeting.wikiDirectedAtChildren
 		);
