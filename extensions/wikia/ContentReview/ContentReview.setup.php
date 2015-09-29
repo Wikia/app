@@ -38,6 +38,13 @@ $wgGroupPermissions['staff']['content-review'] = true;
  * Controllers
  */
 $wgAutoloadClasses['ContentReviewApiController'] = __DIR__ . '/controllers/ContentReviewApiController.class.php';
+$wgAutoloadClasses['JsPagesSpecialController'] = __DIR__ . '/controllers/JsPagesSpecialController.class.php';
+
+
+/**
+ * Special page
+ */
+$wgSpecialPages['JsPages'] = 'JsPagesSpecialController';
 
 /**
  * Models
@@ -84,4 +91,13 @@ JSMessages::registerPackage( 'ContentReviewTestMode', [
 
 JSMessages::registerPackage( 'ContentReviewDiffPage', [
 	'content-review-diff-page-*'
+] );
+
+JSMessages::registerPackage( 'JsPagesSpecialPage', [
+	'content-review-special-js-pages-*',
+	'content-review-special-list-header-page-name',
+	'content-review-special-list-header-actions',
+	'content-review-module-header-latest',
+	'content-review-module-header-last',
+	'content-review-module-header-live'
 ] );

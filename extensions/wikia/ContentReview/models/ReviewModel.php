@@ -46,6 +46,21 @@ class ReviewModel extends ContentReviewBaseModel {
 		return $pageStatus;
 	}
 
+	public function getPagesStatuses( $wikiId ) {
+		$db = $this->getDatabaseForRead();
+
+		$pagesStatuses = ( new \WikiaSQL() )
+			->SELECT( 'page_id', 'revision_id', 'status' )
+			->FROM( self::CONTENT_REVIEW_STATUS_TABLE )
+			->WHERE( 'wiki_id' )->EQUAL_TO( $wikiId )
+			->ORDER_BY( [ 'page_id', 'ASC' ], [ 'revision_id', 'DESC' ] )
+			->runLoop( $db, function ( &$pagesStatuses, $row ) {
+				$pagesStatuses[$row->page_id][(int)$row->status] = (int)$row->revision_id;
+			} );
+
+		return $pagesStatuses;
+	}
+
 	public function getCurrentUnreviewedId( $wikiId, $pageId ) {
 		$db = $this->getDatabaseForRead();
 
