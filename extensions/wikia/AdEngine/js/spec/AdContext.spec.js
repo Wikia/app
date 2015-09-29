@@ -181,6 +181,19 @@ describe('AdContext', function () {
 		};
 		adContext = getModule();
 		expect(adContext.getContext().targeting.pageCategories).toEqual(['Category1', 'Category2']);
+
+		mocks.win = {
+			ads: {
+				context: {
+					targeting: {
+						enablePageCategories: true,
+						mercuryPageCategories: []
+					}
+				}
+			}
+		};
+		adContext = getModule();
+		expect(adContext.getContext().targeting.pageCategories).toEqual([]);
 	});
 
 	it('makes targeting.enableKruxTargeting false when disaster recovery instant global variable is set to true',
