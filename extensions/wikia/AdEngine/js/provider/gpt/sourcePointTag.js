@@ -4,7 +4,7 @@ define('ext.wikia.adEngine.provider.gpt.sourcePointTag', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.provider.gpt.googleTag',
 	'ext.wikia.adEngine.slot.adSlot',
-	'ext.wikia.adEngine.sourcePointDetection',
+	'ext.wikia.adEngine.sourcePoint',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window'

@@ -410,26 +410,14 @@ describe('AdContext', function () {
 		expect(getModule().getContext().opts.sourcePoint).toBeTruthy();
 	});
 
-	it('disables SourcePoint detection when url is not set', function () {
+	it('disables SourcePoint detection when url is not set (e.g. for mercury skin)', function () {
 		mocks.instantGlobals = {wgAdDriverSourcePointDetectionCountries: ['XX', 'ZZ']};
 
 		expect(getModule().getContext().opts.sourcePointDetection).toBe(undefined);
-		expect(getModule().getContext().opts.sourcePointDetectionMobile).toBe(undefined);
 	});
 
 	it('enables SourcePoint detection when instantGlobals.wgAdDriverSourcePointDetectionCountries', function () {
-		mocks.win = {
-			ads: {
-				context: {
-					opts: {
-						sourcePointDetectionUrl: '//foo.bar'
-					},
-					targeting: {
-						skin: 'oasis'
-					}
-				}
-			}
-		};
+		mocks.win = {ads: {context: {opts: {sourcePointDetectionUrl: '//foo.bar'}}}};
 		mocks.instantGlobals = {wgAdDriverSourcePointDetectionCountries: ['XX', 'ZZ']};
 
 		expect(getModule().getContext().opts.sourcePointDetection).toBeTruthy();
@@ -446,39 +434,12 @@ describe('AdContext', function () {
 	});
 
 	it('enables SourcePoint detection when url param sourcepointdetection is set', function () {
-		mocks.win = {
-			ads: {
-				context: {
-					opts: {
-						sourcePointDetectionUrl: '//foo.bar'
-					}
-				}
-			}
-		};
+		mocks.win = {ads: {context: {opts: {sourcePointDetectionUrl: '//foo.bar'}}}};
 		spyOn(mocks.querystring, 'getVal').and.callFake(function (param) {
 			return param === 'sourcepointdetection' ?  '1' : '0';
 		});
 
 		expect(getModule().getContext().opts.sourcePointDetection).toBeTruthy();
-		expect(getModule().getContext().opts.sourcePointDetectionMobile).toBeTruthy();
-	});
-
-	it('enables SourcePoint detection when instantGlobals.wgAdDriverSourcePointDetectionMobileCountries', function () {
-		mocks.win = {
-			ads: {
-				context: {
-					opts: {
-						sourcePointDetectionUrl: '//foo.bar'
-					},
-					targeting: {
-						skin: 'mercury'
-					}
-				}
-			}
-		};
-		mocks.instantGlobals = {wgAdDriverSourcePointDetectionMobileCountries: ['XX', 'ZZ']};
-
-		expect(getModule().getContext().opts.sourcePointDetectionMobile).toBeTruthy();
 	});
 
 	it('enables incontent_player slot when country in instatnGlobals.wgAdDriverIncontentPlayerSlotCountries', function () {
