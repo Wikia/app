@@ -70,12 +70,11 @@ class ApprovedraftAction extends FormlessAction {
 		global $wgEnableInsightsInfoboxes;
 
 		// Get Title object of parent page
-		$helper = new TemplateDraftHelper();
-		$parentTitle = $helper->getParentTitle( $draftTitle );
+		$parentTitle = TemplateDraftHelper::getParentTitle( $draftTitle );
 
 		// Check edit rights
-		if ( !$parentTitle->userCan( 'templatedraft' ) ) {
-			throw new PermissionsException( 'edit' );
+		if ( !$parentTitle->userCan( 'templatedraft' ) || !$parentTitle->userCan( 'edit' ) ) {
+			throw new ErrorPageError( 'badaccess', 'templatedraft-protect-edit' );
 		}
 
 		// Get contents of draft page

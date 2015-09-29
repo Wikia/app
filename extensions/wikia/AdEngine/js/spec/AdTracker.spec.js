@@ -253,7 +253,7 @@ describe('ext.wikia.adEngine.adTracker', function () {
 
 		timer = adTracker.measureTime('test/event', {abc: 'def', xyz: 123});
 
-		windowMock.wgNow = new Date(new Date().getTime() - 999);
+		windowMock.wgNow = new Date(windowMock.wgNow.getTime() - 110);
 
 		timer = timer.measureDiff({abc: 'def', xyz: 123}, 'diff');
 

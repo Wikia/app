@@ -3,11 +3,12 @@
 use Wikia\DependencyInjection\Injector;
 use Wikia\DependencyInjection\InjectorBuilder;
 use Wikia\Service\User\Preferences\PreferenceService;
+use Wikia\Service\User\Attributes\UserAttributes;
 use Wikia\Service\User\Attributes\AttributeService;
 use Wikia\Domain\User\Preferences\UserPreferences;
 use Wikia\Service\User\Preferences\Migration\PreferenceScopeService;
 use Wikia\Service\User\Preferences\Migration\PreferenceCorrectionService;
-
+use Wikia\Util\Statistics\BernoulliTrial;
 
 class UserTest extends WikiaBaseTest {
 
@@ -16,8 +17,15 @@ class UserTest extends WikiaBaseTest {
 	protected $injector;
 	protected $userPreferenceServiceMock;
 	protected $userAttributeServiceMock;
+	protected $userAttributesMock;
 
 	protected $testUser;
+
+	protected static $currentInjector;
+
+	public static function setUpBeforeClass() {
+		self::$currentInjector = Injector::getInjector();
+	}
 
 	public function setUp() {
 		parent::setUp();
@@ -26,14 +34,21 @@ class UserTest extends WikiaBaseTest {
 		$this->testUser = User::newFromId( self::TEST_USER_ID );
 	}
 
+	public static function tearDownAfterClass() {
+		Injector::setInjector( self::$currentInjector );
+	}
+
 	private function setupAndInjectUserPreferenceServiceMock() {
 		global $wgGlobalUserPreferenceWhiteList, $wgLocalUserPreferenceWhiteList;
 
 		$this->userPreferenceServiceMock = $this->getMock( PreferenceService::class,
 			['getGlobalPreference', 'getPreferences', 'setPreferences', 'setGlobalPreference', 'deleteGlobalPreference',
-			'getLocalPreference', 'setLocalPreference', 'deleteLocalPreference', 'save', 'getGlobalDefault'] );
+			'getLocalPreference', 'setLocalPreference', 'deleteLocalPreference', 'save', 'getGlobalDefault', 'deleteFromCache'] );
 
 		$this->userAttributeServiceMock = $this->getMock( AttributeService::class );
+		$this->userAttributesMock = $this->getMockBuilder( UserAttributes::class )
+			->disableOriginalConstructor()
+			->getMock();
 
 		$container = ( new InjectorBuilder() )
 			->bind( PreferenceService::class )->to( $this->userPreferenceServiceMock )
@@ -41,6 +56,8 @@ class UserTest extends WikiaBaseTest {
 			->bind( PreferenceScopeService::GLOBAL_SCOPE_PREFS )->to( $wgGlobalUserPreferenceWhiteList )
 			->bind( PreferenceScopeService::LOCAL_SCOPE_PREFS )->to( $wgLocalUserPreferenceWhiteList )
 			->bind( PreferenceCorrectionService::PREFERENCE_CORRECTION_ENABLED )->to( false )
+			->bind( PreferenceCorrectionService::PREFERENCE_CORRECTION_SAMPLER )->to( new BernoulliTrial( 0 ) )
+			->bind( UserAttributes::class )->to( $this->userAttributesMock )
 			->build();
 		Injector::setInjector( $container );
 	}

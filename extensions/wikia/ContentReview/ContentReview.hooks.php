@@ -98,7 +98,7 @@ class Hooks {
 	public function onRawPageViewBeforeOutput( \RawAction $rawAction, &$text ) {
 		$title = $rawAction->getTitle();
 		$helper = new Helper();
-		$helper->replaceWithLastApproved( $title, $rawAction->getContentType(), $text );
+		$text = $helper->replaceWithLastApproved( $title, $rawAction->getContentType(), $text );
 		return true;
 	}
 

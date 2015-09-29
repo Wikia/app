@@ -6,12 +6,14 @@ use Wikia\Domain\User\Preferences\LocalPreference;
 use Wikia\Domain\User\Preferences\UserPreferences;
 use Wikia\Logger\Loggable;
 use Wikia\Service\User\Preferences\PreferenceService;
+use Wikia\Util\Statistics\BernoulliTrial;
 
 class PreferenceCorrectionService {
 
 	use Loggable;
 
 	const PREFERENCE_CORRECTION_ENABLED = "preference_correction_enabled";
+	const PREFERENCE_CORRECTION_SAMPLER = "preference_correction_event_sampler";
 
 	/** @var bool */
 	private $correctionEnabled;
@@ -22,18 +24,29 @@ class PreferenceCorrectionService {
 	/** @var PreferenceService */
 	private $preferenceService;
 
+	/** @var BernoulliTrial */
+	private $sampler;
+
 	/**
 	 * @Inject({
 	 *    Wikia\Service\User\Preferences\PreferenceService::class,
 	 *    Wikia\Service\User\Preferences\Migration\PreferenceScopeService::class,
+	 *    Wikia\Service\User\Preferences\Migration\PreferenceCorrectionService::PREFERENCE_CORRECTION_SAMPLER,
 	 *    Wikia\Service\User\Preferences\Migration\PreferenceCorrectionService::PREFERENCE_CORRECTION_ENABLED})
 	 * @param PreferenceService $preferenceService
 	 * @param PreferenceScopeService $scopeService
+	 * @param BernoulliTrial $sampler
 	 * @param bool $correctionEnabled
 	 */
-	public function __construct( PreferenceService $preferenceService, PreferenceScopeService $scopeService, $correctionEnabled ) {
+	public function __construct(
+		PreferenceService $preferenceService,
+		PreferenceScopeService $scopeService,
+		BernoulliTrial $sampler,
+		$correctionEnabled ) {
+
 		$this->scopeService = $scopeService;
 		$this->preferenceService = $preferenceService;
+		$this->sampler = $sampler;
 		$this->correctionEnabled = $correctionEnabled;
 	}
 
@@ -53,6 +66,13 @@ class PreferenceCorrectionService {
 					'userId' => $userId] );
 			$this->preferenceService->setPreferences( $userId, $expected );
 			$this->preferenceService->save( $userId );
+		}
+
+		if ( $this->sampler->shouldSample() ) {
+			\Transaction::addRawEvent( \Transaction::EVENT_USER_PREFERENCES_COUNTERS, [
+				'type' => 'comparison',
+				'differences' => $differences,
+			] );
 		}
 
 		return $differences;

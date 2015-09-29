@@ -12,10 +12,10 @@ define('ext.wikia.adEngine.slot.scrollHandler', [
 		reloadedView = {},
 		context = adContext.getContext(),
 		config = context.opts.scrollHandlerConfig || {},
-		// 'mercury' value is not set in context.targeting.skin yet
-		skin = context.targeting.skin === 'oasis' ? 'oasis' : 'mercury';
+		skin;
 
-	function init() {
+	function init(currentSkin) {
+		skin = currentSkin;
 		if (context.opts.enableScrollHandler)  {
 			config = config[skin];
 			prepareSettings();
@@ -50,7 +50,7 @@ define('ext.wikia.adEngine.slot.scrollHandler', [
 		reloadedView[slotName] += 1;
 		if (skin === 'oasis') {
 			win.adslots2.push([slotName]);
-		} else {
+		} else if (skin === 'mercury') {
 			win.Mercury.Modules.Ads.getInstance().pushSlotToQueue(slotName);
 		}
 	}

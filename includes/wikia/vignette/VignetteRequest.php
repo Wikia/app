@@ -150,11 +150,11 @@ class VignetteRequest {
 		$isVignetteUrl = false;
 
 		if ( strpos( $wgVignetteUrl, '<SHARD>' ) === false ) {
-			$isVignetteUrl = strpos( $url, $wgVignetteUrl ) !== false;
+			$isVignetteUrl = strpos( $url, $wgVignetteUrl ) === 0;
 		} else {
 			for ( $i = 1; $i <= $wgImagesServers; ++$i ) {
 				$candidate = str_replace( '<SHARD>', $i, $wgVignetteUrl );
-				if ( strpos( $url, $candidate ) !== false ) {
+				if ( strpos( $url, $candidate ) === 0 ) {
 					$isVignetteUrl = true;
 					break;
 				}
