@@ -62,10 +62,10 @@ define('ext.wikia.adEngine.adContext', [
 		if (!noExternals && context.opts.sourcePointDetectionUrl) {
 			context.opts.sourcePointDetection = isUrlParamSet('sourcepointdetection') ||
 				(context.targeting.skin === 'oasis' &&
-				geo.isProperCountry(instantGlobals.wgAdDriverSourcePointDetectionCountries));
+				geo.isProperGeo(instantGlobals.wgAdDriverSourcePointDetectionCountries));
 			context.opts.sourcePointDetectionMobile = isUrlParamSet('sourcepointdetection') ||
 				(context.targeting.skin === 'mercury' &&
-				geo.isProperCountry(instantGlobals.wgAdDriverSourcePointDetectionMobileCountries));
+				geo.isProperGeo(instantGlobals.wgAdDriverSourcePointDetectionMobileCountries));
 		}
 
 		// SourcePoint integration
