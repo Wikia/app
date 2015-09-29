@@ -25,22 +25,20 @@ require(
 			// @see CE-1220
 			contentLanguage = w.wgContentLanguage.split('-')[0],
 			// Cache version
-			cacheVersion = '1.01';
+			cacheVersion = '1.01',
+			// LinkTitle from Cache
+			linkTitle = retrieveLinkTitle();
 
 		function init() {
 			if (targetLanguage !== false && targetLanguage !== contentLanguage) {
 				// Check local browser cache to see if a request has been sent
 				// in the last month and if the notification has been shown to him.
 				// Both have to be !== true to continue.
-				if (cache.get('wikiaInYourLangRequestSent' + cacheVersion) !== true &&
-					cache.get('wikiaInYourLangNotificationShown' + cacheVersion) !== true) {
-					// Update JS cache and set the notification shown indicator to true
-					// Cache for a day
-					cache.set('wikiaInYourLangRequestSent' + cacheVersion, true, cache.CACHE_STANDARD);
-
+				if (cache.get(getWIYLRequestSentKey()) !== true &&
+					cache.get(getWIYLNotificationShownKey()) !== true) {
 					getNativeWikiaInfo();
-				} else if (typeof cache.get(targetLanguage + 'WikiaInYourLangMessage' + cacheVersion) === 'string') {
-					displayNotification(cache.get(targetLanguage + 'WikiaInYourLangMessage' + cacheVersion));
+				} else if (typeof cache.get(getWIYLMessageKey()) === 'string') {
+					displayNotification(cache.get(getWIYLMessageKey()));
 				}
 			}
 		}
@@ -85,17 +83,27 @@ require(
 				format: 'json',
 				type: 'GET',
 				data: {
-					targetLanguage: targetLanguage
+					targetLanguage: targetLanguage,
+					articleTitle: w.wgPageName
 				},
 				callback: function (results) {
 					if (results.success === true) {
+						// Save link address if it is different from this article title
+						saveLinkTitle(results.linkAddress);
+						// Re-initialize linkTitle with linkAddress
+						linkTitle = retrieveLinkTitle();
+
 						// Display notification
 						displayNotification(results.message);
+
+						// Update JS cache and set the notification shown indicator to true
+						// Cache for a day
+						cache.set(getWIYLRequestSentKey(), true, cache.CACHE_STANDARD);
 
 						// Save the message in cache to display until a user closes it
 						// Cache for a day
 						cache.set(
-							targetLanguage + 'WikiaInYourLangMessage' + cacheVersion,
+							getWIYLMessageKey(),
 							results.message,
 							cache.CACHE_STANDARD
 						);
@@ -106,12 +114,13 @@ require(
 
 		function displayNotification(message) {
 			var bannerNotification = new BannerNotification(message, 'notify').show(),
+				label = getTrackingLabel('notification-view'),
 				// Track a view of the notification
 				trackingParams = {
 					trackingMethod: 'analytics',
 					category: 'wikia-in-your-lang',
 					action: tracker.ACTIONS.VIEW,
-					label: targetLanguage + '-notification-view'
+					label: label
 				};
 
 			tracker.track(trackingParams);
@@ -130,29 +139,89 @@ require(
 
 		function onNotificationClosed() {
 			// Track closing of a notification
-			var trackingParams = {
+			var label = getTrackingLabel('notification-close'),
+			    trackingParams = {
 				trackingMethod: 'analytics',
 				category: 'wikia-in-your-lang',
 				action: tracker.ACTIONS.CLOSE,
-				label: targetLanguage + '-notification-close',
+				label: label,
 			};
 			tracker.track(trackingParams);
 
-			cache.set(targetLanguage + 'WikiaInYourLangMessage' + cacheVersion, null);
+			cache.set(getWIYLMessageKey(), null);
 			// Cache for a month
-			cache.set('wikiaInYourLangNotificationShown' + cacheVersion, true, cache.CACHE_LONG);
+			cache.set(getWIYLNotificationShownKey(), true, cache.CACHE_LONG);
 		}
 
 		function onLinkClick() {
 			// Track a click on a notification link
-			var trackingParams = {
+			var label = getTrackingLabel('notification-link-click'),
+			    trackingParams = {
 				trackingMethod: 'analytics',
 				category: 'wikia-in-your-lang',
 				action: tracker.ACTIONS.CLICK_LINK_TEXT,
-				label: targetLanguage + '-notification-link-click',
+				label: label,
 			};
-
 			tracker.track(trackingParams);
+		}
+
+		function getWIYLRequestSentKey() {
+			return 'wikiaInYourLangRequestSent' + linkTitle + cacheVersion;
+		}
+
+		function getWIYLNotificationShownKey() {
+			return 'wikiaInYourLangNotificationShown' + linkTitle + cacheVersion;
+		}
+
+		function getWIYLMessageKey() {
+			return targetLanguage + 'WikiaInYourLangMessage' + linkTitle + cacheVersion;
+		}
+
+		function getWIYLLinkTitlesKey() {
+			return targetLanguage + 'WikiaInYourLangLinkTitles' + cacheVersion;
+		}
+
+		function saveLinkTitle(linkAddress) {
+			var articleTitle = w.wgPageName,
+				linkAddressAry = linkAddress.match(/.+\.com\/wiki\/(.*)/),
+				listOfCachedTitles = {},
+				linkTitle = '';
+
+			if ( linkAddressAry && linkAddressAry.length > 1 ) {
+				linkTitle = linkAddressAry[1];
+			} else {
+				linkTitle = 'main';
+			}
+
+			listOfCachedTitles = cache.get(getWIYLLinkTitlesKey());
+			if ( !listOfCachedTitles ) {
+				listOfCachedTitles = {};
+			}
+			listOfCachedTitles[articleTitle] = linkTitle;
+
+			cache.set(getWIYLLinkTitlesKey(),listOfCachedTitles, cache.CACHE_LONG);
+		}
+
+		/**
+		 * Retrieve linkTitle for this articleTitle from cache.
+		 * articleTitle is a current article title of this wiki.
+		 * linkTitle is wikia-in-your-lang link's article title, which may or may not be the same as the articleTitle.
+		 * listOfCachedTitles is a map of articleTitle => linkTitle
+		 * @returns {string} wikia-in-your-lang link's article title
+		 */
+		function retrieveLinkTitle() {
+			var articleTitle = w.wgPageName,
+				listOfCachedTitles = cache.get(getWIYLLinkTitlesKey());
+			return (listOfCachedTitles && listOfCachedTitles[articleTitle]) ? listOfCachedTitles[articleTitle] : '';
+		}
+
+		function getTrackingLabel(postfix) {
+			var label = targetLanguage;
+			if ( linkTitle.length > 0 && linkTitle != 'main' ) {
+				label += '-article';
+			}
+			label += '-' + postfix;
+			return label;
 		}
 
 		if (!w.wikiaPageIsCorporate) {

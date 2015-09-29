@@ -2,11 +2,13 @@
 /*jshint camelcase:false*/
 /*jshint maxdepth:5*/
 define('ext.wikia.adEngine.lookup.openXBidder', [
+	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adTracker',
+	'ext.wikia.adEngine.utils.adLogicZoneParams',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window'
-], function (adTracker, doc, log, win) {
+], function (adContext, adTracker, adLogicZoneParams, doc, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.lookup.openXBidder',
@@ -21,45 +23,66 @@ define('ext.wikia.adEngine.lookup.openXBidder', [
 		},
 		called = false,
 		priceTimeout = 't',
-		slots = {
-			HOME_TOP_LEADERBOARD: '728x90',
-			HOME_TOP_RIGHT_BOXAD: '300x250',
-			INCONTENT_BOXAD_1: '300x250',
-			LEFT_SKYSCRAPER_2: '160x600',
-			LEFT_SKYSCRAPER_3: '160x600',
-			PREFOOTER_LEFT_BOXAD: '300x250',
-			PREFOOTER_RIGHT_BOXAD: '300x250',
-			TOP_LEADERBOARD: '728x90',
-			TOP_RIGHT_BOXAD: '300x250',
-			MOBILE_IN_CONTENT: '300x250',
-			MOBILE_PREFOOTER: '300x250',
-			MOBILE_TOP_LEADERBOARD: '320x50'
+		config = {
+			oasis: {
+				TOP_LEADERBOARD: '728x90',
+				TOP_RIGHT_BOXAD: '300x250',
+				LEFT_SKYSCRAPER_2: '160x600',
+				PREFOOTER_LEFT_BOXAD: '300x250',
+				PREFOOTER_RIGHT_BOXAD: '300x250'
+			},
+			mercury: {
+				MOBILE_IN_CONTENT: '300x250',
+				MOBILE_PREFOOTER: '300x250',
+				MOBILE_TOP_LEADERBOARD: '320x50'
+			}
 		},
 		sizeMapping = {
 			'728x90': '7x9',
 			'300x250': '3x2',
 			'160x600': '1x6',
 			'320x50': '3x5'
-		};
+		},
+		slots = [];
 
-	function getAds() {
+	function getSlots(skin) {
+		var context = adContext.getContext(),
+			pageType = context.targeting.pageType,
+			slotName;
+
+		slots = config[skin];
+		if (skin === 'oasis' && pageType === 'home') {
+			for (slotName in slots) {
+				if (slots.hasOwnProperty(slotName) && slotName.indexOf('TOP') > -1) {
+					slots['HOME_' + slotName] = slots[slotName];
+					delete slots[slotName];
+				}
+			}
+		}
+
+		return slots;
+	}
+
+	function getAds(skin) {
 		var ads = [],
 			size,
 			slotName,
-			slotPath,
-			src = 'gpt';
+			slotPath = [
+				'/5441',
+				'wka.' + adLogicZoneParams.getSite(),
+				adLogicZoneParams.getMappedVertical(),
+				'',
+				adLogicZoneParams.getPageType()
+			].join('/');
 
+		slots = getSlots(skin);
 		for (slotName in slots) {
 			if (slots.hasOwnProperty(slotName)) {
 				size = slots[slotName];
-				// @TODO - ADEN-2447 - Remove hardcoded wiki details
-				slotPath = [
-					'/5441', 'wka.life', '_prowrestling', 'article', src, slotName
-				].join('/');
 				ads.push([
 					slotPath,
 					[size],
-					slotName
+					'wikia_gpt' + slotPath + '/gpt/' + slotName
 				]);
 			}
 		}
@@ -117,14 +140,20 @@ define('ext.wikia.adEngine.lookup.openXBidder', [
 		trackState(true);
 	}
 
-	function call() {
+	function call(skin) {
 		log('call', 'debug', logGroup);
+
 		var openx = doc.createElement('script'),
 			node = doc.getElementsByTagName('script')[0];
 
+		if (adLogicZoneParams.getSite() !== 'life') {
+			log(['call', 'Not wka.life vertical'], 'debug', logGroup);
+			return;
+		}
+
 		oxTiming = adTracker.measureTime('ox_bidder', {}, 'start');
 		oxTiming.track();
-		win.OX_dfp_ads = getAds();
+		win.OX_dfp_ads = getAds(skin);
 
 		win.OX_dfp_options = {
 			callback: onResponse

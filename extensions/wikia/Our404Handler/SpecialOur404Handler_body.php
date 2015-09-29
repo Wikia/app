@@ -43,7 +43,7 @@ class Our404HandlerPage extends UnlistedSpecialPage {
 	 * Just render some simple 404 page
 	 */
 	public function doRender404() {
-		global $wgOut, $wgContLang, $wgCanonicalNamespaceNames;
+		global $wgOut, $wgContLang, $wgCanonicalNamespaceNames, $wgOur404HandlerBroaderRedirects;
 
 		/**
 		 * check, maybe we have article with that title, if yes 301redirect to
@@ -83,7 +83,10 @@ class Our404HandlerPage extends UnlistedSpecialPage {
 		if( !is_null( $oTitle ) ) {
 			// Preserve the query string on a redirect
 			$query = parse_url ( $_SERVER['REQUEST_URI'], PHP_URL_QUERY );
-			if( $namespace == NS_SPECIAL || $namespace == NS_MEDIA ) {
+			if( $namespace == NS_SPECIAL
+				|| $namespace == NS_MEDIA
+				|| $wgOur404HandlerBroaderRedirects
+			) {
 				/**
 				 * these namespaces are special and don't have articles
 				 */

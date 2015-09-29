@@ -96,6 +96,7 @@ $config['adengine2_desktop_js'] = array(
 		'//extensions/wikia/AdEngine/js/provider/openX.targeting.js',
 		'//extensions/wikia/AdEngine/js/provider/remnantGpt.js',
 		'//extensions/wikia/AdEngine/js/provider/turtle.js',
+		'//extensions/wikia/AdEngine/js/recovery/helper.js',
 		'//extensions/wikia/AdEngine/js/slot/adSlot.js',
 		'//extensions/wikia/AdEngine/js/slot/inContentPlayer.js',
 		'//extensions/wikia/AdEngine/js/slot/scrollHandler.js',
@@ -105,6 +106,7 @@ $config['adengine2_desktop_js'] = array(
 		'//extensions/wikia/AdEngine/js/template/modalHandlerFactory.js',
 		'//extensions/wikia/AdEngine/js/template/modalOasisHandler.js',
 		'//extensions/wikia/AdEngine/js/template/skin.js',
+		'//extensions/wikia/AdEngine/js/utils/AdLogicZoneParams.js',
 		'//resources/wikia/modules/krux.js',
 
 		// was: late queue
@@ -167,6 +169,8 @@ $config['adengine2_tracking_js'] = array(
 	'skin' => ['oasis', 'venus', 'wikiamobile'],
 	'assets' => array(
 		'//extensions/wikia/AdEngine/js/AdTracker.js',
+		'//extensions/wikia/AdEngine/js/AdContext.js',
+		'//extensions/wikia/AdEngine/js/utils/AdLogicZoneParams.js',
 	),
 );
 
@@ -191,6 +195,14 @@ $config['adengine2_ox_bidder_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'//extensions/wikia/AdEngine/js/lookup/openXBidder.js',
+	),
+);
+
+$config['adengine2_ads_recovery_message_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasis', 'wikiamobile' ],
+	'assets' => array(
+		'//extensions/wikia/AdEngine/js/recovery/message.js',
 	),
 );
 
@@ -739,8 +751,10 @@ $config['mobile_base_ads_js'] = array(
 		'//extensions/wikia/AdEngine/js/provider/openX.js',
 		'//extensions/wikia/AdEngine/js/provider/openX.targeting.js',
 		'//extensions/wikia/AdEngine/js/provider/paidAssetDrop.js',
+		'//extensions/wikia/AdEngine/js/recovery/helper.js',
 		'//extensions/wikia/AdEngine/js/provider/remnantGptMobile.js',
 		'//extensions/wikia/AdEngine/js/slot/adSlot.js',
+		'//extensions/wikia/AdEngine/js/utils/AdLogicZoneParams.js',
 
 		// Video ads
 		'//extensions/wikia/AdEngine/js/WikiaDartVideoHelper.js',
@@ -808,6 +822,7 @@ $config['interactivemaps_ads_js'] = array(
 		'//extensions/wikia/AdEngine/js/provider/gpt/adSizeConverter.js',
 		'//extensions/wikia/AdEngine/js/provider/gpt/googleTag.js',
 		'//extensions/wikia/AdEngine/js/provider/gpt/helper.js',
+		'//extensions/wikia/AdEngine/js/recovery/helper.js',
 		'//extensions/wikia/AdEngine/js/SlotTweaker.js',
 		'//extensions/wikia/AdEngine/InteractiveMaps/ads.js'
 	)
@@ -1686,6 +1701,7 @@ $config['analytics_bluekai_js'] = array(
 		'//extensions/wikia/AdEngine/js/AdContext.js',
 		'//extensions/wikia/AdEngine/js/AdLogicPageParams.js',
 		'//extensions/wikia/AdEngine/js/AdLogicPageViewCounter.js',
+		'//extensions/wikia/AdEngine/js/utils/AdLogicZoneParams.js',
 	]
 );
 

@@ -151,7 +151,7 @@ class PreferenceServiceImpl implements PreferenceService {
 		foreach ( $prefs->getLocalPreferences() as $wikiId => $wikiPreferences ) {
 			foreach ( $wikiPreferences as $pref ) {
 				/** @var $pref LocalPreference */
-				if ( $this->prefIsSaveable( $pref->getName(), $pref->getValue(), $this->getLocalDefault( $pref->getName() ) ) ) {
+				if ( $this->prefIsSaveable( $pref->getName(), $pref->getValue(), $this->getLocalDefault( $pref->getName(), $wikiId ) ) ) {
 					$prefsToSave->setLocalPreference( $pref->getName(), $pref->getWikiId(), $pref->getValue() );
 				}
 			}
@@ -185,6 +185,10 @@ class PreferenceServiceImpl implements PreferenceService {
 
 	public function getLocalDefault( $pref, $wikiId ) {
 		return $this->defaultPreferences->getLocalPreference( $pref, $wikiId );
+	}
+
+	public function deleteFromCache( $userId ) {
+		return $this->cache->delete( $userId );
 	}
 
 	protected function getLoggerContext() {
@@ -234,10 +238,6 @@ class PreferenceServiceImpl implements PreferenceService {
 		return $this->cache->save( $userId, $preferences );
 	}
 
-	private function deleteFromCache( $userId ) {
-		return $this->cache->delete( $userId );
-	}
-
 	private function applyDefaults( UserPreferences $preferences ) {
 		foreach ( $this->defaultPreferences->getGlobalPreferences() as $globalPreference ) {
 			if ( !$preferences->hasGlobalPreference( $globalPreference->getName() ) ) {
@@ -258,11 +258,7 @@ class PreferenceServiceImpl implements PreferenceService {
 	}
 
 	private function prefIsSaveable( $pref, $value, $valueFromDefaults ) {
-		if ( $value == $valueFromDefaults ) {
-			return false;
-		}
-
 		return in_array( $pref, $this->forceSavePrefs ) || $value != $valueFromDefaults ||
-			( $valueFromDefaults != null && $value !== false && $value !== null );
+			( $valueFromDefaults === null && $value !== false && $value !== null );
 	}
 }

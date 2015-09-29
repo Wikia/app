@@ -41,10 +41,10 @@ class Preferences {
 	);
 
 	/**
-	 * @return UserPreferences
+	 * @return PreferenceScopeService
 	 */
 	static function preferenceScope() {
-		return Injector::getInjector()->get(PreferenceScopeService::class);
+		return Injector::getInjector()->get( PreferenceScopeService::class );
 	}
 
 	/**
@@ -83,7 +83,7 @@ class Preferences {
 
 		## Prod in defaults from the user
 		foreach ( $defaultPreferences as $name => &$info ) {
-			$prefFromUser = self::getUserPreference( $name, $info, $user );
+			$prefFromUser = self::getUserProperty( $name, $info, $user );
 			$field = HTMLForm::loadInputFromParameters( $name, $info ); // For validation
 			$defaultOptions = User::getDefaultOptions();
 			$globalDefault = isset( $defaultOptions[$name] )
@@ -119,8 +119,8 @@ class Preferences {
 	 * @param $user User
 	 * @return array|String
 	 */
-	static function getUserPreference( $name, $info, $user ) {
-		$val = self::getUserPreferenceHelper($user, $name);
+	static function getUserProperty( $name, $info, $user ) {
+		$val = self::getUserPropertyHelper( $user, $name );
 
 		// Handling for array-type preferences
 		if ( ( isset( $info['type'] ) && $info['type'] == 'multiselect' ) ||
@@ -130,7 +130,7 @@ class Preferences {
 			$val = array();
 
 			foreach ( $options as $value ) {
-				if ( self::getUserPreferenceHelper( $user, "$prefix$value" ) ) {
+				if ( self::getUserPropertyHelper( $user, "$prefix$value" ) ) {
 					$val[] = $value;
 				}
 			}
@@ -139,12 +139,19 @@ class Preferences {
 		return $val;
 	}
 
-	private static function getUserPreferenceHelper(User $user, $property) {
-		if (in_array($property, self::getAttributes())) {
-			return $user->getGlobalAttribute($property);
-		} else {
-			return $user->getGlobalPreference($property);
+	private static function getUserPropertyHelper( User $user, $property ) {
+		$scopeService = self::preferenceScope();
+
+		if ( in_array( $property, self::getAttributes() ) ) {
+			return $user->getGlobalAttribute( $property );
+		} elseif ( $scopeService->isGlobalPreference( $property ) ) {
+			return $user->getGlobalPreference( $property );
+		} elseif ( $scopeService->isLocalPreference( $property ) ) {
+			list( $prefName, $wikiId ) = $scopeService->splitLocalPreference( $property );
+			return $user->getLocalPreference( $prefName, $wikiId );
 		}
+
+		return null;
 	}
 
 	/**

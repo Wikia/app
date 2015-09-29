@@ -116,7 +116,12 @@ class UserLoginHooksHelper {
 	}
 
 	public static function isValidEmailAddr( $addr ) {
-		return preg_match( '/^[a-z0-9._%+-]+@(?:[a-z0-9\-]+\.)+[a-z]{2,4}$/i', $addr ) !== 0;
+		// this validation match Helios email validation
+		// [see: https://github.com/Wikia/helios/blob/ce490394ae10eb248afd2a063dc465d8eb4efb01/domain/user_validator_funs.go#L29]
+		return preg_match(
+			'/^[\w!#$%&\'*+\/=?^_`{|}~-]+(?:\.[\w!#$%&\'*+\/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[a-zA-Z0-9](?:[\w-]*[\w])?$/i',
+			$addr
+		) !== 0;
 	}
 
 	/**
