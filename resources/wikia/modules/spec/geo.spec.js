@@ -69,6 +69,8 @@ describe("Geo", function () {
 		expect(geo.isProperGeo(['XX-EU'])).toBeTruthy();
 		expect(geo.isProperGeo(['XX'])).toBeTruthy();
 		expect(geo.isProperGeo(['PL-72'])).toBeTruthy();
+
+		expect(geo.isProperGeo()).toBeFalsy();
 	});
 
 });

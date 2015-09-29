@@ -122,7 +122,10 @@
 		 * @returns {boolean}
 		 */
 		function isProperGeo(countryList) {
-			return isProperContinent(countryList) || isProperCountry(countryList) || isProperRegion(countryList);
+			return  !!(countryList &&
+						countryList.indexOf &&
+						(isProperContinent(countryList) || isProperCountry(countryList) || isProperRegion(countryList))
+			);
 		}
 
 
