@@ -2146,10 +2146,10 @@ class User {
 			#<Wikia>
 			global $wgExternalSharedDB, $wgSharedDB;
 			if( isset( $wgSharedDB ) ) {
-					$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
+				$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 			}
 			else {
-					$dbw = wfGetDB( DB_MASTER );
+				$dbw = wfGetDB( DB_MASTER );
 			}
 			#</Wikia>
 
@@ -4711,10 +4711,10 @@ class User {
 			// @author Lucas Garczewski (tor)
 			global $wgExternalSharedDB, $wgSharedDB;
 			if( isset( $wgSharedDB ) ) {
-					$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
+				$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 			}
 			else {
-					$dbw = wfGetDB( DB_MASTER );
+				$dbw = wfGetDB( DB_MASTER );
 			}
 
 			$dbw->update( '`user`',
