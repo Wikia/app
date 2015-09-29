@@ -2,10 +2,15 @@
 (function (context) {
 	'use strict';
 
+	/**
+	 * Determines the locale for a Facebook user based on Wikia language and user's location
+	 *
+	 * Facebook languages/countries supported: https://www.facebook.com/translations/FacebookLocales.xml
+	 **/
 	function facebookLocale() {
-		/** https://www.facebook.com/translations/FacebookLocales.xml
-		 *  Note: only one code per language is used. **/
-		var languageCodes = {
+		/** Note: only one default country per language is used. */
+		var defaultCountryCodes = {
+			// languageCode: CountryCode
 			'af': 'ZA',
 			'ak': 'GH',
 			'am': 'ET',
@@ -129,7 +134,8 @@
 			'zu': 'ZA',
 			'zz': 'TR'
 			},
-			countryCodes = {
+			languagesOfCountry = {
+				// CountryCode: languageCodes
 				'AF': ['ps'],
 				'AL': ['sq'],
 				'AM': ['hy'],
@@ -237,7 +243,7 @@
 		 * In case language is invalid or unsupported, defaults to en/US
 		 *
 		 * @param {string} inputLanguageCode
-		 * @returns {string}
+		 * @returns {string} URL of localized Facebook SDK
 		 */
 		function getSdkUrl(inputLanguageCode) {
 			var matchingLanguages,
@@ -245,13 +251,13 @@
 				geoCountryCode = Geo.getCountryCode(),
 				countryCode = '';
 			if (geoCountryCode) {
-				matchingLanguages = countryCodes[geoCountryCode.toUpperCase()];
+				matchingLanguages = languagesOfCountry[geoCountryCode.toUpperCase()];
 				if (languageCode in matchingLanguages) {
 					countryCode = matchingLanguages[languageCode];
 				}
 			}
 			if (!countryCode) {
-				countryCode = languageCodes[languageCode];
+				countryCode = defaultCountryCodes[languageCode];
 				if (!countryCode) {
 					languageCode = 'en';
 					countryCode = 'US';
