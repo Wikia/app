@@ -1,10 +1,11 @@
+/*global Geo*/
 (function (context) {
 	'use strict';
 
 	function facebookLocale() {
 		/** https://www.facebook.com/translations/FacebookLocales.xml
-		 *  Note: only one code per language is used since proper country cannot be reliably retrieved. **/
-		var codes = {
+		 *  Note: only one code per language is used. **/
+		var languageCodes = {
 			'af': 'ZA',
 			'ak': 'GH',
 			'am': 'ET',
@@ -127,17 +128,137 @@
 			'zh': 'CN',
 			'zu': 'ZA',
 			'zz': 'TR'
-		};
+			},
+			countryCodes = {
+				'AF': ['ps'],
+				'AL': ['sq'],
+				'AM': ['hy'],
+				'AR': ['ar'],
+				'AZ': ['az'],
+				'BA': ['bs'],
+				'BE': ['nl'],
+				'BG': ['bg'],
+				'BO': ['ay'],
+				'BR': ['pt'],
+				'BY': ['be'],
+				'CA': ['fr'],
+				'CD': ['ln'],
+				'CH': ['rm'],
+				'CL': ['es'],
+				'CN': ['zh'],
+				'CO': ['es'],
+				'CZ': ['cs'],
+				'DE': ['de', 'yi'],
+				'DK': ['da'],
+				'EE': ['et'],
+				'EO': ['eo'],
+				'ES': ['ca', 'es', 'eu', 'gl'],
+				'ET': ['am'],
+				'FI': ['fi'],
+				'FR': ['br', 'co', 'fr'],
+				'FO': ['fo'],
+				'GB': ['cy', 'en'],
+				'GE': ['ka'],
+				'GH': ['ak'],
+				'GR': ['el', 'gx'],
+				'HK': ['zh'],
+				'HR': ['hr'],
+				'HU': ['hu'],
+				'ID': ['id', 'jv'],
+				'IE': ['ga'],
+				'IL': ['he'],
+				'IN': ['as', 'bn', 'en', 'gu', 'hi', 'kn', 'ml', 'mr', 'or', 'pa', 'sa', 'ta', 'te'],
+				'IQ': ['cb'],
+				'IR': ['fa'],
+				'IS': ['is'],
+				'IT': ['it', 'sc'],
+				'JP': ['ja'],
+				'KE': ['sw'],
+				'KH': ['km'],
+				'KR': ['ko'],
+				'KS': ['ja'],
+				'KZ': ['kk'],
+				'LA': ['es', 'lo'],
+				'LK': ['si'],
+				'LT': ['fb', 'lt'],
+				'LV': ['lv'],
+				'MA': ['tz'],
+				'MG': ['mg'],
+				'MK': ['mk'],
+				'MM': ['my'],
+				'MN': ['mn'],
+				'MT': ['mt'],
+				'MW': ['ny'],
+				'MX': ['es'],
+				'MY': ['ms'],
+				'NG': ['ff', 'ha', 'ig', 'yo'],
+				'NL': ['fy', 'li', 'nl'],
+				'NO': ['nb', 'nn', 'se'],
+				'NP': ['ne'],
+				'PE': ['qu'],
+				'PH': ['cx', 'tl'],
+				'PI': ['en'],
+				'PK': ['ur'],
+				'PL': ['pl', 'sz'],
+				'PT': ['pt'],
+				'PY': ['gn'],
+				'RO': ['ro'],
+				'RS': ['sr'],
+				'RU': ['ru', 'tt'],
+				'RW': ['rw'],
+				'SE': ['sv'],
+				'SI': ['sl'],
+				'SK': ['sk'],
+				'SN': ['wo'],
+				'SO': ['so'],
+				'ST': ['tl'],
+				'SY': ['sy'],
+				'TH': ['th'],
+				'TJ': ['tg'],
+				'TM': ['tk'],
+				'TR': ['ku', 'tr', 'zz'],
+				'TW': ['zh'],
+				'UA': ['uk'],
+				'UD': ['en'],
+				'UG': ['lg'],
+				'US': ['ck', 'en'],
+				'UZ': ['uz'],
+				'VA': ['la'],
+				'VE': ['es'],
+				'VN': ['vi'],
+				'ZA': ['af', 'xh', 'zu'],
+				'ZW': ['nd', 'sn']
+			};
 
-		function getSdkUrl(langCode) {
-			var lowerLangCode = langCode.toLowerCase(),
-				countryCode = codes[langCode];
-			if (langCode.length !== 2 || !countryCode) {
-				lowerLangCode = 'en';
-				countryCode = 'US';
+		/**
+		 * Gets the Localized URL of the FB JS SDK
+		 * To localize, it attempts to match user location (country) with the language;
+		 * if unsuccessful, it falls back to a default country associated with the language
+		 * In case language is invalid or unsupported, defaults to en/US
+		 *
+		 * @param {string} inputLanguageCode
+		 * @returns {string}
+		 */
+		function getSdkUrl(inputLanguageCode) {
+			var matchingLanguages,
+				languageCode = inputLanguageCode.length === 2 ? inputLanguageCode.toLowerCase() : 'en',
+				geoCountryCode = Geo.getCountryCode(),
+				countryCode = '';
+			if (geoCountryCode) {
+				matchingLanguages = countryCodes[geoCountryCode.toUpperCase()];
+				if (languageCode in matchingLanguages) {
+					countryCode = matchingLanguages[languageCode];
+				}
+			}
+			if (!countryCode) {
+				countryCode = languageCodes[languageCode];
+				if (!countryCode) {
+					languageCode = 'en';
+					countryCode = 'US';
+				}
 			}
 
-			return '//connect.facebook.net/' + lowerLangCode + '_' + countryCode + '/sdk.js';
+			return '//connect.facebook.net/' + languageCode + '_' + countryCode + '/sdk.js';
 		}
 
 		return {
@@ -154,6 +275,6 @@
 	context.Wikia.fbLocale = facebookLocale(context);
 
 	if (context.define && context.define.amd) {
-		context.define('wikia.fbLocale', ['wikia.window'], facebookLocale);
+		context.define('wikia.fbLocale', [], facebookLocale);
 	}
 }(this));
