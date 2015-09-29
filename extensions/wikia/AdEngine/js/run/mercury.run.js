@@ -25,8 +25,7 @@ require([
 	// Custom ads (skins, footer, etc)
 	win.loadCustomAd = customAdsLoader.loadCustomAd;
 
-	var ac = instantGlobals.wgAmazonMatchCountriesMobile;
-	if (ac && ac.indexOf && ac.indexOf(geo.getCountryCode()) > -1) {
+	if (geo.isProperGeo(instantGlobals.wgAmazonMatchCountriesMobile)) {
 		amazon.call();
 	}
 });
