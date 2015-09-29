@@ -137,7 +137,7 @@ class ArticleAsJson extends WikiaService {
 	public static function onPortableInfoboxNodeImageGetData( $data, &$ref ) {
 		wfProfileIn( __METHOD__ );
 
-		$title = Title::newFromText( $data[ 'name' ] );
+		$title = Title::newFromText( $data['name'] );
 		if ( $title ) {
 			$details = WikiaFileHelper::getMediaDetail( $title, self::$mediaDetailConfig );
 			$details['context'] = isset( $data['context'] ) ? $data['context'] : self::MEDIA_CONTEXT_INFOBOX;
