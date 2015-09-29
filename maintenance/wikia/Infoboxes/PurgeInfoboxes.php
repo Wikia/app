@@ -15,7 +15,10 @@ class PurgeInfoboxes extends Maintenance {
 			->run( $this->getDB( DB_SLAVE ), function ( ResultWrapper $result ) {
 				$out = [ ];
 				while ( $row = $result->fetchRow() ) {
-					$out[] = Title::newFromText( $row[ 'qc_title' ], NS_TEMPLATE )->getFullText();
+					$title = Title::newFromText( $row[ 'qc_title' ], NS_TEMPLATE );
+					if ( $title && $title->exists() ) {
+						$out[] = $title->getFullText();
+					}
 				}
 
 				return $out;
