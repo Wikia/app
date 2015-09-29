@@ -18,7 +18,21 @@ describe('AdContext', function () {
 				},
 				getContinentCode: function() {
 					return 'CC';
+				},
+				isProperGeo: function() {
+					return false;
+				},
+				isProperRegion: function () {
+					return false;
+				},
+				isProperContinent: function() {
+					return false;
+				},
+				isProperCountry: function() {
+					return false;
 				}
+
+
 			},
 			instantGlobals: {},
 			win: {},
@@ -189,6 +203,7 @@ describe('AdContext', function () {
 			mocks.win = {ads: {context: {targeting: {enableKruxTargeting: true}}}};
 
 			mocks.instantGlobals = {wgAdDriverKruxCountries: ['CY']};
+			mocks.geo.isProperGeo = function() { return true; };
 			adContext = getModule();
 			expect(adContext.getContext().targeting.enableKruxTargeting).toBeTruthy();
 
@@ -235,6 +250,7 @@ describe('AdContext', function () {
 		expect(adContext.getContext().providers.turtle).toBeTruthy();
 
 		mocks.instantGlobals = {wgAdDriverTurtleCountries: ['YY']};
+		mocks.geo.isProperGeo = function() { return false; };
 		adContext = getModule();
 		expect(adContext.getContext().providers.turtle).toBeFalsy();
 	});
@@ -244,10 +260,12 @@ describe('AdContext', function () {
 
 		mocks.win = {};
 		mocks.instantGlobals = {wgAdDriverOpenXCountries: ['AA', 'CY', 'ZZ']};
+		mocks.geo.isProperGeo = function() { return true; };
 		adContext = getModule();
 		expect(adContext.getContext().providers.openX).toBeTruthy();
 
 		mocks.instantGlobals = {wgAdDriverOpenXCountries: ['YY']};
+		mocks.geo.isProperGeo = function() { return false; };
 		adContext = getModule();
 		expect(adContext.getContext().providers.openX).toBeFalsy();
 	});
@@ -270,10 +288,12 @@ describe('AdContext', function () {
 
 		mocks.win = {ads: {context: {slots: {invisibleHighImpact: true}}}};
 		mocks.instantGlobals = {wgAdDriverHighImpactSlotCountries: ['HH', 'CY', 'ZZ']};
+		mocks.geo.isProperGeo = function() { return true; };
 		adContext = getModule();
 		expect(adContext.getContext().slots.invisibleHighImpact).toBeTruthy();
 
 		mocks.instantGlobals = {wgAdDriverHighImpactSlotCountries: ['YY']};
+		mocks.geo.isProperGeo = function() { return false; };
 		adContext = getModule();
 		expect(adContext.getContext().slots.invisibleHighImpact).toBeFalsy();
 	});
@@ -290,10 +310,12 @@ describe('AdContext', function () {
 		var adContext;
 
 		mocks.instantGlobals = {wgAdDriverScrollHandlerCountries: ['HH', 'CY', 'ZZ']};
+		mocks.geo.isProperGeo = function() { return true; };
 		adContext = getModule();
 		expect(adContext.getContext().opts.enableScrollHandler).toBeTruthy();
 
 		mocks.instantGlobals = {wgAdDriverScrollHandlerCountries: ['YY']};
+		mocks.geo.isProperGeo = function() { return false; };
 		adContext = getModule();
 		expect(adContext.getContext().opts.enableScrollHandler).toBeFalsy();
 	});
@@ -328,10 +350,12 @@ describe('AdContext', function () {
 		var adContext;
 		mocks.win = {ads: {context: {targeting: {enableKruxTargeting: true}}}};
 		mocks.instantGlobals = {wgAdDriverKruxCountries: ['AA', 'CY', 'BB']};
+		mocks.geo.isProperGeo = function() { return true; };
 		adContext = getModule();
 		expect(adContext.getContext().targeting.enableKruxTargeting).toBeTruthy();
 
 		mocks.instantGlobals = {wgAdDriverKruxCountries: ['AA', 'BB', 'CC']};
+		mocks.geo.isProperGeo = function() { return false; };
 		adContext = getModule();
 		expect(adContext.getContext().targeting.enableKruxTargeting).toBeFalsy();
 	});
@@ -341,11 +365,13 @@ describe('AdContext', function () {
 
 		mocks.win = {ads: {context: {targeting: {wikiDirectedAtChildren: false, enableKruxTargeting: true}}}};
 		mocks.instantGlobals = {wgAdDriverKruxCountries: ['CY']};
+		mocks.geo.isProperGeo = function() { return true; };
 		adContext = getModule();
 		expect(adContext.getContext().targeting.enableKruxTargeting).toBeTruthy();
 
 		mocks.win = {ads: {context: {targeting: {wikiDirectedAtChildren: true, enableKruxTargeting: true}}}};
 		mocks.instantGlobals = {wgAdDriverKruxCountries: ['CY']};
+		mocks.geo.isProperGeo = function() { return false; };
 		adContext = getModule();
 		expect(adContext.getContext().targeting.enableKruxTargeting).toBeFalsy();
 	});
@@ -363,28 +389,28 @@ describe('AdContext', function () {
 	it('disables SourcePoint when url is not set (e.g. for mercury skin)', function () {
 		mocks.win = {ads: {context: {opts: {sourcePointDetection: true}}}};
 		mocks.instantGlobals = {wgAdDriverSourcePointCountries: ['CY', 'ZZ']};
-
+		mocks.geo.isProperGeo = function() { return true; };
 		expect(getModule().getContext().opts.sourcePoint).toBe(undefined);
 	});
 
 	it('enables SourcePoint when country in instant var', function () {
 		mocks.win = {ads: {context: {opts: {sourcePointUrl: '//foo.bar', sourcePointDetection: true}}}};
 		mocks.instantGlobals = {wgAdDriverSourcePointCountries: ['CY', 'ZZ']};
-
+		mocks.geo.isProperGeo = function() { return true; };
 		expect(getModule().getContext().opts.sourcePoint).toBeTruthy();
 	});
 
 	it('enables SourcePoint when region in instant var', function () {
 		mocks.win = {ads: {context: {opts: {sourcePointUrl: '//foo.bar', sourcePointDetection: true}}}};
 		mocks.instantGlobals = {wgAdDriverSourcePointCountries: ['CY-RR']};
-
+		mocks.geo.isProperGeo = function() { return true; };
 		expect(getModule().getContext().opts.sourcePoint).toBeTruthy();
 	});
 
 	it('enables SourcePoint when country and region in instant var (country overwrites region)', function () {
 		mocks.win = {ads: {context: {opts: {sourcePointUrl: '//foo.bar', sourcePointDetection: true}}}};
 		mocks.instantGlobals = {wgAdDriverSourcePointCountries: ['CY-EE', 'CY']};
-
+		mocks.geo.isProperGeo = function() { return true; };
 		expect(getModule().getContext().opts.sourcePoint).toBeTruthy();
 	});
 
@@ -392,7 +418,7 @@ describe('AdContext', function () {
 		function () {
 			mocks.win = {ads: {context: {opts: {sourcePointUrl: '//foo.bar', sourcePointDetection: true}}}};
 			mocks.instantGlobals = {wgAdDriverSourcePointCountries: ['CY-EE', 'YY']};
-
+			mocks.geo.isProperGeo = function() { return false; };
 			expect(getModule().getContext().opts.sourcePoint).toBeFalsy();
 		}
 	);
@@ -436,35 +462,35 @@ describe('AdContext', function () {
 			}
 		};
 		mocks.instantGlobals = {wgAdDriverSourcePointDetectionCountries: ['CY', 'ZZ']};
-
+		mocks.geo.isProperGeo = function() { return true; };
 		expect(getModule().getContext().opts.sourcePointDetection).toBeTruthy();
 	});
 
 	it('enables SourcePoint detection when instantGlobals.wgAdDriverSourcePointDetectionCountries is enabled global (XX)', function () {
 		mocks.win = {ads: {context: {opts: {sourcePointDetectionUrl: '//foo.bar'}}}};
 		mocks.instantGlobals = {wgAdDriverSourcePointDetectionCountries: ['XX']};
-
+		mocks.geo.isProperGeo = function() { return true; };
 		expect(getModule().getContext().opts.sourcePointDetection).toBeTruthy();
 	});
 
 	it('enables SourcePoint detection when instantGlobals.wgAdDriverSourcePointDetectionCountries is enabled global (XX-XX)', function () {
 		mocks.win = {ads: {context: {opts: {sourcePointDetectionUrl: '//foo.bar'}}}};
 		mocks.instantGlobals = {wgAdDriverSourcePointDetectionCountries: ['XX']};
-
+		mocks.geo.isProperGeo = function() { return true; };
 		expect(getModule().getContext().opts.sourcePointDetection).toBeTruthy();
 	});
 
 	it('enables SourcePoint detection when instantGlobals.wgAdDriverSourcePointDetectionCountries is enabled for continent', function () {
 		mocks.win = {ads: {context: {opts: {sourcePointDetectionUrl: '//foo.bar'}}}};
 		mocks.instantGlobals = {wgAdDriverSourcePointDetectionCountries: ['XX-CC']};
-
+		mocks.geo.isProperGeo = function() { return true; };
 		expect(getModule().getContext().opts.sourcePointDetection).toBeTruthy();
 	});
 
 	it('disables SourcePoint detection when instantGlobals.wgAdDriverSourcePointDetectionCountries is disabled for continent', function () {
 		mocks.win = {ads: {context: {opts: {sourcePointDetectionUrl: '//foo.bar'}}}};
 		mocks.instantGlobals = {wgAdDriverSourcePointDetectionCountries: ['XX-DD']};
-
+		mocks.geo.isProperGeo = function() { return false; };
 		expect(getModule().getContext().opts.sourcePointDetection).toBeFalsy();
 	});
 
@@ -518,10 +544,12 @@ describe('AdContext', function () {
 		var adContext;
 
 		mocks.instantGlobals = {wgAdDriverIncontentPlayerSlotCountries: ['HH', 'CY', 'ZZ']};
+		mocks.geo.isProperGeo = function() { return true; };
 		adContext = getModule();
 		expect(adContext.getContext().slots.incontentPlayer).toBeTruthy();
 
 		mocks.instantGlobals = {wgAdDriverIncontentPlayerSlotCountries: ['YY']};
+		mocks.geo.isProperGeo = function() { return false; };
 		adContext = getModule();
 		expect(adContext.getContext().slots.incontentPlayer).toBeFalsy();
 	});
@@ -550,7 +578,7 @@ describe('AdContext', function () {
 			wgAdDriverSourcePointDetectionCountries: ['CY'],
 			wgAdDriverAdsRecoveryMessageCountries: ['CY', 'ZZ']
 		};
-
+		mocks.geo.isProperGeo = function() { return true; };
 		expect(getModule().getContext().opts.recoveredAdsMessage).toBeTruthy();
 	});
 
@@ -570,7 +598,7 @@ describe('AdContext', function () {
 			wgAdDriverSourcePointDetectionCountries: ['CY'],
 			wgAdDriverAdsRecoveryMessageCountries: ['CY-EE', 'CY']
 		};
-
+		mocks.geo.isProperGeo = function() { return true; };
 		expect(getModule().getContext().opts.recoveredAdsMessage).toBeTruthy();
 	});
 
@@ -581,7 +609,7 @@ describe('AdContext', function () {
 				wgAdDriverSourcePointDetectionCountries: ['CY'],
 				wgAdDriverAdsRecoveryMessageCountries: ['CY-EE', 'YY']
 			};
-
+			mocks.geo.isProperGeo = function() { return false; };
 			expect(getModule().getContext().opts.recoveredAdsMessage).toBeFalsy();
 		}
 	);
@@ -593,7 +621,7 @@ describe('AdContext', function () {
 				wgAdDriverSourcePointDetectionCountries: ['YY'],
 				wgAdDriverAdsRecoveryMessageCountries: ['CY']
 			};
-
+			mocks.geo.isProperGeo = function() { return false; };
 			expect(getModule().getContext().opts.recoveredAdsMessage).toBeFalsy();
 		}
 	);
