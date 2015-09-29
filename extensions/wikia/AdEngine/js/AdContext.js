@@ -56,7 +56,8 @@ define('ext.wikia.adEngine.adContext', [
 
 	function setContext(newContext) {
 		var i,
-			len;
+			len,
+			noExternals = w.wgNoExternals || isUrlParamSet('noexternals');
 
 		// Note: consider copying the value, not the reference
 		context = newContext;
@@ -74,7 +75,7 @@ define('ext.wikia.adEngine.adContext', [
 		}
 
 		// SourcePoint detection integration
-		if (!isUrlParamSet('noexternals') && context.opts.sourcePointDetectionUrl) {
+		if (!noExternals && context.opts.sourcePointDetectionUrl) {
 			context.opts.sourcePointDetection = isUrlParamSet('sourcepointdetection') ||
 				isProperCountry(instantGlobals.wgAdDriverSourcePointDetectionCountries);
 		}
@@ -134,7 +135,7 @@ define('ext.wikia.adEngine.adContext', [
 			isProperCountry(instantGlobals.wgAdDriverKruxCountries) &&
 			!instantGlobals.wgSitewideDisableKrux &&
 			!context.targeting.wikiDirectedAtChildren &&
-			!isUrlParamSet('noexternals')
+			!noExternals
 		);
 
 		// Export the context back to ads.context
