@@ -7,7 +7,13 @@
  * @author Jakub Olek <jolek@wikia-inc.com>
  *
  */
-define('wikia.loader', ['wikia.window', require.optional('mw'), 'wikia.nirvana', 'jquery', 'wikia.log', 'wikia.fbLocale'
+define('wikia.loader', [
+		'wikia.window',
+		require.optional('mw'),
+		'wikia.nirvana',
+		'jquery',
+		'wikia.log',
+		'wikia.fbLocale'
 	],
 	function loader (window, mw, nirvana, $, log, fbLocale) {
 	'use strict';
