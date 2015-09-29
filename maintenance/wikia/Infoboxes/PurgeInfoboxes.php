@@ -7,6 +7,9 @@ require_once( dirname( __FILE__ ) . '/../../Maintenance.php' );
 
 class PurgeInfoboxes extends Maintenance {
 
+	const ARTICLES_LIMIT = 500;
+	const PURGE_CHUNK = 50;
+
 	public function execute() {
 		$templates = ( new WikiaSQL() )
 			->SELECT( 'qc_title' )
@@ -22,7 +25,7 @@ class PurgeInfoboxes extends Maintenance {
 			} );
 
 		foreach ( $templates as $template ) {
-			$articles = array_chunk( $this->getTemplateUsage( $template ), 50 );
+			$articles = array_chunk( $this->getTemplateUsage( $template ), self::PURGE_CHUNK );
 			foreach ( $articles as $slice ) {
 				$this->purgeArticles( $slice );
 			}
@@ -33,7 +36,7 @@ class PurgeInfoboxes extends Maintenance {
 		$params = [ 'action' => 'query',
 					'list' => 'embeddedin',
 					'eititle' => $template,
-					'eilimit' => 500 ];
+					'eilimit' => self::ARTICLES_LIMIT ];
 		if ( isset( $continue ) ) {
 			$params[ 'eicontinue' ] = $continue;
 		}
@@ -68,8 +71,7 @@ class PurgeInfoboxes extends Maintenance {
 	 * @return ApiMain
 	 */
 	private function callApi( $params ) {
-		$request = new FauxRequest( $params );
-		$api = new ApiMain( $request, true );
+		$api = new ApiMain( new FauxRequest( $params ), true );
 		$api->execute();
 
 		return $api->getResult()->getResultData();
