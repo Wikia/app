@@ -36,6 +36,28 @@ class CSRFDetector {
 	}
 
 	/**
+	 * Edit token should be checked before uploading image via URL
+	 *
+	 * @see PLATFORM-1531
+	 *
+	 * @return bool true, continue hook processing
+	 */
+	public static function onUploadFromUrlReallyFetchFile() {
+		self::assertEditTokenWasChecked( __METHOD__ );
+		return true;
+	}
+
+	/**
+	 * Edit token should be checked before uploading a file
+	 *
+	 * @return bool true, continue hook processing
+	 */
+	public static function onUploadComplete() {
+		self::assertEditTokenWasChecked( __METHOD__ );
+		return true;
+	}
+
+	/**
 	 * Assert that User::matchEditToken was called in this request
 	 *
 	 * @param string $fname the caller name
