@@ -79,27 +79,21 @@ class SetGlobalBasedOnWam extends Maintenance {
 		}
 		$varId = (int)$varData->cv_id;
 
+		$success = $fail = [ ];
+
 		foreach ( $wikiIdsToConvert as $wikiId ) {
 			$this->output( "Setting {$var} to {$varValue} for wikiId={$wikiId}\n\n" );
 
 			if ( !$dry ) {
-				WikiFactory::setVarById( $varId, $wikiId, $varValue );
-			}
-		}
-
-		if ( !$dry ) {
-			$this->output( "All done! Let's validate the result...\n\n" );
-
-			$success = $fail = [ ];
-
-			foreach ( $wikiIdsToConvert as $wikiId ) {
-				if ( WikiFactory::getVarValueByName( $var, $wikiId ) === $varValue ) {
+				if ( WikiFactory::setVarById( $varId, $wikiId, $varValue ) ) {
 					$success[] = $wikiId;
 				} else {
 					$fail[] = $wikiId;
 				}
 			}
+		}
 
+		if ( !$dry ) {
 			$countFailed = count( $fail );
 			if ( $countFailed === 0 ) {
 				$this->output( "Results verified! {$count} wikias have {$var}={$varValue}.\n\n" );
