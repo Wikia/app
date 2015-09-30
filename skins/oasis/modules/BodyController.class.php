@@ -543,7 +543,7 @@ class BodyController extends WikiaController {
 		// extra logic for subpages (RT #74091)
 		if ( !empty( $this->subtitle ) ) {
 			switch ( $namespace ) {
-				// for user subpages add link to theirs talk pages
+				// for user subpages add link to their talk pages
 				case NS_USER:
 					$talkPage = $wg->Title->getTalkPage();
 
@@ -573,11 +573,10 @@ class BodyController extends WikiaController {
 		}
 
 		// bugid-70243: optionally hide navigation h1s for SEO
-		$this->setVal( 'displayHeader', !$wg->HideNavigationHeaders );
+		$this->displayHeader = !$wg->HideNavigationHeaders;
 
-		if ( $wg->EnableSeoTestingExt ) {
-			$this->setVal( 'seoTestOneH1', SeoTesting::getGroup('One_H1') === 2 );
-		}
+		$this->seoTestOneH1 = $wg->EnableSeoTestingExt &&
+			SeoTesting::getGroup( 'One_H1' ) === 2;
 
 		wfProfileOut(__METHOD__);
 	}

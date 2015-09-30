@@ -1,10 +1,8 @@
-<? if ( $displayHeader ): ?>
-	<? if ( $seoTestOneH1 ): ?>
-		<h2><?= wfMessage( 'oasis-global-page-header' )->escaped() ?></h2>
-	<? else: ?>
-		<h1><?= wfMessage( 'oasis-global-page-header' )->escaped() ?></h1>
-	<? endif; ?>
-<? endif; ?>
+<?php if ( $displayHeader ) { ?>
+	<?= $seoTestOneH1 ? '<h2>' : '<h1>' ?>
+		<?= wfMessage( 'oasis-global-page-header' )->escaped() ?>
+	<?= $seoTestOneH1 ? '</h2>' : '</h1>' ?>
+<?php } ?>
 <div class="skiplinkcontainer">
 	<a class="skiplink" rel="nofollow" href="#WikiaArticle">
 		<?= wfMessage( 'oasis-skip-to-content' )->escaped() ?>
