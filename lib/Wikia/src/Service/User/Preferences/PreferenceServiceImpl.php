@@ -11,14 +11,12 @@ use Wikia\Util\WikiaProfiler;
 
 class PreferenceServiceImpl implements PreferenceService {
 
-	use WikiaProfiler;
 	use Loggable;
 
 	const CACHE_PROVIDER = "user_preferences_cache_provider";
 	const HIDDEN_PREFS = "user_preferences_hidden_prefs";
 	const DEFAULT_PREFERENCES = "user_preferences_default_prefs";
 	const FORCE_SAVE_PREFERENCES = "user_preferences_force_save_prefs";
-	const PROFILE_EVENT = \Transaction::EVENT_USER_PREFERENCES;
 
 	/** @var CacheProvider */
 	private $cache;
@@ -159,14 +157,7 @@ class PreferenceServiceImpl implements PreferenceService {
 
 		if ( !$prefsToSave->isEmpty() ) {
 			try {
-				$profilerStart = $this->startProfile();
 				$result = $this->persistence->save( $userId, $prefsToSave );
-				$this->endProfile(
-					self::PROFILE_EVENT,
-					$profilerStart,
-					[
-						'user_id' => $userId,
-						'method' => 'setPreferences', ] );
 				$this->saveToCache( $userId, $prefsToSave );
 
 				return $result;
@@ -210,14 +201,7 @@ class PreferenceServiceImpl implements PreferenceService {
 
 			if ( !$preferences ) {
 				try {
-					$profilerStart = $this->startProfile();
 					$preferences = $this->persistence->get( $userId );
-					$this->endProfile(
-						self::PROFILE_EVENT,
-						$profilerStart,
-						[
-							'user_id' => $userId,
-							'method' => 'getPreferences', ] );
 				} catch ( \Exception $e ) {
 					$this->error( $e->getMessage(), ['user' => $userId] );
 					throw $e;
