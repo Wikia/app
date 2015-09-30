@@ -5,28 +5,38 @@
  */
 $(function () {
 	'use strict';
-	if ( window.wgGoogleSearchTest ) {
-		var searchId = window.wgGoogleSearchParam;
-		$.loadGoogleSearchAPI(searchId);
-
-		$('#searchForm').submit( function (evt) {
-			var contentLang = window.wgContentLanguage || 'en',
-				searchQuery = $('#searchInput').val(),
-				$googleInput = $('.gsc-input'),
-				$googleButton = $('.gsc-search-button'),
-				$selectElement = $('#searchSelect'),
-				$selectedOption = $selectElement.find('option:selected');
-
-			evt.preventDefault();
-
-			//get info of local or global and modify query scope
-			if ($selectedOption.val() === 'local') {
-				searchQuery += ' site:' + window.location.hostname;
-			}
-
-			//Invoke google search
-			$googleInput.val(searchQuery);
-			$googleButton.trigger('click');
-		});
+	if ( !window.wgGoogleSearchTest ) {
+		return;
 	}
+
+    var wikiaSite = $('.WikiaSiteWrapper'),
+        searchId = window.wgGoogleSearchParam;
+
+	//The html class is defined in Oasis_Index.php. Better check if it exists.
+	if ( wikiaSite.length === 0 ) {
+		return;
+	}
+
+	wikiaSite.before('<gcse:search></gcse:search>');
+	$.loadGoogleSearchAPI(searchId);
+
+	$('#searchForm').submit( function (evt) {
+		var contentLang = window.wgContentLanguage || 'en',
+			searchQuery = $('#searchInput').val(),
+			$googleInput = $('.gsc-input'),
+			$googleButton = $('.gsc-search-button'),
+			$selectElement = $('#searchSelect'),
+			$selectedOption = $selectElement.find('option:selected');
+
+		evt.preventDefault();
+
+		//get info of local or global and modify query scope
+		if ($selectedOption.val() === 'local') {
+			searchQuery += ' site:' + window.location.hostname;
+		}
+
+		//Invoke google search
+		$googleInput.val(searchQuery);
+		$googleButton.trigger('click');
+	});
 });
