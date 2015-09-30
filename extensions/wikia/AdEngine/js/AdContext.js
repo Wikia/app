@@ -61,7 +61,7 @@ define('ext.wikia.adEngine.adContext', [
 				geo.isProperGeo(instantGlobals.wgAdDriverSourcePointDetectionCountries));
 			context.opts.sourcePointDetectionMobile = isUrlParamSet('sourcepointdetection') ||
 				(context.targeting.skin === 'mercury' &&
-				geo.isProperGeo(instantGlobals.wgAdDriverSourcePointDetectionCountries));
+				geo.isProperGeo(instantGlobals.wgAdDriverSourcePointDetectionMobileCountries));
 		}
 
 		// SourcePoint integration
@@ -91,11 +91,11 @@ define('ext.wikia.adEngine.adContext', [
 				(context.targeting.pageType === 'article' || context.targeting.pageType === 'home');
 		}
 
-		if (isProperCountry(instantGlobals.wgAdDriverTurtleCountries)) {
+		if (geo.isProperGeo(instantGlobals.wgAdDriverTurtleCountries)) {
 			context.providers.turtle = true;
 		}
 
-		if (isProperCountry(instantGlobals.wgAdDriverOpenXCountries)) {
+		if (geo.isProperGeo(instantGlobals.wgAdDriverOpenXCountries)) {
 			context.providers.openX = true;
 		}
 
