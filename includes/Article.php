@@ -221,7 +221,7 @@ class Article extends Page {
 			// Wikia: Temporary Investigation for PLATFORM-1355
 			if(empty($this->mContent)) {
 					global $wgCityId;
-					WikiaLogger::instance()->error( __METHOD__ . ' empty content PLAT1355', [
+					Wikia\Logger\WikiaLogger::instance()->error( __METHOD__ . ' empty content PLAT1355', [
 						'wiki_id' => $wgCityId,
 						'page_id' => $this->mPage->getID()
 				] );
