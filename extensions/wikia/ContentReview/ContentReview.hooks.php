@@ -24,19 +24,9 @@ class Hooks {
 		global $wgCityId, $wgTitle, $wgUser;
 
 		if ( ( new Helper() )->userCanEditJsPage( $wgTitle, $wgUser ) ) {
-			$pageStatus = \F::app()->sendRequest(
-				'ContentReviewApiController',
-				'getPageStatus',
-				[
-					'wikiId' => $wgCityId,
-					'pageId' => $wgTitle->getArticleID(),
-				],
-				true
-			)->getData();
-
 			$railModuleList[1403] = [ 'ContentReviewModule', 'Render', [
-				'pageStatus' => $pageStatus,
-				'latestRevisionId' => $wgTitle->getLatestRevID(),
+				'wikiId' => $wgCityId,
+				'pageId' => $wgTitle->getArticleID(),
 			] ];
 		}
 

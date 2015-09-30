@@ -15,9 +15,9 @@
 		<?php foreach( $jsPages as $page ): ?>
 			<tr>
 				<td><?= $page['pageLink'] ?></td>
-				<td><?= $page['latestRevision']['diffLink'] . $page['latestRevision']['statusMsg'] . $page['latestRevision']['reasonLink'] ?></td>
-				<td><?= $page['latestReviewed']['diffLink'] . $page['latestReviewed']['statusMsg'] . $page['latestReviewed']['reasonLink'] ?></td>
-				<td><?= $page['liveRevision']['diffLink'] . $page['liveRevision']['statusMsg'] ?></td>
+				<td><?= $page['latestRevision']['diffLink'] . $page['latestRevision']['message'] . $page['latestRevision']['reasonLink'] ?></td>
+				<td><?= $page['latestReviewed']['diffLink'] . $page['latestReviewed']['message'] . $page['latestReviewed']['reasonLink'] ?></td>
+				<td><?= $page['liveRevision']['diffLink'] . $page['liveRevision']['message'] ?></td>
 				<td><?= $page['submit'] ?></td>
 			</tr>
 		<?php endforeach; ?>
