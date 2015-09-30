@@ -1286,6 +1286,8 @@ class FauxRequest extends WebRequest {
 	 * @return bool
 	 */
 	public function wasPosted() {
+		wfRunHooks( 'WebRequestWasPosted' ); # Wikia change
+
 		return $this->wasPosted;
 	}
 

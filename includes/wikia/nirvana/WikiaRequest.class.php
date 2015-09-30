@@ -186,6 +186,8 @@ class WikiaRequest {
 	 * @return bool
 	 */
 	public function wasPosted() {
+		wfRunHooks( 'WikiaRequestWasPosted' );
+
 		return isset( $_SERVER['REQUEST_METHOD'] ) && $_SERVER['REQUEST_METHOD'] == 'POST';
 	}
 

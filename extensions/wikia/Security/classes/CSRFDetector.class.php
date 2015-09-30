@@ -10,7 +10,10 @@ use Wikia\Logger\WikiaLogger;
  * @see PLATFORM-1540
  */
 class CSRFDetector {
+
+	// flags to be checked when performing certain actions
 	private static $userMatchEditTokenCalled = false;
+	private static $requestWasPostedCalled = false;
 
 	/**
 	 * Set a flag when User::matchEditToken is called
@@ -23,15 +26,25 @@ class CSRFDetector {
 	}
 
 	/**
-	 * Edit token should be checked before a revision is inserted
+	 * Set a flag when WebRequest::wasPosted or WikiaRequest::wasPosted is called
 	 *
-	 * @param \Revision $revision
-	 * @param $data
-	 * @param $flags
 	 * @return bool true, continue hook processing
 	 */
-	public static function onRevisionInsertComplete( \Revision $revision, $data, $flags ) {
-		self::assertEditTokenWasChecked( __METHOD__ );
+	public static function onRequestWasPosted() {
+		self::$requestWasPostedCalled = true;
+		return true;
+	}
+
+
+	/**
+	 * Edit token should be checked before a revision is inserted
+	 *
+	 * @see MAIN-5465
+	 *
+	 * @return bool true, continue hook processing
+	 */
+	public static function onRevisionInsertComplete() {
+		self::assertEditTokenAndMethodWereChecked( __METHOD__ );
 		return true;
 	}
 
@@ -43,7 +56,7 @@ class CSRFDetector {
 	 * @return bool true, continue hook processing
 	 */
 	public static function onUploadFromUrlReallyFetchFile() {
-		self::assertEditTokenWasChecked( __METHOD__ );
+		self::assertEditTokenAndMethodWereChecked( __METHOD__ );
 		return true;
 	}
 
@@ -53,24 +66,42 @@ class CSRFDetector {
 	 * @return bool true, continue hook processing
 	 */
 	public static function onUploadComplete() {
-		self::assertEditTokenWasChecked( __METHOD__ );
+		self::assertEditTokenAndMethodWereChecked( __METHOD__ );
 		return true;
 	}
 
 	/**
-	 * Assert that User::matchEditToken was called in this request
+	 * Edit token should be checked before saving user settings
+	 *
+	 * @see CE-1224
+	 *
+	 * @return bool true, continue hook processing
+	 */
+	public static function onUserSaveSettings() {
+		self::assertEditTokenAndMethodWereChecked( __METHOD__ );
+		return true;
+	}
+
+	/**
+	 * Assert that edit token and HTTP method were checked in this request
+	 *
+	 * @see https://kibana.wikia-inc.com/#/dashboard/elasticsearch/PLATFORM-1540
 	 *
 	 * @param string $fname the caller name
 	 */
-	private static function assertEditTokenWasChecked( $fname ) {
-		$request = \RequestContext::getMain()->getRequest();
+	private static function assertEditTokenAndMethodWereChecked( $fname ) {
+		// filter out maintenance scripts
+		if ( \RequestContext::getMain()->getRequest() instanceof \FauxRequest ) {
+			return;
+		}
 
-		# check the request against WebRequest to filter out maintenance scripts
-		if ( get_class( $request ) === \WebRequest::class && self::$userMatchEditTokenCalled === false ) {
-			wfDebug( __METHOD__ . ": {$fname} called, but edit token was not checked\n" );
+		if ( self::$userMatchEditTokenCalled === false || self::$requestWasPostedCalled == false ) {
+			wfDebug( __METHOD__ . ": {$fname} called, but edit token and / or HTTP method was not checked\n" );
 
 			WikiaLogger::instance()->warning( __METHOD__, [
 				'caller' => $fname,
+				'editTokenChecked' => self::$userMatchEditTokenCalled,
+				'httpMethodChecked' => self::$requestWasPostedCalled,
 				'exception' => new Exception(),
 			] );
 		}
