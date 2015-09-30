@@ -8,10 +8,6 @@ class WikiaInYourLangController extends WikiaController {
 
 	const WIKIAINYOURLANG_WIKIA_DOMAIN = 'wikia.com';
 
-	public function init() {
-//		this is null, app is there.
-//		var_dump($this->app->getSkinTemplateObj()->data['language_urls']);exit();
-	}
 	/**
 	 * Searches the city_list table for the given wikia in the target language.
 	 * Takes the currentUrl and targetLanguage parameters from the Request object.
