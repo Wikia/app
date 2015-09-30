@@ -105,7 +105,7 @@ class MercuryApi {
 	 */
 	public function getWikiVariables() {
 		global $wgSitename, $wgCacheBuster, $wgDBname, $wgDefaultSkin, $wgDisableAnonymousEditing,
-			   $wgLang, $wgLanguageCode, $wgContLang, $wgCityId, $wgEnableNewAuth, $wgDisableAnonymousUploadForMercury;
+			   $wgLanguageCode, $wgContLang, $wgCityId, $wgEnableNewAuth, $wgDisableAnonymousUploadForMercury;
 
 		return [
 			'cacheBuster' => (int) $wgCacheBuster,
@@ -117,7 +117,6 @@ class MercuryApi {
 			'homepage' => $this->getHomepageUrl(),
 			'id' => (int) $wgCityId,
 			'language' => [
-				'user' => $wgLang->getCode(),
 				'userDir' => SassUtil::isRTL() ? 'rtl' : 'ltr',
 				'content' => $wgLanguageCode,
 				'contentDir' => $wgContLang->getDir()
