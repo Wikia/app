@@ -1,18 +1,9 @@
 <?php
 
 use Wikia\ContentReview\Helper;
-use Wikia\ContentReview\Models\ReviewModel;
 use Wikia\ContentReview\ContentReviewStatusesService;
 
 class ContentReviewModuleController extends WikiaController {
-
-	const STATUS_NONE = 'none';
-	const STATUS_LIVE = 'live';
-	const STATUS_AWAITING = 'awaiting';
-	const STATUS_REJECTED = 'rejected';
-	const STATUS_APPROVED = 'approved';
-	const STATUS_UNSUBMITTED = 'unsubmitted';
-
 	const STATUS_TEMPLATE_PATH = 'extensions/wikia/ContentReview/templates/ContentReviewModuleStatus.mustache';
 	const STATUS_MODULE_TEMPLATE_PATH =
 		'extensions/wikia/ContentReview/controllers/templates/ContentReviewModule.mustache';
@@ -48,7 +39,10 @@ class ContentReviewModuleController extends WikiaController {
 		$this->setVal( 'latestStatus', MustacheService::getInstance()->render(
 			self::STATUS_TEMPLATE_PATH, $pageStatus['latestRevision']
 		) );
-		$this->setVal( 'displaySubmit', $pageStatus['latestRevision']['statusKey'] === self::STATUS_UNSUBMITTED );
+		$this->setVal(
+			'displaySubmit',
+			$pageStatus['latestRevision']['statusKey'] === ContentReviewStatusesService::STATUS_UNSUBMITTED
+		);
 
 		/**
 		 * Last reviewed status
