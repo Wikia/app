@@ -25,7 +25,7 @@ define('wikia.importScript', ['wikia.importScriptHelper', 'wikia.window'], funct
 
 		for (var i = 0; i < articles.length; i++) {
 			if (!importScriptHelper.isJsPage(articles[i])) {
-				articlesFailed.push(namespacePrefix + articles[i]);
+				articlesFailed.push(importScriptHelper.getNamespacePrefix() + articles[i]);
 				continue;
 			}
 			if (importScriptHelper.isLocal(articles[i])) {
