@@ -134,17 +134,22 @@ class FlagsApiController extends FlagsApiBaseController {
 	public function addFlagsToPage() {
 		$this->processRequest();
 		$this->validatePageId();
-		$this->checkUserEditPermissions( $this->params['page_id'], $this->params['wiki_id'] );
 
+		$pageId = $this->params['page_id'];
+		$wikiId = $this->params['wiki_id'];
+		$this->checkUserEditPermissions( $pageId, $wikiId );
+
+		$flags = $this->params['flags'];
 		$flagModel = new Flag();
 		$modelResponse = $flagModel->addFlagsToPage( $this->params );
 
-		$this->getCache()->purgeFlagsForPage( $this->params['page_id'] );
-		$this->purgeFlaggedPages( $this->params['flags'] );
-		$this->purgeFlagInsights( $this->params['flags'] );
+		$this->getCache()->purgeFlagsForPage( $pageId );
+
+		$this->purgeFlaggedPages( $flags );
+		$this->purgeFlagInsights( $flags );
 
 		$this->makeSuccessResponse( $modelResponse );
-		$this->logFlagChange( $this->params['flags'], $this->params['wiki_id'], $this->params['page_id'], self::LOG_ACTION_FLAG_ADDED );
+		$this->logFlagChange( $flags, $wikiId, $pageId, self::LOG_ACTION_FLAG_ADDED );
 	}
 
 	/**
@@ -158,17 +163,22 @@ class FlagsApiController extends FlagsApiBaseController {
 	public function removeFlagsFromPage() {
 		$this->processRequest();
 		$this->validatePageId();
-		$this->checkUserEditPermissions( $this->params['page_id'], $this->params['wiki_id'] );
+
+		$pageId = $this->params['page_id'];
+		$wikiId = $this->params['wiki_id'];
+		$this->checkUserEditPermissions( $pageId, $wikiId );
+
+		$flags = $this->params['flags'];
 
 		$flagModel = new Flag();
-		$modelResponse = $flagModel->removeFlagsFromPage( $this->params['flags'] );
+		$modelResponse = $flagModel->removeFlagsFromPage( $flags );
 
-		$this->getCache()->purgeFlagsForPage( $this->params['page_id'] );
-		$this->purgeFlaggedPages( $this->params['flags'] );
-		$this->purgeFlagInsights( $this->params['flags'], $this->params['page_id'] );
+		$this->getCache()->purgeFlagsForPage( $pageId );
+		$this->purgeFlaggedPages( $flags );
+		$this->purgeFlagInsights( $flags, $pageId );
 
 		$this->makeSuccessResponse( $modelResponse );
-		$this->logFlagChange( $this->params['flags'], $this->params['wiki_id'], $this->params['page_id'], self::LOG_ACTION_FLAG_REMOVED );
+		$this->logFlagChange( $flags, $wikiId, $pageId, self::LOG_ACTION_FLAG_REMOVED );
 	}
 
 	/**
@@ -185,21 +195,26 @@ class FlagsApiController extends FlagsApiBaseController {
 	public function updateFlagsForPage() {
 		$this->processRequest();
 		$this->validatePageId();
-		$this->checkUserEditPermissions( $this->params['page_id'], $this->params['wiki_id'] );
+
+		$pageId = $this->params['page_id'];
+		$wikiId = $this->params['wiki_id'];
+		$this->checkUserEditPermissions( $pageId, $wikiId );
+
+		$flags = $this->params['flags'];
 
 		$oldFlags = $this->app->sendRequest(
 			'FlagsApiController',
 			'getFlagsForPage',
-			[ 'page_id' => $this->params['page_id'] ]
+			[ 'page_id' => $pageId ]
 		)->getData();
 
 		$flagModel = new Flag();
-		$modelResponse = $flagModel->updateFlagsForPage( $this->params['flags'] );
+		$modelResponse = $flagModel->updateFlagsForPage( $flags );
 
-		$this->getCache()->purgeFlagsForPage( $this->params['page_id'] );
+		$this->getCache()->purgeFlagsForPage( $pageId );
 
 		$this->makeSuccessResponse( $modelResponse );
-		$this->logParametersChange( $oldFlags, $this->params['flags'], $this->params['wiki_id'], $this->params['page_id'] );
+		$this->logParametersChange( $oldFlags, $flags, $wikiId, $pageId );
 	}
 
 	/**
