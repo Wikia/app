@@ -11,6 +11,8 @@ class ContributeController extends WikiaController {
 	 * Method for the contribute sidebar module
 	 */
 	public function index() {
+		$this->overrideTemplate( 'Index' );
+
 		$this->response->addAsset( 'skins/oasis/css/modules/ContributeModule.scss' );
 
 		$this->tally = wfMessage( 'oasis-total-articles-mainpage' )
