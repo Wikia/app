@@ -76,6 +76,10 @@ define('ext.wikia.adEngine.slot.scrollHandler', [
 		var el = doc.getElementById(slotName),
 			offset = 0;
 
+		if (el == null) {
+			return false;
+		}
+
 		if (config[slotName].trigger === 'scroll.bottom') {
 			offset = el.offsetHeight;
 		}
