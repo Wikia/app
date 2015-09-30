@@ -4,6 +4,7 @@
  * Unit tests for TransactionClassifier
  *
  * @author macbre
+ * @group TransactionClassifier
  */
 class TransactionClassifierTest extends WikiaBaseTest {
 
@@ -82,6 +83,18 @@ class TransactionClassifierTest extends WikiaBaseTest {
 			],
 			[
 				'attributes' => [
+					Transaction::PARAM_ENTRY_POINT => Transaction::ENTRY_POINT_PAGE,
+					Transaction::PARAM_NAMESPACE => NS_MAIN,
+					Transaction::PARAM_ACTION => TransactionClassifier::ACTION_VIEW,
+					Transaction::PARAM_SKIN => 'foo-skin',
+					Transaction::PARAM_PARSER_CACHE_DISABLED => true,
+					Transaction::PARAM_DPL => true,
+					Transaction::PARAM_USER_ATTRIBUTES => true
+				],
+				'expectedName' => 'page/main/view/foo-skin/parser_cache_disabled/dpl/user_attributes'
+			],
+			[
+				'attributes' => [
 					Transaction::PARAM_ENTRY_POINT => Transaction::ENTRY_POINT_NIRVANA,
 					Transaction::PARAM_CONTROLLER => 'SearchSuggestionsApi',
 				],
@@ -92,7 +105,15 @@ class TransactionClassifierTest extends WikiaBaseTest {
 					Transaction::PARAM_ENTRY_POINT => Transaction::ENTRY_POINT_NIRVANA,
 					Transaction::PARAM_CONTROLLER => 'Places',
 				],
-				'expectedName' => 'api/nirvana/other'
+				'expectedName' => 'api/nirvana/Places'
+			],
+			[
+				'attributes' => [
+					Transaction::PARAM_ENTRY_POINT => Transaction::ENTRY_POINT_NIRVANA,
+					Transaction::PARAM_CONTROLLER => 'ImageServing',
+					Transaction::PARAM_METHOD => 'getImages',
+				],
+				'expectedName' => 'api/nirvana/ImageServing'
 			],
 		];
 	}

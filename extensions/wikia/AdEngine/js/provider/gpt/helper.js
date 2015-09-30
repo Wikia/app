@@ -1,39 +1,56 @@
 /*global define, setTimeout, require*/
 /*jshint maxlen:125, camelcase:false, maxdepth:7*/
 define('ext.wikia.adEngine.provider.gpt.helper', [
+	'wikia.document',
 	'wikia.log',
+	'wikia.window',
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adLogicPageParams',
 	'ext.wikia.adEngine.provider.gpt.adDetect',
 	'ext.wikia.adEngine.provider.gpt.adElement',
 	'ext.wikia.adEngine.provider.gpt.googleTag',
+	'ext.wikia.adEngine.recovery.helper',
 	'ext.wikia.adEngine.slotTweaker',
-	require.optional('ext.wikia.adEngine.provider.gpt.sourcePointTag'),
 	require.optional('ext.wikia.adEngine.provider.gpt.sraHelper'),
 	require.optional('ext.wikia.adEngine.slot.scrollHandler')
 ], function (
+	doc,
 	log,
+	window,
 	adContext,
 	adLogicPageParams,
 	adDetect,
 	AdElement,
 	GoogleTag,
+	recoveryHelper,
 	slotTweaker,
-	SourcePointTag,
 	sraHelper,
 	scrollHandler
 ) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.gpt.helper',
-		context = adContext.getContext(),
-		googleApi;
+		googleApi = new GoogleTag(),
+		sourcePointInitialized = false;
 
-	if (context.opts.sourcePoint) {
-		log('SourcePoint enabled', 'debug', logGroup);
-		googleApi = new SourcePointTag();
-	} else {
-		googleApi = new GoogleTag();
+	function loadRecovery() {
+		if (sourcePointInitialized) {
+			return;
+		}
+		log('SourcePoint recovery enabled', 'debug', logGroup);
+		sourcePointInitialized = true;
+		googleApi = recoveryHelper.createSourcePointTag();
+		recoveryHelper.recoverSlots();
+	}
+
+	function loadSourcePoint() {
+		if (recoveryHelper.isBlocking()) {
+			loadRecovery();
+		} else {
+			recoveryHelper.addOnBlockingCallback(function () {
+				loadRecovery();
+			});
+		}
 	}
 
 	/**
@@ -51,7 +68,10 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	 */
 	function pushAd(slotName, slotElement, slotPath, slotTargeting, extra) {
 		var count,
-			element;
+			element,
+			recoverableSlots = extra.recoverableSlots || [],
+			shouldPush = !recoveryHelper.isBlocking() ||
+				(recoveryHelper.isBlocking() && recoveryHelper.isRecoverable(slotName, recoverableSlots));
 
 		extra = extra || {};
 		slotTargeting = JSON.parse(JSON.stringify(slotTargeting)); // copy value
@@ -67,8 +87,12 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 
 		function callSuccess(adInfo) {
 			if (adInfo && adInfo.adType === 'collapse') {
-				slotTweaker.hide(slotName);
+				slotTweaker.hide(
+					element.getSlotName(),
+					recoveryHelper.isBlocking() && recoveryHelper.isRecoveryEnabled()
+				);
 			}
+
 			if (typeof extra.success === 'function') {
 				extra.success(adInfo);
 			}
@@ -106,8 +130,21 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 		}
 
 		if (!googleApi.isInitialized()) {
-			googleApi.init();
+			if (recoveryHelper.isRecoveryEnabled()) {
+				googleApi.init(loadSourcePoint);
+			} else {
+				googleApi.init();
+			}
 			googleApi.setPageLevelParams(adLogicPageParams.getPageLevelParams());
+		}
+
+		if (!shouldPush) {
+			log(['Push blocked', slotName], 'debug', logGroup);
+			return;
+		}
+
+		if (!recoveryHelper.isBlocking() && recoveryHelper.isRecoveryEnabled()) {
+			recoveryHelper.addSlotToRecover(slotName);
 		}
 
 		log(['pushAd', slotName], 'info', logGroup);

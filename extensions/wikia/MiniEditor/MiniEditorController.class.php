@@ -4,11 +4,7 @@ class MiniEditorController extends WikiaController {
 
 	// Should be called once for any extension that wants to use MiniEditor
 	public function Setup() {
-		if ( F::app()->checkSkin( 'venus' ) ) {
-			VenusController::addBodyClass('MiniEditor');
-		} else {
-			OasisController::addBodyClass('MiniEditor');
-		}
+		OasisController::addBodyClass('MiniEditor');
 	}
 
 	/**

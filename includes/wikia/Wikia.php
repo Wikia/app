@@ -63,6 +63,7 @@ $wgHooks['TitleGetLangVariants'][] = 'Wikia::onTitleGetLangVariants';
 $wgHooks['LocalFilePurgeThumbnailsUrls'][] = 'Wikia::onLocalFilePurgeThumbnailsUrls';
 
 $wgHooks['BeforePageDisplay'][] = 'Wikia::onBeforePageDisplay';
+$wgHooks['GetPreferences'][] = 'Wikia::onGetPreferences';
 
 /**
  * This class has only static methods so they can be used anywhere
@@ -1583,16 +1584,37 @@ class Wikia {
 		return true;
 	}
 
+	static public function getEnvironmentRobotPolicy(WebRequest $request) {
+		global $wgDevelEnvironment, $wgStagingEnvironment, $wgDefaultRobotPolicy;
+
+		$policy = '';
+
+		if( !empty( $wgDevelEnvironment ) || !empty( $wgStagingEnvironment ) ) {
+			$policy = $wgDefaultRobotPolicy;
+		}
+
+		$stagingHeader = $request->getHeader('X-Staging');
+
+		if( !empty($stagingHeader) ) {
+			// we've got special cases like externaltest.* and showcase.* aliases:
+			// https://github.com/Wikia/wikia-vcl/blob/master/wikia.com/control-stage.vcl#L15
+			// those cases for backend look like production,
+			// therefore we don't want to base only on environment variables
+			// but on HTML headers as well, see:
+			// https://github.com/Wikia/app/blob/dev/redirect-robots.php#L285
+			$policy = 'noindex,nofollow';
+		}
+		return $policy;
+	}
+
 	/**
 	 * Add variables to SkinTemplate
 	 */
 	static public function onSkinTemplateOutputPageBeforeExec(SkinTemplate $skinTemplate, QuickTemplate $tpl) {
-		global $wgDevelEnvironment, $wgStagingEnvironment, $wgDefaultRobotPolicy;
 		wfProfileIn(__METHOD__);
 
 		$out = $skinTemplate->getOutput();
 		$title = $skinTemplate->getTitle();
-		$stagingHeader = $skinTemplate->getRequest()->getHeader('X-Staging');
 
 		# quick hack for rt#15730; if you ever feel temptation to add 'elseif' ***CREATE A PROPER HOOK***
 		if (($title instanceof Title) && NS_CATEGORY == $title->getNamespace()) { // FIXME
@@ -1603,18 +1625,9 @@ class Wikia {
 		$tpl->set( 'thisurl', $title->getPrefixedURL() );
 		$tpl->set( 'thisquery', $skinTemplate->thisquery );
 
-		if( !empty( $wgDevelEnvironment ) || !empty( $wgStagingEnvironment ) ) {
-			$out->setRobotPolicy( $wgDefaultRobotPolicy );
-		}
-
-		if( !empty($stagingHeader) ) {
-		// we've got special cases like externaltest.* and showcase.* aliases:
-		// https://github.com/Wikia/wikia-vcl/blob/master/wikia.com/control-stage.vcl#L15
-		// those cases for backend look like production,
-		// therefore we don't want to base only on environment variables
-		// but on HTML headers as well, see:
-		// https://github.com/Wikia/app/blob/dev/redirect-robots.php#L285
-			$out->setRobotPolicy( 'noindex,nofollow' );
+		$robotPolicy = Wikia::getEnvironmentRobotPolicy( $skinTemplate->getRequest() );
+		if ( !empty( $robotPolicy ) ) {
+			$out->setRobotPolicy( $robotPolicy );
 		}
 
 		wfProfileOut(__METHOD__);
@@ -1640,8 +1653,15 @@ class Wikia {
 
 		$wgUseSiteJs = $wgUseSiteJs && $request->getBool( 'usesitejs', $wgUseSiteJs ) !== false;
 		$wgUseSiteCss = $wgUseSiteCss && $request->getBool( 'usesitecss', $wgUseSiteCss ) !== false;
-		$wgAllowUserJs = $wgAllowUserJs && $request->getBool( 'useuserjs',
-			$request->getBool( 'allowuserjs', $wgAllowUserJs ) ) !== false;
+
+		// Don't enable user JS unless explicitly enabled by the user (CE-2509)
+		if ( !$user->getGlobalPreference( 'enableuserjs', false ) ) {
+			$wgAllowUserJs = false;
+		} else {
+			$wgAllowUserJs = $wgAllowUserJs && $request->getBool( 'useuserjs',
+				$request->getBool( 'allowuserjs', $wgAllowUserJs ) ) !== false;
+		}
+
 		$wgAllowUserCss = $wgAllowUserCss && $request->getBool( 'useusercss',
 			$request->getBool( 'allowusercss', $wgAllowUserCss ) ) !== false;
 		$wgBuckySampling = $request->getInt( 'buckysampling', $wgBuckySampling );
@@ -2276,7 +2296,7 @@ class Wikia {
 	 * return false stops permissions processing and we are totally decided (nothing later can override)
 	 */
 	static function canEditInterfaceWhitelist (&$title, &$wgUser, $action, &$result) {
-		global $wgEditInterfaceWhitelist;
+		global $wgEditInterfaceWhitelist, $wgEnableContentReviewExt;
 
 		// List the conditions we don't care about for early exit
 		if ( $action == "read" || $title->getNamespace() != NS_MEDIAWIKI || empty( $wgEditInterfaceWhitelist )) {
@@ -2289,7 +2309,10 @@ class Wikia {
 		}
 
 		// In this NS, editinterface applies only to white listed pages
-		if (in_array($title->getDBKey(), $wgEditInterfaceWhitelist)) {
+		if ( in_array( $title->getDBKey(), $wgEditInterfaceWhitelist )
+			|| $title->isCssPage()
+			|| ( !empty( $wgEnableContentReviewExt ) && $title->isJsPage() )
+		) {
 			return $wgUser->isAllowed('editinterface');
 		}
 
@@ -2349,6 +2372,22 @@ class Wikia {
 			);
 		}
 
+		return true;
+	}
+
+	/**
+	 * Add a preference for enabling personal JavaScript.
+	 *
+	 * @param  User    $user        The current user.
+	 * @param  array   $preferences The preferences array.
+	 * @return boolean
+	 */
+	public static function onGetPreferences( User $user, array &$preferences ) {
+		$preferences['enableuserjs'] = array(
+			'type' => 'toggle',
+			'label-message' => 'tog-enableuserjs',
+			'section' => 'under-the-hood/advanced-displayv2',
+		);
 		return true;
 	}
 }

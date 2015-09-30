@@ -33,23 +33,6 @@ class TransactionClassifier {
 		'Newimages',
 		'Videos',
 	);
-	protected static $FILTER_NIRVANA_CONTROLLERS = array(
-		'Rail',
-		//'RelatedPagesApi', moved to api/v1
-		'VideosModule',
-		'ArticleComments',
-		'WallNotificationsController',
-		'JSMessages',
-		'WikiaSearchIndexer',
-		'LatestActivity',
-
-		// controllers used by Mobile Apps (PLATFORM-1177)
-		'SpecialVideosSpecial',
-		'GameGuides',
-		'SearchApi',
-		'VideoHandler',
-		'SearchSuggestionsApi',
-	);
 
 	protected static $FILTER_AJAX_FUNCTIONS = array(
 		'getLinkSuggest',
@@ -88,6 +71,10 @@ class TransactionClassifier {
 	protected static $MAP_DPL = array(
 		true => 'dpl',
 	);
+
+	protected static $MAP_USER_ATTRIBUTES = [
+		true => 'user_attributes'
+	];
 
 	protected $dependencies = array( Transaction::PARAM_ENTRY_POINT );
 	protected $attributes = array();
@@ -138,8 +125,9 @@ class TransactionClassifier {
 				break;
 			// nirvana call - wikia.php
 			case Transaction::ENTRY_POINT_NIRVANA:
-				$this->addByList( Transaction::PARAM_CONTROLLER, self::$FILTER_NIRVANA_CONTROLLERS );
+				$this->add( Transaction::PARAM_CONTROLLER );
 				break;
+			// foo.wikia.com/api/v1 calls
 			case Transaction::ENTRY_POINT_API_V1:
 				$this->add( Transaction::PARAM_CONTROLLER );
 				break;
@@ -183,6 +171,9 @@ class TransactionClassifier {
 
 		// add "DPL was used" information
 		$this->addByMap( Transaction::PARAM_DPL, self::$MAP_DPL );
+
+		// add "user_attributes service was enabled" information
+		$this->addByMap( Transaction::PARAM_USER_ATTRIBUTES, self::$MAP_USER_ATTRIBUTES );
 
 		// add size category
 		if ( $this->add( Transaction::PARAM_SIZE_CATEGORY ) === null ) {

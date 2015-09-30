@@ -18,16 +18,22 @@ class PortableInfoboxRenderServiceHelperTest extends WikiaBaseTest {
 	 */
 	public function createWikiaFileHelperMock( $input ) {
 		$fileWidth = isset( $input[ 'fileWidth' ] ) ? $input[ 'fileWidth' ] : null;
+		$fileHeight = isset( $input[ 'fileHeight' ] ) ? $input[ 'fileHeight' ] : null;
 
 		$fileMock = $this->getMockBuilder('File')
 			->setConstructorArgs( [ 'TestFile' ] )
-			->setMethods( [ 'getWidth' ] )
+			->setMethods( [ 'getWidth', 'getHeight' ] )
 			->getMock();
 		$fileMock->expects($this->any())
 			->method( 'getWidth' )
 			->will( $this->returnValue( $fileWidth ) );
+		$fileMock->expects($this->any())
+			->method( 'getHeight' )
+			->will( $this->returnValue( $fileHeight ) );
 
 		$this->mockStaticMethod( 'WikiaFileHelper', 'getFileFromTitle', $fileMock );
+
+		return $fileMock;
 	}
 
 	/**
@@ -72,7 +78,8 @@ class PortableInfoboxRenderServiceHelperTest extends WikiaBaseTest {
 				'output' => [
 					'header' => 'test header',
 					'labels' => [ 'test label 1', 'test label 2' ],
-					'values' => [ 'test value 1', 'test value 2' ]
+					'values' => [ 'test value 1', 'test value 2' ],
+					'renderLabels' => true
 				],
 				'description' => 'Horizontal group data with header and two data tags'
 			],
@@ -95,7 +102,8 @@ class PortableInfoboxRenderServiceHelperTest extends WikiaBaseTest {
 				],
 				'output' => [
 					'labels' => [ 'test label 1', 'test label 2' ],
-					'values' => [ 'test value 1', 'test value 2' ]
+					'values' => [ 'test value 1', 'test value 2' ],
+					'renderLabels' => true
 				],
 				'description' => 'Horizontal group data without header'
 			],
@@ -125,9 +133,34 @@ class PortableInfoboxRenderServiceHelperTest extends WikiaBaseTest {
 				'output' => [
 					'header' => 'test header',
 					'labels' => [ '', 'test label 2' ],
-					'values' => [ 'test value 1', 'test value 2' ]
+					'values' => [ 'test value 1', 'test value 2' ],
+					'renderLabels' => true
 				],
 				'description' => 'Horizontal group data with empty label'
+			],
+			[
+				'input' => [
+					[
+						'type' => 'data',
+						'data' => [
+							'label' => '',
+							'value' => 'test value 1'
+						]
+					],
+					[
+						'type' => 'data',
+						'data' => [
+							'label' => '',
+							'value' => 'test value 2'
+						]
+					]
+				],
+				'output' => [
+					'labels' => [ '', '' ],
+					'values' => [ 'test value 1', 'test value 2' ],
+					'renderLabels' => false
+				],
+				'description' => 'Horizontal group data without labels'
 			],
 		];
 	}
@@ -240,7 +273,6 @@ class PortableInfoboxRenderServiceHelperTest extends WikiaBaseTest {
 	 * @param string $type
 	 * @param boolean $result
 	 * @param string $description
-	 * @param array $mockParams
 	 * @dataProvider testIsTypeSupportedInTemplatesDataProvider
 	 */
 	public function testIsTypeSupportedInTemplates( $type, $result, $description ) {
@@ -266,6 +298,133 @@ class PortableInfoboxRenderServiceHelperTest extends WikiaBaseTest {
 				'type' => 'invalidTestType',
 				'result' => false,
 				'description' => 'invalid data type'
+			]
+		];
+	}
+
+	/**
+	 * @desc test getAdjustedImageSize function. It should return the sizes we pass to transform function,
+	 * not the sizes we want image to have. transform adjusts the correct sizes,
+	 * that is creates thumbnail with sizes not bigger than passed, keeping the original aspect ratio.
+	 * 
+	 * @param $mockParams
+	 * @param $isWikiaMobile
+	 * @param $result
+	 * @param $description
+	 * @dataProvider testGetAdjustedImageSizeDataProvider
+	 */
+	public function testGetAdjustedImageSize( $mockParams, $isWikiaMobile, $result, $description ) {
+		$mock = $this->getMockBuilder( 'Wikia\PortableInfobox\Helpers\PortableInfoboxRenderServiceHelper' )
+			->setMethods( [ 'isWikiaMobile' ] )
+			->getMock();
+		$mock->expects( $this->any() )->method( 'isWikiaMobile' )->will( $this->returnValue( $isWikiaMobile ) );
+
+		$file = $this->createWikiaFileHelperMock( $mockParams );
+
+		$this->assertEquals(
+			$result,
+			$mock->getAdjustedImageSize( $file ),
+			$description
+		);
+	}
+
+	public function testGetAdjustedImageSizeDataProvider() {
+		return [
+			[
+				'mockParams' => [
+					'fileHeight' => 2000,
+					'fileWidth' => 3000
+				],
+				'isWikiaMobile' => false,
+				'result' => [
+					'height' => 500,
+					'width' => 270
+				],
+				'description' => 'Big image on desktop'
+			],
+			[
+				'mockParams' => [
+					'fileHeight' => 3000,
+					'fileWidth' => 250
+				],
+				'isWikiaMobile' => false,
+				'result' => [
+					'height' => 500,
+					'width' => 270
+				],
+				'description' => 'Tall image on desktop'
+			],
+			[
+				'mockParams' => [
+					'fileHeight' => 200,
+					'fileWidth' => 2000
+				],
+				'isWikiaMobile' => false,
+				'result' => [
+					'height' => 200,
+					'width' => 270
+				],
+				'description' => 'Wide image on desktop'
+			],
+			[
+				'mockParams' => [
+					'fileHeight' => 50,
+					'fileWidth' => 45
+				],
+				'isWikiaMobile' => false,
+				'result' => [
+					'height' => 50,
+					'width' => 270
+				],
+				'description' => 'Small image on desktop'
+			],
+			[
+				'mockParams' => [
+					'fileHeight' => 2000,
+					'fileWidth' => 3000
+				],
+				'isWikiaMobile' => true,
+				'result' => [
+					'height' => null,
+					'width' => 360
+				],
+				'description' => 'Big image on mobile'
+			],
+			[
+				'mockParams' => [
+					'fileHeight' => 3000,
+					'fileWidth' => 250
+				],
+				'isWikiaMobile' => true,
+				'result' => [
+					'height' => null,
+					'width' => 360
+				],
+				'description' => 'Tall image on mobile'
+			],
+			[
+				'mockParams' => [
+					'fileHeight' => 200,
+					'fileWidth' => 2000
+				],
+				'isWikiaMobile' => true,
+				'result' => [
+					'height' => null,
+					'width' => 360
+				],
+				'description' => 'Wide image on mobile'
+			],
+			[
+				'mockParams' => [
+					'fileHeight' => 50,
+					'fileWidth' => 45
+				],
+				'isWikiaMobile' => true,
+				'result' => [
+					'height' => null,
+					'width' => 360
+				],
+				'description' => 'Small image on mobile'
 			]
 		];
 	}

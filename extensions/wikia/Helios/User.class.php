@@ -84,14 +84,6 @@ class User {
 		if ( $token ) {
 			$heliosClient = self::getHeliosClient();
 
-			// start the session if there's none so far
-			// the code is borrowed from SpecialUserlogin
-			// @see PLATFORM-1261
-			if ( session_id() == '' ) {
-				wfSetupSession();
-				WikiaLogger::instance()->debug( __METHOD__ . '::startSession' );
-			}
-
 			try {
 				$tokenInfo = $heliosClient->info( $token );
 				if ( !empty( $tokenInfo->user_id ) ) {
@@ -103,6 +95,19 @@ class User {
 						self::clearAccessTokenCookie();
 						return null;
 					}
+
+					// start the session if there's none so far
+					// the code is borrowed from SpecialUserlogin
+					// @see PLATFORM-1261
+					if ( session_id() == '' ) {
+						wfSetupSession();
+						WikiaLogger::instance()->debug( __METHOD__ . '::startSession' );
+
+						// Update mTouched on user when he starts new MW session
+						// @see SOC-1326
+						$user->invalidateCache();
+					}
+
 					// return a MediaWiki's User object
 					return $user;
 				}
@@ -231,9 +236,13 @@ class User {
 	 * Call helios invalidate token.
 	 */
 	private static function invalidateAccessTokenInHelios() {
+		global $wgUser;
 		$request = \RequestContext::getMain()->getRequest();
 		$heliosClient = self::getHeliosClient();
-		$heliosClient->invalidateToken( self::getAccessToken( $request ) );
+		$accessToken = self::getAccessToken( $request );
+		if ( !empty( $accessToken ) ) {
+			$heliosClient->invalidateToken( $accessToken, $wgUser->getId() );
+		}
 	}
 
 	/**

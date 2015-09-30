@@ -141,11 +141,14 @@ class AssetsManagerBaseBuilder {
 		unlink($tempInFile);
 
 		if ( $retval !== 0 ) {
+			$e = new Exception( 'JS minification failed', $retval );
+
 			\Wikia\Logger\WikiaLogger::instance()->error( 'AssetsManagerBaseBuilder::minifyJS failed', [
-				'exception' => new Exception()
+				'exception' => $e,
+				'output' => $out,
 			]);
 
-			throw new Exception( 'JS minification failed' );
+			throw $e;
 		}
 
 		wfProfileOut(__METHOD__);

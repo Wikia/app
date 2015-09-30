@@ -14,10 +14,6 @@
 	display: none !important;
 }
 
-.source-point .wikia-ad.default-height {
-	height: auto !important;
-}
-
 /** Leaderboards **/
 
 .WikiaTopAds {
@@ -27,7 +23,7 @@
 	padding: 10px 0;
 	text-align: center;
 	width: $width-outside;
-	z-index: 0;
+	z-index: 2;
 	.WikiaTopAdsInner {
 		@include clearfix;
 		display: inline-block;

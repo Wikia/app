@@ -1600,7 +1600,7 @@ $wgMemCachedPersistent = false;
 /**
  * Read/write timeout for MemCached server communication, in microseconds.
  */
-$wgMemCachedTimeout = 100000;
+$wgMemCachedTimeout = 500000;
 
 /**
  * Set this to true to make a local copy of the message cache, for use in
@@ -4531,6 +4531,14 @@ $wgUpgradeKey = false;
  * Default: 13 weeks = about three months
  */
 $wgRCMaxAge = 13 * 7 * 24 * 3600;
+
+/**
+ * Wikia change: Recentchanges items are periodically purged; keep the number of rows at the stable level
+ *
+ * @see PLATFORM-1393
+ * @see PLATFORM-1460
+ */
+$wgRCMaxRows = 20000;
 
 /**
  * Filter $wgRCLinkDays by $wgRCMaxAge to avoid showing links for numbers

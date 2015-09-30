@@ -20,15 +20,17 @@ function wfVerbatimExtension( $parser ) {
 function renderVerbatim( $input ) {
 	global $wgEditInterfaceWhitelist, $wgVerbatimBlacklist;
 
+	$formattedInput = ucfirst( trim( $input ) );
 	// Begin wikia change
 	if (
 		( !empty( $wgEditInterfaceWhitelist )
-			&& in_array( ucfirst( trim( $input ) ), $wgEditInterfaceWhitelist ) )
+			&& in_array( $formattedInput, $wgEditInterfaceWhitelist ) )
 		|| ( !empty( $wgVerbatimBlacklist )
-			&& in_array( ucfirst( trim( $input ) ), $wgVerbatimBlacklist ) )
+			&& in_array( $formattedInput, $wgVerbatimBlacklist ) )
+		|| preg_match( '!\.(?:css|js)$!u', $formattedInput )
 	) {
 		// Do not allow transclusion into Verbatim tags
-		return "";
+		return '';
 	}
 	// End wikia change
 

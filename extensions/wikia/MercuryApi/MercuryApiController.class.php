@@ -309,6 +309,12 @@ class MercuryApiController extends WikiaController {
 			$wikiVariables['image'] = $wikiImages[$this->wg->CityId];
 		}
 
+		$wikiVariables['specialRobotPolicy'] = null;
+		$robotPolicy = Wikia::getEnvironmentRobotPolicy( $this->getContext()->getRequest() );
+		if ( !empty( $robotPolicy ) ) {
+			$wikiVariables['specialRobotPolicy'] = $robotPolicy;
+		}
+
 		$this->response->setVal( 'data', $wikiVariables );
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 

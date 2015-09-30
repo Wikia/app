@@ -12,11 +12,17 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 		slots = {},
 		slotQueue = [],
 		pageLevelParams,
-		googleTag,
 		pubAds;
+
+	function resetForRecovery() {
+		registeredCallbacks = {};
+		slots = {};
+		slotQueue = [];
+	}
 
 	function GoogleTag() {
 		this.initialized = false;
+		resetForRecovery();
 	}
 
 	function dispatchEvent(event) {
@@ -38,25 +44,22 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 	}
 
 	GoogleTag.prototype.enableServices = function () {
-		googleTag = window.googletag = window.googletag || {};
-		window.googletag.cmd = window.googletag.cmd || [];
-
 		log(['enableServices', 'push'], 'info', logGroup);
 		this.push(function () {
-			pubAds = googleTag.pubads();
+			pubAds = window.googletag.pubads();
 
 			pubAds.collapseEmptyDivs();
 			pubAds.enableSingleRequest();
 			pubAds.disableInitialLoad(); // manually request ads using refresh
 			pubAds.addEventListener('slotRenderEnded', dispatchEvent);
 
-			googleTag.enableServices();
+			window.googletag.enableServices();
 
 			log(['enableServices', 'push', 'done'], 'debug', logGroup);
 		});
 	};
 
-	GoogleTag.prototype.init = function () {
+	GoogleTag.prototype.init = function (onLoadCallback) {
 		log('init', 'debug', logGroup);
 
 		var gads = doc.createElement('script'),
@@ -65,12 +68,21 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 		gads.async = true;
 		gads.type = 'text/javascript';
 		gads.src = '//www.googletagservices.com/tag/js/gpt.js';
+		gads.addEventListener('load', function () {
+			log('GPT loaded', 'debug', logGroup);
+			if (typeof onLoadCallback === 'function') {
+				onLoadCallback();
+			}
+		});
 
 		log('Appending GPT script to head', 'debug', logGroup);
 		node.parentNode.insertBefore(gads, node);
 
-		this.enableServices();
+		window.googletag = window.googletag || {};
+		window.googletag.cmd = window.googletag.cmd || [];
+
 		this.initialized = true;
+		this.enableServices();
 	};
 
 	GoogleTag.prototype.isInitialized = function () {
@@ -96,7 +108,7 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 	};
 
 	GoogleTag.prototype.push = function (callback) {
-		googleTag.cmd.push(callback);
+		window.googletag.cmd.push(callback);
 	};
 
 	GoogleTag.prototype.flush = function () {
@@ -125,9 +137,9 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 
 		adElement.setPageLevelParams(pageLevelParams);
 		if (!slot) {
-			slot = googleTag.defineSlot(adElement.getSlotPath(), adElement.getSizes(), adElement.getId());
+			slot = window.googletag.defineSlot(adElement.getSlotPath(), adElement.getSizes(), adElement.getId());
 			slot.addService(pubAds);
-			googleTag.display(adElement.getId());
+			window.googletag.display(adElement.getId());
 			slots[adElement.getId()] = slot;
 		}
 

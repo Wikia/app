@@ -164,6 +164,13 @@ class DifferenceEngine extends ContextSource {
 		}
 	}
 
+	/**
+	 * Add an HTML of a page with a diff between revisions. It has the following switches that
+	 * allow you to controll the output:
+	 * * $diffOnly - `True` hides the actual content after the latest revision.
+	 * @param bool|false $diffOnly
+	 * @throws PermissionsError
+	 */
 	function showDiffPage( $diffOnly = false ) {
 		wfProfileIn( __METHOD__ );
 
@@ -382,7 +389,20 @@ class DifferenceEngine extends ContextSource {
 				$msg = $suppressed ? 'rev-suppressed-diff-view' : 'rev-deleted-diff-view';
 				$notice = "<div id='mw-$msg' class='mw-warning plainlinks'>\n" . $this->msg( $msg )->parse() . "</div>\n";
 			}
-			$this->showDiff( $oldHeader, $newHeader, $notice );
+			/**
+			 * Wikia change begin
+			 * Allows to hide a diff view and display a notice instead.
+			 * @author adamk@wikia-inc.com
+			 * @see CE-2704
+			 */
+			if ( !wfRunHooks( 'ShowDiff', [ $this, &$notice ] ) ) {
+				$out->addHTML( $notice );
+			} else {
+				$this->showDiff( $oldHeader, $newHeader, $notice );
+			}
+			/**
+			 * Wikia change end
+			 */
 			if ( !$diffOnly ) {
 				$this->renderNewRevision();
 			}

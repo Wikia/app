@@ -1,5 +1,5 @@
 /*global describe, it, expect, modules, spyOn, document, beforeEach*/
-describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
+describe('ext.wikia.adEngine.provider.gpt.sourcePointTag', function () {
 	'use strict';
 
 	function noop() { return undefined; }
@@ -18,9 +18,6 @@ describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 				getShortSlotName: noop
 			},
 			callback: noop,
-			cssTweaker: {
-				copyStyles: noop
-			},
 			element: {
 				getId: noop,
 				getNode: function () {
@@ -79,7 +76,6 @@ describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 			GoogleTag,
 			mocks.adSlot,
 			mocks.sourcePoint,
-			mocks.cssTweaker,
 			document,
 			mocks.log,
 			mocks.window
@@ -98,48 +94,12 @@ describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 
 	it('Initialization should prepare googletag object and configure pubads', function () {
 		var api = getApi();
-		spyOn(mocks.pubads, 'addEventListener');
-		spyOn(mocks.pubads, 'collapseEmptyDivs');
-		spyOn(mocks.pubads, 'disableInitialLoad');
-		spyOn(mocks.pubads, 'enableSingleRequest');
 		spyOn(mocks.sourcePoint, 'getClientId');
-		spyOn(mocks.window.googletag, 'enableServices');
 
 		api.init();
 
 		expect(api.isInitialized()).toBe(true);
-		expect(mocks.pubads.addEventListener).toHaveBeenCalled();
-		expect(mocks.pubads.collapseEmptyDivs).toHaveBeenCalled();
-		expect(mocks.pubads.disableInitialLoad).toHaveBeenCalled();
-		expect(mocks.pubads.enableSingleRequest).toHaveBeenCalled();
 		expect(mocks.sourcePoint.getClientId).toHaveBeenCalled();
-		expect(mocks.window.googletag.enableServices).toHaveBeenCalled();
-	});
-
-	it('Define collapsed slot by default if sp.block is set', function () {
-		var api = getApi();
-		spyOn(mocks.slot, 'getTargeting').and.callFake(function (key) {
-			return key === 'sp.block' ? ['1'] : [];
-		});
-		spyOn(mocks.slot, 'setCollapseEmptyDiv');
-
-		api.init();
-		api.addSlot(mocks.element);
-
-		expect(mocks.slot.setCollapseEmptyDiv).toHaveBeenCalled();
-	});
-
-	it('Define not collapsed slot if sp.block is not set', function () {
-		var api = getApi();
-		spyOn(mocks.slot, 'getTargeting').and.callFake(function () {
-			return [];
-		});
-		spyOn(mocks.slot, 'setCollapseEmptyDiv');
-
-		api.init();
-		api.addSlot(mocks.element);
-
-		expect(mocks.slot.setCollapseEmptyDiv).not.toHaveBeenCalled();
 	});
 
 	it('Call GoogleTag.onAdLoad if SP is not blocking (and by default)', function () {

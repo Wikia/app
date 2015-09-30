@@ -158,6 +158,31 @@ JSMessages::registerPackage('ChatEntryPoint', array(
 	'chat-member-since'
 ));
 
+/**
+ * ResourceLoader module
+ */
+$wgResourceModules['ext.Chat2'] = [
+	'messages' => [
+		'chat-user-permanently-disconnected',
+		'chat-welcome-message',
+		'chat-user-joined',
+		'chat-ban-undolink',
+		'chat-user-was-kicked',
+		'chat-you-were-kicked',
+		'chat-user-was-banned',
+		'chat-you-were-banned',
+		'chat-user-was-unbanned',
+		'chat-user-parted',
+		'chat-log-reason-undo',
+		'chat-ban-modal-heading',
+		'chat-ban-cannt-undo',
+		'chat-browser-is-notsupported',
+
+	],
+	'position' => 'top'
+];
+
+
 define( 'CHAT_TAG', 'chat' );
 define( 'CUC_TYPE_CHAT', 128);	// for CheckUser operation type
 

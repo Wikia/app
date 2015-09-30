@@ -56,8 +56,17 @@ require([
 
 	function authModalOpen(url) {
 		require(['AuthModal'], function (authModal) {
-			authModal.load(url);
+			authModal.load({
+				url: url,
+				origin: 'global-nav',
+				onAuthSuccess: onAuthSuccess.bind({url: url})
+			});
 		});
+	}
+
+	function onAuthSuccess() {
+		var redirect = this.url.replace(/.*?redirect=([^&]+)/, '$1');
+		window.location.href = decodeURIComponent(redirect);
 	}
 
 	function globalNavAuthButtonsClick(event) {
@@ -70,7 +79,7 @@ require([
 			event.stopPropagation();
 		}
 
-		authModalOpen(event.target.href);
+		authModalOpen(event.currentTarget.href);
 	}
 
 	function oldAccountNav ($entryPoint) {
@@ -110,7 +119,7 @@ require([
 
 		$entryPoint = $('#AccountNavigation');
 
-		if (!win.wgUserName && $entryPoint.hasClass('newAuth')) {
+		if (!win.wgUserName && win.wgEnableNewAuthModal) {
 			$authEntryPoints = $entryPoint.find('.auth-link.register, .auth-link.sign-in, a.sign-in');
 
 			$authEntryPoints.click(globalNavAuthButtonsClick);

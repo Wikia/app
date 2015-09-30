@@ -19,6 +19,7 @@ $messages['en'] = array(
 	'templatedraft-module-title-approve' => 'Move this draft template',
 	'templatedraft-module-content-approve' => 'Happy with this draft and want to promote it to the live template?',
 	'templatedraft-module-button-approve' => 'Approve this draft',
+	'templatedraft-module-approve-protected' => 'This template is protected. Please ask an [[Special:ListAdmins|Admin]] to approve this draft.',
 	'templatedraft-preview-n-docs' => '== Usage & preview ==
 Type in this:
 
@@ -35,6 +36,7 @@ $2
 	'templatedraft-module-view-parent' => 'view parent template wikitext',
 	'templatedraft-module-help' => 'view the help page on Infobox markup',
 	'templatedraft-invalid-template' => 'Invalid template name provided.',
+	'templatedraft-protect-edit' => 'You do not have permission to edit parent page.',
 );
 
 $messages['qqq'] = array(
@@ -55,31 +57,33 @@ $messages['qqq'] = array(
 	'templatedraft-module-title-approve' => 'A title of the TemplateDraft module for approving draft that appears in the right rail on Template pages.',
 	'templatedraft-module-content-approve' => 'A content of the TemplateDraft module for approving draft that appears in the right rail on Template pages.',
 	'templatedraft-module-button-approve' => 'A button shown in a right rail module for approving draft that moves draft text to parent template and gets user to this parent template',
+	'templatedraft-module-approve-protected' => 'Message informing user that template is protected and to approve it should contact one of the admins.',
 	'templatedraft-preview-n-docs' => 'Used when generating documentation for a converted draft of a template',
 	'templatedraft-module-editintro-please-convert' => 'Information for user that a draft version of infobox with new markup can be generated automatically by clicking button ($1).',
 	'templatedraft-module-view-parent' => 'Link label to view parent page of this draft',
 	'templatedraft-module-help' => 'Link label to view the help page on Infobox markup',
 	'templatedraft-invalid-template' => 'Error message returned by an API method when an invalid or non-existent title was provided.',
+	'templatedraft-protect-edit' => 'Error message informing user does not have permissions to edit parent page.',
 );
 
 $messages['de'] = array(
 	'templatedraft-description' => 'TemplateDraft-Erweiterung',
 	'templatedraft-subpage' => 'Entwurf',
-	'templatedraft-editintro' => 'Bitteschön! Wir haben eine Entwurfsversion deiner Infobox mit unserem neuen Markup erstellt. Wir werden sie als untergeordnete Seite speichern, damit du sie überprüfen und alle notwendigen Änderungen vornehmen kannst. Schau auch bei $1 und $2 vorbei.',
-	'templatedraft-approval-no-page-error' => 'Genehmigung fehlgeschlagen, da die Entwurfsseite nicht existiert',
-	'templatedraft-approval-no-templatedraft-error' => 'Die Seite ist kein Vorlagenentwurf und kann daher nicht genehmigt werden',
-	'templatedraft-approval-success-confirmation' => 'Der Inhalt dieser Vorlage wurde mit der aktualisierten Version aus dem Vorlagenentwurf ersetzt und der Entwurf wurde entfernt',
-	'templatedraft-approval-summary' => 'Die Infobox wurde mithilfe des Migrationstools [[Help:PortableInfoboxes|Portable Infobox]] aktualisiert',
-	'templatedraft-draft-removal-summary' => 'Bereinigung. Entwurf zur übergeordneten Seite genehmigt.',
-	'templatedraft-module-title-create' => 'Diese Infobox migrieren',
-	'templatedraft-module-subtitle-create' => 'Diese Vorlage verwendet nicht das neue [[Help:PortableInfoboxes|Infobox-Markup]].',
-	'templatedraft-module-content-create' => 'Wir können eine Entwurfsversion des Markups aus deiner bestehenden Infobox erstellen und diese als untergeordnete Seite speichern, damit du sie überprüfen und alle notwendigen Änderungen vornehmen kannst.',
-	'templatedraft-module-button-create' => 'Entwurfs-Markup erstellen',
-	'templatedraft-module-button-title-create' => 'Öffnet eine neue Registerkarte mit vorgefülltem Bearbeitungsformular',
-	'templatedraft-module-closelink-create' => 'Dies ist keine infobox',
+	'templatedraft-editintro' => 'Bitteschön! Wir haben eine Entwurfsversion deiner Infobox in unserem neuen Format erstellt. Wir speichern sie als Unterseite, damit du sie überprüfen und alle notwendigen Änderungen vornehmen kannst. Schau auch bei $1 und $2 vorbei.',
+	'templatedraft-approval-no-page-error' => 'Übernahme fehlgeschlagen, da die Entwurfsseite nicht existiert',
+	'templatedraft-approval-no-templatedraft-error' => 'Diese Seite ist kein Vorlagenentwurf und kann daher nicht übernommen werden.',
+	'templatedraft-approval-success-confirmation' => 'Der Inhalt dieser Vorlage wurde mit der aktualisierten Version aus dem Vorlagenentwurf ersetzt und der Entwurf wurde entfernt.',
+	'templatedraft-approval-summary' => 'Die Infobox wurde mithilfe des [[Hilfe:Umwandlung von Infoboxen|Umwandlungswerkzeug]] aktualisiert.',
+	'templatedraft-draft-removal-summary' => 'Aufgeräumt. Der Entwurf wurde auf die übergeordnete Vorlagenseite übernommen.',
+	'templatedraft-module-title-create' => 'Diese Infobox umwandeln',
+	'templatedraft-module-subtitle-create' => 'Diese Vorlage verwendet nicht das neue [[Hilfe:Infoboxen|Infobox-Format]].',
+	'templatedraft-module-content-create' => 'Wir können eine Entwurfsversion der Vorlage im neuen Format aus deiner bestehenden Infobox erstellen und diese als Unterseite speichern. Du kannst sie dann überprüfen und alle notwendigen Änderungen vornehmen.',
+	'templatedraft-module-button-create' => 'Entwurf im neuen Format erstellen',
+	'templatedraft-module-button-title-create' => 'Öffnet einen neuen Browsertab mit vorgefülltem Bearbeitungsformular',
+	'templatedraft-module-closelink-create' => 'Dies ist keine Infobox',
 	'templatedraft-module-title-approve' => 'Diese Entwurfsvorlage verschieben',
-	'templatedraft-module-content-approve' => 'Bist du mit diesem Entwurf zufrieden und möchtest ihn als Live-Vorlage anzeigen?',
-	'templatedraft-module-button-approve' => 'Diesen Entwurf freigeben',
+	'templatedraft-module-content-approve' => 'Bist du mit diesem Entwurf zufrieden und möchtest ihn übernehmen?',
+	'templatedraft-module-button-approve' => 'Diesen Entwurf übernehmen',
 	'templatedraft-preview-n-docs' => '== Verwendung und Vorschau ==
 Gib das ein:
 
@@ -91,10 +95,10 @@ um das zu sehen:
 
 $2
 
-[{{fullurl:{{ns:Template}}:{{PAGENAME}}}}?action=purge Klicke hier, um die oben stehende Vorschau zu aktualisieren]',
+[{{fullurl:{{ns:Template}}:{{PAGENAME}}}}?action=purge Klicke hier, um die obige Vorschau zu aktualisieren]',
 	'templatedraft-module-editintro-please-convert' => 'Wir können eine Entwurfsversion deiner Infobox mit unserem neuen Markup erstellen. Klicke dazu einfach auf $1.',
 	'templatedraft-module-view-parent' => 'Wikitext der übergeordneten Vorlage ansehen',
-	'templatedraft-module-help' => 'Hilfeseite für das Infobox-Markup ansehen',
+	'templatedraft-module-help' => 'Hilfeseite für das Infobox-Format ansehen',
 	'templatedraft-invalid-template' => 'Ungültiger Vorlagenname angegeben.',
 );
 
@@ -108,7 +112,7 @@ $messages['es'] = array(
 	'templatedraft-approval-summary' => 'El Infobox se actualizó usando la herramienta de migración de [[w:c:es:Ayuda:Infoboxes_Portátiles|infobox portátil]]',
 	'templatedraft-draft-removal-summary' => 'Limpieza. Borrador aprobado para la página principal.',
 	'templatedraft-module-title-create' => 'Migrar este infobox',
-	'templatedraft-module-subtitle-create' => 'Esta plantilla no usa el nuevo [[Help:PortableInfoboxes|marcador de infobox]].',
+	'templatedraft-module-subtitle-create' => 'Esta plantilla no usa el nuevo [[w:c:es:Ayuda:Infoboxes_Portátiles|marcador de infobox]].',
 	'templatedraft-module-content-create' => 'Podemos generar un borrador del marcador desde tu infobox existente y guardarlo como subpágina, para que puedas revisarlo y hacer cualquier cambio necesario.',
 	'templatedraft-module-button-create' => 'Generar marcador de borrador',
 	'templatedraft-module-button-title-create' => 'Abrir una nueva pestaña con un formulario de edición previamente llenado',
@@ -139,13 +143,13 @@ $messages['fr'] = array(
 	'templatedraft-subpage' => 'Version de travail',
 	'templatedraft-editintro' => "Eh voilà ! Nous avons généré une version de travail de votre infobox avec notre nouveau code. Nous allons l'enregistrer comme sous-page afin que vous puissiez la vérifier et y apporter d'éventuelles modifications. Vous voudrez peut-être $1 ou $2.",
 	'templatedraft-approval-no-page-error' => "Échec d'approbation : page de la version de travail inexistante",
-	'templatedraft-approval-no-templatedraft-error' => "Impossible d'approuver un brouillon qui ne concerne pas un modèle",
+	'templatedraft-approval-no-templatedraft-error' => "Impossible d'approuver une version de travail qui ne concerne pas un modèle",
 	'templatedraft-approval-success-confirmation' => 'Le contenu de ce modèle a été remplacé par la version mise à jour du modèle de la version de travail et la version de travail a été supprimée.',
 	'templatedraft-approval-summary' => "Infobox mise à jour à l'aide de l'outil de migration des [[w:c:fr:Aide:Infoboxes_portables|infoboxes portables]]",
-	'templatedraft-draft-removal-summary' => 'Nettoyage. Application du brouillon sur la page parente approuvée.',
+	'templatedraft-draft-removal-summary' => 'Nettoyage. Application de la version de travail sur la page parente approuvée.',
 	'templatedraft-module-title-create' => 'Migrer cette infobox',
 	'templatedraft-module-subtitle-create' => "Le nouveau [[w:c:fr:Aide:Infoboxes_portables|code des infoboxes]] n'est pas utilisé pour ce modèle.",
-	'templatedraft-module-content-create' => "Nous pouvons générer une version brouillon de votre infobox avec le nouveau code et l'enregistrer comme sous-page afin que vous puissiez la vérifier et y apporter d'éventuelles modifications.",
+	'templatedraft-module-content-create' => "Nous pouvons générer une version de travail de votre infobox avec le nouveau code et l'enregistrer comme sous-page afin que vous puissiez la vérifier et y apporter d'éventuelles modifications.",
 	'templatedraft-module-button-create' => 'Générer le code de la version de travail',
 	'templatedraft-module-button-title-create' => "Ouvrir un nouvel onglet avec un formulaire d'édition pré-rempli",
 	'templatedraft-module-closelink-create' => "Il ne s'agit pas d'une infobox.",

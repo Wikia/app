@@ -38,8 +38,20 @@ define('ext.wikia.adEngine.adContext', [
 		return !!(countryList && countryList.indexOf && countryList.indexOf(geo.getCountryCode()) > -1);
 	}
 
+	function isProperRegion(countryList) {
+		return !!(
+			countryList &&
+			countryList.indexOf &&
+			countryList.indexOf(geo.getCountryCode() + '-' + geo.getRegionCode()) > -1
+		);
+	}
+
+	function isProperGeo(countryList) {
+		return isProperCountry(countryList) || isProperRegion(countryList);
+	}
+
 	function isUrlParamSet(param) {
-		return !!parseInt(qs.getVal(param, '0'));
+		return !!parseInt(qs.getVal(param, '0'), 10);
 	}
 
 	function setContext(newContext) {
@@ -64,13 +76,18 @@ define('ext.wikia.adEngine.adContext', [
 		// SourcePoint integration
 		if (context.opts.sourcePointUrl) {
 			context.opts.sourcePoint = isUrlParamSet('sourcepoint') ||
-				isProperCountry(instantGlobals.wgAdDriverSourcePointCountries);
+				isProperGeo(instantGlobals.wgAdDriverSourcePointCountries);
 		}
 
 		// SourcePoint detection integration
 		if (context.opts.sourcePointDetectionUrl) {
 			context.opts.sourcePointDetection = isUrlParamSet('sourcepointdetection') ||
 				isProperCountry(instantGlobals.wgAdDriverSourcePointDetectionCountries);
+		}
+
+		// Recoverable ads message
+		if (context.opts.sourcePointDetection && !context.opts.sourcePoint) {
+			context.opts.recoveredAdsMessage = isProperGeo(instantGlobals.wgAdDriverAdsRecoveryMessageCountries);
 		}
 
 		// Showcase.*
@@ -107,6 +124,7 @@ define('ext.wikia.adEngine.adContext', [
 		context.slots.incontentPlayer = isProperCountry(instantGlobals.wgAdDriverIncontentPlayerSlotCountries) ||
 			isUrlParamSet('incontentplayer');
 
+		context.opts.scrollHandlerConfig = instantGlobals.wgAdDriverScrollHandlerConfig;
 		context.opts.enableScrollHandler = isProperCountry(instantGlobals.wgAdDriverScrollHandlerCountries) ||
 			isUrlParamSet('scrollhandler');
 

@@ -118,15 +118,6 @@ class BodyController extends WikiaController {
 	public static function isOasisBreakpoints() {
 		$app = F::app();
 
-		//For now we want to disable breakpoints for German wikis if not turn on explicitly.
-		//@TODO remove when 71Media fixes their styles and $wgOasisBreakpointsDE will retire
-		if (
-			strtolower( $app->wg->LanguageCode ) == 'de'
-			&& empty( $app->wg->OasisBreakpointsDE )
-		) {
-			$app->wg->OasisBreakpoints = false;
-		}
-
 		$app->wg->OasisBreakpoints = $app->wg->Request->getBool( 'oasisbreakpoints', $app->wg->OasisBreakpoints ) !== false;
 		return !empty( $app->wg->OasisBreakpoints );
 	}
@@ -583,5 +574,9 @@ class BodyController extends WikiaController {
 
 		// bugid-70243: optionally hide navigation h1s for SEO
 		$this->setVal( 'displayHeader', !$wg->HideNavigationHeaders );
+
+		if ( $wg->EnableSeoTestingExt ) {
+			$this->setVal( 'seoTestOneH1', SeoTesting::getGroup( 'One_H1' ) === 2 );
+		}
 	}
 }

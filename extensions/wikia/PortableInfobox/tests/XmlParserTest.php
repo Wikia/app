@@ -7,28 +7,20 @@ class XmlParserTest extends WikiaBaseTest {
 		parent::setUp();
 	}
 
-	/**
-	 * @dataProvider errorHandlingDataProvider
-	 */
-	public function testErrorHandling( $markup, $expectedErrors ) {
-		$parser = $this->getMockBuilder( 'Wikia\PortableInfobox\Parser\XmlParser' )
-			->setMethods( [ 'logXmlParseError' ] )
-			->getMock();
+	/** @dataProvider contentTagsDataProvider */
+	public function testXHTMLParsing( $tag, $content ) {
+		$markup = "<data source=\"asdfd\"><{$tag}>{$content}</{$tag}></data>";
+		$result = \Wikia\PortableInfobox\Parser\XmlParser::parseXmlString( $markup );
 
-		$errors = [ ];
-		try {
-			$data = $parser->parseXmlString( $markup, $errors );
-		} catch ( \Wikia\PortableInfobox\Parser\XmlMarkupParseErrorException $e ) {
-			// parseXmlString should throw an exception, but we want to proceed in order to check parameters
-			// from logXmlParseError
-		}
+		$this->assertEquals( $content, (string)$result->{$tag} );
+	}
 
-		$this->assertEquals( $expectedErrors, array_map(
-			function ( LibXMLError $error ) {
-				return [ 'level' => $error->level, 'code' => $error->code, 'msg' => trim( $error->message ) ];
-			},
-			$errors
-		) );
+	public function contentTagsDataProvider() {
+		return [
+			[ 'default', 'sadf <br> sakdjfl' ],
+			[ 'format', '<>' ],
+			[ 'label', '' ]
+		];
 	}
 
 	public function errorHandlingDataProvider() {

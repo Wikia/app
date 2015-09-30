@@ -11,6 +11,7 @@ $messages['en'] = array(
 	'bannernotifications-desc' => 'Displays system notifications for events such as AJAX failures',
 	'bannernotifications-general-ajax-failure' => 'The browser could not connect to the Wikia.  Try again later.',
 	'bannernotifications-not-confirmed-email' => "Oh no! Your email address has not yet been confirmed. You should have a confirmation message in your inbox. Didn't get it? [[Special:ConfirmEmail|Click here and we'll send a new one.]] If you need to change your address, head to your [[Special:Preferences#mw-prefsection-emailv2|Preferences page]].",
+	'bannernotifications-no-email' => "Oh no! Looks like we don't have an email address for you. To set your email, head to your [[Special:Preferences#mw-prefsection-emailv2|Preferences page]].",
 );
 
 /** Message documentation (Message documentation)
@@ -19,6 +20,7 @@ $messages['qqq'] = array(
 	'bannernotifications-desc' => 'Description of this extension',
 	'bannernotifications-general-ajax-failure' => 'General message for AJAX failure to be put on banner notification',
 	'bannernotifications-not-confirmed-email' => 'Banner Notification text - informs user that account has not confirmed email address. In order to confirm email address user has to follow instructions from email that was sent by Wikia. User can resend that email by going to [[Special:ConfirmEmail]] or change email address on preferences page - [[Special:Preferences#mw-prefsection-emailv2]]',
+	'bannernotifications-no-email' => 'Banner Notification text - informs user that account has no email address. In order to set email address user needs to go to preferences page - [[Special:Preferences#mw-prefsection-emailv2]]',
 );
 
 /** Arabic (العربية)
@@ -76,6 +78,7 @@ $messages['de'] = array(
 	'bannernotifications-desc' => 'Zeigt Systembenachrichtigungen für Ereignisse wie AJAX-Ausfälle.',
 	'bannernotifications-general-ajax-failure' => 'Der Browser konnte keine Verbindung mit Wikia herstellen. Bitte versuche es später erneut.',
 	'bannernotifications-not-confirmed-email' => 'Oh nein! Deine E-Mail-Adresse wurde noch nicht bestätigt. Die Bestätigungsnachricht sollte in deinem Postfach angekommen sein. Hast du sie erhalten? [[Special:ConfirmEmail|Klicke hier und wir schicken sie dir noch einmal zu.]] Wenn du deine E-Mail-Adresse ändern musst, kannst du das auf deiner [[Special:Preferences#mw-prefsection-emailv2|Einstellungsseite]] tun.',
+	'bannernotifications-no-email' => 'Oh nein! Offenbar haben wir deine E-Mail-Adresse nicht. Gehe auf deine [[Special:Preferences#mw-prefsection-emailv2|Einstellungsseite]], um deine E-Mail-Adresse einzutragen.',
 );
 
 /** Spanish (español)
@@ -85,6 +88,7 @@ $messages['es'] = array(
 	'bannernotifications-desc' => 'Muestra las notificaciones del sistema para eventos tales como fallas de AJAX',
 	'bannernotifications-general-ajax-failure' => 'El navegador no pudo conectarse a Wikia. Inténtalo más tarde.',
 	'bannernotifications-not-confirmed-email' => '¡ Oh, no! Aún no se ha confirmado tu dirección de correo electrónico. Debes tener un mensaje de confirmación en tu bandeja de entrada. ¿No te llegó? [[Special: ConfirmEmail| Haz clic aquí y te enviaremos uno nuevo.]] Si necesitas cambiar tu dirección, dirígete a [[Special:Preferences#mw-prefsection-emailv2|Página de preferencias]].',
+	'bannernotifications-no-email' => '¡Oh no! Parece que no tenemos tu dirección de correo electrónico. Para configurar tu correo electrónico, dirígete a tu [[Special:Preferences#mw-prefsection-emailv2|página de preferencias]].',
 );
 
 /** Finnish (suomi)
@@ -112,6 +116,7 @@ $messages['fr'] = array(
 	'bannernotifications-desc' => 'Affiche des notifications système pour des événements tels que les échecs AJAX.',
 	'bannernotifications-general-ajax-failure' => 'Le navigateur n’a pas pu se connecter au Wikia. Veuillez réessayer plus tard.',
 	'bannernotifications-not-confirmed-email' => "Votre adresse e-mail n'a pas encore été confirmée. Vous devriez avoir un message de confirmation dans votre boîte de messagerie. Vous ne l'avez pas reçu ? [[Special:ConfirmEmail|Cliquez ici pour en avoir un nouveau.]] Pour changer d'adresse e-mail, allez à la [[Spécial:Préférences#mw-prefsection-emailv2|page Préférences]].",
+	'bannernotifications-no-email' => "Apparemment vous n'avez pas encore fourni d'adresse e-mail. Pour enregistrer votre adresse, veuillez allez dans vos [[Special:Preferences#mw-prefsection-emailv2|Préférences]].",
 );
 
 /** Galician (galego)
@@ -163,12 +168,14 @@ $messages['it'] = array(
 	'bannernotifications-desc' => 'Visualizza le notifiche di sistema per eventi quali guasti AJAX',
 	'bannernotifications-general-ajax-failure' => 'Il browser non riesce a connettersi a Wikia. Riprovare più tardi.',
 	'bannernotifications-not-confirmed-email' => "Oh no! Il tuo indirizzo email non è ancora stato confermato. Avresti dovuto ricevere un messaggio di conferma nella tua casella di posta. Non l'hai ricevuto? [[Special: ConfirmEmail| Clicca qui e te ne invieremo un altro.]] Se devi cambiare il tuo indirizzo, visita la pagina [[speciale: preferenze #mw-prefsection-emailv2| Preferenze]].",
+	'bannernotifications-no-email' => 'Oh no! A quanto pare non abbiamo un indirizzo email per te. Per impostare la tua email, vai nelle tue [[Special:Preferences#mw-prefsection-emailv2| Preferenze]].',
 );
 
 $messages['ja'] = array(
 	'bannernotifications-desc' => 'AJAXエラーなどのイベントに関するシステム通知を表示します',
 	'bannernotifications-general-ajax-failure' => 'ブラウザでウィキアに接続できませんでした。しばらくしてから、もう一度お試しください。',
 	'bannernotifications-not-confirmed-email' => 'メールアドレスの認証が完了していないようです。受信トレイの確認メールをチェックしてみてください。確認メールが見つからない場合は、[[Special:ConfirmEmail|ここをクリック]]すると新しい確認メールが送信されます。メールアドレスを変更する必要がある場合は、[[Special:Preferences#mw-prefsection-emailv2|「個人設定」ページ]]にアクセスしてください。',
+	'bannernotifications-no-email' => 'メールアドレスが設定されていないようです。メールを設定するには、[[Special:Preferences#mw-prefsection-emailv2|「個人設定」ページ]]にアクセスしてください。',
 );
 
 /** Macedonian (македонски)
@@ -203,6 +210,7 @@ $messages['nl'] = array(
 	'bannernotifications-desc' => 'Geeft systeemberichten weer voor gebeurtenissen zoals AJAX-fouten',
 	'bannernotifications-general-ajax-failure' => 'De browser kon geen verbinding maken met de Wikia. Probeer het later nog opnieuw.',
 	'bannernotifications-not-confirmed-email' => "Oh no! Your email address has not yet been confirmed. You should have a confirmation message in your inbox. Didn't get it? [[Special:ConfirmEmail|Click here and we'll send a new one.]] If you need to change your address, head to your [[Special:Preferences#mw-prefsection-emailv2|Preferences page]].",
+	'bannernotifications-no-email' => "Oh no! Looks like we don't have an email address for you. To set your email, head to your [[Special:Preferences#mw-prefsection-emailv2|Preferences page]].",
 );
 
 /** Occitan (occitan)
@@ -220,6 +228,7 @@ $messages['pl'] = array(
 	'bannernotifications-desc' => 'Wyświetla komunikaty systemowe dla zdarzeń takich jak błędy AJAX',
 	'bannernotifications-general-ajax-failure' => 'Przeglądarka nie była w stanie połączyć się z Wikią. Spróbuj później.',
 	'bannernotifications-not-confirmed-email' => 'O nie! Twój adres e-mail nie został jeszcze potwierdzony. E-mail pozwalający potwierdzić rejestrację powinien być w Twojej skrzynce odbiorczej. Nie ma go tam? [[Special:ConfirmEmail|Kliknij tutaj, a wyślemy go ponownie.]] Jeśli chciałbyś zmienić adres, przejdź do [[Special:Preferences#mw-prefsection-emailv2|strony z Ustawieniami]].',
+	'bannernotifications-no-email' => 'O nie! Wygląda na to, że nie mamy Twojego adresu e-mail. Aby ustawić swój adres e-mail przejdź do [[Special:Preferences#mw-prefsection-emailv2|strony z Ustawieniami]].',
 );
 
 /** Piedmontese (Piemontèis)
@@ -237,6 +246,7 @@ $messages['pt'] = array(
 	'bannernotifications-desc' => 'Exibe notificações de sistema para eventos como falhas de AJAX',
 	'bannernotifications-general-ajax-failure' => 'O navegador não pode se conectar a Wikia. Tente novamente mais tarde.',
 	'bannernotifications-not-confirmed-email' => 'Seu endereço de e-mail ainda não foi confirmado. Você deve ter recebido uma mensagem de confirmação em sua caixa de entrada. Não recebeu? [[Especial: ConfirmEmail| Clique aqui e enviaremos um novo.]] Se você precisar alterar o seu endereço, visite sua [[especial: preferências #mw-prefsection-emailv2| página de preferências]].',
+	'bannernotifications-no-email' => 'Aparentemente não temos um endereço de e-mail para você. Para definir o seu e-mail, acesse [[especial: preferências #mw-prefsection-emailv2| Preferências]].',
 );
 
 /** Brazilian Portuguese (português do Brasil)
@@ -263,6 +273,7 @@ $messages['ru'] = array(
 	'bannernotifications-desc' => 'Отображает системные уведомления для события, таких как сбои AJAX',
 	'bannernotifications-general-ajax-failure' => 'Браузер не смог подключиться к Викия. Попробуйте еще раз позже.',
 	'bannernotifications-not-confirmed-email' => 'Ваш адрес электронной почты ещё не подтверждён. Сообщение о подтверждении уже должно быть в ваших входящих сообщениях. Не получили? [[Special:ConfirmEmail|Нажмите здесь, и мы вышлем вам новое]]. Если вы хотите сменить ваш адрес эл. почты, перейдите в соответствующий раздел [[Special:Preferences#mw-prefsection-emailv2|личных настроек]].',
+	'bannernotifications-no-email' => 'Похоже, вы не указали адрес электронной почты. Перейдите на страницу [[Special:Preferences#mw-prefsection-emailv2|личных настроек]], чтобы указать его.',
 );
 
 /** Swedish (svenska)
@@ -320,6 +331,7 @@ $messages['zh-hans'] = array(
 	'bannernotifications-desc' => '显示一些如AJAX失败类似事件的系统通知',
 	'bannernotifications-general-ajax-failure' => '浏览器无法连接到Wikia。请稍后再试。',
 	'bannernotifications-not-confirmed-email' => '您的电子邮件地址尚未得到验证。您的收件箱里应该已经收到了一条确认邮件。没有收到？[[Special:ConfirmEmail|单击此处，我们会重新发送一个邮件]]如需更改您的地址，请前往[[Special:Preferences#mw-prefsection-emailv2|首选项页]]。',
+	'bannernotifications-no-email' => '哎呀！很抱歉，我们没有您的电子邮件地址。请点击[[Special:Preferences#mw-prefsection-emailv2|用户设定]]设置您的电子邮箱。',
 );
 
 /** Traditional Chinese (中文（繁體）‎)
@@ -329,5 +341,6 @@ $messages['zh-hant'] = array(
 	'bannernotifications-general-ajax-failure' => '瀏覽器無法連接到 Wikia。請稍後再試。',
 	'bannernotifications-desc' => '顯示一個如AJAX失敗類似事件的系統通知',
 	'bannernotifications-not-confirmed-email' => '你的電子郵件地址尚未得到證實。你的收件匣中應該已經收到了一條確認訊息。沒有收到？[[Special:ConfirmEmail|按一下此處，我們會重新發送一個郵件]]如需更改位址，請到[[Special:Preferences#mw-prefsection-emailv2|首選項頁]]。',
+	'bannernotifications-no-email' => '哎呀！很抱歉，我們沒有您的電子郵件地址。請點擊[[Special:Preferences#mw-prefsection-emailv2|用戶設定]]設置您的電子郵箱。',
 );
 
