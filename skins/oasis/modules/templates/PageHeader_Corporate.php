@@ -1,10 +1,14 @@
-<div id="WikiaPageHeader" class="WikiaPageHeader">
-	<h1><?= !empty($displaytitle) ? $title : htmlspecialchars($title) ?></h1>
-<?php
-        // edit button with actions dropdown
-        if ( !empty($action) && $canAct ) {
-                echo F::app()->renderView('MenuButton', 'Index', array('action' => $action, 'image' => $actionImage, 'dropdown' => $dropdown, 'name' => $actionName));
-        }
-?>
-	<p><?= $subtitle ?></p>
+<div id="pageHeader" class="page-header corporate">
+	<h1><?= $title ?></h1>
+	<?php if ( !empty( $button['action'] ) && $canAct ) {
+		echo $app->renderView(
+			'MenuButton',
+			'Index',
+			$button
+		);
+	}
+
+	if ( !empty( $subtitle ) ) { ?>
+		<h2 class="breadcrumbs"><?= $subtitle ?></h2>
+	<?php } ?>
 </div>
