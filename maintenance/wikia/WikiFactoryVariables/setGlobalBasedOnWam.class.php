@@ -24,7 +24,7 @@ class setGlobalBasedOnWam extends Maintenance {
 		$var = $this->getOption( 'var' );
 		$varValue = $this->getOption( 'varValue' );
 		$dependency = $this->getOption( 'dependency' );
-		$dependencyValue = $this->getOption( 'dependencyValue' );
+		$dependencyValue = $this->getOption( 'dependencyValue', true );
 		$dry = $this->getOption( 'dry' );
 
 		/**
@@ -34,10 +34,22 @@ class setGlobalBasedOnWam extends Maintenance {
 		$wikisToOrder = [];
 
 		if ( $dependency !== null ) {
-			$dependencyId = WikiFactory::getVarIdByName( $dependency );
-			$wikisToOrder = WikiFactory::getCityIDsFromVarValue( $dependencyId, $dependencyValue, '=' );
-			$count = count( $wikisToOrder );
+			/**
+			 * Convert the value to boolean or integer.
+			 * Leave as a string otherwise.
+			 */
+			$dependencyData = WikiFactory::getVarByName( $dependency );
 
+			if ( $dependencyData->cv_variable_type === 'boolean' ) {
+				$dependencyValue = filter_var( $dependencyValue, FILTER_VALIDATE_BOOLEAN );
+			} elseif ( $dependencyData->cv_variable_type === 'integer' ) {
+				$dependencyValue = (int)$dependencyValue;
+			}
+			$dependencyId = $dependencyData->cv_id;
+
+			$wikisToOrder = WikiFactory::getCityIDsFromVarValue( $dependencyId, $dependencyValue, '=' );
+
+			$count = count( $wikisToOrder );
 			if ( $count === 0 ) {
 				$this->output( "No wikias found with {$dependency}={$dependencyValue}.\n\n" );
 				return;
