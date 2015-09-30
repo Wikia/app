@@ -4,15 +4,18 @@
  */
 require_once( __DIR__ . '/../../Maintenance.php' );
 
-class setGlobalBasedOnWam extends Maintenance {
+class SetGlobalBasedOnWam extends Maintenance {
 
 	public function __construct() {
 		parent::__construct();
 		$this->addOption( 'limit', 'How many wikis should I change the variable for?', true, true );
 		$this->addOption( 'var', 'What variable should I set?', true, true );
 		$this->addOption( 'varValue', 'What value should I set the variable to?', true, true );
-		$this->addOption( 'dependency', 'Should I consider any other variable\'s value?', false, true );
-		$this->addOption( 'dependencyValue', 'What should be a value of the dependant variable?', false, true );
+		/**
+		 * If you want to add an additional condition to what wikis should be chosen - use dependency.
+		 */
+		$this->addOption( 'dependency', 'Should I consider any other variable\'s value when querying for wikis (for example, only touch wikis with wgUseSiteJs set to `true`)?', false, true );
+		$this->addOption( 'dependencyValue', 'What should be a value of the dependant variable? Default is `true`.', false, true );
 		$this->addOption( 'dry', 'Would you like to try it out first?', false, false );
 	}
 
@@ -109,5 +112,5 @@ class setGlobalBasedOnWam extends Maintenance {
 	}
 }
 
-$maintClass = 'setGlobalBasedOnWam';
+$maintClass = 'SetGlobalBasedOnWam';
 require_once( RUN_MAINTENANCE_IF_MAIN );
