@@ -4,6 +4,10 @@ use Wikia\ContentReview\ContentReviewStatusesService;
 
 class JsPagesSpecialController extends WikiaSpecialPageController {
 
+	private static $topJsPages = [
+		'Wikia.js', 'Common.js'
+	];
+
 	function __construct() {
 		parent::__construct( 'JsPages', 'content-review-js-pages', true );
 	}
@@ -35,17 +39,25 @@ class JsPagesSpecialController extends WikiaSpecialPageController {
 
 		$contentReviewStatusesService = new ContentReviewStatusesService();
 		$jsPages = $contentReviewStatusesService->getJsPagesStatuses( $this->wg->CityId );
-		$this->jsPages = $this->formatMessages( $jsPages );
+		$this->jsPages = $this->preparePages( $jsPages );
 
 		$this->submit = wfMessage( 'content-review-module-submit' )->escaped();
 	}
 
-	private function formatMessages( $jsPages ) {
-		foreach ( $jsPages as &$jsPage ) {
+	private function preparePages( $jsPages ) {
+		$pagesOnTop = [];
+
+		foreach ( $jsPages as $pageId => &$jsPage ) {
 			$jsPage['latestRevision']['statusMessage'] = $this->formatMessage( $jsPage['latestRevision'] );
 			$jsPage['latestReviewed']['statusMessage'] = $this->formatMessage( $jsPage['latestReviewed'] );
 			$jsPage['liveRevision']['statusMessage'] = $this->formatMessage( $jsPage['liveRevision'] );
+
+			if ( in_array( $jsPage['page_title'], self::$topJsPages ) ) {
+				$pagesOnTop[$pageId] = $jsPage;
+			}
 		}
+
+		$jsPages = $pagesOnTop + $jsPages;
 
 		return $jsPages;
 	}
