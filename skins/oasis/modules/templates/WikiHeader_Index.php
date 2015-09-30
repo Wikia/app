@@ -5,7 +5,7 @@
 			<?= $seoTestOneH1 ? '<h2>' : '<h1>' ?>
 				<?= wfMessage( 'oasis-wiki-navigation', $wordmarkText )->escaped() ?>
 			<?= $seoTestOneH1 ? '</h2>' : '</h1>' ?>
-	<? } ?>
+		<? } ?>
 		<?= $app->renderView( 'WikiNavigation', 'Index' ) ?>
 	</nav>
 	<?php if ( $displayHeaderButtons ) { ?>
