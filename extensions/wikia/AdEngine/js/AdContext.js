@@ -23,15 +23,11 @@ define('ext.wikia.adEngine.adContext', [
 	}
 
 	function getMercuryCategories() {
-		var categoryDict;
-
-		try {
-			categoryDict = w.Wikia.article.article.categories;
-		} catch (e) {
+		if (!context.targeting.mercuryPageCategories) {
 			return;
 		}
 
-		return categoryDict.map(function (item) { return item.title; });
+		return context.targeting.mercuryPageCategories.map(function (item) { return item.title; });
 	}
 
 	function isProperCountry(countryList) {
