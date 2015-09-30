@@ -193,24 +193,33 @@ if ( array_key_exists('h', $opts) || array_key_exists ('f', $opts) ) {
 		require_once( $dirName . "/../../../config/DB.php" );
 	}
 
-	if ( isset( $wgDBbackenduser, $wgDBbackendpassword, $wgLBFactoryConf['hostsByName']['sharedb-s4'] ) ) {
+	if ( isset( $wgDBbackenduser, $wgDBbackendpassword ) ) {
 		// prepare raw output for consumption as csv. changes " => \"; \t => ","; beginning of line => ", end of line => "
 		$prepareCsv = "sed 's/\"/\\\\\"/g;s/\\t/\",\"/g;s/^/\"/;s/$/\"/;s/\\n//g'";
 
-		$dbhost = $wgLBFactoryConf['hostsByName']['sharedb-s4'];
+		// This is kind of a hack
+		$dbhost = 'slave.db-sharedb.service.sjc.consul';
 	    // dump city_list row to local CSV file and import into local database
 		$response = `mysql -u $wgDBbackenduser -p$wgDBbackendpassword --database wikicities -h $dbhost -ss -e "SELECT * from city_list where city_id = $city_id " | $prepareCsv > /tmp/city_list.csv`;
 		print "city_list dump ok\n";
 		$response = `mysqlimport -u $wgDBdevboxUser -p$wgDBdevboxPass -h $wgDBdevboxCentral --replace --fields-enclosed-by=\\" --fields-terminated-by=, --local wikicities /tmp/city_list.csv`;
 		print $response;
 		unlink ("/tmp/city_list.csv");
+
 		// dump city_domains rows to local CSV file and improt into local database
 		$response = `mysql -u $wgDBbackenduser -p$wgDBbackendpassword --database wikicities -h $dbhost -ss -e "SELECT * from city_domains where city_id = $city_id " | $prepareCsv > /tmp/city_domains.csv`;
 		print "city_domains dump ok\n";
 		$response = `mysqlimport -u $wgDBdevboxUser -p$wgDBdevboxPass -h $wgDBdevboxCentral --replace --fields-enclosed-by=\\" --fields-terminated-by=, --local wikicities /tmp/city_domains.csv`;
 		print $response;
 		unlink ("/tmp/city_domains.csv");
+
 		// dump city_vars rows to local CVS file and import into local database
+		$response = `mysql -u $wgDBbackenduser -p$wgDBbackendpassword --database wikicities -h $dbhost -ss -e "select * from city_variables_pool where cv_id in (select cv_variable_id from city_variables where cv_city_id = $city_id)" | $prepareCsv > /tmp/city_variables_pool.csv`;
+		print "city_variables_pool dump ok\n";
+		$response = `mysqlimport -u $wgDBdevboxUser -p$wgDBdevboxPass -h $wgDBdevboxCentral --replace --fields-enclosed-by=\\" --fields-terminated-by=, --local wikicities /tmp/city_variables_pool.csv`;
+		print $response;
+		unlink ("/tmp/city_variables_pool.csv");
+
 		$response = `mysql -u $wgDBbackenduser -p$wgDBbackendpassword --database wikicities -h $dbhost -ss -e "SELECT * from city_variables where cv_city_id = $city_id " | $prepareCsv > /tmp/city_variables.csv`;
 		print "city_vars dump ok\n";
 		$response = `mysqlimport -u $wgDBdevboxUser -p$wgDBdevboxPass -h $wgDBdevboxCentral --replace --fields-enclosed-by=\\" --fields-terminated-by=, --local wikicities /tmp/city_variables.csv`;
@@ -264,6 +273,7 @@ if ( array_key_exists('h', $opts) || array_key_exists ('i', $opts) ) {
 	echo "That database is supposed to live on server:" . $wgDBdevboxServer . "\n";
 
 	// Now we create the database on the relevant server
+	return;
 
 	$response = `mysql -u $wgDBdevboxUser -p$wgDBdevboxPass -h $wgDBdevboxServer -e "CREATE DATABASE IF NOT EXISTS $dbname" 2>&1`;
 	if(trim($response) != ""){
