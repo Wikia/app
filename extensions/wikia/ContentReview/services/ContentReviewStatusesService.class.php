@@ -143,7 +143,9 @@ class ContentReviewStatusesService extends \WikiaService {
 					$liveRevisionId
 				);
 
-				$page['submit'] = true;
+				if ( $title->userCan( 'edit' ) ) {
+					$page['submit'] = true;
+				}
 			}
 		}
 

@@ -17,7 +17,7 @@ class JsPagesSpecialController extends WikiaSpecialPageController {
 	}
 
 	protected function checkAccess() {
-		if( !$this->wg->User->isLoggedIn() || !$this->wg->User->isAllowed( 'content-review' ) ) {
+		if( !$this->wg->User->isLoggedIn() ) {
 			return false;
 		}
 		return true;
@@ -55,10 +55,10 @@ class JsPagesSpecialController extends WikiaSpecialPageController {
 
 		if ( !empty( $jsPage['diffLink'] ) ) {
 			$statusMessage .= '<span class="content-review-status content-review-status-' . $jsPage['statusKey'] . '">'
-				. $jsPage['diffLink'] . '</span>' . $jsPage['message'];
+				. $jsPage['diffLink'] . '</span> ' . $jsPage['message'];
 
 			if ( !empty( $jsPage['reasonLink'] ) ) {
-				$statusMessage .= $jsPage['reasonLink'];
+				$statusMessage .= ' ' . $jsPage['reasonLink'];
 			}
 		} else {
 			$statusMessage .= '<span class="content-review-status content-review-status-' . $jsPage['statusKey'] . '">'
