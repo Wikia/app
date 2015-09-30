@@ -274,8 +274,6 @@ if ( array_key_exists('h', $opts) || array_key_exists ('i', $opts) ) {
 	echo "That database is supposed to live on server:" . $wgDBdevboxServer . "\n";
 
 	// Now we create the database on the relevant server
-	return;
-
 	$response = `mysql -u $wgDBdevboxUser -p$wgDBdevboxPass -h $wgDBdevboxServer -e "CREATE DATABASE IF NOT EXISTS $dbname" 2>&1`;
 	if(trim($response) != ""){
 		print "CREATE DATABASE attempt returned the error:\n$response\n";
