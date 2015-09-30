@@ -213,15 +213,16 @@ if ( array_key_exists('h', $opts) || array_key_exists ('f', $opts) ) {
 		print $response;
 		unlink ("/tmp/city_domains.csv");
 
-		// dump city_vars rows to local CVS file and import into local database
+		// dump city_variables_pool rows to local CVS file and import into local database
 		$response = `mysql -u $wgDBbackenduser -p$wgDBbackendpassword --database wikicities -h $dbhost -ss -e "select * from city_variables_pool where cv_id in (select cv_variable_id from city_variables where cv_city_id = $city_id)" | $prepareCsv > /tmp/city_variables_pool.csv`;
 		print "city_variables_pool dump ok\n";
 		$response = `mysqlimport -u $wgDBdevboxUser -p$wgDBdevboxPass -h $wgDBdevboxCentral --replace --fields-enclosed-by=\\" --fields-terminated-by=, --local wikicities /tmp/city_variables_pool.csv`;
 		print $response;
 		unlink ("/tmp/city_variables_pool.csv");
 
+		// dump city_variables rows to local CVS file and import into local database
 		$response = `mysql -u $wgDBbackenduser -p$wgDBbackendpassword --database wikicities -h $dbhost -ss -e "SELECT * from city_variables where cv_city_id = $city_id " | $prepareCsv > /tmp/city_variables.csv`;
-		print "city_vars dump ok\n";
+		print "city_variables dump ok\n";
 		$response = `mysqlimport -u $wgDBdevboxUser -p$wgDBdevboxPass -h $wgDBdevboxCentral --replace --fields-enclosed-by=\\" --fields-terminated-by=, --local wikicities /tmp/city_variables.csv`;
 		print $response;
 		unlink ("/tmp/city_variables.csv");
