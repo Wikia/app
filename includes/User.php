@@ -4004,6 +4004,9 @@ class User {
 			}
 			// Wikia change - end
 		}
+
+		wfRunHooks( 'UserMatchEditToken' ); # Wikia change
+
 		return $val == $sessionToken;
 	}
 
