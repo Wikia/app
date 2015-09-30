@@ -25,6 +25,8 @@ class CSRFDetector {
 	/**
 	 * Edit token should be checked before a revision is inserted
 	 *
+	 * @see MAIN-5465
+	 *
 	 * @param \Revision $revision
 	 * @param $data
 	 * @param $flags
@@ -59,6 +61,8 @@ class CSRFDetector {
 
 	/**
 	 * Edit token should be checked before saving user settings
+	 *
+	 * @see CE-1224
 	 *
 	 * @return bool true, continue hook processing
 	 */
