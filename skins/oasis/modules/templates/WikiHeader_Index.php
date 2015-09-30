@@ -2,7 +2,7 @@
 	<?= $app->renderView( 'WikiHeader', 'Wordmark' ) ?>
     <nav class="WikiNav">
     	<? if ( $displayHeader ): ?>
-        <h1><?= wfMsg( 'oasis-wiki-navigation', $wordmarkText ) ?></h1>
+        <h1><?= wfMessage( 'oasis-wiki-navigation', $wordmarkText )->escaped() ?></h1>
         <? endif; ?>
 		<?= $app->renderView( 'WikiNavigation', 'Index' ) ?>
     </nav>
