@@ -988,7 +988,6 @@ class ArticlesApiController extends WikiaApiController {
 
 		if ( !empty( $articleId ) ) {
 			$article = Article::newFromID( $articleId );
-			$title = $article->getTitle();
 		} else {
 			$title = Title::newFromText( $articleTitle, NS_MAIN );
 
@@ -1003,9 +1002,10 @@ class ArticlesApiController extends WikiaApiController {
 
 		if ( $redirect !== 'no' && $article->getPage()->isRedirect() ) {
 			// false, Title object of local target or string with URL
+			/** @var Title|string|boolean $followRedirect */
 			$followRedirect = $article->getPage()->followRedirect();
 
-			if ( $followRedirect && !is_string( $followRedirect ) ) {
+			if ( $followRedirect instanceof Title && !empty($followRedirect->getArticleID()) ) {
 				$article = Article::newFromTitle( $followRedirect, RequestContext::getMain() );
 			}
 		}

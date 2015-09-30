@@ -338,9 +338,12 @@ class MercuryApiController extends WikiaController {
 			$article = Article::newFromID( $articleId );
 
 			if ( $title->isRedirect() ) {
-				/* @var Title $title */
-				$title = $article->getRedirectTarget();
-				$article = Article::newFromID( $title->getArticleID() );
+				/* @var Title|null $redirectTargetTitle */
+				$redirectTargetTitle = $article->getRedirectTarget();
+				if ( $redirectTargetTitle instanceof Title && !empty($redirectTargetTitle->getArticleID() ) ) {
+					$article = Article::newFromID( $redirectTargetTitle->getArticleID() );
+					$title = $redirectTargetTitle;
+				}
 				$data['redirected'] = true;
 			}
 
