@@ -41,11 +41,24 @@ class SEOTweaksGlobalHooksHelper {
 	 * @return null|Title
 	 */
 	static protected function getFirstArticleImage( $title ) {
-		$retTitle = self::getFirstArticleImageLargerThan( $title, self::PREF_WIDTH, self::PREF_HEIGHT );
-		if ( empty( $retTitle ) ) {
-			$retTitle = self::getFirstArticleImageLargerThan( $title, self::MIN_WIDTH, self::MIN_HEIGHT );
+		$retTitle = self::getInfoboxImage( $title );
+
+		if ( !empty( $retTitle ) ) {
+			return $retTitle;
 		}
-		return $retTitle;
+		$retTitle = self::getFirstArticleImageLargerThan( $title, self::PREF_WIDTH, self::PREF_HEIGHT );
+
+		if ( !empty( $retTitle ) ) {
+			return $retTitle;
+		}
+
+		return self::getFirstArticleImageLargerThan( $title, self::MIN_WIDTH, self::MIN_HEIGHT );
+	}
+
+	static protected function getInfoboxImage( $title ) {
+		$imageServing = new ImageServing( [ $title->getArticleID() ], self::MIN_WIDTH, self::MIN_HEIGHT );
+		$out = $imageServing->getImages( 1, "ImageServingDriverInfoboxImageNS" );
+		return self::createTitleFromResultArray( $out );
 	}
 
 	/**
@@ -57,6 +70,10 @@ class SEOTweaksGlobalHooksHelper {
 	static protected function getFirstArticleImageLargerThan( $title, $width, $height ) {
 		$imageServing = new ImageServing( [ $title->getArticleID() ], $width, $height );
 		$out = $imageServing->getImages( 1 );
+		return self::createTitleFromResultArray( $out );
+	}
+
+	static protected function createTitleFromResultArray( $out ) {
 		if ( !empty( $out ) ) {
 			///used reset instead direct call because we can get hashmap from ImageServing driver.
 			$first = reset( $out );
