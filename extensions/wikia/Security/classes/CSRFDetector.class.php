@@ -58,6 +58,16 @@ class CSRFDetector {
 	}
 
 	/**
+	 * Edit token should be checked before saving user settings
+	 *
+	 * @return bool true, continue hook processing
+	 */
+	public static function onUserSaveSettings() {
+		self::assertEditTokenWasChecked( __METHOD__ );
+		return true;
+	}
+
+	/**
 	 * Assert that User::matchEditToken was called in this request
 	 *
 	 * @param string $fname the caller name
