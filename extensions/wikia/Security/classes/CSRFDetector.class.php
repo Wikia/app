@@ -73,10 +73,12 @@ class CSRFDetector {
 	 * @param string $fname the caller name
 	 */
 	private static function assertEditTokenWasChecked( $fname ) {
-		$request = \RequestContext::getMain()->getRequest();
+		// filter out maintenance scripts
+		if ( \RequestContext::getMain()->getRequest() instanceof \FauxRequest ) {
+			return;
+		}
 
-		# check the request against WebRequest to filter out maintenance scripts
-		if ( get_class( $request ) === \WebRequest::class && self::$userMatchEditTokenCalled === false ) {
+		if ( self::$userMatchEditTokenCalled === false ) {
 			wfDebug( __METHOD__ . ": {$fname} called, but edit token was not checked\n" );
 
 			WikiaLogger::instance()->warning( __METHOD__, [
