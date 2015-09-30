@@ -27,15 +27,12 @@ class NodeImage extends Node {
 			$alt = $this->getValueWithDefault( $this->xmlNode->{self::ALT_TAG_NAME} );
 			$caption = $this->getValueWithDefault( $this->xmlNode->{self::CAPTION_TAG_NAME} );
 
-			wfRunHooks( 'PortableInfoboxNodeImage::getData', [ $title, &$ref, $caption ] );
-
 			$this->data = [
 				'url' => $this->resolveImageUrl( $file ),
 				'name' => ( $title ) ? $title->getText() : '',
 				'key' => ( $title ) ? $title->getDBKey() : '',
 				'alt' => $alt,
-				'caption' => $caption,
-				'ref' => $ref
+				'caption' => $caption
 			];
 
 			if ( $this->isVideo( $file ) ) {

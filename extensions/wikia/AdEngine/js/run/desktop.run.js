@@ -14,7 +14,7 @@ require([
 	'ext.wikia.adEngine.slot.scrollHandler',
 	'ext.wikia.adEngine.slotTracker',
 	'ext.wikia.adEngine.slotTweaker',
-	'ext.wikia.adEngine.sourcePointDetection',
+	'ext.wikia.adEngine.sourcePoint',
 	'wikia.krux',
 	'wikia.window',
 	'wikia.loader'

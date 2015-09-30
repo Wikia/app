@@ -23,15 +23,11 @@ define('ext.wikia.adEngine.adContext', [
 	}
 
 	function getMercuryCategories() {
-		var categoryDict;
-
-		try {
-			categoryDict = w.Wikia.article.article.categories;
-		} catch (e) {
+		if (!context.targeting.mercuryPageCategories) {
 			return;
 		}
 
-		return categoryDict.map(function (item) { return item.title; });
+		return context.targeting.mercuryPageCategories.map(function (item) { return item.title; });
 	}
 
 	function isProperCountry(countryList) {
@@ -77,11 +73,7 @@ define('ext.wikia.adEngine.adContext', [
 		// SourcePoint detection integration
 		if (!noExternals && context.opts.sourcePointDetectionUrl) {
 			context.opts.sourcePointDetection = isUrlParamSet('sourcepointdetection') ||
-				(context.targeting.skin === 'oasis' &&
-				isProperCountry(instantGlobals.wgAdDriverSourcePointDetectionCountries));
-			context.opts.sourcePointDetectionMobile = isUrlParamSet('sourcepointdetection') ||
-				(context.targeting.skin === 'mercury' &&
-				isProperCountry(instantGlobals.wgAdDriverSourcePointDetectionMobileCountries));
+				isProperCountry(instantGlobals.wgAdDriverSourcePointDetectionCountries);
 		}
 
 		// SourcePoint integration

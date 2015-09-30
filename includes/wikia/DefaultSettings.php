@@ -640,6 +640,7 @@ include_once( "$IP/extensions/wikia/Rail/Rail.setup.php" );
 include_once( "$IP/extensions/wikia/PageShare/PageShare.setup.php" );
 include_once( "$IP/extensions/wikia/PaidAssetDrop/PaidAssetDrop.setup.php" );
 include_once( "$IP/extensions/wikia/CreateNewWiki/CreateNewWiki_global_setup.php" );
+include_once( "$IP/extensions/wikia/Security/Security.setup.php" );
 
 /**
  * @name $wgSkipSkins
@@ -1534,13 +1535,6 @@ $wgAdDriverSourcePointCountries = null;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverSourcePointDetectionCountries = null;
-
-/**
- * @name $wgAdDriverSourcePointDetectionMobileCountries
- * List of countries to call SourcePoint detection scripts on Mercury
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverSourcePointDetectionMobileCountries = null;
 
 /**
  * trusted proxy service registry
