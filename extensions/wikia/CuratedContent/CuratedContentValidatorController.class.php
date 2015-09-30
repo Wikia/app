@@ -17,7 +17,7 @@ class CuratedContentValidatorController extends WikiaController {
 
 	public function validateSection() {
 		global $wgRequest;
-		if (!$wgRequest->wasPosted()) {
+		if ( !$wgRequest->wasPosted() ) {
 			throw new CuratedContentValidatorMethodNotAllowedException();
 		}
 
@@ -36,7 +36,7 @@ class CuratedContentValidatorController extends WikiaController {
 
 	public function validateSectionWithItems() {
 		global $wgRequest;
-		if (!$wgRequest->wasPosted()) {
+		if ( !$wgRequest->wasPosted() ) {
 			throw new CuratedContentValidatorMethodNotAllowedException();
 		}
 
@@ -64,7 +64,7 @@ class CuratedContentValidatorController extends WikiaController {
 
 	public function validateItem() {
 		global $wgRequest;
-		if (!$wgRequest->wasPosted()) {
+		if ( !$wgRequest->wasPosted() ) {
 			throw new CuratedContentValidatorMethodNotAllowedException();
 		}
 
