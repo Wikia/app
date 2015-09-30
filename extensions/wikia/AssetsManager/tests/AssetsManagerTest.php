@@ -268,10 +268,10 @@ class AssetsManagerTest extends WikiaBaseTest {
 	public function getGroupsForSkin() {
 		return [
 			['oasis', ['oasis'], false, true],
-			['oasis', ['venus'], false, false],
-			['oasis', ['oasis', 'venus'], false, true],
+			['oasis', ['monobook'], false, false],
+			['oasis', ['oasis', 'monobook'], false, true],
 			['oasis', [], false, true],
-			['venus', [], true, false]
+			['monobook', [], true, false]
 		];
 	}
 }

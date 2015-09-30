@@ -77,9 +77,6 @@ $wgResourceModules += array(
 			'ext.visualEditor.viewPageTarget'
 		)
 	),
-	'ext.visualEditor.wikia.venusViewPageTarget' => $wgVisualEditorWikiaResourceTemplate + array(
-		// placeholder to establish naming scheme
-	),
 	'ext.visualEditor.wikia.core' => $wgVisualEditorWikiaResourceTemplate + array(
 		'scripts' => array(
 			've/ve.track.js',

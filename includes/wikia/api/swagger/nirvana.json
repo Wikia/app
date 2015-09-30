@@ -994,48 +994,6 @@
         ]
       }
     },
-    "/Recommendations/ForArticle": {
-      "get": {
-        "tags": ["recommendations"],
-        "responses": {
-          "200": {
-            "description": "No response was specified",
-            "schema": {
-              "$ref": "RecommendationsResultSet"
-            }
-          },
-          "400": {
-            "description": "input parameter missing or exceeds limit"
-          },
-          "404": {
-            "description": "Selected article not found"
-          }
-        },
-        "description": "",
-        "summary": "Get recommendations for article from many sources",
-        "operationId": "getForArticle",
-        "parameters": [
-          {
-            "in": "query",
-            "description": "Article ID",
-            "name": "id",
-            "required": true,
-            "type": "integer",
-            "format": "int32",
-            "default": ""
-          },
-          {
-            "in": "query",
-            "description": "Number of requested recommendations - default 9, min value: 1, max value: 30",
-            "name": "limit",
-            "required": false,
-            "type": "integer",
-            "format": "int32",
-            "default": 9
-          }
-        ]
-      }
-    },
     "/RelatedPages/List": {
       "get": {
         "tags": ["relatedPages"],

@@ -58,13 +58,7 @@ $commentsCounter = wfMessage( 'oasis-comments-header', $wg->Lang->FormatNum( $co
 	<? if ( $countComments ): ?>
 		<div class="article-comments-pagination upper-pagination"><?= $pagination ?></div>
 	<? endif ?>
-	<?= $app->getView( 'ArticleComments', 'VenusCommentList', [
-			'commentListRaw' => $commentListRaw,
-			'page' => $page,
-			'useMaster' => false
-		])->render()
-	?>
-		<button class="comments-show-more"><?= wfMessage('article-comments-show-more')->plain() ?></button>
+	<button class="comments-show-more"><?= wfMessage('article-comments-show-more')->plain() ?></button>
 	<? if ( $countComments ): ?>
 		<div class="article-comments-pagination"><?= $pagination ?></div>
 	<? endif ?>
