@@ -17,7 +17,7 @@ define(
 		}
 
 		function bindEvents() {
-			$('#content-review-module-submit').on('click', submitPageForReview);
+			$('.content-review-module-submit').on('click', submitPageForReview);
 		}
 
 		function submitPageForReview(event) {
