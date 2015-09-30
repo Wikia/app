@@ -646,7 +646,7 @@ include_once( $IP . '/extensions/wikia/Rail/Rail.setup.php' );
 include_once( $IP . '/extensions/wikia/PageShare/PageShare.setup.php' );
 include_once( $IP . '/extensions/wikia/PaidAssetDrop/PaidAssetDrop.setup.php' );
 include_once( $IP . '/extensions/wikia/CreateNewWiki/CreateNewWiki_global_setup.php' );
-include_once( $IP/ . 'extensions/wikia/Security/Security.setup.php' );
+include_once( $IP . '/extensions/wikia/Security/Security.setup.php' );
 
 /**
  * @name $wgSkipSkins
