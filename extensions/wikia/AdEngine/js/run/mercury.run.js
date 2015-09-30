@@ -23,23 +23,18 @@ require([
 	'use strict';
 	var skin = 'mercury';
 
-	// @TODO refactor this method after ADEN-2430 by using new module?
-	function isProperCountry(countryList) {
-		return !!(countryList && countryList.indexOf && countryList.indexOf(geo.getCountryCode()) > -1);
-	}
-
 	messageListener.init();
 	scrollHandler.init(skin);
 
 	// Custom ads (skins, footer, etc)
 	win.loadCustomAd = customAdsLoader.loadCustomAd;
 
-	if (isProperCountry(instantGlobals.wgAmazonMatchCountriesMobile)) {
+	if (geo.isProperGeo(instantGlobals.wgAmazonMatchCountriesMobile)) {
 		amazon.call();
 	}
 
 	mercuryListener.onLoad(function () {
-		if (isProperCountry(instantGlobals.wgAdDriverOpenXBidderCountriesMobile)) {
+		if (geo.isProperGeo(instantGlobals.wgAdDriverOpenXBidderCountriesMobile)) {
 			oxBidder.call(skin);
 		}
 	});
