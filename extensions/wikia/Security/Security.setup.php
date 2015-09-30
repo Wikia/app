@@ -14,3 +14,7 @@ $wgAutoloadClasses['Wikia\\Security\\Exception'] = __DIR__ . '/classes/Exception
 // PLATFORM-1540: detect revision inserts not guarded by user's edit token check
 $wgHooks['UserMatchEditToken'][] = 'Wikia\\Security\\CSRFDetector::onUserMatchEditToken';
 $wgHooks['RevisionInsertComplete'][] = 'Wikia\\Security\\CSRFDetector::onRevisionInsertComplete';
+
+// PLATFORM-1540: detect file uploads (local files and via URL) not guarded by user's edit token check
+$wgHooks['UploadFromUrlReallyFetchFile'][] = 'Wikia\\Security\\CSRFDetector::onUploadFromUrlReallyFetchFile';
+$wgHooks['UploadComplete'][] = 'Wikia\\Security\\CSRFDetector::onUploadComplete';
