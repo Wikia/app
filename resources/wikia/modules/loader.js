@@ -143,7 +143,7 @@ define('wikia.loader', [
 				}
 			},
 			facebook: {
-				file: window.fbScript || fbLocale.getSdkUrl(window.wgContentLanguage),
+				file: window.fbScript || fbLocale.getSdkUrl(window.wgUserLanguage),
 				check: function () {
 					return typeof window.FB;
 				},

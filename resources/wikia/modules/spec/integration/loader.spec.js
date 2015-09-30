@@ -6,7 +6,7 @@ describe('Loader Module', function () {
 			document: window.document,
 			wgCdnRootUrl: '',
 			wgAssetsManagerQuery: '/__am/%4$d/%1$s/%3$s/%2$s',
-			wgContentLanguage: 'ja',
+			wgUserLanguage: 'ja',
 			wgStyleVersion: ~~(Math.random() * 99999)
 		},
 		mwMock,
@@ -128,7 +128,7 @@ describe('Loader Module', function () {
 	it('Facebook library is properly initialized when lazy loaded', function (done) {
 		var windowMock = {
 				document: window.document,
-				wgContentLanguage: 'ja',
+				wgUserLanguage: 'ja',
 				onFBloaded: function () {}
 			},
 			loader = modules['wikia.loader'](windowMock, mwMock, nirvanaMock, jQuery, logMock, fbLocale);
