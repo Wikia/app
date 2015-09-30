@@ -73,10 +73,11 @@ class ContentReviewStatusesService extends \WikiaService {
 	 */
 	private function prepareData( $jsPages, $statuses ) {
 		foreach ( $jsPages as $pageId => &$page ) {
+			$liveRevisionId = 0;
+
 			$page += $this->initPageData();
 
 			$title = \Title::newFromText( $page['page_title'], NS_MEDIAWIKI );
-
 			$page['pageLink'] = $this->createPageLink( $title );
 
 			if ( isset( $statuses[$pageId] ) ) {
@@ -130,16 +131,18 @@ class ContentReviewStatusesService extends \WikiaService {
 						}
 					}
 				}
+			}
 
-				// If latest revision is not equal last touched revision it means that must be submited for review
-				if ( $page['page_latest'] != $page['latestRevision']['revisionId'] ) {
-					$page['latestRevision'] = $this->prepareRevisionData(
-						$title,
-						self::STATUS_UNSUBMITTED,
-						$page['page_latest'],
-						$liveRevisionId
-					);
-				}
+			// If latest revision is not equal last touched revision it means that must be submited for review
+			if ( $page['page_latest'] != $page['latestRevision']['revisionId'] ) {
+				$page['latestRevision'] = $this->prepareRevisionData(
+					$title,
+					self::STATUS_UNSUBMITTED,
+					$page['page_latest'],
+					$liveRevisionId
+				);
+
+				$page['submit'] = true;
 			}
 		}
 

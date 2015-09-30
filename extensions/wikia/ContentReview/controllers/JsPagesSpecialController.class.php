@@ -11,6 +11,7 @@ class JsPagesSpecialController extends WikiaSpecialPageController {
 	public function init() {
 		$this->specialPage->setHeaders();
 
+		Wikia::addAssetsToOutput( 'content_review_module_scss' );
 		\JSMessages::enqueuePackage( 'JsPagesSpecialPage', \JSMessages::EXTERNAL );
 	}
 
@@ -32,8 +33,41 @@ class JsPagesSpecialController extends WikiaSpecialPageController {
 		$this->getOutput()->setPageTitle( wfMessage( 'content-review-special-js-pages-title' )->plain() );
 
 		$contentReviewStatusesService = new ContentReviewStatusesService();
-		$this->jsPages = $contentReviewStatusesService->getJsPagesStatuses( $this->wg->CityId );
+		$jsPages = $contentReviewStatusesService->getJsPagesStatuses( $this->wg->CityId );
+		$this->jsPages = $this->formatMessages( $jsPages );
+
+		$this->submit = wfMessage( 'content-review-module-submit' )->escaped();
 	}
+
+	private function formatMessages( $jsPages ) {
+		foreach ( $jsPages as &$jsPage ) {
+			$jsPage['latestRevision']['statusMessage'] = $this->formatMessage( $jsPage['latestRevision'] );
+			$jsPage['latestReviewed']['statusMessage'] = $this->formatMessage( $jsPage['latestReviewed'] );
+			$jsPage['liveRevision']['statusMessage'] = $this->formatMessage( $jsPage['liveRevision'] );
+		}
+
+		return $jsPages;
+	}
+
+	private function formatMessage( $jsPage ) {
+		$statusMessage = '';
+
+		if ( !empty( $jsPage['diffLink'] ) ) {
+			$statusMessage .= '<span class="content-review-status content-review-status-' . $jsPage['statusKey'] . '">'
+				. $jsPage['diffLink'] . '</span>' . $jsPage['message'];
+
+			if ( !empty( $jsPage['reasonLink'] ) ) {
+				$statusMessage .= $jsPage['reasonLink'];
+			}
+		} else {
+			$statusMessage .= '<span class="content-review-status content-review-status-' . $jsPage['statusKey'] . '">'
+				. $jsPage['message'] . '</span>';
+		}
+
+		return $statusMessage;
+	}
+
+
 
 
 }
