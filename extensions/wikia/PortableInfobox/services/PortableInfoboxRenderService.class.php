@@ -5,6 +5,7 @@ use Wikia\PortableInfobox\Helpers\PortableInfoboxRenderServiceHelper;
 class PortableInfoboxRenderService extends WikiaService {
 	const MOBILE_TEMPLATE_POSTFIX = '-mobile';
 	const MEDIA_CONTEXT_INFOBOX_HERO_IMAGE = 'infobox-hero-image';
+	const MEDIA_CONTEXT_INFOBOX = 'infobox';
 
 	private static $templates = [
 		'wrapper' => 'PortableInfoboxWrapper.mustache',
@@ -151,6 +152,7 @@ class PortableInfoboxRenderService extends WikiaService {
 		$helper = new PortableInfoboxRenderServiceHelper();
 
 		if ( $type === 'image' ) {
+			$data[ 'image' ][ 'context' ] = self::MEDIA_CONTEXT_INFOBOX;
 			$data = $helper->extendImageData( $data );
 			if ( !$data ) {
 				return false;

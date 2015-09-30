@@ -84,7 +84,7 @@ class PortableInfoboxRenderServiceHelper {
 			return false;
 		}
 
-		wfRunHooks( 'PortableInfoboxNodeImage::getData', [ $data, &$ref ] );
+		wfRunHooks( 'PortableInfoboxRenderServiceHelper::extendImageData', [ $data, &$ref ] );
 
 		$data[ 'ref' ] = $ref;
 		$data[ 'height' ] = $thumbnail->getHeight();

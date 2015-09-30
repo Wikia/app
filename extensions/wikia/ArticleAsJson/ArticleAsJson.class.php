@@ -14,7 +14,6 @@ class ArticleAsJson extends WikiaService {
 	const MEDIA_CONTEXT_ARTICLE_VIDEO = 'article-video';
 	const MEDIA_CONTEXT_GALLERY_IMAGE = 'gallery-image';
 	const MEDIA_CONTEXT_ICON = 'icon';
-	const MEDIA_CONTEXT_INFOBOX = 'infobox';
 
 	private static function createMarker( $width = 0, $height = 0, $isGallery = false ){
 		$blankImgUrl = '//:0';
@@ -134,13 +133,13 @@ class ArticleAsJson extends WikiaService {
 		return true;
 	}
 
-	public static function onPortableInfoboxNodeImageGetData( $data, &$ref ) {
+	public static function onExtendPortableInfoboxImageData( $data, &$ref ) {
 		wfProfileIn( __METHOD__ );
 
 		$title = Title::newFromText( $data['name'] );
 		if ( $title ) {
 			$details = WikiaFileHelper::getMediaDetail( $title, self::$mediaDetailConfig );
-			$details['context'] = isset( $data['context'] ) ? $data['context'] : self::MEDIA_CONTEXT_INFOBOX;
+			$details['context'] = $data['context'];
 			self::$media[] = self::createMediaObject( $details, $title->getText(), $data['caption'] );
 			$ref = count( self::$media ) - 1;
 		}
