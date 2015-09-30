@@ -5,19 +5,19 @@
  */
 $(function () {
 	'use strict';
-	if ( !window.wgGoogleSearchTest ) {
+	if (!window.wgGoogleSearchTest) {
 		return;
 	}
 
-    var wikiaSite = $('.WikiaSiteWrapper'),
+    var $wikiaSite = $('.WikiaSiteWrapper'),
         searchId = window.wgGoogleSearchParam;
 
 	//The html class is defined in Oasis_Index.php. Better check if it exists.
-	if ( wikiaSite.length === 0 ) {
+	if ($wikiaSite.length === 0) {
 		return;
 	}
 
-	wikiaSite.before('<gcse:search></gcse:search>');
+	$wikiaSite.before('<gcse:search></gcse:search>');
 	$.loadGoogleSearchAPI(searchId);
 
 	$('#searchForm').submit( function (evt) {
