@@ -13,7 +13,9 @@ class CSRFDetector {
 	private static $userMatchEditTokenCalled = false;
 
 	/**
-	 * @return bool
+	 * Set a flag when User::matchEditToken is called
+	 *
+	 * @return bool true, continue hook processing
 	 */
 	public static function onUserMatchEditToken() {
 		self::$userMatchEditTokenCalled = true;
@@ -26,7 +28,7 @@ class CSRFDetector {
 	 * @param \Revision $revision
 	 * @param $data
 	 * @param $flags
-	 * @return bool
+	 * @return bool true, continue hook processing
 	 */
 	public static function onRevisionInsertComplete( \Revision $revision, $data, $flags ) {
 		self::assertEditTokenWasChecked( __METHOD__ );
@@ -41,10 +43,11 @@ class CSRFDetector {
 	private static function assertEditTokenWasChecked( $fname ) {
 		$request = \RequestContext::getMain()->getRequest();
 
+		# check the request against WebRequest to filter out maintenance scripts
 		if ( get_class( $request ) === \WebRequest::class && self::$userMatchEditTokenCalled === false ) {
-			wfDebug( __METHOD__ . ": revision was inserted, but edit token was not checked\n" );
+			wfDebug( __METHOD__ . ": {$fname} called, but edit token was not checked\n" );
 
-			WikiaLogger::instance()->warning( __METHOD__ . '::noEditTokenCheck', [
+			WikiaLogger::instance()->warning( __METHOD__, [
 				'caller' => $fname,
 				'exception' => new Exception(),
 			] );
