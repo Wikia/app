@@ -76,7 +76,7 @@ define('ext.wikia.adEngine.slot.scrollHandler', [
 		var el = doc.getElementById(slotName),
 			offset = 0;
 
-		if (el == null) {
+		if (!el) {
 			return false;
 		}
 
