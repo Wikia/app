@@ -12,6 +12,7 @@ class JsPagesSpecialController extends WikiaSpecialPageController {
 		$this->specialPage->setHeaders();
 
 		Wikia::addAssetsToOutput( 'content_review_module_scss' );
+		Wikia::addAssetsToOutput( 'content_review_module_js' );
 		\JSMessages::enqueuePackage( 'JsPagesSpecialPage', \JSMessages::EXTERNAL );
 	}
 

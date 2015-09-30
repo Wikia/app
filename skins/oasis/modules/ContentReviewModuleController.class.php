@@ -43,6 +43,7 @@ class ContentReviewModuleController extends WikiaController {
 			'displaySubmit',
 			$pageStatus['latestRevision']['statusKey'] === ContentReviewStatusesService::STATUS_UNSUBMITTED
 		);
+		$this->setVal( 'pageName', $pageStatus['pageName'] );
 
 		/**
 		 * Last reviewed status

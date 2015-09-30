@@ -79,6 +79,7 @@ class ContentReviewStatusesService extends \WikiaService {
 
 			$title = \Title::newFromText( $page['page_title'], NS_MEDIAWIKI );
 			$page['pageLink'] = $this->createPageLink( $title );
+			$page['pageName'] = $title->getFullText();
 
 			if ( isset( $statuses[$pageId] ) ) {
 				$liveRevisionId = $this->getLiveRevision( $statuses[$pageId] );

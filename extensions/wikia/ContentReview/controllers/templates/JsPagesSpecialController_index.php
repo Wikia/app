@@ -20,7 +20,7 @@
 				<td><?= $page['liveRevision']['statusMessage'] ?></td>
 				<td>
 					<?php if ( $page['submit'] ): ?>
-						<button class="content-review-module-submit primary">
+						<button class="content-review-module-submit primary" data-page-name="<?= $page['pageName'] ?>">
 							<?= $submit ?>
 						</button>
 					<?php endif; ?>
