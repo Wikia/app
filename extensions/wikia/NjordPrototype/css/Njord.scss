@@ -1,8 +1,7 @@
 @import "skins/shared/color";
 @import "skins/shared/mixins/gradient";
 @import "skins/shared/mixins/flexbox";
-@import "skins/oasis/css/core/responsive-variables";
-@import "skins/oasis/css/core/breakpoints-variables";
+@import "icons";
 
 $btn-bar-color: mix($color-page, #000, 90);
 @if $is-dark-wiki {
