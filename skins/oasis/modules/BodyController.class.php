@@ -454,7 +454,7 @@ class BodyController extends WikiaController {
 		$this->railModulesExist = true;
 
 		// use one column layout for pages with no right rail modules
-		if ( count( $this->railModuleList ) == 0 || !empty( $wg->SuppressRail) ) {
+		if ( count( $this->railModuleList ) == 0 || !empty( $wg->SuppressRail ) ) {
 			// Special:AdminDashboard doesn't need this class, but pages chromed with it do
 			if ( !$this->displayAdminDashboard || $this->displayAdminDashboardChromedArticle ) {
 				OasisController::addBodyClass('oasis-one-column');
