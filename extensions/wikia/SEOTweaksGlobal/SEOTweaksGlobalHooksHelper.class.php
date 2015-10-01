@@ -35,8 +35,9 @@ class SEOTweaksGlobalHooksHelper {
 	}
 
 	/**
-	 * Return first image from an article, the biggest as possible
-	 * take minimal recommended image size from facebook, and if not found, take minimal requirement
+	 * Return first image from an article, first check for infobox images,
+	 * If not found, take the biggest as possible:
+	 * first minimal recommended image size from facebook, and if not found, take minimal requirement
 	 * @param $title
 	 * @return null|Title
 	 */
@@ -55,6 +56,12 @@ class SEOTweaksGlobalHooksHelper {
 		return self::getFirstArticleImageLargerThan( $title, self::MIN_WIDTH, self::MIN_HEIGHT );
 	}
 
+	/**
+	 * @desc Return infobox image with minimal size of self::MIN_WIDTH x self::MIN_HEIGHT
+	 * using ImageServingDriverInfoboxImageNS
+	 * @param $title Title title of article to find the image for
+	 * @return null|\Title
+	 */
 	static protected function getInfoboxImage( $title ) {
 		$imageServing = new ImageServing( [ $title->getArticleID() ], self::MIN_WIDTH, self::MIN_HEIGHT );
 		$out = $imageServing->getImages( 1, "ImageServingDriverInfoboxImageNS" );
@@ -73,6 +80,11 @@ class SEOTweaksGlobalHooksHelper {
 		return self::createTitleFromResultArray( $out );
 	}
 
+	/**
+	 * @desc Creates a Title object from array of file names
+	 * @param $out array of file names
+	 * @return null|\Title
+	 */
 	static protected function createTitleFromResultArray( $out ) {
 		if ( !empty( $out ) ) {
 			///used reset instead direct call because we can get hashmap from ImageServing driver.

@@ -1,6 +1,9 @@
 <?php
 class ImageServingDriverInfoboxImageNS extends ImageServingDriverMainNS {
 
+	/**
+	 * @param array $articleIds
+	 */
 	protected function loadImagesFromDb( $articleIds = [ ] ) {
 		wfProfileIn( __METHOD__ );
 
@@ -8,5 +11,4 @@ class ImageServingDriverInfoboxImageNS extends ImageServingDriverMainNS {
 
 		wfProfileOut( __METHOD__ );
 	}
-
 }
