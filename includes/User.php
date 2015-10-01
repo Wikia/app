@@ -3525,32 +3525,6 @@ class User {
 			$this->mPassword = '';
 		}
 
-		// wikia change begin
-		/**
-		 * @author Krzysztof Krzyżaniak (eloy)
-		 * trap for BugId: 4013
-		 */
-		if( $this->mEmail == "devbox@wikia-inc.com" || $this->mEmail == "devbox+test@wikia-inc.com" ) {
-			// gather everything we know about request
-			global $wgCommandLineMode;
-			$log = "MOLI TRAP@devbox: ";
-			if( $wgCommandLineMode && !empty($argv)) {
-				$log .= $argv[ 0 ];
-				openlog( "trap", LOG_PID | LOG_PERROR, LOG_LOCAL6 );
-				syslog( LOG_WARNING, "$log");
-				closelog();
-			}
-			else {
-				global $wgTitle;
-				if (is_object($wgTitle)) {
-					$log .= $wgTitle->getFullUrl();
-					error_log( $log );
-				}
-			}
-		}
-
-		// wikia change end
-
 		$dbw = wfGetDB( DB_MASTER );
 		$dbw->update( 'user',
 			array( /* SET */
