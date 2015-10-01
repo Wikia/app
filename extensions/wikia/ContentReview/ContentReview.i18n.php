@@ -35,7 +35,7 @@ $messages['en'] = [
 	'content-review-status-autoapproved' => 'Auto-approved',
 	'content-review-rejection-explanation-title' => 'Submitted script change $1 rejected',
 	'content-review-rejection-explanation' => '==$1==
-The recently submitted change to this JS script [$2] was rejected by the Wikia review process. Please make sure you meet the [[Help:JavaScript review process|Custom JavaScript guidelines]].',
+The recently submitted change to this JS script [$2 $3] was rejected by the Wikia review process. Please make sure you meet the [[Help:JavaScript review process|Custom JavaScript guidelines]].',
 	'content-review-status-link-text' => 'Review status',
 ];
 
@@ -72,7 +72,7 @@ $messages['qqq'] = [
 	'content-review-status-autoapproved' => 'A name of a status of a revision that was auto-approved',
 	'content-review-status-live' => 'A name of a status of a revision that is currently live',
 	'content-review-rejection-explanation-title' => 'A title of a section with a rejection explanation. Became a separate message to allow extraction to a URL anchor of a Why? link.',
-	'content-review-rejection-explanation' => 'Standard explanation response when script changes were rejected. This text is a prefill to script talk page when reviewer is redirected there to provide feedback on rejection. $1 is the title message, $2 is a URL to a view of a revision.',
+	'content-review-rejection-explanation' => 'Standard explanation response when script changes were rejected. This text is a prefill to script talk page when reviewer is redirected there to provide feedback on rejection. $1 is the title message, $2 is a URL to a view of a revision and $3 is the number of a revision that becomes a text of the link.',
 	'content-review-status-link-text' => 'Text on entrypoint link to show content review module with review status info and submit for review buttons',
 ];
 

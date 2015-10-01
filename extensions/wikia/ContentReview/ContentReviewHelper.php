@@ -307,7 +307,8 @@ class Helper extends \ContextSource {
 		if ( (int)$revisionId !== 0 ) {
 			$params['messageParams'] = [
 				1 => wfMessage( 'content-review-rejection-explanation-title' )->params( $revisionId )->escaped(),
-				2 => $title->getFullURL( "oldid={$revisionId}" ) . " {$revisionId}",
+				2 => $title->getFullURL( "oldid={$revisionId}" ),
+				3 => $revisionId,
 			];
 		}
 
