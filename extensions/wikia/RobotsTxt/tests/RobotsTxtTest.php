@@ -33,6 +33,27 @@ class RobotsTxtTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * Test allowSpecialPage in non-English language
+	 *
+	 * @covers RobotsTxt::allowSpecialPage
+	 */
+	public function testAllowSpecialPageInternational() {
+		$this->mockGlobalVariable( 'wgContLang', Language::factory('de') );
+		$robots = new RobotsTxt();
+		$robots->allowSpecialPage( 'Randompage' );
+		$this->assertEquals( [
+			'User-agent: *',
+			'Allow: /wiki/Spezial:Zuf%C3%A4llige_Seite',
+			'Allow: /wiki/Spezial:Random',
+			'Allow: /wiki/Spezial:RandomPage',
+			'Allow: /wiki/Special:Zuf%C3%A4llige_Seite',
+			'Allow: /wiki/Special:Random',
+			'Allow: /wiki/Special:RandomPage',
+			'',
+		], $robots->getContents() );
+	}
+
+	/**
 	 * Test blockRobot
 	 *
 	 * @covers RobotsTxt::testBlockRobot
@@ -97,6 +118,27 @@ class RobotsTxtTest extends WikiaBaseTest {
 		$robots->disallowNamespace( NS_FILE );
 		$this->assertEquals( [
 			'User-agent: *',
+			'Disallow: /wiki/File:',
+			'Disallow: /*?*title=File:',
+			'Disallow: /index.php/File:',
+			'',
+		], $robots->getContents() );
+	}
+
+	/**
+	 * Test disallowNamespace in non-English language
+	 *
+	 * @covers RobotsTxt::disallowNamespace
+	 */
+	public function testDisallowNamespaceInternational() {
+		$this->mockGlobalVariable( 'wgContLang', Language::factory('de') );
+		$robots = new RobotsTxt();
+		$robots->disallowNamespace( NS_FILE );
+		$this->assertEquals( [
+			'User-agent: *',
+			'Disallow: /wiki/Datei:',
+			'Disallow: /*?*title=Datei:',
+			'Disallow: /index.php/Datei:',
 			'Disallow: /wiki/File:',
 			'Disallow: /*?*title=File:',
 			'Disallow: /index.php/File:',
