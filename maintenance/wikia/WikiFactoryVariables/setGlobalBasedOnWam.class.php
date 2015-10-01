@@ -13,6 +13,9 @@ class SetGlobalBasedOnWam extends Maintenance {
 		$this->addOption( 'varValue', 'What value should I set the variable to?', true, true );
 		/**
 		 * If you want to add an additional condition to what wikis should be chosen - use dependency.
+		 * BE AWARE THAT THE RESULT GOES INTO AN IN() MySQL CLAUSE
+		 * Please, be sane about the dependency. It makes sense if it limits the results to
+		 * a few thousands of wikias, not tens or hundreds of thousands!
 		 */
 		$this->addOption( 'dependency', 'Should I consider any other variable\'s value when querying for wikis (for example, only touch wikis with wgUseSiteJs set to `true`)?', false, true );
 		$this->addOption( 'dependencyValue', 'What should be a value of the dependant variable? Default is `true`.', false, true );
