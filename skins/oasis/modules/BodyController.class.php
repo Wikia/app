@@ -251,19 +251,19 @@ class BodyController extends WikiaController {
 						}
 					}
 				}
-			} else if ( $wg->Title->isSpecial( 'Leaderboard' ) ) {
+			} elseif ( $wg->Title->isSpecial( 'Leaderboard' ) ) {
 				$railModuleList[$latestActivityKey] = ['LatestActivity', 'Index', null];
 				$railModuleList[1290] = ['LatestEarnedBadges', 'Index', null];
-			} else if ( $wg->Title->isSpecial( 'WikiActivity' ) ) {
+			} elseif ( $wg->Title->isSpecial( 'WikiActivity' ) ) {
 				$railModuleList[1102] = ['HotSpots', 'Index', null];
 				$railModuleList[1101] = ['CommunityCorner', 'Index', null];
 				$railModuleList[1450] = ['PagesOnWiki', 'Index', null];
-			} else if (
+			} elseif (
 				$wg->Title->isSpecial( 'Following' ) ||
 				$wg->Title->isSpecial( 'Contributions' )
 			) {
 				// intentionally nothing here
-			} else if ( $wg->Title->isSpecial( 'ThemeDesignerPreview' ) ) {
+			} elseif ( $wg->Title->isSpecial( 'ThemeDesignerPreview' ) ) {
 				$railModuleList[$latestActivityKey] = ['LatestActivity', 'Index', null];
 				$railModuleList[1450] = ['PagesOnWiki', 'Index', null];
 
@@ -405,12 +405,12 @@ class BodyController extends WikiaController {
 				$this->headerModuleAction = 'BlogPost';
 
 			// is this page a blog listing?
-			} else if ( self::isBlogListing() ) {
+			} elseif ( self::isBlogListing() ) {
 				$this->headerModuleAction = 'BlogListing';
 			}
 
 		// show corporate header on this page?
-		} else if ( WikiaPageType::isCorporatePage() || WikiaPageType::isWikiaHub() ) {
+		} elseif ( WikiaPageType::isCorporatePage() || WikiaPageType::isWikiaHub() ) {
 			$this->headerModuleName = 'PageHeader';
 
 			if ( self::isEditPage() ) {
@@ -454,7 +454,7 @@ class BodyController extends WikiaController {
 		$this->railModulesExist = true;
 
 		// use one column layout for pages with no right rail modules
-		if( count( $this->railModuleList ) == 0 || !empty( $wg->SuppressRail) ) {
+		if ( count( $this->railModuleList ) == 0 || !empty( $wg->SuppressRail) ) {
 			// Special:AdminDashboard doesn't need this class, but pages chromed with it do
 			if ( !$this->displayAdminDashboard || $this->displayAdminDashboardChromedArticle ) {
 				OasisController::addBodyClass('oasis-one-column');
@@ -466,11 +466,11 @@ class BodyController extends WikiaController {
 
 		// determine if WikiaGridLayout needs to be enabled
 		$this->isGridLayoutEnabled = self::isGridLayoutEnabled();
-		if($this->isGridLayoutEnabled) {
+		if ( $this->isGridLayoutEnabled ) {
 			OasisController::addBodyClass('wikia-grid');
 		}
 
-		if( $this->isOasisBreakpoints() ) {
+		if ( $this->isOasisBreakpoints() ) {
 			OasisController::addBodyClass( 'oasis-breakpoints' );
 		}
 
