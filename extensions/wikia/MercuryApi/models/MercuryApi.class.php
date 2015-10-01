@@ -117,7 +117,6 @@ class MercuryApi {
 			'homepage' => $this->getHomepageUrl(),
 			'id' => (int) $wgCityId,
 			'language' => [
-				'userDir' => SassUtil::isRTL() ? 'rtl' : 'ltr',
 				'content' => $wgLanguageCode,
 				'contentDir' => $wgContLang->getDir()
 			],
