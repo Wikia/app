@@ -1,0 +1,37 @@
+@import "skins/shared/color";
+
+// Page
+$color-ve-hover: darken($color-page, 10%);
+$color-ve-page-secondary: darken($color-page, 10%);
+$color-ve-page-tertiary: darken($color-page, 5%);
+$color-ve-text-secondary: lighten($color-text, 15%);
+
+@if $is-dark-wiki {
+	$color-ve-hover: lighten($color-page, 5%);
+	$color-ve-page-secondary: lighten($color-page, 3%);
+	$color-ve-page-tertiary: lighten($color-page, 7%);
+	$color-ve-text-secondary: mix($color-text, $color-page, 50%);
+}
+
+// Gradients
+$color-ve-gradient: $color-page;
+$color-ve-gradient-dark: darken($color-ve-gradient, 8%);
+$color-ve-gradient-light: lighten($color-ve-gradient, 2%);
+$color-ve-gradient-shadow: darken($color-ve-gradient, 20%);
+
+@if $is-dark-wiki {
+	$color-ve-gradient: lighten($color-page, 5%);
+
+	@if lightness($color-page) < 15 {
+		$color-ve-gradient: lighten($color-page, 10%);
+	}
+
+	$color-ve-gradient-dark: darken($color-ve-gradient, 5%);
+	$color-ve-gradient-light: lighten($color-ve-gradient, 5%);
+	$color-ve-gradient-shadow: darken($color-ve-gradient, 10%);
+}
+
+$color-page-opposite: black;
+@if $is-dark-wiki {
+	$color-page-opposite: white;
+}

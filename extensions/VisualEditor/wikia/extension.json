@@ -89,11 +89,7 @@
 				"ve/ui/widgets/ve.ui.WikiaTemplateOptionWidget.js",
 				"ve/ui/widgets/ve.ui.WikiaTemplateGetInfoWidget.js"
 			],
-			"styles": [
-				"ve/ui/styles/ve.ui.WikiaMediaInsertDialog.css",
-				"ve/ui/styles/ve.ui.Toolbar.css",
-				"ve/ui/styles/ve.ui.WikiaSourceModeDialog.css"
-			],
+			"styles": [],
 			"dependencies": [
 				"jquery.byteLength",
 				"jquery.client",
