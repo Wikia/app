@@ -100,6 +100,7 @@ class CSRFDetector {
 
 			WikiaLogger::instance()->warning( __METHOD__, [
 				'caller' => $fname,
+				'transaction' => \Transaction::getInstance()->getType(), # e.g. api/nirvana/Videos
 				'editTokenChecked' => self::$userMatchEditTokenCalled,
 				'httpMethodChecked' => self::$requestWasPostedCalled,
 				'exception' => new Exception(),
