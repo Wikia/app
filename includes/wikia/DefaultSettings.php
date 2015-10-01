@@ -1801,7 +1801,7 @@ $wgAdDriverIncontentPlayerSlotCountries = null;
  * manage a user's preferences externally
  */
 $wgPreferenceServiceRead = false;
-$wgPreferenceServiceShadowWrite = true && $wgWikiaDatacenter != WIKIA_DC_RES;
+$wgPreferenceServiceWrite = true && $wgWikiaDatacenter != WIKIA_DC_RES;
 
 /**
  * @name $wgEnableRobotsTxtExt
