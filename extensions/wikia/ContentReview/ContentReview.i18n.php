@@ -71,7 +71,8 @@ $messages['qqq'] = [
 	'content-review-status-rejected' => 'A name of a status of a revision that has been rejected.',
 	'content-review-status-autoapproved' => 'A name of a status of a revision that was auto-approved',
 	'content-review-status-live' => 'A name of a status of a revision that is currently live',
-	'content-review-rejection-explanation' => 'Standard explanation response when script changes were rejected. This text is a prefill to script talk page when reviewer is redirected there to provide feedback on rejection.',
+	'content-review-rejection-explanation-title' => 'A title of a section with a rejection explanation. Became a separate message to allow extraction to a URL anchor of a Why? link.',
+	'content-review-rejection-explanation' => 'Standard explanation response when script changes were rejected. This text is a prefill to script talk page when reviewer is redirected there to provide feedback on rejection. $1 is the title message, $2 is a URL to a view of a revision.',
 	'content-review-status-link-text' => 'Text on entrypoint link to show content review module with review status info and submit for review buttons',
 ];
 
