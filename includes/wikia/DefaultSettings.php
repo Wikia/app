@@ -1815,7 +1815,7 @@ $wgAdDriverIncontentPlayerSlotCountries = null;
  * manage a user's preferences externally
  */
 $wgPreferenceServiceRead = false;
-$wgPreferenceServiceShadowWrite = true;
+$wgPreferenceServiceWrite = true;
 
 /**
  * @name $wgEnableRobotsTxtExt
