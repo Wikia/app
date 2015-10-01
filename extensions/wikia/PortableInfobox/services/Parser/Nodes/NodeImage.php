@@ -38,30 +38,18 @@ class NodeImage extends Node {
 			$imageDataLower = strtolower($imageData);
 
 			if ( strpos( $imageDataLower, '-tabber-' ) !== false || strpos( $imageDataLower, '-gallery-' ) !== false ) {
+				$this->data = [];
 				$parsed = $this->getExternalParser()->parseRecursive( $imageData );
 
-				// TODO: Move to separated function + error handling
-				$galleryImages = array();
-				if ( preg_match('#\sdata-model="([^"]+)"#', $parsed, $galleryOut) ) {
-					$galleryImages = array_map(function($gallery) {
-						return array('key' => $gallery['dbKey'], 'caption' => $gallery['caption']);
-					}, json_decode(htmlspecialchars_decode($galleryOut[1]), true));
-				}
+				$galleryImages = $this->getGalleryItems( $imageData );
+				$tabberImages = $this->getTabberItems( $parsed );
 
-				// TODO: Move to separated function + error handling
-				$tabberImages = array();
-				if ( preg_match_all('/class="tabbertab" title="([^"]+)".*?\sdata-image-key="([^"]+)"/is', $parsed, $tabberOut) ) {
-					for( $i = 0; $i < count( $tabberOut[0] ); $i++ ) {
-						$tabberImages[] = array('key' => $tabberOut[2][$i], 'caption' => $tabberOut[1][$i]);
-					}
-				}
-				$this->data = [];
 				$images = $galleryImages + $tabberImages;
 				for( $i = 0; $i < count( $images ); $i++ ) {
 					$this->data[] = $this->getImage(
 						$images[$i]['key'],
 						$images[$i]['caption'],
-						$images[$i]['caption']
+						$images[$i]['alt']
 					);
 				}
 			} else {
@@ -107,6 +95,40 @@ class NodeImage extends Node {
 		);
 
 		return $title;
+	}
+
+	private function getGalleryItems( $imageData ) {
+		preg_match( '/.(UNIQ.*QINU)./U', $imageData, $galleryMarkers );
+		$galleryImages = array();
+
+		foreach ( $galleryMarkers as $marker ) {
+			$galleryWikitext = PortableInfoboxDataBag::getInstance()->getGallery( $marker );
+			$galleryLines = preg_split('/\r\n|\n|\r/', $galleryWikitext);
+
+			foreach ( $galleryLines as $galleryImage) {
+				$galleryOut = explode('|', $galleryImage, 3);
+
+				//TODO: take care about params like link=, linktext= etc. which one is caption?
+				//see mre here: http://community.wikia.com/wiki/Help:Galleries,_Slideshows,_and_Sliders/wikitext
+				//maybe regexing HTML will be more effective?
+				if ( !empty( $galleryOut[0] ) ) {
+					$galleryImages[] = [ 'key' => $galleryOut[ 0 ], 'caption' => $galleryOut[ 1 ], 'alt' => $galleryOut[ 2 ] ];
+				}
+			}
+		}
+
+		return $galleryImages;
+	}
+
+	private function getTabberItems( $parsed ) {
+		$tabberImages = array();
+		if ( preg_match_all('/class="tabbertab" title="([^"]+)".*?\sdata-image-key="([^"]+)"/is', $parsed, $tabberOut) ) {
+			for( $i = 0; $i < count( $tabberOut[0] ); $i++ ) {
+				$tabberImages[] = array('key' => $tabberOut[2][$i], 'caption' => $tabberOut[1][$i]);
+			}
+		}
+
+		return $tabberImages;
 	}
 
 	/**
