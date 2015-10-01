@@ -80,7 +80,6 @@ class ContentReviewStatusesService extends \WikiaService {
 	 * 					...
 	 *				]
 	 * @return array
-	 * @throws \MWException (Title::newFromText)
 	 */
 	public function prepareData( $jsPages, $statuses ) {
 		foreach ( $jsPages as $pageId => &$page ) {
@@ -90,6 +89,16 @@ class ContentReviewStatusesService extends \WikiaService {
 		return $jsPages;
 	}
 
+	/**
+	 * Compares and prepare information about statuses for each of revisions for given page
+	 * @see prepareData
+	 *
+	 * @param int $pageId
+	 * @param array $page
+	 * @param array $statuses
+	 * @return array
+	 * @throws \MWException (Title::newFromText)
+	 */
 	public function preparePageStatuses( $pageId, $page, $statuses ) {
 		$liveRevisionId = 0;
 		$title = \Title::newFromText( $page['page_title'], NS_MEDIAWIKI );
@@ -168,6 +177,12 @@ class ContentReviewStatusesService extends \WikiaService {
 		return $page;
 	}
 
+	/**
+	 * Returns status key based on status
+	 *
+	 * @param int $status
+	 * @return string
+	 */
 	public function getStatusKey( $status = 0 ) {
 		switch ( $status ) {
 			case 1:
@@ -202,6 +217,13 @@ class ContentReviewStatusesService extends \WikiaService {
 		return 0;
 	}
 
+	/**
+	 * Prepares params for diff revision link
+	 *
+	 * @param int $revisionId
+	 * @param int $liveRevisionId
+	 * @return array
+	 */
 	public function prepareRevisionLinkParams( $revisionId, $liveRevisionId = 0 ) {
 		$params = [];
 
@@ -220,6 +242,27 @@ class ContentReviewStatusesService extends \WikiaService {
 
 	public static function purgeJsPagesCache() {
 		\WikiaDataAccess::cachePurge( self::getJsPagesMemcKey() );
+	}
+
+	protected function initPageData( \Title $title ) {
+		$statusNoneMsg = $this->getStatusMessage();
+
+		return [
+			'pageLink' => $this->createPageLink( $title ),
+			'pageName' => $title->getFullText(),
+			'latestRevision' => [
+				'statusKey' => self::STATUS_NONE,
+				'message' => $statusNoneMsg
+			],
+			'latestReviewed' => [
+				'statusKey' => self::STATUS_NONE,
+				'message' => $statusNoneMsg
+			],
+			'liveRevision' => [
+				'statusKey' => self::STATUS_NONE,
+				'message' => $statusNoneMsg
+			]
+		];
 	}
 
 	/**
@@ -276,27 +319,6 @@ class ContentReviewStatusesService extends \WikiaService {
 
 	private function getStatusMessage( $statusKey = self::STATUS_NONE ) {
 		return wfMessage( "content-review-module-status-{$statusKey}" )->escaped();
-	}
-
-	protected function initPageData( \Title $title ) {
-		$statusNoneMsg = $this->getStatusMessage();
-
-		return [
-			'pageLink' => $this->createPageLink( $title ),
-			'pageName' => $title->getFullText(),
-			'latestRevision' => [
-				'statusKey' => self::STATUS_NONE,
-				'message' => $statusNoneMsg
-			],
-			'latestReviewed' => [
-				'statusKey' => self::STATUS_NONE,
-				'message' => $statusNoneMsg
-			],
-			'liveRevision' => [
-				'statusKey' => self::STATUS_NONE,
-				'message' => $statusNoneMsg
-			]
-		];
 	}
 
 	private static function getJsPagesMemcKey() {

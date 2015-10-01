@@ -40,7 +40,6 @@ $wgGroupPermissions['staff']['content-review'] = true;
 $wgAutoloadClasses['ContentReviewApiController'] = __DIR__ . '/controllers/ContentReviewApiController.class.php';
 $wgAutoloadClasses['JsPagesSpecialController'] = __DIR__ . '/controllers/JsPagesSpecialController.class.php';
 
-
 /**
  * Special page
  */
