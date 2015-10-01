@@ -63,10 +63,6 @@ class ContentReviewStatusesService extends \WikiaService {
 		return $jsPage;
 	}
 
-	public static function purgeJsPagesCache() {
-		\WikiaDataAccess::cachePurge( self::getJsPagesMemcKey() );
-	}
-
 	/**
 	 * Prepares data about revision statuses
 	 *
@@ -86,85 +82,144 @@ class ContentReviewStatusesService extends \WikiaService {
 	 * @return array
 	 * @throws \MWException (Title::newFromText)
 	 */
-	private function prepareData( $jsPages, $statuses ) {
+	public function prepareData( $jsPages, $statuses ) {
 		foreach ( $jsPages as $pageId => &$page ) {
-			$liveRevisionId = 0;
+			$page = $this->preparePageStatuses( $pageId, $page, $statuses );
+		}
 
-			$page += $this->initPageData();
+		return $jsPages;
+	}
 
-			$title = \Title::newFromText( $page['page_title'], NS_MEDIAWIKI );
-			$page['pageLink'] = $this->createPageLink( $title );
-			$page['pageName'] = $title->getFullText();
+	public function preparePageStatuses( $pageId, $page, $statuses ) {
+		$liveRevisionId = 0;
+		$title = \Title::newFromText( $page['page_title'], NS_MEDIAWIKI );
 
-			if ( isset( $statuses[$pageId] ) ) {
-				$liveRevisionId = $this->getLiveRevision( $statuses[$pageId] );
+		$page += $this->initPageData( $title );
 
-				foreach( $statuses[$pageId] as $status => $revisionId ) {
-					// Check revisions which are waiting for review or in review process
-					// In these states revision can be only in "latest revision" section
-					if ( Helper::isStatusAwaiting( $status ) && empty( $page['latestRevision']['revisionId'] ) ) {
-						$page['latestRevision'] = $this->prepareRevisionData(
+		if ( isset( $statuses[$pageId] ) ) {
+			$liveRevisionId = $this->getLiveRevision( $statuses[$pageId] );
+
+			foreach( $statuses[$pageId] as $status => $revisionId ) {
+				// Check revisions which are waiting for review or in review process
+				// In these states revision can be only in "latest revision" section
+				if ( Helper::isStatusAwaiting( $status ) && empty( $page['latestRevision']['revisionId'] ) ) {
+					$page['latestRevision'] = $this->prepareRevisionData(
+						$title,
+						self::STATUS_AWAITING,
+						$revisionId,
+						$liveRevisionId
+					);
+					// Check revisions for which review process is completed
+				} elseif ( Helper::isStatusCompleted( $status ) ) {
+					$statusKey = $this->getStatusKey( $status );
+
+					// Prepare data for last reviewed revision (can be approved or rejected)
+					if ( empty( $page['latestReviewed']['revisionId'] ) ) {
+						$page['latestReviewed'] = $this->prepareRevisionData(
 							$title,
-							self::STATUS_AWAITING,
+							$statusKey,
 							$revisionId,
 							$liveRevisionId
 						);
-					// Check revisions for which review process is completed
-					} elseif ( Helper::isStatusCompleted( $status ) ) {
-						$statusKey = $this->getStatusKey( $status );
-
-						// Prepare data for last reviewed revision (can be approved or rejected)
-						if ( empty( $page['latestReviewed']['revisionId'] ) ) {
-							$page['latestReviewed'] = $this->prepareRevisionData(
-								$title,
-								$statusKey,
-								$revisionId,
-								$liveRevisionId
-							);
-						}
-
-						// If revision is approved it means it's live
-						if ( $statusKey === self::STATUS_APPROVED ) {
-							$statusKey = self::STATUS_LIVE;
-
-							// Prepare data for live revision
-							$page['liveRevision'] = $this->prepareRevisionData(
-								$title,
-								$statusKey,
-								$revisionId,
-								$liveRevisionId
-							);
-						}
-
-						// Prepare data for latest revision section
-						if ( empty( $page['latestRevision']['revisionId'] ) ) {
-							$page['latestRevision'] =  $this->prepareRevisionData(
-								$title,
-								$statusKey,
-								$revisionId,
-								$liveRevisionId
-							);
-						}
 					}
-				}
-			}
 
-			// If latest revision is not equal last touched revision it means that must be submited for review
-			if ( $page['page_latest'] != $page['latestRevision']['revisionId'] ) {
-				$page['latestRevision'] = $this->prepareRevisionData(
-					$title,
-					self::STATUS_UNSUBMITTED,
-					$page['page_latest'],
-					$liveRevisionId
-				);
+					// If revision is approved it means it's live
+					if ( $statusKey === self::STATUS_APPROVED ) {
+						$statusKey = self::STATUS_LIVE;
 
-				if ( $title->userCan( 'edit' ) ) {
-					$page['submit'] = true;
+						// Prepare data for live revision
+						$page['liveRevision'] = $this->prepareRevisionData(
+							$title,
+							$statusKey,
+							$revisionId,
+							$liveRevisionId
+						);
+					}
+
+					// Prepare data for latest revision section
+					if ( empty( $page['latestRevision']['revisionId'] ) ) {
+						$page['latestRevision'] =  $this->prepareRevisionData(
+							$title,
+							$statusKey,
+							$revisionId,
+							$liveRevisionId
+						);
+					}
 				}
 			}
 		}
 
-		return $jsPages;
+		// If latest revision is not equal last touched revision it means that must be submited for review
+		if ( isset( $page['latestRevision']['revisionId'] )
+			&& $page['page_latest'] != $page['latestRevision']['revisionId']
+		) {
+			$page['latestRevision'] = $this->prepareRevisionData(
+				$title,
+				self::STATUS_UNSUBMITTED,
+				$page['page_latest'],
+				$liveRevisionId
+			);
+
+			if ( $title->userCan( 'edit' ) ) {
+				$page['submit'] = true;
+			}
+		}
+
+		return $page;
+	}
+
+	public function getStatusKey( $status = 0 ) {
+		switch ( $status ) {
+			case 1:
+			case 2: $statusKey = self::STATUS_AWAITING; break;
+			case 3:
+			case 5: $statusKey = self::STATUS_APPROVED; break;
+			case 4: $statusKey = self::STATUS_REJECTED; break;
+			default: $statusKey = self::STATUS_NONE;
+		}
+
+		return $statusKey;
+	}
+
+	/**
+	 * Gets live revision id
+	 *
+	 * Live revision is revision which was last approved or auto approved
+	 * Returns 0 if there is no live revision
+	 *
+	 * @param array $pageStatuses
+	 * @return int
+	 */
+	public function getLiveRevision( $pageStatuses ) {
+		if ( isset( $pageStatuses[ReviewModel::CONTENT_REVIEW_STATUS_APPROVED] ) ) {
+			return $pageStatuses[ReviewModel::CONTENT_REVIEW_STATUS_APPROVED];
+		}
+
+		if ( isset( $pageStatuses[ReviewModel::CONTENT_REVIEW_STATUS_AUTOAPPROVED] ) ) {
+			return $pageStatuses[ReviewModel::CONTENT_REVIEW_STATUS_AUTOAPPROVED];
+		}
+
+		return 0;
+	}
+
+	public function prepareRevisionLinkParams( $revisionId, $liveRevisionId = 0 ) {
+		$params = [];
+
+		if ( !empty( $liveRevisionId ) ) {
+			$params['oldid'] = $liveRevisionId;
+
+			if ( $revisionId !== $liveRevisionId ) {
+				$params['diff'] = $revisionId;
+			}
+		} else {
+			$params['oldid'] = $revisionId;
+		}
+
+		return $params;
+	}
+
+	public static function purgeJsPagesCache() {
+		\WikiaDataAccess::cachePurge( self::getJsPagesMemcKey() );
 	}
 
 	/**
@@ -197,43 +252,12 @@ class ContentReviewStatusesService extends \WikiaService {
 		return $data;
 	}
 
-	/**
-	 * Gets live revision id
-	 *
-	 * Live revision is revision which was last approved or auto approved
-	 * Returns 0 if there is no live revision
-	 *
-	 * @param array $pageStatuses
-	 * @return int
-	 */
-	private function getLiveRevision( $pageStatuses ) {
-		if ( isset( $pageStatuses[ReviewModel::CONTENT_REVIEW_STATUS_APPROVED] ) ) {
-			return $pageStatuses[ReviewModel::CONTENT_REVIEW_STATUS_APPROVED];
-		}
-
-		if ( isset( $pageStatuses[ReviewModel::CONTENT_REVIEW_STATUS_AUTOAPPROVED] ) ) {
-			return $pageStatuses[ReviewModel::CONTENT_REVIEW_STATUS_AUTOAPPROVED];
-		}
-
-		return 0;
-	}
-
-	private function createPageLink( \Title $title ) {
+	public function createPageLink( \Title $title ) {
 		return \Linker::linkKnown( $title, $title->getText() );
 	}
 
-	protected function createRevisionLink( $title, $revisionId, $liveRevisionId = 0 ) {
-		$params = [];
-
-		if ( !empty( $liveRevisionId ) ) {
-			$params['oldid'] = $liveRevisionId;
-
-			if ( $revisionId !== $liveRevisionId ) {
-				$params['diff'] = $revisionId;
-			}
-		} else {
-			$params['oldid'] = $revisionId;
-		}
+	private function createRevisionLink( $title, $revisionId, $liveRevisionId = 0 ) {
+		$params = $this->prepareRevisionLinkParams( $revisionId, $liveRevisionId );
 
 		return \Linker::linkKnown(
 			$title,
@@ -254,23 +278,12 @@ class ContentReviewStatusesService extends \WikiaService {
 		return wfMessage( "content-review-module-status-{$statusKey}" )->escaped();
 	}
 
-	private function getStatusKey( $status = 0 ) {
-		switch ( $status ) {
-			case 1:
-			case 2: $statusKey = self::STATUS_AWAITING; break;
-			case 3:
-			case 5: $statusKey = self::STATUS_APPROVED; break;
-			case 4: $statusKey = self::STATUS_REJECTED; break;
-			default: $statusKey = self::STATUS_NONE;
-		}
-
-		return $statusKey;
-	}
-
-	private function initPageData() {
+	protected function initPageData( \Title $title ) {
 		$statusNoneMsg = $this->getStatusMessage();
 
 		return [
+			'pageLink' => $this->createPageLink( $title ),
+			'pageName' => $title->getFullText(),
 			'latestRevision' => [
 				'statusKey' => self::STATUS_NONE,
 				'message' => $statusNoneMsg
