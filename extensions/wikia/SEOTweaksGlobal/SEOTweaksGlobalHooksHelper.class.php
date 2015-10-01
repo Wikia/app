@@ -64,9 +64,9 @@ class SEOTweaksGlobalHooksHelper {
 	 * @param null $driverName
 	 * @return null|\Title
 	 */
-	static protected function getFirstArticleImageLargerThan( $title, $width, $height, $driverName = null) {
+	static protected function getFirstArticleImageLargerThan( $title, $width, $height, $driverName = null ) {
 		$imageServing = new ImageServing( [ $title->getArticleID() ], $width, $height );
-		$out = $imageServing->getImages( 1 , $driverName);
+		$out = $imageServing->getImages( 1, $driverName);
 		return self::createTitleFromResultArray( $out );
 	}
 

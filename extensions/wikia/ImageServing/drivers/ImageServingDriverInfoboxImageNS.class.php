@@ -1,4 +1,11 @@
 <?php
+
+/*
+ * @author: Diana Falkowska
+ *
+ * This class is used to get image list from infoboxes only.
+ * Manages images which are used only in portable infoboxes.
+ */
 class ImageServingDriverInfoboxImageNS extends ImageServingDriverMainNS {
 
 	/**
