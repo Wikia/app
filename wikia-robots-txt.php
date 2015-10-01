@@ -32,6 +32,7 @@ if ( !$allowRobots ) {
 	// Params
 	$robots->disallowParam( 'action' );
 	$robots->disallowParam( 'feed' );
+	$robots->disallowParam( 'oldid' );
 	$robots->disallowParam( 'printable' );
 	$robots->disallowParam( 'useskin' );
 	$robots->disallowParam( 'uselang' );
