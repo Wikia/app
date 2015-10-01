@@ -14,6 +14,3 @@ $wgExtensionCredits['other'][] = array(
 );
 
 $wgAutoloadClasses['ZenboxHooks'] =  __DIR__ . '/ZenboxHooks.class.php';
-
-
-$wgHooks['VenusAssetsPackages'][] = 'ZenboxHooks::onVenusAssetsPackages';

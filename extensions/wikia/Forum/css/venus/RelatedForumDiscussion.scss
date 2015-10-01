@@ -1,5 +1,4 @@
 @import "skins/shared/color";
-@import "extensions/wikia/Venus/styles/variables";
 
 .RelatedForumDiscussion {
 	clear: both;
@@ -7,18 +6,8 @@
 	.mw-content-text & {
 		h2 {
 			margin-bottom: 0;
-			padding-left: $medium-grid-gutter;
-			padding-right: $medium-grid-gutter;
-
-			@media #{$large-up} {
-				padding-left: $large-grid-column-padding;
-				padding-right: $large-grid-column-padding;
-			}
-
-			@media #{$small-only} {
-				padding-left: $small-grid-gutter;
-				padding-right: $small-grid-gutter;
-			}
+			padding-left: 10px;
+			padding-right: 10px;
 		}
 	}
 
@@ -42,7 +31,7 @@
 
 			.forum-total-replies {
 				color: $color-alternate-text;
-				font-size: $font-size-xs;
+				font-size: 14px;
 			}
 
 			.talk-two {
@@ -61,15 +50,7 @@
 
 	.forum-replies {
 		list-style: none;
-		padding-right: $medium-grid-gutter;
-
-		@media #{$large-up} {
-			padding-right: $large-grid-column-padding;
-		}
-
-		@media #{$small-only} {
-			padding-right: $small-grid-gutter;
-		}
+		padding-right: 10px;
 
 		.forum-reply {
 			margin-top: 10px;
@@ -79,7 +60,7 @@
 			.forum-timestamp {
 				color: $color-alternate-text;
 				display: inline-block;
-				font-size: $font-size-xs;
+				font-size: 14px;
 			}
 
 			.forum-user-avatar {

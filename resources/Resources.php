@@ -81,7 +81,6 @@ return array(
 		// Wikia change - begin
 		'skinScripts' => [
 			'default' => 'resources/jquery/jquery-' . AssetsConfig::JQUERY_VERSION . '.js',
-			'venus' => 'resources/jquery/jquery-2.1.1.js',
 		],
 		// Wikia change - end
 		'debugRaw' => false,

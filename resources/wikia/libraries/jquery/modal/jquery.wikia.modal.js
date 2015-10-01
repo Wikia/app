@@ -30,7 +30,7 @@ $.fn.extend({
 			wrapper;
 
 		//wrap with modal chrome
-		if (skin === 'oasis' || skin === 'venus' || settings.appendToBody) {
+		if (skin === 'oasis' || settings.appendToBody) {
 			/**
 			 * Generate modal content and add it to <body>
 			 * <section class="modalWrapper" id="'+id+'"><section class="modalContent">[modal content]</section></section>');
@@ -85,7 +85,7 @@ $.fn.extend({
 		}
 
 		// calculate modal width for oasis
-		if (skin === 'oasis' || skin === 'venus') {
+		if (skin === 'oasis') {
 
 			if(settings.width !== 'auto') {
 
