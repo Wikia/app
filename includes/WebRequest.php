@@ -558,6 +558,8 @@ class WebRequest {
 	 * @return Boolean
 	 */
 	public function wasPosted() {
+		wfRunHooks( 'WebRequestWasPosted' ); # Wikia change
+
 		return isset( $_SERVER['REQUEST_METHOD'] ) && $_SERVER['REQUEST_METHOD'] == 'POST';
 	}
 
@@ -1286,8 +1288,6 @@ class FauxRequest extends WebRequest {
 	 * @return bool
 	 */
 	public function wasPosted() {
-		wfRunHooks( 'WebRequestWasPosted' ); # Wikia change
-
 		return $this->wasPosted;
 	}
 
