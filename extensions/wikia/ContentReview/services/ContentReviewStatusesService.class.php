@@ -13,6 +13,9 @@ class ContentReviewStatusesService extends \WikiaService {
 			STATUS_APPROVED = 'approved',
 			STATUS_UNSUBMITTED = 'unsubmitted';
 
+	const	CONTENT_REVIEW_STATUSES_MEMC_KEY = 'content-review-statuses',
+			CONTENT_REVIEW_STATUSES_MEMV_VERSION = '1.0';
+
 	/**
 	 * Gets revisions statuses for all JS pages on given wiki
 	 *
@@ -20,15 +23,23 @@ class ContentReviewStatusesService extends \WikiaService {
 	 * @return bool|array
 	 */
 	public function getJsPagesStatuses( $wikiId ) {
-		$helper = new Helper();
-		$jsPages = $helper->getJsPages();
+		$jsPages = \WikiaDataAccess::cache(
+			$this->getJsPagesMemcKey(),
+			259200, // 3 * 24 * 60 * 60
+			function() use( $wikiId ) {
+				$helper = new Helper();
+				$jsPages = $helper->getJsPages();
 
-		$reviewModel = new Models\ReviewModel();
-		$statuses = $reviewModel->getPagesStatuses( $wikiId );
+				$reviewModel = new Models\ReviewModel();
+				$statuses = $reviewModel->getPagesStatuses( $wikiId );
 
-		if ( !empty( $statuses ) ) {
-			$jsPages = $this->prepareData( $jsPages, $statuses );
-		}
+				if ( !empty( $statuses ) ) {
+					$jsPages = $this->prepareData( $jsPages, $statuses );
+				}
+
+				return $jsPages;
+			}
+		);
 
 		return $jsPages;
 	}
@@ -50,6 +61,10 @@ class ContentReviewStatusesService extends \WikiaService {
 		}
 
 		return $jsPage;
+	}
+
+	public static function purgeJsPagesCache() {
+		\WikiaDataAccess::cachePurge( self::getJsPagesMemcKey() );
 	}
 
 	/**
@@ -269,5 +284,12 @@ class ContentReviewStatusesService extends \WikiaService {
 				'message' => $statusNoneMsg
 			]
 		];
+	}
+
+	private static function getJsPagesMemcKey() {
+		return wfMemcKey(
+			self::CONTENT_REVIEW_STATUSES_MEMC_KEY,
+			self::CONTENT_REVIEW_STATUSES_MEMV_VERSION
+		);
 	}
 }

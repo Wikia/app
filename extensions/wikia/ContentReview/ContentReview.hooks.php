@@ -169,6 +169,8 @@ class Hooks {
 			$helper = new Helper();
 			$helper->purgeCurrentJsPagesTimestamp();
 
+			ContentReviewStatusesService::purgeJsPagesCache();
+
 			if ( $helper->userCanAutomaticallyApprove( $user ) ) {
 				( new ContentReviewService() )
 					->automaticallyApproveRevision( $user, $wgCityId, $title->getArticleID(), $revision->getId() );

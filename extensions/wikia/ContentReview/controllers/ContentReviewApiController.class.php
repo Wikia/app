@@ -4,6 +4,7 @@ use Wikia\ContentReview\Models\CurrentRevisionModel;
 use Wikia\ContentReview\Models\ReviewModel;
 use Wikia\ContentReview\Models\ReviewLogModel;
 use Wikia\ContentReview\Helper;
+use Wikia\ContentReview\ContentReviewStatusesService;
 
 class ContentReviewApiController extends WikiaApiController {
 
@@ -48,6 +49,8 @@ class ContentReviewApiController extends WikiaApiController {
 
 		( new ReviewModel() )->submitPageForReview( $this->wg->CityId, $pageId,
 			$revisionId, $submitUserId );
+
+		ContentReviewStatusesService::purgeJsPagesCache();
 
 		$this->makeSuccessResponse();
 	}
@@ -106,6 +109,8 @@ class ContentReviewApiController extends WikiaApiController {
 
 		$model = new ReviewModel();
 		$model->updateRevisionStatus( $wikiId, $pageId, $oldStatus, $status, $reviewerId );
+
+		ContentReviewStatusesService::purgeJsPagesCache();
 	}
 
 	/**
@@ -153,6 +158,8 @@ class ContentReviewApiController extends WikiaApiController {
 			}
 
 			$reviewModel->updateCompletedReview( $wikiId, $pageId, $review['revision_id'], $status );
+
+			ContentReviewStatusesService::purgeJsPagesCache();
 		}
 		else {
 			$this->notification = wfMessage( 'content-review-diff-already-done' )->escaped();
