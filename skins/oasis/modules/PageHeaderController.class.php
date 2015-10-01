@@ -69,34 +69,34 @@ class PageHeaderController extends WikiaController {
 			$button['name'] = 'rate';
 		}
 		// "Add topic"
-		else if ( isset( $actions['addsection'] ) ) {
+		elseif ( isset( $actions['addsection'] ) ) {
 			$button['action'] = $actions['addsection'];
 			$button['action']['text'] = wfMessage( 'oasis-page-header-add-topic' )->escaped();
 			$button['image'] = MenuButtonController::ADD_ICON;
 			$button['name'] = 'addtopic';
 		}
 		// "Edit with form" (SMW)
-		else if ( isset( $actions['form_edit'] ) ) {
+		elseif ( isset( $actions['form_edit'] ) ) {
 			$button['action'] = $actions['form_edit'];
 			$button['image'] = MenuButtonController::EDIT_ICON;
 			$button['name'] = 'form-edit';
 		}
 		// ve-edit
-		else if ( isset( $actions['ve-edit'] ) && $actions['ve-edit']['main'] ) {
+		elseif ( isset( $actions['ve-edit'] ) && $actions['ve-edit']['main'] ) {
 			$button['action'] = $actions['ve-edit'];
 			$button['image'] = MenuButtonController::EDIT_ICON;
 			$button['name'] = 've-edit';
 			unset( $actions['ve-edit'] );
 		}
 		// edit
-		else if ( isset( $actions['edit'] ) ) {
+		elseif ( isset( $actions['edit'] ) ) {
 			$button['action'] = $actions['edit'];
 			$button['image'] = MenuButtonController::EDIT_ICON;
 			$button['name'] = 'edit';
 			unset( $actions['edit'] );
 		}
 		// view source
-		else if ( isset( $actions['viewsource'] ) ) {
+		elseif ( isset( $actions['viewsource'] ) ) {
 			$button['action'] = $actions['viewsource'];
 			$button['image'] = MenuButtonController::LOCK_ICON;
 			$button['name'] = 'source';
@@ -183,19 +183,19 @@ class PageHeaderController extends WikiaController {
 			$title = $this->skinVars['title'];
 
 		// wrap talk page ns in strong tags
-		} else if ( $wg->Title->isTalkPage() ) {
+		} elseif ( $wg->Title->isTalkPage() ) {
 			$title = Xml::element( 'strong', [], $wg->ContLang->getNsText( NS_TALK ) . ':' );
 			$title .= htmlspecialchars( $wg->Title->getText() );
 
 		// remove prefixes from certain namespaces
 		// needs to be after the above so it doesn't affect NS_USER_TALK
 		// see BodyController::getUserPagesNamespaces
-		} else if ( in_array( $ns, $removeNamespacePrefix ) ) {
+		} elseif ( in_array( $ns, $removeNamespacePrefix ) ) {
 			$title = $wg->Title->getText();
 			$displayTitle = false;
 
 		// use message for mainpage title unless it needs to be overridden
-		} else if ( WikiaPageType::isMainPage() ) {
+		} elseif ( WikiaPageType::isMainPage() ) {
 			$title = $mainpageTitle !== null
 				? $mainpageTitle
 				: wfMessage( 'oasis-home' )->escaped();
@@ -446,13 +446,13 @@ class PageHeaderController extends WikiaController {
 		// choose header message
 		if ( $isPreview ) {
 			$titleMsg = 'oasis-page-header-preview';
-		} else if ( $isShowChanges ) {
+		} elseif ( $isShowChanges ) {
 			$titleMsg = 'oasis-page-header-changes';
-		} else if ( $isDiff ) {
+		} elseif ( $isDiff ) {
 			$titleMsg = 'oasis-page-header-diff';
-		} else if ( $isSectionEdit ) {
+		} elseif ( $isSectionEdit ) {
 			$titleMsg = 'oasis-page-header-editing-section';
-		} else if ( $isHistory ) {
+		} elseif ( $isHistory ) {
 			$titleMsg = 'oasis-page-header-history';
 		} else {
 			$titleMsg = 'oasis-page-header-editing';

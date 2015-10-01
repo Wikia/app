@@ -15,7 +15,7 @@ $wgExtensionCredits['specialpage'][] = [
 ];
 
 // i18n
-$wgExtensionMessagesFiles["WikiaNewFiles"] =  __DIR__ . '/SpecialNewFiles.i18n.php';
+$wgExtensionMessagesFiles['WikiaNewFiles'] =  __DIR__ . '/SpecialNewFiles.i18n.php';
 $wgExtensionMessagesFiles['WikiaNewFilesAliases'] = __DIR__ . '/SpecialNewFiles.alias.php';
 
 // autoloaded classes
