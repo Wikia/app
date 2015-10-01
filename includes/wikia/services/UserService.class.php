@@ -82,7 +82,7 @@ class UserService extends Service {
 			foreach( $ids[ 'user_id' ] as $id ) {
 				$user = User::newFromId( $id );
 				//skip default user
-				if ( $user->getTouched() != 0 ) {
+				if ( $user && $user->getTouched() != 0 ) {
 					$result[] = $user;
 				}
 			}
@@ -91,7 +91,7 @@ class UserService extends Service {
 			foreach( $ids[ 'user_name' ] as $name ) {
 				$user = User::newFromName( $name );
 				//skip default user
-				if ( $user->getTouched() != 0 ) {
+				if ( $user && $user->getTouched() != 0 ) {
 					$result[] = $user;
 				}
 			}
