@@ -12,7 +12,7 @@
 		echo $app->renderView(
 			'CommentsLikes',
 			'Index',
-			['comments' => $comments]
+			[ 'comments' => $comments ]
 		);
 	}
 

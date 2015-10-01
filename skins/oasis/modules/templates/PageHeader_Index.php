@@ -1,6 +1,6 @@
 <?php if ( !empty( $wg->EnableMonetizationModuleExt ) ) {
 	if ( !empty( $wg->AdDriverUseMonetizationService ) ) {
-		echo $app->renderView( 'Ad', 'Index', ['slotName' => 'MON_ABOVE_TITLE'] );
+		echo $app->renderView( 'Ad', 'Index', [ 'slotName' => 'MON_ABOVE_TITLE' ] );
 	} elseif ( !empty( $monModules[MonetizationModuleHelper::SLOT_TYPE_ABOVE_TITLE] ) ) {
 		echo $monModules[MonetizationModuleHelper::SLOT_TYPE_ABOVE_TITLE];
 	}
@@ -36,7 +36,7 @@ if ( $runNjord ) {
 				echo $app->renderView(
 					'CommentsLikes',
 					'Index',
-					['comments' => $comments]
+					[ 'comments' => $comments ]
 				);
 			}
 
@@ -68,7 +68,7 @@ if ( $runNjord ) {
 	</header>
 	<?php if ( !empty( $wg->EnableMonetizationModuleExt ) ) {
 		if ( !empty( $wg->AdDriverUseMonetizationService ) ) {
-			echo $app->renderView( 'Ad', 'Index', ['slotName' => 'MON_BELOW_TITLE'] );
+			echo $app->renderView( 'Ad', 'Index', [ 'slotName' => 'MON_BELOW_TITLE' ] );
 		} elseif ( !empty( $monModules[MonetizationModuleHelper::SLOT_TYPE_BELOW_TITLE] ) ) {
 			echo $monModules[MonetizationModuleHelper::SLOT_TYPE_BELOW_TITLE];
 		}

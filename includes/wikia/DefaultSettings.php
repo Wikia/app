@@ -892,7 +892,7 @@ $wgUseExternalEditor = false;
  * libmemcached related stuff
  */
 define( 'CACHE_LIBMEMCACHED', 11 );
-$wgObjectCaches[ CACHE_LIBMEMCACHED ] = ['factory' => 'LibmemcachedBagOStuff::newFromGlobals'];
+$wgObjectCaches[ CACHE_LIBMEMCACHED ] = [ 'factory' => 'LibmemcachedBagOStuff::newFromGlobals' ];
 $wgSessionsInLibmemcached = false;
 
 
@@ -952,7 +952,7 @@ $wgWatchlistNotificationTimeout = 24 * 60 * 60;
  * @name $wgExcludedWantedFiles
  * don't show those files on Special:WantedFiles
  */
-$wgExcludedWantedFiles = [0 => 'Placeholder', 1 => 'Welcome-user-page'];
+$wgExcludedWantedFiles = [ 0 => 'Placeholder', 1 => 'Welcome-user-page' ];
 
 /**
  *  @name $wgExtensionNamespacesFiles

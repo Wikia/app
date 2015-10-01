@@ -136,7 +136,7 @@ class PageHeaderController extends WikiaController {
 		);
 
 		// Enable to modify actions list on dropdown
-		wfRunHooks( 'PageHeaderDropdownActions', [&$dropdownActions] );
+		wfRunHooks( 'PageHeaderDropdownActions', [ &$dropdownActions ] );
 
 		foreach ( $dropdownActions as $action ) {
 			if ( isset( $actions[$action] ) ) {
@@ -171,7 +171,7 @@ class PageHeaderController extends WikiaController {
 		$wg = $this->wg;
 		$ns = $wg->Title->getNamespace();
 		$removeNamespacePrefix = array_merge(
-			[NS_MEDIAWIKI, NS_TEMPLATE, NS_CATEGORY, NS_FILE, NS_FORUM],
+			[ NS_MEDIAWIKI, NS_TEMPLATE, NS_CATEGORY, NS_FILE, NS_FORUM ],
 			$wg->SuppressNamespacePrefix,
 			// varies depending on what extensions are installed
 			// so use this instead
@@ -233,13 +233,13 @@ class PageHeaderController extends WikiaController {
 		// get main edit button and dropdown
 		$this->button = $this->prepareActionButton();
 		// allow other extensions to modify the main button and/or dropdown
-		wfRunHooks( 'PageHeaderIndexAfterActionButtonPrepared', [&$this->button] );
+		wfRunHooks( 'PageHeaderIndexAfterActionButtonPrepared', [ &$this->button ] );
 
 		$this->curatedContentToolButton = $this->getCuratedContentButton();
 
 		// comments button (for talk page)
 		if ( !$this->isWallEnabled &&
-			( $wg->Title->isTalkPage() || in_array( $ns, [NS_FORUM, NS_SPECIAL] ) )
+			( $wg->Title->isTalkPage() || in_array( $ns, [ NS_FORUM, NS_SPECIAL ] ) )
 		) {
 			$this->comments = false;
 		} else {
@@ -249,7 +249,7 @@ class PageHeaderController extends WikiaController {
 
 		// allow other extensions to append extra buttons to the header
 		$this->extraButtons = [];
-		wfRunHooks( 'PageHeaderIndexExtraButtons', [&$this->extraButtons] );
+		wfRunHooks( 'PageHeaderIndexExtraButtons', [ &$this->extraButtons ] );
 
 		// get the page title
 		$this->title = $this->getTitle();
@@ -483,8 +483,8 @@ class PageHeaderController extends WikiaController {
 				$logPage,
 				wfMessage( 'viewpagelogs' )->escaped(),
 				[],
-				['page' => $wg->Title->getPrefixedText()],
-				['known', 'noclasses']
+				[ 'page' => $wg->Title->getPrefixedText() ],
+				[ 'known', 'noclasses' ]
 			);
 
 			// FIXME: Skin is now an abstract class (MW1.19)
@@ -509,7 +509,7 @@ class PageHeaderController extends WikiaController {
 		// - changing the title
 		// - changing the subtitle
 		// - suppressing/adding the talk page button
-		wfRunHooks( 'PageHeaderEditPage', [&$this, $ns, $isPreview, $isShowChanges, $isDiff, $isEdit, $isHistory] );
+		wfRunHooks( 'PageHeaderEditPage', [ &$this, $ns, $isPreview, $isShowChanges, $isDiff, $isEdit, $isHistory ] );
 
 		$pipe = wfMessage( 'pipe-separator' )->escaped();
 		$this->subtitle = implode( " {$pipe} ", $subtitle );

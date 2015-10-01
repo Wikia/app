@@ -6,7 +6,7 @@
 
 $wgExtensionCredits['specialpage'][] = [
 	'name' => 'SpecialVideos',
-	'author' => ['Liz Lee', 'Saipetch Kongkatong'],
+	'author' => [ 'Liz Lee', 'Saipetch Kongkatong' ],
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/SpecialVideos',
 	'descriptionmsg' => 'specialvideos-desc'
 ];
@@ -27,10 +27,10 @@ $wgSpecialPages['Videos'] =  'SpecialVideosSpecialController';
 // hooks
 $wgHooks['PageHeaderIndexExtraButtons'][] = 'SpecialVideosHooks::onPageHeaderIndexExtraButtons';
 
-JSMessages::registerPackage('SpecialVideos', [
+JSMessages::registerPackage( 'SpecialVideos', [
 	'specialvideos-remove-modal-title',
 	'specialvideos-remove-modal-message'
-]);
+] );
 
 $wgGroupPermissions['*']['specialvideosdelete'] = false;
 $wgGroupPermissions['staff']['specialvideosdelete'] = true;

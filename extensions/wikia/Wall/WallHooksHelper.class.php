@@ -556,14 +556,14 @@ class WallHooksHelper {
 				$button['action'] = [
 					'class' => '',
 					'text' => wfMessage( 'viewsource' )->escaped(),
-					'href' => $userTalkPageTitle->getLocalUrl( ['action' => 'edit'] ),
+					'href' => $userTalkPageTitle->getLocalUrl( [ 'action' => 'edit' ] ),
 				];
 
 				$button['image'] = MenuButtonController::LOCK_ICON;
 
 				$button['dropdown'] = [
 					'history' => [
-						'href' => $userTalkPageTitle->getLocalUrl( ['action' => 'history'] ),
+						'href' => $userTalkPageTitle->getLocalUrl( [ 'action' => 'history' ] ),
 						'text' => wfMessage( 'history_short' )->escaped(),
 					],
 				];
@@ -1743,7 +1743,7 @@ class WallHooksHelper {
 				->parse();
 			$pageHeaderModule->subtitle = Xml::element(
 				'a',
-				['href' => $wmRef->getMessagePageUrl()],
+				[ 'href' => $wmRef->getMessagePageUrl() ],
 				wfMessage( 'oasis-page-header-back-to-article' )->escaped()
 			);
 		}

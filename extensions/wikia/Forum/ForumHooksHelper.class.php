@@ -253,7 +253,7 @@ class ForumHooksHelper {
 				$action = [
 					'class' => '',
 					'text' => wfMessage( 'viewsource' )->escaped(),
-					'href' => $title->getLocalUrl( ['action' => 'edit'] ),
+					'href' => $title->getLocalUrl( [ 'action' => 'edit' ] ),
 					'id' => 'ca-viewsource',
 					'primary' => 1
 				];

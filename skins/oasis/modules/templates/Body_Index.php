@@ -102,7 +102,7 @@
 						echo $app->sendRequest(
 							'AdminDashboardSpecialPage',
 							'chromedArticleHeader',
-							['headerText' => $wg->Title->getText()]
+							[ 'headerText' => $wg->Title->getText() ]
 						);
 					} ?>
 
@@ -114,7 +114,7 @@
 						) {
 							echo $app->renderView( 'Ad', 'Index', [
 								'slotName' => 'HOME_TOP_RIGHT_BOXAD',
-								'pageTypes' => ['homepage_logged', 'corporate', 'all_ads']
+								'pageTypes' => [ 'homepage_logged', 'corporate', 'all_ads' ]
 							] );
 						} ?>
 					</div>
@@ -161,7 +161,11 @@
 
 				<?php if ( !empty( $wg->EnableMonetizationModuleExt ) ) {
 					if ( !empty( $wg->AdDriverUseMonetizationService ) ) {
-						echo $app->renderView( 'Ad', 'Index', ['slotName' => 'MON_ABOVE_FOOTER'] );
+						echo $app->renderView(
+							'Ad',
+							'Index',
+							[ 'slotName' => 'MON_ABOVE_FOOTER' ]
+						);
 					} elseif ( !empty( $monetizationModules[MonetizationModuleHelper::SLOT_TYPE_ABOVE_FOOTER] ) ) {
 						echo $monetizationModules[MonetizationModuleHelper::SLOT_TYPE_ABOVE_FOOTER];
 					}
@@ -182,7 +186,11 @@
 		</article><!-- WikiaMainContent -->
 
 		<?php if( $railModulesExist ) {
-			echo $app->renderView( 'Rail', 'Index', ['railModuleList' => $railModuleList] );
+			echo $app->renderView(
+				'Rail',
+				'Index',
+				[ 'railModuleList' => $railModuleList ]
+			);
 		}
 
 		if ( $displayAdminDashboard ) {
