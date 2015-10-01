@@ -340,11 +340,14 @@ class MercuryApiController extends WikiaController {
 			if ( $title->isRedirect() ) {
 				/* @var Title|null $redirectTargetTitle */
 				$redirectTargetTitle = $article->getRedirectTarget();
+				$data['redirected'] = true;
 				if ( $redirectTargetTitle instanceof Title && !empty($redirectTargetTitle->getArticleID() ) ) {
 					$article = Article::newFromID( $redirectTargetTitle->getArticleID() );
 					$title = $redirectTargetTitle;
+				} else {
+					$data['redirectEmptyTarget'] = true;
 				}
-				$data['redirected'] = true;
+
 			}
 
 			//CONCF-855: $article is null sometimes, fix added
