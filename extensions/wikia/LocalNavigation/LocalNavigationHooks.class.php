@@ -16,9 +16,6 @@ class LocalNavigationHooks {
 			// clear the cache of the "old" local nav logic
 			// it's still used when NavigationModel::parse() is called
 			$model->clearMemc( $title );
-
-			// clear the cache of the new local nav logic
-			$model->clearNavigationTreeCache();
 		}
 
 		return true;
