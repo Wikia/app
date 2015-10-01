@@ -185,9 +185,18 @@ class ContentReviewModuleController extends WikiaController {
 		);
 	}
 
-	protected function createRevisionTalkpageLink() {
+	/**
+	 * Returns a link to an explanation of rejection
+	 * @param $revisionId
+	 * @return string
+	 */
+	protected function createRevisionTalkpageLink( $revisionId ) {
+		$talkageSection = wfMessage( 'content-review-rejection-explanation-title' )->params( $revisionId )->escaped();
+		$talkpageTitle = $this->wg->Title->getTalkPage();
+		$talkpageTitle->setFragment( "#{$talkageSection}" );
+
 		return Linker::linkKnown(
-			$this->wg->Title->getTalkPage(),
+			$talkpageTitle,
 			wfMessage( 'content-review-rejection-reason-link' )->escaped()
 		);
 	}

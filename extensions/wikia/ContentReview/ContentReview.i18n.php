@@ -33,8 +33,9 @@ $messages['en'] = [
 	'content-review-status-rejected' => 'Rejected',
 	'content-review-status-live' => 'Live',
 	'content-review-status-autoapproved' => 'Auto-approved',
-	'content-review-rejection-explanation' => '==Submitted script change rejected==
-The recently submitted change to this JS script was rejected by the Wikia review process. Please make sure you meet the [[Help:JavaScript review process|Custom JavaScript guidelines]].',
+	'content-review-rejection-explanation-title' => 'Submitted script change $1 rejected',
+	'content-review-rejection-explanation' => '==$1==
+The recently submitted change to this JS script [$2] was rejected by the Wikia review process. Please make sure you meet the [[Help:JavaScript review process|Custom JavaScript guidelines]].',
 	'content-review-status-link-text' => 'Review status',
 ];
 

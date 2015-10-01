@@ -154,9 +154,11 @@ class ContentReviewApiController extends WikiaApiController {
 				$this->notification = wfMessage( 'content-review-diff-approve-confirmation' )->parse();
 			} elseif ( $status === ReviewModel::CONTENT_REVIEW_STATUS_REJECTED ) {
 				$title = Title::newFromID( $pageId );
-				$feedbackLink = $helper->prepareProvideFeedbackLink( $title );
+				$feedbackLink = $helper->prepareProvideFeedbackLink( $title, $diff );
 				$this->notification = wfMessage( 'content-review-diff-reject-confirmation', $feedbackLink )->parse();
 			}
+
+			$reviewModel->updateCompletedReview( $wikiId, $pageId, $review['revision_id'], $status );
 		}
 		else {
 			$this->notification = wfMessage( 'content-review-diff-already-done' )->escaped();

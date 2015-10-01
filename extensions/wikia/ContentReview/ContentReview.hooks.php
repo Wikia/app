@@ -83,7 +83,8 @@ class Hooks {
 			\Wikia::addAssetsToOutput( 'content_review_diff_page_scss' );
 			\JSMessages::enqueuePackage( 'ContentReviewDiffPage', \JSMessages::EXTERNAL );
 
-			$output->prependHTML( $helper->getToolbarTemplate() );
+			$revisionId = $helper->getCurrentlyReviewedRevisionId( $output->getRequest() );
+			$output->prependHTML( $helper->getToolbarTemplate( $revisionId ) );
 		}
 
 		return true;
