@@ -14,7 +14,7 @@ class ContentReviewStatusesService extends \WikiaService {
 			STATUS_UNSUBMITTED = 'unsubmitted';
 
 	const	CONTENT_REVIEW_STATUSES_MEMC_KEY = 'content-review-statuses',
-			CONTENT_REVIEW_STATUSES_MEMV_VERSION = '1.0';
+			CONTENT_REVIEW_STATUSES_MEMV_VERSION = '1.02';
 
 	/**
 	 * Gets revisions statuses for all JS pages on given wiki
@@ -158,10 +158,10 @@ class ContentReviewStatusesService extends \WikiaService {
 			}
 		}
 
+		$latestRevisionId = isset( $page['latestRevision']['revisionId'] ) ? $page['latestRevision']['revisionId'] : 0;
+
 		// If latest revision is not equal last touched revision it means that must be submited for review
-		if ( isset( $page['latestRevision']['revisionId'] )
-			&& $page['page_latest'] != $page['latestRevision']['revisionId']
-		) {
+		if ( $page['page_latest'] != $latestRevisionId ) {
 			$page['latestRevision'] = $this->prepareRevisionData(
 				$title,
 				self::STATUS_UNSUBMITTED,
