@@ -1,6 +1,14 @@
-<h1 class="content-review-special-header-content-title">
-	<?= wfMessage( 'content-review-special-js-pages-title' )->escaped() ?>
-</h1>
+<p>
+	<?php if ( $isTestModeEnabled ): ?>
+		<button class="content-review-module-test-mode-disable secondary">
+			<?= wfMessage( 'content-review-module-test-mode-disable' )->escaped() ?>
+		</button>
+	<?php else: ?>
+		<button class="content-review-module-test-mode-enable secondary">
+			<?= wfMessage( 'content-review-module-test-mode-enable' )->escaped() ?>
+		</button>
+	<?php endif ?>
+</p>
 <table class="article-table">
 	<thead>
 	<tr class="content-review-special-list-headers">

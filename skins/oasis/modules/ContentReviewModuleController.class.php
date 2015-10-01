@@ -17,7 +17,9 @@ class ContentReviewModuleController extends WikiaController {
 		Wikia::addAssetsToOutput( 'content_review_module_scss' );
 		JSMessages::enqueuePackage( 'ContentReviewModule', JSMessages::EXTERNAL );
 
-		$this->setVal( 'isTestModeEnabled', ( new Helper() )->isContentReviewTestModeEnabled() );
+		$helper = new Helper();
+
+		$this->setVal( 'isTestModeEnabled', $helper->isContentReviewTestModeEnabled() );
 
 		/*
 		 * This part allows fetches required params if not set. This allows direct usage via API
@@ -42,6 +44,7 @@ class ContentReviewModuleController extends WikiaController {
 		$this->setVal(
 			'displaySubmit',
 			$pageStatus['latestRevision']['statusKey'] === ContentReviewStatusesService::STATUS_UNSUBMITTED
+			&& $helper->userCanEditJsPage( $this->wg->Title, $this->wg->User )
 		);
 		$this->setVal( 'pageName', $pageStatus['pageName'] );
 

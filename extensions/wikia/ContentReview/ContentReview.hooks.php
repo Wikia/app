@@ -23,7 +23,7 @@ class Hooks {
 	public function onGetRailModuleList( Array &$railModuleList ) {
 		global $wgCityId, $wgTitle, $wgUser;
 
-		if ( ( new Helper() )->userCanEditJsPage( $wgTitle, $wgUser ) ) {
+		if ( $wgUser->isLoggedIn() ) {
 			$railModuleList[1403] = [ 'ContentReviewModule', 'Render', [
 				'wikiId' => $wgCityId,
 				'pageId' => $wgTitle->getArticleID(),

@@ -62,15 +62,7 @@ class ContentReviewApiController extends WikiaApiController {
 	public function enableTestMode() {
 		$this->isValidPostRequest( $this->request, $this->wg->User );
 
-		$pageId = $this->request->getInt( 'pageId' );
-
-		$title = Title::newFromID( $pageId );
-		if ( $title === null || !$title->isJsPage() ) {
-			throw new NotFoundApiException( "JS page with ID {$pageId} does not exist");
-		}
-
-		$submitUserId = $this->wg->User->getId();
-		if ( !$submitUserId > 0 || !$this->canUserSubmit( $title )	) {
+		if ( !$this->wg->User->isLoggedIn() ) {
 			throw new PermissionsException( 'edit' );
 		}
 

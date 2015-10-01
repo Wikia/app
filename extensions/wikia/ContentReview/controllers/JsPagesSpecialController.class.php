@@ -1,6 +1,7 @@
 <?php
 
 use Wikia\ContentReview\ContentReviewStatusesService;
+use Wikia\ContentReview\Helper;
 
 class JsPagesSpecialController extends WikiaSpecialPageController {
 
@@ -15,8 +16,9 @@ class JsPagesSpecialController extends WikiaSpecialPageController {
 	public function init() {
 		$this->specialPage->setHeaders();
 
-		Wikia::addAssetsToOutput( 'content_review_module_scss' );
-		Wikia::addAssetsToOutput( 'content_review_module_js' );
+		\Wikia::addAssetsToOutput( 'content_review_module_scss' );
+		\Wikia::addAssetsToOutput( 'content_review_module_js' );
+		\Wikia::addAssetsToOutput( 'content_review_test_mode_js' );
 		\JSMessages::enqueuePackage( 'JsPagesSpecialPage', \JSMessages::EXTERNAL );
 	}
 
@@ -42,6 +44,7 @@ class JsPagesSpecialController extends WikiaSpecialPageController {
 		$this->jsPages = $this->preparePages( $jsPages );
 
 		$this->submit = wfMessage( 'content-review-module-submit' )->escaped();
+		$this->isTestModeEnabled = ( new Helper() )->isContentReviewTestModeEnabled();
 	}
 
 	private function preparePages( $jsPages ) {
