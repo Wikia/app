@@ -131,13 +131,15 @@ class BlogArticle extends Article {
 		}
 
 		// Link rel=next/prev for SEO
-		$lastPage = intval( $blogPostCount / $this->mCount ) - 1;
-		if ( $page > 0 ) {
+		$lastPage = ceil( $blogPostCount / $this->mCount ) - 1;
+		if ( $page > 0 && $page <= $lastPage ) {
+			// All pages but the first
 			$prevUrl = sprintf( '?page=%d', $page - 1 );
 			$link = Html::element( 'link', [ 'rel' => 'prev', 'href' => $prevUrl ] );
 			$wg->Out->addHeadItem( 'Pagination - prev', "\t" . $link . PHP_EOL );
 		}
-		if ( $page < $lastPage ) {
+		if ( $page >= 0 && $page < $lastPage ) {
+			// All pages but the last
 			$nextUrl = sprintf( '?page=%d', $page + 1 );
 			$link = Html::element( 'link', [ 'rel' => 'next', 'href' => $nextUrl ] );
 			$wg->Out->addHeadItem( 'Pagination - next', "\t" . $link . PHP_EOL );
