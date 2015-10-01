@@ -132,14 +132,17 @@ describe('AdContext', function () {
 		).toBeFalsy();
 
 		mocks.win = {
-			ads: {context: {}},
-			wgCategories: ['Category1', 'Category2'],
-			Wikia: {article: {article: {
-				categories: [
-					{title: 'Category1', url: '/wiki/Category:Category1'},
-					{title: 'Category2', url: '/wiki/Category:Category2'}
-				]
-			}}}
+			ads: {
+				context: {
+					targeting: {
+						mercuryPageCategories: [
+							{title: 'Category1', url: '/wiki/Category:Category1'},
+							{title: 'Category2', url: '/wiki/Category:Category2'}
+						]
+					}
+				}
+			},
+			wgCategories: ['Category1', 'Category2']
 		};
 		adContext = getModule();
 		expect(
@@ -164,11 +167,11 @@ describe('AdContext', function () {
 		expect(adContext.getContext().targeting.pageCategories).toEqual(['Category1', 'Category2']);
 
 		mocks.win = {
-			ads: {context: {targeting: {enablePageCategories: true}}},
-			Wikia: {
-				article: {
-					article: {
-						categories: [
+			ads: {
+				context: {
+					targeting: {
+						enablePageCategories: true,
+						mercuryPageCategories: [
 							{title: 'Category1', url: '/wiki/Category:Category1'},
 							{title: 'Category2', url: '/wiki/Category:Category2'}
 						]
@@ -178,6 +181,19 @@ describe('AdContext', function () {
 		};
 		adContext = getModule();
 		expect(adContext.getContext().targeting.pageCategories).toEqual(['Category1', 'Category2']);
+
+		mocks.win = {
+			ads: {
+				context: {
+					targeting: {
+						enablePageCategories: true,
+						mercuryPageCategories: []
+					}
+				}
+			}
+		};
+		adContext = getModule();
+		expect(adContext.getContext().targeting.pageCategories).toEqual([]);
 	});
 
 	it('makes targeting.enableKruxTargeting false when disaster recovery instant global variable is set to true',
@@ -347,28 +363,39 @@ describe('AdContext', function () {
 		expect(adContext.getContext().targeting.enableKruxTargeting).toBeFalsy();
 	});
 
+	it('disables krux when url param noexternals=1 is set', function () {
+		mocks.win = {ads: {context: {targeting: {enableKruxTargeting: true}}}};
+		mocks.instantGlobals = {wgAdDriverKruxCountries: ['AA', 'XX', 'BB']};
+		spyOn(mocks.querystring, 'getVal').and.callFake(function (param) {
+			return param === 'noexternals' ?  '1' : '0';
+		});
+
+		expect(getModule().getContext().targeting.enableKruxTargeting).toBeFalsy();
+	});
+
 	it('disables SourcePoint when url is not set (e.g. for mercury skin)', function () {
+		mocks.win = {ads: {context: {opts: {sourcePointDetection: true}}}};
 		mocks.instantGlobals = {wgAdDriverSourcePointCountries: ['XX', 'ZZ']};
 
 		expect(getModule().getContext().opts.sourcePoint).toBe(undefined);
 	});
 
 	it('enables SourcePoint when country in instant var', function () {
-		mocks.win = {ads: {context: {opts: {sourcePointUrl: '//foo.bar'}}}};
+		mocks.win = {ads: {context: {opts: {sourcePointUrl: '//foo.bar', sourcePointDetection: true}}}};
 		mocks.instantGlobals = {wgAdDriverSourcePointCountries: ['XX', 'ZZ']};
 
 		expect(getModule().getContext().opts.sourcePoint).toBeTruthy();
 	});
 
 	it('enables SourcePoint when region in instant var', function () {
-		mocks.win = {ads: {context: {opts: {sourcePointUrl: '//foo.bar'}}}};
+		mocks.win = {ads: {context: {opts: {sourcePointUrl: '//foo.bar', sourcePointDetection: true}}}};
 		mocks.instantGlobals = {wgAdDriverSourcePointCountries: ['XX-RR']};
 
 		expect(getModule().getContext().opts.sourcePoint).toBeTruthy();
 	});
 
 	it('enables SourcePoint when country and region in instant var (country overwrites region)', function () {
-		mocks.win = {ads: {context: {opts: {sourcePointUrl: '//foo.bar'}}}};
+		mocks.win = {ads: {context: {opts: {sourcePointUrl: '//foo.bar', sourcePointDetection: true}}}};
 		mocks.instantGlobals = {wgAdDriverSourcePointCountries: ['XX-EE', 'XX']};
 
 		expect(getModule().getContext().opts.sourcePoint).toBeTruthy();
@@ -376,15 +403,22 @@ describe('AdContext', function () {
 
 	it('disables SourcePoint when country and region in instant var and both are invalid',
 		function () {
-			mocks.win = {ads: {context: {opts: {sourcePointUrl: '//foo.bar'}}}};
+			mocks.win = {ads: {context: {opts: {sourcePointUrl: '//foo.bar', sourcePointDetection: true}}}};
 			mocks.instantGlobals = {wgAdDriverSourcePointCountries: ['XX-EE', 'YY']};
 
 			expect(getModule().getContext().opts.sourcePoint).toBeFalsy();
 		}
 	);
 
-	it('enables SourcePoint when url param sourcepoint is set', function () {
+	it('disables SourcePoint when detection is disabled', function () {
 		mocks.win = {ads: {context: {opts: {sourcePointUrl: '//foo.bar'}}}};
+		mocks.instantGlobals = {wgAdDriverSourcePointCountries: ['XX', 'ZZ']};
+
+		expect(getModule().getContext().opts.sourcePoint).toBeFalsy();
+	});
+
+	it('enables SourcePoint when url param sourcepoint is set', function () {
+		mocks.win = {ads: {context: {opts: {sourcePointUrl: '//foo.bar', sourcePointDetection: true}}}};
 		spyOn(mocks.querystring, 'getVal').and.callFake(function (param) {
 			return param === 'sourcepoint' ?  '1' : '0';
 		});
@@ -403,6 +437,16 @@ describe('AdContext', function () {
 		mocks.instantGlobals = {wgAdDriverSourcePointDetectionCountries: ['XX', 'ZZ']};
 
 		expect(getModule().getContext().opts.sourcePointDetection).toBeTruthy();
+	});
+
+	it('disables SourcePoint detection when url param noexternals=1 is set', function () {
+		mocks.win = {ads: {context: {opts: {sourcePointDetectionUrl: '//foo.bar'}}}};
+		mocks.instantGlobals = {wgAdDriverSourcePointDetectionCountries: ['XX', 'ZZ']};
+		spyOn(mocks.querystring, 'getVal').and.callFake(function (param) {
+			return param === 'noexternals' ?  '1' : '0';
+		});
+
+		expect(getModule().getContext().opts.sourcePointDetection).toBeFalsy();
 	});
 
 	it('enables SourcePoint detection when url param sourcepointdetection is set', function () {

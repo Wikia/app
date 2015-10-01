@@ -54,6 +54,11 @@ $WikiNavWidth: $width-outside - 271px;
 			display: none;
 		}
 
+		> h2 {
+			// SEO Test "One_H1"
+			display: none;
+		}
+
 		>ul {
 			@include clearfix;
 			position: relative;

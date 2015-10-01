@@ -14,11 +14,15 @@ use Wikia\Service\PersistenceException;
 use Wikia\Service\Swagger\ApiProvider;
 use Wikia\Service\UnauthorizedException;
 use Wikia\Util\AssertionException;
+use Wikia\Util\WikiaProfiler;
 
 /**
  * @Injectable(lazy=true)
  */
 class PreferencePersistenceSwaggerService implements PreferencePersistence {
+
+	use WikiaProfiler;
+
 	const SERVICE_NAME = "user-preference";
 
 	/** @var ApiProvider */
@@ -59,7 +63,7 @@ class PreferencePersistenceSwaggerService implements PreferencePersistence {
 			->setGlobalPreferences( $globalPrefs );
 
 		try {
-			$this->getApi( $userId )->setUserPreferences( $userId, $userPreferences );
+			$this->savePreferences( $this->getApi( $userId ), $userId, $userPreferences );
 			return true;
 		} catch ( ApiException $e ) {
 			$this->handleApiException( $e );
@@ -79,7 +83,7 @@ class PreferencePersistenceSwaggerService implements PreferencePersistence {
 		$prefs = new UserPreferences();
 
 		try {
-			$storedPreferences = $this->getApi( $userId )->getUserPreferences( $userId );
+			$storedPreferences = $this->getPreferences( $this->getApi( $userId ), $userId );
 			$globalPreferences = $storedPreferences->getGlobalPreferences();
 			$localPreferences = $storedPreferences->getLocalPreferences();
 
@@ -108,7 +112,40 @@ class PreferencePersistenceSwaggerService implements PreferencePersistence {
 	 * @return UserPreferencesApi
 	 */
 	private function getApi( $userId ) {
-		return $this->apiProvider->getAuthenticatedApi( self::SERVICE_NAME, $userId, UserPreferencesApi::class );
+		$profilerStart = $this->startProfile();
+		$api = $this->apiProvider->getAuthenticatedApi( self::SERVICE_NAME, $userId, UserPreferencesApi::class );
+		$this->endProfile(
+			\Transaction::EVENT_USER_PREFERENCES,
+			$profilerStart,
+			[
+				'user_id' => $userId,
+				'method' => 'getApi', ] );
+
+		return $api;
+	}
+
+	private function savePreferences( UserPreferencesApi $api, $userId, SwaggerUserPreferences $userPreferences ) {
+		$profilerStart = $this->startProfile();
+		$api->setUserPreferences( $userId, $userPreferences );
+		$this->endProfile(
+			\Transaction::EVENT_USER_PREFERENCES,
+			$profilerStart,
+			[
+				'user_id' => $userId,
+				'method' => 'setPreferences', ] );
+	}
+
+	private function getPreferences( UserPreferencesApi $api, $userId ) {
+		$profilerStart = $this->startProfile();
+		$preferences = $api->getUserPreferences( $userId );
+		$this->endProfile(
+			\Transaction::EVENT_USER_PREFERENCES,
+			$profilerStart,
+			[
+				'user_id' => $userId,
+				'method' => 'getPreferences', ] );
+
+		return $preferences;
 	}
 
 	/**

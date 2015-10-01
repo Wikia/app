@@ -107,4 +107,10 @@
 		var url = 'https://www.google.com/recaptcha/api.js?hl=' + window.wgUserLanguage;
 		return loadExternalLibrary('ReCaptcha', url, typeof window.grecaptcha);
 	};
+
+	$.loadGoogleSearchAPI = function (searchId) {
+		var url = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+				  '//cse.google.com/cse.js?cx=' + searchId;
+		return loadExternalLibrary('googleSearchUrl', url, typeof window.GoogleSearch );
+	};
 })(jQuery);

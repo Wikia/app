@@ -640,6 +640,7 @@ include_once( "$IP/extensions/wikia/Rail/Rail.setup.php" );
 include_once( "$IP/extensions/wikia/PageShare/PageShare.setup.php" );
 include_once( "$IP/extensions/wikia/PaidAssetDrop/PaidAssetDrop.setup.php" );
 include_once( "$IP/extensions/wikia/CreateNewWiki/CreateNewWiki_global_setup.php" );
+include_once( "$IP/extensions/wikia/Security/Security.setup.php" );
 
 /**
  * @name $wgSkipSkins
@@ -1807,7 +1808,7 @@ $wgPreferenceServiceShadowWrite = true;
  *
  * Enables extension that generates robots.txt
  */
-$wgEnableRobotsTxtExt = false;
+$wgEnableRobotsTxtExt = true;
 
 /**
  * @name $wgEnableFliteTagExt
@@ -1816,12 +1817,48 @@ $wgEnableRobotsTxtExt = false;
  */
 $wgEnableFliteTagExt = false;
 
+// SEO-related variables start (keep them sorted)
+
 /**
  * @name $wgEnableSeoLinkHreflangExt
  *
  * Enables SEO Link Hreflang extension
  */
 $wgEnableSeoLinkHreflangExt = false;
+
+/**
+ * @name $wgEnableSeoTestingExt
+ *
+ * Enables SEO Testing extension
+ */
+$wgEnableSeoTestingExt = true;
+
+/**
+ * @name $wgSeoTestingExperiments
+ *
+ * The configuration of SEO experiments.
+ *
+ * Format:
+ *
+ * [
+ *   'Name_of_test' => [
+ *     'dbNames' => ['list', 'of', 'dbnames'],
+ *     'startDay' => '2015-10-01',
+ *     'endDay' => '2015-12-31',
+ *   ],
+ *   'Another_test' => [
+ *     'dbNames' => ['other', 'wikis'],
+ *     'startDay' => '2015-11-01',
+ *     'endDay' => '2015-11-30',
+ *   ],
+ * ]
+ *
+ * Only set this on community wiki (177).
+ * The wikis affected are listed under dbNames key for each experiment.
+ */
+$wgSeoTestingExperiments = [];
+
+// SEO-related variables end
 
 /**
  * @name $wgAdDriverAdsRecoveryMessageCountries

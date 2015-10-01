@@ -11,10 +11,15 @@
 $wgHooks['ParserFirstCallInit'][] = 'efHideTagsSetup';
 
 function efHideTagsSetup(Parser $parser) {
-	global $wgEnableVerbatimExt;
+	global $wgEnableVerbatimExt, $wgEnableFlashmp3whitelistExt;
 
 	if ( empty( $wgEnableVerbatimExt ) ) {
 		$parser->setHook( 'verbatim', 'efHideTags' );
+	}
+
+	// CE-2809
+	if ( !empty( $wgEnableFlashmp3whitelistExt ) ) {
+		$parser->setHook( 'mp3', 'efHideTags' );
 	}
 
 	$parser->setHook( 'vote', 'efHideTags' );
