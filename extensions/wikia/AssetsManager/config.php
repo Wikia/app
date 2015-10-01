@@ -2245,6 +2245,7 @@ $config[ 'global_navigation_scss' ] = [
 		'//extensions/wikia/GlobalNavigation/styles/GlobalNavigationUserLoginDropdown.scss',
 		'//extensions/wikia/GlobalNavigation/styles/GlobalNavigationNotifications.scss',
 		'//extensions/wikia/GlobalNavigation/styles/GlobalNavigationInverse.scss',
+		'//extensions/wikia/GlobalNavigation/styles/GoogleSearchAPI.scss',
 		'//skins/shared/styles/transparent-out.scss'
 	]
 ];
@@ -2265,6 +2266,7 @@ $config[ 'global_navigation_js' ] = [
 		'//extensions/wikia/GlobalNavigation/scripts/GlobalNavigationLazyLoad.js',
 		'//extensions/wikia/GlobalNavigation/scripts/GlobalNavigationHubsMenu.js',
 		'//extensions/wikia/GlobalNavigation/scripts/GlobalNavigationSearch.js',
+		'//extensions/wikia/GlobalNavigation/scripts/GoogleSearchAPI.js',
 		'//extensions/wikia/GlobalNavigation/scripts/SearchSuggestions.js',
 		'//extensions/wikia/GlobalNavigation/scripts/GlobalNavigationInverseTransition.js',
 		'//extensions/wikia/GlobalNavigation/scripts/GlobalNavigationAccountNavigation.js',
