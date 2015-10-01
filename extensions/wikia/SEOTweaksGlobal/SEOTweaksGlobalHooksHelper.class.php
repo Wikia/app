@@ -42,7 +42,7 @@ class SEOTweaksGlobalHooksHelper {
 	 * @return null|Title
 	 */
 	static protected function getFirstArticleImage( $title ) {
-		$retTitle = self::getInfoboxImage( $title );
+		$retTitle = self::getFirstArticleImageLargerThan( $title, self::MIN_WIDTH, self::MIN_HEIGHT, "ImageServingDriverInfoboxImageNS" );
 
 		if ( !empty( $retTitle ) ) {
 			return $retTitle;
@@ -57,26 +57,16 @@ class SEOTweaksGlobalHooksHelper {
 	}
 
 	/**
-	 * @desc Return infobox image with minimal size of self::MIN_WIDTH x self::MIN_HEIGHT
-	 * using ImageServingDriverInfoboxImageNS
-	 * @param $title Title title of article to find the image for
-	 * @return null|\Title
-	 */
-	static protected function getInfoboxImage( $title ) {
-		$imageServing = new ImageServing( [ $title->getArticleID() ], self::MIN_WIDTH, self::MIN_HEIGHT );
-		$out = $imageServing->getImages( 1, "ImageServingDriverInfoboxImageNS" );
-		return self::createTitleFromResultArray( $out );
-	}
-
-	/**
 	 * Return first image from an article, matched criteria
 	 * @param $title
 	 * @param $width
-	 * @return null|Title
+	 * @param $height
+	 * @param null $driverName
+	 * @return null|\Title
 	 */
-	static protected function getFirstArticleImageLargerThan( $title, $width, $height ) {
+	static protected function getFirstArticleImageLargerThan( $title, $width, $height, $driverName = null) {
 		$imageServing = new ImageServing( [ $title->getArticleID() ], $width, $height );
-		$out = $imageServing->getImages( 1 );
+		$out = $imageServing->getImages( 1 , $driverName);
 		return self::createTitleFromResultArray( $out );
 	}
 
