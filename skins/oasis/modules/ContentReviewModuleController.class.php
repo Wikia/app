@@ -81,27 +81,32 @@ class ContentReviewModuleController extends WikiaController {
 	}
 
 	public function isWithReason( $latestRevisionId, $pageStatus ) {
-		return ( $latestRevisionId === (int)$pageStatus['lastReviewedId']
+		return ( isset( $pageStatus['lastReviewedId'] )
+			&& $latestRevisionId === (int)$pageStatus['lastReviewedId']
 			&& $pageStatus['lastReviewedStatus'] === ReviewModel::CONTENT_REVIEW_STATUS_REJECTED
 		);
 	}
 
 	public function getLatestRevisionStatus( $latestRevisionId, array $pageStatus ) {
+		$latestId = isset( $pageStatus['latestId'] ) ? $pageStatus['latestId'] : 0;
+		$liveId = isset( $pageStatus['liveId'] ) ? $pageStatus['liveId'] : 0;
+		$lastReviewedId = isset( $pageStatus['lastReviewedId'] ) ? $pageStatus['lastReviewedId'] : 0;
+
 		if ( $latestRevisionId === 0 ) {
 			$latestStatus = self::STATUS_NONE;
-		} elseif ( $latestRevisionId === $pageStatus['liveId'] ) {
+		} elseif ( $latestRevisionId === $liveId ) {
 			$latestStatus = self::STATUS_LIVE;
-		} elseif ( $latestRevisionId === $pageStatus['latestId']
+		} elseif ( $latestRevisionId === $latestId
 			&& Helper::isStatusAwaiting( $pageStatus['latestStatus'] )
 		) {
 			$latestStatus = self::STATUS_AWAITING;
-		} elseif ( $latestRevisionId === $pageStatus['lastReviewedId']
+		} elseif ( $latestRevisionId === $lastReviewedId
 			&& $pageStatus['lastReviewedStatus'] === ReviewModel::CONTENT_REVIEW_STATUS_REJECTED
 		) {
 			$latestStatus = self::STATUS_REJECTED;
-		} elseif ( $latestRevisionId > $pageStatus['liveId']
-			&& $latestRevisionId > $pageStatus['latestId']
-			&& $latestRevisionId > $pageStatus['lastReviewedId']
+		} elseif ( $latestRevisionId > $liveId
+			&& $latestRevisionId > $latestId
+			&& $latestRevisionId > $lastReviewedId
 		) {
 			$latestStatus = self::STATUS_UNSUBMITTED;
 		}
@@ -118,7 +123,7 @@ class ContentReviewModuleController extends WikiaController {
 	}
 
 	public function getLastRevisionStatus( array $pageStatus ) {
-		if ( is_null( $pageStatus['lastReviewedId'] ) ) {
+		if ( !isset( $pageStatus['lastReviewedId'] ) ) {
 			$lastStatus = $this->prepareTemplateData( self::STATUS_NONE );
 		} elseif ( $pageStatus['lastReviewedStatus'] === ReviewModel::CONTENT_REVIEW_STATUS_APPROVED ) {
 			$lastStatus = $this->prepareTemplateData( self::STATUS_APPROVED, $pageStatus['liveId'], $pageStatus['lastReviewedId'] );
@@ -130,7 +135,7 @@ class ContentReviewModuleController extends WikiaController {
 	}
 
 	public function getLiveRevisionStatus( array $pageStatus ) {
-		if ( !is_null( $pageStatus['liveId'] ) ) {
+		if ( isset( $pageStatus['liveId'] ) ) {
 			$liveStatus = $this->prepareTemplateData( self::STATUS_LIVE, $pageStatus['liveId'] );
 		} else {
 			$liveStatus = $this->prepareTemplateData( self::STATUS_NONE );
