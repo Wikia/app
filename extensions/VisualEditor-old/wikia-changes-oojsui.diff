@@ -1,0 +1,1062 @@
+diff --git a/resources/lib/oojs-ui/oojs-ui-apex.css b/resources/lib/oojs-ui/oojs-ui-apex.css
+index cc6550b..f8089e3 100644
+--- a/resources/lib/oojs-ui/oojs-ui-apex.css
++++ b/resources/lib/oojs-ui/oojs-ui-apex.css
+@@ -2111,97 +2111,6 @@
+ 	border-radius: 0.5em;
+ 	box-shadow: 0 0.2em 1em rgba(0, 0, 0, 0.3);
+ }
+-
+-.oo-ui-icon-add {
+-	background-image: /* @embed */ url(themes/apex/images/icons/add.png);
+-}
+-.oo-ui-icon-advanced {
+-	background-image: /* @embed */ url(themes/apex/images/icons/advanced.png);
+-}
+-.oo-ui-icon-alert {
+-	background-image: /* @embed */ url(themes/apex/images/icons/alert.png);
+-}
+-.oo-ui-icon-check {
+-	background-image: /* @embed */ url(themes/apex/images/icons/check.png);
+-}
+-.oo-ui-icon-clear {
+-	background-image: /* @embed */ url(themes/apex/images/icons/clear.png);
+-}
+-.oo-ui-icon-close {
+-	background-image: /* @embed */ url(themes/apex/images/icons/close.png);
+-}
+-.oo-ui-icon-code {
+-	background-image: /* @embed */ url(themes/apex/images/icons/code.png);
+-}
+-.oo-ui-icon-collapse {
+-	background-image: /* @embed */ url(themes/apex/images/icons/collapse.png);
+-}
+-.oo-ui-icon-comment {
+-	background-image: /* @embed */ url(themes/apex/images/icons/comment.png);
+-}
+-.oo-ui-icon-expand {
+-	background-image: /* @embed */ url(themes/apex/images/icons/expand.png);
+-}
+-.oo-ui-icon-help {
+-	background-image: /* @embed */ url(themes/apex/images/icons/help.png);
+-}
+-.oo-ui-icon-info {
+-	background-image: /* @embed */ url(themes/apex/images/icons/info.png);
+-}
+-.oo-ui-icon-link {
+-	background-image: /* @embed */ url(themes/apex/images/icons/link.png);
+-}
+-.oo-ui-icon-menu {
+-	background-image: /* @embed */ url(themes/apex/images/icons/menu.png);
+-}
+-.oo-ui-icon-next {
+-	background-image: /* @embed */ url(themes/apex/images/icons/move-ltr.png);
+-}
+-.oo-ui-icon-picture {
+-	background-image: /* @embed */ url(themes/apex/images/icons/picture.png);
+-}
+-.oo-ui-icon-previous {
+-	background-image: /* @embed */ url(themes/apex/images/icons/move-rtl.png);
+-}
+-.oo-ui-icon-redo {
+-	background-image: /* @embed */ url(themes/apex/images/icons/arched-arrow-ltr.png);
+-}
+-.oo-ui-icon-remove {
+-	background-image: /* @embed */ url(themes/apex/images/icons/remove.png);
+-}
+-.oo-ui-icon-search {
+-	background-image: /* @embed */ url(themes/apex/images/icons/search.png);
+-}
+-.oo-ui-icon-settings {
+-	background-image: /* @embed */ url(themes/apex/images/icons/settings.png);
+-}
+-.oo-ui-icon-tag {
+-	background-image: /* @embed */ url(themes/apex/images/icons/tag.png);
+-}
+-.oo-ui-icon-undo {
+-	background-image: /* @embed */ url(themes/apex/images/icons/arched-arrow-rtl.png);
+-}
+-.oo-ui-icon-window {
+-	background-image: /* @embed */ url(themes/apex/images/icons/window.png);
+-}
+-.oo-ui-indicator-alert {
+-	background-image: /* @embed */ url(themes/apex/images/indicators/alert.png);
+-}
+-.oo-ui-indicator-up {
+-	background-image: /* @embed */ url(themes/apex/images/indicators/arrow-up.png);
+-}
+-.oo-ui-indicator-down {
+-	background-image: /* @embed */ url(themes/apex/images/indicators/arrow-down.png);
+-}
+-.oo-ui-indicator-next {
+-	background-image: /* @embed */ url(themes/apex/images/indicators/arrow-ltr.png);
+-}
+-.oo-ui-indicator-previous {
+-	background-image: /* @embed */ url(themes/apex/images/indicators/arrow-rtl.png);
+-}
+-.oo-ui-indicator-required {
+-	background-image: /* @embed */ url(themes/apex/images/indicators/required.png);
+-}
+ .oo-ui-texture-pending {
+ 	background-image: /* @embed */ url(themes/apex/images/textures/pending.gif);
+ }
+diff --git a/resources/lib/oojs-ui/oojs-ui-apex.svg.css b/resources/lib/oojs-ui/oojs-ui-apex.svg.css
+index fee6163..dc72d47 100644
+--- a/resources/lib/oojs-ui/oojs-ui-apex.svg.css
++++ b/resources/lib/oojs-ui/oojs-ui-apex.svg.css
+@@ -168,50 +168,10 @@
+ .oo-ui-buttonElement-frameless.oo-ui-widget-disabled > .oo-ui-buttonElement-button > .oo-ui-labelElement-label {
+ 	color: #cccccc;
+ }
+-.oo-ui-buttonElement-framed > .oo-ui-buttonElement-button {
+-	margin: 0.1em 0;
+-	padding: 0.2em 0.8em;
+-	border-radius: 0.3em;
+-	text-shadow: 0 1px 1px rgba(255, 255, 255, 0.5);
+-	border: 1px #c9c9c9 solid;
+-	-webkit-transition: border-color 100ms ease-in-out;
+-	   -moz-transition: border-color 100ms ease-in-out;
+-	    -ms-transition: border-color 100ms ease-in-out;
+-	     -o-transition: border-color 100ms ease-in-out;
+-	        transition: border-color 100ms ease-in-out;
+-	background: #eeeeee;
+-	filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr='#ffffff', endColorstr='#dddddd');
+-	background-image: -webkit-gradient(linear, right top, right bottom, color-stop(0%, #ffffff), color-stop(100%, #dddddd));
+-	background-image: -webkit-linear-gradient(top, #ffffff 0%, #dddddd 100%);
+-	background-image:    -moz-linear-gradient(top, #ffffff 0%, #dddddd 100%);
+-	background-image:     -ms-linear-gradient(top, #ffffff 0%, #dddddd 100%);
+-	background-image:      -o-linear-gradient(top, #ffffff 0%, #dddddd 100%);
+-	background-image:         linear-gradient(top, #ffffff 0%, #dddddd 100%);
+-}
+-.oo-ui-buttonElement-framed > .oo-ui-buttonElement-button:hover,
+-.oo-ui-buttonElement-framed > .oo-ui-buttonElement-button:focus {
+-	border-color: #aaaaaa;
+-	outline: none;
+-}
+ .oo-ui-buttonElement-framed > input.oo-ui-buttonElement-button,
+ .oo-ui-buttonElement-framed.oo-ui-labelElement > .oo-ui-buttonElement-button > .oo-ui-labelElement-label {
+ 	line-height: 1.9em;
+ }
+-.oo-ui-buttonElement-framed.oo-ui-widget-enabled > .oo-ui-buttonElement-button:active,
+-.oo-ui-buttonElement-framed.oo-ui-buttonElement-active > .oo-ui-buttonElement-button,
+-.oo-ui-buttonElement-framed.oo-ui-buttonElement-pressed > .oo-ui-buttonElement-button {
+-	box-shadow: inset 0 1px 4px 0 rgba(0, 0, 0, 0.07);
+-	color: black;
+-	border-color: #c9c9c9;
+-	background: #eeeeee;
+-	filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr='#dddddd', endColorstr='#ffffff');
+-	background-image: -webkit-gradient(linear, right top, right bottom, color-stop(0%, #dddddd), color-stop(100%, #ffffff));
+-	background-image: -webkit-linear-gradient(top, #dddddd 0%, #ffffff 100%);
+-	background-image:    -moz-linear-gradient(top, #dddddd 0%, #ffffff 100%);
+-	background-image:     -ms-linear-gradient(top, #dddddd 0%, #ffffff 100%);
+-	background-image:      -o-linear-gradient(top, #dddddd 0%, #ffffff 100%);
+-	background-image:         linear-gradient(top, #dddddd 0%, #ffffff 100%);
+-}
+ .oo-ui-buttonElement-framed.oo-ui-iconElement > .oo-ui-buttonElement-button > .oo-ui-iconElement-icon {
+ 	margin-left: -0.5em;
+ 	margin-right: -0.5em;
+@@ -220,62 +180,6 @@
+ 	margin-left: -0.5em;
+ 	margin-right: 0.3em;
+ }
+-.oo-ui-buttonElement-framed.oo-ui-flaggedElement-progressive > .oo-ui-buttonElement-button {
+-	border: solid 1px #a6cee1;
+-	background: #cde7f4;
+-	filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr='#eaf4fa', endColorstr='#b0d9ee');
+-	background-image: -webkit-gradient(linear, right top, right bottom, color-stop(0%, #eaf4fa), color-stop(100%, #b0d9ee));
+-	background-image: -webkit-linear-gradient(top, #eaf4fa 0%, #b0d9ee 100%);
+-	background-image:    -moz-linear-gradient(top, #eaf4fa 0%, #b0d9ee 100%);
+-	background-image:     -ms-linear-gradient(top, #eaf4fa 0%, #b0d9ee 100%);
+-	background-image:      -o-linear-gradient(top, #eaf4fa 0%, #b0d9ee 100%);
+-	background-image:         linear-gradient(top, #eaf4fa 0%, #b0d9ee 100%);
+-}
+-.oo-ui-buttonElement-framed.oo-ui-flaggedElement-progressive > .oo-ui-buttonElement-button:hover,
+-.oo-ui-buttonElement-framed.oo-ui-flaggedElement-progressive > .oo-ui-buttonElement-button:focus {
+-	border-color: #9dc2d4;
+-}
+-.oo-ui-buttonElement-framed.oo-ui-flaggedElement-progressive.oo-ui-widget-enabled > .oo-ui-buttonElement-button:active,
+-.oo-ui-buttonElement-framed.oo-ui-flaggedElement-progressive.oo-ui-buttonElement-active > .oo-ui-buttonElement-button,
+-.oo-ui-buttonElement-framed.oo-ui-flaggedElement-progressive.oo-ui-buttonElement-pressed > .oo-ui-buttonElement-button {
+-	border: solid 1px #a6cee1;
+-	background: #cde7f4;
+-	filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr='#b0d9ee', endColorstr='#eaf4fa');
+-	background-image: -webkit-gradient(linear, right top, right bottom, color-stop(0%, #b0d9ee), color-stop(100%, #eaf4fa));
+-	background-image: -webkit-linear-gradient(top, #b0d9ee 0%, #eaf4fa 100%);
+-	background-image:    -moz-linear-gradient(top, #b0d9ee 0%, #eaf4fa 100%);
+-	background-image:     -ms-linear-gradient(top, #b0d9ee 0%, #eaf4fa 100%);
+-	background-image:      -o-linear-gradient(top, #b0d9ee 0%, #eaf4fa 100%);
+-	background-image:         linear-gradient(top, #b0d9ee 0%, #eaf4fa 100%);
+-}
+-.oo-ui-buttonElement-framed.oo-ui-flaggedElement-constructive > .oo-ui-buttonElement-button {
+-	border: solid 1px #b8d892;
+-	background: #daf0be;
+-	filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr='#f0fbe1', endColorstr='#c3e59a');
+-	background-image: -webkit-gradient(linear, right top, right bottom, color-stop(0%, #f0fbe1), color-stop(100%, #c3e59a));
+-	background-image: -webkit-linear-gradient(top, #f0fbe1 0%, #c3e59a 100%);
+-	background-image:    -moz-linear-gradient(top, #f0fbe1 0%, #c3e59a 100%);
+-	background-image:     -ms-linear-gradient(top, #f0fbe1 0%, #c3e59a 100%);
+-	background-image:      -o-linear-gradient(top, #f0fbe1 0%, #c3e59a 100%);
+-	background-image:         linear-gradient(top, #f0fbe1 0%, #c3e59a 100%);
+-}
+-.oo-ui-buttonElement-framed.oo-ui-flaggedElement-constructive > .oo-ui-buttonElement-button:hover,
+-.oo-ui-buttonElement-framed.oo-ui-flaggedElement-constructive > .oo-ui-buttonElement-button:focus {
+-	border-color: #adcb89;
+-}
+-.oo-ui-buttonElement-framed.oo-ui-flaggedElement-constructive.oo-ui-widget-enabled > .oo-ui-buttonElement-button:active,
+-.oo-ui-buttonElement-framed.oo-ui-flaggedElement-constructive.oo-ui-buttonElement-active > .oo-ui-buttonElement-button,
+-.oo-ui-buttonElement-framed.oo-ui-flaggedElement-constructive.oo-ui-buttonElement-pressed > .oo-ui-buttonElement-button {
+-	border: solid 1px #b8d892;
+-	background: #daf0be;
+-	filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr='#c3e59a', endColorstr='#f0fbe1');
+-	background-image: -webkit-gradient(linear, right top, right bottom, color-stop(0%, #c3e59a), color-stop(100%, #f0fbe1));
+-	background-image: -webkit-linear-gradient(top, #c3e59a 0%, #f0fbe1 100%);
+-	background-image:    -moz-linear-gradient(top, #c3e59a 0%, #f0fbe1 100%);
+-	background-image:     -ms-linear-gradient(top, #c3e59a 0%, #f0fbe1 100%);
+-	background-image:      -o-linear-gradient(top, #c3e59a 0%, #f0fbe1 100%);
+-	background-image:         linear-gradient(top, #c3e59a 0%, #f0fbe1 100%);
+-}
+ .oo-ui-buttonElement-framed.oo-ui-flaggedElement-destructive > .oo-ui-buttonElement-button {
+ 	color: #d45353;
+ }
+diff --git a/resources/lib/oojs-ui/oojs-ui.js b/resources/lib/oojs-ui/oojs-ui.js
+index 5f75895..7237ee5 100644
+--- a/resources/lib/oojs-ui/oojs-ui.js
++++ b/resources/lib/oojs-ui/oojs-ui.js
+@@ -2369,6 +2369,14 @@ OO.ui.Dialog.static.escapable = true;
+ 
+ /* Methods */
+ 
++OO.ui.Dialog.prototype.setOverlayless = function () {
++	this.$element.addClass( 'oo-ui-dialog-overlayless' );
++};
++
++OO.ui.Dialog.prototype.unsetOverlayless = function () {
++	this.$element.removeClass( 'oo-ui-dialog-overlayless' );
++};
++
+ /**
+  * Handle frame document key down events.
+  *
+@@ -2504,12 +2512,32 @@ OO.ui.Dialog.prototype.initialize = function () {
+ 	// Properties
+ 	this.title = new OO.ui.LabelWidget( { $: this.$ } );
+ 
++	if ( this instanceof OO.ui.ProcessDialog ) {
++		this.closeButton = new OO.ui.ButtonWidget( {
++			'$': this.$,
++			'framed': false,
++			'icon': 'close',
++			'title': OO.ui.msg( 'ooui-dialog-action-close' )
++		} );
++		this.closeButton.connect( this, { 'click': 'onCloseButtonClick' } );
++		this.closeButton.$element
++			.addClass( 'oo-ui-window-closeButton' )
++			.appendTo( this.$head );
++	}
++
+ 	// Initialization
+ 	this.$content.addClass( 'oo-ui-dialog-content' );
+ 	this.setPendingElement( this.$head );
+ };
+ 
+ /**
++ * Handle close button click events.
++ */
++OO.ui.Dialog.prototype.onCloseButtonClick = function () {
++	this.close( { 'action': 'cancel' } );
++};
++
++/**
+  * Attach action actions.
+  */
+ OO.ui.Dialog.prototype.attachActions = function () {
+@@ -2688,6 +2716,18 @@ OO.ui.WindowManager.static.sizes = {
+ 		// These can be non-numeric because they are never used in calculations
+ 		width: '100%',
+ 		height: '100%'
++	},
++	'840px': {
++		width: 840
++	},
++	'712px': {
++		width: 712
++	},
++	'717px': {
++		width: 717
++	},
++	'800px': {
++		width: 800
+ 	}
+ };
+ 
+@@ -3713,6 +3753,10 @@ OO.ui.ButtonElement = function OoUiButtonElement( config ) {
+ 	this.setTabIndex( config.tabIndex || 0 );
+ 	this.setAccessKey( config.accessKey );
+ 	this.setButtonElement( config.$button || this.$( '<a>' ) );
++
++	if ( !config.flags || ( config.flags && config.flags.indexOf( 'primary' ) === -1 ) ) {
++		this.$button.addClass( 'secondary' );
++	}
+ };
+ 
+ /* Setup */
+@@ -6672,9 +6716,11 @@ OO.ui.ProcessDialog.prototype.initialize = function () {
+ 		.append( this.$errors );
+ 	this.$navigation
+ 		.addClass( 'oo-ui-processDialog-navigation' )
+-		.append( this.$safeActions, this.$location, this.$primaryActions );
++		//.append( this.$safeActions, this.$location, this.$primaryActions );
++		.append( this.$location );
+ 	this.$head.append( this.$navigation );
+-	this.$foot.append( this.$otherActions );
++	//this.$foot.append( this.$otherActions );
++	this.$foot.append( this.$primaryActions, this.$safeActions, this.$otherActions );
+ };
+ 
+ /**
+@@ -6705,7 +6751,9 @@ OO.ui.ProcessDialog.prototype.attachActions = function () {
+ 	}
+ 
+ 	this.fitLabel();
+-	this.$body.css( 'bottom', this.$foot.outerHeight( true ) );
++	setTimeout( function() {
++		this.$body.css( 'bottom', this.$foot.outerHeight( true ) );
++	}.bind( this ), 0 );
+ };
+ 
+ /**
+diff --git a/resources/lib/oojs-ui/themes/apex/images/icons/add-white.svg b/resources/lib/oojs-ui/themes/apex/images/icons/add-white.svg
+new file mode 100644
+index 0000000..29d1512
+--- /dev/null
++++ b/resources/lib/oojs-ui/themes/apex/images/icons/add-white.svg
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="utf-8"?>
++<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
++    <g id="add" style="opacity:0.75;fill:white;">
++        <path id="plus" d="M13 8h-2v3h-3v2h3v3h2v-3h3v-2h-3z"/>
++    </g>
++</svg>
+diff --git a/resources/lib/oojs-ui/themes/apex/images/icons/add.svg b/resources/lib/oojs-ui/themes/apex/images/icons/add.svg
+index 29e5dba..9a7b987 100644
+--- a/resources/lib/oojs-ui/themes/apex/images/icons/add.svg
++++ b/resources/lib/oojs-ui/themes/apex/images/icons/add.svg
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+-    <g id="add">
++    <g id="add" style="opacity:0.75;">
+         <path id="plus" d="M13 8h-2v3h-3v2h3v3h2v-3h3v-2h-3z"/>
+     </g>
+ </svg>
+diff --git a/resources/lib/oojs-ui/themes/apex/images/icons/advanced-white.svg b/resources/lib/oojs-ui/themes/apex/images/icons/advanced-white.svg
+new file mode 100644
+index 0000000..237f753
+--- /dev/null
++++ b/resources/lib/oojs-ui/themes/apex/images/icons/advanced-white.svg
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="utf-8"?>
++<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
++    <g id="settings" style="opacity:0.75;fill:white;">
++        <path id="gear" d="M20.869 13.476c.079-.482.131-.972.131-1.476s-.052-.994-.131-1.476l-2.463-.259c-.149-.556-.367-1.082-.648-1.57l1.558-1.924c-.576-.806-1.281-1.511-2.087-2.087l-1.924 1.558c-.488-.281-1.015-.499-1.57-.648l-.259-2.463c-.482-.079-.972-.131-1.476-.131s-.994.052-1.476.131l-.259 2.463c-.555.149-1.081.367-1.57.648l-1.924-1.557c-.805.576-1.51 1.281-2.086 2.086l1.558 1.924c-.281.488-.499 1.015-.648 1.57l-2.463.259c-.08.482-.132.972-.132 1.476s.052.994.131 1.476l2.463.259c.149.556.367 1.082.648 1.57l-1.558 1.924c.576.806 1.281 1.511 2.087 2.087l1.924-1.558c.488.281 1.015.499 1.57.648l.259 2.463c.482.079.972.131 1.476.131s.994-.052 1.476-.131l.259-2.463c.556-.149 1.082-.367 1.57-.648l1.924 1.558c.806-.576 1.511-1.281 2.087-2.087l-1.558-1.924c.281-.488.499-1.015.648-1.57l2.463-.259zm-8.869 2.522c-2.209 0-3.998-1.789-3.998-3.998s1.789-3.998 3.998-3.998 3.998 1.789 3.998 3.998-1.789 3.998-3.998 3.998z"/>
++    </g>
++</svg>
+diff --git a/resources/lib/oojs-ui/themes/apex/images/icons/advanced.svg b/resources/lib/oojs-ui/themes/apex/images/icons/advanced.svg
+index 201b4d7..c4f0ef6 100644
+--- a/resources/lib/oojs-ui/themes/apex/images/icons/advanced.svg
++++ b/resources/lib/oojs-ui/themes/apex/images/icons/advanced.svg
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+-    <g id="settings">
++    <g id="settings" style="opacity:0.75;">
+         <path id="gear" d="M20.869 13.476c.079-.482.131-.972.131-1.476s-.052-.994-.131-1.476l-2.463-.259c-.149-.556-.367-1.082-.648-1.57l1.558-1.924c-.576-.806-1.281-1.511-2.087-2.087l-1.924 1.558c-.488-.281-1.015-.499-1.57-.648l-.259-2.463c-.482-.079-.972-.131-1.476-.131s-.994.052-1.476.131l-.259 2.463c-.555.149-1.081.367-1.57.648l-1.924-1.557c-.805.576-1.51 1.281-2.086 2.086l1.558 1.924c-.281.488-.499 1.015-.648 1.57l-2.463.259c-.08.482-.132.972-.132 1.476s.052.994.131 1.476l2.463.259c.149.556.367 1.082.648 1.57l-1.558 1.924c.576.806 1.281 1.511 2.087 2.087l1.924-1.558c.488.281 1.015.499 1.57.648l.259 2.463c.482.079.972.131 1.476.131s.994-.052 1.476-.131l.259-2.463c.556-.149 1.082-.367 1.57-.648l1.924 1.558c.806-.576 1.511-1.281 2.087-2.087l-1.558-1.924c.281-.488.499-1.015.648-1.57l2.463-.259zm-8.869 2.522c-2.209 0-3.998-1.789-3.998-3.998s1.789-3.998 3.998-3.998 3.998 1.789 3.998 3.998-1.789 3.998-3.998 3.998z"/>
+     </g>
+ </svg>
+diff --git a/resources/lib/oojs-ui/themes/apex/images/icons/alert-white.svg b/resources/lib/oojs-ui/themes/apex/images/icons/alert-white.svg
+new file mode 100644
+index 0000000..7933b50
+--- /dev/null
++++ b/resources/lib/oojs-ui/themes/apex/images/icons/alert-white.svg
+@@ -0,0 +1,8 @@
++<?xml version="1.0" encoding="utf-8"?>
++<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
++    <g id="alert" style="opacity:0.75;fill:white;">
++        <path id="point" d="M11 16h2v2h-2z"/>
++        <path id="stroke" d="M13.516 10h-3l.484 5h2z"/>
++        <path id="triangle" d="M12.017 5.974l7.519 13.026h-15.04l7.521-13.026m0-2.474c-.544 0-1.088.357-1.5 1.071l-7.985 13.831c-.825 1.429-.15 2.598 1.5 2.598h15.968c1.65 0 2.325-1.169 1.5-2.599l-7.983-13.829c-.413-.715-.956-1.072-1.5-1.072z"/>
++    </g>
++</svg>
+diff --git a/resources/lib/oojs-ui/themes/apex/images/icons/alert.svg b/resources/lib/oojs-ui/themes/apex/images/icons/alert.svg
+index f0c6522..de94f8c 100644
+--- a/resources/lib/oojs-ui/themes/apex/images/icons/alert.svg
++++ b/resources/lib/oojs-ui/themes/apex/images/icons/alert.svg
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+-    <g id="alert">
++    <g id="alert" style="opacity:0.75;">
+         <path id="point" d="M11 16h2v2h-2z"/>
+         <path id="stroke" d="M13.516 10h-3l.484 5h2z"/>
+         <path id="triangle" d="M12.017 5.974l7.519 13.026h-15.04l7.521-13.026m0-2.474c-.544 0-1.088.357-1.5 1.071l-7.985 13.831c-.825 1.429-.15 2.598 1.5 2.598h15.968c1.65 0 2.325-1.169 1.5-2.599l-7.983-13.829c-.413-.715-.956-1.072-1.5-1.072z"/>
+diff --git a/resources/lib/oojs-ui/themes/apex/images/icons/arched-arrow-ltr-white.svg b/resources/lib/oojs-ui/themes/apex/images/icons/arched-arrow-ltr-white.svg
+new file mode 100644
+index 0000000..1f211e7
+--- /dev/null
++++ b/resources/lib/oojs-ui/themes/apex/images/icons/arched-arrow-ltr-white.svg
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="utf-8"?>
++<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
++    <g id="arched-arrow-ltr" style="opacity:0.75;fill:white;">
++        <path id="arrow" d="M19.925 14.937l-2.391-6.901-1.48 2.329c-.964-.845-2.699-1.85-5.513-1.823-4.887.046-6.524 4.244-6.524 4.244s2.753-2.639 6.925-1.949c1.729.286 3.007 1.206 3.675 1.791l-1.474 2.319 6.782-.01z"/>
++    </g>
++</svg>
+diff --git a/resources/lib/oojs-ui/themes/apex/images/icons/arched-arrow-ltr.svg b/resources/lib/oojs-ui/themes/apex/images/icons/arched-arrow-ltr.svg
+index 8a670ef..0117725 100644
+--- a/resources/lib/oojs-ui/themes/apex/images/icons/arched-arrow-ltr.svg
++++ b/resources/lib/oojs-ui/themes/apex/images/icons/arched-arrow-ltr.svg
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+-    <g id="arched-arrow-ltr">
++    <g id="arched-arrow-ltr" style="opacity:0.75;">
+         <path id="arrow" d="M19.925 14.937l-2.391-6.901-1.48 2.329c-.964-.845-2.699-1.85-5.513-1.823-4.887.046-6.524 4.244-6.524 4.244s2.753-2.639 6.925-1.949c1.729.286 3.007 1.206 3.675 1.791l-1.474 2.319 6.782-.01z"/>
+     </g>
+ </svg>
+diff --git a/resources/lib/oojs-ui/themes/apex/images/icons/arched-arrow-rtl-white.svg b/resources/lib/oojs-ui/themes/apex/images/icons/arched-arrow-rtl-white.svg
+new file mode 100644
+index 0000000..e41fc43
+--- /dev/null
++++ b/resources/lib/oojs-ui/themes/apex/images/icons/arched-arrow-rtl-white.svg
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="utf-8"?>
++<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
++    <g id="arched-arrow-rtl" style="opacity:0.75;fill:white;">
++        <path id="arrow" d="M13.401 8.542c-2.814-.027-4.549.978-5.513 1.823l-1.48-2.329-2.391 6.901 6.782.009-1.474-2.319c.668-.584 1.945-1.504 3.675-1.791 4.172-.69 6.925 1.949 6.925 1.949s-1.637-4.197-6.524-4.243z"/>
++    </g>
++</svg>
+diff --git a/resources/lib/oojs-ui/themes/apex/images/icons/arched-arrow-rtl.svg b/resources/lib/oojs-ui/themes/apex/images/icons/arched-arrow-rtl.svg
+index 01fc216..64c4088 100644
+--- a/resources/lib/oojs-ui/themes/apex/images/icons/arched-arrow-rtl.svg
++++ b/resources/lib/oojs-ui/themes/apex/images/icons/arched-arrow-rtl.svg
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+-    <g id="arched-arrow-rtl">
++    <g id="arched-arrow-rtl" style="opacity:0.75;">
+         <path id="arrow" d="M13.401 8.542c-2.814-.027-4.549.978-5.513 1.823l-1.48-2.329-2.391 6.901 6.782.009-1.474-2.319c.668-.584 1.945-1.504 3.675-1.791 4.172-.69 6.925 1.949 6.925 1.949s-1.637-4.197-6.524-4.243z"/>
+     </g>
+ </svg>
+diff --git a/resources/lib/oojs-ui/themes/apex/images/icons/check-white.svg b/resources/lib/oojs-ui/themes/apex/images/icons/check-white.svg
+new file mode 100644
+index 0000000..860b59b
+--- /dev/null
++++ b/resources/lib/oojs-ui/themes/apex/images/icons/check-white.svg
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0, 0, 24, 24">
++    <g id="check" style="opacity:0.75;fill:white;">
++        <path d="M7.105 13.473l1.422-1.423 1.901 1.902 4.81-6.952 1.657 1.148-6.26 8.852z"/>
++    </g>
++</svg>
+diff --git a/resources/lib/oojs-ui/themes/apex/images/icons/check.svg b/resources/lib/oojs-ui/themes/apex/images/icons/check.svg
+index 8d4a1f8..76cdc73 100644
+--- a/resources/lib/oojs-ui/themes/apex/images/icons/check.svg
++++ b/resources/lib/oojs-ui/themes/apex/images/icons/check.svg
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0, 0, 24, 24">
+-    <g id="check">
++    <g id="check" style="opacity:0.75;">
+         <path d="M7.105 13.473l1.422-1.423 1.901 1.902 4.81-6.952 1.657 1.148-6.26 8.852z"/>
+     </g>
+ </svg>
+diff --git a/resources/lib/oojs-ui/themes/apex/images/icons/clear-white.svg b/resources/lib/oojs-ui/themes/apex/images/icons/clear-white.svg
+new file mode 100644
+index 0000000..9d39c60
+--- /dev/null
++++ b/resources/lib/oojs-ui/themes/apex/images/icons/clear-white.svg
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="utf-8"?>
++<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
++    <g id="clear" style="opacity:0.75;fill:white;">
++        <path id="circle-with-strike" d="M11.999 5.022c-3.853 0-6.977 3.124-6.977 6.978 0 3.853 3.124 6.978 6.977 6.978 3.854 0 6.979-3.125 6.979-6.978 0-3.854-3.125-6.978-6.979-6.978zm-5.113 6.978c0-1.092.572-3.25.93-2.929l7.113 7.113c.488.525-1.837.931-2.93.931-2.825-.001-5.113-2.291-5.113-5.115zm9.298 2.929l-7.114-7.113c-.445-.483 1.837-.931 2.929-.931 2.827 0 5.115 2.289 5.115 5.114 0 1.093-.364 3.543-.93 2.93z"/>
++    </g>
++</svg>
+diff --git a/resources/lib/oojs-ui/themes/apex/images/icons/clear.svg b/resources/lib/oojs-ui/themes/apex/images/icons/clear.svg
+index 0dcde9d..fc657b9 100644
+--- a/resources/lib/oojs-ui/themes/apex/images/icons/clear.svg
++++ b/resources/lib/oojs-ui/themes/apex/images/icons/clear.svg
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+-    <g id="clear">
++    <g id="clear" style="opacity:0.75;">
+         <path id="circle-with-strike" d="M11.999 5.022c-3.853 0-6.977 3.124-6.977 6.978 0 3.853 3.124 6.978 6.977 6.978 3.854 0 6.979-3.125 6.979-6.978 0-3.854-3.125-6.978-6.979-6.978zm-5.113 6.978c0-1.092.572-3.25.93-2.929l7.113 7.113c.488.525-1.837.931-2.93.931-2.825-.001-5.113-2.291-5.113-5.115zm9.298 2.929l-7.114-7.113c-.445-.483 1.837-.931 2.929-.931 2.827 0 5.115 2.289 5.115 5.114 0 1.093-.364 3.543-.93 2.93z"/>
+     </g>
+ </svg>
+diff --git a/resources/lib/oojs-ui/themes/apex/images/icons/close-white.svg b/resources/lib/oojs-ui/themes/apex/images/icons/close-white.svg
+new file mode 100644
+index 0000000..e2d94b0
+--- /dev/null
++++ b/resources/lib/oojs-ui/themes/apex/images/icons/close-white.svg
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="utf-8"?>
++<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
++    <g id="close" style="opacity:0.75;fill:white;">
++        <path id="x" d="M18.717 6.697l-1.414-1.414-5.303 5.303-5.303-5.303-1.414 1.414 5.303 5.303-5.303 5.303 1.414 1.414 5.303-5.303 5.303 5.303 1.414-1.414-5.303-5.303z"/>
++    </g>
++</svg>
+diff --git a/resources/lib/oojs-ui/themes/apex/images/icons/close.svg b/resources/lib/oojs-ui/themes/apex/images/icons/close.svg
+index 1345e86..aa0e30a 100644
+--- a/resources/lib/oojs-ui/themes/apex/images/icons/close.svg
++++ b/resources/lib/oojs-ui/themes/apex/images/icons/close.svg
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+-    <g id="close">
++    <g id="close" style="opacity:0.75;">
+         <path id="x" d="M18.717 6.697l-1.414-1.414-5.303 5.303-5.303-5.303-1.414 1.414 5.303 5.303-5.303 5.303 1.414 1.414 5.303-5.303 5.303 5.303 1.414-1.414-5.303-5.303z"/>
+     </g>
+ </svg>
+diff --git a/resources/lib/oojs-ui/themes/apex/images/icons/code-white.svg b/resources/lib/oojs-ui/themes/apex/images/icons/code-white.svg
+new file mode 100644
+index 0000000..b36074d
+--- /dev/null
++++ b/resources/lib/oojs-ui/themes/apex/images/icons/code-white.svg
+@@ -0,0 +1,7 @@
++<?xml version="1.0" encoding="utf-8"?>
++<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" viewBox="0 0 24 24">
++    <g id="code" style="opacity:0.75;fill:white;">
++        <path id="left-bracket" d="M4 12v-1h1c1 0 1 0 1-1v-2.386c0-.514.024-.896.073-1.142.054-.252.139-.463.257-.633.204-.279.473-.475.808-.584.335-.115.872-.255 1.835-.255h1.027v1h-.752c-.457 0-.77.191-.936.408-.167.215-.312.445-.312 1.068v1.857c0 .729-.041 1.18-.244 1.493-.2.307-.562.529-1.09.667.535.155.9.385 1.096.688.199.303.238.757.238 1.484v1.862c0 .619.145.848.312 1.062.166.22.479.407.936.407l.752.004v1h-1.027c-.963 0-1.5-.133-1.835-.248-.335-.109-.604-.307-.808-.591-.118-.165-.203-.374-.257-.625-.049-.253-.073-.636-.073-1.149v-2.387c0-1 0-1-1-1h-1z"/>
++        <use transform="matrix(-1 0 0 1 24 0)" id="right-bracket" width="24" height="24" xlink:href="#left-bracket"/>
++    </g>
++</svg>
+diff --git a/resources/lib/oojs-ui/themes/apex/images/icons/code.svg b/resources/lib/oojs-ui/themes/apex/images/icons/code.svg
+index 32f140d..1e6b07a 100644
+--- a/resources/lib/oojs-ui/themes/apex/images/icons/code.svg
++++ b/resources/lib/oojs-ui/themes/apex/images/icons/code.svg
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" viewBox="0 0 24 24">
+-    <g id="code">
++    <g id="code" style="opacity:0.75;">
+         <path id="left-bracket" d="M4 12v-1h1c1 0 1 0 1-1v-2.386c0-.514.024-.896.073-1.142.054-.252.139-.463.257-.633.204-.279.473-.475.808-.584.335-.115.872-.255 1.835-.255h1.027v1h-.752c-.457 0-.77.191-.936.408-.167.215-.312.445-.312 1.068v1.857c0 .729-.041 1.18-.244 1.493-.2.307-.562.529-1.09.667.535.155.9.385 1.096.688.199.303.238.757.238 1.484v1.862c0 .619.145.848.312 1.062.166.22.479.407.936.407l.752.004v1h-1.027c-.963 0-1.5-.133-1.835-.248-.335-.109-.604-.307-.808-.591-.118-.165-.203-.374-.257-.625-.049-.253-.073-.636-.073-1.149v-2.387c0-1 0-1-1-1h-1z"/>
+         <use transform="matrix(-1 0 0 1 24 0)" id="right-bracket" width="24" height="24" xlink:href="#left-bracket"/>
+     </g>
+diff --git a/resources/lib/oojs-ui/themes/apex/images/icons/collapse-white.svg b/resources/lib/oojs-ui/themes/apex/images/icons/collapse-white.svg
+new file mode 100644
+index 0000000..d990540
+--- /dev/null
++++ b/resources/lib/oojs-ui/themes/apex/images/icons/collapse-white.svg
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="utf-8"?>
++<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
++    <g id="collapse" style="opacity:0.75;fill:white;">
++        <path id="arrow" d="M6.697 15.714l5.303-5.302 5.303 5.302 1.414-1.414-6.717-6.717-6.717 6.717z"/>
++    </g>
++</svg>
+diff --git a/resources/lib/oojs-ui/themes/apex/images/icons/collapse.svg b/resources/lib/oojs-ui/themes/apex/images/icons/collapse.svg
+index 55aa8f8..f1a8637 100644
+--- a/resources/lib/oojs-ui/themes/apex/images/icons/collapse.svg
++++ b/resources/lib/oojs-ui/themes/apex/images/icons/collapse.svg
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+-    <g id="collapse">
++    <g id="collapse" style="opacity:0.75;">
+         <path id="arrow" d="M6.697 15.714l5.303-5.302 5.303 5.302 1.414-1.414-6.717-6.717-6.717 6.717z"/>
+     </g>
+ </svg>
+diff --git a/resources/lib/oojs-ui/themes/apex/images/icons/comment-white.svg b/resources/lib/oojs-ui/themes/apex/images/icons/comment-white.svg
+new file mode 100644
+index 0000000..3adebd4
+--- /dev/null
++++ b/resources/lib/oojs-ui/themes/apex/images/icons/comment-white.svg
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="utf-8"?>
++<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
++    <g id="comment" style="opacity:0.75;fill:white;">
++        <path id="speech-bubble" d="M15 6h-6c-1.657 0-3 1.344-3 3v4c0 1.656 1.343 3 3 3v3l3-3h3c1.657 0 3-1.344 3-3v-4c0-1.656-1.343-3-3-3z"/>
++    </g>
++</svg>
+diff --git a/resources/lib/oojs-ui/themes/apex/images/icons/comment.svg b/resources/lib/oojs-ui/themes/apex/images/icons/comment.svg
+index 0ae7e63..e125b4b 100644
+--- a/resources/lib/oojs-ui/themes/apex/images/icons/comment.svg
++++ b/resources/lib/oojs-ui/themes/apex/images/icons/comment.svg
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+-    <g id="comment">
++    <g id="comment" style="opacity:0.75;">
+         <path id="speech-bubble" d="M15 6h-6c-1.657 0-3 1.344-3 3v4c0 1.656 1.343 3 3 3v3l3-3h3c1.657 0 3-1.344 3-3v-4c0-1.656-1.343-3-3-3z"/>
+     </g>
+ </svg>
+diff --git a/resources/lib/oojs-ui/themes/apex/images/icons/expand-white.svg b/resources/lib/oojs-ui/themes/apex/images/icons/expand-white.svg
+new file mode 100644
+index 0000000..ed7c24d
+--- /dev/null
++++ b/resources/lib/oojs-ui/themes/apex/images/icons/expand-white.svg
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="utf-8"?>
++<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
++    <g id="expand" style="opacity:0.75;fill:white;">
++        <path id="arrow" d="M17.303 8.283l-5.303 5.303-5.303-5.303-1.414 1.414 6.717 6.717 6.717-6.717z"/>
++    </g>
++</svg>
+diff --git a/resources/lib/oojs-ui/themes/apex/images/icons/expand.svg b/resources/lib/oojs-ui/themes/apex/images/icons/expand.svg
+index 7666b41..4335bc0 100644
+--- a/resources/lib/oojs-ui/themes/apex/images/icons/expand.svg
++++ b/resources/lib/oojs-ui/themes/apex/images/icons/expand.svg
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+-    <g id="expand">
++    <g id="expand" style="opacity:0.75;">
+         <path id="arrow" d="M17.303 8.283l-5.303 5.303-5.303-5.303-1.414 1.414 6.717 6.717 6.717-6.717z"/>
+     </g>
+ </svg>
+diff --git a/resources/lib/oojs-ui/themes/apex/images/icons/help-white.svg b/resources/lib/oojs-ui/themes/apex/images/icons/help-white.svg
+new file mode 100644
+index 0000000..ed80194
+--- /dev/null
++++ b/resources/lib/oojs-ui/themes/apex/images/icons/help-white.svg
+@@ -0,0 +1,10 @@
++<?xml version="1.0" encoding="utf-8"?>
++<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
++    <g id="help" style="opacity:0.75;fill:white;">
++        <path id="circle" d="M12.001 2.085c-5.478 0-9.916 4.438-9.916 9.916 0 5.476 4.438 9.914 9.916 9.914 5.476 0 9.914-4.438 9.914-9.914 0-5.478-4.438-9.916-9.914-9.916zm.001 18c-4.465 0-8.084-3.619-8.084-8.083 0-4.465 3.619-8.084 8.084-8.084 4.464 0 8.083 3.619 8.083 8.084 0 4.464-3.619 8.083-8.083 8.083z"/>
++        <g id="question-mark" style="opacity:0.75;fill:white;">
++            <path id="top" d="M11.766 6.688c-2.5 0-3.219 2.188-3.219 2.188l1.411.854s.298-.791.901-1.229c.516-.375 1.625-.625 2.219.125.701.885-.17 1.587-1.078 2.719-.953 1.186-1 3.655-1 3.655h1.969s.135-2.318 1.041-3.381c.603-.707 1.443-1.338 1.443-2.494s-1.187-2.437-3.687-2.437z"/>
++            <path id="bottom" d="M11 16h2v2h-2z"/>
++        </g>
++    </g>
++</svg>
+diff --git a/resources/lib/oojs-ui/themes/apex/images/icons/help.svg b/resources/lib/oojs-ui/themes/apex/images/icons/help.svg
+index bb2545c..d0d99f4 100644
+--- a/resources/lib/oojs-ui/themes/apex/images/icons/help.svg
++++ b/resources/lib/oojs-ui/themes/apex/images/icons/help.svg
+@@ -1,8 +1,8 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+-    <g id="help">
++    <g id="help" style="opacity:0.75;">
+         <path id="circle" d="M12.001 2.085c-5.478 0-9.916 4.438-9.916 9.916 0 5.476 4.438 9.914 9.916 9.914 5.476 0 9.914-4.438 9.914-9.914 0-5.478-4.438-9.916-9.914-9.916zm.001 18c-4.465 0-8.084-3.619-8.084-8.083 0-4.465 3.619-8.084 8.084-8.084 4.464 0 8.083 3.619 8.083 8.084 0 4.464-3.619 8.083-8.083 8.083z"/>
+-        <g id="question-mark">
++        <g id="question-mark" style="opacity:0.75;">
+             <path id="top" d="M11.766 6.688c-2.5 0-3.219 2.188-3.219 2.188l1.411.854s.298-.791.901-1.229c.516-.375 1.625-.625 2.219.125.701.885-.17 1.587-1.078 2.719-.953 1.186-1 3.655-1 3.655h1.969s.135-2.318 1.041-3.381c.603-.707 1.443-1.338 1.443-2.494s-1.187-2.437-3.687-2.437z"/>
+             <path id="bottom" d="M11 16h2v2h-2z"/>
+         </g>
+diff --git a/resources/lib/oojs-ui/themes/apex/images/icons/info-white.svg b/resources/lib/oojs-ui/themes/apex/images/icons/info-white.svg
+new file mode 100644
+index 0000000..6238b1f
+--- /dev/null
++++ b/resources/lib/oojs-ui/themes/apex/images/icons/info-white.svg
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0, 0, 24, 24">
++    <g id="info" style="opacity:0.75;fill:white;">
++        <path id="circled-i" d="M11.499 17c-3.036 0-5.499-2.464-5.499-5.5 0-3.037 2.462-5.5 5.499-5.5 3.037 0 5.501 2.462 5.501 5.5 0 3.036-2.464 5.5-5.501 5.5zm.002-12c-3.591 0-6.501 2.91-6.501 6.5s2.91 6.5 6.501 6.5c3.588 0 6.499-2.911 6.499-6.5s-2.911-6.5-6.499-6.5zM12 10v4h1v1h-3v-1h1v-3h-1v-1zM11 8h1v1h-1z"/>
++    </g>
++</svg>
+diff --git a/resources/lib/oojs-ui/themes/apex/images/icons/info.svg b/resources/lib/oojs-ui/themes/apex/images/icons/info.svg
+index 9c0d1cb..1a3168f 100644
+--- a/resources/lib/oojs-ui/themes/apex/images/icons/info.svg
++++ b/resources/lib/oojs-ui/themes/apex/images/icons/info.svg
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0, 0, 24, 24">
+-    <g id="info">
++    <g id="info" style="opacity:0.75;">
+         <path id="circled-i" d="M11.499 17c-3.036 0-5.499-2.464-5.499-5.5 0-3.037 2.462-5.5 5.499-5.5 3.037 0 5.501 2.462 5.501 5.5 0 3.036-2.464 5.5-5.501 5.5zm.002-12c-3.591 0-6.501 2.91-6.501 6.5s2.91 6.5 6.501 6.5c3.588 0 6.499-2.911 6.499-6.5s-2.911-6.5-6.499-6.5zM12 10v4h1v1h-3v-1h1v-3h-1v-1zM11 8h1v1h-1z"/>
+     </g>
+ </svg>
+diff --git a/resources/lib/oojs-ui/themes/apex/images/icons/link-white.svg b/resources/lib/oojs-ui/themes/apex/images/icons/link-white.svg
+new file mode 100644
+index 0000000..56b245b
+--- /dev/null
++++ b/resources/lib/oojs-ui/themes/apex/images/icons/link-white.svg
+@@ -0,0 +1,8 @@
++<?xml version="1.0" encoding="utf-8"?>
++<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
++    <g id="link" style="opacity:0.75;fill:white;">
++        <path id="right" d="M19.188 12.001c0 1.1-.891 2.015-1.988 2.015l-4.195-.015c.538 1.088.963 1.999 1.997 1.999h3c1.656 0 2.998-2.343 2.998-4s-1.342-4-2.998-4h-3c-1.034 0-1.459.911-1.998 1.999l4.195-.015c1.098 0 1.989.917 1.989 2.017z"/>
++        <path id="center" d="M8 12c0 .535.42 1 .938 1h6.109c.518 0 .938-.465.938-1 0-.534-.42-1-.938-1h-6.109c-.518 0-.938.466-.938 1z"/>
++        <path id="left" d="M4.816 11.999c0-1.1.891-2.015 1.988-2.015l4.196.015c-.539-1.088-.964-1.999-1.998-1.999h-3c-1.656 0-2.998 2.343-2.998 4s1.342 4 2.998 4h3c1.034 0 1.459-.911 1.998-1.999l-4.195.015c-1.098 0-1.989-.917-1.989-2.017z"/>
++    </g>
++</svg>
+diff --git a/resources/lib/oojs-ui/themes/apex/images/icons/link.svg b/resources/lib/oojs-ui/themes/apex/images/icons/link.svg
+index dbae341..4290a7d 100644
+--- a/resources/lib/oojs-ui/themes/apex/images/icons/link.svg
++++ b/resources/lib/oojs-ui/themes/apex/images/icons/link.svg
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+-    <g id="link">
++    <g id="link" style="opacity:0.75;">
+         <path id="right" d="M19.188 12.001c0 1.1-.891 2.015-1.988 2.015l-4.195-.015c.538 1.088.963 1.999 1.997 1.999h3c1.656 0 2.998-2.343 2.998-4s-1.342-4-2.998-4h-3c-1.034 0-1.459.911-1.998 1.999l4.195-.015c1.098 0 1.989.917 1.989 2.017z"/>
+         <path id="center" d="M8 12c0 .535.42 1 .938 1h6.109c.518 0 .938-.465.938-1 0-.534-.42-1-.938-1h-6.109c-.518 0-.938.466-.938 1z"/>
+         <path id="left" d="M4.816 11.999c0-1.1.891-2.015 1.988-2.015l4.196.015c-.539-1.088-.964-1.999-1.998-1.999h-3c-1.656 0-2.998 2.343-2.998 4s1.342 4 2.998 4h3c1.034 0 1.459-.911 1.998-1.999l-4.195.015c-1.098 0-1.989-.917-1.989-2.017z"/>
+diff --git a/resources/lib/oojs-ui/themes/apex/images/icons/menu-white.svg b/resources/lib/oojs-ui/themes/apex/images/icons/menu-white.svg
+new file mode 100644
+index 0000000..e559f4d
+--- /dev/null
++++ b/resources/lib/oojs-ui/themes/apex/images/icons/menu-white.svg
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="utf-8"?>
++<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
++    <g id="menu" style="opacity:0.75;fill:white;">
++        <path id="lines" d="M6 15h12c.553 0 1 .447 1 1v1c0 .553-.447 1-1 1h-12c-.553 0-1-.447-1-1v-1c0-.553.447-1 1-1zm-1-4v1c0 .553.447 1 1 1h12c.553 0 1-.447 1-1v-1c0-.553-.447-1-1-1h-12c-.553 0-1 .447-1 1zm0-5v1c0 .553.447 1 1 1h12c.553 0 1-.447 1-1v-1c0-.553-.447-1-1-1h-12c-.553 0-1 .447-1 1z"/>
++    </g>
++</svg>
+diff --git a/resources/lib/oojs-ui/themes/apex/images/icons/menu.svg b/resources/lib/oojs-ui/themes/apex/images/icons/menu.svg
+index 50ac8a3..026612d 100644
+--- a/resources/lib/oojs-ui/themes/apex/images/icons/menu.svg
++++ b/resources/lib/oojs-ui/themes/apex/images/icons/menu.svg
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+-    <g id="menu">
++    <g id="menu" style="opacity:0.75;">
+         <path id="lines" d="M6 15h12c.553 0 1 .447 1 1v1c0 .553-.447 1-1 1h-12c-.553 0-1-.447-1-1v-1c0-.553.447-1 1-1zm-1-4v1c0 .553.447 1 1 1h12c.553 0 1-.447 1-1v-1c0-.553-.447-1-1-1h-12c-.553 0-1 .447-1 1zm0-5v1c0 .553.447 1 1 1h12c.553 0 1-.447 1-1v-1c0-.553-.447-1-1-1h-12c-.553 0-1 .447-1 1z"/>
+     </g>
+ </svg>
+diff --git a/resources/lib/oojs-ui/themes/apex/images/icons/move-ltr-white.svg b/resources/lib/oojs-ui/themes/apex/images/icons/move-ltr-white.svg
+new file mode 100644
+index 0000000..8ac87db
+--- /dev/null
++++ b/resources/lib/oojs-ui/themes/apex/images/icons/move-ltr-white.svg
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="utf-8"?>
++<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
++    <g id="move-ltr" style="opacity:0.75;fill:white;">
++        <path id="arrow" d="M8.935 7.181l5.302 5.302-5.302 5.303 1.414 1.414 6.716-6.717-6.716-6.716z"/>
++    </g>
++</svg>
+diff --git a/resources/lib/oojs-ui/themes/apex/images/icons/move-ltr.svg b/resources/lib/oojs-ui/themes/apex/images/icons/move-ltr.svg
+index 51e6611..39b772b 100644
+--- a/resources/lib/oojs-ui/themes/apex/images/icons/move-ltr.svg
++++ b/resources/lib/oojs-ui/themes/apex/images/icons/move-ltr.svg
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+-    <g id="move-ltr">
++    <g id="move-ltr" style="opacity:0.75;">
+         <path id="arrow" d="M8.935 7.181l5.302 5.302-5.302 5.303 1.414 1.414 6.716-6.717-6.716-6.716z"/>
+     </g>
+ </svg>
+diff --git a/resources/lib/oojs-ui/themes/apex/images/icons/move-rtl-white.svg b/resources/lib/oojs-ui/themes/apex/images/icons/move-rtl-white.svg
+new file mode 100644
+index 0000000..bb1f27f
+--- /dev/null
++++ b/resources/lib/oojs-ui/themes/apex/images/icons/move-rtl-white.svg
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="utf-8"?>
++<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
++    <g id="move-rtl" style="opacity:0.75;fill:white;">
++        <path id="arrow" d="M15.065 17.786l-5.302-5.303 5.302-5.302-1.414-1.414-6.716 6.716 6.716 6.717z"/>
++    </g>
++</svg>
+diff --git a/resources/lib/oojs-ui/themes/apex/images/icons/move-rtl.svg b/resources/lib/oojs-ui/themes/apex/images/icons/move-rtl.svg
+index bcee09d..090fd28 100644
+--- a/resources/lib/oojs-ui/themes/apex/images/icons/move-rtl.svg
++++ b/resources/lib/oojs-ui/themes/apex/images/icons/move-rtl.svg
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+-    <g id="move-rtl">
++    <g id="move-rtl" style="opacity:0.75;">
+         <path id="arrow" d="M15.065 17.786l-5.302-5.303 5.302-5.302-1.414-1.414-6.716 6.716 6.716 6.717z"/>
+     </g>
+ </svg>
+diff --git a/resources/lib/oojs-ui/themes/apex/images/icons/picture-white.svg b/resources/lib/oojs-ui/themes/apex/images/icons/picture-white.svg
+new file mode 100644
+index 0000000..48f5861
+--- /dev/null
++++ b/resources/lib/oojs-ui/themes/apex/images/icons/picture-white.svg
+@@ -0,0 +1,8 @@
++<?xml version="1.0" encoding="utf-8"?>
++<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
++    <g id="picture" style="opacity:0.75;fill:white;">
++        <path id="frame" d="M18 4h-12c-2-.007-3 .993-3 2.993l.014 9.007c-.014 2 .986 2.988 2.986 3h12c2-.012 2.994-1 3-3.006v-9.001c-.006-2-1-3-3-2.993zm1 13h-14v-11h14v11z"/>
++        <path id="mountains" d="M6 13.5l3.5-3.5 2.328 2.312-1.312 1.094.875 1.032 4.109-3.438 2.5 2v3h-12z"/>
++        <path id="sky" d="M6 12l3.516-4.156 3.046 3.172 2.938-2.016 2.5 2v-4h-12z"/>
++    </g>
++</svg>
+diff --git a/resources/lib/oojs-ui/themes/apex/images/icons/picture.svg b/resources/lib/oojs-ui/themes/apex/images/icons/picture.svg
+index 7400bca..39f67b0 100644
+--- a/resources/lib/oojs-ui/themes/apex/images/icons/picture.svg
++++ b/resources/lib/oojs-ui/themes/apex/images/icons/picture.svg
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+-    <g id="picture">
++    <g id="picture" style="opacity:0.75;">
+         <path id="frame" d="M18 4h-12c-2-.007-3 .993-3 2.993l.014 9.007c-.014 2 .986 2.988 2.986 3h12c2-.012 2.994-1 3-3.006v-9.001c-.006-2-1-3-3-2.993zm1 13h-14v-11h14v11z"/>
+         <path id="mountains" d="M6 13.5l3.5-3.5 2.328 2.312-1.312 1.094.875 1.032 4.109-3.438 2.5 2v3h-12z"/>
+         <path id="sky" d="M6 12l3.516-4.156 3.046 3.172 2.938-2.016 2.5 2v-4h-12z"/>
+diff --git a/resources/lib/oojs-ui/themes/apex/images/icons/remove-white.svg b/resources/lib/oojs-ui/themes/apex/images/icons/remove-white.svg
+new file mode 100644
+index 0000000..5867ead
+--- /dev/null
++++ b/resources/lib/oojs-ui/themes/apex/images/icons/remove-white.svg
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="utf-8"?>
++<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
++    <g id="remove" style="opacity:0.75;fill:white;">
++        <path id="trash-can" d="M12 10h-1v6h1v-6zm-2 0h-1v6h1v-6zm4 0h-1v6h1v-6zm0-4v-1h-5v1h-3v3h1v7.966l1 1.031v-.074.077h6.984l.016-.018v.015l1-1.031v-7.966h1v-3h-3zm1 11h-7v-8h7v8zm1-9h-9v-1h9v1z"/>
++    </g>
++</svg>
+diff --git a/resources/lib/oojs-ui/themes/apex/images/icons/remove.svg b/resources/lib/oojs-ui/themes/apex/images/icons/remove.svg
+index 6ad7917..cb4bce1 100644
+--- a/resources/lib/oojs-ui/themes/apex/images/icons/remove.svg
++++ b/resources/lib/oojs-ui/themes/apex/images/icons/remove.svg
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+-    <g id="remove">
++    <g id="remove" style="opacity:0.75;">
+         <path id="trash-can" d="M12 10h-1v6h1v-6zm-2 0h-1v6h1v-6zm4 0h-1v6h1v-6zm0-4v-1h-5v1h-3v3h1v7.966l1 1.031v-.074.077h6.984l.016-.018v.015l1-1.031v-7.966h1v-3h-3zm1 11h-7v-8h7v8zm1-9h-9v-1h9v1z"/>
+     </g>
+ </svg>
+diff --git a/resources/lib/oojs-ui/themes/apex/images/icons/search-white.svg b/resources/lib/oojs-ui/themes/apex/images/icons/search-white.svg
+new file mode 100644
+index 0000000..6853b91
+--- /dev/null
++++ b/resources/lib/oojs-ui/themes/apex/images/icons/search-white.svg
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="utf-8"?>
++<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
++    <g id="search" style="opacity:0.75;fill:white;">
++        <path id="magnifying-glass" d="M16.021 15.96l-2.374-2.375-.169-.099c.403-.566.643-1.26.643-2.009-.001-1.92-1.558-3.477-3.477-3.477-1.921 0-3.478 1.557-3.478 3.478 0 1.92 1.557 3.477 3.478 3.477.749 0 1.442-.239 2.01-.643l.098.169 2.375 2.374c.19.189.543.143.79-.104s.293-.601.104-.791zm-5.377-2.27c-1.221 0-2.213-.991-2.213-2.213 0-1.221.992-2.213 2.213-2.213 1.222 0 2.213.992 2.213 2.213-.001 1.222-.992 2.213-2.213 2.213z"/>
++    </g>
++</svg>
+diff --git a/resources/lib/oojs-ui/themes/apex/images/icons/search.svg b/resources/lib/oojs-ui/themes/apex/images/icons/search.svg
+index e4db4f0..498d1e8 100644
+--- a/resources/lib/oojs-ui/themes/apex/images/icons/search.svg
++++ b/resources/lib/oojs-ui/themes/apex/images/icons/search.svg
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+-    <g id="search">
++    <g id="search" style="opacity:0.75;">
+         <path id="magnifying-glass" d="M16.021 15.96l-2.374-2.375-.169-.099c.403-.566.643-1.26.643-2.009-.001-1.92-1.558-3.477-3.477-3.477-1.921 0-3.478 1.557-3.478 3.478 0 1.92 1.557 3.477 3.478 3.477.749 0 1.442-.239 2.01-.643l.098.169 2.375 2.374c.19.189.543.143.79-.104s.293-.601.104-.791zm-5.377-2.27c-1.221 0-2.213-.991-2.213-2.213 0-1.221.992-2.213 2.213-2.213 1.222 0 2.213.992 2.213 2.213-.001 1.222-.992 2.213-2.213 2.213z"/>
+     </g>
+ </svg>
+diff --git a/resources/lib/oojs-ui/themes/apex/images/icons/settings-white.svg b/resources/lib/oojs-ui/themes/apex/images/icons/settings-white.svg
+new file mode 100644
+index 0000000..97c7ea2
+--- /dev/null
++++ b/resources/lib/oojs-ui/themes/apex/images/icons/settings-white.svg
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0, 0, 24, 24">
++    <g id="settings" style="opacity:0.75;fill:white;">
++        <path id="gear" d="M3 4h3v2h-3zM12 4h9v2h-9zM8 3h2c.552 0 1 .448 1 1v2c0 .552-.448 1-1 1h-2c-.552 0-1-.448-1-1v-2c0-.552.448-1 1-1zM3 11h9v2h-9zM18 11h3v2h-3zM14 10h2c.552 0 1 .448 1 1v2c0 .552-.448 1-1 1h-2c-.552 0-1-.448-1-1v-2c0-.552.448-1 1-1zM3 18h6v2h-6zM15 18h6v2h-6zM11 17h2c.552 0 1 .448 1 1v2c0 .552-.448 1-1 1h-2c-.552 0-1-.448-1-1v-2c0-.552.448-1 1-1z"/>
++    </g>
++</svg>
+diff --git a/resources/lib/oojs-ui/themes/apex/images/icons/settings.svg b/resources/lib/oojs-ui/themes/apex/images/icons/settings.svg
+index 9fa0a4b..ae4af30 100644
+--- a/resources/lib/oojs-ui/themes/apex/images/icons/settings.svg
++++ b/resources/lib/oojs-ui/themes/apex/images/icons/settings.svg
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0, 0, 24, 24">
+-    <g id="settings">
++    <g id="settings" style="opacity:0.75;">
+         <path id="gear" d="M3 4h3v2h-3zM12 4h9v2h-9zM8 3h2c.552 0 1 .448 1 1v2c0 .552-.448 1-1 1h-2c-.552 0-1-.448-1-1v-2c0-.552.448-1 1-1zM3 11h9v2h-9zM18 11h3v2h-3zM14 10h2c.552 0 1 .448 1 1v2c0 .552-.448 1-1 1h-2c-.552 0-1-.448-1-1v-2c0-.552.448-1 1-1zM3 18h6v2h-6zM15 18h6v2h-6zM11 17h2c.552 0 1 .448 1 1v2c0 .552-.448 1-1 1h-2c-.552 0-1-.448-1-1v-2c0-.552.448-1 1-1z"/>
+     </g>
+ </svg>
+diff --git a/resources/lib/oojs-ui/themes/apex/images/icons/tag-white.svg b/resources/lib/oojs-ui/themes/apex/images/icons/tag-white.svg
+new file mode 100644
+index 0000000..84e8dae
+--- /dev/null
++++ b/resources/lib/oojs-ui/themes/apex/images/icons/tag-white.svg
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="utf-8"?>
++<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
++    <g id="tag" style="opacity:0.75;fill:white;">
++        <path d="M18.748 11.717c.389.389.389 1.025 0 1.414l-4.949 4.95c-.389.389-1.025.389-1.414 0l-6.01-6.01c-.389-.389-.707-1.157-.707-1.707l-.001-4.364c0-.55.45-1 1-1h4.364c.55 0 1.318.318 1.707.707l6.01 6.01zm-10.644-4.261c-.579.576-.578 1.514-.001 2.093.578.577 1.516.577 2.095.001.576-.578.576-1.517 0-2.095-.581-.576-1.518-.577-2.094.001z"/>
++    </g>
++</svg>
+diff --git a/resources/lib/oojs-ui/themes/apex/images/icons/tag.svg b/resources/lib/oojs-ui/themes/apex/images/icons/tag.svg
+index 534824c..2e6f43e 100644
+--- a/resources/lib/oojs-ui/themes/apex/images/icons/tag.svg
++++ b/resources/lib/oojs-ui/themes/apex/images/icons/tag.svg
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+-    <g id="tag">
++    <g id="tag" style="opacity:0.75;">
+         <path d="M18.748 11.717c.389.389.389 1.025 0 1.414l-4.949 4.95c-.389.389-1.025.389-1.414 0l-6.01-6.01c-.389-.389-.707-1.157-.707-1.707l-.001-4.364c0-.55.45-1 1-1h4.364c.55 0 1.318.318 1.707.707l6.01 6.01zm-10.644-4.261c-.579.576-.578 1.514-.001 2.093.578.577 1.516.577 2.095.001.576-.578.576-1.517 0-2.095-.581-.576-1.518-.577-2.094.001z"/>
+     </g>
+ </svg>
+diff --git a/resources/lib/oojs-ui/themes/apex/images/icons/window-white.svg b/resources/lib/oojs-ui/themes/apex/images/icons/window-white.svg
+new file mode 100644
+index 0000000..ccb5aa0
+--- /dev/null
++++ b/resources/lib/oojs-ui/themes/apex/images/icons/window-white.svg
+@@ -0,0 +1,7 @@
++<?xml version="1.0" encoding="utf-8"?>
++<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
++    <g id="window" style="opacity:0.75;fill:white;">
++        <path id="title" d="M7 10h10v1h-10z"/>
++        <path id="frame" d="M16 19h-8c-2.206 0-4-1.794-4-4v-6c0-2.206 1.794-4 4-4h8c2.206 0 4 1.794 4 4v6c0 2.206-1.794 4-4 4zm-8-12c-1.103 0-2 .897-2 2v6c0 1.103.897 2 2 2h8c1.103 0 2-.897 2-2v-6c0-1.103-.897-2-2-2h-8z"/>
++    </g>
++</svg>
+diff --git a/resources/lib/oojs-ui/themes/apex/images/icons/window.svg b/resources/lib/oojs-ui/themes/apex/images/icons/window.svg
+index cd3b76c..24a92bd 100644
+--- a/resources/lib/oojs-ui/themes/apex/images/icons/window.svg
++++ b/resources/lib/oojs-ui/themes/apex/images/icons/window.svg
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+-    <g id="window">
++    <g id="window" style="opacity:0.75;">
+         <path id="title" d="M7 10h10v1h-10z"/>
+         <path id="frame" d="M16 19h-8c-2.206 0-4-1.794-4-4v-6c0-2.206 1.794-4 4-4h8c2.206 0 4 1.794 4 4v6c0 2.206-1.794 4-4 4zm-8-12c-1.103 0-2 .897-2 2v6c0 1.103.897 2 2 2h8c1.103 0 2-.897 2-2v-6c0-1.103-.897-2-2-2h-8z"/>
+     </g>
+diff --git a/resources/lib/oojs-ui/themes/apex/images/indicators/alert-white.svg b/resources/lib/oojs-ui/themes/apex/images/indicators/alert-white.svg
+new file mode 100644
+index 0000000..21571c9
+--- /dev/null
++++ b/resources/lib/oojs-ui/themes/apex/images/indicators/alert-white.svg
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12">
++    <g id="alert" style="opacity:0.75;fill:white;">
++        <path d="M6 12c-3.314 0-6-2.686-6-6s2.686-6 6-6 6 2.686 6 6-2.686 6-6 6zm-1-5h2v-5h-2zm0 3h2v-2h-2z"/>
++    </g>
++</svg>
+diff --git a/resources/lib/oojs-ui/themes/apex/images/indicators/alert.svg b/resources/lib/oojs-ui/themes/apex/images/indicators/alert.svg
+index d9dc6a8..321088f 100644
+--- a/resources/lib/oojs-ui/themes/apex/images/indicators/alert.svg
++++ b/resources/lib/oojs-ui/themes/apex/images/indicators/alert.svg
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12">
+-    <g id="alert">
++    <g id="alert" style="opacity:0.75;">
+         <path d="M6 12c-3.314 0-6-2.686-6-6s2.686-6 6-6 6 2.686 6 6-2.686 6-6 6zm-1-5h2v-5h-2zm0 3h2v-2h-2z"/>
+     </g>
+ </svg>
+diff --git a/resources/lib/oojs-ui/themes/apex/images/indicators/arrow-down-white.svg b/resources/lib/oojs-ui/themes/apex/images/indicators/arrow-down-white.svg
+new file mode 100644
+index 0000000..7d2941b
+--- /dev/null
++++ b/resources/lib/oojs-ui/themes/apex/images/indicators/arrow-down-white.svg
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="utf-8"?>
++<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12">
++    <g id="down" style="opacity:0.75;fill:white;">
++        <path id="arrow" d="M2 3l3.5 6 3.5-6z"/>
++    </g>
++</svg>
+diff --git a/resources/lib/oojs-ui/themes/apex/images/indicators/arrow-down.svg b/resources/lib/oojs-ui/themes/apex/images/indicators/arrow-down.svg
+index bfa8ef0..72aed26 100644
+--- a/resources/lib/oojs-ui/themes/apex/images/indicators/arrow-down.svg
++++ b/resources/lib/oojs-ui/themes/apex/images/indicators/arrow-down.svg
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12">
+-    <g id="down">
++    <g id="down" style="opacity:0.75;">
+         <path id="arrow" d="M2 3l3.5 6 3.5-6z"/>
+     </g>
+ </svg>
+diff --git a/resources/lib/oojs-ui/themes/apex/images/indicators/arrow-ltr-white.svg b/resources/lib/oojs-ui/themes/apex/images/indicators/arrow-ltr-white.svg
+new file mode 100644
+index 0000000..e815678
+--- /dev/null
++++ b/resources/lib/oojs-ui/themes/apex/images/indicators/arrow-ltr-white.svg
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12">
++    <g id="ltr" style="opacity:0.75;fill:white;">
++        <path id="arrow" d="M3 9v-7l6 3.5z"/>
++    </g>
++</svg>
+diff --git a/resources/lib/oojs-ui/themes/apex/images/indicators/arrow-ltr.svg b/resources/lib/oojs-ui/themes/apex/images/indicators/arrow-ltr.svg
+index aeca27a..2c498b9 100644
+--- a/resources/lib/oojs-ui/themes/apex/images/indicators/arrow-ltr.svg
++++ b/resources/lib/oojs-ui/themes/apex/images/indicators/arrow-ltr.svg
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12">
+-    <g id="ltr">
++    <g id="ltr" style="opacity:0.75;">
+         <path id="arrow" d="M3 9v-7l6 3.5z"/>
+     </g>
+ </svg>
+diff --git a/resources/lib/oojs-ui/themes/apex/images/indicators/arrow-rtl-white.svg b/resources/lib/oojs-ui/themes/apex/images/indicators/arrow-rtl-white.svg
+new file mode 100644
+index 0000000..6f096ed
+--- /dev/null
++++ b/resources/lib/oojs-ui/themes/apex/images/indicators/arrow-rtl-white.svg
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12">
++    <g id="rtl" style="opacity:0.75;fill:white;">
++        <path id="arrow" d="M3 5.5l6 3.5v-7z"/>
++    </g>
++</svg>
+diff --git a/resources/lib/oojs-ui/themes/apex/images/indicators/arrow-rtl.svg b/resources/lib/oojs-ui/themes/apex/images/indicators/arrow-rtl.svg
+index eba0099..e9fde6f 100644
+--- a/resources/lib/oojs-ui/themes/apex/images/indicators/arrow-rtl.svg
++++ b/resources/lib/oojs-ui/themes/apex/images/indicators/arrow-rtl.svg
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12">
+-    <g id="rtl">
++    <g id="rtl" style="opacity:0.75;">
+         <path id="arrow" d="M3 5.5l6 3.5v-7z"/>
+     </g>
+ </svg>
+diff --git a/resources/lib/oojs-ui/themes/apex/images/indicators/arrow-up-white.svg b/resources/lib/oojs-ui/themes/apex/images/indicators/arrow-up-white.svg
+new file mode 100644
+index 0000000..f4ff600
+--- /dev/null
++++ b/resources/lib/oojs-ui/themes/apex/images/indicators/arrow-up-white.svg
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="utf-8"?>
++<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12">
++    <g id="up" style="opacity:0.75;fill:white;">
++        <path id="arrow" d="M5.5 2l-3.5 6h7z"/>
++    </g>
++</svg>
+diff --git a/resources/lib/oojs-ui/themes/apex/images/indicators/arrow-up.svg b/resources/lib/oojs-ui/themes/apex/images/indicators/arrow-up.svg
+index 4b01bb0..23e4487 100644
+--- a/resources/lib/oojs-ui/themes/apex/images/indicators/arrow-up.svg
++++ b/resources/lib/oojs-ui/themes/apex/images/indicators/arrow-up.svg
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12">
+-    <g id="up">
++    <g id="up" style="opacity:0.75;">
+         <path id="arrow" d="M5.5 2l-3.5 6h7z"/>
+     </g>
+ </svg>
+diff --git a/resources/lib/oojs-ui/themes/apex/images/indicators/required-white.svg b/resources/lib/oojs-ui/themes/apex/images/indicators/required-white.svg
+new file mode 100644
+index 0000000..b63d754
+--- /dev/null
++++ b/resources/lib/oojs-ui/themes/apex/images/indicators/required-white.svg
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12">
++    <g id="required" style="opacity:0.75;fill:white;">
++        <path d="M5 1h2v10h-2zM9.83 2.634l1 1.732-8.66 5-1-1.732zM1.17 4.366l1-1.732 8.66 5-1 1.732z"/>
++    </g>
++</svg>
+diff --git a/resources/lib/oojs-ui/themes/apex/images/indicators/required.svg b/resources/lib/oojs-ui/themes/apex/images/indicators/required.svg
+index 969fa2d..2949a43 100644
+--- a/resources/lib/oojs-ui/themes/apex/images/indicators/required.svg
++++ b/resources/lib/oojs-ui/themes/apex/images/indicators/required.svg
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12">
+-    <g id="required">
++    <g id="required" style="opacity:0.75;">
+         <path d="M5 1h2v10h-2zM9.83 2.634l1 1.732-8.66 5-1-1.732zM1.17 4.366l1-1.732 8.66 5-1 1.732z"/>
+     </g>
+ </svg>
