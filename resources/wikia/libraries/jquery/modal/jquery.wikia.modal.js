@@ -76,7 +76,7 @@ $.fn.extend({
 		}
 
 		// skin === oasis is for backward support
-		if (settings.tabsOutsideContent || skin === 'oasis' || skin === 'venus') {
+		if (settings.tabsOutsideContent || skin === 'oasis') {
 			// find tabs with .modal-tabs class and move them outside modal content
 			var modalTabs = wrapper.find('.modal-tabs');
 			if (modalTabs.exists()) {
@@ -227,7 +227,7 @@ $.fn.extend({
 				}
 		});
 
-		if (skin == 'oasis' || skin == 'venus' || settings.appendToBody) {
+		if (skin == 'oasis' || settings.appendToBody) {
 			blackout.appendTo("body");
 		} else {
 			blackout.appendTo("#positioned_elements");
