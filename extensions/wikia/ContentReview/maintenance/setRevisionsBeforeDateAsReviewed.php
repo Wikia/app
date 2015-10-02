@@ -56,7 +56,7 @@ class ReviewedBeforeDateRevision extends Maintenance {
 										$this->getWikiaUser(),
 										$wgCityId,
 										$jsPage['page_id'],
-										$jsPage['page_latest']
+										$revision->getId()
 									);
 									$this->output( "Added revision id for page {$jsPage['page_title']} (ID: {$jsPage['page_id']})\n" );
 								} catch( FluentSql\Exception\SqlException $e ) {
