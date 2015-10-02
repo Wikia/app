@@ -2,6 +2,7 @@
 
 namespace Wikia\ContentReview;
 
+use Wikia\Interfaces\IRequest;
 use Wikia\ContentReview\Models\CurrentRevisionModel;
 use Wikia\ContentReview\Models\ReviewModel;
 
@@ -318,10 +319,10 @@ class Helper extends \ContextSource {
 	/**
 	 * Returns an ID of a revision that is currently being reviewed. It is either a value of
 	 * `diff` URL parameter or `oldid` if `diff` is not present.
-	 * @param \WikiaRequest $request
+	 * @param IRequest $request An object of a class implementing the IRequest interface
 	 * @return null|int
 	 */
-	public function getCurrentlyReviewedRevisionId( \WikiaRequest $request ) {
+	public function getCurrentlyReviewedRevisionId( IRequest $request ) {
 		$revisionId = $request->getVal( 'diff' );
 		if ( $revisionId === null ) {
 			$revisionId = $request->getVal( 'oldid' );
