@@ -68,15 +68,17 @@ class JsPagesSpecialController extends WikiaSpecialPageController {
 	private function formatMessage( $jsPage ) {
 		$statusMessage = '';
 
+		$statusKey = Sanitizer::encodeAttribute( $jsPage['statusKey'] );
+
 		if ( !empty( $jsPage['diffLink'] ) ) {
-			$statusMessage .= '<span class="content-review-status content-review-status-' . $jsPage['statusKey'] . '">'
+			$statusMessage .= '<span class="content-review-status content-review-status-' . $statusKey . '">'
 				. $jsPage['diffLink'] . '</span> ' . $jsPage['message'];
 
 			if ( !empty( $jsPage['reasonLink'] ) ) {
 				$statusMessage .= ' ' . $jsPage['reasonLink'];
 			}
 		} else {
-			$statusMessage .= '<span class="content-review-status content-review-status-' . $jsPage['statusKey'] . '">'
+			$statusMessage .= '<span class="content-review-status content-review-status-' . $statusKey . '">'
 				. $jsPage['message'] . '</span>';
 		}
 

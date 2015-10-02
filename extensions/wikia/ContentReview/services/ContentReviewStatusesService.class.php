@@ -294,23 +294,19 @@ class ContentReviewStatusesService extends \WikiaService {
 	}
 
 	public function createPageLink( \Title $title ) {
-		return \Linker::linkKnown( $title, $title->getText() );
+		return \HTML::element( 'a', [ 'href' => $title->getFullURL() ], $title->getText() );
 	}
 
-	private function createRevisionLink( $title, $revisionId, $liveRevisionId = 0 ) {
+	private function createRevisionLink( \Title $title, $revisionId, $liveRevisionId = 0 ) {
 		$params = $this->prepareRevisionLinkParams( $revisionId, $liveRevisionId );
 
-		return \Linker::linkKnown(
-			$title,
-			"#{$revisionId}",
-			[],
-			$params
-		);
+		return \HTML::element( 'a', [ 'href' => $title->getFullURL( $params ) ], "#{$revisionId}" );
 	}
 
 	private function createRevisionTalkpageLink( \Title $title ) {
-		return \Linker::linkKnown(
-			$title,
+		return \HTML::element(
+			'a',
+			[ 'href' => $title->getFullURL() ],
 			wfMessage( 'content-review-rejection-reason-link' )->escaped()
 		);
 	}
