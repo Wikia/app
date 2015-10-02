@@ -83,6 +83,16 @@ class CSRFDetector {
 	}
 
 	/**
+	 * Edit token should be checked before making changes in WikiFactory
+	 *
+	 * @return bool true, continue hook processing
+	 */
+	public static function onWikiFactory() {
+		self::assertEditTokenAndMethodWereChecked( __METHOD__ );
+		return true;
+	}
+
+	/**
 	 * Assert that edit token and HTTP method were checked in this request
 	 *
 	 * @see https://kibana.wikia-inc.com/#/dashboard/elasticsearch/PLATFORM-1540
