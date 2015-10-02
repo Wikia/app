@@ -46,6 +46,7 @@ class CSRFDetector {
 		foreach( $wgCSRFDetectorHooks as $hookName ) {
 			$wgHooks[$hookName][] = function() use ( $hookName ) {
 				self::assertEditTokenAndMethodWereChecked( $hookName );
+				return true;
 			};
 		}
 	}
