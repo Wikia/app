@@ -308,11 +308,6 @@ $wgAutoloadClasses['TemplateClassification'] = "$IP/includes/wikia/TemplateClass
 $wgAutoloadClasses['TemplateDataExtractor'] = "$IP/includes/wikia/TemplateDataExtractor.class.php";
 
 /**
- * Custom Wikia interfaces
- */
-$wgAutoloadClasses['Wikia\\Interfaces\\IRequest'] = "$IP/includes/wikia/interfaces/IRequest.php";
-
-/**
  * Resource Loader enhancements
  */
 $wgAutoloadClasses[ 'ResourceLoaderGlobalWikiModule'  ]  = "$IP/includes/wikia/resourceloader/ResourceLoaderGlobalWikiModule.class.php";
