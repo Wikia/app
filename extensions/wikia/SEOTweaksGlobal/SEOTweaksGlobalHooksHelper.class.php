@@ -100,7 +100,8 @@ class SEOTweaksGlobalHooksHelper {
 			$cacheKey = self::makeKey( $title );
 			$imageUrl = $wgMemc->get( $cacheKey );
 
-			if ( is_null( $imageUrl ) || $imageUrl === false ) {    // not in memcache
+			//if no image in memcache
+			if ( empty( $imageUrl ) ) {
 				if ( $namespace != NS_FILE ) {
 					$title = self::getFirstArticleImage( $title );
 				}
@@ -121,10 +122,12 @@ class SEOTweaksGlobalHooksHelper {
 				$wgMemc->set( $cacheKey, $imageUrl );
 			}
 
-			if ( !empty( $imageUrl ) ) { // only when there is a thumbnail url
+			// only when there is a thumbnail url add it to metatags
+			if ( !empty( $imageUrl ) ) {
 				$meta[ 'og:image' ] = $imageUrl;
 			}
 		}
+
 		return true;
 	}
 
