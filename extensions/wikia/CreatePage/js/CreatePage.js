@@ -290,7 +290,7 @@ var CreatePage = {
 		CreatePage.context = context;
 		if ( window.WikiaEnableNewCreatepage ) {
 			$().log( 'init', 'CreatePage' );
-			
+
 			if ( !window.WikiaDisableDynamicLinkCreatePagePopup ) {
 				$( '#dynamic-links-write-article-link, #dynamic-links-write-article-icon' ).click(function( e ) {
 					CreatePage.requestDialog( e, null );
