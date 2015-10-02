@@ -266,25 +266,37 @@ var CreatePage = {
 	},
 
 	redLinkClick: function( e, titleText ) {
+		console.log('qqq redlinkclick titleText', titleText);
 		'use strict';
 		var title = new mw.Title.newFromText( titleText ),
 			namespace = title.getNamespacePrefix().replace( ':', '' ),
 			visualEditorActive = $( 'html' ).hasClass( 've-activated' );
 
 		CreatePage.redlinkParam = '&redlink=1';
-
+		console.log('qqq CreatePage.canUseVisualEditor()', CreatePage.canUseVisualEditor());
 		if ( CreatePage.canUseVisualEditor() ) {
 			CreatePage.track( { action: 'click', label: 've-redlink-click' } );
 		}
-
+		console.log('qqq visualEditorActive', visualEditorActive);
+		console.log("qqq mw.config.get( 'wgNamespaceIds' )[ namespace.toLowerCase() ]", mw.config.get( 'wgNamespaceIds' )[ namespace.toLowerCase() ]);
+		console.log('qqq window.ContentNamespacesText', window.ContentNamespacesText);
+		console.log('qqq window.ContentNamespacesText.indexOf( title[0] )', window.ContentNamespacesText.indexOf( title[0] ));
+		console.log('qqq condition evaluate ', (
+			visualEditorActive ||
+			mw.config.get( 'wgNamespaceIds' )[ namespace.toLowerCase() ] &&
+			window.ContentNamespacesText &&
+			window.ContentNamespacesText.indexOf( title[0] ) === -1
+		));
 		if (
 			visualEditorActive ||
 			mw.config.get( 'wgNamespaceIds' )[ namespace.toLowerCase() ] &&
 			window.ContentNamespacesText &&
 			window.ContentNamespacesText.indexOf( title[0] ) === -1
 		) {
+			console.log('qqq stop not request dialog');
 			return false;
 		} else {
+			console.log('qqq go request dialog');
 			CreatePage.requestDialog( e, titleText );
 		}
 	},
@@ -322,6 +334,7 @@ var CreatePage = {
 			}
 
 			$( '#WikiaArticle' ).on( 'click', 'a.new', function( e ) {
+				console.log('qqq attaching event handler to a new', $( '#WikiaArticle' ).find('a.new').length);
 				CreatePage.redLinkClick( e, CreatePage.getTitleFromUrl( this.href ) );
 			});
 
