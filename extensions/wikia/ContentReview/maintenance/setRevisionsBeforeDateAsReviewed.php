@@ -75,7 +75,7 @@ class ReviewedBeforeDateRevision extends Maintenance {
 
 			$helper->purgeReviewedJsPagesTimestamp();
 		} else {
-			$this->output( "Wiki (Id: {$wgCityId}) has disabled custom scripts.\n" );
+			$this->output( "Wiki (Id: {$wgCityId}) has disabled custom scripts or JSRT.\n" );
 		}
 
 	}
