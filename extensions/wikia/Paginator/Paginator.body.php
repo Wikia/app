@@ -188,4 +188,34 @@ class Paginator extends Service{
 		return $this->pagesCount;
 	}
 
+	/**
+	 * Get HTML to put to HTML <head> to allow search engines to identify next and previous pages
+	 *
+	 * @param $url
+	 * @return string
+	 */
+	public function getHeadItem( $url ) {
+		$links = '';
+
+		// Converting from 0-indexed to 1-indexed
+		$currentPage = $this->activePage + 1;
+
+		// Pages outside the pagination range
+		if ( $currentPage < 1 || $currentPage > $this->pagesCount ) {
+			return '';
+		}
+
+		// Has a previous page?
+		if ( $currentPage > 1 ) {
+			$links .= "\t" . Html::element( 'link', [ 'rel' => 'prev', 'href' => sprintf( $url, $currentPage - 1 ) ] ) . PHP_EOL;
+		}
+
+		// Has a next page?
+		if ( $currentPage < $this->pagesCount ) {
+			$links .= "\t" . Html::element( 'link', [ 'rel' => 'next', 'href' => sprintf( $url, $currentPage + 1 ) ] ) . PHP_EOL;
+		}
+
+		return $links;
+	}
+
 }
