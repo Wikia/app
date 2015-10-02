@@ -35,7 +35,8 @@ class TemplateDraftModuleController extends WikiaController {
 		if ( $draftTitle->userCan( 'edit' ) && $parentTitle->userCan( 'edit' ) ) {
 			$this->allowApprove = true;
 			$this->draftUrl = $draftTitle->getFullUrl( [
-				'action' => 'approvedraft'
+				'action' => 'approvedraft',
+				'token' => ApprovedraftAction::getApproveToken( $draftTitle, $this->wg->User ),
 			] );
 		}
 	}
