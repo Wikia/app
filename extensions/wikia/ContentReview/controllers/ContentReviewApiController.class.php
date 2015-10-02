@@ -155,6 +155,7 @@ class ContentReviewApiController extends WikiaApiController {
 				$this->notification = wfMessage( 'content-review-diff-reject-confirmation', $feedbackLink )->parse();
 			}
 
+			$reviewModel->updateCompletedReview( $wikiId, $pageId, $review['revision_id'], $status );
 			ContentReviewStatusesService::purgeJsPagesCache();
 		}
 		else {
