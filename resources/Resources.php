@@ -247,9 +247,6 @@ return array(
 				'resources/jquery.ui/themes/default/jquery.ui.core.css',
 				// TODO: use /skins/oasis/css/core/jquery.ui.autocomplete.scss SASS file here
 			),
-			'venus' => array(
-				'resources/jquery.ui/themes/default/jquery.ui.core.css',
-			)
 			// wikia change - end
 		),
 		'dependencies' => 'jquery',
