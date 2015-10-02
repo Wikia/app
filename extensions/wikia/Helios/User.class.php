@@ -78,6 +78,7 @@ class User {
 	 */
 	public static function newFromToken( \WebRequest $request ) {
 		// Extract access token from HTTP request data.
+		wfProfileIn(__METHOD__);
 		$token = self::getAccessToken( $request );
 
 		// Authenticate with the token, if present.
@@ -93,6 +94,7 @@ class User {
 					// @see SERVICES-459
 					if ( (bool)$user->getGlobalFlag( 'disabled' ) ) {
 						self::clearAccessTokenCookie();
+						wfProfileOut(__METHOD__);
 						return null;
 					}
 
@@ -109,6 +111,7 @@ class User {
 					}
 
 					// return a MediaWiki's User object
+					wfProfileOut(__METHOD__);
 					return $user;
 				}
 			}
@@ -118,6 +121,7 @@ class User {
 			}
 		}
 
+		wfProfileOut(__METHOD__);
 		return null;
 	}
 

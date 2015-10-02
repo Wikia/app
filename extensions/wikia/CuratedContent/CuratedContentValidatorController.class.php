@@ -1,5 +1,6 @@
 <?php
 
+class CuratedContentValidatorMethodNotAllowedException extends MethodNotAllowedException {}
 /**
  * CuratedContentValidatorComponent: API endpoint for validation
  */
@@ -15,6 +16,11 @@ class CuratedContentValidatorController extends WikiaController {
 	}
 
 	public function validateSection() {
+		global $wgRequest;
+		if ( !$wgRequest->wasPosted() ) {
+			throw new CuratedContentValidatorMethodNotAllowedException();
+		}
+
 		$section = $this->request->getVal( 'item' );
 
 		if ( empty( $section ) ) {
@@ -29,6 +35,11 @@ class CuratedContentValidatorController extends WikiaController {
 	}
 
 	public function validateSectionWithItems() {
+		global $wgRequest;
+		if ( !$wgRequest->wasPosted() ) {
+			throw new CuratedContentValidatorMethodNotAllowedException();
+		}
+
 		$section = $this->request->getVal( 'item' );
 
 		if ( empty( $section ) ) {
@@ -52,6 +63,11 @@ class CuratedContentValidatorController extends WikiaController {
 	}
 
 	public function validateItem() {
+		global $wgRequest;
+		if ( !$wgRequest->wasPosted() ) {
+			throw new CuratedContentValidatorMethodNotAllowedException();
+		}
+
 		$item = $this->request->getVal( 'item' );
 		$isFeatured = $this->request->getBool( 'isFeaturedItem', false );
 

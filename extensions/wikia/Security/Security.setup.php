@@ -16,12 +16,28 @@ $wgHooks['UserMatchEditToken'][] = 'Wikia\\Security\\CSRFDetector::onUserMatchEd
 $wgHooks['WebRequestWasPosted'][] = 'Wikia\\Security\\CSRFDetector::onRequestWasPosted';
 $wgHooks['WikiaRequestWasPosted'][] = 'Wikia\\Security\\CSRFDetector::onRequestWasPosted';
 
-// PLATFORM-1540: detect revision inserts not guarded by user's edit token check
-$wgHooks['RevisionInsertComplete'][] = 'Wikia\\Security\\CSRFDetector::onRevisionInsertComplete';
+/**
+ * CSRFDetector
+ *
+ * List of hooks to bind, actions that triggered them will be checked against token and HTTP method validation
+ *
+ * @see PLATFORM-1540
+ */
+$wgCSRFDetectorHooks = [
+	// MAIN-5465: detect revision inserts not guarded by user's edit token check
+	'RevisionInsertComplete',
 
-// PLATFORM-1540: detect file uploads (local files and via URL) not guarded by user's edit token check
-$wgHooks['UploadComplete'][] = 'Wikia\\Security\\CSRFDetector::onUploadComplete';
-$wgHooks['UploadFromUrlReallyFetchFile'][] = 'Wikia\\Security\\CSRFDetector::onUploadFromUrlReallyFetchFile';
+	// PLATFORM-1531: detect file uploads (local files and via URL) not guarded by user's edit token check
+	'UploadComplete',
+	'UploadFromUrlReallyFetchFile',
 
-// PLATFORM-1540: detect user settings saves not guarded by user's edit token check
-$wgHooks['UserSaveSettings'][] = 'Wikia\\Security\\CSRFDetector::onUserSaveSettings';
+	// CE-1224: detect user settings saves not guarded by user's edit token check
+	'UserSaveSettings',
+
+	// WikiFactory related actions should be protected as well
+	'WikiFactoryChanged',
+	'WikiFactoryVariableRemoved',
+];
+
+// bind to all hooks defined in $wgCSRFDetectorHooks
+$wgExtensionFunctions[] = 'Wikia\\Security\\CSRFDetector::setupHooks';

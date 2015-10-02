@@ -35,7 +35,7 @@
  *
  * @ingroup HTTP
  */
-class WebRequest {
+class WebRequest implements Wikia\Interfaces\IRequest {
 	protected $data, $headers = array();
 
 	/**
