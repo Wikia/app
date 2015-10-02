@@ -184,11 +184,18 @@ class ContentReviewStatusesService extends \WikiaService {
 	public function getStatusKey( $status = 0 ) {
 		switch ( $status ) {
 			case 1:
-			case 2: $statusKey = self::STATUS_AWAITING; break;
+			case 2:
+				$statusKey = self::STATUS_AWAITING;
+				break;
 			case 3:
-			case 5: $statusKey = self::STATUS_APPROVED; break;
-			case 4: $statusKey = self::STATUS_REJECTED; break;
-			default: $statusKey = self::STATUS_NONE;
+			case 5:
+				$statusKey = self::STATUS_APPROVED;
+				break;
+			case 4:
+				$statusKey = self::STATUS_REJECTED;
+				break;
+			default:
+				$statusKey = self::STATUS_NONE;
 		}
 
 		return $statusKey;
