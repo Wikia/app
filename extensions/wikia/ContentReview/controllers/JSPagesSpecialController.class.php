@@ -3,14 +3,14 @@
 use Wikia\ContentReview\ContentReviewStatusesService;
 use Wikia\ContentReview\Helper;
 
-class JsPagesSpecialController extends WikiaSpecialPageController {
+class JSPagesSpecialController extends WikiaSpecialPageController {
 
 	private static $topJsPages = [
 		'Wikia.js', 'Common.js'
 	];
 
 	function __construct() {
-		parent::__construct( 'JsPages', 'content-review-js-pages', true );
+		parent::__construct( 'JSPages', 'content-review-js-pages', true );
 	}
 
 	public function init() {
@@ -19,7 +19,7 @@ class JsPagesSpecialController extends WikiaSpecialPageController {
 		\Wikia::addAssetsToOutput( 'content_review_module_scss' );
 		\Wikia::addAssetsToOutput( 'content_review_module_js' );
 		\Wikia::addAssetsToOutput( 'content_review_test_mode_js' );
-		\JSMessages::enqueuePackage( 'JsPagesSpecialPage', \JSMessages::EXTERNAL );
+		\JSMessages::enqueuePackage( 'JSPagesSpecialPage', \JSMessages::EXTERNAL );
 	}
 
 	protected function checkAccess() {
