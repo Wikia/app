@@ -187,7 +187,7 @@ class ResourceLoaderHooks {
 		// Wikia doesn't include Mediawiki:Common.css in Oasis
 		// lower-case skin name is returned by getSkin()
 		// TODO: Remove $wgOasisLoadCommonCSS after renaming it to $wgLoadCommonCSS in WF after release
-		if ( in_array($skinName, ['oasis']) && empty( $wgOasisLoadCommonCSS ) && empty( $wgLoadCommonCSS ) ) {
+		if ( ( $skinName === 'oasis' ) && empty( $wgOasisLoadCommonCSS ) && empty( $wgLoadCommonCSS ) ) {
 			unset($pages['MediaWiki:Common.css']);
 		}
 

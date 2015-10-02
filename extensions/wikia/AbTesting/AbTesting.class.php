@@ -60,7 +60,7 @@ class AbTesting extends WikiaObject {
 	static public function onWikiaSkinTopShortTTLModules( Array &$modules, $skin) {
 		$app = F::app();
 
-		if ( $app->checkSkin( ['oasis', 'wikiamobile'], $skin ) ) {
+		if ( $app->checkSkin( [ 'oasis', 'wikiamobile' ], $skin ) ) {
 			$modules[] = 'wikia.ext.abtesting';
 		}
 
