@@ -179,9 +179,10 @@ class ApiVisualEditorEdit extends ApiVisualEditor {
 				if ( $this->veConfig->get( 'VisualEditorUseChangeTagging' ) ) {
 					// Defer till after the RC row is inserted
 					// @TODO: doEditContent should let callers specify desired tags
-					DeferredUpdates::addCallableUpdate( function() use ( $newRevId ) {
-						ChangeTags::addTags( 'visualeditor', null, $newRevId, null );
-					} );
+					// ve-upstream-sync - review - @author: Paul Oslund
+					// DeferredUpdates::addCallableUpdate( function() use ( $newRevId ) {
+					ChangeTags::addTags( 'visualeditor', null, $newRevId, null );
+					// } );
 				}
 			} else {
 				$newRevId = $page->getLatestRevId();
