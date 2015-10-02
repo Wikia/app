@@ -1,0 +1,111 @@
+<?php
+
+$dir = __DIR__ . "/../../../../";
+require_once( $dir . 'maintenance/Maintenance.php' );
+
+class ReviewedBeforeDateRevision extends Maintenance {
+
+	const JS_FILE_EXTENSION = '.js';
+
+	private $contentReviewService,
+			$currentRevisionModel,
+			$wikiaUser;
+
+	/**
+	 * Set script options
+	 */
+	public function __construct() {
+		parent::__construct();
+
+		$this->addOption( 'beforeDate', 'Approve all revisions edited before this date.' );
+	}
+
+	public function execute() {
+		global $wgCityId, $wgUseSiteJs, $wgEnableContentReviewExt;
+
+		if ( !empty( $wgUseSiteJs ) && !empty( $wgEnableContentReviewExt ) ) {
+			$this->output( "Processing wiki id: {$wgCityId}\n" );
+
+			$helper = new \Wikia\ContentReview\Helper();
+			$jsPages = $helper->getJsPages();
+
+			$currentRevisions = $this->getCurrentRevisionModel()->getLatestReviewedRevisionForWiki( $wgCityId );
+
+			$beforeDate = $this->getOption( 'beforeDate', null );
+
+			if ( !is_null( $beforeDate ) ) {
+				$beforeDate = strtotime( $beforeDate );
+			} else {
+				exit('Date is not set.');
+			}
+
+			foreach ( $jsPages as $jsPage ) {
+				if ( !empty( $jsPage['page_id'] ) && !empty( $jsPage['page_latest'] ) ) {
+					$lastApprovedRevisionId = isset( $currentRevisions[$jsPage['page_id']] ) ? $currentRevisions[$jsPage['page_id']] : 0;
+
+					if ( $jsPage['page_latest'] != $lastApprovedRevisionId ) {
+						$revision = Revision::newFromId( $jsPage['page_latest'] );
+						$title = $revision->getTitle();
+						$approved = false;
+
+						while ( !$approved && !is_null( $revision ) && $revision->getId() != $lastApprovedRevisionId ) {
+							$userId = $revision->getUser();
+							$user = User::newFromId( $userId );
+
+							if ( strtotime( $revision->getTimestamp() ) <= $beforeDate && $title->userCan( 'editinterfacetrusted', $user ) ) {
+								try {
+									$this->getContentReviewService()->automaticallyApproveRevision(
+										$this->getWikiaUser(),
+										$wgCityId,
+										$jsPage['page_id'],
+										$jsPage['page_latest']
+									);
+									$this->output( "Added revision id for page {$jsPage['page_title']} (ID: {$jsPage['page_id']})\n" );
+								} catch( FluentSql\Exception\SqlException $e ) {
+									$this->output( $e->getMessage() . "\n" );
+								}
+
+								$approved = true;
+							} else {
+								$revision = $revision->getPrevious();
+							}
+
+						}
+					}
+				}
+			}
+
+			$helper->purgeReviewedJsPagesTimestamp();
+		} else {
+			$this->output( "Wiki (Id: {$wgCityId}) has disabled custom scripts.\n" );
+		}
+
+	}
+
+	private function getWikiaUser() {
+		if ( empty( $this->wikiaUser ) ) {
+			$this->wikiaUser = User::newFromName( 'Wikia' );
+		}
+
+		return $this->wikiaUser;
+	}
+
+	private function getCurrentRevisionModel() {
+		if ( empty( $this->currentRevisionModel ) ) {
+			$this->currentRevisionModel = new Wikia\ContentReview\Models\CurrentRevisionModel();
+		}
+
+		return $this->currentRevisionModel;
+	}
+
+	private function getContentReviewService() {
+		if ( empty( $this->contentReviewService ) ) {
+			$this->contentReviewService = new Wikia\ContentReview\ContentReviewService();
+		}
+
+		return $this->contentReviewService;
+	}
+}
+
+$maintClass = 'ReviewedBeforeDateRevision';
+require_once( RUN_MAINTENANCE_IF_MAIN );
