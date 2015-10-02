@@ -328,7 +328,7 @@ $2
 	'templatedraft-module-view-parent' => 'zobacz wikitekst rodzica szablonu',
 	'templatedraft-module-help' => 'zobacz stronę pomocy na temat znaczników Infoboksów',
 	'templatedraft-invalid-template' => 'Nieprawidłowa nazwa szablonu.',
-	'templatedraft-module-approve-protected' => 'Ten szablon jest chroniony. Poproś [[[Special:ListAdmins|Admina]] o zatwierdzenie wersji roboczej.',
+	'templatedraft-module-approve-protected' => 'Ten szablon jest chroniony. Poproś [[Special:ListAdmins|Admina]] o zatwierdzenie wersji roboczej.',
 	'templatedraft-protect-edit' => 'Nie masz uprawnień do edytowania strony nadrzędnej.',
 );
 
