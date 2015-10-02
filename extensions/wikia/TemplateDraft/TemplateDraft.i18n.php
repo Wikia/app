@@ -100,6 +100,8 @@ $2
 	'templatedraft-module-view-parent' => 'Wikitext der übergeordneten Vorlage ansehen',
 	'templatedraft-module-help' => 'Hilfeseite für das Infobox-Format ansehen',
 	'templatedraft-invalid-template' => 'Ungültiger Vorlagenname angegeben.',
+	'templatedraft-module-approve-protected' => 'Diese Vorlage ist geschützt. Wende dich bitte an einen [[Special: ListAdmins| Administrator]], damit er diesen Entwurf freischalten kann.',
+	'templatedraft-protect-edit' => 'Du hast keine Berechtigung, die übergeordnete Vorlagenseite zu bearbeiten.',
 );
 
 $messages['es'] = array(
@@ -111,12 +113,12 @@ $messages['es'] = array(
 	'templatedraft-approval-success-confirmation' => 'El contenido de esta platilla se cambió con una versión actualizada de una plantilla de borrador y se eliminó el borrador',
 	'templatedraft-approval-summary' => 'El Infobox se actualizó usando la herramienta de migración de [[w:c:es:Ayuda:Infoboxes_Portátiles|infobox portátil]]',
 	'templatedraft-draft-removal-summary' => 'Limpieza. Borrador aprobado para la página principal.',
-	'templatedraft-module-title-create' => 'Migrar este infobox',
+	'templatedraft-module-title-create' => 'Migrar esta infobox',
 	'templatedraft-module-subtitle-create' => 'Esta plantilla no usa el nuevo [[w:c:es:Ayuda:Infoboxes_Portátiles|marcador de infobox]].',
 	'templatedraft-module-content-create' => 'Podemos generar un borrador del marcador desde tu infobox existente y guardarlo como subpágina, para que puedas revisarlo y hacer cualquier cambio necesario.',
 	'templatedraft-module-button-create' => 'Generar marcador de borrador',
 	'templatedraft-module-button-title-create' => 'Abrir una nueva pestaña con un formulario de edición previamente llenado',
-	'templatedraft-module-closelink-create' => 'Este no es un infobox',
+	'templatedraft-module-closelink-create' => 'Este no es una infobox',
 	'templatedraft-module-title-approve' => 'Mover esta plantilla de borrador',
 	'templatedraft-module-content-approve' => '¿Estás conforme con este borrador y deseas promoverlo a una plantilla activa?',
 	'templatedraft-module-button-approve' => 'Aprobar este borrador',
@@ -136,6 +138,8 @@ $2
 	'templatedraft-module-view-parent' => 'ver wikitext de la plantilla principal',
 	'templatedraft-module-help' => 'ver la página de ayuda sobre el marcador del infobox',
 	'templatedraft-invalid-template' => 'El nombre de la plantilla es inválido.',
+	'templatedraft-module-approve-protected' => 'Esta plantilla está protegida. Por favor pregunta a un [[Special:ListAdmins|administrador]] que apruebe este borrador.',
+	'templatedraft-protect-edit' => 'No tienes permiso para editar la página principal.',
 );
 
 $messages['fr'] = array(
@@ -172,6 +176,8 @@ $2
 	'templatedraft-module-view-parent' => 'afficher le wikitexte du modèle parent',
 	'templatedraft-module-help' => "afficher la page d'aide sur le code des infoboxes",
 	'templatedraft-invalid-template' => 'Nom de modèle fourni non valide.',
+	'templatedraft-module-approve-protected' => "Ce modèle est protégé. Veuillez demander à un [[Special:ListAdmins|administrateur]] d'approuver cette version de travail.",
+	'templatedraft-protect-edit' => "Vous n'êtes pas autorisé à modifier la page parente.",
 );
 
 $messages['it'] = array(
@@ -208,6 +214,8 @@ $2
 	'templatedraft-module-view-parent' => 'vedi modello della pagina principale wikitext',
 	'templatedraft-module-help' => 'vedi la pagina di aiuto sul markup per Infobox',
 	'templatedraft-invalid-template' => 'Il nome di modello fornito non è valido.',
+	'templatedraft-module-approve-protected' => 'Questo modello è protetto. Chiedi a un [[Special: ListAdmins|Amministratore]] di approvare questo progetto.',
+	'templatedraft-protect-edit' => 'Non hai il permesso di modificare la pagina principale.',
 );
 
 $messages['ja'] = array(
@@ -244,6 +252,8 @@ $2
 	'templatedraft-module-view-parent' => 'もとのテンプレートのウィキテキスト',
 	'templatedraft-module-help' => 'インフォボックスのマークアップに関するヘルプページ',
 	'templatedraft-invalid-template' => '入力したテンプレート名は無効です。',
+	'templatedraft-module-approve-protected' => 'このテンプレートは保護されているようです。このドラフトを承認するには、[[Special:ListAdmins|アドミン]]にお問い合わせください。',
+	'templatedraft-protect-edit' => '親ページを編集していただくための権限をお持ちでないようです。',
 );
 
 $messages['nl'] = array(
@@ -280,6 +290,8 @@ $2
 	'templatedraft-module-view-parent' => 'view parent template wikitext',
 	'templatedraft-module-help' => 'view the help page on Infobox markup',
 	'templatedraft-invalid-template' => 'Invalid template name provided.',
+	'templatedraft-module-approve-protected' => 'This template is protected. Please ask an [[Special:ListAdmins|Admin]] to approve this draft.',
+	'templatedraft-protect-edit' => 'You do not have permission to edit parent page.',
 );
 
 $messages['pl'] = array(
@@ -316,6 +328,8 @@ $2
 	'templatedraft-module-view-parent' => 'zobacz wikitekst rodzica szablonu',
 	'templatedraft-module-help' => 'zobacz stronę pomocy na temat znaczników Infoboksów',
 	'templatedraft-invalid-template' => 'Nieprawidłowa nazwa szablonu.',
+	'templatedraft-module-approve-protected' => 'Ten szablon jest chroniony. Poproś [[[Special:ListAdmins|Admina]] o zatwierdzenie wersji roboczej.',
+	'templatedraft-protect-edit' => 'Nie masz uprawnień do edytowania strony nadrzędnej.',
 );
 
 $messages['pt'] = array(
@@ -352,6 +366,8 @@ $2
 	'templatedraft-module-view-parent' => 'visualizar wikitexto da predefinição principal',
 	'templatedraft-module-help' => 'visualizar a página de ajuda sobre marcação de Infobox',
 	'templatedraft-invalid-template' => 'Nome inválido de predefinição fornecido.',
+	'templatedraft-module-approve-protected' => 'Esta predefinição está protegida. Por favor, pergunte a um  [[Special:ListAdmins|Admin]] para aprovar este projeto.',
+	'templatedraft-protect-edit' => 'Você não tem permissão para editar esta página.',
 );
 
 $messages['ru'] = array(
@@ -388,17 +404,19 @@ $2
 	'templatedraft-module-view-parent' => 'Просмотр викитекста старой версии шаблона',
 	'templatedraft-module-help' => 'Справочная статья о модульных инфобоксах',
 	'templatedraft-invalid-template' => 'Недопустимое название шаблона.',
+	'templatedraft-module-approve-protected' => 'Этот шаблон находится под защитой. Пожалуйста, попросите [[Special:ListAdmins|администраторов]] вики одобрить этот черновик.',
+	'templatedraft-protect-edit' => 'Вы не имеете разрешения на редактирование родительской страницы.',
 );
 
 $messages['zh-hans'] = array(
 	'templatedraft-description' => 'TemplateDraft扩展',
 	'templatedraft-subpage' => '模版草稿',
-	'templatedraft-editintro' => '给您！我们已经用我们的新标记文件生成了您的信息框草稿。我们会将其保存为一个子页面，以便于您查看并进行必要的更改。您可以$1或$2。',
+	'templatedraft-editintro' => '好啦！我们已经使用新的标记文件为您生成了信息框草稿。我们会将其保存为一个子页面，以便于您查看并进行必要的更改。您可以$1或$2。',
 	'templatedraft-approval-no-page-error' => '由于页面的草稿不存在，审核操作失败',
 	'templatedraft-approval-no-templatedraft-error' => '草稿审核操作不适用于非模版草稿页面',
 	'templatedraft-approval-success-confirmation' => '此模版内容已被模版的草稿更新版替换，原模版草案已被移除',
 	'templatedraft-approval-summary' => '使用[[w:c:zh.community:Help:移動化訊息框|移动化信息框]]迁移工具进行更新',
-	'templatedraft-draft-removal-summary' => '清理。被批准为父页面的草稿。',
+	'templatedraft-draft-removal-summary' => '清理完毕。草稿已被批准为首页面。',
 	'templatedraft-module-title-create' => '迁移此信息框',
 	'templatedraft-module-subtitle-create' => '此模版没有使用新的[[w:c:zh.community:Help:移動化訊息框|移动式信息框]]。',
 	'templatedraft-module-content-create' => '我们可以从现用的信息框生成标记文件的草稿，并保存为子页面，以便于您查看并进行必要的更改。',
@@ -421,20 +439,22 @@ $2
 
 [{{fullurl:{{ns:Template}}:{{PAGENAME}}}}?action=purge 点击此处刷新上面的预览内容]',
 	'templatedraft-module-editintro-please-convert' => '我们可以用我们的新标记文件为您生成信息框的草稿，只需点击 $1即可。',
-	'templatedraft-module-view-parent' => '查看父模版的 wikitext',
+	'templatedraft-module-view-parent' => '查看主模版的wikitext',
 	'templatedraft-module-help' => '查看信息框标记文件的帮助页面',
 	'templatedraft-invalid-template' => '提供的模版名称无效',
+	'templatedraft-module-approve-protected' => '此模板受到保护。请咨询[[Special:ListAdmins|管理员]]批准这一草案。',
+	'templatedraft-protect-edit' => '您没有权限编辑首页面。',
 );
 
 $messages['zh-hant'] = array(
 	'templatedraft-description' => 'TemplateDraft的擴展文件',
 	'templatedraft-subpage' => '模版草稿',
-	'templatedraft-editintro' => '好了！我們已經用我們的新標記文件生成了你的資訊框的草稿。我們會將它保存為一個子頁面，以便于你查看並進行必要的更改。你可以$1或者$2。',
+	'templatedraft-editintro' => '好啦！ 我們已經使用新的標記檔為您生成了訊息框草稿。 我們會將其保存為一個子頁面，以便於您查看並進行必要的更改。 您可以$1或$2。',
 	'templatedraft-approval-no-page-error' => '由於沒有頁面的草稿，審核錯作失敗',
 	'templatedraft-approval-no-templatedraft-error' => '草稿審核操作不適用於非模版草稿頁面',
 	'templatedraft-approval-success-confirmation' => '草稿内容已經被模版草稿更新版替換，原模版草稿已經被移除',
 	'templatedraft-approval-summary' => '使用[[w:c:zh.community:Help:移動化訊息框|移動化訊息框]]遷移工具進行更新',
-	'templatedraft-draft-removal-summary' => '清理。被批准為父頁面的草稿',
+	'templatedraft-draft-removal-summary' => '清理完畢。 草稿已被批准為首頁面。',
 	'templatedraft-module-title-create' => '遷移這個資訊框',
 	'templatedraft-module-subtitle-create' => '這個模版沒有使用新的[[w:c:zh.community:Help:移動化訊息框|移動化訊息框]]。',
 	'templatedraft-module-content-create' => '我們可以從現用的資訊框生成標記文件的草稿，並保存為子頁面，以便于你查看並進行必要的更改。',
@@ -457,8 +477,10 @@ $2
 
 [{{fullurl:{{ns:Template}}:{{PAGENAME}}}}?action=purge 按一下這裡刷新上面的預覽内容]',
 	'templatedraft-module-editintro-please-convert' => '我們可以用我們的新標記文件為你生成資訊框的草稿，只需按一下$1就可以了。',
-	'templatedraft-module-view-parent' => '查看父模版wikitext',
+	'templatedraft-module-view-parent' => '查看主模版的wikitext',
 	'templatedraft-module-help' => '查看資訊框標記文件的幫助頁面',
 	'templatedraft-invalid-template' => '提供的模版名稱無效',
+	'templatedraft-module-approve-protected' => '此模板受到保護。 請諮詢[[Special:ListAdmins|管理員]]批准這一草案。',
+	'templatedraft-protect-edit' => '您沒有許可權編輯首頁面。',
 );
 
