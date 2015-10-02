@@ -37,35 +37,37 @@ var CreatePage = {
 	},
 
 	requestDialog: function( e, titleText ) {
+		console.log('qqq requestDialog titleText',titleText );
 		'use strict';
 
 		var rs, dialogCallback;
-
+		console.log('qqq window.WikiaEnableNewCreatepage', window.WikiaEnableNewCreatepage);
 		// BugId:4941
 		if ( Boolean( window.WikiaEnableNewCreatepage ) === false ) {
 			// create page popouts are disabled - follow the link
 			return;
 		}
-
+		console.log('qqq e.which', e.which);
 		// Ignore middle-click. BugId:12544
 		if ( e && e.which === 2 ) {
 			return;
 		}
-
+		console.log('qqq e.preventDefault', e.preventDefault);
 		// don't follow the link
 		if ( e && e.preventDefault ) {
 			e.preventDefault();
 		}
-
+		console.log('qqq CreatePage.canUseVisualEditor()', CreatePage.canUseVisualEditor());
+		console.log("qqq  $( e.target ).hasClass( 'createboxButton' )",  $( e.target ).hasClass( 'createboxButton' ));
 		// VE and <createbox>
 		if ( CreatePage.canUseVisualEditor() && $( e.target ).hasClass( 'createboxButton' ) ) {
 			CreatePage.checkTitle( titleText );
 			return;
 		}
-
+		console.log('qqq CreatePage.loading', CreatePage.loading);
 		if ( false === CreatePage.loading ) {
 			CreatePage.loading = true;
-
+			console.log('qqq CreatePage.canUseVisualEditor()', CreatePage.canUseVisualEditor());
 			if ( CreatePage.canUseVisualEditor() && titleText ) {
 				rs = 'wfCreatePageAjaxGetVEDialog';
 				dialogCallback = CreatePage.openVEDialog;
@@ -73,7 +75,7 @@ var CreatePage = {
 				rs = 'wfCreatePageAjaxGetDialog';
 				dialogCallback = CreatePage.openDialog;
 			}
-
+			console.log('qqq', dialogCallback);
 			$.getJSON(
 				CreatePage.context.wgScript,
 				{
@@ -87,6 +89,7 @@ var CreatePage = {
 	},
 
 	openVEDialog: function( data ) {
+		console.log('qqq openVEDialog', data);
 		require( [ 'wikia.ui.factory' ], function( uiFactory ) {
 			uiFactory.init( [ 'modal' ] ).then( function( uiModal ) {
 				var createPageModalConfig = {
@@ -156,6 +159,7 @@ var CreatePage = {
 	},
 
 	openDialog: function( data ) {
+		console.log('qqq openDialog', data);
 		require( [ 'wikia.ui.factory' ], function( uiFactory ) {
 			uiFactory.init( [ 'modal' ] ).then( function( uiModal ) {
 				var createPageModalConfig = {
@@ -288,13 +292,15 @@ var CreatePage = {
 	init: function( context ) {
 		'use strict';
 		CreatePage.context = context;
+		console.log('qqq init', window.WikiaEnableNewCreatepage);
 		if ( window.WikiaEnableNewCreatepage ) {
 			$().log( 'init', 'CreatePage' );
-
+			console.log('qqq', window.WikiaDisableDynamicLinkCreatePagePopup);
 			if ( !window.WikiaDisableDynamicLinkCreatePagePopup ) {
 				$( '#dynamic-links-write-article-link, #dynamic-links-write-article-icon' ).click(function( e ) {
 					CreatePage.requestDialog( e, null );
 				});
+				console.log('qqq jquery obj', $( '.noarticletext a[href*="redlink=1"]' ));
 				$( '.noarticletext a[href*="redlink=1"]' ).click(function( e ) {
 					CreatePage.requestDialog( e, CreatePage.context.wgPageName ); return false;
 				});
