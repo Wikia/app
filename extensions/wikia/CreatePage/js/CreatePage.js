@@ -40,15 +40,18 @@ var CreatePage = {
 		'use strict';
 
 		var rs, dialogCallback;
+
 		// BugId:4941
 		if ( Boolean( window.WikiaEnableNewCreatepage ) === false ) {
 			// create page popouts are disabled - follow the link
 			return;
 		}
+
 		// Ignore middle-click. BugId:12544
 		if ( e && e.which === 2 ) {
 			return;
 		}
+
 		// don't follow the link
 		if ( e && e.preventDefault ) {
 			e.preventDefault();
@@ -59,8 +62,10 @@ var CreatePage = {
 			CreatePage.checkTitle( titleText );
 			return;
 		}
+
 		if ( false === CreatePage.loading ) {
 			CreatePage.loading = true;
+
 			if ( CreatePage.canUseVisualEditor() && titleText ) {
 				rs = 'wfCreatePageAjaxGetVEDialog';
 				dialogCallback = CreatePage.openVEDialog;
@@ -263,6 +268,7 @@ var CreatePage = {
 			visualEditorActive = $( 'html' ).hasClass( 've-activated' );
 
 		CreatePage.redlinkParam = '&redlink=1';
+
 		if ( CreatePage.canUseVisualEditor() ) {
 			CreatePage.track( { action: 'click', label: 've-redlink-click' } );
 		}
@@ -282,9 +288,9 @@ var CreatePage = {
 	init: function( context ) {
 		'use strict';
 		CreatePage.context = context;
-
 		if ( window.WikiaEnableNewCreatepage ) {
 			$().log( 'init', 'CreatePage' );
+			
 			if ( !window.WikiaDisableDynamicLinkCreatePagePopup ) {
 				$( '#dynamic-links-write-article-link, #dynamic-links-write-article-icon' ).click(function( e ) {
 					CreatePage.requestDialog( e, null );
