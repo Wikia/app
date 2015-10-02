@@ -98,6 +98,17 @@ if( 'view' == wgAction ) {
 	window.user_protected = false;
 }
 
+// PLATFORM-1531: helper function for sending AJAX requests to WMU backend (with edit token attached)
+function WMU_ajax(method, data, callback) {
+	var url = window.wgScriptPath + '/index.php?action=ajax&rs=WMU&method=' + encodeURIComponent(method);
+
+	data = data || {};
+	data.token = window.mw.user.tokens.get('editToken'); // always pass the edit token to prevent CSRF
+
+	WMU_jqXHR.abort();
+	WMU_jqXHR = $.post(url, data, callback);
+}
+
 function WMU_setSkip(){
 	WMU_skipDetails = true;
 }
@@ -696,19 +707,16 @@ function WMU_indicator(id, show) {
 }
 
 function WMU_chooseImage(sourceId, itemId) {
-	var callback = function(o) {
-		WMU_displayDetails(o.responseText);
-	};
-
 	WMU_track({
 		label: 'add-recent-photo'
 	});
 
 	WMU_indicator(1, true);
-	WMU_jqXHR.abort();
-	WMU_jqXHR = $.ajax(wgScriptPath + '/index.php?action=ajax&rs=WMU&method=chooseImage&' + 'sourceId=' + sourceId + '&itemId=' + itemId, {
-		method: 'get',
-		complete: callback
+	WMU_ajax('chooseImage', {
+		sourceId: sourceId,
+		itemId: itemId
+	}, function(resp) {
+		WMU_displayDetails(resp);
 	});
 }
 
