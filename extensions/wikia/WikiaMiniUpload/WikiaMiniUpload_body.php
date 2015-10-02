@@ -208,6 +208,8 @@ class WikiaMiniUpload {
 		$itemId = $wgRequest->getVal('itemId');
 		$sourceId = $wgRequest->getInt('sourceId');
 
+		$this->assertValidRequest();
+
 		if ( $sourceId == 0 ) {
 			$file = wfFindFile(Title::newFromText($itemId, 6));
 			$props = array();
@@ -891,5 +893,17 @@ class WikiaMiniUpload {
 		}
 
 		return $info;
+	}
+
+	/**
+	 * @throws BadRequestException
+	 * @see PLATFORM-1531
+	 */
+	function assertValidRequest() {
+		global $wgRequest, $wgUser;
+
+		if ( !$wgRequest->wasPosted() ||  !$wgUser->matchEditToken( $wgRequest->getVal( 'token' ) ) ) {
+			throw new BadRequestException( 'Request must be POSTed and provide a valid edit token.' );
+		}
 	}
 }
