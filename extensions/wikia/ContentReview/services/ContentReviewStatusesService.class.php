@@ -33,9 +33,7 @@ class ContentReviewStatusesService extends \WikiaService {
 				$reviewModel = new Models\ReviewModel();
 				$statuses = $reviewModel->getPagesStatuses( $wikiId );
 
-				if ( !empty( $statuses ) ) {
-					$jsPages = $this->prepareData( $jsPages, $statuses );
-				}
+				$jsPages = $this->prepareData( $jsPages, $statuses );
 
 				return $jsPages;
 			}
