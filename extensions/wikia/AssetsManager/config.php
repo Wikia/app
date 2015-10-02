@@ -1955,7 +1955,7 @@ $config['api_docs_scss'] = array(
 	)
 );
 
-$config['videos_module_common_js'] = [
+$config['videos_module_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => ['oasis'],
 	'assets' => [
@@ -1965,14 +1965,6 @@ $config['videos_module_common_js'] = [
 		'//extensions/wikia/VideosModule/scripts/models/videos.js',
 		'//extensions/wikia/VideosModule/scripts/views/titleThumbnail.js',
 		'//extensions/wikia/VideosModule/scripts/views/index.js',
-	]
-];
-
-$config['videos_module_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => ['oasis'],
-	'assets' => [
-		'#group_videos_module_common_js',
 		'//extensions/wikia/VideosModule/scripts/controllers/rail.js',
 	]
 ];
