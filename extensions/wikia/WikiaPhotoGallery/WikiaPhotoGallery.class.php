@@ -1622,9 +1622,12 @@ class WikiaPhotoGallery extends ImageGallery {
 
 		// If the image extends beyond the given dimensions in height or width then scale down the image to fit
 		// entirely within the dimensions
-		if ( ( $adjWidth > 0 && $adjHeight > 0 ) && ( $adjWidth > $dim['w'] ) || ( $adjHeight > $dim['h'] ) ) {
-			$aspect = $file->getWidth() / $file->getHeight();
-			if ( ( $file->getWidth() - $dim['w'] ) > ( $file->getHeight() - $dim['h'] ) ) {
+		if (
+			( $adjWidth > 0 && $adjHeight > 0 ) &&
+			( ( $adjWidth > $dim['w'] ) || ( $adjHeight > $dim['h'] ) )
+		) {
+			$aspect = $adjWidth / $adjHeight;
+			if ( ( $adjWidth - $dim['w'] ) > ( $adjHeight - $dim['h'] ) ) {
 				// Oversized image, constrain on width
 				$adjWidth = $dim['w'];
 				$adjHeight = intval( $adjWidth / $aspect );
