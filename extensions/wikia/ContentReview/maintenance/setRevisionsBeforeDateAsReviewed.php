@@ -5,8 +5,6 @@ require_once( $dir . 'maintenance/Maintenance.php' );
 
 class ReviewedBeforeDateRevision extends Maintenance {
 
-	const JS_FILE_EXTENSION = '.js';
-
 	private $contentReviewService,
 			$currentRevisionModel,
 			$wikiaUser;
