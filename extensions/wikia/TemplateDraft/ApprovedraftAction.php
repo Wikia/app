@@ -42,7 +42,7 @@ class ApprovedraftAction extends FormlessAction {
 		) );
 
 		// Must have valid token for this action/title
-		$salt = [ $this->getName(), $this->getTitle()->getDBkey() ];
+		$salt = [ $this->getName(), $title->getDBkey() ];
 
 		if ( !$this->getUser()->matchEditToken( $request->getVal( 'token' ), $salt ) ) {
 			$this->addBannerNotificationMessage( 'sessionfailure' );
