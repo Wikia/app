@@ -44,11 +44,11 @@
 }
 
 .content-review-status-unsubmitted {
-  border-color: $content-review-color-unsubmitted;
+	border-color: $content-review-color-unsubmitted;
 }
 
 .WikiaRail .content-review-status-unsubmitted {
-  animation: submitReminder 3s infinite;
+	animation: submitReminder 3s infinite;
 }
 
 /* Animation */

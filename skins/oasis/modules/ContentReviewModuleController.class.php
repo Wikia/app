@@ -44,7 +44,7 @@ class ContentReviewModuleController extends WikiaController {
 		$this->setVal(
 			'displaySubmit',
 			$pageStatus['latestRevision']['statusKey'] === ContentReviewStatusesService::STATUS_UNSUBMITTED
-			&& $helper->userCanEditJsPage( $this->wg->Title, $this->wg->User )
+				&& $helper->userCanEditJsPage( $this->wg->Title, $this->wg->User )
 		);
 		$this->setVal( 'pageName', $pageStatus['pageName'] );
 
