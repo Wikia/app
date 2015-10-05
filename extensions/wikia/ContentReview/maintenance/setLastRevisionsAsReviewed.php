@@ -15,25 +15,38 @@ class ReviewedRevision extends Maintenance {
 	public function __construct() {
 		parent::__construct();
 
+		$this->addOption( 'excludeEnabled', 'Exclude wikis on which ContentReview extension is enabled.' );
 	}
 
 	public function execute() {
-		global $wgCityId;
+		global $wgCityId, $wgUseSiteJs, $wgEnableContentReviewExt;
 
-		$this->output( "Processing wiki id: {$wgCityId}\n" );
+		$excludeWiki = false;
+		$excludeEnabled = $this->getOption( 'excludeEnabled', false );
 
-		$jsPages = ( new \Wikia\ContentReview\Helper() )->getJsPages();
+		if ( !empty( $excludeEnabled ) && !empty( $wgEnableContentReviewExt ) ) {
+			$excludeWiki = true;
+		}
 
-		foreach ( $jsPages as $jsPage ) {
-			if ( !empty( $jsPage['page_id'] ) && !empty( $jsPage['page_latest'] ) ) {
-				try {
-					$this->getRevisionModel()->approveRevision( $wgCityId, $jsPage['page_id'], $jsPage['page_latest'] );
-					$this->output( "Added revision id for page {$jsPage['page_title']} (ID: {$jsPage['page_id']})\n" );
-				} catch( FluentSql\Exception\SqlException $e ) {
-					$this->output( $e->getMessage() . "\n" );
+		if ( !empty( $wgUseSiteJs ) && !$excludeWiki ) {
+			$this->output( "Processing wiki id: {$wgCityId}\n" );
+
+			$jsPages = ( new \Wikia\ContentReview\Helper() )->getJsPages();
+
+			foreach ( $jsPages as $jsPage ) {
+				if ( !empty( $jsPage['page_id'] ) && !empty( $jsPage['page_latest'] ) ) {
+					try {
+						$this->getRevisionModel()->approveRevision( $wgCityId, $jsPage['page_id'], $jsPage['page_latest'] );
+						$this->output( "Added revision id for page {$jsPage['page_title']} (ID: {$jsPage['page_id']})\n" );
+					} catch( FluentSql\Exception\SqlException $e ) {
+						$this->output( $e->getMessage() . "\n" );
+					}
 				}
 			}
+		} else {
+			$this->output( "Wiki (Id: {$wgCityId}) has disabled custom scripts.\n" );
 		}
+
 	}
 
 	private function getRevisionModel() {

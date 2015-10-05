@@ -176,83 +176,13 @@ var importNotifications = (function() {
 	};
 }());
 
-/**
- * Imports script from provided JS page name
- * Page has to be in MediaWiki namespace and has .js extension
- *
- * Article name can point a page on other wikia (e.g. 'external:otherwikiasubdomain:Pagename.js')
- *
- * @param {array} articles Names of pages to import without namespace prefix
- */
-var importWikiaScriptPages = (function () {
-	var namespacePrefix = 'MediaWiki:',
-		externalPrefix = 'external:',
-		externalPrefixLength = externalPrefix.length;
-
-	function importWikiaScriptPages(articles) {
-		var articlesToImport = [],
-			articlesFailed = [];
-
-		if (!$.isArray(articles)) {
-			articles = [articles];
-		}
-
-		for (var i = 0; i < articles.length; i++) {
-			if (!isJsPage(articles[i])) {
-				articlesFailed.push(namespacePrefix + articles[i]);
-				continue;
-			}
-			if (isExternal(articles[i])) {
-				var articlePreparedName = prepareExternalArticleName(articles[i]);
-				if (articlePreparedName.length === 0) {
-					articlesFailed.push(articles[i]);
-					continue;
-				}
-				articlesToImport.push(articlePreparedName);
-				continue;
-			}
-			articlesToImport.push(namespacePrefix + articles[i]);
-		}
-
-		window.importNotifications.importNotJsFailed(articlesFailed);
-
-		window.importArticles({
-			type: 'script',
-			articles: articlesToImport
-		});
-	}
-
-	function isJsPage(scriptName) {
-		return scriptName.substr(scriptName.length - 3) === '.js';
-	}
-
-	function isExternal(scriptName) {
-		return scriptName.substr(0, externalPrefixLength) === externalPrefix;
-	}
-
-	function prepareExternalArticleName(articleName) {
-		var indexOfSubdomain = articleName.indexOf(':', externalPrefixLength) + 1,
-			articlePreparedName = '';
-
-		if (indexOfSubdomain === 0) {
-			// Subdomain not provided
-			return articlePreparedName;
-		}
-
-		// Inject namespace after subdomain
-		articlePreparedName = articleName.slice(0,indexOfSubdomain) +
-			namespacePrefix +
-			articleName.slice(indexOfSubdomain);
-
-		return articlePreparedName;
-	}
-
-	return importWikiaScriptPages;
-}());
 
 // Exports
 window.importArticle = window.importArticles = importArticle;
 window.importNotifications = importNotifications;
-window.importWikiaScriptPages = importWikiaScriptPages;
+
+require(['wikia.importScript', 'wikia.window'], function(importScript, window){
+	window.importWikiaScriptPages = importScript.importWikiaScriptPages;
+});
 
 })( this, jQuery );

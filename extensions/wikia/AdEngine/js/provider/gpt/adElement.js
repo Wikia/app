@@ -13,6 +13,8 @@ define('ext.wikia.adEngine.provider.gpt.adElement', [
 		this.id = 'wikia_gpt' + slotPath;
 		this.node = doc.getElementById(this.id);
 		this.slotPath = slotPath;
+		this.slotName = slotName;
+		this.slotContainerId = this.id;
 
 		if (!this.node) {
 			this.node = doc.createElement('div');
@@ -31,6 +33,22 @@ define('ext.wikia.adEngine.provider.gpt.adElement', [
 
 	AdElement.prototype.getId = function () {
 		return this.id;
+	};
+
+	AdElement.prototype.getSlotContainerId = function () {
+		return this.slotContainerId;
+	};
+
+	AdElement.prototype.setSlotContainerId = function (slotContainerId) {
+		this.slotContainerId = slotContainerId;
+	};
+
+	AdElement.prototype.getSlotName = function () {
+		return this.slotName;
+	};
+
+	AdElement.prototype.setSlotName = function (slotName) {
+		this.slotName = slotName;
 	};
 
 	AdElement.prototype.getNode = function () {

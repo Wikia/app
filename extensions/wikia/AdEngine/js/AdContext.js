@@ -23,28 +23,21 @@ define('ext.wikia.adEngine.adContext', [
 	}
 
 	function getMercuryCategories() {
-		var categoryDict;
-
-		try {
-			categoryDict = w.Wikia.article.article.categories;
-		} catch (e) {
+		if (!context.targeting.mercuryPageCategories) {
 			return;
 		}
 
-		return categoryDict.map(function (item) { return item.title; });
-	}
-
-	function isProperCountry(countryList) {
-		return !!(countryList && countryList.indexOf && countryList.indexOf(geo.getCountryCode()) > -1);
+		return context.targeting.mercuryPageCategories.map(function (item) { return item.title; });
 	}
 
 	function isUrlParamSet(param) {
-		return !!parseInt(qs.getVal(param, '0'));
+		return !!parseInt(qs.getVal(param, '0'), 10);
 	}
 
 	function setContext(newContext) {
 		var i,
-			len;
+			len,
+			noExternals = w.wgNoExternals || isUrlParamSet('noexternals');
 
 		// Note: consider copying the value, not the reference
 		context = newContext;
@@ -61,16 +54,25 @@ define('ext.wikia.adEngine.adContext', [
 			context.opts.showAds = false;
 		}
 
-		// SourcePoint integration
-		if (context.opts.sourcePointUrl) {
-			context.opts.sourcePoint = isUrlParamSet('sourcepoint') ||
-				isProperCountry(instantGlobals.wgAdDriverSourcePointCountries);
+		// SourcePoint detection integration
+		if (!noExternals && context.opts.sourcePointDetectionUrl) {
+			context.opts.sourcePointDetection = isUrlParamSet('sourcepointdetection') ||
+				(context.targeting.skin === 'oasis' &&
+				geo.isProperGeo(instantGlobals.wgAdDriverSourcePointDetectionCountries));
+			context.opts.sourcePointDetectionMobile = isUrlParamSet('sourcepointdetection') ||
+				(context.targeting.skin === 'mercury' &&
+				geo.isProperGeo(instantGlobals.wgAdDriverSourcePointDetectionMobileCountries));
 		}
 
-		// SourcePoint detection integration
-		if (context.opts.sourcePointDetectionUrl) {
-			context.opts.sourcePointDetection = isUrlParamSet('sourcepointdetection') ||
-				isProperCountry(instantGlobals.wgAdDriverSourcePointDetectionCountries);
+		// SourcePoint integration
+		if (context.opts.sourcePointDetection && context.opts.sourcePointUrl) {
+			context.opts.sourcePoint = isUrlParamSet('sourcepoint') ||
+				geo.isProperGeo(instantGlobals.wgAdDriverSourcePointCountries);
+		}
+
+		// Recoverable ads message
+		if (context.opts.sourcePointDetection && !context.opts.sourcePoint) {
+			context.opts.recoveredAdsMessage = geo.isProperGeo(instantGlobals.wgAdDriverAdsRecoveryMessageCountries);
 		}
 
 		// Showcase.*
@@ -89,33 +91,35 @@ define('ext.wikia.adEngine.adContext', [
 				(context.targeting.pageType === 'article' || context.targeting.pageType === 'home');
 		}
 
-		if (isProperCountry(instantGlobals.wgAdDriverTurtleCountries)) {
+		if (geo.isProperGeo(instantGlobals.wgAdDriverTurtleCountries)) {
 			context.providers.turtle = true;
 		}
 
-		if (isProperCountry(instantGlobals.wgAdDriverOpenXCountries)) {
+		if (geo.isProperGeo(instantGlobals.wgAdDriverOpenXCountries)) {
 			context.providers.openX = true;
 		}
 
 		// INVISIBLE_HIGH_IMPACT slot
 		context.slots.invisibleHighImpact = (
 			context.slots.invisibleHighImpact &&
-			isProperCountry(instantGlobals.wgAdDriverHighImpactSlotCountries)
+			geo.isProperGeo(instantGlobals.wgAdDriverHighImpactSlotCountries)
 		) || isUrlParamSet('highimpactslot');
 
 		// INCONTENT_PLAYER slot
-		context.slots.incontentPlayer = isProperCountry(instantGlobals.wgAdDriverIncontentPlayerSlotCountries) ||
+		context.slots.incontentPlayer = geo.isProperGeo(instantGlobals.wgAdDriverIncontentPlayerSlotCountries) ||
 			isUrlParamSet('incontentplayer');
 
-		context.opts.enableScrollHandler = isProperCountry(instantGlobals.wgAdDriverScrollHandlerCountries) ||
+		context.opts.scrollHandlerConfig = instantGlobals.wgAdDriverScrollHandlerConfig;
+		context.opts.enableScrollHandler = geo.isProperGeo(instantGlobals.wgAdDriverScrollHandlerCountries) ||
 			isUrlParamSet('scrollhandler');
 
 		// Krux integration
 		context.targeting.enableKruxTargeting = !!(
 			context.targeting.enableKruxTargeting &&
-			isProperCountry(instantGlobals.wgAdDriverKruxCountries) &&
+			geo.isProperGeo(instantGlobals.wgAdDriverKruxCountries) &&
 			!instantGlobals.wgSitewideDisableKrux &&
-			!context.targeting.wikiDirectedAtChildren
+			!context.targeting.wikiDirectedAtChildren &&
+			!noExternals
 		);
 
 		// Export the context back to ads.context

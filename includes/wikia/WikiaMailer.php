@@ -69,7 +69,8 @@ class WikiaSendgridMailer {
 			'sourceType' => $sourceType,
 		] );
 		if ( $sourceType == 'mediawiki' ) {
-			$logContext['backtrace'] = self::backtrace();
+			// Note, previously called this 'backtrace' but that seemed to mess up logging
+			$logContext['btrace'] = self::backtrace();
 		}
 
 		WikiaLogger::instance()->info( 'Queuing email for SendGrid', $logContext );

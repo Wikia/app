@@ -51,8 +51,59 @@ class PortableInfoboxHooks {
 		return true;
 	}
 
-	static public function onAllInfoboxesQueryRecached() {
+	public static function onAllInfoboxesQueryRecached() {
 		F::app()->wg->Memc->delete( wfMemcKey( ApiQueryAllinfoboxes::MCACHE_KEY ) );
+
+		return true;
+	}
+
+	/**
+	 * Purge memcache before edit
+	 *
+	 * @param $article Page|WikiPage
+	 * @param $user
+	 * @param $text
+	 * @param $summary
+	 * @param $minor
+	 * @param $watchthis
+	 * @param $sectionanchor
+	 * @param $flags
+	 * @param $status
+	 *
+	 * @return bool
+	 */
+	public static function onArticleSave( Page &$article, &$user, &$text, &$summary, $minor, $watchthis, $sectionanchor,
+		&$flags, &$status ) {
+		PortableInfoboxDataService::newFromTitle( $article->getTitle() )->delete();
+
+		return true;
+	}
+
+	/**
+	 * Purge memcache, this will not rebuild infobox data
+	 *
+	 * @param Page|WikiPage $article
+	 *
+	 * @return bool
+	 */
+	public static function onArticlePurge( Page &$article ) {
+		PortableInfoboxDataService::newFromTitle( $article->getTitle() )->purge();
+
+		return true;
+	}
+
+	/**
+	 * Purge articles memcache when template is edited
+	 *
+	 * @param $articles Array of Titles
+	 *
+	 * @return bool
+	 */
+	public static function onBacklinksPurge( Array $articles ) {
+		foreach ( $articles as $title ) {
+			PortableInfoboxDataService::newFromTitle( $title )->purge();
+		}
+
 		return true;
 	}
 

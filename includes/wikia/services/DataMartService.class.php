@@ -22,6 +22,7 @@ class DataMartService extends Service {
 	const LOCK_TOP_ARTICLES = 10;
 
 	const TOP_WIKIS_FOR_HUB = 10;
+	const DEFAULT_TOP_WIKIAS_LIMIT = 200;
 
 	const TTL = 43200; // WikiaSQL results caching time (12 hours)
 
@@ -566,12 +567,6 @@ class DataMartService extends Service {
 				];
 			} );
 
-			if ( empty( $topArticles ) ) {
-				WikiaLogger::instance()->error( 'DataMartService::doGetTopArticlesByPageview emptyQueryResult', [
-					'raw_sql' => (string) $sql->injectParams( $db, $sql->build() )
-				] );
-			}
-
 			return $topArticles;
 		};
 
@@ -855,6 +850,45 @@ class DataMartService extends Service {
 			->runLoop( $db, function( &$wikis, $row ) {
 				$wikis[] = intval( $row->wiki_id );
 			} );
+
+		return $wikis;
+	}
+
+	/**
+	 * Returns an array of IDs of wikias ordered by WAM rank.
+	 * The default limit is 200. If 0 is provided - no limit is used.
+	 * @param int $limit Default is set as the DEFAULT_TOP_WIKIAS_LIMIT const
+	 * @param array $wikisIds Limit the range to certain wikis
+	 * @return bool|array An array of IDs or `false` on no results
+	 */
+	public function getWikisOrderByWam( $limit = self::DEFAULT_TOP_WIKIAS_LIMIT, array $wikisIds = [] ) {
+		$app = F::app();
+
+		$db = wfGetDB( DB_SLAVE, [], $app->wg->DWStatsDB );
+
+		$sql = ( new WikiaSQL() )->skipIf( self::isDisabled() )
+			->cacheGlobal( self::TTL )
+			->SELECT( 'wiki_id' )
+			->FROM( 'dimension_top_wikis' )
+			->ORDER_BY( 'rank' );
+
+		/**
+		 * Limit the results to certain wikias
+		 */
+		if ( !empty( $wikisIds ) ) {
+			$sql->WHERE( 'wiki_id' )->IN( $wikisIds );
+		}
+
+		/**
+		 * Limit the number of results
+		 */
+		if ( $limit > 0 ) {
+			$sql->LIMIT( (int)$limit );
+		}
+
+		$wikis = $sql->runLoop( $db, function( &$wikis, $row ) {
+			$wikis[] = (int)$row->wiki_id;
+		} );
 
 		return $wikis;
 	}

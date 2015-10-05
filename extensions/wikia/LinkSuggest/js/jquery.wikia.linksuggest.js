@@ -414,10 +414,10 @@ $.widget( 'wikia.linksuggest', {
 
 }( jQuery ));
 
-// Implementation: This should be done injecting this code into MediaWiki, not
-// in this JS file
-$( function() {
-	// Apply font-style for bug in IE. This should be done using a style sheet
-	// BugId:68869 removed unnecessary inline style. Seems to work fine in IE anyway
-	$( '#wpTextbox1' ).linksuggest();
+// VOLDEV-121: proper loading for LinkSuggest
+$(function () {
+	// If there are no preset selectors, the module was invoked dynamically
+	// In that case, it's up to the caller JS to apply LinkSuggest to elements
+	var elements = mw.config.get('wgLinkSuggestElements') || [];
+	$(elements.join(',')).linksuggest();
 });

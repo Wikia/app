@@ -1584,16 +1584,37 @@ class Wikia {
 		return true;
 	}
 
+	static public function getEnvironmentRobotPolicy(WebRequest $request) {
+		global $wgDevelEnvironment, $wgStagingEnvironment, $wgDefaultRobotPolicy;
+
+		$policy = '';
+
+		if( !empty( $wgDevelEnvironment ) || !empty( $wgStagingEnvironment ) ) {
+			$policy = $wgDefaultRobotPolicy;
+		}
+
+		$stagingHeader = $request->getHeader('X-Staging');
+
+		if( !empty($stagingHeader) ) {
+			// we've got special cases like externaltest.* and showcase.* aliases:
+			// https://github.com/Wikia/wikia-vcl/blob/master/wikia.com/control-stage.vcl#L15
+			// those cases for backend look like production,
+			// therefore we don't want to base only on environment variables
+			// but on HTML headers as well, see:
+			// https://github.com/Wikia/app/blob/dev/redirect-robots.php#L285
+			$policy = 'noindex,nofollow';
+		}
+		return $policy;
+	}
+
 	/**
 	 * Add variables to SkinTemplate
 	 */
 	static public function onSkinTemplateOutputPageBeforeExec(SkinTemplate $skinTemplate, QuickTemplate $tpl) {
-		global $wgDevelEnvironment, $wgStagingEnvironment, $wgDefaultRobotPolicy;
 		wfProfileIn(__METHOD__);
 
 		$out = $skinTemplate->getOutput();
 		$title = $skinTemplate->getTitle();
-		$stagingHeader = $skinTemplate->getRequest()->getHeader('X-Staging');
 
 		# quick hack for rt#15730; if you ever feel temptation to add 'elseif' ***CREATE A PROPER HOOK***
 		if (($title instanceof Title) && NS_CATEGORY == $title->getNamespace()) { // FIXME
@@ -1604,18 +1625,9 @@ class Wikia {
 		$tpl->set( 'thisurl', $title->getPrefixedURL() );
 		$tpl->set( 'thisquery', $skinTemplate->thisquery );
 
-		if( !empty( $wgDevelEnvironment ) || !empty( $wgStagingEnvironment ) ) {
-			$out->setRobotPolicy( $wgDefaultRobotPolicy );
-		}
-
-		if( !empty($stagingHeader) ) {
-		// we've got special cases like externaltest.* and showcase.* aliases:
-		// https://github.com/Wikia/wikia-vcl/blob/master/wikia.com/control-stage.vcl#L15
-		// those cases for backend look like production,
-		// therefore we don't want to base only on environment variables
-		// but on HTML headers as well, see:
-		// https://github.com/Wikia/app/blob/dev/redirect-robots.php#L285
-			$out->setRobotPolicy( 'noindex,nofollow' );
+		$robotPolicy = Wikia::getEnvironmentRobotPolicy( $skinTemplate->getRequest() );
+		if ( !empty( $robotPolicy ) ) {
+			$out->setRobotPolicy( $robotPolicy );
 		}
 
 		wfProfileOut(__METHOD__);
@@ -2298,6 +2310,7 @@ class Wikia {
 
 		// In this NS, editinterface applies only to white listed pages
 		if ( in_array( $title->getDBKey(), $wgEditInterfaceWhitelist )
+			|| $title->isCssPage()
 			|| ( !empty( $wgEnableContentReviewExt ) && $title->isJsPage() )
 		) {
 			return $wgUser->isAllowed('editinterface');
