@@ -93,10 +93,10 @@ class ContentReviewApiControllerTest extends WikiaBaseTest {
 		/**
 		 * User Mock
 		 */
-		$userMock = $this->prepareUserMockWithEditToken( $inputData['userEditToken'], [ 'isLoggedIn' ] );
+		$userMock = $this->prepareUserMockWithEditToken( $inputData['userEditToken'], [ 'isAllowed' ] );
 		$userMock->expects( $this->any() )
-			->method( 'isLoggedIn' )
-			->willReturn( $inputData['isLoggedIn'] );
+			->method( 'isAllowed' )
+			->willReturn( $inputData['hasTestModeRights'] );
 		$this->mockGlobalVariable( 'wgUser', $userMock );
 
 		/**
@@ -439,7 +439,7 @@ class ContentReviewApiControllerTest extends WikiaBaseTest {
 					'wasPosted' => false,
 					'requestToken' => $validToken,
 					'userEditToken' => $validToken,
-					'isLoggedIn' => true,
+					'hasTestModeRights' => true,
 				],
 				'BadRequestApiException',
 				'The request would be ok if it was POSTed.',
@@ -449,7 +449,7 @@ class ContentReviewApiControllerTest extends WikiaBaseTest {
 					'wasPosted' => true,
 					'requestToken' => $validToken,
 					'userEditToken' => $invalidToken,
-					'isLoggedIn' => true,
+					'hasTestModeRights' => true,
 				],
 				'BadRequestApiException',
 				'A token sent in the request does not match with the user\'s edit token.',
@@ -459,7 +459,7 @@ class ContentReviewApiControllerTest extends WikiaBaseTest {
 					'wasPosted' => true,
 					'requestToken' => $validToken,
 					'userEditToken' => $validToken,
-					'isLoggedIn' => false,
+					'hasTestModeRights' => false,
 				],
 				'PermissionsException',
 				'User is not logged in.',
@@ -469,7 +469,7 @@ class ContentReviewApiControllerTest extends WikiaBaseTest {
 					'wasPosted' => true,
 					'requestToken' => $validToken,
 					'userEditToken' => $validToken,
-					'isLoggedIn' => true,
+					'hasTestModeRights' => true,
 				],
 				'success',
 				'Everything is fine, methods to enable the test mode and make a success response should be called once.',
