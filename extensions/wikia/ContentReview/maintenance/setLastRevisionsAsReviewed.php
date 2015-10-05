@@ -15,12 +15,20 @@ class ReviewedRevision extends Maintenance {
 	public function __construct() {
 		parent::__construct();
 
+		$this->addOption( 'excludeEnabled', 'Exclude wikis on which ContentReview extension is enabled.' );
 	}
 
 	public function execute() {
-		global $wgCityId, $wgUseSiteJs;
+		global $wgCityId, $wgUseSiteJs, $wgEnableContentReviewExt;
 
-		if ( !empty( $wgUseSiteJs ) ) {
+		$excludeWiki = false;
+		$excludeEnabled = $this->getOption( 'excludeEnabled', false );
+
+		if ( !empty( $excludeEnabled ) && !empty( $wgEnableContentReviewExt ) ) {
+			$excludeWiki = true;
+		}
+
+		if ( !empty( $wgUseSiteJs ) && !$excludeWiki ) {
 			$this->output( "Processing wiki id: {$wgCityId}\n" );
 
 			$jsPages = ( new \Wikia\ContentReview\Helper() )->getJsPages();

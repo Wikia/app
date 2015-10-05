@@ -3,9 +3,9 @@
 	<nav class="WikiNav">
 		<? if ( $displayHeader ): ?>
 			<? if ( $seoTestOneH1 ): ?>
-				<h2><?= wfMsg( 'oasis-wiki-navigation', $wordmarkText ) ?></h2>
+				<h2><?= wfMessage( 'oasis-wiki-navigation', $wordmarkText )->escaped() ?></h2>
 			<? else: ?>
-				<h1><?= wfMsg( 'oasis-wiki-navigation', $wordmarkText ) ?></h1>
+				<h1><?= wfMessage( 'oasis-wiki-navigation', $wordmarkText )->escaped() ?></h1>
 			<? endif; ?>
 		<? endif; ?>
 		<?= $app->renderView( 'WikiNavigation', 'Index' ) ?>

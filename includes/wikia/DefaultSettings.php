@@ -640,6 +640,7 @@ include_once( "$IP/extensions/wikia/Rail/Rail.setup.php" );
 include_once( "$IP/extensions/wikia/PageShare/PageShare.setup.php" );
 include_once( "$IP/extensions/wikia/PaidAssetDrop/PaidAssetDrop.setup.php" );
 include_once( "$IP/extensions/wikia/CreateNewWiki/CreateNewWiki_global_setup.php" );
+include_once( "$IP/extensions/wikia/Security/Security.setup.php" );
 
 /**
  * @name $wgSkipSkins
@@ -1264,7 +1265,7 @@ $wgAmazonMatchCountriesMobile = null;
  * @name $wgEnableOpenXBidder
  * Enables OpenX bidder
  */
-$wgAdDriverEnableOpenXBidder = false;
+$wgAdDriverEnableOpenXBidder = true;
 
 /**
  * @name $wgAdDriverOpenXBidderCountries
@@ -1272,6 +1273,13 @@ $wgAdDriverEnableOpenXBidder = false;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverOpenXBidderCountries = null;
+
+/**
+ * @name $wgAdDriverOpenXBidderCountriesMobile
+ * Enables OpenX bidder on mobile in these countries.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverOpenXBidderCountriesMobile = null;
 
 /**
  * @name $wgAdPageLevelCategoryLangs
@@ -1807,14 +1815,14 @@ $wgAdDriverIncontentPlayerSlotCountries = null;
  * manage a user's preferences externally
  */
 $wgPreferenceServiceRead = false;
-$wgPreferenceServiceShadowWrite = true;
+$wgPreferenceServiceShadowWrite = true && $wgWikiaDatacenter != WIKIA_DC_RES;
 
 /**
  * @name $wgEnableRobotsTxtExt
  *
  * Enables extension that generates robots.txt
  */
-$wgEnableRobotsTxtExt = false;
+$wgEnableRobotsTxtExt = true;
 
 /**
  * @name $wgEnableFliteTagExt

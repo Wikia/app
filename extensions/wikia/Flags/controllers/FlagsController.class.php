@@ -110,6 +110,15 @@ class FlagsController extends WikiaController {
 			throw new MissingParameterApiException( 'page_id' );
 		}
 
+		$title = Title::newFromID( $pageId );
+		if ( $title === null ) {
+			throw new InvalidParameterApiException( 'page_id' );
+		}
+
+		if ( !$title->userCan( 'edit' , $this->wg->User ) ) {
+			throw new PermissionsException( 'edit' );
+		}
+
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 
 		/**
@@ -188,6 +197,10 @@ class FlagsController extends WikiaController {
 			$title = Title::newFromID( $pageId );
 			if ( $title === null ) {
 				throw new InvalidParameterApiException( 'page_id' );
+			}
+
+			if ( !$title->userCan( 'edit', $this->wg->User ) ) {
+				throw new PermissionsException( 'edit' );
 			}
 
 			/**

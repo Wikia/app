@@ -35,28 +35,47 @@ class SEOTweaksGlobalHooksHelper {
 	}
 
 	/**
-	 * Return first image from an article, the biggest as possible
-	 * take minimal recommended image size from facebook, and if not found, take minimal requirement
+	 * Return first image from an article, first check for infobox images,
+	 * If not found, take the biggest as possible:
+	 * first minimal recommended image size from facebook, and if not found, take minimal requirement
 	 * @param $title
 	 * @return null|Title
 	 */
 	static protected function getFirstArticleImage( $title ) {
-		$retTitle = self::getFirstArticleImageLargerThan( $title, self::PREF_WIDTH, self::PREF_HEIGHT );
-		if ( empty( $retTitle ) ) {
-			$retTitle = self::getFirstArticleImageLargerThan( $title, self::MIN_WIDTH, self::MIN_HEIGHT );
+		$retTitle = self::getFirstArticleImageLargerThan( $title, self::MIN_WIDTH, self::MIN_HEIGHT, "ImageServingDriverInfoboxImageNS" );
+
+		if ( !empty( $retTitle ) ) {
+			return $retTitle;
 		}
-		return $retTitle;
+		$retTitle = self::getFirstArticleImageLargerThan( $title, self::PREF_WIDTH, self::PREF_HEIGHT );
+
+		if ( !empty( $retTitle ) ) {
+			return $retTitle;
+		}
+
+		return self::getFirstArticleImageLargerThan( $title, self::MIN_WIDTH, self::MIN_HEIGHT );
 	}
 
 	/**
 	 * Return first image from an article, matched criteria
 	 * @param $title
 	 * @param $width
-	 * @return null|Title
+	 * @param $height
+	 * @param null $driverName
+	 * @return null|\Title
 	 */
-	static protected function getFirstArticleImageLargerThan( $title, $width, $height ) {
+	static protected function getFirstArticleImageLargerThan( $title, $width, $height, $driverName = null ) {
 		$imageServing = new ImageServing( [ $title->getArticleID() ], $width, $height );
-		$out = $imageServing->getImages( 1 );
+		$out = $imageServing->getImages( 1, $driverName);
+		return self::createTitleFromResultArray( $out );
+	}
+
+	/**
+	 * @desc Creates a Title object from array of file names
+	 * @param $out array of file names
+	 * @return null|\Title
+	 */
+	static protected function createTitleFromResultArray( $out ) {
 		if ( !empty( $out ) ) {
 			///used reset instead direct call because we can get hashmap from ImageServing driver.
 			$first = reset( $out );
@@ -81,7 +100,8 @@ class SEOTweaksGlobalHooksHelper {
 			$cacheKey = self::makeKey( $title );
 			$imageUrl = $wgMemc->get( $cacheKey );
 
-			if ( is_null( $imageUrl ) || $imageUrl === false ) {    // not in memcache
+			//if no image in memcache
+			if ( empty( $imageUrl ) ) {
 				if ( $namespace != NS_FILE ) {
 					$title = self::getFirstArticleImage( $title );
 				}
@@ -102,10 +122,12 @@ class SEOTweaksGlobalHooksHelper {
 				$wgMemc->set( $cacheKey, $imageUrl );
 			}
 
-			if ( !empty( $imageUrl ) ) { // only when there is a thumbnail url
+			// only when there is a thumbnail url add it to metatags
+			if ( !empty( $imageUrl ) ) {
 				$meta[ 'og:image' ] = $imageUrl;
 			}
 		}
+
 		return true;
 	}
 

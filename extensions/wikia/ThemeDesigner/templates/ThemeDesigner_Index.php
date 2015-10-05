@@ -4,7 +4,7 @@
 	<meta http-equiv="Content-Type" content="<?= $mimetype ?>; charset=<?= $charset ?>">
 	<meta name="viewport" content="width=1200">
 
-	<title><?= wfMsg('themedesigner-title') ?></title>
+	<title><?= wfMessage( 'wikia-pagetitle', wfMsg( 'themedesigner-title' ) )->text() ?></title>
 
 	<!-- Make IE recognize HTML5 tags. -->
 	<!--[if IE]>
