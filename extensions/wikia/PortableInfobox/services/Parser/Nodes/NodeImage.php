@@ -10,46 +10,67 @@ class NodeImage extends Node {
 	const CAPTION_TAG_NAME = 'caption';
 	const MEDIA_TYPE_VIDEO = 'VIDEO';
 
+	private function getImage($key, $caption, $alt) {
+		$title = $this->getImageAsTitleObject( $key );
+		$file = $this->getFilefromTitle( $title );
+		if ( $title instanceof \Title ) {
+			$this->getExternalParser()->addImage( $title->getDBkey() );
+		}
+		$ref = null;
+		wfRunHooks( 'PortableInfoboxNodeImage::getData', [ $title, &$ref, $caption ] );
+		$item = [
+			'url' => $this->resolveImageUrl( $file ),
+			'name' => ( $title ) ? $title->getText() : '',
+			'key' => ( $title ) ? $title->getDBKey() : '',
+			'alt' => $alt,
+			'caption' => $caption,
+			'ref' => $ref
+		];
+		if ( $this->isVideo( $file ) ) {
+			$item = $this->videoDataDecorator( $item, $file );
+		}
+		return $item;
+	}
+
 	public function getData() {
 		if ( !isset( $this->data ) ) {
 			$imageData = $this->getRawValueWithDefault( $this->xmlNode );
+			$imageDataLower = strtolower($imageData);
 
-			if( is_string($imageData) && PortableInfoboxDataBag::getInstance()->getGallery($imageData)) {
-				$imageData = PortableInfoboxDataBag::getInstance()->getGallery($imageData);
-			}
+			if ( strpos( $imageDataLower, '-tabber-' ) !== false || strpos( $imageDataLower, '-gallery-' ) !== false ) {
+				$this->data = [];
+				$parsed = $this->getExternalParser()->parseRecursive( $imageData );
 
-			$title = $this->getImageAsTitleObject( $imageData );
-			$file = $this->getFilefromTitle( $title );
-			if ( $title instanceof \Title ) {
-				$this->getExternalParser()->addImage( $title->getDBkey() );
-			}
-			$ref = null;
-			$alt = $this->getValueWithDefault( $this->xmlNode->{self::ALT_TAG_NAME} );
-			$caption = $this->getValueWithDefault( $this->xmlNode->{self::CAPTION_TAG_NAME} );
+				$galleryImages = $this->getGalleryItems( $imageData );
+				$tabberImages = $this->getTabberItems( $parsed );
 
-			wfRunHooks( 'PortableInfoboxNodeImage::getData', [ $title, &$ref, $caption ] );
-
-			$this->data = [
-				'url' => $this->resolveImageUrl( $file ),
-				'name' => ( $title ) ? $title->getText() : '',
-				'key' => ( $title ) ? $title->getDBKey() : '',
-				'alt' => $alt,
-				'caption' => $caption,
-				'ref' => $ref
-			];
-
-			if ( $this->isVideo( $file ) ) {
-				$this->data = $this->videoDataDecorator( $this->data, $file );
+				$images = $galleryImages + $tabberImages;
+				for( $i = 0; $i < count( $images ); $i++ ) {
+					$this->data[] = $this->getImage(
+						$images[$i]['key'],
+						$images[$i]['caption'],
+						$images[$i]['alt']
+					);
+				}
+			} else {
+				$this->data = array( $this->getImage(
+					$imageData,
+					$this->getValueWithDefault( $this->xmlNode->{self::CAPTION_TAG_NAME} ),
+					$this->getValueWithDefault( $this->xmlNode->{self::ALT_TAG_NAME} )
+				) );
 			}
 		}
-
 		return $this->data;
 	}
 
 	public function isEmpty() {
 		$data = $this->getData();
-
-		return empty( $data[ 'url' ] );
+		for($i = 0; $i < count($data); $i++) {
+			if(!empty( $data[$i]['url'])) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	public function getSource() {
@@ -74,6 +95,40 @@ class NodeImage extends Node {
 		);
 
 		return $title;
+	}
+
+	private function getGalleryItems( $imageData ) {
+		preg_match( '/.(UNIQ.*QINU)./U', $imageData, $galleryMarkers );
+		$galleryImages = array();
+
+		foreach ( $galleryMarkers as $marker ) {
+			$galleryWikitext = PortableInfoboxDataBag::getInstance()->getGallery( $marker );
+			$galleryLines = preg_split('/\r\n|\n|\r/', $galleryWikitext);
+
+			foreach ( $galleryLines as $galleryImage) {
+				$galleryOut = explode('|', $galleryImage, 3);
+
+				//TODO: take care about params like link=, linktext= etc. which one is caption?
+				//see mre here: http://community.wikia.com/wiki/Help:Galleries,_Slideshows,_and_Sliders/wikitext
+				//maybe regexing HTML will be more effective?
+				if ( !empty( $galleryOut[0] ) ) {
+					$galleryImages[] = [ 'key' => $galleryOut[ 0 ], 'caption' => $galleryOut[ 1 ], 'alt' => $galleryOut[ 2 ] ];
+				}
+			}
+		}
+
+		return $galleryImages;
+	}
+
+	private function getTabberItems( $parsed ) {
+		$tabberImages = array();
+		if ( preg_match_all('/class="tabbertab" title="([^"]+)".*?\sdata-image-key="([^"]+)"/is', $parsed, $tabberOut) ) {
+			for( $i = 0; $i < count( $tabberOut[0] ); $i++ ) {
+				$tabberImages[] = array('key' => $tabberOut[2][$i], 'caption' => $tabberOut[1][$i]);
+			}
+		}
+
+		return $tabberImages;
 	}
 
 	/**

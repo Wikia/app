@@ -11,14 +11,12 @@ use Wikia\Util\WikiaProfiler;
 
 class PreferenceServiceImpl implements PreferenceService {
 
-	use WikiaProfiler;
 	use Loggable;
 
 	const CACHE_PROVIDER = "user_preferences_cache_provider";
 	const HIDDEN_PREFS = "user_preferences_hidden_prefs";
 	const DEFAULT_PREFERENCES = "user_preferences_default_prefs";
 	const FORCE_SAVE_PREFERENCES = "user_preferences_force_save_prefs";
-	const PROFILE_EVENT = \Transaction::EVENT_USER_PREFERENCES;
 
 	/** @var CacheProvider */
 	private $cache;
@@ -151,7 +149,7 @@ class PreferenceServiceImpl implements PreferenceService {
 		foreach ( $prefs->getLocalPreferences() as $wikiId => $wikiPreferences ) {
 			foreach ( $wikiPreferences as $pref ) {
 				/** @var $pref LocalPreference */
-				if ( $this->prefIsSaveable( $pref->getName(), $pref->getValue(), $this->getLocalDefault( $pref->getName() ) ) ) {
+				if ( $this->prefIsSaveable( $pref->getName(), $pref->getValue(), $this->getLocalDefault( $pref->getName(), $wikiId ) ) ) {
 					$prefsToSave->setLocalPreference( $pref->getName(), $pref->getWikiId(), $pref->getValue() );
 				}
 			}
@@ -159,14 +157,7 @@ class PreferenceServiceImpl implements PreferenceService {
 
 		if ( !$prefsToSave->isEmpty() ) {
 			try {
-				$profilerStart = $this->startProfile();
 				$result = $this->persistence->save( $userId, $prefsToSave );
-				$this->endProfile(
-					self::PROFILE_EVENT,
-					$profilerStart,
-					[
-						'user_id' => $userId,
-						'method' => 'setPreferences', ] );
 				$this->saveToCache( $userId, $prefsToSave );
 
 				return $result;
@@ -185,6 +176,10 @@ class PreferenceServiceImpl implements PreferenceService {
 
 	public function getLocalDefault( $pref, $wikiId ) {
 		return $this->defaultPreferences->getLocalPreference( $pref, $wikiId );
+	}
+
+	public function deleteFromCache( $userId ) {
+		return $this->cache->delete( $userId );
 	}
 
 	protected function getLoggerContext() {
@@ -206,14 +201,7 @@ class PreferenceServiceImpl implements PreferenceService {
 
 			if ( !$preferences ) {
 				try {
-					$profilerStart = $this->startProfile();
 					$preferences = $this->persistence->get( $userId );
-					$this->endProfile(
-						self::PROFILE_EVENT,
-						$profilerStart,
-						[
-							'user_id' => $userId,
-							'method' => 'getPreferences', ] );
 				} catch ( \Exception $e ) {
 					$this->error( $e->getMessage(), ['user' => $userId] );
 					throw $e;
@@ -232,10 +220,6 @@ class PreferenceServiceImpl implements PreferenceService {
 
 	private function saveToCache( $userId, UserPreferences $preferences ) {
 		return $this->cache->save( $userId, $preferences );
-	}
-
-	private function deleteFromCache( $userId ) {
-		return $this->cache->delete( $userId );
 	}
 
 	private function applyDefaults( UserPreferences $preferences ) {
@@ -258,11 +242,7 @@ class PreferenceServiceImpl implements PreferenceService {
 	}
 
 	private function prefIsSaveable( $pref, $value, $valueFromDefaults ) {
-		if ( $value == $valueFromDefaults ) {
-			return false;
-		}
-
 		return in_array( $pref, $this->forceSavePrefs ) || $value != $valueFromDefaults ||
-			( $valueFromDefaults != null && $value !== false && $value !== null );
+			( $valueFromDefaults === null && $value !== false && $value !== null );
 	}
 }

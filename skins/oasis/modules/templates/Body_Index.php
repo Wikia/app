@@ -1,5 +1,9 @@
 <? if ( $displayHeader ): ?>
-<h1><?= wfMsg( 'oasis-global-page-header' ); ?></h1>
+	<? if ( $seoTestOneH1 ): ?>
+		<h2><?= wfMsg( 'oasis-global-page-header' ); ?></h2>
+	<? else: ?>
+		<h1><?= wfMsg( 'oasis-global-page-header' ); ?></h1>
+	<? endif; ?>
 <? endif; ?>
 <div class="skiplinkcontainer">
 <a class="skiplink" rel="nofollow" href="#WikiaArticle"><?= wfMsg( 'oasis-skip-to-content' ); ?></a>

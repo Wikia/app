@@ -192,11 +192,21 @@ class ReviewModel extends ContentReviewBaseModel {
 		return $content;
 	}
 
-	public function getReviewedContent( $wiki_id, $page_id, $status ) {
+	/**
+	 * Retrieves a row from content_review_status table for a given based on a desired status.
+	 * If there is no review of the given page of the given status - a false is returned.
+	 *
+	 * @param $wiki_id
+	 * @param $page_id
+	 * @param $status
+	 * @return bool|array Returns an array that resembles a row from the content_review_status table,
+	 * or `false` if no is found.
+	 */
+	public function getReviewOfPageByStatus( $wiki_id, $page_id, $status ) {
 		$db = $this->getDatabaseForRead();
 
 		$content = ( new \WikiaSQL() )
-			->SELECT( '*' )
+			->SELECT_ALL()
 			->FROM( self::CONTENT_REVIEW_STATUS_TABLE )
 			->WHERE( 'wiki_id' )->EQUAL_TO( $wiki_id )
 			->AND_( 'page_id' )->EQUAL_TO( $page_id )

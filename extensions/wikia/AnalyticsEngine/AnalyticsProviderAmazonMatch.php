@@ -27,7 +27,7 @@ class AnalyticsProviderAmazonMatch implements iAnalyticsProvider {
 		var ac = globals[$instantGlobalName],
 			amazon = amazon1 || amazon2;
 
-		if (ac && ac.indexOf && ac.indexOf(geo.getCountryCode()) > -1) {
+		if (geo.isProperGeo(ac)) {
 			amazon.call();
 		}
 	});

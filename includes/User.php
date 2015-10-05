@@ -1099,14 +1099,14 @@ class User {
 			return false;
 		}
 
-                // Wikia change start
-                global $wgExternalAuthType;
-                if ( $wgExternalAuthType ) { // in other words: unless Uncyclopedia
-                    $extUser = ExternalUser::newFromCookie();
-                    if ( $extUser ) {
-                            $extUser->linkToLocal( $sId );
-                    }
-                }
+		// Wikia change start
+		global $wgExternalAuthType;
+		if ( $wgExternalAuthType ) { // in other words: unless Uncyclopedia
+			$extUser = ExternalUser::newFromCookie();
+			if ( $extUser ) {
+					$extUser->linkToLocal( $sId );
+			}
+		}
 
 		$passwordCorrect = FALSE;
 		// wikia change end
@@ -1392,6 +1392,14 @@ class User {
 	public static function getDefaultOptions() {
 		global $wgNamespacesToBeSearchedDefault, $wgDefaultUserOptions, $wgContLang, $wgDefaultSkin;
 
+		static $defOpt = null;
+		if ( !defined( 'MW_PHPUNIT_TEST' ) && $defOpt !== null ) {
+			// Disabling this for the unit tests, as they rely on being able to change $wgContLang
+			// mid-request and see that change reflected in the return value of this function.
+			// Which is insane and would never happen during normal MW operation
+			// Owen backported this from MW 1.25
+			return $defOpt;
+		}
 		$defOpt = $wgDefaultUserOptions;
 		# default language setting
 		$variant = $wgContLang->getDefaultVariant();
@@ -1402,6 +1410,7 @@ class User {
 		}
 		$defOpt['skin'] = $wgDefaultSkin;
 
+		// Owen fixed this (see above)
 		// FIXME: Ideally we'd cache the results of this function so the hook is only run once,
 		// but that breaks the parser tests because they rely on being able to change $wgContLang
 		// mid-request and see that change reflected in the return value of this function.
@@ -1500,9 +1509,9 @@ class User {
 		wfRunHooks( 'GetBlockedStatus', array( &$this ) );
 
 		if ( !empty($this->mBlockedby) ) {
-		    $this->mBlock->mBy = $this->mBlockedby;
-		    $this->mBlock->mReason = $this->mBlockreason;
-        }
+			$this->mBlock->mBy = $this->mBlockedby;
+			$this->mBlock->mReason = $this->mBlockreason;
+		}
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -2109,6 +2118,9 @@ class User {
 		if( $this->mId ) {
 			global $wgMemc, $wgSharedDB; # Wikia
 			$wgMemc->delete( $this->getCacheKey() );
+			$this->userPreferences()->deleteFromCache( $this->getId() );
+			// Wikia: and save updated user data in the cache to avoid memcache miss and DB query
+			$this->saveToCache();
 			if( !empty( $wgSharedDB ) ) {
 				$memckey = self::getUserTouchedKey( $this->mId );
 				$wgMemc->set( $memckey, $this->mTouched );
@@ -2132,13 +2144,13 @@ class User {
 			$this->mTouched = self::newTouchedTimestamp();
 
 			#<Wikia>
-            global $wgExternalSharedDB, $wgSharedDB;
-            if( isset( $wgSharedDB ) ) {
-                    $dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
-            }
-            else {
-                    $dbw = wfGetDB( DB_MASTER );
-            }
+			global $wgExternalSharedDB, $wgSharedDB;
+			if( isset( $wgSharedDB ) ) {
+				$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
+			}
+			else {
+				$dbw = wfGetDB( DB_MASTER );
+			}
 			#</Wikia>
 
 			$touched = $dbw->timestamp( $this->mTouched );
@@ -2151,7 +2163,6 @@ class User {
 				$dbw->update( '`user`',
 					array( 'user_touched' => $touched ), array( 'user_id' => $this->mId ),
 					__METHOD__ );
-				$dbw->commit();
 			}
 
 			$this->clearSharedCache();
@@ -2424,6 +2435,7 @@ class User {
 			$this->warning("calling getOption", [
 				"class" => "user",
 				"type" => "getoption",
+				"option" => $oname,
 				"source" => wfBacktrace(true),
 			]);
 		}
@@ -2557,7 +2569,7 @@ class User {
 		global $wgPreferenceServiceRead;
 
 		if ($wgPreferenceServiceRead) {
-			$value = $this->userPreferences()->getLocalPreference($this->mId, $cityId, $preference, $default, $ignoreHidden);
+			$value = $this->userPreferences()->getLocalPreference($this->getId(), $cityId, $preference, $default, $ignoreHidden);
 		} else {
 			$preferenceGlobalName = self::localToGlobalPropertyName($preference, $cityId, $sep);
 			$value = $this->getOptionHelper($preferenceGlobalName, $default, $ignoreHidden);
@@ -2583,7 +2595,7 @@ class User {
 
 		if ($wgPreferenceServiceRead) {
 			$preferences = [];
-			$value = $this->userPreferences()->getGlobalPreference($this->mId, $preference, $default, $ignoreHidden);
+			$value = $this->userPreferences()->getGlobalPreference($this->getId(), $preference, $default, $ignoreHidden);
 			foreach ($this->userPreferences()->getPreferences($this->getId())->getGlobalPreferences() as $globalPreference) {
 				$preferences[$globalPreference->getName()] = $globalPreference->getValue();
 			}
@@ -2619,8 +2631,8 @@ class User {
 		global $wgPreferenceServiceShadowWrite;
 
 		if ( $wgPreferenceServiceShadowWrite ) {
-			$value = $this->sanitizeProperty( $value );
-			$this->userPreferences()->setLocalPreference( $this->mId, $cityId, $preference, $value );
+			$value = $this->replaceNewlineAndCRWithSpace( $value );
+			$this->userPreferences()->setLocalPreference( $this->getId(), $cityId, $preference, $value );
 		}
 
 		$preferenceGlobalName = self::localToGlobalPropertyName($preference, $cityId, $sep);
@@ -2638,8 +2650,8 @@ class User {
 		global $wgPreferenceServiceShadowWrite;
 
 		if ( $wgPreferenceServiceShadowWrite ) {
-			$value = $this->sanitizeProperty( $value );
-			$this->userPreferences()->setGlobalPreference( $this->mId, $preference, $value );
+			$value = $this->replaceNewlineAndCRWithSpace( $value );
+			$this->userPreferences()->setGlobalPreference( $this->getId(), $preference, $value );
 			if ( $preference == 'skin' ) {
 				unset( $this->mSkin );
 			}
@@ -2682,7 +2694,41 @@ class User {
 	 * @return string
 	 */
 	public function getGlobalAttribute( $attribute, $default = null ) {
+
+		// There are currently 2 attributes we want to get from the attribute
+		// service directly every time. "avatar" and "location". These are attributes
+		// which can be updated by clients other than MW. By talking to the service
+		// we make sure to skip MW's user cache which may have a stale value for
+		// that attribute. Check to see if we should be using the service here before
+		// falling back to the getOptionHelper which uses the user cache.
+		if ( $this->shouldGetAttributeFromService( $attribute ) ) {
+			return $this->userAttributes()->getAttribute( $this->getId(), $attribute, $default );
+		}
+
 		return $this->getOptionHelper($attribute, $default);
+	}
+
+	/**
+	 * @param $attributeName
+	 * @return bool
+	 */
+	private function shouldGetAttributeFromService( $attributeName ) {
+		global $wgEnableReadsFromAttributeService;
+
+		if ( empty( $wgEnableReadsFromAttributeService ) ) {
+			return false;
+		}
+
+		// User is anonymous or nonexistant
+		if ( $this->getId() == 0 ) {
+			return false;
+		}
+
+		if ( !in_array( $attributeName, UserAttributes::$ATTRIBUTES_USED_BY_OUTSIDE_CLIENTS ) ) {
+			return false;
+		}
+
+		return true;
 	}
 
 	/**
@@ -2775,13 +2821,13 @@ class User {
 		}
 
 		foreach ( $array_map as $key => $value ) {
-			$array_map[ $key ] = $this->sanitizeProperty( $value );
+			$array_map[ $key ] = $this->replaceNewlineAndCRWithSpace( $value );
 		}
 
 		return $array_map;
 	}
 
-	private function sanitizeProperty($value) {
+	private function replaceNewlineAndCRWithSpace($value) {
 		if ($value) {
 			$value = str_replace("\r\n", "\n", $value);
 			$value = str_replace("\r", "\n", $value);
@@ -2829,7 +2875,7 @@ class User {
 		}
 		// Filter out any newlines that may have passed through input validation.
 		// Newlines are used to separate items in the options blob.
-		$val = $this->sanitizeProperty($val);
+		$val = $this->replaceNewlineAndCRWithSpace($val);
 		// Explicitly NULL values should refer to defaults
 		global $wgDefaultUserOptions;
 		if( is_null( $val ) && isset( $wgDefaultUserOptions[$oname] ) ) {
@@ -3479,32 +3525,6 @@ class User {
 			$this->mPassword = '';
 		}
 
-		// wikia change begin
-		/**
-		 * @author Krzysztof Krzyżaniak (eloy)
-		 * trap for BugId: 4013
-		 */
-		if( $this->mEmail == "devbox@wikia-inc.com" || $this->mEmail == "devbox+test@wikia-inc.com" ) {
-			// gather everything we know about request
-			global $wgCommandLineMode;
-			$log = "MOLI TRAP@devbox: ";
-			if( $wgCommandLineMode && !empty($argv)) {
-				$log .= $argv[ 0 ];
-				openlog( "trap", LOG_PID | LOG_PERROR, LOG_LOCAL6 );
-				syslog( LOG_WARNING, "$log");
-				closelog();
-			}
-			else {
-				global $wgTitle;
-				if (is_object($wgTitle)) {
-					$log .= $wgTitle->getFullUrl();
-					error_log( $log );
-				}
-			}
-		}
-
-		// wikia change end
-
 		$dbw = wfGetDB( DB_MASTER );
 		$dbw->update( 'user',
 			array( /* SET */
@@ -3967,6 +3987,9 @@ class User {
 			}
 			// Wikia change - end
 		}
+
+		wfRunHooks( 'UserMatchEditToken' ); # Wikia change
+
 		return $val == $sessionToken;
 	}
 
@@ -4660,16 +4683,16 @@ class User {
 	public function incEditCount() {
 		global $wgMemc, $wgCityId, $wgEnableEditCountLocal;
 		if( !$this->isAnon() ) {
-            // wikia change, load always from first cluster when we use
-            // shared users database
-            // @author Lucas Garczewski (tor)
-            global $wgExternalSharedDB, $wgSharedDB;
-            if( isset( $wgSharedDB ) ) {
-                    $dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
-            }
-            else {
-                    $dbw = wfGetDB( DB_MASTER );
-            }
+			// wikia change, load always from first cluster when we use
+			// shared users database
+			// @author Lucas Garczewski (tor)
+			global $wgExternalSharedDB, $wgSharedDB;
+			if( isset( $wgSharedDB ) ) {
+				$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
+			}
+			else {
+				$dbw = wfGetDB( DB_MASTER );
+			}
 
 			$dbw->update( '`user`',
 				array( 'user_editcount=user_editcount+1' ),
@@ -4878,40 +4901,42 @@ class User {
 			}
 
 			$this->loadAttributes();
+			$this->preferenceCorrection()->compareAndCorrect($this->getId(), $this->mOptions);
 		}
 
 		$this->mOptionsLoaded = true;
 
 		wfRunHooks( 'UserLoadOptions', array( $this, &$this->mOptions ) );
-		$this->preferenceCorrection()->compareAndCorrect($this->getId(), $this->mOptions);
 	}
 
 	private function loadAttributes() {
-		global $wgEnableReadsFromAttributeService, $wgPublicUserAttributes;
+		global $wgEnableReadsFromAttributeService;
 
 		if ( !empty( $wgEnableReadsFromAttributeService ) ) {
-			$attributesFromService = $this->userAttributes()->getAttributes( $this->getId() );
+			$attributes = $this->userAttributes()->getAttributes($this->getId());
+			foreach ( $attributes as $attributeName => $attributeValue ) {
+				$this->compareAttributeValueFromService( $attributeName, $attributeValue );
 
-			// Currently the attribute service only stores public attributes. Once it stores private as well
-			// this can be updated to $wgUserAttributeWhitelist which contains all attributes
-			foreach ( $wgPublicUserAttributes as $attributeName ) {
-				$this->compareAttributeValueFromService( $attributeName, $attributesFromService[$attributeName] );
-				$this->mOptionOverrides[$attributeName] = $attributesFromService[$attributeName];
-				$this->mOptions[$attributeName] = $attributesFromService[$attributeName];
+				 $this->mOptionOverrides[$attributeName] = $attributeValue;
+				 $this->mOptions[$attributeName] = $attributeValue;
 			}
 		}
 	}
 
 	private function compareAttributeValueFromService( $attributeName, $attributeValue ) {
-
-		// bio and coverPhoto are not used in MW
-		if ( $attributeName == "bio" || $attributeName == "coverPhoto" ) {
-			return;
-		}
-
-		if ( $this->mOptions[$attributeName] !== $attributeValue  ) {
+		if ( !array_key_exists( $attributeName, $this->mOptions ) ) {
+			$this->logAttributeMissing( $attributeName, $attributeValue );
+		} elseif ( $this->mOptions[$attributeName] !== $attributeValue  ) {
 			$this->logAttributeMismatch( $attributeName, $attributeValue );
 		}
+	}
+
+	private function logAttributeMissing( $attributeName, $attributeValue ) {
+		$this->error( 'USER_ATTRIBUTES attribute_missing', [
+			'attribute' => $attributeName,
+			'valueFromService' => $attributeValue,
+			'userId' => $this->getId()
+		] );
 	}
 
 	private function logAttributeMismatch( $attributeName, $attributeValue ) {

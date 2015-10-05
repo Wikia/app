@@ -20,6 +20,8 @@ class UserIdentityBox {
 	const USER_OCCUPATION_CHAR_LIMIT = 200;
 	const USER_GENDER_CHAR_LIMIT = 200;
 
+	const CACHE_TTL = 60 * 60; // 1 hour
+
 	private $user = null;
 	private $title = null;
 	private $favWikisModel = null;
@@ -219,6 +221,7 @@ class UserIdentityBox {
 					$data[$key] = $this->user->getGlobalAttribute( $key );
 				}
 			}
+			$this->saveMemcUserIdentityData( $data );
 		} else {
 			$data = array_merge_recursive( $data, $memcData );
 		}
@@ -465,7 +468,7 @@ class UserIdentityBox {
 			}
 		}
 
-		$wgMemc->set( $this->getMemcUserIdentityDataKey(), $memcData );
+		$wgMemc->set( $this->getMemcUserIdentityDataKey(), $memcData, self::CACHE_TTL );
 
 		return $memcData;
 	}
@@ -629,9 +632,4 @@ class UserIdentityBox {
 		return $this->favWikisModel;
 	}
 
-	public function clearCache() {
-		global $wgMemc;
-
-		$wgMemc->delete( $this->getMemcUserIdentityDataKey() );
-	}
 }

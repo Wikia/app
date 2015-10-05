@@ -46,23 +46,20 @@ class PortableInfoboxRenderServiceHelper {
 		return $horizontalGroupData;
 	}
 
-	public function createSliderGroupData( $groupData ) {
-		$sliderGroupData = [];
-
-		foreach ( $groupData as $item ) {
-			//do we want to support other tags in slider as well?
-			if ( $item[ 'type' ] === 'image' ) {
-
-				$data = $this->extendImageData( $item[ 'data' ] );
-				if ( !$data ) {
-					continue;
+	public function createSliderGroupData( $dataItems ) {
+		$items = [];
+		foreach ( $dataItems as $dataItem ) {
+			if ( $dataItem['type'] === 'image' ) {
+				foreach ( $dataItem['data'] as $item ) {
+					$item = $this->extendImageData( $item );
+					if ( !$item ) {
+						continue;
+					}
+					$items[] = $item;
 				}
-
-				$sliderGroupData[] = $data;
 			}
 		}
-
-		return ['images' => $sliderGroupData];
+		return ['images' => $items];
 	}
 
 
@@ -98,11 +95,15 @@ class PortableInfoboxRenderServiceHelper {
 	 */
 	public function extendImageData( $data ) {
 		$thumbnail = $this->getThumbnail( $data[ 'name' ] );
+		$ref = null;
 
 		if ( !$thumbnail ) {
 			return false;
 		}
 
+		wfRunHooks( 'PortableInfoboxRenderServiceHelper::extendImageData', [ $data, &$ref ] );
+
+		$data[ 'ref' ] = $ref;
 		$data[ 'height' ] = $thumbnail->getHeight();
 		$data[ 'width' ] = $thumbnail->getWidth();
 		$data[ 'thumbnail' ] = $thumbnail->getUrl();
