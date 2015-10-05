@@ -32,7 +32,8 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 			},
 			slotTweaker: {
 				show: noop,
-				hide: noop
+				hide: noop,
+				removeDefaultHeight: noop
 			},
 			slotElement: {
 				appendChild: noop

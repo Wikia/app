@@ -139,6 +139,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 
 		if (!shouldPush) {
 			log(['Push blocked', slotName], 'debug', logGroup);
+			slotTweaker.removeDefaultHeight(slotName);
 			return;
 		}
 
