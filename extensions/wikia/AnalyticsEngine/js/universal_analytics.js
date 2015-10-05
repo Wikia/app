@@ -302,7 +302,8 @@
 		['set', 'dimension21', String(window.wgArticleId)],                     // ArticleId
 		['set', 'dimension23', window.wikiaIsPowerUserFrequent ? 'Yes' : 'No'], // IsPowerUser: Frequent
 		['set', 'dimension24', window.wikiaIsPowerUserLifetime ? 'Yes' : 'No'], // IsPowerUser: Lifetime
-		['set', 'dimension25', String(window.wgNamespaceNumber)]                // Namespace Number
+		['set', 'dimension25', String(window.wgNamespaceNumber)],               // Namespace Number
+		['set', 'dimension26', String(window.wgSeoTestingBucket || 0)]          // SEO Testing bucket
 	);
 
 	/*
@@ -443,26 +444,27 @@
 	window.ga('ads.require', 'displayfeatures');
 
 	/* Ads Account Custom Dimensions */
-	window.ga('ads.set', 'dimension1', window.wgDBname);                                // DBname
-	window.ga('ads.set', 'dimension2', window.wgContentLanguage);                       // ContentLanguage
-	window.ga('ads.set', 'dimension3', window.cscoreCat);                               // Hub
-	window.ga('ads.set', 'dimension4', window.skin);                                    // Skin
-	window.ga('ads.set', 'dimension5', !!window.wgUserName ? 'user' : 'anon');          // LoginStatus
+	window.ga('ads.set', 'dimension1', window.wgDBname);                                 // DBname
+	window.ga('ads.set', 'dimension2', window.wgContentLanguage);                        // ContentLanguage
+	window.ga('ads.set', 'dimension3', window.cscoreCat);                                // Hub
+	window.ga('ads.set', 'dimension4', window.skin);                                     // Skin
+	window.ga('ads.set', 'dimension5', !!window.wgUserName ? 'user' : 'anon');           // LoginStatus
 
 	/**** Medium-Priority Custom Dimensions ****/
-	window.ga('ads.set', 'dimension8', window.wikiaPageType);                           // PageType
-	window.ga('ads.set', 'dimension9', window.wgCityId);                                // CityId
-	window.ga('ads.set', 'dimension14', window.wgGaHasAds ? 'Yes' : 'No');              // HasAds
-	window.ga('ads.set', 'dimension15', window.wikiaPageIsCorporate ? 'Yes' : 'No');    // IsCorporatePage
-	window.ga('ads.set', 'dimension16', getKruxSegment());                              // Krux Segment
-	window.ga('ads.set', 'dimension17', window.wgWikiVertical);                         // Vertical
-	window.ga('ads.set', 'dimension18', window.wgWikiCategories.join(','));             // Categories
-	window.ga('ads.set', 'dimension19', window.wgArticleType);                          // ArticleType
-	window.ga('ads.set', 'dimension21', String(window.wgArticleId));                    // ArticleId
+	window.ga('ads.set', 'dimension8', window.wikiaPageType);                            // PageType
+	window.ga('ads.set', 'dimension9', window.wgCityId);                                 // CityId
+	window.ga('ads.set', 'dimension14', window.wgGaHasAds ? 'Yes' : 'No');               // HasAds
+	window.ga('ads.set', 'dimension15', window.wikiaPageIsCorporate ? 'Yes' : 'No');     // IsCorporatePage
+	window.ga('ads.set', 'dimension16', getKruxSegment());                               // Krux Segment
+	window.ga('ads.set', 'dimension17', window.wgWikiVertical);                          // Vertical
+	window.ga('ads.set', 'dimension18', window.wgWikiCategories.join(','));              // Categories
+	window.ga('ads.set', 'dimension19', window.wgArticleType);                           // ArticleType
+	window.ga('ads.set', 'dimension21', String(window.wgArticleId));                     // ArticleId
 	window.ga('ads.set', 'dimension21', String(window.wgArticleId));                     // ArticleId
 	window.ga('ads.set', 'dimension23', window.wikiaIsPowerUserFrequent ? 'Yes' : 'No'); // IsPowerUser: Frequent
 	window.ga('ads.set', 'dimension24', window.wikiaIsPowerUserLifetime ? 'Yes' : 'No'); // IsPowerUser: Lifetime
 	window.ga('ads.set', 'dimension25', String(window.wgNamespaceNumber));               // Namespace Number
+	window.ga('ads.set', 'dimension26', String(window.wgSeoTestingBucket || 0));         // SEO Testing bucket
 
 	/**** Include A/B testing status ****/
 	if (window.Wikia && window.Wikia.AbTest) {

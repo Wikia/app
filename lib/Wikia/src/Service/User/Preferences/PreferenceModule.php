@@ -13,7 +13,7 @@ use Wikia\Persistence\User\Preferences\PreferencePersistenceSwaggerService;
 use Wikia\Service\User\Preferences\Migration\PreferenceScopeService;
 
 class PreferenceModule implements Module {
-	const PREFERENCE_CACHE_VERSION = 1;
+	const PREFERENCE_CACHE_VERSION = 3;
 
 	public function configure( InjectorBuilder $builder ) {
 		$builder

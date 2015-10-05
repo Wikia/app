@@ -105,7 +105,7 @@ class MercuryApi {
 	 */
 	public function getWikiVariables() {
 		global $wgSitename, $wgCacheBuster, $wgDBname, $wgDefaultSkin, $wgDisableAnonymousEditing,
-			   $wgLang, $wgLanguageCode, $wgContLang, $wgCityId, $wgEnableNewAuth, $wgDisableAnonymousUploadForMercury;
+			   $wgLanguageCode, $wgContLang, $wgCityId, $wgEnableNewAuth, $wgDisableAnonymousUploadForMercury;
 
 		return [
 			'cacheBuster' => (int) $wgCacheBuster,
@@ -117,8 +117,6 @@ class MercuryApi {
 			'homepage' => $this->getHomepageUrl(),
 			'id' => (int) $wgCityId,
 			'language' => [
-				'user' => $wgLang->getCode(),
-				'userDir' => SassUtil::isRTL() ? 'rtl' : 'ltr',
 				'content' => $wgLanguageCode,
 				'contentDir' => $wgContLang->getDir()
 			],
@@ -248,9 +246,9 @@ class MercuryApi {
 	 * @return string homepage URL. Default is US homepage.
 	 */
 	private function getHomepageUrl() {
-		global $wgLang;
+		global $wgLanguageCode;
 		if ( class_exists('WikiaLogoHelper') ) {
-			return ( new WikiaLogoHelper() )->getCentralUrlForLang( $wgLang->getCode() );
+			return ( new WikiaLogoHelper() )->getCentralUrlForLang( $wgLanguageCode );
 		}
 		return 'http://www.wikia.com'; //default homepage url
 	}

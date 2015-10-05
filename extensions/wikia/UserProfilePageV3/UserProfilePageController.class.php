@@ -1,5 +1,8 @@
 <?php
 
+use Wikia\Service\User\Attributes\UserAttributes;
+use Wikia\DependencyInjection\Injector;
+
 class UserProfilePageController extends WikiaController {
 	const AVATAR_DEFAULT_SIZE = 150;
 	const AVATAR_MAX_SIZE = 512000;
@@ -529,10 +532,18 @@ class UserProfilePageController extends WikiaController {
 				$user->setGlobalAttribute( 'avatar_rev', date( 'U' ) );
 				$user->saveSettings();
 			}
+
+			$this->clearAttributeCache( $userId );
 		}
 
 		wfProfileOut( __METHOD__ );
 		return true;
+	}
+
+	private function clearAttributeCache( $userId ) {
+		/** @var UserAttributes $attributeService */
+		$attributeService = Injector::getInjector()->get(UserAttributes::class);
+		$attributeService->clearCache( $userId );
 	}
 
 	/**

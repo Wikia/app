@@ -5,6 +5,7 @@ namespace Wikia\Service\User\Attributes;
 use PHPUnit_Framework_MockObject_MockObject;
 use PHPUnit_Framework_TestCase;
 use Wikia\Domain\User\Attribute;
+use Doctrine\Common\Cache\CacheProvider;
 
 class UserAttributeTest extends PHPUnit_Framework_TestCase {
 	/** @var int */
@@ -15,6 +16,9 @@ class UserAttributeTest extends PHPUnit_Framework_TestCase {
 
 	/** @var PHPUnit_Framework_MockObject_MockObject */
 	protected $service;
+
+	/** @var PHPUnit_Framework_MockObject_MockObject */
+	protected $cache;
 
 	/** @var  Attribute */
 	protected $attribute1;
@@ -33,6 +37,11 @@ class UserAttributeTest extends PHPUnit_Framework_TestCase {
 			->setMethods( [ 'set', 'get', 'delete' ] )
 			->disableOriginalConstructor()
 			->getMock();
+		$this->cache = $this->getMockBuilder( CacheProvider::class )
+			->setMethods( ['doFetch', 'doContains', 'doSave', 'doFlush', 'doDelete', 'doGetStats'] )
+			->disableOriginalConstructor()
+			->getMock();
+		$this->cache->method('doFetch')->willReturn(false);
 		$this->attribute1 = new Attribute( "nickName", "Lebowski" );
 		$this->attribute2 = new Attribute( "gender", "female" );
 		$this->defaultAttribute = new Attribute( "defaultName", "defaultValue" );
@@ -41,7 +50,7 @@ class UserAttributeTest extends PHPUnit_Framework_TestCase {
 
 	public function testGetAttributes() {
 		$this->setupServiceGetExpects();
-		$attributes = new UserAttributes( $this->service );
+		$attributes = new UserAttributes( $this->service, $this->cache );
 
 		$this->assertEquals( $this->attribute1->getValue(),
 			$attributes->getAttribute( $this->userId, $this->attribute1->getName() ) );
@@ -54,7 +63,7 @@ class UserAttributeTest extends PHPUnit_Framework_TestCase {
 
 	public function testGetAttributesWithDefaultParameter() {
 		$this->setupServiceGetExpects();
-		$attributes = new UserAttributes( $this->service );
+		$attributes = new UserAttributes( $this->service, $this->cache );
 
 		$this->assertEquals( "someDefaultValue",
 			$attributes->getAttribute( $this->userId, "attrWithNoValue", "someDefaultValue" ) );
@@ -64,19 +73,11 @@ class UserAttributeTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testSetAttribute() {
-		$userAttributes = new UserAttributes( $this->service );
+		$userAttributes = new UserAttributes( $this->service, $this->cache );
 		$userAttributes->setAttribute( $this->userId, new Attribute( "newAttr", "foo" ) );
 		$this->assertEquals( "foo", $userAttributes->getAttribute( $this->userId, "newAttr" ) );
 		$userAttributes->setAttribute( $this->userId, new Attribute( "anotherNewAttr", null ) );
 		$this->assertEquals( null, $userAttributes->getAttribute( $this->userId, "anotherNewAttr" ) );
-	}
-
-	public function testSetAttributeAsAnonUser() {
-		$this->service->expects( $this->exactly( 0 ) )
-			->method( "set" );
-
-		$userAttributes = new UserAttributes( $this->service );
-		$userAttributes->setAttribute( $this->anonUserId, new Attribute( "newAttr", "foo" ) );
 	}
 
 	public function testDeleteAttributeSetForUser() {
@@ -86,7 +87,7 @@ class UserAttributeTest extends PHPUnit_Framework_TestCase {
 			->with( $this->userId, $this->attribute1 );
 
 
-		$userAttributes = new UserAttributes( $this->service );
+		$userAttributes = new UserAttributes( $this->service, $this->cache );
 
 		$this->assertEquals( $this->attribute1->getValue(),
 			$userAttributes->getAttribute( $this->userId, $this->attribute1->getName() ) );

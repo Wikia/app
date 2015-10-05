@@ -98,6 +98,17 @@ if( 'view' == wgAction ) {
 	window.user_protected = false;
 }
 
+// PLATFORM-1531: helper function for sending AJAX requests to WMU backend (with edit token attached)
+function WMU_ajax(method, data, callback) {
+	var url = window.wgScriptPath + '/index.php?action=ajax&rs=WMU&method=' + encodeURIComponent(method);
+
+	data = data || {};
+	data.token = window.mw.user.tokens.get('editToken'); // always pass the edit token to prevent CSRF
+
+	WMU_jqXHR.abort();
+	WMU_jqXHR = $.post(url, data, callback);
+}
+
 function WMU_setSkip(){
 	WMU_skipDetails = true;
 }
@@ -696,19 +707,16 @@ function WMU_indicator(id, show) {
 }
 
 function WMU_chooseImage(sourceId, itemId) {
-	var callback = function(o) {
-		WMU_displayDetails(o.responseText);
-	};
-
 	WMU_track({
 		label: 'add-recent-photo'
 	});
 
 	WMU_indicator(1, true);
-	WMU_jqXHR.abort();
-	WMU_jqXHR = $.ajax(wgScriptPath + '/index.php?action=ajax&rs=WMU&method=chooseImage&' + 'sourceId=' + sourceId + '&itemId=' + itemId, {
-		method: 'get',
-		complete: callback
+	WMU_ajax('chooseImage', {
+		sourceId: sourceId,
+		itemId: itemId
+	}, function(resp) {
+		WMU_displayDetails(resp);
 	});
 }
 
@@ -1038,7 +1046,7 @@ function WMU_insertImage(type) {
 		}
 	}
 
-	var callback = function(o) {
+	var callback = function(resp) {
 		var screenType = WMU_jqXHR.getResponseHeader('X-screen-type');
 		if(typeof screenType == "undefined") {
 			screenType = WMU_jqXHR.getResponseHeader('X-Screen-Type');
@@ -1046,13 +1054,13 @@ function WMU_insertImage(type) {
 
 		switch($.trim(screenType)) {
 			case 'error':
-				o.responseText = o.responseText.replace(/<script.*script>/, "" );
-				alert(o.responseText);
+				resp = resp.replace(/<script.*script>/, "" );
+				alert(resp);
 				WMU_switchScreen('Summary');
 				break;
 			case 'conflict':
 				WMU_switchScreen('Conflict');
-				$('#ImageUpload' + WMU_curScreen).html(o.responseText);
+				$('#ImageUpload' + WMU_curScreen).html(resp);
 				break;
 			case 'summary':
 				WMU_switchScreen('Summary');
@@ -1061,7 +1069,7 @@ function WMU_insertImage(type) {
 				}
 
 				$('#ImageUploadBack').hide();
-				$('#ImageUpload' + WMU_curScreen).html(o.responseText);
+				$('#ImageUpload' + WMU_curScreen).html(resp);
 
 				var event = jQuery.Event("imageUploadSummary");
 				$("body").trigger(event, [$('#ImageUpload' + WMU_curScreen)]);
@@ -1070,7 +1078,7 @@ function WMU_insertImage(type) {
 				}
 
 				// Special Case for using WMU in SDSObject Special Page - returns the file name of chosen image
-				var $responseHTML = $(o.responseText),
+				var $responseHTML = $(resp),
 					wmuData = {
 					imageTitle: $responseHTML.find('#ImageUploadFileName').val(),
 					imageWikiText: $responseHTML.find('#ImageUploadTag').val()
@@ -1151,7 +1159,7 @@ function WMU_insertImage(type) {
 				}
 				break;
 			case 'existing':
-				WMU_displayDetails(o.responseText);
+				WMU_displayDetails(resp);
 				break;
 		}
 		WMU_indicator(1, false);
@@ -1165,10 +1173,12 @@ function WMU_insertImage(type) {
 
 	WMU_indicator(1, true);
 	WMU_jqXHR.abort();
-	WMU_jqXHR = $.ajax(wgScriptPath + '/index.php?action=ajax&rs=WMU&method=insertImage&' + params.join('&'), {
-		method: 'get',
-		complete: callback
-	});
+	WMU_jqXHR = $.post(
+		wgScriptPath + '/index.php?action=ajax&rs=WMU&method=insertImage&' + params.join('&'), {
+			token: window.mw.user.tokens.get('editToken')
+		},
+		callback
+	);
 }
 
 function WMU_box_in_article() {
