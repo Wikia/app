@@ -142,7 +142,10 @@ class HeliosClientImpl implements HeliosClient
 	{
 		return $this->request(
 			'info',
-			[ 'code' => $token ]
+			[
+				'code' => $token,
+				'noblockcheck' => 1,
+			]
 		);
 	}
 

@@ -22,9 +22,10 @@
  */
 
 class ApprovedraftAction extends FormlessAction {
+	const ACTION_NAME = 'approvedraft';
 
 	public function getName() {
-		return 'approvedraft';
+		return self::ACTION_NAME;
 	}
 
 	protected function getDescription() {
@@ -33,13 +34,20 @@ class ApprovedraftAction extends FormlessAction {
 
 	public function onView() {
 		$title = $this->getTitle();
+		$request = $this->getRequest();
 
 		$redirectParams = wfArrayToCGI( array_diff_key(
 			$this->getRequest()->getQueryValues(),
-			[ 'title' => null, 'action' => null ]
-		));
+			[ 'title' => null, 'action' => null, 'token' => null ]
+		) );
 
-		if ( !$title->exists() ) {
+		// Must have valid token for this action/title
+		$salt = [ $this->getName(), $title->getDBkey() ];
+
+		if ( !$this->getUser()->matchEditToken( $request->getVal( 'token' ), $salt ) ) {
+			$this->addBannerNotificationMessage( 'sessionfailure' );
+			$redirectTitle = $title;
+		} elseif ( !$title->exists() ) {
 
 			$this->addBannerNotificationMessage( 'templatedraft-approval-no-page-error' );
 			$redirectTitle = $title;
@@ -59,6 +67,21 @@ class ApprovedraftAction extends FormlessAction {
 		}
 
 		$this->getOutput()->redirect( $redirectTitle->getFullUrl( $redirectParams ) );
+	}
+
+	/**
+	 * Get token to approve a draft page for a user.
+	 *
+	 * @param Title $title Title object of the draft page to approve
+	 * @param User $user User for whom the action is going to be performed
+	 * @return string Token
+	 */
+	public static function getApproveToken( Title $title, User $user ) {
+		$salt = [ self::ACTION_NAME, $title->getDBkey() ];
+
+		// This token stronger salted
+		// It's title/action specific because index.php is GET and API is POST
+		return $user->getEditToken( $salt );
 	}
 
 	/**

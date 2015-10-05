@@ -52,7 +52,7 @@ require_once( $dir . '/Tags/WikiFactoryTagsQuery.php' );
  * permissions
  */
 $wgAvailableRights[] = 'wikifactory';
-$wgGroupPermissions['util']['wikifactory'] = true;
+//$wgGroupPermissions['util']['wikifactory'] = true;
 $wgAvailableRights[] = 'wikifactorymetrics';
 $wgGroupPermissions['staff']['wikifactorymetrics'] = true;
 

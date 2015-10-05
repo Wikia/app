@@ -1265,7 +1265,7 @@ $wgAmazonMatchCountriesMobile = null;
  * @name $wgEnableOpenXBidder
  * Enables OpenX bidder
  */
-$wgAdDriverEnableOpenXBidder = false;
+$wgAdDriverEnableOpenXBidder = true;
 
 /**
  * @name $wgAdDriverOpenXBidderCountries
@@ -1815,7 +1815,7 @@ $wgAdDriverIncontentPlayerSlotCountries = null;
  * manage a user's preferences externally
  */
 $wgPreferenceServiceRead = false;
-$wgPreferenceServiceWrite = true;
+$wgPreferenceServiceWrite = true && $wgWikiaDatacenter != WIKIA_DC_RES;
 
 /**
  * @name $wgEnableRobotsTxtExt
