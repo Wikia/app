@@ -2628,15 +2628,15 @@ class User {
 	 * @see getGlobalPreference
 	 */
 	public function setLocalPreference($preference, $value, $cityId, $sep = '-') {
-		global $wgPreferenceServiceShadowWrite;
+		global $wgPreferenceServiceWrite;
 
-		if ( $wgPreferenceServiceShadowWrite ) {
+		if ( $wgPreferenceServiceWrite ) {
 			$value = $this->replaceNewlineAndCRWithSpace( $value );
 			$this->userPreferences()->setLocalPreference( $this->getId(), $cityId, $preference, $value );
+		} else {
+			$preferenceGlobalName = self::localToGlobalPropertyName($preference, $cityId, $sep);
+			$this->setOptionHelper( $preferenceGlobalName, $value );
 		}
-
-		$preferenceGlobalName = self::localToGlobalPropertyName($preference, $cityId, $sep);
-		$this->setOptionHelper( $preferenceGlobalName, $value );
 	}
 
 	/**
@@ -2647,9 +2647,9 @@ class User {
 	 * @see getGlobalPreference for documentation about preferences
 	 */
 	public function setGlobalPreference( $preference, $value ) {
-		global $wgPreferenceServiceShadowWrite;
+		global $wgPreferenceServiceWrite;
 
-		if ( $wgPreferenceServiceShadowWrite ) {
+		if ( $wgPreferenceServiceWrite ) {
 			$value = $this->replaceNewlineAndCRWithSpace( $value );
 			$this->userPreferences()->setGlobalPreference( $this->getId(), $preference, $value );
 			if ( $preference == 'skin' ) {
@@ -2658,9 +2658,9 @@ class User {
 			if ( $preference == 'theme' ) {
 				unset( $this->mTheme );
 			}
+		} else {
+			$this->setOptionHelper( $preference, $value );
 		}
-
-		$this->setOptionHelper( $preference, $value );
 	}
 
 	/**
