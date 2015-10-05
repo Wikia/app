@@ -78,11 +78,15 @@ class PortableInfoboxRenderServiceHelper {
 	 */
 	public function extendImageData( $data ) {
 		$thumbnail = $this->getThumbnail( $data[ 'name' ] );
+		$ref = null;
 
 		if ( !$thumbnail ) {
 			return false;
 		}
 
+		wfRunHooks( 'PortableInfoboxRenderServiceHelper::extendImageData', [ $data, &$ref ] );
+
+		$data[ 'ref' ] = $ref;
 		$data[ 'height' ] = $thumbnail->getHeight();
 		$data[ 'width' ] = $thumbnail->getWidth();
 		$data[ 'thumbnail' ] = $thumbnail->getUrl();

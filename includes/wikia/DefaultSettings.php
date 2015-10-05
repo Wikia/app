@@ -640,6 +640,7 @@ include_once( "$IP/extensions/wikia/Rail/Rail.setup.php" );
 include_once( "$IP/extensions/wikia/PageShare/PageShare.setup.php" );
 include_once( "$IP/extensions/wikia/PaidAssetDrop/PaidAssetDrop.setup.php" );
 include_once( "$IP/extensions/wikia/CreateNewWiki/CreateNewWiki_global_setup.php" );
+include_once( "$IP/extensions/wikia/Security/Security.setup.php" );
 
 /**
  * @name $wgSkipSkins
@@ -1264,7 +1265,7 @@ $wgAmazonMatchCountriesMobile = null;
  * @name $wgEnableOpenXBidder
  * Enables OpenX bidder
  */
-$wgAdDriverEnableOpenXBidder = false;
+$wgAdDriverEnableOpenXBidder = true;
 
 /**
  * @name $wgAdDriverOpenXBidderCountries
@@ -1272,6 +1273,13 @@ $wgAdDriverEnableOpenXBidder = false;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverOpenXBidderCountries = null;
+
+/**
+ * @name $wgAdDriverOpenXBidderCountriesMobile
+ * Enables OpenX bidder on mobile in these countries.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverOpenXBidderCountriesMobile = null;
 
 /**
  * @name $wgAdPageLevelCategoryLangs
@@ -1536,6 +1544,13 @@ $wgAdDriverSourcePointCountries = null;
 $wgAdDriverSourcePointDetectionCountries = null;
 
 /**
+ * @name $wgAdDriverSourcePointDetectionMobileCountries
+ * List of countries to call SourcePoint detection scripts on Mercury
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverSourcePointDetectionMobileCountries = null;
+
+/**
  * trusted proxy service registry
  */
 $wgAutoloadClasses[ 'TrustedProxyService'] =  "$IP/includes/wikia/services/TrustedProxyService.class.php" ;
@@ -1766,13 +1781,6 @@ $wgOasisTypography = true;
 $wgOasisBreakpoints = true;
 
 /**
- * Force new breakpoints $wgOasisBreakpoints for German wikis
- * see CONCF-433
- * todo remove when 71M adjusts their styles
- */
-$wgOasisBreakpointsDE = true;
-
-/**
  * Add poweruser to implicit groups
  */
 $wgImplicitGroups[] = 'poweruser';
@@ -1807,14 +1815,14 @@ $wgAdDriverIncontentPlayerSlotCountries = null;
  * manage a user's preferences externally
  */
 $wgPreferenceServiceRead = false;
-$wgPreferenceServiceShadowWrite = true;
+$wgPreferenceServiceShadowWrite = true && $wgWikiaDatacenter != WIKIA_DC_RES;
 
 /**
  * @name $wgEnableRobotsTxtExt
  *
  * Enables extension that generates robots.txt
  */
-$wgEnableRobotsTxtExt = false;
+$wgEnableRobotsTxtExt = true;
 
 /**
  * @name $wgEnableFliteTagExt
@@ -1823,9 +1831,52 @@ $wgEnableRobotsTxtExt = false;
  */
 $wgEnableFliteTagExt = false;
 
+// SEO-related variables start (keep them sorted)
+
 /**
  * @name $wgEnableSeoLinkHreflangExt
  *
  * Enables SEO Link Hreflang extension
  */
 $wgEnableSeoLinkHreflangExt = false;
+
+/**
+ * @name $wgEnableSeoTestingExt
+ *
+ * Enables SEO Testing extension
+ */
+$wgEnableSeoTestingExt = true;
+
+/**
+ * @name $wgSeoTestingExperiments
+ *
+ * The configuration of SEO experiments.
+ *
+ * Format:
+ *
+ * [
+ *   'Name_of_test' => [
+ *     'dbNames' => ['list', 'of', 'dbnames'],
+ *     'startDay' => '2015-10-01',
+ *     'endDay' => '2015-12-31',
+ *   ],
+ *   'Another_test' => [
+ *     'dbNames' => ['other', 'wikis'],
+ *     'startDay' => '2015-11-01',
+ *     'endDay' => '2015-11-30',
+ *   ],
+ * ]
+ *
+ * Only set this on community wiki (177).
+ * The wikis affected are listed under dbNames key for each experiment.
+ */
+$wgSeoTestingExperiments = [];
+
+// SEO-related variables end
+
+/**
+ * @name $wgAdDriverAdsRecoveryMessageCountries
+ * Enables module which displays a simple message to users with ad blockers
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverAdsRecoveryMessageCountries = null;

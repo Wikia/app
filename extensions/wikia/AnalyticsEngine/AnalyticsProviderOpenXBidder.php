@@ -26,8 +26,8 @@ class AnalyticsProviderOpenXBidder implements iAnalyticsProvider {
 		var ac = globals[$instantGlobalName],
 			qs = new Querystring();
 
-		if ((ac && ac.indexOf && ac.indexOf(geo.getCountryCode()) > -1) || qs.getVal('oxbidder', '0') === '1') {
-			oxBidder.call();
+		if (geo.isProperGeo(ac) || qs.getVal('oxbidder', '0') === '1') {
+			oxBidder.call('oasis');
 		};
 	});
 CODE;
