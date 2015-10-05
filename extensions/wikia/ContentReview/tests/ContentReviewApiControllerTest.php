@@ -93,26 +93,16 @@ class ContentReviewApiControllerTest extends WikiaBaseTest {
 		/**
 		 * User Mock
 		 */
-		$userMock = $this->getMock( '\User', [ 'getId', 'getEditToken' ] );
+		$userMock = $this->prepareUserMockWithEditToken( $inputData['userEditToken'], [ 'getId' ] );
 		$userMock->expects( $this->any() )
 			->method( 'getId' )
 			->willReturn( $inputData['userId'] );
-		$userMock->expects( $this->any() )
-			->method( 'getEditToken' )
-			->willReturn( $inputData['userEditToken'] );
-
 		$this->mockGlobalVariable( 'wgUser', $userMock );
 
 		/**
 		 * Wikia Request Mock
 		 */
-		$requestMock = $this->getMock( '\WikiaRequest', [ 'wasPosted', 'getVal' ], [ [] ] );
-		$requestMock->expects( $this->any() )
-			->method( 'wasPosted' )
-			->willReturn( $inputData['wasPosted'] );
-		$requestMock->expects( $this->any() )
-			->method( 'getVal' )
-			->willReturn( $inputData['requestToken'] );
+		$requestMock = $this->preparePostRequestValidatingMock( $inputData['wasPosted'], $inputData['requestToken'] );
 		$requestMock->expects( $this->any() )
 			->method( 'getInt' )
 			->willReturn( 0 ); // pageId, does not really matter since the Title is overwritten
@@ -144,6 +134,100 @@ class ContentReviewApiControllerTest extends WikiaBaseTest {
 
 		$apiController->setRequest( $requestMock );
 		$apiController->enableTestMode();
+	}
+
+	/**
+	 * @dataProvider removeCompletedAndUpdateLogsDataProvider
+	 * @param array $inputData
+	 * @param string $expected
+	 * @param string $message
+	 */
+	public function testRemoveCompletedAndUpdateLogs( $inputData, $expected, $message ) {
+		/**
+		 * Set exception if expected
+		 */
+		if ( $inputData['exception'] ) {
+			$this->setExpectedException( $expected );
+		}
+
+		$requestMock = $this->preparePostRequestValidatingMock( $inputData['wasPosted'], $inputData['requestToken'], [ 'getInt' ] );
+
+		$userMock = $this->prepareUserMockWithEditToken( $inputData['userEditToken'], [ 'getRights' ] );
+		$userMock->expects( $this->any() )
+			->method( 'getRights' )
+			->willReturn( $inputData['userGetRights'] );
+		$this->mockGlobalVariable( 'wgUser', $userMock );
+
+		$currentRevisionModelMock = $this->getMock( 'Wikia\ContentReview\Models\CurrentRevisionModel', [
+			'approveRevision',
+		] );
+
+		$helperMock = $this->getMock( 'Wikia\ContentReview\Helper', [
+			'hasPageApprovedId',
+			'isDiffPageInReviewProcess',
+			'purgeReviewedJsPagesTimestamp',
+			'prepareProvideFeedbackLink',
+		] );
+		$helperMock->expects( $this->any() )
+			->method( 'hasPageApprovedId' )
+			->willReturn( $inputData['hasPageApprovedId'] );
+		$helperMock->expects( $this->any() )
+			->method( 'isDiffPageInReviewProcess' )
+			->willReturn( $inputData['isDiffPageInReviewProcess'] );
+
+		$reviewLogModelMock = $this->getMock( 'Wikia\ContentReview\Models\ReviewLogModel', [
+			'backupCompletedReview',
+		] );
+
+		$reviewModelMock = $this->getMock( 'Wikia\ContentReview\Models\ReviewModel', [
+			'getReviewOfPageByStatus',
+			'updateCompletedReview',
+		] );
+		$reviewModelMock->expects( $this->any() )
+			->method( 'getReviewOfPageByStatus' )
+			->willReturn( $inputData['inReviewRevision'] );
+
+		$this->mockStaticMethod( '\Title', 'newFromId', 'Mocked title' );
+
+		$responseMock = $this->getMock( '\WikiaResponse' );
+
+		/**
+		 * Mock ContentReviewApiController
+		 * @var ContentReviewApiController
+		 */
+		$apiControllerMock = $this->getMock( '\ContentReviewApiController', [
+			'getCurrentRevisionModel',
+			'getHelper',
+			'getReviewLogModel',
+			'getReviewModel',
+		] );
+
+		$apiControllerMock->setRequest( $requestMock );
+		$apiControllerMock->setResponse( $responseMock );
+
+		$apiControllerMock->expects( $this->any() )
+			->method( 'getCurrentRevisionModel' )
+			->willReturn( $currentRevisionModelMock );
+		$apiControllerMock->expects( $this->any() )
+			->method( 'getHelper' )
+			->willReturn( $helperMock );
+		$apiControllerMock->expects( $this->any() )
+			->method( 'getReviewLogModel' )
+			->willReturn( $reviewLogModelMock );
+		$apiControllerMock->expects( $this->any() )
+			->method( 'getReviewModel' )
+			->willReturn( $reviewModelMock );
+
+		/**
+		 * If no exception occurs - check a status with which a notification has been retrieved
+		 */
+		if ( !$inputData['exception'] ) {
+			$apiControllerMock->expects( $this->once() )
+				->method( 'getReviewUpdateNotification' )
+				->with( $expected );
+		}
+
+		$apiControllerMock->removeCompletedAndUpdateLogs();
 	}
 
 	private function prepareControllerPropertiesMocks( $params ) {
@@ -201,6 +285,65 @@ class ContentReviewApiControllerTest extends WikiaBaseTest {
 
 		$this->contentReviewApiControllerMock->method( 'getTitle' )
 			->will( $this->returnValue( $titleMock ) );
+	}
+
+	/**
+	 * Returns a mock of WikiaRequest object that can be used for validating a POST request
+	 * with a matching edit token.
+	 * @param bool $wasPosted
+	 * @param string $requestToken
+	 * @param array $methodsToMock
+	 * @return PHPUnit_Framework_MockObject_MockObject
+	 */
+	private function preparePostRequestValidatingMock( $wasPosted, $requestToken, array $methodsToMock = [] ) {
+		/**
+		 * Wikia Request Mock
+		 */
+		if ( !in_array( 'wasPosted', $methodsToMock ) ) {
+			$methodsToMock[] = 'wasPosted';
+		}
+		if ( !in_array( 'getVal', $methodsToMock ) ) {
+			$methodsToMock[] = 'getVal';
+		}
+
+		$requestMock = $this->getMock( '\WikiaRequest', $methodsToMock, [ [] ] );
+		$requestMock->expects( $this->any() )
+			->method( 'wasPosted' )
+			->willReturn( $wasPosted );
+
+		if ( $wasPosted ) {
+			$requestTokenMatcher = $this->atLeastOnce();
+		} else {
+			$requestTokenMatcher = $this->never();
+		}
+		$requestMock->expects( $requestTokenMatcher )
+			->method( 'getVal' )
+			->willReturn( $requestToken );
+
+		return $requestMock;
+	}
+
+	/**
+	 * Returns a mock of User object that can be used for validating a POST request
+	 * with a matching edit token.
+	 * @param string $userEditToken
+	 * @param array $methodsToMock An array of methods other than getEditToken to mock
+	 * @return PHPUnit_Framework_MockObject_MockObject
+	 */
+	private function prepareUserMockWithEditToken( $userEditToken, array $methodsToMock = [] ) {
+		/**
+		 * User Mock
+		 */
+		if ( !in_array( 'getEditToken', $methodsToMock ) ) {
+			$methodsToMock[] = 'getEditToken';
+		}
+
+		$userMock = $this->getMock( '\User', $methodsToMock );
+		$userMock->expects( $this->any() )
+			->method( 'getEditToken' )
+			->willReturn( $userEditToken );
+
+		return $userMock;
 	}
 
 	public function submitPageForReviewProvider() {
@@ -348,7 +491,7 @@ class ContentReviewApiControllerTest extends WikiaBaseTest {
 			],
 			[
 				[
-					'wasPosted' => TRUE,
+					'wasPosted' => true,
 					'requestToken' => $validToken,
 					'userEditToken' => $validToken,
 					'isJsPage' => true,
@@ -360,7 +503,7 @@ class ContentReviewApiControllerTest extends WikiaBaseTest {
 			],
 			[
 				[
-					'wasPosted' => TRUE,
+					'wasPosted' => true,
 					'requestToken' => $validToken,
 					'userEditToken' => $validToken,
 					'isJsPage' => true,
@@ -372,7 +515,7 @@ class ContentReviewApiControllerTest extends WikiaBaseTest {
 			],
 			[
 				[
-					'wasPosted' => TRUE,
+					'wasPosted' => true,
 					'requestToken' => $validToken,
 					'userEditToken' => $validToken,
 					'isJsPage' => true,
@@ -381,6 +524,63 @@ class ContentReviewApiControllerTest extends WikiaBaseTest {
 				],
 				'success',
 				'Everything is fine, methods to enable the test mode and make a success response should be called once.',
+			],
+		];
+	}
+
+	public function removeCompletedAndUpdateLogsDataProvider() {
+		$validToken = MWCryptRand::generateHex( 32 );
+		$invalidToken = MWCryptRand::generateHex( 32 );
+
+		return [
+			[
+				[
+					'exception' => true,
+					'wasPosted' => false,
+				],
+				$expected = 'BadRequestApiException',
+				$message = 'The request would be ok if it was POSTed.',
+			],
+			[
+				[
+					'exception' => true,
+					'wasPosted' => true,
+					'requestToken' => $invalidToken,
+					'userEditToken' => $validToken,
+				],
+				$expected = 'BadRequestApiException',
+				$message = 'An invalid editToken was sent in the request.',
+			],
+			[
+				[
+					'exception' => true,
+					'wasPosted' => true,
+					'requestToken' => $validToken,
+					'userEditToken' => $validToken,
+					'userGetRights' => [
+						// empty array - no content-review rights
+					],
+				],
+				$expected = 'PermissionsException',
+				$message = 'User does not have content-review rights.',
+			],
+			[
+				[
+					'exception' => true,
+					'wasPosted' => true,
+					'requestToken' => $validToken,
+					'userEditToken' => $validToken,
+					'userGetRights' => [
+						'content-review',
+					],
+					'hasPageApprovedId' => true,
+					'isDiffPageInReviewProcess' => true,
+					'inReviewRevision' => [
+						// empty array
+					],
+				],
+				$expected = 'NotFoundApiException',
+				$message = 'No revision in review - should throw an exception.',
 			],
 		];
 	}

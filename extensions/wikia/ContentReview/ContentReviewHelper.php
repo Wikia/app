@@ -227,7 +227,7 @@ class Helper extends \ContextSource {
 			return true;
 		}
 
-		$reviewData = $reviewModel->getReviewedContent( $wikiId, $pageId, ReviewModel::CONTENT_REVIEW_STATUS_IN_REVIEW );
+		$reviewData = $reviewModel->getReviewOfPageByStatus( $wikiId, $pageId, ReviewModel::CONTENT_REVIEW_STATUS_IN_REVIEW );
 		return ( !empty( $reviewData ) && (int)$reviewData['revision_id'] === $diff );
 	}
 

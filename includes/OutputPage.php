@@ -841,11 +841,13 @@ class OutputPage extends ContextSource {
 	 * @param $name string
 	 */
 	public function setHTMLTitle( $name ) {
+		/* Wikia change - begin */
 		if ( $name instanceof Message ) {
-			$this->mHTMLtitle = $name->setContext( $this->getContext() )->text();
-		} else {
-			$this->mHTMLtitle = $name;
+			$name = $name->setContext( $this->getContext() )->text();
 		}
+
+		$this->mHTMLtitle = wfMessage( 'wikia-pagetitle', $name )->text();
+		/* Wikia change - end */
 	}
 
 	/**

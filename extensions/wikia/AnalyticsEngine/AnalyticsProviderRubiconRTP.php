@@ -68,9 +68,9 @@ class AnalyticsProviderRubiconRTP implements iAnalyticsProvider {
 		require.optional('ext.wikia.adEngine.lookup.rubiconRtp'), // new name
 		require.optional('ext.wikia.adEngine.rubiconRtp')         // old name
 	], function (geo, instantGlobals, rtp1, rtp2) {
-		var rtpCountries = {$rtpCountries}, country = geo.getCountryCode();
+		var rtpCountries = {$rtpCountries};
 
-		if (rtpCountries.indexOf(country) !== -1 && !instantGlobals.wgSitewideDisableRubiconRTP) {
+		if (geo.isProperGeo(rtpCountries) && !instantGlobals.wgSitewideDisableRubiconRTP) {
 			var rtp = rtp1 || rtp2;
 			rtp.call({$rtpConfig});
 		}

@@ -4,7 +4,7 @@ define('ext.wikia.adEngine.provider.gpt.sourcePointTag', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.provider.gpt.googleTag',
 	'ext.wikia.adEngine.slot.adSlot',
-	'ext.wikia.adEngine.sourcePoint',
+	'ext.wikia.adEngine.sourcePointDetection',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window'
@@ -66,6 +66,7 @@ define('ext.wikia.adEngine.provider.gpt.sourcePointTag', [
 			}
 
 			if (slotName !== newSlotName) {
+				element.setSlotContainerId(slotElementId);
 				iframe = doc.getElementById(slotElementId).querySelector('div[id*="_container_"] iframe');
 				iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
 

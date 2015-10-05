@@ -110,4 +110,42 @@ class WikiaDispatchableObjectTest extends WikiaBaseTest {
 			$className::purgeMethods( ['testMultiple3', 'testMultiple4'] )
 		);
 	}
+
+	/**
+	 * @dataProvider checkWriteRequestProvider
+	 */
+	public function testCheckWriteRequest( $params, $wasPosted, $token, $exceptionExpected ) {
+		$requestMock = $this->getMock( 'WikiaRequest', [ 'wasPosted' ], [ $params ] );
+		$requestMock->expects( $this->once() )
+			->method( 'wasPosted' )
+			->will( $this->returnValue( $wasPosted ) );
+
+		$userMock = $this->getMock( 'User', [ 'getEditToken' ] );
+		$userMock->expects( $this->any() )
+			->method( 'getEditToken' )
+			->will( $this->returnValue( $token ) );
+
+		$dispatchableObjectMock = $this->getMockBuilder( 'WikiaDispatchableObject' )
+			->disableOriginalConstructor()
+			->getMockForAbstractClass();
+
+		$dispatchableObjectMock->setRequest( $requestMock );
+		$dispatchableObjectMock->wg->User = $userMock;
+
+		if ( $exceptionExpected ) {
+			$this->setExpectedException( 'BadRequestException' );
+		}
+
+		$dispatchableObjectMock->checkWriteRequest();
+	}
+
+	public function checkWriteRequestProvider() {
+		return [
+			[ [ 'token' => '1234' ], true, '1234', false ],
+			[ [], true, '1234', true ],
+			[ [], false, '1234', true ],
+			[ [ 'token' => '4321' ], true, '1234', true ],
+			[ [ 'token' => '1234' ], false, '1234', true ],
+		];
+	}
 }
