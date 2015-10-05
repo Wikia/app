@@ -1265,7 +1265,7 @@ $wgAmazonMatchCountriesMobile = null;
  * @name $wgEnableOpenXBidder
  * Enables OpenX bidder
  */
-$wgAdDriverEnableOpenXBidder = false;
+$wgAdDriverEnableOpenXBidder = true;
 
 /**
  * @name $wgAdDriverOpenXBidderCountries

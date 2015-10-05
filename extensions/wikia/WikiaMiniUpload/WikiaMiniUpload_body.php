@@ -428,6 +428,9 @@ class WikiaMiniUpload {
 	 */
 	function insertImage() {
 		global $wgRequest, $wgUser, $wgContLang;
+
+		$this->assertValidRequest();
+
 		$type = $wgRequest->getVal('type');
 		$name = $wgRequest->getVal('name');
 		$mwname = $wgRequest->getVal('mwname');

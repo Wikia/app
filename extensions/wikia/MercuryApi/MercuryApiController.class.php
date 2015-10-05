@@ -338,16 +338,21 @@ class MercuryApiController extends WikiaController {
 			$article = Article::newFromID( $articleId );
 
 			if ( $title->isRedirect() ) {
-				/* @var Title $title */
-				$title = $article->getRedirectTarget();
-				$article = Article::newFromID( $title->getArticleID() );
+				/* @var Title|null $redirectTargetTitle */
+				$redirectTargetTitle = $article->getRedirectTarget();
 				$data['redirected'] = true;
+				if ( $redirectTargetTitle instanceof Title && !empty( $redirectTargetTitle->getArticleID() ) ) {
+					$article = Article::newFromID( $redirectTargetTitle->getArticleID() );
+					$title = $redirectTargetTitle;
+				} else {
+					$data['redirectEmptyTarget'] = true;
+				}
 			}
 
-			//CONCF-855: $article is null sometimes, fix added
-			//I add logging as well to be sure that this not happen anymore
-			//TODO: Remove after 2 weeks: CONCF-1012
-			if ( !$article instanceof Article) {
+			// CONCF-855: $article is null sometimes, fix added
+			// I add logging as well to be sure that this not happen anymore
+			// TODO: Remove after 2 weeks: CONCF-1012
+			if ( !$article instanceof Article ) {
 				\Wikia\Logger\WikiaLogger::instance()->error(
 					'$article should be an instance of an Article',
 					[
@@ -357,7 +362,7 @@ class MercuryApiController extends WikiaController {
 					]
 				);
 
-				throw new NotFoundApiException('Article is empty');
+				throw new NotFoundApiException( 'Article is empty' );
 			}
 
 			$data['details'] = $this->getArticleDetails( $article );
