@@ -41,6 +41,7 @@ class WAMPageController extends WikiaController
 			$paginator = Paginator::newFromArray( array_fill( 0, $total, '' ), $itemsPerPage );
 			$paginator->setActivePage( $this->page - 1 );
 			$this->paginatorBar = $paginator->getBarHTML( $this->getUrlWithAllParams() );
+			$this->wg->Out->addHeadItem( 'Pagination', $paginator->getHeadItem( $this->getUrlWithAllParams() ) );
 		}
 	}
 
