@@ -161,7 +161,9 @@ abstract class PoolCounterWork {
 	 * @param $status Status
 	 */
 	function logError( $status ) {
-		wfDebugLog( 'poolcounter', $status->getWikiText() );
+		$msg = json_encode( $status->getErrorsArray() );
+
+		wfDebugLog( 'poolcounter', $msg);
 	}
 
 	/**
@@ -212,6 +214,7 @@ abstract class PoolCounterWork {
 			default:
 				$errors = array( PoolCounter::QUEUE_FULL => 'pool-queuefull', PoolCounter::TIMEOUT => 'pool-timeout' );
 
+				$this->logError( $status );
 				$status = Status::newFatal( isset( $errors[$status->value] ) ? $errors[$status->value] : 'pool-errorunknown' );
 				$this->logError( $status );
 				return $this->error( $status );
