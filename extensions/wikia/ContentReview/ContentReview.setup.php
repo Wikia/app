@@ -34,6 +34,8 @@ $wgGroupPermissions['*']['content-review'] = false;
 $wgGroupPermissions['util']['content-review'] = true;
 $wgGroupPermissions['staff']['content-review'] = true;
 
+$wgAvailableRights[] = 'content-review-test-mode';
+$wgGroupPermissions['user']['content-review-test-mode'] = true;
 /**
  * Controllers
  */

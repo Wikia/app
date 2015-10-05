@@ -65,8 +65,8 @@ class ContentReviewApiController extends WikiaApiController {
 	public function enableTestMode() {
 		$this->isValidPostRequest( $this->request, $this->wg->User );
 
-		if ( !$this->wg->User->isLoggedIn() ) {
-			throw new PermissionsException( 'edit' );
+		if ( !$this->wg->User->isAllowed( 'content-review-test-mode' ) ) {
+			throw new PermissionsException( 'content-review-test-mode' );
 		}
 
 		$this->getHelper()->setContentReviewTestMode( $this->wg->CityId );
