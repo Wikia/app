@@ -19,7 +19,9 @@ if ( !$allowRobots ) {
 	$robots->setSitemap( sprintf( 'http://%s/sitemap-index.xml', $_SERVER['SERVER_NAME'] ) );
 
 	// Special pages
-	$robots->disallowSpecialPages();
+	$robots->disallowNamespace( NS_SPECIAL );
+	$robots->disallowNamespace( NS_TEMPLATE );
+	$robots->disallowNamespace( NS_TEMPLATE_TALK );
 
 	//$robots->allowSpecialPage( 'Allpages' ); // TODO: SEO-64
 	$robots->allowSpecialPage( 'CreateNewWiki' );
@@ -30,6 +32,7 @@ if ( !$allowRobots ) {
 	// Params
 	$robots->disallowParam( 'action' );
 	$robots->disallowParam( 'feed' );
+	$robots->disallowParam( 'oldid' );
 	$robots->disallowParam( 'printable' );
 	$robots->disallowParam( 'useskin' );
 	$robots->disallowParam( 'uselang' );
