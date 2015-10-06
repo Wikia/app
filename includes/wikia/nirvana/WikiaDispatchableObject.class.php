@@ -186,6 +186,21 @@ abstract class WikiaDispatchableObject extends WikiaObject {
 		return $this->response;
 	}
 
+	/**
+	 * Check write requests were correctly POSTed and passed a valid edit
+	 * token.
+	 *
+	 * @throws BadRequestException If the request either wasn't POSTed or didn't provide
+	 *                             a valid edit token.
+	 */
+	public function checkWriteRequest() {
+		if ( !$this->request->wasPosted()
+			|| !$this->wg->User->matchEditToken( $this->request->getVal( 'token' ) )
+		) {
+			throw new BadRequestException( 'Request must be POSTed and provide a valid edit token.' );
+		}
+	}
+
 	// Magic setting of template variables so we don't have to do $this->response->setVal
 	// NOTE: This is the opposite behavior of the Oasis Module
 	// In a module, a public member variable goes to the template

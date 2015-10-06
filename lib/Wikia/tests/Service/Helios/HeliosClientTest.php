@@ -25,7 +25,7 @@ class HeliosClientTest extends \WikiaBaseTest {
 
 	public function testInvalidResponse()
 	{
-		$this->setExpectedException('Wikia\Service\Helios\ClientException','Invalid response.');
+		$this->setExpectedException('Wikia\Service\Helios\ClientException','Invalid Helios response.');
 
 		$this->mockStaticMethod( '\MWHttpRequest', 'canMakeRequests', true );
 

@@ -22,12 +22,12 @@ class ContentReviewService extends \WikiaService {
 	 * @param int $wikiId
 	 * @param int $pageId
 	 * @param int $revisionId
-	 * @throws PermissionsException
+	 * @throws \PermissionsException
 	 * @throws \FluentSql\Exception\SqlException
 	 */
 	public function automaticallyApproveRevision( \User $user, $wikiId, $pageId, $revisionId ) {
 		if ( !$user->isAllowed( 'content-review' ) ) {
-			throw new PermissionsException( 'content-review' );
+			throw new \PermissionsException( 'content-review' );
 		}
 
 		$submitUserId = $user->getId();
@@ -40,6 +40,7 @@ class ContentReviewService extends \WikiaService {
 		$currentRevisionModel->approveRevision( $wikiId, $pageId, $revisionId );
 
 		( new Helper() )->purgeReviewedJsPagesTimestamp();
+		ContentReviewStatusesService::purgeJsPagesCache();
 
 		$reviewLogModel = new ReviewLogModel();
 		$now = ( new \DateTime() )->format( 'Y-m-d H:i:s' );

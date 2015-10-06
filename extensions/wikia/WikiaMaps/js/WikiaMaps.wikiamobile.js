@@ -1,7 +1,8 @@
 require([
 	'wikia.window',
-	'wikia.maps.pontoBridge',
-	require.optional('ext.wikia.adEngine.slot.interactiveMaps')
+	'wikia.maps.pontoBridge'
+	//FIXME: turning off ads on map because of JS errors - should be fixed in ADEN-1784
+	//require.optional('ext.wikia.adEngine.slot.interactiveMaps')
 ], function (w, pontoBridge, mapAds) {
 	'use strict';
 
