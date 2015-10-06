@@ -65,7 +65,7 @@ define('ext.wikia.adEngine.provider.sevenOneMedia', [
 		}
 	}
 
-	function fillInSlot(slotname, pSuccess) {
+	function fillInSlot(slotname, slotElement, pSuccess) {
 		log(['fillInSlot', slotname], 'info', logGroup);
 
 		var slotDeName = slotMap[slotname],
@@ -90,7 +90,7 @@ define('ext.wikia.adEngine.provider.sevenOneMedia', [
 		if (slotDeName.match(/^(rectangle1|promo[123])$/)) {
 			$slot = $('<div class="ad-wrapper" style="display: none"></div>');
 			$slot.attr('id', 'ad-' + slotDeName);
-			$('#' + slotname).append($slot);
+			$(slotElement).append($slot);
 			sevenOneMedia.pushAd(slotDeName, {beforeFinish: clearDefaultHeight, afterFinish: success});
 			sevenOneMedia.flushAds();
 		}

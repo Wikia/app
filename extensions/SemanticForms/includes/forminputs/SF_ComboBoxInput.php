@@ -20,6 +20,14 @@ class SFComboBoxInput extends SFFormInput {
 		return array( '_wpg', '_str' );
 	}
 
+	 public static function getDefaultCargoTypes() {
+		  return array( 'Page' => array() );
+	 }
+
+	public static function getOtherCargoTypesHandled() {
+		return array( 'String' );
+	}
+
 	public static function getHTML( $cur_value, $input_name, $is_mandatory, $is_disabled, $other_args ) {
 		// For backward compatibility with pre-SF-2.1 forms
 		if ( array_key_exists( 'no autocomplete', $other_args ) &&
@@ -28,7 +36,7 @@ class SFComboBoxInput extends SFFormInput {
 			return SFTextInput::getHTML( $cur_value, $input_name, $is_mandatory, $is_disabled, $other_args );
 		}
 
-		global $sfgTabIndex, $sfgFieldNum;
+		global $sfgTabIndex, $sfgFieldNum, $sfgEDSettings;
 
 		$className = 'sfComboBox';
 		if ( $is_mandatory ) {
@@ -43,53 +51,107 @@ class SFComboBoxInput extends SFFormInput {
 		} else {
 			$size = '35';
 		}
-		// There's no direct correspondence between the 'size='
-		// attribute for text inputs and the number of pixels, but
-		// multiplying by 6 seems to be about right for the major
-		// browsers.
-		$pixel_width = $size * 6 . 'px';
-
-		list( $autocompleteFieldType, $autocompletionSource ) =
-			SFTextWithAutocompleteInput::getAutocompletionTypeAndSource( $other_args );
-
-		// @TODO - that count() check shouldn't be necessary
-		if ( array_key_exists( 'possible_values', $other_args ) &&
-		count( $other_args['possible_values'] ) > 0 ) {
-			$values = $other_args['possible_values'];
-		} elseif ( $autocompleteFieldType == 'values' ) {
-			$values = explode( ',', $other_args['values'] );
+		if ( array_key_exists( 'values from external data', $other_args ) ) {
+			$autocompleteSettings = 'external data';
+			$remoteDataType = null;
+			if ( array_key_exists( 'origName', $other_args ) ) {
+				$name = $other_args['origName'];
+			} else {
+				$name = $input_name;
+			}
+			$sfgEDSettings[$name] = array();
+			if ( $other_args['values from external data'] != null ) {
+				$sfgEDSettings[$name]['title'] = $other_args['values from external data'];
+			}
+			if ( array_key_exists( 'image', $other_args ) ) {
+				$image_param =  $other_args['image'];
+				$sfgEDSettings[$name]['image'] = $image_param;
+				global $edgValues;
+				for ($i = 0; $i < count($edgValues[$image_param]); $i++) {
+					$image = $edgValues[$image_param][$i];
+					if ( strpos( $image, "http" ) !== 0 ) {
+						$file = wfFindFile( $image );
+						if ( $file ) {
+							$url = $file->getFullUrl();
+							$edgValues[$image_param][$i] = $url;
+						} else {
+							$edgValues[$image_param][$i] = "";
+						}
+					}
+				}
+			}
+			if ( array_key_exists( 'description', $other_args ) ) {
+				$sfgEDSettings[$name]['description'] = $other_args['description'];
+				if ( !array_key_exists( 'size', $other_args ) ) {
+					$size = '80';//Set larger default size if description is also there
+				}
+			}
 		} else {
-			$values = SFUtils::getAutocompleteValues( $autocompletionSource, $autocompleteFieldType );
-		}
-		$autocompletionSource = str_replace( "'", "\'", $autocompletionSource );
-
-		$optionsText = Html::element( 'option', array( 'value' => $cur_value ), null, false ) . "\n";
-		foreach ( $values as $value ) {
-			$optionsText .= Html::element( 'option', array( 'value' => $value ), $value ) . "\n";
+			list( $autocompleteSettings, $remoteDataType ) = self::setAutocompleteValues( $other_args );
 		}
 
-		$selectAttrs = array(
+		$inputAttrs = array(
+			'type' => 'text',
 			'id' => "input_$sfgFieldNum",
 			'name' => $input_name,
 			'class' => $className,
 			'tabindex' => $sfgTabIndex,
-			'autocompletesettings' => $autocompletionSource,
-			'comboboxwidth' => $pixel_width,
+			'autocompletesettings' => $autocompleteSettings,
+			'value' => $cur_value,
+			'size' => $size,
+			'disabled' => $is_disabled,
 		);
 		if ( array_key_exists( 'origName', $other_args ) ) {
-			$selectAttrs['origname'] = $other_args['origName'];
+			$inputAttrs['origname'] = $other_args['origName'];
 		}
 		if ( array_key_exists( 'existing values only', $other_args ) ) {
-			$selectAttrs['existingvaluesonly'] = 'true';
+			$inputAttrs['existingvaluesonly'] = 'true';
 		}
-		$selectText = Html::rawElement( 'select', $selectAttrs, $optionsText );
+		if ( array_key_exists( 'placeholder', $other_args ) ) {
+			$inputAttrs['placeholder'] = $other_args['placeholder'];
+		}
+		if ( !is_null( $remoteDataType ) ) {
+			$inputAttrs['autocompletedatatype'] = $remoteDataType;
+		}
+
+		$inputText = Html::rawElement( 'input', $inputAttrs);
 
 		$divClass = 'ui-widget';
 		if ( $is_mandatory ) {
 			$divClass .= ' mandatory';
 		}
-		$text = Html::rawElement( 'div', array( 'class' => $divClass ), $selectText );
+
+		$text = Html::rawElement( 'div', array( 'class' => $divClass ), $inputText );
 		return $text;
+	}
+
+	public static function setAutocompleteValues( $field_args ) {
+		global $sfgAutocompleteValues, $sfgMaxLocalAutocompleteValues;
+
+		list( $autocompleteFieldType, $autocompletionSource ) =
+			SFTextWithAutocompleteInput::getAutocompletionTypeAndSource( $field_args );
+
+		$remoteDataType = null;
+		if ( array_key_exists( 'remote autocompletion', $field_args ) && $field_args['remote autocompletion'] == true ) {
+			$remoteDataType = $autocompleteFieldType;
+		} elseif ( $autocompletionSource !== '' ) {
+			// @TODO - that count() check shouldn't be necessary
+			if ( array_key_exists( 'possible_values', $field_args ) &&
+			count( $field_args['possible_values'] ) > 0 ) {
+				$autocompleteValues = $field_args['possible_values'];
+			} elseif ( $autocompleteFieldType == 'values' ) {
+				$autocompleteValues = explode( ',', $field_args['values'] );
+			} else {
+				$autocompleteValues = SFUtils::getAutocompleteValues( $autocompletionSource, $autocompleteFieldType );
+			}
+			if( count($autocompleteValues) > $sfgMaxLocalAutocompleteValues &&
+			$autocompleteFieldType != 'values' && !array_key_exists( 'values dependent on', $field_args ) && !array_key_exists( 'mapping template', $field_args ) ) {
+				$remoteDataType = $autocompleteFieldType;
+			}
+			$sfgAutocompleteValues[$autocompletionSource] = $autocompleteValues;
+		}
+		$autocompletionSource = str_replace( "'", "\'", $autocompletionSource );
+		return array( $autocompletionSource, $remoteDataType );
 	}
 
 	public static function getParameters() {
@@ -97,13 +159,13 @@ class SFComboBoxInput extends SFFormInput {
 		$params[] = array(
 			'name' => 'size',
 			'type' => 'int',
-			'description' => wfMsg( 'sf_forminputs_size' )
+			'description' => wfMessage( 'sf_forminputs_size' )->text()
 		);
 		$params = array_merge( $params, SFEnumInput::getValuesParameters() );
 		$params[] = array(
 			'name' => 'existing values only',
 			'type' => 'boolean',
-			'description' => wfMsg( 'sf_forminputs_existingvaluesonly' )
+			'description' => wfMessage( 'sf_forminputs_existingvaluesonly' )->text()
 		);
 		return $params;
 	}

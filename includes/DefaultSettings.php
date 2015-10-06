@@ -521,7 +521,7 @@ $wgHashedSharedUploadDirectory = true;
  *
  * Please specify the namespace, as in the example below.
  */
-$wgRepositoryBaseUrl = "http://commons.wikimedia.org/wiki/File:";
+$wgRepositoryBaseUrl = "https://commons.wikimedia.org/wiki/File:";
 
 /**
  * This is the list of preferred extensions for uploading files. Uploading files
@@ -1327,9 +1327,6 @@ $wgDBClusterTimeout = 10;
  */
 $wgDBAvgStatusPoll = 2000;
 
-/** Set to true if using InnoDB tables */
-$wgDBtransactions = false;
-
 /**
  * Set to true to engage MySQL 4.1/5.0 charset-related features;
  * for now will just cause sending of 'SET NAMES=utf8' on connect.
@@ -1588,16 +1585,6 @@ $wgSessionsInMemcached = false;
  */
 $wgSessionHandler = null;
 
-/** Wikia change - begin - @author: Michał ‘Mix’ Roszka <mix@wikia-inc.com>
- *
- * See: https://wikia-inc.atlassian.net/browse/PLATFORM-308
- *
- * This is used for storing session data relevant to the above issue. The data
- * are logged to Kibana on shutdown.
- */
-$wgSessionDebugData = [];
-/** Wikia change - end */
-
 /** If enabled, will send MemCached debugging information to $wgDebugLogFile */
 $wgMemCachedDebug = false;
 
@@ -1613,7 +1600,7 @@ $wgMemCachedPersistent = false;
 /**
  * Read/write timeout for MemCached server communication, in microseconds.
  */
-$wgMemCachedTimeout = 100000;
+$wgMemCachedTimeout = 500000;
 
 /**
  * Set this to true to make a local copy of the message cache, for use in
@@ -4544,6 +4531,14 @@ $wgUpgradeKey = false;
  * Default: 13 weeks = about three months
  */
 $wgRCMaxAge = 13 * 7 * 24 * 3600;
+
+/**
+ * Wikia change: Recentchanges items are periodically purged; keep the number of rows at the stable level
+ *
+ * @see PLATFORM-1393
+ * @see PLATFORM-1460
+ */
+$wgRCMaxRows = 20000;
 
 /**
  * Filter $wgRCLinkDays by $wgRCMaxAge to avoid showing links for numbers

@@ -1369,7 +1369,7 @@ class SWMSendToGroupTask extends BatchTask {
 	 * @return boolean: result of operation
 	 */
 	private function sendMessageHelperToGroup(&$DB, &$wikisDB, &$params) {
-		global $wgStatsDB, $wgStatsDBEnabled;
+		global $wgSpecialsDB;
 
 		$result = true;
 
@@ -1377,25 +1377,23 @@ class SWMSendToGroupTask extends BatchTask {
 		$this->log('Step 2 of 3: get list of users that belong to a specified group (on specified wikis) [number of wikis = ' . count($wikisDB) . ']');
 
 		$sqlValues = array();
-		if ( !empty( $wgStatsDBEnabled ) ) {
-			$dbr = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
-			$groupName = $params['groupName'];
-			$groupNameLike = $dbr->buildLike( $dbr->anyString(), $groupName, $dbr->anyString() );
+		$dbr = wfGetDB(DB_SLAVE, array(), $wgSpecialsDB);
+		$groupName = $params['groupName'];
+		$groupNameLike = $dbr->buildLike( $dbr->anyString(), $groupName, $dbr->anyString() );
 
-			$dbResult = $dbr->select(
-				array('`specials`.`events_local_users`'),
-				array('user_id', 'wiki_id'),
-				array('wiki_id IN (' . implode(',', array_keys($wikisDB)) . ')', "(single_group = '$groupName' OR all_groups " . $groupNameLike .")"),
-				__METHOD__,
-				array('GROUP BY' => 'wiki_id, user_id')
-			);
+		$dbResult = $dbr->select(
+			array('events_local_users'),
+			array('user_id', 'wiki_id'),
+			array('wiki_id IN (' . implode(',', array_keys($wikisDB)) . ')', "(single_group = '$groupName' OR all_groups " . $groupNameLike .")"),
+			__METHOD__,
+			array('GROUP BY' => 'wiki_id, user_id')
+		);
 
-			//step 3 of 3: add records about new message to right users
-			while ($row = $dbr->FetchObject($dbResult)) {
-				$sqlValues[] = "({$row->wiki_id}, {$row->user_id}, {$params['messageId']}, " . MSG_STATUS_UNSEEN . ')';
-			}
-			$dbr->FreeResult($dbResult);
+		//step 3 of 3: add records about new message to right users
+		while ($row = $dbr->FetchObject($dbResult)) {
+			$sqlValues[] = "({$row->wiki_id}, {$row->user_id}, {$params['messageId']}, " . MSG_STATUS_UNSEEN . ')';
 		}
+		$dbr->FreeResult($dbResult);
 
 		if (count($sqlValues)) {
 			$this->log("Step 3 of 3: add records about new message to right users [number of users = " . count($sqlValues) .	"]");

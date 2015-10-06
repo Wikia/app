@@ -150,11 +150,11 @@ class VignetteRequest {
 		$isVignetteUrl = false;
 
 		if ( strpos( $wgVignetteUrl, '<SHARD>' ) === false ) {
-			$isVignetteUrl = strpos( $url, $wgVignetteUrl ) !== false;
+			$isVignetteUrl = strpos( $url, $wgVignetteUrl ) === 0;
 		} else {
 			for ( $i = 1; $i <= $wgImagesServers; ++$i ) {
 				$candidate = str_replace( '<SHARD>', $i, $wgVignetteUrl );
-				if ( strpos( $url, $candidate ) !== false ) {
+				if ( strpos( $url, $candidate ) === 0 ) {
 					$isVignetteUrl = true;
 					break;
 				}
@@ -225,7 +225,7 @@ class VignetteRequest {
 		}
 
 		if (preg_match('/-(-{0,1}\d+),(\d+),(-{0,1}\d+),(\d+)-/', $legacyDefinition, $matches)) {
-			if ($generator->getMode() == UrlGenerator::MODE_SCALE_TO_WIDTH) {
+			if ($generator->getMode() == UrlGenerator::MODE_SCALE_TO_WIDTH || $generator->getMode() == UrlGenerator::MODE_SCALE_TO_WIDTH_DOWN) {
 				$generator->windowCrop();
 			} else {
 				$generator->windowCropFixed();

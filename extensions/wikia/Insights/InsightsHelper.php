@@ -4,6 +4,7 @@ class InsightsHelper {
 	/**
 	 * Used to create the following messages:
 	 *
+	 * 'insights-list-subtitle-flags',
 	 * 'insights-list-subtitle-uncategorizedpages',
 	 * 'insights-list-subtitle-withoutimages',
 	 * 'insights-list-subtitle-deadendpages',
@@ -14,16 +15,18 @@ class InsightsHelper {
 	/**
 	 * Used to create the following messages:
 	 *
-	 * 'insights-list-description-uncategorizedpages',
-	 * 'insights-list-description-withoutimages',
 	 * 'insights-list-description-deadendpages',
+	 * 'insights-list-description-flags',
+	 * 'insights-list-description-uncategorizedpages',
 	 * 'insights-list-description-wantedpages'
+	 * 'insights-list-description-withoutimages',
 	 */
 	const INSIGHT_DESCRIPTION_MSG_PREFIX = 'insights-list-description-';
 
 	/**
 	 * Used to create the following messages:
 	 *
+	 * 'insights-notification-message-inprogress-flags',
 	 * 'insights-notification-message-inprogress-uncategorizedpages',
 	 * 'insights-notification-message-inprogress-withoutimages',
 	 * 'insights-notification-message-inprogress-deadendpages',
@@ -34,21 +37,52 @@ class InsightsHelper {
 	/**
 	 * Used to create the following messages:
 	 *
-	 * 'insights-notification-message-fixed-uncategorizedpages',
-	 * 'insights-notification-message-fixed-withoutimages',
 	 * 'insights-notification-message-fixed-deadendpages',
-	 * 'insights-notification-message-fixed-wantedpages'
 	 * 'insights-notification-message-fixed-nonportableinfoboxes'
+	 * 'insights-notification-message-fixed-uncategorizedpages',
+	 * 'insights-notification-message-fixed-wantedpages'
+	 * 'insights-notification-message-fixed-withoutimages',
 	 */
 	const INSIGHT_FIXED_MSG_PREFIX = 'insights-notification-message-fixed-';
 
 	public static $insightsPages = [
-		InsightsUnconvertedInfoboxesModel::INSIGHT_TYPE => 'InsightsUnconvertedInfoboxesModel',
 		InsightsUncategorizedModel::INSIGHT_TYPE	=> 'InsightsUncategorizedModel',
 		InsightsWithoutimagesModel::INSIGHT_TYPE	=> 'InsightsWithoutimagesModel',
-		InsightsDeadendModel::INSIGHT_TYPE		=> 'InsightsDeadendModel',
+		InsightsDeadendModel::INSIGHT_TYPE			=> 'InsightsDeadendModel',
 		InsightsWantedpagesModel::INSIGHT_TYPE		=> 'InsightsWantedpagesModel'
 	];
+
+
+	/**
+	 * Prepare array with all available insights pages
+	 *
+	 * @return array
+	 */
+	public static function getInsightsPages() {
+		global $wgEnableInsightsInfoboxes, $wgEnableFlagsExt;
+
+		/* Add infoboxes insight */
+		if ( !empty( $wgEnableInsightsInfoboxes )
+			&& !isset( self::$insightsPages[InsightsUnconvertedInfoboxesModel::INSIGHT_TYPE] )
+		) {
+			self::$insightsPages = array_merge(
+				[ InsightsUnconvertedInfoboxesModel::INSIGHT_TYPE => 'InsightsUnconvertedInfoboxesModel' ],
+				self::$insightsPages
+			);
+		}
+
+		/* Add flags insight */
+		if ( !empty( $wgEnableFlagsExt )
+			&& !isset( self::$insightsPages[InsightsFlagsModel::INSIGHT_TYPE] )
+		) {
+			self::$insightsPages = array_merge(
+				[ InsightsFlagsModel::INSIGHT_TYPE => 'InsightsFlagsModel' ],
+				self::$insightsPages
+			);
+		}
+
+		return self::$insightsPages;
+	}
 
 	/**
 	 * Returns a full URL for a known subpage and a NULL for an unknown one.
@@ -56,7 +90,9 @@ class InsightsHelper {
 	 * @return String|null
 	 */
 	public static function getSubpageLocalUrl( $subpage ) {
-		if ( isset( self::$insightsPages[$subpage] ) ) {
+		$insightsPages = self::getInsightsPages();
+
+		if ( isset( $insightsPages[$subpage] ) ) {
 			return SpecialPage::getTitleFor( 'Insights', $subpage )->getLocalURL();
 		}
 		return null;
@@ -65,11 +101,12 @@ class InsightsHelper {
 	/**
 	 * Checks if a given subpage is known
 	 *
-	 * @param $subpage A slug of a subpage
+	 * @param $subpage string|null A slug of a subpage
 	 * @return bool
 	 */
 	public static function isInsightPage( $subpage ) {
-		return !empty( $subpage ) && isset( self::$insightsPages[$subpage] );
+		$insightsPages = self::getInsightsPages();
+		return !empty( $subpage ) && isset( $insightsPages[$subpage] );
 	}
 
 	/**
@@ -93,12 +130,13 @@ class InsightsHelper {
 	 * Returns a specific subpage model
 	 * If it does not exist a user is redirected to the Special:Insights landing page
 	 *
-	 * @param $subpage A slug of a subpage
+	 * @param $subpage string|null A slug of a subpage
 	 * @return InsightsModel|null
 	 */
 	public static function getInsightModel( $subpage ) {
 		if ( self::isInsightPage( $subpage ) ) {
-			$modelName = self::$insightsPages[$subpage];
+			$insightsPages = self::getInsightsPages();
+			$modelName = $insightsPages[$subpage];
 			if ( class_exists( $modelName ) ) {
 				return new $modelName();
 			}
@@ -140,7 +178,8 @@ class InsightsHelper {
 	 */
 	public static function getMessageKeys() {
 		$messageKeys = [];
-		foreach ( self::$insightsPages as $key => $class ) {
+		$insightsPages = self::getInsightsPages();
+		foreach ( $insightsPages as $key => $class ) {
 			$messageKeys[$key] = [
 				'subtitle' => self::INSIGHT_SUBTITLE_MSG_PREFIX . $key,
 				'description' => self::INSIGHT_DESCRIPTION_MSG_PREFIX . $key,

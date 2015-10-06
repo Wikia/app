@@ -48,7 +48,7 @@ class RT {
 				wfDebug( "Connection string: $wgRequestTracker_DBconn\n" );
 				$wgRequestTracker_Active = 0;
 			}
-			$tz = $wgUser->getOption( 'timecorrection' );
+			$tz = $wgUser->getGlobalPreference( 'timecorrection' );
 			if ( $tz ) {
 				$found = array();
 				if ( preg_match ( '/((-?\d\d?):(\d\d))/', $tz, $found ) ) {

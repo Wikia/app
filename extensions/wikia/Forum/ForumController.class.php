@@ -283,12 +283,12 @@ class ForumController extends WallBaseController {
 		$selected = $this->wg->request->getVal( 'sort' );
 
 		if ( empty( $selected ) ) {
-			$selected = $this->app->wg->User->getOption( 'forum_sort_' . $this->sortingType );
+			$selected = $this->app->wg->User->getGlobalPreference( 'forum_sort_' . $this->sortingType );
 		} else {
-			$selectedDB = $this->app->wg->User->getOption( 'forum_sort_' . $this->sortingType );
+			$selectedDB = $this->app->wg->User->getGlobalPreference( 'forum_sort_' . $this->sortingType );
 
 			if ( $selectedDB != $selected ) {
-				$this->app->wg->User->setOption( 'forum_sort_' . $this->sortingType, $selected );
+				$this->app->wg->User->setGlobalPreference( 'forum_sort_' . $this->sortingType, $selected );
 				$this->app->wg->User->saveSettings();
 			}
 		}

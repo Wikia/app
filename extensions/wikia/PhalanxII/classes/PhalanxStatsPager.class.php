@@ -4,21 +4,23 @@ class PhalanxStatsPager extends PhalanxPager {
 	public $pInx = 'blockId';
 
 	public function __construct( $id ) {
+		global $wgSpecialsDB;
+
 		parent::__construct();
 		$this->id = (int) $id;
-		$this->mDb = wfGetDB( DB_SLAVE, array(), $this->app->wg->StatsDB );
+		$this->mDb = wfGetDB( DB_SLAVE, array(), $wgSpecialsDB );
 		if ( !empty( $this->pInx ) ) {
 			$this->mDefaultQuery[$this->pInx] = $this->id;
 		}
 	}
 
 	function getQueryInfo() {
-		$query['tables'] = '`specials`.`phalanx_stats`';
+		$query['tables'] = 'phalanx_stats';
 		$query['fields'] = '*';
 		$query['conds'] = array(
 			$this->qCond => $this->id,
 		);
-		
+
 		return $query;
 	}
 

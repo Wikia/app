@@ -175,7 +175,7 @@ class ApiQueryUsers extends ApiQueryBase {
 				}
 
 				if ( isset( $this->prop['gender'] ) ) {
-					$gender = $user->getOption( 'gender' );
+					$gender = $user->getGlobalAttribute( 'gender' );
 					if ( strval( $gender ) === '' ) {
 						$gender = 'unknown';
 					}

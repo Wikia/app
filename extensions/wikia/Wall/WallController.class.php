@@ -191,12 +191,12 @@ class WallController extends WallBaseController {
 		$selected = $this->wg->request->getVal( 'sort' );
 
 		if ( empty( $selected ) ) {
-			$selected = $this->app->wg->User->getOption( 'wall_sort_' . $this->sortingType );
+			$selected = $this->app->wg->User->getGlobalPreference( 'wall_sort_' . $this->sortingType );
 		} else {
-			$selectedDB = $this->app->wg->User->getOption( 'wall_sort_' . $this->sortingType );
+			$selectedDB = $this->app->wg->User->getGlobalPreference( 'wall_sort_' . $this->sortingType );
 
 			if ( $selectedDB != $selected ) {
-				$this->app->wg->User->setOption( 'wall_sort_' . $this->sortingType, $selected );
+				$this->app->wg->User->setGlobalPreference( 'wall_sort_' . $this->sortingType, $selected );
 				$this->app->wg->User->saveSettings();
 			}
 		}

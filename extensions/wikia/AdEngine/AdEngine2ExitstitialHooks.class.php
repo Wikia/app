@@ -73,8 +73,8 @@ class AdEngine2ExitstitialHooks {
 
 		if ( !$wgEnableOutboundScreenExt
 			|| $wgRTEParserEnabled    // skip logic when in FCK
-			|| empty( $wgTitle )        // setup functions can call MakeExternalLink before wgTitle is set RT#144229
-			|| $wgUser->isLoggedIn()  // logged in users have no exit stitial ads
+			|| empty( $wgTitle )      // setup functions can call MakeExternalLink before wgTitle is set
+			|| filter_var( $url, FILTER_VALIDATE_URL ) === false
 			|| strpos( $url, 'http://' ) !== 0
 		) {
 			return;

@@ -83,8 +83,7 @@ class NavigationModel extends WikiaModel {
 	 */
 	private function getMemcKey( $messageName, $cityId = false ) {
 		if ( $this->useSharedMemcKey ) {
-			$wikiId = substr( wfSharedMemcKey(), 0, -1 );
-
+			$wikiId = wfWikiID();
 		} else {
 			$wikiId = ( is_numeric($cityId)) ? $cityId : intval( $this->wg->CityId );
 
@@ -96,7 +95,7 @@ class NavigationModel extends WikiaModel {
 
 		$messageName = str_replace(' ', '_', $messageName);
 
-		return implode( ':', array( __CLASS__, $wikiId, $this->wg->Lang->getCode(), $messageName, self::version ) );
+		return wfSharedMemcKey( __CLASS__, $wikiId, $this->wg->Lang->getCode(), $messageName, self::version );
 	}
 
 	public function clearMemc( $key = self::WIKIA_GLOBAL_VARIABLE, $city_id = false ){

@@ -23,7 +23,7 @@ trait NamespaceConfigurable
 		    }
 		}
 		if ( empty($namespaces) ) {
-		    if ( $user->getOption( 'searchAllNamespaces' ) ) {
+		    if ( $user->getGlobalPreference( 'searchAllNamespaces' ) ) {
 			    $namespaces = array_keys($searchableNamespaces);
 		    } else {
 		    	$profiles = $searchConfig->getSearchProfiles();

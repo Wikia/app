@@ -288,13 +288,13 @@ class LookupContribsCore {
 	 * @FIXME Why does this use a pass by reference, never uses it and then !@#!$%^ sets it to array()? Confusing as hell. --love, TOR
 	 */
 	function getEditCount(&$wikisIds) {
-		global $wgStatsDB;
+		global $wgSpecialsDB;
 		wfProfileIn( __METHOD__ );
 
-		$dbr = wfGetDB(DB_SLAVE, 'stats', $wgStatsDB);
+		$dbr = wfGetDB(DB_SLAVE, 'stats', $wgSpecialsDB);
 
 		$res = $dbr->select(
-			array('specials.events_local_users'),
+			array('events_local_users'),
 			array('wiki_id', 'edits'),
 			array( 'user_id' => $this->mUserId, 'edits <> 0' ),
 			__METHOD__,

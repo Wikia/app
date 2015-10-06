@@ -833,7 +833,7 @@ class WikiaPhotoGalleryHelper {
 				$editPage->summary = wfMsgForContent('wikiaPhotoGallery-edit-summary');
 
 				// watch all my edits / preserve watchlist (RT #59138)
-				if ($wgUser->getOption('watchdefault')) {
+				if ($wgUser->getGlobalPreference('watchdefault')) {
 					$editPage->watchthis = true;
 				}
 				else {

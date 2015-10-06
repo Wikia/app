@@ -6,7 +6,8 @@ class CuratedContentSpecialPreviewController extends WikiaSpecialPageController 
 	}
 
 	public function index() {
-		if (!$this->wg->User->isAllowed( 'curatedcontentpreview' )) {
+		global $wgStyleVersion, $wgUser;
+		if (!$wgUser->isAllowed( 'curatedcontentpreview' )) {
 			$this->displayRestrictionError();
 			return false;  // skip rendering
 		}
@@ -36,7 +37,7 @@ class CuratedContentSpecialPreviewController extends WikiaSpecialPageController 
 				array(
 					'allinone' => 1,
 					'page' => $title,
-					'cb' => $this->wg->StyleVersion
+					'cb' => $wgStyleVersion
 				)
 			);
 		}

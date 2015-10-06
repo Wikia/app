@@ -26,6 +26,7 @@ class  WikiaMobileNavigationService extends WikiaService {
 			return false;
 		}
 
+		$this->setupLoginLink();
 
 		$themeSettings = new ThemeSettings();
 		$settings = $themeSettings->getSettings();
@@ -38,6 +39,22 @@ class  WikiaMobileNavigationService extends WikiaService {
 			$this->response->setVal( 'wordmarkUrl', $themeSettings->getWordmarkUrl() );
 		} else {
 			$this->response->setVal( 'wikiName', ( !empty( $settings['wordmark-text'] ) ) ? $settings['wordmark-text'] : $this->wg->SiteName );
+		}
+	}
+
+	/**
+	 * If WikiFactory wgEnableNewAuth variable is set to true, then this method sets login url for the New Auth Flow login page.
+	 * Also new class is set for the login button.
+	 * Otherwise it sets url to the old Special:Login page.
+	 */
+	private function setupLoginLink() {
+		if ( $this->app->wg->EnableNewAuth ) {
+			$this->loginUrl = ( new UserLoginHelper() )->getNewAuthUrl();
+			$this->loginButtonClass = 'new-login';
+		}
+		else {
+			$this->loginUrl = SpecialPage::getTitleFor( 'UserLogin' )->getLocalURL();
+			$this->loginButtonClass = '';
 		}
 	}
 

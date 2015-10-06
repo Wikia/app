@@ -1,0 +1,6 @@
+{
+  "packagePath": "Swagger",
+  "srcBasePath": "src",
+  "modelPackage": "Swagger\\Client\\User\\Preferences\\Models",
+  "apiPackage": "Swagger\\Client\\User\\Preferences\\Api"
+}

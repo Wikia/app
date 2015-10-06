@@ -1,7 +1,6 @@
 <?php
 namespace Flags;
 
-use Flags\Models\FlagType;
 use Wikia\Tasks\Tasks\BaseTask;
 
 class FlagsLogTask extends BaseTask {
@@ -46,5 +45,79 @@ class FlagsLogTask extends BaseTask {
 			$this->error( "No flags types found for wikia (city_id:{$this->getWikiId()})" );
 		}
 
+	}
+
+	/**
+	 * Adds logs if parameters in flags were changed
+	 *
+	 * @param Array $oldFlags old flags values
+	 * @param Array $flags new flags values
+	 * @param $pageId
+	 */
+	public function logParametersChange( Array $oldFlags, Array $flags, $pageId ) {
+		if ( $oldFlags['status'] === true ) {
+			foreach ( $flags as $i => $flag ) {
+				$title = \Title::newFromID( $pageId );
+				$log = new \LogPage( 'flags' );
+
+				if ( !empty( $oldFlags['data'][$flag['flag_type_id']]['flag_params_names'] ) ) {
+					$this->logParameters( $oldFlags['data'][$flag['flag_type_id']], $flag, $log, $title );
+				}
+			}
+		} else {
+			$this->error( "No flags found for page (city_id:{$this->getWikiId()}; page_id:{$pageId})" );
+		}
+
+	}
+
+	private function logParameters( $oldFlag, $newFlag, $log, $title ) {
+		$paramNames = json_decode( $oldFlag['flag_params_names'] );
+
+		foreach ( $paramNames as $paramName => $paramDescription ) {
+			$addToLog = false;
+			if ( !empty( $oldFlag['params'][$paramName] ) ) {
+				if ( empty( $newFlag['params'][$paramName] ) ) {
+					// parameter was removed
+					$addToLog = true;
+					$actionType = 'flag-parameter-removed';
+					$logParams = [
+						'flag_name' => $oldFlag['flag_name'],
+						'param_name' => $paramName,
+						'old_value' => $oldFlag['params'][$paramName],
+						'new_value' => ''
+					];
+				} elseif ( $oldFlag['params'][$paramName] !== $newFlag['params'][$paramName] ) {
+					// parameter was modified
+					$addToLog = true;
+					$actionType = 'flag-parameter-modified';
+					$logParams = [
+						'flag_name' => $oldFlag['flag_name'],
+						'param_name' => $paramName,
+						'old_value' => $oldFlag['params'][$paramName],
+						'new_value' => $newFlag['params'][$paramName]
+					];
+				}
+			} elseif ( empty( $oldFlag['params'][$paramName] ) && !empty( $newFlag['params'][$paramName] ) ) {
+				// parameter was added
+				$addToLog = true;
+				$actionType = 'flag-parameter-added';
+				$logParams = [
+					'flag_name' => $oldFlag['flag_name'],
+					'param_name' => $paramName,
+					'old_value' => '',
+					'new_value' => $newFlag['params'][$paramName]
+				];
+			}
+
+			if ( $addToLog ) {
+				$log->addEntry(
+					$actionType,
+					$title,
+					'',
+					$logParams,
+					$this->createdByUser()
+				);
+			}
+		}
 	}
 }

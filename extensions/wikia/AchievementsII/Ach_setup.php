@@ -159,7 +159,7 @@ function Ach_MastheadEditCounter(&$editCounter, $user) {
 	if ($user instanceof User) {
 		global $wgUser;
 
-		if(!($wgUser->getId() == $user->getId() && $wgUser->getOption('hidepersonalachievements'))) {
+		if(!($wgUser->getId() == $user->getId() && $wgUser->getGlobalPreference('hidepersonalachievements'))) {
 			$dbr = wfGetDB(DB_SLAVE);
 			$editCounter = $dbr->selectField('ach_user_score', 'score', array('user_id' => $user->getId()), __METHOD__);
 
@@ -202,7 +202,7 @@ function Ach_GetHTMLAfterBody($skin, &$html) {
 
 	global $wgOut, $wgTitle, $wgUser;
 
-	if($wgUser->isLoggedIn() && !($wgUser->getOption('hidepersonalachievements'))) {
+	if($wgUser->isLoggedIn() && !($wgUser->getGlobalPreference( 'hidepersonalachievements' ))) {
 		if ($wgTitle->getNamespace() == NS_SPECIAL && array_shift(SpecialPageFactory::resolveAlias($wgTitle->getDBkey())) == 'MyHome') {
 			$awardingService = new AchAwardingService();
 			$awardingService->awardCustomNotInTrackBadge($wgUser, BADGE_WELCOME);

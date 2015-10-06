@@ -4144,6 +4144,9 @@ class Parser {
 				if ( !is_callable( $this->mTagHooks[$name] ) ) {
 					throw new MWException( "Tag hook for $name is not callable\n" );
 				}
+
+				wfRunHooks( 'ParserTagHooksBeforeInvoke', [ $name, $marker, $content, $attributes, $this, $frame ] );
+
 				$output = call_user_func_array( $this->mTagHooks[$name],
 					array( $content, $attributes, $this, $frame ) );
 			} elseif ( isset( $this->mFunctionTagHooks[$name] ) ) {
@@ -4854,10 +4857,10 @@ class Parser {
 
 		# If not given, retrieve from the user object.
 		if ( $nickname === false )
-			$nickname = $user->getOption( 'nickname' );
+			$nickname = $user->getGlobalAttribute( 'nickname' );
 
 		if ( is_null( $fancySig ) ) {
-			$fancySig = $user->getBoolOption( 'fancysig' );
+			$fancySig = (bool)$user->getGlobalAttribute( 'fancysig' );
 		}
 
 		$nickname = $nickname == null ? $username : $nickname;

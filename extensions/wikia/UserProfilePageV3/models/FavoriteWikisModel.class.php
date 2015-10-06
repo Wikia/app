@@ -38,7 +38,7 @@ class FavoriteWikisModel extends WikiaModel {
 	 * @return array
 	 */
 	private function getTopWikisFromDb( $limit = null ) {
-		global $wgCityId, $wgDevelEnvironment, $wgStatsDB;
+		global $wgCityId, $wgDevelEnvironment, $wgSpecialsDB;
 		wfProfileIn(__METHOD__);
 
 		if (is_null($limit)) {
@@ -61,9 +61,9 @@ class FavoriteWikisModel extends WikiaModel {
 				$where[] = 'wiki_id NOT IN (' . join(',', $hiddenTopWikis) . ')';
 			}
 
-			$dbs = wfGetDB( DB_SLAVE, array(), $wgStatsDB );
+			$dbs = wfGetDB( DB_SLAVE, array(), $wgSpecialsDB );
 			$res = $dbs->select(
-				array('specials.events_local_users'),
+				array('events_local_users'),
 				array('wiki_id', 'edits'),
 				$where,
 				__METHOD__,

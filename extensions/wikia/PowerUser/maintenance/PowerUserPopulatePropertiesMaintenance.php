@@ -17,9 +17,7 @@ use Wikia\PowerUser\PowerUser;
 
 class PowerUserPopulatePropertiesMaintenance extends Maintenance {
 
-	private
-		$iPowerUsersLifetimeCounter = 0,
-		$iPowerUsersAdminCounter = 0;
+	private $iPowerUsersLifetimeCounter = 0;
 
 	/**
 	 * Workflow:
@@ -29,8 +27,6 @@ class PowerUserPopulatePropertiesMaintenance extends Maintenance {
 	public function execute() {
 		$this->output( "Populating with PowerUsers for lifetime edits... \n" );
 		$this->populatePowerUsersLifetime();
-		$this->output( "Populating with PowerUsers for admin rights... \n" );
-		$this->populatePowerUsersAdmin();
 	}
 
 	private function populatePowerUsersLifetime() {
@@ -49,25 +45,6 @@ class PowerUserPopulatePropertiesMaintenance extends Maintenance {
 			} );
 
 		$this->output( "PowerUsers for lifetime edits populated! Count: {$this->iPowerUsersLifetimeCounter}\n" );
-	}
-
-	private function populatePowerUsersAdmin() {
-		global $wgSpecialsDB;
-		$oDB = wfGetDB( DB_SLAVE, [], $wgSpecialsDB );
-
-		$aPowerUsersAdminIds = ( new WikiaSQL() )
-			->SELECT( 'user_id' )
-			->FROM( 'events_local_users' )
-			->WHERE( 'all_groups' )->LIKE( 'sysop' )
-			->GROUP_BY( 'user_id' )
-			->runLoop( $oDB, function( &$aPowerUsersAdminIds, $oRow ) {
-				$oPowerUser = new PowerUser( User::newFromId( $oRow->city_id ) );
-				if ( $oPowerUser->addPowerUserProperty( PowerUser::TYPE_ADMIN ) ) {
-					$this->iPowerUsersAdminCounter++;
-				}
-			} );
-
-		$this->output( "PowerUsers for lifetime edits populated! Count: {$this->iPowerUsersAdminCounter}\n" );
 	}
 }
 

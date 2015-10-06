@@ -159,4 +159,6 @@ $messages = array_merge( $messages , array(
 'vertical-comics' => '漫画',
 'vertical-lifestyle' => 'ライフスタイル',
 'vertical-movies' => '映画',
+
+'tog-enableuserjs' => '個人用JavaScriptを有効にする（[[w:c:ja.community:ヘルプ:個人用CSSとJavaScript#JavaScript|詳細]]）',
 ));

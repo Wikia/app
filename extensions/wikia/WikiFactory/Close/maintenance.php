@@ -63,17 +63,12 @@ class CloseWikiMaintenance {
 		$first     = isset( $this->mOptions[ "first" ] ) ? true : false;
 		$sleep     = isset( $this->mOptions[ "sleep" ] ) ? $this->mOptions[ "sleep" ] : 15;
 		$cluster   = isset( $this->mOptions[ "cluster" ] ) ? $this->mOptions[ "cluster" ] : false; // eg. c6
-		$condition = array( "ORDER BY" => "city_id" );
-
-		if ($cluster === false) {
-			$this->log('--cluster needs to be provided');
-			return;
-		}
+		$opts      = array( "ORDER BY" => "city_id" );
 
 		$this->info( 'start', [
 			'cluster' => $cluster,
 			'first'   => $first,
-			'limit'   => $this->mOptions[ "limit" ] ?: false
+			'limit'   => isset( $this->mOptions[ "limit" ] ) ? $this->mOptions[ "limit" ] : false
 		] );
 
 		/**
@@ -81,28 +76,40 @@ class CloseWikiMaintenance {
 		 */
 		if( !$first ) {
 			if( isset( $this->mOptions[ "limit" ] ) && is_numeric( $this->mOptions[ "limit" ] ) )  {
-				$condition[ "LIMIT" ] = $this->mOptions[ "limit" ];
+				$opts[ "LIMIT" ] = $this->mOptions[ "limit" ];
 			}
 		}
 
 		$timestamp = wfTimestamp(TS_DB,strtotime(sprintf("-%d days",self::CLOSE_WIKI_DELAY)));
+		$where = array(
+			"city_public" => array( WikiFactory::CLOSE_ACTION, WikiFactory::HIDE_ACTION ),
+			"city_flags <> 0",
+			sprintf( "city_flags <> %d", WikiFactory::FLAG_REDIRECT ),
+			"city_last_timestamp < '{$timestamp}'",
+		);
+
+		if ($cluster !== false) {
+			$where[ "city_cluster" ] = $cluster;
+		}
+
 		$dbr = WikiFactory::db( DB_SLAVE );
 		$sth = $dbr->select(
 			array( "city_list" ),
 			array( "city_id", "city_flags", "city_dbname", "city_url", "city_public" ),
-			array(
-				"city_public" => array( 0, -1 ),
-				"city_flags <> 0 && city_flags <> 32",
-				"city_last_timestamp < '{$timestamp}'",
-				"city_cluster" => $cluster
-			),
+			$where,
 			__METHOD__,
-			$condition
+			$opts
 		);
 
 		$this->info( 'wikis to remove', [
 			'wikis' => $sth->numRows()
 		] );
+
+		$this->log( 'Wikis to remove: ' . $sth->numRows() );
+		$this->log( $dbr->lastQuery() );
+
+		$this->log( 'Will start in 5 seconds...' );
+		sleep(5);
 
 		while( $row = $dbr->fetchObject( $sth ) ) {
 			/**
@@ -130,12 +137,14 @@ class CloseWikiMaintenance {
 				echo "{$dbname} is not unique. Check city_list and rerun script";
 				die( 1 );
 			}
-			$this->log( "city_id={$row->city_id} city_url={$row->city_url} city_dbname={$dbname} city_flags={$row->city_flags} city_public={$row->city_public}" );
+			$this->log( "city_id={$row->city_id} city_cluster={$cluster} city_url={$row->city_url} city_dbname={$dbname} city_flags={$row->city_flags} city_public={$row->city_public}" );
 
 			/**
 			 * request for dump on remote server (now hardcoded for Iowa)
 			 */
 			if( $row->city_flags & WikiFactory::FLAG_HIDE_DB_IMAGES)  {
+				// "Hide Database and Image Dump
+				$this->log( "Images and DB dump should be hidden" );
 				$hide = true;
 			}
 			if( $row->city_flags & WikiFactory::FLAG_CREATE_DB_DUMP ) {
@@ -163,6 +172,7 @@ class CloseWikiMaintenance {
 			}
 			if( $row->city_flags & WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE ) {
 				if( $dbname && $folder ) {
+					$this->log( "Dumping images on remote host" );
 					$source = $this->tarFiles( $folder, $dbname, $cityid );
 					if( $source ) {
                         $retval = DumpsOnDemand::putToAmazonS3( $source, !$hide,  MimeMagic::singleton()->guessMimeType( $source ) );
@@ -187,6 +197,7 @@ class CloseWikiMaintenance {
 			}
 			if( $row->city_flags & WikiFactory::FLAG_DELETE_DB_IMAGES ||
 			$row->city_flags & WikiFactory::FLAG_FREE_WIKI_URL ) {
+				$this->log( "Cleaning the shared database" );
 
 				/**
 				 * clear wikifactory tables, condition for city_public should
@@ -237,11 +248,23 @@ class CloseWikiMaintenance {
 				 */
 				$local = wfGetDB( DB_MASTER, array(), $centralDB );
 				$server = $local->getLBInfo( 'host' );
-				$dbw = new DatabaseMysql( $server, $wgDBadminuser, $wgDBadminpassword, $centralDB );
-				$dbw->begin();
-				$dbw->query( "DROP DATABASE `{$row->city_dbname}`");
-				$dbw->commit();
-				$this->log(  "{$row->city_dbname} dropped from cluster {$cluster}" );
+
+				try {
+					$dbw = new DatabaseMysql($server, $wgDBadminuser, $wgDBadminpassword, $centralDB);
+					$dbw->begin();
+					$dbw->query("DROP DATABASE `{$row->city_dbname}`");
+					$dbw->commit();
+					$this->log("{$row->city_dbname} dropped from cluster {$cluster}");
+				}
+				catch (Exception $e) {
+					$this->log("{$row->city_dbname} database drop failed! {$e->getMessage()}");
+					$this->info( 'drop database', [
+						'cluster'   => $cluster,
+						'dbname'    => $row->city_dbname,
+						'exception' => $e,
+						'server'    => $server
+					] );
+				}
 
 				/**
 				 * update search index
@@ -249,6 +272,11 @@ class CloseWikiMaintenance {
 				$indexer = new Wikia\Search\Indexer();
 				$indexer->deleteWikiDocs( $row->city_id );
 				$this->log( "Wiki documents removed from index" );
+
+				/**
+				 * let other extensions remove entries for closed wiki
+				 */
+				wfRunHooks( 'WikiFactoryDoCloseWiki', [ $row ] );
 
 				/**
 				 * there is nothing to set because row in city_list doesn't
@@ -270,6 +298,8 @@ class CloseWikiMaintenance {
 				'dbname'  => $dbname,
 			] );
 
+			$this->log( "$dbname: completed" );
+
 			/**
 			 * just one?
 			 */
@@ -278,6 +308,8 @@ class CloseWikiMaintenance {
 			}
 			sleep( $sleep );
 		}
+
+		$this->log( 'Done' );
 	}
 
 	/**

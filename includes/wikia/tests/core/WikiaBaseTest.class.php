@@ -1,4 +1,7 @@
 <?php
+
+use \Wikia\Util\GlobalStateWrapper;
+
 /**
  * WikiaBaseTest class - part of Wikia UnitTest Framework - W(U)TF
  * @author ADi
@@ -17,6 +20,7 @@
  * }
  */
 abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
+	const MOCK_DEV_NAME = 'mockdevname';
 
 	protected static $alternativeConstructors = [
 		'Article' => [ 'newFromID', 'newFromTitle', 'newFromWikiPage' ],
@@ -455,9 +459,9 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Mocks global $wgMemc->get() so it always returns null
+	 * @return PHPUnit_Framework_MockObject_MockObject
 	 */
-	protected function disableMemCache() {
+	private function getMemCacheMock() {
 		$wgMemcMock = $this->getMockBuilder( 'MWMemcached' )
 			->disableOriginalConstructor()
 			->setMethods( [ 'get' ] )
@@ -465,6 +469,85 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 		$wgMemcMock->expects( $this->any() )
 			->method( 'get' )
 			->willReturn( null );
-		$this->mockGlobalVariable( 'wgMemc', $wgMemcMock );
+
+		return $wgMemcMock;
+	}
+
+	/**
+	 * Mocks global $wgMemc->get() so it always returns null
+	 */
+	protected function disableMemCache() {
+		$this->mockGlobalVariable( 'wgMemc', $this->getMemCacheMock() );
+	}
+
+	/**
+	 * Run given callback in a context that has memcache disabled
+	 *
+	 * @see PLATFORM-1337
+	 *
+	 * @param callable $callback function to run
+	 * @return mixed the value returned by $callback
+	 */
+	protected function memCacheDisabledSection( callable $callback ) {
+		$globalState = new GlobalStateWrapper( [
+			'wgMemc' => $this->getMemCacheMock()
+		] );
+
+		return $globalState->wrap( $callback );
+	}
+
+	protected function mockPreviewEnv() {
+		$this->mockGlobalVariable( 'wgDevelEnvironment', false );
+		$this->mockGlobalVariable( 'wgStagingEnvironment', true );
+		$this->mockGlobalVariable( 'wgWikiaEnvironment', WIKIA_ENV_PREVIEW );
+	}
+
+	protected function mockVerifyEnv() {
+		$this->mockGlobalVariable( 'wgDevelEnvironment', false );
+		$this->mockGlobalVariable( 'wgStagingEnvironment', true );
+		$this->mockGlobalVariable( 'wgWikiaEnvironment', WIKIA_ENV_VERIFY );
+	}
+
+	protected function mockSandboxEnv() {
+		$this->mockGlobalVariable( 'wgDevelEnvironment', false );
+		$this->mockGlobalVariable( 'wgStagingEnvironment', false );
+		$this->mockGlobalVariable( 'wgWikiaEnvironment', WIKIA_ENV_SANDBOX );
+		$this->getStaticMethodMock( 'WikiFactory', 'getExternalHostName' )
+			->expects( $this->any() )
+			->method( 'getExternalHostName' )
+			->willReturn( 'sandbox-s1' );
+	}
+
+	protected function mockProdEnv() {
+		$this->mockGlobalVariable( 'wgDevelEnvironment', false );
+		$this->mockGlobalVariable( 'wgWikiaEnvironment', WIKIA_ENV_PROD );
+	}
+
+	protected function mockDevEnv() {
+		$this->mockGlobalVariable( 'wgDevelEnvironmentName', self::MOCK_DEV_NAME );
+		$this->getStaticMethodMock( 'WikiFactory', 'getExternalHostName' )
+			->expects( $this->any() )
+			->method( 'getExternalHostName' )
+			->willReturn( self::MOCK_DEV_NAME );
+	}
+
+	protected function mockEnvironment( $environment ) {
+		switch ( $environment ) {
+			case WIKIA_ENV_PROD:
+				$this->mockProdEnv();
+				break;
+			case WIKIA_ENV_PREVIEW:
+				$this->mockPreviewEnv();
+				break;
+			case WIKIA_ENV_VERIFY:
+				$this->mockVerifyEnv();
+				break;
+			case WIKIA_ENV_SANDBOX:
+				$this->mockSandboxEnv();
+				break;
+			case WIKIA_ENV_DEV:
+				$this->mockDevEnv();
+				break;
+		}
 	}
 }

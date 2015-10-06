@@ -41,7 +41,7 @@ class CreateBlogPage extends SpecialBlogPage {
 		$this->mTitle = ($pageId > 0) ? Title::newFromId($pageId) : Title::makeTitle( NS_SPECIAL, 'CreateBlogPage' );
 
 		// force CategorySelect initialisation if available
-		if (class_exists('CategorySelectHooksHelper') && ($wgUser->getOption('disablecategoryselect', false) == false)) {
+		if (class_exists('CategorySelectHooksHelper') && ($wgUser->getGlobalPreference('disablecategoryselect', false) == false)) {
 			$this->mCategorySelectEnabled = true;
 			$wgRequest->setVal('action', 'edit');
 			CategorySelectHooksHelper::onMediaWikiPerformAction(null, null, $this->mTitle, null, null, null);
@@ -253,17 +253,17 @@ class CreateBlogPage extends SpecialBlogPage {
 		// beware: dirty copy&paste of the code (will be replaced by RTE reskin)
 		global $wgUser;
 		# Sort out the "watch" checkbox
-		if ( $wgUser->getOption( 'watchdefault' ) ) {
+		if ( $wgUser->getGlobalPreference( 'watchdefault' ) ) {
 			# Watch all edits
 			$this->mEditPage->watchthis = true;
-		} elseif ( $wgUser->getOption( 'watchcreations' ) && !$this->mEditPage->mTitle->exists() ) {
+		} elseif ( $wgUser->getGlobalPreference( 'watchcreations' ) && !$this->mEditPage->mTitle->exists() ) {
 			# Watch creations
 			$this->mEditPage->watchthis = true;
 		} elseif ( $this->mEditPage->mTitle->userIsWatching() ) {
 			# Already watched
 			$this->mEditPage->watchthis = true;
 		}
-		if ( $wgUser->getOption( 'minordefault' ) ) $this->mEditPage->minoredit = true;
+		if ( $wgUser->getGlobalPreference( 'minordefault' ) ) $this->mEditPage->minoredit = true;
 
 		// fix for RT #33844 - run hook fired by "classical" EditPage
 		// Allow extensions to modify edit form

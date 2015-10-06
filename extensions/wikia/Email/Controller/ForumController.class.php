@@ -4,11 +4,8 @@ namespace Email\Controller;
 
 use Email\Check;
 use Email\EmailController;
-use Email\Tracking\TrackingCategories;
 
 class ForumController extends EmailController {
-
-	const TRACKING_CATEGORY = TrackingCategories::WALL_NOTIFICATION;
 
 	protected $titleText;
 	protected $titleUrl;
@@ -99,7 +96,7 @@ class ForumController extends EmailController {
 					'type' => 'text',
 					'name' => 'titleText',
 					'label' => 'Title Text',
-					'tooltip' => 'The title of the forum thread, eg "Changing the Font Size of Headings" from Title URL listed above'
+					'tooltip' => 'The title of the forum thread, eg "Changing the Font Size of Headings" from Title URL given'
 				],
 				[
 					'type' => 'text',
@@ -111,7 +108,7 @@ class ForumController extends EmailController {
 					'type' => 'text',
 					'name' => 'boardTitle',
 					'label' => 'Board Title',
-					'tooltip' => 'Name of the board, eg <wikiName>.wikia.com/wiki/Board:<wallUserName>'
+					'tooltip' => 'Name of the board, eg "Support Requests - Getting Started board"'
 				],
 				[
 					'type' => 'hidden',
@@ -122,7 +119,7 @@ class ForumController extends EmailController {
 					'type' => 'text',
 					'name' => 'details',
 					'label' => 'Details',
-					'tooltip' => 'The first posting in the board'
+					'tooltip' => 'Content of the post/reply'
 				],
 			]
 		];
@@ -132,18 +129,27 @@ class ForumController extends EmailController {
 }
 
 class ReplyForumController extends ForumController {
-	protected $threadId;
-	protected $threadUrl;
+
+	/** @var \Title */
+	protected $parent;
 
 	public function initEmail() {
 		parent::initEmail();
 
-		$this->threadId = $this->request->getVal( 'threadId' );
-		$this->thread = \Title::newFromText(
-			$this->threadId,
-			NS_USER_WALL_MESSAGE
-		);
-		$this->threadUrl = $this->thread->getFullURL();
+		// This is a bit confusing; discussion URLs use the ID as their user facing title text, so the Title
+		// object is constructed as if the ID is the title text and with NS_USER_WALL_MESSAGE as the namespace.
+		// This is completely bogus since the dbKey is actually something much different and for this
+		// reason, a call to $parent->exists() will fail.
+		$id = $this->request->getVal( 'parentId' );
+		$this->parent = \Title::newFromText( $id, NS_USER_WALL_MESSAGE );
+
+		$this->assertValidReplyParams();
+	}
+
+	protected function assertValidReplyParams() {
+		if ( !$this->parent instanceof \Title ) {
+			throw new Check( "Could not find parent for parentId given" );
+		}
 	}
 
 	public function getSubject() {
@@ -151,7 +157,11 @@ class ReplyForumController extends ForumController {
 	}
 
 	protected function getSummary() {
-		return $this->getMessage( $this->getSummaryKey(), $this->titleText, $this->threadUrl )->parse();
+		return $this->getMessage(
+			$this->getSummaryKey(),
+			$this->titleText,
+			$this->parent->getFullURL()
+		)->parse();
 	}
 
 	protected function getContentFooterMessages() {
@@ -159,16 +169,20 @@ class ReplyForumController extends ForumController {
 	}
 
 	protected function getViewAll() {
-		return $this->getMessage( 'emailext-forum-reply-view-all', $this->threadUrl )->parse();
+		return $this->getMessage( 'emailext-forum-reply-view-all', $this->parent->getFullURL() )->parse();
 	}
 
 	protected function getFooterMessages() {
-		$unfollowUrl =  $this->thread->getFullURL( [
+		$unfollowUrl =  $this->parent->getFullURL( [
 			'action' => 'unwatch'
 		] );
 
 		$footerMessages = [
-			$this->getMessage( 'emailext-forumreply-unfollow-text', $unfollowUrl, $this->threadUrl )->parse()
+			$this->getMessage(
+				'emailext-forumreply-unfollow-text',
+				$unfollowUrl,
+				$this->parent->getFullURL()
+			)->parse()
 		];
 
 		return array_merge( $footerMessages, EmailController::getFooterMessages() );
@@ -191,8 +205,8 @@ class ReplyForumController extends ForumController {
 
 		$formFields['inputs'][] = [
 			'type' => 'text',
-			'name' => 'threadId',
-			'label' => 'Thread Id',
+			'name' => 'parentId',
+			'label' => 'Parent ID',
 			'tooltip' => 'The id of the forum thread, eg "841030" from URL like:  http://community.wikia.com/wiki/Thread:841030'
 		];
 

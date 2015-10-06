@@ -28,7 +28,7 @@ class WatchlistFeed extends SpecialPage
 			if( !$user ) {
 				$enabled = false;
 			} else {
-				$enabled = ( $user->getOption( "enableWatchlistFeed" ) == "yes" ) ? true : false;
+				$enabled = ( $user->getGlobalPreference( "enableWatchlistFeed" ) == "yes" ) ? true : false;
 				$wgUser = $user;
 			}
 
@@ -69,16 +69,16 @@ class WatchlistFeed extends SpecialPage
 	function disableFeed() {
 		global $wgUser;
 
-		$wgUser->setOption("enableWatchlistFeed","no");
+		$wgUser->setGlobalPreference("enableWatchlistFeed","no");
 		$wgUser->saveSettings();
 	}
 	function enableFeed() {
 		global $wgUser;
 
-		$wgUser->setOption("enableWatchlistFeed","yes");
+		$wgUser->setGlobalPreference("enableWatchlistFeed","yes");
 
 		$key = $this->generateAccessKey();
-		$wgUser->setOption("watchlistAccessKey",$key);
+		$wgUser->setGlobalAttribute("watchlistAccessKey",$key);
 		$wgUser->saveSettings();
 	}
 	function generateAccessKey() {
@@ -96,7 +96,7 @@ class WatchlistFeed extends SpecialPage
 	}
 	function displayConfigurationForm() {
 		global $wgOut,$wgRequest,$wgUser,$wgTitle;
-		$option = $wgUser->getOption( "enableWatchlistFeed" );
+		$option = $wgUser->getGlobalPreference( "enableWatchlistFeed" );
 		$enabled = ( $option == "yes" ) ? true : false;
 
 		$wgOut->setRobotPolicy( 'noindex,nofollow' );
@@ -107,11 +107,11 @@ class WatchlistFeed extends SpecialPage
 
 				$rssFeedUrl = $wgTitle->getFullUrl()
 					."?uid=".$wgUser->getID()
-					."&key=".$wgUser->getOption("watchlistAccessKey")
+					."&key=".$wgUser->getGlobalAttribute("watchlistAccessKey")
 					."&feed=rss";
 				$atomFeedUrl = $wgTitle->getFullUrl()
 					."?uid=".$wgUser->getID()
-					."&key=".$wgUser->getOption("watchlistAccessKey")
+					."&key=".$wgUser->getGlobalAttribute("watchlistAccessKey")
 					."&feed=atom";
 
 				$wgOut->addHTML(wfMsg("watchlistfeed-links",$rssFeedUrl,$atomFeedUrl));
@@ -288,10 +288,10 @@ class Watchlist{
 		$fname = 'Watchlist::prepare';
 
 		$defaults = array(
-		/* float */ 'days' => floatval( $wgUser->getOption( 'watchlistdays' ) ), /* 3.0 or 0.5, watch further below */
-		/* bool  */ 'hideOwn' => (int)$wgUser->getBoolOption( 'watchlisthideown' ),
-		/* bool  */ 'hideBots' => (int)$wgUser->getBoolOption( 'watchlisthidebots' ),
-		/* bool */ 'hideMinor' => (int)$wgUser->getBoolOption( 'watchlisthideminor' ),
+		/* float */ 'days' => floatval( $wgUser->getGlobalPreference( 'watchlistdays' ) ), /* 3.0 or 0.5, watch further below */
+		/* bool  */ 'hideOwn' => (int)$wgUser->getGlobalPreference( 'watchlisthideown' ),
+		/* bool  */ 'hideBots' => (int)$wgUser->getGlobalPreference( 'watchlisthidebots' ),
+		/* bool */ 'hideMinor' => (int)$wgUser->getGlobalPreference( 'watchlisthideminor' ),
 		/* ?     */ 'namespace' => 'all',
 		);
 
@@ -299,10 +299,10 @@ class Watchlist{
 
 		# Extract variables from the request, falling back to user preferences or
 		# other default values if these don't exist
-		$prefs['days'    ] = floatval( $wgUser->getOption( 'watchlistdays' ) );
-		$prefs['hideown' ] = $wgUser->getBoolOption( 'watchlisthideown' );
-		$prefs['hidebots'] = $wgUser->getBoolOption( 'watchlisthidebots' );
-		$prefs['hideminor'] = $wgUser->getBoolOption( 'watchlisthideminor' );
+		$prefs['days'    ] = floatval( $wgUser->getGlobalPreference( 'watchlistdays' ) );
+		$prefs['hideown' ] = (bool)$wgUser->getGlobalPreference( 'watchlisthideown' );
+		$prefs['hidebots'] = (bool)$wgUser->getGlobalPreference( 'watchlisthidebots' );
+		$prefs['hideminor'] = (bool)$wgUser->getGlobalPreference( 'watchlisthideminor' );
 
 		# Get query variables
 		$days     = $wgRequest->getVal(  'days', $prefs['days'] );
@@ -382,9 +382,9 @@ class Watchlist{
 		$andHideMinor = $hideMinor ? 'AND rc_minor = 0' : '';
 
 		# Toggle watchlist content (all recent edits or just the latest)
-		if( $wgUser->getOption( 'extendwatchlist' )) {
+		if( $wgUser->getGlobalPreference( 'extendwatchlist' )) {
 			$andLatest='';
-			$limitWatchlist = 'LIMIT ' . intval( $wgUser->getOption( 'wllimit' ) );
+			$limitWatchlist = 'LIMIT ' . intval( $wgUser->getGlobalPreference( 'wllimit' ) );
 		} else {
 		# Top log Ids for a page are not stored
 			$andLatest = 'AND (rc_this_oldid=page_latest OR rc_type=' . RC_LOG . ') ';

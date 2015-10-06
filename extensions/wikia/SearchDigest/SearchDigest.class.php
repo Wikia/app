@@ -64,16 +64,10 @@ class SpecialSearchDigest extends SpecialPage {
 
 class SearchDigestPager extends ReverseChronologicalPager {
 	function __construct() {
-		global $wgStatsDB, $wgDevelEnvironment;
+		global $wgSpecialsDB;
 
 		parent::__construct();
-
-		if ( $wgDevelEnvironment ) {
-			$this->mDb = wfGetDB( DB_SLAVE );
-		} else {
-			$this->mDb = wfGetDB( DB_SLAVE, array(), $wgStatsDB );
-			$this->mDb->selectDB( 'specials' );
-		}
+		$this->mDb = wfGetDB( DB_SLAVE, array(), $wgSpecialsDB );
 
 		// create a Linker object so we don't have to create it every time in formatRow
 		$this->linker = new Linker;

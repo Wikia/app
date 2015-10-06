@@ -49,7 +49,7 @@ class AchUserProfileService {
 				&& AchAwardingService::canEarnBadges( $this->ownerUser )
 				// and the subject user didn't hide his achievements
 				//     by setting the option 'hidepersonalachievements'
-				&& !$this->ownerUser->getOption('hidepersonalachievements');
+				&& !$this->ownerUser->getGlobalPreference('hidepersonalachievements');
 		}
 		return $this->visible;
 	}
@@ -64,7 +64,7 @@ class AchUserProfileService {
 				// and can earn badges
 				&& AchAwardingService::canEarnBadges( $this->viewerUser )
 				// and didn't hide his achievements
-				&& !$this->viewerUser->getOption('hidepersonalachievements');
+				&& !$this->viewerUser->getGlobalPreference('hidepersonalachievements');
 		}
 		return $this->hasPersonalAnnotations;
 	}

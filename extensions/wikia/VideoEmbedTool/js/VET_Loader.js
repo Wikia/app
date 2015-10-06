@@ -77,19 +77,22 @@
 
 		$elem = $elem || $();
 
-		if (window.wgUserName === null && window.wgAction === 'edit') {
+		if (window.wgUserName === null && !window.UserLogin.forceLoggedIn && window.wgAction === 'edit') {
 			// handle login on edit page
 			window.UserLogin.rteForceLogin();
 			$elem.stopThrobbing();
 			return;
-		} else if (window.wgUserName === null) {
+		} else if (window.wgUserName === null && !window.UserLogin.forceLoggedIn) {
 			// handle login on article page
-			window.UserLoginModal.show({
-				origin: 'vet',
-				callback: function () {
-					window.UserLogin.forceLoggedIn = true;
-					vetLoader.load(options);
-				}
+			require(['AuthModal'], function (authModal) {
+				authModal.load({
+					url: '/signin?redirect=' + encodeURIComponent(window.location.href),
+					origin: 'vet',
+					onAuthSuccess: function () {
+						window.UserLogin.forceLoggedIn = true;
+						vetLoader.load(options);
+					}
+				});
 			});
 			$elem.stopThrobbing();
 			return;

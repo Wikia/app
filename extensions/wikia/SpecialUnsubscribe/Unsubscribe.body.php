@@ -179,7 +179,7 @@ class UnsubscribePage extends UnlistedSpecialPage {
 
 				#this shouldnt need to be checked, but we will anyway
 				# we don't need it now - this is in EmailConfirmed hook
-				/*if( $user->getBoolOption($this->mPrefname) ) {
+				/*if( $user->getGlobalPreference($this->mPrefname) ) {
 					unset($this->mUsers[$uid]);
 					continue;
 				}*/
@@ -262,17 +262,17 @@ EOT
 				}
 
 				#our new flag
-				$user->setOption( $this->mPrefname, 1);
+				$user->setGlobalPreference( $this->mPrefname, 1);
 
 				#FB:1758 don't invalidate email, but do turn off email options
 				#(users can do this on their own when they are logged in)
-				$user->setOption( 'enotiffollowedpages', 0);
-				$user->setOption( 'enotifusertalkpages', 0);
-				$user->setOption( 'enotifwatchlistpages', 0);
-				$user->setOption( 'enotifminoredits', 0);
-				$user->setOption( 'watchlistdigest', 0);
-				$user->setOption( 'marketingallowed', 0);
-				$user->setOption( 'disablemail', 1);
+				$user->setGlobalPreference( 'enotiffollowedpages', 0);
+				$user->setGlobalPreference( 'enotifusertalkpages', 0);
+				$user->setGlobalPreference( 'enotifwatchlistpages', 0);
+				$user->setGlobalPreference( 'enotifminoredits', 0);
+				$user->setGlobalPreference( 'watchlistdigest', 0);
+				$user->setGlobalPreference( 'marketingallowed', 0);
+				$user->setGlobalPreference( 'disablemail', 1);
 
 				#super important, dont forget to save the bits back to metal
 				$user->saveSettings();

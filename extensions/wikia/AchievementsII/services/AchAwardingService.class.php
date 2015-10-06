@@ -263,7 +263,7 @@ class AchAwardingService {
 			$dbw->commit();
 
 			//notify the user only if he wants to be notified
-			if ( !($this->mUser->getOption('hidepersonalachievements')) ) {
+			if ( !($this->mUser->getGlobalPreference('hidepersonalachievements')) ) {
 				$_SESSION['achievementsNewBadges'] = true;
 
 				$achNotificationService = new AchNotificationService($this->mUser);

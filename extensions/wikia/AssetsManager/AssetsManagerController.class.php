@@ -42,6 +42,7 @@ class AssetsManagerController extends WikiaController {
 		$messages = $this->request->getVal( 'messages', null );
 		$mustache = $this->request->getVal( 'mustache', null );
 		$handlebars = $this->request->getVal( 'handlebars', null );
+		$sassParams = $this->request->getVal( 'sassParams', null );
 
 		// handle templates via sendRequest
 		if ( !is_null( $templates ) ) {
@@ -70,7 +71,7 @@ class AssetsManagerController extends WikiaController {
 			$profileId = __METHOD__ . "::styles::{$styles}";
 			wfProfileIn( $profileId );
 
-			$key = $this->getComponentMemcacheKey( $styles );
+			$key = $this->getComponentMemcacheKey( $styles, $sassParams );
 			$data = $this->wg->Memc->get( $key );
 
 			if ( empty( $data ) ) {
@@ -81,8 +82,8 @@ class AssetsManagerController extends WikiaController {
 					$builder = $this->getBuilder( 'sass', $styleFile );
 
 					if ( !is_null( $builder ) ) {
-						if ( $this->app->checkSkin( 'oasis' ) ) {
-							$builder->addParams( SassUtil::getOasisSettings() );
+						if ( !empty( $sassParams ) ) {
+							$builder->addParams( $sassParams );
 						}
 						$data .= $builder->getContent();
 					}
@@ -156,7 +157,10 @@ class AssetsManagerController extends WikiaController {
 		wfProfileOut( __METHOD__ );
 	}
 
-	private function getComponentMemcacheKey( $par ) {
+	private function getComponentMemcacheKey( $par, $sassParams = null ) {
+		if ( $sassParams ) {
+			$par = json_encode( [ $par, $sassParams ] );
+		}
 		return self::MEMCKEY_PREFIX . '::' . md5( $par ) . '::' . $this->wg->StyleVersion;
 	}
 

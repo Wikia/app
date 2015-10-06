@@ -20,7 +20,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 $wgExtensionCredits['parserhook'][] = array(
 	'path'			=> __FILE__,
 	'name'			=> 'RSHiscores',
-	'version'		=> '3.0.0',
+	'version'		=> '3.0.1',
 	'descriptionmsg'	=> 'rshiscores-desc',
 	'url'			=> 'https://github.com/TehKittyCat/RSHiscores',
 	'author'		=> '[http://runescape.wikia.com/wiki/User_talk:TehKittyCat TehKittyCat]',

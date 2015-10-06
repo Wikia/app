@@ -15,7 +15,7 @@
  * Note: edit user interface and cache support functions have been
  * moved to separate EditPage and HTMLFileCache classes.
  *
- * @internal documentation reviewed 15 Mar 2010
+ * internal documentation reviewed 15 Mar 2010
  *
  * //Wikia Change Start - helping PHP lint
  * @property Title mTitle
@@ -218,6 +218,12 @@ class Article extends Page {
 			return $text;
 		} else {
 			$this->fetchContent();
+			// Wikia: Temporary Investigation for PLATFORM-1355
+			if(empty($this->mContent)) {
+					Wikia\Logger\WikiaLogger::instance()->error( __METHOD__ . ' empty content PLAT1355', [
+						'page_id' => $this->mPage->getID()
+				] );
+			}
 			wfProfileOut( __METHOD__ );
 
 			return $this->mContent;
@@ -456,6 +462,7 @@ class Article extends Page {
 		$parserCache = ParserCache::singleton();
 
 		$parserOptions = $this->getParserOptions();
+
 		# Render printable version, use printable version cache
 		if ( $wgOut->isPrintable() ) {
 			$parserOptions->setIsPrintable( true );
@@ -732,7 +739,7 @@ class Article extends Page {
 
 		$diff = $wgRequest->getVal( 'diff' );
 		$rcid = $wgRequest->getVal( 'rcid' );
-		$diffOnly = $wgRequest->getBool( 'diffonly', $wgUser->getOption( 'diffonly' ) );
+		$diffOnly = $wgRequest->getBool( 'diffonly', $wgUser->getGlobalPreference( 'diffonly' ) );
 		$purge = $wgRequest->getVal( 'action' ) == 'purge';
 		$unhide = $wgRequest->getInt( 'unhide' ) == 1;
 		$oldid = $this->getOldID();
@@ -1501,7 +1508,7 @@ class Article extends Page {
 		} else {
 			$suppress = '';
 		}
-		$checkWatch = $user->getBoolOption( 'watchdeletion' ) || $this->getTitle()->userIsWatching();
+		$checkWatch = (bool)$user->getGlobalPreference( 'watchdeletion' ) || $this->getTitle()->userIsWatching();
 
 		$form = Xml::openElement( 'form', array( 'method' => 'post',
 			'action' => $this->getTitle()->getLocalURL( 'action=delete' ), 'id' => 'deleteconfirm' ) ) .

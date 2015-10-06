@@ -1,9 +1,11 @@
 <?php
+use Wikia\PortableInfobox\Helpers\PortableInfoboxClassification;
 
 class UnconvertedInfoboxesPage extends PageQueryPage {
 	const LIMIT = 1000;
+	const UNCONVERTED_INFOBOXES_TYPE = 'Nonportableinfoboxes';
 
-	function __construct( $name = 'Nonportableinfoboxes' ) {
+	function __construct( $name = self::UNCONVERTED_INFOBOXES_TYPE ) {
 		parent::__construct( $name );
 	}
 
@@ -79,6 +81,8 @@ class UnconvertedInfoboxesPage extends PageQueryPage {
 			}
 		}
 
+		wfRunHooks( 'UnconvertedInfoboxesQueryRecached' );
+
 		return $num;
 	}
 
@@ -97,10 +101,11 @@ class UnconvertedInfoboxesPage extends PageQueryPage {
 			->SELECT( 'page_title' )->AS_( 'title' )
 			->FROM( 'page' )
 			->WHERE( 'page_namespace' )->EQUAL_TO( NS_TEMPLATE )
+				->AND_( 'page_is_redirect' )->EQUAL_TO( 0 )
 			->runLoop( $dbr, function( &$nonportableTemplates, $row ) {
 				$title = Title::newFromText( $row->title, NS_TEMPLATE );
 				$contentText = ( new WikiPage( $title ) )->getText();
-				if ( $title !== null && self::isTitleWithNonportableInfobox( $title->getText(), $contentText ) ) {
+				if ( $title !== null && PortableInfoboxClassification::isTitleWithNonportableInfobox( $title->getText(), $contentText ) ) {
 					$links = $title->getIndirectLinks();
 					$nonportableTemplates[] = [
 						$this->getName(),
@@ -112,36 +117,5 @@ class UnconvertedInfoboxesPage extends PageQueryPage {
 			} );
 
 		return $nonportableTemplates;
-	}
-
-	/**
-	 * Checks if a page contains non-portable infoboxes based on its title and content.
-	 * The first check is if the title includes a word "infobox":
-	 * - if yes, check for a new markup (<infobox>) in the content. If it is missing - it indicates that
-	 *   the template contains a non-portable infobox
-	 * - if no, check for an occurrence of a word "infobox" inside all class HTML attributes
-	 *
-	 * Returns true if a page may consist a non-portable infobox
-	 *
-	 * @param string $titleText
-	 * @param string $contentText
-	 * @return bool
-	 */
-	public static function isTitleWithNonportableInfobox( $titleText, $contentText ) {
-		$titleNeedle = 'infobox';
-		if ( strripos( $titleText, $titleNeedle ) !== false ) {
-			$portableInfoboxNeedle = '<infobox>';
-
-			// If a portable infobox markup was found
-			// it means that the template doesn't have a non-portable infobox
-			return strpos( $contentText, $portableInfoboxNeedle ) === false;
-		} else {
-			$nonportableInfoboxRegEx = '/class=\"[^\"]*infobox[^\"]*\"/i';
-			$nonportableInfoboxRegExMatch = preg_match( $nonportableInfoboxRegEx, $contentText );
-
-			// If a non-portable infobox markup was found
-			// the $nonportableInfoboxRegExMatch is not empty
-			return !empty( $nonportableInfoboxRegExMatch );
-		}
 	}
 }

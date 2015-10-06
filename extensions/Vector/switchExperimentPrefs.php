@@ -1,5 +1,8 @@
 <?php
 
+echo "this script is deprecated since it's unable to determine the difference between a user property, flag, and preference\n";
+exit(1);
+
 $path = '../..';
 
 if ( getenv( 'MW_INSTALL_PATH' ) !== false ) {

@@ -1,45 +1,10 @@
 @import './insights-settings';
+@import './insights-icons-mixin';
 
 @if $is-dark-wiki {
-	.insights-icon-uncategorizedpages {
-		background-image: url('/extensions/wikia/Insights/images/uncategorized_dark.svg'); /* inline */
-	}
-
-	.insights-icon-withoutimages {
-		background-image: url('/extensions/wikia/Insights/images/withoutimages_dark.svg'); /* inline */
-	}
-
-	.insights-icon-deadendpages {
-		background-image: url('/extensions/wikia/Insights/images/deadendpages_dark.svg'); /* inline */
-	}
-
-	.insights-icon-wantedpages {
-		background-image: url('/extensions/wikia/Insights/images/wantedpages_dark.svg'); /* inline */
-	}
-
-	.insights-icon-nonportableinfoboxes {
-		background-image: url('/extensions/wikia/Insights/images/genericinsights_dark.svg'); /* inline */
-	}
+	@include insights-icons-dark();
 } @else {
-	.insights-icon-uncategorizedpages {
-		background-image: url('/extensions/wikia/Insights/images/uncategorized.svg'); /* inline */
-	}
-
-	.insights-icon-withoutimages {
-		background-image: url('/extensions/wikia/Insights/images/withoutimages.svg'); /* inline */
-	}
-
-	.insights-icon-deadendpages {
-		background-image: url('/extensions/wikia/Insights/images/deadendpages.svg'); /* inline */
-	}
-
-	.insights-icon-wantedpages {
-		background-image: url('/extensions/wikia/Insights/images/wantedpages.svg'); /* inline */
-	}
-
-	.insights-icon-nonportableinfoboxes {
-		background-image: url('/extensions/wikia/Insights/images/genericinsights.svg'); /* inline */
-	}
+	@include insights-icons-light();
 }
 
 /** The landing page **/
@@ -75,6 +40,7 @@
 
 .insights-container-nav {
 	float: left;
+	padding-right: $width-insights-nav-content-space;
 	width: $width-insights-nav;
 
 	.insights-nav-list {
@@ -131,7 +97,7 @@
 .insights-container-main {
 	box-sizing: border-box;
 	float: right;
-	width: calc(100% - #{$width-insights-nav});
+	width: calc(100% - #{$width-insights-nav + $width-insights-nav-content-space});
 
 }
 
@@ -149,14 +115,6 @@
 	margin: 0;
 	table-layout: fixed;
 	width: 100%;
-
-	tr {
-
-		td:first-child,
-		th:first-child {
-			padding-left: 15px;
-		}
-	}
 }
 
 .insights-list-header {
@@ -165,6 +123,11 @@
 	border-top: $border-insights-default;
 	padding: 5px 10px;
 	text-align: left;
+	white-space: nowrap;
+}
+
+.insights-list-header-altaction {
+	text-align: right;
 }
 
 .insights-list-header-pageviews {
@@ -178,7 +141,17 @@
 	padding: 10px;
 }
 
+.insights-list-cell-altaction {
+	padding: 0 10px;
+	text-align: right;
+}
+
 .insights-list-item {
+
+	.insights-list-item:first-child,
+	.insights-list-header:first-child {
+		padding-left: 15px;
+	}
 
 	&:last-child {
 

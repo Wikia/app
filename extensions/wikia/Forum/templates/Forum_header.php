@@ -1,5 +1,4 @@
 <header id="WikiaPageHeader" class="WikiaPageHeader">
-	<h1><?= $pageHeading ?></h1>
 	<? if($showStats): ?>
 		<div class="header-right">
 			<div class="first tally">
@@ -10,4 +9,5 @@
 			</div>
 		</div>
 	<? endif; ?>
+	<h1><?= $pageHeading ?></h1>
 </header>

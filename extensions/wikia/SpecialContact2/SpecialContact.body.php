@@ -115,7 +115,7 @@ class ContactForm extends SpecialPage {
 
 				if ( !empty( $this->customForms[$par]['markuser'] ) ) {
 					// notify relevant extension that a request has been made
-					$user->setOption( $this->customForms[$par]['markuser'], 1 );
+					$user->setGlobalFlag( $this->customForms[$par]['markuser'], 1 );
 					$user->saveSettings();
 				}
 
@@ -246,7 +246,7 @@ class ContactForm extends SpecialPage {
 		//if they are logged in, add the ID(and name) and their lang
 		if( !empty($uid) ) {
 			$items[] = 'uID: ' . $uid . " (User:". $user->getName() .")";
-			$items[] = 'uLang: ' . $user->getOption( 'language' );
+			$items[] = 'uLang: ' . $user->getGlobalPreference( 'language' );
 		}
 
 		if ( !empty( $this->mReferral ) ) {
@@ -387,9 +387,12 @@ class ContactForm extends SpecialPage {
 
 				if ( $sub === 'close-account' && $closeMyAccountSupported ) {
 					$title = SpecialPage::getTitleFor( 'CloseMyAccount' );
+				} elseif ( $sub === 'dmca-request' ) {
+					$title = GlobalTitle::newFromText( 'DMCARequest', NS_SPECIAL, Wikia::COMMUNITY_WIKI_ID );
 				} else {
 					$title = SpecialPage::getTitleFor( 'Contact', $sub );
 				}
+
 				$msgKey = 'specialcontact-seclink-' . $msg;
 				$newsec['links'][] = $uskin->makeKnownLinkObj( $title, $this->msg( $msgKey )->escaped(), '', '', '', "class={$msgKey}" );
 			}
@@ -549,7 +552,7 @@ class ContactForm extends SpecialPage {
 		} elseif ( $user->isAnon() && !empty( $this->secDat['reqlogin'] ) ) {
 			$out->showErrorPage( 'loginreqtitle', 'specialcontact-error-logintext' );
 			return;
-		} elseif ( $this->secDat['form'] === 'rename-account' && $user->getOption( 'wasRenamed', 0 ) ) {
+		} elseif ( $this->secDat['form'] === 'rename-account' && $user->getGlobalFlag( 'wasRenamed', 0 ) ) {
 			$out->showErrorPage( 'specialcontact-error-title', 'specialcontact-error-alreadyrenamed' );
 			return;
 		} else {

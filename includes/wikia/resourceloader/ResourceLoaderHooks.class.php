@@ -172,6 +172,7 @@ class ResourceLoaderHooks {
 
 		// handle skin name changes
 		$skinName = $context->getSkin();
+
 		if ( isset( $wgResourceLoaderAssetsSkinMapping[$skinName] ) ) {
 			$mappedName = $wgResourceLoaderAssetsSkinMapping[$skinName];
 			$mapping = array(
@@ -218,6 +219,7 @@ class ResourceLoaderHooks {
 			);
 			$pages = Wikia::renameArrayKeys($pages,$mapping);
 		}
+
 
 		// todo: add user-defined user scripts here
 
@@ -345,7 +347,7 @@ class ResourceLoaderHooks {
 		}
 		else {
 			$cb = $context->getRequest()->getVal('cb', false);
-			$ts = false;
+			$ts = 0;
 		}
 
 		// check if at least one of required modules serves dynamic content

@@ -45,13 +45,11 @@ class WikiFactoryTest extends WikiaBaseTest {
 	/**
 	 * @dataProvider testGetLocalEnvURLDataProvider
 	 */
-	public function testGetLocalEnvURL($env, $url, $expected) {
-		$_SERVER['SERVER_NAME'] = $env;
-		$url = WikiFactory::getLocalEnvURL($url);
-		$this->assertEquals($expected, $url);
-		$_SERVER['SERVER_NAME'] = null;
+	public function testGetLocalEnvURL( $environment, $url, $expected ) {
+		$this->mockEnvironment( $environment );
+		$url = WikiFactory::getLocalEnvURL( $url );
+		$this->assertEquals( $expected, $url );
 	}
-
 
 	/**
 	 * @dataProvider testGetCurrentStagingHostDataProvider
@@ -115,34 +113,34 @@ class WikiFactoryTest extends WikiaBaseTest {
 	public function testGetLocalEnvURLDataProvider() {
 		return [
 			[
-				'env' => 'preview.wikia.com',
+				'env' => WIKIA_ENV_PREVIEW,
 				'url' => 'http://muppet.wikia.com',
 				'expected' => 'http://preview.muppet.wikia.com'
 			],
 			[
-				'env' => 'verify.wikia.com',
+				'env' => WIKIA_ENV_VERIFY,
 				'url' => 'http://muppet.wikia.com/wiki/Muppet',
 				'expected' => 'http://verify.muppet.wikia.com/wiki/Muppet'
 			],
 			[
-				'env' => '.test.wikia-dev.com',
+				'env' => WIKIA_ENV_DEV,
 				'url' => 'http://muppet.wikia.com/wiki',
-				'expected' => 'http://muppet.test.wikia-dev.com/wiki'
+				'expected' => 'http://muppet.' . self::MOCK_DEV_NAME . '.wikia-dev.com/wiki'
 			],
 			[
-				'env' => 'sandbox-s1.wikia.com',
+				'env' => WIKIA_ENV_SANDBOX,
 				'url' => 'http://gta.wikia.com/Vehicles_in_GTA_III',
 				'expected' => 'http://sandbox-s1.gta.wikia.com/Vehicles_in_GTA_III'
 			],
 			[
-				'env' => 'verify.wikia.com',
+				'env' => WIKIA_ENV_VERIFY,
 				'url' => 'http://gta.wikia.com/wiki/test/test/test',
 				'expected' => 'http://verify.gta.wikia.com/wiki/test/test/test'
 			],
 			[
-				'env' => '.dev.wikia-dev.com',
+				'env' => WIKIA_ENV_DEV,
 				'url' => 'http://gta.wikia.com/',
-				'expected' => 'http://gta.dev.wikia-dev.com'
+				'expected' => 'http://gta.' . self::MOCK_DEV_NAME . '.wikia-dev.com'
 			]
 		];
 	}

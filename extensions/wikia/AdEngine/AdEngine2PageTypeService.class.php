@@ -84,7 +84,7 @@ class AdEngine2PageTypeService {
 		}
 
 		$user = $this->wg->User;
-		if ( !$user->isLoggedIn() || $user->getOption( 'showAds' ) ) {
+		if ( !$user->isLoggedIn() || $user->getGlobalPreference( 'showAds' ) ) {
 			// Only leaderboard, medrec and invisible on corporate sites for anonymous users
 			if ( WikiaPageType::isCorporatePage() ) {
 				$pageLevel = self::PAGE_TYPE_CORPORATE;

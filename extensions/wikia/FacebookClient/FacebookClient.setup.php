@@ -48,6 +48,7 @@ $wgHooks['MonobookSkinAssetGroups'][] = 'FacebookClientHooks::onSkinAssetGroups'
 $wgHooks['ParserFirstCallInit'][] = 'FacebookClientHooks::setupParserHook';
 $wgHooks['SkinTemplatePageBeforeUserMsg'][] = 'FacebookClientHooks::onSkinTemplatePageBeforeUserMsg';
 $wgHooks['SkinAfterBottomScripts'][] = 'FacebookClientHooks::onSkinAfterBottomScripts';
+$wgHooks['UserLogout'][] = 'FacebookClientHooks::onUserLogout';
 
 /**
  * messages

@@ -13,11 +13,11 @@ class SpecialAdTestImport extends SpecialPage {
 	}
 
 	private function getAdTestDump() {
-		$siteMapUrl = $this->source . '/sitemap-adtest-NS_0-0.xml.gz?cb=' . rand( 0, 1000 );
-		$siteMap = shell_exec( 'curl ' . escapeshellarg( $siteMapUrl ) . ' | zcat' );
-		$xml = simplexml_load_string( $siteMap );
-		foreach ( $xml->url as $url ) {
-			$titles[] = str_replace( $this->source . '/wiki/', '', $url->loc );
+		$apiUrl = $this->source . '/api.php?action=query&list=allpages&aplimit=500&format=json';
+		$apiResult = json_decode(file_get_contents($apiUrl));
+
+		foreach ($apiResult->query->allpages as $page) {
+			$titles[] = str_replace(' ', '_', $page->title);
 		}
 
 		$tempFile = tempnam( '/tmp/', 'adtest-xml' );

@@ -1,8 +1,7 @@
 /*global require*/
-/*jslint newcap:true*/
 /*jshint camelcase:false*/
-/*jshint maxlen:200*/
 require([
+	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adEngine',
 	'ext.wikia.adEngine.adLogicHighValueCountry',
 	'ext.wikia.adEngine.adTracker',
@@ -11,14 +10,16 @@ require([
 	'ext.wikia.adEngine.dartHelper',
 	'ext.wikia.adEngine.messageListener',
 	'ext.wikia.adEngine.provider.evolve',
-	'ext.wikia.adEngine.slot.adInContentPlayer',
+	'ext.wikia.adEngine.recovery.helper',
+	'ext.wikia.adEngine.slot.scrollHandler',
 	'ext.wikia.adEngine.slotTracker',
 	'ext.wikia.adEngine.slotTweaker',
+	'ext.wikia.adEngine.sourcePointDetection',
 	'wikia.krux',
 	'wikia.window',
-	require.optional('ext.wikia.adEngine.slot.exitstitial'),
-	require.optional('ext.wikia.adEngine.slot.inContentDesktop')
+	'wikia.loader'
 ], function (
+	adContext,
 	adEngine,
 	adLogicHighValueCountry,
 	adTracker,
@@ -27,22 +28,25 @@ require([
 	dartHelper,
 	messageListener,
 	providerEvolve,
-	adInContentPlayer,
+	recoveryHelper,
+	scrollHandler,
 	slotTracker,
 	slotTweaker,
+	sourcePoint,
 	krux,
-	window,
-	exitstitial,
-	inContentDesktop
+	win,
+	loader
 ) {
 	'use strict';
 
-	var kruxSiteId = 'JU3_GW1b';
+	var kruxSiteId = 'JU3_GW1b',
+		context = adContext.getContext(),
+		skin = 'oasis';
 
-	window.AdEngine_getTrackerStats = slotTracker.getStats;
+	win.AdEngine_getTrackerStats = slotTracker.getStats;
 
 	// DART API for Liftium
-	window.LiftiumDART = {
+	win.LiftiumDART = {
 		getUrl: function (slotname, slotsize) {
 			if (slotsize) {
 				slotsize += ',1x1';
@@ -59,42 +63,85 @@ require([
 	messageListener.init();
 
 	// Register Evolve hop
-	window.evolve_hop = providerEvolve.hop;
+	win.evolve_hop = providerEvolve.hop;
 
 	// Register window.wikiaDartHelper so jwplayer can use it
-	window.wikiaDartHelper = dartHelper;
+	win.wikiaDartHelper = dartHelper;
 
 	// Register adLogicHighValueCountry as so Liftium can use it
-	window.adLogicHighValueCountry = adLogicHighValueCountry;
+	win.adLogicHighValueCountry = adLogicHighValueCountry;
 
 	// Register adSlotTweaker so DART creatives can use it
 	// https://www.google.com/dfp/5441#delivery/CreateCreativeTemplate/creativeTemplateId=10017012
-	window.adSlotTweaker = slotTweaker;
+	win.adSlotTweaker = slotTweaker;
 
 	// Custom ads (skins, footer, etc)
-	window.loadCustomAd = customAdsLoader.loadCustomAd;
-
-	adInContentPlayer.init();
+	win.loadCustomAd = customAdsLoader.loadCustomAd;
 
 	// Everything starts after content and JS
-	window.wgAfterContentAndJS.push(function () {
+	win.wgAfterContentAndJS.push(function () {
 		// Ads
 		adTracker.measureTime('adengine.init', 'queue.desktop').track();
-		window.adslots2 = window.adslots2 || [];
-		adEngine.run(adConfigDesktop, window.adslots2, 'queue.desktop');
+		scrollHandler.init(skin);
+		win.adslots2 = win.adslots2 || [];
+		adEngine.run(adConfigDesktop, win.adslots2, 'queue.desktop');
+
+		// Recovery
+		recoveryHelper.initEventQueue();
+		sourcePoint.initDetection();
+
+		if (context.opts.sourcePoint && win.ads) {
+			win.ads.runtime.sp.slots = win.ads.runtime.sp.slots || [];
+			recoveryHelper.addOnBlockingCallback(function () {
+				adTracker.measureTime('adengine.init', 'queue.desktop').track();
+				adEngine.run(adConfigDesktop, win.ads.runtime.sp.slots, 'queue.sp');
+			});
+		}
+
+		if (context.opts.recoveredAdsMessage) {
+			loader({
+				type: loader.AM_GROUPS,
+				resources: ['adengine2_ads_recovery_message_js']
+			}).done(function () {
+				require(['ext.wikia.adEngine.recovery.message'], function (recoveredAdMessage) {
+					recoveredAdMessage.addRecoveryCallback();
+				});
+			});
+		}
 
 		// Krux
 		krux.load(kruxSiteId);
 	});
+});
 
-	// Start loading in content slots
-	if (inContentDesktop) {
-		window.addEventListener('load', inContentDesktop.init);
+// Inject extra slots
+require([
+	'ext.wikia.adEngine.slot.inContentPlayer',
+	'ext.wikia.adEngine.slot.skyScraper3',
+	'wikia.document',
+	'wikia.window',
+	require.optional('ext.wikia.adEngine.slot.exitstitial'),
+	require.optional('ext.wikia.adEngine.slot.inContentDesktop')
+], function (inContentPlayer, skyScraper3, doc, win, exitstitial, inContentDesktop) {
+	'use strict';
+
+	function initDesktopSlots() {
+		inContentPlayer.init();
+		skyScraper3.init();
+
+		if (inContentDesktop) {
+			inContentDesktop.init();
+		}
+
+		if (exitstitial) {
+			exitstitial.init();
+		}
 	}
 
-	// Start loading in content slots
-	if (exitstitial) {
-		window.addEventListener('load', exitstitial.init);
+	if (doc.readyState === 'complete') {
+		initDesktopSlots();
+	} else {
+		win.addEventListener('load', initDesktopSlots);
 	}
 });
 

@@ -35,7 +35,7 @@
  *
  * @ingroup HTTP
  */
-class WebRequest {
+class WebRequest implements Wikia\Interfaces\IRequest {
 	protected $data, $headers = array();
 
 	/**
@@ -558,6 +558,8 @@ class WebRequest {
 	 * @return Boolean
 	 */
 	public function wasPosted() {
+		wfRunHooks( 'WebRequestWasPosted' ); # Wikia change
+
 		return isset( $_SERVER['REQUEST_METHOD'] ) && $_SERVER['REQUEST_METHOD'] == 'POST';
 	}
 
@@ -709,7 +711,7 @@ class WebRequest {
 			$limit = 0;
 		}
 		if( ( $limit == 0 ) && ( $optionname != '' ) ) {
-			$limit = (int)$wgUser->getOption( $optionname );
+			$limit = (int)$wgUser->getGlobalPreference( $optionname );
 		}
 		if( $limit <= 0 ) {
 			$limit = $deflimit;

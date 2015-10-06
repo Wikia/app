@@ -122,7 +122,7 @@ abstract class ExternalUser {
 			}
 			$obj = self::newFromId( $id );
 		}
-		
+
 		return $obj;
 	}
 	
@@ -142,6 +142,7 @@ abstract class ExternalUser {
 
 		if ( $wgExternalAuthType ) {
 			$obj = new $wgExternalAuthType;
+			/* @var ExternalUser_Wikia $obj */
 			$ret = $obj->addToDatabase( $User, $password, $email, $realname );
 		}
 

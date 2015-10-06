@@ -150,11 +150,11 @@ abstract class WatchedPageController extends EmailController {
 	}
 
 	/**
-	 * @param $title
+	 * @param \Title $title
 	 * @return String
 	 * @throws \MWException
 	 */
-	protected function getAllChangesText( $title ) {
+	protected function getAllChangesText( \Title $title ) {
 		return $this->getMessage( 'emailext-watchedpage-view-all-changes',
 			$title->getFullURL( [
 				'action' => 'history'
@@ -201,7 +201,7 @@ abstract class WatchedPageController extends EmailController {
 	}
 }
 
-class WatchedPageEditedController extends WatchedPageController {
+class WatchedPageEditedOrCreatedController extends WatchedPageController {
 	/**
 	 * @return String
 	 */
@@ -292,10 +292,24 @@ class WatchedPageRenamedController extends WatchedPageController {
 	/** @var \Title */
 	protected $newTitle;
 
+	/**
+	 * Set newTitle (the new title the page was moved to). Make sure to use the master DB when getting the
+	 * redirect URL, this ensure that even if the slave hasn't caught up we get a valid redirect URL.
+	 */
 	public function initEmail() {
 		parent::initEmail();
 
-		$this->newTitle = \WikiPage::factory( $this->title )->getRedirectTarget();
+		$this->newTitle = \WikiPage::factory( $this->title )->getRedirectTarget( \Title::GAID_FOR_UPDATE );
+		$this->assertValidNewTitle();
+	}
+
+	/**
+	 * @throws \Email\Check
+	 */
+	private function assertValidNewTitle() {
+		if ( !$this->newTitle instanceof \Title ) {
+			throw new Check( "Invalid value found for newTitle" );
+		}
 	}
 
 	/**
@@ -335,5 +349,41 @@ class WatchedPageRenamedController extends WatchedPageController {
 	 */
 	protected function getAllChangesText( $title ) {
 		return parent::getAllChangesText( $this->newTitle );
+	}
+}
+
+class WatchedPageRestoredController extends WatchedPageController {
+
+	/**
+	 * @return String
+	 */
+	protected function getSubjectMessageKey() {
+		return 'emailext-watchedpage-article-restored-subject';
+	}
+
+	/**
+	 * @return String
+	 */
+	protected function getSummaryMessageKey() {
+		return 'emailext-watchedpage-article-restored-summary';
+	}
+
+	/**
+	 * @return String
+	 */
+	protected function getButtonLink() {
+		return $this->title->getFullUrl();
+	}
+
+	/**
+	 * @return String
+	 */
+	protected function getButtonTextMessageKey() {
+		return 'emailext-watchedpage-article-restored-button-text';
+	}
+
+	protected function getContentFooterMessages() {
+		// no op
+		return [];
 	}
 }

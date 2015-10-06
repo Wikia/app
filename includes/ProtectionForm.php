@@ -482,7 +482,7 @@ class ProtectionForm {
 					<td class='mw-input'>" .
 						Xml::checkLabel( wfMsg( 'watchthis' ),
 							'mwProtectWatch', 'mwProtectWatch',
-							$this->mTitle->userIsWatching() || $wgUser->getOption( 'watchdefault' ) ) .
+							$this->mTitle->userIsWatching() || $wgUser->getGlobalPreference( 'watchdefault' ) ) .
 					"</td>
 				</tr>";
 			}

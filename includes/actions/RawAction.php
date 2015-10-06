@@ -33,7 +33,7 @@ class RawAction extends FormlessAction {
 	}
 
 	function onView() {
-		global $wgGroupPermissions, $wgSquidMaxage, $wgForcedRawSMaxage, $wgJsMimeType;
+		global $wgGroupPermissions, $wgSquidMaxage, $wgForcedRawSMaxage, $wgJsMimeType, $wgEnableContentReviewExt;
 
 		$this->getOutput()->disable();
 		$request = $this->getRequest();
@@ -72,6 +72,13 @@ class RawAction extends FormlessAction {
 		}
 
 		$maxage = $request->getInt( 'maxage', $wgSquidMaxage );
+
+		if ( $wgEnableContentReviewExt && $contentType == $wgJsMimeType && $this->page->getTitle()->inNamespace( NS_MEDIAWIKI ) ) {
+			if ( ( new \Wikia\ContentReview\Helper() )->isContentReviewTestModeEnabled() ) {
+				$maxage = 0;
+				$smaxage = 0;
+			}
+		}
 
 		$response = $request->response();
 
@@ -145,9 +152,11 @@ class RawAction extends FormlessAction {
 			}
 		}
 
-		if ( $text !== false && $text !== '' && $request->getVal( 'templates' ) === 'expand' ) {
+		// Wikia change begin: author: lukaszk
+		if ( $text !== false && $text !== '' && $request->getVal( 'templates' ) === 'expand' && !$title->isJsPage() ) {
 			$text = $wgParser->preprocess( $text, $title, ParserOptions::newFromContext( $this->getContext() ) );
 		}
+		// Wikia change end;
 
 		return $text;
 	}

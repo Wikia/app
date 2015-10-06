@@ -289,6 +289,7 @@ class ForumHooksHelper {
 	 */
 	static public function onOutputPageBeforeHTML( OutputPage $out, &$text ) {
 		$app = F::app();
+		$out->addStyle( AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/Forum/css/ForumTag.scss'));
 		$title = $out->getTitle();
 		if ( $out->isArticle()
 			&& $title->exists()
@@ -406,13 +407,7 @@ class ForumHooksHelper {
 	 * Create a tag for including the Forum Activity Module on pages
 	 */
 	static public function onParserFirstCallInit( Parser &$parser ) {
-		wfProfileIn( __METHOD__ );
 		$parser->setHook( 'wikiaforum', array( __CLASS__, 'parseForumActivityTag' ) );
-
-		// Add styling for forum tag
-		$scssFile = AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/Forum/css/ForumTag.scss' );
-		F::app()->wg->Out->addStyle( $scssFile );
-		wfProfileOut( __METHOD__ );
 		return true;
 	}
 

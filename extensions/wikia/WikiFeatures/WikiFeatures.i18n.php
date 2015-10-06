@@ -71,6 +71,8 @@ $messages['en'] = array(
 	'wikifeatures-feature-description-wgGameGuidesContentForAdmins' => 'Use the Special:GameGuidesContent page of your wiki to manage which categories appear in the [[w:c:community:Help:Game Guides|Game Guides]] mobile app. Expand your potential audience!',
 	'wikifeatures-feature-heading-wgEnableNjordExt' => 'Hero Image',
 	'wikifeatures-feature-description-wgEnableNjordExt' => 'Make your wiki more attractive by uploading an image to represent it on its home page!',
+	'wikifeatures-feature-heading-wgDisableAnonymousEditing' => 'Require all contributors to log in',
+	'wikifeatures-feature-description-wgDisableAnonymousEditing' => 'Do you want all contributors on your wikia to be logged in? When this feature is enabled, no anonymous visitors will be allowed to edit pages or participate in comments, Forum or Message Wall without logging in. Anyone can still create a Wikia account to join your community!',
 	'wikifeatures-feature-heading-emptylabs' => 'Looks like the lab is taking a break',
 	'wikifeatures-feature-description-emptylabs' => 'Our tech scientists are hard at work bubbling up new features for you to try out. Look for more labs here soon!',
 	'wikifeatures-log-name' => 'Wiki Features log',
@@ -88,6 +90,8 @@ $messages['qqq'] = array(
 	'wikifeatures-feature-description-wgEnableWikiaInteractiveMaps' => 'Description text for the Maps feature.',
 	'wikifeatures-feature-heading-wgEnableMediaGalleryExt' => 'Header text for enabling the Media Gallery feature',
 	'wikifeatures-feature-description-wgEnableMediaGalleryExt' => 'Description text for enabling the Media Gallery feature',
+	'wikifeatures-feature-heading-wgDisableAnonymousEditing' => 'Header text for requiring all contributors to log in to edit.',
+	'wikifeatures-feature-description-wgDisableAnonymousEditing' => 'Description for requiring all contributors to log in to edit.',
 	'action-wikifeaturesview' => '{{doc-action|wikifeaturesview}}',
 );
 
@@ -378,6 +382,8 @@ $messages['de'] = array(
 	'wikifeatures-feature-heading-wgEnableCuratedContentExt' => 'Curated Content',
 	'wikifeatures-feature-description-wgEnableCuratedContentExt' => 'Verwende die Seite Special:CuratedContent deines Wikis, um die Inhalte zu verwalten, die in der mobilen App erscheinen. Vergrößere dein potentielles Publikum!',
 	'action-wikifeaturesview' => 'Wiki-Funktionen ansehen',
+	'wikifeatures-feature-heading-wgDisableAnonymousEditing' => 'Alle Autoren müssen sich anmelden.',
+	'wikifeatures-feature-description-wgDisableAnonymousEditing' => 'Möchtest du, dass sich alle Autoren auf deinem Wikia anmelden müssen? Wenn diese Funktion aktiviert ist, dürfen anonyme Besucher keine Seiten bearbeiten, keine Kommentare schreiben und auch das Forum und die Nachrichtenseiten nicht nutzen, solange sie nicht angemeldet sind. Jeder kann nach wie vor ein Wikia-Konto einrichten, um deiner Community beizutreten!',
 );
 
 /** German (formal address) (‪Deutsch (Sie-Form)‬)
@@ -486,6 +492,8 @@ $messages['es'] = array(
 	'wikifeatures-feature-heading-wgEnableCuratedContentExt' => 'Contenido puesto al día',
 	'wikifeatures-feature-description-wgEnableCuratedContentExt' => 'Use la página Especial:CuratedContent de su wikia para administrar el contenido que aparece en la aplicación móvil. ¡Expanda su público potencial!',
 	'action-wikifeaturesview' => 'Ver funcionalidades de Wikia',
+	'wikifeatures-feature-heading-wgDisableAnonymousEditing' => 'Requiere a todos los editores el iniciar sesión',
+	'wikifeatures-feature-description-wgDisableAnonymousEditing' => '¿Quieres todos los editores en tu wikia inicien sesión? Cuando esta funcionalidad es habilitada, los visitantes anónimos no podrán editar páginas o participar en comentarios, Foro o Muro de mensajes sin antes iniciar sesión. ¡Todavía cualquiera puede crear una cuenta de Wikia para unirse a tu comunidad!',
 );
 
 /** French (français)
@@ -564,6 +572,8 @@ $messages['fr'] = array(
 	'wikifeatures-feature-heading-wgEnableCuratedContentExt' => "Contenu de l'application mobile",
 	'wikifeatures-feature-description-wgEnableCuratedContentExt' => "Utilisez la page [[{{#special:CuratedContent}}]] de votre wikia pour gérer le contenu affiché dans l'application mobile et élargir votre public !",
 	'action-wikifeaturesview' => 'afficher Composants de wiki',
+	'wikifeatures-feature-heading-wgDisableAnonymousEditing' => 'Demander à tous les éditeurs de se connecter',
+	'wikifeatures-feature-description-wgDisableAnonymousEditing' => "Voulez-vous que tous les éditeurs de votre wikia se connectent ? Si vous activez cette fonctionnalité, les visiteurs anonymes ne pourront pas modifier de pages ni participer aux commentaires, forum ou mur de discussion sans être d'abord connectés. Il est toujours possible de créer un compte Wikia pour rejoindre votre communauté !",
 );
 
 /** Galician (Galego)
@@ -760,6 +770,8 @@ $messages['it'] = array(
 	'wikifeatures-log-name' => 'Registro delle Wiki Funzioni',
 	'wikifeatures-log-header' => 'Di seguito è riportato un elenco delle modifiche alle impostazioni delle Wiki Funzioni.',
 	'action-wikifeaturesview' => 'mostra Wiki Funzioni',
+	'wikifeatures-feature-heading-wgDisableAnonymousEditing' => 'Richiedi a tutti i collaboratori di accedere',
+	'wikifeatures-feature-description-wgDisableAnonymousEditing' => 'Vuoi che tutti i collaboratori della tua wikia siano connessi? Quando questa funzione è attivata, ai visitatori anonimi non sarà permesso di modificare pagine o di partecipare nei commenti, nel Forum o alla Bacheca senza prima accedere. Chiunque potrà ancora creare un account con Wikia per unirsi alla tua community!',
 );
 
 /** Japanese (日本語)
@@ -769,8 +781,8 @@ $messages['ja'] = array(
 	'wikifeatures-title' => 'ウィキ・フィーチャーズ',
 	'wikifeatures-heading' => '機能',
 	'wikifeatures-creative' => 'ウィキ・フィーチャーズでは、自分のウィキアコミュニティで使いたい拡張機能の有効、無効をご希望で切り替えることができます。役立ちそうだと思う機能を見つけたらぜひお試しください。切り替えはいつでも行うことができ、一度有効にした機能を再度無効にすることもできます。',
-	'wikifeatures-labs-heading' => '研究室',
-	'wikifeatures-labs-creative' => '研究室では、試験的に運用している機能やアイディアをご紹介しています。ここでご覧いただける機能はまだ調整中であるため、不都合が生じてしまう場合もありますが、宜しければお試しください。使ってみた感想、改善すべき点、動作がおかしいと思われる点がありましたら、ぜひお聞かせください。',
+	'wikifeatures-labs-heading' => 'ラボ',
+	'wikifeatures-labs-creative' => 'ラボでは、試験的に運用している機能やアイディアをご紹介しています。ここでご覧いただける機能はまだ調整中であるため、不都合が生じてしまう場合もありますが、宜しければお試しください。使ってみた感想、改善すべき点、動作がおかしいと思われる点がありましたら、ぜひお聞かせください。',
 	'wikifeatures-feedback' => 'フィードバックを送る',
 	'wikifeatures-toggle-active' => '有効にしました',
 	'wikifeatures-toggle-inactive' => '無効にしました',
@@ -790,7 +802,7 @@ $messages['ja'] = array(
 	'wikifeatures-error-message' => 'コメントが短すぎるか長すぎるようです。',
 	'wikifeatures-error-spam-attempt' => '追加のフィードバックを送信するには、1分ほどお待ちください。',
 	'wikifeatures-error-invalid-category' => 'フィードバックの内容を選択してください。',
-	'wikifeatures-feedback-description' => 'ウィキアでは、研究室に掲載されている機能についてのご意見、ご感想をお待ちしています。この機能の改善すべき点、問題点、その他ご感想などがございましたら、下のボックスからぜひお知らせください。',
+	'wikifeatures-feedback-description' => 'ウィキアでは、ラボに掲載されている機能についてのご意見、ご感想をお待ちしています。この機能の改善すべき点、問題点、その他ご感想などがございましたら、下のボックスからぜひお知らせください。',
 	'wikifeatures-feedback-success' => 'フィードバックをお送りいただき、ありがとうございました。',
 	'wikifeatures-feedback-submit-button' => '送信',
 	'wikifeatures-feedback-cancel-button' => 'キャンセル',
@@ -836,6 +848,8 @@ $messages['ja'] = array(
 	'wikifeatures-log-name' => 'ウィキ・フィーチャーズ・ログ',
 	'wikifeatures-log-header' => '以下は、ウィキ・フィーチャーズの設定変更のリストです。',
 	'action-wikifeaturesview' => 'ウィキ・フィーチャーズを表示',
+	'wikifeatures-feature-heading-wgDisableAnonymousEditing' => 'すべての投稿者のログインを必須にする',
+	'wikifeatures-feature-description-wgDisableAnonymousEditing' => 'あなたのウィキアですべての投稿者のログインを必須にしますか？この機能を有効にすると、匿名ユーザーはログインせずにページを編集したり、コメントやフォーラム、メッセージウォールに参加したりすることができなくなります。ただし、誰でもウィキアアカウントを作成してコミュニティに参加することはできます。',
 );
 
 /** Kannada (ಕನ್ನಡ)
@@ -1119,6 +1133,8 @@ $messages['nl'] = array(
 	'wikifeatures-feature-heading-wgEnableCuratedContentExt' => 'Curated Content',
 	'wikifeatures-feature-description-wgEnableCuratedContentExt' => 'Use the Special:CuratedContent page of your wiki to manage content which appears in the mobile app. Expand your potential audience!',
 	'action-wikifeaturesview' => 'view Wiki Features',
+	'wikifeatures-feature-heading-wgDisableAnonymousEditing' => 'Require all contributors to log in',
+	'wikifeatures-feature-description-wgDisableAnonymousEditing' => 'Do you want all contributors on your wikia to be logged in? When this feature is enabled, no anonymous visitors will be allowed to edit pages or participate in comments, Forum or Message Wall without logging in. Anyone can still create a Wikia account to join your community!',
 );
 
 /** Polish (polski)
@@ -1197,6 +1213,8 @@ $messages['pl'] = array(
 	'wikifeatures-feature-heading-wgEnableCuratedContentExt' => 'Zarządzana treść',
 	'wikifeatures-feature-description-wgEnableCuratedContentExt' => 'Użyj strony [[{{#special:CuratedContent}}]] na Twojej wiki, aby zarządzać treścią, która jest widoczna w aplikacji mobilnej. Poszerz swoją widownie!',
 	'action-wikifeaturesview' => 'zobacz Rozszerzenia Wiki',
+	'wikifeatures-feature-heading-wgDisableAnonymousEditing' => 'Należy być zalogowanym, aby edytować',
+	'wikifeatures-feature-description-wgDisableAnonymousEditing' => 'Czy chcesz, żeby wszyscy użytkownicy twojej strony wikia byli zalogowani, aby móc edytować? Kiedy ta funkcja jest włączona, osoby odwiedzające stronę anonimowo nie mogą edytować stron, komentować treści na stronie, udzielać się na Forum ani na Tablicy Wiadomości, bez uprzedniego zalogowania.   Kązdy może w końcu utworzyć konto na portalu Wikia i dołączyć do twojej społeczności!',
 );
 
 /** Pashto (پښتو)
@@ -1283,6 +1301,8 @@ $messages['pt'] = array(
 	'wikifeatures-log-name' => 'Registro dos recursos da Wikia',
 	'wikifeatures-log-header' => 'Abaixo está uma lista das alterações de configurações dos recursos da Wikia.',
 	'action-wikifeaturesview' => 'Exibir recursos da Wikia',
+	'wikifeatures-feature-heading-wgDisableAnonymousEditing' => 'Exigir que todos os contribuidores iniciem sessão',
+	'wikifeatures-feature-description-wgDisableAnonymousEditing' => 'Você quer que todos os contribuidores em sua wikia iniciem sessão? Quando este recurso é habilitado, visitantes anônimos não poderão editar páginas ou participar nos comentários, fórum ou no mural de mensagens sem iniciarem sessão. Entretanto, qualquer pessoa ainda pode criar uma conta na Wikia para participar de sua comunidade!',
 );
 
 /** Brazilian Portuguese (português do Brasil)
@@ -1406,6 +1426,8 @@ $messages['ru'] = array(
 	'wikifeatures-feature-heading-wgEnableCuratedContentExt' => 'Curated Content',
 	'wikifeatures-feature-description-wgEnableCuratedContentExt' => 'Используйте страницу Special:CuratedContent вашей вики, чтобы управлять контентом мобильного приложения. Расширьте свою потенциальную аудиторию!',
 	'action-wikifeaturesview' => 'просмотреть Wiki Features',
+	'wikifeatures-feature-heading-wgDisableAnonymousEditing' => 'Обязательная регистрация участников',
+	'wikifeatures-feature-description-wgDisableAnonymousEditing' => 'Хотите, чтобы на вашей вики редактировали только зарегистрированные участники? После подключения этого расширения, анонимные участники не смогут редактировать статьи, оставлять комментарии к статьям и блогам, или общаться на Форуме и Стенах обсуждения. Только зарегистрированные участники смогут редактировать вашу вики.',
 );
 
 /** Swedish (svenska)
@@ -1601,6 +1623,8 @@ $messages['zh-hans'] = array(
 	'wikifeatures-log-name' => '维基功能日志',
 	'wikifeatures-log-header' => '下面是维基功能设置更改列表。',
 	'action-wikifeaturesview' => '查看维基功能',
+	'wikifeatures-feature-heading-wgDisableAnonymousEditing' => '要求所有贡献者登入',
+	'wikifeatures-feature-description-wgDisableAnonymousEditing' => '希望访问您维基的所有贡献者登入？启用此功能后，任何匿名访客均无权编辑页面、参与评论或论坛讨论，或在留言板上留言，但任何人都仍然可以创建维基帐户加入您的社区！',
 );
 
 /** Traditional Chinese (‪中文（繁體）‬)
@@ -1720,5 +1744,7 @@ $messages['zh-tw'] = array(
 	'wikifeatures-log-name' => '維基功能日誌',
 	'wikifeatures-log-header' => '下面是維基的功能設置更改列表。',
 	'action-wikifeaturesview' => '查看維基功能',
+	'wikifeatures-feature-heading-wgDisableAnonymousEditing' => '要求所有貢獻者登入',
+	'wikifeatures-feature-description-wgDisableAnonymousEditing' => '希望訪問你的維基的所有貢獻者登入？啟用此功能後，任何匿名訪客將無權編輯頁面、參與評論或論壇討論，或在留言板上留言，但任何人都仍然可以創建維基帳戶加入你的社區！',
 );
 

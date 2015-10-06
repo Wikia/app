@@ -402,12 +402,8 @@
 	}
 
   	// BugId:9262
-	.diff-article-content {
-		margin-right: 340px;
-
-		body.mainpage & {
-			margin-right: 0;
-		}
+	.diff-article-content body.mainpage & {
+		margin-right: 0;
 	}
 
 	.fbconnect-synced-profile {
@@ -567,7 +563,7 @@
 		li {
 			border-left: 1px solid $color-page-border;
 			display: inline-block;
-			line-height: 15px;
+			line-height: 24px;
 			margin-bottom: 6px;
 			padding-left: 5px;
 			padding-right: 5px;

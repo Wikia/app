@@ -80,13 +80,7 @@ class BodyController extends WikiaController {
 	 * @return Boolean
 	 */
 	public static function isOasisBreakpoints() {
-		global $wgOasisBreakpoints, $wgRequest, $wgLanguageCode, $wgOasisBreakpointsDE;
-
-		//For now we want to disable breakpoints for German wikis if not turn on explicitly.
-		//@TODO remove when 71Media fixes their styles and $wgOasisBreakpointsDE will retire
-		if ( strtolower( $wgLanguageCode ) == 'de' && empty( $wgOasisBreakpointsDE ) ) {
-			$wgOasisBreakpoints = false;
-		}
+		global $wgOasisBreakpoints, $wgRequest;
 
 		$wgOasisBreakpoints = $wgRequest->getBool( 'oasisbreakpoints', $wgOasisBreakpoints ) !== false;
 		return !empty( $wgOasisBreakpoints );
@@ -255,7 +249,7 @@ class BodyController extends WikiaController {
 			$page_owner = User::newFromName($wgTitle->getText());
 
 			if($page_owner) {
-				if ( !$page_owner->getOption('hidefollowedpages') ) {
+				if ( !$page_owner->getGlobalPreference('hidefollowedpages') ) {
 					$railModuleList[1101] = array('FollowedPages', 'Index', null);
 				}
 
@@ -414,6 +408,15 @@ class BodyController extends WikiaController {
 			OasisController::addBodyClass('wikia-grid');
 		}
 
+		if( $this->isOasisBreakpoints() ) {
+			OasisController::addBodyClass( 'oasis-breakpoints' );
+		}
+
+		//@TODO remove this check after deprecating responsive (July 2015)
+		if( $this->isResponsiveLayoutEnabled() ) {
+			OasisController::addBodyClass( 'oasis-responsive' );
+		}
+
 		// if we are on a special search page, pull in the css file and don't render a header
 		if($wgTitle && $wgTitle->isSpecial( 'Search' ) && !$this->wg->WikiaSearchIsDefault) {
 			$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL("skins/oasis/css/modules/SpecialSearch.scss"));
@@ -495,6 +498,10 @@ class BodyController extends WikiaController {
 
 		// bugid-70243: optionally hide navigation h1s for SEO
 		$this->setVal( 'displayHeader', !$this->wg->HideNavigationHeaders );
+
+		if ( $this->wg->EnableSeoTestingExt ) {
+			$this->setVal( 'seoTestOneH1', SeoTesting::getGroup('One_H1') === 2 );
+		}
 
 		wfProfileOut(__METHOD__);
 	}

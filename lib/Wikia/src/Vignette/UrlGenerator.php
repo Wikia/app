@@ -14,6 +14,7 @@ class UrlGenerator {
 	const MODE_FIXED_ASPECT_RATIO = 'fixed-aspect-ratio';
 	const MODE_FIXED_ASPECT_RATIO_DOWN = 'fixed-aspect-ratio-down';
 	const MODE_SCALE_TO_WIDTH = 'scale-to-width';
+	const MODE_SCALE_TO_WIDTH_DOWN = 'scale-to-width-down';
 	const MODE_TOP_CROP = 'top-crop';
 	const MODE_TOP_CROP_DOWN = 'top-crop-down';
 	const MODE_WINDOW_CROP = 'window-crop';
@@ -32,34 +33,34 @@ class UrlGenerator {
 	const REVISION_LATEST = 'latest';
 
 	/** @var UrlConfig */
-	private $config;
+	protected $config;
 
 	/** @var string mode of the image we're requesting */
-	private $mode = self::MODE_ORIGINAL;
+	protected $mode = self::MODE_ORIGINAL;
 
 	/** @var int width of the image, in pixels */
-	private $width = 100;
+	protected $width = 100;
 
 	/** @var int height of the image, in pixels */
-	private $height = 100;
+	protected $height = 100;
 
 	/** @var array hash of query parameters to send to the thumbnailer */
-	private $query = [];
+	protected $query = [];
 
 	/** @var string one of the IMAGE_TYPE_ constants */
-	private $imageType = self::IMAGE_TYPE_IMAGES;
+	protected $imageType = self::IMAGE_TYPE_IMAGES;
 
 	/** @var int for window-crop modes, where to start the window (from the left) */
-	private $xOffset = 0;
+	protected $xOffset = 0;
 
 	/** @var int for window-crop modes, where to start the window (from the top) */
-	private $yOffset = 0;
+	protected $yOffset = 0;
 
 	/** @var int for window-crop modes, the width of the window that's cropped */
-	private $windowWidth = 0;
+	protected $windowWidth = 0;
 
 	/** @var int for window-crop modes, the height of the window that's cropped */
-	private $windowHeight = 0;
+	protected $windowHeight = 0;
 
 	public function __construct(UrlConfig $config) {
 		$this->config = $config;
@@ -209,10 +210,14 @@ class UrlGenerator {
 	/**
 	 * dictate width, let height auto scale
 	 * @param null $width
+	 * @param bool $upsample allow thumbnails larger than originals
 	 * @return $this
 	 */
-	public function scaleToWidth($width = null) {
-		$this->mode(self::MODE_SCALE_TO_WIDTH);
+	public function scaleToWidth($width = null, $upsample = false) {
+
+		$upsample
+			? $this->mode(self::MODE_SCALE_TO_WIDTH)
+			: $this->mode(self::MODE_SCALE_TO_WIDTH_DOWN);
 
 		if ($width != null) {
 			$this->width($width);
@@ -304,13 +309,13 @@ class UrlGenerator {
 	/**
 	 * @return string
 	 */
-	private function modePath() {
+	protected function modePath() {
 		$modePath = '';
 
 		if ($this->mode != self::MODE_ORIGINAL) {
 			$modePath .= "/{$this->mode}";
 
-			if ($this->mode == self::MODE_SCALE_TO_WIDTH) {
+			if ($this->mode == self::MODE_SCALE_TO_WIDTH || $this->mode == self::MODE_SCALE_TO_WIDTH_DOWN) {
 				$modePath .= "/{$this->width}";
 			} elseif ($this->mode == self::MODE_WINDOW_CROP || $this->mode == self::MODE_WINDOW_CROP_FIXED) {
 				$modePath .= "/width/{$this->width}";
@@ -330,7 +335,7 @@ class UrlGenerator {
 	}
 
 
-	private function getRevision() {
+	protected function getRevision() {
 		$revision = self::REVISION_LATEST;
 
 		if ($this->config->isArchive()) {
@@ -371,12 +376,12 @@ class UrlGenerator {
 		return $this;
 	}
 
-	private function imageType($type) {
+	protected function imageType($type) {
 		$this->imageType = $type;
 		return $this;
 	}
 
-	private function domainShard($imagePath) {
+	protected function domainShard($imagePath) {
 		// shard based on original image, so frontends can build thumb urls from originals that might be cached in the
 		// user's browser (VE, for instance)
 		$hash = ord(sha1($this->config->relativePath()));

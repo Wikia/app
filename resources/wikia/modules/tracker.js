@@ -296,7 +296,7 @@
 				' [' + trackingMethod + ' track]', 'info', logGroup );
 
 			// No-interactive = true
-			// @see /extensions/wikia/AnalyticsEngine/js/analytics.js
+			// @see /extensions/wikia/AnalyticsEngine/js/universal_analytics.js
 			analyticsArgs.push( true );
 
 			if ( tracking.ad ) {

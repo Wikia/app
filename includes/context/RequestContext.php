@@ -65,6 +65,12 @@ class RequestContext implements IContextSource {
 	private $skin;
 
 	/**
+	 * @var int
+	 */
+	private $recursion = 0;
+
+
+	/**
 	 * Set the WebRequest object
 	 *
 	 * @param $r WebRequest object
@@ -256,6 +262,7 @@ class RequestContext implements IContextSource {
 	 * @since 1.19
 	 */
 	public function setLanguage( $l ) {
+
 		if ( $l instanceof Language ) {
 			$this->lang = $l;
 		} elseif ( is_string( $l ) ) {
@@ -284,23 +291,26 @@ class RequestContext implements IContextSource {
 	 * @since 1.19
 	 */
 	public function getLanguage() {
-		if ( isset( $this->recursion ) ) {
-			trigger_error( "Recursion detected in " . __METHOD__, E_USER_WARNING );
-			$e = new Exception;
-			wfDebugLog( 'recursion-guard', "Recursion detected:\n" . $e->getTraceAsString() );
-
+		/**
+		 * The following block of code (between if and elseif) has been added in
+		 * order to force setting $this->lang to some value. Apparently there was
+		 * something wrong with the following block (the one inside elseif) that would
+		 * cause an infinite loop or other issues.
+		 */
+		if ( $this->recursion > 0 ) {
+			$this->recursion++;
 			global $wgLanguageCode;
 			$code = ( $wgLanguageCode ) ? $wgLanguageCode : 'en';
 			$this->lang = Language::factory( $code );
 		} elseif ( $this->lang === null ) {
-			$this->recursion = true;
+			$this->recursion++;
 
 			global $wgLanguageCode, $wgContLang;
 
 			$request = $this->getRequest();
 			$user = $this->getUser();
 
-			$code = $request->getVal( 'uselang', $user->getOption( 'language' ) );
+			$code = $request->getVal( 'uselang', $user->getGlobalPreference( 'language' ) );
 			$code = self::sanitizeLangCode( $code );
 
 			wfRunHooks( 'UserGetLanguageObject', array( $user, &$code, $this ) );
@@ -312,7 +322,7 @@ class RequestContext implements IContextSource {
 				$this->lang = $obj;
 			}
 
-			unset( $this->recursion );
+			$this->recursion = 0;
 		}
 
 		return $this->lang;
@@ -353,7 +363,7 @@ class RequestContext implements IContextSource {
 				global $wgHiddenPrefs;
 				if( !in_array( 'skin', $wgHiddenPrefs ) ) {
 					# get the user skin
-					$userSkin = $this->getUser()->getOption( 'skin' );
+					$userSkin = $this->getUser()->getGlobalPreference( 'skin' );
 					$userSkin = $this->getRequest()->getVal( 'useskin', $userSkin );
 				} else {
 					# if we're not allowing users to override, then use the default

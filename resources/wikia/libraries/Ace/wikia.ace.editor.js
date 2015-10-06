@@ -2,6 +2,7 @@ define( 'wikia.ace.editor', ['wikia.window', 'jquery'], function(win, $){
 	'use strict';
 
 	var ace = win.ace, editorInstance, editorSession,
+		$editPage = $('#EditPage'),
 		$editor, $window = $(win), $input,
 		editorMinHeight = 300,
 		$wikiaBar = $('#WikiaBarWrapper'),
@@ -26,6 +27,8 @@ define( 'wikia.ace.editor', ['wikia.window', 'jquery'], function(win, $){
 		editorInstance = ace.edit( editorId );
 		$editor = $('#' + editorId);
 		editorSession = editorInstance.getSession();
+
+		$editor.msg = editorMessage;
 	}
 
 	/**
@@ -169,20 +172,26 @@ define( 'wikia.ace.editor', ['wikia.window', 'jquery'], function(win, $){
 		$window.resize(resizeEditor);
 	}
 
+	/** Overwrite Wikia Editor function **/
+
 	/**
-	 * Init modal showing difference between last saved and currently edited code
+	 * Translate message
 	 *
-	 * @param initConfig modal config values
-	 * @param modalCallback callback functiona after modal init
+	 * @param {String} msg message name
+	 * @returns {String}
 	 */
-	function showDiff( initConfig, modalCallback ) {
-		require( [ 'wikia.ui.factory' ], function( uiFactory ){
-			uiFactory.init( [ 'modal' ] ).then(function( uiModal ) {
-				uiModal.createComponent( initConfig, function( previewModal ) {
-					modalCallback(previewModal, ace);
-				});
-			});
-		});
+	function editorMessage(msg) {
+		return $.msg('wikia-editor-' + msg);
+	}
+
+	/**
+	 * Get element by data attribute ('data-space-type')
+	 *
+	 * @param {String} name
+	 * @returns {Element}
+	 */
+	function getSpace(name) {
+		return $editPage.find('[data-space-type=' + name + ']') || false;
 	}
 
 	/**
@@ -194,10 +203,10 @@ define( 'wikia.ace.editor', ['wikia.window', 'jquery'], function(win, $){
 		getEditor: getEditor,
 		getEditorInstance: getEditorInstance,
 		getInput: getInput,
+		getSpace: getSpace,
 		setTheme: setTheme,
 		setMode: setMode,
 		setOptions: setOptions,
-		setConfig: setConfig,
-		showDiff: showDiff
+		setConfig: setConfig
 	};
 });

@@ -52,8 +52,8 @@ define('ext.wikia.adEngine.provider.liftium', [
 		return false;
 	};
 
-	fillInSlot = function (slotname, success) {
-		log(['fillInSlot', slotname], 'debug', logGroup);
+	fillInSlot = function (slotname, slotElement, success) {
+		log(['fillInSlot', slotname, slotElement], 'debug', logGroup);
 
 		// TOP_BUTTON_WIDE after TOP_LEADERBOARD hack:
 		if (slotname === 'TOP_BUTTON_WIDE') {
@@ -77,10 +77,10 @@ define('ext.wikia.adEngine.provider.liftium', [
 
 		var slotsize = slotMap[slotname].size;
 
-			log('using iframe for #' + slotname, 'debug', logGroup);
-			Liftium.injectAd(doc, slotname, slotsize);
+		log('using iframe for #' + slotname, 'debug', logGroup);
+		Liftium.injectAd(doc, slotname, slotElement, slotsize);
 
-			slotTweaker.removeDefaultHeight(slotname);
+		slotTweaker.removeDefaultHeight(slotname);
 
 		// Fake success, because we don't have the success event in Liftium
 		success();

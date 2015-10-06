@@ -278,8 +278,8 @@ class AbTestingData extends WikiaObject {
 		);
 
 		$dbr = $this->getDb(DB_MASTER);
-		$val1 = $dbr->selectField(self::TABLE_VERSIONS,"{$aggregate}({$startExpr})",$startConds);
-		$val2 = $dbr->selectField(self::TABLE_VERSIONS,"{$aggregate}({$endExpr})",$endConds);
+		$val1 = $dbr->selectField(self::TABLE_VERSIONS,"{$aggregate}({$startExpr})",$startConds, __METHOD__);
+		$val2 = $dbr->selectField(self::TABLE_VERSIONS,"{$aggregate}({$endExpr})",$endConds, __METHOD__);
 
 		if ( is_null($val1) ) {
 			return $val2;

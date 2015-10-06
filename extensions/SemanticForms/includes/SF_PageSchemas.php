@@ -22,6 +22,20 @@ class SFPageSchemas extends PSExtensionHandler {
 	 */
 	public static function createPageSchemasObject( $tagName, $xml ) {
 		$sfarray = array();
+
+		if( $tagName == "standardInputs" ) {
+			foreach ( $xml->children() as $tag => $child ) {
+					foreach ( $child->children() as $tag => $formelem ) {
+						if ( $tag == $tagName ) {
+							foreach( $formelem->attributes() as $attr => $name) {
+								$sfarray[$attr] = (string)$formelem->attributes()->$attr;
+							}
+						}
+					}
+					return $sfarray;
+			}
+		}
+
 		if ( $tagName == "semanticforms_Form" ) {
 			foreach ( $xml->children() as $tag => $child ) {
 				if ( $tag == $tagName ) {
@@ -44,14 +58,18 @@ class SFPageSchemas extends PSExtensionHandler {
 				}
 			}
 		}
-		if ( $tagName == "semanticforms_FormInput" ) {
+		if ( $tagName == "semanticforms_FormInput" || $tagName == "semanticforms_PageSection" ) {
 			foreach ( $xml->children() as $tag => $child ) {
 				if ( $tag == $tagName ) {
 					foreach ( $child->children() as $prop ) {
 						if ( $prop->getName() == 'InputType' ) {
 							$sfarray[$prop->getName()] = (string)$prop;
 						} else {
+							if ( (string)$prop->attributes()->name == '' ) {
+								$sfarray[$prop->getName()] = (string)$prop;
+							} else {
 							$sfarray[(string)$prop->attributes()->name] = (string)$prop;
+							}
 						}
 					}
 					return $sfarray;
@@ -69,11 +87,14 @@ class SFPageSchemas extends PSExtensionHandler {
 
 		$formName = null;
 		$xml = '';
+		$isStandardInputsOpen = false;
 		foreach ( $wgRequest->getValues() as $var => $val ) {
+			$val = str_replace( array( '<', '>' ), array( '&lt;', '&gt;' ), $val );
 			if ( $var == 'sf_form_name' ) {
 				$formName = $val;
 			} elseif ( $var == 'sf_page_name_formula' ) {
 				if ( !empty( $val ) ) {
+					$val = Xml::escapeTagsOnly( $val );
 					$xml .= '<PageNameFormula>' . $val . '</PageNameFormula>';
 				}
 			} elseif ( $var == 'sf_create_title' ) {
@@ -84,7 +105,49 @@ class SFPageSchemas extends PSExtensionHandler {
 				if ( !empty( $val ) ) {
 					$xml .= '<EditTitle>' . $val . '</EditTitle>';
 				}
+			} elseif ( $var == 'sf_fi_free_text_label' ) {
+				$isStandardInputsOpen = true;
+				$xml .= '<standardInputs ';
+				if ( !empty( $val ) ) {
+					$xml .= 'freeTextLabel="' . Xml::escapeTagsOnly( $val ) . '" ';
+				}
+			} /* Options */ elseif ( $var == 'sf_fi_free_text' ) {
+				if ( !empty( $val ) ) {
+					$xml .= 'inputFreeText="' . $val . '" ';
+				}
+			} elseif ( $var == 'sf_fi_summary' ) {
+				if ( !empty( $val ) ) {
+					$xml .= 'inputSummary="' . $val . '" ';
+				}
+			} elseif ( $var == 'sf_fi_minor_edit' ) {
+				if ( !empty( $val ) ) {
+					$xml .= 'inputMinorEdit="' . $val . '" ';
+				}
+			} elseif ( $var == 'sf_fi_watch' ) {
+				if ( !empty( $val ) ) {
+					$xml .= 'inputWatch="' . $val . '" ';
+				}
+			} elseif ( $var == 'sf_fi_save' ) {
+				if ( !empty( $val ) ) {
+					$xml .= 'inputSave="' . $val . '" ';
+				}
+			} elseif ( $var == 'sf_fi_preview' ) {
+				if ( !empty( $val ) ) {
+					$xml .= 'inputPreview="' . $val . '" ';
+				}
+			} elseif ( $var == 'sf_fi_changes' ) {
+				if ( !empty( $val ) ) {
+					$xml .= 'inputChanges="' . $val . '" ';
+				}
+			} elseif ( $var == 'sf_fi_cancel' ) {
+				if ( !empty( $val ) ) {
+					$xml .= 'inputCancel="' . $val . '"';
+				}
 			}
+		}
+		if ( $isStandardInputsOpen ) {
+			$isStandardInputsOpen = false;
+			$xml .= ' />';
 		}
 		$xml = '<semanticforms_Form name="' . $formName . '" >' . $xml;
 		$xml .= '</semanticforms_Form>';
@@ -100,6 +163,7 @@ class SFPageSchemas extends PSExtensionHandler {
 		$xmlPerTemplate = array();
 		$templateNum = -1;
 		foreach ( $wgRequest->getValues() as $var => $val ) {
+			$val = str_replace( array( '<', '>' ), array( '&lt;', '&gt;' ), $val );
 			if ( substr( $var, 0, 18 ) == 'sf_template_label_' ) {
 				$templateNum = substr( $var, 18 );
 				$xml = '<semanticforms_TemplateDetails>';
@@ -126,6 +190,7 @@ class SFPageSchemas extends PSExtensionHandler {
 		$xmlPerField = array();
 		$fieldNum = -1;
 		foreach ( $wgRequest->getValues() as $var => $val ) {
+			$val = str_replace( array( '<', '>' ), array( '&lt;', '&gt;' ), $val );
 			if ( substr( $var, 0, 14 ) == 'sf_input_type_' ) {
 				$fieldNum = substr( $var, 14 );
 				$xml = '<semanticforms_FormInput>';
@@ -133,30 +198,74 @@ class SFPageSchemas extends PSExtensionHandler {
 					$xml .= '<InputType>' . $val . '</InputType>';
 				}
 			} elseif ( substr( $var, 0, 14 ) == 'sf_key_values_' ) {
+				$xml .= self::createFormInputXMLFromForm( $val );
+			} elseif ( substr( $var, 0, 14 ) == 'sf_input_befo_' ) {
 				if ( $val !== '' ) {
-					// replace the comma substitution character that has no chance of
-					// being included in the values list - namely, the ASCII beep
-					$listSeparator = ',';
-					$key_values_str = str_replace( "\\$listSeparator", "\a", $val );
-					$key_values_array = explode( $listSeparator, $key_values_str );
-					foreach ( $key_values_array as $value ) {
-						// replace beep back with comma, trim
-						$value = str_replace( "\a", $listSeparator, trim( $value ) );
-						$param_value = explode( "=", $value, 2 );
-						if ( count( $param_value ) == 2 && $param_value[1] != null ) {
-							// Handles <Parameter name="size">20</Parameter>
-							$xml .= '<Parameter name="' . $param_value[0] . '">' . $param_value[1] . '</Parameter>';
-						} else {
-							// Handles <Parameter name="mandatory" />
-							$xml .= '<Parameter name="' . $param_value[0] . '"/>';
-						}
-					}
+					$xml .= '<TextBeforeField>' . $val . '</TextBeforeField>';
 				}
+			} elseif ( substr( $var, 0, 14 ) == 'sf_input_desc_' ) {
+				if ( $val !== '' ) {
+					$xml .= '<Description>' . $val . '</Description>';
+				}
+			} elseif ( substr( $var, 0, 18 ) == 'sf_input_desctool_' ) {
+				if ( $val !== '' ) {
+					$xml .= '<DescriptionTooltipMode>' . $val . '</DescriptionTooltipMode>';
+				}
+			} elseif ( substr( $var, 0, 16 ) == 'sf_input_finish_' ) {
+				// This is a hack.
 				$xml .= '</semanticforms_FormInput>';
 				$xmlPerField[$fieldNum] = $xml;
 			}
 		}
 		return $xmlPerField;
+	}
+
+	/**
+	 * Creates Page Schemas XML for page sections
+	 */
+	public static function createPageSectionXMLFromForm() {
+		global $wgRequest;
+		$xmlPerPageSection = array();
+		$pageSectionNum = -1;
+
+		foreach ( $wgRequest->getValues() as $var => $val ) {
+			$val = str_replace( array( '<', '>' ), array( '&lt;', '&gt;' ), $val );
+			if ( substr( $var, 0, 26 ) == 'sf_pagesection_key_values_' ) {
+				$pageSectionNum = substr( $var, 26 );
+				$xml = "";
+				if ( $val != '' ) {
+					$xml = '<semanticforms_PageSection>';
+					$xml .= self::createFormInputXMLFromForm( $val );
+					$xml .= '</semanticforms_PageSection>';
+				}
+				$xmlPerPageSection[$pageSectionNum] = $xml;
+			}
+		}
+		return $xmlPerPageSection;
+	}
+
+	static function createFormInputXMLFromForm( $valueFromForm ) {
+		$xml = '';
+		if ( $valueFromForm !== '' ) {
+			// replace the comma substitution character that has no chance of
+			// being included in the values list - namely, the ASCII beep
+			$listSeparator = ',';
+			$key_values_str = str_replace( "\\$listSeparator", "\a", $valueFromForm );
+			$key_values_array = explode( $listSeparator, $key_values_str );
+			foreach ( $key_values_array as $value ) {
+			// replace beep back with comma, trim
+				$value = str_replace( "\a", $listSeparator, trim( $value ) );
+				$param_value = explode( "=", $value, 2 );
+				if ( count( $param_value ) == 2 && $param_value[1] != null ) {
+					// Handles <Parameter name="size">20</Parameter>
+					$xml .= '<Parameter name="' . $param_value[0] . '">' . $param_value[1] . '</Parameter>';
+				} else {
+					// Handles <Parameter name="mandatory" />
+					$xml .= '<Parameter name="' . $param_value[0] . '"/>';
+				}
+			}
+		}
+		return $xml;
 	}
 
 	public static function getDisplayColor() {
@@ -183,7 +292,16 @@ class SFPageSchemas extends PSExtensionHandler {
 		$createTitle = PageSchemas::getValueFromObject( $form_array, 'CreateTitle' );
 		$editTitle = PageSchemas::getValueFromObject( $form_array, 'EditTitle' );
 
-		$text = "\t<p>" . wfMsg( 'ps-namelabel' ) . ' ' . Html::input( 'sf_form_name', $formName, 'text', array( 'size' => 15 ) ) . "</p>\n";
+		//Inputs
+		if ( !is_null( $pageSchemaObj ) ) {
+			$standardInputs = $pageSchemaObj->getObject( 'standardInputs' );
+		} else {
+			$standardInputs = array();
+		}
+
+		$freeTextLabel = html_entity_decode( PageSchemas::getValueFromObject( $form_array, 'freeTextLabel' ) );
+
+		$text = "\t<p>" . wfMessage( 'ps-namelabel' )->escaped() . ' ' . Html::input( 'sf_form_name', $formName, 'text', array( 'size' => 15 ) ) . "</p>\n";
 		// The checkbox isn't actually a field in the page schema -
 		// we set it based on whether or not a page formula has been
 		// specified.
@@ -194,9 +312,59 @@ class SFPageSchemas extends PSExtensionHandler {
 		$text .= '<p>' . Html::input( 'sf_two_step_process', null, 'checkbox', $twoStepProcessAttrs );
 		$text .= ' Users must enter the page name before getting to the form (default)';
 		$text .= "</p>\n";
-		$text .= "\t<p id=\"sf-page-name-formula\">" . wfMsg( 'sf-pageschemas-pagenameformula' ) . ' ' . Html::input( 'sf_page_name_formula', $pageNameFormula, 'text', array( 'size' => 30 ) ) . "</p>\n";
-		$text .= "\t<p>" . wfMsg( 'sf-pageschemas-createtitle' ) . ' ' . Html::input( 'sf_create_title', $createTitle, 'text', array( 'size' => 25 ) ) . "</p>\n";
-		$text .= "\t<p id=\"sf-edit-title\">" . wfMsg( 'sf-pageschemas-edittitle' ) . ' ' . Html::input( 'sf_edit_title', $editTitle, 'text', array( 'size' => 25 ) ) . "</p>\n";
+		$text .= '<div class="editSchemaMinorFields">';
+		$text .= "\t<p id=\"sf-page-name-formula\">" . wfMessage( 'sf-pageschemas-pagenameformula' )->escaped() . ' ' . Html::input( 'sf_page_name_formula', $pageNameFormula, 'text', array( 'size' => 30 ) ) . "</p>\n";
+		$text .= "\t<p>" . wfMessage( 'sf-pageschemas-createtitle' )->escaped() . ' ' . Html::input( 'sf_create_title', $createTitle, 'text', array( 'size' => 25 ) ) . "</p>\n";
+		$text .= "\t<p id=\"sf-edit-title\">" . wfMessage( 'sf-pageschemas-edittitle' )->escaped() . ' ' . Html::input( 'sf_edit_title', $editTitle, 'text', array( 'size' => 25 ) ) . "</p>\n";
+
+		$text .= "Free text label: " . Html::input( 'sf_fi_free_text_label', ( ( empty( $freeTextLabel ) ) ? wfMessage( 'sf_form_freetextlabel' )->inContentLanguage()->text() : $freeTextLabel ), 'text' ) . "</p><p>";
+
+		//Inputs
+		$text .= "<p>Define form buttons and inputs (all will be enabled if none are selected): &nbsp;</p><p>";
+
+		// Free text
+		$text .= '<span>';
+		$text .= Html::input( 'sf_fi_free_text', '1', 'checkbox', array( 'id' => 'sf_fi_free_text', 'checked' => ( isset( $standardInputs['inputFreeText'])) ? $standardInputs['inputFreeText'] : null ) );
+		$text .= Html::rawElement( 'label', array( 'for' => 'sf_fi_free_text' ), 'Free text input' );
+		$text .= "&nbsp;</span>";
+		// Summary
+		$text .= '<span>';
+		$text .= Html::input( 'sf_fi_summary', '1', 'checkbox', array( 'id' => 'sf_fi_summary', 'checked' => ( isset( $standardInputs['inputSummary'] ) ) ? $standardInputs['inputSummary'] : null ) );
+		$text .= Html::rawElement( 'label', array( 'for' => 'sf_fi_summary' ), 'Summary input' );
+		$text .= "&nbsp;</span>";
+		// Minor edit
+		$text .= '<span>';
+		$text .= Html::input( 'sf_fi_minor_edit', '1', 'checkbox', array( 'id' => 'sf_fi_minor_edit', 'checked' => ( isset( $standardInputs['inputMinorEdit'] ) ) ? $standardInputs['inputMinorEdit'] : null ) );
+		$text .= Html::rawElement( 'label', array( 'for' => 'sf_fi_minor_edit' ), 'Minor edit input' );
+		$text .= "&nbsp;</span>";
+		// Watch
+		$text .= '<span>';
+		$text .= Html::input( 'sf_fi_watch', '1', 'checkbox', array( 'id' => 'sf_fi_watch', 'checked' => ( isset( $standardInputs['inputWatch'] ) ) ? $standardInputs['inputWatch'] : null ) );
+		$text .= Html::rawElement( 'label', array( 'for' => 'sf_fi_watch' ), 'Watch input' );
+		$text .= "&nbsp;</span>";
+		// Save
+		$text .= '<span>';
+		$text .= Html::input( 'sf_fi_save', '1', 'checkbox', array( 'id' => 'sf_fi_save', 'checked' => ( isset( $standardInputs['inputSave'] ) ) ? $standardInputs['inputSave'] : null ) );
+		$text .= Html::rawElement( 'label', array( 'for' => 'sf_fi_save' ), 'Save input' );
+		$text .= "&nbsp;</span>";
+		// Preview
+		$text .= '<span>';
+		$text .= Html::input( 'sf_fi_preview', '1', 'checkbox', array( 'id' => 'sf_fi_preview', 'checked' => ( isset( $standardInputs['inputPreview'] ) ) ? $standardInputs['inputPreview'] : null ) );
+		$text .= Html::rawElement( 'label', array( 'for' => 'sf_fi_preview' ), 'Preview input' );
+		$text .= "&nbsp;</span>";
+		// Changes
+		$text .= '<span>';
+		$text .= Html::input( 'sf_fi_changes', '1', 'checkbox', array( 'id' => 'sf_fi_changes', 'checked' => ( isset( $standardInputs['inputChanges'] ) ) ? $standardInputs['inputChanges'] : null ) );
+		$text .= Html::rawElement( 'label', array( 'for' => 'sf_fi_changes' ), 'Changes input' );
+		$text .= "&nbsp;</span>";
+		// Cancel
+		$text .= '<span>';
+		$text .= Html::input( 'sf_fi_cancel', '1', 'checkbox', array( 'id' => 'sf_fi_cancel', 'checked' => ( isset( $standardInputs['inputCancel'] ) ) ? $standardInputs['inputCancel'] : null ) );
+		$text .= Html::rawElement( 'label', array( 'for' => 'sf_fi_cancel' ), 'Cancel input' );
+		$text .= "&nbsp;</span>";
+
+		$text .= "</p>";
+		$text .= "</div>\n";
 
 		// Separately, add Javascript for getting the checkbox to
 		// hide certain fields.
@@ -238,7 +406,7 @@ END;
 		}
 
 		$text = "\t<p>" . "The following fields are useful if there can be multiple instances of this template." . "</p>\n";
-		$text .= "\t<p>" . 'Label:' . ' ' . Html::input( 'sf_template_label_num', $templateLabel, 'text', array( 'size' => 15 ) ) . "</p>\n";
+		$text .= "\t<p>" . wfMessage( 'exif-label' )->escaped() . ': ' . Html::input( 'sf_template_label_num', $templateLabel, 'text', array( 'size' => 15 ) ) . "</p>\n";
 		$text .= "\t<p>" . 'Text of button to add another instance (default is "Add another"):' . ' ' . Html::input( 'sf_template_addanother_num', $addAnotherText, 'text', array( 'size' => 25 ) ) . "</p>\n";
 
 		return array( $text, $hasExistingValues );
@@ -252,11 +420,17 @@ END;
 		$fieldValues = array();
 		$hasExistingValues = false;
 		$inputType = null;
+		$inputDesc = null;
+		$inputDescTooltipMode = null;
+		$inputBeforeText = null;
 		if ( !is_null( $psField ) ) {
 			$fieldValues = $psField->getObject( 'semanticforms_FormInput' );
 			if ( !is_null( $fieldValues ) ) {
 				$hasExistingValues = true;
 				$inputType = PageSchemas::getValueFromObject( $fieldValues, 'InputType' );
+				$inputDesc = PageSchemas::getValueFromObject( $fieldValues, 'Description' );
+				$inputDescTooltipMode = PageSchemas::getValueFromObject( $fieldValues, 'DescriptionTooltipMode' );
+				$inputBeforeText = PageSchemas::getValueFromObject( $fieldValues, 'TextBeforeField' );
 			} else {
 				$fieldValues = array();
 			}
@@ -273,12 +447,12 @@ END;
 			$inputTypeDropdownHTML .= Html::element( 'option', $inputTypeOptionAttrs, $possibleInputType ) . "\n";
 		}
 		$inputTypeDropdown = Html::rawElement( 'select', array( 'name' => 'sf_input_type_num' ), $inputTypeDropdownHTML );
-		$text = '<p>' . wfMsg( 'sf-pageschemas-inputtype' ) . ' ' . $inputTypeDropdown . '</p>';
+		$text = '<p>' . wfMessage( 'sf-pageschemas-inputtype' )->escaped() . ' ' . $inputTypeDropdown . '</p>';
 
-		$text .= "\t" . '<p>Enter parameter names and their values as key=value pairs, separated by commas (if a value contains a comma, replace it with "\,"). For example: size=20, mandatory</p>' . "\n";
+		$text .= "\t" . '<p>' . wfMessage( 'sf-pageschemas-otherparams', 'size=20, mandatory' )->escaped() . '</p>' . "\n";
 		$paramValues = array();
 		foreach ( $fieldValues as $param => $value ) {
-			if ( !empty( $param ) && $param != 'InputType' ) {
+			if ( !empty( $param ) && $param != 'InputType' && $param != 'Description' && $param != 'DescriptionTooltipMode' && $param != 'TextBeforeField' ) {
 				if ( !empty( $value ) ) {
 					$paramValues[] = $param . '=' . $value;
 				} else {
@@ -286,11 +460,58 @@ END;
 				}
 			}
 		}
+		foreach ( $paramValues as $i => $paramAndVal ) {
+			$paramValues[$i] = str_replace( ',', '\,', $paramAndVal );
+		}
 		$param_value_str = implode( ', ', $paramValues );
 		$inputParamsAttrs = array( 'size' => 80 );
 		$inputParamsInput = Html::input( 'sf_key_values_num', $param_value_str, 'text', $inputParamsAttrs );
 		$text .= "\t<p>$inputParamsInput</p>\n";
+
+		$text .= '<div class="editSchemaMinorFields">' . "\n";
+		$inputBeforeTextPrint = Html::input( 'sf_input_befo_num', $inputBeforeText, 'text', array( 'size' => 80 ) );
+		$text .= "\t<p>Text that will be printed before the field: $inputBeforeTextPrint</p>\n";
+
+		$inputDescription = Html::input( 'sf_input_desc_num', $inputDesc, 'text', array( 'size' => 80 ) );
+		$inputDescriptionTooltipMode = Html::input( 'sf_input_desctool_num', $inputDescTooltipMode, 'checkbox', array( 'checked' => ( $inputDescTooltipMode ) ? 'checked' : null ) );
+		$text .= "\t<p>Field description: $inputDescription<br>$inputDescriptionTooltipMode Show description as pop-up tooltip</p>\n";
+
+		// @HACK to make input parsing easier.
+		$text .= Html::hidden( 'sf_input_finish_num', 1 );
+
+		$text .= "</div>\n";
+
 		return array( $text, $hasExistingValues );
+	}
+
+	public static function getPageSectionEditingHTML( $psPageSection ) {
+		$otherParams = array();
+
+		if ( !is_null( $psPageSection ) ) {
+			$otherParams = $psPageSection->getObject( 'semanticforms_PageSection' );
+		}
+		$paramValues = array();
+		if ( !is_null( $otherParams ) ) {
+			foreach ( $otherParams as $param => $value ) {
+				if ( !empty( $param ) ) {
+					if ( !empty( $value ) ) {
+						$paramValues[] = $param . '=' . $value;
+					} else {
+						$paramValues[] = $param;
+					}
+				}
+			}
+		}
+
+		foreach ( $paramValues as $i => $paramAndVal ) {
+			$paramValues[$i] = str_replace( ',', '\,', $paramAndVal );
+		}
+		$param_value_str = implode( ', ', $paramValues );
+		$text = "\t" . '<p>' . wfMessage( 'sf-pageschemas-otherparams', 'rows=10, mandatory' )->escaped() . '</p>' . "\n";
+		$inputParamsInput = Html::input( 'sf_pagesection_key_values_num', $param_value_str, 'text', array( 'size' => 80 ) );
+		$text .= "\t<p>$inputParamsInput</p>\n";
+
+		return $text;
 	}
 
 	public static function getFormName( $pageSchemaObj ) {
@@ -315,7 +536,13 @@ END;
 				$formName = (string)$child->attributes()->name;
 				$sfarray['name'] = $formName;
 				foreach ( $child->children() as $tag => $formelem ) {
-					$sfarray[$tag] = (string)$formelem;
+					if ( $tag == "standardInputs" ) {
+						foreach ( $formelem->attributes() as $attr => $value ) {
+							$sfarray[$attr] = (string)$formelem->attributes()->$attr;
+						}
+					} else {
+						$sfarray[$tag] = (string)$formelem;
+					}
 				}
 				return $sfarray;
 			}
@@ -339,6 +566,8 @@ END;
 						$formField->setIsHidden( true );
 					} elseif ( $var == 'restricted' ) {
 						$formField->setIsRestricted( true );
+					} elseif ( in_array( $var, array( 'Description', 'DescriptionTooltipMode', 'TextBeforeField' ) ) ) {
+						$formField->setDescriptionArg( $var, $val );
 					} else {
 						$formField->setFieldArg( $var, $val );
 					}
@@ -347,6 +576,25 @@ END;
 			}
 		}
 		return $form_fields;
+	}
+
+	public static function getPageSection( $psPageSection ) {
+		$pageSection = SFPageSection::create( $psPageSection->getSectionName() );
+		$pageSectionArray = $psPageSection->getObject( 'semanticforms_PageSection' );
+		if ( !is_null( $pageSectionArray ) ) {
+			foreach ( $pageSectionArray as $var => $val ) {
+				if ( $var == 'mandatory' ) {
+					$pageSection->setIsMandatory( true );
+				} elseif ( $var == 'hidden' ) {
+					$pageSection->setIsHidden( true );
+				} elseif ( $var == 'restricted' ) {
+					$pageSection->setIsRestricted( true );
+				} else {
+					$pageSection->setSectionArgs( $var, $val );
+				}
+			}
+		}
+		return $pageSection;
 	}
 
 	/**
@@ -376,8 +624,16 @@ END;
 		$psFields = $psTemplate->getFields();
 		$templateFields = array();
 		foreach ( $psFields as $psField ) {
-			$prop_array = $psField->getObject( 'semanticmediawiki_Property' );
-			$propertyName = PageSchemas::getValueFromObject( $prop_array, 'name' );
+			if ( defined( 'SMW_VERSION' ) ) {
+				$prop_array = $psField->getObject( 'semanticmediawiki_Property' );
+				$propertyName = PageSchemas::getValueFromObject( $prop_array, 'name' );
+				if ( !is_null( $prop_array ) && empty( $propertyName ) ) {
+					$propertyName = $psField->getName();
+				}
+			} else {
+				$propertyName = null;
+			}
+
 			if ( $psField->getLabel() === '' ) {
 				$fieldLabel = $psField->getName();
 			} else {
@@ -391,6 +647,17 @@ END;
 				$psField->getDelimiter(),
 				$psField->getDisplay()
 			);
+			$templateField->setNamespace( $psField->getNamespace() );
+			if ( defined( 'CARGO_VERSION' ) ) {
+				$cargoFieldArray = $psField->getObject( 'cargo_Field' );
+				$fieldType = PageSchemas::getValueFromObject( $cargoFieldArray, 'Type' );
+				$allowedValues = PageSchemas::getValueFromObject( $cargoFieldArray, 'AllowedValues' );
+				if ( $fieldType != '' ) {
+					$templateField->setFieldType( $fieldType );
+					$templateField->setPossibleValues( $allowedValues );
+				}
+			}
+
 			$templateFields[] = $templateField;
 		}
 		return $templateFields;
@@ -401,10 +668,40 @@ END;
 	 * of Page Schemas.
 	 */
 	public static function generateForm( $formName, $formTitle,
-		$formTemplates, $formDataFromSchema, $categoryName ) {
+		$formItems, $formDataFromSchema, $categoryName ) {
 		global $wgUser;
 
-		$form = SFForm::create( $formName, $formTemplates );
+		$input = array();
+		if ( array_key_exists( 'inputFreeText', $formDataFromSchema ) ) {
+			$input['free text'] = '{{{standard input|free text|rows=10}}}';
+		}
+		if ( array_key_exists( 'inputSummary', $formDataFromSchema ) ) {
+			$input['summary'] = '{{{standard input|summary}}}';
+		}
+		if ( array_key_exists( 'inputMinorEdit', $formDataFromSchema ) ) {
+			$input['minor edit'] = '{{{standard input|minor edit}}}';
+		}
+		if ( array_key_exists( 'inputWatch', $formDataFromSchema ) ) {
+			$input['watch'] = '{{{standard input|watch}}}';
+		}
+		if ( array_key_exists( 'inputSave', $formDataFromSchema ) ) {
+			$input['save'] = '{{{standard input|save}}}';
+		}
+		if ( array_key_exists( 'inputPreview', $formDataFromSchema ) ) {
+			$input['preview'] = '{{{standard input|preview}}}';
+		}
+		if ( array_key_exists( 'inputChanges', $formDataFromSchema ) ) {
+			$input['changes'] = '{{{standard input|changes}}}';
+		}
+		if ( array_key_exists( 'inputCancel', $formDataFromSchema ) ) {
+			$input['cancel'] = '{{{standard input|cancel}}}';
+		}
+
+		$freeTextLabel = null;
+		if ( array_key_exists( 'freeTextLabel', $formDataFromSchema ) )
+			$freeTextLabel = $formDataFromSchema['freeTextLabel'];
+
+		$form = SFForm::create( $formName, $formItems );
 		$form->setAssociatedCategory( $categoryName );
 		if ( array_key_exists( 'PageNameFormula', $formDataFromSchema ) ) {
 			$form->setPageNameFormula( $formDataFromSchema['PageNameFormula'] );
@@ -415,12 +712,19 @@ END;
 		if ( array_key_exists( 'EditTitle', $formDataFromSchema ) ) {
 			$form->setEditTitle( $formDataFromSchema['EditTitle'] );
 		}
-		$formContents = $form->createMarkup();
+		$formContents = $form->createMarkup( $input, $freeTextLabel );
 		$params = array();
 		$params['user_id'] = $wgUser->getId();
 		$params['page_text'] = $formContents;
 		$job = new PSCreatePageJob( $formTitle, $params );
-		Job::batchInsert( array( $job ) );
+
+		$jobs = array( $job );
+		if ( class_exists( 'JobQueueGroup' ) ) {
+			JobQueueGroup::singleton()->push( $jobs );
+		} else {
+			// MW <= 1.20
+			Job::batchInsert( $jobs );
+		}
 	}
 
 	/**
@@ -429,69 +733,134 @@ END;
 	public static function generatePages( $pageSchemaObj, $selectedPages ) {
 		global $wgUser;
 
-		$psTemplates = $pageSchemaObj->getTemplates();
-
-		$form_templates = array();
+		$psFormItems = $pageSchemaObj->getFormItemsList();
+		$form_items = array();
 		$jobs = array();
-		foreach ( $psTemplates as $psTemplate ) {
-			// Generate every specified template
-			$templateName = $psTemplate->getName();
-			$templateTitle = Title::makeTitleSafe( NS_TEMPLATE, $templateName );
-			$fullTemplateName = PageSchemas::titleString( $templateTitle );
-			$template_fields = self::getFieldsFromTemplateSchema( $psTemplate );
-			if ( class_exists( 'SIOPageSchemas' ) ) {
-				$internalObjProperty = SIOPageSchemas::getInternalObjectPropertyName( $psTemplate );
-			} else {
-				$internalObjProperty = null;
+		$templateHackUsed = false;
+		$isCategoryNameSet = false;
+
+		// Generate every specified template
+		foreach ( $psFormItems as $psFormItem ) {
+			if ( $psFormItem['type'] == 'Template' ) {
+				$psTemplate = $psFormItem['item'];
+				$templateName = $psTemplate->getName();
+				$templateTitle = Title::makeTitleSafe( NS_TEMPLATE, $templateName );
+				$fullTemplateName = PageSchemas::titleString( $templateTitle );
+				$template_fields = self::getFieldsFromTemplateSchema( $psTemplate );
+				// Get property for use in either #set_internal
+				// or #subobject, defined by either SIO's or
+				// SMW's Page Schemas portion. We don't need
+				// to record which one it came from, because
+				// SF's code to generate the template runs its
+				// own, similar check.
+				// @TODO - $internalObjProperty should probably
+				// have a more generic name.
+				if ( class_exists( 'SIOPageSchemas' ) ) {
+					$internalObjProperty = SIOPageSchemas::getInternalObjectPropertyName( $psTemplate );
+				} elseif ( method_exists( 'SMWPageSchemas', 'getConnectingPropertyName' ) ) {
+					$internalObjProperty = SMWPageSchemas::getConnectingPropertyName( $psTemplate );
+				} else {
+					$internalObjProperty = null;
+				}
+				// TODO - actually, the category-setting should be
+				// smarter than this: if there's more than one
+				// template in the schema, it should probably be only
+				// the first non-multiple template that includes the
+				// category tag.
+				if ( $psTemplate->isMultiple() ) {
+					$categoryName = null;
+				} else {
+					if ( $isCategoryNameSet == false ) {
+						$categoryName = $pageSchemaObj->getCategoryName();
+						$isCategoryNameSet = true;
+					} else {
+						$categoryName = null;
+					}
+
+				}
+				if ( method_exists( $psTemplate, 'getFormat' ) ) {
+					$templateFormat = $psTemplate->getFormat();
+				} else {
+					$templateFormat = null;
+				}
+
+				$sfTemplate = new SFTemplate( $templateName, $template_fields );
+				$sfTemplate->setConnectingProperty( $internalObjProperty );
+				$sfTemplate->setCategoryName( $categoryName );
+				$sfTemplate->setFormat( $templateFormat );
+
+				// Set Cargo table, if one was set in the schema.
+				$cargoArray = $psTemplate->getObject( 'cargo_TemplateDetails' );
+				if ( !is_null( $cargoArray ) ) {
+					$sfTemplate->mCargoTable = PageSchemas::getValueFromObject( $cargoArray, 'Table' );
+				}
+
+				$templateText = $sfTemplate->createText();
+
+				if ( in_array( $fullTemplateName, $selectedPages ) ) {
+					$params = array();
+					$params['user_id'] = $wgUser->getId();
+					$params['page_text'] = $templateText;
+					$jobs[] = new PSCreatePageJob( $templateTitle, $params );
+					if ( strpos( $templateText, '{{!}}' ) > 0 ) {
+						$templateHackUsed = true;
+					}
+				}
+
+				$templateValues = self::getTemplateValues( $psTemplate );
+				if ( array_key_exists( 'Label', $templateValues ) ) {
+					$templateLabel = $templateValues['Label'];
+				} else {
+					$templateLabel = null;
+				}
+				$form_fields = self::getFormFieldInfo( $psTemplate, $template_fields );
+				// Create template info for form, for use in generating
+				// the form (if it will be generated).
+				$form_template = SFTemplateInForm::create(
+					$templateName,
+					$templateLabel,
+					$psTemplate->isMultiple(),
+					null,
+					$form_fields
+				);
+				$form_items[] = array( 'type' => 'template', 'name' => $form_template->getTemplateName(), 'item' => $form_template );
+			} elseif ( $psFormItem['type'] == 'Section' ) {
+				$psPageSection = $psFormItem['item'];
+				$form_section = self::getPageSection( $psPageSection );
+				$form_section->setSectionLevel( $psPageSection->getSectionLevel() );
+				$form_items[] = array( 'type' => 'section', 'name'=> $form_section->getSectionName(), 'item' => $form_section );
 			}
-			// TODO - actually, the category-setting should be
-			// smarter than this: if there's more than one
-			// template in the schema, it should probably be only
-			// the first non-multiple template that includes the
-			// category tag.
-			if ( $psTemplate->isMultiple() ) {
-				$categoryName = null;
-			} else {
-				$categoryName = $pageSchemaObj->getCategoryName();
-			}
-			$templateText = SFTemplateField::createTemplateText( $templateName,
-				$template_fields, $internalObjProperty, $categoryName, null, null, null );
-			if ( in_array( $fullTemplateName, $selectedPages ) ) {
+
+		}
+
+		// Create the "!" hack template, if it's necessary
+		if ( $templateHackUsed ) {
+			$templateTitle = Title::makeTitleSafe( NS_TEMPLATE, '!' );
+			if ( ! $templateTitle->exists() ) {
 				$params = array();
 				$params['user_id'] = $wgUser->getId();
-				$params['page_text'] = $templateText;
+				$params['page_text'] = '|';
 				$jobs[] = new PSCreatePageJob( $templateTitle, $params );
 			}
-
-			$templateValues = self::getTemplateValues( $psTemplate );
-			if ( array_key_exists( 'Label', $templateValues ) ) {
-				$templateLabel = $templateValues['Label'];
-			} else {
-				$templateLabel = null;
-			}
-			$form_fields = self::getFormFieldInfo( $psTemplate, $template_fields );
-			// Create template info for form, for use in generating
-			// the form (if it will be generated).
-			$form_template = SFTemplateInForm::create(
-				$templateName,
-				$templateLabel,
-				$psTemplate->isMultiple(),
-				null,
-				$form_fields
-			);
-			$form_templates[] = $form_template;
 		}
-		Job::batchInsert( $jobs );
+
+		if ( class_exists( 'JobQueueGroup' ) ) {
+			JobQueueGroup::singleton()->push( $jobs );
+		} else {
+			// MW <= 1.20
+			Job::batchInsert( $jobs );
+		}
 
 		// Create form, if it's specified.
 		$formName = self::getFormName( $pageSchemaObj );
+		$categoryName = $pageSchemaObj->getCategoryName();
 		if ( !empty( $formName ) ) {
 			$formInfo = self::getMainFormInfo( $pageSchemaObj );
 			$formTitle = Title::makeTitleSafe( SF_NS_FORM, $formName );
 			$fullFormName = PageSchemas::titleString( $formTitle );
 			if ( in_array( $fullFormName, $selectedPages ) ) {
 				self::generateForm( $formName, $formTitle,
-					$form_templates, $formInfo, $categoryName );
+					$form_items, $formInfo, $categoryName );
 			}
 		}
 	}
@@ -542,7 +911,7 @@ END;
 		$displayValues = array();
 		foreach ( $templateValues as $key => $value ) {
 			if ( $key == 'Label' ) {
-				$propName = 'Label';
+				$propName = wfMessage( 'exif-label' )->escaped();
 			} elseif ( $key == 'AddAnotherText' ) {
 				$propName = "'Add another' button";
 			}
@@ -553,6 +922,10 @@ END;
 
 	public static function getFieldDisplayString() {
 		return 'Form input';
+	}
+
+	public static function getPageSectionDisplayString() {
+		return wfMessage( 'ps-otherparams' )->text();
 	}
 
 	/**
@@ -569,6 +942,21 @@ END;
 					} else {
 						$propName = (string)$prop->attributes()->name;
 					}
+					$values[$propName] = (string)$prop;
+				}
+				return array( $inputName, $values );
+			}
+		}
+		return null;
+	}
+
+	public static function getPageSectionDisplayValues( $pageSectionXML ) {
+		foreach ( $pageSectionXML->children() as $tag => $child ) {
+			if ( $tag == "semanticforms_PageSection" ) {
+				$inputName = $child->attributes()->name;
+				$values = array();
+				foreach ( $child->children() as $prop ) {
+					$propName = (string)$prop->attributes()->name;
 					$values[$propName] = (string)$prop;
 				}
 				return array( $inputName, $values );

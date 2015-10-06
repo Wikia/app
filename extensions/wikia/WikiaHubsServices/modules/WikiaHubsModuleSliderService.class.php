@@ -129,22 +129,19 @@ class WikiaHubsModuleSliderService extends WikiaHubsModuleEditableService {
 			$slidesCount =  $model->getSlidesCount();
 
 			for( $i = 1; $i <= $slidesCount; $i++ ) {
-				$imageData = $this->getImageData($data['photo'.$i]);
-
-				$structuredData['slides'][] = array(
-									'photoUrl' => $imageData->url,
-									'strapline' => $data['strapline'.$i],
-									'shortDesc' => $data['shortDesc'.$i],
-									'longDesc' => $data['longDesc'.$i],
-									'url' => $data['url'.$i],
-									'photoName' => $data['photo'.$i],
-								);
+				$structuredData['slides'][] = [
+					'photoUrl' => $this->getImageInfo($data['photo'.$i])->url,
+					'strapline' => $data['strapline'.$i],
+					'shortDesc' => $data['shortDesc'.$i],
+					'longDesc' => $data['longDesc'.$i],
+					'url' => $data['url'.$i],
+					'photoName' => $data['photo'.$i],
+				];
 			}
 		}
 
 		return $structuredData;
 	}
-
 
 	public function render($structureData) {
 		$data['wikitextslider'] = $this->getWikitext($structureData);
@@ -168,9 +165,16 @@ class WikiaHubsModuleSliderService extends WikiaHubsModuleEditableService {
 		return $galleryText;
 	}
 
-	public function getImageData( $image ) {
-		return ImagesService::getLocalFileThumbUrlAndSizes($image, 0, ImagesService::EXT_JPG);
-
+	/**
+	 * @desc This is exactly the same as in WikiaHubsModuleService class
+	 * and is here only for testing purposes
+	 *
+	 * @param $image
+	 * @param int $destSize
+	 * @return stdClass
+	 */
+	public function getImageInfo( $image, $destSize = 0 ) {
+		return ImagesService::getLocalFileThumbUrlAndSizes($image, $destSize, ImagesService::EXT_JPG);
 	}
 
 	/**

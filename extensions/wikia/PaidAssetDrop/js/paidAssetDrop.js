@@ -114,11 +114,11 @@ define('ext.wikia.paidAssetDrop.paidAssetDrop', [
 	/**
 	 * Inject the Paid Asset Drop
 	 *
-	 * @param {String} placeHolderSelector selector to drop the Paid Assets to (prepend)
-	 * @param {String} platform            desktop or mobile
-	 * @param {String} pageType            home or article
+	 * @param {Object} placeHolder placeholder element or selector string to drop the Paid Assets to (prepend)
+	 * @param {String} platform    desktop or mobile
+	 * @param {String} pageType    home or article
 	 */
-	function injectPad(placeHolderSelector, platform, pageType) {
+	function injectPad(placeHolder, platform, pageType) {
 		if (!isValidPageType(pageType)) {
 			log('Invalid page type: ' + pageType, 'debug', logGroup);
 			return;
@@ -138,8 +138,8 @@ define('ext.wikia.paidAssetDrop.paidAssetDrop', [
 			var padContent = fetchPadContent(response);
 
 			if (padContent) {
-				log('Injecting PAD into ' + placeHolderSelector, 'info', logGroup);
-				$(placeHolderSelector).prepend(padContent);
+				log(['Injecting PAD into:', placeHolder], 'info', logGroup);
+				$(placeHolder).prepend(padContent);
 			}
 		});
 	}

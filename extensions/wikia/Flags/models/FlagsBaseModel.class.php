@@ -10,6 +10,8 @@
 
 namespace Flags\Models;
 
+use Wikia\Util\GlobalStateWrapper;
+
 class FlagsBaseModel extends \WikiaModel {
 	/**
 	 * Names of tables used by the extension
@@ -23,7 +25,7 @@ class FlagsBaseModel extends \WikiaModel {
 	 * @return \DatabaseBase
 	 */
 	protected function getDatabaseForRead() {
-		return wfGetDB( DB_SLAVE, [], $this->wg->FlagsDB );
+		return $this->getDatabase( DB_SLAVE );
 	}
 
 	/**
@@ -31,7 +33,32 @@ class FlagsBaseModel extends \WikiaModel {
 	 * @return \DatabaseBase
 	 */
 	protected function getDatabaseForWrite() {
-		return wfGetDB( DB_MASTER, [], $this->wg->FlagsDB );
+		return $this->getDatabase( DB_MASTER );
+	}
+
+	/**
+	 * Get connection to flags database
+	 *
+	 * Flags database is encoded in utf-8, while in most cases MW communicate with
+	 * databases using latin1, so sometimes we get strings in wrong encoding.
+	 * The only way to force utf-8 communication (adding SET NAMES utf8) is setting
+	 * global variable wgDBmysql5.
+	 *
+	 * @see https://github.com/Wikia/app/blob/dev/includes/db/DatabaseMysqlBase.php#L113
+	 *
+	 * @param int $dbType master or slave
+	 * @return \DatabaseBase
+	 */
+	protected function getDatabase( $dbType ) {
+		$wrapper = new GlobalStateWrapper( [
+			'wgDBmysql5' => true
+		] );
+
+		$db = $wrapper->wrap( function () use ( $dbType ) {
+			return wfGetDB( $dbType, [], $this->wg->FlagsDB );
+		} );
+
+		return $db;
 	}
 
 	/**

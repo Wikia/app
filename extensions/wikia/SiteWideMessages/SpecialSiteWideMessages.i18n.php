@@ -40,7 +40,7 @@ $messages['en'] = array(
 	'swm-label-expiration'		=> 'Expiration time',
 	'swm-label-expiration-hint' => '<i>Pick an expiry time from the drop down or write a time by hand to overwrite the drop down selection. Time written manually must be in the form 2012-04-01 00:00:00</i>',
 	'swm-label-mode-wikis-all'	=> 'All wikis',
-	'swm-label-mode-wikis-hub'	=> 'Selected hub',
+	'swm-label-mode-wikis-hub'	=> 'Selected vertical',
 	'swm-label-mode-wikis-cluster'=> 'Selected cluster',
 	'swm-label-mode-wikis-wiki'	=> 'Selected wiki',
 	'swm-label-mode-wikis-wiki-multi' => 'List of wikis',
@@ -89,7 +89,7 @@ $messages['en'] = array(
 	'swm-list-table-content'	=> 'Content',
 	'swm-list-table-tools'		=> 'Tools',
 	'swm-list-table-lang'		=> 'Languages',
-	'swm-list-table-hub'		=> 'Hub',
+	'swm-list-table-hub'		=> 'Vertical',
 	'swm-yes'					=> 'Yes',
 	'swm-no'					=> 'No',
 	'swm-error-no-such-wiki'	=> 'There is no such wiki!',
@@ -187,8 +187,8 @@ Referred to in:
 	'swm-list-table-content' => '{{Identical|Content}}',
 	'swm-list-table-tools' => '{{Identical|Tool}}',
 	'swm-list-table-lang' => '{{Identical|Language}}',
-	'swm-list-table-hub' => 'Column heading of a table with one message per line. The column contains the hub of wikis the message was sent to.
-{{Identical|Hub}}',
+	'swm-list-table-hub' => 'Column heading of a table with one message per line. The column contains the vertical of wikis the message was sent to.
+{{Identical|Vertical}}',
 	'swm-yes' => '{{Identical|Yes}}',
 	'swm-no' => '{{Identical|No}}',
 	'swm-error-no-wiki-list' => 'Error message to display when no wikis where entered into the list of wikis box.',

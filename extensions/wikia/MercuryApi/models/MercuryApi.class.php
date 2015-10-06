@@ -104,25 +104,28 @@ class MercuryApi {
 	 * @return mixed
 	 */
 	public function getWikiVariables() {
-		global $wgSitename, $wgCacheBuster, $wgDBname, $wgDefaultSkin,
-			   $wgLang, $wgLanguageCode, $wgContLang, $wgCityId;
+		global $wgSitename, $wgCacheBuster, $wgDBname, $wgDefaultSkin, $wgDisableAnonymousEditing,
+			   $wgLanguageCode, $wgContLang, $wgCityId, $wgEnableNewAuth, $wgDisableAnonymousUploadForMercury;
+
 		return [
 			'cacheBuster' => (int) $wgCacheBuster,
 			'dbName' => $wgDBname,
 			'defaultSkin' => $wgDefaultSkin,
+			'disableAnonymousEditing' => $wgDisableAnonymousEditing,
+			'disableAnonymousUploadForMercury' => $wgDisableAnonymousUploadForMercury,
+			'enableNewAuth' => $wgEnableNewAuth,
+			'homepage' => $this->getHomepageUrl(),
 			'id' => (int) $wgCityId,
 			'language' => [
-				'user' => $wgLang->getCode(),
-				'userDir' => SassUtil::isRTL() ? 'rtl' : 'ltr',
 				'content' => $wgLanguageCode,
 				'contentDir' => $wgContLang->getDir()
 			],
+			'mainPageTitle' => Title::newMainPage()->getPrefixedDBkey(),
 			'namespaces' => $wgContLang->getNamespaces(),
 			'siteMessage' => $this->getSiteMessage(),
 			'siteName' => $wgSitename,
-			'mainPageTitle' => Title::newMainPage()->getPrefixedDBkey(),
 			'theme' => SassUtil::getOasisSettings(),
-			'wikiCategories' => WikiFactoryHub::getInstance()->getWikiCategoryNames( $wgCityId ),
+			'wikiCategories' => WikiFactoryHub::getInstance()->getWikiCategoryNames( $wgCityId )
 		];
 	}
 
@@ -238,6 +241,20 @@ class MercuryApi {
 	}
 
 	/**
+	 * Get homepage URL for given language.
+	 *
+	 * @return string homepage URL. Default is US homepage.
+	 */
+	private function getHomepageUrl() {
+		global $wgLanguageCode;
+		if ( class_exists('WikiaLogoHelper') ) {
+			return ( new WikiaLogoHelper() )->getCentralUrlForLang( $wgLanguageCode );
+		}
+		return 'http://www.wikia.com'; //default homepage url
+	}
+
+
+	/**
 	 * Get ads context for Title. Return null if Ad Engine extension is not enabled
 	 *
 	 * @param Title $title Title object
@@ -291,10 +308,10 @@ class MercuryApi {
 	/**
 	 * Add `section` type to all sections from CuratedContent data
 	 *
-	 * @param $data
+	 * @param array $data
 	 * @return array
 	 */
-	private function getCuratedContentSections( $data ) {
+	public function getCuratedContentSections( Array $data ) {
 		$sections = [];
 		if ( !empty( $data[ 'sections' ] ) ) {
 			foreach ( $data[ 'sections' ] as $section ) {
@@ -311,17 +328,13 @@ class MercuryApi {
 	 * @param $items
 	 * @return array
 	 */
-	private function getCuratedContentItems( $items ) {
+	public function getCuratedContentItems( $items ) {
 		$data = [];
 		if ( !empty( $items ) ) {
 			foreach ( $items as $item ) {
-				if ( $item[ 'type' ] === 'article' ) {
-					$processedItem = $this->processCuratedContentArticle($item);
-					if ( !empty( $processedItem ) ) {
-						$data[] = $processedItem;
-					}
-				} else {
-					$data[] = $item;
+				$processedItem = $this->processCuratedContentItem($item);
+				if ( !empty( $processedItem ) ) {
+					$data[] = $processedItem;
 				}
 			}
 		}
@@ -338,27 +351,36 @@ class MercuryApi {
 	 * @param $item
 	 * @return mixed
 	 */
-	private function processCuratedContentArticle( $item ) {
-		if ( !empty( $item[ 'article_id' ] ) ) {
-			$title = Title::newFromID( $item[ 'article_id' ] );
+	public function processCuratedContentItem( $item ) {
+		if ( !empty( $item['article_id'] ) ) {
+			$title = Title::newFromID( $item['article_id'] );
 
 			if ( !empty( $title ) ) {
-				$item[ 'article_local_url' ] = $title->getLocalURL();
+				$item['article_local_url'] = $title->getLocalURL();
 				return $item;
 			}
+		} else if ( $item['article_id'] === 0 ) {
+			// Categories which don't have content have wgArticleID set to 0
+			// In order to generate link for them
+			// we can simply replace $1 inside /wiki/$1 to category title (Category:%name%)
+			global $wgArticlePath;
+			$item['article_local_url'] = str_replace( "$1",  $item['title'], $wgArticlePath );
+			return $item;
 		}
 		return null;
 	}
 
-	public function processTrendingData( $data, $itemArrayName, $paramsToInclude = [] ) {
-		if ( !isset( $data[ $itemArrayName ] ) || !is_array( $data[ $itemArrayName ] ) ) {
+	public function processTrendingArticlesData( $data ) {
+		$data = $data[ 'items' ];
+
+		if ( !isset( $data ) || !is_array( $data ) ) {
 			return null;
 		}
 
 		$items = [];
 
-		foreach ( $data[ $itemArrayName ] as $item ) {
-			$processedItem = $this->processTrendingDataItem( $item, $paramsToInclude );
+		foreach ( $data as $item ) {
+			$processedItem = $this->processTrendingArticlesItem( $item );
 
 			if ( !empty( $processedItem ) ) {
 				$items[] = $processedItem;
@@ -371,18 +393,15 @@ class MercuryApi {
 	/**
 	 * @desc To save some bandwidth, the unnecessary params are stripped
 	 *
-	 * @param $item array
-	 * @param $paramsToInclude array: leave empty to return all params
+	 * @param array $item
 	 * @return array
 	 */
-	private function processTrendingDataItem( $item, $paramsToInclude = [] ) {
-		if ( empty( $paramsToInclude ) ) {
-			return $item;
-		}
+	public function processTrendingArticlesItem( $item ) {
+		$paramsToInclude = [ 'title', 'thumbnail', 'url' ];
 
 		$processedItem = [];
 
-		if ( !empty( $item ) && is_array( $item ) && is_array( $paramsToInclude ) ) {
+		if ( !empty( $item ) && is_array( $item ) ) {
 			foreach ( $paramsToInclude as $param) {
 				if ( !empty( $item[ $param ] ) ) {
 					$processedItem[ $param ] = $item[ $param ];
@@ -391,5 +410,29 @@ class MercuryApi {
 		}
 
 		return $processedItem;
+	}
+
+	public function processTrendingVideoData( $data ) {
+		$videosData = $data[ 'videos' ];
+
+		if ( !isset( $videosData ) || !is_array( $videosData ) ) {
+			return null;
+		}
+
+		$items = [];
+
+		foreach ( $videosData as $item ) {
+			$items[] = ArticleAsJson::createMediaObject(
+				WikiaFileHelper::getMediaDetail(
+					Title::newFromText( $item['title'], NS_FILE ),
+					[
+						'imageMaxWidth' => false
+					]
+				),
+				$item['title']
+			);
+		}
+
+		return $items;
 	}
 }

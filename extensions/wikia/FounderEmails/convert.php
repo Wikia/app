@@ -24,7 +24,7 @@
  * @author Krzysztof Krzyżaniak (eloy) <eloy@wikia-inc.com>
  */
 
-require_once( dirname(__FILE__) . '/../../../maintenance/Maintenance.php' );
+require_once( dirname( __FILE__ ) . '/../../../maintenance/Maintenance.php' );
 
 class FounderEmailsOptionsConverter extends Maintenance {
 
@@ -57,7 +57,7 @@ class FounderEmailsOptionsConverter extends Maintenance {
 		$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB ); // handler to wikifactory tables
 
 		// take all users with founderemailsenabled option
-		wfOut( "Getting users with founderemailsenabled option set...\n");
+		wfOut( "Getting users with founderemailsenabled option set...\n" );
 		$sth = $dbw->select(
 			array( "user_properties" ),
 			array( "up_user", "up_value" ),
@@ -65,7 +65,7 @@ class FounderEmailsOptionsConverter extends Maintenance {
 			__METHOD__
 		);
 
-		while( $row = $dbw->fetchObject( $sth ) ) {
+		while ( $row = $dbw->fetchObject( $sth ) ) {
 			// now check if user founded any wiki
 			$sth2 = $dbw->select(
 				array( "city_list" ),
@@ -73,28 +73,28 @@ class FounderEmailsOptionsConverter extends Maintenance {
 				array( "city_founding_user" => $row->up_user )
 			);
 			$user = User::newFromId( $row->up_user );
-			if( $user ) {
+			if ( $user ) {
 				wfOut( "Found user {$user->getId()} with user name {$user->getName()}\n" );
 				$changed = false;
-				while( $city = $dbw->fetchObject( $sth2 ) ) {
+				while ( $city = $dbw->fetchObject( $sth2 ) ) {
 					$city_id = $city->city_id;
-					if( !$this->hasOption( 'dry' ) ) {
-						$user->setOption( "founderemails-joins-{$city_id}", $row->up_value );
-						$user->setOption( "founderemails-edits-{$city_id}", $row->up_value );
-						$user->setOption( "founderemails-views-digest-{$city_id}", $row->up_value );
-						$user->setOption( "founderemails-complete-digest-{$city_id}", $row->up_value );
-						if( $this->hasOption( 'remove' ) ) {
-							// hack, User object doesn't have method for resetting option
-							unset( $user->mOptions[ "founderemailsenabled" ] );
+					if ( !$this->hasOption( 'dry' ) ) {
+						$user->setLocalPreference( "founderemails-joins", $row->up_value, $city_id );
+						$user->setLocalPreference( "founderemails-edits", $row->up_value, $city_id );
+						$user->setLocalPreference( "founderemails-views-digest", $row->up_value, $city_id );
+						$user->setLocalPreference( "founderemails-complete-digest", $row->up_value, $city_id );
+						if ( $this->hasOption( 'remove' ) ) {
+							// founderemailsenabled is not in use anymore.
+							$user->removeGlobalPreference("founderemailsenabled");
 						}
 						$changed = true;
 					}
-					wfOut("\tset founderemails-joins-{$city_id} to {$row->up_value}\n" );
-					wfOut("\tset founderemails-edits-{$city_id} to {$row->up_value}\n" );
-					wfOut("\tset founderemails-views-digest-{$city_id} to {$row->up_value}\n" );
-					wfOut("\tset founderemails-complete-digest-{$city_id} to {$row->up_value}\n" );
+					wfOut( "\tset founderemails-joins-{$city_id} to {$row->up_value}\n" );
+					wfOut( "\tset founderemails-edits-{$city_id} to {$row->up_value}\n" );
+					wfOut( "\tset founderemails-views-digest-{$city_id} to {$row->up_value}\n" );
+					wfOut( "\tset founderemails-complete-digest-{$city_id} to {$row->up_value}\n" );
 				}
-				if( $changed ) {
+				if ( $changed ) {
 					$user->saveSettings();
 				}
 			}

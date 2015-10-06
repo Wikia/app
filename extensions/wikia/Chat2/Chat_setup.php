@@ -118,7 +118,6 @@ $wgHooks[ 'BeforePageDisplay' ][] = 'ChatHelper::onBeforePageDisplay';
 $wgHooks[ 'ContributionsToolLinks' ][] = 'ChatHelper::onContributionsToolLinks';
 $wgHooks[ 'LogLine' ][] = 'ChatHelper::onLogLine';
 $wgHooks[ 'UserGetRights' ][] = 'chatAjaxonUserGetRights';
-$wgHooks[ 'GetIP' ][] = 'ChatAjax::onGetIP'; // used for calls from chat nodejs server
 
 // logs
 $wgLogTypes[] = 'chatban';
@@ -159,6 +158,31 @@ JSMessages::registerPackage('ChatEntryPoint', array(
 	'chat-member-since'
 ));
 
+/**
+ * ResourceLoader module
+ */
+$wgResourceModules['ext.Chat2'] = [
+	'messages' => [
+		'chat-user-permanently-disconnected',
+		'chat-welcome-message',
+		'chat-user-joined',
+		'chat-ban-undolink',
+		'chat-user-was-kicked',
+		'chat-you-were-kicked',
+		'chat-user-was-banned',
+		'chat-you-were-banned',
+		'chat-user-was-unbanned',
+		'chat-user-parted',
+		'chat-log-reason-undo',
+		'chat-ban-modal-heading',
+		'chat-ban-cannt-undo',
+		'chat-browser-is-notsupported',
+
+	],
+	'position' => 'top'
+];
+
+
 define( 'CHAT_TAG', 'chat' );
 define( 'CUC_TYPE_CHAT', 128);	// for CheckUser operation type
 
@@ -197,17 +221,6 @@ function ChatAjax() {
 			if( !empty($data) ) {
 				$wgUser = User::newFromId( $data['user_id'] );
 			}
-		}
-
-		/*
-		 ChatAjax requests come from chat nodejs server, and that's not the user ip
-		 so if the server passed the correct user ip, we try to make use of it and
-		 record it here so $wgRequest->getIP return this address
-		 */
-		$userIP = $wgRequest->getVal('userIP');
-		if ( ( $userIP !== false ) && IP::isIPAddress( $userIP ) ){
-			ChatAjax::$chatUserIP = $userIP;
-
 		}
 
 		$data = ChatAjax::$method();

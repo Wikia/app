@@ -306,14 +306,15 @@ $color-highlight-column: rgba($color-page, 0);
 	@include linear-gradient($color-admin-header-shadow, top, $color-admin-header-highlight, 40%, $color-admin-header-shadow, 100%);
 	border-bottom: 1px solid $color-admin-header-shadow;
 	border-top: 1px solid $color-admin-header-shadow;
-	height: 25px;
 	padding-top: 5px;
 	h1 {
 		color: $color-admin-header-text;
-		float: left;
 		font-size: 16px;
 		font-style: normal;
 		margin: 0 30px 0 20px;
+	}
+	h2 {
+		margin-top: 0;
 	}
 	&.AdminDashboardArticleHeader {
 		border-top: 0;

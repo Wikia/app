@@ -22,10 +22,11 @@ class SpecialRenameuser extends SpecialPage {
 	 * Show the special page
 	 *
 	 * @param mixed $par Parameter passed to the page
+	 *
+	 * @throws PermissionsError
+	 * @throws ReadOnlyError
 	 */
 	public function execute( $par ) {
-		wfProfileIn(__METHOD__);
-
 		global $wgOut, $wgUser, $wgTitle, $wgRequest, $wgStatsDBEnabled, $wgJsMimeType;
 
 		$this->setHeaders();
@@ -35,88 +36,95 @@ class SpecialRenameuser extends SpecialPage {
 		$sSrc = $oAssetsManager->getOneCommonURL( '/extensions/wikia/UserRenameTool/js/NewUsernameUrlEncoder.js' );
 		$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$sSrc}\"></script>" );
 
-		if( wfReadOnly() || !$wgStatsDBEnabled ) {
+		if ( wfReadOnly() || !$wgStatsDBEnabled ) {
 			$wgOut->readOnlyPage();
-
-			wfProfileOut( __METHOD__ );
 			return;
 		}
 
-		if( !$wgUser->isAllowed( 'renameuser' ) ) {
-			wfProfileOut(__METHOD__);
+		if ( !$wgUser->isAllowed( 'renameuser' ) ) {
 			throw new PermissionsError( 'renameuser' );
 		}
 
 		// Get the request data
-		$oldusername = $wgRequest->getText( 'oldusername', $par );
-		$newusername = $wgRequest->getText( 'newusername' );
+		$oldUsername = $wgRequest->getText( 'oldusername', $par );
+		$newUsername = $wgRequest->getText( 'newusername' );
 		$reason = $wgRequest->getText( 'reason' );
 		$token = $wgUser->getEditToken();
 		$notifyRenamed = $wgRequest->getBool( 'notify_renamed', false );
-		$confirmaction = false;
+		$confirmAction = false;
 
-		if ($wgRequest->wasPosted() && $wgRequest->getInt('confirmaction')){
-			$confirmaction = true;
+		if ( $wgRequest->wasPosted() && $wgRequest->getInt( 'confirmaction' ) ) {
+			$confirmAction = true;
 		}
 
-		$warnings = array();
-		$errors = array();
-		$infos = array();
+		$warnings = [];
+		$errors = [];
+		$info = [];
 
-		if (
-			$wgRequest->wasPosted() &&
-			$wgRequest->getText( 'token' ) !== '' &&
-			$wgUser->matchEditToken($wgRequest->getVal('token'))
-		){
-			$process = new RenameUserProcess( $oldusername, $newusername, $confirmaction, $reason );
+		if ( $this->validRenameRequest() ) {
+			$process = new RenameUserProcess( $oldUsername, $newUsername, $confirmAction, $reason, $notifyRenamed );
 			$status = $process->run();
 			$warnings = $process->getWarnings();
 			$errors = $process->getErrors();
-			if ($status) {
-				$infos[] = wfMessage('userrenametool-info-in-progress')->inContentLanguage()->text();
+			if ( $status ) {
+				$info[] = wfMessage( 'userrenametool-info-in-progress' )->inContentLanguage()->text();
 			}
 		}
 
-		$showConfirm = ( empty( $errors ) && empty( $infos ) );
+		$showConfirm = ( empty( $errors ) && empty( $info ) );
 
-		// note: errors and infos beyond this point are non-blocking
+		// note: errors and info beyond this point are non-blocking
 
-		if ( !empty( $oldusername ) ) {
-			$olduser = User::newFromName( $oldusername );
-			if ( $olduser->getOption( 'requested-rename', 0 ) ) {
-				$infos[] = wfMsg( 'userrenametool-requested-rename', $oldusername );
+		if ( !empty( $oldUsername ) ) {
+			$oldUser = User::newFromName( $oldUsername );
+			if ( $oldUser->getGlobalFlag( 'requested-rename', 0 ) ) {
+				$info[] = wfMsg( 'userrenametool-requested-rename', $oldUsername );
 			} else {
-				$errors[] = wfMsg( 'userrenametool-did-not-request-rename', $oldusername );
+				$errors[] = wfMsg( 'userrenametool-did-not-request-rename', $oldUsername );
 			}
-			if ( $olduser->getOption( 'wasRenamed', 0 ) ) {
-				$errors[] = wfMsg( 'userrenametool-previously-renamed', $oldusername );
+			if ( $oldUser->getGlobalFlag( 'wasRenamed', 0 ) ) {
+				$errors[] = wfMsg( 'userrenametool-previously-renamed', $oldUsername );
 			}
 		}
 
 		$template = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
 		$template->set_vars(
-			array (
+			[
 				"submitUrl"     	=> $wgTitle->getLocalUrl(),
-				"oldusername"   	=> $oldusername,
-				"oldusername_hsc"	=> htmlspecialchars($oldusername),
-				"newusername"   	=> $newusername,
-				"newusername_hsc"	=> htmlspecialchars($newusername),
+				"oldusername"   	=> $oldUsername,
+				"oldusername_hsc"	=> htmlspecialchars( $oldUsername ),
+				"newusername"   	=> $newUsername,
+				"newusername_hsc"	=> htmlspecialchars( $newUsername ),
 				"reason"        	=> $reason,
 				"move_allowed"  	=> $wgUser->isAllowed( 'move' ),
-				"confirmaction" 	=> $confirmaction,
+				"confirmaction" 	=> $confirmAction,
 				"warnings"      	=> $warnings,
 				"errors"        	=> $errors,
-				"infos"         	=> $infos,
+				"infos"         	=> $info,
 				"show_confirm"  	=> $showConfirm,
 				"token"         	=> $token,
 				"notify_renamed" 	=> $notifyRenamed,
-			)
+			]
 		);
 
 		$text = $template->render( "rename-form" );
-		$wgOut->addHTML($text);
+		$wgOut->addHTML( $text );
 
-		wfProfileOut(__METHOD__);
 		return;
+	}
+
+	private function validRenameRequest() {
+		$wg = F::app()->wg;
+
+		if ( !$wg->Request->wasPosted() ) {
+			return false;
+		}
+
+		$token = $wg->Request->getText( 'token' );
+		if ( $token === '' ) {
+			return false;
+		}
+
+		return $wg->User->matchEditToken( $token );
 	}
 }

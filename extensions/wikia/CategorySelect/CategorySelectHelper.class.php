@@ -74,7 +74,7 @@ class CategorySelectHelper {
 				// Disabled if usecatsel=no is present
 				$request->getVal( 'usecatsel', '' ) == 'no'
 				// Disabled by user preferences
-				|| $user->getOption( 'disablecategoryselect' )
+				|| $user->getGlobalPreference( 'disablecategoryselect' )
 				// Disabled for unsupported skin
 				|| !in_array( get_class( RequestContext::getMain()->getSkin() ), $supportedSkins )
 				// Disabled for unsupported action

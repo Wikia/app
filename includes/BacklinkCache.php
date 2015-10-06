@@ -17,7 +17,7 @@
  *
  * Introduced by r47317
  *
- * @internal documentation reviewed on 18 Mar 2011 by hashar
+ * internal documentation reviewed on 18 Mar 2011 by hashar
  *
  * @author Tim Starling
  * @copyright © 2009, Tim Starling, Domas Mituzas

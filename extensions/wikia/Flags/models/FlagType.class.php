@@ -13,6 +13,9 @@ namespace Flags\Models;
 
 class FlagType extends FlagsBaseModel {
 
+	/**
+	 * flag_targeting DB field constants
+	 */
 	const FLAG_TARGETING_READERS = 1;
 	const FLAG_TARGETING_CONTRIBUTORS = 2;
 
@@ -29,7 +32,8 @@ class FlagType extends FlagsBaseModel {
 		5 => 'delete',
 		6 => 'improvements',
 		7 => 'status',
-		8 => 'other'
+		8 => 'other',
+		9 => 'navigation',
 	];
 
 	/**
@@ -120,27 +124,47 @@ class FlagType extends FlagsBaseModel {
 	/**
 	 * Fetches all types of flags available on a wikia from the database
 	 * @param int $wikiId
+	 * @param int $targeting @see flag_targeting constants
 	 * @return bool|mixed
 	 */
-	public function getFlagTypesForWikia( $wikiId ) {
+	public function getFlagTypesForWikia( $wikiId, $targeting = 0 ) {
 		$db = $this->getDatabaseForRead();
 
 		$flagTypesForWikia = ( new \WikiaSQL() )
 			->SELECT_ALL()
 			->FROM( self::FLAGS_TYPES_TABLE )
 			->WHERE( 'wiki_id' )->EQUAL_TO( $wikiId )
-			->ORDER_BY( 'flag_name ASC' )
-			->runLoop( $db, function( &$flagTypesForWikia, $row ) {
-				$flagTypesForWikia[$row->flag_type_id] = get_object_vars( $row );
+			->ORDER_BY( 'flag_name ASC' );
 
-				/**
-				 * Create URLs for a template of the flag
-				 */
-				$title = \Title::newFromText( $row->flag_view, NS_TEMPLATE );
-				$flagTypesForWikia[$row->flag_type_id]['flag_view_url'] = $title->getFullURL();
-			} );
+		if ( $targeting ) {
+			$flagTypesForWikia->AND_( 'flag_targeting' )->EQUAL_TO( $targeting );
+		}
+
+		$flagTypesForWikia = $flagTypesForWikia->runLoop( $db, function( &$flagTypesForWikia, $row ) {
+			$flagTypesForWikia[$row->flag_type_id] = get_object_vars( $row );
+		} );
 
 		return $flagTypesForWikia;
+	}
+
+	/**
+	 * Fetches pages ids with given flag enabled
+	 *
+	 * @param int $flagTypeId
+	 * @return array
+	 */
+	public function getPagesWithFlag( $flagTypeId ) {
+		$db = $this->getDatabaseForRead();
+
+		$pagesIds = ( new \WikiaSQL() )
+			->SELECT( 'page_id' )
+			->FROM( self::FLAGS_TO_PAGES_TABLE )
+			->WHERE( 'flag_type_id' )->EQUAL_TO( $flagTypeId )
+			->runLoop( $db, function( &$pagesIds, $row ) {
+				$pagesIds[] = $row->page_id;
+			} );
+
+		return $pagesIds;
 	}
 
 	/**
@@ -175,7 +199,7 @@ class FlagType extends FlagsBaseModel {
 	 * If the passed params have been verified,
 	 * performs an INSERT query that adds a new type of flags.
 	 * @param array $params
-	 * @return bool
+	 * @return int id of inserted flag type
 	 */
 	public function addFlagType( $params ) {
 		$this->verifyParamsForAdd( $params );
@@ -201,9 +225,121 @@ class FlagType extends FlagsBaseModel {
 
 		$db->commit();
 
-		$this->paramsVerified = false;
-
 		return $flagTypeId;
+	}
+
+	/**
+	 * Updating methods
+	 */
+
+
+	/**
+	 * Verify in the fetched array has every required information
+	 * before performing an UPDATE query.
+	 * @param array $params
+	 * @return bool
+	 * @throws \MissingParameterApiException
+	 */
+	public function verifyParamsForUpdate( $params ) {
+		$required = [ 'flag_type_id' ];
+
+		foreach ( $required as $requiredField ) {
+			if ( !isset( $params[$requiredField] ) ) {
+				throw new \MissingParameterApiException( $requiredField ) ;
+			}
+		}
+
+		return true;
+	}
+
+	/**
+	 * Updates definition of flag type
+	 *
+	 * @param $params
+	 * @return bool
+	 */
+	public function updateFlagType( $params ) {
+		$this->verifyParamsForUpdate( $params );
+
+		$db = $this->getDatabaseForWrite();
+
+		$editableFields = [
+			'flag_group',
+			'flag_name',
+			'flag_view',
+			'flag_targeting',
+			'flag_params_names',
+		];
+
+		$sql = ( new \WikiaSQL )
+			->UPDATE( self::FLAGS_TYPES_TABLE );
+
+		foreach ( $editableFields as $field ) {
+			if ( !empty( $params[$field] ) ) {
+				$sql->SET( $field, $params[$field] );
+			}
+		}
+
+		$sql->WHERE( 'flag_type_id' )->EQUAL_TO( $params['flag_type_id'] )
+			->run( $db );
+
+		$status = $db->affectedRows() > 0;
+
+		$db->commit();
+
+		return $status;
+	}
+
+	/**
+	 * Verify in the fetched array has every required information
+	 * before performing an UPDATE query.
+	 * @param array $params
+	 * @return bool
+	 * @throws \InvalidDataApiException
+	 * @throws \MissingParameterApiException
+	 */
+	public function verifyParamsForParametersUpdate( $params ) {
+		$required = [ 'flag_type_id', 'flag_params_names' ];
+
+		foreach ( $required as $requiredField ) {
+			if ( !isset( $params[$requiredField] ) ) {
+				throw new \MissingParameterApiException( $requiredField ) ;
+			}
+		}
+
+		json_decode( $params['flag_params_names'] );
+		if ( json_last_error() !== JSON_ERROR_NONE ) {
+			throw new \InvalidDataApiException();
+		}
+
+		return true;
+	}
+
+	/**
+	 * Update parameters definition for flag type
+	 *
+	 * @param $params
+	 * @return bool
+	 * @throws \InvalidDataApiException
+	 */
+	public function updateFlagTypeParameters( $params ) {
+		$this->verifyParamsForParametersUpdate( $params );
+
+		$flag_params_names = !empty( $params['flag_params_names'] ) ? $params['flag_params_names'] : null;
+
+		$db = $this->getDatabaseForWrite();
+
+		( new \WikiaSQL )
+			->UPDATE( self::FLAGS_TYPES_TABLE )
+			->SET( 'flag_params_names', $flag_params_names )
+			->WHERE( 'flag_type_id' )->EQUAL_TO( $params['flag_type_id'] )
+			->run( $db );
+
+		$status = $db->affectedRows() > 0;
+
+		$db->commit();
+
+		return $status;
 	}
 
 	/**

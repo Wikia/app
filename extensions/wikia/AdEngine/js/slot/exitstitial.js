@@ -5,15 +5,18 @@ define('ext.wikia.adEngine.slot.exitstitial', [
 	'ext.wikia.adEngine.adContext',
 	'jquery',
 	'wikia.location',
+	'wikia.log',
 	'wikia.window'
-], function (adContext, $, loc, win) {
+], function (adContext, $, loc, log, win) {
 	'use strict';
 
-	var modalId = 'ExitstitialInfobox',
+	var logGroup = 'ext.wikia.adEngine.slot.exitstitial',
+		modalId = 'ExitstitialInfobox',
 		modalWidth = 840,
 		adSlot = 'EXIT_STITIAL_BOXAD_1',
-		enabled = adContext.getContext().slots.exitstitial,
-		redirectDelay = adContext.getContext().slots.exitstitialRedirectDelay || 10;
+		context = adContext.getContext(),
+		enabled = context.slots.exitstitial && context.opts.pageType === 'all_ads',
+		redirectDelay = context.slots.exitstitialRedirectDelay || 10;
 
 	function init() {
 		// Check if external links should be ad-guarded
@@ -21,10 +24,14 @@ define('ext.wikia.adEngine.slot.exitstitial', [
 			return;
 		}
 
+		log('Exitstitial ads: enabled', 'info', logGroup);
+
 		$('.WikiaArticle a.exitstitial').filter('.external, .extiw').click(function (event) {
 			event.preventDefault();
 
 			var url = $(this).attr('href');
+
+			log('Launching exitstitial ad', 'info', logGroup);
 
 			$.getMessages('AdEngine', function () {
 				var $goBack = $('<a></a>').attr('href', '').text($.msg('adengine-exitstitial-go-back')),
@@ -38,12 +45,14 @@ define('ext.wikia.adEngine.slot.exitstitial', [
 					$skipAd = $('<a></a>').attr('href', url).text($.msg('adengine-exitstitial-button'));
 
 				function skipAd() {
+					log('Skipping ad', 'info', logGroup);
 					$skipAd.filter(':visible').each(function () {
 						loc.href = url;
 					});
 				}
 
 				function showModal() {
+					log('Showing modal', 'info', logGroup);
 					$modal.css('opacity', 1);
 				}
 

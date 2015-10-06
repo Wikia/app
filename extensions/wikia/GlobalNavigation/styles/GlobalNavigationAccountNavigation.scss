@@ -25,12 +25,15 @@
 		border: 0;
 	}
 
-	.account-navigation-first-item {
+	.account-navigation-item {
 		list-style: none;
 
 		.links-container {
 			display: table-row;
 			height: $global-navigation-height-without-margin;
+			font-size: 12px;
+			padding-top: 2px;
+			vertical-align: middle;
 
 			.chevron {
 				@include global-nav-chevron;
@@ -73,15 +76,41 @@
 		}
 	}
 
-	.sign-in-label {
+	.auth-link {
 		color: $global-navigation-text-color;
+
+		&:hover {
+			color: $global-navigation-link-hover-color;
+			text-decoration: none;
+		}
+	}
+
+	a {
+		&.auth-link {
+			&:first-child {
+				padding-left: 7px;
+			}
+		}
+	}
+
+	.links-container {
+		> .auth-link {
+			display: table-cell;
+		}
+	}
+
+	.auth-label {
 		display: table-cell;
 		font-size: 12px;
 		padding-top: 2px;
 		vertical-align: middle;
 
-		&:hover {
-			text-decoration: none;
+		&.sign-in {
+			padding-left: 7px;
+		}
+
+		&.register {
+			padding-right: 7px;
 		}
 	}
 
@@ -120,6 +149,14 @@
 
 			&:first-child a {
 				border-top: 0;
+			}
+		}
+	}
+
+	&.newAuth {
+		.avatar-container {
+			&.anon-avatar-placeholder {
+				margin-top: 7px;
 			}
 		}
 	}

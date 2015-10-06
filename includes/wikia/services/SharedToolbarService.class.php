@@ -196,7 +196,7 @@ class SharedToolbarService extends ToolbarService {
 		global $wgUser;
 
 		$list = array();
-		$data = $wgUser->getOption( 'myTools', false );
+		$data = $wgUser->getGlobalPreference( 'myTools' );
 		if ( is_string( $data ) ) {
 			$data = json_decode( $data, true );
 			foreach ( $data as $specialPage )

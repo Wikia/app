@@ -53,7 +53,7 @@ final class SWLEmailer {
     		'swl-email-propschanged',
     		array( $changeSet->getEdit()->getTitle()->getFullText() ),
     		true,
-    		$user->getOption( 'language' )
+    		$user->getGlobalPreference( 'language' )
     	);
     	
     	wfRunHooks( 'SWLBeforeEmailNotify', array( $group, $user, $changeSet, $describeChanges, &$title, &$emailText ) );

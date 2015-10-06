@@ -83,7 +83,7 @@ class ChangesList extends ContextSource {
 		$sk = $context->getSkin();
 		$list = null;
 		if( wfRunHooks( 'FetchChangesList', array( $user, &$sk, &$list ) ) ) {
-			$new = $context->getRequest()->getBool( 'enhanced', $user->getOption( 'usenewrc' ) );
+			$new = $context->getRequest()->getBool( 'enhanced', $user->getGlobalPreference( 'usenewrc' ) );
 			return $new ? new EnhancedChangesList( $context ) : new OldChangesList( $context );
 		} else {
 			return $list;

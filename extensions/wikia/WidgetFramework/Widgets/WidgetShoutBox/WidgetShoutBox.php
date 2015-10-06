@@ -109,7 +109,7 @@ function WidgetShoutBox($id, $params) {
 	$midnight = strtotime('today 00:00');
 
 	// time offset (set by user in his preferences)
-	$time_offset = $wgUser->getOption('timecorrection') ? (int) $wgUser->getOption('timecorrection') * 3600 : 0;
+	$time_offset = $wgUser->getGlobalPreference('timecorrection') ? (int) $wgUser->getGlobalPreference('timecorrection') * 3600 : 0;
 
 	$count = 0;
 

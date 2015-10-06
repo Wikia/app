@@ -1,9 +1,10 @@
 <?php
+use Wikia\PortableInfobox\Helpers\PortableInfoboxClassification;
 
 class UnconvertedInfoboxesPageTest extends WikiaBaseTest {
 
 	public function setUp() {
-		$this->setupFile = __DIR__ . '/../Insights.setup.php';
+		$this->setupFile = __DIR__ . '/../InsightsUnconvertedInfoboxes.setup.php';
 		parent::setUp();
 	}
 
@@ -11,7 +12,7 @@ class UnconvertedInfoboxesPageTest extends WikiaBaseTest {
 	 * @dataProvider getInfoboxTitles
 	 */
 	public function testIsTitleWithNonportableInfobox( $titleText, $contentText, $expected ) {
-		$result = UnconvertedInfoboxesPage::isTitleWithNonportableInfobox( $titleText, $contentText );
+		$result = PortableInfoboxClassification::isTitleWithNonportableInfobox( $titleText, $contentText );
 		$this->assertSame( $expected, $result );
 	}
 
@@ -26,6 +27,11 @@ class UnconvertedInfoboxesPageTest extends WikiaBaseTest {
 				'This is a non-portable Infobox title',
 				'This content misses an infobox XML-like tag',
 				true
+			],
+			[
+				'This is an ignored Infobox documentation title/docs',
+				'This content is irrelevant and will be ignored',
+				false
 			],
 			[
 				'This is a title with no word in-fo-box in it, but with a non-portable one in the content',

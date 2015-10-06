@@ -1,6 +1,6 @@
 require(
-	['jquery', 'wikia.loader', 'wikia.nirvana', 'wikia.mustache', 'mw', 'wikia.tracker'],
-	function ($, loader, nirvana, mustache, mw, tracker)
+	['jquery', 'wikia.document', 'wikia.loader', 'wikia.nirvana', 'wikia.mustache', 'mw', 'wikia.tracker'],
+	function ($, document, loader, nirvana, mustache, mw, tracker)
 {
 	'use strict';
 
@@ -29,7 +29,7 @@ require(
 		}
 	}],
 
-	/* Modal close button config*/
+	/* Modal close button config */
 	buttonForEmptyState = [{
 		vars: {
 			value: mw.message('flags-edit-modal-close-button-text').escaped(),
@@ -64,7 +64,8 @@ require(
 	labelForSubmitAction = 'submit-form-untouched';
 
 	function init() {
-		$('#ca-flags').on('click', showModal);
+		$('body').on('click', '#ca-flags, .bn-flags-entry-point', showModal);
+		addFlagsButton();
 	}
 
 	/**
@@ -79,14 +80,14 @@ require(
 					controller: 'Flags',
 					method: 'editForm',
 					data: {
-						page_id: window.wgArticleId
+						'page_id': window.wgArticleId
 					},
 					type: 'get'
 				}),
 				loader({
 					type: loader.MULTI,
 					resources: {
-						mustache: '/extensions/wikia/Flags/controllers/templates/FlagsController_editForm.mustache',
+						mustache: '/extensions/wikia/Flags/controllers/templates/FlagsController_editForm.mustache,/extensions/wikia/Flags/controllers/templates/FlagsController_editFormEmpty.mustache,/extensions/wikia/Flags/controllers/templates/FlagsController_editFormException.mustache',
 						styles: '/extensions/wikia/Flags/styles/EditFormModal.scss'
 					}
 				})
@@ -94,9 +95,15 @@ require(
 				var template;
 
 				loader.processStyle(res.styles);
-				template = res.mustache[0];
 
-				flagsData[0].flags = prepareFlagsData(flagsData[0].flags);
+				if (flagsData[0].flags) {
+					template = res.mustache[0];
+					flagsData[0].flags = prepareFlagsData(flagsData[0].flags);
+				} else if (flagsData[0].emptyMessage) {
+					template = res.mustache[1];
+				} else if (flagsData[0].exceptionMessage) {
+					template = res.mustache[2];
+				}
 
 				modalConfig.vars.content = mustache.render(template, flagsData[0]);
 
@@ -114,7 +121,7 @@ require(
 		var flagTypeId, paramName, paramsNames,
 			param, params, flags = [];
 
-		for( flagTypeId in flagsData) {
+		for (flagTypeId in flagsData) {
 			params = [];
 			if (flagsData[flagTypeId]['flag_params_names']) {
 				paramsNames  = JSON.parse(flagsData[flagTypeId]['flag_params_names']);
@@ -122,6 +129,7 @@ require(
 					param = [];
 					param['param_name'] = paramName;
 					param['param_description'] = paramsNames[paramName];
+					param['param_placeholder'] = paramsNames[paramName].length ? paramsNames[paramName] : paramName;
 					param['param_value'] = flagsData[flagTypeId].params ? flagsData[flagTypeId].params[paramName] : '';
 					params.push(param);
 				}
@@ -167,14 +175,14 @@ require(
 			/* Track clicks on modal form */
 			$flagsEditForm.bind('click', trackModalFormClicks);
 			/* Detect form change */
-			$flagsEditForm.on('change', function() {
+			$flagsEditForm.on('change', function () {
 				labelForSubmitAction = 'submit-form-touched';
 				$flagsEditForm.off('change');
 			});
 		}
 
 		/* Track all ways of closing modal */
-		modalInstance.bind('close', function() {
+		modalInstance.bind('close', function () {
 			track({
 				label: 'modal-close'
 			});
@@ -215,11 +223,33 @@ require(
 		/* Track links clicks */
 		if ($target.is('a')) {
 			$targetLinkDataId = $target.data('id');
-			if($targetLinkDataId) {
+			if ($targetLinkDataId) {
 				track({
 					action: tracker.ACTIONS.CLICK_LINK_TEXT,
 					label: $targetLinkDataId
 				});
+			}
+		}
+	}
+
+	/**
+	 * Adds edit flags button before and after generated flags in view
+	 */
+	function addFlagsButton() {
+		var $a = $(document.createElement('a'))
+				.addClass('flags-icon')
+				.html(mw.message('flags-edit-flags-button-text').escaped())
+				.click(showModal),
+			$div = $(document.createElement('div'))
+				.addClass('flags-edit')
+				.html($a);
+		var flagsContainer = $('.portable-flags');
+		if (flagsContainer.length !== 0) {
+			flagsContainer.prepend($div).append($div.clone(true));
+		} else {
+			flagsContainer = $('.portable-flags-inline');
+			if (flagsContainer.length !== 0) {
+				flagsContainer.prepend($div).append($div.clone(true));
 			}
 		}
 	}

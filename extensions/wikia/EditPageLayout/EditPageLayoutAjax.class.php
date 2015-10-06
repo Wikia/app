@@ -74,7 +74,17 @@ class EditPageLayoutAjax {
 								$matches = array();
 								if ( preg_match_all( '/^#REDIRECT \[\[([^\]]+)\]\]/Um', $wikitext, $matches ) ) {
 									$redirectTitle = Title::newFromText( $matches[1][0] );
-									$html = $article->viewRedirect( array( $redirectTitle ) );
+									if ( $redirectTitle ) {
+										$html = $article->viewRedirect( array( $redirectTitle ) );
+									} else {
+										\Wikia\Logger\WikiaLogger::instance()->info(
+											'No redirect title',
+											[
+												'titleText' => $matches[1][0]
+											]
+										);
+										$html = '';
+									}
 								}
 							}
 
@@ -164,7 +174,7 @@ class EditPageLayoutAjax {
 	static private function updatePreferences( $name, $value ) {
 		global $wgUser;
 		if ($wgUser->isLoggedIn()) {
-			$wgUser->setOption($name, $value);
+			$wgUser->setGlobalPreference($name, $value);
 			$wgUser->saveSettings();
 
 			// commit changes to local db

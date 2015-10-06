@@ -14,6 +14,9 @@ class Chat {
 	// Cache ban info for 24h, 24*60*60 = 86400
 	const BAN_INFO_TTL = 86400;
 
+	// Value to store in memcache when no ban information is found
+	const NO_BAN_INFORMATION = -1;
+
 	/**
 	 * The return value of this method gets passed to Javascript as the global wgChatKey.  It then becomes the 'key'
 	 * parameter sent with every chat request to the Node.js server.
@@ -291,17 +294,29 @@ class Chat {
 
 		$userID = $banUser->getId();
 		$key = self::getBanInfoCacheKey( $cityID, $userID );
+		$memc = F::app()->wg->Memc;
 
-		$banInfo = WikiaDataAccess::cache( $key, self::BAN_INFO_TTL, function () use ( $cityID, $userID ) {
-			ChatHelper::info( __METHOD__ . ': Cache miss - querying DB', [
-				'cityId' => $cityID,
-				'userID' => $userID,
-			] );
+		$banInfo = $memc->get( $key );
+		if ( empty( $banInfo ) ) {
+			$banInfo = self::getBanInfoFromDB( $cityID, $userID );
 
-			return self::getBanInfoFromDB( $cityID, $userID );
-		} );
+			// Only cache for as long as we have left in the ban, or a default if the ban has expired
+			if ( empty( $banInfo ) ) {
+				// Cache the absense of ban information since this will be the case most often
+				$ttl = self::BAN_INFO_TTL;
+				$banInfo = self::NO_BAN_INFORMATION;
+			} else {
+				$ttl = $banInfo->end_date - time();
+			}
 
-		return empty( $banInfo ) ? false : $banInfo;
+			$memc->set( $key, $banInfo, $ttl );
+		} else {
+			if ( $banInfo->end_date < time() ) {
+				$banInfo = self::NO_BAN_INFORMATION;
+			}
+		}
+
+		return $banInfo == self::NO_BAN_INFORMATION ? false : $banInfo;
 	}
 
 	private static function getBanInfoFromDB( $cityID, $userID ) {

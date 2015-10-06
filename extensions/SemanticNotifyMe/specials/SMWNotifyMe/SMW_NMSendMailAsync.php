@@ -42,7 +42,7 @@ foreach ( $msgs as $msg ) {
 	}
 	$user_info = $sStore->getUserInfo( $msg['user_id'] );
 	$user = User::newFromRow( $user_info );
-	if ( ( $user_info->user_email != '' ) &&  $user->getOption( 'enotifyme' ) ) {
+	if ( ( $user_info->user_email != '' ) &&  $user->getGlobalPreference( 'enotifyme' ) ) {
 		$name = ( ( $user_info->user_real_name == '' ) ? $user_info->user_name:$user_info->user_real_name );
 
 		UserMailer::send(

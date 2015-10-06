@@ -305,7 +305,7 @@ class WallMessage {
 	}
 
 	public function canDelete( User $user ) {
-		return $this->can( $user, 'walldelete' ) && $user->getOption( 'walldelete', false );
+		return $this->can( $user, 'walldelete' ) && $user->getGlobalPreference( 'walldelete', false );
 	}
 
 	public function canRemove( User $user ) {
@@ -935,7 +935,9 @@ class WallMessage {
 	public function removeWatch( User $user ) {
 		if ( !$this->isMain() ) {
 			$parent = $this->getTopParentObj();
-			if ( $parent ) $user->removeWatch( $parent->getTitle() );
+			if ( $parent ) {
+				$user->removeWatch( $parent->getTitle() );
+			}
 		} else {
 			$user->removeWatch( $this->title );
 		}

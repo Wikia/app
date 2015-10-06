@@ -94,4 +94,24 @@ class InsightsHooks {
 		$wgQueryPages[] = [ 'UnconvertedInfoboxesPage', 'Nonportableinfoboxes' ];
 		return true;
 	}
+
+	/**
+	 * Purge memcache with insights articles after updating special pages task is done
+	 *
+	 * @param  QueryPage $queryPage
+	 * @return bool
+	 */
+	public static function onAfterUpdateSpecialPages( $queryPage ) {
+		$queryPageName = strtolower( $queryPage->getName() );
+
+		$model = InsightsHelper::getInsightModel( $queryPageName );
+
+		if ( $model instanceof InsightsQueryPageModel && $model->purgeCacheAfterUpdateTask() ) {
+			$model->purgeInsightsCache();
+			$model->initModel( [] );
+			$model->getContent( [] );
+		}
+
+		return true;
+	}
 } 

@@ -63,6 +63,12 @@ class SpecialAllpages extends IncludableSpecialPage {
 		$out = $this->getOutput();
 
 		$this->setHeaders();
+
+		/* Wikia change begin - @author: rychu */
+		// SEO-6: Remove the nofollow attribute from Special:AllPages
+		$out->setRobotPolicy( 'noindex,follow' );
+		/* Wikia change end */
+
 		$this->outputHeader();
 		$out->allowClickjacking();
 

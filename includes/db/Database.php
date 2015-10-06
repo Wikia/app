@@ -839,7 +839,7 @@ abstract class DatabaseBase implements DatabaseType {
 	 * @return bool
 	 */
 	function isWriteQuery( $sql ) {
-		return !preg_match( '/^(?:SELECT|BEGIN|COMMIT|SET|SHOW|\(SELECT)\b/i', $sql );
+		return !preg_match( '/^(?:SELECT|BEGIN|COMMIT|SET|SHOW|\(SELECT)\b/i', ltrim( $sql ) ); // PLATFORM-1417 (ltrim)
 	}
 
 	/**
@@ -904,6 +904,7 @@ abstract class DatabaseBase implements DatabaseType {
 				'exception' => new Exception( $sql ),
 				'server'    => $this->mServer
 			] );
+			wfDebug( sprintf( "%s: DB read-only mode prevented the following query: %s\n", __METHOD__, $sql ) );
 			return false;
 		}
 		# </Wikia>
@@ -936,6 +937,18 @@ abstract class DatabaseBase implements DatabaseType {
 		if ( strpos( $sql, ' ' ) === false ) {
 			$commentedSql = "{$sql} /* {$fname} {$userName} */";
 		}
+
+		// PLATFORM-1311: log deletes on `revision` table
+		if ( startsWith( $sql, 'DELETE ' ) && strpos( $sql, '`revision`' ) !== false ) {
+			WikiaLogger::instance()->warning( 'PLATFORM-1311', [
+				'reason' => 'SQL DELETE',
+				'fname' => $fname,
+				'sql' => $sql,
+				'exception' => new Exception(),
+			] );
+		}
+		// Wikia change- end
+
 		# Wikia change - end
 
 		# If DBO_TRX is set, start a transaction
@@ -2683,10 +2696,18 @@ abstract class DatabaseBase implements DatabaseType {
 			$sql .= ' WHERE ' . $conds;
 		}
 
+		// Wikia change- begin
+		// improve logging for BAC-1094
 		if ( strpos( $sql, '`user`' ) !== false ) {
-			global $wgDBname, $wgUser;
-			error_log( sprintf( "MOLI: (%s), user: %d: %s", $wgDBname, ( !empty( $wgUser ) ) ? $wgUser->getId() : 0, $sql ) );
+			global $wgUser;
+			WikiaLogger::instance()->warning( 'MOLI: delete from user', [
+				'fname' => $fname,
+				'sql' => $sql,
+				'exception' => new Exception(),
+				'sent_by' => !empty( $wgUser ) ? $wgUser->getName() : ''
+			] );
 		}
+		// Wikia change- end
 
 		return $this->query( $sql, $fname );
 	}

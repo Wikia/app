@@ -14,12 +14,12 @@
 
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Places',
-	'version' => '2.0',
+	'version' => '2.1',
 	'author' => array(
 		'Maciej Brencz',
 		'Jakub Kurcek' ),
 	'descriptionmsg' => 'places-desc',
-	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/Places'
+	'url' => 'https://github.com/Wikia/app/blob/dev/extensions/wikia/Places/README.md'
 );
 
 $dir = dirname( __FILE__ );

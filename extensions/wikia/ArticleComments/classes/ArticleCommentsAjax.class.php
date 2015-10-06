@@ -46,22 +46,22 @@ class ArticleCommentsAjax {
 			return $result;
 		}
 
-		if (!ArticleComment::canComment()) {
+		if ( !ArticleComment::canComment() ) {
 			return $result;
 		}
 
 		$comment = ArticleComment::newFromId( $commentId );
 		if ( $comment ) {
-			$comment->load(true);
+			$comment->load( true );
 			if ( $comment->canEdit() ) {
-				$text = self::getConvertedContent($wgRequest->getVal('wpArticleComment'));
-				$commentId = $wgRequest->getText('id', false);
+				$text = self::getConvertedContent( $wgRequest->getVal( 'wpArticleComment' ) );
+				$commentId = $wgRequest->getText( 'id', false );
 				$response = $comment->doSaveComment( $text, $wgUser, $title, $commentId );
 				if ( $response !== false ) {
 					$status = $response[0];
 					$article = $response[1];
 
-					return ArticleComment::doAfterPost($status, $article, $parentId );
+					return ArticleComment::doAfterPost( $status, $article, $parentId );
 				}
 			}
 		}
@@ -103,17 +103,17 @@ class ArticleCommentsAjax {
 		 */
 		$comment = ArticleComment::newFromId( $commentId );
 		if ( $comment ) {
-			$comment->load(true);
+			$comment->load( true );
 			if ( $comment->canEdit() ) {
 				$result['error'] = 0;
 				$result['show'] = true;
 				$result['text'] = $comment->editPage();
 
-				if (ArticleComment::isMiniEditorEnabled()) {
+				if ( ArticleComment::isMiniEditorEnabled() ) {
 					$result['edgeCases'] = MiniEditorHelper::getEdgeCases();
 				}
 
-				$result['emptyMsg'] = wfMsg('article-comments-empty-comment', $comment->getTitle()->getLocalUrl('redirect=no&action=delete'));
+				$result['emptyMsg'] = wfMsg( 'article-comments-empty-comment', $comment->getTitle()->getLocalUrl( 'redirect=no&action=delete' ) );
 			}
 		}
 
@@ -133,7 +133,7 @@ class ArticleCommentsAjax {
 
 		$articleId = $wgRequest->getVal( 'article', false );
 		$commentId = $wgRequest->getVal( 'id', false );
-		$result = array('id' => $commentId);
+		$result = array( 'id' => $commentId );
 
 		$title = Title::newFromID( $articleId );
 		if ( !$title ) {
@@ -152,7 +152,7 @@ class ArticleCommentsAjax {
 				'stylePath' => $wgStylePath
 			);
 
-			$result['html'] = F::app()->getView('ArticleComments', 'Reply', $vars)->render();
+			$result['html'] = F::app()->getView( 'ArticleComments', 'Reply', $vars )->render();
 		}
 
 		return $result;
@@ -188,7 +188,7 @@ class ArticleCommentsAjax {
 			'parentId' => $parentId,
 		] );
 
-		$response = ArticleComment::doPost( self::getConvertedContent($wgRequest->getVal('wpArticleComment')), $wgUser, $title, $parentId );
+		$response = ArticleComment::doPost( self::getConvertedContent( $wgRequest->getVal( 'wpArticleComment' ) ), $wgUser, $title, $parentId );
 
 		if ( $response !== false ) {
 			if (
@@ -207,9 +207,9 @@ class ArticleCommentsAjax {
 			$countAll = $wgLang->formatNum( $listing->getCountAllNested() );
 			$commentsHTML = $response[2]['text'];
 
-			$result = array('text' => $commentsHTML, 'counter' => $countAll);
+			$result = array( 'text' => $commentsHTML, 'counter' => $countAll );
 
-			if( F::app()->checkskin( 'wikiamobile' ) ) {
+			if ( F::app()->checkskin( 'wikiamobile' ) ) {
 				$result['counterMessage'] = wfMessage( 'wikiamobile-article-comments-counter' )
 					->params( $countAll )
 					->text();
@@ -236,8 +236,8 @@ class ArticleCommentsAjax {
 	static function axGetComments() {
 		global $wgRequest, $wgTitle;
 
-		$page = $wgRequest->getVal('page', false);
-		$articleId = $wgRequest->getVal('article', false);
+		$page = $wgRequest->getVal( 'page', false );
+		$articleId = $wgRequest->getVal( 'article', false );
 		$wgTitle = Title::newFromID( $articleId );
 
 		$error = 0;
@@ -245,23 +245,23 @@ class ArticleCommentsAjax {
 		$method = 'CommentList';
 		$isMobile = F::app()->checkSkin( 'wikiamobile' );
 
-		if($isMobile){
+		if ( $isMobile ) {
 			$method = 'WikiaMobile' . $method;
 		} elseif ( F::app()->checkSkin( 'venus' ) ) {
 			$method = 'Venus' . $method;
 		}
 
-		$title = Title::newFromID($articleId);
+		$title = Title::newFromID( $articleId );
 		if ( !$title ) {
 			$error = 1;
 		} else {
-			$listing = ArticleCommentList::newFromTitle($title);
-			$comments = $listing->getCommentPages(false, $page);
-			$text = F::app()->getView('ArticleComments', $method, array('commentListRaw' => $comments, 'page' => $page, 'useMaster' => false))->render();
-			$pagination = (!$isMobile) ? $listing->doPagination($listing->getCountAll(), count($comments), $page === false ? 1 : $page, $title) : '';
+			$listing = ArticleCommentList::newFromTitle( $title );
+			$comments = $listing->getCommentPages( false, $page );
+			$text = F::app()->getView( 'ArticleComments', $method, array( 'commentListRaw' => $comments, 'page' => $page, 'useMaster' => false ) )->render();
+			$pagination = ( !$isMobile ) ? $listing->doPagination( $listing->getCountAll(), count( $comments ), $page === false ? 1 : $page, $title ) : '';
 		}
 
-		$result = array('error' => $error, 'text' => $text, 'pagination' => $pagination);
+		$result = array( 'error' => $error, 'text' => $text, 'pagination' => $pagination );
 
 		return $result;
 	}
@@ -272,13 +272,13 @@ class ArticleCommentsAjax {
 	 * @param string $text - the text to convert
 	 * @return string - the converted text
 	 */
-	static public function getConvertedContent($content = '') {
+	static public function getConvertedContent( $content = '' ) {
 		global $wgEnableMiniEditorExtForArticleComments, $wgRequest;
-		if ($wgEnableMiniEditorExtForArticleComments && !empty($content)) {
-			$convertToFormat = $wgRequest->getVal('convertToFormat', '');
+		if ( $wgEnableMiniEditorExtForArticleComments && !empty( $content ) ) {
+			$convertToFormat = $wgRequest->getVal( 'convertToFormat', '' );
 
-			if (!empty($convertToFormat)) {
-				$content = MiniEditorHelper::convertContent($content, $convertToFormat);
+			if ( !empty( $convertToFormat ) ) {
+				$content = MiniEditorHelper::convertContent( $content, $convertToFormat );
 			}
 		}
 

@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 width="24px" height="24px" viewBox="0 0 24 24" xml:space="preserve">
-<g id="strikethrough-y" style="opacity:0.75;">
-	<path id="strikethrough" d="m 6,11 h 12 v 1 H 6 v -1 z"/>
-	<path id="a" d="m 7,6 1.72359,0 3.2883235,4.9350295 3.264496,-4.9350295 1.723589,0 -4.193804,6.2853305 0,5.714669 -1.61239,0 0,-5.714669 -4.1938045,-6.2853305"/>
-</g>
-</svg>

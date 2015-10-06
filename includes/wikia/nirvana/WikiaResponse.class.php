@@ -16,6 +16,7 @@ class WikiaResponse {
 	 */
 	const RESPONSE_CODE_OK = 200;
 	const RESPONSE_CODE_ERROR = 501;
+	const RESPONSE_CODE_BAD_REQUEST = 400;
 	const RESPONSE_CODE_FORBIDDEN = 403;
 	const RESPONSE_CODE_NOT_FOUND = 404;
 
@@ -43,6 +44,7 @@ class WikiaResponse {
 	const CACHE_LONG = 2592000; // 30 days
 	const CACHE_STANDARD = 86400; // 24 hours
 	const CACHE_SHORT = 10800; // 3 hours
+	const CACHE_VERY_SHORT = 300; // 5 minutes
 
 	/**
 	 * Caching policy

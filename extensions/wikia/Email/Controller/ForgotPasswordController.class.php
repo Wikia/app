@@ -2,8 +2,6 @@
 
 namespace Email\Controller;
 
-use Email\Check;
-use Email\Fatal;
 use Email\EmailController;
 
 /**
@@ -15,74 +13,71 @@ use Email\EmailController;
  */
 class ForgotPasswordController extends EmailController {
 
-	public function initEmail() {
-		$this->fromAddress = new \MailAddress(
-			$this->wg->PasswordSender,
-			$this->wg->PasswordSenderName
-		);
-	}
-
-	public function assertCanEmail() {
-		parent::assertCanEmail();
-
-		$this->assertCanChangePassword();
-		$this->assertPasswordReminderNotThrottled();
-		$this->assertHasIP();
-	}
-
-	public function getSubject() {
-		return $this->getMessage( 'emailext-password-email-subject' )->text();
-	}
-
-	protected function getContent() {
-		$html = $this->app->renderView(
-			get_class( $this ),
-			'body',
-			$this->request->getParams()
-		);
-
-		return $html;
-	}
+	protected $tempPass;
 
 	/**
-	 * @template forgotPassword
-	 *
-	 * @throws \MWException
+	 * @see EmailController::assertCanAccessController
+	 * @throws \Email\Fatal
 	 */
-	public function body() {
-		$targetUser = $this->targetUser;
+	public function assertCanAccessController() {
+		global $wgTheSchwartzSecretToken;
 
-		wfRunHooks( 'User::mailPasswordInternal', [
-			$this->currentUser,
-			$this->getContext()->getRequest()->getIP(),
-			$targetUser,
-		] );
-
-		$tempPass = $targetUser->randomPassword();
-		$targetUser->setNewpassword( $tempPass );
-		$targetUser->saveSettings();
-
-		$this->response->setData( [
-			'greeting' => $this->getMessage( 'emailext-password-email-greeting', $targetUser->getName() )->text(),
-			'content' => $this->getMessage( 'emailext-password-email-content', $tempPass )->text(),
-			'signature' => $this->getMessage( 'emailext-password-email-signature' )->text(),
-		] );
-	}
-
-	protected function assertCanChangePassword() {
-		if ( !$this->wg->Auth->allowPasswordChange() ) {
-			throw new Fatal( 'This user is not allowed to change their password' );
-		}
-	}
-
-	protected function assertPasswordReminderNotThrottled() {
-		// Do not throttle staff
-		if ( $this->wg->User->isStaff() ) {
+		$token = $this->getVal('secret');
+		if( isset( $token ) && $token == $wgTheSchwartzSecretToken ) {
 			return;
 		}
 
-		if ( $this->targetUser->isPasswordReminderThrottled() ) {
-			throw new Check( 'Too many resend password requests sent' );
+		parent::assertCanAccessController();
+	}
+
+	/**
+	 * A redefinition of our parent's assertCanEmail which removes assertions:
+	 *
+	 * - assertUserWantsEmail : Even if a user says they don't want email, they should get this
+	 * - assertUserNotBlocked : Even if a user is blocked they should still get these emails
+	 *
+	 * @throws \Email\Fatal
+	 */
+	public function assertCanEmail() {
+		$this->assertUserHasEmail();
+	}
+
+	public function initEmail() {
+		$userService = new \UserService();
+		$this->tempPass = $this->request->getVal( 'tempPass' );
+		if ( empty( $this->tempPass ) ) {
+			$this->tempPass = $userService->resetPassword( $this->targetUser );
 		}
+	}
+
+	public function getSubject() {
+		return $this->getMessage( 'emailext-password-subject' )->text();
+	}
+
+	/**
+	 * @template temporaryPassword
+	 */
+	public function body() {
+		$this->response->setData( [
+			'salutation' => $this->getSalutation(),
+			'summary' => $this->getSummary(),
+			'passwordIntro' => $this->getIntro(),
+			'tempPassword' => $this->tempPass,
+			'instructions' => $this->getMessage( 'emailext-password-unrequested' )->text(),
+			'questions' => $this->getMessage( 'emailext-password-questions' )->parse(),
+			'signature' => $this->getMessage( 'emailext-password-signature' )->text(),
+		] );
+	}
+
+	protected function getSummary() {
+		return $this->getMessage( 'emailext-password-summary' )->text();
+	}
+
+	protected function getIntro() {
+		return $this->getMessage( 'emailext-password-intro' )->text();
+	}
+
+	protected function getDetails() {
+		return $this->getMessage( 'emailext-password-details' )->text();
 	}
 }

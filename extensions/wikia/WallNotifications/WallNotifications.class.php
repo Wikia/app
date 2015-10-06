@@ -1,4 +1,5 @@
 <?php
+
 use Wikia\Logger\WikiaLogger;
 
 /**
@@ -413,11 +414,9 @@ class WallNotifications {
 				'titleUrl' => $notifData->url,
 				'details' => $text,
 				'targetUser' => $watcherName,
-				'fromAddress' => $this->app->wg->PasswordSender,
-				'replyToAddress' => $this->app->wg->NoReplyAddress,
-				'fromName' => $this->app->wg->PasswordSenderName,
 				'wallUserName' => $notifData->wall_username,
-				'threadId' => $notifData->parent_id
+				'threadId' => $notifData->title_id,
+				'parentId' => $notifData->parent_id,
 			];
 
 			F::app()->sendRequest( $controller, 'handle', $params );
@@ -432,11 +431,11 @@ class WallNotifications {
 		}
 
 		// Don't send an email to users that unsubscribed their email address
-		if ( $watcher->getBoolOption( 'unsubscribed' ) === true ) {
+		if ( (bool)$watcher->getGlobalPreference( 'unsubscribed' ) === true ) {
 			return false;
 		}
 
-		$mode = $watcher->getOption( 'enotifwallthread' );
+		$mode = $watcher->getGlobalPreference( 'enotifwallthread' );
 		if ( empty( $mode ) ) {
 			return false;
 		}
@@ -457,16 +456,16 @@ class WallNotifications {
 			&& MWNamespace::getSubject( $notification->data->article_title_ns ) == NS_WIKIA_FORUM_BOARD
 		) {
 			if ( $notification->isMain() ) {
-				$controller = 'Email\Controller\Forum';
+				$controller = Email\Controller\ForumController::class;
 			} else {
-				$controller = 'Email\Controller\ReplyForum';
+				$controller = Email\Controller\ReplyForumController::class;
 			}
-		} else if ( $notification->data->wall_username != $watcherName ) {
-			$controller = 'Email\Controller\FollowedWallMessage';
+		} else if ( $notification->isMain() && $notification->data->wall_username != $watcherName ) {
+			$controller = Email\Controller\FollowedWallMessageController::class;
 		} else if ( !$notification->isMain() ) {
-			$controller = 'Email\Controller\ReplyWallMessage';
+			$controller = Email\Controller\ReplyWallMessageController::class;
 		} else {
-			$controller = 'Email\Controller\OwnWallMessage';
+			$controller = Email\Controller\OwnWallMessageController::class;
 		}
 
 		return $controller;
@@ -490,6 +489,14 @@ class WallNotifications {
 	protected function getWatchlist( $name, $titleDbkey, $ns = NS_USER_WALL ) {
 		// TODO: add some caching
 		$userTitle = Title::newFromText( $name, MWNamespace::getSubject( $ns ) );
+		if ( empty( $userTitle ) ) {
+			WikiaLogger::instance()->error( 'User page is non-existent', [
+				'issue' => 'SOC-1070',
+				'name' => $name,
+				'ns' => $ns,
+			] );
+			return [];
+		}
 
 		$dbw = $this->getLocalDB( true );
 		$res = $dbw->select(

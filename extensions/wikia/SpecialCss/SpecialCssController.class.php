@@ -106,14 +106,21 @@ class SpecialCssController extends WikiaSpecialPageController {
 	}
 
 	protected function handleAssets() {
-		$this->response->addAsset('/extensions/wikia/SpecialCss/css/SpecialCss.scss');
-		$this->response->addAsset('special_css_js');
+		$this->response->addAsset( '/extensions/wikia/SpecialCss/css/SpecialCss.scss' );
+		$this->response->addAsset( 'special_css_js' );
 		// This shouldn't be moved to asset manager package because of Ace internal autoloader
-		$this->response->addAsset('resources/Ace/ace.js');
+		$this->response->addAsset( 'resources/Ace/ace.js' );
 
-		$aceUrl = AssetsManager::getInstance()->getOneCommonURL('/resources/Ace');
+		$aceUrl = AssetsManager::getInstance()->getOneCommonURL( '/resources/Ace' );
 		$aceUrlParts = parse_url($aceUrl);
-		$this->response->setJsVar('aceScriptsPath', $aceUrlParts['path']);
+		$this->response->setJsVar( 'wgEnableCodePageEditor', true );
+		$this->response->setJsVar( 'wgEditedTitle', (new SpecialCssModel())->getCssFileTitle()->getPrefixedText() );
+		$this->response->setJsVar( 'wgEditPageClass', 'SpecialCustomEditPage' );
+		$this->response->setJsVar( 'aceScriptsPath', $aceUrlParts['path'] );
+		$this->response->setJsVar(
+			'wgEditPageHandler',
+			$this->app->getGlobal( 'wgScript' ) . '?action=ajax&rs=EditPageLayoutAjax&title=$1'
+		);
 
 		JSMessages::enqueuePackage('SpecialCss', JSMessages::EXTERNAL);
 	}

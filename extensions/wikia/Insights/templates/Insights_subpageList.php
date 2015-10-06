@@ -17,22 +17,29 @@
 			<p class="insights-header-description"><?= wfMessage( InsightsHelper::INSIGHT_DESCRIPTION_MSG_PREFIX . $subpage )->parse() ?></p>
 		</div>
 		<?php if ( !empty( $dropdown ) ): ?>
-			<div class="insights-header-sorting">
-				<form class="insights-sorting-form" method="GET">
+			<form class="insights-sorting-form" method="GET">
+				<div class="insights-header-sorting">
 					<label for="sort"><?= wfMessage( 'insights-sort-label' )->escaped() ?></label>
 					<select class="insights-sorting" name="sort">
 						<?php foreach( $dropdown as $sortType => $sortLabel ): ?>
-							<option value="<?= $sortType ?>" <?php if ( $sortType == $current ): ?>selected<?php endif ?>><?= $sortLabel ?></option>
+							<option value="<?= Sanitizer::encodeAttribute( $sortType ) ?>" <?php if ( $sortType == $current ): ?>selected<?php endif ?>><?= htmlspecialchars( $sortLabel ) ?></option>
 						<?php endforeach ?>
 					</select>
-				</form>
-			</div>
+				</div>
+				<?php if ( !empty( $flagTypes ) ): // Flags filter dropdown ?>
+					<?= $app->renderView( 'Insights', 'flagsFiltering', [ 'selectedFlagTypeId' => $selectedFlagTypeId, 'flagTypes' => $flagTypes ] ); ?>
+				<?php endif ?>
+			</form>
 		<?php endif ?>
+
 		<div class="insights-content">
 			<?php if ( !empty( $content ) ) : ?>
 				<table class="insights-list" data-type="<?= Sanitizer::encodeAttribute( $subpage ) ?>">
 					<tr>
 						<th class="insights-list-header insights-list-first-column"><?= wfMessage( 'insights-list-header-page' )->escaped() ?></th>
+						<?php if ( $data['display']['altaction'] ) : ?>
+							<th class="insights-list-header insights-list-header-altaction"><?= wfMessage( "insights-list-header-altaction" )->escaped() ?></th>
+						<?php endif; ?>
 						<?php if ( $data['display']['pageviews'] ) : ?>
 							<th class="insights-list-header insights-list-header-pageviews"><?= wfMessage( 'insights-list-header-pageviews' )->escaped() ?></th>
 						<?php endif; ?>
@@ -61,6 +68,13 @@
 									</p>
 								<?php endif; ?>
 							</td>
+							<?php if ( !empty( $item['altaction'] ) ) : ?>
+							<td class="insights-list-cell insights-list-cell-altaction">
+								<a class="wikia-button <?= $item['altaction']['class'] ?>" href="<?= $item['altaction']['url'] ?>" target="_blank">
+									<?= $item['altaction']['text'] ?>
+								</a>
+							</td>
+							<?php endif; ?>
 							<?php if ( $data['display']['pageviews'] ) : ?>
 								<td class="insights-list-item-pageviews insights-list-cell">
 									<?= $wg->Lang->formatNum( $item['metadata'][$metadata] ); ?>
@@ -72,11 +86,16 @@
 				<?php if ( $paginatorBar ) : ?>
 					<?= $paginatorBar ?>
 				<?php endif ?>
+			<?php elseif (!empty( $flagTypes ) ) : ?>
+				<p>
+					<?= wfMessage( 'insights-list-no-flag-types' )->escaped(); ?>
+				</p>
 			<?php else: ?>
 				<p>
 					<?= wfMessage( 'insights-list-no-items' )->escaped(); ?>
 				</p>
 			<?php endif; ?>
+
 		</div>
 	</div>
 </div>

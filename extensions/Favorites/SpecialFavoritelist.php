@@ -34,10 +34,10 @@ function wfSpecialFavoritelist( $par ) {
 	global $wgRCShowFavoritingUsers, $wgEnotifFavoritelist, $wgShowUpdatedMarker;
 	
 	// Add feed links
-	$flToken = $wgUser->getOption( 'favoritelisttoken' );
+	$flToken = $wgUser->getGlobalAttribute( 'favoritelisttoken' );
 	if (!$flToken) {
 		$flToken = sha1( mt_rand() . microtime( true ) );
-		$wgUser->setOption( 'favoritelisttoken', $flToken );
+		$wgUser->setGlobalAttribute( 'favoritelisttoken', $flToken );
 		$wgUser->saveSettings();
 	}
 	
@@ -464,7 +464,7 @@ private function viewFavList ($user, $output, $request, $mode) {
 		$form .= Xml::label( wfMsg( 'favoritelistedit-raw-titles' ), 'titles' );
 		$form .= "<br />\n";
 		$form .= Xml::openElement( 'textarea', array( 'id' => 'titles', 'name' => 'titles',
-			'rows' => $wgUser->getIntOption( 'rows' ), 'cols' => $wgUser->getIntOption( 'cols' ) ) );
+			'rows' => $wgUser->getGlobalPreference( 'rows' ), 'cols' => $wgUser->getGlobalPreference( 'cols' ) ) );
 		$titles = $this->getFavoritelist( $user );
 			foreach( $titles as $title )
 			$form .= htmlspecialchars( $title ) . "\n";

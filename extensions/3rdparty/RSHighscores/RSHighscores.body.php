@@ -119,6 +119,7 @@ class RSHiscores {
 		if ( $hs != 'rs3' && $hs != 'osrs' ) {
 			// RSHiscores 3.0 breaks backward-compatibility. Add a tracking category to allow fixing existing usage.
 			$parser->addTrackingCategory( 'rshiscores-error-category' );
+
 			// Unknown or unsupported hiscores API.
 			return 'H';
 		}
@@ -129,7 +130,7 @@ class RSHiscores {
 			// No name was entered.
 			return 'A';
 
-		} elseif ( array_key_exists( $player, self::$cache ) && array_key_exists( $player, self::$cache[$hs] ) ) {
+		} elseif ( array_key_exists( $hs, self::$cache ) && array_key_exists( $player, self::$cache[$hs] ) ) {
 			// Get the hiscores data from the cache.
 			$data = self::$cache[$hs][$player];
 

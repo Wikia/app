@@ -19,6 +19,10 @@
       "description": "Articles API"
     },
     {
+      "name": "flags",
+      "description": "Flags API"
+    },
+    {
       "name": "mercury",
       "decription": "Mercury API"
     },
@@ -704,6 +708,131 @@
             "description": "Comma-separated namespace ids, see more: http://community.wikia.com/wiki/Help:Namespaces",
             "name": "namespaces",
             "required": false,
+            "type": "string",
+            "default": ""
+          }
+        ]
+      }
+    },
+    "/Flags/FlagsForPage": {
+      "get": {
+        "tags": ["flags"],
+        "responses": {
+          "200": {
+            "description": "List of flags with flag_type_id values as indexes"
+          },
+          "400": {
+            "description": "Page ID is not set or is invalid"
+          }
+        },
+        "description": "",
+        "summary": "Retrieve all data for flags assigned to the given page.",
+        "operationId": "getFlagsForPage",
+        "parameters": [
+          {
+            "in": "query",
+            "description": "Used to override the default wiki ID.",
+            "name": "wiki_id",
+            "required": false,
+            "type": "int",
+            "default": ""
+          },
+          {
+            "in": "query",
+            "description": "ID of the page for which to get the flags.",
+            "name": "page_id",
+            "required": true,
+            "type": "int",
+            "default": ""
+          }
+        ]
+      }
+    },
+    "/Flags/FlagsForPageForEdit": {
+      "get": {
+        "tags": ["flags"],
+        "responses": {
+          "200": {
+            "description": "List of flags with flag_type_id values as indexes"
+          },
+          "400": {
+            "description": "Page ID is not set or is invalid"
+          }
+        },
+        "description": "It returns the types with instances on the page first and then all other types sorted alphabetically.",
+        "summary": "Retrieves all data for all flag types available on the given wikia.",
+        "operationId": "getFlagsForPageForEdit",
+        "parameters": [
+          {
+            "in": "query",
+            "description": "Used to override the default wiki ID.",
+            "name": "wiki_id",
+            "required": false,
+            "type": "int",
+            "default": ""
+          },
+          {
+            "in": "query",
+            "description": "ID of the page for which to get the flags.",
+            "name": "page_id",
+            "required": true,
+            "type": "int",
+            "default": ""
+          }
+        ]
+      }
+    },
+    "/Flags/FlagTypes": {
+      "get": {
+        "tags": ["flags"],
+        "responses": {
+          "200": {
+            "description": "List of flag types with flag_type_id values as indexes"
+          }
+        },
+        "description": "",
+        "summary": "Retrieve all flag types for given wiki.",
+        "operationId": "getFlagTypes",
+        "parameters": [
+          {
+            "in": "query",
+            "description": "Used to override the default wiki ID.",
+            "name": "wiki_id",
+            "required": false,
+            "type": "int",
+            "default": ""
+          }
+        ]
+      }
+    },
+    "/Flags/FlagTypeIdByTemplate": {
+      "get": {
+        "tags": ["flags"],
+        "responses": {
+          "200": {
+            "description": "Flag type ID."
+          },
+          "400": {
+            "description": "View name is not set or is empty."
+          }
+        },
+        "description": "",
+        "summary": "Get flag type id by template (view) name",
+        "operationId": "getFlagTypeIdByTemplate",
+        "parameters": [
+          {
+            "in": "query",
+            "description": "Used to override the default wiki ID.",
+            "name": "wiki_id",
+            "required": false,
+            "type": "int",
+            "default": ""
+          },
+          {
+            "in": "query",
+            "description": "View name.",
+            "name": "flag_view",
+            "required": true,
             "type": "string",
             "default": ""
           }

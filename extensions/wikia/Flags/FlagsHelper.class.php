@@ -35,21 +35,19 @@ class FlagsHelper {
 		$flagsToAdd = $flagsToRemove = $flagsToUpdate = [];
 
 		foreach ( $currentFlags as $flagTypeId => $flag ) {
-			$keyCheckbox = $this->composeInputName( $flagTypeId, self::FLAGS_INPUT_NAME_CHECKBOX );
-
-			if ( !isset( $flag['flag_id'] ) && !isset( $postData[$keyCheckbox] ) ) {
+			if ( !isset( $flag['flag_id'] ) && !isset( $postData[$flagTypeId][self::FLAGS_INPUT_NAME_CHECKBOX] ) ) {
 				/**
 				 * 1. The flag type DOES NOT have an instance on this page and WAS NOT posted - continue
 				 */
 				continue;
 
-			} elseif ( !isset( $flag['flag_id'] ) && isset( $postData[$keyCheckbox] ) ) {
+			} elseif ( !isset( $flag['flag_id'] ) && isset( $postData[$flagTypeId][self::FLAGS_INPUT_NAME_CHECKBOX] ) ) {
 				/**
 				 * 2. The flag type DOES NOT have an instance on this page and WAS posted - new flag
 				 */
 				$flagsToAdd[$flagTypeId] = $this->getFlagFromPostData( $flag, $postData );
 
-			} elseif ( isset( $flag['flag_id'] ) && !isset( $postData[$keyCheckbox] ) ) {
+			} elseif ( isset( $flag['flag_id'] ) && !isset( $postData[$flagTypeId][self::FLAGS_INPUT_NAME_CHECKBOX] ) ) {
 				/**
 				 * 3. The flag type HAS an instance on this page and WAS NOT posted - remove flag
 				 */
@@ -84,17 +82,14 @@ class FlagsHelper {
 
 		$flagFromPost = [];
 
-		if ( isset( $flag['flag_id'] ) ) {
-			/**
-			 * If the flag exists - use flag_id for update
-			 */
-			$flagFromPost['flag_id'] = $flag['flag_id'];
-		} else {
-			/**
-			 * If the flag does not exist - use flag_type_id for insert
-			 */
-			$flagFromPost['flag_type_id'] = $flagTypeId;
-		}
+		/**
+		 * flag_id is used for update
+		 */
+		$flagFromPost['flag_id'] = isset( $flag['flag_id'] ) ? $flag['flag_id'] : null;
+		/**
+		 * flag_type_id is used for insert
+		 */
+		$flagFromPost['flag_type_id'] = $flagTypeId;
 
 		$flagFromPost['params'] = [];
 
@@ -109,13 +104,12 @@ class FlagsHelper {
 			 * This is a protection from users modifying names of parameters in the DOM.
 			 */
 			foreach ( $paramNames as $paramName => $paramDescription ) {
-				$key = $this->composeInputName( $flagTypeId, $paramName );
-				if ( isset( $postData[$key] ) ) {
+				if ( isset( $postData[$flagTypeId][$paramName] ) ) {
 					/**
 					 * Use a value from the form if it is provided.
 					 * It will be escaped by default mechanism from FluentSQL.
 					 */
-					$flagFromPost['params'][$paramName] = $postData[$key];
+					$flagFromPost['params'][$paramName] = $postData[$flagTypeId][$paramName];
 				} else {
 					/**
 					 * Insert an empty string if a value is not provided.
@@ -182,7 +176,7 @@ class FlagsHelper {
 	 *
 	 * @return array An array of localized names of targets of Flags
 	 */
-	public function getFlagTargetFullNames() {
+	public static function getFlagTargetFullNames() {
 		$flagTargetFullNames = [];
 
 		/**
@@ -191,7 +185,10 @@ class FlagsHelper {
 		 * flags-target-contributors
 		 */
 		foreach ( FlagType::$flagTargeting as $flagTargetId => $flagTargetKey ) {
-			$flagTargetFullNames[$flagTargetId] = wfMessage( "flags-target-{$flagTargetKey}" )->escaped();
+			$flagTargetFullNames[$flagTargetId] = [
+				'name' => wfMessage( "flags-target-{$flagTargetKey}" )->escaped(),
+				'value' => $flagTargetId
+			];
 		}
 
 		return $flagTargetFullNames;
@@ -202,9 +199,8 @@ class FlagsHelper {
 	 *
 	 * @return array An array of localized names of groups of Flags
 	 */
-	public function getFlagGroupsFullNames() {
+	public static function getFlagGroupsFullNames() {
 		$flagGroupsFullNames = [];
-
 		/**
 		 * Generates the following messages:
 		 * flags-groups-spoiler
@@ -214,22 +210,15 @@ class FlagsHelper {
 		 * flags-groups-delete
 		 * flags-groups-improvements
 		 * flags-groups-status
+		 * flags-groups-navigation
 		 * flags-groups-other
 		 */
 		foreach ( FlagType::$flagGroups as $flagGroupId => $flagGroupKey ) {
-			$flagGroupsFullNames[$flagGroupId] = wfMessage( "flags-groups-{$flagGroupKey}" )->escaped();
+			$flagGroupsFullNames[$flagGroupId] = [
+				'name' => wfMessage( "flags-groups-{$flagGroupKey}" )->escaped(),
+				'value' => $flagGroupId
+			];
 		}
-
 		return $flagGroupsFullNames;
-	}
-
-	/**
-	 * Composes the name of a flags edit form input from the $field parameter and a $flagTypeId
-	 * @param int $flagTypeId
-	 * @param string $field
-	 * @return string
-	 */
-	private function composeInputName( $flagTypeId, $field ) {
-		return self::FLAGS_INPUT_NAME_PREFIX . ":{$flagTypeId}:{$field}";
 	}
 }

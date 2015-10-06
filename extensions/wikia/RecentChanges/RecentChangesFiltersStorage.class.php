@@ -12,11 +12,11 @@ class RecentChangesFiltersStorage {
 	public function set( $values, $setToAll = false ) {
 		if ( $setToAll ) {
 			$new = [];
-			$this->user->setOption( 'RCFilters', null ); // Clear user option, so "all" will work on all wikis (CE-75)
+			$this->user->setGlobalPreference( 'RCFilters', null ); // Clear user option, so "all" will work on all wikis (CE-75)
 		} else {
 			$old = $this->get(false);
 			$new = $this->buildUserOption($old, empty($values) ? array():$values );
-			$this->user->setOption('RCFilters', serialize($new) );
+			$this->user->setGlobalPreference('RCFilters', serialize($new) );
 		}
 		$this->setCache($new);
 		$this->user->saveSettings();
@@ -26,7 +26,7 @@ class RecentChangesFiltersStorage {
 	public function get($onlyFromThisWiki = true) {
 		$values = $this->getCache();
 		if(is_null($values)) {
-			$values = unserialize( $this->user->getOption('RCFilters') );
+			$values = unserialize( $this->user->getGlobalPreference('RCFilters') );
 		}
 
 		if(empty($values)) {

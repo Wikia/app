@@ -1,18 +1,13 @@
 <?php
 
+use Wikia\PortableInfobox\Helpers\PortableInfoboxRenderServiceHelper;
+
 class PortableInfoboxRenderService extends WikiaService {
-	const LOGGER_LABEL = 'portable-infobox-render-not-supported-type';
-	const DESKTOP_THUMBNAIL_WIDTH = 270;
-	const MOBILE_THUMBNAIL_WIDTH = 360;
-	// TODO: https://wikia-inc.atlassian.net/browse/MAIN-4601 - request for the missing vignette feature which will
-	// allow us to remove THUMBNAIL_HEIGHT from the code. Currently we need this value cause it it impossible to get
-	// vignette thumbnail without upsampling only specifying width. The height need to be big enough so each image width
-	// will reach our thumbnail width based on its aspect ratio
-
-	const THUMBNAIL_HEIGHT = 1000;
 	const MOBILE_TEMPLATE_POSTFIX = '-mobile';
+	const MEDIA_CONTEXT_INFOBOX_HERO_IMAGE = 'infobox-hero-image';
+	const MEDIA_CONTEXT_INFOBOX = 'infobox';
 
-	private $templates = [
+	private static $templates = [
 		'wrapper' => 'PortableInfoboxWrapper.mustache',
 		'title' => 'PortableInfoboxItemTitle.mustache',
 		'header' => 'PortableInfoboxItemHeader.mustache',
@@ -20,52 +15,69 @@ class PortableInfoboxRenderService extends WikiaService {
 		'image-mobile' => 'PortableInfoboxItemImageMobile.mustache',
 		'data' => 'PortableInfoboxItemData.mustache',
 		'group' => 'PortableInfoboxItemGroup.mustache',
-		'comparison' => 'PortableInfoboxItemComparison.mustache',
-		'comparison-set' => 'PortableInfoboxItemComparisonSet.mustache',
-		'comparison-set-header' => 'PortableInfoboxItemComparisonSetHeader.mustache',
-		'comparison-set-item' => 'PortableInfoboxItemComparisonSetItem.mustache',
-		'footer' => 'PortableInfoboxItemFooter.mustache'
+		'horizontal-group-content' => 'PortableInfoboxHorizontalGroupContent.mustache',
+		'navigation' => 'PortableInfoboxItemNavigation.mustache',
+		'hero-mobile' => 'PortableInfoboxItemHeroMobile.mustache'
 	];
 	private $templateEngine;
 
 	function __construct() {
 		$this->templateEngine = ( new Wikia\Template\MustacheEngine )
-			->setPrefix( dirname( __FILE__ ) . '/../templates' );
+			->setPrefix( self::getTemplatesDir() );
+	}
+
+	public static function getTemplatesDir() {
+		return dirname( __FILE__ ) . '/../templates';
+	}
+
+	public static function getTemplates() {
+		return self::$templates;
 	}
 
 	/**
 	 * renders infobox
 	 *
 	 * @param array $infoboxdata
+	 *
 	 * @return string - infobox HTML
 	 */
-	public function renderInfobox( array $infoboxdata, $theme ) {
+	public function renderInfobox( array $infoboxdata, $theme, $layout ) {
 		wfProfileIn( __METHOD__ );
+
+		$helper = new PortableInfoboxRenderServiceHelper();
 		$infoboxHtmlContent = '';
+		$heroData = [ ];
 
 		foreach ( $infoboxdata as $item ) {
 			$data = $item[ 'data' ];
 			$type = $item[ 'type' ];
 
 			switch ( $type ) {
-				case 'comparison':
-					$infoboxHtmlContent .= $this->renderComparisonItem( $data['value'] );
-					break;
 				case 'group':
-					$infoboxHtmlContent .= $this->renderGroup( $data['value'] );
+					$infoboxHtmlContent .= $this->renderGroup( $data );
 					break;
-				case 'footer':
-					$infoboxHtmlContent .= $this->renderItem( 'footer', $data );
+				case 'navigation':
+					$infoboxHtmlContent .= $this->renderItem( 'navigation', $data );
 					break;
 				default:
-					if ( $this->validateType( $type ) ) {
+					if ( $helper->isWikiaMobile() && $helper->isValidHeroDataItem( $item, $heroData ) ) {
+						$heroData[ $type ] = $data;
+						continue;
+					}
+
+					if ( $helper->isTypeSupportedInTemplates( $type, self::getTemplates() ) ) {
 						$infoboxHtmlContent .= $this->renderItem( $type, $data );
 					};
 			}
 		}
 
-		if(!empty($infoboxHtmlContent)) {
-			$output = $this->renderItem( 'wrapper', [ 'content' => $infoboxHtmlContent, 'theme' => $theme ] );
+		if ( !empty( $heroData ) ) {
+			$infoboxHtmlContent = $this->renderInfoboxHero( $heroData ) . $infoboxHtmlContent;
+		}
+
+		if ( !empty( $infoboxHtmlContent ) ) {
+			$output = $this->renderItem( 'wrapper',
+				[ 'content' => $infoboxHtmlContent, 'theme' => $theme, 'layout' => $layout ] );
 		} else {
 			$output = '';
 		}
@@ -76,62 +88,30 @@ class PortableInfoboxRenderService extends WikiaService {
 	}
 
 	/**
-	 * renders comparison infobox component
-	 *
-	 * @param array $comparisonData
-	 * @return string - comparison HTML
-	 */
-	private function renderComparisonItem( $comparisonData )
-	{
-		$comparisonHTMLContent = '';
-
-		foreach ($comparisonData as $set) {
-			$setHTMLContent = '';
-
-			foreach ($set['data']['value'] as $item) {
-				$type = $item['type'];
-
-				if ($type === 'header') {
-					$setHTMLContent .= $this->renderItem(
-						'comparison-set-header',
-						['content' => $this->renderItem($type, $item['data'])]
-					);
-				} else {
-					if ($this->validateType($type)) {
-						$setHTMLContent .= $this->renderItem(
-							'comparison-set-item',
-							['content' => $this->renderItem($type, $item['data'])]
-						);
-					}
-				}
-			}
-
-			$comparisonHTMLContent .= $this->renderItem( 'comparison-set', [ 'content' => $setHTMLContent ] );
-		}
-
-		if ( !empty( $comparisonHTMLContent ) ) {
-			$output = $this->renderItem('comparison', [ 'content' => $comparisonHTMLContent ] );
-		} else {
-			$output = '';
-		}
-
-		return $output;
-	}
-
-	/**
 	 * renders group infobox component
 	 *
 	 * @param array $groupData
+	 *
 	 * @return string - group HTML markup
 	 */
 	private function renderGroup( $groupData ) {
+		$helper = new PortableInfoboxRenderServiceHelper();;
 		$groupHTMLContent = '';
+		$dataItems = $groupData[ 'value' ];
+		$layout = $groupData[ 'layout' ];
 
-		foreach ( $groupData as $item ) {
-			$type = $item['type'];
+		if ( $layout === 'horizontal' ) {
+			$groupHTMLContent .= $this->renderItem(
+				'horizontal-group-content',
+				$helper->createHorizontalGroupData( $dataItems )
+			);
+		} else {
+			foreach ( $dataItems as $item ) {
+				$type = $item[ 'type' ];
 
-			if ( $this->validateType( $type ) ) {
-				$groupHTMLContent .= $this->renderItem( $type, $item['data'] );
+				if ( $helper->isTypeSupportedInTemplates( $type, self::getTemplates() ) ) {
+					$groupHTMLContent .= $this->renderItem( $type, $item[ 'data' ] );
+				}
 			}
 		}
 
@@ -139,106 +119,56 @@ class PortableInfoboxRenderService extends WikiaService {
 	}
 
 	/**
+	 * renders infobox hero component
+	 *
+	 * @param array $data - infobox hero component data
+	 *
+	 * @return string
+	 */
+	private function renderInfoboxHero( $data ) {
+		$helper = new PortableInfoboxRenderServiceHelper();
+
+		if ( array_key_exists( 'image', $data ) ) {
+			$data[ 'image' ][ 'context' ] = self::MEDIA_CONTEXT_INFOBOX_HERO_IMAGE;
+			$data[ 'image' ] = $helper->extendImageData( $data[ 'image' ] );
+			$markup = $this->renderItem( 'hero-mobile', $data );
+		} else {
+			$markup = $this->renderItem( 'title', $data[ 'title' ] );
+		}
+
+		return $markup;
+	}
+
+	/**
 	 * renders part of infobox
+	 * If image element has invalid thumbnail, doesn't render this element at all.
 	 *
 	 * @param string $type
 	 * @param array $data
-	 * @return string - HTML
+	 *
+	 * @return bool|string - HTML
 	 */
 	private function renderItem( $type, array $data ) {
-		//TODO: with validated the performance of render Service and in the next phase we want to refactor it (make
-		// it modular) While doing this we also need to move this logic to appropriate image render class
-		if ( $type === 'image' ) {
-			$data[ 'thumbnail' ] = $this->getThumbnailUrl( $data );
-			$data[ 'key' ] = urlencode( $data[ 'key' ] );
+		$helper = new PortableInfoboxRenderServiceHelper();
 
-			if ( $this->isWikiaMobile() ) {
+		if ( $type === 'image' ) {
+			$data[ 'image' ][ 'context' ] = self::MEDIA_CONTEXT_INFOBOX;
+			$data = $helper->extendImageData( $data );
+			if ( !$data ) {
+				return false;
+			}
+
+			if ( $helper->isWikiaMobile() ) {
 				$type = $type . self::MOBILE_TEMPLATE_POSTFIX;
 			}
 		}
 
+		if ( $helper->isWikiaMobile() ) {
+			$data = $helper->sanitizeInfoboxTitle( $type, $data );
+		}
+
 		return $this->templateEngine->clearData()
 			->setData( $data )
-			->render( $this->templates[ $type ] );
-	}
-
-	/**
-	 * @desc returns the thumbnail url from
-	 * Vignette or from old service
-	 * @param string $url
-	 * @return string thumbnail url
-	 */
-	protected function getThumbnailUrl( $data ) {
-		$url = $data['url'];
-		// TODO: remove 'if' condition when unified thumb method
-		// will be implemented: https://wikia­inc.atlassian.net/browse/PLATFORM­1237
-		if ( VignetteRequest::isVignetteUrl( $url ) ) {
-			return $this->createVignetteThumbnail( $url );
-		} else {
-			return $this->createOldThumbnail( $data['name'] );
-		}
-	}
-
-	/**
-	 * @param $url
-	 * @return string
-	 */
-	private function createVignetteThumbnail( $url ) {
-		return VignetteRequest::fromUrl( $url )
-			->thumbnailDown()
-			->width( $this->isWikiaMobile() ?
-				self::MOBILE_THUMBNAIL_WIDTH :
-				self::DESKTOP_THUMBNAIL_WIDTH
-			)
-			->height( self::THUMBNAIL_HEIGHT )
-			->url();
-	}
-
-	/**
-	 * @desc If the image is served from an old
-	 * service we have to again obtain file to
-	 * call the createThumb function
-	 * @param $title
-	 * @return mixed
-	 */
-	private function createOldThumbnail( $title )
-	{
-		$file = \WikiaFileHelper::getFileFromTitle( $title );
-		if ( $file ) {
-			return $file->createThumb(
-				F::app()->checkSkin( 'wikiamobile' ) ?
-					self::MOBILE_THUMBNAIL_WIDTH :
-					self::DESKTOP_THUMBNAIL_WIDTH
-			);
-		}
-		return '';
-	}
-
-	/** 
-	 * required for testing mobile template rendering
-	 * @return bool
-	 */
-	protected function isWikiaMobile() {
-		return F::app()->checkSkin( 'wikiamobile' );
-	}
-
-	/**
-	 * check if item type is supported and logs unsupported types
-	 *
-	 * @param string $type - template type
-	 * @return bool
-	 */
-	private function validateType( $type ) {
-		$isValid = true;
-
-		if ( !isset( $this->templates[ $type ] ) ) {
-			Wikia\Logger\WikiaLogger::instance()->info( self::LOGGER_LABEL, [
-				'type' => $type
-			] );
-
-			$isValid = false;
-		}
-
-		return $isValid;
+			->render( self::getTemplates()[ $type ] );
 	}
 }

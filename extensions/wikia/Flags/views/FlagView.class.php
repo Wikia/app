@@ -14,10 +14,28 @@ use Flags\Models\FlagType;
 
 class FlagView {
 
+	const FLAGS_CSS_CLASS = 'portable-flags';
+	const FLAGS_CSS_CLASS_INLINE = 'portable-flags-inline';
+
 	public static $flagsTargetingCssClasses = [
 		FlagType::FLAG_TARGETING_READERS => 'flags-targeting-readers',
 		FlagType::FLAG_TARGETING_CONTRIBUTORS => 'flags-targeting-contributors',
 	];
+
+	/**
+	 * Parses the wrapped wikitext and returns an HTML block of code with rendered flags.
+	 * @param array $templateCalls
+	 * @param $pageId
+	 * @return ParserOutput
+	 */
+	public function renderFlags( Array $templateCalls, $pageId ) {
+		global $wgUser;
+
+		$wikitext = $this->wrapAllFlags( $templateCalls );
+		$title = \Title::newFromID( $pageId );
+
+		return \ParserPool::parse( $wikitext, $title, \ParserOptions::newFromUser( $wgUser ) );
+	}
 
 	/**
 	 * Creates wikitext calls out of an array of names of templates and an array
@@ -56,7 +74,7 @@ class FlagView {
 	 */
 	public function wrapAllFlags( Array $templateCalls ) {
 		return \Html::rawElement( 'div', [
-			'class' => 'portable-flags',
+			'class' => self::FLAGS_CSS_CLASS,
 		], implode( '', $templateCalls ) );
 	}
 }

@@ -21,14 +21,12 @@ class ListusersData {
 
 	var $mDBh;
 	var $mTable;
-	var $mDBEnable;
 
 	function __construct( $city_id, $load = 1 ) {
-		global $wgStatsDB, $wgStatsDBEnabled;
+		global $wgSpecialsDB;
 		$this->mCityId = $city_id;
-		$this->mDBh = $wgStatsDB;
-		$this->mDBEnable = $wgStatsDBEnabled;
-		$this->mTable = '`specials`.`events_local_users`';
+		$this->mDBh = $wgSpecialsDB;
+		$this->mTable = 'events_local_users';
 
 		$this->mOrderOptions = array(
 			'username'	=> array( 'user_name %s' ),
@@ -126,7 +124,7 @@ class ListusersData {
 		$memkey = wfForeignMemcKey( $this->mCityId, null, "ludata", md5( implode(', ', $subMemkey) ) );
 		$cached = $wgMemc->get($memkey);
 
-		if ( empty($cached) && !empty($this->mDBEnable) ) {
+		if ( empty($cached) ) {
 			/* db handle */
 			$dbs = wfGetDB( DB_SLAVE, array(), $this->mDBh );
 
@@ -386,7 +384,7 @@ class ListusersData {
 		$result = array();
 		$memkey = wfForeignMemcKey( $this->mCityId, null, Listusers::TITLE, "records" );
 		$cached = $wgMemc->get($memkey);
-		if ( empty($cached) && !empty($this->mDBEnable) ) {
+		if ( empty($cached) ) {
 			/* build SQL query */
 			$dbs = wfGetDB(DB_SLAVE, array(), $this->mDBh);
 
@@ -450,11 +448,6 @@ class ListusersData {
 		wfProfileIn( __METHOD__ );
 
 		if ( !$user instanceof User ) {
-			wfProfileOut( __METHOD__ );
-			return true;
-		}
-
-		if ( empty($this->mDBEnable) ) {
 			wfProfileOut( __METHOD__ );
 			return true;
 		}

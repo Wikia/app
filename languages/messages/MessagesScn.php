@@ -520,8 +520,9 @@ La mutivazzioni è chista: ''$2''.",
 # Login and logout pages
 'logouttext'                 => "'''Nisciuta. Ora siti fora.'''
 
-Poi cuntinuari a usari {{SITENAME}} di manera anònima, o poi [[Special:UserLogin|tràsiri n'àutra vota]] cu lu stissu o cu n'àutru nomu d'utenti.
+Poi cuntinuari a usari {{SITENAME}} di manera anònima, o poi $1 cu lu stissu o cu n'àutru nomu d'utenti.
 Accura chi quarchi pàggina pò cuntinuari a èssiri ammustrata comu si nun avissi nisciutu nzinu a quannu tu nun scancelli tutta la mimoria dû tò browser.",
+'logouttext-link-text'       => "tràsiri n'àutra vota",
 'welcomecreation'            => "== Bonvinutu, $1! ==
 
 L'account hà statu criatu currettamenti. Nun ti scurdari di pirsunalizzari li [[Special:Preferences|prifirenzi di {{SITENAME}}]].",

@@ -228,7 +228,7 @@ class SpecialPasswordReset extends FormSpecialPage {
 			: 'passwordreset-emailtext-user';
 
 		// Send in the user's language; which should hopefully be the same
-		$userLanguage = $firstUser->getOption( 'language' );
+		$userLanguage = $firstUser->getGlobalPreference( 'language' );
 
 		$passwords = array();
 		foreach ( $users as $user ) {
