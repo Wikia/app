@@ -17,7 +17,8 @@ class PortableInfoboxRenderService extends WikiaService {
 		'group' => 'PortableInfoboxItemGroup.mustache',
 		'horizontal-group-content' => 'PortableInfoboxHorizontalGroupContent.mustache',
 		'navigation' => 'PortableInfoboxItemNavigation.mustache',
-		'hero-mobile' => 'PortableInfoboxItemHeroMobile.mustache'
+		'hero-mobile' => 'PortableInfoboxItemHeroMobile.mustache',
+		'gallery' => 'PortableInfoboxGallery.mustache'
 	];
 	private $templateEngine;
 
@@ -74,6 +75,15 @@ class PortableInfoboxRenderService extends WikiaService {
 		if ( !empty( $heroData ) ) {
 			$infoboxHtmlContent = $this->renderInfoboxHero( $heroData ) . $infoboxHtmlContent;
 		}
+
+		$galleryData = Array (
+			'url' => 'http://vignette.wikia-dev.com/visualeditor/images/b/b8/Challenger.jpg/revision/latest?cb=20140626002212',
+			'name' => 'Challenger.jpg',
+			'key' => 'Challenger.jpg',
+			'alt' => '',
+			'caption' => 'This is a caption'
+		);
+		$infoboxHtmlContent = $this->renderItem('gallery', $galleryData) . $infoboxHtmlContent;
 
 		if ( !empty( $infoboxHtmlContent ) ) {
 			$output = $this->renderItem( 'wrapper',
@@ -151,7 +161,7 @@ class PortableInfoboxRenderService extends WikiaService {
 	private function renderItem( $type, array $data ) {
 		$helper = new PortableInfoboxRenderServiceHelper();
 
-		if ( $type === 'image' ) {
+		if ( $type === 'image' || $type === 'gallery' ) {
 			$data[ 'image' ][ 'context' ] = self::MEDIA_CONTEXT_INFOBOX;
 			$data = $helper->extendImageData( $data );
 			if ( !$data ) {

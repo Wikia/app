@@ -81,6 +81,35 @@
 	text-align: center; // center smaller image inside infobox
 }
 
+.pi-image-gallery {
+	position: relative;
+
+	&::after {
+		background-image: url("/extensions/VisualEditor/modules/ve-mw/ui/styles/images/icons/gallery-ltr-white.svg");
+		background-repeat: no-repeat;
+		background-size: contain;
+		content: '';
+		display: block;
+		height: 30px;
+		position: absolute;
+		right: $infobox-item-margin;
+		top: $infobox-item-margin;
+		width: 30px;
+	}
+}
+
+.pi-gallery-caption {
+	color: white;
+	font-size: 12px;
+	line-height: 18px;
+	margin-top: -28px;
+	text-align: left;
+}
+
+.pi-image-gallery-extras {
+	display: none;
+}
+
 .pi-caption {
 	color: $color-alternate-text;
 	font-size: 12px;
