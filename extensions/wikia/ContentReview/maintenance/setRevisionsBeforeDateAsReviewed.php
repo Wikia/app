@@ -94,6 +94,7 @@ class ReviewedBeforeDateRevision extends Maintenance {
 			}
 
 			$helper->purgeReviewedJsPagesTimestamp();
+			\Wikia\ContentReview\ContentReviewStatusesService::purgeJsPagesCache();
 		} else {
 			$this->output( "Wiki (Id: {$wgCityId}) has disabled custom scripts or JSRT.\n" );
 		}
