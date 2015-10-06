@@ -93,35 +93,16 @@ class ContentReviewApiControllerTest extends WikiaBaseTest {
 		/**
 		 * User Mock
 		 */
-		$userMock = $this->prepareUserMockWithEditToken( $inputData['userEditToken'], [ 'getId' ] );
+		$userMock = $this->prepareUserMockWithEditToken( $inputData['userEditToken'], [ 'isAllowed' ] );
 		$userMock->expects( $this->any() )
-			->method( 'getId' )
-			->willReturn( $inputData['userId'] );
+			->method( 'isAllowed' )
+			->willReturn( $inputData['hasTestModeRights'] );
 		$this->mockGlobalVariable( 'wgUser', $userMock );
 
 		/**
 		 * Wikia Request Mock
 		 */
 		$requestMock = $this->preparePostRequestValidatingMock( $inputData['wasPosted'], $inputData['requestToken'] );
-		$requestMock->expects( $this->any() )
-			->method( 'getInt' )
-			->willReturn( 0 ); // pageId, does not really matter since the Title is overwritten
-
-		/**
-		 * Title Mock
-		 */
-		$titleMock = $this->getMock( '\Title', [ 'isJsPage', 'userCan' ] );
-		$titleMock->expects( $this->any() )
-			->method( 'isJsPage' )
-			->willReturn( $inputData['isJsPage'] );
-		$titleMock->expects( $this->any() )
-			->method( 'userCan' )
-			->with( 'edit' )
-			->willReturn( $inputData['userCanEdit'] );
-		$this->getStaticMethodMock( '\Title', 'newFromId' )
-			->expects( $this->any() )
-			->method( 'newFromId' )
-			->willReturn( $titleMock );
 
 		/**
 		 * API Controller Mock
@@ -458,9 +439,7 @@ class ContentReviewApiControllerTest extends WikiaBaseTest {
 					'wasPosted' => false,
 					'requestToken' => $validToken,
 					'userEditToken' => $validToken,
-					'isJsPage' => true,
-					'userId' => 1234,
-					'userCanEdit' => true,
+					'hasTestModeRights' => true,
 				],
 				'BadRequestApiException',
 				'The request would be ok if it was POSTed.',
@@ -470,9 +449,7 @@ class ContentReviewApiControllerTest extends WikiaBaseTest {
 					'wasPosted' => true,
 					'requestToken' => $validToken,
 					'userEditToken' => $invalidToken,
-					'isJsPage' => true,
-					'userId' => 1234,
-					'userCanEdit' => true,
+					'hasTestModeRights' => true,
 				],
 				'BadRequestApiException',
 				'A token sent in the request does not match with the user\'s edit token.',
@@ -482,45 +459,17 @@ class ContentReviewApiControllerTest extends WikiaBaseTest {
 					'wasPosted' => true,
 					'requestToken' => $validToken,
 					'userEditToken' => $validToken,
-					'isJsPage' => false,
-					'userId' => 1234,
-					'userCanEdit' => true,
-				],
-				'NotFoundApiException',
-				'A request was sent from a non-JS page.',
-			],
-			[
-				[
-					'wasPosted' => true,
-					'requestToken' => $validToken,
-					'userEditToken' => $validToken,
-					'isJsPage' => true,
-					'userId' => 0,
-					'userCanEdit' => true,
+					'hasTestModeRights' => false,
 				],
 				'PermissionsException',
-				'Asking for the user\'s ID returned 0. For some reason.',
+				'User is not logged in.',
 			],
 			[
 				[
 					'wasPosted' => true,
 					'requestToken' => $validToken,
 					'userEditToken' => $validToken,
-					'isJsPage' => true,
-					'userId' => 123,
-					'userCanEdit' => false,
-				],
-				'PermissionsException',
-				'The user does not have permissions to edit the JS page.',
-			],
-			[
-				[
-					'wasPosted' => true,
-					'requestToken' => $validToken,
-					'userEditToken' => $validToken,
-					'isJsPage' => true,
-					'userId' => 123,
-					'userCanEdit' => true,
+					'hasTestModeRights' => true,
 				],
 				'success',
 				'Everything is fine, methods to enable the test mode and make a success response should be called once.',
