@@ -491,11 +491,11 @@ class ContactForm extends SpecialPage {
 		$titleObj = Title::makeTitle( NS_SPECIAL, 'Contact' . '/' . $sub );
 		$action = $titleObj->escapeLocalUrl( $q );
 
-		$encName = htmlspecialchars( $this->mUserName );
-		$encEmail = htmlspecialchars( $this->mEmail );
-		$encRealName = htmlspecialchars( $this->mRealName );
-		$encProblem = htmlspecialchars( $this->mProblem );
-		$encProblemDesc = htmlspecialchars( $this->mProblemDesc );
+		$encName = Sanitizer::encodeAttribute( $this->mUserName );
+		$encEmail = Sanitizer::encodeAttribute( $this->mEmail );
+		$encRealName = Sanitizer::encodeAttribute( $this->mRealName );
+		$encProblem = Sanitizer::encodeAttribute( $this->mProblem );
+		$encProblemDesc = htmlspecialchars( $this->mProblemDesc, ENT_QUOTES );
 
 
 		//global this, for use with unlocking a field
