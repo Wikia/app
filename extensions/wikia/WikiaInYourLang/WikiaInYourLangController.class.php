@@ -36,6 +36,7 @@ class WikiaInYourLangController extends WikiaController {
 		 */
 		$sTargetLanguage = $this->getLanguageCore( $this->request->getVal( 'targetLanguage' ) );
 		$sArticleTitle = $this->request->getVal( 'articleTitle', false );
+		$sInterlangInfo = $this->request->getVal('interlangInfo', ''); //what to pass? question
 
 		/**
 		 * Steps to get the native wikia's ID:
@@ -70,11 +71,20 @@ class WikiaInYourLangController extends WikiaController {
 						$oNativeWiki->city_title,
 					];
 					$isMainPageLink = true;
-					$articleURL = $this->getArticleURL( $sArticleTitle, $oNativeWiki->city_id );
-					if ( $articleURL ) {
+
+					if ( $sInterlangInfo ) {
+						list(, $sTitle) = explode( ':', $sInterlangInfo );
+						$articleURL = $oNativeWiki->city_url . 'wiki/' . $sTitle; //question
 						$aMessageParams[1] = $articleURL;
 						$this->response->setVal( 'linkAddress', $articleURL );
 						$isMainPageLink = false;
+					} else {
+						$articleURL = $this->getArticleURL( $sArticleTitle, $oNativeWiki->city_id );
+						if ( $articleURL ) {
+							$aMessageParams[1] = $articleURL;
+							$this->response->setVal( 'linkAddress', $articleURL );
+							$isMainPageLink = false;
+						}
 					}
 
 					$aMessages = $this->prepareMessage( $sTargetLanguage, $aMessageParams, $isMainPageLink );
@@ -241,7 +251,7 @@ class WikiaInYourLangController extends WikiaController {
 		$articleURL = null;
 		if ( $sArticleTitle !== false ) {
 			$title = GlobalTitle::newFromText( $sArticleTitle, NS_MAIN, $cityId );
-			if ( !is_null( $title ) && $title->exists() ) {
+			if ( !is_null( $title ) && $title->exists() ) { //title->exists() can throw exception
 				$articleURL = $title->getFullURL();
 			}
 		}
