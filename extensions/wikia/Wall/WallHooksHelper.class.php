@@ -2268,8 +2268,6 @@ class WallHooksHelper {
 		$isWatchlist = $title->isSpecial( 'Watchlist' );
 		return ( F::app()->wg->ShowUpdatedMarker && !$user->isAnon()
 			&& ( $wm->isWatched( $user ) || $wm->isWallWatched( $user ) || $wm->isWallOwner( $user ) )
-			&& ( ( $isWatchlist && ( $wm->getTitle()->getNotificationTimestamp( $user ) || $wm->getArticleTitle()->getNotificationTimestamp( $user ) ) )
-				|| !$isWatchlist )
 		);
 	}
 
