@@ -1,19 +1,20 @@
-<figure class="pi-item pi-image pi-image-gallery">
-	<a href="{{url}}" class="image image-thumbnail{{#isVideo}} video video-thumbnail small{{/isVideo}}"
-	   title="{{alt}}">
-		<img src="{{thumbnail}}" class="pi-image-thumbnail" alt="{{alt}}" width="{{{width}}}" height="{{{height}}}"
-		     data-{{media-type}}-key="{{name}}" data-{{media-type}}-name="{{name}}"/>
-		{{#isVideo}}
-		{{#duration}}
-		<span class="duration" itemprop="duration">{{duration}}</span>
-		{{/duration}}
-		<span class="play-circle"></span>
-		{{/isVideo}}
-	</a>
-  <figcaption class="pi-item-spacing pi-gallery-caption">This is a caption</figcaption>
-</figure>
+{{#hero}}
+  <figure class="pi-item pi-image pi-image-gallery">
+    <a href="{{url}}" class="image image-thumbnail{{#isVideo}} video video-thumbnail small{{/isVideo}}" title="{{alt}}">
+      <img src="{{thumbnail}}" class="pi-image-thumbnail" alt="{{alt}}" width="{{{width}}}" height="{{{height}}}" data-{{media-type}}-key="{{name}}" data-{{media-type}}-name="{{name}}"/>
+      {{#isVideo}}
+      {{#duration}}
+      <span class="duration" itemprop="duration">{{duration}}</span>
+      {{/duration}}
+      <span class="play-circle"></span>
+      {{/isVideo}}
+    </a>
+    {{#caption}}<figcaption class="pi-item-spacing pi-gallery-caption">{{{caption}}}</figcaption>{{/caption}}
+  </figure>
+{{/hero}}
 
 <div class="pi-image-gallery-extras">
-  <img src="http://vignette.wikia-dev.com/visualeditor/images/1/1d/Challenger-1.jpg/revision/latest?cb=20140626002317" class="pi-image-thumbnail" alt="A.jpg" data-{{media-type}}-key="Challenger-1.jpg" data-{{media-type}}-name="Challenger-1.jpg" />
-  <img src="http://vignette.wikia-dev.com/visualeditor/images/4/41/Challenger-0.jpg/revision/latest/zoom-crop/width/480/height/480?cb=20140626002239" class="pi-image-thumbnail" alt="Challenger-0.jpg" data-{{media-type}}-key="Challenger-0.jpg" data-{{media-type}}-name="Challenger-0.jpg" />
+  {{#extras}}
+    <img src="{{url}}" class="pi-image-thumbnail" alt="{{name}}" data-image-key="{{name}}" data-image-name="{{name}}" />
+  {{/extras}}
 </div>
