@@ -254,7 +254,7 @@ class PhalanxHooks extends WikiaObject {
 		// get the client IP using Fastly-generated request header
 		$clientIPFromFastly = $wgRequest->getHeader( $wgClientIPHeader );
 
-		if ( !User::isIP( $clientIPFromFastly ) ) {
+		if ( !User::isIP( $clientIPFromFastly ) && ! IP::isInRange( $wgRequest->getIP(), '10.0.0.0/8') ) {
 			WikiaLogger::instance()->error( 'Phalanx user IP incorrect', [
 				'ip_from_fastly' => $clientIPFromFastly,
 				'ip_from_user' => $user->getName(),
