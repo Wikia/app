@@ -1033,7 +1033,7 @@ function getSong($artist, $song="", $doHyphens=true, $ns=NS_MAIN, $isOuterReques
 
 				// SWC 20090802 - Neuter the actual lyrics :( - return an explanation with a link to the LyricWiki page.
 				// SWC 20091021 - Gil has determined that up to 17% of the lyrics can be returned as fair-use - we'll stick with 1/7th (about 14.3%) of the characters for safety.
-				// SWC 20151006 - allowFullLyrics is not likely to be true anymore. That was a previous feature to allow the original LyricWiki app (from 2011, I think) to access
+				// SWC 20151006 - allowFullLyrics is not likely to be true anymore. That was a previous feature to allow the original LyricWiki app (from 2010) to access
 				// lyrics. The newer LyricWiki app (Lyrically) does NOT use this feature, it uses its own API. To see the code which handled the signature, roll back the commit
 				// in which this comment appeared.
 				if(!$allowFullLyrics){
