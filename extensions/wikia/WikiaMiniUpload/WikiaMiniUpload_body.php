@@ -115,7 +115,7 @@ class WikiaMiniUpload {
 	}
 
      function query() {
-        global $wgRequest;
+        global $wgRequest, $wgFlickrAPIKey;
 
         $query = $wgRequest->getText('query');
         $page = $wgRequest->getVal('page', 1);
@@ -123,7 +123,7 @@ class WikiaMiniUpload {
 
         if ( $sourceId == 1 ) {
 
-            $flickrAPI = new phpFlickr('bac0bd138f5d0819982149f67c0ca734');
+            $flickrAPI = new phpFlickr($wgFlickrAPIKey);
             $flickrResult = $flickrAPI->photos_search(array('tags' => $query, 'tag_mode' => 'all', 'page' => $page, 'per_page' => 8, 'license' => '4,5', 'sort' => 'interestingness-desc'));
 
 			$tmpl = new EasyTemplate(dirname(__FILE__).'/templates/');
@@ -790,7 +790,9 @@ class WikiaMiniUpload {
 	}
 
 	function getFlickrPhotoInfo( $itemId ) {
-		$flickrAPI = new phpFlickr( 'bac0bd138f5d0819982149f67c0ca734' );
+		global $wgFlickrAPIKey;
+
+		$flickrAPI = new phpFlickr( $wgFlickrAPIKey );
 		$flickrResult = $flickrAPI->photos_getInfo( $itemId );
 
 		// phpFlickr 3.x has different response structure than previous version
