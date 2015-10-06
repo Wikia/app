@@ -313,7 +313,7 @@ class ContentReviewStatusesService extends \WikiaService {
 	private function createRevisionTalkpageLink( \Title $title ) {
 		return \Html::element(
 			'a',
-			[ 'href' => $title->getFullURL() ],
+			[ 'href' => $title->getTalkPage() ],
 			wfMessage( 'content-review-rejection-reason-link' )->escaped()
 		);
 	}
