@@ -361,10 +361,8 @@
 				"mobile"
 			]
 		},
-		"ext.visualEditor.base": {
+		"ext.visualEditor.init": {
 			"scripts": [
-				"lib/ve/src/ve.utils.js",
-				"lib/ve/src/ve.TriggerListener.js",
 				"lib/ve/src/init/ve.init.js",
 				"lib/ve/src/init/ve.init.Platform.js",
 				"lib/ve/src/init/ve.init.Target.js"
@@ -377,6 +375,22 @@
 				"oojs-ui",
 				"unicodejs",
 				"ext.visualEditor.ve"
+			]
+		},
+		"ext.visualEditor.base": {
+			"scripts": [
+				"lib/ve/src/ve.TriggerListener.js",
+				"lib/ve/src/ve.utils.js"
+			],
+			"debugScripts": [
+				"lib/ve/src/ve.debug.js"
+			],
+			"dependencies": [
+				"oojs",
+				"oojs-ui",
+				"unicodejs",
+				"ext.visualEditor.ve",
+				"ext.visualEditor.init"
 			],
 			"targets": [
 				"desktop",

@@ -1629,3 +1629,20 @@ ve.rejectsCursor = function ( node ) {
 	// false, because if so then there can be no adjacent cursor.
 	return node.contentEditable === 'false';
 };
+
+// ve-upstream-sync - review - @author: Paul Oslund
+// Brought back in for older browser support
+/**
+ * Wrapper for Array#indexOf.
+ *
+ * Values are compared without type coercion.
+ *
+ * @method
+ * @source <http://api.jquery.com/jQuery.inArray/>
+ * @until ES5: Array#indexOf
+ * @param {Mixed} value Element to search for
+ * @param {Array} array Array to search in
+ * @param {number} [fromIndex=0] Index to being searching from
+ * @returns {number} Index of value in array, or -1 if not found
+ */
+ve.indexOf = $.inArray;

@@ -1,0 +1,26 @@
+// Oasis Mixins
+@import "skins/shared/mixins/gradient";
+@import "skins/shared/mixins/transition";
+
+// Oasis Imports
+@import "skins/shared/color";
+@import "skins/oasis/css/core/layout";
+
+// VE Imports
+@import "modules/ve/ui/styles/color";
+@import "modules/ve/ui/styles/ve.ui.Dialog";
+@import "modules/ve/ui/styles/ve.ui.Icons-vector";
+@import "modules/ve/ui/styles/ve.ui.MWSaveDialog";
+@import "modules/ve/ui/styles/ve.ui.Surface";
+@import "modules/ve/ui/styles/ve.ui.Toolbar";
+@import "modules/ve/ui/styles/ve.ui.ToolGroup";
+@import "modules/ve/ui/styles/ve.ui.Widget";
+@import "modules/ve/ui/styles/ve.ui.WikiaFocusWidget";
+@import "modules/ve/ui/styles/ve.ui.WikiaSourceModeDialog";
+@import "modules/ve/ui/styles/ve.ui.WikiaMediaInsertDialog";
+@import "modules/ve/ui/styles/ve.ui.WikiaDropTargetWidget";
+@import "modules/ve/ui/styles/ve.ui.WikiaMediaPreviewWidget";
+@import "modules/ve/ui/styles/ve.ui.WikiaSingleMediaInsertDialog";
+@import "modules/ve/ui/styles/ve.ui.WikiaMapInsertDialog";
+@import "modules/ve/ui/styles/ve.ui.WikiaTemplateInsertDialog";
+@import "modules/ve/ui/styles/ve.ui.WikiaTransclusionDialog";

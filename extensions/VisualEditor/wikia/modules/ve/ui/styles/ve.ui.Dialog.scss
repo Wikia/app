@@ -1,0 +1,39 @@
+@import "skins/shared/mixins/transition";
+@import "skins/shared/color";
+
+.oo-ui-windowManager-modal.oo-ui-windowManager-floating > .oo-ui-dialog > .oo-ui-window-frame {
+	background: $color-page;
+	border-color: $color-page-border;
+}
+
+@if $is-dark-wiki {
+	.oo-ui-window-head {
+		border-bottom: 1px solid $color-page-border;
+	}
+
+	.oo-ui-window-foot {
+		border-top: 1px solid $color-page-border;
+	}
+}
+
+.oo-ui-dialog-content .oo-ui-window-closeButton {
+  float: right;
+  margin: 0.7em 0.7em;
+  position: relative;
+  z-index: 1;
+}
+
+.oo-ui-processDialog-actions-safe,
+.oo-ui-processDialog-actions-primary {
+	float: right;
+	position: static;
+}
+
+.oo-ui-windowManager-modal > .oo-ui-dialog-overlayless {
+	background-color: transparent;
+}
+
+.ve-ui-mwSaveDialog-captcha > div {
+	margin: 5px auto 0 auto;
+}
+

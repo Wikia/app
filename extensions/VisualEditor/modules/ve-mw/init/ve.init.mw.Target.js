@@ -538,7 +538,7 @@ ve.init.mw.Target.prototype.saveFail = function ( doc, saveData, jqXHR, status, 
 					pageInfo = data.query && data.query.pages && data.query.pageids &&
 						data.query.pageids[ 0 ] && data.query.pages[ data.query.pageids[ 0 ] ],
 					editToken = pageInfo && pageInfo.edittoken,
-					isAnon = mw.user.isAnon();
+					isAnon = mw.user.anonymous();
 
 				if ( userInfo && editToken ) {
 					target.editToken = editToken;

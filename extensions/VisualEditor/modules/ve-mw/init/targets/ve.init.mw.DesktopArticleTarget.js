@@ -706,7 +706,9 @@ ve.init.mw.DesktopArticleTarget.prototype.saveComplete = function (
 			} );
 		}
 
-		this.setupSectionEditLinks();
+		// ve-upstream-sync - review - @author: Paul Oslund
+		// this.setupSectionEditLinks();
+
 		// Tear down the target now that we're done saving
 		// Not passing trackMechanism because this isn't an abort action
 		this.deactivate( true );

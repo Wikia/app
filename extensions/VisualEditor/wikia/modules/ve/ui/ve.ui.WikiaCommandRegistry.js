@@ -12,3 +12,10 @@ ve.ui.commandRegistry.register(
 		{ args: ['wikiaSourceMode'] }
 	)
 );
+
+ve.ui.commandRegistry.register(
+	new ve.ui.Command(
+		'wikiaMediaInsert', 'window', 'open',
+		{ args: ['wikiaMediaInsert'] }
+	)
+);

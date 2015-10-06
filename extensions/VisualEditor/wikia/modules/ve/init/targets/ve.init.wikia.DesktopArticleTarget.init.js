@@ -74,7 +74,11 @@
 		targetPromise = targetPromise || getTarget();
 		targetPromise
 			.then( function ( target ) {
-				return target.activate( dataPromise );
+				return $.getResources( [
+					$.getSassCommonURL( '/extensions/VisualEditor/wikia/VisualEditor.scss' )
+				] ).then( function () {
+					return target.activate( dataPromise );
+				} );
 			} );
 	}
 
