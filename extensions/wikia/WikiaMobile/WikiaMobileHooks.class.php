@@ -251,12 +251,12 @@ class WikiaMobileHooks {
 
 			//this is going to be additional call but at least it won't be loaded on every page
 			foreach ( $scripts as $s ) {
-				$out->addScript( '<script src="' . $s . '"></script>' );
+				$out->addScript( '<script src="' . Sanitizer::encodeAttribute( $s ) . '"></script>' );
 			}
 
 			//set proper titles for a page
 			$out->setPageTitle( $text );
-			$out->setHTMLTitle( $text );
+			$out->setHTMLTitle( $title->getPrefixedText() );
 
 			//render lists: exhibition and alphabetical
 			$params = array( 'categoryPage' => $categoryPage );
