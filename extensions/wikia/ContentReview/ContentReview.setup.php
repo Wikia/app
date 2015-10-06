@@ -34,10 +34,18 @@ $wgGroupPermissions['*']['content-review'] = false;
 $wgGroupPermissions['util']['content-review'] = true;
 $wgGroupPermissions['staff']['content-review'] = true;
 
+$wgAvailableRights[] = 'content-review-test-mode';
+$wgGroupPermissions['user']['content-review-test-mode'] = true;
 /**
  * Controllers
  */
 $wgAutoloadClasses['ContentReviewApiController'] = __DIR__ . '/controllers/ContentReviewApiController.class.php';
+$wgAutoloadClasses['JSPagesSpecialController'] = __DIR__ . '/controllers/JSPagesSpecialController.class.php';
+
+/**
+ * Special page
+ */
+$wgSpecialPages['JSPages'] = 'JSPagesSpecialController';
 
 /**
  * Models
@@ -51,6 +59,7 @@ $wgAutoloadClasses['Wikia\ContentReview\Models\ReviewLogModel'] = __DIR__ . '/mo
  * Services
  */
 $wgAutoloadClasses['Wikia\ContentReview\ContentReviewService'] = __DIR__ . '/services/ContentReviewService.class.php';
+$wgAutoloadClasses['Wikia\ContentReview\ContentReviewStatusesService'] = __DIR__ . '/services/ContentReviewStatusesService.class.php';
 
 /**
  * Helpers
@@ -84,4 +93,13 @@ JSMessages::registerPackage( 'ContentReviewTestMode', [
 
 JSMessages::registerPackage( 'ContentReviewDiffPage', [
 	'content-review-diff-page-*'
+] );
+
+JSMessages::registerPackage( 'JSPagesSpecialPage', [
+	'content-review-special-js-pages-*',
+	'content-review-special-list-header-page-name',
+	'content-review-special-list-header-actions',
+	'content-review-module-header-latest',
+	'content-review-module-header-last',
+	'content-review-module-header-live'
 ] );

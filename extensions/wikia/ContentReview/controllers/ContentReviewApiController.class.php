@@ -4,6 +4,7 @@ use Wikia\ContentReview\Models\CurrentRevisionModel;
 use Wikia\ContentReview\Models\ReviewModel;
 use Wikia\ContentReview\Models\ReviewLogModel;
 use Wikia\ContentReview\Helper;
+use Wikia\ContentReview\ContentReviewStatusesService;
 
 class ContentReviewApiController extends WikiaApiController {
 
@@ -49,6 +50,8 @@ class ContentReviewApiController extends WikiaApiController {
 		( new ReviewModel() )->submitPageForReview( $this->wg->CityId, $pageId,
 			$revisionId, $submitUserId );
 
+		ContentReviewStatusesService::purgeJsPagesCache();
+
 		$this->makeSuccessResponse();
 	}
 
@@ -62,16 +65,8 @@ class ContentReviewApiController extends WikiaApiController {
 	public function enableTestMode() {
 		$this->isValidPostRequest( $this->request, $this->wg->User );
 
-		$pageId = $this->request->getInt( 'pageId' );
-
-		$title = Title::newFromID( $pageId );
-		if ( $title === null || !$title->isJsPage() ) {
-			throw new NotFoundApiException( "JS page with ID {$pageId} does not exist");
-		}
-
-		$submitUserId = $this->wg->User->getId();
-		if ( !$submitUserId > 0 || !$this->canUserSubmit( $title )	) {
-			throw new PermissionsException( 'edit' );
+		if ( !$this->wg->User->isAllowed( 'content-review-test-mode' ) ) {
+			throw new PermissionsException( 'content-review-test-mode' );
 		}
 
 		$this->getHelper()->setContentReviewTestMode( $this->wg->CityId );
@@ -114,6 +109,8 @@ class ContentReviewApiController extends WikiaApiController {
 
 		$model = new ReviewModel();
 		$model->updateRevisionStatus( $wikiId, $pageId, $oldStatus, $status, $reviewerId );
+
+		ContentReviewStatusesService::purgeJsPagesCache();
 	}
 
 	/**
@@ -157,6 +154,9 @@ class ContentReviewApiController extends WikiaApiController {
 				$feedbackLink = $helper->prepareProvideFeedbackLink( $title );
 				$this->notification = wfMessage( 'content-review-diff-reject-confirmation', $feedbackLink )->parse();
 			}
+
+			$reviewModel->updateCompletedReview( $wikiId, $pageId, $review['revision_id'], $status );
+			ContentReviewStatusesService::purgeJsPagesCache();
 		}
 		else {
 			$this->notification = wfMessage( 'content-review-diff-already-done' )->escaped();

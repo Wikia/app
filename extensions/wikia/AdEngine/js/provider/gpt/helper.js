@@ -1,9 +1,7 @@
 /*global define, setTimeout, require*/
 /*jshint maxlen:125, camelcase:false, maxdepth:7*/
 define('ext.wikia.adEngine.provider.gpt.helper', [
-	'wikia.document',
 	'wikia.log',
-	'wikia.window',
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adLogicPageParams',
 	'ext.wikia.adEngine.provider.gpt.adDetect',
@@ -14,9 +12,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	require.optional('ext.wikia.adEngine.provider.gpt.sraHelper'),
 	require.optional('ext.wikia.adEngine.slot.scrollHandler')
 ], function (
-	doc,
 	log,
-	window,
 	adContext,
 	adLogicPageParams,
 	adDetect,
@@ -88,7 +84,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 		function callSuccess(adInfo) {
 			if (adInfo && adInfo.adType === 'collapse') {
 				slotTweaker.hide(
-					element.getSlotName(),
+					element.getSlotContainerId(),
 					recoveryHelper.isBlocking() && recoveryHelper.isRecoveryEnabled()
 				);
 			}
@@ -99,7 +95,10 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 		}
 
 		function callError(adInfo) {
-			slotTweaker.hide(element.getId());
+			slotTweaker.hide(
+				element.getSlotContainerId(),
+				recoveryHelper.isBlocking() && recoveryHelper.isRecoveryEnabled()
+			);
 			if (typeof extra.error === 'function') {
 				adInfo = adInfo || {};
 				adInfo.method = 'hop';
@@ -140,6 +139,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 
 		if (!shouldPush) {
 			log(['Push blocked', slotName], 'debug', logGroup);
+			slotTweaker.removeDefaultHeight(slotName);
 			return;
 		}
 

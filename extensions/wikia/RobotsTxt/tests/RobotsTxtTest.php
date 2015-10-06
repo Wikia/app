@@ -1,6 +1,6 @@
 <?php
 
-class RobotsTest extends WikiaBaseTest {
+class RobotsTxtTest extends WikiaBaseTest {
 
 	public function setUp() {
 		global $IP;
@@ -26,6 +26,27 @@ class RobotsTest extends WikiaBaseTest {
 		$robots->allowSpecialPage( 'Randompage' );
 		$this->assertEquals( [
 			'User-agent: *',
+			'Allow: /wiki/Special:Random',
+			'Allow: /wiki/Special:RandomPage',
+			'',
+		], $robots->getContents() );
+	}
+
+	/**
+	 * Test allowSpecialPage in non-English language
+	 *
+	 * @covers RobotsTxt::allowSpecialPage
+	 */
+	public function testAllowSpecialPageInternational() {
+		$this->mockGlobalVariable( 'wgContLang', Language::factory('de') );
+		$robots = new RobotsTxt();
+		$robots->allowSpecialPage( 'Randompage' );
+		$this->assertEquals( [
+			'User-agent: *',
+			'Allow: /wiki/Spezial:Zuf%C3%A4llige_Seite',
+			'Allow: /wiki/Spezial:Random',
+			'Allow: /wiki/Spezial:RandomPage',
+			'Allow: /wiki/Special:Zuf%C3%A4llige_Seite',
 			'Allow: /wiki/Special:Random',
 			'Allow: /wiki/Special:RandomPage',
 			'',
@@ -88,18 +109,39 @@ class RobotsTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * Test disallowSpecialPages
+	 * Test disallowNamespace
 	 *
-	 * @covers RobotsTxt::testDisallowSpecialPages
+	 * @covers RobotsTxt::disallowNamespace
 	 */
-	public function testDisallowSpecialPages() {
+	public function testDisallowNamespace() {
 		$robots = new RobotsTxt();
-		$robots->disallowSpecialPages();
+		$robots->disallowNamespace( NS_FILE );
 		$this->assertEquals( [
 			'User-agent: *',
-			'Disallow: /wiki/Special:',
-			'Disallow: /*?*title=Special:',
-			'Disallow: /index.php/Special:',
+			'Disallow: /wiki/File:',
+			'Disallow: /*?*title=File:',
+			'Disallow: /index.php/File:',
+			'',
+		], $robots->getContents() );
+	}
+
+	/**
+	 * Test disallowNamespace in non-English language
+	 *
+	 * @covers RobotsTxt::disallowNamespace
+	 */
+	public function testDisallowNamespaceInternational() {
+		$this->mockGlobalVariable( 'wgContLang', Language::factory('de') );
+		$robots = new RobotsTxt();
+		$robots->disallowNamespace( NS_FILE );
+		$this->assertEquals( [
+			'User-agent: *',
+			'Disallow: /wiki/Datei:',
+			'Disallow: /*?*title=Datei:',
+			'Disallow: /index.php/Datei:',
+			'Disallow: /wiki/File:',
+			'Disallow: /*?*title=File:',
+			'Disallow: /index.php/File:',
 			'',
 		], $robots->getContents() );
 	}
