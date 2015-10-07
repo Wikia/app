@@ -28,6 +28,7 @@ use Wikia\Service\User\Attributes\UserAttributes;
 use Wikia\Service\User\Preferences\Migration\PreferenceCorrectionService;
 use Wikia\Service\User\Preferences\PreferenceService;
 use Wikia\Util\Statistics\BernoulliTrial;
+use Wikia\Service\Helios\HeliosClient;
 
 /**
  * Int Number of characters in user_token field.
@@ -247,6 +248,11 @@ class User {
 	static $idCacheByName = array();
 
 	/**
+		* @var string the service auth token (currently helios); should NEVER be cached
+	 */
+	private $globalAuthToken = null;
+
+	/**
 	 * @var UserAttributes
 	 */
 	private $attributeService;
@@ -270,6 +276,14 @@ class User {
 	 */
 	function __toString(){
 		return $this->getName();
+	}
+
+
+	/**
+		* @return HeliosClient
+	 */
+	private function getAuthenticationService() {
+		return Injector::getInjector()->get(HeliosClient::class);
 	}
 
 	/**
@@ -1140,6 +1154,27 @@ class User {
 			# No session or persistent login cookie
 			$this->loadDefaults();
 			return false;
+		}
+
+		if ( !$this->isUserAuthenticated() ) {
+				Wikia\Logger\WikiaLogger::instance()->error(
+					'global authentication failed',
+					[
+					'global_auth_token' => $this->getGlobalAuthToken(),
+					'from'              => $from,
+					'ip'                => $this->getRequest()->getIP(),
+					'session_id'        => session_id(),
+					'user_id'           => $this->getId(),
+					'user_name'         => $this->getName(),
+					]
+				);
+
+			wfDebug( "User: global authentication failed; using $from\n" );
+			$this->loadDefaults();
+			return false;
+		} else {
+			wfDebug( "User: global authentication success!; $from\n" );
+
 		}
 
 		if ( ( $sName === $proposedUser->getName() ) && $passwordCorrect ) {
@@ -5177,4 +5212,35 @@ class User {
 	public static function getUserTouchedKey( $user_id ) {
 		return wfSharedMemcKey( "user_touched", 'v1', $user_id );
 	}
+
+	/**
+	 * Get the global authentication token.
+	 * @return string
+	 */
+	public function getGlobalAuthToken() {
+		return $this->globalAuthToken;
+	}
+
+	/**
+	 * Set the global authentication token.
+	 * @param string
+	 */
+	public function setGlobalAuthToken($token) {
+		$this->globalAuthToken = $token;
+	}
+
+	/**
+	 * Is the user authenticated?
+	 * @return bool true if yes, false if no
+	 */
+	public function isUserAuthenticated() {
+		$tokenInfo = $this->getAuthenticationService()->info( $this->getGlobalAuthToken() );
+		if ( !empty( $tokenInfo->user_id ) ) {
+			return ( $this->getId() > 0 ) && ( $tokenInfo->user_id == $this->getId() );
+		}
+
+		return false;
+	}
+
+
 }
