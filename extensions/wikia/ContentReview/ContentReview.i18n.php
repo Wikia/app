@@ -14,7 +14,7 @@ $messages['en'] = [
 	'content-review-module-status-approved' => 'was approved',
 	'content-review-module-status-rejected' => 'was rejected',
 	'content-review-rejection-reason-link' => 'Why?',
-	'content-review-module-help' => '[[Help:JavaScript_review_process|Help]]',
+	'content-review-module-help' => '[[Help:CSS and JS customization|Help]]',
 	'content-review-module-help-article' => 'Help:CSS and JS customization',
 	'content-review-module-help-text' => 'Help',
 	'content-review-module-submit' => 'Submit for review',
@@ -37,6 +37,8 @@ $messages['en'] = [
 	'content-review-rejection-explanation' => '==$1==
 The recently submitted change to this JS script [$2 $3] was rejected by the Wikia review process. Please make sure you meet the [[Help:JavaScript review process|Custom JavaScript guidelines]].',
 	'content-review-status-link-text' => 'Review status',
+
+	'content-review-special-js-pages-title' => 'JavaScript pages',
 ];
 
 $messages['qqq'] = [
@@ -74,6 +76,7 @@ $messages['qqq'] = [
 	'content-review-rejection-explanation-title' => 'A title of a section with a rejection explanation. Became a separate message to allow extraction to a URL anchor of a Why? link.',
 	'content-review-rejection-explanation' => 'Standard explanation response when script changes were rejected. This text is a prefill to script talk page when reviewer is redirected there to provide feedback on rejection. $1 is the title message, $2 is a URL to a view of a revision and $3 is the number of a revision that becomes a text of the link.',
 	'content-review-status-link-text' => 'Text on entrypoint link to show content review module with review status info and submit for review buttons',
+	'content-review-special-js-pages-title' => 'Title of special page which contains all JavaScript pages on given wiki',
 ];
 
 $messages['de'] = [

@@ -2,7 +2,8 @@
 
 namespace Wikia\ContentReview\Models;
 
-use Wikia\ContentReview\Helper;
+use Wikia\ContentReview\Helper,
+	Wikia\ContentReview\ContentReviewStatusesService;
 
 class ReviewModel extends ContentReviewBaseModel {
 
@@ -44,6 +45,21 @@ class ReviewModel extends ContentReviewBaseModel {
 		}
 
 		return $pageStatus;
+	}
+
+	public function getPagesStatuses( $wikiId ) {
+		$db = $this->getDatabaseForRead();
+
+		$pagesStatuses = ( new \WikiaSQL() )
+			->SELECT( 'page_id', 'revision_id', 'status' )
+			->FROM( self::CONTENT_REVIEW_STATUS_TABLE )
+			->WHERE( 'wiki_id' )->EQUAL_TO( $wikiId )
+			->ORDER_BY( [ 'page_id', 'ASC' ], [ 'revision_id', 'DESC' ] )
+			->runLoop( $db, function ( &$pagesStatuses, $row ) {
+				$pagesStatuses[$row->page_id][(int)$row->status] = (int)$row->revision_id;
+			} );
+
+		return $pagesStatuses;
 	}
 
 	public function getCurrentUnreviewedId( $wikiId, $pageId ) {
@@ -241,23 +257,21 @@ class ReviewModel extends ContentReviewBaseModel {
 	public function getStatusName( $status, $revisionId ) {
 		switch( $status ) {
 			case self::CONTENT_REVIEW_STATUS_UNREVIEWED:
-				$statusName = \ContentReviewModuleController::STATUS_AWAITING;
-				break;
 			case self::CONTENT_REVIEW_STATUS_IN_REVIEW:
-				$statusName = \ContentReviewModuleController::STATUS_AWAITING;
+				$statusName = ContentReviewStatusesService::STATUS_AWAITING;
 				break;
 			case self::CONTENT_REVIEW_STATUS_APPROVED:
-				$statusName = \ContentReviewModuleController::STATUS_APPROVED;
+				$statusName = ContentReviewStatusesService::STATUS_APPROVED;
 				break;
 			case self::CONTENT_REVIEW_STATUS_REJECTED:
-				$statusName = \ContentReviewModuleController::STATUS_REJECTED;
+				$statusName = ContentReviewStatusesService::STATUS_REJECTED;
 				break;
-			default: $statusName = \ContentReviewModuleController::STATUS_NONE;
+			default: $statusName = ContentReviewStatusesService::STATUS_NONE;
 		}
 
 		// Distinguish none from unsubmitted
-		if ( $statusName == \ContentReviewModuleController::STATUS_NONE && !empty( $revisionId ) ) {
-			$statusName = \ContentReviewModuleController::STATUS_UNSUBMITTED;
+		if ( $statusName == ContentReviewStatusesService::STATUS_NONE && !empty( $revisionId ) ) {
+			$statusName = ContentReviewStatusesService::STATUS_UNSUBMITTED;
 		}
 
 		return $statusName;
