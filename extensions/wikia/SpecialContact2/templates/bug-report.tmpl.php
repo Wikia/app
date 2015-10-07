@@ -1,10 +1,10 @@
 <?php
-if ( !empty($err) ) {
-        print $err;
+if ( !empty( $err ) ) {
+	echo $err;
 }
-
-echo wfMessage( 'specialcontact-intro-bug' )->parseAsBlock();
 ?>
+
+<?= wfMessage( 'specialcontact-intro-bug' )->parseAsBlock(); ?>
 
 <h2><?= wfMessage( 'specialcontact-form-header' )->escaped() ?></h2>
 

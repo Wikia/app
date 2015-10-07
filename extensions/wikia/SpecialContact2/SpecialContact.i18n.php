@@ -38,6 +38,7 @@ Follow the links below to learn more about how to use Wikia, make changes to you
 		'specialcontact-seclink-feedback' => "I want to offer some feedback",
 		'specialcontact-seclink-bug' => "I think I found a bug",
 		'specialcontact-seclink-bad-ad' => "I see a broken or inappropriate ad",
+		'specialcontact-seclink-security' => 'I think I found a security issue',
 
 	'specialcontact-secheader-setting' => "Changes to this wikia",
 		'specialcontact-seclink-wiki-name-change' => "Sitename or URL",
@@ -61,6 +62,7 @@ Follow the links below to learn more about how to use Wikia, make changes to you
 		'specialcontact-sectitle-feedback' => "Feedback",
 		'specialcontact-sectitle-bug' => "Bug Report",
 		'specialcontact-sectitle-bad-ad' => "Ad report",
+		'specialcontact-sectitle-security' => 'Security issue report',
 
 		'specialcontact-sectitle-wiki-name-change' => "Wikia name change",
 		'specialcontact-sectitle-design' => "Wikia design",
@@ -176,6 +178,30 @@ Happy editing!",
 If you prefer to use regular e-mail or have multiple attachments, you can contact us at [mailto:community@wikia.com community@wikia.com].
 ",
 
+	'specialcontact-intro-security' => "If you have found or believe you have found a security issue in Wikia's code or on one of Wikia's communities, please let us know. We appreciate your help in keeping Wikia safe for everyone by disclosing it to us in a [[wikipedia:Responsible disclosure|responsible manner]].
+
+If you are looking to report a general bug or another type of issue, please use one of the [[Special:Contact|other contact forms]].
+
+When performing security testing, you must:
+
+* Not compromise the availability of the site
+* Not compromise the security or privacy of other users' data
+* Be non-destructive and non-disruptive
+
+When reporting a security issue, please provide full details of the issue including:
+
+* Full steps to reproduce the vulnerability (including a Proof-of-Concept URL if appropriate)
+* Please indicate if you are logged in or logged out when the issue occurs
+* Your browser information including type and version
+** Particularly for XSS or vulnerabilities that require a specific browser or plugin to reproduce
+* A short description of the vulnerability's potential security impact
+
+In response to security reports using this form, Wikia will:
+* Prioritize the reproduction and confirmation of any reported vulnerability
+* Identify a reasonable timeline to patch any confirmed vulnerability
+* Not pursue legal action against any reporter who complies with all of the guidelines for testing and reporting security issues
+",
+
 	/* non-form footer */
 	'specialcontact-noform-footer' => "'''Does this page answer your question?''' If not, please feel free to [[Special:contact/general|contact us]] to discuss your issue further. Remember you can always check out our '''[[w:c:community:Help:Index|help pages]]''', [[w:c:community:Blog:Wikia_Staff_Blog|staff blog]]  or post on our '''[[w:c:community:Special:Forum|community help forums]]'''. If you are looking for admin help and advice, stop by [[w:c:community:Admin_Central:Main_Page|Founder & Admin Central]].",
 
@@ -213,6 +239,26 @@ If you prefer to use regular e-mail or have multiple attachments, you can contac
 	'specialcontact-logged-in-as' => 'You are logged in as $1. [[Special:UserLogout|Not you?]]',
 	'specialcontact-mail-on-file' => 'Your e-mail is set to $1. [[Special:Preferences|Do you wish to change it?]]',
 
+	'specialcontact-label-security-type' => 'Type of security issue if known',
+	'specialcontact-label-security-link' => 'Link to where the issue can be found',
+	'specialcontact-label-security-description' => 'Please describe the security issue including steps to reproduce',
+	'specialcontact-default-security-description' => 'Description:
+
+Reproduction steps:
+  1.
+  2.
+  3.
+
+Browser/OS: ',
+
+	'specialcontact-security-issue-type-xss' => 'Cross-Site Scripting (XSS)',
+	'specialcontact-security-issue-type-csrf' => 'Cross-Site Request Forgery (CSRF)',
+	'specialcontact-security-issue-type-sqli' => 'SQL injection',
+	'specialcontact-security-issue-type-auth' => 'Authentication/Authorization issues',
+	'specialcontact-security-issue-type-leak' => 'Information Leakage',
+	'specialcontact-security-issue-type-redirect' => 'URL Redirection Abuse',
+	'specialcontact-security-issue-type-other' => 'Other',
+
 	/* errors */
 	'specialcontact-nomessage' => 'Please fill in a message',
 	'specialcontact-captchafail' =>	'Incorrect or missing confirmation code.',
@@ -234,6 +280,20 @@ Remember, you can also find help in our [[w:c:community:Special:Forum|Community 
 
 $messages['qqq'] = array(
 	'specialcontact-seclink-dmca-request' => 'Link text for copyright complaints.',
+	'specialcontact-seclink-security' => 'Link text for reporting security issues.',
+	'specialcontact-sectitle-security' => 'Title of the form for reporting security issues.',
+	'specialcontact-intro-security' => 'Introductory text for the security issue report form, including responsible disclosure guidelines.',
+	'specialcontact-label-security-type' => 'Label for the type of security issue being reported.',
+	'specialcontact-label-security-link' => 'Label for the input for the URL to where the security issue can be reproduced.',
+	'specialcontact-label-security-description' => 'Label for the text area for providing the description of the security issue.',
+	'specialcontact-default-security-description' => 'Default text placed in the text area for providing the description of the security issue.',
+	'specialcontact-security-issue-type-xss' => 'Text of an option for selecting the type of security issue being reported.',
+	'specialcontact-security-issue-type-csrf' => 'Text of an option for selecting the type of security issue being reported.',
+	'specialcontact-security-issue-type-sqli' => 'Text of an option for selecting the type of security issue being reported.',
+	'specialcontact-security-issue-type-auth' => 'Text of an option for selecting the type of security issue being reported.',
+	'specialcontact-security-issue-type-leak' => 'Text of an option for selecting the type of security issue being reported.',
+	'specialcontact-security-issue-type-redirect' => 'Text of an option for selecting the type of security issue being reported.',
+	'specialcontact-security-issue-type-other' => 'Text of an option for selecting the type of security issue being reported.',
 );
 
 $messages['de'] = array(
