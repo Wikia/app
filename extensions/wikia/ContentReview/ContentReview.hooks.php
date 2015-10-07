@@ -20,6 +20,8 @@ class Hooks {
 		\Hooks::register( 'ArticleDeleteComplete', [ $hooks, 'onArticleDeleteComplete' ] );
 		\Hooks::register( 'ArticleUndelete', [ $hooks, 'onArticleUndelete' ] );
 		\Hooks::register( 'ShowDiff', [ $hooks, 'onShowDiff' ] );
+		\Hooks::register( 'UserRights::groupCheckboxes', [ $hooks, 'onUserRightsGroupCheckboxes' ] );
+		\Hooks::register( 'UserAddGroup', [ $hooks, 'onUserAddGroup' ] );
 	}
 
 	public function onGetRailModuleList( Array &$railModuleList ) {
@@ -231,6 +233,26 @@ class Hooks {
 			);
 			return false;
 		}
+		return true;
+	}
+
+	public function onUserRightsGroupCheckboxes( $group, &$disabled, &$irreversible ) {
+		global $wgUser;
+
+		if ( $group === 'content-reviewer' && ( !$wgUser->isAllowed( 'content-review' ) || !$wgUser->isStaff() ) ) {
+			$disabled = true;
+		}
+
+		return true;
+	}
+
+	public function onUserAddGroup( \User $user, $group ) {
+		global $wgUser;
+
+		if ( $group === 'content-reviewer' && ( !$wgUser->isAllowed( 'content-review' ) || !$wgUser->isStaff() ) ) {
+			return false;
+		}
+
 		return true;
 	}
 
