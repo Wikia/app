@@ -81,6 +81,46 @@
 	text-align: center; // center smaller image inside infobox
 }
 
+.pi-image-gallery {
+	position: relative;
+
+	&::after {
+		// TODO: Remove coupling with VE
+		background-image: url("/extensions/VisualEditor/modules/ve-mw/ui/styles/images/icons/gallery-ltr-white.svg");
+		background-repeat: no-repeat;
+		background-size: contain;
+		content: '';
+		display: block;
+		height: $infobox-gallery-icon-size;
+		position: absolute;
+		right: $infobox-item-margin;
+		top: $infobox-item-margin;
+		width: $infobox-gallery-icon-size;
+	}
+}
+
+.pi-image-gallery > .video-thumbnail {
+	display: block;
+
+	.play-circle {
+		bottom: 26px; // TODO: This positioning is temporary, as it breaks with longer captions
+	}
+}
+
+.pi-gallery-caption {
+	bottom: 0;
+	color: $infobox-gallery-caption-color;
+	font-size: 12px;
+	left: 0;
+	line-height: 18px;
+	position: absolute;
+	text-align: left;
+}
+
+.pi-image-gallery-extras {
+	display: none;
+}
+
 .pi-caption {
 	color: $color-alternate-text;
 	font-size: 12px;

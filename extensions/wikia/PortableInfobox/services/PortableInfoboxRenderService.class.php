@@ -17,7 +17,8 @@ class PortableInfoboxRenderService extends WikiaService {
 		'group' => 'PortableInfoboxItemGroup.mustache',
 		'horizontal-group-content' => 'PortableInfoboxHorizontalGroupContent.mustache',
 		'navigation' => 'PortableInfoboxItemNavigation.mustache',
-		'hero-mobile' => 'PortableInfoboxItemHeroMobile.mustache'
+		'hero-mobile' => 'PortableInfoboxItemHeroMobile.mustache',
+		'gallery' => 'PortableInfoboxGallery.mustache'
 	];
 	private $templateEngine;
 
@@ -74,6 +75,11 @@ class PortableInfoboxRenderService extends WikiaService {
 		if ( !empty( $heroData ) ) {
 			$infoboxHtmlContent = $this->renderInfoboxHero( $heroData ) . $infoboxHtmlContent;
 		}
+
+		$galleryData = $this->mockGalleryData();
+		$infoboxHtmlContent = $this->renderGallery($galleryData) . $infoboxHtmlContent;
+
+		$infoboxHtmlContent = $this->renderGallery( $this->mockGalleryData( true ) ) . $infoboxHtmlContent;
 
 		if ( !empty( $infoboxHtmlContent ) ) {
 			$output = $this->renderItem( 'wrapper',
@@ -137,6 +143,73 @@ class PortableInfoboxRenderService extends WikiaService {
 		}
 
 		return $markup;
+	}
+
+	/**
+	 * renders infobox gallery component
+	 *
+	 * @param array $data - array of images
+	 *
+	 * @return string
+	 */
+	private function renderGallery( $data ) {
+		$helper = new PortableInfoboxRenderServiceHelper();
+
+		$galleryData = [];
+
+		$cover = array_shift($data);
+		$galleryData['cover'] = $helper->extendImageData( $cover );
+		$galleryData['extras'] = array_map([$helper,'extendImageData'], $data);
+
+		$markup = $this->renderItem( 'gallery', $galleryData );
+
+		return $markup;
+	}
+
+	/**
+	 * temporary function to provide mock data for a gallery
+	 * @param bool $hasVideo - whether this gallery has a video
+	 *
+	 * @return array
+	 */
+	private function mockGalleryData( $hasVideo ) {
+		$galleryData =  [
+			[
+				'url' => 'http://vignette.wikia-dev.com/visualeditor/images/b/b8/Challenger.jpg/revision/latest?cb=20140626002212',
+				'name' => 'Challenger.jpg',
+				'key' => 'Challenger.jpg',
+				'alt' => '',
+				'caption' => 'This is a caption'
+			],
+			[
+				'url' => 'http://vignette.wikia-dev.com/visualeditor/images/1/1d/Challenger-1.jpg/revision/latest?cb=20140626002317',
+				'name' => 'Challenger-1.jpg',
+				'key' => 'Challenger-1.jpg',
+				'alt' => '',
+				'caption' => 'This is a caption for Challenger 1'
+			],
+			[
+				'url' => 'http://vignette.wikia-dev.com/visualeditor/images/4/41/Challenger-0.jpg/revision/latest?cb=20140626002239',
+				'name' => 'Challenger-0.jpg',
+				'key' => 'Challenger-0.jpg',
+				'alt' => '',
+				'caption' => 'This is a caption for Challenger 0'
+			]
+		];
+
+		if ( $hasVideo ) {
+			array_unshift($galleryData, [
+				'url' => 'http://visualeditor.paulo.wikia-dev.com/wiki/File:Poland_is_beautiful',
+				'name' => 'Poland is beautiful',
+				'key' => 'Poland is beautiful',
+				'alt' => '',
+				'caption' => 'This is a caption for Poland is Beautiful',
+				'isVideo' => 1,
+				'duration' => '04:33'
+			]);
+		}
+
+		return $galleryData;
 	}
 
 	/**
