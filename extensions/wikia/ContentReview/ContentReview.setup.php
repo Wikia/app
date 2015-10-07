@@ -31,8 +31,9 @@ $wgExtensionCredits['other'][] = [
  */
 $wgAvailableRights[] = 'content-review';
 $wgGroupPermissions['*']['content-review'] = false;
-$wgGroupPermissions['util']['content-review'] = true;
-$wgGroupPermissions['staff']['content-review'] = true;
+$wgGroupPermissions['content-reviewers']['content-review'] = true;
+$wgAddGroups['content-reviewers'][] = 'content-reviewers';
+$wgRemoveGroups['content-reviewers'][] = 'content-reviewers';
 
 $wgAvailableRights[] = 'content-review-test-mode';
 $wgGroupPermissions['user']['content-review-test-mode'] = true;
