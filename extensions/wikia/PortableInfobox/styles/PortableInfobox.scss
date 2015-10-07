@@ -99,6 +99,14 @@
 	}
 }
 
+.pi-image-gallery > .video-thumbnail {
+	display: block;
+
+	.play-circle {
+		bottom: 26px; // TODO: This positioning is temporary, as it breaks with longer captions
+	}
+}
+
 .pi-gallery-caption {
 	bottom: 0;
 	color: $infobox-gallery-caption-color;

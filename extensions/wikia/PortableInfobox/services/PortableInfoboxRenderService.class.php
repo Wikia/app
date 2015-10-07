@@ -79,6 +79,8 @@ class PortableInfoboxRenderService extends WikiaService {
 		$galleryData = $this->mockGalleryData();
 		$infoboxHtmlContent = $this->renderGallery($galleryData) . $infoboxHtmlContent;
 
+		$infoboxHtmlContent = $this->renderGallery( $this->mockGalleryData( true ) ) . $infoboxHtmlContent;
+
 		if ( !empty( $infoboxHtmlContent ) ) {
 			$output = $this->renderItem( 'wrapper',
 				[ 'content' => $infoboxHtmlContent, 'theme' => $theme, 'layout' => $layout ] );
@@ -166,11 +168,12 @@ class PortableInfoboxRenderService extends WikiaService {
 
 	/**
 	 * temporary function to provide mock data for a gallery
+	 * @param bool $hasVideo - whether this gallery has a video
 	 *
 	 * @return array
 	 */
-	private function mockGalleryData() {
-		return [
+	private function mockGalleryData( $hasVideo ) {
+		$galleryData =  [
 			[
 				'url' => 'http://vignette.wikia-dev.com/visualeditor/images/b/b8/Challenger.jpg/revision/latest?cb=20140626002212',
 				'name' => 'Challenger.jpg',
@@ -193,6 +196,20 @@ class PortableInfoboxRenderService extends WikiaService {
 				'caption' => 'This is a caption for Challenger 0'
 			]
 		];
+
+		if ( $hasVideo ) {
+			array_unshift($galleryData, [
+				'url' => 'http://visualeditor.paulo.wikia-dev.com/wiki/File:Poland_is_beautiful',
+				'name' => 'Poland is beautiful',
+				'key' => 'Poland is beautiful',
+				'alt' => '',
+				'caption' => 'This is a caption for Poland is Beautiful',
+				'isVideo' => 1,
+				'duration' => '04:33'
+			]);
+		}
+
+		return $galleryData;
 	}
 
 	/**
