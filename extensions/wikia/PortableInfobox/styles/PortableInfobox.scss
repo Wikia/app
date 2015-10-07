@@ -85,24 +85,27 @@
 	position: relative;
 
 	&::after {
+		// TODO: Remove coupling with VE
 		background-image: url("/extensions/VisualEditor/modules/ve-mw/ui/styles/images/icons/gallery-ltr-white.svg");
 		background-repeat: no-repeat;
 		background-size: contain;
 		content: '';
 		display: block;
-		height: 30px;
+		height: $infobox-gallery-icon-size;
 		position: absolute;
 		right: $infobox-item-margin;
 		top: $infobox-item-margin;
-		width: 30px;
+		width: $infobox-gallery-icon-size;
 	}
 }
 
 .pi-gallery-caption {
-	color: white;
+	bottom: 0;
+	color: $infobox-gallery-caption-color;
 	font-size: 12px;
+	left: 0;
 	line-height: 18px;
-	margin-top: -28px;
+	position: absolute;
 	text-align: left;
 }
 

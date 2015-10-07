@@ -76,29 +76,7 @@ class PortableInfoboxRenderService extends WikiaService {
 			$infoboxHtmlContent = $this->renderInfoboxHero( $heroData ) . $infoboxHtmlContent;
 		}
 
-		$galleryData = Array (
-			Array (
-				'url' => 'http://vignette.wikia-dev.com/visualeditor/images/b/b8/Challenger.jpg/revision/latest?cb=20140626002212',
-				'name' => 'Challenger.jpg',
-				'key' => 'Challenger.jpg',
-				'alt' => '',
-				'caption' => 'This is a caption'
-			),
-			Array (
-				'url' => 'http://vignette.wikia-dev.com/visualeditor/images/1/1d/Challenger-1.jpg/revision/latest?cb=20140626002317',
-				'name' => 'Challenger-1.jpg',
-				'key' => 'Challenger-1.jpg',
-				'alt' => '',
-				'caption' => 'This is a caption for Challenger 1'
-			),
-			Array (
-				'url' => 'http://vignette.wikia-dev.com/visualeditor/images/4/41/Challenger-0.jpg/revision/latest?cb=20140626002239',
-				'name' => 'Challenger-0.jpg',
-				'key' => 'Challenger-0.jpg',
-				'alt' => '',
-				'caption' => 'This is a caption for Challenger 0'
-			)
-		);
+		$galleryData = $this->mockGalleryData();
 		$infoboxHtmlContent = $this->renderGallery($galleryData) . $infoboxHtmlContent;
 
 		if ( !empty( $infoboxHtmlContent ) ) {
@@ -175,14 +153,46 @@ class PortableInfoboxRenderService extends WikiaService {
 	private function renderGallery( $data ) {
 		$helper = new PortableInfoboxRenderServiceHelper();
 
-		$galleryData = Array();
-		$hero = array_shift($data);
-		$galleryData['hero'] = $helper->extendImageData( $hero );
-		$galleryData['extras'] = $data;
+		$galleryData = [];
+
+		$cover = array_shift($data);
+		$galleryData['cover'] = $helper->extendImageData( $cover );
+		$galleryData['extras'] = array_map([$helper,'extendImageData'], $data);
 
 		$markup = $this->renderItem( 'gallery', $galleryData );
 
 		return $markup;
+	}
+
+	/**
+	 * temporary function to provide mock data for a gallery
+	 *
+	 * @return array
+	 */
+	private function mockGalleryData() {
+		return [
+			[
+				'url' => 'http://vignette.wikia-dev.com/visualeditor/images/b/b8/Challenger.jpg/revision/latest?cb=20140626002212',
+				'name' => 'Challenger.jpg',
+				'key' => 'Challenger.jpg',
+				'alt' => '',
+				'caption' => 'This is a caption'
+			],
+			[
+				'url' => 'http://vignette.wikia-dev.com/visualeditor/images/1/1d/Challenger-1.jpg/revision/latest?cb=20140626002317',
+				'name' => 'Challenger-1.jpg',
+				'key' => 'Challenger-1.jpg',
+				'alt' => '',
+				'caption' => 'This is a caption for Challenger 1'
+			],
+			[
+				'url' => 'http://vignette.wikia-dev.com/visualeditor/images/4/41/Challenger-0.jpg/revision/latest?cb=20140626002239',
+				'name' => 'Challenger-0.jpg',
+				'key' => 'Challenger-0.jpg',
+				'alt' => '',
+				'caption' => 'This is a caption for Challenger 0'
+			]
+		];
 	}
 
 	/**
