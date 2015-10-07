@@ -72,13 +72,13 @@ require(
 		}
 
 		function getInterlangFromArticleInterlangList() {
-			var i, interLangData;
+			var i, interlangData;
 			if (Array.isArray(w.wgArticleInterlangList)) {
-				for(i = 0; i < w.wgArticleInterlangList.length; i++) { //what to pass? question
-					interLangData = w.wgArticleInterlangList[i].split(':');
-					if (targetLanguage === interLangData[0]) {
-						//we have interlang for this user
-						getNativeWikiaInfo(w.wgArticleInterlangList[i])
+				for(i = 0; i < w.wgArticleInterlangList.length; i++) {
+					interlangData = w.wgArticleInterlangList[i].split(':');
+					if (targetLanguage === interlangData[0]) {
+						//we have interlang for this user. Pass the interlang article title
+						getNativeWikiaInfo(interlangData[1]);
 						return true;
 					}
 				}
@@ -86,7 +86,7 @@ require(
 			return false;
 		}
 
-		function getNativeWikiaInfo(interlangInfo) {
+		function getNativeWikiaInfo(interlangTitle) {
 			/**
 			 * Sends a request to the WikiaInYourLangController via Nirvana.
 			 * Response consists of:
@@ -104,7 +104,7 @@ require(
 				data: {
 					targetLanguage: targetLanguage,
 					articleTitle: w.wgPageName,
-					interlangInfo: interlangInfo //what to pass? question
+					interlangTitle: interlangTitle
 				},
 				callback: function (results) {
 					if (results.success === true) {
