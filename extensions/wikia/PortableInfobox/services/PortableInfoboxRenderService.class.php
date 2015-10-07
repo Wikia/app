@@ -152,7 +152,6 @@ class PortableInfoboxRenderService extends WikiaService {
 		$helper = new PortableInfoboxRenderServiceHelper();
 
 		if ( $type === 'image' ) {
-
 			$data[ 'context' ] = self::MEDIA_CONTEXT_INFOBOX;
 			$data = $helper->extendImageData( $data );
 
