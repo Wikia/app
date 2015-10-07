@@ -140,7 +140,8 @@ class MercuryApi {
 		if ( !$msg->isDisabled() ) {
 			$msgText = $msg->text();
 		}
-		return !empty( $msgText ) ? $msgText : false;
+
+		return !empty( $msgText ) ? htmlspecialchars( $msgText ) : false;
 	}
 
 	/**
