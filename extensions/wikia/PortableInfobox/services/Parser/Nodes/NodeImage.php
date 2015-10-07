@@ -19,7 +19,7 @@ class NodeImage extends Node {
 			if ( $this->containsTabberOrGallery( $parameterValue ) ) {
 				$parsed = $this->getExternalParser()->parseRecursive( $parameterValue );
 
-				$items = $this->getGalleryItems( $parsed ) + $this->getTabberItems( $parsed );
+				$items = array_merge( $this->getGalleryItems( $parsed ), $this->getTabberItems( $parsed ) );
 				for( $i = 0; $i < count( $items ); $i++ ) {
 					$this->data[] = $this->getImage(
 						$items[$i]['title'],
