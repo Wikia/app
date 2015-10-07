@@ -273,18 +273,15 @@ class MercuryApiController extends WikiaController {
 
 		$wikiVariables = $this->mercuryApi->getWikiVariables();
 
-		try {
-			$wikiVariables['navData'] = $this->getNavigationData();
-		} catch ( Exception $e ) {
+		$navData = $this->getNavigationData();
+		if ( empty( $navData ) ) {
 			\Wikia\Logger\WikiaLogger::instance()->error(
-				'Fallback to empty navigation',
-				[
-					'exception' => $e
-				]
+				'Fallback to empty navigation'
 			);
-			$wikiVariables['navData'] = [ ];
+			$navData = [ ];
 		}
 
+		$wikiVariables['navData'] = $navData;
 		$wikiVariables['vertical'] = WikiFactoryHub::getInstance()->getWikiVertical( $this->wg->CityId )['short'];
 		$wikiVariables['basePath'] = $this->wg->Server;
 
