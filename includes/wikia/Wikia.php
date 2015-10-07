@@ -22,7 +22,6 @@ $wgHooks['ComposeMail']              [] = "Wikia::ComposeMail";
 $wgHooks['SoftwareInfo']             [] = "Wikia::softwareInfo";
 $wgHooks['AddNewAccount']            [] = "Wikia::ignoreUser";
 $wgHooks['ComposeMail']              [] = "Wikia::isUnsubscribed";
-$wgHooks['AllowNotifyOnPageChange']  [] = "Wikia::allowNotifyOnPageChange";
 $wgHooks['AfterInitialize']          [] = "Wikia::onAfterInitialize";
 $wgHooks['UserMailerSend']           [] = "Wikia::onUserMailerSend";
 $wgHooks['ArticleDeleteComplete']    [] = "Wikia::onArticleDeleteComplete";
@@ -1339,22 +1338,6 @@ class Wikia {
 		}
 
 		return true;
-	}
-
-	static public function allowNotifyOnPageChange ( /* User */ $editor, /* Title */ $title ) {
-		global $wgWikiaBotUsers;
-
-		$allow = true;
-		if ( !empty( $wgWikiaBotUsers ) ) {
-			foreach ( $wgWikiaBotUsers as $type => $user ) {
-				if ( $user["username"] == $editor->getName() ) {
-					$allow = false;
-					break;
-				}
-			}
-		}
-
-		return $allow;
 	}
 
 	/**
