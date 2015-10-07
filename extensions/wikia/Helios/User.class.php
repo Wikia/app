@@ -89,6 +89,7 @@ class User {
 				$tokenInfo = $heliosClient->info( $token );
 				if ( !empty( $tokenInfo->user_id ) ) {
 					$user = \User::newFromId( $tokenInfo->user_id );
+					$user->setGlobalAuthToken( $token );
 
 					// dont return the user object if it's disabled
 					// @see SERVICES-459
