@@ -175,10 +175,11 @@ class MercuryApiController extends WikiaController {
 	 * @return array
 	 */
 	private function getNavigationData() {
-		//getData always return array with navigation and wiki keys.
-		//See: includes/wikia/api/NavigationApiController.class.php:28
-		//and: includes/wikia/models/NavigationModel.class.php:175
-		return $this->sendRequest( 'NavigationApi', 'getData' )->getData()['navigation']['wiki'];
+		$navData = $this->sendRequest( 'NavigationApi', 'getData' )->getData();
+		if ( isset( $navData['navigation']['wiki'] ) ) {
+			return $this->sendRequest('NavigationApi', 'getData')->getData()['navigation']['wiki'];
+		}
+		return [ ];
 	}
 
 	/**
@@ -281,7 +282,6 @@ class MercuryApiController extends WikiaController {
 			\Wikia\Logger\WikiaLogger::instance()->error(
 				'Fallback to empty navigation'
 			);
-			$navData = [ ];
 		}
 
 		$wikiVariables['navigation'] = $navData;
