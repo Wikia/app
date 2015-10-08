@@ -2,8 +2,8 @@
 <!-- DISTRIBUTION TABLE -->
 <script type="text/javascript" charset="utf-8">
 function mlShowDetails(dbname) {
-	var username = '<?= htmlspecialchars( $username ) ?>';
-	var action = '<?= htmlspecialchars( $action ) ?>';
+	var username = '<?= Xml::escapeJsString( $username ) ?>';
+	var action = '<?= Xml::escapeJsString( $action ) ?>';
 
 	if ( !username ) {
 		return false;
@@ -14,7 +14,7 @@ function mlShowDetails(dbname) {
 
 $(document).ready(function() {
 	var baseurl = wgScript + "?action=ajax&rs=MultiLookupAjax::axData";
-	var username = '<?= htmlspecialchars( $username ) ?>';
+	var username = '<?= Xml::escapeJsString( $username ) ?>';
 
 	if ( !username ) {
 		return;
@@ -52,7 +52,7 @@ $(document).ready(function() {
 		"aoColumnDefs": [
 			{ "bVisible": true,  "aTargets": [ 0 ], "bSortable" : false },
 			{ "fnRender": function ( oObj ) {
-				var row = '<a href="'+ window.location.pathname + "?target="+ username +'&wiki=' + oObj.aData[1] + '">' + oObj.aData[1] + '</a>';
+				var row = '<a href="'+ window.location.pathname + "?target="+ mw.html.escape( username ) +'&wiki=' + mw.html.escape( oObj.aData[1] ) + '">' + mw.html.escape( oObj.aData[1] ) + '</a>';
 				return row;
 			},
 				"bUseRendered": false,
@@ -61,7 +61,7 @@ $(document).ready(function() {
 			},
 			{ "bVisible": true,  "aTargets": [ 2 ], "bSortable" : false },
 			{ "fnRender": function ( oObj ) {
-				var row = '<a href="'+ oObj.aData[3] + '">' + oObj.aData[3] + '</a>';
+				var row = '<a href="'+ mw.html.escape( oObj.aData[3] ) + '">' + mw.html.escape( oObj.aData[3] ) + '</a>';
 				return row;
 			},
 				"bUseRendered": false,

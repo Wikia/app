@@ -4,13 +4,13 @@
 
 $(document).ready(function() {
 	var baseurl = wgScript + "?action=ajax&rs=MultiLookupAjax::axData";
-	var username = '<?= htmlspecialchars( $username ) ?>';
-	var wiki = '<?= htmlspecialchars( $wiki ) ?>';
-				
+	var username = '<?= Xml::escapeJsString( $username ) ?>';
+	var wiki = '<?= Xml::escapeJsString( $wiki ) ?>';
+
 	if ( !username && !mode && !wiki ) {
 		return;
 	}
-	
+
 	var oTable = $('#ml-table').dataTable( {
 		"oLanguage": {
 			"sLengthMenu": "<?= wfMessage( 'table_pager_limit', '_MENU_' ) ?>",
@@ -35,14 +35,14 @@ $(document).ready(function() {
 		"aoColumns": [
 			{ "sName": "id" },
 			{ "sName": "dbname" },
-			{ "sName": "title" },			
+			{ "sName": "title" },
 			{ "sName": "edit" }
 		],
-		"aoColumnDefs": [ 
+		"aoColumnDefs": [
 			{ "bVisible": true,  "aTargets": [ 0 ], "bSortable" : false },
 			{ "bVisible": true,  "aTargets": [ 1 ], "bSortable" : false },
 			{ "bVisible": true,  "aTargets": [ 2 ], "bSortable" : false },
-			{ "bVisible": true,  "aTargets": [ 3 ], "bSortable" : false }		
+			{ "bVisible": true,  "aTargets": [ 3 ], "bSortable" : false }
 		],
 		"bProcessing": true,
 		"bServerSide": true,
@@ -54,14 +54,14 @@ $(document).ready(function() {
 		},*/
 		"fnServerData": function ( sSource, aoData, fnCallback ) {
 			var limit		= 25;
-			var offset 		= 0;		
+			var offset 		= 0;
 			var groups	 	= 0;
 			var loop		= 1;
 			var order 		= '';
-			
+
 			var sortingCols = 0;
 			var iColumns	= 0;
-			
+
 			for ( i in aoData ) {
 				switch ( aoData[i].name ) {
 					case 'iDisplayLength'	: limit = aoData[i].value; break;
@@ -71,12 +71,12 @@ $(document).ready(function() {
 					case 'iColumns'			: iColumns = aoData[i].value; break;
 					case 'iSortingCols'		: sortingCols = aoData[i].value; break;
 				}
-			}				
-				
+			}
+
 			$.ajax( {
-				"dataType": 'json', 
-				"type": "POST", 
-				"url": sSource, 
+				"dataType": 'json',
+				"type": "POST",
+				"url": sSource,
 				"data": [
 					{ 'name' : 'username',	'value' : username },
 					{ 'name' : 'wiki', 		'value' : wiki },
@@ -85,10 +85,10 @@ $(document).ready(function() {
 					{ 'name' : 'loop', 		'value' : loop },
 					{ 'name' : 'numOrder',	'value' : sortingCols },
 					{ 'name' : 'order',		'value' : order }
-				], 
+				],
 				"success": fnCallback
 			} );
-		}		
+		}
 	} );
 } );
 
