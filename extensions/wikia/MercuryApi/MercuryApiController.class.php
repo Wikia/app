@@ -175,7 +175,10 @@ class MercuryApiController extends WikiaController {
 	 * @return array
 	 */
 	private function getNavigationData() {
-		return $this->sendRequest( 'NavigationApi', 'getData' )->getData();
+		//getData always return array with navigation and wiki keys.
+		//See: includes/wikia/api/NavigationApiController.class.php:28
+		//and: includes/wikia/models/NavigationModel.class.php:175
+		return $this->sendRequest( 'NavigationApi', 'getData' )->getData()['navigation']['wiki'];
 	}
 
 	/**
@@ -281,7 +284,7 @@ class MercuryApiController extends WikiaController {
 			$navData = [ ];
 		}
 
-		$wikiVariables['navData'] = $navData;
+		$wikiVariables['navigation'] = $navData;
 		$wikiVariables['vertical'] = WikiFactoryHub::getInstance()->getWikiVertical( $this->wg->CityId )['short'];
 		$wikiVariables['basePath'] = $this->wg->Server;
 
