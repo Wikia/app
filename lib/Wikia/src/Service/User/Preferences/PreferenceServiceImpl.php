@@ -193,7 +193,7 @@ class PreferenceServiceImpl implements PreferenceService {
 	 */
 	private function load( $userId ) {
 		if ( $userId == 0 ) {
-			return new UserPreferences();
+			return $this->applyDefaults( new UserPreferences() );
 		}
 
 		if ( !isset( $this->preferences[$userId] ) ) {

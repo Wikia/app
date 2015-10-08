@@ -54,6 +54,13 @@ class PreferenceServiceImplTest extends PHPUnit_Framework_TestCase {
 		$this->assertNull( $preferences->getGlobalDefault( "pref2" ) );
 	}
 
+	public function testGetAnon() {
+		$defaultPreferences = ( new UserPreferences() )
+			->setGlobalPreference( 'pref1', 'val1' );
+		$preferences = new PreferenceServiceImpl( $this->cache, $this->persistence, $defaultPreferences, [], [] );
+		$this->assertEquals( 'val1', $preferences->getPreferences( 0 )->getGlobalPreference( 'pref1' ) );
+	}
+
 	public function testGet() {
 		$this->setupServiceExpects();
 		$preferences = new PreferenceServiceImpl( $this->cache, $this->persistence, new UserPreferences(), [], [] );
