@@ -63,7 +63,12 @@
 									</p>
 									<p class="insights-list-item-metadata">
 										<?php if ( isset( $item['metadata']['wantedBy'] ) ) : ?>
-											<?= $item['metadata']['wantedBy'] ?>
+											<?php $wantedBy = $item['metadata']['wantedBy']; ?>
+											<?=
+												Linker::linkKnown(
+													$wantedBy['url'],
+													wfMessage( $wantedBy['message'] )->inLanguage( $wg->Lang )->numParams( $wantedBy['value'] )->escaped() );
+											?>
 										<?php endif; ?>
 									</p>
 								<?php endif; ?>

@@ -31,7 +31,9 @@ class InsightsWantedpagesModel extends InsightsQueryPageModel {
 				}
 
 				$article['link'] = InsightsHelper::getTitleLink( $title, $params );
-				$article['metadata']['wantedBy'] = $this->makeWlhLink( $title, $row );
+				$article['metadata']['wantedBy']['message'] = $this->wlhLinkMessage();
+				$article['metadata']['wantedBy']['value'] = (int)$row->value;
+				$article['metadata']['wantedBy']['url'] = $this->getWlhUrl( $title );
 
 				$data[] = $article;
 			}
@@ -54,5 +56,14 @@ class InsightsWantedpagesModel extends InsightsQueryPageModel {
 			return $this->removeFixedItem( ucfirst( self::INSIGHT_TYPE ), $title );
 		}
 		return false;
+	}
+
+	/**
+	 * Returns a link to a WhatLinksHere page for the given Title.
+	 * @param Title $title The target article's title object
+	 * @return string
+	 */
+	public function getWlhUrl( Title $title ) {
+		return SpecialPage::getTitleFor( 'Whatlinkshere', $title->getPrefixedText() );
 	}
 }
