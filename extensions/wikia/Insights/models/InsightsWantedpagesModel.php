@@ -59,13 +59,4 @@ class InsightsWantedpagesModel extends InsightsQueryPageModel {
 		}
 		return false;
 	}
-
-	/**
-	 * Returns a link to a WhatLinksHere page for the given Title.
-	 * @param Title $title The target article's title object
-	 * @return string
-	 */
-	public function getWlhUrl( Title $title ) {
-		return SpecialPage::getTitleFor( 'Whatlinkshere', $title->getPrefixedText() );
-	}
 }

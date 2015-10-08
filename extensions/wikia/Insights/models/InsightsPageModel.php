@@ -258,7 +258,11 @@ abstract class InsightsPageModel extends InsightsModel {
 				}
 
 				if ( $this->isWlhLinkRequired() ) {
-					$article['metadata']['wantedBy'] = $this->makeWlhLink( $title, $row );
+					$article['metadata']['wantedBy'] = [
+						'message' => $this->wlhLinkMessage(),
+						'value' => (int)$row->value,
+						'url' => $this->getWlhUrl( $title ),
+					];
 				}
 
 				if ( $this->arePageViewsRequired() ) {
@@ -379,6 +383,15 @@ abstract class InsightsPageModel extends InsightsModel {
 		$data['userpage'] = $userpage;
 
 		return $data;
+	}
+
+	/**
+	 * Returns a link to a WhatLinksHere page for the given Title.
+	 * @param Title $title The target article's title object
+	 * @return string
+	 */
+	public function getWlhUrl( Title $title ) {
+		return SpecialPage::getTitleFor( 'Whatlinkshere', $title->getPrefixedText() );
 	}
 
 	/**
