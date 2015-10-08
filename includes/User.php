@@ -1156,16 +1156,16 @@ class User {
 		}
 
 		if ( !$this->isUserAuthenticated() ) {
-				Wikia\Logger\WikiaLogger::instance()->error(
-					'global authentication failed',
-					[
-					'global_auth_token' => $this->getGlobalAuthToken(),
-					'from'              => $from,
-					'ip'                => $this->getRequest()->getIP(),
-					'session_id'        => session_id(),
-					'user_id'           => $this->getId(),
-					'user_name'         => $this->getName(),
-					]
+			Wikia\Logger\WikiaLogger::instance()->error(
+				'global authentication failed',
+				[
+				'global_auth_token' => $this->getGlobalAuthToken(),
+				'from'              => $from,
+				'ip'                => $this->getRequest()->getIP(),
+				'session_id'        => session_id(),
+				'user_id'           => $this->getId(),
+				'user_name'         => $this->getName(),
+				]
 				);
 
 			wfDebug( "User: global authentication failed; using $from\n" );
