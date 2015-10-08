@@ -115,7 +115,7 @@ class WikiaMiniUpload {
 	}
 
      function query() {
-        global $wgRequest, $wgHTTPProxy;
+        global $wgRequest, $wgFlickrAPIKey;
 
         $query = $wgRequest->getText('query');
         $page = $wgRequest->getVal('page', 1);
@@ -123,9 +123,7 @@ class WikiaMiniUpload {
 
         if ( $sourceId == 1 ) {
 
-            $flickrAPI = new phpFlickr('bac0bd138f5d0819982149f67c0ca734');
-            $proxyArr = explode(':', $wgHTTPProxy);
-            $flickrAPI->setProxy($proxyArr[0], $proxyArr[1]);
+            $flickrAPI = new phpFlickr($wgFlickrAPIKey);
             $flickrResult = $flickrAPI->photos_search(array('tags' => $query, 'tag_mode' => 'all', 'page' => $page, 'per_page' => 8, 'license' => '4,5', 'sort' => 'interestingness-desc'));
 
 			$tmpl = new EasyTemplate(dirname(__FILE__).'/templates/');
@@ -209,6 +207,8 @@ class WikiaMiniUpload {
 		global $wgRequest, $wgUser;
 		$itemId = $wgRequest->getVal('itemId');
 		$sourceId = $wgRequest->getInt('sourceId');
+
+		$this->assertValidRequest();
 
 		if ( $sourceId == 0 ) {
 			$file = wfFindFile(Title::newFromText($itemId, 6));
@@ -428,6 +428,9 @@ class WikiaMiniUpload {
 	 */
 	function insertImage() {
 		global $wgRequest, $wgUser, $wgContLang;
+
+		$this->assertValidRequest();
+
 		$type = $wgRequest->getVal('type');
 		$name = $wgRequest->getVal('name');
 		$mwname = $wgRequest->getVal('mwname');
@@ -787,11 +790,9 @@ class WikiaMiniUpload {
 	}
 
 	function getFlickrPhotoInfo( $itemId ) {
-		global $wgHTTPProxy;
+		global $wgFlickrAPIKey;
 
-		$flickrAPI = new phpFlickr( 'bac0bd138f5d0819982149f67c0ca734' );
-		$proxyArr = explode( ':', $wgHTTPProxy );
-		$flickrAPI->setProxy( $proxyArr[0], $proxyArr[1] );
+		$flickrAPI = new phpFlickr( $wgFlickrAPIKey );
 		$flickrResult = $flickrAPI->photos_getInfo( $itemId );
 
 		// phpFlickr 3.x has different response structure than previous version
@@ -897,5 +898,17 @@ class WikiaMiniUpload {
 		}
 
 		return $info;
+	}
+
+	/**
+	 * @throws BadRequestException
+	 * @see PLATFORM-1531
+	 */
+	function assertValidRequest() {
+		global $wgRequest, $wgUser;
+
+		if ( !$wgRequest->wasPosted() ||  !$wgUser->matchEditToken( $wgRequest->getVal( 'token' ) ) ) {
+			throw new BadRequestException( 'Request must be POSTed and provide a valid edit token.' );
+		}
 	}
 }

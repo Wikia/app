@@ -2,17 +2,19 @@
 
 namespace Wikia\ContentReview\Models;
 
-use Wikia\ContentReview\Helper;
+use Wikia\ContentReview\Helper,
+	Wikia\ContentReview\ContentReviewStatusesService;
 
 class ReviewModel extends ContentReviewBaseModel {
 
 	/**
 	 * Possible states a review can be in
 	 */
-	const CONTENT_REVIEW_STATUS_UNREVIEWED = 1;
-	const CONTENT_REVIEW_STATUS_IN_REVIEW = 2;
-	const CONTENT_REVIEW_STATUS_APPROVED = 3;
-	const CONTENT_REVIEW_STATUS_REJECTED = 4;
+	const 	CONTENT_REVIEW_STATUS_UNREVIEWED = 1,
+			CONTENT_REVIEW_STATUS_IN_REVIEW = 2,
+			CONTENT_REVIEW_STATUS_APPROVED = 3,
+			CONTENT_REVIEW_STATUS_REJECTED = 4,
+			CONTENT_REVIEW_STATUS_AUTOAPPROVED = 5;
 
 	public function getPageStatus( $wikiId, $pageId ) {
 		$db = $this->getDatabaseForRead();
@@ -43,6 +45,21 @@ class ReviewModel extends ContentReviewBaseModel {
 		}
 
 		return $pageStatus;
+	}
+
+	public function getPagesStatuses( $wikiId ) {
+		$db = $this->getDatabaseForRead();
+
+		$pagesStatuses = ( new \WikiaSQL() )
+			->SELECT( 'page_id', 'revision_id', 'status' )
+			->FROM( self::CONTENT_REVIEW_STATUS_TABLE )
+			->WHERE( 'wiki_id' )->EQUAL_TO( $wikiId )
+			->ORDER_BY( [ 'page_id', 'ASC' ], [ 'revision_id', 'DESC' ] )
+			->runLoop( $db, function ( &$pagesStatuses, $row ) {
+				$pagesStatuses[$row->page_id][(int)$row->status] = (int)$row->revision_id;
+			} );
+
+		return $pagesStatuses;
 	}
 
 	public function getCurrentUnreviewedId( $wikiId, $pageId ) {
@@ -150,39 +167,6 @@ class ReviewModel extends ContentReviewBaseModel {
 		return true;
 	}
 
-	/**
-	 * Backup completed review in log table
-	 *
-	 * @param Array $review
-	 * @param int $status
-	 * @return bool
-	 * @throws \FluentSql\Exception\SqlException
-	 */
-	public function backupCompletedReview( $review, $status, $reviewUserId ) {
-		$db = $this->getDatabaseForWrite();
-
-		( new \WikiaSQL() )
-			->INSERT( self::CONTENT_REVIEW_LOG_TABLE )
-			->SET( 'wiki_id', $review['wiki_id'] )
-			->SET( 'page_id', $review['page_id'] )
-			->SET( 'revision_id', $review['revision_id'] )
-			->SET( 'status', $status )
-			->SET( 'submit_user_id', $review['submit_user_id'] )
-			->SET( 'submit_time', $review['submit_time'] )
-			->SET( 'review_user_id', $reviewUserId )
-			->SET( 'review_start', $review['review_start'] )
-			// review_end has a default value set to CURRENT_TIMESTAMP
-			->run( $db );
-
-		$affectedRows = $db->affectedRows();
-
-		if ( $affectedRows === 0 ) {
-			throw new \FluentSql\Exception\SqlException( 'The INSERT operation failed.' );
-		}
-
-		return true;
-	}
-
 	public function updateRevisionStatus( $wiki_id, $page_id, $oldStatus, $status, $reviewerId  ) {
 		$db = $this->getDatabaseForWrite();
 
@@ -224,11 +208,21 @@ class ReviewModel extends ContentReviewBaseModel {
 		return $content;
 	}
 
-	public function getReviewedContent( $wiki_id, $page_id, $status ) {
+	/**
+	 * Retrieves a row from content_review_status table for a given based on a desired status.
+	 * If there is no review of the given page of the given status - a false is returned.
+	 *
+	 * @param $wiki_id
+	 * @param $page_id
+	 * @param $status
+	 * @return bool|array Returns an array that resembles a row from the content_review_status table,
+	 * or `false` if no is found.
+	 */
+	public function getReviewOfPageByStatus( $wiki_id, $page_id, $status ) {
 		$db = $this->getDatabaseForRead();
 
 		$content = ( new \WikiaSQL() )
-			->SELECT( '*' )
+			->SELECT_ALL()
 			->FROM( self::CONTENT_REVIEW_STATUS_TABLE )
 			->WHERE( 'wiki_id' )->EQUAL_TO( $wiki_id )
 			->AND_( 'page_id' )->EQUAL_TO( $page_id )
@@ -263,23 +257,21 @@ class ReviewModel extends ContentReviewBaseModel {
 	public function getStatusName( $status, $revisionId ) {
 		switch( $status ) {
 			case self::CONTENT_REVIEW_STATUS_UNREVIEWED:
-				$statusName = \ContentReviewModuleController::STATUS_AWAITING;
-				break;
 			case self::CONTENT_REVIEW_STATUS_IN_REVIEW:
-				$statusName = \ContentReviewModuleController::STATUS_AWAITING;
+				$statusName = ContentReviewStatusesService::STATUS_AWAITING;
 				break;
 			case self::CONTENT_REVIEW_STATUS_APPROVED:
-				$statusName = \ContentReviewModuleController::STATUS_APPROVED;
+				$statusName = ContentReviewStatusesService::STATUS_APPROVED;
 				break;
 			case self::CONTENT_REVIEW_STATUS_REJECTED:
-				$statusName = \ContentReviewModuleController::STATUS_REJECTED;
+				$statusName = ContentReviewStatusesService::STATUS_REJECTED;
 				break;
-			default: $statusName = \ContentReviewModuleController::STATUS_NONE;
+			default: $statusName = ContentReviewStatusesService::STATUS_NONE;
 		}
 
 		// Distinguish none from unsubmitted
-		if ( $statusName == \ContentReviewModuleController::STATUS_NONE && !empty( $revisionId ) ) {
-			$statusName = \ContentReviewModuleController::STATUS_UNSUBMITTED;
+		if ( $statusName == ContentReviewStatusesService::STATUS_NONE && !empty( $revisionId ) ) {
+			$statusName = ContentReviewStatusesService::STATUS_UNSUBMITTED;
 		}
 
 		return $statusName;

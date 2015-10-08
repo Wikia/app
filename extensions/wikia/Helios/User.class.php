@@ -78,19 +78,12 @@ class User {
 	 */
 	public static function newFromToken( \WebRequest $request ) {
 		// Extract access token from HTTP request data.
+		wfProfileIn(__METHOD__);
 		$token = self::getAccessToken( $request );
 
 		// Authenticate with the token, if present.
 		if ( $token ) {
 			$heliosClient = self::getHeliosClient();
-
-			// start the session if there's none so far
-			// the code is borrowed from SpecialUserlogin
-			// @see PLATFORM-1261
-			if ( session_id() == '' ) {
-				wfSetupSession();
-				WikiaLogger::instance()->debug( __METHOD__ . '::startSession' );
-			}
 
 			try {
 				$tokenInfo = $heliosClient->info( $token );
@@ -101,9 +94,24 @@ class User {
 					// @see SERVICES-459
 					if ( (bool)$user->getGlobalFlag( 'disabled' ) ) {
 						self::clearAccessTokenCookie();
+						wfProfileOut(__METHOD__);
 						return null;
 					}
+
+					// start the session if there's none so far
+					// the code is borrowed from SpecialUserlogin
+					// @see PLATFORM-1261
+					if ( session_id() == '' ) {
+						wfSetupSession();
+						WikiaLogger::instance()->debug( __METHOD__ . '::startSession' );
+
+						// Update mTouched on user when he starts new MW session
+						// @see SOC-1326
+						$user->invalidateCache();
+					}
+
 					// return a MediaWiki's User object
+					wfProfileOut(__METHOD__);
 					return $user;
 				}
 			}
@@ -113,6 +121,7 @@ class User {
 			}
 		}
 
+		wfProfileOut(__METHOD__);
 		return null;
 	}
 

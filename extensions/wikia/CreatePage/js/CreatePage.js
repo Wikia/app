@@ -263,7 +263,7 @@ var CreatePage = {
 
 	redLinkClick: function( e, titleText ) {
 		'use strict';
-		var title = new mw.Title.newFromText( titleText ),
+		var title = new mw.Title.newFromText( decodeURIComponent( titleText ) ),
 			namespace = title.getNamespacePrefix().replace( ':', '' ),
 			visualEditorActive = $( 'html' ).hasClass( 've-activated' );
 

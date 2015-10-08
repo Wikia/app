@@ -9,7 +9,7 @@
  * @author Owen Davis <owen(at)wikia-inc.com>
  * @author Wojciech Szela <wojtek(at)wikia-inc.com>
  */
-class WikiaRequest {
+class WikiaRequest implements Wikia\Interfaces\IRequest {
 
 	const EXCEPTION_MODE_RETURN = 0;
 	const EXCEPTION_MODE_WRAP_AND_THROW = 1;
@@ -186,6 +186,8 @@ class WikiaRequest {
 	 * @return bool
 	 */
 	public function wasPosted() {
+		wfRunHooks( 'WikiaRequestWasPosted' );
+
 		return isset( $_SERVER['REQUEST_METHOD'] ) && $_SERVER['REQUEST_METHOD'] == 'POST';
 	}
 

@@ -27,7 +27,7 @@ class LightboxHelper extends WikiaModel {
 				array( 'img_name, img_timestamp' ),
 				array(
 					"img_media_type in ('".MEDIATYPE_BITMAP."', '".MEDIATYPE_DRAWING."')",
-					"img_timestamp < $to",
+					"img_timestamp < " . $db->addQuotes( $to ),
 				),
 				__METHOD__,
 				array(
@@ -109,7 +109,7 @@ class LightboxHelper extends WikiaModel {
 				array( 'count(*) cnt' ),
 				array(
 					"img_media_type in ('".MEDIATYPE_BITMAP."', '".MEDIATYPE_DRAWING."')",
-					"img_timestamp < $timestamp",
+					"img_timestamp < " . $db->addQuotes( $timestamp ),
 				),
 				__METHOD__
 			);

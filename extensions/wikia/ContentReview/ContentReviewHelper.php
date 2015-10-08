@@ -2,6 +2,7 @@
 
 namespace Wikia\ContentReview;
 
+use Wikia\Interfaces\IRequest;
 use Wikia\ContentReview\Models\CurrentRevisionModel;
 use Wikia\ContentReview\Models\ReviewModel;
 
@@ -153,35 +154,35 @@ class Helper extends \ContextSource {
 	}
 
 	/**
-	 * Enable test mode on current wiki
+	 * Enable test mode on provided wiki
+	 * @param int $wikiId
 	 */
-	public function setContentReviewTestMode() {
-		global $wgCityId;
-
-		$key = \ContentReviewApiController::CONTENT_REVIEW_TEST_MODE_KEY;
-
+	public function setContentReviewTestMode( $wikiId ) {
 		$wikiIds = $this->getContentReviewTestModeWikis();
 
-		if ( !in_array( $wgCityId, $wikiIds ) ) {
-			$wikiIds[] = $wgCityId;
-			$this->getRequest()->setSessionData( $key, serialize( $wikiIds ) );
+		if ( !in_array( $wikiId, $wikiIds ) ) {
+			$wikiIds[] = $wikiId;
+			$this->getRequest()->setSessionData(
+				\ContentReviewApiController::CONTENT_REVIEW_TEST_MODE_KEY,
+				serialize( $wikiIds )
+			);
 		}
 	}
 
 	/**
-	 * Disable test mode on current wiki
+	 * Disable test mode on provided wiki
+	 * @param int $wikiId
 	 */
-	public function disableContentReviewTestMode() {
-		global $wgCityId;
-
-		$key = \ContentReviewApiController::CONTENT_REVIEW_TEST_MODE_KEY;
-
+	public function disableContentReviewTestMode( $wikiId ) {;
 		$wikiIds = $this->getContentReviewTestModeWikis();
-		$wikiKey = array_search( $wgCityId, $wikiIds );
+		$wikiKey = array_search( $wikiId, $wikiIds );
 
 		if ( $wikiKey !== false ) {
 			unset( $wikiIds[$wikiKey] );
-			$this->getRequest()->setSessionData( $key, serialize( $wikiIds ) );
+			$this->getRequest()->setSessionData(
+				\ContentReviewApiController::CONTENT_REVIEW_TEST_MODE_KEY,
+				serialize( $wikiIds )
+			);
 		}
 	}
 
@@ -218,25 +219,21 @@ class Helper extends \ContextSource {
 		);
 	}
 
-	public function isDiffPageInReviewProcess( $wikiId, $pageId, $diff ) {
+	public function isDiffPageInReviewProcess( \WikiaRequest $request, ReviewModel $reviewModel, $wikiId, $pageId, $diff ) {
 		/**
 		 * Do not hit database if there is a URL parameter that indicates that a user
 		 * came directly from Special:ContentReview.
 		 */
-		if ( $this->getRequest()->getInt( self::CONTENT_REVIEW_PARAM ) === 1 ) {
+		if ( $request->getInt( self::CONTENT_REVIEW_PARAM ) === 1 ) {
 			return true;
 		}
 
-		$reviewModel = new ReviewModel();
-		$reviewData = $reviewModel->getReviewedContent( $wikiId, $pageId, ReviewModel::CONTENT_REVIEW_STATUS_IN_REVIEW );
-
+		$reviewData = $reviewModel->getReviewOfPageByStatus( $wikiId, $pageId, ReviewModel::CONTENT_REVIEW_STATUS_IN_REVIEW );
 		return ( !empty( $reviewData ) && (int)$reviewData['revision_id'] === $diff );
 	}
 
-	public function hasPageApprovedId( $wikiId, $pageId, $oldid ) {
-		$currentModel = new CurrentRevisionModel();
-		$currentData = $currentModel->getLatestReviewedRevision( $wikiId, $pageId );
-
+	public function hasPageApprovedId( CurrentRevisionModel $model, $wikiId, $pageId, $oldid ) {
+		$currentData = $model->getLatestReviewedRevision( $wikiId, $pageId );
 		return ( !empty( $currentData ) && (int)$currentData['revision_id'] === $oldid );
 	}
 
@@ -268,7 +265,13 @@ class Helper extends \ContextSource {
 		return false;
 	}
 
-	public function getToolbarTemplate() {
+	/**
+	 * Returns an HTML with a toolbar displayed to reviewers.
+	 * @param int $revisionId An ID of the revision that is currently being reviewed
+	 * @return string
+	 * @throws \Exception
+	 */
+	public function getToolbarTemplate( $revisionId ) {
 		global $wgCityId;
 
 		return \MustacheService::getInstance()->render(
@@ -281,7 +284,7 @@ class Helper extends \ContextSource {
 				'buttonApproveText' => wfMessage( 'content-review-diff-approve' )->plain(),
 				'rejectStatus' => ReviewModel::CONTENT_REVIEW_STATUS_REJECTED,
 				'buttonRejectText' => wfMessage( 'content-review-diff-reject' )->plain(),
-				'talkpageUrl' => $this->prepareProvideFeedbackLink( $this->getTitle() ),
+				'talkpageUrl' => $this->prepareProvideFeedbackLink( $this->getTitle(), $revisionId ),
 				'talkpageLinkText' => wfMessage( 'content-review-diff-toolbar-talkpage' )->plain(),
 				'guidelinesUrl' => wfMessage( 'content-review-diff-toolbar-guidelines-url' )->useDatabase( false )->plain(),
 				'guidelinesLinkText' => wfMessage( 'content-review-diff-toolbar-guidelines' )->plain(),
@@ -292,15 +295,39 @@ class Helper extends \ContextSource {
 	/**
 	 * Link for adding new section on script talk page. Prefilled with standard explanation of rejection.
 	 * @param \Title $title Title object of JS page
+	 * @param int $revisionId
 	 * @return string full link to edit page
 	 */
-	public function prepareProvideFeedbackLink( \Title $title ) {
+	public function prepareProvideFeedbackLink( \Title $title, $revisionId = 0 ) {
 		$params = [
 			'action' => 'edit',
 			'section' => 'new',
-			'useMessage' => 'content-review-rejection-explanation'
+			'useMessage' => 'content-review-rejection-explanation',
 		];
+
+		if ( (int)$revisionId !== 0 ) {
+			$params['messageParams'] = [
+				1 => wfMessage( 'content-review-rejection-explanation-title' )->params( $revisionId )->escaped(),
+				2 => $title->getFullURL( "oldid={$revisionId}" ),
+				3 => $revisionId,
+			];
+		}
+
 		return $title->getTalkPage()->getFullURL( $params );
+	}
+
+	/**
+	 * Returns an ID of a revision that is currently being reviewed. It is either a value of
+	 * `diff` URL parameter or `oldid` if `diff` is not present.
+	 * @param IRequest $request An object of a class implementing the IRequest interface
+	 * @return null|int
+	 */
+	public function getCurrentlyReviewedRevisionId( IRequest $request ) {
+		$revisionId = $request->getVal( 'diff' );
+		if ( $revisionId === null ) {
+			$revisionId = $request->getVal( 'oldid' );
+		}
+		return $revisionId;
 	}
 
 	public function purgeReviewedJsPagesTimestamp() {
@@ -313,5 +340,85 @@ class Helper extends \ContextSource {
 
 	public function getMemcKey( $params ) {
 		return wfMemcKey( self::CONTENT_REVIEW_PARAM, self::CONTENT_REVIEW_MEMC_VER, $params );
+	}
+
+	protected function getRevisionById( $revId ) {
+		return \Revision::newFromId( $revId );
+	}
+
+	protected function getCurrentRevisionModel() {
+		return new CurrentRevisionModel();
+	}
+
+	/**
+	 * Replaces $text with text from last approved revision
+	 * Change is done only for JS pages.
+	 * If there's no approved revision replaces with empty string
+	 * @param \Title $title
+	 * @param string $contentType
+	 * @param string $text
+	 * @return String
+	 */
+	public function replaceWithLastApproved( \Title $title, $contentType, $text ) {
+		global $wgCityId;
+
+		if ( $this->isPageReviewed( $title, $contentType ) ) {
+			$pageId = $title->getArticleID();
+			$latestRevId = $title->getLatestRevID();
+			$latestReviewedRevData = $this->getCurrentRevisionModel()->getLatestReviewedRevision( $wgCityId, $pageId );
+
+			if ( $latestReviewedRevData['revision_id'] !== $latestRevId
+				&& !$this->isContentReviewTestModeEnabled()
+			) {
+				$revision = $this->getRevisionById( $latestReviewedRevData['revision_id'] );
+
+				if ( $revision instanceof \Revision ) {
+					return $revision->getRawText();
+				}
+
+				return '';
+			}
+		}
+
+		return $text;
+	}
+
+	/**
+	 * Checks if a user can edit a JS page in the MediaWiki namespace.
+	 * @param \Title $title
+	 * @param \User $user
+	 * @return bool
+	 */
+	public function userCanEditJsPage( \Title $title, \User $user ) {
+		return $title->isJsPage()
+			&& $title->userCan( 'edit', $user );
+	}
+
+	/**
+	 * Checks if a user is a reviewer entitled to an automatic approval and if he requested it.
+	 *
+	 * The wpApprove request param that appears here is a value of a checkbox which is part of
+	 * the EditPageLayout for reviewers. It is displayed above the Publish button and allows a reviewer
+	 * to make a decision of skipping the review process.
+	 *
+	 * @param \User $user
+	 * @return bool
+	 */
+	public function userCanAutomaticallyApprove( \User $user ) {
+		return $user->isAllowed( 'content-review' )
+			&& $user->getRequest()->getBool( 'wpApprove' );
+	}
+
+	/**
+	 * Checks if a page should be even consider for content replacement with an approved revision.
+	 * @param \Title $title
+	 * @param $contentType
+	 * @return bool
+	 */
+	public function isPageReviewed( \Title $title, $contentType ) {
+		global $wgJsMimeType;
+
+		return $title->isJsPage()
+			|| $title->inNamespace( NS_MEDIAWIKI ) && $contentType === $wgJsMimeType;
 	}
 }

@@ -169,7 +169,7 @@
 </section>
 <div id="QuizStatus" class="QuizStatus">
 	<? if(!empty($wordmarkUrl)) { ?>
-		<img src="<?= $wordmarkUrl ?>" alt="<?= $wordmarkText ?>" height="55">
+		<img src="<?= Sanitizer::encodeAttribute( $wordmarkUrl ) ?>" alt="<?= Sanitizer::encodeAttribute( $wordmarkText ) ?>" height="55">
 	<? } ?>
 	<button id="StartButton"><?= wfMsg('wikiaquiz-game-start-button') ?></button>
 	<div id="ProgressBar" class="progress-bar">

@@ -18,9 +18,6 @@ describe('ext.wikia.adEngine.provider.gpt.sourcePointTag', function () {
 				getShortSlotName: noop
 			},
 			callback: noop,
-			cssTweaker: {
-				copyStyles: noop
-			},
 			element: {
 				getId: noop,
 				getNode: function () {
@@ -79,7 +76,6 @@ describe('ext.wikia.adEngine.provider.gpt.sourcePointTag', function () {
 			GoogleTag,
 			mocks.adSlot,
 			mocks.sourcePoint,
-			mocks.cssTweaker,
 			document,
 			mocks.log,
 			mocks.window

@@ -28,8 +28,16 @@ class TemplateDraftModuleController extends WikiaController {
 			AssetsManager::getInstance()->getSassCommonURL( "skins/oasis/css/modules/TemplateDraftModule.scss" )
 		);
 
-		$this->draftUrl = $this->app->wg->Title->getFullUrl( [
-			'action' => 'approvedraft'
-		] );
+		$this->allowApprove = false;
+		$draftTitle = $this->wg->Title;
+		$parentTitle = TemplateDraftHelper::getParentTitle( $draftTitle );
+
+		if ( $draftTitle->userCan( 'edit' ) && $parentTitle->userCan( 'edit' ) ) {
+			$this->allowApprove = true;
+			$this->draftUrl = $draftTitle->getFullUrl( [
+				'action' => 'approvedraft',
+				'token' => ApprovedraftAction::getApproveToken( $draftTitle, $this->wg->User ),
+			] );
+		}
 	}
 }

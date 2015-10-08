@@ -31,13 +31,23 @@ $wgExtensionCredits['other'][] = [
  */
 $wgAvailableRights[] = 'content-review';
 $wgGroupPermissions['*']['content-review'] = false;
-$wgGroupPermissions['util']['content-review'] = true;
-$wgGroupPermissions['staff']['content-review'] = true;
+$wgGroupPermissions['content-reviewer']['content-review'] = true;
+$wgAddGroups['content-reviewer'][] = 'content-reviewer';
+$wgRemoveGroups['content-reviewer'][] = 'content-reviewer';
+$wgWikiaGlobalUserGroups[] = 'content-reviewer';
 
+$wgAvailableRights[] = 'content-review-test-mode';
+$wgGroupPermissions['user']['content-review-test-mode'] = true;
 /**
  * Controllers
  */
 $wgAutoloadClasses['ContentReviewApiController'] = __DIR__ . '/controllers/ContentReviewApiController.class.php';
+$wgAutoloadClasses['JSPagesSpecialController'] = __DIR__ . '/controllers/JSPagesSpecialController.class.php';
+
+/**
+ * Special page
+ */
+$wgSpecialPages['JSPages'] = 'JSPagesSpecialController';
 
 /**
  * Models
@@ -45,6 +55,13 @@ $wgAutoloadClasses['ContentReviewApiController'] = __DIR__ . '/controllers/Conte
 $wgAutoloadClasses['Wikia\ContentReview\Models\ContentReviewBaseModel'] = __DIR__ . '/models/ContentReviewBaseModel.php';
 $wgAutoloadClasses['Wikia\ContentReview\Models\CurrentRevisionModel'] = __DIR__ . '/models/CurrentRevisionModel.php';
 $wgAutoloadClasses['Wikia\ContentReview\Models\ReviewModel'] = __DIR__ . '/models/ReviewModel.php';
+$wgAutoloadClasses['Wikia\ContentReview\Models\ReviewLogModel'] = __DIR__ . '/models/ReviewLogModel.php';
+
+/**
+ * Services
+ */
+$wgAutoloadClasses['Wikia\ContentReview\ContentReviewService'] = __DIR__ . '/services/ContentReviewService.class.php';
+$wgAutoloadClasses['Wikia\ContentReview\ContentReviewStatusesService'] = __DIR__ . '/services/ContentReviewStatusesService.class.php';
 
 /**
  * Helpers
@@ -55,14 +72,7 @@ $wgAutoloadClasses['Wikia\ContentReview\Helper'] = __DIR__ . '/ContentReviewHelp
  * Hooks
  */
 $wgAutoloadClasses['Wikia\ContentReview\Hooks'] = __DIR__ . '/ContentReview.hooks.php';
-$wgHooks['GetRailModuleList'][] = 'Wikia\ContentReview\Hooks::onGetRailModuleList';
-$wgHooks['MakeGlobalVariablesScript'][] = 'Wikia\ContentReview\Hooks::onMakeGlobalVariablesScript';
-$wgHooks['BeforePageDisplay'][] = 'Wikia\ContentReview\Hooks::onBeforePageDisplay';
-$wgHooks['ArticleContentOnDiff'][] = 'Wikia\ContentReview\Hooks::onArticleContentOnDiff';
-$wgHooks['RawPageViewBeforeOutput'][] = 'Wikia\ContentReview\Hooks::onRawPageViewBeforeOutput';
-$wgHooks['SkinTemplateNavigation'][] = 'Wikia\ContentReview\Hooks::onSkinTemplateNavigation';
-$wgHooks['UserLogoutComplete'][] = 'Wikia\ContentReview\Hooks::onUserLogoutComplete';
-$wgHooks['ArticleSaveComplete'][] = 'Wikia\ContentReview\Hooks::onArticleSaveComplete';
+$wgExtensionFunctions[] = 'Wikia\ContentReview\Hooks::register';
 
 /**
  * Right rail module
@@ -73,6 +83,7 @@ $wgAutoloadClasses['ContentReviewModuleController'] = $IP . '/skins/oasis/module
  * Messages
  */
 $wgExtensionMessagesFiles['ContentReview'] = __DIR__ . '/ContentReview.i18n.php';
+$wgExtensionMessagesFiles['ContentReviewInternal'] = __DIR__ . '/ContentReviewInternal.i18n.php';
 
 JSMessages::registerPackage( 'ContentReviewModule', [
 	'content-review-module-*'
@@ -84,4 +95,13 @@ JSMessages::registerPackage( 'ContentReviewTestMode', [
 
 JSMessages::registerPackage( 'ContentReviewDiffPage', [
 	'content-review-diff-page-*'
+] );
+
+JSMessages::registerPackage( 'JSPagesSpecialPage', [
+	'content-review-special-js-pages-*',
+	'content-review-special-list-header-page-name',
+	'content-review-special-list-header-actions',
+	'content-review-module-header-latest',
+	'content-review-module-header-last',
+	'content-review-module-header-live'
 ] );
