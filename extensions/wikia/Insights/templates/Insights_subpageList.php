@@ -53,9 +53,10 @@
 										<?php if ( isset( $item['metadata']['lastRevision'] ) ) : ?>
 											<?php $revision = $item['metadata']['lastRevision'] ?>
 											<?= wfMessage( 'insights-last-edit' )->rawParams(
-											Xml::element( 'a', [
-													'href' => $revision['userpage']
-												],
+												Html::element( 'a',
+													[
+														'href' => $revision['userpage']
+													],
 													$revision['username']
 												),
 												$wg->Lang->userDate( $revision['timestamp'], $wg->User )
