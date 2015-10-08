@@ -46,15 +46,12 @@ switch($wgWikiaDatacenter) {
 		die("unknown data center: {$opts['p']}\n$USAGE");
 }
 
-$wgDBdevboxUser = 'devbox';
-$wgDBdevboxPass = 'devbox';
-
 // Get db credentials from production. This is pretty gross. :)
 if ( file_exists( $dirName . "/../../../config/DB.php" ) ) {
 	require_once( $dirName . "/../../../config/DB.php" );
 }
 
-if ( isset( $wgDBbackenduser, $wgDBbackendpassword ) ) {
+if ( isset( $wgDBbackenduser, $wgDBbackendpassword, $wgDBdevboxUser, $wgDBdevboxPass ) ) {
 	$prod = new mysqlwrapper($wgDBbackenduser, $wgDBbackendpassword, 'slave.db-sharedb.service.sjc.consul');
 	$dev = new mysqlwrapper($wgDBdevboxUser, $wgDBdevboxPass, $wgDBdevboxServer);
 } else {
