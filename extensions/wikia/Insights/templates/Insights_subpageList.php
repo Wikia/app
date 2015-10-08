@@ -65,8 +65,10 @@
 										<?php if ( isset( $item['metadata']['wantedBy'] ) ) : ?>
 											<?php $wantedBy = $item['metadata']['wantedBy']; ?>
 											<?=
-												Linker::linkKnown(
-													$wantedBy['url'],
+												Html::element( 'a',
+													[
+														'href' => $wantedBy['url'],
+													],
 													wfMessage( $wantedBy['message'] )->numParams( $wantedBy['value'] )->escaped()
 												);
 											?>
