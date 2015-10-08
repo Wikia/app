@@ -687,7 +687,7 @@ $messages['ru'] = array(
 	'insights-list-subtitle-nonportableinfoboxes' => 'Немодульные инфобоксы',
 	'insights-list-description-nonportableinfoboxes' => 'Эти инфобоксы построены с помощью таблиц и блоков и должны быть переписаны с использованием новой [[Справка:Модульные инфобоксы|модульной разметки]] для корректного отображения на всех устройствах.
 
-[[w:c:community:Thread:841717|Обсуждение модульных инфобокосв]] (на английском языке).',
+[[w:c:ru.community:Thread:59124|Обсуждение модульных инфобокосв]] на русском языке.',
 	'insights-notification-message-inprogress-nonportableinfoboxes' => 'Этот инфобокс необходимо переписать с использованием новой модульной разметки.',
 	'insights-notification-message-fixed-nonportableinfoboxes' => 'Отлично! Инфобокс на этой странице был конвертирован.',
 	'insights-notification-next-item-nonportableinfoboxes' => 'Конвертируйте следующий инфобокс.',
