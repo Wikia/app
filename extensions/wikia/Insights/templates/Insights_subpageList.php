@@ -63,7 +63,15 @@
 									</p>
 									<p class="insights-list-item-metadata">
 										<?php if ( isset( $item['metadata']['wantedBy'] ) ) : ?>
-											<?= $item['metadata']['wantedBy'] ?>
+											<?php $wantedBy = $item['metadata']['wantedBy']; ?>
+											<?=
+												Html::element( 'a',
+													[
+														'href' => $wantedBy['url'],
+													],
+													wfMessage( $wantedBy['message'] )->numParams( $wantedBy['value'] )->escaped()
+												);
+											?>
 										<?php endif; ?>
 									</p>
 								<?php endif; ?>
