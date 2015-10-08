@@ -695,7 +695,8 @@ class AchAwardingService {
 		if (
 			$user->isAnon() ||
 			$user->isBlocked() ||
-			( $user->isAllowed( 'bot' ) || in_array( $user->getName(), $wgWikiaBotLikeUsers ) ) || (is_array( $wgAchExemptUsers ) && in_array( $user->getId(), $wgAchExemptUsers)) ||
+			( $user->isAllowed( 'bot' ) || in_array( $user->getName(), $wgWikiaBotLikeUsers ) ) ||
+			( is_array( $wgAchExemptUsers ) && in_array( $user->getId(), $wgAchExemptUsers ) ) ||
 			/*
 			 * certain users (like staff and helpers) should not earn badges
 			 * unless they also belong to a group that explicitly states they should
