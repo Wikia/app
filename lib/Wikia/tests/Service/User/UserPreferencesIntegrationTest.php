@@ -32,7 +32,7 @@ class UserPreferencesIntegrationTest extends PHPUnit_Framework_TestCase {
 	 * @var string
 	 */
 	const TEST_PREFERENCE_NAME = "hidepatrolled";
-	const TEST_USER_NAME = "WikiaBot";
+	const TEST_USER_NAME = "Array";
 
 	/**
 	 * @param bool $ignoreCache should we return not cached PreferenceService instance
