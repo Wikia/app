@@ -615,6 +615,11 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 			return;
 		}
 
+		if ( !empty( array_intersect( F::app()->wg->AccountAdminGroups, $user->getGroups() ) ) ) {
+			$this->setErrorResponse( 'userlogin-account-admin-error' );
+			return;
+		}
+
 		/// Get a temporary password
 		$userService = new \UserService();
 		$tempPass = $userService->resetPassword( $user );
