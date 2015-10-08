@@ -4,8 +4,8 @@
 
 $(document).ready(function() {
 	var baseurl = wgScript + "?action=ajax&rs=MultiLookupAjax::axData";
-	var username = '<?=$username?>';
-	var wiki = '<?=$wiki?>';
+	var username = '<?= htmlspecialchars( $username ) ?>';
+	var wiki = '<?= htmlspecialchars( $wiki ) ?>';
 				
 	if ( !username && !mode && !wiki ) {
 		return;
@@ -13,19 +13,19 @@ $(document).ready(function() {
 	
 	var oTable = $('#ml-table').dataTable( {
 		"oLanguage": {
-			"sLengthMenu": "<?=wfMsg('table_pager_limit', '_MENU_');?>",
-			"sZeroRecords": "<?=wfMsg('table_pager_empty');?>",
-			"sEmptyTable": "<?=wfMsg('table_pager_empty');?>",
-			"sInfo": "<?=wfMsgExt('multilookuprecordspager',  array('parseinline'), '_START_', '_END_', '_TOTAL_');?>",
-			"sInfoEmpty": "<?=wfMsgExt('multilookuprecordspager', array('parseinline'), '0', '0', '0');?>",
+			"sLengthMenu": "<?= wfMessage( 'table_pager_limit', '_MENU_' ) ?>",
+			"sZeroRecords": "<?= wfMessage( 'table_pager_empty' ) ?>",
+			"sEmptyTable": "<?= wfMessage( 'table_pager_empty' ) ?>",
+			"sInfo": "<?= wfMessage( 'multilookuprecordspager' )->parse() ?>",
+			"sInfoEmpty": "<?= wfMessage( 'multilookuprecordspager' )->parse() ?>",
 			"sInfoFiltered": "",
-			"sSearch": "<?=wfMsg('search')?>",
-			"sProcessing": "<img src='" + stylepath + "/common/images/ajax.gif' /> <?=wfMsg('livepreview-loading')?>",
+			"sSearch": "<?= wfMessage( 'search' )->escaped() ?>",
+			"sProcessing": "<img src='" + stylepath + "/common/images/ajax.gif' /> <?= wfMessage( 'livepreview-loading' )->escaped() ?>",
 			"oPaginate" : {
-				"sFirst": "<?=wfMsg('table_pager_first')?>",
-				"sPrevious": "<?=wfMsg('table_pager_prev')?>",
-				"sNext": "<?=wfMsg('table_pager_next')?>",
-				"sLast": "<?=wfMsg('table_pager_last')?>"
+				"sFirst": "<?= wfMessage( 'table_pager_first' )->escaped() ?>",
+				"sPrevious": "<?= wfMessage( 'table_pager_prev' )->escaped() ?>",
+				"sNext": "<?= wfMessage( 'table_pager_next' )->escaped() ?>",
+				"sLast": "<?= wfMessage( 'table_pager_last' )->escaped() ?>"
 			}
 		},
 		"aaSorting" : [],
@@ -98,9 +98,9 @@ $(document).ready(function() {
 <div>
 <form method="post" action="<?=$action?>" id="ml-form">
 <div class="lc_filter">
-	<span class="lc_filter lc_first"><?= wfMsg('multilookupselectuser') ?></span>
-	<span class="lc_filter"><input type="text" name="target" id="ml_search" size="50" value="<?=$username?>"></span>
-	<span class="lc_filter"><input type="button" value="<?=wfMsg('multilookupgo')?>" id="ml-showuser" onclick="submit();"></span>
+	<span class="lc_filter lc_first"><?= wfMessage( 'multilookupselectuser' )->escaped() ?></span>
+	<span class="lc_filter"><input type="text" name="target" id="ml_search" size="50" value="<?= Sanitizer::encodeAttribute( $username ) ?>"></span>
+	<span class="lc_filter"><input type="button" value="<?= wfMessage( 'multilookupgo' )->escaped() ?>" id="ml-showuser" onclick="submit();"></span>
 </div>
 </form>
 </div>
@@ -109,22 +109,22 @@ $(document).ready(function() {
 	<thead>
 		<tr>
 			<th width="2%">#</th>
-			<th width="18%"><?=wfMsg('multilookupwikidbname')?></th>			
-			<th width="35%"><?=wfMsg('multilookupwikititle')?></th>			
-			<th width="45%" style="white-space:nowrap"><?=wfMsg('multilookuplastedithdr')?></th>
+			<th width="18%"><?= wfMessage( 'multilookupwikidbname' )->escaped() ?></th>
+			<th width="35%"><?= wfMessage( 'multilookupwikititle' )->escaped() ?></th>
+			<th width="45%"><?= wfMessage( 'multilookuplastedithdr' )->escaped() ?></th>
 		</tr>
 	</thead>
 	<tbody>
 		<tr>
-			<td colspan="4" class="dataTables_empty"><?=wfMsg('livepreview-loading')?></td>
+			<td colspan="4" class="dataTables_empty"><?= wfMessage( 'livepreview-loading' )->escaped() ?></td>
 		</tr>
 	</tbody>
 	<tfoot>
 		<tr>
 			<th width="2%">#</th>
-			<th width="18%"><?=wfMsg('multilookupwikidbname')?></th>			
-			<th width="35%"><?=wfMsg('multilookupwikititle')?></th>			
-			<th width="45%" style="white-space:nowrap"><?=wfMsg('multilookuplastedithdr')?></th>
+			<th width="18%"><?= wfMessage( 'multilookupwikidbname' )->escaped() ?></th>
+			<th width="35%"><?= wfMessage( 'multilookupwikititle' )->escaped() ?></th>
+			<th width="45%"><?= wfMessage( 'multilookuplastedithdr' )->escaped() ?></th>
 		</tr>
 	</tfoot>
 </table>
