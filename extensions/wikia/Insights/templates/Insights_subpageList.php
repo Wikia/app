@@ -67,7 +67,8 @@
 											<?=
 												Linker::linkKnown(
 													$wantedBy['url'],
-													wfMessage( $wantedBy['message'] )->inLanguage( $wg->Lang )->numParams( $wantedBy['value'] )->escaped() );
+													wfMessage( $wantedBy['message'] )->numParams( $wantedBy['value'] )->escaped()
+												);
 											?>
 										<?php endif; ?>
 									</p>
