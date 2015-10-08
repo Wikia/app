@@ -25,13 +25,27 @@ class BrokenRenameFixTask extends BaseTask {
 			$this->info( "Running the {$rerunRenameScript}. Please wait for the results.
 			It may take a long time, depending on the amount of wikias the user edited at." );
 
-			$cmd = sprintf( 'SERVER_ID=177 php %s --userId=%d --oldName=%s --newName=%s',
-				$rerunRenameScript, intval( $userId ), wfEscapeShellArg( $oldName ), wfEscapeShellArg( $newName ) );
+			$wikis = User::newFromId( $userId )->getWikiasWithUserContributions();
 
-			$output = wfShellExec( $cmd );
+			if ( empty( $wikis ) ) {
+				$this->info( 'No wikias with contributions found for the user' );
+				return true;
+			}
 
-			$this->info( "The script has finished. See the logs below for the result." );
-			$this->info( $output );
+			$this->info( 'Wikias with the user\'s edits: ' . json_encode( $wikis ) );
+
+			foreach ( $wikis as $wikiId ) {
+				$cmd = sprintf( 'SERVER_ID=177 php %s --userId=%d --oldName=%s --newName=%s --wikiId=%d',
+					$rerunRenameScript,
+					(int)$userId,
+					wfEscapeShellArg( $oldName ),
+					wfEscapeShellArg( $newName ),
+					(int)$wikiId
+				);
+				$output = wfShellExec( $cmd );
+
+				$this->info( $output );
+			}
 
 			return true;
 		}
