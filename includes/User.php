@@ -1166,15 +1166,11 @@ class User {
 				'session_id'        => session_id(),
 				'user_id'           => $this->getId(),
 				'user_name'         => $this->getName(),
-				]
-				);
+				]);
 
 			wfDebug( "User: global authentication failed; using $from\n" );
 			$this->loadDefaults();
 			return false;
-		} else {
-			wfDebug( "User: global authentication success!; $from\n" );
-
 		}
 
 		if ( ( $sName === $proposedUser->getName() ) && $passwordCorrect ) {
