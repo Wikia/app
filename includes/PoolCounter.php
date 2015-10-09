@@ -1,5 +1,7 @@
 <?php
 
+use Wikia\Logger\WikiaLogger;
+
 /**
  *  When you have many workers (threads/servers) giving service, and a
  * cached item expensive to produce expires, you may get several workers
@@ -160,10 +162,11 @@ abstract class PoolCounterWork {
 	 *
 	 * @param $status Status
 	 */
-	function logError( $status ) {
-		$msg = json_encode( $status->getErrorsArray() );
+	function logError( Status $status ) {
 
-		wfDebugLog( 'poolcounter', $msg);
+		WikiaLogger::instance()->error( 'poolcounter', [
+			'poolcounter_status' => $status
+		]);
 	}
 
 	/**

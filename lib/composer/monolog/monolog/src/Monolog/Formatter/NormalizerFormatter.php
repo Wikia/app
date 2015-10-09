@@ -12,6 +12,7 @@
 namespace Monolog\Formatter;
 
 use Exception;
+use Status;
 
 /**
  * Normalizes incoming records to remove objects/resources so it's easier to dump to various targets
@@ -80,6 +81,8 @@ class NormalizerFormatter implements FormatterInterface
         if (is_object($data)) {
             if ($data instanceof Exception) {
                 return $this->normalizeException($data);
+            } elseif ($data instanceof Status) {
+                return $this->normalizeStatus($data);
             }
 
             return sprintf("[object] (%s: %s)", get_class($data), $this->toJson($data, true));
@@ -112,6 +115,18 @@ class NormalizerFormatter implements FormatterInterface
         if ($previous = $e->getPrevious()) {
             $data['previous'] = $this->normalizeException($previous);
         }
+
+        return $data;
+    }
+
+    protected function normalizeStatus(Status $status)
+    {
+        $data = array(
+            'is_ok' => $status->isOK(),
+            'errors' => $status->getErrorsArray(),
+            'message' => $status->getMessage(),
+            'value' => $status->value,
+        );
 
         return $data;
     }
