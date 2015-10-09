@@ -67,7 +67,6 @@ class HAWelcomeTask extends BaseTask {
 	 */
 	public function sendWelcomeMessage( $params ) {
 		$this->info( "HAWelcome sendWelcomeMessage" );
-		register_shutdown_function( [ $this, 'shutdownFunction' ] );
 		$this->normalizeInstanceParameters( $params );
 		$this->mergeFeatureFlagsFromUserSettings();
 
@@ -483,10 +482,5 @@ class HAWelcomeTask extends BaseTask {
 		$this->welcomeMessage = $message;
 	}
 
-	public function shutdownFunction() {
-		$error = error_get_last();
-		if ( !empty($error) && $error['type'] === E_ERROR ) {
-			$this->info( "HAWelcome fatal: " . var_export( $error, true) );
-		}
-	}
+
 }
