@@ -12,7 +12,7 @@
 namespace Monolog\Formatter;
 
 use Exception;
-use Status;
+use Status; //Added for Wikia change
 
 /**
  * Normalizes incoming records to remove objects/resources so it's easier to dump to various targets
