@@ -138,8 +138,8 @@ $(document).ready(function() {
 								dataType: 'json',
 								type: "POST",
 								data: {
-									url: mw.html.escape( url ),
-									username: mw.html.escape( username ),
+									url: url,
+									username: username,
 									id: wikiId,
 								},
 								url: wgScript + "?action=ajax&rs=LookupUserPage::requestApiAboutUser",
