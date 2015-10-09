@@ -112,8 +112,7 @@ select {
 				<?
 					foreach( $formData['wikis'] as $wikiID => $wikiInfo ) :
 						$style = !$wikiInfo['p'] ? 'style="color: red"' : '';
-						$editURL = Title::makeTitle( NS_SPECIAL, 'WikiFactory' )->getFullURL() . '/' . $wikiID;
-						$editURL .= '/variables/' . $formData['vars'][ $formData['selectedVar'] ]
+						$editURL = SpecialPage::getTitleFor( 'WikiFactory', "{$wikiID}/variables/{$formData['vars'][ $formData['selectedVar'] ]}" )->getFullURL();
 				?>
 					<li class="wikiList">
 						<input type="checkbox" name="wikiSelected[]" id="wikiSelected_<?= Sanitizer::encodeAttribute( $wikiID ) ?>" value="<?= Sanitizer::encodeAttribute( $wikiID ) ?>">
@@ -149,7 +148,7 @@ select {
 
 	$.loadJQueryAutocomplete(function() {
 		$('#wikiSelectTagName').autocomplete({
-			serviceUrl: mw.config.get( 'wgServer' ) + mw.config.get( 'wgScript' ) + encodeURIComponent('?action=ajax&rs=WikiFactoryTags::axQuery'),
+			serviceUrl: mw.config.get( 'wgServer' ) + mw.config.get( 'wgScript' ) + '?action=ajax&rs=WikiFactoryTags::axQuery',
 			minChars:3,
 			deferRequestBy: 0
 		});
@@ -202,13 +201,13 @@ select {
 		busy(1);
 		// read data from form
 		var values = '';
-		values += '&group=' + $('#groupSelect').val();
-		values += '&string=' + $('#withString').val();
+		values += '&group=' + encodeURIComponent($('#groupSelect').val());
+		values += '&string=' + encodeURIComponent($('#withString').val());
 
 		$.ajax({
 			type:"POST",
 			dataType: "json",
-			url: ajaxpath + encodeURIComponent('?action=ajax&rs=axWFactoryFilterVariables' + values),
+			url: ajaxpath + '?action=ajax&rs=axWFactoryFilterVariables' + values,
 			success: function( aData ) {
 				$('#variableSelect').html(aData['selector']);
 				busy(0);
