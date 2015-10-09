@@ -124,6 +124,7 @@ class NormalizerFormatter implements FormatterInterface
         $data = array(
             'is_ok' => $status->isOK(),
             'errors' => $status->getErrorsArray(),
+            'warnings' => $status->getWarningsArray(),
             'message' => $status->getMessage(),
             'value' => $status->value,
         );
