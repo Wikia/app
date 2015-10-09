@@ -1,6 +1,7 @@
 <?php
 namespace Wikia\Helios;
 
+use Email\Controller\EmailConfirmationController;
 use Wikia\DependencyInjection\Injector;
 use Wikia\Service\User\Auth\AuthService;
 
@@ -122,7 +123,8 @@ class HelperController extends \WikiaController
 			return;
 		}
 
-		$mailStatus = $user->sendConfirmationMail();
+		$mailStatus = $user->sendConfirmationMail(
+			'created', EmailConfirmationController::TYPE, '', true, '', $this->getVal( 'langCode', 'en' ));
 
 		if ( ! $mailStatus->isGood() ) {
 			$this->response->setVal( 'message', 'could not send an email message' );
