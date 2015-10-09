@@ -244,12 +244,19 @@ class WikiaInYourLangController extends WikiaController {
 	}
 
 	private function getArticleURL( $sArticleTitle, $cityId ) {
+		$sArticleAnchor = null;
 		$articleURL = null;
+
 		if ( $sArticleTitle !== false ) {
 			$sArticleTitle = str_replace( ' ', '_', $sArticleTitle );
+			list($sArticleTitle, $sArticleAnchor) = explode('#', $sArticleTitle);
 			$title = GlobalTitle::newFromText( $sArticleTitle, NS_MAIN, $cityId );
-			if ( !is_null( $title ) && $title->exists() ) { //title->exists() can throw exception
+
+			if ( !is_null( $title ) && $title->exists() ) {
 				$articleURL = $title->getFullURL();
+			}
+			if ( $sArticleAnchor ) {
+				$articleURL = $articleURL . '#' . $sArticleAnchor;
 			}
 		}
 		return $articleURL;
