@@ -20,6 +20,7 @@
  * @file
  */
 
+use Email\Controller\EmailConfirmationController;
 use Wikia\DependencyInjection\Injector;
 use Wikia\Domain\User\Attribute;
 use Wikia\Logger\Loggable;
@@ -2628,15 +2629,15 @@ class User {
 	 * @see getGlobalPreference
 	 */
 	public function setLocalPreference($preference, $value, $cityId, $sep = '-') {
-		global $wgPreferenceServiceShadowWrite;
+		global $wgPreferenceServiceWrite;
 
-		if ( $wgPreferenceServiceShadowWrite ) {
+		if ( $wgPreferenceServiceWrite ) {
 			$value = $this->replaceNewlineAndCRWithSpace( $value );
 			$this->userPreferences()->setLocalPreference( $this->getId(), $cityId, $preference, $value );
+		} else {
+			$preferenceGlobalName = self::localToGlobalPropertyName($preference, $cityId, $sep);
+			$this->setOptionHelper( $preferenceGlobalName, $value );
 		}
-
-		$preferenceGlobalName = self::localToGlobalPropertyName($preference, $cityId, $sep);
-		$this->setOptionHelper( $preferenceGlobalName, $value );
 	}
 
 	/**
@@ -2647,9 +2648,9 @@ class User {
 	 * @see getGlobalPreference for documentation about preferences
 	 */
 	public function setGlobalPreference( $preference, $value ) {
-		global $wgPreferenceServiceShadowWrite;
+		global $wgPreferenceServiceWrite;
 
-		if ( $wgPreferenceServiceShadowWrite ) {
+		if ( $wgPreferenceServiceWrite ) {
 			$value = $this->replaceNewlineAndCRWithSpace( $value );
 			$this->userPreferences()->setGlobalPreference( $this->getId(), $preference, $value );
 			if ( $preference == 'skin' ) {
@@ -2658,9 +2659,9 @@ class User {
 			if ( $preference == 'theme' ) {
 				unset( $this->mTheme );
 			}
+		} else {
+			$this->setOptionHelper( $preference, $value );
 		}
-
-		$this->setOptionHelper( $preference, $value );
 	}
 
 	/**
@@ -4011,10 +4012,23 @@ class User {
 	 * Generate a new e-mail confirmation token and send a confirmation/invalidation
 	 * mail to the user's given address.
 	 *
-	 * @param $type String: message to send, either "created", "changed" or "set"
-	 * @return Status object
+	 * @param string $type
+	 * @param string $mailtype
+	 * @param string $mailmsg
+	 * @param bool|true $ip_arg
+	 * @param string $emailTextTemplate
+	 * @param null $language
+	 * @return Status
+	 * @throws MWException
 	 */
-	public function sendConfirmationMail( $type = 'created', $mailtype = "ConfirmationMail", $mailmsg = '', $ip_arg = true, $emailTextTemplate = '' ) {
+	public function sendConfirmationMail(
+		$type = 'created',
+		$mailtype = EmailConfirmationController::TYPE,
+		$mailmsg = '',
+		$ip_arg = true,
+		$emailTextTemplate = '',
+		$language = null ) {
+
 		global $wgLang;
 		$expiration = null; // gets passed-by-ref and defined in next line.
 		$token = $this->confirmationToken( $expiration );
@@ -4054,7 +4068,7 @@ class User {
 
 		$emailController = $this->getEmailController( $mailtype );
 		if ( !empty( $emailController ) ) {
-			return $this->sendUsingEmailExtension( $emailController, $url );
+			return $this->sendUsingEmailExtension( $emailController, $url, $language );
 		}
 
 		/* Wikia change begin - @author: Marooned */
@@ -4105,7 +4119,7 @@ class User {
 	}
 
 	private function isConfirmationMail( $mailType ) {
-		return $mailType == "ConfirmationMail";
+		return $mailType == EmailConfirmationController::TYPE;
 	}
 
 	private function isConfirmationReminderMail( $mailType ) {
@@ -4120,12 +4134,16 @@ class User {
 		return $mailType == "ReactivationMail";
 	}
 
-	private function sendUsingEmailExtension( $emailController, $url ) {
+	private function sendUsingEmailExtension( $emailController, $url, $language=null ) {
 		$params = [
 			'targetUser' => $this->getName(),
 			'newEmail' => $this->getNewEmail(),
 			'confirmUrl' => $url,
 		];
+
+		if ($language !== null) {
+			$params['targetLang'] = $language;
+		}
 
 		$responseData = F::app()->sendRequest( $emailController, 'handle', $params )->getData();
 
@@ -4147,7 +4165,7 @@ class User {
 		$this->saveSettings();
 		return $this->sendConfirmationMail(
 			false,
-			!empty( $this->getNewEmail() ) ? 'ReConfirmationMail' : 'ConfirmationMail'
+			!empty( $this->getNewEmail() ) ? 'ReConfirmationMail' : EmailConfirmationController::TYPE
 		);
 	}
 

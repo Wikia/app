@@ -72,10 +72,6 @@ class TransactionClassifier {
 		true => 'dpl',
 	);
 
-	protected static $MAP_USER_ATTRIBUTES = [
-		true => 'user_attributes'
-	];
-
 	protected $dependencies = array( Transaction::PARAM_ENTRY_POINT );
 	protected $attributes = array();
 	protected $nameParts = null;
@@ -171,9 +167,6 @@ class TransactionClassifier {
 
 		// add "DPL was used" information
 		$this->addByMap( Transaction::PARAM_DPL, self::$MAP_DPL );
-
-		// add "user_attributes service was enabled" information
-		$this->addByMap( Transaction::PARAM_USER_ATTRIBUTES, self::$MAP_USER_ATTRIBUTES );
 
 		// add size category
 		if ( $this->add( Transaction::PARAM_SIZE_CATEGORY ) === null ) {

@@ -2,6 +2,7 @@
 
 namespace Wikia\ContentReview;
 
+use Wikia\Interfaces\IRequest;
 use Wikia\ContentReview\Models\CurrentRevisionModel;
 use Wikia\ContentReview\Models\ReviewModel;
 
@@ -264,7 +265,13 @@ class Helper extends \ContextSource {
 		return false;
 	}
 
-	public function getToolbarTemplate() {
+	/**
+	 * Returns an HTML with a toolbar displayed to reviewers.
+	 * @param int $revisionId An ID of the revision that is currently being reviewed
+	 * @return string
+	 * @throws \Exception
+	 */
+	public function getToolbarTemplate( $revisionId ) {
 		global $wgCityId;
 
 		return \MustacheService::getInstance()->render(
@@ -277,7 +284,7 @@ class Helper extends \ContextSource {
 				'buttonApproveText' => wfMessage( 'content-review-diff-approve' )->plain(),
 				'rejectStatus' => ReviewModel::CONTENT_REVIEW_STATUS_REJECTED,
 				'buttonRejectText' => wfMessage( 'content-review-diff-reject' )->plain(),
-				'talkpageUrl' => $this->prepareProvideFeedbackLink( $this->getTitle() ),
+				'talkpageUrl' => $this->prepareProvideFeedbackLink( $this->getTitle(), $revisionId ),
 				'talkpageLinkText' => wfMessage( 'content-review-diff-toolbar-talkpage' )->plain(),
 				'guidelinesUrl' => wfMessage( 'content-review-diff-toolbar-guidelines-url' )->useDatabase( false )->plain(),
 				'guidelinesLinkText' => wfMessage( 'content-review-diff-toolbar-guidelines' )->plain(),
@@ -288,15 +295,39 @@ class Helper extends \ContextSource {
 	/**
 	 * Link for adding new section on script talk page. Prefilled with standard explanation of rejection.
 	 * @param \Title $title Title object of JS page
+	 * @param int $revisionId
 	 * @return string full link to edit page
 	 */
-	public function prepareProvideFeedbackLink( \Title $title ) {
+	public function prepareProvideFeedbackLink( \Title $title, $revisionId = 0 ) {
 		$params = [
 			'action' => 'edit',
 			'section' => 'new',
-			'useMessage' => 'content-review-rejection-explanation'
+			'useMessage' => 'content-review-rejection-explanation',
 		];
+
+		if ( (int)$revisionId !== 0 ) {
+			$params['messageParams'] = [
+				1 => wfMessage( 'content-review-rejection-explanation-title' )->params( $revisionId )->escaped(),
+				2 => $title->getFullURL( "oldid={$revisionId}" ),
+				3 => $revisionId,
+			];
+		}
+
 		return $title->getTalkPage()->getFullURL( $params );
+	}
+
+	/**
+	 * Returns an ID of a revision that is currently being reviewed. It is either a value of
+	 * `diff` URL parameter or `oldid` if `diff` is not present.
+	 * @param IRequest $request An object of a class implementing the IRequest interface
+	 * @return null|int
+	 */
+	public function getCurrentlyReviewedRevisionId( IRequest $request ) {
+		$revisionId = $request->getVal( 'diff' );
+		if ( $revisionId === null ) {
+			$revisionId = $request->getVal( 'oldid' );
+		}
+		return $revisionId;
 	}
 
 	public function purgeReviewedJsPagesTimestamp() {

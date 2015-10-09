@@ -17,26 +17,20 @@ class Hooks {
 		\Hooks::register( 'SkinTemplateNavigation', [ $hooks, 'onSkinTemplateNavigation' ] );
 		\Hooks::register( 'UserLogoutComplete', [ $hooks, 'onUserLogoutComplete' ] );
 		\Hooks::register( 'ArticleSaveComplete', [ $hooks, 'onArticleSaveComplete' ] );
+		\Hooks::register( 'ArticleDeleteComplete', [ $hooks, 'onArticleDeleteComplete' ] );
+		\Hooks::register( 'ArticleUndelete', [ $hooks, 'onArticleUndelete' ] );
 		\Hooks::register( 'ShowDiff', [ $hooks, 'onShowDiff' ] );
+		\Hooks::register( 'UserRights::groupCheckboxes', [ $hooks, 'onUserRightsGroupCheckboxes' ] );
+		\Hooks::register( 'UserAddGroup', [ $hooks, 'onUserAddGroup' ] );
 	}
 
 	public function onGetRailModuleList( Array &$railModuleList ) {
 		global $wgCityId, $wgTitle, $wgUser;
 
-		if ( ( new Helper() )->userCanEditJsPage( $wgTitle, $wgUser ) ) {
-			$pageStatus = \F::app()->sendRequest(
-				'ContentReviewApiController',
-				'getPageStatus',
-				[
-					'wikiId' => $wgCityId,
-					'pageId' => $wgTitle->getArticleID(),
-				],
-				true
-			)->getData();
-
+		if ( $wgTitle->isJsPage() && $wgUser->isLoggedIn() ) {
 			$railModuleList[1403] = [ 'ContentReviewModule', 'Render', [
-				'pageStatus' => $pageStatus,
-				'latestRevisionId' => $wgTitle->getLatestRevID(),
+				'wikiId' => $wgCityId,
+				'pageId' => $wgTitle->getArticleID(),
 			] ];
 		}
 
@@ -83,7 +77,8 @@ class Hooks {
 			\Wikia::addAssetsToOutput( 'content_review_diff_page_scss' );
 			\JSMessages::enqueuePackage( 'ContentReviewDiffPage', \JSMessages::EXTERNAL );
 
-			$output->prependHTML( $helper->getToolbarTemplate() );
+			$revisionId = $helper->getCurrentlyReviewedRevisionId( $output->getRequest() );
+			$output->prependHTML( $helper->getToolbarTemplate( $revisionId ) );
 		}
 
 		return true;
@@ -176,13 +171,46 @@ class Hooks {
 		$title = $article->getTitle();
 
 		if ( !is_null( $title )	&&  $title->isJsPage() ) {
-			$helper = new Helper();
-			$helper->purgeCurrentJsPagesTimestamp();
+			$this->purgeContentReviewData();
 
-			if ( $helper->userCanAutomaticallyApprove( $user ) ) {
+			if ( ( new Helper() )->userCanAutomaticallyApprove( $user ) ) {
 				( new ContentReviewService() )
 					->automaticallyApproveRevision( $user, $wgCityId, $title->getArticleID(), $revision->getId() );
 			}
+		}
+
+		return true;
+	}
+
+	/**
+	 * Purges JS pages data
+	 *
+	 * @param \WikiPage $article
+	 * @param \User $user
+	 * @param $reason
+	 * @param $id
+	 */
+	public function onArticleDeleteComplete( \WikiPage &$article, \User &$user, $reason, $id ) {
+		$title = $article->getTitle();
+
+		if ( !is_null( $title )	&&  $title->isJsPage() ) {
+			$this->purgeContentReviewData();
+		}
+
+		return true;
+	}
+
+	/**
+	 * Purges JS pages data
+	 *
+	 * @param \Title $title
+	 * @param $created
+	 * @param $comment
+	 * @return bool
+	 */
+	public function onArticleUndelete( \Title $title, $created, $comment ) {
+		if ( !is_null( $title )	&&  $title->isJsPage() ) {
+			$this->purgeContentReviewData();
 		}
 
 		return true;
@@ -209,6 +237,26 @@ class Hooks {
 		return true;
 	}
 
+	public function onUserRightsGroupCheckboxes( $group, &$disabled, &$irreversible ) {
+		global $wgUser;
+
+		if ( $group === 'content-reviewer' && ( !$wgUser->isAllowed( 'content-review' ) || !$wgUser->isStaff() ) ) {
+			$disabled = true;
+		}
+
+		return true;
+	}
+
+	public function onUserAddGroup( \User $user, $group ) {
+		global $wgUser;
+
+		if ( $group === 'content-reviewer' && ( !$wgUser->isAllowed( 'content-review' ) || !$wgUser->isStaff() ) ) {
+			return false;
+		}
+
+		return true;
+	}
+
 	private function disableTestMode( \WebRequest $request ) {
 		$key = \ContentReviewApiController::CONTENT_REVIEW_TEST_MODE_KEY;
 
@@ -216,5 +264,12 @@ class Hooks {
 		if ( !empty( $wikis ) ) {
 			$request->setSessionData( $key, null );
 		}
+	}
+
+	private function purgeContentReviewData() {
+		$helper = new Helper();
+		$helper->purgeCurrentJsPagesTimestamp();
+
+		ContentReviewStatusesService::purgeJsPagesCache();
 	}
 }

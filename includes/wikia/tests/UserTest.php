@@ -109,7 +109,7 @@ class UserTest extends WikiaBaseTest {
 
 	public function testSetGlobalPreferenceWithMockedUserPreferenceService() {
 		// this has side effects in the database as long as we are in migration mode
-		$this->mockGlobalVariable( 'wgPreferenceServiceShadowWrite', true );
+		$this->mockGlobalVariable( 'wgPreferenceServiceWrite', true );
 
 		$preference = 'somepref';
 		$value = 'somevalue';
@@ -138,7 +138,7 @@ class UserTest extends WikiaBaseTest {
 
 	// this has side effects in the database as long as we are in migration mode
 	public function testSetLocalPreferenceWithMockedUserPreferenceService() {
-		$this->mockGlobalVariable( 'wgPreferenceServiceShadowWrite', true );
+		$this->mockGlobalVariable( 'wgPreferenceServiceWrite', true );
 
 		$cityId = 12345;
 		$preference = 'somepref';

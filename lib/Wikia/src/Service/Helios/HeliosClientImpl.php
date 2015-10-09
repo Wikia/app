@@ -100,10 +100,14 @@ class HeliosClientImpl implements HeliosClient
 			return null;
 		}
 
-		$output = json_decode( $request->getContent() );
+		$response = $request->getContent();
+		$output = json_decode( $response );
 
 		if ( !$output ) {
-			throw new ClientException ( 'Invalid response.' );
+			$data = [];
+			$data[ "response" ] = $response;
+			$data["status_code"] = $request->getStatus();
+			throw new ClientException ( 'Invalid Helios response.', 0, null, $data );
 		}
 
 		return $output;
