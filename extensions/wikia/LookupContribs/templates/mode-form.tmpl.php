@@ -82,8 +82,8 @@ $(document).ready(function() {
 				"url": sSource,
 				"data": [
 					{ 'name' : 'username',	'value' : username },
-					{ 'name' : 'mode', 		'value' : ( $('#lc-mode').exists() ) ? mw.html.encode($('#lc-mode').val()) : mode },
-					{ 'name' : 'ns',		'value' : ( $('#lc-nspace').exists() ) ? mw.html.encode($('#lc-nspace').val()) : -1 },
+					{ 'name' : 'mode', 		'value' : ( $('#lc-mode').exists() ) ? mw.html.escape($('#lc-mode').val()) : mode },
+					{ 'name' : 'ns',		'value' : ( $('#lc-nspace').exists() ) ? mw.html.escape($('#lc-nspace').val()) : -1 },
 					{ 'name' : 'wiki', 		'value' : wiki },
 					{ 'name' : 'limit', 	'value' : limit },
 					{ 'name' : 'offset',	'value' : offset },
