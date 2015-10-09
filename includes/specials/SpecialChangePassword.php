@@ -66,16 +66,6 @@ class SpecialChangePassword extends UnlistedSpecialPage {
 			return;
 		}
 
-		if ( $request->wasPosted() &&
-			!empty( array_intersect( F::app()->wg->AccountAdminGroups, $user->getAllGroups() ) ) ) {
-			\Wikia\Logger\WikiaLogger::instance()->warning(
-				sprintf( "Junior helper cannot change account info - user: %s", $user->getName() )
-			);
-
-			$this->error( $this->msg( 'userlogin-account-admin-error' )->text() );
-			return;
-		}
-
 		if( $request->wasPosted() && $user->matchEditToken( $request->getVal( 'token' ) ) ) {
 			try {
 				if ( isset( $_SESSION['wsDomain'] ) ) {
