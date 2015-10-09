@@ -31,8 +31,9 @@ $messages['en'] = array(
 	'whereisextension-name-contains'	=> 'variable name contains',
 	'whereisextension-search-like-value' => 'Like:',
 	'whereisextension-search-type' => 'Type:',
-	'whereisextension-search-type-bool' => "Boolean",
-	'whereisextension-search-type-full' => "Like",
+	'whereisextension-search-type-bool' => 'Boolean',
+	'whereisextension-search-type-full' => 'Like',
+	'whereisextension-edit' => 'edit'
 );
 
 /** Message documentation (Message documentation)
@@ -45,6 +46,7 @@ $messages['qqq'] = array(
 	'whereisextension-filter' => 'Used as some kind of fieldset description.
 {{Identical|Filter}}',
 	'whereisextension-search-type' => '{{Identical|Type}}',
+	'whereisextension-edit' => 'A link to edit a value of a variable.',
 );
 
 /** Afrikaans (Afrikaans)
