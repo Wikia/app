@@ -101,9 +101,8 @@ class ViddlerApiWrapper extends ApiWrapper {
 
 
 	protected function getApiUrl() {
-		global $wgViddlerApiKey;
 		$watchUrl = str_replace( '$1', trim($this->videoId, '/'), static::$WATCH_URL );
-		$apiUrl = str_replace( '$1', $wgViddlerApiKey, static::$API_URL ) . urlencode($watchUrl);
+		$apiUrl = str_replace( '$1', '', static::$API_URL ) . urlencode($watchUrl);
 		return $apiUrl;
 	}
 

@@ -173,7 +173,7 @@ class UstreamApiWrapper extends ApiWrapper {
 		}
 
 		$apiUrl = str_replace( '$1', $videoId, static::$API_URL );
-		$apiUrl = str_replace( '$2', F::app()->wg->UstreamApiConfig['appKey'], $apiUrl );
+		$apiUrl = str_replace( '$2', '', $apiUrl );
 
 		return $apiUrl;
 	}
