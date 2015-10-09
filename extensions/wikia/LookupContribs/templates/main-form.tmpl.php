@@ -59,7 +59,7 @@ $(document).ready(function() {
 			{
 				"fnRender": function ( oObj ) {
 					var row = '<span class="lc-row"><a href="' + mw.html.escape(oObj.aData[3])+ '">' + oObj.aData[3] + '</a></span>';
-					row += '&nbsp;(<a href="' + mw.html.encode(oObj.aData[3]) + 'index.php?title=Special:Contributions/' + mw.html.escape(encodeURIComponent(username)) + '">';
+					row += '&nbsp;(<a href="' + mw.html.escape(oObj.aData[3]) + 'index.php?title=Special:Contributions/' + mw.html.escape(encodeURIComponent(username)) + '">';
 					row += '<?= wfMessage( 'lookupcontribscontribs' )->escaped() ?>';
 					row += '</a>)</span>';
 					return row;
