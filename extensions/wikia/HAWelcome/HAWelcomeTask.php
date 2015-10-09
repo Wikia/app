@@ -148,6 +148,7 @@ class HAWelcomeTask extends BaseTask {
 		$this->info( "attempting to create welcome user page" );
 		$recipientProfile = $this->getRecipientProfilePage();
 
+		// SOC-1217 set Title in RequestContext for WidgetTips
 		RequestContext::getMain()->setTitle( $recipientProfile->getTitle() );
 
 		if ( ! $recipientProfile->exists() ) {
