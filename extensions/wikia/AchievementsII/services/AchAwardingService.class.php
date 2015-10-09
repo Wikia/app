@@ -686,7 +686,7 @@ class AchAwardingService {
 	 * @author tor
 	 */
 	public static function canEarnBadges( User $user = null ) {
-		global $wgWikiaBotLikeUsers, $wgUser, $wgAchExemptUsers;
+		global $wgWikiaBotLikeUsers, $wgUser, $wgAchievementExemptUsers;
 
 		if ( empty ( $user ) ) {
 			$user = $wgUser;
@@ -696,7 +696,7 @@ class AchAwardingService {
 			$user->isAnon() ||
 			$user->isBlocked() ||
 			( $user->isAllowed( 'bot' ) || in_array( $user->getName(), $wgWikiaBotLikeUsers ) ) ||
-			( is_array( $wgAchExemptUsers ) && in_array( $user->getId(), $wgAchExemptUsers ) ) ||
+			( is_array( $wgAchievementExemptUsers ) && in_array( $user->getId(), $wgAchievementExemptUsers ) ) ||
 			/*
 			 * certain users (like staff and helpers) should not earn badges
 			 * unless they also belong to a group that explicitly states they should
