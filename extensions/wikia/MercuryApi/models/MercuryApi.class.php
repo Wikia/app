@@ -104,7 +104,7 @@ class MercuryApi {
 	 * @return mixed
 	 */
 	public function getWikiVariables() {
-		global $wgSitename, $wgCacheBuster, $wgDBname, $wgDefaultSkin, $wgDisableAnonymousEditing,
+		global $wgSitename, $wgCacheBuster, $wgDBname, $wgDefaultSkin, $wgDisableAnonymousEditing, $wgIsDarkTheme,
 			   $wgLanguageCode, $wgContLang, $wgCityId, $wgEnableNewAuth, $wgDisableAnonymousUploadForMercury;
 
 		return [
@@ -116,6 +116,7 @@ class MercuryApi {
 			'enableNewAuth' => $wgEnableNewAuth,
 			'homepage' => $this->getHomepageUrl(),
 			'id' => (int) $wgCityId,
+			'isDarkTheme' => $wgIsDarkTheme,
 			'language' => [
 				'content' => $wgLanguageCode,
 				'contentDir' => $wgContLang->getDir()
