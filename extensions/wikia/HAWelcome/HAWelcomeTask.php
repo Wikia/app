@@ -147,6 +147,9 @@ class HAWelcomeTask extends BaseTask {
 	public function createUserProfilePage() {
 		$this->info( "attempting to create welcome user page" );
 		$recipientProfile = $this->getRecipientProfilePage();
+
+		RequestContext::getMain()->setTitle( $recipientProfile->getTitle() );
+
 		if ( ! $recipientProfile->exists() ) {
 			$this->info( sprintf( "creating welcome user page for %s",
 				$this->recipientObject->getName() ) );
