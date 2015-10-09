@@ -110,10 +110,10 @@ $(document).ready(function() {
 				url: sSource,
 				data: [
 					{ name: 'username', value: ( $('#lu_name').exists() ) ? mw.html.escape( $('#lu_name').val() ) : '' },
-					{ name: 'limit', value: mw.html.escape( limit ) },
-					{ name: 'offset', value: mw.html.escape( offset ) },
-					{ name: 'loop', value: mw.html.escape( loop ) },
-					{ name: 'numOrder', value: mw.html.escape( sortingCols ) },
+					{ name: 'limit', value: limit },
+					{ name: 'offset', value: offset },
+					{ name: 'loop', value: loop },
+					{ name: 'numOrder', value: sortingCols },
 					{ name: 'order', value: mw.html.escape( order ) }
 				],
 				success: function(json) {
