@@ -2,8 +2,8 @@
 <!-- DISTRIBUTION TABLE -->
 <script type="text/javascript" charset="utf-8">
 function lcShowDetails(dbname, mode) {
-	var username = '<?= Sanitizer::cleanUrl( $username ) ?>';
-	var action = '<?= Sanitizer::cleanUrl( $action ) ?>';
+	var username = '<?= Xml::escapeJsString( $username ) ?>';
+	var action = '<?= Xml::escapeJsString( $action ) ?>';
 	//var sel_mode = '#lc-mode-' + dbname;
 	//var mode = ( $(sel_mode).exists() ) ? $(sel_mode).val() : '';
 
@@ -11,12 +11,12 @@ function lcShowDetails(dbname, mode) {
 		return false;
 	}
 
-	document.location.href = action + '?target=' + username + '&wiki=' + mw.html.escape( dbname ) + '&mode=' + mw.html.escape( mode );
+	document.location.href = action + '?target=' + encodeURIComponent(username) + '&wiki=' + mw.html.escape( dbname ) + '&mode=' + mw.html.escape( mode );
 }
 
 $(document).ready(function() {
 	var baseurl = wgScript + "?action=ajax&rs=LookupContribsAjax::axData";
-	var username = '<?= htmlspecialchars( $username, ENT_QUOTES ) ?>';
+	var username = '<?= Xml::escapeJsString( $username ) ?>';
 
 	if ( !username ) {
 		return;
@@ -58,8 +58,8 @@ $(document).ready(function() {
 			{ "bVisible": true,  "aTargets": [ 2 ], "bSortable" : true, "sClass": "lc-datetime" },
 			{
 				"fnRender": function ( oObj ) {
-					var row = '<span class="lc-row"><a href="' + mw.html.escape( oObj.aData[3] ) + '">' + mw.html.escape( oObj.aData[3] ) + '</a></span>';
-					row += '&nbsp;(<a href="' + mw.html.escape( oObj.aData[3] ) + 'index.php?title=Special:Contributions/' + mw.html.escape( username ) + '">';
+					var row = '<span class="lc-row"><a href="' + mw.html.escape(oObj.aData[3])+ '">' + oObj.aData[3] + '</a></span>';
+					row += '&nbsp;(<a href="' + mw.html.encode(oObj.aData[3]) + 'index.php?title=Special:Contributions/' + mw.html.escape(encodeURIComponent(username)) + '">';
 					row += '<?= wfMessage( 'lookupcontribscontribs' )->escaped() ?>';
 					row += '</a>)</span>';
 					return row;
@@ -72,7 +72,7 @@ $(document).ready(function() {
 				"fnRender": function ( oObj ) {
 					var row = '<div style="white-space:nowrap">';
 <? $loop = 0; foreach ( $modes as $mode => $modeName ) : ?>
-					row += '(<a href="javascript:void(0)" onclick="lcShowDetails(\'' + mw.html.escape( oObj.aData[1] ) + '\', \'<?= Sanitizer::encodeAttribute( $mode ) ?>\');"><?= htmlspecialchars( $modeName ) ?></a>)';
+					row += '(<a href="javascript:void(0)" onclick="lcShowDetails(\'' + mw.html.escape(encodeURIComponent(oObj.aData[1])) + '\', \'<?= Sanitizer::encodeAttribute( $mode ) ?>\');"><?= htmlspecialchars( $modeName ) ?></a>)';
 <? if ( $loop < count($modes) - 1 ) : ?> row += ' &#183; '; <? endif ?>
 <? $loop++; endforeach ?>
 					row += '</div>';
