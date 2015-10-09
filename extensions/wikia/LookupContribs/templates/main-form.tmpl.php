@@ -58,7 +58,7 @@ $(document).ready(function() {
 			{ "bVisible": true,  "aTargets": [ 2 ], "bSortable" : true, "sClass": "lc-datetime" },
 			{
 				"fnRender": function ( oObj ) {
-					var row = '<span class="lc-row"><a href="' + mw.html.escape(oObj.aData[3])+ '">' + oObj.aData[3] + '</a></span>';
+					var row = '<span class="lc-row"><a href="' + mw.html.escape(oObj.aData[3])+ '">' + mw.html.escape(oObj.aData[3]) + '</a></span>';
 					row += '&nbsp;(<a href="' + mw.html.escape(oObj.aData[3]) + 'index.php?title=Special:Contributions/' + mw.html.escape(encodeURIComponent(username)) + '">';
 					row += '<?= wfMessage( 'lookupcontribscontribs' )->escaped() ?>';
 					row += '</a>)</span>';
@@ -137,11 +137,11 @@ $(document).ready(function() {
 				"url": sSource,
 				"data": [
 					{ 'name' : 'username',	'value' : ( $('#lc_search').exists() ) ? mw.html.escape( $('#lc_search').val() ) : '' },
-					{ 'name' : 'limit', 	'value' : mw.html.escape( limit ) },
-					{ 'name' : 'offset',	'value' : mw.html.escape( offset ) },
-					{ 'name' : 'loop', 		'value' : mw.html.escape( loop ) },
-					{ 'name' : 'numOrder',	'value' : mw.html.escape( sortingCols ) },
-					{ 'name' : 'order',		'value' : mw.html.escape( order ) }
+					{ 'name' : 'limit', 	'value' : limit },
+					{ 'name' : 'offset',	'value' : offset },
+					{ 'name' : 'loop',      'value' : loop },
+					{ 'name' : 'numOrder',	'value' : sortingCols },
+					{ 'name' : 'order',     'value' : mw.html.escape( order ) }
 				],
 				"success": fnCallback
 			} );
