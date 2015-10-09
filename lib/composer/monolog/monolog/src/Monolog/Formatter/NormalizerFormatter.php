@@ -81,9 +81,11 @@ class NormalizerFormatter implements FormatterInterface
         if (is_object($data)) {
             if ($data instanceof Exception) {
                 return $this->normalizeException($data);
+            //Wikia change - begin
             } elseif ($data instanceof Status) {
                 return $this->normalizeStatus($data);
             }
+            //Wikia change - end
 
             return sprintf("[object] (%s: %s)", get_class($data), $this->toJson($data, true));
         }
@@ -119,6 +121,7 @@ class NormalizerFormatter implements FormatterInterface
         return $data;
     }
 
+    //Wikia change - begin
     protected function normalizeStatus(Status $status)
     {
         $data = array(
@@ -131,6 +134,7 @@ class NormalizerFormatter implements FormatterInterface
 
         return $data;
     }
+    //Wikia change - end
 
     protected function toJson($data, $ignoreErrors = false)
     {
