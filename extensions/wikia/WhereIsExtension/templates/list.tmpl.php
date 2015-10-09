@@ -34,84 +34,95 @@ select {
 	<br style="clear: both;" />
 <?php endif; ?>
 <div id="PaneList">
-	<form method="get" action="<?php print $formData['actionURL'] ?>">
+	<form method="get" action="<?= Sanitizer::encodeAttribute( $formData['actionURL'] ) ?>">
 		<div style="float: left; margin-right: 6px">
 
 
 			<select size="10" style="width: 22em;" id="variableSelect" name="var">
 			<?php
-			$gVar = empty($formData['selectedVar']) ? '' : $formData['selectedVar'];
-			$gVal = empty($formData['selectedVal']) ? '' : $formData['selectedVal'];
-			foreach($formData['vars'] as $varId => $varName) {
-				$selected = $gVar == $varId ? ' selected="selected"' : '';
-				echo "\t\t<option value=\"$varId\"$selected>$varName</option>\n";
-			}
+				$gVar = empty( $formData['selectedVar'] ) ? '' : $formData['selectedVar'];
+				$gVal = empty( $formData['selectedVal'] ) ? '' : $formData['selectedVal'];
+				foreach( $formData['vars'] as $varId => $varName ) :
+					$selected = $gVar == $varId ? ' selected' : '';
+			?>
+				<option value="<?= Sanitizer::encodeAttribute( $varId ) ?>" <?= $selected ?>>
+					<?= htmlspecialchars( $varName ) ?>
+				</option>
+			<?php
+				endforeach;
 			?>
 			</select>
 		</div>
 		<p>
-			<?php print wfMsg('whereisextension-search-type') ?>
+			<?= wfMessage( 'whereisextension-search-type' )->escaped() ?>
 		</p>
 		<select style="width: 22em;" id="searchType" name="searchType" >
-			<option value="bool" <?php echo $formData['searchType'] != 'full' ? 'selected="selected" ':'' ?>  ><?php print wfMsg('whereisextension-search-type-bool') ?></option>
-			<option value="full" <?php echo $formData['searchType'] == 'full' ? 'selected="selected" ':'' ?> ><?php print wfMsg('whereisextension-search-type-full') ?></option>
+			<option value="bool" <?= $formData['searchType'] != 'full' ? 'selected' : '' ?>  ><?= wfMessage( 'whereisextension-search-type-bool' )->escaped() ?></option>
+			<option value="full" <?= $formData['searchType'] == 'full' ? 'selected' : '' ?> ><?= wfMessage( 'whereisextension-search-type-full' )->escaped() ?></option>
 		</select>
 		<p class="boolValue"   >
-			<?php print wfMsg('whereisextension-isset') ?>
+			<?= wfMessage( 'whereisextension-isset' )->escaped() ?>
 		</p>
 		<select class="boolValue" name="val">
 			<?php
-			foreach($formData['vals'] as $valId => $valName) {
-				$selected = $gVal == $valId ? ' selected="selected"' : '';
-				echo "\t\t<option value=\"$valId\"$selected>{$valName[0]}</option>\n";
-			}
+				foreach( $formData['vals'] as $valId => $valName ) :
+					$selected = $gVal == $valId ? ' selected' : '';
+			?>
+				<option value="<?= Sanitizer::encodeAttribute( $valId ) ?>" <?= $selected ?>>
+					<?= htmlspecialchars( $valName[0] ) ?>
+				</option>
+			<?php
+				endforeach;
 			?>
 		</select>
 		<p class="likeValue"  style="display:none">
-			<?php print wfMsg('whereisextension-search-like-value') ?>
+			<?= wfMessage( 'whereisextension-search-like-value' )->escaped() ?>
 		</p>
 
-		<input value="<?php echo $formData['likeValue']; ?>" type="text" name="likeValue" class="likeValue"  style="display:none" />&nbsp;
-		<input type="submit" value="<?php print wfMsg('whereisextension-submit') ?>"/>
+		<input value="<?= Sanitizer::encodeAttribute( $formData['likeValue'] ) ?>" type="text" name="likeValue" class="likeValue"  style="display:none">&nbsp;
+		<input type="submit" value="<?= wfMessage( 'whereisextension-submit' )->escaped() ?>">
 	</form>
 
 	<br/>
-	<?php print wfMsg('whereisextension-filter') ?>
+	<?= wfMessage( 'whereisextension-filter' )->escaped() ?>
 	<br/>
 	<select id="groupSelect" name="group">
 		<option value="0" selected="selected">
-			<?php print wfMsg('whereisextension-all-groups') ?>
+			<?= wfMessage( 'whereisextension-all-groups' )->escaped() ?>
 		</option>
-		<? foreach ($formData['groups'] as $key => $value) {
-			$selected = $key == $formData['selectedGroup'] ? ' selected="selected"' : '';
+		<? foreach ( $formData['groups'] as $key => $value ) {
+			$selected = $key == $formData['selectedGroup'] ? ' selected' : '';
 		?>
-		<option value="<?php print $key ?>"<?php print $selected ?>><?php print $value ?></option>
+		<option value="<?= Sanitizer::encodeAttribute( $key ) ?>"<?= $selected ?>>
+			<?= htmlspecialchars( $value ) ?>
+		</option>
 		<? } ?>
 	</select>
 	<br/>
-	<label for="withString"><?php print wfMsg('whereisextension-name-contains') ?></label>
+	<label for="withString"><?= wfMessage( 'whereisextension-name-contains' )->escaped() ?></label>
 	<br/>
 	<input type="text" name="withString" id="withString" size="18" />
 
 	<?php
-	if (!empty($formData['wikis']) && count($formData['wikis'])) {
+	if ( !empty( $formData['wikis'] ) && count( $formData['wikis'] ) ) {
 		?>
-		<h3 id="headerWikis"><?php print wfMsg('whereisextension-list', $formData['count'] ) ?></h3>
-		<form method="post" action="<?php print $formData['actionURL'] ?>" name="wikiSelectForm">
+		<h3 id="headerWikis"><?= wfMessage( 'whereisextension-list', $formData['count'] )->escaped() ?></h3>
+		<form method="post" action="<?= Sanitizer::encodeAttribute( $formData['actionURL'] ) ?>" name="wikiSelectForm">
 			<ul>
-			<?php
-			$front = '&nbsp;<a href="' . Title::makeTitle( NS_SPECIAL, 'WikiFactory' )->getFullUrl() . '/';
-			$back = '/variables/' . $formData['vars'][ $formData['selectedVar'] ] . '">[edit]</a>';
-			foreach($formData['wikis'] as $wikiID => $wikiInfo) {
-				$editURL = $front . $wikiID . $back;
+				<?
+					foreach( $formData['wikis'] as $wikiID => $wikiInfo ) :
+						$style = !$wikiInfo['p'] ? 'style="color: red"' : '';
+						$editURL = Title::makeTitle( NS_SPECIAL, 'WikiFactory' )->getFullURL() . '/' . $wikiID;
+						$editURL .= '/variables/' . $formData['vars'][ $formData['selectedVar'] ]
 				?>
-				<li class="wikiList">
-					<input type="checkbox" name="wikiSelected[]" id="wikiSelected_<?php print $wikiID; ?>" value="<?php print $wikiID; ?>" />&nbsp;
-					<?php print $editURL ?> <a href="<?php print htmlspecialchars($wikiInfo['u']) ?>" <?php echo ( !$wikiInfo['p'] ? "style=\"color: red;\"" : "" ); ?>><?php print $wikiInfo['t'] ?></a> (<?php print htmlspecialchars($wikiInfo['u']); ?>)
-				</li>
-				<?php
-			}
-			?>
+					<li class="wikiList">
+						<input type="checkbox" name="wikiSelected[]" id="wikiSelected_<?= Sanitizer::encodeAttribute( $wikiID ) ?>" value="<?= Sanitizer::encodeAttribute( $wikiID ) ?>">
+						<a href="<?= rawurlencode( $editURL ) ?>" <?= $style ?>><?= wfMessage( 'whereisextension-edit' )->escaped() ?></a>
+						<a href="<?= rawurlencode( $wikiInfo['u'] ) ?>" <?= $style ?>>
+							<?= htmlspecialchars( $wikiInfo['t'] ) ?>
+						</a> (<?= htmlspecialchars( $wikiInfo['u'] ) ?>)
+					</li>
+				<? endforeach; ?>
 			</ul>
                         <?= $sPager ?>
 			<a href="#" id="wikiSelectAll" class="selectorLink">select all</a>&nbsp;
@@ -138,7 +149,7 @@ select {
 
 	$.loadJQueryAutocomplete(function() {
 		$('#wikiSelectTagName').autocomplete({
-			serviceUrl: wgServer+wgScript+'?action=ajax&rs=WikiFactoryTags::axQuery',
+			serviceUrl: wgServer + wgScript + '?action=ajax&rs=WikiFactoryTags::axQuery',
 			minChars:3,
 			deferRequestBy: 0
 		});
@@ -151,7 +162,7 @@ select {
 </div>
 
 <script type="text/javascript">
-	var ajaxpath = "<?php print $GLOBALS['wgScriptPath'].'/index.php'; ?>";
+	var ajaxpath = mw.config.get('wgScriptPath') + '/index.php';
 
 	function showHideLikeBool(e) {
 		if(e.val() == "bool") {
@@ -197,7 +208,7 @@ select {
 		$.ajax({
 			type:"POST",
 			dataType: "json",
-			url: ajaxpath+'?action=ajax&rs=axWFactoryFilterVariables' + values,
+			url: ajaxpath+'?action=ajax&rs=axWFactoryFilterVariables' + encodeURIComponent(values),
 			success: function( aData ) {
 				$('#variableSelect').html(aData['selector']);
 				busy(0);
