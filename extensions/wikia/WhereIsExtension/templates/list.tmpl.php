@@ -117,16 +117,16 @@ select {
 				?>
 					<li class="wikiList">
 						<input type="checkbox" name="wikiSelected[]" id="wikiSelected_<?= Sanitizer::encodeAttribute( $wikiID ) ?>" value="<?= Sanitizer::encodeAttribute( $wikiID ) ?>">
-						<a href="<?= rawurlencode( $editURL ) ?>" <?= $style ?>><?= wfMessage( 'whereisextension-edit' )->escaped() ?></a>
-						<a href="<?= rawurlencode( $wikiInfo['u'] ) ?>" <?= $style ?>>
+						<a href="<?= Sanitizer::encodeAttribute( $editURL ) ?>" <?= $style ?>><?= wfMessage( 'whereisextension-edit' )->escaped() ?></a>
+						<a href="<?= Sanitizer::encodeAttribute( $wikiInfo['u'] ) ?>" <?= $style ?>>
 							<?= htmlspecialchars( $wikiInfo['t'] ) ?>
 						</a> (<?= htmlspecialchars( $wikiInfo['u'] ) ?>)
 					</li>
 				<? endforeach; ?>
 			</ul>
                         <?= $sPager ?>
-			<a href="#" id="wikiSelectAll" class="selectorLink">select all</a>&nbsp;
-			<a href="#" id="wikiDeselectAll" class="selectorLink">deselect all</a><br />
+			<a href="#" id="wikiSelectAll" class="selectorLink"><?= wfMessage( 'whereisextension-select-all' )->escaped() ?></a>&nbsp;
+			<a href="#" id="wikiDeselectAll" class="selectorLink"><?= wfMessage( 'whereisextension-deselect-all' )->escaped() ?></a><br />
 			Tag name:&nbsp;
 			<input type="text" name="wikiSelectTagName" id="wikiSelectTagName" value="" />&nbsp;
 			<input type="submit" name="wikiSelectSubmit" value="Tag selected" />
@@ -149,7 +149,7 @@ select {
 
 	$.loadJQueryAutocomplete(function() {
 		$('#wikiSelectTagName').autocomplete({
-			serviceUrl: wgServer + wgScript + '?action=ajax&rs=WikiFactoryTags::axQuery',
+			serviceUrl: mw.config.get( 'wgServer' ) + mw.config.get( 'wgScript' ) + encodeURIComponent('?action=ajax&rs=WikiFactoryTags::axQuery'),
 			minChars:3,
 			deferRequestBy: 0
 		});
@@ -208,7 +208,7 @@ select {
 		$.ajax({
 			type:"POST",
 			dataType: "json",
-			url: ajaxpath+'?action=ajax&rs=axWFactoryFilterVariables' + encodeURIComponent(values),
+			url: ajaxpath + encodeURIComponent('?action=ajax&rs=axWFactoryFilterVariables' + values),
 			success: function( aData ) {
 				$('#variableSelect').html(aData['selector']);
 				busy(0);
