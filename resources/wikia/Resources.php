@@ -286,4 +286,11 @@ return [
 			'extensions/wikia/RelatedPages/RelatedPages.monobook.css',
 		],
 	],
+
+	'wikia.importScript' => [
+		'scripts' => [
+			'resources/wikia/modules/importScript.js',
+			'resources/wikia/modules/importScriptHelper.js'
+		]
+	],
 ];

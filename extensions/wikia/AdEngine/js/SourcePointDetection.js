@@ -1,16 +1,18 @@
 /*global define*/
 /*jshint maxlen:125, camelcase:false, maxdepth:7*/
-define('ext.wikia.adEngine.sourcePoint', [
+define('ext.wikia.adEngine.sourcePointDetection', [
 	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.adTracker',
 	'wikia.document',
 	'wikia.krux',
 	'wikia.log'
-], function (adContext, doc, krux, log) {
+], function (adContext, adTracker, doc, krux, log) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.adEngine.sourcePoint',
+	var logGroup = 'ext.wikia.adEngine.sourcePointDetection',
 		kruxEventSent = false,
-		context = adContext.getContext();
+		detectionInitialized = false,
+		spDetectionTime;
 
 	function getClientId() {
 		log('getClientId', 'info', logGroup);
@@ -31,14 +33,22 @@ define('ext.wikia.adEngine.sourcePoint', [
 	}
 
 	function initDetection() {
-		if (!context.opts.sourcePointDetection) {
+		var context = adContext.getContext(),
+			detectionScript = doc.createElement('script'),
+			node = doc.getElementsByTagName('script')[0];
+
+		spDetectionTime = adTracker.measureTime('spDetection', {}, 'start');
+		spDetectionTime.track();
+
+		if (!context.opts.sourcePointDetection && !context.opts.sourcePointDetectionMobile) {
 			log(['init', 'SourcePoint detection disabled'], 'debug', logGroup);
 			return;
 		}
+		if (detectionInitialized) {
+			log(['init', 'SourcePoint detection already initialized'], 'debug', logGroup);
+			return;
+		}
 		log('init', 'debug', logGroup);
-
-		var detectionScript = doc.createElement('script'),
-			node = doc.getElementsByTagName('script')[0];
 
 		detectionScript.async = true;
 		detectionScript.type = 'text/javascript';
@@ -48,13 +58,16 @@ define('ext.wikia.adEngine.sourcePoint', [
 		// @TODO Refactor event listeners after ADEN-2452
 		doc.addEventListener('sp.blocking', function () {
 			sendKruxEvent('yes');
+			spDetectionTime.measureDiff({}, 'end').track();
 		});
 		doc.addEventListener('sp.not_blocking', function () {
 			sendKruxEvent('no');
+			spDetectionTime.measureDiff({}, 'end').track();
 		});
 
 		log('Appending detection script to head', 'debug', logGroup);
 		node.parentNode.insertBefore(detectionScript, node);
+		detectionInitialized = true;
 	}
 
 	return {

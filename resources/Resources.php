@@ -975,6 +975,7 @@ return array(
 		// Wikia - change end
 		'dependencies' => array(
 			'mediawiki.util',
+			'wikia.importScript'
 		),
 		'position' => 'top',
 	),

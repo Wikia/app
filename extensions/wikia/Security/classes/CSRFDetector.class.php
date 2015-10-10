@@ -10,7 +10,10 @@ use Wikia\Logger\WikiaLogger;
  * @see PLATFORM-1540
  */
 class CSRFDetector {
+
+	// flags to be checked when performing certain actions
 	private static $userMatchEditTokenCalled = false;
+	private static $requestWasPostedCalled = false;
 
 	/**
 	 * Set a flag when User::matchEditToken is called
@@ -23,32 +26,52 @@ class CSRFDetector {
 	}
 
 	/**
-	 * Edit token should be checked before a revision is inserted
+	 * Set a flag when WebRequest::wasPosted or WikiaRequest::wasPosted is called
 	 *
-	 * @param \Revision $revision
-	 * @param $data
-	 * @param $flags
 	 * @return bool true, continue hook processing
 	 */
-	public static function onRevisionInsertComplete( \Revision $revision, $data, $flags ) {
-		self::assertEditTokenWasChecked( __METHOD__ );
+	public static function onRequestWasPosted() {
+		self::$requestWasPostedCalled = true;
 		return true;
 	}
 
 	/**
-	 * Assert that User::matchEditToken was called in this request
+	 * Bind to hooks, actions that triggered them will be checked against token and HTTP method validation
 	 *
-	 * @param string $fname the caller name
+	 * Called via $wgExtensionFunctions
 	 */
-	private static function assertEditTokenWasChecked( $fname ) {
-		$request = \RequestContext::getMain()->getRequest();
+	public static function setupHooks() {
+		global $wgCSRFDetectorHooks, $wgHooks;
 
-		# check the request against WebRequest to filter out maintenance scripts
-		if ( get_class( $request ) === \WebRequest::class && self::$userMatchEditTokenCalled === false ) {
-			wfDebug( __METHOD__ . ": {$fname} called, but edit token was not checked\n" );
+		foreach( $wgCSRFDetectorHooks as $hookName ) {
+			$wgHooks[$hookName][] = function() use ( $hookName ) {
+				self::assertEditTokenAndMethodWereChecked( $hookName );
+				return true;
+			};
+		}
+	}
+
+	/**
+	 * Assert that edit token and HTTP method were checked in this request
+	 *
+	 * @see https://kibana.wikia-inc.com/#/dashboard/elasticsearch/PLATFORM-1540
+	 *
+	 * @param string $hookName hook that triggered the check
+	 */
+	private static function assertEditTokenAndMethodWereChecked( $hookName ) {
+		// filter out maintenance scripts
+		if ( \RequestContext::getMain()->getRequest() instanceof \FauxRequest ) {
+			return;
+		}
+
+		if ( self::$userMatchEditTokenCalled === false || self::$requestWasPostedCalled == false ) {
+			wfDebug( __METHOD__ . ": {$hookName} hook triggered, but edit token and / or HTTP method was not checked\n" );
 
 			WikiaLogger::instance()->warning( __METHOD__, [
-				'caller' => $fname,
+				'hookName' => $hookName,
+				'transaction' => \Transaction::getInstance()->getType(), # e.g. api/nirvana/Videos
+				'editTokenChecked' => self::$userMatchEditTokenCalled,
+				'httpMethodChecked' => self::$requestWasPostedCalled,
 				'exception' => new Exception(),
 			] );
 		}

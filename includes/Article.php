@@ -218,6 +218,12 @@ class Article extends Page {
 			return $text;
 		} else {
 			$this->fetchContent();
+			// Wikia: Temporary Investigation for PLATFORM-1355
+			if(empty($this->mContent)) {
+					Wikia\Logger\WikiaLogger::instance()->error( __METHOD__ . ' empty content PLAT1355', [
+						'page_id' => $this->mPage->getID()
+				] );
+			}
 			wfProfileOut( __METHOD__ );
 
 			return $this->mContent;

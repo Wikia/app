@@ -29,10 +29,9 @@ class AdEngine2ContextService {
 			}
 
 			$sourcePointUrl = null;
-			$sourcePointDetectionUrl = null;
+			$sourcePointDetectionUrl = ResourceLoader::makeCustomURL( $wg->Out, ['wikia.ext.adengine.sourcepoint.detection'], 'scripts' );
 			if ( $skinName === 'oasis' ) {
 				$sourcePointUrl = ResourceLoader::makeCustomURL( $wg->Out, ['wikia.ext.adengine.sourcepoint'], 'scripts' );
-				$sourcePointDetectionUrl = ResourceLoader::makeCustomURL( $wg->Out, ['wikia.ext.adengine.sourcepoint.detection'], 'scripts' );
 			}
 
 			$langCode = $title->getPageLanguage()->getCode();

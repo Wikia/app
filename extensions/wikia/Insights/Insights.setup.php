@@ -86,3 +86,4 @@ function wfInsightsSetup() {
  * Message files
  */
 $wgExtensionMessagesFiles['Insights'] = $dir . 'Insights.i18n.php';
+$wgExtensionMessagesFiles['InsightsAliases'] = $dir . 'Insights.alias.php';

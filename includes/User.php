@@ -20,6 +20,7 @@
  * @file
  */
 
+use Email\Controller\EmailConfirmationController;
 use Wikia\DependencyInjection\Injector;
 use Wikia\Domain\User\Attribute;
 use Wikia\Logger\Loggable;
@@ -1099,14 +1100,14 @@ class User {
 			return false;
 		}
 
-                // Wikia change start
-                global $wgExternalAuthType;
-                if ( $wgExternalAuthType ) { // in other words: unless Uncyclopedia
-                    $extUser = ExternalUser::newFromCookie();
-                    if ( $extUser ) {
-                            $extUser->linkToLocal( $sId );
-                    }
-                }
+		// Wikia change start
+		global $wgExternalAuthType;
+		if ( $wgExternalAuthType ) { // in other words: unless Uncyclopedia
+			$extUser = ExternalUser::newFromCookie();
+			if ( $extUser ) {
+					$extUser->linkToLocal( $sId );
+			}
+		}
 
 		$passwordCorrect = FALSE;
 		// wikia change end
@@ -1392,6 +1393,14 @@ class User {
 	public static function getDefaultOptions() {
 		global $wgNamespacesToBeSearchedDefault, $wgDefaultUserOptions, $wgContLang, $wgDefaultSkin;
 
+		static $defOpt = null;
+		if ( !defined( 'MW_PHPUNIT_TEST' ) && $defOpt !== null ) {
+			// Disabling this for the unit tests, as they rely on being able to change $wgContLang
+			// mid-request and see that change reflected in the return value of this function.
+			// Which is insane and would never happen during normal MW operation
+			// Owen backported this from MW 1.25
+			return $defOpt;
+		}
 		$defOpt = $wgDefaultUserOptions;
 		# default language setting
 		$variant = $wgContLang->getDefaultVariant();
@@ -1402,6 +1411,7 @@ class User {
 		}
 		$defOpt['skin'] = $wgDefaultSkin;
 
+		// Owen fixed this (see above)
 		// FIXME: Ideally we'd cache the results of this function so the hook is only run once,
 		// but that breaks the parser tests because they rely on being able to change $wgContLang
 		// mid-request and see that change reflected in the return value of this function.
@@ -1500,9 +1510,9 @@ class User {
 		wfRunHooks( 'GetBlockedStatus', array( &$this ) );
 
 		if ( !empty($this->mBlockedby) ) {
-		    $this->mBlock->mBy = $this->mBlockedby;
-		    $this->mBlock->mReason = $this->mBlockreason;
-        }
+			$this->mBlock->mBy = $this->mBlockedby;
+			$this->mBlock->mReason = $this->mBlockreason;
+		}
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -2135,13 +2145,13 @@ class User {
 			$this->mTouched = self::newTouchedTimestamp();
 
 			#<Wikia>
-            global $wgExternalSharedDB, $wgSharedDB;
-            if( isset( $wgSharedDB ) ) {
-                    $dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
-            }
-            else {
-                    $dbw = wfGetDB( DB_MASTER );
-            }
+			global $wgExternalSharedDB, $wgSharedDB;
+			if( isset( $wgSharedDB ) ) {
+				$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
+			}
+			else {
+				$dbw = wfGetDB( DB_MASTER );
+			}
 			#</Wikia>
 
 			$touched = $dbw->timestamp( $this->mTouched );
@@ -2619,15 +2629,15 @@ class User {
 	 * @see getGlobalPreference
 	 */
 	public function setLocalPreference($preference, $value, $cityId, $sep = '-') {
-		global $wgPreferenceServiceShadowWrite;
+		global $wgPreferenceServiceWrite;
 
-		if ( $wgPreferenceServiceShadowWrite ) {
+		if ( $wgPreferenceServiceWrite ) {
 			$value = $this->replaceNewlineAndCRWithSpace( $value );
 			$this->userPreferences()->setLocalPreference( $this->getId(), $cityId, $preference, $value );
+		} else {
+			$preferenceGlobalName = self::localToGlobalPropertyName($preference, $cityId, $sep);
+			$this->setOptionHelper( $preferenceGlobalName, $value );
 		}
-
-		$preferenceGlobalName = self::localToGlobalPropertyName($preference, $cityId, $sep);
-		$this->setOptionHelper( $preferenceGlobalName, $value );
 	}
 
 	/**
@@ -2638,9 +2648,9 @@ class User {
 	 * @see getGlobalPreference for documentation about preferences
 	 */
 	public function setGlobalPreference( $preference, $value ) {
-		global $wgPreferenceServiceShadowWrite;
+		global $wgPreferenceServiceWrite;
 
-		if ( $wgPreferenceServiceShadowWrite ) {
+		if ( $wgPreferenceServiceWrite ) {
 			$value = $this->replaceNewlineAndCRWithSpace( $value );
 			$this->userPreferences()->setGlobalPreference( $this->getId(), $preference, $value );
 			if ( $preference == 'skin' ) {
@@ -2649,9 +2659,9 @@ class User {
 			if ( $preference == 'theme' ) {
 				unset( $this->mTheme );
 			}
+		} else {
+			$this->setOptionHelper( $preference, $value );
 		}
-
-		$this->setOptionHelper( $preference, $value );
 	}
 
 	/**
@@ -3516,32 +3526,6 @@ class User {
 			$this->mPassword = '';
 		}
 
-		// wikia change begin
-		/**
-		 * @author Krzysztof Krzyżaniak (eloy)
-		 * trap for BugId: 4013
-		 */
-		if( $this->mEmail == "devbox@wikia-inc.com" || $this->mEmail == "devbox+test@wikia-inc.com" ) {
-			// gather everything we know about request
-			global $wgCommandLineMode;
-			$log = "MOLI TRAP@devbox: ";
-			if( $wgCommandLineMode && !empty($argv)) {
-				$log .= $argv[ 0 ];
-				openlog( "trap", LOG_PID | LOG_PERROR, LOG_LOCAL6 );
-				syslog( LOG_WARNING, "$log");
-				closelog();
-			}
-			else {
-				global $wgTitle;
-				if (is_object($wgTitle)) {
-					$log .= $wgTitle->getFullUrl();
-					error_log( $log );
-				}
-			}
-		}
-
-		// wikia change end
-
 		$dbw = wfGetDB( DB_MASTER );
 		$dbw->update( 'user',
 			array( /* SET */
@@ -4028,10 +4012,23 @@ class User {
 	 * Generate a new e-mail confirmation token and send a confirmation/invalidation
 	 * mail to the user's given address.
 	 *
-	 * @param $type String: message to send, either "created", "changed" or "set"
-	 * @return Status object
+	 * @param string $type
+	 * @param string $mailtype
+	 * @param string $mailmsg
+	 * @param bool|true $ip_arg
+	 * @param string $emailTextTemplate
+	 * @param null $language
+	 * @return Status
+	 * @throws MWException
 	 */
-	public function sendConfirmationMail( $type = 'created', $mailtype = "ConfirmationMail", $mailmsg = '', $ip_arg = true, $emailTextTemplate = '' ) {
+	public function sendConfirmationMail(
+		$type = 'created',
+		$mailtype = EmailConfirmationController::TYPE,
+		$mailmsg = '',
+		$ip_arg = true,
+		$emailTextTemplate = '',
+		$language = null ) {
+
 		global $wgLang;
 		$expiration = null; // gets passed-by-ref and defined in next line.
 		$token = $this->confirmationToken( $expiration );
@@ -4071,7 +4068,7 @@ class User {
 
 		$emailController = $this->getEmailController( $mailtype );
 		if ( !empty( $emailController ) ) {
-			return $this->sendUsingEmailExtension( $emailController, $url );
+			return $this->sendUsingEmailExtension( $emailController, $url, $language );
 		}
 
 		/* Wikia change begin - @author: Marooned */
@@ -4122,7 +4119,7 @@ class User {
 	}
 
 	private function isConfirmationMail( $mailType ) {
-		return $mailType == "ConfirmationMail";
+		return $mailType == EmailConfirmationController::TYPE;
 	}
 
 	private function isConfirmationReminderMail( $mailType ) {
@@ -4137,12 +4134,16 @@ class User {
 		return $mailType == "ReactivationMail";
 	}
 
-	private function sendUsingEmailExtension( $emailController, $url ) {
+	private function sendUsingEmailExtension( $emailController, $url, $language=null ) {
 		$params = [
 			'targetUser' => $this->getName(),
 			'newEmail' => $this->getNewEmail(),
 			'confirmUrl' => $url,
 		];
+
+		if ($language !== null) {
+			$params['targetLang'] = $language;
+		}
 
 		$responseData = F::app()->sendRequest( $emailController, 'handle', $params )->getData();
 
@@ -4164,7 +4165,7 @@ class User {
 		$this->saveSettings();
 		return $this->sendConfirmationMail(
 			false,
-			!empty( $this->getNewEmail() ) ? 'ReConfirmationMail' : 'ConfirmationMail'
+			!empty( $this->getNewEmail() ) ? 'ReConfirmationMail' : EmailConfirmationController::TYPE
 		);
 	}
 
@@ -4700,16 +4701,16 @@ class User {
 	public function incEditCount() {
 		global $wgMemc, $wgCityId, $wgEnableEditCountLocal;
 		if( !$this->isAnon() ) {
-            // wikia change, load always from first cluster when we use
-            // shared users database
-            // @author Lucas Garczewski (tor)
-            global $wgExternalSharedDB, $wgSharedDB;
-            if( isset( $wgSharedDB ) ) {
-                    $dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
-            }
-            else {
-                    $dbw = wfGetDB( DB_MASTER );
-            }
+			// wikia change, load always from first cluster when we use
+			// shared users database
+			// @author Lucas Garczewski (tor)
+			global $wgExternalSharedDB, $wgSharedDB;
+			if( isset( $wgSharedDB ) ) {
+				$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
+			}
+			else {
+				$dbw = wfGetDB( DB_MASTER );
+			}
 
 			$dbw->update( '`user`',
 				array( 'user_editcount=user_editcount+1' ),
