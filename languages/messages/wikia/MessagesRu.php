@@ -39,4 +39,5 @@ $messages = array_merge( $messages, array(
 'addnewtalksection-link' => 'Создать новый раздел',
 
 'tog-enableuserjs' => 'Включить персональный JavaScript ([[Справка:Персональный СSS и JavaScript|подробнее]])',
+'wikia-pagetitle' => '$1 — Wikia',
 ) );
