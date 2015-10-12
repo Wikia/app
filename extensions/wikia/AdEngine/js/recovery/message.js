@@ -1,12 +1,18 @@
 /*global define*/
 define('ext.wikia.adEngine.recovery.message', [
+	'ext.wikia.adEngine.adTracker',
 	'ext.wikia.adEngine.recovery.helper',
 	'wikia.document',
+	'wikia.localStorage',
+	'wikia.location',
 	'wikia.log',
 	'wikia.window'
 ], function (
+	adTracker,
 	recoveryHelper,
 	doc,
+	localStorage,
+	location,
 	log,
 	win
 ) {
@@ -14,14 +20,54 @@ define('ext.wikia.adEngine.recovery.message', [
 
 	var logGroup = 'ext.wikia.adEngine.recovery.message',
 		wikiaTopAdsId = 'WikiaTopAds',
-		wikiaRailId = 'WikiaRail';
+		wikiaRailId = 'WikiaRail',
+		localstorageKey = 'rejectedRecoveredMessage',
+		headerText = 'Hey! It looks like you\'re using ad blocking software!',
+		messageText = 'Wikia runs ads so we can keep the lights on and so Wikia will always be free to use. ' +
+			'We can bring you fun, free, fan-oriented content until my glorious return to Earh if you ' +
+			'<strong>add us to your adblock whitelist</strong>. ' +
+			'<a class="action-accept">Click</a> my face to refresh after you\'re done!';
+
+	function accept() {
+		adTracker.track('recovery/message', 'accept');
+		location.reload();
+	}
+
+	function reject(message) {
+		adTracker.track('recovery/message', 'reject');
+		message.style.display = 'none';
+		localStorage.setItem(localstorageKey, true);
+	}
+
+	function isRejected() {
+		return !!localStorage.getItem(localstorageKey);
+	}
 
 	function createMessage(uniqueClassName) {
 		var className = 'recovered-message',
-			div = doc.createElement('div');
+			div = doc.createElement('div'),
+			icon = doc.createElement('img'),
+			message = doc.createElement('div'),
+			closeButton = doc.createElement('div');
 
-		div.textContent = 'Hello world!';
+		icon.src = '/skins/oasis/images/recovered_message_icon.png';
+		icon.classList.add('icon');
+		icon.addEventListener('click', accept);
+
+		closeButton.classList.add('close-button');
+		closeButton.addEventListener('click', function () {
+			reject(div);
+		});
+
+		message.innerHTML = '<div class="dialog-pointer"></div><h3>' + headerText + '</h3><p>' + messageText + '</p>';
+		message.classList.add('message');
+		message.querySelector('.action-accept').addEventListener('click', accept);
+		message.appendChild(closeButton);
+
 		div.classList.add(className, className + '-' + uniqueClassName);
+		div.appendChild(icon);
+		div.appendChild(message);
+
 		return div;
 	}
 
@@ -59,6 +105,11 @@ define('ext.wikia.adEngine.recovery.message', [
 	}
 
 	function addRecoveryCallback() {
+		if (isRejected()) {
+			log('recoveredAdsMessage.recover - message already rejected', 'debug', logGroup);
+			return;
+		}
+
 		recoveryHelper.addOnBlockingCallback(function () {
 			recover();
 		});
