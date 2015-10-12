@@ -91,7 +91,7 @@ class ApiQueryUsers extends ApiQueryBase {
 
 		foreach( $ids as $id ) {
 			$u = User::newFromId( $id );
-			if ( $u->isLoggedIn() ) {
+			if ( !$u->isAnon() ) { # do not add anons as IP addresses
 				$users[] = $u->getName();
 			}
 		}
