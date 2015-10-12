@@ -16,10 +16,10 @@ describe('AdContext', function () {
 				getRegionCode: function () {
 					return 'CURRENT_REGION';
 				},
-				getContinentCode: function() {
+				getContinentCode: function () {
 					return 'CURRENT_CONTINENT';
 				},
-				isProperGeo: function(countryList) {
+				isProperGeo: function (countryList) {
 					if (!countryList) {
 						return false;
 					}
@@ -40,10 +40,10 @@ describe('AdContext', function () {
 				isProperRegion: function () {
 					return false;
 				},
-				isProperContinent: function() {
+				isProperContinent: function () {
 					return false;
 				},
-				isProperCountry: function() {
+				isProperCountry: function () {
 					return false;
 				}
 			},
@@ -77,6 +77,9 @@ describe('AdContext', function () {
 	beforeEach(function () {
 		mocks.instantGlobals = {};
 		getModule().getContext().opts = {};
+		if (mocks.doc && mocks.doc.hasOwnProperty('referrer')) {
+			mocks.doc.referrer = '';
+		}
 	});
 
 	it(
@@ -461,7 +464,7 @@ describe('AdContext', function () {
 		expect(getModule().getContext().opts.sourcePointDetectionMobile).toBe(undefined);
 	});
 
-	it('enables SourcePoint detection when instantGlobals.wgAdDriverSourcePointDetectionCountries', function () {
+	it('enables SP detection when instantGlobals.wgAdDriverSourcePointDetectionCountries', function () {
 		mocks.win = {
 			ads: {
 				context: {
@@ -525,7 +528,8 @@ describe('AdContext', function () {
 		expect(getModule().getContext().opts.sourcePointDetectionMobile).toBeTruthy();
 	});
 
-	it('enables SourcePoint detection when instantGlobals.wgAdDriverSourcePointDetectionCountries is enabled for continent', function () {
+	it('enables SourcePoint detection when ' +
+	'instantGlobals.wgAdDriverSourcePointDetectionCountries is enabled for continent', function () {
 		mocks.win = {
 			ads: {
 				context: {
@@ -583,7 +587,8 @@ describe('AdContext', function () {
 			ads: {
 				context: {
 					opts: {
-						sourcePointDetectionUrl: '//foo.bar'
+						sourcePointDetectionUrl: '//foo.bar',
+						showAds: true
 					},
 					targeting: {
 						skin: 'oasis'
@@ -604,7 +609,8 @@ describe('AdContext', function () {
 			ads: {
 				context: {
 					opts: {
-						sourcePointDetectionUrl: '//foo.bar'
+						sourcePointDetectionUrl: '//foo.bar',
+						showAds: true
 					},
 					targeting: {
 						skin: 'oasis'
@@ -625,7 +631,8 @@ describe('AdContext', function () {
 			ads: {
 				context: {
 					opts: {
-						sourcePointDetectionUrl: '//foo.bar'
+						sourcePointDetectionUrl: '//foo.bar',
+						showAds: true
 					},
 					targeting: {
 						skin: 'oasis'
