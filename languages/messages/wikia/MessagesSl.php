@@ -37,4 +37,5 @@ $messages = array_merge( $messages, array(
 'review_reason_5' => 'Razlog recenzije 5',
 'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
 'addnewtalksection-link' => 'Začnite novo razpravo',
+'wikia-pagetitle' => '$1 – Wikia',
 ) );
