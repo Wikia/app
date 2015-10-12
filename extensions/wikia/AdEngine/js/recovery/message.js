@@ -33,9 +33,9 @@ define('ext.wikia.adEngine.recovery.message', [
 		location.reload();
 	}
 
-	function reject(message) {
+	function reject(messageContainer) {
 		adTracker.track('recovery/message', 'reject');
-		message.style.display = 'none';
+		messageContainer.style.display = 'none';
 		localStorage.setItem(localstorageKey, true);
 	}
 
@@ -45,7 +45,7 @@ define('ext.wikia.adEngine.recovery.message', [
 
 	function createMessage(uniqueClassName) {
 		var className = 'recovered-message',
-			div = doc.createElement('div'),
+			container = doc.createElement('div'),
 			icon = doc.createElement('img'),
 			message = doc.createElement('div'),
 			closeButton = doc.createElement('div');
@@ -56,7 +56,7 @@ define('ext.wikia.adEngine.recovery.message', [
 
 		closeButton.classList.add('close-button');
 		closeButton.addEventListener('click', function () {
-			reject(div);
+			reject(container);
 		});
 
 		message.innerHTML = '<div class="dialog-pointer"></div><h3>' + headerText + '</h3><p>' + messageText + '</p>';
@@ -64,11 +64,11 @@ define('ext.wikia.adEngine.recovery.message', [
 		message.querySelector('.action-accept').addEventListener('click', accept);
 		message.appendChild(closeButton);
 
-		div.classList.add(className, className + '-' + uniqueClassName);
-		div.appendChild(icon);
-		div.appendChild(message);
+		container.classList.add(className, className + '-' + uniqueClassName);
+		container.appendChild(icon);
+		container.appendChild(message);
 
-		return div;
+		return container;
 	}
 
 	function injectTopMessage() {
