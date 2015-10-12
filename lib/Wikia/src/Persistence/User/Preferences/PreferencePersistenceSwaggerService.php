@@ -107,19 +107,46 @@ class PreferencePersistenceSwaggerService implements PreferencePersistence {
 		return $prefs;
 	}
 
+	public function deleteAll($userId) {
+		try {
+			return $this->deleteAllPreferences($this->getApi($userId), $userId);
+		} catch (ApiException $e) {
+			$this->handleApiException($e);
+		}
+
+		return false;
+	}
+
+	public function findWikisWithLocalPreferenceValue( $preferenceName, $value ) {
+		try {
+			return $this->findWikisWithLocalPreference($this->getApi(), $preferenceName, $value);
+		} catch (ApiException $e) {
+			$this->handleApiException($e);
+		}
+
+		return [];
+	}
+
 	/**
 	 * @param $userId
 	 * @return UserPreferencesApi
 	 */
-	private function getApi( $userId ) {
+	private function getApi( $userId=null ) {
 		$profilerStart = $this->startProfile();
-		$api = $this->apiProvider->getAuthenticatedApi( self::SERVICE_NAME, $userId, UserPreferencesApi::class );
+
+		if ($userId === null) {
+			$api = $this->apiProvider->getApi( self::SERVICE_NAME, UserPreferencesApi::class );
+		} else {
+			$api = $this->apiProvider->getAuthenticatedApi( self::SERVICE_NAME, $userId, UserPreferencesApi::class );
+		}
+
 		$this->endProfile(
 			\Transaction::EVENT_USER_PREFERENCES,
 			$profilerStart,
 			[
 				'user_id' => $userId,
-				'method' => 'getApi', ] );
+				'method' => 'getApi',
+				'authenticated' => $userId !== null, ] );
 
 		return $api;
 	}
@@ -146,6 +173,31 @@ class PreferencePersistenceSwaggerService implements PreferencePersistence {
 				'method' => 'getPreferences', ] );
 
 		return $preferences;
+	}
+
+	private function deleteAllPreferences(UserPreferencesApi $api, $userId) {
+		$profilerStart = $this->startProfile();
+		$deleted = $api->deleteUserPreferences( $userId );
+		$this->endProfile(
+			\Transaction::EVENT_USER_PREFERENCES,
+			$profilerStart,
+			[
+				'user_id' => $userId,
+				'method' => 'deletePreferences', ] );
+
+		return $deleted;
+	}
+
+	private function findWikisWithLocalPreference(UserPreferencesApi $api, $preferenceName, $value) {
+		$profilerStart = $this->startProfile();
+		$deleted = $api->findWikisWithLocalPreference( $preferenceName, $value );
+		$this->endProfile(
+			\Transaction::EVENT_USER_PREFERENCES,
+			$profilerStart,
+			[
+				'method' => 'findWikisWithLocalPreference', ] );
+
+		return $deleted;
 	}
 
 	/**

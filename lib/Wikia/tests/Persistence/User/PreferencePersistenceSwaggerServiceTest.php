@@ -28,7 +28,7 @@ class PreferencePersistenceSwaggerServiceTest extends \PHPUnit_Framework_TestCas
 
 	public function setUp() {
 		$this->apiProvider = $this->getMockBuilder( ApiProvider::class )
-			->setMethods( ['getAuthenticatedApi'] )
+			->setMethods( ['getAuthenticatedApi', 'getApi' ] )
 			->disableOriginalConstructor()
 			->getMock();
 		$this->userPreferencesApi = $this->getMockBuilder( UserPreferencesApi::class )
@@ -38,6 +38,10 @@ class PreferencePersistenceSwaggerServiceTest extends \PHPUnit_Framework_TestCas
 		$this->apiProvider->expects( $this->any() )
 			->method( 'getAuthenticatedApi' )
 			->with( PreferencePersistenceSwaggerService::SERVICE_NAME, $this->userId, UserPreferencesApi::class )
+			->willReturn( $this->userPreferencesApi );
+		$this->apiProvider->expects( $this->any() )
+			->method( 'getApi' )
+			->with( PreferencePersistenceSwaggerService::SERVICE_NAME, UserPreferencesApi::class )
 			->willReturn( $this->userPreferencesApi );
 
 		$this->persistence = new PreferencePersistenceSwaggerService( $this->apiProvider );
