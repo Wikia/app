@@ -464,7 +464,7 @@ describe('AdContext', function () {
 		expect(getModule().getContext().opts.sourcePointDetectionMobile).toBe(undefined);
 	});
 
-	it('enables SP detection when instantGlobals.wgAdDriverSourcePointDetectionCountries', function () {
+	it('enables SourcePoint detection when instantGlobals.wgAdDriverSourcePointDetectionCountries', function () {
 		mocks.win = {
 			ads: {
 				context: {
