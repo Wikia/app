@@ -1,3 +1,4 @@
+/*global define*/
 define('ext.wikia.adEngine.recovery.message', [
 	'ext.wikia.adEngine.recovery.helper',
 	'wikia.document',
@@ -12,21 +13,37 @@ define('ext.wikia.adEngine.recovery.message', [
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.recovery.message',
+		wikiaTopAdsId = 'WikiaTopAds',
 		wikiaRailId = 'WikiaRail';
 
-	function addRecoveryCallback() {
-		recoveryHelper.addOnBlockingCallback(function () {
-			recover();
-		});
+	function createMessage(uniqueClassName) {
+		var className = 'recovered-message',
+			div = doc.createElement('div');
+
+		div.textContent = 'Hello world!';
+		div.classList.add(className, className + '-' + uniqueClassName);
+		return div;
 	}
 
-	function injectRightRailRecoveredAd() {
-		var rail = doc.getElementById(wikiaRailId),
-			p = doc.createElement('p');
+	function injectTopMessage() {
+		var topAds = doc.getElementById(wikiaTopAdsId),
+			message = createMessage('top');
 
-		log('recoveredAdsMessage.recover - injecting right rail recovery', 'debug', logGroup);
-		p.textContent = 'Hello world!';
-		rail.insertBefore(p, rail.firstChild);
+		log('recoveredAdsMessage.recover - injecting top message', 'debug', logGroup);
+		topAds.parentNode.insertBefore(message, topAds);
+	}
+
+	function injectRightRailMessage() {
+		var rail = doc.getElementById(wikiaRailId),
+			message = createMessage('right-rail');
+
+		log('recoveredAdsMessage.recover - injecting right rail message', 'debug', logGroup);
+		rail.insertBefore(message, rail.firstChild);
+	}
+
+	function injectMessage() {
+		injectTopMessage();
+		injectRightRailMessage();
 	}
 
 	function recover() {
@@ -34,11 +51,17 @@ define('ext.wikia.adEngine.recovery.message', [
 
 		if (doc.readyState === 'complete') {
 			log('recoveredAdsMessage.recover - executing inject functions', 'debug', logGroup);
-			injectRightRailRecoveredAd();
+			injectMessage();
 		} else {
 			log('recoveredAdsMessage.recover - registering onLoad', 'debug', logGroup);
-			win.addEventListener('load', injectRightRailRecoveredAd);
+			win.addEventListener('load', injectMessage);
 		}
+	}
+
+	function addRecoveryCallback() {
+		recoveryHelper.addOnBlockingCallback(function () {
+			recover();
+		});
 	}
 
 	return {
