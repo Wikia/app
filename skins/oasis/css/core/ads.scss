@@ -4,6 +4,7 @@
 @import 'breakpoints-variables';
 @import 'skins/shared/mixins/clearfix';
 @import 'skins/shared/mixins/gradient';
+@import 'skins/shared/mixins/transform';
 @import 'ads-floor';
 @import 'ads-in-content';
 
@@ -307,9 +308,7 @@ body >a >img[src$="noad.gif"] {
 			background: #ffffff;
 			top: -10px;
 			left: 110px;
-			-ms-transform: rotate(45deg);
-			-webkit-transform: rotate(45deg);
-			transform: rotate(45deg);
+			@include transform-rotate(45deg);
 		}
 
 		.close-button {
@@ -346,9 +345,7 @@ body >a >img[src$="noad.gif"] {
 			.dialog-pointer {
 				top: 15px;
 				left: -10px;
-				-ms-transform: rotate(-45deg);
-				-webkit-transform: rotate(-45deg);
-				transform: rotate(-45deg);
+				@include transform-rotate(-45deg);
 			}
 		}
 
