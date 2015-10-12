@@ -976,8 +976,8 @@ class User {
 	 */
 	public static function randomPassword() {
 		global $wgMinimalPasswordLength;
-		// Decide the final password length based on our min password length, stopping at a minimum of 10 chars
-		$length = max( 10, $wgMinimalPasswordLength );
+		// Decide the final password length based on our min password length, stopping at a minimum of 20 chars
+		$length = max( 20, $wgMinimalPasswordLength );
 		// Multiply by 1.25 to get the number of hex characters we need
 		$length = $length * 1.25;
 		// Generate random hex chars
