@@ -689,4 +689,26 @@ describe('AdContext', function () {
 
 		expect(getModule().getContext().opts.recoveredAdsMessage).toBeFalsy();
 	});
+
+	it('disables recoveredAdsMessage when showAds is false', function () {
+		mocks.win = {
+			ads: {
+				context: {
+					opts: {
+						sourcePointDetectionUrl: '//foo.bar',
+						showAds: false
+					},
+					targeting: {
+						skin: 'oasis'
+					}
+				}
+			}
+		};
+		mocks.instantGlobals = {
+			wgAdDriverSourcePointDetectionCountries: ['CURRENT_COUNTRY'],
+			wgAdDriverAdsRecoveryMessageCountries: ['CURRENT_COUNTRY']
+		};
+
+		expect(getModule().getContext().opts.recoveredAdsMessage).toBeFalsy();
+	});
 });
