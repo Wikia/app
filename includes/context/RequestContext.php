@@ -203,24 +203,59 @@ class RequestContext implements IContextSource {
 	public function getUser() {
 		// Wikia change - begin - @author: Michał Roszka
 		global $wgEnableHeliosExt;
+		$authPath = [];
+
 		if ( $this->user === null && $wgEnableHeliosExt ) {
 			$this->user = \Wikia\Helios\User::newFromToken( $this->getRequest() );
+			$authPath[] = 'helios: ' . ($this->user !== null ? 'OK' : 'FAIL');
 		}
 		// Wikia change - end
 		// Wikia change - begin - @author: wladek
 		global $wgUserForceAnon;
 		if ( $this->user === null && $wgUserForceAnon ) {
 			$this->user = new User();
+			$authPath[] = 'force_anon';
 		}
 
 		if ( $this->user === null ) {
 		// Wikia change - end
 			$this->user = User::newFromSession( $this->getRequest() );
+			$authPath[] = 'MW: ' . ($this->user !== null ? 'OK' : 'FAIL');
 		}
+
+		$this->logAuthenticationMethod($this->user, $authPath);
 
 		// Replace the user object according to the context, e.g. Piggyback.
 		wfRunHooks( 'RequestContextOverrideUser', [ &$this->user, $this->getRequest() ] );
 		return $this->user;
+	}
+
+	/**
+	 * @param $user User
+	 * @param $authSource array
+	 */
+	private function logAuthenticationMethod($user, $authSource) {
+		if ( count( $authSource ) <= 1 || $user === null || !$user->isLoggedIn() ) {
+			return;
+		}
+
+		$sampler = new \Wikia\Util\Statistics\BernoulliTrial( 0.05 );
+
+		if ( !$sampler->shouldSample() ) {
+			return;
+		}
+
+		\Wikia\Logger\WikiaLogger::instance()->info(
+			'AUTHENTICATION_FALLBACK',
+			[
+				'auth_path'		=> $authSource,
+				'ip'			=> $this->getRequest()->getIP(),
+				'session_id'	=> session_id(),
+				'from'			=> $user->mFrom,
+				'user_id'		=> $user->getId(),
+				'user_name'		=> $user->getName(),
+			]
+		);
 	}
 
 	/**
