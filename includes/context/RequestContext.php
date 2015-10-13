@@ -207,20 +207,20 @@ class RequestContext implements IContextSource {
 
 		if ( $this->user === null && $wgEnableHeliosExt ) {
 			$this->user = \Wikia\Helios\User::newFromToken( $this->getRequest() );
-			$authPath[] = 'helios: ' . ($this->user !== null ? 'OK' : 'FAIL');
+			$authPath['helios'] = ($this->user !== null ? 'OK' : 'FAIL');
 		}
 		// Wikia change - end
 		// Wikia change - begin - @author: wladek
 		global $wgUserForceAnon;
 		if ( $this->user === null && $wgUserForceAnon ) {
 			$this->user = new User();
-			$authPath[] = 'force_anon';
+			$authPath['force_anon'] = 'OK';
 		}
 
 		if ( $this->user === null ) {
 		// Wikia change - end
 			$this->user = User::newFromSession( $this->getRequest() );
-			$authPath[] = 'MW: ' . ($this->user !== null ? 'OK' : 'FAIL');
+			$authPath['media_wiki'] = ($this->user !== null ? 'OK' : 'FAIL');
 		}
 
 		$this->logAuthenticationMethod($this->user, $authPath);
@@ -241,14 +241,14 @@ class RequestContext implements IContextSource {
 
 		$sampler = new \Wikia\Util\Statistics\BernoulliTrial( 0.05 );
 
-		if ( !$sampler->shouldSample() ) {
+		if ( 0 && !$sampler->shouldSample() ) {
 			return;
 		}
 
 		\Wikia\Logger\WikiaLogger::instance()->info(
 			'AUTHENTICATION_FALLBACK',
 			[
-				'auth_path'		=> $authSource,
+				'auth'			=> $authSource,
 				'ip'			=> $this->getRequest()->getIP(),
 				'session_id'	=> session_id(),
 				'from'			=> $user->mFrom,
