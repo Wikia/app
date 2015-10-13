@@ -23,7 +23,6 @@ $dir = dirname(__FILE__) . '/';
 
 $wgAutoloadClasses['Piggyback'] = $dir . 'Piggyback_body.php'; # Tell MediaWiki to load the extension body.
 $wgAutoloadClasses['PBLoginForm']  = $dir . 'Piggyback_body.php'; # Tell MediaWiki to load the extension body.
-$wgAutoloadClasses['PiggybackTemplate'] = $dir . 'Piggyback_form.php'; # Tell MediaWiki to load the extension body.
 
 $wgExtensionMessagesFiles['Piggyback'] = $dir . 'Piggyback.i18n.php';
 $wgExtensionMessagesFiles['PiggybackAliases'] = $dir . 'Piggyback.alias.php';
