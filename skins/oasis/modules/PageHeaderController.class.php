@@ -309,7 +309,7 @@ class PageHeaderController extends WikiaController {
 				break;
 
 			case NS_TEMPLATE:
-				$this->pageType = wfMsg( 'oasis-page-header-subtitle-template' );
+				$this->pageType = $this->renderTemplateSubtitle();
 				break;
 
 			case NS_SPECIAL:
@@ -637,5 +637,29 @@ class PageHeaderController extends WikiaController {
 		global $wgMemc;
 		$wgMemc->delete( wfMemcKey( 'mOasisRecentRevisions2', $article->getTitle()->getArticleId() ) );
 		return true;
+	}
+
+	private function renderTemplateSubtitle() {
+		global $wgUser;
+		$templateType = $this->getTemplateType();
+		if ( $wgUser->isLoggedIn() ) {
+			$templateType .= $this->renderEditButton();
+			return $templateType;
+		} else {
+			if ( $templateType !== 'Unclassified' ) {
+				return $templateType;
+			}
+			return wfMessage( 'oasis-page-header-subtitle-template' )->escaped();
+		}
+
+	}
+
+	private function getTemplateType() {
+		// Mock for frontend work
+		return wfMessage( 'oasis-page-header-subtitle-template-unclassified' )->escaped();
+	}
+
+	private function renderEditButton() {
+		return Xml::element( 'a', [ 'class' => 'template-classification-edit sprite-small edit', ], ' ' );
 	}
 }

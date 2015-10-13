@@ -2667,3 +2667,19 @@ $config['visit_source_js'] = [
 		'//extensions/wikia/VisitSource/scripts/VisitSource.js',
 	]
 ];
+
+$config['tempate_classification_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/TemplateClassification/scripts/TemplateClassification.js',
+	]
+];
+
+$config['tempate_classification_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/TemplateClassification/styles/TemplateClassification.scss',
+	]
+];

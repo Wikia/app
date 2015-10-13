@@ -53,6 +53,7 @@ $messages['en'] = array(
 	'oasis-page-header-subtitle-mediawiki' => 'MediaWiki page',
 	'oasis-page-header-subtitle-special' => 'Special page',
 	'oasis-page-header-subtitle-template' => 'Template page',
+	'oasis-page-header-subtitle-template-unclassified' => 'Unclassified',
 	'oasis-page-header-subtitle-category' => 'Category page',
 	'oasis-page-header-subtitle-forum' => 'Forum page',
 	'oasis-page-header-subtitle-special-wikiactivity' => 'See all activity >',

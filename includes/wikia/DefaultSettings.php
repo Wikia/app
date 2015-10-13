@@ -1880,3 +1880,6 @@ $wgSeoTestingExperiments = [];
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverAdsRecoveryMessageCountries = null;
+
+/* Add TemplateClassification extension */
+require_once( "$IP/extensions/wikia/TemplateClassification/TemplateClassification.setup.php" );
