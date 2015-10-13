@@ -1017,7 +1017,7 @@ $wgAssetsManagerQuery = '/__am/%4$d/%1$s/%3$s/%2$s';
 /**
  * global user_options
  */
-$wgGlobalUserProperties = array('language');
+$wgGlobalUserProperties = [];
 
 /**
  * debug level for memcached
