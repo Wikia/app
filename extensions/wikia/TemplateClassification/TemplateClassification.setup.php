@@ -27,3 +27,8 @@ $wgExtensionCredits['other'][] = [
  */
 $wgAutoloadClasses['Wikia\TemplateClassification\Hooks'] = __DIR__ . '/TemplateClassification.hooks.php';
 $wgExtensionFunctions[] = 'Wikia\TemplateClassification\Hooks::register';
+
+/**
+ * View
+ */
+$wgAutoloadClasses['Wikia\TemplateClassification\View'] = __DIR__ . '/TemplateClassificationView.php';

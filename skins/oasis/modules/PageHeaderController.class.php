@@ -309,7 +309,9 @@ class PageHeaderController extends WikiaController {
 				break;
 
 			case NS_TEMPLATE:
-				$this->pageType = $this->renderTemplateSubtitle();
+				$this->pageType = $this->renderTemplateSubtitle(
+					wfMessage( 'oasis-page-header-subtitle-template' )->escaped()
+				);
 				break;
 
 			case NS_SPECIAL:
@@ -639,27 +641,9 @@ class PageHeaderController extends WikiaController {
 		return true;
 	}
 
-	private function renderTemplateSubtitle() {
-		$user = $this->getContext()->getUser();
-		$templateType = $this->getTemplateType();
-		if ( $user->isLoggedIn() ) {
-			$templateType .= $this->renderEditButton();
-			return $templateType;
-		} else {
-			if ( $templateType !== 'Unclassified' ) {
-				return $templateType;
-			}
-			return wfMessage( 'oasis-page-header-subtitle-template' )->escaped();
-		}
-
+	private function renderTemplateSubtitle( $fallbackMsg ) {
+		$templateClassificationView = new Wikia\TemplateClassification\View();
+		return $templateClassificationView->renderEditableType( $fallbackMsg );
 	}
 
-	private function getTemplateType() {
-		// Mock for frontend work
-		return wfMessage( 'oasis-page-header-subtitle-template-unclassified' )->escaped();
-	}
-
-	private function renderEditButton() {
-		return Html::element( 'a', [ 'class' => 'template-classification-edit sprite-small edit', ], ' ' );
-	}
 }
