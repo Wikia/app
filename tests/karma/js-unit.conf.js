@@ -51,6 +51,7 @@ module.exports = function (config) {
 			'resources/wikia/modules/imageServing.js',
 			'resources/wikia/modules/krux.js',
 			'resources/wikia/modules/lazyqueue.js',
+			'resources/wikia/modules/facebookLocale.js',
 			'resources/wikia/modules/loader.js',
 			'resources/wikia/modules/nirvana.js',
 			'resources/wikia/modules/querystring.js',
