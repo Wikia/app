@@ -9,8 +9,7 @@ class View {
 	 * @param String $fallbackMsg
 	 * @return String
 	 */
-	public function renderEditableType( $fallbackMsg ) {
-		$user = $this->getContext()->getUser();
+	public function renderEditableType( $fallbackMsg, $user ) {
 		$templateType = $this->getTemplateType();
 		if ( $user->isLoggedIn() ) {
 			$templateType .= $this->renderEditButton();
@@ -30,6 +29,6 @@ class View {
 	}
 
 	private function renderEditButton() {
-		return Html::element( 'a', [ 'class' => 'template-classification-edit sprite-small edit', ], ' ' );
+		return \Html::element( 'a', [ 'class' => 'template-classification-edit sprite-small edit', ], ' ' );
 	}
 }

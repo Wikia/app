@@ -309,9 +309,7 @@ class PageHeaderController extends WikiaController {
 				break;
 
 			case NS_TEMPLATE:
-				$this->pageType = $this->renderTemplateSubtitle(
-					wfMessage( 'oasis-page-header-subtitle-template' )->escaped()
-				);
+				$this->pageType = wfMsg( 'oasis-page-header-subtitle-template' );
 				break;
 
 			case NS_SPECIAL:
@@ -344,6 +342,7 @@ class PageHeaderController extends WikiaController {
 				$this->pageType = wfMsg( 'oasis-page-header-subtitle-forum' );
 				break;
 		}
+		wfRunHooks( 'PageHeaderPageTypePrepared', array( &$this, $ns ) );
 
 		// render subpage info
 		$this->pageSubject = $skin->subPageSubtitle();
@@ -639,11 +638,6 @@ class PageHeaderController extends WikiaController {
 		global $wgMemc;
 		$wgMemc->delete( wfMemcKey( 'mOasisRecentRevisions2', $article->getTitle()->getArticleId() ) );
 		return true;
-	}
-
-	private function renderTemplateSubtitle( $fallbackMsg ) {
-		$templateClassificationView = new Wikia\TemplateClassification\View();
-		return $templateClassificationView->renderEditableType( $fallbackMsg );
 	}
 
 }

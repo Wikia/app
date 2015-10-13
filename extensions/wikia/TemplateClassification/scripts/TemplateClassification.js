@@ -7,7 +7,7 @@ require(['jquery'], function ($) {
 	function init() {
 		$('.template-classification-edit').click(function (e) {
 			e.preventDefault();
-			console.log('edit');
+			// Run TemplateClassification edit modal here
 		});
 	}
 
