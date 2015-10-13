@@ -1,6 +1,7 @@
 <?php
-$dir = dirname(__FILE__) . '/';
 
-$wgAutoloadClasses['TemplateClassificationHooks'] = $dir . 'TemplateClassificationHooks.class.php';
-
-$wgHooks['BeforePageDisplay'][] = 'TemplateClassificationHooks::onBeforePageDisplay';
+/**
+ * Hooks
+ */
+$wgAutoloadClasses['Wikia\TemplateClassification\Hooks'] = __DIR__ . '/TemplateClassification.hooks.php';
+$wgExtensionFunctions[] = 'Wikia\TemplateClassification\Hooks::register';
