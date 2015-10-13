@@ -20,9 +20,9 @@ class Hooks {
 	 * @return true
 	 */
 	public static function onBeforePageDisplay( \OutputPage $out, \Skin $skin ) {
-		global $wgUser;
+		$user = $skin->getUser();
 		$title = $out->getTitle();
-		if ( $wgUser->isLoggedIn() && $title->getNamespace() === NS_TEMPLATE ) {
+		if ( $user->isLoggedIn() && $title->inNamespace( NS_TEMPLATE ) ) {
 			\Wikia::addAssetsToOutput( 'tempate_classification_js' );
 			\Wikia::addAssetsToOutput( 'tempate_classification_scss' );
 		}

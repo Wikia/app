@@ -640,9 +640,9 @@ class PageHeaderController extends WikiaController {
 	}
 
 	private function renderTemplateSubtitle() {
-		global $wgUser;
+		$user = $this->getContext()->getUser();
 		$templateType = $this->getTemplateType();
-		if ( $wgUser->isLoggedIn() ) {
+		if ( $user->isLoggedIn() ) {
 			$templateType .= $this->renderEditButton();
 			return $templateType;
 		} else {
@@ -660,6 +660,6 @@ class PageHeaderController extends WikiaController {
 	}
 
 	private function renderEditButton() {
-		return Xml::element( 'a', [ 'class' => 'template-classification-edit sprite-small edit', ], ' ' );
+		return Html::element( 'a', [ 'class' => 'template-classification-edit sprite-small edit', ], ' ' );
 	}
 }
