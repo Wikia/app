@@ -352,7 +352,7 @@ class ArticleComment {
 		$comment = false;
 		$title = $this->getTitle();
 		$commentId = $title->getArticleId();
-		$canDelete = $title->userCan( 'delete' );
+		$canDelete = !count( $title->getUserPermissionsErrors( 'delete', F::app()->wg->User, false, [] ) );
 
 		// vary cache on permission as well so it changes we can show it to a user
 		$articleDataKey = wfMemcKey(
@@ -1536,6 +1536,7 @@ class ArticleComment {
 		$app = F::app();
 		$commentsNS = $app->wg->ArticleCommentsNamespaces;
 		$ns = $title->getNamespace();
+
 		// Only handle article and blog comments
 		if ( !in_array( MWNamespace::getSubject( $ns ), $commentsNS ) ||
 			!ArticleComment::isTitleComment( $title ) ) {

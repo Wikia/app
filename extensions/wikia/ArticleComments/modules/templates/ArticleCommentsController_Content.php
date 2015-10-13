@@ -20,7 +20,7 @@
 		<? endif ?>
 		<div class="session">
 			<?= $avatar ?>
-			<?= $isAnon ? wfMessage( 'oasis-comments-anonymous-prompt' )->text() : '' /* wfMsg( 'oasis-comments-user-prompt', $avatar->mUser->getName() ) */ ?>
+			<?= wfMessage( 'oasis-comments-anonymous-prompt' )->parse() /* wfMsg( 'oasis-comments-user-prompt', $avatar->mUser->getName() ) */ ?>
 		</div>
 		<form action="<?= $title->getFullURL() ?>" method="post" class="article-comm-form" id="article-comm-form">
 			<input type="hidden" name="wpArticleId" value="<?= $title->getArticleId() ?>" />
@@ -44,8 +44,6 @@
 	<? elseif ( $isBlocked ): ?>
 		<p><?= wfMessage( 'article-comments-comment-cannot-add' )->escaped() ?></p>
 		<p><?= $reason ?></p>
-	<? elseif ( !$canEdit && $wg->User->isAnon() ): ?>
-		<p class="login"><?= wfMessage( 'article-comments-login' )->parse() ?></p>
 	<? elseif ( !$commentingAllowed ): ?>
 		<p class="no-comments-allowed"><?= wfMessage( 'article-comments-comment-cannot-add' )->escaped() ?> </p>
 	<? endif ?>

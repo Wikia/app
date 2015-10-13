@@ -26,7 +26,7 @@ $commentsCounter = wfMessage( 'oasis-comments-header', $wg->Lang->FormatNum( $co
 		<? endif ?>
 		<div class="session">
 			<?= $avatar ?>
-			<?= $isAnon ? wfMessage( 'oasis-comments-anonymous-prompt' )->plain() : '' ?>
+			<?= wfMessage( 'oasis-comments-anonymous-prompt' )->parse(); ?>
 		</div>
 		<form action="<?= $title->getLocalURL() ?>" method="post" class="article-comm-form" id="article-comm-form">
 			<input type="hidden" name="wpArticleId" value="<?= $title->getArticleId() ?>" />
@@ -50,8 +50,6 @@ $commentsCounter = wfMessage( 'oasis-comments-header', $wg->Lang->FormatNum( $co
 	<? elseif ( $isBlocked ): ?>
 		<p><?= wfMessage( 'article-comments-comment-cannot-add' )->escaped() ?></p>
 		<p><?= $reason ?></p>
-	<? elseif ( !$canEdit && $wg->User->isAnon() ): ?>
-		<p class="login"><?= wfMessage( 'article-comments-login' )->parse() ?></p>
 	<? elseif ( !$commentingAllowed ): ?>
 		<p class="no-comments-allowed"><?= wfMessage( 'article-comments-comment-cannot-add' )->escaped() ?> </p>
 	<? endif ?>
