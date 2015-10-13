@@ -1015,11 +1015,6 @@ $wgAssetsManagerQuery = '/__am/%4$d/%1$s/%3$s/%2$s';
 //$wgAssetsManagerQuery = '/index.php?action=ajax&rs=AssetsManagerEntryPoint&__am&type=%1$s&cb=%4$d&params=%3$s&oid=%2$s';
 
 /**
- * global user_options
- */
-$wgGlobalUserProperties = [];
-
-/**
  * debug level for memcached
  */
 $wgMemCachedDebugLevel = 1;
