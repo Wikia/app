@@ -2,26 +2,30 @@
 define('ext.wikia.adEngine.recovery.message', [
 	'ext.wikia.adEngine.adTracker',
 	'ext.wikia.adEngine.recovery.helper',
+	'jquery',
 	'wikia.document',
+	'wikia.loader',
 	'wikia.localStorage',
 	'wikia.location',
 	'wikia.log',
+	'wikia.mustache',
 	'wikia.window'
 ], function (
 	adTracker,
 	recoveryHelper,
+	$,
 	doc,
+	loader,
 	localStorage,
 	location,
 	log,
+	mustache,
 	win
 ) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.recovery.message',
-		wikiaTopAdsId = 'WikiaTopAds',
-		wikiaRailId = 'WikiaRail',
-		localstorageKey = 'rejectedRecoveredMessage',
+		localStorageKey = 'rejectedRecoveredMessage',
 		headerText = 'Hey! It looks like you\'re using ad blocking software!',
 		messageText = 'Wikia runs ads so we can keep the lights on and so Wikia will always be free to use. ' +
 			'We can bring you fun, free, fan-oriented content until my glorious return to Earh if you ' +
@@ -36,55 +40,57 @@ define('ext.wikia.adEngine.recovery.message', [
 	function reject(messageContainer) {
 		adTracker.track('recovery/message', 'reject');
 		messageContainer.style.display = 'none';
-		localStorage.setItem(localstorageKey, true);
+		localStorage.setItem(localStorageKey, true);
 	}
 
 	function isRejected() {
-		return !!localStorage.getItem(localstorageKey);
+		return !!localStorage.getItem(localStorageKey);
+	}
+
+	function getTemplate() {
+		return $.when(
+			loader({
+				type: loader.MULTI,
+				resources: {
+					mustache: 'extensions/wikia/AdEngine/templates/recovered_message.mustache'
+				}
+			})
+		).then(function (response) {
+			return response.mustache[0];
+		});
 	}
 
 	function createMessage(uniqueClassName) {
-		var className = 'recovered-message',
-			container = doc.createElement('div'),
-			icon = doc.createElement('img'),
-			message = doc.createElement('div'),
-			closeButton = doc.createElement('div');
+		return getTemplate().then(function (template) {
+			var params = {
+					positionClass: 'recovered-message-' + uniqueClassName,
+					header: headerText,
+					text: messageText
+				};
 
-		icon.src = '/skins/oasis/images/recovered_message_icon.png';
-		icon.classList.add('icon');
-		icon.addEventListener('click', accept);
+			return $(mustache.render(template, params));
+		}).then(function (messageContainer) {
+			messageContainer.find('.icon,.action-accept').on('click', accept);
+			messageContainer.find('.close-button').on('click', function () {
+				reject(messageContainer);
+			});
 
-		closeButton.classList.add('close-button');
-		closeButton.addEventListener('click', function () {
-			reject(container);
+			return messageContainer;
 		});
-
-		message.innerHTML = '<div class="dialog-pointer"></div><h3>' + headerText + '</h3><p>' + messageText + '</p>';
-		message.classList.add('message');
-		message.querySelector('.action-accept').addEventListener('click', accept);
-		message.appendChild(closeButton);
-
-		container.classList.add(className, className + '-' + uniqueClassName);
-		container.appendChild(icon);
-		container.appendChild(message);
-
-		return container;
 	}
 
 	function injectTopMessage() {
-		var topAds = doc.getElementById(wikiaTopAdsId),
-			message = createMessage('top');
-
 		log('recoveredAdsMessage.recover - injecting top message', 'debug', logGroup);
-		topAds.parentNode.insertBefore(message, topAds);
+		createMessage('top').done(function (messageContainer) {
+			$('#WikiaTopAds').before(messageContainer);
+		});
 	}
 
 	function injectRightRailMessage() {
-		var rail = doc.getElementById(wikiaRailId),
-			message = createMessage('right-rail');
-
 		log('recoveredAdsMessage.recover - injecting right rail message', 'debug', logGroup);
-		rail.insertBefore(message, rail.firstChild);
+		createMessage('right-rail').done(function (messageContainer) {
+			$('#WikiaRail').prepend(messageContainer);
+		});
 	}
 
 	function injectMessage() {
