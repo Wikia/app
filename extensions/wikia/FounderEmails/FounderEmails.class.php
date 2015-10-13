@@ -1,5 +1,8 @@
 <?php
 
+use Wikia\DependencyInjection\Injector;
+use Wikia\Service\User\Preferences\PreferenceService;
+
 class FounderEmails {
 	static private $instance = null;
 	private $mLastEventType = null;
@@ -42,29 +45,16 @@ class FounderEmails {
 	 * Get list of wikis with a particular local preference setting
 	 * Since the expected default is 0, we need to look for users with up_property value set to 1
 	 *
-	 * @param string $prefPrefix Which preference setting to search for, MUST be either:
-	 *                           founderemails-complete-digest OR founderemails-views-digest
+	 * @param string $preferenceName Which preference setting to search for, MUST be either:
+	 *                               founderemails-complete-digest OR founderemails-views-digest
 	 *
 	 * @return array
 	 */
 
-	public function getFoundersWithPreference( $prefPrefix ) {
-		$prefixLength = strlen( $prefPrefix ) + 2;
-		$db = wfGetDB( DB_SLAVE, array(), 'wikicities' );
-		$cityList = array();
-		$oRes = $db->select(
-			[ 'wikicities.user_properties' ],
-			[ "distinct substring(up_property, $prefixLength) city_id" ],
-			[
-				"up_property like '$prefPrefix-%'",
-				'up_value' => 1
-			]
-		);
-		while ( $oRow = $db->fetchObject ( $oRes ) ) {
-			$cityList[] = $oRow->city_id;
-		}
-
-		return $cityList;
+	public function getWikisWithFounderPreference( $preferenceName ) {
+		/** @var PreferenceService $preferenceService */
+		$preferenceService = Injector::getInjector()->get( PreferenceService::class );
+		return $preferenceService->findWikisWithLocalPreferenceValue( $preferenceName, "1" );
 	}
 
 	/**
