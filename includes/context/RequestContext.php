@@ -241,7 +241,9 @@ class RequestContext implements IContextSource {
 
 		$sampler = new \Wikia\Util\Statistics\BernoulliTrial( 0.05 );
 
-		if ( 0 && !$sampler->shouldSample() ) {
+		\Transaction::addEvent( \Transaction::EVENT_USER_AUTH, $authSource );
+
+		if ( !$sampler->shouldSample() ) {
 			return;
 		}
 
