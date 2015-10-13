@@ -123,8 +123,8 @@ function WMU_loadDetails() {
 	$('#ImageUploadMain').hide();
 	WMU_indicator(1, true);
 
-	var callback = function(o) {
-		WMU_displayDetails(o.responseText);
+	var callback = function(responseText) {
+		WMU_displayDetails(responseText);
 
 		$('#ImageUploadBack').hide();
 
@@ -172,16 +172,10 @@ function WMU_loadDetails() {
 		}
 	};
 
-	WMU_jqXHR.abort();
-
-	var params = new Array();
-	params.push('sourceId=0');
-	params.push('itemId=' + encodeURIComponent(FCK.wysiwygData[WMU_refid].href.split(":")[1]));
-
-	WMU_jqXHR = $.ajax(wgScriptPath + '/index.php?action=ajax&rs=WMU&method=chooseImage&' + params.join('&'), {
-		method: 'get',
-		complete: callback
-	});
+	WMU_ajax('chooseImage', {
+		sourceId: 0,
+		itemId: FCK.wysiwygData[WMU_refid].href.split(":")[1]
+	}, callback);
 }
 
 // macbre: move back button inside dialog content and add before provided selector (Oasis changes)
