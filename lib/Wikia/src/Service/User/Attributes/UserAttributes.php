@@ -110,12 +110,12 @@ class UserAttributes {
 
 		// TODO When bulk updates are complete, convert this to a single request
 		$savedAttributes = [];
-		foreach( $attributes as $key => $value ) {
-			if ( $this->attributeShouldBeSaved( $key, $value ) ) {
-				$this->setInService( $userId, new Attribute( $key, $value ) );
-				$savedAttributes[$key] = $value;
-			} elseif ( $this->attributeShouldBeDeleted( $key, $value ) ) {
-				$this->deleteFromService( $userId, new Attribute( $key, $value ) );
+		foreach( $attributes as $name => $value ) {
+			if ( $this->attributeShouldBeSaved( $name, $value ) ) {
+				$this->setInService( $userId, new Attribute( $name, $value ) );
+				$savedAttributes[$name] = $value;
+			} elseif ( $this->attributeShouldBeDeleted( $name, $value ) ) {
+				$this->deleteFromService( $userId, new Attribute( $name, $value ) );
 			}
 		}
 
