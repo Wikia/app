@@ -52,7 +52,7 @@ class Custom404PageBestMatchingPageFinder {
 
 		$originalLowerCase = mb_strtolower( $originalTitle );
 		$originalLength = mb_strlen( $originalLowerCase );
-		$originalWords = trim( preg_replace( '/\\W+/', ' ', $originalLowerCase ) );
+		$originalWords = trim( preg_replace( '/\\W+/u', ' ', $originalLowerCase ) );
 		$mismatchingCaseTitles = [];
 		$matchingPrefixTitles = [];
 		$matchingPrefixTitlesIncludingSubPages = [];
@@ -117,7 +117,7 @@ class Custom404PageBestMatchingPageFinder {
 
 			if ( $queryResults['numFound'] === 0 ) {
 				// Strip last (maybe incomplete?) word form the title
-				$titleTextStripped = trim( preg_replace( '/\\W*\\w+\\W*$/', '', $titleText ) );
+				$titleTextStripped = trim( preg_replace( '/\\W*\\w+\\W*$/u', '', $titleText ) );
 				if ( !empty( $titleTextStripped ) ) {
 					$queryResults = $this->query( $titleTextStripped, $namespaceId );
 				}
