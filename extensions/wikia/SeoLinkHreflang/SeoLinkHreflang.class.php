@@ -16,20 +16,31 @@ class SeoLinkHreflang {
 	const SEO_LINK_SECTION_END = '<!-- Alternate languages end -->';
 
 	/**
-	 * Get link to a matching article on Japanese Star Wars wiki
-	 * Based on static mapping in starwars_en_ja_mapping.php
+	 * Link between Japanese and English Star Wars wikis
+	 * Based on static mappings in starwars_en_ja_mapping.php and starwars_ja_en_mapping.php
 	 *
 	 * @param OutputPage $out
+	 * @param string $wgDBname starwars or jastarwars
 	 * @return array (key: lang, value: url)
 	 */
-	private static function getStarWarsLinks( OutputPage $out ) {
+	private static function getStarWarsLinks( OutputPage $out, $wgDBname ) {
+		$mapping = [];
+		$langFrom = $out->getLanguage()->getCode();
+
+		if ( $wgDBname === 'starwars' ) {
+			$mapping = require __DIR__ . '/starwars_en_ja_mapping.php';
+			$langTo = 'ja';
+			$urlPrefix = 'http://ja.starwars.wikia.com/wiki/';
+		} else {
+			$mapping = require __DIR__ . '/starwars_ja_en_mapping.php';
+			$langTo = 'en';
+			$urlPrefix = 'http://starwars.wikia.com/wiki/';
+		}
+
 		$dbKey = $out->getTitle()->getDBkey();
 
-		$mapping = require __DIR__ . '/starwars_en_ja_mapping.php';
-
 		if ( !empty( $mapping[ $dbKey ] ) ) {
-			$url = 'http://ja.starwars.wikia.com/wiki/' . $mapping[ $dbKey ];
-			return [ 'ja' => $url ];
+			return [ $langTo => $urlPrefix . $mapping[ $dbKey ] ];
 		}
 
 		return [];
@@ -76,8 +87,8 @@ class SeoLinkHreflang {
 
 		$links = [];
 
-		if ( $wgDBname === 'starwars' ) {
-			$links = self::getStarWarsLinks( $out );
+		if ( $wgDBname === 'starwars' || $wgDBname === 'jastarwars' ) {
+			$links = self::getStarWarsLinks( $out, $wgDBname );
 		} else if ( $out->getTitle()->isMainPage() ) {
 			$links = self::getMainPageLinks( $_SERVER['HTTP_HOST'] );
 		}
