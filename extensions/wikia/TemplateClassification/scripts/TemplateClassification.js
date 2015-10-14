@@ -7,7 +7,7 @@ require(['jquery', 'mw', 'wikia.loader', 'wikia.nirvana'], function ($, mw, load
 			vars: {
 				id: 'TemplateClassificationEditModal',
 				classes: ['template-classification-edit-modal'],
-				size: 'medium', // size of the modal
+				size: 'small', // size of the modal
 				content: '', // content
 				title: mw.message('template-classification-edit-modal-title').escaped()
 			}
