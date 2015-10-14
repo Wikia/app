@@ -31,11 +31,11 @@ class Hooks {
 	}
 
 	/**
-	 * @param PageHeaderController $pageHeaderController
-	 * @param int $ns
+	 * @param \PageHeaderController $pageHeaderController
+	 * @param \Title $title
 	 */
-	public function onPageHeaderPageTypePrepared( \PageHeaderController $pageHeaderController, $ns ) {
-		if ( $ns === NS_TEMPLATE ) {
+	public function onPageHeaderPageTypePrepared( \PageHeaderController $pageHeaderController, \Title $title ) {
+		if ( $title->inNamespace( NS_TEMPLATE ) ) {
 			$view = new View();
 			$pageHeaderController->pageType = $view->renderEditableType(
 				$pageHeaderController->pageType, $pageHeaderController->getContext()->getUser()
