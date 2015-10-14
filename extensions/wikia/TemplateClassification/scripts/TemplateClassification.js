@@ -42,13 +42,36 @@ require(['jquery', 'mw', 'wikia.loader', 'wikia.nirvana'], function ($, mw, load
 	function init() {
 		$('.template-classification-edit').click(function (e) {
 			e.preventDefault();
-				// TODO Mark current type
-				modalConfig.vars.content = 'classificationForm';
 
-				require(['wikia.ui.factory'], function (uiFactory) {
-					/* Initialize the modal component */
-					uiFactory.init(['modal']).then(createComponent);
-				});
+			$.when(
+				nirvana.sendRequest({
+					controller: 'TemplateClassification',
+					method: 'getTemplateClassificationEditForm',
+					type: 'get',
+					format: 'html'
+				}),
+				nirvana.sendRequest({
+					controller: 'TemplateClassificationMockApi',
+					method: 'getTemplateType',
+					type: 'get'
+				})
+			).done(
+				function (classificationForm, templateType) {
+					var type = templateType[0].type,
+						$cf = $(classificationForm[0]);
+
+					// Mark selected type
+					$cf.find('input[value=\'' + type + '\']').attr('checked', 'checked');
+
+					// Set modal content
+					modalConfig.vars.content = $cf.html();
+
+					require(['wikia.ui.factory'], function (uiFactory) {
+						/* Initialize the modal component */
+						uiFactory.init(['modal']).then(createComponent);
+					});
+				}
+			);
 		});
 	}
 
