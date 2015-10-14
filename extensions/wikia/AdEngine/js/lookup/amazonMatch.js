@@ -113,7 +113,7 @@ define('ext.wikia.adEngine.lookup.amazonMatch', [
 		var amznMatch = doc.createElement('script'),
 			node = doc.getElementsByTagName('script')[0];
 
-		amazonTiming = adTracker.measureTime('ox_bidder', {}, 'start');
+		amazonTiming = adTracker.measureTime('amazon', {}, 'start');
 		amazonTiming.track();
 
 		amznMatch.type = 'text/javascript';
