@@ -6,8 +6,8 @@ class View {
 
 	/**
 	 * Returns HTML with Template type and entry point for edit
-	 * @param String $fallbackMsg
-	 * @return String
+	 * @param string $fallbackMsg
+	 * @return string
 	 */
 	public function renderEditableType( $fallbackMsg, $user ) {
 		$templateType = $this->getTemplateType();

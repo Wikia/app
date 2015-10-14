@@ -22,7 +22,7 @@ class Hooks {
 	 *
 	 * @return true
 	 */
-	public static function onBeforePageDisplay( \OutputPage $out, \Skin $skin ) {
+	public function onBeforePageDisplay( \OutputPage $out, \Skin $skin ) {
 		if ( $skin->getUser()->isLoggedIn() && $out->getTitle()->inNamespace( NS_TEMPLATE ) ) {
 			\Wikia::addAssetsToOutput( 'tempate_classification_js' );
 			\Wikia::addAssetsToOutput( 'tempate_classification_scss' );
@@ -32,7 +32,7 @@ class Hooks {
 
 	/**
 	 * @param PageHeaderController $pageHeaderController
-	 * @param Int $ns
+	 * @param int $ns
 	 */
 	public function onPageHeaderPageTypePrepared( \PageHeaderController $pageHeaderController, $ns ) {
 		if ( $ns === NS_TEMPLATE ) {
