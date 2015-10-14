@@ -315,6 +315,11 @@ class MercuryApiController extends WikiaController {
 			$wikiVariables['specialRobotPolicy'] = $robotPolicy;
 		}
 
+		// Get the button color from ThemeDesigner to act as the main "theme color".
+		// This may need to change later as we use more colors from ThemeDesigner.
+		$themeSettings = ( new ThemeSettings() )->getSettings();
+		$wikiVariables['themeColor'] = $themeSettings['color-buttons'];
+
 		$this->response->setVal( 'data', $wikiVariables );
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 
