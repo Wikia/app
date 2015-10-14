@@ -48,15 +48,19 @@ define('ext.wikia.adEngine.recovery.message', [
 	}
 
 	function getTemplate() {
+		var templatePath = 'extensions/wikia/AdEngine/templates/recovered_message.mustache';
+
 		return $.when(
 			loader({
 				type: loader.MULTI,
 				resources: {
-					mustache: 'extensions/wikia/AdEngine/templates/recovered_message.mustache'
+					mustache: templatePath
 				}
 			})
 		).then(function (response) {
 			return response.mustache[0];
+		}).fail(function () {
+			log(['recoveredAdsMessage.getTemplate', 'Unable to load template', templatePath], 'debug', logGroup);
 		});
 	}
 
