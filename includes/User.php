@@ -4951,10 +4951,8 @@ class User {
 			# <Wikia>
 			if ( $this->shouldOptionBeStored( $key, $value ) ) {
 				$insertRows[] = [ 'up_user' => $this->getId(), 'up_property' => $key, 'up_value' => $value ];
-				$this->setAttributeInService( $key, $value );
 			} elseif ($this->isDefaultOption($key, $value)) {
 				$deletePrefs[] = $key;
-				$this->deleteAttributeInService( $key );
 			}
 			# </Wikia>
 			if ( $extuser && isset( $wgAllowPrefChange[$key] ) ) {
@@ -5004,32 +5002,6 @@ class User {
 
 	private function isDefaultOption($key, $value) {
 		return $value == self::getDefaultOption($key);
-	}
-
-	private function setAttributeInService( $attributeName, $attributeValue ) {
-		if ( $this->isPublicAttribute( $attributeName ) ) {
-			$this->userAttributes()->setAttribute( $this->getId(), new Attribute( $attributeName, $attributeValue ) );
-		}
-	}
-
-	private function deleteAttributeInService( $attributeName ) {
-		if ( $this->isPublicAttribute( $attributeName ) ) {
-			$this->userAttributes()->deleteAttribute( $this->getId(), new Attribute( $attributeName ) );
-		}
-	}
-
-	/**
-	 * Returns whether the current option being set is a public attribute, ie, an
-	 * attribute that we want to be readable by anybody and set into the attribute
-	 * service. This includes things like bio, avatar, and nickName.
-	 *
-	 * @param $attributeName
-	 * @return bool
-	 */
-	private function isPublicAttribute( $attributeName ) {
-		global $wgPublicUserAttributes;
-
-		return in_array( $attributeName, $wgPublicUserAttributes );
 	}
 
 	/**
