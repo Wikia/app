@@ -112,11 +112,9 @@ class UserAttributes {
 		$savedAttributes = [];
 		foreach( $attributes as $key => $value ) {
 			if ( $this->attributeShouldBeSaved( $key, $value ) ) {
-				jbug( "saved: $key", $value );
 				$this->setInService( $userId, new Attribute( $key, $value ) );
 				$savedAttributes[$key] = $value;
 			} elseif ( $this->attributeShouldBeDeleted( $key, $value ) ) {
-				jbug( "deleted: $key", $value );
 				$this->deleteFromService( $userId, new Attribute( $key, $value ) );
 			}
 		}
