@@ -28,6 +28,7 @@ class Hooks {
 		if ( $skin->getUser()->isLoggedIn() && $out->getTitle()->inNamespace( NS_TEMPLATE ) ) {
 			\Wikia::addAssetsToOutput( 'tempate_classification_js' );
 			\Wikia::addAssetsToOutput( 'tempate_classification_scss' );
+			$out->addModules( 'ext.wikia.TemplateClassification.EditFormMessages' );
 		}
 		return true;
 	}
