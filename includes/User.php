@@ -5050,9 +5050,7 @@ class User {
 	 * @return bool
 	 */
 	private function shouldOptionBeStored( $key, $value ) {
-		global $wgGlobalUserProperties;
 		if (
-			( is_array( $wgGlobalUserProperties ) && in_array( $key, $wgGlobalUserProperties ) ) ||
 			( is_null( self::getDefaultOption( $key ) ) && !( $value === false || is_null($value) ) ) ||
 			$value != self::getDefaultOption( $key )
 		) {
