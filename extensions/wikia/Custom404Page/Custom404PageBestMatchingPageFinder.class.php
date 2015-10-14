@@ -116,8 +116,8 @@ class Custom404PageBestMatchingPageFinder {
 			$queryResults = $this->query( $titleText, $namespaceId );
 
 			if ( $queryResults['numFound'] === 0 ) {
-				// Strip last "word" form the title
-				$titleTextStripped = preg_replace( '/\\W*\\w+\\W*$/', '', $titleText );
+				// Strip last (maybe incomplete?) word form the title
+				$titleTextStripped = trim( preg_replace( '/\\W*\\w+\\W*$/', '', $titleText ) );
 				if ( !empty( $titleTextStripped ) ) {
 					$queryResults = $this->query( $titleTextStripped, $namespaceId );
 				}
@@ -125,7 +125,12 @@ class Custom404PageBestMatchingPageFinder {
 
 			if ( $queryResults['numFound'] < self::MAX_SOLR_RESULTS ) {
 				$titleText = self::findTheBestMatchingTitleText( $titleText, $queryResults['titles'] );
-				return Title::newFromText( $titleText );
+				if ( $titleText ) {
+					$title = Title::newFromText( $titleText );
+					if ( $title->exists() ) {
+						return $title;
+					}
+				}
 			}
 
 		}
