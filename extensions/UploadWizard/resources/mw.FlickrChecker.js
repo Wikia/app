@@ -2,7 +2,7 @@
 
 mw.FlickrChecker = {
 
-	apiUrl: 'http://api.flickr.com/services/rest/?',
+	apiUrl: 'https://api.flickr.com/services/rest/?',
 	apiKey: 'e9d8174a79c782745289969a45d350e8',
 	licenseList: new Array(),
 	
