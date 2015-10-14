@@ -62,7 +62,7 @@ class Custom404PageBestMatchingPageFinder {
 			$lowerCase = mb_strtolower( $suggestedTitle );
 			$words = trim( preg_replace( '/\\W+/u', ' ', $lowerCase ) );
 
-			if ( $originalLowerCase == $lowerCase ) {
+			if ( $originalLowerCase === $lowerCase ) {
 				$mismatchingCaseTitles[] = $suggestedTitle;
 			}
 

@@ -128,7 +128,7 @@ class SEOTweaksHooksHelper {
 	static public function onArticleViewHeader( &$article, &$outputDone, &$pcache ) {
 		global $wgEnableCustom404PageExt;
 
-		if ( $wgEnableCustom404PageExt ) {
+		if ( !empty( $wgEnableCustom404PageExt ) ) {
 			// Custom404Page does the same, just better
 			return true;
 		}

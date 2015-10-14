@@ -1826,7 +1826,7 @@ $wgEnableFliteTagExt = false;
  *
  * Enables custom 404 page for missing articles suggesting the closest matching article
  */
-$wgEnableCustom404PageExt = true;
+$wgEnableCustom404PageExt = false;
 
 /**
  * @name $wgEnableRobotsTxtExt
