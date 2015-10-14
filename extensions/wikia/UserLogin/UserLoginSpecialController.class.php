@@ -616,7 +616,9 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 		}
 
 		if ( !empty( array_intersect( F::app()->wg->AccountAdminGroups, $user->getGroups() ) ) ) {
-			\Wikia\Logger\WikiaLogger::instance()->warning("Junior helper cannot change account info");
+			\Wikia\Logger\WikiaLogger::instance()->warning(
+				sprintf( "Junior helper cannot change account info - user: %s", $user->getName() )
+			);
 
 			$this->setErrorResponse( 'userlogin-account-admin-error' );
 			return;
