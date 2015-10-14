@@ -5,9 +5,9 @@
  * @addtogroup Languages
  */
 
-$messages = array();
+$messages = [];
 
-$messages['en'] = array(
+$messages['en'] = [
 	'wikifactory-desc' => 'Store MediaWiki settings in database',
 	'wikifactorypagetitle' => 'Wiki Factory Configurator',
 	'wikifactory' => 'Wiki Factory Configurator',
@@ -127,6 +127,7 @@ $messages['en'] = array(
 	"closed-wiki-dump-noexists" => "This wiki has been closed. Content dump will be available within 24 hours. Please check back.",
 	"closed-wiki-create-wiki" => "Create a new wiki",
 	"closed-wiki-policy" => "View Wikia's Close Policy",
+	"closed-wiki-policy-url" => "http://community.wikia.com/wiki/Community_Central:Closed_Wikia",
 	"closed-wiki-invalid-redirect-url" => "Error: Redirect URL does not point to any existing wiki: \"\$1\"",
 	"closed-create-dump" => "Create a database dump",
 	"closed-create-image-archive" => "Create an image archive",
@@ -145,7 +146,7 @@ $messages['en'] = array(
 	'newwikisgraph-wikis-created' => "wikis created",
 	'newwikisgraph-param-all' => 'All',
 	'newwikisgraph-param-other' => 'Other',
-);
+];
 
 /** Message documentation (Message documentation)
  * @author EugeneZelenko
@@ -158,7 +159,7 @@ $messages['en'] = array(
  * @author Siebrand
  * @author Umherirrender
  */
-$messages['qqq'] = array(
+$messages['qqq'] = [
 	'wikifactory-desc' => '{{desc}}',
 	'wf_city_url' => '{{Identical|Address}}',
 	'wf_city_id' => '{{Identical|ID}}',
@@ -218,14 +219,15 @@ The fact that these are maximum values is explained by [[Wikia:Awc-metrics-fewer
 	'closed-delete-images' => '{{Identical|Delete image}}',
 	'closed-hide-dumps' => 'The exact meaning is: "Hide database dump and hide image dump", i.e. both are dumps.',
 	'closed-reason' => '{{Identical|Reason}}',
+	'closed-wiki-policy-url' => 'HTTP URL pointing to the close policy on the language\'s community portal',
 	'newwikisgraph' => 'Title of a special page',
 	'newwikisgraph-param-all' => '{{Identical|All}}',
-);
+];
 
 /** Afrikaans (Afrikaans)
  * @author Naudefj
  */
-$messages['af'] = array(
+$messages['af'] = [
 	'wikifactorypagetitle' => 'Wiki Factory Instellingsbeheer',
 	'wikifactory' => 'Wiki Factory Instellingsbeheer',
 	'closewiki' => 'Sluit Wiki',
@@ -334,16 +336,16 @@ Kom asseblief later terug.",
 	'closed-confirm-btn' => 'Bevestig sluiting',
 	'closed-redirect-alert' => 'Verskaf asseblief die URL vir die aanstuur!',
 	'closed-reason' => 'Rede:',
-);
+];
 
 /** Aragonese (aragonés)
  * @author Juanpabl
  */
-$messages['an'] = array(
+$messages['an'] = [
 	'wikifactory-label-variables' => 'Variables',
 	'wikifactory-label-actions' => 'Accions',
 	'closed-reason' => 'Razón:',
-);
+];
 
 /** Arabic (العربية)
  * @author Achraf94
@@ -352,7 +354,7 @@ $messages['an'] = array(
  * @author Meno25
  * @author OsamaK
  */
-$messages['ar'] = array(
+$messages['ar'] = [
 	'wikifactorypagetitle' => 'أداة إعداد ويكيفاكتوري',
 	'wikifactory' => 'أداة إعداد ويكيفاكتوري',
 	'closewiki' => 'إغلاق الويكي',
@@ -480,13 +482,13 @@ $messages['ar'] = array(
 	'newwikisgraph-wikis-created' => 'الويكيات المنشئة',
 	'newwikisgraph-param-all' => 'الكل',
 	'newwikisgraph-param-other' => 'أخرى',
-);
+];
 
 /** Azerbaijani (azərbaycanca)
  * @author Cekli829
  * @author Vago
  */
-$messages['az'] = array(
+$messages['az'] = [
 	'wf_city_url' => 'Ünvan',
 	'wf_city_public' => 'Status',
 	'wf_city_lang' => 'Dil',
@@ -516,12 +518,12 @@ $messages['az'] = array(
 	'closed-reason' => 'Səbəb:',
 	'newwikisgraph-param-all' => 'Bütün',
 	'newwikisgraph-param-other' => 'Digər',
-);
+];
 
 /** Bashkir (башҡортса)
  * @author ҒатаУлла
  */
-$messages['ba'] = array(
+$messages['ba'] = [
 	'closewiki' => 'Викины ябыу',
 	'wf_city_url' => 'Адрес',
 	'wf_city_id' => 'id',
@@ -550,12 +552,12 @@ $messages['ba'] = array(
 	'right-wikifactory' => 'Викиның эске көйләүҙәрен үҙгәртергә',
 	'wikifactory-domain-edit' => 'Был URL-ды үҙгәртергә',
 	'wikifactory-domain-remove' => "викинан был URL'ды юйырға",
-);
+];
 
 /** Bavarian (Boarisch)
  * @author Mucalexx
  */
-$messages['bar'] = array(
+$messages['bar'] = [
 	'wikifactorypagetitle' => 'Wiki Factory-Kónfigurator',
 	'wikifactory' => 'Wiki Factory-Kónfigurator',
 	'closewiki' => 'Wiki schliassen.',
@@ -614,30 +616,30 @@ $messages['bar'] = array(
 	'awc-metrics-one-week' => 'vur < 1 Wocher erstejd',
 	'awc-metrics-two-weeks' => 'vur < 2 Wocher erstejd',
 	'closed-wiki-create-wiki' => 'A neichs Wiki erstejn',
-);
+];
 
 /** Southern Balochi (بلوچی مکرانی)
  * @author Baloch Afghanistan
  */
-$messages['bcc'] = array(
+$messages['bcc'] = [
 	'wf_cc_name' => 'تهر',
 	'awc-metrics-category' => 'و تهر',
-);
+];
 
 /** Belarusian (беларуская)
  * @author Тест
  */
-$messages['be'] = array(
+$messages['be'] = [
 	'wf_cc_name' => 'Катэгорыя',
 	'awc-metrics-close' => 'Закрыць',
 	'closed-reason' => 'Прычына:',
-);
+];
 
 /** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)
  * @author EugeneZelenko
  * @author Jim-by
  */
-$messages['be-tarask'] = array(
+$messages['be-tarask'] = [
 	'wikifactorypagetitle' => 'Канфігурацыя Wiki Factory',
 	'wikifactory' => 'Канфігурацыя Wiki Factory',
 	'closewiki' => 'Закрыць Вікі',
@@ -739,6 +741,7 @@ $messages['be-tarask'] = array(
 	'closed-wiki-dump-noexists' => 'Гэтая вікі была закрытая. Зьмест копіі будзе даступны на працягу 24 гадзінаў. Калі ласка, праверце.',
 	'closed-wiki-create-wiki' => 'Стварыць новую вікі',
 	'closed-wiki-policy' => 'Паказаць правілы закрыцьця вікі ў Wikia',
+	'closed-wiki-policy-url' => 'http://ru.community.wikia.com/wiki/Викия:Закрытие_вики',
 	'closed-create-dump' => 'Стварыць копію базы зьвестак',
 	'closed-create-image-archive' => 'Стварыць архіў файлаў',
 	'closed-delete-database-images' => 'Выдаліць базу зьвестак і файлаў',
@@ -749,14 +752,14 @@ $messages['be-tarask'] = array(
 	'closed-confirm-btn' => 'Пацьвердзіць закрыцьцё',
 	'closed-redirect-alert' => 'Калі ласка, устаўце новы URL-адрас ці перанакіраваньне!',
 	'closed-reason' => 'Прычына:',
-);
+];
 
 /** Bulgarian (български)
  * @author DCLXVI
  * @author Spiritia
  * @author Stanqo
  */
-$messages['bg'] = array(
+$messages['bg'] = [
 	'wikifactorypagetitle' => 'Уики конфигуратор',
 	'wikifactory' => 'Уики конфигуратор',
 	'closewiki' => 'Затваряне на уикито',
@@ -820,16 +823,16 @@ $messages['bg'] = array(
 	'closed-delete-images' => 'Изтриване на картинките',
 	'closed-reason' => 'Причина:',
 	'newwikisgraph-param-all' => 'Всички',
-);
+];
 
 /** Banjar (Bahasa Banjar)
  * @author Ezagren
  */
-$messages['bjn'] = array(
+$messages['bjn'] = [
 	'wf_city_created' => 'Sudah diulah',
 	'wf_city_lang' => 'Bahasa',
 	'wikifactory-label-actions' => 'Tindakan',
-);
+];
 
 /** Breton (brezhoneg)
  * @author Fohanno
@@ -837,7 +840,7 @@ $messages['bjn'] = array(
  * @author Gwenn-Ael
  * @author Y-M D
  */
-$messages['br'] = array(
+$messages['br'] = [
 	'wikifactorypagetitle' => 'Keflunier Wiki Factory',
 	'wikifactory' => 'Keflunier Wiki Factory',
 	'closewiki' => 'Klozañ Wiki',
@@ -946,6 +949,7 @@ $messages['br'] = array(
 	'closed-wiki-dump-noexists' => "Klozet eo bet ar Wiki-mañ. Un dump eus an endalc'h a c'hallor kaout a-benn1 devezh. Distroit da welet diwezhatoc'h.",
 	'closed-wiki-create-wiki' => 'Krouiñ ur wiki nevez',
 	'closed-wiki-policy' => 'Gwelet politikerezh klozañ Wikia',
+	'closed-wiki-policy-url' => 'http://communaute.wikia.com/wiki/Wikia_fermé',
 	'closed-create-dump' => 'Krouiñ un dump eus an diaz roadennoù',
 	'closed-create-image-archive' => 'Krouiñ un diell skeudennoù',
 	'closed-delete-database-images' => 'Dilemel an diaz roadennoù hag ar skeudennoù',
@@ -959,12 +963,12 @@ $messages['br'] = array(
 	'newwikisgraph-wikis-created' => 'wikioù krouet',
 	'newwikisgraph-param-all' => 'An holl',
 	'newwikisgraph-param-other' => 'All',
-);
+];
 
 /** Bosnian (bosanski)
  * @author CERminator
  */
-$messages['bs'] = array(
+$messages['bs'] = [
 	'closewiki' => 'Zatvori wiki',
 	'wf_city_url' => 'Adresa',
 	'wf_city_title' => 'Naslov',
@@ -998,7 +1002,7 @@ $messages['bs'] = array(
 	'awc-metrics-db-size' => 'Veličina DB',
 	'awc-metrics-images' => 'Slike',
 	'awc-metrics-close' => 'Zatvori',
-);
+];
 
 /** Catalan (català)
  * @author Alvaro Vidal-Abarca
@@ -1008,7 +1012,7 @@ $messages['bs'] = array(
  * @author SMP
  * @author Unapersona
  */
-$messages['ca'] = array(
+$messages['ca'] = [
 	'wikifactorypagetitle' => 'Configurador de fàbrica de wiki',
 	'wikifactory' => 'Configurador de fàbrica de wiki',
 	'closewiki' => 'Tanca el wiki',
@@ -1137,13 +1141,13 @@ $messages['ca'] = array(
 	'newwikisgraph-wikis-created' => 'wikis creadas',
 	'newwikisgraph-param-all' => 'Tots',
 	'newwikisgraph-param-other' => 'Altres',
-);
+];
 
 /** Chechen (нохчийн)
  * @author Sasan700
  * @author Умар
  */
-$messages['ce'] = array(
+$messages['ce'] = [
 	'wikifactorypagetitle' => 'Конфигуратор Wiki Factory',
 	'wikifactory' => 'Конфигуратор Wiki Factory',
 	'closewiki' => 'ДӀачӀагӀа вики',
@@ -1228,14 +1232,14 @@ $messages['ce'] = array(
 	'newwikisgraph-wikis-created' => 'кхоьллина вики',
 	'newwikisgraph-param-all' => 'Массо',
 	'newwikisgraph-param-other' => 'Кхин',
-);
+];
 
 /** Central Kurdish (کوردیی ناوەندی)
  */
-$messages['ckb'] = array(
+$messages['ckb'] = [
 	'wf_cc_name' => 'پۆل',
 	'closed-reason' => 'هۆکار:',
-);
+];
 
 /** Czech (čeština)
  * @author Chmee2
@@ -1243,7 +1247,7 @@ $messages['ckb'] = array(
  * @author Dontlietome7
  * @author Mr. Richard Bolla
  */
-$messages['cs'] = array(
+$messages['cs'] = [
 	'wikifactorypagetitle' => 'Wiki-Factory konfigurátor',
 	'wikifactory' => 'Wiki-Factory konfigurátor',
 	'closewiki' => 'Zavřít wiki',
@@ -1370,22 +1374,22 @@ $messages['cs'] = array(
 	'newwikisgraph-wikis-created' => 'wiki vytvořena',
 	'newwikisgraph-param-all' => 'Vše',
 	'newwikisgraph-param-other' => 'Ostatní',
-);
+];
 
 /** Kashubian (kaszëbsczi)
  */
-$messages['csb'] = array(
+$messages['csb'] = [
 	'wf_city_title' => 'Titel',
 	'wf_city_lang' => 'Jãzëk',
 	'wf_cc_name' => 'Kategòrëjô',
 	'wikifactory-label-actions' => 'Dzéjania',
-);
+];
 
 /** Welsh (Cymraeg)
  * @author Lloffiwr
  * @author Thefartydoctor
  */
-$messages['cy'] = array(
+$messages['cy'] = [
 	'wf_city_url' => 'Cyfeiriad',
 	'wf_city_title' => 'Teitl',
 	'wf_city_founding_user' => 'Sefydlydd',
@@ -1416,13 +1420,13 @@ $messages['cy'] = array(
 	'closed-delete-images' => "Dileu'r delweddau",
 	'closed-confirm-btn' => "Cadarnhau'r cau",
 	'closed-reason' => 'Rheswm',
-);
+];
 
 /** Danish (dansk)
  * @author Christian List
  * @author Emilkris33
  */
-$messages['da'] = array(
+$messages['da'] = [
 	'wikifactorypagetitle' => 'Wiki Factory Konfigurator',
 	'wikifactory' => 'Wiki Factory Konfigurartor',
 	'closewiki' => 'Luk Wiki',
@@ -1451,7 +1455,7 @@ $messages['da'] = array(
 	'closewiki-check-and-confirm' => 'Check wikier og bekræft drift',
 	'closewiki-redirect-to' => 'Omdirigerer til',
 	'closewiki-message' => 'domænenavn $1',
-);
+];
 
 /** German (Deutsch)
  * @author ChrisiPK
@@ -1472,7 +1476,7 @@ $messages['da'] = array(
  * @author Umherirrender
  * @author Yottabyte
  */
-$messages['de'] = array(
+$messages['de'] = [
 	'wikifactory-desc' => 'Speichert die MediaWiki-Einstellungen in eine Datenbank',
 	'wikifactorypagetitle' => 'Wiki Factory: Konfigurator',
 	'wikifactory' => 'Wiki-Factory-Konfigurator',
@@ -1588,6 +1592,7 @@ $messages['de'] = array(
 	'closed-wiki-dump-noexists' => 'Dieses Wiki wurde geschlossen. Der Inhaltsdump wird innerhalb von 24 Stunden zur Verfügung stehen. Bitte sieh dann noch einmal nach.',
 	'closed-wiki-create-wiki' => 'Ein neues Wiki erstellen',
 	'closed-wiki-policy' => 'Zeige Wikias Schließungs-Richtlinie',
+	'closed-wiki-policy-url' => 'http://de.community.wikia.com/wiki/Geschlossene_Wikia',
 	'closed-wiki-invalid-redirect-url' => 'Fehler: Weiterleitungs-URL zeigt nicht auf ein vorhandenes Wiki: „$1“',
 	'closed-create-dump' => 'Einen Datenbank-Dump erzeugen',
 	'closed-create-image-archive' => 'Ein Bild-Archiv erstellen',
@@ -1604,14 +1609,14 @@ $messages['de'] = array(
 	'newwikisgraph-wikis-created' => 'Neue Wikis',
 	'newwikisgraph-param-all' => 'Alle',
 	'newwikisgraph-param-other' => 'Andere',
-);
+];
 
 /** German (formal address) (Deutsch (Sie-Form)‎)
  * @author Geitost
  * @author LWChris
  * @author Umherirrender
  */
-$messages['de-formal'] = array(
+$messages['de-formal'] = [
 	'wikifactory-label-hubs' => 'Hubs',
 	'wikifactory-label-domains' => 'Domains',
 	'wikifactory-label-tags' => 'Tags',
@@ -1619,14 +1624,14 @@ $messages['de-formal'] = array(
 	'closed-wiki-dump-exists' => 'Sie können Ihre Inhalte herunterladen, wenn Sie möchten.<br />(Wenn Ihr Wiki kürzlich geschlossen worden ist, kann es eine kurze Weile dauern, bis die Daten erstellt werden.)', # Fuzzy
 	'closed-wiki-dump-noexists' => 'Dieses Wiki wurde geschlossen. Der Inhaltsdump wird innerhalb von 24 Stunden zur Verfügung stehen. Bitte sehen Sie dann noch einmal nach.',
 	'closed-redirect-alert' => 'Bitte geben Sie die neue URL der Weiterleitung ein!',
-);
+];
 
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
  * @author Marmase
  * @author Mirzali
  */
-$messages['diq'] = array(
+$messages['diq'] = [
 	'closewiki' => 'Wiki racnê',
 	'wf_city_url' => 'Adrese',
 	'wf_city_id' => 'id',
@@ -1685,7 +1690,7 @@ $messages['diq'] = array(
 	'newwikisgraph-wikis-created' => 'Wikiy vıraziyê',
 	'newwikisgraph-param-all' => 'Pêro',
 	'newwikisgraph-param-other' => 'Zewbi',
-);
+];
 
 /** Greek (Ελληνικά)
  * @author Crazymadlover
@@ -1693,7 +1698,7 @@ $messages['diq'] = array(
  * @author Omnipaedista
  * @author Περίεργος
  */
-$messages['el'] = array(
+$messages['el'] = [
 	'closewiki' => 'Κλείσιμο του Wiki',
 	'wf_city_url' => 'Διεύθυνση',
 	'wf_city_title' => 'Τίτλος',
@@ -1726,15 +1731,15 @@ $messages['el'] = array(
 	'awc-metrics-articles' => 'Λήμματα',
 	'awc-metrics-edits' => 'Επεξεργασίες',
 	'awc-metrics-images' => 'Εικόνες',
-);
+];
 
 /** British English (British English)
  * @author Captaindogfish
  */
-$messages['en-gb'] = array(
+$messages['en-gb'] = [
 	'wikifactory-label-reason' => "'''Reason''' (optional, reason text or ticket number):",
 	'wikifactory-label-domain' => "'''Domain''':",
-);
+];
 
 /** Spanish (español)
  * @author Armando-Martin
@@ -1745,7 +1750,7 @@ $messages['en-gb'] = array(
  * @author Translationista
  * @author VegaDark
  */
-$messages['es'] = array(
+$messages['es'] = [
 	'wikifactory-desc' => 'Almacena la configuración MediaWiki en la base de datos',
 	'wikifactorypagetitle' => 'Configurador de Wiki Factory',
 	'wikifactory' => 'Configurador de Wiki Factory',
@@ -1877,12 +1882,12 @@ $messages['es'] = array(
 	'newwikisgraph-wikis-created' => 'wikis creados',
 	'newwikisgraph-param-all' => 'Todos',
 	'newwikisgraph-param-other' => 'Otro',
-);
+];
 
 /** Estonian (eesti)
  * @author Hendrik
  */
-$messages['et'] = array(
+$messages['et'] = [
 	'wikifactory-label-close' => 'Sulge',
 	'awc-metrics-db-size' => 'Andmebaasi suurus',
 	'awc-metrics-images' => 'Pildid',
@@ -1890,12 +1895,12 @@ $messages['et'] = array(
 	'awc-metrics-close' => 'Sulge',
 	'awc-metrics-this-month' => 'see kuu',
 	'awc-metrics-exact-match' => 'täpne vaste',
-);
+];
 
 /** Basque (euskara)
  * @author An13sa
  */
-$messages['eu'] = array(
+$messages['eu'] = [
 	'closewiki' => 'Wikia itxi',
 	'wf_city_url' => 'Helbidea',
 	'wf_city_title' => 'Izenburua',
@@ -1928,7 +1933,7 @@ $messages['eu'] = array(
 	'awc-metrics-closed' => 'itxita',
 	'awc-metrics-removed' => 'ezabatua',
 	'closed-reason' => 'Arrazoia:',
-);
+];
 
 /** Persian (فارسی)
  * @author Alirezaaa
@@ -1939,7 +1944,7 @@ $messages['eu'] = array(
  * @author Reza1615
  * @author ZxxZxxZ
  */
-$messages['fa'] = array(
+$messages['fa'] = [
 	'wf_city_url' => 'نشانی',
 	'wf_city_id' => 'شناسه',
 	'wf_city_title' => 'عنوان',
@@ -1979,7 +1984,7 @@ $messages['fa'] = array(
 	'closed-reason' => 'دلیل:',
 	'newwikisgraph-param-all' => 'همه',
 	'newwikisgraph-param-other' => 'دیگر',
-);
+];
 
 /** Finnish (suomi)
  * @author Centerlink
@@ -1989,7 +1994,7 @@ $messages['fa'] = array(
  * @author Silvonen
  * @author Tofu II
  */
-$messages['fi'] = array(
+$messages['fi'] = [
 	'closewiki' => 'Sulje wiki',
 	'wf_city_url' => 'Osoite',
 	'wf_city_title' => 'Otsikko',
@@ -2041,7 +2046,7 @@ $messages['fi'] = array(
 	'closed-hide-dumps' => 'Piilota tietokanta ja kuvavedos',
 	'closed-confirm-btn' => 'Vahvista sulkeminen',
 	'closed-reason' => 'Syy:',
-);
+];
 
 /** French (français)
  * @author Crochet.david
@@ -2052,7 +2057,7 @@ $messages['fi'] = array(
  * @author Verdy p
  * @author Wyz
  */
-$messages['fr'] = array(
+$messages['fr'] = [
 	'wikifactory-desc' => 'Stocker les paramètres de MédiaWiki dans la base de données',
 	'wikifactorypagetitle' => "Configurateur de l'usine à wikis",
 	'wikifactory' => "Configurateur de l'usine à wikis",
@@ -2169,6 +2174,7 @@ $messages['fr'] = array(
 	'closed-wiki-dump-noexists' => 'Ce wiki a été fermé. Un dump du contenu sera disponible dans les 24 heures. Revenez plus tard.',
 	'closed-wiki-create-wiki' => 'Créer un nouveau wiki',
 	'closed-wiki-policy' => 'Voir la politique de fermeture de Wikia',
+	'closed-wiki-policy-url' => 'http://communaute.wikia.com/wiki/Wikia_fermé',
 	'closed-wiki-invalid-redirect-url' => 'Erreur : L’URL de redirection ne pointe pas vers un wiki existant : « $1 »',
 	'closed-create-dump' => 'Créer un dump de la base de données',
 	'closed-create-image-archive' => 'Créer une archive des images',
@@ -2185,25 +2191,25 @@ $messages['fr'] = array(
 	'newwikisgraph-wikis-created' => 'wikis créés',
 	'newwikisgraph-param-all' => 'Tout',
 	'newwikisgraph-param-other' => 'Autre',
-);
+];
 
 /** Western Frisian (Frysk)
  * @author Robin0van0der0vliet
  */
-$messages['fy'] = array(
+$messages['fy'] = [
 	'wf_city_lang' => 'Taal',
 	'wf_cc_name' => 'Kategory',
 	'wikifactory-label-close' => 'Slute',
 	'awc-metrics-close' => 'Slute',
 	'awc-metrics-close-action' => 'slute',
 	'closed-reason' => 'Reden:',
-);
+];
 
 /** Galician (galego)
  * @author Toliño
  * @author Vivaelcelta
  */
-$messages['gl'] = array(
+$messages['gl'] = [
 	'wikifactorypagetitle' => 'Configurador da fábrica de wikis',
 	'wikifactory' => 'Configurador da fábrica de wikis',
 	'closewiki' => 'Pechar o wiki',
@@ -2331,27 +2337,27 @@ $messages['gl'] = array(
 	'newwikisgraph-wikis-created' => 'wikis creados',
 	'newwikisgraph-param-all' => 'Todos',
 	'newwikisgraph-param-other' => 'Outro',
-);
+];
 
 /** Manx (Gaelg)
  * @author Shimmin Beg
  */
-$messages['gv'] = array(
+$messages['gv'] = [
 	'closed-reason' => 'Fa:',
-);
+];
 
 /** Hausa (Hausa)
  */
-$messages['ha'] = array(
+$messages['ha'] = [
 	'wf_cc_name' => 'Rukuni',
 	'closed-reason' => 'Dalili:',
-);
+];
 
 /** Hebrew (עברית)
  * @author 0ftal
  * @author Guycn2
  */
-$messages['he'] = array(
+$messages['he'] = [
 	'wikifactory-label-close' => 'סגירה',
 	'wikifactory-label-reason' => "'''סיבה''' (אופציונלי, הסיבה או מספר הכרטיס):",
 	'wikifactory-label-domain' => "'''דומיין''':",
@@ -2382,14 +2388,14 @@ $messages['he'] = array(
 	'closed-wiki-dump-exists' => 'אנא לחץ על כאן אם ברצונך לשחזר את התוכן שלך', # Fuzzy
 	'closed-wiki-dump-noexists' => 'ויקי זה נסגר. גיבוי התוכן יהיה זמין תוך 24 שעות. אנא בדוק בקרוב.',
 	'closed-wiki-create-wiki' => 'צור אתר ויקי חדש',
-);
+];
 
 /** Hungarian (magyar)
  * @author Dani
  * @author Glanthor Reviol
  * @author TK-999
  */
-$messages['hu'] = array(
+$messages['hu'] = [
 	'wikifactorypagetitle' => 'Wikigyár beállító',
 	'wikifactory' => 'Wikigyár beállító',
 	'closewiki' => 'Wiki bezárása',
@@ -2497,12 +2503,12 @@ $messages['hu'] = array(
 	'newwikisgraph-wikis-created' => 'létrehozott wiki',
 	'newwikisgraph-param-all' => 'Összes',
 	'newwikisgraph-param-other' => 'Egyéb',
-);
+];
 
 /** Armenian (Հայերեն)
  * @author Pandukht
  */
-$messages['hy'] = array(
+$messages['hy'] = [
 	'awc-metrics-two-weeks' => 'Ստեղծված է < 2 շաբաթ առաջ',
 	'awc-metrics-three-weeks' => 'Ստեղծված է < 3 շաբաթ առաջ',
 	'awc-metrics-one-months' => 'Ստեղծված է < 1 ամիս առաջ',
@@ -2512,12 +2518,12 @@ $messages['hy'] = array(
 	'awc-metrics-by-email' => 'կամ (մասնակցի էլ. փոստը)՝',
 	'awc-metrics-by-user' => 'հիմնված (մասնակցի անուն) մասնակցի կողմից՝',
 	'awc-metrics-by-domains' => 'և դոմենը բովանդակում է՝',
-);
+];
 
 /** Interlingua (interlingua)
  * @author McDutchie
  */
-$messages['ia'] = array(
+$messages['ia'] = [
 	'wikifactorypagetitle' => 'Configurator del fabrica de wikis',
 	'wikifactory' => 'Configurator del fabrica de wikis',
 	'closewiki' => 'Clauder wiki',
@@ -2643,7 +2649,7 @@ $messages['ia'] = array(
 	'newwikisgraph-wikis-created' => 'wikis create',
 	'newwikisgraph-param-all' => 'Totes',
 	'newwikisgraph-param-other' => 'Alteres',
-);
+];
 
 /** Indonesian (Bahasa Indonesia)
  * @author Aldnonymous
@@ -2652,7 +2658,7 @@ $messages['ia'] = array(
  * @author Irwangatot
  * @author Kenrick95
  */
-$messages['id'] = array(
+$messages['id'] = [
 	'wikifactorypagetitle' => 'Penyesuai Wiki Factory',
 	'wikifactory' => 'Penyesuai Wiki Factory',
 	'closewiki' => 'Menutup Wiki',
@@ -2771,12 +2777,12 @@ $messages['id'] = array(
 	'closed-confirm-btn' => 'Konfirmasi penutupan',
 	'closed-redirect-alert' => 'Silakan memasukkan pengalihan URL baru !',
 	'closed-reason' => 'Alasan:',
-);
+];
 
 /** Igbo (Igbo)
  * @author Ukabia
  */
-$messages['ig'] = array(
+$messages['ig'] = [
 	'wf_cc_name' => 'Ébéonọr',
 	'wikifactory-label-actions' => 'Mmèmé',
 	'wikifactory-label-close' => 'Mèchí',
@@ -2790,14 +2796,14 @@ $messages['ig'] = array(
 	'awc-metrics-last-month' => '{{PLURAL:$1|önwa|$1 önwa}} gafere',
 	'closed-wiki' => 'Wiki mechịrị',
 	'closed-reason' => 'Mgbághapụtà:',
-);
+];
 
 /** Italian (italiano)
  * @author Darth Kule
  * @author Gifh
  * @author HalphaZ
  */
-$messages['it'] = array(
+$messages['it'] = [
 	'wikifactorypagetitle' => 'Configuratore Wiki Factory',
 	'wikifactory' => 'Configuratore Wiki Factory',
 	'closewiki' => 'Chiudi il wiki',
@@ -2857,7 +2863,7 @@ $messages['it'] = array(
 	'awc-metrics-exact-match' => 'corrispondenza esatta',
 	'closed-wiki-create-wiki' => 'Crea un nuovo wiki',
 	'closed-reason' => 'Motivo:',
-);
+];
 
 /** Japanese (日本語)
  * @author Aotake
@@ -2867,7 +2873,7 @@ $messages['it'] = array(
  * @author Plover-Y
  * @author Yanajin66
  */
-$messages['ja'] = array(
+$messages['ja'] = [
 	'closewiki' => 'ウィキを閉じる',
 	'wf_city_url' => 'アドレス',
 	'wf_city_id' => 'ID',
@@ -2918,28 +2924,29 @@ $messages['ja'] = array(
 	'closed-delete-database-images' => 'データベースとイメージの削除',
 	'closed-delete-images' => 'イメージの削除',
 	'closed-hide-dumps' => 'データベースとイメージダンプを非表示',
+	'closed-wiki-policy-url' => 'http://ja.community.wikia.com/wiki/コミュニティセントラル:クローズされたウィキア',
 	'closed-reason' => '理由：',
 	'newwikisgraph-param-all' => 'すべて',
-);
+];
 
 /** Georgian (ქართული)
  * @author BRUTE
  */
-$messages['ka'] = array(
+$messages['ka'] = [
 	'awc-metrics-images' => 'სურათები',
-);
+];
 
 /** Khowar (کھوار)
  * @author Rachitrali
  */
-$messages['khw'] = array(
+$messages['khw'] = [
 	'closed-reason' => 'وجہ',
-);
+];
 
 /** Kannada (ಕನ್ನಡ)
  * @author Nayvik
  */
-$messages['kn'] = array(
+$messages['kn'] = [
 	'wf_city_url' => 'ವಿಳಾಸ',
 	'wf_city_title' => 'ಶೀರ್ಷಿಕೆ',
 	'wf_city_founding_user' => 'ಸಂಸ್ಥಾಪಕ',
@@ -2958,14 +2965,14 @@ $messages['kn'] = array(
 	'awc-metrics-close' => 'ಮುಚ್ಚಿ',
 	'awc-metrics-close-action' => 'ಮುಚ್ಚಿ',
 	'closed-reason' => 'ಕಾರಣ:',
-);
+];
 
 /** Korean (한국어)
  * @author Cafeinlove
  * @author Miri-Nae
  * @author 아라
  */
-$messages['ko'] = array(
+$messages['ko'] = [
 	'closewiki' => '위키 폐쇄',
 	'wf_city_url' => '주소',
 	'wf_city_id' => 'ID',
@@ -3016,13 +3023,13 @@ $messages['ko'] = array(
 	'closed-wiki-create-wiki' => '새 위키 만들기',
 	'closed-wiki-policy' => '위키아 폐쇄 정책 보기',
 	'closed-reason' => '이유:',
-);
+];
 
 /** Karachay-Balkar (къарачай-малкъар)
  * @author Iltever
  * @author Къарачайлы
  */
-$messages['krc'] = array(
+$messages['krc'] = [
 	'wikifactorypagetitle' => 'Wiki Factory конфигуратор',
 	'wikifactory' => 'Wiki Factory конфигуратор',
 	'closewiki' => 'Викини джаб',
@@ -3118,6 +3125,7 @@ $messages['krc'] = array(
 	'closed-wiki-dump-noexists' => 'Бу вики джабылгъан этгенди. Ичиндегилени списогу 24 сагъатны ичинде кёрюннюкдю. Кечирек киригиз.',
 	'closed-wiki-create-wiki' => 'Джангы вики къура',
 	'closed-wiki-policy' => 'Викини джабыууну джорукъларына къара',
+	'closed-wiki-policy-url' => 'http://ru.community.wikia.com/wiki/Викия:Закрытие_вики',
 	'closed-create-dump' => 'Билгилени базасыны дампын къура',
 	'closed-create-image-archive' => 'Суратланы архивлерин къура',
 	'closed-delete-database-images' => 'Билгилени базасы бла суратланы къорат',
@@ -3128,18 +3136,19 @@ $messages['krc'] = array(
 	'closed-confirm-btn' => 'Джабыуну къабыл эт',
 	'closed-redirect-alert' => 'Джангыдан джибериуню джангы URL адресин джазыгъыз!',
 	'closed-reason' => 'Чурум:',
-);
+];
 
 /** Colognian (Ripoarisch)
  * @author Purodha
  */
-$messages['ksh'] = array(
+$messages['ksh'] = [
 	'wf_city_title' => 'Tittel',
 	'awc-metrics-nbr-result' => 'Erus kütt:',
 	'closed-wiki-dump-exists' => 'Do kanns der Ennhald vun däm Wiki afroofe.', # Fuzzy
 	'closed-wiki-dump-noexists' => 'Dat Wiki heh es zohjemaat woode. Däm singe Enhalld sullt innerhallf vun 24 Shtunde als e Aschiiv paraat shtonn. Bes esu joot, un loor spääder noch end donoh.',
 	'closed-wiki-create-wiki' => 'E neu Wiki opmaache',
 	'closed-wiki-policy' => 'Donn Wikia sing Reschlinnije för et Zohmaache aanzeije',
+	'closed-wiki-policy-url' => 'http://de.community.wikia.com/wiki/Geschlossene_Wikia',
 	'closed-create-dump' => 'Donn de Daatebangk en e Aschiiv ußlaarere',
 	'closed-create-image-archive' => 'Donn de Bellder en a Aschiiv ußlaarere',
 	'closed-delete-database-images' => 'Donn de Bellder un de Daatebangk fottschmiiße',
@@ -3150,19 +3159,19 @@ $messages['ksh'] = array(
 	'closed-confirm-btn' => 'Zohmaache!',
 	'closed-redirect-alert' => 'Jif de neu URL för noh ömzeleide aan!',
 	'closed-reason' => 'Jrond:',
-);
+];
 
 /** Latin (Latina)
  * @author Rsa23899
  */
-$messages['la'] = array(
+$messages['la'] = [
 	'wf_cc_name' => 'Catēgoria',
-);
+];
 
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
-$messages['lb'] = array(
+$messages['lb'] = [
 	'closewiki' => 'Wiki zoumaachen',
 	'wf_city_url' => 'Adress',
 	'wf_city_id' => 'id',
@@ -3214,12 +3223,12 @@ $messages['lb'] = array(
 	'closed-redirect-url' => "D'URL viruleeden",
 	'closed-confirm-btn' => 'Zoumaache confirméieren',
 	'closed-reason' => 'Grond:',
-);
+];
 
 /** Macedonian (македонски)
  * @author Bjankuloski06
  */
-$messages['mk'] = array(
+$messages['mk'] = [
 	'wikifactorypagetitle' => 'Викифабрика - Конфигуратор',
 	'wikifactory' => 'Викифабрика - Конфигуратор',
 	'closewiki' => 'Затвори го викито',
@@ -3347,11 +3356,11 @@ $messages['mk'] = array(
 	'newwikisgraph-wikis-created' => 'создадени викија',
 	'newwikisgraph-param-all' => 'Сите',
 	'newwikisgraph-param-other' => 'Други',
-);
+];
 
 /** Malayalam (മലയാളം)
  */
-$messages['ml'] = array(
+$messages['ml'] = [
 	'wf_city_url' => 'വിലാസം',
 	'wf_city_title' => 'ശീർഷകം',
 	'wf_city_created' => 'സൃഷ്ടിച്ചിരിക്കുന്നു',
@@ -3365,19 +3374,19 @@ $messages['ml'] = array(
 	'wikifactory-label-close' => 'അടയ്ക്കുക',
 	'wikifactory-label-tags' => 'അനുബന്ധങ്ങൾ',
 	'closewiki-unknown' => 'അജ്ഞാതം',
-);
+];
 
 /** Mongolian (монгол)
  * @author Chinneeb
  */
-$messages['mn'] = array(
+$messages['mn'] = [
 	'closed-reason' => 'Шалтгаан:',
-);
+];
 
 /** Marathi (मराठी)
  * @author Sau6402
  */
-$messages['mr'] = array(
+$messages['mr'] = [
 	'closewiki' => 'विकि बंद करा',
 	'wf_city_url' => 'पत्ता',
 	'wf_city_id' => 'आय.डी',
@@ -3454,13 +3463,13 @@ $messages['mr'] = array(
 	'newwikisgraph-wikis-created' => 'विकि तयार झालेले आहे',
 	'newwikisgraph-param-all' => 'सर्व',
 	'newwikisgraph-param-other' => 'इतर',
-);
+];
 
 /** Malay (Bahasa Melayu)
  * @author Anakmalaysia
  * @author SNN95
  */
-$messages['ms'] = array(
+$messages['ms'] = [
 	'wikifactory-desc' => 'Simpan tetapan MediaWiki dalam pangkalan data',
 	'wikifactorypagetitle' => 'Alat Tatarajah Kilang Wiki',
 	'wikifactory' => 'Alat Tatarajah Kilang Wiki',
@@ -3592,13 +3601,13 @@ $messages['ms'] = array(
 	'newwikisgraph-wikis-created' => 'wiki yang dicipta',
 	'newwikisgraph-param-all' => 'Semua',
 	'newwikisgraph-param-other' => 'Lain-lain',
-);
+];
 
 /** Maltese (Malti)
  * @author Chrisportelli
  * @author Leli Forte
  */
-$messages['mt'] = array(
+$messages['mt'] = [
 	'wikifactory-label-return' => 'Lura għal-lista',
 	'wikifactory-label-clog' => 'Reġistru tat-tibdil',
 	'wikifactory-label-actions' => 'Azzjonijiet',
@@ -3615,12 +3624,12 @@ $messages['mt'] = array(
 	'closewiki-wiki-closed_removed' => "'''$1''' tinsab magħluqa u skedata għat-tħassir ($2)",
 	'closewiki-wiki-closed_redirect' => "'''$1''' hi magħluqa ($2) u se tiġi ridirezzjonata lejn: $3",
 	'awc-metrics-close' => 'Agħlaq',
-);
+];
 
 /** Burmese (မြန်မာဘာသာ)
  * @author Erikoo
  */
-$messages['my'] = array(
+$messages['my'] = [
 	'wf_city_title' => 'ခေါင်းစဉ်',
 	'wf_city_created' => 'ဖန်တီးလိုက်သည်',
 	'wf_city_public' => 'အခြေအနေ',
@@ -3634,21 +3643,21 @@ $messages['my'] = array(
 	'closewiki-unknown' => 'မသိရှိပါ',
 	'awc-metrics-by-language' => 'ဘာသာစကား အလိုက် :',
 	'awc-metrics-search' => 'ရှာဖွေရန် ရွေးချယ်မှု',
-);
+];
 
 /** Mazanderani (مازِرونی)
  */
-$messages['mzn'] = array(
+$messages['mzn'] = [
 	'wf_city_lang' => 'زوون',
 	'wf_cc_name' => 'رج',
 	'wikifactory-label-actions' => 'عملکاردون',
-);
+];
 
 /** Norwegian Bokmål (norsk bokmål)
  * @author Audun
  * @author Nghtwlkr
  */
-$messages['nb'] = array(
+$messages['nb'] = [
 	'wikifactorypagetitle' => 'Konfigurer Wiki Factory',
 	'wikifactory' => 'Konfigurer Wiki Factory',
 	'closewiki' => 'Steng wiki',
@@ -3774,7 +3783,7 @@ $messages['nb'] = array(
 	'newwikisgraph-wikis-created' => 'wikier opprettet',
 	'newwikisgraph-param-all' => 'Alle',
 	'newwikisgraph-param-other' => 'Andre',
-);
+];
 
 /** Dutch (Nederlands)
  * @author McDutchie
@@ -3784,7 +3793,7 @@ $messages['nb'] = array(
  * @author Southparkfan
  * @author Tjcool007
  */
-$messages['nl'] = array(
+$messages['nl'] = [
 	'wikifactorypagetitle' => 'Instellingenbeheer Wiki Factory',
 	'wikifactory' => 'Instellingenbeheer Wiki Factory',
 	'closewiki' => 'Wiki sluiten',
@@ -3916,26 +3925,26 @@ Kom hier dan terug.',
 	'newwikisgraph-wikis-created' => "wiki's aangemaakt",
 	'newwikisgraph-param-all' => 'Alle',
 	'newwikisgraph-param-other' => 'Anders',
-);
+];
 
 /** Nederlands (informeel)‎ (Nederlands (informeel)‎)
  * @author Siebrand
  */
-$messages['nl-informal'] = array(
+$messages['nl-informal'] = [
 	'closed-wiki-dump-exists' => 'Je kunt je inhoud ophalen als je wilt.<br />Als je wiki recent gesloten is, kan het een tijdje duren voordat de bestanden aangemaakt zijn.', # Fuzzy
-);
+];
 
 /** Norwegian Nynorsk (norsk nynorsk)
  * @author Harald Khan
  */
-$messages['nn'] = array(
+$messages['nn'] = [
 	'closewiki-images-url' => 'Biletarkiv: $1',
-);
+];
 
 /** Occitan (occitan)
  * @author Cedric31
  */
-$messages['oc'] = array(
+$messages['oc'] = [
 	'closewiki' => 'Clausurar lo wiki',
 	'wf_city_url' => 'Adreça',
 	'wf_city_id' => 'id',
@@ -3967,20 +3976,20 @@ $messages['oc'] = array(
 	'closewiki-wiki-closed' => "'''$1''' es estat clausurat ($2)",
 	'awc-metrics-search' => 'Opcions de recèrca :',
 	'awc-metrics-hubs' => 'Wikis novèls (per mes)',
-);
+];
 
 /** Punjabi (ਪੰਜਾਬੀ)
  * @author Babanwalia
  */
-$messages['pa'] = array(
+$messages['pa'] = [
 	'wikifactory-label-reason' => "'''ਕਾਰਨ''' (ਚੋਣਵਾਂ, ਕਾਰਨ ਦੀ ਲਿਖਤ ਜਾਂ ਟਿਕਟ ਨੰਬਰ):",
 	'wikifactory-label-domain' => "'''ਮਿਲਖ''':",
-);
+];
 
 /** Pennsylvania German (Deitsch)
  * @author Xqt
  */
-$messages['pdc'] = array(
+$messages['pdc'] = [
 	'wf_city_url' => 'Adress',
 	'wf_city_id' => 'id',
 	'wf_city_title' => 'Titel',
@@ -3995,7 +4004,7 @@ $messages['pdc'] = array(
 	'awc-metrics-db-size' => 'DB-Grees',
 	'awc-metrics-close' => 'Zumache',
 	'closed-reason' => 'Grund:',
-);
+];
 
 /** Polish (polski)
  * @author BeginaFelicysym
@@ -4008,7 +4017,7 @@ $messages['pdc'] = array(
  * @author Vengir
  * @author VerMa
  */
-$messages['pl'] = array(
+$messages['pl'] = [
 	'wikifactory-desc' => 'Przechowuj ustawienia MediaWiki w bazie danych',
 	'wikifactorypagetitle' => 'Konfiguracja WikiFactory',
 	'wikifactory' => 'Konfiguracja WikiFactory',
@@ -4139,13 +4148,13 @@ $messages['pl'] = array(
 	'newwikisgraph-wikis-created' => 'utworzone wiki',
 	'newwikisgraph-param-all' => 'Wszystkie',
 	'newwikisgraph-param-other' => 'Inne',
-);
+];
 
 /** Piedmontese (Piemontèis)
  * @author Borichèt
  * @author Dragonòt
  */
-$messages['pms'] = array(
+$messages['pms'] = [
 	'wikifactorypagetitle' => 'Configurador ëd Fatorìa ëd Wiki',
 	'wikifactory' => 'Configurador ëd Fatorìa ëd Wiki',
 	'closewiki' => 'Sara Wiki',
@@ -4274,12 +4283,12 @@ pàgine',
 	'newwikisgraph-wikis-created' => 'wiki creà',
 	'newwikisgraph-param-all' => 'Tùit',
 	'newwikisgraph-param-other' => 'Àutr',
-);
+];
 
 /** Pashto (پښتو)
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
-$messages['ps'] = array(
+$messages['ps'] = [
 	'closewiki' => 'ويکي تړل',
 	'wf_city_url' => 'پته',
 	'wf_city_id' => 'پېژند',
@@ -4344,7 +4353,7 @@ $messages['ps'] = array(
 	'closed-reason' => 'سبب:',
 	'newwikisgraph-param-all' => 'ټول',
 	'newwikisgraph-param-other' => 'نور',
-);
+];
 
 /** Portuguese (português)
  * @author Crazymadlover
@@ -4357,7 +4366,7 @@ $messages['ps'] = array(
  * @author SandroHc
  * @author Waldir
  */
-$messages['pt'] = array(
+$messages['pt'] = [
 	'wikifactorypagetitle' => 'Configurador da Fábrica de Wikis',
 	'wikifactory' => 'Configurador da Fábrica de Wikis',
 	'closewiki' => 'Fechar wiki',
@@ -4481,7 +4490,7 @@ regist.',
 	'newwikisgraph-wikis-created' => 'wikis criadas',
 	'newwikisgraph-param-all' => 'Todas',
 	'newwikisgraph-param-other' => 'Outra',
-);
+];
 
 /** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
@@ -4495,7 +4504,7 @@ regist.',
  * @author Luckas Blade
  * @author 555
  */
-$messages['pt-br'] = array(
+$messages['pt-br'] = [
 	'wikifactorypagetitle' => 'Configurador da Fábrica de Wikis',
 	'wikifactory' => 'Configurador da Fábrica de Wikis',
 	'closewiki' => 'Fechar Wiki',
@@ -4622,14 +4631,14 @@ $messages['pt-br'] = array(
 	'newwikisgraph-wikis-created' => 'wikis criadas',
 	'newwikisgraph-param-all' => 'Todas',
 	'newwikisgraph-param-other' => 'Outra',
-);
+];
 
 /** Romanian (română)
  * @author Cin
  * @author Minisarm
  * @author Stelistcristi
  */
-$messages['ro'] = array(
+$messages['ro'] = [
 	'closewiki' => 'Închide wiki',
 	'wf_city_url' => 'Adresă',
 	'wf_city_title' => 'Titlu',
@@ -4684,12 +4693,12 @@ $messages['ro'] = array(
 	'closed-redirect-url' => 'Redirecţionează adresa',
 	'closed-redirect-alert' => 'Vă rugăm puneţi noua adresă de redirecţionare!',
 	'closed-reason' => 'Motivul:',
-);
+];
 
 /** tarandíne (tarandíne)
  * @author Joetaras
  */
-$messages['roa-tara'] = array(
+$messages['roa-tara'] = [
 	'wikifactorypagetitle' => 'Configuratore de Uicchi Factory',
 	'wikifactory' => 'Configuratore de Uicchi Factory',
 	'closewiki' => "Achiude 'a uicchi",
@@ -4729,7 +4738,7 @@ $messages['roa-tara'] = array(
 	'newwikisgraph-wikis-created' => 'uicchi ccrejate',
 	'newwikisgraph-param-all' => 'Tutte',
 	'newwikisgraph-param-other' => 'Otre',
-);
+];
 
 /** Russian (русский)
  * @author DCamer
@@ -4740,7 +4749,7 @@ $messages['roa-tara'] = array(
  * @author Okras
  * @author Александр Сигачёв
  */
-$messages['ru'] = array(
+$messages['ru'] = [
 	'wikifactorypagetitle' => 'Конфигуратор Wiki Factory',
 	'wikifactory' => 'Конфигуратор Wiki Factory',
 	'closewiki' => 'Закрыть вики',
@@ -4854,6 +4863,7 @@ $messages['ru'] = array(
 	'closed-wiki-dump-noexists' => 'Этот вики была закрыт. Снимок содержимого будет доступен в течение 24 часов. Пожалуйста, заходите позже.',
 	'closed-wiki-create-wiki' => 'Создать новую вики',
 	'closed-wiki-policy' => 'Просмотреть правила закрытия Викии',
+	'closed-wiki-policy-url' => 'http://ru.community.wikia.com/wiki/Викия:Закрытие_вики',
 	'closed-create-dump' => 'Создать дамп базы данных',
 	'closed-create-image-archive' => 'Создать архив изображений',
 	'closed-delete-database-images' => 'Удалить базу данных и изображения',
@@ -4869,30 +4879,30 @@ $messages['ru'] = array(
 	'newwikisgraph-wikis-created' => 'создано викий',
 	'newwikisgraph-param-all' => 'Всего',
 	'newwikisgraph-param-other' => 'Другие',
-);
+];
 
 /** Scots (Scots)
  * @author John Reid
  */
-$messages['sco'] = array(
+$messages['sco'] = [
 	'closed-wiki-dump-links' => '[$1 Nou pages] (this version is uissuallie best fer bot uiss)<br />[$2 Nou pages n histerie] (warnishmant: this file coud be aafa muckle)',
-);
+];
 
 /** Sinhala (සිංහල)
  * @author බිඟුවා
  */
-$messages['si'] = array(
+$messages['si'] = [
 	'wf_city_url' => 'ලිපිනය:',
 	'wikifactory-label-variables' => 'විචල්‍යයන්',
 	'wikifactory-label-close' => 'වසන්න',
-);
+];
 
 /** Slovenian (slovenščina)
  * @author Dbc334
  */
-$messages['sl'] = array(
+$messages['sl'] = [
 	'closed-reason' => 'Razlog:',
-);
+];
 
 /** Serbian (Cyrillic script) (српски (ћирилица)‎)
  * @author Charmed94
@@ -4900,7 +4910,7 @@ $messages['sl'] = array(
  * @author Verlor
  * @author Михајло Анђелковић
  */
-$messages['sr-ec'] = array(
+$messages['sr-ec'] = [
 	'wikifactorypagetitle' => 'Викифабрика – подешавање',
 	'wikifactory' => 'Викифабрика – подешавање',
 	'closewiki' => 'Затвори викију',
@@ -5017,7 +5027,7 @@ $messages['sr-ec'] = array(
 	'closed-confirm-btn' => 'Потврди затварање',
 	'closed-redirect-alert' => 'Унесите нову URL адресу преусмерења!',
 	'closed-reason' => 'Разлог:',
-);
+];
 
 /** Swedish (svenska)
  * @author Dafer45
@@ -5026,7 +5036,7 @@ $messages['sr-ec'] = array(
  * @author Tobulos1
  * @author WikiPhoenix
  */
-$messages['sv'] = array(
+$messages['sv'] = [
 	'wikifactory-desc' => 'Lagrar MediaWiki-inställningar i databasen',
 	'wikifactorypagetitle' => 'Wiki Factory Konfigurator',
 	'wikifactory' => 'Wiki Factory Konfigurator',
@@ -5158,12 +5168,12 @@ $messages['sv'] = array(
 	'newwikisgraph-wikis-created' => 'wikis skapade',
 	'newwikisgraph-param-all' => 'Alla',
 	'newwikisgraph-param-other' => 'Andra',
-);
+];
 
 /** Tamil (தமிழ்)
  * @author TRYPPN
  */
-$messages['ta'] = array(
+$messages['ta'] = [
 	'wf_city_url' => 'முகவரி',
 	'wf_city_id' => 'அடையாளம்',
 	'wf_city_title' => 'தலைப்பு',
@@ -5182,14 +5192,14 @@ $messages['ta'] = array(
 	'awc-metrics-nbr-result' => 'முடிவுகள்:',
 	'awc-metrics-articles' => 'கட்டுரைகள்',
 	'awc-metrics-close' => 'மூடுக',
-);
+];
 
 /** Telugu (తెలుగు)
  * @author Chaduvari
  * @author Jprmvnvijay5
  * @author Veeven
  */
-$messages['te'] = array(
+$messages['te'] = [
 	'wf_city_url' => 'చిరునామా',
 	'wf_city_title' => 'శీర్షిక',
 	'wf_city_founding_user' => 'వ్యవస్థాపకులు',
@@ -5227,19 +5237,19 @@ $messages['te'] = array(
 	'awc-metrics-last-month' => 'గత {{PLURAL:$1|నెల|$1 నెలలు}}',
 	'closed-confirm-btn' => 'మూసివేతను ఖాయం చెయ్యండి',
 	'closed-reason' => 'కారణం:',
-);
+];
 
 /** Tetum (tetun)
  * @author MF-Warburg
  */
-$messages['tet'] = array(
+$messages['tet'] = [
 	'awc-metrics-active' => 'ativu',
-);
+];
 
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */
-$messages['tl'] = array(
+$messages['tl'] = [
 	'wikifactorypagetitle' => 'Tagapag-ayos ng Pabrika ng Wiki',
 	'wikifactory' => 'Tagapag-ayos ng Pabrika ng Wiki',
 	'closewiki' => 'Isara ang Wiki',
@@ -5366,20 +5376,20 @@ $messages['tl'] = array(
 	'newwikisgraph-wikis-created' => 'nalikhang mga wiki',
 	'newwikisgraph-param-all' => 'Lahat',
 	'newwikisgraph-param-other' => 'Iba Pa',
-);
+];
 
 /** Talysh (толышә зывон)
  * @author Erdemaslancan
  */
-$messages['tly'] = array(
+$messages['tly'] = [
 	'closed-reason' => 'Сәбәб:',
-);
+];
 
 /** Tatar (Cyrillic script) (татарча)
  * @author Ajdar
  * @author Ильнар
  */
-$messages['tt-cyrl'] = array(
+$messages['tt-cyrl'] = [
 	'wikifactorypagetitle' => 'Wiki Factory конфигураторы',
 	'wikifactory' => 'Wiki Factory конфигураторы',
 	'closewiki' => 'Викине ябу',
@@ -5461,7 +5471,7 @@ $messages['tt-cyrl'] = array(
 	'closed-reason' => 'Сәбәп:',
 	'newwikisgraph-param-all' => 'Барысы',
 	'newwikisgraph-param-other' => 'Башкасы',
-);
+];
 
 /** Ukrainian (українська)
  * @author Andriykopanytsia
@@ -5471,7 +5481,7 @@ $messages['tt-cyrl'] = array(
  * @author Капитан Джон Шепард
  * @author Тест
  */
-$messages['uk'] = array(
+$messages['uk'] = [
 	'wikifactory-desc' => 'Магазин МедіаВікі, налаштування бази даних',
 	'wikifactorypagetitle' => 'Конфігуратор Wiki Factory',
 	'wikifactory' => 'Конфігуратор Wiki Factory',
@@ -5604,26 +5614,26 @@ $messages['uk'] = array(
 	'newwikisgraph-wikis-created' => 'створено вікі',
 	'newwikisgraph-param-all' => 'Усі',
 	'newwikisgraph-param-other' => 'Інші',
-);
+];
 
 /** Urdu (اردو)
  */
-$messages['ur'] = array(
+$messages['ur'] = [
 	'closed-reason' => 'وجہ:',
-);
+];
 
 /** Uzbek (oʻzbekcha/ўзбекча)
  * @author CoderSI
  */
-$messages['uz'] = array(
+$messages['uz'] = [
 	'wikifactory-label-info' => "Ma'lumot",
-);
+];
 
 /** Vietnamese (Tiếng Việt)
  * @author Baonguyen21022003
  * @author Dinhxuanduyet
  */
-$messages['vi'] = array(
+$messages['vi'] = [
 	'closewiki' => 'Xóa Wiki',
 	'wf_city_url' => 'Địa chỉ',
 	'wf_city_id' => 'id',
@@ -5674,20 +5684,20 @@ $messages['vi'] = array(
 	'closed-wiki-dump-noexists' => 'Wiki này đã bị xóa. Bãi chứa nội dung sẽ có sẵn trong vòng 24 giờ. Xin vui lòng kiểm tra lại.',
 	'closed-wiki-create-wiki' => 'Tạo wiki mới',
 	'closed-delete-database-images' => 'Xóa cơ sở dữ liệu và hình ảnh',
-);
+];
 
 /** Wu Chinese (吴语)
  */
-$messages['wuu'] = array(
+$messages['wuu'] = [
 	'closed-reason' => '理由：',
-);
+];
 
 /** Yiddish (ייִדיש)
  * @author פוילישער
  */
-$messages['yi'] = array(
+$messages['yi'] = [
 	'closed-reason' => 'אורזאַך:',
-);
+];
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Anakmalaysia
@@ -5697,7 +5707,7 @@ $messages['yi'] = array(
  * @author Liuxinyu970226
  * @author Yfdyh000
  */
-$messages['zh-hans'] = array(
+$messages['zh-hans'] = [
 	'wikifactory-desc' => '在数据库中存储MediaWiki设置',
 	'wikifactorypagetitle' => 'Wiki出厂配置',
 	'wikifactory' => 'Wiki出厂配置',
@@ -5813,6 +5823,7 @@ $messages['zh-hans'] = array(
 	'closed-wiki-dump-noexists' => '此wiki已关闭。内容转储将在24小时内提供。请重新检查。',
 	'closed-wiki-create-wiki' => '创造一个新维基',
 	'closed-wiki-policy' => '查阅Wikia的关闭方针',
+	'closed-wiki-policy-url' => 'http://zh.community.wikia.com/wiki/終止Wikia站台',
 	'closed-create-dump' => '创建数据库转储',
 	'closed-create-image-archive' => '创建图像存档',
 	'closed-delete-database-images' => '删除数据库和图像',
@@ -5828,7 +5839,7 @@ $messages['zh-hans'] = array(
 	'newwikisgraph-wikis-created' => '创建的wiki',
 	'newwikisgraph-param-all' => '所有',
 	'newwikisgraph-param-other' => '其他',
-);
+];
 
 /** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
@@ -5837,7 +5848,7 @@ $messages['zh-hans'] = array(
  * @author Simon Shek
  * @author Wrightbus
  */
-$messages['zh-hant'] = array(
+$messages['zh-hant'] = [
 	'wikifactorypagetitle' => 'Wiki出廠配置',
 	'wikifactory' => 'Wiki出廠配置',
 	'closewiki' => '關閉 Wiki',
@@ -5934,6 +5945,7 @@ $messages['zh-hant'] = array(
 	'closed-wiki-dump-noexists' => '本維基已被關閉。內容轉存將在 24 小時內提供。請重新檢查。',
 	'closed-wiki-create-wiki' => '建立一個新的 wiki',
 	'closed-wiki-policy' => '查看 Wikia 的關站政策',
+	'closed-wiki-policy-url' => 'http://zh.community.wikia.com/wiki/終止Wikia站台',
 	'closed-create-dump' => 'Create a database dump',
 	'closed-create-image-archive' => '創建圖像存檔',
 	'closed-delete-database-images' => '刪除資料庫和圖像',
@@ -5948,19 +5960,21 @@ $messages['zh-hant'] = array(
 	'newwikisgraph-wikis-created' => '已建立的wiki',
 	'newwikisgraph-param-all' => '全部',
 	'newwikisgraph-param-other' => '其他',
-);
+];
 
 /** Chinese (Hong Kong) (中文（香港）‎)
  * @author Tcshek
  */
-$messages['zh-hk'] = array(
+$messages['zh-hk'] = [
 	'awc-metrics-images' => '圖像',
 	'closed-delete-database-images' => '刪除資料庫和圖像',
-);
+	'closed-wiki-policy-url' => 'http://zh.community.wikia.com/wiki/終止Wikia站台',
+];
 
 /** Chinese (Taiwan) (中文（台灣）‎)
  * @author Ffaarr
  */
-$messages['zh-tw'] = array(
+$messages['zh-tw'] = [
 	'closed-wiki' => '關閉的圍紀',
-);
+	'closed-wiki-policy-url' => 'http://zh.community.wikia.com/wiki/終止Wikia站台',
+];
