@@ -2,7 +2,7 @@
 
 namespace Wikia\TemplateClassification\UnusedTemplates;
 
-class Handler extends \WikiaService {
+class Handler {
 	/**
 	 * Reflects a `propname` in the `page_wikia_props` table.
 	 */
