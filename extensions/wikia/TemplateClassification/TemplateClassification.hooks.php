@@ -2,6 +2,8 @@
 
 namespace Wikia\TemplateClassification;
 
+use Wikia\TemplateClassification\UnusedTemplates\Handler;
+
 class Hooks {
 
 	public static function register() {
@@ -9,14 +11,22 @@ class Hooks {
 		\Hooks::register( 'QueryPageUseResultsBeforeRecache', [ $hooks, 'onQueryPageUseResultsBeforeRecache' ] );
 	}
 
-	public function onQueryPageUseResultsBeforeRecache( $queryCacheType, $results ) {
-		if ( $queryCacheType === \UnusedtemplatesPage::UNUSED_TEMPLATES_PAGE_NAME ) {
+	public function onQueryPageUseResultsBeforeRecache( \QueryPage $queryPage, $results ) {
+		if ( $queryPage->getName() === \UnusedtemplatesPage::UNUSED_TEMPLATES_PAGE_NAME ) {
+			$handler = $this->getUnusedTemplatesHandler();
 			if ( $results instanceof \ResultWrapper ) {
-				// Mark these results as not-needing classification
+				$handler->markAsUnusedFromResults( $results );
 			} else {
-				// Mark all templates as needing classification
+				$handler->markAllAsUsed();
 			}
 		}
 		return true;
+	}
+
+	/**
+	 * @return Handler
+	 */
+	protected function getUnusedTemplatesHandler() {
+		return new Handler();
 	}
 }
