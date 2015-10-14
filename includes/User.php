@@ -4909,45 +4909,6 @@ class User {
 		wfRunHooks( 'UserLoadOptions', array( $this, &$this->mOptions ) );
 	}
 
-	private function loadAttributes() {
-		global $wgEnableReadsFromAttributeService;
-
-		if ( !empty( $wgEnableReadsFromAttributeService ) ) {
-			$attributes = $this->userAttributes()->getAttributes($this->getId());
-			foreach ( $attributes as $attributeName => $attributeValue ) {
-				$this->compareAttributeValueFromService( $attributeName, $attributeValue );
-
-				 $this->mOptionOverrides[$attributeName] = $attributeValue;
-				 $this->mOptions[$attributeName] = $attributeValue;
-			}
-		}
-	}
-
-	private function compareAttributeValueFromService( $attributeName, $attributeValue ) {
-		if ( !array_key_exists( $attributeName, $this->mOptions ) ) {
-			$this->logAttributeMissing( $attributeName, $attributeValue );
-		} elseif ( $this->mOptions[$attributeName] !== $attributeValue  ) {
-			$this->logAttributeMismatch( $attributeName, $attributeValue );
-		}
-	}
-
-	private function logAttributeMissing( $attributeName, $attributeValue ) {
-		$this->error( 'USER_ATTRIBUTES attribute_missing', [
-			'attribute' => $attributeName,
-			'valueFromService' => $attributeValue,
-			'userId' => $this->getId()
-		] );
-	}
-
-	private function logAttributeMismatch( $attributeName, $attributeValue ) {
-		$this->error( 'USER_ATTRIBUTES attribute_mismatch', [
-			'attribute' => $attributeName,
-			'valueFromMW' => $this->mOptions[$attributeName],
-			'valueFromService' => $attributeValue,
-			'userId' => $this->getId()
-		] );
-	}
-
 	/**
 	 * Save this user's preferences into the database.
 	 *
