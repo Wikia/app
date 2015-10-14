@@ -97,9 +97,50 @@ class UserAttributes {
 	 * @param Attribute $attribute
 	 */
 	public function setAttribute( $userId, Attribute $attribute ) {
-		$this->setInService( $userId, $attribute );
+		// If attribute value is null and default exists, set value to default
+		if ( is_null( $attribute->getValue() ) && isset( $this->defaultAttributes[$attribute->getName()] ) ) {
+			$attribute->setValue( $this->defaultAttributes[$attribute->getName()] );
+		}
+
 		$this->setInInstanceCache( $userId, $attribute );
-		$this->setInMemcache( $userId, $this->attributes[$userId] );
+	}
+
+	public function save( $userId ) {
+		$attributes = $this->loadAttributes( $userId );
+
+		// TODO When bulk updates are complete, convert this to a single request
+		$savedAttributes = [];
+		foreach( $attributes as $key => $value ) {
+			if ( $this->attributeShouldBeSaved( $key, $value ) ) {
+				jbug( "saved: $key", $value );
+				$this->setInService( $userId, new Attribute( $key, $value ) );
+				$savedAttributes[$key] = $value;
+			} elseif ( $this->attributeShouldBeDeleted( $key, $value ) ) {
+				jbug( "deleted: $key", $value );
+				$this->deleteFromService( $userId, new Attribute( $key, $value ) );
+			}
+		}
+
+		$this->setInMemcache( $userId, $savedAttributes );
+	}
+
+	/**
+	 * Returns true if either is true:
+	 * 1.) No default for the attribute and the value is either not false or not null
+	 * 2.) Value is different than the default
+	 * @param $name
+	 * @param $value
+	 * @return bool
+	 */
+	private function attributeShouldBeSaved( $name, $value ) {
+		return (
+			( is_null( $this->defaultAttributes[$name] ) ) && !( $value === false || is_null( $value ) ) ||
+			$value != $this->defaultAttributes[$name]
+		);
+	}
+
+	private function attributeShouldBeDeleted( $name, $value ) {
+		return isset( $this->defaultAttributes[$name] ) && $value == $this->defaultAttributes[$name];
 	}
 
 	/**

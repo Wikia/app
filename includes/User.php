@@ -2726,6 +2726,12 @@ class User {
 		return true;
 	}
 
+	private function isPublicAttribute( $attributeName ) {
+		global $wgPublicUserAttributes;
+
+		return in_array( $attributeName, $wgPublicUserAttributes );
+	}
+
 	/**
 	 * Set a global user attribute.
 	 *
@@ -2734,7 +2740,12 @@ class User {
 	 * @see getGlobalAttribute for more documentation about attributes
 	 */
 	public function setGlobalAttribute($attribute, $value) {
-		$this->setOptionHelper($attribute, $value);
+		if ( $this->isPublicAttribute( $attribute ) ) {
+			$value = $this->replaceNewlineAndCRWithSpace( $value );
+			$this->userAttributes()->setAttribute( $this->getId(), new Attribute( $attribute, $value ) );
+		} else {
+			$this->setOptionHelper($attribute, $value);
+		}
 	}
 
 	/**
@@ -3529,6 +3540,7 @@ class User {
 
 		$this->saveOptions();
 		$this->savePreferences();
+		$this->saveAttributes();
 
 		wfRunHooks( 'UserSaveSettings', array( $this ) );
 		$this->clearSharedCache();
@@ -3653,6 +3665,7 @@ class User {
 
 		$this->saveOptions();
 		$this->savePreferences();
+		$this->saveAttributes();
 	}
 
 	/**
@@ -4900,7 +4913,6 @@ class User {
 				$this->mOptions[$row->up_property] = $row->up_value;
 			}
 
-			$this->loadAttributes();
 			$this->preferenceCorrection()->compareAndCorrect($this->getId(), $this->mOptions);
 		}
 
@@ -4916,6 +4928,15 @@ class User {
 	 */
 	protected function savePreferences() {
 		$this->userPreferences()->save($this->getId());
+	}
+
+	/**
+	 * Save this user's attributes into the attribute service.
+	 *
+	 * @see getGlobalPreference for documentation about preferences
+	 */
+	protected function saveAttributes() {
+		$this->userAttributes()->save( $this->getId() );
 	}
 
 	/**
