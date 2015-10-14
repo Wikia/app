@@ -17,10 +17,13 @@ class AttributesModule implements Module {
 			->bind( AttributePersistence::class )->toClass( AttributePersistenceSwagger::class )
 			->bind( UserAttributes::CACHE_PROVIDER )->to( function() {
 				global $wgMemc;
-				$provider = new BagOStuffCacheProvider( $wgMemc );
-				$provider->setNamespace( UserAttributes::class . ":" . self::ATTRIBUTES_CACHE_VERSION );
+				$provider = new BagOStuffCacheProvider($wgMemc);
+				$provider->setNamespace(UserAttributes::class . ":" . self::ATTRIBUTES_CACHE_VERSION);
 
-			return $provider;
-		} );
+				return $provider;
+			} )
+			->bind( UserAttributes::DEFAULT_ATTRIBUTES )->to( function() {
+				return \User::getDefaultOptions();
+			} );
 	}
 }

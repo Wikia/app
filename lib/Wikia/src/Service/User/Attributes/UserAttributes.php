@@ -10,6 +10,7 @@ class UserAttributes {
 
 	use Loggable;
 
+	const DEFAULT_ATTRIBUTES = "user_attributes_default_attributes";
 	const CACHE_PROVIDER = "user_attributes_cache_provider";
 
 	/** @var CacheProvider */
@@ -21,10 +22,8 @@ class UserAttributes {
 	/** @var string[string][string] */
 	private $attributes;
 
-	// These are attributes which are updated by clients other than MW. We want to grab these
-	// values from the service, rather than MW's user cache, since they may have been updated
-	// outside of MW.
-	public static $ATTRIBUTES_USED_BY_OUTSIDE_CLIENTS = [ AVATAR_USER_OPTION_NAME, "location" ];
+	/** @var string[string] */
+	private $defaultAttributes;
 
 	const CACHE_TTL = 300; // 5 minute
 
@@ -32,13 +31,16 @@ class UserAttributes {
 	 * @Inject({
 	 *    Wikia\Service\User\Attributes\AttributeService::class,
 	 * 	  Wikia\Service\User\Attributes\UserAttributes::CACHE_PROVIDER,
+	 *    Wikia\Service\User\Attributes\UserAttributes::DEFAULT_ATTRIBUTES
 	 * })
 	 * @param AttributeService $attributeService
 	 * @param CacheProvider $cache,
+	 * @param string[string] $defaultAttributes
 	 */
-	public function __construct( AttributeService $attributeService, CacheProvider $cache ) {
+	public function __construct( AttributeService $attributeService, CacheProvider $cache, $defaultAttributes ) {
 		$this->attributeService = $attributeService;
 		$this->cache = $cache;
+		$this->defaultAttributes = $defaultAttributes;
 		$this->attributes = [];
 	}
 
@@ -51,6 +53,10 @@ class UserAttributes {
 
 		if ( !is_null( $attributes[$attributeName] ) ) {
 			return $attributes[$attributeName];
+		}
+
+		if ( !is_null( $this->defaultAttributes[$attributeName] ) ) {
+			return  $this->defaultAttributes[$attributeName];
 		}
 
 		return $default;

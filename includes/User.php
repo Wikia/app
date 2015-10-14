@@ -2696,12 +2696,6 @@ class User {
 	 */
 	public function getGlobalAttribute( $attribute, $default = null ) {
 
-		// There are currently 2 attributes we want to get from the attribute
-		// service directly every time. "avatar" and "location". These are attributes
-		// which can be updated by clients other than MW. By talking to the service
-		// we make sure to skip MW's user cache which may have a stale value for
-		// that attribute. Check to see if we should be using the service here before
-		// falling back to the getOptionHelper which uses the user cache.
 		if ( $this->shouldGetAttributeFromService( $attribute ) ) {
 			return $this->userAttributes()->getAttribute( $this->getId(), $attribute, $default );
 		}
@@ -2725,7 +2719,7 @@ class User {
 			return false;
 		}
 
-		if ( !in_array( $attributeName, UserAttributes::$ATTRIBUTES_USED_BY_OUTSIDE_CLIENTS ) ) {
+		if ( !$this->isPublicAttribute( $attributeName ) ) {
 			return false;
 		}
 
