@@ -2816,18 +2816,6 @@ class User {
 		return sprintf("%s%s%s", $property, $sep, $cityId);
 	}
 
-	private function sanitizePropertyArray( $array_map ) {
-		if ( !is_array( $array_map ) ) {
-			return [ ];
-		}
-
-		foreach ( $array_map as $key => $value ) {
-			$array_map[ $key ] = $this->replaceNewlineAndCRWithSpace( $value );
-		}
-
-		return $array_map;
-	}
-
 	private function replaceNewlineAndCRWithSpace($value) {
 		if ($value) {
 			$value = str_replace("\r\n", "\n", $value);
