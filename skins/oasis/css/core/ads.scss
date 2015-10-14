@@ -314,7 +314,7 @@ body >a >img[src$="noad.gif"] {
 		.close-button {
 			width: 13px;
 			height: 13px;
-			background: url('/skins/oasis/images/icon_close.png') 1px 0 no-repeat #aaa;
+			background: url(/skins/oasis/images/icon_close.png) 1px 0 no-repeat #aaa; /* $wgCdnStylePath */
 			background-size: 12px 12px;
 			position: absolute;
 			top: 0;
@@ -328,8 +328,11 @@ body >a >img[src$="noad.gif"] {
 	}
 
 	.icon {
-		margin: 0 5px;
+		width: 98px;
+		height: 90px;
+		margin: 0 auto 5px auto;
 		cursor: pointer;
+		background: url(/skins/oasis/images/recovered_message_icon.png) no-repeat; /* $wgCdnStylePath */
 	}
 
 	&.recovered-message-top {
