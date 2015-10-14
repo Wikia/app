@@ -1,4 +1,4 @@
-require(['jquery', 'mw', 'wikia.loader', 'wikia.nirvana'], function ($, mw, loader, nirvana) {
+require(['jquery', 'mw', 'wikia.loader', 'wikia.nirvana', 'wikia.window'], function ($, mw, loader, nirvana, window) {
 	'use strict';
 
 	var
@@ -53,7 +53,10 @@ require(['jquery', 'mw', 'wikia.loader', 'wikia.nirvana'], function ($, mw, load
 				nirvana.sendRequest({
 					controller: 'TemplateClassificationMockApi',
 					method: 'getTemplateType',
-					type: 'get'
+					type: 'get',
+					data: {
+						'articleId': window.wgArticleId
+					}
 				})
 			).done(
 				function (classificationForm, templateType) {

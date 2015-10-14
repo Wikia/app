@@ -41,7 +41,7 @@ class Hooks {
 		if ( $title->inNamespace( NS_TEMPLATE ) ) {
 			$view = new View();
 			$pageHeaderController->pageType = $view->renderEditableType(
-				$pageHeaderController->pageType, $pageHeaderController->getContext()->getUser()
+				$title->getArticleID(), $pageHeaderController->getContext()->getUser(), $pageHeaderController->pageType
 			);
 		}
 		return true;
