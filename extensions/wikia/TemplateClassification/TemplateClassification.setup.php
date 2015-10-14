@@ -32,3 +32,13 @@ $wgExtensionFunctions[] = 'Wikia\TemplateClassification\Hooks::register';
  * UnusedTemplates
  */
 $wgAutoloadClasses['Wikia\TemplateClassification\UnusedTemplates\Handler'] = __DIR__ . '/UnusedTemplates/UnusedTemplatesHandler.class.php';
+
+/**
+ * View
+ */
+$wgAutoloadClasses['Wikia\TemplateClassification\View'] = __DIR__ . '/TemplateClassificationView.php';
+
+/**
+ * Messages
+ */
+$wgExtensionMessagesFiles['TemplateClassification'] = __DIR__ . '/TemplateClassification.i18n.php';
