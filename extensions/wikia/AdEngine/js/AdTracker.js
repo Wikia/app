@@ -4,7 +4,7 @@ define('ext.wikia.adEngine.adTracker', ['wikia.tracker', 'wikia.window', 'wikia.
 	'use strict';
 
 	var timeBuckets = [0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.5, 5.0, 8.0, 20.0, 60.0],
-		logGroup = 'ext.wikia.adEngine.AdTracker';
+		logGroup = 'ext.wikia.adEngine.adTracker';
 
 	function encodeAsQueryString(extraParams) {
 		var out = [], key, keys = [], i, len;
