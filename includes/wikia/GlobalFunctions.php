@@ -623,7 +623,7 @@ function getMenuHelper( $name, $limit = 7 ) {
 
 	$dbr = wfGetDB( DB_SLAVE );
 	$query = "SELECT cl_from FROM categorylinks USE INDEX (cl_from), page_visited USE INDEX (page_visited_cnt_inx) WHERE article_id = cl_from AND cl_to = '" . addslashes( $name ) . "' ORDER BY COUNT DESC LIMIT $limit";
-	$res = $dbr->query( $query );
+	$res = $dbr->query( $query, __METHOD__ );
 	$result = array();
 	while ( $row = $dbr->fetchObject( $res ) ) {
 		$result[] = $row->cl_from;
@@ -631,7 +631,7 @@ function getMenuHelper( $name, $limit = 7 ) {
 	if ( count( $result ) < $limit ) {
 		$resultEscaped = array_map( 'addslashes', $result ); # PLATFORM-1579
 		$query = "SELECT cl_from FROM categorylinks WHERE cl_to = '" . addslashes( $name ) . "' " . ( count( $result ) > 0 ? " AND cl_from NOT IN (" . implode( ',', $resultEscaped ) . ") " : "" ) . " LIMIT " . ( $limit - count( $result ) );
-		$res = $dbr->query( $query );
+		$res = $dbr->query( $query, __METHOD__ );
 		while ( $row = $dbr->fetchObject( $res ) ) {
 			$result[] = $row->cl_from;
 		}
