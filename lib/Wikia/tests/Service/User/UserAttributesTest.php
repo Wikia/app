@@ -109,7 +109,7 @@ class UserAttributeTest extends PHPUnit_Framework_TestCase {
 		// Should be saved because it's a default attribute with a new value
 		$userAttributes->setAttribute( $this->userId, new Attribute( "defaultAttr2",  "someNewValue" ) );
 
-		// Should be saved because it's a default attribute with a new value
+		// Should be saved because it's a non-default attribute
 		$userAttributes->setAttribute( $this->userId, new Attribute( "nickName",  "Lebowski" ) );
 
 		$userAttributes->save( $this->userId );
