@@ -8,7 +8,7 @@
 class TemplateClassificationMockApiController extends WikiaApiController {
 	const TYPE_FIELD = 'type';
 
-	public function getTemplateType( $articleId ) {
+	public function getTemplateType() {
 		$articleId = $this->request->getInt( 'articleId' );
 		/* Use cache to have consistent results for same pages due to randomization */
 		$type = WikiaDataAccess::cache(
@@ -20,5 +20,10 @@ class TemplateClassificationMockApiController extends WikiaApiController {
 			}
 		);
 		$this->response->setVal( self::TYPE_FIELD, $type );
+	}
+
+	public function setTemplateType() {
+		$articleId = $this->request->getInt( 'articleId' );
+		$templateType = $this->request->getVal( 'templateType' );
 	}
 }

@@ -67,7 +67,7 @@ require(['jquery', 'mw', 'wikia.loader', 'wikia.nirvana', 'wikia.window'], funct
 					$cf.find('input[value=\'' + type + '\']').attr('checked', 'checked');
 
 					// Set modal content
-					modalConfig.vars.content = $cf.html();
+					modalConfig.vars.content = $cf[0].outerHTML;
 
 					require(['wikia.ui.factory'], function (uiFactory) {
 						/* Initialize the modal component */
@@ -95,7 +95,16 @@ require(['jquery', 'mw', 'wikia.loader', 'wikia.nirvana', 'wikia.window'], funct
 	function processInstance(modalInstance) {
 		/* Submit template type edit form on Done button click */
 		modalInstance.bind('done', function () {
-			// TODO submit
+			nirvana.sendRequest({
+				controller: 'TemplateClassificationMockApi',
+				method: 'setTemplateType',
+				type: 'get',
+				data: {
+					'articleId': window.wgArticleId,
+					'templateType': $('#TemplateClassificationEditForm').serializeArray()[0].value
+				}
+			});
+			modalInstance.trigger('close');
 		});
 
 		/* Show the modal */
