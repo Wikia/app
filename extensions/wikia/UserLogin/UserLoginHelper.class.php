@@ -238,7 +238,7 @@ class UserLoginHelper extends WikiaModel {
 			$result['msg'] = wfMessage( 'userlogin-error-nosuchuser' )->escaped();
 			return $result;
 		} else {
-			if ( !$user->getGlobalFlag(UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME ) && $user->isEmailConfirmed() ) {
+			if ( !$user->getGlobalFlag( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME ) && $user->isEmailConfirmed() ) {
 				// User already confirmed on signup
 				$result['result'] = 'confirmed';
 				$result['msg'] = wfMessage( 'usersignup-error-confirmed-user', $username, $user->getUserPage()->getFullURL() )->parse();
@@ -613,7 +613,7 @@ class UserLoginHelper extends WikiaModel {
 		return $result;
 	}
 
-	public function getNewAuthUrl($page = '/join') {
+	public function getNewAuthUrl( $page = '/join' ) {
 		if ( $this->app->wg->title->isSpecial( 'Userlogout' ) ) {
 			$requestUrl = Title::newMainPage()->getLocalURL();
 		}

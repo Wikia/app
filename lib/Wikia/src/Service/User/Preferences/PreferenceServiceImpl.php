@@ -127,6 +127,32 @@ class PreferenceServiceImpl implements PreferenceService {
 		$this->load( $userId )->deleteLocalPreference( $name, $wikiId );
 	}
 
+	public function deleteAllPreferences( $userId ) {
+		try {
+			$deleted = $this->persistence->deleteAll( $userId );
+			if ( $deleted ) {
+				$this->deleteFromCache( $userId );
+				unset( $this->preferences[$userId] );
+			}
+
+			return $deleted;
+		} catch (\Exception $e) {
+			$this->error( $e->getMessage(), ['user' => $userId] );
+			throw $e;
+		}
+	}
+
+	public function findWikisWithLocalPreferenceValue( $preferenceName, $value ) {
+		try {
+			return $this->persistence->findWikisWithLocalPreferenceValue( $preferenceName, $value );
+		} catch (\Exception $e) {
+			$this->error( $e->getMessage(), [
+				'preferenceName' => $preferenceName,
+				'value' => $value, ] );
+			throw $e;
+		}
+	}
+
 	/**
 	 * @param string $userId
 	 * @return bool

@@ -342,6 +342,7 @@ class PageHeaderController extends WikiaController {
 				$this->pageType = wfMsg( 'oasis-page-header-subtitle-forum' );
 				break;
 		}
+		wfRunHooks( 'PageHeaderPageTypePrepared', [ $this, $this->getContext()->getTitle() ] );
 
 		// render subpage info
 		$this->pageSubject = $skin->subPageSubtitle();
@@ -638,4 +639,5 @@ class PageHeaderController extends WikiaController {
 		$wgMemc->delete( wfMemcKey( 'mOasisRecentRevisions2', $article->getTitle()->getArticleId() ) );
 		return true;
 	}
+
 }
