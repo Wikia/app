@@ -1,4 +1,5 @@
-require(['jquery', 'mw', 'wikia.loader', 'wikia.nirvana', 'wikia.window'], function ($, mw, loader, nirvana, window) {
+require(['jquery', 'mw', 'wikia.loader', 'wikia.nirvana'],
+function ($, mw, loader, nirvana) {
 	'use strict';
 
 	var
@@ -55,7 +56,7 @@ require(['jquery', 'mw', 'wikia.loader', 'wikia.nirvana', 'wikia.window'], funct
 					method: 'getTemplateType',
 					type: 'get',
 					data: {
-						'articleId': window.wgArticleId
+						'articleId': mw.config.get('wgArticleId')
 					}
 				})
 			).done(
@@ -100,7 +101,7 @@ require(['jquery', 'mw', 'wikia.loader', 'wikia.nirvana', 'wikia.window'], funct
 				method: 'setTemplateType',
 				type: 'get',
 				data: {
-					'articleId': window.wgArticleId,
+					'articleId': mw.config.get('wgArticleId'),
 					'templateType': $('#TemplateClassificationEditForm').serializeArray()[0].value
 				}
 			});

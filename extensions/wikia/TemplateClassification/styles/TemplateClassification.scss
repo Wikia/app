@@ -11,11 +11,11 @@
 .template-classification-edit-modal {
 	line-height: 2.5em;
 
-	input[type=radio] {
+	.template-classification-edit-form-input {
 		vertical-align: middle;
 	}
 
-	label::after {
+	.template-classification-edit-form-label::after {
 		content: "\A";
 		white-space: pre;
 	}
