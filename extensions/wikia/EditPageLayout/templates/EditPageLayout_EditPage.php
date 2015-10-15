@@ -108,7 +108,7 @@
 								</div>
 							</div>
 							<?php if ( $showMobilePreview ): ?>
-								<div class="preview_box clearfix">
+								<div class="preview_box">
 									<h3 class="preview-header"><?= wfMessage( 'preview' )->escaped() ?></h3>
 									<a id="wpPreviewMobile" class="preview_mobile preview_icon" href="#">
 										<svg xmlns="http://www.w3.org/2000/svg" version="1.0" x="0px" y="0px" viewBox="0 0 32 48" xml:space="preserve">
