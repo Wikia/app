@@ -2743,9 +2743,9 @@ class User {
 		if ( $this->isPublicAttribute( $attribute ) ) {
 			$value = $this->replaceNewlineAndCRWithSpace( $value );
 			$this->userAttributes()->setAttribute( $this->getId(), new Attribute( $attribute, $value ) );
-		} else {
-			$this->setOptionHelper($attribute, $value);
 		}
+
+		$this->setOptionHelper( $attribute, $value );
 	}
 
 	/**
@@ -4932,11 +4932,42 @@ class User {
 
 	/**
 	 * Save this user's attributes into the attribute service.
-	 *
-	 * @see getGlobalPreference for documentation about preferences
 	 */
 	protected function saveAttributes() {
 		$this->userAttributes()->save( $this->getId() );
+		$this->compareAttributesAtSave();
+	}
+
+	/**
+	 * SOC-1407 -- Log discrepancies between MW's result for an
+	 * attribute and the service's result for an attribute at save
+	 * time to try and identify cases where the 2 diverge.
+	 */
+	private function compareAttributesAtSave() {
+		global $wgPublicUserAttributes;
+		foreach ( $wgPublicUserAttributes as $attribute ) {
+			$this->logIfMismatch( $attribute );
+		}
+	}
+
+	private function logIfMismatch( $attribute ) {
+		$valueFromMW = $this->getOptionHelper( $attribute );
+		$valueFromService = $this->userAttributes()->getAttribute( $this->getId(), $attribute );
+		if ( $valueFromMW !== $valueFromService ) {
+			$this->logMismatch( $attribute, $valueFromMW, $valueFromService );
+		}
+	}
+
+	private function logMismatch( $attrName, $valueFromMW, $valueFromService ) {
+		$e = new Exception();
+		$this->error( 'USER_ATTRIBUTES attribute_mismatch_during_save', [
+				'attribute' => $attrName,
+				'valueFromMW' => $valueFromMW,
+				'valueFromService' => $valueFromService,
+				'userId' => $this->getId(),
+				'traceBack' => $e->getTraceAsString()
+			]
+		);
 	}
 
 	/**
