@@ -459,7 +459,7 @@
 	window.ga('ads.set', 'dimension17', window.wgWikiVertical);                          // Vertical
 	window.ga('ads.set', 'dimension18', window.wgWikiCategories.join(','));              // Categories
 	window.ga('ads.set', 'dimension19', window.wgArticleType);                           // ArticleType
-	window.ga('ads.set', 'dimension21', String(window.wgArticleId));                     // ArticleId
+	window.ga('ads.set', 'dimension20', window.wgABPerformanceTest || 'not set');        // Performance A/B testing
 	window.ga('ads.set', 'dimension21', String(window.wgArticleId));                     // ArticleId
 	window.ga('ads.set', 'dimension23', window.wikiaIsPowerUserFrequent ? 'Yes' : 'No'); // IsPowerUser: Frequent
 	window.ga('ads.set', 'dimension24', window.wikiaIsPowerUserLifetime ? 'Yes' : 'No'); // IsPowerUser: Lifetime
