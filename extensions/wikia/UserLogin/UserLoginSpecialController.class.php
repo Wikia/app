@@ -624,7 +624,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 			return;
 		}
 
-		/// Get a temporary password
+		// / Get a temporary password
 		$userService = new \UserService();
 		$tempPass = $userService->resetPassword( $user );
 
@@ -684,7 +684,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	private function setResponseGeneric( $key, $params, $result = 'ok', $postProcess = 'escaped' ) {
 		$msg = wfMessage( $key, $params )->$postProcess();
 
-		$this->response->setData([
+		$this->response->setData( [
 			'result' => $result,
 			'msg' => $msg,
 		] );
