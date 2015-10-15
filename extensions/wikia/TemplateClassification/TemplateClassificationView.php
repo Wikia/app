@@ -13,7 +13,13 @@ class View {
 	 */
 	public function renderTemplateType( \User $user, $fallbackMsg = '' ) {
 		$templateType = ( new \TemplateClassificationMockService() )->getTemplateType();
-		$templateName = wfMessage( 'template-classification-type-' . $templateType )->escaped();
+		/**
+		 * template-classification-type-unclassified
+		 * template-classification-type-infobox
+		 * template-classification-type-navbox
+		 * template-classification-type-quote
+		 */
+		$templateName = wfMessage( "template-classification-type-{$templateType}" )->escaped();
 		if ( $user->isLoggedIn() ) {
 			$templateName .= $this->renderEditButton();
 			return $templateName;
