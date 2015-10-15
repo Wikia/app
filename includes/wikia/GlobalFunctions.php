@@ -629,8 +629,8 @@ function getMenuHelper( $name, $limit = 7 ) {
 		$result[] = $row->cl_from;
 	}
 	if ( count( $result ) < $limit ) {
-		$resultEscaped = array_map( 'addslashes', $result ); # PLATFORM-1579
-		$query = "SELECT cl_from FROM categorylinks WHERE cl_to = '" . addslashes( $name ) . "' " . ( count( $result ) > 0 ? " AND cl_from NOT IN (" . implode( ',', $resultEscaped ) . ") " : "" ) . " LIMIT " . ( $limit - count( $result ) );
+		$resultEscaped = $dbr->makeList( $result ); # PLATFORM-1579 - e.g. 'a', 'b', 'c'
+		$query = "SELECT cl_from FROM categorylinks WHERE cl_to = '" . addslashes( $name ) . "' " . ( count( $result ) > 0 ? " AND cl_from NOT IN (" . $resultEscaped . ") " : "" ) . " LIMIT " . ( $limit - count( $result ) );
 		$res = $dbr->query( $query, __METHOD__ );
 		while ( $row = $dbr->fetchObject( $res ) ) {
 			$result[] = $row->cl_from;
