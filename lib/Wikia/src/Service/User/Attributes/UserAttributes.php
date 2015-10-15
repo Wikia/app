@@ -97,6 +97,8 @@ class UserAttributes {
 	 * @param Attribute $attribute
 	 */
 	public function setAttribute( $userId, Attribute $attribute ) {
+		$this->loadAttributes( $userId );
+
 		// If attribute value is null and default exists, set value to default
 		if ( is_null( $attribute->getValue() ) && isset( $this->defaultAttributes[$attribute->getName()] ) ) {
 			$attribute->setValue( $this->defaultAttributes[$attribute->getName()] );
@@ -159,6 +161,8 @@ class UserAttributes {
 
 
 	public function deleteAttribute( $userId, Attribute $attribute ) {
+		$this->loadAttributes( $userId );
+
 		$this->deleteFromService( $userId, $attribute );
 		$this->deleteFromInstanceCache( $userId, $attribute );
 		$this->setInMemcache( $userId, $this->attributes[$userId] );
