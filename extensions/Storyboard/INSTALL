@@ -1,5 +1,0 @@
-Once you have downloaded the code, place the 'Storyboard' directory within your MediaWiki 'extensions' directory.
-Then add the following code to your LocalSettings.php file:
-
-# Storyboard
-require_once( "$IP/extensions/Storyboard/Storyboard.php" );
