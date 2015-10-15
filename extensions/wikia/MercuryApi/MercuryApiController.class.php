@@ -384,6 +384,8 @@ class MercuryApiController extends WikiaController {
 			if ( !empty( $relatedPages ) ) {
 				$data['relatedPages'] = $relatedPages;
 			}
+
+			$data['htmlTitle'] = $this->wg->Out->getWikiaHTMLTitle( $title->getPrefixedText() );
 		} catch ( WikiaHttpException $exception ) {
 			$this->response->setCode( $exception->getCode() );
 
