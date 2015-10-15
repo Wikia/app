@@ -39,7 +39,7 @@ define('ext.wikia.adEngine.recovery.message', [
 
 	function reject(messageContainer) {
 		adTracker.track('recovery/message', 'reject');
-		messageContainer.style.display = 'none';
+		messageContainer.hide();
 		localStorage.setItem(localStorageKey, true);
 	}
 
