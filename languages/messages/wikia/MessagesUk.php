@@ -37,4 +37,5 @@ $messages = array_merge( $messages, array(
 'review_reason_5' => 'Причина переглядання 5',
 'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
 'addnewtalksection-link' => 'Створити новий розділ',
+'wikia-pagetitle' => '$1 — Wikia',
 ) );

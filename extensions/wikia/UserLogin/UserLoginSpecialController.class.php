@@ -615,6 +615,15 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 			return;
 		}
 
+		if ( !empty( array_intersect( F::app()->wg->AccountAdminGroups, $user->getGroups() ) ) ) {
+			\Wikia\Logger\WikiaLogger::instance()->warning(
+				sprintf( "Junior helper cannot change account info - user: %s", $user->getName() )
+			);
+
+			$this->setErrorResponse( 'userlogin-account-admin-error' );
+			return;
+		}
+
 		/// Get a temporary password
 		$userService = new \UserService();
 		$tempPass = $userService->resetPassword( $user );

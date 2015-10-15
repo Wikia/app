@@ -3,7 +3,7 @@
 class MercuryApiHooks {
 
 	const SERVICE_API_ROOT = '/';
-	const SERVICE_API_BASE = 'api/v1/';
+	const SERVICE_API_BASE = 'api/mercury/';
 	const SERVICE_API_ARTICLE = 'article/';
 	const SERVICE_API_CURATED_CONTENT = 'main/section/';
 
