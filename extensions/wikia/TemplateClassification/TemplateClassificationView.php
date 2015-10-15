@@ -5,22 +5,41 @@ namespace Wikia\TemplateClassification;
 class View {
 
 	/**
-	 * Returns HTML with Template type and entry point for edit
+	 * Returns HTML with Template type.
+	 * If a user is logged in it returns also an entry point for edition.
+	 * @param \User $user
 	 * @param string $fallbackMsg
 	 * @return string
 	 */
-	public function renderEditableType( $fallbackMsg, $user ) {
-		$templateType = $this->getTemplateType();
+	public function renderTemplateType( \User $user, $fallbackMsg = '' ) {
+		$templateType = ( new \TemplateClassificationMockService() )->getTemplateType();
+		$templateName = wfMessage( 'template-classification-type-' . $templateType )->escaped();
 		if ( $user->isLoggedIn() ) {
-			$templateType .= $this->renderEditButton();
-			return $templateType;
+			$templateName .= $this->renderEditButton();
+			return $templateName;
 		} else {
 			if ( $this->isTemplateClassified() ) {
-				return $templateType;
+				return $templateName;
 			}
 			return $fallbackMsg;
 		}
+	}
 
+	/**
+	 * Renders an entry point on a template's edit page.
+	 *
+	 * @param \User $user
+	 * @return string
+	 */
+	public function renderEditPageEntryPoint( \User $user ) {
+		$templateType = $this->renderTemplateType( $user );
+		return \MustacheService::getInstance()->render(
+			__DIR__ . '/templates/TemplateClassificationEditPageEntryPoint.mustache',
+			[
+				'header' => wfMessage( 'template-classification-type-header' ),
+				'templateType' => $templateType,
+			]
+		);
 	}
 
 	/**

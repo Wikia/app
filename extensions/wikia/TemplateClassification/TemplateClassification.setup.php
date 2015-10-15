@@ -37,7 +37,6 @@ $wgAutoloadClasses['Wikia\TemplateClassification\UnusedTemplates\Handler'] = __D
  * Controllers
  */
 $wgAutoloadClasses['TemplateClassificationController'] = __DIR__ . '/TemplateClassificationController.class.php';
-$wgAutoloadClasses['TemplateClassificationMockApiController'] = __DIR__ . '/TemplateClassificationMockApiController.class.php';
 
 /**
  * View
@@ -48,3 +47,9 @@ $wgAutoloadClasses['Wikia\TemplateClassification\View'] = __DIR__ . '/TemplateCl
  * Messages
  */
 $wgExtensionMessagesFiles['TemplateClassification'] = __DIR__ . '/TemplateClassification.i18n.php';
+
+/**
+ * Mock backend
+ */
+$wgAutoloadClasses['TemplateClassificationMockApiController'] = __DIR__ . '/TemplateClassificationMockApiController.class.php';
+$wgAutoloadClasses['TemplateClassificationMockService'] = __DIR__ . '/TemplateClassificationMockService.class.php';
