@@ -8,6 +8,13 @@
 class TemplateClassificationMockApiController extends WikiaApiController {
 
 	public function getTemplateType() {
-		$this->setVal( 'type', ( new TemplateClassificationMockService() )->getTemplateType() );
+		$articleId = $this->request->getInt( 'articleId' );
+
+		$this->setVal( 'type', ( new TemplateClassificationMockService() )->getTemplateType( $articleId ) );
+	}
+
+	public function setTemplateType() {
+		$articleId = $this->request->getInt( 'articleId' );
+		$templateType = $this->request->getVal( 'templateType' );
 	}
 }
