@@ -21,4 +21,8 @@ class TemplateClassificationMockService extends WikiaService {
 		);
 		return $type;
 	}
+
+	public function setTemplateType($articleId, $templateType) {
+
+	}
 }

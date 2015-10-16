@@ -7,48 +7,54 @@ function ($, mw, loader, nirvana) {
 	function init() {
 		$('.template-classification-edit').click(function (e) {
 			e.preventDefault();
-
-			$.when(
-				nirvana.sendRequest({
-					controller: 'TemplateClassification',
-					method: 'getTemplateClassificationEditForm',
-					type: 'get',
-					format: 'html'
-				}),
-				nirvana.sendRequest({
-					controller: 'TemplateClassificationMockApi',
-					method: 'getTemplateType',
-					type: 'get',
-					data: {
-						'articleId': mw.config.get('wgArticleId')
-					}
-				}),
-				loader({
-					type: loader.MULTI,
-					resources: {
-						messages: 'TemplateClassificationModal'
-					}
-				})
-			).done(
-				function (classificationForm, templateType, loaderRes) {
-					mw.messages.set(loaderRes.messages);
-
-					var type = templateType[0].type,
-						$cf = $(classificationForm[0]);
-
-					// Mark selected type
-					$cf.find('input[value="' + mw.html.escape(type) + '"]').attr('checked', 'checked');
-
-					// Set modal content
-					setupTemplateClassificationModal($cf[0].outerHTML);
-
-					require(['wikia.ui.factory'], function (uiFactory) {
-						/* Initialize the modal component */
-						uiFactory.init(['modal']).then(createComponent);
-					});
-				}
-			);
+			openEditModal();
 		});
+		if (isNewArticle()) {
+			openEditModal();
+		}
+	}
+
+	function openEditModal() {
+		$.when(
+			nirvana.sendRequest({
+				controller: 'TemplateClassification',
+				method: 'getTemplateClassificationEditForm',
+				type: 'get',
+				format: 'html'
+			}),
+			nirvana.sendRequest({
+				controller: 'TemplateClassificationMockApi',
+				method: 'getTemplateType',
+				type: 'get',
+				data: {
+					'articleId': mw.config.get('wgArticleId')
+				}
+			}),
+			loader({
+				type: loader.MULTI,
+				resources: {
+					messages: 'TemplateClassificationModal'
+				}
+			})
+		).done(
+			function (classificationForm, templateType, loaderRes) {
+				mw.messages.set(loaderRes.messages);
+
+				var type = templateType[0].type,
+					$cf = $(classificationForm[0]);
+
+				// Mark selected type
+				$cf.find('input[value="' + mw.html.escape(type) + '"]').attr('checked', 'checked');
+
+				// Set modal content
+				setupTemplateClassificationModal($cf[0].outerHTML);
+
+				require(['wikia.ui.factory'], function (uiFactory) {
+					/* Initialize the modal component */
+					uiFactory.init(['modal']).then(createComponent);
+				});
+			}
+		);
 	}
 
 	/**
@@ -68,14 +74,19 @@ function ($, mw, loader, nirvana) {
 	function processInstance(modalInstance) {
 		/* Submit template type edit form on Done button click */
 		modalInstance.bind('done', function () {
-			nirvana.sendRequest({
-				controller: 'TemplateClassificationMockApi',
-				method: 'setTemplateType',
-				data: {
-					'articleId': mw.config.get('wgArticleId'),
-					'templateType': $('#TemplateClassificationEditForm').serializeArray()[0].value
-				}
-			});
+			var templateType = $('#TemplateClassificationEditForm').serializeArray()[0].value;
+			if (isNewArticle()) {
+				storeTypeForSend(templateType);
+			} else {
+				nirvana.sendRequest({
+					controller: 'TemplateClassificationMockApi',
+					method: 'setTemplateType',
+					data: {
+						'articleId': mw.config.get('wgArticleId'),
+						'templateType': templateType
+					}
+				});
+			}
 			modalInstance.trigger('close');
 		});
 
@@ -122,6 +133,19 @@ function ($, mw, loader, nirvana) {
 		];
 
 		modalConfig.vars.buttons = modalButtons;
+	}
+
+	function isNewArticle() {
+		return mw.config.get('wgArticleId') === 0 && mw.config.get('wgTransactionContext').action === 'edit';
+	}
+
+	function storeTypeForSend(templateType) {
+		var $inputElement = $('<input>').attr({
+			'type':'hidden',
+			'name':'template-classification-type',
+			'value':mw.html.escape(templateType)
+		});
+		$('#editform').append($inputElement);
 	}
 
 	$(init);

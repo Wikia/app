@@ -16,6 +16,16 @@ class Hooks {
 		\Hooks::register( 'PageHeaderPageTypePrepared', [ $hooks, 'onPageHeaderPageTypePrepared' ] );
 		\Hooks::register( 'QueryPageUseResultsBeforeRecache', [ $hooks, 'onQueryPageUseResultsBeforeRecache' ] );
 		\Hooks::register( 'EditPageLayoutExecute', [ $hooks, 'onEditPageLayoutExecute' ] );
+		\Hooks::register( 'ArticleInsertComplete', [ $hooks, 'onArticleInsertComplete' ] );
+	}
+
+	public function onArticleInsertComplete( \WikiPage $article ) {
+		$context = \RequestContext::getMain();
+		( new \TemplateClassificationMockService() )->setTemplateType(
+			$article->getId(),
+			$context->getRequest()->getVal('template-classification-type')
+		);
+		return true;
 	}
 
 	/**
