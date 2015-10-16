@@ -15,6 +15,11 @@ use \Wikia\Tasks\Tasks\BaseTask;
 class BrokenRenameFixTask extends BaseTask {
 
 	public function rerunRenameScript( $userId, $oldName, $newName ) {
+		if ( !$this->createdByUser()->isAllowed( 'renameuser' ) ) {
+			$this->error( 'A user that created the task is not allowed to perform a rename' );
+			return false;
+		}
+
 		$maintenanceDir = __DIR__ . '/../../../maintenance/wikia';
 		$rerunRenameScript = $maintenanceDir . '/RerunRenameUserLocal.class.php';
 

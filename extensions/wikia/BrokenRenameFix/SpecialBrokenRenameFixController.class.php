@@ -25,6 +25,10 @@ class SpecialBrokenRenameFixController extends WikiaSpecialPageController {
 	}
 
 	public function index() {
+		if ( !$this->getContext()->getUser()->isAllowed( 'renameuser' ) ) {
+			throw new PermissionsError( 'renameuser' );
+		}
+
 		Wikia::addAssetsToOutput( 'special_broken_rename_fix' );
 
 		$this->wg->Out->setPageTitle( wfMessage( 'brf-title' )->escaped() );
