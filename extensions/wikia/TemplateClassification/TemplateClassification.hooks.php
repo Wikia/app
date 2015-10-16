@@ -2,6 +2,7 @@
 
 namespace Wikia\TemplateClassification;
 
+use Wikia\TemplateClassification\Permissions;
 use Wikia\TemplateClassification\UnusedTemplates\Handler;
 
 class Hooks {
@@ -26,7 +27,7 @@ class Hooks {
 	 * @return true
 	 */
 	public function onBeforePageDisplay( \OutputPage $out, \Skin $skin ) {
-		if ( $skin->getUser()->isLoggedIn() && $out->getTitle()->inNamespace( NS_TEMPLATE ) ) {
+		if ( ( new Permissions() )->shouldDisplayEntryPoint( $skin->getUser(), $out->getTitle() ) ) {
 			\Wikia::addAssetsToOutput( 'tempate_classification_js' );
 			\Wikia::addAssetsToOutput( 'tempate_classification_scss' );
 		}
@@ -39,10 +40,11 @@ class Hooks {
 	 * @return bool
 	 */
 	public function onPageHeaderPageTypePrepared( \PageHeaderController $pageHeaderController, \Title $title ) {
-		if ( $title->inNamespace( NS_TEMPLATE ) ) {
+		$user = $pageHeaderController->getContext()->getUser();
+		if ( ( new Permissions() )->shouldDisplayEntryPoint( $user, $title ) ) {
 			$view = new View();
 			$pageHeaderController->pageType = $view->renderTemplateType(
-				$title->getArticleID(), $pageHeaderController->getContext()->getUser(), $pageHeaderController->pageType
+				$title->getArticleID(), $user, $pageHeaderController->pageType
 			);
 		}
 		return true;
@@ -70,10 +72,11 @@ class Hooks {
 	 * @return bool
 	 */
 	public function onEditPageLayoutExecute( \EditPageLayoutController $editPage ) {
+		$user = $editPage->getContext()->getUser();
 		$title = $editPage->getContext()->getTitle();
-		if ( $title->inNamespace( NS_TEMPLATE ) ) {
+		if ( ( new Permissions() )->shouldDisplayEntryPoint( $user, $title ) ) {
 			$editPage->addExtraPageControlsHtml(
-				( new View )->renderEditPageEntryPoint( $title->getArticleID(), $editPage->getContext()->getUser() )
+				( new View )->renderEditPageEntryPoint( $title->getArticleID(), $user )
 			);
 		}
 		return true;
