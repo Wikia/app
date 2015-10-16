@@ -3853,6 +3853,12 @@ $wgRateLimits = array(
 		'ip'     => null, // for each anon and recent account
 		'subnet' => null, // ... with final octet removed
 		),
+	'upload' => array(
+		'user'   => null,
+		'newbie' => null,
+		'ip'     => null,
+		'subnet' => null,
+	),
 	'move' => array(
 		'user'   => null,
 		'newbie' => null,
