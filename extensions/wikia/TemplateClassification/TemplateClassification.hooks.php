@@ -29,7 +29,6 @@ class Hooks {
 		if ( $skin->getUser()->isLoggedIn() && $out->getTitle()->inNamespace( NS_TEMPLATE ) ) {
 			\Wikia::addAssetsToOutput( 'tempate_classification_js' );
 			\Wikia::addAssetsToOutput( 'tempate_classification_scss' );
-			$out->addModules( 'ext.wikia.TemplateClassification.EditFormMessages' );
 		}
 		return true;
 	}
@@ -42,7 +41,7 @@ class Hooks {
 	public function onPageHeaderPageTypePrepared( \PageHeaderController $pageHeaderController, \Title $title ) {
 		if ( $title->inNamespace( NS_TEMPLATE ) ) {
 			$view = new View();
-			$pageHeaderController->pageType = $view->renderEditableType(
+			$pageHeaderController->pageType = $view->renderTemplateType(
 				$title->getArticleID(), $pageHeaderController->getContext()->getUser(), $pageHeaderController->pageType
 			);
 		}
@@ -71,10 +70,10 @@ class Hooks {
 	 * @return bool
 	 */
 	public function onEditPageLayoutExecute( \EditPageLayoutController $editPage ) {
-		$context = $editPage->getContext();
-		if ( $context->getTitle()->inNamespace( NS_TEMPLATE ) ) {
+		$title = $editPage->getContext()->getTitle();
+		if ( $title->inNamespace( NS_TEMPLATE ) ) {
 			$editPage->addExtraPageControlsHtml(
-				( new View )->renderEditPageEntryPoint( $context->getUser() )
+				( new View )->renderEditPageEntryPoint( $title->getArticleID(), $editPage->getContext()->getUser() )
 			);
 		}
 		return true;

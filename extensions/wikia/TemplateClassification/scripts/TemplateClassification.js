@@ -2,43 +2,7 @@ require(['jquery', 'mw', 'wikia.loader', 'wikia.nirvana'],
 function ($, mw, loader, nirvana) {
 	'use strict';
 
-	var
-		/* Modal component configuration */
-		modalConfig = {
-			vars: {
-				id: 'TemplateClassificationEditModal',
-				classes: ['template-classification-edit-modal'],
-				size: 'small', // size of the modal
-				content: '', // content
-				title: mw.message('template-classification-edit-modal-title').escaped()
-			}
-		},
-		/* Modal buttons config for done and cancel buttons */
-		modalButtons = [{
-			vars: {
-				value: mw.message('template-classification-edit-modal-save-button-text').escaped(),
-				classes: ['normal', 'primary'],
-				data: [
-					{
-						key: 'event',
-						value: 'done'
-					}
-				]
-			}
-		},
-		{
-			vars: {
-				value: mw.message('template-classification-edit-modal-cancel-button-text').escaped(),
-				data: [
-					{
-						key: 'event',
-						value: 'close'
-					}
-				]
-			}
-		}];
-
-	modalConfig.vars.buttons = modalButtons;
+	var modalConfig;
 
 	function init() {
 		$('.template-classification-edit').click(function (e) {
@@ -58,17 +22,25 @@ function ($, mw, loader, nirvana) {
 					data: {
 						'articleId': mw.config.get('wgArticleId')
 					}
+				}),
+				loader({
+					type: loader.MULTI,
+					resources: {
+						messages: 'TemplateClassificationModal'
+					}
 				})
 			).done(
-				function (classificationForm, templateType) {
+				function (classificationForm, templateType, loaderRes) {
+					mw.messages.set(loaderRes.messages);
+
 					var type = templateType[0].type,
 						$cf = $(classificationForm[0]);
 
 					// Mark selected type
-					$cf.find('input[value=\'' + type + '\']').attr('checked', 'checked');
+					$cf.find('input[value=\'' + mw.html.escape(type) + '\']').attr('checked', 'checked');
 
 					// Set modal content
-					modalConfig.vars.content = $cf[0].outerHTML;
+					setupTemplateClassificationModal($cf[0].outerHTML);
 
 					require(['wikia.ui.factory'], function (uiFactory) {
 						/* Initialize the modal component */
@@ -110,6 +82,47 @@ function ($, mw, loader, nirvana) {
 
 		/* Show the modal */
 		modalInstance.show();
+	}
+
+	function setupTemplateClassificationModal(content) {
+		/* Modal component configuration */
+		modalConfig = {
+			vars: {
+				id: 'TemplateClassificationEditModal',
+				classes: ['template-classification-edit-modal'],
+				size: 'small', // size of the modal
+				content: content, // content
+				title: mw.message('template-classification-edit-modal-title').escaped()
+			}
+		};
+
+		var modalButtons = [
+			{
+				vars: {
+						value: mw.message('template-classification-edit-modal-save-button-text').escaped(),
+						classes: ['normal', 'primary'],
+						data: [
+							{
+								key: 'event',
+								value: 'done'
+							}
+						]
+					}
+			},
+			{
+				vars: {
+					value: mw.message('template-classification-edit-modal-cancel-button-text').escaped(),
+					data: [
+						{
+							key: 'event',
+							value: 'close'
+						}
+					]
+				}
+			}
+		];
+
+		modalConfig.vars.buttons = modalButtons;
 	}
 
 	$(init);
