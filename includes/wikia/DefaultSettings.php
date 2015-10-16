@@ -1875,3 +1875,8 @@ $wgSeoTestingExperiments = [];
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverAdsRecoveryMessageCountries = null;
+
+/**
+ * Protect Piggyback logs even if the extension is disabled
+ */
+$wgLogRestrictions['piggyback'] = 'piggyback';
