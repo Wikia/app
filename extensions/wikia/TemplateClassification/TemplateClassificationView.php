@@ -13,6 +13,10 @@ class View {
 	 * @return string
 	 */
 	public function renderTemplateType( $articleId, $user, $fallbackMsg = '' ) {
+		if ( !$user->isLoggedIn() && !$this->isTemplateClassified() ) {
+			return $fallbackMsg;
+		}
+
 		$templateType = ( new \TemplateClassificationMockService() )->getTemplateType( $articleId );
 		/**
 		 * template-classification-type-unclassified
@@ -20,16 +24,20 @@ class View {
 		 * template-classification-type-navbox
 		 * template-classification-type-quote
 		 */
-		$templateName = wfMessage( "template-classification-type-{$templateType}" )->escaped();
-		if ( $user->isLoggedIn() ) {
-			$templateName .= $this->renderEditButton();
-			return $templateName;
-		} else {
-			if ( $this->isTemplateClassified() ) {
-				return $templateName;
-			}
-			return $fallbackMsg;
+		$templateTypeMessage = wfMessage( "template-classification-type-{$templateType}" )->escaped();
+
+		$editButton = flase;
+		if ($user->isLoggedIn()) {
+			$editButton = true;
 		}
+
+		return \MustacheService::getInstance()->render(
+			__DIR__ . '/templates/TemplateClassificationViewPageEntryPoint.mustache',
+			[
+				'templateType' => $templateTypeMessage,
+				'editButton' => $editButton,
+			]
+		);
 	}
 
 	/**
@@ -56,7 +64,4 @@ class View {
 		return false;
 	}
 
-	private function renderEditButton() {
-		return \Html::element( 'a', [ 'class' => 'template-classification-edit sprite-small edit', ], ' ' );
-	}
 }

@@ -84,9 +84,16 @@ function ($, mw, loader, nirvana) {
 	function processInstance(modalInstance) {
 		//modalInstance = instance;
 		/* Submit template type edit form on Done button click */
-		modalInstance.bind('done', function () {
-			var templateType = $('#TemplateClassificationEditForm').serializeArray()[0].value;
+		modalInstance.bind('done', function processSave() {
+			var selectedTypeText,
+				templateType = $('#TemplateClassificationEditForm').serializeArray()[0].value;
+
 			selectedType = mw.html.escape(templateType);
+
+			// Update entry point label
+			selectedTypeText = $classificationForm.find('label[for="template-classification-' + selectedType + '"]');
+			$('.template-classification-type-text').html(selectedTypeText.html());
+
 			if (isNewArticle()) {
 				storeTypeForSend(templateType);
 			} else {
