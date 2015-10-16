@@ -19,11 +19,17 @@ class Hooks {
 		\Hooks::register( 'ArticleInsertComplete', [ $hooks, 'onArticleInsertComplete' ] );
 	}
 
-	public function onArticleInsertComplete( \WikiPage $article ) {
-		$context = \RequestContext::getMain();
+	/**
+	 * Save template type passed from article creation
+	 * template type is stored in templateClassificationType hidden field
+	 *
+	 * @param \WikiPage $wikiPage
+	 * @return bool
+	 */
+	public function onArticleInsertComplete( \WikiPage $wikiPage ) {
 		( new \TemplateClassificationMockService() )->setTemplateType(
-			$article->getId(),
-			$context->getRequest()->getVal('template-classification-type')
+			$wikiPage->getId(),
+			\RequestContext::getMain()->getRequest()->getVal('templateClassificationType')
 		);
 		return true;
 	}

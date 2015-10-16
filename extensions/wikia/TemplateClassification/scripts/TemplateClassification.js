@@ -2,7 +2,10 @@ require(['jquery', 'mw', 'wikia.loader', 'wikia.nirvana'],
 function ($, mw, loader, nirvana) {
 	'use strict';
 
-	var modalConfig;
+	var $classificationForm,
+		$editFromHiddenTypeFiled,
+		modalConfig,
+		selectedType;
 
 	function init() {
 		$('.template-classification-edit').click(function (e) {
@@ -15,46 +18,53 @@ function ($, mw, loader, nirvana) {
 	}
 
 	function openEditModal() {
+		if (selectedType) {
+			// All data in house, just open modal
+			handleRequestsForModal(false, [{type:selectedType}], false);
+			return true;
+		}
+
+		if (isNewArticle()) {
+			// Open modal without type selected
+			$.when(
+				getTemplateClassificationEditForm(),
+				false,
+				getMessages()
+			).done(handleRequestsForModal);
+			return;
+		}
+
+		// Fetch all data and open modal
 		$.when(
-			nirvana.sendRequest({
-				controller: 'TemplateClassification',
-				method: 'getTemplateClassificationEditForm',
-				type: 'get',
-				format: 'html'
-			}),
-			nirvana.sendRequest({
-				controller: 'TemplateClassificationMockApi',
-				method: 'getTemplateType',
-				type: 'get',
-				data: {
-					'articleId': mw.config.get('wgArticleId')
-				}
-			}),
-			loader({
-				type: loader.MULTI,
-				resources: {
-					messages: 'TemplateClassificationModal'
-				}
-			})
-		).done(
-			function (classificationForm, templateType, loaderRes) {
-				mw.messages.set(loaderRes.messages);
+			getTemplateClassificationEditForm(),
+			getTemplateType(mw.config.get('wgArticleId')),
+			getMessages()
+		).done(handleRequestsForModal);
+	}
 
-				var type = templateType[0].type,
-					$cf = $(classificationForm[0]);
+	function handleRequestsForModal(classificationForm, templateType, loaderRes) {
+		if (loaderRes) {
+			mw.messages.set(loaderRes.messages);
+		}
 
-				// Mark selected type
-				$cf.find('input[value="' + mw.html.escape(type) + '"]').attr('checked', 'checked');
+		if (classificationForm) {
+			$classificationForm = $(classificationForm[0]);
+		}
 
-				// Set modal content
-				setupTemplateClassificationModal($cf[0].outerHTML);
+		if (templateType) {
+			selectedType = mw.html.escape(templateType[0].type);
+			// Mark selected type
+			$classificationForm.find('input[checked="checked"]').removeAttr('checked');
+			$classificationForm.find('input[value="' + selectedType + '"]').attr('checked', 'checked');
+		}
 
-				require(['wikia.ui.factory'], function (uiFactory) {
-					/* Initialize the modal component */
-					uiFactory.init(['modal']).then(createComponent);
-				});
-			}
-		);
+		// Set modal content
+		setupTemplateClassificationModal($classificationForm[0].outerHTML);
+
+		require(['wikia.ui.factory'], function (uiFactory) {
+			/* Initialize the modal component */
+			uiFactory.init(['modal']).then(createComponent);
+		});
 	}
 
 	/**
@@ -72,9 +82,11 @@ function ($, mw, loader, nirvana) {
 	 * One of sub-tasks for getting modal shown
 	 */
 	function processInstance(modalInstance) {
+		//modalInstance = instance;
 		/* Submit template type edit form on Done button click */
 		modalInstance.bind('done', function () {
 			var templateType = $('#TemplateClassificationEditForm').serializeArray()[0].value;
+			selectedType = mw.html.escape(templateType);
 			if (isNewArticle()) {
 				storeTypeForSend(templateType);
 			} else {
@@ -135,17 +147,50 @@ function ($, mw, loader, nirvana) {
 		modalConfig.vars.buttons = modalButtons;
 	}
 
+	function getTemplateClassificationEditForm() {
+		return nirvana.sendRequest({
+			controller: 'TemplateClassification',
+			method: 'getTemplateClassificationEditForm',
+			type: 'get',
+			format: 'html'
+		});
+	}
+
+	function getTemplateType(articleId) {
+		return nirvana.sendRequest({
+			controller: 'TemplateClassificationMockApi',
+			method: 'getTemplateType',
+			type: 'get',
+			data: {
+				'articleId': articleId
+			}
+		});
+	}
+
+	function getMessages() {
+		return loader({
+			type: loader.MULTI,
+			resources: {
+				messages: 'TemplateClassificationModal'
+			}
+		});
+	}
+
 	function isNewArticle() {
 		return mw.config.get('wgArticleId') === 0 && mw.config.get('wgTransactionContext').action === 'edit';
 	}
 
 	function storeTypeForSend(templateType) {
-		var $inputElement = $('<input>').attr({
-			'type':'hidden',
-			'name':'template-classification-type',
-			'value':mw.html.escape(templateType)
-		});
-		$('#editform').append($inputElement);
+		if (!$editFromHiddenTypeFiled) {
+			$editFromHiddenTypeFiled = $('<input>').attr({
+				'type': 'hidden',
+				'name': 'templateClassificationType',
+				'value': mw.html.escape(templateType)
+			});
+			$('#editform').append($editFromHiddenTypeFiled);
+		} else {
+			$editFromHiddenTypeFiled.attr('value', mw.html.escape(templateType));
+		}
 	}
 
 	$(init);
