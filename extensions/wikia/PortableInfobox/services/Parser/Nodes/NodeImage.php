@@ -12,41 +12,97 @@ class NodeImage extends Node {
 
 	public function getData() {
 		if ( !isset( $this->data ) ) {
-			$imageData = $this->getRawValueWithDefault( $this->xmlNode );
+			$this->data = array();
 
-			if( is_string($imageData) && PortableInfoboxDataBag::getInstance()->getGallery($imageData)) {
-				$imageData = PortableInfoboxDataBag::getInstance()->getGallery($imageData);
-			}
+			// value passed to source parameter (or default)
+			$value = $this->getRawValueWithDefault( $this->xmlNode );
 
-			$title = $this->getImageAsTitleObject( $imageData );
-			$file = $this->getFilefromTitle( $title );
-			if ( $title instanceof \Title ) {
-				$this->getExternalParser()->addImage( $title->getDBkey() );
-			}
-			$ref = null;
-			$alt = $this->getValueWithDefault( $this->xmlNode->{self::ALT_TAG_NAME} );
-			$caption = $this->getValueWithDefault( $this->xmlNode->{self::CAPTION_TAG_NAME} );
-
-			$this->data = [
-				'url' => $this->resolveImageUrl( $file ),
-				'name' => ( $title ) ? $title->getText() : '',
-				'key' => ( $title ) ? $title->getDBKey() : '',
-				'alt' => $alt,
-				'caption' => $caption
-			];
-
-			if ( $this->isVideo( $file ) ) {
-				$this->data = $this->videoDataDecorator( $this->data, $file );
+			if ( $this->containsTabberOrGallery( $value ) ) {
+				$this->data = $this->getImagesData( $value );
+			} else {
+				$this->data = array( $this->getImageData(
+					$value,
+					$this->getValueWithDefault( $this->xmlNode->{self::ALT_TAG_NAME} ),
+					$this->getValueWithDefault( $this->xmlNode->{self::CAPTION_TAG_NAME} )
+				) );
 			}
 		}
-
 		return $this->data;
+	}
+
+	/**
+	 * @desc Checks if parser preprocessed string containg Tabber or Gallery extension
+	 * @param string $str String to check
+	 * @return bool
+	 */
+	private function containsTabberOrGallery( $str ) {
+		// TODO: Consider more robust approach (UNIQ...QINU)
+		$strLower = strtolower( $str );
+		if ( strpos( $strLower, '-tabber-' ) !== false || strpos( $strLower, '-gallery-' ) !== false ) {
+			return true;
+		}
+		return false;
+	}
+
+	private function getImagesData( $value ) {
+		$html = $this->getExternalParser()->parseRecursive( $value );
+		$items = $this->getTabberItems( $html );
+
+		// TODO: Add support for <gallery>
+
+		$data = array();
+
+		for( $i = 0; $i < count( $items ); $i++ ) {
+			$data[] = $this->getImageData( $items[$i]['title'], $items[$i]['caption'], $items[$i]['caption'] );
+		}
+
+		return $data;
+	}
+
+	private function getTabberItems( $html ) {
+		$items = array();
+		if ( preg_match_all('/class="tabbertab" title="([^"]+)".*?\sdata-image-key="([^"]+)"/is', $html, $tabberOut) ) {
+			for( $i = 0; $i < count( $tabberOut[0] ); $i++ ) {
+				$items[] = array(
+					'title' => $tabberOut[2][$i],
+					'caption' => $tabberOut[1][$i]
+				);
+			}
+		}
+		return $items;
+	}
+
+	private function getImageData( $title, $alt, $caption ) {
+		$titleObj = $this->getImageAsTitleObject( $title );
+		$fileObj = $this->getFilefromTitle( $titleObj );
+
+		if ( $titleObj instanceof \Title ) {
+			$this->getExternalParser()->addImage( $titleObj->getDBkey() );
+		}
+
+		$image = [
+			'url' => $this->resolveImageUrl( $fileObj ),
+			'name' => $titleObj ? $titleObj->getText() : '',
+			'key' => $titleObj ? $titleObj->getDBKey() : '',
+			'alt' => $alt,
+			'caption' => $caption
+		];
+
+		if ( $this->isVideo( $fileObj ) ) {
+			$image = $this->videoDataDecorator( $image, $fileObj );
+		}
+
+		return $image;
 	}
 
 	public function isEmpty() {
 		$data = $this->getData();
-
-		return empty( $data[ 'url' ] );
+		foreach ( $data as $dataItem ) {
+			if ( !empty( $dataItem[ 'url' ] ) ) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	public function getSource() {

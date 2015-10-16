@@ -17,7 +17,9 @@ class PortableInfoboxRenderService extends WikiaService {
 		'group' => 'PortableInfoboxItemGroup.mustache',
 		'horizontal-group-content' => 'PortableInfoboxHorizontalGroupContent.mustache',
 		'navigation' => 'PortableInfoboxItemNavigation.mustache',
-		'hero-mobile' => 'PortableInfoboxItemHeroMobile.mustache'
+		'hero-mobile' => 'PortableInfoboxItemHeroMobile.mustache',
+		'image-collection' => 'PortableInfoboxItemImageCollection.mustache',
+		'image-collection-mobile' => 'PortableInfoboxItemImageCollection.mustache' // TODO: Create separated template for mobile
 	];
 	private $templateEngine;
 
@@ -129,8 +131,10 @@ class PortableInfoboxRenderService extends WikiaService {
 		$helper = new PortableInfoboxRenderServiceHelper();
 
 		if ( array_key_exists( 'image', $data ) ) {
-			$data[ 'image' ][ 'context' ] = self::MEDIA_CONTEXT_INFOBOX_HERO_IMAGE;
-			$data[ 'image' ] = $helper->extendImageData( $data[ 'image' ] );
+			$image = $data[ 'image' ][ 0 ];
+			$image[ 'context' ] = self::MEDIA_CONTEXT_INFOBOX_HERO_IMAGE;
+			$image = $helper->extendImageData( $image );
+			$data['image'] = $image;
 			$markup = $this->renderItem( 'hero-mobile', $data );
 		} else {
 			$markup = $this->renderItem( 'title', $data[ 'title' ] );
@@ -152,16 +156,28 @@ class PortableInfoboxRenderService extends WikiaService {
 		$helper = new PortableInfoboxRenderServiceHelper();
 
 		if ( $type === 'image' ) {
-			$data[ 'context' ] = self::MEDIA_CONTEXT_INFOBOX;
-			$data = $helper->extendImageData( $data );
-
-			if ( !$data ) {
+			$images = array();
+			for ( $i = 0; $i < count($data); $i++ ) {
+				$data[$i][ 'context' ] = self::MEDIA_CONTEXT_INFOBOX;
+				$data[$i] = $helper->extendImageData( $data[$i] );
+				if ( !!$data[$i] ) {
+					$images[] = $data[$i];
+				}
+			}
+			if ( count ( $images ) === 0 ) {
 				return false;
+			} else if ( count ( $images ) === 1 ) {
+				$data = $images[0];
+				$templateName = $type;
+			} else {
+				$data = array( 'images' => $images );
+				$templateName = 'image-collection';
 			}
-
 			if ( $helper->isWikiaMobile() ) {
-				$type = $type . self::MOBILE_TEMPLATE_POSTFIX;
+				$templateName = $templateName . self::MOBILE_TEMPLATE_POSTFIX;
 			}
+		} else {
+			$templateName = $type;
 		}
 
 		if ( $helper->isWikiaMobile() ) {
@@ -170,6 +186,6 @@ class PortableInfoboxRenderService extends WikiaService {
 
 		return $this->templateEngine->clearData()
 			->setData( $data )
-			->render( self::getTemplates()[ $type ] );
+			->render( self::getTemplates()[ $templateName ] );
 	}
 }

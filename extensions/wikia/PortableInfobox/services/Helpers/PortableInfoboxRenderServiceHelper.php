@@ -112,8 +112,8 @@ class PortableInfoboxRenderServiceHelper {
 			return true;
 		}
 
-		if ( $type === 'image' && !array_key_exists( 'image', $heroData ) ) {
-			$imageWidth = $this->getFileWidth( $item[ 'data' ][ 'name' ] );
+		if ( $type === 'image' && !array_key_exists( 'image', $heroData ) && count( $item[ 'data' ] ) === 1 ) {
+			$imageWidth = $this->getFileWidth( $item[ 'data' ][ 0 ][ 'name' ] );
 
 			if ( $imageWidth >= self::MINIMAL_HERO_IMG_WIDTH ) {
 				return true;
