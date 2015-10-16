@@ -10,7 +10,7 @@ $messages = array();
 $messages['en'] = array(
 	'videos' => 'Videos',
 	'specialvideos-desc' => 'Implements [[Special:Videos]]',
-	'specialvideos-html-title' => 'Videos on this wiki - {{SITENAME}}',
+	'specialvideos-html-title' => 'Videos on this wiki',
 	'specialvideos-page-title' => 'Videos',
 	'specialvideos-wiki-videos-tally' => '<em>{{FORMATNUM:$1}}</em><span>{{PLURAL:$1|video on<br /> this wiki|videos on<br /> this wiki}}</span>',
 	'specialvideos-sort-by' => 'Sort by',
@@ -66,7 +66,7 @@ $messages['qqq'] = array(
 );
 
 $messages['de'] = array(
-	'specialvideos-html-title' => 'Videos auf diesem Wiki - {{SITENAME}}',
+	'specialvideos-html-title' => 'Videos auf diesem Wiki',
 	'specialvideos-page-title' => 'Videos',
 	'specialvideos-wiki-videos-tally' => '<em>{{FORMATNUM:$1}}</em><span>{{PLURAL:$1|Videos auf<br /> diesem Wiki|Videos auf<br /> Diesem Wiki}}</span>',
 	'specialvideos-sort-by' => 'Sortieren nach',
@@ -81,7 +81,7 @@ $messages['de'] = array(
 );
 
 $messages['es'] = array(
-	'specialvideos-html-title' => 'Vídeos en este wiki - {{SITENAME}}',
+	'specialvideos-html-title' => 'Vídeos en este wiki',
 	'specialvideos-page-title' => 'Vídeos',
 	'specialvideos-wiki-videos-tally' => '<em>{{FORMATNUM:$1}}</em><span>{{PLURAL:$1|vídeo en<br /> este wiki|vídeos en<br /> este wiki}}</span>',
 	'specialvideos-sort-by' => 'Organizar Por',
@@ -96,7 +96,7 @@ $messages['es'] = array(
 );
 
 $messages['fr'] = array(
-	'specialvideos-html-title' => 'Vidéos sur ce wiki ? {{SITENAME}}',
+	'specialvideos-html-title' => 'Vidéos sur ce wiki',
 	'specialvideos-page-title' => 'Vidéos',
 	'specialvideos-wiki-videos-tally' => '<em>{{FORMATNUM:$1}}</em><span>{{PLURAL:$1|vidéo|vidéos}} sur<br />ce wiki</span>',
 	'specialvideos-sort-by' => 'Trier par',
@@ -139,7 +139,7 @@ $messages['nl'] = array(
 );
 
 $messages['pl'] = array(
-	'specialvideos-html-title' => 'Filmy na {{SITENAME}}',
+	'specialvideos-html-title' => 'Filmy',
 	'specialvideos-page-title' => 'Filmy',
 	'specialvideos-wiki-videos-tally' => '<em>{{FORMATNUM:$1}}</em><span> {{PLURAL:$1|film na<br /> tej wiki|filmów na<br /> tej wiki}}</span>',
 	'specialvideos-sort-by' => 'Sposób sortowania',
@@ -154,7 +154,7 @@ $messages['pl'] = array(
 );
 
 $messages['ru'] = array(
-	'specialvideos-html-title' => 'Видео на этой вики - {{SITENAME}}',
+	'specialvideos-html-title' => 'Видео на этой вики ',
 	'specialvideos-page-title' => 'Видео',
 	'specialvideos-wiki-videos-tally' => '<em>{{FORMATNUM:$1}}</em><span>{{PLURAL:$1|видео на<br /> этой вики}}</span>',
 	'specialvideos-sort-by' => 'Cортировать по',
@@ -177,7 +177,7 @@ $messages['tl'] = array(
 );
 
 $messages['it'] = array(
-	'specialvideos-html-title' => 'Video in questa wiki - {{SITENAME}}',
+	'specialvideos-html-title' => 'Video in questa wiki',
 	'specialvideos-page-title' => 'Video',
 	'specialvideos-wiki-videos-tally' => '<em>{{FORMATNUM:$1}}</em><span>{{PLURAL:$1|video in<br /> questa wiki|video in<br /> questa wiki}}</span>',
 	'specialvideos-sort-by' => 'Ordina per',

@@ -36,6 +36,7 @@ class WikiaInYourLangController extends WikiaController {
 		 */
 		$sTargetLanguage = $this->getLanguageCore( $this->request->getVal( 'targetLanguage' ) );
 		$sArticleTitle = $this->request->getVal( 'articleTitle', false );
+		$sInterlangTitle = $this->request->getVal('interlangTitle', null);
 
 		/**
 		 * Steps to get the native wikia's ID:
@@ -70,7 +71,12 @@ class WikiaInYourLangController extends WikiaController {
 						$oNativeWiki->city_title,
 					];
 					$isMainPageLink = true;
-					$articleURL = $this->getArticleURL( $sArticleTitle, $oNativeWiki->city_id );
+					$articleURL = null;
+					if ( $sInterlangTitle && strlen($sInterlangTitle) ) { //If main page, then $sInterlang is ''
+						$articleURL = $this->getArticleURL( $sInterlangTitle, $oNativeWiki->city_id );
+					} else {
+						$articleURL = $this->getArticleURL( $sArticleTitle, $oNativeWiki->city_id );
+					}
 					if ( $articleURL ) {
 						$aMessageParams[1] = $articleURL;
 						$this->response->setVal( 'linkAddress', $articleURL );
@@ -238,11 +244,19 @@ class WikiaInYourLangController extends WikiaController {
 	}
 
 	private function getArticleURL( $sArticleTitle, $cityId ) {
+		$sArticleAnchor = null;
 		$articleURL = null;
+
 		if ( $sArticleTitle !== false ) {
+			$sArticleTitle = str_replace( ' ', '_', $sArticleTitle );
+			list($sArticleTitle, $sArticleAnchor) = explode('#', $sArticleTitle);
 			$title = GlobalTitle::newFromText( $sArticleTitle, NS_MAIN, $cityId );
+
 			if ( !is_null( $title ) && $title->exists() ) {
 				$articleURL = $title->getFullURL();
+			}
+			if ( $sArticleAnchor ) {
+				$articleURL = $articleURL . '#' . $sArticleAnchor;
 			}
 		}
 		return $articleURL;

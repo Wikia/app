@@ -1341,20 +1341,22 @@ class Wikia {
 		return true;
 	}
 
-	static public function allowNotifyOnPageChange ( /* User */ $editor, /* Title */ $title ) {
-		global $wgWikiaBotUsers;
+	/**
+	 * Do not send watchlist emails for edits made by Wikia bot accounts
+	 *
+	 * @param User $editor
+	 * @param Title $title
+	 * @return bool return false if you want to block an email
+	 */
+	static public function allowNotifyOnPageChange ( User $editor, /* Title */ $title ) {
+		global $wgWikiaBotLikeUsers;
 
-		$allow = true;
-		if ( !empty( $wgWikiaBotUsers ) ) {
-			foreach ( $wgWikiaBotUsers as $type => $user ) {
-				if ( $user["username"] == $editor->getName() ) {
-					$allow = false;
-					break;
-				}
-			}
+		if ( in_array( $editor->getName(), $wgWikiaBotLikeUsers)  ) {
+			return false;
 		}
-
-		return $allow;
+		else {
+			return true;
+		}
 	}
 
 	/**
@@ -1615,11 +1617,6 @@ class Wikia {
 
 		$out = $skinTemplate->getOutput();
 		$title = $skinTemplate->getTitle();
-
-		# quick hack for rt#15730; if you ever feel temptation to add 'elseif' ***CREATE A PROPER HOOK***
-		if (($title instanceof Title) && NS_CATEGORY == $title->getNamespace()) { // FIXME
-			$tpl->set( 'pagetitle', preg_replace("/^{$title->getNsText()}:/", '', $out->getHTMLTitle()));
-		}
 
 		// Pass parameters to skin, see: Login friction project (Marooned)
 		$tpl->set( 'thisurl', $title->getPrefixedURL() );

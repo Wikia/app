@@ -28,7 +28,7 @@ class FounderEmailsViewsDigestEvent extends FounderEmailsEvent {
 		F::app()->wg->Title = Title::newMainPage();
 		// Get list of founders with digest mode turned on
 		if ( empty( $events ) ) {
-			$cityList = $founderEmailObj->getFoundersWithPreference( 'founderemails-complete-digest' );
+			$cityList = $founderEmailObj->getWikisWithFounderPreference( 'founderemails-complete-digest' );
 		} else {
 			$cityList = $events;
 		}

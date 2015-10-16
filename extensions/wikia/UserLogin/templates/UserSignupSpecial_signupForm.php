@@ -25,13 +25,13 @@ $form = [
 			'name' => 'signupToken',
 			'value' => Sanitizer::encodeAttribute( $signupToken ),
 		],
-		[ //fake username field ( not in use )
+		[ // fake username field ( not in use )
 			'type' => 'hidden',
 			'name' => 'username',
 			'value' => '',
 			'label' => wfMessage( 'yourname' )->escaped(),
 		],
-		[ //actual username field
+		[ // actual username field
 			'type' => 'text',
 			'name' => 'userloginext01',
 			'value' => htmlspecialchars( $username ),
@@ -49,13 +49,13 @@ $form = [
 			'isInvalid' => ( !empty( $errParam ) && $errParam === 'email' ),
 			'errorMsg' => ( !empty( $msg ) ? $msg : '' )
 		],
-		[ //fake password field ( not in use )
+		[ // fake password field ( not in use )
 			'type' => 'hidden',
 			'name' => 'password',
 			'value' => '',
 			'label' => wfMessage( 'yourpassword' )->escaped(),
 		],
-		[ //actual password field
+		[ // actual password field
 			'type' => 'password',
 			'name' => 'userloginext02',
 			'value' => '',
@@ -106,7 +106,7 @@ $form = [
 $form['isInvalid'] = !empty( $result ) && $result === 'error' && empty( $errParam );
 $form['errorMsg'] = $form['isInvalid'] ? $msg : '';
 
-if( !empty( $returnto ) ) {
+if ( !empty( $returnto ) ) {
 	$form['inputs'][] = [
 		'type' => 'hidden',
 		'name' => 'returnto',
@@ -114,7 +114,7 @@ if( !empty( $returnto ) ) {
 	];
 }
 
-if( !empty( $byemail ) ) {
+if ( !empty( $byemail ) ) {
 	$form['inputs'][] = [
 		'type' => 'hidden',
 		'name' => 'byemail',
@@ -143,12 +143,12 @@ if( !empty( $byemail ) ) {
 		<? endif; ?>
 		<?= F::app()->renderView( 'WikiaStyleGuideForm', 'index', [ 'form' => $form ] ) ?>
 	</div>
-	<? if( empty( $byemail ) ): ?>
+	<? if ( empty( $byemail ) ): ?>
 		<div class="marketing">
 			<h2><?= wfMessage( 'usersignup-marketing-benefits' )->escaped() ?></h2>
 			<div class="benefit">
 				<ul class="avatars">
-					<? foreach( $avatars as $avatar ) { ?>
+					<? foreach ( $avatars as $avatar ) { ?>
 					<li class="avatar"><img src="<?= $avatar ?>" width="30" height="30"></li>
 					<? } ?>
 				</ul>
