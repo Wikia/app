@@ -14,6 +14,7 @@ class Hooks {
 		\Hooks::register( 'BeforePageDisplay', [ $hooks, 'onBeforePageDisplay' ] );
 		\Hooks::register( 'PageHeaderPageTypePrepared', [ $hooks, 'onPageHeaderPageTypePrepared' ] );
 		\Hooks::register( 'QueryPageUseResultsBeforeRecache', [ $hooks, 'onQueryPageUseResultsBeforeRecache' ] );
+		\Hooks::register( 'EditPageLayoutExecute', [ $hooks, 'onEditPageLayoutExecute' ] );
 	}
 
 	/**
@@ -28,7 +29,6 @@ class Hooks {
 		if ( $skin->getUser()->isLoggedIn() && $out->getTitle()->inNamespace( NS_TEMPLATE ) ) {
 			\Wikia::addAssetsToOutput( 'tempate_classification_js' );
 			\Wikia::addAssetsToOutput( 'tempate_classification_scss' );
-			$out->addModules( 'ext.wikia.TemplateClassification.EditFormMessages' );
 		}
 		return true;
 	}
@@ -36,17 +36,23 @@ class Hooks {
 	/**
 	 * @param \PageHeaderController $pageHeaderController
 	 * @param \Title $title
+	 * @return bool
 	 */
 	public function onPageHeaderPageTypePrepared( \PageHeaderController $pageHeaderController, \Title $title ) {
 		if ( $title->inNamespace( NS_TEMPLATE ) ) {
 			$view = new View();
-			$pageHeaderController->pageType = $view->renderEditableType(
+			$pageHeaderController->pageType = $view->renderTemplateType(
 				$title->getArticleID(), $pageHeaderController->getContext()->getUser(), $pageHeaderController->pageType
 			);
 		}
 		return true;
 	}
 
+	/**
+	 * @param \QueryPage $queryPage
+	 * @param $results
+	 * @return bool
+	 */
 	public function onQueryPageUseResultsBeforeRecache( \QueryPage $queryPage, $results ) {
 		if ( $queryPage->getName() === \UnusedtemplatesPage::UNUSED_TEMPLATES_PAGE_NAME ) {
 			$handler = $this->getUnusedTemplatesHandler();
@@ -55,6 +61,20 @@ class Hooks {
 			} else {
 				$handler->markAllAsUsed();
 			}
+		}
+		return true;
+	}
+
+	/**
+	 * @param \EditPageLayoutController $editPage
+	 * @return bool
+	 */
+	public function onEditPageLayoutExecute( \EditPageLayoutController $editPage ) {
+		$title = $editPage->getContext()->getTitle();
+		if ( $title->inNamespace( NS_TEMPLATE ) ) {
+			$editPage->addExtraPageControlsHtml(
+				( new View )->renderEditPageEntryPoint( $title->getArticleID(), $editPage->getContext()->getUser() )
+			);
 		}
 		return true;
 	}

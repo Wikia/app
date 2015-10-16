@@ -1,10 +1,20 @@
-.wikia-page-header {
-	.header-title {
-		.sprite-small {
-			display: inline-block;
-			margin: 0 4px;
-			cursor: pointer;
-		}
+.template-classification-edit {
+	display: inline-block;
+	margin: 0 4px;
+	cursor: pointer;
+}
+
+.tc-edit-rail-box {
+	margin: 10px 0;
+
+	.tc-edit-rail-header {
+		font-size: 14px;
+	}
+}
+
+.editpage-sourcewidemode-on {
+	.tc-edit-rail-box {
+		display: none;
 	}
 }
 

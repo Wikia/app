@@ -6,20 +6,10 @@
  */
 
 class TemplateClassificationMockApiController extends WikiaApiController {
-	const TYPE_FIELD = 'type';
 
 	public function getTemplateType() {
 		$articleId = $this->request->getInt( 'articleId' );
-		/* Use cache to have consistent results for same pages due to randomization */
-		$type = WikiaDataAccess::cache(
-			wfMemcKey( 'template-classification-type-for-page', $articleId ),
-			WikiaResponse::CACHE_STANDARD,
-			function () {
-				$rand = array_rand( TemplateClassification::$templateTypes );
-				return TemplateClassification::$templateTypes[$rand];
-			}
-		);
-		$this->response->setVal( self::TYPE_FIELD, $type );
+		$this->setVal( 'type', ( new TemplateClassificationMockService() )->getTemplateType( $articleId ) );
 	}
 
 	public function setTemplateType() {

@@ -37,7 +37,6 @@ $wgAutoloadClasses['Wikia\TemplateClassification\UnusedTemplates\Handler'] = __D
  * Controllers
  */
 $wgAutoloadClasses['TemplateClassificationController'] = __DIR__ . '/TemplateClassificationController.class.php';
-$wgAutoloadClasses['TemplateClassificationMockApiController'] = __DIR__ . '/TemplateClassificationMockApiController.class.php';
 
 /**
  * View
@@ -49,15 +48,12 @@ $wgAutoloadClasses['Wikia\TemplateClassification\View'] = __DIR__ . '/TemplateCl
  */
 $wgExtensionMessagesFiles['TemplateClassification'] = __DIR__ . '/TemplateClassification.i18n.php';
 
+JSMessages::registerPackage( 'TemplateClassificationModal', [
+	'template-classification-edit-modal-*',
+] );
+
 /**
- * Resources Loader module
+ * Mock backend
  */
-$wgResourceModules['ext.wikia.TemplateClassification.EditFormMessages'] = [
-	'messages' => [
-		'template-classification-edit-modal-title',
-		'template-classification-edit-modal-save-button-text',
-		'template-classification-edit-modal-cancel-button-text',
-	],
-	'localBasePath' => __DIR__,
-	'remoteExtPath' => 'wikia/TemplateClassification'
-];
+$wgAutoloadClasses['TemplateClassificationMockApiController'] = __DIR__ . '/TemplateClassificationMockApiController.class.php';
+$wgAutoloadClasses['TemplateClassificationMockService'] = __DIR__ . '/TemplateClassificationMockService.class.php';
