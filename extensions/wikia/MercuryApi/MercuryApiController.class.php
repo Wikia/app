@@ -349,9 +349,6 @@ class MercuryApiController extends WikiaController {
 				}
 			}
 
-			// CONCF-855: $article is null sometimes, fix added
-			// I add logging as well to be sure that this not happen anymore
-			// TODO: Remove after 2 weeks: CONCF-1012
 			if ( !$article instanceof Article ) {
 				\Wikia\Logger\WikiaLogger::instance()->error(
 					'$article should be an instance of an Article',
@@ -366,9 +363,7 @@ class MercuryApiController extends WikiaController {
 			}
 
 			$data['details'] = $this->getArticleDetails( $article );
-			$data['topContributors'] = $this->getTopContributorsDetails(
-				$this->getTopContributorsPerArticle( $articleId )
-			);
+
 			$isMainPage = $title->isMainPage();
 			$data['isMainPage'] = $isMainPage;
 
@@ -377,13 +372,16 @@ class MercuryApiController extends WikiaController {
 			} else {
 				$articleAsJson = $this->getArticleJson( $articleId, $title, $sections );
 				$data['article'] = $articleAsJson;
+				$data['topContributors'] = $this->getTopContributorsDetails(
+					$this->getTopContributorsPerArticle( $articleId )
+				);
+				$relatedPages = $this->getRelatedPages( $articleId );
+
+				if ( !empty( $relatedPages ) ) {
+					$data['relatedPages'] = $relatedPages;
+				}
 			}
 
-			$relatedPages = $this->getRelatedPages( $articleId );
-
-			if ( !empty( $relatedPages ) ) {
-				$data['relatedPages'] = $relatedPages;
-			}
 		} catch ( WikiaHttpException $exception ) {
 			$this->response->setCode( $exception->getCode() );
 
