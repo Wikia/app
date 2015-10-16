@@ -30,7 +30,6 @@ $wgExtensionMessagesFiles['PiggybackAliases'] = $dir . 'Piggyback.alias.php';
 $wgSpecialPages['Piggyback'] = 'Piggyback'; # Let MediaWiki know about your new special page.
 
 $wgSpecialPageGroups['Piggyback'] = 'users';
-$wgLogRestrictions['piggyback'] = 'piggyback';
 $wgLogTypes[] = 'piggyback';
 
 //permissions
