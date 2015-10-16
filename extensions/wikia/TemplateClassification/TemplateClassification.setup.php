@@ -37,6 +37,7 @@ $wgAutoloadClasses['Wikia\TemplateClassification\UnusedTemplates\Handler'] = __D
  * Controllers
  */
 $wgAutoloadClasses['TemplateClassificationController'] = __DIR__ . '/TemplateClassificationController.class.php';
+$wgAutoloadClasses['Wikia\TemplateClassification\Permissions'] = __DIR__ . '/Permissions.class.php';
 
 /**
  * View
