@@ -20,7 +20,9 @@
 		<? endif ?>
 		<div class="session">
 			<?= $avatar ?>
-			<?= wfMessage( 'oasis-comments-anonymous-prompt' )->parse() /* wfMsg( 'oasis-comments-user-prompt', $avatar->mUser->getName() ) */ ?>
+			<? if ( $isAnon ): ?>
+				<?= wfMessage( 'oasis-comments-anonymous-prompt' )->parse() /* wfMsg( 'oasis-comments-user-prompt', $avatar->mUser->getName() ) */ ?>
+			<? endif ?>
 		</div>
 		<form action="<?= $title->getFullURL() ?>" method="post" class="article-comm-form" id="article-comm-form">
 			<input type="hidden" name="wpArticleId" value="<?= $title->getArticleId() ?>" />

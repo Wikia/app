@@ -26,7 +26,9 @@ $commentsCounter = wfMessage( 'oasis-comments-header', $wg->Lang->FormatNum( $co
 		<? endif ?>
 		<div class="session">
 			<?= $avatar ?>
-			<?= wfMessage( 'oasis-comments-anonymous-prompt' )->parse(); ?>
+			<? if ( $isAnon ): ?>
+				<?= wfMessage( 'oasis-comments-anonymous-prompt' )->parse(); ?>
+			<? endif ?>
 		</div>
 		<form action="<?= $title->getLocalURL() ?>" method="post" class="article-comm-form" id="article-comm-form">
 			<input type="hidden" name="wpArticleId" value="<?= $title->getArticleId() ?>" />
