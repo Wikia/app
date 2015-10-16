@@ -26,6 +26,7 @@ class FliteTagController extends WikiaParserTagController {
 				'guid' => $args['guid'],
 				'width' => $args['width'],
 				'height' => $args['height'],
+				'widgetType' => self::PARSER_TAG_NAME
 			]
 		);
 	}
@@ -71,6 +72,7 @@ class FliteTagController extends WikiaParserTagController {
 		$this->setVal( 'guid', $this->getVal( 'guid' ) );
 		$this->setVal( 'width', $this->getVal( 'width' ) );
 		$this->setVal( 'height', $this->getVal( 'height' ) );
+		$this->setVal( 'widgetType', $this->getVal( 'widgetType' ) );
 
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 	}
