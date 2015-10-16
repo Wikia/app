@@ -37,7 +37,7 @@ function ($, mw, loader, nirvana) {
 						$cf = $(classificationForm[0]);
 
 					// Mark selected type
-					$cf.find('input[value=\'' + mw.html.escape(type) + '\']').attr('checked', 'checked');
+					$cf.find('input[value="' + mw.html.escape(type) + '"]').attr('checked', 'checked');
 
 					// Set modal content
 					setupTemplateClassificationModal($cf[0].outerHTML);
@@ -71,7 +71,6 @@ function ($, mw, loader, nirvana) {
 			nirvana.sendRequest({
 				controller: 'TemplateClassificationMockApi',
 				method: 'setTemplateType',
-				type: 'get',
 				data: {
 					'articleId': mw.config.get('wgArticleId'),
 					'templateType': $('#TemplateClassificationEditForm').serializeArray()[0].value
