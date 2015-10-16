@@ -72,7 +72,6 @@ class FliteTagController extends WikiaParserTagController {
 		$this->setVal( 'guid', $this->getVal( 'guid' ) );
 		$this->setVal( 'width', $this->getVal( 'width' ) );
 		$this->setVal( 'height', $this->getVal( 'height' ) );
-		$this->setVal( 'widgetType', $this->getVal( 'widgetType' ) );
 	}
 
 	public function fliteAdUnitDesktop() {
@@ -83,6 +82,7 @@ class FliteTagController extends WikiaParserTagController {
 
 	public function fliteAdUnitMobile() {
 		$this->setSkinSharedVariables();
+		$this->setVal( 'widgetType', $this->getVal( 'widgetType' ) );
 
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 	}
