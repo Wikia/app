@@ -1004,3 +1004,22 @@ abstract class DatabaseMysqlBase extends DatabaseBase {
 	}
 
 }
+
+class MySQLMasterPos implements DBMasterPos {
+	/** @var string */
+	public $file;
+	/** @var int Position */
+	public $pos;
+	/** @var float UNIX timestamp */
+	public $asOfTime = 0.0;
+
+	function __construct( $file, $pos ) {
+		$this->file = $file;
+		$this->pos = $pos;
+		$this->asOfTime = microtime( true );
+	}
+
+	function __toString() {
+		return "{$this->file}/{$this->pos}";
+	}
+}
