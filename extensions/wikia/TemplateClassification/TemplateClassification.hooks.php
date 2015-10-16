@@ -28,6 +28,7 @@ class Hooks {
 		if ( $skin->getUser()->isLoggedIn() && $out->getTitle()->inNamespace( NS_TEMPLATE ) ) {
 			\Wikia::addAssetsToOutput( 'tempate_classification_js' );
 			\Wikia::addAssetsToOutput( 'tempate_classification_scss' );
+			$out->addModules( 'ext.wikia.TemplateClassification.EditFormMessages' );
 		}
 		return true;
 	}
@@ -40,7 +41,7 @@ class Hooks {
 		if ( $title->inNamespace( NS_TEMPLATE ) ) {
 			$view = new View();
 			$pageHeaderController->pageType = $view->renderEditableType(
-				$pageHeaderController->pageType, $pageHeaderController->getContext()->getUser()
+				$title->getArticleID(), $pageHeaderController->getContext()->getUser(), $pageHeaderController->pageType
 			);
 		}
 		return true;

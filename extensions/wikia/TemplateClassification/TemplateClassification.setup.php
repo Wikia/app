@@ -48,3 +48,16 @@ $wgAutoloadClasses['Wikia\TemplateClassification\View'] = __DIR__ . '/TemplateCl
  * Messages
  */
 $wgExtensionMessagesFiles['TemplateClassification'] = __DIR__ . '/TemplateClassification.i18n.php';
+
+/**
+ * Resources Loader module
+ */
+$wgResourceModules['ext.wikia.TemplateClassification.EditFormMessages'] = [
+	'messages' => [
+		'template-classification-edit-modal-title',
+		'template-classification-edit-modal-save-button-text',
+		'template-classification-edit-modal-cancel-button-text',
+	],
+	'localBasePath' => __DIR__,
+	'remoteExtPath' => 'wikia/TemplateClassification'
+];

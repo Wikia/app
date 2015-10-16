@@ -7,3 +7,16 @@
 		}
 	}
 }
+
+.template-classification-edit-modal {
+	line-height: 2.5em;
+
+	.template-classification-edit-form-input {
+		vertical-align: middle;
+	}
+
+	.template-classification-edit-form-label::after {
+		content: "\A";
+		white-space: pre;
+	}
+}
