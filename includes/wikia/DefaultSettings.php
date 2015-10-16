@@ -1813,13 +1813,6 @@ $wgPreferenceServiceRead = false;
 $wgPreferenceServiceWrite = true;
 
 /**
- * @name $wgEnableRobotsTxtExt
- *
- * Enables extension that generates robots.txt
- */
-$wgEnableRobotsTxtExt = true;
-
-/**
  * @name $wgEnableFliteTagExt
  *
  * Enables FliteTag extension which makes it possible to use <flite> tag within an article content
@@ -1827,6 +1820,20 @@ $wgEnableRobotsTxtExt = true;
 $wgEnableFliteTagExt = false;
 
 // SEO-related variables start (keep them sorted)
+
+/**
+ * @name $wgEnableCustom404PageExt
+ *
+ * Enables custom 404 page for missing articles suggesting the closest matching article
+ */
+$wgEnableCustom404PageExt = false;
+
+/**
+ * @name $wgEnableRobotsTxtExt
+ *
+ * Enables extension that generates robots.txt
+ */
+$wgEnableRobotsTxtExt = true;
 
 /**
  * @name $wgEnableSeoLinkHreflangExt
