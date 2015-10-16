@@ -1,17 +1,6 @@
 <?php
 
 class Custom404PageHooks {
-
-	/**
-	 * The canonical URL to set
-	 *
-	 * This is set in BeforeDisplayNoArticleText hook and read in WikiaCanonicalHref hook,
-	 * so the order of executing the hooks is critical for this to work.
-	 *
-	 * @var string
-	 */
-	static private $canonicalUrlOverride;
-
 	/**
 	 * Attempt to recover a URL that was truncated by an external service (e.g. Wanted -> Wanted!).
 	 *
@@ -55,15 +44,6 @@ class Custom404PageHooks {
 		$wgOut->setStatusCode( 200 );
 		$wgOut->setRobotPolicy( 'noindex,follow' );
 
-		self::$canonicalUrlOverride = $bestMatchingTitle->getFullURL();
-
 		return false;
-	}
-
-	static public function onWikiaCanonicalHref( &$canonicalUrl ) {
-		if ( self::$canonicalUrlOverride ) {
-			$canonicalUrl = self::$canonicalUrlOverride;
-		}
-		return true;
 	}
 }

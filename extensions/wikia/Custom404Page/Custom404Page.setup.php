@@ -6,7 +6,6 @@ $wgAutoloadClasses['Custom404PageHooks'] =  __DIR__ . '/Custom404PageHooks.class
 
 // Hooks
 $wgHooks['BeforeDisplayNoArticleText'][] = 'Custom404PageHooks::onBeforeDisplayNoArticleText';
-$wgHooks['WikiaCanonicalHref'][] = 'Custom404PageHooks::onWikiaCanonicalHref';
 
 // Messages
 $wgExtensionMessagesFiles['Custom404Page'] = __DIR__ . '/Custom404Page.i18n.php';
