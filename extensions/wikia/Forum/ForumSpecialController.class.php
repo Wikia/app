@@ -140,6 +140,11 @@ class ForumSpecialController extends WikiaSpecialPageController {
 						'maxlength' => '255'
 					),
 				),
+				array(
+					'type' => 'hidden',
+					'name' => 'token',
+					'value' => F::app()->wg->User->getEditToken(),
+				),
 			),
 			'method' => 'post',
 			'action' => '',
@@ -189,6 +194,11 @@ class ForumSpecialController extends WikiaSpecialPageController {
 					'attributes' => array(
 						'maxlength' => '255'
 					),
+				),
+				array(
+					'type' => 'hidden',
+					'name' => 'token',
+					'value' => F::app()->wg->User->getEditToken(),
 				),
 			),
 			'method' => 'post',
