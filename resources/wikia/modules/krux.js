@@ -109,7 +109,7 @@ define('wikia.krux', [
 	}
 
 	function sendEvent(eventId, data) {
-		if (!kruxLoaded) {
+		if (!kruxLoaded || typeof Krux !== 'function') {
 			return false;
 		}
 		Krux('admEvent', eventId, data || {});
