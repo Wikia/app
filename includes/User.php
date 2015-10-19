@@ -1142,6 +1142,8 @@ class User {
 			return false;
 		}
 
+		$this->logAuthenticationFallthrough($from, $passwordCorrect);
+
 		if ( ( $sName === $proposedUser->getName() ) && $passwordCorrect ) {
 			$this->loadFromUserObject( $proposedUser );
 			$request->setSessionData( 'wsToken', $this->mToken );
@@ -5171,5 +5173,28 @@ class User {
 	 */
 	public static function getUserTouchedKey( $user_id ) {
 		return wfSharedMemcKey( "user_touched", 'v1', $user_id );
+	}
+
+
+	/**
+	 * Log authentication fall through.
+	 *
+	 * @param string $from
+	 * @param bool $passwordCorrect
+	 */
+	private function logAuthenticationFallthrough($from, $passwordCorrect) {
+		$sampler = new BernoulliTrial( 0.05 );
+		if ( $sampler->shouldSample() ) {
+			Wikia\Logger\WikiaLogger::instance()->info(
+				'AUTHENTICATION_FALLBACK',
+				[
+					'from'              => $from,
+					'passwordCorrect'   => $passwordCorrect,
+					'ip'                => $this->getRequest()->getIP(),
+					'session_id'        => session_id(),
+					'user_id'           => $this->getId(),
+					'user_name'         => $this->getName(),
+				]);
+		}
 	}
 }
