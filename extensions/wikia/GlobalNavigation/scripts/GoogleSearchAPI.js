@@ -35,6 +35,11 @@ $(function () {
 			searchQuery += ' site:' + window.location.hostname;
 		}
 
+		//Manually trigger page view
+		var currentUrlPath = window.location.pathname;
+		currentUrlPath += '?q=' + encodeURIComponent(searchQuery);
+		window.guaTrackPageview(currentUrlPath);
+
 		//Invoke google search
 		$googleInput.val(searchQuery);
 		$googleButton.trigger('click');
