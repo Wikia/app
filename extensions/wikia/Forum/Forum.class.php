@@ -238,12 +238,6 @@ class Forum extends Walls {
 			return false;
 		}
 
-		if ( !F::app()->wg->request->wasPosted() ||
-			!F::app()->wg->User->matchEditToken( F::app()->wg->request->getVal( 'editToken' ) ) ) {
-			wfProfileOut( __METHOD__ );
-			return false;
-		}
-
 		Forum::$allowToEditBoard = true;
 
 		if ( $id == null ) {

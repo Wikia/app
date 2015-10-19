@@ -58,6 +58,12 @@ class ForumExternalController extends WallExternalController {
 			return;
 		}
 
+		try {
+			$this->displayAnyWriteAccessError();
+		} catch ( \BadRequestException $bre ) {
+			return true;
+		}
+
 		$boardTitle = $this->getVal( 'boardTitle', '' );
 		$boardDescription = $this->getVal( 'boardDescription', '' );
 
@@ -100,6 +106,12 @@ class ForumExternalController extends WallExternalController {
 
 		if ( !empty( $this->status ) ) {
 			return;
+		}
+
+		try {
+			$this->displayAnyWriteAccessError();
+		} catch ( \BadRequestException $bre ) {
+			return true;
 		}
 
 		$boardId = $this->getVal( 'boardId', '' );
@@ -159,6 +171,12 @@ class ForumExternalController extends WallExternalController {
 		$this->status = self::checkAdminAccess();
 		if ( !empty( $this->status ) ) {
 			return;
+		}
+
+		try {
+			$this->displayAnyWriteAccessError();
+		} catch ( \BadRequestException $bre ) {
+			return true;
 		}
 
 		$boardId = $this->getVal( 'boardId', '' );
@@ -242,4 +260,18 @@ class ForumExternalController extends WallExternalController {
 		$context->response->setVal( 'message', $this->app->renderView( 'ForumController', 'threadReply', array( 'comment' => $reply, 'isreply' => true ) ) );
 	}
 
+	/**
+	 * Upon verifying write access, sets the status and error message appropriately
+	 *
+	 * @throws BadRequestException
+	 */
+	private function displayAnyWriteAccessError() {
+		try {
+			$this->checkWriteRequest();
+		} catch ( \BadRequestException $bre ) {
+			$this->status = 'error';
+			$this->errormsg = wfMessage( 'forum-token-mismatch' )->escaped();
+			throw $bre;
+		}
+	}
 }

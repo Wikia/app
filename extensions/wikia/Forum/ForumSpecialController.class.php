@@ -143,7 +143,7 @@ class ForumSpecialController extends WikiaSpecialPageController {
 				array(
 					'type' => 'hidden',
 					'name' => 'token',
-					'value' => F::app()->wg->User->getEditToken(),
+					'value' => $this->getUser()->getEditToken(),
 				),
 			),
 			'method' => 'post',
@@ -198,7 +198,7 @@ class ForumSpecialController extends WikiaSpecialPageController {
 				array(
 					'type' => 'hidden',
 					'name' => 'token',
-					'value' => F::app()->wg->User->getEditToken(),
+					'value' => $this->getUser()->getEditToken(),
 				),
 			),
 			'method' => 'post',
@@ -269,6 +269,11 @@ class ForumSpecialController extends WikiaSpecialPageController {
 					'isRequired' => true,
 					'label' => wfMessage( 'forum-admin-merge-board-destination', $boardTitle )->plain(),
 					'options' => $this->destinationBoards,
+				),
+				array(
+					'type' => 'hidden',
+					'name' => 'token',
+					'value' => $this->getUser()->getEditToken(),
 				),
 			),
 			'method' => 'post',
