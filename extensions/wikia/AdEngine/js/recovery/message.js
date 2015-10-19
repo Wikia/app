@@ -25,12 +25,7 @@ define('ext.wikia.adEngine.recovery.message', [
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.recovery.message',
-		localStorageKey = 'rejectedRecoveredMessage',
-		headerText = 'Hey! It looks like you\'re using ad blocking software!',
-		messageText = 'Wikia runs ads so we can keep the lights on and so Wikia will always be free to use. ' +
-			'We can bring you fun, free, fan-oriented content until my glorious return to Earh if you ' +
-			'<strong>add us to your adblock whitelist</strong>. ' +
-			'<a class="action-accept">Click</a> my face to refresh after you\'re done!';
+		localStorageKey = 'rejectedRecoveredMessage';
 
 	function accept() {
 		adTracker.track('recovery/message', 'accept');
@@ -47,29 +42,39 @@ define('ext.wikia.adEngine.recovery.message', [
 		return !!localStorage.getItem(localStorageKey);
 	}
 
-	function getTemplate() {
-		var templatePath = 'extensions/wikia/AdEngine/templates/recovered_message.mustache';
+	function getAssets() {
+		var templatePath = 'extensions/wikia/AdEngine/templates/recovered_message.mustache',
+			messagePackage = 'AdEngineRecoveryMessage';
 
 		return $.when(
 			loader({
 				type: loader.MULTI,
 				resources: {
+					messages: messagePackage,
 					mustache: templatePath
 				}
 			})
 		).then(function (response) {
-			return response.mustache[0];
+			return response;
 		}).fail(function () {
-			log(['recoveredAdsMessage.getTemplate', 'Unable to load template', templatePath], 'debug', logGroup);
+			log([
+				'recoveredAdsMessage.getAssets', 'Unable to load template or messages',
+				templatePath,
+				messagePackage
+			], 'debug', logGroup);
 		});
 	}
 
 	function createMessage(uniqueClassName) {
-		return getTemplate().then(function (template) {
-			var params = {
+		return getAssets().then(function (loaderResponse) {
+			var template = loaderResponse.mustache[0],
+				params = {
 					positionClass: 'recovered-message-' + uniqueClassName,
-					header: headerText,
-					text: messageText
+					header: $.msg('adengine-recovery-message-blocking-welcome'),
+					text: $.msg(
+						'adengine-recovery-message-blocking-message-a',
+						'<a class="action-accept">' + $.msg('adengine-recovery-message-blocking-click') + '</a>'
+					)
 				};
 
 			return $(mustache.render(template, params));
