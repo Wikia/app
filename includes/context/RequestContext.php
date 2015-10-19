@@ -235,7 +235,7 @@ class RequestContext implements IContextSource {
 	 * @param $authSource array
 	 */
 	private function logAuthenticationMethod($user, $authSource) {
-		if ( count( $authSource ) <= 1 || $user === null || !$user->isLoggedIn() ) {
+		if ( $user === null || !$user->isLoggedIn() ) {
 			return;
 		}
 
