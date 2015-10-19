@@ -3,6 +3,7 @@
 		<div class="wikia-logo-container table-cell">
 			<a href="<?= htmlspecialchars( $centralUrl ) ?>"
 				class="wikia-logo"
+				rel="nofollow"
 				data-id="wikia-logo">
 				<img src="<?= $wg->BlankImgUrl ?>"
 					height="24"
