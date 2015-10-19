@@ -59,9 +59,10 @@ class ForumExternalController extends WallExternalController {
 		}
 
 		try {
-			$this->displayAnyWriteAccessError();
+			$this->checkWriteRequest();
 		} catch ( \BadRequestException $bre ) {
-			return true;
+			$this->setTokenMismatchError();
+			return;
 		}
 
 		$boardTitle = $this->getVal( 'boardTitle', '' );
@@ -109,9 +110,10 @@ class ForumExternalController extends WallExternalController {
 		}
 
 		try {
-			$this->displayAnyWriteAccessError();
+			$this->checkWriteRequest();
 		} catch ( \BadRequestException $bre ) {
-			return true;
+			$this->setTokenMismatchError();
+			return;
 		}
 
 		$boardId = $this->getVal( 'boardId', '' );
@@ -174,7 +176,7 @@ class ForumExternalController extends WallExternalController {
 		}
 
 		try {
-			$this->displayAnyWriteAccessError();
+			$this->setTokenMismatchError();
 		} catch ( \BadRequestException $bre ) {
 			return true;
 		}
@@ -261,17 +263,10 @@ class ForumExternalController extends WallExternalController {
 	}
 
 	/**
-	 * Upon verifying write access, sets the status and error message appropriately
-	 *
-	 * @throws BadRequestException
+	 * Sets token mismatch error message
 	 */
-	private function displayAnyWriteAccessError() {
-		try {
-			$this->checkWriteRequest();
-		} catch ( \BadRequestException $bre ) {
-			$this->status = 'error';
-			$this->errormsg = wfMessage( 'forum-token-mismatch' )->escaped();
-			throw $bre;
-		}
+	private function setTokenMismatchError() {
+		$this->status = 'error';
+		$this->errormsg = wfMessage( 'forum-token-mismatch' )->escaped();
 	}
 }
