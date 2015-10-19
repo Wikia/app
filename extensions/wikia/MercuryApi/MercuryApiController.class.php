@@ -465,7 +465,18 @@ class MercuryApiController extends WikiaController {
 			throw new NotFoundApiException( 'No members' );
 		}
 
-		$this->response->setVal( 'items', $data[ 'items' ] );
+		$this->response->setVal( 'items', $data['items'] );
+	}
+
+	public function getMainPageDetailsAndAdsContext() {
+		$mainPageTitle = Title::newMainPage();
+		$mainPageArticleID = $mainPageTitle->getArticleID();
+		$article = Article::newFromID($mainPageArticleID);
+
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
+		$this->response->setVal( 'details', $this->getArticleDetails( $article ) );
+		$this->response->setVal( 'adsContext', $this->mercuryApi->getAdsContext( $mainPageTitle ) );
 	}
 
 	public static function curatedContentDataMemcKey( $section = null ) {
