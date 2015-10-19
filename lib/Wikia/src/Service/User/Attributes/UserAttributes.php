@@ -110,7 +110,8 @@ class UserAttributes {
 	public function save( $userId ) {
 		$attributes = $this->loadAttributes( $userId );
 
-		// TODO When bulk updates are complete, convert this to a single request
+		// TODO When bulk updates are complete, convert this to a single request.
+		// Ticket: SOC-1482
 		$savedAttributes = [];
 		foreach( $attributes as $name => $value ) {
 			if ( $this->attributeShouldBeSaved( $name, $value ) ) {
