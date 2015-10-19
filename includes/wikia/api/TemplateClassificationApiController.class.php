@@ -6,8 +6,7 @@ use Swagger\Client\TemplateClassification\Storage\Api\TCSApi;
 use Swagger\Client\TemplateClassification\Storage\Models\TemplateTypeProvider;
 use Swagger\Client\ApiException;
 
-class TemplateClassificationApiController extends WikiaApiController
-{
+class TemplateClassificationApiController extends WikiaApiController {
 	const SERVICE_NAME = 'template-classification-storage';
 	const USER_PROVIDER = 'user';
 
@@ -25,11 +24,13 @@ class TemplateClassificationApiController extends WikiaApiController
 	 * @throws BadRequestApiException
 	 * @throws Exception
 	 */
-	public function getType( $wikiId, $pageId ) {
-		$templateType = "";
+	public function getType() {
+		$templateType = '';
+
+		$pageId = $this->request->getVal( 'pageId', null );
 
 		try {
-			$type = $this->getApiClient()->getTemplateType( $wikiId, $pageId );
+			$type = $this->getApiClient()->getTemplateType( $this->wg->CityId, $pageId );
 			if ( !is_null( $type ) ) {
 				$templateType = $type->getType();
 			}
@@ -52,13 +53,15 @@ class TemplateClassificationApiController extends WikiaApiController
 	 * @throws BadRequestApiException
 	 * @throws Exception
 	 */
-	public function getDetails( $wikiId, $pageId ) {
+	public function getDetails() {
 		$templateDetails = [];
 
-		try {
-			$details = $this->getApiClient()->getTemplateDetails( $wikiId, $pageId );
+		$pageId = $this->request->getVal( 'pageId', null );
 
-			if ( !is_null($details) ) {
+		try {
+			$details = $this->getApiClient()->getTemplateDetails( $this->wg->CityId, $pageId );
+
+			if ( !is_null( $details ) ) {
 				$providers = $details->getProviders();
 				$templateDetails = $this->prepareTemplateDetails( $providers );
 			}
@@ -84,8 +87,11 @@ class TemplateClassificationApiController extends WikiaApiController
 	 * @throws PermissionsException
 	 * @throws UnauthorizedException
 	 */
-	public function classifyType( $wikiId, $pageId, $templateType ) {
-		$this->validateRequest( $this->wg->User, $this->request );
+	public function classifyType() {
+		$pageId = $this->request->getVal( 'pageId', null );
+		$templateType = $this->request->getVal( 'type', null );
+
+		$this->validateRequest( $this->wg->User, $this->request, $pageId );
 
 		$details = [
 			'provider' => self::USER_PROVIDER,
@@ -95,7 +101,7 @@ class TemplateClassificationApiController extends WikiaApiController
 		$templateTypeProvider = new TemplateTypeProvider( $details );
 
 		try {
-			$this->getApiClient()->insertTemplateDetails( $wikiId, $pageId, $templateTypeProvider );
+			$this->getApiClient()->insertTemplateDetails( $this->wg->CityId, $pageId, $templateTypeProvider );
 		} catch ( InvalidArgumentException $e ) {
 			throw new BadRequestApiException( $e->getMessage() );
 		} catch ( ApiException $e ) {
@@ -128,12 +134,13 @@ class TemplateClassificationApiController extends WikiaApiController
 	 *
 	 * @param User $user
 	 * @param WikiaRequest $request
+	 * @param int $pageId
 	 * @return bool
 	 * @throws PermissionsException
 	 * @throws UnauthorizedException
 	 * @throws BadRequestException
 	 */
-	private function validateRequest( User $user, WikiaRequest $request ) {
+	private function validateRequest( User $user, WikiaRequest $request, $pageId ) {
 		if ( !$request->wasPosted() ) {
 			throw new BadRequestApiException();
 		}
@@ -142,7 +149,13 @@ class TemplateClassificationApiController extends WikiaApiController
 			throw new UnauthorizedException();
 		}
 
-		if ( !$user->isAllowed( 'edit' ) ) {
+		$title = Title::newFromID( $pageId );
+
+		if ( is_null( $title ) || !$title->inNamespace( NS_TEMPLATE ) ) {
+			throw new InvalidParameterApiException( 'pageId' );
+		}
+
+		if ( !$title->userCan( 'edit' ) ) {
 			throw new PermissionsException( 'edit' );
 		}
 
