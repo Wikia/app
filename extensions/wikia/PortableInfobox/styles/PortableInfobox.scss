@@ -14,7 +14,7 @@
 	// (placing it within portable-infobox class makes it strong enough) //
 
 .portable-infobox {
-	
+
 	.pi-item-spacing {
 		padding: $infobox-item-margin $infobox-item-margin * 2;
 	}
@@ -163,7 +163,7 @@
 // **********  Image Collection  ********** //
 
 ul.pi-image-collection-tabs {
-	margin: 0 0 -1px 0;
+	margin: 0 -1px -1px 0;
 	padding: 0;
 	list-style: none;
 
@@ -175,6 +175,10 @@ ul.pi-image-collection-tabs {
 		display: inline-block;
 		margin: 0;
 		max-width: 50%;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		vertical-align: bottom;
+		white-space: nowrap;
 
 		&.current {
 			background: $infobox-section-header-background;
