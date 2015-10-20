@@ -12,41 +12,122 @@ class NodeImage extends Node {
 
 	public function getData() {
 		if ( !isset( $this->data ) ) {
-			$imageData = $this->getRawValueWithDefault( $this->xmlNode );
+			$this->data = array();
 
-			if( is_string($imageData) && PortableInfoboxDataBag::getInstance()->getGallery($imageData)) {
-				$imageData = PortableInfoboxDataBag::getInstance()->getGallery($imageData);
+			// value passed to source parameter (or default)
+			$value = $this->getRawValueWithDefault( $this->xmlNode );
+
+			if ( $this->containsTabberOrGallery( $value ) ) {
+				$this->data = $this->getImagesData( $value );
+			} else {
+				$this->data = array( $this->getImageData(
+					$value,
+					$this->getValueWithDefault( $this->xmlNode->{self::ALT_TAG_NAME} ),
+					$this->getValueWithDefault( $this->xmlNode->{self::CAPTION_TAG_NAME} )
+				) );
 			}
+		}
+		return $this->data;
+	}
 
-			$title = $this->getImageAsTitleObject( $imageData );
-			$file = $this->getFilefromTitle( $title );
-			if ( $title instanceof \Title ) {
-				$this->getExternalParser()->addImage( $title->getDBkey() );
-			}
-			$ref = null;
-			$alt = $this->getValueWithDefault( $this->xmlNode->{self::ALT_TAG_NAME} );
-			$caption = $this->getValueWithDefault( $this->xmlNode->{self::CAPTION_TAG_NAME} );
+	/**
+	 * @desc Checks if parser preprocessed string containg Tabber or Gallery extension
+	 * @param string $str String to check
+	 * @return bool
+	 */
+	private function containsTabberOrGallery( $str ) {
+		// TODO: Consider more robust approach (UNIQ...QINU)
+		$strLower = strtolower( $str );
+		if ( strpos( $strLower, '-tabber-' ) !== false || strpos( $strLower, '-gallery-' ) !== false ) {
+			return true;
+		}
+		return false;
+	}
 
-			$this->data = [
-				'url' => $this->resolveImageUrl( $file ),
-				'name' => ( $title ) ? $title->getText() : '',
-				'key' => ( $title ) ? $title->getDBKey() : '',
-				'alt' => $alt,
-				'caption' => $caption
-			];
+	private function getTabberMarkers( $value ) {
+		if ( preg_match_all('/\x7fUNIQ[A-Z0-9]*-TABBER-[0-9]{8}-QINU\x7f/is', $value, $out) ) {
+			return $out[0];
+		} else {
+			return [];
+		}
+	}
 
-			if ( $this->isVideo( $file ) ) {
-				$this->data = $this->videoDataDecorator( $this->data, $file );
+	private function getTabberHtml( $marker ) {
+		return $this->getExternalParser()->parseRecursive( $marker );
+	}
+
+	private function getTabberItems( $html ) {
+		global $wgArticleAsJson;
+
+		$doc = new \DOMDocument();
+		$doc->loadHTML($html);
+		$sxml = simplexml_import_dom($doc);
+		$divs = $sxml->xpath('//div[@class=\'tabbertab\']');
+
+		$items = array();
+
+		foreach ($divs as $div) {
+			$tabTitle = (string) $div['title'];
+			if ( $wgArticleAsJson ) {
+				if ( preg_match( '/data-ref="([^"]+)"/', $div->p->asXML(), $out ) ) {
+					$items[] = array( 'label' => $tabTitle, 'title' => \ArticleAsJson::$media[$out[1]]['title'] );
+				}
+			} else {
+				if ( preg_match( '/data-image-key="([^"]+)"/', $div->p->asXML(), $out ) ) {
+					$items[] = array( 'label' => $tabTitle, 'title' => $out[1] );
+				}
 			}
 		}
 
-		return $this->data;
+		return $items;
+	}
+
+	private function getImagesData( $value ) {
+		$tabberItems = array();
+		$tabberMarkers = $this->getTabberMarkers( $value );
+		for ( $i = 0; $i < count ( $tabberMarkers ); $i++ ) {
+			$tabberHtml = $this->getTabberHtml( $tabberMarkers[$i] );
+			$tabberItems = array_merge($tabberItems, $this->getTabberItems($tabberHtml));
+		}
+		$data = array();
+		for( $i = 0; $i < count( $tabberItems ); $i++ ) {
+			$data[] = $this->getImageData( $tabberItems[$i]['title'], $tabberItems[$i]['label'], $tabberItems[$i]['label'] );
+		}
+		return $data;
+	}
+
+
+	private function getImageData( $title, $alt, $caption ) {
+		$titleObj = $this->getImageAsTitleObject( $title );
+		$fileObj = $this->getFilefromTitle( $titleObj );
+
+		if ( $titleObj instanceof \Title ) {
+			$this->getExternalParser()->addImage( $titleObj->getDBkey() );
+		}
+
+		$image = [
+			'url' => $this->resolveImageUrl( $fileObj ),
+			'name' => $titleObj ? $titleObj->getText() : '',
+			'key' => $titleObj ? $titleObj->getDBKey() : '',
+			'alt' => $alt,
+			'caption' => $caption
+		];
+
+		if ( $this->isVideo( $fileObj ) ) {
+			$image = $this->videoDataDecorator( $image, $fileObj );
+		}
+
+		return $image;
 	}
 
 	public function isEmpty() {
 		$data = $this->getData();
-
-		return empty( $data[ 'url' ] );
+		foreach ( $data as $dataItem ) {
+			if ( !empty( $dataItem[ 'url' ] ) ) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	public function getSource() {
