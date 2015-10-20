@@ -391,7 +391,8 @@ var UserProfilePage = {
 			data: {
 				'userId': UserProfilePage.userId,
 				'data': JSON.stringify(userData),
-				'token': window.mw.user.tokens.get('editToken')},
+				'token': window.mw.user.tokens.get('editToken')
+			},
 			success: function (data) {
 				if (data.status === 'error') {
 					UserProfilePage.error(data.errMsg);
