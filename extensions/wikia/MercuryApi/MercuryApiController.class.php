@@ -473,16 +473,11 @@ class MercuryApiController extends WikiaController {
 		$mainPageArticleID = $mainPageTitle->getArticleID();
 		$article = Article::newFromID( $mainPageArticleID );
 
-		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
-		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
-
 		$articleDetails = $this->getArticleDetails( $article );
 
 		if ( empty( $articleDetails ) ) {
 			throw new WikiaException( 'Article details empty', 500 );
 		}
-
-		$this->response->setVal( 'details', $articleDetails );
 
 		$adsContext = $this->mercuryApi->getAdsContext( $mainPageTitle );
 
@@ -490,6 +485,9 @@ class MercuryApiController extends WikiaController {
 			throw new WikiaException( 'Ads Context empty', 500 );
 		}
 
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
+		$this->response->setVal( 'details', $articleDetails );
 		$this->response->setVal( 'adsContext',  $adsContext );
 	}
 
