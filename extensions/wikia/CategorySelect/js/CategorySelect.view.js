@@ -77,7 +77,8 @@
 							controller: 'CategorySelectController',
 							data: {
 								articleId: articleId,
-								categories: $wrapper.data( 'categorySelect' ).getData( '.new' )
+								categories: $wrapper.data( 'categorySelect' ).getData( '.new' ),
+								token: mw.user.tokens.get('editToken')
 							},
 							method: 'save'
 						}).done(function( response ) {
