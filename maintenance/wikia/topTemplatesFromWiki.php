@@ -28,8 +28,17 @@ class topTemplatesFromWiki extends Maintenance {
 		$this->output($data);
 	}
 
+	/**
+	 * @desc Get from DB ID's of templates which are used at least
+	 * on one page which is in MAIN namespace.
+	 *
+	 * @return bool|mixed
+	 * @throws \Exception
+	 * @throws \FluentSql\Exception\SqlException
+	 */
 	protected function getTemplatesFromWiki() {
 		$db = wfGetDB( DB_SLAVE );
+
 		$pages = ( new \WikiaSQL() )
 			->SELECT('p2.page_id as temp_id','tl_title','COUNT(*)')
 			->FROM('page')->AS_('p')
@@ -52,6 +61,10 @@ class topTemplatesFromWiki extends Maintenance {
 		return $pages;
 	}
 
+	/**
+	 * prepares appropriate format and sends data to pipeline
+	 * @param $data
+	 */
 	protected function pushDataToRabbit( $data ) {
 		global $wgCityId;
 		$msg = new stdClass();
@@ -73,7 +86,9 @@ class topTemplatesFromWiki extends Maintenance {
 		}
 	}
 
-	/** @return PipelineConnectionBase */
+	/**
+	 * @return PipelineConnectionBase
+	 */
 	protected static function getPipeline() {
 		if ( !isset( self::$pipe ) ) {
 			self::$pipe = new PipelineConnectionBase();
