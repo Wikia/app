@@ -1,1 +1,12 @@
-<ul>{{#images}}<li>{{name}}</li>{{/images}}</ul>
+<div class="pi-image-collection">
+	<ul class="pi-image-collection-tabs">
+		{{#images}}<li class="pi-tab-link pi-item-spacing" data-pi-tab="pi-tab-{{ref}}">{{name}}</li>{{/images}}
+	</ul>
+
+	{{#images}}
+		<div class="pi-image-collection-tab-content" id="pi-tab-{{ref}}">
+			<img src="{{thumbnail}}" class="pi-image-thumbnail" alt="{{alt}}" width="{{{width}}}" height="{{{height}}}"
+			     data-{{media-type}}-key="{{name}}" data-{{media-type}}-name="{{name}}"/>
+		</div>
+	{{/images}}
+</div>

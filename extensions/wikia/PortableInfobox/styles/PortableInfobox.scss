@@ -160,6 +160,38 @@
 	}
 }
 
+// **********  Image Collection  ********** //
+
+ul.pi-image-collection-tabs {
+	margin: 0 0 -1px 0;
+	padding: 0;
+	list-style: none;
+
+	li {
+		border-bottom: 1px solid $infobox-section-header-background;
+		border-right: 1px solid $infobox-section-header-background;
+		box-sizing: border-box;
+		cursor: pointer;
+		display: inline-block;
+		margin: 0;
+		max-width: 50%;
+
+		&.current {
+			background: $infobox-section-header-background;
+			font-weight: bold;
+		}
+	}
+}
+
+.pi-image-collection-tab-content {
+	background-color: $infobox-background;
+	display: none;
+}
+
+.pi-image-collection-tab-content.current {
+	display: inherit;
+}
+
 // **********  Error handling styles  ********** //
 
 .WikiaArticle {
