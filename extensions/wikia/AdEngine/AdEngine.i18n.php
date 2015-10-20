@@ -13,7 +13,7 @@ $messages['en'] = array(
 	// Recoverable products
 	'adengine-recovery-message-blocking-welcome' => 'Hey! It looks like you\'re using ad blocking software!',
 	'adengine-recovery-message-blocking-click' => 'Click',
-	'adengine-recovery-message-blocking-message-a' => 'Wikia runs ads so we can keep the lights on and so Wikia will always be free to use. We can bring you fun, free, fan-oriented content until my glorious return to Earth if you <b>add us to your adblock whitelist</b>. $1 my face to refresh after you\'re done!',
+	'adengine-recovery-message-blocking-message-a' => 'Wikia runs ads so we can keep the lights on and so Wikia will always be free to use. We can bring you fun, free, fan-oriented content until my glorious return to Earth if you add us to your adblock whitelist. $1 my face to refresh after you\'re done!',
 );
 
 /** Message documentation (Message documentation)

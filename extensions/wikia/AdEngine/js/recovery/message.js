@@ -71,15 +71,14 @@ define('ext.wikia.adEngine.recovery.message', [
 	function createMessage(uniqueClassName) {
 		return getAssets().then(function (assets) {
 			var template = assets.mustache[0],
-				text = mw.message(
-					'adengine-recovery-message-blocking-message-a',
+				text = mw.message('adengine-recovery-message-blocking-message-a').rawParams([
 					'<a class="action-accept">' +
 						mw.message('adengine-recovery-message-blocking-click').escaped() +
 					'</a>'
-				).plain(),
+				]).escaped(),
 				params = {
 					positionClass: 'recovered-message-' + uniqueClassName,
-					header: mw.message('adengine-recovery-message-blocking-welcome').plain(),
+					header: mw.message('adengine-recovery-message-blocking-welcome').text(),
 					text: text
 				};
 
