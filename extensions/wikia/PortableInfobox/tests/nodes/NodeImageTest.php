@@ -86,12 +86,25 @@ class NodeImageTest extends WikiaBaseTest {
 
 	public function sourceProvider() {
 		return [
-			[ '<image source="img"/>', [ 'img' ] ],
-			[ '<image source="img"><default>{{{img}}}</default><alt source="img" /></image>', [ 'img' ] ],
-			[ '<image source="img"><alt source="alt"/><caption source="cap"/></image>', [ 'img', 'alt', 'cap' ] ],
-			[ '<image source="img"><alt source="alt"><default>{{{def}}}</default></alt><caption source="cap"/></image>',
-			  [ 'img', 'alt', 'def', 'cap' ] ],
-			[ '<image/>', [ ] ],
+			[
+				'<image source="img"/>',
+				[ 'img' ]
+			],
+			[
+				'<image source="img"><default>{{{img}}}</default><alt source="img" /></image>',
+				[ 'img' ]
+			],
+			[
+				'<image source="img"><alt source="alt"/><caption source="cap"/></image>',
+				[ 'img', 'alt', 'cap' ]
+			],
+			[
+				'<image source="img"><alt source="alt"><default>{{{def}}}</default></alt><caption source="cap"/></image>',
+				[ 'img', 'alt', 'def', 'cap' ] ],
+			[
+				'<image/>',
+				[ ]
+			],
 		];
 	}
 
