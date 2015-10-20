@@ -315,6 +315,7 @@ class PageHeaderController extends WikiaController {
 				$this->pageType = wfMessage( 'oasis-page-header-subtitle-forum' )->escaped();
 				break;
 		}
+		wfRunHooks( 'PageHeaderPageTypePrepared', [ $this, $this->getContext()->getTitle() ] );
 
 		// render subpage info
 		$this->pageSubject = $skin->subPageSubtitle();
@@ -563,4 +564,5 @@ class PageHeaderController extends WikiaController {
 			->inContentLanguage()
 			->text();
 	}
+
 }

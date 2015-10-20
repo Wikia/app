@@ -13,6 +13,9 @@
  * @ingroup Maintenance
  */
 
+use Wikia\DependencyInjection\Injector;
+use Wikia\Service\User\Preferences\PreferenceService;
+
 require_once( __DIR__ . '/../Maintenance.php' );
 
 abstract class RemoveUserBase extends Maintenance {
@@ -61,9 +64,12 @@ abstract class RemoveUserBase extends Maintenance {
 		$dbw->delete( self::USER_TABLE,  [ 'user_id' => $batch ], __METHOD__ );
 		$rows += $dbw->affectedRows();
 
-		// remove entries from user_properties table
-		$dbw->delete( 'user_properties', [ 'up_user' => $batch ], __METHOD__ );
-		$rows += $dbw->affectedRows();
+		/** @var PreferenceService $preferenceService */
+		$preferenceService = Injector::getInjector()->get( PreferenceService::class );
+		foreach ( $batch as $userId ) {
+			$preferenceService->deleteAllPreferences( $userId );
+			++$rows;
+		}
 
 		$dbw->commit( __METHOD__ );
 
