@@ -19,7 +19,7 @@ class PortableInfoboxRenderService extends WikiaService {
 		'navigation' => 'PortableInfoboxItemNavigation.mustache',
 		'hero-mobile' => 'PortableInfoboxItemHeroMobile.mustache',
 		'image-collection' => 'PortableInfoboxItemImageCollection.mustache',
-		'image-collection-mobile' => 'PortableInfoboxItemImageCollection.mustache' // TODO: Create separated template for mobile
+		'image-collection-mobile' => 'PortableInfoboxItemImageCollectionMobile.mustache'
 	];
 	private $templateEngine;
 

@@ -83,8 +83,7 @@ class NodeImage extends Node {
 		return $galleryItems;
 	}
 
-	private function getTabberItems( $value ) { 
-		global $wgArticleAsJson;
+	private function getTabberItems( $value ) {
 		$tabberItems = array();
 		$tabberMarkers = $this->getMarkers( $value, 'TABBER' );
 		for ( $i = 0; $i < count ( $tabberMarkers ); $i++ ) {
@@ -103,6 +102,7 @@ class NodeImage extends Node {
 	}
 
 	private function getTabberData( $html ) {
+		global $wgArticleAsJson;
 		$data = array();
 		$doc = new \DOMDocument();
 		$doc->loadHTML( $html );
