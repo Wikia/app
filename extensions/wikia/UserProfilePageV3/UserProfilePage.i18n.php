@@ -115,7 +115,6 @@ $messages['en'] = array(
 	'user-identity-remove-fail' => 'There was some problem when removing the avatar!',
 	'user-identity-avatars-maintenance' => 'Upload and deletion of avatars temporarily disabled during maintenance!',
 	'userprofilepage-edit-modal-error' => 'Unexpected error occurred',
-	'user-identity-token-mismatch' => 'Oops! Token doesn\'t match',
 );
 
 /** Message documentation (Message documentation)
@@ -264,7 +263,6 @@ Parameters:
 	'user-identity-remove-fail' => 'Error message, general error message during avatar picture removal.',
 	'user-identity-avatars-maintenance' => "Info message that avatars are currently under maintenance and can't be modified right now.",
 	'userprofilepage-edit-modal-error' => 'General error message for user profile page.',
-	'user-identity-token-mismatch' => "Shown when hidden token (to prevent hijacking) sent to the backend doesn't match the one stored in user's session",
 );
 
 /** Arabic (العربية)
@@ -272,7 +270,6 @@ Parameters:
 $messages['ar'] = array(
 	'useravatar-log' => 'سجل تغييرات الصور الرمزية',
 	'blog-avatar-changed-log' => 'أضاف أو غير الصورة الرمزية',
-	'user-identity-token-mismatch' => 'عفوا! الرمز المميز لا يتطابق',
 );
 
 /** Azerbaijani (azərbaycanca)
@@ -367,7 +364,6 @@ $messages['br'] = array(
 	'blog-avatar-changed-log' => 'en deus ouzhpennet pe kemmet e avatar',
 	'blog-avatar-removed-log' => 'En deus dilamet avatarioù $1',
 	'blog-avatar-alt' => 'Marilh ouzhpennadennoù pe dilammadennoù avataroù an implijerien',
-	'user-identity-token-mismatch' => 'Pop ! Ar jedouer ne glot ket',
 );
 
 /** Catalan (català)
@@ -481,7 +477,6 @@ $messages['ca'] = array(
 	'blog-avatar-changed-log' => 'Avatar afegit o canviat',
 	'blog-avatar-removed-log' => "Esborrats avatars de l'usuari $1",
 	'blog-avatar-alt' => "Registre d'addicions o esborrats d'avatars d'usuari",
-	'user-identity-token-mismatch' => 'Ops! No coincideix amb la fitxa',
 );
 
 /** Czech (česky)
@@ -722,7 +717,6 @@ $messages['de'] = array(
 	'user-identity-box-about-fb-page' => 'Wie lautet der Link zu deinem Facebook-Profil?',
 	'user-identity-avatars-maintenance' => 'Das Hochladen und Löschen von Avataren ist aus Wartungsgründen momentan nicht möglich!',
 	'userprofilepage-edit-modal-error' => 'Ein unerwarteter Fehler ist aufgetreten.',
-	'user-identity-token-mismatch' => 'Upps! Token stimmt nicht überein.',
 );
 
 /** Swiss High German (Schweizer Hochdeutsch)
@@ -900,7 +894,6 @@ $messages['es'] = array(
 	'user-identity-box-about-fb-page' => '¿Cuál es el enlace de tu perfil de Facebook?',
 	'user-identity-avatars-maintenance' => '¡La subida y eliminación de avatares se desactiva durante el mantenimiento!',
 	'userprofilepage-edit-modal-error' => 'Ha ocurrido un error inesperado',
-	'user-identity-token-mismatch' => '¡Oops! El token no coincide.',
 );
 
 /** Finnish (suomi)
@@ -1134,7 +1127,6 @@ $messages['fr'] = array(
 	'user-identity-box-about-fb-page' => 'Quel est le lien vers votre profil Facebook ?',
 	'user-identity-avatars-maintenance' => 'Importation et retrait des avatars désactivés momentanément pour cause de maintenance !',
 	'userprofilepage-edit-modal-error' => "Un erreur inattendue s'est produite",
-	'user-identity-token-mismatch' => 'Oups ! Le jeton ne correspond pas',
 );
 
 /** Galician (galego)
@@ -1248,7 +1240,6 @@ $messages['gl'] = array(
 	'blog-avatar-alt' => 'Rexistros das adicións e eliminacións de avatares de usuario',
 	'user-identity-remove-confirmation' => 'Está seguro de querer eliminar o avatar?',
 	'user-identity-remove-fail' => 'Houbo un problema ao eliminar o avatar!',
-	'user-identity-token-mismatch' => 'Vaites! O pase non coincide',
 );
 
 /** Hungarian (magyar)
@@ -1480,7 +1471,6 @@ $messages['ia'] = array(
 	'blog-avatar-alt' => 'Registro de additiones o remotiones de avatares de usatores',
 	'user-identity-remove-confirmation' => 'Es tu secur de voler remover le avatar?',
 	'user-identity-remove-fail' => 'Un problema occurreva con le remotion del avatar!',
-	'user-identity-token-mismatch' => 'Ups! Indicio non coincide',
 );
 
 /** Italian (italiano)
@@ -1718,7 +1708,6 @@ $messages['ja'] = array(
 	'user-identity-remove-fail' => 'アバターの削除中にエラーが発生しました',
 	'user-identity-avatars-maintenance' => 'メンテナンス中のため、アバターのアップロードと削除ができなくなっています。',
 	'userprofilepage-edit-modal-error' => '予期しないエラーが発生しました',
-	'user-identity-token-mismatch' => 'おっと! トークンが一致しません',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -1916,7 +1905,6 @@ $messages['mk'] = array(
 	'blog-avatar-alt' => 'Дневници на додавања и отстранувања на кориснички аватари',
 	'user-identity-remove-confirmation' => 'Дали сте сигурни дека сакате да го отстраните аватарот?',
 	'user-identity-remove-fail' => 'Се појави некаков проблем при отстранувањето на аватарот!',
-	'user-identity-token-mismatch' => 'Упс! Шифрата не се совпаѓа',
 );
 
 /** Malay (Bahasa Melayu)
@@ -2030,7 +2018,6 @@ $messages['ms'] = array(
 	'blog-avatar-alt' => 'Log penambahan atau pengguguran avatar pengguna',
 	'user-identity-remove-confirmation' => 'Adakah anda benar-benar ingin menggugurkan avatar ini?',
 	'user-identity-remove-fail' => 'Ada sedikit masalah ketika menggugurkan avatar!',
-	'user-identity-token-mismatch' => 'Eh! Token tak sepadan',
 );
 
 /** Norwegian Bokmål (norsk bokmål)
@@ -2144,7 +2131,6 @@ $messages['nb'] = array(
 	'blog-avatar-alt' => 'Logger over brukeravatar-tillegg eller -fjerninger',
 	'user-identity-remove-confirmation' => 'Er du sikker på at du vil fjerne avataren?',
 	'user-identity-remove-fail' => 'Det oppstod et problem under fjerning av avataren!',
-	'user-identity-token-mismatch' => 'Ops! Koden samsvarer ikke',
 );
 
 /** Dutch (Nederlands)
@@ -2266,7 +2252,6 @@ $messages['nl'] = array(
 	'user-identity-box-about-fb-page' => 'Wat is jouw Facebook profiel-link?',
 	'user-identity-avatars-maintenance' => 'Het uploaden en verwijderen van profielafbeeldingen is tijdelijk uitgeschakeld wegens werkzaamheden!',
 	'userprofilepage-edit-modal-error' => 'Er zijn onbekende fouten opgetreden',
-	'user-identity-token-mismatch' => 'Het token komt niet overeen',
 );
 
 /** Pälzisch (Pälzisch)
@@ -2400,7 +2385,6 @@ $messages['pl'] = array(
 	'user-identity-box-about-fb-page' => 'Jaki jest link do Twojego profilu na Facebooku?',
 	'user-identity-avatars-maintenance' => 'Przesyłanie i usuwanie avatarów tymczasowo wyłączone na czas konserwacji!',
 	'userprofilepage-edit-modal-error' => 'Wystąpił nieznany błąd',
-	'user-identity-token-mismatch' => 'Ups! Token nie pasuje',
 );
 
 /** Piedmontese (Piemontèis)
@@ -2410,7 +2394,6 @@ $messages['pms'] = array(
 	'blog-avatar-changed-log' => 'Avatar giontà o cangià',
 	'blog-avatar-removed-log' => 'Avatar ëd $1 gavà',
 	'blog-avatar-alt' => "Registr ëd le gionte o dle scancelassion ëd j'avatar ëd j'utent",
-	'user-identity-token-mismatch' => 'Contacc! Ël geton a corispond pa',
 );
 
 /** Pashto (پښتو)
@@ -2667,7 +2650,6 @@ $messages['roa-tara'] = array(
 	'user-action-menu-edit' => 'Cange',
 	'user-action-menu-edit-profile' => "Cange 'u profile",
 	'user-action-menu-leave-message' => "Lasse 'u messàgge",
-	'user-identity-token-mismatch' => "Ue! 'U gettone non ge corrisponne",
 );
 
 /** Russian (русский)
@@ -2789,7 +2771,6 @@ $messages['ru'] = array(
 	'user-identity-box-about-fb-page' => 'Дайте ссылку на свою страницу в Facebook',
 	'user-identity-avatars-maintenance' => 'Загрузка и удаление аватара временно отключено. Идут технические работы.',
 	'userprofilepage-edit-modal-error' => 'Неизвестная ошибка',
-	'user-identity-token-mismatch' => 'Символ не соответствует',
 );
 
 /** Serbian (Cyrillic script) (српски (ћирилица)‎)
@@ -2810,7 +2791,6 @@ $messages['sr-ec'] = array(
 	'userprofilepage-question-list-title' => '$1/$2 питања',
 	'userprofilepage-interview-section-title' => 'Интервју с корисником',
 	'userprofilepage-invalid-user' => 'Неисправан корисник. Нисте пријављени или немате права да наставите',
-	'user-identity-token-mismatch' => 'Упс! Жетон се не поклапа.',
 );
 
 /** Swedish (svenska)
@@ -2925,7 +2905,6 @@ $messages['sv'] = array(
 	'blog-avatar-alt' => 'Logbok över användares tillagda eller borttagna avatarer.',
 	'user-identity-remove-confirmation' => 'Är du säker på att du vill ta bort avataren?',
 	'user-identity-remove-fail' => 'Det uppstod ett problem när avataren skulle tas bort!',
-	'user-identity-token-mismatch' => 'Hoppsan! Koden stämmer inte överens',
 );
 
 /** Telugu (తెలుగు)
@@ -3064,7 +3043,6 @@ $messages['tl'] = array(
 	'blog-avatar-alt' => 'Mga talaan ng mga pagdaragdag o pagtatanggal ng abatar ng tagagamit',
 	'user-identity-remove-confirmation' => 'Talaga bang gusto mong tanggalin ang abatar?',
 	'user-identity-remove-fail' => 'Mayroong ilang suliranin noong tinatanggal ang abatar!',
-	'user-identity-token-mismatch' => 'Ay! Hindi magkatugma ang kahalip',
 );
 
 /** толышә зывон (толышә зывон)
@@ -3175,7 +3153,6 @@ $messages['uk'] = array(
 	'user-action-menu-history' => 'Історія',
 	'usermasthead-log-message' => 'Додана інформація до профілю',
 	'usermasthead-log-alt' => 'Журнали зміни даних про користувачів',
-	'user-identity-token-mismatch' => 'Йой! Знак не збігається',
 );
 
 /** Uzbek (oʻzbekcha)
@@ -3406,7 +3383,6 @@ $messages['zh-hans'] = array(
 	'user-identity-remove-fail' => '移除个人头像时遇到问题！',
 	'user-identity-avatars-maintenance' => '系统处于维护状态，上传和删除头像暂时不可用！',
 	'userprofilepage-edit-modal-error' => '发生未知错误',
-	'user-identity-token-mismatch' => '呀！令牌不匹配',
 );
 
 /** Traditional Chinese (中文（繁體）‎)

@@ -1033,6 +1033,6 @@ class UserProfilePageController extends WikiaController {
 	 */
 	private function setTokenMismatchError() {
 		$this->setVal( 'status', 'error' );
-		$this->setVal( 'errorMsg', wfMessage( 'user-identity-token-mismatch' )->escaped() );
+		$this->setVal( 'errorMsg', wfMessage( 'sessionfailure' )->escaped() );
 	}
 }
