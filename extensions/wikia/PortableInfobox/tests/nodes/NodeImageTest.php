@@ -7,6 +7,63 @@ class NodeImageTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @covers       NodeImage::getGalleryData
+	 */
+	public function testGalleryData() {
+		$input = '<div data-model="[{&quot;caption&quot;:&quot;_caption_&quot;,&quot;title&quot;:&quot;_title_&quot;}]"></div>';
+		$expected = array(
+			array(
+				'label' => '_caption_',
+				'title' => '_title_',
+			)
+		);
+		$this->assertEquals( $expected, Wikia\PortableInfobox\Parser\Nodes\NodeImage::getGalleryData( $input ) );
+	}
+
+	/**
+	 * @covers       NodeImage::getTabberData
+	 */
+	public function testTabberData() {
+		$input = '<div class="tabber"><div class="tabbertab" title="_title_"><p><a><img data-image-key="_data-image-key_"></a></p></div></div>';
+		$expected = array(
+			array(
+				'label' => '_title_',
+				'title' => '_data-image-key_',
+			)
+		);
+		$this->assertEquals( $expected, Wikia\PortableInfobox\Parser\Nodes\NodeImage::getTabberData( $input ) );
+	}
+
+	/**
+	 * @covers       NodeImage::getMarkers
+	 * @dataProvider markersProvider
+	 *
+	 * @param $markup
+	 * @param $params
+	 * @param $expected
+	 */
+	public function testMarkers( $ext, $value, $expected ) {
+		$this->assertEquals( $expected, Wikia\PortableInfobox\Parser\Nodes\NodeImage::getMarkers( $value, $ext ) );
+	}
+
+	public function markersProvider() {
+		return [
+			[
+				'TABBER',
+				"<div>\x7fUNIQ123456789-tAbBeR-12345678-QINU\x7f</div>",
+				[ "\x7fUNIQ123456789-tAbBeR-12345678-QINU\x7f" ]
+			],
+			[
+				'GALLERY',
+				"\x7fUNIQ123456789-tAbBeR-12345678-QINU\x7f<center>\x7fUNIQabcd-gAlLeRy-12345678-QINU\x7f</center>\x7fUNIQabcd-gAlLeRy-87654321-QINU\x7f",
+				[ "\x7fUNIQabcd-gAlLeRy-12345678-QINU\x7f", "\x7fUNIQabcd-gAlLeRy-87654321-QINU\x7f" ]
+			]
+		];
+	}
+
+
+
+	/**
 	 * @covers       NodeImage::getData
 	 * @dataProvider dataProvider
 	 *
