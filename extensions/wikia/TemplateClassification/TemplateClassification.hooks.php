@@ -57,7 +57,9 @@ class Hooks {
 	 */
 	public function onPageHeaderPageTypePrepared( \PageHeaderController $pageHeaderController, \Title $title ) {
 		$user = $pageHeaderController->getContext()->getUser();
-		if ( ( new Permissions() )->shouldDisplayEntryPoint( $user, $title ) ) {
+		if ( ( new Permissions() )->shouldDisplayEntryPoint( $user, $title )
+			&& $title->exists()
+		) {
 			$view = new View();
 			$pageHeaderController->pageType = $view->renderTemplateType(
 				$title->getArticleID(), $user, $pageHeaderController->pageType
