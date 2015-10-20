@@ -39,7 +39,7 @@ define( 'USER_TOKEN_LENGTH', 32 );
  * Int Serialized record version.
  * @ingroup Constants
  */
-define( 'MW_USER_VERSION', 16 );
+define( 'MW_USER_VERSION', 17 );
 
 /**
  * String Some punctuation to prevent editing from broken text-mangling proxies.
