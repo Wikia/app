@@ -23,6 +23,7 @@ class TemplateClassificationController extends WikiaController {
 				 * template-classification-type-unclassified
 				 */
 				'name' => wfMessage( "template-classification-type-{$type}" )->escaped(),
+				'description' => wfMessage( "template-classification-description-{$type}" )->escaped(),
 			];
 		}
 

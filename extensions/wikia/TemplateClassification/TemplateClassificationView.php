@@ -13,14 +13,17 @@ class View {
 	 * @return string
 	 */
 	public function renderTemplateType( $articleId, $user, $fallbackMsg = '' ) {
-		$templateType = ( new \TemplateClassificationMockService() )->getTemplateType( $articleId );
+		$templateType = lcfirst( ( new \TemplateClassificationMockService() )->getTemplateType( $articleId ) );
 		/**
 		 * template-classification-type-unclassified
 		 * template-classification-type-infobox
 		 * template-classification-type-navbox
 		 * template-classification-type-quote
 		 */
-		$templateName = wfMessage( "template-classification-type-{$templateType}" )->escaped();
+		$templateName = wfMessage(
+			"template-classification-indicator",
+			wfMessage( "template-classification-type-{$templateType}" )
+		)->escaped();
 		if ( $user->isLoggedIn() ) {
 			$templateName .= $this->renderEditButton();
 			return $templateName;
