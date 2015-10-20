@@ -550,20 +550,21 @@ class EditAccount extends SpecialPage {
 	public function displayLogData() {
 		global $wgExternalSharedDB, $wgOut, $wgRequest;
 
-		$user_id = $wgRequest->getVal('user_id', null);
+		$user_id = $wgRequest->getInt('user_id', 0);
 		$rows = [];
 
 		if ( $wgExternalSharedDB && $user_id ) {
+			$user_name = User::newFromID($user_id);
+
 			$dbr = wfGetDB ( DB_SLAVE, array(), $wgExternalSharedDB );
 			$res = $dbr->select (
 				'user_email_log',   // from
 				["*"], 				// cols
-				"user_id = " . $dbr->strencode($user_id), // where
+				['user_id' => $user_id], // where
 				__METHOD__,
 				["ORDER BY" => "changed_at DESC"]  // options
 				);
 			while ( $row = $dbr->fetchObject( $res ) ) {
-				$row->user_name = User::newFromID($row->user_id);
 				$row->changed_by_name = User::newFromId($row->changed_by_id);
 				$rows[] = $row;
 			}
@@ -572,7 +573,7 @@ class EditAccount extends SpecialPage {
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
 
 		$oTmpl->set_Vars( [
-			'userName' => 'foo',
+			'userName' => $user_name,
 			'returnURL' => $this->getTitle()->getFullURL(),
 			'rows' => $rows
 			]
