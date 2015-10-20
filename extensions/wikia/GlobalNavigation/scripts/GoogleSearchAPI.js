@@ -26,7 +26,8 @@ $(function () {
 			$googleInput = $('.gsc-input'),
 			$googleButton = $('.gsc-search-button'),
 			$selectElement = $('#searchSelect'),
-			$selectedOption = $selectElement.find('option:selected');
+			$selectedOption = $selectElement.find('option:selected'),
+			currentUrlPath = window.location.pathname;
 
 		evt.preventDefault();
 
@@ -36,7 +37,6 @@ $(function () {
 		}
 
 		//Manually trigger page view
-		var currentUrlPath = window.location.pathname;
 		currentUrlPath += '?q=' + encodeURIComponent(searchQuery);
 		window.guaTrackPageview(currentUrlPath);
 
