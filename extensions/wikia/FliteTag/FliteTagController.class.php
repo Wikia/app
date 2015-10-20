@@ -21,11 +21,12 @@ class FliteTagController extends WikiaParserTagController {
 	protected function getSuccessOutput( $args ) {
 		return $this->sendRequest(
 			'FliteTagController',
-			'fliteAdUnit',
+			( new WikiaIFrameTagBuilderHelper() )->isMobileSkin() ? 'fliteAdUnitMobile' : 'fliteAdUnitDesktop',
 			[
 				'guid' => $args['guid'],
 				'width' => $args['width'],
 				'height' => $args['height'],
+				'widgetType' => self::PARSER_TAG_NAME
 			]
 		);
 	}
@@ -67,10 +68,21 @@ class FliteTagController extends WikiaParserTagController {
 		] );
 	}
 
-	public function fliteAdUnit() {
+	private function setSkinSharedVariables() {
 		$this->setVal( 'guid', $this->getVal( 'guid' ) );
 		$this->setVal( 'width', $this->getVal( 'width' ) );
 		$this->setVal( 'height', $this->getVal( 'height' ) );
+	}
+
+	public function fliteAdUnitDesktop() {
+		$this->setSkinSharedVariables();
+
+		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
+	}
+
+	public function fliteAdUnitMobile() {
+		$this->setSkinSharedVariables();
+		$this->setVal( 'widgetType', $this->getVal( 'widgetType' ) );
 
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 	}
