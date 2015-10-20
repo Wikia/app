@@ -8,7 +8,7 @@ class TemplateListProviderController extends WikiaController {
 	 * @desc get top wikis according to WAM ranking
 	 * @return Mixed|null
 	 */
-	protected function getTopWikis( $limit = 100 ) {
+	public function getTopWikis( $limit = 100 ) {
 		$data = WikiaDataAccess::cache( wfMemcKey( self::WIKIS_MCACHE_KEY ), self::CACHE_TTL, function () use ( $limit ) {
 			$dbr = $this->getDB();
 			return ( new WikiaSQL() )
