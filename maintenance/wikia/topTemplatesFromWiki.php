@@ -31,18 +31,21 @@ class topTemplatesFromWiki extends Maintenance {
 	protected function getTemplatesFromWiki() {
 		$db = wfGetDB( DB_SLAVE );
 		$pages = ( new \WikiaSQL() )
-			->SELECT( 'tl_namespace AS namespace', 'tl_title AS title', 'COUNT(*) AS value' )
-			->FROM( 'templatelinks' )
-			->WHERE( 'tl_namespace' )->EQUAL_TO( NS_TEMPLATE )
-			->GROUP_BY( 'tl_namespace', 'tl_title' )
+			->SELECT('p2.page_id as temp_id','tl_title','COUNT(*)')
+			->FROM('page')->AS_('p')
+			->INNER_JOIN('templatelinks')->AS_('t')
+			->ON('t.tl_from','p.page_id')
+			->INNER_JOIN('page')->AS_('p2')
+			->ON('p2.page_title','t.tl_title')
+			->WHERE('p.page_namespace')->EQUAL_TO(NS_MAIN)
+			->AND_('p2.page_namespace')->EQUAL_TO(NS_TEMPLATE)
+			->GROUP_BY('tl_title')
 			->HAVING( 'COUNT(*)' )->GREATER_THAN( 0 )
-			->ORDER_BY( 'COUNT(*)' )->DESC()
+			->ORDER_BY('COUNT(*)')->DESC()
 			->runLoop( $db, function ( &$pages, $row ) {
-				global $wgCityId;
 				$pages[] = [
-					'wiki_id' => $wgCityId,
-					'page_id' => $row->value,
-					'title' => $row->title
+					'page_id' => $row->temp_id,
+					'title' => $row->tl_title
 				];
 			} );
 
