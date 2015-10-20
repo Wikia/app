@@ -175,8 +175,7 @@ class EditPageLayoutHelper {
 
 		return ( $articleTitle->isCssOrJsPage()
 			|| $articleTitle->isCssJsSubpage()
-			|| $namespace === NS_MODULE
-			|| self::isInfoboxTemplate( $articleTitle )
+			|| in_array( $namespace, array( NS_MODULE, NS_TEMPLATE ) )
 		);
 	}
 
@@ -253,7 +252,7 @@ class EditPageLayoutHelper {
 	 * @return bool
 	 */
 	public static function isCodePageWithPreview( Title $title ) {
-		return self::isInfoboxTemplate( $title );
+		return $title->getNamespace() === NS_TEMPLATE;
 	}
 
 	/**
@@ -278,7 +277,8 @@ class EditPageLayoutHelper {
 			$type = 'css';
 		} elseif ( $title->isJsPage() || $title->isJsSubpage() ) {
 			$type = 'javascript';
-		} elseif ( self::isInfoboxTemplate( $title ) ) {
+		} else {
+			// default to XML since most templates use HTML tags or infobox markup
 			$type = 'xml';
 		}
 
