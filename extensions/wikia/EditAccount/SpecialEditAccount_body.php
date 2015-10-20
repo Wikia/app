@@ -125,6 +125,12 @@ class EditAccount extends SpecialPage {
 			return;
 		}
 
+		// Displays a log of email changes for the selected user
+		if ($par && $par == "log") {
+			$this->displayLogData();
+			return;
+		}
+
 		$changeReason = $request->getVal( 'wpReason' );
 
 		switch( $action ) {
@@ -227,6 +233,11 @@ class EditAccount extends SpecialPage {
 					'userStatus' => $userStatus,
 					'emailStatus' => $emailStatus,
 					'changeEmailRequested' => $changeEmailRequested,
+					'mailLogLink' => Linker::linkKnown(
+						SpecialPage::getTitleFor( 'EditAccount', 'log' ),
+						"Mail change log",  // TODO: i18n this
+						array(), 			// attribs
+						array('user_id' => $this->mUser->getID())),
 				) );
 		}
 
@@ -517,5 +528,56 @@ class EditAccount extends SpecialPage {
 		// This suffix shouldn't reduce the entropy of the intentionally scrambled password.
 		$REQUIRED_CHARS = "A1a";
 		return (wfGenerateToken() . $REQUIRED_CHARS);
+	}
+
+	/** Hook for storing historical log of email changes **/
+	public static function logEmailChanges($user, $new_email, $old_email) {
+		global $wgExternalSharedDB, $wgUser, $wgRequest;
+		if ( $wgExternalSharedDB ) {
+			$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
+			$dbw->insert(
+				'user_email_log',
+				['user_id' => $user->getId(),
+				 'old_email' => $old_email,
+				 'new_email' => $new_email,
+				 'changed_by_id' => $wgUser->getId(),
+				 'changed_by_ip' => $wgRequest->getIP()  // stored as string
+				]);
+		}
+		return true;
+	}
+
+	public function displayLogData() {
+		global $wgExternalSharedDB, $wgOut, $wgRequest;
+
+		$user_id = $wgRequest->getVal('user_id', null);
+		$rows = [];
+
+		if ( $wgExternalSharedDB && $user_id ) {
+			$dbr = wfGetDB ( DB_SLAVE, array(), $wgExternalSharedDB );
+			$res = $dbr->select (
+				'user_email_log',   // from
+				["*"], 				// cols
+				"user_id = " . $dbr->strencode($user_id), // where
+				__METHOD__,
+				["ORDER BY" => "changed_at DESC"]  // options
+				);
+			while ( $row = $dbr->fetchObject( $res ) ) {
+				$row->user_name = User::newFromID($row->user_id);
+				$row->changed_by_name = User::newFromId($row->changed_by_id);
+				$rows[] = $row;
+			}
+		}
+
+		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
+
+		$oTmpl->set_Vars( [
+			'userName' => 'foo',
+			'returnURL' => $this->getTitle()->getFullURL(),
+			'rows' => $rows
+			]
+		);
+
+		$wgOut->addHTML( $oTmpl->render( "changelog" ) );
 	}
 }
