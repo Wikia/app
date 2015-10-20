@@ -375,8 +375,7 @@ var UserProfilePage = {
 		UserProfilePage.bucky.timer.start('saveUserDataFail');
 
 		var userData = UserProfilePage.getFormData(),
-			saveButton = $('button[data-event=save]'),
-			token = $('input[name=token]').val() || '';
+			saveButton = $('button[data-event=save]');
 
 		//prevent from multiple clicks on 'save' button
 		saveButton.prop('disabled', true);
@@ -392,7 +391,7 @@ var UserProfilePage = {
 			data: {
 				'userId': UserProfilePage.userId,
 				'data': JSON.stringify(userData),
-				'token': token},
+				'token': window.mw.user.tokens.get('editToken')},
 			success: function (data) {
 				if (data.status === 'error') {
 					UserProfilePage.error(data.errMsg);

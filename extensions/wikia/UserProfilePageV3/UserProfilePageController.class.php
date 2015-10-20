@@ -853,7 +853,6 @@ class UserProfilePageController extends WikiaController {
 		$this->setVal( 'userId', $userId );
 		$this->setVal( 'avatarMaxSize', self::AVATAR_MAX_SIZE );
 		$this->setVal( 'avatar', AvatarService::renderAvatar( $user->getName(), self::AVATAR_DEFAULT_SIZE ) );
-		$this->setVal( 'editToken', F::app()->wg->User->getEditToken() );
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -927,8 +926,6 @@ class UserProfilePageController extends WikiaController {
 		if ( !empty( $userData['birthday']['month'] ) ) {
 			$this->setVal( 'days', cal_days_in_month( CAL_GREGORIAN, $userData['birthday']['month'], 2000 /* leap year */ ) );
 		}
-
-		$this->setVal('editToken', F::app()->wg->User->getEditToken());
 
 		wfProfileOut( __METHOD__ );
 	}

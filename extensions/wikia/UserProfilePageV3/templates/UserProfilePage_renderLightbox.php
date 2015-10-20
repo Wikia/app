@@ -44,7 +44,6 @@
 						</div>
 					<? endif; ?>
 				</fieldset>
-				<input type="hidden" name="token" value="<?= $editToken ?>">
 
 			</form>
 		</li>
@@ -125,7 +124,6 @@
 						<?= wfMessage( 'user-identity-box-hide-edits-wikis' )->escaped(); ?>
 					</label>
 				</div>
-				<input type="hidden" name="token" value="<?= $editToken ?>">
 			</form>
 		</li>
 	</ul>
