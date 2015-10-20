@@ -235,8 +235,8 @@ class EditAccount extends SpecialPage {
 					'changeEmailRequested' => $changeEmailRequested,
 					'mailLogLink' => Linker::linkKnown(
 						SpecialPage::getTitleFor( 'EditAccount', 'log' ),
-						"Mail change log",  // TODO: i18n this
-						array(), 			// attribs
+						"Mail change log",	// TODO: i18n this
+						array(),			// attribs
 						array('user_id' => $this->mUser->getID())),
 				) );
 		}
@@ -541,7 +541,7 @@ class EditAccount extends SpecialPage {
 				 'old_email' => $old_email,
 				 'new_email' => $new_email,
 				 'changed_by_id' => $wgUser->getId(),
-				 'changed_by_ip' => $wgRequest->getIP()  // stored as string
+				 'changed_by_ip' => $wgRequest->getIP()		// stored as string
 				]);
 		}
 		return true;
@@ -551,6 +551,7 @@ class EditAccount extends SpecialPage {
 		global $wgExternalSharedDB, $wgOut, $wgRequest;
 
 		$user_id = $wgRequest->getInt('user_id', 0);
+		$user_name = "Not found";
 		$rows = [];
 
 		if ( $wgExternalSharedDB && $user_id ) {
@@ -558,11 +559,11 @@ class EditAccount extends SpecialPage {
 
 			$dbr = wfGetDB ( DB_SLAVE, array(), $wgExternalSharedDB );
 			$res = $dbr->select (
-				'user_email_log',   // from
-				["*"], 				// cols
-				['user_id' => $user_id], // where
+				'user_email_log',			// from
+				["*"],						// cols
+				['user_id' => $user_id],	// where
 				__METHOD__,
-				["ORDER BY" => "changed_at DESC"]  // options
+				["ORDER BY" => "changed_at DESC"]	// options
 				);
 			while ( $row = $dbr->fetchObject( $res ) ) {
 				$row->changed_by_name = User::newFromId($row->changed_by_id);
