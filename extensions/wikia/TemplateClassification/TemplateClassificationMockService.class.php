@@ -10,6 +10,9 @@ class TemplateClassificationMockService extends WikiaService {
 	 * @return string
 	 */
 	public function getTemplateType( $articleId ) {
+		if ( empty( $articleId ) ) {
+			return TemplateClassification::TEMPLATE_UNCLASSIFIED;
+		}
 		/* Use cache to have consistent results for same pages due to randomization */
 		$type = WikiaDataAccess::cache(
 			wfMemcKey( 'template-classification-type-for-page', $articleId ),
