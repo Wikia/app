@@ -614,9 +614,20 @@ class TopListHelper {
 	 *
 	 */
 	public static function voteItem() {
-		global $wgRequest;
+		global $wgRequest, $wgUser;
 
 		$result = array( 'result' => false );
+
+		try {
+			$wgRequest->isValidWriteRequest( $wgUser );
+		} catch ( BadRequestException $exception ) {
+			$result['errors'] = $exception->getMessage();
+			$json = json_encode( $result );
+			$response = new AjaxResponse( $json );
+			$response->setContentType( 'application/json; charset=utf-8' );
+
+			return $response;
+		}
 
 		$titleText = $wgRequest->getVal( 'title' );
 
@@ -681,6 +692,17 @@ class TopListHelper {
 
 		$result = array( 'result' => false );
 		$errors = array();
+
+		try {
+			$wgRequest->isValidWriteRequest( $wgUser );
+		} catch ( BadRequestException $exception ) {
+			$result['errors'] = $exception->getMessage();
+			$json = json_encode( $result );
+			$response = new AjaxResponse( $json );
+			$response->setContentType( 'application/json; charset=utf-8' );
+
+			return $response;
+		}
 
 		$listText = $wgRequest->getVal( 'list' );
 		$itemText = trim( $wgRequest->getVal( 'text' ) );
