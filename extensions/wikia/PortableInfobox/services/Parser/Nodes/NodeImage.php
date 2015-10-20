@@ -44,58 +44,83 @@ class NodeImage extends Node {
 		return false;
 	}
 
-	private function getTabberMarkers( $value ) {
-		if ( preg_match_all('/\x7fUNIQ[A-Z0-9]*-TABBER-[0-9]{8}-QINU\x7f/is', $value, $out) ) {
+	private function getImagesData( $value ) {
+		$data = array();
+		$items = array_merge( $this->getGalleryItems( $value ), $this->getTabberItems( $value ) );
+		for( $i = 0; $i < count( $items ); $i++ ) {
+			$data[] = $this->getImageData( $items[$i]['title'], $items[$i]['label'], $items[$i]['label'] );
+		}
+		return $data;
+	}
+
+	private function getGalleryItems( $value ) {
+		global $wgArticleAsJson;
+		$galleryItems = array();
+		$galleryMarkers = $this->getMarkers( $value, 'GALLERY' );
+		for ( $i = 0; $i < count ( $galleryMarkers ); $i++ ) {
+			$galleryHtml = $this->getExternalParser()->parseRecursive( $galleryMarkers[$i] );
+			if ( $wgArticleAsJson ) {
+				if ( preg_match( '/data-ref=\'([^\']+)\'/', $galleryHtml, $out ) ) {
+					$media = \ArticleAsJson::$media[$out[1]];
+					for( $j = 0; $j < count( $media ); $j++ ) {
+						$galleryItems[] = array( 'label' => strip_tags( $media[$j]['caption'] ), 'title' => $media[$j]['title'] );
+					}
+				}
+			} else {
+				if ( preg_match( '#\sdata-model="([^"]+)"#', $galleryHtml, $galleryOut ) ) {
+					$model = json_decode( htmlspecialchars_decode( $galleryOut[1] ), true );
+					$galleryItems = array_map( function( $modelItem ) {
+						return array( 'label' => strip_tags( $modelItem[ 'caption' ] ), 'title' => $modelItem['title'] );
+					}, $model );
+				}
+				if ( preg_match_all('#data-image-key="([^"]+)".*?\s<h2>(.*?)<\/h2>#is', $html, $galleryOut ) ) {
+					for( $j = 0; $j < count( $galleryOut[0] ); $j++ ) {
+						$galleryItems[] = array( 'label' => $galleryOut[2][$j], 'title' => $galleryOut[1][$j] );
+					}
+				}
+			}
+		}
+		return $galleryItems;
+	}
+
+	private function getTabberItems( $value ) { 
+		global $wgArticleAsJson;
+		$tabberItems = array();
+		$tabberMarkers = $this->getMarkers( $value, 'TABBER' );
+		for ( $i = 0; $i < count ( $tabberMarkers ); $i++ ) {
+			$tabberHtml = $this->getExternalParser()->parseRecursive( $tabberMarkers[$i] );
+			$tabberItems = array_merge( $tabberItems, $this->getTabberData( $tabberHtml ) );
+		}
+		return $tabberItems;
+	}
+
+	private function getMarkers( $value, $ext ) {
+		if ( preg_match_all('/\x7fUNIQ[A-Z0-9]*-' . $ext . '-[0-9]{8}-QINU\x7f/is', $value, $out ) ) {
 			return $out[0];
 		} else {
 			return [];
 		}
 	}
 
-	private function getTabberHtml( $marker ) {
-		return $this->getExternalParser()->parseRecursive( $marker );
-	}
-
-	private function getTabberItems( $html ) {
-		global $wgArticleAsJson;
-
+	private function getTabberData( $html ) {
+		$data = array();
 		$doc = new \DOMDocument();
-		$doc->loadHTML($html);
-		$sxml = simplexml_import_dom($doc);
-		$divs = $sxml->xpath('//div[@class=\'tabbertab\']');
-
-		$items = array();
-
-		foreach ($divs as $div) {
-			$tabTitle = (string) $div['title'];
+		$doc->loadHTML( $html );
+		$sxml = simplexml_import_dom( $doc );
+		$divs = $sxml->xpath( '//div[@class=\'tabbertab\']' );
+		foreach ( $divs as $div ) {
 			if ( $wgArticleAsJson ) {
 				if ( preg_match( '/data-ref="([^"]+)"/', $div->p->asXML(), $out ) ) {
-					$items[] = array( 'label' => $tabTitle, 'title' => \ArticleAsJson::$media[$out[1]]['title'] );
+					$data[] = array( 'label' => (string) $div['title'], 'title' => \ArticleAsJson::$media[$out[1]]['title'] );
 				}
 			} else {
 				if ( preg_match( '/data-image-key="([^"]+)"/', $div->p->asXML(), $out ) ) {
-					$items[] = array( 'label' => $tabTitle, 'title' => $out[1] );
+					$data[] = array( 'label' => (string) $div['title'], 'title' => $out[1] );
 				}
 			}
 		}
-
-		return $items;
-	}
-
-	private function getImagesData( $value ) {
-		$tabberItems = array();
-		$tabberMarkers = $this->getTabberMarkers( $value );
-		for ( $i = 0; $i < count ( $tabberMarkers ); $i++ ) {
-			$tabberHtml = $this->getTabberHtml( $tabberMarkers[$i] );
-			$tabberItems = array_merge($tabberItems, $this->getTabberItems($tabberHtml));
-		}
-		$data = array();
-		for( $i = 0; $i < count( $tabberItems ); $i++ ) {
-			$data[] = $this->getImageData( $tabberItems[$i]['title'], $tabberItems[$i]['label'], $tabberItems[$i]['label'] );
-		}
 		return $data;
 	}
-
 
 	private function getImageData( $title, $alt, $caption ) {
 		$titleObj = $this->getImageAsTitleObject( $title );
