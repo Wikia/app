@@ -3,6 +3,7 @@ define('ext.wikia.adEngine.recovery.message', [
 	'ext.wikia.adEngine.adTracker',
 	'ext.wikia.adEngine.recovery.helper',
 	'jquery',
+	'mw',
 	'wikia.document',
 	'wikia.loader',
 	'wikia.localStorage',
@@ -14,6 +15,7 @@ define('ext.wikia.adEngine.recovery.message', [
 	adTracker,
 	recoveryHelper,
 	$,
+	mw,
 	doc,
 	loader,
 	localStorage,
@@ -54,8 +56,9 @@ define('ext.wikia.adEngine.recovery.message', [
 					mustache: templatePath
 				}
 			})
-		).then(function (response) {
-			return response;
+		).then(function (assets) {
+			mw.messages.set(assets.messages);
+			return assets;
 		}).fail(function () {
 			log([
 				'recoveredAdsMessage.getAssets', 'Unable to load template or messages',
@@ -66,15 +69,18 @@ define('ext.wikia.adEngine.recovery.message', [
 	}
 
 	function createMessage(uniqueClassName) {
-		return getAssets().then(function (loaderResponse) {
-			var template = loaderResponse.mustache[0],
+		return getAssets().then(function (assets) {
+			var template = assets.mustache[0],
+				text = mw.message(
+					'adengine-recovery-message-blocking-message-a',
+					'<a class="action-accept">' +
+						mw.message('adengine-recovery-message-blocking-click').escaped() +
+					'</a>'
+				).plain(),
 				params = {
 					positionClass: 'recovered-message-' + uniqueClassName,
-					header: $.msg('adengine-recovery-message-blocking-welcome'),
-					text: $.msg(
-						'adengine-recovery-message-blocking-message-a',
-						'<a class="action-accept">' + $.msg('adengine-recovery-message-blocking-click') + '</a>'
-					)
+					header: mw.message('adengine-recovery-message-blocking-welcome').plain(),
+					text: text
 				};
 
 			return $(mustache.render(template, params));
