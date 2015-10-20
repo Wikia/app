@@ -176,9 +176,10 @@ class ForumExternalController extends WallExternalController {
 		}
 
 		try {
-			$this->setTokenMismatchError();
+			$this->checkWriteRequest();
 		} catch ( \BadRequestException $bre ) {
-			return true;
+			$this->setTokenMismatchError();
+			return;
 		}
 
 		$boardId = $this->getVal( 'boardId', '' );
