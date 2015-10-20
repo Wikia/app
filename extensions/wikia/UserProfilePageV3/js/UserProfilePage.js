@@ -247,7 +247,7 @@ var UserProfilePage = {
 			$sampleAvatars = modal.find('.sample-avatars');
 
 		// VOLDEV-83: Fix confusing file upload interface
-		$avatarUploadButton.on('click', function() {
+		$avatarUploadButton.on('click', function () {
 			$avatarUploadInput.click();
 		});
 
@@ -375,7 +375,8 @@ var UserProfilePage = {
 		UserProfilePage.bucky.timer.start('saveUserDataFail');
 
 		var userData = UserProfilePage.getFormData(),
-			saveButton = $('button[data-event=save]');
+			saveButton = $('button[data-event=save]'),
+			token = $('input[name=token]').val() || '';
 
 		//prevent from multiple clicks on 'save' button
 		saveButton.prop('disabled', true);
@@ -388,7 +389,10 @@ var UserProfilePage = {
 			type: 'POST',
 			url: this.ajaxEntryPoint + '&method=saveUserData',
 			dataType: 'json',
-			data: {'userId': UserProfilePage.userId, 'data': JSON.stringify(userData)},
+			data: {
+				'userId': UserProfilePage.userId,
+				'data': JSON.stringify(userData),
+				'token': token},
 			success: function (data) {
 				if (data.status === 'error') {
 					UserProfilePage.error(data.errMsg);

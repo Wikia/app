@@ -415,6 +415,14 @@ class UserProfilePageController extends WikiaController {
 	public function saveUserData() {
 		wfProfileIn( __METHOD__ );
 
+		try {
+			$this->checkWriteRequest();
+		} catch( \BadRequestException $bre ) {
+			$this->setTokenMismatchError();
+			wfProfileOut( __METHOD__ );
+			return;
+		}
+
 		$user = User::newFromId( $this->getVal( 'userId' ) );
 		$isAllowed = ( $this->app->wg->User->isAllowed( 'editprofilev3' ) || intval( $user->getId() ) === intval( $this->app->wg->User->getId() ) );
 
@@ -784,6 +792,14 @@ class UserProfilePageController extends WikiaController {
 	public function uploadByUrl( $url, $userData, &$errorMsg = '' ) {
 		wfProfileIn( __METHOD__ );
 
+		try {
+			$this->checkWriteRequest();
+		} catch ( \BadRequestException $bre ) {
+			$this->setTokenMismatchError();
+			wfProfileOut( __METHOD__ );
+			return;
+		}
+
 		// start by presuming there is no error
 		// $errorNo = UPLOAD_ERR_OK;
 		$user = $userData['user'];
@@ -837,6 +853,7 @@ class UserProfilePageController extends WikiaController {
 		$this->setVal( 'userId', $userId );
 		$this->setVal( 'avatarMaxSize', self::AVATAR_MAX_SIZE );
 		$this->setVal( 'avatar', AvatarService::renderAvatar( $user->getName(), self::AVATAR_DEFAULT_SIZE ) );
+		$this->setVal( 'editToken', F::app()->wg->User->getEditToken() );
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -910,6 +927,8 @@ class UserProfilePageController extends WikiaController {
 		if ( !empty( $userData['birthday']['month'] ) ) {
 			$this->setVal( 'days', cal_days_in_month( CAL_GREGORIAN, $userData['birthday']['month'], 2000 /* leap year */ ) );
 		}
+
+		$this->setVal('editToken', F::app()->wg->User->getEditToken());
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -1012,4 +1031,11 @@ class UserProfilePageController extends WikiaController {
 		return true;
 	}
 
+	/**
+	 * Sets token mismatch error message
+	 */
+	private function setTokenMismatchError() {
+		$this->setVal( 'status', 'error' );
+		$this->setVal( 'errorMsg', wfMessage( 'user-identity-token-mismatch' )->escaped() );
+	}
 }
