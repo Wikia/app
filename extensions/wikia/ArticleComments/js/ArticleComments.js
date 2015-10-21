@@ -379,7 +379,8 @@
 				rs: 'ArticleCommentsAjax',
 				title: wgPageName,
 				wpArticleComment: content,
-				useskin: window.skin
+				useskin: window.skin,
+				token: window.mw.user.tokens.get('editToken')
 			};
 
 			if (e.data.parentId) {
@@ -636,7 +637,7 @@
 			}
 		},
 
-		showMoreComments: function() {
+		showMoreComments: function () {
 			var $nodesToHide = this.$wrapper.find('.comments').children().slice(3),
 				$pagination = $('.article-comments-pagination', this.$wrapper),
 				showMoreButton = this.$wrapper.find('.comments-show-more');
@@ -653,7 +654,7 @@
 			// ... and show the button
 			showMoreButton.css('display', 'block');
 
-			showMoreButton.click(function() {
+			showMoreButton.click(function () {
 				$nodesToHide.show();
 				$pagination.show();
 
@@ -677,7 +678,7 @@
 			hash = window.location.hash;
 			permalink = /^#comm-/.test(hash);
 
-			switch(window.skin) {
+			switch (window.skin) {
 				case 'venus':
 					styleAssets.push($.getSassCommonURL('extensions/wikia/Venus/styles/article/comments.scss'));
 					break;
