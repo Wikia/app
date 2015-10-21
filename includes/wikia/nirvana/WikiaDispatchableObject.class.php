@@ -197,6 +197,13 @@ abstract class WikiaDispatchableObject extends WikiaObject {
 		$this->request->isValidWriteRequest( $this->wg->User );
 	}
 
+	protected function setTokenMismatchError() {
+		$this->response->setValues( [
+			'status' => 'error',
+			'errormsg' => wfMessage( 'sessionfailure' )->escaped(),
+		] );
+	}
+
 	// Magic setting of template variables so we don't have to do $this->response->setVal
 	// NOTE: This is the opposite behavior of the Oasis Module
 	// In a module, a public member variable goes to the template
