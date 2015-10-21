@@ -1,6 +1,6 @@
 <?php
 /**
- * Class SpecialBrokenRenameFixController
+ * Class BrokenRenameFixSpecialController
  *
  * A special page with an interface to rerun local rename jobs.
  *
@@ -10,7 +10,7 @@
  * @package BrokenRenameFix
  */
 
-class SpecialBrokenRenameFixController extends WikiaSpecialPageController {
+class BrokenRenameFixSpecialController extends WikiaSpecialPageController {
 
 	const BRF_FORM_SUBMIT = 'submit';
 

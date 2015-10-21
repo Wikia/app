@@ -30,8 +30,8 @@ $wgExtensionMessagesFiles['BrokenRenameFix'] = __DIR__ . '/BrokenRenameFix.i18n.
 /**
  * Special pages
  */
-$wgAutoloadClasses['SpecialBrokenRenameFixController'] = __DIR__ . '/SpecialBrokenRenameFixController.class.php';
-$wgSpecialPages['BrokenRenameFix'] = 'SpecialBrokenRenameFixController';
+$wgAutoloadClasses['BrokenRenameFixSpecialController'] = __DIR__ . '/BrokenRenameFixSpecialController.class.php';
+$wgSpecialPages['BrokenRenameFix'] = 'BrokenRenameFixSpecialController';
 $wgSpecialPageGroups['BrokenRenameFix'] = 'wikia';
 
 /**
