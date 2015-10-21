@@ -13,6 +13,15 @@ class RelatedPages {
 
 	const LIMIT_MAX = 10;
 
+	/**
+	 * Limit the number of results taken from categorylinks and improve the performance on big wikis
+	 * by making the temporary table much smaller
+	 *
+	 * @author macbre
+	 * @see PLATFORM-1591
+	 */
+	const CATEGORY_LINKS_LIMIT = 100000;
+
 	protected function __construct() {
 	}
 
@@ -250,7 +259,9 @@ class RelatedPages {
 			array( "cl_from AS page_id" ),
 			array( "cl_to IN ( " . $dbr->makeList( $categories ) . " )" ),
 			__METHOD__,
-			array(),
+			[
+				'LIMIT' => self::CATEGORY_LINKS_LIMIT
+			],
 			$joinSql
 		);
 
