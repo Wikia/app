@@ -45,6 +45,7 @@ class NodeImage extends Node {
 	}
 
 	public static function getTabberData( $html ) {
+		global $wgArticleAsJson;
 		$data = array();
 		$doc = new \DOMDocument();
 		$doc->loadHTML( $html );
