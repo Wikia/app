@@ -1157,7 +1157,7 @@ class User {
 		}
 
 		if ( !$this->isUserAuthenticatedViaAuthenticationService() ) {
-			$this->logFallbackToMediaWikiSessionRejection($from);
+			$this->logFallbackToMediaWikiSessionRejection( $from );
 			$this->loadDefaults();
 			return false;
 		}
@@ -5210,7 +5210,7 @@ class User {
 	 * Set the global authentication token.
 	 * @param string
 	 */
-	public function setGlobalAuthToken($token) {
+	public function setGlobalAuthToken( $token ) {
 		$this->globalAuthToken = $token;
 	}
 
@@ -5236,7 +5236,7 @@ class User {
 	/**
 	 * Log an attempt to fallback to the MW session that was rejected.
 	 */
-	protected function logFallbackToMediaWikiSessionRejection($from) {
+	protected function logFallbackToMediaWikiSessionRejection( $from ) {
 		Wikia\Logger\WikiaLogger::instance()->error(
 			'AUTHENTICATION_FALLBACK_REJECTED',
 			[
