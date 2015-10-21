@@ -82,10 +82,11 @@
 							},
 							method: 'save'
 						}).done(function( response ) {
+							var error = response.error || response.exception;
 							$container.stopThrobbing();
 
-							if ( response.error ) {
-								throw 'Saving error: ' + response.error;
+							if ( error ) {
+								throw 'Saving error: ' + error;
 							} else {
 								$wrapper
 									.removeClass( 'editMode' )
