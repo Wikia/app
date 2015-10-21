@@ -175,7 +175,7 @@ class EditPageLayoutHelper {
 
 		return ( $articleTitle->isCssOrJsPage()
 			|| $articleTitle->isCssJsSubpage()
-			|| in_array( $namespace, array( NS_MODULE, NS_TEMPLATE ) )
+			|| in_array( $namespace, [ NS_MODULE, NS_TEMPLATE ] )
 		);
 	}
 
@@ -252,7 +252,7 @@ class EditPageLayoutHelper {
 	 * @return bool
 	 */
 	public static function isCodePageWithPreview( Title $title ) {
-		return $title->getNamespace() === NS_TEMPLATE;
+		return $title->inNamespace( NS_TEMPLATE );
 	}
 
 	/**
