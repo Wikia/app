@@ -31,7 +31,7 @@ class SpecialBrokenRenameFixController extends WikiaSpecialPageController {
 
 		Wikia::addAssetsToOutput( 'special_broken_rename_fix' );
 
-		$this->wg->Out->setPageTitle( wfMessage( 'brf-title' )->escaped() );
+		$this->getOutput()->setPageTitle( wfMessage( 'brf-title' )->escaped() );
 
 		$this->setMessages();
 		$this->setFormData();
@@ -59,9 +59,9 @@ class SpecialBrokenRenameFixController extends WikiaSpecialPageController {
 			$task = new BrokenRenameFixTask();
 			$task->call( 'rerunRenameScript', $this->userId, $this->oldName, $this->newName );
 			$task->prioritize();
-			$task->queue();
+			$taskId = $task->queue();
 
-			$this->addNotice( wfMessage( 'brf-success' )->escaped() . $this->getLogsLink(), 'success' );
+			$this->addNotice( wfMessage( 'brf-success' )->rawParams( $this->getLogsLink( $taskId ) )->escaped(), 'success' );
 		} else {
 			$this->prefillFormValues();
 		}
@@ -92,7 +92,7 @@ class SpecialBrokenRenameFixController extends WikiaSpecialPageController {
 		}
 
 		$usernameFromId = User::newFromId( $this->userId )->getName();
-		if ( $usernameFromId !== $this->oldName && $usernameFromId !== $this->newName ) {
+		if ( $usernameFromId !== $this->newName ) {
 			$this->addNotice( wfMessage( 'brf-error-invalid-user' )->escaped() );
 			$status = false;
 		}
@@ -148,19 +148,16 @@ class SpecialBrokenRenameFixController extends WikiaSpecialPageController {
 	/**
 	 * Creates a link to logs that will be available after the rename rerun finishes.
 	 *
-	 * @return string An HTML <a> element
+	 * @param  string $taskId The ID of the task.
+	 * @return string A HTML <a> element
 	 * @throws MWException
 	 */
-	private function getLogsLink() {
-		$logTitleText = sprintf( '%s/%s to %s rename rerun log',
-			$this->newName, $this->oldName, $this->newName );
-		$logTitle = Title::newFromText( $logTitleText, NS_USER );
-		$url = '';
-		if ( $logTitle !== null ) {
-			$url = $logTitle->getFullURL();
-		}
+	private function getLogsLink( $taskId ) {
+		$taskLink = Linker::linkKnown(
+			GlobalTitle::newFromText( 'Tasks/log', NS_SPECIAL, 177 ),
+			'#' . htmlspecialchars( $taskId )
+		);
 
-		return Html::rawElement( 'a', [ 'href' => $url, 'target' => '_blank' ],
-			wfMessage( 'brf-success-link-text' )->escaped() );
+		return $taskLink;
 	}
 }
