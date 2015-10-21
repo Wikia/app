@@ -90,7 +90,7 @@ require([
 		recoveryHelper.initEventQueue();
 		sourcePoint.initDetection();
 
-		if (context.opts.sourcePoint && win.ads) {
+		if (context.opts.sourcePointRecovery && win.ads) {
 			win.ads.runtime.sp.slots = win.ads.runtime.sp.slots || [];
 			recoveryHelper.addOnBlockingCallback(function () {
 				adTracker.measureTime('adengine.init', 'queue.desktop').track();

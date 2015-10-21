@@ -41,7 +41,7 @@ define('ext.wikia.adEngine.recovery.helper', [
 	}
 
 	function isRecoveryEnabled() {
-		return !!(context.opts.sourcePoint && SourcePointTag);
+		return !!(context.opts.sourcePointRecovery && SourcePointTag);
 	}
 
 	function isBlocking() {

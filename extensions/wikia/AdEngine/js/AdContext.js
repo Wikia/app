@@ -64,14 +64,14 @@ define('ext.wikia.adEngine.adContext', [
 				geo.isProperGeo(instantGlobals.wgAdDriverSourcePointDetectionMobileCountries));
 		}
 
-		// SourcePoint integration
+		// SourcePoint recovery integration
 		if (context.opts.sourcePointDetection && context.opts.sourcePointUrl) {
-			context.opts.sourcePoint = isUrlParamSet('sourcepoint') ||
+			context.opts.sourcePointRecovery = isUrlParamSet('sourcepoint') ||
 				geo.isProperGeo(instantGlobals.wgAdDriverSourcePointRecoveryCountries);
 		}
 
 		// Recoverable ads message
-		if (context.opts.sourcePointDetection && !context.opts.sourcePoint && context.opts.showAds) {
+		if (context.opts.sourcePointDetection && !context.opts.sourcePointRecovery && context.opts.showAds) {
 			context.opts.recoveredAdsMessage = geo.isProperGeo(instantGlobals.wgAdDriverAdsRecoveryMessageCountries);
 		}
 
