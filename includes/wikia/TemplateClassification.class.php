@@ -15,7 +15,7 @@ class TemplateClassification {
 	const TEMPLATE_DESIGN = 'design';
 	const TEMPLATE_NAV = 'navigation';
 	const TEMPLATE_NOT_ART = 'nonarticle';
-	const TEMPLATE_DONTKNOW = 'dontknow';
+	const TEMPLATE_UNKNOWN = 'unknown';
 
 	/**
 	 * Names of the primary and secondary properties used for templates' classification.
@@ -38,7 +38,6 @@ class TemplateClassification {
 		self::TEMPLATE_QUOTE,
 		self::TEMPLATE_NAVBOX,
 		self::TEMPLATE_UNCLASSIFIED,
-		self::TEMPLATE_NAVBOX,
 		self::TEMPLATE_FLAG,
 		self::TEMPLATE_REF,
 		self::TEMPLATE_MEDIA,
@@ -46,7 +45,7 @@ class TemplateClassification {
 		self::TEMPLATE_DESIGN,
 		self::TEMPLATE_NAV,
 		self::TEMPLATE_NOT_ART,
-		self::TEMPLATE_DONTKNOW,
+		self::TEMPLATE_UNKNOWN,
 	];
 
 	/**
