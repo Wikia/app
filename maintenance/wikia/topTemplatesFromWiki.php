@@ -8,7 +8,7 @@
 require_once( dirname( __FILE__ ) . '../../Maintenance.php' );
 
 class allTemplatesFromWiki extends Maintenance {
-	const TEMPLATE_MESSAGE_PREFIX = 'articledi';
+	const TEMPLATE_MESSAGE_PREFIX = 'initialClassification._namespace:template';
 	/** @var PipelineConnectionBase */
 	protected static $pipe;
 
@@ -22,9 +22,10 @@ class allTemplatesFromWiki extends Maintenance {
 
 	public function execute() {
 		$data = $this->getTemplatesFromWiki();
-		$this->pushDataToRabbit( $data );
+		$this->output( "\nFetching template IDs from DB done!\n" );
 
-		$this->output( "\nDone!\n" );
+		$this->pushDataToRabbit( $data );
+		$this->output( "\nPushing events done! \nBye\n" );
 		$this->output($data);
 	}
 
@@ -60,9 +61,8 @@ class allTemplatesFromWiki extends Maintenance {
 		global $wgCityId;
 		$msg = new stdClass();
 		$msg->cityId = $wgCityId;
-		$msg->args = new stdClass();
 		foreach ( $data as $template ) {
-			$msg->pageId = (int)$template[ 'page_id' ];
+			$msg->pageId = $template[ 'page_id' ];
 
 			try {
 				self::getPipeline()
