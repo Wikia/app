@@ -264,8 +264,8 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		$shortCat = 'shortcat';
 		$sevenOneMediaSub2Site = 'customsub2site';
 		$expectedSevenOneMediaUrlFormat = 'http://%s/__load/-/cb%3D%d%26debug%3Dfalse%26lang%3D%s%26only%3Dscripts%26skin%3Doasis/wikia.ext.adengine.sevenonemedia';
-		$expectedSourcePointDetectionUrlFormat = 'http://%s/__load/-/cb%3D%d%26debug%3Dfalse%26lang%3D%s%26only%3Dscripts%26skin%3Doasis/wikia.ext.adengine.sourcepoint.detection';
-		$expectedSourcePointRecoveryUrlFormat = 'http://%s/__load/-/cb%3D%d%26debug%3Dfalse%26lang%3D%s%26only%3Dscripts%26skin%3Doasis/wikia.ext.adengine.sourcepoint';
+		$expectedSourcePointDetectionUrlFormat = 'http://%s/__load/-/cb%3D%d%26debug%3Dfalse%26lang%3D%s%26only%3Dscripts%26skin%3Doasis/wikia.ext.adengine.sp.detection';
+		$expectedSourcePointRecoveryUrlFormat = 'http://%s/__load/-/cb%3D%d%26debug%3Dfalse%26lang%3D%s%26only%3Dscripts%26skin%3Doasis/wikia.ext.adengine.sp.recovery';
 
 		if ( $titleMockType === 'article' || $titleMockType === 'mainpage' ) {
 			$expectedTargeting['pageArticleId'] = $artId;
