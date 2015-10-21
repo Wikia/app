@@ -154,7 +154,13 @@ class Hooks {
 		return true;
 	}
 
-	public function onWebRequestInitialized( \WebRequest $webRequest ) {
+	/**
+	 * A hook for adds client IP to the fields sent to Logstash
+	 *
+	 * @param \WebRequest $webRequest
+	 * @return bool true
+	 */
+	public static function onWebRequestInitialized( \WebRequest $webRequest ) {
 		$fields = [];
 
 		if ( isset( $_SERVER['REQUEST_URI'] ) ) {
