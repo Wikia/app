@@ -118,7 +118,7 @@ class NodeImage extends Node {
 		return $galleryItems;
 	}
 
-	private function getTabberItems( $value ) { 
+	private function getTabberItems( $value ) {
 		$tabberItems = array();
 		$tabberMarkers = self::getMarkers( $value, 'TABBER' );
 		for ( $i = 0; $i < count ( $tabberMarkers ); $i++ ) {
