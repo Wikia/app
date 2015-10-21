@@ -1158,6 +1158,7 @@ class User {
 
 		if ( !$this->isUserAuthenticatedViaAuthenticationService() ) {
 			$this->logFallbackToMediaWikiSessionRejection( $from );
+			$this->logout();
 			$this->loadDefaults();
 			return false;
 		}
@@ -5223,6 +5224,11 @@ class User {
 
 		if ( !$wgRejectAuthenticationFallback ) {
 			return true;
+		}
+
+		$token = $this->getGlobalAuthToken();
+		if ( empty( $token ) ) {
+			return false;
 		}
 
 		$tokenInfo = $this->getAuthenticationService()->info( $this->getGlobalAuthToken() );

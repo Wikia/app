@@ -245,7 +245,7 @@ class User {
 		$request = \RequestContext::getMain()->getRequest();
 		$heliosClient = self::getHeliosClient();
 		$accessToken = self::getAccessToken( $request );
-		if ( !empty( $accessToken ) ) {
+		if ( !empty( $accessToken ) && !empty( $wgUser ) ) {
 			$heliosClient->invalidateToken( $accessToken, $wgUser->getId() );
 		}
 	}
