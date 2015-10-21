@@ -265,6 +265,10 @@ class RelatedPages {
 			$joinSql
 		);
 
+		# sanitize query parameters
+		$articleId = intval( $articleId );
+		$limit = intval( $limit );
+
 		$sql = "SELECT page_id, count(*) c FROM ( $innerSQL ) i WHERE page_id != $articleId GROUP BY page_id ORDER BY c desc LIMIT $limit";
 		$res = $dbr->query( $sql, __METHOD__ );
 		while ( $row = $dbr->fetchObject( $res ) ) {
