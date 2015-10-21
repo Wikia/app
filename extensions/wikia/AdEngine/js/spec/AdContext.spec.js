@@ -414,42 +414,42 @@ describe('AdContext', function () {
 	});
 
 	it('enables SourcePoint when country in instant var', function () {
-		mocks.win = {ads: {context: {opts: {sourcePointUrl: '//foo.bar', sourcePointDetection: true}}}};
+		mocks.win = {ads: {context: {opts: {sourcePointRecoveryUrl: '//foo.bar', sourcePointDetection: true}}}};
 		mocks.instantGlobals = {wgAdDriverSourcePointRecoveryCountries: ['CURRENT_COUNTRY', 'ZZ']};
 
 		expect(getModule().getContext().opts.sourcePointRecovery).toBeTruthy();
 	});
 
 	it('enables SourcePoint when region in instant var', function () {
-		mocks.win = {ads: {context: {opts: {sourcePointUrl: '//foo.bar', sourcePointDetection: true}}}};
+		mocks.win = {ads: {context: {opts: {sourcePointRecoveryUrl: '//foo.bar', sourcePointDetection: true}}}};
 		mocks.instantGlobals = {wgAdDriverSourcePointRecoveryCountries: ['CURRENT_COUNTRY-CURRENT_REGION']};
 
 		expect(getModule().getContext().opts.sourcePointRecovery).toBeTruthy();
 	});
 
 	it('enables SourcePoint when country and region in instant var (country overwrites region)', function () {
-		mocks.win = {ads: {context: {opts: {sourcePointUrl: '//foo.bar', sourcePointDetection: true}}}};
+		mocks.win = {ads: {context: {opts: {sourcePointRecoveryUrl: '//foo.bar', sourcePointDetection: true}}}};
 		mocks.instantGlobals = {wgAdDriverSourcePointRecoveryCountries: ['CURRENT_COUNTRY-EE', 'CURRENT_COUNTRY']};
 
 		expect(getModule().getContext().opts.sourcePointRecovery).toBeTruthy();
 	});
 
 	it('disables SourcePoint when country and region in instant var and both are invalid', function () {
-		mocks.win = {ads: {context: {opts: {sourcePointUrl: '//foo.bar', sourcePointDetection: true}}}};
+		mocks.win = {ads: {context: {opts: {sourcePointRecoveryUrl: '//foo.bar', sourcePointDetection: true}}}};
 		mocks.instantGlobals = {wgAdDriverSourcePointRecoveryCountries: ['CURRENT_COUNTRY-EE', 'YY']};
 
 		expect(getModule().getContext().opts.sourcePointRecovery).toBeFalsy();
 	});
 
 	it('disables SourcePoint when detection is disabled', function () {
-		mocks.win = {ads: {context: {opts: {sourcePointUrl: '//foo.bar'}}}};
+		mocks.win = {ads: {context: {opts: {sourcePointRecoveryUrl: '//foo.bar'}}}};
 		mocks.instantGlobals = {wgAdDriverSourcePointRecoveryCountries: ['CURRENT_COUNTRY', 'ZZ']};
 
 		expect(getModule().getContext().opts.sourcePointRecovery).toBeFalsy();
 	});
 
 	it('enables SourcePoint when url param sourcepoint is set', function () {
-		mocks.win = {ads: {context: {opts: {sourcePointUrl: '//foo.bar', sourcePointDetection: true}}}};
+		mocks.win = {ads: {context: {opts: {sourcePointRecoveryUrl: '//foo.bar', sourcePointDetection: true}}}};
 		spyOn(mocks.querystring, 'getVal').and.callFake(function (param) {
 			return param === 'sourcepoint' ?  '1' : '0';
 		});

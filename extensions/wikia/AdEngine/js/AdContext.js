@@ -65,7 +65,7 @@ define('ext.wikia.adEngine.adContext', [
 		}
 
 		// SourcePoint recovery integration
-		if (context.opts.sourcePointDetection && context.opts.sourcePointUrl) {
+		if (context.opts.sourcePointDetection && context.opts.sourcePointRecoveryUrl) {
 			context.opts.sourcePointRecovery = isUrlParamSet('sourcepoint') ||
 				geo.isProperGeo(instantGlobals.wgAdDriverSourcePointRecoveryCountries);
 		}
