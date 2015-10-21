@@ -7,7 +7,7 @@
 
 require_once( dirname( __FILE__ ) . '../../Maintenance.php' );
 
-class topTemplatesFromWiki extends Maintenance {
+class allTemplatesFromWiki extends Maintenance {
 	const TEMPLATE_MESSAGE_PREFIX = 'articledi';
 	/** @var PipelineConnectionBase */
 	protected static $pipe;
@@ -17,7 +17,7 @@ class topTemplatesFromWiki extends Maintenance {
 	 */
 	public function __construct() {
 		parent::__construct();
-		$this->mDescription = 'topTemplatesFromWiki';
+		$this->mDescription = 'allTemplatesFromWiki';
 	}
 
 	public function execute() {
@@ -29,8 +29,7 @@ class topTemplatesFromWiki extends Maintenance {
 	}
 
 	/**
-	 * @desc Get from DB ID's of templates which are used at least
-	 * on one page which is in MAIN namespace.
+	 * @desc Get from current DB all template IDs
 	 *
 	 * @return bool|mixed
 	 * @throws \Exception
@@ -40,21 +39,13 @@ class topTemplatesFromWiki extends Maintenance {
 		$db = wfGetDB( DB_SLAVE );
 
 		$pages = ( new \WikiaSQL() )
-			->SELECT('p2.page_id as temp_id','tl_title','COUNT(*)')
-			->FROM('page')->AS_('p')
-			->INNER_JOIN('templatelinks')->AS_('t')
-			->ON('t.tl_from','p.page_id')
-			->INNER_JOIN('page')->AS_('p2')
-			->ON('p2.page_title','t.tl_title')
-			->WHERE('p.page_namespace')->EQUAL_TO(NS_MAIN)
-			->AND_('p2.page_namespace')->EQUAL_TO(NS_TEMPLATE)
-			->GROUP_BY('tl_title')
-			->HAVING( 'COUNT(*)' )->GREATER_THAN( 0 )
-			->ORDER_BY('COUNT(*)')->DESC()
+			->SELECT('page_id','page_title')
+			->FROM('page')
+			->WHERE('page_namespace')->EQUAL_TO( NS_TEMPLATE )
 			->runLoop( $db, function ( &$pages, $row ) {
 				$pages[] = [
-					'page_id' => $row->temp_id,
-					'title' => $row->tl_title
+					'page_id' => $row->page_id,
+					'page_title' => $row->page_title
 				];
 			} );
 
@@ -97,5 +88,5 @@ class topTemplatesFromWiki extends Maintenance {
 	}
 }
 
-$maintClass = 'topTemplatesFromWiki';
+$maintClass = 'allTemplatesFromWiki';
 require_once( RUN_MAINTENANCE_IF_MAIN );
