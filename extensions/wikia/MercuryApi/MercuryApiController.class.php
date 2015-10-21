@@ -475,20 +475,12 @@ class MercuryApiController extends WikiaController {
 
 		$articleDetails = $this->getArticleDetails( $article );
 
-		if ( empty( $articleDetails ) ) {
-			throw new WikiaException( 'Article details empty', 500 );
-		}
-
 		$adsContext = $this->mercuryApi->getAdsContext( $mainPageTitle );
-
-		if ( empty( $adsContext ) ) {
-			throw new WikiaException( 'Ads Context empty', 500 );
-		}
 
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
 		$this->response->setVal( 'details', $articleDetails );
-		$this->response->setVal( 'adsContext',  $adsContext );
+		$this->response->setVal( 'adsContext', $adsContext );
 	}
 
 	public static function curatedContentDataMemcKey( $section = null ) {
