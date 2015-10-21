@@ -5231,7 +5231,7 @@ class User {
 			return false;
 		}
 
-		$tokenInfo = $this->getAuthenticationService()->info( $this->getGlobalAuthToken() );
+		$tokenInfo = $this->getAuthenticationService()->info( $token );
 		if ( !empty( $tokenInfo->user_id ) ) {
 			return ( $this->getId() > 0 ) && ( $tokenInfo->user_id == $this->getId() );
 		}
