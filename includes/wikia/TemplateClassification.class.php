@@ -68,7 +68,8 @@ class TemplateClassification {
 
 	/**
 	 * Checks if the template is of the given type.
-
+	 * @param $type One of values from the $templateTypes array
+	 * @return bool
 	 */
 	public function isType( $type ) {
 		if ( !$this->getClassificationProp( $type ) ) {
