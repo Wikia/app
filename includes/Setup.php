@@ -445,6 +445,8 @@ if ( $wgCommandLineMode ) {
 	wfDebug( "$debug\n" );
 }
 
+wfRunHooks('WebRequestInitialized', [ $wgRequest ] );
+
 wfProfileOut( $fname . '-misc1' );
 wfProfileIn( $fname . '-memcached' );
 
