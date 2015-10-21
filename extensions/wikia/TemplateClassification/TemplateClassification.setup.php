@@ -27,3 +27,34 @@ $wgExtensionCredits['other'][] = [
  */
 $wgAutoloadClasses['Wikia\TemplateClassification\Hooks'] = __DIR__ . '/TemplateClassification.hooks.php';
 $wgExtensionFunctions[] = 'Wikia\TemplateClassification\Hooks::register';
+
+/**
+ * UnusedTemplates
+ */
+$wgAutoloadClasses['Wikia\TemplateClassification\UnusedTemplates\Handler'] = __DIR__ . '/UnusedTemplates/UnusedTemplatesHandler.class.php';
+
+/**
+ * Controllers
+ */
+$wgAutoloadClasses['TemplateClassificationController'] = __DIR__ . '/TemplateClassificationController.class.php';
+$wgAutoloadClasses['Wikia\TemplateClassification\Permissions'] = __DIR__ . '/Permissions.class.php';
+
+/**
+ * View
+ */
+$wgAutoloadClasses['Wikia\TemplateClassification\View'] = __DIR__ . '/TemplateClassificationView.php';
+
+/**
+ * Messages
+ */
+$wgExtensionMessagesFiles['TemplateClassification'] = __DIR__ . '/TemplateClassification.i18n.php';
+
+JSMessages::registerPackage( 'TemplateClassificationModal', [
+	'template-classification-edit-modal-*',
+] );
+
+/**
+ * Mock backend
+ */
+$wgAutoloadClasses['TemplateClassificationMockApiController'] = __DIR__ . '/TemplateClassificationMockApiController.class.php';
+$wgAutoloadClasses['TemplateClassificationMockService'] = __DIR__ . '/TemplateClassificationMockService.class.php';

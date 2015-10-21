@@ -31,10 +31,10 @@ class ChatEntryPoint {
 	static public function getEntryPointTemplateVars( $isEntryPoint ) {
 		global $wgEnableWallExt, $wgBlankImgUrl;
 		return [
-			'linkToSpecialChat' => SpecialPage::getTitleFor("Chat")->escapeLocalUrl(),
+			'linkToSpecialChat' => SpecialPage::getTitleFor( "Chat" )->escapeLocalUrl(),
 			'isEntryPoint' => $isEntryPoint,
 			'blankImgUrl' => $wgBlankImgUrl,
-			'profileType' => !empty($wgEnableWallExt) ? 'message-wall' : 'talk-page'
+			'profileType' => !empty( $wgEnableWallExt ) ? 'message-wall' : 'talk-page'
 		];
 	}
 
@@ -57,7 +57,7 @@ class ChatEntryPoint {
 		$html = str_replace( "\n", "", $html );
 
 		wfProfileOut( __METHOD__ );
-		return '<nowiki>'.$html.'</nowiki>';
+		return '<nowiki>' . $html . '</nowiki>';
 	}
 
 	static private function getChatUsersMemcKey() {
@@ -85,7 +85,7 @@ class ChatEntryPoint {
 		global $wgReadOnly;
 		wfProfileIn( __METHOD__ );
 		$chatters = [];
-		if( empty( $wgReadOnly ) ) {
+		if ( empty( $wgReadOnly ) ) {
 			// cache the whole response
 			// individual users are cached anyway, but still we gain performance making just one memcache request instead of several
 			$chatters = WikiaDataAccess::cache( self::getChatUsersMemcKey(), ChatEntryPoint::CHAT_USER_LIST_CACHE, function() {
@@ -93,15 +93,15 @@ class ChatEntryPoint {
 				$chatters = [];
 				// Gets array of users currently in chat to populate rail module and user stats menus
 				$chattersIn = NodeApiClient::getChatters();
-				foreach( $chattersIn as $i => $val ) {
+				foreach ( $chattersIn as $i => $val ) {
 					$chatters[ $i ] = WikiaDataAccess::cache( wfMemcKey( 'chatavatars', $val, 'v2' ), 60 * 60, function() use ( $wgEnableWallExt, $val ) {
 						$chatter = [ 'username' => $val,
-							'avatarUrl' => AvatarService::getAvatarUrl( $val, ChatRailController::AVATAR_SIZE)
+							'avatarUrl' => AvatarService::getAvatarUrl( $val, ChatRailController::AVATAR_SIZE )
 						];
 
 						// get stats for edit count and member since
 						$user = User::newFromName( $val );
-						if( $user instanceof User ) {
+						if ( $user instanceof User ) {
 							$userStatsService = new UserStatsService( $user->getId() );
 							$stats = $userStatsService->getStats();
 
@@ -125,10 +125,10 @@ class ChatEntryPoint {
 							$chatter[ 'contribsUrl' ] = SpecialPage::getTitleFor( 'Contributions', $chatter[ 'username' ] )->getFullURL();
 						}
 						return $chatter;
-					});
+					} );
 				}
 				return $chatters;
-			});
+			} );
 		}
 		wfProfileOut( __METHOD__ );
 		return $chatters;

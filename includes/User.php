@@ -39,7 +39,7 @@ define( 'USER_TOKEN_LENGTH', 32 );
  * Int Serialized record version.
  * @ingroup Constants
  */
-define( 'MW_USER_VERSION', 16 );
+define( 'MW_USER_VERSION', 17 );
 
 /**
  * String Some punctuation to prevent editing from broken text-mangling proxies.
@@ -2391,6 +2391,11 @@ class User {
 		if( $str == $this->mEmail ) {
 			return;
 		}
+
+		/* Wikia change */
+		/* add a new hook that sends both before/after emails @param User, new_email, old_email */
+		wfRunHooks( 'BeforeUserSetEmail', array( $this, $str, $this->mEmail ) );
+
 		$this->mEmail = $str;
 
 		/* Wikia change begin - @author: Macbre */
@@ -5050,9 +5055,7 @@ class User {
 	 * @return bool
 	 */
 	private function shouldOptionBeStored( $key, $value ) {
-		global $wgGlobalUserProperties;
 		if (
-			( is_array( $wgGlobalUserProperties ) && in_array( $key, $wgGlobalUserProperties ) ) ||
 			( is_null( self::getDefaultOption( $key ) ) && !( $value === false || is_null($value) ) ) ||
 			$value != self::getDefaultOption( $key )
 		) {

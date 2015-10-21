@@ -77,7 +77,8 @@
 							controller: 'CategorySelectController',
 							data: {
 								articleId: articleId,
-								categories: $wrapper.data( 'categorySelect' ).getData( '.new' )
+								categories: $wrapper.data( 'categorySelect' ).getData( '.new' ),
+								token: mw.user.tokens.get('editToken')
 							},
 							method: 'save'
 						}).done(function( response ) {
@@ -98,6 +99,10 @@
 									.find( '.input' )
 									.val( '' );
 							}
+						}).fail(function (response) {
+							$container.stopThrobbing();
+
+							throw 'Saving error: ' + response.responseText
 						});
 					}).on( 'update', function() {
 						var modified = $wrapper.find( '.category.new' ).length > 0;

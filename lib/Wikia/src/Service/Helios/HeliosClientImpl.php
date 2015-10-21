@@ -60,6 +60,18 @@ class HeliosClientImpl implements HeliosClient
 		// Request URI pre-processing.
 		$uri = "{$this->baseUri}{$resourceName}?" . http_build_query($getParams);
 
+		// Appending the request remote IP for client to be able to
+		// identify the source of the remote request.
+		if ( isset( $extraRequestOptions['headers'] ) ) {
+			$headers = $extraRequestOptions['headers'];
+			unset( $extraRequestOptions['headers'] );
+		} else {
+			$headers = [];
+		}
+
+		global $wgRequest;
+		$headers['X-Forwarded-For'] = $wgRequest->getIP();
+
 		// Request options pre-processing.
 		$options = [
 			'method'          => 'GET',
@@ -69,6 +81,7 @@ class HeliosClientImpl implements HeliosClient
 			'followRedirects' => false,
 			'returnInstance'  => true,
 			'internalRequest' => true,
+			'headers'         => $headers,
 		];
 
 		$options = array_merge( $options, $extraRequestOptions );

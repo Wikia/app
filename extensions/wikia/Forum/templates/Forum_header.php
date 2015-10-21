@@ -1,5 +1,5 @@
 <header id="WikiaPageHeader" class="WikiaPageHeader">
-	<? if($showStats): ?>
+	<? if ( $showStats ): ?>
 		<div class="header-right">
 			<div class="first tally">
 				<?= wfMessage( 'forum-header-total-threads', $wg->Lang->formatNum( $threads ) )->parse() ?>
