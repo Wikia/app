@@ -126,6 +126,13 @@ class SEOTweaksHooksHelper {
 	 * @param bool $pcache
 	 */
 	static public function onArticleViewHeader( &$article, &$outputDone, &$pcache ) {
+		global $wgEnableCustom404PageExt;
+
+		if ( !empty( $wgEnableCustom404PageExt ) ) {
+			// Custom404Page does the same, just better
+			return true;
+		}
+
 		$title = $article->getTitle();
 		if ( !$title->exists()
 				&& $title->isContentPage()

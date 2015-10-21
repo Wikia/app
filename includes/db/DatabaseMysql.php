@@ -1033,16 +1033,3 @@ class MySQLField implements Field {
 		return $this->binary;
 	}
 }
-
-class MySQLMasterPos implements DBMasterPos {
-	var $file, $pos;
-
-	function __construct( $file, $pos ) {
-		$this->file = $file;
-		$this->pos = $pos;
-	}
-
-	function __toString() {
-		return "{$this->file}/{$this->pos}";
-	}
-}
