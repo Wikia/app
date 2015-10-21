@@ -83,7 +83,7 @@ $signupForm['inputs'][] = [
 $signupForm['inputs'][] = [
 	'type' => 'custom',
 	'class' => 'wikia-terms',
-	'output' => wfMessage('prefs-help-terms')->parse()
+	'output' => wfMessage( 'prefs-help-terms' )->parse()
 ];
 
 $signupForm['submits'] = [

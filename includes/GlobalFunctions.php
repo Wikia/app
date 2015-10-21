@@ -3933,13 +3933,14 @@ function wfMemoryLimit() {
 /**
  * Converts shorthand byte notation to integer form
  *
- * @param $string String
+ * @param string $string
+ * @param int $default Returned if $string is empty
  * @return Integer
  */
-function wfShorthandToInteger( $string = '' ) {
+function wfShorthandToInteger( $string = '', $default = -1 ) {
 	$string = trim( $string );
-	if( $string === '' ) {
-		return -1;
+	if ( $string === '' ) {
+		return $default;
 	}
 	$last = $string[strlen( $string ) - 1];
 	$val = intval( $string );

@@ -1,1 +1,0 @@
-CREATE INDEX /*i*/cr_repo_status_author ON /*_*/code_rev (cr_repo_id, cr_status, cr_author);

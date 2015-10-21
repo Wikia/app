@@ -29,6 +29,7 @@ class TemplateClassification {
 		self::TEMPLATE_INFOBOX,
 		self::TEMPLATE_QUOTE,
 		self::TEMPLATE_NAVBOX,
+		self::TEMPLATE_UNCLASSIFIED,
 	];
 
 	/**

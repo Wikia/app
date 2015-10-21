@@ -31,6 +31,9 @@ class AvatarsMigrator extends Maintenance {
 		$this->addOption( 'dry-run', 'Don\'t perform any operations [default]' );
 		$this->addOption( 'force', 'Perform the migration' );
 
+		$this->addOption( 'from', 'User ID to start the migration from' );
+		$this->addOption( 'to', 'User ID to stop the migration at' );
+
 		$this->mDescription = 'This script migrates the user avatars from DFS to user avatars service';
 	}
 
@@ -44,17 +47,24 @@ class AvatarsMigrator extends Maintenance {
 
 		$this->output( "Getting the list of all accounts...\n" );
 
+		// handle --from and --to options
+		$where = [];
+
+		if ($this->hasOption('from')) $where[] = sprintf( 'user_id >= %d', $this->getOption( 'from' ) );
+		if ($this->hasOption('to'))   $where[] = sprintf( 'user_id <= %d', $this->getOption( 'to' ) );
+
 		// get all accounts
 		$db = $this->getDB( DB_SLAVE );
 
 		$res = $db->select(
 			'`user`',
 			'user_id AS id',
-			[],
+			$where,
 			__METHOD__
 		);
 
 		$rows = $res->numRows();
+		$this->output( "Query: {$db->lastQuery()}\n" );
 		$this->output( "Processing {$rows} users...\n" );
 
 		$this->output( "Will start in 5 seconds...\n" );

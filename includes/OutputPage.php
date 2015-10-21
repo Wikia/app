@@ -823,6 +823,9 @@ class OutputPage extends ContextSource {
 	 * "HTML title" means the contents of <title>.
 	 * It is stored as plain, unescaped text and will be run through htmlspecialchars in the skin file.
 	 *
+	 * Wikia change: the pagetitle message template will be applied (adding " - Name of the wiki"
+	 * in most cases), then the wikia-pagetitle message template will be applied (adding " - Wikia")
+	 *
 	 * @param $name string
 	 */
 	public function setHTMLTitle( $name ) {
@@ -831,7 +834,17 @@ class OutputPage extends ContextSource {
 			$name = $name->setContext( $this->getContext() )->text();
 		}
 
-		$this->mHTMLtitle = wfMessage( 'wikia-pagetitle', $name )->text();
+		// First apply the per-wiki template (editable by communitiess)
+		if ( $this->getTitle()->isMainPage() ) {
+			$title = wfMessage( 'pagetitle-view-mainpage', $name )->inContentLanguage()->text();
+		} else {
+			$title = wfMessage( 'pagetitle', $name )->inContentLanguage()->text();
+		}
+
+		// Now apply Wikia-wide template on top of that
+		$fullTitle = wfMessage( 'wikia-pagetitle', $title )->inContentLanguage()->text();
+
+		$this->mHTMLtitle = $fullTitle;
 		/* Wikia change - end */
 	}
 
@@ -872,7 +885,11 @@ class OutputPage extends ContextSource {
 		$this->mPagetitle = $nameWithTags;
 
 		# change "<i>foo&amp;bar</i>" to "foo&bar"
-		$this->setHTMLTitle( $this->msg( 'pagetitle' )->rawParams( Sanitizer::stripAllTags( $nameWithTags ) ) );
+		# Wikia change - begin
+		#$this->setHTMLTitle( $this->msg( 'pagetitle' )->rawParams( Sanitizer::stripAllTags( $nameWithTags ) ) );
+		# This logic is moved to OutputPage::setHTMLTitle
+		$this->setHTMLTitle( Sanitizer::stripAllTags( $nameWithTags ) );
+		# Wikia change -end
 	}
 
 	/**
@@ -2523,7 +2540,7 @@ $templates
 		if ( $this->getHTMLTitle() == '' ) {
 			# start wikia change
 			wfProfileIn( "parsePageTitle" );
-			$this->setHTMLTitle(  $this->getWikiaPageTitle( $this->getPageTitle() ) );
+			$this->setHTMLTitle(  $this->getPageTitle() );
 			wfProfileOut( "parsePageTitle" );
 			# end wikia change
 			# $this->setHTMLTitle( $this->msg( 'pagetitle', $this->getPageTitle() ) );
@@ -3702,23 +3719,6 @@ $templates
 		$returnval = $this->mRedirectsEnabled;
 		$this->mRedirectsEnabled = $state;
 		return $returnval;
-	}
-
-	/**
-	 * @author Wikia
-	 */
-	public function getWikiaPageTitle( $name ) {
-		$msgPagetitle = wfMsg( 'pagetitle', $name );
-		if( $msgPagetitle == '#wikiapagetitle#' ) {
-			global $wgSitename;
-			if( $name == wfMsgForContent( 'mainpage' ) ) {
-				return $wgSitename;
-			} else {
-				return "$name - $wgSitename";
-			}
-		} else {
-			return $msgPagetitle;
-		}
 	}
 
 	/**

@@ -84,6 +84,19 @@ class ApiQueryUsers extends ApiQueryBase {
 		$users = (array)$params['users'];
 		$goodNames = $done = array();
 		$result = $this->getResult();
+
+		// Wikia change - begin
+		// @see PLATFORM-1561
+		$ids = (array)$params['ids'];
+
+		foreach( $ids as $id ) {
+			$u = User::newFromId( $id );
+			if ( !$u->isAnon() ) { # do not add anons as IP addresses
+				$users[] = $u->getName();
+			}
+		}
+		// Wikia change - end
+
 		// Canonicalize user names
 		foreach ( $users as $u ) {
 			$n = User::getCanonicalName( $u );
@@ -288,6 +301,9 @@ class ApiQueryUsers extends ApiQueryBase {
 			'users' => array(
 				ApiBase::PARAM_ISMULTI => true
 			),
+			'ids' => array(
+				ApiBase::PARAM_ISMULTI => true
+			),
 			'token' => array(
 				ApiBase::PARAM_TYPE => array_keys( $this->getTokenFunctions() ),
 				ApiBase::PARAM_ISMULTI => true
@@ -308,7 +324,8 @@ class ApiQueryUsers extends ApiQueryBase {
 				'  emailable      - Tags if the user can and wants to receive e-mail through [[Special:Emailuser]]',
 				'  gender         - Tags the gender of the user. Returns "male", "female", or "unknown"',
 			),
-			'users' => 'A list of users to obtain the same information for',
+			'users' => 'A list of user names to obtain the same information for',
+			'ids' => 'A list of user IDs to obtain the same information for',
 			'token' => 'Which tokens to obtain for each user',
 		);
 	}
@@ -318,7 +335,10 @@ class ApiQueryUsers extends ApiQueryBase {
 	}
 
 	public function getExamples() {
-		return 'api.php?action=query&list=users&ususers=brion|TimStarling&usprop=groups|editcount|gender';
+		return [
+			'api.php?action=query&list=users&ususers=brion|TimStarling&usprop=groups|editcount|gender',
+			'api.php?action=query&list=users&usids=1|2&usprop=groups|editcount|gender',
+		];
 	}
 
 	public function getHelpUrls() {

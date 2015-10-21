@@ -439,6 +439,7 @@ $wgHooks['WikiaSkinTopScripts'][] = 'WikiFactoryHubHooks::onWikiaSkinTopScripts'
 $wgHooks['Debug'][] = 'Wikia\\Logger\\Hooks::onDebug';
 $wgHooks['WikiFactory::execute'][] = 'Wikia\\Logger\\Hooks::onWikiFactoryExecute';
 $wgHooks['WikiFactory::onExecuteComplete'][] = 'Wikia\\Logger\\Hooks::onWikiFactoryExecuteComplete';
+$wgHooks['WebRequestInitialized'][] = 'Wikia\\Logger\\Hooks::onWebRequestInitialized';
 
 // memcache stats (PLATFORM-292)
 $wgAutoloadClasses['Wikia\\Memcached\\MemcachedStats'] = "$IP/includes/wikia/memcached/MemcachedStats.class.php";
@@ -1004,11 +1005,6 @@ $wgMemCachedConnectionTimeout = 0.5; // connection timeout in seconds
 
 $wgAssetsManagerQuery = '/__am/%4$d/%1$s/%3$s/%2$s';
 //$wgAssetsManagerQuery = '/index.php?action=ajax&rs=AssetsManagerEntryPoint&__am&type=%1$s&cb=%4$d&params=%3$s&oid=%2$s';
-
-/**
- * global user_options
- */
-$wgGlobalUserProperties = array('language');
 
 /**
  * debug level for memcached
@@ -1804,14 +1800,7 @@ $wgAdDriverIncontentPlayerSlotCountries = null;
  * manage a user's preferences externally
  */
 $wgPreferenceServiceRead = false;
-$wgPreferenceServiceShadowWrite = true && $wgWikiaDatacenter != WIKIA_DC_RES;
-
-/**
- * @name $wgEnableRobotsTxtExt
- *
- * Enables extension that generates robots.txt
- */
-$wgEnableRobotsTxtExt = true;
+$wgPreferenceServiceWrite = true;
 
 /**
  * @name $wgEnableFliteTagExt
@@ -1821,6 +1810,20 @@ $wgEnableRobotsTxtExt = true;
 $wgEnableFliteTagExt = false;
 
 // SEO-related variables start (keep them sorted)
+
+/**
+ * @name $wgEnableCustom404PageExt
+ *
+ * Enables custom 404 page for missing articles suggesting the closest matching article
+ */
+$wgEnableCustom404PageExt = false;
+
+/**
+ * @name $wgEnableRobotsTxtExt
+ *
+ * Enables extension that generates robots.txt
+ */
+$wgEnableRobotsTxtExt = true;
 
 /**
  * @name $wgEnableSeoLinkHreflangExt
@@ -1869,3 +1872,8 @@ $wgSeoTestingExperiments = [];
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverAdsRecoveryMessageCountries = null;
+
+/**
+ * Protect Piggyback logs even if the extension is disabled
+ */
+$wgLogRestrictions['piggyback'] = 'piggyback';

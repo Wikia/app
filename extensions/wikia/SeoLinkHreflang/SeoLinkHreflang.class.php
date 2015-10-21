@@ -16,20 +16,21 @@ class SeoLinkHreflang {
 	const SEO_LINK_SECTION_END = '<!-- Alternate languages end -->';
 
 	/**
-	 * Get link to a matching article on Japanese Star Wars wiki
-	 * Based on static mapping in starwars_en_ja_mapping.php
+	 * Link based on static array supplied in $mapping param
 	 *
 	 * @param OutputPage $out
+	 * @param array $mapping (keys used: langTo, urlPrefix and mapping)
 	 * @return array (key: lang, value: url)
 	 */
-	private static function getStarWarsLinks( OutputPage $out ) {
+	private static function getStaticMappingLinks( OutputPage $out, $mapping ) {
+		$articleMapping = $mapping[ 'mapping' ];
+		$langTo = $mapping[ 'langTo' ];
+		$urlPrefix = $mapping[ 'urlPrefix' ];
+
 		$dbKey = $out->getTitle()->getDBkey();
 
-		$mapping = require __DIR__ . '/starwars_en_ja_mapping.php';
-
-		if ( !empty( $mapping[ $dbKey ] ) ) {
-			$url = 'http://ja.starwars.wikia.com/wiki/' . $mapping[ $dbKey ];
-			return [ 'ja' => $url ];
+		if ( !empty( $articleMapping[ $dbKey ] ) ) {
+			return [ $langTo => $urlPrefix . $articleMapping[ $dbKey ] ];
 		}
 
 		return [];
@@ -76,8 +77,9 @@ class SeoLinkHreflang {
 
 		$links = [];
 
-		if ( $wgDBname === 'starwars' ) {
-			$links = self::getStarWarsLinks( $out );
+		if ( $wgDBname === 'starwars' || $wgDBname === 'jastarwars' ) {
+			$mapping = require( __DIR__ . '/starwars_mapping.php' );
+			$links = self::getStaticMappingLinks( $out, $mapping[ $wgDBname ] );
 		} else if ( $out->getTitle()->isMainPage() ) {
 			$links = self::getMainPageLinks( $_SERVER['HTTP_HOST'] );
 		}

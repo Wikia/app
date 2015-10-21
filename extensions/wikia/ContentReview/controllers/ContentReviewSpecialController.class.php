@@ -72,43 +72,46 @@ class ContentReviewSpecialController extends WikiaSpecialPageController {
 
 		foreach ( $reviewsRaw as $review ) {
 			$title = GlobalTitle::newFromID( $review['page_id'], $review['wiki_id'] );
-			$wiki = WikiFactory::getWikiByID( $review['wiki_id'] );
 
-			$review['url'] = $title->getFullURL( [
-				'oldid' => $review['revision_id'],
-			] );
-			$review['title'] = $title->getText();
-			$review['wiki'] = $wiki->city_title;
-			$review['wikiArchiveUrl'] = $this->getContext()->getTitle()->getFullURL( [
-				self::PAR => $review['wiki_id'],
-			] );
+			if ( !is_null( $title ) ) {
+				$wiki = WikiFactory::getWikiByID( $review['wiki_id'] );
 
-			$review['user'] = User::newFromId( $review['submit_user_id'] )->getName();
-			$review['diff'] = $title->getFullURL( [
-				'diff' => $review['revision_id'],
-				'oldid' => $review['reviewed_id'],
-				Helper::CONTENT_REVIEW_PARAM => 1,
-			] );
-			$review['diffText'] = $review['status'] == ReviewModel::CONTENT_REVIEW_STATUS_UNREVIEWED
-				? wfMessage( 'content-review-special-start-review' )->escaped()
-				: wfMessage( 'content-review-special-continue-review' )->escaped();
+				$review['url'] = $title->getFullURL( [
+					'oldid' => $review['revision_id'],
+				] );
+				$review['title'] = $title->getText();
+				$review['wiki'] = $wiki->city_title;
+				$review['wikiArchiveUrl'] = $this->getContext()->getTitle()->getFullURL( [
+					self::PAR => $review['wiki_id'],
+				] );
 
-			if ( !empty( $review['review_user_id'] ) ) {
-				$review['review_user_name'] = User::newFromId( $review['review_user_id'] )->getName();
+				$review['user'] = User::newFromId( $review['submit_user_id'] )->getName();
+				$review['diff'] = $title->getFullURL( [
+					'diff' => $review['revision_id'],
+					'oldid' => $review['reviewed_id'],
+					Helper::CONTENT_REVIEW_PARAM => 1,
+				] );
+				$review['diffText'] = $review['status'] == ReviewModel::CONTENT_REVIEW_STATUS_UNREVIEWED
+					? wfMessage( 'content-review-special-start-review' )->escaped()
+					: wfMessage( 'content-review-special-continue-review' )->escaped();
+
+				if ( !empty( $review['review_user_id'] ) ) {
+					$review['review_user_name'] = User::newFromId( $review['review_user_id'] )->getName();
+				}
+
+				$reviewKey = implode( ':', [
+					$review['wiki_id'],
+					$review['page_id'],
+					ReviewModel::CONTENT_REVIEW_STATUS_IN_REVIEW
+				] );
+				if ( $review['status'] == ReviewModel::CONTENT_REVIEW_STATUS_UNREVIEWED
+					&& isset( $reviewsRaw[$reviewKey] )
+				) {
+					$review['hide'] = true;
+				}
+
+				$reviews[$review['wiki_id']][] = $review;
 			}
-
-			$reviewKey = implode( ':', [
-				$review['wiki_id'],
-				$review['page_id'],
-				ReviewModel::CONTENT_REVIEW_STATUS_IN_REVIEW
-			] );
-			if ( $review['status'] == ReviewModel::CONTENT_REVIEW_STATUS_UNREVIEWED
-				&& isset( $reviewsRaw[$reviewKey] )
-			) {
-				$review['hide'] = true;
-			}
-
-			$reviews[$review['wiki_id']][] = $review;
 		}
 
 		return $reviews;
@@ -120,34 +123,36 @@ class ContentReviewSpecialController extends WikiaSpecialPageController {
 		foreach ( $reviewsRaw as $review ) {
 			$title = GlobalTitle::newFromID( $review['page_id'], $review['wiki_id'] );
 
-			$review['title'] = $title->getText();
-			$review['diff'] = $title->getFullURL( [
-				'oldid' => $review['revision_id']
-			] );
-
-			if ( !empty( $review['review_user_id'] ) ) {
-				$review['review_user_name'] = User::newFromId( $review['review_user_id'] )->getName();
-			}
-
-			if ( $review['revision_id'] == $reviewed[$review['page_id']]['revision_id'] ) {
-				$review['status'] = 'live';
-			}
-
-			if ( $review['status'] == ReviewModel::CONTENT_REVIEW_STATUS_APPROVED
-				|| $review['status'] == ReviewModel::CONTENT_REVIEW_STATUS_AUTOAPPROVED
-			) {
-				$review['restore'] = true;
-				$review['restoreUrl'] = $title->getFullURL( [
-					'oldid' => $review['revision_id'],
-					'action' => 'edit',
-					'summary' => wfMessage( 'content-review-restore-summary' )
-						->inLanguage( $title->getPageLanguage() )
-						->params( $review['revision_id'] )
-						->escaped(),
+			if ( !is_null( $title ) ) {
+				$review['title'] = $title->getText();
+				$review['diff'] = $title->getFullURL( [
+					'oldid' => $review['revision_id']
 				] );
-			}
 
-			$reviews[$review['page_id']][] = $review;
+				if ( !empty( $review['review_user_id'] ) ) {
+					$review['review_user_name'] = User::newFromId( $review['review_user_id'] )->getName();
+				}
+
+				if ( $review['revision_id'] == $reviewed[$review['page_id']]['revision_id'] ) {
+					$review['status'] = 'live';
+				}
+
+				if ( $review['status'] == ReviewModel::CONTENT_REVIEW_STATUS_APPROVED
+					|| $review['status'] == ReviewModel::CONTENT_REVIEW_STATUS_AUTOAPPROVED
+				) {
+					$review['restore'] = true;
+					$review['restoreUrl'] = $title->getFullURL( [
+						'oldid' => $review['revision_id'],
+						'action' => 'edit',
+						'summary' => wfMessage( 'content-review-restore-summary' )
+							->inLanguage( $title->getPageLanguage() )
+							->params( $review['revision_id'] )
+							->escaped(),
+					] );
+				}
+
+				$reviews[$review['page_id']][] = $review;
+			}
 		}
 
 		return $reviews;

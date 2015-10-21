@@ -38,7 +38,6 @@ $wgExtensionCredits['other'][] =
  * classes
  */
 $wgAutoloadClasses['AbTesting'] = "{$dir}/AbTesting.class.php";
-$wgAutoloadClasses['AbExperiment'] = "{$dir}/AbTesting.class.php";
 $wgAutoloadClasses['AbTestingData'] = "{$dir}/AbTestingData.class.php";
 $wgAutoloadClasses['ResourceLoaderAbTestingModule'] = "{$dir}/ResourceLoaderAbTestingModule.class.php";
 $wgAutoloadClasses['SpecialAbTestingController'] = "{$dir}/SpecialAbTestingController.class.php";

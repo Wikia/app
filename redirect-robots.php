@@ -9,10 +9,11 @@ define( 'MW_NO_SETUP', 1 );
 require_once( dirname(__FILE__) . '/includes/WebStart.php' );
 require_once( dirname(__FILE__) . '/includes/Setup.php' );
 
-if ( !empty( $wgEnableRobotsTxtExt ) ) {
-	require( __DIR__ . '/wikia-robots-txt.php' );
-	exit;
-}
+// SEO-98 Roll back to the old robots, cannot do from WikiFactory, because it's locked
+//if ( !empty( $wgEnableRobotsTxtExt ) ) {
+//	require( __DIR__ . '/wikia-robots-txt.php' );
+//	exit;
+//}
 
 require_once( dirname(__FILE__) . '/includes/StreamFile.php' );
 require_once( dirname(__FILE__) . '/includes/SpecialPage.php' );

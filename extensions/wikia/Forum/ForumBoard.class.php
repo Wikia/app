@@ -1,6 +1,6 @@
 <?php
 
-//TODO: move this to wall class php ??
+// TODO: move this to wall class php ??
 
 /**
  * Forum Board
@@ -16,7 +16,7 @@ class ForumBoard extends Wall {
 	 * get board info: the number of threads, the number of posts, the username and timestamp of the last post
 	 * @return array $info
 	 */
-	public function getBoardInfo($db = DB_SLAVE) {
+	public function getBoardInfo( $db = DB_SLAVE ) {
 		wfProfileIn( __METHOD__ );
 
 		$memKey = wfMemcKey( 'forum_board_info', $this->getId() );
@@ -74,10 +74,10 @@ class ForumBoard extends Wall {
 	 * get number of active threads (exclude deleted and removed threads)
 	 * @return integer activeThreads
 	 */
-	public function getTotalActiveThreads($relatedPageId = 0, $db = DB_SLAVE) {
+	public function getTotalActiveThreads( $relatedPageId = 0, $db = DB_SLAVE ) {
 		wfProfileIn( __METHOD__ );
 
-		if(empty($relatedPageId)) {
+		if ( empty( $relatedPageId ) ) {
 			$memKey = wfMemcKey( 'forum_board_active_threads', $this->getId() );
 
 			if ( $db == DB_SLAVE ) {
@@ -91,7 +91,7 @@ class ForumBoard extends Wall {
 			if ( !empty( $relatedPageId ) ) {
 				$filter = "comment_id in (select comment_id from wall_related_pages where page_id = {$relatedPageId})";
 			} else {
-				$filter = 'parent_page_id =' . ((int)$this->getId());
+				$filter = 'parent_page_id =' . ( (int)$this->getId() );
 			}
 
 			$activeThreads = $db->selectField(
@@ -107,7 +107,7 @@ class ForumBoard extends Wall {
 			);
 
 			$activeThreads = intval( $activeThreads );
-			if(empty($relatedPageId)) {
+			if ( empty( $relatedPageId ) ) {
 				$this->wg->Memc->set( $memKey, $activeThreads, 60 * 60 * 12 );
 			}
 		}

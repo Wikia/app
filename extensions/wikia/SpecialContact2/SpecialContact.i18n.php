@@ -38,6 +38,7 @@ Follow the links below to learn more about how to use Wikia, make changes to you
 		'specialcontact-seclink-feedback' => "I want to offer some feedback",
 		'specialcontact-seclink-bug' => "I think I found a bug",
 		'specialcontact-seclink-bad-ad' => "I see a broken or inappropriate ad",
+		'specialcontact-seclink-security' => 'I think I found a security issue',
 
 	'specialcontact-secheader-setting' => "Changes to this wikia",
 		'specialcontact-seclink-wiki-name-change' => "Sitename or URL",
@@ -61,6 +62,7 @@ Follow the links below to learn more about how to use Wikia, make changes to you
 		'specialcontact-sectitle-feedback' => "Feedback",
 		'specialcontact-sectitle-bug' => "Bug Report",
 		'specialcontact-sectitle-bad-ad' => "Ad report",
+		'specialcontact-sectitle-security' => 'Security issue report',
 
 		'specialcontact-sectitle-wiki-name-change' => "Wikia name change",
 		'specialcontact-sectitle-design' => "Wikia design",
@@ -176,6 +178,30 @@ Happy editing!",
 If you prefer to use regular e-mail or have multiple attachments, you can contact us at [mailto:community@wikia.com community@wikia.com].
 ",
 
+	'specialcontact-intro-security' => "If you have found or believe you have found a security issue in Wikia's code or on one of Wikia's communities, please let us know. We appreciate your help in keeping Wikia safe for everyone by disclosing it to us in a [[wikipedia:Responsible disclosure|responsible manner]].
+
+If you are looking to report a general bug or another type of issue, please use one of the [[Special:Contact|other contact forms]].
+
+When performing security testing, you must:
+
+* Not compromise the availability of the site
+* Not compromise the security or privacy of other users' data
+* Be non-destructive and non-disruptive
+
+When reporting a security issue, please provide full details of the issue including:
+
+* Full steps to reproduce the vulnerability (including a Proof-of-Concept URL if appropriate)
+* Please indicate if you are logged in or logged out when the issue occurs
+* Your browser information including type and version
+** Particularly for XSS or vulnerabilities that require a specific browser or plugin to reproduce
+* A short description of the vulnerability's potential security impact
+
+In response to security reports using this form, Wikia will:
+* Prioritize the reproduction and confirmation of any reported vulnerability
+* Identify a reasonable timeline to patch any confirmed vulnerability
+* Not pursue legal action against any reporter who complies with all of the guidelines for testing and reporting security issues
+",
+
 	/* non-form footer */
 	'specialcontact-noform-footer' => "'''Does this page answer your question?''' If not, please feel free to [[Special:contact/general|contact us]] to discuss your issue further. Remember you can always check out our '''[[w:c:community:Help:Index|help pages]]''', [[w:c:community:Blog:Wikia_Staff_Blog|staff blog]]  or post on our '''[[w:c:community:Special:Forum|community help forums]]'''. If you are looking for admin help and advice, stop by [[w:c:community:Admin_Central:Main_Page|Founder & Admin Central]].",
 
@@ -213,6 +239,26 @@ If you prefer to use regular e-mail or have multiple attachments, you can contac
 	'specialcontact-logged-in-as' => 'You are logged in as $1. [[Special:UserLogout|Not you?]]',
 	'specialcontact-mail-on-file' => 'Your e-mail is set to $1. [[Special:Preferences|Do you wish to change it?]]',
 
+	'specialcontact-label-security-type' => 'Type of security issue if known',
+	'specialcontact-label-security-link' => 'Link to where the issue can be found',
+	'specialcontact-label-security-description' => 'Please describe the security issue including steps to reproduce',
+	'specialcontact-default-security-description' => 'Description:
+
+Reproduction steps:
+  1.
+  2.
+  3.
+
+Browser/OS: ',
+
+	'specialcontact-security-issue-type-xss' => 'Cross-Site Scripting (XSS)',
+	'specialcontact-security-issue-type-csrf' => 'Cross-Site Request Forgery (CSRF)',
+	'specialcontact-security-issue-type-sqli' => 'SQL injection',
+	'specialcontact-security-issue-type-auth' => 'Authentication/Authorization issues',
+	'specialcontact-security-issue-type-leak' => 'Information Leakage',
+	'specialcontact-security-issue-type-redirect' => 'URL Redirection Abuse',
+	'specialcontact-security-issue-type-other' => 'Other',
+
 	/* errors */
 	'specialcontact-nomessage' => 'Please fill in a message',
 	'specialcontact-captchafail' =>	'Incorrect or missing confirmation code.',
@@ -234,6 +280,20 @@ Remember, you can also find help in our [[w:c:community:Special:Forum|Community 
 
 $messages['qqq'] = array(
 	'specialcontact-seclink-dmca-request' => 'Link text for copyright complaints.',
+	'specialcontact-seclink-security' => 'Link text for reporting security issues.',
+	'specialcontact-sectitle-security' => 'Title of the form for reporting security issues.',
+	'specialcontact-intro-security' => 'Introductory text for the security issue report form, including responsible disclosure guidelines.',
+	'specialcontact-label-security-type' => 'Label for the type of security issue being reported.',
+	'specialcontact-label-security-link' => 'Label for the input for the URL to where the security issue can be reproduced.',
+	'specialcontact-label-security-description' => 'Label for the text area for providing the description of the security issue.',
+	'specialcontact-default-security-description' => 'Default text placed in the text area for providing the description of the security issue.',
+	'specialcontact-security-issue-type-xss' => 'Text of an option for selecting the type of security issue being reported.',
+	'specialcontact-security-issue-type-csrf' => 'Text of an option for selecting the type of security issue being reported.',
+	'specialcontact-security-issue-type-sqli' => 'Text of an option for selecting the type of security issue being reported.',
+	'specialcontact-security-issue-type-auth' => 'Text of an option for selecting the type of security issue being reported.',
+	'specialcontact-security-issue-type-leak' => 'Text of an option for selecting the type of security issue being reported.',
+	'specialcontact-security-issue-type-redirect' => 'Text of an option for selecting the type of security issue being reported.',
+	'specialcontact-security-issue-type-other' => 'Text of an option for selecting the type of security issue being reported.',
 );
 
 $messages['de'] = array(
@@ -437,6 +497,51 @@ Falls ihr lieber eine E-Mail schicken wollt, dann schreibt uns an [mailto:commun
 	'specialcontact-submitcomplete' => "Danke, dass du Wikia kontaktiert hast. Wir haben alle hier angegebenen Informationen bekommen. Wir werden unser bestes tun, um innerhalb von 2 Arbeitstagen auf deine Nachricht zu antworten. Wir bitten um Geduld.
 
 Vergiss nicht, du kannst dir jederzeit die '''[[w:c:de.community:Hilfe:Übersicht|Hilfeseiten]]''' ansehen, den [[w:c:community:Blog:Wikia_Staff_Blog|Wikia-Blog]] lesen oder in unseren '''[[w:c:de.community:Spezial:Forum|Foren]]''' posten.",
+
+	'specialcontact-seclink-security' => 'Ich glaube, ich habe ein Sicherheitsproblem entdeckt',
+	'specialcontact-seclink-dmca-request' => 'Ich habe eine Urheberrechtsbeschwerde',
+	'specialcontact-sectitle-security' => 'Bericht über Sicherheitsproblem',
+	'specialcontact-intro-security' => 'Wenn du im Code von Wikia oder in einer der Wikia-Communitys ein Sicherheitsproblem entdeckt hast oder vermutest, eines entdeckt zu haben, teile uns dies bitte mit. Wir wissen es sehr zu schätzen, dass du uns dabei hilfst, die Benutzung von Wikia für jeden sicher zu machen, indem du uns dies auf [[wikipedia:Responsible disclosure|verantwortungsvolle Weise]] mitteilst.
+
+Wenn du einen allgemeinen Bug oder eine andere Art von Problem melden möchtest, verwende bitte das [[Special:Contact|normale Kontaktformular]].
+
+Bei der Durchführung eines Sicherheitstests darfst du:
+
+* die Erreichbarkeit der Site nicht aufs Spiel setzen
+* die Sicherheit oder den Schutz der Daten anderer Benutzer nicht gefährden
+* der Site nicht schaden und nichts zerstören
+
+Bitte achte darauf, dass du bei der Meldung eines Sicherheitsproblems das Problem detailliert beschreibst. Die Beschreibung sollte folgende Punkte beinhalten:
+
+* Alle Schritte zur Reproduktion der Schwachstelle (einschließlich einer URL, die das Konzept falls möglich bestätigt)
+* Bitte gib an, ob du eingeloggt bist, wenn das Problem auftritt
+* Deine Browserdaten, einschließlich Browserart und Version
+** Besonders mit XSS oder bei Schwachstellen, bei denen ein bestimmter Browser oder ein bestimmtes Plugin zur Reproduktion benötigt werden
+* Eine kurze Beschreibung der möglichen Sicherheitsauswirkungen, die durch diese Schwachstelle entstehen
+
+Wenn ein Sicherheitsbericht über dieses Formular abgeschickt wird, unternimmt Wikia Folgendes:
+* Priorisierung der Reproduktion und Bestätigung der berichteten Schwachstelle
+* Festlegung eines angemessenen Zeitrahmens für die Beseitigung der Schwachstelle
+* Keine Einleitung rechtlicher Schritte gegen Personen, die Bericht erstatten und sich an die Test- und Meldungsrichtlinien bei Sicherheitsproblemen halten
+',
+	'specialcontact-label-security-type' => 'Art des Sicherheitsproblems, falls bekannt',
+	'specialcontact-label-security-link' => 'Link zu der Stelle, an der das Problem auftritt',
+	'specialcontact-label-security-description' => 'Beschreibe bitte das Sicherheitsproblem sowie die einzelnen Schritte, über die es reproduziert werden kann.',
+	'specialcontact-default-security-description' => 'Beschreibung:
+
+Schritte zur Reproduktion:
+  1.
+  2.
+  3.
+
+Browser/OS: ',
+	'specialcontact-security-issue-type-xss' => 'Cross-Site-Scripting (XSS)',
+	'specialcontact-security-issue-type-csrf' => 'Cross-Site-Request-Forgery (CSRF)',
+	'specialcontact-security-issue-type-sqli' => 'SQL-Injection',
+	'specialcontact-security-issue-type-auth' => 'Authentifizierungs-/Autorisierungsfragen',
+	'specialcontact-security-issue-type-leak' => 'Datenleck',
+	'specialcontact-security-issue-type-redirect' => 'Missbrauch von Domainweiterleitungen',
+	'specialcontact-security-issue-type-other' => 'Andere',
 );
 
 $messages['es'] = array(
@@ -655,6 +760,140 @@ Si prefieres usar un email o adjuntar archivos, puedes contactar con nosotros en
 	'specialcontact-submitcomplete' => 'Gracias por contactar con Wikia. Recibimos y revisamos todos los mensajes que se envían por aquí. En los próximos 2 o 3 días laborables recibirás una respuesta, por favor sé paciente mientras nos encargamos de todos los mensajes que recibimos.
 
 Recuerda que puedes encontrar ayuda también en nuestro [[w:c:comunidad:Foro:Índice|foro]] de la comunidad de Wikia en español o en nuestro [[w:c:ayuda|wikia de ayuda]]. Y por supuesto si quieres mantenerte al día con las últimas novedades, sigue nuestro [http://es.wikia.com/wiki/Blog:Noticias_de_Wikia?action=watch blog de noticias]. ¡Diviértete!',
+
+	'specialcontact-seclink-security' => 'Creo que he encontrado un problema de seguridad',
+	'specialcontact-seclink-dmca-request' => 'Tengo una queja sobre derechos de autor',
+	'specialcontact-sectitle-security' => 'Informe de problemas de seguridad',
+	'specialcontact-intro-security' => 'Si has encontrado o crees que has encontrado un problema de seguridad en el código de Wikia o en una de las comunidades de Wikia, por favor avísanos. Apreciamos tu ayuda en mantener a salvo a Wikia para todos al revelarlo de una [[wikipedia:Responsible disclosure|manera responsable]].
+
+Si quieres informar de un error general u otro tipo de problema, por favor utiliza una de las [[Special:Contact|otras formas de contacto]].
+
+Al realizar pruebas de seguridad, debes:
+
+* No comprometer la disponibilidad del sitio
+* No comprometer la seguridad o la privacidad de los datos de otros usuarios
+* No ser destructivo y no ser disruptivo
+
+Al informar de un problema de seguridad, por favor proporciona todos los detalles del problema, incluyendo:
+* Pasos completos para reproducir la vulnerabilidad (incluyendo una URL de prueba de concepto si es apropiado)
+* Indicar si te encuentras conectado o sin conectar cuando el problema ocurre
+* La información de tu navegador, incluyendo el tipo y versión
+** Particularmente para XSS o vulnerabilidades que requieren de un navegador específico o un plugin para reproducir
+* Una breve descripción del impacto potencial de la vulnerabilidad sobre la seguridad
+
+En respuesta a informes de seguridad usando este formulario, Wikia:
+* Dará prioridad a la reproducción y la confirmación de cualquier vulnerabilidad divulgada
+* Determinará un calendario razonable para arreglar cualquier vulnerabilidad confirmada
+* No tomará acciones legales contra cualquier persona que reporte y que cumpla con todas las pautas para el análisis y registro de problemas de seguridad
+',
+	'specialcontact-label-security-type' => 'Tipo de problema de seguridad, si es conocido',
+	'specialcontact-label-security-link' => 'Enlace donde se encuentra el problema',
+	'specialcontact-label-security-description' => 'Por favor describe el problema de seguridad, incluyendo pasos para reproducir',
+	'specialcontact-default-security-description' => 'Descripción:
+
+Pasos de reproducción:
+  1.
+  2.
+  3.
+
+Navegador/sistema operativo: ',
+	'specialcontact-security-issue-type-xss' => 'Cross-Site Scripting (XSS)',
+	'specialcontact-security-issue-type-csrf' => 'Falsificación de petición de Cross-Site (CSRF)',
+	'specialcontact-security-issue-type-sqli' => 'Inyección SQL',
+	'specialcontact-security-issue-type-auth' => 'Problemas de autenticación y autorización',
+	'specialcontact-security-issue-type-leak' => 'Fuga de información',
+	'specialcontact-security-issue-type-redirect' => 'Abuso de redirección de URL',
+	'specialcontact-security-issue-type-other' => 'Otro',
+);
+
+$messages['fr'] = array(
+	'specialcontact-seclink-security' => 'Je pense avoir trouvé un problème de sécurité',
+	'specialcontact-seclink-dmca-request' => "Je souhaite déclarer une atteinte au droit d'auteur",
+	'specialcontact-sectitle-security' => 'Signaler un problème de sécurité',
+	'specialcontact-intro-security' => "Si vous trouvez ou pensez avoir trouvé un problème de sécurité dans le code de Wikia ou l'une des communautés de Wikia, veuillez nous en informer. Nous vous remercions de nous aider à assurer la protection du site Wikia en nous signalant les problèmes de sécurité [[wikipedia:Responsible disclosure|de façon responsable]].
+
+Si vous souhaitez nous informer d'un bug général ou d'un autre type de problème, veuillez utiliser l'un des autres [[Special:Contact|formulaires de contact]].
+
+Les instructions suivantes doivent être observées lorsque vous testez la sécurité :
+
+* Ne pas compromettre la disponibilité du site
+* Ne pas compromettre la sécurité ou la confidentialité des données d'un autre utilisateur
+* Ne rien détruire ni perturber
+
+Merci de fournir les détails complets du problème de sécurité, dont ce qui suit :
+
+* Toutes les étapes permettant de reproduire la vulnérabilité (y compris une URL Proof-of-Concept, le cas échéant)
+* Si vous êtes connecté ou non lorsque le problème survient
+* Les informations de votre navigateur (dont le type et la version)
+** En particulier en cas de XSS ou de vulnérabilités survenant avec un navigateur ou plug-in spécifique
+* Une brève description de l'impact potentiel de la vulnérabilité sur la sécurité
+
+Wikia traitera les problèmes de sécurité signalés via ce formulaire comme suit :
+* La priorité sera donnée à la reproduction et à la confirmation des vulnérabilités.
+* Un temps de résolution raisonnable sera déterminé pour les vulnérabilités avérées.
+* Aucune poursuite en justice ne sera engagée envers les personnes ayant respecté toutes les instructions de test et de signalement des problèmes de sécurité.
+",
+	'specialcontact-label-security-type' => "Type de problème de sécurité (s'il est connu)",
+	'specialcontact-label-security-link' => 'Lien vers le lieu où le problème se produit',
+	'specialcontact-label-security-description' => 'Veuillez décrire le problème de sécurité ainsi que les étapes de reproduction :',
+	'specialcontact-default-security-description' => "Description :
+
+Étapes de reproduction :
+  1.
+  2.
+  3.
+
+Navigateur/Système d'exploitation : ",
+	'specialcontact-security-issue-type-xss' => 'Cross-Site Scripting (XSS)',
+	'specialcontact-security-issue-type-csrf' => 'Cross-Site Request Forgery (CSRF)',
+	'specialcontact-security-issue-type-sqli' => 'Injection SQL',
+	'specialcontact-security-issue-type-auth' => "Problèmes d'authentification/autorisation",
+	'specialcontact-security-issue-type-leak' => "Fuite d'informations",
+	'specialcontact-security-issue-type-redirect' => "Abus de redirection d'URL",
+	'specialcontact-security-issue-type-other' => 'Autre',
+);
+
+$messages['it'] = array(
+	'specialcontact-seclink-security' => 'Penso di aver trovato un problema di sicurezza',
+	'specialcontact-seclink-dmca-request' => 'Ho un reclamo sul copyright',
+	'specialcontact-sectitle-security' => 'Rapporto sul problema di sicurezza',
+	'specialcontact-intro-security' => "Se hai trovato o credi di aver trovato un problema di sicurezza nel codice di Wikia o in una delle comunità di Wikia, faccelo sapere. Apprezziamo il tuo aiuto nel mantenere Wikia un sito sicuro per tutti riportandolo in [[wikipedia:Responsible disclosure|maniera responsible]]. Se vuoi per segnalare un bug generale o un altro tipo di problema, sei pregato di utilizzare una delle [[Special: Contact|altre forme di contatto]]. Quando si esegue il test di sicurezza, è necessario:
+
+* non compromettere la disponibilità del sito
+* non compromettere la sicurezza o la privacy dei dati degli altri utenti
+* non essere invadenti o distruttivi
+
+Nel segnalare un problema di sicurezza, sei pregato di fornire tutti i dettagli sulla questione, tra cui:
+
+* la procedura completa per riprodurre la vulnerabilità (compreso un URL di Proof-of-Concept, se appropriato)
+* indicare se sei loggato o se hai eseguito il logout quando si verifica il problema
+* informazioni tra cui il tipo e la versione del tuo browser
+** Specialmente per XSS o vulnerabilità che richiedono un browser specifico o plugin per la riproduzione * Una breve descrizione dell'impatto potenziale sulla sicurezza della vulnerabilità riscontrata
+
+In risposta ai rapporti di sicurezza utilizzando questo modulo, Wikia:
+
+* darà la priorità alla riproduzione e conferma di ogni vulnerabilità segnalata
+* identificherà una tempistica ragionevole per correggere le vulnerabilità confermate
+* non intraprenderà un'azione legale contro l'autore della segnalazione che ha agito in conformità a tutte le linee guida per il testing e la segnalazione di problemi di sicurezza
+",
+	'specialcontact-label-security-type' => 'Tipo di problema di sicurezza, se noto',
+	'specialcontact-label-security-link' => 'Link per riprodurre il problema',
+	'specialcontact-label-security-description' => 'Descrivi il problema di sicurezza riscontrato, compresi i passaggi da riprodurre',
+	'specialcontact-default-security-description' => 'Descrizione:
+
+Passaggi per la riproduzione:
+  1.
+  2.
+  3.
+
+Browser/OS: ',
+	'specialcontact-security-issue-type-xss' => 'Cross-Site Scripting (XSS)',
+	'specialcontact-security-issue-type-csrf' => 'Richiesta intersito falsa (Cross-Site Request Forgery, CSRF)',
+	'specialcontact-security-issue-type-sqli' => 'SQL injection',
+	'specialcontact-security-issue-type-auth' => 'Problemi di autenticazione/autorizzazione',
+	'specialcontact-security-issue-type-leak' => 'Perdita di informazioni',
+	'specialcontact-security-issue-type-redirect' => 'Abuso di reindirizzamento URL',
+	'specialcontact-security-issue-type-other' => 'Altro',
 );
 
 $messages['ja'] = array(
@@ -865,6 +1104,145 @@ $messages['ja'] = array(
 	/* after */
 	'specialcontact-submitcomplete' => 'ウィキアにご連絡いただきましてありがとうございます。お返事に2から3日ほどお時間をいただいておりますことをご了承ください。また、こちらのページ
 [[w:c:community:Forum:Community_Central_Forum|コミュニティーヘルプフォーラム]] と [[w:c:community:Help:Index|ヘルプページ]]をご確認ください。ウィキアの最新ニュースはここで確認することができます。  [[w:c:community:Blog:Wikia_Staff_Blog |スタッフブログ]]. 楽しんでね!',
+
+	'specialcontact-seclink-security' => 'セキュリティの問題を見つけた',
+	'specialcontact-seclink-dmca-request' => '著作権侵害の申し立て',
+	'specialcontact-sectitle-security' => 'セキュリティの問題に関する報告',
+	'specialcontact-intro-security' => 'ウィキアのコード内またはコミュニティのいずれかにおいて、セキュリティの問題を見つけた場合、またはそう思われる場合は、ご報告ください。その際は、ウィキアの安全性を保つため、[[wikipedia:Responsible disclosure|責任ある方法]]でご報告いただくようお願いいたします。
+
+一般的なバグや別の種類の問題を報告しようとしている場合は、[[Special:Contact|その他のお問い合わせフォーム]]から該当するものをご利用ください。
+
+セキュリティテストを実行する場合は、次の点にご注意ください。
+
+* サイトの可用性を損なってはなりません
+* 他のユーザーのデータのセキュリティやプライバシーを損なってはなりません
+* 破壊的な行為や有害な行為は行わないでください
+
+セキュリティの問題を報告する際は、次の項目を含む問題の詳細をお知らせください。
+
+* 脆弱性を再現するための完全な手順（該当する場合は、概念実証URLも含めてください）
+* 問題発生時にログインしていたか、ログインしていなかったかを明記してください
+* ブラウザ情報（種類、バージョンなど）
+** 再現に特定のブラウザやプラグインが必要な脆弱性やXSSの場合は特に重要です
+* 脆弱性によるセキュリティ上の影響の可能性に関する簡単な説明
+
+このフォームによるセキュリティに関するご報告に対して、ウィキアでは次のことを行います。
+* 報告された脆弱性の再現と確認を優先的に行います
+* 確認された脆弱性の修復に要するタイムラインを特定します
+* セキュリティの問題のテストと報告においてガイドラインのすべてに準拠している報告者に対しては法的措置は取りません
+',
+	'specialcontact-label-security-type' => 'セキュリティの問題の種類（わかる場合）',
+	'specialcontact-label-security-link' => '問題が見つかったページへのリンク',
+	'specialcontact-label-security-description' => 'セキュリティの問題についての説明（再現の手順を含む）をご入力ください',
+	'specialcontact-default-security-description' => '説明：
+
+再現の手順：
+  1.
+  2.
+  3.
+
+ブラウザ/OS：',
+	'specialcontact-security-issue-type-xss' => 'クロスサイト・スクリプティング（XSS）',
+	'specialcontact-security-issue-type-csrf' => 'クロスサイト・リクエスト・フォージェリ（CSRF）',
+	'specialcontact-security-issue-type-sqli' => 'SQLインジェクション',
+	'specialcontact-security-issue-type-auth' => '認証/承認の問題',
+	'specialcontact-security-issue-type-leak' => '情報漏洩',
+	'specialcontact-security-issue-type-redirect' => '不正なURLリダイレクト',
+	'specialcontact-security-issue-type-other' => 'その他',
+);
+
+$messages['nl'] = array(
+	'specialcontact-seclink-security' => 'I think I found a security issue',
+	'specialcontact-seclink-dmca-request' => 'I have a copyright complaint',
+	'specialcontact-sectitle-security' => 'Security issue report',
+	'specialcontact-intro-security' => "If you have found or believe you have found a security issue in Wikia's code or on one of Wikia's communities, please let us know. We appreciate your help in keeping Wikia safe for everyone by disclosing it to us in a [[wikipedia:Responsible disclosure|responsible manner]].
+
+If you are looking to report a general bug or another type of issue, please use one of the [[Special:Contact|other contact forms]].
+
+When performing security testing, you must:
+
+* Not compromise the availability of the site
+* Not compromise the security or privacy of other users' data
+* Be non-destructive and non-disruptive
+
+When reporting a security issue, please provide full details of the issue including:
+
+* Full steps to reproduce the vulnerability (including a Proof-of-Concept URL if appropriate)
+* Please indicate if you are logged in or logged out when the issue occurs
+* Your browser information including type and version
+** Particularly for XSS or vulnerabilities that require a specific browser or plugin to reproduce
+* A short description of the vulnerability's potential security impact
+
+In response to security reports using this form, Wikia will:
+* Prioritize the reproduction and confirmation of any reported vulnerability
+* Identify a reasonable timeline to patch any confirmed vulnerability
+* Not pursue legal action against any reporter who complies with all of the guidelines for testing and reporting security issues
+",
+	'specialcontact-label-security-type' => 'Type of security issue if known',
+	'specialcontact-label-security-link' => 'Link to where the issue can be found',
+	'specialcontact-label-security-description' => 'Please describe the security issue including steps to reproduce',
+	'specialcontact-default-security-description' => 'Description:
+
+Reproduction steps:
+  1.
+  2.
+  3.
+
+Browser/OS: ',
+	'specialcontact-security-issue-type-xss' => 'Cross-Site Scripting (XSS)',
+	'specialcontact-security-issue-type-csrf' => 'Cross-Site Request Forgery (CSRF)',
+	'specialcontact-security-issue-type-sqli' => 'SQL injection',
+	'specialcontact-security-issue-type-auth' => 'Authentication/Authorization issues',
+	'specialcontact-security-issue-type-leak' => 'Information Leakage',
+	'specialcontact-security-issue-type-redirect' => 'URL Redirection Abuse',
+	'specialcontact-security-issue-type-other' => 'Other',
+);
+
+$messages['pl'] = array(
+	'specialcontact-seclink-security' => 'Wydaje mi się, że znalazłem problem dotyczący zabezpieczeń',
+	'specialcontact-seclink-dmca-request' => 'Chciałbym zgłosić naruszenie praw autorskich',
+	'specialcontact-sectitle-security' => 'Raport dotyczący problemu z zabezpieczeniami',
+	'specialcontact-intro-security' => 'Jeśli znalazłeś lub wydaje ci się, że zauważyłeś problem związany z zabezpieczeniami w kodzie Wikii lub na jednej ze społeczności, poinformuj nas o tym. Doceniamy twoją pomoc w utrzymanie Wikii bezpieczną dla wszystkich użytkowników poprzez ujawnianie nam problemów w [[wikipedia:Responsible disclosure|odpowiedzialny sposób]].
+
+Jeśli chcesz zgłosić typowy błąd lub innego rodzaju problem, skorzystaj z jednej z [[Special:Contact|innych form kontaktu]].
+
+Podczas sprawdzania zabezpieczeń:
+
+* Nie wolno stwarzać zagrożenia dla dostępności serwisu
+* Nie wolno naruszać bezpieczeństwa lub prywatności danych innych użytkowników
+* Należy dbać by testy nie były szkodliwe lub uciążliwe
+
+Zgłaszając problem dotyczący zabezpieczeń podaj wszelkie szczegóły problemu, w tym:
+
+* Działania niezbędne do odtworzenia luki (w tym URL do funkcjonalnego prototypu, jeśli ma to zastosowanie)
+* Prosimy wskaż czy w chwili wystąpienia problemu jesteś {{GENDER:$1|zalogowany|zalogowana}} czy {{GENDER:$1|wylogowany|wylogowana}}
+* Informacje dotyczące używanej przglądarki, w tym jej rodzaj i wersja
+** W szczególności w przypadku XSS lub luk, których odtworzenie wymaga użycia konkretnego rodzaju przeglądarki
+* Krótki opis potencjalnych konsekwencji znalezionej luki
+
+W odpowiedzi na otrzymany raport dotyczący zabezpieczeń, Wikia:
+* Nada priorytet odtworzenia i potwierdzenia występowania zgłoszonej luki
+* Ustali termin usunięcia każdej potwierdzonej luki
+* Nie będzie wchodziła na drogę sądową wobec zgłaszających, którzy będą stosowali się do wskazówek dotyczących sprawdzania i raportowania problemów dotyczących zabezpieczeń
+',
+	'specialcontact-label-security-type' => 'Rodzaj problemu związanego z zabezpieczeniami, jeśli jest znany',
+	'specialcontact-label-security-link' => 'Link do miejsca, gdzie można zaobserwować opisany problem',
+	'specialcontact-label-security-description' => 'Proszę opisać problem z zabezpieczeniami uwzględniając działania, które należy podjąć w celu jego odtworzenia',
+	'specialcontact-default-security-description' => 'Opis:
+
+Jak odtworzyć problem:
+  1.
+  2.
+  3.
+
+Przeglądarka/System operacyjny: ',
+	'specialcontact-security-issue-type-xss' => 'Cross-Site Scripting (XSS)',
+	'specialcontact-security-issue-type-csrf' => 'Cross-Site Request Forgery (CSRF)',
+	'specialcontact-security-issue-type-sqli' => 'SQL injection',
+	'specialcontact-security-issue-type-auth' => 'Kwestie uwierzytelniania/autoryzacji',
+	'specialcontact-security-issue-type-leak' => 'Wyciek informacji',
+	'specialcontact-security-issue-type-redirect' => 'Nadużycie związane z przekierowaniem URL',
+	'specialcontact-security-issue-type-other' => 'Inne',
 );
 
 $messages['pt'] = array(
@@ -1088,6 +1466,192 @@ Se você preferir usar email regular ou tiver anexos, você pode entrar em conta
 	'specialcontact-submitcomplete' => 'Obrigada por entrar em contato com a Wikia. Nós recebemos e revisamos todas as mensagens enviadas por aqui. Nós vamos tentar respondê-lo em 2 ou 3 dias úteis, mas por favor, seja paciente enquanto revisamos todas as mensagens.
 
 Lembre-se, você também pode pedir ajudar no nosso [[w:c:comunidade:Special:Forum|Fórum da Comunidade]] e [[w:c:comunidade:Ajuda|páginas de ajuda]]. Você também pode manter-se atualizado com todas as útlimas notícias da Wikia através do nosso [[w:c:comunidade:Categoria:Notícias da Wikia|blog da equipe]]. Feliz edições!',
+
+	'specialcontact-seclink-security' => 'Acho que encontrei um problema de segurança',
+	'specialcontact-seclink-dmca-request' => 'Tenho uma queixa sobre direitos autorais',
+	'specialcontact-sectitle-security' => 'Relatório de problema de segurança',
+	'specialcontact-intro-security' => 'Se você encontrou ou acredita ter encontrado um problema de segurança no código da Wikia ou em uma das comunidades da Wikia, por favor informe-nos. Nós apreciamos sua ajuda em manter a Wikia segura para todos através da divulgação [[wikipedia:Responsible disclosure|modo responsável]].
+
+Se você quiser informar sobre um bug geral ou outro tipo de problema, use um dos [[Special:Contact|outros formulários para contato]].
+
+Ao executar testes de segurança, você deve:
+
+* não comprometer a disponibilidade do site
+* não comprometer a segurança ou a privacidade de dados dos outros usuários
+* não ser destrutivo e disruptivo
+
+Quando relatar um problema de segurança, forneça detalhes completos sobre o assunto, incluindo:
+
+* Todas as etapas para reproduzir a vulnerabilidade (incluindo um URL de prova de conceito, se for o caso)
+* Indicação de estar ou não conectado quando o problema ocorre
+* Informações sobre seu navegador, incluindo o tipo e versão
+** Especialmente para XSS ou vulnerabilidades que exigem um navegador específico ou plugin para reproduzir
+* Uma breve descrição do impacto potencial da vulnerabilidade da segurança
+
+Em resposta aos relatórios de segurança usando este formulário, a Wikia compromete-se a:
+* priorizar a reprodução e a confirmação de qualquer vulnerabilidade relatada
+* identificar um cronograma razoável para corrigir qualquer vulnerabilidade confirmada
+* não buscar ação judicial contra qualquer repórter que cumpra com todas as diretrizes para testes e relato de problemas de segurança
+
+
+',
+	'specialcontact-label-security-type' => 'Tipo de problema de segurança (se conhecido)',
+	'specialcontact-label-security-link' => 'Link para onde o problema pode ser encontrado',
+	'specialcontact-label-security-description' => 'Por favor, descreva o problema de segurança, incluindo etapas a serem reproduzidas',
+	'specialcontact-default-security-description' => 'Descrição:
+
+Etapas de reprodução:
+ 1.
+ 2.
+ 3.
+
+Navegador/OS: ',
+	'specialcontact-security-issue-type-xss' => 'Cross-Site Scripting (XSS)',
+	'specialcontact-security-issue-type-csrf' => 'Falsificação de solicitação entre sites (CSRF)',
+	'specialcontact-security-issue-type-sqli' => 'Injeção de SQL',
+	'specialcontact-security-issue-type-auth' => 'Problemas de autenticação/autorização',
+	'specialcontact-security-issue-type-leak' => 'Vazamento de informações',
+	'specialcontact-security-issue-type-redirect' => 'Abuso de redirecionamento de URL',
+	'specialcontact-security-issue-type-other' => 'Outros',
+);
+
+$messages['ru'] = array(
+	'specialcontact-seclink-security' => 'Мне кажется, что я нашёл/нашла уязвимость безопасности',
+	'specialcontact-seclink-dmca-request' => 'Я хочу сообщить о нарушении авторских прав',
+	'specialcontact-sectitle-security' => 'Сообщение об уязвимости',
+	'specialcontact-intro-security' => 'Если вы нашли или считаете, что нашли уязвимость безопасности в коде Викия или на одном из википроектов на Викия, пожалуйста, сообщите об этом. Мы будем признательны за вашу помощь в обеспечении безопасности на Викия и будем очень благодарны, если при сообщении об уязвимости вы проследуете нижеизложенным правилам и не станете разглашать детали уязвимости публично до её закрытия.
+
+Если вы хотите сообщить об ошибках, не связанных с безопасностью, — пожалуйста, воспользуйтесь [[Special:Contact|другими формами связи с сотрудниками Викия]].
+
+Тестируя найденную уязвимость, вы НЕ должны:
+
+* Нарушать доступность сайта
+* Нарушать безопасность других участников или разглашать их личные данные
+* Использовать найденные уязвимости, чтобы причинить вред сайту или участникам
+
+При отправлении отчёта о найденной уязвимости, предоставьте как можно более полные данные об уязвимости, включая:
+
+* Описание воспроизведения ошибки (включая ссылку на экспериментальную демонстрацию уязвимости, если это возможно и безопасно)
+* Детали о том, работает ли уязвимость для вошедших в свою учётную запись участников или только для анонимных участников
+* Ваш браузер: название, версию
+** Особенно важно в случае обнаружения XSS или уязвимостей, которые работают только для определённых браузеров или при наличии определённого плагина
+* Краткое описание потенциального ущерба, который может нанести использование уязвимости
+
+При получении сообщений об уязвимости с помощью этой формы, мы:
+* Сосредоточим внимание на воспроизведении и подтверждении сообщённой уязвимости
+* Сообщим о предполагаемом сроке закрытия конкретной уязвимости
+* Не предпримем правовых действий против сообщившего об уязвимости участника, если он/она в полной мере руководствовался/ась вышеизложенными правилами сообщения уязвимости
+',
+	'specialcontact-label-security-type' => 'Тип уязвимости (если известен)',
+	'specialcontact-label-security-link' => 'Ссылка на страницу с уязвимостью',
+	'specialcontact-label-security-description' => 'Пожалуйста, опишите уязвимость и процесс её воспроизведения',
+	'specialcontact-default-security-description' => 'Описание:
+
+Воспроизведение:
+1.
+2.
+3.
+
+Браузер/ОС: ',
+	'specialcontact-security-issue-type-xss' => 'Межсайтовый скриптинг (XSS)',
+	'specialcontact-security-issue-type-csrf' => 'Межсайтовая подделка запроса (CSRF)',
+	'specialcontact-security-issue-type-sqli' => 'Внедрение SQL-кода',
+	'specialcontact-security-issue-type-auth' => 'Проблемы с аутентификацией/авторизацией',
+	'specialcontact-security-issue-type-leak' => 'Утечка информации',
+	'specialcontact-security-issue-type-redirect' => 'Злоупотребление перенаправлениями URL',
+	'specialcontact-security-issue-type-other' => 'Другое',
+);
+
+$messages['zh-hans'] = array(
+	'specialcontact-seclink-security' => '我想我找到了一个安全性问题',
+	'specialcontact-seclink-dmca-request' => '我要版权投诉',
+	'specialcontact-sectitle-security' => '安全问题报告',
+	'specialcontact-intro-security' => '如果您在Wikia编程代码中或在Wikia的某一个社区上发现一个安全漏洞，请及时告诉我们。我们非常感谢用户这种[[wikipedia:Responsible disclosure|负责性的态度]]，通过向我们报告问题，一起帮助所有人共同维护Wikia的网络安全。
+
+如果您报告的是一般性技术故障或其它类型问题，请使用[[Special:Contact|其它联系方式]]。
+
+当执行安全测试时，您必须:
+
+* 确保网站的正常使用
+* 确保其他用户数据或个人隐私安全
+* 不做任何破坏和干扰
+
+在报告安全问题时，请提供充分详细的说明包括:
+
+* 完整的漏洞重现步骤 (包括URL地址以便我们进行验证)
+* 请说明在问题发生时，您是否已经登录或注销账户
+* 您所使用的浏览器信息，包括类型和版本
+** 尤其是对某些要求使用特别的浏览器或者插件的XSS或安全漏洞进行问题重现的时候
+* 潜在的安全漏洞影响的简短报告
+
+在使用这个表格填写安全报告时，Wikia将:
+* 优先处理任何已经得到确认的安全漏洞报告
+* 进行合理的时间安排修补任何已经得到证实的安全漏洞
+* 对任何符合所有测试和安全问题报告规范的用户进行法律免责',
+	'specialcontact-label-security-type' => '已知的安全问题类型',
+	'specialcontact-label-security-link' => '链接到问题发生之处',
+	'specialcontact-label-security-description' => '请描述安全问题包括步骤重现',
+	'specialcontact-default-security-description' => '描述:
+
+问题重现步骤:
+1.
+2.
+3.
+
+浏览器/操作系统:',
+	'specialcontact-security-issue-type-xss' => '跨站点脚本(XSS)',
+	'specialcontact-security-issue-type-csrf' => '跨站点请求伪造(CSRF)',
+	'specialcontact-security-issue-type-sqli' => 'SQL注入',
+	'specialcontact-security-issue-type-auth' => '身份验证/授权问题',
+	'specialcontact-security-issue-type-leak' => '信息泄漏',
+	'specialcontact-security-issue-type-redirect' => 'URL重定向滥用',
+	'specialcontact-security-issue-type-other' => '其他',
+);
+
+$messages['zh-hant'] = array(
+	'specialcontact-seclink-security' => '我想我找到了一個安全性問題',
+	'specialcontact-seclink-dmca-request' => '我要版權投訴',
+	'specialcontact-sectitle-security' => '安全問題報告',
+	'specialcontact-intro-security' => '如果您在Wikia程式設計代碼中或在Wikia的某一個社區上發現一個安全性漏洞，請及時告訴我們。 我們非常感謝使用者這種[[wikipedia:Responsible disclosure|負責的態度]]，通過向我們報告問題，一起幫助所有人共同維護Wikia的網路安全。
+
+如果您報告的是一般性技術故障或其它類型問題，請使用[[Special:Contact|其它連絡方式]]。
+
+當執行安全測試時，您必須:
+
+* 確保網站的正常使用
+* 確保其他使用者資料或個人隱私安全
+* 不做任何破壞和干擾
+
+在報告安全問題時，請提供充分詳細的說明包括:
+
+* 完整的漏洞重現步驟 (包括URL位址以便我們進行驗證)
+* 請說明在問題發生時，您是否已經登錄或登出帳戶
+* 您所使用的瀏覽器資訊，包括類型和版本
+** 尤其是對某些要求使用特別的瀏覽器或者外掛程式的XSS或安全性漏洞進行問題重現的時候
+* 潛在的安全性漏洞影響的簡短報告
+
+在使用這個表格填寫安全報告時，Wikia將:
+* 優先處理任何已經得到確認的安全性漏洞報告
+* 進行合理的時間安排修補任何已經得到證實的安全性漏洞
+* 對任何符合所有測試和安全問題報告規範的使用者進行法律免責',
+	'specialcontact-label-security-type' => '已知的安全問題類型',
+	'specialcontact-label-security-link' => '連結到問題發生之處',
+	'specialcontact-label-security-description' => '請描述安全問題包括步驟重現',
+	'specialcontact-default-security-description' => '描述:
+
+問題重現步驟:
+1.
+2.
+3.
+
+瀏覽器/作業系統:',
+	'specialcontact-security-issue-type-xss' => '跨網站腳本(XSS)',
+	'specialcontact-security-issue-type-csrf' => '跨網站請求偽造(CSRF)',
+	'specialcontact-security-issue-type-sqli' => 'SQL注入',
+	'specialcontact-security-issue-type-auth' => '身份驗證/授權問題',
+	'specialcontact-security-issue-type-leak' => '資訊洩漏',
+	'specialcontact-security-issue-type-redirect' => 'URL重定向濫用',
+	'specialcontact-security-issue-type-other' => '其他',
 );
 
 $messages['zh'] = array(
