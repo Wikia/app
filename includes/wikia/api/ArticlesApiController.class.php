@@ -963,7 +963,15 @@ class ArticlesApiController extends WikiaApiController {
 		}
 
 		$jsonFormatService = new JsonFormatService();
-		$jsonSimple = $jsonFormatService->getSimpleFormatForArticle( $article );
+
+//		$parser = new \Wikia\JsonFormat\HtmlParser();
+//		$parser->parse();
+//		dd('asdfdf');
+
+//		print_r( $jsonFormatService->getJsonFormatForArticle( $article )->toArray() );
+//		dd('sadf');
+//		$jsonSimple = $jsonFormatService->getSimpleFormatForArticle( $article );
+		$jsonSimple = $jsonFormatService->getJsonFormatForArticle( $article )->toArray();
 
 		$this->setResponseData(
 			$jsonSimple,
