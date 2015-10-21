@@ -616,19 +616,13 @@ class TopListHelper {
 	public static function voteItem() {
 		global $wgRequest, $wgUser;
 
-		$result = array( 'result' => false );
-
 		try {
 			$wgRequest->isValidWriteRequest( $wgUser );
 		} catch ( BadRequestException $exception ) {
-			$result['errors'] = $exception->getMessage();
-			$json = json_encode( $result );
-			$response = new AjaxResponse( $json );
-			$response->setContentType( 'application/json; charset=utf-8' );
-
-			return $response;
+			return self::getJsonExceptionResponse( $exception );
 		}
 
+		$result = array( 'result' => false );
 		$titleText = $wgRequest->getVal( 'title' );
 
 		if( !empty( $titleText ) ) {
@@ -690,19 +684,14 @@ class TopListHelper {
 	public static function addItem() {
 		global $wgRequest, $wgUser;
 
-		$result = array( 'result' => false );
-		$errors = array();
-
 		try {
 			$wgRequest->isValidWriteRequest( $wgUser );
 		} catch ( BadRequestException $exception ) {
-			$result['errors'] = $exception->getMessage();
-			$json = json_encode( $result );
-			$response = new AjaxResponse( $json );
-			$response->setContentType( 'application/json; charset=utf-8' );
-
-			return $response;
+			return self::getJsonExceptionResponse( $exception );
 		}
+
+		$result = array( 'result' => false );
+		$errors = array();
 
 		$listText = $wgRequest->getVal( 'list' );
 		$itemText = trim( $wgRequest->getVal( 'text' ) );
@@ -790,5 +779,24 @@ class TopListHelper {
 				__METHOD__
 			);
 		}
+	}
+
+	/**
+	 * Generates a JSON response object containing the exception message
+	 * as the error
+	 *
+	 * @param $exception
+	 * @param $result
+	 * @return AjaxResponse
+	 */
+	private static function getJsonExceptionResponse( $exception ) {
+		$result = [
+			'result' => false,
+			'errors' => [ $exception->getMessage() ]
+		];
+		$json = json_encode( $result );
+		$response = new AjaxResponse( $json );
+		$response->setContentType( 'application/json; charset=utf-8' );
+		return $response;
 	}
 }
