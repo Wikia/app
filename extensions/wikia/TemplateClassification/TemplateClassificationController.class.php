@@ -13,7 +13,12 @@ class TemplateClassificationController extends WikiaController {
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 		$this->overrideTemplate( 'editForm' );
 
-		foreach ( TemplateClassification::$templateTypes as $type ) {
+		$userEditableTypes = array_diff(
+			TemplateClassification::$templateTypes,
+			array( TemplateClassification::TEMPLATE_UNCLASSIFIED )
+		);
+
+		foreach ( $userEditableTypes as $type ) {
 			$templateTypes[] = [
 				'type' => $type,
 				/**
@@ -29,7 +34,7 @@ class TemplateClassificationController extends WikiaController {
 				 * template-classification-type-unknown
 				 * template-classification-type-data
 				 */
-				'name' => wfMessage( "template-classification-type-{$type}" )->escaped(),
+				'name' => wfMessage( "template-classification-type-{$type}" )->plain(),
 				/**
 				 * template-classification-description-infobox
 				 * template-classification-description-navbox
@@ -43,7 +48,7 @@ class TemplateClassificationController extends WikiaController {
 				 * template-classification-description-unknown
 				 * template-classification-description-data
 				 */
-				'description' => wfMessage( "template-classification-description-{$type}" )->escaped(),
+				'description' => wfMessage( "template-classification-description-{$type}" )->plain(),
 			];
 		}
 
