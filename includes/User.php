@@ -2391,6 +2391,11 @@ class User {
 		if( $str == $this->mEmail ) {
 			return;
 		}
+
+		/* Wikia change */
+		/* add a new hook that sends both before/after emails @param User, new_email, old_email */
+		wfRunHooks( 'BeforeUserSetEmail', array( $this, $str, $this->mEmail ) );
+
 		$this->mEmail = $str;
 
 		/* Wikia change begin - @author: Macbre */
