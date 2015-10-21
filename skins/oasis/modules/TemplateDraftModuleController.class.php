@@ -11,7 +11,8 @@ class TemplateDraftModuleController extends WikiaController {
 			AssetsManager::getInstance()->getSassCommonURL( "skins/oasis/css/modules/TemplateDraftModule.scss" )
 		);
 
-		$subpage = wfMessage( 'templatedraft-subpage' )->inContentLanguage()->escaped();
+		$subpage = 'foo';
+//		$subpage = wfMessage( 'templatedraft-subpage' )->inContentLanguage()->escaped();
 		$subpageTitle = Title::newFromText( $this->app->wg->Title->getText() . '/' . $subpage, NS_TEMPLATE );
 		$this->draftUrl = $subpageTitle->getFullUrl( [
 			'action' => 'edit',
