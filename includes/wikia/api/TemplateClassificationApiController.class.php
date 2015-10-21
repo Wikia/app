@@ -1,74 +1,49 @@
 <?php
 
-use Wikia\Service\Gateway\ConsulUrlProvider;
-use Wikia\Service\Swagger\ApiProvider;
-use Swagger\Client\TemplateClassification\Storage\Api\TCSApi;
-use Swagger\Client\TemplateClassification\Storage\Models\TemplateTypeProvider;
+
 use Swagger\Client\ApiException;
 
 class TemplateClassificationApiController extends WikiaApiController {
-	const SERVICE_NAME = 'template-classification-storage';
-	const USER_PROVIDER = 'user';
 
-	private $apiClient = null;
+	private $templateClassificationService = null;
 
 	/**
 	 * Get template type
 	 *
 	 * Type can be provided by user or automatic script, but user classification overrides automatic generated type
 	 *
-	 * @param int $wikiId
-	 * @param int $pageId
 	 * @return string
-	 * @throws ApiException
 	 * @throws BadRequestApiException
 	 * @throws Exception
+	 * @throws \Swagger\Client\ApiException
 	 */
 	public function getType() {
-		$templateType = '';
-
 		$pageId = $this->request->getVal( 'pageId', null );
 
 		try {
-			$type = $this->getApiClient()->getTemplateType( $this->wg->CityId, $pageId );
-			if ( !is_null( $type ) ) {
-				$templateType = $type->getType();
-			}
+			$templateType = $this->getTemplateClassificationService()->getType( $this->wg->CityId, $pageId );
 		} catch ( InvalidArgumentException $e ) {
 			throw new BadRequestApiException( $e->getMessage() );
-		} catch ( ApiException $e ) {
-			throw $e;
 		}
 
 		return $templateType;
 	}
 
 	/**
-	 * Get details about template type
+	 * Get details about template type (provider, origin)
 	 *
-	 * @param int $wikiId
-	 * @param int $pageId
 	 * @return array
-	 * @throws ApiException
 	 * @throws BadRequestApiException
 	 * @throws Exception
+	 * @throws \Swagger\Client\ApiException
 	 */
 	public function getDetails() {
-		$templateDetails = [];
-
 		$pageId = $this->request->getVal( 'pageId', null );
 
 		try {
-			$details = $this->getApiClient()->getTemplateDetails( $this->wg->CityId, $pageId );
-
-			if ( !is_null( $details ) ) {
-				$providers = $details->getProviders();
-				$templateDetails = $this->prepareTemplateDetails( $providers );
-			}
+			$templateDetails = $this->getTemplateClassificationService()->getDetails( $this->wg->CityId, $pageId );
 		} catch ( InvalidArgumentException $e ) {
 			throw new BadRequestApiException( $e->getMessage() );
-		} catch ( ApiException $e ) {
-			throw $e;
 		}
 
 		return $templateDetails;
@@ -77,56 +52,30 @@ class TemplateClassificationApiController extends WikiaApiController {
 	/**
 	 * Classify template type
 	 *
-	 * @param int $userId
-	 * @param int $wikiId
-	 * @param int $pageId
-	 * @param string $templateType
-	 * @throws ApiException
 	 * @throws BadRequestApiException
-	 * @throws Exception
+	 * @throws InvalidParameterApiException
 	 * @throws PermissionsException
 	 * @throws UnauthorizedException
+	 * @throws Exception
+	 * @throws \Swagger\Client\ApiException
 	 */
 	public function classifyType() {
 		$pageId = $this->request->getVal( 'pageId', null );
 		$templateType = $this->request->getVal( 'type', null );
+		$userId = $this->wg->User->getId();
 
 		$this->validateRequest( $this->wg->User, $this->request, $pageId );
 
-		$details = [
-			'provider' => self::USER_PROVIDER,
-			'origin' => $this->wg->User->getId(),
-			'types' => [ $templateType ]
-		];
-		$templateTypeProvider = new TemplateTypeProvider( $details );
-
 		try {
-			$this->getApiClient()->insertTemplateDetails( $this->wg->CityId, $pageId, $templateTypeProvider );
+			$this->getTemplateClassificationService()->classifyTemplate(
+				$this->wg->CityId,
+				$pageId,
+				$templateType,
+				$userId
+			);
 		} catch ( InvalidArgumentException $e ) {
 			throw new BadRequestApiException( $e->getMessage() );
-		} catch ( ApiException $e ) {
-			throw $e;
 		}
-	}
-
-	/**
-	 * Prepare template details output
-	 *
-	 * @param TemplateTypeProvider[] $providers
-	 * @return array
-	 */
-	private function prepareTemplateDetails( $providers ) {
-		$templateDetails = [];
-
-		foreach ( $providers as $provider ) {
-			$templateDetails[$provider->getProvider()] = [
-				'provider' => $provider->getProvider(),
-				'origin' => $provider->getOrigin(),
-				'types' => $provider->getTypes()
-			];
-		}
-
-		return $templateDetails;
 	}
 
 	/**
@@ -162,29 +111,11 @@ class TemplateClassificationApiController extends WikiaApiController {
 		return true;
 	}
 
-	/**
-	 * Get Swagger-generated API client
-	 *
-	 * @return TCSApi
-	 */
-	private function getApiClient() {
-		if ( is_null( $this->apiClient ) ) {
-			$this->apiClient = $this->createApiClient();
+	private function getTemplateClassificationService() {
+		if ( is_null( $this->templateClassificationService ) ) {
+			$this->templateClassificationService = new TemplateClassificationService();
 		}
 
-		return $this->apiClient;
+		return $this->templateClassificationService;
 	}
-
-	/**
-	 * Create Swagger-generated API client
-	 *
-	 * @return TCSApi
-	 */
-	private function createApiClient() {
-		global $wgConsulUrl, $wgConsulServiceTag;
-		$urlProvider = new ConsulUrlProvider( $wgConsulUrl, $wgConsulServiceTag );
-		$apiProvider = new ApiProvider( $urlProvider );
-		return $apiProvider->getApi( self::SERVICE_NAME, TCSApi::class );
-	}
-
 }
