@@ -266,7 +266,6 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		$expectedSevenOneMediaUrlFormat = 'http://%s/__load/-/cb%3D%d%26debug%3Dfalse%26lang%3D%s%26only%3Dscripts%26skin%3Doasis/wikia.ext.adengine.sevenonemedia';
 		$expectedSourcePointDetectionUrlFormat = 'http://%s/__load/-/cb%3D%d%26debug%3Dfalse%26lang%3D%s%26only%3Dscripts%26skin%3Doasis/wikia.ext.adengine.sourcepoint.detection';
 		$expectedSourcePointRecoveryUrlFormat = 'http://%s/__load/-/cb%3D%d%26debug%3Dfalse%26lang%3D%s%26only%3Dscripts%26skin%3Doasis/wikia.ext.adengine.sourcepoint';
-		$expectedSourcePointUrlFormat = $expectedSourcePointRecoveryUrlFormat;
 
 		if ( $titleMockType === 'article' || $titleMockType === 'mainpage' ) {
 			$expectedTargeting['pageArticleId'] = $artId;

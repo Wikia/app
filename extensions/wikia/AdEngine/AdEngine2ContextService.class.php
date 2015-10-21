@@ -28,12 +28,10 @@ class AdEngine2ContextService {
 				$monetizationServiceAds = F::app()->sendRequest( 'MonetizationModule', 'index' )->getData()['data'];
 			}
 
-			$sourcePointUrl = null;
 			$sourcePointRecoveryUrl = null;
 			$sourcePointDetectionUrl = ResourceLoader::makeCustomURL( $wg->Out, ['wikia.ext.adengine.sourcepoint.detection'], 'scripts' );
 			if ( $skinName === 'oasis' ) {
 				$sourcePointRecoveryUrl = ResourceLoader::makeCustomURL( $wg->Out, ['wikia.ext.adengine.sourcepoint'], 'scripts' );
-				$sourcePointUrl = $sourcePointRecoveryUrl;
 			}
 
 			$langCode = $title->getPageLanguage()->getCode();
@@ -54,7 +52,7 @@ class AdEngine2ContextService {
 					'showAds' => $adPageTypeService->areAdsShowableOnPage(),
 					'trackSlotState' => $wg->AdDriverTrackState,
 					'usePostScribe' => $wg->Request->getBool( 'usepostscribe', false ),
-					'sourcePointUrl' => $sourcePointUrl,
+					'sourcePointUrl' => $sourcePointRecoveryUrl,
 					'sourcePointDetectionUrl' => $sourcePointDetectionUrl,
 					'sourcePointRecoveryUrl' => $sourcePointRecoveryUrl,
 				] ),
