@@ -11,8 +11,8 @@ define('ext.wikia.adEngine.recovery.helper', [
 	doc,
 	lazyQueue,
 	log,
-	SourcePointTag,
-	win
+	win,
+	SourcePointTag
 ) {
 	'use strict';
 
