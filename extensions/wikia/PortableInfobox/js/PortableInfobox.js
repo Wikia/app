@@ -6,24 +6,24 @@
 			this.setupTabs();
 		},
 		setupTabs: function() {
-			var $imageCollection = $('.pi-image-collection'),
-				$tabs = $('ul.pi-image-collection-tabs li'),
-				$tabContent = $('.pi-image-collection-tab-content');
+			var $imageCollections = $('.pi-image-collection');
 
-			$tabs.first().addClass('current');
-			$tabContent.first().addClass('current');
+			$imageCollections.each( function( index, collection ) {
+				var $collection = $imageCollections.eq(index),
+					$tabs = $collection.find('ul.pi-image-collection-tabs li'),
+					$tabContent = $collection.find('.pi-image-collection-tab-content');
 
-			$imageCollection.on('click', 'ul.pi-image-collection-tabs li', function( event ) {
-				var $target = $(this),
-					tabId = $target.attr('data-pi-tab');
+				$tabs.click( function() {
+					var $target = $(this),
+						tabId = $target.attr('data-pi-tab');
 
-				$tabs.removeClass('current');
-				$tabContent.removeClass('current');
+					$tabs.removeClass('current');
+					$tabContent.removeClass('current');
 
-				$target.addClass('current');
-				$('#' + tabId).addClass('current');
+					$target.addClass('current');
+					$collection.find('#' + tabId).addClass('current');
+				});
 			});
-
 		}
 	};
 
