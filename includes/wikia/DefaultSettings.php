@@ -1888,3 +1888,8 @@ $wgAdDriverAdsRecoveryMessageCountries = null;
  * Protect Piggyback logs even if the extension is disabled
  */
 $wgLogRestrictions['piggyback'] = 'piggyback';
+
+/**
+ * Reject attempts to fall back to the MediaWiki session for authentication.
+ */
+$wgRejectAuthenticationFallback = false;

@@ -1156,19 +1156,8 @@ class User {
 			return false;
 		}
 
-		if ( !$this->isUserAuthenticated() ) {
-			Wikia\Logger\WikiaLogger::instance()->error(
-				'global authentication failed',
-				[
-				'global_auth_token' => $this->getGlobalAuthToken(),
-				'from'              => $from,
-				'ip'                => $this->getRequest()->getIP(),
-				'session_id'        => session_id(),
-				'user_id'           => $this->getId(),
-				'user_name'         => $this->getName(),
-				]);
-
-			wfDebug( "User: global authentication failed; using $from\n" );
+		if ( !$this->isUserAuthenticatedViaAuthenticationService() ) {
+			$this->logFallbackToMediaWikiSessionRejection($from);
 			$this->loadDefaults();
 			return false;
 		}
@@ -5226,10 +5215,16 @@ class User {
 	}
 
 	/**
-	 * Is the user authenticated?
+	 * Is the user authenticated via the authentication service?
 	 * @return bool true if yes, false if no
 	 */
-	public function isUserAuthenticated() {
+	public function isUserAuthenticatedViaAuthenticationService() {
+		global $wgRejectAuthenticationFallback;
+
+		if ( !$wgRejectAuthenticationFallback ) {
+			return true;
+		}
+
 		$tokenInfo = $this->getAuthenticationService()->info( $this->getGlobalAuthToken() );
 		if ( !empty( $tokenInfo->user_id ) ) {
 			return ( $this->getId() > 0 ) && ( $tokenInfo->user_id == $this->getId() );
@@ -5238,5 +5233,20 @@ class User {
 		return false;
 	}
 
+	/**
+	 * Log an attempt to fallback to the MW session that was rejected.
+	 */
+	protected function logFallbackToMediaWikiSessionRejection($from) {
+		Wikia\Logger\WikiaLogger::instance()->error(
+			'AUTHENTICATION_FALLBACK_REJECTED',
+			[
+			'global_auth_token' => $this->getGlobalAuthToken(),
+			'from'              => $from,
+			'ip'                => $this->getRequest()->getIP(),
+			'session_id'        => session_id(),
+			'user_id'           => $this->getId(),
+			'user_name'         => $this->getName(),
+			]);
+	}
 
 }
