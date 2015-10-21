@@ -82,11 +82,10 @@
 							},
 							method: 'save'
 						}).done(function( response ) {
-							var error = response.error || response.exception;
 							$container.stopThrobbing();
 
-							if ( error ) {
-								throw 'Saving error: ' + error;
+							if ( response.error ) {
+								throw 'Saving error: ' + response.error;
 							} else {
 								$wrapper
 									.removeClass( 'editMode' )
@@ -100,6 +99,10 @@
 									.find( '.input' )
 									.val( '' );
 							}
+						}).fail(function (response) {
+							$container.stopThrobbing();
+
+							throw 'Saving error: ' + response.responseText
 						});
 					}).on( 'update', function() {
 						var modified = $wrapper.find( '.category.new' ).length > 0;
