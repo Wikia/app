@@ -29,9 +29,11 @@ class AdEngine2ContextService {
 			}
 
 			$sourcePointUrl = null;
+			$sourcePointRecoveryUrl = null;
 			$sourcePointDetectionUrl = ResourceLoader::makeCustomURL( $wg->Out, ['wikia.ext.adengine.sourcepoint.detection'], 'scripts' );
 			if ( $skinName === 'oasis' ) {
-				$sourcePointUrl = ResourceLoader::makeCustomURL( $wg->Out, ['wikia.ext.adengine.sourcepoint'], 'scripts' );
+				$sourcePointRecoveryUrl = ResourceLoader::makeCustomURL( $wg->Out, ['wikia.ext.adengine.sourcepoint'], 'scripts' );
+				$sourcePointUrl = $sourcePointRecoveryUrl;
 			}
 
 			$langCode = $title->getPageLanguage()->getCode();
@@ -54,6 +56,7 @@ class AdEngine2ContextService {
 					'usePostScribe' => $wg->Request->getBool( 'usepostscribe', false ),
 					'sourcePointUrl' => $sourcePointUrl,
 					'sourcePointDetectionUrl' => $sourcePointDetectionUrl,
+					'sourcePointRecoveryUrl' => $sourcePointRecoveryUrl,
 				] ),
 				'targeting' => $this->filterOutEmptyItems( [
 					'enableKruxTargeting' => $wg->EnableKruxTargeting,
