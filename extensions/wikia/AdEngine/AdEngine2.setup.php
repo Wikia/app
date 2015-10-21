@@ -19,7 +19,7 @@ $wgAutoloadClasses['AdEngine2Service'] =  __DIR__ . '/AdEngine2Service.class.php
 $wgAutoloadClasses['ResourceLoaderAdEngineBase'] = __DIR__ . '/ResourceLoaders/ResourceLoaderAdEngineBase.php';
 $wgAutoloadClasses['ResourceLoaderScript'] = __DIR__ . '/ResourceLoaders/ResourceLoaderScript.php';
 $wgAutoloadClasses['ResourceLoaderAdEngineSevenOneMediaModule'] = __DIR__ . '/ResourceLoaders/ResourceLoaderAdEngineSevenOneMediaModule.php';
-$wgAutoloadClasses['ResourceLoaderAdEngineSourcePointModule'] = __DIR__ . '/ResourceLoaders/ResourceLoaderAdEngineSourcePointModule.php';
+$wgAutoloadClasses['ResourceLoaderAdEngineSourcePointRecoveryModule'] = __DIR__ . '/ResourceLoaders/ResourceLoaderAdEngineSourcePointRecoveryModule.php';
 $wgAutoloadClasses['ResourceLoaderAdEngineSourcePointDetectionModule'] = __DIR__ . '/ResourceLoaders/ResourceLoaderAdEngineSourcePointDetectionModule.php';
 
 // Hooks for Exitstitial ads
@@ -52,7 +52,7 @@ $wgResourceModules['wikia.ext.adengine.sevenonemedia'] = array(
 );
 
 $wgResourceModules['wikia.ext.adengine.sourcepoint'] = array(
-	'class' => 'ResourceLoaderAdEngineSourcePointModule',
+	'class' => 'ResourceLoaderAdEngineSourcePointRecoveryModule',
 );
 
 $wgResourceModules['wikia.ext.adengine.sourcepoint.detection'] = array(
