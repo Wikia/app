@@ -119,7 +119,6 @@ class NodeImage extends Node {
 	}
 
 	private function getTabberItems( $value ) { 
-		global $wgArticleAsJson;
 		$tabberItems = array();
 		$tabberMarkers = self::getMarkers( $value, 'TABBER' );
 		for ( $i = 0; $i < count ( $tabberMarkers ); $i++ ) {
