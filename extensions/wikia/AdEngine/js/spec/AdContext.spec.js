@@ -451,7 +451,7 @@ describe('AdContext', function () {
 	it('enables SourcePoint when url param sourcepoint is set', function () {
 		mocks.win = {ads: {context: {opts: {sourcePointRecoveryUrl: '//foo.bar', sourcePointDetection: true}}}};
 		spyOn(mocks.querystring, 'getVal').and.callFake(function (param) {
-			return param === 'sourcepoint' ?  '1' : '0';
+			return param === 'sourcepointrecovery' ?  '1' : '0';
 		});
 
 		expect(getModule().getContext().opts.sourcePointRecovery).toBeTruthy();
