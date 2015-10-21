@@ -88,7 +88,7 @@ class AchImageUploadService {
 	}
 
 	public static function uploadBadge($destinationFileName, $badgeLevel) {
-		global $wgRequest, $wgUser, $wgBadgeCustomizationAllowed;
+		global $wgRequest, $wgUser, $wgBadgeNoFrame;
 
 		$upload = new UploadAchievementsFromFile();
 		$upload->initialize( $destinationFileName, $wgRequest->getUpload( 'wpUploadFile' ) );
@@ -167,7 +167,7 @@ class AchImageUploadService {
 		imagedestroy($badgeImage);
 		$badgeImage = $tmp;
 
-		if ($wgBadgeCustomizationAllowed) {
+		if ( !empty( $wgBadgeNoFrame ) ) {
 			// save badge as is
 			imagepng($badgeImage, $badgeFile, 9, PNG_ALL_FILTERS);
 		} else {
@@ -199,7 +199,7 @@ class AchImageUploadService {
 			self::merge_alphamask($badge, $img['top'], $img['bottom']);
 
 			// save badge
-			$ret = imagepng($badge, $badgeFile, 9, PNG_ALL_FILTERS);
+			imagepng($badge, $badgeFile, 9, PNG_ALL_FILTERS);
 
 			wfDebug(__METHOD__ . ": generated badge saved as {$badgeFile}\n");
 
