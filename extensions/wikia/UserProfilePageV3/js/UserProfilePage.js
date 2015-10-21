@@ -247,7 +247,7 @@ var UserProfilePage = {
 			$sampleAvatars = modal.find('.sample-avatars');
 
 		// VOLDEV-83: Fix confusing file upload interface
-		$avatarUploadButton.on('click', function() {
+		$avatarUploadButton.on('click', function () {
 			$avatarUploadInput.click();
 		});
 
@@ -388,7 +388,11 @@ var UserProfilePage = {
 			type: 'POST',
 			url: this.ajaxEntryPoint + '&method=saveUserData',
 			dataType: 'json',
-			data: {'userId': UserProfilePage.userId, 'data': JSON.stringify(userData)},
+			data: {
+				'userId': UserProfilePage.userId,
+				'data': JSON.stringify(userData),
+				'token': window.mw.user.tokens.get('editToken')
+			},
 			success: function (data) {
 				if (data.status === 'error') {
 					UserProfilePage.error(data.errMsg);
