@@ -7,17 +7,17 @@ class View {
 	/**
 	 * Returns HTML with Template type.
 	 * If a user is logged in it returns also an entry point for edition.
-	 * @param int $articleId
+	 * @param \Title $title
 	 * @param \User $user
 	 * @param string $fallbackMsg
 	 * @return string
 	 */
-	public function renderTemplateType( $articleId, $user, $fallbackMsg = '' ) {
-		if ( !$user->isLoggedIn() && !$this->isTemplateClassified() ) {
+	public function renderTemplateType( \Title $title, $user, $fallbackMsg = '' ) {
+		if ( !$user->isLoggedIn() && !$this->isTemplateClassified( $title ) ) {
 			return $fallbackMsg;
 		}
 
-		$templateType = ( new \TemplateClassificationMockService() )->getTemplateType( $articleId );
+		$templateType = ( new \TemplateClassificationMockService() )->getTemplateType( $title->getArticleID() );
 		/**
 		 * template-classification-type-unclassified
 		 * template-classification-type-infobox
@@ -27,7 +27,7 @@ class View {
 		$templateTypeMessage = wfMessage( "template-classification-type-{$templateType}" )->escaped();
 
 		$editButton = flase;
-		if ($user->isLoggedIn()) {
+		if ( ( new Permissions() )->userCanChangeType( $user, $title ) ) {
 			$editButton = true;
 		}
 
@@ -42,12 +42,12 @@ class View {
 
 	/**
 	 * Renders an entry point on a template's edit page.
-	 * @param int $articleId
+	 * @param \Title $title
 	 * @param \User $user
 	 * @return string
 	 */
-	public function renderEditPageEntryPoint( $articleId, \User $user ) {
-		$templateType = $this->renderTemplateType( $articleId, $user );
+	public function renderEditPageEntryPoint( \Title $title, \User $user ) {
+		$templateType = $this->renderTemplateType( $title, $user );
 		return \MustacheService::getInstance()->render(
 			__DIR__ . '/templates/TemplateClassificationEditPageEntryPoint.mustache',
 			[
@@ -60,8 +60,9 @@ class View {
 	/**
 	 * Mock for frontend work
 	 */
-	private function isTemplateClassified() {
-		return false;
+	private function isTemplateClassified( $title ) {
+		$templateType = ( new \TemplateClassificationMockService() )->getTemplateType( $title->getArticleID() );
+		return $templateType !== \TemplateClassification::TEMPLATE_UNCLASSIFIED;
 	}
 
 }

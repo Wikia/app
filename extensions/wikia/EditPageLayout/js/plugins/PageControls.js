@@ -103,6 +103,13 @@
 
 		// handle "Save" button
 		onSave: function (event) {
+			event.preventDefault();
+
+			var eventOk = this.editor.fire('save');
+			if (eventOk === false) {
+				return;
+			}
+
 			if (this.textarea.val() == this.textarea.attr('placeholder')) {
 				this.textarea.val('');
 			}
@@ -120,7 +127,6 @@
 			});
 
 			// prevent submitting immediately so we can track this event
-			event.preventDefault();
 			this.editform.off('submit');
 			setTimeout(this.proxy(function () {
 				this.editform.submit();

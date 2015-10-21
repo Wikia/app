@@ -2661,7 +2661,7 @@ $config['visit_source_js'] = [
 	]
 ];
 
-$config['tempate_classification_js'] = [
+$config['template_classification_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis' ],
 	'assets' => [
@@ -2669,7 +2669,7 @@ $config['tempate_classification_js'] = [
 	]
 ];
 
-$config['tempate_classification_scss'] = [
+$config['template_classification_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => [ 'oasis' ],
 	'assets' => [

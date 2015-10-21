@@ -9,6 +9,10 @@
 		requires.push('syntaxhighlighterqueueinit');
 	}
 
+	if (window.enableTemplateClassificationEditorPlugin === true) {
+		requires.push('templateclassificationeditorplugin');
+	}
+
 	/**
 	 * Shortcut to automatically add all Wikia specific plugins
 	 */

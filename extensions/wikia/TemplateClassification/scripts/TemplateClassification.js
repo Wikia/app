@@ -1,4 +1,4 @@
-require(['jquery', 'mw', 'wikia.loader', 'wikia.nirvana'],
+define('TemplateClassification', ['jquery', 'mw', 'wikia.loader', 'wikia.nirvana'],
 function ($, mw, loader, nirvana) {
 	'use strict';
 
@@ -12,7 +12,7 @@ function ($, mw, loader, nirvana) {
 			e.preventDefault();
 			openEditModal();
 		});
-		if (isNewArticle()) {
+		if (isNewArticle()) { // TODO open if type is TemplateClassification::UNDEFINED
 			openEditModal();
 		}
 	}
@@ -183,8 +183,12 @@ function ($, mw, loader, nirvana) {
 		});
 	}
 
+	function isEditPage() {
+		return mw.config.get('wgTransactionContext').action === 'edit';
+	}
+
 	function isNewArticle() {
-		return mw.config.get('wgArticleId') === 0 && mw.config.get('wgTransactionContext').action === 'edit';
+		return mw.config.get('wgArticleId') === 0 && isEditPage();
 	}
 
 	function storeTypeForSend(templateType) {
@@ -200,5 +204,15 @@ function ($, mw, loader, nirvana) {
 		}
 	}
 
-	$(init);
+	return {
+		init: init,
+		open: openEditModal
+	};
+});
+
+require([],function () {
+	'use strict';
+	require(['TemplateClassification'],function (tc) {
+		$(tc.init);
+	});
 });
