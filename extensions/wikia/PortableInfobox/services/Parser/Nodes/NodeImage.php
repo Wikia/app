@@ -57,8 +57,8 @@ class NodeImage extends Node {
 					$data[] = array( 'label' => (string) $div['title'], 'title' => \ArticleAsJson::$media[$out[1]]['title'] );
 				}
 			} else {
-				if ( preg_match( '/data-image-key="([^"]+)"/', $div->p->asXML(), $out ) ) {
-					$data[] = array( 'label' => (string) $div['title'], 'title' => $out[1] );
+				if ( preg_match( '/data-(video|image)-key="([^"]+)"/', $div->p->asXML(), $out ) ) {
+					$data[] = array( 'label' => (string) $div['title'], 'title' => $out[2] );
 				}
 			}
 		}
