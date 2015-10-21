@@ -11,7 +11,7 @@ class TemplateClassificationMockService extends WikiaService {
 	 */
 	public function getTemplateType( $articleId ) {
 		if ( empty( $articleId ) ) {
-			return TemplateClassification::TEMPLATE_UNCLASSIFIED;
+			return '';
 		}
 		/* Use cache to have consistent results for same pages due to randomization */
 		$type = WikiaDataAccess::cache(
@@ -19,7 +19,8 @@ class TemplateClassificationMockService extends WikiaService {
 			WikiaResponse::CACHE_STANDARD,
 			function () {
 				$types = TemplateClassification::$templateTypes;
-				return $types[array_rand( $types )];
+				$types = array_merge( $types, [''] );
+				return $types[ array_rand( $types ) ];
 			}
 		);
 		return $type;

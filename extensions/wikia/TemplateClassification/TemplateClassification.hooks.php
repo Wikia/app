@@ -15,8 +15,10 @@ class Hooks {
 		\Hooks::register( 'BeforePageDisplay', [ $hooks, 'onBeforePageDisplay' ] );
 		\Hooks::register( 'PageHeaderPageTypePrepared', [ $hooks, 'onPageHeaderPageTypePrepared' ] );
 		\Hooks::register( 'QueryPageUseResultsBeforeRecache', [ $hooks, 'onQueryPageUseResultsBeforeRecache' ] );
-		\Hooks::register( 'EditPageLayoutExecute', [ $hooks, 'onEditPageLayoutExecute' ] );
+		/* Edit page hooks */
+		\Hooks::register( 'EditPage::showEditForm:fields', [ $hooks, 'onEditPageShowEditFormFields' ] );
 		\Hooks::register( 'ArticleInsertComplete', [ $hooks, 'onArticleInsertComplete' ] );
+		\Hooks::register( 'EditPageLayoutExecute', [ $hooks, 'onEditPageLayoutExecute' ] );
 		\Hooks::register( 'EditPageMakeGlobalVariablesScript', [ $hooks, 'onEditPageMakeGlobalVariablesScript' ] );
 	}
 
@@ -40,13 +42,31 @@ class Hooks {
 	 * @param array $aVars
 	 * @return bool
 	 */
-	public static function onEditPageMakeGlobalVariablesScript( array &$aVars ) {
+	public function onEditPageMakeGlobalVariablesScript( array &$aVars ) {
 		$context = \RequestContext::getMain();
 
 		// Enable TemplateClassificationEditorPlugin
 		if ( ( new Permissions() )->shouldDisplayEntryPointInEdit( $context->getUser(), $context->getTitle() ) ) {
 			$aVars['enableTemplateClassificationEditorPlugin'] = true;
 		}
+		return true;
+	}
+
+	/**
+	 * Add hidden input to editform with template type
+	 * @param \EditPageLayout $editPage
+	 * @param \OutputPage $out
+	 */
+	public static function onEditPageShowEditFormFields( \EditPageLayout $editPage, \OutputPage $out ) {
+		return true;
+		$articleId = $editPage->getTitle()->getArticleID();
+		$templateType = ( new \TemplateClassificationMockService() )->getTemplateType( $articleId );
+		$editPage->addHiddenField([
+			'name' => 'templateClassificationType',
+			'value' => $templateType,
+			'type' => 'hidden',
+		]);
+
 		return true;
 	}
 

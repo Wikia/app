@@ -15,19 +15,24 @@
 			},
 
 			forceType: function () {
-				/* existance of templateClassificationType field defines definition of type
-				* TODO check also if type is not set as TemplateClassification::UNDEFINED */
-				var typeDefined =
-					$('#editform').find('[name=templateClassificationType]').length > 0 ||
-					mw.config.get('wgArticleId') !== 0;
+				var	$typeField = $('#editform').find('input[name=templateClassificationType]'),
+					type;
 
-				if (!typeDefined) {
-					require(['TemplateClassification'], function forceTemplateClassificationModal(tc) {
-						tc.open();
-					});
+				if ($typeField.length > 0) {
+					type = $typeField.attr('value');
+					if (type !== '') {
+						// Type defined
+						return true;
+					}
 				}
 
-				return typeDefined;
+				// Type not defined force modal
+				require(['TemplateClassification'], function forceTemplateClassificationModal(tc) {
+					tc.open();
+				});
+
+				// Break article submit
+				return false;
 			}
 
 		});

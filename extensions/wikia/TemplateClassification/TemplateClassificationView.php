@@ -18,6 +18,10 @@ class View {
 		}
 
 		$templateType = ( new \TemplateClassificationMockService() )->getTemplateType( $title->getArticleID() );
+		// Fallback to unclassified for not existent classification
+		if ( $templateType === '' ) {
+			$templateType = \TemplateClassification::TEMPLATE_UNCLASSIFIED;
+		}
 		/**
 		 * template-classification-type-unclassified
 		 * template-classification-type-infobox
@@ -62,7 +66,7 @@ class View {
 	 */
 	private function isTemplateClassified( $title ) {
 		$templateType = ( new \TemplateClassificationMockService() )->getTemplateType( $title->getArticleID() );
-		return $templateType !== \TemplateClassification::TEMPLATE_UNCLASSIFIED;
+		return $templateType !== \TemplateClassification::TEMPLATE_UNCLASSIFIED && $templateType !== '';
 	}
 
 }

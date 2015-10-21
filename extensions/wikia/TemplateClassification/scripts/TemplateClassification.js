@@ -3,48 +3,60 @@ function ($, mw, loader, nirvana) {
 	'use strict';
 
 	var $classificationForm,
-		$editFromHiddenTypeFiled,
+		$editFromHiddenTypeFiled = $(),
 		modalConfig,
-		selectedType;
+		selectedType,
+		messagesLoaded;
 
 	function init() {
 		$('.template-classification-edit').click(function (e) {
 			e.preventDefault();
 			openEditModal();
 		});
-		if (isNewArticle()) { // TODO open if type is TemplateClassification::UNDEFINED
+
+		/* Force modal on load for new pages creation */
+		if (isNewArticle() && isEditPage()) {
 			openEditModal();
 		}
 	}
 
 	function openEditModal() {
-		if (selectedType) {
-			// All data in house, just open modal
-			handleRequestsForModal(false, [{type:selectedType}], false);
-			return true;
+		var messagesLoader = falseFunction,
+			classificationFormLoader = falseFunction,
+			typeLoader = getTemplateType;
+
+		if (!messagesLoaded) {
+			messagesLoader = getMessages;
 		}
 
-		if (isNewArticle()) {
-			// Open modal without type selected
-			$.when(
-				getTemplateClassificationEditForm(),
-				false,
-				getMessages()
-			).done(handleRequestsForModal);
-			return;
+		if (!$classificationForm) {
+			classificationFormLoader = getTemplateClassificationEditForm;
+		}
+
+		if (isEditPage()) {
+			selectedType = getType();
+		}
+
+		if (selectedType) {
+			typeLoader = function () {return [{type:selectedType}];};
+		}
+
+		if (isNewArticle() && !selectedType) {
+			typeLoader = falseFunction;
 		}
 
 		// Fetch all data and open modal
 		$.when(
-			getTemplateClassificationEditForm(),
-			getTemplateType(mw.config.get('wgArticleId')),
-			getMessages()
+			classificationFormLoader(),
+			typeLoader(mw.config.get('wgArticleId')),
+			messagesLoader()
 		).done(handleRequestsForModal);
 	}
 
 	function handleRequestsForModal(classificationForm, templateType, loaderRes) {
 		if (loaderRes) {
 			mw.messages.set(loaderRes.messages);
+			messagesLoaded = true;
 		}
 
 		if (classificationForm) {
@@ -94,7 +106,8 @@ function ($, mw, loader, nirvana) {
 			selectedTypeText = $classificationForm.find('label[for="template-classification-' + selectedType + '"]');
 			$('.template-classification-type-text').html(selectedTypeText.html());
 
-			if (isNewArticle()) {
+			// Don't send save request when on edit page
+			if (isEditPage()) {
 				storeTypeForSend(templateType);
 			} else {
 				nirvana.sendRequest({
@@ -192,7 +205,7 @@ function ($, mw, loader, nirvana) {
 	}
 
 	function storeTypeForSend(templateType) {
-		if (!$editFromHiddenTypeFiled) {
+		if ($editFromHiddenTypeFiled.length === 0) {
 			$editFromHiddenTypeFiled = $('<input>').attr({
 				'type': 'hidden',
 				'name': 'templateClassificationType',
@@ -202,6 +215,20 @@ function ($, mw, loader, nirvana) {
 		} else {
 			$editFromHiddenTypeFiled.attr('value', mw.html.escape(templateType));
 		}
+	}
+
+	function getType() {
+		if ($editFromHiddenTypeFiled.length === 0){
+			$editFromHiddenTypeFiled = $('#editform').find('[name=templateClassificationType]');
+		}
+		if ($editFromHiddenTypeFiled.length === 0) {
+			return '';
+		}
+		return $editFromHiddenTypeFiled.attr('value');
+	}
+
+	function falseFunction() {
+		return false;
 	}
 
 	return {
