@@ -23,9 +23,9 @@ var TopList = {
 		$.post(wgScript,
 			{
 				'action': 'ajax',
-                'rs': 'TopListHelper::voteItem',
-                'title': $('#top-list-title').val() + '/' + this.id,
-                'token': mw.user.tokens.get('editToken')
+ 				'rs': 'TopListHelper::voteItem',
+ 				'title': $('#top-list-title').val() + '/' + this.id,
+ 				'token': mw.user.tokens.get('editToken')
 			},
 			function(response) {
 				if(response.result === true){
@@ -50,11 +50,11 @@ var TopList = {
 		$.post(wgScript,
 			{
 				'action': 'ajax',
-                'cb' : Math.random(),
-                'list': $('#top-list-title').val(),
+				'cb' : Math.random(),
+				'list': $('#top-list-title').val(),
 				'rs': 'TopListHelper::addItem',
-                'text': $('#toplist-new-item-name').val(),
-                'token': mw.user.tokens.get('editToken')
+				'text': $('#toplist-new-item-name').val(),
+				'token': mw.user.tokens.get('editToken')
 			},
 			function(response) {
 				TopList.unblockInput();
