@@ -21,7 +21,7 @@ class View {
 		 * template-classification-type-quote
 		 */
 		$templateName = wfMessage(
-			"template-classification-indicator",
+			'template-classification-indicator',
 			wfMessage( "template-classification-type-{$templateType}" )
 		)->escaped();
 		if ( $user->isLoggedIn() ) {
