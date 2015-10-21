@@ -222,4 +222,11 @@ class EditPageLayoutController extends WikiaController {
 
 		wfProfileOut( __METHOD__ );
 	}
+
+	public function addExtraPageControlsHtml( $html ) {
+		if ( !isset( $this->extraPageControlsHtml ) ) {
+			$this->extraPageControlsHtml = '';
+		}
+		$this->extraPageControlsHtml .= $html;
+	}
 }

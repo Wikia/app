@@ -1,1 +1,0 @@
-CREATE INDEX /*i*/repo_path ON /*_*/code_paths (cp_repo_id, cp_path);

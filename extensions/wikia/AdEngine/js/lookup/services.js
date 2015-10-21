@@ -21,6 +21,7 @@ define('ext.wikia.adEngine.lookup.services', [
 
 	var logGroup = 'ext.wikia.adEngine.lookup.services',
 		rtpLookupTracked = false,
+		oxLookupTracked = false,
 		amazonLookupTracked = false;
 
 	function trackState(module) {
@@ -57,6 +58,11 @@ define('ext.wikia.adEngine.lookup.services', [
 		if (!amazonLookupTracked) {
 			amazonLookupTracked  = true;
 			trackState(amazonMatch);
+		}
+
+		if (!oxLookupTracked) {
+			oxLookupTracked  = true;
+			trackState(oxBidder);
 		}
 
 		if (rtp && rtp.wasCalled()) {

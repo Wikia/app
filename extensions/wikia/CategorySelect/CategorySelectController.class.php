@@ -191,6 +191,8 @@ class CategorySelectController extends WikiaController {
 	public function save() {
 		wfProfileIn( __METHOD__ );
 
+		$this->checkWriteRequest();
+
 		$articleId = $this->request->getVal( 'articleId', 0 );
 		$categories = $this->request->getVal( 'categories', array() );
 

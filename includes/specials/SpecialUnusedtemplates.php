@@ -30,8 +30,9 @@
  * @ingroup SpecialPage
  */
 class UnusedtemplatesPage extends QueryPage {
+	const UNUSED_TEMPLATES_PAGE_NAME = 'Unusedtemplates';
 
-	function __construct( $name = 'Unusedtemplates' ) {
+	function __construct( $name = self::UNUSED_TEMPLATES_PAGE_NAME ) {
 		parent::__construct( $name );
 	}
 

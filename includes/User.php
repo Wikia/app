@@ -20,6 +20,7 @@
  * @file
  */
 
+use Email\Controller\EmailConfirmationController;
 use Wikia\DependencyInjection\Injector;
 use Wikia\Domain\User\Attribute;
 use Wikia\Logger\Loggable;
@@ -39,7 +40,7 @@ define( 'USER_TOKEN_LENGTH', 32 );
  * Int Serialized record version.
  * @ingroup Constants
  */
-define( 'MW_USER_VERSION', 16 );
+define( 'MW_USER_VERSION', 17 );
 
 /**
  * String Some punctuation to prevent editing from broken text-mangling proxies.
@@ -989,8 +990,8 @@ class User {
 	 */
 	public static function randomPassword() {
 		global $wgMinimalPasswordLength;
-		// Decide the final password length based on our min password length, stopping at a minimum of 10 chars
-		$length = max( 10, $wgMinimalPasswordLength );
+		// Decide the final password length based on our min password length, stopping at a minimum of 20 chars
+		$length = max( 20, $wgMinimalPasswordLength );
 		// Multiply by 1.25 to get the number of hex characters we need
 		$length = $length * 1.25;
 		// Generate random hex chars
@@ -2421,6 +2422,11 @@ class User {
 		if( $str == $this->mEmail ) {
 			return;
 		}
+
+		/* Wikia change */
+		/* add a new hook that sends both before/after emails @param User, new_email, old_email */
+		wfRunHooks( 'BeforeUserSetEmail', array( $this, $str, $this->mEmail ) );
+
 		$this->mEmail = $str;
 
 		/* Wikia change begin - @author: Macbre */
@@ -4042,10 +4048,23 @@ class User {
 	 * Generate a new e-mail confirmation token and send a confirmation/invalidation
 	 * mail to the user's given address.
 	 *
-	 * @param $type String: message to send, either "created", "changed" or "set"
-	 * @return Status object
+	 * @param string $type
+	 * @param string $mailtype
+	 * @param string $mailmsg
+	 * @param bool|true $ip_arg
+	 * @param string $emailTextTemplate
+	 * @param null $language
+	 * @return Status
+	 * @throws MWException
 	 */
-	public function sendConfirmationMail( $type = 'created', $mailtype = "ConfirmationMail", $mailmsg = '', $ip_arg = true, $emailTextTemplate = '' ) {
+	public function sendConfirmationMail(
+		$type = 'created',
+		$mailtype = EmailConfirmationController::TYPE,
+		$mailmsg = '',
+		$ip_arg = true,
+		$emailTextTemplate = '',
+		$language = null ) {
+
 		global $wgLang;
 		$expiration = null; // gets passed-by-ref and defined in next line.
 		$token = $this->confirmationToken( $expiration );
@@ -4085,7 +4104,7 @@ class User {
 
 		$emailController = $this->getEmailController( $mailtype );
 		if ( !empty( $emailController ) ) {
-			return $this->sendUsingEmailExtension( $emailController, $url );
+			return $this->sendUsingEmailExtension( $emailController, $url, $language );
 		}
 
 		/* Wikia change begin - @author: Marooned */
@@ -4136,7 +4155,7 @@ class User {
 	}
 
 	private function isConfirmationMail( $mailType ) {
-		return $mailType == "ConfirmationMail";
+		return $mailType == EmailConfirmationController::TYPE;
 	}
 
 	private function isConfirmationReminderMail( $mailType ) {
@@ -4151,12 +4170,16 @@ class User {
 		return $mailType == "ReactivationMail";
 	}
 
-	private function sendUsingEmailExtension( $emailController, $url ) {
+	private function sendUsingEmailExtension( $emailController, $url, $language=null ) {
 		$params = [
 			'targetUser' => $this->getName(),
 			'newEmail' => $this->getNewEmail(),
 			'confirmUrl' => $url,
 		];
+
+		if ($language !== null) {
+			$params['targetLang'] = $language;
+		}
 
 		$responseData = F::app()->sendRequest( $emailController, 'handle', $params )->getData();
 
@@ -4178,7 +4201,7 @@ class User {
 		$this->saveSettings();
 		return $this->sendConfirmationMail(
 			false,
-			!empty( $this->getNewEmail() ) ? 'ReConfirmationMail' : 'ConfirmationMail'
+			!empty( $this->getNewEmail() ) ? 'ReConfirmationMail' : EmailConfirmationController::TYPE
 		);
 	}
 
@@ -5063,9 +5086,7 @@ class User {
 	 * @return bool
 	 */
 	private function shouldOptionBeStored( $key, $value ) {
-		global $wgGlobalUserProperties;
 		if (
-			( is_array( $wgGlobalUserProperties ) && in_array( $key, $wgGlobalUserProperties ) ) ||
 			( is_null( self::getDefaultOption( $key ) ) && !( $value === false || is_null($value) ) ) ||
 			$value != self::getDefaultOption( $key )
 		) {
