@@ -191,6 +191,10 @@ ul.pi-image-collection-tabs {
 .pi-image-collection-tab-content {
 	background-color: $infobox-background;
 	display: none;
+
+	.video-thumbnail {
+		display: block;
+	}
 }
 
 .pi-image-collection-tab-content.current {
