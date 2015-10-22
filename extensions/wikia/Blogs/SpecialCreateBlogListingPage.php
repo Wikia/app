@@ -45,12 +45,11 @@ class CreateBlogListingPage extends SpecialPage {
 
 		$wgOut->setPageTitle( wfMsg( 'create-blog-listing-title' ) );
 
-		if ( $wgRequest->wasPosted() ) {
+		if ( $wgRequest->wasPosted() && $wgUser->matchEditToken( $wgRequest->getVal( 'token' ) ) ) {
 			$this->parseFormData();
 			if ( count( $this->mFormErrors ) > 0 || !empty( $this->mRenderedPreview ) ) {
 				$this->renderForm();
-			}
-			else {
+			} else {
 				$this->save();
 			}
 		}
@@ -84,7 +83,7 @@ class CreateBlogListingPage extends SpecialPage {
 	}
 
 	protected function parseFormData() {
-		global $wgUser, $wgRequest, $wgOut, $wgParser;
+		global $wgRequest, $wgParser;
 
 		$this->mFormData['listingTitle'] = $wgRequest->getVal( 'blogListingTitle' );
 		$this->mFormData['listingCategories'] = $wgRequest->getVal( 'wpCategoryTextarea1' );
@@ -96,21 +95,18 @@ class CreateBlogListingPage extends SpecialPage {
 
 		if ( empty( $this->mFormData['listingTitle'] ) ) {
 			$this->mFormErrors[] = wfMsg( 'create-blog-empty-title-error' );
-		}
-		else {
+		} else {
 			$oPostTitle = Title::newFromText( $this->mFormData['listingTitle'], NS_BLOG_LISTING );
 
 			if ( !( $oPostTitle instanceof Title ) ) {
 				$this->mFormErrors[] = wfMsg( 'create-blog-invalid-title-error' );
-			}
-			elseif ( $oPostTitle->isProtected( 'edit' ) && !$oPostTitle->userCan( 'edit' ) ) {
+			} elseif ( $oPostTitle->isProtected( 'edit' ) && !$oPostTitle->userCan( 'edit' ) ) {
 				if ( $oPostTitle->isSemiProtected() ) {
 					$this->mFormErrors[] = wfMsgExt( 'semiprotectedpagewarning', array( 'parse' ) );
 				} else {
 					$this->mFormErrors[] = wfMsgExt( 'protectedpagewarning', array( 'parse' ) );
 				}
-			}
-			else {
+			} else {
 				$this->mPostArticle = new Article( $oPostTitle, 0 );
 				if ( $this->mPostArticle->exists() && ( $this->mFormData['listingType'] == 'plain' ) && !$this->mFormData['isExistingArticleEditAllowed'] ) {
 					$this->mFormErrors[] = wfMsg( 'create-blog-article-already-exists' );
@@ -187,13 +183,10 @@ class CreateBlogListingPage extends SpecialPage {
 		global $wgOut;
 		if ( $this->mFormData['listingType'] == 'box' ) {
 			$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
-			$oTmpl->set_vars( array(
-				"tagBody" => $this->mTagBody )
-			);
+			$oTmpl->set_vars( [ 'tagBody' => $this->mTagBody ] );
 
 			$wgOut->addHTML( $oTmpl->render( "createListingConfirm" ) );
-		}
-		else {
+		} else {
 			$sPageBody = $this->mTagBody;
 
 			if ( !empty( $this->mFormData['listingPageCategories'] ) ) {
