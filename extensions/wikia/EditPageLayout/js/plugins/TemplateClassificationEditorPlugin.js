@@ -3,7 +3,7 @@
  *
  * @author Kamil Koterba <kamil@wikia-inc.com>
  */
-(function (window, $, mw) {
+(function (window, $) {
 		'use strict';
 
 		var WE = window.WikiaEditor = window.WikiaEditor || (new window.Observable());
@@ -27,7 +27,7 @@
 				}
 
 				// Type not defined force modal
-				require(['TemplateClassification'], function forceTemplateClassificationModal(tc) {
+				require(['TemplateClassificationInEdit'], function forceTemplateClassificationModal(tc) {
 					tc.open();
 				});
 
@@ -37,4 +37,4 @@
 
 		});
 
-})(this, jQuery, mw);
+})(this, jQuery);

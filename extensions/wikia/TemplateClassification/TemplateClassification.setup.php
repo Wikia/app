@@ -10,6 +10,7 @@
  * The extension is a MediaWiki client of the TemplateClassification Service.
  *
  * @author Adam Karmiński <adamk@wikia-inc.com>
+ * @author Kamil Koterba <kamil@wikia-inc.com>
  * @copyright (c) 2015 Wikia, Inc.
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
@@ -17,9 +18,12 @@
 $wgExtensionCredits['other'][] = [
 	'name'				=> 'Template Classification',
 	'version'			=> '1.0',
-	'author'			=> 'Adam Karmiński',
+	'author'			=> [
+		'Adam Karmiński',
+		'Kamil Koterba',
+	],
 	'url'               => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/TemplateClassification',
-	'descriptionmsg'    => 'tc-desc',
+	'descriptionmsg'    => 'template-classification-description',
 ];
 
 /**

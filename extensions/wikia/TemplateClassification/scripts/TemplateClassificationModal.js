@@ -1,29 +1,39 @@
-define('TemplateClassification', ['jquery', 'mw', 'wikia.loader', 'wikia.nirvana'],
+/**
+ * TemplateClassificationModal module
+ *
+ * Initiates modal and opens it on entry point click
+ * Provides two params in init method for handling save and providing selected type
+ */
+define('TemplateClassificationModal', ['jquery', 'mw', 'wikia.loader', 'wikia.nirvana'],
 function ($, mw, loader, nirvana) {
 	'use strict';
 
 	var $classificationForm,
-		$editFromHiddenTypeFiled = $(),
 		modalConfig,
-		selectedType,
-		messagesLoaded;
+		messagesLoaded,
+		saveHandler = falseFunction,
+		typeGetter = falseFunction;
 
-	function init() {
+	/**
+	 * @param {function} typeGetterProvided Method that should return type in json format,
+	 *  	also can return a promise that will return type
+	 *  	eg. return from typeGetterProvided [{type:'exampletype'}]
+	 * @param {function} saveHandlerProvided Method that should handle modal save,
+	 *  	receives {string} selectedType as parameter
+	 */
+	function init(typeGetterProvided, saveHandlerProvided) {
+		saveHandler = saveHandlerProvided;
+		typeGetter = typeGetterProvided;
+
 		$('.template-classification-edit').click(function (e) {
 			e.preventDefault();
 			openEditModal();
 		});
-
-		/* Force modal on load for new pages creation */
-		if (isNewArticle() && isEditPage()) {
-			openEditModal();
-		}
 	}
 
 	function openEditModal() {
 		var messagesLoader = falseFunction,
-			classificationFormLoader = falseFunction,
-			typeLoader = getTemplateType;
+			classificationFormLoader = falseFunction;
 
 		if (!messagesLoaded) {
 			messagesLoader = getMessages;
@@ -33,24 +43,26 @@ function ($, mw, loader, nirvana) {
 			classificationFormLoader = getTemplateClassificationEditForm;
 		}
 
-		if (isEditPage()) {
-			selectedType = getType();
-		}
-
-		if (selectedType) {
-			typeLoader = function () {return [{type:selectedType}];};
-		}
-
-		if (isNewArticle() && !selectedType) {
-			typeLoader = falseFunction;
-		}
-
 		// Fetch all data and open modal
 		$.when(
 			classificationFormLoader(),
-			typeLoader(mw.config.get('wgArticleId')),
+			typeGetter(mw.config.get('wgArticleId')),
 			messagesLoader()
 		).done(handleRequestsForModal);
+	}
+
+	function getLabel(templateType) {
+		var selectedTypeText;
+
+		if (!$classificationForm) {
+			return '';
+		}
+
+		selectedTypeText = $classificationForm.find(
+			'label[for="template-classification-' + mw.html.escape(templateType) + '"]'
+		);
+
+		return selectedTypeText.html();
 	}
 
 	function handleRequestsForModal(classificationForm, templateType, loaderRes) {
@@ -64,7 +76,7 @@ function ($, mw, loader, nirvana) {
 		}
 
 		if (templateType) {
-			selectedType = mw.html.escape(templateType[0].type);
+			var selectedType = mw.html.escape(templateType[0].type);
 			// Mark selected type
 			$classificationForm.find('input[checked="checked"]').removeAttr('checked');
 			$classificationForm.find('input[value="' + selectedType + '"]').attr('checked', 'checked');
@@ -94,36 +106,31 @@ function ($, mw, loader, nirvana) {
 	 * One of sub-tasks for getting modal shown
 	 */
 	function processInstance(modalInstance) {
-		//modalInstance = instance;
 		/* Submit template type edit form on Done button click */
-		modalInstance.bind('done', function processSave() {
-			var selectedTypeText,
-				templateType = $('#TemplateClassificationEditForm').serializeArray()[0].value;
-
-			selectedType = mw.html.escape(templateType);
-
-			// Update entry point label
-			selectedTypeText = $classificationForm.find('label[for="template-classification-' + selectedType + '"]');
-			$('.template-classification-type-text').html(selectedTypeText.html());
-
-			// Don't send save request when on edit page
-			if (isEditPage()) {
-				storeTypeForSend(templateType);
-			} else {
-				nirvana.sendRequest({
-					controller: 'TemplateClassificationMockApi',
-					method: 'setTemplateType',
-					data: {
-						'articleId': mw.config.get('wgArticleId'),
-						'templateType': templateType
-					}
-				});
-			}
-			modalInstance.trigger('close');
+		modalInstance.bind('done', function runSave() {
+			processSave(modalInstance);
 		});
 
 		/* Show the modal */
 		modalInstance.show();
+	}
+
+	function processSave(modalInstance) {
+		var templateType = $('#TemplateClassificationEditForm').serializeArray()[0].value;
+
+		saveHandler(templateType);
+
+		// Update entry point label
+		updateEntryPointLabel(templateType);
+
+		modalInstance.trigger('close');
+	}
+
+	function updateEntryPointLabel(templateType) {
+		var selectedTypeText = $classificationForm.find(
+			'label[for="template-classification-' + mw.html.escape(templateType) + '"]'
+		);
+		$('.template-classification-type-text').html(selectedTypeText.html());
 	}
 
 	function setupTemplateClassificationModal(content) {
@@ -176,17 +183,6 @@ function ($, mw, loader, nirvana) {
 		});
 	}
 
-	function getTemplateType(articleId) {
-		return nirvana.sendRequest({
-			controller: 'TemplateClassificationMockApi',
-			method: 'getTemplateType',
-			type: 'get',
-			data: {
-				'articleId': articleId
-			}
-		});
-	}
-
 	function getMessages() {
 		return loader({
 			type: loader.MULTI,
@@ -196,50 +192,13 @@ function ($, mw, loader, nirvana) {
 		});
 	}
 
-	function isEditPage() {
-		return mw.config.get('wgTransactionContext').action === 'edit';
-	}
-
-	function isNewArticle() {
-		return mw.config.get('wgArticleId') === 0 && isEditPage();
-	}
-
-	function storeTypeForSend(templateType) {
-		if ($editFromHiddenTypeFiled.length === 0) {
-			$editFromHiddenTypeFiled = $('<input>').attr({
-				'type': 'hidden',
-				'name': 'templateClassificationType',
-				'value': mw.html.escape(templateType)
-			});
-			$('#editform').append($editFromHiddenTypeFiled);
-		} else {
-			$editFromHiddenTypeFiled.attr('value', mw.html.escape(templateType));
-		}
-	}
-
-	function getType() {
-		if ($editFromHiddenTypeFiled.length === 0){
-			$editFromHiddenTypeFiled = $('#editform').find('[name=templateClassificationType]');
-		}
-		if ($editFromHiddenTypeFiled.length === 0) {
-			return '';
-		}
-		return $editFromHiddenTypeFiled.attr('value');
-	}
-
 	function falseFunction() {
 		return false;
 	}
 
 	return {
 		init: init,
+		getLabel: getLabel,
 		open: openEditModal
 	};
-});
-
-require([],function () {
-	'use strict';
-	require(['TemplateClassification'],function (tc) {
-		$(tc.init);
-	});
 });

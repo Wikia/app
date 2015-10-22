@@ -2661,11 +2661,21 @@ $config['visit_source_js'] = [
 	]
 ];
 
-$config['template_classification_js'] = [
+$config['template_classification_in_view_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis' ],
 	'assets' => [
-		'//extensions/wikia/TemplateClassification/scripts/TemplateClassification.js',
+		'//extensions/wikia/TemplateClassification/scripts/TemplateClassificationInView.js',
+		'//extensions/wikia/TemplateClassification/scripts/TemplateClassificationModal.js',
+	]
+];
+
+$config['template_classification_in_edit_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/TemplateClassification/scripts/TemplateClassificationInEdit.js',
+		'//extensions/wikia/TemplateClassification/scripts/TemplateClassificationModal.js',
 	]
 ];
 

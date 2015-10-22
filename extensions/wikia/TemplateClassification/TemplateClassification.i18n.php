@@ -2,6 +2,7 @@
 $messages = [];
 
 $messages['en'] = [
+	'template-classification-description' => 'Interface for classifying templates to understand content better.',
 	'template-classification-type-unclassified' => 'Unclassified',
 	'template-classification-type-infobox' => 'Infobox',
 	'template-classification-type-navbox' => 'Navbox',
@@ -13,6 +14,7 @@ $messages['en'] = [
 ];
 
 $messages['qqq'] = [
+	'template-classification-description' => 'Description of extension viewed on Special:Version',
 	'template-classification-type-unclassified' => 'Name of an unclassified type',
 	'template-classification-type-infobox' => 'Name of an infobox type',
 	'template-classification-type-navbox' => 'Name of a navbox type',
@@ -24,6 +26,7 @@ $messages['qqq'] = [
 ];
 
 $messages['pl'] = [
+	'template-classification-description' => 'Interfejs do klasyfikacji szablonów w celu lepszego zrozumienia treści.',
 	'template-classification-type-unclassified' => 'Niesklasyfikowany',
 	'template-classification-type-infobox' => 'Infobox',
 	'template-classification-type-navbox' => 'Navbox',

@@ -58,7 +58,6 @@ class Hooks {
 	 * @param \OutputPage $out
 	 */
 	public static function onEditPageShowEditFormFields( \EditPageLayout $editPage, \OutputPage $out ) {
-		return true;
 		$articleId = $editPage->getTitle()->getArticleID();
 		$templateType = ( new \TemplateClassificationMockService() )->getTemplateType( $articleId );
 		$editPage->addHiddenField([
@@ -81,10 +80,10 @@ class Hooks {
 	public function onBeforePageDisplay( \OutputPage $out, \Skin $skin ) {
 		$permissions = new Permissions();
 		if ( $permissions->shouldDisplayEntryPointOnView( $skin->getUser(), $out->getTitle() ) ) {
-			\Wikia::addAssetsToOutput( 'template_classification_js' );
+			\Wikia::addAssetsToOutput( 'template_classification_in_view_js' );
 			\Wikia::addAssetsToOutput( 'template_classification_scss' );
 		} elseif ( $permissions->shouldDisplayEntryPointInEdit( $skin->getUser(), $out->getTitle() ) ) {
-			\Wikia::addAssetsToOutput( 'template_classification_js' );
+			\Wikia::addAssetsToOutput( 'template_classification_in_edit_js' );
 			\Wikia::addAssetsToOutput( 'template_classification_scss' );
 		}
 		return true;
