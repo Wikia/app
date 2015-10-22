@@ -18,15 +18,22 @@ class View {
 		}
 
 		$templateType = ( new \TemplateClassificationMockService() )->getTemplateType( $title->getArticleID() );
-		// Fallback to unclassified for not existent classification
+		// Fallback to unknown for not existent classification
 		if ( $templateType === '' ) {
-			$templateType = \TemplateClassification::TEMPLATE_UNCLASSIFIED;
+			$templateType = \TemplateClassification::TEMPLATE_UNKNOWN;
 		}
 		/**
-		 * template-classification-type-unclassified
 		 * template-classification-type-infobox
 		 * template-classification-type-navbox
 		 * template-classification-type-quote
+		 * template-classification-type-unclassified
+		 * template-classification-type-media
+		 * template-classification-type-reference
+		 * template-classification-type-navigation
+		 * template-classification-type-nonarticle
+		 * template-classification-type-design
+		 * template-classification-type-unknown
+		 * template-classification-type-data
 		 */
 		$templateTypeMessage = wfMessage(
 			'template-classification-indicator',
@@ -69,7 +76,7 @@ class View {
 	 */
 	private function isTemplateClassified( $title ) {
 		$templateType = ( new \TemplateClassificationMockService() )->getTemplateType( $title->getArticleID() );
-		return $templateType !== \TemplateClassification::TEMPLATE_UNCLASSIFIED && $templateType !== '';
+		return $templateType !== \TemplateClassification::TEMPLATE_UNKNOWN && $templateType !== '';
 	}
 
 }

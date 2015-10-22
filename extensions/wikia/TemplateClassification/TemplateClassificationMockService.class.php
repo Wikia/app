@@ -18,7 +18,10 @@ class TemplateClassificationMockService extends WikiaService {
 			wfMemcKey( 'template-classification-type-for-page', $articleId ),
 			WikiaResponse::CACHE_STANDARD,
 			function () {
-				$types = TemplateClassification::$templateTypes;
+				$types = array_diff(
+					TemplateClassification::$templateTypes,
+					[ TemplateClassification::TEMPLATE_UNCLASSIFIED ]
+				);
 				$types = array_merge( $types, [''] );
 				return $types[ array_rand( $types ) ];
 			}
