@@ -128,7 +128,7 @@ function ($, mw, loader, nirvana) {
 
 	function updateEntryPointLabel(templateType) {
 		var selectedTypeText = $classificationForm.find(
-			'label[for="template-classification-' + mw.html.escape(templateType) + '"]'
+			'label[for="template-classification-' + mw.html.escape(templateType) + '"] .tc-type-name'
 		);
 		$('.template-classification-type-text').html(selectedTypeText.html());
 	}

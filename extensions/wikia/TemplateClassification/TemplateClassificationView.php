@@ -12,7 +12,7 @@ class View {
 	 * @param string $fallbackMsg
 	 * @return string
 	 */
-	public function renderTemplateType( \Title $title, $user, $fallbackMsg = '' ) {
+	public function renderTemplateType( \Title $title, $user, $fallbackMsg = '', $templateTypeLabel = null ) {
 		if ( !$user->isLoggedIn() && !$this->isTemplateClassified( $title ) ) {
 			return $fallbackMsg;
 		}
@@ -21,6 +21,10 @@ class View {
 		// Fallback to unknown for not existent classification
 		if ( $templateType === '' ) {
 			$templateType = \TemplateClassification::TEMPLATE_UNKNOWN;
+		}
+
+		if ( $templateTypeLabel === null ) {
+			$templateTypeLabel = wfMessage( 'template-classification-indicator' )->plain();
 		}
 		/**
 		 * template-classification-type-infobox
@@ -35,10 +39,7 @@ class View {
 		 * template-classification-type-unknown
 		 * template-classification-type-data
 		 */
-		$templateTypeMessage = wfMessage(
-			'template-classification-indicator',
-			wfMessage( "template-classification-type-{$templateType}" )
-		)->escaped();
+		$templateTypeMessage = wfMessage( "template-classification-type-{$templateType}" )->plain();
 
 		$editButton = flase;
 		if ( ( new Permissions() )->userCanChangeType( $user, $title ) ) {
@@ -48,6 +49,7 @@ class View {
 		return \MustacheService::getInstance()->render(
 			__DIR__ . '/templates/TemplateClassificationViewPageEntryPoint.mustache',
 			[
+				'templateTypeLabel' => $templateTypeLabel,
 				'templateType' => $templateTypeMessage,
 				'editButton' => $editButton,
 			]
@@ -61,7 +63,7 @@ class View {
 	 * @return string
 	 */
 	public function renderEditPageEntryPoint( \Title $title, \User $user ) {
-		$templateType = $this->renderTemplateType( $title, $user );
+		$templateType = $this->renderTemplateType( $title, $user, '', '' );
 		return \MustacheService::getInstance()->render(
 			__DIR__ . '/templates/TemplateClassificationEditPageEntryPoint.mustache',
 			[

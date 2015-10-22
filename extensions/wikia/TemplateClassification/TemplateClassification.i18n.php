@@ -42,7 +42,7 @@ $messages['en'] = [
 	'template-classification-edit-modal-cancel-button-text' => 'Cancel',
 	'template-classification-edit-modal-title' => 'Edit template type',
 
-	'template-classification-indicator' => 'Template type: $1',
+	'template-classification-indicator' => 'Template type:',
 ];
 
 $messages['qqq'] = [
@@ -77,7 +77,7 @@ $messages['qqq'] = [
 	'template-classification-edit-modal-cancel-button-text' => 'Text on cancel button for editing template type',
 	'template-classification-edit-modal-title' => 'Title of modal for editing template type',
 
-	'template-classification-indicator' => 'Shown in page subheader and near classification dialog entry points to indicate which type the template is currently classified as. Takes one of the template-classification-type-* messages as a parameter.',
+	'template-classification-indicator' => 'Shown in page subheader and near classification dialog entry points to indicate which type the template is currently classified as.',
 ];
 
 $messages['pl'] = [
