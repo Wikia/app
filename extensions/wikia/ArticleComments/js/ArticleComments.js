@@ -450,7 +450,7 @@
 					//re-add events
 					ArticleComments.addHover();
 				} else {
-					// fill error box
+					// Show any API errors via a Banner Notification
 					new BannerNotification(json.msg, 'error').show();
 				}
 
