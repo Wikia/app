@@ -15,12 +15,10 @@
 			},
 
 			forceType: function () {
-				var	$typeField = $('#editform').find('input[name=templateClassificationType]'),
-					type;
+				var	$typeField = $('#editform').find('input[name=templateClassificationType]');
 
 				if ($typeField.length > 0) {
-					type = $typeField.attr('value');
-					if (type !== '') {
+					if ($typeField.attr('value') !== '') {
 						// Type defined
 						return true;
 					}

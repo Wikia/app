@@ -4,16 +4,18 @@
  * Works for edit page.
  *
  * Provides selected type for TemplateClassificationModal,
- * handles type submit that is stored in hidden innput in editrofm
+ * handles type submit that is stored in hidden input in editform
  */
 define('TemplateClassificationInEdit',
 	['jquery', 'mw', 'TemplateClassificationModal'],
 	function ($, mw, templateClassificationModal) {
 		'use strict';
 
-		var $editFromHiddenTypeFiled = $();
+		var $editFromHiddenTypeFiled;
 
 		function init() {
+			$editFromHiddenTypeFiled = $('#editform').find('[name=templateClassificationType]');
+
 			templateClassificationModal.init(getType, storeTypeForSend);
 
 			/* Force modal on load for new pages creation */
@@ -31,30 +33,12 @@ define('TemplateClassificationInEdit',
 		}
 
 		function getType() {
-			var type;
-			if ($editFromHiddenTypeFiled.length === 0){
-				$editFromHiddenTypeFiled = $('#editform').find('[name=templateClassificationType]');
-			}
-			if ($editFromHiddenTypeFiled.length === 0) {
-				type = '';
-			} else {
-				type = $editFromHiddenTypeFiled.attr('value');
-			}
 			/* Return in format required by TemplateClassificationModal module */
-			return [{type:type}];
+			return [{type: $editFromHiddenTypeFiled.attr('value')}];
 		}
 
 		function storeTypeForSend(templateType) {
-			if ($editFromHiddenTypeFiled.length === 0) {
-				$editFromHiddenTypeFiled = $('<input>').attr({
-					'type': 'hidden',
-					'name': 'templateClassificationType',
-					'value': mw.html.escape(templateType)
-				});
-				$('#editform').append($editFromHiddenTypeFiled);
-			} else {
-				$editFromHiddenTypeFiled.attr('value', mw.html.escape(templateType));
-			}
+			$editFromHiddenTypeFiled.attr('value', mw.html.escape(templateType));
 		}
 
 		return {
