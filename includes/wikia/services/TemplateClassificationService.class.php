@@ -11,6 +11,36 @@ class TemplateClassificationService {
 	const USER_PROVIDER = 'user';
 	const AUTO_PROVIDER = 'auto';
 
+	const TEMPLATE_INFOBOX = 'infobox';
+	const TEMPLATE_QUOTE = 'quote';
+	const TEMPLATE_NAVBOX = 'navbox';
+	const TEMPLATE_FLAG = 'notice';
+	const TEMPLATE_REF = 'reference';
+	const TEMPLATE_MEDIA = 'media';
+	const TEMPLATE_DATA = 'data';
+	const TEMPLATE_DESIGN = 'design';
+	const TEMPLATE_NAV = 'navigation';
+	const TEMPLATE_NOT_ART = 'nonarticle';
+	const TEMPLATE_UNKNOWN = 'unknown';
+
+	/**
+	 * Allowed types of templates stored in an array to make a validation process easier.
+	 * @var array
+	 */
+	static $templateTypes = [
+		self::TEMPLATE_INFOBOX,
+		self::TEMPLATE_QUOTE,
+		self::TEMPLATE_NAVBOX,
+		self::TEMPLATE_FLAG,
+		self::TEMPLATE_REF,
+		self::TEMPLATE_MEDIA,
+		self::TEMPLATE_DATA,
+		self::TEMPLATE_DESIGN,
+		self::TEMPLATE_NAV,
+		self::TEMPLATE_NOT_ART,
+		self::TEMPLATE_UNKNOWN,
+	];
+
 	private $apiClient = null;
 
 	/**

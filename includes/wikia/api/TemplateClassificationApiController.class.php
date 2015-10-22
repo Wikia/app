@@ -59,7 +59,7 @@ class TemplateClassificationApiController extends WikiaApiController {
 	 * @throws Exception
 	 * @throws \Swagger\Client\ApiException
 	 */
-	public function classifyType() {
+	public function classifyTemplate() {
 		$pageId = $this->request->getVal( 'pageId', null );
 		$templateType = $this->request->getVal( 'type', null );
 		$userId = $this->wg->User->getId();
