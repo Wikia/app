@@ -30,9 +30,14 @@ class Hooks {
 	 * @return bool
 	 */
 	public function onArticleInsertComplete( \WikiPage $wikiPage ) {
-		( new \TemplateClassificationMockService() )->setTemplateType(
+		global $wgCityId;
+
+		( new \TemplateClassificationService() )->classifyTemplate(
+			$wgCityId,
 			$wikiPage->getId(),
-			\RequestContext::getMain()->getRequest()->getVal('templateClassificationType')
+			\RequestContext::getMain()->getRequest()->getVal('templateClassificationType'),
+			\TemplateClassificationService::USER_PROVIDER,
+			$wikiPage->getUser()
 		);
 		return true;
 	}
@@ -58,8 +63,9 @@ class Hooks {
 	 * @param \OutputPage $out
 	 */
 	public static function onEditPageShowEditFormFields( \EditPageLayout $editPage, \OutputPage $out ) {
+		global $wgCityId;
 		$articleId = $editPage->getTitle()->getArticleID();
-		$templateType = ( new \TemplateClassificationMockService() )->getTemplateType( $articleId );
+		$templateType = ( new \TemplateClassificationService() )->getType( $wgCityId, $articleId );
 		$editPage->addHiddenField([
 			'name' => 'templateClassificationType',
 			'value' => $templateType,

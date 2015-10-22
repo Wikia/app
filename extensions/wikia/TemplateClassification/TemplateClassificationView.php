@@ -21,7 +21,7 @@ class View {
 		$templateType = ( new \TemplateClassificationService() )->getType( $wikiId, $title->getArticleID() );
 		// Fallback to unknown for not existent classification
 		if ( $templateType === '' ) {
-			$templateType = \TemplateClassification::TEMPLATE_UNKNOWN;
+			$templateType = \TemplateClassificationService::TEMPLATE_UNKNOWN;
 		}
 
 		if ( $templateTypeLabel === null ) {
@@ -76,7 +76,7 @@ class View {
 	private function isTemplateClassified( $title ) {
 		global $wgCityId;
 		$templateType = ( new \TemplateClassificationService() )->getType( $wgCityId, $title->getArticleID() );
-		return $templateType !== \TemplateClassification::TEMPLATE_UNKNOWN && $templateType !== '';
+		return $templateType !== \TemplateClassificationService::TEMPLATE_UNKNOWN && $templateType !== '';
 	}
 
 }

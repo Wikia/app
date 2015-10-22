@@ -197,7 +197,7 @@ class EditPageLayoutHelper {
 
 		if ( $namespace === NS_TEMPLATE ) {
 			$tc = new TemplateClassification( $title );
-			return $tc->isType( $tc::TEMPLATE_INFOBOX )
+			return $tc->isType( \TemplateClassificationService::TEMPLATE_INFOBOX )
 					|| self::isTemplateDraft( $title )
 					|| !empty( $portableInfobox );
 		}

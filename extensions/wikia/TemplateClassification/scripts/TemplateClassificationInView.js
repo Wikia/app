@@ -21,11 +21,11 @@ define('TemplateClassificationInView', ['jquery', 'mw', 'wikia.nirvana', 'Templa
 			}
 
 			return nirvana.sendRequest({
-				controller: 'TemplateClassificationMockApi',
-				method: 'getTemplateType',
+				controller: 'TemplateClassificationApi',
+				method: 'getType',
 				type: 'get',
 				data: {
-					'articleId': articleId
+					'pageId': articleId
 				}
 			});
 		}
@@ -40,11 +40,12 @@ define('TemplateClassificationInView', ['jquery', 'mw', 'wikia.nirvana', 'Templa
 			$('.template-classification-type-text').html(typeLabel);
 
 			nirvana.sendRequest({
-				controller: 'TemplateClassificationMockApi',
-				method: 'setTemplateType',
+				controller: 'TemplateClassificationApi',
+				method: 'classifyTemplate',
 				data: {
-					'articleId': mw.config.get('wgArticleId'),
-					'templateType': templateType
+					pageId: mw.config.get('wgArticleId'),
+					type: $('#TemplateClassificationEditForm').serializeArray()[0].value,
+					editToken: mw.user.tokens.get('editToken')
 				}
 			});
 		}
