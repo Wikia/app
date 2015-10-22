@@ -170,6 +170,7 @@ class PortableInfoboxRenderService extends WikiaService {
 				$data = $images[0];
 				$templateName = $type;
 			} else {
+				$images[0]['isFirst'] = true;
 				$data = array( 'images' => $images );
 				$templateName = 'image-collection';
 			}

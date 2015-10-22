@@ -14,7 +14,7 @@
 	// (placing it within portable-infobox class makes it strong enough) //
 
 .portable-infobox {
-	
+
 	.pi-item-spacing {
 		padding: $infobox-item-margin $infobox-item-margin * 2;
 	}
@@ -158,6 +158,43 @@
 	.pi-data-value {
 		padding-left: $infobox-item-margin * 2;
 	}
+}
+
+// **********  Image Collection  ********** //
+
+ul.pi-image-collection-tabs {
+	list-style: none;
+	margin: 0 -1px -1px 0;
+	overflow: hidden;
+	padding: 0;
+	text-align: center;
+
+	li {
+		border: 1px solid $infobox-section-header-background;
+		box-sizing: border-box;
+		cursor: pointer;
+		display: inline-block;
+		margin: -1px -1px 0 0;
+		max-width: 50%;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		vertical-align: bottom;
+		white-space: nowrap;
+
+		&.current {
+			background: $infobox-section-header-background;
+			font-weight: bold;
+		}
+	}
+}
+
+.pi-image-collection-tab-content {
+	background-color: $infobox-background;
+	display: none;
+}
+
+.pi-image-collection-tab-content.current {
+	display: inherit;
 }
 
 // **********  Error handling styles  ********** //
