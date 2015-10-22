@@ -1,14 +1,18 @@
 <?php
 
 class PipelineEventProducer {
+	const WG_CONTENT_NAMESPACES_KEY = 'wgContentNamespaces';
 	const ARTICLE_MESSAGE_PREFIX = 'article';
 	const PRODUCER_NAME = 'MWEventsProducer';
 	const CONTENT = 'content';
+	const ACTION_CREATE = 'create';
+	const ACTION_UPDATE = 'update';
+	const ACTION_DELETE = 'delete';
 	/** @var PipelineConnectionBase */
 	protected static $pipe;
 
 	/**
-	 * @desc Send event to pipeline if old format.
+	 * @desc Send event to pipeline in old format.
 	 * @param $eventName
 	 * @param $pageId
 	 * @param array $params
@@ -22,6 +26,14 @@ class PipelineEventProducer {
 		self::publish( implode( '.', [ self::ARTICLE_MESSAGE_PREFIX, $eventName ] ), $msg );
 	}
 
+	/**
+	 * @desc Send event to pipeline in new format.
+	 * @param $action
+	 * @param $id
+	 * @param string $ns
+	 * @param array $data
+	 * @param array $flags
+	 */
 	public static function nSend( $action, $id, $ns = self::CONTENT, $data = [ ], $flags = [ ] ) {
 		$route = implode( '.', array_merge( [ self::PRODUCER_NAME, "_action:{$action}", "_namespace:{$ns}" ], $flags,
 				// adds info about the message content
@@ -29,6 +41,8 @@ class PipelineEventProducer {
 					return "_content:{$item}";
 				}, array_keys( $data ) ) )
 		);
+
+		wfDebug($route);
 
 		$msg = self::prepareMessage( $id );
 		foreach ( $data as $key => $value ) {
@@ -52,10 +66,17 @@ class PipelineEventProducer {
 	 */
 	static public function onArticleSaveComplete( &$oPage, &$oUser, $text, $summary, $minor, $undef1, $undef2,
 		&$flags, $oRevision, &$status, $baseRevId ) {
-		wfDebug( "IndexingPipeline:onArticleSaveComplete\n" );
+		wfDebug( __METHOD__ . "\n" );
 		$rev = isset( $oRevision ) ? $oRevision->getId() : $oRevision;
+		$ns = self::getArticleNamespace( $oPage->getTitle() );
+		//todo: check if $baseRevId is empty only for new articles
+		$action = empty( $baseRevId ) ? self::ACTION_CREATE : self::ACTION_UPDATE;
+
 		self::send( 'onArticleSaveComplete', $oPage->getId(),
 			[ 'prevRevision' => $baseRevId, 'revision' => $rev ] );
+
+		wfDebug('WEventsProducer' . $baseRevId);
+		self::nSend( $action, $oPage->getId(), $ns, [ 'prevRevision' => $baseRevId, 'revision' => $rev ] );
 
 		return true;
 	}
@@ -70,9 +91,14 @@ class PipelineEventProducer {
 	 * @return bool
 	 */
 	static public function onNewRevisionFromEditComplete( $article, Revision $rev, $baseID, User $user ) {
-		wfDebug( "IndexingPipeline:onNewRevisionFromEditComplete\n" );
+		wfDebug( __METHOD__ . "\n" );
+		$ns = self::getArticleNamespace( $article->getTitle() );
+		//todo: check if this works
+		$action = empty( $baseID ) ? self::ACTION_CREATE : self::ACTION_UPDATE;
+
 		self::send( 'onNewRevisionFromEditComplete', $article->getId(),
 			[ 'prevRevision' => $baseID, 'revision' => $rev->getId() ] );
+		self::nSend( $action, $article->getId(), $ns, [ 'prevRevision' => $baseID, 'revision' => $rev->getId() ] );
 
 		return true;
 	}
@@ -83,8 +109,11 @@ class PipelineEventProducer {
 	 * @return bool
 	 */
 	static public function onArticleDeleteComplete( &$oPage, &$oUser, $reason, $pageId ) {
-		wfDebug( "IndexingPipeline:onArticleDeleteComplete\n" );
+		wfDebug( __METHOD__ . "\n" );
+		$ns = self::getArticleNamespace( $oPage->getTitle() );
+
 		self::send( 'onArticleDeleteComplete', $pageId );
+		self::nSend( self::ACTION_DELETE, $pageId, $ns );
 
 		return true;
 	}
@@ -95,8 +124,11 @@ class PipelineEventProducer {
 	 * @return bool
 	 */
 	static public function onArticleUndelete( Title &$oTitle, $isNew = false ) {
-		wfDebug( "IndexingPipeline:onArticleUndelete\n" );
+		wfDebug( __METHOD__ . "\n" );
+		$ns = self::getArticleNamespace( $oTitle );
+
 		self::send( 'onArticleUndelete', $oTitle->getArticleId(), [ 'isNew' => $isNew ] );
+		self::nSend( self::ACTION_UPDATE, $oTitle->getArticleId(), $ns, [ 'isNew' => $isNew ] );
 
 		return true;
 	}
@@ -107,8 +139,11 @@ class PipelineEventProducer {
 	 * @return bool
 	 */
 	static public function onTitleMoveComplete( &$oOldTitle, &$oNewTitle, &$oUser, $pageId, $redirectId = 0 ) {
-		wfDebug( "IndexingPipeline:onTitleMoveComplete\n" );
+		wfDebug( __METHOD__ . "\n" );
+		$ns = self::getArticleNamespace( $oNewTitle );
+
 		self::send( 'onTitleMoveComplete', $pageId, [ 'redirectId' => $redirectId ] );
+		self::nSend( 'onTitleMoveComplete', $pageId, $ns, [ 'redirectId' => $redirectId ] );
 
 		return true;
 	}
@@ -150,5 +185,19 @@ class PipelineEventProducer {
 		}
 
 		return self::$pipe;
+	}
+
+	protected static function getArticleNamespace( $title ) {
+		global $wgCityId;
+
+		$pageNamespace = $title->getNamespace();
+		$contentNamespaces = WikiFactory::getVarValueByName( self::WG_CONTENT_NAMESPACES_KEY, $wgCityId );
+		if ( in_array($pageNamespace, $contentNamespaces) ) {
+			$pageNamespace =  self::CONTENT;
+		} else {
+			$pageNamespace = $title->getNsText();
+		}
+
+		return $pageNamespace;
 	}
 }
