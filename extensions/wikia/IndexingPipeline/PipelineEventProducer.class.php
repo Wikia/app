@@ -35,7 +35,6 @@ class PipelineEventProducer {
 	 * @param array $flags
 	 */
 	public static function nSend( $action, $id, $ns = self::CONTENT, $data = [ ], $flags = [ ] ) {
-		$ns = strtolower($ns);
 		$route = implode( '.', array_merge( [ self::PRODUCER_NAME, "_action:{$action}", "_namespace:{$ns}" ], $flags,
 				// adds info about the message content
 				array_map( function ( $item ) {
@@ -131,7 +130,7 @@ class PipelineEventProducer {
 	/**
 	 * @desc Fires on:
 	 *  - article rename
-	 * Send ACTION_UPDATE as the id of article remains the same only title changes
+	 * Send ACTION_UPDATE as the ID of article remains the same only title changes
 	 * @return bool
 	 */
 	static public function onTitleMoveComplete( &$oOldTitle, &$oNewTitle, &$oUser, $pageId, $redirectId = 0 ) {
