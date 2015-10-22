@@ -186,14 +186,6 @@ $wgAutoloadClasses[ 'InvalidDataApiException' ] = "{$IP}/includes/wikia/api/ApiE
 $wgAutoloadClasses[ 'LimitExceededApiException'] = "{$IP}/includes/wikia/api/ApiExceptions.php";
 $wgAutoloadClasses[ 'NotFoundApiException'] = "{$IP}/includes/wikia/api/ApiExceptions.php";
 
-//Recommendations
-$wgAutoloadClasses['Wikia\\Api\\Recommendations\\Collector'] = "{$IP}/includes/wikia/api/Recommendations/Collector.class.php";
-$wgAutoloadClasses['Wikia\\Api\\Recommendations\\DataProviders\\IDataProvider'] = "{$IP}/includes/wikia/api/Recommendations/DataProviders/IDataProvider.interface.php";
-$wgAutoloadClasses['Wikia\\Api\\Recommendations\\DataProviders\\Category'] = "{$IP}/includes/wikia/api/Recommendations/DataProviders/Category.class.php";
-$wgAutoloadClasses['Wikia\\Api\\Recommendations\\DataProviders\\Video'] = "{$IP}/includes/wikia/api/Recommendations/DataProviders/Video.class.php";
-$wgAutoloadClasses['Wikia\\Api\\Recommendations\\DataProviders\\TopArticles'] = "{$IP}/includes/wikia/api/Recommendations/DataProviders/TopArticles.class.php";
-$wgAutoloadClasses['RecommendationsApiController'] = "{$IP}/includes/wikia/api/RecommendationsApiController.class.php";
-$wgWikiaApiControllers['RecommendationsApiController'] = "{$IP}/includes/wikia/api/RecommendationsApiController.class.php";
 /**
  * Wikia API end
  */
@@ -690,7 +682,6 @@ $wgSkipSkins = array(
 		'efmonaco',
 		'answers',
 		'vector',
-		'venus',
 		'campfire',
 		'wikiamobile'
 );
@@ -1142,7 +1133,6 @@ $wgPasswordSenderName = 'Wikia';
  */
 $wgResourceLoaderAssetsSkinMapping = [
 	'oasis' => 'wikia', // in Oasis we use Wikia.js (and Wikia.css) instead of Oasis.js (Oasis.css)
-	'venus' => 'wikia', // in Venus we use Wikia.js (and Wikia.css) instead of Venus.js (Venus.css) - CON-2113
 ];
 
 /**
@@ -1711,7 +1701,6 @@ $wgBuckySampling = 10;
 $wgBuckyEnabledSkins = [
 	'monobook',
 	'oasis',
-	'venus',
 	'uncyclopedia',
 	'wikiamobile',
 ];
