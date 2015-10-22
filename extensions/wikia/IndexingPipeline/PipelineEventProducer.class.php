@@ -7,6 +7,12 @@ class PipelineEventProducer {
 	/** @var PipelineConnectionBase */
 	protected static $pipe;
 
+	/**
+	 * @desc Send event to pipeline if old format.
+	 * @param $eventName
+	 * @param $pageId
+	 * @param array $params
+	 */
 	public static function send( $eventName, $pageId, $params = [ ] ) {
 		$msg = self::prepareMessage( $pageId );
 		$msg->args = new stdClass();
@@ -32,7 +38,18 @@ class PipelineEventProducer {
 		self::publish( $route, $msg );
 	}
 
-	// Hooks handlers
+	/*
+	 * Hooks handlers
+	 */
+
+	/**
+	 * @desc Fires on:
+	 *  - new article created
+	 *  - article edit
+	 *  - edition undo
+	 *  - edition revert
+	 * @return bool
+	 */
 	static public function onArticleSaveComplete( &$oPage, &$oUser, $text, $summary, $minor, $undef1, $undef2,
 		&$flags, $oRevision, &$status, $baseRevId ) {
 		wfDebug( "IndexingPipeline:onArticleSaveComplete\n" );
@@ -44,11 +61,12 @@ class PipelineEventProducer {
 	}
 
 	/**
-	 * @param WikiPage $article
-	 * @param Revision $rev
-	 * @param $baseID
-	 * @param User $user
-	 *
+	 * @desc Fires on:
+	 *  - new article created
+	 *  - article edit
+	 *  - edition undo
+	 *  - edition revert
+	 *  - article rename
 	 * @return bool
 	 */
 	static public function onNewRevisionFromEditComplete( $article, Revision $rev, $baseID, User $user ) {
@@ -59,6 +77,11 @@ class PipelineEventProducer {
 		return true;
 	}
 
+	/**
+	 * @desc Fires on:
+	 *  - article delete
+	 * @return bool
+	 */
 	static public function onArticleDeleteComplete( &$oPage, &$oUser, $reason, $pageId ) {
 		wfDebug( "IndexingPipeline:onArticleDeleteComplete\n" );
 		self::send( 'onArticleDeleteComplete', $pageId );
@@ -66,6 +89,11 @@ class PipelineEventProducer {
 		return true;
 	}
 
+	/**
+	 * @desc Fires on:
+	 *  - article restore
+	 * @return bool
+	 */
 	static public function onArticleUndelete( Title &$oTitle, $isNew = false ) {
 		wfDebug( "IndexingPipeline:onArticleUndelete\n" );
 		self::send( 'onArticleUndelete', $oTitle->getArticleId(), [ 'isNew' => $isNew ] );
@@ -73,6 +101,11 @@ class PipelineEventProducer {
 		return true;
 	}
 
+	/**
+	 * @desc Fires on:
+	 *  - article rename
+	 * @return bool
+	 */
 	static public function onTitleMoveComplete( &$oOldTitle, &$oNewTitle, &$oUser, $pageId, $redirectId = 0 ) {
 		wfDebug( "IndexingPipeline:onTitleMoveComplete\n" );
 		self::send( 'onTitleMoveComplete', $pageId, [ 'redirectId' => $redirectId ] );
@@ -80,7 +113,15 @@ class PipelineEventProducer {
 		return true;
 	}
 
-	// Helper methods
+	/*
+	 * Helper methods
+	 */
+
+	/**
+	 * @desc create message with cityId and pageId fields
+	 * @param $pageId
+	 * @return \stdClass
+	 */
 	protected static function prepareMessage( $pageId ) {
 		global $wgCityId;
 		$msg = new stdClass();
@@ -90,6 +131,10 @@ class PipelineEventProducer {
 		return $msg;
 	}
 
+	/**
+	 * @param $key
+	 * @param $data
+	 */
 	protected static function publish( $key, $data ) {
 		try {
 			self::getPipeline()->publish( $key, $data );
