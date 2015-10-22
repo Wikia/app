@@ -149,6 +149,7 @@ class SpecialVideosHelper extends WikiaModel {
 			$videoDetail = $helper->getVideoDetail( $videoInfo, $videoOptions );
 			if ( !empty( $videoDetail ) ) {
 				$byUserMsg = WikiaFileHelper::getByUserMsg( $videoDetail['userName'], $videoDetail['timestamp'] );
+				// FIXME: this isn't shown to users b/c it's buggy (CONSF-51)
 				$viewTotal = wfMessage( 'videohandler-video-views', $this->wg->Lang->formatNum( $videoDetail['viewsTotal'] ) )->text();
 
 				$videos[] = [

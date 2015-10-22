@@ -28,7 +28,10 @@ class View {
 		 * template-classification-type-navbox
 		 * template-classification-type-quote
 		 */
-		$templateTypeMessage = wfMessage( "template-classification-type-{$templateType}" )->escaped();
+		$templateTypeMessage = wfMessage(
+			'template-classification-indicator',
+			wfMessage( "template-classification-type-{$templateType}" )
+		)->escaped();
 
 		$editButton = flase;
 		if ( ( new Permissions() )->userCanChangeType( $user, $title ) ) {

@@ -8,6 +8,14 @@ class TemplateClassification {
 	const TEMPLATE_INFOBOX = 'infobox';
 	const TEMPLATE_QUOTE = 'quote';
 	const TEMPLATE_NAVBOX = 'navbox';
+	const TEMPLATE_FLAG = 'notice';
+	const TEMPLATE_REF = 'reference';
+	const TEMPLATE_MEDIA = 'media';
+	const TEMPLATE_DATA = 'data';
+	const TEMPLATE_DESIGN = 'design';
+	const TEMPLATE_NAV = 'navigation';
+	const TEMPLATE_NOT_ART = 'nonarticle';
+	const TEMPLATE_UNKNOWN = 'unknown';
 
 	/**
 	 * Names of the primary and secondary properties used for templates' classification.
@@ -30,6 +38,14 @@ class TemplateClassification {
 		self::TEMPLATE_QUOTE,
 		self::TEMPLATE_NAVBOX,
 		self::TEMPLATE_UNCLASSIFIED,
+		self::TEMPLATE_FLAG,
+		self::TEMPLATE_REF,
+		self::TEMPLATE_MEDIA,
+		self::TEMPLATE_DATA,
+		self::TEMPLATE_DESIGN,
+		self::TEMPLATE_NAV,
+		self::TEMPLATE_NOT_ART,
+		self::TEMPLATE_UNKNOWN,
 	];
 
 	/**

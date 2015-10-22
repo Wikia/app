@@ -26,7 +26,8 @@ $(function () {
 			$googleInput = $('.gsc-input'),
 			$googleButton = $('.gsc-search-button'),
 			$selectElement = $('#searchSelect'),
-			$selectedOption = $selectElement.find('option:selected');
+			$selectedOption = $selectElement.find('option:selected'),
+			currentUrlPath = window.location.pathname;
 
 		evt.preventDefault();
 
@@ -34,6 +35,10 @@ $(function () {
 		if ($selectedOption.val() === 'local') {
 			searchQuery += ' site:' + window.location.hostname;
 		}
+
+		//Manually trigger page view
+		currentUrlPath += '?q=' + encodeURIComponent(searchQuery);
+		window.guaTrackPageview(currentUrlPath);
 
 		//Invoke google search
 		$googleInput.val(searchQuery);

@@ -415,6 +415,14 @@ class UserProfilePageController extends WikiaController {
 	public function saveUserData() {
 		wfProfileIn( __METHOD__ );
 
+		try {
+			$this->checkWriteRequest();
+		} catch( \BadRequestException $bre ) {
+			$this->setTokenMismatchError();
+			wfProfileOut( __METHOD__ );
+			return;
+		}
+
 		$user = User::newFromId( $this->getVal( 'userId' ) );
 		$isAllowed = ( $this->app->wg->User->isAllowed( 'editprofilev3' ) || intval( $user->getId() ) === intval( $this->app->wg->User->getId() ) );
 
@@ -784,6 +792,14 @@ class UserProfilePageController extends WikiaController {
 	public function uploadByUrl( $url, $userData, &$errorMsg = '' ) {
 		wfProfileIn( __METHOD__ );
 
+		try {
+			$this->checkWriteRequest();
+		} catch ( \BadRequestException $bre ) {
+			$this->setTokenMismatchError();
+			wfProfileOut( __METHOD__ );
+			return;
+		}
+
 		// start by presuming there is no error
 		// $errorNo = UPLOAD_ERR_OK;
 		$user = $userData['user'];
@@ -1012,4 +1028,11 @@ class UserProfilePageController extends WikiaController {
 		return true;
 	}
 
+	/**
+	 * Sets token mismatch error message
+	 */
+	private function setTokenMismatchError() {
+		$this->setVal( 'status', 'error' );
+		$this->setVal( 'errorMsg', wfMessage( 'sessionfailure' )->escaped() );
+	}
 }

@@ -22,11 +22,21 @@
 	line-height: 2.5em;
 
 	.template-classification-edit-form-input {
-		vertical-align: middle;
+		vertical-align: text-bottom;
 	}
 
 	.template-classification-edit-form-label::after {
 		content: "\A";
 		white-space: pre;
 	}
+}
+
+.template-classification-edit-form-label div {
+	display: inline-block;
+	vertical-align: top;
+	width: 300px;
+}
+
+.template-classification-edit-form-label strong {
+	font-weight: bold;
 }

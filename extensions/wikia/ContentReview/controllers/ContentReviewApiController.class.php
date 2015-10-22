@@ -164,22 +164,6 @@ class ContentReviewApiController extends WikiaApiController {
 		}
 	}
 
-	public function getPageStatus() {
-		$wikiId = $this->request->getInt( 'wikiId' );
-		$pageId = $this->request->getInt( 'pageId' );
-
-		$liveRevisionData = [
-			'liveId' => $this->getLatestReviewedRevisionFromDB( $wikiId, $pageId )['revision_id'],
-		];
-
-		$reviewModel = new ReviewModel();
-		$reviewData = $reviewModel->getPageStatus( $wikiId, $pageId );
-
-		$currentPageData = array_merge( $liveRevisionData, $reviewData );
-
-		$this->makeSuccessResponse( $currentPageData );
-	}
-
 	public function getLatestReviewedRevision() {
 		$wikiId = $this->request->getInt( 'wikiId' );
 		$pageId = $this->request->getInt( 'pageId' );
@@ -210,24 +194,13 @@ class ContentReviewApiController extends WikiaApiController {
 		/* Override global title to provide context */
 		$this->wg->Title = Title::newFromText( $pageName );
 
-		/* Get page status */
-		$pageStatus = \F::app()->sendRequest(
-			'ContentReviewApiController',
-			'getPageStatus',
+		/* Render status module */
+		$res = $this->app->sendRequest(
+			'ContentReviewModule',
+			'Render',
 			[
 				'wikiId' => $this->wg->CityId,
 				'pageId' => $this->wg->Title->getArticleID(),
-			],
-			true
-		)->getData();
-
-		/* Render status module */
-		$res = \F::app()->sendRequest(
-			'ContentReviewModule',
-			'executeRender',
-			[
-				'pageStatus' => $pageStatus,
-				'latestRevisionId' => $this->wg->Title->getLatestRevID(),
 			],
 			true
 		)->getData();

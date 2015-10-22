@@ -16,37 +16,6 @@ class ReviewModel extends ContentReviewBaseModel {
 			CONTENT_REVIEW_STATUS_REJECTED = 4,
 			CONTENT_REVIEW_STATUS_AUTOAPPROVED = 5;
 
-	public function getPageStatus( $wikiId, $pageId ) {
-		$db = $this->getDatabaseForRead();
-
-		$pageStatus = ( new \WikiaSQL() )
-			->SELECT( 'revision_id', 'status' )
-			->FROM( self::CONTENT_REVIEW_STATUS_TABLE )
-			->WHERE( 'wiki_id' )->EQUAL_TO( $wikiId )
-				->AND_( 'page_id' )->EQUAL_TO( $pageId )
-			->ORDER_BY( [ 'revision_id', 'ASC' ] )
-			->runLoop( $db, function ( &$pageStatus, $row ) {
-				if ( Helper::isStatusAwaiting( $row->status ) ) {
-					$pageStatus['latestId'] = (int)$row->revision_id;
-					$pageStatus['latestStatus'] = (int)$row->status;
-				} else {
-					$pageStatus['lastReviewedId'] = (int)$row->revision_id;
-					$pageStatus['lastReviewedStatus'] = (int)$row->status;
-				}
-			} );
-
-		if ( empty( $pageStatus ) ) {
-			$pageStatus = [
-				'latestId' => null,
-				'latestStatus' => null,
-				'lastReviewedId' => null,
-				'lastReviewedStatus' => null,
-			];
-		}
-
-		return $pageStatus;
-	}
-
 	public function getPagesStatuses( $wikiId ) {
 		$db = $this->getDatabaseForRead();
 
