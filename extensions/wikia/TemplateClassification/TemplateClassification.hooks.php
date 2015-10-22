@@ -95,11 +95,13 @@ class Hooks {
 	 * @return bool
 	 */
 	public function onPageHeaderPageTypePrepared( \PageHeaderController $pageHeaderController, \Title $title ) {
+		global $wgCityId;
+
 		$user = $pageHeaderController->getContext()->getUser();
 		if ( ( new Permissions() )->shouldDisplayTypeLabel( $title ) ) {
 			$view = new View();
 			$pageHeaderController->pageType = $view->renderTemplateType(
-				$title, $user, $pageHeaderController->pageType
+				$wgCityId, $title, $user, $pageHeaderController->pageType
 			);
 		}
 		return true;
@@ -127,11 +129,13 @@ class Hooks {
 	 * @return bool
 	 */
 	public function onEditPageLayoutExecute( \EditPageLayoutController $editPage ) {
+		global $wgCityId;
+
 		$user = $editPage->getContext()->getUser();
 		$title = $editPage->getContext()->getTitle();
 		if ( ( new Permissions() )->shouldDisplayEntryPoint( $user, $title ) ) {
 			$editPage->addExtraPageControlsHtml(
-				( new View )->renderEditPageEntryPoint( $title, $user )
+				( new View )->renderEditPageEntryPoint( $wgCityId, $title, $user )
 			);
 		}
 		return true;

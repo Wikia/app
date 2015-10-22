@@ -7,17 +7,18 @@ class View {
 	/**
 	 * Returns HTML with Template type.
 	 * If a user is logged in it returns also an entry point for edition.
+	 * @param int $wikiId
 	 * @param \Title $title
 	 * @param \User $user
 	 * @param string $fallbackMsg
 	 * @return string
 	 */
-	public function renderTemplateType( \Title $title, $user, $fallbackMsg = '', $templateTypeLabel = null ) {
+	public function renderTemplateType( $wikiId, \Title $title, $user, $fallbackMsg = '', $templateTypeLabel = null ) {
 		if ( !$user->isLoggedIn() && !$this->isTemplateClassified( $title ) ) {
 			return $fallbackMsg;
 		}
 
-		$templateType = ( new \TemplateClassificationMockService() )->getTemplateType( $title->getArticleID() );
+		$templateType = ( new \TemplateClassificationService() )->getType( $wikiId, $title->getArticleID() );
 		// Fallback to unknown for not existent classification
 		if ( $templateType === '' ) {
 			$templateType = \TemplateClassification::TEMPLATE_UNKNOWN;
@@ -30,7 +31,6 @@ class View {
 		 * template-classification-type-infobox
 		 * template-classification-type-navbox
 		 * template-classification-type-quote
-		 * template-classification-type-unclassified
 		 * template-classification-type-media
 		 * template-classification-type-reference
 		 * template-classification-type-navigation
@@ -62,8 +62,8 @@ class View {
 	 * @param \User $user
 	 * @return string
 	 */
-	public function renderEditPageEntryPoint( \Title $title, \User $user ) {
-		$templateType = $this->renderTemplateType( $title, $user, '', '' );
+	public function renderEditPageEntryPoint( $wikiId, \Title $title, \User $user ) {
+		$templateType = $this->renderTemplateType( $wikiId, $title, $user, '', '' );
 		return \MustacheService::getInstance()->render(
 			__DIR__ . '/templates/TemplateClassificationEditPageEntryPoint.mustache',
 			[
@@ -73,11 +73,9 @@ class View {
 		);
 	}
 
-	/**
-	 * Mock for frontend work
-	 */
 	private function isTemplateClassified( $title ) {
-		$templateType = ( new \TemplateClassificationMockService() )->getTemplateType( $title->getArticleID() );
+		global $wgCityId;
+		$templateType = ( new \TemplateClassificationService() )->getType( $wgCityId, $title->getArticleID() );
 		return $templateType !== \TemplateClassification::TEMPLATE_UNKNOWN && $templateType !== '';
 	}
 
