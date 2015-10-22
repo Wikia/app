@@ -447,13 +447,11 @@
 						}
 					}
 
-					//readd events
+					//re-add events
 					ArticleComments.addHover();
-					//clear error box
-					$('#article-comm-info').html('');
 				} else {
-					//fill error box
-					$('#article-comm-info').html(json.msg);
+					// fill error box
+					new BannerNotification(json.msg, 'error').show();
 				}
 
 				$source.removeAttr('readonly');
