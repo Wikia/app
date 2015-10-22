@@ -20,7 +20,7 @@ function ($, mw, loader, nirvana) {
 					method: 'getType',
 					type: 'get',
 					data: {
-						'pageId': mw.config.get('wgArticleId')
+						pageId: mw.config.get('wgArticleId')
 					}
 				}),
 				loader({
@@ -33,11 +33,13 @@ function ($, mw, loader, nirvana) {
 				function (classificationForm, templateType, loaderRes) {
 					mw.messages.set(loaderRes.messages);
 
-					var type = templateType[0].type,
+					var type = templateType[0].type || '',
 						$cf = $(classificationForm[0]);
 
 					// Mark selected type
-					$cf.find('input[value="' + mw.html.escape(type) + '"]').attr('checked', 'checked');
+					if ( type.length ) {
+						$cf.find('input[value="' + mw.html.escape(type) + '"]').attr('checked', 'checked');
+					}
 
 					// Set modal content
 					setupTemplateClassificationModal($cf[0].outerHTML);
@@ -72,8 +74,9 @@ function ($, mw, loader, nirvana) {
 				controller: 'TemplateClassificationApi',
 				method: 'classifyTemplate',
 				data: {
-					'pageId': mw.config.get('wgArticleId'),
-					'type': $('#TemplateClassificationEditForm').serializeArray()[0].value
+					pageId: mw.config.get('wgArticleId'),
+					type: $('#TemplateClassificationEditForm').serializeArray()[0].value,
+					editToken: mw.user.tokens.get('editToken')
 				}
 			});
 			modalInstance.trigger('close');
