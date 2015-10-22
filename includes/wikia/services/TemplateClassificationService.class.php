@@ -9,6 +9,7 @@ class TemplateClassificationService {
 
 	const SERVICE_NAME = 'template-classification-storage';
 	const USER_PROVIDER = 'user';
+	const AUTO_PROVIDER = 'auto';
 
 	private $apiClient = null;
 
@@ -62,14 +63,15 @@ class TemplateClassificationService {
 	 * @param int $wikiId
 	 * @param int $pageId
 	 * @param string $templateType
-	 * @param int $userId
+	 * @param string $provider
+	 * @param int $origin
 	 * @throws Exception
 	 * @throws \Swagger\Client\ApiException
 	 */
-	public function classifyTemplate( $wikiId, $pageId, $templateType, $userId ) {
+	public function classifyTemplate( $wikiId, $pageId, $templateType, $provider, $origin ) {
 		$details = [
-			'provider' => self::USER_PROVIDER,
-			'origin' => $userId,
+			'provider' => $provider,
+			'origin' => $origin,
 			'types' => [ $templateType ]
 		];
 		$templateTypeProvider = new TemplateTypeProvider( $details );
@@ -80,17 +82,17 @@ class TemplateClassificationService {
 	/**
 	 * Prepare template details output
 	 *
-	 * @param TemplateTypeProvider[] $providers
+	 * @param TemplateTypeProvider[] $details
 	 * @return array
 	 */
-	private function prepareTemplateDetails( $providers ) {
+	private function prepareTemplateDetails( $details ) {
 		$templateDetails = [];
 
-		foreach ( $providers as $provider ) {
-			$templateDetails[$provider->getProvider()] = [
-				'provider' => $provider->getProvider(),
-				'origin' => $provider->getOrigin(),
-				'types' => $provider->getTypes()
+		foreach ( $details as $detail ) {
+			$templateDetails[$detail->getProvider()] = [
+				'provider' => $detail->getProvider(),
+				'origin' => $detail->getOrigin(),
+				'types' => $detail->getTypes()
 			];
 		}
 
