@@ -105,8 +105,7 @@
 		onSave: function (event) {
 			event.preventDefault();
 
-			var eventOk = this.editor.fire('save');
-			if (eventOk === false) {
+			if (this.editor.fire('save') === false) {
 				return;
 			}
 
