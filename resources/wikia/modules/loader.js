@@ -325,6 +325,11 @@ define('wikia.loader', ['wikia.window', require.optional('mw'), 'wikia.nirvana',
 					options.sassParams = options.sassParams || window.wgSassParams;
 				}
 
+				if (typeof window.wgUserLanguage !== 'undefined') {
+					// Add language to avoid cache pollution
+					options.uselang = window.wgUserLanguage;
+				}
+
 				nirvana.getJson(
 					'AssetsManager',
 					'getMultiTypePackage',
