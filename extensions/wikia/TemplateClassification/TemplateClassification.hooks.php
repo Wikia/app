@@ -49,9 +49,10 @@ class Hooks {
 	 */
 	public function onEditPageMakeGlobalVariablesScript( array &$aVars ) {
 		$context = \RequestContext::getMain();
-
 		// Enable TemplateClassificationEditorPlugin
-		if ( ( new Permissions() )->shouldDisplayEntryPointInEdit( $context->getUser(), $context->getTitle() ) ) {
+		if ( ( new Permissions() )->shouldDisplayEntryPoint( $context->getUser(), $context->getTitle() )
+			&& $this->isEditPage()
+		) {
 			$aVars['enableTemplateClassificationEditorPlugin'] = true;
 		}
 		return true;
@@ -84,11 +85,16 @@ class Hooks {
 	 * @return true
 	 */
 	public function onBeforePageDisplay( \OutputPage $out, \Skin $skin ) {
+		$title = $out->getTitle();
 		$permissions = new Permissions();
-		if ( $permissions->shouldDisplayEntryPointOnView( $skin->getUser(), $out->getTitle() ) ) {
+		if ( $permissions->shouldDisplayEntryPoint( $skin->getUser(), $title )
+			&& $title->exists()
+		) {
 			\Wikia::addAssetsToOutput( 'template_classification_in_view_js' );
 			\Wikia::addAssetsToOutput( 'template_classification_scss' );
-		} elseif ( $permissions->shouldDisplayEntryPointInEdit( $skin->getUser(), $out->getTitle() ) ) {
+		} elseif ( $permissions->shouldDisplayEntryPoint( $skin->getUser(), $title )
+			&& $this->isEditPage()
+		) {
 			\Wikia::addAssetsToOutput( 'template_classification_in_edit_js' );
 			\Wikia::addAssetsToOutput( 'template_classification_scss' );
 		}
@@ -104,7 +110,7 @@ class Hooks {
 		global $wgCityId;
 
 		$user = $pageHeaderController->getContext()->getUser();
-		if ( ( new Permissions() )->shouldDisplayTypeLabel( $title ) ) {
+		if ( $title->inNamespace( NS_TEMPLATE ) && $title->exists() ) {
 			$view = new View();
 			$pageHeaderController->pageType = $view->renderTemplateType(
 				$wgCityId, $title, $user, $pageHeaderController->pageType
@@ -152,5 +158,9 @@ class Hooks {
 	 */
 	protected function getUnusedTemplatesHandler() {
 		return new Handler();
+	}
+
+	private function isEditPage() {
+		return \RequestContext::getMain()->getRequest()->getVal( 'action' ) === 'edit';
 	}
 }
