@@ -631,7 +631,6 @@ class WallExternalController extends WikiaController {
 			$this->wg->CityId,
 			$this->request->getVal( 'parent' )
 		);
-		gmark();
 	}
 
 	public function preview() {
