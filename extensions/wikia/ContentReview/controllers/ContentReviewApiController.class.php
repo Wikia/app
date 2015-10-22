@@ -210,24 +210,13 @@ class ContentReviewApiController extends WikiaApiController {
 		/* Override global title to provide context */
 		$this->wg->Title = Title::newFromText( $pageName );
 
-		/* Get page status */
-		$pageStatus = \F::app()->sendRequest(
-			'ContentReviewApiController',
-			'getPageStatus',
+		/* Render status module */
+		$res = $this->app->sendRequest(
+			'ContentReviewModule',
+			'Render',
 			[
 				'wikiId' => $this->wg->CityId,
 				'pageId' => $this->wg->Title->getArticleID(),
-			],
-			true
-		)->getData();
-
-		/* Render status module */
-		$res = \F::app()->sendRequest(
-			'ContentReviewModule',
-			'executeRender',
-			[
-				'pageStatus' => $pageStatus,
-				'latestRevisionId' => $this->wg->Title->getLatestRevID(),
 			],
 			true
 		)->getData();
