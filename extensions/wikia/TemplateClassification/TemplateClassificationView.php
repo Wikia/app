@@ -50,7 +50,8 @@ class View {
 			__DIR__ . '/templates/TemplateClassificationViewPageEntryPoint.mustache',
 			[
 				'templateTypeLabel' => $templateTypeLabel,
-				'templateType' => $templateTypeMessage,
+				'templateType' => $templateType,
+				'templateTypeName' => $templateTypeMessage,
 				'editButton' => $editButton,
 			]
 		);

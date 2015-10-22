@@ -9,6 +9,7 @@ function ($, mw, loader, nirvana) {
 	'use strict';
 
 	var $classificationForm,
+		$typeLabel,
 		modalConfig,
 		messagesLoaded,
 		saveHandler = falseFunction,
@@ -24,6 +25,7 @@ function ($, mw, loader, nirvana) {
 	function init(typeGetterProvided, saveHandlerProvided) {
 		saveHandler = saveHandlerProvided;
 		typeGetter = typeGetterProvided;
+		$typeLabel = $('.template-classification-type-text');
 
 		$('.template-classification-edit').click(function (e) {
 			e.preventDefault();
@@ -59,7 +61,7 @@ function ($, mw, loader, nirvana) {
 		}
 
 		selectedTypeText = $classificationForm.find(
-			'label[for="template-classification-' + mw.html.escape(templateType) + '"]'
+			'label[for="template-classification-' + mw.html.escape(templateType) + '"] .tc-type-name'
 		);
 
 		return selectedTypeText.html();
@@ -127,10 +129,9 @@ function ($, mw, loader, nirvana) {
 	}
 
 	function updateEntryPointLabel(templateType) {
-		var selectedTypeText = $classificationForm.find(
-			'label[for="template-classification-' + mw.html.escape(templateType) + '"] .tc-type-name'
-		);
-		$('.template-classification-type-text').html(selectedTypeText.html());
+		$typeLabel
+			.data('type', mw.html.escape(templateType))
+			.html(getLabel(templateType));
 	}
 
 	function setupTemplateClassificationModal(content) {

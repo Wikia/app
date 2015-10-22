@@ -9,36 +9,18 @@ define('TemplateClassificationInView', ['jquery', 'mw', 'wikia.nirvana', 'Templa
 	function ($, mw, nirvana, templateClassificationModal) {
 		'use strict';
 
-		var selectedType;
+		var $typeLabel;
 
 		function init() {
+			$typeLabel = $('.template-classification-type-text');
 			templateClassificationModal.init(getType, storeTypeForSend);
 		}
 
-		function getType(articleId) {
-			if (selectedType) {
-				return [{type:selectedType}];
-			}
-
-			return nirvana.sendRequest({
-				controller: 'TemplateClassificationApi',
-				method: 'getType',
-				type: 'get',
-				data: {
-					'pageId': articleId
-				}
-			});
+		function getType() {
+			return [{type: $typeLabel.data('type')}];
 		}
 
-		function storeTypeForSend(templateType) {
-			var typeLabel;
-
-			selectedType = mw.html.escape(templateType);
-
-			// Update entry point label
-			typeLabel = templateClassificationModal.getLabel(templateType);
-			$('.template-classification-type-text').html(typeLabel);
-
+		function storeTypeForSend() {
 			nirvana.sendRequest({
 				controller: 'TemplateClassificationApi',
 				method: 'classifyTemplate',
