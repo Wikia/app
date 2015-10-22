@@ -16,11 +16,11 @@ function ($, mw, loader, nirvana) {
 					format: 'html'
 				}),
 				nirvana.sendRequest({
-					controller: 'TemplateClassificationMockApi',
-					method: 'getTemplateType',
+					controller: 'TemplateClassificationApi',
+					method: 'getType',
 					type: 'get',
 					data: {
-						'articleId': mw.config.get('wgArticleId')
+						'pageId': mw.config.get('wgArticleId')
 					}
 				}),
 				loader({
@@ -69,11 +69,11 @@ function ($, mw, loader, nirvana) {
 		/* Submit template type edit form on Done button click */
 		modalInstance.bind('done', function () {
 			nirvana.sendRequest({
-				controller: 'TemplateClassificationMockApi',
-				method: 'setTemplateType',
+				controller: 'TemplateClassificationApi',
+				method: 'classifyTemplate',
 				data: {
-					'articleId': mw.config.get('wgArticleId'),
-					'templateType': $('#TemplateClassificationEditForm').serializeArray()[0].value
+					'pageId': mw.config.get('wgArticleId'),
+					'type': $('#TemplateClassificationEditForm').serializeArray()[0].value
 				}
 			});
 			modalInstance.trigger('close');

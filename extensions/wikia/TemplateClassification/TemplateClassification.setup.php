@@ -52,9 +52,3 @@ $wgExtensionMessagesFiles['TemplateClassification'] = __DIR__ . '/TemplateClassi
 JSMessages::registerPackage( 'TemplateClassificationModal', [
 	'template-classification-edit-modal-*',
 ] );
-
-/**
- * Mock backend
- */
-$wgAutoloadClasses['TemplateClassificationMockApiController'] = __DIR__ . '/TemplateClassificationMockApiController.class.php';
-$wgAutoloadClasses['TemplateClassificationMockService'] = __DIR__ . '/TemplateClassificationMockService.class.php';
