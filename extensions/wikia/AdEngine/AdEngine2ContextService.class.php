@@ -52,7 +52,7 @@ class AdEngine2ContextService {
 					'showAds' => $adPageTypeService->areAdsShowableOnPage(),
 					'trackSlotState' => $wg->AdDriverTrackState,
 					'usePostScribe' => $wg->Request->getBool( 'usepostscribe', false ),
-					'sourcePointUrl' => $sourcePointRecoveryUrl,
+					'sourcePointUrl' => $sourcePointRecoveryUrl, // @TODO ADEN-2578 - cleanup
 					'sourcePointDetectionUrl' => $sourcePointDetectionUrl,
 					'sourcePointRecoveryUrl' => $sourcePointRecoveryUrl,
 				] ),

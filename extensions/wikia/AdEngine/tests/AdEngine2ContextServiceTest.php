@@ -389,7 +389,7 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		if ( $skinName === 'oasis' ) {
 			$this->assertStringMatchesFormat( $expectedSourcePointRecoveryUrlFormat, $result['opts']['sourcePointRecoveryUrl'] );
 			unset( $result['opts']['sourcePointRecoveryUrl'] );
-			unset( $result['opts']['sourcePointUrl'] );
+			unset( $result['opts']['sourcePointUrl'] ); // @TODO ADEN-2578 - cleanup
 		}
 		$this->assertStringMatchesFormat( $expectedSourcePointDetectionUrlFormat, $result['opts']['sourcePointDetectionUrl'] );
 		unset( $result['opts']['sourcePointDetectionUrl'] );
