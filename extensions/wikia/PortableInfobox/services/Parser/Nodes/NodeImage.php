@@ -35,9 +35,14 @@ class NodeImage extends Node {
 					$data[] = array( 'label' => strip_tags( $model[$i][ 'caption' ] ), 'title' => $model[$i][ 'title' ] );
 				}
 			}
-			if ( preg_match_all('#data-image-key="([^"]+)".*?\s<h2>(.*?)<\/h2>#is', $html, $galleryOut ) ) {
+			if ( preg_match_all('#data-(video|image)-key="([^"]+)".*?\s<h2>(.*?)<\/h2>#is', $html, $galleryOut ) ) {
 				for( $i = 0; $i < count( $galleryOut[0] ); $i++ ) {
-					$data[] = array( 'label' => $galleryOut[2][$i], 'title' => $galleryOut[1][$i] );
+					$data[] = array( 'label' => $galleryOut[3][$i], 'title' => $galleryOut[2][$i] );
+				}
+			}
+			if ( preg_match_all('#data-(video|image)-key="([^"]+)".*?<div class="lightbox-caption"[^>]*>(.*?)<\/div>#is', $html, $galleryOut ) ) {
+				for( $i = 0; $i < count( $galleryOut[0] ); $i++ ) {
+					$data[] = array( 'label' => $galleryOut[3][$i], 'title' => $galleryOut[2][$i] );
 				}
 			}
 		}
