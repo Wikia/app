@@ -186,9 +186,11 @@ class EditPageLayoutHelper {
 	 * @return bool
 	 */
 	static public function isCodeSyntaxHighlightingEnabled( Title $articleTitle ) {
-		global $wgEnableEditorSyntaxHighlighting;
+		global $wgEnableEditorSyntaxHighlighting, $wgUser;
 
-		return self::isCodePage( $articleTitle ) && $wgEnableEditorSyntaxHighlighting;
+		return self::isCodePage( $articleTitle )
+			&& $wgEnableEditorSyntaxHighlighting
+			&& !$wgUser->getGlobalPreference( 'disablesyntaxhighlighting' );
 	}
 
 	static public function isInfoboxTemplate( Title $title ) {
