@@ -67,16 +67,11 @@ class PipelineEventProducer {
 	static public function onArticleSaveComplete( &$oPage, &$oUser, $text, $summary, $minor, $undef1, $undef2,
 		&$flags, $oRevision, &$status, $baseRevId ) {
 		wfDebug( __METHOD__ . "\n" );
-		$rev = isset( $oRevision ) ? $oRevision->getId() : $oRevision;
 		$ns = self::getArticleNamespace( $oPage->getTitle() );
-		//todo: check if $baseRevId is empty only for new articles
-		$action = empty( $baseRevId ) ? self::ACTION_CREATE : self::ACTION_UPDATE;
+		$action = $oRevision->getPrevious() === null ? self::ACTION_CREATE : self::ACTION_UPDATE;
 
-		self::send( 'onArticleSaveComplete', $oPage->getId(),
-			[ 'prevRevision' => $baseRevId, 'revision' => $rev ] );
-
-		wfDebug('WEventsProducer' . $baseRevId);
-		self::nSend( $action, $oPage->getId(), $ns, [ 'prevRevision' => $baseRevId, 'revision' => $rev ] );
+		self::send( 'onArticleSaveComplete', $oPage->getId() );
+		self::nSend( $action, $oPage->getId(), $ns );
 
 		return true;
 	}
@@ -93,12 +88,10 @@ class PipelineEventProducer {
 	static public function onNewRevisionFromEditComplete( $article, Revision $rev, $baseID, User $user ) {
 		wfDebug( __METHOD__ . "\n" );
 		$ns = self::getArticleNamespace( $article->getTitle() );
-		//todo: check if this works
-		$action = empty( $baseID ) ? self::ACTION_CREATE : self::ACTION_UPDATE;
+		$action = $rev->getPrevious() === null ? self::ACTION_CREATE : self::ACTION_UPDATE;
 
-		self::send( 'onNewRevisionFromEditComplete', $article->getId(),
-			[ 'prevRevision' => $baseID, 'revision' => $rev->getId() ] );
-		self::nSend( $action, $article->getId(), $ns, [ 'prevRevision' => $baseID, 'revision' => $rev->getId() ] );
+		self::send( 'onNewRevisionFromEditComplete', $article->getId() );
+		self::nSend( $action, $article->getId(), $ns );
 
 		return true;
 	}
