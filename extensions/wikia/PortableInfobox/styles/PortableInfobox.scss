@@ -166,14 +166,15 @@ ul.pi-image-collection-tabs {
 	margin: 0 -1px -1px 0;
 	padding: 0;
 	list-style: none;
+	overflow: hidden;
 
 	li {
-		border-bottom: 1px solid $infobox-section-header-background;
-		border-right: 1px solid $infobox-section-header-background;
+		border: 1px solid $infobox-section-header-background;
+		border-left: none;
 		box-sizing: border-box;
 		cursor: pointer;
 		display: inline-block;
-		margin: 0;
+		margin: -1px 0 0 0;
 		max-width: 50%;
 		overflow: hidden;
 		text-overflow: ellipsis;
