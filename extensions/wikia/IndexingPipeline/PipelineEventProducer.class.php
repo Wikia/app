@@ -35,6 +35,7 @@ class PipelineEventProducer {
 	 * @param array $flags
 	 */
 	public static function nSend( $action, $id, $ns = self::CONTENT, $data = [ ], $flags = [ ] ) {
+		$ns = strtolower($ns);
 		$route = implode( '.', array_merge( [ self::PRODUCER_NAME, "_action:{$action}", "_namespace:{$ns}" ], $flags,
 				// adds info about the message content
 				array_map( function ( $item ) {
