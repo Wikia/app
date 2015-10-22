@@ -115,6 +115,7 @@ class PipelineEventProducer {
 	/**
 	 * @desc Fires on:
 	 *  - article restore
+	 * Send ACTION_CREATE as an article with new ID is created
 	 * @return bool
 	 */
 	static public function onArticleUndelete( Title &$oTitle, $isNew = false ) {
@@ -122,7 +123,7 @@ class PipelineEventProducer {
 		$ns = self::getArticleNamespace( $oTitle );
 
 		self::send( 'onArticleUndelete', $oTitle->getArticleId(), [ 'isNew' => $isNew ] );
-		self::nSend( self::ACTION_UPDATE, $oTitle->getArticleId(), $ns, [ 'isNew' => $isNew ] );
+		self::nSend( self::ACTION_CREATE, $oTitle->getArticleId(), $ns, [ 'isNew' => $isNew ] );
 
 		return true;
 	}
@@ -130,6 +131,7 @@ class PipelineEventProducer {
 	/**
 	 * @desc Fires on:
 	 *  - article rename
+	 * Send ACTION_UPDATE as the id of article remains the same only title changes
 	 * @return bool
 	 */
 	static public function onTitleMoveComplete( &$oOldTitle, &$oNewTitle, &$oUser, $pageId, $redirectId = 0 ) {
@@ -137,7 +139,7 @@ class PipelineEventProducer {
 		$ns = self::getArticleNamespace( $oNewTitle );
 
 		self::send( 'onTitleMoveComplete', $pageId, [ 'redirectId' => $redirectId ] );
-		self::nSend( 'onTitleMoveComplete', $pageId, $ns, [ 'redirectId' => $redirectId ] );
+		self::nSend( self::ACTION_UPDATE, $pageId, $ns, [ 'redirectId' => $redirectId ] );
 
 		return true;
 	}
