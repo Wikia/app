@@ -1,21 +1,7 @@
 <?php
 
 class TemplateClassification {
-	/**
-	 * Flags indicating type of the template.
-	 */
 	const TEMPLATE_UNCLASSIFIED = 'unclassified';
-	const TEMPLATE_INFOBOX = 'infobox';
-	const TEMPLATE_QUOTE = 'quote';
-	const TEMPLATE_NAVBOX = 'navbox';
-	const TEMPLATE_FLAG = 'notice';
-	const TEMPLATE_REF = 'reference';
-	const TEMPLATE_MEDIA = 'media';
-	const TEMPLATE_DATA = 'data';
-	const TEMPLATE_DESIGN = 'design';
-	const TEMPLATE_NAV = 'navigation';
-	const TEMPLATE_NOT_ART = 'nonarticle';
-	const TEMPLATE_UNKNOWN = 'unknown';
 
 	/**
 	 * Names of the primary and secondary properties used for templates' classification.
@@ -30,32 +16,19 @@ class TemplateClassification {
 	const CLASSIFICATION_ACTOR_HUMAN = 1;
 
 	/**
-	 * Allowed types of templates stored in an array to make a validation process easier.
-	 * @var array
-	 */
-	static $templateTypes = [
-		self::TEMPLATE_INFOBOX,
-		self::TEMPLATE_QUOTE,
-		self::TEMPLATE_NAVBOX,
-		self::TEMPLATE_UNCLASSIFIED,
-		self::TEMPLATE_FLAG,
-		self::TEMPLATE_REF,
-		self::TEMPLATE_MEDIA,
-		self::TEMPLATE_DATA,
-		self::TEMPLATE_DESIGN,
-		self::TEMPLATE_NAV,
-		self::TEMPLATE_NOT_ART,
-		self::TEMPLATE_UNKNOWN,
-	];
-
-	/**
 	 * A Title object for the page you are classifying.
 	 * @var Title
 	 */
 	private $title;
+	private $templateTypes;
 
 	public function __construct( Title $templateTitle ) {
 		$this->title = $templateTitle;
+
+		$this->templateTypes = array_merge(
+			TemplateClassificationService::$templateTypes,
+			[ self::TEMPLATE_UNCLASSIFIED ]
+		);
 	}
 
 	/**
@@ -87,7 +60,7 @@ class TemplateClassification {
 	 * @return bool|string
 	 */
 	private function getClassificationProp( $type ) {
-		if ( array_search( $type, self::$templateTypes, true ) !== false ) {
+		if ( array_search( $type, $this->templateTypes, true ) !== false ) {
 			return self::TEMPLATE_CLASSIFICATION_DATA_PREFIX . $type;
 		}
 
