@@ -71,6 +71,7 @@ class TemplateClassificationApiController extends WikiaApiController {
 				$this->wg->CityId,
 				$pageId,
 				$templateType,
+				TemplateClassificationService::USER_PROVIDER,
 				$userId
 			);
 		} catch ( InvalidArgumentException $e ) {
