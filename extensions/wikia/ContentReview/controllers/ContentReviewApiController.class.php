@@ -164,22 +164,6 @@ class ContentReviewApiController extends WikiaApiController {
 		}
 	}
 
-	public function getPageStatus() {
-		$wikiId = $this->request->getInt( 'wikiId' );
-		$pageId = $this->request->getInt( 'pageId' );
-
-		$liveRevisionData = [
-			'liveId' => $this->getLatestReviewedRevisionFromDB( $wikiId, $pageId )['revision_id'],
-		];
-
-		$reviewModel = new ReviewModel();
-		$reviewData = $reviewModel->getPageStatus( $wikiId, $pageId );
-
-		$currentPageData = array_merge( $liveRevisionData, $reviewData );
-
-		$this->makeSuccessResponse( $currentPageData );
-	}
-
 	public function getLatestReviewedRevision() {
 		$wikiId = $this->request->getInt( 'wikiId' );
 		$pageId = $this->request->getInt( 'pageId' );
