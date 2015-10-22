@@ -1829,6 +1829,13 @@ $wgEnableFliteTagExt = false;
 $wgEnableCustom404PageExt = false;
 
 /**
+ * @name $wgEnableLillyExt
+ *
+ * Enables collecting outgoing links to other languages in an external service (Lilly)
+ */
+$wgEnableLillyExt = false;
+
+/**
  * @name $wgEnableRobotsTxtExt
  *
  * Enables extension that generates robots.txt
