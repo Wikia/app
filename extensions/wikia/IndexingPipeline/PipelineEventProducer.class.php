@@ -5,6 +5,9 @@ class PipelineEventProducer {
 	const ARTICLE_MESSAGE_PREFIX = 'article';
 	const PRODUCER_NAME = 'MWEventsProducer';
 	const CONTENT = 'content';
+	const ROUTE_ACTION_KEY = '_action';
+	const ROUTE_NAMESPACE_KEY = '_namespace';
+	const ROUTE_CONTENT_KEY = '_content';
 	const ACTION_CREATE = 'create';
 	const ACTION_UPDATE = 'update';
 	const ACTION_DELETE = 'delete';
@@ -12,7 +15,7 @@ class PipelineEventProducer {
 	protected static $pipe;
 
 	/**
-	 * @desc Send event to pipeline in old format.
+	 * @desc Send event to pipeline in old format (message with params inside).
 	 * @param $eventName
 	 * @param $pageId
 	 * @param array $params
@@ -27,7 +30,7 @@ class PipelineEventProducer {
 	}
 
 	/**
-	 * @desc Send event to pipeline in new format.
+	 * @desc Send event to pipeline in new format (with flags, see function prepareRoute).
 	 * @param $action
 	 * @param $id
 	 * @param string $ns
@@ -35,14 +38,7 @@ class PipelineEventProducer {
 	 * @param array $flags
 	 */
 	public static function nSend( $action, $id, $ns = self::CONTENT, $data = [ ], $flags = [ ] ) {
-		$ns = strtolower($ns);
-		$route = implode( '.', array_merge( [ self::PRODUCER_NAME, "_action:" . $action,  "_namespace:" . $ns ], $flags,
-				// adds info about the message content
-				array_map( function ( $item ) {
-					return "_content:{$item}";
-				}, array_keys( $data ) ) )
-		);
-
+		$route = self::prepareRoute( $action, $ns, $flags, $data);
 		$msg = self::prepareMessage( $id );
 		foreach ( $data as $key => $value ) {
 			$msg->{$key} = $value;
@@ -64,7 +60,7 @@ class PipelineEventProducer {
 	 *  - article rename
 	 * @return bool
 	 */
-	static public function onNewRevisionFromEditComplete( $article, Revision $rev, $baseID, User $user ) {
+	public static function onNewRevisionFromEditComplete( $article, Revision $rev, $baseID, User $user ) {
 		$ns = self::getArticleNamespace( $article->getTitle() );
 		$action = $rev->getPrevious() === null ? self::ACTION_CREATE : self::ACTION_UPDATE;
 
@@ -79,7 +75,7 @@ class PipelineEventProducer {
 	 *  - article delete
 	 * @return bool
 	 */
-	static public function onArticleDeleteComplete( &$oPage, &$oUser, $reason, $pageId ) {
+	public static function onArticleDeleteComplete( &$oPage, &$oUser, $reason, $pageId ) {
 		$ns = self::getArticleNamespace( $oPage->getTitle() );
 
 		self::send( 'onArticleDeleteComplete', $pageId );
@@ -94,7 +90,7 @@ class PipelineEventProducer {
 	 * Send ACTION_CREATE as an article with new ID is created
 	 * @return bool
 	 */
-	static public function onArticleUndelete( Title &$oTitle, $isNew = false ) {
+	public static function onArticleUndelete( Title &$oTitle, $isNew = false ) {
 		$ns = self::getArticleNamespace( $oTitle );
 
 		self::send( 'onArticleUndelete', $oTitle->getArticleId(), [ 'isNew' => $isNew ] );
@@ -109,7 +105,7 @@ class PipelineEventProducer {
 	 * Send ACTION_UPDATE as the ID of article remains the same only title changes
 	 * @return bool
 	 */
-	static public function onTitleMoveComplete( &$oOldTitle, &$oNewTitle, &$oUser, $pageId, $redirectId = 0 ) {
+	public static function onTitleMoveComplete( &$oOldTitle, &$oNewTitle, &$oUser, $pageId, $redirectId = 0 ) {
 		$ns = self::getArticleNamespace( $oNewTitle );
 
 		self::send( 'onTitleMoveComplete', $pageId, [ 'redirectId' => $redirectId ] );
@@ -134,6 +130,27 @@ class PipelineEventProducer {
 		$msg->pageId = $pageId;
 
 		return $msg;
+	}
+
+	/**
+	 * @desc create message route
+	 * @param $action
+	 * @param $ns
+	 * @param $flags
+	 * @param $data
+	 * @return string message route in format:
+	 * PRODUCER_NAME.ROUTE_ACTION_KEY:{action}.ROUTE_NAMESPACE_KEY:{namespace}.ROUTE_CONTENT_KEY:{items}
+	 */
+	protected static function prepareRoute( $action, $ns, $flags, $data ) {
+		$ns = strtolower($ns);
+		$route = implode( '.', array_merge( [ self::PRODUCER_NAME, self::ROUTE_ACTION_KEY . $action,  self::ROUTE_NAMESPACE_KEY . $ns ], $flags,
+				// adds info about the message content
+				array_map( function ( $item ) {
+					return self::ROUTE_CONTENT_KEY . $item;
+				}, array_keys( $data ) ) )
+		);
+
+		return $route;
 	}
 
 	/**
