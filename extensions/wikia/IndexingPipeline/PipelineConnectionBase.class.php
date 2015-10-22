@@ -25,9 +25,7 @@ class PipelineConnectionBase {
 		$this->port = $wgIndexingPipeline[ 'port' ];
 		$this->user = $wgIndexingPipeline[ 'user' ];
 		$this->pass = $wgIndexingPipeline[ 'pass' ];
-		//TODO: after development uncomment this line and remove following one
-		//$this->vhost = $wgIndexingPipeline[ 'vhost' ];
-		$this->vhost = 'tests';
+		$this->vhost = $wgIndexingPipeline[ 'vhost' ];
 		$this->exchange = $wgIndexingPipeline[ 'exchange' ];
 		$this->deadExchange = $wgIndexingPipeline[ 'deadExchange' ];
 	}

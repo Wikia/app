@@ -43,8 +43,6 @@ class PipelineEventProducer {
 				}, array_keys( $data ) ) )
 		);
 
-		wfDebug($route);
-
 		$msg = self::prepareMessage( $id );
 		foreach ( $data as $key => $value ) {
 			$msg->{$key} = $value;
@@ -63,31 +61,10 @@ class PipelineEventProducer {
 	 *  - article edit
 	 *  - edition undo
 	 *  - edition revert
-	 * @return bool
-	 */
-	static public function onArticleSaveComplete( &$oPage, &$oUser, $text, $summary, $minor, $undef1, $undef2,
-		&$flags, $oRevision, &$status, $baseRevId ) {
-		wfDebug( __METHOD__ . "\n" );
-		$ns = self::getArticleNamespace( $oPage->getTitle() );
-		$action = $oRevision->getPrevious() === null ? self::ACTION_CREATE : self::ACTION_UPDATE;
-
-		self::send( 'onArticleSaveComplete', $oPage->getId() );
-		self::nSend( $action, $oPage->getId(), $ns );
-
-		return true;
-	}
-
-	/**
-	 * @desc Fires on:
-	 *  - new article created
-	 *  - article edit
-	 *  - edition undo
-	 *  - edition revert
 	 *  - article rename
 	 * @return bool
 	 */
 	static public function onNewRevisionFromEditComplete( $article, Revision $rev, $baseID, User $user ) {
-		wfDebug( __METHOD__ . "\n" );
 		$ns = self::getArticleNamespace( $article->getTitle() );
 		$action = $rev->getPrevious() === null ? self::ACTION_CREATE : self::ACTION_UPDATE;
 
@@ -103,7 +80,6 @@ class PipelineEventProducer {
 	 * @return bool
 	 */
 	static public function onArticleDeleteComplete( &$oPage, &$oUser, $reason, $pageId ) {
-		wfDebug( __METHOD__ . "\n" );
 		$ns = self::getArticleNamespace( $oPage->getTitle() );
 
 		self::send( 'onArticleDeleteComplete', $pageId );
@@ -119,7 +95,6 @@ class PipelineEventProducer {
 	 * @return bool
 	 */
 	static public function onArticleUndelete( Title &$oTitle, $isNew = false ) {
-		wfDebug( __METHOD__ . "\n" );
 		$ns = self::getArticleNamespace( $oTitle );
 
 		self::send( 'onArticleUndelete', $oTitle->getArticleId(), [ 'isNew' => $isNew ] );
@@ -135,7 +110,6 @@ class PipelineEventProducer {
 	 * @return bool
 	 */
 	static public function onTitleMoveComplete( &$oOldTitle, &$oNewTitle, &$oUser, $pageId, $redirectId = 0 ) {
-		wfDebug( __METHOD__ . "\n" );
 		$ns = self::getArticleNamespace( $oNewTitle );
 
 		self::send( 'onTitleMoveComplete', $pageId, [ 'redirectId' => $redirectId ] );
