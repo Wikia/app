@@ -1863,18 +1863,6 @@ $config['licensed_video_swap_js'] = array(
 	),
 );
 
-/* SpecialCSS */
-$config['special_css_js'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => array(
-		'//resources/wikia/libraries/Ace/wikia.ace.editor.js',
-		'#group_editpage_events_js',
-		'//extensions/wikia/SpecialCss/js/SpecialCss.js',
-		'//resources/wikia/libraries/mustache/mustache.js',
-		'//resources/wikia/libraries/mustache/jquery.mustache.js'
-	)
-);
-
 /* UI repo JS API */
 $config['ui_repo_api_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
