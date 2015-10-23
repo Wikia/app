@@ -316,7 +316,7 @@ class MercuryApiController extends WikiaController {
 		}
 
 		// template for non-main pages (use $1 for article name)
-		$wikiVariables['htmlTitleTemplate'] = $this->wg->Out->getWikiaHTMLTitle( '$1', false );
+		$wikiVariables['htmlTitleTemplate'] = WikiaHtmlTitle::getPageTitle( '$1', false );
 
 		$this->response->setVal( 'data', $wikiVariables );
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
@@ -388,7 +388,7 @@ class MercuryApiController extends WikiaController {
 				$data['relatedPages'] = $relatedPages;
 			}
 
-			$data['htmlTitle'] = $this->wg->Out->getWikiaHTMLTitle( $title->getPrefixedText(), $title->isMainPage() );
+			$data['htmlTitle'] = WikiaHtmlTitle::getPageTitle( $title->getPrefixedText(), $title->isMainPage() );
 		} catch ( WikiaHttpException $exception ) {
 			$this->response->setCode( $exception->getCode() );
 
