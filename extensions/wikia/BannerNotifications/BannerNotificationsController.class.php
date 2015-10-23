@@ -213,7 +213,7 @@ class BannerNotificationsController extends WikiaController {
 	public static function addLogOutConfirmation( &$user, &$injected_html, $oldName ) {
 		global $wgOut, $wgRequest;
 
-		if ( F::app()->checkSkin( 'oasis' ) || F::app()->checkSkin( 'venus' ) ) {
+		if ( F::app()->checkSkin( 'oasis' ) ) {
 
 			self::addConfirmation(
 				wfMessage( 'oasis-confirmation-user-logout' )->escaped()

@@ -313,7 +313,10 @@ class SitemapPage extends UnlistedSpecialPage {
 			),
 			$scope,
 			__METHOD__,
-			array( "ORDER BY" => "page_id" )
+			[
+				"ORDER BY" => "page_id",
+				"USE INDEX" => "PRIMARY", # PLATFORM-1286
+			]
 		);
 
 		$includeVideo = (bool) F::app()->wg->EnableVideoSitemaps;

@@ -109,8 +109,7 @@ class WikiFactoryTags {
 				array( "city_tag", "city_tag_map" ),
 				array( "tag_id", "name" ),
 				array( "tag_id = id", "city_id" => $this->mCityId ),
-				__METHOD__,
-				array( "ORDER BY" => "name" )
+				__METHOD__
 			);
 			while( $row = $dbr->fetchObject( $sth ) ) {
 				$result[ $row->tag_id ] = $row->name;

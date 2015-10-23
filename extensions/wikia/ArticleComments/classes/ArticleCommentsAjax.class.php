@@ -247,8 +247,6 @@ class ArticleCommentsAjax {
 
 		if ( $isMobile ) {
 			$method = 'WikiaMobile' . $method;
-		} elseif ( F::app()->checkSkin( 'venus' ) ) {
-			$method = 'Venus' . $method;
 		}
 
 		$title = Title::newFromID( $articleId );

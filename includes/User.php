@@ -28,6 +28,7 @@ use Wikia\Service\User\Attributes\UserAttributes;
 use Wikia\Service\User\Preferences\Migration\PreferenceCorrectionService;
 use Wikia\Service\User\Preferences\PreferenceService;
 use Wikia\Util\Statistics\BernoulliTrial;
+use Wikia\Service\Helios\HeliosClient;
 
 /**
  * Int Number of characters in user_token field.
@@ -39,7 +40,7 @@ define( 'USER_TOKEN_LENGTH', 32 );
  * Int Serialized record version.
  * @ingroup Constants
  */
-define( 'MW_USER_VERSION', 16 );
+define( 'MW_USER_VERSION', 17 );
 
 /**
  * String Some punctuation to prevent editing from broken text-mangling proxies.
@@ -247,6 +248,11 @@ class User {
 	static $idCacheByName = array();
 
 	/**
+		* @var string the service auth token (currently helios); should NEVER be cached
+	 */
+	private $globalAuthToken = null;
+
+	/**
 	 * @var UserAttributes
 	 */
 	private $attributeService;
@@ -270,6 +276,14 @@ class User {
 	 */
 	function __toString(){
 		return $this->getName();
+	}
+
+
+	/**
+		* @return HeliosClient
+	 */
+	private function getAuthenticationService() {
+		return Injector::getInjector()->get(HeliosClient::class);
 	}
 
 	/**
@@ -1138,6 +1152,13 @@ class User {
 			$from = 'cookie';
 		} else {
 			# No session or persistent login cookie
+			$this->loadDefaults();
+			return false;
+		}
+
+		if ( !$this->isUserAuthenticatedViaAuthenticationService() ) {
+			$this->logFallbackToMediaWikiSessionRejection( $from );
+			$this->logout();
 			$this->loadDefaults();
 			return false;
 		}
@@ -2391,6 +2412,11 @@ class User {
 		if( $str == $this->mEmail ) {
 			return;
 		}
+
+		/* Wikia change */
+		/* add a new hook that sends both before/after emails @param User, new_email, old_email */
+		wfRunHooks( 'BeforeUserSetEmail', array( $this, $str, $this->mEmail ) );
+
 		$this->mEmail = $str;
 
 		/* Wikia change begin - @author: Macbre */
@@ -3525,6 +3551,8 @@ class User {
 		if ( !$wgAuth->allowSetLocalPassword() ) {
 			$this->mPassword = '';
 		}
+
+		wfRunHooks( 'BeforeUserSaveSettings', array( $this ) );
 
 		$dbw = wfGetDB( DB_MASTER );
 		$dbw->update( 'user',
@@ -5172,4 +5200,61 @@ class User {
 	public static function getUserTouchedKey( $user_id ) {
 		return wfSharedMemcKey( "user_touched", 'v1', $user_id );
 	}
+
+	/**
+	 * Get the global authentication token.
+	 * @return string
+	 */
+	public function getGlobalAuthToken() {
+		return $this->globalAuthToken;
+	}
+
+	/**
+	 * Set the global authentication token.
+	 * @param string
+	 */
+	public function setGlobalAuthToken( $token ) {
+		$this->globalAuthToken = $token;
+	}
+
+	/**
+	 * Is the user authenticated via the authentication service?
+	 * @return bool true if yes, false if no
+	 */
+	public function isUserAuthenticatedViaAuthenticationService() {
+		global $wgRejectAuthenticationFallback;
+
+		if ( !$wgRejectAuthenticationFallback ) {
+			return true;
+		}
+
+		$token = $this->getGlobalAuthToken();
+		if ( empty( $token ) ) {
+			return false;
+		}
+
+		$tokenInfo = $this->getAuthenticationService()->info( $token );
+		if ( !empty( $tokenInfo->user_id ) ) {
+			return ( $this->getId() > 0 ) && ( $tokenInfo->user_id == $this->getId() );
+		}
+
+		return false;
+	}
+
+	/**
+	 * Log an attempt to fallback to the MW session that was rejected.
+	 */
+	protected function logFallbackToMediaWikiSessionRejection( $from ) {
+		Wikia\Logger\WikiaLogger::instance()->error(
+			'AUTHENTICATION_FALLBACK_REJECTED',
+			[
+			'global_auth_token' => $this->getGlobalAuthToken(),
+			'from'              => $from,
+			'ip'                => $this->getRequest()->getIP(),
+			'session_id'        => session_id(),
+			'user_id'           => $this->getId(),
+			'user_name'         => $this->getName(),
+			]);
+	}
+
 }

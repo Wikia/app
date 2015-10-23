@@ -66,6 +66,7 @@ $messages['en'] = array(
 	'wall-message-closed-by' => "[[$2|$1]] closed this thread",
 	'wall-message-closed-by-because' => "$1 closed this thread because:",
 	'wall-message-restore-reply' => "Restore Reply",
+	'wall-message-limit-reached' => "There is a limit of $1 posts per thread.",
 	'wall-delete-reason' => "User/admin action",
 	'wall-user-talk-page-archive-anchor' => 'See archived talk page',
 	'wall-user-talk-archive-page-title' => 'User_talk_archive',
@@ -419,6 +420,7 @@ $messages['qqq'] = array(
 	'wall-message-closed-by-because' => 'Summary at the top of a closed thread page. Parameters:
 * $1 is the user who closed the thread (GENDER is supported in this message).',
 	'wall-message-restore-reply' => 'Button to restore a reply on a removed reply page',
+	'wall-message-limit-reached' => 'Error message displayed instead of edit form when thread reaches the maximum number of replies',
 	'wall-delete-reason' => 'default user/admin action',
 	'wall-user-talk-page-archive-anchor' => "Link on a Message Wall page to the user's old talk page archive",
 	'wall-user-talk-archive-page-title' => "Title on a user's talk page archive",

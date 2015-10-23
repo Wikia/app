@@ -160,6 +160,7 @@ $wgAutoloadClasses['UserApiController'] = "{$IP}/includes/wikia/api/UserApiContr
 $wgAutoloadClasses['TvApiController'] = "{$IP}/includes/wikia/api/TvApiController.class.php";
 $wgAutoloadClasses['MoviesApiController'] = "{$IP}/includes/wikia/api/MoviesApiController.class.php";
 $wgAutoloadClasses['InfoboxApiController'] = "{$IP}/includes/wikia/api/InfoboxApiController.class.php";
+$wgAutoloadClasses['TemplateClassificationApiController'] = "{$IP}/includes/wikia/api/TemplateClassificationApiController.class.php";
 $wgExtensionMessagesFiles['WikiaApi'] = "{$IP}/includes/wikia/api/WikiaApi.i18n.php";
 
 $wgWikiaApiControllers['DiscoverApiController'] = "{$IP}/includes/wikia/api/DiscoverApiController.class.php";
@@ -185,14 +186,6 @@ $wgAutoloadClasses[ 'InvalidDataApiException' ] = "{$IP}/includes/wikia/api/ApiE
 $wgAutoloadClasses[ 'LimitExceededApiException'] = "{$IP}/includes/wikia/api/ApiExceptions.php";
 $wgAutoloadClasses[ 'NotFoundApiException'] = "{$IP}/includes/wikia/api/ApiExceptions.php";
 
-//Recommendations
-$wgAutoloadClasses['Wikia\\Api\\Recommendations\\Collector'] = "{$IP}/includes/wikia/api/Recommendations/Collector.class.php";
-$wgAutoloadClasses['Wikia\\Api\\Recommendations\\DataProviders\\IDataProvider'] = "{$IP}/includes/wikia/api/Recommendations/DataProviders/IDataProvider.interface.php";
-$wgAutoloadClasses['Wikia\\Api\\Recommendations\\DataProviders\\Category'] = "{$IP}/includes/wikia/api/Recommendations/DataProviders/Category.class.php";
-$wgAutoloadClasses['Wikia\\Api\\Recommendations\\DataProviders\\Video'] = "{$IP}/includes/wikia/api/Recommendations/DataProviders/Video.class.php";
-$wgAutoloadClasses['Wikia\\Api\\Recommendations\\DataProviders\\TopArticles'] = "{$IP}/includes/wikia/api/Recommendations/DataProviders/TopArticles.class.php";
-$wgAutoloadClasses['RecommendationsApiController'] = "{$IP}/includes/wikia/api/RecommendationsApiController.class.php";
-$wgWikiaApiControllers['RecommendationsApiController'] = "{$IP}/includes/wikia/api/RecommendationsApiController.class.php";
 /**
  * Wikia API end
  */
@@ -360,6 +353,7 @@ $wgAutoloadClasses['FormBuilderService']  =  $IP.'/includes/wikia/services/FormB
 $wgAutoloadClasses['LicensedWikisService']  =  $IP.'/includes/wikia/services/LicensedWikisService.class.php';
 $wgAutoloadClasses['ArticleQualityService'] = $IP.'/includes/wikia/services/ArticleQualityService.php';
 $wgAutoloadClasses['PortableInfoboxDataService'] = $IP . '/extensions/wikia/PortableInfobox/services/PortableInfoboxDataService.class.php';
+$wgAutoloadClasses['TemplateClassificationService'] = $IP . '/includes/wikia/services/TemplateClassificationService.class.php';
 
 // services hooks
 $wgHooks['ArticleEditUpdates'][] = 'MediaQueryService::onArticleEditUpdates';
@@ -447,6 +441,7 @@ $wgHooks['WikiaSkinTopScripts'][] = 'WikiFactoryHubHooks::onWikiaSkinTopScripts'
 $wgHooks['Debug'][] = 'Wikia\\Logger\\Hooks::onDebug';
 $wgHooks['WikiFactory::execute'][] = 'Wikia\\Logger\\Hooks::onWikiFactoryExecute';
 $wgHooks['WikiFactory::onExecuteComplete'][] = 'Wikia\\Logger\\Hooks::onWikiFactoryExecuteComplete';
+$wgHooks['WebRequestInitialized'][] = 'Wikia\\Logger\\Hooks::onWebRequestInitialized';
 
 // memcache stats (PLATFORM-292)
 $wgAutoloadClasses['Wikia\\Memcached\\MemcachedStats'] = "$IP/includes/wikia/memcached/MemcachedStats.class.php";
@@ -687,7 +682,6 @@ $wgSkipSkins = array(
 		'efmonaco',
 		'answers',
 		'vector',
-		'venus',
 		'campfire',
 		'wikiamobile'
 );
@@ -1139,7 +1133,6 @@ $wgPasswordSenderName = 'Wikia';
  */
 $wgResourceLoaderAssetsSkinMapping = [
 	'oasis' => 'wikia', // in Oasis we use Wikia.js (and Wikia.css) instead of Oasis.js (Oasis.css)
-	'venus' => 'wikia', // in Venus we use Wikia.js (and Wikia.css) instead of Venus.js (Venus.css) - CON-2113
 ];
 
 /**
@@ -1708,7 +1701,6 @@ $wgBuckySampling = 10;
 $wgBuckyEnabledSkins = [
 	'monobook',
 	'oasis',
-	'venus',
 	'uncyclopedia',
 	'wikiamobile',
 ];
@@ -1813,13 +1805,6 @@ $wgPreferenceServiceRead = false;
 $wgPreferenceServiceWrite = true;
 
 /**
- * @name $wgEnableRobotsTxtExt
- *
- * Enables extension that generates robots.txt
- */
-$wgEnableRobotsTxtExt = true;
-
-/**
  * @name $wgEnableFliteTagExt
  *
  * Enables FliteTag extension which makes it possible to use <flite> tag within an article content
@@ -1827,6 +1812,20 @@ $wgEnableRobotsTxtExt = true;
 $wgEnableFliteTagExt = false;
 
 // SEO-related variables start (keep them sorted)
+
+/**
+ * @name $wgEnableCustom404PageExt
+ *
+ * Enables custom 404 page for missing articles suggesting the closest matching article
+ */
+$wgEnableCustom404PageExt = false;
+
+/**
+ * @name $wgEnableRobotsTxtExt
+ *
+ * Enables extension that generates robots.txt
+ */
+$wgEnableRobotsTxtExt = true;
 
 /**
  * @name $wgEnableSeoLinkHreflangExt
@@ -1875,3 +1874,13 @@ $wgSeoTestingExperiments = [];
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverAdsRecoveryMessageCountries = null;
+
+/**
+ * Protect Piggyback logs even if the extension is disabled
+ */
+$wgLogRestrictions['piggyback'] = 'piggyback';
+
+/**
+ * Reject attempts to fall back to the MediaWiki session for authentication.
+ */
+$wgRejectAuthenticationFallback = false;

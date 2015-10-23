@@ -212,6 +212,7 @@ class WallBaseController extends WikiaController {
 			$replies = $this->getVal( 'replies', array() );
 			$repliesCount = count( $replies );
 			$this->response->setVal( 'repliesNumber', $repliesCount );
+			$this->response->setVal( 'repliesLimit', WallThread::FETCHED_REPLIES_LIMIT);
 			$this->response->setVal( 'showRepliesNumber', $repliesCount );
 			$this->response->setVal( 'showLoadMore', false );
 
