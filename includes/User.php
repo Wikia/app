@@ -3526,6 +3526,8 @@ class User {
 			$this->mPassword = '';
 		}
 
+		wfRunHooks( 'BeforeUserSaveSettings', array( $this ) );
+
 		$dbw = wfGetDB( DB_MASTER );
 		$dbw->update( 'user',
 			array( /* SET */
