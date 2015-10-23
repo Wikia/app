@@ -45,15 +45,14 @@ class CreateBlogListingPage extends SpecialPage {
 
 		$wgOut->setPageTitle( wfMsg( 'create-blog-listing-title' ) );
 
-		if ( $wgRequest->wasPosted() && $wgUser->matchEditToken( $wgRequest->getVal( 'token' ) ) ) {
+		if ( $wgRequest->wasPosted() ) {
 			$this->parseFormData();
 			if ( count( $this->mFormErrors ) > 0 || !empty( $this->mRenderedPreview ) ) {
 				$this->renderForm();
 			} else {
 				$this->save();
 			}
-		}
-		else {
+		} else {
 			if ( $wgRequest->getVal( 'article' ) != null ) {
 				$this->parseTag( urldecode( $wgRequest->getVal( 'article' ) ) );
 			}
@@ -83,7 +82,12 @@ class CreateBlogListingPage extends SpecialPage {
 	}
 
 	protected function parseFormData() {
-		global $wgRequest, $wgParser;
+		global $wgUser, $wgRequest, $wgParser;
+
+		if ( !$wgUser->matchEditToken( $wgRequest->getVal( 'token' ) ) ) {
+			$this->mFormErrors[] = wfMessage( 'sessionfailure' )->escaped();
+			return;
+		}
 
 		$this->mFormData['listingTitle'] = $wgRequest->getVal( 'blogListingTitle' );
 		$this->mFormData['listingCategories'] = $wgRequest->getVal( 'wpCategoryTextarea1' );
@@ -114,19 +118,19 @@ class CreateBlogListingPage extends SpecialPage {
 			}
 		}
 
-		if ( !count( $this->mFormErrors ) ) {
-			$this->buildTag();
+		if ( count( $this->mFormErrors ) ) {
+			return;
 		}
 
-		if ( !count( $this->mFormErrors ) && $wgRequest->getVal( 'wpPreview' ) ) {
+		$this->buildTag();
+
+		if ( $wgRequest->getVal( 'wpPreview' ) ) {
 			if ( $this->mFormData['listingType'] == 'plain' ) {
 				$this->mRenderedPreview = BlogTemplateClass::parseTag( $this->mTagBody, array(), $wgParser );
-			}
-			else {
+			} else {
 				$this->mRenderedPreview = '<pre>' . htmlspecialchars( $this->mTagBody ) . '</pre>';
 			}
 		}
-
 	}
 
 	protected function renderForm() {
