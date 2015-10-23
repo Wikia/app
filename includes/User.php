@@ -221,8 +221,6 @@ class User {
 	 */
 	var $mFrom;
 
-	var $mTheme; # Wikia - Skin chooser related
-
 	/**
 	 * Lazy-initialized variables, invalidated with clearInstanceCache
 	 */
@@ -1387,7 +1385,6 @@ class User {
 		$this->mDatePreference = null;
 		$this->mBlockedby = -1; # Unset
 		$this->mHash = false;
-		$this->mTheme = null; # Wikia - Skin chooser related
 		$this->mRights = null;
 		$this->mEffectiveGroups = null;
 		$this->mImplicitGroups = null;
@@ -2497,16 +2494,6 @@ class User {
 		}
 
 		if ( array_key_exists( $oname, $this->mOptions ) ) {
-			# Wikia - Skin chooser related
-			if($oname == 'skin') {
-				if(strlen(trim($this->mOptions[$oname])) > 7 &&  substr(trim($this->mOptions[$oname]), 0, 6) == 'quartz') {
-					$this->mOptions[$oname] = 'quartz';
-					$this->setOptionHelper('theme', substr(trim($this->mOptions[$oname]), 6));
-				} else if(trim($this->mOptions[$oname]) == 'slate' || trim($this->mOptions[$oname]) == 'smoke') {
-					$this->mOptions[$oname] = 'quartz';
-					$this->setOptionHelper('theme', trim($this->mOptions[$oname]));
-				}
-			}
 
 			/* Wikia change begin - @author: Macbre */
 			/* allow extensions to modify value returned by User::getOption() */
@@ -2677,9 +2664,6 @@ class User {
 			$this->userPreferences()->setGlobalPreference( $this->getId(), $preference, $value );
 			if ( $preference == 'skin' ) {
 				unset( $this->mSkin );
-			}
-			if ( $preference == 'theme' ) {
-				unset( $this->mTheme );
 			}
 		} else {
 			$this->setOptionHelper( $preference, $value );
@@ -2890,11 +2874,6 @@ class User {
 		if ( $oname == 'skin' ) {
 			# Clear cached skin, so the new one displays immediately in Special:Preferences
 			unset( $this->mSkin );
-		}
-		# Wikia - Skin chooser related
-		if ( $oname == 'theme' ) {
-			# Clear cached skin, so the new one displays immediately in Special:Preferences
-			unset($this->mTheme);
 		}
 		// Filter out any newlines that may have passed through input validation.
 		// Newlines are used to separate items in the options blob.
