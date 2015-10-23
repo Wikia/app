@@ -1033,8 +1033,6 @@ class User {
 		$this->mEmailTokenExpires = null;
 		$this->mRegistration = wfTimestamp( TS_MW );
 		$this->mGroups = array();
-		$this->mMonacoData = null;
-		$this->mMonacoSidebar = null;
 
 		$this->mBirthDate = null; // Wikia. Added to reflect our user table layout.
 
@@ -1226,8 +1224,6 @@ class User {
 			$this->loadFromRow( $s );
 			$this->mGroups = null; // deferred
 			$this->getEditCount(); // revalidation for nulls
-			$this->mMonacoData = null;
-			$this->mMonacoSidebar = null;
 			return true;
 		} else {
 			# Invalid user_id
