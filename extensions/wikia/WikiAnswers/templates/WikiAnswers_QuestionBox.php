@@ -11,7 +11,22 @@ function askQuestion(){
 	q = encodeURIComponent( q );
 
 	var path = window.wgServer + window.wgArticlePath.replace("$1","");
-	window.location = path + "Special:CreateQuestionPage?questiontitle=" + q.charAt(0).toUpperCase() + q.substring(1);
+
+	jQuery.ajax({
+		url: path + "Special:CreateQuestionPage",
+		type: 'POST',
+		data: {
+			'questiontitle': q.charAt(0).toUpperCase() + q.substring(1),
+			'token': window.mw.user.tokens.get('editToken')
+		}
+	}).done(function () {
+		window.location.href = path + "Special:CreateQuestionPage?questiontitle="
+			+ q.charAt(0).toUpperCase() + q.substring(1);
+	}).fail(function () {
+		console.log("Error creating question!");
+		window.location.href = path + "Special:CreateQuestionPage";
+	});
+
 	return false;
 }
 /*]]>*/</script>

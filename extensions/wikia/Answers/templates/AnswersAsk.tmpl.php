@@ -15,7 +15,7 @@ function ask_question() {
 	q = encodeURIComponent( q );
 	
 	var url = "http://answer.wikia.com/api.php?action=query&titles=" + q + "&format=json";
-	var params = ''
+	var params = 'token=' + window.mw.user.tokens.get('editToken');
 
 	var callback = {
 		success: function( oResponse ) {
@@ -33,7 +33,7 @@ function ask_question() {
 		}
 	};
 	
-	var request = YAHOO.util.Connect.asyncRequest('GET', url, callback, params);
+	var request = YAHOO.util.Connect.asyncRequest('POST', url, callback, params);
 }
 </script>
 
