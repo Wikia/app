@@ -317,7 +317,7 @@
 
 // Visual Editor changes for breakpoints
 $ve-overlay-color: rgba(0, 0, 0, .5);
-$vw-overlay-shadow-size: 100vw; // IE does not support vmax
+$vw-overlay-shadow-size: 100vw;
 body.ve {
 	pointer-events: none;
 
