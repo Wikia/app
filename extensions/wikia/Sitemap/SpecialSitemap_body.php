@@ -88,29 +88,24 @@ class SitemapPage extends UnlistedSpecialPage {
 
 		$this->parseType();
 
-		if( $this->mType == "google" ) {
-			$this->verifyGoogle();
+		// cache on both CDN and client
+		header( "Cache-Control: s-maxage=86400", true );
+		header( "X-Pass-Cache-Control: public, max-age=86400", true );
+		header( "X-Robots-Tag: noindex" );
+
+		$this->mTitle = SpecialPage::getTitleFor( "Sitemap", $subpage );
+		$this->getNamespacesList();
+		if ( $this->mType == "namespace" ) {
+			$wgOut->disable();
+
+			header( "Content-type: application/x-gzip" );
+			print $this->generateNamespace();
+		}
+		else if($subpage == 'sitemap-index.xml') {
+			$this->generateIndex();
 		}
 		else {
-			// cache on both CDN and client
-			header( "Cache-Control: s-maxage=86400", true );
-			header( "X-Pass-Cache-Control: public, max-age=86400", true );
-			header( "X-Robots-Tag: noindex" );
-
-			$this->mTitle = SpecialPage::getTitleFor( "Sitemap", $subpage );
-			$this->getNamespacesList();
-			if ( $this->mType == "namespace" ) {
-				$wgOut->disable();
-
-				header( "Content-type: application/x-gzip" );
-				print $this->generateNamespace();
-			}
-			else if($subpage == 'sitemap-index.xml') {
-				$this->generateIndex();
-			}
-			else {
-				$this->print404();
-			}
+			$this->print404();
 		}
 	}
 
