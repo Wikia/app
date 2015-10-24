@@ -39,9 +39,13 @@ class PipelineEventProducerTest extends WikiaBaseTest {
 					'action' => PipelineEventProducer::ACTION_UPDATE,
 					'ns' => PipelineEventProducer::CONTENT,
 					'flags' => [],
-					'data' => [ 'isNew' => false ]
+					'data' => [
+						'isNew' => false,
+						'otherParam' => "other_value",
+						'numberParam' => 45
+					]
 				],
-				'expect' => 'MWEventsProducer._action:update._namespace:content._content:isNew',
+				'expect' => 'MWEventsProducer._action:update._namespace:content._content:isNew._content:otherParam._content:numberParam',
 				'description' => 'Article undelete(restore) action'
 			],
 			[
