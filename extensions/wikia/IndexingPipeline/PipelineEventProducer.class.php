@@ -1,7 +1,6 @@
 <?php
 
 class PipelineEventProducer {
-	const WG_CONTENT_NAMESPACES_KEY = 'wgContentNamespaces';
 	const ARTICLE_MESSAGE_PREFIX = 'article';
 	const PRODUCER_NAME = 'MWEventsProducer';
 	const CONTENT = 'content';
@@ -61,11 +60,12 @@ class PipelineEventProducer {
 	 * @return bool
 	 */
 	public static function onNewRevisionFromEditComplete( $article, Revision $rev, $baseID, User $user ) {
-		$ns = self::getArticleNamespace( $article->getTitle() );
+		$ns = self::preparePageNamespaceName( $article->getTitle() );
 		$action = $rev->getPrevious() === null ? self::ACTION_CREATE : self::ACTION_UPDATE;
+		$id = $article->getId();
 
-		self::send( 'onNewRevisionFromEditComplete', $article->getId() );
-		self::nSend( $action, $article->getId(), $ns );
+		self::send( 'onNewRevisionFromEditComplete', $id );
+		self::nSend( $action, $id, $ns );
 
 		return true;
 	}
@@ -76,7 +76,7 @@ class PipelineEventProducer {
 	 * @return bool
 	 */
 	public static function onArticleDeleteComplete( &$oPage, &$oUser, $reason, $pageId ) {
-		$ns = self::getArticleNamespace( $oPage->getTitle() );
+		$ns = self::preparePageNamespaceName( $oPage->getTitle() );
 
 		self::send( 'onArticleDeleteComplete', $pageId );
 		self::nSend( self::ACTION_DELETE, $pageId, $ns );
@@ -91,10 +91,11 @@ class PipelineEventProducer {
 	 * @return bool
 	 */
 	public static function onArticleUndelete( Title &$oTitle, $isNew = false ) {
-		$ns = self::getArticleNamespace( $oTitle );
+		$ns = self::preparePageNamespaceName( $oTitle );
+		$data = [ 'isNew' => $isNew ];
 
-		self::send( 'onArticleUndelete', $oTitle->getArticleId(), [ 'isNew' => $isNew ] );
-		self::nSend( self::ACTION_CREATE, $oTitle->getArticleId(), $ns, [ 'isNew' => $isNew ] );
+		self::send( 'onArticleUndelete', $oTitle->getArticleId(), $data );
+		self::nSend( self::ACTION_CREATE, $oTitle->getArticleId(), $ns, $data );
 
 		return true;
 	}
@@ -106,10 +107,11 @@ class PipelineEventProducer {
 	 * @return bool
 	 */
 	public static function onTitleMoveComplete( &$oOldTitle, &$oNewTitle, &$oUser, $pageId, $redirectId = 0 ) {
-		$ns = self::getArticleNamespace( $oNewTitle );
+		$ns = self::preparePageNamespaceName( $oNewTitle );
+		$data = [ 'redirectId' => $redirectId ];
 
-		self::send( 'onTitleMoveComplete', $pageId, [ 'redirectId' => $redirectId ] );
-		self::nSend( self::ACTION_UPDATE, $pageId, $ns, [ 'redirectId' => $redirectId ] );
+		self::send( 'onTitleMoveComplete', $pageId, $data );
+		self::nSend( self::ACTION_UPDATE, $pageId, $ns, $data );
 
 		return true;
 	}
@@ -141,12 +143,11 @@ class PipelineEventProducer {
 	 * @return string message route in format:
 	 * PRODUCER_NAME.ROUTE_ACTION_KEY:{action}.ROUTE_NAMESPACE_KEY:{namespace}.ROUTE_CONTENT_KEY:{items}
 	 */
-	protected static function prepareRoute( $action, $ns, $flags, $data ) {
-		$ns = strtolower($ns);
-		$route = implode( '.', array_merge( [ self::PRODUCER_NAME, self::ROUTE_ACTION_KEY . $action,  self::ROUTE_NAMESPACE_KEY . $ns ], $flags,
+	public static function prepareRoute( $action, $ns, $flags, $data ) {
+		$route = implode( '.', array_merge( [ self::PRODUCER_NAME, self::ROUTE_ACTION_KEY . ':' . $action,  self::ROUTE_NAMESPACE_KEY . ':' . $ns ], $flags,
 				// adds info about the message content
 				array_map( function ( $item ) {
-					return self::ROUTE_CONTENT_KEY . $item;
+					return self::ROUTE_CONTENT_KEY . ':' . $item;
 				}, array_keys( $data ) ) )
 		);
 
@@ -174,15 +175,20 @@ class PipelineEventProducer {
 		return self::$pipe;
 	}
 
-	protected static function getArticleNamespace( $title ) {
-		global $wgCityId;
+	/**
+	 * @desc For given page title returns it's lowerased namespace in english.
+	 * Namespace CONTENT means that page is in 0 or one of the custom content namespaces.
+	 * @param $title
+	 * @return string lowerased english namespace
+	 */
+	public static function preparePageNamespaceName( $title ) {
+		global $wgContentNamespaces;
+		$namespaceID = $title->getNamespace();
 
-		$pageNamespace = $title->getNamespace();
-		$contentNamespaces = WikiFactory::getVarValueByName( self::WG_CONTENT_NAMESPACES_KEY, $wgCityId );
-		if ( in_array($pageNamespace, $contentNamespaces) ) {
+		if ( in_array($namespaceID, $wgContentNamespaces) ) {
 			$pageNamespace =  self::CONTENT;
 		} else {
-			$pageNamespace = $title->getNsText();
+			$pageNamespace = strtolower( MWNamespace::getCanonicalName( $namespaceID ) );
 		}
 
 		return $pageNamespace;
