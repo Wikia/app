@@ -233,7 +233,8 @@ class PortableInfoboxRenderServiceHelperTest extends WikiaBaseTest {
 			],
 			[
 				'item' => [
-					'type' => 'image'
+					'type' => 'image',
+					'data' => array( null )
 				],
 				'heroData' => [],
 				'result' => true,
