@@ -2,7 +2,7 @@
 
 namespace Wikia\TemplateClassification;
 
-use Wikia\TemplateClassification\Permissions;
+use Wikia\TemplateClassification\Logger;
 use Wikia\TemplateClassification\UnusedTemplates\Handler;
 
 class Hooks {
@@ -32,13 +32,23 @@ class Hooks {
 	public function onArticleInsertComplete( \WikiPage $wikiPage ) {
 		global $wgCityId;
 
-		( new \TemplateClassificationService() )->classifyTemplate(
-			$wgCityId,
-			$wikiPage->getId(),
-			\RequestContext::getMain()->getRequest()->getVal('templateClassificationType'),
-			\TemplateClassificationService::USER_PROVIDER,
-			$wikiPage->getUser()
-		);
+		$request = \RequestContext::getMain()->getRequest();
+
+		try {
+			( new \TemplateClassificationService() )->classifyTemplate(
+				$wgCityId,
+				$wikiPage->getId(),
+				$request->getVal( 'templateClassificationType' ),
+				\TemplateClassificationService::USER_PROVIDER,
+				$wikiPage->getUser()
+			);
+		} catch ( \Exception $e ) {
+			( new Logger() )->exception( $e, $request );
+			\BannerNotificationsController::addConfirmation(
+				wfMessage( 'template-classification-notification-error-retry' )->escaped(),
+				\BannerNotificationsController::CONFIRMATION_ERROR
+			);
+		}
 		return true;
 	}
 
@@ -62,6 +72,7 @@ class Hooks {
 	 * Add hidden input to editform with template type
 	 * @param \EditPageLayout $editPage
 	 * @param \OutputPage $out
+	 * @return bool
 	 */
 	public static function onEditPageShowEditFormFields( \EditPageLayout $editPage, \OutputPage $out ) {
 		global $wgCityId;
