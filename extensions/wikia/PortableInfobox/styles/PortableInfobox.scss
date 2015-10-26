@@ -1,4 +1,5 @@
 @import 'skins/shared/color';
+@import 'skins/shared/mixins/chevron';
 @import 'skins/shared/mixins/flexbox';
 @import 'extensions/wikia/PortableInfobox/styles/PortableInfoboxVariables';
 
@@ -150,7 +151,31 @@
 
 // **********  Collapsible groups  ********** //
 
+.pi-collapse {
+	.pi-header {
+		@include right-chevron($infobox-chevron-size, 2px, 'up', $color-text);
+		padding-right: $infobox-item-margin * 3 + $infobox-chevron-size;
+		position: relative;
+
+		&:after {
+			display: block;
+			margin-top: -($infobox-chevron-size / 2) + 2;
+			position: absolute;
+			right: $infobox-item-margin * 2;
+			top: 50%;
+		}
+	}
+}
+
 .pi-collapse-closed {
+	border-bottom: none;
+
+	.pi-header::after {
+		margin-top: -($infobox-chevron-size / 2);
+		-webkit-transform: rotate(135deg);
+		transform: rotate(135deg);
+	}
+
 	> *:nth-child(n+2) {
 		display: none;
 	}
