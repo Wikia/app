@@ -22,6 +22,7 @@ class Hooks {
 		\Hooks::register( 'ShowDiff', [ $hooks, 'onShowDiff' ] );
 		\Hooks::register( 'UserRights::groupCheckboxes', [ $hooks, 'onUserRightsGroupCheckboxes' ] );
 		\Hooks::register( 'UserAddGroup', [ $hooks, 'onUserAddGroup' ] );
+		\Hooks::register( 'BeforeUserAddGlobalGroup', [ $hooks, 'onUserAddGroup' ] );
 	}
 
 	public function onGetRailModuleList( Array &$railModuleList ) {
@@ -240,7 +241,7 @@ class Hooks {
 	public function onUserRightsGroupCheckboxes( $group, &$disabled, &$irreversible ) {
 		global $wgUser;
 
-		if ( $group === 'content-reviewer' && ( !$wgUser->isAllowed( 'content-review' ) || !$wgUser->isStaff() ) ) {
+		if ( $group === 'content-reviewer' && !$wgUser->isAllowed( 'content-review' ) ) {
 			$disabled = true;
 		}
 
@@ -250,7 +251,7 @@ class Hooks {
 	public function onUserAddGroup( \User $user, $group ) {
 		global $wgUser;
 
-		if ( $group === 'content-reviewer' && ( !$wgUser->isAllowed( 'content-review' ) || !$wgUser->isStaff() ) ) {
+		if ( $group === 'content-reviewer' && !$wgUser->isAllowed( 'content-review' ) ) {
 			return false;
 		}
 
