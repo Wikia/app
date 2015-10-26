@@ -40,7 +40,9 @@ $messages['en'] = [
 	'template-classification-type-header' => 'Type of the template',
 	'template-classification-edit-modal-save-button-text' => 'Save',
 	'template-classification-edit-modal-cancel-button-text' => 'Cancel',
-	'template-classification-edit-modal-title' => 'Edit template type',
+	'template-classification-edit-modal-title-add-template' => 'Add template',
+	'template-classification-edit-modal-title-edit-type' => 'Edit template type',
+	'template-classification-edit-modal-select-type-sub-title' => 'Choose template type',
 
 	'template-classification-indicator' => 'Template type:',
 ];
@@ -75,7 +77,9 @@ $messages['qqq'] = [
 	'template-classification-type-header' => 'A header of all boxes that display a type of a template.',
 	'template-classification-edit-modal-save-button-text' => 'Text on save button on modal for editing template type',
 	'template-classification-edit-modal-cancel-button-text' => 'Text on cancel button for editing template type',
-	'template-classification-edit-modal-title' => 'Title of modal for editing template type',
+	'template-classification-edit-modal-title-edit-type' => 'Title of modal for editing template type',
+	'template-classification-edit-modal-title-add-template' => 'Title of modal for choosing template type while adding new template',
+	'template-classification-edit-modal-select-type-sub-title' => 'Subtitle of modal for choosing template type while adding new template',
 
 	'template-classification-indicator' => 'Shown in page subheader and near classification dialog entry points to indicate which type the template is currently classified as.',
 ];
@@ -89,5 +93,5 @@ $messages['pl'] = [
 	'template-classification-type-header' => 'Typ tego szablonu',
 	'template-classification-edit-modal-save-button-text' => 'Zapisz',
 	'template-classification-edit-modal-cancel-button-text' => 'Anuluj',
-	'template-classification-edit-modal-title' => 'Zmień typ tego szablonu',
+	'template-classification-edit-modal-title-edit-type' => 'Zmień typ tego szablonu',
 ];

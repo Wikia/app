@@ -11,21 +11,17 @@ define('TemplateClassificationInEdit',
 	function ($, mw, templateClassificationModal) {
 		'use strict';
 
-		var $editFromHiddenTypeFiled;
+		var $editFormHiddenTypeFiled;
 
 		function init() {
-			$editFromHiddenTypeFiled = $('#editform').find('[name=templateClassificationType]');
+			$editFormHiddenTypeFiled = $('#editform').find('[name=templateClassificationType]');
 
 			templateClassificationModal.init(getType, storeTypeForSend);
 
 			/* Force modal on load for new pages creation */
 			if (isNewArticle()) {
-				open();
+				templateClassificationModal.open('addTemplate');
 			}
-		}
-
-		function open() {
-			templateClassificationModal.open();
 		}
 
 		function isNewArticle() {
@@ -34,16 +30,16 @@ define('TemplateClassificationInEdit',
 
 		function getType() {
 			/* Return in format required by TemplateClassificationModal module */
-			return [{type: $editFromHiddenTypeFiled.val()}];
+			return [{type: $editFormHiddenTypeFiled.val()}];
 		}
 
 		function storeTypeForSend(templateType) {
-			$editFromHiddenTypeFiled.val(mw.html.escape(templateType));
+			$editFormHiddenTypeFiled.val(mw.html.escape(templateType));
 		}
 
 		return {
 			init: init,
-			open: open
+			open: templateClassificationModal.open
 		};
 	}
 );
