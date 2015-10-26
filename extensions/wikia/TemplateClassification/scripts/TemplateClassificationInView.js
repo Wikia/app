@@ -26,7 +26,7 @@ define('TemplateClassificationInView', ['jquery', 'mw', 'wikia.nirvana', 'Templa
 				method: 'classifyTemplate',
 				data: {
 					pageId: mw.config.get('wgArticleId'),
-					type: $('#TemplateClassificationEditForm').serializeArray()[0].value,
+					type: $('#TemplateClassificationEditForm [name="template-classification-types"]:checked').val(),
 					editToken: mw.user.tokens.get('editToken')
 				}
 			});
