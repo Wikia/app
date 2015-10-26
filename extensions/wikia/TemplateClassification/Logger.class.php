@@ -24,8 +24,11 @@ class Logger {
 				'tcExcptnFile' => $e->getFile() . ':' . $e->getLine(),
 				'tcExcptnBcktrc' => $e->getTraceAsString(),
 			],
-			'tcRqst' => $request->getValues(),
 		];
+
+		if ( $request !== null ) {
+			$context['tcRqst'] = $request->getValues();
+		}
 
 		$this->error( self::EXCEPTION_MESSAGE, $context );
 	}
