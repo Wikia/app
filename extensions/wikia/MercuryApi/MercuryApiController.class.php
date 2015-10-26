@@ -472,15 +472,14 @@ class MercuryApiController extends WikiaController {
 		$mainPageTitle = Title::newMainPage();
 		$mainPageArticleID = $mainPageTitle->getArticleID();
 		$article = Article::newFromID( $mainPageArticleID );
+		$data = [ ];
 
-		$articleDetails = $this->getArticleDetails( $article );
-
-		$adsContext = $this->mercuryApi->getAdsContext( $mainPageTitle );
+		$data['articleDetails'] = $this->getArticleDetails( $article );
+		$data['adsContext'] = $this->mercuryApi->getAdsContext( $mainPageTitle );
 
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
-		$this->response->setVal( 'details', $articleDetails );
-		$this->response->setVal( 'adsContext', $adsContext );
+		$this->response->setVal( 'data', $data );
 	}
 
 	public static function curatedContentDataMemcKey( $section = null ) {
