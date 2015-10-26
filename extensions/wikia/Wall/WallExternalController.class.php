@@ -464,9 +464,7 @@ class WallExternalController extends WikiaController {
 	public function editMessage() {
 		// TODO: remove call to ac !!!
 		$msgid = $this->request->getVal( 'msgid' );
-		/**
-		 * @var $mw WallMessage
-		 */
+		/** @var $mw WallMessage */
 		$mw =  WallMessage::newFromId( $msgid );
 
 		if ( empty( $mw ) ) {
@@ -476,7 +474,7 @@ class WallExternalController extends WikiaController {
 
 			$this->response->setVal( 'status', false );
 			$this->response->setVal( 'forcereload', true );
-			return true;
+			return;
 		}
 
 		$text = $mw->getRawText();
@@ -492,8 +490,6 @@ class WallExternalController extends WikiaController {
 
 		$this->response->setVal( 'htmlorwikitext', $text );
 		$this->response->setVal( 'status', true );
-
-		return true;
 	}
 
 	public function notifyEveryoneSave() {
@@ -517,9 +513,14 @@ class WallExternalController extends WikiaController {
 	}
 
 	public function editMessageSave() {
-		/**
-		 * @var $helper WallHelper
-		 */
+		try {
+			$this->checkWriteRequest();
+		} catch ( \BadRequestException $bre ) {
+			$this->setTokenMismatchError();
+			return;
+		}
+
+		/** @var $helper WallHelper */
 		$helper = new WallHelper();
 
 		$msgid = $this->request->getVal( 'msgid' );
@@ -539,11 +540,9 @@ class WallExternalController extends WikiaController {
 			$this->response->setVal( 'status', false ) ;
 			$this->response->setVal( 'msgTitle', wfMsg( ' wall-delete-error-title' ) );
 			$this->response->setVal( 'msgContent', wfMsg( 'wall-deleted-msg-text' ) );
-			return true;
+			return;
 		}
-		/**
-		 * @var $wallMessage WallMessage
-		 */
+		/** @var $wallMessage WallMessage */
 		$wallMessage = WallMessage::newFromTitle( $title );
 
 		$wallMessage->load();
@@ -560,17 +559,15 @@ class WallExternalController extends WikiaController {
 
 		$this->response->setVal( 'userUrl', $editorUrl );
 
-		$query = array(
+		$query = [
 			'diff' => 'prev',
 			'oldid' => $wallMessage->getTitle()->getLatestRevID( Title::GAID_FOR_UPDATE ),
-		);
+		];
 
 		$this->response->setVal( 'historyUrl', $wallMessage->getTitle()->getFullUrl( $query ) );
-
 		$this->response->setVal( 'status', true );
-		$this->response->setVal( 'msgTitle', Xml::element( 'a', array( 'href' => $wallMessage->getMessagePageUrl() ), $newtitle ) );
+		$this->response->setVal( 'msgTitle', Xml::element( 'a', [ 'href' => $wallMessage->getMessagePageUrl() ], $newtitle ) );
 		$this->response->setVal( 'body', $text );
-		return true;
 	}
 
 	public function replyToMessage() {
