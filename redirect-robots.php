@@ -16,9 +16,9 @@ require_once( dirname(__FILE__) . '/includes/Setup.php' );
 if ( !empty( $wgExperimentalRobotsTxt ) && preg_match( '/^[a-z0-9-]+$/m', $wgExperimentalRobotsTxt ) ) {
 	$allowRobots = ( $wgWikiaEnvironment === WIKIA_ENV_PROD || $wgRequest->getBool( 'forcerobots' ) );
 	$file = __DIR__ . '/robots.txt.d/' . $wgExperimentalRobotsTxt . '.txt';
-	if ( is_file( $file ) && is_readable( $file ) && $allowRobots ) {
-		header('Content-Type: text/plain');
-		header('Cache-Control: s-maxage=3600');
+	if ( $allowRobots && is_file( $file ) && is_readable( $file ) ) {
+		header( 'Content-Type: text/plain' );
+		header( 'Cache-Control: s-maxage=3600' );
 		echo file_get_contents( $file );
 		echo "\n";
 		echo getSitemapUrl();

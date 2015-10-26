@@ -1814,28 +1814,6 @@ $wgPreferenceServiceWrite = true;
  */
 $wgEnableFliteTagExt = false;
 
-
-
-
-
-
-
-/**
- * @name $wgExperimentalRobotsTxt
- *
- * Enables an experimental robots.txt for given community.
- * Value should only contain lowercase letters, dashes and numbers.
- * A proper file should also reside in $IP/robots.txt.d/ directory
- * @see redirect-robots.php
- */
-$wgExperimentalRobotsTxt = false;
-
-
-
-
-
-
-
 /**
  * @name $wgAdDriverAdsRecoveryMessageCountries
  * Enables module which displays a simple message to users with ad blockers
