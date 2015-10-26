@@ -48,7 +48,7 @@ function ($, mw, loader, nirvana) {
 		// Fetch all data and open modal
 		$.when(
 			classificationFormLoader(),
-			typeGetter(mw.config.get('wgArticleId')),
+			typeGetter(),
 			messagesLoader()
 		).done(handleRequestsForModal);
 	}
