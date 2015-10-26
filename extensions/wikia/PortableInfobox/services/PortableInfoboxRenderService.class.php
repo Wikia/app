@@ -97,10 +97,12 @@ class PortableInfoboxRenderService extends WikiaService {
 	 * @return string - group HTML markup
 	 */
 	private function renderGroup( $groupData ) {
+		$cssClasses = [];
 		$helper = new PortableInfoboxRenderServiceHelper();;
 		$groupHTMLContent = '';
 		$dataItems = $groupData[ 'value' ];
 		$layout = $groupData[ 'layout' ];
+		$collapse = $groupData[ 'collapse' ];
 
 		if ( $layout === 'horizontal' ) {
 			$groupHTMLContent .= $this->renderItem(
@@ -117,7 +119,15 @@ class PortableInfoboxRenderService extends WikiaService {
 			}
 		}
 
-		return $this->renderItem( 'group', [ 'content' => $groupHTMLContent ] );
+		if ( $collapse !== null && count( $dataItems ) > 0 && $dataItems[ 0 ][ 'type' ] === 'header' ) {
+			$cssClasses[] = 'pi-collapse';
+			$cssClasses[] = 'pi-collapse-' . $collapse;
+		}
+
+		return $this->renderItem( 'group', [
+			'content' => $groupHTMLContent,
+			'cssClasses' => implode(' ', $cssClasses)
+		] );
 	}
 
 	/**
