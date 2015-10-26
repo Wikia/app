@@ -113,6 +113,14 @@ class WikiaRequest implements Wikia\Interfaces\IRequest {
 	}
 
 	/**
+	 * A wrapper for consistency with WebRequest
+	 * @return array
+	 */
+	public function getValues() {
+		return $this->getParams();
+	}
+
+	/**
 	 * Fetch an integer value from the input or return $default if not set.
 	 * Guaranteed to return an integer; non-numeric input will typically
 	 * return 0.
