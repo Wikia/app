@@ -74,8 +74,12 @@ class SetWikiFactoryVariable extends Maintenance {
 			die( "Error: $this->varName not found.\n" );
 		}
 
+		if ( $append && $varData['cv_variable_type'] !== 'string' ) {
+			die( "Error: $this->varName is not a string and the script cannot append to it anything.\n" );
+		}
+
 		echo "Variable: $this->varName (Id: $varData[cv_id])\n";
-		$this->debug( "Variable data: ".json_encode( $varData )."\n" );
+		$this->debug( "Variable data: " . json_encode( $varData ) . "\n" );
 
 		if ( !empty( $wikiId ) ) {
 			$wikiIds = [ $wikiId ];
@@ -114,10 +118,11 @@ class SetWikiFactoryVariable extends Maintenance {
 				echo "Set {$this->varName} to " . var_export( $varValue, true );
 				$status = $this->setVariable( $id, $varValue );
 			} else if ( $append ) {
-				echo "Appending " . $varValue . " to  {$this->varName}:" . PHP_EOL;
-				var_dump($varData); die;
-				// echo "New value: " . var_export( $varValue, true ) . PHP_EOL;
-				// $status = $this->setVariable( $id, $varValue );
+				echo "Appending " . $varValue . " to {$this->varName}:" . PHP_EOL;
+				$varValue = ( is_null($varData['cv_value']) ) ? '' . $varValue : $varData['cv_value'] . $varValue;
+				echo "Previous value: " . $varData['cv_value'] . PHP_EOL;
+				echo "New value: " . $varValue . PHP_EOL;
+				$status = $this->setVariable( $id, $varValue );
 			} else if ( $remove ) {
 				echo "Remove {$this->varName}";
 				$status = $this->removeVariableFromWiki( $id, $varData );
