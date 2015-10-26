@@ -33,12 +33,21 @@ class Hooks {
 		global $wgCityId;
 
 		$request = \RequestContext::getMain()->getRequest();
+		$type = $request->getVal( 'templateClassificationType' );
+
+		/**
+		 * The service was not available when the field's value was set
+		 * so we exit early to prevent polluting of the results.
+		 */
+		if ( $type === \TemplateClassificationService::NOT_AVAILABLE ) {
+			return true;
+		}
 
 		try {
 			( new \TemplateClassificationService() )->classifyTemplate(
 				$wgCityId,
 				$wikiPage->getId(),
-				$request->getVal( 'templateClassificationType' ),
+				$type,
 				\TemplateClassificationService::USER_PROVIDER,
 				$wikiPage->getUser()
 			);
@@ -46,7 +55,7 @@ class Hooks {
 			( new Logger() )->exception( $e, $request );
 			\BannerNotificationsController::addConfirmation(
 				wfMessage( 'template-classification-notification-error-retry' )->escaped(),
-				\BannerNotificationsController::CONFIRMATION_ERROR
+				\BannerNotificationsController::CONFIRMATION_WARN
 			);
 		}
 		return true;
@@ -77,7 +86,18 @@ class Hooks {
 	public static function onEditPageShowEditFormFields( \EditPageLayout $editPage, \OutputPage $out ) {
 		global $wgCityId;
 		$articleId = $editPage->getTitle()->getArticleID();
-		$templateType = ( new \TemplateClassificationService() )->getType( $wgCityId, $articleId );
+
+		try {
+			$templateType = ( new \TemplateClassificationService() )->getType( $wgCityId, $articleId );
+		} catch ( \Exception $e ) {
+			( new Logger() )->exception( $e );
+			/**
+			 * If the service is unreachable - fill the field with a not-available string
+			 * which instructs front-end tools to skip the classification part.
+			 */
+			$templateType = \TemplateClassificationService::NOT_AVAILABLE;
+		}
+
 		$editPage->addHiddenField([
 			'name' => 'templateClassificationType',
 			'value' => $templateType,

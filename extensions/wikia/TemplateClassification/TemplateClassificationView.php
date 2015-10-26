@@ -2,8 +2,6 @@
 
 namespace Wikia\TemplateClassification;
 
-use Wikia\TemplateClassification\Logger;
-
 class View {
 
 	/**
@@ -16,7 +14,7 @@ class View {
 	 * @return string
 	 */
 	public function renderTemplateType( $wikiId, \Title $title, $user, $fallbackMsg = '', $templateTypeLabel = null ) {
-		if ( !$user->isLoggedIn() && !$this->isTemplateClassified( $title ) ) {
+		if ( !$user->isLoggedIn() ) {
 			return $fallbackMsg;
 		}
 
@@ -24,8 +22,9 @@ class View {
 			$templateType = ( new \TemplateClassificationService() )->getType( $wikiId, $title->getArticleID() );
 		} catch ( \Exception $e ) {
 			( new Logger() )->exception( $e );
-			$templateType = \TemplateClassificationService::TEMPLATE_UNKNOWN;
+			return $fallbackMsg;
 		}
+
 		// Fallback to unknown for not existent classification
 		if ( $templateType === '' ) {
 			$templateType = \TemplateClassificationService::TEMPLATE_UNKNOWN;
@@ -80,21 +79,4 @@ class View {
 			]
 		);
 	}
-
-	/**
-	 * Checks if a template is classified. Returns false if the service is unreachable.
-	 * @param $title
-	 * @return bool
-	 */
-	private function isTemplateClassified( $title ) {
-		global $wgCityId;
-		try {
-			$templateType = ( new \TemplateClassificationService() )->getType( $wgCityId, $title->getArticleID() );
-			return $templateType !== \TemplateClassificationService::TEMPLATE_UNKNOWN && $templateType !== '';
-		} catch ( \Exception $e ) {
-			( new Logger() )->exception( $e );
-			return false;
-		}
-	}
-
 }
