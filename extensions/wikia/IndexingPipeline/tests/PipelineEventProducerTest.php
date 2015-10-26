@@ -82,6 +82,14 @@ class PipelineEventProducerTest extends WikiaBaseTest {
 				],
 				'expect' => 'MWEventsProducer._action:create._namespace:template',
 				'description' => 'Create template with invalid data array'
+			],
+			[
+				'data' => [
+					'action' => PipelineEventProducer::ACTION_CREATE,
+					'ns' => strtolower( $wgCanonicalNamespaceNames[ NS_TEMPLATE ] )
+				],
+				'expect' => 'MWEventsProducer._action:create._namespace:template',
+				'description' => 'Create template with no data array'
 			]
 		];
 	}
