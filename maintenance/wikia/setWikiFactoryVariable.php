@@ -36,6 +36,7 @@ class SetWikiFactoryVariable extends Maintenance {
 		$this->addOption( 'varName', 'WikiFactory variable name', true, true, 'n' );
 		$this->addOption( 'set', 'Set the variable value. Note: "true" for enable or "false" for disable the extenstion', false, true, 's' );
 		$this->addOption( 'remove', 'Remove the variable value (from the Wiki)', false, false, 'r' );
+		$this->addOption( 'append', 'Append string value to existing value', false, false, 'a' );
 		$this->addOption( 'wikiId', 'Wiki Id', false, true, 'i' );
 		$this->addOption( 'file', 'File of wiki ids', false, true, 'f' );
 	}
@@ -45,7 +46,7 @@ class SetWikiFactoryVariable extends Maintenance {
 		$this->verbose = $this->hasOption( 'verbose' );
 		$this->varName = $this->getOption( 'varName', '' );
 		$set = $this->hasOption( 'set' );
-		$varValue = $this->getOption( 'set', '' );
+		$append = $this->hasOption( 'append' );
 		$remove = $this->hasOption( 'remove' );
 		$wikiId = $this->getOption( 'wikiId', '' );
 		$file = $this->getOption('file', '');
@@ -54,11 +55,17 @@ class SetWikiFactoryVariable extends Maintenance {
 			die( "Error: Empty variable name.\n" );
 		}
 
-		if ( $set && $remove ) {
-			die( "Error: Cannot set and remove the variable at the same time\n" );
+		if ( $set && $remove && $append ) {
+			die( "Error: Cannot set and append and remove the variable at the same time\n" );
 		}
 
-		if ( $set && $varValue == '' ) {
+		if( $set ) {
+			$varValue = $this->getOption( 'set', '' );
+		} else {
+			$varValue = $this->getOption( 'append', '' );
+		}
+
+		if ( ( $set || $append ) && $varValue == '' ) {
 			die( "Error: Empty variable value.\n" );
 		}
 
@@ -104,8 +111,13 @@ class SetWikiFactoryVariable extends Maintenance {
 
 			$status = true;
 			if ( $set ) {
-				echo "Set {$this->varName} to ".var_export( $varValue, true );
+				echo "Set {$this->varName} to " . var_export( $varValue, true );
 				$status = $this->setVariable( $id, $varValue );
+			} else if ( $append ) {
+				echo "Appending " . $varValue . " to  {$this->varName}:" . PHP_EOL;
+				var_dump($varData); die;
+				// echo "New value: " . var_export( $varValue, true ) . PHP_EOL;
+				// $status = $this->setVariable( $id, $varValue );
 			} else if ( $remove ) {
 				echo "Remove {$this->varName}";
 				$status = $this->removeVariableFromWiki( $id, $varData );
