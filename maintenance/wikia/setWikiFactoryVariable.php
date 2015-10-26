@@ -69,7 +69,15 @@ class SetWikiFactoryVariable extends Maintenance {
 			die( "Error: Empty variable value.\n" );
 		}
 
-		$varData = (array) WikiFactory::getVarByName( $this->varName, false, true );
+		if ( !empty( $wikiId ) ) {
+			$wikiIds = [ $wikiId ];
+		} else if ( !empty( $file ) ) {
+			$wikiIds = file( $file );
+		} else {
+			die( "Error: wiki id is empty or the file is invalid.\n" );
+		}
+
+		$varData = (array) WikiFactory::getVarByName( $this->varName, $wikiId, true );
 		if ( empty( $varData['cv_id'] ) ) {
 			die( "Error: $this->varName not found.\n" );
 		}
@@ -80,14 +88,6 @@ class SetWikiFactoryVariable extends Maintenance {
 
 		echo "Variable: $this->varName (Id: $varData[cv_id])\n";
 		$this->debug( "Variable data: " . json_encode( $varData ) . "\n" );
-
-		if ( !empty( $wikiId ) ) {
-			$wikiIds = [ $wikiId ];
-		} else if ( !empty( $file ) ) {
-			$wikiIds = file( $file );
-		} else {
-			die( "Error: wiki id is empty or the file is invalid.\n" );
-		}
 
 		// get valid value
 		if ( $set ) {
