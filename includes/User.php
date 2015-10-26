@@ -3090,7 +3090,6 @@ class User {
 
 			$this->invalidateCache();
 		}
-
 	}
 
 	/**
