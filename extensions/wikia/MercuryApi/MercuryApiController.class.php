@@ -474,7 +474,7 @@ class MercuryApiController extends WikiaController {
 		$article = Article::newFromID( $mainPageArticleID );
 		$data = [ ];
 
-		$data['articleDetails'] = $this->getArticleDetails( $article );
+		$data['details'] = $this->getArticleDetails( $article );
 		$data['adsContext'] = $this->mercuryApi->getAdsContext( $mainPageTitle );
 
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
