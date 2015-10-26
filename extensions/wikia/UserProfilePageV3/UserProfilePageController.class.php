@@ -1027,12 +1027,5 @@ class UserProfilePageController extends WikiaController {
 		wfProfileOut( __METHOD__ );
 		return true;
 	}
-
-	/**
-	 * Sets token mismatch error message
-	 */
-	private function setTokenMismatchError() {
-		$this->setVal( 'status', 'error' );
-		$this->setVal( 'errorMsg', wfMessage( 'sessionfailure' )->escaped() );
-	}
 }
+
