@@ -20,7 +20,7 @@ class SitemapPage extends UnlistedSpecialPage {
 
 	const BLOBS_TABLE_NAME = 'sitemap_blobs';
 	private $mType, $mTitle, $mNamespaces, $mNamespace, $mPriorities,
-		$mSizeLimit, $mPage, $mGoogleCode;
+		$mSizeLimit, $mPage;
 
 	/**
 	 * @var MediaQueryService
@@ -160,30 +160,6 @@ class SitemapPage extends UnlistedSpecialPage {
 	}
 
 	/**
-	 * compare provided hex with local configuration
-	 *
-	 * @access private
-	 */
-	private function verifyGoogle() {
-		global $wgGoogleSiteVerification, $wgGoogleSiteVerificationAlwaysValid, $wgOut;
-
-		$wgOut->disable();
-
-		$out = "";
-		if( $wgGoogleSiteVerification == $this->mGoogleCode ||
-			$wgGoogleSiteVerificationAlwaysValid ) {
-			header( "Cache-Control: public, max-age=3600", true );
-			$out .= "google-site-verification: google{$this->mGoogleCode}.html";
-		}
-		else {
-			header( "Cache-Control: no-cache" );
-			header( "HTTP/1.0 404 Not Found" );
-			$out .= "go away";
-		}
-		print $out;
-	}
-
-	/**
 	 * parse type and set mType and mNamespace
 	 */
 	private function parseType() {
@@ -195,10 +171,6 @@ class SitemapPage extends UnlistedSpecialPage {
 			$this->mType = "namespace";
 			$this->mNamespace = $match[ 1 ];
 			$this->mPage = $match[ 2 ];
-		}
-		elseif( preg_match( "/^google([0-9a-f]{16}).html$/", $this->mType, $match ) ) {
-			$this->mType = "google";
-			$this->mGoogleCode = $match[ 1 ];
 		}
 		else {
 			$this->mType = "index";
