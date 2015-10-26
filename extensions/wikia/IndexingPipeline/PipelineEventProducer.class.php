@@ -22,21 +22,21 @@ class PipelineEventProducer {
 	public static function send( $eventName, $pageId, $params = [ ] ) {
 		$msgBase = self::prepareMessageData( $pageId );
 		$msgBase->args = new stdClass();
-		$msg = self::prepareMessageBody( $params, $msgBase );
+		$msg = self::prepareMessageBody( $params, $msgBase->args );
 
 		self::publish( implode( '.', [ self::ARTICLE_MESSAGE_PREFIX, $eventName ] ), $msg );
 	}
 
 	/**
-	 * @desc Send event to pipeline in new format (with flags, see function prepareRoute).
+	 * @desc Send event to pipeline in new format,
+	 * using new action names (see function prepareRoute).
 	 * @param $action
 	 * @param $id
 	 * @param string $ns
 	 * @param array $data
-	 * @param array $flags
 	 */
-	public static function nSend( $action, $id, $ns = self::CONTENT, $data = [ ], $flags = [ ] ) {
-		$route = self::prepareRoute( $action, $ns, $flags, $data);
+	public static function sendFlaggedSyntax( $action, $id, $ns = self::CONTENT, $data = [] ) {
+		$route = self::prepareRoute( $action, $ns, $data);
 		$msgBase = self::prepareMessageData( $id );
 		$msg = self::prepareMessageBody( $data, $msgBase );
 
@@ -62,7 +62,7 @@ class PipelineEventProducer {
 		$id = $article->getId();
 
 		self::send( 'onNewRevisionFromEditComplete', $id );
-		self::nSend( $action, $id, $ns );
+		self::sendFlaggedSyntax( $action, $id, $ns );
 
 		return true;
 	}
@@ -76,7 +76,7 @@ class PipelineEventProducer {
 		$ns = self::preparePageNamespaceName( $oPage->getTitle() );
 
 		self::send( 'onArticleDeleteComplete', $pageId );
-		self::nSend( self::ACTION_DELETE, $pageId, $ns );
+		self::sendFlaggedSyntax( self::ACTION_DELETE, $pageId, $ns );
 
 		return true;
 	}
@@ -92,7 +92,7 @@ class PipelineEventProducer {
 		$data = [ 'isNew' => $isNew ];
 
 		self::send( 'onArticleUndelete', $oTitle->getArticleId(), $data );
-		self::nSend( self::ACTION_CREATE, $oTitle->getArticleId(), $ns, $data );
+		self::sendFlaggedSyntax( self::ACTION_CREATE, $oTitle->getArticleId(), $ns, $data );
 
 		return true;
 	}
@@ -108,7 +108,7 @@ class PipelineEventProducer {
 		$data = [ 'redirectId' => $redirectId ];
 
 		self::send( 'onTitleMoveComplete', $pageId, $data );
-		self::nSend( self::ACTION_UPDATE, $pageId, $ns, $data );
+		self::sendFlaggedSyntax( self::ACTION_UPDATE, $pageId, $ns, $data );
 
 		return true;
 	}
