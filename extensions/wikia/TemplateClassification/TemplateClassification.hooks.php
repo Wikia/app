@@ -51,7 +51,7 @@ class Hooks {
 				$wikiPage->getUser()
 			);
 		} catch ( \Exception $e ) {
-			( new Logger() )->exception( $e, $request );
+			( new Logger() )->exception( $e );
 			\BannerNotificationsController::addConfirmation(
 				wfMessage( 'template-classification-notification-error-retry' )->escaped(),
 				\BannerNotificationsController::CONFIRMATION_WARN
