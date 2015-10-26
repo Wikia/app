@@ -163,7 +163,7 @@ class ApiQueryUsers extends ApiQueryBase {
 
 					$data[$name]['blockedby'] = $blockInfo->getByName();
 					$data[$name]['blockreason'] = $blockInfo->mReason;
-					$data[$name]['blockexpiry'] = $blockInfo->mExpiry;
+					$data[$name]['blockexpiry'] = $blockInfo->getExpiry();
 				}
 
 				if ( isset( $this->prop['emailable'] ) && $user->canReceiveEmail() ) {
