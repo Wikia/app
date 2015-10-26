@@ -148,6 +148,21 @@
 	}
 }
 
+// **********  Collapsible groups  ********** //
+
+.pi-collapse-closed {
+	> *:nth-child(n+2) {
+		display: none;
+	}
+
+	.pi-horizontal-group {
+		thead,
+		tbody {
+			display: none;
+		}
+	}
+}
+
 // **********  Overwrite default infobox styles for STACKED layout type  ********** //
 
 .pi-layout-stacked {
