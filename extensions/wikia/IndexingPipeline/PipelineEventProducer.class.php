@@ -20,11 +20,10 @@ class PipelineEventProducer {
 	 * @param array $params
 	 */
 	public static function send( $eventName, $pageId, $params = [ ] ) {
-		$msg = self::prepareMessage( $pageId );
-		$msg->args = new stdClass();
-		foreach ( $params as $param => $value ) {
-			$msg->args->{$param} = $value;
-		}
+		$msgBase = self::prepareMessageData( $pageId );
+		$msgBase->args = new stdClass();
+		$msg = self::prepareMessageBody( $params, $msgBase );
+
 		self::publish( implode( '.', [ self::ARTICLE_MESSAGE_PREFIX, $eventName ] ), $msg );
 	}
 
@@ -38,10 +37,8 @@ class PipelineEventProducer {
 	 */
 	public static function nSend( $action, $id, $ns = self::CONTENT, $data = [ ], $flags = [ ] ) {
 		$route = self::prepareRoute( $action, $ns, $flags, $data);
-		$msg = self::prepareMessage( $id );
-		foreach ( $data as $key => $value ) {
-			$msg->{$key} = $value;
-		}
+		$msgBase = self::prepareMessageData( $id );
+		$msg = self::prepareMessageBody( $data, $msgBase );
 
 		self::publish( $route, $msg );
 	}
@@ -125,11 +122,25 @@ class PipelineEventProducer {
 	 * @param $pageId
 	 * @return \stdClass
 	 */
-	protected static function prepareMessage( $pageId ) {
+	protected static function prepareMessageData( $pageId ) {
 		global $wgCityId;
 		$msg = new stdClass();
 		$msg->cityId = $wgCityId;
 		$msg->pageId = $pageId;
+
+		return $msg;
+	}
+
+	/**
+	 * @desc iterate over passed params and add them to message body
+	 * @param $params
+	 * @param $msg
+	 * @return mixed
+	 */
+	protected static function prepareMessageBody ( $params, $msg ) {
+		foreach ( $params as $param => $value ) {
+			$msg->{$param} = $value;
+		}
 
 		return $msg;
 	}
