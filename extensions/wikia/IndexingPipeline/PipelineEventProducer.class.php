@@ -149,20 +149,22 @@ class PipelineEventProducer {
 	 * @desc create message route
 	 * @param $action
 	 * @param $ns
-	 * @param $flags
 	 * @param $data
 	 * @return string message route in format:
 	 * PRODUCER_NAME.ROUTE_ACTION_KEY:{action}.ROUTE_NAMESPACE_KEY:{namespace}.ROUTE_CONTENT_KEY:{items}
 	 */
-	public static function prepareRoute( $action, $ns, $flags, $data ) {
-		//prepare info about the data is in the message content
-		$contentData = array_map( function ( $item ) {
+	public static function prepareRoute( $action, $ns, $data = [] ) {
+		$contentData = [];
+
+		//prepare info about what data can be found in the message content
+		if ( !empty( array_keys( $data ) ) ) {
+			$contentData = array_map( function ( $item ) {
 				return self::ROUTE_CONTENT_KEY . ':' . $item;
 			}, array_keys( $data ) );
+		}
 
 		$routeData = array_merge(
 			[ self::PRODUCER_NAME, self::ROUTE_ACTION_KEY . ':' . $action,  self::ROUTE_NAMESPACE_KEY . ':' . $ns ],
-			$flags,
 			$contentData
 		);
 
