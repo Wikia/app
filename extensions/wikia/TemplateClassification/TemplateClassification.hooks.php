@@ -2,7 +2,6 @@
 
 namespace Wikia\TemplateClassification;
 
-use Wikia\TemplateClassification\Logger;
 use Wikia\TemplateClassification\UnusedTemplates\Handler;
 
 class Hooks {
