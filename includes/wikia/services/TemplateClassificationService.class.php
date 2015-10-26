@@ -21,7 +21,7 @@ class TemplateClassificationService {
 	const TEMPLATE_DESIGN = 'design';
 	const TEMPLATE_NAV = 'navigation';
 	const TEMPLATE_NOT_ART = 'nonarticle';
-	const TEMPLATE_UNKNOWN = 'unknown';
+	const TEMPLATE_OTHER = 'other';
 
 	/**
 	 * Allowed types of templates stored in an array to make a validation process easier.
@@ -38,7 +38,7 @@ class TemplateClassificationService {
 		self::TEMPLATE_DESIGN,
 		self::TEMPLATE_NAV,
 		self::TEMPLATE_NOT_ART,
-		self::TEMPLATE_UNKNOWN,
+		self::TEMPLATE_OTHER,
 	];
 
 	private $apiClient = null;
