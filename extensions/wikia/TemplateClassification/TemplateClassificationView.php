@@ -2,6 +2,8 @@
 
 namespace Wikia\TemplateClassification;
 
+use Wikia\TemplateClassification\Logger;
+
 class View {
 
 	/**
@@ -74,10 +76,20 @@ class View {
 		);
 	}
 
+	/**
+	 * Checks if a template is classified. Returns false if the service is unreachable.
+	 * @param $title
+	 * @return bool
+	 */
 	private function isTemplateClassified( $title ) {
 		global $wgCityId;
-		$templateType = ( new \TemplateClassificationService() )->getType( $wgCityId, $title->getArticleID() );
-		return $templateType !== \TemplateClassificationService::TEMPLATE_UNKNOWN && $templateType !== '';
+		try {
+			$templateType = ( new \TemplateClassificationService() )->getType( $wgCityId, $title->getArticleID() );
+			return $templateType !== \TemplateClassificationService::TEMPLATE_UNKNOWN && $templateType !== '';
+		} catch( \Exception $e ) {
+			( new Logger() )->exception( $e );
+			return false;
+		}
 	}
 
 }
