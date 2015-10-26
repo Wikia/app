@@ -39,6 +39,7 @@ class ProtectSiteJS {
 	private static function isUserSkinJS( Title $title, User $user ) {
 		global $wgCityId;
 		$allowedJsSubpages = [
+			'chat',
 			'common',
 			'monobook',
 			'wikia',

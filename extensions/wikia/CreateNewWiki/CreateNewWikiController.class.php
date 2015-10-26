@@ -211,9 +211,13 @@ class CreateNewWikiController extends WikiaController {
 
 	/**
 	 * Ajax call to Create wiki
+	 *
+	 * @throws BadRequestException
 	 */
 	public function CreateWiki() {
 		wfProfileIn(__METHOD__);
+		$this->checkWriteRequest();
+
 		$wgRequest = $this->app->getGlobal('wgRequest'); /* @var $wgRequest WebRequest */
 		$wgDevelDomains = $this->app->getGlobal('wgDevelDomains');
 		$wgUser = $this->app->getGlobal('wgUser'); /* @var $wgUser User */
