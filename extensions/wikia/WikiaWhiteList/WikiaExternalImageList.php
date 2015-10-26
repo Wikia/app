@@ -121,7 +121,7 @@ class WikiaExtImagesWhitelist
 		    $settings['previousFilter'] = false;
         }
 		if (empty($settings['files'])) {
-		    $settings['files'] = array("DB: wikicities Mediawiki:External_image_whitelist");
+		    $settings['files'] = array("DB: wikia Mediawiki:External_image_whitelist");
         } else {
             $use_prefix = 1;
         }
