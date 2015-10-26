@@ -169,9 +169,17 @@ class ArticleCommentsAjax {
 	static public function axPost() {
 		global $wgRequest, $wgUser, $wgLang;
 
+		$result = [ 'error' => 1 ];
+
+		try {
+			$wgRequest->isValidWriteRequest( $wgUser );
+		} catch ( \BadRequestException $bre ) {
+			$result['msg'] = wfMessage( 'sessionfailure' )->escaped();
+			return $result;
+		}
+
 		$articleId = $wgRequest->getVal( 'article', false );
 		$parentId = $wgRequest->getVal( 'parentId' );
-		$result = array( 'error' => 1 );
 		$title = Title::newFromID( $articleId );
 
 		if ( !$title ) {
