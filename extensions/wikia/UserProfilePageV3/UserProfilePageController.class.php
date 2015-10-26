@@ -461,7 +461,7 @@ class UserProfilePageController extends WikiaController {
 		if ( $status === 'error' ) {
 			$this->setVal( 'errorMsg', $errorMsg );
 			wfProfileOut( __METHOD__ );
-			return true;
+			return;
 		}
 
 		if ( !empty( $userData->avatarData ) ) {
@@ -469,12 +469,12 @@ class UserProfilePageController extends WikiaController {
 			if ( $status !== true ) {
 				$this->setVal( 'errorMsg', $errorMsg );
 				wfProfileOut( __METHOD__ );
-				return true;
+				return;
 			}
 		}
 
 		wfProfileOut( __METHOD__ );
-		return null;
+		return;
 	}
 
 	/**
@@ -522,8 +522,7 @@ class UserProfilePageController extends WikiaController {
 					}
 					break;
 				case 'uploaded':
-					$errorMsg = wfMessage( 'userprofilepage-interview-save-internal-error' )->escaped();
-					$avatar = $this->saveAvatarFromUrl( $user, $data->file, $errorMsg );
+					$avatar = $this->saveAvatarFromUrl( $user, $data->file );
 
 					// user avatars service updates user preferences on its own
 					if ( empty( $wgAvatarsUseService ) ) {
@@ -565,7 +564,7 @@ class UserProfilePageController extends WikiaController {
 	 *
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
-	private function saveAvatarFromUrl( User $user, $url, &$errorMsg ) {
+	private function saveAvatarFromUrl( User $user, $url ) {
 		wfProfileIn( __METHOD__ );
 
 		$userId = $user->getId();
@@ -577,8 +576,7 @@ class UserProfilePageController extends WikiaController {
 				'username' => $user->getName(),
 				'user' => $user,
 				'localPath' => '',
-			),
-			$errorMsg
+			)
 		);
 
 		$localPath = $this->getLocalPath( $user );
@@ -789,15 +787,12 @@ class UserProfilePageController extends WikiaController {
 	 *
 	 * @return Integer error code of operation
 	 */
-	public function uploadByUrl( $url, $userData, &$errorMsg = '' ) {
-		wfProfileIn( __METHOD__ );
-
+	public function uploadByUrl( $url, $userData ) {
 		try {
 			$this->checkWriteRequest();
 		} catch ( \BadRequestException $bre ) {
 			$this->setTokenMismatchError();
-			wfProfileOut( __METHOD__ );
-			return;
+			return UPLOAD_ERR_CANT_WRITE;
 		}
 
 		// start by presuming there is no error
@@ -826,7 +821,6 @@ class UserProfilePageController extends WikiaController {
 			$errorNo = UPLOAD_ERR_EXTENSION;
 		}
 
-		wfProfileOut( __METHOD__ );
 		return $errorNo;
 	}
 
@@ -1027,12 +1021,5 @@ class UserProfilePageController extends WikiaController {
 		wfProfileOut( __METHOD__ );
 		return true;
 	}
-
-	/**
-	 * Sets token mismatch error message
-	 */
-	private function setTokenMismatchError() {
-		$this->setVal( 'status', 'error' );
-		$this->setVal( 'errorMsg', wfMessage( 'sessionfailure' )->escaped() );
-	}
 }
+

@@ -834,17 +834,7 @@ class OutputPage extends ContextSource {
 			$name = $name->setContext( $this->getContext() )->text();
 		}
 
-		// First apply the per-wiki template (editable by communitiess)
-		if ( $this->getTitle()->isMainPage() ) {
-			$title = wfMessage( 'pagetitle-view-mainpage', $name )->inContentLanguage()->text();
-		} else {
-			$title = wfMessage( 'pagetitle', $name )->inContentLanguage()->text();
-		}
-
-		// Now apply Wikia-wide template on top of that
-		$fullTitle = wfMessage( 'wikia-pagetitle', $title )->inContentLanguage()->text();
-
-		$this->mHTMLtitle = $fullTitle;
+		$this->mHTMLtitle = WikiaHtmlTitle::getPageTitle( $name, $this->getTitle()->isMainPage() );
 		/* Wikia change - end */
 	}
 
