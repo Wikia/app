@@ -121,10 +121,10 @@ class SetWikiFactoryVariable extends Maintenance {
 				echo "Appending " . $varValue . " to {$this->varName}:" . PHP_EOL;
 				$varData = (array) WikiFactory::getVarByName( $this->varName, $id, true );
 				$prevValue = unserialize($varData['cv_value']);
-				$varValue = $prevValue . $varValue;
+				$newValue = $prevValue . $varValue;
 				echo "Previous value: " . $prevValue . PHP_EOL;
-				echo "New value: " . $varValue . PHP_EOL;
-				$status = $this->setVariable( $id, $varValue );
+				echo "New value: " . $newValue . PHP_EOL;
+				$status = $this->setVariable( $id, $newValue );
 			} else if ( $remove ) {
 				echo "Remove {$this->varName}";
 				$status = $this->removeVariableFromWiki( $id, $varData );
