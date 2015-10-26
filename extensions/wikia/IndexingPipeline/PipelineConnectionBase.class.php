@@ -4,7 +4,7 @@ use PhpAmqpLib\Message\AMQPMessage;
 
 class PipelineConnectionBase {
 	const DURABLE_MESSAGE = 2;
-	const MESSAGE_TTL = 900000; //15m
+	const MESSAGE_TTL = 57600000; //16h
 
 	protected $host;
 	protected $port;

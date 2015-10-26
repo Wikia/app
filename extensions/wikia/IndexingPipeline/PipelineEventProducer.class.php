@@ -3,7 +3,7 @@
 class PipelineEventProducer {
 	const ARTICLE_MESSAGE_PREFIX = 'article';
 	const PRODUCER_NAME = 'MWEventsProducer';
-	const CONTENT = 'content';
+	const NS_CONTENT = 'content';
 	const ROUTE_ACTION_KEY = '_action';
 	const ROUTE_NAMESPACE_KEY = '_namespace';
 	const ROUTE_CONTENT_KEY = '_content';
@@ -35,7 +35,7 @@ class PipelineEventProducer {
 	 * @param string $ns
 	 * @param array $data
 	 */
-	public static function sendFlaggedSyntax( $action, $id, $ns = self::CONTENT, $data = [] ) {
+	public static function sendFlaggedSyntax( $action, $id, $ns = self::NS_CONTENT, $data = [] ) {
 		$route = self::prepareRoute( $action, $ns, $data);
 		$msgBase = self::prepareMessageData( $id );
 		$msg = self::prepareMessageBody( $data, $msgBase );
@@ -205,7 +205,7 @@ class PipelineEventProducer {
 		$namespaceID = $title->getNamespace();
 
 		if ( in_array($namespaceID, $wgContentNamespaces) ) {
-			$pageNamespace =  self::CONTENT;
+			$pageNamespace =  self::NS_CONTENT;
 		} else {
 			$pageNamespace = strtolower( MWNamespace::getCanonicalName( $namespaceID ) );
 		}

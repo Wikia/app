@@ -36,7 +36,7 @@ class PipelineEventProducerTest extends WikiaBaseTest {
 			[
 				'data' => [
 					'action' => PipelineEventProducer::ACTION_UPDATE,
-					'ns' => PipelineEventProducer::CONTENT,
+					'ns' => PipelineEventProducer::NS_CONTENT,
 					'data' => [
 						'isNew' => false,
 						'otherParam' => "other_value",
@@ -49,7 +49,7 @@ class PipelineEventProducerTest extends WikiaBaseTest {
 			[
 				'data' => [
 					'action' => PipelineEventProducer::ACTION_UPDATE,
-					'ns' => PipelineEventProducer::CONTENT,
+					'ns' => PipelineEventProducer::NS_CONTENT,
 					'data' => [ 'redirectId' => 578437 ]
 				],
 				'expect' => 'MWEventsProducer._action:update._namespace:content._content:redirectId',
