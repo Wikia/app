@@ -241,7 +241,7 @@ class Hooks {
 	public function onUserRightsGroupCheckboxes( $group, &$disabled, &$irreversible ) {
 		global $wgUser;
 
-		if ( $group === 'content-reviewer' && !$wgUser->isAllowed( 'content-review' ) ) {
+		if ( $group === 'content-reviewer' && ( !$wgUser->isAllowed( 'content-review' ) || !$wgUser->isStaff() ) ) {
 			$disabled = true;
 		}
 
@@ -251,7 +251,7 @@ class Hooks {
 	public function onUserAddGroup( \User $user, $group ) {
 		global $wgUser;
 
-		if ( $group === 'content-reviewer' && !$wgUser->isAllowed( 'content-review' ) ) {
+		if ( $group === 'content-reviewer' && ( !$wgUser->isAllowed( 'content-review' ) || !$wgUser->isStaff() ) ) {
 			return false;
 		}
 
