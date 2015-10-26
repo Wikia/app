@@ -118,7 +118,7 @@ function ($, mw, loader, nirvana) {
 	}
 
 	function processSave(modalInstance) {
-		var templateType = $('#TemplateClassificationEditForm').serializeArray()[0].value;
+		var templateType = $('#TemplateClassificationEditForm [name="template-classification-types"]:checked').val();
 
 		saveHandler(templateType);
 
