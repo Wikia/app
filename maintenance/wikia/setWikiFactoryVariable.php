@@ -37,6 +37,9 @@ class SetWikiFactoryVariable extends Maintenance {
 		$this->addOption( 'set', 'Set the variable value. Note: "true" for enable or "false" for disable the extenstion', false, true, 's' );
 		$this->addOption( 'remove', 'Remove the variable value (from the Wiki)', false, false, 'r' );
 		$this->addOption( 'append', 'Append string value to existing value', false, false, 'a' );
+		$this->addOption( 'merge', 'Merge new key into existing array value', false, false);
+		$this->addOption( 'unset', 'Remove key from existing array value', false, false);
+		$this->addOption( 'split', 'Convert a string value to an array to allow merge/unset options', false, false);
 		$this->addOption( 'wikiId', 'Wiki Id', false, true, 'i' );
 		$this->addOption( 'file', 'File of wiki ids', false, true, 'f' );
 	}
@@ -47,6 +50,9 @@ class SetWikiFactoryVariable extends Maintenance {
 		$this->varName = $this->getOption( 'varName', '' );
 		$set = $this->hasOption( 'set' );
 		$append = $this->hasOption( 'append' );
+		$merge = $this->hasOption( 'merge' );
+		$unset = $this->hasOption( 'unset' );
+		$split = $this->getOption( 'split', '');
 		$remove = $this->hasOption( 'remove' );
 		$wikiId = $this->getOption( 'wikiId', '' );
 		$file = $this->getOption('file', '');
@@ -61,8 +67,12 @@ class SetWikiFactoryVariable extends Maintenance {
 
 		if( $set ) {
 			$varValue = $this->getOption( 'set', '' );
-		} else {
+		} else if ( $append ) {
 			$varValue = $this->getOption( 'append', '' );
+		} else if ( $merge ) {
+			$varValue = $this->getOption( 'merge', '' );
+		} else if ( $unset ) {
+			$varValue = $this->getOption( 'unset', '' );
 		}
 
 		if ( ( $set || $append ) && $varValue == '' ) {
@@ -125,6 +135,34 @@ class SetWikiFactoryVariable extends Maintenance {
 				echo "Previous value: " . $prevValue . PHP_EOL;
 				echo "New value: " . $newValue . PHP_EOL;
 				$status = $this->setVariable( $id, $newValue );
+			} else if ( $merge ) {
+				$varData = (array) WikiFactory::getVarByName( $this->varName, $id, true );
+				if (!empty ($split)) {
+					// value is string so we must convert to array
+					$prevValue = unserialize($varData['cv_value']);
+					$prevValue = explode($split, $prevValue);
+				}
+
+				if (is_array($prevValue)) {
+					echo "Adding new value $varValue to array" . PHP_EOL;
+					$newValue = array_filter(array_unique(array_merge($prevValue, [$varValue])));
+				} else {
+					echo "Value is not an array" . PHP_EOL;
+					$status = 0;  // failed, value is not an array
+				}
+
+				if (!empty ($split)) {
+					// join array back to string
+					$newValue = join($split, $newValue);
+				}
+
+				$status = $this->setVariable( $id, $newValue );
+
+			} else if ( $unset ) {
+
+				// NOT IMPLEMENTED YET
+				echo "Not implemented yet." . PHP_EOL;
+
 			} else if ( $remove ) {
 				echo "Remove {$this->varName}";
 				$status = $this->removeVariableFromWiki( $id, $varData );
@@ -157,6 +195,8 @@ class SetWikiFactoryVariable extends Maintenance {
 			if ( $status ) {
 				WikiFactory::clearCache( $wikiId );
 			}
+		} else {
+			echo "Dry run, not changing variable." . PHP_EOL;
 		}
 
 		return $status;
