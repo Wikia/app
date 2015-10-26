@@ -55,8 +55,8 @@ class SetWikiFactoryVariable extends Maintenance {
 			die( "Error: Empty variable name.\n" );
 		}
 
-		if ( $set && $remove && $append ) {
-			die( "Error: Cannot set and append and remove the variable at the same time\n" );
+		if ( $set && $remove || $set && $append || $remove && $append ) {
+			die( "Error: Cannot use one of the three commands (set, append, remove) at the same time" . PHP_EOL );
 		}
 
 		if( $set ) {
