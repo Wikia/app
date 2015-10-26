@@ -14,13 +14,6 @@ namespace Wikia\Interfaces;
 interface IRequest {
 
 	/**
-	 * Return an array of all arguments passed in a request.
-	 *
-	 * @return array
-	 */
-	public function getValues();
-
-	/**
 	 * Return true if the named value is set in the input, whatever that
 	 * value is (even "0"). Return false if the named value is not set.
 	 *
