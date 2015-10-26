@@ -2651,3 +2651,10 @@ $config['tempate_classification_scss'] = [
 		'//extensions/wikia/TemplateClassification/styles/TemplateClassification.scss',
 	]
 ];
+
+$config['special_broken_rename_fix'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'assets' => [
+		'//extensions/wikia/BrokenRenameFix/styles/SpecialBrokenRenameFix.scss',
+	],
+];
