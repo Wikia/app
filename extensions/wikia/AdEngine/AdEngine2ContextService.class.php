@@ -28,10 +28,10 @@ class AdEngine2ContextService {
 				$monetizationServiceAds = F::app()->sendRequest( 'MonetizationModule', 'index' )->getData()['data'];
 			}
 
-			$sourcePointUrl = null;
-			$sourcePointDetectionUrl = ResourceLoader::makeCustomURL( $wg->Out, ['wikia.ext.adengine.sourcepoint.detection'], 'scripts' );
+			$sourcePointRecoveryUrl = null;
+			$sourcePointDetectionUrl = ResourceLoader::makeCustomURL( $wg->Out, ['wikia.ext.adengine.sp.detection'], 'scripts' );
 			if ( $skinName === 'oasis' ) {
-				$sourcePointUrl = ResourceLoader::makeCustomURL( $wg->Out, ['wikia.ext.adengine.sourcepoint'], 'scripts' );
+				$sourcePointRecoveryUrl = ResourceLoader::makeCustomURL( $wg->Out, ['wikia.ext.adengine.sp.recovery'], 'scripts' );
 			}
 
 			$langCode = $title->getPageLanguage()->getCode();
@@ -52,8 +52,9 @@ class AdEngine2ContextService {
 					'showAds' => $adPageTypeService->areAdsShowableOnPage(),
 					'trackSlotState' => $wg->AdDriverTrackState,
 					'usePostScribe' => $wg->Request->getBool( 'usepostscribe', false ),
-					'sourcePointUrl' => $sourcePointUrl,
+					'sourcePointUrl' => $sourcePointRecoveryUrl, // @TODO ADEN-2578 - cleanup
 					'sourcePointDetectionUrl' => $sourcePointDetectionUrl,
+					'sourcePointRecoveryUrl' => $sourcePointRecoveryUrl,
 				] ),
 				'targeting' => $this->filterOutEmptyItems( [
 					'enableKruxTargeting' => $wg->EnableKruxTargeting,

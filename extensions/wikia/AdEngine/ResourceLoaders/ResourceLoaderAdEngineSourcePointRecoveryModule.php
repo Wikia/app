@@ -1,6 +1,6 @@
 <?php
 
-class ResourceLoaderAdEngineSourcePointModule extends ResourceLoaderAdEngineBase {
+class ResourceLoaderAdEngineSourcePointRecoveryModule extends ResourceLoaderAdEngineBase {
 	const TTL_SCRIPTS = 86400;   // one day for fresh scripts from SourcePoint
 	const TTL_GRACE = 3600; // one hour for old scripts (served if we fail to fetch fresh scripts)
 	const CACHE_BUSTER = 14;     // increase this any time the local files change

@@ -50,9 +50,10 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverKruxCountries';
 		$vars[] = 'wgAdDriverOpenXBidderCountries';
 		$vars[] = 'wgAdDriverOpenXBidderCountriesMobile';
-		$vars[] = 'wgAdDriverSourcePointCountries';
+		$vars[] = 'wgAdDriverSourcePointCountries'; // @TODO ADEN-2578 - cleanup
 		$vars[] = 'wgAdDriverSourcePointDetectionCountries';
 		$vars[] = 'wgAdDriverSourcePointDetectionMobileCountries';
+		$vars[] = 'wgAdDriverSourcePointRecoveryCountries';
 		$vars[] = 'wgAdDriverScrollHandlerConfig';
 		$vars[] = 'wgAdDriverScrollHandlerCountries';
 		$vars[] = 'wgAdDriverTurtleCountries';

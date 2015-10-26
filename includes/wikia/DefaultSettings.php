@@ -1519,6 +1519,7 @@ $wgAdDriverOpenXCountries = null;
 
 /**
  * @name $wgAdDriverSourcePointCountries
+ * @TODO ADEN-2578 - cleanup
  * List of countries to call ads through SourcePoint
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
@@ -1537,6 +1538,13 @@ $wgAdDriverSourcePointDetectionCountries = null;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverSourcePointDetectionMobileCountries = null;
+
+/**
+ * @name $wgAdDriverSourcePointRecoveryCountries
+ * List of countries to call ads through SourcePoint
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverSourcePointRecoveryCountries = null;
 
 /**
  * trusted proxy service registry
