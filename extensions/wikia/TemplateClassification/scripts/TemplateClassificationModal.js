@@ -48,7 +48,7 @@ function ($, mw, loader, nirvana) {
 		// Fetch all data and open modal
 		$.when(
 			classificationFormLoader(),
-			typeGetter(mw.config.get('wgArticleId')),
+			typeGetter(),
 			messagesLoader()
 		).done(handleRequestsForModal);
 	}
@@ -118,7 +118,7 @@ function ($, mw, loader, nirvana) {
 	}
 
 	function processSave(modalInstance) {
-		var templateType = $('#TemplateClassificationEditForm').serializeArray()[0].value;
+		var templateType = $('#TemplateClassificationEditForm [name="template-classification-types"]:checked').val();
 
 		saveHandler(templateType);
 

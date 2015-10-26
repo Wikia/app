@@ -34,11 +34,11 @@ define('TemplateClassificationInEdit',
 
 		function getType() {
 			/* Return in format required by TemplateClassificationModal module */
-			return [{type: $editFromHiddenTypeFiled.attr('value')}];
+			return [{type: $editFromHiddenTypeFiled.val()}];
 		}
 
 		function storeTypeForSend(templateType) {
-			$editFromHiddenTypeFiled.attr('value', mw.html.escape(templateType));
+			$editFromHiddenTypeFiled.val(mw.html.escape(templateType));
 		}
 
 		return {

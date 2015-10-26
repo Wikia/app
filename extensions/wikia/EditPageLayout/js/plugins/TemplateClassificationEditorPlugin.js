@@ -18,7 +18,7 @@
 				var	$typeField = $('#editform').find('input[name=templateClassificationType]');
 
 				if ($typeField.length > 0) {
-					if ($typeField.attr('value') !== '') {
+					if ($typeField.val() !== '') {
 						// Type defined
 						return true;
 					}
