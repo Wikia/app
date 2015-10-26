@@ -20,7 +20,12 @@ class View {
 			return $fallbackMsg;
 		}
 
-		$templateType = ( new \TemplateClassificationService() )->getType( $wikiId, $title->getArticleID() );
+		try {
+			$templateType = ( new \TemplateClassificationService() )->getType( $wikiId, $title->getArticleID() );
+		} catch ( \Exception $e ) {
+			( new Logger() )->exception( $e );
+			$templateType = \TemplateClassificationService::TEMPLATE_UNKNOWN;
+		}
 		// Fallback to unknown for not existent classification
 		if ( $templateType === '' ) {
 			$templateType = \TemplateClassificationService::TEMPLATE_UNKNOWN;
@@ -86,7 +91,7 @@ class View {
 		try {
 			$templateType = ( new \TemplateClassificationService() )->getType( $wgCityId, $title->getArticleID() );
 			return $templateType !== \TemplateClassificationService::TEMPLATE_UNKNOWN && $templateType !== '';
-		} catch( \Exception $e ) {
+		} catch ( \Exception $e ) {
 			( new Logger() )->exception( $e );
 			return false;
 		}
