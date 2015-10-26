@@ -11,6 +11,65 @@ class SEOTweaksTest extends WikiaBaseTest
 	}
 
 	/**
+	 * @covers SEOTweaksHooksHelper::onBeforePageDisplay
+	 */
+	public function testOnBeforePageDisplayWithoutGoogleVals() {
+
+		$this->mockGlobalVariable('wgSEOGooglePlusLink', null);
+
+		$mockOut = $this->getMockbuilder( 'OutputPage' )
+						->disableOriginalConstructor()
+						->setMethods( array( 'addLink' ) )
+						->getMock();
+
+		$mockHelper = $this->helperMocker->setMethods( array( 'foo' ) ) // fake method required to run real methods
+										->getMock();
+
+		$wgRefl = new ReflectionProperty( 'WikiaObject', 'wg' );
+		$wgRefl->setAccessible( true );
+
+		$mockOut
+			->expects( $this->never() )
+			->method ( 'addLink' )
+		;
+
+		// first, with neither setting -- nothing should happen
+		$this->assertTrue(
+				$mockHelper->onBeforePageDisplay( $mockOut ),
+				'SEOTweaksHooksHelper::onBeforePageDisplay should always return true'
+		);
+	}
+
+	/**
+	 * @covers SEOTweaksHooksHelper::onBeforePageDisplay
+	 */
+	public function testOnBeforePageDisplayWithGoogleVals() {
+
+		$this->mockGlobalVariable('wgSEOGooglePlusLink', 'bazqux');
+
+		$mockOut = $this->getMockbuilder( 'OutputPage' )
+						->disableOriginalConstructor()
+						->setMethods( array( 'addLink' ) )
+						->getMock();
+
+		$mockHelper = $this->helperMocker->setMethods( array( 'foo' ) ) // fake method required to run real methods
+										->getMock();
+
+		$wgRefl = new ReflectionProperty( 'WikiaObject', 'wg' );
+		$wgRefl->setAccessible( true );
+
+		$mockOut
+			->expects( $this->once() )
+			->method ( 'addLink' )
+			->with   ( array( 'href' => 'bazqux', 'rel' => 'publisher' ) )
+		;
+		$this->assertTrue(
+				$mockHelper->onBeforePageDisplay( $mockOut ),
+				'SEOTweaksHooksHelper::onBeforePageDisplay should always return true'
+		);
+	}
+
+	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.01246 ms
 	 * @covers SEOTweaksHooksHelper::onAfterInitialize

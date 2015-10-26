@@ -732,11 +732,6 @@ $(function() {
 				include_once( "form-tags-find.tmpl.php" );
 				break;
 
-		# GOOGLE
-			case "google":
-				include_once( "form-google.tmpl.php" );
-				break;
-
 		# CLOSE
 			case "close":
 				include_once( "form-close.tmpl.php" );
