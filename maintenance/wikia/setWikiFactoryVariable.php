@@ -119,8 +119,9 @@ class SetWikiFactoryVariable extends Maintenance {
 				$status = $this->setVariable( $id, $varValue );
 			} else if ( $append ) {
 				echo "Appending " . $varValue . " to {$this->varName}:" . PHP_EOL;
-				$varValue = ( is_null($varData['cv_value']) ) ? '' . $varValue : $varData['cv_value'] . $varValue;
-				echo "Previous value: " . $varData['cv_value'] . PHP_EOL;
+				$prevValue = unserialize($varData['cv_value']);
+				$varValue = $prevValue . $varValue;
+				echo "Previous value: " . $prevValue . PHP_EOL;
 				echo "New value: " . $varValue . PHP_EOL;
 				$status = $this->setVariable( $id, $varValue );
 			} else if ( $remove ) {
