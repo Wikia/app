@@ -445,7 +445,7 @@ if ( $wgCommandLineMode ) {
 	wfDebug( "$debug\n" );
 }
 
-wfRunHooks('WebRequestInitialized', [ $wgRequest ] );
+wfRunHooks('WebRequestInitialized', [ $wgRequest ] ); // Wikia change
 
 wfProfileOut( $fname . '-misc1' );
 wfProfileIn( $fname . '-memcached' );
