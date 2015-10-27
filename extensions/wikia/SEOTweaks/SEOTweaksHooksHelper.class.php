@@ -21,10 +21,7 @@ class SEOTweaksHooksHelper {
 	 * @return bool true
 	 */
 	static function onBeforePageDisplay( $out ) {
-		global $wgSEOGoogleSiteVerification, $wgSEOGooglePlusLink, $wgServer;
-		if ( !empty( $wgSEOGoogleSiteVerification ) ) {
-			$out->addMeta( 'google-site-verification', $wgSEOGoogleSiteVerification );
-		}
+		global $wgSEOGooglePlusLink;
 		if ( !empty( $wgSEOGooglePlusLink ) ) {
 			$out->addLink( array( 'href' => $wgSEOGooglePlusLink, 'rel' => 'publisher' ) );
 		}
