@@ -116,6 +116,7 @@ class MercuryApi {
 			'enableNewAuth' => $wgEnableNewAuth,
 			'homepage' => $this->getHomepageUrl(),
 			'id' => (int) $wgCityId,
+			'isCoppaWiki' => (wgWikiDirectedAtChildrenByFounder || wgWikiDirectedAtChildrenByStaff),
 			'language' => [
 				'content' => $wgLanguageCode,
 				'contentDir' => $wgContLang->getDir()
