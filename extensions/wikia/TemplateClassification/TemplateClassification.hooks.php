@@ -17,7 +17,7 @@ class Hooks {
 		\Hooks::register( 'QueryPageUseResultsBeforeRecache', [ $hooks, 'onQueryPageUseResultsBeforeRecache' ] );
 		/* Edit page hooks */
 		\Hooks::register( 'EditPage::showEditForm:fields', [ $hooks, 'onEditPageShowEditFormFields' ] );
-		\Hooks::register( 'ArticleInsertComplete', [ $hooks, 'onArticleInsertComplete' ] );
+		\Hooks::register( 'ArticleSaveComplete', [ $hooks, 'onArticleSaveComplete' ] );
 		\Hooks::register( 'EditPageLayoutExecute', [ $hooks, 'onEditPageLayoutExecute' ] );
 		\Hooks::register( 'EditPageMakeGlobalVariablesScript', [ $hooks, 'onEditPageMakeGlobalVariablesScript' ] );
 	}
@@ -27,17 +27,20 @@ class Hooks {
 	 * template type is stored in templateClassificationType hidden field
 	 *
 	 * @param \WikiPage $wikiPage
+	 * @param \User $user
 	 * @return bool
 	 */
-	public function onArticleInsertComplete( \WikiPage $wikiPage ) {
+	public function onArticleSaveComplete( \WikiPage $article, \User $user, $text, $summary,
+		$minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId
+	) {
 		global $wgCityId;
 
 		( new \TemplateClassificationService() )->classifyTemplate(
 			$wgCityId,
-			$wikiPage->getId(),
+			$article->getId(),
 			\RequestContext::getMain()->getRequest()->getVal('templateClassificationType'),
 			\TemplateClassificationService::USER_PROVIDER,
-			$wikiPage->getUser()
+			$user->getId()
 		);
 		return true;
 	}
