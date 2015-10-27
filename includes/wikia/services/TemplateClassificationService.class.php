@@ -117,7 +117,7 @@ class TemplateClassificationService {
 	 * @throws Exception
 	 * @throws \Swagger\Client\ApiException
 	 */
-	public function getTypesOnWiki( $wikiId ) {
+	public function getTemplatesOnWiki( $wikiId ) {
 		$templateTypes = [];
 
 		$types = $this->getApiClient()->getTemplateTypesOnWiki( $wikiId );
