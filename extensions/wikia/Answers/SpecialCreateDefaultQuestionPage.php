@@ -9,37 +9,13 @@ class CreateQuestionPage extends UnlistedSpecialPage {
 
 	function execute( $question ) {
 		if ( $this->getRequest()->wasPosted() ) {
-			return $this->createQuestion();
-		}
-
-		return $this->questionPage( $question );
-	}
-
-	private function questionPage( $question ) {
-		if ( empty( $question ) ) {
-			$question = $this->getRequest()->getVal( self::QS_KEY_QUESTION, false );
-			if ( !$question ) {
-				return;
-			}
-		}
-
-		$q = new DefaultQuestion( $question );
-
-		if ( !is_object( $q ) ) {
+			$this->createQuestion();
 			return;
 		}
 
-		if ( is_object( $q->title ) && $q->title->exists() ) {
-			$this->getOutput()->redirect( $q->title->getFullURL() );
-			return;
+		if ( !empty( $question ) ) {
+			$this->redirectToHelpPage();
 		}
-
-		if ( $q->searchTest() ) {
-			$this->redirectToSearchPage( $q );
-			return;
-		}
-
-		$this->redirectToHelpPage();
 	}
 
 	private function createQuestion() {
