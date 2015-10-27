@@ -1,6 +1,7 @@
 @import 'skins/shared/color';
 @import 'skins/shared/mixins/chevron';
 @import 'skins/shared/mixins/flexbox';
+@import 'skins/shared/mixins/transform';
 @import 'extensions/wikia/PortableInfobox/styles/PortableInfoboxVariables';
 
 .portable-infobox {
@@ -171,9 +172,8 @@
 	border-bottom: none;
 
 	.pi-header::after {
+		@include transform-rotate(135deg);
 		margin-top: -($infobox-chevron-size / 2);
-		-webkit-transform: rotate(135deg);
-		transform: rotate(135deg);
 	}
 
 	> *:nth-child(n+2) {
