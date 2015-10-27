@@ -3,7 +3,7 @@
  * if templateClassificationType hidden field in #editform is not filled
  */
 define('TemplateClassificationModalForce',
-	['jquery', 'mw', 'wikia.loader', 'wikia.nirvana', 'TemplateClassificationLabeling'],
+	['jquery'],
 	function ($) {
 		'use strict';
 		function forceType() {

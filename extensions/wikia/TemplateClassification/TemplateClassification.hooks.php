@@ -87,7 +87,7 @@ class Hooks {
 	public function onBeforePageDisplay( \OutputPage $out, \Skin $skin ) {
 		$title = $out->getTitle();
 		if ( ( new Permissions() )->shouldDisplayEntryPoint( $skin->getUser(), $title ) ) {
-			if ( $title->exists() ) {
+			if ( $title->exists() && !$this->isEditPage() ) {
 				\Wikia::addAssetsToOutput( 'template_classification_in_view_js' );
 				\Wikia::addAssetsToOutput( 'template_classification_scss' );
 			} elseif ( $this->isEditPage() ) {
