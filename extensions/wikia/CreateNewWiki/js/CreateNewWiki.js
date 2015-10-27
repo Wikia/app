@@ -480,44 +480,48 @@
 				categories.push($(this).val());
 			});
 
-			$.nirvana.sendRequest({
-				controller: 'CreateNewWiki',
-				method: 'CreateWiki',
-				data: {
+			window.mw.Api.getEditToken(function (editToken) {
+				$.nirvana.sendRequest({
+					controller: 'CreateNewWiki',
+					method: 'CreateWiki',
 					data: {
-						wName: self.wikiName.val(),
-						wDomain: self.wikiDomain.val(),
-						wLanguage: self.wikiLanguage.find('option:selected').val(),
-						wVertical: verticalOption.val(),
-						wCategories: categories,
-						wAllAges: self.wikiAllAges.is(':checked') ? self.wikiAllAges.val() : null,
-						wAnswer: Math.floor(self.answer)
+						data: {
+							wName: self.wikiName.val(),
+							wDomain: self.wikiDomain.val(),
+							wLanguage: self.wikiLanguage.find('option:selected').val(),
+							wVertical: verticalOption.val(),
+							wCategories: categories,
+							wAllAges: self.wikiAllAges.is(':checked') ? self.wikiAllAges.val() : null,
+							wAnswer: Math.floor(self.answer)
+						},
+						token: editToken
 					},
-					token: window.mw.user.tokens.get('editToken')
-				},
-				callback: function (res) {
-					self.createStatus = res.status;
-					self.createStatusMessage = res.statusMsg;
+					callback: function (res) {
+						self.createStatus = res.status;
+						self.createStatusMessage = res.statusMsg;
 
-					throbberWrapper.stopThrobbing();
+						throbberWrapper.stopThrobbing();
 
-					if (self.createStatus && self.createStatus === 'ok') {
-						self.cityId = res.cityId;
-						self.finishCreateUrl = (res.finishCreateUrl.indexOf('.com/wiki/') < 0 ?
-							res.finishCreateUrl.replace('.com/', '.com/wiki/') :
-							res.finishCreateUrl);
+						if (self.createStatus && self.createStatus === 'ok') {
+							self.cityId = res.cityId;
+							self.finishCreateUrl = (res.finishCreateUrl.indexOf('.com/wiki/') < 0 ?
+								res.finishCreateUrl.replace('.com/', '.com/wiki/') :
+								res.finishCreateUrl);
 
-						// unblock "Next" button (BugId:51519)
-						self.$themWikiWrapper.find('.next-controls input').
-							attr('disabled', false).
-							addClass('enabled'); // for QA with love
-					} else {
-						$.showModal(res.statusHeader, self.createStatusMessage);
+							// unblock "Next" button (BugId:51519)
+							self.$themWikiWrapper.find('.next-controls input').
+								attr('disabled', false).
+								addClass('enabled'); // for QA with love
+						} else {
+							$.showModal(res.statusHeader, self.createStatusMessage);
+						}
+					},
+					onErrorCallback: function () {
+						self.generateAjaxErrorMsg();
 					}
-				},
-				onErrorCallback: function () {
-					self.generateAjaxErrorMsg();
-				}
+				});
+			}, function () {
+				self.generateAjaxErrorMsg();
 			});
 		},
 
