@@ -2,6 +2,8 @@
 
 namespace Wikia\TemplateClassification;
 
+use Swagger\Client\ApiException;
+
 class View {
 
 	/**
@@ -20,7 +22,7 @@ class View {
 
 		try {
 			$templateType = ( new \TemplateClassificationService() )->getType( $wikiId, $title->getArticleID() );
-		} catch ( \Exception $e ) {
+		} catch ( ApiException $e ) {
 			( new Logger() )->exception( $e );
 			return $fallbackMsg;
 		}

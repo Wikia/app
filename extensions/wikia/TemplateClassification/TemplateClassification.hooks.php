@@ -2,6 +2,7 @@
 
 namespace Wikia\TemplateClassification;
 
+use Swagger\Client\ApiException;
 use Wikia\TemplateClassification\UnusedTemplates\Handler;
 
 class Hooks {
@@ -50,7 +51,7 @@ class Hooks {
 				\TemplateClassificationService::USER_PROVIDER,
 				$wikiPage->getUser()
 			);
-		} catch ( \Exception $e ) {
+		} catch ( ApiException $e ) {
 			( new Logger() )->exception( $e );
 			\BannerNotificationsController::addConfirmation(
 				wfMessage( 'template-classification-notification-error-retry' )->escaped(),
@@ -88,7 +89,7 @@ class Hooks {
 
 		try {
 			$templateType = ( new \TemplateClassificationService() )->getType( $wgCityId, $articleId );
-		} catch ( \Exception $e ) {
+		} catch ( ApiException $e ) {
 			( new Logger() )->exception( $e );
 			/**
 			 * If the service is unreachable - fill the field with a not-available string
