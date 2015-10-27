@@ -13,7 +13,7 @@ class TemplateDraftController extends WikiaController {
 	public function createDraftContent( Title $title, $content, $type ) {
 		$newContent = '';
 
-		if ( $type === \TemplateClassificationService::TEMPLATE_INFOBOX ) {
+		if ( $type === TemplateClassificationService::TEMPLATE_INFOBOX ) {
 			/**
 			 * While we're at it we can mark the base template as an infobox
 			 */
@@ -51,7 +51,7 @@ class TemplateDraftController extends WikiaController {
 		$tc = new TemplateClassification( Title::newFromID( $pageId ) );
 		$this->response->setVal(
 			'status',
-			$tc->classifyTemplate( \TemplateClassificationService::TEMPLATE_INFOBOX, false )
+			$tc->classifyTemplate( TemplateClassificationService::TEMPLATE_INFOBOX, false )
 		);
 	}
 

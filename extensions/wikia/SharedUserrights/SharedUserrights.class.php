@@ -84,7 +84,10 @@ class UserRights {
 	static function addGlobalGroup( User $user, $group ) {
 		global $wgWikiaGlobalUserGroups;
 
-		if ( !self::isCentralWiki() || !in_array( $group, $wgWikiaGlobalUserGroups ) ) {
+		if ( !self::isCentralWiki()
+			|| !in_array( $group, $wgWikiaGlobalUserGroups )
+			|| !wfRunHooks( 'BeforeUserAddGlobalGroup', [ $user, $group ] )
+		) {
 			return true;
 		}
 
