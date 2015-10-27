@@ -60,7 +60,7 @@ class TemplateDraftHooks {
 				$text = $controller->createDraftContent(
 					$title, // @TODO this is currently taking the *edited* title (with subpage), not the *converted* title
 					$parentContent,
-					TemplateClassification::TEMPLATE_INFOBOX
+					\TemplateClassificationService::TEMPLATE_INFOBOX
 				);
 			}
 		}
