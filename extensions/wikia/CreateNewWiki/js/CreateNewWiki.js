@@ -480,7 +480,24 @@
 				categories.push($(this).val());
 			});
 
-			window.mw.Api.getEditToken(function (editToken) {
+			$.get('/api.php', {
+				action: 'query',
+				prop: 'info',
+				titles: window.wgTitle,
+				intoken: 'edit',
+				format: 'json'
+			}).then(function (response) {
+				var pages,
+					editToken;
+
+				if (!response || !response.query || !response.query.pages) {
+					self.generateAjaxErrorMsg();
+					return;
+				}
+
+				pages = response.query.pages;
+				editToken = pages[Object.keys(pages)[0]].edittoken;
+
 				$.nirvana.sendRequest({
 					controller: 'CreateNewWiki',
 					method: 'CreateWiki',
@@ -520,7 +537,7 @@
 						self.generateAjaxErrorMsg();
 					}
 				});
-			}, function () {
+			}).fail(function () {
 				self.generateAjaxErrorMsg();
 			});
 		},
