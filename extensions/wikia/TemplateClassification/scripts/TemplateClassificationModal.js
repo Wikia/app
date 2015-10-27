@@ -4,7 +4,8 @@
  * Initiates modal and opens it on entry point click
  * Provides two params in init method for handling save and providing selected type
  */
-define('TemplateClassificationModal', ['jquery', 'mw', 'wikia.loader', 'wikia.nirvana', 'TemplateClassificationLabeling'],
+define('TemplateClassificationModal',
+	['jquery', 'mw', 'wikia.loader', 'wikia.nirvana', 'TemplateClassificationLabeling'],
 function ($, mw, loader, nirvana, labeling) {
 	'use strict';
 
@@ -29,7 +30,7 @@ function ($, mw, loader, nirvana, labeling) {
 
 		$('.template-classification-edit').click(function (e) {
 			e.preventDefault();
-			openEditModal();
+			openEditModal('editType');
 		});
 	}
 
@@ -55,7 +56,7 @@ function ($, mw, loader, nirvana, labeling) {
 		).done(handleRequestsForModal);
 	}
 
-	function getLabel(templateType) {
+	function getTypeLabel(templateType) {
 		var selectedTypeText;
 
 		if (!$classificationForm) {
@@ -135,7 +136,7 @@ function ($, mw, loader, nirvana, labeling) {
 	function updateEntryPointLabel(templateType) {
 		$typeLabel
 			.data('type', mw.html.escape(templateType))
-			.html(getLabel(templateType));
+			.html(getTypeLabel(templateType));
 	}
 
 	function setupTemplateClassificationModal(content) {
@@ -153,7 +154,7 @@ function ($, mw, loader, nirvana, labeling) {
 		var modalButtons = [
 			{
 				vars: {
-						value: mw.message('template-classification-edit-modal-save-button-text').escaped(),
+						value: labeling.getConfirmButtonLabel(),
 						classes: ['normal', 'primary'],
 						data: [
 							{
@@ -203,7 +204,6 @@ function ($, mw, loader, nirvana, labeling) {
 
 	return {
 		init: init,
-		getLabel: getLabel,
 		open: openEditModal
 	};
 });

@@ -2,19 +2,29 @@
  * TemplateClassificationLabeling module
  *
  */
-define('TemplateClassificationLabeling', ['jquery', 'mw', 'wikia.loader', 'wikia.nirvana'],
+define('TemplateClassificationLabeling',
+	['jquery', 'mw'],
 	function ($, mw) {
 		'use strict';
-		var mode = 'editType',
-			prepareContentStrategy,
-			getTitleStrategy;
+
+		var availableModes = [
+			'editType',
+			'addTemplate',
+			'addTypeBeforePublish'
+			],
+			mode = 'editType',
+			getTitleStrategy,
+			prepareConfirmButtonStrategy,
+			prepareContentStrategy;
 
 		function init(modeParam) {
-			if (modeParam === 'addTemplate') {
+			if (availableModes.indexOf(modeParam) >= 0) {
 				mode = modeParam;
-			} else {
-				mode = 'editType';
 			}
+		}
+
+		function getConfirmButtonLabel() {
+			return prepareConfirmButtonStrategy[mode]();
 		}
 
 		function getTitle() {
@@ -25,29 +35,64 @@ define('TemplateClassificationLabeling', ['jquery', 'mw', 'wikia.loader', 'wikia
 			return prepareContentStrategy[mode](content);
 		}
 
-		prepareContentStrategy = {
-			addTemplate: function PCSAddTemplate(content) {
+		prepareConfirmButtonStrategy = (function prepareConfirmButtonStrategy() {
+			function addTemplate() {
+				return mw.message('template-classification-edit-modal-add-button-text').escaped();
+			}
+
+			function editType() {
+				return mw.message('template-classification-edit-modal-save-button-text').escaped();
+			}
+
+			return {
+				addTemplate: addTemplate,
+				editType: editType,
+				addTypeBeforePublish: editType
+			};
+		})();
+
+		getTitleStrategy = (function getTitleStrategy() {
+			function addTemplate() {
+				return mw.message('template-classification-edit-modal-title-add-template').escaped();
+			}
+
+			function editType() {
+				return mw.message('template-classification-edit-modal-title-edit-type').escaped();
+			}
+
+			function addTypeBeforePublish() {
+				return mw.message('template-classification-edit-modal-select-type-sub-title').escaped();
+			}
+
+			return {
+				addTemplate: addTemplate,
+				editType: editType,
+				addTypeBeforePublish: addTypeBeforePublish
+			};
+		})();
+
+		prepareContentStrategy = (function prepareContentStrategy() {
+			function addTemplate(content) {
 				var $subtitle = $('<h2>').html(
 					mw.message('template-classification-edit-modal-select-type-sub-title').escaped()
 				);
 				return $subtitle[0].outerHTML + content;
-			},
-			editType: function PCSEditType(content) {
+			}
+
+			function editType(content) {
 				return content;
 			}
-		};
 
-		getTitleStrategy = {
-			addTemplate: function GTSAddTemplate() {
-				return mw.message('template-classification-edit-modal-title-add-template').escaped();
-			},
-			editType: function GTSEditType() {
-				return mw.message('template-classification-edit-modal-title-edit-type').escaped();
-			}
-		};
+			return {
+				addTemplate: addTemplate,
+				editType: editType,
+				addTypeBeforePublish: editType
+			};
+		})();
 
 		return {
 			init: init,
+			getConfirmButtonLabel: getConfirmButtonLabel,
 			getTitle: getTitle,
 			prepareContent: prepareContent
 		};

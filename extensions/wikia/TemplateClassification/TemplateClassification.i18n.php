@@ -38,6 +38,7 @@ $messages['en'] = [
 	'template-classification-description-unknown' => "I don't know.",
 
 	'template-classification-type-header' => 'Type of the template',
+	'template-classification-edit-modal-add-button-text' => 'Add',
 	'template-classification-edit-modal-save-button-text' => 'Save',
 	'template-classification-edit-modal-cancel-button-text' => 'Cancel',
 	'template-classification-edit-modal-title-add-template' => 'Add template',
@@ -75,6 +76,7 @@ $messages['qqq'] = [
 	'template-classification-description-reference'  => 'Description (additional label) for the reference template type. This is shown in dialog box under the type name to explain what each type is.',
 
 	'template-classification-type-header' => 'A header of all boxes that display a type of a template.',
+	'template-classification-edit-modal-add-button-text' => 'Text on add button on modal for proceeding to template adding after template type is choose',
 	'template-classification-edit-modal-save-button-text' => 'Text on save button on modal for editing template type',
 	'template-classification-edit-modal-cancel-button-text' => 'Text on cancel button for editing template type',
 	'template-classification-edit-modal-title-edit-type' => 'Title of modal for editing template type',
