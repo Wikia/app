@@ -19,7 +19,7 @@ $wgAutoloadClasses['AdEngine2Service'] =  __DIR__ . '/AdEngine2Service.class.php
 $wgAutoloadClasses['ResourceLoaderAdEngineBase'] = __DIR__ . '/ResourceLoaders/ResourceLoaderAdEngineBase.php';
 $wgAutoloadClasses['ResourceLoaderScript'] = __DIR__ . '/ResourceLoaders/ResourceLoaderScript.php';
 $wgAutoloadClasses['ResourceLoaderAdEngineSevenOneMediaModule'] = __DIR__ . '/ResourceLoaders/ResourceLoaderAdEngineSevenOneMediaModule.php';
-$wgAutoloadClasses['ResourceLoaderAdEngineSourcePointModule'] = __DIR__ . '/ResourceLoaders/ResourceLoaderAdEngineSourcePointModule.php';
+$wgAutoloadClasses['ResourceLoaderAdEngineSourcePointRecoveryModule'] = __DIR__ . '/ResourceLoaders/ResourceLoaderAdEngineSourcePointRecoveryModule.php';
 $wgAutoloadClasses['ResourceLoaderAdEngineSourcePointDetectionModule'] = __DIR__ . '/ResourceLoaders/ResourceLoaderAdEngineSourcePointDetectionModule.php';
 
 // Hooks for Exitstitial ads
@@ -36,9 +36,7 @@ $wgHooks['OasisSkinAssetGroupsBlocking'][] = 'AdEngine2Hooks::onOasisSkinAssetGr
 $wgHooks['WikiaMobileAssetsPackages'][] = 'AdEngine2Hooks::onWikiaMobileAssetsPackages';
 $wgHooks['WikiaSkinTopScripts'][] = 'AdEngine2Hooks::onWikiaSkinTopScripts';
 $wgHooks['WikiaSkinTopModules'][] = 'AdEngine2Hooks::onWikiaSkinTopModules';
-$wgHooks['VenusAssetsPackages'][] = 'AdEngine2Hooks::onVenusAssetsPackages';
 $wgHooks['SkinAfterContent'][] = 'AdEngine2Hooks::onSkinAfterContent';
-$wgHooks['SkinAfterBottomScripts'][] = 'AdEngine2Hooks::onSkinAfterBottomScripts';
 
 // i18n
 $wgExtensionMessagesFiles['AdEngine'] = __DIR__ . '/AdEngine.i18n.php';
@@ -51,11 +49,11 @@ $wgResourceModules['wikia.ext.adengine.sevenonemedia'] = array(
 	'class' => 'ResourceLoaderAdEngineSevenOneMediaModule',
 );
 
-$wgResourceModules['wikia.ext.adengine.sourcepoint'] = array(
-	'class' => 'ResourceLoaderAdEngineSourcePointModule',
+$wgResourceModules['wikia.ext.adengine.sp.recovery'] = array(
+	'class' => 'ResourceLoaderAdEngineSourcePointRecoveryModule',
 );
 
-$wgResourceModules['wikia.ext.adengine.sourcepoint.detection'] = array(
+$wgResourceModules['wikia.ext.adengine.sp.detection'] = array(
 	'class' => 'ResourceLoaderAdEngineSourcePointDetectionModule',
 );
 

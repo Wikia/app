@@ -1017,8 +1017,6 @@ class ArticleComment {
 
 				if ( $app->checkSkin( 'wikiamobile' ) ) {
 					$viewName = 'WikiaMobileComment';
-				} elseif ( $app->checkSkin( 'venus' ) ) {
-					$viewName = 'VenusComment';
 				} else {
 					$viewName = 'Comment';
 				}
@@ -1538,7 +1536,7 @@ class ArticleComment {
 	 */
 	static public function isMiniEditorEnabled() {
 		$app = F::app();
-		return $app->wg->EnableMiniEditorExtForArticleComments && $app->checkSkin( [ 'oasis', 'venus' ] );
+		return $app->wg->EnableMiniEditorExtForArticleComments && $app->checkSkin( [ 'oasis' ] );
 	}
 
 	/**

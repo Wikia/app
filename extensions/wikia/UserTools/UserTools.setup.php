@@ -2,7 +2,6 @@
 /**
  * User Tools Customization enabled in
  * user toolbar as customize link (Oasis)
- * and in article navigation as customize link (Venus)
  *
  * @author Bogna 'bognix' Knychała
  */

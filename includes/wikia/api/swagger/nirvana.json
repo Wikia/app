@@ -35,10 +35,6 @@
       "description": "Palantir API"
     },
     {
-      "name": "recommendations",
-      "description": "Recommendations API"
-    },
-    {
       "name": "relatedPages",
       "description": "Related Pages API"
     },
@@ -990,48 +986,6 @@
             "type": "integer",
             "format": "int32",
             "default": 25
-          }
-        ]
-      }
-    },
-    "/Recommendations/ForArticle": {
-      "get": {
-        "tags": ["recommendations"],
-        "responses": {
-          "200": {
-            "description": "No response was specified",
-            "schema": {
-              "$ref": "RecommendationsResultSet"
-            }
-          },
-          "400": {
-            "description": "input parameter missing or exceeds limit"
-          },
-          "404": {
-            "description": "Selected article not found"
-          }
-        },
-        "description": "",
-        "summary": "Get recommendations for article from many sources",
-        "operationId": "getForArticle",
-        "parameters": [
-          {
-            "in": "query",
-            "description": "Article ID",
-            "name": "id",
-            "required": true,
-            "type": "integer",
-            "format": "int32",
-            "default": ""
-          },
-          {
-            "in": "query",
-            "description": "Number of requested recommendations - default 9, min value: 1, max value: 30",
-            "name": "limit",
-            "required": false,
-            "type": "integer",
-            "format": "int32",
-            "default": 9
           }
         ]
       }
@@ -3167,60 +3121,6 @@
           "type": "integer",
           "format": "int32",
           "description": "Number of comments on this article"
-        }
-      }
-    },
-    "RecommendationsResultSet": {
-      "id": "RecommendationsResultSet",
-      "name": "",
-      "required": [
-        "items"
-      ],
-      "properties": {
-        "items": {
-          "type": "array",
-          "description": "Standard container name for element collection (list)",
-          "items": {
-            "$ref": "#/definitions/RecommendationItem"
-          }
-        }
-      }
-    },
-    "RecommendationItem": {
-      "id": "RecommendationItem",
-      "name": "",
-      "required": [
-        "type",
-        "title",
-        "url",
-        "description",
-        "source",
-        "media"
-      ],
-      "properties": {
-        "source": {
-          "type": "string",
-          "description": "Recommendation item data source - RelatedPages/VideoRecommendations/TopArticles"
-        },
-        "url": {
-          "type": "string",
-          "description": "Recommendation item URL"
-        },
-        "description": {
-          "type": "string",
-          "description": "Recommendation item description"
-        },
-        "media": {
-          "$ref": "#/definitions/Media",
-          "description": "Object describing recommendation item media format"
-        },
-        "title": {
-          "type": "string",
-          "description": "Recommendation item title"
-        },
-        "type": {
-          "type": "string",
-          "description": "Recommendation item type - video/article"
         }
       }
     },

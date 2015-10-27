@@ -175,8 +175,7 @@ class EditPageLayoutHelper {
 
 		return ( $articleTitle->isCssOrJsPage()
 			|| $articleTitle->isCssJsSubpage()
-			|| $namespace === NS_MODULE
-			|| self::isInfoboxTemplate( $articleTitle )
+			|| in_array( $namespace, [ NS_MODULE, NS_TEMPLATE ] )
 		);
 	}
 
@@ -187,9 +186,11 @@ class EditPageLayoutHelper {
 	 * @return bool
 	 */
 	static public function isCodeSyntaxHighlightingEnabled( Title $articleTitle ) {
-		global $wgEnableEditorSyntaxHighlighting;
+		global $wgEnableEditorSyntaxHighlighting, $wgUser;
 
-		return self::isCodePage( $articleTitle ) && $wgEnableEditorSyntaxHighlighting;
+		return self::isCodePage( $articleTitle )
+			&& $wgEnableEditorSyntaxHighlighting
+			&& !$wgUser->getGlobalPreference( 'disablesyntaxhighlighting' );
 	}
 
 	static public function isInfoboxTemplate( Title $title ) {
@@ -198,7 +199,7 @@ class EditPageLayoutHelper {
 
 		if ( $namespace === NS_TEMPLATE ) {
 			$tc = new TemplateClassification( $title );
-			return $tc->isType( $tc::TEMPLATE_INFOBOX )
+			return $tc->isType( TemplateClassificationService::TEMPLATE_INFOBOX )
 					|| self::isTemplateDraft( $title )
 					|| !empty( $portableInfobox );
 		}
@@ -253,7 +254,7 @@ class EditPageLayoutHelper {
 	 * @return bool
 	 */
 	public static function isCodePageWithPreview( Title $title ) {
-		return self::isInfoboxTemplate( $title );
+		return $title->inNamespace( NS_TEMPLATE );
 	}
 
 	/**
@@ -278,7 +279,8 @@ class EditPageLayoutHelper {
 			$type = 'css';
 		} elseif ( $title->isJsPage() || $title->isJsSubpage() ) {
 			$type = 'javascript';
-		} elseif ( self::isInfoboxTemplate( $title ) ) {
+		} else {
+			// default to XML since most templates use HTML tags or infobox markup
 			$type = 'xml';
 		}
 

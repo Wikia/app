@@ -22,6 +22,7 @@ class Hooks {
 		\Hooks::register( 'ShowDiff', [ $hooks, 'onShowDiff' ] );
 		\Hooks::register( 'UserRights::groupCheckboxes', [ $hooks, 'onUserRightsGroupCheckboxes' ] );
 		\Hooks::register( 'UserAddGroup', [ $hooks, 'onUserAddGroup' ] );
+		\Hooks::register( 'BeforeUserAddGlobalGroup', [ $hooks, 'onUserAddGroup' ] );
 	}
 
 	public function onGetRailModuleList( Array &$railModuleList ) {

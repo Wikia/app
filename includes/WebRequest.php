@@ -1106,6 +1106,34 @@ HTML;
 		$this->ip = $ip;
 	}
 	/* Wikia change end */
+
+	/**
+	 * Verify if write request is a valid, non-CSRF request
+	 * (uses POST and contains a valid edit token)
+	 *
+	 * @param \User $user
+	 * @return mixed
+	 * @throws BadRequestException
+	 */
+	public function isValidWriteRequest( \User $user ) {
+		if ( !$this->wasPosted() || !$user->matchEditToken( $this->getVal( 'token' ) ) ) {
+			throw new BadRequestException( 'Request must be POSTed and provide a valid edit token.' );
+		}
+	}
+
+	const WIKIA_INTERNAL_REQUEST_HEADER = 'X-Wikia-Internal-Request';
+
+	/**
+	 * Use X-Wikia-Internal-Request request header to check if a given request should be treated as an internal one,
+	 * e.g. was sent via Http::get() helper or made by DC warmer
+	 *
+	 * @see PLATFORM-1473
+	 *
+	 * @return bool
+	 */
+	public function isWikiaInternalRequest() {
+		return $this->getHeader( self::WIKIA_INTERNAL_REQUEST_HEADER ) !== false;
+	}
 }
 
 /**

@@ -12,15 +12,18 @@ class View {
 	 * @param string $fallbackMsg
 	 * @return string
 	 */
-	public function renderTemplateType( $articleId, $user, $fallbackMsg = '' ) {
-		$templateType = ( new \TemplateClassificationMockService() )->getTemplateType( $articleId );
+	public function renderTemplateType( $wikiId, $articleId, $user, $fallbackMsg = '' ) {
+		$templateType = lcfirst( ( new \TemplateClassificationService() )->getType( $wikiId, $articleId ) );
 		/**
 		 * template-classification-type-unclassified
 		 * template-classification-type-infobox
 		 * template-classification-type-navbox
 		 * template-classification-type-quote
 		 */
-		$templateName = wfMessage( "template-classification-type-{$templateType}" )->escaped();
+		$templateName = wfMessage(
+			'template-classification-indicator',
+			wfMessage( "template-classification-type-{$templateType}" )
+		)->escaped();
 		if ( $user->isLoggedIn() ) {
 			$templateName .= $this->renderEditButton();
 			return $templateName;
@@ -38,8 +41,8 @@ class View {
 	 * @param \User $user
 	 * @return string
 	 */
-	public function renderEditPageEntryPoint( $articleId, \User $user ) {
-		$templateType = $this->renderTemplateType( $articleId, $user );
+	public function renderEditPageEntryPoint( $wikiId, $articleId, \User $user ) {
+		$templateType = $this->renderTemplateType( $wikiId, $articleId, $user );
 		return \MustacheService::getInstance()->render(
 			__DIR__ . '/templates/TemplateClassificationEditPageEntryPoint.mustache',
 			[
