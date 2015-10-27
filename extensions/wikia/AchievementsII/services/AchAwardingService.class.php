@@ -42,10 +42,13 @@ class AchAwardingService {
 	 * @param Int $badge_type_id
 	 */
 	public function awardCustomNotInTrackBadge($user, $badge_type_id) {
+		global $wgExternalSharedDB, $wgAchievementsEditAddPhotoOnly;
+
+		if( !empty($wgAchievementsEditAddPhotoOnly) && ($badge_type_id != BADGE_EDIT && $badge_type_id != BADGE_PICTURE)) {
+			return;
+		}
+
 		wfProfileIn(__METHOD__);
-
-		global $wgExternalSharedDB;
-
 		$this->mUser = $user;
 
 		if( self::canEarnBadges( $this->mUser ) ) {
@@ -75,9 +78,13 @@ class AchAwardingService {
 
 
 	public function processSharing($articleID, $sharerID, $IP) {
-		global $wgEnableAchievementsForSharing;
+		global $wgEnableAchievementsForSharing, $wgAchievementsEditAddPhotoOnly;
 
 		if(empty($wgEnableAchievementsForSharing)) {
+			return;
+		}
+
+		if( !empty($wgAchievementsEditAddPhotoOnly) ) {
 			return;
 		}
 
@@ -346,6 +353,8 @@ class AchAwardingService {
 	}
 
 	private function processAllInTrack() {
+		global $wgAchievementsEditAddPhotoOnly;
+
 		wfProfileIn(__METHOD__);
 
 		global $wgContLang;
@@ -359,25 +368,26 @@ class AchAwardingService {
 			$this->mCounters[BADGE_EDIT]++;
 
 			// EDIT+CATEGORY
+			if(empty($wgAchievementsEditAddPhotoOnly)) {
+				// get categories article already belongs to
+				$articleCategories = array_change_key_case($this->mTitle->getParentCategories(), CASE_LOWER);
 
-			// get categories article already belongs to
-			$articleCategories = array_change_key_case($this->mTitle->getParentCategories(), CASE_LOWER);
+				// get categories to which article is added within this edit
+				$insertedCategories = array_change_key_case(Wikia::getVar('categoryInserts'), CASE_LOWER);
 
-			// get categories to which article is added within this edit
-			$insertedCategories = array_change_key_case(Wikia::getVar('categoryInserts'), CASE_LOWER);
+				// get configuration of edit+categories
+				$editPlusCategory = AchConfig::getInstance()->getInTrackEditPlusCategory();
 
-			// get configuration of edit+categories
-			$editPlusCategory = AchConfig::getInstance()->getInTrackEditPlusCategory();
-
-			$cat1 = strtolower($wgContLang->getNSText(NS_CATEGORY));
-			foreach($editPlusCategory as $badge_type_id => $badge_config) {
-				if($badge_config['enabled']) {
-					$cat2 = str_replace(' ', '_', strtolower($badge_config['category']));
-					if(isset($insertedCategories[$cat2]) || isset($articleCategories[$cat1.':'.$cat2])) {
-						if(empty($this->mCounters[$badge_type_id])) {
-							$this->mCounters[$badge_type_id] = 0;
+				$cat1 = strtolower($wgContLang->getNSText(NS_CATEGORY));
+				foreach($editPlusCategory as $badge_type_id => $badge_config) {
+					if($badge_config['enabled']) {
+						$cat2 = str_replace(' ', '_', strtolower($badge_config['category']));
+						if(isset($insertedCategories[$cat2]) || isset($articleCategories[$cat1.':'.$cat2])) {
+							if(empty($this->mCounters[$badge_type_id])) {
+								$this->mCounters[$badge_type_id] = 0;
+							}
+							$this->mCounters[$badge_type_id]++;
 						}
-						$this->mCounters[$badge_type_id]++;
 					}
 				}
 			}
@@ -426,66 +436,75 @@ class AchAwardingService {
 			}
 
 			// BADGE_CATEGORY
-			$insertedCategories = Wikia::getVar('categoryInserts');
-			if(!empty($insertedCategories) && is_array($insertedCategories)) {
-				if(empty($this->mCounters[BADGE_CATEGORY])) {
-					$this->mCounters[BADGE_CATEGORY] = 0;
-				}
-				$this->mCounters[BADGE_CATEGORY] += count($insertedCategories);
-			}
-
-		}
-
-		// BADGE_BLOGPOST
-		// is defined check if required because blogs are not enabled everywhere
-		if(defined('NS_BLOG_ARTICLE') && $this->mTitle->getNamespace() == NS_BLOG_ARTICLE) {
-			if($this->mTitle->getBaseText() == $this->mUser->getName()) {
-				if($this->mStatus->value['new'] == true) {
-					if(empty($this->mCounters[BADGE_BLOGPOST])) {
-						$this->mCounters[BADGE_BLOGPOST] = 0;
+			if(empty($wgAchievementsEditAddPhotoOnly)) {
+				$insertedCategories = Wikia::getVar('categoryInserts');
+				if(!empty($insertedCategories) && is_array($insertedCategories)) {
+					if(empty($this->mCounters[BADGE_CATEGORY])) {
+						$this->mCounters[BADGE_CATEGORY] = 0;
 					}
-					$this->mCounters[BADGE_BLOGPOST]++;
+					$this->mCounters[BADGE_CATEGORY] += count($insertedCategories);
 				}
 			}
 		}
 
-		// BADGE_BLOGCOMMENT
-		// is defined check if required because blogs are not enabled everywhere
-		if(defined('NS_BLOG_ARTICLE_TALK') && $this->mTitle->getNamespace() == NS_BLOG_ARTICLE_TALK) {
-			// handle only article/comment creating (not editing)
-			if($this->mStatus->value['new'] == true) {
-				$blogPostTitle = Title::newFromText($this->mTitle->getBaseText(), NS_BLOG_ARTICLE);
-				if($blogPostTitle) {
-					$blogPostArticle = new Article($blogPostTitle);
-					if(empty($this->mCounters[BADGE_BLOGCOMMENT]) || !in_array($blogPostArticle->getID(), $this->mCounters[BADGE_BLOGCOMMENT])) {
-						if(empty($this->mCounters[BADGE_BLOGCOMMENT])) {
-							$this->mCounters[BADGE_BLOGCOMMENT] = array();
+		if(empty($wgAchievementsEditAddPhotoOnly)) {
+			// BADGE_BLOGPOST
+			// is defined check if required because blogs are not enabled everywhere
+			if(defined('NS_BLOG_ARTICLE') && $this->mTitle->getNamespace() == NS_BLOG_ARTICLE) {
+				if($this->mTitle->getBaseText() == $this->mUser->getName()) {
+					if($this->mStatus->value['new'] == true) {
+						if(empty($this->mCounters[BADGE_BLOGPOST])) {
+							$this->mCounters[BADGE_BLOGPOST] = 0;
 						}
-						$this->mCounters[BADGE_BLOGCOMMENT][] = $blogPostArticle->getID();
+						$this->mCounters[BADGE_BLOGPOST]++;
 					}
 				}
 			}
-		}
 
-
-		// BADGE_LOVE
-		if(empty($this->mCounters[BADGE_LOVE])) {
-			$this->mCounters[BADGE_LOVE][COUNTERS_COUNTER] = 1;
-		} else {
-			if($this->mCounters[BADGE_LOVE][COUNTERS_DATE] == date('Y-m-d')) {
-				// ignore
-			} else if($this->mCounters[BADGE_LOVE][COUNTERS_DATE] == date('Y-m-d', strtotime('-1 day'))) {
-				$this->mCounters[BADGE_LOVE][COUNTERS_COUNTER]++;
-			} else {
-				$this->mCounters[BADGE_LOVE][COUNTERS_COUNTER] = 1;
+			// BADGE_BLOGCOMMENT
+			// is defined check if required because blogs are not enabled everywhere
+			if(defined('NS_BLOG_ARTICLE_TALK') && $this->mTitle->getNamespace() == NS_BLOG_ARTICLE_TALK) {
+				// handle only article/comment creating (not editing)
+				if($this->mStatus->value['new'] == true) {
+					$blogPostTitle = Title::newFromText($this->mTitle->getBaseText(), NS_BLOG_ARTICLE);
+					if($blogPostTitle) {
+						$blogPostArticle = new Article($blogPostTitle);
+						if(empty($this->mCounters[BADGE_BLOGCOMMENT]) || !in_array($blogPostArticle->getID(), $this->mCounters[BADGE_BLOGCOMMENT])) {
+							if(empty($this->mCounters[BADGE_BLOGCOMMENT])) {
+								$this->mCounters[BADGE_BLOGCOMMENT] = array();
+							}
+							$this->mCounters[BADGE_BLOGCOMMENT][] = $blogPostArticle->getID();
+						}
+					}
+				}
 			}
+
+
+			// BADGE_LOVE
+			if(empty($this->mCounters[BADGE_LOVE])) {
+				$this->mCounters[BADGE_LOVE][COUNTERS_COUNTER] = 1;
+			} else {
+				if($this->mCounters[BADGE_LOVE][COUNTERS_DATE] == date('Y-m-d')) {
+					// ignore
+				} else if($this->mCounters[BADGE_LOVE][COUNTERS_DATE] == date('Y-m-d', strtotime('-1 day'))) {
+					$this->mCounters[BADGE_LOVE][COUNTERS_COUNTER]++;
+				} else {
+					$this->mCounters[BADGE_LOVE][COUNTERS_COUNTER] = 1;
+				}
+			}
+			$this->mCounters[BADGE_LOVE][COUNTERS_DATE] = date('Y-m-d');
 		}
-		$this->mCounters[BADGE_LOVE][COUNTERS_DATE] = date('Y-m-d');
 
 		wfProfileOut(__METHOD__);
 	}
 
 	private function processAllNotInTrack() {
+		global $wgAchievementsEditAddPhotoOnly;
+
+		if(!empty($wgAchievementsEditAddPhotoOnly)) {
+			return;
+		}
+
 		wfProfileIn(__METHOD__);
 
 		// BADGE_LUCKYEDIT
