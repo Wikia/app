@@ -65,6 +65,9 @@ $wgHooks['LocalFilePurgeThumbnailsUrls'][] = 'Wikia::onLocalFilePurgeThumbnailsU
 $wgHooks['BeforePageDisplay'][] = 'Wikia::onBeforePageDisplay';
 $wgHooks['GetPreferences'][] = 'Wikia::onGetPreferences';
 
+# handle internal requests - PLATFORM-1473
+$wgHooks['WebRequestInitialized'][] = 'Wikia::onWebRequestInitialized';
+
 /**
  * This class has only static methods so they can be used anywhere
  *
@@ -1662,6 +1665,27 @@ class Wikia {
 		$wgAllowUserCss = $wgAllowUserCss && $request->getBool( 'useusercss',
 			$request->getBool( 'allowusercss', $wgAllowUserCss ) ) !== false;
 		$wgBuckySampling = $request->getInt( 'buckysampling', $wgBuckySampling );
+
+		return true;
+	}
+
+	/**
+	 * Detect internal HTTP requests: log them and set a response header to ease debugging
+	 *
+	 * @see PLATFORM-1473
+	 *
+	 * @param WebRequest $request
+	 * @return bool true, it's a hook
+	 */
+	static public function onWebRequestInitialized( WebRequest $request ) {
+		if ( $request->isWikiaInternalRequest() ) {
+			$requestSource = $request->getHeader( WebRequest::WIKIA_INTERNAL_REQUEST_HEADER );
+
+			Wikia\Logger\WikiaLogger::instance()->info( 'Wikia internal request', [
+				'source' => $requestSource
+			] );
+			$request->response()->header( 'X-Wikia-Is-Internal-Request: ' . $requestSource );
+		}
 
 		return true;
 	}
