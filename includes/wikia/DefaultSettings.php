@@ -1828,5 +1828,6 @@ $wgLogRestrictions['piggyback'] = 'piggyback';
 
 /**
  * Reject attempts to fall back to the MediaWiki session for authentication.
+ * The user MUST have a valid helios authentication token.
  */
-$wgRejectAuthenticationFallback = false;
+$wgRejectAuthenticationFallback = true;
