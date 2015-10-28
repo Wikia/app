@@ -150,6 +150,18 @@
 	}
 }
 
+// **********  Overwrite default infobox styles for STACKED layout type  ********** //
+
+.pi-layout-stacked {
+	.pi-data {
+		display: block;
+	}
+
+	.pi-data-value {
+		padding-left: $infobox-item-margin * 2;
+	}
+}
+
 // **********  Collapsible groups  ********** //
 
 .pi-collapse {
@@ -185,18 +197,6 @@
 		tbody {
 			display: none;
 		}
-	}
-}
-
-// **********  Overwrite default infobox styles for STACKED layout type  ********** //
-
-.pi-layout-stacked {
-	.pi-data {
-		display: block;
-	}
-
-	.pi-data-value {
-		padding-left: $infobox-item-margin * 2;
 	}
 }
 
