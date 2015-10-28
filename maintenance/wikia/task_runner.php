@@ -34,6 +34,12 @@ class TaskRunnerMaintenance extends Maintenance {
 			'task_id' => $this->mOptions['task_id']
 		] );
 
+		// an ugly c&p from Wikia::onWebRequestInitialized
+		// I'm going to burn in hell
+		Wikia\Logger\WikiaLogger::instance()->info( 'Wikia internal request', [
+			'source' => 'celery'
+		] );
+
 		$runner = new TaskRunner(
 			$this->mOptions['wiki_id'],
 			$this->mOptions['task_id'],
