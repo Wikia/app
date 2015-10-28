@@ -1120,6 +1120,20 @@ HTML;
 			throw new BadRequestException( 'Request must be POSTed and provide a valid edit token.' );
 		}
 	}
+
+	const WIKIA_INTERNAL_REQUEST_HEADER = 'X-Wikia-Internal-Request';
+
+	/**
+	 * Use X-Wikia-Internal-Request request header to check if a given request should be treated as an internal one,
+	 * e.g. was sent via Http::get() helper or made by DC warmer
+	 *
+	 * @see PLATFORM-1473
+	 *
+	 * @return bool
+	 */
+	public function isWikiaInternalRequest() {
+		return $this->getHeader( self::WIKIA_INTERNAL_REQUEST_HEADER ) !== false;
+	}
 }
 
 /**

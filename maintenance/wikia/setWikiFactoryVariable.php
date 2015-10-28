@@ -36,6 +36,7 @@ class SetWikiFactoryVariable extends Maintenance {
 		$this->addOption( 'varName', 'WikiFactory variable name', true, true, 'n' );
 		$this->addOption( 'set', 'Set the variable value. Note: "true" for enable or "false" for disable the extenstion', false, true, 's' );
 		$this->addOption( 'remove', 'Remove the variable value (from the Wiki)', false, false, 'r' );
+		$this->addOption( 'append', 'Append string value to existing value', false, false, 'a' );
 		$this->addOption( 'wikiId', 'Wiki Id', false, true, 'i' );
 		$this->addOption( 'file', 'File of wiki ids', false, true, 'f' );
 	}
@@ -45,7 +46,7 @@ class SetWikiFactoryVariable extends Maintenance {
 		$this->verbose = $this->hasOption( 'verbose' );
 		$this->varName = $this->getOption( 'varName', '' );
 		$set = $this->hasOption( 'set' );
-		$varValue = $this->getOption( 'set', '' );
+		$append = $this->hasOption( 'append' );
 		$remove = $this->hasOption( 'remove' );
 		$wikiId = $this->getOption( 'wikiId', '' );
 		$file = $this->getOption('file', '');
@@ -54,21 +55,19 @@ class SetWikiFactoryVariable extends Maintenance {
 			die( "Error: Empty variable name.\n" );
 		}
 
-		if ( $set && $remove ) {
-			die( "Error: Cannot set and remove the variable at the same time\n" );
+		if ( $set && $remove || $set && $append || $remove && $append ) {
+			die( "Error: Cannot use one of the three commands (set, append, remove) at the same time" . PHP_EOL );
 		}
 
-		if ( $set && $varValue == '' ) {
+		if( $set ) {
+			$varValue = $this->getOption( 'set', '' );
+		} else {
+			$varValue = $this->getOption( 'append', '' );
+		}
+
+		if ( ( $set || $append ) && $varValue == '' ) {
 			die( "Error: Empty variable value.\n" );
 		}
-
-		$varData = (array) WikiFactory::getVarByName( $this->varName, false, true );
-		if ( empty( $varData['cv_id'] ) ) {
-			die( "Error: $this->varName not found.\n" );
-		}
-
-		echo "Variable: $this->varName (Id: $varData[cv_id])\n";
-		$this->debug( "Variable data: ".json_encode( $varData )."\n" );
 
 		if ( !empty( $wikiId ) ) {
 			$wikiIds = [ $wikiId ];
@@ -77,6 +76,18 @@ class SetWikiFactoryVariable extends Maintenance {
 		} else {
 			die( "Error: wiki id is empty or the file is invalid.\n" );
 		}
+
+		$varData = (array) WikiFactory::getVarByName( $this->varName, $wikiId, true );
+		if ( empty( $varData['cv_id'] ) ) {
+			die( "Error: $this->varName not found.\n" );
+		}
+
+		if ( $append && $varData['cv_variable_type'] !== 'string' ) {
+			die( "Error: $this->varName is not a string and the script cannot append to it anything.\n" );
+		}
+
+		echo "Variable: $this->varName (Id: $varData[cv_id])\n";
+		$this->debug( "Variable data: " . json_encode( $varData ) . "\n" );
 
 		// get valid value
 		if ( $set ) {
@@ -104,8 +115,16 @@ class SetWikiFactoryVariable extends Maintenance {
 
 			$status = true;
 			if ( $set ) {
-				echo "Set {$this->varName} to ".var_export( $varValue, true );
+				echo "Set {$this->varName} to " . var_export( $varValue, true );
 				$status = $this->setVariable( $id, $varValue );
+			} else if ( $append ) {
+				echo "Appending " . $varValue . " to {$this->varName}:" . PHP_EOL;
+				$varData = (array) WikiFactory::getVarByName( $this->varName, $id, true );
+				$prevValue = unserialize($varData['cv_value']);
+				$newValue = $prevValue . $varValue;
+				echo "Previous value: " . $prevValue . PHP_EOL;
+				echo "New value: " . $newValue . PHP_EOL;
+				$status = $this->setVariable( $id, $newValue );
 			} else if ( $remove ) {
 				echo "Remove {$this->varName}";
 				$status = $this->removeVariableFromWiki( $id, $varData );

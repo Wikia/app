@@ -79,12 +79,17 @@ class Hooks {
 
 	/**
 	 * Add hidden input to editform with template type
-	 * @param \EditPageLayout $editPage
+	 * @param \EditPage $editPage
 	 * @param \OutputPage $out
 	 * @return bool
 	 */
-	public static function onEditPageShowEditFormFields( \EditPageLayout $editPage, \OutputPage $out ) {
+	public static function onEditPageShowEditFormFields( \EditPage $editPage, \OutputPage $out ) {
 		global $wgCityId;
+
+		if ( $out->getSkin() instanceof \SkinMonoBook ) {
+			return true;
+		}
+
 		$articleId = $editPage->getTitle()->getArticleID();
 
 		try {
@@ -117,17 +122,14 @@ class Hooks {
 	 */
 	public function onBeforePageDisplay( \OutputPage $out, \Skin $skin ) {
 		$title = $out->getTitle();
-		$permissions = new Permissions();
-		if ( $permissions->shouldDisplayEntryPoint( $skin->getUser(), $title )
-			&& $title->exists()
-		) {
-			\Wikia::addAssetsToOutput( 'template_classification_in_view_js' );
-			\Wikia::addAssetsToOutput( 'template_classification_scss' );
-		} elseif ( $permissions->shouldDisplayEntryPoint( $skin->getUser(), $title )
-			&& $this->isEditPage()
-		) {
-			\Wikia::addAssetsToOutput( 'template_classification_in_edit_js' );
-			\Wikia::addAssetsToOutput( 'template_classification_scss' );
+		if ( ( new Permissions() )->shouldDisplayEntryPoint( $skin->getUser(), $title ) ) {
+			if ( $title->exists() ) {
+				\Wikia::addAssetsToOutput( 'template_classification_in_view_js' );
+				\Wikia::addAssetsToOutput( 'template_classification_scss' );
+			} elseif ( $this->isEditPage() ) {
+				\Wikia::addAssetsToOutput( 'template_classification_in_edit_js' );
+				\Wikia::addAssetsToOutput( 'template_classification_scss' );
+			}
 		}
 		return true;
 	}

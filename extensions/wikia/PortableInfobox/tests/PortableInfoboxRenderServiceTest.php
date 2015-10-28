@@ -105,12 +105,14 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 					[
 						'type' => 'image',
 						'data' => [
-							'alt' => 'image alt',
-							'url' => 'http://image.jpg',
-							'name' => 'image',
-							'key' => 'image',
-							'caption' => 'Lorem ipsum dolor',
-							'isVideo' => false
+							[
+								'alt' => 'image alt',
+								'url' => 'http://image.jpg',
+								'name' => 'image',
+								'key' => 'image',
+								'caption' => 'Lorem ipsum dolor',
+								'isVideo' => false
+							]
 						]
 					]
 				],
@@ -144,13 +146,15 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 					[
 						'type' => 'image',
 						'data' => [
-							'alt' => 'image alt',
-							'url' => 'http://image.jpg',
-							'caption' => 'Lorem ipsum dolor',
-							'isVideo' => true,
-							'duration' => '1:20',
-							'name' => 'test',
-							'key' => 'test'
+							[
+								'alt' => 'image alt',
+								'url' => 'http://image.jpg',
+								'caption' => 'Lorem ipsum dolor',
+								'isVideo' => true,
+								'duration' => '1:20',
+								'name' => 'test',
+								'key' => 'test'
+							]
 						]
 					]
 				],
@@ -228,11 +232,13 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 					[
 						'type' => 'image',
 						'data' => [
-							'alt' => 'image alt',
-							'url' => 'http://image.jpg',
-							'name' => 'image',
-							'key' => 'image',
-							'isVideo' => false
+							[
+								'alt' => 'image alt',
+								'url' => 'http://image.jpg',
+								'name' => 'image',
+								'key' => 'image',
+								'isVideo' => false
+							]
 						]
 					],
 					[

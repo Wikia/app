@@ -492,7 +492,8 @@
 						wCategories: categories,
 						wAllAges: self.wikiAllAges.is(':checked') ? self.wikiAllAges.val() : null,
 						wAnswer: Math.floor(self.answer)
-					}
+					},
+					token: window.mw.user.tokens.get('editToken')
 				},
 				callback: function (res) {
 					self.createStatus = res.status;

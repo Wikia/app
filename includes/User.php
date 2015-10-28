@@ -221,8 +221,6 @@ class User {
 	 */
 	var $mFrom;
 
-	var $mTheme; # Wikia - Skin chooser related
-
 	/**
 	 * Lazy-initialized variables, invalidated with clearInstanceCache
 	 */
@@ -1033,8 +1031,6 @@ class User {
 		$this->mEmailTokenExpires = null;
 		$this->mRegistration = wfTimestamp( TS_MW );
 		$this->mGroups = array();
-		$this->mMonacoData = null;
-		$this->mMonacoSidebar = null;
 
 		$this->mBirthDate = null; // Wikia. Added to reflect our user table layout.
 
@@ -1226,8 +1222,6 @@ class User {
 			$this->loadFromRow( $s );
 			$this->mGroups = null; // deferred
 			$this->getEditCount(); // revalidation for nulls
-			$this->mMonacoData = null;
-			$this->mMonacoSidebar = null;
 			return true;
 		} else {
 			# Invalid user_id
@@ -1391,7 +1385,6 @@ class User {
 		$this->mDatePreference = null;
 		$this->mBlockedby = -1; # Unset
 		$this->mHash = false;
-		$this->mTheme = null; # Wikia - Skin chooser related
 		$this->mRights = null;
 		$this->mEffectiveGroups = null;
 		$this->mImplicitGroups = null;
@@ -2501,16 +2494,6 @@ class User {
 		}
 
 		if ( array_key_exists( $oname, $this->mOptions ) ) {
-			# Wikia - Skin chooser related
-			if($oname == 'skin') {
-				if(strlen(trim($this->mOptions[$oname])) > 7 &&  substr(trim($this->mOptions[$oname]), 0, 6) == 'quartz') {
-					$this->mOptions[$oname] = 'quartz';
-					$this->setOptionHelper('theme', substr(trim($this->mOptions[$oname]), 6));
-				} else if(trim($this->mOptions[$oname]) == 'slate' || trim($this->mOptions[$oname]) == 'smoke') {
-					$this->mOptions[$oname] = 'quartz';
-					$this->setOptionHelper('theme', trim($this->mOptions[$oname]));
-				}
-			}
 
 			/* Wikia change begin - @author: Macbre */
 			/* allow extensions to modify value returned by User::getOption() */
@@ -2681,9 +2664,6 @@ class User {
 			$this->userPreferences()->setGlobalPreference( $this->getId(), $preference, $value );
 			if ( $preference == 'skin' ) {
 				unset( $this->mSkin );
-			}
-			if ( $preference == 'theme' ) {
-				unset( $this->mTheme );
 			}
 		} else {
 			$this->setOptionHelper( $preference, $value );
@@ -2895,11 +2875,6 @@ class User {
 			# Clear cached skin, so the new one displays immediately in Special:Preferences
 			unset( $this->mSkin );
 		}
-		# Wikia - Skin chooser related
-		if ( $oname == 'theme' ) {
-			# Clear cached skin, so the new one displays immediately in Special:Preferences
-			unset($this->mTheme);
-		}
 		// Filter out any newlines that may have passed through input validation.
 		// Newlines are used to separate items in the options blob.
 		$val = $this->replaceNewlineAndCRWithSpace($val);
@@ -3098,7 +3073,7 @@ class User {
 	 * @param $group String Name of the group to add
 	 */
 	public function addGroup( $group ) {
-		if( wfRunHooks( 'UserAddGroup', array( $this, &$group ) ) ) {
+		if( wfRunHooks( 'UserAddGroup', array( $this, &$group )) ) {
 			$dbw = wfGetDB( DB_MASTER );
 			if( $this->getId() ) {
 				$dbw->insert( 'user_groups',
@@ -3109,12 +3084,13 @@ class User {
 					__METHOD__,
 					array( 'IGNORE' ) );
 			}
-		}
-		$this->loadGroups();
-		$this->mGroups[] = $group;
-		$this->mRights = User::getGroupPermissions( $this->getEffectiveGroups( true ) );
 
-		$this->invalidateCache();
+			$this->loadGroups();
+			$this->mGroups[] = $group;
+			$this->mRights = User::getGroupPermissions( $this->getEffectiveGroups( true ) );
+
+			$this->invalidateCache();
+		}
 	}
 
 	/**
@@ -3551,6 +3527,8 @@ class User {
 		if ( !$wgAuth->allowSetLocalPassword() ) {
 			$this->mPassword = '';
 		}
+
+		wfRunHooks( 'BeforeUserSaveSettings', array( $this ) );
 
 		$dbw = wfGetDB( DB_MASTER );
 		$dbw->update( 'user',

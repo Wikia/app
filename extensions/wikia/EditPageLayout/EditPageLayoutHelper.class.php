@@ -186,9 +186,11 @@ class EditPageLayoutHelper {
 	 * @return bool
 	 */
 	static public function isCodeSyntaxHighlightingEnabled( Title $articleTitle ) {
-		global $wgEnableEditorSyntaxHighlighting;
+		global $wgEnableEditorSyntaxHighlighting, $wgUser;
 
-		return self::isCodePage( $articleTitle ) && $wgEnableEditorSyntaxHighlighting;
+		return self::isCodePage( $articleTitle )
+			&& $wgEnableEditorSyntaxHighlighting
+			&& !$wgUser->getGlobalPreference( 'disablesyntaxhighlighting' );
 	}
 
 	static public function isInfoboxTemplate( Title $title ) {
@@ -197,7 +199,7 @@ class EditPageLayoutHelper {
 
 		if ( $namespace === NS_TEMPLATE ) {
 			$tc = new TemplateClassification( $title );
-			return $tc->isType( \TemplateClassificationService::TEMPLATE_INFOBOX )
+			return $tc->isType( TemplateClassificationService::TEMPLATE_INFOBOX )
 					|| self::isTemplateDraft( $title )
 					|| !empty( $portableInfobox );
 		}
@@ -337,13 +339,13 @@ class EditPageLayoutHelper {
 			'extensions/wikia/EditPageLayout/js/plugins/Noticearea.js',
 			'extensions/wikia/EditPageLayout/js/plugins/Railminimumheight.js',
 			'extensions/wikia/EditPageLayout/js/plugins/Sizechangedevent.js',
+			'extensions/wikia/EditPageLayout/js/plugins/TemplateClassificationEditorPlugin.js',
 			'extensions/wikia/EditPageLayout/js/plugins/Wikiacore.js',
 			'extensions/wikia/EditPageLayout/js/plugins/Widescreen.js',
 			'extensions/wikia/EditPageLayout/js/plugins/Preloads.js',
 			'extensions/wikia/EditPageLayout/js/plugins/Leaveconfirm.js',
 			'extensions/wikia/EditPageLayout/js/plugins/WikitextSyntaxHighlighterQueueInit.js',
 			'extensions/wikia/EditPageLayout/js/plugins/WikitextSyntaxHighlighter.js',
-			'extensions/wikia/EditPageLayout/js/plugins/TemplateClassificationEditorPlugin.js',
 			// >> extras (mainly things which should be moved elsewhere)
 			'extensions/wikia/EditPageLayout/js/extras/Buttons.js',
 			// >> visual modules - toolbars etc.
