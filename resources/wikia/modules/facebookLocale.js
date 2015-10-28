@@ -253,7 +253,7 @@
 			if (geoCountryCode) {
 				matchingLanguages = languagesOfCountry[geoCountryCode.toUpperCase()];
 				if (matchingLanguages && languageCode in matchingLanguages) {
-					countryCode = matchingLanguages[languageCode];
+					countryCode = geoCountryCode.toUpperCase();
 				}
 			}
 			if (!countryCode) {
