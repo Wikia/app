@@ -19,9 +19,7 @@ class CreateQuestionPage extends UnlistedSpecialPage {
 	}
 
 	private function createQuestion() {
-		if ( !$this->getRequest()->wasPosted()
-			|| !$this->getUser()->matchEditToken( $this->getRequest()->getVal( 'token' ) )
-		) {
+		if ( !$this->getUser()->matchEditToken( $this->getRequest()->getVal( 'token' ) ) ) {
 			throw new Exception( wfMessage( 'sessionfailure' )->escaped() );
 		}
 
