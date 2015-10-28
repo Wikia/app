@@ -2,6 +2,8 @@
 
 namespace Wikia\TemplateClassification;
 
+use Swagger\Client\ApiException;
+
 class View {
 
 	/**
@@ -14,11 +16,17 @@ class View {
 	 * @return string
 	 */
 	public function renderTemplateType( $wikiId, \Title $title, $user, $fallbackMsg = '', $templateTypeLabel = null ) {
-		if ( !$user->isLoggedIn() && !$this->isTemplateClassified( $title ) ) {
+		if ( !$user->isLoggedIn() ) {
 			return $fallbackMsg;
 		}
 
-		$templateType = ( new \TemplateClassificationService() )->getType( $wikiId, $title->getArticleID() );
+		try {
+			$templateType = ( new \TemplateClassificationService() )->getType( $wikiId, $title->getArticleID() );
+		} catch ( ApiException $e ) {
+			( new Logger() )->exception( $e );
+			return $fallbackMsg;
+		}
+
 		// Fallback to unknown for not existent classification
 		if ( $templateType === '' ) {
 			$templateType = \TemplateClassificationService::TEMPLATE_UNKNOWN;
@@ -65,6 +73,11 @@ class View {
 	 */
 	public function renderEditPageEntryPoint( $wikiId, \Title $title, \User $user ) {
 		$templateType = $this->renderTemplateType( $wikiId, $title, $user, '', '' );
+
+		if ( !$templateType ) {
+			return '';
+		}
+
 		return \MustacheService::getInstance()->render(
 			__DIR__ . '/templates/TemplateClassificationEditPageEntryPoint.mustache',
 			[
@@ -73,11 +86,4 @@ class View {
 			]
 		);
 	}
-
-	private function isTemplateClassified( $title ) {
-		global $wgCityId;
-		$templateType = ( new \TemplateClassificationService() )->getType( $wgCityId, $title->getArticleID() );
-		return $templateType !== \TemplateClassificationService::TEMPLATE_UNKNOWN && $templateType !== '';
-	}
-
 }

@@ -23,6 +23,8 @@ class TemplateClassificationService {
 	const TEMPLATE_NOT_ART = 'nonarticle';
 	const TEMPLATE_UNKNOWN = 'unknown';
 
+	const NOT_AVAILABLE = 'not-available';
+
 	/**
 	 * Allowed types of templates stored in an array to make a validation process easier.
 	 * @var array
