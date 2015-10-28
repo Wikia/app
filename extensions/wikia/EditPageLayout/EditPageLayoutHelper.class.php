@@ -339,6 +339,7 @@ class EditPageLayoutHelper {
 			'extensions/wikia/EditPageLayout/js/plugins/Noticearea.js',
 			'extensions/wikia/EditPageLayout/js/plugins/Railminimumheight.js',
 			'extensions/wikia/EditPageLayout/js/plugins/Sizechangedevent.js',
+			'extensions/wikia/EditPageLayout/js/plugins/TemplateClassificationEditorPlugin.js',
 			'extensions/wikia/EditPageLayout/js/plugins/Wikiacore.js',
 			'extensions/wikia/EditPageLayout/js/plugins/Widescreen.js',
 			'extensions/wikia/EditPageLayout/js/plugins/Preloads.js',

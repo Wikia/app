@@ -15,7 +15,71 @@ class Hooks {
 		\Hooks::register( 'BeforePageDisplay', [ $hooks, 'onBeforePageDisplay' ] );
 		\Hooks::register( 'PageHeaderPageTypePrepared', [ $hooks, 'onPageHeaderPageTypePrepared' ] );
 		\Hooks::register( 'QueryPageUseResultsBeforeRecache', [ $hooks, 'onQueryPageUseResultsBeforeRecache' ] );
+		/* Edit page hooks */
+		\Hooks::register( 'EditPage::showEditForm:fields', [ $hooks, 'onEditPageShowEditFormFields' ] );
+		\Hooks::register( 'ArticleInsertComplete', [ $hooks, 'onArticleInsertComplete' ] );
 		\Hooks::register( 'EditPageLayoutExecute', [ $hooks, 'onEditPageLayoutExecute' ] );
+		\Hooks::register( 'EditPageMakeGlobalVariablesScript', [ $hooks, 'onEditPageMakeGlobalVariablesScript' ] );
+	}
+
+	/**
+	 * Save template type passed from article creation
+	 * template type is stored in templateClassificationType hidden field
+	 *
+	 * @param \WikiPage $wikiPage
+	 * @return bool
+	 */
+	public function onArticleInsertComplete( \WikiPage $wikiPage ) {
+		global $wgCityId;
+
+		( new \TemplateClassificationService() )->classifyTemplate(
+			$wgCityId,
+			$wikiPage->getId(),
+			\RequestContext::getMain()->getRequest()->getVal('templateClassificationType'),
+			\TemplateClassificationService::USER_PROVIDER,
+			$wikiPage->getUser()
+		);
+		return true;
+	}
+
+	/**
+	 * Add global variables for Javascript
+	 * @param array $aVars
+	 * @return bool
+	 */
+	public function onEditPageMakeGlobalVariablesScript( array &$aVars ) {
+		$context = \RequestContext::getMain();
+		// Enable TemplateClassificationEditorPlugin
+		if ( ( new Permissions() )->shouldDisplayEntryPoint( $context->getUser(), $context->getTitle() )
+			&& $this->isEditPage()
+		) {
+			$aVars['enableTemplateClassificationEditorPlugin'] = true;
+		}
+		return true;
+	}
+
+	/**
+	 * Add hidden input to editform with template type
+	 * @param \EditPage $editPage
+	 * @param \OutputPage $out
+	 * @return bool
+	 */
+	public static function onEditPageShowEditFormFields( \EditPage $editPage, \OutputPage $out ) {
+		global $wgCityId;
+
+		if ( $out->getSkin() instanceof \SkinMonoBook ) {
+			return true;
+		}
+
+		$articleId = $editPage->getTitle()->getArticleID();
+		$templateType = ( new \TemplateClassificationService() )->getType( $wgCityId, $articleId );
+		$editPage->addHiddenField([
+			'name' => 'templateClassificationType',
+			'value' => $templateType,
+			'type' => 'hidden',
+		]);
+
+		return true;
 	}
 
 	/**
@@ -27,9 +91,15 @@ class Hooks {
 	 * @return true
 	 */
 	public function onBeforePageDisplay( \OutputPage $out, \Skin $skin ) {
-		if ( ( new Permissions() )->shouldDisplayEntryPoint( $skin->getUser(), $out->getTitle() ) ) {
-			\Wikia::addAssetsToOutput( 'tempate_classification_js' );
-			\Wikia::addAssetsToOutput( 'tempate_classification_scss' );
+		$title = $out->getTitle();
+		if ( ( new Permissions() )->shouldDisplayEntryPoint( $skin->getUser(), $title ) ) {
+			if ( $title->exists() ) {
+				\Wikia::addAssetsToOutput( 'template_classification_in_view_js' );
+				\Wikia::addAssetsToOutput( 'template_classification_scss' );
+			} elseif ( $this->isEditPage() ) {
+				\Wikia::addAssetsToOutput( 'template_classification_in_edit_js' );
+				\Wikia::addAssetsToOutput( 'template_classification_scss' );
+			}
 		}
 		return true;
 	}
@@ -43,10 +113,10 @@ class Hooks {
 		global $wgCityId;
 
 		$user = $pageHeaderController->getContext()->getUser();
-		if ( ( new Permissions() )->shouldDisplayEntryPoint( $user, $title ) ) {
+		if ( $title->inNamespace( NS_TEMPLATE ) && $title->exists() ) {
 			$view = new View();
 			$pageHeaderController->pageType = $view->renderTemplateType(
-				$wgCityId, $title->getArticleID(), $user, $pageHeaderController->pageType
+				$wgCityId, $title, $user, $pageHeaderController->pageType
 			);
 		}
 		return true;
@@ -80,7 +150,7 @@ class Hooks {
 		$title = $editPage->getContext()->getTitle();
 		if ( ( new Permissions() )->shouldDisplayEntryPoint( $user, $title ) ) {
 			$editPage->addExtraPageControlsHtml(
-				( new View )->renderEditPageEntryPoint( $wgCityId, $title->getArticleID(), $user )
+				( new View )->renderEditPageEntryPoint( $wgCityId, $title, $user )
 			);
 		}
 		return true;
@@ -91,5 +161,9 @@ class Hooks {
 	 */
 	protected function getUnusedTemplatesHandler() {
 		return new Handler();
+	}
+
+	private function isEditPage() {
+		return \RequestContext::getMain()->getRequest()->getVal( 'action' ) === 'edit';
 	}
 }

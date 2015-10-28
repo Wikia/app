@@ -26,7 +26,7 @@ class TemplateClassificationApiController extends WikiaApiController {
 			throw new BadRequestApiException( $e->getMessage() );
 		}
 
-		return $templateType;
+		$this->response->setVal( 'type', $templateType );
 	}
 
 	/**

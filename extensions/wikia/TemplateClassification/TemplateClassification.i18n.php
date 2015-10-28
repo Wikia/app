@@ -2,6 +2,7 @@
 $messages = [];
 
 $messages['en'] = [
+	'template-classification-description' => 'Interface for classifying templates to understand content better.',
 	'template-classification-type-unclassified' => 'Unclassified',
 	'template-classification-type-infobox' => 'Infobox',
 	'template-classification-description-infobox' => 'Displays the most essential snippets of information about an article in a box.',
@@ -41,10 +42,11 @@ $messages['en'] = [
 	'template-classification-edit-modal-cancel-button-text' => 'Cancel',
 	'template-classification-edit-modal-title' => 'Edit template type',
 
-	'template-classification-indicator' => 'Template type: $1',
+	'template-classification-indicator' => 'Template type:',
 ];
 
 $messages['qqq'] = [
+	'template-classification-description' => 'Description of extension viewed on Special:Version',
 	'template-classification-type-unclassified' => 'Name of an unclassified type',
 	'template-classification-type-infobox' => 'Name of an infobox type',
 	'template-classification-type-navbox' => 'Name of a navbox type',
@@ -75,10 +77,11 @@ $messages['qqq'] = [
 	'template-classification-edit-modal-cancel-button-text' => 'Text on cancel button for editing template type',
 	'template-classification-edit-modal-title' => 'Title of modal for editing template type',
 
-	'template-classification-indicator' => 'Shown in page subheader and near classification dialog entry points to indicate which type the template is currently classified as. Takes one of the template-classification-type-* messages as a parameter.',
+	'template-classification-indicator' => 'Shown in page subheader and near classification dialog entry points to indicate which type the template is currently classified as.',
 ];
 
 $messages['pl'] = [
+	'template-classification-description' => 'Interfejs do klasyfikacji szablonów w celu lepszego zrozumienia treści.',
 	'template-classification-type-unclassified' => 'Niesklasyfikowany',
 	'template-classification-type-infobox' => 'Infobox',
 	'template-classification-type-navbox' => 'Navbox',
