@@ -49,6 +49,11 @@ $wgAutoloadClasses['Wikia\TemplateClassification\Permissions'] = __DIR__ . '/Per
 $wgAutoloadClasses['Wikia\TemplateClassification\View'] = __DIR__ . '/TemplateClassificationView.php';
 
 /**
+ * Other
+ */
+$wgAutoloadClasses['Wikia\TemplateClassification\Logger'] = __DIR__ . '/Logger.class.php';
+
+/**
  * Messages
  */
 $wgExtensionMessagesFiles['TemplateClassification'] = __DIR__ . '/TemplateClassification.i18n.php';

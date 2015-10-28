@@ -2,6 +2,7 @@
 
 namespace Wikia\TemplateClassification;
 
+use Swagger\Client\ApiException;
 use Wikia\TemplateClassification\Permissions;
 use Wikia\TemplateClassification\UnusedTemplates\Handler;
 
@@ -35,13 +36,32 @@ class Hooks {
 	) {
 		global $wgCityId;
 
-		( new \TemplateClassificationService() )->classifyTemplate(
-			$wgCityId,
-			$article->getId(),
-			\RequestContext::getMain()->getRequest()->getVal('templateClassificationType'),
-			\TemplateClassificationService::USER_PROVIDER,
-			$user->getId()
-		);
+		$request = \RequestContext::getMain()->getRequest();
+		$type = $request->getVal( 'templateClassificationType' );
+
+		/**
+		 * The service was not available when the field's value was set
+		 * so we exit early to prevent polluting of the results.
+		 */
+		if ( !isset( $type ) || $type === \TemplateClassificationService::NOT_AVAILABLE ) {
+			return true;
+		}
+
+		try {
+			( new \TemplateClassificationService() )->classifyTemplate(
+				$wgCityId,
+				$article->getId(),
+				$type,
+				\TemplateClassificationService::USER_PROVIDER,
+				$user->getId()
+			);
+		} catch ( ApiException $e ) {
+			( new Logger() )->exception( $e );
+			\BannerNotificationsController::addConfirmation(
+				wfMessage( 'template-classification-notification-error-retry' )->escaped(),
+				\BannerNotificationsController::CONFIRMATION_WARN
+			);
+		}
 		return true;
 	}
 
@@ -75,7 +95,18 @@ class Hooks {
 		}
 
 		$articleId = $editPage->getTitle()->getArticleID();
-		$templateType = ( new \TemplateClassificationService() )->getType( $wgCityId, $articleId );
+
+		try {
+			$templateType = ( new \TemplateClassificationService() )->getType( $wgCityId, $articleId );
+		} catch ( ApiException $e ) {
+			( new Logger() )->exception( $e );
+			/**
+			 * If the service is unreachable - fill the field with a not-available string
+			 * which instructs front-end tools to skip the classification part.
+			 */
+			$templateType = \TemplateClassificationService::NOT_AVAILABLE;
+		}
+
 		$editPage->addHiddenField([
 			'name' => 'templateClassificationType',
 			'value' => $templateType,

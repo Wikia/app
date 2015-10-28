@@ -48,6 +48,8 @@ $messages['en'] = [
 	'template-classification-edit-modal-error' => 'Unfortunately, we were not able to classify this template. Would you mind trying it again?',
 
 	'template-classification-indicator' => 'Template type:',
+
+	'template-classification-notification-error-retry' => 'Something went wrong and we could not classify this template. Could you retry it using the link under a title of the page?',
 ];
 
 $messages['qqq'] = [
@@ -88,6 +90,8 @@ $messages['qqq'] = [
 	'template-classification-edit-modal-error' => 'A message shown in a Banner Notification after a user chooses a type of a template in a modal and the classification trial results with an error.',
 
 	'template-classification-indicator' => 'Shown in page subheader and near classification dialog entry points to indicate which type the template is currently classified as.',
+
+	'template-classification-notification-error-retry' => 'A message shown to a user in a Banner Notification if classifying of a template resulted with an error and we want a user to retry doing it.',
 ];
 
 $messages['pl'] = [
