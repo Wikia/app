@@ -8,6 +8,29 @@ class NodeGroupTest extends WikiaBaseTest {
 
 	/**
 	 * @covers       NodeGroup::getData
+	 * @dataProvider groupNodeCollapseTestProvider
+	 *
+	 * @param $markup
+	 * @param $expected
+	 */
+	public function testNodeGroupCollapse( $markup, $expected ) {
+		$node = \Wikia\PortableInfobox\Parser\Nodes\NodeFactory::newFromXML( $markup );
+
+
+		$this->assertEquals( $expected, $node->getData()[ 'collapse' ] );
+	}
+
+	public function groupNodeCollapseTestProvider() {
+		return [
+			[ '<group></group>', null ],
+			[ '<group collapse="wrong"></group>', null ],
+			[ '<group collapse="open"></group>', 'open' ],
+			[ '<group collapse="closed"></group>', 'closed' ]
+		];
+	}
+
+	/**
+	 * @covers       NodeGroup::getData
 	 * @dataProvider groupNodeTestProvider
 	 *
 	 * @param $markup
