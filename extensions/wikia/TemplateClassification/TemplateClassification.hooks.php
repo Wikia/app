@@ -43,7 +43,7 @@ class Hooks {
 		 * The service was not available when the field's value was set
 		 * so we exit early to prevent polluting of the results.
 		 */
-		if ( $type === \TemplateClassificationService::NOT_AVAILABLE ) {
+		if ( !isset( $type ) || $type === \TemplateClassificationService::NOT_AVAILABLE ) {
 			return true;
 		}
 
