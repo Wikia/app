@@ -56,7 +56,7 @@ define('TemplateClassificationInView', ['jquery', 'mw', 'wikia.nirvana', 'Templa
 		}
 
 		function animateOnError($element) {
-			$element.toggleClass('template-classification-error');
+			$element.addClass('template-classification-error');
 			$element.one('webkitAnimationEnd oanimationend msAnimationEnd animationend', function(e) {
 				$element.removeClass('template-classification-error');
 			});
