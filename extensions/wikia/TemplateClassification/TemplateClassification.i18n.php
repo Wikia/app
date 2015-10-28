@@ -44,7 +44,7 @@ $messages['en'] = [
 	'template-classification-edit-modal-title-add-template' => 'Add template',
 	'template-classification-edit-modal-title-edit-type' => 'Edit template type',
 	'template-classification-edit-modal-select-type-sub-title' => 'Choose template type',
-	'template-classification-edit-modal-success' => 'The template is now classified! Thank you!',
+	'template-classification-edit-modal-success' => 'New classification of the template has been saved. Thank you!',
 	'template-classification-edit-modal-error' => 'Unfortunately, we were not able to classify this template. Would you mind trying it again?',
 
 	'template-classification-indicator' => 'Template type:',

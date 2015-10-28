@@ -17,16 +17,20 @@ define('TemplateClassificationInView', ['jquery', 'mw', 'wikia.nirvana', 'Templa
 		}
 
 		function getType() {
-			return [{type: $typeLabel.data('type')}];
+			return $typeLabel.data('type');
 		}
 
-		function sendClassifyTemplateRequest() {
+		function sendClassifyTemplateRequest(selectedTemplateType) {
+			var previousType = getType();
+
+			templateClassificationModal.updateEntryPointLabel(selectedTemplateType);
+
 			nirvana.sendRequest({
 				controller: 'TemplateClassificationApi',
 				method: 'classifyTemplate',
 				data: {
 					pageId: mw.config.get('wgArticleId'),
-					type: $('#TemplateClassificationEditForm [name="template-classification-types"]:checked').val(),
+					type: selectedTemplateType,
 					editToken: mw.user.tokens.get('editToken')
 				},
 				callback: function() {
@@ -38,6 +42,9 @@ define('TemplateClassificationInView', ['jquery', 'mw', 'wikia.nirvana', 'Templa
 					notification.show();
 				},
 				onErrorCallback: function() {
+					templateClassificationModal.updateEntryPointLabel(previousType);
+					animateOnError($typeLabel);
+
 					var notification = new BannerNotification(
 						mw.message('template-classification-edit-modal-error').escaped(),
 						'error'
@@ -45,6 +52,13 @@ define('TemplateClassificationInView', ['jquery', 'mw', 'wikia.nirvana', 'Templa
 
 					notification.show();
 				}
+			});
+		}
+
+		function animateOnError($element) {
+			$element.toggleClass('template-classification-error');
+			$element.one('webkitAnimationEnd oanimationend msAnimationEnd animationend', function(e) {
+				$element.removeClass('template-classification-error');
 			});
 		}
 
