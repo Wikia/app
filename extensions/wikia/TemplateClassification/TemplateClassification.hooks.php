@@ -60,11 +60,17 @@ class Hooks {
 
 	/**
 	 * Add hidden input to editform with template type
-	 * @param \EditPageLayout $editPage
+	 * @param \EditPage $editPage
 	 * @param \OutputPage $out
+	 * @return bool
 	 */
-	public static function onEditPageShowEditFormFields( \EditPageLayout $editPage, \OutputPage $out ) {
+	public static function onEditPageShowEditFormFields( \EditPage $editPage, \OutputPage $out ) {
 		global $wgCityId;
+
+		if ( $out->getSkin() instanceof \SkinMonoBook ) {
+			return true;
+		}
+
 		$articleId = $editPage->getTitle()->getArticleID();
 		$templateType = ( new \TemplateClassificationService() )->getType( $wgCityId, $articleId );
 		$editPage->addHiddenField([
