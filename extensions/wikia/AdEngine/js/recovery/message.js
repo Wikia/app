@@ -3,6 +3,7 @@ define('ext.wikia.adEngine.recovery.message', [
 	'ext.wikia.adEngine.adTracker',
 	'ext.wikia.adEngine.recovery.helper',
 	'jquery',
+	'mw',
 	'wikia.document',
 	'wikia.loader',
 	'wikia.localStorage',
@@ -14,6 +15,7 @@ define('ext.wikia.adEngine.recovery.message', [
 	adTracker,
 	recoveryHelper,
 	$,
+	mw,
 	doc,
 	loader,
 	localStorage,
@@ -25,12 +27,7 @@ define('ext.wikia.adEngine.recovery.message', [
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.recovery.message',
-		localStorageKey = 'rejectedRecoveredMessage',
-		headerText = 'Hey! It looks like you\'re using ad blocking software!',
-		messageText = 'Wikia runs ads so we can keep the lights on and so Wikia will always be free to use. ' +
-			'We can bring you fun, free, fan-oriented content until my glorious return to Earh if you ' +
-			'<strong>add us to your adblock whitelist</strong>. ' +
-			'<a class="action-accept">Click</a> my face to refresh after you\'re done!';
+		localStorageKey = 'rejectedRecoveredMessage';
 
 	function accept() {
 		adTracker.track('recovery/message', 'accept');
@@ -47,29 +44,42 @@ define('ext.wikia.adEngine.recovery.message', [
 		return !!localStorage.getItem(localStorageKey);
 	}
 
-	function getTemplate() {
-		var templatePath = 'extensions/wikia/AdEngine/templates/recovered_message.mustache';
+	function getAssets() {
+		var templatePath = 'extensions/wikia/AdEngine/templates/recovered_message.mustache',
+			messagePackage = 'AdEngineRecoveryMessage';
 
 		return $.when(
 			loader({
 				type: loader.MULTI,
 				resources: {
+					messages: messagePackage,
 					mustache: templatePath
 				}
 			})
-		).then(function (response) {
-			return response.mustache[0];
+		).then(function (assets) {
+			mw.messages.set(assets.messages);
+			return assets;
 		}).fail(function () {
-			log(['recoveredAdsMessage.getTemplate', 'Unable to load template', templatePath], 'debug', logGroup);
+			log([
+				'recoveredAdsMessage.getAssets', 'Unable to load template or messages',
+				templatePath,
+				messagePackage
+			], 'debug', logGroup);
 		});
 	}
 
 	function createMessage(uniqueClassName) {
-		return getTemplate().then(function (template) {
-			var params = {
+		return getAssets().then(function (assets) {
+			var template = assets.mustache[0],
+				text = mw.message('adengine-recovery-message-blocking-message-a').rawParams([
+					'<a class="action-accept">' +
+						mw.message('adengine-recovery-message-blocking-click').escaped() +
+					'</a>'
+				]).escaped(),
+				params = {
 					positionClass: 'recovered-message-' + uniqueClassName,
-					header: headerText,
-					text: messageText
+					header: mw.message('adengine-recovery-message-blocking-welcome').text(),
+					text: text
 				};
 
 			return $(mustache.render(template, params));
