@@ -56,3 +56,7 @@ $wgExtensionMessagesFiles['TemplateClassification'] = __DIR__ . '/TemplateClassi
 JSMessages::registerPackage( 'TemplateClassificationModal', [
 	'template-classification-edit-modal-*',
 ] );
+
+JSMessages::registerPackage( 'TemplateClassificationTypes', [
+	'template-classification-type-*',
+] );
