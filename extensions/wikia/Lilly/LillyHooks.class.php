@@ -64,6 +64,11 @@ class LillyHooks {
 	static function onLinkerMakeExternalLink( &$url, &$text, &$link, &$attribs ) {
 		global $wgLillyServiceUrl, $wgTitle;
 
+		// wgTitle is null sometimes
+		if ( !( $wgTitle instanceof Title ) ) {
+			return true;
+		}
+
 		$sourceUrl = $wgTitle->getFullURL();
 		$targetUrl = $url;
 
