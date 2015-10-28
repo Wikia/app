@@ -95,7 +95,7 @@ define(
 			e.preventDefault();
 
 			/* Allow TemplateClassification extension to break submit */
-			if (win.enableTemplateClassificationEditorPlugin === true) {
+			if (win.enableTemplateClassificationEditorPlugin) {
 				require(['TemplateClassificationModalForce'], function forceTemplateClassificationModal(tcForce) {
 					if (tcForce.forceType() === true) {
 						return;
