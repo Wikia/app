@@ -8,9 +8,9 @@ define('TemplateClassificationLabeling',
 		'use strict';
 
 		var availableModes = [
-			'editType',
-			'addTemplate',
-			'addTypeBeforePublish'
+				'editType',
+				'addTemplate',
+				'addTypeBeforePublish'
 			],
 			mode = 'editType',
 			getTitleStrategy,
