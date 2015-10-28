@@ -42,13 +42,15 @@ class AchAwardingService {
 	 * @param Int $badge_type_id
 	 */
 	public function awardCustomNotInTrackBadge($user, $badge_type_id) {
+		wfProfileIn(__METHOD__);
+
 		global $wgExternalSharedDB, $wgAchievementsEditAddPhotoOnly;
 
-		if( !empty($wgAchievementsEditAddPhotoOnly) && ($badge_type_id != BADGE_EDIT && $badge_type_id != BADGE_PICTURE)) {
+		if( !empty( $wgAchievementsEditAddPhotoOnly ) && ( $badge_type_id != BADGE_EDIT && $badge_type_id != BADGE_PICTURE ) ) {
+			wfProfileOut(__METHOD__);
 			return;
 		}
 
-		wfProfileIn(__METHOD__);
 		$this->mUser = $user;
 
 		if( self::canEarnBadges( $this->mUser ) ) {
@@ -84,7 +86,7 @@ class AchAwardingService {
 			return;
 		}
 
-		if( !empty($wgAchievementsEditAddPhotoOnly) ) {
+		if(!empty($wgAchievementsEditAddPhotoOnly)) {
 			return;
 		}
 

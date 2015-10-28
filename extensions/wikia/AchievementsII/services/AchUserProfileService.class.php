@@ -218,7 +218,7 @@ class AchUserProfileService {
 
 		$challengesAnnotated = array();
 		foreach($challenges as $badge_type_id => $badge_lap) {
-			if( !empty($wgAchievementsEditAddPhotoOnly) && ($badge_type_id != BADGE_EDIT && $badge_type_id != BADGE_PICTURE)) {
+			if(!empty($wgAchievementsEditAddPhotoOnly) && ($badge_type_id != BADGE_EDIT && $badge_type_id != BADGE_PICTURE)) {
 				continue;
 			}
 			$badge = new AchBadge($badge_type_id, $badge_lap);
