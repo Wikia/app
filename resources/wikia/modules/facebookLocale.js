@@ -278,7 +278,7 @@
 	}
 
 	//namespace
-	context.Wikia.fbLocale = facebookLocale(context);
+	context.Wikia.fbLocale = facebookLocale();
 
 	if (context.define && context.define.amd) {
 		context.define('wikia.fbLocale', [], facebookLocale);
