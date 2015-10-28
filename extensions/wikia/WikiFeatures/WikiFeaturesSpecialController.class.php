@@ -95,97 +95,111 @@ class WikiFeaturesSpecialController extends WikiaSpecialPageController {
 	 * @responseParam string error (error message)
 	 */
 	public function toggleFeature() {
+		try {
+			$this->checkWriteRequest();
+		} catch ( BadRequestException $e ) {
+			$this->setVal( 'result', 'error' );
+			$this->setVal( 'error', wfMessage( 'sessionfailure' )->escaped() );
+			return;
+		}
+
 		$enabled = $this->getVal('enabled', null);
 		$feature = $this->getVal('feature', null);
 
-		wfrunHooks( 'WikiFeatures::onToggleFeature', [
+		wfRunHooks( 'WikiFeatures::onToggleFeature', [
 			'name' => $feature,
 			'enabled' => $enabled
 		] );
 
 		// check user permission
 		if(!$this->wg->User->isAllowed( 'wikifeatures' )) {
-			$this->setVal('result', 'error');
-			$this->setVal('error', wfMsg('wikifeatures-error-permission'));
+			$this->setVal( 'result', 'error' );
+			$this->setVal( 'error', wfMessage( 'wikifeatures-error-permission' )->escaped() );
 			return;
 		}
 
 		// check if feature given is actually something we allow setting
 		if ( !in_array( $feature, $this->wg->WikiFeatures['normal'] ) && !in_array( $feature, $this->wg->WikiFeatures['labs'] ) ) {
-			$this->setVal('result', 'error');
-			$this->setVal('error', wfMsg('wikifeatures-error-invalid-parameter', $feature));
+			$this->setVal( 'result', 'error' );
+			$this->setVal( 'error', wfMessage( 'wikifeatures-error-invalid-parameter', $feature )->escaped() );
 			return;
 		}
 
-		// validate feature: valid value ($enabled and $feature), check if Feature exists ($wg_value)
-		$wg_value = WikiFactory::getVarByName($feature, $this->wg->CityId);
-		if (($enabled != 'true' && $enabled != 'false') || empty($feature) || empty($wg_value)) {
-			$this->setVal('result', 'error');
-			$this->setVal('error', wfMsg('wikifeatures-error-invalid-parameter', $feature));
+		// validate feature: valid value ($enabled and $feature), check if Feature exists ($wgValue)
+		$wgValue = WikiFactory::getVarByName( $feature, $this->wg->CityId );
+		if ( ( $enabled != 'true' && $enabled != 'false' ) || empty( $feature ) || empty( $wgValue ) ) {
+			$this->setVal( 'result', 'error' );
+			$this->setVal( 'error', wfMessage( 'wikifeatures-error-invalid-parameter', $feature )->escaped() );
 			return;
 		}
 
-		$enabled = ($enabled == 'true');
+		$enabled = ( $enabled == 'true' );
 
-		$logMsg = "set extension option: $feature = ".var_export($enabled, TRUE);
+		$logMsg = "set extension option: $feature = " . var_export( $enabled, true );
 		$log = new LogPage( 'wikifeatures' );
 		$log->addEntry( 'wikifeatures', SpecialPage::getTitleFor('WikiFeatures'), $logMsg, array() );
-		WikiFactory::setVarByName($feature, $this->wg->CityId, $enabled, "WikiFeatures");
+		WikiFactory::setVarByName( $feature, $this->wg->CityId, $enabled, 'WikiFeatures' );
 
-		if ($feature == 'wgShowTopListsInCreatePage') {
-			WikiFactory::setVarByName( 'wgEnableTopListsExt', $this->wg->CityId, $enabled, "WikiFeatures" );
+		if ( $feature == 'wgShowTopListsInCreatePage' ) {
+			WikiFactory::setVarByName( 'wgEnableTopListsExt', $this->wg->CityId, $enabled, 'WikiFeatures' );
 		}
 
 		// clear cache for active wikis
 		WikiFactory::clearCache( $this->wg->CityId );
-		$this->wg->Memc->delete(WikiFeaturesHelper::getInstance()->getMemcKeyNumActiveWikis($feature));
+		$this->wg->Memc->delete( WikiFeaturesHelper::getInstance()->getMemcKeyNumActiveWikis( $feature ) );
 
 		wfRunHooks( 'WikiFeatures::afterToggleFeature', [ $feature, $enabled ] );
 
-		$this->setVal('result', 'ok');
+		$this->setVal( 'result', 'ok' );
 	}
 
-/**
- * Does some validation and hands user's feedback over so we had a chance to know it.
- * @requestParam type $category
- * @requestParam type $message
- * @responseParam string result [OK/error]
- * @responseParam string error (error message)
- */
-
+	/**
+	 * Does some validation and hands user's feedback over so we had a chance to know it.
+	 * @requestParam type $category
+	 * @requestParam type $message
+	 * @responseParam string result [OK/error]
+	 * @responseParam string error (error message)
+	 */
 	public function saveFeedback() {
+		try {
+			$this->checkWriteRequest();
+		} catch ( BadRequestException $e ) {
+			$this->setVal( 'result', 'error' );
+			$this->setVal( 'error', wfMessage( 'sessionfailure' )->escaped() );
+			return;
+		}
 
 		$user = $this->wg->User;
-		$feature = $this->getVal('feature');
-		$category = $this->getVal('category');
-		$message = $this->getVal('message');
+		$feature = $this->getVal( 'feature' );
+		$category = $this->getVal( 'category' );
+		$message = $this->getVal( 'message' );
 
-		if( !$user->isLoggedIn() ) {
+		if ( !$user->isLoggedIn() ) {
 			$this->result = 'error';
-			$this->error = wfMsg('wikifeatures-error-permission');
+			$this->error = wfMessage( 'wikifeatures-error-permission' )->escaped();
 			return;
 		}
 
 		// TODO: validate feature_id
-		if ( !array_key_exists($feature, WikiFeaturesHelper::$feedbackAreaIDs) ) {
+		if ( !array_key_exists( $feature, WikiFeaturesHelper::$feedbackAreaIDs ) ) {
 			$this->result = 'error';
-			$this->error = wfMsg('wikifeatures-error-invalid-parameter', 'feature');
-		} else if ( !array_key_exists($category, WikiFeaturesHelper::$feedbackCategories) || $category == 0) {
+			$this->error = wfMessage( 'wikifeatures-error-invalid-parameter', 'feature' )->escaped();
+		} elseif ( !array_key_exists( $category, WikiFeaturesHelper::$feedbackCategories ) || $category == 0 ) {
 			$this->result = 'error';
-			$this->error = wfMsg('wikifeatures-error-invalid-category');
-		} else if ( !$message || strlen($message) < 10 || strlen($message) > 1000 ) {
+			$this->error = wfMessage( 'wikifeatures-error-invalid-category' )->escaped();
+		} elseif ( !$message || strlen( $message ) < 10 || strlen( $message ) > 1000 ) {
 			$this->result = 'error';
-			$this->error = wfMsg('wikifeatures-error-message');
-		} else if( WikiFeaturesHelper::getInstance()->isSpam($user->getName(), $feature) ) {
+			$this->error = wfMessage( 'wikifeatures-error-message' )->escaped();
+		} elseif ( WikiFeaturesHelper::getInstance()->isSpam( $user->getName(), $feature ) ) {
 			$this->result = 'error';
-			$this->error = wfMsg('wikifeatures-error-spam-attempt');
+			$this->error = wfMessage( 'wikifeatures-error-spam-attempt' )->escaped();
 		}
 
 		// Passed validations, actually do something useful
-		if( is_null($this->error) ) {
+		if ( is_null( $this->error ) ) {
 			$this->result = 'ok';
 			$bugzdata = WikiFeaturesHelper::getInstance()->sendFeedback( $feature, $user, $message, $category );
-			$this->msg = wfMsg('wikifeatures-feedback-success');
+			$this->msg = wfMessage( 'wikifeatures-feedback-success' )->escaped();
 		}
 	}
 

@@ -54,10 +54,6 @@ class CategorySelectController extends WikiaController {
 		$this->response->setVal( 'showHidden', $showHidden );
 		$this->response->setVal( 'userCanEdit', $userCanEdit );
 
-		if ( $this->app->checkSkin( 'venus' ) ) {
-			$this->overrideTemplate( 'articlePageVenus' );
-		}
-
 		wfProfileOut( __METHOD__ );
 	}
 
