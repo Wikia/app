@@ -33,8 +33,7 @@ define('TemplateClassificationInView', ['jquery', 'mw', 'wikia.nirvana', 'Templa
 		}
 
 		return {
-			init: init,
-			open: open
+			init: init
 		};
 	}
 );

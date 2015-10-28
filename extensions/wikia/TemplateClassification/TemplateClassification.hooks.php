@@ -3,6 +3,7 @@
 namespace Wikia\TemplateClassification;
 
 use Swagger\Client\ApiException;
+use Wikia\TemplateClassification\Permissions;
 use Wikia\TemplateClassification\UnusedTemplates\Handler;
 
 class Hooks {
@@ -17,7 +18,7 @@ class Hooks {
 		\Hooks::register( 'QueryPageUseResultsBeforeRecache', [ $hooks, 'onQueryPageUseResultsBeforeRecache' ] );
 		/* Edit page hooks */
 		\Hooks::register( 'EditPage::showEditForm:fields', [ $hooks, 'onEditPageShowEditFormFields' ] );
-		\Hooks::register( 'ArticleInsertComplete', [ $hooks, 'onArticleInsertComplete' ] );
+		\Hooks::register( 'ArticleSaveComplete', [ $hooks, 'onArticleSaveComplete' ] );
 		\Hooks::register( 'EditPageLayoutExecute', [ $hooks, 'onEditPageLayoutExecute' ] );
 		\Hooks::register( 'EditPageMakeGlobalVariablesScript', [ $hooks, 'onEditPageMakeGlobalVariablesScript' ] );
 	}
@@ -27,9 +28,12 @@ class Hooks {
 	 * template type is stored in templateClassificationType hidden field
 	 *
 	 * @param \WikiPage $wikiPage
+	 * @param \User $user
 	 * @return bool
 	 */
-	public function onArticleInsertComplete( \WikiPage $wikiPage ) {
+	public function onArticleSaveComplete( \WikiPage $article, \User $user, $text, $summary,
+		$minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId
+	) {
 		global $wgCityId;
 
 		$request = \RequestContext::getMain()->getRequest();
@@ -46,10 +50,10 @@ class Hooks {
 		try {
 			( new \TemplateClassificationService() )->classifyTemplate(
 				$wgCityId,
-				$wikiPage->getId(),
+				$article->getId(),
 				$type,
 				\TemplateClassificationService::USER_PROVIDER,
-				$wikiPage->getUser()
+				$user->getId()
 			);
 		} catch ( ApiException $e ) {
 			( new Logger() )->exception( $e );
@@ -123,7 +127,7 @@ class Hooks {
 	public function onBeforePageDisplay( \OutputPage $out, \Skin $skin ) {
 		$title = $out->getTitle();
 		if ( ( new Permissions() )->shouldDisplayEntryPoint( $skin->getUser(), $title ) ) {
-			if ( $title->exists() ) {
+			if ( $title->exists() && !$this->isEditPage() ) {
 				\Wikia::addAssetsToOutput( 'template_classification_in_view_js' );
 				\Wikia::addAssetsToOutput( 'template_classification_scss' );
 			} elseif ( $this->isEditPage() ) {

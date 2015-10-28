@@ -4,8 +4,9 @@
  * Initiates modal and opens it on entry point click
  * Provides two params in init method for handling save and providing selected type
  */
-define('TemplateClassificationModal', ['jquery', 'mw', 'wikia.loader', 'wikia.nirvana'],
-function ($, mw, loader, nirvana) {
+define('TemplateClassificationModal',
+	['jquery', 'mw', 'wikia.loader', 'wikia.nirvana', 'TemplateClassificationLabeling'],
+function ($, mw, loader, nirvana, labeling) {
 	'use strict';
 
 	var $classificationForm,
@@ -29,13 +30,15 @@ function ($, mw, loader, nirvana) {
 
 		$('.template-classification-edit').click(function (e) {
 			e.preventDefault();
-			openEditModal();
+			openEditModal('editType');
 		});
 	}
 
-	function openEditModal() {
+	function openEditModal(modeProvided) {
 		var messagesLoader = falseFunction,
 			classificationFormLoader = falseFunction;
+
+		labeling.init(modeProvided);
 
 		if (!messagesLoaded) {
 			messagesLoader = getMessages;
@@ -53,7 +56,7 @@ function ($, mw, loader, nirvana) {
 		).done(handleRequestsForModal);
 	}
 
-	function getLabel(templateType) {
+	function getTypeLabel(templateType) {
 		var selectedTypeText;
 
 		if (!$classificationForm) {
@@ -85,7 +88,9 @@ function ($, mw, loader, nirvana) {
 		}
 
 		// Set modal content
-		setupTemplateClassificationModal($classificationForm[0].outerHTML);
+		setupTemplateClassificationModal(
+			labeling.prepareContent($classificationForm[0].outerHTML)
+		);
 
 		require(['wikia.ui.factory'], function (uiFactory) {
 			/* Initialize the modal component */
@@ -131,7 +136,7 @@ function ($, mw, loader, nirvana) {
 	function updateEntryPointLabel(templateType) {
 		$typeLabel
 			.data('type', mw.html.escape(templateType))
-			.html(getLabel(templateType));
+			.html(getTypeLabel(templateType));
 	}
 
 	function setupTemplateClassificationModal(content) {
@@ -142,14 +147,14 @@ function ($, mw, loader, nirvana) {
 				classes: ['template-classification-edit-modal'],
 				size: 'small', // size of the modal
 				content: content, // content
-				title: mw.message('template-classification-edit-modal-title').escaped()
+				title: labeling.getTitle()
 			}
 		};
 
 		var modalButtons = [
 			{
 				vars: {
-						value: mw.message('template-classification-edit-modal-save-button-text').escaped(),
+						value: labeling.getConfirmButtonLabel(),
 						classes: ['normal', 'primary'],
 						data: [
 							{
@@ -199,7 +204,6 @@ function ($, mw, loader, nirvana) {
 
 	return {
 		init: init,
-		getLabel: getLabel,
 		open: openEditModal
 	};
 });

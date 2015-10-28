@@ -2634,6 +2634,7 @@ $config['template_classification_in_view_js'] = [
 	'skin' => [ 'oasis' ],
 	'assets' => [
 		'//extensions/wikia/TemplateClassification/scripts/TemplateClassificationInView.js',
+		'//extensions/wikia/TemplateClassification/scripts/TemplateClassificationLabeling.js',
 		'//extensions/wikia/TemplateClassification/scripts/TemplateClassificationModal.js',
 	]
 ];
@@ -2643,7 +2644,9 @@ $config['template_classification_in_edit_js'] = [
 	'skin' => [ 'oasis' ],
 	'assets' => [
 		'//extensions/wikia/TemplateClassification/scripts/TemplateClassificationInEdit.js',
+		'//extensions/wikia/TemplateClassification/scripts/TemplateClassificationLabeling.js',
 		'//extensions/wikia/TemplateClassification/scripts/TemplateClassificationModal.js',
+		'//extensions/wikia/TemplateClassification/scripts/TemplateClassificationModalForce.js',
 	]
 ];
 
