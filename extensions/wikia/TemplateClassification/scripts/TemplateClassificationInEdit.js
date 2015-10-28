@@ -30,11 +30,12 @@ define('TemplateClassificationInEdit',
 
 		function getType() {
 			/* Return in format required by TemplateClassificationModal module */
-			return [{type: $editFormHiddenTypeField.val()}];
+			return $editFormHiddenTypeField.val();
 		}
 
 		function storeTypeForSend(templateType) {
 			$editFormHiddenTypeField.val(mw.html.escape(templateType));
+			templateClassificationModal.updateEntryPointLabel(templateType);
 		}
 
 		return {
