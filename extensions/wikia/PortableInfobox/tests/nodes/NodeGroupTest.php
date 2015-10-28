@@ -15,8 +15,6 @@ class NodeGroupTest extends WikiaBaseTest {
 	 */
 	public function testNodeGroupCollapse( $markup, $expected ) {
 		$node = \Wikia\PortableInfobox\Parser\Nodes\NodeFactory::newFromXML( $markup );
-
-
 		$this->assertEquals( $expected, $node->getData()[ 'collapse' ] );
 	}
 
