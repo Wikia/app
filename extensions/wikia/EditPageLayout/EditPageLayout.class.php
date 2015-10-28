@@ -344,7 +344,11 @@ class EditPageLayout extends EditPage {
 	}
 
 	/**
-	 * Add hidden field to be shown in "Edit title" dialog
+	 * Add hidden field to editor
+	 * this can be any type of field checkbox, text, hidden etc
+	 * It won't be visible to user as it's hidden by css
+	 * @param array $field Array of attributes
+	 *        eg. [ 'name' => 'exampleName', 'type' => 'checkbox', ...]
 	 */
 	public function addHiddenField($field) {
 		$this->mHiddenFields[] = $field;
