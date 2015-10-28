@@ -15,32 +15,27 @@ class PipelineEventProducer {
 
 	/**
 	 * @desc Send event to pipeline in old format (message with params inside).
+	 *
 	 * @param $eventName
 	 * @param $pageId
 	 * @param array $params
 	 */
 	public static function send( $eventName, $pageId, $params = [ ] ) {
-		$msgBase = self::prepareMessageData( $pageId );
-		$msgBase->args = new stdClass();
-		$msg = self::prepareMessageBody( $params, $msgBase->args );
-
-		self::publish( implode( '.', [ self::ARTICLE_MESSAGE_PREFIX, $eventName ] ), $msg );
+		self::publish( implode( '.', [ self::ARTICLE_MESSAGE_PREFIX, $eventName ] ),
+			self::prepareMessage( $pageId, $params ) );
 	}
 
 	/**
 	 * @desc Send event to pipeline in new format,
 	 * using new action names (see function prepareRoute).
+	 *
 	 * @param $action
 	 * @param $id
 	 * @param string $ns
 	 * @param array $data
 	 */
-	public static function sendFlaggedSyntax( $action, $id, $ns = self::NS_CONTENT, $data = [] ) {
-		$route = self::prepareRoute( $action, $ns, $data);
-		$msgBase = self::prepareMessageData( $id );
-		$msg = self::prepareMessageBody( $data, $msgBase );
-
-		self::publish( $route, $msg );
+	public static function sendFlaggedSyntax( $action, $id, $ns = self::NS_CONTENT, $data = [ ] ) {
+		self::publish( self::prepareRoute( $action, $ns, $data ), self::prepareMessage( $id, $data ) );
 	}
 
 	/*
@@ -119,25 +114,17 @@ class PipelineEventProducer {
 
 	/**
 	 * @desc create message with cityId and pageId fields
+	 *
 	 * @param $pageId
+	 *
 	 * @return \stdClass
 	 */
-	protected static function prepareMessageData( $pageId ) {
+	protected static function prepareMessage( $pageId, $params ) {
 		global $wgCityId;
 		$msg = new stdClass();
 		$msg->cityId = $wgCityId;
 		$msg->pageId = $pageId;
 
-		return $msg;
-	}
-
-	/**
-	 * @desc iterate over passed params and add them to message body
-	 * @param $params
-	 * @param $msg
-	 * @return mixed
-	 */
-	protected static function prepareMessageBody ( $params, $msg ) {
 		foreach ( $params as $param => $value ) {
 			$msg->{$param} = $value;
 		}
@@ -147,14 +134,16 @@ class PipelineEventProducer {
 
 	/**
 	 * @desc create message route
+	 *
 	 * @param $action
 	 * @param $ns
 	 * @param $data
+	 *
 	 * @return string message route in format:
 	 * PRODUCER_NAME.ROUTE_ACTION_KEY:{action}.ROUTE_NAMESPACE_KEY:{namespace}.ROUTE_CONTENT_KEY:{items}
 	 */
-	public static function prepareRoute( $action, $ns, $data = [] ) {
-		$contentData = [];
+	public static function prepareRoute( $action, $ns, $data = [ ] ) {
+		$contentData = [ ];
 
 		//prepare info about what data can be found in the message content
 		if ( !empty( array_keys( $data ) ) ) {
@@ -164,11 +153,11 @@ class PipelineEventProducer {
 		}
 
 		$routeData = array_merge(
-			[ self::PRODUCER_NAME, self::ROUTE_ACTION_KEY . ':' . $action,  self::ROUTE_NAMESPACE_KEY . ':' . $ns ],
+			[ self::PRODUCER_NAME, self::ROUTE_ACTION_KEY . ':' . $action, self::ROUTE_NAMESPACE_KEY . ':' . $ns ],
 			$contentData
 		);
 
-		$route = implode( '.', $routeData);
+		$route = implode( '.', $routeData );
 
 		return $route;
 	}
@@ -197,15 +186,17 @@ class PipelineEventProducer {
 	/**
 	 * @desc For given page title returns it's lowerased namespace in english.
 	 * Namespace CONTENT means that page is in 0 or one of the custom content namespaces.
+	 *
 	 * @param $title
+	 *
 	 * @return string lowerased english namespace
 	 */
 	public static function preparePageNamespaceName( $title ) {
 		global $wgContentNamespaces;
 		$namespaceID = $title->getNamespace();
 
-		if ( in_array($namespaceID, $wgContentNamespaces) ) {
-			$pageNamespace =  self::NS_CONTENT;
+		if ( in_array( $namespaceID, $wgContentNamespaces ) ) {
+			$pageNamespace = self::NS_CONTENT;
 		} else {
 			$pageNamespace = strtolower( MWNamespace::getCanonicalName( $namespaceID ) );
 		}
