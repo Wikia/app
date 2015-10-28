@@ -8,7 +8,7 @@ $messages['en'] = [
 Article {{FULLPAGENAME}} was not found. What do you want to do?
 
 * Go to [[$1]] instead
-* Search for <span class="plainlinks">[{{fullurl:Special:Search|search={{urlencode:{{PAGENAME}}}}}} {{PAGENAME}}]</span>
+* Search existing articles for <span class="plainlinks">[{{fullurl:Special:Search|search={{urlencode:{{PAGENAME}}}}}} {{PAGENAME}}]</span>
 * Create article <span class="plainlinks">[{{fullurl:{{FULLPAGENAME}}|action=create}} {{FULLPAGENAME}}]</span>',
 ];
 

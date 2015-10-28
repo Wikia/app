@@ -89,6 +89,7 @@ class User {
 				$tokenInfo = $heliosClient->info( $token );
 				if ( !empty( $tokenInfo->user_id ) ) {
 					$user = \User::newFromId( $tokenInfo->user_id );
+					$user->setGlobalAuthToken( $token );
 
 					// dont return the user object if it's disabled
 					// @see SERVICES-459
@@ -244,7 +245,7 @@ class User {
 		$request = \RequestContext::getMain()->getRequest();
 		$heliosClient = self::getHeliosClient();
 		$accessToken = self::getAccessToken( $request );
-		if ( !empty( $accessToken ) ) {
+		if ( !empty( $accessToken ) && !empty( $wgUser ) ) {
 			$heliosClient->invalidateToken( $accessToken, $wgUser->getId() );
 		}
 	}

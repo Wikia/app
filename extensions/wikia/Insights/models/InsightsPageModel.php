@@ -391,7 +391,7 @@ abstract class InsightsPageModel extends InsightsModel {
 	 * @return string
 	 */
 	public function getWlhUrl( Title $title ) {
-		return SpecialPage::getTitleFor( 'Whatlinkshere', $title->getPrefixedText() );
+		return SpecialPage::getTitleFor( 'Whatlinkshere', $title->getPrefixedText() )->getFullUrl();
 	}
 
 	/**
