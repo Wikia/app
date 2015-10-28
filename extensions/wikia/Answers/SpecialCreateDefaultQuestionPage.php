@@ -1,58 +1,82 @@
 <?php
 class CreateQuestionPage extends UnlistedSpecialPage {
 
+	const QS_KEY_QUESTION = 'questiontitle';
+
 	function __construct(){
 		parent::__construct("CreateQuestionPage");
 	}
 
-	function execute( $question ){
-		global $wgRequest, $wgOut, $wgUser;
-
-                if ( wfReadOnly() ) {
-                        return false;
-                }
-
-                //don't allow blocked users to ask questions, duh
-                if( $wgUser->isBlocked() ){
-					throw new UserBlockedError( $wgUser->getBlock() );
-                }
-
-                if( !$wgUser->isAllowed( 'edit' ) ){
-                        return false;
-                }
-
-		if( empty( $question ) ) {
-			$question = $wgRequest->getVal("questiontitle");
+	function execute( $question ) {
+		if ( $this->getRequest()->wasPosted() ) {
+			$this->createQuestion();
+			return;
 		}
 
-		if( empty( $question ) ) {
-			return true;
+		if ( !empty( $question ) ) {
+			$this->redirectToHelpPage();
+		}
+	}
+
+	private function createQuestion() {
+		if ( !$this->getUser()->matchEditToken( $this->getRequest()->getVal( 'token' ) ) ) {
+			throw new Exception( wfMessage( 'sessionfailure' )->escaped() );
+		}
+
+		if ( wfReadOnly() ) {
+			return;
+		}
+
+		//don't allow blocked users to ask questions, duh
+		if ( $this->getUser()->isBlocked() ) {
+			throw new UserBlockedError( $this->getUser()->getBlock() );
+		}
+
+		if ( !$this->getUser()->isAllowed( 'edit' ) ) {
+			return;
+		}
+
+		$question = $this->getRequest()->getVal( self::QS_KEY_QUESTION, false );
+		if ( !$question ) {
+			return;
 		}
 
 		$q = new DefaultQuestion( $question );
 
 		if ( !is_object( $q ) ) {
-			return false;
+			return;
 		}
 
-		if ( is_object($q->title) && $q->title->exists() ) {
-			$wgOut->redirect( $q->title->getFullURL() );
-			return false;
+		if ( is_object( $q->title ) && $q->title->exists() ) {
+			$this->getOutput()->redirect( $q->title->getFullURL() );
+			return;
 		}
 
 		if ( $q->searchTest() ) {
-			$wgOut->redirect( SpecialPage::getTitleFor( 'Search' )->getFullURL("search=" . $q->question . "&fulltext=Search") );
-			return false;
+			$this->redirectToSearchPage( $q );
+			return;
 		}
 
 		$res = $q->create();
 
 		if ( $res ) {
-			$wgOut->redirect( $q->title->getFullURL("state=asked") );
+			$this->getOutput()->redirect( $q->title->getFullURL( "state=asked" ) );
 		} else {
-			$wgOut->redirect( Title::makeTitle( NS_MAIN, wfMsgForContent("question_redirected_help_page") )->getFullURL() );
+			$this->redirectToHelpPage();
 		}
+	}
 
-		return false;
+	private function redirectToHelpPage() {
+		$this->getOutput()->redirect(
+			Title::makeTitle(
+				NS_MAIN, wfMessage( 'question_redirected_help_page' )->inContentLanguage()->text()
+			)->getFullURL()
+		);
+	}
+
+	private function redirectToSearchPage( DefaultQuestion $defaultQuestion) {
+		$this->getOutput()->redirect(
+			SpecialPage::getTitleFor( 'Search' )->getFullURL(
+				"search=" . $defaultQuestion->question . "&fulltext=Search" ) );
 	}
 }

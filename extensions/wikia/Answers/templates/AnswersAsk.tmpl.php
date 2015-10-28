@@ -14,8 +14,8 @@ function ask_question() {
 	if( q.charAt( q.length-1 ) == "?" ) q = q.substr(0,q.length-1) ; //removes question mark
 	q = encodeURIComponent( q );
 	
-	var url = "http://answer.wikia.com/api.php?action=query&titles=" + q + "&format=json";
-	var params = ''
+	var url = "http://answers.wikia.com/api.php?action=query&titles=" + q + "&format=json";
+	var params = '';
 
 	var callback = {
 		success: function( oResponse ) {
