@@ -87,7 +87,7 @@ define(
 	 */
 	function initSubmit() {
 		$('#editform').submit(function (e) {
-			var hiddenInput = ace.getInput().val(ace.getContent()),
+			var $hiddenInput = ace.getInput().val(ace.getContent()),
 				$editForm = $(this);
 
 			disableBeforeUnload = true;
@@ -100,11 +100,11 @@ define(
 					if (tcForce.forceType() === true) {
 						return;
 					} else {
-						finishSubmit($editForm, hiddenInput);
+						finishSubmit($editForm, $hiddenInput);
 					}
 				});
 			} else {
-				finishSubmit($editForm, hiddenInput);
+				finishSubmit($editForm, $hiddenInput);
 			}
 		});
 	}
@@ -112,10 +112,10 @@ define(
 	/**
 	 * Submit form with hidden field
 	 * @param {jQuery} $editForm
-	 * @param {jQuery} hiddenInput
+	 * @param {jQuery} $hiddenInput
 	 */
-	function finishSubmit($editForm, hiddenInput) {
-		$editForm.unbind('submit').append(hiddenInput).submit();
+	function finishSubmit($editForm, $hiddenInput) {
+		$editForm.unbind('submit').append($hiddenInput).submit();
 	}
 
 	/**
