@@ -482,21 +482,18 @@
 
 			$.get('/api.php', {
 				action: 'query',
-				prop: 'info',
-				titles: window.wgTitle,
-				intoken: 'edit',
+				uiprop: 'preferencestoken',
+				meta: 'userinfo',
 				format: 'json'
 			}).then(function (response) {
-				var pages,
-					editToken;
+				var preferencesToken;
 
-				if (!response || !response.query || !response.query.pages) {
+				if (!response || !response.query || !response.query.userinfo) {
 					self.generateAjaxErrorMsg();
 					return;
 				}
 
-				pages = response.query.pages;
-				editToken = pages[Object.keys(pages)[0]].edittoken;
+				preferencesToken = response.query.userinfo.preferencestoken;
 
 				$.nirvana.sendRequest({
 					controller: 'CreateNewWiki',
@@ -511,7 +508,7 @@
 							wAllAges: self.wikiAllAges.is(':checked') ? self.wikiAllAges.val() : null,
 							wAnswer: Math.floor(self.answer)
 						},
-						token: editToken
+						token: preferencesToken
 					},
 					callback: function (res) {
 						self.createStatus = res.status;
