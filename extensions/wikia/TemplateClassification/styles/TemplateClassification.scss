@@ -45,3 +45,14 @@
 .template-classification-edit-form-label .tc-type-name {
 	font-weight: bold;
 }
+
+@keyframes fadeBackground {
+	to {
+		background-color: transparent;
+	}
+}
+
+.template-classification-error {
+	background-color: #e1390b;
+	animation: fadeBackground 1s linear;
+}

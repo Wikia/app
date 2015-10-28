@@ -44,6 +44,8 @@ $messages['en'] = [
 	'template-classification-edit-modal-title-add-template' => 'Add template',
 	'template-classification-edit-modal-title-edit-type' => 'Edit template type',
 	'template-classification-edit-modal-select-type-sub-title' => 'Choose template type',
+	'template-classification-edit-modal-success' => 'New classification of the template has been saved. Thank you!',
+	'template-classification-edit-modal-error' => 'Unfortunately, we were not able to classify this template. Would you mind trying it again?',
 
 	'template-classification-indicator' => 'Template type:',
 
@@ -84,6 +86,8 @@ $messages['qqq'] = [
 	'template-classification-edit-modal-title-edit-type' => 'Title of modal for editing template type',
 	'template-classification-edit-modal-title-add-template' => 'Title of modal for choosing template type while adding new template',
 	'template-classification-edit-modal-select-type-sub-title' => 'Subtitle of modal for choosing template type while adding new template',
+	'template-classification-edit-modal-success' => 'A message shown in a Banner Notification after a user chooses a type of a template in a modal and the classification is successfully saved.',
+	'template-classification-edit-modal-error' => 'A message shown in a Banner Notification after a user chooses a type of a template in a modal and the classification trial results with an error.',
 
 	'template-classification-indicator' => 'Shown in page subheader and near classification dialog entry points to indicate which type the template is currently classified as.',
 

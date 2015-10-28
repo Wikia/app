@@ -56,18 +56,8 @@ function ($, mw, loader, nirvana, labeling) {
 		).done(handleRequestsForModal);
 	}
 
-	function getTypeLabel(templateType) {
-		var selectedTypeText;
-
-		if (!$classificationForm) {
-			return '';
-		}
-
-		selectedTypeText = $classificationForm.find(
-			'label[for="template-classification-' + mw.html.escape(templateType) + '"] .tc-type-name'
-		);
-
-		return selectedTypeText.html();
+	function getTypeMessage(templateType) {
+		return mw.message('template-classification-type-' + mw.html.escape(templateType));
 	}
 
 	function handleRequestsForModal(classificationForm, templateType, loaderRes) {
@@ -81,10 +71,13 @@ function ($, mw, loader, nirvana, labeling) {
 		}
 
 		if (templateType) {
-			var selectedType = mw.html.escape(templateType[0].type);
 			// Mark selected type
-			$classificationForm.find('input[checked="checked"]').removeAttr('checked');
-			$classificationForm.find('input[value="' + selectedType + '"]').attr('checked', 'checked');
+			var selectedType = $classificationForm.find('input[value="' + templateType + '"]');
+
+			if (selectedType.length > 0) {
+				$classificationForm.find('input[checked="checked"]').removeAttr('checked');
+				selectedType.attr('checked', 'checked');
+			}
 		}
 
 		// Set modal content
@@ -127,16 +120,13 @@ function ($, mw, loader, nirvana, labeling) {
 
 		saveHandler(templateType);
 
-		// Update entry point label
-		updateEntryPointLabel(templateType);
-
 		modalInstance.trigger('close');
 	}
 
 	function updateEntryPointLabel(templateType) {
 		$typeLabel
 			.data('type', mw.html.escape(templateType))
-			.html(getTypeLabel(templateType));
+			.html(getTypeMessage(templateType).escaped());
 	}
 
 	function setupTemplateClassificationModal(content) {
@@ -193,7 +183,7 @@ function ($, mw, loader, nirvana, labeling) {
 		return loader({
 			type: loader.MULTI,
 			resources: {
-				messages: 'TemplateClassificationModal'
+				messages: 'TemplateClassificationModal,TemplateClassificationTypes'
 			}
 		});
 	}
@@ -204,6 +194,7 @@ function ($, mw, loader, nirvana, labeling) {
 
 	return {
 		init: init,
-		open: openEditModal
+		open: openEditModal,
+		updateEntryPointLabel: updateEntryPointLabel
 	};
 });
