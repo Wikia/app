@@ -33,9 +33,13 @@
 
 			$collapsibleGroups.each( function( index, group ) {
 				var $group = $collapsibleGroups.eq(index),
-					$header = $group.find('.pi-header');
+					$header = $group.find('.pi-header'),
+					title = $group.hasClass('pi-collapse-closed') ? 'Open' : 'Close';
+
+				$header.attr('title', title);
 
 				$header.click( function() {
+					this.title = (this.title === 'Open') ? 'Close' : 'Open';
 					$group.toggleClass('pi-collapse-closed');
 				});
 			});
