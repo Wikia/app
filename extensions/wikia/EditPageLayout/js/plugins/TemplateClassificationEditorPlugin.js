@@ -19,12 +19,8 @@
 			},
 
 			forceType: function () {
-				if (templateClassificationForceModal.forceType() === true) {
-					// Break article submit
-					return false;
-				} else {
-					return true;
-				}
+				/* Break article submit if modal was forced */
+				return !templateClassificationForceModal.forceType();
 			}
 
 		});
