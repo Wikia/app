@@ -5,8 +5,8 @@
  * Provides two params in init method for handling save and providing selected type
  */
 define('TemplateClassificationModal',
-	['jquery', 'mw', 'wikia.loader', 'wikia.nirvana', 'TemplateClassificationLabeling'],
-function ($, mw, loader, nirvana, labeling) {
+	['jquery', 'mw', 'wikia.loader', 'wikia.nirvana', 'wikia.tracker', 'TemplateClassificationLabeling'],
+function ($, mw, loader, nirvana, tracker, labeling) {
 	'use strict';
 
 	var $classificationForm,
@@ -88,6 +88,13 @@ function ($, mw, loader, nirvana, labeling) {
 		require(['wikia.ui.factory'], function (uiFactory) {
 			/* Initialize the modal component */
 			uiFactory.init(['modal']).then(createComponent);
+
+			// Track - open TC modal
+			tracker.track({
+				trackingMethod: 'both',
+				category: 'template-classification-dialog',
+				action: 'open'
+			});
 		});
 	}
 
