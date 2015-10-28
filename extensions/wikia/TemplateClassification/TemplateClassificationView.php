@@ -73,6 +73,11 @@ class View {
 	 */
 	public function renderEditPageEntryPoint( $wikiId, \Title $title, \User $user ) {
 		$templateType = $this->renderTemplateType( $wikiId, $title, $user, '', '' );
+
+		if ( !$templateType ) {
+			return '';
+		}
+
 		return \MustacheService::getInstance()->render(
 			__DIR__ . '/templates/TemplateClassificationEditPageEntryPoint.mustache',
 			[
