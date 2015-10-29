@@ -2750,6 +2750,8 @@ class User {
 			$this->userAttributes()->setAttribute( $this->getId(), new Attribute( $attribute, $value ) );
 		}
 
+		// Continue writing all attributes to the user_properties table for the time being. When we work on
+		// SOC-1408 (remove public attributes from the MW dbs) we'll make sure to stop setting them here.
 		$this->setOptionHelper( $attribute, $value );
 	}
 
