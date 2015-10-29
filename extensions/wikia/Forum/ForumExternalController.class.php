@@ -263,11 +263,4 @@ class ForumExternalController extends WallExternalController {
 		$context->response->setVal( 'message', $this->app->renderView( 'ForumController', 'threadReply', array( 'comment' => $reply, 'isreply' => true ) ) );
 	}
 
-	/**
-	 * Sets token mismatch error message
-	 */
-	private function setTokenMismatchError() {
-		$this->status = 'error';
-		$this->errormsg = wfMessage( 'forum-token-mismatch' )->escaped();
-	}
 }
