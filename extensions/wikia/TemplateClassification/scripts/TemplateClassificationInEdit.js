@@ -19,7 +19,7 @@ define('TemplateClassificationInEdit',
 			templateClassificationModal.init(getType, storeTypeForSend);
 
 			/* Force modal on load for new pages creation */
-			if (isNewArticle()) {
+			if (isNewArticle() && !getType()) {
 				templateClassificationModal.open('addTemplate');
 			}
 		}
