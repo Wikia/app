@@ -147,7 +147,7 @@ class SetWikiFactoryVariable extends Maintenance {
 					echo "Adding new value $varValue to array" . PHP_EOL;
 					$newValue = array_filter(array_unique(array_merge($prevValue, [$varValue])));
 				} else {
-					echo "Value is not an array" . PHP_EOL;
+					echo "Value is not an array, you probably want to use the --split parameter." . PHP_EOL;
 					$status = 0;  // failed, value is not an array
 				}
 
