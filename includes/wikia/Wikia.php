@@ -66,7 +66,7 @@ $wgHooks['BeforePageDisplay'][] = 'Wikia::onBeforePageDisplay';
 $wgHooks['GetPreferences'][] = 'Wikia::onGetPreferences';
 
 # handle internal requests - PLATFORM-1473
-#$wgHooks['WebRequestInitialized'][] = 'Wikia::onWebRequestInitialized';
+$wgHooks['WebRequestInitialized'][] = 'Wikia::onWebRequestInitialized';
 
 /**
  * This class has only static methods so they can be used anywhere
