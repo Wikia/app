@@ -46,14 +46,14 @@ class AchAwardingService {
 
 		global $wgExternalSharedDB, $wgAchievementsEditAddPhotoOnly;
 
-		if( !empty( $wgAchievementsEditAddPhotoOnly ) && ( $badge_type_id != BADGE_EDIT && $badge_type_id != BADGE_PICTURE ) ) {
+		if ( !empty( $wgAchievementsEditAddPhotoOnly ) && ( $badge_type_id != BADGE_EDIT && $badge_type_id != BADGE_PICTURE ) ) {
 			wfProfileOut(__METHOD__);
 			return;
 		}
 
 		$this->mUser = $user;
 
-		if( self::canEarnBadges( $this->mUser ) ) {
+		if ( self::canEarnBadges( $this->mUser ) ) {
 
 			$where = array('badge_type_id' => $badge_type_id, 'user_id' => $this->mUser->getId());
 
@@ -65,7 +65,7 @@ class AchAwardingService {
 				$where,
 				__METHOD__);
 
-			if($badge === false) {
+			if ($badge === false) {
 
 				$this->loadUserBadges();
 				$this->awardNotInTrackBadge($badge_type_id);
@@ -358,7 +358,7 @@ class AchAwardingService {
 
 		global $wgAchievementsEditAddPhotoOnly;
 
-		if(empty($wgAchievementsEditAddPhotoOnly)) {
+		if (empty($wgAchievementsEditAddPhotoOnly)) {
 			if ($this->mTitle->isContentPage()) {
 				$this->processInTrackEditCategory();
 				$this->processInTrackCategory();
@@ -459,8 +459,8 @@ class AchAwardingService {
 	private function processInTrackBlogPost() {
 		//BADGE_BLOGPOST
 		//is defined check if required because blogs are not enabled everywhere
-		if(defined('NS_BLOG_ARTICLE') && $this->mTitle->getNamespace() == NS_BLOG_ARTICLE) {
-			if($this->mTitle->getBaseText() == $this->mUser->getName()) {
+		if (defined('NS_BLOG_ARTICLE') && $this->mTitle->getNamespace() == NS_BLOG_ARTICLE) {
+			if ($this->mTitle->getBaseText() == $this->mUser->getName()) {
 				if ($this->mStatus->value['new'] == true) {
 					$this->incrementCounterBy(BADGE_BLOGPOST, 1);
 				}
@@ -471,7 +471,7 @@ class AchAwardingService {
 	private function processInTrackBlogComment() {
 		// BADGE_BLOGCOMMENT
 		// is defined check if required because blogs are not enabled everywhere
-		if(defined('NS_BLOG_ARTICLE_TALK') && $this->mTitle->getNamespace() == NS_BLOG_ARTICLE_TALK) {
+		if (defined('NS_BLOG_ARTICLE_TALK') && $this->mTitle->getNamespace() == NS_BLOG_ARTICLE_TALK) {
 			// handle only article/comment creating (not editing)
 			if ($this->mStatus->value['new'] == true) {
 				$blogPostTitle = Title::newFromText($this->mTitle->getBaseText(), NS_BLOG_ARTICLE);
@@ -490,7 +490,7 @@ class AchAwardingService {
 
 	private function processInTrackLove() {
 		//BADGE_LOVE
-		if(empty($this->mCounters[BADGE_LOVE])) {
+		if (empty($this->mCounters[BADGE_LOVE])) {
 			$this->mCounters[BADGE_LOVE][COUNTERS_COUNTER] = 1;
 		} else {
 			if ($this->mCounters[BADGE_LOVE][COUNTERS_DATE] == date('Y-m-d')) {
@@ -506,7 +506,7 @@ class AchAwardingService {
 
 	private function incrementCounterBy($badge_type_id, $value) {
 		$this->mCounters = is_array($this->mCounters) ? $this->mCounters : $this->mUserCountersService->getCounters();
-		if(empty($this->mCounters[$badge_type_id])) {
+		if (empty($this->mCounters[$badge_type_id])) {
 			$this->mCounters[$badge_type_id] = 0;
 		}
 		$this->mCounters[$badge_type_id] += $value;
