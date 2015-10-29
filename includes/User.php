@@ -2522,6 +2522,11 @@ class User {
 			}
 		}
 
+		// Populate with attributes from attribute service
+		foreach ( $this->userAttributes()->getAttributes( $this->getId() ) as $attrName => $attrValue ) {
+			$options[$attrName] = $attrValue;
+		}
+
 		return $options;
 	}
 
