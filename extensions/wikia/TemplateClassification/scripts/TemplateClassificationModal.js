@@ -10,6 +10,7 @@ function ($, mw, loader, nirvana, tracker, labeling) {
 	'use strict';
 
 	var $classificationForm,
+		$preselectedType,
 		$typeLabel,
 		modalConfig,
 		messagesLoaded,
@@ -72,11 +73,11 @@ function ($, mw, loader, nirvana, tracker, labeling) {
 
 		if (templateType) {
 			// Mark selected type
-			var selectedType = $classificationForm.find('input[value="' + templateType + '"]');
+			$preselectedType = $classificationForm.find('input[value="' + templateType + '"]');
 
-			if (selectedType.length > 0) {
+			if ($preselectedType.length > 0) {
 				$classificationForm.find('input[checked="checked"]').removeAttr('checked');
-				selectedType.attr('checked', 'checked');
+				$preselectedType.attr('checked', 'checked');
 			}
 		}
 
@@ -139,7 +140,7 @@ function ($, mw, loader, nirvana, tracker, labeling) {
 		modalInstance.bind('option-select', function(e) {
 			var $input = $(e.currentTarget).find('input:radio');
 
-			$input.prop('checked', true);
+			$input.attr('checked', 'checked');
 
 			// Track - click to change a template's type
 			tracker.track({
@@ -155,9 +156,34 @@ function ($, mw, loader, nirvana, tracker, labeling) {
 	}
 
 	function processSave(modalInstance) {
-		var templateType = $('#TemplateClassificationEditForm [name="template-classification-types"]:checked').val();
+		var newTemplateType = $('#TemplateClassificationEditForm [name="template-classification-types"]:checked').val(),
+			oldTemplateType = '';
 
-		saveHandler(templateType);
+		if ( $preselectedType.length > 0 ) {
+			oldTemplateType = $preselectedType.val();
+		}
+
+		if ( newTemplateType !== oldTemplateType ) {
+			// Track - modal saved with changes
+			tracker.track({
+				trackingMethod: 'both',
+				category: 'template-classification-dialog',
+				action: 'close',
+				label: 'changed',
+				value: newTemplateType
+			});
+
+			saveHandler(newTemplateType);
+		} else {
+			// Track - modal saved without changes
+			tracker.track({
+				trackingMethod: 'both',
+				category: 'template-classification-dialog',
+				action: 'close',
+				label: 'nochange',
+				value: oldTemplateType
+			});
+		}
 
 		modalInstance.trigger('close');
 	}
