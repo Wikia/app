@@ -74,6 +74,11 @@ class TemplateClassificationApiController extends WikiaApiController {
 				TemplateClassificationService::USER_PROVIDER,
 				$userId
 			);
+
+			$title = Title::newFromId( $pageId );
+			if ( $title !== null ) {
+				$title->invalidateCache();
+			}
 		} catch ( InvalidArgumentException $e ) {
 			throw new BadRequestApiException( $e->getMessage() );
 		}
