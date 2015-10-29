@@ -462,21 +462,6 @@ class OutputPage extends ContextSource {
 	 * @return Array of module names
 	 */
 	public function getModules( $filter = false, $position = null, $param = 'mModules' ) {
-		// Wikia change - begin - @author macbre
-		// Load all ResourceLoader modules at the bottom of the page
-		// when the skin has the flag set (e.g. Venus)
-		$skin = $this->getSkin();
-		if ( $skin instanceof WikiaSkin && !empty( $skin->pushRLModulesToBottom ) ) {
-			// when asked for top modules return nothing
-			if ( $position === 'top' ) {
-				return [];
-			}
-
-			// otherwise, return all modules - null means no filtering below
-			$position = null;
-		}
-		// Wikia change - end
-
 		$modules = array_values( array_unique( $this->$param ) );
 		return $filter
 			? $this->filterModules( $modules, $position )
@@ -838,6 +823,9 @@ class OutputPage extends ContextSource {
 	 * "HTML title" means the contents of <title>.
 	 * It is stored as plain, unescaped text and will be run through htmlspecialchars in the skin file.
 	 *
+	 * Wikia change: the pagetitle message template will be applied (adding " - Name of the wiki"
+	 * in most cases), then the wikia-pagetitle message template will be applied (adding " - Wikia")
+	 *
 	 * @param $name string
 	 */
 	public function setHTMLTitle( $name ) {
@@ -846,7 +834,7 @@ class OutputPage extends ContextSource {
 			$name = $name->setContext( $this->getContext() )->text();
 		}
 
-		$this->mHTMLtitle = wfMessage( 'wikia-pagetitle', $name )->text();
+		$this->mHTMLtitle = WikiaHtmlTitle::getPageTitle( $name, $this->getTitle()->isMainPage() );
 		/* Wikia change - end */
 	}
 
@@ -887,7 +875,11 @@ class OutputPage extends ContextSource {
 		$this->mPagetitle = $nameWithTags;
 
 		# change "<i>foo&amp;bar</i>" to "foo&bar"
-		$this->setHTMLTitle( $this->msg( 'pagetitle' )->rawParams( Sanitizer::stripAllTags( $nameWithTags ) ) );
+		# Wikia change - begin
+		#$this->setHTMLTitle( $this->msg( 'pagetitle' )->rawParams( Sanitizer::stripAllTags( $nameWithTags ) ) );
+		# This logic is moved to OutputPage::setHTMLTitle
+		$this->setHTMLTitle( Sanitizer::stripAllTags( $nameWithTags ) );
+		# Wikia change -end
 	}
 
 	/**
@@ -2538,7 +2530,7 @@ $templates
 		if ( $this->getHTMLTitle() == '' ) {
 			# start wikia change
 			wfProfileIn( "parsePageTitle" );
-			$this->setHTMLTitle(  $this->getWikiaPageTitle( $this->getPageTitle() ) );
+			$this->setHTMLTitle(  $this->getPageTitle() );
 			wfProfileOut( "parsePageTitle" );
 			# end wikia change
 			# $this->setHTMLTitle( $this->msg( 'pagetitle', $this->getPageTitle() ) );
@@ -2899,13 +2891,6 @@ $templates
 	function getScriptsForBottomQueue( $inHead ) {
 		global $wgUseSiteJs, $wgAllowUserJs, $wgEnableContentReviewExt;
 
-		$asyncMWload = true;
-
-		$skin = $this->getSkin();
-		if ( $skin instanceof WikiaSkin && !empty( $skin->pushRLModulesToBottom ) ) {
-			$asyncMWload = false;
-		}
-
 		// Script and Messages "only" requests marked for bottom inclusion
 		// If we're in the <head>, use load() calls rather than <script src="..."> tags
 		// Messages should go first
@@ -2924,7 +2909,7 @@ $templates
 		if ( $modules ) {
 			$scripts .= Html::inlineScript(
 				ResourceLoader::makeLoaderConditionalScript(
-					Xml::encodeJsCall( 'mw.loader.load', array( $modules, null, $asyncMWload ) )
+					Xml::encodeJsCall( 'mw.loader.load', array( $modules, null, true ) )
 				)
 			);
 		}
@@ -3724,23 +3709,6 @@ $templates
 		$returnval = $this->mRedirectsEnabled;
 		$this->mRedirectsEnabled = $state;
 		return $returnval;
-	}
-
-	/**
-	 * @author Wikia
-	 */
-	public function getWikiaPageTitle( $name ) {
-		$msgPagetitle = wfMsg( 'pagetitle', $name );
-		if( $msgPagetitle == '#wikiapagetitle#' ) {
-			global $wgSitename;
-			if( $name == wfMsgForContent( 'mainpage' ) ) {
-				return $wgSitename;
-			} else {
-				return "$name - $wgSitename";
-			}
-		} else {
-			return $msgPagetitle;
-		}
 	}
 
 	/**

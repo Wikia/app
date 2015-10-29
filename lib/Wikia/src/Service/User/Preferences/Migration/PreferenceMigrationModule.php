@@ -12,9 +12,9 @@ class PreferenceMigrationModule implements Module {
 	const PREFERENCE_CORRECTION_SAMPLE_RATE = 0.2;
 
 	public function configure( InjectorBuilder $builder ) {
-		global $wgGlobalUserPreferenceWhiteList, $wgLocalUserPreferenceWhiteList, $wgCityId, $wgWikiaDatacenter;
+		global $wgGlobalUserPreferenceWhiteList, $wgLocalUserPreferenceWhiteList, $wgCityId;
 
-		$preferenceCorrectionEnabled = isset( $wgCityId ) && $wgCityId % 100 < self::PREFERENCE_CORRECTION_RAMP && $wgWikiaDatacenter != WIKIA_DC_RES;
+		$preferenceCorrectionEnabled = isset( $wgCityId ) && $wgCityId % 100 < self::PREFERENCE_CORRECTION_RAMP;
 
 		$builder
 			->bind( PreferenceCorrectionService::PREFERENCE_CORRECTION_ENABLED )->to( $preferenceCorrectionEnabled )

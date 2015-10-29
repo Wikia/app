@@ -21,10 +21,7 @@ class SEOTweaksHooksHelper {
 	 * @return bool true
 	 */
 	static function onBeforePageDisplay( $out ) {
-		global $wgSEOGoogleSiteVerification, $wgSEOGooglePlusLink, $wgServer;
-		if ( !empty( $wgSEOGoogleSiteVerification ) ) {
-			$out->addMeta( 'google-site-verification', $wgSEOGoogleSiteVerification );
-		}
+		global $wgSEOGooglePlusLink;
 		if ( !empty( $wgSEOGooglePlusLink ) ) {
 			$out->addLink( array( 'href' => $wgSEOGooglePlusLink, 'rel' => 'publisher' ) );
 		}
@@ -126,6 +123,13 @@ class SEOTweaksHooksHelper {
 	 * @param bool $pcache
 	 */
 	static public function onArticleViewHeader( &$article, &$outputDone, &$pcache ) {
+		global $wgEnableCustom404PageExt;
+
+		if ( !empty( $wgEnableCustom404PageExt ) ) {
+			// Custom404Page does the same, just better
+			return true;
+		}
+
 		$title = $article->getTitle();
 		if ( !$title->exists()
 				&& $title->isContentPage()

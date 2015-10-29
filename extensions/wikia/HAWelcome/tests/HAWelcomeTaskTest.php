@@ -156,7 +156,7 @@ class HAWelcomeTaskTest extends WikiaBaseTest {
 		$welcomer = $this->getMock( '\User' );
 		$recipient = $this->getMock( '\User', ['getName'] );
 
-		$profilePage = $this->getMock( '\Article', ['exists', 'doEdit'], [], '', false );
+		$profilePage = $this->getMock( '\Article', ['exists', 'doEdit', 'getTitle'], [], '', false );
 		$task = $this->getMock( '\HAWelcomeTask', [
 			'getRecipientProfilePage',
 			'getWelcomePageTemplateForRecipient',
@@ -166,6 +166,10 @@ class HAWelcomeTaskTest extends WikiaBaseTest {
 		$profilePage->expects( $this->once() )
 			->method( 'exists' )
 			->will( $this->returnValue( false ) );
+
+		$profilePage->expects( $this->any() )
+			->method( 'getTitle' )
+			->will( $this->returnValue( $this->getMock( '\Title', [], [], '', false ) ) );
 
 		$welcomePageTemplate = 'any';
 

@@ -8,11 +8,11 @@ define( "NS_WIKIA_FORUM_TOPIC_BOARD", 2002 );
 $wgExtensionNamespacesFiles['Forum'] = __DIR__ . '/Forum.namespaces.php';
 
 if ( !empty( $wgEnableForumExt ) ) {
-	wfLoadExtensionNamespaces( 'Forum', 
-	array( 
-		NS_WIKIA_FORUM_BOARD, 
+	wfLoadExtensionNamespaces( 'Forum',
+	array(
+		NS_WIKIA_FORUM_BOARD,
 		NS_WIKIA_FORUM_BOARD_THREAD,
-		NS_WIKIA_FORUM_TOPIC_BOARD 
+		NS_WIKIA_FORUM_TOPIC_BOARD
 	) );
 }
 

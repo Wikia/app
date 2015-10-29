@@ -37,7 +37,6 @@ $messages['en'] = [
 	'content-review-rejection-explanation' => '==$1==
 The recently submitted change to this JavaScript page (revision [$2 $3]) was rejected by the Wikia review process. Please make sure you meet the [[Help:JavaScript review process|Custom JavaScript guidelines]]. --~~~~',
 	'content-review-status-link-text' => 'Review status',
-
 	'content-review-special-js-pages-title' => 'JavaScript pages',
 ];
 
@@ -111,9 +110,11 @@ $messages['de'] = [
 	'content-review-status-rejected' => 'Abgelehnt',
 	'content-review-status-live' => 'Live',
 	'content-review-status-autoapproved' => 'Automatisch zugelassen',
-	'content-review-rejection-explanation' => '==Die eingereichte Skript-Änderung wurde abgelehnt==
-Die kürzlich eingereichte Änderung dieses JS-Skripts wurde im Wikia- Überprüfungsprozess abgelehnt. Stelle bitte sicher, dass du die [[w:c:de:Hilfe:JavaScript-Überprüfungsprozess|Richtlinien für angepasstes Javascript]] erfüllst.',
+	'content-review-rejection-explanation' => '==$1==
+Die kürzlich eingereichte Änderung dieser JavaScript-Seite (Überprüfung [$2 $3]) wurde im Wikia- Überprüfungsprozess abgelehnt. Stelle bitte sicher, dass du die [[w:c:de:Hilfe:JavaScript-Überprüfungsprozess|Richtlinien für angepasstes Javascript]] erfüllst.--~~~~',
 	'content-review-status-link-text' => 'Stand der Überprüfung',
+	'content-review-rejection-explanation-title' => 'Die eingereichte Skript-Änderung $1 wurde abgelehnt',
+	'content-review-special-js-pages-title' => 'JavaScript-Seiten',
 ];
 
 $messages['es'] = [
@@ -129,7 +130,7 @@ $messages['es'] = [
 	'content-review-module-status-approved' => 'fue aprobado',
 	'content-review-module-status-rejected' => 'fue rechazado',
 	'content-review-rejection-reason-link' => '¿Por qué?',
-	'content-review-module-help' => '[[w:c:es:Ayuda:Personalización CSS y JS|Ayuda]]',
+	'content-review-module-help' => '[[Ayuda:Personalización CSS y JS|Ayuda]]',
 	'content-review-module-help-article' => 'Ayuda:Personalización CSS y JS',
 	'content-review-module-help-text' => 'Ayuda',
 	'content-review-module-submit' => 'Presentar para aprobación',
@@ -148,23 +149,26 @@ $messages['es'] = [
 	'content-review-status-rejected' => 'Rechazado',
 	'content-review-status-live' => 'Activo',
 	'content-review-status-autoapproved' => 'Auto-aprobado',
-	'content-review-rejection-explanation' => '==Cambio de script presentado rechazado== 
-El cambio a este script de JS presentado recientemente fue rechazado por el proceso de revisión de Wikia. Por favor, asegúrate de haber cumplido con las [[w:c:es:Ayuda:Proceso de revisión de JavaScript|directrices de JavaScript personalizado]].',
+	'content-review-rejection-explanation' => '==$1==
+El cambio recientemente presentado a esta página de JavaScript (revisión [$2 $3]) fue rechazada por el proceso de revisión de Wikia. Por favor, asegúrate de que cumple con la [[Ayuda:Proceso de revisión de JavaScript|directrices de personalización de JavaScript]].
+ --~~~~',
 	'content-review-status-link-text' => 'Estado de revisión',
+	'content-review-rejection-explanation-title' => 'El cambio de script $1 presentado ha sido rechazado',
+	'content-review-special-js-pages-title' => 'Páginas de JavaScript',
 ];
 
 $messages['fr'] = [
 	'content-review-desc' => 'Cette extension permet de lancer un processus de vérification manuelle du JavaScript de la communauté avant sa publication.',
 	'content-review-module-title' => 'État du JavaScript personnel',
-	'content-review-module-header-latest' => 'Dernière version soumise :',
+	'content-review-module-header-latest' => 'Dernière version :',
 	'content-review-module-header-last' => 'Dernière version vérifiée :',
 	'content-review-module-header-live' => 'Version actuellement publiée :',
-	'content-review-module-status-none' => 'Aucun',
-	'content-review-module-status-unsubmitted' => 'doit être soumis',
-	'content-review-module-status-live' => 'est publié !',
-	'content-review-module-status-awaiting' => 'doit être vérifié',
-	'content-review-module-status-approved' => 'a été approuvé',
-	'content-review-module-status-rejected' => 'a été rejeté',
+	'content-review-module-status-none' => 'Aucune',
+	'content-review-module-status-unsubmitted' => 'doit être soumise',
+	'content-review-module-status-live' => 'est publiée !',
+	'content-review-module-status-awaiting' => 'doit être vérifiée',
+	'content-review-module-status-approved' => 'a été approuvée',
+	'content-review-module-status-rejected' => 'a été rejetée',
 	'content-review-rejection-reason-link' => 'Pourquoi ?',
 	'content-review-module-help' => '[[w:c:fr:Aide:Personnalisation_du_CSS_et_JS|Aide]]',
 	'content-review-module-help-article' => 'Aide:Personnalisation du CSS et JS',
@@ -179,15 +183,17 @@ $messages['fr'] = [
 	'content-review-test-mode-enabled' => "Vous utilisez actuellement des versions de fichiers JavaScript personnels n'ayant fait l'objet d'aucune vérification. ",
 	'action-content-review' => 'Vérification du contenu',
 	'content-review-restore-summary' => 'Rétablissement de la version $1',
-	'content-review-status-unreviewed' => 'Non vérifié',
+	'content-review-status-unreviewed' => 'Non vérifiée',
 	'content-review-status-in-review' => 'En cours de vérification',
-	'content-review-status-approved' => 'Approuvé',
-	'content-review-status-rejected' => 'Rejeté',
-	'content-review-status-live' => 'Publié',
-	'content-review-status-autoapproved' => 'Approuvé automatiquement',
-	'content-review-rejection-explanation' => '==Rejet de la modification soumise pour le script==
-Le processus de vérification Wikia a rejeté la modification soumise pour ce script JS. Assurez-vous de respecter les [[w:c:fr:Aide:Processus_de_vérification_du_JavaScript|directives de personnalisation du JavaScript]].',
+	'content-review-status-approved' => 'Approuvée',
+	'content-review-status-rejected' => 'Rejetée',
+	'content-review-status-live' => 'Publiée',
+	'content-review-status-autoapproved' => 'Approuvée automatiquement',
+	'content-review-rejection-explanation' => '==$1==
+Le processus de vérification Wikia a rejeté la modification soumise pour cette page JavaScript (révision [$2 $3]) . Assurez-vous de respecter les [[w:c:fr:Aide:Processus_de_vérification_du_JavaScript|instructions de personnalisation du JavaScript]]. --~~~~',
 	'content-review-status-link-text' => 'État de la vérification',
+	'content-review-rejection-explanation-title' => 'Modification $1 soumise pour le script rejetée',
+	'content-review-special-js-pages-title' => 'Pages JavaScript',
 ];
 
 $messages['it'] = [
@@ -203,7 +209,7 @@ $messages['it'] = [
 	'content-review-module-status-approved' => 'è stata approvata',
 	'content-review-module-status-rejected' => 'è stata respinta',
 	'content-review-rejection-reason-link' => 'Perché?',
-	'content-review-module-help' => '[[w:it:Aiuto:CSS|Guida]]',
+	'content-review-module-help' => '[[Aiuto:Personalizzazione di CSS e JS|Guida]]',
 	'content-review-module-help-article' => 'Aiuto:CSS',
 	'content-review-module-help-text' => 'Aiuto',
 	'content-review-module-submit' => 'Invia per revisione',
@@ -222,9 +228,11 @@ $messages['it'] = [
 	'content-review-status-rejected' => 'Respinta',
 	'content-review-status-live' => 'Live',
 	'content-review-status-autoapproved' => 'Auto-approvata',
-	'content-review-rejection-explanation' => '==Modifica allo script respinta==
-La modifica da poco inviata per questo script in JS è stata respinta dal processo di revisione di Wikia. Assicurati di osservare le [[w:it:Aiuto:Processo_di_revisione_del_JavaScript|Linee guida del JavaScript personalizzato]].',
+	'content-review-rejection-explanation' => '==$1==
+La modifica inviata di recente per questa pagina in JavaScript (revisione [$2 $3]) è stata respinta dal processo di revisione di Wikia. Assicurati di seguire le [[Help:JavaScript review process|Linee guida del JavaScript personalizzato]]. --~~~~',
 	'content-review-status-link-text' => 'Stato della revisione',
+	'content-review-rejection-explanation-title' => 'La modifica $1 inviata per lo script è stata respinta',
+	'content-review-special-js-pages-title' => 'Pagine in JavaScript',
 ];
 
 $messages['ja'] = [
@@ -240,7 +248,7 @@ $messages['ja'] = [
 	'content-review-module-status-approved' => '承認されました',
 	'content-review-module-status-rejected' => '拒否されました',
 	'content-review-rejection-reason-link' => '理由',
-	'content-review-module-help' => '[[w:c:ja:ヘルプ:CSSとJavaScriptのカスタマイゼーション|ヘルプ]]',
+	'content-review-module-help' => '[[ヘルプ:CSSとJavaScriptのカスタマイゼーション|ヘルプ]]',
 	'content-review-module-help-article' => 'ヘルプ:CSSとJavaScriptのカスタマイゼーション',
 	'content-review-module-help-text' => 'ヘルプ',
 	'content-review-module-submit' => '申請する',
@@ -259,9 +267,11 @@ $messages['ja'] = [
 	'content-review-status-rejected' => '拒否済み',
 	'content-review-status-live' => '公開中',
 	'content-review-status-autoapproved' => '自動承認済み',
-	'content-review-rejection-explanation' => '==申請されたスクリプトの変更が拒否されました==
-最近申請されたこのJSスクリプトに対する変更は、ウィキアの審査プロセスにおいて拒否されました。[[w:c:ja:ヘルプ:JavaScriptの審査プロセス|カスタムJavaScriptのガイドライン]]を満たしていることをご確認ください。',
+	'content-review-rejection-explanation' => '==$1==
+最近申請したこのJavaScriptページへの変更（版[$2 $3]）は、ウィキアの審査プロセスにおいて拒否されました。[[ヘルプ:JavaScriptの審査プロセス|カスタムJavaScriptのガイドライン]]を満たしていることをご確認ください。--~~~~',
 	'content-review-status-link-text' => '審査状況',
+	'content-review-rejection-explanation-title' => '申請したスクリプトの変更「$1」が拒否されました',
+	'content-review-special-js-pages-title' => 'JavaScriptページ',
 ];
 
 $messages['nl'] = [
@@ -296,9 +306,11 @@ $messages['nl'] = [
 	'content-review-status-rejected' => 'Rejected',
 	'content-review-status-live' => 'Live',
 	'content-review-status-autoapproved' => 'Auto-approved',
-	'content-review-rejection-explanation' => '==Submitted script change rejected==
-The recently submitted change to this JS script was rejected by the Wikia review process. Please make sure you meet the [[Help:JavaScript review process|Custom JavaScript guidelines]].',
+	'content-review-rejection-explanation' => '==$1==
+The recently submitted change to this JavaScript page (revision [$2 $3]) was rejected by the Wikia review process. Please make sure you meet the [[Help:JavaScript review process|Custom JavaScript guidelines]]. --~~~~',
 	'content-review-status-link-text' => 'Review status',
+	'content-review-rejection-explanation-title' => 'Submitted script change $1 rejected',
+	'content-review-special-js-pages-title' => 'JavaScript pages',
 ];
 
 $messages['pl'] = [
@@ -333,9 +345,11 @@ $messages['pl'] = [
 	'content-review-status-rejected' => 'Odrzucona',
 	'content-review-status-live' => 'Aktywna',
 	'content-review-status-autoapproved' => 'Zatwierdzona automatycznie',
-	'content-review-rejection-explanation' => '== Przesłana zmiana skryptu została odrzucona == 
-Niedawno przesłana zmiana w tym skrypcie JS została odrzucona przez Wikię w procesie przeglądu kodu. Proszę upewnij się, że spełniasz [[Help:JavaScript review process|wytyczne własnego kodu JavaScript]].',
+	'content-review-rejection-explanation' => '==$1==
+Niedawno przesłana zmiana w tej stronie JavaScript (rewizja [$2 $3]) została odrzucona w procesie przeglądu kodu. Proszę upewnij się, że kod spełnia wytyczne dotyczące [[Pomoc:Dostosowywanie CSS i JS|dostosowywania własnego kodu CSS i JS]]. --~~~~',
 	'content-review-status-link-text' => 'Status przeglądu',
+	'content-review-rejection-explanation-title' => 'Przesłana zmiana skryptu $1 została odrzucona',
+	'content-review-special-js-pages-title' => 'Strony JavaScript',
 ];
 
 $messages['pt'] = [
@@ -344,7 +358,7 @@ $messages['pt'] = [
 	'content-review-module-header-latest' => 'Revisão mais recente:',
 	'content-review-module-header-last' => 'Última revisão:',
 	'content-review-module-header-live' => 'Revisão ao vivo:',
-	'content-review-module-status-none' => 'Nenhum',
+	'content-review-module-status-none' => 'Nenhuma',
 	'content-review-module-status-unsubmitted' => 'necessita ser submetida',
 	'content-review-module-status-live' => 'ao vivo!',
 	'content-review-module-status-awaiting' => 'aguardando revisão',
@@ -370,9 +384,11 @@ $messages['pt'] = [
 	'content-review-status-rejected' => 'Rejeitada',
 	'content-review-status-live' => 'Ao vivo',
 	'content-review-status-autoapproved' => 'Auto-aprovada',
-	'content-review-rejection-explanation' => '== Alteração de script enviado rejeitada ==
-A recente alteração enviada para este script JS foi rejeitada pelo processo de revisão de Wikia. Por favor, certifique-se de estar seguindo [[w:c:pt:Ajuda:Processo_de_revisão_de_JavaScript|as diretrizes personalizadas JavaScript]].',
+	'content-review-rejection-explanation' => '==$1==
+A recente alteração enviada para esta página JavaScript (revisão [$2 $3]) foi rejeitada pelo processo de revisão da Wikia. Por favor, certifique-se de estar seguindo [[w:c:pt:Ajuda:Processo_de_revisão_de_JavaScript|as diretrizes personalizadas JavaScript]]. --˜˜˜˜ ',
 	'content-review-status-link-text' => 'Status da revisão',
+	'content-review-rejection-explanation-title' => 'A alteração do script $1 enviado foi rejeitada',
+	'content-review-special-js-pages-title' => 'Páginas JavaScript',
 ];
 
 $messages['ru'] = [
@@ -382,14 +398,14 @@ $messages['ru'] = [
 	'content-review-module-header-last' => 'Последняя проверенная версия:',
 	'content-review-module-header-live' => 'Рабочая версия:',
 	'content-review-module-status-none' => 'Нет данных',
-	'content-review-module-status-unsubmitted' => 'необходимо отправить на проверку',
+	'content-review-module-status-unsubmitted' => 'ожидается отправка',
 	'content-review-module-status-live' => 'подключена!',
 	'content-review-module-status-awaiting' => 'ожидается проверка',
 	'content-review-module-status-approved' => 'одобрена',
 	'content-review-module-status-rejected' => 'отклонена',
 	'content-review-rejection-reason-link' => 'Почему?',
-	'content-review-module-help' => '[[w:c:ru:Справка:Использование CSS и JS|Справка]]',
-	'content-review-module-help-article' => 'Справка:Использование CSS и JS',
+	'content-review-module-help' => '[[Справка:Использование CSS и JS|Справка]]',
+	'content-review-module-help-article' => 'Справка:Проверка JavaScript',
 	'content-review-module-help-text' => 'Справка',
 	'content-review-module-submit' => 'Отправить на проверку',
 	'content-review-module-submit-success' => 'Правки были успешно отправлены на проверку.',
@@ -407,9 +423,11 @@ $messages['ru'] = [
 	'content-review-status-rejected' => 'Отклонено',
 	'content-review-status-live' => 'Используется',
 	'content-review-status-autoapproved' => 'Одобрено автоматически',
-	'content-review-rejection-explanation' => '==Отправленная версия страницы была отклонена==
-Последняя отправленная версия этой страницы была отклонена после проверки кода. Пожалуйста, проверьте, соответствует ли ваш код [[w:c:ru:Справка:Проверка JavaScript|политике Викия в отношении пользовательского JavaScript]].',
+	'content-review-rejection-explanation' => '==$1==
+Недавно отправленные изменения этой страницы (версия [$2 $3]) были отклонены после проверки кода. Пожалуйста, проверьте, соответствует ли ваш код [[w:c:ru:Справка:Проверка JavaScript|политике Викия в отношении пользовательского JavaScript]]. --~~~~',
 	'content-review-status-link-text' => 'Прогресс проверки',
+	'content-review-rejection-explanation-title' => 'Отправленная версия $1 была отклонена',
+	'content-review-special-js-pages-title' => 'Страницы JavaScript',
 ];
 
 $messages['zh-hans'] = [
@@ -417,7 +435,7 @@ $messages['zh-hans'] = [
 	'content-review-module-title' => '自定义JavaScript状态',
 	'content-review-module-header-latest' => '最新版本:',
 	'content-review-module-header-last' => '上次审核版本:',
-	'content-review-module-header-live' => '上线版本:',
+	'content-review-module-header-live' => '现在使用版本:',
 	'content-review-module-status-none' => '无',
 	'content-review-module-status-unsubmitted' => '需要提交',
 	'content-review-module-status-live' => '已发布！',
@@ -425,7 +443,7 @@ $messages['zh-hans'] = [
 	'content-review-module-status-approved' => '已被批准',
 	'content-review-module-status-rejected' => '已被拒绝',
 	'content-review-rejection-reason-link' => '为什么?',
-	'content-review-module-help' => '[[Help:CSS and JS customization|帮助]]',
+	'content-review-module-help' => '[[Help:自訂CSS與JS|帮助]]',
 	'content-review-module-help-article' => '帮助: CSS和JS定制化',
 	'content-review-module-help-text' => '帮助',
 	'content-review-module-submit' => '提交等待审核',
@@ -444,9 +462,11 @@ $messages['zh-hans'] = [
 	'content-review-status-rejected' => '已被拒绝',
 	'content-review-status-live' => '已发布',
 	'content-review-status-autoapproved' => '自动批准',
-	'content-review-rejection-explanation' => '==提交脚本更改被拒绝==
-最近提交对此JS脚本更改的请求被Wikia拒绝。 请确保您符合[[Help:JavaScript review process|自定义JavaScript审核流程]]。',
+	'content-review-rejection-explanation' => '==$1==
+JavaScript页面最近提交的变更请求(版本[$2 $3]) 未通过Wikia审核。请确保您的变更符合[[Help:JavaScript審核流程|JavaScript审核流程]]。--~~~~',
 	'content-review-status-link-text' => '审核状态',
+	'content-review-rejection-explanation-title' => '提交的脚本更改$1被拒绝',
+	'content-review-special-js-pages-title' => 'JavaScript页面',
 ];
 
 $messages['zh-hant'] = [
@@ -462,8 +482,8 @@ $messages['zh-hant'] = [
 	'content-review-module-status-approved' => '已通過審核',
 	'content-review-module-status-rejected' => '被拒絕了',
 	'content-review-rejection-reason-link' => '為什麼?',
-	'content-review-module-help' => '[[Help:CSS and JS customization|幫助頁]]',
-	'content-review-module-help-article' => 'Help:自訂CSS與JS',
+	'content-review-module-help' => '[[Help:自訂CSS與JS|幫助]]',
+	'content-review-module-help-article' => '幫助:自訂CSS與JS',
 	'content-review-module-help-text' => '幫助',
 	'content-review-module-submit' => '送出審核',
 	'content-review-module-submit-success' => '所做的更改已成功提交供審核。',
@@ -481,8 +501,10 @@ $messages['zh-hant'] = [
 	'content-review-status-rejected' => '未通過',
 	'content-review-status-live' => '已發佈',
 	'content-review-status-autoapproved' => '已自動批准',
-	'content-review-rejection-explanation' => '==提交腳本更改被拒絕== 
-最近提交對此JS腳本更改的請求被Wikia拒絕。請確保您所提交內容符合[[Help:JavaScript review process|自訂JavaScript審核流程]]。',
+	'content-review-rejection-explanation' => '==$1==
+JavaScript頁最近提交的變更請求(版本[$2 $3]) 未通過Wikia審核。 請確保您的變更符合[[Help:JavaScript審核流程|JavaScript審核流程]]。 --~~~~',
 	'content-review-status-link-text' => '審核狀態',
+	'content-review-rejection-explanation-title' => '提交的腳本更改$1被拒絕',
+	'content-review-special-js-pages-title' => 'JavaScript頁',
 ];
 

@@ -39,7 +39,12 @@ class FacebookSignupController extends WikiaController {
 		if ( ( $user instanceof User ) && ( $fbUserId !== 0 ) ) {
 			$errorMsg = '';
 
-			if ( $this->isAccountDisabled( $user ) ) {
+			if ( $user->isAllowed( 'login-restrict-facebook' ) ) {
+				$this->response->setData([
+					'loginAborted' => true,
+					'errorMsg' => $errorMsg,
+				]);
+			} elseif ( $this->isAccountDisabled( $user ) ) {
 				// User account was disabled, abort the login
 				$errorMsg = wfMessage( 'userlogin-error-edit-account-closed-flag' )->escaped();
 

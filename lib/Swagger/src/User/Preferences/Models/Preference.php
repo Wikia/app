@@ -51,6 +51,7 @@ class Preference implements ArrayAccess
       * @var string[]
       */
     static $swaggerTypes = array(
+        'wiki_id' => 'int',
         'name' => 'string',
         'value' => 'string'
     );
@@ -60,6 +61,7 @@ class Preference implements ArrayAccess
       * @var string[] 
       */
     static $attributeMap = array(
+        'wiki_id' => 'wikiId',
         'name' => 'name',
         'value' => 'value'
     );
@@ -69,6 +71,7 @@ class Preference implements ArrayAccess
       * @var string[]
       */
     static $setters = array(
+        'wiki_id' => 'setWikiId',
         'name' => 'setName',
         'value' => 'setValue'
     );
@@ -78,10 +81,17 @@ class Preference implements ArrayAccess
       * @var string[]
       */
     static $getters = array(
+        'wiki_id' => 'getWikiId',
         'name' => 'getName',
         'value' => 'getValue'
     );
   
+    
+    /**
+      * $wiki_id 
+      * @var int
+      */
+    protected $wiki_id;
     
     /**
       * $name 
@@ -103,9 +113,31 @@ class Preference implements ArrayAccess
     public function __construct(array $data = null)
     {
         if ($data != null) {
+            $this->wiki_id = $data["wiki_id"];
             $this->name = $data["name"];
             $this->value = $data["value"];
         }
+    }
+    
+    /**
+     * Gets wiki_id
+     * @return int
+     */
+    public function getWikiId()
+    {
+        return $this->wiki_id;
+    }
+  
+    /**
+     * Sets wiki_id
+     * @param int $wiki_id 
+     * @return $this
+     */
+    public function setWikiId($wiki_id)
+    {
+        
+        $this->wiki_id = $wiki_id;
+        return $this;
     }
     
     /**

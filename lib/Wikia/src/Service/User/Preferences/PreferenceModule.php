@@ -48,8 +48,7 @@ class PreferenceModule implements Module {
 				return $defaultPreferences;
 			} )
 			->bind( PreferenceServiceImpl::FORCE_SAVE_PREFERENCES )->to( function() {
-				global $wgGlobalUserProperties;
-				return $wgGlobalUserProperties;
+				return ['language'];
 			} );
 	}
 }
