@@ -5,8 +5,8 @@
  *
  * Provides selected type for TemplateClassificationModal and handles type submit
  */
-define('TemplateClassificationInView', ['jquery', 'mw', 'wikia.nirvana', 'TemplateClassificationModal', 'BannerNotification'],
-	function ($, mw, nirvana, templateClassificationModal, BannerNotification) {
+define('TemplateClassificationInView', ['jquery', 'mw', 'wikia.nirvana', 'wikia.tracker', 'TemplateClassificationModal', 'BannerNotification'],
+	function ($, mw, nirvana, tracker, templateClassificationModal, BannerNotification) {
 		'use strict';
 
 		var $typeLabel;
@@ -14,6 +14,15 @@ define('TemplateClassificationInView', ['jquery', 'mw', 'wikia.nirvana', 'Templa
 		function init() {
 			$typeLabel = $('.template-classification-type-text');
 			templateClassificationModal.init(getType, sendClassifyTemplateRequest);
+
+			$('.template-classification-edit').on('click', function() {
+				tracker.track({
+					trackingMethod: 'both',
+					category: 'template-classification-entry-point',
+					action: 'click',
+					label: 'view-page'
+				});
+			});
 		}
 
 		function getType() {
