@@ -136,6 +136,20 @@ function ($, mw, loader, nirvana, tracker, labeling) {
 			});
 		});
 
+		modalInstance.bind('option-select', function(e) {
+			var $input = $(e.currentTarget).find('input:radio');
+
+			$input.prop('checked', true);
+
+			// Track - click to change a template's type
+			tracker.track({
+				trackingMethod: 'both',
+				category: 'template-classification-dialog',
+				action: 'change',
+				label: $input.val()
+			});
+		});
+
 		/* Show the modal */
 		modalInstance.show();
 	}
