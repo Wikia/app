@@ -50,11 +50,7 @@ require(
 		function shouldShowWikiaInYourLangWithTargetAndContentLanguage(targetLanguage, contentLanguage) {
 			var targetLanguageLangCode = targetLanguage.split('-')[0],
 			    contentLanguageLangCode = contentLanguage.split('-')[0];
-
-			if (targetLanguageLangCode === contentLanguageLangCode) {
-				return false;
-			}
-			return true;
+			return targetLanguageLangCode !== contentLanguageLangCode;
 		}
 
 		function getTargetLanguage() {
