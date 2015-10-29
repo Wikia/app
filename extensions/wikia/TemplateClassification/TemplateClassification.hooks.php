@@ -95,25 +95,7 @@ class Hooks {
 			return true;
 		}
 
-		$title = $editPage->getTitle();
-
-		try {
-			$templateType = ( new \TemplateClassificationService() )->getType( $wgCityId, $title->getArticleID() );
-		} catch ( ApiException $e ) {
-			( new Logger() )->exception( $e );
-			/**
-			 * If the service is unreachable - fill the field with a not-available string
-			 * which instructs front-end tools to skip the classification part.
-			 */
-			$templateType = \TemplateClassificationService::NOT_AVAILABLE;
-		}
-
-		// Fallback to infobox on template draft conversion for not existent classification
-		if ( ( $templateType === '' || $templateType === \TemplateClassificationService::NOT_AVAILABLE )
-			&& $this->isTemplateDraftConversion( $out->getRequest(), $title )
-		) {
-			$templateType = \TemplateClassificationService::TEMPLATE_INFOBOX;
-		}
+		$templateType = $this->getTemplateTypeForEdit( $editPage->getTitle(), $wgCityId );
 
 		$editPage->addHiddenField([
 			'name' => 'templateClassificationType',
@@ -199,16 +181,6 @@ class Hooks {
 	}
 
 	/**
-	 * Determines whether a title is a draft in conversion mode initiated
-	 * @param IRequest $request
-	 * @param \Title $title
-	 * @return bool
-	 */
-	public function isTemplateDraftConversion( IRequest $request, \Title $title ) {
-		return $request->getInt( 'conversion' ) && $title->isTemplateDraft();
-	}
-
-	/**
 	 * @return Handler
 	 */
 	protected function getUnusedTemplatesHandler() {
@@ -217,5 +189,35 @@ class Hooks {
 
 	private function isEditPage() {
 		return \RequestContext::getMain()->getRequest()->getVal( 'action' ) === 'edit';
+	}
+
+	/**
+	 * Retrieves template type for edit page purposes
+	 * Has fallback to infobox when in template draft conversion process
+	 * @param \Title $title
+	 * @param int $wikiaId
+	 * @return string
+	 */
+	private function getTemplateTypeForEdit( \Title $title, $wikiaId ) {
+		global $wgEnableTemplateDraftExt;
+
+		if ( !empty( $wgEnableTemplateDraftExt )
+			&& \TemplateDraftHelper::isInfoboxDraftConversion( $title )
+		) {
+			return \TemplateClassificationService::TEMPLATE_INFOBOX;
+		}
+
+		try {
+			$templateType = ( new \TemplateClassificationService() )->getType( $wikiaId, $title->getArticleID() );
+		} catch ( ApiException $e ) {
+			( new Logger() )->exception( $e );
+			/**
+			 * If the service is unreachable - fill the field with a not-available string
+			 * which instructs front-end tools to skip the classification part.
+			 */
+			$templateType = \TemplateClassificationService::NOT_AVAILABLE;
+		}
+
+		return $templateType;
 	}
 }

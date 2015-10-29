@@ -20,18 +20,22 @@ class View {
 			return $fallbackMsg;
 		}
 
-		try {
-			$templateType = ( new \TemplateClassificationService() )->getType( $wikiId, $title->getArticleID() );
-		} catch ( ApiException $e ) {
-			( new Logger() )->exception( $e );
-			return $fallbackMsg;
-		}
+		$templateType = '';
 
 		// Fallback to infobox on template draft for not existent classification
-		if ( $templateType === ''
-			&& ( new Hooks() )->isTemplateDraftConversion( \RequestContext::getMain()->getRequest(), $title )
+		if ( !empty( $wgEnableTemplateDraftExt )
+			&& \TemplateDraftHelper::isInfoboxDraftConversion( $title )
 		) {
 			$templateType = \TemplateClassificationService::TEMPLATE_INFOBOX;
+		}
+
+		if ( $templateType === '' ) {
+			try {
+				$templateType = ( new \TemplateClassificationService() )->getType( $wikiId, $title->getArticleID() );
+			} catch ( ApiException $e ) {
+				( new Logger() )->exception( $e );
+				return $fallbackMsg;
+			}
 		}
 
 		// Fallback to unknown for not existent classification
