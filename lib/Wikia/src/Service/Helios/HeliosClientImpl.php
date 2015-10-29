@@ -186,6 +186,24 @@ class HeliosClientImpl implements HeliosClient
 	}
 
 	/**
+	 * Generate a token for a user.
+	 * Warning: Assumes the user is already authenticated.
+	 *
+	 * @param $userId integer - the current user id
+	 *
+	 * @return array - JSON string deserialized into an associative array
+	 */
+	public function generateToken( $userId )
+	{
+		return $this->request(
+			sprintf('users/%s/tokens', $userId),
+			[],
+			[],
+			[ 'method' => 'POST' ]
+		);
+	}
+
+	/**
 	* A shortcut method for register requests.
 	*/
 	public function register( $username, $password, $email, $birthdate, $langCode )
