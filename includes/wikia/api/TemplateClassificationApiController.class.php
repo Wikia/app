@@ -76,7 +76,7 @@ class TemplateClassificationApiController extends WikiaApiController {
 			);
 
 			$title = Title::newFromId( $pageId );
-			if ( $title !== null ) {
+			if ( $title instanceof Title ) {
 				$title->invalidateCache();
 			}
 		} catch ( InvalidArgumentException $e ) {
