@@ -49,7 +49,7 @@ require(
 		// @see CE-1220
 		function shouldShowWikiaInYourLangWithTargetAndContentLanguage(targetLanguage, contentLanguage) {
 			var targetLanguageLangCode = targetLanguage.split('-')[0],
-				contentLanguageLangCode = contentLanguage.split('-')[0];
+			    contentLanguageLangCode = contentLanguage.split('-')[0];
 
 			if (targetLanguageLangCode === contentLanguageLangCode) {
 				return false;
