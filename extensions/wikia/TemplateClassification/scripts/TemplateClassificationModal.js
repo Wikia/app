@@ -118,6 +118,16 @@ function ($, mw, loader, nirvana, tracker, labeling) {
 			processSave(modalInstance);
 		});
 
+		modalInstance.bind('close', function () {
+			// Track - close TC modal
+			tracker.track({
+				trackingMethod: 'both',
+				category: 'template-classification-dialog',
+				action: 'close',
+				label: 'close-event'
+			});
+		});
+
 		/* Show the modal */
 		modalInstance.show();
 	}
