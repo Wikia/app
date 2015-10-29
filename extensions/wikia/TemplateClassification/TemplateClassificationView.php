@@ -27,6 +27,13 @@ class View {
 			return $fallbackMsg;
 		}
 
+		// Fallback to infobox on template draft for not existent classification
+		if ( $templateType === ''
+			&& ( new Hooks() )->isTemplateDraftConversion( \RequestContext::getMain()->getRequest(), $title )
+		) {
+			$templateType = \TemplateClassificationService::TEMPLATE_INFOBOX;
+		}
+
 		// Fallback to unknown for not existent classification
 		if ( $templateType === '' ) {
 			$templateType = \TemplateClassificationService::TEMPLATE_UNKNOWN;

@@ -3,6 +3,7 @@
 namespace Wikia\TemplateClassification;
 
 use Swagger\Client\ApiException;
+use Wikia\Interfaces\IRequest;
 use Wikia\TemplateClassification\Permissions;
 use Wikia\TemplateClassification\UnusedTemplates\Handler;
 
@@ -87,17 +88,17 @@ class Hooks {
 	 * @param \OutputPage $out
 	 * @return bool
 	 */
-	public static function onEditPageShowEditFormFields( \EditPage $editPage, \OutputPage $out ) {
+	public function onEditPageShowEditFormFields( \EditPage $editPage, \OutputPage $out ) {
 		global $wgCityId;
 
 		if ( $out->getSkin() instanceof \SkinMonoBook ) {
 			return true;
 		}
 
-		$articleId = $editPage->getTitle()->getArticleID();
+		$title = $editPage->getTitle();
 
 		try {
-			$templateType = ( new \TemplateClassificationService() )->getType( $wgCityId, $articleId );
+			$templateType = ( new \TemplateClassificationService() )->getType( $wgCityId, $title->getArticleID() );
 		} catch ( ApiException $e ) {
 			( new Logger() )->exception( $e );
 			/**
@@ -105,6 +106,13 @@ class Hooks {
 			 * which instructs front-end tools to skip the classification part.
 			 */
 			$templateType = \TemplateClassificationService::NOT_AVAILABLE;
+		}
+
+		// Fallback to infobox on template draft conversion for not existent classification
+		if ( ( $templateType === '' || $templateType === \TemplateClassificationService::NOT_AVAILABLE )
+			&& $this->isTemplateDraftConversion( $out->getRequest(), $title )
+		) {
+			$templateType = \TemplateClassificationService::TEMPLATE_INFOBOX;
 		}
 
 		$editPage->addHiddenField([
@@ -188,6 +196,16 @@ class Hooks {
 			);
 		}
 		return true;
+	}
+
+	/**
+	 * Determines whether a title is a draft in conversion mode initiated
+	 * @param IRequest $request
+	 * @param \Title $title
+	 * @return bool
+	 */
+	public function isTemplateDraftConversion( IRequest $request, \Title $title ) {
+		return $request->getInt( 'conversion' ) && $title->isTemplateDraft();
 	}
 
 	/**

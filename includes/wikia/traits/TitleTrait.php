@@ -152,4 +152,10 @@ trait TitleTrait {
 
 		return $rows;
 	}
+
+	public function isTemplateDraft() {
+		global $wgEnableTemplateDraftExt;
+
+		return !empty( $wgEnableTemplateDraftExt ) && TemplateDraftHelper::isTitleDraft( $this );
+	}
 }
