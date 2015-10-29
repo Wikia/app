@@ -114,8 +114,16 @@ function ($, mw, loader, nirvana, tracker, labeling) {
 	 */
 	function processInstance(modalInstance) {
 		/* Submit template type edit form on Done button click */
-		modalInstance.bind('done', function runSave() {
+		modalInstance.bind('done', function runSave(e) {
 			processSave(modalInstance);
+
+			// Track - primary-button click
+			tracker.track({
+				trackingMethod: 'both',
+				category: 'template-classification-dialog',
+				action: 'primary-button',
+				label: $(e.currentTarget).text()
+			});
 		});
 
 		modalInstance.bind('close', function () {
