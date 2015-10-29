@@ -64,6 +64,17 @@ class TemplateClassificationService {
 			$templateType = $type->getType();
 		}
 
+		/**
+		 * Quick fix begin
+		 * Permanent change will be needed
+		 */
+		if ( $templateType === 'other' ) {
+			$templateType = self::TEMPLATE_UNKNOWN;
+		}
+		/**
+		 * Quick fix end
+		 */
+
 		return $templateType;
 	}
 
