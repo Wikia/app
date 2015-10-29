@@ -167,20 +167,6 @@ class HeliosClientImpl implements HeliosClient
 	}
 
 	/**
-	 * A shortcut method for refresh token requests.
-	 */
-	public function refreshToken( $token )
-	{
-		return $this->request(
-			'token',
-			[
-				'grant_type'	=> 'refresh_token',
-				'refresh_token'	=> $token
-			]
-		);
-	}
-
-	/**
 	 * A shortcut method for token invalidation requests.
 	 *
 	 * @param $token string - a token to be invalidated
