@@ -207,7 +207,7 @@ class EditPageLayoutHelper {
 		return false;
 	}
 
-	static function isTemplateDraft( $title ) {
+	static public function isTemplateDraft( $title ) {
 		global $wgEnableTemplateDraftExt;
 
 		return !empty( $wgEnableTemplateDraftExt ) && TemplateDraftHelper::isTitleDraft( $title );

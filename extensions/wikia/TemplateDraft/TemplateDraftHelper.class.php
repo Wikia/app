@@ -27,6 +27,15 @@ class TemplateDraftHelper {
 	}
 
 	/**
+	 * Determines whether a title is a draft in infobox conversion mode
+	 * @param Title $title
+	 * @return bool
+	 */
+	public static function isInfoboxDraftConversion( Title $title ) {
+		return self::isTitleDraft( $title ) && \TemplateConverter::isConversion();
+	}
+
+	/**
 	 * Checks if the template (Title object) is marked by human as infobox
 	 * @param Title $title
 	 * @return bool

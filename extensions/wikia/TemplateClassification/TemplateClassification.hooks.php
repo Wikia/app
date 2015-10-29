@@ -3,6 +3,7 @@
 namespace Wikia\TemplateClassification;
 
 use Swagger\Client\ApiException;
+use Wikia\Interfaces\IRequest;
 use Wikia\TemplateClassification\Permissions;
 use Wikia\TemplateClassification\UnusedTemplates\Handler;
 
@@ -87,25 +88,14 @@ class Hooks {
 	 * @param \OutputPage $out
 	 * @return bool
 	 */
-	public static function onEditPageShowEditFormFields( \EditPage $editPage, \OutputPage $out ) {
+	public function onEditPageShowEditFormFields( \EditPage $editPage, \OutputPage $out ) {
 		global $wgCityId;
 
 		if ( $out->getSkin() instanceof \SkinMonoBook ) {
 			return true;
 		}
 
-		$articleId = $editPage->getTitle()->getArticleID();
-
-		try {
-			$templateType = ( new \TemplateClassificationService() )->getType( $wgCityId, $articleId );
-		} catch ( ApiException $e ) {
-			( new Logger() )->exception( $e );
-			/**
-			 * If the service is unreachable - fill the field with a not-available string
-			 * which instructs front-end tools to skip the classification part.
-			 */
-			$templateType = \TemplateClassificationService::NOT_AVAILABLE;
-		}
+		$templateType = $this->getTemplateTypeForEdit( $editPage->getTitle(), $wgCityId );
 
 		$editPage->addHiddenField([
 			'name' => 'templateClassificationType',
@@ -199,5 +189,35 @@ class Hooks {
 
 	private function isEditPage() {
 		return \RequestContext::getMain()->getRequest()->getVal( 'action' ) === 'edit';
+	}
+
+	/**
+	 * Retrieves template type for edit page purposes
+	 * Has fallback to infobox when in template draft conversion process
+	 * @param \Title $title
+	 * @param int $wikiaId
+	 * @return string
+	 */
+	private function getTemplateTypeForEdit( \Title $title, $wikiaId ) {
+		global $wgEnableTemplateDraftExt;
+
+		if ( !empty( $wgEnableTemplateDraftExt )
+			&& \TemplateDraftHelper::isInfoboxDraftConversion( $title )
+		) {
+			return \TemplateClassificationService::TEMPLATE_INFOBOX;
+		}
+
+		try {
+			$templateType = ( new \TemplateClassificationService() )->getType( $wikiaId, $title->getArticleID() );
+		} catch ( ApiException $e ) {
+			( new Logger() )->exception( $e );
+			/**
+			 * If the service is unreachable - fill the field with a not-available string
+			 * which instructs front-end tools to skip the classification part.
+			 */
+			$templateType = \TemplateClassificationService::NOT_AVAILABLE;
+		}
+
+		return $templateType;
 	}
 }
