@@ -16,6 +16,8 @@ class View {
 	 * @return string
 	 */
 	public function renderTemplateType( $wikiId, \Title $title, $user, $fallbackMsg = '', $templateTypeLabel = null ) {
+		global $wgEnableTemplateDraftExt;
+
 		if ( !$user->isLoggedIn() ) {
 			return $fallbackMsg;
 		}
