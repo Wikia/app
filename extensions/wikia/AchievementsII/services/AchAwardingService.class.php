@@ -78,7 +78,6 @@ class AchAwardingService {
 		wfProfileOut(__METHOD__);
 	}
 
-
 	public function processSharing($articleID, $sharerID, $IP) {
 		global $wgEnableAchievementsForSharing, $wgAchievementsEditAddPhotoOnly;
 
@@ -355,149 +354,162 @@ class AchAwardingService {
 	}
 
 	private function processAllInTrack() {
-		global $wgAchievementsEditAddPhotoOnly;
-
 		wfProfileIn(__METHOD__);
 
-		global $wgContLang;
-
-		if($this->mTitle->isContentPage()) {
-
-			// BADGE_EDIT
-			if(empty($this->mCounters[BADGE_EDIT])) {
-				$this->mCounters[BADGE_EDIT] = 0;
-			}
-			$this->mCounters[BADGE_EDIT]++;
-
-			// EDIT+CATEGORY
-			if(empty($wgAchievementsEditAddPhotoOnly)) {
-				// get categories article already belongs to
-				$articleCategories = array_change_key_case($this->mTitle->getParentCategories(), CASE_LOWER);
-
-				// get categories to which article is added within this edit
-				$insertedCategories = array_change_key_case(Wikia::getVar('categoryInserts'), CASE_LOWER);
-
-				// get configuration of edit+categories
-				$editPlusCategory = AchConfig::getInstance()->getInTrackEditPlusCategory();
-
-				$cat1 = strtolower($wgContLang->getNSText(NS_CATEGORY));
-				foreach($editPlusCategory as $badge_type_id => $badge_config) {
-					if($badge_config['enabled']) {
-						$cat2 = str_replace(' ', '_', strtolower($badge_config['category']));
-						if(isset($insertedCategories[$cat2]) || isset($articleCategories[$cat1.':'.$cat2])) {
-							if(empty($this->mCounters[$badge_type_id])) {
-								$this->mCounters[$badge_type_id] = 0;
-							}
-							$this->mCounters[$badge_type_id]++;
-						}
-					}
-				}
-			}
-
-			// BADGE_PICTURE
-			$insertedImages = Wikia::getVar('imageInserts');
-			if(!empty($insertedImages) && is_array($insertedImages)) {
-				if(empty($this->mCounters[BADGE_PICTURE])) {
-					$this->mCounters[BADGE_PICTURE] = 0;
-				}
-				foreach($insertedImages as $inserted_image) {
-					if($inserted_image['il_to']{0} != ':') {
-						if(wfFindFile($inserted_image['il_to'])) {
-							//check if the image has been used less than 10 times
-							//(to avoid awarding after template based bulk insertion)
-							//calls api.php?action=query&list=imageusage&iulimit=10&iutitle=File:File_mame.ext
-							$imageUsageCount = 0;
-							$imageUsageLimit = 10;
-							$params = array(
-								'action' => 'query',
-								'list' => 'imageusage',
-								'iutitle' => "File:{$inserted_image['il_to']}",
-								'iulimit' => $imageUsageLimit,
-							);
-
-							try {
-								wfProfileIn(__METHOD__ . '::apiCall');
-
-								$api = new ApiMain(new FauxRequest($params));
-								$api->execute();
-								$res = $api->getResultData();
-
-								wfProfileOut(__METHOD__ . '::apiCall');
-
-								if (is_array($res['query']['imageusage'])) {
-									$imageUsageCount = count($res['query']['imageusage']);
-								}
-							}
-							catch(Exception $e) {};
-
-							if($imageUsageCount < $imageUsageLimit)
-								$this->mCounters[BADGE_PICTURE]++;
-						}
-					}
-				}
-			}
-
-			// BADGE_CATEGORY
-			if(empty($wgAchievementsEditAddPhotoOnly)) {
-				$insertedCategories = Wikia::getVar('categoryInserts');
-				if(!empty($insertedCategories) && is_array($insertedCategories)) {
-					if(empty($this->mCounters[BADGE_CATEGORY])) {
-						$this->mCounters[BADGE_CATEGORY] = 0;
-					}
-					$this->mCounters[BADGE_CATEGORY] += count($insertedCategories);
-				}
-			}
-		}
+		global $wgAchievementsEditAddPhotoOnly;
 
 		if(empty($wgAchievementsEditAddPhotoOnly)) {
-			// BADGE_BLOGPOST
-			// is defined check if required because blogs are not enabled everywhere
-			if(defined('NS_BLOG_ARTICLE') && $this->mTitle->getNamespace() == NS_BLOG_ARTICLE) {
-				if($this->mTitle->getBaseText() == $this->mUser->getName()) {
-					if($this->mStatus->value['new'] == true) {
-						if(empty($this->mCounters[BADGE_BLOGPOST])) {
-							$this->mCounters[BADGE_BLOGPOST] = 0;
-						}
-						$this->mCounters[BADGE_BLOGPOST]++;
-					}
-				}
+			if ($this->mTitle->isContentPage()) {
+				$this->processInTrackEditCategory();
+				$this->processInTrackCategory();
 			}
+			$this->processInTrackBlogPost();
+			$this->processInTrackBlogComment();
+			$this->processInTrackLove();
+		}
 
-			// BADGE_BLOGCOMMENT
-			// is defined check if required because blogs are not enabled everywhere
-			if(defined('NS_BLOG_ARTICLE_TALK') && $this->mTitle->getNamespace() == NS_BLOG_ARTICLE_TALK) {
-				// handle only article/comment creating (not editing)
-				if($this->mStatus->value['new'] == true) {
-					$blogPostTitle = Title::newFromText($this->mTitle->getBaseText(), NS_BLOG_ARTICLE);
-					if($blogPostTitle) {
-						$blogPostArticle = new Article($blogPostTitle);
-						if(empty($this->mCounters[BADGE_BLOGCOMMENT]) || !in_array($blogPostArticle->getID(), $this->mCounters[BADGE_BLOGCOMMENT])) {
-							if(empty($this->mCounters[BADGE_BLOGCOMMENT])) {
-								$this->mCounters[BADGE_BLOGCOMMENT] = array();
-							}
-							$this->mCounters[BADGE_BLOGCOMMENT][] = $blogPostArticle->getID();
-						}
-					}
-				}
-			}
-
-
-			// BADGE_LOVE
-			if(empty($this->mCounters[BADGE_LOVE])) {
-				$this->mCounters[BADGE_LOVE][COUNTERS_COUNTER] = 1;
-			} else {
-				if($this->mCounters[BADGE_LOVE][COUNTERS_DATE] == date('Y-m-d')) {
-					// ignore
-				} else if($this->mCounters[BADGE_LOVE][COUNTERS_DATE] == date('Y-m-d', strtotime('-1 day'))) {
-					$this->mCounters[BADGE_LOVE][COUNTERS_COUNTER]++;
-				} else {
-					$this->mCounters[BADGE_LOVE][COUNTERS_COUNTER] = 1;
-				}
-			}
-			$this->mCounters[BADGE_LOVE][COUNTERS_DATE] = date('Y-m-d');
+		if ($this->mTitle->isContentPage()) {
+			$this->processInTrackEdit();
+			$this->processInTrackPicture();
 		}
 
 		wfProfileOut(__METHOD__);
+	}
+
+	private function processInTrackEdit() {
+		// BADGE_EDIT
+		$this->incrementCounterBy(BADGE_EDIT, 1);
+	}
+
+	private function processInTrackEditCategory() {
+		global $wgContLang;
+
+		// EDIT+CATEGORY
+		// get categories article already belongs to
+		$articleCategories = array_change_key_case($this->mTitle->getParentCategories(), CASE_LOWER);
+
+		// get categories to which article is added within this edit
+		$insertedCategories = array_change_key_case(Wikia::getVar('categoryInserts'), CASE_LOWER);
+
+		// get configuration of edit+categories
+		$editPlusCategory = AchConfig::getInstance()->getInTrackEditPlusCategory();
+
+		$cat1 = strtolower($wgContLang->getNSText(NS_CATEGORY));
+		foreach ($editPlusCategory as $badge_type_id => $badge_config) {
+			if ($badge_config['enabled']) {
+				$cat2 = str_replace(' ', '_', strtolower($badge_config['category']));
+				if (isset($insertedCategories[$cat2]) || isset($articleCategories[$cat1 . ':' . $cat2])) {
+					$this->incrementCounterBy($badge_type_id, 1);
+				}
+			}
+		}
+	}
+
+	private function processInTrackPicture() {
+		// BADGE_PICTURE
+		$insertedImages = Wikia::getVar('imageInserts');
+		if (!empty($insertedImages) && is_array($insertedImages)) {
+			foreach ($insertedImages as $inserted_image) {
+				if ($inserted_image['il_to']{0} != ':') {
+					if (wfFindFile($inserted_image['il_to'])) {
+						//check if the image has been used less than 10 times
+						//(to avoid awarding after template based bulk insertion)
+						//calls api.php?action=query&list=imageusage&iulimit=10&iutitle=File:File_mame.ext
+						$imageUsageCount = 0;
+						$imageUsageLimit = 10;
+						$params = array(
+							'action' => 'query',
+							'list' => 'imageusage',
+							'iutitle' => "File:{$inserted_image['il_to']}",
+							'iulimit' => $imageUsageLimit,
+						);
+
+						try {
+							wfProfileIn(__METHOD__ . '::apiCall');
+
+							$api = new ApiMain(new FauxRequest($params));
+							$api->execute();
+							$res = $api->getResultData();
+
+							wfProfileOut(__METHOD__ . '::apiCall');
+
+							if (is_array($res['query']['imageusage'])) {
+								$imageUsageCount = count($res['query']['imageusage']);
+							}
+						} catch (Exception $e) {
+						};
+
+						if ($imageUsageCount < $imageUsageLimit) {
+							$this->incrementCounterBy(BADGE_PICTURE, 1);
+						}
+					}
+				}
+			}
+		}
+	}
+
+	private function processInTrackCategory() {
+		// BADGE_CATEGORY
+		$insertedCategories = Wikia::getVar('categoryInserts');
+		if (!empty($insertedCategories) && is_array($insertedCategories)) {
+			$this->incrementCounterBy(BADGE_CATEGORY, count($insertedCategories));
+		}
+	}
+
+	private function processInTrackBlogPost() {
+		//BADGE_BLOGPOST
+		//is defined check if required because blogs are not enabled everywhere
+		if(defined('NS_BLOG_ARTICLE') && $this->mTitle->getNamespace() == NS_BLOG_ARTICLE) {
+			if($this->mTitle->getBaseText() == $this->mUser->getName()) {
+				if ($this->mStatus->value['new'] == true) {
+					$this->incrementCounterBy(BADGE_BLOGPOST, 1);
+				}
+			}
+		}
+	}
+
+	private function processInTrackBlogComment() {
+		// BADGE_BLOGCOMMENT
+		// is defined check if required because blogs are not enabled everywhere
+		if(defined('NS_BLOG_ARTICLE_TALK') && $this->mTitle->getNamespace() == NS_BLOG_ARTICLE_TALK) {
+			// handle only article/comment creating (not editing)
+			if ($this->mStatus->value['new'] == true) {
+				$blogPostTitle = Title::newFromText($this->mTitle->getBaseText(), NS_BLOG_ARTICLE);
+				if ($blogPostTitle) {
+					$blogPostArticle = new Article($blogPostTitle);
+					if (empty($this->mCounters[BADGE_BLOGCOMMENT]) || !in_array($blogPostArticle->getID(), $this->mCounters[BADGE_BLOGCOMMENT])) {
+						if (empty($this->mCounters[BADGE_BLOGCOMMENT])) {
+							$this->mCounters[BADGE_BLOGCOMMENT] = array();
+						}
+						$this->mCounters[BADGE_BLOGCOMMENT][] = $blogPostArticle->getID();
+					}
+				}
+			}
+		}
+	}
+
+	private function processInTrackLove() {
+		//BADGE_LOVE
+		if(empty($this->mCounters[BADGE_LOVE])) {
+			$this->mCounters[BADGE_LOVE][COUNTERS_COUNTER] = 1;
+		} else {
+			if ($this->mCounters[BADGE_LOVE][COUNTERS_DATE] == date('Y-m-d')) {
+				// ignore
+			} else if ($this->mCounters[BADGE_LOVE][COUNTERS_DATE] == date('Y-m-d', strtotime('-1 day'))) {
+				$this->mCounters[BADGE_LOVE][COUNTERS_COUNTER]++;
+			} else {
+				$this->mCounters[BADGE_LOVE][COUNTERS_COUNTER] = 1;
+			}
+		}
+		$this->mCounters[BADGE_LOVE][COUNTERS_DATE] = date('Y-m-d');
+	}
+
+	private function incrementCounterBy($badge_type_id, $value) {
+		$this->mCounters = is_array($this->mCounters) ? $this->mCounters : $this->mUserCountersService->getCounters();
+		if(empty($this->mCounters[$badge_type_id])) {
+			$this->mCounters[$badge_type_id] = 0;
+		}
+		$this->mCounters[$badge_type_id] += $value;
 	}
 
 	private function processAllNotInTrack() {
