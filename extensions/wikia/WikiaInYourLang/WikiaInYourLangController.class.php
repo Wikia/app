@@ -146,15 +146,6 @@ class WikiaInYourLangController extends WikiaController {
 	}
 
 	/**
-	 * Returns a core of a full language code (e.g. pt from pt-br)
-	 * @param  string $sFullLangCode Full language code
-	 * @return string A core of the language code
-	 */
-	public function getLanguageCore( $sFullLangCode ) {
-		return explode( '-', $sFullLangCode )[0];
-	}
-
-	/**
 	 * Concats a lang code with a domain
 	 * @param  string $sWikiDomain A domain (host) (e.g. community.wikia.com)
 	 * @param  string $sTargetLanguage A lang code (e.g. ja)
