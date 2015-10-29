@@ -66,9 +66,9 @@ class TemplateClassificationService {
 
 		/**
 		 * Quick fix begin
-		 * Permanent change will be needed
+		 * Permanent change will be needed from the Services team.
 		 */
-		if ( $templateType === 'other' ) {
+		if ( !in_array( $templateType, self::$templateTypes ) ) {
 			$templateType = self::TEMPLATE_UNKNOWN;
 		}
 		/**
