@@ -26,11 +26,17 @@ class UserAttributeTest extends PHPUnit_Framework_TestCase {
 	/** @var  Attribute */
 	protected $attribute2;
 
-	/** @var  Attribute */
-	protected $defaultAttribute;
-
 	/** @var Attribute[]  */
 	protected $savedAttributesForUser;
+
+	/** @var  Attribute */
+	protected $defaultAttribute1;
+
+	/** @var  Attribute */
+	protected $defaultAttribute2;
+
+	/** @var Attribute[]  */
+	protected $defaultAttributes;
 
 	protected function setUp() {
 		$this->service = $this->getMockBuilder( AttributeService::class )
@@ -44,8 +50,13 @@ class UserAttributeTest extends PHPUnit_Framework_TestCase {
 		$this->cache->method('doFetch')->willReturn(false);
 		$this->attribute1 = new Attribute( 'nickName', 'Lebowski' );
 		$this->attribute2 = new Attribute( 'gender', 'female' );
-		$this->defaultAttribute = new Attribute( 'defaultName', 'defaultValue' );
 		$this->savedAttributesForUser = [ $this->attribute1, $this->attribute2 ];
+		$this->defaultAttribute1 = new Attribute( 'defaultAttr1', 'defaultAttr1Val' );
+		$this->defaultAttribute2 = new Attribute( 'defaultAttr2', 'defaultAttr2Val' );
+		$this->defaultAttributes = [
+			$this->defaultAttribute1->getName() => $this->defaultAttribute1->getValue(),
+			$this->defaultAttribute2->getName() => $this->defaultAttribute2->getValue()
+		];
 	}
 
 	public function testGetAttributes() {
@@ -74,10 +85,10 @@ class UserAttributeTest extends PHPUnit_Framework_TestCase {
 
 	public function testGetAttributesWithGlobalDefaultSet() {
 		$this->setupServiceGetExpects();
-		$attributes = new UserAttributes( $this->service, $this->cache, [ 'defaultAttr' => 'defaultValue' ] );
+		$attributes = new UserAttributes( $this->service, $this->cache, $this->defaultAttributes );
 
-		$this->assertEquals( 'defaultValue',
-			$attributes->getAttribute( $this->userId, 'defaultAttr' ) );
+		$this->assertEquals( $this->defaultAttribute1->getValue(),
+			$attributes->getAttribute( $this->userId, $this->defaultAttribute1->getName() ) );
 	}
 
 	public function testSetAttribute() {
@@ -89,25 +100,20 @@ class UserAttributeTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testSaveAttribute() {
-		$defaultAttributes = [
-			'defaultAttr1' => 'defaultAttr1Val',
-			'defaultAttr2' => 'defaultAttr2Val',
-		];
-
 		$this->service->expects( $this->once() )
 			->method( 'delete' )
-			->with( $this->userId, new Attribute( 'defaultAttr1', 'defaultAttr1Val' ) );
+			->with( $this->userId, $this->defaultAttribute1 );
 
 		$this->service->expects( $this->exactly( 2 ) )
 			->method( 'set' );
 
-		$userAttributes = new UserAttributes( $this->service, $this->cache, $defaultAttributes );
+		$userAttributes = new UserAttributes( $this->service, $this->cache, $this->defaultAttributes );
 
 		// Should be deleted during save b/c it's a default attribute with a default value
-		$userAttributes->setAttribute( $this->userId, new Attribute( 'defaultAttr1',  'defaultAttr1Val' ) );
+		$userAttributes->setAttribute( $this->userId,  $this->defaultAttribute1 );
 
 		// Should be saved because it's a default attribute with a new value
-		$userAttributes->setAttribute( $this->userId, new Attribute( 'defaultAttr2',  'someNewValue' ) );
+		$userAttributes->setAttribute( $this->userId, new Attribute( $this->defaultAttribute2->getName(),  'someNewValue' ) );
 
 		// Should be saved because it's a non-default attribute
 		$userAttributes->setAttribute( $this->userId, new Attribute( 'nickName',  'Lebowski' ) );
