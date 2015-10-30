@@ -5,8 +5,8 @@
  *
  * Provides selected type for TemplateClassificationModal and handles type submit
  */
-define('TemplateClassificationInView', ['jquery', 'mw', 'wikia.nirvana', 'TemplateClassificationModal', 'BannerNotification'],
-	function ($, mw, nirvana, templateClassificationModal, BannerNotification) {
+define('TemplateClassificationInView', ['jquery', 'mw', 'wikia.nirvana', 'wikia.tracker', 'TemplateClassificationModal', 'BannerNotification'],
+	function ($, mw, nirvana, tracker, templateClassificationModal, BannerNotification) {
 		'use strict';
 
 		var $typeLabel;
@@ -14,6 +14,15 @@ define('TemplateClassificationInView', ['jquery', 'mw', 'wikia.nirvana', 'Templa
 		function init() {
 			$typeLabel = $('.template-classification-type-text');
 			templateClassificationModal.init(getType, sendClassifyTemplateRequest);
+
+			$('.template-classification-edit').on('mousedown', function () {
+				tracker.track({
+					trackingMethod: 'analytics',
+					category: 'template-classification-entry-point',
+					action: tracker.ACTIONS.CLICK,
+					label: 'view-page'
+				});
+			});
 		}
 
 		function getType() {
@@ -33,7 +42,7 @@ define('TemplateClassificationInView', ['jquery', 'mw', 'wikia.nirvana', 'Templa
 					type: selectedTemplateType,
 					editToken: mw.user.tokens.get('editToken')
 				},
-				callback: function() {
+				callback: function () {
 					var notification = new BannerNotification(
 						mw.message('template-classification-edit-modal-success').escaped(),
 						'success'
@@ -41,7 +50,7 @@ define('TemplateClassificationInView', ['jquery', 'mw', 'wikia.nirvana', 'Templa
 
 					notification.show();
 				},
-				onErrorCallback: function() {
+				onErrorCallback: function () {
 					templateClassificationModal.updateEntryPointLabel(previousType);
 					animateOnError($typeLabel);
 
@@ -57,7 +66,7 @@ define('TemplateClassificationInView', ['jquery', 'mw', 'wikia.nirvana', 'Templa
 
 		function animateOnError($element) {
 			$element.addClass('template-classification-error');
-			$element.one('webkitAnimationEnd oanimationend msAnimationEnd animationend', function(e) {
+			$element.one('webkitAnimationEnd oanimationend msAnimationEnd animationend', function (e) {
 				$element.removeClass('template-classification-error');
 			});
 		}

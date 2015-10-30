@@ -5,16 +5,21 @@
  * Provides two params in init method for handling save and providing selected type
  */
 define('TemplateClassificationModal',
-	['jquery', 'mw', 'wikia.loader', 'wikia.nirvana', 'TemplateClassificationLabeling'],
-function ($, mw, loader, nirvana, labeling) {
+	['jquery', 'mw', 'wikia.loader', 'wikia.nirvana', 'wikia.tracker', 'TemplateClassificationLabeling'],
+function ($, mw, loader, nirvana, tracker, labeling) {
 	'use strict';
 
 	var $classificationForm,
+		$preselectedType,
 		$typeLabel,
 		modalConfig,
 		messagesLoaded,
 		saveHandler = falseFunction,
-		typeGetter = falseFunction;
+		typeGetter = falseFunction,
+		track = tracker.buildTrackingFunction({
+			category: 'template-classification-dialog',
+			trackingMethod: 'analytics'
+		});
 
 	/**
 	 * @param {function} typeGetterProvided Method that should return type in json format,
@@ -72,11 +77,11 @@ function ($, mw, loader, nirvana, labeling) {
 
 		if (templateType) {
 			// Mark selected type
-			var selectedType = $classificationForm.find('input[value="' + templateType + '"]');
+			$preselectedType = $classificationForm.find('input[value="' + templateType + '"]');
 
-			if (selectedType.length > 0) {
+			if ($preselectedType.length > 0) {
 				$classificationForm.find('input[checked="checked"]').removeAttr('checked');
-				selectedType.attr('checked', 'checked');
+				$preselectedType.attr('checked', 'checked');
 			}
 		}
 
@@ -88,6 +93,9 @@ function ($, mw, loader, nirvana, labeling) {
 		require(['wikia.ui.factory'], function (uiFactory) {
 			/* Initialize the modal component */
 			uiFactory.init(['modal']).then(createComponent);
+
+			// Track - open TC modal
+			track({action: tracker.ACTIONS.OPEN});
 		});
 	}
 
@@ -107,8 +115,34 @@ function ($, mw, loader, nirvana, labeling) {
 	 */
 	function processInstance(modalInstance) {
 		/* Submit template type edit form on Done button click */
-		modalInstance.bind('done', function runSave() {
+		modalInstance.bind('done', function runSave(e) {
 			processSave(modalInstance);
+
+			// Track - primary-button click
+			track({
+				action: tracker.ACTIONS.CLICK_LINK_BUTTON,
+				label: $(e.currentTarget).text()
+			});
+		});
+
+		modalInstance.bind('close', function () {
+			// Track - close TC modal
+			track({
+				action: tracker.ACTIONS.CLOSE,
+				label: 'close-event'
+			});
+		});
+
+		modalInstance.bind('option-select', function (e) {
+			var $input = $(e.currentTarget).find('input:radio');
+
+			$input.attr('checked', 'checked');
+
+			// Track - click to change a template's type
+			track({
+				action: tracker.ACTIONS.CLICK_LINK_TEXT,
+				label: $input.val()
+			});
 		});
 
 		/* Show the modal */
@@ -116,9 +150,30 @@ function ($, mw, loader, nirvana, labeling) {
 	}
 
 	function processSave(modalInstance) {
-		var templateType = $('#TemplateClassificationEditForm [name="template-classification-types"]:checked').val();
+		var newTemplateType = $('#TemplateClassificationEditForm [name="template-classification-types"]:checked').val(),
+			oldTemplateType = '';
 
-		saveHandler(templateType);
+		if ($preselectedType.length > 0) {
+			oldTemplateType = $preselectedType.val();
+		}
+
+		if (newTemplateType !== oldTemplateType) {
+			// Track - modal saved with changes
+			track({
+				action: tracker.ACTIONS.SUBMIT,
+				label: 'changed',
+				value: newTemplateType
+			});
+
+			saveHandler(newTemplateType);
+		} else {
+			// Track - modal saved without changes
+			track({
+				action: tracker.ACTIONS.SUBMIT,
+				label: 'nochange',
+				value: oldTemplateType
+			});
+		}
 
 		modalInstance.trigger('close');
 	}
