@@ -452,7 +452,7 @@ var UserProfilePage = {
 			}
 		}
 
-		userData.hideEditsWikis = (document.userData.hideEditsWikis.checked) ? 1 : 0;
+		userData.hideEditsWikis = document.userData.hideEditsWikis.checked ? 1 : 0;
 
 		return userData;
 	},
