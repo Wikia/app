@@ -2332,7 +2332,7 @@ class Wikia {
 	 * return false stops permissions processing and we are totally decided (nothing later can override)
 	 */
 	static function canEditInterfaceWhitelist (&$title, &$wgUser, $action, &$result) {
-		global $wgEditInterfaceWhitelist, $wgEnableContentReviewExt;
+		global $wgEditInterfaceWhitelist;
 
 		// List the conditions we don't care about for early exit
 		if ( $action == "read" || $title->getNamespace() != NS_MEDIAWIKI || empty( $wgEditInterfaceWhitelist )) {
@@ -2347,7 +2347,7 @@ class Wikia {
 		// In this NS, editinterface applies only to white listed pages
 		if ( in_array( $title->getDBKey(), $wgEditInterfaceWhitelist )
 			|| $title->isCssPage()
-			|| ( !empty( $wgEnableContentReviewExt ) && $title->isJsPage() )
+			|| ( Wikia::isUsingSafeJs() && $title->isJsPage() )
 			|| startsWith( lcfirst( $title->getDBKey() ), self::CUSTOM_INTERFACE_PREFIX )
 		) {
 			return $wgUser->isAllowed('editinterface');
@@ -2426,5 +2426,15 @@ class Wikia {
 			'section' => 'under-the-hood/advanced-displayv2',
 		);
 		return true;
+	}
+
+	/**
+	 * Checks if a wikia is using safe mechanisms for using and editing custom JS pages.
+	 * @return bool
+	 */
+	public static function isUsingSafeJs() {
+		global $wgUseSiteJs, $wgEnableContentReviewExt;
+
+		return !empty( $wgUseSiteJs ) && !empty( $wgEnableContentReviewExt );
 	}
 }
