@@ -15,11 +15,11 @@ define('TemplateClassificationInView', ['jquery', 'mw', 'wikia.nirvana', 'wikia.
 			$typeLabel = $('.template-classification-type-text');
 			templateClassificationModal.init(getType, sendClassifyTemplateRequest);
 
-			$('.template-classification-edit').on('click', function() {
+			$('.template-classification-edit').on('mousedown', function () {
 				tracker.track({
-					trackingMethod: 'both',
+					trackingMethod: 'analytics',
 					category: 'template-classification-entry-point',
-					action: 'click',
+					action: tracker.ACTIONS.CLICK,
 					label: 'view-page'
 				});
 			});
