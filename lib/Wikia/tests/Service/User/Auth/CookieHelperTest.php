@@ -25,8 +25,7 @@ class CookieHelperTest extends \PHPUnit_Framework_TestCase {
 			->disableOriginalConstructor()
 			->getMock();
 
-		$this->cookieHelper = new HeliosCookieHelper();
-		$this->cookieHelper->setHeliosClient($this->helios);
+		$this->cookieHelper = new HeliosCookieHelper( $this->helios );
 	}
 
 	public function testSetAuthenticationCookie() {
