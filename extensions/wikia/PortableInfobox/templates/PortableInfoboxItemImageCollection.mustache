@@ -1,6 +1,6 @@
 <div class="pi-image-collection">
 	<ul class="pi-image-collection-tabs">
-		{{#images}}<li class="pi-tab-link pi-item-spacing {{#isFiefst}}current{{/isFirst}}">
+		{{#images}}<li class="pi-tab-link pi-item-spacing {{#isFirst}}current{{/isFirst}}">
 			{{#caption}}{{caption}}{{/caption}}
 			{{^caption}}{{name}}{{/caption}}
 		</li>{{/images}}
