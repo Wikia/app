@@ -83,6 +83,8 @@ class Wikia {
 
 	const FAVICON_URL_CACHE_KEY = 'favicon-v1';
 
+	const CUSTOM_INTERFACE_PREFIX = 'custom-';
+
 	private static $vars = array();
 	private static $cachedLinker;
 
@@ -2346,6 +2348,7 @@ class Wikia {
 		if ( in_array( $title->getDBKey(), $wgEditInterfaceWhitelist )
 			|| $title->isCssPage()
 			|| ( !empty( $wgEnableContentReviewExt ) && $title->isJsPage() )
+			|| startsWith( lcfirst( $title->getDBKey() ), self::CUSTOM_INTERFACE_PREFIX )
 		) {
 			return $wgUser->isAllowed('editinterface');
 		}
