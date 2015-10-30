@@ -82,6 +82,10 @@ class MastheadTest extends WikiaBaseTest {
 			],
 			# PLATFORM-1617: full URLs
 			[
+				'http://images.wikia.com/messaging/images//1/19/Avatar.jpg',
+				true
+			],
+			[
 				'http://images.wikia.com/messaging/images/e/e5/Avatar4.jpg',
 				true
 			],
