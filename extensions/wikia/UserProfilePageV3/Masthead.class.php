@@ -452,9 +452,12 @@ class Masthead {
 	public function isDefault() {
 		$url = $this->mUser->getGlobalAttribute( AVATAR_USER_OPTION_NAME );
 		if ( $url ) {
-			/**
-			 * default avatar are only filenames without path
-			 */
+			# all avatars (including the default ones) are always stored with a full URL
+			if ( startsWith( $url, 'http://' ) and preg_match('#/Avatar\d?.jpg$#', $url) ) {
+				return true;
+			}
+
+			 # Legacy: default avatar are only filenames without path
 			if ( strpos( $url, '/' ) !== false ) {
 				return false;
 			}
@@ -546,7 +549,8 @@ class Masthead {
 			global $wgAvatarsUseService;
 
 			// user avatars service updates user preferences on its own
-			if ( empty( $wgAvatarsUseService ) ) {
+			// removing default avatars is hanlded by MW even when the service is enabled (PLATFORM-1617)
+			if ( empty( $wgAvatarsUseService ) || $this->isDefault() ) {
 				$this->mUser->setGlobalAttribute( AVATAR_USER_OPTION_NAME, "" );
 				$this->mUser->saveSettings();
 			}
