@@ -420,26 +420,6 @@ class Masthead {
 	}
 
 	/**
-	 * getFullPath -- return full path for image
-	 */
-	public function getFullPath() {
-		global $wgBlogAvatarDirectory;
-
-		return $wgBlogAvatarDirectory . $this->getLocalPath();
-	}
-
-	/**
-	 * Get Swift storage instance for avatars
-	 *
-	 * @return \Wikia\SwiftStorage storage instance
-	 */
-	public function getSwiftStorage() {
-		global $wgBlogAvatarSwiftContainer, $wgBlogAvatarSwiftPathPrefix;
-
-		return \Wikia\SwiftStorage::newFromContainer( $wgBlogAvatarSwiftContainer, $wgBlogAvatarSwiftPathPrefix );
-	}
-
-	/**
 	 * @return string temporary file to be used for upload from URL
 	 */
 	private function getTempFile() {
@@ -523,15 +503,6 @@ class Masthead {
 				$oLogPage->addEntry( 'avatar_rem', $mUserPage, '', array( $sUserText ) );
 			}
 			/* */
-
-			/**
-			 * notice image replication system
-			 */
-			global $wgEnableUploadInfoExt;
-			if ( $wgEnableUploadInfoExt ) {
-				$sImageFull = $this->getFullPath();
-				UploadInfo::log( $this->mUser->getUserPage(), $sImageFull, $this->getLocalPath(), "", "r" );
-			}
 		}
 		wfProfileOut( __METHOD__ );
 
@@ -674,8 +645,6 @@ class Masthead {
 	 * @return integer UPLOAD_* error code
 	 */
 	private function postProcessImageInternal( $sTmpFile, &$errorNo = UPLOAD_ERR_OK, &$errorMsg = '' ) {
-		global $wgAvatarsUseSwiftStorage, $wgBlogAvatarSwiftContainer, $wgBlogAvatarSwiftPathPrefix;
-
 		wfProfileIn( __METHOD__ );
 		$aImgInfo = getimagesize( $sTmpFile );
 
@@ -785,56 +754,4 @@ class Masthead {
 
 		return true;
 	}
-
-	/**
-	 * @brief remove thumbnails for avatar by cleaning up whole folder
-	 *
-	 * @author Krzysztof Krzyżaniak (eloy) <eloy@wikia-inc.com>
-	 * @access private
-	 *
-	 * @return boolean status of operation
-	 */
-	private function purgeThumbnails() {
-		global $wgAvatarsUseSwiftStorage, $wgBlogAvatarPath, $wgBlogAvatarSwiftContainer, $wgBlogAvatarSwiftPathPrefix;
-		// get path to thumbnail folder
-		wfProfileIn( __METHOD__ );
-
-		if ( !empty( $wgAvatarsUseSwiftStorage ) ) {
-			$swift = $this->getSwiftStorage();
-
-			$backend = FileBackendGroup::singleton()->get( 'swift-backend' );
-			$dir = sprintf( 'mwstore://swift-backend/%s%s%s', $wgBlogAvatarSwiftContainer, $wgBlogAvatarSwiftPathPrefix, $this->getLocalPath() );
-			$dir = $this->getThumbPath( $dir );
-
-			$avatarRemotePath = sprintf( "thumb%s", $this->getLocalPath() );
-
-			$urls = [ ];
-			$files = [ ];
-			$iterator = $backend->getFileList( array( 'dir' => $dir ) );
-			foreach ( $iterator as $file ) {
-				$files[] = sprintf( "%s/%s", $avatarRemotePath, $file );
-			}
-
-			// deleting files on file system and creating an array of URLs to purge
-			if ( !empty( $files ) ) {
-				foreach ( $files as $file ) {
-					$status = $swift->remove( $file );
-					if ( !$status->isOk() ) {
-						wfDebugLog( "avatar", __METHOD__ . ": $file exists but cannot be removed.\n", true );
-					} else {
-						$urls[] = wfReplaceImageServer( $wgBlogAvatarPath ) . "/$file";
-						wfDebugLog( "avatar", __METHOD__ . ": $file removed.\n", true );
-					}
-				}
-			}
-
-			wfDebugLog( "avatar", __METHOD__ . ": all thumbs removed.\n", true );
-		}
-
-		// purging avatars urls
-		SquidUpdate::purge( $urls );
-
-		wfProfileOut( __METHOD__ );
-	}
 }
-
