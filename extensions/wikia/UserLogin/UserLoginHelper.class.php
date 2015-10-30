@@ -634,4 +634,22 @@ class UserLoginHelper extends WikiaModel {
 		$lang = $this->wg->ContLang->mCode;
 		return $lang == 'en' ? '' : '&uselang=' . $lang;
 	}
+
+	/**
+	 * Set the cookies for the newly connected user.
+	 *
+	 * @param User the user that has been authenticated via facebook.
+	 */
+	private static function setCookiesForFacebookUser( \User $user, \Wikia\HTTP\Response $response ) {
+		$user->setCookies();
+		self::getCookieHelper()->setAuthenticationCookieWithUserId( $user->getId() );
+	}
+
+	/**
+	 * @return \Wikia\Service\User\Auth\CookieHelper
+	 */
+	private static function getCookieHelper() {
+		return Injector::getInjector()->get(CookieHelper::class);
+	}
+
 }
