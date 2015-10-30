@@ -15,7 +15,11 @@ function ($, mw, loader, nirvana, tracker, labeling) {
 		modalConfig,
 		messagesLoaded,
 		saveHandler = falseFunction,
-		typeGetter = falseFunction;
+		typeGetter = falseFunction,
+		track = tracker.buildTrackingFunction({
+			category: 'template-classification-dialog',
+			trackingMethod: 'analytics'
+		});
 
 	/**
 	 * @param {function} typeGetterProvided Method that should return type in json format,
@@ -91,11 +95,7 @@ function ($, mw, loader, nirvana, tracker, labeling) {
 			uiFactory.init(['modal']).then(createComponent);
 
 			// Track - open TC modal
-			tracker.track({
-				trackingMethod: 'both',
-				category: 'template-classification-dialog',
-				action: 'open'
-			});
+			track({action: tracker.ACTIONS.OPEN});
 		});
 	}
 
@@ -119,20 +119,16 @@ function ($, mw, loader, nirvana, tracker, labeling) {
 			processSave(modalInstance);
 
 			// Track - primary-button click
-			tracker.track({
-				trackingMethod: 'both',
-				category: 'template-classification-dialog',
-				action: 'primary-button',
+			track({
+				action: tracker.ACTIONS.CLICK_LINK_BUTTON,
 				label: $(e.currentTarget).text()
 			});
 		});
 
 		modalInstance.bind('close', function () {
 			// Track - close TC modal
-			tracker.track({
-				trackingMethod: 'both',
-				category: 'template-classification-dialog',
-				action: 'close',
+			track({
+				action: tracker.ACTIONS.CLOSE,
 				label: 'close-event'
 			});
 		});
@@ -143,10 +139,8 @@ function ($, mw, loader, nirvana, tracker, labeling) {
 			$input.attr('checked', 'checked');
 
 			// Track - click to change a template's type
-			tracker.track({
-				trackingMethod: 'both',
-				category: 'template-classification-dialog',
-				action: 'change',
+			track({
+				action: tracker.ACTIONS.CLICK_LINK_TEXT,
 				label: $input.val()
 			});
 		});
@@ -159,16 +153,14 @@ function ($, mw, loader, nirvana, tracker, labeling) {
 		var newTemplateType = $('#TemplateClassificationEditForm [name="template-classification-types"]:checked').val(),
 			oldTemplateType = '';
 
-		if ( $preselectedType.length > 0 ) {
+		if ($preselectedType.length > 0) {
 			oldTemplateType = $preselectedType.val();
 		}
 
-		if ( newTemplateType !== oldTemplateType ) {
+		if (newTemplateType !== oldTemplateType) {
 			// Track - modal saved with changes
-			tracker.track({
-				trackingMethod: 'both',
-				category: 'template-classification-dialog',
-				action: 'close',
+			track({
+				action: tracker.ACTIONS.SUBMIT,
 				label: 'changed',
 				value: newTemplateType
 			});
@@ -176,10 +168,8 @@ function ($, mw, loader, nirvana, tracker, labeling) {
 			saveHandler(newTemplateType);
 		} else {
 			// Track - modal saved without changes
-			tracker.track({
-				trackingMethod: 'both',
-				category: 'template-classification-dialog',
-				action: 'close',
+			track({
+				action: tracker.ACTIONS.SUBMIT,
 				label: 'nochange',
 				value: oldTemplateType
 			});
