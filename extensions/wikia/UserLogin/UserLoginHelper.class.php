@@ -1,5 +1,8 @@
 <?php
 
+use Wikia\DependencyInjection\Injector;
+use Wikia\Service\User\Auth\CookieHelper;
+
 /**
  * User Login Helper
  * @author Hyun
@@ -640,7 +643,7 @@ class UserLoginHelper extends WikiaModel {
 	 *
 	 * @param User the user that has been authenticated via facebook.
 	 */
-	private static function setCookiesForFacebookUser( \User $user, \Wikia\HTTP\Response $response ) {
+	public static function setCookiesForFacebookUser( \User $user, \Wikia\HTTP\Response $response ) {
 		$user->setCookies();
 		self::getCookieHelper()->setAuthenticationCookieWithUserId( $user->getId(), $response );
 	}
