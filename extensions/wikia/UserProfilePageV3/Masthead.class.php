@@ -549,7 +549,8 @@ class Masthead {
 			global $wgAvatarsUseService;
 
 			// user avatars service updates user preferences on its own
-			if ( empty( $wgAvatarsUseService ) ) {
+			// removing default avatars is hanlded by MW even when the service is enabled (PLATFORM-1617)
+			if ( empty( $wgAvatarsUseService ) || $this->isDefault() ) {
 				$this->mUser->setGlobalAttribute( AVATAR_USER_OPTION_NAME, "" );
 				$this->mUser->saveSettings();
 			}
