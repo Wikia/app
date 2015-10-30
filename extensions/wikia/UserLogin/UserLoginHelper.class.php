@@ -642,7 +642,7 @@ class UserLoginHelper extends WikiaModel {
 	 */
 	private static function setCookiesForFacebookUser( \User $user, \Wikia\HTTP\Response $response ) {
 		$user->setCookies();
-		self::getCookieHelper()->setAuthenticationCookieWithUserId( $user->getId() );
+		self::getCookieHelper()->setAuthenticationCookieWithUserId( $user->getId(), $response );
 	}
 
 	/**
