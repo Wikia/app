@@ -133,7 +133,7 @@ function ($, mw, loader, nirvana, tracker, labeling) {
 			});
 		});
 
-		modalInstance.bind('option-select', function(e) {
+		modalInstance.bind('option-select', function (e) {
 			var $input = $(e.currentTarget).find('input:radio');
 
 			$input.attr('checked', 'checked');

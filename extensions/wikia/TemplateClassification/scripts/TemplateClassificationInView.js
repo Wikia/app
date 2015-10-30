@@ -42,7 +42,7 @@ define('TemplateClassificationInView', ['jquery', 'mw', 'wikia.nirvana', 'wikia.
 					type: selectedTemplateType,
 					editToken: mw.user.tokens.get('editToken')
 				},
-				callback: function() {
+				callback: function () {
 					var notification = new BannerNotification(
 						mw.message('template-classification-edit-modal-success').escaped(),
 						'success'
@@ -50,7 +50,7 @@ define('TemplateClassificationInView', ['jquery', 'mw', 'wikia.nirvana', 'wikia.
 
 					notification.show();
 				},
-				onErrorCallback: function() {
+				onErrorCallback: function () {
 					templateClassificationModal.updateEntryPointLabel(previousType);
 					animateOnError($typeLabel);
 
@@ -66,7 +66,7 @@ define('TemplateClassificationInView', ['jquery', 'mw', 'wikia.nirvana', 'wikia.
 
 		function animateOnError($element) {
 			$element.addClass('template-classification-error');
-			$element.one('webkitAnimationEnd oanimationend msAnimationEnd animationend', function(e) {
+			$element.one('webkitAnimationEnd oanimationend msAnimationEnd animationend', function (e) {
 				$element.removeClass('template-classification-error');
 			});
 		}
