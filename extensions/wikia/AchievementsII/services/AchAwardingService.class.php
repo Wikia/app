@@ -506,7 +506,7 @@ class AchAwardingService {
 
 	private function incrementCounterBy($badge_type_id, $value) {
 		$this->mCounters = is_array($this->mCounters) ? $this->mCounters : $this->mUserCountersService->getCounters();
-		if (empty($this->mCounters[$badge_type_id])) {
+		if (!isset($this->mCounters[$badge_type_id])) {
 			$this->mCounters[$badge_type_id] = 0;
 		}
 		$this->mCounters[$badge_type_id] += $value;
