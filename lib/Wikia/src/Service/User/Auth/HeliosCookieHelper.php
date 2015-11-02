@@ -10,7 +10,7 @@ class HeliosCookieHelper implements CookieHelper {
 	const ACCESS_TOKEN_COOKIE_NAME = 'access_token';
 	// This is set to 6 months,(365/2)*24*60*60 = 15768000
 	const ACCESS_TOKEN_COOKIE_TTL = 15768000;
-	const NO_COOKIE_PREFIX = '';
+	const COOKIE_PREFIX = '';
 
 	private $heliosClient;
 
@@ -57,7 +57,7 @@ class HeliosCookieHelper implements CookieHelper {
 			// structure of the json map
 			$accessToken,
 			time() + self::ACCESS_TOKEN_COOKIE_TTL,
-			self::NO_COOKIE_PREFIX
+			self::COOKIE_PREFIX
 		);
 	}
 
@@ -72,7 +72,7 @@ class HeliosCookieHelper implements CookieHelper {
 			self::ACCESS_TOKEN_COOKIE_NAME,
 			'',
 			time() - self::ACCESS_TOKEN_COOKIE_TTL,
-			self::NO_COOKIE_PREFIX
+			self::COOKIE_PREFIX
 		);
 	}
 
