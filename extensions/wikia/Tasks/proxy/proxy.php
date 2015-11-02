@@ -1,5 +1,6 @@
 <?php
 set_time_limit( 0 );
+ini_set('display_errors', 0);
 
 # SEC-21: make sure that this is called internally
 $headers = apache_request_headers();
