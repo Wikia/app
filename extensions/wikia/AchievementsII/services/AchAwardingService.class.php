@@ -505,7 +505,10 @@ class AchAwardingService {
 	}
 
 	private function incrementCounterBy($badge_type_id, $value) {
-		$this->mCounters = is_array($this->mCounters) ? $this->mCounters : $this->mUserCountersService->getCounters();
+		if (!is_array($this->mCounters)) {
+			throw new MWException("Counters have to be initialized as array.");
+		}
+
 		if (!isset($this->mCounters[$badge_type_id])) {
 			$this->mCounters[$badge_type_id] = 0;
 		}
