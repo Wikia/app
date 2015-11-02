@@ -23,7 +23,7 @@ class HeliosCookieHelper implements CookieHelper {
 
 
 	/**
-		* @param HeliosClient $client
+	 * @param HeliosClient $client
 	 */
 	public function setHeliosClient( HeliosClient $client ) {
 		$this->heliosClient = $client;
